@@ -206,10 +206,27 @@ html.pts-immersive .bottom-nav {
 .pts-header__top {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 0.75rem;
   width: 100%;
   min-height: 2.75rem;
+}
+.pts-header--compact {
+  padding-bottom: 0.25rem;
+}
+.pts-settings--inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  text-decoration: none;
+  color: var(--pts-gold, var(--mj-brand));
+  white-space: nowrap;
+}
+.pts-dates--hero {
+  margin-top: 0.35rem;
+  font-size: 0.78rem;
+  opacity: 0.88;
 }
 /* شريط رجوع + إعدادات أسفل صفحة الصلاة (فوق الشريط السفلي) */
 .pts-chrome {

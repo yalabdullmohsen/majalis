@@ -8,7 +8,7 @@ import { useThemePreference } from "./ThemePreferenceProvider";
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 import { useIsMobileNav } from "@/hooks/useIsMobileNav";
 import { isNavHrefActive } from "@/lib/nav-active";
-import { isImmersiveChromePath } from "@/lib/immersive-chrome";
+import { isImmersiveChromePath, isCompactHeaderPath } from "@/lib/immersive-chrome";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { getActiveTab } from "@/lib/get-active-tab";
 import { LOBBY_SEARCH_FILTER } from "@/config/section-lobby-chrome";
@@ -319,7 +319,7 @@ export default function NavBar() {
                 <Search size={17} strokeWidth={1.8} aria-hidden="true" />
               </button>
             )}
-            {!isMobile && !isImmersiveChromePath(location) && <DeferredHeaderTicker />}
+            {!isMobile && !isImmersiveChromePath(location) && !isCompactHeaderPath(location) && <DeferredHeaderTicker />}
             {!isMobile && desktopAuthLinks}
 
             {/* Mobile: زر دخول/حساب واضح دائمًا — لا يُترك مخفيًا داخل قائمة الهامبرغر فقط */}
@@ -338,7 +338,7 @@ export default function NavBar() {
         </div>
 
         {/* صف بحث مستقل — لا يتداخل مع التبويبات أو التيكر */}
-        {isMobile && !isImmersiveChromePath(location) && (
+        {isMobile && !isImmersiveChromePath(location) && !isCompactHeaderPath(location) && (
           <div className="navbar-v3__search-row">
             <button
               type="button"
@@ -353,7 +353,7 @@ export default function NavBar() {
         )}
 
         {/* صف مستقل تحت أزرار الهيدر — يمنع تداخل التيكر مع القائمة/البحث/الحساب */}
-        {isMobile && !isImmersiveChromePath(location) && (
+        {isMobile && !isImmersiveChromePath(location) && !isCompactHeaderPath(location) && (
           <div className="navbar-ticker-row" aria-label="شريط تنبيهات ومقتطفات">
             <DeferredHeaderTicker />
           </div>

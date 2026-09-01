@@ -272,6 +272,11 @@
       "permanent": true
     },
     {
+      "source": "/more",
+      "destination": "/sections",
+      "permanent": true
+    },
+    {
       "source": "/tajweed",
       "destination": "/quran-hub/tajweed",
       "permanent": true
@@ -1380,10 +1385,6 @@
     },
     {
       "source": "/competitions",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/more",
       "destination": "/index.html"
     }
   ],

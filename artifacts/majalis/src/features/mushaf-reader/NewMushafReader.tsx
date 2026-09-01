@@ -524,6 +524,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         </div>
       }
     >
+      <h1 className="sr-only">المصحف الشريف</h1>
       <MediaBridge
         active={Boolean(playingVerseKey || playerState === "paused" || mediaPlaying)}
         title={verseLabel}

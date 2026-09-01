@@ -18,6 +18,7 @@
 
 import { sendJson } from "../api/_http.mjs";
 import { createClient } from "@supabase/supabase-js";
+import { searchStaticIndex, normalizeArabic as normalizeArabicStatic } from "../static-search-server.mjs";
 
 // ─── إعداد Supabase ─────────────────────────────────────────────────────────
 
@@ -40,25 +41,14 @@ function getSupabase() {
 // ─── تطبيع عربي خفيف (mirror من arabic-normalize.ts للاستخدام في Node) ──────
 
 function normalizeArabic(text) {
-  if (!text) return "";
-  return text
-    // التشكيل الكامل + علامات وقف قرآنية + الكشيدة
-    .replace(/[ً-ٟؐ-ؚۖ-ۜ۟-ۤۧ-ٰۭـ]/g, "")
-    .replace(/[أإآٱ]/g, "ا")
-    .replace(/ؤ/g, "و")
-    .replace(/ئ/g, "ي")
-    .replace(/ة/g, "ه")
-    .replace(/ى/g, "ي")
-    .replace(/[,.;:!?،؛؟«»""''()[\]{}\-—]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+  return normalizeArabicStatic(text);
 }
 
 // ─── الأنواع المسموح بها ─────────────────────────────────────────────────────
 
 const VALID_TYPES = new Set([
   "lesson", "library", "hadith", "fatwa", "qa", "fawaid",
-  "miracle", "story", "fiqh", "adhkar",
+  "miracle", "story", "fiqh", "adhkar", "quran", "page",
 ]);
 
 // ─── دوال البحث في كل جدول ──────────────────────────────────────────────────
@@ -293,75 +283,81 @@ export default async function handler(req, res) {
   const limit = Math.min(Number(req.query?.limit || 20), 50);
   const offset = Math.max(Number(req.query?.offset || 0), 0);
 
-  // ── اتصال Supabase ──────────────────────────────────────────────────────
+  const t0 = Date.now();
+
+  // ── فهرس ثابت محلي (primary) — لا يعتمد على Supabase ─────────────────────
+  const staticHit = searchStaticIndex(rawQuery, Math.max(limit * 2, 40));
+  /** @type {Map<string, object>} */
+  const mergedByKey = new Map();
+  for (const item of staticHit.results) {
+    mergedByKey.set(`${item.type}:${item.id}`, item);
+  }
+
+  // ── Supabase (supplement) — اختياري ───────────────────────────────────
   const supabase = getSupabase();
-  if (!supabase) {
-    sendJson(res, 503, { ok: false, error: "database_unavailable" });
-    return;
-  }
+  if (supabase) {
+    const TIMEOUT_MS = 2500;
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("search_timeout")), TIMEOUT_MS),
+    );
 
-  // ── بحث متوازٍ مع timeout 3s ────────────────────────────────────────────
-  const TIMEOUT_MS = 3000;
-  const timeoutPromise = new Promise((_, reject) =>
-    setTimeout(() => reject(new Error("search_timeout")), TIMEOUT_MS),
-  );
+    const perLimit = Math.ceil(limit / Math.max(requestedTypes.length, 1)) + 5;
 
-  const perLimit = Math.ceil(limit / requestedTypes.length) + 5;
+    const searchMap = {
+      lesson:  () => searchLessons(supabase, normQuery, perLimit),
+      library: () => searchLibrary(supabase, normQuery, perLimit),
+      hadith:  () => searchHadith(supabase, normQuery, perLimit),
+      qa:      () => searchQa(supabase, normQuery, perLimit),
+      fawaid:  () => searchFawaid(supabase, normQuery, perLimit),
+      miracle: () => searchMiracles(supabase, normQuery, perLimit),
+      story:   () => searchStories(supabase, normQuery, perLimit),
+      fiqh:    () => searchFiqh(supabase, normQuery, perLimit),
+      quran:   () => searchQuranIndex(supabase, normQuery, perLimit),
+      adhkar:  () => Promise.resolve([]),
+    };
 
-  const searchMap = {
-    lesson:  () => searchLessons(supabase, normQuery, perLimit),
-    library: () => searchLibrary(supabase, normQuery, perLimit),
-    hadith:  () => searchHadith(supabase, normQuery, perLimit),
-    qa:      () => searchQa(supabase, normQuery, perLimit),
-    fawaid:  () => searchFawaid(supabase, normQuery, perLimit),
-    miracle: () => searchMiracles(supabase, normQuery, perLimit),
-    story:   () => searchStories(supabase, normQuery, perLimit),
-    fiqh:    () => searchFiqh(supabase, normQuery, perLimit),
-    quran:   () => searchQuranIndex(supabase, normQuery, perLimit),
-    // الأذكار: بيانات seed — تُعالَج عبر intelligent-search
-    adhkar:  () => Promise.resolve([]),
-  };
+    try {
+      const searchPromises = requestedTypes
+        .filter((t) => searchMap[t])
+        .map((t) => searchMap[t]().catch(() => []));
 
-  try {
-    const t0 = Date.now();
+      const settled = await Promise.race([
+        Promise.all(searchPromises),
+        timeoutPromise,
+      ]);
 
-    const searchPromises = requestedTypes
-      .filter((t) => searchMap[t])
-      .map((t) => searchMap[t]().catch(() => []));
-
-    const settled = await Promise.race([
-      Promise.all(searchPromises),
-      timeoutPromise,
-    ]);
-
-    const allResults = settled.flat();
-
-    // ── ترتيب وتقطيع ──────────────────────────────────────────────────────
-    const sliced = allResults.slice(offset, offset + limit);
-
-    // ── تجميع حسب النوع ─────────────────────────────────────────────────
-    const groups = {};
-    for (const item of sliced) {
-      if (!groups[item.type]) groups[item.type] = [];
-      groups[item.type].push(item);
-    }
-
-    sendJson(res, 200, {
-      ok: true,
-      query: rawQuery,
-      normalized: normQuery,
-      count: sliced.length,
-      total: allResults.length,
-      response_ms: Date.now() - t0,
-      results: sliced,
-      groups,
-    });
-  } catch (err) {
-    if (err.message === "search_timeout") {
-      sendJson(res, 408, { ok: false, error: "search_timeout", message: "انتهت مهلة البحث (3s)" });
-    } else {
-      console.error("[/api/search]", err);
-      sendJson(res, 500, { ok: false, error: err.message || "internal_error" });
+      for (const item of settled.flat()) {
+        const key = `${item.type}:${item.id}`;
+        if (!mergedByKey.has(key)) mergedByKey.set(key, item);
+      }
+    } catch (err) {
+      if (err.message !== "search_timeout") {
+        console.warn("[/api/search] supabase supplement failed:", err.message);
+      }
     }
   }
+
+  const allResults = [...mergedByKey.values()];
+  const sliced = allResults.slice(offset, offset + limit);
+
+  const groups = {};
+  for (const item of sliced) {
+    if (!groups[item.type]) groups[item.type] = [];
+    groups[item.type].push(item);
+  }
+
+  sendJson(res, 200, {
+    ok: true,
+    query: rawQuery,
+    normalized: normQuery,
+    count: sliced.length,
+    total: allResults.length,
+    response_ms: Date.now() - t0,
+    results: sliced,
+    groups,
+    sources: {
+      static: staticHit.total,
+      merged: allResults.length,
+    },
+  });
 }

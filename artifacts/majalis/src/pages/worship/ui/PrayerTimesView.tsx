@@ -305,7 +305,7 @@ export default function PrayerTimesPage() {
 
   return (
     <div className="pts-screen pts-screen--with-nav" dir="rtl">
-      <header className="pts-header">
+      <header className="pts-header pts-header--compact">
         <div className="pts-header__top">
           <button
             type="button"
@@ -317,14 +317,49 @@ export default function PrayerTimesPage() {
             <MapPin size={15} strokeWidth={2} aria-hidden="true" />
             <span>{locLabel}</span>
           </button>
-        </div>
-        <div className="pts-dates">
-          {hijriStr && <span>{hijriStr}</span>}
-          <span className="pts-dates__sep" aria-hidden="true">·</span>
-          <span>{gregStr}</span>
+          <Link href="/adhan-settings" className="pts-settings pts-settings--inline" aria-label="إعدادات الأذان">
+            <Bell size={15} strokeWidth={2} aria-hidden="true" />
+            <span>إعدادات الأذان</span>
+          </Link>
         </div>
         <h1 className="pts-title sr-only">مواقيت الصلاة</h1>
       </header>
+
+      <section className="pts-hero" aria-label="الصلاة القادمة والعدّ التنازلي">
+        <MosqueSilhouette />
+        <div className="pts-hero__content">
+          <p className="pts-hero__label">{heroLabel}</p>
+          <h2 className="pts-hero__name" key={displayKey}>
+            {displayKey === "Sunrise" ? displayName : `صلاة ${displayName}`}
+          </h2>
+          <div
+            className="pts-hero__countdown"
+            dir="ltr"
+            aria-live="polite"
+            aria-atomic="true"
+            aria-label={`الوقت: ${displayHms}`}
+            key={displayHms}
+          >
+            {displayHms}
+          </div>
+          <div className="pts-dates pts-dates--hero">
+            {hijriStr && <span>{hijriStr}</span>}
+            {hijriStr && gregStr ? <span className="pts-dates__sep" aria-hidden="true">·</span> : null}
+            <span>{gregStr}</span>
+          </div>
+          {inGrace && !pinnedKey && (
+            <p className="pts-hero__hint">حتى مرور ٣٥ دقيقة ثم الانتقال للصلاة التالية</p>
+          )}
+          {pinnedKey && pinnedKey !== countdown.next.key && (
+            <div className="pts-hero__actions">
+              {isTomorrow && <span className="pts-badge">غداً</span>}
+              <button type="button" className="pts-hero__reset" onClick={() => setPinnedKey(null)}>
+                العودة للصلاة القادمة
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
 
       {govOpen && (
         <div id="pts-gov-panel" className="pts-gov-panel" role="region" aria-label="إعدادات الموقع والحساب">
@@ -389,36 +424,37 @@ export default function PrayerTimesPage() {
         </div>
       )}
 
-      <section className="pts-hero" aria-label="العداد التنازلي">
-        <MosqueSilhouette />
-        <div className="pts-hero__content">
-          <p className="pts-hero__label">{heroLabel}</p>
-          <h2 className="pts-hero__name" key={displayKey}>
-            {displayKey === "Sunrise" ? displayName : `صلاة ${displayName}`}
-          </h2>
-          <div
-            className="pts-hero__countdown"
-            dir="ltr"
-            aria-live="polite"
-            aria-atomic="true"
-            aria-label={`الوقت: ${displayHms}`}
-            key={displayHms}
-          >
-            {displayHms}
-          </div>
-          {inGrace && !pinnedKey && (
-            <p className="pts-hero__hint">حتى مرور ٣٥ دقيقة ثم الانتقال للصلاة التالية</p>
-          )}
-          {pinnedKey && pinnedKey !== countdown.next.key && (
-            <div className="pts-hero__actions">
-              {isTomorrow && <span className="pts-badge">غداً</span>}
-              <button type="button" className="pts-hero__reset" onClick={() => setPinnedKey(null)}>
-                العودة للصلاة القادمة
+      {prayers.length > 0 && (
+        <nav className="pts-list" aria-label="صلوات اليوم">
+          {prayers.map((p) => {
+            const next = isNext(p.key);
+            const pinned = isPinned(p.key);
+            const past = isPast(p);
+            const status = rowStatusLabel(p.key, countdown.next?.key, inGrace, ranKey, past);
+            return (
+              <button
+                key={p.key}
+                type="button"
+                className={[
+                  "pts-row",
+                  next || (inGrace && p.key === ranKey) ? "pts-row--next" : "",
+                  pinned && !next ? "pts-row--pinned" : "",
+                  past ? "pts-row--past" : "",
+                ].filter(Boolean).join(" ")}
+                onClick={() => setPinnedKey(p.key === pinnedKey ? null : p.key)}
+                aria-pressed={pinned}
+                aria-label={`${PRAYER_AR[p.key] ?? p.name}، ${displayTime12(p)}، ${status}`}
+              >
+                <span className="pts-row__meta">
+                  <span className="pts-row__name">{PRAYER_AR[p.key] ?? p.name}</span>
+                  <span className="pts-row__status">{status}</span>
+                </span>
+                <span className="pts-row__time" dir="ltr">{displayTime12(p)}</span>
               </button>
-            </div>
-          )}
-        </div>
-      </section>
+            );
+          })}
+        </nav>
+      )}
 
       <nav className="pts-dock" aria-label="أدوات الصلاة">
         <Link href="/adhkar" className="pts-dock__item">
@@ -458,38 +494,6 @@ export default function PrayerTimesPage() {
           ))}
         </ol>
       </section>
-
-      {prayers.length > 0 && (
-        <nav className="pts-list" aria-label="صلوات اليوم">
-          {prayers.map((p) => {
-            const next = isNext(p.key);
-            const pinned = isPinned(p.key);
-            const past = isPast(p);
-            const status = rowStatusLabel(p.key, countdown.next?.key, inGrace, ranKey, past);
-            return (
-              <button
-                key={p.key}
-                type="button"
-                className={[
-                  "pts-row",
-                  next || (inGrace && p.key === ranKey) ? "pts-row--next" : "",
-                  pinned && !next ? "pts-row--pinned" : "",
-                  past ? "pts-row--past" : "",
-                ].filter(Boolean).join(" ")}
-                onClick={() => setPinnedKey(p.key === pinnedKey ? null : p.key)}
-                aria-pressed={pinned}
-                aria-label={`${PRAYER_AR[p.key] ?? p.name}، ${displayTime12(p)}، ${status}`}
-              >
-                <span className="pts-row__meta">
-                  <span className="pts-row__name">{PRAYER_AR[p.key] ?? p.name}</span>
-                  <span className="pts-row__status">{status}</span>
-                </span>
-                <span className="pts-row__time" dir="ltr">{displayTime12(p)}</span>
-              </button>
-            );
-          })}
-        </nav>
-      )}
 
       <nav className="pts-chrome" aria-label="تنقّل الصفحة">
         <button
