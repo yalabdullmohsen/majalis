@@ -698,6 +698,26 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
   color: var(--mj-on-brand, #fff);
 }
 
+html[data-theme="dark"] .lessons-page-v3 .lessons-upcoming-card__btn:not(.lessons-upcoming-card__btn--primary),
+html.dark .lessons-page-v3 .lessons-upcoming-card__btn:not(.lessons-upcoming-card__btn--primary) {
+  background: color-mix(in srgb, var(--mj-surface-2, #1a2420) 55%, white 12%);
+  color: var(--mj-ink, #e8ece9);
+  border-color: color-mix(in srgb, var(--mj-ink-2, #c5cdc8) 28%, transparent);
+}
+
+html[data-theme="dark"] .lessons-page-v3 .lessons-v3-chip,
+html.dark .lessons-page-v3 .lessons-v3-chip {
+  background: color-mix(in srgb, var(--mj-surface, #131a18) 88%, white 8%);
+  color: var(--mj-ink-2, #c5cdc8);
+  border-color: color-mix(in srgb, var(--mj-ink-2, #c5cdc8) 22%, transparent);
+}
+
+html[data-theme="dark"] .lessons-page-v3 .lessons-v3-chip.is-active,
+html.dark .lessons-page-v3 .lessons-v3-chip.is-active {
+  color: var(--mj-ink, #e8ece9);
+  background: color-mix(in srgb, var(--mj-brand-deep, #123f2e) 24%, var(--mj-surface, #131a18));
+}
+
 .lessons-v3-upcoming .lessons-v2-section__title {
   margin-bottom: 0.45rem;
 }
