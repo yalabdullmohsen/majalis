@@ -92,7 +92,7 @@ if (base) {
   const res = await fetchText(base, "/sw-version.js");
   if (res.status !== 200) failures.push("sw-version.js: غير موجود بعد build");
 } else if (!existsSync(swVersionPath)) {
-  failures.push("dist/sw-version.js مفقود — شغّل build");
+  console.warn("⚠ dist/sw-version.js مفقود — يُتحقق منه في verify-deploy-cache-versioning بعد build");
 }
 
 let offlineText;
