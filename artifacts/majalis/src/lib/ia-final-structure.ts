@@ -42,6 +42,7 @@ export const IA_REDIRECTS: Record<string, string> = {
   "/quran/tajweed": "/quran-hub/tajweed",
   "/quran": "/quran-hub",
   "/anbiya": "/prophets",
+  "/more": "/",
 };
 
 /** عناوين ممنوعة في الأسطح العامة (رئيسية / المزيد / تذييل / وصول سريع). */
