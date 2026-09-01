@@ -1,0 +1,589 @@
+{
+  "generatedAt": "2026-09-01T17:23:01.977Z",
+  "workflowCount": 21,
+  "mergeBlocking": [
+    "Auto Deploy main → production",
+    "Auto-ready and merge PRs to main",
+    "CI",
+    "Preview smoke (manual)",
+    "Resolve PR conflicts from main",
+    "Vercel Check (manual)"
+  ],
+  "mergeQueuePreserved": true,
+  "requiredChecks": [
+    "Verify build",
+    "ci-required"
+  ],
+  "duplicateBuildWorkflows": [
+    "ios-native-macos.yml",
+    "vercel-check.yml"
+  ],
+  "missingScripts": [],
+  "duplicateTriggersNoPaths": [],
+  "alwaysOnJobs": [
+    "auto-deploy.yml",
+    "auto-maintenance.yml",
+    "auto-merge-to-main.yml",
+    "harvest-sources.yml",
+    "resolve-pr-conflicts.yml",
+    "scheduled-release-train.yml"
+  ],
+  "heavyWorkflows": [
+    "harvest-sources.yml",
+    "ios-native-macos.yml",
+    "ios-testflight-deploy.yml",
+    "scheduled-release-train.yml",
+    "vercel-check.yml"
+  ],
+  "parallelizable": [
+    "static-checks",
+    "build",
+    "repo-gates",
+    "fast-lane"
+  ],
+  "nightlyCandidates": [
+    "mushaf-gates-nightly",
+    "audit:public-site",
+    "test:regression"
+  ],
+  "workflows": [
+    {
+      "file": "auto-deploy.yml",
+      "name": "Auto Deploy main → production",
+      "triggers": [
+        "push",
+        "schedule",
+        "workflow_dispatch"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": true,
+      "mergeQueueSafe": true,
+      "usesCache": false,
+      "builds": true,
+      "duplicateBuildRisk": false,
+      "blocksMerge": true,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "push",
+        "schedule",
+        "deploy",
+        "psi-gate",
+        "notify-success"
+      ],
+      "maxTimeoutMinutes": 25,
+      "durationCategory": "medium",
+      "optimization": "تخطّي build/typecheck على push — CI سبق التحقق؛ اكتفِ بـ version.json"
+    },
+    {
+      "file": "auto-maintenance.yml",
+      "name": "Auto Maintenance",
+      "triggers": [
+        "schedule",
+        "workflow_dispatch"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": true,
+      "mergeQueueSafe": true,
+      "usesCache": false,
+      "builds": false,
+      "duplicateBuildRisk": false,
+      "blocksMerge": false,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "schedule",
+        "workflow_dispatch",
+        "scan"
+      ],
+      "maxTimeoutMinutes": 25,
+      "durationCategory": "medium",
+      "optimization": "—"
+    },
+    {
+      "file": "auto-merge-to-main.yml",
+      "name": "Auto-ready and merge PRs to main",
+      "triggers": [
+        "pull_request",
+        "schedule",
+        "workflow_dispatch",
+        "workflow_run"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": true,
+      "mergeQueueSafe": true,
+      "usesCache": false,
+      "builds": false,
+      "duplicateBuildRisk": false,
+      "blocksMerge": true,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "pull_request",
+        "workflow_run",
+        "schedule",
+        "workflow_dispatch",
+        "cancel-on-ci-failure",
+        "auto-merge"
+      ],
+      "maxTimeoutMinutes": 25,
+      "durationCategory": "medium",
+      "optimization": "—"
+    },
+    {
+      "file": "ci.yml",
+      "name": "CI",
+      "triggers": [
+        "pull_request",
+        "push",
+        "merge_group"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": false,
+      "mergeQueueSafe": true,
+      "usesCache": true,
+      "builds": true,
+      "duplicateBuildRisk": false,
+      "blocksMerge": true,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "push",
+        "pull_request",
+        "merge_group",
+        "classify",
+        "fast-lane",
+        "static-checks",
+        "build",
+        "repo-gates",
+        "mushaf-measure",
+        "mushaf-gates",
+        "layout-bands",
+        "visual-snapshot",
+        "color-contrast",
+        "lhci-home",
+        "postgres-integration",
+        "verify",
+        "ci-required"
+      ],
+      "maxTimeoutMinutes": 20,
+      "durationCategory": "medium",
+      "optimization": "بناء واحد + dist artifact — مسار PR مختصر للمصحف"
+    },
+    {
+      "file": "harvest-sources.yml",
+      "name": "Harvest sources",
+      "triggers": [
+        "schedule",
+        "workflow_dispatch"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": true,
+      "mergeQueueSafe": true,
+      "usesCache": true,
+      "builds": false,
+      "duplicateBuildRisk": false,
+      "blocksMerge": false,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "schedule",
+        "workflow_dispatch",
+        "harvest"
+      ],
+      "maxTimeoutMinutes": 45,
+      "durationCategory": "heavy",
+      "optimization": "—"
+    },
+    {
+      "file": "ios-capacitor-gates.yml",
+      "name": "iOS Capacitor Gates",
+      "triggers": [
+        "pull_request",
+        "push"
+      ],
+      "hasPathsFilter": true,
+      "hasConcurrency": true,
+      "cancelInProgress": true,
+      "mergeQueueSafe": true,
+      "usesCache": true,
+      "builds": false,
+      "duplicateBuildRisk": false,
+      "blocksMerge": false,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "pull_request",
+        "push",
+        "ios-static"
+      ],
+      "maxTimeoutMinutes": 15,
+      "durationCategory": "fast",
+      "optimization": "—"
+    },
+    {
+      "file": "ios-native-macos.yml",
+      "name": "iOS native (macOS)",
+      "triggers": [
+        "pull_request",
+        "push"
+      ],
+      "hasPathsFilter": true,
+      "hasConcurrency": true,
+      "cancelInProgress": false,
+      "mergeQueueSafe": true,
+      "usesCache": false,
+      "builds": true,
+      "duplicateBuildRisk": true,
+      "blocksMerge": false,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "pull_request",
+        "push",
+        "xcode"
+      ],
+      "maxTimeoutMinutes": 45,
+      "durationCategory": "heavy",
+      "optimization": "—"
+    },
+    {
+      "file": "ios-testflight-deploy.yml",
+      "name": "iOS TestFlight Deploy",
+      "triggers": [
+        "push",
+        "workflow_dispatch"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": false,
+      "mergeQueueSafe": true,
+      "usesCache": true,
+      "builds": true,
+      "duplicateBuildRisk": false,
+      "blocksMerge": false,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "push",
+        "workflow_dispatch",
+        "testflight"
+      ],
+      "maxTimeoutMinutes": 90,
+      "durationCategory": "heavy",
+      "optimization": "—"
+    },
+    {
+      "file": "owner-bootstrap.yml",
+      "name": "Owner Bootstrap",
+      "triggers": [
+        "workflow_dispatch"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": true,
+      "mergeQueueSafe": true,
+      "usesCache": false,
+      "builds": false,
+      "duplicateBuildRisk": false,
+      "blocksMerge": false,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "workflow_dispatch",
+        "promote-owner"
+      ],
+      "maxTimeoutMinutes": null,
+      "durationCategory": "fast",
+      "optimization": "—"
+    },
+    {
+      "file": "phase2-trial-import.yml",
+      "name": "Phase 2 Trial Import",
+      "triggers": [
+        "workflow_dispatch"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": true,
+      "mergeQueueSafe": true,
+      "usesCache": false,
+      "builds": false,
+      "duplicateBuildRisk": false,
+      "blocksMerge": false,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "workflow_dispatch",
+        "import"
+      ],
+      "maxTimeoutMinutes": null,
+      "durationCategory": "fast",
+      "optimization": "—"
+    },
+    {
+      "file": "platform-bootstrap.yml",
+      "name": "Platform Self Bootstrap",
+      "triggers": [
+        "workflow_dispatch"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": true,
+      "mergeQueueSafe": true,
+      "usesCache": false,
+      "builds": false,
+      "duplicateBuildRisk": false,
+      "blocksMerge": false,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "workflow_dispatch",
+        "bootstrap"
+      ],
+      "maxTimeoutMinutes": null,
+      "durationCategory": "fast",
+      "optimization": "—"
+    },
+    {
+      "file": "pr-quality-report.yml",
+      "name": "PR Quality Verify Report",
+      "triggers": [
+        "pull_request",
+        "workflow_dispatch"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": true,
+      "mergeQueueSafe": true,
+      "usesCache": true,
+      "builds": false,
+      "duplicateBuildRisk": false,
+      "blocksMerge": false,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "pull_request",
+        "workflow_dispatch",
+        "quality"
+      ],
+      "maxTimeoutMinutes": 25,
+      "durationCategory": "medium",
+      "optimization": "تخطّي audits عند docs-only عبر changed-scope"
+    },
+    {
+      "file": "pr-safe-merge-report.yml",
+      "name": "PR Safe Auto-Merge Report",
+      "triggers": [
+        "pull_request",
+        "workflow_dispatch"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": true,
+      "mergeQueueSafe": true,
+      "usesCache": false,
+      "builds": false,
+      "duplicateBuildRisk": false,
+      "blocksMerge": false,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "pull_request",
+        "workflow_dispatch",
+        "report"
+      ],
+      "maxTimeoutMinutes": 10,
+      "durationCategory": "fast",
+      "optimization": "—"
+    },
+    {
+      "file": "preview-smoke.yml",
+      "name": "Preview smoke (manual)",
+      "triggers": [
+        "workflow_dispatch"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": true,
+      "mergeQueueSafe": true,
+      "usesCache": false,
+      "builds": false,
+      "duplicateBuildRisk": false,
+      "blocksMerge": true,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "workflow_dispatch",
+        "preview-smoke"
+      ],
+      "maxTimeoutMinutes": 15,
+      "durationCategory": "fast",
+      "optimization": "—"
+    },
+    {
+      "file": "production-bootstrap.yml",
+      "name": "Production Bootstrap",
+      "triggers": [
+        "workflow_dispatch"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": true,
+      "mergeQueueSafe": true,
+      "usesCache": false,
+      "builds": false,
+      "duplicateBuildRisk": false,
+      "blocksMerge": false,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "workflow_dispatch",
+        "bootstrap"
+      ],
+      "maxTimeoutMinutes": null,
+      "durationCategory": "fast",
+      "optimization": "—"
+    },
+    {
+      "file": "release-majlisilm.yml",
+      "name": "Release Majlisilm (يدوي فقط)",
+      "triggers": [
+        "workflow_dispatch"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": false,
+      "mergeQueueSafe": true,
+      "usesCache": false,
+      "builds": true,
+      "duplicateBuildRisk": false,
+      "blocksMerge": false,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "release"
+      ],
+      "maxTimeoutMinutes": 30,
+      "durationCategory": "medium",
+      "optimization": "—"
+    },
+    {
+      "file": "resolve-pr-conflicts.yml",
+      "name": "Resolve PR conflicts from main",
+      "triggers": [
+        "pull_request",
+        "schedule",
+        "workflow_dispatch"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": true,
+      "mergeQueueSafe": true,
+      "usesCache": false,
+      "builds": false,
+      "duplicateBuildRisk": false,
+      "blocksMerge": true,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "schedule",
+        "workflow_dispatch",
+        "pull_request",
+        "resolve"
+      ],
+      "maxTimeoutMinutes": 20,
+      "durationCategory": "medium",
+      "optimization": "—"
+    },
+    {
+      "file": "scheduled-release-train.yml",
+      "name": "Scheduled Release Train",
+      "triggers": [
+        "schedule",
+        "workflow_dispatch"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": false,
+      "mergeQueueSafe": true,
+      "usesCache": false,
+      "builds": false,
+      "duplicateBuildRisk": false,
+      "blocksMerge": false,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "schedule",
+        "workflow_dispatch",
+        "release-train"
+      ],
+      "maxTimeoutMinutes": 45,
+      "durationCategory": "heavy",
+      "optimization": "—"
+    },
+    {
+      "file": "supabase-migrations.yml",
+      "name": "Supabase Migrations",
+      "triggers": [
+        "push",
+        "workflow_dispatch"
+      ],
+      "hasPathsFilter": true,
+      "hasConcurrency": true,
+      "cancelInProgress": false,
+      "mergeQueueSafe": true,
+      "usesCache": false,
+      "builds": false,
+      "duplicateBuildRisk": false,
+      "blocksMerge": false,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "push",
+        "workflow_dispatch",
+        "migrate"
+      ],
+      "maxTimeoutMinutes": 20,
+      "durationCategory": "medium",
+      "optimization": "—"
+    },
+    {
+      "file": "tasmee3_ci.yml",
+      "name": "Tasmee3 CI",
+      "triggers": [
+        "pull_request",
+        "push"
+      ],
+      "hasPathsFilter": true,
+      "hasConcurrency": true,
+      "cancelInProgress": true,
+      "mergeQueueSafe": true,
+      "usesCache": false,
+      "builds": false,
+      "duplicateBuildRisk": false,
+      "blocksMerge": false,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "push",
+        "pull_request",
+        "flutter",
+        "backend"
+      ],
+      "maxTimeoutMinutes": null,
+      "durationCategory": "fast",
+      "optimization": "—"
+    },
+    {
+      "file": "vercel-check.yml",
+      "name": "Vercel Check (manual)",
+      "triggers": [
+        "workflow_dispatch"
+      ],
+      "hasPathsFilter": false,
+      "hasConcurrency": true,
+      "cancelInProgress": true,
+      "mergeQueueSafe": true,
+      "usesCache": true,
+      "builds": true,
+      "duplicateBuildRisk": true,
+      "blocksMerge": true,
+      "permissionsWriteAll": false,
+      "jobs": [
+        "workflow_dispatch",
+        "quality"
+      ],
+      "maxTimeoutMinutes": 45,
+      "durationCategory": "heavy",
+      "optimization": "—"
+    }
+  ],
+  "failures": [],
+  "ok": true
+}

@@ -25,4 +25,18 @@ test("ui css requires color contrast scope", () => {
   const r = classifyScopes(["artifacts/majalis/src/styles/pages/home.css"]);
   assert.equal(r.outputs.scope_need_color_contrast, "true");
   assert.equal(r.outputs.scope_need_mushaf, "false");
+  assert.equal(r.checks.ui, true);
+});
+
+test("docs-only skips visual/lighthouse checks", () => {
+  const r = classifyScopes(["docs/CI_THROUGHPUT.md", "README.md"]);
+  assert.equal(r.docsOnly, true);
+  assert.equal(r.outputs.scope_docs_only, "true");
+  assert.equal(r.checks.visual, false);
+  assert.equal(r.checks.build, false);
+});
+
+test("pwa path triggers pwa checks only", () => {
+  const r = classifyScopes(["artifacts/majalis/public/sw.js"]);
+  assert.equal(r.checks.pwa, true);
 });
