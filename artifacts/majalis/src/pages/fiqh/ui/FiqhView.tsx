@@ -157,7 +157,7 @@ function FiqhLobbyBody({ lobby }: { lobby: LobbySpec }) {
 
       <SectionLobby
         lobbyId="fiqh"
-        title="مراجع ومساندة"
+        title={lobby.title}
         chips={lobby.chips}
         groups={lobby.groups.filter((g) => g.id === "supporting")}
         className="fiqh-lux-page fiqh-lux-support"
