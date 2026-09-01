@@ -19,8 +19,9 @@ function fail(level, msg) {
   (level === "critical" ? critical : high).push(msg);
 }
 
-function runNode(scriptRel, label) {
-  const r = spawnSync(process.execPath, [resolve(root, scriptRel)], {
+function runNode(scriptRel, label, { tsx = false } = {}) {
+  const args = tsx ? ["--import", "tsx", resolve(root, scriptRel)] : [resolve(root, scriptRel)];
+  const r = spawnSync(process.execPath, args, {
     cwd: root,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],
@@ -215,7 +216,7 @@ if (existsSync(sitemapPath)) {
 runNode("scripts/check-seo-indexing.js", "check-seo-indexing");
 runNode("scripts/check-editorial-safety.js", "check-editorial-safety");
 runNode("scripts/check-copy-quality.js", "check-copy-quality");
-runNode("scripts/check-sources-and-licenses.js", "check-sources-and-licenses");
+runNode("scripts/check-sources-and-licenses.js", "check-sources-and-licenses", { tsx: true });
 runNode("scripts/check-pwa.js", "check-pwa");
 
 if (existsSync(resolve(root, "public/data/search/index.json"))) {

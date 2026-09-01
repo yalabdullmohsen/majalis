@@ -1,14 +1,14 @@
 /**
  * فحص سريع بعد النشر — production smoke.
  * التشغيل: pnpm run smoke:production
- * اختياري: SMOKE_BASE=https://majlisilm.com
+ * اختياري: SMOKE_BASE=https://www.ssunnah.com
  */
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const BASE = (process.env.SMOKE_BASE || "https://majlisilm.com").replace(/\/$/, "");
+const BASE = (process.env.SMOKE_BASE || "https://www.ssunnah.com").replace(/\/$/, "");
 
 const CORE_PATHS = [
   "/",
@@ -64,7 +64,7 @@ function countProphetsInSource(): number {
 
 async function fetchRes(path: string, redirect: RequestRedirect = "manual") {
   const url = `${BASE}${path}`;
-  const res = await fetch(url, { redirect, headers: { "user-agent": "majlisilm-smoke/1.0" } });
+  const res = await fetch(url, { redirect, headers: { "user-agent": "ssunnah-smoke/1.0" } });
   return { url, res };
 }
 
@@ -113,10 +113,10 @@ async function checkVersion() {
     fail(`/version.json → HTTP ${res.status}`);
     return null;
   }
-  const json = (await res.json()) as { shortCommit?: string; ref?: string; commit?: string };
-  if (!json.shortCommit && !json.commit) fail("version.json بلا commit");
+  const json = (await res.json()) as { shortCommit?: string; ref?: string };
+  if (!json.shortCommit) fail("version.json بلا shortCommit");
   if (json.ref && json.ref !== "main") warn(`version.json ref=${json.ref} (ليس main)`);
-  console.log(`✓ version.json → ${json.shortCommit || json.commit} (${json.ref || "?"})`);
+  console.log(`✓ version.json → ${json.shortCommit} (${json.ref || "?"})`);
   return json;
 }
 

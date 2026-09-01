@@ -17,14 +17,17 @@ const versionJson = JSON.parse(await readFile(resolve(distDir, "version.json"), 
 const swVersionJs = await readFile(resolve(distDir, "sw-version.js"), "utf8");
 const swJs = await readFile(resolve(distDir, "sw.js"), "utf8");
 
-if (!versionJson.commit || versionJson.commit === "unknown") {
-  failures.push("version.json: لا يحمل commit حقيقي");
+if (!versionJson.shortCommit || versionJson.shortCommit === "unknown") {
+  failures.push("version.json: لا يحمل shortCommit حقيقي");
+}
+if (versionJson.commit && /^[a-f0-9]{40}$/i.test(versionJson.commit)) {
+  failures.push("version.json: يسرب commit كامل — أزل الحقل commit من المخرجات العامة");
 }
 
 const swBuildIdMatch = swVersionJs.match(/SW_BUILD_ID\s*=\s*["']([a-f0-9]+)["']/i);
 if (!swBuildIdMatch) {
   failures.push("sw-version.js: لا يحتوي SW_BUILD_ID بصيغة متوقَّعة");
-} else if (!versionJson.commit.startsWith(swBuildIdMatch[1]) && swBuildIdMatch[1] !== versionJson.shortCommit) {
+} else if (swBuildIdMatch[1] !== versionJson.shortCommit) {
   failures.push(`sw-version.js (${swBuildIdMatch[1]}) لا يطابق version.json (${versionJson.shortCommit})`);
 }
 

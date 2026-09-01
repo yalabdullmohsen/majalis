@@ -45,7 +45,12 @@
     "audit:feature-readiness": "pnpm --filter @workspace/majalis run audit:feature-readiness",
     "audit:mobile-app": "pnpm --filter @workspace/majalis run audit:mobile-app",
     "audit:product-upgrade": "pnpm --filter @workspace/majalis run audit:product-upgrade",
-    "smoke:production": "tsx scripts/post-deploy-smoke.ts"
+    "smoke:production": "tsx scripts/post-deploy-smoke.ts",
+    "guard:predeploy": "node scripts/predeploy-guard.mjs",
+    "guard:predeploy:post-build": "node scripts/predeploy-guard.mjs --post-build",
+    "guard:postdeploy": "node scripts/postdeploy-smoke.mjs",
+    "report:release": "node scripts/release-report.mjs",
+    "release:check": "pnpm run guard:predeploy && pnpm run build && pnpm run guard:predeploy:post-build && pnpm run guard:postdeploy && pnpm run report:release"
   },
   "private": true,
   "devDependencies": {
