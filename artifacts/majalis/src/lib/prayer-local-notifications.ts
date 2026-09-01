@@ -19,7 +19,7 @@ import {
   type PrayerSoundProfile,
 } from "@/lib/prayer-notification-sounds";
 import { POST_REMINDER_MINUTES } from "@/lib/prayer-alert-preferences";
-import { getEffectiveMuezzinId, loadAdhanPrefs } from "@/lib/adhan-preferences";
+import { getEffectiveMuezzinId, isIqamahEnabledForPrayer, loadAdhanPrefs } from "@/lib/adhan-preferences";
 import {
   allPrayerNotificationIdsForWindow,
   dateISOInZone,
@@ -34,8 +34,8 @@ import { formatTime12 } from "@/lib/prayer-times";
 
 const PRAYER_ORDER = ["fajr", "dhuhr", "asr", "maghrib", "isha"] as const;
 
-/** ميزانية نظام التشغيل (~64) — نافذة متحركة: اليوم + الغد × 5 × 3 أنواع. */
-const MAX_NATIVE_PRAYER_NOTIFS = 30;
+/** ميزانية نظام التشغيل (~64) — نافذة: اليوم المتبقي + الغد × 5 × حتى 4 أنواع. */
+const MAX_NATIVE_PRAYER_NOTIFS = 48;
 
 export type PermissionStatus = "granted" | "denied" | "prompt" | "unsupported";
 
@@ -240,6 +240,8 @@ export async function schedulePrayerNativeNotifications(opts: {
   postReminderEnabled?: boolean;
   preAlertMinutes: number;
   soundProfile?: PrayerSoundProfile;
+  iqamahEnabled?: boolean;
+  iqamahDelayMinutes?: number;
 }): Promise<Array<{ id: number; kind: string; atMs: number }>> {
   if (!isNative) return [];
   const scheduled: Array<{ id: number; kind: string; atMs: number }> = [];
@@ -368,6 +370,44 @@ export async function schedulePrayerNativeNotifications(opts: {
       scheduled.push({ id, kind: "post", atMs: postEpoch });
     }
 
+    const iqamahDelay = opts.iqamahDelayMinutes ?? adhanPrefs.iqamahDelayMinutes ?? 10;
+    const prayerKeyForIqamah = PRAYER_ORDER.includes(
+      prayerKeyNorm as (typeof PRAYER_ORDER)[number],
+    )
+      ? (prayerKeyNorm as (typeof PRAYER_ORDER)[number])
+      : null;
+    const iqamahOn =
+      opts.iqamahEnabled ??
+      (prayerKeyForIqamah ? isIqamahEnabledForPrayer(adhanPrefs, prayerKeyForIqamah) : false);
+    const iqamahEpoch = opts.prayerTimeEpochMs + iqamahDelay * 60_000;
+    if (iqamahOn && iqamahDelay > 0 && iqamahEpoch > now) {
+      const iqamahCopy = buildScheduledPrayerNotificationCopy({
+        kind: "iqamah",
+        prayerName: opts.prayerName,
+        prayerTimeLabel: timeLabel,
+      });
+      const sound = safeSound("quiet", profile, muezzinId);
+      const id = hashPrayerNotificationId(opts.prayerKey, opts.dateISO, "iqamah");
+      notifications.push({
+        id,
+        title: iqamahCopy.title,
+        body: iqamahCopy.body,
+        schedule: { at: new Date(iqamahEpoch), allowWhileIdle: true },
+        sound,
+        channelId: CHANNEL_PRAYER,
+        interruptionLevel: "timeSensitive",
+        extra: {
+          url: "/prayer-times",
+          kind: "prayer-iqamah",
+          prayerKey: opts.prayerKey,
+          prayerAtMs: opts.prayerTimeEpochMs,
+          dateISO: opts.dateISO,
+          friendlyKey: friendlyAdhanNotificationKey(opts.prayerKey, opts.dateISO, "iqamah"),
+        },
+      });
+      scheduled.push({ id, kind: "iqamah", atMs: iqamahEpoch });
+    }
+
     if (notifications.length > 0) {
       await LocalNotifications.schedule({ notifications });
       console.info(
@@ -470,9 +510,11 @@ export async function cancelPrayerNativeNotifications(prayerKey: string): Promis
         { id: hashPrayerNotificationId(prayerKey, today, "pre") },
         { id: hashPrayerNotificationId(prayerKey, today, "enter") },
         { id: hashPrayerNotificationId(prayerKey, today, "post") },
+        { id: hashPrayerNotificationId(prayerKey, today, "iqamah") },
         { id: hashPrayerNotificationId(prayerKey, tomorrow, "pre") },
         { id: hashPrayerNotificationId(prayerKey, tomorrow, "enter") },
         { id: hashPrayerNotificationId(prayerKey, tomorrow, "post") },
+        { id: hashPrayerNotificationId(prayerKey, tomorrow, "iqamah") },
       ],
     });
   } catch {

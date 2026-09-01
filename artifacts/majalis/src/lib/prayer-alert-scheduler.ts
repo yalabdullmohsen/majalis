@@ -107,8 +107,8 @@ export function epochForSlot(slot: PrayerSlot, timeZone?: string): number {
 }
 
 /**
- * كل الصلوات المفروضة مع epoch مطلق (ما فات يلتفّ لليوم التالي).
- * يُستخدم لجدولة نظام التشغيل — لا يعتمد على بقاء التطبيق مفتوحاً.
+ * كل الصلوات المفروضة في نافذة اليوم المتبقي + الغد.
+ * ما فات اليوم لا يُدرج؛ الغد يُدرج كاملًا حتى تبقى التنبيهات بعد إغلاق التطبيق.
  */
 export function listNativePrayerScheduleSlots(
   prayers: PrayerSlot[],
@@ -116,16 +116,23 @@ export function listNativePrayerScheduleSlots(
 ): Array<{ slot: PrayerSlot; epoch: number; dateISO: string }> {
   const tz = timeZone || getActivePrayerLocation().timeZone || "Asia/Kuwait";
   const obligatory = prayers.filter((p) => p.obligatory && p.minutes != null);
-  return obligatory
-    .map((slot) => {
-      const epoch = epochForSlot(slot, tz);
-      return {
+  const todayNoon = calendarNoonInZone(tz);
+  const tomorrowNoon = new Date(todayNoon.getTime() + 24 * 3600_000);
+  const now = Date.now();
+  const out: Array<{ slot: PrayerSlot; epoch: number; dateISO: string }> = [];
+  for (const slot of obligatory) {
+    if (slot.minutes == null) continue;
+    for (const noon of [todayNoon, tomorrowNoon]) {
+      const epoch = epochAtZoneMinutes(tz, slot.minutes, noon);
+      if (epoch <= now) continue;
+      out.push({
         slot,
         epoch,
         dateISO: dateISOInZone(tz, new Date(epoch)),
-      };
-    })
-    .sort((a, b) => a.epoch - b.epoch);
+      });
+    }
+  }
+  return out.sort((a, b) => a.epoch - b.epoch);
 }
 
 /** أقرب صلاة قادمة لم يحن وقتها بعد (تتجاهل ما فات، تلتفّ لليوم التالي إن لزم). */

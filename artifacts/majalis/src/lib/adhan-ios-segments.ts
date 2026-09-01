@@ -33,13 +33,20 @@ export type AdhanIosSegmentPlan = {
   segmentIndex: number;
 };
 
-const CHAIN_STORE_KEY = "majalis-adhan-ios-chain-v1";
+const CHAIN_STORE_KEY = "majalis-adhan-ios-chain-v2";
 
 type ChainRecord = {
   prayerKey: string;
+  dayKey: string;
   ids: number[];
   startedAt: number;
 };
+
+type ChainMap = Record<string, ChainRecord>;
+
+function chainStoreKey(prayerKey: string, dayKey: string): string {
+  return `${prayerKey.toLowerCase()}:${dayKey}`;
+}
 
 function chainIdBase(prayerKey: string, dayKey: string): number {
   // نطاق بعيداً عن إشعارات الصلاة الأخرى
@@ -96,8 +103,10 @@ export function buildAdhanIosSegmentPlan(opts: {
       id: base + i,
       sound: adhanIosSoundName(opts.recordingId, kind, i + 1),
       atMs: opts.startAtMs + i * ADHAN_IOS_SEGMENT_SCHEDULE_GAP_SEC * 1000,
-      title: isFirst ? `أذان ${opts.prayerName}` : null,
-      body: isFirst ? "حيّ على الصلاة" : null,
+      title: isFirst ? `أذان ${opts.prayerName}` : `تتمة أذان ${opts.prayerName}`,
+      body: isFirst
+        ? "حيّ على الصلاة"
+        : `المقطع ${i + 1} من ${clipped.length}`,
       prayerKey: opts.prayerKey,
       segmentIndex: i,
     });
@@ -105,63 +114,102 @@ export function buildAdhanIosSegmentPlan(opts: {
   return plan;
 }
 
-let _memoryChain: ChainRecord | null = null;
+let _memoryChains: ChainMap = {};
 
-function readChain(): ChainRecord | null {
+function readChainMap(): ChainMap {
   try {
     if (typeof sessionStorage !== "undefined") {
       const raw = sessionStorage.getItem(CHAIN_STORE_KEY);
-      if (raw) return JSON.parse(raw) as ChainRecord;
+      if (raw) {
+        const parsed = JSON.parse(raw) as ChainMap | ChainRecord;
+        if (parsed && typeof parsed === "object" && !("ids" in parsed)) {
+          return parsed as ChainMap;
+        }
+      }
     }
   } catch {
     /* ignore */
   }
-  return _memoryChain;
+  return { ..._memoryChains };
 }
 
-function writeChain(rec: ChainRecord | null) {
-  _memoryChain = rec;
+function writeChainMap(map: ChainMap) {
+  _memoryChains = { ...map };
   try {
     if (typeof sessionStorage === "undefined") return;
-    if (!rec) sessionStorage.removeItem(CHAIN_STORE_KEY);
-    else sessionStorage.setItem(CHAIN_STORE_KEY, JSON.stringify(rec));
+    if (!Object.keys(map).length) sessionStorage.removeItem(CHAIN_STORE_KEY);
+    else sessionStorage.setItem(CHAIN_STORE_KEY, JSON.stringify(map));
   } catch {
     /* ignore */
   }
+}
+
+function upsertChain(rec: ChainRecord) {
+  const map = readChainMap();
+  map[chainStoreKey(rec.prayerKey, rec.dayKey)] = rec;
+  writeChainMap(map);
 }
 
 export function isAdhanIosSegmentsAvailable(): boolean {
   return Capacitor.isNativePlatform() && isIOS;
 }
 
-/** يلغي أي سلسلة مقاطع نشطة (فتح التطبيق / ضغط إشعار) */
-export async function cancelAdhanIosSegmentChain(): Promise<number[]> {
-  const chain = readChain();
-  writeChain(null);
-  if (!chain?.ids.length) return [];
-  if (!isAdhanIosSegmentsAvailable()) return chain.ids;
+/** يلغي سلسلة صلاة واحدة، أو كل السلاسل إن لم يُمرَّر مفتاح. */
+export async function cancelAdhanIosSegmentChain(prayerKey?: string): Promise<number[]> {
+  const map = readChainMap();
+  const pk = prayerKey?.toLowerCase();
+  const toCancel = Object.entries(map).filter(([key, rec]) =>
+    pk ? rec.prayerKey.toLowerCase() === pk || key.startsWith(`${pk}:`) : true,
+  );
+  const ids = toCancel.flatMap(([, rec]) => rec.ids);
+  for (const [key] of toCancel) delete map[key];
+  writeChainMap(map);
+  if (!ids.length) return [];
+  if (!isAdhanIosSegmentsAvailable()) return ids;
   try {
     await LocalNotifications.cancel({
-      notifications: chain.ids.map((id) => ({ id })),
+      notifications: ids.map((id) => ({ id })),
     });
   } catch {
     /* ignore */
   }
-  return chain.ids;
+  return ids;
 }
 
 /**
- * يجدول سلسلة مقاطع. يلغي أي سلسلة سابقة أولًا (لا تداخل).
+ * يجدول سلسلة مقاطع لصلاة واحدة. يلغي سلسلة نفس الصلاة/اليوم فقط — لا يمسح صلوات أخرى.
  */
 export async function scheduleAdhanIosSegmentChain(
   plan: AdhanIosSegmentPlan[],
 ): Promise<{ ok: boolean; ids: number[] }> {
   if (!plan.length) return { ok: false, ids: [] };
-  await cancelAdhanIosSegmentChain();
+  const prayerKey = plan[0].prayerKey;
+  const dayKey = new Date(plan[0].atMs).toISOString().slice(0, 10);
+  const map = readChainMap();
+  const storeKey = chainStoreKey(prayerKey, dayKey);
+  const prev = map[storeKey];
+  if (prev?.ids.length && isAdhanIosSegmentsAvailable()) {
+    try {
+      await LocalNotifications.cancel({
+        notifications: prev.ids.map((id) => ({ id })),
+      });
+    } catch {
+      /* ignore */
+    }
+  }
+  delete map[storeKey];
+  writeChainMap(map);
+
+  const rec: ChainRecord = {
+    prayerKey,
+    dayKey,
+    ids: plan.map((p) => p.id),
+    startedAt: Date.now(),
+  };
+
   if (!isAdhanIosSegmentsAvailable()) {
-    // ويب/اختبار: خزّن السلسلة فقط
-    for (const p of plan) {
-      if (import.meta.env?.DEV) {
+    if (import.meta.env?.DEV) {
+      for (const p of plan) {
         console.info("[adhan-schedule]", {
           prayerName: p.title ?? plan[0].title,
           prayerKey: p.prayerKey,
@@ -173,24 +221,21 @@ export async function scheduleAdhanIosSegmentChain(
         });
       }
     }
-    writeChain({
-      prayerKey: plan[0].prayerKey,
-      ids: plan.map((p) => p.id),
-      startedAt: Date.now(),
-    });
-    return { ok: true, ids: plan.map((p) => p.id) };
+    upsertChain(rec);
+    return { ok: true, ids: rec.ids };
   }
 
   const notifications = plan.map((p) => ({
     id: p.id,
-    title: p.title ?? "",
-    body: p.body ?? " ",
+    title: p.title || `أذان ${prayerKey}`,
+    body: p.body || "حيّ على الصلاة",
     schedule: { at: new Date(p.atMs), allowWhileIdle: true },
     sound: p.sound,
     extra: {
       adhanSegment: true,
       prayerKey: p.prayerKey,
       segmentIndex: p.segmentIndex,
+      dayKey,
     },
   }));
 
@@ -208,12 +253,8 @@ export async function scheduleAdhanIosSegmentChain(
       });
     }
   }
-  writeChain({
-    prayerKey: plan[0].prayerKey,
-    ids: plan.map((p) => p.id),
-    startedAt: Date.now(),
-  });
-  return { ok: true, ids: plan.map((p) => p.id) };
+  upsertChain(rec);
+  return { ok: true, ids: rec.ids };
 }
 
 /** مدة افتراضية عند غياب ميتاداتا التقطيع — 4×28ث كحد أقصى */
@@ -271,30 +312,12 @@ export async function scheduleIosFullAdhan(opts: {
         sound,
         atMs: opts.startAtMs,
         title: `أذان ${opts.prayerName}`,
-        body: "حيّ على الصلاة — افتح التطبيق لسماع الأذان الكامل",
+        body: "حيّ على الصلاة، افتح التطبيق لسماع الأذان الكامل",
         prayerKey: opts.prayerKey,
         segmentIndex: 0,
       },
     ];
     const result = await scheduleAdhanIosSegmentChain(plan);
-    if (result.ok) {
-      try {
-        const { rememberAdhanResumeContext } = await import("./adhan-smart-cancel");
-        const key = opts.prayerKey as
-          | "fajr"
-          | "dhuhr"
-          | "asr"
-          | "maghrib"
-          | "isha";
-        rememberAdhanResumeContext({
-          prayerKey: key,
-          muezzinId: opts.recordingId,
-          isFajr: opts.isFajr,
-        });
-      } catch {
-        /* ignore */
-      }
-    }
     return result;
   }
 
@@ -307,23 +330,5 @@ export async function scheduleIosFullAdhan(opts: {
     durationsSec: opts.durationsSec ?? defaultAdhanSegmentDurations(),
   });
   const result = await scheduleAdhanIosSegmentChain(plan);
-  if (result.ok) {
-    try {
-      const { rememberAdhanResumeContext } = await import("./adhan-smart-cancel");
-      const key = opts.prayerKey as
-        | "fajr"
-        | "dhuhr"
-        | "asr"
-        | "maghrib"
-        | "isha";
-      rememberAdhanResumeContext({
-        prayerKey: key,
-        muezzinId: opts.recordingId,
-        isFajr: opts.isFajr,
-      });
-    } catch {
-      /* ignore */
-    }
-  }
   return result;
 }

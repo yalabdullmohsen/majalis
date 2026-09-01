@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { X, Volume2, Clock, Landmark } from "lucide-react";
 import { ADHAN_EVENT_NAME, type AdhanEvent } from "@/lib/adhan-events";
 import { stopAdhan } from "@/lib/adhan-playback";
+import {
+  buildScheduledPrayerNotificationCopy,
+} from "@/lib/prayer-notification-copy";
 import "@/styles/components/adhan-notification.css";
 
 type ActiveEvent = AdhanEvent & { id: number };
@@ -46,7 +49,30 @@ export function AdhanNotificationBar() {
 
 function AdhanToast({ event, onDismiss }: { event: ActiveEvent; onDismiss: () => void }) {
   const isAdhan = event.type === "adhan";
+  const isIqamah = event.type === "iqamah";
   const [playing, setPlaying] = useState(isAdhan);
+  const copy = isAdhan
+    ? buildScheduledPrayerNotificationCopy({
+        kind: "enter",
+        prayerName: event.prayerName,
+        prayerTimeLabel: event.prayerTimeLabel ?? "",
+      })
+    : isIqamah
+      ? buildScheduledPrayerNotificationCopy({
+          kind: "iqamah",
+          prayerName: event.prayerName,
+          prayerTimeLabel: event.prayerTimeLabel ?? "",
+        })
+      : buildScheduledPrayerNotificationCopy({
+          kind: "pre",
+          prayerName: event.prayerName,
+          prayerTimeLabel: event.prayerTimeLabel ?? "",
+          minutesBefore: event.minutesBefore ?? 15,
+        });
+
+  const sub = event.cityName
+    ? `${copy.body} · ${event.cityName}`
+    : copy.body;
 
   function handleStop() {
     stopAdhan();
@@ -55,22 +81,16 @@ function AdhanToast({ event, onDismiss }: { event: ActiveEvent; onDismiss: () =>
 
   return (
     <div
-      className={`anb-toast${isAdhan ? " anb-toast--adhan" : " anb-toast--reminder"}`}
+      className={`anb-toast${isAdhan || isIqamah ? " anb-toast--adhan" : " anb-toast--reminder"}`}
       role="alert"
     >
       <span className="anb-toast__emoji" aria-hidden="true">
-        {isAdhan ? <Landmark size={22} strokeWidth={1.8} /> : <Clock size={22} strokeWidth={1.8} />}
+        {isAdhan || isIqamah ? <Landmark size={22} strokeWidth={1.8} /> : <Clock size={22} strokeWidth={1.8} />}
       </span>
 
       <div className="anb-toast__body">
-        <p className="anb-toast__title">
-          {isAdhan ? `حان وقت صلاة ${event.prayerName}` : `قريباً: ${event.prayerName}`}
-        </p>
-        <p className="anb-toast__sub">
-          {isAdhan
-            ? "حيَّ على الصلاة • حيَّ على الفلاح"
-            : `موعد الصلاة بعد ${event.minutesBefore} دقيقة`}
-        </p>
+        <p className="anb-toast__title">{copy.title}</p>
+        <p className="anb-toast__sub">{sub}</p>
       </div>
 
       <div className="anb-toast__actions">

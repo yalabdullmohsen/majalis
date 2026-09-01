@@ -12,6 +12,8 @@ import {
   buildAdhanIosSegmentPlan,
   defaultAdhanSegmentDurations,
   scheduleIosFullAdhan,
+  cancelAdhanIosSegmentChain,
+  scheduleAdhanIosSegmentChain,
 } from "../adhan-ios-segments";
 
 assert.equal(ADHAN_IOS_MAX_SEGMENTS, 4);
@@ -45,7 +47,8 @@ const plan = buildAdhanIosSegmentPlan({
 assert.equal(plan.length, 4, "حد أقصى 4 مقاطع");
 assert.ok(plan.every((p) => p.sound.startsWith("adhan-seq-makkah-")));
 assert.ok(plan[0].title?.includes("الفجر"));
-assert.equal(plan[1].title, null, "المقاطع التالية بلا عنوان متكرر");
+assert.match(String(plan[1].title), /تتمة أذان الفجر/);
+assert.match(String(plan[1].body), /المقطع 2/);
 assert.equal(plan[0].atMs, start);
 assert.equal(plan[1].atMs, start + 29_000);
 assert.equal(plan[2].atMs, start + 58_000);
@@ -66,6 +69,31 @@ assert.equal(
 );
 
 assert.equal(defaultAdhanSegmentDurations().length, 4);
+
+{
+  const fajrPlan = buildAdhanIosSegmentPlan({
+    prayerKey: "fajr",
+    prayerName: "الفجر",
+    recordingId: "makkah",
+    isFajr: true,
+    startAtMs: start,
+    durationsSec: [28, 28, 28, 28],
+  });
+  const maghribPlan = buildAdhanIosSegmentPlan({
+    prayerKey: "maghrib",
+    prayerName: "المغرب",
+    recordingId: "makkah",
+    isFajr: false,
+    startAtMs: start + 3600_000,
+    durationsSec: [28, 28, 28, 28],
+  });
+  await scheduleAdhanIosSegmentChain(fajrPlan);
+  await scheduleAdhanIosSegmentChain(maghribPlan);
+  const onlyFajr = await cancelAdhanIosSegmentChain("fajr");
+  assert.equal(onlyFajr.length, 4, "إلغاء الفجر لا يمسح المغرب");
+  const leftover = await cancelAdhanIosSegmentChain();
+  assert.equal(leftover.length, 4, "سلسلة المغرب بقيت");
+}
 
 // الوضع الكامل + مكة: سلسلة ٤ مقاطع تلقائيًا
 const scheduledFull = await scheduleIosFullAdhan({

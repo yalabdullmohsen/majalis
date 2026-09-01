@@ -12,7 +12,7 @@
 export const STABLE_PRAYER_KEYS = ["fajr", "dhuhr", "asr", "maghrib", "isha"] as const;
 export type StablePrayerKey = (typeof STABLE_PRAYER_KEYS)[number];
 
-export type PrayerNotifIdKind = "pre" | "enter" | "post";
+export type PrayerNotifIdKind = "pre" | "enter" | "post" | "iqamah";
 
 const PRAYER_ORDER = STABLE_PRAYER_KEYS;
 
@@ -45,7 +45,7 @@ export function hashPrayerNotificationId(
 
 /** معرّفات اليوم + الغد لكل الصلوات (لإلغاء شامل قبل إعادة الجدولة). */
 export function allPrayerNotificationIdsForWindow(dateISOs: string[]): Array<{ id: number }> {
-  const kinds: PrayerNotifIdKind[] = ["pre", "enter", "post"];
+  const kinds: PrayerNotifIdKind[] = ["pre", "enter", "post", "iqamah"];
   const out: Array<{ id: number }> = [];
   for (const dateISO of dateISOs) {
     for (const prayer of PRAYER_ORDER) {
