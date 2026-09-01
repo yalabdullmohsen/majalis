@@ -581,9 +581,9 @@ self.addEventListener("message", (event) => {
           resolve();
           return;
         }
-        const cityLine = cityName ? ` — ${cityName}` : "";
+        const cityLine = cityName ? ` · ${cityName}` : "";
         self.registration.showNotification(`إقامة ${prayerArabic}${cityLine}`, {
-          body: `قد قامت الصلاة${cityName ? ` · ${cityName}` : ""}`,
+          body: `قد قامت صلاة ${prayerArabic}${cityName ? ` · ${cityName}` : ""}`,
           icon: "/logo.png?v=20260825",
           badge: "/favicon.png?v=20260825",
           dir: "rtl",
@@ -620,9 +620,9 @@ self.addEventListener("message", (event) => {
         resolve();
         return;
       }
-      const cityLine = cityName ? ` — ${cityName}` : "";
-      self.registration.showNotification(`حان وقت ${prayerArabic}${cityLine}`, {
-        body: `حيَّ على الصلاة، حيَّ على الفلاح${cityName ? ` · ${cityName}` : ""}`,
+      const cityLine = cityName ? ` · ${cityName}` : "";
+      self.registration.showNotification(`أذان ${prayerArabic}${cityLine}`, {
+        body: `حان وقت صلاة ${prayerArabic}${cityName ? ` · ${cityName}` : ""}`,
         icon: "/logo.png?v=20260825",
         badge: "/favicon.png?v=20260825",
         dir: "rtl",

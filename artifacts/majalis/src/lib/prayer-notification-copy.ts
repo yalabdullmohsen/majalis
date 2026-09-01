@@ -114,7 +114,7 @@ export function formatPreAlertMinutesPhrase(minutes: number): string {
 }
 
 export function buildScheduledPrayerNotificationCopy(opts: {
-  kind: "pre" | "enter" | "post";
+  kind: "pre" | "enter" | "post" | "iqamah";
   prayerName: string;
   prayerTimeLabel: string;
   minutesBefore?: number;
@@ -123,15 +123,24 @@ export function buildScheduledPrayerNotificationCopy(opts: {
   const clock = opts.prayerTimeLabel;
   if (opts.kind === "pre") {
     const mins = Math.max(1, Math.round(opts.minutesBefore ?? 15));
+    const phrase = formatPreAlertMinutesPhrase(mins);
     return {
       title: `اقترب وقت ${name}`,
-      body: `بقي ${formatPreAlertMinutesPhrase(mins)} على صلاة ${name}`,
+      body: clock
+        ? `${clock} · بقي ${phrase} على صلاة ${name}`
+        : `بقي ${phrase} على صلاة ${name}`,
     };
   }
   if (opts.kind === "enter") {
     return {
       title: `أذان ${name}`,
-      body: `حان وقت صلاة ${name}`,
+      body: clock ? `حان وقت صلاة ${name} · ${clock}` : `حان وقت صلاة ${name}`,
+    };
+  }
+  if (opts.kind === "iqamah") {
+    return {
+      title: `إقامة ${name}`,
+      body: clock ? `قد قامت صلاة ${name} · ${clock}` : `قد قامت صلاة ${name}`,
     };
   }
   return {

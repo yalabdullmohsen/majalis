@@ -54,6 +54,7 @@ export function AdhanActiveOverlay() {
       <div className="aao-panel">
         <p className="aao-eyebrow">حان وقت الصلاة</p>
         <h2 className="aao-title">{active.prayerName}</h2>
+        {active.prayerTimeLabel ? <p className="aao-city">{active.prayerTimeLabel}</p> : null}
         {active.cityName ? <p className="aao-city">{active.cityName}</p> : null}
 
         <div className="aao-dua">
