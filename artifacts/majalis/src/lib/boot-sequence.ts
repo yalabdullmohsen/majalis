@@ -85,7 +85,7 @@ export function lockBootLayoutMetrics(): void {
   };
   ensure("--header-chrome", "56px");
   ensure("--nav-chrome", "56px");
-  ensure("--bottom-nav-height", "84px");
+  ensure("--bottom-nav-height", "64px");
   ensure("--top-sponsor-content-h", "40px");
   // قفل منطقة المحتوى الأولى (هيكل ثابت)
   const banner = cs.getPropertyValue("--ad-banner-height").trim();

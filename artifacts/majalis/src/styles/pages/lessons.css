@@ -477,7 +477,7 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 
 .lessons-v3-footer-pad {
   padding-inline: 1rem;
-  padding-bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px);
+  padding-bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px);
   margin-top: 0.75rem;
 }
 
@@ -694,7 +694,7 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 .lesson-detail-page,
 .lesson-detail-page.mj-page {
   padding-bottom: calc(
-    var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px
+    var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px
   ) !important;
 }
 

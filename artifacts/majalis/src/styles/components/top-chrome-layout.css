@@ -25,8 +25,8 @@
     --ticker-height: 2.25rem;
     /* يطابق final-release — لا تُعاد إلى 64px بعد تحميل NavBar */
     --nav-chrome: 84px;
-    --bottom-nav-height: 84px;
-    --content-pb: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px);
+    --bottom-nav-height: 64px;
+    --content-pb: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px);
   }
 }
 
@@ -153,12 +153,12 @@ header.navbar-v3,
 .global-back-btn,
 .floating-back-btn {
   z-index: var(--z-fab);
-  bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 16px);
+  bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 16px);
 }
 
 .section-lobby__back {
   z-index: var(--z-fab);
-  bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 16px);
+  bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 16px);
 }
 
 .bottom-nav,
@@ -200,7 +200,7 @@ header.navbar-v3,
     height: auto !important;
     overflow-x: clip;
     overflow-y: visible;
-    padding-block-end: var(--content-pb, calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 24px)) !important;
+    padding-block-end: var(--content-pb, calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px)) !important;
   }
 
   .app-shell > .site-footer,

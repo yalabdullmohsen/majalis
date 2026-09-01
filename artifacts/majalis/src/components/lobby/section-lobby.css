@@ -37,7 +37,7 @@
 .section-lobby__back {
   position: fixed;
   z-index: 185;
-  bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 16px);
+  bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 16px);
   inset-inline-start: 1rem;
   inset-inline-end: auto;
   display: inline-flex;
