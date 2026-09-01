@@ -89,7 +89,7 @@ function generateIcs(monthEvents: { date: Date; ev: CalendarEvent }[], monthLabe
   const lines: string[] = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//majlisilm.com//Islamic Lessons Calendar//AR",
+    "PRODID:-//ssunnah.com//Islamic Lessons Calendar//AR",
     `X-WR-CALNAME:دروس سُنّة — ${monthLabel}`,
     "X-WR-TIMEZONE:Asia/Kuwait",
     "CALSCALE:GREGORIAN",
@@ -98,7 +98,7 @@ function generateIcs(monthEvents: { date: Date; ev: CalendarEvent }[], monthLabe
   for (const { date, ev } of monthEvents) {
     const dtstart = toIcsDate(date, ev.time);
     const dtend = toIcsDate(date, ev.time ? ev.time.replace(/\d+/, (h) => String(Number(h) + 1)) : undefined);
-    const uid = `${ev.id}-${format(date, "yyyyMMdd")}@majlisilm.com`;
+    const uid = `${ev.id}-${format(date, "yyyyMMdd")}@ssunnah.com`;
     lines.push(
       "BEGIN:VEVENT",
       `UID:${uid}`,

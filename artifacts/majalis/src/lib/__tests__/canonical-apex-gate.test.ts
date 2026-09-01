@@ -50,11 +50,14 @@ assert.match(
   /"has"\s*:\s*\[\{\s*"type"\s*:\s*"host"\s*,\s*"value"\s*:\s*"www\.majlisilm\.com"\s*\}\][\s\S]*?"destination"\s*:\s*"https:\/\/www\.ssunnah\.com/,
   "vercel: تحويل www.majlisilm إلى www.ssunnah",
 );
-assert.match(
+assert.doesNotMatch(
   vercel,
-  /"Access-Control-Allow-Origin"[\s\S]*?"value"\s*:\s*"https:\/\/www\.ssunnah\.com"/,
-  "vercel: CORS على النطاق الحي",
+  /"source"\s*:\s*"\/\(\.\*\)"[\s\S]*?"Access-Control-Allow-Origin"/,
+  "vercel: لا CORS على HTML الثابت (/(.*))",
 );
+const searchApi = readFileSync(resolve(root, "lib/api-handlers/search.js"), "utf8");
+assert.match(searchApi, /Access-Control-Allow-Origin/, "search API: CORS عند الحاجة");
+assert.match(searchApi, /Vary.*Origin/, "search API: Vary Origin");
 assert.match(
   vercel,
   /"proxy"\s*:\s*\{[\s\S]*"entrypoint"\s*:\s*"middleware\.js"[\s\S]*"matcher"/,

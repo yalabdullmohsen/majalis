@@ -1408,12 +1408,8 @@
           "value": "same-origin-allow-popups"
         },
         {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://www.ssunnah.com"
-        },
-        {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'sha256-t/29DvhUprBZa4I9wqp5i0k9xA8BdFVFXq2e1zYcjDU=' 'sha256-BbY9KU1DPy5fwEGTuHoI4tbAw3+pUafi9FT8n/xYnEU=' 'sha256-nhf7vI1dFKDqYhb1a4WpnwDR9CTJkM6VnvqN9eyP5gI=' 'sha256-Qp6wZwNLoCeQNpNDNLXIiwgGoT5wyvRimcRRms6BHkY=' 'sha256-An6M4c9eW/HdAQbjnYOKxO/Xfou4R11AvCR8sBvSKUw=' 'sha256-zx29bupCX8cLrxa2tG1Jl1iU7ZcnbkfS5RnFoDd8oJE=' 'sha256-BHvT1ehiatDn/6+/2D8J9nhlIToTY8jMYax+25J/26c=' https://cdn.jsdelivr.net https://platform.twitter.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob: https://everyayah.com https://www.everyayah.com https://cdn.islamic.network https://*.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.alquran.cloud https://api.quran.com https://api.aladhan.com https://everyayah.com https://www.everyayah.com https://cdn.islamic.network https://*.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; frame-src 'self' https://platform.twitter.com https://syndication.twitter.com https://www.google.com https://maps.google.com https://www.youtube.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+          "value": "default-src 'self'; script-src 'self' 'sha256-t/29DvhUprBZa4I9wqp5i0k9xA8BdFVFXq2e1zYcjDU=' 'sha256-8EpBgah4UVh+D89ghKlnC93ADk8NRXG5y4hqrhnxxHA=' 'sha256-nhf7vI1dFKDqYhb1a4WpnwDR9CTJkM6VnvqN9eyP5gI=' 'sha256-Qp6wZwNLoCeQNpNDNLXIiwgGoT5wyvRimcRRms6BHkY=' 'sha256-An6M4c9eW/HdAQbjnYOKxO/Xfou4R11AvCR8sBvSKUw=' 'sha256-zx29bupCX8cLrxa2tG1Jl1iU7ZcnbkfS5RnFoDd8oJE=' 'sha256-BHvT1ehiatDn/6+/2D8J9nhlIToTY8jMYax+25J/26c=' https://cdn.jsdelivr.net https://platform.twitter.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob: https://everyayah.com https://www.everyayah.com https://cdn.islamic.network https://*.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.alquran.cloud https://api.quran.com https://api.aladhan.com https://everyayah.com https://www.everyayah.com https://cdn.islamic.network https://*.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; frame-src 'self' https://platform.twitter.com https://syndication.twitter.com https://www.google.com https://maps.google.com https://www.youtube.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
         }
       ]
     },
@@ -1435,7 +1431,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=300, stale-while-revalidate=86400"
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
         },
         {
           "key": "Content-Type",
@@ -1448,7 +1444,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=300, stale-while-revalidate=86400"
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
         },
         {
           "key": "Content-Type",
@@ -1468,7 +1464,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=300, stale-while-revalidate=86400"
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
         }
       ]
     },
@@ -1790,7 +1786,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=300, stale-while-revalidate=86400"
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
         }
       ]
     },
@@ -1799,7 +1795,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, s-maxage=300, stale-while-revalidate=86400"
+          "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
         }
       ]
     },
@@ -1852,10 +1848,6 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=86400, stale-while-revalidate=604800"
-        },
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://www.ssunnah.com"
         }
       ]
     },

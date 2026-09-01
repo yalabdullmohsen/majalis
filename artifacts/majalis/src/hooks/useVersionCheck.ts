@@ -12,7 +12,7 @@ import { purgeStaleRuntimeCaches } from "@/lib/runtime-cache-purge";
 const BOOT_SILENT_MS = 8_000;
 const BOOT_RELOAD_KEY = "majalis-boot-version-reload.v1";
 /** حارس موحّد مع سكربت mj-version-boot في index.html */
-const REFRESHING_FLAG = "majlisilm-refreshing-version";
+const REFRESHING_FLAG = "ssunnah-refreshing-version";
 
 function alreadyDidBootReload(): boolean {
   try {

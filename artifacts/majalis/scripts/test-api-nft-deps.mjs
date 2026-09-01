@@ -19,8 +19,13 @@ assert.doesNotMatch(
   /import\s+\{[^}]*getPlatformHealth[^}]*\}\s+from/,
   "healthz must not statically import platform-health",
 );
-assert.match(healthz, /import\(["']\.\.\/platform-health\.mjs["']\)/, "healthz full probe must lazy-import platform-health");
-assert.match(healthz, /full\s*===\s*["']1["']|query\?\.full/, "healthz deep probe is opt-in via full=1");
+assert.doesNotMatch(
+  healthz,
+  /platform-health\.mjs/,
+  "healthz must not load platform-health — use /api/deep-health",
+);
+assert.match(healthz, /service:\s*"ssunnah-web"/, "healthz service name is ssunnah-web");
+assert.doesNotMatch(healthz, /VERCEL_GIT_COMMIT_SHA|uptimeMs/, "healthz must not expose internal deploy metadata");
 
 // Dedicated light function files are optional Phase-1 stretch; do not require them
 // after Production deploy regressions from multi-function vercel.json configs.

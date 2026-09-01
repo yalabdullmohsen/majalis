@@ -298,7 +298,7 @@ export function buildCalendarIcsFromUnified(lesson: UnifiedLesson): string {
     "PRODID:-//AlMajlisAlIlmi//Lessons//AR",
     "CALSCALE:GREGORIAN",
     "BEGIN:VEVENT",
-    `UID:${lesson.id}@majlisilm.com`,
+    `UID:${lesson.id}@ssunnah.com`,
     `DTSTAMP:${dt}T120000Z`,
     `DTSTART;VALUE=DATE:${dt}`,
     `SUMMARY:${lesson.title} — ${lesson.sheikhName}`,
