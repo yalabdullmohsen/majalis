@@ -3,6 +3,7 @@
  */
 import { Capacitor } from "@capacitor/core";
 import {
+  LAUNCH_SPLASH_ID,
   SPLASH_FADE_OUT_MS,
   SPLASH_MAX_VISIBLE_MS,
   SPLASH_MIN_VISIBLE_MS,
@@ -18,14 +19,34 @@ export {
 let hidden = false;
 let armedAt = 0;
 
-export async function hideNativeSplash(immediate = false): Promise<void> {
-  if (hidden) return;
-  hidden = true;
+/** يزيل #mj-launch-splash حتى لو حُظر سكربت الإقلاع بـ CSP. */
+export function dismissHtmlLaunchSplash(immediate = false): void {
   try {
     sessionStorage.setItem(SPLASH_SESSION_KEY, "1");
   } catch {
     /* ignore */
   }
+  const el = document.getElementById(LAUNCH_SPLASH_ID);
+  if (!el) return;
+  const remove = () => {
+    try {
+      el.remove();
+    } catch {
+      /* ignore */
+    }
+  };
+  if (immediate) {
+    remove();
+    return;
+  }
+  el.classList.add("mj-launch-splash--out");
+  window.setTimeout(remove, SPLASH_FADE_OUT_MS);
+}
+
+export async function hideNativeSplash(immediate = false): Promise<void> {
+  if (hidden) return;
+  hidden = true;
+  dismissHtmlLaunchSplash(immediate);
   if (!Capacitor.isNativePlatform()) return;
   try {
     const { SplashScreen } = await import("@capacitor/splash-screen");
@@ -62,9 +83,12 @@ function scheduleNativeHide(): void {
   run();
 }
 
-/** يخفي SplashScreen الأصلي بعد أول رسم مع احترام الحد الأدنى/الأقصى. */
+/**
+ * يخفي دخولية HTML (#mj-launch-splash) على الويب والأصلي،
+ * ويخفي Capacitor SplashScreen على الأصلي فقط.
+ * يجب أن يعمل على الويب أيضًا — وإلا تبقى «سُنّة» إن حُظر سكربت الإقلاع بـ CSP.
+ */
 export function armNativeSplashController(): void {
-  if (!Capacitor.isNativePlatform()) return;
   armedAt = performance.now();
 
   const deadline = window.setTimeout(() => {

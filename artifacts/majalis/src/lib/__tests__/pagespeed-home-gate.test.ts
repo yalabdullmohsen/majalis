@@ -21,13 +21,15 @@ const main = read("src/main.tsx");
 const intro = read("src/components/onboarding/FirstVisitIntro.tsx");
 const navBack = read("src/lib/navigation-back.ts");
 
-assert.match(html, /MIN_MS\s*=\s*120/, "دخولية قصيرة — LCP");
-assert.match(html, /SOFT_MAX_MS\s*=\s*420/, "هدف LCP ليّن ≤420ms عند جاهزية الخطوط");
-assert.match(html, /MAX_MS\s*=\s*1400/, "سقف صلب لانتظار الخطوط — منع FOUT");
+const boot = read("public/mj-launch-splash-boot.js");
+assert.match(html, /src="\/mj-launch-splash-boot\.js"/);
+assert.match(boot, /MIN_MS\s*=\s*120/, "دخولية قصيرة — LCP");
+assert.match(boot, /SOFT_MAX_MS\s*=\s*420/, "هدف LCP ليّن ≤420ms عند جاهزية الخطوط");
+assert.match(boot, /MAX_MS\s*=\s*1400/, "سقف صلب لانتظار الخطوط — منع FOUT");
 assert.match(splash, /SPLASH_MIN_VISIBLE_MS\s*=\s*120/);
 assert.match(splash, /SPLASH_LCP_SOFT_MS\s*=\s*420/);
 assert.match(splash, /SPLASH_MAX_VISIBLE_MS\s*=\s*1_?400|SPLASH_MAX_VISIBLE_MS\s*=\s*1400/);
-assert.match(html, /sessionStorage\.getItem\(KEY\)/, "تخطّي الدخولية في نفس الجلسة");
+assert.match(boot, /sessionStorage\.getItem\(KEY\)/, "تخطّي الدخولية في نفس الجلسة");
 assert.match(html, /<meta charset="UTF-8"\s*\/>/, "charset موجود");
 {
   const head = html.split(/<head[^>]*>/i)[1] ?? "";
