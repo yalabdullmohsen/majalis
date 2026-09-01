@@ -23,6 +23,11 @@ import {
   DHIKR_PHRASE_NATIVE_ID_BASE,
   DHIKR_PHRASE_SLOTS,
 } from "../dhikr-phrase-reminders";
+import {
+  NOTIFICATION_TITLE_FALLBACK,
+  notificationBodyWithoutBrand,
+  notificationTitleWithoutBrand,
+} from "../notifications/copy";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "../../..");
 
@@ -72,6 +77,15 @@ assert.equal(TEST_NOTIFICATION_NATIVE_ID, 99901);
 assert.equal(DHIKR_PHRASE_NATIVE_ID_BASE, 9401);
 assert.equal(DHIKR_PHRASE_SLOTS.length, 7);
 console.log("  ✓ channel + test trigger constants");
+
+{
+  assert.equal(notificationTitleWithoutBrand("سُنّة"), NOTIFICATION_TITLE_FALLBACK);
+  assert.equal(notificationTitleWithoutBrand(""), "تذكير");
+  assert.equal(notificationTitleWithoutBrand("الحمد لله"), "الحمد لله");
+  assert.equal(notificationTitleWithoutBrand("أذان الفجر | سُنّة"), "أذان الفجر");
+  assert.equal(notificationBodyWithoutBrand("3 بطاقة تنتظر مراجعتك اليوم في سُنّة."), "3 بطاقة تنتظر مراجعتك اليوم");
+  console.log("  ✓ notification copy strips app brand");
+}
 
 // ── Source gates: native hides web push; presentationOptions; Capacitor push wired ──
 {
@@ -147,6 +161,11 @@ console.log("  ✓ channel + test trigger constants");
   const settingsDhikr = read("src/pages/account/ui/NotificationSettingsView.tsx");
   assert.match(settingsDhikr, /تذكير الذكر/, "settings toggle for dhikr phrases");
   assert.match(settingsDhikr, /dhikrPhraseReminder/, "prefs key wired in settings");
+
+  const swSrc = read("public/sw.js");
+  assert.match(swSrc, /function swNotifTitle/, "SW strips branded notification titles");
+  assert.doesNotMatch(swSrc, /title \|\| "سُنّة"/, "SW no brand title fallback");
+  assert.doesNotMatch(swSrc, /title:\s*"سُنّة"/, "SW push payload not branded");
 
   const boot = read("src/lib/notifications/native-bootstrap.ts");
   assert.match(boot, /localNotificationActionPerformed/, "tap listener");

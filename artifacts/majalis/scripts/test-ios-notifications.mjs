@@ -124,6 +124,11 @@ ok(dhikr.includes("الحمد لله"), "dhikr includes الحمد لله");
 ok(settings.includes("تذكير الذكر"), "settings has dhikr phrase toggle");
 ok(settings.includes("dhikrPhraseReminder"), "settings wires dhikrPhraseReminder");
 
+const sw = read("public/sw.js");
+ok(sw.includes("function swNotifTitle"), "SW strips branded titles");
+ok(!sw.includes('title || "سُنّة"'), "SW no brand title fallback");
+ok(!/title:\s*"سُنّة"/.test(sw), "SW push payload not branded");
+
 const scheduler = read("src/lib/prayer-alert-scheduler.ts");
 ok(scheduler.includes("buildPrayerScheduleSignature"), "schedule signature");
 ok(scheduler.includes("invalidatePrayerNativeSchedule"), "invalidate helper");
