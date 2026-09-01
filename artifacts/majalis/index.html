@@ -186,10 +186,7 @@
                   keys.map(function (k) {
                     if (
                       /intro|onboard|welcome|splash|boot-guide|first-?launch|first-?run/i.test(k) ||
-                      (k.indexOf("ssunnah-v") === 0 && k.indexOf(live) < 0) ||
-                      k.indexOf("majlisilm-v") === 0 ||
-                      k.indexOf("majlisilm-startup-") === 0 ||
-                      k === "majlisilm-version"
+                      (k.indexOf("ssunnah-v") === 0 && k.indexOf(live) < 0)
                     ) {
                       return caches.delete(k);
                     }
