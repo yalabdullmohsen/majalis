@@ -424,7 +424,286 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 }
 
 .lessons-page-v3 .section-lobby__shot {
-  gap: 12px;
+  gap: 8px;
+}
+
+.lessons-page-v3 .section-lobby__head {
+  padding-block: 0.1rem 0;
+}
+
+.lessons-page-v3 .section-lobby__title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.lessons-v3-top {
+  display: grid;
+  gap: 0.45rem;
+  margin-bottom: 0.35rem;
+}
+
+.lessons-v3-chip-row {
+  display: flex;
+  gap: 0.35rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  padding-block: 0.1rem;
+  scrollbar-width: none;
+}
+
+.lessons-v3-chip-row::-webkit-scrollbar {
+  display: none;
+}
+
+.lessons-v3-chip {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  min-height: 32px;
+  padding: 0.28rem 0.72rem;
+  border: 1px solid color-mix(in srgb, var(--mj-hairline, #d8deda) 88%, transparent);
+  border-radius: 999px;
+  background: var(--mj-surface, #fff);
+  color: var(--mj-ink-2, #3d5248);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lessons-v3-chip.is-active {
+  border-color: color-mix(in srgb, var(--mj-brand-deep, #123f2e) 24%, transparent);
+  background: color-mix(in srgb, var(--mj-brand-deep, #123f2e) 8%, var(--mj-surface, #fff));
+  color: var(--mj-brand-deep, #123f2e);
+  font-weight: 700;
+}
+
+.lessons-v3-stats {
+  margin: 0;
+  padding: 0 0.1rem;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--mj-muted, #66756d);
+  white-space: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.lessons-v3-stats::-webkit-scrollbar {
+  display: none;
+}
+
+.lessons-v3-stats a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.lessons-v3-stats a:hover {
+  color: var(--mj-brand-deep, #123f2e);
+  text-decoration: underline;
+}
+
+.lessons-v3-nearest {
+  margin-bottom: 0.75rem;
+}
+
+.lessons-page-v3 .lessons-nearest-card,
+.lessons-page-v3 .lessons-upcoming-card {
+  background: var(--mj-surface, var(--color-surface, #fff));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, var(--mj-hairline, #dde3df));
+  border-radius: 20px;
+  box-shadow: 0 6px 18px -14px rgb(11 32 24 / 22%);
+}
+
+.lessons-page-v3 .lessons-nearest-card {
+  padding: 0.85rem 0.95rem 0.95rem;
+}
+
+.lessons-page-v3 .lessons-nearest-card__eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+}
+
+.lessons-page-v3 .lessons-nearest-card__type,
+.lessons-page-v3 .lessons-nearest-card__badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.lessons-page-v3 .lessons-nearest-card__type {
+  color: var(--mj-brand-deep, #123f2e);
+}
+
+.lessons-page-v3 .lessons-nearest-card__badge {
+  color: var(--mj-muted, #66756d);
+}
+
+.lessons-page-v3 .lessons-nearest-card__title {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--mj-ink, #1a1a18);
+}
+
+.lessons-page-v3 .lessons-nearest-card__sheikh {
+  margin: 0 0 0.55rem;
+  font-size: 0.84rem;
+  font-weight: 650;
+  color: var(--mj-brand-deep, #123f2e);
+}
+
+.lessons-page-v3 .lessons-nearest-card__facts {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0 0 0.75rem;
+}
+
+.lessons-page-v3 .lessons-nearest-card__facts > div {
+  display: grid;
+  grid-template-columns: 4.25rem 1fr;
+  gap: 0.45rem;
+  align-items: baseline;
+}
+
+.lessons-page-v3 .lessons-nearest-card__facts dt {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--mj-muted, #66756d);
+}
+
+.lessons-page-v3 .lessons-nearest-card__facts dd {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 650;
+  color: var(--mj-ink, #1a1a18);
+  line-height: 1.45;
+}
+
+.lessons-page-v3 .lessons-nearest-card__actions {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.lessons-page-v3 .lessons-nearest-card__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  background: var(--mj-brand-deep, #123f2e);
+  color: var(--mj-on-brand, #fff);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.lessons-upcoming-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.lessons-page-v3 .lessons-upcoming-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.lessons-page-v3 .lessons-upcoming-card__body {
+  padding: 0.8rem 0.9rem 0.55rem;
+}
+
+.lessons-page-v3 .lessons-upcoming-card__title {
+  margin: 0 0 0.25rem;
+  font-size: 0.96rem;
+  font-weight: 780;
+  line-height: 1.45;
+  color: var(--mj-ink, #1a1a18);
+}
+
+.lessons-page-v3 .lessons-upcoming-card__sheikh {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 650;
+  color: var(--mj-brand-deep, #123f2e);
+}
+
+.lessons-page-v3 .lessons-upcoming-card__meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem 0.55rem;
+  margin: 0;
+}
+
+.lessons-page-v3 .lessons-upcoming-card__meta > div {
+  display: grid;
+  gap: 0.08rem;
+}
+
+.lessons-page-v3 .lessons-upcoming-card__meta dt {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--mj-muted, #66756d);
+}
+
+.lessons-page-v3 .lessons-upcoming-card__meta dd {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 650;
+  color: var(--mj-ink, #1a1a18);
+  line-height: 1.35;
+}
+
+.lessons-page-v3 .lessons-upcoming-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0 0.85rem 0.85rem;
+}
+
+.lessons-page-v3 .lessons-upcoming-card__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0.35rem 0.72rem;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, var(--mj-hairline, #dde3df));
+  border-radius: 999px;
+  background: var(--mj-surface-2, #f4f6f5);
+  color: var(--mj-brand-deep, #123f2e);
+  font-family: inherit;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lessons-page-v3 .lessons-upcoming-card__btn--primary {
+  background: var(--mj-brand-deep, #123f2e);
+  border-color: transparent;
+  color: var(--mj-on-brand, #fff);
+}
+
+.lessons-v3-upcoming .lessons-v2-section__title {
+  margin-bottom: 0.45rem;
+}
+
+.lessons-page-v3 .lessons-v2-main {
+  padding-bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 12px);
 }
 
 .lessons-page-v3 .lessons-v2-main {
