@@ -260,7 +260,7 @@ export default function FawaidPage({
         {loading ? (
           <SkeletonCardGrid count={8} />
         ) : displayItems.length === 0 ? (
-          <Empty text={debouncedSearch.trim() ? `لا توجد فوائد مطابقة لـ «${debouncedSearch.trim()}».` : "لا توجد فوائد في هذا القسم."} />
+          <Empty text={debouncedSearch.trim() ? `لا توجد فوائد مطابقة لـ «${debouncedSearch.trim()}». جرّب كلمة أخرى.` : "لا توجد فوائد في هذا القسم حاليًا."} />
         ) : (
           <>
             <div className="faidah-grid">

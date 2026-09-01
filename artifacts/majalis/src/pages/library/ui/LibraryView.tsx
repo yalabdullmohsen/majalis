@@ -303,7 +303,7 @@ export default function LibraryPage({
         loading={loading}
         error={loadError}
         empty={!loading && !loadError && filtered.length === 0}
-        emptyText={items.length === 0 ? "لا توجد كتب حالياً" : "لا توجد نتائج مطابقة."}
+        emptyText={items.length === 0 ? "لا توجد كتب في المكتبة حاليًا." : "لا توجد نتائج مطابقة. جرّب كلمة أخرى أو أزل التصفية."}
         onRetry={loadLibrary}
       >
         <div className={`lib-grid lib-grid--${view}`}>

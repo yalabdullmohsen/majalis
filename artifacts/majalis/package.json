@@ -11,6 +11,7 @@
     "check:seo": "node scripts/check-seo-quality.js",
     "check:search": "node scripts/check-search-quality.js",
     "check:editorial": "node scripts/check-editorial-safety.js",
+    "check:copy-quality": "node scripts/check-copy-quality.js",
     "check:sources-and-licenses": "node --import tsx scripts/check-sources-and-licenses.js",
     "check:pwa": "node scripts/check-pwa.js",
     "check:performance-budget": "node scripts/check-performance-budget.mjs",

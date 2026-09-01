@@ -1,3 +1,4 @@
+import { EMPTY } from "@/lib/ui-copy";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RequestManager } from "@/lib/request-manager";
 import { beginAbortScope, abortScope } from "@/lib/route-abort";
@@ -35,7 +36,7 @@ export function useAsyncData<T>(
     enabled = true,
     initialData,
     emptyWhen,
-    emptyMessage = "لا توجد بيانات حالياً",
+    emptyMessage = EMPTY.data,
     dedupeKey,
     timeoutMs,
   } = options;

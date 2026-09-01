@@ -1524,7 +1524,7 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
 
         <div className="gl-results-meta">
           {filtered.length === 0 ? (
-            <p className="gl-empty">لا توجد نتائج</p>
+            <p className="gl-empty">لا توجد نتائج مطابقة. جرّب كلمة أخرى.</p>
           ) : (
             <p className="gl-results-count">{formatArabicNumber(filtered.length)} مصطلح</p>
           )}
