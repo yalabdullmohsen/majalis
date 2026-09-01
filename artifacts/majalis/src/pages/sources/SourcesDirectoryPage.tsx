@@ -37,9 +37,10 @@ export default function SourcesDirectoryPage() {
       className="sources-directory-page"
     >
       <p className="sources-policy-note">
-        المحتوى مملوك لأصحابه، وسُنّة يعرض روابطه فقط.
+        المحتوى مملوك لأصحابه. سُنّة يعرض روابط المصدر فقط — عنوان، شيخ، وقت، مكان،
+        ورابط المنشور — دون إعادة استضافة نص طويل أو صور كاملة.
         {" "}
-        <Link href="/data-licenses">التراخيص</Link>
+        <Link href="/data-licenses">المصادر والتراخيص</Link>
         {" · "}
         <a href="https://github.com/yalabdullmohsen/majalis/blob/main/artifacts/majalis/docs/SOURCES_POLICY.md" target="_blank" rel="noopener noreferrer">
           سياسة المصادر
