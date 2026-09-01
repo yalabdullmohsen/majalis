@@ -40,7 +40,7 @@ assert.match(
 );
 assert.match(
   top,
-  /--bottom-nav-height:\s*84px/,
+  /--bottom-nav-height:\s*64px/,
   "ارتفاع الشريط السفلي موحّد 84px على الجوال",
 );
 
@@ -50,7 +50,7 @@ assert.match(
 );
 assert.match(
   finalCss,
-  /#main-content\.app-main[\s\S]*?padding-block-end:\s*calc\(\s*var\(--bottom-nav-height,\s*84px\)\s*\+\s*var\(--inset-bottom/,
+  /#main-content\.app-main[\s\S]*?padding-block-end:\s*calc\(\s*var\(--bottom-nav-height,\s*64px\)\s*\+\s*var\(--inset-bottom/,
   "حجز سفلي صريح على #main-content",
 );
 assert.doesNotMatch(

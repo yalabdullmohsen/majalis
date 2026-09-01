@@ -86,8 +86,8 @@ header.navbar-v3,
     background-color: var(--surface-app, var(--mj-bg, #F2F4F3)) !important;
     background-image: none !important;
     opacity: 1 !important;
-    border-top: 1px solid var(--border) !important;
-    box-shadow: 0 -4px 12px rgb(23 61 53 / 5%) !important;
+    border-top: 1px solid color-mix(in srgb, var(--border) 42%, transparent) !important;
+    box-shadow: 0 -1px 4px rgb(23 61 53 / 3%) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     padding-bottom: var(--inset-bottom) !important;
@@ -95,16 +95,16 @@ header.navbar-v3,
 
 .bottom-nav__tab {
   color: var(--text-2) !important;
-  border-radius: 14px !important;
+  border-radius: 12px !important;
   position: relative;
-  min-height: 3rem;
+  min-height: 2.75rem;
   margin: 0;
   transition: background 0.18s ease, color 0.18s ease;
 }
 
 .bottom-nav__tab.is-active {
   color: var(--brand) !important;
-  background: color-mix(in srgb, var(--mj-brand-deep, #123f2e) 10%, transparent) !important;
+  background: color-mix(in srgb, var(--mj-brand-deep, #123f2e) 7%, transparent) !important;
 }
 
 .bottom-nav__tab.is-active::before {
@@ -113,8 +113,8 @@ header.navbar-v3,
 }
 
 .bottom-nav__tab-label {
-  font-size: var(--text-nav, 0.875rem);
-  font-weight: 600;
+  font-size: var(--type-nav-label, var(--text-nav, 0.75rem));
+  font-weight: 500;
   letter-spacing: 0;
 }
 

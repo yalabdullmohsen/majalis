@@ -6,7 +6,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-block-end: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 12px);
+  padding-block-end: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 12px);
 }
 .app-sheet-overlay--elevated {
   z-index: 10060;

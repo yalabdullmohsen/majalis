@@ -102,7 +102,7 @@ html.pts-immersive .bottom-nav {
   padding-block-start: max(12px, var(--inset-top, 0px)) !important;
   /* فراغ آمن فوق الشريط السفلي + شريط رجوع/إعدادات */
   padding-bottom: calc(
-    var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 4.5rem
+    var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 4.5rem
   ) !important;
   box-sizing: border-box;
 }
@@ -216,7 +216,7 @@ html.pts-immersive .bottom-nav {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 0.35rem);
+  bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 0.35rem);
   z-index: 35;
   display: flex;
   align-items: center;
