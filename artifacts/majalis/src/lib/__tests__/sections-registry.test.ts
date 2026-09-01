@@ -72,7 +72,7 @@ assert.ok(drawer.includes("account"));
 assert.equal(drawer.includes("tafsir"), false);
 assert.ok(drawer.length <= 12);
 
-assert.ok(SECTION_MERGE_REDIRECTS.some((r) => r.from === "/more" && r.to === "/"));
+assert.ok(SECTION_MERGE_REDIRECTS.some((r) => r.from === "/more" && r.to === "/#explore"));
 assert.ok(SECTIONS.some((s) => s.id === "flashcards" && s.aliases?.includes("المحفوظات")));
 assert.ok(SECTIONS.some((s) => s.id === "sections" && s.aliases?.includes("المزيد")));
 assert.ok(SECTIONS.some((s) => s.id === "quran" && s.aliases?.includes("قرآن")));

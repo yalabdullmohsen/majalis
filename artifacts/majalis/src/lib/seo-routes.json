@@ -322,7 +322,7 @@
       ],
       "sitemap": false,
       "robots": "noindex, follow",
-      "redirect": "/"
+      "redirect": "/#explore"
     },
     {
       "path": "/sections",
