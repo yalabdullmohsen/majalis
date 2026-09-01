@@ -49,7 +49,7 @@ export const FEATURED: { href: string; Icon: LucideIcon; title: string; desc: st
   { href: "/prayer-times", Icon: Clock, title: seoNavLabel("/prayer-times", "مواقيت الصلاة"), desc: "المواقيت والقبلة والأذان", cta: "افتح" },
   { href: "/fiqh", Icon: Scale, title: seoNavLabel("/fiqh", "الفقه والأحكام"), desc: "الأحكام والقواعد والمجامع تحت باب واحد", cta: "افتح" },
   { href: "/adhkar", Icon: RotateCw, title: seoNavLabel("/adhkar", "الأذكار اليومية"), desc: "أذكار الصباح والمساء وما بينهما", cta: "افتح" },
-  { href: "/sections", Icon: Layers, title: seoNavLabel("/sections", "المزيد من العلوم"), desc: "مكتبة وحديث وأعلام وسين جيم", cta: "افتح" },
+  { href: "/sections", Icon: Layers, title: seoNavLabel("/sections", "جميع الأقسام"), desc: "مكتبة وحديث وأعلام وسين جيم", cta: "افتح" },
 ];
 
 /* ── أقسام مصنّفة ── */

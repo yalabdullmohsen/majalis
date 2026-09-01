@@ -37,7 +37,7 @@ assert.deepEqual(
 );
 assert.deepEqual(
   BOTTOM_NAV_TABS.map((t) => t.label),
-  ["مركز القرآن", "الدروس", "الصلاة", "فقه", "الأقسام"],
+  ["القرآن", "الدروس", "الصلاة", "الفقه", "الأقسام"],
 );
 
 assert.deepEqual(MORE_IA_GROUP_TITLES.length, 7);

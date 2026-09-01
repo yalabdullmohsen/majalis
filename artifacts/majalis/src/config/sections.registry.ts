@@ -235,7 +235,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "quran",
     label: "مركز القرآن الكريم",
-    navLabel: "مركز القرآن",
+    navLabel: "القرآن",
     subtitle: "المصحف والتلاوة والتفسير",
     route: "/quran-hub",
     icon: BookOpen,
@@ -643,7 +643,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "fiqh",
     label: "الفقه والأحكام",
-    navLabel: "فقه",
+    navLabel: "الفقه",
     subtitle: "أبواب الفقه والفتاوى",
     route: "/fiqh",
     icon: Scale,

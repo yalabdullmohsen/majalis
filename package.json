@@ -47,6 +47,7 @@
     "audit:mobile-app": "pnpm --filter @workspace/majalis run audit:mobile-app",
     "audit:product-upgrade": "pnpm --filter @workspace/majalis run audit:product-upgrade",
     "audit:legacy-routes": "pnpm --filter @workspace/majalis run audit:legacy-routes",
+    "audit:navigation": "pnpm --filter @workspace/majalis run audit:navigation",
     "smoke:production": "tsx scripts/post-deploy-smoke.ts"
   },
   "private": true,

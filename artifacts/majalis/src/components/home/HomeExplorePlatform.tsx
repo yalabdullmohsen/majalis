@@ -17,7 +17,7 @@ export function HomeExplorePlatform() {
       </div>
 
       <p className="hp-explore__lead" style={{ color: "#524e4a", marginBottom: "1rem", lineHeight: 1.7 }}>
-        ستة أبواب واضحة — القرآن الكريم، الدروس، الصلاة، الفقه، الأذكار، والمزيد.
+        ستة أبواب واضحة — القرآن، الدروس، الصلاة، الفقه، الأذكار، وجميع العلوم.
       </p>
 
       <div className="hp-explore__featured" aria-label="أهم الأقسام">
@@ -37,7 +37,7 @@ export function HomeExplorePlatform() {
 
       <div className="hp-explore__footer">
         <Link href="/sections" className="hp-explore__sitemap">
-          المزيد من العلوم ←
+          جميع الأقسام ←
         </Link>
       </div>
     </section>
