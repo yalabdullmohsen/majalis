@@ -1,6 +1,6 @@
 import { seoNavLabel } from "@/lib/seo-nav-labels";
 import { filterNavItems } from "@/lib/nav-visibility";
-import { navFor, primaryNav } from "@/config/navigation";
+import { primaryNav } from "@/config/navigation";
 
 export type NavLink = {
   href: string;
