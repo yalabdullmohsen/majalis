@@ -14,7 +14,7 @@ if (/<img\b|SheikhAvatar|lessonImage|posterUrl|qrCodeUrl|__poster|__media|__qr|_
   failures.push("UnifiedLessonCard must not contain an image or an image slot");
 }
 for (const [name, source, pattern] of [
-  ["LessonsPage", lessonsPage, /CompactLessonRow|UnifiedLessonCard/],
+  ["LessonsPage", lessonsPage, /CompactLessonRow|UnifiedLessonCard|LessonsUpcomingCard/],
   ["HomeUpcomingLessons", homeLessons, /UnifiedLessonCard/],
   ["HomeUpcomingCourses", homeCourses, /UnifiedLessonCard/],
 ]) {
