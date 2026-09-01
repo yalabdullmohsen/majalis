@@ -5,6 +5,25 @@
 
 .hadith-page { position: relative; }
 
+.hadith-page__browse {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid color-mix(in srgb, var(--majalis-accent, #34785F) 12%, transparent);
+}
+
+.hadith-page__browse-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.hadith-page__browse-lead {
+  margin: 0 0 1rem;
+  color: var(--msk-text-2, var(--mj-ink-2));
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
 /* Stats row */
 .hadith-stats-row {
   display: flex;
@@ -177,6 +196,34 @@
 .hadith-grade--daif        { background: #FFF7ED; color: #9A3412; }
 .hadith-grade--mawdu       { background: #FEF2F2; color: #7F1D1D; }
 .hadith-grade--unknown     { background: var(--emerald-50, #EEF1F0); color: var(--msk-text-2, var(--mj-ink-2)); }
+.hadith-grade--pending     { background: #F8FAFC; color: #475569; border: 1px solid #CBD5E1; }
+
+.hadith-grade-filters {
+  margin: 0.5rem 0 0.75rem;
+}
+
+.hadith-card__read-more {
+  flex: 1;
+  min-width: 5.5rem;
+  border: 1px solid color-mix(in srgb, var(--majalis-accent, #34785F) 35%, transparent);
+  background: color-mix(in srgb, var(--majalis-accent, #34785F) 8%, #fff);
+  color: var(--majalis-accent, #34785F);
+  border-radius: var(--radius-sm, 0.45rem);
+  padding: 0.35rem 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hadith-meta-item--incomplete {
+  color: #9A3412;
+  font-weight: 600;
+}
+
+.hadith-badge--topic {
+  background: var(--emerald-50, #EEF1F0);
+  color: var(--msk-text-2, var(--mj-ink-2));
+}
 
 /* Title & chapter */
 .hadith-card__title {

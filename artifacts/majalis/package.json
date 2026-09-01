@@ -180,6 +180,7 @@
     "audit:audio:quick": "AUDIT_AUDIO_MODE=quick node scripts/audit-audio.mjs",
     "audit:audio:stratified": "AUDIT_AUDIO_MODE=stratified node scripts/audit-audio.mjs",
     "audit:audio:full": "AUDIT_AUDIO_MODE=full node scripts/audit-audio.mjs",
+    "audit:hadith": "node scripts/hadith-section-audit.mjs",
     "test:adhan-catalog": "node --import tsx src/lib/__tests__/adhan-catalog.test.ts && pnpm run test:tafsir-audio",
     "test:tafsir-audio": "node --import tsx src/lib/__tests__/tafsir-audio-bus.test.ts",
     "test:adhan-fajr-thasweeb": "node --import tsx src/lib/__tests__/adhan-fajr-thasweeb.test.ts",
