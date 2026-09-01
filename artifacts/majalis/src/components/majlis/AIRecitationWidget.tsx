@@ -40,8 +40,8 @@ export function AIRecitationWidget({
       <div className={`ai-recitation ai-recitation--consent${className ? ` ${className}` : ""}`} dir="rtl">
         <h3 className="ai-recitation__title">{label}</h3>
         <p className="ai-recitation__hint">
-          يستمع التطبيق لصوتك عبر التعرف الصوتي للجهاز (locale: ar_SA) ويقارن
-          النص بالآية محليًا. لا يُرفع الصوت إلى خوادم سُنّة.
+          يستمع التطبيق لصوتك ويقارن النص بالآية. يُفضَّل التعرّف على الجهاز؛
+          وإلا قد تُمرَّر مقاطع قصيرة عبر خدمة تفريغ آمنة بلا تخزين للصوت.
         </p>
         <p className="ai-recitation__target" dir="rtl">
           {targetVerse}

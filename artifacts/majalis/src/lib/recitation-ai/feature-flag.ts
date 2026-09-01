@@ -1,6 +1,8 @@
 /**
- * علم تفعيل «تلاوة» بالذكاء الاصطناعي (مسار /quran/recitation-test-ai).
- * القتل السريع: VITE_AI_TARTEEL_DISABLED=1 أو localStorage majalis:ai-tarteel-kill=1
+ * علم تفعيل «تلاوة / تسميع» بالذكاء الاصطناعي (مسار /quran/recitation-test-ai).
+ * مفعّل افتراضيًا دائمًا. القتل السريع فقط عبر:
+ *   - VITE_AI_TARTEEL_DISABLED=1
+ *   - أو localStorage majalis:ai-tarteel-kill=1
  * لا تضع مفاتيح API هنا — المفاتيح على الخادم فقط.
  */
 export const AI_TARTEEL_FEATURE_DEFAULT = true;
@@ -29,15 +31,16 @@ export function isAiTarteelKillSwitchOn(): boolean {
   }
   const disabled = envFlag("VITE_AI_TARTEEL_DISABLED");
   if (disabled === "1" || disabled === "true" || disabled === "yes" || disabled === "on") return true;
-  if (envFlag("VITE_AI_TARTEEL_ENABLED") === "0") return true;
+  // VITE_AI_TARTEEL_ENABLED=0 يُعامل كقتل صريح فقط؛ أي قيمة أخرى لا تعطّل.
+  if (envFlag("VITE_AI_TARTEEL_ENABLED") === "0" || envFlag("VITE_AI_TARTEEL_ENABLED") === "false") {
+    return true;
+  }
   return false;
 }
 
 /** الميزة ظاهرة ومفعّلة ما لم يُفعَّل القتل السريع. */
 export function isAiTarteelEnabled(): boolean {
-  if (isAiTarteelKillSwitchOn()) return false;
-  if (envFlag("VITE_AI_TARTEEL_ENABLED") === "1") return true;
-  return AI_TARTEEL_FEATURE_DEFAULT;
+  return !isAiTarteelKillSwitchOn();
 }
 
 export function setAiTarteelKillSwitch(killed: boolean): void {

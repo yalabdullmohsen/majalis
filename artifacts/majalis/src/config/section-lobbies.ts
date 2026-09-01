@@ -83,6 +83,7 @@ const QURAN_GROUPS: Array<{ id: string; title: string; ids: string[] }> = [
     id: "tilawa-tafsir",
     title: "التلاوة والتفسير",
     ids: [
+      "quran-recitation",
       "quran-surahs",
       "tafsir",
       "quran-tilawa",
@@ -99,8 +100,8 @@ const QURAN_GROUPS: Array<{ id: string; title: string; ids: string[] }> = [
   },
   {
     id: "hifz",
-    title: "الحفظ والتلاوة",
-    ids: ["quran-recitation", "flashcards"],
+    title: "الحفظ والمراجعة",
+    ids: ["flashcards"],
   },
   {
     id: "numbers",

@@ -64,6 +64,14 @@ assert.match(wsSrc, /getRecitationWsUrl/);
 
 const regSrc = readFileSync(resolve(root, "lib/recitation-ai/provider-registry.ts"), "utf8");
 assert.match(regSrc, /WebSocketQuranASRProvider/);
+assert.match(regSrc, /ServerQuranASRProvider/);
+assert.match(regSrc, /احتياط: التعرّف الصوتي في المتصفح/);
+// الخادم قبل Web Speech في المسار العادي (أول ظهور لـ server.isAvailable قبل webSpeechOk)
+{
+  const serverIdx = regSrc.indexOf("await server.isAvailable()");
+  const webSpeechIdx = regSrc.indexOf("await webSpeech.isAvailable()");
+  assert.ok(serverIdx > 0 && webSpeechIdx > serverIdx, "المزوّد الخادمي قبل Web Speech في registry");
+}
 
 const webSrc = readFileSync(resolve(root, "lib/recitation-ai/providers/web-speech-provider.ts"), "utf8");
 assert.match(webSrc, /INTERIM_CONFIDENCE/);

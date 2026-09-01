@@ -1,11 +1,11 @@
 /**
  * provider-registry.ts
  * يختار أفضل مزوّد متاح فعليًا وقت التشغيل (القسم 13: العمل عند ضعف
- * الإنترنت). الأولوية مبنية على **التكلفة والكمون**:
- *   1) جهازي أصلي (Capacitor)
+ * الإنترنت). الأولوية:
+ *   1) جهازي أصلي (Capacitor) — مجاني ومحلي
  *   2) WebSocket ASR إن ضُبط VITE_RECITATION_WS_URL (Deepgram/بوابة خاصة)
- *   3) Web Speech API (Chrome/Edge — مجاني)
- *   4) REST شرائح ~250ms + VAD → Groq (Safari / fallback)
+ *   3) مزوّد الخادم Groq whisper (ذكاء اصطناعي حقيقي — Safari/Chrome/PWA)
+ *   4) Web Speech API كاحتياط أخير فقط (دقة ضعيفة مع النص القرآني)
  *
  * استثناء: عند `preferTajweed=true` يُفضَّل WebSocket ثم الخادمي إن وُفّرا
  * لطوابع زمنية قابلة للقياس.
@@ -64,23 +64,24 @@ export async function selectBestProvider(
     };
   }
 
-  const webSpeechOk = await webSpeech.isAvailable();
-  if (webSpeechOk) {
-    return { provider: webSpeech, reason: "استخدام التعرّف الصوتي في المتصفح (حفظ فقط، مجاني، كمون شبه فوري)" };
+  // الذكاء الاصطناعي الخادمي قبل Web Speech — مطابقة أفضل للنص القرآني.
+  if (isOnline && (await server.isAvailable())) {
+    return {
+      provider: server,
+      reason: "تسميع بالذكاء الاصطناعي عبر المزوّد الخادمي (شرائح قصيرة + مطابقة لحظية)",
+    };
   }
 
-  if (isOnline) {
-    const serverOk = await server.isAvailable();
-    if (serverOk) {
-      return {
-        provider: server,
-        reason: "متصفحك لا يدعم Web Speech API (على الأرجح Safari) — استخدام المزوّد الخادمي كبديل (بث شرائح ~250ms + VAD)",
-      };
-    }
+  const webSpeechOk = await webSpeech.isAvailable();
+  if (webSpeechOk) {
+    return {
+      provider: webSpeech,
+      reason: "احتياط: التعرّف الصوتي في المتصفح (دقة محدودة مع النص القرآني)",
+    };
   }
 
   return {
     provider: null,
-    reason: "لا يتوفر محرك تعرّف صوتي على هذا المتصفح/الجهاز — جرّب Chrome، أو تطبيق الجوال",
+    reason: "لا يتوفر محرك تعرّف صوتي على هذا المتصفح/الجهاز — جرّب Chrome، أو تطبيق الجوال، أو تأكد من الاتصال",
   };
 }

@@ -587,6 +587,17 @@ export const AyahActionSheet = memo(function AyahActionSheet({
                     {audioStateLabel}
                   </p>
 
+                  {isAiTarteelEnabled() && parsed ? (
+                    <a
+                      className="ayah-action-sheet__ai-tarteel"
+                      href={`/quran/recitation-test-ai?surah=${parsed.surah}&ayah=${parsed.ayah}`}
+                      data-testid="mushaf-ayah-ai-tarteel"
+                    >
+                      <Mic size={18} aria-hidden="true" />
+                      <span>تسميع بالذكاء الاصطناعي</span>
+                    </a>
+                  ) : null}
+
                   <button
                     type="button"
                     className={`ayah-action-sheet__hifz-toggle${hifzOpen ? " is-open" : ""}`}
@@ -608,16 +619,6 @@ export const AyahActionSheet = memo(function AyahActionSheet({
                 {hifzOpen ? (
                   <div className="ayah-action-sheet__hifz" data-testid="mushaf-hifz-panel" role="region" aria-label="وضع الحفظ">
                     <p className="ayah-action-sheet__hifz-title">وضع الحفظ</p>
-                    {isAiTarteelEnabled() && parsed ? (
-                      <a
-                        className="ayah-action-sheet__ai-tarteel"
-                        href={`/quran/recitation-test-ai?surah=${parsed.surah}`}
-                        data-testid="mushaf-ayah-ai-tarteel"
-                      >
-                        <Mic size={18} aria-hidden="true" />
-                        <span>تلاوة بالذكاء</span>
-                      </a>
-                    ) : null}
                     <p className="ayah-action-sheet__range-label">النطاق</p>
                     <div className="ayah-action-sheet__range" role="group" aria-label="نطاق التلاوة">
                       {(
