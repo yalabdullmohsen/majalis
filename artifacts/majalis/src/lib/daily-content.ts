@@ -1,5 +1,6 @@
 import { DAILY_TICKER_NAWAWI } from "./daily-ticker-nawawi";
 import { DAILY_TICKER_DHIKR } from "./daily-ticker-dhikr";
+import { filterForPublicZone, normalizePublicSource } from "./content-display-zones";
 
 export type DailyHadithEntry = {
   id: string;
@@ -410,7 +411,8 @@ export type DailyDhikrEntry = {
 };
 
 export function getDailyHadith(date = new Date()) {
-  return pickDailyItem(DAILY_HADITH_POOL, date);
+  const pool = filterForPublicZone(DAILY_HADITH_POOL, "dailyReminder");
+  return pickDailyItem(pool.length > 0 ? pool : DAILY_HADITH_POOL, date);
 }
 
 export function getDailyAyah(date = new Date()) {
@@ -422,12 +424,12 @@ export function getDailyFaida(date = new Date()) {
 }
 
 export function getDailyDhikr(date = new Date()): DailyDhikrEntry {
-  const pool = DAILY_TICKER_DHIKR;
-  const item = pickDailyItem(pool, date);
+  const pool = filterForPublicZone(DAILY_TICKER_DHIKR, "dailyReminder");
+  const item = pickDailyItem(pool.length > 0 ? pool : DAILY_TICKER_DHIKR, date);
   return {
     id: item.id,
     text: item.text,
     category: item.categoryId === "adh-morning" ? "أذكار الصباح" : "أذكار المساء",
-    source: item.source,
+    source: normalizePublicSource(item.source) ?? item.source,
   };
 }

@@ -38,18 +38,24 @@ assert(pool.every((p) => p.href.startsWith("/")), "كل عنصر له رابط �
 assert(new Set(pool.map((p) => p.kind)).size >= 4, "المجمّع يغطي أربعة أنواع محتوى على الأقل");
 assert(pool.some((p) => p.kind === "promo"), "يشمل نبذ أقسام/مميزات (promo)");
 assert(pool.some((p) => p.kind === "hadith"), "يشمل أحاديث");
-assert(pool.some((p) => p.kind === "dhikr"), "يشمل أذكارًا");
-assert(pool.some((p) => p.label === "أذكار الصباح"), "صباحًا: أذكار الصباح");
-assert(!pool.some((p) => p.label === "أذكار المساء"), "صباحًا: بلا أذكار المساء");
+assert(pool.some((p) => p.kind === "dhikr"), "صباحًا: أذكار");
+assert(pool.some((p) => p.label === "ذكر ثابت"), "صباحًا: تسمية ذكر ثابت");
 {
   const evening = buildTickerPool(new Date("2026-08-30T19:00:00"));
-  assert(evening.some((p) => p.label === "أذكار المساء"), "مساءً: أذكار المساء");
-  assert(!evening.some((p) => p.label === "أذكار الصباح"), "مساءً: بلا أذكار الصباح");
+  assert(evening.some((p) => p.kind === "dhikr"), "مساءً: أذكار");
+  assert(evening.some((p) => p.label === "ذكر ثابت"), "مساءً: ذكر ثابت");
 }
 
-console.log("\n=== سلامة النص (بلا قصّ، بلا تكرار) ===");
-assert(!pool.some((p) => p.text.trim().endsWith("…")), "لا عنصر واحد ينتهي بعلامة حذف (لا قصّ للنص)");
-assert(pool.some((p) => p.text.length > 200), "توجد نصوص طويلة كاملة (أطول من 200 حرف) — دليل عدم القصّ");
+console.log("\n=== معاينة الشريط (اختصار للعرض) ===");
+assert(pool.every((p) => p.previewText.trim().length > 0), "كل عنصر له معاينة");
+assert(
+  pool.some((p) => p.text.length > p.previewText.length),
+  "توجد نصوص طويلة تُختصر في المعاينة",
+);
+assert(
+  pool.every((p) => p.previewText.length <= p.text.length),
+  "المعاينة لا أطول من النص الأصلي",
+);
 {
   const seen = new Set<string>();
   const dupes = pool.filter((p) => {

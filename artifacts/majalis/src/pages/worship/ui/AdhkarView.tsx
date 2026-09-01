@@ -3,7 +3,7 @@ import { Leaf } from "lucide-react";
 import { useLocation, useParams } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
 import { ADHKAR_CATEGORIES, FEATURED_ADHKAR_SLUGS } from "@/lib/adhkar-seed";
-import { usePublishedAdhkarItems } from "@/lib/adhkar-service";
+import { usePublishedAdhkarItems, isPublishableAdhkar, getUnverifiedAdhkarItems } from "@/lib/adhkar-service";
 import { PageHeader, Empty } from "@/components/ui-common";
 import { PageShell } from "@/components/layout/PageShell";
 import { adhkarCatRedirectPath, hrefAdhkar, resolveAdhkarCategory } from "@/lib/content-href";
@@ -147,8 +147,10 @@ export default function AdhkarPage() {
   }, [routeParams.slug, location, category]);
 
   const items = useMemo(() => {
-    if (category === "all") return publishedItems;
-    return publishedItems.filter((i) => i.categoryId === category);
+    if (category === "adh-unverified") return getUnverifiedAdhkarItems(publishedItems);
+    const safe = publishedItems.filter(isPublishableAdhkar);
+    if (category === "all") return safe;
+    return safe.filter((i) => i.categoryId === category);
   }, [category, publishedItems]);
 
   const current = items[currentIndex] ?? null;
@@ -268,7 +270,22 @@ export default function AdhkarPage() {
             aria-selected={category === cat.id}
           >{cat.name}</button>
         ))}
+        <button
+          role="tab"
+          type="button"
+          className={`content-hub-chip${category === "adh-unverified" ? " content-hub-chip--active" : ""}`}
+          onClick={() => changeCategory("adh-unverified")}
+          aria-selected={category === "adh-unverified"}
+        >
+          تنبيه وتمييز
+        </button>
       </div>
+
+      {category === "adh-unverified" && (
+        <p className="adhkar-category-desc" role="note">
+          أذكار لا تثبت أو تحتاج تنبيهًا — للتعليم والتمييز فقط، ولا تُعرض في ورد اليوم أو الشريط العلوي.
+        </p>
+      )}
 
       {activeCategory && category !== "all" && (
         <p className="adhkar-category-desc">{activeCategory.description}</p>
