@@ -107,7 +107,7 @@ export function HomeUpcomingLessons({
         loading={loading}
         error={loadError}
         empty={!loading && !loadError && todayLessons.length === 0}
-        emptyText="لا توجد دروس مجدولة اليوم"
+        emptyText="لا توجد دروس مجدولة اليوم. تصفّح فهرس الدروس أو جرّب يومًا آخر."
         onRetry={loadLessons}
       >
         <div className="home-kuwait-grid lesson-unified-grid">

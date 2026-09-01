@@ -25,7 +25,7 @@ export function FaidaImageCardModal({ text, source, category, onClose }: Props) 
     try {
       const dataUrl = await toPng(cardRef.current, { pixelRatio: 3, cacheBust: true });
       const link = document.createElement("a");
-      link.download = `فائدة-المجلس-العلمي.png`;
+      link.download = `فائدة-سُنّة.png`;
       link.href = dataUrl;
       link.click();
       setStatus("done");
@@ -68,7 +68,7 @@ export function FaidaImageCardModal({ text, source, category, onClose }: Props) 
             )}
 
             <div className="fic-card__footer">
-              <span>majlisilm.com</span>
+              <span>ssunnah.com</span>
             </div>
           </div>
         </div>

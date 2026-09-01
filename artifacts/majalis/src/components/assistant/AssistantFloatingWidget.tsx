@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { BUTTON } from "@/lib/ui-copy";
 import { Link, useLocation } from "wouter";
 import { Sparkles, X } from "lucide-react";
 import { useAssistantChat } from "@/hooks/useAssistantChat";
@@ -56,7 +57,7 @@ export function AssistantFloatingWidget() {
           title="المساعد العلمي"
         >
           <Sparkles size={22} strokeWidth={2} aria-hidden="true" />
-          <span className="assistant-fab__label">المساعد</span>
+          <span className="assistant-fab__label">{BUTTON.askAssistant}</span>
         </button>
       )}
 

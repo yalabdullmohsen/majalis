@@ -101,7 +101,7 @@ export const NOUN_ASILA: ArabicCountNoun = {
 
 /** عدّادات إعلانات المسابقات الخارجية (ليست أسئلة). */
 export const NOUN_MUSABAQAT: ArabicCountNoun = {
-  zero: "لا مسابقات",
+  zero: "لا مسابقات حالية",
   one: "مسابقة",
   two: "مسابقتان",
   few: "مسابقات",

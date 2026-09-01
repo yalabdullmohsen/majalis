@@ -488,7 +488,7 @@ export default function NotificationSettingsPage() {
                 <Bell size={26} strokeWidth={1.5} />
               </div>
               <p className="nh-empty__msg">
-                {searchQ ? `لا نتائج لـ «${searchQ}»` : histTab === "archived" ? "لا توجد إشعارات مؤرشفة" : "لا توجد إشعارات"}
+                {searchQ ? `لا نتائج لـ «${searchQ}». جرّب كلمة أخرى.` : histTab === "archived" ? "لا توجد إشعارات مؤرشفة." : "لا توجد إشعارات جديدة."}
               </p>
               {!searchQ && <p className="nh-empty__sub">سنُخبرك هنا بكل جديد يخصّ رحلتك العلمية</p>}
             </div>

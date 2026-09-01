@@ -87,7 +87,7 @@ export function FiqhCouncilSearchBox({
           )}
 
           {!loading && results.length === 0 && (
-            <p className="fiqh-search-hint">لا توجد نتائج.</p>
+            <p className="fiqh-search-hint">لا توجد نتائج مطابقة. جرّب كلمة أخرى.</p>
           )}
 
           {results.map((item) => (

@@ -214,6 +214,7 @@ if (existsSync(sitemapPath)) {
 
 runNode("scripts/check-seo-indexing.js", "check-seo-indexing");
 runNode("scripts/check-editorial-safety.js", "check-editorial-safety");
+runNode("scripts/check-copy-quality.js", "check-copy-quality");
 runNode("scripts/check-sources-and-licenses.js", "check-sources-and-licenses");
 runNode("scripts/check-pwa.js", "check-pwa");
 
