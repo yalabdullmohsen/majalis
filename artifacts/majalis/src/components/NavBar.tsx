@@ -13,7 +13,6 @@ import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { getActiveTab } from "@/lib/get-active-tab";
 import { LOBBY_SEARCH_FILTER } from "@/config/section-lobby-chrome";
 import { useSharedPrayerCountdownLive } from "@/components/prayer/PrayerCountdownProvider";
-import { isTickerQuietPath } from "@/lib/ticker-quiet-paths";
 import { HeaderAdSlot } from "@/components/header/HeaderAdSlot";
 import { shouldShowHeaderAd } from "@/config/header-ad";
 import "@/styles/components/dark-emerald-menus.css";
