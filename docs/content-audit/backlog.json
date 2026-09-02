@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-02",
-  "lastCompletedId": "b054",
-  "resumeFromId": "b055",
+  "lastCompletedId": "b055",
+  "resumeFromId": "b056",
   "items": [
     {
       "id": "b001",
@@ -636,6 +636,19 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b054-nations-knowledge-gate.test.ts"
       ],
       "finding": "كانت أقسام الذنب/المآل متطابقة في 16 بطاقة؛ استُبدلت بمحتوى nations-seed (ذنب ومآل وعبر فريدة)، وأُضيفت 5 بطاقات ناقصة لتغطية 21 أمة في NATIONS، مع الإبقاء على آيات المصحف حيث وُجدت."
+    },
+    {
+      "id": "b055",
+      "section": "discover_islam",
+      "title": "إزالة الحشو القالبي من اكتشف الإسلام (FAQ + مسار المحطات)",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/public/data/knowledge/discover-islam/path-and-faq.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b055-discover-islam-gate.test.ts"
+      ],
+      "finding": "حُذف بيان أوضح/توجيه القالبيان من أسئلة FAQ؛ بيان فريد لكل سؤال، وتوجيه حسب موضوع السؤال؛ و«لماذا هذه المحطة؟» + «ماذا أفعل الآن؟» فريدان لـ20 محطة مسار."
     }
   ]
 }
