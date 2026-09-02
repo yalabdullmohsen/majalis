@@ -195,6 +195,12 @@ export const CONTENT_AUDIT_GATES: ContentAuditGate[] = [
     path: "src/lib/__tests__/content-audit-b058-courses-registry-gate.test.ts",
     kind: "node-tsx",
   },
+  {
+    id: "b059-coverage-matrix",
+    dimension: "تدقيق",
+    path: "src/lib/__tests__/content-audit-b059-coverage-matrix-gate.test.ts",
+    kind: "node-tsx",
+  },
   // تصحيح — لغة وهوية ومصادر
   {
     id: "content-lang",

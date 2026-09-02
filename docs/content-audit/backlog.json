@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-02",
-  "lastCompletedId": "b058",
-  "resumeFromId": "b059",
+  "lastCompletedId": "b059",
+  "resumeFromId": "b060",
   "items": [
     {
       "id": "b001",
@@ -109,8 +109,10 @@
       "section": "coverage_matrix",
       "title": "بناء مصفوفة تغطية كاملة لكل الأقسام المذكورة في البند 5 من التكليف",
       "severity": "medium",
-      "status": "pending",
-      "nextAction": "توسيع inventory.json تدريجياً قسماً قسماً بدل جرد 252 مساراً دفعة واحدة (تقليل استهلاك الرصيد)."
+      "status": "done",
+      "nextAction": "توسيع inventory.json تدريجياً قسماً قسماً بدل جرد 252 مساراً دفعة واحدة (تقليل استهلاك الرصيد).",
+      "verifiedAt": "2026-09-02",
+      "finding": "أُغلق ضمن b059 بمصفوفة inventory الكاملة من السجل الحي."
     },
     {
       "id": "b011",
@@ -693,6 +695,20 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b058-courses-registry-gate.test.ts"
       ],
       "finding": "أُزيل الحشو القالبي من ملخصات/متون الدورات؛ مُلئت 18 دورة بلا body من حقولها (متون/جدول/مكان) دون اختراع منهج؛ وسُجّلت arabic-language وmaqasid-sharia وdalail-nubuwwah في sections.registry (المسارات كانت موجودة)."
+    },
+    {
+      "id": "b059",
+      "section": "coverage_matrix",
+      "title": "مصفوفة تغطية الأقسام الحيّة من sections.registry + حالة التدقيق",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "docs/content-audit/inventory.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b059-coverage-matrix-gate.test.ts",
+        "docs/content-audit/technical-handoff.md"
+      ],
+      "finding": "وُسّع inventory لـ54 قسمًا حيًا (غير الحساب) مع حالة تدقيق b044–b058 لـ25 قسمًا؛ بوابة تتحقق من اكتمال التغطية مقابل SECTIONS. أُغلق b010. حُدّث handoff لإغلاق ربط اللغة/المقاصد/دلائل."
     }
   ]
 }
