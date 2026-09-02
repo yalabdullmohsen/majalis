@@ -1,7 +1,7 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b047",
+  "lastCompletedId": "b048",
   "resumeFromId": "b011",
   "items": [
     {
@@ -537,6 +537,21 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b047-history-glossary-gate.test.ts"
       ],
       "finding": "أُعيدت كتابة الراشدين/الأمويين/العباسيين بعد تشويه لغوي ومعلوماتي (فتوحات لا فتوات، المستعصم لا المعتصم، سليمان لا عبد الملك في حصار 717، إزالة عين جالوت من هارون…). المصطلحات: إكمال تعاريف مبتورة، إضافة الحسن/الضعيف، حذف تكرار الحسد، مصادر للأحاديث. بوابة b047."
+    },
+    {
+      "id": "b048",
+      "section": "mamluk_seljuk_glossary",
+      "title": "تدقيق المماليك/السلاجقة + تنظيف روابط المصطلحات",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/src/data/islamic-history/mamluk.json",
+        "artifacts/majalis/src/data/islamic-history/seljuk-ayyubid.json",
+        "artifacts/majalis/src/pages/account/ui/IslamicGlossaryView.tsx",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b048-mamluk-glossary-gate.test.ts"
+      ],
+      "finding": "تصحيح قطز/كتبغا/الريدانية/صبح الأعشى؛ فصل طغرل بك عن ألب أرسلان؛ إزالة الروض الباسم؛ إضافة 14 مصطلحًا أساسيًا؛ تقليل روابط related المكسورة من ~260 إلى ≤40؛ إصلاح ربط مقاصد/قياس بالبدعة خطأً."
     }
   ]
 }
