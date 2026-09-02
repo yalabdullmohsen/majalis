@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState, useCallback, startTransition } from "react";
-import { Pencil, Trash2 } from "lucide-react";
+import { GraduationCap, Pencil, Trash2 } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { Link } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { CompactSectionHeader } from "@/components/ui/CompactSectionHeader";
 import { ErrorState, Empty } from "@/components/ui-common";
 import { HarvestFeedPanel } from "@/components/lessons/HarvestFeedPanel";
 import { SectionLobby } from "@/components/lobby/SectionLobby";
@@ -551,23 +552,17 @@ export default function LessonsPage({
     [lobby.quad, activeLessons.length, archivedLessons.length],
   );
   const nearest = featuredSections.upcoming[0];
-  const primary = lobby.primary
-    ? {
-        ...lobby.primary,
-        subtitle: nearest
-          ? [nearest.title, nearest.mosque].filter(Boolean).join(" — ")
-          : loading
-            ? "\u00a0"
-            : "لا درس قريب اليوم",
-      }
-    : undefined;
+  const lessonsHeaderDesc = nearest
+    ? [nearest.title, nearest.mosque].filter(Boolean).join(" — ")
+    : loading
+      ? "جاري تحميل أقرب الدروس…"
+      : "حلقات ودروس علمية مرتبة حسب الموعد.";
 
   return (
     <SectionLobby
       lobbyId="lessons"
       title={lobby.title}
-      primary={primary}
-      className="lessons-page-v2 lessons-page-v3 ds-page mj-page"
+      className="lessons-page-v2 lessons-page-v3 ds-page mj-page lessons-compact-header"
       chips={lobby.chips?.map((c) => ({
         ...c,
         active: tab === c.id,
@@ -590,6 +585,19 @@ export default function LessonsPage({
         </div>
       }
     >
+      <CompactSectionHeader
+        title="الدروس"
+        description={lessonsHeaderDesc}
+        icon={GraduationCap}
+        stats={[
+          { id: "active", label: `${activeLessons.length} درسًا` },
+          ...(archivedLessons.length > 0
+            ? [{ id: "archived", label: `${archivedLessons.length} في الأرشيف` }]
+            : []),
+        ]}
+        titleId="lessons-compact-title"
+        className="lessons-compact-section-header"
+      />
       <div className="lessons-v2-layout lessons-v3-layout">
         <main className="lessons-v2-main" id="lessons-list">
           {loadError && !loading ? (
