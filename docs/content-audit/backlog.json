@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
-  "generatedAt": "2026-07-24",
-  "lastCompletedId": "b051",
-  "resumeFromId": "b011",
+  "generatedAt": "2026-09-02",
+  "lastCompletedId": "b052",
+  "resumeFromId": "b053",
   "items": [
     {
       "id": "b001",
@@ -596,6 +596,20 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b051-fiqh-filler-gate.test.ts"
       ],
       "finding": "حذف الجمل القالبية المكررة (اختزال مخلّ / ضبط النقل / تقريب الفهم / محل النزاع…) من بذرة المسائل ومن الموسوعة المولَّدة؛ حارس filler أخضر؛ تدعيم 3 بطاقات معرفة قصيرة."
+    },
+    {
+      "id": "b052",
+      "section": "tafsir_knowledge",
+      "title": "جودة معرفة التفسير: مقدمات السور وحشو بطاقات الآيات",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/public/data/knowledge/tafsir/surahs/all-surah-intros.json",
+        "artifacts/majalis/public/data/knowledge/tafsir/ayahs/",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b052-tafsir-knowledge-gate.test.ts"
+      ],
+      "finding": "مزامنة أسباب التسمية/المحاور من surah-extended-meta؛ حذف ~972 قسم حشو (غريب/سبب نزول/فوائد قالب)؛ تعويض 110+ آية قصيرة من الميسّر/السعدي؛ 114 مقدمة verified؛ بوابة content-audit-b052."
     }
   ]
 }
