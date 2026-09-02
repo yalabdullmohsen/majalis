@@ -95,10 +95,17 @@ export function useRecitationTest(canonicalText: string) {
           setState("unsupported");
           return;
         }
-        // لا تطلب أذونات بصمت إن لم تُمنح بعد — فقط حضّر إن كانت ممنوحة
-        const perm = await plugin.requestPermissions();
+        // لا تطلب أذونات بصمت عند التركيب — حضّر فقط إن كان الإذن ممنوحًا مسبقًا
+        const raw = plugin as typeof plugin & {
+          checkPermissions?: () => Promise<{ speechRecognition?: string }>;
+        };
+        let granted = false;
+        if (typeof raw.checkPermissions === "function") {
+          const checked = await raw.checkPermissions();
+          granted = checked.speechRecognition === "granted";
+        }
         if (cancelled) return;
-        if (perm.speechRecognition === "granted") {
+        if (granted) {
           await plugin.prepare({ language: "ar-SA" });
           if (!cancelled) setState("ready");
         } else {
