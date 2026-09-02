@@ -38,14 +38,45 @@ type PrayerDayCache = {
   updatedAt: string;
 };
 
+/** أوقات تقديرية ثابتة — لا تُعرض كصحيحة ولا تُخزَّن في الكاش. */
+export function isEstimatedPrayerPayload(
+  payload: PrayerTimesPayload | null | undefined,
+): boolean {
+  if (!payload) return false;
+  if (payload.stale && /تقديري|بدون اتصال/i.test(payload.source || "")) return true;
+  return false;
+}
+
 function readPrayerCache(): PrayerDayCache | null {
   try {
     const raw = localStorage.getItem(PRAYER_CACHE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as PrayerDayCache;
-    if (!parsed?.byDate || typeof parsed.byDate !== "object") return null;
+    if (!parsed?.byDate || typeof parsed.byDate !== "object") {
+      localStorage.removeItem(PRAYER_CACHE_KEY);
+      return null;
+    }
+    let scrubbed = false;
+    for (const key of Object.keys(parsed.byDate)) {
+      if (isEstimatedPrayerPayload(parsed.byDate[key])) {
+        delete parsed.byDate[key];
+        scrubbed = true;
+      }
+    }
+    if (scrubbed) {
+      try {
+        localStorage.setItem(PRAYER_CACHE_KEY, JSON.stringify(parsed));
+      } catch {
+        /* ignore */
+      }
+    }
     return parsed;
   } catch {
+    try {
+      localStorage.removeItem(PRAYER_CACHE_KEY);
+    } catch {
+      /* ignore */
+    }
     return null;
   }
 }
@@ -71,6 +102,7 @@ export function getCachedPrayerTimes(governorateId?: string): PrayerTimesPayload
 }
 
 function putPrayerCacheDay(govId: string, dateKey: string, payload: PrayerTimesPayload): void {
+  if (!payload?.ok || !payload.prayers?.length || isEstimatedPrayerPayload(payload)) return;
   const methodId = activePrayerMethodId();
   const prev = readPrayerCache();
   const byDate = prev?.govId === govId && prev.method === methodId ? { ...prev.byDate } : {};
@@ -628,10 +660,19 @@ export async function fetchPrayerTimes(governorateId?: string): Promise<PrayerTi
     /* continue */
   }
 
-  const fallback = staticPrayerFallback(cityName);
-  putPrayerCacheDay(locId, dateKey, fallback);
+  /* لا نخزّن ولا نُرجع أوقاتًا وهمية كأنها صحيحة — الواجهة تعرض اختيار المدينة */
   if (loc.source === "kuwait") void refreshPrayerTimesInBackground(loc.kuwaitGovId);
-  return fallback;
+  return {
+    ok: false,
+    city: cityName,
+    timezone: loc.timeZone,
+    method: prayerCalcMethodLabel(getPrayerCalcMethod()),
+    source: "غير متوفر",
+    date: { gregorian: dateKey, hijri: null, readable: null },
+    prayers: [],
+    fetchedAt: new Date().toISOString(),
+    stale: true,
+  };
 }
 
 /**
