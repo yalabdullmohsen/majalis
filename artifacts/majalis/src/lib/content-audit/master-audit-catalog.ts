@@ -165,6 +165,12 @@ export const CONTENT_AUDIT_GATES: ContentAuditGate[] = [
     path: "src/lib/__tests__/content-audit-b053-prophets-knowledge-gate.test.ts",
     kind: "node-tsx",
   },
+  {
+    id: "b054-nations-knowledge",
+    dimension: "تدقيق",
+    path: "src/lib/__tests__/content-audit-b054-nations-knowledge-gate.test.ts",
+    kind: "node-tsx",
+  },
   // تصحيح — لغة وهوية ومصادر
   {
     id: "content-lang",

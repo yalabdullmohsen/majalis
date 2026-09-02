@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-02",
-  "lastCompletedId": "b053",
-  "resumeFromId": "b054",
+  "lastCompletedId": "b054",
+  "resumeFromId": "b055",
   "items": [
     {
       "id": "b001",
@@ -623,6 +623,19 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b053-prophets-knowledge-gate.test.ts"
       ],
       "finding": "كانت أقسام التعريف/الزمان/المواقف/الدروس/المآل متطابقة تقريباً في 25 بطاقة؛ استُبدلت بمحتوى prophets-data (دروس ومواقف فريدة)، وحُذف حشو «يُراجع مقالة الأمة…»، مع ربط مختصر بالأمة عبر related عند وجودها."
+    },
+    {
+      "id": "b054",
+      "section": "nations_knowledge",
+      "title": "إزالة الحشو القالبي من معرفة الأمم ومزامنة المحتوى من nations-seed",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/public/data/knowledge/nations/",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b054-nations-knowledge-gate.test.ts"
+      ],
+      "finding": "كانت أقسام الذنب/المآل متطابقة في 16 بطاقة؛ استُبدلت بمحتوى nations-seed (ذنب ومآل وعبر فريدة)، وأُضيفت 5 بطاقات ناقصة لتغطية 21 أمة في NATIONS، مع الإبقاء على آيات المصحف حيث وُجدت."
     }
   ]
 }
