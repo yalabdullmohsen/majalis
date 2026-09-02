@@ -37,6 +37,11 @@
   },
   "redirects": [
     {
+      "source": "/more",
+      "destination": "/#explore",
+      "permanent": true
+    },
+    {
       "source": "/scholars/imam-malik",
       "destination": "/scholars/malik",
       "permanent": true

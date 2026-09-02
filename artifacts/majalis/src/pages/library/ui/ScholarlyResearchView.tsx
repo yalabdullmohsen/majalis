@@ -173,7 +173,7 @@ export default function ScholarlyResearchPage() {
 
   const handleSave = useCallback(async () => {
     if (!result || !isLoggedIn) {
-      setSaveMsg(isLoggedIn ? "لا توجد نتائج للحفظ" : "يجب تسجيل الدخول أولاً");
+      setSaveMsg(isLoggedIn ? "لا توجد نتائج بحث للحفظ. نفّذ بحثًا أولًا." : "يجب تسجيل الدخول أولاً");
       return;
     }
     setSaveMsg("جارٍ الحفظ…");

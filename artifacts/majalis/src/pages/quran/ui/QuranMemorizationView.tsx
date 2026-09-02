@@ -172,7 +172,7 @@ function QuestionCard({
       const dir = question.type === "next-ayah" ? "next" : question.type === "prev-ayah" ? "prev" : null;
       if (dir) {
         fetchAdjacentAyah(question.surahNumber, question.ayahNumber, dir)
-          .then((ayah) => setAdjacentAyah(ayah?.text ?? "لا توجد آية"))
+          .then((ayah) => setAdjacentAyah(ayah?.text ?? "تعذّر تحميل نص الآية."))
           .catch(() => setAdjacentAyah("تعذّر التحميل"));
       }
     }

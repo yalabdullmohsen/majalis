@@ -51,6 +51,16 @@ export type LibraryBook = {
   sort_order: number;
   /** تنبيه علمي يظهر في صفحة الكتاب؛ الكتب ذات التنبيه لا تُبرَز في الرئيسية. */
   caution?: string;
+  /** حوكمة المصادر — اختياري؛ يُشتق من resolveLibraryProvenance عند الغياب */
+  sourceName?: string;
+  sourceUrl?: string;
+  license?: string;
+  usageNote?: string;
+  publicDomain?: boolean;
+  hostedBySsunnah?: boolean;
+  reviewed?: boolean;
+  lastVerifiedAt?: string;
+  file_url?: string;
 };
 
 export const LIBRARY_CATALOG: LibraryBook[] = [

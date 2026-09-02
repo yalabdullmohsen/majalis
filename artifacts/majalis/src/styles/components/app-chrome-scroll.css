@@ -90,18 +90,10 @@ html:not(.pts-immersive) body {
   }
 
   .app-shell.app-chrome-hidden .app-top-chrome {
-    transform: translateY(-100%);
+    transform: translateY(calc(-100% - 4px));
     opacity: 0;
     pointer-events: none;
-    /* انهيار الحجز في التدفق — transform وحده يترك فراغًا بمنتصف الشاشة */
-    height: 0 !important;
-    min-height: 0 !important;
-    max-height: 0 !important;
-    overflow: hidden !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-    flex: 0 0 0 !important;
+    /* transform فقط — لا height:0 حتى لا يختفي الشريط فجأة */
   }
 
   .app-main {

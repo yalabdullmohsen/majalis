@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useLayoutEffect, useRef, useState, type ComponentType } from "react";
+import { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState, type ComponentType } from "react";
 import { Link, Route, Switch, Router as WouterRouter, useLocation } from "wouter";
 import { AuthProvider, useAuth } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
@@ -16,7 +16,8 @@ import { ErrorBoundary, SectionErrorBoundary } from "@/components/ErrorBoundary"
 import { usePageSeo } from "@/lib/seo";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
-import { useSharedPrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
+import { useSharedPrayerData } from "@/components/prayer/PrayerCountdownProvider";
+import { recordRouteTransitionEnd, recordRouteTransitionStart } from "@/lib/route-transition-timing";
 import { PRAYER_ALERT_PREFS_CHANGED_EVENT } from "@/lib/prayer-alert-preferences";
 import { recordRecentPage } from "@/lib/recent-pages";
 import {
@@ -210,6 +211,7 @@ function ScrollResetOnNav() {
     const leavingLocation = lastLocationRef.current;
     const isPop = isPopRef.current;
     recordNavigationVisit(location, isPop ? "pop" : "push");
+    recordRouteTransitionStart(location);
     if (leavingLocation === location) {
       isPopRef.current = false;
       return;
@@ -220,9 +222,19 @@ function ScrollResetOnNav() {
 
     if (isPop) {
       restoreScrollSnapshot(scrollPosByPath.get(location));
+      const ms = recordRouteTransitionEnd(location);
+      if (ms != null && ms > 0 && typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("majalis:route-transition", { detail: { path: location, ms } }));
+      }
       return;
     }
     scrollDocumentToTop();
+    requestAnimationFrame(() => {
+      const ms = recordRouteTransitionEnd(location);
+      if (ms != null && ms > 0) {
+        window.dispatchEvent(new CustomEvent("majalis:route-transition", { detail: { path: location, ms } }));
+      }
+    });
   }, [location]);
 
   return null;
@@ -254,7 +266,7 @@ function IslamicReminderBootstrap() {
 }
 
 function AdhanSchedulerBootstrap() {
-  const { data } = useSharedPrayerCountdown();
+  const { data } = useSharedPrayerData();
   useEffect(() => {
     if (!data) return;
     // مزامنة كاش أوقات الصلاة في lesson-time بالبيانات الحية الفعلية من كل
@@ -300,7 +312,7 @@ function AdhanSchedulerBootstrap() {
  * (مثلاً بعد إغلاقه في الخلفية لدقائق ثم فتحه من جديد داخل نافذة الـ١٥ دقيقة).
  */
 function PrayerAlertSchedulerBootstrap() {
-  const { data } = useSharedPrayerCountdown();
+  const { data } = useSharedPrayerData();
 
   useEffect(() => {
     if (!data) return;
@@ -612,6 +624,21 @@ function AppShellInner() {
   const deferHomePrayerChrome = location === "/" || location === "";
   const isHomePath = deferHomePrayerChrome;
 
+  const searchScrollYRef = useRef(0);
+
+  const openGlobalSearch = useCallback(() => {
+    searchScrollYRef.current = window.scrollY || document.documentElement.scrollTop || 0;
+    setSearchOpen(true);
+  }, []);
+
+  const closeGlobalSearch = useCallback(() => {
+    const y = searchScrollYRef.current;
+    setSearchOpen(false);
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: y, left: 0, behavior: "instant" as ScrollBehavior });
+    });
+  }, []);
+
   const { isHidden: shouldHideChrome } = useAutoHideBottomNav({
     forceShow: searchOpen || comingSoonOpen || hideSiteChrome,
     routeKey: location,
@@ -632,7 +659,7 @@ function AppShellInner() {
   }, [onPrayer, immersive]);
 
   useEffect(() => {
-    const evtHandler = () => setSearchOpen(true);
+    const evtHandler = () => openGlobalSearch();
     const soonHandler = (e: Event) => {
       const detail = (e as CustomEvent<{ title?: string }>).detail;
       setComingSoonTitle(detail?.title || "هذا القسم");
@@ -644,7 +671,7 @@ function AppShellInner() {
       window.removeEventListener("global-search-open", evtHandler);
       window.removeEventListener("global-coming-soon-open", soonHandler as EventListener);
     };
-  }, []);
+  }, [openGlobalSearch]);
 
   return (
     <PrayerCountdownScope deferMs={isHomePath ? 10_000 : 0}>
@@ -655,7 +682,7 @@ function AppShellInner() {
       data-native-app={isNativeApp ? "true" : "false"}
     >
       <PageChromeSync />
-      <GlobalAppShortcuts onToggleSearch={() => setSearchOpen((v) => !v)} />
+      <GlobalAppShortcuts onToggleSearch={() => (searchOpen ? closeGlobalSearch() : openGlobalSearch())} />
       <a href="#main-content" className="skip-link mj-skip-link">{t("skip_to_content")}</a>
       <Suspense fallback={null}>
         <OfflineBanner />
@@ -753,7 +780,7 @@ function AppShellInner() {
       {searchOpen && (
         <SectionErrorBoundary name="GlobalSearchModal">
           <Suspense fallback={null}>
-            <GlobalSearchModal onClose={() => setSearchOpen(false)} />
+            <GlobalSearchModal onClose={closeGlobalSearch} />
           </Suspense>
         </SectionErrorBoundary>
       )}

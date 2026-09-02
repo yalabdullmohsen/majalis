@@ -227,6 +227,7 @@ const ContentProductionDashboardPage = lazyWithRetry(
   "ContentProductionDashboardPage",
 );
 const FeatureStatusPage = lazyWithRetry(() => import("@/views/admin/FeatureStatusPage"), "FeatureStatusPage");
+const InternalStatusPage = lazyWithRetry(() => import("@/views/internal/InternalStatusPage"), "InternalStatusPage");
 const MyLearningPage = lazy(() => import("@/pages/lessons/MyLearningPage"));
 const LearnHubPage = lazy(() => import("@/views/learn/LearnHubPage"));
 const LearnCategoryPage = lazy(() => import("@/views/learn/LearnCategoryPage"));
@@ -660,11 +661,12 @@ export default function AppRoutes() {
       <Route path="/updates/auto/:slug"><SafeLazyRoute component={AutoContentDetailPage} /></Route>
       <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
       <Route path="/sections"><SafeLazyRoute component={SectionsPage} /></Route>
-      <Route path="/more"><Redirect to="/sections" /></Route>
+      <Route path="/more"><Redirect to="/#explore" /></Route>
       <Route path="/whats-new"><Redirect to="/" /></Route>
       <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
       <Route path="/register"><SafeLazyRoute component={RegisterPage} /></Route>
       <Route path="/auth/register"><Redirect to="/register" /></Route>
+      <Route path="/internal/status"><AdminLazyRoute component={InternalStatusPage} /></Route>
       <Route path="/admin/sources"><AdminLazyRoute component={AutomationSourcesPage} /></Route>
       <Route path="/admin/automation/sources"><AdminLazyRoute component={AutomationSourcesPage} /></Route>
       <Route path="/admin/automation/dashboard"><AdminLazyRoute component={AutomationDashboardPage} /></Route>

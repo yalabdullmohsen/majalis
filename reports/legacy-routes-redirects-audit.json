@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-09-01T22:34:27.873Z",
+  "siteUrl": "https://www.ssunnah.com",
+  "critical": 0,
+  "high": 0,
+  "medium": 0,
+  "info": 0,
+  "issues": {
+    "critical": [],
+    "high": [],
+    "medium": [],
+    "info": []
+  },
+  "redirectCount": 170,
+  "iaRedirectCount": 20
+}

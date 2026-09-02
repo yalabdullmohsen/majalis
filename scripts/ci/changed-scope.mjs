@@ -62,6 +62,42 @@ function listChangedFiles() {
 }
 
 /** @param {string} p */
+export function isPwaPath(p) {
+  const s = String(p || "").replace(/\\/g, "/");
+  return (
+    /sw\.(js|ts|mjs)$/i.test(s) ||
+    /service-worker/i.test(s) ||
+    /manifest\.(webmanifest|json)$/i.test(s) ||
+    /\/pwa\//i.test(s) ||
+    /workbox/i.test(s)
+  );
+}
+
+/** @param {string} p */
+export function isSeoPath(p) {
+  const s = String(p || "").replace(/\\/g, "/");
+  return (
+    /seo/i.test(s) ||
+    /sitemap/i.test(s) ||
+    /robots\.txt$/i.test(s) ||
+    /generate-seo/i.test(s) ||
+    /post-build-seo/i.test(s) ||
+    /seo-routes\.json$/i.test(s) ||
+    /seo-nav-labels\.json$/i.test(s)
+  );
+}
+
+/** @param {string} p */
+export function isApiPath(p) {
+  const s = String(p || "").replace(/\\/g, "/");
+  return (
+    /^artifacts\/api-server\//i.test(s) ||
+    /^artifacts\/majalis\/(api|lib\/api)/i.test(s) ||
+    /api-handlers/i.test(s)
+  );
+}
+
+/** @param {string} p */
 export function classifyPath(p) {
   const s = String(p || "").replace(/\\/g, "/");
   if (/^docs\//i.test(s) || /\.md$/i.test(s)) return "docs";
@@ -129,6 +165,17 @@ export function classifyScopes(paths) {
   const list = [...scopes];
   const has = (id) => scopes.has(id);
 
+  const emptyOrUnknown = paths.length === 0;
+  const uiPaths = paths.some((p) => classifyPath(p) === "ui_layout" || /\.css$/i.test(p));
+  const apiPaths = paths.some((p) => classifyPath(p) === "backend_api" || isApiPath(p));
+  const seoPaths = paths.some((p) => isSeoPath(p));
+  const pwaPaths = paths.some((p) => isPwaPath(p));
+  const iosPaths = paths.some((p) => classifyPath(p) === "ios_capacitor");
+  const contentPaths = paths.some((p) => classifyPath(p) === "content_data");
+  const mushafPaths = paths.some((p) => classifyPath(p) === "quran_mushaf");
+  const docsOnly =
+    list.length > 0 && list.every((id) => id === "docs");
+
   const need_build =
     has("ui_layout") ||
     has("quran_mushaf") ||
@@ -137,21 +184,49 @@ export function classifyScopes(paths) {
     has("ci_config") ||
     has("ios_capacitor") ||
     has("other") ||
-    paths.length === 0;
+    emptyOrUnknown;
 
-  const need_mushaf = has("quran_mushaf") || paths.length === 0;
-  const need_color_contrast = has("ui_layout") || has("quran_mushaf") || paths.length === 0;
-  const need_data_audit = has("content_data") || paths.length === 0;
+  const need_mushaf = has("quran_mushaf") || emptyOrUnknown;
+  const need_color_contrast = has("ui_layout") || has("quran_mushaf") || emptyOrUnknown;
+  const need_data_audit = has("content_data") || emptyOrUnknown;
   const need_admin_privacy = has("ui_layout") || has("ci_config") || has("content_data");
+  const need_ui_checks = uiPaths || mushafPaths || emptyOrUnknown;
+  const need_api_checks = apiPaths || has("backend_api") || emptyOrUnknown;
+  const need_seo_checks = seoPaths || has("ui_layout") || has("content_data") || emptyOrUnknown;
+  const need_pwa_checks = pwaPaths || emptyOrUnknown;
+  const need_content_checks = contentPaths || emptyOrUnknown;
+  const need_ios_checks = iosPaths || emptyOrUnknown;
+  const need_full_checks = emptyOrUnknown || has("ci_config") || has("other");
+  const need_visual = need_ui_checks && !docsOnly;
+  const need_lighthouse = need_visual;
+
   const admin_only =
     list.length > 0 &&
     paths.every((p) => /\/admin\//i.test(p) || /seo-routes\.json$/i.test(p));
+
+  const checks = {
+    ui: need_ui_checks,
+    api: need_api_checks,
+    seo: need_seo_checks,
+    pwa: need_pwa_checks,
+    content: need_content_checks,
+    ios: need_ios_checks,
+    full: need_full_checks,
+    mushaf: need_mushaf,
+    build: need_build,
+    visual: need_visual,
+    lighthouse: need_lighthouse,
+    color_contrast: need_color_contrast,
+    data_audit: need_data_audit,
+  };
 
   return {
     scopes: list.map((id) => SCOPE_LABELS[id]),
     scopeIds: list,
     byPath,
     paths,
+    checks,
+    docsOnly,
     outputs: {
       scopes: list.map((id) => SCOPE_LABELS[id]).join(","),
       scope_need_build: need_build ? "true" : "false",
@@ -160,6 +235,14 @@ export function classifyScopes(paths) {
       scope_need_data_audit: need_data_audit ? "true" : "false",
       scope_need_admin_privacy: need_admin_privacy ? "true" : "false",
       scope_admin_only: admin_only ? "true" : "false",
+      scope_need_ui: need_ui_checks ? "true" : "false",
+      scope_need_api: need_api_checks ? "true" : "false",
+      scope_need_seo: need_seo_checks ? "true" : "false",
+      scope_need_pwa: need_pwa_checks ? "true" : "false",
+      scope_need_ios: need_ios_checks ? "true" : "false",
+      scope_need_full: need_full_checks ? "true" : "false",
+      scope_need_visual: need_visual ? "true" : "false",
+      scope_docs_only: docsOnly ? "true" : "false",
     },
   };
 }

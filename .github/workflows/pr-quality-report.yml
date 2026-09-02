@@ -30,16 +30,37 @@ jobs:
       - uses: ./.github/actions/setup-workspace
 
       - name: Scope classify
-        run: node scripts/ci/changed-scope.mjs --json > reports/changed-scope.json || mkdir -p reports && node scripts/ci/changed-scope.mjs --json > reports/changed-scope.json
+        id: scope
+        run: |
+          set -euo pipefail
+          mkdir -p reports
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            node scripts/ci/changed-scope.mjs --base "${{ github.event.pull_request.base.sha }}" --head "${{ github.event.pull_request.head.sha }}" --json > reports/changed-scope.json
+          else
+            node scripts/ci/changed-scope.mjs --json > reports/changed-scope.json
+          fi
+          docs_only=$(node -e "const j=require('./reports/changed-scope.json');process.stdout.write(j.docsOnly?'true':'false')")
+          need_seo=$(node -e "const j=require('./reports/changed-scope.json');process.stdout.write(j.checks?.seo?'true':'false')")
+          echo "docs_only=$docs_only" >> "$GITHUB_OUTPUT"
+          echo "need_seo=$need_seo" >> "$GITHUB_OUTPUT"
 
       - name: Audits (P0-only fail)
+        if: steps.scope.outputs.docs_only != 'true'
         working-directory: artifacts/majalis
         run: |
           set -euo pipefail
           pnpm run audit:public-site
           pnpm run audit:data-completeness
-          pnpm run audit:seo
+          if [ "${{ steps.scope.outputs.need_seo }}" = "true" ]; then
+            pnpm run audit:seo
+          else
+            echo "skip audit:seo — خارج نطاق التغيير"
+          fi
           pnpm run audit:feature-readiness
+
+      - name: Docs-only skip note
+        if: steps.scope.outputs.docs_only == 'true'
+        run: echo "docs-only PR — تخطّي audits الثقيلة" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Write short summary
         id: summary

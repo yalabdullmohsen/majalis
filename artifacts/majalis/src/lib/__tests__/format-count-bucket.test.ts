@@ -13,7 +13,7 @@ assert.equal(formatCountBucket(35), "٣٠+");
 assert.equal(formatCountBucket(53), "٥٠+");
 assert.equal(formatCountBucket(97), "٩٠+");
 
-assert.equal(pluralArBucket(0, NOUN_MUSABAQAT), "لا مسابقات");
+assert.equal(pluralArBucket(0, NOUN_MUSABAQAT), "لا مسابقات حالية");
 assert.equal(pluralArBucket(0, NOUN_DURUS), "لا دروس");
 assert.equal(pluralArBucket(1, NOUN_DURUS), "درس");
 assert.equal(pluralArBucket(2, NOUN_HALAQAT), "حلقتان");

@@ -28,6 +28,7 @@ export type ScholarlyContentRecord = {
   gradeSource?: string;
   displayZones?: DisplayZone[];
   reviewed?: boolean;
+  needsSource?: boolean;
   notes?: string;
 };
 
@@ -71,11 +72,27 @@ export function isBlockedFromPublic(record: Pick<ScholarlyContentRecord, "text" 
   return false;
 }
 
+/** يمنع عرض محتوى بلا مصدر في المناطق العامة. */
+export function isUnsourcedForPublic(record: {
+  source?: string;
+  reference?: string;
+  needsSource?: boolean;
+}): boolean {
+  if (record.needsSource) return true;
+  const src = (record.source || record.reference || "").trim();
+  if (!src) return true;
+  if (/^السنة\s*النبوية$/i.test(src) && !record.reference?.trim()) return true;
+  return false;
+}
+
 export function isAllowedInZone(
-  record: Pick<ScholarlyContentRecord, "text" | "source" | "grade" | "displayZones">,
+  record: Pick<ScholarlyContentRecord, "text" | "source" | "grade" | "displayZones" | "reference"> & {
+    needsSource?: boolean;
+  },
   zone: DisplayZone,
 ): boolean {
   if (record.displayZones?.length && !record.displayZones.includes(zone)) return false;
+  if (PUBLIC_DISPLAY_ZONES.includes(zone) && isUnsourcedForPublic(record)) return false;
   if (PUBLIC_DISPLAY_ZONES.includes(zone) && isBlockedFromPublic(record)) return false;
   return true;
 }

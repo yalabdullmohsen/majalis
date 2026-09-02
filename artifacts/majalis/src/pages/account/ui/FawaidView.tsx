@@ -16,6 +16,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { TopicPage } from "@/components/topic/TopicPage";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
+import { hasPublicSource } from "@/lib/content-provenance";
 
 /** دفعات واجهة — تفادي رسم مئات البطاقات دفعة واحدة في DOM. */
 const FAWAID_PAGE_SIZE = 24;
@@ -130,7 +131,14 @@ export default function FawaidPage({
   }, [fawaid]);
 
   const displayItems = useMemo(() => {
-    let items = normalized;
+    let items = normalized.filter((f) =>
+      hasPublicSource({
+        source: f.source,
+        author_name: f.author_name,
+        documentation_status: f.documentation_status,
+        trust_level: f.trust_level,
+      }),
+    );
     if (category !== "الكل") {
       items = items.filter((f) => f.category === category);
     }
@@ -252,7 +260,7 @@ export default function FawaidPage({
         {loading ? (
           <SkeletonCardGrid count={8} />
         ) : displayItems.length === 0 ? (
-          <Empty text={debouncedSearch.trim() ? `لا توجد فوائد مطابقة لـ «${debouncedSearch.trim()}».` : "لا توجد فوائد في هذا القسم."} />
+          <Empty text={debouncedSearch.trim() ? `لا توجد فوائد مطابقة لـ «${debouncedSearch.trim()}». جرّب كلمة أخرى.` : "لا توجد فوائد في هذا القسم حاليًا."} />
         ) : (
           <>
             <div className="faidah-grid">

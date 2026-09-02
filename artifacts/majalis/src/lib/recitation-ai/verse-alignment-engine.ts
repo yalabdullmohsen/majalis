@@ -44,6 +44,8 @@ export const NEEDS_REPEAT_CONFIDENCE_THRESHOLD = 85;
 export type EngineConfig = {
   referenceWords: ReferenceWord[]; // كامل النطاق المُختار مسبقًا (سورة/نطاق آيات/صفحة/جزء)
   alertLevel?: AlertLevel;
+  /** false = متساهل (Levenshtein 75٪) · true = دقيق (تطابق مطبَّع حرفي) */
+  matchingStrict?: boolean;
   /** يُستدعى فور اكتشاف توقف طويل نسبيًا لسرعة قراءة المستخدم الفعلية. */
   longPauseThresholdMultiplier?: number;
 };
@@ -181,7 +183,13 @@ export class VerseAlignmentEngine {
     while (this.buffer.length > (finalFlush ? 0 : COMMIT_LAG) && this.cursor < this.ref.length) {
       const refWindow = this.ref.slice(this.cursor, this.cursor + LOOKAHEAD).map((r) => r.normalized);
       const heardWindow = this.buffer.map((b) => b.norm);
-      const ops = alignFittingWindow(heardWindow, refWindow);
+      const matchMode =
+        this.config.matchingStrict === true
+          ? "strict"
+          : this.config.matchingStrict === false
+            ? "tolerant"
+            : "legacy-soft";
+      const ops = alignFittingWindow(heardWindow, refWindow, { mode: matchMode });
 
       const commitCount = finalFlush ? ops.length : this.leadingStableOpCount(ops);
       if (commitCount === 0) break;

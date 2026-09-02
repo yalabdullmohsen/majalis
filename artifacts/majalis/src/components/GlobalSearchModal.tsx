@@ -77,7 +77,7 @@ const FILTER_CHIPS: { key: string; label: string }[] = [
   { key: "settings", label: "إعدادات" },
 ];
 
-const DEBOUNCE_MS = 120;
+const DEBOUNCE_MS = 300;
 
 // ── مساعدات ─────────────────────────────────────────────────────────────────
 
@@ -193,6 +193,7 @@ export function GlobalSearchModal({ onClose }: Props) {
   const inputRef  = useRef<HTMLInputElement>(null);
   const timerRef  = useRef<ReturnType<typeof setTimeout> | null>(null);
   const abortRef  = useRef<AbortController | null>(null);
+  const requestSeqRef = useRef(0);
   const isMobile  = useIsMobile();
 
   // Preconnect text APIs while the modal is open (DNS/TLS warm for search).
@@ -234,30 +235,32 @@ export function GlobalSearchModal({ onClose }: Props) {
       abortRef.current?.abort();
       const ctrl = new AbortController();
       abortRef.current = ctrl;
+      const seq = ++requestSeqRef.current;
       setLoading(true);
       setError(false);
       try {
         await afterNextPaint();
         await yieldToMain();
-        if (ctrl.signal.aborted) return;
+        if (ctrl.signal.aborted || seq !== requestSeqRef.current) return;
         const res = await runAppSearch(q.trim(), {
           limit: filter !== "all" ? 20 : 28,
           kind: filter !== "all" ? filter : undefined,
           signal: ctrl.signal,
         });
-        if (ctrl.signal.aborted) return;
+        if (ctrl.signal.aborted || seq !== requestSeqRef.current) return;
         // لا انتقال تلقائي عبر quickNav — اعرض النتائج ليختار المستخدم.
         await yieldToMain();
-        if (ctrl.signal.aborted) return;
+        if (ctrl.signal.aborted || seq !== requestSeqRef.current) return;
         setResults(res.results);
         setGroupCounts(res.counts);
         setSuggestion(res.suggestion ?? null);
       } catch (err: unknown) {
+        if (seq !== requestSeqRef.current) return;
         if ((err as Error)?.name !== "AbortError" && (err as DOMException)?.name !== "AbortError") {
           setError(true);
         }
       } finally {
-        if (!ctrl.signal.aborted) setLoading(false);
+        if (!ctrl.signal.aborted && seq === requestSeqRef.current) setLoading(false);
       }
     },
     [],

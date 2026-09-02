@@ -1,0 +1,76 @@
+{
+  "generatedAt": "2026-09-01T21:10:10.645Z",
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "info": 0,
+    "doors": 8,
+    "lessons": 156,
+    "searchTermsChecked": 7
+  },
+  "doors": [
+    {
+      "id": "tahara",
+      "label": "الطهارة",
+      "issueCount": 12,
+      "status": "complete",
+      "href": "/tahara"
+    },
+    {
+      "id": "salah",
+      "label": "الصلاة",
+      "issueCount": 24,
+      "status": "complete",
+      "href": "/salah-guide"
+    },
+    {
+      "id": "zakat",
+      "label": "الزكاة",
+      "issueCount": 7,
+      "status": "complete",
+      "href": "/zakat"
+    },
+    {
+      "id": "sawm",
+      "label": "الصيام",
+      "issueCount": 9,
+      "status": "complete",
+      "href": "/sawm"
+    },
+    {
+      "id": "hajj",
+      "label": "الحج",
+      "issueCount": 11,
+      "status": "complete",
+      "href": "/hajj"
+    },
+    {
+      "id": "muamalat",
+      "label": "المعاملات",
+      "issueCount": 43,
+      "status": "complete",
+      "href": "/fiqh/books/buyu"
+    },
+    {
+      "id": "usrah",
+      "label": "الأسرة",
+      "issueCount": 24,
+      "status": "complete",
+      "href": "/nikah"
+    },
+    {
+      "id": "jinayat",
+      "label": "الجنايات والحدود",
+      "issueCount": 26,
+      "status": "complete",
+      "href": "/fiqh/books/hudud"
+    }
+  ],
+  "findings": {
+    "critical": [],
+    "high": [],
+    "medium": [],
+    "info": []
+  }
+}

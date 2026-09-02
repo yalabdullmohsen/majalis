@@ -297,7 +297,7 @@ export default function AdhkarPage() {
       ) : isError ? (
         <Empty text="تعذّر تحميل الأذكار." />
       ) : total === 0 ? (
-        <Empty text="لا توجد أذكار في هذا القسم." />
+        <Empty text="لا توجد أذكار في هذا القسم حاليًا. جرّب قسمًا آخر." />
       ) : current ? (
         <div className="adhkar-focus-shell">
           {/* عداد الأذكار — سياق واضح: الذكر ن من م */}

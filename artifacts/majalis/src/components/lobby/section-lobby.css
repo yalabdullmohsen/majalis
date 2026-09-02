@@ -179,6 +179,7 @@
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pinch-zoom;
   padding-bottom: 8px;
 }
 

@@ -25,6 +25,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import {
   isPrivateSeoPath,
 } from "./seo-path-class.mjs";
+import { enforceSeoPolicy } from "./seo-index-policy.mjs";
 import { IA_BREADCRUMB_PARENTS, IA_REDIRECTS } from "../src/lib/ia-final-structure.ts";
 import { dedupeLinksByHref } from "../src/lib/link-dedupe.ts";
 
@@ -62,6 +63,34 @@ const TITLE_SUFFIX = SITE.titleSuffix;
 const DEFAULT_IMAGE = SITE.defaultImage;
 const LOGO_IMAGE = SITE.logoImage || "/brand/official.png?v=20260825";
 const ASSET_VERSION = SITE.assetVersion || "20260825";
+const OG_SECTION_IMAGES = SITE.ogSectionImages || {};
+
+function withAssetVersion(relPath) {
+  const rel = String(relPath || DEFAULT_IMAGE);
+  if (rel.includes("?")) return rel;
+  return `${rel}?v=${ASSET_VERSION}`;
+}
+
+/** صورة OG حسب القسم — بدل official-og.png الموحّدة. */
+function resolveOgImage(path, routeImage) {
+  if (routeImage) return withAssetVersion(routeImage);
+  const p = String(path || "").replace(/\/$/, "") || "/";
+  if (OG_SECTION_IMAGES[p]) return withAssetVersion(OG_SECTION_IMAGES[p]);
+  const prefixRules = [
+    ["/mushaf", "/brand/og-quran.png"],
+    ["/quran", "/brand/og-quran.png"],
+    ["/lessons", "/brand/og-lessons.png"],
+    ["/fiqh", "/brand/og-fiqh.png"],
+    ["/hadith", "/brand/og-hadith.png"],
+    ["/adhkar", "/brand/og-adhkar.png"],
+    ["/library", "/brand/og-library.png"],
+    ["/contact", "/brand/og-contact.png"],
+  ];
+  for (const [prefix, img] of prefixRules) {
+    if (p === prefix || p.startsWith(`${prefix}/`)) return withAssetVersion(img);
+  }
+  return withAssetVersion(DEFAULT_IMAGE.replace(/\?v=[^&]+/, ""));
+}
 const THEME_COLOR = SITE.themeColor || "#1F7A5A";
 const THEME_COLOR_DARK = SITE.themeColorDark || "#4FB48B";
 const OG_W = SITE.ogImageWidth || 1200;
@@ -115,6 +144,11 @@ const { FIQH_ISSUES_PUBLISHED_SEED } = await importSrc("src/lib/fiqh-issues-seed
 const { isPublicIssue, isVerifiedPublicItem } = await importSrc("src/lib/fiqh-council-trust.ts");
 const { FIQH_COUNCIL_PUBLISHED_SEED } = await importSrc("src/lib/fiqh-council-seed.ts");
 const { FIQH_ITEM_TYPE_LABELS } = await importSrc("src/lib/fiqh-council-types.ts");
+const { SCHOLAR_PROFILES } = await importSrc("src/data/scholars-profiles.ts");
+const { ANNUAL_COURSES_SEED } = await importSrc("src/lib/annual-courses-seed.ts");
+const ANNUAL_COURSE_SUMMARY = new Map(
+  ANNUAL_COURSES_SEED.map((c) => [c.id, c.summary || c.title]),
+);
 const {
   publishedBooks,
   FIQH_CATEGORY_LABELS,
@@ -297,18 +331,22 @@ function tidyDesc(text) {
     .trim();
 }
 
-/** يمدّ الوصف إلى ≥120 حرفًا ثم يقصّه عند 160 — نطاق Ahrefs/Google الآمن. */
+/** يزيل الخاتمة المكررة القديمة من seo-routes. */
+function stripLegacyDescBoilerplate(text) {
+  return tidyDesc(text)
+    .replace(/\s*[—–-]\s*صفحة .* ضمن منصة .*$/u, "")
+    .replace(/\s*[—–-]\s*محتوى شرعي موثّ?ق.*$/u, "")
+    .replace(/\s*تصفّح الأقسام المرتبطة في .*\.?$/u, "")
+    .trim();
+}
+
+/** يقصّ الوصف الفريد عند 160 — يمدّ فقط عند الحاجة بلا خاتمة مكررة. */
 function padDesc(text, suffix) {
-  let t = tidyDesc(text);
-  const pad = tidyDesc(suffix) || `محتوى شرعي موثّق ضمن منصة ${SITE_NAME}.`;
+  let t = stripLegacyDescBoilerplate(text);
+  const pad = stripLegacyDescBoilerplate(suffix);
   if (!t) t = pad;
-  else if (t.length < META_DESC_MIN && pad && !t.includes(pad.slice(0, Math.min(20, pad.length)))) {
-    t = `${t} — ${pad}`;
-  }
-  let guard = 0;
-  while (t.length < META_DESC_MIN && guard < 4) {
-    t = `${t} تصفّح الأقسام المرتبطة في ${SITE_NAME}.`;
-    guard += 1;
+  else if (t.length < META_DESC_MIN && pad && !t.includes(pad.slice(0, Math.min(18, pad.length)))) {
+    t = `${t} ${pad}`;
   }
   return clamp(t, META_DESC_MAX);
 }
@@ -412,6 +450,34 @@ function linkList(heading, items) {
 // ─────────────────────────────────────────────────────────────────────────────
 // JSON-LD
 // ─────────────────────────────────────────────────────────────────────────────
+function lessonEventJsonLdScript(row) {
+  const date = row.next_date || row.start_date || row.event_date;
+  const place = row.mosque || row.region || row.city;
+  if (!date && !place) return "";
+  return jsonLdScript({
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: row.title,
+    description: lessonDescription(row),
+    url: absoluteUrl(`/lessons/${row.id}`),
+    inLanguage: "ar",
+    eventAttendanceMode: row.has_live_stream || row.is_online
+      ? "https://schema.org/OnlineEventAttendanceMode"
+      : "https://schema.org/OfflineEventAttendanceMode",
+    ...(date ? { startDate: date } : {}),
+    ...(place
+      ? {
+          location: {
+            "@type": "Place",
+            name: place,
+            address: { "@type": "PostalAddress", addressLocality: row.city || "الكويت", addressCountry: "KW" },
+          },
+        }
+      : {}),
+    organizer: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+  });
+}
+
 function lessonJsonLdScript(row) {
   const sheikh = String(row.speaker_name || "").trim();
   const isCourse = row.is_course || row.activity_type === "دورة";
@@ -476,7 +542,18 @@ function siteJsonLdScript() {
       "query-input": "required name=search_term_string",
     },
   };
-  return jsonLdScript([org, site]);
+  const app = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: SITE_NAME,
+    url: SITE_URL,
+    applicationCategory: "EducationalApplication",
+    operatingSystem: "Web, iOS, Android",
+    inLanguage: "ar",
+    image: absoluteUrl(withAssetVersion("/brand/og-home.png")),
+    offers: { "@type": "Offer", price: "0", priceCurrency: "KWD" },
+  };
+  return jsonLdScript([org, site, app]);
 }
 
 function bookJsonLdScript(row) {
@@ -729,12 +806,17 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
 /** كل صفحة مُصيَّرة تُسجَّل هنا؛ منها تُبنى الخريطة، فلا تتفرّق مصادر الحقيقة. */
 const pages = [];
 function addPage(route, { extraJsonLd = "", richBody = "", parents = [], sitemap = true, priority = 0.7, changefreq = "weekly" } = {}) {
-  const description = padDesc(
-    route.description,
-    `صفحة ${route.title || route.path} في منصة ${SITE_NAME}`,
-  );
+  const rawDesc = stripLegacyDescBoilerplate(route.description || route.metaDescription || "");
+  const description =
+    rawDesc.length >= META_DESC_MIN
+      ? clamp(rawDesc, META_DESC_MAX)
+      : padDesc(rawDesc, route.title ? `${route.title} — ${SITE_NAME}` : SITE_NAME);
   pages.push({
-    route: { ...route, description },
+    route: {
+      ...route,
+      description,
+      image: resolveOgImage(route.path, route.image),
+    },
     extraJsonLd,
     richBody,
     parents,
@@ -802,8 +884,43 @@ const DUAS_SEED = [
 
 // ⚠️ لا FAQPage هنا: الواجهة تعرض مقتطف الإجابة فقط (answer.slice(0,120))،
 // وحقن الإجابة كاملة في البيانات المنظّمة مخالفة لسياسة Google.
+function scholarPersonJsonLd(profile) {
+  return jsonLdScript({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: profile.fullName || profile.name,
+    alternateName: profile.name,
+    description: profile.summary,
+    url: absoluteUrl(`/scholars/${profile.slug}`),
+    ...(profile.born ? { birthDate: profile.born } : {}),
+    deathDate: profile.died,
+    knowsAbout: profile.specialty,
+  });
+}
+
 const LIST_JSON_LD = {
   "/library": itemListJsonLdScript(LIBRARY_CATALOG.map((b) => ({ name: b.title, url: `/library/${b.id}` })), "المكتبة العلمية"),
+  "/hadith": itemListJsonLdScript(
+    [
+      { name: "الأحاديث الصحيحة", url: "/hadith/sahih" },
+      { name: "الأحاديث الضعيفة", url: "/hadith/daif" },
+      { name: "الأحاديث الموضوعة", url: "/hadith/mawdu" },
+      { name: "كتب الحديث", url: "/hadith/books" },
+      { name: "مصطلح الحديث", url: "/hadith-science" },
+      { name: "الأربعون النووية", url: "/arbaeen-nawawi" },
+    ],
+    "الأحاديث النبوية",
+  ),
+  "/quran-hub": itemListJsonLdScript(
+    [
+      { name: "المصحف الرقمي", url: "/mushaf" },
+      { name: "فهرس السور", url: "/quran/surahs" },
+      { name: "التجويد", url: "/quran-hub/tajweed" },
+      { name: "علوم القرآن", url: "/ulum-quran" },
+      { name: "قصص السور", url: "/quran/surah-stories" },
+    ],
+    "مركز القرآن الكريم",
+  ),
   "/fiqh-council": itemListJsonLdScript(
     PUBLIC_FIQH_ITEMS.map((r) => ({ name: r.title, url: `/fiqh-council/${r.slug || r.id}` })),
     "قرارات المجمع الفقهي",
@@ -860,6 +977,7 @@ const LIST_JSON_LD = {
     QURAN_SURAHS.map((s) => ({ name: s.name, url: `/quran/surahs#surah-${s.number}` })),
     "فهرس سور القرآن الكريم",
   ),
+  ...Object.fromEntries(SCHOLAR_PROFILES.map((s) => [`/scholars/${s.slug}`, scholarPersonJsonLd(s)])),
 };
 
 const UNIVERSITIES_CATALOG = JSON.parse(
@@ -917,10 +1035,11 @@ ${linkList(
   lessonRows.map((r) => ({ name: r.title, url: `/lessons/${r.id}`, note: r.speaker_name })),
 )}
 ${linkList("روابط ذات صلة", [
-  { name: "دروس الكويت", url: "/kuwait-lessons" },
+  { name: "تقويم الدروس", url: "/calendar" },
+  { name: "دروس المشايخ القادمة", url: "/kuwait-lessons" },
+  { name: "البث المباشر", url: "/lessons?live=1" },
+  { name: "أرشيف الدروس", url: "/lessons/archive" },
   { name: "الدورات السنوية", url: "/annual-courses" },
-  { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
-  { name: "البحث العلمي", url: "/search" },
 ])}`,
   "/library": `${linkList(
     "كتب المكتبة العلمية",
@@ -1947,7 +2066,8 @@ ${linkList("أقسام الحديث", [
   { name: "صحيح البخاري", url: "/library/book-bukhari" },
   { name: "صحيح مسلم", url: "/library/book-muslim" },
 ])}`,
-  "/hadith/daif": `<p>صفحة تنبيه: روايات مشهورة مقرونة بدرجتها وتخريجها المنسوب — لتجنّب الاحتجاج بها في الأحكام والعقائد دون تمييز.</p>
+  "/hadith/daif": `<p><strong>تنبيه:</strong> هذه الصفحة للتنبيه والتمييز لا للاحتجاج — روايات مشهورة مقرونة بدرجتها وتخريجها المنسوب؛ لا تُعرض كتوصية شرعية.</p>
+<p>الضعيف والموضوع يُذكر للتعليم والتحذير فقط، لا للعمل به في العقائد والأحكام دون تمييز.</p>
 <h2>تعريف مختصر</h2>
 <p>الضعيف: ما فقد شرطًا من شروط القبول. يُروى للمعرفة والتحذير لا لبناء حكم مستقل في العقيدة والأحكام عند جمهور المحققين.</p>
 <h2>تنبيه علمي</h2>
@@ -2392,18 +2512,20 @@ for (const route of seoConfig.routes) {
   if (route.path === "/rulings") continue; // يُضاف يدويًا أدناه كإعادة توجيه
   // لا قشرة SEO عامة لمسارات الإدارة/اللوحة — middleware يرجع 404 للعامة.
   if (isPrivateSeoPath(route.path)) continue;
+  if (route.redirect) continue;
   const redirectTarget = IA_REDIRECTS[route.path];
+  const baseRoute = enforceSeoPolicy(route);
   const effectiveRoute = redirectTarget
     ? {
-        ...route,
+        ...baseRoute,
         robots: "noindex, follow",
         sitemap: false,
       }
-    : route;
+    : baseRoute;
   addPage(effectiveRoute, {
     extraJsonLd: LIST_JSON_LD[route.path] || "",
     richBody: RICH_BODY_MAP[route.path] || "",
-    sitemap: redirectTarget ? false : Boolean(route.sitemap),
+    sitemap: redirectTarget ? false : Boolean(effectiveRoute.sitemap),
     priority: route.priority ?? 0.7,
     changefreq: route.changefreq ?? "weekly",
   });
@@ -2461,7 +2583,7 @@ for (const row of lessonRows) {
       ogType: "article",
     },
     {
-      extraJsonLd: lessonJsonLdScript(row),
+      extraJsonLd: `${lessonJsonLdScript(row)}${lessonEventJsonLdScript(row)}`,
       parents: [{ name: "الدروس الشرعية", path: "/lessons" }],
       priority: 0.72,
       richBody: `<h2>بيانات الدرس</h2>
@@ -2534,7 +2656,10 @@ for (const row of PLATFORM_SEED.courses || []) {
     {
       path: `/annual-courses/${row.id}`,
       title: row.title || row.name,
-      description: padDesc(row.description || row.title || row.name, `دورة علمية شرعية من ${SITE_NAME}`),
+      description: padDesc(
+        ANNUAL_COURSE_SUMMARY.get(row.id) || row.summary || row.description || row.title || row.name,
+        `دورة علمية شرعية من ${SITE_NAME}`,
+      ),
     },
     {
       extraJsonLd: courseJsonLdScript(row),
@@ -2860,7 +2985,7 @@ for (const t of TOPICS) {
       title: t.title,
       description: padDesc(
         `${t.title} — أدلة وأحكام ودروس وكتب ذات صلة من مصادر سُنّة.`,
-        `موضوع إسلامي ضمن منصة ${SITE_NAME}`,
+        t.title,
       ),
       keywords: [t.title, "مواضيع إسلامية", "أحكام شرعية"],
       robots: "noindex, follow",
@@ -2940,7 +3065,6 @@ const LASTMOD_PATHS = new Set([
   "/adhkar",
   "/prayer-times",
   "/fiqh",
-  "/search",
   "/tarikh-islami",
   "/library",
 ]);
@@ -2987,6 +3111,18 @@ Disallow: /vault
 Disallow: /api/
 Disallow: /search
 Disallow: /search/
+Disallow: /assistant
+Disallow: /assistant/
+Disallow: /knowledge-graph
+Disallow: /knowledge-graph/
+Disallow: /adhan-settings
+Disallow: /adhan-settings/
+Disallow: /fiqh-council/live
+Disallow: /fiqh-council/stats
+Disallow: /fiqh-council/compare
+Disallow: /fiqh-council/recommendations
+Disallow: /profile
+Disallow: /settings
 Disallow: /quran/recitation-test-ai
 Disallow: /fiqh-council/research-assistant
 Disallow: /fiqh-council/research
