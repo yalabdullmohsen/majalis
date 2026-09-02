@@ -399,12 +399,7 @@ article {
 }
 
 /* ── Login ── */
-.login-page {
-  min-height: 70vh;
-  display: grid;
-  place-items: center;
-  padding: var(--ds-space-4);
-}
+/* التنسيق الكامل في auth.css — هنا لا نفرض grid/ارتفاع يعيد تمريرًا داخليًا */
 
 .login-card {
   width: min(100%, 22rem);
