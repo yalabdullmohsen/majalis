@@ -1,7 +1,7 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b050",
+  "lastCompletedId": "b051",
   "resumeFromId": "b011",
   "items": [
     {
@@ -581,6 +581,21 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b050-quran-people-gate.test.ts"
       ],
       "finding": "تصحيح تصحيف الزانية→الزبانية؛ إزالة تكرار فقرة الحكمة من 101 بطاقة معرفة؛ استبدال 19 درسًا عامًا بحشو «وليسأل القارئ»."
+    },
+    {
+      "id": "b051",
+      "section": "fiqh_issues",
+      "title": "إزالة الحشو القالبي من المسائل الفقهية والموسوعة المولَّدة",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/src/lib/fiqh-issues-seed.ts",
+        "artifacts/majalis/content/archive/rulings-encyclopedia/seeds/rulings-encyclopedia-seed.generated.ts",
+        "artifacts/majalis/public/data/knowledge/quran-people/people.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b051-fiqh-filler-gate.test.ts"
+      ],
+      "finding": "حذف الجمل القالبية المكررة (اختزال مخلّ / ضبط النقل / تقريب الفهم / محل النزاع…) من بذرة المسائل ومن الموسوعة المولَّدة؛ حارس filler أخضر؛ تدعيم 3 بطاقات معرفة قصيرة."
     }
   ]
 }

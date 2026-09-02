@@ -147,6 +147,12 @@ export const CONTENT_AUDIT_GATES: ContentAuditGate[] = [
     path: "src/lib/__tests__/content-audit-b050-quran-people-gate.test.ts",
     kind: "node-tsx",
   },
+  {
+    id: "b051-fiqh-filler",
+    dimension: "تدقيق",
+    path: "src/lib/__tests__/content-audit-b051-fiqh-filler-gate.test.ts",
+    kind: "node-tsx",
+  },
   // تصحيح — لغة وهوية ومصادر
   {
     id: "content-lang",
