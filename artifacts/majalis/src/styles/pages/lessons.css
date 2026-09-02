@@ -433,13 +433,23 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 
 .lessons-v3-sticky {
   position: sticky;
-  top: 0;
+  top: var(--sticky-below-chrome, 0px);
   z-index: 8;
   display: grid;
   gap: 0.55rem;
   padding-block: 0.15rem 0.55rem;
   margin-bottom: 0.35rem;
   background: var(--mj-bg, var(--color-bg, #f5f7f6));
+}
+
+/* لا تضاعف حشو .ds-page فوق .section-lobby */
+.section-lobby.lessons-page-v3.ds-page {
+  width: 100%;
+  max-width: 430px;
+  margin-inline: auto;
+  padding-block: 0;
+  padding-inline: 0;
+  box-sizing: border-box;
 }
 
 /* زر التصفية: عرض المحتوى فقط — لا شريط فارغ بعرض الصفحة */
@@ -477,7 +487,8 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 
 .lessons-v3-footer-pad {
   padding-inline: 1rem;
-  padding-bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px);
+  /* الحجز السفلي على .app-main — لا تضاعف هنا */
+  padding-bottom: 0.75rem;
   margin-top: 0.75rem;
 }
 
@@ -689,8 +700,6 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
   -webkit-appearance: none;
 }
 
-.lessons-page-v2,
-.lessons-page-v2.lessons-page-v3,
 .lesson-detail-page,
 .lesson-detail-page.mj-page {
   padding-bottom: calc(

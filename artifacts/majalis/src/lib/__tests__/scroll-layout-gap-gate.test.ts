@@ -12,6 +12,8 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const chrome = readFileSync(resolve(root, "src/styles/components/app-chrome-scroll.css"), "utf8");
 const top = readFileSync(resolve(root, "src/styles/components/top-chrome-layout.css"), "utf8");
 const finalCss = readFileSync(resolve(root, "src/styles/final-release.css"), "utf8");
+const authCss = readFileSync(resolve(root, "src/styles/pages/auth.css"), "utf8");
+const lessonsCss = readFileSync(resolve(root, "src/styles/pages/lessons.css"), "utf8");
 
 assert.match(
   chrome,
@@ -58,6 +60,28 @@ assert.doesNotMatch(
   finalCss.replace(/html\.pts-immersive[\s\S]*?(?=@media|$)/g, ""),
   /@media\s*\(max-width:\s*879px\)[\s\S]*?\.app-shell\s*\{[^}]*overflow:\s*hidden\s*!important/,
   "لا overflow:hidden على صدفة الجوال العامة",
+);
+
+assert.doesNotMatch(
+  authCss,
+  /\.login-page[\s\S]*?overflow-y:\s*auto/,
+  "صفحة الدخول بلا تمرير داخلي — وثيقة واحدة",
+);
+assert.match(
+  authCss,
+  /\.app-main:has\(\.login-page\)/,
+  "صفحة الدخول تلغي حجز الشريط السفلي من app-main",
+);
+
+assert.match(
+  lessonsCss,
+  /\.lessons-v3-sticky[\s\S]*?top:\s*var\(--sticky-below-chrome/,
+  "شريط تصفية الدروس تحت الكروم العلوي",
+);
+assert.doesNotMatch(
+  lessonsCss,
+  /\.lessons-page-v2(?:\.lessons-page-v3)?\s*,[\s\S]*?padding-bottom:\s*calc\(\s*var\(--bottom-nav-height/,
+  "قائمة الدروس بلا حجز سفلي مضاعف",
 );
 
 console.log("scroll-layout-gap-gate.test.ts: ok");
