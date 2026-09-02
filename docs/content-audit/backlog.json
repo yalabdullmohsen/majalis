@@ -1,7 +1,7 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b048",
+  "lastCompletedId": "b049",
   "resumeFromId": "b011",
   "items": [
     {
@@ -552,6 +552,21 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b048-mamluk-glossary-gate.test.ts"
       ],
       "finding": "تصحيح قطز/كتبغا/الريدانية/صبح الأعشى؛ فصل طغرل بك عن ألب أرسلان؛ إزالة الروض الباسم؛ إضافة 14 مصطلحًا أساسيًا؛ تقليل روابط related المكسورة من ~260 إلى ≤40؛ إصلاح ربط مقاصد/قياس بالبدعة خطأً."
+    },
+    {
+      "id": "b049",
+      "section": "andalus_ottoman_glossary",
+      "title": "تدقيق الأندلس والعثماني + إغلاق related المصطلحات",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/src/data/islamic-history/andalus.json",
+        "artifacts/majalis/src/data/islamic-history/ottoman.json",
+        "artifacts/majalis/src/pages/account/ui/IslamicGlossaryView.tsx",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b049-andalus-ottoman-glossary-gate.test.ts"
+      ],
+      "finding": "قوط لا وزن؛ الزهراء للناصر لا للداخل؛ المنصور بن أبي عامر؛ إنكشارية؛ إزالة مصادر وهمية عثمانية؛ 0 روابط related مكسورة بعد إضافة ~34 مصطلحًا."
     }
   ]
 }
