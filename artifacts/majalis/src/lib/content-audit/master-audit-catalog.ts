@@ -105,6 +105,12 @@ export const CONTENT_AUDIT_GATES: ContentAuditGate[] = [
     path: "src/lib/__tests__/content-audit-dawah-affinity-gate.test.ts",
     kind: "node-tsx",
   },
+  {
+    id: "b044-affinity",
+    dimension: "تدقيق",
+    path: "src/lib/__tests__/content-audit-b044-affinity-gate.test.ts",
+    kind: "node-tsx",
+  },
   // تصحيح — لغة وهوية ومصادر
   {
     id: "content-lang",
