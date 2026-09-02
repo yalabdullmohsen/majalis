@@ -1,7 +1,7 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b045",
+  "lastCompletedId": "b046",
   "resumeFromId": "b011",
   "items": [
     {
@@ -503,6 +503,21 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b045-gate.test.ts"
       ],
       "finding": "10 شبهات أُعيدت كتابتها بلا حشو؛ 101 FAQ أُثريت؛ كل مصطلحات مصطلح الحديث صارت لها أمثلة. content-gates خضراء."
+    },
+    {
+      "id": "b046",
+      "section": "sahabah",
+      "title": "تحفّظ تراجم الصحابة: أرقام المسند والجزم الحساس",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/src/views/SahabahPage.tsx",
+        "artifacts/majalis/src/lib/mind-maps-data.ts",
+        "artifacts/majalis/src/data/islamicQuizData.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b046-sahabah-gate.test.ts"
+      ],
+      "finding": "أُزيلت أرقام مسند مطلقة وجزم تاريخي/روائي حسّاس؛ قُيّد حديث المنزلة؛ تحفّظ أول إسلام. content-gates خضراء."
     }
   ]
 }

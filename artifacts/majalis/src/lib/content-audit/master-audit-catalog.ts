@@ -117,6 +117,12 @@ export const CONTENT_AUDIT_GATES: ContentAuditGate[] = [
     path: "src/lib/__tests__/content-audit-b045-gate.test.ts",
     kind: "node-tsx",
   },
+  {
+    id: "b046-sahabah",
+    dimension: "تدقيق",
+    path: "src/lib/__tests__/content-audit-b046-sahabah-gate.test.ts",
+    kind: "node-tsx",
+  },
   // تصحيح — لغة وهوية ومصادر
   {
     id: "content-lang",
