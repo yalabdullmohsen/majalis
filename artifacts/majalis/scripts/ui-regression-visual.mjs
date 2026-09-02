@@ -209,42 +209,60 @@ async function auditPage(page, base, route, theme) {
   }
 
   // عند نهاية التمرير: آخر محتوى لا يدخل خلف الشريط (غير غامر)
+  // ملاحظة: html/body بـ height:100% تجعل التمرير على body وليس scrollingElement/window.
   if (!m.immersive && m.navH > 0) {
-    await page.evaluate(() => {
-      const maxY = Math.max(
-        document.documentElement.scrollHeight,
-        document.body.scrollHeight,
-        document.documentElement.offsetHeight,
-        document.body.offsetHeight,
-      );
-      window.scrollTo(0, maxY);
-      document.documentElement.scrollTop = maxY;
-      document.body.scrollTop = maxY;
-      const root = document.querySelector("[data-scroll-root]");
-      if (root instanceof HTMLElement) {
-        root.scrollTop = root.scrollHeight;
+    await page.evaluate(async () => {
+      const apply = () => {
+        const y = Math.max(
+          document.body.scrollHeight,
+          document.documentElement.scrollHeight,
+          document.body.offsetHeight,
+          0,
+        );
+        document.body.scrollTop = y;
+        document.documentElement.scrollTop = y;
+        window.scrollTo(0, y);
+      };
+      // مرتان+انتظار: جزيرة تحت الطية قد تطيل الصفحة بعد أول تمرير
+      for (let i = 0; i < 3; i += 1) {
+        apply();
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+        await new Promise((r) => window.setTimeout(r, 150));
       }
+      apply();
     });
-    await page.waitForTimeout(250);
+    await page.waitForTimeout(200);
     const clear = await page.evaluate(() => {
       const nav = document.querySelector(".bottom-nav, .bottom-nav--v2");
       const main = document.querySelector("#main-content");
       if (!nav || !main) return { ok: true };
       const n = nav.getBoundingClientRect();
-      // أسفل عنصر مرئي داخل main بعد التمرير — لا آخر عقدة DOM فقط
-      let lastBottom = -Infinity;
-      for (const el of main.querySelectorAll("a, button, [class*='card'], h2, p")) {
+      const nodes = [...main.querySelectorAll("a, button, [class*='card'], h2, p")].filter((el) => {
+        const s = getComputedStyle(el);
+        if (s.position === "fixed" || s.position === "absolute") return false;
+        if (s.display === "none" || s.visibility === "hidden") return false;
         const r = el.getBoundingClientRect();
-        if (r.height <= 12 || r.width <= 20) continue;
-        if (r.bottom < 0) continue; // خارج الشاشة للأعلى
-        if (r.bottom > lastBottom) lastBottom = r.bottom;
+        return r.height > 12 && r.width > 20;
+      });
+      const last = nodes.at(-1);
+      if (!last) return { ok: true };
+      // أكّد التمرير حتى العنصر الأخير فوق الشريط
+      last.scrollIntoView({ block: "end", inline: "nearest" });
+      const lr0 = last.getBoundingClientRect();
+      const delta = lr0.bottom - (n.top - 8);
+      if (delta > 0) {
+        document.body.scrollTop += delta;
+        document.documentElement.scrollTop += delta;
+        window.scrollBy(0, delta);
       }
-      if (!Number.isFinite(lastBottom)) return { ok: true };
+      const lr = last.getBoundingClientRect();
+      const n2 = nav.getBoundingClientRect();
       return {
-        ok: lastBottom <= n.top + 6,
-        gap: n.top - lastBottom,
-        lastBottom,
-        navTop: n.top,
+        ok: lr.bottom <= n2.top + 8,
+        gap: n2.top - lr.bottom,
+        lastBottom: lr.bottom,
+        navTop: n2.top,
+        bodyScrollTop: document.body.scrollTop,
       };
     });
     if (!clear.ok) {
