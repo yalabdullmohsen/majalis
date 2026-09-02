@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { useSearch } from "wouter";
-import { RotateCcw } from "lucide-react";
+import { goBackOrFallback } from "@/lib/navigation-back";
 import { RecitationSetup } from "@/components/recitation/RecitationSetup";
 import type { RecitationSetupConfig } from "@/lib/recitation-ai/recitation-setup-types";
 import {
@@ -8,7 +8,7 @@ import {
   referenceWordsToLiveRecitation,
   type LiveRecitationSessionResult,
 } from "@/components/recitation/LiveRecitation";
-import { CircularProgress } from "@/components/recitation/CircularProgress";
+import { SessionReport, buildSessionReportData } from "@/components/recitation/SessionReport";
 import { loadReferenceWordsForSetup } from "@/lib/recitation-ai/load-setup-words";
 import type { LiveRecitationWord } from "@/components/recitation/LiveRecitation";
 import "@/styles/recitation-ai.css";
@@ -59,6 +59,10 @@ export function RecitationModule() {
     setPhase("setup");
   }, []);
 
+  const handleHome = useCallback(() => {
+    goBackOrFallback("/quran-hub");
+  }, []);
+
   if (phase === "loading") {
     return (
       <div className="rai-module" dir="rtl">
@@ -83,17 +87,12 @@ export function RecitationModule() {
 
   if (phase === "report" && result) {
     return (
-      <div className="rai-module rai-report" dir="rtl">
-        <h2 className="rai-module__title">تقرير الجلسة</h2>
-        <div className="rai-report__ring-wrap">
-          <CircularProgress percentage={result.accuracyPct} label="نسبة الإتقان" />
-        </div>
-        <p className="rai-module__summary">
-          أتممت {result.correct} من {result.total} كلمة بنجاح.
-        </p>
-        <button type="button" className="rai-start-btn" onClick={handleRestart}>
-          <RotateCcw size={16} aria-hidden="true" /> جلسة جديدة
-        </button>
+      <div className="rai-module" dir="rtl">
+        <SessionReport
+          sessionData={buildSessionReportData(result)}
+          onRestart={handleRestart}
+          onHome={handleHome}
+        />
       </div>
     );
   }
