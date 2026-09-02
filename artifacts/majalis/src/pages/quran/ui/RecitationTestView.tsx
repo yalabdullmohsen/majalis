@@ -26,6 +26,7 @@ import { addRecitationReviewItem, getDueRecitationReviews, type RecitationReview
 import { loadRecitationSettings, saveRecitationSettings } from "@/lib/recitation-ai/recitation-settings-service";
 import { hapticNotify } from "@/lib/capacitor-utils";
 import { InteractiveMushafReveal, type WordRevealInfo } from "@/components/quran/InteractiveMushafReveal";
+import { CircularProgress } from "@/components/recitation/CircularProgress";
 import { MicPermissionHelp } from "@/components/MicPermissionHelp";
 import { loadMutashabihatIndex, getSimilarAyahs, type MutashabihMatch } from "@/lib/recitation-ai/mutashabihat";
 import { FreeformStartDetector, loadPositionIndex } from "@/lib/recitation-ai/freeform-start-detector";
@@ -91,6 +92,14 @@ function revokeRecitationAiConsent(): void {
   try { localStorage.removeItem(RAI_CONSENT_KEY); } catch { /* تجاهل */ }
 }
 
+const MATCHING_STRICT_KEY = "recitation-ai-matching-strict-v1";
+function readMatchingStrictPreference(): boolean {
+  try { return localStorage.getItem(MATCHING_STRICT_KEY) === "1"; } catch { return false; }
+}
+function writeMatchingStrictPreference(strict: boolean): void {
+  try { localStorage.setItem(MATCHING_STRICT_KEY, strict ? "1" : "0"); } catch { /* تجاهل */ }
+}
+
 /** يستخرج نصًا صالحًا للعرض ورمز الخطأ (إن وُجد) من أي خطأ مُلتقَط — يميّز ASRProviderUnavailableError (رمز حقيقي) عن أي Error عام آخر. */
 function describeAsrError(e: unknown): { message: string; code: ASRProviderError["code"] | null } {
   if (e instanceof ASRProviderUnavailableError) return { message: e.detail.message, code: e.detail.code };
@@ -112,6 +121,7 @@ function RecitationTestPageInner() {
   const [surahNumber, setSurahNumber] = useState(1);
   const [mode, setMode] = useState<RecitationMode>("interactive_mushaf");
   const [precisionLevel, setPrecisionLevel] = useState<PrecisionLevel>("hifz");
+  const [matchingStrict, setMatchingStrict] = useState(() => readMatchingStrictPreference());
   const [alertLevel, setAlertLevel] = useState<AlertLevel>("gentle");
   const [revealGranularity, setRevealGranularity] = useState<"word" | "ayah" | "page">("word");
   const [tajweedAvailable, setTajweedAvailable] = useState<{ available: boolean; reason?: string } | null>(null);
@@ -216,6 +226,8 @@ function RecitationTestPageInner() {
   // استبعاد applyEvents من اعتماديات attachAsrSession أعلاه — TDZ).
   const alertLevelRef = useRef<AlertLevel>(alertLevel);
   useEffect(() => { alertLevelRef.current = alertLevel; }, [alertLevel]);
+  const matchingStrictRef = useRef(matchingStrict);
+  useEffect(() => { matchingStrictRef.current = matchingStrict; }, [matchingStrict]);
 
   // listening طازج لمستمع visibilitychange (مسجَّل مرة واحدة عند التركيب) — أدناه.
   const listeningRef = useRef(false);
@@ -480,7 +492,11 @@ function RecitationTestPageInner() {
       }
       providerRef.current = selection.provider;
 
-      const engine = new VerseAlignmentEngine({ referenceWords: words, alertLevel });
+      const engine = new VerseAlignmentEngine({
+        referenceWords: words,
+        alertLevel,
+        matchingStrict: matchingStrictRef.current,
+      });
       engineRef.current = engine;
       sessionStartRef.current = Date.now();
 
@@ -657,7 +673,11 @@ function RecitationTestPageInner() {
         recallStartAtRef.current = null;
         setRecallMs(null);
 
-        const engine = new VerseAlignmentEngine({ referenceWords: words, alertLevel });
+        const engine = new VerseAlignmentEngine({
+        referenceWords: words,
+        alertLevel,
+        matchingStrict: matchingStrictRef.current,
+      });
         engineRef.current = engine;
 
         // إعادة تغذية الكلمات المسموعة أثناء الاكتشاف نفسه — لا تُهدَر.
@@ -848,7 +868,11 @@ function RecitationTestPageInner() {
         for (const w of remaining) next.set(`${w.surah}:${w.ayah}:${w.wordIndex}`, "hidden");
         return next;
       });
-      const engine = new VerseAlignmentEngine({ referenceWords: remaining, alertLevel: alertLevelRef.current });
+      const engine = new VerseAlignmentEngine({
+        referenceWords: remaining,
+        alertLevel: alertLevelRef.current,
+        matchingStrict: matchingStrictRef.current,
+      });
       engineRef.current = engine;
       setCorrectionCard(null);
       setTeacherHold(false);
@@ -1495,6 +1519,34 @@ function RecitationTestPageInner() {
           </div>
 
           <div className="rai-setup__group">
+            <span className="rai-setup__label">مستوى دقة التحليل</span>
+            <div className="rai-choice-grid">
+              <button
+                type="button"
+                className={`rai-choice ${!matchingStrict ? "rai-choice--active" : ""}`}
+                onClick={() => {
+                  setMatchingStrict(false);
+                  writeMatchingStrictPreference(false);
+                }}
+              >
+                متساهل — للمبتدئين
+                <span className="rai-choice__hint">يتجاهل التشكيل وأخطاء النطق البسيطة</span>
+              </button>
+              <button
+                type="button"
+                className={`rai-choice ${matchingStrict ? "rai-choice--active" : ""}`}
+                onClick={() => {
+                  setMatchingStrict(true);
+                  writeMatchingStrictPreference(true);
+                }}
+              >
+                دقيق — للمتقدمين
+                <span className="rai-choice__hint">مطابقة حرفية بعد التطبيع القرآني</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="rai-setup__group">
             <span className="rai-setup__label">مستوى الدقة</span>
             <div className="rai-choice-grid">
               <button type="button" className={`rai-choice ${precisionLevel === "hifz" ? "rai-choice--active" : ""}`} onClick={() => setPrecisionLevel("hifz")}>
@@ -1792,16 +1844,7 @@ function RecitationTestPageInner() {
       </div>
       <div className="rai-report">
         <div className="rai-report__ring-wrap">
-          <svg width="140" height="140" viewBox="0 0 140 140">
-            <circle cx="70" cy="70" r="60" fill="none" stroke="rgba(14,110,82,.15)" strokeWidth="12" />
-            <circle
-              cx="70" cy="70" r="60" fill="none" stroke="#0E6E52" strokeWidth="12"
-              strokeDasharray={`${(accuracy / 100) * 377} 377`}
-              strokeLinecap="round"
-              transform="rotate(-90 70 70)"
-            />
-            <text x="70" y="78" textAnchor="middle" fontSize="28" fontWeight={800} fill="#153025">{accuracy}%</text>
-          </svg>
+          <CircularProgress percentage={accuracy} />
         </div>
 
         <div className="rai-report__stats">

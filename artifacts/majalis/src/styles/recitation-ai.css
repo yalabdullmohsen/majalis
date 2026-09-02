@@ -501,6 +501,59 @@ html[data-theme="dark"] .imr-word--cursor {
 /* ── شاشة التقرير ─────────────────────────────────────────── */
 .rai-report { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--ds-space-5); }
 .rai-report__ring-wrap { display: flex; justify-content: center; padding: 1rem 0; }
+
+.rai-circular-progress {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  background: var(--rai-surface, #fff);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(14, 110, 82, 0.12);
+  box-shadow: 0 4px 14px rgba(14, 110, 82, 0.06);
+}
+html[data-theme="dark"] .rai-circular-progress {
+  background: #1a2120;
+  border-color: rgba(94, 196, 154, 0.15);
+}
+.rai-circular-progress__ring {
+  position: relative;
+  width: 10rem;
+  height: 10rem;
+}
+.rai-circular-progress__svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.rai-circular-progress__arc {
+  transition: stroke-dashoffset 1s ease-out, stroke 0.4s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rai-circular-progress__arc { transition: none; }
+}
+.rai-circular-progress__center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+}
+.rai-circular-progress__value {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--rai-emerald-deep, #153025);
+  line-height: 1.1;
+}
+html[data-theme="dark"] .rai-circular-progress__value {
+  color: var(--mj-brand-soft, #9fd9b8);
+}
+.rai-circular-progress__label {
+  font-size: 0.8rem;
+  color: #6b7a74;
+}
+
 .rai-report__stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: .75rem; }
 .rai-report__stat { background: #fff; border-radius: 14px; padding: .8rem; text-align: center; border: 1px solid rgba(14,110,82,.12); }
 html[data-theme="dark"] .rai-report__stat { background: #1A2120; border-color: rgba(94,196,154,.15); }
