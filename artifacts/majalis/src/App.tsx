@@ -423,12 +423,28 @@ function PrayerAlertSchedulerBootstrap() {
   return null;
 }
 
-/** قنوات + مستمعو النقر + Remote Push (Capacitor) عند الغلاف الأصلي. */
+/** قنوات + مستمعو النقر + Remote Push صامت (بدون طلب إذن) بعد أول خمول. */
 function NativeNotificationsBootstrap() {
   useEffect(() => {
-    void import("@/lib/notifications/native-bootstrap").then(({ bootstrapNativeNotifications }) => {
-      void bootstrapNativeNotifications();
-    });
+    let cancelled = false;
+    const run = () => {
+      if (cancelled) return;
+      void import("@/lib/notifications/native-bootstrap").then(({ bootstrapNativeNotifications }) => {
+        if (!cancelled) void bootstrapNativeNotifications();
+      });
+    };
+    let idleId: number | undefined;
+    let timeoutId: number | undefined;
+    if (typeof requestIdleCallback === "function") {
+      idleId = requestIdleCallback(run, { timeout: 4500 });
+    } else {
+      timeoutId = window.setTimeout(run, 2800);
+    }
+    return () => {
+      cancelled = true;
+      if (idleId != null && typeof cancelIdleCallback === "function") cancelIdleCallback(idleId);
+      if (timeoutId != null) window.clearTimeout(timeoutId);
+    };
   }, []);
   return null;
 }

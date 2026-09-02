@@ -98,23 +98,27 @@ export async function attachPushNotificationListeners(): Promise<void> {
   });
 
   await PushNotifications.addListener("pushNotificationActionPerformed", (event) => {
-    console.info(
-      "[pushNotifications] actionPerformed",
-      event?.actionId,
-      event?.notification?.id,
-    );
+    if (import.meta.env.DEV) {
+      console.info(
+        "[pushNotifications] actionPerformed",
+        event?.actionId,
+        event?.notification?.id,
+      );
+    }
     navigateFromPushData(event?.notification?.data);
   });
 
   listenersAttached = true;
-  console.info("[pushNotifications] listeners attached");
+  if (import.meta.env.DEV) console.info("[pushNotifications] listeners attached");
 }
 
 /**
- * Request permission and register for APNs (iOS) / FCM (Android).
- * Safe no-op on web. Does not touch Web Push / Service Worker paths.
+ * تسجيل Remote Push للأصل.
+ * افتراضيًا لا يطلب إذنًا (آمن عند الإقلاع) — مرّر requestPermission من إعدادات المستخدم فقط.
  */
-export async function registerNativePushNotifications(): Promise<NativePushRegistrationResult> {
+export async function registerNativePushNotifications(options?: {
+  requestPermission?: boolean;
+}): Promise<NativePushRegistrationResult> {
   if (!isNative) return { status: "unsupported" };
   if (registrationInFlight) return registrationInFlight;
 
@@ -124,8 +128,14 @@ export async function registerNativePushNotifications(): Promise<NativePushRegis
 
       const { PushNotifications } = await import("@capacitor/push-notifications");
       let perm = await PushNotifications.checkPermissions();
-      if (perm.receive === "prompt" || perm.receive === "prompt-with-rationale") {
-        perm = await PushNotifications.requestPermissions();
+      // لا نطلب إذنًا عند الإقلاع — فقط إن مُرِّر requestPermission (إعدادات المستخدم).
+      if (perm.receive !== "granted") {
+        if (
+          options?.requestPermission &&
+          (perm.receive === "prompt" || perm.receive === "prompt-with-rationale")
+        ) {
+          perm = await PushNotifications.requestPermissions();
+        }
       }
       if (perm.receive !== "granted") {
         return { status: "denied" as const };

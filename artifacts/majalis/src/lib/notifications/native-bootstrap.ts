@@ -21,7 +21,7 @@ function navigateFromNotificationExtra(extra: unknown): void {
     if (current === url) return;
     window.history.pushState({}, "", url);
     window.dispatchEvent(new PopStateEvent("popstate"));
-    console.info("[notifications] deep-link from notification →", url);
+    if (import.meta.env.DEV) console.info("[notifications] deep-link from notification →", url);
   } catch (e) {
     console.warn("[notifications] deep-link failed", e);
   }
@@ -32,12 +32,14 @@ export async function attachLocalNotificationListeners(): Promise<void> {
   try {
     const { LocalNotifications } = await import("@capacitor/local-notifications");
     await LocalNotifications.addListener("localNotificationActionPerformed", (event) => {
-      console.info(
-        "[notifications] actionPerformed",
-        event.actionId,
-        event.notification?.id,
-        event.notification?.extra,
-      );
+      if (import.meta.env.DEV) {
+        console.info(
+          "[notifications] actionPerformed",
+          event.actionId,
+          event.notification?.id,
+          event.notification?.extra,
+        );
+      }
       // سلسلة مقاطع الأذان: ألغِ البقية واستأنف داخليًا قبل أي deep-link
       void import("@/lib/adhan-smart-cancel").then(({ onAdhanSegmentNotificationInteraction }) =>
         onAdhanSegmentNotificationInteraction(event.notification?.extra),
@@ -45,14 +47,16 @@ export async function attachLocalNotificationListeners(): Promise<void> {
       navigateFromNotificationExtra(event.notification?.extra);
     });
     await LocalNotifications.addListener("localNotificationReceived", (notification) => {
-      console.info(
-        "[notifications] received (foreground)",
-        notification.id,
-        notification.title,
-      );
+      if (import.meta.env.DEV) {
+        console.info(
+          "[notifications] received (foreground)",
+          notification.id,
+          notification.title,
+        );
+      }
     });
     _listenersAttached = true;
-    console.info("[notifications] local listeners attached");
+    if (import.meta.env.DEV) console.info("[notifications] local listeners attached");
     void import("@/lib/adhan-smart-cancel").then(({ attachAdhanSmartCancelListeners }) =>
       attachAdhanSmartCancelListeners(),
     );
@@ -77,7 +81,7 @@ export async function bootstrapNativeNotifications(): Promise<void> {
       const pending = await import("@capacitor/local-notifications")
         .then(({ LocalNotifications }) => LocalNotifications.getPending())
         .catch(() => null);
-      if (pending) {
+      if (pending && import.meta.env.DEV) {
         console.info(
           "[notifications] pending count on boot:",
           pending.notifications?.length ?? 0,

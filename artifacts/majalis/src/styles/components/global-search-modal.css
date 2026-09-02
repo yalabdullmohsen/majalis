@@ -26,6 +26,8 @@
   height: 100dvh;
   max-height: 100dvh;
   overflow: hidden;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 .gsm-card {
   width: min(96vw, 46rem);
