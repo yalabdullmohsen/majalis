@@ -33,7 +33,7 @@ function navigateFromPushData(data: unknown): void {
     if (current === url) return;
     window.history.pushState({}, "", url);
     window.dispatchEvent(new PopStateEvent("popstate"));
-    console.info("[pushNotifications] deep-link →", url);
+    if (import.meta.env.DEV) console.info("[pushNotifications] deep-link →", url);
   } catch (error) {
     console.warn("[pushNotifications] deep-link failed", error);
   }
@@ -80,7 +80,9 @@ export async function attachPushNotificationListeners(): Promise<void> {
     if (!value) return;
     persistDeviceToken(value);
     const platform = Capacitor.getPlatform();
-    console.info("[pushNotifications] registration token", platform, value.slice(0, 12) + "…");
+    if (import.meta.env.DEV) {
+      console.info("[pushNotifications] registration token", platform, value.slice(0, 12) + "…");
+    }
     void forwardTokenToServer(value, platform);
   });
 
@@ -89,12 +91,14 @@ export async function attachPushNotificationListeners(): Promise<void> {
   });
 
   await PushNotifications.addListener("pushNotificationReceived", (notification) => {
-    console.info(
-      "[pushNotifications] received",
-      notification?.id,
-      notification?.title,
-      notification?.data,
-    );
+    if (import.meta.env.DEV) {
+      console.info(
+        "[pushNotifications] received",
+        notification?.id,
+        notification?.title,
+        notification?.data,
+      );
+    }
   });
 
   await PushNotifications.addListener("pushNotificationActionPerformed", (event) => {

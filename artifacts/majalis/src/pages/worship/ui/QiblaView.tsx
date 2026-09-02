@@ -209,6 +209,19 @@ export default function QiblaPage() {
       }
       return;
     }
+    // لا تطلب GPS عند فتح الصفحة — استخدم موقعًا محفوظًا أو الوضع اليدوي حتى ينقر المستخدم
+    if (!initialGeo) {
+      setManualMode(true);
+    }
+  }, [initialGeo]);
+
+  function requestDeviceLocation() {
+    if (!navigator.geolocation) {
+      setError("المتصفح لا يدعم تحديد الموقع التلقائي.");
+      setManualMode(true);
+      return;
+    }
+    setError("");
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const { latitude: lat, longitude: lon } = pos.coords;
@@ -221,14 +234,12 @@ export default function QiblaPage() {
         setManualMode(false);
       },
       () => {
-        if (!initialGeo) {
-          setError("لم يُمنح إذن تحديد الموقع. اختر مدينتك يدوياً:");
-          setManualMode(true);
-        }
+        setError("لم يُمنح إذن تحديد الموقع. اختر مدينتك يدوياً:");
+        setManualMode(true);
       },
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 60_000 },
     );
-  }, []);
+  }
 
   function applyManualCity(cityName: string) {
     const city = QIBLA_CITIES.find((c) => c.name === cityName);
@@ -287,12 +298,26 @@ export default function QiblaPage() {
               >
                 احسب القبلة
               </button>
+              {typeof navigator !== "undefined" && navigator.geolocation ? (
+                <button
+                  type="button"
+                  className="qibla-manual-btn qibla-manual-btn--gps"
+                  onClick={() => requestDeviceLocation()}
+                >
+                  استخدم موقعي
+                </button>
+              ) : null}
             </div>
           </div>
         )}
 
         {!manualMode && bearing == null && (
-          <p className="qibla-loading">جارٍ تحديد موقعك…</p>
+          <div className="qibla-loading-wrap">
+            <p className="qibla-loading">حدد موقعك لحساب اتجاه القبلة.</p>
+            <button type="button" className="qibla-permit-btn" onClick={() => requestDeviceLocation()}>
+              استخدم موقعي
+            </button>
+          </div>
         )}
 
         {bearing != null && (
