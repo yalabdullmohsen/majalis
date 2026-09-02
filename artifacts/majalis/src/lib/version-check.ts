@@ -45,9 +45,13 @@ async function fetchLiveVersion(): Promise<VersionPayload | null> {
  * Resolves true only when the live /version.json commit genuinely differs
  * from the commit this tab loaded. Fails silent (resolves false) on any
  * network/parse error — this is a nicety, never allowed to break the app.
+ * يقارن بالبادئة (8 أحرف) لأن endpoint العام لا يعيد SHA كاملًا.
  */
 export async function isNewVersionAvailable(loadedCommit: string): Promise<boolean> {
   const live = await fetchLiveVersion();
-  if (!live?.commit) return false;
-  return live.commit !== loadedCommit;
+  const liveId = live?.shortCommit || live?.commit;
+  if (!liveId) return false;
+  const a = liveId.slice(0, 8);
+  const b = loadedCommit.slice(0, 8);
+  return a !== b;
 }

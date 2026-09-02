@@ -196,6 +196,16 @@ console.log("  ✓ channel + test trigger constants");
   assert.match(boot, /localNotificationActionPerformed/, "tap listener");
   assert.match(boot, /bootstrapNativeNotifications/, "bootstrap export");
   assert.match(boot, /maybeRegisterRemotePush/, "remote push on boot");
+  assert.match(
+    nativePush,
+    /requestPermission/,
+    "native push supports opt-in permission request",
+  );
+  assert.match(
+    nativePush,
+    /options\?\.requestPermission/,
+    "boot path does not prompt unless requestPermission",
+  );
 
   console.log("  ✓ source architecture gates");
 }

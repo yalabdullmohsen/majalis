@@ -113,7 +113,7 @@ button.vault-item-card__title {
    Phase 5 — المحفظة العلمية (Vault)
    ══════════════════════════════════════════════════════════════════════════════ */
 
-.vault-page { padding-bottom: 4rem; }
+.vault-page { padding-bottom: calc(var(--bottom-nav-total, var(--nav-h, 64px)) + var(--inset-bottom, 0px) + 1rem); }
 
 /* Search */
 .vault-search-wrap {
