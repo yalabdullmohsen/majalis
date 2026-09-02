@@ -430,27 +430,30 @@ html[data-theme="dark"] .imr-ayah--recited {
   background-color: rgba(94,196,154,.09);
   box-shadow: 0 0 0 3px rgba(94,196,154,.09);
 }
-.imr-word { display: inline; transition: color .15s ease, filter .15s ease, opacity .15s ease; }
+.imr-word { display: inline; transition: color .15s ease, filter .15s ease, opacity .15s ease, transform .15s ease; }
 
 .imr-word--hidden {
   filter: blur(5px);
   opacity: .35;
   color: #8A8A8A;
+  user-select: none;
 }
 .imr-word--revealed {
   filter: blur(0);
   opacity: 1;
-  color: inherit;
+  color: var(--rai-emerald, #0e6e52);
   animation: imr-reveal 150ms ease-out;
 }
 /* الموضع الحالي المتوقع — تمييز خفيف بلا بطاقة عائمة */
 .imr-word--cursor {
+  display: inline-block;
+  transform: scale(1.06);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
   background: rgba(14, 110, 82, 0.12);
   border-radius: 4px;
   padding: 0 0.12em;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 html[data-theme="dark"] .imr-word--cursor {
   background: rgba(94, 196, 154, 0.16);
@@ -460,8 +463,9 @@ html[data-theme="dark"] .imr-word--cursor {
   to { filter: blur(0); opacity: 1; }
 }
 .imr-word--error {
-  filter: blur(5px);
-  opacity: .5;
+  filter: blur(0);
+  opacity: 1;
+  color: #dc2626;
 }
 .imr-word--pulse-error { animation: imr-pulse-error 900ms ease-in-out 2; }
 @keyframes imr-pulse-error {
