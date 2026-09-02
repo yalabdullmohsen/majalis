@@ -1,5 +1,6 @@
 import type { FiqhLessonHit } from "@/lib/fiqh-books";
 import {
+  expandFiqhFilterDoors,
   type FiqhCanonicalDoor,
   resolveLessonDoor,
   sortLessonsByCompleteness,
@@ -13,8 +14,12 @@ export function filterLessonsByDoor(
   door: FiqhDoorFilter,
 ): FiqhLessonHit[] {
   const unique = dedupeLessonHits(hits);
-  if (door === "all") return sortLessonsByCompleteness(unique);
-  return sortLessonsByCompleteness(unique.filter((hit) => resolveLessonDoor(hit) === door));
+  const expanded = expandFiqhFilterDoors(door);
+  if (expanded === "all") return sortLessonsByCompleteness(unique);
+  const allowed = new Set(expanded);
+  return sortLessonsByCompleteness(
+    unique.filter((hit) => allowed.has(resolveLessonDoor(hit))),
+  );
 }
 
 export function filterLessonsByBook(

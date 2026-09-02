@@ -1,6 +1,6 @@
 import {
-  FIQH_DOOR_META,
-  FIQH_DOOR_ORDER,
+  FIQH_FILTER_CHIP_ORDER,
+  fiqhFilterChipLabel,
   type FiqhCanonicalDoor,
 } from "@/lib/fiqh/fiqhNormalize";
 import type { FiqhDoorFilter } from "@/lib/fiqh/fiqhFilters";
@@ -12,16 +12,11 @@ type Props = {
   className?: string;
 };
 
-const ALL_CHIP = { id: "all" as const, label: "كل الأبواب" };
-
 export function FiqhFilters({ value, onChange, className }: Props) {
-  const chips: Array<{ id: FiqhDoorFilter; label: string }> = [
-    ALL_CHIP,
-    ...FIQH_DOOR_ORDER.map((id: FiqhCanonicalDoor) => ({
-      id,
-      label: FIQH_DOOR_META[id].label,
-    })),
-  ];
+  const chips = FIQH_FILTER_CHIP_ORDER.map((id) => ({
+    id: id as FiqhDoorFilter,
+    label: fiqhFilterChipLabel(id as FiqhCanonicalDoor | "all"),
+  }));
 
   return (
     <div className={cn("fiqh-filters", className)} role="group" aria-label="فلترة أبواب الفقه">
