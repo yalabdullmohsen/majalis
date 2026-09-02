@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-02",
-  "lastCompletedId": "b055",
-  "resumeFromId": "b056",
+  "lastCompletedId": "b056",
+  "resumeFromId": "b057",
   "items": [
     {
       "id": "b001",
@@ -649,6 +649,20 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b055-discover-islam-gate.test.ts"
       ],
       "finding": "حُذف بيان أوضح/توجيه القالبيان من أسئلة FAQ؛ بيان فريد لكل سؤال، وتوجيه حسب موضوع السؤال؛ و«لماذا هذه المحطة؟» + «ماذا أفعل الآن؟» فريدان لـ20 محطة مسار."
+    },
+    {
+      "id": "b056",
+      "section": "intro_history",
+      "title": "توسيع مواضيع التعريف بالإسلام + عبرات تاريخ فريدة",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/public/data/knowledge/intro-islam/topics.json",
+        "artifacts/majalis/public/data/knowledge/history/timeline.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b056-intro-history-gate.test.ts"
+      ],
+      "finding": "وُسّعت 14 بطاقة intro-islam بمحتوى تعريفي أوضح (مع الاستفادة من المقالات الثابتة حيث طابقت). واستُبدلت عبرة التاريخ القالبية المشتركة بـ17 عبرة خاصة بكل عصر، ورُفعت البطاقات إلى verified."
     }
   ]
 }

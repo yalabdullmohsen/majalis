@@ -177,6 +177,12 @@ export const CONTENT_AUDIT_GATES: ContentAuditGate[] = [
     path: "src/lib/__tests__/content-audit-b055-discover-islam-gate.test.ts",
     kind: "node-tsx",
   },
+  {
+    id: "b056-intro-history",
+    dimension: "تدقيق",
+    path: "src/lib/__tests__/content-audit-b056-intro-history-gate.test.ts",
+    kind: "node-tsx",
+  },
   // تصحيح — لغة وهوية ومصادر
   {
     id: "content-lang",
