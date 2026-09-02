@@ -1,7 +1,7 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b049",
+  "lastCompletedId": "b050",
   "resumeFromId": "b011",
   "items": [
     {
@@ -567,6 +567,20 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b049-andalus-ottoman-glossary-gate.test.ts"
       ],
       "finding": "قوط لا وزن؛ الزهراء للناصر لا للداخل؛ المنصور بن أبي عامر؛ إنكشارية؛ إزالة مصادر وهمية عثمانية؛ 0 روابط related مكسورة بعد إضافة ~34 مصطلحًا."
+    },
+    {
+      "id": "b050",
+      "section": "quran_people",
+      "title": "تصحيح الزبانية وإزالة الحشو المكرر في الذين ذُكروا في القرآن",
+      "severity": "critical",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/public/data/quran-people/people.json",
+        "artifacts/majalis/public/data/knowledge/quran-people/people.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b050-quran-people-gate.test.ts"
+      ],
+      "finding": "تصحيح تصحيف الزانية→الزبانية؛ إزالة تكرار فقرة الحكمة من 101 بطاقة معرفة؛ استبدال 19 درسًا عامًا بحشو «وليسأل القارئ»."
     }
   ]
 }

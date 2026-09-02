@@ -141,6 +141,12 @@ export const CONTENT_AUDIT_GATES: ContentAuditGate[] = [
     path: "src/lib/__tests__/content-audit-b049-andalus-ottoman-glossary-gate.test.ts",
     kind: "node-tsx",
   },
+  {
+    id: "b050-quran-people",
+    dimension: "تدقيق",
+    path: "src/lib/__tests__/content-audit-b050-quran-people-gate.test.ts",
+    kind: "node-tsx",
+  },
   // تصحيح — لغة وهوية ومصادر
   {
     id: "content-lang",
