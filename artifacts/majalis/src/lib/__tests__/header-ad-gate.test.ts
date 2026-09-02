@@ -33,7 +33,7 @@ assert.doesNotMatch(nav, /navbar-v3__tagline/);
 
 assert.match(cfg, /headerAdConfig/);
 assert.match(cfg, /export const headerAd\b/);
-assert.match(cfg, /enabled:\s*true/);
+assert.match(cfg, /enabled:\s*false/);
 assert.match(cfg, /placement:\s*"header"/);
 assert.match(cfg, /shouldShowHeaderAd/);
 assert.match(cfg, /Google Ads/);
