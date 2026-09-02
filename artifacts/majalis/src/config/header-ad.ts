@@ -41,7 +41,7 @@ export const TOP_SPONSOR_STATUS = {
 };
 
 export const headerAdConfig: HeaderAdConfig = {
-  enabled: true,
+  enabled: false,
   placement: "header",
   badgeLabel: "شريك سُنّة",
   title: "شركة العبد المحسن للحج",
