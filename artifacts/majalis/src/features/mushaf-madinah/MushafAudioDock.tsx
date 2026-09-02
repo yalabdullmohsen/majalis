@@ -27,6 +27,8 @@ type Props = {
   onClose?: () => void;
   onSeek?: (seconds: number) => void;
   onSpeed?: (rate: number) => void;
+  readersOpen?: boolean;
+  onReadersOpenChange?: (open: boolean) => void;
 };
 
 /** شريط تلاوة مضغوط أسفل المصحف — بلا وضع حفظ. */
@@ -47,9 +49,13 @@ export function MushafAudioDock({
   onClose,
   onSeek,
   onSpeed,
+  readersOpen: readersOpenProp,
+  onReadersOpenChange,
 }: Props) {
   const { currentTime, duration, playbackRate } = useMushafAudioClock();
-  const [readersOpen, setReadersOpen] = useState(false);
+  const [readersOpenLocal, setReadersOpenLocal] = useState(false);
+  const readersOpen = readersOpenProp ?? readersOpenLocal;
+  const setReadersOpen = onReadersOpenChange ?? setReadersOpenLocal;
   const [readerQuery, setReaderQuery] = useState("");
   const playing = playerState === "playing" || playerState === "buffering" || playerState === "loading";
   const loading = playerState === "loading" || playerState === "buffering";
@@ -71,7 +77,7 @@ export function MushafAudioDock({
           : playerState === "ended"
             ? "انتهت التلاوة"
             : playerState === "error"
-              ? "فشل التحميل"
+              ? "تعذر تشغيل التلاوة الآن"
               : "جاهز");
   const progressMax = duration > 0 ? duration : 1;
   const progressVal = duration > 0 ? Math.min(duration, Math.max(0, currentTime)) : 0;
@@ -190,7 +196,7 @@ export function MushafAudioDock({
           {statusLabel}
           {loading ? " · جاري تحميل التلاوة…" : ""}
           {audioError || playerState === "error"
-            ? ` · ${audioError || "تعذر تشغيل هذه الآية لهذا القارئ"}`
+            ? ` · ${audioError || "تعذر تشغيل التلاوة الآن"}`
             : ""}
         </p>
       </div>
