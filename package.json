@@ -46,6 +46,7 @@
     "audit:feature-readiness": "pnpm --filter @workspace/majalis run audit:feature-readiness",
     "audit:mobile-app": "pnpm --filter @workspace/majalis run audit:mobile-app",
     "audit:product-upgrade": "pnpm --filter @workspace/majalis run audit:product-upgrade",
+    "audit:quran-recitation": "pnpm --filter @workspace/majalis run audit:quran-recitation",
     "audit:legacy-routes": "pnpm --filter @workspace/majalis run audit:legacy-routes",
     "audit:navigation": "pnpm --filter @workspace/majalis run audit:navigation",
     "audit:lessons-quality": "pnpm --filter @workspace/majalis run audit:lessons-quality",

@@ -3622,6 +3622,61 @@ html.dark .mm-settings-sheet {
 .ayah-action-sheet a:not(.ayah-action-sheet__ai-tarteel) {
   color: var(--mm-ui-accent-deep, #135034);
 }
+
+/* مشغّل التلاوة — رسائل الخطأ والإجراءات */
+.quran-audio-player {
+  position: relative;
+}
+
+.quran-audio-player__fallback {
+  position: fixed;
+  inset-inline: 0.75rem;
+  bottom: calc(var(--inset-bottom, 0px) + 7.5rem);
+  z-index: 9998;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.65rem;
+  background: color-mix(in srgb, var(--mm-paper, #fff) 94%, #000);
+  border: 1px solid color-mix(in srgb, #c00 28%, transparent);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  pointer-events: auto;
+}
+
+.quran-audio-player__fallback p {
+  margin: 0 0 0.45rem;
+  font-weight: 600;
+  color: #8b1a1a;
+}
+
+.quran-audio-player__fallback-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.quran-audio-player__btn {
+  border: 1px solid color-mix(in srgb, var(--mm-ui-accent, #135034) 45%, transparent);
+  background: color-mix(in srgb, var(--mm-ui-accent, #135034) 10%, #fff);
+  color: var(--mm-ui-accent-deep, #0e3d27);
+  border-radius: 0.45rem;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mm-viewport[data-mushaf-theme="night"] .quran-audio-player__fallback,
+.mm-viewport[data-mushaf-theme="oled"] .quran-audio-player__fallback {
+  background: color-mix(in srgb, #1a1a1a 92%, #fff);
+  border-color: color-mix(in srgb, #f66 35%, transparent);
+}
+
+.mm-viewport[data-mushaf-theme="night"] .quran-audio-player__fallback p,
+.mm-viewport[data-mushaf-theme="oled"] .quran-audio-player__fallback p {
+  color: #ffb4b4;
+}
+
 .mm-pager-track.is-panning {
   will-change: scroll-position;
 }

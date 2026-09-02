@@ -30,8 +30,20 @@ export type AudioRegistry = {
 
 const REGISTRY_URL = "/data/audio/audio-registry.json";
 
-// البداية المطلوبة: 3 قرّاء ممتازين (كلهم EveryAyah 128+ في هذا السجل).
-export const DEFAULT_VERIFIED_RECITER_IDS = ["husary", "minshawi", "alafasy"] as const;
+// البداية المطلوبة: قرّاء مُحقَّقون QA (يشمل ياسر الدوسري وسعود الشريم).
+export const DEFAULT_VERIFIED_RECITER_IDS = [
+  "husary",
+  "minshawi",
+  "alafasy",
+  "dosari",
+  "shuraim",
+] as const;
+
+function isVerifiedAyahReciter(id: string): boolean {
+  if (!(DEFAULT_VERIFIED_RECITER_IDS as readonly string[]).includes(id)) return false;
+  const r = RECITERS.find((x) => x.id === id);
+  return Boolean(r?.everyayahFolder);
+}
 
 function fallbackVerifiedReciters(): QuranReciter[] {
   const order = new Set<string>(DEFAULT_VERIFIED_RECITER_IDS as readonly string[]);
@@ -83,7 +95,7 @@ export async function getVerifiedReciters(): Promise<QuranReciter[]> {
     .filter((x): x is QuranReciter => Boolean(x));
 
   verifiedRecitersCache = (verified.length > 0 ? verified : fallbackVerifiedReciters()).filter(
-    (r) => Boolean(r.everyayahFolder),
+    (r) => Boolean(r.everyayahFolder) && isVerifiedAyahReciter(r.id),
   );
   if (verifiedRecitersCache.length === 0) {
     verifiedRecitersCache = fallbackVerifiedReciters();
@@ -96,7 +108,7 @@ export async function getVerifiedReciters(): Promise<QuranReciter[]> {
  * UI will update once `getVerifiedReciters()` resolves.
  */
 export function getVerifiedRecitersSyncFallback(): QuranReciter[] {
-  return fallbackVerifiedReciters();
+  return fallbackVerifiedReciters().filter((r) => isVerifiedAyahReciter(r.id));
 }
 
 /** يُعيد id قارئ مُحقَّق QA أو أول قارئ افتراضي. */
