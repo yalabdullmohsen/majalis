@@ -670,3 +670,100 @@ html[data-theme="dark"] .rai-consent-screen__delete-btn { color: #FCA5A5; border
 .rai-consent-screen__delete-status { margin: .5rem 0 0; font-family: var(--font-body); font-size: .8rem; }
 .rai-consent-screen__delete-status--ok { color: var(--majalis-emerald, var(--mj-brand)); }
 .rai-consent-screen__delete-status--err { color: #B91C1C; }
+
+/* ── LiveRecitation (تلاوة حية مبسّطة) ───────────────────────── */
+.live-rec {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 60vh;
+  padding: 1.5rem 1rem 4rem;
+}
+.live-rec__toolbar {
+  position: sticky;
+  top: max(1rem, var(--inset-top, 1rem));
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: min(100%, 28rem);
+  margin-bottom: 2rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--rai-ivory) 88%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+html[data-theme="dark"] .live-rec__toolbar {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, #111714 88%, transparent);
+}
+.live-rec__mic {
+  min-height: 44px;
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 0.75rem;
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.live-rec__mic--start { background: var(--rai-emerald, #0e6e52); }
+.live-rec__mic--start:hover { background: #0a5a43; }
+.live-rec__mic--stop { background: #dc2626; }
+.live-rec__mic--stop:hover { background: #b91c1c; }
+.live-rec__listening {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--rai-emerald-deep, #153025);
+}
+html[data-theme="dark"] .live-rec__listening { color: #d1e7df; }
+.live-rec__pulse {
+  position: relative;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: #16a34a;
+}
+.live-rec__pulse::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #16a34a;
+  opacity: 0.75;
+  animation: live-rec-ping 1.2s ease-out infinite;
+}
+@keyframes live-rec-ping {
+  0% { transform: scale(1); opacity: 0.75; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+.live-rec__words {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 0.5rem;
+  width: min(100%, 48rem);
+  line-height: 3.5;
+  text-align: center;
+  padding-bottom: 8rem;
+}
+.live-rec__word {
+  font-family: "Amiri Quran", "Amiri", serif;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+}
+.live-rec__unsupported,
+.live-rec__error {
+  margin: 1rem;
+  font-family: var(--font-body);
+  text-align: center;
+}
+.live-rec__error { color: #b91c1c; }
+
