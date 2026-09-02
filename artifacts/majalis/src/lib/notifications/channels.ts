@@ -6,7 +6,7 @@ import { isNative } from "@/lib/capacitor-utils";
 
 export const CHANNEL_PRAYER = "majalis-prayer-alerts";
 export const CHANNEL_QURAN = "majalis-quran-daily";
-export const CHANNEL_GENERAL = "majalis-general";
+export const CHANNEL_GENERAL = "ssunnah-general";
 
 /** اسم ملف غير موجود → صوت النظام الافتراضي على iOS/Android 7 (انظر Capacitor docs). */
 export const DEFAULT_ALERT_SOUND = "default";
@@ -43,7 +43,7 @@ export async function ensureNotificationChannels(): Promise<void> {
       },
       {
         id: CHANNEL_GENERAL,
-        name: "تذكيرات المجلس",
+        name: "تذكيرات عامة",
         description: "تذكيرات عامة واختبارات التشخيص",
         importance: 4 as const,
         visibility: 1 as const,
