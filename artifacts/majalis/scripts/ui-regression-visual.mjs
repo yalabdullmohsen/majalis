@@ -211,23 +211,41 @@ async function auditPage(page, base, route, theme) {
   // عند نهاية التمرير: آخر محتوى لا يدخل خلف الشريط (غير غامر)
   if (!m.immersive && m.navH > 0) {
     await page.evaluate(() => {
-      document.body.scrollTop = 99999;
-      document.documentElement.scrollTop = 99999;
+      const maxY = Math.max(
+        document.documentElement.scrollHeight,
+        document.body.scrollHeight,
+        document.documentElement.offsetHeight,
+        document.body.offsetHeight,
+      );
+      window.scrollTo(0, maxY);
+      document.documentElement.scrollTop = maxY;
+      document.body.scrollTop = maxY;
+      const root = document.querySelector("[data-scroll-root]");
+      if (root instanceof HTMLElement) {
+        root.scrollTop = root.scrollHeight;
+      }
     });
-    await page.waitForTimeout(200);
+    await page.waitForTimeout(250);
     const clear = await page.evaluate(() => {
       const nav = document.querySelector(".bottom-nav, .bottom-nav--v2");
       const main = document.querySelector("#main-content");
       if (!nav || !main) return { ok: true };
       const n = nav.getBoundingClientRect();
-      // آخر عنصر تفاعلي/بطاقة داخل main
-      const nodes = [...main.querySelectorAll("a, button, [class*='card'], h2, p")].filter((el) => {
+      // أسفل عنصر مرئي داخل main بعد التمرير — لا آخر عقدة DOM فقط
+      let lastBottom = -Infinity;
+      for (const el of main.querySelectorAll("a, button, [class*='card'], h2, p")) {
         const r = el.getBoundingClientRect();
-        return r.height > 12 && r.width > 20;
-      });
-      const last = nodes.at(-1)?.getBoundingClientRect();
-      if (!last) return { ok: true };
-      return { ok: last.bottom <= n.top + 6, gap: n.top - last.bottom, lastBottom: last.bottom, navTop: n.top };
+        if (r.height <= 12 || r.width <= 20) continue;
+        if (r.bottom < 0) continue; // خارج الشاشة للأعلى
+        if (r.bottom > lastBottom) lastBottom = r.bottom;
+      }
+      if (!Number.isFinite(lastBottom)) return { ok: true };
+      return {
+        ok: lastBottom <= n.top + 6,
+        gap: n.top - lastBottom,
+        lastBottom,
+        navTop: n.top,
+      };
     });
     if (!clear.ok) {
       throw new Error(
