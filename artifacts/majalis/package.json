@@ -255,7 +255,7 @@
     "test:recitation-error-detector": "node --import tsx src/lib/recitation-ai/__tests__/error-detector.test.ts",
     "test:recitation-confidence": "node --import tsx src/lib/recitation-ai/__tests__/confidence-scorer.test.ts",
     "test:recitation-providers": "node --import tsx src/lib/recitation-ai/__tests__/asr-providers.test.ts",
-    "test:recitation-streaming": "node --import tsx src/lib/recitation-ai/__tests__/streaming-latency.test.ts",
+    "test:recitation-streaming": "node --import tsx src/lib/recitation-ai/__tests__/streaming-latency.test.ts && node --import tsx src/hooks/__tests__/useSpeechRecognition.test.ts",
     "test:recitation-mutashabihat": "node --import tsx src/lib/recitation-ai/__tests__/mutashabihat.test.ts",
     "test:recitation-freeform-start": "node --import tsx src/lib/recitation-ai/__tests__/freeform-start-detector.test.ts",
     "test:recitation-page-juz": "node --import tsx src/lib/recitation-ai/__tests__/page-juz-lookup.test.ts",

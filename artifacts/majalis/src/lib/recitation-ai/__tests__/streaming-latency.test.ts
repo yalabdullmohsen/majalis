@@ -92,4 +92,13 @@ const mushafSrc = readFileSync(resolve(root, "components/quran/InteractiveMushaf
 assert.match(mushafSrc, /imr-word--cursor/);
 assert.match(mushafSrc, /rai-word-/);
 
+const cssSrc = readFileSync(resolve(root, "styles/recitation-ai.css"), "utf8");
+assert.match(cssSrc, /\.imr-word--revealed[\s\S]*--rai-emerald/);
+assert.match(cssSrc, /\.imr-word--error[\s\S]*#dc2626/);
+assert.match(cssSrc, /\.imr-word--cursor[\s\S]*scale\(1\.06\)/);
+
+const hookSrc = readFileSync(resolve(root, "hooks/useSpeechRecognition.ts"), "utf8");
+assert.match(hookSrc, /interimResults = true/);
+assert.match(hookSrc, /isWebSpeechRecognitionSupported/);
+
 console.log("streaming-latency.test.ts: ok");
