@@ -123,6 +123,12 @@ export const CONTENT_AUDIT_GATES: ContentAuditGate[] = [
     path: "src/lib/__tests__/content-audit-b046-sahabah-gate.test.ts",
     kind: "node-tsx",
   },
+  {
+    id: "b047-history-glossary",
+    dimension: "تدقيق",
+    path: "src/lib/__tests__/content-audit-b047-history-glossary-gate.test.ts",
+    kind: "node-tsx",
+  },
   // تصحيح — لغة وهوية ومصادر
   {
     id: "content-lang",

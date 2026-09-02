@@ -1,7 +1,7 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b046",
+  "lastCompletedId": "b047",
   "resumeFromId": "b011",
   "items": [
     {
@@ -518,6 +518,25 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b046-sahabah-gate.test.ts"
       ],
       "finding": "أُزيلت أرقام مسند مطلقة وجزم تاريخي/روائي حسّاس؛ قُيّد حديث المنزلة؛ تحفّظ أول إسلام. content-gates خضراء."
+    },
+    {
+      "id": "b047",
+      "section": "islamic_history_glossary",
+      "title": "إصلاح تشويه التاريخ الإسلامي + تدقيق المصطلحات",
+      "severity": "critical",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/src/data/islamic-history/umayyad.json",
+        "artifacts/majalis/src/data/islamic-history/rashidun.json",
+        "artifacts/majalis/src/data/islamic-history/abbasid.json",
+        "artifacts/majalis/src/data/islamic-history/civilization.json",
+        "artifacts/majalis/src/data/islamic-history/andalus.json",
+        "artifacts/majalis/src/data/islamic-history/ottoman.json",
+        "artifacts/majalis/src/pages/account/ui/IslamicGlossaryView.tsx",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b047-history-glossary-gate.test.ts"
+      ],
+      "finding": "أُعيدت كتابة الراشدين/الأمويين/العباسيين بعد تشويه لغوي ومعلوماتي (فتوحات لا فتوات، المستعصم لا المعتصم، سليمان لا عبد الملك في حصار 717، إزالة عين جالوت من هارون…). المصطلحات: إكمال تعاريف مبتورة، إضافة الحسن/الضعيف، حذف تكرار الحسد، مصادر للأحاديث. بوابة b047."
     }
   ]
 }
