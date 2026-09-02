@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-02",
-  "lastCompletedId": "b052",
-  "resumeFromId": "b053",
+  "lastCompletedId": "b053",
+  "resumeFromId": "b054",
   "items": [
     {
       "id": "b001",
@@ -610,6 +610,19 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b052-tafsir-knowledge-gate.test.ts"
       ],
       "finding": "مزامنة أسباب التسمية/المحاور من surah-extended-meta؛ حذف ~972 قسم حشو (غريب/سبب نزول/فوائد قالب)؛ تعويض 110+ آية قصيرة من الميسّر/السعدي؛ 114 مقدمة verified؛ بوابة content-audit-b052."
+    },
+    {
+      "id": "b053",
+      "section": "prophets_knowledge",
+      "title": "إزالة الحشو القالبي من معرفة الأنبياء ومزامنة الدروس من prophets-data",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/public/data/knowledge/prophets/",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b053-prophets-knowledge-gate.test.ts"
+      ],
+      "finding": "كانت أقسام التعريف/الزمان/المواقف/الدروس/المآل متطابقة تقريباً في 25 بطاقة؛ استُبدلت بمحتوى prophets-data (دروس ومواقف فريدة)، وحُذف حشو «يُراجع مقالة الأمة…»، مع ربط مختصر بالأمة عبر related عند وجودها."
     }
   ]
 }
