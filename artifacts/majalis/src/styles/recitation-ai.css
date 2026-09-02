@@ -767,3 +767,106 @@ html[data-theme="dark"] .live-rec__listening { color: #d1e7df; }
 }
 .live-rec__error { color: #b91c1c; }
 
+/* ── RecitationModule / RecitationSetup ─────────────────────── */
+.rai-module {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+}
+.rai-module__title,
+.rai-module-setup__title {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-body);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--rai-emerald-deep, #153025);
+  text-align: center;
+}
+.rai-module-setup__header {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.rai-module-setup__sub {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+.rai-module-setup__advanced {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  text-align: center;
+  color: #6b7280;
+}
+.rai-module-setup__advanced a {
+  color: var(--rai-emerald, #0e6e52);
+  font-weight: 700;
+}
+.rai-module__status,
+.rai-module__summary {
+  margin: 1rem 0;
+  font-family: var(--font-body);
+  text-align: center;
+}
+.rai-module__error {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: rgba(220, 38, 38, 0.08);
+  color: #b91c1c;
+  font-family: var(--font-body);
+  text-align: center;
+}
+.rai-strict-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.rai-strict-toggle__hint {
+  margin: 0.25rem 0 0;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+.rai-toggle {
+  position: relative;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 1.5rem;
+  border: none;
+  border-radius: 999px;
+  background: #d1d5db;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.rai-toggle--on { background: var(--rai-emerald, #0e6e52); }
+.rai-toggle__knob {
+  position: absolute;
+  top: 0.125rem;
+  right: 0.125rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s ease;
+}
+.rai-toggle--on .rai-toggle__knob { transform: translateX(-1.25rem); }
+.live-rec__end {
+  min-height: 44px;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid rgba(14, 110, 82, 0.35);
+  border-radius: 0.75rem;
+  background: transparent;
+  color: var(--rai-emerald, #0e6e52);
+  font-family: var(--font-body);
+  font-weight: 700;
+  cursor: pointer;
+}
+.live-rec__toolbar {
+  flex-wrap: wrap;
+}
+
+

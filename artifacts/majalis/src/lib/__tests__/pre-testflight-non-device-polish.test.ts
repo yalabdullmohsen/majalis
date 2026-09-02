@@ -70,10 +70,11 @@ assert.match(mushafSrc, /MushafViewport/);
 assert.match(mushafSrc, /applyPageSeo/);
 assert.equal(isImmersiveChromePath("/mushaf"), true);
 
-const raiSrc = read("src/pages/quran/ui/RecitationTestView.tsx");
-assert.match(raiSrc, /goBackOrFallback\("\/quran\/recitation-test-ai"\)/);
-assert.match(raiSrc, /rai-back-btn/);
-assert.match(raiSrc, /aria-label="رجوع"/);
+const raiPageSrc = read("src/pages/quran/RecitationTestPage.tsx");
+assert.match(raiPageSrc, /goBackOrFallback\("\/quran\/recitation-test-ai"\)/);
+assert.match(raiPageSrc, /rai-back-btn/);
+assert.match(raiPageSrc, /aria-label="رجوع"/);
+assert.match(raiPageSrc, /RecitationModule/);
 
 const prayerSrc = read("src/pages/worship/ui/PrayerTimesView.tsx");
 assert.match(prayerSrc, /reload/);

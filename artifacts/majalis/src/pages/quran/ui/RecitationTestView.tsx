@@ -1,8 +1,7 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearch } from "wouter";
-import { Pause, Play, Square, ChevronLeft, RotateCcw, ArrowRight } from "lucide-react";
+import { Pause, Play, Square, ChevronLeft, RotateCcw } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
-import { goBackOrFallback } from "@/lib/navigation-back";
 import { useAuth } from "@/components/AuthProvider";
 import { fetchSurahDetail, getSurahList } from "@/lib/quran-api";
 import { addRecitationSuccessAyahs, markSurahCompleted } from "@/lib/local-milestones";
@@ -45,10 +44,6 @@ import {
   resumePlaybackAfterTasmee,
   stopAuxiliaryAudioForTasmee,
 } from "@/lib/recitation-ai/playback-handoff";
-import {
-  AI_TARTEEL_DISABLED_MESSAGE,
-  isAiTarteelEnabled,
-} from "@/lib/recitation-ai/feature-flag";
 import { warmRecitationWsConnection, discardWarmedRecitationWs } from "@/lib/recitation-ai/warm-connection";
 import { markTarteelLatency } from "@/lib/recitation-ai/tarteel-latency";
 import type { AlertLevel, AlignmentEvent, PrecisionLevel, RecitationMode, ReferenceWord, TajweedNote } from "@/lib/recitation-ai/types";
@@ -92,13 +87,10 @@ function revokeRecitationAiConsent(): void {
   try { localStorage.removeItem(RAI_CONSENT_KEY); } catch { /* تجاهل */ }
 }
 
-const MATCHING_STRICT_KEY = "recitation-ai-matching-strict-v1";
-function readMatchingStrictPreference(): boolean {
-  try { return localStorage.getItem(MATCHING_STRICT_KEY) === "1"; } catch { return false; }
-}
-function writeMatchingStrictPreference(strict: boolean): void {
-  try { localStorage.setItem(MATCHING_STRICT_KEY, strict ? "1" : "0"); } catch { /* تجاهل */ }
-}
+import {
+  readMatchingStrictPreference,
+  writeMatchingStrictPreference,
+} from "@/lib/recitation-ai/matching-strict-preference";
 
 /** يستخرج نصًا صالحًا للعرض ورمز الخطأ (إن وُجد) من أي خطأ مُلتقَط — يميّز ASRProviderUnavailableError (رمز حقيقي) عن أي Error عام آخر. */
 function describeAsrError(e: unknown): { message: string; code: ASRProviderError["code"] | null } {
@@ -107,7 +99,7 @@ function describeAsrError(e: unknown): { message: string; code: ASRProviderError
   return { message: "خطأ غير معروف", code: null };
 }
 
-function RecitationTestPageInner() {
+export function RecitationTestViewInner() {
   const search = useSearch();
   const { user } = useAuth();
 
@@ -1614,6 +1606,11 @@ function RecitationTestPageInner() {
           >
             {phase === "loading" ? "جارٍ تهيئة الميكروفون…" : "ابدأ التلاوة"}
           </button>
+          <p className="rai-module-setup__advanced">
+            <Link href="/quran/recitation-test-ai">الوضع المبسّط</Link>
+            {" "}
+            — إعداد سريع وتلاوة حية مع Web Speech.
+          </p>
           <p className="rai-report__disclaimer">
             سيُطلَب إذن الميكروفون قبل بدء الاستماع، ويُستخدَم فقط أثناء الجلسة — لا يُحفَظ التسجيل كأرشيف.
             يُفضَّل التعرّف على الجهاز؛ وإلا تُمرَّر مقاطع قصيرة عبر خدمة التفريغ لتقييم أدق بلا تخزين للصوت
@@ -1984,44 +1981,4 @@ function errorTypeLabel(t: string): string {
   return map[t] ?? t;
 }
 
-export default function RecitationTestPage() {
-  if (!isAiTarteelEnabled()) {
-    return (
-      <div className="rai-shell">
-        <button
-          type="button"
-          className="rai-back-btn"
-          onClick={() => goBackOrFallback("/quran/recitation-test-ai")}
-          aria-label="رجوع"
-        >
-          <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
-          رجوع
-        </button>
-        <div className="rai-page" role="alert">
-          <div className="rai-header">
-            <h1 className="rai-header__title">التلاوة</h1>
-            <p className="rai-header__sub">{AI_TARTEEL_DISABLED_MESSAGE}</p>
-          </div>
-          <Link href="/quran-hub" className="rai-start-btn">
-            العودة لمركز القرآن الكريم
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="rai-shell">
-      <button
-        type="button"
-        className="rai-back-btn"
-        onClick={() => goBackOrFallback("/quran/recitation-test-ai")}
-        aria-label="رجوع"
-      >
-        <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
-        رجوع
-      </button>
-      <RecitationTestPageInner />
-    </div>
-  );
-}
+export default RecitationTestViewInner;
