@@ -20,8 +20,10 @@ export type LiveRecitationProps = {
 
 export type LiveRecitationSessionResult = {
   correct: number;
+  incorrect: number;
   total: number;
   accuracyPct: number;
+  notesCount: number;
 };
 
 function buildSessionResult(
@@ -29,8 +31,12 @@ function buildSessionResult(
 ): LiveRecitationSessionResult {
   const total = wordsStatus.length;
   const correct = wordsStatus.filter((w) => w.status === "correct").length;
+  const incorrectMarked = wordsStatus.filter((w) => w.status === "incorrect").length;
+  const missed = Math.max(0, total - correct - incorrectMarked);
+  const incorrect = incorrectMarked + missed;
+  const notesCount = incorrect;
   const accuracyPct = total > 0 ? Math.round((correct / total) * 100) : 0;
-  return { correct, total, accuracyPct };
+  return { correct, incorrect, total, accuracyPct, notesCount };
 }
 
 export function referenceWordsToLiveRecitation(words: ReferenceWord[]): LiveRecitationWord[] {
