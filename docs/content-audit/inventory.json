@@ -1,6 +1,6 @@
 {
   "$comment": "جرد بمستوى القسم (لا لكل مسار فردي — 252 مساراً في App.tsx، سيُفصَّل تدريجياً حسب الحاجة لتقليل الاستهلاك). كل سجل: section, route, sourceFile, completeness, scholarlyAudit, linguisticAudit, sourcesStatus, seoStatus, linksStatus, severity, lastReviewed, nextAction.",
-  "generatedAt": "2026-07-24",
+  "generatedAt": "2026-09-02",
   "records": [
     {
       "section": "قصص الأنبياء",
@@ -111,8 +111,50 @@
       "seoStatus": "لم يبدأ",
       "linksStatus": "لم يبدأ",
       "severity": "medium",
-      "lastReviewed": "2026-07-24",
-      "nextAction": "سيُضاف لكل قسم سجل مستقل عند الوصول إليه في الدورة المستمرة (b010)."
+      "lastReviewed": "2026-09-02",
+      "nextAction": "متابعة الجرد قسمًا قسمًا؛ أُضيفت سجلات للتعريف/الدورات/اللغة في b058"
+    },
+    {
+      "section": "التعريف بالإسلام / اكتشف الإسلام",
+      "route": "/discover-islam, /intro knowledge",
+      "sourceFile": "public/data/knowledge/discover-islam, intro-islam",
+      "completeness": "مكتمل نسبيًا بعد b055–b056",
+      "scholarlyAudit": "FAQ بلا حشو قالبي؛ intro موسَّع",
+      "linguisticAudit": "جزئي",
+      "sourcesStatus": "معرفة داخلية + مقالات ثابتة",
+      "seoStatus": "مسارات موجودة",
+      "linksStatus": "بوابات content-audit خضراء",
+      "severity": "low",
+      "lastReviewed": "2026-09-02",
+      "nextAction": "توسعة أجوبة FAQ من مصادر دعوية عند توفرها"
+    },
+    {
+      "section": "الدورات العلمية السنوية",
+      "route": "/courses أو منصة الدورات",
+      "sourceFile": "artifacts/majalis/src/lib/annual-courses-seed.ts",
+      "completeness": "63 دورة كلها بـ body بعد b058",
+      "scholarlyAudit": "البطاقة تعريفية من الحقول؛ لا منهج مفصّل مخترع",
+      "linguisticAudit": "أُزيل الحشو القالبي",
+      "sourcesStatus": "حقول المنصة",
+      "seoStatus": "حسب المسارات الحالية",
+      "linksStatus": "بوابة b058",
+      "severity": "low",
+      "lastReviewed": "2026-09-02",
+      "nextAction": "إثراء body بمناهج معتمدة عند توفر مصدر الجهة المنظمة (كان b014)"
+    },
+    {
+      "section": "اللغة العربية / مقاصد / دلائل النبوة",
+      "route": "/arabic-language, /maqasid-sharia, /dalail-nubuwwah",
+      "sourceFile": "arabic-language-data.ts, maqasid-sharia-data.ts, dalail-nubuwwah-data.ts",
+      "completeness": "محتوى + صفحة + مسار + سجل أقسام",
+      "scholarlyAudit": "عناوين مناهج قياسية؛ بلا مسائل خلافية مخترعة",
+      "linguisticAudit": "حشو الدروس أُزيل في b057",
+      "sourcesStatus": "بذور داخلية",
+      "seoStatus": "مسارات AppRoutes",
+      "linksStatus": "sections.registry live",
+      "severity": "low",
+      "lastReviewed": "2026-09-02",
+      "nextAction": "لا شيء عاجل"
     }
   ]
 }

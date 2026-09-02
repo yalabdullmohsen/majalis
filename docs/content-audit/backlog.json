@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-02",
-  "lastCompletedId": "b057",
-  "resumeFromId": "b058",
+  "lastCompletedId": "b058",
+  "resumeFromId": "b059",
   "items": [
     {
       "id": "b001",
@@ -148,9 +148,11 @@
       "section": "annual_courses",
       "title": "18 من 63 دورة علمية سنوية بلا حقل body (محتوى تفصيلي) — فقط summary مختصر",
       "severity": "medium",
-      "status": "needs_source",
+      "status": "done",
       "detail": "فحص برمجي لـ ANNUAL_COURSES_SEED (annual-courses-seed.ts): 63 دورة، summary مكتمل 100%، لكن 18 دورة بلا body (المتون، البرنامج، التفاصيل). الحقل يحوي بيانات لوجستية دقيقة (أسماء مشايخ، تواريخ، مساجد) لا يجوز اختلاقها.",
-      "nextAction": "يحتاج تزويد الإدارة بتفاصيل الدورات الـ18 الناقصة (لا يمكن تأليفها من نافذة المحتوى) — أو تصنيفها needs_source دائم إذا تعذر الحصول على التفاصيل."
+      "nextAction": "يحتاج تزويد الإدارة بتفاصيل الدورات الـ18 الناقصة (لا يمكن تأليفها من نافذة المحتوى) — أو تصنيفها needs_source دائم إذا تعذر الحصول على التفاصيل.",
+      "verifiedAt": "2026-09-02",
+      "finding": " — أُغلق ضمن b058 بملء body من الحقول المسجّلة."
     },
     {
       "id": "b015",
@@ -402,9 +404,9 @@
       "section": "arabic_language",
       "title": "فجوة تغطية حقيقية: لا يوجد قسم \"اللغة العربية والنحو والصرف والبلاغة\" في المنصة إطلاقاً",
       "severity": "medium",
-      "status": "partially_done",
-      "finding": "بطلب مباشر من المالك (\"أنشئ وأكمل\")، أُنشئ المحتوى وصفحة العرض كاملَين من نافذة المحتوى: src/lib/arabic-language-data.ts (7 أبواب، 74 درساً: نحو أساسي/متقدم، صرف، معاني، بيان، بديع، اللغة وخدمة القرآن) وsrc/views/ArabicLanguagePage.tsx (بنفس نمط TarikhIslamiPage.tsx الموجود). تعمّدت عدم لمس App.tsx (تسجيل المسار) لأنه بنية تطبيق لا محتوى وقد يتعارض مع عمل نافذة automation/tasks المتزامنة — التفاصيل الدقيقة لسطرَي الربط موثّقة في technical-handoff.md §-1.",
-      "nextAction": "نافذة automation/tasks: إضافة سطرين في App.tsx فقط (lazy import + Route) — لا محتوى إضافي مطلوب، كل شيء جاهز."
+      "status": "done",
+      "finding": "بطلب مباشر من المالك (\"أنشئ وأكمل\")، أُنشئ المحتوى وصفحة العرض كاملَين من نافذة المحتوى: src/lib/arabic-language-data.ts (7 أبواب، 74 درساً: نحو أساسي/متقدم، صرف، معاني، بيان، بديع، اللغة وخدمة القرآن) وsrc/views/ArabicLanguagePage.tsx (بنفس نمط TarikhIslamiPage.tsx الموجود). تعمّدت عدم لمس App.tsx (تسجيل المسار) لأنه بنية تطبيق لا محتوى وقد يتعارض مع عمل نافذة automation/tasks المتزامنة — التفاصيل الدقيقة لسطرَي الربط موثّقة في technical-handoff.md §-1. — المسارات في AppRoutes كانت جاهزة؛ اكتمل الظهور عبر sections.registry في b058.",
+      "verifiedAt": "2026-09-02"
     },
     {
       "id": "b038",
@@ -677,6 +679,20 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b057-lesson-filler-gate.test.ts"
       ],
       "finding": "حُذفت الجملة القالبية من 1174 متناً في 11 ملف دروس (كانت تكرارًا للملخص)، وحُوّلت إلى أزواج عنوان/ملخص. عُدّل strip-lesson-filler.mjs لئلا يعيد حقن الحشو."
+    },
+    {
+      "id": "b058",
+      "section": "annual_courses_registry",
+      "title": "تنظيف حشو الدورات السنوية + ملء body + تسجيل أقسام اللغة/المقاصد/دلائل النبوة",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/src/lib/annual-courses-seed.ts",
+        "artifacts/majalis/src/config/sections.registry.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b058-courses-registry-gate.test.ts"
+      ],
+      "finding": "أُزيل الحشو القالبي من ملخصات/متون الدورات؛ مُلئت 18 دورة بلا body من حقولها (متون/جدول/مكان) دون اختراع منهج؛ وسُجّلت arabic-language وmaqasid-sharia وdalail-nubuwwah في sections.registry (المسارات كانت موجودة)."
     }
   ]
 }
