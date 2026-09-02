@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-02",
-  "lastCompletedId": "b056",
-  "resumeFromId": "b057",
+  "lastCompletedId": "b057",
+  "resumeFromId": "b058",
   "items": [
     {
       "id": "b001",
@@ -663,6 +663,20 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b056-intro-history-gate.test.ts"
       ],
       "finding": "وُسّعت 14 بطاقة intro-islam بمحتوى تعريفي أوضح (مع الاستفادة من المقالات الثابتة حيث طابقت). واستُبدلت عبرة التاريخ القالبية المشتركة بـ17 عبرة خاصة بكل عصر، ورُفعت البطاقات إلى verified."
+    },
+    {
+      "id": "b057",
+      "section": "lesson_seeds",
+      "title": "إزالة حشو «يُؤخذ للعمل بضابط الدليل» من بذور الدروس وإصلاح سكربت الحقن",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/src/lib/*-data.ts",
+        "artifacts/majalis/scripts/strip-lesson-filler.mjs",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b057-lesson-filler-gate.test.ts"
+      ],
+      "finding": "حُذفت الجملة القالبية من 1174 متناً في 11 ملف دروس (كانت تكرارًا للملخص)، وحُوّلت إلى أزواج عنوان/ملخص. عُدّل strip-lesson-filler.mjs لئلا يعيد حقن الحشو."
     }
   ]
 }

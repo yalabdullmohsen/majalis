@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
  * يزيل أجسام الدروس المحشوّة آلياً في ملفات *-data.ts ذات الشكل
- * ["عنوان", "ملخص", "متن طويل مكرّر"]
- * ويستبدل المتن بجملة قصيرة مبنية على الملخص.
+ * ["عنوان", "ملخص", "متن = ملخص + حشو"]
+ * إن صار المتن مطابقاً للملخص بعد التنظيف يُحوَّل الزوج إلى ["عنوان","ملخص"].
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -23,8 +23,11 @@ const TARGETS = [
   "maqasid-sharia-data.ts",
   "sunnah-studies-data.ts",
   "arabic-language-data.ts",
-    "dalail-nubuwwah-data.ts",
-  ];
+  "dalail-nubuwwah-data.ts",
+];
+
+const FILLER = "يُؤخذ للعمل بضابط الدليل، دون توسع فيما لم يثبت";
+const FILLER_RE = /\s*يُؤخذ للعمل بضابط الدليل، دون توسع فيما لم يثبت\.?\s*$/;
 
 const PAD_RE =
   /الصبر على مقتضاه|يُستحضر المآل|يُسأل الله التوفيق|يُترجم المعنى إلى طاعة|تُربط سيرته|البلاغة تُخدم بفهم السياق|علم الحديث يضبط الرواية|البرهان على النبوة تراكمي|يُقدَّم قول الجمهور عند تعادل|الموسوعة أداة مرجع|التحقيق يقتضي نسبة القول|يُراعى حال المتعلم فلا يُلقى|لا يُستدل بالمتشابه على هدم المحكم|تُقدَّم المعجزة القرآنية/;
@@ -47,13 +50,24 @@ for (const name of TARGETS) {
   const next = src.replace(
     /\["((?:[^"\\]|\\.)*)"\s*,\s*"((?:[^"\\]|\\.)*)"\s*,\s*"((?:[^"\\]|\\.)*)"\]/g,
     (full, titleRaw, summaryRaw, bodyRaw) => {
-      const body = unescapeTs(bodyRaw);
-      if (body.length < 240 && !PAD_RE.test(body)) return full;
-      if (!PAD_RE.test(body) && body.length < 400) return full;
       const summary = unescapeTs(summaryRaw).trim();
-      const clean = `${summary} يُؤخذ للعمل بضابط الدليل، دون توسع فيما لم يثبت.`;
+      let body = unescapeTs(bodyRaw).trim();
+      const hadFiller = body.includes(FILLER);
+      const hadPad = PAD_RE.test(body);
+      if (!hadFiller && !hadPad && body.length < 240) return full;
+      if (hadFiller) {
+        body = body.replace(FILLER_RE, "").split(FILLER).join("").replace(/\s{2,}/g, " ").trim();
+      } else if (hadPad || body.length >= 400) {
+        // متن حشو قديم طويل: اختزله إلى الملخص دون إضافة جملة قالب جديدة
+        body = summary;
+      } else {
+        return full;
+      }
       n++;
-      return `["${titleRaw}", "${summaryRaw}", "${escapeTs(clean)}"]`;
+      if (!body || body === summary) {
+        return `["${titleRaw}", "${summaryRaw}"]`;
+      }
+      return `["${titleRaw}", "${summaryRaw}", "${escapeTs(body)}"]`;
     },
   );
   if (n > 0) {
