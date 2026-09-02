@@ -433,6 +433,7 @@
     "audit:fiqh": "node --import tsx scripts/fiqh-section-audit.mjs",
     "audit:legacy-routes": "node --import tsx scripts/legacy-routes-redirects-audit.mjs",
     "audit:navigation": "node --import tsx scripts/navigation-consistency-audit.mjs",
+    "audit:lessons-quality": "node --import tsx scripts/lessons-quality-audit.mjs",
     "audit:data-completeness": "node scripts/audit-data-completeness.mjs",
     "audit:seo": "node scripts/audit-seo.mjs",
     "audit:feature-readiness": "node --import tsx scripts/audit-feature-readiness.ts",
