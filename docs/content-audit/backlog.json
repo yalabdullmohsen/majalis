@@ -1,7 +1,7 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-07-24",
-  "lastCompletedId": "b044",
+  "lastCompletedId": "b045",
   "resumeFromId": "b011",
   "items": [
     {
@@ -488,6 +488,21 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b044-affinity-gate.test.ts"
       ],
       "finding": "جرد بوابات المعرفة كشف حشوًا مكررًا في intro-islam وآيات غير مرتبطة في التاريخ وFAQ عامة. أُصلح مع تنظيف sitemap/masarat وحذف فائدة مكررة. content-gates + بحث ناجحة."
+    },
+    {
+      "id": "b045",
+      "section": "discover_mustalah",
+      "title": "توسيع شبهات اكتشف الإسلام + FAQ + أمثلة مصطلح الحديث",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/public/data/knowledge/discover-islam/path-and-faq.json",
+        "artifacts/majalis/src/pages/hadith/ui/HadithScienceView.tsx",
+        "artifacts/majalis/scripts/content-gates/fix-content-audit-batch-b045.mjs",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b045-gate.test.ts"
+      ],
+      "finding": "10 شبهات أُعيدت كتابتها بلا حشو؛ 101 FAQ أُثريت؛ كل مصطلحات مصطلح الحديث صارت لها أمثلة. content-gates خضراء."
     }
   ]
 }
