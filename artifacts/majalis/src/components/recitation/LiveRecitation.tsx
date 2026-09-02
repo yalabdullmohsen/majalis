@@ -15,7 +15,23 @@ export type LiveRecitationProps = {
   words: LiveRecitationWord[];
   matchingStrict?: boolean;
   className?: string;
+  onSessionEnd?: (result: LiveRecitationSessionResult) => void;
 };
+
+export type LiveRecitationSessionResult = {
+  correct: number;
+  total: number;
+  accuracyPct: number;
+};
+
+function buildSessionResult(
+  wordsStatus: Array<LiveRecitationWord & { status: WordStatus }>,
+): LiveRecitationSessionResult {
+  const total = wordsStatus.length;
+  const correct = wordsStatus.filter((w) => w.status === "correct").length;
+  const accuracyPct = total > 0 ? Math.round((correct / total) * 100) : 0;
+  return { correct, total, accuracyPct };
+}
 
 export function referenceWordsToLiveRecitation(words: ReferenceWord[]): LiveRecitationWord[] {
   return words.map((w) => ({
@@ -28,7 +44,7 @@ export function referenceWordsToLiveRecitation(words: ReferenceWord[]): LiveReci
  * تلاوة حية مبسّطة: Web Speech API + إخفاء الكلمات القادمة + تلوين لحظي.
  * للجلسات الكاملة (تقرير، محاذاة متقدمة، مزوّدو ASR) استخدم RecitationTestView.
  */
-export function LiveRecitation({ words, matchingStrict = false, className }: LiveRecitationProps) {
+export function LiveRecitation({ words, matchingStrict = false, className, onSessionEnd }: LiveRecitationProps) {
   const [isListening, setIsListening] = useState(false);
   const { transcript, isSupported, error, resetTranscript } = useSpeechRecognition(isListening);
   const [wordsStatus, setWordsStatus] = useState<Array<LiveRecitationWord & { status: WordStatus }>>(() =>
@@ -36,12 +52,14 @@ export function LiveRecitation({ words, matchingStrict = false, className }: Liv
   );
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const activeWordRef = useRef<HTMLSpanElement>(null);
+  const sessionEndedRef = useRef(false);
 
   useEffect(() => {
     setWordsStatus(words.map((w) => ({ ...w, status: "pending" as const })));
     setCurrentWordIndex(0);
     resetTranscript();
     setIsListening(false);
+    sessionEndedRef.current = false;
   }, [words, resetTranscript]);
 
   useEffect(() => {
@@ -72,6 +90,21 @@ export function LiveRecitation({ words, matchingStrict = false, className }: Liv
     }
   }, [transcript, currentWordIndex, matchingStrict, words]);
 
+  useEffect(() => {
+    if (!onSessionEnd || sessionEndedRef.current || words.length === 0) return;
+    if (currentWordIndex < words.length) return;
+    sessionEndedRef.current = true;
+    setIsListening(false);
+    onSessionEnd(buildSessionResult(wordsStatus));
+  }, [currentWordIndex, onSessionEnd, words.length, wordsStatus]);
+
+  const finishSession = () => {
+    if (sessionEndedRef.current) return;
+    sessionEndedRef.current = true;
+    setIsListening(false);
+    onSessionEnd?.(buildSessionResult(wordsStatus));
+  };
+
   const toggleListening = async () => {
     if (isListening) {
       setIsListening(false);
@@ -101,6 +134,11 @@ export function LiveRecitation({ words, matchingStrict = false, className }: Liv
         >
           {isListening ? "إيقاف التسجيل" : "بدء التلاوة"}
         </button>
+        {onSessionEnd && (
+          <button type="button" className="live-rec__end" onClick={finishSession}>
+            إنهاء الجلسة
+          </button>
+        )}
         {isListening && (
           <div className="live-rec__listening" role="status" aria-live="polite">
             <span className="live-rec__pulse" aria-hidden="true" />
