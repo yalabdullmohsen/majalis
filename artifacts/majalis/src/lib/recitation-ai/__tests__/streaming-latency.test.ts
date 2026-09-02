@@ -87,9 +87,28 @@ assert.match(viewSrc, /rai-word-/);
 assert.match(viewSrc, /MicPermissionHelp/);
 assert.match(viewSrc, /warmRecitationWsConnection/);
 assert.match(viewSrc, /ابدأ التلاوة/);
+assert.match(viewSrc, /activeWordRef/);
+assert.match(viewSrc, /cursorWordRef/);
 
 const mushafSrc = readFileSync(resolve(root, "components/quran/InteractiveMushafReveal.tsx"), "utf8");
 assert.match(mushafSrc, /imr-word--cursor/);
 assert.match(mushafSrc, /rai-word-/);
+assert.match(mushafSrc, /cursorWordRef/);
+
+const liveRecSrc = readFileSync(resolve(root, "components/recitation/LiveRecitation.tsx"), "utf8");
+assert.match(liveRecSrc, /useSpeechRecognition/);
+assert.match(liveRecSrc, /matchRecitationAdvanced/);
+assert.match(liveRecSrc, /scrollIntoView/);
+assert.match(liveRecSrc, /activeWordRef/);
+assert.doesNotMatch(liveRecSrc, /MOCK_AYAH/);
+
+const cssSrc = readFileSync(resolve(root, "styles/recitation-ai.css"), "utf8");
+assert.match(cssSrc, /\.imr-word--revealed[\s\S]*--rai-emerald/);
+assert.match(cssSrc, /\.imr-word--error[\s\S]*#dc2626/);
+assert.match(cssSrc, /\.imr-word--cursor[\s\S]*scale\(1\.06\)/);
+
+const hookSrc = readFileSync(resolve(root, "hooks/useSpeechRecognition.ts"), "utf8");
+assert.match(hookSrc, /interimResults = true/);
+assert.match(hookSrc, /isWebSpeechRecognitionSupported/);
 
 console.log("streaming-latency.test.ts: ok");

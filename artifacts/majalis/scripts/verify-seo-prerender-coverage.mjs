@@ -22,6 +22,10 @@ for (const route of seo.routes || []) {
     skippedPrivate += 1;
     continue;
   }
+  if (route.redirect) {
+    skippedPrivate += 1;
+    continue;
+  }
   const file = resolve(root, "seo-prerender", path.replace(/^\//, ""), "index.html");
   if (!existsSync(file)) missing.push(path);
 }

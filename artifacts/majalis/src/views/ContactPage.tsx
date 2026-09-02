@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type MouseEvent } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearch } from "wouter";
 import { AlertTriangle, Check, Copy, Lock, Mail, MessageSquare, Settings2, Users2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -6,11 +6,7 @@ import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { applyPageSeo } from "@/lib/seo";
 import { CONTACT_EMAIL, mailtoWithSubject } from "@/lib/site-config";
-import { openExternalUrl } from "@/lib/capacitor-utils";
 import "@/styles/pages/contact.css";
-
-const INSTAGRAM_URL = "https://instagram.com/Al_abdalmhsn";
-const INSTAGRAM_HANDLE = "Al_abdalmhsn";
 
 const FAQ = [
   {
@@ -31,7 +27,7 @@ const FAQ = [
   },
   {
     q: "هل تقبلون شراكات أو إعلانات؟",
-    a: "نرحب بالشراكات العلمية والمؤسسية المتوافقة مع منهجنا. راسلنا عبر البريد أو تواصل عبر إنستقرام شركة العبد المحسن للحج.",
+    a: "نرحب بالشراكات العلمية والمؤسسية المتوافقة مع منهجنا. راسلنا عبر البريد الرسمي مع موضوع «شراكة مؤسسية».",
   },
 ].filter((item) => Boolean(item.q?.trim() && item.a?.trim()));
 
@@ -88,11 +84,6 @@ export default function ContactPage() {
     }
   };
 
-  const openInstagram = (e: MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    void openExternalUrl(INSTAGRAM_URL);
-  };
-
   return (
     <LegalPageLayout eyebrow="الدعم" title="تواصل معنا" density="medium" className="contact-page">
       <p className="contact-lead">يسعدنا استقبال ملاحظاتك واقتراحاتك وتصحيحاتك.</p>
@@ -135,22 +126,6 @@ export default function ContactPage() {
               </button>
             </div>
           </div>
-
-          <div className="contact-ig-card">
-            <p className="contact-ig-card__label">إنستقرام شركة العبد المحسن للحج</p>
-            <p className="contact-ig-card__handle" dir="ltr" lang="en">
-              @{INSTAGRAM_HANDLE}
-            </p>
-            <a
-              href={INSTAGRAM_URL}
-              className="contact-btn contact-btn--ig"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={openInstagram}
-            >
-              فتح إنستقرام
-            </a>
-          </div>
         </div>
       </LegalSection>
 
@@ -186,53 +161,17 @@ export default function ContactPage() {
       <LegalSection title="للإعلان والشراكات">
         <div className="contact-ads-block">
           <p className="contact-ads-block__text">
-            للاقتراحات أو الإعلان أو الشراكات، تواصل معنا عبر البريد أو إنستقرام.
+            للاقتراحات أو الإعلان أو الشراكات، راسلنا عبر البريد الرسمي فقط.
           </p>
           <p className="contact-ads-block__meta" dir="ltr" lang="en">
             {CONTACT_EMAIL}
-          </p>
-          <p className="contact-ads-block__meta">
-            إنستقرام شركة العبد المحسن للحج —{" "}
-            <a href={INSTAGRAM_URL} dir="ltr" lang="en" onClick={openInstagram} target="_blank" rel="noopener noreferrer">
-              @{INSTAGRAM_HANDLE}
-            </a>
           </p>
           <div className="contact-email-card__actions">
             <a href={mailtoWithSubject("للإعلان والشراكات")} className="contact-btn contact-btn--primary">
               إرسال بريد
             </a>
-            <a
-              href={INSTAGRAM_URL}
-              className="contact-btn contact-btn--ghost"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={openInstagram}
-            >
-              فتح إنستقرام
-            </a>
           </div>
         </div>
-      </LegalSection>
-
-      <LegalSection title="أوقات الرد">
-        <ul className="contact-times">
-          <li className="contact-time-row">
-            <span>الاستفسارات العامة</span>
-            <strong>1–3 أيام عمل</strong>
-          </li>
-          <li className="contact-time-row">
-            <span>تصحيح المحتوى العلمي</span>
-            <strong>3–5 أيام عمل</strong>
-          </li>
-          <li className="contact-time-row">
-            <span>المشاكل التقنية</span>
-            <strong>خلال 24 ساعة</strong>
-          </li>
-          <li className="contact-time-row">
-            <span>طلبات حذف البيانات</span>
-            <strong>خلال 7 أيام عمل</strong>
-          </li>
-        </ul>
       </LegalSection>
 
       <LegalSection title="الأسئلة الشائعة">
