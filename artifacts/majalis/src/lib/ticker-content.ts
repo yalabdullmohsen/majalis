@@ -255,9 +255,9 @@ export function pickNextBatch(
   return { batch, recent: nextRecent };
 }
 
-/** فاصل تدوير مسار الإعلان: 50–80 ثانية. */
+/** فاصل تدوير مسار الإعلان: 40–65 ثانية — أسرع قليلًا بلا إزعاج. */
 export function nextRotationDelayMs(rand: () => number = Math.random): number {
-  return Math.round((50 + rand() * 30) * 1000);
+  return Math.round((40 + rand() * 25) * 1000);
 }
 
 export const REFRESH_ON_RETURN_AFTER_MS = 45_000;

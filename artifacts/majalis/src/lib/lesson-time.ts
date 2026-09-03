@@ -143,6 +143,28 @@ export function getKuwaitClock(date = new Date()): KuwaitClock {
   };
 }
 
+/** هل يقع الختم في نفس اليوم المدني الكويتي؟ */
+export function isSameKuwaitDay(ms: number, nowMs = Date.now()): boolean {
+  const a = getKuwaitClock(new Date(ms));
+  const b = getKuwaitClock(new Date(nowMs));
+  return a.year === b.year && a.month === b.month && a.day === b.day;
+}
+
+/**
+ * بداية الأسبوع الكويتي: السبت 00:00 Asia/Kuwait.
+ * weekday: 0 أحد … 6 سبت.
+ */
+export function kuwaitWeekStartMs(ms: number): number {
+  const clock = getKuwaitClock(new Date(ms));
+  const daysFromSaturday = (clock.weekday + 1) % 7;
+  return clock.dayStartMs - daysFromSaturday * 86_400_000;
+}
+
+/** هل الختم في نفس الأسبوع المدني الكويتي (سبت–جمعة)؟ */
+export function isSameKuwaitWeek(ms: number, nowMs = Date.now()): boolean {
+  return kuwaitWeekStartMs(ms) === kuwaitWeekStartMs(nowMs);
+}
+
 // ترتيب مطابقة الصلوات — يُقرأ وقتها من effectivePrayerMinutes (كاش حي أولاً)
 const PRAYER_ROOT_KEYS: Array<[RegExp, string]> = [
   [/شروق/u,  "الشروق"],

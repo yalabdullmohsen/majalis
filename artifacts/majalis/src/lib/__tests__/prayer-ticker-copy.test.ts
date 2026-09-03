@@ -55,7 +55,7 @@ import {
     remainingSeconds: 27 * 60,
     sinceSeconds: null,
   });
-  assert.equal(chip.text, "باقي ٢٧ دقيقة على أذان المغرب");
+  assert.equal(chip.text, "متبقي على المغرب: ٢٧ دقيقة");
   assert.equal(chip.urgent, false);
 }
 
@@ -68,8 +68,9 @@ import {
     nextRemainingSeconds: 72 * 60,
   });
   assert.equal(after.isNow, false);
-  assert.equal(after.text, "باقي ساعة و١٢ دقيقة على أذان العشاء");
-  assert.equal(/[0-9]|:/.test(after.text), false);
+  assert.equal(after.text, "متبقي على العشاء: ساعة و١٢ دقيقة");
+  assert.equal(/[0-9]/.test(after.text), false);
+  assert.doesNotMatch(after.text, /\d{1,2}:\d{2}/);
 }
 
 {
@@ -78,7 +79,7 @@ import {
     remainingSeconds: 9,
     sinceSeconds: null,
   });
-  assert.match(isha.text, /باقي دقيقة على أذان العشاء/);
+  assert.match(isha.text, /متبقي على العشاء: دقيقة/);
   assert.equal(/[0-9]/.test(isha.text), false);
 }
 

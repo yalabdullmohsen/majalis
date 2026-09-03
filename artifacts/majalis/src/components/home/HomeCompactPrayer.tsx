@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Clock } from "lucide-react";
-import { useNumerals } from "@/hooks/useNumerals";
 import {
   computePrayerCountdown,
   fetchPrayerTimes,
@@ -10,6 +9,7 @@ import {
 } from "@/lib/prayer-times";
 import { subscribeSecondTick } from "@/lib/second-tick";
 import { subscribePrayerDayRollover } from "@/lib/prayer-day-rollover";
+import { formatAdhanRemainingPhrase } from "@/lib/prayer-ticker-copy";
 
 function kuwaitNowParts() {
   const parts = new Intl.DateTimeFormat("en-GB", {
@@ -25,15 +25,7 @@ function kuwaitNowParts() {
   return { minutes: h * 60 + m, seconds: s };
 }
 
-function fmtHms(totalSeconds: number): string {
-  const safe = Math.max(0, totalSeconds);
-  const h = Math.floor(safe / 3600);
-  const m = Math.floor((safe % 3600) / 60);
-  const s = safe % 60;
-  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-}
-
-function getRemainingForPrayer(prayerMinutes: number): string {
+function getRemainingSecondsForPrayer(prayerMinutes: number): number {
   const { minutes: nowMin, seconds: nowSec } = kuwaitNowParts();
   let rem: number;
   if (prayerMinutes > nowMin) {
@@ -41,7 +33,11 @@ function getRemainingForPrayer(prayerMinutes: number): string {
   } else {
     rem = ((24 * 60 - nowMin) + prayerMinutes) * 60 - nowSec;
   }
-  return fmtHms(Math.max(0, rem));
+  return Math.max(0, rem);
+}
+
+function getRemainingForPrayer(prayerMinutes: number): string {
+  return formatAdhanRemainingPhrase(getRemainingSecondsForPrayer(prayerMinutes));
 }
 
 const GRACE_MINUTES = 30;
@@ -75,9 +71,13 @@ function useCompactPrayer() {
     return subscribeSecondTick(() => {
       const cd = computePrayerCountdown(data.prayers);
       setNextKey(cd.next?.key ?? null);
-      setCountdown(cd.remainingHms ?? "");
+      setCountdown(formatAdhanRemainingPhrase(Math.max(0, Math.round(cd.remainingMs / 1000))));
       setSinceSeconds(cd.sinceSeconds);
-      setGraceNextHms(cd.graceNextHms ?? null);
+      setGraceNextHms(
+        cd.graceNextSeconds != null
+          ? formatAdhanRemainingPhrase(cd.graceNextSeconds)
+          : null,
+      );
     });
   }, [data]);
 
@@ -86,7 +86,6 @@ function useCompactPrayer() {
 
 export function HomeCompactPrayer() {
   const { data, nextKey, countdown, sinceSeconds, graceNextHms } = useCompactPrayer();
-  const fmt = useNumerals();
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [selectedCountdown, setSelectedCountdown] = useState<string>("");
 
@@ -132,8 +131,8 @@ export function HomeCompactPrayer() {
           {selectedPrayer ? (
             <span className="hcp-strip__countdown hcp-strip__countdown--sel" aria-live="polite">
               متبقٍّ لـ{selectedPrayer.name}:{" "}
-              <span className="hcp-strip__countdown-time" dir="ltr">
-                {selectedCountdown ? fmt(selectedCountdown) : "—"}
+              <span className="hcp-strip__countdown-time">
+                {selectedCountdown ? selectedCountdown : "—"}
               </span>
             </span>
           ) : sinceSeconds != null && justRangPrayer ? (
@@ -151,16 +150,15 @@ export function HomeCompactPrayer() {
               </span>
               {actualNextPrayer && graceNextHms && (
                 <span className="hcp-next-hint">
-                  {actualNextPrayer.name} بعد{" "}
-                  <span dir="ltr">{graceNextHms}</span>
+                  متبقي على {actualNextPrayer.name}: {graceNextHms}
                 </span>
               )}
             </span>
           ) : (
             actualNextPrayer && countdown && (
               <span className="hcp-strip__countdown" aria-live="off">
-                متبقٍّ على {actualNextPrayer.name}:{" "}
-                <span className="hcp-strip__countdown-time" dir="ltr">{countdown}</span>
+                متبقي على {actualNextPrayer.name}:{" "}
+                <span className="hcp-strip__countdown-time">{countdown}</span>
               </span>
             )
           )}

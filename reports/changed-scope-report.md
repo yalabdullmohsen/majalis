@@ -1,8 +1,8 @@
 # تقرير نطاق التغييرات
 
-**التاريخ:** 2026-09-03T17:18:20.296Z
-**عدد الملفات:** 407
-**النطاقات:** other، content/data، quran/mushaf، ui/layout، docs
+**التاريخ:** 2026-09-03T20:05:37.136Z
+**عدد الملفات:** 819
+**النطاقات:** ci/config، other، content/data، docs، backend/api، quran/mushaf، ui/layout
 **docs-only:** لا
 
 ## البوابات المقترحة
@@ -10,7 +10,7 @@
 | البوابة | مطلوب |
 |---------|-------|
 | ui | ✓ |
-| api | — |
+| api | ✓ |
 | seo | ✓ |
 | pwa | ✓ |
 | content | ✓ |
@@ -25,10 +25,34 @@
 
 ## الملفات المتغيرة (أول 40)
 
+- `.github/workflows/release-majlisilm.yml` → ci_config
+- `"artifacts/majalis/content/archive/rulings-encyclopedia/data/chunks/\330\247\331\204\330\243\330\263\330\261\330\251.json"` → other
+- `"artifacts/majalis/content/archive/rulings-encyclopedia/data/chunks/\330\247\331\204\330\255\330\254-\331\210\330\247\331\204\330\271\331\205\330\261\330\251.json"` → other
+- `"artifacts/majalis/content/archive/rulings-encyclopedia/data/chunks/\330\247\331\204\330\262\331\203\330\247\330\251.json"` → other
+- `"artifacts/majalis/content/archive/rulings-encyclopedia/data/chunks/\330\247\331\204\330\265\331\204\330\247\330\251.json"` → other
+- `"artifacts/majalis/content/archive/rulings-encyclopedia/data/chunks/\330\247\331\204\330\265\331\212\330\247\331\205.json"` → other
+- `"artifacts/majalis/content/archive/rulings-encyclopedia/data/chunks/\330\247\331\204\330\267\331\207\330\247\330\261\330\251.json"` → other
+- `"artifacts/majalis/content/archive/rulings-encyclopedia/data/chunks/\330\247\331\204\330\271\331\202\331\212\330\257\330\251.json"` → other
+- `"artifacts/majalis/content/archive/rulings-encyclopedia/data/chunks/\330\247\331\204\331\205\330\271\330\247\331\205\331\204\330\247\330\252.json"` → other
 - `"artifacts/majalis/content/archive/rulings-encyclopedia/data/chunks/\330\247\331\204\331\206\331\210\330\247\330\262\331\204-\330\247\331\204\331\205\330\271\330\247\330\265\330\261\330\251.json"` → other
+- `artifacts/majalis/content/archive/rulings-encyclopedia/data/manifest.json` → content_data
 - `artifacts/majalis/content/archive/rulings-encyclopedia/seeds/rulings-encyclopedia-seed.generated.ts` → content_data
+- `artifacts/majalis/content/fiqh/FIQH_CONTENT_QUEUE.md` → docs
+- `artifacts/majalis/content/fiqh/books.json` → other
+- `artifacts/majalis/content/hadith-corpus/HADITH_IMPORT_QUEUE.md` → docs
+- `artifacts/majalis/content/quran-stats/QUEUE.md` → docs
+- `artifacts/majalis/data/CONTENT_REVIEW_QUEUE.md` → docs
 - `artifacts/majalis/data/data-quality-audit.json` → content_data
 - `artifacts/majalis/data/needs-post-review.jsonl` → content_data
+- `artifacts/majalis/docs/AHRUF_REVIEW_QUEUE.md` → docs
+- `artifacts/majalis/docs/CONTENT_REVIEW_QUEUE.md` → docs
+- `artifacts/majalis/docs/FIQH_REVIEW_QUEUE.md` → docs
+- `artifacts/majalis/index.html` → other
+- `artifacts/majalis/lib/api-dispatch.mjs` → backend_api
+- `artifacts/majalis/lib/api-handlers/client-error-log.js` → backend_api
+- `artifacts/majalis/lib/content-flags.mjs` → other
+- `artifacts/majalis/lib/static-search-server.mjs` → other
+- `artifacts/majalis/lib/updates-ios-fallback.mjs` → other
 - `artifacts/majalis/package.json` → other
 - `artifacts/majalis/public/data/knowledge/discover-islam/path-and-faq.json` → content_data
 - `artifacts/majalis/public/data/knowledge/history/timeline.json` → content_data
@@ -41,32 +65,8 @@
 - `artifacts/majalis/public/data/knowledge/nations/nation-ashab-qarya.json` → content_data
 - `artifacts/majalis/public/data/knowledge/nations/nation-ashab-rass.json` → content_data
 - `artifacts/majalis/public/data/knowledge/nations/nation-ashab-sabt.json` → content_data
-- `artifacts/majalis/public/data/knowledge/nations/nation-ashab-ukhdud.json` → content_data
-- `artifacts/majalis/public/data/knowledge/nations/nation-bani-israil.json` → content_data
-- `artifacts/majalis/public/data/knowledge/nations/nation-firaun.json` → content_data
-- `artifacts/majalis/public/data/knowledge/nations/nation-madyan.json` → content_data
-- `artifacts/majalis/public/data/knowledge/nations/nation-qawm-ibrahim.json` → content_data
-- `artifacts/majalis/public/data/knowledge/nations/nation-qawm-lut.json` → content_data
-- `artifacts/majalis/public/data/knowledge/nations/nation-qawm-nuh.json` → content_data
-- `artifacts/majalis/public/data/knowledge/nations/nation-qawm-yunus.json` → content_data
-- `artifacts/majalis/public/data/knowledge/nations/nation-qurun-mujmala.json` → content_data
-- `artifacts/majalis/public/data/knowledge/nations/nation-rum-furs.json` → content_data
-- `artifacts/majalis/public/data/knowledge/nations/nation-saba.json` → content_data
-- `artifacts/majalis/public/data/knowledge/nations/nation-thamud.json` → content_data
-- `artifacts/majalis/public/data/knowledge/nations/nation-tubba.json` → content_data
-- `artifacts/majalis/public/data/knowledge/nations/nation-yajuj-majuj.json` → content_data
-- `artifacts/majalis/public/data/knowledge/prophets/adam.json` → content_data
-- `artifacts/majalis/public/data/knowledge/prophets/al-yasa.json` → content_data
-- `artifacts/majalis/public/data/knowledge/prophets/ayyub.json` → content_data
-- `artifacts/majalis/public/data/knowledge/prophets/dawud.json` → content_data
-- `artifacts/majalis/public/data/knowledge/prophets/dhul-kifl.json` → content_data
-- `artifacts/majalis/public/data/knowledge/prophets/harun.json` → content_data
-- `artifacts/majalis/public/data/knowledge/prophets/hud.json` → content_data
-- `artifacts/majalis/public/data/knowledge/prophets/ibrahim.json` → content_data
-- `artifacts/majalis/public/data/knowledge/prophets/idris.json` → content_data
-- `artifacts/majalis/public/data/knowledge/prophets/ilyas.json` → content_data
 
-… +367 ملفًا
+… +779 ملفًا
 
 ## سياسات
 

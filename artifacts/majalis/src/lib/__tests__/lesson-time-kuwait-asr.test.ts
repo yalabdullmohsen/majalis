@@ -7,6 +7,8 @@ import {
   formatRelativeTimeDetailed,
   formatShortLessonTime,
   isPrayerRelativeTime,
+  isSameKuwaitDay,
+  isSameKuwaitWeek,
   parseTimeToMinutes,
   setPrayerTimesCache,
 } from "../lesson-time";
@@ -100,5 +102,13 @@ const placeOnly: KuwaitLessonRecord = {
 };
 assert.equal(isOutsideKuwaitLesson(placeOnly), true, "مكان سعودي بلا شيخ مستبعد");
 assert.equal(filterKuwaitOnlyForDisplay([outside, local, placeOnly]).map((l) => l.id).join(), "kw-local");
+
+const kuwaitThursday = new Date("2026-09-03T12:00:00+03:00"); // خميس
+const sameDay = new Date("2026-09-03T21:30:00+03:00").getTime();
+const nextSat = new Date("2026-09-05T12:00:00+03:00").getTime();
+assert.equal(isSameKuwaitDay(sameDay, kuwaitThursday.getTime()), true);
+assert.equal(isSameKuwaitDay(nextSat, kuwaitThursday.getTime()), false);
+assert.equal(isSameKuwaitWeek(sameDay, kuwaitThursday.getTime()), true);
+assert.equal(isSameKuwaitWeek(nextSat, kuwaitThursday.getTime()), false, "السبت التالي أسبوع جديد");
 
 console.log("  ✓ lesson time kuwait asr + scope");

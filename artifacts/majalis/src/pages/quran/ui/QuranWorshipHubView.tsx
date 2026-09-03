@@ -10,6 +10,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { fetchSurahList, getSurahMeta, type SurahSummary } from "@/lib/quran-api";
 import { navigateTo } from "@/lib/navigation-intent";
 import { toArabicDigits } from "@/lib/utils";
+import { formatAdhanRemainingPhrase } from "@/lib/prayer-ticker-copy";
 
 const OBLIGATORY_KEYS = new Set(["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"]);
 
@@ -96,9 +97,9 @@ export default function QuranWorshipHubView() {
             <h2 className="qwh-prayer-strip__name">
               {next ? `${next.name} — ${next.time}` : "جارٍ تجهيز المواقيت…"}
             </h2>
-            {countdown?.remainingHms && next ? (
+            {countdown && next ? (
               <p className="qwh-prayer-strip__countdown" aria-live="polite">
-                بعد {countdown.remainingHms}
+                متبقي على {next.name}: {formatAdhanRemainingPhrase(Math.max(0, Math.round(countdown.remainingMs / 1000)))}
               </p>
             ) : null}
           </div>

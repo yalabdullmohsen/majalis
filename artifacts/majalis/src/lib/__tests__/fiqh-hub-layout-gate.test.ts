@@ -20,6 +20,7 @@ const card = readFileSync(resolve(root, "src/components/fiqh/FiqhCategoryCard.ts
 const css = readFileSync(resolve(root, "src/styles/pages/fiqh-hub.css"), "utf8");
 
 assert.match(view, /أبواب مرتبة للمبتدئ/);
+assert.match(view, /hasVerifiedIssueCount && d.issueCount > 0/);
 assert.match(view, /ابدأ من هنا/);
 assert.match(view, /أبواب الفقه/);
 assert.match(view, /مسائل مختارة/);
@@ -36,7 +37,7 @@ assert.match(css, /max-height:\s*7\.5rem/);
 assert.deepEqual([...FIQH_START_HERE_DOORS], ["tahara", "salah", "zakat", "sawm", "hajj"]);
 assert.deepEqual(
   [...FIQH_HUB_DOOR_ORDER].slice(0, 8),
-  ["tahara", "salah", "zakat", "sawm", "hajj", "janaza", "ayman", "atima"],
+  ["tahara", "salah", "janaza", "zakat", "sawm", "hajj", "buyu", "nikah"],
 );
 
 const books = getAllFiqhBooks();

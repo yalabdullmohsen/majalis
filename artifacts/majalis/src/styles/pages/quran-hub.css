@@ -125,12 +125,12 @@
 .quran-open-mushaf__cta-btn {
   display: grid;
   place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 999px;
   background: var(--qom-accent);
   color: #fff;
-  box-shadow: 0 8px 18px -10px rgba(18, 63, 46, 0.55);
+  box-shadow: 0 10px 22px -8px rgba(18, 63, 46, 0.65);
   transition: transform 0.15s ease, filter 0.15s ease;
 }
 

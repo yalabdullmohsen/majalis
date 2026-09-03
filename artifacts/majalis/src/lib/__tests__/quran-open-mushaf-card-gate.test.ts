@@ -21,7 +21,7 @@ assert.doesNotMatch(hub, /FeaturedSectionCard|card--featured/);
 assert.doesNotMatch(hub, /loadLastPageSync/);
 
 assert.match(card, /resolveMushafResumeInfo/);
-assert.match(card, /آخر توقف/);
+assert.match(card, /آخر موضع توقفت عنده/);
 assert.match(card, /ابدأ القراءة من الفاتحة/);
 assert.match(card, /متابعة القراءة/);
 assert.match(card, /title="فتح المصحف"/);

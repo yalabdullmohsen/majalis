@@ -48,10 +48,12 @@ assert.match(tour, /markFeatureTourCompleted/);
 
 assert.match(intro, /مرحبًا بك في سُنّة/);
 assert.match(intro, /ابدأ الآن/);
-assert.match(intro, /تصفح الأقسام/);
 assert.match(intro, /تخطي/);
 assert.match(intro, /وصول سريع/);
-assert.match(intro, /اقتراح اليوم/);
+assert.match(intro, /فتح المصحف/);
+assert.match(intro, /مواقيت الصلاة/);
+assert.doesNotMatch(intro, /تصفح الأقسام/);
+assert.doesNotMatch(intro, /اقتراح اليوم/);
 assert.doesNotMatch(intro, /quran\/people|sections\//);
 assert.doesNotMatch(intro, /requestPermission|Notification/);
 assert.doesNotMatch(intro, /from ["']lucide-react["']/);

@@ -11,8 +11,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useSharedPrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
-import { useNumerals } from "@/hooks/useNumerals";
 import { PRE_ALERT_MINUTES, isBannerDismissedFor, dismissBannerFor, loadPrayerAlertPrefs } from "@/lib/prayer-alert-preferences";
+import { formatAdhanRemainingPhrase } from "@/lib/prayer-ticker-copy";
 import "@/styles/components/prayer-countdown-banner.css";
 
 const PRAYER_ICONS: Record<string, LucideIcon> = {
@@ -33,7 +33,6 @@ const POST_ADHAN_MAX_SEC = 35 * 60;
  */
 export function PrayerCountdownBanner() {
   const { countdown } = useSharedPrayerCountdown();
-  const fmt = useNumerals();
   const [dismissedKey, setDismissedKey] = useState<string | null>(null);
   const [leaving, setLeaving] = useState(false);
   const dismissTimer = useRef<number | null>(null);
@@ -63,17 +62,15 @@ export function PrayerCountdownBanner() {
   if (inGrace && countdown.sinceSeconds != null && countdown.sinceSeconds <= POST_ADHAN_MAX_SEC) {
     mode = "elapsed";
     label = `مضى على أذان ${countdown.next.name}`;
-    timer = countdown.sinceHms ?? "";
+    timer = formatAdhanRemainingPhrase(countdown.sinceSeconds);
   } else if (!inGrace) {
     const remainingSeconds = Math.round(countdown.remainingMs / 1000);
     const minutesRemaining = Math.ceil(remainingSeconds / 60);
     const preWindow = loadPrayerAlertPrefs().preAlertMinutes || PRE_ALERT_MINUTES;
     if (minutesRemaining > 0 && minutesRemaining <= preWindow) {
       mode = "countdown";
-      label = `متبقي على صلاة ${countdown.next.name}`;
-      timer =
-        countdown.remainingHms ??
-        `${fmt(minutesRemaining)} ${minutesRemaining === 1 ? "دقيقة" : "دقائق"}`;
+      label = `متبقي على ${countdown.next.name}`;
+      timer = formatAdhanRemainingPhrase(remainingSeconds);
     }
   }
 

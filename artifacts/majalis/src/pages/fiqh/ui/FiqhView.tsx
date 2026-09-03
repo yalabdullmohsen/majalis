@@ -90,7 +90,9 @@ function FiqhLobbyBody({ lobby }: { lobby: LobbySpec | null }) {
   const doors = useMemo(() => buildFiqhDoorSummaries(), []);
   const startHere = useMemo(() => pickDoors(FIQH_START_HERE_DOORS, doors), [doors]);
   const hubDoors = useMemo(() => {
-    const hub = pickDoors(FIQH_HUB_DOOR_ORDER, doors).sort((a, b) => a.sortOrder - b.sortOrder);
+    const hub = pickDoors(FIQH_HUB_DOOR_ORDER, doors)
+      .filter((d) => d.hasVerifiedIssueCount && d.issueCount > 0)
+      .sort((a, b) => a.sortOrder - b.sortOrder);
     const expanded = expandFiqhGroupFilter(group);
     if (expanded === "all") return hub;
     const allowed = new Set(expanded);
@@ -214,12 +216,12 @@ export default function FiqhPage() {
       path: "/fiqh",
       title: "الفقه | سُنّة",
       description:
-        "أبواب مرتبة للمبتدئ في الطهارة، الصلاة، الزكاة، الصيام، الحج، المعاملات والأسرة.",
+        "أبواب مرتبة للمبتدئ: الطهارة، الصلاة، الجنائز، الزكاة، الصيام، الحج، ثم المعاملات والأسرة.",
       keywords: ["فقه إسلامي", "كتب الفقه", "مسائل فقهية", "سُنّة"],
       jsonLd: [
         webPageJsonLd(
           "الفقه",
-          "أبواب مرتبة للمبتدئ في الطهارة والصلاة والزكاة والصيام والحج والمعاملات والأسرة.",
+          "أبواب مرتبة للمبتدئ في الطهارة والصلاة والجنائز والزكاة والصيام والحج والمعاملات والأسرة.",
           "/fiqh",
         ),
         breadcrumbJsonLd([
@@ -264,7 +266,7 @@ export default function FiqhPage() {
     <SectionTemplatePage
       route="/fiqh"
       title="الفقه"
-      subtitle="أبواب مرتبة للمبتدئ في الطهارة، الصلاة، الزكاة، الصيام، الحج، المعاملات والأسرة."
+      subtitle="أبواب مرتبة للمبتدئ: الطهارة، الصلاة، الجنائز، الزكاة، الصيام، الحج، ثم المعاملات والأسرة."
       eyebrow="العلوم الشرعية"
       groupTitle="أبواب الفقه"
     >

@@ -287,3 +287,62 @@ html.dark .qp-person-card__cta {
     transform: none;
   }
 }
+
+.qp-person-detail {
+  display: grid;
+  gap: 0.85rem;
+  padding-bottom: 2.5rem;
+}
+.qp-person-detail__card {
+  margin: 0;
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+  background: var(--qp-surface, #fff);
+  border: 1px solid var(--qp-line, #e3e8e6);
+  box-shadow: 0 8px 20px -16px rgba(11, 32, 24, 0.35);
+}
+.qp-person-detail__h {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--qp-brand-deep, #12362a);
+}
+.qp-person-detail__card p,
+.qp-person-detail__card li {
+  margin: 0;
+  line-height: 1.75;
+  color: var(--qp-ink, #16241e);
+}
+.qp-person-detail__card ul {
+  margin: 0;
+  padding-inline-start: 1.1rem;
+  display: grid;
+  gap: 0.35rem;
+}
+.qp-person-detail__ayah-grid {
+  display: grid;
+  gap: 0.5rem;
+}
+.qp-person-detail__ayah {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--qp-line, #e3e8e6);
+  border-radius: 0.85rem;
+  text-decoration: none;
+  color: inherit;
+  background: var(--qp-surface, #fff);
+}
+.qp-person-detail__note {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.85rem;
+  color: var(--qp-ink-2, #4a5a53);
+}
+.qp-person-detail__open {
+  color: var(--color-mushaf-gold, #8B6914);
+  white-space: nowrap;
+  font-weight: 700;
+  font-size: 0.85rem;
+}

@@ -26,7 +26,7 @@ export default function FiqhUsulPage() {
     <SectionTemplatePage
       route="/fiqh/usul"
       title="أصول الفقه"
-      subtitle="قواعد الاستنباط والأدلة — أبواب مرتبة للتعرّف على هيكل العلم دون اختراع أحكام بلا مصدر."
+      subtitle="قواعد الاستنباط والأدلة — تعريف العلم، أبواب مرتبة، أدلة ومصادر موثّقة دون اختراع أحكام."
       eyebrow="الفقه · أصول"
       breadcrumb={[
         { label: "الرئيسية", href: "/" },
@@ -36,6 +36,14 @@ export default function FiqhUsulPage() {
       groupTitle="أبواب أصول الفقه"
     >
       <div className="fiqh-usul-page" dir="rtl">
+        <article className="fiqh-usul-define">
+          <p className="fiqh-usul-define__eyebrow">تعريف</p>
+          <h2 className="fiqh-usul-define__title">ما أصول الفقه؟</h2>
+          <p className="fiqh-usul-define__body">
+            معرفة أدلة الفقه الإجمالية، وكيفية الاستفادة منها، وحال المستفيد.
+          </p>
+          <p className="fiqh-usul-define__src">الورقات — عبد الملك بن عبد الله الجويني</p>
+        </article>
         <p className="fiqh-usul-page__lead">
           المباحث أدناه هيكل تعليمي يربط المحتوى المنشور في المنصة. ما وُسم «هيكل» يعرض الإطار فقط مع إحالة إلى المتن، بلا تفصيل أحكام جديدة.
         </p>

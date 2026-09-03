@@ -588,6 +588,40 @@ ol.fiqh-lesson-list {
   font-size: 0.82rem;
   color: var(--majalis-ink-soft, var(--text-2));
 }
+.fiqh-usul-define {
+  margin: 0;
+  padding: 1rem 1.05rem 1.05rem;
+  border-radius: 1rem;
+  background:
+    linear-gradient(165deg, color-mix(in srgb, var(--section-accent, #8B7A3A) 16%, transparent), transparent 70%),
+    var(--majalis-panel, var(--mj-surface, #fff));
+  border: 1px solid color-mix(in srgb, var(--section-accent, #8B7A3A) 28%, var(--majalis-line, #e3e8e6));
+  box-shadow: 0 10px 24px -18px rgba(11, 32, 24, 0.4);
+}
+.fiqh-usul-define__eyebrow {
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--section-accent, #8B7A3A);
+}
+.fiqh-usul-define__title {
+  margin: 0 0 0.4rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--majalis-ink, #1a1a18);
+}
+.fiqh-usul-define__body {
+  margin: 0 0 0.45rem;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--majalis-ink, #1a1a18);
+}
+.fiqh-usul-define__src {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--majalis-ink-soft, #4a5a53);
+}
 .fiqh-usul-page {
   display: grid;
   gap: 1.25rem;
@@ -1603,7 +1637,7 @@ html.dark .fiqh-filters__chip.is-active {
 
 @media (min-width: 900px) {
   .fiqh-category-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -1658,6 +1692,22 @@ html.dark .fiqh-filters__chip.is-active {
     linear-gradient(165deg, color-mix(in srgb, #1a3d34 12%, transparent), transparent 58%),
     var(--fq-surface, #fff);
 }
+
+.fiqh-category-card--tahara { --fiqh-card-accent: #0d6b4f; }
+.fiqh-category-card--salah { --fiqh-card-accent: #157a5c; }
+.fiqh-category-card--janaza { --fiqh-card-accent: #3d5c54; }
+.fiqh-category-card--zakat { --fiqh-card-accent: #2f9e7b; }
+.fiqh-category-card--sawm { --fiqh-card-accent: #1f6b56; }
+.fiqh-category-card--hajj { --fiqh-card-accent: #0f5c4c; }
+.fiqh-category-card--buyu { --fiqh-card-accent: #6b7c3a; }
+.fiqh-category-card--nikah { --fiqh-card-accent: #2a8f6a; }
+.fiqh-category-card--jinayat { --fiqh-card-accent: #1a3d34; }
+.fiqh-category-card--qada { --fiqh-card-accent: #245c4a; }
+.fiqh-category-card--ayman { --fiqh-card-accent: #4a6b3a; }
+.fiqh-category-card--atima { --fiqh-card-accent: #3d7a4a; }
+.fiqh-category-card--usul { --fiqh-card-accent: #8B7A3A; }
+.fiqh-category-card--qawaid { --fiqh-card-accent: #5c6b3a; }
+.fiqh-category-card--nawazil { --fiqh-card-accent: #3a6b5c; }
 
 .fiqh-category-card--featured {
   box-shadow:

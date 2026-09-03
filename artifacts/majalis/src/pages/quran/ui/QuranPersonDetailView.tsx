@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, Redirect, useParams } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
-import { PageHero } from "@/components/ui/PageHero";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { toArabicDigits } from "@/lib/utils";
 import { getSurahMeta } from "@/lib/quran-api";
 import {
@@ -14,6 +14,7 @@ import {
   type QuranPerson,
 } from "@/features/quran-people";
 import "@/styles/pages/quran-hub.css";
+import "@/styles/pages/quran-people.css";
 
 export default function QuranPersonDetailView() {
   const params = useParams<{ slug?: string }>();
@@ -55,54 +56,78 @@ export default function QuranPersonDetailView() {
   }
 
   if (person === undefined) {
-    return <div className="quran-hub-page" dir="rtl"><p style={{ padding: "2rem" }}></p></div>;
+    return (
+      <SectionTemplatePage
+        route="/quran/people"
+        title="الذين ذكروا في القرآن"
+        subtitle="جاري التحميل…"
+        groupTitle="المذكورون في القرآن"
+      >
+        <p className="qp-people__status" role="status"></p>
+      </SectionTemplatePage>
+    );
   }
+
   if (!person) {
     return (
-      <div className="quran-hub-page" dir="rtl">
-        <PageHero title="غير موجود" description="لم نجد هذه الشخصية في الفهرس المنشور" />
-        <p style={{ padding: "1rem", textAlign: "center" }}>
+      <SectionTemplatePage
+        route="/quran/people"
+        title="غير موجود"
+        subtitle="لم نجد هذه الشخصية في الفهرس المنشور"
+        groupTitle="المذكورون في القرآن"
+        breadcrumb={[
+          { label: "الرئيسية", href: "/" },
+          { label: "الذين ذكروا في القرآن", href: "/quran/people" },
+          { label: "غير موجود" },
+        ]}
+      >
+        <p className="qp-people__status">
           <Link href="/quran/people">العودة إلى الذين ذكروا في القرآن</Link>
           {" · "}
           <Link href="/prophets">قصص الأنبياء</Link>
         </p>
-      </div>
+      </SectionTemplatePage>
     );
   }
 
   return (
-    <div className="quran-hub-page" dir="rtl">
-      <PageHero
-        title={person.nameAr}
-        description={`${PERSON_CATEGORY_LABEL[person.category]} · ${MENTION_TYPE_LABEL[person.mentionType]}`}
-      />
-      <article style={{ maxWidth: 720, marginInline: "auto", padding: "0 1rem 2.5rem", lineHeight: 1.7 }}>
-        <p><Link href="/quran/people">← الذين ذكروا في القرآن</Link></p>
-
-        <section style={{ marginTop: "1.25rem" }}>
-          <h2 style={{ fontSize: "1.1rem", marginBottom: "0.35rem" }}>التعريف</h2>
+    <SectionTemplatePage
+      route="/quran/people"
+      title={person.nameAr}
+      subtitle={`${PERSON_CATEGORY_LABEL[person.category]} · ${MENTION_TYPE_LABEL[person.mentionType]}`}
+      eyebrow="الذين ذكروا في القرآن"
+      groupTitle="مواضع الذكر"
+      breadcrumb={[
+        { label: "الرئيسية", href: "/" },
+        { label: "الذين ذكروا في القرآن", href: "/quran/people" },
+        { label: person.nameAr },
+      ]}
+    >
+      <div className="qp-people qp-person-detail" dir="rtl">
+        <article className="qp-person-detail__card">
+          <h2 className="qp-person-detail__h">التعريف</h2>
           <p>{person.definition}</p>
-        </section>
+        </article>
 
-        <section style={{ marginTop: "1.25rem" }}>
-          <h2 style={{ fontSize: "1.1rem", marginBottom: "0.35rem" }}>سبب الذكر</h2>
+        <article className="qp-person-detail__card">
+          <h2 className="qp-person-detail__h">سبب الذكر</h2>
           <p>{person.whyMentioned}</p>
-        </section>
+        </article>
 
         {person.lessons.length > 0 && (
-          <section style={{ marginTop: "1.25rem" }}>
-            <h2 style={{ fontSize: "1.1rem", marginBottom: "0.35rem" }}>العِبَر</h2>
+          <article className="qp-person-detail__card">
+            <h2 className="qp-person-detail__h">العِبَر</h2>
             <ul>
               {person.lessons.map((l) => (
                 <li key={l}>{l}</li>
               ))}
             </ul>
-          </section>
+          </article>
         )}
 
         {(person.prophetSlug || (person.relatedLinks?.length ?? 0) > 0) && (
-          <section style={{ marginTop: "1.25rem" }}>
-            <h2 style={{ fontSize: "1.1rem", marginBottom: "0.35rem" }}>روابط مرتبطة</h2>
+          <article className="qp-person-detail__card">
+            <h2 className="qp-person-detail__h">روابط مرتبطة</h2>
             <ul>
               {person.prophetSlug && (
                 <li>
@@ -116,40 +141,31 @@ export default function QuranPersonDetailView() {
                 <li key={l.href}><Link href={l.href}>{l.label}</Link></li>
               ))}
             </ul>
-          </section>
+          </article>
         )}
 
-        <section style={{ marginTop: "1.5rem" }}>
-          <h2 style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>مواضع الذكر في المصحف</h2>
-          <div style={{ display: "grid", gap: "0.5rem" }}>
+        <section className="qp-person-detail__ayahs" aria-labelledby="qp-ayahs-title">
+          <h2 id="qp-ayahs-title" className="qp-person-detail__h">مواضع الذكر في المصحف</h2>
+          <div className="qp-person-detail__ayah-grid">
             {person.occurrences.map((o) => {
               const surahName = getSurahMeta(o.surah)?.name ?? String(o.surah);
               return (
                 <Link
                   key={`${o.surah}:${o.ayah}`}
                   href={mushafAyahHref(o.surah, o.ayah)}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    gap: "0.75rem",
-                    padding: "0.7rem 0.85rem",
-                    border: "1px solid var(--color-border, #e5e0d8)",
-                    borderRadius: 8,
-                    textDecoration: "none",
-                    color: "inherit",
-                  }}
+                  className="qp-person-detail__ayah"
                 >
                   <span>
                     سورة {surahName} · آية {toArabicDigits(o.ayah)}
-                    {o.note ? <span style={{ color: "var(--color-muted)", display: "block", fontSize: "0.85rem" }}>{o.note}</span> : null}
+                    {o.note ? <span className="qp-person-detail__note">{o.note}</span> : null}
                   </span>
-                  <span style={{ color: "var(--color-mushaf-gold, #8B6914)", whiteSpace: "nowrap" }}>فتح المصحف</span>
+                  <span className="qp-person-detail__open">فتح المصحف</span>
                 </Link>
               );
             })}
           </div>
         </section>
-      </article>
-    </div>
+      </div>
+    </SectionTemplatePage>
   );
 }

@@ -17,11 +17,18 @@ import {
 const here = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(here, "../../../../");
 const searchView = readFileSync(resolve(appRoot, "src/pages/account/ui/SearchView.tsx"), "utf8");
+const searchModal = readFileSync(resolve(appRoot, "src/components/GlobalSearchModal.tsx"), "utf8");
 
 assert.match(searchView, /ابحث في المحتوى/);
 assert.match(searchView, /250/);
 assert.match(searchView, /AbortController/);
 assert.match(searchView, /لا توجد نتائج في هذا القسم، جرّب كلمة أخرى أو ابحث في الكل/);
+assert.match(searchModal, /key: "tafsir"/);
+assert.match(searchModal, /key: "seerah"/);
+assert.match(searchModal, /key: "quran"/);
+assert.match(searchModal, /أقسام مقترحة/);
+assert.match(searchModal, /scope: filter/);
+assert.doesNotMatch(searchModal, /key: "surah"/);
 assert.match(searchView, /VirtualList/);
 assert.match(searchView, /\/quiz\?qa=/);
 assert.match(searchView, /\/fawaid#/);

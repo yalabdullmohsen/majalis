@@ -74,7 +74,7 @@ export function resolveMushafResumeInfo(): MushafResumeInfo {
     return {
       href,
       hasResume: true,
-      resumeLine: `آخر توقف: ${parts.join("، ")}`,
+      resumeLine: `آخر موضع توقفت عنده: ${parts.join("، ")}`,
       ctaLabel: "متابعة القراءة",
     };
   } catch {
@@ -114,7 +114,7 @@ export function QuranOpenMushafCard() {
           <BookOpen size={18} strokeWidth={1.9} />
         </div>
         <div className="quran-open-mushaf__text">
-          <h2 className="quran-open-mushaf__title">المصحف</h2>
+          <h2 className="quran-open-mushaf__title">فتح المصحف</h2>
           <p className="quran-open-mushaf__desc">{description}</p>
           <p className="quran-open-mushaf__resume" data-has-resume={info.hasResume ? "1" : "0"}>
             {info.resumeLine}

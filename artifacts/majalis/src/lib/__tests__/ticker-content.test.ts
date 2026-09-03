@@ -112,8 +112,8 @@ console.log("\n=== فاصل التدوير ===");
 {
   const lo = nextRotationDelayMs(() => 0);
   const hi = nextRotationDelayMs(() => 0.999999);
-  assert(lo === 50_000, `الحد الأدنى 50 ثانية (${lo}ms)`);
-  assert(hi <= 80_000 && hi >= 79_000, `الحد الأعلى 80 ثانية (${hi}ms)`);
+  assert(lo === 40_000, `الحد الأدنى 40 ثانية (${lo}ms)`);
+  assert(hi <= 65_000 && hi >= 64_000, `الحد الأعلى 65 ثانية (${hi}ms)`);
 }
 
 console.log("\n=== التخزين المحلي ===");

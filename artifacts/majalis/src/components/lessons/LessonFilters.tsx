@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { formatSheikhName } from "@/lib/sheikh-name";
 import { isOnlineVenue } from "@/lib/lessons/lessonNormalize";
-import { computeNextOccurrenceMs } from "@/lib/lesson-time";
+import { computeNextOccurrenceMs, isSameKuwaitDay, isSameKuwaitWeek } from "@/lib/lesson-time";
 import { isWomenFriendlyLesson } from "@/lib/lesson-women-attendance";
 
 export type LessonQuickFilterId =
@@ -30,27 +30,11 @@ export const DEFAULT_LESSON_QUICK_FILTERS: LessonQuickFilters = {
 
 const SCHEDULE_CHIPS: Array<{ id: LessonQuickFilterId; label: string }> = [
   { id: "all", label: "الكل" },
-  { id: "lessons", label: "دروس" },
-  { id: "courses", label: "دورات" },
+  { id: "today", label: "اليوم" },
   { id: "in_person", label: "حضوري" },
   { id: "remote", label: "عن بعد" },
-  { id: "archive", label: "أرشيف" },
+  { id: "this_week", label: "هذا الأسبوع" },
 ];
-
-function isTodayMs(ms: number, now = Date.now()): boolean {
-  const d = new Date(ms);
-  const n = new Date(now);
-  return (
-    d.getFullYear() === n.getFullYear() &&
-    d.getMonth() === n.getMonth() &&
-    d.getDate() === n.getDate()
-  );
-}
-
-function isThisWeekMs(ms: number, now = Date.now()): boolean {
-  const end = now + 7 * 24 * 60 * 60 * 1000;
-  return ms >= now && ms <= end;
-}
 
 function isStandaloneLesson(lesson: KuwaitLessonRecord): boolean {
   return !(lesson.isCourse || lesson.activityType === "دورة");
@@ -71,8 +55,8 @@ export function applyLessonQuickFilters(
 
     if (filters.schedule === "in_person" && !inPerson) return false;
     if (filters.schedule === "remote" && !remote) return false;
-    if (filters.schedule === "today" && !isTodayMs(nextMs, nowMs)) return false;
-    if (filters.schedule === "this_week" && !isThisWeekMs(nextMs, nowMs)) return false;
+    if (filters.schedule === "today" && !isSameKuwaitDay(nextMs, nowMs)) return false;
+    if (filters.schedule === "this_week" && !isSameKuwaitWeek(nextMs, nowMs)) return false;
     if (filters.schedule === "courses" && !(lesson.isCourse || lesson.activityType === "دورة")) {
       return false;
     }

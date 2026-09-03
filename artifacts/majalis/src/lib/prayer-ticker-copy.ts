@@ -70,7 +70,7 @@ function remainingCopy(prayerName: string, remainingSeconds: number): PrayerChip
   const name = prayerName.trim() || "الصلاة";
   const phrase = formatAdhanRemainingPhrase(remainingSeconds);
   return {
-    text: `باقي ${phrase} على أذان ${name}`,
+    text: `متبقي على ${name}: ${phrase}`,
     prayerName: name,
     timeText: phrase,
     isNow: false,

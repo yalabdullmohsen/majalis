@@ -97,8 +97,9 @@ console.log("\n=== تنسيق العدّ + نافذة حان وقت + أرقام
     remainingSeconds: 9,
     sinceSeconds: null,
   });
-  assert.equal(ishaFlicker.text, "باقي دقيقة على أذان العشاء");
-  assert.equal(/[0-9]|:/.test(ishaFlicker.text), false, "بلا ثوانٍ ولا أرقام لاتينية");
+  assert.equal(ishaFlicker.text, "متبقي على العشاء: دقيقة");
+  assert.equal(/[0-9]/.test(ishaFlicker.text), false, "بلا ثوانٍ ولا أرقام لاتينية");
+  assert.doesNotMatch(ishaFlicker.text, /\d{1,2}:\d{2}/);
 
   const now = buildPrayerChipCopy({
     prayerName: "المغرب",
@@ -116,7 +117,7 @@ console.log("\n=== تنسيق العدّ + نافذة حان وقت + أرقام
     nextRemainingSeconds: 72 * 60,
   });
   assert.equal(afterNow.isNow, false);
-  assert.equal(afterNow.text, "باقي ساعة و١٢ دقيقة على أذان العشاء");
+  assert.equal(afterNow.text, "متبقي على العشاء: ساعة و١٢ دقيقة");
 
   const urgent = buildPrayerChipCopy({
     prayerName: "العصر",
@@ -124,13 +125,15 @@ console.log("\n=== تنسيق العدّ + نافذة حان وقت + أرقام
     sinceSeconds: null,
   });
   assert.equal(urgent.urgent, true);
-  assert.match(urgent.text, /باقي ٨ دقائق على أذان العصر/);
+  assert.match(urgent.text, /متبقي على العصر: ٨ دقائق/);
 
   const latin = /[0-9]/;
   assert.equal(latin.test(formatChipDuration(3723)), false, "صفر رقم لاتيني");
   assert.equal(latin.test(formatChipDuration(2712)), false, "صفر رقم لاتيني في الدقائق");
   assert.equal(latin.test(now.text), false, "صفر رقم لاتيني في حان وقت");
-  assert.equal(/:/.test(afterNow.text), false, "بلا ثوانٍ ولا MM:SS");
+  assert.equal(/:/.test(now.text), false, "حان وقت بلا نقطتين");
+  assert.match(afterNow.text, /متبقي على العشاء:/);
+  assert.doesNotMatch(afterNow.text, /\d{1,2}:\d{2}/, "بلا ثوانٍ ولا MM:SS");
 }
 
 console.log("\n=== تباين ≥ ٤.٥:١ نهارًا وليلاً ===");

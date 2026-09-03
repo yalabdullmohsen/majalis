@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import {
-  AlertTriangle, Bell, BookMarked, BookOpen, Clock, CreditCard, FileText, Flame,
+  AlertTriangle, Bell, BookMarked, BookOpen, Clock, FileText, Flame,
   GraduationCap, HelpCircle, Layers, Lightbulb, Mic2,
   Newspaper, RotateCw, Scale, Scroll, Search, Star, Tag, User, Wrench,
 } from "lucide-react";
@@ -15,6 +15,11 @@ import {
 } from "@/lib/search-history";
 import { highlightOriginalParts } from "@/features/search/tolerant-match";
 import { runAppSearch, type AppSearchResult } from "@/features/search/app-search";
+import {
+  SEARCH_SCOPE_DEFS,
+  isSearchScopeId,
+  type SearchScopeId,
+} from "@/features/search/search-scopes";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { TEXT_API_ORIGINS, useResourcePrewarm } from "@/lib/resource-prewarm";
 import "@/styles/components/global-search-modal.css";
@@ -62,20 +67,31 @@ const KIND_META: Record<string, { label: string; Icon: LucideIcon; color: string
   app:           { label: "صفحة",      Icon: Layers,        color: "#1E40AF" },
 };
 
-const FILTER_CHIPS: { key: string; label: string }[] = [
-  { key: "all",     label: "الكل" },
-  { key: "surah",   label: "قرآن" },
-  { key: "tafsir",  label: "تفسير" },
-  { key: "book",    label: "مراجع" },
-  { key: "hadith",  label: "أحاديث" },
-  { key: "qa",      label: "فتاوى" },
-  { key: "fiqh",    label: "فقه" },
-  { key: "lesson",  label: "دروس" },
-  { key: "scholar", label: "علماء" },
-  { key: "adhkar",  label: "أذكار" },
-  { key: "seerah",  label: "سيرة" },
-  { key: "settings", label: "إعدادات" },
+const FILTER_CHIPS: { key: SearchScopeId; label: string }[] = [
+  { key: "all", label: "الكل" },
+  { key: "quran", label: "القرآن" },
+  { key: "tafsir", label: "تفسير" },
+  { key: "seerah", label: "سيرة" },
+  { key: "history", label: "التاريخ الإسلامي" },
+  { key: "prophet", label: "قصص الأنبياء" },
+  { key: "fiqh", label: "فقه" },
+  { key: "hadith", label: "حديث" },
+  { key: "adhkar", label: "أذكار" },
+  { key: "lesson", label: "دروس" },
 ];
+
+const SCOPE_SUGGESTIONS = SEARCH_SCOPE_DEFS.filter((d) => d.id !== "fawaid");
+
+function readInitialSearchFilter(): SearchScopeId {
+  try {
+    const raw = sessionStorage.getItem("gsm-initial-filter") || "all";
+    if (raw === "surah") return "quran";
+    if (isSearchScopeId(raw)) return raw;
+  } catch {
+    /* ignore */
+  }
+  return "all";
+}
 
 const DEBOUNCE_MS = 300;
 
@@ -176,13 +192,7 @@ type Props = { onClose: () => void };
 
 export function GlobalSearchModal({ onClose }: Props) {
   const [query, setQuery]           = useState("");
-  const [activeFilter, setActiveFilter] = useState(() => {
-    try {
-      return sessionStorage.getItem("gsm-initial-filter") || "all";
-    } catch {
-      return "all";
-    }
-  });
+  const [activeFilter, setActiveFilter] = useState<SearchScopeId>(readInitialSearchFilter);
   const [results, setResults]       = useState<AppSearchResult[]>([]);
   const [groupCounts, setGroupCounts] = useState<Record<string, number>>({});
   const [suggestion, setSuggestion] = useState<string | null>(null);
@@ -223,8 +233,9 @@ export function GlobalSearchModal({ onClose }: Props) {
   }, [onClose]);
 
   const doSearch = useCallback(
-    async (q: string, filter: string) => {
-      if (!q.trim()) {
+    async (q: string, filter: SearchScopeId) => {
+      const trimmed = q.trim();
+      if (!trimmed && filter === "all") {
         setResults([]);
         setGroupCounts({});
         setSuggestion(null);
@@ -242,13 +253,12 @@ export function GlobalSearchModal({ onClose }: Props) {
         await afterNextPaint();
         await yieldToMain();
         if (ctrl.signal.aborted || seq !== requestSeqRef.current) return;
-        const res = await runAppSearch(q.trim(), {
+        const res = await runAppSearch(trimmed, {
           limit: filter !== "all" ? 20 : 28,
-          kind: filter !== "all" ? filter : undefined,
+          scope: filter,
           signal: ctrl.signal,
         });
         if (ctrl.signal.aborted || seq !== requestSeqRef.current) return;
-        // لا انتقال تلقائي عبر quickNav — اعرض النتائج ليختار المستخدم.
         await yieldToMain();
         if (ctrl.signal.aborted || seq !== requestSeqRef.current) return;
         setResults(res.results);
@@ -268,13 +278,14 @@ export function GlobalSearchModal({ onClose }: Props) {
 
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
-    if (!query.trim()) {
+    if (!query.trim() && activeFilter === "all") {
       setResults([]);
       setLoading(false);
       setError(false);
       return;
     }
-    timerRef.current = setTimeout(() => doSearch(query, activeFilter), DEBOUNCE_MS);
+    const delay = query.trim() ? DEBOUNCE_MS : 0;
+    timerRef.current = setTimeout(() => doSearch(query, activeFilter), delay);
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, [query, activeFilter, doSearch]);
 
@@ -307,7 +318,7 @@ export function GlobalSearchModal({ onClose }: Props) {
   };
 
   const topLocal  = getTopSearchQueries(6).map((e) => e.query);
-  const isEmpty   = !query.trim();
+  const showIdleHome = !query.trim() && activeFilter === "all";
   const hasResults = results.length > 0;
 
   return (
@@ -400,8 +411,25 @@ export function GlobalSearchModal({ onClose }: Props) {
         {/* ── منطقة النتائج ─────────────────────────────────────────── */}
         <div className="gsm-results-area">
 
-          {isEmpty && (
+          {showIdleHome && (
             <div className="gsm-empty-pad">
+
+              <section className="gsm-section">
+                <p className="gsm-section__label">أقسام مقترحة</p>
+                <div className="gsm-scope-grid">
+                  {SCOPE_SUGGESTIONS.map((scope) => (
+                    <button
+                      key={scope.id}
+                      type="button"
+                      className="gsm-scope-card"
+                      onClick={() => setActiveFilter(scope.id)}
+                    >
+                      <strong className="gsm-scope-card__title">{scope.title}</strong>
+                      <span className="gsm-scope-card__desc">{scope.desc}</span>
+                    </button>
+                  ))}
+                </div>
+              </section>
 
               {history.length > 0 && (
                 <section className="gsm-section">
@@ -443,59 +471,12 @@ export function GlobalSearchModal({ onClose }: Props) {
                   </div>
                 </section>
               )}
-
-              <section className="gsm-section">
-                <p className="gsm-section__label">مواضيع شائعة</p>
-                <div className="gsm-pills">
-                  {POPULAR_QUERIES.map((q) => (
-                    <button
-                      key={q}
-                      type="button"
-                      onClick={() => handleQuickQuery(q)}
-                      className="gsm-pill"
-                    >
-                      {q}
-                    </button>
-                  ))}
-                </div>
-              </section>
-
-              <section className="gsm-section">
-                <p className="gsm-section__label">تصفح</p>
-                <div className="gsm-quicklinks">
-                  {[
-                    { href: "/my-learning#flashcards", label: "المراجعة", Icon: CreditCard },
-                    { href: "/mushaf", label: "القرآن الكريم", Icon: BookMarked },
-                    { href: "/quran-knowledge", label: "القرآن وعلومه", Icon: BookOpen },
-                    { href: "/adhkar", label: "الأذكار", Icon: RotateCw },
-                    { href: "/lessons", label: "الدروس", Icon: GraduationCap },
-                    { href: "/fiqh", label: "الفقه والأحكام", Icon: Scale },
-                    { href: "/quiz", label: "الأسئلة", Icon: HelpCircle },
-                    { href: "/hadith", label: "الحديث وعلومه", Icon: Scroll },
-                    { href: "/memorization", label: "الحفظ", Icon: Layers },
-                    { href: "/islamic-directory", label: "الدليل", Icon: Layers },
-                    { href: "/flashcards", label: "الفوائد", Icon: Lightbulb },
-                    { href: "/seerah", label: "السيرة", Icon: Star },
-                    { href: "/occasions-lessons", label: "المناسبات والدروس", Icon: Bell },
-                  ].map((l) => (
-                    <button
-                      key={l.href}
-                      type="button"
-                      onClick={() => { onClose(); navigate(l.href); }}
-                      className="gsm-quicklink-btn"
-                    >
-                      <l.Icon size={14} strokeWidth={1.8} aria-hidden="true" />
-                      {l.label}
-                    </button>
-                  ))}
-                </div>
-              </section>
             </div>
           )}
 
-          {!isEmpty && loading && !hasResults && <SkeletonResults />}
+          {!showIdleHome && loading && !hasResults && <SkeletonResults />}
 
-          {!isEmpty && error && !loading && (
+          {!showIdleHome && error && !loading && (
             <div className="gsm-error-state" role="alert" aria-live="assertive">
               <p className="gsm-state-icon"><AlertTriangle size={32} strokeWidth={1.5} aria-hidden="true" /></p>
               <p className="gsm-state-title">تعذر تنفيذ البحث. حاول مرة أخرى.</p>
@@ -506,12 +487,23 @@ export function GlobalSearchModal({ onClose }: Props) {
             </div>
           )}
 
-          {!isEmpty && !loading && !error && !hasResults && (
+          {!showIdleHome && !loading && !error && !hasResults && (
             <div className="gsm-empty-state">
               <p className="gsm-state-icon"><Search size={32} strokeWidth={1.5} aria-hidden="true" /></p>
-              <p className="gsm-state-title">لا نتائج لـ «{query.trim()}».</p>
-              <button type="button" className="gsm-retry-btn" onClick={() => setQuery("")}>
-                مسح البحث
+              <p className="gsm-state-title">
+                {query.trim()
+                  ? `لا نتائج لـ «${query.trim()}».`
+                  : "لا توجد نتائج في هذا القسم، جرّب كلمة أخرى أو ابحث في الكل"}
+              </p>
+              <button
+                type="button"
+                className="gsm-retry-btn"
+                onClick={() => {
+                  setQuery("");
+                  setActiveFilter("all");
+                }}
+              >
+                {query.trim() ? "مسح البحث" : "عرض الأقسام"}
               </button>
               {suggestion && (
                 <p className="gsm-state-hint">

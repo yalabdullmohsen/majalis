@@ -73,6 +73,7 @@ export function FiqhCategoryCard({ door, className, featured = false }: Props) {
         "fiqh-category-card",
         `fiqh-category-card--${group}`,
         featured && "fiqh-category-card--featured",
+        `fiqh-category-card--${door.id}`,
         className,
       )}
       aria-label={door.label}

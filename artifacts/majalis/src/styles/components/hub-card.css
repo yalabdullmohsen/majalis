@@ -404,9 +404,9 @@ html.dark .sq-card {
 
 .navbar-prayer-chip {
   overflow: visible !important;
-  max-width: none !important;
-  white-space: nowrap;
-  flex-shrink: 0;
+  max-width: min(46vw, 22rem) !important;
+  white-space: normal;
+  flex-shrink: 1;
   min-height: 2.1rem;
   padding-block: 0.35rem !important;
   padding-inline: 0.7rem !important;
@@ -421,7 +421,7 @@ html.dark .sq-card {
 .navbar-prayer-chip__hms {
   overflow: visible !important;
   text-overflow: clip !important;
-  white-space: nowrap !important;
+  white-space: normal !important;
   color: var(--mj-on-brand) !important;
 }
 

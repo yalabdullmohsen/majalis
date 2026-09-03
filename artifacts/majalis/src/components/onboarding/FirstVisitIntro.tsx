@@ -3,7 +3,7 @@
  * بلا lucide (بوابة LCP) — أيقونات SVG مضمّنة خفيفة.
  * قراءة موضع المصحف من التخزين مباشرة بلا سحب حزمة المصحف.
  */
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { firstVisitIntroConfig } from "@/config/first-visit-intro";
 import { markFirstVisitIntroSeen } from "@/lib/first-visit-intro-state";
 import { loadLastPageSync } from "@/lib/quran-last-page";
@@ -47,15 +47,6 @@ const SURAH_SHORT: readonly string[] = [
   "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر",
   "المسد", "الإخلاص", "الفلق", "الناس",
 ];
-
-function resolveAdhkarHref(): string {
-  try {
-    const hour = new Date().getHours();
-    return hour >= 15 ? "/adhkar/evening" : "/adhkar/morning";
-  } catch {
-    return "/adhkar";
-  }
-}
 
 function readStoredAyahKey(): string | null {
   try {
@@ -120,88 +111,30 @@ const QUICK: Tile[] = [
     icon: <IntroIcon d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5zM12 6v12" />,
   },
   {
-    id: "wird",
-    title: "ورد اليوم",
-    desc: "ثبّت وردك",
-    href: "/daily-wird",
-    tone: "gold",
-    icon: <IntroIcon d="M12 3l2.2 6.6H21l-5.4 3.9 2.1 6.5L12 16.6 6.3 20l2.1-6.5L3 9.6h6.8z" />,
-  },
-  {
     id: "lessons",
-    title: "دروس اليوم",
-    desc: "دروس قريبة",
+    title: "الدروس",
+    desc: "دروس اليوم",
     href: "/lessons",
     tone: "teal",
     icon: <IntroIcon d="M22 10v6M2 10l10-5 10 5-10 5zM6 12v5c3 3 9 3 12 0v-5" />,
   },
   {
-    id: "adhkar",
-    title: "الأذكار",
-    desc: "صباح ومساء",
-    href: "/adhkar",
+    id: "prayer",
+    title: "مواقيت الصلاة",
+    desc: "أذان الكويت",
+    href: "/prayer-times",
+    tone: "gold",
+    icon: <IntroIcon d="M12 6v6l4 2M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z" />,
+  },
+  {
+    id: "search",
+    title: "البحث",
+    desc: "تفسير وسيرة وفقه",
+    href: "/search",
     tone: "mint",
-    icon: <IntroIcon d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z" />,
+    icon: <IntroIcon d="M21 21l-4.3-4.3M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14z" />,
   },
 ];
-
-const START_HERE: Tile[] = [
-  {
-    id: "quran",
-    title: "القرآن الكريم",
-    desc: "مصحف وتلاوة وتفسير",
-    href: "/quran-hub",
-    tone: "green",
-    icon: <IntroIcon d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z" />,
-  },
-  {
-    id: "fiqh",
-    title: "الفقه",
-    desc: "أبواب الأحكام",
-    href: "/fiqh",
-    tone: "teal",
-    icon: <IntroIcon d="M12 3v18M5 8h14M7 8c0 4 2.5 7 5 9 2.5-2 5-5 5-9" />,
-  },
-  {
-    id: "seerah",
-    title: "السيرة",
-    desc: "سيرة النبي ﷺ",
-    href: "/seerah",
-    tone: "gold",
-    icon: <IntroIcon d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0zm9-4v4l3 2" />,
-  },
-  {
-    id: "prophets",
-    title: "قصص الأنبياء",
-    desc: "سير الرسل",
-    href: "/prophets",
-    tone: "mint",
-    icon: <IntroIcon d="M12 2l3 7h7l-5.5 4.5L18 22l-6-4-6 4 1.5-8.5L2 9h7z" />,
-  },
-  {
-    id: "hadith",
-    title: "الحديث",
-    desc: "علوم السنة",
-    href: "/hadith",
-    tone: "green",
-    icon: <IntroIcon d="M14 2H6a2 2 0 0 0-2 2v16l4-2 4 2 4-2 4 2V8z" />,
-  },
-  {
-    id: "history",
-    title: "التاريخ الإسلامي",
-    desc: "عصور ودول",
-    href: "/tarikh-islami",
-    tone: "gold",
-    icon: <IntroIcon d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6" />,
-  },
-];
-
-const TODAY_SUGGESTIONS = [
-  { title: "اقرأ صفحة من المصحف", desc: "ثبّت وردك اليومي من القرآن", href: "/mushaf" },
-  { title: "أذكار وقتك", desc: "تابع أذكار الصباح أو المساء بعدد التكرار", href: "/adhkar" },
-  { title: "درس علمي قريب", desc: "تصفّح دروس اليوم والقادمة", href: "/lessons" },
-  { title: "قصة نبي", desc: "عبرة قصيرة من قصص الأنبياء", href: "/prophets" },
-] as const;
 
 export function FirstVisitIntro({ onContinue }: Props) {
   const [resume, setResume] = useState<ResumeItem[]>(() => {
@@ -229,17 +162,8 @@ export function FirstVisitIntro({ onContinue }: Props) {
     };
   }, []);
 
-  const dayIdx = useMemo(() => {
-    try {
-      return Math.floor(Date.now() / 86_400_000) % TODAY_SUGGESTIONS.length;
-    } catch {
-      return 0;
-    }
-  }, []);
-  const suggestion = TODAY_SUGGESTIONS[dayIdx]!;
-
   const finish = useCallback(
-    (href?: string) => {
+    (href?: string, openSearch = false) => {
       markFirstVisitIntroSeen();
       try {
         localStorage.setItem("majlis-home-welcomed-v1", "1");
@@ -247,6 +171,10 @@ export function FirstVisitIntro({ onContinue }: Props) {
         /* ignore */
       }
       onContinue();
+      if (openSearch) {
+        window.dispatchEvent(new CustomEvent("global-search-open", { detail: { filter: "all" } }));
+        return;
+      }
       if (href && href !== "/") navigateTo(href, { mode: "state" });
     },
     [onContinue],
@@ -254,12 +182,11 @@ export function FirstVisitIntro({ onContinue }: Props) {
 
   const goQuick = useCallback(
     (tile: Tile) => {
-      const href =
-        tile.id === "adhkar"
-          ? resolveAdhkarHref()
-          : tile.id === "mushaf"
-            ? resolveStartHref()
-            : tile.href;
+      if (tile.id === "search") {
+        finish(undefined, true);
+        return;
+      }
+      const href = tile.id === "mushaf" ? resolveStartHref() : tile.href;
       finish(href);
     },
     [finish],
@@ -280,7 +207,7 @@ export function FirstVisitIntro({ onContinue }: Props) {
           <p className="first-visit-intro__badge">سُنّة</p>
           <h1 className="first-visit-intro__title">مرحبًا بك في سُنّة</h1>
           <p className="first-visit-intro__lead">
-            ابدأ وردك، تابع قراءتك، وتصفح العلم الشرعي بسهولة.
+            المصحف، الدروس، ومواقيت الصلاة — ابدأ من هنا.
           </p>
           <div className="first-visit-intro__hero-actions">
             <button
@@ -289,13 +216,6 @@ export function FirstVisitIntro({ onContinue }: Props) {
               onClick={() => finish(resolveStartHref())}
             >
               ابدأ الآن
-            </button>
-            <button
-              type="button"
-              className="first-visit-intro__btn first-visit-intro__btn--ghost"
-              onClick={() => finish("/sections")}
-            >
-              تصفح الأقسام
             </button>
           </div>
         </header>
@@ -344,45 +264,6 @@ export function FirstVisitIntro({ onContinue }: Props) {
             </ul>
           </section>
         ) : null}
-
-        <section className="first-visit-intro__section" aria-labelledby="fvi-start">
-          <h2 id="fvi-start" className="first-visit-intro__section-title">
-            ابدأ من هنا
-          </h2>
-          <ul className="first-visit-intro__start">
-            {START_HERE.map((tile) => (
-              <li key={tile.id}>
-                <button
-                  type="button"
-                  className={`first-visit-intro__tile first-visit-intro__tile--${tile.tone}`}
-                  onClick={() => finish(tile.href)}
-                >
-                  <span className="first-visit-intro__tile-icon" aria-hidden="true">
-                    {tile.icon}
-                  </span>
-                  <span className="first-visit-intro__tile-title">{tile.title}</span>
-                  <span className="first-visit-intro__tile-desc">{tile.desc}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="first-visit-intro__section" aria-labelledby="fvi-today">
-          <h2 id="fvi-today" className="first-visit-intro__section-title">
-            اقتراح اليوم
-          </h2>
-          <button
-            type="button"
-            className="first-visit-intro__suggest"
-            onClick={() =>
-              finish(suggestion.href === "/adhkar" ? resolveAdhkarHref() : suggestion.href)
-            }
-          >
-            <strong className="first-visit-intro__suggest-title">{suggestion.title}</strong>
-            <span className="first-visit-intro__suggest-desc">{suggestion.desc}</span>
-          </button>
-        </section>
       </div>
     </div>
   );
