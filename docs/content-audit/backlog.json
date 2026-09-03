@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-03",
-  "lastCompletedId": "b075",
-  "resumeFromId": "b076",
+  "lastCompletedId": "b076",
+  "resumeFromId": "b077",
   "items": [
     {
       "id": "b001",
@@ -951,6 +951,19 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b075-fikr-bodies-gate.test.ts"
       ],
       "finding": "أُضيف متن موجز فريد لكل درس فكر وواقع (105) من الملخص المنقول بلا زيادة حديث أو حكم؛ بوابة b075."
+    },
+    {
+      "id": "b076",
+      "section": "durus_imaniyya_bodies",
+      "title": "متون فريدة للدروس الإيمانية من الملخص المنقول",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/durus-imaniyya-data.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b076-durus-imaniyya-bodies-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز فريد لكل درس إيماني (205) من الملخص المنقول بلا زيادة حديث أو حكم؛ بوابة b076."
     }
   ]
 }
