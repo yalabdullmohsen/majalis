@@ -3,8 +3,9 @@ name: Release Majlisilm (يدوي فقط)
 # مسار الإصدار اليدوي الوحيد.
 # يعمل حصراً عبر workflow_dispatch من فرع main.
 # لا pull_request، لا push، لا schedule — عمداً.
-# لا يدفع إلى main مباشرة: حماية الفرع تبقى سارية، والنشر يتم
-# بدمج PR الإصدار بالطريقة الطبيعية بعد نجاح البوابات.
+# لا يدفع إلى main مباشرة أبدًا.
+# دمج نوافذ الأتمتة محليًا بـ git merge --squash فقط (بلا merge --no-ff / merge commits).
+# النشر إلى main عبر PR إصدار + squash auto-merge بعد خضار الفحوصات.
 
 on:
   workflow_dispatch: {}
@@ -67,10 +68,12 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
         run: git fetch origin automation/content automation/tasks
 
-      - name: دمج automation/content إلى شجرة الإصدار المحلية
+      # دمج خطي فقط (squash) — محظور: merge --no-ff / merge commit / push إلى main.
+      - name: دمج automation/content إلى شجرة الإصدار المحلية (squash)
         if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
         run: |
-          if ! git merge origin/automation/content --no-ff -m "release: دمج automation/content"; then
+          set -euo pipefail
+          if ! git merge --squash origin/automation/content; then
             CONFLICTS=$(git diff --name-only --diff-filter=U)
             echo "::error::تعارض دمج في automation/content — أُلغي الإصدار بالكامل، main لم يتأثر."
             echo "## ❌ تعارض دمج في automation/content" >> "$GITHUB_STEP_SUMMARY"
@@ -81,14 +84,20 @@ jobs:
             while IFS= read -r f; do
               [ -n "$f" ] && echo "::error file=$f::تعارض دمج في هذا الملف بين main وautomation/content"
             done <<< "$CONFLICTS"
-            git merge --abort || true
+            git reset --merge || true
             exit 1
           fi
+          if git diff --cached --quiet; then
+            echo "automation/content: لا تغييرات جديدة (الشجرة مطابقة)."
+          else
+            git commit -m "release: دمج automation/content (squash خطي)"
+          fi
 
-      - name: دمج automation/tasks إلى شجرة الإصدار المحلية
+      - name: دمج automation/tasks إلى شجرة الإصدار المحلية (squash)
         if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
         run: |
-          if ! git merge origin/automation/tasks --no-ff -m "release: دمج automation/tasks"; then
+          set -euo pipefail
+          if ! git merge --squash origin/automation/tasks; then
             CONFLICTS=$(git diff --name-only --diff-filter=U)
             echo "::error::تعارض دمج في automation/tasks — أُلغي الإصدار بالكامل، main لم يتأثر."
             echo "## ❌ تعارض دمج في automation/tasks" >> "$GITHUB_STEP_SUMMARY"
@@ -99,8 +108,13 @@ jobs:
             while IFS= read -r f; do
               [ -n "$f" ] && echo "::error file=$f::تعارض دمج في هذا الملف بين main (بعد دمج automation/content) وautomation/tasks"
             done <<< "$CONFLICTS"
-            git merge --abort || true
+            git reset --merge || true
             exit 1
+          fi
+          if git diff --cached --quiet; then
+            echo "automation/tasks: لا تغييرات جديدة (الشجرة مطابقة)."
+          else
+            git commit -m "release: دمج automation/tasks (squash خطي)"
           fi
 
       - name: Setup Node.js
@@ -137,7 +151,7 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
         run: pnpm --filter @workspace/majalis run test:regression
 
-      - name: فرع إصدار وطلب دمج إلى main (بلا دفع مباشر)
+      - name: فرع إصدار وطلب دمج إلى main (بلا دفع مباشر — squash فقط)
         if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -155,22 +169,33 @@ jobs:
             exit 0
           fi
           git checkout -B "$RELEASE_BRANCH"
-          # ادفع فرع الإصدار فقط. محظور: git push origin HEAD:main
+          # رفض أي merge commit في فرع الإصدار (قواعد المستودع تمنعها على main).
+          if [ "$(git rev-list --merges --count origin/main..HEAD)" != "0" ]; then
+            echo "::error::فرع الإصدار يحتوي merge commits — أوقف. استخدم squash فقط."
+            exit 1
+          fi
+          # ادفع فرع الإصدار فقط. محظور: git push origin HEAD:main (لا تُنفَّذ أبدًا).
           git push origin "HEAD:refs/heads/${RELEASE_BRANCH}"
           existing=$(gh pr list --base main --head "$RELEASE_BRANCH" --json number --jq '.[0].number // empty' || true)
           if [ -n "${existing}" ]; then
             echo "PR إصدار موجود #${existing}"
-            echo "## PR الإصدار #${existing}" >> "$GITHUB_STEP_SUMMARY"
+            gh pr merge "$existing" --auto --squash || true
+            echo "## PR الإصدار #${existing} (auto squash)" >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
           url=$(gh pr create --base main --head "$RELEASE_BRANCH" \
             --title "release: دمج نوافذ الأتمتة (run ${{ github.run_number }})" \
             --body "$(cat <<'EOF'
-          إصدار مُتحقَّق محلياً في هذا الـworkflow (typecheck + build + test:regression) بعد دمج `automation/content` و`automation/tasks` فوق `main`.
+          إصدار مُتحقَّق محلياً في هذا الـworkflow (typecheck + build + test:regression) بعد دمج `automation/content` و`automation/tasks` فوق `main` بـ **squash خطي** (بلا merge commits).
 
-          لا دفع مباشر إلى `main`. الدمج يتم بطلب السحب هذا عبر حماية الفرع المعتادة.
+          لا دفع مباشر إلى `main`. الدمج يتم بطلب السحب هذا عبر **squash merge** فقط بعد خضار الفحوصات المطلوبة (لا cancelled).
 
           EOF
           )")
-          echo "## PR الإصدار" >> "$GITHUB_STEP_SUMMARY"
+          pr_num=$(gh pr list --base main --head "$RELEASE_BRANCH" --json number --jq '.[0].number // empty')
+          if [ -n "${pr_num}" ]; then
+            # تفعيل auto-merge بالـ squash فقط — لا merge commit.
+            gh pr merge "$pr_num" --auto --squash
+          fi
+          echo "## PR الإصدار (squash auto-merge)" >> "$GITHUB_STEP_SUMMARY"
           echo "$url" >> "$GITHUB_STEP_SUMMARY"
