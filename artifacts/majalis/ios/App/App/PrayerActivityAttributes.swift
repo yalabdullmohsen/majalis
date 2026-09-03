@@ -2,7 +2,7 @@ import Foundation
 #if canImport(ActivityKit)
 import ActivityKit
 
-/// بنية بيانات Live Activity لتنبيه الصلاة القادمة — مُشتركة بين تطبيق المجلس
+/// بنية بيانات Live Activity لتنبيه الصلاة القادمة — مُشتركة بين تطبيق سُنّة
 /// العلمي الرئيسي (يبدأ/يحدّث/ينهي النشاط) وإضافة الودجت PrayerLiveActivity
 /// (تعرض الواجهة في Dynamic Island وشاشة القفل). يجب أن يتطابق هذا الملف
 /// حرفياً في كلا الهدفين (Target Membership) وإلا فشل الترجيع (decode).
