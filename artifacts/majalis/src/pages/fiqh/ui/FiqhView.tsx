@@ -6,7 +6,7 @@ import { breadcrumbJsonLd, webPageJsonLd } from "@/lib/seo-structured-data";
 import { ShareButtons } from "@/components/ContentActions";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { SectionLobby } from "@/components/lobby/SectionLobby";
-import { CompactSectionHeader } from "@/components/ui/CompactSectionHeader";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import type { LobbySpec } from "@/config/section-lobbies";
 import { FIQH_HUB_STATS } from "@/lib/fiqh-hub-stats";
 import { formatAbwabCount, formatMasailCount } from "@/lib/arabic-count";
@@ -262,20 +262,23 @@ export default function FiqhPage() {
   );
 
   return (
-    <div className="fiqh-lux-shell" dir="rtl">
-      <CompactSectionHeader
-        title="الفقه"
-        description="أبواب مرتبة للمبتدئ في الطهارة، الصلاة، الزكاة، الصيام، الحج، المعاملات والأسرة."
-        titleId="fiqh-compact-title"
-      />
-      <FiqhLobbyBody lobby={lobby} />
-      <section className="fiqh-hub-stats" aria-label="حجم المحتوى">
-        {headerStats.map((stat) => (
-          <p key={stat.id} className="fiqh-hub-stats__item">
-            {stat.label}
-          </p>
-        ))}
-      </section>
-    </div>
+    <SectionTemplatePage
+      route="/fiqh"
+      title="الفقه"
+      subtitle="أبواب مرتبة للمبتدئ في الطهارة، الصلاة، الزكاة، الصيام، الحج، المعاملات والأسرة."
+      eyebrow="العلوم الشرعية"
+      groupTitle="أبواب الفقه"
+    >
+      <div className="fiqh-lux-shell" dir="rtl">
+        <FiqhLobbyBody lobby={lobby} />
+        <section className="fiqh-hub-stats" aria-label="حجم المحتوى">
+          {headerStats.map((stat) => (
+            <p key={stat.id} className="fiqh-hub-stats__item">
+              {stat.label}
+            </p>
+          ))}
+        </section>
+      </div>
+    </SectionTemplatePage>
   );
 }

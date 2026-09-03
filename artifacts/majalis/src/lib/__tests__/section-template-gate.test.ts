@@ -12,15 +12,16 @@ import { getSectionAccent, SECTIONS } from "@/config/sections.registry";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
-const ANATOMY = [
+const ANATOMY_HERO = [
   "data-section-crumb",
   "data-section-hero",
   "data-section-eyebrow",
   "data-section-title",
   "data-section-sub",
   "data-section-quote",
-  "data-section-group-title",
 ] as const;
+
+const ANATOMY_PAGE = ["data-section-group-title"] as const;
 
 const HUB_PAGES: Array<[string, string]> = [
   ["الحديث", "src/pages/hadith/ui/HadithView.tsx"],
@@ -64,14 +65,19 @@ function hubSource(rel: string, src: string): string {
 
 console.log("=== تشريح TopicPage التسعة ===");
 const topic = read("src/components/topic/TopicPage.tsx");
+const sectionHero = read("src/components/topic/SectionHero.tsx");
 let last = -1;
-for (const marker of ANATOMY) {
-  const idx = topic.indexOf(marker);
-  assert.ok(idx >= 0, `TopicPage يحتوي ${marker}`);
+for (const marker of ANATOMY_HERO) {
+  const idx = sectionHero.indexOf(marker);
+  assert.ok(idx >= 0, `SectionHero يحتوي ${marker}`);
   assert.ok(idx > last, `ترتيب ${marker} بعد السابق`);
   last = idx;
 }
+for (const marker of ANATOMY_PAGE) {
+  assert.ok(topic.includes(marker), `TopicPage يحتوي ${marker}`);
+}
 assert.match(topic, /data-section-template/);
+assert.match(topic, /SectionHero/);
 assert.match(topic, /getSectionAccent/);
 assert.match(topic, /--section-accent/);
 assert.doesNotMatch(topic, LOCAL_SEARCH);
@@ -93,8 +99,10 @@ assert.match(registry, /SECTION_GROUP_ACCENT/);
 assert.match(registry, /getSectionAccent/);
 assert.match(registry, /accent:/);
 assert.ok(SECTIONS.every((s) => Boolean(s.accent)), "كل قسم في السجل له accent");
-assert.equal(getSectionAccent("/hadith"), "#6B7340");
+assert.equal(getSectionAccent("/hadith"), "#0E7A5F");
 assert.equal(getSectionAccent("/tafsir"), "#2A7A6E");
+assert.equal(getSectionAccent("/fiqh"), "#1F6B4A");
+assert.equal(getSectionAccent("/fiqh/usul"), "#8B7A3A");
 
 const chrome = read("src/config/section-template.ts");
 assert.match(chrome, /sectionTemplateChrome/);
@@ -113,6 +121,7 @@ for (const [label, rel] of HUB_PAGES) {
 {
   const tarikh = read("src/views/TarikhIslamiPage.tsx");
   assert.match(tarikh, /tarikh-hero/, "التاريخ: واجهة مخصصة");
+  assert.match(tarikh, /SectionHero/, "التاريخ: يستعمل SectionHero");
   assert.match(tarikh, /ISLAMIC_HISTORY_ITEMS/, "التاريخ: بيانات موحدة");
   assert.match(tarikh, /type=["']search["']/, "التاريخ: بحث داخلي مقصود");
   assert.doesNotMatch(tarikh, /SectionAccordionLayout/, "التاريخ: بلا أكورديون قديم");

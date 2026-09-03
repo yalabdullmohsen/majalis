@@ -11,18 +11,20 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from "react";
-import { Link, useLocation, useSearch } from "wouter";
+import { useLocation, useSearch } from "wouter";
 import {
   getTopicTheme,
-  topicThemeCssVars,
   type TopicThemeId,
 } from "@/config/topic-themes";
 import { getSectionAccent } from "@/config/sections.registry";
 import { sectionTemplateChrome } from "@/config/section-template";
 import { HubCard } from "@/components/ui/HubCard";
+import { SectionHero } from "@/components/topic/SectionHero";
 import { navigateTo } from "@/lib/navigation-intent";
 import "@/styles/components/topic-page.css";
 import "@/styles/components/safe-hero.css";
+
+export { SectionHero } from "@/components/topic/SectionHero";
 
 export type TopicBreadcrumbItem = {
   label: string;
@@ -159,10 +161,6 @@ export function TopicPage({
   };
 
   const sectionAccent = sectionRoute ? getSectionAccent(sectionRoute) : theme.accent;
-  const heroStyle = {
-    ...topicThemeCssVars(theme),
-    "--section-accent": sectionAccent,
-  } as CSSProperties;
 
   return (
     <div
@@ -172,45 +170,15 @@ export function TopicPage({
       data-section-template="1"
       style={{ "--section-accent": sectionAccent } as CSSProperties}
     >
-      <nav className="topic-page__crumb" aria-label="مسار التنقل" data-section-crumb="1">
-        {breadcrumb.map((item, i) => {
-          const last = i === breadcrumb.length - 1;
-          return (
-            <span key={`${item.label}-${i}`} className="topic-page__crumb-item">
-              {i > 0 ? <span aria-hidden="true"> / </span> : null}
-              {item.href && !last ? (
-                <Link href={item.href}>{item.label}</Link>
-              ) : (
-                <span aria-current={last ? "page" : undefined}>{item.label}</span>
-              )}
-            </span>
-          );
-        })}
-      </nav>
-
-      <header className="topic-page__hero on-dark safe-hero" data-on-dark data-section-hero="1" style={heroStyle}>
-        <div className="topic-page__hero-inner safe-hero__body">
-          {eyebrow ? (
-            <p className="topic-page__eyebrow safe-hero__badge" data-section-eyebrow="1">
-              {eyebrow}
-            </p>
-          ) : null}
-          <h1 className="topic-page__title" data-section-title="1">
-            {title}
-          </h1>
-          {subtitle ? (
-            <p className="topic-page__sub" data-section-sub="1">
-              {subtitle}
-            </p>
-          ) : null}
-          {quote ? (
-            <blockquote className="topic-page__quote" data-section-quote="1">
-              <p className="topic-page__quote-text">{quote.text}</p>
-              <cite className="topic-page__quote-ref">{quote.ref}</cite>
-            </blockquote>
-          ) : null}
-        </div>
-      </header>
+      <SectionHero
+        themeId={themeId}
+        accent={sectionAccent}
+        breadcrumb={breadcrumb}
+        eyebrow={eyebrow}
+        title={title}
+        subtitle={subtitle}
+        quote={quote}
+      />
 
       {groupTitle ? (
         <h2 className="topic-page__group-title" data-section-group-title="1">

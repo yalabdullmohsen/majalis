@@ -32,7 +32,7 @@ function approxBrightness(hex: string): number {
 }
 
 const ids = Object.keys(TOPIC_THEMES) as TopicThemeId[];
-assert.equal(ids.length, 9, "يُتوقع 9 سمات موضوعية");
+assert.equal(ids.length, 13, "يُتوقع 13 سمة موضوعية");
 
 for (const id of ids) {
   const t = TOPIC_THEMES[id];

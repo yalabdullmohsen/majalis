@@ -4,8 +4,9 @@ import { useLocation, useParams } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
 import { ADHKAR_CATEGORIES, FEATURED_ADHKAR_SLUGS } from "@/lib/adhkar-seed";
 import { usePublishedAdhkarItems, isPublishableAdhkar, getUnverifiedAdhkarItems } from "@/lib/adhkar-service";
-import { PageHeader, Empty } from "@/components/ui-common";
+import { Empty } from "@/components/ui-common";
 import { PageShell } from "@/components/layout/PageShell";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { adhkarCatRedirectPath, hrefAdhkar, resolveAdhkarCategory } from "@/lib/content-href";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -246,13 +247,14 @@ export default function AdhkarPage() {
   const isLast  = currentIndex === total - 1;
 
   return (
-    <PageShell variant="narrow" className="content-hub-page adhkar-page adhkar-page--focus">
-      <PageHeader
-        eyebrow="العبادة اليومية"
-        title="الأذكار"
-        subtitle="أذكار الصباح والمساء والنوم وبعد الصلاة من القرآن والسنة — مع العدّ والحفظ والمشاركة."
-      />
-
+    <SectionTemplatePage
+      route="/adhkar"
+      title="الأذكار"
+      subtitle="أذكار الصباح والمساء والنوم وبعد الصلاة من القرآن والسنة — مع العدّ والحفظ والمشاركة."
+      eyebrow="العبادة اليومية"
+      groupTitle="ورد الأذكار"
+    >
+    <PageShell variant="narrow" className="content-hub-page adhkar-page adhkar-page--focus adhkar-page--embedded">
       {/* شريط التصنيفات */}
       <div className="content-hub-chips adhkar-chips" role="tablist" aria-label="تصفية الأذكار">
         <button
@@ -443,5 +445,6 @@ export default function AdhkarPage() {
         <SectionQuiz sectionId="adhkar" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />
       </div>
     </PageShell>
+    </SectionTemplatePage>
   );
 }

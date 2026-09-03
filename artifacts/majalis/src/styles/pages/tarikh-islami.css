@@ -9,6 +9,16 @@
   margin-bottom: 1.25rem;
 }
 
+.tarikh-hero .topic-page__crumb {
+  padding-inline: 0;
+  background: transparent;
+}
+
+.tarikh-hero .topic-page__hero {
+  max-width: none;
+  margin-inline: 0;
+}
+
 .tarikh-hero__eyebrow {
   margin: 0 0 0.35rem;
   font-size: 0.82rem;

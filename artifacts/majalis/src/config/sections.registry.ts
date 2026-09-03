@@ -127,24 +127,31 @@ export const SECTION_GROUP_ACCENT: Record<SectionGroup, string> = {
 
 /** تجاوزات لونية تطابق سمات TopicPage */
 const SECTION_ACCENT_BY_ID: Record<string, string> = {
-  hadith: "#6B7340",
-  seerah: "#8B6914",
-  "islamic-history": "#8B6914",
+  hadith: "#0E7A5F",
+  seerah: "#A67C3A",
+  "islamic-history": "#7A6B3A",
   tafsir: "#2A7A6E",
   "quran-tajweed": "#2A7A6E",
   "quran-qiraat": "#2A7A6E",
   "ulum-quran": "#2A7A6E",
   "quran-asbab": "#2A7A6E",
   "quran-figures": "#2A7A6E",
-  nations: "#8B6914",
+  prophets: "#1A8A7A",
+  nations: "#7A6B3A",
   library: "#8B6914",
   research: "#8B6914",
   glossary: "#8B6914",
   universities: "#8B6914",
   "discover-islam": "#4A5590",
-  fiqh: "#4A5590",
+  fiqh: "#1F6B4A",
+  "usul-fiqh": "#8B7A3A",
+  adhkar: "#3A9A7A",
+  duas: "#3A9A7A",
   fawaid: "#B45309",
   miracles: "#0E7490",
+  lessons: "#1F6B56",
+  qa: "#1F6B56",
+  "islam-guide": "#7A6B3A",
 };
 
 export function resolveSectionAccent(s: {

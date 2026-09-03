@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionHero } from "@/components/topic/SectionHero";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import {
   getHistoryErasWithEvents,
@@ -203,16 +204,26 @@ export default function TarikhIslamiPage() {
   };
 
   return (
-    <div className="page-shell tarikh-page" dir="rtl">
-      <header className="tarikh-hero">
-        <p className="tarikh-hero__eyebrow">الدول والعصور — تفاعلي</p>
-        <h1 className="tarikh-hero__title">التاريخ الإسلامي</h1>
-        <p className="tarikh-hero__lead">
-          اسلك العصور بالترتيب: اضغط الدولة لترى ماذا حدث فيها. قصة النبي ﷺ عبر بوابة السيرة، ثم الخلافة
-          والدول حتى يومنا هذا.
-        </p>
+    <div className="page-shell tarikh-page" dir="rtl" style={{ ["--section-accent" as string]: "#7A6B3A" }}>
+      <SectionHero
+        themeId="history"
+        accent="#7A6B3A"
+        className="tarikh-hero"
+        breadcrumb={[
+          { label: "الرئيسية", href: "/" },
+          { label: "التاريخ الإسلامي" },
+        ]}
+        eyebrow="الدول والعصور — تفاعلي"
+        title="التاريخ الإسلامي"
+        subtitle="اسلك العصور بالترتيب: اضغط الدولة لترى ماذا حدث فيها. قصة النبي ﷺ عبر بوابة السيرة، ثم الخلافة والدول حتى يومنا هذا."
+        quote={{
+          text: "الَّذِينَ إِن مَّكَّنَّاهُمْ فِي الْأَرْضِ أَقَامُوا الصَّلَاةَ وَآتَوُا الزَّكَاةَ وَأَمَرُوا بِالْمَعْرُوفِ وَنَهَوْا عَنِ الْمُنكَرِ",
+          ref: "الحج: ٤١",
+          type: "ayah",
+        }}
+      >
         <ShareButtons title="التاريخ الإسلامي — سُنّة" />
-      </header>
+      </SectionHero>
 
       <nav className="tarikh-rail" aria-label="مسار الدول الإسلامية">
         <button

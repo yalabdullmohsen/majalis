@@ -11,14 +11,18 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const view = read("src/pages/fiqh/ui/FiqhView.tsx");
+const usul = read("src/pages/fiqh/ui/FiqhUsulView.tsx");
 const compact = read("src/components/ui/CompactSectionHeader.tsx");
 const compactCss = read("src/components/ui/compact-section-header.css");
 const safe = read("src/styles/components/safe-hero.css");
 const topic = read("src/styles/components/topic-page.css");
 const topicTsx = read("src/components/topic/TopicPage.tsx");
+const sectionHero = read("src/components/topic/SectionHero.tsx");
 
-assert.match(view, /CompactSectionHeader/);
+assert.match(view, /SectionTemplatePage/);
 assert.doesNotMatch(view, /FiqhLuxHero|fiqh-lux-hero/);
+assert.match(usul, /SectionTemplatePage/);
+assert.match(usul, /USUL_HUB_TOPICS|fiqh-usul-topics/);
 assert.match(compact, /compact-section-header__icon/);
 assert.match(compactCss, /\.compact-section-header__icon[\s\S]*?flex-shrink:\s*0/);
 assert.doesNotMatch(
@@ -33,7 +37,8 @@ assert.match(safe, /\.safe-hero__decor/);
 assert.match(safe, /z-index:\s*2/);
 assert.match(safe, /pointer-events:\s*none/);
 
-assert.match(topicTsx, /safe-hero/);
+assert.match(topicTsx, /SectionHero/);
+assert.match(sectionHero, /data-section-hero/);
 assert.match(topic, /isolation:\s*isolate/);
 assert.match(topic, /\.topic-page__eyebrow[\s\S]*?white-space:\s*normal/);
 

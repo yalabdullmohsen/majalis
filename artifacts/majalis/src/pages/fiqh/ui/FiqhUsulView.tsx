@@ -1,35 +1,13 @@
 import { Link } from "wouter";
 import { useEffect } from "react";
+import { BookOpen, Scale } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { usePageView } from "@/hooks/usePageView";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
+import { HubCard } from "@/components/ui/HubCard";
+import { USUL_HUB_TOPICS } from "@/lib/fiqh/fiqh-usul-topics";
 import "@/styles/pages/fiqh-hub.css";
-
-const USUL_ITEMS = [
-  {
-    title: "الكتاب",
-    summary: "القرآن أصل الأدلة، لا يُقدَّم عليه غيره، ويُفهم بعربيته ودلالة السلف.",
-    evidence: "قال تعالى: ﴿وَنَزَّلْنَا عَلَيْكَ الْكِتَابَ تِبْيَانًا لِّكُلِّ شَيْءٍ﴾ النحل: 89.",
-    source: { book: "روضة الناظر وجنة المناظر", author: "موفق الدين ابن قدامة المقدسي", ref: "باب الأدلة، الكتاب" },
-  },
-  {
-    title: "السنة",
-    summary: "السنة وحي بيان، حجة في الأحكام إذا صحت، وتشمل القول والفعل والتقرير.",
-    evidence: "قال تعالى: ﴿وَمَا آتَاكُمُ الرَّسُولُ فَخُذُوهُ﴾ الحشر: 7. وقال ﷺ: «عليكم بسنتي» رواه أبو داود والترمذي.",
-    source: { book: "روضة الناظر وجنة المناظر", author: "موفق الدين ابن قدامة المقدسي", ref: "باب الأدلة، السنة" },
-  },
-  {
-    title: "الإجماع",
-    summary: "إجماع علماء العصر من الأمة على حكم شرعي حجة قاطعة عند أهل السنة، وأعلاه إجماع الصحابة.",
-    evidence: "قال ﷺ: «لا تجتمع أمتي على ضلالة» رواه ابن ماجه وغيره بطرق يشد بعضها بعضًا. واستدل الأصوليون بقوله تعالى: ﴿وَمَن يُشَاقِقِ الرَّسُولَ مِن بَعْدِ مَا تَبَيَّنَ لَهُ الْهُدَىٰ وَيَتَّبِعْ غَيْرَ سَبِيلِ الْمُؤْمِنِينَ﴾ النساء: 115.",
-    source: { book: "روضة الناظر وجنة المناظر", author: "موفق الدين ابن قدامة المقدسي", ref: "باب الإجماع" },
-  },
-  {
-    title: "القياس",
-    summary: "إلحاق فرع بأصل في حكم لعلة جامعة، وهو حجة عند جماهير أهل العلم إذا استوفى أركانه.",
-    evidence: "حديث معاذ حين بعثه إلى اليمن: «أجتهد رأيي ولا آلو» رواه أبو داود والترمذي، وتلقاه أهل العلم بالقبول في باب الاجتهاد.",
-    source: { book: "الورقات", author: "عبد الملك بن عبد الله الجويني", ref: "باب القياس" },
-  },
-];
+import "@/styles/components/hub-card.css";
 
 export default function FiqhUsulPage() {
   usePageView("fiqh-usul", null);
@@ -37,31 +15,115 @@ export default function FiqhUsulPage() {
     applyPageSeo({
       path: "/fiqh/usul",
       title: "أصول الفقه | سُنّة",
-      description: "أدلة الأحكام: الكتاب والسنة والإجماع والقياس، من مباحث الفقه المساندة.",
+      description: "هيكل أبواب أصول الفقه: الأدلة، الحكم الشرعي، دلالات الألفاظ، الإجماع والقياس والقواعد.",
       keywords: ["أصول الفقه", "أدلة الأحكام", "سُنّة"],
     });
   }, []);
 
+  const detailTopics = USUL_HUB_TOPICS.filter((t) => t.details && t.details.length > 0);
+
   return (
-    <div className="fqp-root page-shell fiqh-hub" dir="rtl">
-      <nav className="fiqh-crumb" aria-label="مسار التنقل">
-        <Link href="/fiqh">الفقه</Link>
-        <span aria-hidden="true"> ← </span>
-        <span>أصول الفقه</span>
-      </nav>
-      <h1 className="fiqh-book-page__title">أصول الفقه</h1>
-      <p className="fiqh-lesson-page__path">مبحث مساند، ليس من كتب الفروع.</p>
-      {USUL_ITEMS.map((item) => (
-        <section key={item.title} className="fiqh-usul-card">
-          <h2>{item.title}</h2>
-          <p>{item.summary}</p>
-          <p><strong>الدليل: </strong>{item.evidence}</p>
-          <p className="fiqh-usul-card__src">
-            {item.source.book} — {item.source.author} — {item.source.ref}
-          </p>
+    <SectionTemplatePage
+      route="/fiqh/usul"
+      title="أصول الفقه"
+      subtitle="قواعد الاستنباط والأدلة — أبواب مرتبة للتعرّف على هيكل العلم دون اختراع أحكام بلا مصدر."
+      eyebrow="الفقه · أصول"
+      breadcrumb={[
+        { label: "الرئيسية", href: "/" },
+        { label: "الفقه", href: "/fiqh" },
+        { label: "أصول الفقه" },
+      ]}
+      groupTitle="أبواب أصول الفقه"
+    >
+      <div className="fiqh-usul-page" dir="rtl">
+        <p className="fiqh-usul-page__lead">
+          المباحث أدناه هيكل تعليمي يربط المحتوى المنشور في المنصة. ما وُسم «هيكل» يعرض الإطار فقط مع إحالة إلى المتن، بلا تفصيل أحكام جديدة.
+        </p>
+
+        <div className="hub-card-grid fiqh-usul-grid">
+          {USUL_HUB_TOPICS.map((topic) => (
+            <HubCard
+              key={topic.id}
+              href={topic.href ?? `#usul-${topic.id}`}
+              title={topic.title}
+              description={topic.summary}
+              badge={topic.kind}
+              meta={topic.status === "structure" ? "هيكل تعليمي" : "محتوى موثّق"}
+              Icon={topic.id === "qawaid" ? Scale : BookOpen}
+              featured={topic.status === "ready" && Boolean(topic.details)}
+            />
+          ))}
+        </div>
+
+        {detailTopics.map((topic) => (
+          <section
+            key={topic.id}
+            id={`usul-${topic.id}`}
+            className="fiqh-usul-section"
+            aria-labelledby={`usul-title-${topic.id}`}
+          >
+            <header className="fiqh-usul-section__head">
+              <h2 id={`usul-title-${topic.id}`} className="fiqh-usul-section__title">
+                {topic.title}
+              </h2>
+              <p className="fiqh-usul-section__sub">{topic.summary}</p>
+            </header>
+            <div className="fiqh-usul-detail-grid">
+              {topic.details!.map((block) => (
+                <article key={block.title} className="fiqh-usul-card fiqh-usul-card--rich">
+                  <h3 className="fiqh-usul-card__title">{block.title}</h3>
+                  <p className="fiqh-usul-card__body">{block.summary}</p>
+                  {block.evidence ? (
+                    <p className="fiqh-usul-card__evidence">
+                      <strong>الدليل: </strong>
+                      {block.evidence}
+                    </p>
+                  ) : null}
+                  <p className="fiqh-usul-card__src">
+                    {block.source.book} — {block.source.author} — {block.source.ref}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </section>
+        ))}
+
+        <section className="fiqh-usul-section" aria-labelledby="usul-structure-title">
+          <header className="fiqh-usul-section__head">
+            <h2 id="usul-structure-title" className="fiqh-usul-section__title">
+              أبواب بهيكل فقط
+            </h2>
+            <p className="fiqh-usul-section__sub">
+              تُعرض كإطار مع مصدر المتن؛ المحتوى التفصيلي يُستكمل لاحقًا من مصادر معتمدة.
+            </p>
+          </header>
+          <div className="fiqh-usul-detail-grid">
+            {USUL_HUB_TOPICS.filter((t) => t.status === "structure").map((topic) => (
+              <article
+                key={topic.id}
+                id={`usul-${topic.id}`}
+                className="fiqh-usul-card fiqh-usul-card--structure"
+              >
+                <span className="fiqh-usul-card__badge">هيكل</span>
+                <h3 className="fiqh-usul-card__title">{topic.title}</h3>
+                <p className="fiqh-usul-card__body">{topic.summary}</p>
+                {topic.source ? (
+                  <p className="fiqh-usul-card__src">
+                    المرجع: {topic.source.book} — {topic.source.author} — {topic.source.ref}
+                  </p>
+                ) : null}
+              </article>
+            ))}
+          </div>
         </section>
-      ))}
-      <div className="fiqh-fab-clearance" />
-    </div>
+
+        <p className="fiqh-usul-page__nav">
+          <Link href="/fiqh">← العودة إلى الفقه</Link>
+          {" · "}
+          <Link href="/fiqh-qawaid">القواعد الفقهية</Link>
+        </p>
+        <div className="fiqh-fab-clearance" />
+      </div>
+    </SectionTemplatePage>
   );
 }
