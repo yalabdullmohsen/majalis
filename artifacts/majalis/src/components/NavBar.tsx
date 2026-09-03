@@ -13,6 +13,7 @@ import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { getActiveTab } from "@/lib/get-active-tab";
 import { LOBBY_SEARCH_FILTER } from "@/config/section-lobby-chrome";
 import { useSharedPrayerCountdownLive } from "@/components/prayer/PrayerCountdownProvider";
+import { buildPrayerChipCopy } from "@/lib/prayer-ticker-copy";
 import { HeaderAdSlot } from "@/components/header/HeaderAdSlot";
 import { shouldShowHeaderAd } from "@/config/header-ad";
 import "@/styles/components/dark-emerald-menus.css";
@@ -31,13 +32,16 @@ function PrayerChipLive() {
   const cd = useSharedPrayerCountdownLive();
 
   if (!cd?.next) return null;
-  const inGrace = cd.sinceSeconds != null;
-  const displayName = cd.next.name;
-  const displayHms = inGrace && cd.sinceHms ? cd.sinceHms : cd.remainingHms;
+  const copy = buildPrayerChipCopy({
+    prayerName: cd.next.name,
+    remainingSeconds: Math.max(0, Math.round(cd.remainingMs / 1000)),
+    sinceSeconds: cd.sinceSeconds,
+    nextPrayerName: cd.graceNextSlot?.name ?? null,
+    nextRemainingSeconds: cd.graceNextSeconds,
+  });
   return (
-    <Link href="/prayer-times" className="navbar-prayer-chip" aria-label={`الصلاة القادمة: ${displayName}`}>
-      <span className="navbar-prayer-chip__name">{displayName}</span>
-      <span className="navbar-prayer-chip__hms" aria-live="off">{displayHms}</span>
+    <Link href="/prayer-times" className="navbar-prayer-chip" aria-label={copy.text}>
+      <span className="navbar-prayer-chip__name">{copy.text}</span>
     </Link>
   );
 }
@@ -67,10 +71,7 @@ function PrayerChip() {
   if (!ready) {
     return (
       <Link href="/prayer-times" className="navbar-prayer-chip navbar-prayer-chip--placeholder" aria-label="مواقيت الصلاة">
-        <span className="navbar-prayer-chip__name">الصلاة</span>
-        <span className="navbar-prayer-chip__hms" aria-hidden="true">
-          &nbsp;
-        </span>
+        <span className="navbar-prayer-chip__name">مواقيت الصلاة</span>
       </Link>
     );
   }

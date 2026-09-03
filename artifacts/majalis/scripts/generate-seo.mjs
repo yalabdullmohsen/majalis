@@ -83,7 +83,7 @@ function resolveOgImage(path, routeImage) {
     ["/fiqh", "/brand/og-fiqh.png"],
     ["/hadith", "/brand/og-hadith.png"],
     ["/adhkar", "/brand/og-adhkar.png"],
-    ["/library", "/brand/og-library.png"],
+    // library OG removed
     ["/contact", "/brand/og-contact.png"],
   ];
   for (const [prefix, img] of prefixRules) {
@@ -565,7 +565,7 @@ function bookJsonLdScript(row) {
     description: row.description || row.title,
     inLanguage: "ar",
     genre: row.category || "فقه إسلامي",
-    url: absoluteUrl(`/library/${row.id}`),
+    url: absoluteUrl(`/search`),
     publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
   });
 }
@@ -899,7 +899,7 @@ function scholarPersonJsonLd(profile) {
 }
 
 const LIST_JSON_LD = {
-  "/library": itemListJsonLdScript(LIBRARY_CATALOG.map((b) => ({ name: b.title, url: `/library/${b.id}` })), "المكتبة العلمية"),
+  // /library removed from public SEO
   "/hadith": itemListJsonLdScript(
     [
       { name: "الأحاديث الصحيحة", url: "/hadith/sahih" },
@@ -1041,16 +1041,6 @@ ${linkList("روابط ذات صلة", [
   { name: "أرشيف الدروس", url: "/lessons/archive" },
   { name: "الدورات السنوية", url: "/annual-courses" },
 ])}`,
-  "/library": `${linkList(
-    "كتب المكتبة العلمية",
-    LIBRARY_CATALOG.map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author })),
-  )}
-${linkList("روابط ذات صلة", [
-  { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
-  { name: "الفقه الإسلامي", url: "/fiqh" },
-  { name: "علوم الحديث", url: "/hadith-science" },
-  { name: "البحث", url: "/search" },
-])}`,
   "/adhkar": `${linkList(
     "أقسام الأذكار",
     FEATURED_ADHKAR.map((c) => ({ name: c.name, url: `/adhkar/${c.slug}` })),
@@ -1067,7 +1057,7 @@ ${linkList("روابط ذات صلة", [
   )}
 ${linkList("روابط ذات صلة", [
   { name: "السيرة النبوية", url: "/seerah" },
-  { name: "المكتبة العلمية", url: "/library" },
+  { name: "البحث", url: "/search" },
   { name: "الدروس الشرعية", url: "/lessons" },
   { name: "قصص الأنبياء", url: "/prophets" },
 ])}`,
@@ -1193,8 +1183,8 @@ ${linkList("علوم الحديث وروابطه", [
   { name: "الأحاديث الموضوعة", url: "/hadith/mawdu" },
   { name: "كتب الحديث", url: "/hadith/books" },
   { name: "الأربعون النووية", url: "/arbaeen-nawawi" },
-  { name: "صحيح البخاري (المكتبة)", url: "/library/book-bukhari" },
-  { name: "صحيح مسلم (المكتبة)", url: "/library/book-muslim" },
+  { name: "صحيح البخاري", url: "/hadith/sahih" },
+  { name: "صحيح مسلم", url: "/hadith/sahih" },
 ])}`,
   "/islamic-glossary": `<p>معجم مبسّط لمصطلحات العلوم الشرعية: فقه، حديث، عقيدة، وأصول — لتعريف الطالب بالمفردات الشائعة قبل التوسّع في الأبواب.</p>
 <h2>تعريف مختصر</h2>
@@ -1234,7 +1224,7 @@ ${linkList("أقسام ذات صلة", [
   { name: "الصيام", url: "/sawm" },
   { name: "الحج والعمرة", url: "/hajj" },
 ])}`,
-  "/hadith": `<p>مكتبة الأحاديث النبوية في سُنّة: متن الحديث بارز، مع بيان الحكم المنسوب (صحيح، حسن، ضعيف، موضوع) والمصدر بقدر الإمكان — راجع التخريج قبل الاستشهاد.</p>
+  "/hadith": `<p>فهرس الأحاديث النبوية في سُنّة: متن الحديث بارز، مع بيان الحكم المنسوب (صحيح، حسن، ضعيف، موضوع) والمصدر بقدر الإمكان — راجع التخريج قبل الاستشهاد.</p>
 <h2>درجات الحديث المعروضة</h2>
 <ul>
   <li>صحيح</li>
@@ -1252,11 +1242,11 @@ ${linkList("أقسام الأحاديث", [
   { name: "أربعون في محبة الله", url: "/hadith/arbaeen-love-of-allah" },
   { name: "علوم الحديث", url: "/hadith-science" },
 ])}
-${linkList("من كتب الحديث في المكتبة", [
-  { name: "صحيح البخاري", url: "/library/book-bukhari" },
-  { name: "صحيح مسلم", url: "/library/book-muslim" },
-  { name: "رياض الصالحين", url: "/library/book-riyadh" },
-  { name: "الأربعون النووية (المكتبة)", url: "/library/book-nawawi40" },
+${linkList("من كتب الحديث", [
+  { name: "صحيح البخاري", url: "/hadith/sahih" },
+  { name: "صحيح مسلم", url: "/hadith/sahih" },
+  { name: "رياض الصالحين", url: "/hadith" },
+  { name: "الأربعون النووية", url: "/arbaeen-nawawi" },
 ])}
 ${linkList("روابط ذات صلة", [
   { name: "الفوائد الحديثية", url: "/fawaid?cat=" + encodeURIComponent("فوائد حديثية") },
@@ -1364,7 +1354,7 @@ ${linkList("روابط ذات صلة", [
 ${linkList("روابط ذات صلة", [
   { name: "الدروس والدورات", url: "/lessons" },
   { name: "الدروس الشرعية", url: "/lessons" },
-  { name: "المكتبة العلمية", url: "/library" },
+  { name: "البحث", url: "/search" },
   { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
   { name: "الفوائد", url: "/fawaid" },
   { name: "مكارم الأخلاق", url: "/akhlaq" },
@@ -1378,13 +1368,13 @@ ${linkList("روابط ذات صلة", [
   { name: "الفوائد", url: "/fawaid" },
   { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
 ])}`,
-  "/arbaeen-nawawi": `<p>الأربعون النووية: أحاديث جامعة في أصول الدين والعمل، مع ربط بعلوم الحديث ومكتبة الأحاديث.</p>
+  "/arbaeen-nawawi": `<p>الأربعون النووية: أحاديث جامعة في أصول الدين والعمل، مع ربط بعلوم الحديث وفهرس الأحاديث.</p>
 ${linkList("روابط ذات صلة", [
   { name: "الأحاديث النبوية", url: "/hadith" },
   { name: "علوم الحديث", url: "/hadith-science" },
-  { name: "الأربعون في المكتبة", url: "/library/book-nawawi40" },
+  { name: "الأربعون النووية", url: "/arbaeen-nawawi" },
   { name: "أربعون في محبة الله", url: "/hadith/arbaeen-love-of-allah" },
-  { name: "رياض الصالحين", url: "/library/book-riyadh" },
+  { name: "رياض الصالحين", url: "/hadith" },
 ])}`,
   "/raqaiq": `
 <p>الرقائق والزهد: نصوص تُرقّق القلب وتذكّر بالآخرة، مع إحالات إلى الأخلاق والتوبة وفضائل الأعمال.</p>
@@ -1487,7 +1477,7 @@ ${linkList("روابط ذات صلة", [
   { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
-  { name: "الفقه على المذاهب الأربعة (المكتبة)", url: "/library/book-al-fiqh-ala-madhahib-al-arba" },
+  { name: "بوابة الفقه", url: "/fiqh" },
   { name: "المعجم الشرعي", url: "/islamic-glossary" },
 ])}`,
   "/fiqh-qawaid": `<p>القواعد الفقهية الكلية وما يتفرع عنها، لضبط الاستنباط وفهم الخلاف — مع ربط بالمذاهب والأحكام.</p>
@@ -1766,7 +1756,7 @@ ${linkList("تعرّف أكثر", [
   { name: "منهجيتنا في التوثيق", url: "/methodology" },
   { name: "الدروس والدورات", url: "/lessons" },
   { name: "الدروس والدورات", url: "/lessons" },
-  { name: "المكتبة العلمية", url: "/library" },
+  { name: "البحث", url: "/search" },
   { name: "تواصل معنا", url: "/contact" },
   { name: "سياسة الخصوصية", url: "/privacy" },
 ])}`,
@@ -1788,7 +1778,7 @@ ${linkList("روابط ذات صلة", [
   "/updates": `<p>آخر مستجدات المنصة: إضافات الدروس والكتب والأدوات — للاطلاع السريع على ما يتجدّد.</p>
 ${linkList("روابط ذات صلة", [
   { name: "الدروس الشرعية", url: "/lessons" },
-  { name: "المكتبة العلمية", url: "/library" },
+  { name: "البحث", url: "/search" },
   { name: "الدروس والدورات", url: "/lessons" },
   { name: "من نحن", url: "/about" },
 ])}`,
@@ -1885,7 +1875,7 @@ ${linkList("روابط ذات صلة", [
 </ul>
 <h2>ما الذي يبقى؟</h2>
 <ul>
-  <li>المحتوى العلمي العام المنشور غير المرتبط بملكية حسابك، مثل الدروس والمكتبة والقرآن والأحكام العامة.</li>
+  <li>المحتوى العلمي العام المنشور غير المرتبط بملكية حسابك، مثل الدروس والقرآن والأحكام العامة.</li>
 </ul>
 <h2>المدة</h2>
 <p>الحذف فوري من جهة الخادم عند نجاح الطلب. قد تستغرق كاشات المتصفح أو الأجهزة المرتبطة دقائق حتى تنتهي الجلسات المحلية بعد تسجيل الخروج التلقائي.</p>
@@ -1973,7 +1963,7 @@ ${linkList("روابط ذات صلة", [
 ${linkList("روابط ذات صلة", [
   { name: "البحث", url: "/search" },
   { name: "الدروس الشرعية", url: "/lessons" },
-  { name: "المكتبة العلمية", url: "/library" },
+  { name: "البحث", url: "/search" },
   { name: "الأسئلة والأجوبة", url: "/quiz" },
   { name: "خريطة أهم الأقسام", url: "/sitemap" },
   { name: "منهجيتنا", url: "/methodology" },
@@ -1989,7 +1979,7 @@ ${linkList("روابط ذات صلة", [
   "/sitemap": `<p>خريطة أقسام سُنّة: مداخل سريعة لأهم المحاور والأدوات وصفحات التعريف.</p>
 ${linkList("محاور أساسية", [
   { name: "الدروس والدورات", url: "/lessons" },
-  { name: "المكتبة العلمية", url: "/library" },
+  { name: "البحث", url: "/search" },
   { name: "مركز القرآن", url: "/quran-hub" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "الأحاديث النبوية", url: "/hadith" },
@@ -2026,7 +2016,7 @@ ${linkList("أدوات", [
   <li>الأذكار والقصص والموضوعات</li>
 </ul>
 <h2>الفلاتر المدعومة</h2>
-<p>بعد كتابة الاستعلام يمكن تصفية النتائج حسب القسم: قرآن، تفسير، مكتبة، أحاديث، فتاوى، فقه، دروس، علماء، أذكار، قصص.</p>
+<p>بعد كتابة الاستعلام يمكن تصفية النتائج حسب القسم: قرآن، تفسير، مراجع، أحاديث، فتاوى، فقه، دروس، علماء، أذكار، قصص.</p>
 <p id="search-empty-state">ابدأ بكتابة كلمة أو عبارة في خانة البحث أعلاه، أو اختر اقتراحًا جاهزًا.</p>
 <p id="search-no-results" hidden>لا توجد نتائج مطابقة — جرّب كلمات أخرى أو تصفية مختلفة.</p>
 <p id="search-error" hidden>تعذّر تحميل نتائج البحث مؤقتًا — أعد المحاولة.</p>`,
@@ -2053,7 +2043,7 @@ ${linkList("أدوات", [
 <p>«الصحيحان» أصحّ كتب الحديث بعد كتاب الله عند أهل السنة. ما فيهما يُعامل هنا كمرجع صحيح بهذا المعنى.</p>
 <h2>مسارات</h2>
 <ul>
-  <li><a href="${escapeHtml(absoluteUrl("/library/book-bukhari"))}">صحيح البخاري</a> · <a href="${escapeHtml(absoluteUrl("/library/book-muslim"))}">صحيح مسلم</a> · <a href="${escapeHtml(absoluteUrl("/arbaeen-nawawi"))}">الأربعون النووية</a></li>
+  <li><a href="${escapeHtml(absoluteUrl("/hadith/sahih"))}">صحيح البخاري</a> · <a href="${escapeHtml(absoluteUrl("/hadith/sahih"))}">صحيح مسلم</a> · <a href="${escapeHtml(absoluteUrl("/arbaeen-nawawi"))}">الأربعون النووية</a></li>
 </ul>
 <p>للتخريج الدقيق راجع الطبعات والشروح المعتمدة. <a href="${escapeHtml(absoluteUrl("/methodology"))}">المنهجية</a>.</p>
 ${linkList("أقسام الحديث", [
@@ -2063,8 +2053,8 @@ ${linkList("أقسام الحديث", [
   { name: "كتب الحديث", url: "/hadith/books" },
   { name: "علوم الحديث", url: "/hadith-science" },
   { name: "الأربعون النووية", url: "/arbaeen-nawawi" },
-  { name: "صحيح البخاري", url: "/library/book-bukhari" },
-  { name: "صحيح مسلم", url: "/library/book-muslim" },
+  { name: "صحيح البخاري", url: "/hadith/sahih" },
+  { name: "صحيح مسلم", url: "/hadith/sahih" },
 ])}`,
   "/hadith/daif": `<p><strong>تنبيه:</strong> هذه الصفحة للتنبيه والتمييز لا للاحتجاج — روايات مشهورة مقرونة بدرجتها وتخريجها المنسوب؛ لا تُعرض كتوصية شرعية.</p>
 <p>الضعيف والموضوع يُذكر للتعليم والتحذير فقط، لا للعمل به في العقائد والأحكام دون تمييز.</p>
@@ -2093,19 +2083,19 @@ ${linkList("أقسام الحديث", [
   { name: "كتب الحديث", url: "/hadith/books" },
   { name: "منهجيتنا في التوثيق", url: "/methodology" },
 ])}`,
-  "/hadith/books": `<p>مداخل إلى كتب الحديث المعتمدة في المكتبة: الصحاح والسنن والجوامع، مع ربط بعلوم الحديث.</p>
+  "/hadith/books": `<p>مداخل إلى كتب الحديث المعتمدة: الصحاح والسنن والجوامع، مع ربط بعلوم الحديث.</p>
 ${linkList("من كتب الحديث", [
-  { name: "صحيح البخاري", url: "/library/book-bukhari" },
-  { name: "صحيح مسلم", url: "/library/book-muslim" },
-  { name: "سنن أبي داود", url: "/library/book-abudawud" },
-  { name: "سنن الترمذي", url: "/library/book-tirmidhi" },
-  { name: "رياض الصالحين", url: "/library/book-riyadh" },
-  { name: "الأربعون النووية", url: "/library/book-nawawi40" },
+  { name: "صحيح البخاري", url: "/hadith/sahih" },
+  { name: "صحيح مسلم", url: "/hadith/sahih" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "رياض الصالحين", url: "/hadith" },
+  { name: "الأربعون النووية", url: "/arbaeen-nawawi" },
 ])}
 ${linkList("روابط ذات صلة", [
   { name: "الأحاديث النبوية", url: "/hadith" },
   { name: "علوم الحديث", url: "/hadith-science" },
-  { name: "المكتبة العلمية", url: "/library" },
+  { name: "البحث", url: "/search" },
 ])}`,
   "/quran-hub/tajweed": `<p>أحكام التجويد: مخارج وصفات ومدود ونون وميم — لضبط التلاوة مع المصحف وخطط الحفظ.</p>
 ${linkList("خدمات القرآن", [
@@ -2289,7 +2279,7 @@ ${linkList("روابط ذات صلة", [
 ${linkList("ابدأ من هنا", [
   { name: "الدروس والدورات", url: "/lessons" },
   { name: "الدروس الشرعية", url: "/lessons" },
-  { name: "المكتبة العلمية", url: "/library" },
+  { name: "البحث", url: "/search" },
   { name: "مركز القرآن", url: "/quran-hub" },
   { name: "بوابة الفقه", url: "/fiqh" },
   { name: "الأحاديث النبوية", url: "/hadith" },
@@ -2419,7 +2409,7 @@ ${linkList("روابط ذات صلة", [
     [
       { name: "دروس متنوعة", url: "/durus-mutanawwia" },
       { name: "الفوائد", url: "/fawaid" },
-      { name: "المكتبة العلمية", url: "/library" },
+      { name: "البحث", url: "/search" },
       { name: "المعجم الشرعي", url: "/islamic-glossary" },
       { name: "خريطة المعرفة", url: "/knowledge-graph" },
     ],
@@ -2431,7 +2421,7 @@ ${linkList("روابط ذات صلة", [
     [
       { name: "علوم القرآن", url: "/ulum-quran" },
       { name: "دراسات قرآنية", url: "/quran-studies" },
-      { name: "المكتبة العلمية", url: "/library" },
+      { name: "البحث", url: "/search" },
       { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
       { name: "المعجم الشرعي", url: "/islamic-glossary" },
     ],
@@ -2598,7 +2588,7 @@ ${linkList("دروس ذات صلة", related)}
 ${linkList("روابط ذات صلة", [
   { name: "فهرس الدروس", url: "/lessons" },
   { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
-  { name: "المكتبة العلمية", url: "/library" },
+  { name: "البحث", url: "/search" },
   { name: "الفقه الإسلامي", url: "/fiqh" },
 ])}`,
     },
@@ -2669,7 +2659,9 @@ for (const row of PLATFORM_SEED.courses || []) {
   );
 }
 
-for (const row of LIBRARY_CATALOG) {
+for (const row of []) {
+  // المكتبة أُزيلت من الواجهة العامة — لا نولّد صفحات /library في prerender/sitemap.
+  void row;
   const related = LIBRARY_CATALOG.filter((b) => b.id !== row.id && b.category && b.category === row.category)
     .slice(0, 6)
     .map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author }));
@@ -2685,7 +2677,7 @@ for (const row of LIBRARY_CATALOG) {
     },
     {
       extraJsonLd: bookJsonLdScript({ ...row, description: desc }),
-      parents: [{ name: "المكتبة العلمية", path: "/library" }],
+      parents: [{ name: "البحث", path: "/search" }],
       priority: 0.7,
       richBody: `<h2>بيانات الكتاب</h2>
 <ul>
@@ -2701,7 +2693,7 @@ for (const row of LIBRARY_CATALOG) {
 </ul>
 ${linkList("كتب ذات صلة في نفس التصنيف", related)}
 ${linkList("روابط ذات صلة", [
-  { name: "المكتبة العلمية", url: "/library" },
+  { name: "البحث", url: "/search" },
   { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
   ...(row.category === "حديث"
     ? [
@@ -2754,7 +2746,7 @@ ${item.sources?.length ? `<h2>المصادر</h2>\n<ul>\n  ${item.sources.map((s
 ${related.length ? linkList("مواضيع ذات صلة", related) : ""}
 ${linkList("روابط ذات صلة", [
   { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
-  { name: "المكتبة العلمية", url: "/library" },
+  { name: "البحث", url: "/search" },
   { name: "السيرة النبوية", url: "/seerah" },
   { name: "الدروس الشرعية", url: "/lessons" },
 ])}`,
@@ -3053,7 +3045,10 @@ const sitemapPages = pages.filter(
   (p) =>
     p.sitemap &&
     !(p.route.robots || "").includes("noindex") &&
-    !IA_REDIRECTS[p.route.path],
+    !IA_REDIRECTS[p.route.path] &&
+    p.route.path !== "/library" &&
+    !String(p.route.path).startsWith("/library/") &&
+    p.route.path !== "/more",
 );
 const LASTMOD_TODAY = "2026-08-26";
 const LASTMOD_PATHS = new Set([
@@ -3066,7 +3061,6 @@ const LASTMOD_PATHS = new Set([
   "/prayer-times",
   "/fiqh",
   "/tarikh-islami",
-  "/library",
 ]);
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -3196,7 +3190,7 @@ console.log(
     `  صفحات مُصيَّرة: ${pages.length}  (منها في sitemap: ${sitemapPages.length})`,
     `  تاريخ إسلامي: ${ISLAMIC_HISTORY_ITEMS.length} · أنبياء: ${PROPHETS.length} · قصص سور: ${SURAH_STORIES.length} · ذنوب وحقوق: ${SINS_TOPICS.length}`,
     `  مسائل فقهية: ${PUBLIC_FIQH_ISSUES.length} · مواضيع: ${TOPICS.length} · مؤذنون: ${MUEZZINS.length}`,
-    `  دروس: ${lessonRows.length} · كتب: ${LIBRARY_CATALOG.length}`,
+    `  دروس: ${lessonRows.length} · فهرس المراجع الداخلي (غير مفهرس علنًا): ${LIBRARY_CATALOG.length}`,
   ].join("\n"),
 );
 } // end main()

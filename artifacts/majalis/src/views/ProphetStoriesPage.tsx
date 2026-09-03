@@ -8,6 +8,7 @@ import { prophetArticleJsonLd, breadcrumbJsonLd } from "@/lib/seo-structured-dat
 import { supabase } from "@/lib/supabase";
 import { getKnowledgeItem, type KnowledgeItem } from "@/lib/knowledge-loader";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { truncateAtWord } from "@/lib/utils";
 import { ScholarlyTrustBadge } from "@/components/ScholarlyTrustBadge";
 import { GraphRelatedRail } from "@/widgets/RelatedRail";
@@ -1050,42 +1051,17 @@ export default function ProphetStoriesPage() {
   }
 
   return (
-    <div className="prophets-lux-page">
-
-      {/* Hero Banner */}
-      <div className="prophets-lux-hero">
-        <div className="prophets-lux-hero__stars" aria-hidden="true">
-          {[...Array(10)].map((_, i) => (
-            <div
-              key={i}
-              className="prophets-lux-hero__star-wrap"
-              style={{
-                "--star-top": `${Math.sin(i * 1.37) * 40 + 50}%`,
-                "--star-left": `${(i / 10) * 100}%`,
-                "--star-delay": `${i * 0.5}s`,
-              } as React.CSSProperties}
-            >
-              <IslamicStar size={16 + (i % 3) * 10} color={IVORY} opacity={0.07 + (i % 4) * 0.03} />
-            </div>
-          ))}
-        </div>
-        <div className="prophets-lux-hero__content">
-          <GeometricBorder color={IVORY} size={24} />
-          <h1 className="prophets-lux-hero__title">الأنبياء والرسل</h1>
-          <p className="prophets-lux-hero__subtitle">
-            أحسن القصص، ٢٥ نبياً مذكوراً في القرآن الكريم
-          </p>
-          <div className="prophets-lux-hero__stats">
-            <span>{PROPHETS.length} نبياً</span>
-            <span>·</span>
-            <span>٥ أولو العزم</span>
-          </div>
-          <p className="prophets-lux-hero__note">
-            هؤلاء الأنبياء والرسل الذين ذكرهم الله بأسمائهم في القرآن الكريم؛ وقد أخبر سبحانه أنه أرسل رسلاً آخرين لم يقصصهم علينا: ﴿وَرُسُلًا قَدْ قَصَصْنَاهُمْ عَلَيْكَ مِن قَبْلُ وَرُسُلًا لَّمْ نَقْصُصْهُمْ عَلَيْكَ﴾ [النساء: 164].
-          </p>
-          <GeometricBorder color={IVORY} size={24} />
-        </div>
-      </div>
+    <SectionTemplatePage
+      route="/prophets"
+      title="الأنبياء والرسل"
+      subtitle={`أحسن القصص — ${PROPHETS.length} نبياً مذكوراً في القرآن الكريم · ٥ أولو العزم`}
+      eyebrow="القصص والأعلام"
+      groupTitle="عرض قصص الأنبياء"
+    >
+    <div className="prophets-lux-page prophets-lux-page--embedded">
+      <p className="text-sm text-muted-foreground leading-relaxed mb-4 rounded-xl border border-border/60 bg-muted/20 px-3 py-2.5">
+        هؤلاء الأنبياء والرسل الذين ذكرهم الله بأسمائهم في القرآن الكريم؛ وقد أخبر سبحانه أنه أرسل رسلاً آخرين لم يقصصهم علينا: ﴿وَرُسُلًا قَدْ قَصَصْنَاهُمْ عَلَيْكَ مِن قَبْلُ وَرُسُلًا لَّمْ نَقْصُصْهُمْ عَلَيْكَ﴾ [النساء: 164].
+      </p>
 
       {/* تبويبات العرض */}
       <div className="prophets-light-section">
@@ -1221,5 +1197,6 @@ export default function ProphetStoriesPage() {
         <ShareButtons title="قصص الأنبياء — سُنّة" url="https://www.ssunnah.com/prophets" />
       </div>
     </div>
+    </SectionTemplatePage>
   );
 }

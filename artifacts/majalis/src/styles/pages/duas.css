@@ -284,7 +284,7 @@ html[data-theme="dark"] .duas-cat,
 html.dark .duas-cat {
   background: var(--mj-surface, #17201C);
   border-color: var(--mj-hairline, #26332D);
-  color: var(--mj-brand, #4FB48B);
+  color: var(--mj-brand, var(--mj-brand));
 }
 html[data-theme="dark"] .dua-virtue,
 html.dark .dua-virtue {

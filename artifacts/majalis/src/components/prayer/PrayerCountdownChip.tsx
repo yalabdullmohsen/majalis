@@ -96,18 +96,7 @@ function PrayerCountdownChipInner() {
         >
           <span className="prayer-countdown-chip__dot" aria-hidden="true" />
           <span id={titleId} className="prayer-countdown-chip__body">
-            {copy.isNow ? (
-              <span className="prayer-countdown-chip__now-text">{copy.text}</span>
-            ) : (
-              <>
-                <span className="prayer-countdown-chip__name">{copy.prayerName}</span>
-                {copy.timeText ? (
-                  <span className="prayer-countdown-chip__time" aria-live="off">
-                    {copy.timeText}
-                  </span>
-                ) : null}
-              </>
-            )}
+            <span className="prayer-countdown-chip__now-text">{copy.text}</span>
           </span>
         </span>
       </button>

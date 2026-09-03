@@ -22,7 +22,7 @@ export function isTabRootPath(pathname: string): boolean {
 
 /** فلتر البحث العام حسب التبويب الحالي */
 export const LOBBY_SEARCH_FILTER: Record<LobbyId, string> = {
-  quran: "surah",
+  quran: "quran",
   lessons: "lesson",
   prayer: "adhkar",
   fiqh: "fiqh",

@@ -1133,6 +1133,11 @@
       "permanent": true
     },
     {
+      "source": "/library",
+      "destination": "/search",
+      "permanent": true
+    },
+    {
       "source": "/latest",
       "destination": "/",
       "permanent": true

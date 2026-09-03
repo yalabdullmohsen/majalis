@@ -29,29 +29,67 @@ export type PrayerChipCopy = {
 /** نافذة «حان وقت» = دقيقتان */
 export const PRAYER_CHIP_NOW_WINDOW_SEC = 120;
 
+function minutesPhrase(mins: number): string {
+  const n = Math.max(0, Math.round(mins));
+  const d = formatArabicNumber(n);
+  if (n <= 1) return "دقيقة";
+  if (n === 2) return "دقيقتين";
+  if (n >= 3 && n <= 10) return `${d} دقائق`;
+  return `${d} دقيقة`;
+}
+
+function hoursPhrase(hours: number): string {
+  const n = Math.max(0, Math.round(hours));
+  const d = formatArabicNumber(n);
+  if (n <= 1) return "ساعة";
+  if (n === 2) return "ساعتين";
+  if (n >= 3 && n <= 10) return `${d} ساعات`;
+  return `${d} ساعة`;
+}
+
 /**
- * تنسيق المدة للشريحة:
- * - أكثر من ساعة ← «س:دد» بلا ثوانٍ
- * - أقل من ساعة ← «دد:ثث»
+ * مدة الأذان بالدقائق فقط — بلا ثوانٍ.
+ * أمثلة: «٢٧ دقيقة» · «ساعة و١٢ دقيقة»
  */
+export function formatAdhanRemainingPhrase(totalSeconds: number): string {
+  const safe = Math.max(0, totalSeconds);
+  const mins = Math.max(safe > 0 ? 1 : 0, Math.round(safe / 60));
+  if (mins < 60) return minutesPhrase(mins);
+  const hours = Math.floor(mins / 60);
+  const rem = mins % 60;
+  if (rem === 0) return hoursPhrase(hours);
+  return `${hoursPhrase(hours)} و${minutesPhrase(rem)}`;
+}
+
+/** توافق: بلا ثوانٍ حتى لا يظهر العداد الرقمي ٢٣:٤٥ ثم ٠–٩. */
 export function formatChipDuration(totalSeconds: number): string {
-  const safe = Math.max(0, Math.floor(totalSeconds));
-  const hours = Math.floor(safe / 3600);
-  const minutes = Math.floor((safe % 3600) / 60);
-  const seconds = safe % 60;
-  if (hours > 0) {
-    return formatArabicNumber(`${hours}:${String(minutes).padStart(2, "0")}`);
-  }
-  return formatArabicNumber(
-    `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`,
-  );
+  return formatAdhanRemainingPhrase(totalSeconds);
+}
+
+function remainingCopy(prayerName: string, remainingSeconds: number): PrayerChipCopy {
+  const name = prayerName.trim() || "الصلاة";
+  const phrase = formatAdhanRemainingPhrase(remainingSeconds);
+  return {
+    text: `متبقي على ${name}: ${phrase}`,
+    prayerName: name,
+    timeText: phrase,
+    isNow: false,
+    urgent: remainingSeconds < 600 && remainingSeconds > 0,
+  };
 }
 
 export function buildPrayerChipCopy(input: PrayerChipCopyInput): PrayerChipCopy {
-  const windowSec = input.nowWindowSec ?? PRAYER_CHIP_NOW_WINDOW_SEC;
   const name = input.prayerName.trim() || "الصلاة";
 
-  if (input.sinceSeconds != null && input.sinceSeconds < windowSec) {
+  /* بعد دخول الوقت: انتقل فورًا للصلاة التالية (توقيت الكويت من المصدر). */
+  if (input.sinceSeconds != null && input.sinceSeconds >= 0) {
+    if (
+      input.nextPrayerName &&
+      input.nextRemainingSeconds != null &&
+      input.nextRemainingSeconds > 0
+    ) {
+      return remainingCopy(input.nextPrayerName, input.nextRemainingSeconds);
+    }
     return {
       text: `حان وقت ${name}`,
       prayerName: name,
@@ -61,32 +99,24 @@ export function buildPrayerChipCopy(input: PrayerChipCopyInput): PrayerChipCopy 
     };
   }
 
-  /* بعد نافذة الدخول: انتقل للصلاة التالية إن وُجدت */
-  if (
-    input.sinceSeconds != null &&
-    input.sinceSeconds >= windowSec &&
-    input.nextPrayerName &&
-    input.nextRemainingSeconds != null
-  ) {
-    const nextName = input.nextPrayerName.trim() || "الصلاة";
-    const timeText = formatChipDuration(input.nextRemainingSeconds);
+  if (input.remainingSeconds <= 0) {
+    if (
+      input.nextPrayerName &&
+      input.nextRemainingSeconds != null &&
+      input.nextRemainingSeconds > 0
+    ) {
+      return remainingCopy(input.nextPrayerName, input.nextRemainingSeconds);
+    }
     return {
-      text: `${nextName} ${timeText}`,
-      prayerName: nextName,
-      timeText,
-      isNow: false,
-      urgent: input.nextRemainingSeconds < 600,
+      text: `حان وقت ${name}`,
+      prayerName: name,
+      timeText: null,
+      isNow: true,
+      urgent: false,
     };
   }
 
-  const timeText = formatChipDuration(input.remainingSeconds);
-  return {
-    text: `${name} ${timeText}`,
-    prayerName: name,
-    timeText,
-    isNow: false,
-    urgent: input.remainingSeconds < 600 && input.remainingSeconds > 0,
-  };
+  return remainingCopy(name, input.remainingSeconds);
 }
 
 /** توافق مع اختبارات/مستهلكين قدماء لـ buildPrayerTickerCopy */

@@ -50,7 +50,7 @@
   border: none;
   border-radius: 0.35rem;
   background: transparent;
-  color: var(--mj-brand, #1f7a5a);
+  color: var(--mj-brand, var(--mj-brand));
   font: inherit;
   font-size: 0.68rem;
   font-weight: 700;
@@ -62,7 +62,7 @@
 
 .compact-sources__more:hover {
   opacity: 0.88;
-  background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 8%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 8%, transparent);
 }
 
 .compact-sources__more:active {
@@ -70,7 +70,7 @@
 }
 
 .compact-sources__more:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 55%, transparent);
+  outline: 2px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 55%, transparent);
   outline-offset: 1px;
 }
 
@@ -167,6 +167,6 @@ html.dark .compact-sources {
 .contact-btn:focus-visible,
 .contact-topic:focus-visible,
 .fiqh-lesson-pager__link:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 55%, transparent);
+  outline: 2px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 55%, transparent);
   outline-offset: 2px;
 }

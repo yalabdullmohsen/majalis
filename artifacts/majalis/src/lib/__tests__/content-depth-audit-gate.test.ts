@@ -51,8 +51,8 @@ assert.ok(
 assert.doesNotMatch(tarikh, /قريبًا|TODO|FIXME/, "لا stubs ظاهرة في بيانات التاريخ");
 
 const searchView = read("src/pages/account/ui/SearchView.tsx");
-assert.match(searchView, /لا نتائج/, "رسالة واضحة عند فراغ البحث");
-assert.match(searchView, /جرّب|تحقق|اختصر|كلمة أخرى/, "إرشاد عملي عند عدم وجود نتائج");
+assert.match(searchView, /لم نجد نتيجة مطابقة|لا نتائج/, "رسالة واضحة عند فراغ البحث");
+assert.match(searchView, /جرّب|تحقق|اختصر|كلمة أخرى|كلمة أقصر/, "إرشاد عملي عند عدم وجود نتائج");
 
 const newMuslim = read("src/views/NewMuslimPathPage.tsx");
 assert.doesNotMatch(newMuslim, /قيد الإعداد/, "مسار المسلم الجديد لا يعرض «قيد الإعداد»");

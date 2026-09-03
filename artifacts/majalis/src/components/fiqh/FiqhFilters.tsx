@@ -1,26 +1,19 @@
 import {
-  FIQH_FILTER_CHIP_ORDER,
-  fiqhFilterChipLabel,
-  type FiqhCanonicalDoor,
+  FIQH_GROUP_FILTER_CHIPS,
+  type FiqhHubGroupFilter,
 } from "@/lib/fiqh/fiqhNormalize";
-import type { FiqhDoorFilter } from "@/lib/fiqh/fiqhFilters";
 import { cn } from "@/lib/utils";
 
 type Props = {
-  value: FiqhDoorFilter;
-  onChange: (door: FiqhDoorFilter) => void;
+  value: FiqhHubGroupFilter;
+  onChange: (group: FiqhHubGroupFilter) => void;
   className?: string;
 };
 
 export function FiqhFilters({ value, onChange, className }: Props) {
-  const chips = FIQH_FILTER_CHIP_ORDER.map((id) => ({
-    id: id as FiqhDoorFilter,
-    label: fiqhFilterChipLabel(id as FiqhCanonicalDoor | "all"),
-  }));
-
   return (
-    <div className={cn("fiqh-filters", className)} role="group" aria-label="فلترة أبواب الفقه">
-      {chips.map((chip) => (
+    <div className={cn("fiqh-filters fiqh-filters--groups", className)} role="group" aria-label="فلترة أبواب الفقه">
+      {FIQH_GROUP_FILTER_CHIPS.map((chip) => (
         <button
           key={chip.id}
           type="button"

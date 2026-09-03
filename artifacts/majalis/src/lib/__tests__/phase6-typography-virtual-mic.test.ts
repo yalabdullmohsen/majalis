@@ -37,8 +37,15 @@ assert.equal(clampQuranFontSize(20), 20);
 const indexCss = read("index.css");
 assert.match(indexCss, /"Amiri Quran"/);
 assert.match(indexCss, /"KFGQPC Hafs Uthmanic"/);
-assert.match(indexCss, /size-adjust/);
-assert.match(indexCss, /ascent-override/);
+
+const fontsUi = read("styles/fonts-ui.css");
+assert.match(fontsUi, /size-adjust/);
+assert.match(fontsUi, /ascent-override/);
+assert.match(fontsUi, /\/fonts\/ui\/amiri-400-ar\.woff2/);
+
+const fontsQuran = read("styles/fonts-quran.css");
+assert.match(fontsQuran, /"Amiri Quran"|AmiriQuran/);
+assert.match(fontsQuran, /ascent-override|size-adjust/);
 
 const html = readFileSync(resolve(root, "index.html"), "utf8");
 assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com/);
@@ -50,7 +57,7 @@ assert.ok(existsSync(resolve(root, "public/fonts/ui/amiri-400-ar.woff2")));
 const main = read("main.tsx");
 assert.doesNotMatch(main, /warmStaticQuranicFonts/, "لا تسخين خطوط مصحف على كل صفحة");
 assert.match(read("pages/quran/MushafReaderPage.tsx"), /warmStaticQuranicFonts/);
-assert.match(read("styles/fonts-ui.css"), /\/fonts\/ui\/amiri-400-ar\.woff2/);
+assert.match(fontsUi, /\/fonts\/ui\/amiri-400-ar\.woff2/);
 
 assert.ok(existsSync(resolve(root, "public/fonts/qpc-v2/p1.woff2")), "خطوط QPC محفوظة كبيانات");
 
@@ -84,8 +91,9 @@ assert.ok(["granted", "denied", "prompt", "unsupported"].includes(state));
 assert.equal(DEFAULT_PREFERENCES.readingTheme, "default");
 assert.match(read("lib/user-preferences.ts"), /ReadingThemeId/);
 assert.match(read("components/reading/ContentActionBar.tsx"), /cycleTheme|readingTheme/);
-assert.match(indexCss, /data-reading-theme="sepia"/);
-assert.match(indexCss, /data-reading-theme="night"/);
+const readingThemesCss = read("styles/index-deferred-pages.css");
+assert.match(readingThemesCss, /data-reading-theme="sepia"/);
+assert.match(readingThemesCss, /data-reading-theme="night"/);
 
 // ── SW caches fonts ─────────────────────────────────────────────────────────
 const sw = readFileSync(resolve(root, "public/sw.js"), "utf8");

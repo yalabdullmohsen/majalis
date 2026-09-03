@@ -199,7 +199,7 @@
 .mj-smooth-image {
   position: relative;
   overflow: hidden;
-  background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 8%, var(--mj-surface, #fff));
+  background: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 8%, var(--mj-surface, #fff));
   isolation: isolate;
 }
 

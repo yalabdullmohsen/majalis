@@ -40,7 +40,6 @@ export const primaryNav: readonly NavLinkItem[] = [
 
 /** أقسام ثانوية — الرئيسية (استكشف) · البحث · التذييل · روابط داخلية. */
 export const secondaryNav: readonly NavLinkItem[] = [
-  { id: "library", href: "/library", label: "المكتبة" },
   { id: "scholars", href: "/scholars", label: "العلماء" },
   { id: "hadith", href: "/hadith", label: "الحديث وعلومه" },
   { id: "glossary", href: "/islamic-glossary", label: "المصطلحات" },
@@ -61,7 +60,6 @@ export const footerNav: readonly FooterGroup[] = [
     id: "sciences",
     title: "الأقسام العلمية",
     links: [
-      { href: "/library", label: "المكتبة" },
       { href: "/hadith", label: "الحديث وعلومه" },
       { href: "/scholars", label: "العلماء" },
       { href: "/islamic-glossary", label: "المصطلحات" },
@@ -144,7 +142,6 @@ export const NAV_LABEL_CANONICAL: Record<string, string> = {
   "/mushaf": "المصحف",
   "/prayer-times": "الصلاة",
   "/hadith": "الحديث وعلومه",
-  "/library": "المكتبة",
   "/fiqh": "الفقه",
   "/adhkar": "الأذكار",
   "/lessons": "الدروس",

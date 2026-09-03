@@ -49,7 +49,7 @@ export const FEATURED: { href: string; Icon: LucideIcon; title: string; desc: st
   { href: "/prayer-times", Icon: Clock, title: seoNavLabel("/prayer-times", "مواقيت الصلاة"), desc: "المواقيت والقبلة والأذان", cta: "افتح" },
   { href: "/fiqh", Icon: Scale, title: seoNavLabel("/fiqh", "الفقه والأحكام"), desc: "الأحكام والقواعد والمجامع تحت باب واحد", cta: "افتح" },
   { href: "/adhkar", Icon: RotateCw, title: seoNavLabel("/adhkar", "الأذكار اليومية"), desc: "أذكار الصباح والمساء وما بينهما", cta: "افتح" },
-  { href: "/sections", Icon: Layers, title: seoNavLabel("/sections", "جميع الأقسام"), desc: "مكتبة وحديث وأعلام وسين جيم", cta: "افتح" },
+  { href: "/sections", Icon: Layers, title: seoNavLabel("/sections", "جميع الأقسام"), desc: "حديث وأعلام وسين جيم وأقسام أخرى", cta: "افتح" },
 ];
 
 /* ── أقسام مصنّفة ── */
@@ -124,7 +124,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/occasions-lessons", Icon: CalendarDays, title: seoNavLabel("/occasions-lessons", "المناسبات والدروس"), desc: "التواريخ والمناسبات" },
       { href: "/islamic-directory", Icon: Landmark, title: seoNavLabel("/islamic-directory", "دليل المؤسسات والمساجد"), desc: "مؤسسات ومساجد ومعالم إسلامية" },
       { href: "/universities", Icon: GraduationCap, title: seoNavLabel("/universities", "دليل الجامعات الشرعية"), desc: "جامعات وكليات الدراسات الشرعية حول العالم" },
-      { href: "/academic-research", Icon: Scroll, title: seoNavLabel("/academic-research", "رسائل الماجستير والدكتوراه"), desc: "مكتبة الأبحاث والرسائل الشرعية الموثّقة" },
+      { href: "/academic-research", Icon: Scroll, title: seoNavLabel("/academic-research", "رسائل الماجستير والدكتوراه"), desc: "فهرس الأبحاث والرسائل الشرعية الموثّقة" },
       { href: "/tarikh-islami",   Icon: Users,       title: seoNavLabel("/tarikh-islami", "التاريخ الإسلامي"),          desc: "خط زمني بالأحداث من قبل البعثة إلى يومنا — مع بوابة للسيرة النبوية" },
     ],
   },

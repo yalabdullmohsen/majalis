@@ -441,7 +441,7 @@ html[data-theme="dark"] .imr-ayah--recited {
 .imr-word--revealed {
   filter: blur(0);
   opacity: 1;
-  color: var(--rai-emerald, #0e6e52);
+  color: var(--rai-emerald);
   animation: imr-reveal 150ms ease-out;
 }
 /* الموضع الحالي المتوقع — تمييز خفيف بلا بطاقة عائمة */
@@ -712,7 +712,7 @@ html[data-theme="dark"] .live-rec__toolbar {
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-.live-rec__mic--start { background: var(--rai-emerald, #0e6e52); }
+.live-rec__mic--start { background: var(--rai-emerald); }
 .live-rec__mic--start:hover { background: #0a5a43; }
 .live-rec__mic--stop { background: #dc2626; }
 .live-rec__mic--stop:hover { background: #b91c1c; }
@@ -801,7 +801,7 @@ html[data-theme="dark"] .live-rec__listening { color: #d1e7df; }
   color: #6b7280;
 }
 .rai-module-setup__advanced a {
-  color: var(--rai-emerald, #0e6e52);
+  color: var(--rai-emerald);
   font-weight: 700;
 }
 .rai-module__status,
@@ -842,7 +842,7 @@ html[data-theme="dark"] .live-rec__listening { color: #d1e7df; }
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-.rai-toggle--on { background: var(--rai-emerald, #0e6e52); }
+.rai-toggle--on { background: var(--rai-emerald); }
 .rai-toggle__knob {
   position: absolute;
   top: 0.125rem;
@@ -860,7 +860,7 @@ html[data-theme="dark"] .live-rec__listening { color: #d1e7df; }
   border: 1px solid rgba(14, 110, 82, 0.35);
   border-radius: 0.75rem;
   background: transparent;
-  color: var(--rai-emerald, #0e6e52);
+  color: var(--rai-emerald);
   font-family: var(--font-body);
   font-weight: 700;
   cursor: pointer;
@@ -910,7 +910,7 @@ html[data-theme="dark"] .live-rec__listening { color: #d1e7df; }
   gap: 0.75rem;
 }
 .rai-session-report__stat-wide { grid-column: 1 / -1; }
-.rai-report__stat-val--ok { color: var(--rai-emerald, #0e6e52); }
+.rai-report__stat-val--ok { color: var(--rai-emerald); }
 .rai-report__stat-val--error { color: #dc2626; }
 .rai-report__stat--error { border-color: rgba(220, 38, 38, 0.25); }
 .rai-session-report__disclaimer {

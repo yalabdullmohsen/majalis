@@ -1,5 +1,5 @@
 /**
- * بوابة صفحة التعريف عند أول زيارة — التعريف معطّل نهائيًا.
+ * بوابة صفحة التعريف عند أول زيارة.
  * node --import tsx src/lib/__tests__/first-visit-intro-state.test.ts
  */
 import assert from "node:assert/strict";
@@ -20,6 +20,10 @@ function installEnv() {
       lsStore.delete(k);
     },
   };
+  Object.defineProperty(globalThis, "navigator", {
+    value: { webdriver: false },
+    configurable: true,
+  });
 }
 
 installEnv();
@@ -39,8 +43,8 @@ beforeEach(() => {
   resetFirstVisitIntroStateForTests();
 });
 
-test("التعريف معطّل — لا يُعرض على الرئيسية", () => {
-  assert.equal(shouldShowFirstVisitIntro("/"), false);
+test("التعريف مفعّل — يُعرض على الرئيسية للمستخدم الجديد", () => {
+  assert.equal(shouldShowFirstVisitIntro("/"), true);
 });
 
 test("مسار غير الرئيسية لا يعرض التعريف", () => {
@@ -48,7 +52,7 @@ test("مسار غير الرئيسية لا يعرض التعريف", () => {
   assert.equal(shouldShowFirstVisitIntro("/fiqh"), false);
 });
 
-test("بعد الحفظ تبقى الحالة مقروءة", () => {
+test("بعد الحفظ لا يُعرض مرة ثانية", () => {
   markFirstVisitIntroSeen();
   assert.equal(hasSeenFirstVisitIntroSync(), true);
   assert.equal(shouldShowFirstVisitIntro("/"), false);
@@ -69,13 +73,11 @@ test("ترحيل ترحيب الرئيسية القديم", () => {
 });
 
 test("webdriver يتخطى التعريف", () => {
-  const desc = Object.getOwnPropertyDescriptor(globalThis, "navigator");
   Object.defineProperty(globalThis, "navigator", {
     value: { webdriver: true },
     configurable: true,
   });
   assert.equal(shouldShowFirstVisitIntro("/"), false);
-  if (desc) Object.defineProperty(globalThis, "navigator", desc);
 });
 
 console.log("first-visit-intro-state.test.ts: ok");

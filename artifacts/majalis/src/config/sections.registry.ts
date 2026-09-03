@@ -1,3 +1,4 @@
+import { BRAND } from "@/shared/config/brand";
 /**
  * SSOT — سجل أقسام سُنّة.
  * كل سطح تنقّل (شريط سفلي · المزيد · الدرج · الرئيسية · البحث) يُولَّد من هنا.
@@ -7,6 +8,7 @@ import type { LucideIcon } from "lucide-react";
 import {
   AudioLines,
   Award,
+  BadgeCheck,
   Bell,
   BookMarked,
   BookOpen,
@@ -26,6 +28,7 @@ import {
   FileText,
   Flame,
   FlaskConical,
+  Gem,
   FolderOpen,
   Gavel,
   GitBranch,
@@ -47,6 +50,7 @@ import {
   ListTree,
   Lock,
   Map,
+  MapPin,
   Microscope,
   MessageCircleQuestion,
   Mic,
@@ -112,35 +116,42 @@ export interface SectionDef {
 
 /** لون العلامة الافتراضي لكل مجموعة أقسام */
 export const SECTION_GROUP_ACCENT: Record<SectionGroup, string> = {
-  sciences: "#1F7A5A",
+  sciences: BRAND.colorDay,
   stories: "#8B6914",
   dawah: "#4A5590",
   library: "#8B6914",
   worship: "#2A7A6E",
   learning: "#3D5A80",
-  account: "#1F7A5A",
+  account: BRAND.colorDay,
 };
 
 /** تجاوزات لونية تطابق سمات TopicPage */
 const SECTION_ACCENT_BY_ID: Record<string, string> = {
-  hadith: "#6B7340",
-  seerah: "#8B6914",
-  "islamic-history": "#8B6914",
+  hadith: "#0E7A5F",
+  seerah: "#A67C3A",
+  "islamic-history": "#7A6B3A",
   tafsir: "#2A7A6E",
   "quran-tajweed": "#2A7A6E",
   "quran-qiraat": "#2A7A6E",
   "ulum-quran": "#2A7A6E",
   "quran-asbab": "#2A7A6E",
   "quran-figures": "#2A7A6E",
-  nations: "#8B6914",
+  prophets: "#1A8A7A",
+  nations: "#7A6B3A",
   library: "#8B6914",
   research: "#8B6914",
   glossary: "#8B6914",
   universities: "#8B6914",
   "discover-islam": "#4A5590",
-  fiqh: "#4A5590",
+  fiqh: "#1F6B4A",
+  "usul-fiqh": "#8B7A3A",
+  adhkar: "#3A9A7A",
+  duas: "#3A9A7A",
   fawaid: "#B45309",
   miracles: "#0E7490",
+  lessons: "#1F6B56",
+  qa: "#1F6B56",
+  "islam-guide": "#7A6B3A",
 };
 
 export function resolveSectionAccent(s: {
@@ -158,7 +169,7 @@ export const SECTION_GROUP_META: Record<
   sciences: { label: "العلوم الشرعية", order: 1, rowStyle: false },
   stories: { label: "القصص والأعلام", order: 2, rowStyle: false },
   dawah: { label: "الدعوة والتعريف", order: 3, rowStyle: false },
-  library: { label: "المكتبة والفهارس", order: 4, rowStyle: false },
+  library: { label: "الفهارس والمراجع", order: 4, rowStyle: false },
   worship: { label: "أدوات العبادة", order: 5, rowStyle: false },
   learning: { label: "التعلّم الشخصي", order: 6, rowStyle: false },
   account: { label: "الحساب والإعدادات", order: 7, rowStyle: true },
@@ -693,6 +704,43 @@ const SECTION_SEEDS: SectionSeed[] = [
     featured: true,
     keywords: ["تاريخ", "حضارة", "سيرة", "فتوحات"],
   },
+  {
+    id: "arabic-language",
+    label: "اللغة العربية",
+    subtitle: "نحو وصرف وبلاغة وخدمة للنص الشرعي",
+    route: "/arabic-language",
+    icon: Gem,
+    group: "sciences",
+    order: 85,
+    surfaces: NAV,
+    status: "live",
+    keywords: ["نحو", "صرف", "بلاغة", "لغة عربية"],
+    aliases: ["النحو والصرف", "البلاغة"],
+  },
+  {
+    id: "maqasid-sharia",
+    label: "مقاصد الشريعة",
+    subtitle: "مداخل في كليات الشريعة وغايات الأحكام",
+    route: "/maqasid-sharia",
+    icon: Compass,
+    group: "sciences",
+    order: 86,
+    surfaces: NAV,
+    status: "live",
+    keywords: ["مقاصد", "كليات", "شريعة"],
+  },
+  {
+    id: "dalail-nubuwwah",
+    label: "دلائل النبوة",
+    subtitle: "براهين صدق الرسالة المحمدية",
+    route: "/dalail-nubuwwah",
+    icon: BadgeCheck,
+    group: "sciences",
+    order: 87,
+    surfaces: NAV,
+    status: "live",
+    keywords: ["دلائل", "نبوة", "معجزات"],
+  },
 
   // —— ٢. القصص والأعلام ——
   {
@@ -770,8 +818,8 @@ const SECTION_SEEDS: SectionSeed[] = [
     icon: Library,
     group: "library",
     order: 10,
-    surfaces: NAV,
-    status: "live",
+    surfaces: [],
+    status: "hidden",
     keywords: ["كتب", "مراجع"],
   },
   {
@@ -812,7 +860,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     surfaces: NAV,
     status: "live",
     keywords: ["تعلّم", "دروس", "عقيدة"],
-    aliases: ["مكتبة الدروس", "دروس شرعية", "أبواب العلم"],
+    aliases: ["فهرس الدروس", "دروس شرعية", "أبواب العلم"],
   },
   {
     id: "universities",
@@ -885,7 +933,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     label: "القبلة",
     subtitle: "اتجاه القبلة والموقع",
     route: "/qibla",
-    icon: Compass,
+    icon: MapPin,
     group: "worship",
     order: 40,
     surfaces: NAV,

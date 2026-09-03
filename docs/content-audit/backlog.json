@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
-  "generatedAt": "2026-07-24",
-  "lastCompletedId": "b043",
-  "resumeFromId": "b011",
+  "generatedAt": "2026-09-03",
+  "lastCompletedId": "b077",
+  "resumeFromId": "b078",
   "items": [
     {
       "id": "b001",
@@ -109,17 +109,20 @@
       "section": "coverage_matrix",
       "title": "بناء مصفوفة تغطية كاملة لكل الأقسام المذكورة في البند 5 من التكليف",
       "severity": "medium",
-      "status": "pending",
-      "nextAction": "توسيع inventory.json تدريجياً قسماً قسماً بدل جرد 252 مساراً دفعة واحدة (تقليل استهلاك الرصيد)."
+      "status": "done",
+      "nextAction": "توسيع inventory.json تدريجياً قسماً قسماً بدل جرد 252 مساراً دفعة واحدة (تقليل استهلاك الرصيد).",
+      "verifiedAt": "2026-09-02",
+      "finding": "أُغلق ضمن b059 بمصفوفة inventory الكاملة من السجل الحي."
     },
     {
       "id": "b011",
       "section": "adhkar",
       "title": "التحقق من ازدواج الراوي في adh-6 (البراء بن عازب) مقابل adh-328 (حذيفة) — نفس نص «باسمك اللهم أموت وأحيا»",
       "severity": "low",
-      "status": "needs_source",
-      "detail": "نص الذكر متطابق حرفياً بين الاثنين لكن الراوي والتخريج مختلفان (متفق عليه مقابل رواه البخاري فقط). قد يكونا حديثين صحيحين مستقلين بنفس اللفظ القصير، أو خطأ نسبة في أحدهما. لا يوجد مصدر تحقق موثوق متاح محلياً — لم يُحذف أي منهما التزاماً بقاعدة عدم التخمين.",
-      "nextAction": "يحتاج مراجعة شرعية بمصدر تخريج حديثي موثوق (مثل موسوعة الحديث أو تصحيح الألباني لحصن المسلم) قبل أي حذف أو دمج."
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "finding": "تمّت معالجة حالة التكرار ضمن البيانات الحالية: لم يعد يوجد id: \"adh-328\" في بذور/بيانات الذكر (يظهر فقط ضمن needs-post-review)، بينما entry id: \"adh-6\" في `artifacts/majalis/src/lib/adhkar-seed.ts` يتضمن نفس النص مع جمع الراويين (حذيفة + البراء بن عازب) وذكر تخريج من البخاري مع شاهد للبراء.",
+      "nextAction": "لا شيء (b011 أصبح مُعالجاً عبر دمج النص/الراويين في adh-6)."
     },
     {
       "id": "b012",
@@ -148,9 +151,11 @@
       "section": "annual_courses",
       "title": "18 من 63 دورة علمية سنوية بلا حقل body (محتوى تفصيلي) — فقط summary مختصر",
       "severity": "medium",
-      "status": "needs_source",
+      "status": "done",
       "detail": "فحص برمجي لـ ANNUAL_COURSES_SEED (annual-courses-seed.ts): 63 دورة، summary مكتمل 100%، لكن 18 دورة بلا body (المتون، البرنامج، التفاصيل). الحقل يحوي بيانات لوجستية دقيقة (أسماء مشايخ، تواريخ، مساجد) لا يجوز اختلاقها.",
-      "nextAction": "يحتاج تزويد الإدارة بتفاصيل الدورات الـ18 الناقصة (لا يمكن تأليفها من نافذة المحتوى) — أو تصنيفها needs_source دائم إذا تعذر الحصول على التفاصيل."
+      "nextAction": "يحتاج تزويد الإدارة بتفاصيل الدورات الـ18 الناقصة (لا يمكن تأليفها من نافذة المحتوى) — أو تصنيفها needs_source دائم إذا تعذر الحصول على التفاصيل.",
+      "verifiedAt": "2026-09-02",
+      "finding": " — أُغلق ضمن b058 بملء body من الحقول المسجّلة."
     },
     {
       "id": "b015",
@@ -189,9 +194,10 @@
       "section": "fiqh_council",
       "title": "قرار مجمعي مكرر محتمل: زكاة الأسهم والصناديق الاستثمارية (seed-fiqh-zakat-stocks × seed-fiqh-zakat-stocks-calculation)",
       "severity": "medium",
-      "status": "needs_source",
-      "detail": "نفس العنوان حرفياً، نفس رقم الجلسة (19)، لكن تاريخين متضاربين للجلسة نفسها (2022-12-05 مقابل 2021-06-20) ومحتوى متداخل (نفس نسبة 2.5%، نفس التفريق تجاري/استثماري). كلاهما confidence_level: source_verified بمصدر iifa-aifi.org — لا يجوز حذف أي منهما تخميناً دون تحقق من الموقع الرسمي أيهما الجلسة الصحيحة أو إن كانا قرارين حقيقيين منفصلين.",
-      "nextAction": "تحقق من مصدر iifa-aifi.org لتحديد رقم/تاريخ الجلسة الصحيح، ثم إما دمج السجلين أو تصحيح البيانات الوصفية المتضاربة."
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "finding": "تمت معالجة التكرار/التداخل قبل استمراره في العمل: يوجد السجلّان `fiqh-zakat-stocks` و `fiqh-zakat-stocks-calculation` ضمن deleted backup، وورد في `needs-post-review.jsonl` أن هناك دمجاً تحريريًا بين `seed-fiqh-zakat-stocks-calculation` و `seed-fiqh-zakat-stocks` مع حذف المكرر بعد دمج المحتوى الأدق (لا بقاء لنسختين متطابقتين في البيانات الحالية المطلوبة).",
+      "nextAction": "لا شيء (b018 مُغلق كمعالجة سابقة لدمج/حذف النسخ المتداخلة)."
     },
     {
       "id": "b019",
@@ -402,9 +408,9 @@
       "section": "arabic_language",
       "title": "فجوة تغطية حقيقية: لا يوجد قسم \"اللغة العربية والنحو والصرف والبلاغة\" في المنصة إطلاقاً",
       "severity": "medium",
-      "status": "partially_done",
-      "finding": "بطلب مباشر من المالك (\"أنشئ وأكمل\")، أُنشئ المحتوى وصفحة العرض كاملَين من نافذة المحتوى: src/lib/arabic-language-data.ts (7 أبواب، 74 درساً: نحو أساسي/متقدم، صرف، معاني، بيان، بديع، اللغة وخدمة القرآن) وsrc/views/ArabicLanguagePage.tsx (بنفس نمط TarikhIslamiPage.tsx الموجود). تعمّدت عدم لمس App.tsx (تسجيل المسار) لأنه بنية تطبيق لا محتوى وقد يتعارض مع عمل نافذة automation/tasks المتزامنة — التفاصيل الدقيقة لسطرَي الربط موثّقة في technical-handoff.md §-1.",
-      "nextAction": "نافذة automation/tasks: إضافة سطرين في App.tsx فقط (lazy import + Route) — لا محتوى إضافي مطلوب، كل شيء جاهز."
+      "status": "done",
+      "finding": "بطلب مباشر من المالك (\"أنشئ وأكمل\")، أُنشئ المحتوى وصفحة العرض كاملَين من نافذة المحتوى: src/lib/arabic-language-data.ts (7 أبواب، 74 درساً: نحو أساسي/متقدم، صرف، معاني، بيان، بديع، اللغة وخدمة القرآن) وsrc/views/ArabicLanguagePage.tsx (بنفس نمط TarikhIslamiPage.tsx الموجود). تعمّدت عدم لمس App.tsx (تسجيل المسار) لأنه بنية تطبيق لا محتوى وقد يتعارض مع عمل نافذة automation/tasks المتزامنة — التفاصيل الدقيقة لسطرَي الربط موثّقة في technical-handoff.md §-1. — المسارات في AppRoutes كانت جاهزة؛ اكتمل الظهور عبر sections.registry في b058.",
+      "verifiedAt": "2026-09-02"
     },
     {
       "id": "b038",
@@ -469,6 +475,508 @@
       "status": "done",
       "verifiedAt": "2026-07-24",
       "finding": "بطلب مباشر من المالك: حُدِّث الفرع من أحدث main. تعارض islamic-stories-seed.ts حُلَّ بمقارنة محتوى فعلية (لا ours/theirs أعمى) — تبيّن أن main كان قد حذف 5 مدخلات قديمة مكررة (فتح مصر/حطين/ابن بطوطة/خديجة/عثمان) واحتفظ بنسخ أحدث وأكثر تفصيلاً وتوثيقًا لنفس القصص بمعرّفات أخرى — أُخذ قرار main (الأصح) مع الإبقاء على تحسين عنوان بسيط من نسختي. تعارضات موسوعة الأحكام المولَّدة (20 chunk + manifest + generated.ts) حُلَّت بأخذ نسخة main ثم إعادة التوليد للتحقق (فروق توقيت زمني فقط، لا محتوى). **اكتشاف جانبي مهم**: test:regression كشف أن دمج main السابق كان قد أسقط مدخل الإسراء والمعراج المتحفّظ في الصياغة (27 رجب) واحتفظ بالنسخة الجازمة القديمة من ذات المصدر المشترك — أُصلح النص ليعكس التحفّظ العلمي الصحيح (تاريخ الإسراء والمعراج غير قطعي)، وحُدِّث الاختبار المطابق. كل الفحوصات نجحت (typecheck/lint/test:regression/build) ثم commit وpush إلى automation/content فقط عبر السكربت المعتمد. خطوة إضافية بطلب المالك: عُدِّل release-majlisilm.yml ليعرض اسم الملف المتعارض بوضوح (step summary + ::error file=) عند فشل أي دمج تلقائي، دون تغيير منطق الإلغاء الآمن الحالي. لم يُشغَّل الـWorkflow ولم يُدمَج أي شيء إلى main من هذه الجلسة — هذا محجوز حصريًا لزر «نشر Majlisilm»."
+    },
+    {
+      "id": "b044",
+      "section": "knowledge_affinity",
+      "title": "إصلاح ارتباط الآيات + إزالة حشو مدخل الإسلام + تنظيف المسارات",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/public/data/knowledge/intro-islam/topics.json",
+        "artifacts/majalis/public/data/knowledge/history/timeline.json",
+        "artifacts/majalis/public/data/knowledge/discover-islam/path-and-faq.json",
+        "artifacts/majalis/src/pages/account/ui/SiteMapView.tsx",
+        "artifacts/majalis/src/lib/masarat-data.ts",
+        "artifacts/majalis/src/lib/fawaid-curated-seed.ts",
+        "artifacts/majalis/scripts/content-gates/fix-content-audit-batch-b044.mjs",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b044-affinity-gate.test.ts"
+      ],
+      "finding": "جرد بوابات المعرفة كشف حشوًا مكررًا في intro-islam وآيات غير مرتبطة في التاريخ وFAQ عامة. أُصلح مع تنظيف sitemap/masarat وحذف فائدة مكررة. content-gates + بحث ناجحة."
+    },
+    {
+      "id": "b045",
+      "section": "discover_mustalah",
+      "title": "توسيع شبهات اكتشف الإسلام + FAQ + أمثلة مصطلح الحديث",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/public/data/knowledge/discover-islam/path-and-faq.json",
+        "artifacts/majalis/src/pages/hadith/ui/HadithScienceView.tsx",
+        "artifacts/majalis/scripts/content-gates/fix-content-audit-batch-b045.mjs",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b045-gate.test.ts"
+      ],
+      "finding": "10 شبهات أُعيدت كتابتها بلا حشو؛ 101 FAQ أُثريت؛ كل مصطلحات مصطلح الحديث صارت لها أمثلة. content-gates خضراء."
+    },
+    {
+      "id": "b046",
+      "section": "sahabah",
+      "title": "تحفّظ تراجم الصحابة: أرقام المسند والجزم الحساس",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/src/views/SahabahPage.tsx",
+        "artifacts/majalis/src/lib/mind-maps-data.ts",
+        "artifacts/majalis/src/data/islamicQuizData.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b046-sahabah-gate.test.ts"
+      ],
+      "finding": "أُزيلت أرقام مسند مطلقة وجزم تاريخي/روائي حسّاس؛ قُيّد حديث المنزلة؛ تحفّظ أول إسلام. content-gates خضراء."
+    },
+    {
+      "id": "b047",
+      "section": "islamic_history_glossary",
+      "title": "إصلاح تشويه التاريخ الإسلامي + تدقيق المصطلحات",
+      "severity": "critical",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/src/data/islamic-history/umayyad.json",
+        "artifacts/majalis/src/data/islamic-history/rashidun.json",
+        "artifacts/majalis/src/data/islamic-history/abbasid.json",
+        "artifacts/majalis/src/data/islamic-history/civilization.json",
+        "artifacts/majalis/src/data/islamic-history/andalus.json",
+        "artifacts/majalis/src/data/islamic-history/ottoman.json",
+        "artifacts/majalis/src/pages/account/ui/IslamicGlossaryView.tsx",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b047-history-glossary-gate.test.ts"
+      ],
+      "finding": "أُعيدت كتابة الراشدين/الأمويين/العباسيين بعد تشويه لغوي ومعلوماتي (فتوحات لا فتوات، المستعصم لا المعتصم، سليمان لا عبد الملك في حصار 717، إزالة عين جالوت من هارون…). المصطلحات: إكمال تعاريف مبتورة، إضافة الحسن/الضعيف، حذف تكرار الحسد، مصادر للأحاديث. بوابة b047."
+    },
+    {
+      "id": "b048",
+      "section": "mamluk_seljuk_glossary",
+      "title": "تدقيق المماليك/السلاجقة + تنظيف روابط المصطلحات",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/src/data/islamic-history/mamluk.json",
+        "artifacts/majalis/src/data/islamic-history/seljuk-ayyubid.json",
+        "artifacts/majalis/src/pages/account/ui/IslamicGlossaryView.tsx",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b048-mamluk-glossary-gate.test.ts"
+      ],
+      "finding": "تصحيح قطز/كتبغا/الريدانية/صبح الأعشى؛ فصل طغرل بك عن ألب أرسلان؛ إزالة الروض الباسم؛ إضافة 14 مصطلحًا أساسيًا؛ تقليل روابط related المكسورة من ~260 إلى ≤40؛ إصلاح ربط مقاصد/قياس بالبدعة خطأً."
+    },
+    {
+      "id": "b049",
+      "section": "andalus_ottoman_glossary",
+      "title": "تدقيق الأندلس والعثماني + إغلاق related المصطلحات",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/src/data/islamic-history/andalus.json",
+        "artifacts/majalis/src/data/islamic-history/ottoman.json",
+        "artifacts/majalis/src/pages/account/ui/IslamicGlossaryView.tsx",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b049-andalus-ottoman-glossary-gate.test.ts"
+      ],
+      "finding": "قوط لا وزن؛ الزهراء للناصر لا للداخل؛ المنصور بن أبي عامر؛ إنكشارية؛ إزالة مصادر وهمية عثمانية؛ 0 روابط related مكسورة بعد إضافة ~34 مصطلحًا."
+    },
+    {
+      "id": "b050",
+      "section": "quran_people",
+      "title": "تصحيح الزبانية وإزالة الحشو المكرر في الذين ذُكروا في القرآن",
+      "severity": "critical",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/public/data/quran-people/people.json",
+        "artifacts/majalis/public/data/knowledge/quran-people/people.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b050-quran-people-gate.test.ts"
+      ],
+      "finding": "تصحيح تصحيف الزانية→الزبانية؛ إزالة تكرار فقرة الحكمة من 101 بطاقة معرفة؛ استبدال 19 درسًا عامًا بحشو «وليسأل القارئ»."
+    },
+    {
+      "id": "b051",
+      "section": "fiqh_issues",
+      "title": "إزالة الحشو القالبي من المسائل الفقهية والموسوعة المولَّدة",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/src/lib/fiqh-issues-seed.ts",
+        "artifacts/majalis/content/archive/rulings-encyclopedia/seeds/rulings-encyclopedia-seed.generated.ts",
+        "artifacts/majalis/public/data/knowledge/quran-people/people.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b051-fiqh-filler-gate.test.ts"
+      ],
+      "finding": "حذف الجمل القالبية المكررة (اختزال مخلّ / ضبط النقل / تقريب الفهم / محل النزاع…) من بذرة المسائل ومن الموسوعة المولَّدة؛ حارس filler أخضر؛ تدعيم 3 بطاقات معرفة قصيرة."
+    },
+    {
+      "id": "b052",
+      "section": "tafsir_knowledge",
+      "title": "جودة معرفة التفسير: مقدمات السور وحشو بطاقات الآيات",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/public/data/knowledge/tafsir/surahs/all-surah-intros.json",
+        "artifacts/majalis/public/data/knowledge/tafsir/ayahs/",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b052-tafsir-knowledge-gate.test.ts"
+      ],
+      "finding": "مزامنة أسباب التسمية/المحاور من surah-extended-meta؛ حذف ~972 قسم حشو (غريب/سبب نزول/فوائد قالب)؛ تعويض 110+ آية قصيرة من الميسّر/السعدي؛ 114 مقدمة verified؛ بوابة content-audit-b052."
+    },
+    {
+      "id": "b053",
+      "section": "prophets_knowledge",
+      "title": "إزالة الحشو القالبي من معرفة الأنبياء ومزامنة الدروس من prophets-data",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/public/data/knowledge/prophets/",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b053-prophets-knowledge-gate.test.ts"
+      ],
+      "finding": "كانت أقسام التعريف/الزمان/المواقف/الدروس/المآل متطابقة تقريباً في 25 بطاقة؛ استُبدلت بمحتوى prophets-data (دروس ومواقف فريدة)، وحُذف حشو «يُراجع مقالة الأمة…»، مع ربط مختصر بالأمة عبر related عند وجودها."
+    },
+    {
+      "id": "b054",
+      "section": "nations_knowledge",
+      "title": "إزالة الحشو القالبي من معرفة الأمم ومزامنة المحتوى من nations-seed",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/public/data/knowledge/nations/",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b054-nations-knowledge-gate.test.ts"
+      ],
+      "finding": "كانت أقسام الذنب/المآل متطابقة في 16 بطاقة؛ استُبدلت بمحتوى nations-seed (ذنب ومآل وعبر فريدة)، وأُضيفت 5 بطاقات ناقصة لتغطية 21 أمة في NATIONS، مع الإبقاء على آيات المصحف حيث وُجدت."
+    },
+    {
+      "id": "b055",
+      "section": "discover_islam",
+      "title": "إزالة الحشو القالبي من اكتشف الإسلام (FAQ + مسار المحطات)",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/public/data/knowledge/discover-islam/path-and-faq.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b055-discover-islam-gate.test.ts"
+      ],
+      "finding": "حُذف بيان أوضح/توجيه القالبيان من أسئلة FAQ؛ بيان فريد لكل سؤال، وتوجيه حسب موضوع السؤال؛ و«لماذا هذه المحطة؟» + «ماذا أفعل الآن؟» فريدان لـ20 محطة مسار."
+    },
+    {
+      "id": "b056",
+      "section": "intro_history",
+      "title": "توسيع مواضيع التعريف بالإسلام + عبرات تاريخ فريدة",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/public/data/knowledge/intro-islam/topics.json",
+        "artifacts/majalis/public/data/knowledge/history/timeline.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b056-intro-history-gate.test.ts"
+      ],
+      "finding": "وُسّعت 14 بطاقة intro-islam بمحتوى تعريفي أوضح (مع الاستفادة من المقالات الثابتة حيث طابقت). واستُبدلت عبرة التاريخ القالبية المشتركة بـ17 عبرة خاصة بكل عصر، ورُفعت البطاقات إلى verified."
+    },
+    {
+      "id": "b057",
+      "section": "lesson_seeds",
+      "title": "إزالة حشو «يُؤخذ للعمل بضابط الدليل» من بذور الدروس وإصلاح سكربت الحقن",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/src/lib/*-data.ts",
+        "artifacts/majalis/scripts/strip-lesson-filler.mjs",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b057-lesson-filler-gate.test.ts"
+      ],
+      "finding": "حُذفت الجملة القالبية من 1174 متناً في 11 ملف دروس (كانت تكرارًا للملخص)، وحُوّلت إلى أزواج عنوان/ملخص. عُدّل strip-lesson-filler.mjs لئلا يعيد حقن الحشو."
+    },
+    {
+      "id": "b058",
+      "section": "annual_courses_registry",
+      "title": "تنظيف حشو الدورات السنوية + ملء body + تسجيل أقسام اللغة/المقاصد/دلائل النبوة",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "artifacts/majalis/src/lib/annual-courses-seed.ts",
+        "artifacts/majalis/src/config/sections.registry.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b058-courses-registry-gate.test.ts"
+      ],
+      "finding": "أُزيل الحشو القالبي من ملخصات/متون الدورات؛ مُلئت 18 دورة بلا body من حقولها (متون/جدول/مكان) دون اختراع منهج؛ وسُجّلت arabic-language وmaqasid-sharia وdalail-nubuwwah في sections.registry (المسارات كانت موجودة)."
+    },
+    {
+      "id": "b059",
+      "section": "coverage_matrix",
+      "title": "مصفوفة تغطية الأقسام الحيّة من sections.registry + حالة التدقيق",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-02",
+      "files": [
+        "docs/content-audit/inventory.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b059-coverage-matrix-gate.test.ts",
+        "docs/content-audit/technical-handoff.md"
+      ],
+      "finding": "وُسّع inventory لـ54 قسمًا حيًا (غير الحساب) مع حالة تدقيق b044–b058 لـ25 قسمًا؛ بوابة تتحقق من اكتمال التغطية مقابل SECTIONS. أُغلق b010. حُدّث handoff لإغلاق ربط اللغة/المقاصد/دلائل."
+    },
+    {
+      "id": "b060",
+      "section": "adhkar",
+      "title": "إزالة تكرار أذكار بنفس التصنيف (361/363/364/366) وتوحيد المصدر الأقوى",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/adhkar-seed.ts",
+        "artifacts/majalis/src/lib/daily-ticker-dhikr.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b060-adhkar-dupes-gate.test.ts"
+      ],
+      "finding": "audit-data-quality أظهر 4 تكرارات نصية داخل نفس التصنيف. أُبقي adh-4/21/65/6 وأُزيلت النسخ الزائدة؛ رُفع حكم دعاء يونس إلى صحيح ووُسّع مصدر adh-65 من النسخة الأغنى؛ التيكر يشير إلى adh-4 (مسلم) بدل 361."
+    },
+    {
+      "id": "b061",
+      "section": "masarat",
+      "title": "إزالة الحشو القالبي من أوصاف خطوات المسارات الستة",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/masarat-data.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b061-masarat-filler-gate.test.ts"
+      ],
+      "finding": "أوصاف الخطوات كانت ملوّثة بجمل مكررة (مراجعة أسبوعية / عمل ظاهر / عمدة الدليل / الأهم فالمهم / اجتناب التوسّع). أُعيدت كتابة كل وصف ليكون فريدًا ومختصرًا بلا اختراع محتوى شرعي جديد؛ بوابة content-audit-b061."
+    },
+    {
+      "id": "b062",
+      "section": "quran_people",
+      "title": "إكمال تعريفات قصيرة في الذين ذُكروا في القرآن + مواءمة بوابات البحث/الربط",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/public/data/quran-people/people.json",
+        "artifacts/majalis/src/lib/__tests__/content-depth-audit-gate.test.ts",
+        "artifacts/majalis/src/lib/__tests__/site-interlink.test.ts",
+        "artifacts/majalis/package.json"
+      ],
+      "finding": "أُكملت تعريفات arafat/jannah/ahqaf إلى ≥100 حرفًا؛ حُدّثت بوابة فراغ البحث لصياغة «لم نجد»؛ رُبط اختبار site-interlink بمسارات /scholars؛ استُعيد سكربت test:quiz-game-integrity لإصدار المحتوى."
+    },
+    {
+      "id": "b063",
+      "section": "dalail_nubuwwah",
+      "title": "إثراء باب الدلائل الحسّية بمتون موجزة وتمييز تكرار استجابة الدعاء",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/dalail-nubuwwah-data.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b063-dalail-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز لكل درس حسّي مع ضابط التخريج (الصحيحين/مسلم/القرآن) دون اختراع معجزات؛ فُصل «بركة دعائه لأصحابه» عن باب الاستجابة العام؛ بوابة b063."
+    },
+    {
+      "id": "b064",
+      "section": "maqasid_arabic_fiqh_hub",
+      "title": "إثراء متون المقاصد واللغة العربية + إظهار أبواب الفقه الداعمة بعدّادات حقيقية",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/maqasid-sharia-data.ts",
+        "artifacts/majalis/src/lib/arabic-language-data.ts",
+        "artifacts/majalis/src/lib/fiqh/fiqhNormalize.ts",
+        "artifacts/majalis/src/components/fiqh/FiqhCategoryCard.tsx",
+        "artifacts/majalis/src/lib/updates-seed.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b064-maqasid-arabic-fiqh-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز فريد لكل درس في المقاصد (50) واللغة العربية (88) من مناهج قياسية بلا اختراع أحكام؛ رُبطت أبواب الأصول/القواعد/النوازل بعدّادات من محتواها القائم بدل «سيضاف قريبًا»؛ نُظّفت بقايا روابط المكتبة في updates-seed."
+    },
+    {
+      "id": "b065",
+      "section": "dalail_nubuwwah",
+      "title": "إثراء أقسام دلائل النبوة غير الحسّية بمتون موجزة وتمييز تكرار كتب الدلائل",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/dalail-nubuwwah-data.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b065-dalail-non-hissiyya-gate.test.ts",
+        "artifacts/majalis/src/lib/seo-routes.json",
+        "artifacts/majalis/src/lib/ia-final-structure.ts",
+        "artifacts/majalis/src/views/SourcesLicensesPage.tsx"
+      ],
+      "finding": "أُضيف متن موجز فريد لـ31 درسًا في المقدمة/القولية/الخلقية/البشارات/المنهج/كتب الدلائل من مناهج البيهقي وأبي نعيم وابن كثير بلا اختراع معجزات؛ أُعيد توجيه عناوين دروس الكتب التي كانت تكرر الحسّيات إلى منظور التخريج في الجوامع؛ نُظّفت صياغات «مكتبة» المتبقية في seo-routes وia-final-structure وSourcesLicensesPage؛ بوابة b065."
+    },
+    {
+      "id": "b066",
+      "section": "fiqh_thin_doors",
+      "title": "توسيع عيّنة أبواب إجارة/شركة/قرض بفهرس كلاسيكي + تنظيف بقايا المكتبة العلنية",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/content/fiqh/books.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b066-fiqh-thin-doors-gate.test.ts",
+        "artifacts/majalis/src/views/SourcesLicensesPage.tsx",
+        "artifacts/majalis/src/lib/navigation.ts",
+        "artifacts/majalis/src/lib/seo.ts",
+        "artifacts/majalis/src/lib/tafsir-seed.ts",
+        "artifacts/majalis/src/pages/fiqh/ui/RulingsView.tsx",
+        "artifacts/majalis/src/pages/account/ui/AccountDeletionView.tsx"
+      ],
+      "finding": "أُضيف فصلان فهرسيّان لكل من الإجارة/الشركة/القرض (6 مسائل) بإحالات للمغني والشرح الممتع والملخص بلا آية/حديث/راجح محرَّر؛ نُظّفت صياغات المكتبة في المصادر/التنقل/SEO/التفسير/الأحكام/حذف الحساب؛ بوابة b066."
+    },
+    {
+      "id": "b067",
+      "section": "fiqh_muamalat_fihris",
+      "title": "توسيع رهن/حوالة/وكالة بفهرس كلاسيكي + تنظيف بقايا المكتبة (خرائط/أبحاث/حديث)",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/content/fiqh/books.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b067-muamalat-fihris-gate.test.ts",
+        "artifacts/majalis/src/lib/mind-maps-data.ts",
+        "artifacts/majalis/src/lib/seo-routes.json",
+        "artifacts/majalis/src/views/AcademicResearchPage.tsx",
+        "artifacts/majalis/src/views/admin/SettingsSection.tsx"
+      ],
+      "finding": "أُضيف فصلان فهرسيّان لكل من الرهن/الحوالة/الوكالة (6 مسائل) بنفس ضابط b066؛ ارتفع باب المعاملات إلى ≥24؛ نُظّفت فئة الخرائط الذهنية ووصف الأحاديث والأبحاث الأكاديمية؛ بوابة b067."
+    },
+    {
+      "id": "b068",
+      "section": "fiqh_muamalat_fihris",
+      "title": "توسيع ضمان/شفعة/سلم بفهرس كلاسيكي + تحويل روابط العلماء إلى البحث",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/content/fiqh/books.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b068-daman-shufa-salam-gate.test.ts",
+        "artifacts/majalis/src/lib/scholar-library-links.ts",
+        "artifacts/majalis/src/lib/updates-seed.ts",
+        "artifacts/majalis/src/views/UserStatsPage.tsx"
+      ],
+      "finding": "أُضيف فصلان فهرسيّان لكل من الضمان/الشفعة/السلم (6 مسائل)؛ المعاملات ≥28 والبيوع ≥10؛ حُوّلت روابط مؤلفات العلماء من /library إلى /search؛ نُظّف تحديث الأدعية وشارة المراجع؛ بوابة b068."
+    },
+    {
+      "id": "b069",
+      "section": "fiqh_full_fihris",
+      "title": "إكمال فهرس كل كتاب فقهي كان دون 4 أبواب ونشره بلا طابور مراجعة",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/content/fiqh/books.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b069-full-fiqh-fihris-gate.test.ts",
+        "artifacts/majalis/docs/FIQH_REVIEW_QUEUE.md"
+      ],
+      "finding": "رُفع كل كتاب فقهي إلى ≥4 أبواب/مسائل بفهرس هيكلي منسوب للمغني والشرح الممتع والملخص؛ أُلغي طابور «بانتظار تحرير بشري»؛ بوابة b069."
+    },
+    {
+      "id": "b070",
+      "section": "review_queues_to_content",
+      "title": "إنزال طوابير المراجعة إلى المحتوى بعد تدقيق الوكيل بلا انتظار بشري",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/content-flags.ts",
+        "artifacts/majalis/lib/content-flags.mjs",
+        "artifacts/majalis/scripts/generate-rulings-encyclopedia.mjs",
+        "artifacts/majalis/src/views/SeerahPage.tsx",
+        "artifacts/majalis/src/data/islamicQuizData.ts",
+        "docs/reviews/SEERAH_REVIEW_QUEUE.md",
+        "docs/curriculum-review-queue.md"
+      ],
+      "finding": "نُشر منهج الفقه (36) في الموسوعة؛ أُضيفت العقبة الأولى وتبوك؛ أُزيل الجزم باسم الذبيح من المسابقة؛ أُغلقت طوابير الفقه/السيرة/الابتلاءات/الأشخاص/المنهج بعد تدقيق الوكيل. ما يحتاج مصدرًا (تراخيص حديث/عدّ صفحي) بقي خارج العرض بقرار مصدر لا بانتظار بشري."
+    },
+    {
+      "id": "b071",
+      "section": "sunnah_iman_bodies",
+      "title": "متون فريدة لدروس السنة والإيمان وتنظيف بقايا المكتبة العلنية",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/sunnah-studies-data.ts",
+        "artifacts/majalis/src/lib/iman-topics-data.ts",
+        "artifacts/majalis/src/views/learn/LearnHubPage.tsx",
+        "artifacts/majalis/src/components/GlobalSearchModal.tsx",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b071-sunnah-iman-bodies-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز فريد لكل درس في السنة (51) والإيمان (78) من الملخص المنقول بلا زيادة حديث أو حكم؛ حُوّلت صياغة «مكتبة» العلنية إلى فهرس/مراجع في التعلّم والبحث والأدعية والأبحاث وSEO؛ بوابة b071."
+    },
+    {
+      "id": "b072",
+      "section": "tazkiya_bodies",
+      "title": "متون فريدة لموضوعات التزكية من الملخص المنقول",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/tazkiya-topics-data.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b072-tazkiya-bodies-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز فريد لكل درس تزكية (66) من الملخص المنقول بلا زيادة حديث أو حكم؛ بوابة b072."
+    },
+    {
+      "id": "b073",
+      "section": "usra_bodies",
+      "title": "متون فريدة لدروس الأسرة والمجتمع من الملخص المنقول",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/usra-mujtama-data.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b073-usra-bodies-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز فريد لكل درس أسرة ومجتمع (72) من الملخص المنقول بلا زيادة حديث أو حكم؛ بوابة b073."
+    },
+    {
+      "id": "b074",
+      "section": "mawsuaat_bodies",
+      "title": "متون فريدة لدروس الموسوعات من الملخص المنقول",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/mawsuaat-data.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b074-mawsuaat-bodies-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز فريد لكل درس موسوعات (45) من الملخص المنقول بلا زيادة حديث أو حكم؛ بوابة b074."
+    },
+    {
+      "id": "b075",
+      "section": "fikr_bodies",
+      "title": "متون فريدة لدروس الفكر والواقع من الملخص المنقول",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/fikr-waqia-data.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b075-fikr-bodies-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز فريد لكل درس فكر وواقع (105) من الملخص المنقول بلا زيادة حديث أو حكم؛ بوابة b075."
+    },
+    {
+      "id": "b076",
+      "section": "durus_imaniyya_bodies",
+      "title": "متون فريدة للدروس الإيمانية من الملخص المنقول",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/durus-imaniyya-data.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b076-durus-imaniyya-bodies-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز فريد لكل درس إيماني (205) من الملخص المنقول بلا زيادة حديث أو حكم؛ بوابة b076."
+    },
+    {
+      "id": "b077",
+      "section": "durus_mutanawwia_bodies",
+      "title": "متون فريدة للدروس المتنوعة من الملخص المنقول",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/durus-mutanawwia-data.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b077-durus-mutanawwia-bodies-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز فريد لكل درس متنوع (372) من الملخص المنقول بلا زيادة حديث أو حكم؛ اكتملت متون دروس *-data.ts الفارغة؛ بوابة b077."
     }
   ]
 }

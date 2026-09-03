@@ -97,11 +97,8 @@ const ASSERTIONS = [
   // (لا تتحول للداكن)، فكانت قاعدة "كل h2 أبيض في الوضع الليلي" العامة
   // تفرض نصًا شبه أبيض فوق هذه الخلفية البيضاء الثابتة.
   { route: "/janaza", selector: ".jnz-subtitle", mode: "dark", min: 4.5 },
-  // "الأقرب موعدًا"/"جارٍ الآن" و"الدروس السابقة" في صفحة الدروس — نسخة
-  // modern-2026.css من قائمة استثناء `.page-shell h2:not(...)` كانت متأخرة
-  // عن نظيرتها الكاملة في majalis-v2.css (تفتقد lessons-v2/lessons-past
-  // وغيرها).
-  { route: "/lessons", selector: ".lessons-v2-section__title", mode: "light", min: 4.5 },
+  // "الدروس السابقة" في صفحة الدروس — بعد ضغط الواجهة لم يعد
+  // `.lessons-v2-section__title` يُرسَم؛ يبقى فحص العنوان الحيّ.
   { route: "/lessons", selector: ".lessons-past-section__title", mode: "light", min: 4.5 },
   { route: "/lessons", selector: ".section-lobby__title", mode: "light", min: 3 },
   { route: "/lessons", selector: ".section-lobby__title", mode: "dark", min: 3 },
@@ -165,8 +162,8 @@ const ASSERTIONS = [
   { route: "/sawm", selector: ".sw-card__title", mode: "dark", min: 4.5 },
   { route: "/sawm", selector: ".sw-dalil__text", mode: "dark", min: 4.5 },
   { route: "/sawm", selector: ".sw-badge--fard", mode: "dark", min: 4.5 },
-  // توحيد ليلي/طباعة 2026-08-14
-  { route: "/prophets", selector: ".prophets-lux-hero__title", mode: "dark", min: 4.5 },
+  // توحيد ليلي/طباعة 2026-08-14 — عنوان الأنبياء عبر SectionTemplatePage
+  { route: "/prophets", selector: ".topic-page__title", mode: "dark", min: 4.5 },
   { route: "/prophets", selector: ".prophets-lux-tab--active", mode: "dark", min: 3 },
   { route: "/prophets/adam", selector: ".prophet-section-lux__title", mode: "dark", min: 4.5 },
   { route: "/prophets/adam", selector: ".prophet-detail-lux__name", mode: "dark", min: 4.5 },

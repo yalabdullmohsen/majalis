@@ -86,10 +86,6 @@ const AdminSiteEditBar = lazyWithRetry(
   () => import("@/components/AdminSiteEditBar").then((m) => ({ default: m.AdminSiteEditBar })),
   "AdminSiteEditBar",
 );
-const AdhanActiveOverlay = lazyWithRetry(
-  () => import("@/components/adhan/AdhanActiveOverlay").then((m) => ({ default: m.AdhanActiveOverlay })),
-  "AdhanActiveOverlay",
-);
 const PrayerCountdownBanner = lazyWithRetry(
   () => import("@/components/prayer/PrayerCountdownBanner").then((m) => ({ default: m.PrayerCountdownBanner })),
   "PrayerCountdownBanner",
@@ -923,11 +919,6 @@ function DeferredHomeAdhanChrome({ defer }: { defer: boolean }) {
       <Suspense fallback={null}>
         <AdhanNotificationBar />
       </Suspense>
-      <SectionErrorBoundary name="AdhanActiveOverlay">
-        <Suspense fallback={null}>
-          <AdhanActiveOverlay />
-        </Suspense>
-      </SectionErrorBoundary>
       <Suspense fallback={null}>
         <PrayerRespectBanner />
       </Suspense>

@@ -61,17 +61,8 @@ for (const item of ISLAMIC_HISTORY_ITEMS) {
   );
 }
 
-// ── المكتبة ────────────────────────────────────────────────────────────────
-for (const b of LIBRARY_CATALOG) {
-  pushDoc(
-    `book:${b.id}`,
-    "book",
-    b.title,
-    `/library/${b.id}`,
-    [b.author, b.category, ...(b.keywords ?? [])],
-    b.author,
-  );
-}
+// ── المكتبة (أُزيلت من الواجهة العامة — لا تُفهرس في البحث) ────────────────
+void LIBRARY_CATALOG;
 
 // ── سور القرآن (أسماء فقط — لا نص آيات) ────────────────────────────────────
 for (const s of getSurahList()) {
@@ -213,7 +204,6 @@ const APP_PAGES = [
   ["app:memorization", "hifz", "الحفظ والمراجعة", "/memorization", ["حفظ", "مراجعة", "خطط الحفظ"]],
   ["app:hadith", "hadith", "الحديث", "/hadith", ["سنة"]],
   ["app:fiqh", "fiqh", "الفقه والأحكام", "/fiqh", ["فقه", "أحكام"]],
-  ["app:library", "book", "المكتبة", "/library", ["كتب"]],
   ["app:tarikh-islami", "history", "التاريخ الإسلامي", "/tarikh-islami", ["تاريخ", "سيرة", "حضارة"]],
   ["app:seerah", "seerah", "السيرة النبوية", "/seerah", ["سيرة"]],
   ["app:prophets", "prophet", "قصص الأنبياء", "/prophets", ["أنبياء", "ابتلاءات"]],

@@ -91,7 +91,7 @@ html.dark .home-page-hero .pattern-backdrop {
 .home-page-hero .m2030-btn--ghost {
   background: transparent;
   color: var(--mj-brand-deep, #145a42);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 32%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 32%, transparent);
 }
 
 html[data-theme="dark"] .home-page-hero .m2030-btn--ghost,

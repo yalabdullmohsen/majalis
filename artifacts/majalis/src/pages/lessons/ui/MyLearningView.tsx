@@ -287,7 +287,7 @@ export default function MyLearningPage() {
               {library.slice(0, 6).map((item, i) => (
                 <Link
                   key={i}
-                  href={item.content_url ?? (item.content_id ? `/library/${item.content_id}` : "/my-learning")}
+                  href={item.content_url ?? "/my-learning"}
                   className="myl2-lib-item"
                 >
                   <BookOpen size={13} aria-hidden="true" className="myl2-lib-item__icon" />

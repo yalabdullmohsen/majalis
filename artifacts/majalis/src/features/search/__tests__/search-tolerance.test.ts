@@ -54,12 +54,11 @@ const FIXTURE: UnifiedSearchDoc[] = [
   doc("app:reciters", "app", "القرّاء", "/reciters", ["قراء", "تلاوة", "تسميع"]),
   doc("app:tafsir", "tafsir", "التفسير", "/tafsir", ["تفسير"]),
   doc("app:tafsir-audio", "tafsir-audio", "التفسير الصوتي", "/tafsir", ["تفسير صوتي"]),
-  doc("app:library", "book", "المكتبة", "/library", ["كتب"]),
   doc("app:tarikh-islami", "history", "التاريخ الإسلامي", "/tarikh-islami", ["تاريخ"]),
   doc("app:nations", "nation", "الأمم السابقة", "/nations", ["أمم"]),
   doc("app:hadith", "hadith", "الحديث", "/hadith", ["سنة"]),
   doc("app:lessons", "lesson", "الدروس", "/lessons", ["دروس"]),
-  doc("book:riyadh", "book", "رياض الصالحين", "/library/riyadh", [" النووي"]),
+  doc("hadith:riyadh", "hadith", "رياض الصالحين", "/hadith", [" النووي", "رياض"]),
   doc("history:tabari", "history", "الطبري", "/tarikh-islami/pers-al-tabari", ["تاريخ"]),
 ];
 
@@ -113,12 +112,11 @@ const CASES: Case[] = [
   { q: "تسميع", expectId: "app:reciters" },
   { q: "تفسير", expectId: "app:tafsir" },
   { q: "تفسير صوتي", expectId: "app:tafsir-audio" },
-  { q: "المكتبه", expectId: "app:library" },
   { q: "تاريخ", expectId: "app:tarikh-islami" },
   { q: "امم سابقه", expectId: "app:nations" },
   { q: "حديث", expectId: "app:hadith" },
   { q: "دروس", expectId: "app:lessons" },
-  { q: "رياض الصالحين", expectId: "book:riyadh" },
+  { q: "رياض الصالحين", expectId: "hadith:riyadh" },
   { q: "الطبري", expectId: "history:tabari" },
   // أخطاء حرف واحد / تطويل
   { q: "البـقرة", expectId: "surah:2" },

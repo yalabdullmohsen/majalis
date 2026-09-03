@@ -27,7 +27,7 @@
   overflow: hidden !important;
 }
 .notif-card__title {
-  color: var(--mj-brand-deep, #18362A) !important;
+  color: var(--mj-brand-deep, var(--brand-deep, var(--mj-brand-deep))) !important;
   font-size: 0.85rem !important;
   font-weight: 700 !important;
   letter-spacing: normal !important;

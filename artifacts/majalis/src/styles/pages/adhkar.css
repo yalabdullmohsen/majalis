@@ -88,8 +88,8 @@
   background: var(--mj-surface-2, var(--majalis-panel));
   cursor: not-allowed;
 }
-/* كان ‎color: var(--mj-on-brand, #0C1512)‎ و‎--mj-on-brand‎ غير معرَّف في
-   المستودع إطلاقًا ⇒ الاحتياط شبه الأسود ‎#0C1512‎ هو ما يُرسم فعلًا فوق
+/* كان ‎color: var(--mj-on-brand, var(--bg, var(--surface-1)))‎ و‎--mj-on-brand‎ غير معرَّف في
+   المستودع إطلاقًا ⇒ الاحتياط شبه الأسود ‎var(--bg, var(--surface-1))‎ هو ما يُرسم فعلًا فوق
    الأخضر: تباين 2.47:1. الرمز الصحيح ‎--on-brand‎ = أبيض صريح. */
 .adhkar-focus-btn--next {
   background: var(--majalis-emerald, var(--mj-brand));
@@ -281,8 +281,8 @@ html.dark .adhkar-focus-btn {
 }
 html[data-theme="dark"] .adhkar-focus-btn:hover:not(:disabled),
 html.dark .adhkar-focus-btn:hover:not(:disabled) {
-  background: var(--mj-brand-soft, #183329);
-  border-color: var(--mj-brand, #4FB48B);
+  background: var(--mj-brand-soft, var(--brand-deep, var(--mj-brand-deep)));
+  border-color: var(--mj-brand, var(--mj-brand));
 }
 html[data-theme="dark"] .adhkar-focus-btn:disabled,
 html.dark .adhkar-focus-btn:disabled {
@@ -293,8 +293,8 @@ html.dark .adhkar-focus-btn:disabled {
 }
 html[data-theme="dark"] .adhkar-focus-btn--next,
 html.dark .adhkar-focus-btn--next {
-  background: var(--mj-brand, #4FB48B);
-  color: var(--mj-on-brand, #0C1512);
+  background: var(--mj-brand, var(--mj-brand));
+  color: var(--mj-on-brand, var(--bg, var(--surface-1)));
   border-color: transparent;
 }
 html[data-theme="dark"] .adhkar-focus-btn--next:disabled,
@@ -305,8 +305,8 @@ html.dark .adhkar-focus-btn--next:disabled {
 }
 html[data-theme="dark"] .adhkar-focus-btn--details,
 html.dark .adhkar-focus-btn--details {
-  color: var(--mj-brand, #4FB48B);
-  border-color: var(--mj-brand, #4FB48B);
+  color: var(--mj-brand, var(--mj-brand));
+  border-color: var(--mj-brand, var(--mj-brand));
   background: var(--mj-surface, #17201C);
 }
 html[data-theme="dark"] .adhkar-sheet,
@@ -315,7 +315,7 @@ html.dark .adhkar-sheet {
 }
 html[data-theme="dark"] .adhkar-sheet-text,
 html.dark .adhkar-sheet-text {
-  background: var(--mj-brand-soft, #183329);
+  background: var(--mj-brand-soft, var(--brand-deep, var(--mj-brand-deep)));
   color: var(--mj-ink, #E9EFEC);
   opacity: 1;
 }
@@ -331,13 +331,13 @@ html.dark .adhkar-sheet-row dt {
 }
 html[data-theme="dark"] .adhkar-grade--sahih,
 html.dark .adhkar-grade--sahih {
-  background: var(--mj-brand-soft, #183329);
-  color: var(--mj-brand, #4FB48B);
+  background: var(--mj-brand-soft, var(--brand-deep, var(--mj-brand-deep)));
+  color: var(--on-brand, #ffffff);
 }
 html[data-theme="dark"] .adhkar-grade--hasan,
 html.dark .adhkar-grade--hasan {
-  background: var(--mj-brand-soft, #183329);
-  color: var(--mj-brand, #4FB48B);
+  background: var(--mj-brand-soft, var(--brand-deep, var(--mj-brand-deep)));
+  color: var(--on-brand, #ffffff);
 }
 html[data-theme="dark"] .adhkar-grade--other,
 html.dark .adhkar-grade--other {

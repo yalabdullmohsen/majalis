@@ -50,7 +50,7 @@
   background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 55%, var(--mj-brand-deep) 100%);
   border: 1px solid var(--on-brand-hairline, rgba(255,255,255,0.22));
   /* الخلفية ولون النص في نفس القاعدة — لا يُفصلان (بوابة «لا سطح بلا لون») */
-  color: var(--on-brand, #FFFFFF);
+  color: var(--on-brand);
   animation: anb-rise 0.38s cubic-bezier(0.34,1.4,0.64,1) both,
              anb-glow-pulse 2.5s ease-in-out 0.4s infinite;
 }
@@ -110,11 +110,11 @@ html.dark .anb-toast--reminder {
   line-height: 1.5;
 }
 .anb-toast--adhan .anb-toast__sub {
-  color: var(--on-brand-secondary, rgba(255, 255, 255, 0.82));
+  color: var(--on-brand-secondary);
   font-size: .8rem;
 }
 .anb-toast--reminder .anb-toast__sub {
-  color: var(--text-2, #3e3a35);
+  color: var(--text-2);
 }
 
 /* ── progress bar under Adhan toast ── */
@@ -179,7 +179,7 @@ html.dark .anb-toast--reminder {
   padding: .15rem .45rem;
   border-radius: .3rem;
   background: var(--on-brand-quiet-bg, rgba(255,255,255,.14));
-  color: var(--on-brand, #ffffff);
+  color: var(--on-brand);
   font-weight: 700;
 }
 

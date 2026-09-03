@@ -9,7 +9,7 @@
 
 /* Hero — نص أبيض فوق الأخضر (تباين ≥ 4.5:1) */
 .gl-hero {
-  background: linear-gradient(135deg, #0B3D2E 0%, #155241 45%, #1F7A5A 100%);
+  background: linear-gradient(135deg, #0B3D2E 0%, #155241 45%, var(--mj-brand) 100%);
   padding: 3.5rem 1.5rem 2.5rem;
   text-align: center;
 }

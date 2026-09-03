@@ -1,17 +1,9 @@
 #!/usr/bin/env node
 /**
- * يحمي 404 الحقيقية لـ/scholars/:id و/library/:id وللمسارات المجهولة.
- *
- * السياسة (تقرير المراجعة الموحّد):
- *  - لا catch-all يعيد /index.html لأي مسار مجهول (كان يحوّل الأخطاء إلى «نجاح» ظاهري).
- *  - مسارات SPA الديناميكية المعروفة فقط تُعاد كتابتها إلى /index.html.
- *  - scholars/ وlibrary/ بلا rewrite → slug مفقود = 404.html حقيقية.
- *  - كل سجل حي يجب أن يملك ملف prerender مطابق.
+ * يحمي 404 الحقيقية لـ/scholars/:id والمسارات المجهولة.
+ * المكتبة أُزيلت علنًا → /library و/library/:id تحويل دائم، لا prerender.
  *
  * التشغيل: node --import tsx scripts/test-dynamic-404-safety.mjs
- * أو: pnpm run test:dynamic-404
- *
- * يستورد مصادر TypeScript عبر tsx (بلا registerHooks / strip-types التجريبي).
  */
 import { existsSync, readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
@@ -27,7 +19,6 @@ if (!existsSync(distDir)) {
 
 const failures = [];
 
-/** استيراد مصدر .ts/.js/.mjs/.json بامتداد صريح — يتطلب `node --import tsx`. */
 async function importSrc(relPath) {
   if (!/\.(ts|tsx|js|mjs|cjs|json)$/.test(relPath)) {
     throw new Error(`importSrc: explicit extension required — got "${relPath}"`);
@@ -50,20 +41,24 @@ async function importSrc(relPath) {
 }
 
 const { ISLAMIC_HISTORY_ITEMS } = await importSrc("src/data/islamic-history/index.ts");
-const { LIBRARY_CATALOG } = await importSrc("src/lib/library-catalog.ts");
 
 for (const item of ISLAMIC_HISTORY_ITEMS) {
   const p = resolve(distDir, "tarikh-islami", item.id, "index.html");
   if (!existsSync(p)) failures.push(`عنصر تاريخ بلا prerender: ${item.id} (سيرجع 404 حقيقية خطأً)`);
 }
 
-for (const b of LIBRARY_CATALOG) {
-  const p = resolve(distDir, "library", b.id, "index.html");
-  if (!existsSync(p)) failures.push(`كتاب بلا prerender: ${b.id} (سيرجع 404 حقيقية خطأً)`);
-}
-
 const vercel = JSON.parse(readFileSync(resolve(appRoot, "vercel.json"), "utf8"));
+const redirects = vercel.redirects || [];
 const rewrites = vercel.rewrites || [];
+
+const libraryHubRedirect = redirects.some(
+  (r) => r.source === "/library" && (r.destination === "/" || r.destination === "/search"),
+);
+const libraryBookRedirect = redirects.some(
+  (r) => typeof r.source === "string" && r.source.startsWith("/library/") && r.permanent === true,
+);
+if (!libraryHubRedirect) failures.push("vercel.json: مفقود تحويل /library إلى / أو /search");
+if (!libraryBookRedirect) failures.push("vercel.json: مفقود تحويل /library/:path* للروابط القديمة");
 
 const catchAll = rewrites.find(
   (r) =>
@@ -87,7 +82,7 @@ if (forbiddenSpa.length) {
   failures.push("vercel.json: tarikh-islami/ أو library/ يجب ألا تُعاد كتابتها إلى /index.html");
 }
 
-const muezzinsRedirect = (vercel.redirects || []).some(
+const muezzinsRedirect = redirects.some(
   (r) => typeof r.source === "string" && r.source.startsWith("/muezzins"),
 );
 if (!muezzinsRedirect) {
@@ -98,7 +93,7 @@ if (!existsSync(resolve(distDir, "404.html"))) {
   failures.push("dist/404.html غير موجود — الـslugs غير الصحيحة ستحصل على صفحة 404 فارغة من Vercel بدل الصفحة المصمَّمة.");
 }
 
-console.log(`فُحص: ${ISLAMIC_HISTORY_ITEMS.length} عنصر تاريخ و${LIBRARY_CATALOG.length} كتابًا.`);
+console.log(`فُحص: ${ISLAMIC_HISTORY_ITEMS.length} عنصر تاريخ + تحويلات المكتبة.`);
 console.log(`rewrites إلى /index.html (SPA فقط): ${spaRewrites.length}`);
 
 if (failures.length) {
@@ -107,4 +102,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log("✓ كل سجل حي (تاريخ/كتاب) له prerender مطابق — ولا catch-all يُخفي 404.");
+console.log("✓ سجلات التاريخ لها prerender، والمكتبة محوّلة علنًا — ولا catch-all يُخفي 404.");

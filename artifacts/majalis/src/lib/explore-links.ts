@@ -96,7 +96,7 @@ export const PAGE_EXPLORE_LINKS = {
   historyDetail: [
     { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
     { href: "/seerah", label: "السيرة النبوية" },
-    { href: "/library", label: "المكتبة العلمية" },
+    { href: "/hadith", label: "الحديث وعلومه" },
     { href: "/lessons", label: "الدروس العلمية" },
   ],
   asmaHusna: [

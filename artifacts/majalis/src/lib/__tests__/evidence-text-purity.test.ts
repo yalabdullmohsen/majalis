@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const viewsDir = resolve(__dirname, "../../views");
+const srcRoot = resolve(__dirname, "../..");
 
 const FORBIDDEN = [
   "محتوى تعليمي معتمد",
@@ -48,7 +49,7 @@ function extractEvidenceTexts(src: string): string[] {
   return out;
 }
 
-const priority = ["ArkanIslamPage.tsx", "ArkanImanPage.tsx", "TawhidPage.tsx", "FiqhPage.tsx"];
+const priority = ["ArkanIslamPage.tsx", "ArkanImanPage.tsx", "TawhidPage.tsx"];
 const files = [
   ...priority.map((f) => join(viewsDir, f)),
   ...readdirSync(viewsDir).filter((f) => f.endsWith(".tsx") && !priority.includes(f)).map((f) => join(viewsDir, f)),
@@ -60,7 +61,7 @@ console.log("\n=== نقاء أدلة الأركان/العقيدة ===");
     const src = readFileSync(file, "utf8");
     const name = file.split("/").pop()!;
     const texts = extractEvidenceTexts(src);
-    assert(texts.length > 0 || name === "FiqhPage.tsx", `${name}: وُجدت حقول أدلة أو الصفحة بلا أدلة نصية (الفقه)`);
+    assert(texts.length > 0, `${name}: وُجدت حقول أدلة`);
     for (const t of texts) {
       for (const frag of FORBIDDEN) {
         assert(!t.includes(frag), `${name}: لا يحتوي دليل على «${frag}»`);
@@ -72,21 +73,25 @@ console.log("\n=== نقاء أدلة الأركان/العقيدة ===");
 
 console.log("\n=== أوصاف أقسام الفقه/العقيدة ≤ 140 وبدون حشو ===");
 {
-  for (const name of ["TawhidPage.tsx", "FiqhPage.tsx"]) {
-    const src = readFileSync(join(viewsDir, name), "utf8");
+  const targets: Array<{ label: string; path: string }> = [
+    { label: "TawhidPage.tsx", path: join(viewsDir, "TawhidPage.tsx") },
+    { label: "fiqh-hub-topics.ts", path: join(srcRoot, "lib/fiqh-hub-topics.ts") },
+  ];
+  for (const { label, path } of targets) {
+    const src = readFileSync(path, "utf8");
     const descRe = /\bdesc\s*:\s*"((?:\\.|[^"\\])*)"/g;
     let m: RegExpExecArray | null;
     let count = 0;
     while ((m = descRe.exec(src))) {
       count++;
       const d = m[1];
-      assert(d.length <= 140, `${name}: وصف ≤140 (فعلي ${d.length}): ${d.slice(0, 40)}…`);
+      assert(d.length <= 140, `${label}: وصف ≤140 (فعلي ${d.length}): ${d.slice(0, 40)}…`);
       for (const frag of FORBIDDEN) {
-        assert(!d.includes(frag), `${name}: وصف بلا حشو «${frag}»`);
+        assert(!d.includes(frag), `${label}: وصف بلا حشو «${frag}»`);
       }
-      assert(!TRAILING_DOTS.test(d), `${name}: وصف بلا نقاط حشو`);
+      assert(!TRAILING_DOTS.test(d), `${label}: وصف بلا نقاط حشو`);
     }
-    assert(count > 5, `${name}: وُجدت أوصاف كافية (${count})`);
+    assert(count > 5, `${label}: وُجدت أوصاف كافية (${count})`);
   }
 }
 

@@ -18,7 +18,7 @@ export const IA_HOME_PRIMARY = [
   { href: "/prayer-times", title: "مواقيت الصلاة", desc: "المواقيت والقبلة والأذان" },
   { href: "/fiqh", title: "الفقه والأحكام", desc: "الأحكام والقواعد والمجامع تحت باب واحد" },
   { href: "/adhkar", title: "الأذكار اليومية", desc: "أذكار الصباح والمساء وما بينهما" },
-  { href: "/sections", title: "جميع الأقسام", desc: "مكتبة وحديث وأعلام وسين جيم" },
+  { href: "/sections", title: "جميع الأقسام", desc: "حديث وأعلام وسين جيم ومسارات العلم" },
 ] as const;
 
 /** مسارات تُلغى من الاكتشاف العام وتُحوَّل بوضوح. */
@@ -109,5 +109,5 @@ export const IA_BREADCRUMB_PARENTS: Record<string, { name: string; path: string 
   "/fiqh-council/nawazil": [{ name: "الفقه", path: "/fiqh" }],
   "/fiqh-qawaid": [{ name: "الفقه", path: "/fiqh" }],
   "/madhahib": [{ name: "الفقه", path: "/fiqh" }],
-  "/islamic-glossary": [{ name: "المكتبة", path: "/library" }],
+  "/islamic-glossary": [{ name: "المصطلحات", path: "/islamic-glossary" }],
 };

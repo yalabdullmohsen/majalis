@@ -941,57 +941,146 @@ html[data-theme="dark"] .lesson-detail-page .lesson-detail-actions-panel {
 .lesson-filters {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
-  margin-bottom: 1rem;
+  gap: 0.4rem;
+  margin-bottom: 0.45rem;
+}
+
+.lesson-filters--compact .lesson-filters__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.lesson-filters__chips {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.35rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-block: 0.1rem;
+}
+
+.lesson-filters__chips::-webkit-scrollbar {
+  display: none;
+}
+
+.lesson-filters__tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex: 0 0 auto;
+}
+
+.lesson-filters__icon-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, var(--mn-border-default, #d8e3de));
+  background: var(--color-surface, #fff);
+  color: var(--mj-brand-deep, #123f2e);
+  cursor: pointer;
+}
+
+.lesson-filters__badge {
+  position: absolute;
+  inset-block-start: -0.2rem;
+  inset-inline-end: -0.2rem;
+  min-width: 1rem;
+  height: 1rem;
+  padding: 0 0.22rem;
+  border-radius: 999px;
+  background: var(--mj-brand, #1f6b56);
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1rem;
+  text-align: center;
+}
+
+.lesson-filters__search-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  min-width: 0;
 }
 
 .lesson-filters__search-field input {
-  width: 100%;
-  padding: 0.55rem 0.75rem;
+  width: min(42vw, 9.5rem);
+  padding: 0.28rem 0.55rem;
+  min-height: 2rem;
   border: 1px solid var(--mn-border-default, #d8e3de);
-  border-radius: var(--radius-button, 18px);
+  border-radius: 999px;
   font: inherit;
+  font-size: 0.8rem;
   background: var(--color-surface, #fff);
+  color: var(--text-primary, var(--mj-ink, #12201a));
 }
 
-.lesson-filters__selects {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.5rem;
+html[data-theme="dark"] .lesson-filters__icon-btn,
+html.dark .lesson-filters__icon-btn,
+html[data-theme="dark"] .lesson-filters__search-field input,
+html.dark .lesson-filters__search-field input {
+  background: var(--color-surface, #1a221f);
+  color: var(--text-primary, #ecf2ef);
+  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 32%, #2a3531);
 }
 
-.lesson-filters__select {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  font-size: var(--ds-text-sm, 0.875rem);
+.lessons-page-v3 .lessons-v2-section--first {
+  margin-bottom: 0.75rem;
+  padding-block-start: 0;
 }
 
-.lesson-filters__select select {
-  padding: 0.45rem 0.55rem;
-  border: 1px solid var(--mn-border-default, #d8e3de);
-  border-radius: var(--ds-radius, 12px);
-  font: inherit;
-  background: var(--color-surface, #fff);
+.lessons-page-v3 .lesson-filters__chips .filter-chips__chip,
+.lessons-page-v3 .filter-chips__chip {
+  min-height: 2rem;
+  padding: 0.28rem 0.7rem;
+  font-size: 0.78rem;
+  border-radius: 999px;
 }
 
-@media (max-width: 640px) {
-  .lesson-filters__selects {
-    grid-template-columns: 1fr;
-  }
+.lessons-page-v3 .lessons-v2-section {
+  margin-bottom: 1rem;
 }
 
+.lessons-page-v3 .sr-only,
+.lesson-filters .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
-/* ترتيب مضغوط: عنوان → فلاتر → الأقرب → القائمة؛ الإحصاءات أسفل */
+/* ترتيب مضغوط: عنوان ظاهر → فلاتر → البطاقة الأولى في أول شاشة */
+.section-lobby.lessons-page-v3.lessons-compact-header {
+  gap: 0.45rem;
+  padding-top: 0.25rem;
+}
 .lessons-page-v3.lessons-compact-header .section-lobby__shot {
-  padding-block-start: 0.35rem;
-  gap: 0.55rem;
+  padding-block-start: 0.1rem;
+  gap: 0.3rem;
 }
 .lessons-page-v3 .lessons-compact-section-header {
   margin-block: 0.15rem 0.35rem;
 }
 .lessons-page-v3 .lesson-filters {
-  margin-block: 0.25rem 0.75rem;
+  margin-block: 0 0.2rem;
 }
 .lessons-page-stats {
   display: flex;
@@ -1021,13 +1110,28 @@ html[data-theme="dark"] .lesson-detail-page .lesson-detail-actions-panel {
 
 /* فراغ علوي أقل + بطاقة درس ناعمة مضغوطة (scoped لصفحة الدروس) */
 .section-lobby.lessons-page-v3.lessons-compact-header .section-lobby__shot {
-  padding-block: 0.15rem 0.35rem;
-  gap: 0.4rem;
+  padding-block: 0.1rem 0.25rem;
+  gap: 0.3rem;
   min-height: 0;
+}
+.section-lobby.lessons-page-v3.lessons-compact-header[data-lessons-hub="1"] .section-lobby__head {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  white-space: normal;
+  border: 0;
 }
 .section-lobby.lessons-page-v3.lessons-compact-header .section-lobby__title {
   font-size: clamp(1.2rem, 3.5vw, 1.45rem);
-  margin-block: 0.1rem 0.25rem;
+  margin-block: 0 0.15rem;
+}
+.section-lobby.lessons-page-v3.lessons-compact-header .section-lobby__title::after {
+  display: none;
 }
 .section-lobby.lessons-page-v3 .lesson-unified-card {
   border: 1px solid color-mix(in srgb, var(--mn-border-default, #d8e3de) 75%, transparent);

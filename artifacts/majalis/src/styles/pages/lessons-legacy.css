@@ -213,7 +213,7 @@
   font-weight: 600;
   padding: 0.18rem 0.5rem;
   border-radius: 999px;
-  background: var(--chip-bg, var(--mj-brand-soft, #E4F0EA));
+  background: var(--chip-bg, var(--mj-brand-soft, var(--brand-soft, var(--mj-brand-soft))));
   color: var(--chip-fg, var(--brand-on-white, #0F4A36));
   border: 1px solid color-mix(in srgb, var(--brand-on-white, #146C4E) 22%, transparent);
   white-space: nowrap;

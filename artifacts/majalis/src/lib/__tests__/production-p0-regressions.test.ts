@@ -33,6 +33,7 @@ console.log("\n=== Library / Quiz يبقيان ===");
 assert(app.includes('path="/library"'), "route /library موجود");
 assert(app.includes('path="/quiz"'), "route /quiz موجود");
 assert(!app.includes('<Route path="/library"><Redirect to="/"'), "لا تحويل مكتبة للرئيسية");
+assert(app.includes('<Route path="/library"><Redirect to="/search"'), "مكتبة → بحث");
 
 console.log("\n=== /qa legacy ===");
 assert(app.includes('<Route path="/qa"><Redirect to="/quiz" />'), "/qa → /quiz");

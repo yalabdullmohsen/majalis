@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, lazy } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { defaultSiteJsonLd } from "@/lib/seo-structured-data";
@@ -13,7 +13,16 @@ import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
 import { HomeLiveNowBanner } from "@/components/home/HomeLiveNowBanner";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { scheduleOnIdle } from "@/lib/yield-to-main";
+import {
+  shouldShowFirstVisitIntro,
+  hasSeenFirstVisitIntroSync,
+} from "@/lib/first-visit-intro-state";
 import "@/styles/m2030/home.css";
+import "@/styles/components/first-visit-intro.css";
+
+const FirstVisitIntro = lazy(() =>
+  import("@/components/onboarding/FirstVisitIntro").then((m) => ({ default: m.FirstVisitIntro })),
+);
 
 const HomeBelowFold = lazyWithRetry(
   () => import("./HomeBelowFold"),
@@ -139,9 +148,10 @@ function HomeBelowFoldGate() {
 export default function HomePage() {
   const dailyCtx = useDailyContext();
   const [lastVisited, setLastVisited] = useState<RecentPage | null>(null);
+  const [showIntro, setShowIntro] = useState(() => shouldShowFirstVisitIntro("/"));
   const [isFirstVisit] = useState(() => {
     try {
-      return localStorage.getItem("majlis-home-welcomed-v1") !== "1";
+      return !hasSeenFirstVisitIntroSync() && localStorage.getItem("majlis-home-welcomed-v1") !== "1";
     } catch {
       return true;
     }
@@ -151,13 +161,15 @@ export default function HomePage() {
     scheduleOnIdle(() => {
       const pages = getRecentPages(2);
       setLastVisited(pages.find((p) => p.href !== "/") ?? null);
-      try {
-        localStorage.setItem("majlis-home-welcomed-v1", "1");
-      } catch {
-        /* التخزين معطّل */
+      if (!showIntro) {
+        try {
+          localStorage.setItem("majlis-home-welcomed-v1", "1");
+        } catch {
+          /* التخزين معطّل */
+        }
       }
     }, 0);
-  }, []);
+  }, [showIntro]);
 
   const continueHref = lastVisited?.href ?? "/lessons";
 
@@ -181,6 +193,22 @@ export default function HomePage() {
     return () => window.cancelAnimationFrame(id);
   }, []);
 
+  if (showIntro) {
+    return (
+      <Suspense
+        fallback={
+          <div className="first-visit-intro" aria-busy="true" aria-label="تحميل الترحيب">
+            <div className="first-visit-intro__inner">
+              <p className="first-visit-intro__badge">سُنّة</p>
+            </div>
+          </div>
+        }
+      >
+        <FirstVisitIntro onContinue={() => setShowIntro(false)} />
+      </Suspense>
+    );
+  }
+
   return (
     <div className="m2030-home" dir="rtl">
       {isMaintenanceMode() && (
@@ -200,7 +228,7 @@ export default function HomePage() {
               href={continueHref}
               className="mj-btn m2030-btn m2030-btn--primary"
             >
-              {isFirstVisit ? "ابدأ بالدروس" : "تابع التصفح"}
+              {isFirstVisit ? "ابدأ الآن" : "تابع التصفح"}
             </Link>
             <Link
               href="/sections"

@@ -96,7 +96,7 @@ export default function LearnHubPage() {
   return (
     <PageShell className="lrn-hub">
       <PageHeader
-        eyebrow="مكتبة الدروس"
+        eyebrow="فهرس الدروس"
         title="دروس التعلّم"
         subtitle="دروس عادية مفصّلة في العقيدة والفقه والسيرة وغيرها — بلا مسارات أو مداخل أو أبواب متسلسلة."
       />

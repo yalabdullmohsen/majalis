@@ -1,5 +1,5 @@
 /**
- * بوابة: شاشة البدء القديمة محذوفة — التعريف معطّل؛ جولة المزايا من الإعدادات فقط.
+ * بوابة: شاشة البدء القديمة محذوفة — التعريف عبر HomeView كسولًا؛ جولة المزايا من الإعدادات.
  */
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
@@ -21,7 +21,7 @@ assert.doesNotMatch(app, /AppFeatureTourGate/);
 assert.doesNotMatch(app, /FirstVisitIntro/, "لا تركيب مقدمة أول زيارة في App");
 assert.doesNotMatch(app, /shouldShowFirstVisitIntro/);
 assert.doesNotMatch(app, /introActive/);
-assert.match(introCfg, /enabled:\s*false/, "التعريف معطّل نهائيًا");
+assert.match(introCfg, /enabled:\s*true/, "التعريف مفعّل مرة واحدة للمستخدم الجديد");
 assert.match(app, /\/feature-tour/);
 assert.match(app, /FeatureTourPage/);
 assert.match(app, /FocusArrival/);
@@ -48,7 +48,19 @@ assert.match(tour, /markFeatureTourCompleted/);
 
 assert.match(intro, /مرحبًا بك في سُنّة/);
 assert.match(intro, /ابدأ الآن/);
-assert.match(intro, /تصفح مباشرة/);
+assert.match(intro, /تخطي/);
+assert.match(intro, /وصول سريع/);
+assert.match(intro, /فتح المصحف/);
+assert.match(intro, /مواقيت الصلاة/);
+assert.doesNotMatch(intro, /تصفح الأقسام/);
+assert.doesNotMatch(intro, /اقتراح اليوم/);
+assert.doesNotMatch(intro, /quran\/people|sections\//);
 assert.doesNotMatch(intro, /requestPermission|Notification/);
+assert.doesNotMatch(intro, /from ["']lucide-react["']/);
+
+const home = readFileSync(join(root, "pages/account/ui/HomeView.tsx"), "utf8");
+assert.match(home, /FirstVisitIntro/);
+assert.match(home, /shouldShowFirstVisitIntro/);
+assert.match(home, /lazy\(/);
 
 console.log("app-start-gate.test.ts: ok");

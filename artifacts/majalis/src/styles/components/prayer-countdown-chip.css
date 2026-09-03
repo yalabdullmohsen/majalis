@@ -2,7 +2,7 @@
 
 .prayer-countdown-chip__hit {
   flex: 0 1 auto;
-  max-width: 42%;
+  max-width: min(78%, 22rem);
   min-width: 44px;
   min-height: 44px;
   height: 44px;
@@ -31,14 +31,13 @@
   padding: 4px 8px;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1c5244) 28%, transparent);
-  /* نهارًا: أخضر صلب كافٍ لنص أبيض بتباين ≥ ٤.٥:١ (١٢٪ وحدها لا تكفي) */
   background: var(--mj-brand-deep, #12362a);
   color: #fff;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
   line-height: 1;
   white-space: nowrap;
-  overflow: hidden;
+  overflow: visible;
   pointer-events: none;
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
@@ -60,7 +59,7 @@
   align-items: center;
   gap: 0.3rem;
   min-width: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .prayer-countdown-chip__name {
@@ -75,15 +74,13 @@
   font-feature-settings: "tnum" 1;
   font-weight: 800;
   letter-spacing: 0.02em;
-  /* عرض ثابت تقريبي لـ دد:ثث / س:دد — يمنع تذبذب العرض */
-  min-width: 3.2ch;
   text-align: start;
 }
 
 .prayer-countdown-chip__now-text {
   font-weight: 800;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: visible;
+  text-overflow: unset;
 }
 
 .prayer-countdown-chip--urgent {

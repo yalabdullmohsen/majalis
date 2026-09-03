@@ -1,22 +1,29 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
-import { Scale, Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { usePageView } from "@/hooks/usePageView";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd, webPageJsonLd } from "@/lib/seo-structured-data";
 import { ShareButtons } from "@/components/ContentActions";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { SectionLobby } from "@/components/lobby/SectionLobby";
-import { CompactSectionHeader } from "@/components/ui/CompactSectionHeader";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import type { LobbySpec } from "@/config/section-lobbies";
 import { FIQH_HUB_STATS } from "@/lib/fiqh-hub-stats";
 import { formatAbwabCount, formatMasailCount } from "@/lib/arabic-count";
 import { FiqhCategoryCard } from "@/components/fiqh/FiqhCategoryCard";
 import { FiqhFilters } from "@/components/fiqh/FiqhFilters";
 import { FiqhIssueCard } from "@/components/fiqh/FiqhIssueCard";
-import { buildFiqhDoorSummaries, expandFiqhFilterDoors } from "@/lib/fiqh/fiqhNormalize";
-import { filterLessonsByDoor, type FiqhDoorFilter } from "@/lib/fiqh/fiqhFilters";
+import {
+  buildFiqhDoorSummaries,
+  expandFiqhGroupFilter,
+  listPublishedLessonHits,
+  FIQH_HUB_DOOR_ORDER,
+  FIQH_START_HERE_DOORS,
+  type FiqhHubGroupFilter,
+  type FiqhDoorSummary,
+} from "@/lib/fiqh/fiqhNormalize";
+import { filterLessonsByDoor } from "@/lib/fiqh/fiqhFilters";
 import { searchFiqhIssues } from "@/lib/fiqh/fiqhSearch";
-import { listPublishedLessonHits } from "@/lib/fiqh/fiqhNormalize";
 import "@/styles/pages/fiqh-hub.css";
 
 function FiqhHubSearch({
@@ -26,51 +33,81 @@ function FiqhHubSearch({
   query: string;
   onQueryChange: (value: string) => void;
 }) {
+  const [open, setOpen] = useState(() => Boolean(query.trim()));
+  const expanded = open || Boolean(query.trim());
+
   return (
-    <div className="fiqh-hub-search">
-      <label className="fiqh-hub-search__label" htmlFor="fiqh-hub-search-input">
-        بحث الفقه
-      </label>
-      <div className="fiqh-hub-search__field">
-        <Search size={18} strokeWidth={2} aria-hidden="true" />
-        <input
-          id="fiqh-hub-search-input"
-          type="search"
-          value={query}
-          onChange={(e) => onQueryChange(e.target.value)}
-          placeholder="ابحث عن مسألة أو باب أو مصدر…"
-          autoComplete="off"
-          enterKeyHint="search"
-        />
-      </div>
+    <div className="fiqh-hub-search fiqh-hub-search--compact">
+      {expanded ? (
+        <label className="fiqh-hub-search__field" htmlFor="fiqh-hub-search-input">
+          <span className="sr-only">بحث الفقه</span>
+          <input
+            id="fiqh-hub-search-input"
+            type="search"
+            value={query}
+            onChange={(e) => onQueryChange(e.target.value)}
+            placeholder="بحث في المسائل…"
+            autoComplete="off"
+            enterKeyHint="search"
+          />
+          <button
+            type="button"
+            className="fiqh-hub-search__icon-btn"
+            aria-label="إغلاق البحث"
+            onClick={() => {
+              onQueryChange("");
+              setOpen(false);
+            }}
+          >
+            <X size={16} strokeWidth={2} aria-hidden="true" />
+          </button>
+        </label>
+      ) : (
+        <button
+          type="button"
+          className="fiqh-hub-search__icon-btn"
+          aria-label="بحث"
+          onClick={() => setOpen(true)}
+        >
+          <Search size={16} strokeWidth={2} aria-hidden="true" />
+        </button>
+      )}
     </div>
   );
 }
 
-function FiqhLobbyBody({ lobby }: { lobby: LobbySpec }) {
+function pickDoors(order: readonly string[], doors: FiqhDoorSummary[]): FiqhDoorSummary[] {
+  return order
+    .map((id) => doors.find((d) => d.id === id))
+    .filter((d): d is FiqhDoorSummary => Boolean(d));
+}
+
+function FiqhLobbyBody({ lobby }: { lobby: LobbySpec | null }) {
   const [quiz, setQuiz] = useState<ReactNode>(null);
   const [query, setQuery] = useState("");
-  const [door, setDoor] = useState<FiqhDoorFilter>("all");
+  const [group, setGroup] = useState<FiqhHubGroupFilter>("all");
 
   const doors = useMemo(() => buildFiqhDoorSummaries(), []);
-  const filteredDoors = useMemo(() => {
-    const expanded = expandFiqhFilterDoors(door);
-    if (expanded === "all") {
-      return doors.filter((d) => d.id !== "other" || d.hasVerifiedIssueCount);
-    }
+  const startHere = useMemo(() => pickDoors(FIQH_START_HERE_DOORS, doors), [doors]);
+  const hubDoors = useMemo(() => {
+    const hub = pickDoors(FIQH_HUB_DOOR_ORDER, doors)
+      .filter((d) => d.hasVerifiedIssueCount && d.issueCount > 0)
+      .sort((a, b) => a.sortOrder - b.sortOrder);
+    const expanded = expandFiqhGroupFilter(group);
+    if (expanded === "all") return hub;
     const allowed = new Set(expanded);
-    return doors.filter((d) => allowed.has(d.id));
-  }, [door, doors]);
+    return hub.filter((d) => allowed.has(d.id));
+  }, [doors, group]);
 
   const searchResults = useMemo(
-    () => searchFiqhIssues(query, { door, limit: query.trim() ? 12 : 0 }),
-    [query, door],
+    () => searchFiqhIssues(query, { door: "all", limit: query.trim() ? 12 : 0 }),
+    [query],
   );
 
   const featuredIssues = useMemo(() => {
     if (query.trim()) return searchResults;
-    return filterLessonsByDoor(listPublishedLessonHits(), door).slice(0, 6);
-  }, [query, door, searchResults]);
+    return filterLessonsByDoor(listPublishedLessonHits(), "all").slice(0, 6);
+  }, [query, searchResults]);
 
   useEffect(() => {
     let cancelled = false;
@@ -86,27 +123,38 @@ function FiqhLobbyBody({ lobby }: { lobby: LobbySpec }) {
 
   return (
     <div className="fiqh-lux-page fiqh-hub-layout">
-      <p className="fiqh-hub-lead">
-        ابدأ بباب، أو ابحث عن مسألة. التصفية تضيّق الأبواب والمسائل معًا.
-      </p>
+      <section className="fiqh-hub-section fiqh-hub-section--start" aria-labelledby="fiqh-start-title">
+        <header className="fiqh-hub-section__head">
+          <h2 id="fiqh-start-title" className="fiqh-hub-section__title">
+            ابدأ من هنا
+          </h2>
+        </header>
+        <div className="fiqh-category-grid fiqh-category-grid--start">
+          {startHere.map((item) => (
+            <FiqhCategoryCard key={item.id} door={item} featured />
+          ))}
+        </div>
+      </section>
 
       <div className="fiqh-hub-controls">
+        <FiqhFilters value={group} onChange={setGroup} />
         <FiqhHubSearch query={query} onQueryChange={setQuery} />
-        <FiqhFilters value={door} onChange={setDoor} />
       </div>
 
-      <section className="fiqh-hub-section" aria-labelledby="fiqh-doors-title">
+      <section className="fiqh-hub-section fiqh-hub-section--doors" aria-labelledby="fiqh-doors-title">
         <header className="fiqh-hub-section__head">
           <h2 id="fiqh-doors-title" className="fiqh-hub-section__title">
             أبواب الفقه
           </h2>
-          <p className="fiqh-hub-section__hint">اختر بابًا للقراءة المتدرجة في الأحكام.</p>
         </header>
         <div className="fiqh-category-grid">
-          {filteredDoors.map((item) => (
+          {hubDoors.map((item) => (
             <FiqhCategoryCard key={item.id} door={item} />
           ))}
         </div>
+        {hubDoors.length === 0 ? (
+          <p className="fiqh-lux-empty">لا أبواب في هذا التصنيف — جرّب «الكل».</p>
+        ) : null}
       </section>
 
       <section className="fiqh-hub-section" aria-labelledby="fiqh-issues-title">
@@ -114,11 +162,6 @@ function FiqhLobbyBody({ lobby }: { lobby: LobbySpec }) {
           <h2 id="fiqh-issues-title" className="fiqh-hub-section__title">
             {query.trim() ? "نتائج البحث" : "مسائل مختارة"}
           </h2>
-          <p className="fiqh-hub-section__hint">
-            {query.trim()
-              ? "أبرز المطابقات حسب بحثك والباب المحدد."
-              : "عيّنة قصيرة للدخول السريع — المزيد داخل كل باب."}
-          </p>
         </header>
         {featuredIssues.length > 0 ? (
           <div className="fiqh-issue-grid">
@@ -129,33 +172,37 @@ function FiqhLobbyBody({ lobby }: { lobby: LobbySpec }) {
         ) : (
           <p className="fiqh-lux-empty">
             {query.trim()
-              ? "لا نتائج مطابقة في هذا الباب — جرّب كلمة أخرى أو بابًا مختلفًا."
-              : "لا مسائل منشورة في هذا الباب بعد."}
+              ? "لا نتائج مطابقة — جرّب كلمة أخرى."
+              : "سيُعرض هنا مسائل مختارة بعد اكتمال الفهرس."}
           </p>
         )}
       </section>
 
-      <SectionLobby
-        lobbyId="fiqh"
-        title={lobby.title}
-        chips={lobby.chips}
-        groups={lobby.groups.filter((g) => g.id === "supporting")}
-        className="fiqh-lux-page fiqh-lux-support"
-      >
-        {quiz}
-        <div className="twh-share">
-          <ShareButtons title="الفقه الإسلامي — سُنّة" url="https://www.ssunnah.com/fiqh" />
-        </div>
-        <ExploreAlsoNav
-          title="استكشف أيضًا"
-          links={[
-            { href: "/hadith", label: "الحديث وعلومه" },
-            { href: "/lessons", label: "الدروس العلمية" },
-            { href: "/salah-guide", label: "دليل الصلاة" },
-            { href: "/zakat", label: "الزكاة" },
-          ]}
-        />
-      </SectionLobby>
+      {lobby ? (
+        <SectionLobby
+          lobbyId="fiqh"
+          title={lobby.title}
+          chips={lobby.chips}
+          groups={lobby.groups.filter((g) => g.id === "supporting")}
+          className="fiqh-lux-page fiqh-lux-support"
+        >
+          {quiz}
+          <div className="twh-share">
+            <ShareButtons title="الفقه الإسلامي — سُنّة" url="https://www.ssunnah.com/fiqh" />
+          </div>
+          <ExploreAlsoNav
+            title="استكشف أيضًا"
+            links={[
+              { href: "/hadith", label: "الحديث وعلومه" },
+              { href: "/lessons", label: "الدروس العلمية" },
+              { href: "/salah-guide", label: "دليل الصلاة" },
+              { href: "/zakat", label: "الزكاة" },
+            ]}
+          />
+        </SectionLobby>
+      ) : (
+        quiz
+      )}
     </div>
   );
 }
@@ -169,12 +216,12 @@ export default function FiqhPage() {
       path: "/fiqh",
       title: "الفقه | سُنّة",
       description:
-        "أبواب ومسائل فقهية مرتبة: طهارة وصلاة وزكاة وصيام وحج ومعاملات وأسرة وجنايات — كتب وأبواب ومسائل للقراءة والتدرج.",
+        "أبواب مرتبة للمبتدئ: الطهارة، الصلاة، الجنائز، الزكاة، الصيام، الحج، ثم المعاملات والأسرة.",
       keywords: ["فقه إسلامي", "كتب الفقه", "مسائل فقهية", "سُنّة"],
       jsonLd: [
         webPageJsonLd(
           "الفقه",
-          "أبواب ومسائل فقهية مرتبة للقراءة والتدرج في العبادات والمعاملات والأسرة.",
+          "أبواب مرتبة للمبتدئ في الطهارة والصلاة والجنائز والزكاة والصيام والحج والمعاملات والأسرة.",
           "/fiqh",
         ),
         breadcrumbJsonLd([
@@ -216,27 +263,23 @@ export default function FiqhPage() {
   );
 
   return (
-    <div className="fiqh-lux-shell" dir="rtl">
-      <CompactSectionHeader
-        title="الفقه"
-        description="أبواب مرتّبة للطهارة والصلاة والزكاة والصيام والحج ثم المعاملات والأسرة."
-        icon={Scale}
-        titleId="fiqh-compact-title"
-      />
-      {lobby ? (
+    <SectionTemplatePage
+      route="/fiqh"
+      title="الفقه"
+      subtitle="أبواب مرتبة للمبتدئ: الطهارة، الصلاة، الجنائز، الزكاة، الصيام، الحج، ثم المعاملات والأسرة."
+      eyebrow="العلوم الشرعية"
+      groupTitle="أبواب الفقه"
+    >
+      <div className="fiqh-lux-shell" dir="rtl">
         <FiqhLobbyBody lobby={lobby} />
-      ) : (
-        <div className="fiqh-lux-page fiqh-hub-layout" aria-busy="true">
-          <p className="fiqh-lux-empty">جاري تجهيز أبواب الفقه…</p>
-        </div>
-      )}
-      <section className="fiqh-hub-stats" aria-label="حجم المحتوى">
-        {headerStats.map((stat) => (
-          <p key={stat.id} className="fiqh-hub-stats__item">
-            {stat.label}
-          </p>
-        ))}
-      </section>
-    </div>
+        <section className="fiqh-hub-stats" aria-label="حجم المحتوى">
+          {headerStats.map((stat) => (
+            <p key={stat.id} className="fiqh-hub-stats__item">
+              {stat.label}
+            </p>
+          ))}
+        </section>
+      </div>
+    </SectionTemplatePage>
   );
 }

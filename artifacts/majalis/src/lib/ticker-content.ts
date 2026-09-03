@@ -255,9 +255,9 @@ export function pickNextBatch(
   return { batch, recent: nextRecent };
 }
 
-/** فاصل تدوير مسار الإعلان: 50–80 ثانية. */
+/** فاصل تدوير مسار الإعلان: 40–65 ثانية — أسرع قليلًا بلا إزعاج. */
 export function nextRotationDelayMs(rand: () => number = Math.random): number {
-  return Math.round((50 + rand() * 30) * 1000);
+  return Math.round((40 + rand() * 25) * 1000);
 }
 
 export const REFRESH_ON_RETURN_AFTER_MS = 45_000;
@@ -267,7 +267,7 @@ export const REFRESH_ON_RETURN_AFTER_MS = 45_000;
  * يمرّ الحديث/الآية كاملًا بسرعة قابلة للقراءة (~35 حرفًا/ث).
  */
 export function marqueeDurationSec(itemCount: number, totalChars = 0): number {
-  const byCount = itemCount * 7;
-  const byChars = totalChars > 0 ? totalChars / 28 : 0;
-  return Math.max(36, Math.min(140, Math.max(byCount, byChars)));
+  const byCount = itemCount * 6;
+  const byChars = totalChars > 0 ? totalChars / 32 : 0;
+  return Math.max(30, Math.min(120, Math.max(byCount, byChars)));
 }

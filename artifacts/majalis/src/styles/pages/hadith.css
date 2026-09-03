@@ -1367,7 +1367,7 @@ html[data-theme="dark"] .hadith-stat strong {
 .hadith-grade--hasan-sahih,
 .hadith-grade--hasan {
   background: color-mix(in srgb, var(--mj-brand, #173d35) 8%, transparent);
-  color: var(--mj-brand-deep, #143f35);
+  color: var(--mj-brand-deep, var(--brand-deep, var(--mj-brand-deep)));
   border: 1px solid color-mix(in srgb, var(--mj-brand, #173d35) 18%, transparent);
   font-weight: 600;
 }
@@ -1450,13 +1450,13 @@ html[data-theme="dark"] .hadith-stat strong {
 .hadith-action-btn:hover,
 .hadith-action-btn:focus-visible {
   background: color-mix(in srgb, var(--mj-brand, #173d35) 8%, transparent);
-  color: var(--mj-brand-deep, #143f35);
+  color: var(--mj-brand-deep, var(--brand-deep, var(--mj-brand-deep)));
   border-color: color-mix(in srgb, var(--mj-brand, #173d35) 28%, transparent);
 }
 .hadith-action-btn--active {
   background: color-mix(in srgb, var(--mj-brand, #173d35) 12%, transparent);
   border-color: color-mix(in srgb, var(--mj-brand, #173d35) 35%, transparent);
-  color: var(--mj-brand-deep, #143f35);
+  color: var(--mj-brand-deep, var(--brand-deep, var(--mj-brand-deep)));
 }
 .hadith-action-btn .icon-star--filled {
   fill: currentColor;
@@ -1526,8 +1526,8 @@ html[data-theme="dark"] .hadith-stat strong {
 /* ── بطاقة حديث — polish 2026-08 ── */
 .hadith-card.ui-card {
   border-radius: var(--radius-card, 24px);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 16%, var(--mj-hairline, #e3e8e6));
-  background: color-mix(in srgb, var(--mj-surface, #fff) 97%, #e4f0ea);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 16%, var(--mj-hairline, #e3e8e6));
+  background: color-mix(in srgb, var(--mj-surface, #fff) 97%, var(--brand-soft, var(--mj-brand-soft)));
   box-shadow: 0 10px 26px -18px rgba(11, 32, 24, 0.18);
 }
 
@@ -1569,8 +1569,8 @@ html[data-theme="dark"] .hadith-stat strong {
 }
 
 .hadith-action-btn:hover {
-  border-color: var(--mj-brand, #1f7a5a);
-  color: var(--mj-brand, #1f7a5a);
+  border-color: var(--mj-brand, var(--mj-brand));
+  color: var(--mj-brand, var(--mj-brand));
 }
 
 .hadith-action-btn:active {

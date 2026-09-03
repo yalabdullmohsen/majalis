@@ -18,7 +18,9 @@ if (Number.isNaN(port) || port <= 0) {
 
 const basePath = process.env.BASE_PATH || "/";
 
-const commitHash = process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT || "dev";
+const rawCommit = process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT || "dev";
+/** قصير فقط في العميل — لا نسرّب الـ SHA الكامل. */
+const commitHash = rawCommit === "dev" ? "dev" : String(rawCommit).slice(0, 7);
 const buildId = process.env.VERCEL_DEPLOYMENT_ID || process.env.BUILD_ID || "local";
 
 /**
@@ -48,7 +50,7 @@ export default defineConfig({
   define: {
     "import.meta.env.VITE_COMMIT_HASH": JSON.stringify(commitHash),
     "import.meta.env.VITE_BUILD_ID": JSON.stringify(buildId),
-    "import.meta.env.VITE_VERCEL_GIT_COMMIT_SHA": JSON.stringify(process.env.VERCEL_GIT_COMMIT_SHA || ""),
+    "import.meta.env.VITE_VERCEL_GIT_COMMIT_SHA": JSON.stringify(commitHash),
   },
   esbuild: {
     target: "es2022",

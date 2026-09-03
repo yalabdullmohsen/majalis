@@ -186,6 +186,42 @@
   border-color: var(--majalis-emerald);
   color: var(--majalis-emerald-deep);
 }
+.gsm-scope-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+@media (min-width: 640px) {
+  .gsm-scope-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.gsm-scope-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-height: 4.5rem;
+  padding: 0.7rem 0.75rem;
+  border-radius: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald, #1f6b56) 18%, var(--majalis-line, #e3e8e6));
+  background:
+    linear-gradient(165deg, color-mix(in srgb, var(--majalis-emerald, #1f6b56) 9%, transparent), transparent 62%),
+    var(--majalis-panel, #fff);
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+  font-family: inherit;
+}
+.gsm-scope-card__title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--majalis-ink, #1a1a18);
+}
+.gsm-scope-card__desc {
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--majalis-ink-soft, #4a5a53);
+}
 .gsm-quicklinks { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .gsm-quicklink-btn {
   display: flex;

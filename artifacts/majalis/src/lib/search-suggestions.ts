@@ -14,7 +14,7 @@ export type SearchSuggestion = {
   label: string;
   meta?: string;
   href: string;
-  group: "lessons" | "fawaid" | "qa" | "adhkar" | "nawawi" | "history" | "prophets" | "library";
+  group: "lessons" | "fawaid" | "qa" | "adhkar" | "nawawi" | "history" | "prophets";
 };
 
 type AdhkarModule = typeof import("@/lib/adhkar-seed");
@@ -23,7 +23,6 @@ type FawaidModule = typeof import("@/lib/fawaid-seed");
 type QaModule = typeof import("@/lib/qa-seed");
 type NawawiModule = typeof import("@/lib/arbaeen-nawawi-seed");
 type ProphetsModule = typeof import("@/lib/prophets-data");
-type LibraryModule = typeof import("@/lib/library-catalog");
 
 type SuggestionIndex = {
   ADHKAR_CATEGORIES: AdhkarModule["ADHKAR_CATEGORIES"];
@@ -34,7 +33,6 @@ type SuggestionIndex = {
   ARBAEEN_NAWAWI: NawawiModule["ARBAEEN_NAWAWI"];
   HISTORY_ITEMS: IslamicHistoryItem[];
   PROPHETS: ProphetsModule["PROPHETS"];
-  LIBRARY_CATALOG: LibraryModule["LIBRARY_CATALOG"];
 };
 
 let index: SuggestionIndex | null = null;
@@ -45,14 +43,13 @@ export function ensureSuggestionIndex(): Promise<SuggestionIndex> {
   if (pending) return pending;
 
   const load = (async (): Promise<SuggestionIndex> => {
-    const [adhkar, lessons, fawaid, qa, nawawi, prophets, library] = await Promise.all([
+    const [adhkar, lessons, fawaid, qa, nawawi, prophets] = await Promise.all([
       import("@/lib/adhkar-seed"),
       import("@/lib/lessons-seed"),
       import("@/lib/fawaid-seed"),
       import("@/lib/qa-seed"),
       import("@/lib/arbaeen-nawawi-seed"),
       import("@/lib/prophets-data"),
-      import("@/lib/library-catalog"),
     ]);
 
     const [LESSONS_SEED, SEED_QA] = await Promise.all([
@@ -69,7 +66,6 @@ export function ensureSuggestionIndex(): Promise<SuggestionIndex> {
       ARBAEEN_NAWAWI: nawawi.ARBAEEN_NAWAWI,
       HISTORY_ITEMS: ISLAMIC_HISTORY_ITEMS,
       PROPHETS: prophets.PROPHETS,
-      LIBRARY_CATALOG: library.LIBRARY_CATALOG,
     };
     index = built;
     return built;
@@ -115,7 +111,6 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
     ARBAEEN_NAWAWI,
     HISTORY_ITEMS,
     PROPHETS,
-    LIBRARY_CATALOG,
   } = index;
 
   const results: SearchSuggestion[] = [];
@@ -213,19 +208,6 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
     if (results.filter((r) => r.group === "prophets").length >= MAX_PER_GROUP) break;
   }
 
-  for (const book of LIBRARY_CATALOG) {
-    if (results.length >= limit) break;
-    if (!arabicMatchAny([book.title, book.author, book.description, book.category, ...(book.keywords || [])], q)) continue;
-    pushUnique(results, seen, {
-      id: book.id,
-      label: book.title,
-      meta: book.author,
-      href: `/library/${book.id}`,
-      group: "library",
-    });
-    if (results.filter((r) => r.group === "library").length >= MAX_PER_GROUP) break;
-  }
-
   return results.slice(0, limit);
 }
 
@@ -237,5 +219,4 @@ export const SUGGESTION_GROUP_LABELS: Record<SearchSuggestion["group"], string> 
   nawawi: "الأربعون النووية",
   history: "التاريخ الإسلامي",
   prophets: "الأنبياء",
-  library: "المكتبة",
 };

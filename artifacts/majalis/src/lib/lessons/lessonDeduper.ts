@@ -3,20 +3,19 @@ import {
   normalizeLessonDay,
   normalizeLessonPlace,
   normalizeLessonSheikh,
-  normalizeLessonSource,
-  normalizeLessonTime,
   normalizeLessonTitle,
 } from "./lessonNormalize";
 
-/** مفتاح التكرار: عنوان + شيخ + يوم + وقت + مكان + مصدر */
+/**
+ * مفتاح التكرار الحقيقي: عنوان + شيخ + تاريخ + مكان.
+ * المصدر يُستخدم لجودة السجل عند الدمج (seed vs supabase) لا للتفريق.
+ */
 export function buildLessonDedupeKey(lesson: KuwaitLessonRecord): string {
   const title = normalizeLessonTitle(lesson.title);
   const sheikh = normalizeLessonSheikh(lesson.sheikhName);
-  const day = normalizeLessonDay(lesson.day || lesson.gregorianDate || "");
-  const time = normalizeLessonTime(lesson.time || "");
+  const date = normalizeLessonDay(lesson.gregorianDate || lesson.day || "");
   const place = normalizeLessonPlace(lesson);
-  const source = normalizeLessonSource(lesson.source);
-  return [title, sheikh, day, time, place, source].join("|");
+  return [title, sheikh, date, place].join("|");
 }
 
 function lessonQualityScore(lesson: KuwaitLessonRecord): number {
@@ -24,6 +23,7 @@ function lessonQualityScore(lesson: KuwaitLessonRecord): number {
   if (lesson.source === "supabase") score += 0.01;
   if (lesson.description?.trim()) score += 0.005;
   if (lesson.mapsUrl) score += 0.002;
+  if (lesson.time?.trim()) score += 0.001;
   return score;
 }
 

@@ -35,6 +35,16 @@ export {
   type AppSearchResponse,
 } from "@/features/search/app-search";
 export {
+  SEARCH_SCOPE_DEFS,
+  SEARCH_SCOPE_IDS,
+  SEARCH_SCOPE_LABELS,
+  docMatchesScope,
+  filterDocsByScope,
+  isSearchScopeId,
+  type SearchScopeId,
+  type SearchScopeDef,
+} from "@/features/search/search-scopes";
+export {
   runUniversalSearch,
   enrichWithVerseHits,
   UNIVERSAL_DEBOUNCE_MS,

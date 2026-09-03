@@ -24,14 +24,31 @@ const TODAY_SUGGESTIONS = [
   { href: "/quiz", title: "سؤال سين جيم", desc: "اختبر معلوماتك بلعبة قصيرة" },
 ] as const;
 
+function looksLikeRoutePath(value: string): boolean {
+  const v = value.trim();
+  if (!v) return true;
+  if (v.includes("/") || v.includes("?")) return true;
+  if (/^[a-z0-9_-]+$/i.test(v) && /[a-z]/i.test(v)) return true;
+  return false;
+}
+
 export function HomeMostReadBand() {
   const recent = getRecentPages(12);
   const popular =
     recent.length >= 3
-      ? recent.slice(0, 6).map((p) => ({ href: p.href, title: p.label || p.href }))
-      : FALLBACK_POPULAR.map((p) => ({ ...p }));
+      ? recent
+          .slice(0, 8)
+          .map((p) => ({
+            href: p.href,
+            title: looksLikeRoutePath(p.label) ? "" : p.label,
+          }))
+          .filter((p) => Boolean(p.title))
+          .slice(0, 6)
+      : [];
+  const displayPopular =
+    popular.length >= 3 ? popular : FALLBACK_POPULAR.map((p) => ({ ...p }));
 
-  const suggestion = TODAY_SUGGESTIONS[getDayIndex() % TODAY_SUGGESTIONS.length];
+  const suggestion = TODAY_SUGGESTIONS[getDayIndex() % TODAY_SUGGESTIONS.length]!;
 
   return (
     <>
@@ -39,11 +56,11 @@ export function HomeMostReadBand() {
         <div className="m2030-band__head">
           <h2 className="m2030-band__title">الأكثر قراءة</h2>
           <span className="m2030-band__link" aria-hidden="true">
-            {toArabicDigits(popular.length)} مسارات
+            {toArabicDigits(displayPopular.length)} عناصر
           </span>
         </div>
         <div className="home-most-read">
-          {popular.map((item) => (
+          {displayPopular.map((item) => (
             <Link key={item.href} href={item.href} className="home-most-read__item mj-card mj-card--link">
               {item.title}
             </Link>

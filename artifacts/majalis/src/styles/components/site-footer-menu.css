@@ -159,7 +159,7 @@
 
 html[data-theme="dark"] .site-footer.site-footer--global,
 html.dark .site-footer.site-footer--global {
-  background: color-mix(in srgb, #0f1a17 92%, var(--color-primary, #4fb48b) 8%);
+  background: color-mix(in srgb, #0f1a17 92%, var(--color-primary, var(--mj-brand)) 8%);
   border-block-start-color: rgba(255, 255, 255, 0.08);
 }
 

@@ -137,7 +137,7 @@ function routeForPath(routes: SeoRoute[], path: string) {
     return {
       ...requiredRoute(routes, "/search"),
       title: `نتائج البحث: ${term} | سُنّة`,
-      description: `نتائج البحث عن «${term}» في الدروس والمكتبة والفوائد داخل سُنّة.`,
+      description: `نتائج البحث عن «${term}» في الدروس والفوائد والأقسام داخل سُنّة.`,
       robots: "noindex, follow",
     };
   }

@@ -178,7 +178,7 @@ export const HOME_MORE_SECTIONS_RAW = [
   { href: "/sahabah",        title: seoNavLabel("/sahabah", "أعلام الصحابة الكرام"), description: "موسوعة كبار الصحابة رضي الله عنهم: سيرتهم وفضائلهم وإرثهم في الإسلام" },
   { href: "/tawba",          title: seoNavLabel("/tawba", "التوبة والاستغفار"),   description: "شروط التوبة النصوح وأنواعها وأفضل صيغ الاستغفار المأثورة وآثارها العظيمة" },
   { href: "/memorization", title: seoNavLabel("/memorization", "الحفظ والمراجعة"), description: "اختبارات وخطط الحفظ" },
-  { href: "/tafsir",        title: seoNavLabel("/tafsir", "علم التفسير"),            description: "أنواع التفسير وأصوله وأشهر كتب المفسرين مع روابط المكتبة والمصحف" },
+  { href: "/tafsir",        title: seoNavLabel("/tafsir", "علم التفسير"),            description: "أنواع التفسير وأصوله وأشهر كتب المفسرين مع روابط المصحف والبحث" },
   { href: "/mawarith",      title: seoNavLabel("/mawarith", "المواريث والفرائض"),   description: "حصص الورثة الشرعية وأسباب الإرث وموانعه وأحكام العَصَبة والحجب والعَوْل والردّ" },
   { href: "/duas-quran",    title: seoNavLabel("/duas-quran", "أدعية القرآن الكريم"),  description: "أدعية قرآنية مأثورة: دعاء الأنبياء والمؤمنين مع سياقها وفوائدها" },
   { href: "/quran-knowledge", title: seoNavLabel("/quran-knowledge", "القرآن وعلومه"), description: "فهرس وعلوم وأسباب وقصص" },

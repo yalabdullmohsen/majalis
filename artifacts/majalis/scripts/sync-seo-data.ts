@@ -6,7 +6,6 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ISLAMIC_HISTORY_ITEMS } from "../src/data/islamic-history";
-import { LIBRARY_CATALOG } from "../src/lib/library-catalog";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "..");
@@ -44,17 +43,6 @@ function clampDesc(s: string, max = 158): string {
   return t.slice(0, max - 1).replace(/[،,\s]+\S*$/, "") + "…";
 }
 
-const libraryJson = [...LIBRARY_CATALOG]
-  .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
-  .map((b) => ({
-    id: b.id,
-    title: b.title,
-    author: b.author,
-    category: b.category,
-    description: b.description,
-  }));
-writeOrCheck("src/data/library-catalog.json", serialize(libraryJson), "مرآة فهرس المكتبة");
-
 const seoRoutes = readJson("src/lib/seo-routes.json") as { routes: Array<{ path: string }> };
 const nonHistoryDetailRoutes = seoRoutes.routes.filter(
   (r) => !/^\/scholars\/[^/]+$/.test(r.path) && !/^\/tarikh-islami\/[^/]+$/.test(r.path),
@@ -87,5 +75,5 @@ if (CHECK && drift > 0) {
 console.log(
   CHECK
     ? "✓ جميع مرايا SEO متزامنة"
-    : `✓ تمت المزامنة — ${libraryJson.length} كتابًا، ${historyRoutes.length} عنصر تاريخ`,
+    : `✓ تمت المزامنة — ${historyRoutes.length} عنصر تاريخ`,
 );

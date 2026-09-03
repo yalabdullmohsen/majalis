@@ -1,17 +1,16 @@
 /**
  * مركز القرآن الكريم — لوبي موحّد من سجل الأقسام.
  */
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionLobby } from "@/components/lobby/SectionLobby";
+import { QuranOpenMushafCard } from "@/components/quran/QuranOpenMushafCard";
 import { getLobby } from "@/config/section-lobbies";
-import { loadLastPageSync } from "@/lib/quran-last-page";
 import "@/components/sections/section-cards.css";
 
 export default function QuranHubPage() {
   const lobby = useMemo(() => getLobby("quran"), []);
-  const [resume, setResume] = useState({ href: "/mushaf", subtitle: lobby.primary?.subtitle ?? "" });
-  // primary: open-mushaf — فتح المصحف من سجل الأقسام
+  // primary: open-mushaf — بطاقة مخصّصة خفيفة بدل المستطيل الأخضر الضخم
 
   useEffect(() => {
     applyPageSeo({
@@ -22,25 +21,11 @@ export default function QuranHubPage() {
     });
   }, []);
 
-  useEffect(() => {
-    const page = loadLastPageSync();
-    if (page && page > 1) {
-      setResume({
-        href: `/mushaf?page=${page}`,
-        subtitle: lobby.primary?.subtitle ?? "",
-      });
-    }
-  }, [lobby.primary?.subtitle]);
-
-  const primary = lobby.primary
-    ? { ...lobby.primary, route: resume.href, subtitle: resume.subtitle || lobby.primary.subtitle }
-    : undefined;
-
   return (
     <SectionLobby
       lobbyId="quran"
       title={lobby.title}
-      primary={primary}
+      primarySlot={<QuranOpenMushafCard />}
       groups={lobby.groups}
     />
   );
