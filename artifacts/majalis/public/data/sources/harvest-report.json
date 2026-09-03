@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-02T18:58:03.391Z",
+  "generated_at": "2026-09-03T08:31:22.961Z",
   "dry_run": false,
   "instagram_mode": "provider",
   "instagram": {
@@ -9,31 +9,83 @@
   },
   "instagram_accounts_total": 47,
   "instagram_checked": 47,
-  "instagram_unchanged": 44,
-  "instagram_new_posts_found": 2,
+  "instagram_unchanged": 32,
+  "instagram_new_posts_found": 0,
   "instagram_published": 0,
   "instagram_skipped_private": 0,
   "instagram_skipped_provider_404": 0,
-  "instagram_failed": 1,
+  "instagram_failed": 15,
   "instagram_probe_records_used": 47,
-  "instagram_fetch_records_used": 2,
+  "instagram_fetch_records_used": 0,
   "sources": 55,
-  "fetched": 26,
-  "published": 18,
+  "fetched": 24,
+  "published": 16,
   "merged": 0,
   "failed": [
     {
-      "id": "ig-mrkz_al_albany",
+      "id": "ig-erth.kwt",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
+      "id": "ig-itm2nan_",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
+      "id": "ig-alshalahi_masjd",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
+      "id": "ig-erwaa.quran",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
+      "id": "ig-trahumkwclub",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
+      "id": "ig-DrosQ8",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
+      "id": "ig-warathakw2",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
+      "id": "ig-fajeralkous",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
+      "id": "ig-manaratkw",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
+      "id": "ig-mpe.kh11",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
+      "id": "ig-masjedalansary",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
+      "id": "ig-m_alkhayatq8",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
+      "id": "ig-masjid_mubark_alsaifi",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
+      "id": "ig-moudhi_mosque",
+      "reason": "HTTP 408: snapshot_timeout"
+    },
+    {
+      "id": "ig-mansuh_quranayh",
       "reason": "HTTP 408: snapshot_timeout"
     }
   ],
   "skipped": [
     {
       "id": "web-aayatkw.com",
-      "reason": "quality_gate:weak_title"
-    },
-    {
-      "id": "ig-alshalahi_masjd",
       "reason": "quality_gate:weak_title"
     },
     {
@@ -53,30 +105,34 @@
       "reason": "quality_gate:no_useful_type"
     },
     {
-      "id": "web-drosq8-linktree",
+      "id": "telegram-DrosQ8",
       "reason": "quality_gate:no_useful_type"
     },
     {
-      "id": "ig-saad.al.abdullah.city",
-      "reason": "quality_gate:weak_title"
+      "id": "telegram-DrosQ8",
+      "reason": "quality_gate:no_useful_type"
+    },
+    {
+      "id": "web-drosq8-linktree",
+      "reason": "quality_gate:no_useful_type"
     }
   ],
   "last_seen_updates": [
     {
       "id": "telegram-DrosQ8",
-      "last_seen_at": "2026-09-02T18:40:39.048Z"
+      "last_seen_at": "2026-09-03T08:07:24.408Z"
     }
   ],
   "lookback_days": 7,
-  "lookback_since": "2026-08-26T18:25:40.659Z",
-  "lesson_relevant_published": 18,
+  "lookback_since": "2026-08-27T07:47:40.004Z",
+  "lesson_relevant_published": 16,
   "quality_gate": {
     "rejected_old": 0,
-    "rejected_weak_title": 3,
-    "rejected_no_useful_type": 5,
+    "rejected_weak_title": 1,
+    "rejected_no_useful_type": 7,
     "rejected_missing_date": 0,
     "rejected_other": 0,
-    "published": 18
+    "published": 16
   },
   "content_changed": true
 }
