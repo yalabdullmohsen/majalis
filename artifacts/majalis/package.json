@@ -243,6 +243,7 @@
     "test:scroll-top": "node scripts/scroll-top-gate.mjs",
     "test:ui-layout-gates": "pnpm run test:calendar-gates && pnpm run test:scroll-top && pnpm run test:section-back-button && pnpm run test:ui-regression-gates",
     "test:site-interlink": "node --import tsx src/lib/__tests__/site-interlink.test.ts",
+    "test:quiz-game-integrity": "node --import tsx src/lib/__tests__/quiz-game-integrity.test.ts",
     "test:quiz-game-reducer": "node --import tsx src/components/quiz-game/__tests__/game-reducer.test.ts",
     "test:scholarly-content-guard": "node --import tsx src/lib/__tests__/scholarly-content-guard.test.ts && pnpm run test:public-weak-content",
     "test:daily-content-consolidation": "node --import tsx src/lib/__tests__/daily-content-consolidation.test.ts",
