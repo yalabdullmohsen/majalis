@@ -90,4 +90,15 @@ const local: KuwaitLessonRecord = {
 };
 assert.equal(filterKuwaitOnlyForDisplay([outside, local]).map((l) => l.id).join(), "kw-local");
 
+const placeOnly: KuwaitLessonRecord = {
+  ...local,
+  id: "outside-place",
+  sheikhName: "محاضر محلي",
+  mosque: "مسجد قباء",
+  region: "المدينة المنورة",
+  governorate: "",
+};
+assert.equal(isOutsideKuwaitLesson(placeOnly), true, "مكان سعودي بلا شيخ مستبعد");
+assert.equal(filterKuwaitOnlyForDisplay([outside, local, placeOnly]).map((l) => l.id).join(), "kw-local");
+
 console.log("  ✓ lesson time kuwait asr + scope");

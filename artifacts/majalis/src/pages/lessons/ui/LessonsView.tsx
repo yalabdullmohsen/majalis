@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState, useCallback, startTransition } from "react";
-import { GraduationCap, Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { Link } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { CompactSectionHeader } from "@/components/ui/CompactSectionHeader";
 import { ErrorState, Empty } from "@/components/ui-common";
 import { HarvestFeedPanel } from "@/components/lessons/HarvestFeedPanel";
 import { SectionLobby } from "@/components/lobby/SectionLobby";
@@ -551,12 +550,6 @@ export default function LessonsPage({
       }),
     [lobby.quad, activeLessons.length, archivedLessons.length],
   );
-  const nearest = featuredSections.upcoming[0];
-  const lessonsHeaderDesc = nearest
-    ? [nearest.title, nearest.mosque].filter(Boolean).join(" — ")
-    : loading
-      ? "جاري تحميل أقرب الدروس…"
-      : "حلقات ودروس علمية مرتبة حسب الموعد.";
 
   return (
     <SectionLobby
@@ -568,7 +561,7 @@ export default function LessonsPage({
         active: tab === c.id,
         onSelect: () => setTab(c.id as TabId),
       }))}
-      groups={lobby.groups}
+      groups={[]}
       filterSlot={
         <div className="lessons-v3-sticky">
           <FilterToggle
@@ -584,13 +577,6 @@ export default function LessonsPage({
         </div>
       }
     >
-      <CompactSectionHeader
-        title="الدروس"
-        description={lessonsHeaderDesc}
-        icon={GraduationCap}
-        titleId="lessons-compact-title"
-        className="lessons-compact-section-header"
-      />
       <div className="lessons-v2-layout lessons-v3-layout">
         <main className="lessons-v2-main" id="lessons-list">
           {loadError && !loading ? (

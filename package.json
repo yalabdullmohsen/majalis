@@ -50,7 +50,9 @@
     "audit:legacy-routes": "pnpm --filter @workspace/majalis run audit:legacy-routes",
     "audit:navigation": "pnpm --filter @workspace/majalis run audit:navigation",
     "audit:lessons-quality": "pnpm --filter @workspace/majalis run audit:lessons-quality",
-    "smoke:production": "tsx scripts/post-deploy-smoke.ts"
+    "smoke:production": "tsx scripts/post-deploy-smoke.ts",
+    "verify:lessons": "pnpm --filter @workspace/majalis run verify:lessons",
+    "verify:ui": "pnpm --filter @workspace/majalis run verify:ui"
   },
   "private": true,
   "devDependencies": {
