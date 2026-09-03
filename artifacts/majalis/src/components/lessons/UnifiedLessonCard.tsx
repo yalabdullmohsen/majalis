@@ -162,7 +162,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
             المحاضر: {lesson.sheikhName.replace(/^الشيخ(?:ة)?:\s*/u, "")}
           </p>
         ) : null}
-        {shortDescription ? (
+        {!compact && shortDescription ? (
           <p className="lesson-unified-card__desc">{shortDescription}</p>
         ) : null}
 
@@ -173,21 +173,38 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
           )}
 
         <div className="lesson-unified-card__facts" aria-label="معلومات الدرس">
-          <FactRow label="اليوم" value={displayDay} />
-          <FactRow label="التاريخ" value={displayDate} />
-          <FactRow
-            label="الوقت"
-            value={
-              scheduleConfirmed
-                ? displayTime || appointmentLine
-                : "الوقت قيد التأكيد"
-            }
-          />
-          <FactRow label="المكان" value={displayPlace} />
-          <FactRow label="الحضور" value={attendanceMode} />
-          {lesson.womenAttendance === "متاح" ? (
-            <FactRow label="حضور النساء" value={lesson.womenAttendanceNote || "متاح"} />
-          ) : null}
+          {compact ? (
+            <>
+              <FactRow
+                label="الموعد"
+                value={
+                  scheduleConfirmed
+                    ? [displayDay, displayDate, displayTime || appointmentLine].filter(Boolean).join(" · ")
+                    : [displayDay, "الوقت قيد التأكيد"].filter(Boolean).join(" · ")
+                }
+              />
+              <FactRow label="المكان" value={displayPlace} />
+              <FactRow label="الحضور" value={attendanceMode} />
+            </>
+          ) : (
+            <>
+              <FactRow label="اليوم" value={displayDay} />
+              <FactRow label="التاريخ" value={displayDate} />
+              <FactRow
+                label="الوقت"
+                value={
+                  scheduleConfirmed
+                    ? displayTime || appointmentLine
+                    : "الوقت قيد التأكيد"
+                }
+              />
+              <FactRow label="المكان" value={displayPlace} />
+              <FactRow label="الحضور" value={attendanceMode} />
+              {lesson.womenAttendance === "متاح" ? (
+                <FactRow label="حضور النساء" value={lesson.womenAttendanceNote || "متاح"} />
+              ) : null}
+            </>
+          )}
         </div>
 
         {!compact ? (
