@@ -410,10 +410,11 @@ function fromFiqhCouncilSeed() {
 // ليست أحكامًا شرعية ولا يجوز تحويلها إلى سجلات في موسوعة الأحكام.
 
 function fromCurriculumRegistry() {
-  // عزل عاجل: لا تُدخَل سجلات المنهج في الموسوعة المعروضة ما دامت الراية false.
-  // الملف المصدر curriculum-topics.json يبقى في المستودع للمراجعة البشرية.
   if (!CONTENT_CURRICULUM_ENABLED) return [];
-  const regPath = path.resolve(ROOT, "data/rulings-encyclopedia/curriculum-topics.json");
+  const regPath = path.resolve(
+    ROOT,
+    "content/archive/rulings-encyclopedia/source/curriculum-topics.json",
+  );
   if (!fs.existsSync(regPath)) return [];
   const topics = JSON.parse(fs.readFileSync(regPath, "utf8"));
   return topics

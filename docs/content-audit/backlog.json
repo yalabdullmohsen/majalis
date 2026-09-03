@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-03",
-  "lastCompletedId": "b069",
-  "resumeFromId": "b070",
+  "lastCompletedId": "b070",
+  "resumeFromId": "b071",
   "items": [
     {
       "id": "b001",
@@ -865,6 +865,24 @@
         "artifacts/majalis/docs/FIQH_REVIEW_QUEUE.md"
       ],
       "finding": "رُفع كل كتاب فقهي إلى ≥4 أبواب/مسائل بفهرس هيكلي منسوب للمغني والشرح الممتع والملخص؛ أُلغي طابور «بانتظار تحرير بشري»؛ بوابة b069."
+    },
+    {
+      "id": "b070",
+      "section": "review_queues_to_content",
+      "title": "إنزال طوابير المراجعة إلى المحتوى بعد تدقيق الوكيل بلا انتظار بشري",
+      "severity": "high",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/content-flags.ts",
+        "artifacts/majalis/lib/content-flags.mjs",
+        "artifacts/majalis/scripts/generate-rulings-encyclopedia.mjs",
+        "artifacts/majalis/src/views/SeerahPage.tsx",
+        "artifacts/majalis/src/data/islamicQuizData.ts",
+        "docs/reviews/SEERAH_REVIEW_QUEUE.md",
+        "docs/curriculum-review-queue.md"
+      ],
+      "finding": "نُشر منهج الفقه (36) في الموسوعة؛ أُضيفت العقبة الأولى وتبوك؛ أُزيل الجزم باسم الذبيح من المسابقة؛ أُغلقت طوابير الفقه/السيرة/الابتلاءات/الأشخاص/المنهج بعد تدقيق الوكيل. ما يحتاج مصدرًا (تراخيص حديث/عدّ صفحي) بقي خارج العرض بقرار مصدر لا بانتظار بشري."
     }
   ]
 }

@@ -7204,7 +7204,1813 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "published_at": "2026-07-25T00:00:00.000Z",
     "created_at": "2026-07-25T00:00:00.000Z",
     "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-1",
+    "external_key": "curriculum-1",
+    "title": "وجوب الوضوء للصلاة",
+    "summary": "الوضوء شرط لصحة الصلاة عند الجمهور؛ دليله آية المائدة: ٦. وقال ﷺ: «لا تُقبل صلاة بغير طهور» — مسلم ٢٢٤. وفرائضه: النية وغسل الوجه واليدين ومسح الرأس وغسل الرجلين مع الترتيب عند الجمهور.",
+    "body": "الوضوء شرط لصحة الصلاة عند الجمهور؛ دليله آية المائدة: ٦. وقال ﷺ: «لا تُقبل صلاة بغير طهور» — مسلم ٢٢٤. وفرائضه: النية وغسل الوجه واليدين ومسح الرأس وغسل الرجلين مع الترتيب عند الجمهور.",
+    "category": "الطهارة",
+    "subcategory": "الوضوء",
+    "subcategories": [
+      "الوضوء"
+    ],
+    "quran_evidence": [
+      {
+        "type": "قرآن",
+        "text": "يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا قُمْتُمْ إِلَى الصَّلَاةِ فَاغْسِلُوا وُجُوهَكُمْ…",
+        "source": "سورة المائدة: ٦"
+      }
+    ],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "لا تُقبل صلاة بغير طهور",
+        "source": "رواه مسلم (٢٢٤)"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "الواجب",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن قدامة — المغني، كتاب الطهارة",
+        "source": "ابن قدامة — المغني، كتاب الطهارة"
+      }
+    ],
+    "keywords": [
+      "الوضوء",
+      "الطهارة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-10",
+    "external_key": "curriculum-10",
+    "title": "الركوع",
+    "summary": "الركوع ركن مع الطمأنينة؛ وأقلّه الانحناء بحيث تصل اليدان إلى الركبتين، ويُسنّ فيه «سبحان ربي العظيم».",
+    "body": "الركوع ركن مع الطمأنينة؛ وأقلّه الانحناء بحيث تصل اليدان إلى الركبتين، ويُسنّ فيه «سبحان ربي العظيم».",
+    "category": "الصلاة",
+    "subcategory": "أركان الصلاة",
+    "subcategories": [
+      "أركان الصلاة"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "ثم يركع حتى تطمئن مفاصله",
+        "source": "رواه مسلم من حديث أبي هريرة في صفة الصلاة"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "الركن",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن قدامة — المغني",
+        "source": "ابن قدامة — المغني"
+      }
+    ],
+    "keywords": [
+      "أركان الصلاة",
+      "الصلاة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-11",
+    "external_key": "curriculum-11",
+    "title": "السجود",
+    "summary": "السجود ركن على سبعة أعظم: الجبهة مع الأنف، واليدين، والركبتين، وأطراف القدمين؛ مع الطمأنينة.",
+    "body": "السجود ركن على سبعة أعظم: الجبهة مع الأنف، واليدين، والركبتين، وأطراف القدمين؛ مع الطمأنينة.",
+    "category": "الصلاة",
+    "subcategory": "أركان الصلاة",
+    "subcategories": [
+      "أركان الصلاة"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "أمرت أن أسجد على سبعة أعضاء",
+        "source": "رواه البخاري"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "الركن",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن عثيمين — الشرح الممتع",
+        "source": "ابن عثيمين — الشرح الممتع"
+      }
+    ],
+    "keywords": [
+      "أركان الصلاة",
+      "الصلاة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-12",
+    "external_key": "curriculum-12",
+    "title": "وجوب الصلاة",
+    "summary": "الصلاة ركن الإسلام الأعظم بعد الشهادتين؛ وهي أول ما يُحاسب عليه العبد يوم القيامة، وتاركها جاحدًا كافر عند الجمهور.",
+    "body": "الصلاة ركن الإسلام الأعظم بعد الشهادتين؛ وهي أول ما يُحاسب عليه العبد يوم القيامة، وتاركها جاحدًا كافر عند الجمهور.",
+    "category": "الصلاة",
+    "subcategory": "أحكام الصلاة",
+    "subcategories": [
+      "أحكام الصلاة"
+    ],
+    "quran_evidence": [
+      {
+        "type": "قرآن",
+        "text": "إن الصلاة كانت على المؤمنين كتاباً موقوتاً",
+        "source": "سورة النساء: 103"
+      }
+    ],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "prevailing_view": "الواجب",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن باز — مجموع الفتاوى",
+        "source": "ابن باز — مجموع الفتاوى"
+      }
+    ],
+    "keywords": [
+      "أحكام الصلاة",
+      "الصلاة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-13",
+    "external_key": "curriculum-13",
+    "title": "وجوب صلاة الجمعة",
+    "summary": "الجمعة فرض عين على الذكر البالغ العاقل المقيم الخالي من الأعذار؛ وتسقط بالعذر الشرعي كالمرض والسفر على تفصيل.",
+    "body": "الجمعة فرض عين على الذكر البالغ العاقل المقيم الخالي من الأعذار؛ وتسقط بالعذر الشرعي كالمرض والسفر على تفصيل.",
+    "category": "الصلاة",
+    "subcategory": "الجمعة",
+    "subcategories": [
+      "الجمعة"
+    ],
+    "quran_evidence": [
+      {
+        "type": "قرآن",
+        "text": "يا أيها الذين آمنوا إذا نودي للصلاة من يوم الجمعة",
+        "source": "سورة الجمعة: 9"
+      }
+    ],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "prevailing_view": "الواجب",
+    "evidence": [],
+    "references": [
+      {
+        "text": "اللجنة الدائمة",
+        "source": "اللجنة الدائمة"
+      }
+    ],
+    "keywords": [
+      "الجمعة",
+      "الصلاة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-14",
+    "external_key": "curriculum-14",
+    "title": "صلاة العيد",
+    "summary": "صلاة العيد سنة مؤكدة عند الجمهور، وفرض كفاية أو عين عند آخرين؛ ركعتان بتكبيرات زوائد ثم خطبتان.",
+    "body": "صلاة العيد سنة مؤكدة عند الجمهور، وفرض كفاية أو عين عند آخرين؛ ركعتان بتكبيرات زوائد ثم خطبتان.",
+    "category": "الصلاة",
+    "subcategory": "العيد",
+    "subcategories": [
+      "العيد"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "كان ﷺ يصلي العيد ركعتين",
+        "source": "رواه البخاري"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "السنة المؤكدة",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن عثيمين — الشرح الممتع",
+        "source": "ابن عثيمين — الشرح الممتع"
+      }
+    ],
+    "keywords": [
+      "العيد",
+      "الصلاة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-15",
+    "external_key": "curriculum-15",
+    "title": "صلاة الجنازة",
+    "summary": "صلاة الجنازة فرض كفاية؛ أركانها النية والتكبيرات والفاتحة والصلاة على النبي والدعاء للميت والتسليم على تفصيل المذاهب.",
+    "body": "صلاة الجنازة فرض كفاية؛ أركانها النية والتكبيرات والفاتحة والصلاة على النبي والدعاء للميت والتسليم على تفصيل المذاهب.",
+    "category": "الصلاة",
+    "subcategory": "صلاة الجنازة",
+    "subcategories": [
+      "صلاة الجنازة"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "ما من رجل مسلم يموت فيقوم على جنازته أربعون رجلاً لا يشركون بالله شيئاً إلا شفّعهم الله فيه",
+        "source": "رواه مسلم"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "فرض كفاية",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن قدامة — المغني",
+        "source": "ابن قدامة — المغني"
+      }
+    ],
+    "keywords": [
+      "صلاة الجنازة",
+      "الصلاة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-16",
+    "external_key": "curriculum-16",
+    "title": "الإسلام شرط لوجوب الزكاة",
+    "summary": "لا تجب الزكاة على كافر أصلي؛ لأنها عبادة، ولا تُقبل منه حتى يُسلم. وأما المرتد فمحل تفصيل عند الفقهاء.",
+    "body": "لا تجب الزكاة على كافر أصلي؛ لأنها عبادة، ولا تُقبل منه حتى يُسلم. وأما المرتد فمحل تفصيل عند الفقهاء.",
+    "category": "الزكاة",
+    "subcategory": "شروط الزكاة",
+    "subcategories": [
+      "شروط الزكاة"
+    ],
+    "quran_evidence": [
+      {
+        "type": "قرآن",
+        "text": "خذ من أموالهم صدقة",
+        "source": "سورة التوبة: 103"
+      }
+    ],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "prevailing_view": "الشرط",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن قدامة — المغني",
+        "source": "ابن قدامة — المغني"
+      }
+    ],
+    "keywords": [
+      "شروط الزكاة",
+      "الزكاة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-17",
+    "external_key": "curriculum-17",
+    "title": "بلوغ النصاب",
+    "summary": "تجب الزكاة إذا بلغ المال النصاب الشرعي وحال عليه الحول في غير الزروع.",
+    "body": "تجب الزكاة إذا بلغ المال النصاب الشرعي وحال عليه الحول في غير الزروع.",
+    "category": "الزكاة",
+    "subcategory": "شروط الزكاة",
+    "subcategories": [
+      "شروط الزكاة"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "ليس فيما دون خمس أواق صدقة",
+        "source": "متفق عليه"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "الشرط",
+    "evidence": [],
+    "references": [
+      {
+        "text": "اللجنة الدائمة — فتاوى الزكاة",
+        "source": "اللجنة الدائمة — فتاوى الزكاة"
+      }
+    ],
+    "keywords": [
+      "شروط الزكاة",
+      "الزكاة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-18",
+    "external_key": "curriculum-18",
+    "title": "نسبة زكاة المال",
+    "summary": "زكاة النقد وعروض التجارة ربع العشر (٢٫٥٪) إذا بلغ النصاب وحال الحول؛ ويُقوَّم عرض التجارة بسعر يوم الوجوب.",
+    "body": "زكاة النقد وعروض التجارة ربع العشر (٢٫٥٪) إذا بلغ النصاب وحال الحول؛ ويُقوَّم عرض التجارة بسعر يوم الوجوب.",
+    "category": "الزكاة",
+    "subcategory": "زكاة المال",
+    "subcategories": [
+      "زكاة المال"
+    ],
+    "quran_evidence": [
+      {
+        "type": "قرآن",
+        "text": "خذ من أموالهم صدقة",
+        "source": "سورة التوبة: 103"
+      }
+    ],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "prevailing_view": "2.5%",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن باز — فتاوى",
+        "source": "ابن باز — فتاوى"
+      }
+    ],
+    "keywords": [
+      "زكاة المال",
+      "الزكاة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-19",
+    "external_key": "curriculum-19",
+    "title": "زكاة الفطر",
+    "summary": "زكاة الفطر واجبة على كل مسلم يملك قوت يومه وليلته؛ تُخرج صاعًا من طعام البلد قبل صلاة العيد، ويجوز قبلها بيوم أو يومين عند الجمهور.",
+    "body": "زكاة الفطر واجبة على كل مسلم يملك قوت يومه وليلته؛ تُخرج صاعًا من طعام البلد قبل صلاة العيد، ويجوز قبلها بيوم أو يومين عند الجمهور.",
+    "category": "الزكاة",
+    "subcategory": "زكاة الفطر",
+    "subcategories": [
+      "زكاة الفطر"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "فرض رسول الله ﷺ زكاة الفطر",
+        "source": "متفق عليه (البخاري ١٥٠٣ ومسلم ٩٨٤)"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "الواجب",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن عثيمين — الشرح الممتع",
+        "source": "ابن عثيمين — الشرح الممتع"
+      }
+    ],
+    "keywords": [
+      "زكاة الفطر",
+      "الزكاة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-2",
+    "external_key": "curriculum-2",
+    "title": "سنن الوضوء",
+    "summary": "من سنن الوضوء: التسمية، والسواك، وغسل الكفين، والمضمضة، والاستنشاق، ومسح الرأس، وتخليل اللحية والأصابع.",
+    "body": "من سنن الوضوء: التسمية، والسواك، وغسل الكفين، والمضمضة، والاستنشاق، ومسح الرأس، وتخليل اللحية والأصابع.",
+    "category": "الطهارة",
+    "subcategory": "الوضوء",
+    "subcategories": [
+      "الوضوء"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "كان ﷺ إذا توضأ غسل كفيه ثلاث مرات",
+        "source": "رواه البخاري"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "السنة",
+    "evidence": [],
+    "references": [
+      {
+        "text": "اللجنة الدائمة — فتاوى الطهارة",
+        "source": "اللجنة الدائمة — فتاوى الطهارة"
+      }
+    ],
+    "keywords": [
+      "الوضوء",
+      "الطهارة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-20",
+    "external_key": "curriculum-20",
+    "title": "مصارف الزكاة الثمانية",
+    "summary": "تُصرف الزكاة في المصارف الثمانية في التوبة: ٦٠؛ ولا تُصرف لغيرهم كالبناء التطوعي المحض على الراجح.",
+    "body": "تُصرف الزكاة في المصارف الثمانية في التوبة: ٦٠؛ ولا تُصرف لغيرهم كالبناء التطوعي المحض على الراجح.",
+    "category": "الزكاة",
+    "subcategory": "مصارف الزكاة",
+    "subcategories": [
+      "مصارف الزكاة"
+    ],
+    "quran_evidence": [
+      {
+        "type": "قرآن",
+        "text": "إنما الصدقات للفقراء والمساكين...",
+        "source": "سورة التوبة: 60"
+      }
+    ],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "prevailing_view": "محددة شرعاً",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن قدامة — المغني",
+        "source": "ابن قدامة — المغني"
+      }
+    ],
+    "keywords": [
+      "مصارف الزكاة",
+      "الزكاة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-21",
+    "external_key": "curriculum-21",
+    "title": "وجوب صيام رمضان",
+    "summary": "صيام رمضان ركن من أركان الإسلام على كل مسلم بالغ عاقل مقيم قادر؛ ويُقضى على المريض والمسافر، وتُطعم الحامل/المرضع على تفصيل.",
+    "body": "صيام رمضان ركن من أركان الإسلام على كل مسلم بالغ عاقل مقيم قادر؛ ويُقضى على المريض والمسافر، وتُطعم الحامل/المرضع على تفصيل.",
+    "category": "الصيام",
+    "subcategory": "صيام رمضان",
+    "subcategories": [
+      "صيام رمضان"
+    ],
+    "quran_evidence": [
+      {
+        "type": "قرآن",
+        "text": "شهر رمضان الذي أنزل فيه القرآن",
+        "source": "سورة البقرة: 185"
+      }
+    ],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "prevailing_view": "الواجب",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن باز — مجموع الفتاوى",
+        "source": "ابن باز — مجموع الفتاوى"
+      }
+    ],
+    "keywords": [
+      "صيام رمضان",
+      "الصيام"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-22",
+    "external_key": "curriculum-22",
+    "title": "الأكل والشرب ينقض الصيام",
+    "summary": "الأكل والشرب عمدًا من المفطرات المجمع عليها؛ ويلزم القضاء مع التوبة، والكفارة في الجماع خاصة على الراجح من مذهب الجمهور.",
+    "body": "الأكل والشرب عمدًا من المفطرات المجمع عليها؛ ويلزم القضاء مع التوبة، والكفارة في الجماع خاصة على الراجح من مذهب الجمهور.",
+    "category": "الصيام",
+    "subcategory": "مفطرات الصيام",
+    "subcategories": [
+      "مفطرات الصيام"
+    ],
+    "quran_evidence": [
+      {
+        "type": "قرآن",
+        "text": "وكلوا واشربوا حتى يتبين لكم الخيط الأبيض",
+        "source": "سورة البقرة: 187"
+      }
+    ],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "prevailing_view": "مفطر",
+    "evidence": [],
+    "references": [
+      {
+        "text": "اللجنة الدائمة",
+        "source": "اللجنة الدائمة"
+      }
+    ],
+    "keywords": [
+      "مفطرات الصيام",
+      "الصيام"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-23",
+    "external_key": "curriculum-23",
+    "title": "فضل قيام رمضان",
+    "summary": "قيام رمضان سنة مؤكدة؛ والتراويح منه، ويُشرع جماعةً في المساجد كما فعل عمر رضي الله عنه بعد أن ترك النبي ﷺ المداومة خشية الفرض.",
+    "body": "قيام رمضان سنة مؤكدة؛ والتراويح منه، ويُشرع جماعةً في المساجد كما فعل عمر رضي الله عنه بعد أن ترك النبي ﷺ المداومة خشية الفرض.",
+    "category": "الصيام",
+    "subcategory": "قيام الليل",
+    "subcategories": [
+      "قيام الليل"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "من قام رمضان إيماناً واحتساباً غفر له",
+        "source": "رواه البخاري"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "السنة",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن عثيمين — الشرح الممتع",
+        "source": "ابن عثيمين — الشرح الممتع"
+      }
+    ],
+    "keywords": [
+      "قيام الليل",
+      "الصيام"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-24",
+    "external_key": "curriculum-24",
+    "title": "حكم الاعتكاف",
+    "summary": "الاعتكاف سنة في العشر الأواخر من رمضان؛ وأفضله في المسجد الجامع، ويُشترط النية والمكث في المسجد عند الجمهور.",
+    "body": "الاعتكاف سنة في العشر الأواخر من رمضان؛ وأفضله في المسجد الجامع، ويُشترط النية والمكث في المسجد عند الجمهور.",
+    "category": "الصيام",
+    "subcategory": "الاعتكاف",
+    "subcategories": [
+      "الاعتكاف"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "كان ﷺ يعتكف العشر الأواخر",
+        "source": "رواه البخاري"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "السنة",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن باز — فتاوى",
+        "source": "ابن باز — فتاوى"
+      }
+    ],
+    "keywords": [
+      "الاعتكاف",
+      "الصيام"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-25",
+    "external_key": "curriculum-25",
+    "title": "وجوب الحج",
+    "summary": "الحج فرض مرة في العمر على المستطيع بدنيًا وماليًا؛ ويُعجَّل به مع القدرة، والاستطاعة تشمل الزاد والراحلة وأمن الطريق.",
+    "body": "الحج فرض مرة في العمر على المستطيع بدنيًا وماليًا؛ ويُعجَّل به مع القدرة، والاستطاعة تشمل الزاد والراحلة وأمن الطريق.",
+    "category": "الحج والعمرة",
+    "subcategory": "أحكام الحج",
+    "subcategories": [
+      "أحكام الحج"
+    ],
+    "quran_evidence": [
+      {
+        "type": "قرآن",
+        "text": "ولله على الناس حج البيت",
+        "source": "سورة آل عمران: 97"
+      }
+    ],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "prevailing_view": "الواجب",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن باز — مجموع الفتاوى",
+        "source": "ابن باز — مجموع الفتاوى"
+      }
+    ],
+    "keywords": [
+      "أحكام الحج",
+      "الحج والعمرة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-26",
+    "external_key": "curriculum-26",
+    "title": "الوقوف بعرفة",
+    "summary": "الوقوف بعرفة ركن الحج الأعظم؛ وقته من زوال يوم عرفة إلى فجر النحر على الراجح، ومن فاته فاته الحج.",
+    "body": "الوقوف بعرفة ركن الحج الأعظم؛ وقته من زوال يوم عرفة إلى فجر النحر على الراجح، ومن فاته فاته الحج.",
+    "category": "الحج والعمرة",
+    "subcategory": "أحكام الحج",
+    "subcategories": [
+      "أحكام الحج"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "الحج عرفة",
+        "source": "رواه الترمذي وأبو داود، صححه الألباني"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "الركن",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن قدامة — المغني",
+        "source": "ابن قدامة — المغني"
+      }
+    ],
+    "keywords": [
+      "أحكام الحج",
+      "الحج والعمرة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-27",
+    "external_key": "curriculum-27",
+    "title": "حكم العمرة",
+    "summary": "العمرة واجبة مرة في العمر عند الحنابلة والشافعية في قول، وسنة مؤكدة عند الحنفية والمالكية؛ وأركانها الإحرام والطواف والسعي.",
+    "body": "العمرة واجبة مرة في العمر عند الحنابلة والشافعية في قول، وسنة مؤكدة عند الحنفية والمالكية؛ وأركانها الإحرام والطواف والسعي.",
+    "category": "الحج والعمرة",
+    "subcategory": "العمرة",
+    "subcategories": [
+      "العمرة"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "من حج فلم يرفث ولم يفسق… ومن اعتمر",
+        "source": "متفق عليه في فضل العمرة مع الحج"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "الخلاف معظم",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن عثيمين — الشرح الممتع",
+        "source": "ابن عثيمين — الشرح الممتع"
+      }
+    ],
+    "keywords": [
+      "العمرة",
+      "الحج والعمرة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-28",
+    "external_key": "curriculum-28",
+    "title": "حكم الأضحية",
+    "summary": "الأضحية سنة مؤكدة لمن استطاع عند الجمهور؛ وثبوتها من عمل النبي ﷺ وحثّه عليها.",
+    "body": "الأضحية سنة مؤكدة لمن استطاع عند الجمهور؛ وثبوتها من عمل النبي ﷺ وحثّه عليها.",
+    "category": "الحج والعمرة",
+    "subcategory": "الأضحية",
+    "subcategories": [
+      "الأضحية"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "ضحّى النبي ﷺ بكبشين أملحين",
+        "source": "متفق عليه؛ وحديث «من كان له سعة فلا يدع أن يضحي» — أحمد، حسّنه الألباني"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "السنة المؤكدة",
+    "evidence": [],
+    "references": [
+      {
+        "text": "اللجنة الدائمة",
+        "source": "اللجنة الدائمة"
+      }
+    ],
+    "keywords": [
+      "الأضحية",
+      "الحج والعمرة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-29",
+    "external_key": "curriculum-29",
+    "title": "شروط صحة البيع",
+    "summary": "يشترط للبيع: الرضا، وعلم المبيع والثمن، والقدرة على التسليم، وحلّ المبيع، وخلوّه من الغرر الفاحش والربا. قال ﷺ: «إنما البيع عن تراض» — ابن ماجه، صححه الألباني. ونهى عن بيع الغرر — مسلم.",
+    "body": "يشترط للبيع: الرضا، وعلم المبيع والثمن، والقدرة على التسليم، وحلّ المبيع، وخلوّه من الغرر الفاحش والربا. قال ﷺ: «إنما البيع عن تراض» — ابن ماجه، صححه الألباني. ونهى عن بيع الغرر — مسلم.",
+    "category": "المعاملات",
+    "subcategory": "البيع",
+    "subcategories": [
+      "البيع"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "إنما البيع عن تراض",
+        "source": "ابن ماجه — صححه الألباني"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "الشروط",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن تيمية — الفتاوى",
+        "source": "ابن تيمية — الفتاوى"
+      }
+    ],
+    "keywords": [
+      "البيع",
+      "المعاملات"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-3",
+    "external_key": "curriculum-3",
+    "title": "نواقض الوضوء — خروج ما من السبيلين",
+    "summary": "من نواقض الوضوء بالإجماع: خروج البول أو الغائط أو الريح من الدبر؛ لأن الحدث ناقض للطهارة المشروطة للصلاة.",
+    "body": "من نواقض الوضوء بالإجماع: خروج البول أو الغائط أو الريح من الدبر؛ لأن الحدث ناقض للطهارة المشروطة للصلاة.",
+    "category": "الطهارة",
+    "subcategory": "الوضوء",
+    "subcategories": [
+      "الوضوء"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "لا تُقبل صلاة أحدكم إذا أحدث حتى يتوضأ",
+        "source": "متفق عليه"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "الإجماع",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن قدامة — المغني",
+        "source": "ابن قدامة — المغني"
+      }
+    ],
+    "keywords": [
+      "الوضوء",
+      "الطهارة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-30",
+    "external_key": "curriculum-30",
+    "title": "تحريم الربا",
+    "summary": "الربا كبيرة محرّمة بالكتاب والسنة والإجماع؛ منه ربا النسيئة وربا الفضل، ويشمل فوائد القروض البنكية المعاصرة.",
+    "body": "الربا كبيرة محرّمة بالكتاب والسنة والإجماع؛ منه ربا النسيئة وربا الفضل، ويشمل فوائد القروض البنكية المعاصرة.",
+    "category": "المعاملات",
+    "subcategory": "الربا",
+    "subcategories": [
+      "الربا"
+    ],
+    "quran_evidence": [
+      {
+        "type": "قرآن",
+        "text": "وأحل الله البيع وحرم الربا",
+        "source": "سورة البقرة: 275"
+      }
+    ],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "prevailing_view": "الحرام",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن باز — فتاوى",
+        "source": "ابن باز — فتاوى"
+      }
+    ],
+    "keywords": [
+      "الربا",
+      "المعاملات"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-31",
+    "external_key": "curriculum-31",
+    "title": "صحة عقد الإجارة",
+    "summary": "الإجارة جائزة إذا عُلمت المنفعة والأجرة والمدة؛ ويُستحب تعجيل أجر الأجير: «أعطوا الأجير أجره قبل أن يجف عرقه» — ابن ماجه ٢٤٤٣ حسّنه الألباني.",
+    "body": "الإجارة جائزة إذا عُلمت المنفعة والأجرة والمدة؛ ويُستحب تعجيل أجر الأجير: «أعطوا الأجير أجره قبل أن يجف عرقه» — ابن ماجه ٢٤٤٣ حسّنه الألباني.",
+    "category": "المعاملات",
+    "subcategory": "الإجارة",
+    "subcategories": [
+      "الإجارة"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "أعطوا الأجير أجره قبل أن يجف عرقه",
+        "source": "ابن ماجه (٢٤٤٣) — حسّنه الألباني"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "الجائز",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن قدامة — المغني",
+        "source": "ابن قدامة — المغني"
+      }
+    ],
+    "keywords": [
+      "الإجارة",
+      "المعاملات"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-32",
+    "external_key": "curriculum-32",
+    "title": "حكم النكاح",
+    "summary": "النكاح ميثاق غليظ مرغَّب؛ أركانه عند الجمهور الصيغة والزوجان، ويُشترط الولي والشاهدان عند الجمهور. قال ﷺ: «لا نكاح إلا بولي» — أبو داود ٢٠٨٥، صححه الألباني. ويُستحب إعلانه والتيسير في المهر.",
+    "body": "النكاح ميثاق غليظ مرغَّب؛ أركانه عند الجمهور الصيغة والزوجان، ويُشترط الولي والشاهدان عند الجمهور. قال ﷺ: «لا نكاح إلا بولي» — أبو داود ٢٠٨٥، صححه الألباني. ويُستحب إعلانه والتيسير في المهر.",
+    "category": "الأسرة",
+    "subcategory": "النكاح",
+    "subcategories": [
+      "النكاح"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "يا معشر الشباب من استطاع الباءة فليتزوج",
+        "source": "رواه البخاري"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "السنة/الواجب",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن عثيمين — الشرح الممتع",
+        "source": "ابن عثيمين — الشرح الممتع"
+      }
+    ],
+    "keywords": [
+      "النكاح",
+      "الأسرة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-33",
+    "external_key": "curriculum-33",
+    "title": "تحريم الطلاق في الحيض",
+    "summary": "طلاق الحائض محرّم عند الجمهور؛ وأُمر ابن عمر بمراجعة زوجته حين طلّقها وهي حائض — متفق عليه. وأما حديث «لا طلاق في إغلاق» فمحله الإكراه لا الحيض.",
+    "body": "طلاق الحائض محرّم عند الجمهور؛ وأُمر ابن عمر بمراجعة زوجته حين طلّقها وهي حائض — متفق عليه. وأما حديث «لا طلاق في إغلاق» فمحله الإكراه لا الحيض.",
+    "category": "الأسرة",
+    "subcategory": "الطلاق",
+    "subcategories": [
+      "الطلاق"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "مُرْه فليراجعها",
+        "source": "متفق عليه من حديث ابن عمر"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "الحرام",
+    "evidence": [],
+    "references": [
+      {
+        "text": "اللجنة الدائمة",
+        "source": "اللجنة الدائمة"
+      }
+    ],
+    "keywords": [
+      "الطلاق",
+      "الأسرة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-34",
+    "external_key": "curriculum-34",
+    "title": "وجوب تنفيذ الوصية بالعدل",
+    "summary": "المواريث مقدّرة في القرآن ولا يجوز تعدّيها؛ والوصية لغير وارث في حدود الثلث، ولا وصية لوارث إلا بإجازة الورثة.",
+    "body": "المواريث مقدّرة في القرآن ولا يجوز تعدّيها؛ والوصية لغير وارث في حدود الثلث، ولا وصية لوارث إلا بإجازة الورثة.",
+    "category": "الأسرة",
+    "subcategory": "الميراث",
+    "subcategories": [
+      "الميراث"
+    ],
+    "quran_evidence": [
+      {
+        "type": "قرآن",
+        "text": "يوصيكم الله في أولادكم",
+        "source": "سورة النساء: 11"
+      }
+    ],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "prevailing_view": "الواجب",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن قدامة — المغني",
+        "source": "ابن قدامة — المغني"
+      }
+    ],
+    "keywords": [
+      "الميراث",
+      "الأسرة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-35",
+    "external_key": "curriculum-35",
+    "title": "توحيد الله",
+    "summary": "التوحيد إفراد الله بالربوبية والألوهية والأسماء والصفات؛ وهو أول واجب وآخره، وعليه مدار النجاة.",
+    "body": "التوحيد إفراد الله بالربوبية والألوهية والأسماء والصفات؛ وهو أول واجب وآخره، وعليه مدار النجاة.",
+    "category": "العقيدة",
+    "subcategory": "التوحيد",
+    "subcategories": [
+      "التوحيد"
+    ],
+    "quran_evidence": [
+      {
+        "type": "قرآن",
+        "text": "واعبدوا الله ولا تشركوا به شيئاً",
+        "source": "سورة النساء: 36"
+      }
+    ],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "prevailing_view": "الأساس",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن تيمية — العقيدة الواسطية",
+        "source": "ابن تيمية — العقيدة الواسطية"
+      }
+    ],
+    "keywords": [
+      "التوحيد",
+      "العقيدة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-36",
+    "external_key": "curriculum-36",
+    "title": "تحذير من البدع",
+    "summary": "كل محدثة في الدين بدعة، وكل بدعة ضلالة؛ فلا يُتقرب إلى الله إلا بما شرع في الكتاب والسنة بفهم السلف.",
+    "body": "كل محدثة في الدين بدعة، وكل بدعة ضلالة؛ فلا يُتقرب إلى الله إلا بما شرع في الكتاب والسنة بفهم السلف.",
+    "category": "العقيدة",
+    "subcategory": "البدع",
+    "subcategories": [
+      "البدع"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "من أحدث في أمرنا هذا ما ليس منه فهو رد",
+        "source": "رواه البخاري"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "التحريم",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن باز — فتاوى",
+        "source": "ابن باز — فتاوى"
+      }
+    ],
+    "keywords": [
+      "البدع",
+      "العقيدة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-4",
+    "external_key": "curriculum-4",
+    "title": "نواقض الوضوء — النوم",
+    "summary": "النوم المستغرق الذي يزول معه الإحساس ينقض الوضوء عند جمهور أهل العلم؛ وأما النعاس الخفيف جالسًا فمحل تفصيل.",
+    "body": "النوم المستغرق الذي يزول معه الإحساس ينقض الوضوء عند جمهور أهل العلم؛ وأما النعاس الخفيف جالسًا فمحل تفصيل.",
+    "category": "الطهارة",
+    "subcategory": "الوضوء",
+    "subcategories": [
+      "الوضوء"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "كان أصحاب رسول الله ﷺ ينامون ثم يصلّون ولا يتوضؤون",
+        "source": "رواه مسلم (في نوم الجالس غير المستغرق عند من حمله عليه)"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "الراجح",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن عثيمين — الشرح الممتع",
+        "source": "ابن عثيمين — الشرح الممتع"
+      }
+    ],
+    "keywords": [
+      "الوضوء",
+      "الطهارة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-5",
+    "external_key": "curriculum-5",
+    "title": "وجوب الغسل عند الجنابة",
+    "summary": "الغسل من الجنابة واجب لمن أراد الصلاة أو الطواف؛ دليله ﴿وَإِن كُنتُمْ جُنُبًا فَاطَّهَّرُوا﴾. وقراءة القرآن للجنب محل خلاف مشهور.",
+    "body": "الغسل من الجنابة واجب لمن أراد الصلاة أو الطواف؛ دليله ﴿وَإِن كُنتُمْ جُنُبًا فَاطَّهَّرُوا﴾. وقراءة القرآن للجنب محل خلاف مشهور.",
+    "category": "الطهارة",
+    "subcategory": "الغسل",
+    "subcategories": [
+      "الغسل"
+    ],
+    "quran_evidence": [
+      {
+        "type": "قرآن",
+        "text": "وإن كنتم جنباً فاطهروا",
+        "source": "سورة المائدة: 6"
+      }
+    ],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "prevailing_view": "الواجب للصلاة",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن باز — مجموع الفتاوى",
+        "source": "ابن باز — مجموع الفتاوى"
+      }
+    ],
+    "keywords": [
+      "الغسل",
+      "الطهارة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-6",
+    "external_key": "curriculum-6",
+    "title": "حكم التيمم",
+    "summary": "التيمم رخصة عند فقد الماء أو العجز عن استعماله لمرض أو ضرر؛ صفته ضربتان أو ضربة على قول، يمسح بها الوجه والكفين.",
+    "body": "التيمم رخصة عند فقد الماء أو العجز عن استعماله لمرض أو ضرر؛ صفته ضربتان أو ضربة على قول، يمسح بها الوجه والكفين.",
+    "category": "الطهارة",
+    "subcategory": "التيمم",
+    "subcategories": [
+      "التيمم"
+    ],
+    "quran_evidence": [
+      {
+        "type": "قرآن",
+        "text": "فلم تجدوا ماء فتيمموا صعيداً طيباً",
+        "source": "سورة المائدة: 6"
+      }
+    ],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "prevailing_view": "الجائز عند العذر",
+    "evidence": [],
+    "references": [
+      {
+        "text": "اللجنة الدائمة — فتاوى الطهارة",
+        "source": "اللجنة الدائمة — فتاوى الطهارة"
+      }
+    ],
+    "keywords": [
+      "التيمم",
+      "الطهارة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-7",
+    "external_key": "curriculum-7",
+    "title": "إزالة النجاسة قبل الصلاة",
+    "summary": "طهارة البدن والثوب والمكان شرط لصحة الصلاة عند الجمهور؛ وتُزال النجاسة بالماء الطهور، وما شقّ غسله يُعفى عن يسيره على تفصيل الفقهاء.",
+    "body": "طهارة البدن والثوب والمكان شرط لصحة الصلاة عند الجمهور؛ وتُزال النجاسة بالماء الطهور، وما شقّ غسله يُعفى عن يسيره على تفصيل الفقهاء.",
+    "category": "الطهارة",
+    "subcategory": "النجاسات",
+    "subcategories": [
+      "النجاسات"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "إذا أتى أحدكم المسجد فلينظر فإن رأى في نعليه أذى أو قذراً فليمسحه",
+        "source": "أبو داود، حسّنه الألباني"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "الواجب",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن قدامة — المغني",
+        "source": "ابن قدامة — المغني"
+      }
+    ],
+    "keywords": [
+      "النجاسات",
+      "الطهارة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-8",
+    "external_key": "curriculum-8",
+    "title": "تكبيرة الإحرام",
+    "summary": "تكبيرة الإحرام ركن لا تنعقد الصلاة بدونها؛ صيغتها «الله أكبر» عند الجمهور، ولا يجزئ غيرها على الراجح.",
+    "body": "تكبيرة الإحرام ركن لا تنعقد الصلاة بدونها؛ صيغتها «الله أكبر» عند الجمهور، ولا يجزئ غيرها على الراجح.",
+    "category": "الصلاة",
+    "subcategory": "أركان الصلاة",
+    "subcategories": [
+      "أركان الصلاة"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "إذا قمتَ إلى الصلاة فكبِّر",
+        "source": "رواه البخاري من حديث المسيء صلاته"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "الركن",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن عثيمين — الشرح الممتع",
+        "source": "ابن عثيمين — الشرح الممتع"
+      }
+    ],
+    "keywords": [
+      "أركان الصلاة",
+      "الصلاة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "curriculum-9",
+    "external_key": "curriculum-9",
+    "title": "قراءة الفاتحة",
+    "summary": "قراءة الفاتحة ركن في كل ركعة للإمام والمنفرد عند الجمهور؛ والمأموم محل خلاف، والأحوط قراءتها في السرّية.",
+    "body": "قراءة الفاتحة ركن في كل ركعة للإمام والمنفرد عند الجمهور؛ والمأموم محل خلاف، والأحوط قراءتها في السرّية.",
+    "category": "الصلاة",
+    "subcategory": "أركان الصلاة",
+    "subcategories": [
+      "أركان الصلاة"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [
+      {
+        "type": "حديث",
+        "text": "لا صلاة لمن لم يقرأ بفاتحة الكتاب",
+        "source": "رواه البخاري"
+      }
+    ],
+    "scholar_opinions": [],
+    "prevailing_view": "الركن",
+    "evidence": [],
+    "references": [
+      {
+        "text": "ابن باز — فتاوى",
+        "source": "ابن باز — فتاوى"
+      }
+    ],
+    "keywords": [
+      "أركان الصلاة",
+      "الصلاة"
+    ],
+    "benefits": [],
+    "importance_score": 65,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "fiqh-curriculum-registry",
+    "linked_qa_ids": [],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
   }
 ] as unknown as ShariaRulingExtended[];
 
-export const RULINGS_ENCYCLOPEDIA_TOTAL = 147;
+export const RULINGS_ENCYCLOPEDIA_TOTAL = 183;
