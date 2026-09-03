@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-03",
-  "lastCompletedId": "b061",
-  "resumeFromId": "b062",
+  "lastCompletedId": "b062",
+  "resumeFromId": "b063",
   "items": [
     {
       "id": "b001",
@@ -736,6 +736,21 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b061-masarat-filler-gate.test.ts"
       ],
       "finding": "أوصاف الخطوات كانت ملوّثة بجمل مكررة (مراجعة أسبوعية / عمل ظاهر / عمدة الدليل / الأهم فالمهم / اجتناب التوسّع). أُعيدت كتابة كل وصف ليكون فريدًا ومختصرًا بلا اختراع محتوى شرعي جديد؛ بوابة content-audit-b061."
+    },
+    {
+      "id": "b062",
+      "section": "quran_people",
+      "title": "إكمال تعريفات قصيرة في الذين ذُكروا في القرآن + مواءمة بوابات البحث/الربط",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/public/data/quran-people/people.json",
+        "artifacts/majalis/src/lib/__tests__/content-depth-audit-gate.test.ts",
+        "artifacts/majalis/src/lib/__tests__/site-interlink.test.ts",
+        "artifacts/majalis/package.json"
+      ],
+      "finding": "أُكملت تعريفات arafat/jannah/ahqaf إلى ≥100 حرفًا؛ حُدّثت بوابة فراغ البحث لصياغة «لم نجد»؛ رُبط اختبار site-interlink بمسارات /scholars؛ استُعيد سكربت test:quiz-game-integrity لإصدار المحتوى."
     }
   ]
 }
