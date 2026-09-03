@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-03",
-  "lastCompletedId": "b074",
-  "resumeFromId": "b075",
+  "lastCompletedId": "b075",
+  "resumeFromId": "b076",
   "items": [
     {
       "id": "b001",
@@ -938,6 +938,19 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b074-mawsuaat-bodies-gate.test.ts"
       ],
       "finding": "أُضيف متن موجز فريد لكل درس موسوعات (45) من الملخص المنقول بلا زيادة حديث أو حكم؛ بوابة b074."
+    },
+    {
+      "id": "b075",
+      "section": "fikr_bodies",
+      "title": "متون فريدة لدروس الفكر والواقع من الملخص المنقول",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/fikr-waqia-data.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b075-fikr-bodies-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز فريد لكل درس فكر وواقع (105) من الملخص المنقول بلا زيادة حديث أو حكم؛ بوابة b075."
     }
   ]
 }
