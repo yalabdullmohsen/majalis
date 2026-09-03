@@ -16,6 +16,28 @@ export function isImmersiveChromePath(pathname: string): boolean {
   );
 }
 
+/** صفحات وظيفية — تُخفى فيها الشريط المتحرك الطويل؛ الوظيفة أولًا */
+export function isCompactHeaderPath(pathname: string): boolean {
+  const p = pathname.replace(/\/+$/, "") || "/";
+  if (isImmersiveChromePath(p) || isAuthStandalonePath(p)) return true;
+  return (
+    p === "/search" ||
+    p.startsWith("/search/") ||
+    p === "/library" ||
+    p.startsWith("/library/") ||
+    p === "/quiz" ||
+    p.startsWith("/quiz/") ||
+    p === "/profile" ||
+    p.startsWith("/profile/") ||
+    p === "/settings" ||
+    p.startsWith("/settings/") ||
+    p === "/prayer-times" ||
+    p.startsWith("/prayer-times/") ||
+    p === "/mushaf" ||
+    p.startsWith("/mushaf/")
+  );
+}
+
 /** صفحة مواقيت الصلاة فقط */
 export function isPrayerTimesPath(pathname: string): boolean {
   const p = pathname.replace(/\/+$/, "") || "/";

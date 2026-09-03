@@ -30,8 +30,8 @@ export default function QuizPage() {
 
   return (
     <>
-      <DailyChallengeQuiz />
       <IslamicQuizGame />
+      <DailyChallengeQuiz />
       <div className="twh-share">
         <ShareButtons title="لعبة سين جيم – أسئلة وأجوبة — سُنّة" url="https://www.ssunnah.com/quiz" />
       </div>
