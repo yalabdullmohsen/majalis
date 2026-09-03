@@ -47,6 +47,11 @@ assert.equal(offenders.length, 0, `majlisilm.com ما زال في مصادر src
 const vercel = readFileSync(resolve(root, "vercel.json"), "utf8");
 assert.match(
   vercel,
+  /"has"\s*:\s*\[\{\s*"type"\s*:\s*"host"\s*,\s*"value"\s*:\s*"ssunnah\.com"\s*\}\][\s\S]*?"destination"\s*:\s*"https:\/\/www\.ssunnah\.com/,
+  "vercel: تحويل ssunnah.com (apex) إلى www.ssunnah.com",
+);
+assert.match(
+  vercel,
   /"has"\s*:\s*\[\{\s*"type"\s*:\s*"host"\s*,\s*"value"\s*:\s*"www\.majlisilm\.com"\s*\}\][\s\S]*?"destination"\s*:\s*"https:\/\/www\.ssunnah\.com/,
   "vercel: تحويل www.majlisilm إلى www.ssunnah",
 );

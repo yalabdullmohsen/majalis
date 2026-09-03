@@ -60,7 +60,7 @@ assert.match(appSrc, /TeachersIndexPage/);
 assert.match(appSrc, /TeacherDetailPage/);
 assert.equal(appSrc.includes('path="/teachers/:slug"><SafeLazyRoute component={IslamicScholarsPage}'), false);
 
-const footer = readFileSync(resolve(appRoot, "src/lib/site-footer-nav.ts"), "utf8");
+const footer = readFileSync(resolve(appRoot, "src/config/navigation.ts"), "utf8");
 assert.match(footer, /href: "\/teachers"/);
 
 console.log("teachers-routes.test.ts: ok");

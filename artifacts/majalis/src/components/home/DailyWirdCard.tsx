@@ -11,6 +11,7 @@ import {
   getDailyHadith,
   getDayIndex,
 } from "@/lib/daily-content";
+import { formatPublicGrade, normalizePublicSource } from "@/lib/content-display-zones";
 import { toArabicDigits } from "@/lib/utils";
 
 const DONE_KEY = "majalis-daily-wird-done-v1";
@@ -64,6 +65,12 @@ export function DailyWirdCard() {
   // لا نعرض حديثًا بلا مصدر
   const hadithOk = Boolean(hadith.source?.trim());
   const ayahRef = `${ayah.surah} · آية ${toArabicDigits(ayah.ayahNumber)}`;
+  const hadithMeta = [
+    normalizePublicSource(hadith.source, hadith.grade),
+    formatPublicGrade(hadith.grade),
+  ]
+    .filter(Boolean)
+    .join(" · ");
 
   return (
     <section
@@ -123,9 +130,7 @@ export function DailyWirdCard() {
               <span>حديث</span>
             </header>
             <p className="home-daily-wird__text">{hadith.text}</p>
-            <p className="home-daily-wird__meta">
-              {[hadith.source, hadith.grade].filter(Boolean).join(" · ")}
-            </p>
+            <p className="home-daily-wird__meta">{hadithMeta}</p>
             <Link href="/hadith" className="home-daily-wird__cta">
               المزيد من الأحاديث
             </Link>

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useSharedPrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
+import { useSharedPrayerData } from "@/components/prayer/PrayerCountdownProvider";
 import { loadAdhanPrefs } from "@/lib/adhan-preferences";
 import {
   getFridayWindowStatus,
@@ -11,7 +11,7 @@ import "@/styles/components/friday-banner.css";
 export function FridayBanner() {
   const [enabled, setEnabled] = useState(() => loadAdhanPrefs().fridayBannerEnabled);
   const [dismissed, setDismissed] = useState(() => isFridayBannerDismissed());
-  const { data } = useSharedPrayerCountdown();
+  const { data } = useSharedPrayerData();
 
   const maghribMinutes = useMemo(
     () => data?.prayers?.find((p) => p.key === "Maghrib")?.minutes ?? null,

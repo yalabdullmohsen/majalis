@@ -240,6 +240,10 @@ export default function NotificationSettingsPage() {
     setPermission(status);
     if (granted) {
       setPrefs(p => ({ ...p, enabled: true }));
+      // Remote Push: طلب إذن صريح من إعدادات المستخدم فقط (ليس عند الإقلاع).
+      void import("@/lib/notifications/apns-scaffold").then(({ maybeRegisterRemotePush }) => {
+        void maybeRegisterRemotePush({ requestPermission: true });
+      });
     }
     setRequesting(false);
   };
@@ -488,7 +492,7 @@ export default function NotificationSettingsPage() {
                 <Bell size={26} strokeWidth={1.5} />
               </div>
               <p className="nh-empty__msg">
-                {searchQ ? `لا نتائج لـ «${searchQ}»` : histTab === "archived" ? "لا توجد إشعارات مؤرشفة" : "لا توجد إشعارات"}
+                {searchQ ? `لا نتائج لـ «${searchQ}». جرّب كلمة أخرى.` : histTab === "archived" ? "لا توجد إشعارات مؤرشفة." : "لا توجد إشعارات جديدة."}
               </p>
               {!searchQ && <p className="nh-empty__sub">سنُخبرك هنا بكل جديد يخصّ رحلتك العلمية</p>}
             </div>

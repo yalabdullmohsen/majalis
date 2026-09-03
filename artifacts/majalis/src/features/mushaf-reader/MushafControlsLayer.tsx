@@ -24,6 +24,7 @@ type ControlsProps = {
   onExit: () => void;
   onSearch: () => void;
   onIndex: () => void;
+  onPlayPage?: () => void;
 };
 
 /** طبقة أدوات القراءة — تظهر عند الحاجة فقط */
@@ -36,6 +37,7 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
   onExit,
   onSearch,
   onIndex,
+  onPlayPage,
 }: ControlsProps) {
   const [draft, setDraft] = useState(String(pageNumber));
   const [gotoError, setGotoError] = useState<string | null>(null);
@@ -103,6 +105,11 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
           {toArabicDigits(pageNumber)}
         </button>
         <div style={{ display: "flex", gap: "0.4rem" }}>
+          {onPlayPage ? (
+            <button type="button" className="nm-controls__btn" onClick={onPlayPage}>
+              تشغيل الصفحة
+            </button>
+          ) : null}
           <button type="button" className="nm-controls__btn" onClick={onIndex}>
             فهرس
           </button>
@@ -215,7 +222,7 @@ export const MushafVerseMenu = memo(function MushafVerseMenu({
       <span className="nm-verse-menu__label">{label}</span>
       <div className="nm-verse-menu__grid">
         <button type="button" className="nm-verse-menu__action" onClick={onPlay}>
-          تلاوة
+          استماع
         </button>
         <button type="button" className="nm-verse-menu__action" onClick={onTafsir}>
           تفسير

@@ -21,7 +21,7 @@ assert.deepEqual(
   bottomNavSections().map((s) => s.id),
   ["quran", "lessons", "prayer", "fiqh", "sections"],
 );
-assert.equal(bottomNavSections()[0]?.label, "مركز القرآن الكريم");
+assert.equal(bottomNavSections()[0]?.navLabel, "القرآن");
 assert.equal(bottomNavSections()[4]?.label, "الأقسام");
 assert.ok(quranHubSections().some((s) => s.id === "open-mushaf" && s.label === "فتح المصحف"));
 assert.ok(quranHubSections().some((s) => s.id === "quran-numbers"));
@@ -72,7 +72,7 @@ assert.ok(drawer.includes("account"));
 assert.equal(drawer.includes("tafsir"), false);
 assert.ok(drawer.length <= 12);
 
-assert.ok(SECTION_MERGE_REDIRECTS.some((r) => r.from === "/more" && r.to === "/sections"));
+assert.ok(SECTION_MERGE_REDIRECTS.some((r) => r.from === "/more" && r.to === "/#explore"));
 assert.ok(SECTIONS.some((s) => s.id === "flashcards" && s.aliases?.includes("المحفوظات")));
 assert.ok(SECTIONS.some((s) => s.id === "sections" && s.aliases?.includes("المزيد")));
 assert.ok(SECTIONS.some((s) => s.id === "quran" && s.aliases?.includes("قرآن")));

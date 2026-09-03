@@ -1,9 +1,10 @@
 import { useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import type { LucideIcon } from "lucide-react";
+import { BookOpen, Flame, GraduationCap, Home, MoonStar, Scale, Search } from "lucide-react";
 import { isAuthStandalonePath, isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { isComingSoonPath } from "@/lib/nav-visibility";
-import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
+import { primaryNav } from "@/config/navigation";
 import { useIsMobileNav } from "@/hooks/useIsMobileNav";
 
 /* هوية التبويب العلوي تُحسم عبر styles/m2030/navigation.css */
@@ -16,6 +17,9 @@ type SectionTab = {
 };
 
 const PREFETCH_BY_HREF: Record<string, () => void> = {
+  "/": () => { void import("@/pages/account/HomePage"); },
+  "/search": () => { void import("@/pages/account/SearchPage"); },
+  "/adhkar": () => { void import("@/pages/worship/AdhkarPage"); },
   "/quran-hub": () => { void import("@/pages/quran/QuranHubPage"); },
   "/mushaf": () => { void import("@/pages/quran/MushafReaderPage"); },
   "/lessons": () => { void import("@/pages/lessons/LessonsPage"); },
@@ -24,17 +28,36 @@ const PREFETCH_BY_HREF: Record<string, () => void> = {
   "/sections": () => { void import("@/pages/account/SectionsPage"); },
 };
 
+const PRIMARY_TAB_ICONS: Record<string, LucideIcon> = {
+  "/": Home,
+  "/lessons": GraduationCap,
+  "/quran-hub": BookOpen,
+  "/adhkar": Flame,
+  "/prayer-times": MoonStar,
+  "/fiqh": Scale,
+  "/search": Search,
+};
+
 /**
- * شريط الأقسام — نفس تبويبات الشريط السفلي من nav-map (تنقّل موحّد).
+ * شريط الأقسام — نفس primaryNav الموحّد (الهيدر والصفحات العامة).
  */
-export const SECTION_TABS: SectionTab[] = BOTTOM_NAV_TABS.map((tab) => ({
+export const SECTION_TABS: SectionTab[] = primaryNav.map((tab) => ({
   href: tab.href,
   label: tab.label,
-  Icon: tab.Icon,
+  Icon: PRIMARY_TAB_ICONS[tab.href] ?? BookOpen,
   prefetch: PREFETCH_BY_HREF[tab.href] ?? (() => undefined),
 }));
 
 export function isTabActive(location: string, href: string): boolean {
+  if (href === "/") {
+    return location === "/";
+  }
+  if (href === "/search") {
+    return location === "/search" || location.startsWith("/search/");
+  }
+  if (href === "/adhkar") {
+    return location === "/adhkar" || location.startsWith("/adhkar/");
+  }
   if (href === "/quran-hub" || href === "/mushaf") {
     return (
       location === "/quran-hub" ||
@@ -107,8 +130,6 @@ export function isTabActive(location: string, href: string): boolean {
     return (
       location === "/prayer-times" ||
       location.startsWith("/prayer-times/") ||
-      location === "/adhkar" ||
-      location.startsWith("/adhkar/") ||
       location === "/tasbih" ||
       location.startsWith("/tasbih/") ||
       location === "/daily-wird" ||

@@ -82,8 +82,8 @@
 
 ## معلومات إضافية
 
-- **الموقع:** https://majlisilm.com
+- **الموقع:** https://www.ssunnah.com
 - **بريد الدعم:** info@ssunnah.com
-- **سياسة الخصوصية:** https://majlisilm.com/privacy
+- **سياسة الخصوصية:** https://www.ssunnah.com/privacy
 - **الدولة المستهدفة:** الكويت والعالم العربي
 - **اللغة الأساسية:** العربية

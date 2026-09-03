@@ -4,6 +4,8 @@ import { SkeletonPage, Empty } from "@/components/ui-common";
 import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
 import { getLibraryItemById } from "@/lib/supabase";
 import { getRelatedLibraryBooks, isCatalogBookId, type LibraryItem } from "@/lib/library-service";
+import { resolveLibraryProvenance } from "@/lib/library-provenance";
+import { shouldNoindexForSourceGap } from "@/lib/content-provenance";
 import { applyPageSeo } from "@/lib/seo";
 import { bookJsonLd, breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
@@ -50,6 +52,12 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
     // params.id لا item.id — يطابق الرابط الفعلي في شريط العنوان دومًا
     // (راجع نفس الإصلاح في RulingDetailPage.tsx، 2026-07-25).
     const path = `/library/${params.id}`;
+    const prov = resolveLibraryProvenance(item);
+    const noindex = shouldNoindexForSourceGap({
+      sourceName: prov.sourceName,
+      sourceUrl: prov.sourceUrl,
+      needsSource: prov.needsSource,
+    }) || (prov.hostedBySsunnah && prov.license === "requires_explicit_license");
     applyPageSeo({
       path,
       title: `${item.title} | المكتبة العلمية، سُنّة`,
@@ -57,6 +65,7 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
       keywords: [...(item.keywords || []), item.category, item.author, "مكتبة", "كتب"],
       ogType: "book",
       canonicalPath: path,
+      robots: noindex ? "noindex, follow" : undefined,
       jsonLd: [
         bookJsonLd({
           name: item.title,
@@ -77,6 +86,7 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
   if (!item) return <Empty text="الكتاب غير موجود." />;
 
   const readUrl = item.external_url || item.file_url;
+  const prov = resolveLibraryProvenance(item);
   const metaParts = [item.category, item.type, item.parts_label].filter(Boolean);
 
   // حقول الحوكمة قد لا تكون في نوع LibraryItem بعد — تُقرأ كما هي ولا تُخترع.
@@ -91,8 +101,8 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
 
   const trustData: TrustData = {
     author:      item.author       || null,
-    source:      meta.source_name  || null,
-    sourceUrl:   meta.source_url   || item.external_url || null,
+    source:      meta.source_name  || prov.sourceName || null,
+    sourceUrl:   meta.source_url   || prov.sourceUrl || item.external_url || null,
     // لا نوع مخترع: «نقل» كانت ثابتة لكل كتاب — تأتي الآن من البيانات أو لا تُعرض.
     contentType: meta.content_type || null,
     verifiedBy:  meta.reviewed_by  || null,
@@ -159,9 +169,18 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
       {readUrl && (
         <div className="library-detail-read">
           <a href={readUrl} target="_blank" rel="noreferrer" className="library-read-btn">
-            قراءة المصدر
+            {prov.hostedBySsunnah ? "قراءة النص" : "رابط المصدر الخارجي"}
           </a>
+          {!prov.hostedBySsunnah && (
+            <p className="library-detail-note">رابط للمصدر — لا إعادة استضافة للنص الكامل.</p>
+          )}
         </div>
+      )}
+      {!readUrl && prov.license && (
+        <p className="library-detail-note">
+          {prov.usageNote}
+          {prov.license ? ` · الترخيص: ${prov.license}` : null}
+        </p>
       )}
       <ContentMindMap
         title={item.title}

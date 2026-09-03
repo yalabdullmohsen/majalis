@@ -1,6 +1,6 @@
 import { seoNavLabel } from "@/lib/seo-nav-labels";
 import { filterNavItems } from "@/lib/nav-visibility";
-import { navFor } from "@/config/navigation";
+import { primaryNav } from "@/config/navigation";
 
 export type NavLink = {
   href: string;
@@ -92,15 +92,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
  * البحث والحساب ليسا هنا لأن لهما عنصري واجهة دائمين مستقلّين في الهيدر
  * (زر البحث الشامل Ctrl+K، ورابط الحساب/تسجيل الدخول) — انظر NavBar.tsx.
  */
-export const PRIMARY_NAV_ITEMS: NavLink[] = [
-  { href: "/", label: seoNavLabel("/", "الرئيسية") },
-  ...navFor("bottom")
-    .filter((i) => i.id !== "sections")
-    .map((i) => ({
-      href: i.href,
-      label: seoNavLabel(i.href, i.label),
-    })),
-];
+export const PRIMARY_NAV_ITEMS: NavLink[] = [...primaryNav];
 
 export const HOME_FEATURE_CARDS = [
   {

@@ -95,7 +95,9 @@ export function BottomNavBar({ isHidden = false }: { isHidden?: boolean } = {}) 
             onFocus={() => triggerPrefetch(href)}
             onClick={() => {
               haptics.selection();
-              window.scrollTo(0, 0);
+              if (!active) {
+                window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+              }
             }}
           >
             <span className="bottom-nav__tab-icon" aria-hidden="true">

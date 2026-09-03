@@ -2,6 +2,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { Empty, ErrorState, SkeletonCardGrid } from "@/components/ui-common";
 import { useDeferredLoading } from "@/hooks/useDeferredLoading";
 import { PAGE_LOAD_TIMEOUT_MS } from "@/lib/request-manager";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 
 type PageLoadingGuardProps = {
   loading: boolean;
@@ -24,8 +25,8 @@ export function PageLoadingGuard({
   loading,
   error,
   empty,
-  emptyText = "لا توجد بيانات حالياً",
-  errorText = "تعذّر تحميل البيانات. حاول مجددًا.",
+  emptyText = EMPTY.data,
+  errorText = STATUS.loadError,
   onRetry,
   children,
   skeleton = "cards",

@@ -1005,11 +1005,15 @@ html.dark .top-section-bar {
   }
 
   .app-main {
-    padding-block-end: 24px !important;
+    padding-block-end: calc(
+      var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px
+    ) !important;
   }
 
   body.has-assistant-fab .app-main {
-    padding-block-end: calc(24px + var(--assistant-fab-size, 3.35rem)) !important;
+    padding-block-end: calc(
+      var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px + var(--assistant-fab-size, 3.35rem)
+    ) !important;
   }
 
   .site-footer-inner--v3 {

@@ -121,10 +121,19 @@ export async function logClientError(report: ClientErrorReport): Promise<void> {
   }
 
   try {
-    await fetch("/api/client-error-log", {
+    await fetch("/api/client-error", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(report),
+      body: JSON.stringify({
+        errorId: report.errorId,
+        message: report.message?.slice(0, 500),
+        stack: report.stack?.slice(0, 2000),
+        route: report.route,
+        buildVersion: report.buildVersion,
+        commitHash: report.commitHash,
+        userAgent: report.userAgent?.slice(0, 240),
+        at: report.at,
+      }),
       keepalive: true,
     });
   } catch {

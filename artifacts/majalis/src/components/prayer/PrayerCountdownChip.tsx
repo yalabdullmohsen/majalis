@@ -8,7 +8,7 @@ import {
   type MouseEvent,
 } from "react";
 import { AppBottomSheet } from "@/components/ui/AppBottomSheet";
-import { useSharedPrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
+import { useSharedPrayerCountdownLive, useSharedPrayerData } from "@/components/prayer/PrayerCountdownProvider";
 import { buildPrayerChipCopy } from "@/lib/prayer-ticker-copy";
 import { formatTime12, type PrayerSlot } from "@/lib/prayer-times";
 import { formatArabicNumber } from "@/lib/numerals";
@@ -44,7 +44,8 @@ function PrayerTimesSheetList({ prayers }: { prayers: PrayerSlot[] }) {
  * يملك اشتراك العدّاد؛ لا يُمرَّر العدّ من الأب حتى لا يُعاد رسم الشريط كل ثانية.
  */
 function PrayerCountdownChipInner() {
-  const { countdown: cd, data } = useSharedPrayerCountdown();
+  const cd = useSharedPrayerCountdownLive();
+  const { data } = useSharedPrayerData();
   const [sheetOpen, setSheetOpen] = useState(false);
   const titleId = useId();
 

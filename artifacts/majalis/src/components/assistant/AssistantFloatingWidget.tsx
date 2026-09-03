@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import { BUTTON } from "@/lib/ui-copy";
 import { Link, useLocation } from "wouter";
 import { Sparkles, X } from "lucide-react";
 import { useAssistantChat } from "@/hooks/useAssistantChat";
 import { AssistantChatView } from "./AssistantChatView";
-import { isImmersiveChromePath } from "@/lib/immersive-chrome";
+import { isAssistantFabHiddenPath } from "@/lib/assistant-fab-paths";
 
 export function AssistantFloatingWidget() {
   const [location] = useLocation();
@@ -11,16 +12,10 @@ export function AssistantFloatingWidget() {
   const chat = useAssistantChat();
   const closeRef = useRef<HTMLButtonElement>(null);
 
-  // /mushaf: قارئ غامر مخصَّص (وضع هادئ خاص به) — زر عائم فوق نص المصحف
-  // يكسر تجربة القراءة ويُشعر بأنها صفحة ويب لا تطبيق قراءة مخصَّص.
-  // يشمل أيضًا /mushaf/page (قارئ الصفحات): شريط تنقّل سفلي ثابت بعرض
-  // الشاشة كاملاً — الزر العائم كان يتراكب فوقه فعليًا (z-index:45 أعلى
-  // من شريط التنقّل) ويحجب النقر، اكتُشف حيًّا أثناء تحقّق Playwright
-  // (انظر MushafPageView.tsx).
   const hiddenOnPage =
     location === "/assistant" ||
     location.startsWith("/admin") ||
-    isImmersiveChromePath(location);
+    isAssistantFabHiddenPath(location);
 
   useEffect(() => {
     setOpen(false);
@@ -62,7 +57,7 @@ export function AssistantFloatingWidget() {
           title="المساعد العلمي"
         >
           <Sparkles size={22} strokeWidth={2} aria-hidden="true" />
-          <span className="assistant-fab__label">المساعد</span>
+          <span className="assistant-fab__label">{BUTTON.askAssistant}</span>
         </button>
       )}
 

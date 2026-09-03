@@ -7,6 +7,7 @@
 import { fetchApprovedLessonsFromDb } from "@/lib/supabase";
 import { loadLessonsSeed, findSeedLessonById, findSeedLessonByIdAsync } from "@/lib/lessons-seed";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
+import { filterKuwaitOnlyForDisplay } from "@/lib/lesson-kuwait-scope";
 import { sheikhNameKey } from "@/lib/sheikh-name";
 import {
   dedupeKuwaitLessons,
@@ -122,14 +123,14 @@ export async function fetchLessons(options?: { bypassCache?: boolean }): Promise
 
 export async function fetchActiveLessons(): Promise<FetchLessonsResult & { active: KuwaitLessonRecord[] }> {
   const result = await fetchLessons();
-  return { ...result, active: splitKuwaitLessons(result.lessons).active };
+  return { ...result, active: splitKuwaitLessons(filterKuwaitOnlyForDisplay(result.lessons)).active };
 }
 
 export async function fetchLessonsSplit(): Promise<
   FetchLessonsResult & { active: KuwaitLessonRecord[]; archived: KuwaitLessonRecord[] }
 > {
   const result = await fetchLessons();
-  const { active, archived } = splitKuwaitLessons(result.lessons);
+  const { active, archived } = splitKuwaitLessons(filterKuwaitOnlyForDisplay(result.lessons));
   return { ...result, active, archived };
 }
 

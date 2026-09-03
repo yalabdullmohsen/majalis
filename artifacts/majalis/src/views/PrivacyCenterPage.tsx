@@ -48,7 +48,7 @@ export default function PrivacyCenterPage() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "majlisilm-data-export.json";
+      a.download = "ssunnah-data-export.json";
       a.click();
       URL.revokeObjectURL(url);
       setExportMsg("تم تنزيل نسخة بياناتك.");

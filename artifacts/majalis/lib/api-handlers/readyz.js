@@ -31,7 +31,6 @@ function versionStamp() {
 }
 
 export default async function handler(req, res) {
-  const version = versionStamp();
   const deep = wantsDeep(req);
 
   // المسار السريع: لا يستورد database ولا يفتح pool — مناسب لـ probes / CDN.
@@ -41,21 +40,20 @@ export default async function handler(req, res) {
       200,
       {
         status: "ok",
-        version,
+        service: "ssunnah-web",
         checks: {
           app_alive: true,
-          deep: false,
         },
-        hint: "الفحص العميق عبر /api/deep-health (محمي) أو ?deep=1",
       },
       {
-        // كاش حافة — يقلّل cold start للفحوص العامة دون إخفاء أعطال طويلة
         "Cache-Control": "public, max-age=0, s-maxage=60, stale-while-revalidate=300",
         "CDN-Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
       },
     );
     return;
   }
+
+  const version = versionStamp();
 
   const checks = {
     app_alive: true,
@@ -179,7 +177,7 @@ export default async function handler(req, res) {
 
   const payload = {
     status: ready ? "ok" : "not_ready",
-    version,
+    service: "ssunnah-web",
     checks,
   };
   if (!ready) {

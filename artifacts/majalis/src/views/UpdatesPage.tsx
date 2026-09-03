@@ -135,7 +135,7 @@ export default function UpdatesPage() {
       ) : loadError ? (
         <ErrorState text="تعذّر تحميل المستجدات. يرجى المحاولة مرة أخرى." onRetry={() => setRetryTick((n) => n + 1)} />
       ) : filtered.length === 0 ? (
-        <Empty text="لا توجد مستجدات." />
+        <Empty text="لا توجد مستجدات منشورة حاليًا." />
       ) : (
         <div className="updates-timeline">
           {filtered.map((item) => (

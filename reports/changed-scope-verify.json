@@ -1,0 +1,55 @@
+{
+  "generatedAt": "2026-09-01T17:23:02.547Z",
+  "paths": [
+    ".github/workflows/auto-deploy.yml",
+    ".github/workflows/harvest-sources.yml",
+    ".github/workflows/ios-capacitor-gates.yml",
+    ".github/workflows/pr-quality-report.yml",
+    "package.json",
+    "scripts/ci/__tests__/changed-scope.test.mjs",
+    "scripts/ci/changed-scope.mjs"
+  ],
+  "scopes": [
+    "ci/config",
+    "ios/capacitor"
+  ],
+  "scopeIds": [
+    "ci_config",
+    "ios_capacitor"
+  ],
+  "checks": {
+    "ui": false,
+    "api": false,
+    "seo": false,
+    "pwa": false,
+    "content": false,
+    "ios": true,
+    "full": true,
+    "mushaf": false,
+    "build": true,
+    "visual": false,
+    "lighthouse": false,
+    "color_contrast": false,
+    "data_audit": false
+  },
+  "outputs": {
+    "scopes": "ci/config,ios/capacitor",
+    "scope_need_build": "true",
+    "scope_need_mushaf": "false",
+    "scope_need_color_contrast": "false",
+    "scope_need_data_audit": "false",
+    "scope_need_admin_privacy": "true",
+    "scope_admin_only": "false",
+    "scope_need_ui": "false",
+    "scope_need_api": "false",
+    "scope_need_seo": "false",
+    "scope_need_pwa": "false",
+    "scope_need_ios": "true",
+    "scope_need_full": "true",
+    "scope_need_visual": "false",
+    "scope_docs_only": "false"
+  },
+  "docsOnly": false,
+  "violations": [],
+  "ok": true
+}

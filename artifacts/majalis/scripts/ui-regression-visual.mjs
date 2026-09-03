@@ -209,10 +209,27 @@ async function auditPage(page, base, route, theme) {
   }
 
   // عند نهاية التمرير: آخر محتوى لا يدخل خلف الشريط (غير غامر)
+  // ملاحظة: html/body بـ height:100% تجعل التمرير على body وليس scrollingElement/window.
   if (!m.immersive && m.navH > 0) {
-    await page.evaluate(() => {
-      document.body.scrollTop = 99999;
-      document.documentElement.scrollTop = 99999;
+    await page.evaluate(async () => {
+      const apply = () => {
+        const y = Math.max(
+          document.body.scrollHeight,
+          document.documentElement.scrollHeight,
+          document.body.offsetHeight,
+          0,
+        );
+        document.body.scrollTop = y;
+        document.documentElement.scrollTop = y;
+        window.scrollTo(0, y);
+      };
+      // مرتان+انتظار: جزيرة تحت الطية قد تطيل الصفحة بعد أول تمرير
+      for (let i = 0; i < 3; i += 1) {
+        apply();
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+        await new Promise((r) => window.setTimeout(r, 150));
+      }
+      apply();
     });
     await page.waitForTimeout(200);
     const clear = await page.evaluate(() => {
@@ -220,14 +237,33 @@ async function auditPage(page, base, route, theme) {
       const main = document.querySelector("#main-content");
       if (!nav || !main) return { ok: true };
       const n = nav.getBoundingClientRect();
-      // آخر عنصر تفاعلي/بطاقة داخل main
       const nodes = [...main.querySelectorAll("a, button, [class*='card'], h2, p")].filter((el) => {
+        const s = getComputedStyle(el);
+        if (s.position === "fixed" || s.position === "absolute") return false;
+        if (s.display === "none" || s.visibility === "hidden") return false;
         const r = el.getBoundingClientRect();
         return r.height > 12 && r.width > 20;
       });
-      const last = nodes.at(-1)?.getBoundingClientRect();
+      const last = nodes.at(-1);
       if (!last) return { ok: true };
-      return { ok: last.bottom <= n.top + 6, gap: n.top - last.bottom, lastBottom: last.bottom, navTop: n.top };
+      // أكّد التمرير حتى العنصر الأخير فوق الشريط
+      last.scrollIntoView({ block: "end", inline: "nearest" });
+      const lr0 = last.getBoundingClientRect();
+      const delta = lr0.bottom - (n.top - 8);
+      if (delta > 0) {
+        document.body.scrollTop += delta;
+        document.documentElement.scrollTop += delta;
+        window.scrollBy(0, delta);
+      }
+      const lr = last.getBoundingClientRect();
+      const n2 = nav.getBoundingClientRect();
+      return {
+        ok: lr.bottom <= n2.top + 8,
+        gap: n2.top - lr.bottom,
+        lastBottom: lr.bottom,
+        navTop: n2.top,
+        bodyScrollTop: document.body.scrollTop,
+      };
     });
     if (!clear.ok) {
       throw new Error(

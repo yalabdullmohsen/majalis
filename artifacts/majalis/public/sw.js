@@ -59,14 +59,21 @@ const STATIC_SHELL_ASSETS = [
   "/icon-512.png",
   "/brand/icon-512-maskable.png",
   "/star-pattern.svg",
-  "/brand/official-og.png?v=20260825",
 ];
 
 /** عنوان الإشعار بلا اسم التطبيق — النظام يعرض الهوية في الرأس. */
 function swNotifTitle(title) {
   const t = typeof title === "string" ? title.trim() : "";
-  if (!t || t === "سُنّة" || t === "سنّة") return "تذكير";
-  return t;
+  if (!t) return "تذكير";
+  if (/^(سُنّة|سنّة|Majlisilm|majlisilm|ssunnah|المجلس\s*العلمي|مجالس\s*العلم)$/iu.test(t)) {
+    return "تذكير";
+  }
+  return (
+    t
+      .replace(/\s*[|·—,-]\s*(سُنّة|سنّة|Majlisilm|majlisilm|المجلس\s*العلمي|مجالس\s*العلم)\s*$/iu, "")
+      .replace(/\s+في (سُنّة|سنّة|المجلس\s*العلمي|مجالس\s*العلم)\.?$/iu, "")
+      .trim() || "تذكير"
+  );
 }
 
 self.addEventListener("install", (event) => {

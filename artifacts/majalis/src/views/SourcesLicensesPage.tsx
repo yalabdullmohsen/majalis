@@ -18,7 +18,7 @@ const QURAN_SOURCES: SourceRow[] = [
   },
   {
     name: "Tanzil / AlQuran Cloud — نص عثماني",
-    desc: "نص حفص وبيانات السور المحلية. إعادة التوزيع الكامل قد تتطلب موافقة Tanzil.",
+    desc: "نص حفص وبيانات السور. إعادة التوزيع الكامل قد تتطلب موافقة Tanzil.",
     status: "جزئي",
   },
   {
@@ -33,6 +33,66 @@ const QURAN_SOURCES: SourceRow[] = [
   },
 ];
 
+const HADITH_SOURCES: SourceRow[] = [
+  {
+    name: "fawazahmed0/hadith-api (صحيح البخاري ومسلم)",
+    desc: "نصوص عربية مع رقم الحديث والكتاب. الصحة منسوبة للمجموعة لا لكل سند على حدة.",
+    status: "جزئي",
+  },
+  {
+    name: "sunnah.com / dorar.net",
+    desc: "مراجع تخريج وروابط خارجية للكتب الستة وغيرها.",
+    status: "جزئي",
+  },
+];
+
+const ADHKAR_SOURCES: SourceRow[] = [
+  {
+    name: "حصن المسلم — إشارات أذكار",
+    desc: "نصوص الأذكار مع العزو (المصدر/المرجع). حقوق الجمع والترتيب للمؤلف/الناشر.",
+    status: "مطلوب",
+  },
+  {
+    name: "الأحاديث في الأذكار",
+    desc: "كل ذكر مرتبط بحديث يُعرض مع كتابه ورقمه والحكم عند الحاجة — لا «السنة النبوية» كمصدر وحيد.",
+    status: "جزئي",
+  },
+];
+
+const LESSON_SOURCES: SourceRow[] = [
+  {
+    name: "حسابات إنستغرام/تليجرام/مواقع خارجية",
+    desc: "الدروس المستوردة: عنوان، شيخ، وقت، مكان، ورابط المنشور الأصلي فقط — لا نص طويل ولا صور كاملة.",
+    status: "جزئي",
+  },
+  {
+    name: "دليل الجهات (/sources)",
+    desc: "فهرسة الحسابات مع روابط مباشرة. المحتوى مملوك لأصحابه؛ سُنّة وسيط روابط.",
+    status: "ممنوح",
+  },
+];
+
+const TAFSIR_SOURCES: SourceRow[] = [
+  {
+    name: "Quran.com API — تفاسير",
+    desc: "الميسّر وغيره عبر جلب حي مع إسناد؛ لا حزمة تفاسير كاملة دون إذن.",
+    status: "جزئي",
+  },
+];
+
+const LIBRARY_SOURCES: SourceRow[] = [
+  {
+    name: "مكتبة المنصة (~١٧٣ كتابًا)",
+    desc: "بطاقات مرجعية (عنوان/مؤلف/وصف) أو رابط خارجي للمصدر — لا نص كامل مستضاف إلا بترخيص صريح.",
+    status: "غير محسوم",
+  },
+  {
+    name: "shamela.ws · sunnah.com · dar-alifta",
+    desc: "روابط قراءة خارجية عند توفرها؛ يُوضّح أنها روابط للمصدر.",
+    status: "جزئي",
+  },
+];
+
 const AUDIO_SOURCES: SourceRow[] = [
   {
     name: "everyayah.com",
@@ -42,44 +102,6 @@ const AUDIO_SOURCES: SourceRow[] = [
   {
     name: "mp3quran.net",
     desc: "بث سور كاملة وتنزيل اختياري محلي بحدود حجم واضحة.",
-    status: "جزئي",
-  },
-  {
-    name: "mohsalvi/adhan-audio (jsDelivr)",
-    desc: "بث أذان باسم النمط فقط بلا نسبة شخصية حتى التثبّت.",
-    status: "جزئي",
-  },
-];
-
-const CONTENT_SOURCES: SourceRow[] = [
-  {
-    name: "Quran.com API — تفاسير",
-    desc: "الميسّر وغيره عبر جلب حي مع إسناد؛ لا حزمة تفاسير كاملة دون إذن.",
-    status: "جزئي",
-  },
-  {
-    name: "حصن المسلم (إشارات أذكار)",
-    desc: "حقوق الجمع والترتيب للمؤلف/الناشر؛ يُعرض مع الإسناد ويُطلب إذن الطبعة قبل التوسعة.",
-    status: "مطلوب",
-  },
-  {
-    name: "dorar.net / sunnah.com",
-    desc: "مراجع تخريج وعرض أحاديث مع العزو.",
-    status: "جزئي",
-  },
-  {
-    name: "aladhan.com",
-    desc: "حساب مواقيت الصلاة والتقويم الهجري.",
-    status: "جزئي",
-  },
-  {
-    name: "مكتبة المنصة (~١٧٣ كتابًا)",
-    desc: "فهرسة فردية ناقصة — تُعرض مع بيان المصدر حيث وُجد ولا تُسوَّق كمرخّصة حتى الجرد.",
-    status: "غير محسوم",
-  },
-  {
-    name: "shamela.ws · dar-alifta · binbaz · iifa",
-    desc: "مراجع تراث وفتاوى وقرارات مع العزو عند الاقتباس.",
     status: "جزئي",
   },
 ];
@@ -111,92 +133,89 @@ function SourceList({ rows }: { rows: SourceRow[] }) {
 export default function SourcesLicensesPage() {
   useEffect(() => {
     applyPageSeo({
-      path: "/sources",
+      path: "/data-licenses",
       title: "المصادر والتراخيص | سُنّة",
       description:
-        "جرد مصادر البيانات والأصول الرقمية في سُنّة وحالة الإذن والترخيص لكل أصل.",
+        "مصادر القرآن والحديث والأذكار والدروس والمكتبة في سُنّة — روابط وتراخيص دون وعود عامة.",
       keywords: ["مصادر", "تراخيص", "QPC", "سُنّة", "حقوق"],
     });
   }, []);
 
   return (
-    <LegalPageLayout eyebrow="الشفافية" title="المصادر والتراخيص" updatedAt="2026-08-11">
-      <LegalSection title="الغرض من هذه الصفحة">
+    <LegalPageLayout eyebrow="الشفافية" title="المصادر والتراخيص" updatedAt="2026-09-01">
+      <LegalSection title="الغرض">
         <p>
-          هذه الصفحة ملخص علني لجرد الحقوق. الجدول الكامل وحالات الإذن في{" "}
-          <code dir="ltr">docs/LICENSES.md</code>، مع{" "}
-          <code dir="ltr">CREDITS.md</code> و<code dir="ltr">LICENSE_RISKS.md</code>. المنهجية في{" "}
+          ملخص علني لمصادر البيانات وحالة الإذن. التفاصيل في{" "}
+          <code dir="ltr">docs/LICENSES.md</code> و{" "}
           <Link href="/methodology">منهجية التوثيق</Link>.
+          {" "}
+          <Link href="/sources">دليل الجهات</Link> للحسابات الخارجية.
         </p>
         <p>
-          أي أصل حالته «مطلوب» أو «غير محسوم» لا يُوسَّع في إصدار المتجر حتى يُحسم الإذن أو يُستبدل.
+          <strong>لا إعادة استضافة:</strong> الدروس والمنشورات الخارجية تُعرض كمعلومة وجدول
+          ورابط مصدر — لا نص طويل ولا صور كاملة من إنستغرام/تليجرام.
         </p>
       </LegalSection>
 
-      <LegalSection title="المصحف والنص والخطوط">
+      <LegalSection title="القرآن والمصحف">
         <SourceList rows={QURAN_SOURCES} />
+      </LegalSection>
+
+      <LegalSection title="الأحاديث">
+        <SourceList rows={HADITH_SOURCES} />
+        <p>
+          كل حديث يُعرض مع كتابه ورقمه ومصدره. الصحيحان: الصحة منسوبة لعضوية الكتاب.
+          صفحات الضعيف/الموضوع للتنبيه التعليمي فقط.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="الأذكار">
+        <SourceList rows={ADHKAR_SOURCES} />
+      </LegalSection>
+
+      <LegalSection title="التفاسير">
+        <SourceList rows={TAFSIR_SOURCES} />
+      </LegalSection>
+
+      <LegalSection title="الدروس والحلقات">
+        <SourceList rows={LESSON_SOURCES} />
+        <p>
+          روابط الدروس تحيل للمصدر الأصلي. لا نعيد نشر المنشور كاملًا.
+          راجع <Link href="/sources">دليل الجهات</Link>.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="المكتبة">
+        <SourceList rows={LIBRARY_SOURCES} />
+        <p>
+          الكتب إما بطاقة مرجعية (عنوان/مؤلف) أو رابط خارجي للقراءة.
+          لا نعرض كتابًا كاملًا دون حق عرض صريح.
+        </p>
       </LegalSection>
 
       <LegalSection title="التلاوة والأذان">
         <SourceList rows={AUDIO_SOURCES} />
-        <p>
-          التشغيل الافتراضي بثّ حي من{" "}
-          <a href="https://everyayah.com" target="_blank" rel="noopener noreferrer">
-            everyayah.com
-          </a>{" "}
-          و{" "}
-          <a href="https://mp3quran.net" target="_blank" rel="noopener noreferrer">
-            mp3quran.net
-          </a>
-          . لا تُعاد استضافة الملفات على خوادمنا. مفتاح تعطيل:{" "}
-          <code dir="ltr">/data/quran-audio-remote.json</code>.
-        </p>
-      </LegalSection>
-
-      <LegalSection title="التفاسير والمحتوى والمكتبة">
-        <SourceList rows={CONTENT_SOURCES} />
-        <p>
-          تفسير صوتي: معطّل عمدًا (كتالوج فارغ) حتى توثيق النسبة والترخيص لكل مقطع.
-        </p>
+        <p>لا تُعاد استضافة الملفات على خوادمنا — بث حي من المصدر.</p>
       </LegalSection>
 
       <LegalSection title="البرمجيات مفتوحة المصدر">
         <p>
-          واجهة المنصة تستخدم مكتبات (React وVite وCapacitor وغيرها) وفق تراخيص تساهلية
-          (MIT / Apache / BSD / ISC…). بوابة CI <code dir="ltr">test:licenses</code> ترفض
-          إدخال تبعية بترخيص GPL/AGPL/SSPL صِرف في شجرة الحزم.
+          واجهة المنصة (React, Vite, Capacitor…) وفق تراخيص تساهلية.
+          بوابة CI <code dir="ltr">test:licenses</code> ترفض GPL/AGPL/SSPL صِرف.
         </p>
       </LegalSection>
 
-      <LegalSection title="التراخيص والاستخدام">
-        <ul>
-          <li>
-            واجهة سُنّة ومكوّناتها البرمجية ملك للمنصة، ويُسمح بالتصفح الشخصي
-            والتعليمي وفق <Link href="/terms">شروط الاستخدام</Link>.
-          </li>
-          <li>
-            نصوص القرآن تُعرض وفق مصادرها؛ لا ندّعي حقوقًا حصرية على النص العثماني.
-          </li>
-          <li>
-            الأحاديث والفتاوى تبقى منسوبة لمصادرها؛ الاقتباس للتعليم مع العزو.
-          </li>
-          <li>
-            حصن المسلم وغيره من المجاميع الحديثة لها حقوق جمع وترتيب — لا إعادة نشر كمنتج مستقل بلا إذن.
-          </li>
-        </ul>
-      </LegalSection>
-
-      <LegalSection title="الإبلاغ عن خطأ في النسبة أو الترخيص">
+      <LegalSection title="الإبلاغ">
         <p>
-          راسلنا عبر <Link href="/contact">تواصل معنا</Link> أو استخدم زر الإبلاغ أسفل المادة.
-          بلاغات الحقوق تُعالَج بأولوية قصوى.
+          بلاغات الحقوق أو خطأ في النسبة عبر{" "}
+          <Link href="/contact">تواصل معنا</Link> — أولوية قصوى.
         </p>
       </LegalSection>
 
       <LegalBackLink />
       <ShareButtons
         title="المصادر والتراخيص — سُنّة"
-        url="https://www.ssunnah.com/sources"
+        url="https://www.ssunnah.com/data-licenses"
       />
     </LegalPageLayout>
   );

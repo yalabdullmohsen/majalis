@@ -269,7 +269,7 @@ export default function MyCitationsPage() {
             )}
 
             {folders.length === 0 ? (
-              <p className="mcp-no-folders">لا توجد مجلدات</p>
+              <p className="mcp-no-folders">لا توجد مجلدات بعد. أنشئ مجلدًا لتنظيم اقتباساتك.</p>
             ) : (
               folders.map((f) => (
                 <button
@@ -296,7 +296,7 @@ export default function MyCitationsPage() {
             <div className="text-center py-16 space-y-3">
               <p className="text-4xl"><FileText size={40} strokeWidth={1.3} /></p>
               <p className="mcp-empty-text">
-                {searchQuery ? "لا توجد نتائج مطابقة" : "لا توجد اقتباسات محفوظة بعد"}
+                {searchQuery ? "لا توجد نتائج مطابقة. جرّب كلمة أخرى." : "لا توجد اقتباسات محفوظة بعد."}
               </p>
               {!searchQuery && (
                 <p className="mcp-empty-hint">ابدأ بالاقتباس من أي محتوى في المنصة</p>

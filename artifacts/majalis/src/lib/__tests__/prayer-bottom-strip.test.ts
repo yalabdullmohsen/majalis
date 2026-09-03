@@ -1,5 +1,5 @@
 /**
- * صفحة الصلاة: لا شريط سفلي بلون مختلف تحت التبويبات.
+ * صفحة الصلاة: لا شريط سفلي بلون مختلف تحت التبويبات + حشو آمن بلا أزرار عائمة.
  * تشغيل: node --import tsx src/lib/__tests__/prayer-bottom-strip.test.ts
  */
 import assert from "node:assert/strict";
@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "../../..");
 const css = readFileSync(resolve(appRoot, "src/styles/pages/prayer-times.css"), "utf8");
+const page = readFileSync(resolve(appRoot, "src/pages/worship/ui/PrayerTimesView.tsx"), "utf8");
 
 assert.match(
   css,
@@ -50,8 +51,8 @@ assert.match(
 );
 assert.match(
   css,
-  /\.pts-hero\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius,\s*var\(--radius-card,\s*24px\)\)/,
-  "بطاقة البطل بزوايا ناعمة (24px)",
+  /\.pts-hero(?:,\s*\.pts-hero--compact)?\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius/,
+  "بطاقة البطل بزوايا ناعمة",
 );
 assert.doesNotMatch(
   css,
@@ -71,20 +72,22 @@ assert.match(
 assert.match(css, /\.pts-screen\s*\{[\s\S]*?width:\s*100%/);
 assert.match(css, /\.pts-screen\s*\{[\s\S]*?background:\s*transparent/);
 assert.match(css, /\.pts-screen\s*\{[\s\S]*?align-items:\s*center/);
-assert.match(css, /\.pts-list\s*\{[\s\S]*?align-items:\s*center/);
-assert.match(css, /\.pts-list\s*\{[\s\S]*?align-self:\s*center/);
-assert.match(css, /\.pts-row\s*\{[\s\S]*?align-self:\s*center/);
-assert.match(css, /\.pts-row\s*\{[\s\S]*?flex-direction:\s*column/);
-assert.match(css, /\.pts-row\s*\{[\s\S]*?text-align:\s*center/);
-assert.doesNotMatch(css, /\.pts-screen\s*\{[\s\S]*?width:\s*100vw/);
-assert.match(css, /\.pts-row\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius/);
-assert.match(css, /\.pts-dock__item\s*\{[\s\S]*?border-radius:\s*var\(--pts-radius-sm/);
+assert.match(css, /\.pts-list\s*\{[\s\S]*?flex-direction:\s*column/);
+assert.match(css, /\.pts-row\s*\{[\s\S]*?grid-template-columns:/);
 assert.match(css, /padding-bottom:\s*calc\(\s*var\(--bottom-nav-height(?:,\s*[^)]+)?\)\s*\+\s*var\(--inset-bottom/);
 assert.match(css, /var\(--inset-top/);
 assert.match(css, /var\(--inset-bottom/);
 assert.doesNotMatch(css, /env\(\s*safe-area-inset/);
-assert.match(css, /padding-inline:\s*16px/);
-assert.match(css, /\.pts-row\s*\{[\s\S]*?width:\s*min\(\s*78vw,\s*320px\)/);
+assert.match(css, /\.pts-screen\s*\{[\s\S]*?padding-inline:\s*16px/);
+assert.match(css, /\.pts-chrome\s*\{[\s\S]*?display:\s*none/);
+assert.match(css, /\.pts-dock\s*\{[\s\S]*?grid-template-columns:\s*repeat\(\s*2/);
+assert.match(css, /\.pts-ranks__toggle/);
+
+assert.match(page, /pts-back--top/, "رجوع أعلى الصفحة");
+assert.match(page, /pts-settings--top/, "إعدادات أعلى الصفحة");
+assert.doesNotMatch(page, /pts-chrome/, "لا شريط عائم سفلي");
+assert.match(page, /عرض الكل/, "مراتب قابلة للتوسيع");
+assert.match(page, /useSharedPrayerCountdown/, "مشاركة العدّاد مع المزوّد");
 
 const chromeScroll = readFileSync(
   resolve(appRoot, "src/styles/components/app-chrome-scroll.css"),

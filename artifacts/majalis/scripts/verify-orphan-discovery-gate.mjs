@@ -41,6 +41,7 @@ const ENTRY_FILES = [
   "lib/nav-map.ts",
   "lib/services-center-nav.ts",
   "lib/site-footer-nav.ts",
+  "config/navigation.ts",
   // صفحة /sections (+ تحويل /more) + مصدر الأقسام + خريطة الموقع + مركز علوم القرآن
   "pages/account/SectionsPage.tsx",
   "pages/account/MorePage.tsx",

@@ -1547,3 +1547,24 @@ html.dark .hadith-card.ui-card {
 .hadith-class-guide__faq{margin:0;}
 .hadith-class-guide__faq dt{font-weight:700;margin-top:.75rem;}
 .hadith-class-guide__faq dd{margin:.3rem 0 0;}
+
+/* صفحة الأحاديث الضعيفة — للتعليم والتمييز فقط */
+.hadith-weak-banner {
+  max-width: 820px;
+  margin: 0 auto 1.25rem;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-md, 0.65rem);
+  border: 1.5px solid color-mix(in srgb, var(--mj-warning, #b45309) 35%, transparent);
+  background: color-mix(in srgb, var(--mj-warning, #b45309) 8%, var(--color-surface, #fff));
+}
+.hadith-weak-banner__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+  color: var(--mj-brand-deep, #163828);
+}
+.hadith-weak-banner__text {
+  margin: 0;
+  line-height: 1.75;
+  font-size: 0.95rem;
+  color: var(--msk-text-2, var(--mj-ink-2));
+}
