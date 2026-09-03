@@ -28,13 +28,17 @@ export function FiqhCategoryCard({ door, className }: Props) {
   const entryHref = door.bookHref ?? door.href;
   const showCount = door.hasVerifiedIssueCount && door.issueCount > 0;
 
+  const showStatus = door.status !== "complete";
+
   return (
     <article className={cn("fiqh-category-card", className)}>
       <div className="fiqh-category-card__head">
         <h3 className="fiqh-category-card__title">{door.label}</h3>
-        <span className={cn("fiqh-status-badge", statusClass(door.status))}>
-          {FIQH_STATUS_LABELS[door.status]}
-        </span>
+        {showStatus ? (
+          <span className={cn("fiqh-status-badge", statusClass(door.status))}>
+            {FIQH_STATUS_LABELS[door.status]}
+          </span>
+        ) : null}
       </div>
       <p className="fiqh-category-card__desc">{door.desc}</p>
       {showCount ? (
