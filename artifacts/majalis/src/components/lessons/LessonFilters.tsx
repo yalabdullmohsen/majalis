@@ -1,16 +1,18 @@
-import { useMemo, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
-import { extractFilterOptions } from "@/lib/kuwait-lessons";
 import { formatSheikhName } from "@/lib/sheikh-name";
 import { isOnlineVenue } from "@/lib/lessons/lessonNormalize";
 import { computeNextOccurrenceMs } from "@/lib/lesson-time";
+import { isWomenFriendlyLesson } from "@/lib/lesson-women-attendance";
 
 export type LessonQuickFilterId =
   | "all"
+  | "today"
+  | "this_week"
   | "in_person"
   | "remote"
-  | "today"
-  | "this_week";
+  | "courses"
+  | "women";
 
 export type LessonQuickFilters = {
   schedule: LessonQuickFilterId;
@@ -26,10 +28,12 @@ export const DEFAULT_LESSON_QUICK_FILTERS: LessonQuickFilters = {
 
 const SCHEDULE_CHIPS: Array<{ id: LessonQuickFilterId; label: string }> = [
   { id: "all", label: "الكل" },
-  { id: "in_person", label: "حضوري" },
-  { id: "remote", label: "عن بعد" },
   { id: "today", label: "اليوم" },
   { id: "this_week", label: "هذا الأسبوع" },
+  { id: "in_person", label: "حضوري" },
+  { id: "remote", label: "عن بعد" },
+  { id: "courses", label: "دورات" },
+  { id: "women", label: "نسائية" },
 ];
 
 function isTodayMs(ms: number, now = Date.now()): boolean {
@@ -62,6 +66,10 @@ export function applyLessonQuickFilters(
     if (filters.schedule === "remote" && !remote) return false;
     if (filters.schedule === "today" && !isTodayMs(nextMs, nowMs)) return false;
     if (filters.schedule === "this_week" && !isThisWeekMs(nextMs, nowMs)) return false;
+    if (filters.schedule === "courses" && !(lesson.isCourse || lesson.activityType === "دورة")) {
+      return false;
+    }
+    if (filters.schedule === "women" && !isWomenFriendlyLesson(lesson)) return false;
 
     if (filters.sheikh !== "كل المشايخ") {
       const target = formatSheikhName(filters.sheikh) || filters.sheikh;
@@ -78,66 +86,30 @@ type Props = {
   filters: LessonQuickFilters;
   onChange: (next: LessonQuickFilters) => void;
   searchSlot?: ReactNode;
+  filterSlot?: ReactNode;
 };
 
-export function LessonFilters({ lessons, filters, onChange, searchSlot }: Props) {
-  const options = useMemo(() => extractFilterOptions(lessons), [lessons]);
-
-  const availableChips = useMemo(() => {
-    const chips = SCHEDULE_CHIPS.filter((chip) => {
-      if (chip.id === "all") return true;
-      const probe = { ...filters, schedule: chip.id };
-      return applyLessonQuickFilters(lessons, probe).length > 0;
-    });
-    return chips;
-  }, [lessons, filters]);
-
-  const sheikhOptions = options.sheikhs;
-  const categoryOptions = options.categories;
-
+export function LessonFilters({ filters, onChange, searchSlot, filterSlot }: Props) {
   return (
-    <div className="lesson-filters">
-      {searchSlot ? <div className="lesson-filters__search">{searchSlot}</div> : null}
-      <div className="lesson-filters__chips filter-chips" role="toolbar" aria-label="تصفية سريعة">
-        {availableChips.map((chip) => (
-          <button
-            key={chip.id}
-            type="button"
-            className={`filter-chips__chip${filters.schedule === chip.id ? " filter-chips__chip--active" : ""}`}
-            aria-pressed={filters.schedule === chip.id}
-            onClick={() => onChange({ ...filters, schedule: chip.id })}
-          >
-            {chip.label}
-          </button>
-        ))}
-      </div>
-      <div className="lesson-filters__selects">
-        <label className="lesson-filters__select">
-          <span>حسب الشيخ</span>
-          <select
-            value={filters.sheikh}
-            onChange={(e) => onChange({ ...filters, sheikh: e.target.value })}
-          >
-            {sheikhOptions.map((v) => (
-              <option key={v} value={v}>
-                {v === "كل المشايخ" ? v : formatSheikhName(v) || v}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="lesson-filters__select">
-          <span>حسب التصنيف</span>
-          <select
-            value={filters.category}
-            onChange={(e) => onChange({ ...filters, category: e.target.value })}
-          >
-            {categoryOptions.map((v) => (
-              <option key={v} value={v}>
-                {v}
-              </option>
-            ))}
-          </select>
-        </label>
+    <div className="lesson-filters lesson-filters--compact">
+      <div className="lesson-filters__bar">
+        <div className="lesson-filters__chips filter-chips" role="toolbar" aria-label="تصفية سريعة">
+          {SCHEDULE_CHIPS.map((chip) => (
+            <button
+              key={chip.id}
+              type="button"
+              className={`filter-chips__chip${filters.schedule === chip.id ? " filter-chips__chip--active" : ""}`}
+              aria-pressed={filters.schedule === chip.id}
+              onClick={() => onChange({ ...filters, schedule: chip.id })}
+            >
+              {chip.label}
+            </button>
+          ))}
+        </div>
+        <div className="lesson-filters__tools">
+          {searchSlot}
+          {filterSlot}
+        </div>
       </div>
     </div>
   );

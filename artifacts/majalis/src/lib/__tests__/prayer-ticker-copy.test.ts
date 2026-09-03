@@ -6,6 +6,7 @@ import assert from "node:assert/strict";
 import {
   buildPrayerChipCopy,
   buildPrayerTickerCopy,
+  formatAdhanRemainingPhrase,
   formatChipDuration,
   PRAYER_CHIP_NOW_WINDOW_SEC,
 } from "../prayer-ticker-copy";
@@ -46,14 +47,39 @@ import {
 }
 
 {
-  assert.equal(formatChipDuration(4500), "١:١٥");
+  assert.equal(formatAdhanRemainingPhrase(27 * 60), "٢٧ دقيقة");
+  assert.equal(formatAdhanRemainingPhrase(72 * 60), "ساعة و١٢ دقيقة");
+  assert.equal(formatChipDuration(4500), "ساعة و١٥ دقيقة");
   const chip = buildPrayerChipCopy({
     prayerName: "المغرب",
-    remainingSeconds: 2712,
+    remainingSeconds: 27 * 60,
     sinceSeconds: null,
   });
-  assert.equal(chip.text, "المغرب ٤٥:١٢");
+  assert.equal(chip.text, "باقي ٢٧ دقيقة على أذان المغرب");
   assert.equal(chip.urgent, false);
+}
+
+{
+  const after = buildPrayerChipCopy({
+    prayerName: "المغرب",
+    remainingSeconds: 0,
+    sinceSeconds: 130,
+    nextPrayerName: "العشاء",
+    nextRemainingSeconds: 72 * 60,
+  });
+  assert.equal(after.isNow, false);
+  assert.equal(after.text, "باقي ساعة و١٢ دقيقة على أذان العشاء");
+  assert.equal(/[0-9]|:/.test(after.text), false);
+}
+
+{
+  const isha = buildPrayerChipCopy({
+    prayerName: "العشاء",
+    remainingSeconds: 9,
+    sinceSeconds: null,
+  });
+  assert.match(isha.text, /باقي دقيقة على أذان العشاء/);
+  assert.equal(/[0-9]/.test(isha.text), false);
 }
 
 console.log("prayer-ticker-copy.test.ts: ok");

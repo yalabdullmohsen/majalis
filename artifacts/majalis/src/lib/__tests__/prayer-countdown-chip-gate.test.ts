@@ -68,19 +68,18 @@ console.log("\n=== ارتفاع الشريط ≤ ٣٦px وعرض الشريحة 
   assert.match(finalRelease, /--ticker-h:\s*2\.65rem/, "ارتفاع الشريط = ٢٫٦٥rem لوضوح المحتوى");
 
   const chipCss = read("src/styles/components/prayer-countdown-chip.css");
-  assert.match(chipCss, /max-width:\s*42%/, "أقصى عرض الشريحة ٤٢٪ — يكفي اسم الصلاة بلا قطع");
+  assert.match(chipCss, /max-width:\s*min\(78%,\s*22rem\)/, "عرض الشريحة يتسع لجملة باقي … على أذان");
   assert.match(chipCss, /height:\s*24px/, "ارتفاع بصري ٢٤px");
   assert.match(chipCss, /padding:\s*4px\s+8px/, "حشو ٤×٨");
   assert.match(chipCss, /min-height:\s*44px/, "هدف لمس ≥٤٤px");
   assert.match(chipCss, /tabular-nums/, "أرقام ثابتة العرض");
   assert.match(chipCss, /prefers-reduced-motion/, "احترام تقليل الحركة");
-  assert.match(chipCss, /\.prayer-countdown-chip__name\s*\{[^}]*flex-shrink:\s*0/s, "اسم الصلاة لا يُضغط إلى القطع");
+  assert.match(chipCss, /\.prayer-countdown-chip__now-text\s*\{[^}]*overflow:\s*visible/s, "نص العدّ لا يُقصّ");
 
-  /* على ٣٩٠px: ٤٢٪ = ١٦٣٫٨px — قبل: min(52vw,16.5rem) ≈ ٢٠٣px */
   const beforeMaxPx = Math.min(0.52 * 390, 16.5 * 16);
-  const afterMaxPx = 0.42 * 390;
+  const afterMaxPx = 0.78 * 390;
   assert.ok(beforeMaxPx > 180, `قبل: عرض أقصى تقريبي ${beforeMaxPx}px`);
-  assert.ok(afterMaxPx > 150 && afterMaxPx < 170, `بعد: عرض أقصى ≈${afterMaxPx}px على ٣٩٠`);
+  assert.ok(afterMaxPx > 280 && afterMaxPx < 320, `بعد: عرض أقصى ≈${afterMaxPx}px على ٣٩٠`);
   console.log(`  عرض الشريحة أقصى (٣٩٠×٨٤٤): قبل ≈${Math.round(beforeMaxPx)}px → بعد ${Math.round(afterMaxPx)}px`);
 }
 
@@ -88,9 +87,18 @@ console.log("\n=== تنسيق العدّ + نافذة حان وقت + أرقام
 {
   assert.equal(PRAYER_CHIP_NOW_WINDOW_SEC, 120, "نافذة حان وقت = دقيقتان");
 
-  assert.equal(formatChipDuration(3723), "١:٠٢", ">ساعة → س:دد بلا ثوانٍ");
-  assert.equal(formatChipDuration(2712), "٤٥:١٢", "<ساعة → دد:ثث");
-  assert.equal(formatChipDuration(59), "٠٠:٥٩", "ثوانٍ فقط مبطّنة");
+  assert.equal(formatChipDuration(3723), "ساعة ودقيقتين");
+  assert.equal(formatChipDuration(27 * 60), "٢٧ دقيقة");
+  assert.equal(formatChipDuration(59), "دقيقة");
+  assert.equal(formatChipDuration(9), "دقيقة");
+
+  const ishaFlicker = buildPrayerChipCopy({
+    prayerName: "العشاء",
+    remainingSeconds: 9,
+    sinceSeconds: null,
+  });
+  assert.equal(ishaFlicker.text, "باقي دقيقة على أذان العشاء");
+  assert.equal(/[0-9]|:/.test(ishaFlicker.text), false, "بلا ثوانٍ ولا أرقام لاتينية");
 
   const now = buildPrayerChipCopy({
     prayerName: "المغرب",
@@ -105,11 +113,10 @@ console.log("\n=== تنسيق العدّ + نافذة حان وقت + أرقام
     remainingSeconds: 0,
     sinceSeconds: 130,
     nextPrayerName: "العشاء",
-    nextRemainingSeconds: 5400,
+    nextRemainingSeconds: 72 * 60,
   });
   assert.equal(afterNow.isNow, false);
-  assert.match(afterNow.text, /العشاء/);
-  assert.match(afterNow.timeText ?? "", /١:٣٠/);
+  assert.equal(afterNow.text, "باقي ساعة و١٢ دقيقة على أذان العشاء");
 
   const urgent = buildPrayerChipCopy({
     prayerName: "العصر",
@@ -117,18 +124,13 @@ console.log("\n=== تنسيق العدّ + نافذة حان وقت + أرقام
     sinceSeconds: null,
   });
   assert.equal(urgent.urgent, true);
+  assert.match(urgent.text, /باقي ٨ دقائق على أذان العصر/);
 
   const latin = /[0-9]/;
-  assert.equal(latin.test(formatChipDuration(3723)), false, "صفر رقم لاتيني في س:دد");
-  assert.equal(latin.test(formatChipDuration(2712)), false, "صفر رقم لاتيني في دد:ثث");
+  assert.equal(latin.test(formatChipDuration(3723)), false, "صفر رقم لاتيني");
+  assert.equal(latin.test(formatChipDuration(2712)), false, "صفر رقم لاتيني في الدقائق");
   assert.equal(latin.test(now.text), false, "صفر رقم لاتيني في حان وقت");
-
-  /* ثبات عرض التنسيق: دد:ثث دائمًا ٥ محارف عربية+نقطتان → لا تذبذب من طول النص */
-  const samples = [0, 1, 59, 60, 601, 3599].map(formatChipDuration);
-  for (const s of samples) {
-    assert.equal(s.length, 5, `طول ثابت لـ دد:ثث: ${s}`);
-  }
-  console.log("  تذبذب عرض النص (طول دد:ثث): ٠ عبر ٦ عينات");
+  assert.equal(/:/.test(afterNow.text), false, "بلا ثوانٍ ولا MM:SS");
 }
 
 console.log("\n=== تباين ≥ ٤.٥:١ نهارًا وليلاً ===");

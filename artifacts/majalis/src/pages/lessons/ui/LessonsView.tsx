@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, useCallback, startTransition } from "react";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Search, SlidersHorizontal, Trash2, X } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { Link } from "wouter";
@@ -8,11 +8,9 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ErrorState, Empty } from "@/components/ui-common";
 import { HarvestFeedPanel } from "@/components/lessons/HarvestFeedPanel";
 import { SectionLobby } from "@/components/lobby/SectionLobby";
-import { getLobby } from "@/config/section-lobbies";
 import {
   ActiveFilters,
   FilterSheet,
-  FilterToggle,
   type ActiveFilterItem,
 } from "@/components/filters";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
@@ -52,8 +50,8 @@ import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { formatSheikhName } from "@/lib/sheikh-name";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { isWomenFriendlyLesson } from "@/lib/lesson-women-attendance";
-
 import { SITE_URL } from "@/lib/site-config";
+
 type TabId = "all" | "men" | "women" | "courses";
 
 function useTabFromUrl(): [TabId, (tab: TabId) => void] {
@@ -237,10 +235,16 @@ export default function LessonsPage({
   });
   const [searchDraft, setSearchDraft] = useState(() => filters.search);
   const debouncedSearch = useDebouncedValue(searchDraft, 250);
-  const [quickFilters, setQuickFilters] = useState<LessonQuickFilters>(DEFAULT_LESSON_QUICK_FILTERS);
+  const [quickFilters, setQuickFilters] = useState<LessonQuickFilters>(() => {
+    const hash = typeof window !== "undefined" ? window.location.hash.replace(/^#/, "") : "";
+    if (hash === "courses") return { ...DEFAULT_LESSON_QUICK_FILTERS, schedule: "courses" };
+    if (hash === "women") return { ...DEFAULT_LESSON_QUICK_FILTERS, schedule: "women" };
+    return DEFAULT_LESSON_QUICK_FILTERS;
+  });
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(() => Boolean(filters.search.trim()));
   const [myReg, setMyReg] = useState<string[]>([]);
-  const [tab, setTab] = useTabFromUrl();
+  const [, setTab] = useTabFromUrl();
   const { user, isLoggedIn, isAdmin } = useAuth();
 
   useEffect(() => {
@@ -317,7 +321,11 @@ export default function LessonsPage({
     return () => window.removeEventListener("hashchange", scrollToList);
   }, []);
 
-  const tabLessons = useMemo(() => filterByTab(activeLessons, tab), [activeLessons, tab]);
+  const tabLessons = useMemo(() => {
+    if (quickFilters.schedule === "courses") return filterByTab(activeLessons, "courses");
+    if (quickFilters.schedule === "women") return filterByTab(activeLessons, "women");
+    return filterByTab(activeLessons, "all");
+  }, [activeLessons, quickFilters.schedule]);
   const options = useMemo(() => extractFilterOptions(tabLessons), [tabLessons]);
   const regionOptions = useMemo(() => {
     if (filters.governorate === "كل المحافظات") return options.regions;
@@ -351,7 +359,11 @@ export default function LessonsPage({
     return { upcoming };
   }, [tabLessons]);
 
-  const showFeatured = !filters.search && filters.governorate === "كل المحافظات" && tab === "all";
+  const pageTitle = quickFilters.schedule === "today" ? "دروس اليوم" : "الدروس";
+  const showFeatured =
+    !filters.search &&
+    filters.governorate === "كل المحافظات" &&
+    quickFilters.schedule === "all";
   const featuredIds = useMemo(() => {
     if (!showFeatured) return new Set<string>();
     return new Set(featuredSections.upcoming.map((l) => l.id));
@@ -379,9 +391,11 @@ export default function LessonsPage({
 
   const clearAllFilters = useCallback(() => {
     setSearchDraft("");
+    setSearchOpen(false);
     setFilters(DEFAULT_KUWAIT_FILTERS);
     setQuickFilters(DEFAULT_LESSON_QUICK_FILTERS);
-  }, []);
+    setTab("all");
+  }, [setTab]);
 
   const activeFilterCount = useMemo(() => countActiveFacetFilters(filters), [filters]);
 
@@ -526,25 +540,81 @@ export default function LessonsPage({
     </div>
   );
 
-  const lobby = useMemo(() => getLobby("lessons"), []);
+  const handleQuickChange = useCallback(
+    (next: LessonQuickFilters) => {
+      setQuickFilters(next);
+      if (next.schedule === "courses") setTab("courses");
+      else if (next.schedule === "women") setTab("women");
+      else setTab("all");
+    },
+    [setTab],
+  );
 
   return (
     <SectionLobby
       lobbyId="lessons"
-      title={lobby.title}
+      title={pageTitle}
       className="lessons-page-v2 lessons-page-v3 ds-page mj-page lessons-compact-header"
-      chips={lobby.chips?.map((c) => ({
-        ...c,
-        active: tab === c.id,
-        onSelect: () => setTab(c.id as TabId),
-      }))}
+      chips={[]}
       groups={[]}
       filterSlot={
         <div className="lessons-v3-sticky">
-          <FilterToggle
-            onClick={() => setFiltersOpen(true)}
-            label="تصفية"
-            expanded={filtersOpen}
+          <LessonFilters
+            lessons={tabLessons}
+            filters={quickFilters}
+            onChange={handleQuickChange}
+            searchSlot={
+              searchOpen || searchDraft.trim() ? (
+                <label className="lesson-filters__search-field">
+                  <span className="sr-only">بحث في الدروس</span>
+                  <input
+                    type="search"
+                    inputMode="search"
+                    value={searchDraft}
+                    onChange={(e) => setSearchDraft(e.target.value)}
+                    placeholder="بحث…"
+                    dir="rtl"
+                    enterKeyHint="search"
+                    autoFocus={searchOpen}
+                  />
+                  <button
+                    type="button"
+                    className="lesson-filters__icon-btn"
+                    aria-label="إغلاق البحث"
+                    onClick={() => {
+                      setSearchDraft("");
+                      setSearchOpen(false);
+                    }}
+                  >
+                    <X size={16} strokeWidth={2} aria-hidden="true" />
+                  </button>
+                </label>
+              ) : (
+                <button
+                  type="button"
+                  className="lesson-filters__icon-btn"
+                  aria-label="بحث"
+                  onClick={() => setSearchOpen(true)}
+                >
+                  <Search size={16} strokeWidth={2} aria-hidden="true" />
+                </button>
+              )
+            }
+            filterSlot={
+              <button
+                type="button"
+                className="lesson-filters__icon-btn"
+                aria-label="تصفية"
+                aria-expanded={filtersOpen}
+                aria-haspopup="dialog"
+                onClick={() => setFiltersOpen(true)}
+              >
+                <SlidersHorizontal size={16} strokeWidth={2} aria-hidden="true" />
+                {activeFilterCount > 0 ? (
+                  <span className="lesson-filters__badge">{activeFilterCount}</span>
+                ) : null}
+              </button>
+            }
           />
           <ActiveFilters
             items={activeFilterItems}
@@ -569,53 +639,14 @@ export default function LessonsPage({
             onRetry={() => safeLocationReload()}
           >
             <>
-                  <p className="lessons-v3-intro">
-                    صفِّ حسب المكان والوقت، ثم راجع الأقرب موعدًا أو القائمة الكاملة.
-                  </p>
-
-                  <LessonFilters
-                    lessons={tabLessons}
-                    filters={quickFilters}
-                    onChange={setQuickFilters}
-                    searchSlot={
-                      <label className="lesson-filters__search-field">
-                        <span className="visually-hidden">بحث في الدروس</span>
-                        <input
-                          type="text"
-                          inputMode="search"
-                          value={searchDraft}
-                          onChange={(e) => setSearchDraft(e.target.value)}
-                          placeholder="بحث في العنوان، الشيخ، المكان، التصنيف…"
-                          dir="rtl"
-                          enterKeyHint="search"
-                        />
-                      </label>
-                    }
-                  />
-
               {showFeatured && featuredSections.upcoming.length > 0 && (
-                    <section className="lessons-v2-section">
-                      <h2 className="lessons-v2-section__title">
-                        {featuredSections.upcoming.some((l) => getFeaturedHomeStatusLabel(l) === "مستمر")
-                          ? "دروس اليوم"
-                          : "الأقرب موعدًا"}
-                      </h2>
-                      <p className="lessons-v2-section__hint">ما يحين قريبًا حسب توقيت الكويت.</p>
+                    <section className="lessons-v2-section lessons-v2-section--first">
                       {renderGrid(featuredSections.upcoming, "", true)}
                     </section>
                   )}
 
                   <section className="lessons-v2-section">
-                    <h2 className="lessons-v2-section__title">
-                      {tab === "courses"
-                        ? "الدورات"
-                        : tab === "women"
-                          ? "دروس نسائية"
-                          : tab === "men"
-                            ? "دروس رجالية"
-                            : "كل الدروس"}
-                    </h2>
-                    {scheduleEntries.length === 0 ? (
+                    {scheduleEntries.length === 0 && !(showFeatured && featuredSections.upcoming.length > 0) ? (
                       <Empty text="لا توجد دروس مطابقة — جرّب مسح الفلاتر أو توسيع البحث." />
                     ) : (
                       <LessonScheduleGroup entries={scheduleEntries} />

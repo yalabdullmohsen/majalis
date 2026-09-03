@@ -302,9 +302,7 @@ export const FIQH_DOOR_META: Record<FiqhCanonicalDoor, FiqhDoorMeta> = {
   },
 };
 
-/** فلاتر الشريط الأفقي — ترتيب العرض المطلوب. */
-export const FIQH_FILTER_CHIP_ORDER: Array<FiqhCanonicalDoor | "all"> = [
-  "all",
+export const FIQH_HUB_DOOR_ORDER: FiqhCanonicalDoor[] = [
   "tahara",
   "salah",
   "zakat",
@@ -313,7 +311,12 @@ export const FIQH_FILTER_CHIP_ORDER: Array<FiqhCanonicalDoor | "all"> = [
   "muamalat",
   "usrah",
   "jinayat",
-  "qada",
+];
+
+/** فلاتر الشريط الأفقي — ترتيب العرض المطلوب. */
+export const FIQH_FILTER_CHIP_ORDER: Array<FiqhCanonicalDoor | "all"> = [
+  "all",
+  ...FIQH_HUB_DOOR_ORDER,
 ];
 
 const FILTER_LABEL_OVERRIDE: Partial<Record<FiqhCanonicalDoor, string>> = {

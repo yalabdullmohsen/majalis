@@ -25,6 +25,7 @@ import {
   getEffectiveMuezzinId,
   getEffectivePlaybackMode,
   isIqamahEnabledForPrayer,
+  type AdhanPlaybackMode,
 } from "./adhan-preferences";
 import { getMuezzin, hasFajrAdhan, playAdhan, playIqamah } from "./adhan-audio";
 import { hapticTap, isIOS, isNative } from "./capacitor-utils";
@@ -147,6 +148,10 @@ function dispatchAdhanEvent(event: AdhanEvent) {
   showBrowserNotification(event);
 }
 
+function mapFullToSilent(mode: AdhanPlaybackMode): AdhanPlaybackMode {
+  return mode === "full" ? "silent" : mode;
+}
+
 function scheduleForPrayer(
   slot: PrayerSlot,
   key: PrayerKey,
@@ -170,7 +175,7 @@ function scheduleForPrayer(
   const deliveryMode = getEffectivePlaybackMode(prefs, key);
   // طلب المستخدم: حذف تشغيل الأذان الكامل (full) والاكتفاء بإشعار وقت الصلاة.
   // عمليًا نعامل mode=full كـsilent داخل الـscheduler فقط (لا نغيّر تفضيلات المستخدم).
-  const effectiveDeliveryMode = deliveryMode === "full" ? "silent" : deliveryMode;
+  const effectiveDeliveryMode = mapFullToSilent(deliveryMode);
 
   if (isAdhanAndroidAlarmAvailable() && effectiveDeliveryMode === "full") {
     void cancelAndroidFullAdhan(key);
@@ -214,7 +219,7 @@ function scheduleForPrayer(
     const fresh = loadAdhanPrefs();
     if (!fresh.globalEnabled || !fresh.prayers[key].enabled) return;
     const mode = getEffectivePlaybackMode(fresh, key);
-    const effectiveMode = mode === "full" ? "silent" : mode;
+    const effectiveMode = mapFullToSilent(mode);
     const muezzinId = getEffectiveMuezzinId(fresh, key);
     const muezzin = getMuezzin(muezzinId);
     const isFajr = key === "fajr";

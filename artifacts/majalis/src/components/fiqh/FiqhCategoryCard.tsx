@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { formatMasailCount } from "@/lib/arabic-count";
 import {
   FIQH_STATUS_LABELS,
+  fiqhFilterChipLabel,
   type FiqhContentStatus,
   type FiqhDoorSummary,
 } from "@/lib/fiqh/fiqhNormalize";
@@ -33,7 +34,7 @@ export function FiqhCategoryCard({ door, className }: Props) {
   return (
     <article className={cn("fiqh-category-card", className)}>
       <div className="fiqh-category-card__head">
-        <h3 className="fiqh-category-card__title">{door.label}</h3>
+        <h3 className="fiqh-category-card__title">{fiqhFilterChipLabel(door.id)}</h3>
         {showStatus ? (
           <span className={cn("fiqh-status-badge", statusClass(door.status))}>
             {FIQH_STATUS_LABELS[door.status]}
