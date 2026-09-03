@@ -50,6 +50,7 @@ const requiredFiles = [
   "lib/recitation-ai/providers/websocket-provider.ts",
   "lib/recitation-ai/providers/web-speech-provider.ts",
   "pages/quran/ui/RecitationTestView.tsx",
+  "pages/quran/RecitationTestPage.tsx",
 ];
 for (const rel of requiredFiles) {
   assert.ok(existsSync(resolve(srcRoot, rel)), `مفقود: ${rel}`);
@@ -66,10 +67,13 @@ assert.match(wsSrc, /first_partial/);
 const viewSrc = readFileSync(resolve(srcRoot, "pages/quran/ui/RecitationTestView.tsx"), "utf8");
 assert.match(viewSrc, /warmRecitationWsConnection/);
 assert.match(viewSrc, /markTarteelLatency\("page_open"\)/);
-assert.match(viewSrc, /isAiTarteelEnabled/);
 assert.match(viewSrc, /pausePlaybackForTasmee/);
 assert.match(viewSrc, /stopAuxiliaryAudioForTasmee/);
 assert.match(viewSrc, /ابدأ التلاوة/);
+
+const pageSrc = readFileSync(resolve(srcRoot, "pages/quran/RecitationTestPage.tsx"), "utf8");
+assert.match(pageSrc, /isAiTarteelEnabled/, "علم التلاوة على صفحة الغلاف لا الواجهة الداخلية");
+assert.match(pageSrc, /AI_TARTEEL_DISABLED_MESSAGE|التلاوة/);
 
 const webSrc = readFileSync(resolve(srcRoot, "lib/recitation-ai/providers/web-speech-provider.ts"), "utf8");
 assert.match(webSrc, /INTERIM_CONFIDENCE/);
