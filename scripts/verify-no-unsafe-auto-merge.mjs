@@ -55,6 +55,27 @@ for (const file of files) {
   }
 }
 
+const releaseWf = join(workflowsDir, "release-majlisilm.yml");
+if (existsSync(releaseWf)) {
+  const releaseBody = readFileSync(releaseWf, "utf8");
+  const releaseActive = stripComments(releaseBody);
+  ok("release-majlisilm.yml present");
+  if (/^\s*pull_request\s*:/m.test(releaseActive) || /^\s*pull_request_target\s*:/m.test(releaseActive)) {
+    bad("release-majlisilm.yml: must not run on pull_request / pull_request_target");
+  }
+  if (!/workflow_dispatch\s*:/.test(releaseActive)) {
+    bad("release-majlisilm.yml: must be workflow_dispatch only");
+  }
+  if (/git\s+push\s+[^\n]*HEAD:main/.test(releaseActive) || /git\s+push\s+[^\n]*\s+main\b/.test(releaseActive)) {
+    bad("release-majlisilm.yml: must not push directly to main");
+  }
+  if (!/github\.event_name\s*==\s*'workflow_dispatch'/.test(releaseActive) || !/github\.ref\s*==\s*'refs\/heads\/main'/.test(releaseActive)) {
+    bad("release-majlisilm.yml: push/PR steps must require workflow_dispatch on main");
+  }
+} else {
+  bad("release-majlisilm.yml missing");
+}
+
 const autoPath = join(workflowsDir, ALLOW_MERGE_FILE);
 if (existsSync(autoPath)) {
   const body = readFileSync(autoPath, "utf8");
