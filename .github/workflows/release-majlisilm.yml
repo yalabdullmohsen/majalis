@@ -179,8 +179,8 @@ jobs:
           existing=$(gh pr list --base main --head "$RELEASE_BRANCH" --json number --jq '.[0].number // empty' || true)
           if [ -n "${existing}" ]; then
             echo "PR إصدار موجود #${existing}"
-            gh pr merge "$existing" --auto --squash || true
-            echo "## PR الإصدار #${existing} (auto squash)" >> "$GITHUB_STEP_SUMMARY"
+            echo "## PR الإصدار #${existing}" >> "$GITHUB_STEP_SUMMARY"
+            echo "الدمج عبر auto-merge-to-main (squash فقط) بعد خضار الفحوصات — لا gh pr merge هنا." >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
           url=$(gh pr create --base main --head "$RELEASE_BRANCH" \
@@ -188,14 +188,10 @@ jobs:
             --body "$(cat <<'EOF'
           إصدار مُتحقَّق محلياً في هذا الـworkflow (typecheck + build + test:regression) بعد دمج `automation/content` و`automation/tasks` فوق `main` بـ **squash خطي** (بلا merge commits).
 
-          لا دفع مباشر إلى `main`. الدمج يتم بطلب السحب هذا عبر **squash merge** فقط بعد خضار الفحوصات المطلوبة (لا cancelled).
+          لا دفع مباشر إلى `main`. الدمج يتم عبر حماية الفرع و**auto-merge squash** بعد خضار الفحوصات المطلوبة (لا cancelled).
 
           EOF
           )")
-          pr_num=$(gh pr list --base main --head "$RELEASE_BRANCH" --json number --jq '.[0].number // empty')
-          if [ -n "${pr_num}" ]; then
-            # تفعيل auto-merge بالـ squash فقط — لا merge commit.
-            gh pr merge "$pr_num" --auto --squash
-          fi
-          echo "## PR الإصدار (squash auto-merge)" >> "$GITHUB_STEP_SUMMARY"
+          echo "## PR الإصدار (بانتظار auto-merge squash)" >> "$GITHUB_STEP_SUMMARY"
           echo "$url" >> "$GITHUB_STEP_SUMMARY"
+          echo "ملاحظة: ممنوع gh pr merge داخل هذا الـworkflow — الدمج عبر auto-merge-to-main.yml فقط." >> "$GITHUB_STEP_SUMMARY"
