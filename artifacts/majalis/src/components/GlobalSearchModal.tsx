@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import {
-  AlertTriangle, Bell, BookMarked, BookOpen, Clock, FileText, Flame,
+  AlertTriangle, Bell, BookMarked, BookOpen, Clock, CreditCard, FileText, Flame,
   GraduationCap, HelpCircle, Layers, Lightbulb, Mic2,
   Newspaper, RotateCw, Scale, Scroll, Search, Star, Tag, User, Wrench,
 } from "lucide-react";
@@ -471,6 +471,31 @@ export function GlobalSearchModal({ onClose }: Props) {
                   </div>
                 </section>
               )}
+
+              <section className="gsm-section">
+                <p className="gsm-section__label">تصفح</p>
+                <div className="gsm-quicklinks">
+                  {[
+                    { href: "/my-learning#flashcards", label: "المراجعة", Icon: CreditCard },
+                    { href: "/mushaf", label: "القرآن الكريم", Icon: BookMarked },
+                    { href: "/adhkar", label: "الأذكار", Icon: RotateCw },
+                    { href: "/lessons", label: "الدروس", Icon: GraduationCap },
+                    { href: "/fiqh", label: "الفقه والأحكام", Icon: Scale },
+                    { href: "/flashcards", label: "الفوائد", Icon: Lightbulb },
+                    { href: "/seerah", label: "السيرة", Icon: Star },
+                  ].map((l) => (
+                    <button
+                      key={l.href}
+                      type="button"
+                      onClick={() => { onClose(); navigate(l.href); }}
+                      className="gsm-quicklink-btn"
+                    >
+                      <l.Icon size={14} strokeWidth={1.8} aria-hidden="true" />
+                      {l.label}
+                    </button>
+                  ))}
+                </div>
+              </section>
             </div>
           )}
 

@@ -1059,6 +1059,9 @@ export default function ProphetStoriesPage() {
       groupTitle="عرض قصص الأنبياء"
     >
     <div className="prophets-lux-page prophets-lux-page--embedded">
+      <p className="text-sm text-muted-foreground leading-relaxed mb-4 rounded-xl border border-border/60 bg-muted/20 px-3 py-2.5">
+        هؤلاء الأنبياء والرسل الذين ذكرهم الله بأسمائهم في القرآن الكريم؛ وقد أخبر سبحانه أنه أرسل رسلاً آخرين لم يقصصهم علينا: ﴿وَرُسُلًا قَدْ قَصَصْنَاهُمْ عَلَيْكَ مِن قَبْلُ وَرُسُلًا لَّمْ نَقْصُصْهُمْ عَلَيْكَ﴾ [النساء: 164].
+      </p>
 
       {/* تبويبات العرض */}
       <div className="prophets-light-section">

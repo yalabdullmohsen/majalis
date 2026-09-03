@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T20:10:44.186Z",
+  "generatedAt": "2026-09-03T21:02:33.280Z",
   "paths": [
     ".github/workflows/release-majlisilm.yml",
     "\"artifacts/majalis/content/archive/rulings-encyclopedia/data/chunks/\\330\\247\\331\\204\\330\\243\\330\\263\\330\\261\\330\\251.json\"",
@@ -819,7 +819,9 @@
     "docs/reviews/SEERAH_REVIEW_QUEUE.md",
     "reports/changed-scope-report.md",
     "reports/changed-scope-verify.json",
-    "scripts/verify-no-unsafe-auto-merge.mjs"
+    "scripts/verify-no-unsafe-auto-merge.mjs",
+    "artifacts/majalis/scripts/verify-color-contrast-gate.mjs",
+    "artifacts/majalis/src/lib/islamic-occasions-seed.ts"
   ],
   "scopes": [
     "ci/config",
