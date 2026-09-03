@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-09-01T20:58:19.427Z",
+  "product": "سُنّة",
+  "section": "hadith",
+  "counts": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "findings": [],
+  "passed": true,
+  "routes": [
+    "/hadith",
+    "/hadith/sahih",
+    "/hadith/daif",
+    "/hadith/mawdu"
+  ]
+}

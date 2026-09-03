@@ -95,7 +95,7 @@ struct PrayerLiveActivityWidget: Widget {
 }
 
 /// بطاقة شاشة القفل — واضحة في الوضعين الفاتح والداكن (خلفية داكنة ثابتة
-/// عبر activityBackgroundTint، فلا تتأثر بوضع النظام، مطابقة لهوية المجلس).
+/// عبر activityBackgroundTint، فلا تتأثر بوضع النظام، مطابقة لهوية سُنّة).
 private struct LockScreenPrayerView: View {
     let attributes: PrayerActivityAttributes
     let state: PrayerActivityAttributes.ContentState

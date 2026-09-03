@@ -93,12 +93,12 @@ export function formatShortLessonTime(time: string): string {
     return `${h}${m} ${period}`;
   }
 
-  // نصوص أوقات الصلاة
+  // نصوص أوقات الصلاة — الأخص أولاً (عصر قبل فجر)
   if (/مغرب/u.test(t)) return "بعد المغرب";
-  if (/فجر/u.test(t))  return "بعد الفجر";
   if (/عصر/u.test(t))  return "بعد العصر";
   if (/ظهر/u.test(t))  return "بعد الظهر";
   if (/عشاء/u.test(t)) return "بعد العشاء";
+  if (/فجر/u.test(t))  return "بعد الفجر";
   if (/الصباح|صباح/u.test(t)) return "صباحاً";
   if (/مساء/u.test(t))         return "مساءً";
   return t.length > 24 ? `${t.slice(0, 22).trim()}…` : t;
@@ -145,12 +145,12 @@ export function getKuwaitClock(date = new Date()): KuwaitClock {
 
 // ترتيب مطابقة الصلوات — يُقرأ وقتها من effectivePrayerMinutes (كاش حي أولاً)
 const PRAYER_ROOT_KEYS: Array<[RegExp, string]> = [
-  [/فجر/u,   "الفجر"],
   [/شروق/u,  "الشروق"],
   [/ظهر/u,   "الظهر"],
   [/عصر/u,   "العصر"],
   [/مغرب/u,  "المغرب"],
   [/عشاء/u,  "العشاء"],
+  [/فجر/u,   "الفجر"], // أخيراً حتى لا يُخلط «بعد العصر» بالفجر
 ];
 
 /** تحويل الأرقام العربية-الهندية (٠-٩) إلى لاتينية. */
@@ -491,12 +491,40 @@ export function formatRelativeTime(targetMs: number, now = Date.now()): string {
 }
 
 /**
- * الوصف الموجز لحالة الدرس — «بعد يوم · فجراً» عند الاقتضاء.
+ * هل الوقت نص صلاة نسبي («بعد العصر») بلا ساعة رقمية صريحة؟
+ * العدّ التنازلي «بعد ساعة» لا يُعرض لهذه الصيغ إلا مع timestamp مؤكد.
  */
-export function formatRelativeTimeDetailed(targetMs: number, time: string, now = Date.now()): string {
-  const basic = formatRelativeTime(targetMs, now);
+export function isPrayerRelativeTime(time: string): boolean {
+  const t = cleanTimeText(time);
+  if (!t) return false;
+  if (/\d{1,2}\s*[:٫]\s*\d{2}/u.test(t)) return false;
+  if (/\d{1,2}/u.test(t) && /(?:^|\s)[صم](?:\s|$)|صباح|مساء|am|pm/iu.test(t)) return false;
+  return PRAYER_ROOT_KEYS.some(([root]) => root.test(t));
+}
 
-  if (basic === "بعد يوم" && /فجر/u.test(time)) {
+/**
+ * الوصف الموجز لحالة الدرس.
+ * - يوم+وقت صلاة نسبي بلا timestamp مؤكد → النص الأصلي («بعد العصر») لا «بعد ساعة».
+ * - «بعد يوم · فجراً» فقط إن كان الوقت فجراً صريحاً.
+ */
+export function formatRelativeTimeDetailed(
+  targetMs: number,
+  time: string,
+  now = Date.now(),
+  opts?: { confirmedAbsolute?: boolean },
+): string {
+  const basic = formatRelativeTime(targetMs, now);
+  const short = formatShortLessonTime(time) || cleanTimeText(time);
+
+  if (!opts?.confirmedAbsolute && isPrayerRelativeTime(time)) {
+    if (basic === "انتهى" || basic === "الآن") return basic;
+    const hours = (targetMs - now) / 3_600_000;
+    if (hours < 24) return short || basic;
+    if (basic.startsWith("بعد") && short) return `${basic} · ${short}`;
+    return short || basic;
+  }
+
+  if (basic === "بعد يوم" && /فجر/u.test(time) && !/عصر/u.test(time)) {
     return "بعد يوم · فجراً";
   }
 

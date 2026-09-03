@@ -42,6 +42,64 @@
 html[data-theme="dark"] {
   /* --mj-* تتبدّل في theme.css؛ لا تُعاد color-primary إلى مسار brand-v4 */
   --shadow-soft: var(--e-2);
+  --color-button-secondary-bg: #222D29;
+  --color-button-secondary-text: #F8FAFC;
+  --color-button-secondary-border: #445651;
+  --color-placeholder: #C5D0CB;
+  --color-primary-deep: #8FD4B0;
+}
+
+html[data-theme="dark"] .home-start-here,
+html.dark .home-start-here {
+  background: var(--color-surface, var(--mj-surface)) !important;
+  border: 1px solid var(--color-border, var(--mj-hairline));
+  color: var(--color-text, var(--mj-ink));
+}
+
+html[data-theme="dark"] .home-start-here .hsh-actions__primary,
+html.dark .home-start-here .hsh-actions__primary {
+  color: var(--color-primary-foreground, var(--mj-on-brand));
+}
+
+html[data-theme="dark"] .home-start-here .hsh-actions__secondary,
+html.dark .home-start-here .hsh-actions__secondary {
+  border: 1px solid var(--color-button-secondary-border);
+  color: var(--color-button-secondary-text);
+  background: var(--color-button-secondary-bg);
+}
+
+html[data-theme="dark"] .hsh-eyebrow,
+html.dark .hsh-eyebrow,
+html[data-theme="dark"] .hsh-step__num,
+html.dark .hsh-step__num {
+  background: var(--color-primary-dark, var(--mj-brand-deep));
+  color: var(--color-primary-foreground, var(--mj-on-brand));
+}
+
+html[data-theme="dark"] .hsh-title,
+html.dark .hsh-title,
+html[data-theme="dark"] .hsh-step__title,
+html.dark .hsh-step__title {
+  color: var(--color-text, var(--mj-ink));
+}
+
+html[data-theme="dark"] .hsh-lead,
+html.dark .hsh-lead,
+html[data-theme="dark"] .hsh-step__desc,
+html.dark .hsh-step__desc {
+  color: var(--color-text-muted, var(--mj-muted));
+}
+
+html[data-theme="dark"] .hsh-step,
+html.dark .hsh-step {
+  background: var(--color-surface-elevated, var(--color-surface, var(--mj-surface)));
+  border-color: var(--color-border, var(--mj-hairline));
+  color: var(--color-text, var(--mj-ink));
+}
+
+html[data-theme="dark"] .hsh-step__cta,
+html.dark .hsh-step__cta {
+  color: var(--color-primary-deep, #8FD4B0);
 }
 
 :root {

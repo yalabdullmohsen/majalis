@@ -24,10 +24,12 @@ function resolveCommit() {
   }
 }
 
-const commit = resolveCommit();
+const commitFull = resolveCommit();
+const shortCommit = commitFull === "unknown" ? "unknown" : commitFull.slice(0, 8);
+/** الحمولة العامة: short فقط — لا نعرّض SHA كامل في endpoint عام. */
 const payload = {
-  commit,
-  shortCommit: commit.slice(0, 8),
+  commit: shortCommit,
+  shortCommit,
   builtAt: new Date().toISOString(),
   ref:
     process.env.VERCEL_GIT_COMMIT_REF ||

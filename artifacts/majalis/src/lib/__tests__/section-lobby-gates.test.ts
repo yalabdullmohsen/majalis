@@ -32,7 +32,7 @@ for (const [id, rel] of PAGES) {
   assert.doesNotMatch(src, /showBack\s*=\s*true/, `${id}: بلا زر رجوع`);
   if (id === "fiqh") {
     assert.match(src, /type=["']search["']/, `${id}: بحث فقهي محلي`);
-    assert.match(src, /بحث في الفقه/, `${id}: تسمية بحث الفقه`);
+    assert.match(src, /بحث الفقه/, `${id}: تسمية بحث الفقه`);
   } else {
     assert.doesNotMatch(src, /type=["']search["']/, `${id}: بلا حقل بحث محلي`);
   }
@@ -90,7 +90,7 @@ assert.ok(quran.groups.every((g) => g.items.length >= 1));
 assert.equal(quran.groups.find((g) => g.id === "numbers")?.items.length, 1);
 
 const lessons = getLobby("lessons");
-assert.ok(lessons.primary);
+assert.equal(lessons.primary, undefined);
 assert.deepEqual(lessons.chips?.map((c) => c.id), ["all", "men", "women", "courses"]);
 assert.equal(lessons.quad?.length, 5);
 assert.deepEqual(lessons.quad?.map((q) => q.id), [

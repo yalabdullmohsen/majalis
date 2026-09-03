@@ -16,6 +16,29 @@ export function isImmersiveChromePath(pathname: string): boolean {
   );
 }
 
+/** صفحات وظيفية — تُخفى فيها الشريط المتحرك الطويل؛ الوظيفة أولًا.
+ * صفحة الدخول/التسجيل ليست ضمنها — الشريط المتحرك يظهر هناك. */
+export function isCompactHeaderPath(pathname: string): boolean {
+  const p = pathname.replace(/\/+$/, "") || "/";
+  if (isImmersiveChromePath(p)) return true;
+  return (
+    p === "/search" ||
+    p.startsWith("/search/") ||
+    p === "/library" ||
+    p.startsWith("/library/") ||
+    p === "/quiz" ||
+    p.startsWith("/quiz/") ||
+    p === "/profile" ||
+    p.startsWith("/profile/") ||
+    p === "/settings" ||
+    p.startsWith("/settings/") ||
+    p === "/prayer-times" ||
+    p.startsWith("/prayer-times/") ||
+    p === "/mushaf" ||
+    p.startsWith("/mushaf/")
+  );
+}
+
 /** صفحة مواقيت الصلاة فقط */
 export function isPrayerTimesPath(pathname: string): boolean {
   const p = pathname.replace(/\/+$/, "") || "/";
@@ -28,7 +51,7 @@ export function isQuranImmersivePath(pathname: string): boolean {
   return p === "/mushaf" || p.startsWith("/mushaf/");
 }
 
-/** صفحة دخول/تسجيل مستقلة — بلا هيدر/إعلان/بحث/تيكر/شريط سفلي */
+/** صفحة دخول/تسجيل — بلا شريط سفلي/تذييل/مساعد؛ الهيدر والتيكر ظاهران */
 export function isAuthStandalonePath(pathname: string): boolean {
   const p = pathname.replace(/\/+$/, "") || "/";
   return (

@@ -284,7 +284,7 @@ export default function UserStatsPage() {
 
   useEffect(() => {
     applyPageSeo({
-      path: "/my-profile",
+      path: "/profile",
       title: "إحصائياتي | سُنّة",
       description: "إحصائياتي وشاراتي وسجل تعلمي في سُنّة، تابع تقدمك في رحلتك العلمية.",
       keywords: ["إحصائيات", "شارات", "نشاط المستخدم", "تقدم علمي", "سُنّة"],

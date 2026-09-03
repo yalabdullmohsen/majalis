@@ -348,25 +348,13 @@ export default function LessonsPage({
         return nextMs - now <= THRESHOLD_MS;
       })
       .slice(0, 4);
-    const upcomingIds = new Set(upcoming.map((l) => l.id));
-    const popular = [...pool]
-      .sort((a, b) => (b.keywords?.length || 0) - (a.keywords?.length || 0))
-      .filter((l) => !upcomingIds.has(l.id))
-      .slice(0, 4);
-    const popularIds = new Set(popular.map((l) => l.id));
-    const shownIds = new Set([...upcomingIds, ...popularIds]);
-    const featured = pool.filter((l) => l.hasLiveStream && !shownIds.has(l.id)).slice(0, 4);
-    return { upcoming, popular, featured };
+    return { upcoming };
   }, [tabLessons]);
 
   const showFeatured = !filters.search && filters.governorate === "كل المحافظات" && tab === "all";
   const featuredIds = useMemo(() => {
     if (!showFeatured) return new Set<string>();
-    return new Set([
-      ...featuredSections.upcoming.map((l) => l.id),
-      ...featuredSections.popular.map((l) => l.id),
-      ...featuredSections.featured.map((l) => l.id),
-    ]);
+    return new Set(featuredSections.upcoming.map((l) => l.id));
   }, [featuredSections, showFeatured]);
 
   const mainList = useMemo(
@@ -539,42 +527,18 @@ export default function LessonsPage({
   );
 
   const lobby = useMemo(() => getLobby("lessons"), []);
-  const quad = useMemo(
-    () =>
-      lobby.quad?.map((item) => {
-        if (item.id === "lessons") {
-          return { ...item, count: activeLessons.length, route: "/lessons#lessons-list" };
-        }
-        if (item.id === "lessons-archive") return { ...item, count: archivedLessons.length };
-        return item;
-      }),
-    [lobby.quad, activeLessons.length, archivedLessons.length],
-  );
-  const nearest = featuredSections.upcoming[0];
-  const primary = lobby.primary
-    ? {
-        ...lobby.primary,
-        subtitle: nearest
-          ? [nearest.title, nearest.mosque].filter(Boolean).join(" — ")
-          : loading
-            ? "\u00a0"
-            : "لا درس قريب اليوم",
-      }
-    : undefined;
 
   return (
     <SectionLobby
       lobbyId="lessons"
       title={lobby.title}
-      primary={primary}
-      className="lessons-page-v2 lessons-page-v3 ds-page mj-page"
+      className="lessons-page-v2 lessons-page-v3 ds-page mj-page lessons-compact-header"
       chips={lobby.chips?.map((c) => ({
         ...c,
         active: tab === c.id,
         onSelect: () => setTab(c.id as TabId),
       }))}
-      groups={lobby.groups}
-      quad={quad}
+      groups={[]}
       filterSlot={
         <div className="lessons-v3-sticky">
           <FilterToggle
@@ -605,30 +569,9 @@ export default function LessonsPage({
             onRetry={() => safeLocationReload()}
           >
             <>
-              {showFeatured && featuredSections.upcoming.length > 0 && (
-                    <section className="lessons-v2-section">
-                      <h2 className="lessons-v2-section__title">
-                        {featuredSections.upcoming.some((l) => getFeaturedHomeStatusLabel(l) === "مستمر")
-                          ? "دروس اليوم"
-                          : "الأقرب موعدًا"}
-                      </h2>
-                      {renderGrid(featuredSections.upcoming, "", true)}
-                    </section>
-                  )}
-
-                  {showFeatured && featuredSections.popular.length > 0 && (
-                    <section className="lessons-v2-section">
-                      <h2 className="lessons-v2-section__title">الأكثر تداولاً</h2>
-                      {renderGrid(featuredSections.popular, "pop-", true)}
-                    </section>
-                  )}
-
-                  {showFeatured && featuredSections.featured.length > 0 && (
-                    <section className="lessons-v2-section">
-                      <h2 className="lessons-v2-section__title">بث مباشر</h2>
-                      {renderGrid(featuredSections.featured, "feat-", true)}
-                    </section>
-                  )}
+                  <p className="lessons-v3-intro">
+                    صفِّ حسب المكان والوقت، ثم راجع الأقرب موعدًا أو القائمة الكاملة.
+                  </p>
 
                   <LessonFilters
                     lessons={tabLessons}
@@ -649,6 +592,18 @@ export default function LessonsPage({
                       </label>
                     }
                   />
+
+              {showFeatured && featuredSections.upcoming.length > 0 && (
+                    <section className="lessons-v2-section">
+                      <h2 className="lessons-v2-section__title">
+                        {featuredSections.upcoming.some((l) => getFeaturedHomeStatusLabel(l) === "مستمر")
+                          ? "دروس اليوم"
+                          : "الأقرب موعدًا"}
+                      </h2>
+                      <p className="lessons-v2-section__hint">ما يحين قريبًا حسب توقيت الكويت.</p>
+                      {renderGrid(featuredSections.upcoming, "", true)}
+                    </section>
+                  )}
 
                   <section className="lessons-v2-section">
                     <h2 className="lessons-v2-section__title">
@@ -720,6 +675,12 @@ export default function LessonsPage({
           { href: "/fiqh", label: "الفقه والأحكام" },
         ]}
       />
+      <section className="lessons-page-stats" aria-label="إحصاءات الدروس">
+        <p className="lessons-page-stats__item">{activeLessons.length} درسًا نشطًا</p>
+        {archivedLessons.length > 0 ? (
+          <p className="lessons-page-stats__item">{archivedLessons.length} في الأرشيف</p>
+        ) : null}
+      </section>
       <div className="lessons-v3-footer-pad">
         <SectionQuiz route="/lessons" aria-label="اختبر معلوماتك في الدروس الشرعية" count={4} />
       </div>

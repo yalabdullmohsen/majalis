@@ -2617,8 +2617,8 @@ h1, h2, h3 {
 /* ── 9. الشريط العلوي (NavBar) — بدون !important كي لا يُلغي final-release.css ── */
 .navbar-v3 {
   background: color-mix(in srgb, var(--majalis-parchment) 94%, transparent);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border-bottom-color: color-mix(in srgb, var(--majalis-line) 60%, transparent);
 }
 

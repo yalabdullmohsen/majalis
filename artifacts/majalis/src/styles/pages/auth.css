@@ -11,13 +11,13 @@
 
   box-sizing: border-box;
   /* تمرير وثيقة واحد — لا حاوية داخلية (overscroll-behavior على .app-shell يقطع التسلسل) */
-  min-height: calc(100dvh - var(--inset-top, 0px) - var(--inset-bottom, 0px));
-  min-height: calc(100svh - var(--inset-top, 0px) - var(--inset-bottom, 0px));
+  min-height: calc(100dvh - var(--app-top-chrome-h, 0px) - var(--inset-top, 0px) - var(--inset-bottom, 0px));
+  min-height: calc(100svh - var(--app-top-chrome-h, 0px) - var(--inset-top, 0px) - var(--inset-bottom, 0px));
   width: 100%;
   max-width: 100vw;
   margin: 0;
   padding:
-    max(0.75rem, var(--inset-top, 0px))
+    max(0.75rem, 0px)
     max(0.85rem, var(--inset-inline-start, var(--inset-left, 0px)))
     max(1.25rem, var(--inset-bottom, 0px))
     max(0.85rem, var(--inset-inline-end, var(--inset-right, 0px)));
@@ -36,8 +36,8 @@
 #main-content.app-main:has(.login-page) {
   padding-inline: 0 !important;
   padding-block-end: 0 !important;
-  min-height: calc(100dvh - var(--inset-top, 0px) - var(--inset-bottom, 0px));
-  min-height: calc(100svh - var(--inset-top, 0px) - var(--inset-bottom, 0px));
+  min-height: calc(100dvh - var(--app-top-chrome-h, 0px) - var(--inset-top, 0px) - var(--inset-bottom, 0px));
+  min-height: calc(100svh - var(--app-top-chrome-h, 0px) - var(--inset-top, 0px) - var(--inset-bottom, 0px));
 }
 
 html.dark .login-page,

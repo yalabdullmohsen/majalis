@@ -18,12 +18,12 @@ import "@/styles/pages/search-legacy.css";
 import "@/styles/components/surface-polish.css";
 
 const SEARCH_QUICK_SUGGESTIONS = [
+  { label: "الصلاة", href: "/search?q=الصلاة" },
+  { label: "الوضوء", href: "/search?q=الوضوء" },
   { label: "أذكار الصباح", href: "/adhkar/morning" },
-  { label: "الأربعون النووية", href: "/arbaeen-nawawi" },
-  { label: "أحاديث ضعيفة", href: "/hadith/daif" },
-  { label: "حفظ القرآن", href: "/memorization" },
-  { label: "فقه الصلاة", href: "/salah-guide" },
-  { label: "دروس الكويت", href: "/kuwait-lessons" },
+  { label: "صحيح البخاري", href: "/hadith/books/bukhari" },
+  { label: "الفقه", href: "/fiqh" },
+  { label: "القرآن", href: "/mushaf" },
 ] as const;
 
 /* ── تمييز على النص الأصلي عبر محرك التسامح الموحّد ── */
@@ -546,15 +546,9 @@ export default function SearchPage() {
 
   return (
     <div className="page-shell narrow search-page ds-page">
-      <PageHeader
-        eyebrow=""
-        title="البحث"
-        subtitle="في الآيات والأحاديث والفتاوى والدروس"
-      />
-
       <form
         onSubmit={(e) => { e.preventDefault(); submitSearch(term); }}
-        className="search-page-form"
+        className="search-page-form search-page-form--primary"
         aria-label="نموذج البحث الشامل"
         role="search"
       >
@@ -562,10 +556,16 @@ export default function SearchPage() {
           value={term}
           onChange={handleTermChange}
           onSubmit={submitSearch}
-          placeholder="ابحث في المحتوى…"
+          placeholder="ابحث في القرآن والحديث والفقه والأذكار…"
         />
         <button type="submit" className="search-page-submit ds-btn ds-btn--primary" aria-label="تنفيذ البحث">بحث</button>
       </form>
+
+      <PageHeader
+        eyebrow=""
+        title="البحث الشامل"
+        subtitle="في الآيات والأحاديث والفتاوى والدروس والمكتبة"
+      />
 
       {/* شرائح تصفية الأقسام */}
       {q.trim() && (
@@ -743,9 +743,9 @@ export default function SearchPage() {
         <div aria-live="polite" aria-atomic="false">
           {total === 0 ? (
             <div className="search-no-results" role="status">
-              <p className="search-no-results__msg">لا نتائج لـ «{q}».</p>
+              <p className="search-no-results__msg">لم نجد نتيجة مطابقة لـ «{q}».</p>
               <p className="search-no-results__hint">
-                جرّب كلمة أخرى، أو اختصر العبارة، أو تحقق من الإملاء (الهمزات والتشكيل لا تمنع المطابقة).
+                لم نجد نتيجة مطابقة، جرّب كلمة أقصر أو اختر من الاقتراحات.
               </p>
               <button
                 type="button"

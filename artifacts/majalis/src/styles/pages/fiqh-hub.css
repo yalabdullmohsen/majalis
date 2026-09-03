@@ -718,21 +718,9 @@ html.dark .fiqh-lux-page.section-lobby {
   direction: rtl;
 }
 
-/* ── Hero الرئيسية — أيقونة في التدفق بلا تداخل مع الشارة ── */
+/* ── Hero القديم معطّل — الرأس عبر CompactSectionHeader ── */
 .fiqh-lux-hero {
-  position: relative;
-  isolation: isolate;
-  margin: 0.75rem max(1rem, var(--page-gutter, 1rem)) 0;
-  padding: 1.75rem 1.5rem;
-  border-radius: 22px;
-  overflow: hidden;
-  background-color: var(--fq-emerald);
-  background-image:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, transparent 55%),
-    radial-gradient(ellipse 80% 60% at 100% 0%, rgba(184, 150, 63, 0.14) 0%, transparent 55%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 28px -16px rgba(11, 32, 24, 0.45);
-  color: var(--fq-on-hero);
+  display: none;
 }
 
 .fiqh-lux-hero__icon {
@@ -1403,8 +1391,15 @@ html.dark .fiqh-lux-page .card::after {
 .fiqh-hub-layout {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  padding-bottom: 2rem;
+  gap: 0.85rem;
+  padding-inline: max(0.75rem, var(--page-gutter, 1rem));
+  padding-bottom: calc(
+    var(--bottom-nav-total, var(--nav-h, 64px)) + var(--inset-bottom, 0px) + 1.25rem
+  );
+}
+
+.fiqh-lux-shell > .compact-section-header {
+  margin-bottom: 0.15rem;
 }
 
 .fiqh-hub-search__label {
@@ -1441,25 +1436,34 @@ html.dark .fiqh-lux-page .card::after {
 
 .fiqh-filters {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pinch-zoom;
+  padding-bottom: 0.25rem;
+  scrollbar-width: thin;
 }
 
 .fiqh-filters__chip {
+  flex: 0 0 auto;
   border: 1px solid var(--fq-line, var(--border));
   background: var(--fq-surface, var(--cardBackground));
   color: var(--fq-ink, var(--text-primary));
   border-radius: 999px;
-  padding: 0.35rem 0.75rem;
-  font-size: 0.82rem;
+  min-height: 2rem;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .fiqh-filters__chip.is-active {
-  border-color: var(--fq-emerald-bright, var(--mj-brand));
-  background: color-mix(in srgb, var(--fq-emerald-bright, var(--mj-brand)) 12%, var(--fq-surface, var(--cardBackground)));
-  color: var(--fq-emerald-bright, var(--mj-brand-deep));
+  border-color: var(--fq-emerald, var(--mj-brand-deep, #123f2e));
+  background: var(--fq-emerald, var(--mj-brand-deep, #123f2e));
+  color: var(--mj-on-brand, #fff);
 }
 
 html[data-theme="dark"] .fiqh-filters__chip,
@@ -1470,8 +1474,9 @@ html.dark .fiqh-filters__chip {
 
 html[data-theme="dark"] .fiqh-filters__chip.is-active,
 html.dark .fiqh-filters__chip.is-active {
-  background: color-mix(in srgb, var(--fq-emerald-bright, #5eead4) 18%, #0f172a);
-  color: #ecfdf5;
+  background: var(--fq-emerald-bright, #5cc095);
+  border-color: var(--fq-emerald-bright, #5cc095);
+  color: #0b1f18;
 }
 
 .fiqh-hub-section__title {
@@ -1503,12 +1508,13 @@ html.dark .fiqh-filters__chip.is-active {
 .fiqh-category-card {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
-  padding: 0.9rem 1rem;
-  border-radius: 20px;
+  gap: 0.35rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 14px;
   border: 1px solid var(--fq-line, var(--border));
   background: var(--fq-surface, var(--cardBackground));
-  min-height: 10rem;
+  box-shadow: 0 1px 3px -2px rgba(11, 32, 24, 0.08);
+  min-height: 0;
 }
 
 .fiqh-category-card__head {
@@ -1520,18 +1526,18 @@ html.dark .fiqh-filters__chip.is-active {
 
 .fiqh-category-card__title {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 800;
   color: var(--fq-ink, var(--text-primary));
 }
 
 .fiqh-category-card__desc {
   margin: 0;
-  font-size: 0.84rem;
-  line-height: 1.55;
+  font-size: 0.78rem;
+  line-height: 1.45;
   color: var(--fq-ink-soft, var(--text-secondary));
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1728,3 +1734,100 @@ html.dark .fiqh-lesson-alert {
   margin-top: 0.5rem;
 }
 
+
+
+/* ترتيب الفقه — إيقاع أوضح وأقل ازدحامًا */
+.fiqh-lux-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  max-width: min(52rem, 100%);
+  margin-inline: auto;
+}
+.fiqh-lux-shell > .compact-section-header {
+  margin-block-end: 0;
+  padding-inline: max(0.75rem, var(--page-gutter, 1rem));
+}
+.fiqh-hub-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-inline: max(0.75rem, var(--page-gutter, 1rem));
+  padding-block: 0.85rem 1.25rem;
+  padding-bottom: calc(
+    var(--bottom-nav-total, var(--nav-h, 64px)) + var(--inset-bottom, 0px) + 1.25rem
+  );
+}
+.fiqh-hub-lead {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--fq-ink-soft, var(--text-secondary));
+  max-width: 42ch;
+}
+.fiqh-hub-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.fiqh-hub-section {
+  margin: 0;
+  padding-block-start: 0.35rem;
+  border-block-start: 1px solid color-mix(in srgb, var(--fq-line, var(--border)) 55%, transparent);
+}
+.fiqh-hub-section:first-of-type {
+  border-block-start: 0;
+  padding-block-start: 0;
+}
+.fiqh-hub-section__head {
+  margin-bottom: 0.85rem;
+}
+.fiqh-hub-section__title {
+  font-size: clamp(1.1rem, 2.6vw, 1.25rem);
+  font-weight: 750;
+  margin: 0 0 0.3rem;
+  color: var(--fq-ink, var(--text-primary));
+}
+.fiqh-hub-section__hint {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--fq-ink-soft, var(--text-secondary));
+}
+.fiqh-category-grid {
+  gap: 0.85rem;
+}
+.fiqh-issue-grid {
+  gap: 0.75rem;
+}
+.fiqh-lux-shell .fiqh-category-card,
+.fiqh-lux-shell .fiqh-door-card,
+.fiqh-lux-page .fiqh-category-card {
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--mn-border-default, #d8e3de) 70%, transparent);
+  box-shadow: 0 1px 2px color-mix(in srgb, #0f172a 5%, transparent);
+  background: var(--fq-surface, var(--cardBackground, var(--color-surface, #fff)));
+  padding: 0.95rem 1rem;
+  gap: 0.4rem;
+}
+.fiqh-lux-shell .fiqh-category-card__desc {
+  -webkit-line-clamp: 2;
+}
+.fiqh-hub-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1.1rem;
+  margin: 0;
+  padding: 0.85rem max(0.75rem, var(--page-gutter, 1rem)) 1.25rem;
+  border-block-start: 1px solid color-mix(in srgb, var(--fq-line, var(--border)) 55%, transparent);
+  color: var(--fq-ink-soft, var(--text-secondary));
+  font-size: 0.86rem;
+}
+.fiqh-hub-stats__item {
+  margin: 0;
+}
+.fiqh-lux-support.section-lobby {
+  margin-top: 0.25rem;
+  padding-inline: 0;
+}

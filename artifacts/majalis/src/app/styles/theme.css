@@ -374,6 +374,17 @@ html.dark,
   --color-hairline: #35443F;
   --color-ink: #F8FAFC;
   --color-ink-2: #E2E8F0;
+  --color-surface-elevated: #222D29;
+  --color-text: #F8FAFC;
+  --color-text-muted: #C5D0CB;
+  --color-border: #35443F;
+  --color-primary: #5CC095;
+  --color-primary-foreground: #06231A;
+  --color-primary-deep: #8FD4B0;
+  --color-button-secondary-bg: #222D29;
+  --color-button-secondary-text: #F8FAFC;
+  --color-button-secondary-border: #445651;
+  --color-placeholder: #C5D0CB;
   --color-muted: #C5D0CB;
   --color-brand: #5CC095;
   --color-brand-soft: #16261F;

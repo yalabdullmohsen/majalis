@@ -20,8 +20,10 @@ assert.match(chipsTsx, /SegmentedFilter/, "FilterChips يغلف النظام ا�
 assert.match(filtersCss, /\.mj-filter-chip\s*\{[\s\S]*?min-height:\s*44px/);
 assert.match(filtersCss, /\.mj-filter-chip\.is-active\s*\{[\s\S]*?color:\s*#fff/);
 assert.match(lessonsCss, /\.lessons-page-v3/);
-assert.match(lessonsView, /all:\s*"الكل"/);
+assert.match(lessonsView, /"الكل"/);
 assert.match(lessonsView, /SectionLobby|FilterToggle/);
 assert.match(lessonsView, /useDebouncedValue/);
+assert.match(lessonsView, /الأقرب موعدًا|دروس اليوم/);
+assert.equal(/الأكثر تداولاً/.test(lessonsView), false, "بلا قسم مميز مزدحم للأكثر تداولاً");
 
 console.log("lessons-filter-chips-layout.test.ts: ok");

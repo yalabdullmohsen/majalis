@@ -10,6 +10,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   isAuthStandalonePath,
+  isCompactHeaderPath,
   isImmersiveChromePath,
   isPrayerTimesPath,
   isQuranImmersivePath,
@@ -46,6 +47,18 @@ assert.equal(isAuthStandalonePath("/register"), true);
 assert.equal(isAuthStandalonePath("/auth/callback"), true);
 assert.equal(isAuthStandalonePath("/"), false);
 
+assert.equal(isCompactHeaderPath("/search"), true);
+assert.equal(isCompactHeaderPath("/library"), true);
+assert.equal(isCompactHeaderPath("/quiz"), true);
+assert.equal(isCompactHeaderPath("/profile"), true);
+assert.equal(isCompactHeaderPath("/settings"), true);
+assert.equal(isCompactHeaderPath("/prayer-times"), true);
+assert.equal(isCompactHeaderPath("/mushaf"), true);
+assert.equal(isCompactHeaderPath("/login"), false, "الدخول يُظهر الشريط المتحرك");
+assert.equal(isCompactHeaderPath("/register"), false, "التسجيل يُظهر الشريط المتحرك");
+assert.equal(isCompactHeaderPath("/"), false);
+assert.equal(isCompactHeaderPath("/hadith"), false);
+
 const prayerSrc = readFileSync(resolve(appRoot, "src/pages/worship/ui/PrayerTimesView.tsx"), "utf8");
 assert.equal(prayerSrc.includes("SectionQuiz"), false, "صفحة الصلاة بلا SectionQuiz");
 assert.equal(prayerSrc.includes("categoryId"), false, "صفحة الصلاة لا تحمّل تصنيفات اختبار");
@@ -77,6 +90,7 @@ assert.match(readFileSync(resolve(appRoot, "src/config/sections.registry.ts"), "
 
 const navBar = readFileSync(resolve(appRoot, "src/components/NavBar.tsx"), "utf8");
 assert.match(navBar, /isImmersiveChromePath\(location\)\) return null/);
+assert.match(navBar, /isCompactHeaderPath\(location\)/, "NavBar يخفّي التيكر على المسارات الوظيفية");
 
 const prayerRanks = readFileSync(resolve(appRoot, "src/pages/worship/ui/PrayerRanksView.tsx"), "utf8");
 assert.equal(prayerRanks.includes("SectionQuiz"), false, "مراتب الصلاة بلا SectionQuiz");

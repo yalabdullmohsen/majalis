@@ -228,6 +228,16 @@ html.dark,
   --color-background: var(--mj-bg);
   --color-border: var(--mj-hairline);
   --color-primary-foreground: #06231A;
+  --color-bg: var(--surface-app, var(--mj-bg));
+  --color-surface-elevated: var(--mj-surface-2);
+  --color-text: var(--mj-ink);
+  --color-text-muted: var(--mj-muted);
+  --color-primary: var(--mj-brand);
+  --color-primary-deep: #8FD4B0;
+  --color-button-secondary-bg: #222D29;
+  --color-button-secondary-text: #F8FAFC;
+  --color-button-secondary-border: #445651;
+  --color-placeholder: #C5D0CB;
 
   --majalis-emerald: var(--mj-brand);
   --majalis-emerald-deep: #4AA882;
