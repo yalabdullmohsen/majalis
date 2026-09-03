@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-03",
-  "lastCompletedId": "b071",
-  "resumeFromId": "b072",
+  "lastCompletedId": "b072",
+  "resumeFromId": "b073",
   "items": [
     {
       "id": "b001",
@@ -899,6 +899,19 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b071-sunnah-iman-bodies-gate.test.ts"
       ],
       "finding": "أُضيف متن موجز فريد لكل درس في السنة (51) والإيمان (78) من الملخص المنقول بلا زيادة حديث أو حكم؛ حُوّلت صياغة «مكتبة» العلنية إلى فهرس/مراجع في التعلّم والبحث والأدعية والأبحاث وSEO؛ بوابة b071."
+    },
+    {
+      "id": "b072",
+      "section": "tazkiya_bodies",
+      "title": "متون فريدة لموضوعات التزكية من الملخص المنقول",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/tazkiya-topics-data.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b072-tazkiya-bodies-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز فريد لكل درس تزكية (66) من الملخص المنقول بلا زيادة حديث أو حكم؛ بوابة b072."
     }
   ]
 }

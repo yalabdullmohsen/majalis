@@ -249,6 +249,12 @@ export const CONTENT_AUDIT_GATES: ContentAuditGate[] = [
     path: "src/lib/__tests__/content-audit-b071-sunnah-iman-bodies-gate.test.ts",
     kind: "node-tsx",
   },
+  {
+    id: "b072-tazkiya-bodies",
+    dimension: "تدقيق",
+    path: "src/lib/__tests__/content-audit-b072-tazkiya-bodies-gate.test.ts",
+    kind: "node-tsx",
+  },
   // تصحيح — لغة وهوية ومصادر
   {
     id: "content-lang",
