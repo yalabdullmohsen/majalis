@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T21:02:33.280Z",
+  "generatedAt": "2026-09-03T21:15:46.433Z",
   "paths": [
     ".github/workflows/release-majlisilm.yml",
     "\"artifacts/majalis/content/archive/rulings-encyclopedia/data/chunks/\\330\\247\\331\\204\\330\\243\\330\\263\\330\\261\\330\\251.json\"",
@@ -106,6 +106,7 @@
     "artifacts/majalis/scripts/sync-seo-data.ts",
     "artifacts/majalis/scripts/test-dynamic-404-safety.mjs",
     "artifacts/majalis/scripts/verify-brand-green-hex.mjs",
+    "artifacts/majalis/scripts/verify-color-contrast-gate.mjs",
     "artifacts/majalis/scripts/verify-lhci-threshold-calibration.mjs",
     "artifacts/majalis/scripts/verify-on-brand-contrast.mjs",
     "artifacts/majalis/seo-prerender/about/index.html",
@@ -698,6 +699,7 @@
     "artifacts/majalis/src/lib/home-feature-catalog.ts",
     "artifacts/majalis/src/lib/ia-final-structure.ts",
     "artifacts/majalis/src/lib/iman-topics-data.ts",
+    "artifacts/majalis/src/lib/islamic-occasions-seed.ts",
     "artifacts/majalis/src/lib/lesson-time.ts",
     "artifacts/majalis/src/lib/lessons/lessonDeduper.ts",
     "artifacts/majalis/src/lib/maqasid-sharia-data.ts",
@@ -819,9 +821,7 @@
     "docs/reviews/SEERAH_REVIEW_QUEUE.md",
     "reports/changed-scope-report.md",
     "reports/changed-scope-verify.json",
-    "scripts/verify-no-unsafe-auto-merge.mjs",
-    "artifacts/majalis/scripts/verify-color-contrast-gate.mjs",
-    "artifacts/majalis/src/lib/islamic-occasions-seed.ts"
+    "scripts/verify-no-unsafe-auto-merge.mjs"
   ],
   "scopes": [
     "ci/config",

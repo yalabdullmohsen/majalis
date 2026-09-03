@@ -81,6 +81,25 @@ function resultHref(item: AppSearchResult): string {
   return "/search";
 }
 
+/** إخفاء نتائج admin/auth من واجهة البحث العامة. */
+function isBlockedOrAdminHref(href?: string | null): boolean {
+  if (!href) return false;
+  return /^\/(admin|dashboard|internal|login|register|auth)(\/|$)/i.test(href);
+}
+
+type SearchResultExtras = AppSearchResult & {
+  partial?: boolean;
+  verification_status?: string | null;
+  source_name?: string | null;
+};
+
+function statusMetaLabel(status?: string | null, hasSource?: boolean): string | null {
+  if (hasSource || status === "verified" || status === "pending_review" || status === "pending" || status === "needs_review") {
+    return "موثّق بمصدر";
+  }
+  return null;
+}
+
 function highlightText(text: string, query: string): React.ReactNode {
   if (!text || !query.trim()) return text;
   const parts = highlightOriginalParts(text, query.trim());
@@ -100,19 +119,26 @@ const ResultCard = memo(function ResultCard({
   item,
   query,
 }: {
-  item: AppSearchResult;
+  item: SearchResultExtras;
   query: string;
 }) {
+  const href = resultHref(item);
+  if (isBlockedOrAdminHref(href)) return null;
+
   const kindLabel = KIND_LABELS[item.kind] || SEARCH_SCOPE_LABELS[item.kind as SearchScopeId] || "محتوى";
   const snippet = item.summary?.trim();
+  const partial = item.partial || item.verification_status === "partial" || item.verification_status === "draft";
+  const verifiedLabel = statusMetaLabel(item.verification_status, Boolean(item.source_name));
   return (
     <article className="srch-result-card">
       <div className="srch-result-card__top">
         <span className="srch-result-card__kind">{kindLabel}</span>
+        {partial ? <span className="srch-result-card__status">قيد الإكمال</span> : null}
+        {verifiedLabel ? <span className="srch-result-card__status">{verifiedLabel}</span> : null}
       </div>
       <h3 className="srch-result-card__title">{highlightText(item.title, query)}</h3>
       {snippet ? <p className="srch-result-card__excerpt">{highlightText(snippet, query)}</p> : null}
-      <Link href={resultHref(item)} className="srch-result-card__open">
+      <Link href={href} className="srch-result-card__open">
         فتح
       </Link>
     </article>
@@ -222,7 +248,7 @@ export default function SearchPage() {
     try {
       const res = await runAppSearch(q, { scope: nextScope, limit: 48, signal: ctrl.signal });
       if (ctrl.signal.aborted) return;
-      setResults(res.results);
+      setResults(res.results.filter((item) => !isBlockedOrAdminHref(resultHref(item))));
       setSuggestions(res.suggestions ?? []);
     } catch (err) {
       if ((err as Error)?.name === "AbortError") return;

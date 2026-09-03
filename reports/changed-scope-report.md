@@ -1,6 +1,6 @@
 # تقرير نطاق التغييرات
 
-**التاريخ:** 2026-09-03T21:02:33.284Z
+**التاريخ:** 2026-09-03T21:15:46.437Z
 **عدد الملفات:** 821
 **النطاقات:** ci/config، other، content/data، docs، backend/api، quran/mushaf، ui/layout
 **docs-only:** لا
