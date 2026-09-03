@@ -52,11 +52,10 @@ function AdhanToast({ event, onDismiss }: { event: ActiveEvent; onDismiss: () =>
   const isIqamah = event.type === "iqamah";
   const [playing, setPlaying] = useState(isAdhan && isAdhanPlaying());
   const copy = isAdhan
-    ? buildScheduledPrayerNotificationCopy({
-        kind: "enter",
-        prayerName: event.prayerName,
-        prayerTimeLabel: event.prayerTimeLabel ?? "",
-      })
+    ? {
+        title: "حيّ على الصلاة",
+        body: event.prayerTimeLabel ? `${event.prayerTimeLabel} · ${event.prayerName}` : event.prayerName,
+      }
     : isIqamah
       ? buildScheduledPrayerNotificationCopy({
           kind: "iqamah",
