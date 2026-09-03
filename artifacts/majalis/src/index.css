@@ -5253,11 +5253,9 @@ body.has-assistant-fab .app-main {
 /* ── قسم "ابدأ من هنا" — خلفية أكثر دفئاً ── */
 
 .home-start-here {
-  background: var(--color-surface, var(--mj-surface)) !important;
+  background: var(--msk-canvas-1, #F4F4F1) !important;
   border-radius: var(--mj-r2, 8px);
   padding: var(--mj-s4, 16px);
-  border: 1px solid var(--color-border, var(--mj-hairline));
-  color: var(--color-text, var(--mj-ink));
 }
 
 .home-start-here .hsh-lead {
@@ -5287,13 +5285,13 @@ body.has-assistant-fab .app-main {
 
 .home-start-here .hsh-actions__primary {
   background: var(--color-primary, var(--mj-brand));
-  color: var(--color-primary-foreground, var(--mj-on-brand));
+  color: #fff;
 }
 
 .home-start-here .hsh-actions__secondary {
-  border: 1px solid var(--color-button-secondary-border, var(--color-border, var(--mj-hairline)));
-  color: var(--color-button-secondary-text, var(--color-text, var(--mj-ink)));
-  background: var(--color-button-secondary-bg, var(--mj-surface-2));
+  border: 1px solid color-mix(in srgb, var(--color-primary, var(--mj-brand)) 30%, transparent);
+  color: var(--color-primary-deep, var(--mj-brand-deep));
+  background: transparent;
 }
 
 /* ── بطاقات مجلس اليوم وأقسام الرئيسية ── */
