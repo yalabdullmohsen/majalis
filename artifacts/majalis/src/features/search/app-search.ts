@@ -6,14 +6,18 @@ import {
   loadUnifiedSearchIndex,
   searchUnifiedIndex,
   searchUnifiedIndexAsync,
+  type UnifiedSearchDoc,
   type UnifiedSearchHit,
 } from "@/features/search/unified-local";
 import { kindPriority } from "@/features/search/kind-priority";
 import { parseQuickNav } from "@/features/search/quick-nav";
 import { normalizeArabic } from "@/shared/arabic-normalize";
 import { scoreTolerantMatch, type TolerantMatch } from "@/features/search/tolerant-match";
-import { searchHadithCorpus } from "@/lib/hadith-corpus";
-import { searchFiqhLessons } from "@/lib/fiqh-books";
+import {
+  filterDocsByScope,
+  isSearchScopeId,
+  type SearchScopeId,
+} from "@/features/search/search-scopes";
 
 export type AppSearchResult = {
   id: string;
@@ -34,12 +38,13 @@ export type AppSearchResponse = {
   /** أقرب ٣ بدائل عند انعدام النتائج */
   suggestions?: string[];
   responseMs: number;
+  scope: SearchScopeId;
 };
 
 const KIND_ALIASES: Record<string, string> = {
   library: "book",
   books: "book",
-  quran: "surah",
+  quran: "quran",
   sheikh: "scholar",
   scholars: "scholar",
   fatwas: "fatwa",
@@ -47,9 +52,28 @@ const KIND_ALIASES: Record<string, string> = {
   courses: "course",
   stories: "story",
   settings: "app",
+  تفسير: "tafsir",
+  سيرة: "seerah",
 };
 
-function flattenGroups(groups: Record<string, UnifiedSearchHit[]>): AppSearchResult[] {
+function resolveScope(opts: { scope?: string; kind?: string }): SearchScopeId {
+  const raw = (opts.scope || opts.kind || "all").trim();
+  if (isSearchScopeId(raw)) return raw;
+  const aliased = KIND_ALIASES[raw] ?? raw;
+  if (isSearchScopeId(aliased)) return aliased;
+  return "all";
+}
+
+function titleFirstRank(item: AppSearchResult, query: string): number {
+  if (!query) return item.match?.rank ?? 9;
+  const titleHit = scoreTolerantMatch(item.title, query);
+  if (titleHit) return titleHit.rank;
+  const summaryHit = item.summary ? scoreTolerantMatch(item.summary, query) : null;
+  if (summaryHit) return 4 + summaryHit.rank;
+  return 8 + (item.match?.rank ?? 3);
+}
+
+function flattenGroups(groups: Record<string, UnifiedSearchHit[]>, query = ""): AppSearchResult[] {
   const flat: AppSearchResult[] = [];
   for (const [kind, hits] of Object.entries(groups)) {
     for (const h of hits) {
@@ -64,8 +88,8 @@ function flattenGroups(groups: Record<string, UnifiedSearchHit[]>): AppSearchRes
     }
   }
   flat.sort((a, b) => {
-    const ra = a.match?.rank ?? 9;
-    const rb = b.match?.rank ?? 9;
+    const ra = titleFirstRank(a, query);
+    const rb = titleFirstRank(b, query);
     if (ra !== rb) return ra - rb;
     const da = a.match?.distance ?? 99;
     const db = b.match?.distance ?? 99;
@@ -76,6 +100,25 @@ function flattenGroups(groups: Record<string, UnifiedSearchHit[]>): AppSearchRes
     return a.title.localeCompare(b.title, "ar");
   });
   return flat;
+}
+
+function pack(results: AppSearchResult[], extra: Partial<AppSearchResponse> = {}): AppSearchResponse {
+  const groups: Record<string, AppSearchResult[]> = {};
+  const counts: Record<string, number> = {};
+  for (const r of results) {
+    (groups[r.kind] ??= []).push(r);
+    counts[r.kind] = (counts[r.kind] ?? 0) + 1;
+  }
+  return {
+    results,
+    groups,
+    counts,
+    suggestion: extra.suggestion ?? null,
+    suggestions: extra.suggestions ?? [],
+    responseMs: extra.responseMs ?? 0,
+    scope: extra.scope ?? "all",
+    ...extra,
+  };
 }
 
 /** أقرب عناوين في الفهرس عند انعدام النتائج (حتى ٣). */
@@ -108,97 +151,165 @@ export function findClosestSuggestion(
   return findClosestSuggestions(docs, query, 1)[0] ?? null;
 }
 
+function browseDocs(docs: UnifiedSearchDoc[], limit: number): AppSearchResult[] {
+  return docs.slice(0, limit).map((d) => ({
+    id: d.id,
+    kind: d.kind,
+    title: d.titleAr,
+    href: d.href,
+    summary: d.meta,
+  }));
+}
+
+async function mergeLazySources(
+  query: string,
+  scope: SearchScopeId,
+  results: AppSearchResult[],
+  signal?: AbortSignal,
+): Promise<AppSearchResult[]> {
+  if (!query) return results;
+  let next = results;
+  const seen = () => new Set(next.map((r) => r.href));
+
+  if (scope === "hadith") {
+    if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
+    const { searchHadithCorpus } = await import("@/lib/hadith-corpus");
+    const corpusHits = searchHadithCorpus(query, 8).map((h) => ({
+      id: `corpus:${h.id}`,
+      kind: "hadith" as const,
+      title: h.isMawdu ? `⚠ موضوع — ${h.id}` : h.id,
+      href: h.href,
+      summary: h.isMawdu
+        ? `حديث موضوع لا يصحّ · ${h.matnPreview}`
+        : [h.narrator, h.matnPreview].filter(Boolean).join(" · "),
+    }));
+    const have = seen();
+    next = [...corpusHits.filter((h) => !have.has(h.href)), ...next];
+  }
+
+  if (scope === "fiqh") {
+    if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
+    const { searchFiqhLessons } = await import("@/lib/fiqh-books");
+    const fiqhHits = searchFiqhLessons(query)
+      .slice(0, 8)
+      .map((h) => ({
+        id: `fiqh:${h.lesson.id}`,
+        kind: "fiqh",
+        title: h.lesson.title,
+        href: h.href.startsWith("/quiz") ? h.href : h.href,
+        summary: h.path,
+      }));
+    const have = seen();
+    next = [...fiqhHits.filter((h) => !have.has(h.href)), ...next];
+  }
+
+  if (scope === "fawaid") {
+    if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
+    const { searchFawaid } = await import("@/lib/fawaid-seed");
+    const fawaidHits = searchFawaid(query)
+      .slice(0, 8)
+      .map((f) => ({
+        id: `fawaid:${f.id}`,
+        kind: "fawaid",
+        title: String(f.text || "").slice(0, 90),
+        href: `/fawaid#${encodeURIComponent(String(f.id))}`,
+        summary: f.category || f.author_name || "فائدة",
+      }));
+    const have = seen();
+    next = [...fawaidHits.filter((h) => !have.has(h.href)), ...next];
+  }
+
+  return next;
+}
+
+function fallbackQueryToken(query: string): string | null {
+  const parts = normalizeArabic(query).split(/\s+/).filter((w) => w.length >= 3);
+  if (parts.length < 2) return null;
+  parts.sort((a, b) => b.length - a.length);
+  return parts[0] ?? null;
+}
+
 export async function runAppSearch(
   rawQuery: string,
-  opts: { limit?: number; kind?: string; signal?: AbortSignal } = {},
+  opts: { limit?: number; kind?: string; scope?: string; signal?: AbortSignal } = {},
 ): Promise<AppSearchResponse> {
   const t0 = performance.now();
   const query = rawQuery.trim();
-  if (!query) {
-    return { results: [], groups: {}, counts: {}, responseMs: 0 };
-  }
+  const scope = resolveScope(opts);
+  const limit = opts.limit ?? 48;
 
-  // اختصار مصحف/حديث = نتيجة اختيارية في أعلى القائمة فقط.
-  // لا نُرجع quickNavHref ولا ننتقل تلقائيًا — المستخدم يختار من الخيارات.
-  const quick = parseQuickNav(query);
-  const quickHit: AppSearchResult | null = quick
-    ? {
-        id: `quick:${quick.href}`,
-        kind: quick.href.includes("hadith") ? "hadith" : "surah",
-        title: quick.titleAr || query,
-        href: quick.href,
-        summary: "انتقال سريع — اضغط للفتح",
-      }
-    : null;
+  const empty = () =>
+    pack([], { responseMs: performance.now() - t0, scope, suggestions: [] });
 
   const { docs } = await loadUnifiedSearchIndex();
   if (opts.signal?.aborted) throw new DOMException("Aborted", "AbortError");
 
-  const limit = opts.limit ?? 48;
-  const grouped =
-    docs.length > 2_500
-      ? await searchUnifiedIndexAsync(docs, query, limit, opts.signal)
-      : searchUnifiedIndex(docs, query, limit);
+  const scopedDocs = filterDocsByScope(docs, scope);
 
-  let results = flattenGroups(grouped);
-  if (opts.kind && opts.kind !== "all") {
-    const want = KIND_ALIASES[opts.kind] ?? opts.kind;
-    results = results.filter((r) => r.kind === want || r.kind === opts.kind);
-  }
-
-  if (quickHit) {
-    const seen = new Set(results.map((r) => r.href));
-    if (!seen.has(quickHit.href)) {
-      results = [quickHit, ...results];
-    } else {
-      results = [quickHit, ...results.filter((r) => r.href !== quickHit.href)];
+  if (!query) {
+    if (scope === "all") return empty();
+    let browsed = browseDocs(scopedDocs, limit);
+    if (scope === "fawaid" && browsed.length === 0) {
+      const { searchFawaid } = await import("@/lib/fawaid-seed");
+      browsed = searchFawaid("")
+        .slice(0, limit)
+        .map((f) => ({
+          id: `fawaid:${f.id}`,
+          kind: "fawaid",
+          title: String(f.text || "").slice(0, 90),
+          href: `/fawaid#${encodeURIComponent(String(f.id))}`,
+          summary: f.category || "فائدة",
+        }));
     }
+    return pack(browsed, { responseMs: performance.now() - t0, scope });
   }
 
-  const corpusHits = searchHadithCorpus(query, 12).map((h) => ({
-    id: `corpus:${h.id}`,
-    kind: "hadith",
-    title: h.isMawdu ? `⚠ موضوع — ${h.id}` : h.id,
-    href: h.href,
-    summary: h.isMawdu
-      ? `حديث موضوع لا يصحّ · ${h.matnPreview}`
-      : [h.narrator, h.matnPreview].filter(Boolean).join(" · "),
-  }));
-  if (corpusHits.length) {
-    const seenHref = new Set(results.map((r) => r.href));
-    results = [...corpusHits.filter((h) => !seenHref.has(h.href)), ...results];
+  const pool = scopedDocs.length ? scopedDocs : docs;
+  const searchLimit = scope === "all" ? limit : Math.max(limit, 80);
+  const searchPool = async (q: string) => {
+    const grouped =
+      pool.length > 2_500
+        ? await searchUnifiedIndexAsync(pool, q, searchLimit, opts.signal)
+        : searchUnifiedIndex(pool, q, searchLimit);
+    return flattenGroups(grouped, q);
+  };
+
+  let results = await searchPool(query);
+  if (results.length === 0) {
+    const token = fallbackQueryToken(query);
+    if (token) results = await searchPool(token);
   }
 
-  const fiqhHits = searchFiqhLessons(query)
-    .slice(0, 12)
-    .map((h) => ({
-      id: `fiqh:${h.lesson.id}`,
-      kind: "fiqh",
-      title: h.lesson.title,
-      href: h.href,
-      summary: h.path,
-    }));
-  if (fiqhHits.length) {
-    const seenHref = new Set(results.map((r) => r.href));
-    results = [...fiqhHits.filter((h) => !seenHref.has(h.href)), ...results];
+  const quick = parseQuickNav(query);
+  const allowQuick =
+    quick && (scope === "all" || (scope === "quran" && quick.href.includes("mushaf")) || (scope === "hadith" && quick.href.includes("hadith")));
+  if (allowQuick && quick) {
+    const quickHit: AppSearchResult = {
+      id: `quick:${quick.href}`,
+      kind: quick.href.includes("hadith") ? "hadith" : "surah",
+      title: quick.titleAr || query,
+      href: quick.href,
+      summary: "انتقال سريع — اضغط للفتح",
+    };
+    const seen = new Set(results.map((r) => r.href));
+    results = seen.has(quickHit.href)
+      ? [quickHit, ...results.filter((r) => r.href !== quickHit.href)]
+      : [quickHit, ...results];
   }
 
-  const groups: Record<string, AppSearchResult[]> = {};
-  const counts: Record<string, number> = {};
-  for (const r of results) {
-    (groups[r.kind] ??= []).push(r);
-    counts[r.kind] = (counts[r.kind] ?? 0) + 1;
-  }
+  results = await mergeLazySources(query, scope, results, opts.signal);
+  if (opts.signal?.aborted) throw new DOMException("Aborted", "AbortError");
+
+  results.sort((a, b) => titleFirstRank(a, query) - titleFirstRank(b, query));
+  if (results.length > limit) results = results.slice(0, limit);
 
   const suggestions =
-    results.length === 0 ? findClosestSuggestions(docs, query, 3) : [];
+    results.length === 0 ? findClosestSuggestions(scopedDocs.length ? scopedDocs : docs, query, 3) : [];
 
-  return {
-    results,
-    groups,
-    counts,
+  return pack(results, {
     suggestion: suggestions[0] ?? null,
     suggestions,
     responseMs: performance.now() - t0,
-  };
+    scope,
+  });
 }
