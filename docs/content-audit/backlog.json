@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-03",
-  "lastCompletedId": "b066",
-  "resumeFromId": "b067",
+  "lastCompletedId": "b067",
+  "resumeFromId": "b068",
   "items": [
     {
       "id": "b001",
@@ -818,6 +818,23 @@
         "artifacts/majalis/src/pages/account/ui/AccountDeletionView.tsx"
       ],
       "finding": "أُضيف فصلان فهرسيّان لكل من الإجارة/الشركة/القرض (6 مسائل) بإحالات للمغني والشرح الممتع والملخص بلا آية/حديث/راجح محرَّر؛ نُظّفت صياغات المكتبة في المصادر/التنقل/SEO/التفسير/الأحكام/حذف الحساب؛ بوابة b066."
+    },
+    {
+      "id": "b067",
+      "section": "fiqh_muamalat_fihris",
+      "title": "توسيع رهن/حوالة/وكالة بفهرس كلاسيكي + تنظيف بقايا المكتبة (خرائط/أبحاث/حديث)",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/content/fiqh/books.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b067-muamalat-fihris-gate.test.ts",
+        "artifacts/majalis/src/lib/mind-maps-data.ts",
+        "artifacts/majalis/src/lib/seo-routes.json",
+        "artifacts/majalis/src/views/AcademicResearchPage.tsx",
+        "artifacts/majalis/src/views/admin/SettingsSection.tsx"
+      ],
+      "finding": "أُضيف فصلان فهرسيّان لكل من الرهن/الحوالة/الوكالة (6 مسائل) بنفس ضابط b066؛ ارتفع باب المعاملات إلى ≥24؛ نُظّفت فئة الخرائط الذهنية ووصف الأحاديث والأبحاث الأكاديمية؛ بوابة b067."
     }
   ]
 }

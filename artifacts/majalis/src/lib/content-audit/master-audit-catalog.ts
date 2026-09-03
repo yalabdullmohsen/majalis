@@ -219,6 +219,12 @@ export const CONTENT_AUDIT_GATES: ContentAuditGate[] = [
     path: "src/lib/__tests__/content-audit-b066-fiqh-thin-doors-gate.test.ts",
     kind: "node-tsx",
   },
+  {
+    id: "b067-muamalat-fihris",
+    dimension: "تدقيق",
+    path: "src/lib/__tests__/content-audit-b067-muamalat-fihris-gate.test.ts",
+    kind: "node-tsx",
+  },
   // تصحيح — لغة وهوية ومصادر
   {
     id: "content-lang",
