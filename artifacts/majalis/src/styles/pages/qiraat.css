@@ -13,7 +13,7 @@
 }
 
 .qr-crumb a {
-  color: var(--mj-brand, #1f7a5a);
+  color: var(--mj-brand, var(--mj-brand));
   text-decoration: none;
   min-height: 44px;
   display: inline-flex;
@@ -36,7 +36,7 @@
 .qr-note {
   padding: 10px 12px;
   border-radius: 12px;
-  background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 10%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 10%, transparent);
   font-size: 13px;
 }
 
@@ -69,7 +69,7 @@
 
 .qr-qari-card__n {
   font-weight: 800;
-  color: var(--mj-brand, #1f7a5a);
+  color: var(--mj-brand, var(--mj-brand));
   margin: 0 0 4px;
 }
 
@@ -109,12 +109,12 @@
   display: inline-block;
   font-size: 12px;
   font-weight: 700;
-  color: var(--mj-brand, #1f7a5a);
+  color: var(--mj-brand, var(--mj-brand));
   margin-bottom: 6px;
 }
 
 .qr-diff-list a {
-  color: var(--mj-brand, #1f7a5a);
+  color: var(--mj-brand, var(--mj-brand));
   font-weight: 600;
   min-height: 44px;
   display: inline-flex;

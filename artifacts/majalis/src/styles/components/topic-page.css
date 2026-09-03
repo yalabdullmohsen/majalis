@@ -3,7 +3,7 @@
 .topic-page {
   --topic-hero-from: #0F3D2E;
   --topic-hero-to: #123F2E;
-  --topic-accent: #1F7A5A;
+  --topic-accent: var(--mj-brand);
   --section-accent: var(--topic-accent);
   --topic-on-hero: #FFFFFF;
   --topic-on-hero-muted: #E8EEEC;
@@ -231,7 +231,7 @@
 }
 
 .topic-card {
-  background: color-mix(in srgb, var(--mj-surface, #fff) 96%, var(--mj-brand-soft, #e4f0ea));
+  background: color-mix(in srgb, var(--mj-surface, #fff) 96%, var(--mj-brand-soft, var(--brand-soft, var(--mj-brand-soft))));
   border-radius: 22px;
   border: 1px solid color-mix(in srgb, var(--topic-accent, var(--mj-brand)) 24%, var(--msk-border, var(--mj-hairline)));
   border-inline-start: 3px solid var(--topic-accent, var(--mj-brand));

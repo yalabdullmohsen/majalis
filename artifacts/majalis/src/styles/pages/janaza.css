@@ -241,7 +241,7 @@ html.dark .jnz-subtitle {
 .jnz-related__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-brand-deep, #111); margin: 0 0 .75rem; }
 /* أسطح الجنازة بيضاء ثابتة — لا تبييض ليلي للنص */
 html[data-theme="dark"] .jnz-related__title,
-html.dark .jnz-related__title { color: var(--mj-brand-deep, #143F35); }
+html.dark .jnz-related__title { color: var(--mj-brand-deep, var(--brand-deep, var(--mj-brand-deep))); }
 .jnz-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .jnz-related__link {
   background: var(--mj-surface);

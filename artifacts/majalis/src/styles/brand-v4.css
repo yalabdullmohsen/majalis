@@ -109,12 +109,20 @@
   --space-card:    var(--s-4);
   --space-tight:   var(--s-3);
 
-  /* color-bg/primary/text: لا تُعاد هنا — theme.css مصدرها عبر --mj-* */
+  /* color-* aliases المطلوبة لبوابة الهوية — تُشير إلى مصدر theme/السطح */
+  --color-bg:                var(--surface-1, var(--bg));
   --color-bg-soft:           var(--surface-2);
+  --color-surface:           var(--surface-1, var(--bg));
   --color-surface-elevated:  var(--bg-elevated);
+  --color-text:              var(--fg, var(--text));
+  --color-text-muted:        var(--muted, var(--text-2));
+  --color-primary:           var(--brand);
   --color-primary-dark:      var(--brand-deep);
   --color-primary-strong:    var(--brand-deep);
   --color-primary-soft:      var(--brand-soft);
+  --color-accent:            var(--accent);
+  --color-border:            var(--border, var(--line));
+  --color-danger:            var(--danger-fg, var(--danger));
   --color-warning-bg:        var(--danger-bg);
   --color-warning-text:      var(--danger-fg);
   --color-success:           var(--ok-fg);
@@ -262,7 +270,9 @@ html[data-theme="dark"] {
   --accent-soft:  #2A3733;
   --accent-deep:  #D9B871;
 
+  --color-bg:                var(--surface-1, var(--bg));
   --color-bg-soft:           var(--surface-2);
+  --color-surface:           var(--surface-1, var(--bg));
   --color-surface-elevated:  var(--bg-elevated);
   --color-primary-dark:      var(--brand-deep);
   --color-primary-deep:      var(--text-brand-deep);
@@ -271,6 +281,8 @@ html[data-theme="dark"] {
   --color-text:              var(--text);
   --color-text-muted:        var(--text-muted);
   --color-border:            var(--border);
+  --color-accent:            var(--accent);
+  --color-danger:            var(--danger-fg, var(--danger));
   --color-primary:           var(--brand);
   --color-primary-foreground: var(--text-on-brand);
   --color-button-secondary-bg: var(--surface-2);

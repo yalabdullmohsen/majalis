@@ -72,7 +72,7 @@
 
 .quick-quad__cell--accent {
   box-shadow:
-    inset 0 0 0 2px var(--mj-brand, #1f7a5a),
+    inset 0 0 0 2px var(--mj-brand, var(--mj-brand)),
     0 10px 24px -14px rgb(31 122 90 / 0.45);
   z-index: 1;
 }
@@ -84,7 +84,7 @@
   width: 36px;
   height: 36px;
   border-radius: var(--radius-pill, 999px);
-  background: var(--mj-brand-soft, #e4f0ea);
+  background: var(--mj-brand-soft, var(--brand-soft, var(--mj-brand-soft)));
   color: var(--mj-brand-deep, #123f2e);
 }
 
@@ -154,6 +154,6 @@ html.dark .quick-quad__icon {
 html[data-theme="dark"] .quick-quad__cell--accent,
 html.dark .quick-quad__cell--accent {
   box-shadow:
-    inset 0 0 0 2px var(--mj-brand, #4fb48b),
+    inset 0 0 0 2px var(--mj-brand, var(--mj-brand)),
     0 8px 18px -12px rgb(79 180 139 / 0.4);
 }

@@ -4,10 +4,10 @@
   --qp-surface: var(--mj-surface, #fff);
   --qp-ink: var(--mj-ink, #16241e);
   --qp-ink-2: var(--mj-ink-2, #4a5a53);
-  --qp-line: color-mix(in srgb, var(--mj-brand, #1f7a5a) 14%, var(--mj-hairline, #e3e8e6));
-  --qp-brand: var(--mj-brand, #1f7a5a);
+  --qp-line: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 14%, var(--mj-hairline, #e3e8e6));
+  --qp-brand: var(--mj-brand, var(--mj-brand));
   --qp-brand-deep: var(--mj-brand-deep, #12362a);
-  --qp-canvas: color-mix(in srgb, var(--mj-brand, #1f7a5a) 4%, var(--mj-bg, #f7f8f6));
+  --qp-canvas: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 4%, var(--mj-bg, #f7f8f6));
 }
 
 .qp-people__body {

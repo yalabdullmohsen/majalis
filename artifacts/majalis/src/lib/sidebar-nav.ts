@@ -1,3 +1,4 @@
+import { BRAND } from "@/shared/config/brand";
 /**
  * القائمة الجانبية — مجموعات بعناوين وألوان مميزة + صفوف الحساب من السجل.
  */
@@ -46,7 +47,7 @@ const DRAWER_BROWSE_GROUPS: ReadonlyArray<{
   {
     id: "sciences",
     title: "العلوم والأقسام",
-    accent: "#1F7A5A",
+    accent: BRAND.colorDay,
     navIds: ["lessons", "fiqh", "fawaid", "miracles", "qa", "sections"],
   },
   {

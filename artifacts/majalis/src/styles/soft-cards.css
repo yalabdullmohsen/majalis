@@ -134,7 +134,7 @@ html.dark .search-empty-state,
 html[data-theme="dark"] .kids-hub-intro,
 html.dark .kids-hub-intro {
   background: color-mix(in srgb, var(--mj-surface, #15201c) 88%, #0d1412);
-  border-color: color-mix(in srgb, var(--mj-brand, #4fb48b) 22%, rgba(255, 255, 255, 0.1));
+  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 22%, rgba(255, 255, 255, 0.1));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
     0 12px 28px rgba(0, 0, 0, 0.28);

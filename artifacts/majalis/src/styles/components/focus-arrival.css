@@ -5,7 +5,7 @@
 
 @keyframes mj-focus-flash {
   0% {
-    background-color: color-mix(in srgb, var(--mj-brand, #1f7a5a) 22%, transparent);
+    background-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 22%, transparent);
   }
   100% {
     background-color: transparent;
@@ -15,7 +15,7 @@
 @media (prefers-reduced-motion: reduce) {
   .mj-focus-flash {
     animation: none;
-    outline: 2px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 55%, transparent);
+    outline: 2px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 55%, transparent);
     outline-offset: 4px;
   }
 }

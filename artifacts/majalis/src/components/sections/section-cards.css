@@ -21,7 +21,7 @@
 .card:focus-visible,
 .card--featured:focus-visible,
 .card--compact:focus-visible {
-  outline: 2px solid var(--mj-brand, #1f7a5a);
+  outline: 2px solid var(--mj-brand, var(--mj-brand));
   outline-offset: 2px;
 }
 
@@ -61,7 +61,7 @@
   width: 36px;
   height: 36px;
   border-radius: 999px;
-  background: var(--chip-bg, var(--mj-brand-soft, #e4f0ea));
+  background: var(--chip-bg, var(--mj-brand-soft, var(--brand-soft, var(--mj-brand-soft))));
   color: var(--chip-fg, var(--mj-brand-deep, #123f2e));
 }
 
@@ -260,7 +260,7 @@ a.card--featured,
 }
 
 .sections-hub__search:focus-visible {
-  outline: 2px solid var(--mj-brand, #1f7a5a);
+  outline: 2px solid var(--mj-brand, var(--mj-brand));
   outline-offset: 1px;
 }
 
@@ -293,7 +293,7 @@ a.card--featured,
   height: 2px;
   margin-block-start: 8px;
   border-radius: 999px;
-  background: var(--mj-brand, #1f7a5a);
+  background: var(--mj-brand, var(--mj-brand));
 }
 
 .sections-hub__featured {

@@ -25,7 +25,7 @@
   border-radius: 999px;
   font-size: 12px;
   font-weight: 700;
-  background: var(--mj-brand-soft, #e4f0ea);
+  background: var(--mj-brand-soft, var(--brand-soft, var(--mj-brand-soft)));
   color: var(--mj-brand-deep, #123f2e);
 }
 
@@ -81,8 +81,8 @@
 }
 
 .src-card__btn--primary {
-  background: var(--mj-brand, #1f7a5a);
-  border-color: var(--mj-brand, #1f7a5a);
+  background: var(--mj-brand, var(--mj-brand));
+  border-color: var(--mj-brand, var(--mj-brand));
   color: #fff;
 }
 

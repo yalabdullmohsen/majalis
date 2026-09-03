@@ -573,7 +573,7 @@ ol.fiqh-lesson-list {
 .fiqh-lesson-page h2 {
   font-size: 1rem;
   margin: 0 0 0.35rem;
-  color: var(--mj-brand, #1f7a5a);
+  color: var(--mj-brand, var(--mj-brand));
 }
 .fiqh-sources { padding-inline-start: 1.1rem; }
 .fiqh-usul-card {
@@ -631,7 +631,7 @@ ol.fiqh-lesson-list {
 .fiqh-read-progress span {
   display: block;
   height: 100%;
-  background: var(--mj-brand, #1f7a5a);
+  background: var(--mj-brand, var(--mj-brand));
   border-radius: inherit;
 }
 .fiqh-lesson-toc {
@@ -687,13 +687,13 @@ ol.fiqh-lesson-list {
 .fiqh-lux-shell,
 .fiqh-lux-page.section-lobby {
   --fq-emerald: var(--mj-brand-deep, #123f2e);
-  --fq-emerald-bright: var(--mj-brand, #1f7a5a);
+  --fq-emerald-bright: var(--mj-brand, var(--mj-brand));
   --fq-gold: var(--mj-accent, #b8963f);
-  --fq-canvas: color-mix(in srgb, var(--mj-bg, #f7f9f8) 92%, #e4f0ea);
+  --fq-canvas: color-mix(in srgb, var(--mj-bg, #f7f9f8) 92%, var(--brand-soft, var(--mj-brand-soft)));
   --fq-surface: var(--mj-surface, #fff);
   --fq-ink: var(--mj-ink, #16241e);
   --fq-ink-soft: var(--mj-ink-2, #4a5a53);
-  --fq-line: color-mix(in srgb, var(--mj-brand, #1f7a5a) 14%, var(--mj-hairline, #e3e8e6));
+  --fq-line: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 14%, var(--mj-hairline, #e3e8e6));
   --fq-on-hero: #fff;
   --fq-on-hero-muted: rgba(255, 255, 255, 0.88);
 }
@@ -881,7 +881,7 @@ html.dark .fiqh-lux-page.section-lobby {
   padding-inline-end: 2.85rem;
   border-radius: 22px;
   border: 1px solid var(--fq-line);
-  background: color-mix(in srgb, var(--fq-surface) 96%, #e4f0ea 4%);
+  background: color-mix(in srgb, var(--fq-surface) 96%, var(--brand-soft, var(--mj-brand-soft)) 4%);
   box-shadow: 0 2px 10px -6px rgba(11, 32, 24, 0.14);
   transition:
     border-color 0.16s ease,
@@ -1172,7 +1172,7 @@ html.dark .fiqh-lux-page .card::after {
   padding: 1.15rem 1rem;
   border-radius: 20px;
   border: 1px solid var(--fq-line);
-  background: color-mix(in srgb, var(--fq-surface) 94%, #e4f0ea 6%);
+  background: color-mix(in srgb, var(--fq-surface) 94%, var(--brand-soft, var(--mj-brand-soft)) 6%);
   box-shadow: 0 2px 10px -6px rgba(11, 32, 24, 0.1);
 }
 

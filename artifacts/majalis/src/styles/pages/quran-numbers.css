@@ -19,7 +19,7 @@
   height: 3px;
   margin-block-start: 10px;
   border-radius: 999px;
-  background: var(--mj-brand, #1f7a5a);
+  background: var(--mj-brand, var(--mj-brand));
 }
 
 .quran-numbers-page {
@@ -91,9 +91,9 @@
 
 .quran-numbers-tabs button[data-active="1"],
 .quran-numbers-freq-modes button[data-active="1"] {
-  background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 14%, transparent);
-  border-color: var(--mj-brand, #1f7a5a);
-  color: var(--mj-brand, #1f7a5a);
+  background: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 14%, transparent);
+  border-color: var(--mj-brand, var(--mj-brand));
+  color: var(--mj-brand, var(--mj-brand));
 }
 
 .quran-numbers-grid {
@@ -126,8 +126,8 @@
 .quran-stat-card__kind {
   font-size: 11px;
   font-weight: 700;
-  color: var(--mj-brand, #1f7a5a);
-  background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 12%, transparent);
+  color: var(--mj-brand, var(--mj-brand));
+  background: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 12%, transparent);
   padding: 2px 8px;
   border-radius: 8px;
 }
@@ -234,7 +234,7 @@
 .quran-stat-sheet__kind {
   margin: 0;
   font-size: 13px;
-  color: var(--mj-brand, #1f7a5a);
+  color: var(--mj-brand, var(--mj-brand));
   font-weight: 700;
 }
 

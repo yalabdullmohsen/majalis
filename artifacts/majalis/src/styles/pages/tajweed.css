@@ -15,7 +15,7 @@
 }
 
 .tj-crumb a {
-  color: var(--mj-brand, #1f7a5a);
+  color: var(--mj-brand, var(--mj-brand));
   text-decoration: none;
   min-height: 44px;
   display: inline-flex;
@@ -38,7 +38,7 @@
 }
 
 .tj-kicker {
-  color: var(--mj-brand, #1f7a5a);
+  color: var(--mj-brand, var(--mj-brand));
   font-weight: 700;
   font-size: 13px;
   margin: 0 0 4px;
@@ -54,7 +54,7 @@
   margin-top: 12px;
   padding: 10px 12px;
   border-radius: 12px;
-  background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 10%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 10%, transparent);
   font-size: 13px;
   line-height: 1.55;
 }
@@ -83,7 +83,7 @@
 
 .tj-chapter-card__n {
   font-weight: 800;
-  color: var(--mj-brand, #1f7a5a);
+  color: var(--mj-brand, var(--mj-brand));
   min-width: 1.5rem;
 }
 
@@ -138,7 +138,7 @@
 
 .tj-examples a,
 .tj-quiz-card__link {
-  color: var(--mj-brand, #1f7a5a);
+  color: var(--mj-brand, var(--mj-brand));
   font-weight: 600;
   min-height: 44px;
   display: inline-flex;
@@ -150,7 +150,7 @@
   padding: 14px;
   border-radius: 14px;
   border: 1px solid var(--mj-hairline, #e3e8e6);
-  background: color-mix(in srgb, var(--mj-brand, #1f7a5a) 6%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 6%, transparent);
 }
 
 .tj-empty {

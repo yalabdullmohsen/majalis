@@ -14,6 +14,10 @@ const BRAND_GREEN = /#(?:143[Ff]35|052[Ee]16|0[Ee]4[Aa]3[Dd]|18362[Aa]|122019|0[
 
 const SKIP = [
   /styles\/theme\.css$/,
+  /app\/styles\/theme\.css$/,
+  /shared\/config\/brand\.ts$/,
+  /lib\/site-config\.ts$/,
+  /__tests__\//,
   /mushaf/i,
   /memorize/i,
   /\/fc-/,

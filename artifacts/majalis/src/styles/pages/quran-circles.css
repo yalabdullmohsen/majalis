@@ -122,7 +122,7 @@
 .qc-sheet-check input {
   width: 1.1rem;
   height: 1.1rem;
-  accent-color: var(--mj-brand, #1f7a5a);
+  accent-color: var(--mj-brand, var(--mj-brand));
 }
 
 .qc-results {
@@ -311,13 +311,13 @@ html.dark .qc-page {
 html[data-theme="dark"] .qc-toolbar,
 html.dark .qc-toolbar {
   background: color-mix(in srgb, var(--mj-surface, #12201b) 92%, #000);
-  border-color: color-mix(in srgb, var(--mj-brand, #4fb48b) 22%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 22%, transparent);
 }
 
 html[data-theme="dark"] .qc-hub-nav__chip,
 html.dark .qc-hub-nav__chip {
   background: color-mix(in srgb, var(--mj-surface, #12201b) 88%, #000);
-  border-color: color-mix(in srgb, var(--mj-brand, #4fb48b) 28%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 28%, transparent);
   color: #d7f0e4;
 }
 
@@ -331,7 +331,7 @@ html.dark .qc-hub-nav__chip.is-active {
 html[data-theme="dark"] .qc-card,
 html.dark .qc-card {
   background: color-mix(in srgb, var(--mj-surface, #12201b) 95%, #000);
-  border-color: color-mix(in srgb, var(--mj-brand, #4fb48b) 20%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 20%, transparent);
 }
 
 html[data-theme="dark"] .qc-card__desc,

@@ -291,7 +291,7 @@
 
 .m2030-band__link {
   font-size: 0.82rem;
-  /* نص على سطح فاتح: --brand (#1F7A5A) = 4.46:1 — استخدم --brand-on-white (#146C4E) ≥ 4.5:1 */
+  /* نص على سطح فاتح: --brand (var(--mj-brand)) = 4.46:1 — استخدم --brand-on-white (#146C4E) ≥ 4.5:1 */
   color: var(--brand-on-white);
   text-decoration: none;
   font-weight: 600;
@@ -643,9 +643,9 @@ html.dark .m2030-feature__title {
   cursor: pointer;
 }
 .daily-wird-card__done-btn.is-done {
-  border-color: #15803d;
-  background: color-mix(in srgb, #15803d 12%, transparent);
-  color: #166534;
+  border-color: var(--mj-brand);
+  background: color-mix(in srgb, var(--mj-brand) 12%, transparent);
+  color: var(--brand-deep, var(--mj-brand-deep));
 }
 .daily-wird-card--done .home-daily-wird__card {
   opacity: 0.92;

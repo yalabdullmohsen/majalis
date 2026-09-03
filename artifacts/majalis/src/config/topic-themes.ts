@@ -1,3 +1,4 @@
+import { BRAND } from "@/shared/config/brand";
 /**
  * سمات لونية لصفحات المواضيع — تدرّجات داكنة (سطوع منخفض) حتى يبقى النص الأبيض مقروءاً.
  * التلوين محصور في اللافتة والحدّ الجانبي والشريحة النشطة.
@@ -34,7 +35,7 @@ export const TOPIC_THEMES: Record<TopicThemeId, TopicTheme> = {
     labelAr: "العقيدة والتوحيد",
     heroFrom: "#0F3D2E",
     heroTo: "#123F2E",
-    accent: "#1F7A5A",
+    accent: BRAND.colorDay,
     onHero: "#FFFFFF",
     onHeroMuted: "#E8EEEC",
     onHeroAccent: "#E8D5A3",
@@ -49,7 +50,7 @@ export const TOPIC_THEMES: Record<TopicThemeId, TopicTheme> = {
     labelAr: "الجنة · أدعية الآخرة",
     heroFrom: "#0A3328",
     heroTo: "#145C45",
-    accent: "#1F7A5A",
+    accent: BRAND.colorDay,
     onHero: "#FFFFFF",
     onHeroMuted: "#E8EEEC",
     onHeroAccent: "#D4E8DC",

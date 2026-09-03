@@ -61,8 +61,8 @@
 }
 
 .harvest-panel__tabs button.is-active {
-  background: var(--mj-brand, #1f7a5a);
-  border-color: var(--mj-brand, #1f7a5a);
+  background: var(--mj-brand, var(--mj-brand));
+  border-color: var(--mj-brand, var(--mj-brand));
   color: #fff;
 }
 

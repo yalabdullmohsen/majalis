@@ -31,8 +31,8 @@
   min-height: 10.5rem;
   padding: 0.95rem 1rem 1rem;
   padding-inline-end: 2.75rem;
-  background: color-mix(in srgb, var(--mj-surface, #fff) 96%, var(--mj-brand-soft, #e4f0ea));
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 22%, var(--mj-hairline, #e3e8e6));
+  background: color-mix(in srgb, var(--mj-surface, #fff) 96%, var(--mj-brand-soft, var(--brand-soft, var(--mj-brand-soft))));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 22%, var(--mj-hairline, #e3e8e6));
   border-radius: 22px;
   box-shadow: 0 2px 10px -6px rgba(11, 32, 24, 0.18);
   text-decoration: none;
@@ -47,7 +47,7 @@
 }
 
 .hub-card:hover {
-  border-color: color-mix(in srgb, var(--mj-brand, #1f7a5a) 48%, var(--mj-accent, #b8963f) 12%);
+  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 48%, var(--mj-accent, #b8963f) 12%);
   box-shadow: 0 6px 18px -8px rgba(11, 32, 24, 0.22);
   text-decoration: none;
   transform: translateY(-1px);
@@ -58,7 +58,7 @@
 }
 
 .hub-card:focus-visible {
-  outline: 2px solid var(--mj-brand, #1f7a5a);
+  outline: 2px solid var(--mj-brand, var(--mj-brand));
   outline-offset: 2px;
 }
 
@@ -79,8 +79,8 @@
   flex-shrink: 0;
   margin-inline-start: auto;
   border-radius: 12px;
-  background: var(--mj-brand-soft, #e4f0ea);
-  color: var(--mj-brand, #1f7a5a);
+  background: var(--mj-brand-soft, var(--brand-soft, var(--mj-brand-soft)));
+  color: var(--mj-brand, var(--mj-brand));
   font-size: 1.15rem;
 }
 
@@ -128,9 +128,9 @@
   align-items: center;
   padding: 0.18rem 0.55rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mj-brand-soft, #e4f0ea) 88%, var(--mj-accent, #b8963f) 12%);
+  background: color-mix(in srgb, var(--mj-brand-soft, var(--brand-soft, var(--mj-brand-soft))) 88%, var(--mj-accent, #b8963f) 12%);
   color: var(--mj-brand-deep, #123f2e);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 18%, transparent);
   font-family: var(--mj-ui);
   font-size: var(--mj-fs-tiny);
   font-weight: 700;
@@ -154,9 +154,9 @@
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f7a5a) 35%, transparent);
-  background: color-mix(in srgb, var(--mj-brand-soft, #e4f0ea) 75%, var(--mj-surface, #fff));
-  color: var(--mj-brand, #1f7a5a);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 35%, transparent);
+  background: color-mix(in srgb, var(--mj-brand-soft, var(--brand-soft, var(--mj-brand-soft))) 75%, var(--mj-surface, #fff));
+  color: var(--mj-brand, var(--mj-brand));
   pointer-events: none;
 }
 
@@ -169,8 +169,8 @@
 }
 
 .hub-card--featured {
-  border-color: color-mix(in srgb, var(--mj-accent, #b8963f) 42%, var(--mj-brand, #1f7a5a) 28%);
-  background: color-mix(in srgb, var(--mj-brand-soft, #e4f0ea) 55%, var(--mj-surface, #fff));
+  border-color: color-mix(in srgb, var(--mj-accent, #b8963f) 42%, var(--mj-brand, var(--mj-brand)) 28%);
+  background: color-mix(in srgb, var(--mj-brand-soft, var(--brand-soft, var(--mj-brand-soft))) 55%, var(--mj-surface, #fff));
 }
 
 html[data-theme="dark"] .hub-card,

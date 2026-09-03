@@ -79,8 +79,8 @@
   cursor: default;
 }
 .dcq__choice.is-correct {
-  border-color: #15803d;
-  background: color-mix(in srgb, #15803d 12%, transparent);
+  border-color: var(--mj-brand);
+  background: color-mix(in srgb, var(--mj-brand) 12%, transparent);
 }
 .dcq__choice.is-wrong {
   border-color: #b91c1c;
@@ -90,7 +90,7 @@
   display: grid;
   gap: 0.4rem;
 }
-.dcq__ok { margin: 0; color: #15803d; font-weight: 700; }
+.dcq__ok { margin: 0; color: var(--mj-brand); font-weight: 700; }
 .dcq__bad { margin: 0; color: #b91c1c; font-weight: 700; }
 .dcq__explain, .dcq__source {
   margin: 0;

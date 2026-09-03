@@ -3135,7 +3135,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 .bdm-card__btn:disabled { opacity: .55; cursor: not-allowed; }
 .bdm-card__btn--start { background: var(--brand-deep, var(--mj-brand-deep, #1a4d3e)); }
 .bdm-card__btn--pause { background: #d97706; }
-.bdm-card__btn--done { background: #065f46; }
+.bdm-card__btn--done { background: var(--brand-deep, var(--mj-brand-deep)); }
 .bdm-card__btn--delete {
   width: auto;
   flex-shrink: 0;

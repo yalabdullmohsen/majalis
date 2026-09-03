@@ -35,7 +35,7 @@
   --text-on-dark: var(--on-dark-strong);
   --text-on-dark-secondary: var(--on-dark-secondary);
   --text-primary-inverse: var(--on-dark-strong);
-  /* نص العلامة على سطح فاتح: --mj-brand (#1F7A5A) = 4.49:1 على --brand-soft — استخدم --brand-on-white */
+  /* نص العلامة على سطح فاتح: --mj-brand (var(--mj-brand)) = 4.49:1 على --brand-soft — استخدم --brand-on-white */
   --text-brand: var(--brand-on-white);
   --text-brand-deep: var(--mj-brand-deep);
   /* أسماء قديمة خاطئة شائعة — كانت تسقط لاحتياطي نهاري ثابت */

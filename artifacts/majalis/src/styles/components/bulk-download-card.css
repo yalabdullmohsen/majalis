@@ -107,7 +107,7 @@
 }
 
 .bdm-card__btn--done {
-  background: #065f46;
+  background: var(--brand-deep, var(--mj-brand-deep));
 }
 
 .bdm-card__btn--delete {

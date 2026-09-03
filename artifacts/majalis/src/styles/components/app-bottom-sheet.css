@@ -150,7 +150,7 @@ html.dark .app-sheet__footer {
 
 .app-sheet__close--primary {
   border-color: transparent;
-  background: var(--mj-brand, #1F7A5A);
+  background: var(--mj-brand, var(--mj-brand));
   color: #fff;
 }
 

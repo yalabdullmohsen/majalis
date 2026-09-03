@@ -1,3 +1,4 @@
+import { BRAND } from "@/shared/config/brand";
 /**
  * SSOT — سجل أقسام سُنّة.
  * كل سطح تنقّل (شريط سفلي · المزيد · الدرج · الرئيسية · البحث) يُولَّد من هنا.
@@ -112,13 +113,13 @@ export interface SectionDef {
 
 /** لون العلامة الافتراضي لكل مجموعة أقسام */
 export const SECTION_GROUP_ACCENT: Record<SectionGroup, string> = {
-  sciences: "#1F7A5A",
+  sciences: BRAND.colorDay,
   stories: "#8B6914",
   dawah: "#4A5590",
   library: "#8B6914",
   worship: "#2A7A6E",
   learning: "#3D5A80",
-  account: "#1F7A5A",
+  account: BRAND.colorDay,
 };
 
 /** تجاوزات لونية تطابق سمات TopicPage */
