@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-03",
-  "lastCompletedId": "b073",
-  "resumeFromId": "b074",
+  "lastCompletedId": "b074",
+  "resumeFromId": "b075",
   "items": [
     {
       "id": "b001",
@@ -925,6 +925,19 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b073-usra-bodies-gate.test.ts"
       ],
       "finding": "أُضيف متن موجز فريد لكل درس أسرة ومجتمع (72) من الملخص المنقول بلا زيادة حديث أو حكم؛ بوابة b073."
+    },
+    {
+      "id": "b074",
+      "section": "mawsuaat_bodies",
+      "title": "متون فريدة لدروس الموسوعات من الملخص المنقول",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/mawsuaat-data.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b074-mawsuaat-bodies-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز فريد لكل درس موسوعات (45) من الملخص المنقول بلا زيادة حديث أو حكم؛ بوابة b074."
     }
   ]
 }
