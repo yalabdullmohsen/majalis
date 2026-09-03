@@ -1134,7 +1134,7 @@
     },
     {
       "source": "/library",
-      "destination": "/",
+      "destination": "/search",
       "permanent": true
     },
     {

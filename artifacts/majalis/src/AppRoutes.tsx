@@ -341,7 +341,7 @@ export default function AppRoutes() {
       <Route path="/sheikhs"><Redirect to="/lessons" /></Route>
       {/* المكتبة العلمية أُزيلت من الواجهة العامة — الروابط القديمة → البحث */}
       <Route path="/library/:id"><Redirect to="/search" /></Route>
-      <Route path="/library"><Redirect to="/" /></Route>
+      <Route path="/library"><Redirect to="/search" /></Route>
       <Route path="/miracles"><SafeLazyRoute component={MiraclesPage} /></Route>
       <Route path="/prophetic-medicine"><SafeLazyRoute component={PropheticMedicinePage} /></Route>
       <Route path="/quran-circles"><SafeLazyRoute component={QuranCirclesPage} /></Route>
