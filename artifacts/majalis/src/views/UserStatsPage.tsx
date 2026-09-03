@@ -138,7 +138,7 @@ function BadgeGrid({ earned }: { earned: Set<string> }) {
   const CATEGORY_LABELS: Record<string, string> = {
     streak: "الأيام المتواصلة",
     lessons: "الدروس",
-    library: "المكتبة",
+    library: "المراجع",
     tasbih: "الذكر والتسبيح",
     path: "المسارات الشرعية",
     content: "المحتوى المحفوظ",

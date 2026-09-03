@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-03",
-  "lastCompletedId": "b067",
-  "resumeFromId": "b068",
+  "lastCompletedId": "b068",
+  "resumeFromId": "b069",
   "items": [
     {
       "id": "b001",
@@ -835,6 +835,22 @@
         "artifacts/majalis/src/views/admin/SettingsSection.tsx"
       ],
       "finding": "أُضيف فصلان فهرسيّان لكل من الرهن/الحوالة/الوكالة (6 مسائل) بنفس ضابط b066؛ ارتفع باب المعاملات إلى ≥24؛ نُظّفت فئة الخرائط الذهنية ووصف الأحاديث والأبحاث الأكاديمية؛ بوابة b067."
+    },
+    {
+      "id": "b068",
+      "section": "fiqh_muamalat_fihris",
+      "title": "توسيع ضمان/شفعة/سلم بفهرس كلاسيكي + تحويل روابط العلماء إلى البحث",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/content/fiqh/books.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b068-daman-shufa-salam-gate.test.ts",
+        "artifacts/majalis/src/lib/scholar-library-links.ts",
+        "artifacts/majalis/src/lib/updates-seed.ts",
+        "artifacts/majalis/src/views/UserStatsPage.tsx"
+      ],
+      "finding": "أُضيف فصلان فهرسيّان لكل من الضمان/الشفعة/السلم (6 مسائل)؛ المعاملات ≥28 والبيوع ≥10؛ حُوّلت روابط مؤلفات العلماء من /library إلى /search؛ نُظّف تحديث الأدعية وشارة المراجع؛ بوابة b068."
     }
   ]
 }

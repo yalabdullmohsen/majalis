@@ -1,6 +1,6 @@
 /**
- * ربط عناوين مؤلفات العلماء بصفحات المكتبة عند تطابق موثوق.
- * لا يغيّر بيانات العلماء — يطابق النص المعروض فقط مع فهرس المكتبة.
+ * ربط عناوين مؤلفات العلماء بالبحث عند تطابق موثوق مع فهرس المراجع.
+ * لا يغيّر بيانات العلماء — يطابق النص المعروض فقط. المسار العلني `/library` محوَّل.
  */
 import { LIBRARY_CATALOG, type LibraryBook } from "@/lib/library-catalog";
 
@@ -101,7 +101,7 @@ export function resolveScholarWorkLink(work: string, authorHint?: string): Schol
     const key = normalizeTitle(raw);
     const exact = CATALOG_BY_NORM.get(key);
     if (exact && authorAgrees(exact.author, authorHint)) {
-      return { label, bookId: exact.id, href: `/library/${exact.id}` };
+      return { label, bookId: exact.id, href: `/search?q=${encodeURIComponent(exact.title)}` };
     }
   }
 
@@ -126,7 +126,7 @@ export function resolveScholarWorkLink(work: string, authorHint?: string): Schol
       }
     }
     if (best) {
-      return { label, bookId: best.id, href: `/library/${best.id}` };
+      return { label, bookId: best.id, href: `/search?q=${encodeURIComponent(best.title)}` };
     }
   }
 
