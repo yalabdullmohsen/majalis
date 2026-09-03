@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-03",
-  "lastCompletedId": "b065",
-  "resumeFromId": "b066",
+  "lastCompletedId": "b066",
+  "resumeFromId": "b067",
   "items": [
     {
       "id": "b001",
@@ -799,6 +799,25 @@
         "artifacts/majalis/src/views/SourcesLicensesPage.tsx"
       ],
       "finding": "أُضيف متن موجز فريد لـ31 درسًا في المقدمة/القولية/الخلقية/البشارات/المنهج/كتب الدلائل من مناهج البيهقي وأبي نعيم وابن كثير بلا اختراع معجزات؛ أُعيد توجيه عناوين دروس الكتب التي كانت تكرر الحسّيات إلى منظور التخريج في الجوامع؛ نُظّفت صياغات «مكتبة» المتبقية في seo-routes وia-final-structure وSourcesLicensesPage؛ بوابة b065."
+    },
+    {
+      "id": "b066",
+      "section": "fiqh_thin_doors",
+      "title": "توسيع عيّنة أبواب إجارة/شركة/قرض بفهرس كلاسيكي + تنظيف بقايا المكتبة العلنية",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/content/fiqh/books.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b066-fiqh-thin-doors-gate.test.ts",
+        "artifacts/majalis/src/views/SourcesLicensesPage.tsx",
+        "artifacts/majalis/src/lib/navigation.ts",
+        "artifacts/majalis/src/lib/seo.ts",
+        "artifacts/majalis/src/lib/tafsir-seed.ts",
+        "artifacts/majalis/src/pages/fiqh/ui/RulingsView.tsx",
+        "artifacts/majalis/src/pages/account/ui/AccountDeletionView.tsx"
+      ],
+      "finding": "أُضيف فصلان فهرسيّان لكل من الإجارة/الشركة/القرض (6 مسائل) بإحالات للمغني والشرح الممتع والملخص بلا آية/حديث/راجح محرَّر؛ نُظّفت صياغات المكتبة في المصادر/التنقل/SEO/التفسير/الأحكام/حذف الحساب؛ بوابة b066."
     }
   ]
 }

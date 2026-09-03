@@ -213,6 +213,12 @@ export const CONTENT_AUDIT_GATES: ContentAuditGate[] = [
     path: "src/lib/__tests__/content-audit-b065-dalail-non-hissiyya-gate.test.ts",
     kind: "node-tsx",
   },
+  {
+    id: "b066-fiqh-thin-doors",
+    dimension: "تدقيق",
+    path: "src/lib/__tests__/content-audit-b066-fiqh-thin-doors-gate.test.ts",
+    kind: "node-tsx",
+  },
   // تصحيح — لغة وهوية ومصادر
   {
     id: "content-lang",
