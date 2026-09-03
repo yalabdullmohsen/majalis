@@ -86,20 +86,6 @@ export default function ContactPage() {
 
   return (
     <LegalPageLayout eyebrow="الدعم" title="تواصل معنا" density="medium" className="contact-page">
-      <p className="contact-lead">يسعدنا استقبال ملاحظاتك واقتراحاتك وتصحيحاتك.</p>
-
-      {activeTopic ? (
-        <p className="contact-topic-banner" role="status">
-          موضوع مقترَح من الرابط: <strong>{activeTopic.label}</strong>
-          {topicParam && topicParam !== activeTopic.id ? (
-            <>
-              {" "}
-              — السياق: <span dir="auto">{topicParam}</span>
-            </>
-          ) : null}
-        </p>
-      ) : null}
-
       <LegalSection title="قنوات التواصل">
         <div className="contact-channels">
           <div className="contact-email-card">
@@ -128,6 +114,20 @@ export default function ContactPage() {
           </div>
         </div>
       </LegalSection>
+
+      <p className="contact-lead">يسعدنا استقبال ملاحظاتك واقتراحاتك وتصحيحاتك.</p>
+
+      {activeTopic ? (
+        <p className="contact-topic-banner" role="status">
+          موضوع مقترَح من الرابط: <strong>{activeTopic.label}</strong>
+          {topicParam && topicParam !== activeTopic.id ? (
+            <>
+              {" "}
+              — السياق: <span dir="auto">{topicParam}</span>
+            </>
+          ) : null}
+        </p>
+      ) : null}
 
       <LegalSection title="كيف نساعدك؟">
         <div className="contact-topics">
