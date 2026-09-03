@@ -33,7 +33,7 @@ export function diffRecitation(canonicalText: string, spokenText: string): Recit
   if (canonicalNorm.length === 0) return { words: [], matchPercent: 0 };
   if (spokenNorm.length === 0) return { words: canonicalRaw.map((text) => ({ text, matched: false })), matchPercent: 0 };
 
-  const ops = alignWindow(spokenNorm, canonicalNorm);
+  const ops = alignWindow(spokenNorm, canonicalNorm, { mode: "strict" });
   const matched = new Array(canonicalNorm.length).fill(false);
   for (const op of ops) {
     if (op.type === "match" && op.refIndex !== null) matched[op.refIndex] = true;
