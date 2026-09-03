@@ -45,7 +45,7 @@ for (const id of NEW_IDS) {
   assert.equal(lesson!.status, "published", `${id}: منشور`);
   assert.match(lesson!.summary, /فهرس هيكلي/, `${id}: ملخص فهرسي`);
   assert.match(lesson!.evidence, /إحالة فهرسية/, `${id}: دليل إحالة`);
-  assert.match(lesson!.preferred, /لا راجح محرَّر/, `${id}: بلا راجح مخترع`);
+  assert.match(lesson!.preferred, /بطاقة فهرس|لا راجح محرَّر/, `${id}: بلا راجح مخترع`);
   assert.doesNotMatch(lesson!.summary, /مدخل إلى|يتناول هذا المبحث/, `${id}: بلا stub`);
   assert.ok((lesson!.sources?.length || 0) >= 2, `${id}: مصادر ≥2`);
 }

@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-03",
-  "lastCompletedId": "b068",
-  "resumeFromId": "b069",
+  "lastCompletedId": "b069",
+  "resumeFromId": "b070",
   "items": [
     {
       "id": "b001",
@@ -851,6 +851,20 @@
         "artifacts/majalis/src/views/UserStatsPage.tsx"
       ],
       "finding": "أُضيف فصلان فهرسيّان لكل من الضمان/الشفعة/السلم (6 مسائل)؛ المعاملات ≥28 والبيوع ≥10؛ حُوّلت روابط مؤلفات العلماء من /library إلى /search؛ نُظّف تحديث الأدعية وشارة المراجع؛ بوابة b068."
+    },
+    {
+      "id": "b069",
+      "section": "fiqh_full_fihris",
+      "title": "إكمال فهرس كل كتاب فقهي كان دون 4 أبواب ونشره بلا طابور مراجعة",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/content/fiqh/books.json",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b069-full-fiqh-fihris-gate.test.ts",
+        "artifacts/majalis/docs/FIQH_REVIEW_QUEUE.md"
+      ],
+      "finding": "رُفع كل كتاب فقهي إلى ≥4 أبواب/مسائل بفهرس هيكلي منسوب للمغني والشرح الممتع والملخص؛ أُلغي طابور «بانتظار تحرير بشري»؛ بوابة b069."
     }
   ]
 }

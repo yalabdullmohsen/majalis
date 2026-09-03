@@ -231,6 +231,12 @@ export const CONTENT_AUDIT_GATES: ContentAuditGate[] = [
     path: "src/lib/__tests__/content-audit-b068-daman-shufa-salam-gate.test.ts",
     kind: "node-tsx",
   },
+  {
+    id: "b069-full-fiqh-fihris",
+    dimension: "تدقيق",
+    path: "src/lib/__tests__/content-audit-b069-full-fiqh-fihris-gate.test.ts",
+    kind: "node-tsx",
+  },
   // تصحيح — لغة وهوية ومصادر
   {
     id: "content-lang",
