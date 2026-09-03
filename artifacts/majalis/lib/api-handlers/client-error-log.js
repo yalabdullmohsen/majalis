@@ -97,33 +97,9 @@ export default async function handler(req, res) {
     return;
   }
 
+  // لا نعرض تقارير الأخطاء (stack / commit / مسارات) عبر GET عام في الإنتاج.
   if (req.method === "GET") {
-    const url = new URL(req.url || "/", "http://localhost");
-    const errorId = url.searchParams.get("id") || url.searchParams.get("errorId");
-    if (!errorId) {
-      sendJson(res, 400, { ok: false, message: "Missing id query parameter" });
-      return;
-    }
-    const memReport = errorStore.get(errorId);
-    if (memReport) {
-      sendJson(res, 200, { ok: true, report: memReport });
-      return;
-    }
-    const admin = getSupabaseAdmin();
-    if (admin) {
-      const { data } = await admin
-        .from("client_error_logs")
-        .select("*")
-        .eq("error_id", errorId)
-        .order("created_at", { ascending: false })
-        .limit(1)
-        .maybeSingle();
-      if (data) {
-        sendJson(res, 200, { ok: true, report: data });
-        return;
-      }
-    }
-    sendJson(res, 404, { ok: false, message: "Error report not found", errorId });
+    sendJson(res, 405, { ok: false, message: "Method not allowed" });
     return;
   }
 

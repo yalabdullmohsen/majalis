@@ -46,10 +46,7 @@
       "أبو إسحاق الشيرازي"
     ],
     "relatedLinks": [
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      },
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"},
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
@@ -226,10 +223,7 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       },
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      }
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"}
     ],
     "timelineOrder": 508
   }

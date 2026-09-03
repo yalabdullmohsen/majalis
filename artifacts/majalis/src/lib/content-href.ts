@@ -20,8 +20,10 @@ export function hrefLessons(id?: string | null): string {
   return pathWithId("/lessons", id);
 }
 
+/** المكتبة أُزيلت من الواجهة العامة — الروابط القديمة تتجه للبحث. */
 export function hrefLibrary(id?: string | null): string {
-  return pathWithId("/library", id);
+  void id;
+  return "/search";
 }
 
 export function hrefIslamicHistory(id?: string | null): string {

@@ -12,7 +12,6 @@ import {
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
-import { LIBRARY_CATALOG } from "@/lib/library-catalog";
 import {
   BOOK_SPOTLIGHTS,
   CAUTIONS,
@@ -97,7 +96,6 @@ function buildCards(): CardItem[] {
 }
 
 const ALL_CARDS = buildCards();
-const TAFSIR_BOOKS = LIBRARY_CATALOG.filter((b) => b.category === "تفسير");
 
 export default function TafsirPage() {
   const [category, setCategory] = useState<TafsirCategory>("الكل");
@@ -185,8 +183,8 @@ export default function TafsirPage() {
             <span>مصطلحًا</span>
           </div>
           <div className="tf-stat">
-            <strong>{toArabicDigits(TAFSIR_BOOKS.length)}</strong>
-            <span>كتابًا</span>
+            <strong>{toArabicDigits(BOOK_SPOTLIGHTS.length)}</strong>
+            <span>مختارات</span>
           </div>
       </section>
 
@@ -206,10 +204,6 @@ export default function TafsirPage() {
         <Link href="/mushaf" className="tf-cta__link">
           <strong>المصحف الشريف</strong>
           <span>اقرأ مع أدوات الاستكشاف</span>
-        </Link>
-        <Link href="/library?cat=تفسير" className="tf-cta__link">
-          <strong>كتب التفسير</strong>
-          <span>{toArabicDigits(TAFSIR_BOOKS.length)} كتابًا في المكتبة</span>
         </Link>
         <Link href="/ulum-quran" className="tf-cta__link">
           <strong>علوم القرآن</strong>
@@ -238,7 +232,7 @@ export default function TafsirPage() {
         </div>
         <p className="tf-section-lead">
           افتح أي آية في المصحف واختر أحد التفاسير التالية — نصوص كاملة للقرآن عبر مصدر موثوق، مع التنبيه عند الحاجة.
-          في القسم تجد أيضاً طبقات المفسرين ({toArabicDigits(MUFASSIRUN.length)} علماً) وكتب المكتبة.
+          في القسم تجد أيضاً طبقات المفسرين ({toArabicDigits(MUFASSIRUN.length)} علماً) وأصول التفسير.
         </p>
         <div className="tf-editions-grid">
           {MUSHAF_TAFSIR_EDITIONS.map((ed) => (
@@ -373,11 +367,6 @@ export default function TafsirPage() {
                           </div>
                         ) : null}
                         {card.note ? <div className="tf-card__note">{card.note}</div> : null}
-                        {card.libraryId ? (
-                          <Link href={`/library/${card.libraryId}`} className="tf-card__lib">
-                            عرض الكتاب في المكتبة ←
-                          </Link>
-                        ) : null}
                       </div>
                     </TextHighlightCapture>
                   ) : null}
@@ -396,7 +385,7 @@ export default function TafsirPage() {
           </h2>
         </div>
         <p className="tf-section-lead">
-          مختارات مرتبطة مباشرة بالمكتبة، مع مستوى مقترح وسبب الاختيار.
+          مختارات للبداية، مع مستوى مقترح وسبب الاختيار — والتفصيل داخل المصحف وعلوم القرآن.
         </p>
         <div className="tf-spotlight-grid">
           {BOOK_SPOTLIGHTS.map((book) => (
@@ -405,8 +394,8 @@ export default function TafsirPage() {
               <h3>{book.title}</h3>
               <p className="tf-spotlight-card__author">{book.author}</p>
               <p className="tf-spotlight-card__why">{book.why}</p>
-              <Link href={`/library/${book.libraryId}`} className="tf-inline-link">
-                افتح في المكتبة
+              <Link href="/mushaf" className="tf-inline-link">
+                افتح المصحف مع التفسير
                 <ChevronLeft size={14} aria-hidden />
               </Link>
             </article>
@@ -416,18 +405,24 @@ export default function TafsirPage() {
 
       <section className="tf-section" aria-labelledby="tf-books-title">
         <h2 id="tf-books-title" className="tf-section__title">
-          كل كتب التفسير في المكتبة ({toArabicDigits(TAFSIR_BOOKS.length)})
+          مسارات التفسير
         </h2>
         <div className="tf-books">
-          {TAFSIR_BOOKS.map((book) => (
-            <Link key={book.id} href={`/library/${book.id}`} className="tf-book">
-              <h3 className="tf-book__title">{book.title}</h3>
-              <p className="tf-book__author">{book.author}</p>
-            </Link>
-          ))}
+          <Link href="/mushaf" className="tf-book">
+            <h3 className="tf-book__title">التفسير في المصحف</h3>
+            <p className="tf-book__author">اقرأ الآية مع التفسير المعتمد</p>
+          </Link>
+          <Link href="/ulum-quran" className="tf-book">
+            <h3 className="tf-book__title">علوم القرآن</h3>
+            <p className="tf-book__author">النزول والجمع وأصول التفسير</p>
+          </Link>
+          <Link href="/quran-hub" className="tf-book">
+            <h3 className="tf-book__title">مركز القرآن</h3>
+            <p className="tf-book__author">بوابة أقسام القرآن الكريم</p>
+          </Link>
         </div>
-        <Link href="/library?cat=تفسير" className="tf-inline-link tf-inline-link--block">
-          تصفح تصنيف التفسير في المكتبة
+        <Link href="/mushaf" className="tf-inline-link tf-inline-link--block">
+          ابدأ القراءة في المصحف
           <ChevronLeft size={14} aria-hidden />
         </Link>
       </section>
@@ -468,7 +463,7 @@ export default function TafsirPage() {
             { href: "/duas-quran", label: "أدعية القرآن" },
             { href: "/hadith-science", label: "علوم الحديث" },
             { href: "/lessons", label: "مسار التفسير" },
-            { href: "/library?cat=تفسير", label: "مكتبة التفسير" },
+            { href: "/tafsir", label: "علم التفسير" },
           ].map(({ href, label }) => (
             <Link key={href} href={href} className="tf-related__link">
               {label}

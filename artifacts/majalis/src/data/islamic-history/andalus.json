@@ -111,10 +111,7 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       },
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      }
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"}
     ],
     "featured": true,
     "timelineOrder": 404
@@ -135,10 +132,7 @@
     "verification": "likely",
     "place": "طليطلة",
     "relatedLinks": [
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      },
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"},
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
@@ -195,10 +189,7 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       },
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      }
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"}
     ],
     "timelineOrder": 407
   },

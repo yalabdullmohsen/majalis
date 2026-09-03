@@ -19,10 +19,7 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       },
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      }
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"}
     ],
     "featured": true,
     "startHere": true,
@@ -69,10 +66,7 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       },
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      }
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"}
     ],
     "timelineOrder": 203
   },
@@ -141,10 +135,7 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       },
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      }
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"}
     ],
     "featured": true,
     "timelineOrder": 206
@@ -212,10 +203,7 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       },
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      }
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"}
     ],
     "timelineOrder": 209
   }

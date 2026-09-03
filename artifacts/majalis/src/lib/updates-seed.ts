@@ -39,7 +39,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-library-book",
     title: "كتاب جديد: رياض الصالحين",
-    summary: "إضافة كتاب رياض الصالحين للإمام النووي إلى المكتبة العلمية.",
+    summary: "إضافة كتاب رياض الصالحين للإمام النووي إلى المصادر المعتمدة.",
     update_type: "كتاب",
     source_type: "library",
     source_id: "book-riyadh",

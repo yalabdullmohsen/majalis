@@ -254,10 +254,7 @@
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
       },
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      }
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"}
     ],
     "timelineOrder": 110
   },

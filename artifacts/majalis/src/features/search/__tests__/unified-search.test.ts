@@ -52,7 +52,6 @@ const kinds = new Set(index.docs.map((d) => d.kind));
 for (const k of [
   "surah",
   "tafsir",
-  "book",
   "hadith",
   "qa",
   "lesson",
@@ -71,6 +70,7 @@ for (const k of [
 ]) {
   assert.ok(kinds.has(k), `القسم ${k} موجود في الفهرس`);
 }
+assert.equal(kinds.has("book"), false, "فهرس الكتب (/library) أُزيل من البحث العلني");
 
 // حالات التطبيع الإلزامية على الفهرس الحقيقي
 for (const [q, needle] of [
@@ -95,7 +95,6 @@ assert.ok(searchUnifiedIndex(index.docs, "مومن", 20));
 const sectionProbes: Record<string, string> = {
   surah: "بقره",
   tafsir: "الميسّر",
-  book: "الموطأ",
   hadith: "البخاري",
   qa: "الصلاة",
   lesson: "درس",

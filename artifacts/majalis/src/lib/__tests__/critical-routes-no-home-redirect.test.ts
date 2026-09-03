@@ -1,5 +1,5 @@
 /**
- * بوابة: مسارات حرجة لا تُحوَّل للرئيسية بلا قصد.
+ * بوابة: مسارات حرجة لا تُحوَّل للرئيسية بلا قصد — باستثناء /library بعد إزالتها علنًا.
  * تشغيل: node --import tsx src/lib/__tests__/critical-routes-no-home-redirect.test.ts
  */
 import assert from "node:assert/strict";
@@ -17,7 +17,7 @@ function routeBlock(path: string): string {
   return m[0];
 }
 
-for (const path of ["/library", "/updates", "/knowledge-graph", "/sections"]) {
+for (const path of ["/updates", "/knowledge-graph", "/sections"]) {
   const block = routeBlock(path);
   assert.equal(
     /Redirect\s+to=["']\/["']/.test(block),
@@ -27,18 +27,21 @@ for (const path of ["/library", "/updates", "/knowledge-graph", "/sections"]) {
   assert.match(block, /SafeLazyRoute|component=/, `${path} يجب أن يعرض صفحة`);
 }
 
+const libraryBlock = routeBlock("/library");
+assert.match(libraryBlock, /Redirect\s+to=["']\/["']/, "/library → / (إزالة المكتبة من الواجهة العامة)");
+
 const moreBlock = routeBlock("/more");
 assert.match(moreBlock, /Redirect\s+to=["']\/#explore["']|Redirect\s+to=["']\/["']/, "/more → الرئيسية (/#explore)");
 
 assert.match(app, /path="\/prayer"[^>]*>\s*<Redirect\s+to="\/prayer-times"/);
 assert.match(app, /path="\/quran\/mushaf"[^>]*>\s*<Redirect\s+to="\/mushaf"/);
-assert.match(app, /LibraryPage/);
+assert.doesNotMatch(app, /LibraryPage|LibraryDetailPage/);
 assert.match(app, /SectionsPage/);
 assert.match(app, /UpdatesPage/);
 assert.match(app, /KnowledgeGraphPage/);
 
 const vercel = readFileSync(resolve(root, "vercel.json"), "utf8");
-for (const path of ["/library", "/updates", "/knowledge-graph"]) {
+for (const path of ["/updates", "/knowledge-graph"]) {
   assert.equal(
     new RegExp(
       `"source"\\s*:\\s*"${path.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"[\\s\\S]{0,120}"destination"\\s*:\\s*"/"`,
@@ -47,6 +50,11 @@ for (const path of ["/library", "/updates", "/knowledge-graph"]) {
     `vercel.json لا يجوز أن يحوّل ${path} إلى /`,
   );
 }
+assert.match(
+  vercel,
+  /"source"\s*:\s*"\/library"[\s\S]{0,120}"destination"\s*:\s*"\/"/,
+  "vercel يجب أن يحوّل /library → /",
+);
 assert.match(
   vercel,
   /"source"\s*:\s*"\/prayer"[\s\S]{0,160}"destination"\s*:\s*"\/prayer-times"/,
@@ -60,6 +68,7 @@ assert.match(
 
 const seo = readFileSync(resolve(root, "src/lib/seo-routes.json"), "utf8");
 assert.match(seo, /"path"\s*:\s*"\/sections"/, "/sections في seo-routes");
-assert.match(seo, /"path"\s*:\s*"\/more"/, "/more يبقى في seo-routes للـprerender/تحويل");
+assert.doesNotMatch(seo, /"path"\s*:\s*"\/library"/, "/library خارج seo-routes العلني");
+assert.doesNotMatch(seo, /"path"\s*:\s*"\/more"/, "/more خارج seo-routes");
 
 console.log("critical-routes-no-home-redirect.test.ts: ok");

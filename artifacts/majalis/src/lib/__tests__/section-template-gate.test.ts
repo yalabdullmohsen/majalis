@@ -131,11 +131,9 @@ const prayer = read("src/pages/worship/ui/PrayerTimesView.tsx");
 assert.doesNotMatch(prayer, /SectionTemplatePage/, "الصلاة مستثناة من قالب العقيدة");
 
 {
-  const library = read("src/pages/library/ui/LibraryView.tsx");
-  assert.match(library, /library-hub--compact/, "المكتبة: واجهة وظيفية مدمجة");
-  assert.match(library, /المكتبة العلمية/, "المكتبة: عنوان واضح");
-  assert.match(library, /SearchField/, "المكتبة: حقل بحث داخلي");
-  assert.doesNotMatch(library, /SectionTemplatePage|sectionRoute=/, "المكتبة: بلا لافتة قسم طويلة");
+  const routes = read("src/AppRoutes.tsx");
+  assert.match(routes, /path="\/library"[^>]*>\s*<Redirect\s+to="\/"/, "المكتبة: تحويل علني إلى الرئيسية");
+  assert.doesNotMatch(routes, /LibraryPage|LibraryDetailPage/, "المكتبة: لا تُعرض صفحات المكتبة علنًا");
 }
 
 {

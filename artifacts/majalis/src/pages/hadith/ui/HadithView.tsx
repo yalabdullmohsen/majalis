@@ -32,7 +32,6 @@ import { fetchAllHadiths, type CdnHadith } from "@/lib/hadith-cdn-service";
 import { fetchSahihaynLocal } from "@/lib/sahihayn-local";
 import { loadLocalVerifiedHadith } from "@/lib/verified-hadith-local-seed";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
-import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
 import { HadithClassGuide } from "@/pages/hadith/ui/HadithClassGuide";
 import { HadithCard } from "@/components/hadith/HadithCard";
 import { HadithFilters } from "@/components/hadith/HadithFilters";
@@ -317,24 +316,13 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
           {h.source_name && (
             <div className="hadith-modal__meta-item">
               <strong>المصدر</strong>
-              <span>
-                {(() => {
-                  const link = resolveScholarWorkLink(h.source_name);
-                  return link.href ? <Link href={link.href}>{h.source_name}</Link> : h.source_name;
-                })()}
-              </span>
+              <span>{h.source_name}</span>
             </div>
           )}
           {takhrijText && (
             <div className="hadith-modal__meta-item">
               <strong>التخريج</strong>
-              <span>
-                {(() => {
-                  const raw = String(takhrijText);
-                  const link = resolveScholarWorkLink(raw);
-                  return link.href ? <Link href={link.href}>{raw}</Link> : raw;
-                })()}
-              </span>
+              <span>{String(takhrijText)}</span>
             </div>
           )}
           <div className="hadith-modal__meta-item">

@@ -49,7 +49,6 @@ function FiqhHubSearch({
             placeholder="بحث في المسائل…"
             autoComplete="off"
             enterKeyHint="search"
-            autoFocus={open}
           />
           <button
             type="button"
@@ -91,7 +90,7 @@ function FiqhLobbyBody({ lobby }: { lobby: LobbySpec | null }) {
   const doors = useMemo(() => buildFiqhDoorSummaries(), []);
   const startHere = useMemo(() => pickDoors(FIQH_START_HERE_DOORS, doors), [doors]);
   const hubDoors = useMemo(() => {
-    const hub = pickDoors(FIQH_HUB_DOOR_ORDER, doors);
+    const hub = pickDoors(FIQH_HUB_DOOR_ORDER, doors).sort((a, b) => a.sortOrder - b.sortOrder);
     const expanded = expandFiqhGroupFilter(group);
     if (expanded === "all") return hub;
     const allowed = new Set(expanded);

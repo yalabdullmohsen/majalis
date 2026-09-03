@@ -1,5 +1,5 @@
 /**
- * بطاقة متابعة محلية — مصحف / دروس / أنبياء / أذكار / مكتبة / علماء.
+ * بطاقة متابعة محلية — مصحف / دروس / أنبياء / أذكار / علماء.
  */
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
@@ -25,7 +25,7 @@ const SECTION_LABEL: Record<ContinueSection | "listen", string> = {
   lessons: "الدروس",
   prophets: "قصص الأنبياء",
   adhkar: "الأذكار",
-  library: "المكتبة",
+  library: "مرجع",
   tarikh: "التاريخ الإسلامي",
   listen: "الاستماع",
 };
@@ -70,6 +70,7 @@ function buildItems(): ResumeItem[] {
   }
 
   for (const entry of getContinueReadingEntries(8)) {
+    if (entry.section === "library") continue;
     if (seen.has(entry.section)) continue;
     if (entry.section === "mushaf" && seen.has("mushaf")) continue;
     seen.add(entry.section);

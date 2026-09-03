@@ -2669,7 +2669,9 @@ for (const row of PLATFORM_SEED.courses || []) {
   );
 }
 
-for (const row of LIBRARY_CATALOG) {
+for (const row of []) {
+  // المكتبة أُزيلت من الواجهة العامة — لا نولّد صفحات /library في prerender/sitemap.
+  void row;
   const related = LIBRARY_CATALOG.filter((b) => b.id !== row.id && b.category && b.category === row.category)
     .slice(0, 6)
     .map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author }));
@@ -3053,7 +3055,10 @@ const sitemapPages = pages.filter(
   (p) =>
     p.sitemap &&
     !(p.route.robots || "").includes("noindex") &&
-    !IA_REDIRECTS[p.route.path],
+    !IA_REDIRECTS[p.route.path] &&
+    p.route.path !== "/library" &&
+    !String(p.route.path).startsWith("/library/") &&
+    p.route.path !== "/more",
 );
 const LASTMOD_TODAY = "2026-08-26";
 const LASTMOD_PATHS = new Set([
@@ -3066,7 +3071,6 @@ const LASTMOD_PATHS = new Set([
   "/prayer-times",
   "/fiqh",
   "/tarikh-islami",
-  "/library",
 ]);
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

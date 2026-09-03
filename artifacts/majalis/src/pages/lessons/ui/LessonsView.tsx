@@ -322,10 +322,11 @@ export default function LessonsPage({
   }, []);
 
   const tabLessons = useMemo(() => {
+    if (quickFilters.schedule === "archive") return archivedLessons;
     if (quickFilters.schedule === "courses") return filterByTab(activeLessons, "courses");
     if (quickFilters.schedule === "women") return filterByTab(activeLessons, "women");
     return filterByTab(activeLessons, "all");
-  }, [activeLessons, quickFilters.schedule]);
+  }, [activeLessons, archivedLessons, quickFilters.schedule]);
   const options = useMemo(() => extractFilterOptions(tabLessons), [tabLessons]);
   const regionOptions = useMemo(() => {
     if (filters.governorate === "كل المحافظات") return options.regions;
@@ -337,10 +338,12 @@ export default function LessonsPage({
     [tabLessons, filters],
   );
 
-  const quickFiltered = useMemo(
-    () => applyLessonQuickFilters(filtered, quickFilters),
-    [filtered, quickFilters],
-  );
+  const quickFiltered = useMemo(() => {
+    if (quickFilters.schedule === "archive") {
+      return sortKuwaitLessons(filterKuwaitLessons(archivedLessons, filters));
+    }
+    return applyLessonQuickFilters(filtered, quickFilters);
+  }, [archivedLessons, filtered, filters, quickFilters]);
 
   const featuredSections = useMemo(() => {
     const pool = filterFeaturedHomeLessons(tabLessons);
@@ -359,7 +362,12 @@ export default function LessonsPage({
     return { upcoming };
   }, [tabLessons]);
 
-  const pageTitle = quickFilters.schedule === "today" ? "دروس اليوم" : "الدروس";
+  const pageTitle =
+    quickFilters.schedule === "archive"
+      ? "أرشيف الدروس"
+      : quickFilters.schedule === "today"
+        ? "دروس اليوم"
+        : "الدروس";
   const showFeatured =
     !filters.search &&
     filters.governorate === "كل المحافظات" &&
@@ -575,7 +583,6 @@ export default function LessonsPage({
                     placeholder="بحث…"
                     dir="rtl"
                     enterKeyHint="search"
-                    autoFocus={searchOpen}
                   />
                   <button
                     type="button"

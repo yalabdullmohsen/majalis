@@ -7,11 +7,13 @@ import { isWomenFriendlyLesson } from "@/lib/lesson-women-attendance";
 
 export type LessonQuickFilterId =
   | "all"
-  | "today"
-  | "this_week"
+  | "lessons"
+  | "courses"
   | "in_person"
   | "remote"
-  | "courses"
+  | "archive"
+  | "today"
+  | "this_week"
   | "women";
 
 export type LessonQuickFilters = {
@@ -28,12 +30,11 @@ export const DEFAULT_LESSON_QUICK_FILTERS: LessonQuickFilters = {
 
 const SCHEDULE_CHIPS: Array<{ id: LessonQuickFilterId; label: string }> = [
   { id: "all", label: "الكل" },
-  { id: "today", label: "اليوم" },
-  { id: "this_week", label: "هذا الأسبوع" },
+  { id: "lessons", label: "دروس" },
+  { id: "courses", label: "دورات" },
   { id: "in_person", label: "حضوري" },
   { id: "remote", label: "عن بعد" },
-  { id: "courses", label: "دورات" },
-  { id: "women", label: "نسائية" },
+  { id: "archive", label: "أرشيف" },
 ];
 
 function isTodayMs(ms: number, now = Date.now()): boolean {
@@ -51,11 +52,17 @@ function isThisWeekMs(ms: number, now = Date.now()): boolean {
   return ms >= now && ms <= end;
 }
 
+function isStandaloneLesson(lesson: KuwaitLessonRecord): boolean {
+  return !(lesson.isCourse || lesson.activityType === "دورة");
+}
+
 export function applyLessonQuickFilters(
   lessons: KuwaitLessonRecord[],
   filters: LessonQuickFilters,
   nowMs = Date.now(),
 ): KuwaitLessonRecord[] {
+  if (filters.schedule === "archive") return [];
+
   return lessons.filter((lesson) => {
     const nextMs = lesson.nextOccurrenceMs ?? computeNextOccurrenceMs(lesson.day, lesson.time);
     const inPerson = Boolean(lesson.mosque?.trim()) && !isOnlineVenue(lesson.mosque, lesson.region);
@@ -69,6 +76,7 @@ export function applyLessonQuickFilters(
     if (filters.schedule === "courses" && !(lesson.isCourse || lesson.activityType === "دورة")) {
       return false;
     }
+    if (filters.schedule === "lessons" && !isStandaloneLesson(lesson)) return false;
     if (filters.schedule === "women" && !isWomenFriendlyLesson(lesson)) return false;
 
     if (filters.sheikh !== "كل المشايخ") {

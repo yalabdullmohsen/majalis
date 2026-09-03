@@ -24,8 +24,8 @@ assert.match(card, /resolveMushafResumeInfo/);
 assert.match(card, /آخر توقف/);
 assert.match(card, /ابدأ القراءة من الفاتحة/);
 assert.match(card, /متابعة القراءة/);
-assert.match(card, /title=\"فتح المصحف\"/);
-assert.match(card, /data-section-card=\"open-mushaf\"/);
+assert.match(card, /title="فتح المصحف"/);
+assert.match(card, /data-section-card="open-mushaf"/);
 assert.match(card, /try \{/);
 assert.match(card, /catch/);
 

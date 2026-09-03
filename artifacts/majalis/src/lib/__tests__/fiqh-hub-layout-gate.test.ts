@@ -31,12 +31,12 @@ assert.match(css, /fiqh-category-card--ibadat/);
 assert.match(css, /fiqh-category-card--muamalat/);
 assert.match(css, /fiqh-category-card--usrah/);
 assert.match(css, /fiqh-category-card--qada_jinayat/);
-assert.match(css, /max-height:\s*9\.25rem/);
+assert.match(css, /max-height:\s*7\.5rem/);
 
 assert.deepEqual([...FIQH_START_HERE_DOORS], ["tahara", "salah", "zakat", "sawm", "hajj"]);
 assert.deepEqual(
   [...FIQH_HUB_DOOR_ORDER].slice(0, 8),
-  ["tahara", "salah", "janaza", "zakat", "sawm", "hajj", "jihad", "buyu"],
+  ["tahara", "salah", "zakat", "sawm", "hajj", "janaza", "ayman", "atima"],
 );
 
 const books = getAllFiqhBooks();

@@ -109,5 +109,5 @@ export const IA_BREADCRUMB_PARENTS: Record<string, { name: string; path: string 
   "/fiqh-council/nawazil": [{ name: "الفقه", path: "/fiqh" }],
   "/fiqh-qawaid": [{ name: "الفقه", path: "/fiqh" }],
   "/madhahib": [{ name: "الفقه", path: "/fiqh" }],
-  "/islamic-glossary": [{ name: "المكتبة", path: "/library" }],
+  "/islamic-glossary": [{ name: "المصطلحات", path: "/islamic-glossary" }],
 };

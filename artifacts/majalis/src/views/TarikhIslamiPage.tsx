@@ -22,10 +22,10 @@ type FilterId = HistoryCategory | "all";
 
 const FILTER_ORDER: FilterId[] = ["all", ...HISTORY_CATEGORY_ORDER];
 
-const LIBRARY_HISTORY = [
-  { href: "/library", label: "المكتبة — كتب التاريخ" },
+const RELATED_HISTORY = [
   { href: "/seerah", label: "السيرة النبوية" },
   { href: "/nations", label: "الأمم السابقة" },
+  { href: "/hadith", label: "الحديث وعلومه" },
   { href: "/methodology", label: "منهج الموقع" },
 ];
 
@@ -332,9 +332,9 @@ export default function TarikhIslamiPage() {
       )}
 
       <section className="tarikh-section tarikh-section--muted">
-        <h2 className="tarikh-section__title">كتب ومراجع من المكتبة</h2>
+        <h2 className="tarikh-section__title">روابط ذات صلة</h2>
         <div className="tarikh-related-links">
-          {LIBRARY_HISTORY.map((l) => (
+          {RELATED_HISTORY.map((l) => (
             <Link key={l.href} href={l.href} className="tarikh-chip">
               {l.label}
             </Link>

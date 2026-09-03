@@ -14,10 +14,7 @@
     ],
     "verification": "confirmed",
     "relatedLinks": [
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      },
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"},
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
@@ -42,10 +39,7 @@
     ],
     "verification": "confirmed",
     "relatedLinks": [
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      },
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"},
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
@@ -68,10 +62,7 @@
     ],
     "verification": "confirmed",
     "relatedLinks": [
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      },
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"},
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
@@ -100,10 +91,7 @@
       "ابن النفيس"
     ],
     "relatedLinks": [
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      },
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"},
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
@@ -131,10 +119,7 @@
       "ابن الشاطر"
     ],
     "relatedLinks": [
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      },
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"},
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
@@ -157,10 +142,7 @@
     ],
     "verification": "confirmed",
     "relatedLinks": [
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      },
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"},
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
@@ -183,10 +165,7 @@
     ],
     "verification": "confirmed",
     "relatedLinks": [
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      },
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"},
       {
         "href": "/mushaf",
         "label": "المصحف"
@@ -215,10 +194,7 @@
       "ياقوت الحموي"
     ],
     "relatedLinks": [
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      },
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"},
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
@@ -246,10 +222,7 @@
       "الجابر"
     ],
     "relatedLinks": [
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      },
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"},
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
@@ -278,10 +251,7 @@
       "المتوكل"
     ],
     "relatedLinks": [
-      {
-        "href": "/library",
-        "label": "المكتبة العلمية"
-      },
+      {"href":"/tarikh-islami","label":"التاريخ الإسلامي"},
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"

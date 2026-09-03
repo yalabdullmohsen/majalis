@@ -46,7 +46,7 @@ console.log("\n=== content-href الموحّد ===");
 console.log("\n=== روابط التوصيات تحتفظ بالمعرّف (إعادة تصدير) ===");
 {
   assert(CONTENT_TYPE_HREF.lesson("abc") === "/lessons/abc", "lesson → /lessons/:id");
-  assert(CONTENT_TYPE_HREF.book("b1") === "/library/b1", "book → /library/:id");
+  assert(CONTENT_TYPE_HREF.book("b1") === "/search", "book → /search (المكتبة أُزيلت علنًا)");
   assert(CONTENT_TYPE_HREF.scholar("pers-al-tabari") === "/scholars/pers-al-tabari", "scholar → /scholars/:id");
   assert(CONTENT_TYPE_HREF.benefit("f1") === "/fawaid#f1", "benefit → /fawaid#id");
   assert(CONTENT_TYPE_HREF.qa("q1") === "/quiz?qa=q1", "qa → /quiz?qa=");

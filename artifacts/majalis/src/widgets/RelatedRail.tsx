@@ -21,7 +21,7 @@ function hrefFor(kind: string, slug: string): string {
     case "scholar":
       return `/tarikh-islami/${slug}`;
     case "book":
-      return `/library/${slug}`;
+      return `/search?q=${encodeURIComponent(slug)}`;
     case "hadith":
       return `/hadith?ref=${encodeURIComponent(slug)}`;
     case "ruling":

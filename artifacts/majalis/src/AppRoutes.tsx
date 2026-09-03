@@ -34,8 +34,6 @@ const TeacherDetailPage = lazy(() => import("@/pages/lessons/TeacherDetailPage")
 const LessonsArchivePage = lazy(() => import("@/pages/lessons/LessonsArchivePage"));
 const LessonDetailPage = lazy(() => import("@/pages/lessons/LessonDetailPage"));
 const ScientificAnnouncementDetailPage = lazy(() => import("@/views/ScientificAnnouncementDetailPage"));
-const LibraryPage = lazy(() => import("@/pages/library/LibraryPage"));
-const LibraryDetailPage = lazy(() => import("@/pages/library/LibraryDetailPage"));
 const MiraclesPage = lazy(() => import("@/views/MiraclesPage"));
 const FawaidPage = lazy(() => import("@/pages/account/FawaidPage"));
 const PropheticMedicinePage = lazy(() => import("@/views/PropheticMedicinePage"));
@@ -341,8 +339,9 @@ export default function AppRoutes() {
       <Route path="/courses"><Redirect to="/lessons" /></Route>
       <Route path="/sheikhs/:id"><Redirect to="/lessons" /></Route>
       <Route path="/sheikhs"><Redirect to="/lessons" /></Route>
-      <Route path="/library/:id"><SafeLazyRoute component={LibraryDetailPage} /></Route>
-      <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>
+      {/* المكتبة العلمية أُزيلت من الواجهة العامة — الروابط القديمة → البحث */}
+      <Route path="/library/:id"><Redirect to="/search" /></Route>
+      <Route path="/library"><Redirect to="/" /></Route>
       <Route path="/miracles"><SafeLazyRoute component={MiraclesPage} /></Route>
       <Route path="/prophetic-medicine"><SafeLazyRoute component={PropheticMedicinePage} /></Route>
       <Route path="/quran-circles"><SafeLazyRoute component={QuranCirclesPage} /></Route>

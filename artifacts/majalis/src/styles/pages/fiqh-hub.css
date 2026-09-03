@@ -1611,16 +1611,16 @@ html.dark .fiqh-filters__chip.is-active {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  padding: 0.6rem 0.65rem 0.55rem;
-  border-radius: 14px;
+  gap: 0.2rem;
+  padding: 0.5rem 0.55rem 0.45rem;
+  border-radius: 12px;
   border: 1px solid color-mix(in srgb, var(--mn-border-default, #d8e3de) 70%, transparent);
   background: var(--fq-surface, var(--cardBackground, #fff));
   box-shadow:
     0 1px 2px color-mix(in srgb, #0f172a 5%, transparent),
-    0 6px 14px color-mix(in srgb, #0f172a 4%, transparent);
+    0 4px 10px color-mix(in srgb, #0f172a 3%, transparent);
   min-height: 0;
-  max-height: 9.25rem;
+  max-height: 7.5rem;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
@@ -2046,9 +2046,9 @@ html.dark .fiqh-hub-search--compact .fiqh-hub-search__field input {
 }
 .fiqh-lux-shell .fiqh-category-card,
 .fiqh-lux-page .fiqh-category-card {
-  border-radius: 14px;
-  max-height: 9.25rem;
-  padding: 0.6rem 0.65rem 0.55rem;
+  border-radius: 12px;
+  max-height: 7.5rem;
+  padding: 0.5rem 0.55rem 0.45rem;
 }
 .fiqh-lux-shell .fiqh-category-card__title {
   font-size: 0.86rem;
