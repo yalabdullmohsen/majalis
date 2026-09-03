@@ -132,7 +132,11 @@ assert.doesNotMatch(prayer, /SectionTemplatePage/, "الصلاة مستثناة 
 
 {
   const routes = read("src/AppRoutes.tsx");
-  assert.match(routes, /path="\/library"[^>]*>\s*<Redirect\s+to="\/"/, "المكتبة: تحويل علني إلى الرئيسية");
+  assert.match(
+    routes,
+    /path="\/library"[^>]*>\s*<Redirect\s+to="\/search"/,
+    "المكتبة: تحويل علني إلى البحث (لا إلى الرئيسية)",
+  );
   assert.doesNotMatch(routes, /LibraryPage|LibraryDetailPage/, "المكتبة: لا تُعرض صفحات المكتبة علنًا");
 }
 

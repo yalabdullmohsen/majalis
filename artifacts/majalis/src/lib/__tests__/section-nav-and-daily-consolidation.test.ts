@@ -122,8 +122,8 @@ console.log("\n=== nav-visibility تنظيف ===");
   for (const p of ["/flashcards", "/ulum-quran", "/occasions", "/institutions", "/rulings", "/fiqh-council"]) {
     assert(HIDDEN_FROM_NAV_PATHS.has(p), `${p} مخفي من الاكتشاف العام`);
   }
-  assert(HIDDEN_FROM_NAV_PATHS.has("/library") || resolveMergedPath("/library") === "/", "المكتبة خارج الاكتشاف العام أو محوّلة");
-  assert(resolveMergedPath("/library") === "/", "library → /");
+  assert(HIDDEN_FROM_NAV_PATHS.has("/library") || resolveMergedPath("/library") === "/search", "المكتبة خارج الاكتشاف العام أو محوّلة");
+  assert(resolveMergedPath("/library") === "/search", "library → /search");
   assert(resolveMergedPath("/quran-index") === "/quran-knowledge", "quran-index → hub");
   assert(resolveMergedPath("/reviewed-cards") === "/my-learning", "reviewed-cards → حسابي");
   assert(resolveMergedPath("/researches") === "/academic-research", "researches → academic-research");

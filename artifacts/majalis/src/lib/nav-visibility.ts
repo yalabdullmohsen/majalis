@@ -116,7 +116,7 @@ export const MERGED_PATH_REDIRECTS: Record<string, string> = {
   "/mosques": "/islamic-directory",
   "/reviewed-cards": "/my-learning",
   "/scientific-library": "/",
-  "/library": "/",
+  "/library": "/search",
   "/latest": "/",
   "/fatwas": "/fiqh",
   "/explore": "/",

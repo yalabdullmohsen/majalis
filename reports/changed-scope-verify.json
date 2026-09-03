@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T22:12:58.663Z",
+  "generatedAt": "2026-09-03T22:41:00.893Z",
   "paths": [
     ".github/workflows/release-majlisilm.yml",
     "\"artifacts/majalis/content/archive/rulings-encyclopedia/data/chunks/\\330\\247\\331\\204\\330\\243\\330\\263\\330\\261\\330\\251.json\"",
@@ -107,7 +107,6 @@
     "artifacts/majalis/scripts/test-dynamic-404-safety.mjs",
     "artifacts/majalis/scripts/verify-brand-green-hex.mjs",
     "artifacts/majalis/scripts/verify-color-contrast-gate.mjs",
-    "artifacts/majalis/scripts/verify-lhci-threshold-calibration.mjs",
     "artifacts/majalis/scripts/verify-on-brand-contrast.mjs",
     "artifacts/majalis/seo-prerender/about/index.html",
     "artifacts/majalis/seo-prerender/academic-research/index.html",
@@ -675,6 +674,7 @@
     "artifacts/majalis/src/lib/__tests__/section-template-gate.test.ts",
     "artifacts/majalis/src/lib/__tests__/site-interlink.test.ts",
     "artifacts/majalis/src/lib/__tests__/ticker-content.test.ts",
+    "artifacts/majalis/src/lib/__tests__/topic-page-shell-gate.test.ts",
     "artifacts/majalis/src/lib/__tests__/topic-themes-contrast.test.ts",
     "artifacts/majalis/src/lib/adhan-scheduler.ts",
     "artifacts/majalis/src/lib/adhkar-seed.ts",
@@ -821,7 +821,10 @@
     "docs/reviews/SEERAH_REVIEW_QUEUE.md",
     "reports/changed-scope-report.md",
     "reports/changed-scope-verify.json",
-    "scripts/verify-no-unsafe-auto-merge.mjs"
+    "scripts/verify-no-unsafe-auto-merge.mjs",
+    "artifacts/majalis/docs/CONTENT_AFFINITY_REPORT.md",
+    "artifacts/majalis/src/lib/__tests__/production-p0-regressions.test.ts",
+    "reports/library-source-completeness-audit.json"
   ],
   "scopes": [
     "ci/config",

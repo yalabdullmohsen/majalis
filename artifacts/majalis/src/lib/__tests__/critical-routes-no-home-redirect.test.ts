@@ -1,5 +1,6 @@
 /**
- * بوابة: مسارات حرجة لا تُحوَّل للرئيسية بلا قصد — باستثناء /library بعد إزالتها علنًا.
+ * بوابة: مسارات حرجة لا تُحوَّل للرئيسية بلا قصد.
+ * /library أُزيلت علنًا وتحوَّل إلى /search (وليس /) حتى لا تُفقد وجهة المحتوى.
  * تشغيل: node --import tsx src/lib/__tests__/critical-routes-no-home-redirect.test.ts
  */
 import assert from "node:assert/strict";
@@ -28,7 +29,8 @@ for (const path of ["/updates", "/knowledge-graph", "/sections"]) {
 }
 
 const libraryBlock = routeBlock("/library");
-assert.match(libraryBlock, /Redirect\s+to=["']\/["']/, "/library → / (إزالة المكتبة من الواجهة العامة)");
+assert.match(libraryBlock, /Redirect\s+to=["']\/search["']/, "/library → /search (إزالة المكتبة من الواجهة العامة)");
+assert.doesNotMatch(libraryBlock, /Redirect\s+to=["']\/["']/, "/library لا يحوّل إلى الرئيسية");
 
 const moreBlock = routeBlock("/more");
 assert.match(moreBlock, /Redirect\s+to=["']\/#explore["']|Redirect\s+to=["']\/["']/, "/more → الرئيسية (/#explore)");
@@ -52,8 +54,13 @@ for (const path of ["/updates", "/knowledge-graph"]) {
 }
 assert.match(
   vercel,
-  /"source"\s*:\s*"\/library"[\s\S]{0,120}"destination"\s*:\s*"\/"/,
-  "vercel يجب أن يحوّل /library → /",
+  /"source"\s*:\s*"\/library"\s*,\s*"destination"\s*:\s*"\/search"/,
+  "vercel يجب أن يحوّل /library → /search",
+);
+assert.doesNotMatch(
+  vercel,
+  /"source"\s*:\s*"\/library"\s*,\s*"destination"\s*:\s*"\/"/,
+  "vercel لا يجوز أن يحوّل /library إلى /",
 );
 assert.match(
   vercel,

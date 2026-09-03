@@ -1,7 +1,7 @@
 # تقرير نطاق التغييرات
 
-**التاريخ:** 2026-09-03T22:12:58.665Z
-**عدد الملفات:** 821
+**التاريخ:** 2026-09-03T22:41:00.894Z
+**عدد الملفات:** 824
 **النطاقات:** ci/config، other، content/data، docs، backend/api، quran/mushaf، ui/layout
 **docs-only:** لا
 
@@ -66,7 +66,7 @@
 - `artifacts/majalis/public/data/knowledge/nations/nation-ashab-rass.json` → content_data
 - `artifacts/majalis/public/data/knowledge/nations/nation-ashab-sabt.json` → content_data
 
-… +781 ملفًا
+… +784 ملفًا
 
 ## سياسات
 
