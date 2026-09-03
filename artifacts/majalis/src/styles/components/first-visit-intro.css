@@ -1,160 +1,321 @@
-/* صفحة التعريف عند أول زيارة — خفيفة، RTL، mobile-first */
+/* شاشة الترحيب — أول دخول مرة واحدة — جذابة وخفيفة */
 
 .first-visit-intro {
+  --fvi-green: #123f2e;
+  --fvi-mint: #1a6b56;
+  --fvi-gold: #b8963f;
+  --fvi-teal: #0e6b58;
+  position: relative;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
   padding:
-    max(1rem, var(--inset-top, 0px))
+    max(0.75rem, var(--inset-top, 0px))
     max(1rem, var(--inset-right, 0px))
-    max(1.25rem, var(--inset-bottom, 0px))
+    max(1.25rem, calc(var(--inset-bottom, 0px) + 0.75rem))
     max(1rem, var(--inset-left, 0px));
   background:
-    radial-gradient(120% 80% at 50% -10%, color-mix(in srgb, var(--mj-brand, #1e5f4b) 14%, transparent), transparent 55%),
-    var(--mj-bg, #e8ecea);
-  color: var(--mj-ink, #0e241e);
+    radial-gradient(90% 55% at 80% -5%, color-mix(in srgb, var(--fvi-gold) 18%, transparent), transparent 50%),
+    radial-gradient(100% 70% at 10% 0%, color-mix(in srgb, var(--fvi-green) 22%, transparent), transparent 55%),
+    linear-gradient(180deg, #f4f7f5 0%, #eef3f0 100%);
+  color: #12201a;
   box-sizing: border-box;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
 
+.first-visit-intro__pattern {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.045;
+  background-image:
+    radial-gradient(circle at 1px 1px, #123f2e 1px, transparent 0);
+  background-size: 18px 18px;
+}
+
 .first-visit-intro__inner {
-  width: min(100%, 28rem);
+  position: relative;
+  z-index: 1;
+  width: min(100%, 30rem);
   margin-inline: auto;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.15rem;
 }
 
 .first-visit-intro__hero {
-  text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding-top: 0.35rem;
+  gap: 0.45rem;
+  padding: 0.85rem 1rem 1rem;
+  border-radius: 1.25rem;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--fvi-green) 92%, #0a2a1e) 0%, var(--fvi-green) 100%);
+  color: #fff;
+  box-shadow: 0 14px 32px -18px rgba(11, 32, 24, 0.55);
+  border: 1px solid color-mix(in srgb, #fff 12%, transparent);
+}
+
+.first-visit-intro__top-actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.first-visit-intro__skip {
+  margin: 0;
+  padding: 0.25rem 0.65rem;
+  border: 1px solid color-mix(in srgb, #fff 28%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, #fff 10%, transparent);
+  color: #f3efe4;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .first-visit-intro__badge {
-  margin: 0;
+  margin: 0.15rem 0 0;
+  align-self: flex-start;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
   font-size: 0.78rem;
-  font-weight: 400;
+  font-weight: 700;
   letter-spacing: 0.02em;
-  color: var(--mj-brand, #1e5f4b);
+  color: #e8d5a3;
+  background: color-mix(in srgb, #e8d5a3 14%, transparent);
+  border: 1px solid color-mix(in srgb, #e8d5a3 28%, transparent);
 }
 
 .first-visit-intro__title {
   margin: 0;
-  font-size: clamp(1.35rem, 4.8vw, 1.65rem);
-  /* وزن 400 فقط — يتجنب تنزيل amiri-700 في مسار LCP */
-  font-weight: 400;
-  line-height: 1.35;
-  color: var(--mj-ink, #0e241e);
+  font-size: clamp(1.35rem, 5vw, 1.7rem);
+  font-weight: 800;
+  line-height: 1.3;
+  color: #fff;
 }
 
 .first-visit-intro__lead {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   line-height: 1.65;
-  color: color-mix(in srgb, var(--mj-ink, #0e241e) 78%, transparent);
+  color: #e4eee8;
 }
 
-.first-visit-intro__cards {
+.first-visit-intro__hero-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 0.45rem;
+}
+
+.first-visit-intro__btn {
+  min-height: 2.65rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: filter 140ms ease, transform 140ms ease;
+}
+
+.first-visit-intro__btn--primary {
+  background: #e8d5a3;
+  color: #123f2e;
+}
+
+.first-visit-intro__btn--ghost {
+  background: color-mix(in srgb, #fff 12%, transparent);
+  color: #fff;
+  border-color: color-mix(in srgb, #fff 28%, transparent);
+}
+
+.first-visit-intro__btn:active {
+  transform: scale(0.98);
+}
+
+.first-visit-intro__section {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.first-visit-intro__section-title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #1a2e26;
+}
+
+.first-visit-intro__quick,
+.first-visit-intro__start {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.65rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
 }
 
-.first-visit-intro__card {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 0.8rem 0.85rem;
-  border-radius: var(--mj-r-md, 14px);
-  background: var(--mj-surface, #f2f4f3);
-  border: 1px solid var(--mj-hairline, rgba(14, 36, 30, 0.1));
-  box-shadow: 0 1px 0 color-mix(in srgb, var(--mj-ink, #0e241e) 4%, transparent);
+.first-visit-intro__tile {
+  display: grid;
+  justify-items: start;
+  gap: 0.2rem;
+  width: 100%;
+  min-height: 5.1rem;
+  padding: 0.7rem 0.75rem;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--fvi-green) 12%, #d7e0db);
+  background: #fff;
+  box-shadow: 0 6px 16px -14px rgba(11, 32, 24, 0.35);
+  cursor: pointer;
+  text-align: start;
+  color: inherit;
 }
 
-.first-visit-intro__card-icon {
-  flex-shrink: 0;
-  width: 2.5rem;
-  height: 2.5rem;
+.first-visit-intro__tile-icon {
   display: grid;
   place-items: center;
-  border-radius: 0.75rem;
-  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 11%, var(--mj-surface, #fff));
-  color: var(--mj-brand, #1e5f4b);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.7rem;
+  margin-bottom: 0.15rem;
 }
 
-.first-visit-intro__card-body {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
+.first-visit-intro__tile--green .first-visit-intro__tile-icon {
+  background: color-mix(in srgb, var(--fvi-green) 12%, #fff);
+  color: var(--fvi-green);
+}
+.first-visit-intro__tile--mint .first-visit-intro__tile-icon {
+  background: color-mix(in srgb, var(--fvi-mint) 14%, #fff);
+  color: var(--fvi-mint);
+}
+.first-visit-intro__tile--gold .first-visit-intro__tile-icon {
+  background: color-mix(in srgb, var(--fvi-gold) 16%, #fff);
+  color: #8b6914;
+}
+.first-visit-intro__tile--teal .first-visit-intro__tile-icon {
+  background: color-mix(in srgb, var(--fvi-teal) 14%, #fff);
+  color: var(--fvi-teal);
 }
 
-.first-visit-intro__card-title {
-  margin: 0;
-  font-size: 0.95rem;
-  font-weight: 400;
+.first-visit-intro__tile-title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1.3;
+  color: #12201a;
+}
+
+.first-visit-intro__tile-desc {
+  font-size: 0.72rem;
   line-height: 1.35;
+  color: #4a5a53;
 }
 
-.first-visit-intro__card-desc {
+.first-visit-intro__resume {
+  list-style: none;
   margin: 0;
-  font-size: 0.82rem;
-  line-height: 1.55;
-  color: color-mix(in srgb, var(--mj-ink, #0e241e) 72%, transparent);
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
 }
 
-.first-visit-intro__actions {
+.first-visit-intro__resume-card {
   display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-  padding-top: 0.15rem;
-}
-
-.first-visit-intro__btn {
-  min-height: 2.75rem;
-  border-radius: 999px;
-  font-size: 0.95rem;
-  font-weight: 400;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border-radius: 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--fvi-green) 16%, #d7e0db);
+  background: color-mix(in srgb, var(--fvi-mint) 6%, #fff);
   cursor: pointer;
-  border: 1px solid transparent;
-  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+  text-align: start;
 }
 
-.first-visit-intro__btn--primary {
-  background: var(--mj-brand, #1e5f4b);
-  color: var(--mj-on-brand, #fff);
+.first-visit-intro__resume-label {
+  flex: 0 0 auto;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--fvi-green);
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--fvi-green) 12%, transparent);
 }
 
-.first-visit-intro__btn--primary:hover {
-  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 88%, #000);
+.first-visit-intro__resume-title {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #12201a;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.first-visit-intro__btn--ghost {
-  background: transparent;
-  color: var(--mj-brand, #1e5f4b);
-  border-color: color-mix(in srgb, var(--mj-brand, #1e5f4b) 35%, transparent);
+.first-visit-intro__suggest {
+  display: grid;
+  gap: 0.2rem;
+  width: 100%;
+  padding: 0.85rem 0.95rem;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--fvi-gold) 28%, #d7e0db);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--fvi-gold) 10%, #fff) 0%, #fff 60%);
+  cursor: pointer;
+  text-align: start;
+  box-shadow: 0 6px 16px -14px rgba(11, 32, 24, 0.3);
 }
 
-.first-visit-intro__btn--ghost:hover {
-  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 8%, transparent);
+.first-visit-intro__suggest-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #12201a;
 }
 
-@media (min-width: 480px) {
-  .first-visit-intro__inner {
-    gap: 1.45rem;
-  }
+.first-visit-intro__suggest-desc {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #4a5a53;
+}
 
-  .first-visit-intro__cards {
-    gap: 0.75rem;
-  }
+html[data-theme="dark"] .first-visit-intro,
+html.dark .first-visit-intro {
+  background:
+    radial-gradient(90% 55% at 80% -5%, color-mix(in srgb, var(--fvi-gold) 14%, transparent), transparent 50%),
+    radial-gradient(100% 70% at 10% 0%, color-mix(in srgb, var(--fvi-green) 28%, transparent), transparent 55%),
+    linear-gradient(180deg, #121a17 0%, #0f1613 100%);
+  color: #eef3f0;
+}
+
+html[data-theme="dark"] .first-visit-intro__section-title,
+html.dark .first-visit-intro__section-title {
+  color: #f2f5f3;
+}
+
+html[data-theme="dark"] .first-visit-intro__tile,
+html.dark .first-visit-intro__tile,
+html[data-theme="dark"] .first-visit-intro__resume-card,
+html.dark .first-visit-intro__resume-card,
+html[data-theme="dark"] .first-visit-intro__suggest,
+html.dark .first-visit-intro__suggest {
+  background: color-mix(in srgb, #1a221f 94%, #123f2e 6%);
+  border-color: color-mix(in srgb, #fff 10%, transparent);
+}
+
+html[data-theme="dark"] .first-visit-intro__tile-title,
+html.dark .first-visit-intro__tile-title,
+html[data-theme="dark"] .first-visit-intro__resume-title,
+html.dark .first-visit-intro__resume-title,
+html[data-theme="dark"] .first-visit-intro__suggest-title,
+html.dark .first-visit-intro__suggest-title {
+  color: #f2f5f3;
+}
+
+html[data-theme="dark"] .first-visit-intro__tile-desc,
+html.dark .first-visit-intro__tile-desc,
+html[data-theme="dark"] .first-visit-intro__suggest-desc,
+html.dark .first-visit-intro__suggest-desc {
+  color: color-mix(in srgb, #e8eeec 78%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

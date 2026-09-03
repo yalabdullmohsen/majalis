@@ -30,6 +30,10 @@ const LABEL_MAP: Record<string, string> = {
   "/quran/surah-stories":           "قصص السور",
   "/surah-stories":                 "قصص السور",
   "/ulum-quran":                    "علوم القرآن",
+  "/quran/people":                  "الذين ذُكروا في القرآن",
+  "/sections":                      "الأقسام",
+  "/more":                          "المزيد",
+  "/mushaf":                        "المصحف",
 
   // ─── الأذكار والعبادة ─────────────────────────────────────────────
   "/adhkar":                        "الأذكار",
@@ -238,8 +242,8 @@ function labelFor(href: string): string {
     if (LABEL_MAP[root]) return LABEL_MAP[root];
   }
 
-  // 4) آخر ملجأ — أعِد المسار كاملًا بدلًا من جزء إنجليزي غير مفهوم
-  return href;
+  // 4) آخر ملجأ — لا تُعرض مسارات تقنية للمستخدم
+  return "صفحة";
 }
 
 const SKIP_PATHS = new Set([
