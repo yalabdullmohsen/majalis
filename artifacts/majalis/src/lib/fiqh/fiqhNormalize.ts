@@ -13,6 +13,9 @@ import {
   lessonHref,
   lessonPath,
 } from "@/lib/fiqh-books";
+import { USUL_HUB_TOPICS } from "@/lib/fiqh/fiqh-usul-topics";
+import { NAWAZIL_TOPICS } from "@/lib/fiqh-council-nawazil";
+import { QAWAID_PUBLIC_COUNT } from "@/lib/fiqh/qawaid-public-count";
 import { normalizeArabic } from "@/shared/arabic-normalize";
 
 /** أبواب فقهية قانونية بالترتيب الشرعي المطلوب في الواجهة. */
@@ -669,6 +672,13 @@ function supportingTopicStatus(id: "nawazil" | "qawaid" | "usul"): FiqhContentSt
   return topic ? "complete" : "needs_completion";
 }
 
+/** أعداد محسوبة من صفحات داعمة موجودة (ليست مسائل كتب الفروع). */
+function supportingTopicCount(id: "nawazil" | "qawaid" | "usul"): number {
+  if (id === "usul") return USUL_HUB_TOPICS.length;
+  if (id === "qawaid") return QAWAID_PUBLIC_COUNT;
+  return NAWAZIL_TOPICS.length;
+}
+
 export function buildFiqhDoorSummaries(): FiqhDoorSummary[] {
   const byDoor = new Map<
     FiqhCanonicalDoor,
@@ -695,16 +705,24 @@ export function buildFiqhDoorSummaries(): FiqhDoorSummary[] {
     const meta = FIQH_DOOR_META[door];
     const bucket = byDoor.get(door)!;
     const isSupporting = door === "nawazil" || door === "qawaid" || door === "usul";
-    const status = isSupporting
-      ? supportingTopicStatus(door)
-      : aggregateDoorStatus(bucket.statuses);
+    if (isSupporting) {
+      const count = supportingTopicCount(door);
+      return {
+        ...meta,
+        issueCount: count,
+        chapterCount: count > 0 ? 1 : 0,
+        status: supportingTopicStatus(door),
+        hasVerifiedIssueCount: count > 0,
+      };
+    }
+    const status = aggregateDoorStatus(bucket.statuses);
     const hasVerifiedIssueCount = bucket.issues > 0;
 
     return {
       ...meta,
       issueCount: bucket.issues,
       chapterCount: bucket.chapters.size,
-      status: hasVerifiedIssueCount || isSupporting ? status : "needs_completion",
+      status: hasVerifiedIssueCount ? status : "needs_completion",
       hasVerifiedIssueCount,
     };
   }).sort((a, b) => a.sortOrder - b.sortOrder);

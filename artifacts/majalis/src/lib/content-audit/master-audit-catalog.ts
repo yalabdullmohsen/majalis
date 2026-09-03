@@ -201,6 +201,12 @@ export const CONTENT_AUDIT_GATES: ContentAuditGate[] = [
     path: "src/lib/__tests__/content-audit-b059-coverage-matrix-gate.test.ts",
     kind: "node-tsx",
   },
+  {
+    id: "b064-maqasid-arabic-fiqh",
+    dimension: "تدقيق",
+    path: "src/lib/__tests__/content-audit-b064-maqasid-arabic-fiqh-gate.test.ts",
+    kind: "node-tsx",
+  },
   // تصحيح — لغة وهوية ومصادر
   {
     id: "content-lang",

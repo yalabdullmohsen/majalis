@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-03",
-  "lastCompletedId": "b063",
-  "resumeFromId": "b064",
+  "lastCompletedId": "b064",
+  "resumeFromId": "b065",
   "items": [
     {
       "id": "b001",
@@ -766,6 +766,23 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b063-dalail-gate.test.ts"
       ],
       "finding": "أُضيف متن موجز لكل درس حسّي مع ضابط التخريج (الصحيحين/مسلم/القرآن) دون اختراع معجزات؛ فُصل «بركة دعائه لأصحابه» عن باب الاستجابة العام؛ بوابة b063."
+    },
+    {
+      "id": "b064",
+      "section": "maqasid_arabic_fiqh_hub",
+      "title": "إثراء متون المقاصد واللغة العربية + إظهار أبواب الفقه الداعمة بعدّادات حقيقية",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/maqasid-sharia-data.ts",
+        "artifacts/majalis/src/lib/arabic-language-data.ts",
+        "artifacts/majalis/src/lib/fiqh/fiqhNormalize.ts",
+        "artifacts/majalis/src/components/fiqh/FiqhCategoryCard.tsx",
+        "artifacts/majalis/src/lib/updates-seed.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b064-maqasid-arabic-fiqh-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز فريد لكل درس في المقاصد (50) واللغة العربية (88) من مناهج قياسية بلا اختراع أحكام؛ رُبطت أبواب الأصول/القواعد/النوازل بعدّادات من محتواها القائم بدل «سيضاف قريبًا»؛ نُظّفت بقايا روابط المكتبة في updates-seed."
     }
   ]
 }

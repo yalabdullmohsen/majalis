@@ -14,7 +14,7 @@ import {
   HandHelping,
   type LucideIcon,
 } from "lucide-react";
-import { formatMasailCount } from "@/lib/arabic-count";
+import { formatMasailCount, formatAbwabCount } from "@/lib/arabic-count";
 import {
   fiqhDoorGroup,
   type FiqhCanonicalDoor,
@@ -50,13 +50,21 @@ const DOOR_ICONS: Partial<Record<FiqhCanonicalDoor, LucideIcon>> = {
   qada: Scale,
   shahadat: Scale,
   iqrar: Scale,
+  usul: BookOpen,
+  qawaid: Scale,
+  nawazil: ScrollText,
 };
+
+const SUPPORTING_DOORS = new Set<FiqhCanonicalDoor>(["usul", "qawaid", "nawazil"]);
 
 export function FiqhCategoryCard({ door, className, featured = false }: Props) {
   const entryHref = door.bookHref ?? door.href;
   const group = fiqhDoorGroup(door.id);
   const Icon = DOOR_ICONS[door.id] ?? BookOpen;
   const hasContent = door.hasVerifiedIssueCount && door.issueCount > 0;
+  const metaLabel = SUPPORTING_DOORS.has(door.id)
+    ? formatAbwabCount(door.issueCount)
+    : formatMasailCount(door.issueCount);
 
   return (
     <Link
@@ -78,7 +86,7 @@ export function FiqhCategoryCard({ door, className, featured = false }: Props) {
       </div>
       <p className="fiqh-category-card__desc">{door.desc}</p>
       {hasContent ? (
-        <p className="fiqh-category-card__meta">{formatMasailCount(door.issueCount)}</p>
+        <p className="fiqh-category-card__meta">{metaLabel}</p>
       ) : (
         <p className="fiqh-category-card__soon">سيضاف محتوى هذا الباب قريبًا</p>
       )}
