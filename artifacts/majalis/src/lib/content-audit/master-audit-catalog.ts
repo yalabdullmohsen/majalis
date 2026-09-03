@@ -279,6 +279,12 @@ export const CONTENT_AUDIT_GATES: ContentAuditGate[] = [
     path: "src/lib/__tests__/content-audit-b076-durus-imaniyya-bodies-gate.test.ts",
     kind: "node-tsx",
   },
+  {
+    id: "b077-durus-mutanawwia-bodies",
+    dimension: "تدقيق",
+    path: "src/lib/__tests__/content-audit-b077-durus-mutanawwia-bodies-gate.test.ts",
+    kind: "node-tsx",
+  },
   // تصحيح — لغة وهوية ومصادر
   {
     id: "content-lang",

@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-03",
-  "lastCompletedId": "b076",
-  "resumeFromId": "b077",
+  "lastCompletedId": "b077",
+  "resumeFromId": "b078",
   "items": [
     {
       "id": "b001",
@@ -964,6 +964,19 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b076-durus-imaniyya-bodies-gate.test.ts"
       ],
       "finding": "أُضيف متن موجز فريد لكل درس إيماني (205) من الملخص المنقول بلا زيادة حديث أو حكم؛ بوابة b076."
+    },
+    {
+      "id": "b077",
+      "section": "durus_mutanawwia_bodies",
+      "title": "متون فريدة للدروس المتنوعة من الملخص المنقول",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/durus-mutanawwia-data.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b077-durus-mutanawwia-bodies-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز فريد لكل درس متنوع (372) من الملخص المنقول بلا زيادة حديث أو حكم؛ اكتملت متون دروس *-data.ts الفارغة؛ بوابة b077."
     }
   ]
 }
