@@ -66,7 +66,7 @@ const FILTER_CHIPS: { key: string; label: string }[] = [
   { key: "all",     label: "الكل" },
   { key: "surah",   label: "قرآن" },
   { key: "tafsir",  label: "تفسير" },
-  { key: "book",    label: "مكتبة" },
+  { key: "book",    label: "مراجع" },
   { key: "hadith",  label: "أحاديث" },
   { key: "qa",      label: "فتاوى" },
   { key: "fiqh",    label: "فقه" },

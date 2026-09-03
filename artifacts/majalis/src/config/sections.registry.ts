@@ -860,7 +860,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     surfaces: NAV,
     status: "live",
     keywords: ["تعلّم", "دروس", "عقيدة"],
-    aliases: ["مكتبة الدروس", "دروس شرعية", "أبواب العلم"],
+    aliases: ["فهرس الدروس", "دروس شرعية", "أبواب العلم"],
   },
   {
     id: "universities",

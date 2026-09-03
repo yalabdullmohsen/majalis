@@ -36,7 +36,7 @@ for (const rel of LEARN_PAGES) {
 }
 
 const hub = read("src/views/learn/LearnHubPage.tsx");
-assert.match(hub, /دروس عادية مفصّلة|مكتبة الدروس/);
+assert.match(hub, /دروس عادية مفصّلة|فهرس الدروس/);
 assert.match(hub, /الدروس المنشورة/);
 
 const cat = read("src/views/learn/LearnCategoryPage.tsx");

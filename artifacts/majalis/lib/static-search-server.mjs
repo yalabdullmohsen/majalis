@@ -113,7 +113,7 @@ const CURATED = {
     { id: "cur:adhkar-salah", type: "adhkar", title: "أذكار الصلاة", summary: "أذكار قبل وبعد الصلاة", href: "/adhkar/salah" },
   ],
   الحديث: [
-    { id: "cur:hadith", type: "hadith", title: "الأحاديث النبوية", summary: "مكتبة الأحاديث مع التخريج", href: "/hadith" },
+    { id: "cur:hadith", type: "hadith", title: "الأحاديث النبوية", summary: "فهرس الأحاديث مع التخريج", href: "/hadith" },
     { id: "cur:hadith-sahih", type: "hadith", title: "الأحاديث الصحيحة", summary: "أحاديث صحيحة للعمل", href: "/hadith/sahih" },
     { id: "cur:arbaeen", type: "hadith", title: "الأربعون النووية", summary: "أربعون حديثًا نبويًا", href: "/arbaeen-nawawi" },
   ],
@@ -133,7 +133,7 @@ const CURATED = {
   ],
   البخاري: [
     { id: "cur:bukhari", type: "hadith", title: "صحيح البخاري", summary: "أحاديث من صحيح البخاري", href: "/hadith/books/bukhari" },
-    { id: "cur:hadith", type: "hadith", title: "الأحاديث", summary: "مكتبة الحديث", href: "/hadith" },
+    { id: "cur:hadith", type: "hadith", title: "الأحاديث", summary: "فهرس الحديث", href: "/hadith" },
   ],
   "اذكار الصباح": [
     { id: "cur:morning", type: "adhkar", title: "أذكار الصباح", summary: "أذكار ما بعد الفجر", href: "/adhkar/morning" },

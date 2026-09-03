@@ -402,7 +402,7 @@ export default function HadithBooksPage() {
           "@context": "https://schema.org",
           "@type": "DataCatalog",
           name: "الكتب الحديثية الكاملة",
-          description: "مكتبة الأحاديث النبوية الكاملة من المصادر الموثوقة",
+          description: "فهرس الأحاديث النبوية الكاملة من المصادر الموثوقة",
           url: "https://www.ssunnah.com/hadith/books",
           dataset: HADITH_COLLECTIONS.map((c) => ({
             "@type": "Dataset",

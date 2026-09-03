@@ -63,7 +63,7 @@ export default function ResearchDetailPage() {
         <div className="sr-empty">
           <p><strong>البحث غير متاح</strong></p>
           <p>قد يكون غير موجود أو غير منشور.</p>
-          <Link href="/academic-research" className="sr-btn sr-btn--outline">العودة للمكتبة</Link>
+          <Link href="/academic-research" className="sr-btn sr-btn--outline">العودة إلى الأبحاث</Link>
         </div>
       </div>
     );

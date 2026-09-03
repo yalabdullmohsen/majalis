@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-03",
-  "lastCompletedId": "b070",
-  "resumeFromId": "b071",
+  "lastCompletedId": "b071",
+  "resumeFromId": "b072",
   "items": [
     {
       "id": "b001",
@@ -883,6 +883,22 @@
         "docs/curriculum-review-queue.md"
       ],
       "finding": "نُشر منهج الفقه (36) في الموسوعة؛ أُضيفت العقبة الأولى وتبوك؛ أُزيل الجزم باسم الذبيح من المسابقة؛ أُغلقت طوابير الفقه/السيرة/الابتلاءات/الأشخاص/المنهج بعد تدقيق الوكيل. ما يحتاج مصدرًا (تراخيص حديث/عدّ صفحي) بقي خارج العرض بقرار مصدر لا بانتظار بشري."
+    },
+    {
+      "id": "b071",
+      "section": "sunnah_iman_bodies",
+      "title": "متون فريدة لدروس السنة والإيمان وتنظيف بقايا المكتبة العلنية",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/sunnah-studies-data.ts",
+        "artifacts/majalis/src/lib/iman-topics-data.ts",
+        "artifacts/majalis/src/views/learn/LearnHubPage.tsx",
+        "artifacts/majalis/src/components/GlobalSearchModal.tsx",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b071-sunnah-iman-bodies-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز فريد لكل درس في السنة (51) والإيمان (78) من الملخص المنقول بلا زيادة حديث أو حكم؛ حُوّلت صياغة «مكتبة» العلنية إلى فهرس/مراجع في التعلّم والبحث والأدعية والأبحاث وSEO؛ بوابة b071."
     }
   ]
 }
