@@ -332,12 +332,12 @@ html.dark .adhkar-sheet-row dt {
 html[data-theme="dark"] .adhkar-grade--sahih,
 html.dark .adhkar-grade--sahih {
   background: var(--mj-brand-soft, var(--brand-deep, var(--mj-brand-deep)));
-  color: var(--mj-brand, var(--mj-brand));
+  color: var(--on-brand, #ffffff);
 }
 html[data-theme="dark"] .adhkar-grade--hasan,
 html.dark .adhkar-grade--hasan {
   background: var(--mj-brand-soft, var(--brand-deep, var(--mj-brand-deep)));
-  color: var(--mj-brand, var(--mj-brand));
+  color: var(--on-brand, #ffffff);
 }
 html[data-theme="dark"] .adhkar-grade--other,
 html.dark .adhkar-grade--other {

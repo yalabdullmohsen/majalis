@@ -100,6 +100,7 @@
 
 .bdm-card__btn--start {
   background: var(--brand-deep, var(--mj-brand-deep, #1a4d3e));
+  color: #fff;
 }
 
 .bdm-card__btn--pause {
@@ -108,6 +109,7 @@
 
 .bdm-card__btn--done {
   background: var(--brand-deep, var(--mj-brand-deep));
+  color: #fff;
 }
 
 .bdm-card__btn--delete {

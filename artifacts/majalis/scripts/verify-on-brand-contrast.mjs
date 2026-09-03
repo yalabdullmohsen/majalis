@@ -470,7 +470,7 @@ if (JSON_OUT) {
    ويحتاج مراجعة فردية. قفله يمنع أي سطح أخضر *جديد* بلا لون نص، ويُنقَص
    الرقم تدريجيًا. لا سقف صامت: الرقم مطبوع دائمًا.                     */
 const HARD_FAIL_KINDS = new Set(["dark-on-brand", "opacity-fade-on-brand"]);
-const SURFACE_WITHOUT_COLOR_BASELINE = 62;
+const SURFACE_WITHOUT_COLOR_BASELINE = 57;
 
 const hardFails = violations.filter((v) => HARD_FAIL_KINDS.has(v.kind));
 const advisory = violations.filter((v) => !HARD_FAIL_KINDS.has(v.kind));

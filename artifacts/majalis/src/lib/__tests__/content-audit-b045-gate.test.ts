@@ -21,15 +21,12 @@ for (const d of doubts) {
   assert.ok((d.evidences || []).length >= 1, `${d.id}: دليل`);
 }
 
-const prayer = (faq.items || []).find((i) => /كم صلاة/.test(String(i.id) + (i as { title?: string }).title || ""));
-// title may be on item
 const prayerByTitle = (faq.items || []).find((i) => (i as { title?: string }).title === "كم صلاة في اليوم؟");
 assert.ok(prayerByTitle, "FAQ الصلوات");
 assert.match(prayerByTitle!.body, /بيان أوضح|خمس/, "إجابة الصلوات موسّعة");
 
 const hs = read("src/pages/hadith/ui/HadithScienceView.tsx");
-const ids = [...hs.matchAll(/id:\s*"([^"]+)"/g)].map((m) => m[1]);
-const termBlocks = hs.split(/\n  \{\n    id:/).slice(1);
+const termBlocks = hs.split(/\n {2}\{\n {4}id:/).slice(1);
 assert.ok(termBlocks.length >= 90, "مصطلحات الحديث ≥90");
 for (const b of termBlocks) {
   const id = (b.match(/^\s*"([^"]+)"/) || [])[1];

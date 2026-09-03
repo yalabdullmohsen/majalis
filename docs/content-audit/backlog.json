@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-03",
-  "lastCompletedId": "b062",
-  "resumeFromId": "b063",
+  "lastCompletedId": "b063",
+  "resumeFromId": "b064",
   "items": [
     {
       "id": "b001",
@@ -751,6 +751,19 @@
         "artifacts/majalis/package.json"
       ],
       "finding": "أُكملت تعريفات arafat/jannah/ahqaf إلى ≥100 حرفًا؛ حُدّثت بوابة فراغ البحث لصياغة «لم نجد»؛ رُبط اختبار site-interlink بمسارات /scholars؛ استُعيد سكربت test:quiz-game-integrity لإصدار المحتوى."
+    },
+    {
+      "id": "b063",
+      "section": "dalail_nubuwwah",
+      "title": "إثراء باب الدلائل الحسّية بمتون موجزة وتمييز تكرار استجابة الدعاء",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/dalail-nubuwwah-data.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b063-dalail-gate.test.ts"
+      ],
+      "finding": "أُضيف متن موجز لكل درس حسّي مع ضابط التخريج (الصحيحين/مسلم/القرآن) دون اختراع معجزات؛ فُصل «بركة دعائه لأصحابه» عن باب الاستجابة العام؛ بوابة b063."
     }
   ]
 }

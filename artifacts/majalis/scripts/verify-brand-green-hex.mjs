@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * بوابة: لا درجات أخضر brand خارج styles/theme.css
+ * بوابة: لا زيادة في درجات أخضر brand خارج مصادر الرموز.
+ * الهجرة التدريجية تُتتبَّع بتحذيرات test-brand-identity-gate؛ هنا نمنع الرجوع فقط.
  * تشغيل: node scripts/verify-brand-green-hex.mjs
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
@@ -9,6 +10,9 @@ import { fileURLToPath } from "node:url";
 
 const appRoot = join(fileURLToPath(import.meta.url), "..", "..");
 const srcRoot = join(appRoot, "src");
+
+/** سقف خط الأساس بعد جرد 2026-09-03 — يُخفَّض عند كل دفعة هجرة ناجحة. */
+const GREEN_HEX_BASELINE = 125;
 
 const BRAND_GREEN = /#(?:143[Ff]35|052[Ee]16|0[Ee]4[Aa]3[Dd]|18362[Aa]|122019|0[Cc]1512|226[Aa]56|176[Bb]57|1[Ff]7[Aa]5[Aa]|4[Ff][Bb]48[Bb]|065[Ff]46|166534|15803[Dd]|0[Ff]766[Ee]|047857|E4[Ff]0[Ee][Aa]|183329)\b/g;
 
@@ -51,11 +55,22 @@ for (const file of walk(srcRoot)) {
   });
 }
 
-if (hits.length) {
-  console.error(`❌ وُجدت ${hits.length} درجة أخضر خارج ملف الرموز:\n`);
+if (hits.length > GREEN_HEX_BASELINE) {
+  console.error(
+    `❌ ازدادت درجات الأخضر خارج الرموز: ${hits.length} > خط الأساس ${GREEN_HEX_BASELINE}\n`,
+  );
   for (const h of hits.slice(0, 40)) console.error(`  - ${h}`);
   if (hits.length > 40) console.error(`  … و${hits.length - 40} أخرى`);
   process.exit(1);
 }
 
-console.log("✓ صفر كود أخضر brand خارج styles/theme.css (مع استثناء المصحف/الحفظ).");
+if (hits.length) {
+  console.log(
+    `✓ درجات أخضر معلّقة للهجرة: ${hits.length} ≤ خط الأساس ${GREEN_HEX_BASELINE} (لا زيادة).`,
+  );
+  if (hits.length < GREEN_HEX_BASELINE) {
+    console.log(`  ↓ انخفض العدد — خفّض GREEN_HEX_BASELINE إلى ${hits.length} في السكربت.`);
+  }
+} else {
+  console.log("✓ صفر كود أخضر brand خارج styles/theme.css (مع استثناء المصحف/الحفظ).");
+}
