@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const topicPage = readFileSync(resolve(root, "src/components/topic/TopicPage.tsx"), "utf8");
+const sectionHero = readFileSync(resolve(root, "src/components/topic/SectionHero.tsx"), "utf8");
 const janna = readFileSync(resolve(root, "src/views/JannaNaarPage.tsx"), "utf8");
 const malaika = readFileSync(resolve(root, "src/views/MalaikaPage.tsx"), "utf8");
 const css = readFileSync(resolve(root, "src/styles/components/topic-page.css"), "utf8");
@@ -19,7 +20,13 @@ assert.ok(topicPage.includes('role="tab"'), "TopicPage: tab");
 assert.ok(topicPage.includes('role="tabpanel"'), "TopicPage: tabpanel");
 assert.ok(topicPage.includes("aria-selected={selected}"), "TopicPage: aria-selected على التبويب");
 assert.ok(topicPage.includes("aria-controls={panelId}"), "TopicPage: aria-controls");
-assert.ok(/className="topic-page__hero on-dark(?:\s+safe-hero)?"/.test(topicPage), "TopicPage: hero on-dark");
+assert.ok(topicPage.includes("<SectionHero"), "TopicPage: يصيّر SectionHero");
+assert.ok(
+  /className=["'`]topic-page__hero on-dark(?:\s+safe-hero)?["'`]/.test(sectionHero)
+    || /className=\{`topic-page__hero on-dark/.test(sectionHero)
+    || /className="topic-page__hero on-dark(?:\s+safe-hero)?"/.test(sectionHero),
+  "TopicPage: hero on-dark",
+);
 assert.ok(topicPage.includes("syncTabParam"), "TopicPage: مزامنة ?tab=");
 
 assert.ok(janna.includes('from "@/components/topic/TopicPage"'), "JannaNaar: يستورد TopicPage");
