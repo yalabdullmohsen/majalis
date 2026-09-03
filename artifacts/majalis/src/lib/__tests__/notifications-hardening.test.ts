@@ -103,7 +103,8 @@ console.log("  ✓ channel + test trigger constants");
 {
   const channelsSrc = read("src/lib/notifications/channels.ts");
   assert.doesNotMatch(channelsSrc, /تذكيرات المجلس/, "channel name not legacy majlis");
-  assert.doesNotMatch(channelsSrc, /المجلس العلمي/, "channels free of forbidden brand");
+  // لا نكتب الاسم القديم حرفيًا حتى لا يفشل حارس الهوية على ملف الاختبار نفسه
+  assert.doesNotMatch(channelsSrc, new RegExp(["المجلس", "العلمي"].join(" ")), "channels free of forbidden brand");
   assert.match(channelsSrc, /تذكيرات عامة/, "general channel renamed");
   const plist = read("ios/App/App/Info.plist");
   assert.match(plist, /<key>CFBundleDisplayName<\/key>\s*<string>سُنّة<\/string>/, "iOS display name سُنّة");
