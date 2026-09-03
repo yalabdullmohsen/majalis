@@ -31,6 +31,7 @@ import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isAuthStandalonePath, isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
+import { isMiniPlayerVisible, subscribeMiniPlayer } from "@/lib/quran-mini-player";
 import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "@/components/home/home-start-here-data";
 /** شريط/كروم ثقيل (lucide + nav-map) — كسول حتى لا يدخل مسار أول زيارة / LCP */
 const SafeAreaDebugOverlay = lazyWithRetry(
@@ -778,11 +779,7 @@ function AppShellInner() {
           <BottomNavBar isHidden={shouldHideChrome} />
         </Suspense>
       )}
-      {!onAuthStandalone && (
-        <Suspense fallback={null}>
-          <QuranMiniPlayerBar />
-        </Suspense>
-      )}
+      {!onAuthStandalone ? <DeferredQuranMiniPlayer /> : null}
       <VisualViewportKeyboardBridge />
       <Suspense fallback={null}>
         <SafeAreaDebugOverlay />
@@ -1034,6 +1031,20 @@ function DeferredAssistantWidget() {
     </Suspense>
   );
 }
+
+
+/** شريط التلاوة المصغّر — يُحمّل فقط عند تشغيل فعلي (لا AudioEngine في الإقلاع). */
+function DeferredQuranMiniPlayer() {
+  const [active, setActive] = useState(() => isMiniPlayerVisible());
+  useEffect(() => subscribeMiniPlayer((state) => setActive(state.visible)), []);
+  if (!active) return null;
+  return (
+    <Suspense fallback={null}>
+      <QuranMiniPlayerBar />
+    </Suspense>
+  );
+}
+
 
 function App() {
   return (
