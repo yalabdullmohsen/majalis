@@ -168,8 +168,11 @@ function scheduleForPrayer(
 
   const adhanTargetEpoch = Date.now() + adhanDelay;
   const deliveryMode = getEffectivePlaybackMode(prefs, key);
+  // طلب المستخدم: حذف تشغيل الأذان الكامل (full) والاكتفاء بإشعار وقت الصلاة.
+  // عمليًا نعامل mode=full كـsilent داخل الـscheduler فقط (لا نغيّر تفضيلات المستخدم).
+  const effectiveDeliveryMode = deliveryMode === "full" ? "silent" : deliveryMode;
 
-  if (isAdhanAndroidAlarmAvailable() && deliveryMode === "full") {
+  if (isAdhanAndroidAlarmAvailable() && effectiveDeliveryMode === "full") {
     void cancelAndroidFullAdhan(key);
     const muezzin = getMuezzin(getEffectiveMuezzinId(prefs, key));
     const isFajr = key === "fajr";
@@ -184,7 +187,7 @@ function scheduleForPrayer(
     }
   }
 
-  if (iosFullAdhanActive() && deliveryMode === "full") {
+  if (iosFullAdhanActive() && effectiveDeliveryMode === "full") {
     const muezzin = getMuezzin(getEffectiveMuezzinId(prefs, key));
     const isFajr = key === "fajr";
     if (!isFajr || hasFajrAdhan(muezzin)) {
@@ -211,11 +214,12 @@ function scheduleForPrayer(
     const fresh = loadAdhanPrefs();
     if (!fresh.globalEnabled || !fresh.prayers[key].enabled) return;
     const mode = getEffectivePlaybackMode(fresh, key);
+    const effectiveMode = mode === "full" ? "silent" : mode;
     const muezzinId = getEffectiveMuezzinId(fresh, key);
     const muezzin = getMuezzin(muezzinId);
     const isFajr = key === "fajr";
 
-    if (mode === "full" && isAdhanAndroidAlarmAvailable()) {
+    if (effectiveMode === "full" && isAdhanAndroidAlarmAvailable()) {
       if (fresh.vibrateEnabled) void hapticTap("medium");
       dispatchAdhanEvent({
         type: "adhan",
@@ -231,7 +235,7 @@ function scheduleForPrayer(
      * iOS كامل + التطبيق في الواجهة: شغّل الأذان الكامل داخل التطبيق بلا انقطاع،
      * وألغِ بقية مقاطع الإشعار. إن كانت الشاشة مقفلة فالمقاطع المتتابعة تتولى الصوت.
      */
-    if (mode === "full" && iosFullAdhanActive()) {
+    if (effectiveMode === "full" && iosFullAdhanActive()) {
       const inForeground =
         typeof document !== "undefined" && document.visibilityState === "visible";
       if (inForeground) {
@@ -250,8 +254,8 @@ function scheduleForPrayer(
       return;
     }
 
-    const audio = playAdhan(muezzin, isFajr, mode, fresh.volume ?? 1);
-    if (!audio && isFajr && mode !== "silent") return;
+    const audio = playAdhan(muezzin, isFajr, effectiveMode, fresh.volume ?? 1);
+    if (!audio && isFajr && effectiveMode !== "silent") return;
     if (fresh.vibrateEnabled) void hapticTap("medium");
     dispatchAdhanEvent({
       type: "adhan",

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { X, Volume2, Clock, Landmark } from "lucide-react";
 import { ADHAN_EVENT_NAME, type AdhanEvent } from "@/lib/adhan-events";
-import { stopAdhan } from "@/lib/adhan-playback";
+import { isAdhanPlaying, stopAdhan } from "@/lib/adhan-playback";
 import {
   buildScheduledPrayerNotificationCopy,
 } from "@/lib/prayer-notification-copy";
@@ -50,7 +50,7 @@ export function AdhanNotificationBar() {
 function AdhanToast({ event, onDismiss }: { event: ActiveEvent; onDismiss: () => void }) {
   const isAdhan = event.type === "adhan";
   const isIqamah = event.type === "iqamah";
-  const [playing, setPlaying] = useState(isAdhan);
+  const [playing, setPlaying] = useState(isAdhan && isAdhanPlaying());
   const copy = isAdhan
     ? buildScheduledPrayerNotificationCopy({
         kind: "enter",
