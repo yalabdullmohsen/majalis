@@ -215,9 +215,9 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
     count: 1,
     narrator: "سعد بن أبي وقاص",
     source: "رواه الترمذي",
-    grade: "حسن",
-    reference: "حصن المسلم، دعاء يونس",
-    keywords: ["كرب", "هم"],
+    grade: "صحيح",
+    reference: "حصن المسلم، دعاء يونس — سنن الترمذي",
+    keywords: ["كرب", "هم", "يونس", "تسبيح"],
   },
   {
     id: "adh-22",
@@ -681,9 +681,9 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
     text: "اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ",
     count: 1,
     narrator: "معاذ بن جبل",
-    source: "رواه أبو داود",
+    source: "رواه أبو داود والنسائي",
     grade: "صحيح",
-    reference: "حصن المسلم، بعد الصلاة",
+    reference: "حصن المسلم، بعد الصلاة — سنن أبي داود",
     keywords: ["بعد الصلاة", "ذكر", "شكر", "عبادة"],
   },
   {
@@ -3662,17 +3662,7 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
     reference: "مسند أحمد",
     keywords: ["صباح","فطرة","إخلاص"],
   },
-  {
-    id: "adh-361",
-    categoryId: "adh-evening",
-    text: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ",
-    count: 1,
-    narrator: "عبد الله بن مسعود",
-    source: "رواه ابن السني وغيره",
-    grade: "حسن",
-    reference: "عمل اليوم والليلة",
-    keywords: ["مساء","توحيد"],
-  },
+
   {
     id: "adh-362",
     categoryId: "adh-salawat",
@@ -3684,28 +3674,8 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
     reference: "الصحيحان — الصلاة",
     keywords: ["صلاة على النبي","إبراهيمية"],
   },
-  {
-    id: "adh-363",
-    categoryId: "adh-distress",
-    text: "لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ",
-    count: 1,
-    narrator: "سعد بن أبي وقاص",
-    source: "رواه الترمذي",
-    grade: "صحيح",
-    reference: "سنن الترمذي — الدعوات",
-    keywords: ["يونس","كرب","تسبيح"],
-  },
-  {
-    id: "adh-364",
-    categoryId: "adh-after-salah",
-    text: "اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ",
-    count: 1,
-    narrator: "معاذ بن جبل",
-    source: "رواه أبو داود والنسائي",
-    grade: "صحيح",
-    reference: "سنن أبي داود — الصلاة",
-    keywords: ["بعد الصلاة","ذكر","شكر"],
-  },
+
+
   {
     id: "adh-365",
     categoryId: "adh-travel",
@@ -3717,17 +3687,7 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
     reference: "سنن أبي داود — الجهاد",
     keywords: ["سفر","ركوب","تسخير"],
   },
-  {
-    id: "adh-366",
-    categoryId: "adh-sleep",
-    text: "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
-    count: 1,
-    narrator: "حذيفة",
-    source: "رواه البخاري",
-    grade: "صحيح",
-    reference: "صحيح البخاري — الدعوات",
-    keywords: ["نوم","تسمية"],
-  },
+
   {
     id: "adh-367",
     categoryId: "adh-misc",

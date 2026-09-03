@@ -326,9 +326,9 @@ export const DAILY_TICKER_DHIKR: DailyTickerDhikr[] =  [
     "source": "رواه أحمد"
   },
   {
-    "id": "adh-361",
+    "id": "adh-4",
     "text": "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ",
     "categoryId": "adh-evening",
-    "source": "رواه ابن السني وغيره"
+    "source": "رواه مسلم"
   }
 ];

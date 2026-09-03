@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
-  "generatedAt": "2026-09-02",
-  "lastCompletedId": "b059",
-  "resumeFromId": "b060",
+  "generatedAt": "2026-09-03",
+  "lastCompletedId": "b060",
+  "resumeFromId": "b061",
   "items": [
     {
       "id": "b001",
@@ -709,6 +709,20 @@
         "docs/content-audit/technical-handoff.md"
       ],
       "finding": "وُسّع inventory لـ54 قسمًا حيًا (غير الحساب) مع حالة تدقيق b044–b058 لـ25 قسمًا؛ بوابة تتحقق من اكتمال التغطية مقابل SECTIONS. أُغلق b010. حُدّث handoff لإغلاق ربط اللغة/المقاصد/دلائل."
+    },
+    {
+      "id": "b060",
+      "section": "adhkar",
+      "title": "إزالة تكرار أذكار بنفس التصنيف (361/363/364/366) وتوحيد المصدر الأقوى",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/adhkar-seed.ts",
+        "artifacts/majalis/src/lib/daily-ticker-dhikr.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b060-adhkar-dupes-gate.test.ts"
+      ],
+      "finding": "audit-data-quality أظهر 4 تكرارات نصية داخل نفس التصنيف. أُبقي adh-4/21/65/6 وأُزيلت النسخ الزائدة؛ رُفع حكم دعاء يونس إلى صحيح ووُسّع مصدر adh-65 من النسخة الأغنى؛ التيكر يشير إلى adh-4 (مسلم) بدل 361."
     }
   ]
 }
