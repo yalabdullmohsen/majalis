@@ -184,7 +184,7 @@ export const SECTION_MERGE_REDIRECTS: ReadonlyArray<{ from: string; to: string; 
   { from: "/about-us", to: "/about", note: "من نحن → عن سُنّة" },
   { from: "/aqidah", to: "/tawhid", note: "عقيدة قديم → التوحيد/العقيدة" },
   { from: "/prayer", to: "/prayer-times", note: "صلاة مختصر → مواقيت الصلاة" },
-  { from: "/more", to: "/sections", note: "المزيد → الأقسام" },
+  { from: "/more", to: "/#explore", note: "المزيد (ملغاة) → الرئيسية /#explore" },
 ];
 
 const NAV: Surface[] = ["moreHub", "home", "search"];
@@ -235,7 +235,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "quran",
     label: "مركز القرآن الكريم",
-    navLabel: "مركز القرآن",
+    navLabel: "القرآن",
     subtitle: "المصحف والتلاوة والتفسير",
     route: "/quran-hub",
     icon: BookOpen,
@@ -340,15 +340,15 @@ const SECTION_SEEDS: SectionSeed[] = [
   },
   {
     id: "quran-recitation",
-    label: "التلاوة",
-    subtitle: "تلاوة بالذكاء مع مطابقة لحظية",
+    label: "تسميع بالذكاء الاصطناعي",
+    subtitle: "سجّل تلاوتك وقيّمها فورًا بالذكاء الاصطناعي",
     route: "/quran/recitation-test-ai",
     icon: Mic,
     group: "sciences",
     order: 5,
-    surfaces: ["search", "drawer"],
+    surfaces: ["search", "drawer", "quranHub"],
     status: "live",
-    keywords: ["تلاوة", "ترتيل", "حفظ", "ميكروفون"],
+    keywords: ["تلاوة", "تسميع", "ترتيل", "حفظ", "ميكروفون", "ذكاء اصطناعي"],
     hub: "quran",
   },
   {
@@ -643,7 +643,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "fiqh",
     label: "الفقه والأحكام",
-    navLabel: "فقه",
+    navLabel: "الفقه",
     subtitle: "أبواب الفقه والفتاوى",
     route: "/fiqh",
     icon: Scale,
@@ -803,16 +803,16 @@ const SECTION_SEEDS: SectionSeed[] = [
   },
   {
     id: "knowledge-doors",
-    label: "بوابة التعلّم",
-    subtitle: "فهرس مسارات وأبواب التعلّم",
+    label: "دروس التعلّم",
+    subtitle: "دروس شرعية مفصّلة في العقيدة وغيرها",
     route: "/learn",
     icon: ListTree,
     group: "library",
     order: 50,
     surfaces: NAV,
     status: "live",
-    keywords: ["تعلّم", "أبواب", "مسارات"],
-    aliases: ["أبواب العلم", "خريطة العلم"],
+    keywords: ["تعلّم", "دروس", "عقيدة"],
+    aliases: ["مكتبة الدروس", "دروس شرعية", "أبواب العلم"],
   },
   {
     id: "universities",

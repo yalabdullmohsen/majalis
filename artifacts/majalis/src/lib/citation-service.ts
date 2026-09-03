@@ -1,4 +1,4 @@
-// خدمة الاقتباسات — مجالس
+// خدمة الاقتباسات — سُنّة
 
 const BASE = "/api/citations";
 const USER_BASE = "/api/user/citations";
@@ -109,7 +109,7 @@ export const STYLE_LABEL: Record<CitationStyle, string> = {
 };
 
 export const MAX_QUOTE_LENGTH = 500;
-export const PLATFORM_URL = "https://majlisilm.com";
+export const PLATFORM_URL = "https://www.ssunnah.com";
 
 // ── مساعدات ──────────────────────────────────────────────────────────────────
 

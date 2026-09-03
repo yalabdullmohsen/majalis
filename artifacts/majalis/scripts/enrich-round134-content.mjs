@@ -59,7 +59,7 @@ const QUIZ_ITEMS = all.map((topic, index) => ({
   question: `ما المقصود بـ${topic.title} عند دراسة ${topic.section}؟`,
   answer: `${topic.meaning}، مع قراءة السيرة للتأسّي والعمل لا للتفاخر بالمعلومة، وترك تنزيل الأحكام الخاصة بلا علم. وهذا تلخيص منهجي منضبط للمتعلم.`,
   explanation:
-    "منهج مجالس العلم: تقديم الثابت، وذكر المشهور بتحفّظ، وتجنّب الإسرائيليات والجزم بما لم يثبت.",
+    "منهج سُنّة: تقديم الثابت، وذكر المشهور بتحفّظ، وتجنّب الإسرائيليات والجزم بما لم يثبت.",
   reference: topic.reference,
 }));
 
@@ -81,7 +81,7 @@ const FAWAID_ITEMS = all.slice(0, 25).map((topic, index) => ({
   text: `من فقه ${topic.title} في ${topic.section} أن ${topic.meaning}، وأن محبة النبي ﷺ تظهر في الاتباع والتثبّت وترك الاحتفال بما لم يُشرع. وهذه فائدة تعليمية للتذكير والمنهج.`,
   category: index % 5 === 0 ? "السيرة" : topic.fawaidCategory,
   source: topic.reference,
-  author_name: index % 2 === 0 ? "أهل العلم" : "محررو مجالس العلم",
+  author_name: index % 2 === 0 ? "أهل العلم" : "محررو سُنّة",
 }));
 
 const STORY_ITEMS = [

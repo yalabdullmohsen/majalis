@@ -85,10 +85,10 @@ BEGIN
 
   INSERT INTO course_books (id, learning_item_id, book_title, book_author, material_role, scope_description, inclusion_reason, source_name)
   VALUES
-    (gen_random_uuid(), v_i1, 'الهداية شرح بداية المبتدي', 'برهان الدين المرغيناني', 'أساسية إلزامية', 'كتاب الطهارة', 'ذروة الفقه الحنفي والمرجع الأساسي في الدراسات اللاحقة لهذا المذهب. موجود في مكتبة المنصة (/library/book-hidayah-marghinani)', 'مكتبة المجلس العلمي'),
-    (gen_random_uuid(), v_i2, 'الهداية شرح بداية المبتدي', 'برهان الدين المرغيناني', 'أساسية إلزامية', 'كتاب الصلاة', 'موجود في مكتبة المنصة (/library/book-hidayah-marghinani)', 'مكتبة المجلس العلمي'),
-    (gen_random_uuid(), v_i3, 'الهداية شرح بداية المبتدي', 'برهان الدين المرغيناني', 'أساسية إلزامية', 'كتاب الزكاة', 'موجود في مكتبة المنصة (/library/book-hidayah-marghinani)', 'مكتبة المجلس العلمي'),
-    (gen_random_uuid(), v_i4, 'الهداية شرح بداية المبتدي', 'برهان الدين المرغيناني', 'أساسية إلزامية', 'كتاب البيوع', 'موجود في مكتبة المنصة (/library/book-hidayah-marghinani)', 'مكتبة المجلس العلمي');
+    (gen_random_uuid(), v_i1, 'الهداية شرح بداية المبتدي', 'برهان الدين المرغيناني', 'أساسية إلزامية', 'كتاب الطهارة', 'ذروة الفقه الحنفي والمرجع الأساسي في الدراسات اللاحقة لهذا المذهب. موجود في مكتبة المنصة (/library/book-hidayah-marghinani)', 'مكتبة سُنّة'),
+    (gen_random_uuid(), v_i2, 'الهداية شرح بداية المبتدي', 'برهان الدين المرغيناني', 'أساسية إلزامية', 'كتاب الصلاة', 'موجود في مكتبة المنصة (/library/book-hidayah-marghinani)', 'مكتبة سُنّة'),
+    (gen_random_uuid(), v_i3, 'الهداية شرح بداية المبتدي', 'برهان الدين المرغيناني', 'أساسية إلزامية', 'كتاب الزكاة', 'موجود في مكتبة المنصة (/library/book-hidayah-marghinani)', 'مكتبة سُنّة'),
+    (gen_random_uuid(), v_i4, 'الهداية شرح بداية المبتدي', 'برهان الدين المرغيناني', 'أساسية إلزامية', 'كتاب البيوع', 'موجود في مكتبة المنصة (/library/book-hidayah-marghinani)', 'مكتبة سُنّة');
 
   UPDATE learning_paths SET total_sessions = total_sessions + 4, updated_at = now() WHERE id = v_path_id;
 

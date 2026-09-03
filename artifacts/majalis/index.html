@@ -134,7 +134,7 @@
     <!-- فحص نسخة مبكر: يجهّز المسح بهدوء — بلا reload أثناء أول إطار -->
     <script id="mj-version-boot">
       (function () {
-        var FLAG = "majlisilm-refreshing-version";
+        var FLAG = "ssunnah-refreshing-version";
         if (navigator.webdriver) return;
         if (location.hostname === "127.0.0.1" || location.hostname === "localhost") return;
         try {
@@ -186,7 +186,7 @@
                   keys.map(function (k) {
                     if (
                       /intro|onboard|welcome|splash|boot-guide|first-?launch|first-?run/i.test(k) ||
-                      (k.indexOf("majlisilm-v") === 0 && k.indexOf(live) < 0)
+                      (k.indexOf("ssunnah-v") === 0 && k.indexOf(live) < 0)
                     ) {
                       return caches.delete(k);
                     }
@@ -270,8 +270,8 @@
         --ticker-row-h: 0px;
         --header-h: calc(var(--header-chrome) + var(--inset-top, 0px) + var(--ad-banner-height, 0px));
         --app-top-chrome-h: calc(var(--header-h) + var(--search-height) + var(--ticker-row-h));
-        --bottom-nav-h: 84px;
-        --bottom-nav-height: 84px;
+        --bottom-nav-h: 64px;
+        --bottom-nav-height: 64px;
         --nav-h: calc(var(--bottom-nav-height) + var(--inset-bottom, 0px));
         --content-pb: calc(var(--bottom-nav-height) + var(--inset-bottom, 0px) + 24px);
         --mm-paper: #f7f1e3;
@@ -398,21 +398,21 @@
     <meta name="description" content="تطبيق سُنّة يجمع القرآن الكريم، الدروس الشرعية، الفقه، الحديث، الأذكار، والمكتبة العلمية في واجهة عربية سهلة وهادئة." />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="سُنّة" />
-    <link rel="canonical" href="https://majlisilm.com/" />
+    <link rel="canonical" href="https://www.ssunnah.com/" />
     <meta property="og:site_name" content="سُنّة" />
     <meta property="og:locale" content="ar_KW" />
     <meta property="og:title" content="سُنّة | قرآن ودروس شرعية" />
     <meta property="og:description" content="تطبيق سُنّة يجمع القرآن الكريم، الدروس الشرعية، الفقه، الحديث، الأذكار، والمكتبة العلمية في واجهة عربية سهلة وهادئة." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://majlisilm.com/" />
-    <meta property="og:image" content="https://majlisilm.com/brand/official-og.png?v=20260829" />
+    <meta property="og:url" content="https://www.ssunnah.com/" />
+    <meta property="og:image" content="https://www.ssunnah.com/brand/og-home.png?v=20260829" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="سُنّة | قرآن ودروس شرعية" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="سُنّة | قرآن ودروس شرعية" />
     <meta name="twitter:description" content="تطبيق سُنّة يجمع القرآن الكريم، الدروس الشرعية، الفقه، الحديث، الأذكار، والمكتبة العلمية في واجهة عربية سهلة وهادئة." />
-    <meta name="twitter:image" content="https://majlisilm.com/brand/official-og.png?v=20260829" />
+    <meta name="twitter:image" content="https://www.ssunnah.com/brand/og-home.png?v=20260829" />
     <meta name="twitter:image:alt" content="سُنّة | قرآن ودروس شرعية" />
     <link rel="icon" href="/favicon.ico?v=20260829" sizes="any" />
     <link rel="icon" type="image/png" href="/icon-192.png?v=20260829" sizes="192x192" />
@@ -431,43 +431,42 @@
         "@graph": [
           {
             "@type": "Organization",
-            "@id": "https://majlisilm.com/#organization",
+            "@id": "https://www.ssunnah.com/#organization",
             "name": "سُنّة",
-            "url": "https://majlisilm.com/",
+            "url": "https://www.ssunnah.com/",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://majlisilm.com/brand/official.png?v=20260829",
+              "url": "https://www.ssunnah.com/brand/official.png?v=20260829",
               "width": 1024,
               "height": 1024
             },
-            "image": "https://majlisilm.com/brand/official-og.png?v=20260829",
+            "image": "https://www.ssunnah.com/brand/og-home.png?v=20260829",
             "description": "تطبيق سُنّة يجمع القرآن الكريم، الدروس الشرعية، الفقه، الحديث، الأذكار، والمكتبة العلمية في واجهة عربية سهلة وهادئة.",
-            "inLanguage": "ar",
-            "sameAs": ["https://www.instagram.com/Majlisalilm"]
+            "inLanguage": "ar"
           },
           {
             "@type": "WebSite",
-            "@id": "https://majlisilm.com/#website",
+            "@id": "https://www.ssunnah.com/#website",
             "name": "سُنّة",
-            "url": "https://majlisilm.com/",
-            "image": "https://majlisilm.com/brand/official-og.png?v=20260829",
+            "url": "https://www.ssunnah.com/",
+            "image": "https://www.ssunnah.com/brand/og-home.png?v=20260829",
             "description": "تطبيق سُنّة يجمع القرآن الكريم، الدروس الشرعية، الفقه، الحديث، الأذكار، والمكتبة العلمية في واجهة عربية سهلة وهادئة.",
             "inLanguage": "ar",
-            "publisher": { "@id": "https://majlisilm.com/#organization" },
+            "publisher": { "@id": "https://www.ssunnah.com/#organization" },
             "potentialAction": {
               "@type": "SearchAction",
               "target": {
                 "@type": "EntryPoint",
-                "urlTemplate": "https://majlisilm.com/search?q={search_term_string}"
+                "urlTemplate": "https://www.ssunnah.com/search?q={search_term_string}"
               },
               "query-input": "required name=search_term_string"
             }
           },
           {
             "@type": "WebApplication",
-            "@id": "https://majlisilm.com/#webapp",
+            "@id": "https://www.ssunnah.com/#webapp",
             "name": "سُنّة",
-            "url": "https://majlisilm.com/",
+            "url": "https://www.ssunnah.com/",
             "applicationCategory": "EducationApplication",
             "operatingSystem": "Any",
             "inLanguage": "ar",
@@ -488,103 +487,8 @@
         <p class="mj-launch-splash__title" id="mj-launch-splash__title">سُنّة</p>
       </div>
     </div>
-    <script>
-      (function () {
-        var el = document.getElementById("mj-launch-splash");
-        if (!el) return;
-        var KEY = "mj.launch-splash.session.v2";
-        var done = false;
-        var appReady = false;
-        var MIN_MS = 120;
-        var SOFT_MAX_MS = 420;
-        var MAX_MS = 1400;
-        var EXIT_MS = 90;
-        var bootReady = false;
-        var shellStable = false;
-        var start = (window.performance && performance.now) ? performance.now() : Date.now();
-        try { window.__mjSplashStart = start; } catch (e) {}
-        function now() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
-        function fontsLikelyReady() {
-          try {
-            if (!document.fonts || !document.fonts.check) return true;
-            return document.fonts.check('16px "Amiri"');
-          } catch (e) { return true; }
-        }
-        function dismiss(immediate) {
-          if (done) return;
-          done = true;
-          try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
-          if (!el.parentNode) return;
-          if (immediate) {
-            try { el.remove(); } catch (e) {}
-            return;
-          }
-          el.classList.add("mj-launch-splash--out");
-          window.setTimeout(function () { if (el.parentNode) el.remove(); }, EXIT_MS);
-        }
-        function tryDismiss() {
-          if (done) return;
-          var elapsed = now() - start;
-          if (elapsed < MIN_MS) return;
-          var fontsOk = bootReady || fontsLikelyReady();
-          if (!fontsOk && elapsed < MAX_MS) return;
-          if (!appReady && !bootReady && elapsed < MAX_MS) return;
-          /* انتظر رفع app-booting حتى لا يظهر #root ثم يخفى */
-          if (!shellStable && document.documentElement.classList.contains("app-booting") && elapsed < MAX_MS) return;
-          if (fontsOk && (bootReady || appReady)) {
-            dismiss(false);
-            return;
-          }
-          if (elapsed >= MAX_MS) dismiss(false);
-        }
-        try { window.__mjDismissSplash = dismiss; } catch (e) {}
-        try {
-          var forceBench = /[?&]splash_timing=1(?:&|$)/.test(location.search);
-          if (!forceBench && (navigator.webdriver || location.hostname === "127.0.0.1" || location.hostname === "localhost")) {
-            try {
-              document.documentElement.classList.remove("app-booting");
-              document.documentElement.dataset.appBooting = "0";
-            } catch (e2) {}
-            dismiss(true);
-            return;
-          }
-          if (!forceBench && sessionStorage.getItem(KEY) === "1") {
-            try {
-              document.documentElement.classList.remove("app-booting");
-              document.documentElement.dataset.appBooting = "0";
-            } catch (e2) {}
-            dismiss(true);
-            return;
-          }
-        } catch (e) {}
-        window.addEventListener("mj:app-painted", function () {
-          appReady = true;
-          tryDismiss();
-        }, { once: true });
-        window.addEventListener("mj:boot-ready", function () {
-          bootReady = true;
-          appReady = true;
-          requestAnimationFrame(function () {
-            requestAnimationFrame(function () {
-              shellStable = !document.documentElement.classList.contains("app-booting");
-              tryDismiss();
-            });
-          });
-        }, { once: true });
-        window.addEventListener("mj:shell-stable", function () {
-          shellStable = true;
-          tryDismiss();
-        }, { once: true });
-        window.setTimeout(function () {
-          appReady = true;
-          bootReady = true;
-          shellStable = true;
-          tryDismiss();
-        }, MAX_MS);
-        window.setTimeout(tryDismiss, MIN_MS);
-        void SOFT_MAX_MS;
-      })();
-    </script>
+    <script src="/mj-launch-splash-boot.js"></script>
+
     <script>
       try {
         document.body.classList.remove("side-nav-open", "navbar-more-open", "mobile-nav-body-lock");
@@ -613,11 +517,9 @@
           <a href="/lessons">الدروس</a>
           <a href="/quran-hub">القرآن</a>
           <a href="/adhkar">الأذكار</a>
-          <a href="/library">المكتبة</a>
-          <a href="/scholars">العلماء</a>
+          <a href="/prayer-times">الصلاة</a>
           <a href="/fiqh">الفقه</a>
-          <a href="/hadith-science">علوم الحديث</a>
-          <a href="/islamic-glossary">المصطلحات</a>
+          <a href="/search">البحث</a>
         </nav>
         <section>
           <h2>الدروس والدورات الشرعية</h2>
@@ -688,15 +590,13 @@
         </section>
         <section>
           <h2>الحديث وعلومه</h2>
-          <p>أحاديث صحيحة وضعيفة وموضوعة، كتب الرواية، والأربعون النووية، مع مدخل إلى مصطلح الحديث.</p>
+          <p>أحاديث صحيحة ومداخل علمية للتمييز بين الدرجات — الصحيح للاحتجاج والضعيف للتنبيه لا للتوصية.</p>
           <ul>
             <li><a href="/hadith">الأحاديث النبوية</a></li>
             <li><a href="/hadith/sahih">الأحاديث الصحيحة</a></li>
-            <li><a href="/hadith/daif">الأحاديث الضعيفة</a></li>
-            <li><a href="/hadith/mawdu">الأحاديث الموضوعة</a></li>
             <li><a href="/hadith/books">كتب الحديث</a></li>
             <li><a href="/arbaeen-nawawi">الأربعون النووية</a></li>
-            <li><a href="/hadith-science">علوم الحديث</a></li>
+            <li><a href="/hadith-science">مصطلح الحديث</a></li>
           </ul>
         </section>
         <section>

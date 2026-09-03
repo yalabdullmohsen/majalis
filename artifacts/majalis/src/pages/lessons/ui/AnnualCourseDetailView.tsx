@@ -67,8 +67,8 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
           name: item.title,
           description: item.summary,
           learningResourceType: "دورة علمية",
-          provider: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
-          publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
+          provider: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
+          publisher: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
           inLanguage: "ar",
         },
         breadcrumbJsonLd([

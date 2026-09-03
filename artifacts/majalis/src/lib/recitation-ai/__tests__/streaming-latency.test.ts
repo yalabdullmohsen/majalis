@@ -64,6 +64,14 @@ assert.match(wsSrc, /getRecitationWsUrl/);
 
 const regSrc = readFileSync(resolve(root, "lib/recitation-ai/provider-registry.ts"), "utf8");
 assert.match(regSrc, /WebSocketQuranASRProvider/);
+assert.match(regSrc, /ServerQuranASRProvider/);
+assert.match(regSrc, /احتياط: التعرّف الصوتي في المتصفح/);
+// الخادم قبل Web Speech في المسار العادي (أول ظهور لـ server.isAvailable قبل webSpeechOk)
+{
+  const serverIdx = regSrc.indexOf("await server.isAvailable()");
+  const webSpeechIdx = regSrc.indexOf("await webSpeech.isAvailable()");
+  assert.ok(serverIdx > 0 && webSpeechIdx > serverIdx, "المزوّد الخادمي قبل Web Speech في registry");
+}
 
 const webSrc = readFileSync(resolve(root, "lib/recitation-ai/providers/web-speech-provider.ts"), "utf8");
 assert.match(webSrc, /INTERIM_CONFIDENCE/);
@@ -79,9 +87,28 @@ assert.match(viewSrc, /rai-word-/);
 assert.match(viewSrc, /MicPermissionHelp/);
 assert.match(viewSrc, /warmRecitationWsConnection/);
 assert.match(viewSrc, /ابدأ التلاوة/);
+assert.match(viewSrc, /activeWordRef/);
+assert.match(viewSrc, /cursorWordRef/);
 
 const mushafSrc = readFileSync(resolve(root, "components/quran/InteractiveMushafReveal.tsx"), "utf8");
 assert.match(mushafSrc, /imr-word--cursor/);
 assert.match(mushafSrc, /rai-word-/);
+assert.match(mushafSrc, /cursorWordRef/);
+
+const liveRecSrc = readFileSync(resolve(root, "components/recitation/LiveRecitation.tsx"), "utf8");
+assert.match(liveRecSrc, /useSpeechRecognition/);
+assert.match(liveRecSrc, /matchRecitationAdvanced/);
+assert.match(liveRecSrc, /scrollIntoView/);
+assert.match(liveRecSrc, /activeWordRef/);
+assert.doesNotMatch(liveRecSrc, /MOCK_AYAH/);
+
+const cssSrc = readFileSync(resolve(root, "styles/recitation-ai.css"), "utf8");
+assert.match(cssSrc, /\.imr-word--revealed[\s\S]*--rai-emerald/);
+assert.match(cssSrc, /\.imr-word--error[\s\S]*#dc2626/);
+assert.match(cssSrc, /\.imr-word--cursor[\s\S]*scale\(1\.06\)/);
+
+const hookSrc = readFileSync(resolve(root, "hooks/useSpeechRecognition.ts"), "utf8");
+assert.match(hookSrc, /interimResults = true/);
+assert.match(hookSrc, /isWebSpeechRecognitionSupported/);
 
 console.log("streaming-latency.test.ts: ok");

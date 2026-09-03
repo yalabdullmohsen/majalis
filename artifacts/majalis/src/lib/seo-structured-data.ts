@@ -5,7 +5,7 @@ import { formatSheikhName, stripSheikhHonorifics } from "./sheikh-name";
 const SITE_URL = SEO_SITE.siteUrl;
 const SITE_NAME = SEO_SITE.siteName;
 const LOGO_PATH = SEO_SITE.logoImage || "/brand/official.png?v=20260825";
-const DEFAULT_IMAGE = SEO_SITE.defaultImage || "/brand/official-og.png?v=20260825";
+const DEFAULT_IMAGE = SEO_SITE.defaultImage || "/brand/og-home.png?v=20260825";
 
 function absoluteUrl(path: string) {
   return new URL(path, SITE_URL).toString();
@@ -34,7 +34,6 @@ export function organizationJsonLd() {
     description:
       "منصة علمية عربية تجمع الدروس الشرعية والدورات والقرآن والأذكار والفوائد في مكان واحد.",
     inLanguage: "ar",
-    sameAs: ["https://www.instagram.com/Majlisalilm"],
   };
 }
 

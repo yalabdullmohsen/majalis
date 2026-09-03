@@ -71,8 +71,9 @@ console.log("\n=== prerender كتب: بلا تكرار «عن الكتاب» م�
 console.log("\n=== بريد محظور ===");
 {
   const site = readFileSync(resolve("site.config.json"), "utf8");
-  assert(!/info@majlisilm\.com/i.test(site), "لا info@ في site.config");
-  assert(/Majlisilm\.app@gmail\.com/i.test(site), "البريد الرسمي موجود");
+  assert(!/info@majlisilm\.com/i.test(site), "لا info@majlisilm في site.config");
+  assert(!/Majlisilm\.app@gmail\.com/i.test(site), "لا بريد gmail القديم في site.config");
+  assert(/info@ssunnah\.com/i.test(site), "البريد الرسمي info@ssunnah.com موجود");
 }
 
 console.log(`\nالنتيجة: ${passed} نجاح / ${failed} فشل`);

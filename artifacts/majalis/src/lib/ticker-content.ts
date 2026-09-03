@@ -19,6 +19,7 @@
 import { DAILY_HADITH_POOL, DAILY_AYAH_POOL, DAILY_FAIDA_POOL } from "./daily-content";
 import { DAILY_TICKER_DHIKR } from "./daily-ticker-dhikr";
 import { FEATURED, QUICK_LINKS } from "./home-feature-catalog";
+import { filterForPublicZone, truncateForPublicPreview } from "./content-display-zones";
 
 export type TickerKind = "hadith" | "dhikr" | "ayah" | "faida" | "promo";
 
@@ -27,7 +28,10 @@ export type TickerContentItem = {
   id: string;
   kind: TickerKind;
   label: string;
+  /** النص الكامل — للاختبارات والتفاصيل، لا للعرض المباشر في الشريط. */
   text: string;
+  /** معاينة مختصرة للشريط العلوي. */
+  previewText: string;
   source?: string;
   href: string;
 };
@@ -41,7 +45,7 @@ export const RECENT_LIMIT = 20;
 export const RECENT_STORAGE_KEY = "majlis:ticker:recent:v1";
 
 /** نبذ موجزة عن الأقسام الرئيسية — واجهة/تنقّل، ليست تدقيق محتوى. */
-export const SECTION_PROMOS: Omit<TickerContentItem, "kind">[] = [
+export const SECTION_PROMOS: Omit<TickerContentItem, "kind" | "previewText">[] = [
   { id: "promo:tawhid", label: "قسم", text: "العقيدة والتوحيد — أصول الإيمان بمنهج واضح", href: "/tawhid" },
   { id: "promo:seerah", label: "قسم", text: "السيرة والتاريخ — سيرة النبي ﷺ ومفاصل الأمة", href: "/seerah" },
   { id: "promo:fiqh", label: "قسم", text: "الفقه والأحكام — عبادات ومعاملات بأسلوب ميسر", href: "/fiqh" },
@@ -49,7 +53,7 @@ export const SECTION_PROMOS: Omit<TickerContentItem, "kind">[] = [
   { id: "promo:quran", label: "قسم", text: "مركز القرآن الكريم — مصحف وتلاوة وأدوات التعلّم", href: "/mushaf" },
   { id: "promo:quran-knowledge", label: "قسم", text: "القرآن وعلومه — فهرس وعلوم وأسباب نزول وقصص", href: "/quran-knowledge" },
   { id: "promo:tarikh", label: "قسم", text: "التاريخ الإسلامي — خط زمني بالأحداث من قبل البعثة إلى يومنا", href: "/tarikh-islami" },
-  { id: "promo:learn", label: "قسم", text: "تعلّم — دروس ودورات واختبارات منظّمة", href: "/learn" },
+  { id: "promo:learn", label: "قسم", text: "دروس التعلّم — دروس شرعية مفصّلة في العقيدة وغيرها", href: "/learn" },
 ];
 
 function normalizeText(text: string): string {
@@ -64,7 +68,7 @@ export function buildTickerPool(now: Date = new Date()): TickerContentItem[] {
   const isMorning = hour >= 4 && hour < 15;
   const isEvening = hour >= 15 || hour < 4;
 
-  for (const h of DAILY_HADITH_POOL) {
+  for (const h of filterForPublicZone(DAILY_HADITH_POOL, "topTicker")) {
     if (!h?.text?.trim()) continue;
     const text = normalizeText(h.text);
     if (!text) continue;
@@ -72,14 +76,15 @@ export function buildTickerPool(now: Date = new Date()): TickerContentItem[] {
     pool.push({
       id: `hadith:${h.id}`,
       kind: "hadith",
-      label: "حديث",
+      label: "حديث اليوم",
       text,
+      previewText: truncateForPublicPreview(text),
       source,
       href: "/hadith",
     });
   }
 
-  for (const d of DAILY_TICKER_DHIKR) {
+  for (const d of filterForPublicZone(DAILY_TICKER_DHIKR, "topTicker")) {
     if (!d?.text?.trim()) continue;
     if (d.categoryId === "adh-morning" && !isMorning) continue;
     if (d.categoryId === "adh-evening" && !isEvening) continue;
@@ -88,8 +93,9 @@ export function buildTickerPool(now: Date = new Date()): TickerContentItem[] {
     pool.push({
       id: `dhikr:${d.id}`,
       kind: "dhikr",
-      label: d.categoryId === "adh-morning" ? "أذكار الصباح" : "أذكار المساء",
+      label: "ذكر ثابت",
       text,
+      previewText: truncateForPublicPreview(text),
       source: d.source || undefined,
       href: "/adhkar",
     });
@@ -102,8 +108,9 @@ export function buildTickerPool(now: Date = new Date()): TickerContentItem[] {
     pool.push({
       id: `ayah:${v.id}`,
       kind: "ayah",
-      label: "آية",
+      label: "آية اليوم",
       text,
+      previewText: truncateForPublicPreview(text),
       source: v.reference || v.surah || undefined,
       href: "/mushaf",
     });
@@ -118,6 +125,7 @@ export function buildTickerPool(now: Date = new Date()): TickerContentItem[] {
       kind: "faida",
       label: f.category || "فائدة",
       text,
+      previewText: truncateForPublicPreview(text),
       source: f.source || undefined,
       href: "/flashcards",
     });
@@ -131,6 +139,7 @@ export function buildTickerPool(now: Date = new Date()): TickerContentItem[] {
       kind: "promo",
       label: p.label,
       text,
+      previewText: truncateForPublicPreview(text),
       href: p.href,
     });
   }
@@ -144,6 +153,7 @@ export function buildTickerPool(now: Date = new Date()): TickerContentItem[] {
       kind: "promo",
       label: "ميزة",
       text: `${title} — ${desc}`,
+      previewText: truncateForPublicPreview(`${title} — ${desc}`),
       href: f.href,
     });
   }
@@ -157,6 +167,7 @@ export function buildTickerPool(now: Date = new Date()): TickerContentItem[] {
       kind: "promo",
       label: "اكتشف",
       text: `${label} — ${desc}`,
+      previewText: truncateForPublicPreview(`${label} — ${desc}`),
       href: q.href,
     });
   }

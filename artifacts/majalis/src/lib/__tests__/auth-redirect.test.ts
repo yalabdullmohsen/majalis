@@ -15,15 +15,15 @@ assert.equal(sanitizeAuthNext("/path?x=1"), "/"); // query مرفوض بالنم
 assert.equal(sanitizeAuthNext("javascript:alert(1)"), "/");
 assert.equal(sanitizeAuthNext("/ok-path_1."), "/ok-path_1.");
 
-assert.equal(getAuthCallbackUrl(), "https://majlisilm.com/auth/callback");
+assert.equal(getAuthCallbackUrl(), "https://www.ssunnah.com/auth/callback");
 assert.equal(
   getAuthCallbackUrl("/fiqh"),
-  "https://majlisilm.com/auth/callback?next=%2Ffiqh",
+  "https://www.ssunnah.com/auth/callback?next=%2Ffiqh",
 );
-assert.equal(getAuthEmailRedirectUrl("//evil"), "https://majlisilm.com/auth/callback");
+assert.equal(getAuthEmailRedirectUrl("//evil"), "https://www.ssunnah.com/auth/callback");
 assert.equal(
   getAuthCallbackUrl("https://phish.test"),
-  "https://majlisilm.com/auth/callback",
+  "https://www.ssunnah.com/auth/callback",
 );
 
 console.log("auth-redirect.test.ts: ok");

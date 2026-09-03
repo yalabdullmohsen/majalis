@@ -53,7 +53,7 @@ export default function Slide8Closing() {
             textWrap: "balance",
           }}
         >
-          مجالس العلم
+          سُنّة
         </div>
         <div
           style={{
@@ -107,7 +107,7 @@ export default function Slide8Closing() {
             color: "#5B5446",
           }}
         >
-          Majalis Al-Ilm
+          سُنّة
         </div>
       </div>
     </div>

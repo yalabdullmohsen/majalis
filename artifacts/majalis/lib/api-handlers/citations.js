@@ -20,7 +20,7 @@ import QRCode from "qrcode";
 // ── ثوابت ────────────────────────────────────────────────────────────────────
 
 const MAX_QUOTE_LENGTH = 500;
-const PLATFORM_URL = "https://majlisilm.com";
+const PLATFORM_URL = "https://www.ssunnah.com";
 
 const VALID_STYLES = new Set(["default", "apa", "mla", "chicago", "turabian"]);
 const ACADEMIC_TYPES = new Set(["article", "research"]);
@@ -148,8 +148,8 @@ function buildCitationSvg(citation, source, isDark = false) {
 <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${totalH}" viewBox="0 0 ${W} ${totalH}" direction="rtl">
   <rect width="${W}" height="${totalH}" fill="${bg}" rx="16"/>
   <rect x="12" y="12" width="${W - 24}" height="${totalH - 24}" fill="none" stroke="${borderColor}" stroke-width="1.5" rx="12"/>
-  <!-- شعار مجالس -->
-  <text x="300" y="40" text-anchor="middle" font-size="15" fill="${accentColor}" font-family="'Times New Roman', Times, serif" font-weight="bold">مجالس — منصة العلم الشرعي</text>
+  <!-- شعار سُنّة -->
+  <text x="300" y="40" text-anchor="middle" font-size="15" fill="${accentColor}" font-family="'Times New Roman', Times, serif" font-weight="bold">سُنّة — منصة العلم الشرعي</text>
   <!-- خط فاصل -->
   <line x1="80" y1="52" x2="${W - 80}" y2="52" stroke="${accentColor}" stroke-width="1" opacity="0.4"/>
   <!-- علامة الاقتباس -->
@@ -178,7 +178,7 @@ function escSvg(str) {
 
 function buildMarkdown(saved, citations) {
   const lines = [
-    "# اقتباساتي المحفوظة — مجالس\n",
+    "# اقتباساتي المحفوظة — سُنّة\n",
     `_تاريخ التصدير: ${new Date().toLocaleDateString("ar-SA")}_\n`,
     "---\n",
   ];

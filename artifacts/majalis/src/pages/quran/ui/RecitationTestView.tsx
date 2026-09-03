@@ -1,8 +1,7 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearch } from "wouter";
-import { Pause, Play, Square, ChevronLeft, RotateCcw, ArrowRight } from "lucide-react";
+import { Pause, Play, Square, ChevronLeft, RotateCcw } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
-import { goBackOrFallback } from "@/lib/navigation-back";
 import { useAuth } from "@/components/AuthProvider";
 import { fetchSurahDetail, getSurahList } from "@/lib/quran-api";
 import { addRecitationSuccessAyahs, markSurahCompleted } from "@/lib/local-milestones";
@@ -26,6 +25,7 @@ import { addRecitationReviewItem, getDueRecitationReviews, type RecitationReview
 import { loadRecitationSettings, saveRecitationSettings } from "@/lib/recitation-ai/recitation-settings-service";
 import { hapticNotify } from "@/lib/capacitor-utils";
 import { InteractiveMushafReveal, type WordRevealInfo } from "@/components/quran/InteractiveMushafReveal";
+import { CircularProgress } from "@/components/recitation/CircularProgress";
 import { MicPermissionHelp } from "@/components/MicPermissionHelp";
 import { loadMutashabihatIndex, getSimilarAyahs, type MutashabihMatch } from "@/lib/recitation-ai/mutashabihat";
 import { FreeformStartDetector, loadPositionIndex } from "@/lib/recitation-ai/freeform-start-detector";
@@ -44,10 +44,6 @@ import {
   resumePlaybackAfterTasmee,
   stopAuxiliaryAudioForTasmee,
 } from "@/lib/recitation-ai/playback-handoff";
-import {
-  AI_TARTEEL_DISABLED_MESSAGE,
-  isAiTarteelEnabled,
-} from "@/lib/recitation-ai/feature-flag";
 import { warmRecitationWsConnection, discardWarmedRecitationWs } from "@/lib/recitation-ai/warm-connection";
 import { markTarteelLatency } from "@/lib/recitation-ai/tarteel-latency";
 import type { AlertLevel, AlignmentEvent, PrecisionLevel, RecitationMode, ReferenceWord, TajweedNote } from "@/lib/recitation-ai/types";
@@ -91,6 +87,11 @@ function revokeRecitationAiConsent(): void {
   try { localStorage.removeItem(RAI_CONSENT_KEY); } catch { /* تجاهل */ }
 }
 
+import {
+  readMatchingStrictPreference,
+  writeMatchingStrictPreference,
+} from "@/lib/recitation-ai/matching-strict-preference";
+
 /** يستخرج نصًا صالحًا للعرض ورمز الخطأ (إن وُجد) من أي خطأ مُلتقَط — يميّز ASRProviderUnavailableError (رمز حقيقي) عن أي Error عام آخر. */
 function describeAsrError(e: unknown): { message: string; code: ASRProviderError["code"] | null } {
   if (e instanceof ASRProviderUnavailableError) return { message: e.detail.message, code: e.detail.code };
@@ -98,7 +99,7 @@ function describeAsrError(e: unknown): { message: string; code: ASRProviderError
   return { message: "خطأ غير معروف", code: null };
 }
 
-function RecitationTestPageInner() {
+export function RecitationTestViewInner() {
   const search = useSearch();
   const { user } = useAuth();
 
@@ -112,6 +113,7 @@ function RecitationTestPageInner() {
   const [surahNumber, setSurahNumber] = useState(1);
   const [mode, setMode] = useState<RecitationMode>("interactive_mushaf");
   const [precisionLevel, setPrecisionLevel] = useState<PrecisionLevel>("hifz");
+  const [matchingStrict, setMatchingStrict] = useState(() => readMatchingStrictPreference());
   const [alertLevel, setAlertLevel] = useState<AlertLevel>("gentle");
   const [revealGranularity, setRevealGranularity] = useState<"word" | "ayah" | "page">("word");
   const [tajweedAvailable, setTajweedAvailable] = useState<{ available: boolean; reason?: string } | null>(null);
@@ -198,7 +200,7 @@ function RecitationTestPageInner() {
    * الصفحة المختارة كنطاق) — يمنع تكرار التمرير التلقائي لنفس الصفحة،
    * ويُصفَّر عند كل بدء جلسة جديدة كي لا يُحمَل رقم صفحة من جلسة سابقة. */
   const lastScrolledPageRef = useRef<number | null>(null);
-  const lastScrolledWordKeyRef = useRef<string | null>(null);
+  const activeWordRef = useRef<HTMLSpanElement>(null);
   const unsubRef = useRef<(() => void) | null>(null);
   const sessionStartRef = useRef<number>(0);
   /** يُلغي جلسة اكتشاف "التسميع الحر" الجارية — يُضبَط داخل startSessionFreeform فقط. */
@@ -216,6 +218,8 @@ function RecitationTestPageInner() {
   // استبعاد applyEvents من اعتماديات attachAsrSession أعلاه — TDZ).
   const alertLevelRef = useRef<AlertLevel>(alertLevel);
   useEffect(() => { alertLevelRef.current = alertLevel; }, [alertLevel]);
+  const matchingStrictRef = useRef(matchingStrict);
+  useEffect(() => { matchingStrictRef.current = matchingStrict; }, [matchingStrict]);
 
   // listening طازج لمستمع visibilitychange (مسجَّل مرة واحدة عند التركيب) — أدناه.
   const listeningRef = useRef(false);
@@ -458,7 +462,6 @@ function RecitationTestPageInner() {
       setCorrectionCard(null);
       setTeacherHold(false);
       lastScrolledPageRef.current = null;
-      lastScrolledWordKeyRef.current = null;
       activeModeRef.current = mode;
       hintsUsedRef.current = 0;
       setHintLevel(0);
@@ -480,7 +483,11 @@ function RecitationTestPageInner() {
       }
       providerRef.current = selection.provider;
 
-      const engine = new VerseAlignmentEngine({ referenceWords: words, alertLevel });
+      const engine = new VerseAlignmentEngine({
+        referenceWords: words,
+        alertLevel,
+        matchingStrict: matchingStrictRef.current,
+      });
       engineRef.current = engine;
       sessionStartRef.current = Date.now();
 
@@ -650,14 +657,17 @@ function RecitationTestPageInner() {
         setCorrectionCard(null);
         setTeacherHold(false);
         lastScrolledPageRef.current = null;
-        lastScrolledWordKeyRef.current = null;
         activeModeRef.current = "freeform";
         hintsUsedRef.current = 0;
         setHintLevel(0);
         recallStartAtRef.current = null;
         setRecallMs(null);
 
-        const engine = new VerseAlignmentEngine({ referenceWords: words, alertLevel });
+        const engine = new VerseAlignmentEngine({
+        referenceWords: words,
+        alertLevel,
+        matchingStrict: matchingStrictRef.current,
+      });
         engineRef.current = engine;
 
         // إعادة تغذية الكلمات المسموعة أثناء الاكتشاف نفسه — لا تُهدَر.
@@ -848,7 +858,11 @@ function RecitationTestPageInner() {
         for (const w of remaining) next.set(`${w.surah}:${w.ayah}:${w.wordIndex}`, "hidden");
         return next;
       });
-      const engine = new VerseAlignmentEngine({ referenceWords: remaining, alertLevel: alertLevelRef.current });
+      const engine = new VerseAlignmentEngine({
+        referenceWords: remaining,
+        alertLevel: alertLevelRef.current,
+        matchingStrict: matchingStrictRef.current,
+      });
       engineRef.current = engine;
       setCorrectionCard(null);
       setTeacherHold(false);
@@ -1146,22 +1160,16 @@ function RecitationTestPageInner() {
     el?.scrollIntoView({ behavior: "smooth", block: "center" });
   }, [currentPage, isMultiPageRange, phase, distinctPages]);
 
-  // تمرير حي على مستوى الكلمة أثناء التسميع — يبقي الموضع المتوقع في وسط الشاشة
-  // دون إجبار إن كانت الكلمة ظاهرة أصلًا (تجنّب اهتزاز الواجهة).
+  // تمرير حي على مستوى الكلمة — يُبقي الموضع المتوقع في وسط الشاشة
+  // (نفس نمط LiveRecitation: ref على الكلمة النشطة + scrollIntoView).
   useEffect(() => {
     if (phase !== "session") return;
-    const w = referenceWords[currentWordIndex];
-    if (!w) return;
-    const key = `${w.surah}:${w.ayah}:${w.wordIndex}`;
-    if (lastScrolledWordKeyRef.current === key) return;
-    lastScrolledWordKeyRef.current = key;
-    const el = document.getElementById(`rai-word-${w.surah}-${w.ayah}-${w.wordIndex}`);
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const margin = 96;
-    const inView = rect.top >= margin && rect.bottom <= window.innerHeight - margin;
-    if (!inView) el.scrollIntoView({ behavior: "smooth", block: "center" });
-  }, [currentWordIndex, phase, referenceWords]);
+    activeWordRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "nearest",
+    });
+  }, [currentWordIndex, phase]);
 
   const correctCount = liveEvents.filter((e) => e.kind === "correct").length;
   const errorEvents = liveEvents.filter((e): e is Extract<AlignmentEvent, { kind: "error" }> => e.kind === "error");
@@ -1234,7 +1242,7 @@ function RecitationTestPageInner() {
           </p>
           <ul className="rai-consent-screen__list">
             <li>سيُطلَب إذن الميكروفون فقط عند ضغطك «ابدأ التلاوة» — لا استماع في الخلفية بلا علمك.</li>
-            <li><strong>التعرّف محليًا أولًا</strong> على جهازك. إن لم يتوفر تعرّف عربي كامل محليًا، قد يمرّ الصوت عبر خدمة نظام التشغيل (Apple/Google) — لا يُرسَل صوت إلى خوادم سُنّة مطلقًا.</li>
+            <li><strong>التعرّف محليًا أولًا</strong> على جهازك عند توفّره. وإلا تُرسَل مقاطع صوتية قصيرة عبر سُنّة إلى خدمة تفريغ آمنة للتقييم الأدق — بلا تخزين للصوت على خوادمنا.</li>
             <li>إن سجّلت الدخول: نتيجة كل جلسة (نسبة الدقة، مواضع الأخطاء، المدة) تُحفَظ في حسابك لعرضها في التقارير ومراجعة الأخطاء المتكررة.</li>
             <li>زائر بلا حساب: يُحفظ تقرير موجز وتقدّم الحفظ على جهازك فقط (محليًا).</li>
             <li>يمكنك سحب الموافقة وحذف بيانات جلسات التلاوة في أي وقت.</li>
@@ -1495,6 +1503,34 @@ function RecitationTestPageInner() {
           </div>
 
           <div className="rai-setup__group">
+            <span className="rai-setup__label">مستوى دقة التحليل</span>
+            <div className="rai-choice-grid">
+              <button
+                type="button"
+                className={`rai-choice ${!matchingStrict ? "rai-choice--active" : ""}`}
+                onClick={() => {
+                  setMatchingStrict(false);
+                  writeMatchingStrictPreference(false);
+                }}
+              >
+                متساهل — للمبتدئين
+                <span className="rai-choice__hint">يتجاهل التشكيل وأخطاء النطق البسيطة</span>
+              </button>
+              <button
+                type="button"
+                className={`rai-choice ${matchingStrict ? "rai-choice--active" : ""}`}
+                onClick={() => {
+                  setMatchingStrict(true);
+                  writeMatchingStrictPreference(true);
+                }}
+              >
+                دقيق — للمتقدمين
+                <span className="rai-choice__hint">مطابقة حرفية بعد التطبيع القرآني</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="rai-setup__group">
             <span className="rai-setup__label">مستوى الدقة</span>
             <div className="rai-choice-grid">
               <button type="button" className={`rai-choice ${precisionLevel === "hifz" ? "rai-choice--active" : ""}`} onClick={() => setPrecisionLevel("hifz")}>
@@ -1570,10 +1606,15 @@ function RecitationTestPageInner() {
           >
             {phase === "loading" ? "جارٍ تهيئة الميكروفون…" : "ابدأ التلاوة"}
           </button>
+          <p className="rai-module-setup__advanced">
+            <Link href="/quran/recitation-test-ai">الوضع المبسّط</Link>
+            {" "}
+            — إعداد سريع وتلاوة حية مع Web Speech.
+          </p>
           <p className="rai-report__disclaimer">
-            سيُطلَب إذن الميكروفون قبل بدء الاستماع، ويُستخدَم فقط أثناء الجلسة — لا يُحفَظ التسجيل افتراضيًا،
-            ولا يُرسَل أي جزء منه لخوادم سُنّة. قد يعالج نظام تشغيلك/متصفحك التعرّف الصوتي خارج الجهاز حين لا
-            يتوفر تعرّف كامل محليًا (راجع{" "}
+            سيُطلَب إذن الميكروفون قبل بدء الاستماع، ويُستخدَم فقط أثناء الجلسة — لا يُحفَظ التسجيل كأرشيف.
+            يُفضَّل التعرّف على الجهاز؛ وإلا تُمرَّر مقاطع قصيرة عبر خدمة التفريغ لتقييم أدق بلا تخزين للصوت
+            (راجع{" "}
             <Link href="/privacy" style={{ color: "var(--rai-emerald)" }}>سياسة الخصوصية</Link>).
           </p>
           <button
@@ -1720,7 +1761,12 @@ function RecitationTestPageInner() {
           )}
 
           {mode === "interactive_mushaf" ? (
-            <InteractiveMushafReveal words={revealWords} revealGranularity={revealGranularity} justCompletedAyah={justCompletedAyah} />
+            <InteractiveMushafReveal
+              words={revealWords}
+              revealGranularity={revealGranularity}
+              justCompletedAyah={justCompletedAyah}
+              cursorWordRef={activeWordRef}
+            />
           ) : (
             <p className="rai-plain-words">
               {referenceWords.map((w, i) => {
@@ -1739,6 +1785,7 @@ function RecitationTestPageInner() {
                     )}
                     <span
                       id={`rai-word-${w.surah}-${w.ayah}-${w.wordIndex}`}
+                      ref={i === currentWordIndex ? activeWordRef : undefined}
                       className={`${cls}${i === currentWordIndex ? " rai-plain-word--cursor" : ""}`}
                     >
                       {showText ? w.raw : "ــــ"}
@@ -1792,16 +1839,7 @@ function RecitationTestPageInner() {
       </div>
       <div className="rai-report">
         <div className="rai-report__ring-wrap">
-          <svg width="140" height="140" viewBox="0 0 140 140">
-            <circle cx="70" cy="70" r="60" fill="none" stroke="rgba(14,110,82,.15)" strokeWidth="12" />
-            <circle
-              cx="70" cy="70" r="60" fill="none" stroke="#0E6E52" strokeWidth="12"
-              strokeDasharray={`${(accuracy / 100) * 377} 377`}
-              strokeLinecap="round"
-              transform="rotate(-90 70 70)"
-            />
-            <text x="70" y="78" textAnchor="middle" fontSize="28" fontWeight={800} fill="#153025">{accuracy}%</text>
-          </svg>
+          <CircularProgress percentage={accuracy} />
         </div>
 
         <div className="rai-report__stats">
@@ -1943,44 +1981,4 @@ function errorTypeLabel(t: string): string {
   return map[t] ?? t;
 }
 
-export default function RecitationTestPage() {
-  if (!isAiTarteelEnabled()) {
-    return (
-      <div className="rai-shell">
-        <button
-          type="button"
-          className="rai-back-btn"
-          onClick={() => goBackOrFallback("/quran/recitation-test-ai")}
-          aria-label="رجوع"
-        >
-          <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
-          رجوع
-        </button>
-        <div className="rai-page" role="alert">
-          <div className="rai-header">
-            <h1 className="rai-header__title">التلاوة</h1>
-            <p className="rai-header__sub">{AI_TARTEEL_DISABLED_MESSAGE}</p>
-          </div>
-          <Link href="/quran-hub" className="rai-start-btn">
-            العودة لمركز القرآن الكريم
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="rai-shell">
-      <button
-        type="button"
-        className="rai-back-btn"
-        onClick={() => goBackOrFallback("/quran/recitation-test-ai")}
-        aria-label="رجوع"
-      >
-        <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
-        رجوع
-      </button>
-      <RecitationTestPageInner />
-    </div>
-  );
-}
+export default RecitationTestViewInner;

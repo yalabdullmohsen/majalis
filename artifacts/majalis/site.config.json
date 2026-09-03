@@ -3,20 +3,25 @@
   "siteName": "سُنّة",
   "siteShortName": "سُنّة",
   "siteDescription": "تطبيق سُنّة يجمع القرآن الكريم، الدروس الشرعية، الفقه، الحديث، الأذكار، والمكتبة العلمية في واجهة عربية سهلة وهادئة.",
-  "$domainNote": "النطاق المعتمد هو المجرّد (بلا www) منذ 2026-07-22 — الخادم يحوّل www إليه بـ308 (Vercel Primary Domain غُيِّر من طرف المالك مباشرة بعد حلقة إعادة توجيه لا نهائية كانت تُعطِّل كل مسار غير الرئيسية). للعودة لـwww: اعكس القيم هنا وفي لوحة Vercel معًا، ثم أعد البناء.",
-  "siteUrl": "https://majlisilm.com",
+  "$domainNote": "النطاق الحي المعتمد: https://www.ssunnah.com (200 بلا redirect). ssunnah.com وmajlisilm.com وwww.majlisilm.com يحوّلان إليه بـ308 من لوحة Vercel. Capacitor يحمّل www.ssunnah.com مباشرة.",
+  "siteUrl": "https://www.ssunnah.com",
   "legacyOrigins": [
+    "https://ssunnah.com",
+    "http://www.ssunnah.com",
+    "http://ssunnah.com",
+    "https://majlisilm.com",
     "https://www.majlisilm.com",
     "http://majlisilm.com",
     "http://www.majlisilm.com"
   ],
   "titleSuffix": " | سُنّة",
   "$emailNote": "بريد التواصل الرسمي الوحيد للمنصة كاملةً — استفسارات عامة، ملاحظات تقنية، تصحيح محتوى علمي، إبلاغ عن خطأ، اقتراحات وشراكات. لا بريد آخر معتمد.",
-  "contactEmail": "Majlisilm.app@gmail.com",
-  "$forbiddenNote": "أسماء وعناوين ممنوعة في أي نص معروض للمستخدم — يحرسها scripts/test-identity.mjs. استثناء وحيد: contactEmail أعلاه معتمَد رغم كونه على نطاق gmail.com.",
+  "contactEmail": "info@ssunnah.com",
+  "$forbiddenNote": "أسماء وعناوين ممنوعة في أي نص معروض للمستخدم — يحرسها scripts/test-identity.mjs. البريد الرسمي الوحيد هو contactEmail أعلاه (info@ssunnah.com).",
   "forbiddenBrandNames": [
     "مجالس العلم",
     "منصة المجالس",
+    "منصة مجالس",
     "مجالس العلمية",
     "المجلس العلمي",
     "Majlis Al-Ilm",
@@ -30,7 +35,18 @@
   ],
   "$brandAssetsNote": "مصدر الصور الرسمي الوحيد — لا majlisilm-og-2026 ولا شعارات قديمة في meta/manifest/JSON-LD.",
   "assetVersion": "20260829",
-  "defaultImage": "/brand/official-og.png?v=20260829",
+  "defaultImage": "/brand/og-home.png?v=20260829",
+  "ogSectionImages": {
+    "/": "/brand/og-home.png",
+    "/quran-hub": "/brand/og-quran.png",
+    "/mushaf": "/brand/og-quran.png",
+    "/lessons": "/brand/og-lessons.png",
+    "/fiqh": "/brand/og-fiqh.png",
+    "/hadith": "/brand/og-hadith.png",
+    "/adhkar": "/brand/og-adhkar.png",
+    "/library": "/brand/og-library.png",
+    "/contact": "/brand/og-contact.png"
+  },
   "logoImage": "/brand/official.png?v=20260829",
   "ogImageWidth": 1200,
   "ogImageHeight": 630,
@@ -51,7 +67,7 @@
     },
     {
       "path": "/quran-hub",
-      "label": "القرآن الكريم"
+      "label": "القرآن"
     },
     {
       "path": "/adhkar",

@@ -89,7 +89,7 @@ function generateIcs(monthEvents: { date: Date; ev: CalendarEvent }[], monthLabe
   const lines: string[] = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//majlisilm.com//Islamic Lessons Calendar//AR",
+    "PRODID:-//ssunnah.com//Islamic Lessons Calendar//AR",
     `X-WR-CALNAME:دروس سُنّة — ${monthLabel}`,
     "X-WR-TIMEZONE:Asia/Kuwait",
     "CALSCALE:GREGORIAN",
@@ -98,7 +98,7 @@ function generateIcs(monthEvents: { date: Date; ev: CalendarEvent }[], monthLabe
   for (const { date, ev } of monthEvents) {
     const dtstart = toIcsDate(date, ev.time);
     const dtend = toIcsDate(date, ev.time ? ev.time.replace(/\d+/, (h) => String(Number(h) + 1)) : undefined);
-    const uid = `${ev.id}-${format(date, "yyyyMMdd")}@majlisilm.com`;
+    const uid = `${ev.id}-${format(date, "yyyyMMdd")}@ssunnah.com`;
     lines.push(
       "BEGIN:VEVENT",
       `UID:${uid}`,
@@ -173,7 +173,7 @@ export default function CalendarPage() {
       title: "التقويم الإسلامي والدروس | سُنّة",
       description: "تقويم الدروس والمناسبات الإسلامية، عرض شهري وأسبوعي ويومي مع الأحداث والحلقات العلمية.",
       keywords: ["تقويم إسلامي", "مواعيد دروس", "التقويم الهجري", "الأحداث الإسلامية", "جدول الدروس"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "التقويم الإسلامي والدروس", url: "https://majlisilm.com/calendar", about: { "@type": "Thing", name: "التقويم الهجري والمناسبات الإسلامية" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "التقويم الإسلامي والدروس", url: "https://www.ssunnah.com/calendar", about: { "@type": "Thing", name: "التقويم الهجري والمناسبات الإسلامية" } }],
     });
   }, []);
 
@@ -332,7 +332,7 @@ export default function CalendarPage() {
       {modalEvent ? <EventModal event={modalEvent} onClose={() => setModalEvent(null)} /> : null}
 
       <div className="twh-share">
-        <ShareButtons aria-label="التقويم الهجري والمناسبات الإسلامية — سُنّة" url="https://majlisilm.com/calendar" />
+        <ShareButtons aria-label="التقويم الهجري والمناسبات الإسلامية — سُنّة" url="https://www.ssunnah.com/calendar" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="islamic-history" aria-label="اختبر معلوماتك في التاريخ الإسلامي" count={4} />

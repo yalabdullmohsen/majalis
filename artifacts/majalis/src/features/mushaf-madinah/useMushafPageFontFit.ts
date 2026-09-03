@@ -254,7 +254,9 @@ export function useMushafPageFontFit(
       const width = Math.round(body?.clientWidth || node.clientWidth || 0);
       const height = Math.round(body?.clientHeight || 0);
       if (!width) {
-        markFit(node, false);
+        /* بلا عرض بعد — أبقِ ظاهرًا بحجم أدنى بدل إخفاء يسبب قفزة عند التقليب */
+        applySize(node, MUSHAF_FIT_MIN_PX);
+        markFit(node, true);
         return;
       }
       /* الصفحات العادية: العرض فقط — فتح الشيت/الرصيف لا يعيد قياس الخط.
@@ -264,13 +266,12 @@ export function useMushafPageFontFit(
       if (!force && geom === lastGeom) return;
       lastGeom = geom;
       const family = normalizeMushafFontFamily(fontFamily);
-      // حجم هندسي فوري قبل القياس الثقيل — يقلّل قفزة المقاس عند الكشف
       applyGeometrySizeHint(node, family, pageNumber);
+      markFit(node, true);
       if (isMushafPageFontReady(family)) {
         applyFit(node, family);
         return;
       }
-      markFit(node, false);
       void waitPageFont(fontFamily)
         .then((loadedFamily) => {
           if (cancelled || !pageRef.current) return;
@@ -285,15 +286,10 @@ export function useMushafPageFontFit(
         });
     };
 
-    // إطار أول: أخفِ النص، ثبّت حجمًا هندسيًا إن وُجد عرض، ثم قِس بعد استقرار الإطار
-    markFit(el, false);
+    /* إطار أول متزامن: حجم هندسي + إظهار فوري — بلا إخفاء ولا انتظار إطارَين */
     applyGeometrySizeHint(el, fontFamily, pageNumber);
-    let firstFrameId = 0;
-    firstFrameId = requestAnimationFrame(() => {
-      firstFrameId = requestAnimationFrame(() => {
-        if (!cancelled) run(true);
-      });
-    });
+    markFit(el, true);
+    run(true);
     const ro =
       typeof ResizeObserver !== "undefined" ? new ResizeObserver(() => run(false)) : null;
     ro?.observe(el);
@@ -303,21 +299,19 @@ export function useMushafPageFontFit(
     };
     window.addEventListener("orientationchange", onOrient);
     const vv = window.visualViewport;
+    /* resize فقط — scroll من visualViewport كان يعيد القياس أثناء التقليب فيقفز النص */
     const onVv = () => {
       lastGeom = "";
       run(true);
     };
     vv?.addEventListener("resize", onVv);
-    vv?.addEventListener("scroll", onVv);
     const fonts = typeof document !== "undefined" ? document.fonts : undefined;
     fonts?.addEventListener?.("loadingdone", onOrient);
     return () => {
       cancelled = true;
-      cancelAnimationFrame(firstFrameId);
       ro?.disconnect();
       window.removeEventListener("orientationchange", onOrient);
       vv?.removeEventListener("resize", onVv);
-      vv?.removeEventListener("scroll", onVv);
       fonts?.removeEventListener?.("loadingdone", onOrient);
     };
   }, [ready, pageRef, pageNumber, fontFamily]);

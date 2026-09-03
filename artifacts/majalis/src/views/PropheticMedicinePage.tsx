@@ -72,7 +72,7 @@ export default function PropheticMedicinePage() {
               "@type": "ListItem",
               position: i + 1,
               name: item.name,
-              url: `https://majlisilm.com/prophetic-medicine#${item.id}`,
+              url: `https://www.ssunnah.com/prophetic-medicine#${item.id}`,
             })),
           },
         ],
@@ -200,7 +200,7 @@ export default function PropheticMedicinePage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الطب النبوي — سُنّة" url="https://majlisilm.com/prophetic-medicine" />
+        <ShareButtons title="الطب النبوي — سُنّة" url="https://www.ssunnah.com/prophetic-medicine" />
       </div>
 
       <FilterBottomSheet

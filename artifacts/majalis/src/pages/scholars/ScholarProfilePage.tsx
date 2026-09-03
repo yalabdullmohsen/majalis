@@ -24,7 +24,7 @@ function ScholarProfileView({ profile }: { profile: ScholarProfile }) {
           name: profile.fullName,
           alternateName: profile.name,
           description: profile.summary,
-          url: `https://majlisilm.com/scholars/${profile.slug}`,
+          url: `https://www.ssunnah.com/scholars/${profile.slug}`,
           jobTitle: profile.specialty.join(" · "),
         },
         {
@@ -116,7 +116,7 @@ function ScholarProfileView({ profile }: { profile: ScholarProfile }) {
       <div className="sp-share">
         <ShareButtons
           title={`${profile.name} — سُنّة`}
-          url={`https://majlisilm.com/scholars/${profile.slug}`}
+          url={`https://www.ssunnah.com/scholars/${profile.slug}`}
         />
       </div>
     </main>
@@ -141,7 +141,7 @@ function ScholarsIndexPage() {
             "@type": "ListItem",
             position: i + 1,
             name: p.name,
-            url: `https://majlisilm.com/scholars/${p.slug}`,
+            url: `https://www.ssunnah.com/scholars/${p.slug}`,
           })),
         },
       ],

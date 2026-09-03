@@ -233,15 +233,33 @@ export async function fetchCategoryDetail(slug: string): Promise<CategoryDetail 
     cursor = parent as CategoryRow;
   }
 
-  const [{ data: children }, { data: series }, { data: lessons }] = await Promise.all([
+  const [{ data: children }, { data: series }, { data: lessons }, { data: childCats }] = await Promise.all([
     supabase.from("categories").select("id, parent_id, slug, name, description, icon, sort_order, status").eq("parent_id", category.id).eq("status", "published").order("sort_order"),
     supabase.from("lesson_series").select("id, slug, title, description, level, category_id, related_course_id").eq("category_id", category.id).eq("status", "published").order("sort_order"),
     supabase.from("lessons").select("id, title, description, category_id, activity_type, session_count, sheikh_id").eq("category_id", category.id).eq("status", "approved"),
+    supabase.from("categories").select("id").eq("parent_id", category.id).eq("status", "published"),
   ]);
 
-  const dbLessons = (lessons ?? []) as LessonSummary[];
-  const existingTitles = new Set(dbLessons.map((l) => l.title));
-  const merged = [...dbLessons];
+  const childIds = ((childCats ?? []) as Array<{ id: string }>).map((c) => c.id);
+  let nestedLessons: LessonSummary[] = [];
+  if (childIds.length > 0) {
+    const { data: nested } = await supabase
+      .from("lessons")
+      .select("id, title, description, category_id, activity_type, session_count, sheikh_id")
+      .in("category_id", childIds)
+      .eq("status", "approved");
+    nestedLessons = (nested ?? []) as LessonSummary[];
+  }
+
+  const dbLessons = [...(lessons ?? []) as LessonSummary[], ...nestedLessons];
+  const seenIds = new Set<string>();
+  const deduped = dbLessons.filter((l) => {
+    if (seenIds.has(l.id)) return false;
+    seenIds.add(l.id);
+    return true;
+  });
+  const existingTitles = new Set(deduped.map((l) => l.title));
+  const merged = [...deduped];
   if (isAqeedahSeedSlug(slug)) {
     for (const seed of getSeedLessonsForSlug(slug)) {
       if (!existingTitles.has(seed.title)) {

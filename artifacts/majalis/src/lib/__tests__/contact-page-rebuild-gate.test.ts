@@ -1,5 +1,5 @@
 /**
- * بوابة صفحة التواصل: بنية نظيفة + FAQ بإجابات + بريد رسمي + إنستقرام + بلا اقتراح شيخ.
+ * بوابة صفحة التواصل: بنية نظيفة + FAQ بإجابات + بريد رسمي + بلا إنستقرام حملة.
  */
 import { readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
@@ -17,9 +17,9 @@ assert.match(contact, /mailtoWithSubject/);
 assert.match(contact, /إرسال بريد/);
 assert.match(contact, /نسخ/);
 assert.doesNotMatch(contact, /نسخ البريد/);
-assert.match(contact, /فتح إنستقرام/);
-assert.match(contact, /instagram\.com\/Al_abdalmhsn/);
-assert.match(contact, /إنستقرام شركة العبد المحسن للحج/);
+assert.doesNotMatch(contact, /instagram\.com/i, "لا إنستقرام حملة في صفحة التواصل");
+assert.doesNotMatch(contact, /فتح إنستقرام/);
+assert.doesNotMatch(contact, /أوقات الرد/);
 assert.match(contact, /للإعلان والشراكات/);
 assert.match(contact, /اقتراحات وملاحظات/);
 assert.match(contact, /يسعدنا استقبال ملاحظاتك واقتراحاتك وتصحيحاتك/);
@@ -43,7 +43,7 @@ for (const q of [
 }
 
 assert.match(css, /\.contact-email-card/, "بطاقة البريد في CSS");
-assert.match(css, /\.contact-ig-card/, "بطاقة إنستقرام");
+assert.doesNotMatch(css, /\.contact-ig-card/, "لا بطاقة إنستقرام");
 assert.match(css, /\.contact-ads-block/, "قسم الإعلان والشراكات");
 assert.match(css, /@media \(max-width: 390px\)/, "ضبط عرض الجوال 390");
 assert.match(globalBack, /path === "\/support"/, "إخفاء الرجوع العائم على /support");

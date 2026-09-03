@@ -2,7 +2,12 @@
  * Native deep-link path resolver for Capacitor iOS/Android.
  * Supports trusted https hosts and majlisilm:// custom scheme only.
  */
-const TRUSTED_HTTPS_HOSTS = new Set(["majlisilm.com", "www.majlisilm.com"]);
+const TRUSTED_HTTPS_HOSTS = new Set([
+  "www.ssunnah.com",
+  "ssunnah.com",
+  "majlisilm.com",
+  "www.majlisilm.com",
+]);
 
 export function resolveNativeDeepLinkPath(url: string): string | null {
   // Reject traversal before URL normalization swallows ".."

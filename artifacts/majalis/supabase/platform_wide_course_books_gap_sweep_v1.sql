@@ -32,7 +32,7 @@ BEGIN
   SELECT unlinked.id, ref.book_title, ref.book_author, 'مادة مساندة',
          'باب متصل بموضوع: ' || unlinked.title,
          'نفس الكتاب المُعتمَد فعلاً لعناصر أخرى بهذا الكورس — موجود في مكتبة المنصة',
-         'مكتبة المجلس العلمي'
+         'مكتبة سُنّة'
   FROM learning_items unlinked
   JOIN course_units cu ON cu.id = unlinked.unit_id
   JOIN courses c ON c.id = cu.course_id
@@ -58,7 +58,7 @@ BEGIN
   SELECT li.id, 'إعانة الطالبين على حل ألفاظ فتح المعين', 'أبو بكر عثمان بن محمد شطا الدمياطي', 'مادة مساندة',
          'باب متصل بموضوع: ' || li.title,
          'العنصر يناقش هذا الكتاب تحديدًا (شرح فتح المعين) — موجود في مكتبة المنصة',
-         'مكتبة المجلس العلمي'
+         'مكتبة سُنّة'
   FROM learning_items li
   JOIN course_units cu ON cu.id = li.unit_id
   JOIN courses c ON c.id = cu.course_id
@@ -71,7 +71,7 @@ BEGIN
   SELECT li.id, 'البرهان في علوم القرآن', 'الإمام بدر الدين الزركشي', 'مادة مساندة',
          'باب متصل بموضوع: ' || li.title,
          'نفس الكتاب المُعتمَد لعنصري "إعجاز القرآن" و"المحكم والمتشابه" بنفس الكورس — موجود في مكتبة المنصة',
-         'مكتبة المجلس العلمي'
+         'مكتبة سُنّة'
   FROM learning_items li
   JOIN course_units cu ON cu.id = li.unit_id
   JOIN courses c ON c.id = cu.course_id
@@ -88,7 +88,7 @@ BEGIN
   SELECT li.id, 'فقه السنة', 'الشيخ سيد سابق', 'قراءة إثرائية',
          'باب متصل بموضوع: ' || li.title,
          'كتاب فقه شامل ميسَّر يستند للأدلة، يغطي فقه المرأة ضمن نطاقه الشامل — موجود في مكتبة المنصة (/library/book-fiqh-sunnah)',
-         'مكتبة المجلس العلمي'
+         'مكتبة سُنّة'
   FROM learning_items li
   JOIN course_units cu ON cu.id = li.unit_id
   JOIN courses c ON c.id = cu.course_id

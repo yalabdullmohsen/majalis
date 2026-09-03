@@ -29,7 +29,7 @@ export function ActiveFilters({
       {resultCount != null && (
         <p className="mj-active-filters__count">
           {resultCount === 0
-            ? "لا توجد نتائج مطابقة"
+            ? "لا توجد نتائج مطابقة. جرّب تعديل التصفية."
             : `${toArabicDigits(resultCount)} ${resultCount === 1 ? "نتيجة" : "نتائج"}`}
         </p>
       )}

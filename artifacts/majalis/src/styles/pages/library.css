@@ -2,6 +2,61 @@
    80 — Library Page 2026 — بطاقات المكتبة مع الغلاف والترتيب
    ═══════════════════════════════════════════════════════════════════ */
 
+.library-hub--compact {
+  padding-top: 0.5rem;
+}
+.library-hub__head {
+  margin-bottom: 0.75rem;
+}
+.library-hub__title {
+  margin: 0;
+  font-size: clamp(1.35rem, 4vw, 1.75rem);
+  font-weight: 700;
+  color: var(--clr-text, var(--mj-ink));
+}
+.library-hub__lead {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  color: var(--clr-text-2, var(--mj-ink-2));
+}
+.library-hub__filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+.library-hub__section-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.library-hub__recent-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+}
+.library-hub__recent-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--clr-border, rgba(23, 61, 53, 0.12));
+  font-size: 0.82rem;
+  text-decoration: none;
+  color: var(--clr-text, var(--mj-ink));
+}
+.library-hub__more {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0 0.5rem;
+}
+.lib-admin-count {
+  font-size: 0.78rem;
+  color: var(--clr-text-2, var(--mj-ink-2));
+  text-align: center;
+}
+
 /* ── شريط الأدوات (ترتيب + عرض) ─────────────────────────────── */
 .lib-toolbar {
   display: flex;

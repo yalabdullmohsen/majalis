@@ -30,7 +30,7 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
     href: "/tawhid", badge: "أنت هنا", color: "var(--mj-brand-deep)", isCurrent: true,
   },
   {
-    emoji: "📘", title: "مدخل إلى العقيدة",
+    emoji: "📘", title: "أصول العقيدة",
     desc: "تعريف العقيدة ومصدرها وأركانها الإجمالية على منهج السلف",
     href: "/learn/aqeedah-intro", badge: "درس", color: "#0B3D2E",
   },
@@ -383,7 +383,7 @@ export default function TawhidPage() {
             "@type": "ListItem",
             position: i + 1,
             name: s.title,
-            url: `https://majlisilm.com${s.href}`,
+            url: `https://www.ssunnah.com${s.href}`,
           })),
         },
       ],
@@ -561,7 +561,7 @@ export default function TawhidPage() {
         </ul>
         <div className="twh-subsection-link" style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
           <Link href="/methodology" className="twh-goto-btn">منهج الموقع ومصادره ←</Link>
-          <Link href="/learn/aqeedah-intro" className="twh-goto-btn">مدخل العقيدة ←</Link>
+          <Link href="/learn/aqeedah-intro" className="twh-goto-btn">أصول العقيدة ←</Link>
         </div>
       </section>
 
@@ -590,7 +590,7 @@ export default function TawhidPage() {
         </p>
         <div className="twh-subsection-link" style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
           <Link href="/learn/aqeedat-ahl-sunnah" className="twh-goto-btn">دروس عقيدة أهل السنة ←</Link>
-          <Link href="/learn/aqeedah-intro" className="twh-goto-btn">مدخل إلى العقيدة ←</Link>
+          <Link href="/learn/aqeedah-intro" className="twh-goto-btn">أصول العقيدة ←</Link>
           <Link href="/learn/aqsam-tawheed" className="twh-goto-btn">أقسام التوحيد ←</Link>
           <Link href="/learn/nawaqid-islam" className="twh-goto-btn">نواقض الإسلام ←</Link>
           <Link href="/learn/wala-bara" className="twh-goto-btn">الولاء والبراء ←</Link>
@@ -603,7 +603,7 @@ export default function TawhidPage() {
       <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والتوحيد" count={4} />
 
       <div className="twh-share">
-        <ShareButtons title="العقيدة والتوحيد — سُنّة" url="https://majlisilm.com/tawhid" />
+        <ShareButtons title="العقيدة والتوحيد — سُنّة" url="https://www.ssunnah.com/tawhid" />
       </div>
     </div>
   );

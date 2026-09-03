@@ -1,5 +1,5 @@
 -- =====================================================================
---  المجلس العلمي — Auto Engine Production Complete Migration
+--  سُنّة — Auto Engine Production Complete Migration
 --  Idempotent — safe to run multiple times
 --  Includes: auto_content v2 + AKE v13 + supplementary tracking tables
 -- =====================================================================

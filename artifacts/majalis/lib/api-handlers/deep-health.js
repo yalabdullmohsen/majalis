@@ -26,7 +26,7 @@ export default async function handler(req, res) {
 
   const out = {
     ok: true,
-    service: "majlisilm-web",
+    service: "ssunnah-web",
     version,
     at: new Date().toISOString(),
     platform: null,

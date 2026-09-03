@@ -142,7 +142,7 @@ INSERT INTO scholarly_sources (slug, name, name_ar, source_type, url, entity_nam
   ('islamweb', 'IslamWeb', 'إسلام ويب', 'website', 'https://islamweb.net', 'IslamWeb', 80),
   ('sunnah-com', 'Sunnah.com', 'سنّة', 'database', 'https://sunnah.com', 'Sunnah.com', 90),
   ('quran-com', 'Quran.com', 'قرآن', 'database', 'https://quran.com', 'Quran.com', 95),
-  ('majalis-local', 'Majalis Scientific Council', 'المجلس العلمي', 'official', 'https://majalis.app', 'المجلس العلمي', 90)
+  ('majalis-local', 'Majalis Scientific Council', 'سُنّة', 'official', 'https://majalis.app', 'سُنّة', 90)
 ON CONFLICT (slug) DO UPDATE SET
   trust_level = EXCLUDED.trust_level,
   updated_at = now();

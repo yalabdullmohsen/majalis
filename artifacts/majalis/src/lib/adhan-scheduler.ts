@@ -11,6 +11,8 @@
  */
 
 import {
+  calendarNoonInZone,
+  epochAtZoneMinutes,
   type PrayerSlot,
   type PrayerTimesPayload,
 } from "./prayer-times";
@@ -36,6 +38,17 @@ import { resolveAdhanClip } from "./adhan-playback-modes";
 
 export type { AdhanEvent };
 export { ADHAN_EVENT_NAME };
+
+function upcomingPrayerEpochs(slot: PrayerSlot): number[] {
+  if (slot.minutes == null) return [];
+  const tz = getActivePrayerLocation().timeZone || "Asia/Kuwait";
+  const todayNoon = calendarNoonInZone(tz);
+  const tomorrowNoon = new Date(todayNoon.getTime() + 24 * 3600_000);
+  const now = Date.now();
+  return [todayNoon, tomorrowNoon]
+    .map((noon) => epochAtZoneMinutes(tz, slot.minutes!, noon))
+    .filter((epoch) => epoch > now);
+}
 
 function iosFullAdhanActive(): boolean {
   return isNative && isIOS;
@@ -175,16 +188,19 @@ function scheduleForPrayer(
     const muezzin = getMuezzin(getEffectiveMuezzinId(prefs, key));
     const isFajr = key === "fajr";
     if (!isFajr || hasFajrAdhan(muezzin)) {
-      void import("./adhan-ios-segments").then(({ scheduleIosFullAdhan }) =>
-        scheduleIosFullAdhan({
-          prayerKey: key,
-          prayerName: PRAYER_ARABIC[key] ?? slot.name,
-          recordingId: muezzin.id,
-          isFajr,
-          startAtMs: adhanTargetEpoch,
-          deliveryMode,
-        }),
-      );
+      const epochs = upcomingPrayerEpochs(slot);
+      void import("./adhan-ios-segments").then(({ scheduleIosFullAdhan }) => {
+        epochs.forEach((startAtMs, index) => {
+          void scheduleIosFullAdhan({
+            prayerKey: key,
+            prayerName: PRAYER_ARABIC[key] ?? slot.name,
+            recordingId: muezzin.id,
+            isFajr,
+            startAtMs,
+            deliveryMode: index === 0 ? deliveryMode : "short",
+          });
+        });
+      });
     }
   }
 
@@ -219,7 +235,7 @@ function scheduleForPrayer(
       const inForeground =
         typeof document !== "undefined" && document.visibilityState === "visible";
       if (inForeground) {
-        void import("./adhan-ios-segments").then((m) => m.cancelAdhanIosSegmentChain());
+        void import("./adhan-ios-segments").then((m) => m.cancelAdhanIosSegmentChain(key));
         const audio = playAdhan(muezzin, isFajr, "full", fresh.volume ?? 1);
         if (!audio && isFajr) return;
       }

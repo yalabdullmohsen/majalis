@@ -1,4 +1,4 @@
-# Testing — المجلس العلمي
+# Testing — سُنّة
 
 ## Web (`@workspace/majalis`)
 

@@ -4,7 +4,6 @@
  */
 import {
   CircleDot,
-  GraduationCap,
 } from "lucide-react";
 import { NOUN_DURUS, NOUN_HALAQAT, NOUN_MUNASABAT, NOUN_MUSABAQAT, type ArabicCountNoun } from "@/lib/arabic-count";
 import { totalExternalCompetitions } from "@/config/competitions-hub";
@@ -83,6 +82,7 @@ const QURAN_GROUPS: Array<{ id: string; title: string; ids: string[] }> = [
     id: "tilawa-tafsir",
     title: "التلاوة والتفسير",
     ids: [
+      "quran-recitation",
       "quran-surahs",
       "tafsir",
       "quran-tilawa",
@@ -99,8 +99,8 @@ const QURAN_GROUPS: Array<{ id: string; title: string; ids: string[] }> = [
   },
   {
     id: "hifz",
-    title: "الحفظ والتلاوة",
-    ids: ["quran-recitation", "flashcards"],
+    title: "الحفظ والمراجعة",
+    ids: ["flashcards"],
   },
   {
     id: "numbers",
@@ -133,13 +133,6 @@ export function getLobby(id: LobbyId): LobbySpec {
       id,
       title: "الدروس",
       path: "/lessons",
-      primary: item({
-        id: "next-lesson",
-        label: "أقرب درس اليوم",
-        subtitle: "جدول الدروس والحلقات لهذا اليوم",
-        route: "/lessons",
-        icon: GraduationCap,
-      }),
       chips: [
         { id: "all", label: "الكل" },
         { id: "men", label: "رجالية" },

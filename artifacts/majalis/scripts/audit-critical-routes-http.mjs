@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * زحف HTTP مركّز للمسارات الحرجة + عيّنة من sitemap (بلا Playwright).
- * MAJLIS_AUDIT_BASE_URL=https://majlisilm.com node scripts/audit-critical-routes-http.mjs
+ * MAJLIS_AUDIT_BASE_URL=https://www.ssunnah.com node scripts/audit-critical-routes-http.mjs
  */
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 
 const appRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repoRoot = resolve(appRoot, "../..");
-const baseUrl = (process.env.MAJLIS_AUDIT_BASE_URL || "https://majlisilm.com").replace(/\/$/, "");
+const baseUrl = (process.env.MAJLIS_AUDIT_BASE_URL || "https://www.ssunnah.com").replace(/\/$/, "");
 
 const CRITICAL = [
   "/",
@@ -83,7 +83,7 @@ async function probe(path) {
     const homepageFallback =
       path !== "/" &&
       status === 200 &&
-      /مجلس علمي|مجالس العلم/.test(title) &&
+      /مجلس علمي|سُنّة/.test(title) &&
       h1s === 1 &&
       /الصفحة الرئيسية|مرحبا/.test(html.slice(0, 2500));
     const sourcePlaceholder = /المصدر قيد الإضافة/.test(html);

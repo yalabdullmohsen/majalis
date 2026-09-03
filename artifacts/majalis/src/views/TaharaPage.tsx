@@ -158,7 +158,7 @@ export default function TaharaPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${w.num}: ${w.title} — ${w.desc}`,
-            url: `https://majlisilm.com/tahara#wudu-fardh-${i + 1}`,
+            url: `https://www.ssunnah.com/tahara#wudu-fardh-${i + 1}`,
           })),
         },
       ],
@@ -435,7 +435,7 @@ export default function TaharaPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="الطهارة وأحكامها — سُنّة" url="https://majlisilm.com/tahara" />
+          <ShareButtons title="الطهارة وأحكامها — سُنّة" url="https://www.ssunnah.com/tahara" />
         </div>
 
         {/* related */}

@@ -3,6 +3,10 @@
 // (انظر prayer-local-notifications.ts) — لا تعتمد على window.Notification هناك.
 
 import { isNative } from "@/lib/capacitor-utils";
+import {
+  notificationBodyWithoutBrand,
+  notificationTitleWithoutBrand,
+} from "@/lib/notifications/copy";
 
 const STORAGE_KEY = "majalis_notif_prefs_v1";
 
@@ -15,6 +19,8 @@ export type NotifPrefs = {
   quranDailyReminder: boolean;
   /** تذكير أذكار الصباح/المساء — يُفعَّل من الإعدادات فقط (لا طلب إذن عند الإطلاق). */
   adhkarReminder: boolean;
+  /** تذكيرات صوتية بعبارات الذكر (سبحان الله، الحمد لله، …) طوال ساعات اليقظة. */
+  dhikrPhraseReminder: boolean;
   reminderHour: number;          // الساعة المفضلة للتذكير (0-23)
   reminderMinute: number;
 };
@@ -26,6 +32,7 @@ const DEFAULTS: NotifPrefs = {
   prayerReminder: false,
   quranDailyReminder: true,
   adhkarReminder: false,
+  dhikrPhraseReminder: true,
   reminderHour: 8,
   reminderMinute: 0,
 };
@@ -97,8 +104,8 @@ export function sendLocalNotification(
           notifications: [
             {
               id,
-              title,
-              body: options?.body ?? "",
+              title: notificationTitleWithoutBrand(title),
+              body: notificationBodyWithoutBrand(options?.body ?? ""),
               schedule: { at: new Date(Date.now() + 800), allowWhileIdle: true },
               sound: DEFAULT_ALERT_SOUND,
               channelId: CHANNEL_GENERAL,
@@ -114,8 +121,8 @@ export function sendLocalNotification(
   }
   if (!("Notification" in window) || Notification.permission !== "granted") return;
   try {
-    new Notification(title, {
-      body: options?.body,
+    new Notification(notificationTitleWithoutBrand(title), {
+      body: notificationBodyWithoutBrand(options?.body ?? "") || undefined,
       icon: options?.icon ?? "/logo.png",
       tag: options?.tag,
       dir: "rtl",
@@ -162,7 +169,7 @@ function markSentToday(tag: string): void {
 export function scheduleFlashcardsReminder(dueCount: number): void {
   if (dueCount === 0 || alreadySentToday("flashcards")) return;
   sendLocalNotification("📇 لديك بطاقات مستحقة", {
-    body: `${dueCount} بطاقة تنتظر مراجعتك اليوم في سُنّة.`,
+    body: `${dueCount} بطاقة تنتظر مراجعتك اليوم.`,
     tag: "flashcards",
   });
   markSentToday("flashcards");

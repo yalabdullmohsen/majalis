@@ -19,7 +19,7 @@ const distDir = resolve(appRoot, "dist");
 const prerenderDir = resolve(appRoot, "seo-prerender");
 
 const SITE = JSON.parse(await readFile(resolve(appRoot, "site.config.json"), "utf8"));
-const SITE_URL = SITE.siteUrl || "https://majlisilm.com";
+const SITE_URL = SITE.siteUrl || "https://www.ssunnah.com";
 const THEME_COLOR = SITE.themeColor || "#1F7A5A";
 const THEME_COLOR_DARK = SITE.themeColorDark || "#4FB48B";
 const PRERENDER_NAV =
@@ -142,7 +142,7 @@ function buildMergedHtml(seoTags, spaAssets, prerenderBody, spaBody) {
       ${prerenderBody}
     </div>
     <div id="root"></div>
-    <script>(function(){function a(){document.documentElement.classList.add('js-ready');var s=document.getElementById('seo-shell');if(s)s.remove()}function arm(){setTimeout(a,3200)}var r=document.getElementById('root');if(r&&r.hasChildNodes())arm();else{var o=new MutationObserver(function(){if(r&&r.hasChildNodes()){o.disconnect();arm()}});o.observe(r||document.documentElement,{childList:true,subtree:true});setTimeout(a,9000)}})()</script>
+    <script>(function(){function a(){document.documentElement.classList.add('js-ready');var s=document.getElementById('seo-shell');if(s)s.remove()}function arm(){requestAnimationFrame(function(){requestAnimationFrame(a)})}var r=document.getElementById('root');if(r&&r.hasChildNodes())arm();else{var o=new MutationObserver(function(){if(r&&r.hasChildNodes()){o.disconnect();arm()}});o.observe(r||document.documentElement,{childList:true,subtree:true});setTimeout(a,2500)}})()</script>
   </body>
 </html>`;
 }

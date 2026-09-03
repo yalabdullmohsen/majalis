@@ -46,7 +46,7 @@ BEGIN
   SELECT li.id, 'الرحيق المختوم', 'الشيخ صفي الرحمن المباركفوري', 'أساسية إلزامية',
          'باب متصل بموضوع: ' || li.title,
          'مرجع سيرة معتمَد وشامل، مستخدَم فعلاً في كورسات السيرة الأخرى بالمسار — موجود في مكتبة المنصة (/library/book-raheeq)',
-         'مكتبة المجلس العلمي'
+         'مكتبة سُنّة'
   FROM learning_items li WHERE li.id IN (
     (SELECT id FROM learning_items WHERE unit_id = v_unit_id AND sort_order = 5),
     (SELECT id FROM learning_items WHERE unit_id = v_unit_id AND sort_order = 6),

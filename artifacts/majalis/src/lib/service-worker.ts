@@ -34,7 +34,7 @@ export async function unregisterServiceWorkersForMeasurement(): Promise<void> {
 
 const SW_UPDATE_CHECK_INTERVAL_MS = 60 * 1000;
 const SW_RELOAD_GUARD_KEY = "mj.sw-reload-once.v1";
-const REFRESHING_FLAG = "majlisilm-refreshing-version";
+const REFRESHING_FLAG = "ssunnah-refreshing-version";
 
 /**
  * تأخير التسجيل بعد استقرار الصفحة. حدث install في public/sw.js يبدأ
@@ -99,7 +99,8 @@ function armControlledSwReload(): void {
       hadController = true;
       return;
     }
-    reloadOnce();
+    // بعد استقرار الجلسة: بنر هادئ فقط — لا reload قسري يكسر الجلسة/يُظهر وميضًا
+    signalQuietUpdate();
   });
 }
 

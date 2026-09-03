@@ -139,9 +139,9 @@ export default function ProphetsFamilyTreePage() {
         "@type": "WebPage",
         name: "شجرة أنساب الأنبياء",
         description: "رسم بياني تفاعلي لنسب الأنبياء الـ25 المذكورين في القرآن الكريم. محتوى معتمد في منهج سُنّة",
-        url: "https://majlisilm.com/prophets/tree",
+        url: "https://www.ssunnah.com/prophets/tree",
         inLanguage: "ar",
-        publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
+        publisher: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
       }],
     });
   }, []);

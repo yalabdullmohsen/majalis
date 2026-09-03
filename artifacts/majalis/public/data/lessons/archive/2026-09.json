@@ -1,0 +1,167 @@
+{
+  "month": "2026-09",
+  "items": [
+    {
+      "id": "ee5216ab2640025b00a147b891aaf1f3af54e61e",
+      "type": "دورة",
+      "title_ar": "ندعوكم اليوم لحضور الدورة العلمية التعليق على الأربعون النووية للشيخ د راشد بن …",
+      "summary_ar": "ندعوكم اليوم لحضور الدوره العلميه: التعليق علي ( الاربعون النوويه &nbsp;) للشيخ د. راشد بن صليهم الهاجري @rashedsfh يومي الاربعاء والخميس ⏰ بعد صلاه العصر مسجد…",
+      "sheikh": "راشد بن صليهم الهاجري @rashedsfh 🗓️ يومي الأربعاء والخميس ⏰",
+      "place": "مبارك عبدالله الصباح - الجهراء&nbsp; https://maps",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://t.me/DrosQ8",
+      "schedule_kind": "upcoming",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "telegram-DrosQ8",
+          "name_ar": "دروس الكويت",
+          "url": "https://t.me/DrosQ8",
+          "post_url": "https://t.me/DrosQ8/27716",
+          "platform": "telegram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-09-02T18:40:39.048Z",
+      "confidence": 0.9
+    },
+    {
+      "id": "541ec505a8df4cc63b965ee2861ca442bf558be9",
+      "type": "درس",
+      "title_ar": "يسرنا دعوتكم لحضور لقاء بعنوان بناء شخصية الطفل مع أ هدى السباعي يوم الاربعاء م…",
+      "summary_ar": "يسرنا دعوتكم لحضور لقاء بعنوان بناء شخصيه الطفل مع ا.هدي السباعي يوم الاربعاء مساء تاريخ ٢ سبتمبر الرابط بالمعرف والقصه Photo by ارث on August 31, 2026. May be…",
+      "sheikh": null,
+      "place": "حساب إرث عبر الانستقرام Erth",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": "weekly",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-erth.kwt",
+          "name_ar": "إرث",
+          "url": "https://instagram.com/erth.kwt",
+          "post_url": "https://www.instagram.com/p/DctN3N2AooB/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-31T00:00:00.000Z",
+      "confidence": 0.75
+    },
+    {
+      "id": "92817884645b3c0b08509fe5f534f0d573c4acc0",
+      "type": "تسجيل",
+      "title_ar": "برنامج طلائع العالمات حيث تتذوقين جمال لغة الوحي برنامج طلائع العالمات الدفعة ا…",
+      "summary_ar": "برنامج طلائع العالمات… حيث تتذوقين جمال لغه الوحي. برنامج طلائع العالمات _ الدفعه السابعه ٢٠٢٦-٢٠٢٨م رابط التسجيل القديم معطل اليك رابط التسجيل الجديد https://…",
+      "sheikh": "الدكتور مصطفى حسنين عبدالهادي حسنين www",
+      "place": "طلائع العالمات سوف تدرسين علوم لغة القرآن والسنة فضيلة الشيخ الدكتور مصطفى حسنين",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": "https://forms.gle/qaqtsfAREkcWZS438",
+      "schedule_kind": null,
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-rasikhoon",
+          "name_ar": "الراسخون",
+          "url": "https://instagram.com/rasikhoon",
+          "post_url": "https://www.instagram.com/p/DcmDD-5DC3Y/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-28T23:56:30.232Z",
+      "confidence": 0.9
+    },
+    {
+      "id": "32d73b4bc9ff89b3f811713f89c7c10f98679110",
+      "type": "محاضرة",
+      "title_ar": "غداً السبت الساعة صباحاً بإذن الله بمسجد الياقوت قراءة صحيح مسلم وصلنا إلى باب …",
+      "summary_ar": "غدا السبت الساعه 10:00 صباحا باذن الله بمسجد الياقوت قراءه صحيح مسلم وصلنا الي باب طلاق الثلاث المجلس 32 للشيخ عثمان الخميس لتفاصيل المحاضرات وللبث المباشر في …",
+      "sheikh": "جميع دروس الشيخ ومواعيد محاضراته تجدونها في الموقع الإلكترون",
+      "place": "الياقوت",
+      "audience": "عام",
+      "starts_at": null,
+      "time_text": "10:00 ص",
+      "register_url": null,
+      "schedule_kind": "upcoming",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-othmanalkamees",
+          "name_ar": "د. عثمان الخميس",
+          "url": "https://instagram.com/othmanalkamees",
+          "post_url": "https://www.instagram.com/p/DcmOQFwiKDX/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-28T00:00:00.000Z",
+      "confidence": 0.95
+    },
+    {
+      "id": "e340e49b5677b8f673feeff1febbe422c74a1398",
+      "type": "محاضرة",
+      "title_ar": "لقاء الجمعة الأسبوعي كلنا شوق للقياكن أحبتنا في الله مع الدكتورة مريم مندكار حف…",
+      "summary_ar": "لقاء الجمعه الاسبوعي كلنا شوق للقياكن احبتنا في الله مع الدكتوره مريم مندكار حفظها الله Photo by مسجد راشد الخياط on August 27, 2026. May be an image of ‎pie, …",
+      "sheikh": "ة مريم مندكار حفظها الله 🍃",
+      "place": "الله 🍃",
+      "audience": "عام",
+      "starts_at": "2026-08-28T00:00:00.000Z",
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": "weekly",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-m_alkhayatq8",
+          "name_ar": "مسجد راشد الخياط",
+          "url": "https://instagram.com/m_alkhayatq8",
+          "post_url": "https://www.instagram.com/p/DckS0kEIr3i/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-27T00:00:00.000Z",
+      "confidence": 0.95
+    },
+    {
+      "id": "521409728e47b4bf644be0da76c2d29acd4a1ce5",
+      "type": "حلقة",
+      "title_ar": "ودج بإنجاز يفرحج كل أسبوع؟ حلقات إرواء للقرآن ودج يكون عندج إنجاز يفرحج كل اسبو…",
+      "summary_ar": "ودج بانجاز يفرحج كل اسبوع؟ Photo by حلقات ارواء للقران on August 26, 2026. May be an image of ‎text that says '‎ودج يكون عندج انجاز يفرحج كل اسبوع؟ CrwDa ទេ ال…",
+      "sheikh": null,
+      "place": null,
+      "audience": "نشء",
+      "starts_at": null,
+      "time_text": null,
+      "register_url": null,
+      "schedule_kind": "weekly",
+      "women_attendance": "men_only",
+      "women_attendance_note": null,
+      "sources": [
+        {
+          "id": "ig-erwaa.quran",
+          "name_ar": "حلقات إرواء للقرآن — جامعة الكويت",
+          "url": "https://instagram.com/erwaa.quran",
+          "post_url": "https://www.instagram.com/p/DcgSaZ1MoJO/",
+          "platform": "instagram"
+        }
+      ],
+      "image_url": null,
+      "published_at": "2026-08-26T16:34:23.140Z",
+      "confidence": 0.65
+    }
+  ]
+}

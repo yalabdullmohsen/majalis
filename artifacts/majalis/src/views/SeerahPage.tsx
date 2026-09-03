@@ -266,7 +266,7 @@ export default function SeerahPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${p.title} (${p.year})`,
-            url: `https://majlisilm.com/seerah#${p.id}`,
+            url: `https://www.ssunnah.com/seerah#${p.id}`,
           })),
         },
       ],

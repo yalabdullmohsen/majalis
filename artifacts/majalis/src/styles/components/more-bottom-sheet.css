@@ -49,8 +49,8 @@
   align-items: flex-end;
   justify-content: center;
   background: color-mix(in srgb, var(--mj-ink) 45%, transparent);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .bottom-sheet.bottom-sheet--services {

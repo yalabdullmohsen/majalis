@@ -86,9 +86,9 @@ struct PrayerLiveActivityWidget: Widget {
                 Image(systemName: prayerSymbol(for: context.attributes.prayerKey))
                     .foregroundStyle(MajalisColor.gold)
             }
-            // Universal Link — opens app via associated domains (applinks:majlisilm.com).
+            // Universal Link — opens app via associated domains (applinks:www.ssunnah.com).
             // Prefer https over custom scheme so CapApp appUrlOpen always gets a pathname.
-            .widgetURL(URL(string: "https://majlisilm.com/prayer-times"))
+            .widgetURL(URL(string: "https://www.ssunnah.com/prayer-times"))
             .keylineTint(MajalisColor.emerald)
         }
     }

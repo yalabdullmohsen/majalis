@@ -20,10 +20,20 @@ import {
   QURAN_DAILY_REMINDER_TITLE,
   QURAN_DAILY_REMINDER_URL,
 } from "./quran-daily-reminder";
+import {
+  DHIKR_PHRASE_REMINDER_BODY,
+  DHIKR_PHRASE_REMINDER_URL,
+  DHIKR_PHRASE_SLOTS,
+  dhikrPhraseTag,
+} from "./dhikr-phrase-reminders";
+import {
+  notificationBodyWithoutBrand,
+  notificationTitleWithoutBrand,
+} from "./notifications/copy";
 
 export interface SmartNotifScheduleItem {
   id: string;
-  kind: "adhkar" | "prayer" | "streak" | "khatmah" | "flashcards" | "quran";
+  kind: "adhkar" | "dhikr" | "prayer" | "streak" | "khatmah" | "flashcards" | "quran";
   title: string;
   body: string;
   /** دقائق من منتصف الليل المحلي */
@@ -90,6 +100,20 @@ export function buildDailySmartSchedule(opts?: {
       tag: "majalis-adhkar-evening",
       url: "/adhkar",
     });
+  }
+
+  if (prefs.dhikrPhraseReminder) {
+    for (const slot of DHIKR_PHRASE_SLOTS) {
+      items.push({
+        id: `dhikr-${slot.id}`,
+        kind: "dhikr",
+        title: slot.phrase,
+        body: DHIKR_PHRASE_REMINDER_BODY,
+        minuteOfDay: slot.hour * 60,
+        tag: dhikrPhraseTag(slot.id),
+        url: DHIKR_PHRASE_REMINDER_URL,
+      });
+    }
   }
 
   if (prefs.prayerReminder) {
@@ -176,8 +200,8 @@ export async function pushScheduleToServiceWorker(
       const fireAt = minuteOfDayToDate(it.minuteOfDay).getTime();
       return {
         id: it.id,
-        title: it.title,
-        body: it.body,
+        title: notificationTitleWithoutBrand(it.title),
+        body: notificationBodyWithoutBrand(it.body),
         tag: it.tag,
         url: it.url || "/",
         fireAt,
@@ -259,16 +283,23 @@ export async function syncSmartLocalNotifications(opts?: {
       if (isNative) {
         const { cancelNativeQuranReminder } = await import("./quran-daily-reminder");
         await cancelNativeQuranReminder();
+        const { cancelNativeDhikrPhraseReminders } = await import("./dhikr-phrase-reminders");
+        await cancelNativeDhikrPhraseReminders();
       }
       return { scheduled: 0, viaSw: false };
     }
 
-    // على الأصل: لا SW — ورد القرآن عبر Capacitor؛ باقي التذكيرات وهي الصفحة مفتوحة فقط.
+    // على الأصل: لا SW — ورد القرآن والذكر عبر Capacitor؛ باقي التذكيرات وهي الصفحة مفتوحة فقط.
     if (isNative) {
       const { ensureQuranDailyReminderScheduled } = await import("./quran-daily-reminder");
       await ensureQuranDailyReminderScheduled();
+      const { ensureDhikrPhraseRemindersScheduled } = await import("./dhikr-phrase-reminders");
+      const dhikr = await ensureDhikrPhraseRemindersScheduled();
       maybeWarnStreakLoss();
-      return { scheduled: prefs.quranDailyReminder ? 1 : 0, viaSw: false };
+      return {
+        scheduled: (prefs.quranDailyReminder ? 1 : 0) + (dhikr.ok ? dhikr.scheduled : 0),
+        viaSw: false,
+      };
     }
 
     const items = buildDailySmartSchedule({
@@ -294,6 +325,7 @@ export function enableSmartNotifDefaults(): NotifPrefs {
     resumeReminder: true,
     prayerReminder: true,
     quranDailyReminder: true,
+    dhikrPhraseReminder: true,
   };
   saveNotifPrefs(next);
   void syncSmartLocalNotifications();

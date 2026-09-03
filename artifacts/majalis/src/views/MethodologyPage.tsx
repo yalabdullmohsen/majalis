@@ -100,13 +100,13 @@ export default function MethodologyPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "منهجيتنا في التوثيق",
-          url: "https://majlisilm.com/methodology",
+          url: "https://www.ssunnah.com/methodology",
           description:
             "منهجية سُنّة: شارة «محتوى موثّق» عند وجود مصدر أو مرجع، ووسم صريح للمحتوى المولَّد آلياً.",
           publisher: {
             "@type": "Organization",
             name: "سُنّة",
-            url: "https://majlisilm.com",
+            url: "https://www.ssunnah.com",
           },
           about: {
             "@type": "Thing",
@@ -144,6 +144,21 @@ export default function MethodologyPage() {
           <time dateTime="2026-08-06">2026-08-06</time>
         </p>
       </header>
+
+      {/* منهجية المحتوى الشرعي في الواجهة العامة */}
+      <section className="mtd-section mtd-section--highlight">
+        <h2 className="mtd-section__title">منهجية المحتوى في الواجهة العامة</h2>
+        <ul className="mtd-guarantees">
+          <li>الاعتماد في العرض العام على القرآن الكريم والسنة الصحيحة والحسن المعتبر وما ثبت من الأذكار.</li>
+          <li>بيان درجة الحديث عند الحاجة بصياغة واضحة: «الحكم: صحيح» أو «الحكم: حسن» — بلا عبارات تقنية.</li>
+          <li>لا تُبنى العقائد والأحكام على حديث ضعيف أو موضوع أو لم يثبت؛ ولا يُستدل به في الترغيب والترهيب للعامة.</li>
+          <li>الضعيف وغير الثابت يُعرض فقط في أقسام تعليمية مُوسَمة (مثل /hadith/daif وأذكار التنبيه) مع إخلاء مسؤولية واضح.</li>
+          <li>مراجعة دورية للمحتوى؛ وما يثبت خطؤه يُصحَّح أو يُسحب من العرض العام فورًا.</li>
+        </ul>
+        <p className="mtd-section__body">
+          الشريط العلوي و«ورد اليوم» والتنبيهات تسحب من pools مُفلترة — لا من صفحات الضعيف.
+        </p>
+      </section>
 
       {/* لماذا الشفافية مهمة */}
       <section className="mtd-section">

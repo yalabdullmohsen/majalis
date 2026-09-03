@@ -172,7 +172,7 @@ function QuestionCard({
       const dir = question.type === "next-ayah" ? "next" : question.type === "prev-ayah" ? "prev" : null;
       if (dir) {
         fetchAdjacentAyah(question.surahNumber, question.ayahNumber, dir)
-          .then((ayah) => setAdjacentAyah(ayah?.text ?? "لا توجد آية"))
+          .then((ayah) => setAdjacentAyah(ayah?.text ?? "تعذّر تحميل نص الآية."))
           .catch(() => setAdjacentAyah("تعذّر التحميل"));
       }
     }
@@ -368,11 +368,11 @@ export default function QuranMemorizationPage() {
         "@type": "LearningResource",
         name: "اختبارات الحفظ القرآني",
         description: "12 نوعًا من اختبارات حفظ القرآن الكريم مع نظام المراجعة المتباعدة. محتوى معتمد في منهج سُنّة",
-        url: "https://majlisilm.com/quran-memorization",
+        url: "https://www.ssunnah.com/quran-memorization",
         inLanguage: "ar",
         educationalLevel: "Beginner",
         learningResourceType: "Quiz",
-        publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
+        publisher: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
       }],
     });
 

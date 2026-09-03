@@ -1,18 +1,21 @@
-/**
- * مصدر واحد لأوقات الصلاة والعدّ التنازلي — يمنع ٣ اشتراكات متوازية
- * (NavBar + جدولة الأذان + تنبيهات الصلاة) التي كانت ترفع TBT.
- */
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, useContext, useMemo, type ReactNode } from "react";
 import {
   usePrayerCountdownState,
   type PrayerCountdownValue,
 } from "@/hooks/usePrayerCountdown";
+import type { PrayerCountdown, PrayerTimesPayload } from "@/lib/prayer-times";
 
-const PrayerCountdownContext = createContext<PrayerCountdownValue | null>(null);
+type PrayerDataValue = {
+  data: PrayerTimesPayload | null;
+  loading: boolean;
+  reload: () => void;
+};
 
-const EMPTY: PrayerCountdownValue = {
+const PrayerDataContext = createContext<PrayerDataValue | null>(null);
+const PrayerCountdownLiveContext = createContext<PrayerCountdown | null>(null);
+
+const EMPTY_DATA: PrayerDataValue = {
   data: null,
-  countdown: null,
   loading: false,
   reload: () => {},
 };
@@ -24,15 +27,35 @@ export function PrayerCountdownProvider({
   children: ReactNode;
   governorateId?: string;
 }) {
-  const value = usePrayerCountdownState(governorateId);
+  const { data, countdown, loading, reload } = usePrayerCountdownState(governorateId);
+  const dataValue = useMemo(
+    () => ({ data, loading, reload }),
+    [data, loading, reload],
+  );
+
   return (
-    <PrayerCountdownContext.Provider value={value}>{children}</PrayerCountdownContext.Provider>
+    <PrayerDataContext.Provider value={dataValue}>
+      <PrayerCountdownLiveContext.Provider value={countdown}>
+        {children}
+      </PrayerCountdownLiveContext.Provider>
+    </PrayerDataContext.Provider>
   );
 }
 
-/** يستهلك السياق المشترك فقط — بلا شبكة/نبضة حتى يُفعَّل المزوّد. */
+/** بيانات المواقيت فقط — لا يُعاد الرسم كل ثانية. */
+export function useSharedPrayerData(): PrayerDataValue {
+  return useContext(PrayerDataContext) ?? EMPTY_DATA;
+}
+
+/** العدّ التنازلي الحي — للشريحة/البانر فقط. */
+export function useSharedPrayerCountdownLive(): PrayerCountdown | null {
+  return useContext(PrayerCountdownLiveContext);
+}
+
 export function useSharedPrayerCountdown(): PrayerCountdownValue {
-  return useContext(PrayerCountdownContext) ?? EMPTY;
+  const { data, loading, reload } = useSharedPrayerData();
+  const countdown = useSharedPrayerCountdownLive();
+  return { data, countdown, loading, reload };
 }
 
 /** نسخة مستقلة لصفحات المواقيت خارج السياق المؤجَّل. */

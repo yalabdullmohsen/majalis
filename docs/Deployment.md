@@ -1,4 +1,4 @@
-# Deployment — المجلس العلمي
+# Deployment — سُنّة
 
 ## Production path
 

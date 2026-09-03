@@ -5,7 +5,7 @@
 
 /** الشريط السفلي (بدون «المزيد» الذي يفتح الورقة/الصفحة). */
 export const IA_BOTTOM_TABS = [
-  { href: "/quran-hub", label: "القرآن الكريم" },
+  { href: "/quran-hub", label: "القرآن" },
   { href: "/lessons", label: "الدروس" },
   { href: "/prayer-times", label: "الصلاة" },
   { href: "/fiqh", label: "الفقه" },
@@ -13,12 +13,12 @@ export const IA_BOTTOM_TABS = [
 
 /** ستة أبواب رئيسية في الصفحة الرئيسية فقط. */
 export const IA_HOME_PRIMARY = [
-  { href: "/quran-hub", title: "القرآن الكريم", desc: "المصحف والتجويد والحفظ وعلوم القرآن" },
+  { href: "/quran-hub", title: "القرآن", desc: "المصحف والتجويد والحفظ وعلوم القرآن" },
   { href: "/lessons", title: "الدروس والدورات", desc: "دروس ودورات علمية منظمة" },
   { href: "/prayer-times", title: "مواقيت الصلاة", desc: "المواقيت والقبلة والأذان" },
   { href: "/fiqh", title: "الفقه والأحكام", desc: "الأحكام والقواعد والمجامع تحت باب واحد" },
   { href: "/adhkar", title: "الأذكار اليومية", desc: "أذكار الصباح والمساء وما بينهما" },
-  { href: "/more", title: "المزيد من العلوم", desc: "مكتبة وحديث وأعلام وسين جيم" },
+  { href: "/sections", title: "جميع الأقسام", desc: "مكتبة وحديث وأعلام وسين جيم" },
 ] as const;
 
 /** مسارات تُلغى من الاكتشاف العام وتُحوَّل بوضوح. */
@@ -42,6 +42,7 @@ export const IA_REDIRECTS: Record<string, string> = {
   "/quran/tajweed": "/quran-hub/tajweed",
   "/quran": "/quran-hub",
   "/anbiya": "/prophets",
+  "/more": "/#explore",
 };
 
 /** عناوين ممنوعة في الأسطح العامة (رئيسية / المزيد / تذييل / وصول سريع). */

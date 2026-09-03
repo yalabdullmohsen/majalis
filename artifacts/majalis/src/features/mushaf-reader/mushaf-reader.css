@@ -23,7 +23,7 @@
   --mushaf-ayah-mark-size: 0.92em;
 
   /* طبقات سفلية داخل القارئ */
-  --bottom-nav-height: 84px;
+  --bottom-nav-height: 64px;
   --reader-action-height: 96px;
   --audio-player-height: 112px;
   --safe-bottom: var(--inset-bottom, 0px);
@@ -103,11 +103,7 @@
 .nm-root[data-audio-dock="1"] {
   --reader-bottom-stack: calc(var(--audio-player-height) + var(--safe-bottom));
 }
-.nm-root[data-ayah-bar="1"][data-audio-dock="1"] {
-  --reader-bottom-stack: calc(
-    var(--reader-action-height) + var(--audio-player-height) + var(--safe-bottom)
-  );
-}
+/* لا نكدّس الارتفاعين — الرصيف يُخفى عند فتح قائمة الآية */
 
 .nm-page {
   position: relative;
@@ -643,16 +639,28 @@
   -webkit-backdrop-filter: none;
 }
 
-.nm-root[data-audio-dock="1"] .nm-verse-menu {
-  bottom: calc(var(--audio-player-height, 112px) + var(--safe-bottom, 0px));
+/* لا نكدّس قائمة الآية فوق رصيف التلاوة — أحدهما فقط */
+.nm-root[data-ayah-bar="1"] .mm-audio-dock {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateX(-50%) translate3d(0, 16px, 0);
 }
 
 .nm-root .mm-audio-dock {
-  background: var(--nm-paper) !important;
-  opacity: 1 !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  background: var(--nm-paper);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   min-height: var(--audio-player-height, 112px);
+}
+
+.nm-root .mm-audio-dock[data-open="1"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nm-root .mm-audio-dock:not([data-open="1"]) {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .nm-verse-menu__label {

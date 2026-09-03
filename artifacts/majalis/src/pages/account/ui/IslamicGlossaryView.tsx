@@ -1524,7 +1524,7 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
 
         <div className="gl-results-meta">
           {filtered.length === 0 ? (
-            <p className="gl-empty">لا توجد نتائج</p>
+            <p className="gl-empty">لا توجد نتائج مطابقة. جرّب كلمة أخرى.</p>
           ) : (
             <p className="gl-results-count">{formatArabicNumber(filtered.length)} مصطلح</p>
           )}
@@ -1627,7 +1627,7 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
       </section>
 
       <div className="twh-share">
-        <ShareButtons title="المعجم الإسلامي — سُنّة" url="https://majlisilm.com/islamic-glossary" />
+        <ShareButtons title="المعجم الإسلامي — سُنّة" url="https://www.ssunnah.com/islamic-glossary" />
       </div>
     </div>
     </SectionTemplatePage>

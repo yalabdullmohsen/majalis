@@ -157,10 +157,10 @@ console.log("\n=== JSON-LD للهجرة يشير لربيع الأول ===");
 {
   const page = readFileSync(resolve(appRoot, "src/views/OccasionsPage.tsx"), "utf-8");
   assert(
-    page.includes('name: "ذكرى الهجرة النبوية", url: "https://majlisilm.com/occasions?month=3"'),
+    page.includes('name: "ذكرى الهجرة النبوية", url: "https://www.ssunnah.com/occasions?month=3"'),
     "JSON-LD الهجرة → month=3",
   );
-  assert(!page.includes('الهجرة النبوية", url: "https://majlisilm.com/occasions?month=1"'),
+  assert(!page.includes('الهجرة النبوية", url: "https://www.ssunnah.com/occasions?month=1"'),
     "لا رابط JSON-LD للهجرة على month=1");
 }
 

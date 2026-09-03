@@ -230,7 +230,7 @@ export function buildLessonShareUrl(
       : `${window.location.origin}${lesson.detailsHref}`;
   const seconds = opts?.atSeconds;
   if (seconds == null || !Number.isFinite(seconds) || seconds <= 0) return base;
-  const url = new URL(base, typeof window !== "undefined" ? window.location.origin : "https://majlisilm.com");
+  const url = new URL(base, typeof window !== "undefined" ? window.location.origin : "https://www.ssunnah.com");
   url.searchParams.set("t", String(Math.floor(seconds)));
   return url.pathname + url.search;
 }
@@ -298,7 +298,7 @@ export function buildCalendarIcsFromUnified(lesson: UnifiedLesson): string {
     "PRODID:-//AlMajlisAlIlmi//Lessons//AR",
     "CALSCALE:GREGORIAN",
     "BEGIN:VEVENT",
-    `UID:${lesson.id}@majlisilm.com`,
+    `UID:${lesson.id}@ssunnah.com`,
     `DTSTAMP:${dt}T120000Z`,
     `DTSTART;VALUE=DATE:${dt}`,
     `SUMMARY:${lesson.title} — ${lesson.sheikhName}`,

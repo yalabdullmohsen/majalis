@@ -8,7 +8,7 @@
 
 | مسار | دور | في typecheck/build الجذري؟ |
 |---|---|---|
-| `artifacts/majalis` | ويب مجالس العلم (أساسي) | نعم |
+| `artifacts/majalis` | ويب سُنّة (أساسي) | نعم |
 | `artifacts/api-server` | Express/Vercel API | منفصل (يُبنى عند الحاجة في CI) |
 | `artifacts/majalis-mobile` | Expo | مستبعد |
 | `artifacts/majalis-pitch` | تسويق | مستبعد |

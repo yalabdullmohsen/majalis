@@ -95,11 +95,13 @@ export function BottomNavBar({ isHidden = false }: { isHidden?: boolean } = {}) 
             onFocus={() => triggerPrefetch(href)}
             onClick={() => {
               haptics.selection();
-              window.scrollTo(0, 0);
+              if (!active) {
+                window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+              }
             }}
           >
             <span className="bottom-nav__tab-icon" aria-hidden="true">
-              <Icon size={20} strokeWidth={active ? 2.25 : 1.75} aria-hidden={true} />
+              <Icon size={18} strokeWidth={active ? 2 : 1.5} aria-hidden={true} />
             </span>
             <span className="bottom-nav__tab-label">{soon ? "قريبًا" : label}</span>
           </Link>

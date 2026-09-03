@@ -22,10 +22,13 @@ try {
   // /sw-version.js missing or failed to load — keep the fallback above.
 }
 
-const OFFLINE_CACHE = `majlisilm-v${SW_BUILD_ID}-offline`;
-const DATA_CACHE    = `majlisilm-v${SW_BUILD_ID}-data`;
-const CACHE_PREFIX  = `majlisilm-v${SW_BUILD_ID}`;
-const VERSION_CACHE = "majlisilm-version";
+const OFFLINE_CACHE = `ssunnah-v${SW_BUILD_ID}-offline`;
+const DATA_CACHE    = `ssunnah-v${SW_BUILD_ID}-data`;
+const CACHE_PREFIX  = `ssunnah-v${SW_BUILD_ID}`;
+const VERSION_CACHE = "ssunnah-version";
+/** بقايا العلامة القديمة — تُحذف عند activate ولا تُستخدم في كاش جديد */
+const LEGACY_CACHE_PREFIXES = ["majlisilm-v", "majlisilm-startup-"];
+const LEGACY_CACHE_EXACT = ["majlisilm-version"];
 const FETCH_TIMEOUT = 8000;
 
 // External API routes served cache-first (Quran API data, prayer times)
@@ -56,8 +59,22 @@ const STATIC_SHELL_ASSETS = [
   "/icon-512.png",
   "/brand/icon-512-maskable.png",
   "/star-pattern.svg",
-  "/brand/official-og.png?v=20260825",
 ];
+
+/** عنوان الإشعار بلا اسم التطبيق — النظام يعرض الهوية في الرأس. */
+function swNotifTitle(title) {
+  const t = typeof title === "string" ? title.trim() : "";
+  if (!t) return "تذكير";
+  if (/^(سُنّة|سنّة|Majlisilm|majlisilm|ssunnah|المجلس\s*العلمي|مجالس\s*العلم)$/iu.test(t)) {
+    return "تذكير";
+  }
+  return (
+    t
+      .replace(/\s*[|·—,-]\s*(سُنّة|سنّة|Majlisilm|majlisilm|المجلس\s*العلمي|مجالس\s*العلم)\s*$/iu, "")
+      .replace(/\s+في (سُنّة|سنّة|المجلس\s*العلمي|مجالس\s*العلم)\.?$/iu, "")
+      .trim() || "تذكير"
+  );
+}
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -84,15 +101,17 @@ self.addEventListener("activate", (event) => {
       const prev = await verCache.match("/sw-version");
       const prevVersion = prev ? await prev.text() : null;
       const keys = await caches.keys();
+      const isLegacyCacheKey = (k) =>
+        k === "majalis-version" ||
+        k === "majalis-audio-v1" ||
+        k.startsWith("majalis-offline-") ||
+        k.startsWith("majalis-data-") ||
+        LEGACY_CACHE_EXACT.includes(k) ||
+        LEGACY_CACHE_PREFIXES.some((p) => k.startsWith(p)) ||
+        /intro|onboard|welcome|splash|boot-guide|first-?launch|first-?run/i.test(k);
+
       const hasLegacy = keys.some(
-        (k) =>
-          k === "majalis-version" ||
-          k === "majalis-audio-v1" ||
-          k.startsWith("majalis-offline-") ||
-          k.startsWith("majalis-data-") ||
-          k.startsWith("majlisilm-startup-") ||
-          /intro|onboard|welcome|splash|boot-guide|first-?launch|first-?run/i.test(k) ||
-          (k.startsWith("majlisilm-v") && !k.startsWith(CACHE_PREFIX)),
+        (k) => isLegacyCacheKey(k) || (k.startsWith("ssunnah-v") && !k.startsWith(CACHE_PREFIX)),
       );
       const isUpdate =
         (prevVersion !== null && prevVersion !== SW_BUILD_ID) || hasLegacy;
@@ -505,7 +524,13 @@ self.addEventListener("message", (event) => {
           const keys = await caches.keys();
           await Promise.all(
             keys
-              .filter((k) => k.startsWith("majlisilm-v") || k.startsWith("majalis-offline-") || k === OFFLINE_CACHE)
+              .filter(
+                (k) =>
+                  k.startsWith("ssunnah-v") ||
+                  LEGACY_CACHE_PREFIXES.some((p) => k.startsWith(p)) ||
+                  k.startsWith("majalis-offline-") ||
+                  k === OFFLINE_CACHE,
+              )
               .map((k) => caches.delete(k)),
           );
         } catch (_) {
@@ -533,7 +558,7 @@ self.addEventListener("message", (event) => {
             resolve();
             return;
           }
-          self.registration.showNotification(item.title || "سُنّة", {
+          self.registration.showNotification(swNotifTitle(item.title), {
             body: item.body || "",
             icon: "/logo.png?v=20260825",
             badge: "/favicon.png?v=20260825",
@@ -541,6 +566,7 @@ self.addEventListener("message", (event) => {
             lang: "ar",
             tag,
             renotify: true,
+            silent: false,
             data: { url: item.url || "/" },
           }).then(resolve).catch(resolve);
         }, Math.min(item.delayMs, 86_400_000));
@@ -570,9 +596,9 @@ self.addEventListener("message", (event) => {
           resolve();
           return;
         }
-        const cityLine = cityName ? ` — ${cityName}` : "";
+        const cityLine = cityName ? ` · ${cityName}` : "";
         self.registration.showNotification(`إقامة ${prayerArabic}${cityLine}`, {
-          body: `قد قامت الصلاة${cityName ? ` · ${cityName}` : ""}`,
+          body: `قد قامت صلاة ${prayerArabic}${cityName ? ` · ${cityName}` : ""}`,
           icon: "/logo.png?v=20260825",
           badge: "/favicon.png?v=20260825",
           dir: "rtl",
@@ -609,9 +635,9 @@ self.addEventListener("message", (event) => {
         resolve();
         return;
       }
-      const cityLine = cityName ? ` — ${cityName}` : "";
-      self.registration.showNotification(`حان وقت ${prayerArabic}${cityLine}`, {
-        body: `حيَّ على الصلاة، حيَّ على الفلاح${cityName ? ` · ${cityName}` : ""}`,
+      const cityLine = cityName ? ` · ${cityName}` : "";
+      self.registration.showNotification(`أذان ${prayerArabic}${cityLine}`, {
+        body: `حان وقت صلاة ${prayerArabic}${cityName ? ` · ${cityName}` : ""}`,
         icon: "/logo.png?v=20260825",
         badge: "/favicon.png?v=20260825",
         dir: "rtl",
@@ -638,9 +664,9 @@ self.addEventListener("message", (event) => {
 self.addEventListener("push", (event) => {
   if (!event.data) return;
   let payload;
-  try { payload = event.data.json(); } catch { payload = { title: "سُنّة", body: event.data.text() }; }
+  try { payload = event.data.json(); } catch { payload = { title: "تذكير", body: event.data.text() }; }
 
-  const title = payload.title || "سُنّة";
+  const title = swNotifTitle(payload.title);
   const options = {
     body: payload.body || "",
     icon: "/logo.png?v=20260825",

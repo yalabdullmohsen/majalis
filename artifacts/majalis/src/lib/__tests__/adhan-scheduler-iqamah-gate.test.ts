@@ -31,6 +31,8 @@ assert.doesNotMatch(scheduler, /madinah/);
 
 assert.match(sw, /CANCEL_ALL_ADHAN/);
 assert.match(sw, /SCHEDULE_IQAMAH/);
+assert.match(sw, /أذان \$\{prayerArabic\}/);
+assert.match(sw, /إقامة \$\{prayerArabic\}/);
 assert.match(sw, /_iqamahTimers/);
 
 assert.doesNotMatch(audio, /id:\s*"madinah"/);

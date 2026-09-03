@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import { ChevronDown, Pause, Play, SkipBack, SkipForward, X } from "lucide-react";
+import { Check, ChevronDown, Pause, Play, SkipBack, SkipForward, X } from "lucide-react";
 import type { PlayerState } from "@/core/audio/AudioEngine";
 import { DEFAULT_VERIFIED_RECITER_IDS } from "@/lib/audio-registry";
 import { useVerifiedReciters } from "@/hooks/useVerifiedReciters";
@@ -22,9 +22,13 @@ type Props = {
   onPrev: () => void;
   onNext: () => void;
   onReciterChange: (id: string) => void;
+  /** تشغيل فوري لقارئ من قائمة الاختيار */
+  onPlayReciter?: (id: string) => void;
   onClose?: () => void;
   onSeek?: (seconds: number) => void;
   onSpeed?: (rate: number) => void;
+  readersOpen?: boolean;
+  onReadersOpenChange?: (open: boolean) => void;
 };
 
 /** شريط تلاوة مضغوط أسفل المصحف — بلا وضع حفظ. */
@@ -41,12 +45,17 @@ export function MushafAudioDock({
   onPrev,
   onNext,
   onReciterChange,
+  onPlayReciter,
   onClose,
   onSeek,
   onSpeed,
+  readersOpen: readersOpenProp,
+  onReadersOpenChange,
 }: Props) {
   const { currentTime, duration, playbackRate } = useMushafAudioClock();
-  const [readersOpen, setReadersOpen] = useState(false);
+  const [readersOpenLocal, setReadersOpenLocal] = useState(false);
+  const readersOpen = readersOpenProp ?? readersOpenLocal;
+  const setReadersOpen = onReadersOpenChange ?? setReadersOpenLocal;
   const [readerQuery, setReaderQuery] = useState("");
   const playing = playerState === "playing" || playerState === "buffering" || playerState === "loading";
   const loading = playerState === "loading" || playerState === "buffering";
@@ -68,10 +77,15 @@ export function MushafAudioDock({
           : playerState === "ended"
             ? "انتهت التلاوة"
             : playerState === "error"
-              ? "فشل التحميل"
+              ? "تعذر تشغيل التلاوة الآن"
               : "جاهز");
   const progressMax = duration > 0 ? duration : 1;
   const progressVal = duration > 0 ? Math.min(duration, Math.max(0, currentTime)) : 0;
+
+  const closeReaders = () => {
+    setReadersOpen(false);
+    setReaderQuery("");
+  };
 
   return (
     <>
@@ -85,11 +99,9 @@ export function MushafAudioDock({
       >
         <div className="mm-audio-dock__head">
           <div className="mm-audio-dock__meta">
-            <p className="mm-audio-dock__reciter-name">{activeReciter?.nameAr ?? "اختر القارئ"}</p>
-            <p className="mm-audio-dock__verse">{verseLabel}</p>
-          </div>
-          <div className="mm-audio-dock__head-actions">
-            {mini ? null : (
+            {mini ? (
+              <p className="mm-audio-dock__reciter-name">{activeReciter?.nameAr ?? "اختر القارئ"}</p>
+            ) : (
               <button
                 type="button"
                 className="mm-audio-dock__reciter-btn"
@@ -98,10 +110,18 @@ export function MushafAudioDock({
                 aria-expanded={readersOpen}
                 onClick={() => setReadersOpen(true)}
               >
-                <span>القارئ</span>
+                <span className="mm-audio-dock__reciter-btn-name">
+                  {activeReciter?.nameAr ?? "اختر القارئ"}
+                </span>
+                {activeReciter?.qualityLabel ? (
+                  <span className="mm-audio-dock__reciter-btn-quality">{activeReciter.qualityLabel}</span>
+                ) : null}
                 <ChevronDown size={14} aria-hidden="true" />
               </button>
             )}
+            <p className="mm-audio-dock__verse">{verseLabel}</p>
+          </div>
+          <div className="mm-audio-dock__head-actions">
             {onClose ? (
               <button type="button" className="mm-audio-dock__close" onClick={onClose} aria-label="إغلاق المشغّل">
                 <X size={18} aria-hidden="true" />
@@ -176,38 +196,37 @@ export function MushafAudioDock({
           {statusLabel}
           {loading ? " · جاري تحميل التلاوة…" : ""}
           {audioError || playerState === "error"
-            ? ` · ${audioError || "تعذر تشغيل هذه الآية لهذا القارئ"}`
+            ? ` · ${audioError || "تعذر تشغيل التلاوة الآن"}`
             : ""}
         </p>
       </div>
 
       {readersOpen
         ? createPortal(
-            <div className="mm-reciter-sheet" role="dialog" aria-modal="true" aria-label="اختيار التلاوة">
+            <div
+              className="mm-reciter-sheet quran-sheet"
+              role="dialog"
+              aria-modal="true"
+              aria-label="اختيار التلاوة"
+            >
               <button
                 type="button"
-                className="mm-reciter-sheet__scrim"
+                className="mm-reciter-sheet__scrim quran-sheet__scrim"
                 aria-label="إغلاق قائمة القراء"
-                onClick={() => {
-                  setReadersOpen(false);
-                  setReaderQuery("");
-                }}
+                onClick={closeReaders}
               />
-              <div className="mm-reciter-sheet__panel">
-                <div className="mm-reciter-sheet__head">
+              <div className="mm-reciter-sheet__panel quran-sheet__panel">
+                <div className="quran-sheet__handle" aria-hidden="true" />
+                <div className="mm-reciter-sheet__head quran-sheet__head">
+                  <h2 className="mm-reciter-sheet__title quran-sheet__title">اختيار التلاوة</h2>
                   <button
                     type="button"
-                    className="mm-ayah-bar__close"
-                    onClick={() => {
-                      setReadersOpen(false);
-                      setReaderQuery("");
-                    }}
+                    className="mm-ayah-bar__close quran-sheet__close"
+                    onClick={closeReaders}
                     aria-label="إغلاق"
                   >
                     <X size={18} aria-hidden="true" />
                   </button>
-                  <h2 className="mm-reciter-sheet__title">اختيار التلاوة</h2>
-                  <span className="mm-reciter-sheet__meta" aria-hidden="true" />
                 </div>
                 <label className="mm-reciter-sheet__search">
                   <span className="sr-only">بحث عن قارئ</span>
@@ -215,29 +234,60 @@ export function MushafAudioDock({
                     type="search"
                     value={readerQuery}
                     onChange={(e) => setReaderQuery(e.target.value)}
-                    placeholder="بحث…"
+                    placeholder="ابحث عن قارئ…"
                   />
                 </label>
-                <p className="mm-reciter-sheet__hint">التلاوات</p>
-                <ul className="mm-reciter-sheet__list" role="listbox" aria-label="قائمة القراء">
-                  {filtered.map((r) => (
-                    <li key={r.id}>
-                      <button
-                        type="button"
-                        role="option"
-                        aria-selected={r.id === reciterId}
-                        className={r.id === reciterId ? "is-active" : undefined}
-                        onClick={() => {
-                          onReciterChange(r.id);
-                          setReadersOpen(false);
-                          setReaderQuery("");
-                        }}
-                      >
-                        <span>{r.nameAr}</span>
-                        <span className="mm-reciter-sheet__meta">{r.qualityLabel}</span>
-                      </button>
-                    </li>
-                  ))}
+                <p className="mm-reciter-sheet__hint">{verseLabel || "التلاوات"}</p>
+                <ul className="mm-reciter-sheet__list quran-reciter-list" role="listbox" aria-label="قائمة القراء">
+                  {filtered.map((r) => {
+                    const selected = r.id === reciterId;
+                    return (
+                      <li key={r.id} className={`quran-reciter-card${selected ? " is-selected" : ""}`}>
+                        <button
+                          type="button"
+                          role="option"
+                          aria-selected={selected}
+                          className={`mm-reciter-sheet__pick quran-reciter-card__pick quran-row${selected ? " is-active" : ""}`}
+                          onClick={() => {
+                            onReciterChange(r.id);
+                            closeReaders();
+                          }}
+                        >
+                          {selected ? (
+                            <Check size={16} aria-hidden="true" className="mm-reciter-sheet__check" />
+                          ) : null}
+                          <span className="mm-reciter-sheet__name">{r.nameAr}</span>
+                          <span className="mm-reciter-sheet__meta">{r.qualityLabel}</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="mm-reciter-sheet__play quran-reciter-card__play quran-btn quran-btn--icon"
+                          aria-label={
+                            selected && playing ? `إيقاف ${r.nameAr}` : `تشغيل ${r.nameAr}`
+                          }
+                          onClick={() => {
+                            if (selected && playing) {
+                              onTogglePlay();
+                              closeReaders();
+                              return;
+                            }
+                            if (onPlayReciter) onPlayReciter(r.id);
+                            else {
+                              onReciterChange(r.id);
+                              onTogglePlay();
+                            }
+                            closeReaders();
+                          }}
+                        >
+                          {selected && playing ? (
+                            <Pause size={16} aria-hidden="true" />
+                          ) : (
+                            <Play size={16} aria-hidden="true" />
+                          )}
+                        </button>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>,

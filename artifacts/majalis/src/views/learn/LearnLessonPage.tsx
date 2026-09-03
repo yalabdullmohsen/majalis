@@ -89,7 +89,7 @@ export default function LearnLessonPage() {
     return (
       <div className="page-shell lrn-cat">
         <p className="lrn-empty">هذا الدرس غير متاح حاليًا.</p>
-        <Link href="/learn" className="lrn-back-link">← العودة لأبواب العلم</Link>
+        <Link href="/learn" className="lrn-back-link">← العودة للدروس</Link>
       </div>
     );
   }
@@ -100,7 +100,7 @@ export default function LearnLessonPage() {
     <div className="page-shell lrn-lesson">
       {lesson.category && (
         <nav className="lrn-breadcrumb" aria-label="مسار التصفح">
-          <Link href="/learn">أبواب العلم</Link>
+          <Link href="/learn">الدروس</Link>
           <span><ChevronLeft size={13} aria-hidden="true" /><Link href={`/learn/${lesson.category.slug}`}>{lesson.category.name}</Link></span>
         </nav>
       )}

@@ -33,7 +33,7 @@ import "./styles/fonts-ui.css";
 import "./app/styles/theme.css";
 import "./styles/soft-cards.css";
 // page-hero / filters / hub-card تُحمَّل مع مكوّناتها (خارج CSS الحرج)
-// Majlisilm 2030 + طبقات الأساس (تُبقى كما هي — لا حذف في هذا الـPR)
+// Majlisilm 2030 + طبقات الأساس — foundation/navigation مؤجّلة (ليست حرجة لأول شاشة)
 import "./styles/brand-v4.css";
 // أزواج (سطح ← لون فوقه) — يشتق من brand-v4 ويجب أن يليه مباشرة
 import "./styles/tokens.css";
@@ -44,9 +44,6 @@ import "./styles/typography-scale.css";
 import "./styles/typography-app.css";
 import "./index.css";
 // contrast/a11y الثقيلة + صفحات متخصصة — بعد load (انظر loadNonCriticalCss)
-import "./styles/m2030/foundation.css";
-import "./styles/m2030/navigation.css";
-// m2030/pages.css + final-release.css — بعد load+idle (ليست حرجة لأول شاشة)
 // جسر aliases: يوجّه --brand/--em-* /shadcn إلى لوحة --mj-* (آخر شيء)
 import "./styles/theme-aliases.css";
 // dark-mode-surfaces (~24KB) — فوري فقط إن كان الثيم داكنًا عند الإقلاع؛ وإلا بعد load
@@ -78,18 +75,22 @@ if (
 
 // طبقات مظهر غير حرجة — بعد load + idle حتى لا تنافس LCP (كانت void import فوريًا)
 function loadNonCriticalCss() {
+  void import("./styles/m2030/foundation.css");
+  void import("./styles/m2030/navigation.css");
   void import("./styles/brand-v4-contrast-fixes.css");
   void import("./styles/a11y-release-gate.css");
   void import("./styles/index-deferred-pages.css");
   void import("./styles/design-system.css").then(() => {
     void import("./styles/brand-v4-components.css");
+    // بعد design-system حتمًا حتى لا يفوز blur(20px) على final-release
+    void import("./styles/final-release.css");
   });
   void import("./styles/components/instant-interaction.css");
   void import("./styles/components/compact-sources.css");
   void import("./styles/components/native-feel.css");
   void import("./styles/m2030/interactions.css");
   void import("./styles/m2030/pages.css");
-  void import("./styles/final-release.css");
+  // final-release يُحمَّل بعد design-system أعلاه — لا تحميل متوازٍ
   const isDark =
     document.documentElement.classList.contains("dark") ||
     document.documentElement.dataset.theme === "dark";

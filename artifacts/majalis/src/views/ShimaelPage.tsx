@@ -463,7 +463,7 @@ export default function ShimaelPage() {
             "@type": "ListItem",
             position: i + 1,
             name: b.title,
-            url: `https://majlisilm.com/shamael#khalq-${b.id}`,
+            url: `https://www.ssunnah.com/shamael#khalq-${b.id}`,
           })),
         },
       ],
@@ -723,7 +723,7 @@ export default function ShimaelPage() {
         )}
 
       <div className="twh-share">
-        <ShareButtons title="الشمائل المحمدية، سُنّة" url="https://majlisilm.com/shimail" />
+        <ShareButtons title="الشمائل المحمدية، سُنّة" url="https://www.ssunnah.com/shimail" />
       </div>
       <RelatedKnowledge kind="hadith" query="الشمائل المحمدية" title="أحاديث ومعارف ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">

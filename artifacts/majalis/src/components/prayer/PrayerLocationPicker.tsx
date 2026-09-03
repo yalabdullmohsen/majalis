@@ -134,7 +134,7 @@ export function PrayerLocationPicker({ onChanged }: Props) {
       <div className="pts-loc__modes">
         <button type="button" className="pts-loc__gps" onClick={useGps} disabled={gpsBusy}>
           <Crosshair size={14} aria-hidden />
-          {gpsBusy ? "جاري التحديد…" : "التحديد التلقائي (GPS)"}
+          {gpsBusy ? "جاري التحديد…" : "استخدم موقعي"}
         </button>
         {gpsError && <p className="pts-loc__err" role="alert">{gpsError}</p>}
       </div>

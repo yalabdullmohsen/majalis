@@ -19,6 +19,15 @@ import {
   DEFAULT_ALERT_SOUND,
 } from "../notifications/channels";
 import { TEST_NOTIFICATION_NATIVE_ID } from "../notifications/test-trigger";
+import {
+  DHIKR_PHRASE_NATIVE_ID_BASE,
+  DHIKR_PHRASE_SLOTS,
+} from "../dhikr-phrase-reminders";
+import {
+  NOTIFICATION_TITLE_FALLBACK,
+  notificationBodyWithoutBrand,
+  notificationTitleWithoutBrand,
+} from "../notifications/copy";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "../../..");
 
@@ -62,10 +71,46 @@ console.log("  ✓ Remote Push enabled (Capacitor)");
 // ── Channels / test ids ──
 assert.ok(CHANNEL_PRAYER.startsWith("majalis-"));
 assert.ok(CHANNEL_QURAN.startsWith("majalis-"));
-assert.ok(CHANNEL_GENERAL.startsWith("majalis-"));
+assert.equal(CHANNEL_GENERAL, "ssunnah-general");
 assert.equal(DEFAULT_ALERT_SOUND, "default");
 assert.equal(TEST_NOTIFICATION_NATIVE_ID, 99901);
+assert.equal(DHIKR_PHRASE_NATIVE_ID_BASE, 9401);
+assert.equal(DHIKR_PHRASE_SLOTS.length, 7);
 console.log("  ✓ channel + test trigger constants");
+
+{
+  assert.equal(notificationTitleWithoutBrand("سُنّة"), NOTIFICATION_TITLE_FALLBACK);
+  assert.equal(
+    notificationTitleWithoutBrand(["المجلس", "العلمي"].join(" ")),
+    NOTIFICATION_TITLE_FALLBACK,
+  );
+  assert.equal(notificationTitleWithoutBrand("Majlisilm"), NOTIFICATION_TITLE_FALLBACK);
+  assert.equal(notificationTitleWithoutBrand(""), "تذكير");
+  assert.equal(notificationTitleWithoutBrand("الحمد لله"), "الحمد لله");
+  assert.equal(notificationTitleWithoutBrand("أذان الفجر | سُنّة"), "أذان الفجر");
+  assert.equal(
+    notificationTitleWithoutBrand(["ورد يومي —", "المجلس", "العلمي"].join(" ")),
+    "ورد يومي",
+  );
+  assert.equal(notificationBodyWithoutBrand("3 بطاقة تنتظر مراجعتك اليوم في سُنّة."), "3 بطاقة تنتظر مراجعتك اليوم");
+  assert.equal(
+    notificationBodyWithoutBrand(["تذكير في", "المجلس", "العلمي."].join(" ")),
+    "تذكير",
+  );
+  console.log("  ✓ notification copy strips app brand");
+}
+
+{
+  const channelsSrc = read("src/lib/notifications/channels.ts");
+  assert.doesNotMatch(channelsSrc, /تذكيرات المجلس/, "channel name not legacy majlis");
+  assert.doesNotMatch(channelsSrc, /المجلس العلمي/, "channels free of forbidden brand");
+  assert.match(channelsSrc, /تذكيرات عامة/, "general channel renamed");
+  const plist = read("ios/App/App/Info.plist");
+  assert.match(plist, /<key>CFBundleDisplayName<\/key>\s*<string>سُنّة<\/string>/, "iOS display name سُنّة");
+  const androidName = read("android/app/src/main/res/values/strings.xml");
+  assert.match(androidName, /<string name="app_name">سُنّة<\/string>/, "Android app_name سُنّة");
+  console.log("  ✓ native + channel identity is سُنّة");
+}
 
 // ── Source gates: native hides web push; presentationOptions; Capacitor push wired ──
 {
@@ -133,10 +178,34 @@ console.log("  ✓ channel + test trigger constants");
   assert.match(quranSrc, /cancelNativeQuranReminder/, "cancel without flipping prefs");
   assert.match(quranSrc, /cancelNativeQuranReminder\(\)/, "ensure cancels when disabled");
 
+  const dhikr = read("src/lib/dhikr-phrase-reminders.ts");
+  assert.match(dhikr, /ensureDhikrPhraseRemindersScheduled/, "dhikr ensure helper");
+  assert.match(dhikr, /sound:\s*DEFAULT_ALERT_SOUND/, "dhikr sound set");
+  assert.match(dhikr, /repeats:\s*true/, "dhikr daily repeats");
+
+  const settingsDhikr = read("src/pages/account/ui/NotificationSettingsView.tsx");
+  assert.match(settingsDhikr, /تذكير الذكر/, "settings toggle for dhikr phrases");
+  assert.match(settingsDhikr, /dhikrPhraseReminder/, "prefs key wired in settings");
+
+  const swSrc = read("public/sw.js");
+  assert.match(swSrc, /function swNotifTitle/, "SW strips branded notification titles");
+  assert.doesNotMatch(swSrc, /title \|\| "سُنّة"/, "SW no brand title fallback");
+  assert.doesNotMatch(swSrc, /title:\s*"سُنّة"/, "SW push payload not branded");
+
   const boot = read("src/lib/notifications/native-bootstrap.ts");
   assert.match(boot, /localNotificationActionPerformed/, "tap listener");
   assert.match(boot, /bootstrapNativeNotifications/, "bootstrap export");
   assert.match(boot, /maybeRegisterRemotePush/, "remote push on boot");
+  assert.match(
+    nativePush,
+    /requestPermission/,
+    "native push supports opt-in permission request",
+  );
+  assert.match(
+    nativePush,
+    /options\?\.requestPermission/,
+    "boot path does not prompt unless requestPermission",
+  );
 
   console.log("  ✓ source architecture gates");
 }

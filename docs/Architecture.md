@@ -1,4 +1,4 @@
-# Architecture — مجالس العلم (Majalis Al-Ilm)
+# Architecture — سُنّة
 
 ## Stack (authoritative)
 

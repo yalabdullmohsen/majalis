@@ -6,6 +6,8 @@ import { Capacitor } from "@capacitor/core";
 import { openExternalUrl } from "@/lib/capacitor-utils";
 
 const APP_HOSTS = new Set([
+  "www.ssunnah.com",
+  "ssunnah.com",
   "majlisilm.com",
   "www.majlisilm.com",
   "localhost",
@@ -22,7 +24,11 @@ function isNative(): boolean {
 
 export function isAppHost(hostname: string): boolean {
   const h = hostname.toLowerCase().replace(/\.$/, "");
-  return APP_HOSTS.has(h) || h.endsWith(".majlisilm.com");
+  return (
+    APP_HOSTS.has(h) ||
+    h.endsWith(".majlisilm.com") ||
+    h.endsWith(".ssunnah.com")
+  );
 }
 
 export function resolveInternalPath(href: string, base = window.location.href): string | null {
@@ -81,12 +87,10 @@ export function installInAppNavigationGuard(): void {
       const href = a.getAttribute("href") || "";
       const internal = resolveInternalPath(href);
       if (internal) {
-        // حتى بدون target=_blank — الروابط المطلقة لنفس النطاق قد تعيد تحميل WebView
-        if (href.startsWith("http") || a.target === "_blank") {
-          event.preventDefault();
-          event.stopPropagation();
-          navigateInApp(internal);
-        }
+        // أي رابط لنطاقاتنا — داخل التطبيق فقط (لا Safari / لا إعادة تحميل بعيدة)
+        event.preventDefault();
+        event.stopPropagation();
+        navigateInApp(internal);
         return;
       }
 
@@ -103,4 +107,21 @@ export function installInAppNavigationGuard(): void {
     },
     true,
   );
+
+  // window.open لنطاقاتنا → تنقل داخلي (يمنع SFSafariViewController → Universal Link → ارتداد)
+  const w = window as unknown as { open: typeof window.open; __mjOpenPatched?: boolean };
+  if (!w.__mjOpenPatched) {
+    w.__mjOpenPatched = true;
+    const nativeOpen = window.open.bind(window);
+    window.open = ((url?: string | URL, target?: string, features?: string) => {
+      if (url != null) {
+        const internal = resolveInternalPath(String(url));
+        if (internal) {
+          navigateInApp(internal);
+          return null;
+        }
+      }
+      return nativeOpen(url, target, features);
+    }) as typeof window.open;
+  }
 }

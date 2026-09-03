@@ -70,9 +70,25 @@
       <button type="button" id="retry">إعادة المحاولة</button>
     </main>
     <script>
-      document.getElementById("retry").addEventListener("click", function () {
-        location.replace("https://majlisilm.com/");
-      });
+      (function () {
+        var LIVE = "https://www.ssunnah.com/";
+        function go() {
+          try {
+            // لا تُعد تحميل صفحة الخطأ نفسها — ارجع للنطاق الحي بلا redirect.
+            location.replace(LIVE);
+          } catch (e) {
+            location.href = LIVE;
+          }
+        }
+        document.getElementById("retry").addEventListener("click", go);
+        // إن بقي المستخدم هنا بسبب فشل شبكة مؤقت، أعد المحاولة تلقائيًا مرة واحدة.
+        try {
+          if (sessionStorage.getItem("mj.native-load-retry") !== "1") {
+            sessionStorage.setItem("mj.native-load-retry", "1");
+            setTimeout(go, 2500);
+          }
+        } catch (e2) {}
+      })();
     </script>
   </body>
 </html>

@@ -37,7 +37,7 @@ assert.deepEqual(
 );
 assert.deepEqual(
   BOTTOM_NAV_TABS.map((t) => t.label),
-  ["مركز القرآن", "الدروس", "الصلاة", "فقه", "الأقسام"],
+  ["القرآن", "الدروس", "الصلاة", "الفقه", "الأقسام"],
 );
 
 assert.deepEqual(MORE_IA_GROUP_TITLES.length, 7);
@@ -101,6 +101,10 @@ for (const [from, to] of Object.entries(IA_REDIRECTS)) {
     assert.equal(/path="\/courses"[^>]*>\s*<Redirect\s+to=["']\/["']/.test(app), false);
     continue;
   }
+  if (from === "/more") {
+    assert.match(app, /path="\/more"[^>]*>\s*<Redirect\s+to="\/#explore"/);
+    continue;
+  }
   const esc = from.replace(/\//g, "\\/");
   assert.match(app, new RegExp(`path="${esc}"[^>]*>\\s*<Redirect\\s+to="${to.replace(/\//g, "\\/")}"`));
   assert.equal(new RegExp(`path="${esc}"[^>]*>\\s*<Redirect\\s+to=["']\\/["']`).test(app), false);
@@ -109,6 +113,10 @@ for (const [from, to] of Object.entries(IA_REDIRECTS)) {
 const vercel = read("vercel.json");
 for (const source of Object.keys(IA_REDIRECTS)) {
   if (source === "/learning/paths") continue; // covered with /learning/paths entry
+  if (source === "/more") {
+    assert.match(vercel, /"source"\s*:\s*"\/more"[\s\S]{0,120}"destination"\s*:\s*"\/#explore"/);
+    continue;
+  }
   const re = new RegExp(
     `"source"\\s*:\\s*"${source.replace(/\//g, "\\/")}"[\\s\\S]{0,200}"destination"\\s*:\\s*"\\/lessons"|"destination"\\s*:\\s*"\\/quiz"`,
   );
@@ -144,7 +152,7 @@ for (const path of Object.keys(IA_REDIRECTS)) {
 if (existsSync(resolve(root, "public/sitemap.xml"))) {
   const sm = read("public/sitemap.xml");
   for (const path of Object.keys(IA_REDIRECTS)) {
-    assert.equal(sm.includes(`<loc>https://majlisilm.com${path}</loc>`), false, `sitemap بلا ${path}`);
+    assert.equal(sm.includes(`<loc>https://www.ssunnah.com${path}</loc>`), false, `sitemap بلا ${path}`);
   }
   assert.equal(sm.includes("/admin"), false);
 }

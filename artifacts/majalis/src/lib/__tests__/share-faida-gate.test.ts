@@ -11,10 +11,10 @@ import { buildFaidaShareText, whatsappShareUrl } from "../share-faida";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
-const text = buildFaidaShareText("كتاب الصلاة", "https://majlisilm.com/fiqh/books/salah");
+const text = buildFaidaShareText("كتاب الصلاة", "https://www.ssunnah.com/fiqh/books/salah");
 assert.match(text, /فائدة من سُنّة/);
 assert.match(text, /كتاب الصلاة/);
-assert.match(text, /https:\/\/majlisilm\.com/);
+assert.match(text, /https:\/\/www\.ssunnah\.com/);
 assert.doesNotMatch(text, /www\.majlisilm/);
 
 const wa = whatsappShareUrl(text);

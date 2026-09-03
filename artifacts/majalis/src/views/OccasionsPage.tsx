@@ -47,14 +47,14 @@ export default function OccasionsPage() {
           description: "تقويم الأعياد والمناسبات الدينية في الشهور الهجرية؛ محتوى معتمد في منهج سُنّة",
           numberOfItems: 12,
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "شهر رمضان المبارك", url: "https://majlisilm.com/occasions?month=9" },
-            { "@type": "ListItem", position: 2, name: "عيد الفطر المبارك", url: "https://majlisilm.com/occasions?month=10" },
-            { "@type": "ListItem", position: 3, name: "عيد الأضحى المبارك", url: "https://majlisilm.com/occasions?month=12" },
-            { "@type": "ListItem", position: 4, name: "ذكرى الهجرة النبوية", url: "https://majlisilm.com/occasions?month=3" },
-            { "@type": "ListItem", position: 5, name: "ليلة القدر", url: "https://majlisilm.com/occasions?month=9" },
-            { "@type": "ListItem", position: 6, name: "يوم عرفة", url: "https://majlisilm.com/occasions?month=12" },
-            { "@type": "ListItem", position: 7, name: "الأشهر الحرم", url: "https://majlisilm.com/occasions" },
-            { "@type": "ListItem", position: 8, name: "النصف من شعبان", url: "https://majlisilm.com/occasions?month=8" },
+            { "@type": "ListItem", position: 1, name: "شهر رمضان المبارك", url: "https://www.ssunnah.com/occasions?month=9" },
+            { "@type": "ListItem", position: 2, name: "عيد الفطر المبارك", url: "https://www.ssunnah.com/occasions?month=10" },
+            { "@type": "ListItem", position: 3, name: "عيد الأضحى المبارك", url: "https://www.ssunnah.com/occasions?month=12" },
+            { "@type": "ListItem", position: 4, name: "ذكرى الهجرة النبوية", url: "https://www.ssunnah.com/occasions?month=3" },
+            { "@type": "ListItem", position: 5, name: "ليلة القدر", url: "https://www.ssunnah.com/occasions?month=9" },
+            { "@type": "ListItem", position: 6, name: "يوم عرفة", url: "https://www.ssunnah.com/occasions?month=12" },
+            { "@type": "ListItem", position: 7, name: "الأشهر الحرم", url: "https://www.ssunnah.com/occasions" },
+            { "@type": "ListItem", position: 8, name: "النصف من شعبان", url: "https://www.ssunnah.com/occasions?month=8" },
           ],
         },
       ],
@@ -192,7 +192,7 @@ export default function OccasionsPage() {
 
       <RelatedKnowledge kind="lesson" query="المناسبات الإسلامية" title="دروس ومواد في المناسبات" limit={6} />
       <div className="twh-share">
-        <ShareButtons title="المناسبات الإسلامية — سُنّة" url="https://majlisilm.com/occasions" />
+        <ShareButtons title="المناسبات الإسلامية — سُنّة" url="https://www.ssunnah.com/occasions" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />

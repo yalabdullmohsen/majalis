@@ -144,6 +144,6 @@ export function makeFawaidItems({ round }) {
       text: `${topic.title} من مفاتيح ضبط باب ${topic.section}: ${topic.meaning}، ومن فقهه وصل العمل بالدليل ومراعاة مراتب الناس والأحوال دون غلو أو تهاون.${suffix}`,
       category: index % 2 === 0 ? topic.section : "طلب العلم",
       source: topic.reference,
-      author_name: index % 2 === 0 ? "أهل العلم" : "محررو مجالس العلم",
+      author_name: index % 2 === 0 ? "أهل العلم" : "محررو سُنّة",
     }));
 }

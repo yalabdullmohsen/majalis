@@ -38,7 +38,8 @@ function titleFromPath(path: string): string {
   "/islamic-glossary": "مفاهيم شرعية",
   "/quiz": "المسابقة",
   "/competitions": "المسابقات",
-  "/settings": "الإعدادات"
+  "/settings": "الإعدادات",
+  "/internal/status": "حالة المنصة"
 };
   if (known[path]) return known[path];
   const leaf = path.split("/").filter(Boolean).pop() ?? path;
@@ -187,6 +188,7 @@ const PATHS = [
   "/islamic-landmarks",
   "/islamic-sects",
   "/islamic-stories",
+  "/internal/status",
   "/janaza",
   "/janna-naar",
   "/jumuah",
@@ -435,7 +437,7 @@ function inferSection(path: string): AppRouteSection {
 }
 
 const SITEMAP_EXCLUDED =
-  /^\/(admin|dashboard|login|register|api|search|settings|account|auth)(\/|$)/;
+  /^\/(admin|dashboard|login|register|api|search|settings|account|auth|internal)(\/|$)/;
 
 export const ROUTE_REGISTRY: readonly AppRoute[] = PATHS.map((path) => ({
   path,

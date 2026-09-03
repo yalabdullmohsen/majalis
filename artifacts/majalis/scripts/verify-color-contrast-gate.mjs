@@ -176,6 +176,19 @@ const ASSERTIONS = [
   { route: "/janaza", selector: ".jnz-step__title", mode: "dark", min: 4.5 },
 ];
 
+function isHeaderAdEnabled() {
+  try {
+    const raw = readFileSync(resolve(appRoot, "src/config/header-ad.ts"), "utf8");
+    return /enabled:\s*true/.test(raw);
+  } catch {
+    return false;
+  }
+}
+
+const contrastAssertions = ASSERTIONS.filter(
+  (a) => isHeaderAdEnabled() || !String(a.selector).includes("header-ad-slot"),
+);
+
 /** مسارات عامة من seo-routes — فحص عنوان لكل مسار × وضعين (تغطية كاملة لا عيّنة). */
 const SEO_ROUTES_PATH = resolve(appRoot, "src/lib/seo-routes.json");
 function loadAllPublicRoutes() {
@@ -420,7 +433,7 @@ async function main() {
   const failures = [];
   let lastRoute = null;
 
-  for (const a of ASSERTIONS) {
+  for (const a of contrastAssertions) {
     try {
       if (lastRoute !== a.route) {
         await page.goto(`${baseUrl}${a.route}`, { waitUntil: "domcontentloaded", timeout: 30000 });
@@ -579,7 +592,7 @@ async function main() {
           try {
             localStorage.setItem("theme", "dark");
             localStorage.setItem("mj-theme", "dark");
-            localStorage.setItem("majlisilm.theme", "dark");
+            localStorage.setItem("majalis-theme", "dark");
           } catch { /* ignore */ }
           document.documentElement.dataset.theme = "dark";
           document.documentElement.classList.add("dark");
@@ -668,7 +681,7 @@ async function main() {
     } catch { /* missing ok */ }
   }
 
-  const totalChecks = ASSERTIONS.length + routeChecks;
+  const totalChecks = contrastAssertions.length + routeChecks;
   const baseline = loadContrastBaseline();
   const novel = failures.filter((f) => !baseline.known.has(violationKey(f)));
   const countGrew = failures.length > baseline.listed;
@@ -695,7 +708,7 @@ async function main() {
   }
 
   console.log(
-    `✓ بوابة انحدار تباين الألوان نجحت — ${ASSERTIONS.length} تأكيد انحدار + ${allRoutes.length} مسارًا عامًا (${routeChecks} قياس عنوان، تُجاهل ${routeSkipped} بلا عنوان قابل للقياس).`,
+    `✓ بوابة انحدار تباين الألوان نجحت — ${contrastAssertions.length} تأكيد انحدار + ${allRoutes.length} مسارًا عامًا (${routeChecks} قياس عنوان، تُجاهل ${routeSkipped} بلا عنوان قابل للقياس).`,
   );
 }
 

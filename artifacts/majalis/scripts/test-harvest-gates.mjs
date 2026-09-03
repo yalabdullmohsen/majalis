@@ -205,7 +205,7 @@ console.log("=== Instagram Bright Data fixture: منشور واحد عبر disco
               shortcode: "BdFixture1",
               url: "https://www.instagram.com/p/BdFixture1/",
               caption: "درس علمي — fixture Bright Data",
-              datetime: "2026-08-24T12:00:00.000Z",
+              datetime: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
               image_url: null,
             },
           ],

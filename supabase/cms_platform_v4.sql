@@ -1,5 +1,5 @@
 -- =====================================================================
---  المجلس العلمي — CMS Platform v4
+--  سُنّة — CMS Platform v4
 --  نظام إدارة محتوى + Content Aggregator + منع التكرار + Audit
 --  آمن لإعادة التشغيل — لا يحذف جداول أو بيانات
 --  نفّذ بعد: platform_v2_schema_fixed.sql + platform_expansion_v3.sql

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
-import { InstagramAcademyLink } from "@/components/InstagramAcademyLink";
 import { applyPageSeo } from "@/lib/seo";
 
 export default function AboutUsPage() {
@@ -17,13 +16,12 @@ export default function AboutUsPage() {
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "سُنّة",
-          url: "https://majlisilm.com",
-          logo: "https://majlisilm.com/brand/official.png?v=20260825",
+          url: "https://www.ssunnah.com",
+          logo: "https://www.ssunnah.com/brand/official.png?v=20260825",
           description: "منصة شرعية رقمية كويتية تجمع الدروس والأحكام الشرعية والقرآن والأذكار في مرجع موثوق",
           foundingDate: "2024",
           areaServed: { "@type": "Country", name: "الكويت" },
           inLanguage: "ar",
-          sameAs: ["https://www.instagram.com/Majlisalilm"],
         },
       ],
     });
@@ -31,7 +29,7 @@ export default function AboutUsPage() {
 
   return (
     <LegalPageLayout eyebrow="تعرّف علينا" title="من نحن" updatedAt="2026-08-05">
-      <LegalSection title="رسالة المجلس وغايته">
+      <LegalSection title="رسالة المنصة وغايتها">
         <p>
           سُنّة منصة شرعية رقمية كويتية أُسِّست لتكون مرجعاً علمياً موثوقاً يجمع بين
           الأصالة والحداثة؛ إذ تتضافر فيها الدروس الشرعية والمصحف الرقمي والأذكار المأثورة
@@ -77,11 +75,10 @@ export default function AboutUsPage() {
           ولسياسة البيانات راجع <Link href="/privacy">سياسة الخصوصية</Link>.
           ولمصادر البيانات والتراخيص راجع <Link href="/sources">المصادر والتراخيص</Link>.
         </p>
-        <InstagramAcademyLink />
       </LegalSection>
 
       <LegalBackLink />
-      <ShareButtons title="من نحن — سُنّة" url="https://majlisilm.com/about-us" />
+      <ShareButtons title="من نحن — سُنّة" url="https://www.ssunnah.com/about-us" />
     </LegalPageLayout>
   );
 }

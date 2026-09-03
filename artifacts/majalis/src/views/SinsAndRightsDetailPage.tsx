@@ -44,7 +44,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
           headline: topic.title,
           description: topic.shortDescription,
           inLanguage: "ar",
-          publisher: { "@type": "Organization", name: "سُنّة", url: "https://majlisilm.com" },
+          publisher: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
         },
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },

@@ -37,7 +37,7 @@
 .section-lobby__back {
   position: fixed;
   z-index: 185;
-  bottom: calc(var(--bottom-nav-height, 84px) + var(--inset-bottom, 0px) + 16px);
+  bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 16px);
   inset-inline-start: 1rem;
   inset-inline-end: auto;
   display: inline-flex;
@@ -135,13 +135,25 @@
   gap: 12px;
 }
 
-.section-lobby[data-lessons-hub="1"] .section-lobby__primary {
-  min-height: 64px;
+.section-lobby[data-lessons-hub="1"] .section-lobby__head {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-.section-lobby[data-lessons-hub="1"] .section-lobby__primary .card--featured {
-  min-height: 64px;
-  padding-block: 0.55rem;
+.section-lobby[data-lessons-hub="1"] .section-lobby__primary {
+  display: none;
+}
+
+.lessons-compact-section-header {
+  margin-inline: 0;
+  margin-block: 0 0.25rem;
 }
 
 .section-lobby[data-lessons-hub="1"] .section-lobby__chip {
@@ -179,6 +191,7 @@
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pinch-zoom;
   padding-bottom: 8px;
 }
 

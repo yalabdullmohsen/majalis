@@ -241,6 +241,7 @@ const { hashPrayerNotificationId } = await import("../prayer-notification-ids");
   assert.match(pre.body, /المغرب/);
   assert.match(pre.body, /١٥|15|بقي|دقائق/);
   assert.match(pre.body, /صلاة/);
+  assert.match(pre.body, /٦:٢٧|6:27/);
   const pre10 = buildScheduledPrayerNotificationCopy({
     kind: "pre",
     prayerName: "المغرب",
@@ -248,7 +249,8 @@ const { hashPrayerNotificationId } = await import("../prayer-notification-ids");
     minutesBefore: 10,
   });
   assert.equal(pre10.title, "اقترب وقت المغرب");
-  assert.equal(pre10.body, "بقي 10 دقائق على صلاة المغرب");
+  assert.match(pre10.body, /بقي 10 دقائق على صلاة المغرب/);
+  assert.match(pre10.body, /٦:٢٧|6:27/);
   const enter = buildScheduledPrayerNotificationCopy({
     kind: "enter",
     prayerName: "المغرب",
@@ -256,6 +258,7 @@ const { hashPrayerNotificationId } = await import("../prayer-notification-ids");
   });
   assert.match(enter.title, /أذان المغرب/);
   assert.match(enter.body, /حان وقت صلاة المغرب/);
+  assert.match(enter.body, /٦:٢٧|6:27/);
   console.log("  ✓ scheduled copy includes clock time");
 }
 
@@ -316,6 +319,7 @@ const { hashPrayerNotificationId } = await import("../prayer-notification-ids");
     ];
     const slots = listNativePrayerScheduleSlots(prayers, TZ);
     assert.equal(slots[0]?.slot.key, "Asr");
+    assert.ok(slots.length >= 8, "نافذة اليوم المتبقي + الغد");
     const asrEpoch = slots[0]!.epoch;
     const expected = epochAtZoneMinutes(TZ, parseHm("15:28"), new Date("2026-08-17T12:00:00+03:00"));
     assert.equal(asrEpoch, expected, "scheduler epoch ≡ epochAtZoneMinutes");

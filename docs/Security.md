@@ -1,4 +1,4 @@
-# Security — المجلس العلمي
+# Security — سُنّة
 
 ## Trust boundaries
 

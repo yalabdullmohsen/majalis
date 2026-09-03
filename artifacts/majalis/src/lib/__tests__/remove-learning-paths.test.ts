@@ -82,6 +82,6 @@ assert.equal(seoRoutes.includes('"/learning/paths/'), false, "seo-routes بلا 
 const sitemap = read("public/sitemap.xml");
 assert.equal(sitemap.includes("/learning/paths"), false, "sitemap بلا /learning/paths");
 assert.equal(sitemap.includes("/lessons/paths"), false, "sitemap بلا /lessons/paths");
-assert.match(sitemap, /https:\/\/majlisilm\.com\/lessons</, "sitemap يبقي /lessons");
+assert.match(sitemap, /https:\/\/www\.ssunnah\.com\/lessons</, "sitemap يبقي /lessons");
 
 console.log("remove-learning-paths.test.ts: ok");

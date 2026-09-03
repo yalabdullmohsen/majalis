@@ -8,6 +8,8 @@
  * - لا محتوى يخالف الشريعة أو يسيء لسمعة المنصة.
  * - المراجعة البشرية مطلوبة قبل نشر أي راعٍ حقيقي.
  */
+import { CONTACT_EMAIL } from "@/lib/site-config";
+
 export type HomepageAdConfig = {
   /** false = لا يُعرض الشريط نهائيًا */
   enabled: boolean;
@@ -31,7 +33,7 @@ export const homepageAdConfig: HomepageAdConfig = {
   description: "مساحة مخصصة للرعايات والإعلانات المتوافقة مع هوية سُنّة.",
   ctaLabel: "احجز إعلانك",
   ctaUrl:
-    "mailto:Majlisilm.app@gmail.com?subject=" +
+    `mailto:${CONTACT_EMAIL}?subject=` +
     encodeURIComponent("طلب إعلان — سُنّة") +
     "&body=" +
     encodeURIComponent("السلام عليكم،\nأرغب في الاستفسار عن مساحة إعلانية / رعاية في سُنّة.\n\n"),

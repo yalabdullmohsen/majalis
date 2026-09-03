@@ -12,15 +12,18 @@ import { Chip, SearchField, Badge } from "@/components/ui-common";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
-import { ContentHubLayout } from "@/components/layout/ContentHubLayout";
+import { PageShell } from "@/components/layout/PageShell";
 import { usePersistedState } from "@/hooks/usePersistedState";
 import { applyPageSeo } from "@/lib/seo";
+import { getRecentPages } from "@/lib/recent-pages";
 import { BookOpen, SortAsc, SortDesc, LayoutGrid, List } from "lucide-react";
 import "@/styles/pages/library.css";
 
 type SortKey = "title" | "author" | "newest";
 type ViewMode = "grid" | "list";
 type StatusFilter = "الكل" | LibraryContentStatus | "has_caution";
+
+const PAGE_SIZE = 48;
 
 const STATUS_CHIPS: { id: StatusFilter; label: string }[] = [
   { id: "الكل", label: "كل الحالات" },
@@ -121,7 +124,7 @@ export default function LibraryPage({
   const [category, setCategory] = usePersistedState("filters:/library:category", "الكل");
   const [statusFilter, setStatusFilter] = usePersistedState<StatusFilter>("filters:/library:status", "الكل");
   const [search, setSearch] = usePersistedState("filters:/library:search", "");
-  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [sortKey, setSortKey] = usePersistedState<SortKey>("filters:/library:sortKey", "newest");
   const [sortAsc, setSortAsc] = usePersistedState("filters:/library:sortAsc", true);
   const [view, setView] = useState<ViewMode>("grid");
@@ -172,7 +175,7 @@ export default function LibraryPage({
             "@type": "ListItem",
             position: i + 1,
             name: cat,
-            url: `https://majlisilm.com/library?cat=${encodeURIComponent(cat)}`,
+            url: `https://www.ssunnah.com/library?cat=${encodeURIComponent(cat)}`,
           })),
         },
       ],
@@ -210,6 +213,27 @@ export default function LibraryPage({
     return list;
   }, [items, search, sortKey, sortAsc, statusFilter]);
 
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [search, category, statusFilter, sortKey, sortAsc]);
+
+  const recentLibrary = useMemo(
+    () => getRecentPages(8).filter((p) => p.href.startsWith("/library/")),
+    [],
+  );
+
+  const suggested = useMemo(
+    () => items.filter((it) => it.contentStatus === "recommended").slice(0, 6),
+    [items],
+  );
+
+  const visibleItems = useMemo(
+    () => filtered.slice(0, visibleCount),
+    [filtered, visibleCount],
+  );
+
+  const hasMore = visibleCount < filtered.length;
+
   const SORT_OPTIONS: { key: SortKey; label: string }[] = [
     { key: "newest", label: "الأحدث" },
     { key: "title",  label: "العنوان" },
@@ -242,17 +266,40 @@ export default function LibraryPage({
   );
 
   return (
-    <ContentHubLayout
-      className="content-hub library-hub"
-      sectionRoute="/library"
-      eyebrow="الأرشيف العلمي"
-      title="المكتبة العلمية"
-      subtitle="كتب أساسية في الحديث والتفسير والعقيدة والفقه، مرتبة للتصفح. التنبيهات المنهجية تظهر عند الحاجة."
-      stats={isAdmin ? [{ label: "كتاب", value: filtered.length }] : []}
-      filters={filtersPanel}
-      filtersOpen={filtersOpen}
-      onFiltersOpenChange={setFiltersOpen}
-    >
+    <PageShell className="content-hub library-hub library-hub--compact">
+      <header className="library-hub__head">
+        <h1 className="library-hub__title">المكتبة العلمية</h1>
+        <p className="library-hub__lead">ابحث في الكتب أو اختر تصنيفًا للبدء.</p>
+      </header>
+
+      <div className="library-hub__filters" aria-label="بحث وتصفية المكتبة">
+        {filtersPanel}
+      </div>
+
+      {recentLibrary.length > 0 && !search.trim() && category === "الكل" && (
+        <section className="library-hub__recent" aria-label="آخر قراءة">
+          <h2 className="library-hub__section-title">آخر قراءة</h2>
+          <div className="library-hub__recent-links">
+            {recentLibrary.map((p) => (
+              <Link key={p.href} href={p.href} className="library-hub__recent-link">
+                {p.label}
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {suggested.length > 0 && !search.trim() && category === "الكل" && (
+        <section className="library-hub__suggested" aria-label="كتب مقترحة">
+          <h2 className="library-hub__section-title">كتب مقترحة</h2>
+          <div className={`lib-grid lib-grid--${view}`}>
+            {suggested.map((item: any) => (
+              <BookCard key={`suggested-${item.id}`} item={item} view={view} />
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* شريط الترتيب والعرض */}
       <div className="lib-toolbar" role="toolbar" aria-label="ترتيب وعرض الكتب">
         <div className="lib-toolbar__sort">
@@ -303,22 +350,40 @@ export default function LibraryPage({
         loading={loading}
         error={loadError}
         empty={!loading && !loadError && filtered.length === 0}
-        emptyText={items.length === 0 ? "لا توجد كتب حالياً" : "لا توجد نتائج مطابقة."}
+        emptyText={items.length === 0 ? "لا توجد كتب في المكتبة حاليًا." : "لا توجد نتائج مطابقة. جرّب كلمة أخرى أو أزل التصفية."}
         onRetry={loadLibrary}
       >
         <div className={`lib-grid lib-grid--${view}`}>
-          {filtered.map((item: any) => (
+          {visibleItems.map((item: any) => (
             <BookCard key={item.id} item={item} view={view} />
           ))}
           <AdminQuickEdit section="library" />
         </div>
       </PageLoadingGuard>
 
+      {hasMore && !loading && (
+        <div className="library-hub__more">
+          <button
+            type="button"
+            className="ui-card-btn"
+            onClick={() => setVisibleCount((n) => n + PAGE_SIZE)}
+          >
+            عرض المزيد ({filtered.length - visibleCount} متبقٍ)
+          </button>
+        </div>
+      )}
+
+      {isAdmin && (
+        <p className="lib-admin-count" aria-live="polite">
+          {filtered.length} كتاب في الفهرس
+        </p>
+      )}
+
       <p className="lib-review-note" role="note">
         فهرس المكتبة متاح للتصفح مع بيان المصدر والدرجة حيث وُجدت.
       </p>
       <div className="twh-share">
-        <ShareButtons title="المكتبة الإسلامية — سُنّة" url="https://majlisilm.com/library" />
+        <ShareButtons title="المكتبة الإسلامية — سُنّة" url="https://www.ssunnah.com/library" />
       </div>
       <RelatedKnowledge kind="book" query="مكتبة إسلامية" title="كتب ومواد ذات صلة" limit={6} />
       <ExploreAlsoNav
@@ -330,6 +395,6 @@ export default function LibraryPage({
           { href: "/lessons", label: "الدروس" },
         ]}
       />
-    </ContentHubLayout>
+    </PageShell>
   );
 }

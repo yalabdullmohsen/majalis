@@ -226,7 +226,7 @@ export default function IslamicLandmarksPage() {
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           name: "المشاهد الإسلامية والمساجد التاريخية",
-          url: "https://majlisilm.com/islamic-landmarks",
+          url: "https://www.ssunnah.com/islamic-landmarks",
           description:
             "مجموعة أبرز المشاهد الإسلامية والمساجد التاريخية حول العالم مع معلومات تاريخية مفصلة. محتوى معتمد في منهج سُنّة",
         },
@@ -419,7 +419,7 @@ export default function IslamicLandmarksPage() {
       )}
 
       <div className="ilm-share-wrap">
-        <ShareButtons title="المواقع الإسلامية التاريخية | سُنّة" url="https://majlisilm.com/islamic-landmarks" />
+        <ShareButtons title="المواقع الإسلامية التاريخية | سُنّة" url="https://www.ssunnah.com/islamic-landmarks" />
       </div>
     </div>
   );

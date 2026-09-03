@@ -26,8 +26,12 @@ function walk(dir, pred, out = []) {
 }
 
 const SKIP_EMAIL = /audit-content-quality|audit-contact-email|strip-lesson-filler/;
-const FORBIDDEN_EMAIL = [/info@majlisilm\.com/i, /yalabdullmohsen1@gmail\.com/i];
-const ALLOWED = /Majlisilm\.app@gmail\.com/i;
+const FORBIDDEN_EMAIL = [
+  /info@majlisilm\.com/i,
+  /Majlisilm\.app@gmail\.com/i,
+  /yalabdullmohsen1@gmail\.com/i,
+];
+const ALLOWED = /info@ssunnah\.com/i;
 
 for (const file of walk(root, (n) => /\.(tsx?|jsx?|mjs|json|html|md|css|sql)$/i.test(n))) {
   if (SKIP_EMAIL.test(file)) continue;
@@ -37,7 +41,7 @@ for (const file of walk(root, (n) => /\.(tsx?|jsx?|mjs|json|html|md|css|sql)$/i.
   }
 }
 const siteCfg = fs.readFileSync(path.join(root, "site.config.json"), "utf8");
-if (!ALLOWED.test(siteCfg)) fail("site.config.json يجب أن يستخدم Majlisilm.app@gmail.com");
+if (!ALLOWED.test(siteCfg)) fail("site.config.json يجب أن يستخدم info@ssunnah.com");
 
 const FORBIDDEN_PHRASES = [
   "تُربط سيرته بمقاصد القرآن",

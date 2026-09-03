@@ -281,7 +281,7 @@ html.dark .mm-viewport,
   box-sizing: border-box;
   display: flex;
   align-items: stretch;
-  justify-content: center;
+  justify-content: flex-start;
   transition: none;
 }
 
@@ -1399,7 +1399,7 @@ html.dark .mm-viewport .mm-page-footer__badge,
 }
 
 .mm-audio-dock__verse {
-  margin: 0;
+  margin: 0.1rem 0 0;
   font-size: 0.72rem;
   font-weight: 600;
   color: #4a4a4a;
@@ -1419,17 +1419,42 @@ html.dark .mm-viewport .mm-page-footer__badge,
   appearance: none;
   display: inline-flex;
   align-items: center;
-  gap: 0.2rem;
-  border: 1px solid #d5c4a1;
-  border-radius: 9999px;
-  background: #fff;
+  gap: 0.35rem;
+  max-width: 100%;
+  border: 1px solid color-mix(in srgb, #135034 22%, #d5c4a1);
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, #135034 8%, #fff);
   color: #0e3d27;
   font: inherit;
   font-weight: 700;
-  font-size: 0.72rem;
-  min-height: 36px;
-  padding: 0 0.55rem;
+  font-size: 0.82rem;
+  min-height: 40px;
+  padding: 0.3rem 0.65rem;
   cursor: pointer;
+  text-align: start;
+}
+
+.mm-audio-dock__reciter-btn-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mm-audio-dock__reciter-btn-quality {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: color-mix(in srgb, #0e3d27 62%, #6b7280);
+  padding: 0.1rem 0.4rem;
+  border-radius: 9999px;
+  background: color-mix(in srgb, #135034 10%, #fff);
+  border: 1px solid color-mix(in srgb, #135034 18%, transparent);
+}
+
+.mm-audio-dock__reciter-btn svg {
+  flex-shrink: 0;
+  opacity: 0.75;
 }
 
 .mm-audio-dock__close,
@@ -1949,16 +1974,15 @@ html.dark .mm-reciter-sheet__search input {
   min-height: 0;
 }
 
-.mm-reciter-sheet__list li {
+.mm-reciter-sheet__list li:not(.quran-reciter-card) {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 44px;
   gap: 0.35rem;
   align-items: center;
 }
 
-.mm-reciter-sheet__list li.is-selected .mm-reciter-sheet__pick {
-  background: color-mix(in srgb, var(--mm-ui-accent) 14%, var(--mm-paper));
-  border-color: color-mix(in srgb, var(--mm-ui-accent) 45%, transparent);
+.mm-reciter-sheet__list li.is-selected .mm-reciter-sheet__pick,
+.mm-reciter-sheet__list .quran-reciter-card.is-selected .mm-reciter-sheet__pick {
   color: var(--mm-ui-accent-deep, #0e3d27);
   font-weight: 700;
 }
@@ -1972,10 +1996,10 @@ html.dark .mm-reciter-sheet__search input {
   justify-content: flex-start;
   gap: 0.45rem;
   text-align: start;
-  padding: 0.7rem 0.85rem;
-  border-radius: 1.1rem;
-  border: 1px solid color-mix(in srgb, var(--mm-gold) 28%, transparent);
-  background: color-mix(in srgb, var(--mm-paper) 94%, #fff);
+  padding: 0.35rem 0.45rem;
+  border-radius: 0.85rem;
+  border: 0;
+  background: transparent;
   color: var(--mm-ink);
   font: inherit;
   font-size: 0.95rem;
@@ -2952,8 +2976,8 @@ html.dark .mm-goto__actions button[data-primary="1"] {
   user-select: none;
 }
 
-/* أخفِ نص المصحف حتى اكتمال قياس الخط — يحجز المساحة بلا قفزة حجم */
-.mm-page:not([data-mm-fit="1"]) .mm-page__body {
+/* أخفِ النص فقط عند data-mm-fit="0" الصريح — لا تُخفِ عند غياب السمة (يمنع قفزة التقليب) */
+.mm-page[data-mm-fit="0"] .mm-page__body {
   visibility: hidden;
 }
 
@@ -3598,6 +3622,61 @@ html.dark .mm-settings-sheet {
 .ayah-action-sheet a:not(.ayah-action-sheet__ai-tarteel) {
   color: var(--mm-ui-accent-deep, #135034);
 }
+
+/* مشغّل التلاوة — رسائل الخطأ والإجراءات */
+.quran-audio-player {
+  position: relative;
+}
+
+.quran-audio-player__fallback {
+  position: fixed;
+  inset-inline: 0.75rem;
+  bottom: calc(var(--inset-bottom, 0px) + 7.5rem);
+  z-index: 9998;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.65rem;
+  background: color-mix(in srgb, var(--mm-paper, #fff) 94%, #000);
+  border: 1px solid color-mix(in srgb, #c00 28%, transparent);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  pointer-events: auto;
+}
+
+.quran-audio-player__fallback p {
+  margin: 0 0 0.45rem;
+  font-weight: 600;
+  color: #8b1a1a;
+}
+
+.quran-audio-player__fallback-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.quran-audio-player__btn {
+  border: 1px solid color-mix(in srgb, var(--mm-ui-accent, #135034) 45%, transparent);
+  background: color-mix(in srgb, var(--mm-ui-accent, #135034) 10%, #fff);
+  color: var(--mm-ui-accent-deep, #0e3d27);
+  border-radius: 0.45rem;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mm-viewport[data-mushaf-theme="night"] .quran-audio-player__fallback,
+.mm-viewport[data-mushaf-theme="oled"] .quran-audio-player__fallback {
+  background: color-mix(in srgb, #1a1a1a 92%, #fff);
+  border-color: color-mix(in srgb, #f66 35%, transparent);
+}
+
+.mm-viewport[data-mushaf-theme="night"] .quran-audio-player__fallback p,
+.mm-viewport[data-mushaf-theme="oled"] .quran-audio-player__fallback p {
+  color: #ffb4b4;
+}
+
 .mm-pager-track.is-panning {
   will-change: scroll-position;
 }

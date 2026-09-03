@@ -1,5 +1,5 @@
 -- =====================================================================
---  المجلس العلمي — Auto Content Pipeline v2
+--  سُنّة — Auto Content Pipeline v2
 --  SEO metadata · pipeline runs · error logs · slug uniqueness
 --  نفّذ بعد auto_content_pipeline.sql
 -- =====================================================================

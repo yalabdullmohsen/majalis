@@ -219,7 +219,7 @@ export default function UlumQuranPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${f.label}: ${f.value}`,
-            url: `https://majlisilm.com/ulum-quran#fact-${i + 1}`,
+            url: `https://www.ssunnah.com/ulum-quran#fact-${i + 1}`,
           })),
         },
       ],
@@ -497,7 +497,7 @@ export default function UlumQuranPage() {
         )}
 
         <div className="twh-share">
-          <ShareButtons title="علوم القرآن الكريم — سُنّة" url="https://majlisilm.com/ulum-quran" />
+          <ShareButtons title="علوم القرآن الكريم — سُنّة" url="https://www.ssunnah.com/ulum-quran" />
         </div>
 
         {/* related */}

@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from "react";
+import { Fragment, useMemo, type Ref } from "react";
 import type { ReferenceWord } from "@/lib/recitation-ai/types";
 import { toArabicDigits } from "@/lib/utils";
 
@@ -22,6 +22,8 @@ type Props = {
   revealGranularity: "word" | "ayah" | "page";
   /** الآية التي اكتملت للتوّ — تُستخدَم للمسة الذهبية على رأس الآية. */
   justCompletedAyah?: number | null;
+  /** مرجع DOM للكلمة الحالية — للتمرير التلقائي أثناء التلاوة. */
+  cursorWordRef?: Ref<HTMLSpanElement>;
 };
 
 /**
@@ -54,7 +56,7 @@ type Props = {
  * ذاك يبقى لمسة ذهبية إضافية *مؤقتة* فوق التظليل الدائم عند إتمام الآية
  * للتوّ تحديدًا، لا بديلًا عنه).
  */
-export function InteractiveMushafReveal({ words, revealGranularity, justCompletedAyah }: Props) {
+export function InteractiveMushafReveal({ words, revealGranularity, justCompletedAyah, cursorWordRef }: Props) {
   const byAyah = useMemo(() => {
     const map = new Map<number, WordRevealInfo[]>();
     for (const w of words) {
@@ -108,6 +110,7 @@ export function InteractiveMushafReveal({ words, revealGranularity, justComplete
                 )}
                 <span
                   id={`rai-word-${w.word.surah}-${w.word.ayah}-${w.word.wordIndex}`}
+                  ref={isCursor && revealGranularity === "word" ? cursorWordRef : undefined}
                   className={[
                     "imr-word",
                     revealGranularity === "page"

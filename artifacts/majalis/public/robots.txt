@@ -1,4 +1,4 @@
-# https://majlisilm.com/robots.txt
+# https://www.ssunnah.com/robots.txt
 # سُنّة
 
 User-agent: *
@@ -25,6 +25,18 @@ Disallow: /vault
 Disallow: /api/
 Disallow: /search
 Disallow: /search/
+Disallow: /assistant
+Disallow: /assistant/
+Disallow: /knowledge-graph
+Disallow: /knowledge-graph/
+Disallow: /adhan-settings
+Disallow: /adhan-settings/
+Disallow: /fiqh-council/live
+Disallow: /fiqh-council/stats
+Disallow: /fiqh-council/compare
+Disallow: /fiqh-council/recommendations
+Disallow: /profile
+Disallow: /settings
 Disallow: /quran/recitation-test-ai
 Disallow: /fiqh-council/research-assistant
 Disallow: /fiqh-council/research
@@ -32,4 +44,4 @@ Disallow: /academic-research
 Disallow: /academic-research/
 Disallow: /fiqh-council/issues/genetic-testing-ancestry-ruling
 
-Sitemap: https://majlisilm.com/sitemap.xml
+Sitemap: https://www.ssunnah.com/sitemap.xml

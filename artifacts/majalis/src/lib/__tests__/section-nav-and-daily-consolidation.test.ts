@@ -31,17 +31,21 @@ function assert(condition: boolean, label: string) {
 
 console.log("\n=== TopSectionBar — مساحات موحّدة ===");
 {
-  assert(SECTION_TABS.length === 5, `5 مساحات في الشريط العلوي (الفعلي: ${SECTION_TABS.length})`);
+  assert(SECTION_TABS.length === 7, `7 عناصر في الشريط العلوي (الفعلي: ${SECTION_TABS.length})`);
   const hrefs = SECTION_TABS.map((t) => t.href);
   const labels = SECTION_TABS.map((t) => t.label);
+  assert(JSON.stringify(hrefs) === JSON.stringify(["/", "/lessons", "/quran-hub", "/adhkar", "/prayer-times", "/fiqh", "/search"]), "primaryNav في الشريط العلوي");
+  assert(JSON.stringify(labels) === JSON.stringify(["الرئيسية", "الدروس", "القرآن", "الأذكار", "الصلاة", "الفقه", "البحث"]), "تسميات موحّدة");
   assert(new Set(hrefs).size === hrefs.length, "لا تكرار في مسارات الأقسام");
-  assert(hrefs.includes("/quran-hub") && labels.includes("مركز القرآن الكريم"), "مساحة مركز القرآن الكريم");
+  assert(hrefs.includes("/quran-hub") && labels.includes("القرآن"), "مساحة القرآن");
   assert(hrefs.includes("/lessons") && labels.includes("الدروس"), "مساحة الدروس");
   assert(hrefs.includes("/prayer-times") && labels.includes("الصلاة"), "مساحة الصلاة");
-  assert(hrefs.includes("/fiqh") && (labels.includes("فقه") || labels.includes("الفقه والأحكام")), "مساحة فقه");
-  assert(hrefs.includes("/sections") && labels.includes("الأقسام"), "مساحة الأقسام");
+  assert(hrefs.includes("/fiqh") && labels.includes("الفقه"), "مساحة الفقه");
+  assert(hrefs.includes("/adhkar") && labels.includes("الأذكار"), "مساحة الأذكار");
+  assert(hrefs.includes("/search") && labels.includes("البحث"), "مساحة البحث");
+  assert(!hrefs.includes("/sections"), "الأقسام في الشريط السفلي فقط");
   assert(!hrefs.includes("/library"), "المكتبة خارج الشريط");
-  assert(!labels.includes("المزيد") && !labels.includes("قرآن"), "لا تسميات قديمة في الشريط");
+  assert(!labels.includes("المزيد"), "لا تسمية المزيد في الشريط");
 }
 
 console.log("\n=== isTabActive ===");
@@ -52,7 +56,8 @@ console.log("\n=== isTabActive ===");
   assert(isTabActive("/quran/surah-stories", "/quran-hub") === true, "قصص السور تحت قرآن");
   assert(isTabActive("/mushaf", "/quran-knowledge") === true, "توافق مسارات المعرفة");
   assert(isTabActive("/hadith", "/lessons") === false, "الحديث تحت المزيد لا الدروس");
-  assert(isTabActive("/adhkar", "/prayer-times") === true, "الأذكار تحت الصلاة");
+  assert(isTabActive("/adhkar", "/adhkar") === true, "الأذكار تبويب مستقل");
+  assert(isTabActive("/adhkar", "/prayer-times") === false, "الأذكار ليست تحت الصلاة");
   assert(isTabActive("/quiz", "/fiqh") === false, "سين جيم تحت المزيد لا فقه");
   assert(isTabActive("/qa", "/fiqh") === false, "مسار /qa لا يُحسب تحت فقه");
   assert(isTabActive("/quiz", "/quran-hub") === false, "سين جيم ليس تحت قرآن");
@@ -108,8 +113,7 @@ console.log("\n=== vercel redirects للتنظيف ===");
 console.log("\n=== PRIMARY_NAV ===");
 {
   const hrefs = PRIMARY_NAV_ITEMS.map((i) => i.href);
-  assert(hrefs.includes("/") && hrefs.includes("/quran-hub") && hrefs.includes("/fiqh"), "هيدر أساسي");
-  assert(hrefs.includes("/lessons") && hrefs.includes("/prayer-times"), "الدروس والصلاة في PRIMARY_NAV");
+  assert(JSON.stringify(hrefs) === JSON.stringify(["/", "/lessons", "/quran-hub", "/adhkar", "/prayer-times", "/fiqh", "/search"]), "PRIMARY_NAV موحّد");
   assert(!hrefs.includes("/library"), "لا مكتبة في PRIMARY_NAV");
 }
 
@@ -171,13 +175,11 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   assert(appSrc.includes("AcademicResearchPage") && !appSrc.includes('<Route path="/academic-research"><Redirect to="/"'),
     "صفحة الأبحاث مفعّلة بلا تحويل للرئيسية");
   assert(!homeSrc.includes("HomeAboutSection"), "من نحن خارج الرئيسية");
-  const footerNavSrc = readFileSync(resolve(appRoot, "src/lib/site-footer-nav.ts"), "utf-8");
+  const footerNavSrc = readFileSync(resolve(appRoot, "src/config/navigation.ts"), "utf-8");
   assert(footerSrc.includes("SITE_FOOTER_GROUPS") || footerSrc.includes("site-footer-nav"), "التذييل من مصدر المجموعات");
-  assert(footerNavSrc.includes("/about") && footerNavSrc.includes("/privacy"), "تذييل عن المجلس");
-  assert(footerNavSrc.includes("/lessons") && footerNavSrc.includes("/quiz"), "تذييل دروس/سين جيم");
-  assert(footerNavSrc.includes("SITE_FOOTER_GROUPS") && footerNavSrc.includes("الأقسام"), "تذييل رباعي المجموعات");
-  for (const title of ["الأقسام", "ابدأ", "الثقة", "قانوني"]) {
-    assert(footerNavSrc.includes(`title: "${title}"`), `مجموعة التذييل: ${title}`);
+  assert(footerNavSrc.includes("footerNav") && footerNavSrc.includes("الأقسام العلمية"), "التذييل من navigation.ts");
+  for (const title of ["الأقسام العلمية", "خدمات القرآن", "الدروس والبحث", "التواصل والسياسات"]) {
+    assert(footerNavSrc.includes(title), `مجموعة التذييل: ${title}`);
   }
   assert(!footerNavSrc.includes('title: "استكشف"'), "لا مجموعة خامسة في التذييل");
   for (const href of ["/methodology", "/fatwa-policy", "/about", "/privacy", "/contact"]) {
@@ -185,10 +187,12 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   }
   assert(
     appSrc.includes("SiteFooter") &&
-      appSrc.includes("{!hideSiteChrome && !isNative && <SiteFooter />}"),
+      (appSrc.includes("{!hideSiteChrome && !isNative && <SiteFooter />}") ||
+        appSrc.includes("DeferredSiteFooter")),
     "التذييل في غلاف التطبيق (ويب فقط — مخفي على Capacitor)",
   );
-  assert(footerNavSrc.includes("الريادة الإسلامية الرقمية"), "سطر الريادة في التذييل");
+  const footerWrapperSrc = readFileSync(resolve(appRoot, "src/lib/site-footer-nav.ts"), "utf-8");
+  assert(footerWrapperSrc.includes("الريادة الإسلامية الرقمية"), "سطر الريادة في التذييل");
   assert(
     moreSecSrc.includes("sections.registry") && servicesNavSrc.includes("sections.registry"),
     "مركز الخدمات/الأقسام من السجل",

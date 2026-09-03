@@ -3,7 +3,7 @@
     "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567801",
     "position": 1,
     "filepath": "src/pages/slides/Slide1Title.tsx",
-    "title": "مجالس العلم — العلم في متناولك",
+    "title": "سُنّة — العلم في متناولك",
     "description": "الشريحة الافتتاحية",
     "speakerNotes": ""
   },
@@ -19,7 +19,7 @@
     "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567803",
     "position": 3,
     "filepath": "src/pages/slides/Slide3Solution.tsx",
-    "title": "الحل — مجالس العلم",
+    "title": "الحل — سُنّة",
     "description": "ما تقدمه المنصة",
     "speakerNotes": ""
   },

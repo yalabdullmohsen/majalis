@@ -49,31 +49,29 @@ export default function LearnHubPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/learn",
-      title: "تعلّم | سُنّة",
+      title: "دروس التعلّم | سُنّة",
       description:
-        "بوابة التعلّم: الفقه والأحكام، السيرة النبوية، العقيدة، قصص الأنبياء، والأمم السابقة — مع فهرس أبواب العلم المنشورة.",
+        "دروس شرعية مفصّلة: الفقه والأحكام، السيرة النبوية، العقيدة، قصص الأنبياء، والأمم السابقة — مع فهرس الدروس المنشورة.",
       keywords: [
         "تعلّم",
-        "أبواب العلم",
+        "دروس شرعية",
+        "العقيدة",
         "الفقه والأحكام",
         "السيرة النبوية",
-        "العقيدة",
         "قصص الأنبياء",
-        "الأمم السابقة",
         "سُنّة",
       ],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          name: "تعلّم",
-          url: "https://majlisilm.com/learn",
-          description:
-            "أقسام التعلّم الأساسية وفهرس أبواب العلم المنشورة",
+          name: "دروس التعلّم",
+          url: "https://www.ssunnah.com/learn",
+          description: "دروس شرعية مفصّلة في العقيدة والفقه والسيرة وغيرها",
           hasPart: LEARN_SECTIONS.map((s) => ({
             "@type": "WebPage",
             name: s.label,
-            url: `https://majlisilm.com${s.href}`,
+            url: `https://www.ssunnah.com${s.href}`,
           })),
         },
       ],
@@ -98,9 +96,9 @@ export default function LearnHubPage() {
   return (
     <PageShell className="lrn-hub">
       <PageHeader
-        eyebrow="بوابة التعلّم"
-        title="تعلّم"
-        subtitle="اختر بابًا: الفقه والأحكام، السيرة، العقيدة، قصص الأنبياء، والأمم السابقة — أو تصفّح فهرس أبواب العلم المنشورة."
+        eyebrow="مكتبة الدروس"
+        title="دروس التعلّم"
+        subtitle="دروس عادية مفصّلة في العقيدة والفقه والسيرة وغيرها — بلا مسارات أو مداخل أو أبواب متسلسلة."
       />
 
       <nav className="lrn-hub-grid" aria-label="أقسام التعلّم">
@@ -115,16 +113,16 @@ export default function LearnHubPage() {
         ))}
       </nav>
 
-      <section className="lrn-hub-catalog" aria-label="فهرس أبواب العلم">
+      <section className="lrn-hub-catalog" aria-label="فهرس الدروس المنشورة">
         <div className="lrn-hub-catalog__head">
           <h2 className="lrn-hub-catalog__title">
-            <Layers size={18} aria-hidden="true" /> أبواب العلم المنشورة
+            <Layers size={18} aria-hidden="true" /> الدروس المنشورة
           </h2>
           {!loading && (
             <div className="lrn-hub-stats" aria-live="polite">
               <div className="lrn-hub-stat">
                 <strong>{tree.length}</strong>
-                <span>باب رئيسي</span>
+                <span>موضوع</span>
               </div>
               <span className="lrn-hub-stat-divider" aria-hidden="true" />
               <div className="lrn-hub-stat">
@@ -147,15 +145,15 @@ export default function LearnHubPage() {
             type="search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="ابحث في أبواب العلم المنشورة…"
-            aria-label="بحث في أبواب العلم"
+            placeholder="ابحث في الدروس والمواضيع…"
+            aria-label="بحث في الدروس"
           />
         </div>
 
         {loading ? (
           <SkeletonCardGrid count={6} />
         ) : filtered.length === 0 ? (
-          <p className="lrn-hub-empty">لا أبواب منشورة مطابقة للبحث حاليًا.</p>
+          <p className="lrn-hub-empty">لا دروس منشورة مطابقة للبحث حاليًا.</p>
         ) : (
           <div className="lrn-hub-grid">
             {filtered.map((cat) => (
@@ -169,9 +167,6 @@ export default function LearnHubPage() {
                   <span className="lrn-hub-card__badge">{cat.lessonCount} درس</span>
                   {cat.seriesCount > 0 && (
                     <span className="lrn-hub-card__badge lrn-hub-card__badge--muted">{cat.seriesCount} سلسلة</span>
-                  )}
-                  {cat.children.length > 0 && (
-                    <span className="lrn-hub-card__badge lrn-hub-card__badge--muted">{cat.children.length} فرع</span>
                   )}
                 </div>
               </Link>

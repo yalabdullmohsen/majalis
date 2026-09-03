@@ -99,23 +99,25 @@ export function shouldBypassSilentMode(): boolean {
 export async function cancelAdhanNotificationChain(opts?: {
   resumeInternal?: boolean;
   cancelledAtSegment?: number;
+  prayerKey?: PrayerKey;
 }): Promise<{ cancelledIds: number[]; resumed: boolean }> {
   if (_busy) return { cancelledIds: [], resumed: false };
   _busy = true;
   try {
+    const prayerKey = opts?.prayerKey ?? readResume()?.prayerKey;
     let cancelledIds: number[] = [];
     try {
       const { cancelAdhanIosSegmentChain } = await import("./adhan-ios-segments");
-      cancelledIds = await cancelAdhanIosSegmentChain();
+      cancelledIds = await cancelAdhanIosSegmentChain(prayerKey);
     } catch {
       /* ignore */
     }
 
-    // أندرويد: إلغاء منبّهات الصلوات إن وُجد الجسر
     try {
       const android = await import("./adhan-android-alarm");
-      const keys: PrayerKey[] = ["fajr", "dhuhr", "asr", "maghrib", "isha"];
-      await Promise.all(keys.map((k) => android.cancelAndroidFullAdhan(k)));
+      if (prayerKey) {
+        await android.cancelAndroidFullAdhan(prayerKey);
+      }
     } catch {
       /* غير أصلي */
     }
@@ -204,6 +206,11 @@ export async function onAdhanSegmentNotificationInteraction(extra: unknown): Pro
   await cancelAdhanNotificationChain({
     resumeInternal: true,
     cancelledAtSegment: segmentIndex,
+    prayerKey:
+      typeof e.prayerKey === "string" &&
+      ["fajr", "dhuhr", "asr", "maghrib", "isha"].includes(e.prayerKey.toLowerCase())
+        ? (e.prayerKey.toLowerCase() as PrayerKey)
+        : undefined,
   });
   return true;
 }
@@ -220,9 +227,12 @@ export async function attachAdhanSmartCancelListeners(): Promise<void> {
     const { App } = await import("@capacitor/app");
     await App.addListener("appStateChange", ({ isActive }) => {
       if (!isActive) return;
-      // فتح التطبيق أثناء سلسلة → ألغِ البقية وأكمل داخليًا إن وُجد سياق
       const ctx = readResume();
-      void cancelAdhanNotificationChain({ resumeInternal: Boolean(ctx) });
+      if (!ctx) return;
+      void cancelAdhanNotificationChain({
+        resumeInternal: true,
+        prayerKey: ctx.prayerKey,
+      });
     });
   } catch {
     /* ignore */
@@ -230,6 +240,19 @@ export async function attachAdhanSmartCancelListeners(): Promise<void> {
 
   try {
     const { LocalNotifications } = await import("@capacitor/local-notifications");
+    await LocalNotifications.addListener("localNotificationReceived", (n) => {
+      const extra = n.extra as { adhanSegment?: boolean; prayerKey?: string } | undefined;
+      const key = String(extra?.prayerKey || "").toLowerCase();
+      if (!extra?.adhanSegment || !["fajr", "dhuhr", "asr", "maghrib", "isha"].includes(key)) {
+        return;
+      }
+      const prayerKey = key as PrayerKey;
+      rememberAdhanResumeContext({
+        prayerKey,
+        muezzinId: getEffectiveMuezzinId(loadAdhanPrefs(), prayerKey),
+        isFajr: prayerKey === "fajr",
+      });
+    });
     await LocalNotifications.addListener("localNotificationActionPerformed", (event) => {
       void onAdhanSegmentNotificationInteraction(event.notification?.extra);
     });

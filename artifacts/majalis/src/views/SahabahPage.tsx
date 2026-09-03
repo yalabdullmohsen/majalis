@@ -1223,7 +1223,7 @@ export default function SahabahPage() {
             "@type": "ListItem",
             position: i + 1,
             name: s.name,
-            url: `https://majlisilm.com/sahabah#${s.id}`,
+            url: `https://www.ssunnah.com/sahabah#${s.id}`,
           })),
         },
       ],
@@ -1364,7 +1364,7 @@ export default function SahabahPage() {
         <SectionQuiz route="/sahabah" title="اختبر معلوماتك في الصحابة والسيرة" count={4} />
 
         <div className="twh-share">
-          <ShareButtons title="الصحابة الكرام — سُنّة" url="https://majlisilm.com/sahabah" />
+          <ShareButtons title="الصحابة الكرام — سُنّة" url="https://www.ssunnah.com/sahabah" />
         </div>
 
         {/* related */}

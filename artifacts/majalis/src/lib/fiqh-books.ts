@@ -191,6 +191,23 @@ export function listPublishedLessons(): FiqhLessonHit[] {
   return hits;
 }
 
+export function getFiqhLessonAny(bookId: string, lessonId: string): FiqhLessonHit | undefined {
+  const book = getFiqhBook(bookId);
+  if (!book) return undefined;
+  for (const chapter of book.chapters) {
+    const lesson = chapter.lessons.find((l) => l.id === lessonId);
+    if (!lesson) continue;
+    return {
+      lesson,
+      book,
+      chapter,
+      path: lessonPath(book, chapter, lesson),
+      href: lessonHref(book, lesson),
+    };
+  }
+  return undefined;
+}
+
 export function getFiqhLesson(bookId: string, lessonId: string): FiqhLessonHit | undefined {
   const book = getVisibleFiqhBook(bookId);
   if (!book) return undefined;

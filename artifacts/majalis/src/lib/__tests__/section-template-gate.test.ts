@@ -33,7 +33,6 @@ const HUB_PAGES: Array<[string, string]> = [
   ["المذكورون في القرآن", "src/pages/quran/ui/QuranPeopleView.tsx"],
   ["السيرة", "src/views/SeerahPage.tsx"],
   ["الأمم السابقة", "src/views/NationsPage.tsx"],
-  ["المكتبة", "src/pages/library/ui/LibraryView.tsx"],
   ["الرسائل", "src/views/AcademicResearchPage.tsx"],
   ["مفاهيم شرعية", "src/pages/account/ui/IslamicGlossaryView.tsx"],
   ["دليل الجامعات", "src/views/UniversitiesPage.tsx"],
@@ -121,6 +120,14 @@ for (const [label, rel] of HUB_PAGES) {
 
 const prayer = read("src/pages/worship/ui/PrayerTimesView.tsx");
 assert.doesNotMatch(prayer, /SectionTemplatePage/, "الصلاة مستثناة من قالب العقيدة");
+
+{
+  const library = read("src/pages/library/ui/LibraryView.tsx");
+  assert.match(library, /library-hub--compact/, "المكتبة: واجهة وظيفية مدمجة");
+  assert.match(library, /المكتبة العلمية/, "المكتبة: عنوان واضح");
+  assert.match(library, /SearchField/, "المكتبة: حقل بحث داخلي");
+  assert.doesNotMatch(library, /SectionTemplatePage|sectionRoute=/, "المكتبة: بلا لافتة قسم طويلة");
+}
 
 {
   const contrast = read("scripts/verify-color-contrast-gate.mjs");

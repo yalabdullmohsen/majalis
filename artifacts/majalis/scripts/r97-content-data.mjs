@@ -135,7 +135,7 @@ function makeFawaidItems() {
       text: `${topic.title} في باب ${topic.section} يربي طالب العلم على أن ${topic.meaning}، وأن العمل بالعلم يحتاج صدقا وتأنيا ومراعاة للمآلات بلا غلو ولا تضييع.${suffix}`,
       category: index % 2 === 0 ? topic.section : "طلب العلم",
       source: topic.reference,
-      author_name: index % 2 === 0 ? "أهل العلم" : "محررو مجالس العلم",
+      author_name: index % 2 === 0 ? "أهل العلم" : "محررو سُنّة",
     }));
 }
 

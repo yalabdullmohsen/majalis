@@ -34,7 +34,7 @@ export default function FiqhCouncilCategoriesPage() {
       title: "الفهرس الموضوعي للمجمع الفقهي | سُنّة",
       description: "تصفح قرارات وفتاوى المجمع الفقهي حسب الموضوع والتصنيف، العبادات والمعاملات والأسرة والمعاصر.",
       keywords: ["فهرس فقهي", "تصنيف فقهي", "أبواب الفقه", "مجمع فقهي", "قرارات فقهية"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الفهرس الموضوعي للمجمع الفقهي", url: "https://majlisilm.com/fiqh-council/index", about: { "@type": "Thing", name: "تصنيف الفقه الإسلامي المعاصر" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الفهرس الموضوعي للمجمع الفقهي", url: "https://www.ssunnah.com/fiqh-council/index", about: { "@type": "Thing", name: "تصنيف الفقه الإسلامي المعاصر" } }],
     });
   }, []);
 
@@ -121,7 +121,7 @@ export default function FiqhCouncilCategoriesPage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="تصنيفات مجلس الفقه — سُنّة" url="https://majlisilm.com/fiqh-council/categories" />
+        <ShareButtons title="تصنيفات مجلس الفقه — سُنّة" url="https://www.ssunnah.com/fiqh-council/categories" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/fiqh-council" title="اختبر معلوماتك في أبواب الفقه" count={4} />

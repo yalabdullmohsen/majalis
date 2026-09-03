@@ -144,6 +144,6 @@ export function makeFawaidItems({ round }) {
       text: `${topic.title} يعين على ضبط باب ${topic.section}: ${topic.meaning}، ومن فقهه الجمع بين تعظيم النص، ومعرفة حال المخاطب، ومراعاة المآلات بلا غلو ولا تضييع.${suffix}`,
       category: index % 2 === 0 ? topic.section : "طلب العلم",
       source: topic.reference,
-      author_name: index % 2 === 0 ? "أهل العلم" : "محررو مجالس العلم",
+      author_name: index % 2 === 0 ? "أهل العلم" : "محررو سُنّة",
     }));
 }

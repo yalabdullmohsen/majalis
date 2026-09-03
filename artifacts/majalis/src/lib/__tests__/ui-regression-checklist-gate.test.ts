@@ -23,10 +23,10 @@ const adCss = read("src/styles/components/header-ad-slot.css");
 // 1) لا تداخل مع BottomNav — حجز سفلي على #main-content
 assert.match(
   finalCss,
-  /#main-content\.app-main[\s\S]*?padding-block-end:\s*calc\(\s*var\(--bottom-nav-height,\s*84px\)/,
+  /#main-content\.app-main[\s\S]*?padding-block-end:\s*calc\(\s*var\(--bottom-nav-height,\s*64px\)/,
   "حجز سفلي على #main-content",
 );
-assert.match(topChrome, /--bottom-nav-height:\s*84px/, "ارتفاع شريط موحّد 84px");
+assert.match(topChrome, /--bottom-nav-height:\s*64px/, "ارتفاع شريط موحّد 64px");
 assert.match(theme, /--content-pb:\s*calc\(\s*var\(--bottom-nav-height/, "--content-pb معرّف");
 
 // 2) شريط سفلي صلب

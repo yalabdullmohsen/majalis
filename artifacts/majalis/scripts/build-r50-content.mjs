@@ -112,7 +112,7 @@ if (fawaidPicked.length < 25) throw new Error(`Only ${fawaidPicked.length} fawai
 const quizLines = quizPicked.map((q, i) => {
   const id = String(1315 + i);
   const answer = padAnswer(q.answer, 55);
-  const ref = q.reference || "مراجع مجالس العلم";
+  const ref = q.reference || "مراجع سُنّة";
   const explanation = q.explanation || `يُستفاد منه في باب ${q.category || "عام"}.`;
   return `  { id: "${id}", section: "${esc(q.section)}", category: "${esc(q.category || "عام")}", level: "${esc(q.level || "متوسط")}", question: "${esc(q.question)}", answer: "${esc(answer)}", explanation: "${esc(explanation)}", reference: "${esc(ref)}" }`;
 });

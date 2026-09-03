@@ -107,7 +107,7 @@ export default function ScholarlyResearchPage() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "الباحث الشرعي",
-          url: "https://majlisilm.com/scholarly-research",
+          url: "https://www.ssunnah.com/scholarly-research",
           description: "محرك بحث شرعي ذكي بتقنية RAG للبحث في المصادر الإسلامية",
           applicationCategory: "EducationalApplication",
           inLanguage: "ar",
@@ -173,7 +173,7 @@ export default function ScholarlyResearchPage() {
 
   const handleSave = useCallback(async () => {
     if (!result || !isLoggedIn) {
-      setSaveMsg(isLoggedIn ? "لا توجد نتائج للحفظ" : "يجب تسجيل الدخول أولاً");
+      setSaveMsg(isLoggedIn ? "لا توجد نتائج بحث للحفظ. نفّذ بحثًا أولًا." : "يجب تسجيل الدخول أولاً");
       return;
     }
     setSaveMsg("جارٍ الحفظ…");
@@ -490,7 +490,7 @@ export default function ScholarlyResearchPage() {
       </div>
 
       <div className="twh-share">
-        <ShareButtons title="الباحث الشرعي — سُنّة" url="https://majlisilm.com/scholarly-research" />
+        <ShareButtons title="الباحث الشرعي — سُنّة" url="https://www.ssunnah.com/scholarly-research" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz route="/research" title="اختبر معلوماتك في العلوم الشرعية" count={4} />

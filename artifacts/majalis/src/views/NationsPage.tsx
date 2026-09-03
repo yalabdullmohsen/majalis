@@ -49,7 +49,7 @@ export default function NationsPage() {
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           name: "الأمم السابقة",
-          url: "https://majlisilm.com/nations",
+          url: "https://www.ssunnah.com/nations",
           numberOfItems: NATIONS.length,
         },
       ],
@@ -175,7 +175,7 @@ export default function NationsPage() {
       )}
 
       <div className="nations-share">
-        <ShareButtons title="الأمم السابقة — سُنّة" url="https://majlisilm.com/nations" />
+        <ShareButtons title="الأمم السابقة — سُنّة" url="https://www.ssunnah.com/nations" />
       </div>
     </div>
     </SectionTemplatePage>

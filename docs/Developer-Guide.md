@@ -1,4 +1,4 @@
-# Developer Guide — المجلس العلمي
+# Developer Guide — سُنّة
 
 ## Prerequisites
 

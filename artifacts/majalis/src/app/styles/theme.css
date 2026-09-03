@@ -116,7 +116,7 @@
   --app-header-height: var(--header-chrome);
   --search-height: 0px;
   --ticker-height: 2.65rem;
-  --bottom-nav-height: 84px;
+  --bottom-nav-height: 64px;
   --nav-chrome: 64px;
   --header-h: calc(var(--header-chrome) + var(--inset-top) + var(--ad-banner-height, 0px));
   --nav-h: calc(var(--nav-chrome) + var(--inset-bottom));
@@ -167,7 +167,7 @@
   --gutter-inline-end: max(var(--inset-left), 16px);
   --header-chrome: 56px;
   --nav-chrome: 64px;
-  --bottom-nav-height: 84px;
+  --bottom-nav-height: 64px;
   --top-sponsor-content-h: 48px;
   --ad-banner-height: 0px;
   --header-h: calc(var(--header-chrome) + var(--inset-top) + var(--ad-banner-height, 0px));
@@ -374,6 +374,17 @@ html.dark,
   --color-hairline: #35443F;
   --color-ink: #F8FAFC;
   --color-ink-2: #E2E8F0;
+  --color-surface-elevated: #222D29;
+  --color-text: #F8FAFC;
+  --color-text-muted: #C5D0CB;
+  --color-border: #35443F;
+  --color-primary: #5CC095;
+  --color-primary-foreground: #06231A;
+  --color-primary-deep: #8FD4B0;
+  --color-button-secondary-bg: #222D29;
+  --color-button-secondary-text: #F8FAFC;
+  --color-button-secondary-border: #445651;
+  --color-placeholder: #C5D0CB;
   --color-muted: #C5D0CB;
   --color-brand: #5CC095;
   --color-brand-soft: #16261F;
@@ -923,7 +934,7 @@ html.dark .mj-btn--ghost {
   opacity: 1 !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  border-radius: 1.25rem 1.25rem 0 0;
+  border-radius: 0.875rem 0.875rem 0 0;
 }
 .mj-nav-skin a[aria-current="page"],
 .mj-nav-skin .is-active {
@@ -932,8 +943,8 @@ html.dark .mj-btn--ghost {
 
 /* شريط سفلي — أهداف لمس + spring خفيف */
 .bottom-nav--v2 .bottom-nav__tab {
-  min-width: var(--mj-touch-min, 48px);
-  min-height: var(--mj-touch-min, 48px);
+  min-width: 44px;
+  min-height: 44px;
   transition:
     transform var(--mj-dur-fast, 140ms) var(--mj-ease-spring, ease),
     color var(--mj-dur-fast, 140ms) ease,

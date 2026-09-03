@@ -37,7 +37,7 @@ export default async function handler(req, res) {
   if (!auth) return;
 
   const registry = JSON.parse(readFileSync(REGISTRY_PATH, "utf8"));
-  const base = registry.productionUrl || "https://majlisilm.com";
+  const base = registry.productionUrl || "https://www.ssunnah.com";
 
   const health = await getPlatformHealth({ skipRemote: false });
   const bootstrapStatus = await getPlatformBootstrapStatus();

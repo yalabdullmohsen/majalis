@@ -4,7 +4,7 @@ globs: artifacts/majalis/src/**/*.{tsx,css}
 alwaysApply: false
 ---
 
-# المجلس العلمي — وصول
+# سُنّة — وصول
 
 - WCAG 2.2: تباين ≥4.5:1 نهاراً وليلاً؛ لا اعتماد على اللون وحده.
 - كل هدف لمس ≥44×44px؛ `aria-label` لكل زر أيقوني؛ focus مرئي.

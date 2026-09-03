@@ -9,9 +9,9 @@ import { addSubscriber, removeSubscriber } from "../../telegram/subscriber-servi
 import { sendMessage } from "../../telegram/bot.mjs";
 import { storeRawMessage } from "../../telegram/channel-monitor.mjs";
 
-const WELCOME = `🕌 <b>أهلاً بك في مجالس!</b>
+const WELCOME = `🕌 <b>أهلاً بك في سُنّة!</b>
 
-تطبيق العلم الشرعي — دروس، مجالس، وعلم نافع.
+تطبيق العلم الشرعي — دروس وقرآن وعلم نافع.
 
 ستصلك إشعارات الدروس والمحتوى الجديد تلقائياً.
 
@@ -19,7 +19,7 @@ const WELCOME = `🕌 <b>أهلاً بك في مجالس!</b>
 
 const GOODBYE = `تم إلغاء اشتراكك بنجاح.\n\nأرسل /start للاشتراك مجدداً في أي وقت.`;
 
-const HELP = `🕌 <b>مجالس — تطبيق العلم الشرعي</b>
+const HELP = `🕌 <b>سُنّة — تطبيق العلم الشرعي</b>
 
 /start — الاشتراك في الإشعارات
 /stop — إلغاء الاشتراك

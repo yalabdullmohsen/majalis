@@ -2,14 +2,14 @@
  * إخفاء/إظهار القائمة السفلية تلقائيًا حسب اتجاه التمرير.
  * يعيد: isHidden · showNav · hideNav
  *
- * عتبة 10px لتقليل التذبذب · يحترم المودال/البحث/الحقول ·
+ * عتبة 24px لتقليل التذبذب · يحترم المودال/البحث/الحقول ·
  * يستمع لتمرير window والحاويات الداخلية (capture).
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { resolveShouldHideChrome } from "./useScrollDirection";
 
 const TOP_SHOW_PX = 24;
-const DELTA_PX = 10;
+const DELTA_PX = 24;
 const BOTTOM_EDGE_SHOW_PX = 28;
 
 export type AutoHideBottomNavApi = {
@@ -135,6 +135,15 @@ export function useAutoHideBottomNav(options?: {
       showNav();
     };
 
+    const onTapShow = (e: MouseEvent | TouchEvent) => {
+      if (forceShowNow()) return;
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest("input, textarea, select, button, a, [role='button'], [role='link']")) return;
+      if (target.closest(".navbar-v3, .bottom-nav, .bottom-nav--v2")) return;
+      showNav();
+    };
+
     const onTouchStart = (e: TouchEvent) => {
       const t = e.touches[0];
       if (!t) return;
@@ -142,12 +151,22 @@ export function useAutoHideBottomNav(options?: {
       if (fromBottom <= BOTTOM_EDGE_SHOW_PX) showNav();
     };
 
+    let resizeRaf = 0;
+    const onResize = () => {
+      if (resizeRaf) return;
+      resizeRaf = window.requestAnimationFrame(() => {
+        resizeRaf = 0;
+        onForceShow();
+      });
+    };
+
     // capture: يلتقط تمرير الحاويات الداخلية + window
     document.addEventListener("scroll", onScroll, { passive: true, capture: true });
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("focusin", onForceShow);
-    window.addEventListener("resize", onForceShow, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
     window.addEventListener("touchstart", onTouchStart, { passive: true });
+    document.addEventListener("click", onTapShow, { passive: true, capture: true });
 
     const mo = new MutationObserver(() => {
       if (forceShowNow()) onForceShow();
@@ -158,11 +177,13 @@ export function useAutoHideBottomNav(options?: {
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
       document.removeEventListener("scroll", onScroll, true);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("focusin", onForceShow);
-      window.removeEventListener("resize", onForceShow);
+      window.removeEventListener("resize", onResize);
       window.removeEventListener("touchstart", onTouchStart);
+      document.removeEventListener("click", onTapShow, true);
       mo.disconnect();
     };
   }, [forceShowProp, showNav]);

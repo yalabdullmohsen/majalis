@@ -397,7 +397,7 @@ export default function InstitutionsPage() {
             "@type": "ListItem",
             position: i + 1,
             name: `${inst.name} — ${inst.city}`,
-            url: `https://majlisilm.com/institutions#${inst.id}`,
+            url: `https://www.ssunnah.com/institutions#${inst.id}`,
           })),
         },
       ],
@@ -480,7 +480,7 @@ export default function InstitutionsPage() {
         </p>
 
         <div className="twh-share">
-          <ShareButtons title="المؤسسات الإسلامية — سُنّة" url="https://majlisilm.com/institutions" />
+          <ShareButtons title="المؤسسات الإسلامية — سُنّة" url="https://www.ssunnah.com/institutions" />
         </div>
         <div className="px-4 pb-6 mt-4">
           <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في العلوم الإسلامية" count={4} />

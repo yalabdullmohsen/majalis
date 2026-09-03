@@ -66,15 +66,35 @@ jobs:
           corepack enable
           corepack prepare --activate
 
+      - name: Confirm CI Verify build (push — تخطّي build مكرر)
+        id: ci_gate
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          ok=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${{ github.sha }}/check-runs" \
+            --jq '[.check_runs[] | select(.name=="Verify build" and .conclusion=="success")] | length' || echo "0")
+          if [ "$ok" != "0" ]; then
+            echo "skip_build=true" >> "$GITHUB_OUTPUT"
+            echo "CI Verify build أخضر — لا build محلي مكرر"
+          else
+            echo "skip_build=false" >> "$GITHUB_OUTPUT"
+            echo "Verify build غير متاح — fallback إلى build محلي"
+          fi
+
       - name: Install dependencies
+        if: steps.ci_gate.outputs.skip_build != 'true'
         run: pnpm install --frozen-lockfile
 
       - name: Type check
+        if: steps.ci_gate.outputs.skip_build != 'true'
         run: |
           pnpm run typecheck:libs
           pnpm --filter @workspace/majalis run typecheck
 
-      - name: Production build (تحقق من main قبل الاعتماد على النشر)
+      - name: Production build (fallback فقط إن لم ينجح CI)
+        if: steps.ci_gate.outputs.skip_build != 'true'
         env:
           PORT: "24216"
           BASE_PATH: "/"
@@ -253,7 +273,7 @@ jobs:
           set -euo pipefail
           SITE="https://www.majlisilm.com"
           MSG=$(cat <<EOF
-          ✅ نُشر بنجاح — مجالس العلم
+          ✅ نُشر بنجاح — سُنّة
           PR: ${PRN:-—} — ${PRT:-—}
           Commit: ${SHORT} (${SHA})
           Build / run: ${RUN_ID}

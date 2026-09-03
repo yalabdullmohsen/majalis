@@ -20,12 +20,14 @@ assert.doesNotMatch(indexHtml, /id="mj-silent-splash"/, "لا دخولية صا�
 assert.doesNotMatch(indexHtml, /id="mj-boot-splash"/, "لا طبقة boot قديمة");
 assert.doesNotMatch(indexHtml, /#0E1A15/, "لا خلفية خضراء داكنة قديمة في الإقلاع");
 assert.match(indexHtml, /prefers-reduced-motion:\s*reduce/, "مسار بلا حركة");
-assert.match(indexHtml, /__mjDismissSplash/, "دالة dismiss للدخولية");
-assert.match(indexHtml, /MIN_MS\s*=\s*120/, "حد أدنى 120ms");
-assert.match(indexHtml, /SOFT_MAX_MS\s*=\s*420/, "هدف LCP ليّن 420ms");
-assert.match(indexHtml, /MAX_MS\s*=\s*1400/, "سقف صلب لخطوط الواجهة");
-assert.match(indexHtml, /splash_timing=1/, "معامل قياس توقيت الدخولية");
-assert.match(indexHtml, /127\.0\.0\.1/, "مسار سريع لمعاينة CI المحلية");
+assert.match(indexHtml, /src="\/mj-launch-splash-boot\.js"/, "دخولية الإطلاق من ملف خارجي (CSP self)");
+const bootJs = readFileSync(resolve(root, "public/mj-launch-splash-boot.js"), "utf8");
+assert.match(bootJs, /__mjDismissSplash/, "دالة dismiss للدخولية");
+assert.match(bootJs, /MIN_MS\s*=\s*120/, "حد أدنى 120ms");
+assert.match(bootJs, /SOFT_MAX_MS\s*=\s*420/, "هدف LCP ليّن 420ms");
+assert.match(bootJs, /MAX_MS\s*=\s*1400/, "سقف صلب لخطوط الواجهة");
+assert.match(bootJs, /splash_timing=1/, "معامل قياس توقيت الدخولية");
+assert.match(bootJs, /127\.0\.0\.1/, "مسار سريع لمعاينة CI المحلية");
 assert.doesNotMatch(indexHtml, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل الشاشة");
 {
   const crit = indexHtml.match(/<style id="mj-lcp-critical">([\s\S]*?)<\/style>/)?.[1] ?? "";

@@ -11,7 +11,7 @@ export default function PrivacyPage() {
       title: "سياسة الخصوصية | سُنّة",
       description: "سياسة خصوصية سُنّة، كيف نجمع بياناتك ونحميها ونستخدمها.",
       keywords: ["خصوصية", "سياسة خصوصية", "سُنّة", "حماية البيانات"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "سياسة الخصوصية", url: "https://majlisilm.com/privacy", about: { "@type": "Organization", name: "سُنّة" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "سياسة الخصوصية", url: "https://www.ssunnah.com/privacy", about: { "@type": "Organization", name: "سُنّة" } }],
     });
   }, []);
 
@@ -269,7 +269,7 @@ export default function PrivacyPage() {
       </LegalSection>
 
       <div className="twh-share">
-        <ShareButtons title="سياسة الخصوصية — سُنّة" url="https://majlisilm.com/privacy" />
+        <ShareButtons title="سياسة الخصوصية — سُنّة" url="https://www.ssunnah.com/privacy" />
       </div>
       <LegalBackLink />
     </LegalPageLayout>

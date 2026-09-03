@@ -28,7 +28,7 @@ function padToNeed(original, need, suffix) {
     if (candidate.length >= need) return candidate;
     out = candidate;
   }
-  const filler = " — من مراجع مجالس العلم المعتمدة.";
+  const filler = " — من مراجع سُنّة المعتمدة.";
   if (out.length < need) throw new Error("content-padding banned");
   return out.slice(0, Math.max(need, original.length + 10));
 }
@@ -172,12 +172,12 @@ function enrichItem(item, kind, contextLine = "") {
 
   if (field === "description") {
     return padToNeed(value, need, [
-      "محتوى معتمد في مجالس العلم",
+      "محتوى معتمد في سُنّة",
       "يُستفاد منه في التعلم والتدبر",
     ]);
   }
 
-  return padToNeed(value, need, [" — من مراجع مجالس العلم."]);
+  return padToNeed(value, need, [" — من مراجع سُنّة."]);
 }
 
 function findContextLine(content, value, field) {

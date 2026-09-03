@@ -9,6 +9,11 @@ import {
   useState,
 } from "react";
 import { getAudioEngine, type PlayerState } from "@/core/audio/AudioEngine";
+import {
+  getQuranRecitationService,
+  QuranRecitationService,
+  unlockAudioOnUserGesture,
+} from "@/lib/quran/quranRecitationService";
 import { getSurahMeta, savePagePosition } from "@/lib/quran-api";
 import {
   getReciter,
@@ -41,6 +46,7 @@ import { setMushafAyahSyncKeys } from "@/features/mushaf-madinah/mushaf-ayah-syn
 import {
   findMushafPageForAyah,
   parseVerseKey,
+  uniqueVerseKeysFromRows,
 } from "@/features/mushaf-madinah/mushaf-page-for-ayah";
 import { useQpcPageFont } from "@/features/mushaf-madinah/useQpcPageFont";
 import { useMushafResourceGate } from "@/features/mushaf-madinah/useMushafResourceGate";
@@ -63,9 +69,9 @@ const MushafSearchSheet = lazy(() =>
     default: m.MushafSearchSheet,
   })),
 );
-const MushafAudioDock = lazy(() =>
-  import("@/features/mushaf-madinah/MushafAudioDock").then((m) => ({
-    default: m.MushafAudioDock,
+const QuranAudioPlayer = lazy(() =>
+  import("@/components/quran/QuranAudioPlayer").then((m) => ({
+    default: m.QuranAudioPlayer,
   })),
 );
 
@@ -98,6 +104,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const [audioDockOpen, setAudioDockOpen] = useState(false);
   const [audioError, setAudioError] = useState<string | null>(null);
   const [audioStatus, setAudioStatus] = useState<string | null>(null);
+  const [iosAudioHint, setIosAudioHint] = useState<string | null>(null);
 
   const { fontFamily, ready: fontReady } = useQpcPageFont(page);
   const { canMountPage, allowOffscreenPrefetch } = useMushafResourceGate(
@@ -119,6 +126,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const actionsOpenRef = useRef(false);
   actionsOpenRef.current = actionsOpen;
   const audio = useMemo(() => getAudioEngine(), []);
+  const recitation = useMemo(() => getQuranRecitationService(), []);
 
   useEffect(() => {
     beginPowerSaverSession();
@@ -127,13 +135,14 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     });
     return () => {
       endPowerSaverSession();
+      recitation.stop();
       const resolved =
         document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
       void import("@/lib/apply-page-chrome").then(({ reapplyPageChromeFromLocation }) =>
         reapplyPageChromeFromLocation(resolved),
       );
     };
-  }, []);
+  }, [recitation]);
 
   useEffect(() => {
     let cancelled = false;
@@ -218,13 +227,20 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         playbackRate: snap.playbackRate,
       });
       if (snap.playerState === "error") {
-        setAudioError(snap.errorMessage || "تعذر تشغيل هذه الآية لهذا القارئ");
-        setAudioStatus("فشل التحميل");
+        setAudioError(
+          QuranRecitationService.userErrorMessage(snap.errorMessage || "تعذر تشغيل التلاوة الآن"),
+        );
+        setAudioStatus("تعذر التشغيل");
+        if (recitation.getPlaybackState().iosNeedsForeground) {
+          setIosAudioHint(QuranRecitationService.IOS_FOREGROUND_HINT);
+        }
       } else if (snap.playerState === "loading" || snap.playerState === "buffering") {
         setAudioError(null);
+        setIosAudioHint(null);
         setAudioStatus("جاري التحميل");
       } else if (snap.playerState === "playing") {
         setAudioError(null);
+        setIosAudioHint(null);
         setAudioStatus("يعمل الآن");
       } else if (snap.playerState === "paused") {
         setAudioStatus("متوقف");
@@ -254,17 +270,18 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       unSnap();
       unAyah();
     };
-  }, [audio]);
+  }, [audio, recitation]);
 
   const [pagerSettled, setPagerSettled] = useState(true);
 
   const go = useCallback(
     (next: number) => {
       suppressPageSyncRef.current = false;
+      recitation.stop();
       setPagerSettled(false);
       onPageChange(clampMushafPage(next));
     },
-    [onPageChange],
+    [onPageChange, recitation],
   );
 
   useEffect(() => {
@@ -325,7 +342,10 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     const parsed = parseVerseKey(selectedVerseKey);
     if (!parsed) return;
     const ayahKey = `${parsed.surah}:${parsed.ayah}`;
+    unlockAudioOnUserGesture();
     setAudioError(null);
+    setIosAudioHint(null);
+    setActionsOpen(false);
     setAudioDockOpen(true);
     bumpChrome();
     suppressPageSyncRef.current = true;
@@ -335,40 +355,91 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       same &&
       (playerState === "playing" || playerState === "paused" || playerState === "buffering")
     ) {
-      await audio.togglePlay(parsed.surah, parsed.ayah);
+      await recitation.togglePlay(parsed.surah, parsed.ayah);
       return;
     }
 
     listAyahAudioUrls(parsed.surah, parsed.ayah, reciterId);
     setAudioStatus("جاري تحميل التلاوة...");
     setStatus("جاري التلاوة…");
-    await audio.playAyah(parsed.surah, parsed.ayah, reciterId);
-  }, [audio, bumpChrome, playerState, playingVerseKey, reciterId, selectedVerseKey]);
+    await recitation.playAyah(parsed.surah, parsed.ayah, reciterId);
+  }, [bumpChrome, playerState, playingVerseKey, recitation, reciterId, selectedVerseKey]);
 
   const togglePlay = useCallback(async () => {
     const key = selectedVerseKey ?? playingVerseKey;
     if (!key) return;
     const parsed = parseVerseKey(key);
     if (!parsed) return;
+    unlockAudioOnUserGesture();
     suppressPageSyncRef.current = true;
-    await audio.togglePlay(parsed.surah, parsed.ayah);
-  }, [audio, playingVerseKey, selectedVerseKey]);
+    await recitation.togglePlay(parsed.surah, parsed.ayah);
+  }, [playingVerseKey, recitation, selectedVerseKey]);
+
+  const pageVerseKeys = useMemo(
+    () => (layout ? uniqueVerseKeysFromRows(layout.rows) : []),
+    [layout],
+  );
+
+  const playPage = useCallback(async () => {
+    if (pageVerseKeys.length === 0) {
+      setAudioError("لا توجد آيات على هذه الصفحة");
+      return;
+    }
+    unlockAudioOnUserGesture();
+    setAudioError(null);
+    setIosAudioHint(null);
+    setActionsOpen(false);
+    setAudioDockOpen(true);
+    bumpChrome();
+    suppressPageSyncRef.current = true;
+    setAudioStatus("جاري تشغيل الصفحة…");
+    await recitation.playPage(pageVerseKeys, reciterId);
+  }, [bumpChrome, pageVerseKeys, recitation, reciterId]);
+
+  const retryPlayback = useCallback(async () => {
+    const key = playingVerseKey ?? selectedVerseKey;
+    if (!key) return;
+    const parsed = parseVerseKey(key);
+    if (!parsed) return;
+    unlockAudioOnUserGesture();
+    setAudioError(null);
+    setIosAudioHint(null);
+    await recitation.playAyah(parsed.surah, parsed.ayah, reciterId);
+  }, [playingVerseKey, recitation, reciterId, selectedVerseKey]);
 
   const onReciterChange = useCallback(
     async (id: string) => {
       saveReciterId(id);
-      audio.setReciter(id);
+      setReciterId(id);
+      await recitation.changeReciter(id);
+    },
+    [recitation],
+  );
+
+  const onPlayReciter = useCallback(
+    async (id: string) => {
+      saveReciterId(id);
       setReciterId(id);
       const key = selectedVerseKey ?? playingVerseKey;
-      if (!key) return;
-      const parsed = parseVerseKey(key);
-      if (!parsed) return;
-      suppressPageSyncRef.current = true;
-      if (playerState === "playing" || playerState === "paused" || playerState === "buffering") {
-        await audio.playAyah(parsed.surah, parsed.ayah, id);
+      if (!key) {
+        setAudioError("اختر آية أولاً");
+        return;
       }
+      const parsed = parseVerseKey(key);
+      if (!parsed) {
+        setAudioError("اختر آية أولاً");
+        return;
+      }
+      unlockAudioOnUserGesture();
+      setAudioError(null);
+      setIosAudioHint(null);
+      setActionsOpen(false);
+      setAudioDockOpen(true);
+      suppressPageSyncRef.current = true;
+      setAudioStatus("جاري تحميل التلاوة...");
+      await recitation.playAyah(parsed.surah, parsed.ayah, id);
     },
-    [audio, playerState, playingVerseKey, selectedVerseKey],
+    [playingVerseKey, recitation, selectedVerseKey],
   );
 
   const onCopy = useCallback(async () => {
@@ -424,10 +495,11 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const mediaPlaying =
     playerState === "playing" || playerState === "buffering" || playerState === "loading";
   const edgesDisabled = actionsOpen || tafsirOpen || searchOpen || indexOpen;
+  /* إخفاء الرصيف عند فتح قائمة الآية لتفادي تعارض أزرار التشغيل */
   const audioDockVisible =
+    !actionsOpen &&
     audioDockOpen &&
     (chromeOpen ||
-      actionsOpen ||
       playerState === "playing" ||
       playerState === "buffering" ||
       playerState === "error");
@@ -497,6 +569,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         </div>
       }
     >
+      <h1 className="sr-only">المصحف الشريف</h1>
       <MediaBridge
         active={Boolean(playingVerseKey || playerState === "paused" || mediaPlaying)}
         title={verseLabel}
@@ -518,32 +591,33 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       />
 
       <Suspense fallback={null}>
-        <MushafAudioDock
+        <QuranAudioPlayer
           open={audioDockVisible}
           verseLabel={verseLabel}
           playerState={playerState}
           reciterId={reciterId}
           audioError={audioError}
           audioStatus={audioStatus}
+          iosHint={iosAudioHint}
           mini={false}
           onMiniChange={() => {}}
           onTogglePlay={() => void togglePlay()}
           onPrev={() => {
             suppressPageSyncRef.current = false;
-            audio.setReciter(reciterId);
-            void audio.skipPrev();
+            void recitation.previousAyah();
           }}
           onNext={() => {
             suppressPageSyncRef.current = false;
-            audio.setReciter(reciterId);
-            void audio.skipNext();
+            void recitation.nextAyah();
           }}
           onReciterChange={(id) => void onReciterChange(id)}
+          onPlayReciter={(id) => void onPlayReciter(id)}
+          onRetry={() => void retryPlayback()}
           onSeek={(seconds) => audio.seek(seconds)}
           onSpeed={(rate) => audio.setPlaybackRate(rate)}
           onClose={() => {
             setAudioDockOpen(false);
-            void audio.pause();
+            recitation.pause();
           }}
         />
       </Suspense>
@@ -557,7 +631,11 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           go(n);
           setGotoOpen(false);
         }}
-        onExit={onExit}
+        onExit={() => {
+          recitation.stop();
+          onExit();
+        }}
+        onPlayPage={() => void playPage()}
         onIndex={() => {
           setIndexOpen(true);
           setSearchOpen(false);

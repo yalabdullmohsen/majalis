@@ -109,7 +109,7 @@ BEGIN
         1, 100, true, 'manual_confirm', 100, 1, 'published', true) RETURNING id INTO v_i3b;
 
       INSERT INTO course_books (id, learning_item_id, book_title, book_author, material_role, scope_description, inclusion_reason, source_name)
-      VALUES (gen_random_uuid(), v_i3b, 'متن مراح الأرواح في علم الصرف', 'أحمد بن علي بن مسعود', 'أساسية إلزامية', 'المقدمة وموضوع علم الصرف', 'من أشهر المتون التعليمية في الصرف، يُدرَّس عادة بعد الآجرومية مباشرة — موجود في مكتبة المنصة (/library/book-sarf-mutah)', 'مكتبة المجلس العلمي');
+      VALUES (gen_random_uuid(), v_i3b, 'متن مراح الأرواح في علم الصرف', 'أحمد بن علي بن مسعود', 'أساسية إلزامية', 'المقدمة وموضوع علم الصرف', 'من أشهر المتون التعليمية في الصرف، يُدرَّس عادة بعد الآجرومية مباشرة — موجود في مكتبة المنصة (/library/book-sarf-mutah)', 'مكتبة سُنّة');
     END;
 
     -- التوسع: ألفية ابن مالك
@@ -148,14 +148,14 @@ BEGIN
 
       INSERT INTO course_books (id, learning_item_id, book_title, book_author, material_role, scope_description, inclusion_reason, source_name)
       VALUES
-        (gen_random_uuid(), v_i4, 'ألفية ابن مالك في النحو والصرف', 'ابن مالك الأندلسي', 'أساسية إلزامية', 'المقدمة ومنهج الترتيب', 'أشهر منظومة نحوية عربية على الإطلاق، المرحلة المتقدمة الطبيعية بعد الآجرومية — موجودة في مكتبة المنصة (/library/book-alfiyyah)', 'مكتبة المجلس العلمي'),
-        (gen_random_uuid(), v_i5, 'ألفية ابن مالك في النحو والصرف', 'ابن مالك الأندلسي', 'أساسية إلزامية', 'الأبواب الصرفية', 'أشهر منظومة نحوية عربية على الإطلاق — موجودة في مكتبة المنصة (/library/book-alfiyyah)', 'مكتبة المجلس العلمي');
+        (gen_random_uuid(), v_i4, 'ألفية ابن مالك في النحو والصرف', 'ابن مالك الأندلسي', 'أساسية إلزامية', 'المقدمة ومنهج الترتيب', 'أشهر منظومة نحوية عربية على الإطلاق، المرحلة المتقدمة الطبيعية بعد الآجرومية — موجودة في مكتبة المنصة (/library/book-alfiyyah)', 'مكتبة سُنّة'),
+        (gen_random_uuid(), v_i5, 'ألفية ابن مالك في النحو والصرف', 'ابن مالك الأندلسي', 'أساسية إلزامية', 'الأبواب الصرفية', 'أشهر منظومة نحوية عربية على الإطلاق — موجودة في مكتبة المنصة (/library/book-alfiyyah)', 'مكتبة سُنّة');
     END;
 
     INSERT INTO course_books (id, learning_item_id, book_title, book_author, material_role, scope_description, inclusion_reason, source_name)
     VALUES
-      (gen_random_uuid(), v_i1, 'متن الآجرومية في النحو', 'ابن آجروم الصنهاجي', 'أساسية إلزامية', 'باب الكلام وأقسامه', 'أشهر متن مبتدئ في النحو، مدرَّس في جُلّ المعاهد الشرعية — موجود في مكتبة المنصة (/library/book-ajrumiyyah)', 'مكتبة المجلس العلمي'),
-      (gen_random_uuid(), v_i2, 'متن الآجرومية في النحو', 'ابن آجروم الصنهاجي', 'أساسية إلزامية', 'باب الإعراب', 'أشهر متن مبتدئ في النحو — موجود في مكتبة المنصة (/library/book-ajrumiyyah)', 'مكتبة المجلس العلمي');
+      (gen_random_uuid(), v_i1, 'متن الآجرومية في النحو', 'ابن آجروم الصنهاجي', 'أساسية إلزامية', 'باب الكلام وأقسامه', 'أشهر متن مبتدئ في النحو، مدرَّس في جُلّ المعاهد الشرعية — موجود في مكتبة المنصة (/library/book-ajrumiyyah)', 'مكتبة سُنّة'),
+      (gen_random_uuid(), v_i2, 'متن الآجرومية في النحو', 'ابن آجروم الصنهاجي', 'أساسية إلزامية', 'باب الإعراب', 'أشهر متن مبتدئ في النحو — موجود في مكتبة المنصة (/library/book-ajrumiyyah)', 'مكتبة سُنّة');
 
     UPDATE learning_paths SET status = 'published', total_sessions = 5, updated_at = now()
     WHERE id = v_path_id;
@@ -202,7 +202,7 @@ BEGIN
       1, 100, true, 'manual_confirm', 100, 1, 'published', true) RETURNING id INTO v_i1;
 
     INSERT INTO course_books (id, learning_item_id, book_title, book_author, material_role, scope_description, inclusion_reason, source_name)
-    VALUES (gen_random_uuid(), v_i1, 'جامع الدروس العربية', 'الشيخ مصطفى الغلاييني', 'أساسية إلزامية', 'المقدمة والمنهج العام', 'من أكثر الكتب استخداماً في تعليم قواعد العربية في العالم العربي — موجود في مكتبة المنصة (/library/book-al-durus-nahwiyya)', 'مكتبة المجلس العلمي');
+    VALUES (gen_random_uuid(), v_i1, 'جامع الدروس العربية', 'الشيخ مصطفى الغلاييني', 'أساسية إلزامية', 'المقدمة والمنهج العام', 'من أكثر الكتب استخداماً في تعليم قواعد العربية في العالم العربي — موجود في مكتبة المنصة (/library/book-al-durus-nahwiyya)', 'مكتبة سُنّة');
 
     -- البناء: أسرار البلاغة
     INSERT INTO path_stages (id, path_id, slug, title, description, sort_order, status)
@@ -234,7 +234,7 @@ BEGIN
         1, 100, true, 'manual_confirm', 100, 1, 'published', true) RETURNING id INTO v_i2b;
 
       INSERT INTO course_books (id, learning_item_id, book_title, book_author, material_role, scope_description, inclusion_reason, source_name)
-      VALUES (gen_random_uuid(), v_i2b, 'أسرار البلاغة', 'الإمام عبد القاهر الجرجاني', 'أساسية إلزامية', 'مباحث التشبيه والاستعارة والكناية', 'الكتاب المؤسِّس لعلمي البيان والمعاني في التراث العربي — موجود في مكتبة المنصة (/library/book-asrar-balagha-jurjani)', 'مكتبة المجلس العلمي');
+      VALUES (gen_random_uuid(), v_i2b, 'أسرار البلاغة', 'الإمام عبد القاهر الجرجاني', 'أساسية إلزامية', 'مباحث التشبيه والاستعارة والكناية', 'الكتاب المؤسِّس لعلمي البيان والمعاني في التراث العربي — موجود في مكتبة المنصة (/library/book-asrar-balagha-jurjani)', 'مكتبة سُنّة');
     END;
 
     -- التوسع: المعجم الوسيط
@@ -267,7 +267,7 @@ BEGIN
         1, 100, true, 'manual_confirm', 100, 1, 'published', true) RETURNING id INTO v_i3c;
 
       INSERT INTO course_books (id, learning_item_id, book_title, book_author, material_role, scope_description, inclusion_reason, source_name)
-      VALUES (gen_random_uuid(), v_i3c, 'المعجم الوسيط', 'مجمع اللغة العربية بالقاهرة', 'أساسية إلزامية', 'مقدمة المعجم وطريقة استخدامه', 'المعجم المعتمد الصادر عن مجمع اللغة العربية بالقاهرة — موجود في مكتبة المنصة (/library/book-mujam-wasit-arabic)', 'مكتبة المجلس العلمي');
+      VALUES (gen_random_uuid(), v_i3c, 'المعجم الوسيط', 'مجمع اللغة العربية بالقاهرة', 'أساسية إلزامية', 'مقدمة المعجم وطريقة استخدامه', 'المعجم المعتمد الصادر عن مجمع اللغة العربية بالقاهرة — موجود في مكتبة المنصة (/library/book-mujam-wasit-arabic)', 'مكتبة سُنّة');
     END;
 
     UPDATE learning_paths SET status = 'published', total_sessions = 3, updated_at = now()

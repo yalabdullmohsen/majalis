@@ -71,7 +71,7 @@ export default function ArbaeenLovePage() {
       )}
 
       <div className="twh-share">
-        <ShareButtons title="الأربعون في محبة رب العالمين — سُنّة" url="https://majlisilm.com/hadith/arbaeen-love-of-allah" />
+        <ShareButtons title="الأربعون في محبة رب العالمين — سُنّة" url="https://www.ssunnah.com/hadith/arbaeen-love-of-allah" />
       </div>
     </div>
   );

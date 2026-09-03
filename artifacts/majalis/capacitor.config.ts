@@ -6,11 +6,16 @@ const config: CapacitorConfig = {
   // مخرجات `vite build` — لا تستخدم public/ (أصول المصدر فقط).
   webDir: "dist",
   server: {
-    // Canonical apex (www → majlisilm.com is a 308). Load apex directly so
-    // WKWebView cold starts do not depend on a redirect before first paint.
-    url: "https://majlisilm.com",
-    // صفحة محلية عند فشل تحميل الإنتاج — Capacitor iOS/Android errorPath
+    // Production: حمّل الـ canonical الحي مباشرة — بلا majlisilm.com (308)
+    // وبلا apex ssunnah.com (308). AASA يستثني `/` لمنع ارتداد Safari↔التطبيق.
+    url: "https://www.ssunnah.com",
     errorPath: "native-load-error.html",
+    allowNavigation: [
+      "www.ssunnah.com",
+      "ssunnah.com",
+      "majlisilm.com",
+      "www.majlisilm.com",
+    ],
     cleartext: false,
     androidScheme: "https",
   },

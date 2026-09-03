@@ -135,7 +135,7 @@ function makeFawaidItems() {
       text: `من فقه ${topic.title} في ${topic.section} أن ${topic.meaning}، وأن العلم إذا صح أثر في العبادة والخلق وحفظ الحقوق ورد المظالم.${suffix}`,
       category: index % 2 === 0 ? topic.section : "تزكية",
       source: topic.reference,
-      author_name: index % 2 === 0 ? "أهل العلم" : "محررو مجالس العلم",
+      author_name: index % 2 === 0 ? "أهل العلم" : "محررو سُنّة",
     }));
 }
 

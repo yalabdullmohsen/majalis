@@ -26,7 +26,7 @@ async function fetchOfficial(url: string): Promise<{ status: number; text: strin
   const res = await fetch(url, {
     redirect: "follow",
     signal: AbortSignal.timeout(30000),
-    headers: { "User-Agent": "MajlisilmSourceValidation/1.0 (+https://majlisilm.com)" },
+    headers: { "User-Agent": "MajlisilmSourceValidation/1.0 (+https://www.ssunnah.com)" },
   });
   const html = await res.text();
   return { status: res.status, text: stripHtml(html) };
