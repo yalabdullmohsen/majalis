@@ -1,10 +1,23 @@
 import { Link } from "wouter";
-import { ArrowLeft } from "lucide-react";
+import {
+  BookOpen,
+  Droplets,
+  Scale,
+  Moon,
+  Landmark,
+  Handshake,
+  ScrollText,
+  Heart,
+  Gavel,
+  Shield,
+  Utensils,
+  HandHelping,
+  type LucideIcon,
+} from "lucide-react";
 import { formatMasailCount } from "@/lib/arabic-count";
 import {
-  FIQH_STATUS_LABELS,
-  fiqhFilterChipLabel,
-  type FiqhContentStatus,
+  fiqhDoorGroup,
+  type FiqhCanonicalDoor,
   type FiqhDoorSummary,
 } from "@/lib/fiqh/fiqhNormalize";
 import { cn } from "@/lib/utils";
@@ -12,43 +25,63 @@ import { cn } from "@/lib/utils";
 type Props = {
   door: FiqhDoorSummary;
   className?: string;
+  featured?: boolean;
 };
 
-function statusClass(status: FiqhContentStatus): string {
-  switch (status) {
-    case "complete":
-      return "fiqh-status-badge--complete";
-    case "needs_completion":
-      return "fiqh-status-badge--needs";
-    default:
-      return "fiqh-status-badge--review";
-  }
-}
+const DOOR_ICONS: Partial<Record<FiqhCanonicalDoor, LucideIcon>> = {
+  tahara: Droplets,
+  salah: BookOpen,
+  janaza: ScrollText,
+  zakat: HandHelping,
+  sawm: Moon,
+  hajj: Landmark,
+  jihad: Shield,
+  buyu: Handshake,
+  faraid: ScrollText,
+  nikah: Heart,
+  talaq: Heart,
+  iddah_rida: Heart,
+  nafaqat: Heart,
+  jinayat: Gavel,
+  diyat: Scale,
+  hudud: Gavel,
+  atima: Utensils,
+  ayman: ScrollText,
+  qada: Scale,
+  shahadat: Scale,
+  iqrar: Scale,
+};
 
-export function FiqhCategoryCard({ door, className }: Props) {
+export function FiqhCategoryCard({ door, className, featured = false }: Props) {
   const entryHref = door.bookHref ?? door.href;
-  const showCount = door.hasVerifiedIssueCount && door.issueCount > 0;
-
-  const showStatus = door.status !== "complete";
+  const group = fiqhDoorGroup(door.id);
+  const Icon = DOOR_ICONS[door.id] ?? BookOpen;
+  const hasContent = door.hasVerifiedIssueCount && door.issueCount > 0;
 
   return (
-    <article className={cn("fiqh-category-card", className)}>
+    <Link
+      href={entryHref}
+      className={cn(
+        "fiqh-category-card",
+        `fiqh-category-card--${group}`,
+        featured && "fiqh-category-card--featured",
+        className,
+      )}
+      aria-label={door.label}
+    >
+      <span className="fiqh-category-card__accent" aria-hidden="true" />
       <div className="fiqh-category-card__head">
-        <h3 className="fiqh-category-card__title">{fiqhFilterChipLabel(door.id)}</h3>
-        {showStatus ? (
-          <span className={cn("fiqh-status-badge", statusClass(door.status))}>
-            {FIQH_STATUS_LABELS[door.status]}
-          </span>
-        ) : null}
+        <span className="fiqh-category-card__icon" aria-hidden="true">
+          <Icon size={16} strokeWidth={1.9} />
+        </span>
+        <h3 className="fiqh-category-card__title">{door.label}</h3>
       </div>
       <p className="fiqh-category-card__desc">{door.desc}</p>
-      {showCount ? (
+      {hasContent ? (
         <p className="fiqh-category-card__meta">{formatMasailCount(door.issueCount)}</p>
-      ) : null}
-      <Link href={entryHref} className="fiqh-category-card__cta">
-        <span>دخول الباب</span>
-        <ArrowLeft size={16} strokeWidth={2.2} aria-hidden="true" />
-      </Link>
-    </article>
+      ) : (
+        <p className="fiqh-category-card__soon">سيضاف محتوى هذا الباب قريبًا</p>
+      )}
+    </Link>
   );
 }

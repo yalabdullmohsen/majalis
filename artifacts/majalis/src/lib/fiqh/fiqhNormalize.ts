@@ -23,6 +23,7 @@ export type FiqhCanonicalDoor =
   | "sawm"
   | "hajj"
   | "janaza"
+  | "jihad"
   | "ayman"
   | "atima"
   | "libas"
@@ -33,17 +34,25 @@ export type FiqhCanonicalDoor =
   | "sharika"
   | "qard"
   | "waqf_hiba"
+  | "faraid"
   | "usrah"
   | "nikah"
   | "talaq"
   | "iddah_rida"
   | "nafaqat"
   | "jinayat"
+  | "diyat"
+  | "hudud"
   | "qada"
+  | "shahadat"
+  | "iqrar"
   | "nawazil"
   | "qawaid"
   | "usul"
   | "other";
+
+/** مجموعات لونية وفلاتر الواجهة. */
+export type FiqhDoorGroup = "ibadat" | "muamalat" | "usrah" | "qada_jinayat";
 
 export type FiqhContentStatus = "complete" | "needs_completion" | "under_review";
 
@@ -54,16 +63,18 @@ export type FiqhDoorMeta = {
   href: string;
   bookHref?: string;
   sortOrder: number;
+  group: FiqhDoorGroup;
 };
 
 /** ترتيب ثابت — لا تعتمد على ترتيب المصفوفة في البيانات. */
 export const FIQH_DOOR_ORDER: FiqhCanonicalDoor[] = [
   "tahara",
   "salah",
+  "janaza",
   "zakat",
   "sawm",
   "hajj",
-  "janaza",
+  "jihad",
   "ayman",
   "atima",
   "libas",
@@ -74,13 +85,18 @@ export const FIQH_DOOR_ORDER: FiqhCanonicalDoor[] = [
   "sharika",
   "qard",
   "waqf_hiba",
+  "faraid",
   "usrah",
   "nikah",
   "talaq",
   "iddah_rida",
   "nafaqat",
   "jinayat",
+  "diyat",
+  "hudud",
   "qada",
+  "shahadat",
+  "iqrar",
   "nawazil",
   "qawaid",
   "usul",
@@ -91,138 +107,173 @@ export const FIQH_DOOR_META: Record<FiqhCanonicalDoor, FiqhDoorMeta> = {
   tahara: {
     id: "tahara",
     label: "الطهارة",
-    desc: "الوضوء والغسل والتيمم ونواقض الطهارة.",
+    desc: "الوضوء والغسل والتيمم ونواقضها.",
     href: "/tahara",
     bookHref: "/fiqh/books/taharah",
     sortOrder: 10,
+    group: "ibadat",
   },
   salah: {
     id: "salah",
     label: "الصلاة",
-    desc: "أركان الصلاة وشروطها وسننها وأوقاتها.",
+    desc: "أركانها وشروطها وسننها وأوقاتها.",
     href: "/salah-guide",
     bookHref: "/fiqh/books/salah",
     sortOrder: 20,
-  },
-  zakat: {
-    id: "zakat",
-    label: "الزكاة",
-    desc: "شروط الوجوب والنصاب والأنواع والمصارف.",
-    href: "/zakat",
-    bookHref: "/fiqh/books/zakat",
-    sortOrder: 30,
-  },
-  sawm: {
-    id: "sawm",
-    label: "الصيام",
-    desc: "رمضان والنوافل والقضاء والكفارة والرخص.",
-    href: "/sawm",
-    bookHref: "/fiqh/books/sawm",
-    sortOrder: 40,
-  },
-  hajj: {
-    id: "hajj",
-    label: "الحج والعمرة",
-    desc: "مناسك الحج والعمرة ومحرمات الإحرام.",
-    href: "/hajj",
-    bookHref: "/fiqh/books/hajj",
-    sortOrder: 50,
+    group: "ibadat",
   },
   janaza: {
     id: "janaza",
     label: "الجنائز",
-    desc: "تغسيل الميت والصلاة عليه والدفن والتعزية.",
+    desc: "تغسيل الميت والصلاة عليه والدفن.",
     href: "/janaza",
     bookHref: "/fiqh/books/janaza",
-    sortOrder: 60,
+    sortOrder: 25,
+    group: "ibadat",
+  },
+  zakat: {
+    id: "zakat",
+    label: "الزكاة",
+    desc: "النصاب والأنواع والمصارف.",
+    href: "/zakat",
+    bookHref: "/fiqh/books/zakat",
+    sortOrder: 30,
+    group: "ibadat",
+  },
+  sawm: {
+    id: "sawm",
+    label: "الصيام",
+    desc: "رمضان والقضاء والكفارة والرخص.",
+    href: "/sawm",
+    bookHref: "/fiqh/books/sawm",
+    sortOrder: 40,
+    group: "ibadat",
+  },
+  hajj: {
+    id: "hajj",
+    label: "الحج والعمرة",
+    desc: "المناسك ومحرمات الإحرام.",
+    href: "/hajj",
+    bookHref: "/fiqh/books/hajj",
+    sortOrder: 50,
+    group: "ibadat",
+  },
+  jihad: {
+    id: "jihad",
+    label: "الجهاد والسير",
+    desc: "أحكام الجهاد والسِّيَر بإيجاز.",
+    href: "/fiqh/books/jihad",
+    bookHref: "/fiqh/books/jihad",
+    sortOrder: 55,
+    group: "ibadat",
   },
   ayman: {
     id: "ayman",
     label: "الأيمان والنذور",
-    desc: "أحكام اليمين والنذر والكفارة.",
+    desc: "اليمين والنذر والكفارة.",
     href: "/fiqh/books/ayman",
     bookHref: "/fiqh/books/ayman",
     sortOrder: 70,
+    group: "ibadat",
   },
   atima: {
     id: "atima",
-    label: "الأطعمة والأشربة",
-    desc: "الحلال والحرام في المطعومات والمشروبات والذكاة.",
+    label: "الأطعمة",
+    desc: "الحلال والحرام في المطعومات.",
     href: "/fiqh/books/atima",
     bookHref: "/fiqh/books/atima",
     sortOrder: 80,
+    group: "ibadat",
   },
   libas: {
     id: "libas",
     label: "اللباس والزينة",
-    desc: "أحكام اللباس والزينة للرجل والمرأة.",
+    desc: "أحكام اللباس والزينة.",
     href: "/fiqh/books/libas",
     bookHref: "/fiqh/books/libas",
     sortOrder: 90,
+    group: "ibadat",
   },
   muamalat: {
     id: "muamalat",
     label: "المعاملات",
-    desc: "ضوابط العقود والمعاملات المالية العامة.",
+    desc: "ضوابط العقود المالية العامة.",
     href: "/fiqh/books/buyu",
     bookHref: "/fiqh/books/buyu",
     sortOrder: 100,
+    group: "muamalat",
   },
   buyu: {
     id: "buyu",
-    label: "البيوع",
-    desc: "عقد البيع وشروطه وأنواعه والخيارات.",
+    label: "البيوع والمعاملات",
+    desc: "عقد البيع وشروطه والخيارات.",
     href: "/fiqh/books/buyu",
     bookHref: "/fiqh/books/buyu",
-    sortOrder: 110,
+    sortOrder: 105,
+    group: "muamalat",
   },
   riba: {
     id: "riba",
     label: "الربا والصرف",
-    desc: "الربا والصرف وصورهما المعاصرة.",
+    desc: "الربا والصرف وصورهما.",
     href: "/fiqh/books/riba",
     bookHref: "/fiqh/books/riba",
     sortOrder: 120,
+    group: "muamalat",
   },
   ijara: {
     id: "ijara",
     label: "الإجارة",
-    desc: "إجارة الأعيان والمنافع وأحكامها.",
+    desc: "إجارة الأعيان والمنافع.",
     href: "/fiqh/books/ijara",
     bookHref: "/fiqh/books/ijara",
     sortOrder: 130,
+    group: "muamalat",
   },
   sharika: {
     id: "sharika",
     label: "الشركة والمضاربة",
-    desc: "الشركات والمضاربة وضوابط الشراكة.",
+    desc: "الشركات والمضاربة.",
     href: "/fiqh/books/sharika",
     bookHref: "/fiqh/books/sharika",
     sortOrder: 140,
+    group: "muamalat",
   },
   qard: {
     id: "qard",
     label: "القرض والدين",
-    desc: "القرض الحسن والدين والوفاء.",
+    desc: "القرض الحسن والوفاء.",
     href: "/fiqh/books/qard",
     bookHref: "/fiqh/books/qard",
     sortOrder: 150,
+    group: "muamalat",
   },
   waqf_hiba: {
     id: "waqf_hiba",
     label: "الوقف والهبة والوصايا",
-    desc: "الوقف والهبة والوصية وأحكامها.",
+    desc: "الوقف والهبة والوصية.",
     href: "/fiqh/books/waqf",
     bookHref: "/fiqh/books/waqf",
     sortOrder: 160,
+    group: "muamalat",
+  },
+  faraid: {
+    id: "faraid",
+    label: "الفرائض والمواريث",
+    desc: "أنصبة الورثة وأحكام التركة.",
+    href: "/fiqh/books/faraid",
+    bookHref: "/fiqh/books/faraid",
+    sortOrder: 165,
+    group: "muamalat",
   },
   usrah: {
     id: "usrah",
     label: "الأسرة",
-    desc: "أحكام الأسرة العامة والميراث والعشرة.",
+    desc: "أحكام الأسرة العامة.",
     href: "/nikah",
     bookHref: "/fiqh/books/nikah",
     sortOrder: 170,
+    group: "usrah",
   },
   nikah: {
     id: "nikah",
@@ -231,67 +282,112 @@ export const FIQH_DOOR_META: Record<FiqhCanonicalDoor, FiqhDoorMeta> = {
     href: "/nikah",
     bookHref: "/fiqh/books/nikah",
     sortOrder: 180,
+    group: "usrah",
   },
   talaq: {
     id: "talaq",
     label: "الطلاق",
-    desc: "الطلاق والخلع والرجعة وما يلحق بها.",
+    desc: "الطلاق والخلع وما يلحق بهما.",
     href: "/fiqh/books/talaq",
     bookHref: "/fiqh/books/talaq",
     sortOrder: 190,
+    group: "usrah",
   },
   iddah_rida: {
     id: "iddah_rida",
-    label: "العِدد والرضاع",
-    desc: "العدّة والرضاع وآثارهما.",
+    label: "الرجعة والعدة والرضاع",
+    desc: "الرجعة والعدّة والرضاع.",
     href: "/fiqh/books/iddah",
     bookHref: "/fiqh/books/iddah",
     sortOrder: 200,
+    group: "usrah",
   },
   nafaqat: {
     id: "nafaqat",
-    label: "النفقات والحضانة",
+    label: "النفقات",
     desc: "النفقة والحضانة وحقوق الأولاد.",
     href: "/fiqh/books/nafaqat",
     bookHref: "/fiqh/books/nafaqat",
     sortOrder: 210,
+    group: "usrah",
   },
   jinayat: {
     id: "jinayat",
-    label: "الجنايات والحدود",
-    desc: "الحدود والقصاص والديات.",
+    label: "الجنايات",
+    desc: "القصاص والجنايات على النفس.",
+    href: "/fiqh/books/jinayat",
+    bookHref: "/fiqh/books/jinayat",
+    sortOrder: 220,
+    group: "qada_jinayat",
+  },
+  diyat: {
+    id: "diyat",
+    label: "الديات",
+    desc: "دية النفس والجراحات.",
+    href: "/fiqh/books/diyat",
+    bookHref: "/fiqh/books/diyat",
+    sortOrder: 225,
+    group: "qada_jinayat",
+  },
+  hudud: {
+    id: "hudud",
+    label: "الحدود",
+    desc: "حدود الزنا والسرقة والقذف.",
     href: "/fiqh/books/hudud",
     bookHref: "/fiqh/books/hudud",
-    sortOrder: 220,
+    sortOrder: 230,
+    group: "qada_jinayat",
   },
   qada: {
     id: "qada",
-    label: "القضاء والشهادات",
-    desc: "القضاء والشهادات والدعوى والإقرار.",
+    label: "القضاء",
+    desc: "آداب القاضي والدعوى والحكم.",
     href: "/fiqh/books/qada",
     bookHref: "/fiqh/books/qada",
-    sortOrder: 230,
+    sortOrder: 240,
+    group: "qada_jinayat",
+  },
+  shahadat: {
+    id: "shahadat",
+    label: "الشهادات",
+    desc: "شروط الشاهد وأنواع الشهادة.",
+    href: "/fiqh/books/shahadat",
+    bookHref: "/fiqh/books/shahadat",
+    sortOrder: 245,
+    group: "qada_jinayat",
+  },
+  iqrar: {
+    id: "iqrar",
+    label: "الإقرار",
+    desc: "الإقرار وآثاره في الخصومات.",
+    href: "/fiqh/books/iqrar",
+    bookHref: "/fiqh/books/iqrar",
+    sortOrder: 250,
+    group: "qada_jinayat",
   },
   nawazil: {
     id: "nawazil",
     label: "النوازل المعاصرة",
-    desc: "نوازل العصر عبر قرارات المجامع المعتمدة.",
+    desc: "نوازل العصر عبر قرارات المجامع.",
     href: "/fiqh-council/nawazil",
-    sortOrder: 240,
+    sortOrder: 260,
+    group: "muamalat",
   },
   qawaid: {
     id: "qawaid",
     label: "القواعد الفقهية",
     desc: "القواعد الخمس الكبرى وما يتفرع عنها.",
     href: "/fiqh-qawaid",
-    sortOrder: 250,
+    sortOrder: 270,
+    group: "ibadat",
   },
   usul: {
     id: "usul",
     label: "أصول الفقه",
     desc: "أدلة الأحكام وطرق الاستنباط.",
     href: "/fiqh/usul",
-    sortOrder: 260,
+    sortOrder: 280,
+    group: "ibadat",
   },
   other: {
     id: "other",
@@ -299,48 +395,98 @@ export const FIQH_DOOR_META: Record<FiqhCanonicalDoor, FiqhDoorMeta> = {
     desc: "مباحث فقهية لم تُصنَّف ضمن الأبواب السابقة.",
     href: "/fiqh",
     sortOrder: 900,
+    group: "ibadat",
   },
 };
 
+/**
+ * ترتيب بوابة الفقه — قريب من منار السبيل:
+ * طهارة ← صلاة ← جنائز ← زكاة ← صيام ← حج ← جهاد ← بيوع ← فرائض ← نكاح…
+ */
 export const FIQH_HUB_DOOR_ORDER: FiqhCanonicalDoor[] = [
+  "tahara",
+  "salah",
+  "janaza",
+  "zakat",
+  "sawm",
+  "hajj",
+  "jihad",
+  "buyu",
+  "faraid",
+  "nikah",
+  "talaq",
+  "iddah_rida",
+  "nafaqat",
+  "jinayat",
+  "diyat",
+  "hudud",
+  "atima",
+  "ayman",
+  "qada",
+  "shahadat",
+  "iqrar",
+];
+
+/** أبواب «ابدأ من هنا» للمبتدئ. */
+export const FIQH_START_HERE_DOORS: FiqhCanonicalDoor[] = [
   "tahara",
   "salah",
   "zakat",
   "sawm",
   "hajj",
-  "muamalat",
-  "usrah",
-  "jinayat",
 ];
 
-/** فلاتر الشريط الأفقي — ترتيب العرض المطلوب. */
+export type FiqhHubGroupFilter = "all" | FiqhDoorGroup;
+
+export const FIQH_GROUP_FILTER_CHIPS: Array<{ id: FiqhHubGroupFilter; label: string }> = [
+  { id: "all", label: "الكل" },
+  { id: "ibadat", label: "العبادات" },
+  { id: "muamalat", label: "المعاملات" },
+  { id: "usrah", label: "الأسرة" },
+  { id: "qada_jinayat", label: "القضاء والجنايات" },
+];
+
+/** توافق: فلاتر الشريط القديمة كانت أبوابًا؛ الواجهة الجديدة تستخدم المجموعات. */
 export const FIQH_FILTER_CHIP_ORDER: Array<FiqhCanonicalDoor | "all"> = [
   "all",
   ...FIQH_HUB_DOOR_ORDER,
 ];
 
-const FILTER_LABEL_OVERRIDE: Partial<Record<FiqhCanonicalDoor, string>> = {
-  hajj: "الحج",
-  jinayat: "الجنايات والحدود",
-  qada: "القضاء",
-};
+const FILTER_LABEL_OVERRIDE: Partial<Record<FiqhCanonicalDoor, string>> = {};
 
 export function fiqhFilterChipLabel(id: FiqhCanonicalDoor | "all"): string {
   if (id === "all") return "كل الأبواب";
   return FILTER_LABEL_OVERRIDE[id] ?? FIQH_DOOR_META[id].label;
 }
 
-/** عند اختيار فلتر تجميعي: يوسّع إلى الأبواب الفرعية. */
+export function fiqhDoorGroup(door: FiqhCanonicalDoor): FiqhDoorGroup {
+  return FIQH_DOOR_META[door].group;
+}
+
+/** عند اختيار فلتر تجميعي قديم (باب واحد): يوسّع إلى الأبواب الفرعية. */
 const FILTER_DOOR_EXPAND: Partial<Record<FiqhCanonicalDoor, FiqhCanonicalDoor[]>> = {
-  muamalat: ["muamalat", "buyu", "riba", "ijara", "sharika", "qard", "waqf_hiba"],
+  muamalat: ["muamalat", "buyu", "riba", "ijara", "sharika", "qard", "waqf_hiba", "faraid"],
+  buyu: ["buyu", "muamalat", "riba", "ijara", "sharika", "qard", "waqf_hiba"],
   usrah: ["usrah", "nikah", "talaq", "iddah_rida", "nafaqat"],
-  jinayat: ["jinayat"],
-  qada: ["qada"],
+  jinayat: ["jinayat", "diyat", "hudud"],
+  qada: ["qada", "shahadat", "iqrar"],
+};
+
+const GROUP_DOOR_EXPAND: Record<FiqhDoorGroup, FiqhCanonicalDoor[]> = {
+  ibadat: ["tahara", "salah", "janaza", "zakat", "sawm", "hajj", "jihad", "atima", "ayman", "libas"],
+  muamalat: ["buyu", "muamalat", "riba", "ijara", "sharika", "qard", "waqf_hiba", "faraid"],
+  usrah: ["usrah", "nikah", "talaq", "iddah_rida", "nafaqat"],
+  qada_jinayat: ["jinayat", "diyat", "hudud", "qada", "shahadat", "iqrar"],
 };
 
 export function expandFiqhFilterDoors(door: FiqhCanonicalDoor | "all"): FiqhCanonicalDoor[] | "all" {
   if (door === "all") return "all";
   return FILTER_DOOR_EXPAND[door] ?? [door];
+}
+
+export function expandFiqhGroupFilter(group: FiqhHubGroupFilter): FiqhCanonicalDoor[] | "all" {
+  if (group === "all") return "all";
+  return GROUP_DOOR_EXPAND[group];
 }
 
 const BOOK_DOOR_MAP: Record<string, FiqhCanonicalDoor> = {
@@ -372,7 +518,7 @@ const BOOK_DOOR_MAP: Record<string, FiqhCanonicalDoor> = {
   waqf: "waqf_hiba",
   hiba: "waqf_hiba",
   wasaya: "waqf_hiba",
-  faraid: "usrah",
+  faraid: "faraid",
   luqata: "muamalat",
   ghasb: "muamalat",
   mawat: "muamalat",
@@ -381,22 +527,22 @@ const BOOK_DOOR_MAP: Record<string, FiqhCanonicalDoor> = {
   ishra: "usrah",
   khul: "talaq",
   talaq: "talaq",
-  raja: "talaq",
+  raja: "iddah_rida",
   ila: "talaq",
   iddah: "iddah_rida",
   rida: "iddah_rida",
   nafaqat: "nafaqat",
   jinayat: "jinayat",
-  diyat: "jinayat",
+  diyat: "diyat",
   qasama: "jinayat",
-  hudud: "jinayat",
-  bughat: "jinayat",
-  jihad: "jinayat",
-  jizya: "jinayat",
+  hudud: "hudud",
+  bughat: "hudud",
+  jihad: "jihad",
+  jizya: "jihad",
   qada: "qada",
-  shahadat: "qada",
+  shahadat: "shahadat",
   dawa: "qada",
-  iqrar: "qada",
+  iqrar: "iqrar",
 };
 
 function categoryFallbackDoor(category: FiqhBookCategory): FiqhCanonicalDoor {
