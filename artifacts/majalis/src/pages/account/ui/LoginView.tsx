@@ -12,6 +12,7 @@ import {
 import { preloadRoute } from "@/lib/lazy-with-retry";
 import { Loading } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { canSubmitForm } from "@/lib/form-rate-limit";
 import { sanitizeAuthNext } from "@/lib/auth-redirect";
 import "@/styles/pages/auth.css";
 
@@ -141,6 +142,10 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (!canSubmitForm("auth-account", 2500)) {
+      setError("انتظر لحظات ثم أعد المحاولة.");
+      return;
+    }
     if (!authEnabled) {
       setError(mapAuthError(null));
       return;
