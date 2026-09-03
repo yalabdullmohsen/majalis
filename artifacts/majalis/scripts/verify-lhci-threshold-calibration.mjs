@@ -62,12 +62,12 @@ for (const m of MAX_METRICS) {
 }
 
 /** CLS ثابت مثل TBT — تذبذب CI تحت simulate يتجاوز main+10% */
-assert.equal(preview.cls, 0.15, "CLS معاينة ثابت 0.15 (استقرار CI)");
+assert.equal(preview.cls, 0.14, "CLS معاينة ثابت 0.14 (استقرار CI)");
 assert.ok(preview.cls >= baseline.median.cls, "CLS لا أشدّ من وسيط main");
 assert.deepEqual(
   assertions["cumulative-layout-shift"],
-  ["error", { maxNumericValue: 0.15 }],
-  "cumulative-layout-shift ≤0.15",
+  ["error", { maxNumericValue: 0.14 }],
+  "cumulative-layout-shift ≤0.14",
 );
 
 /** FCP/SI لا تُنسخ من PSI */
