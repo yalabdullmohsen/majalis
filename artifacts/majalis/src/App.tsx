@@ -423,12 +423,28 @@ function PrayerAlertSchedulerBootstrap() {
   return null;
 }
 
-/** قنوات + مستمعو النقر + Remote Push (Capacitor) عند الغلاف الأصلي. */
+/** قنوات + مستمعو النقر + Remote Push صامت (بدون طلب إذن) بعد أول خمول. */
 function NativeNotificationsBootstrap() {
   useEffect(() => {
-    void import("@/lib/notifications/native-bootstrap").then(({ bootstrapNativeNotifications }) => {
-      void bootstrapNativeNotifications();
-    });
+    let cancelled = false;
+    const run = () => {
+      if (cancelled) return;
+      void import("@/lib/notifications/native-bootstrap").then(({ bootstrapNativeNotifications }) => {
+        if (!cancelled) void bootstrapNativeNotifications();
+      });
+    };
+    let idleId: number | undefined;
+    let timeoutId: number | undefined;
+    if (typeof requestIdleCallback === "function") {
+      idleId = requestIdleCallback(run, { timeout: 4500 });
+    } else {
+      timeoutId = window.setTimeout(run, 2800);
+    }
+    return () => {
+      cancelled = true;
+      if (idleId != null && typeof cancelIdleCallback === "function") cancelIdleCallback(idleId);
+      if (timeoutId != null) window.clearTimeout(timeoutId);
+    };
   }, []);
   return null;
 }
@@ -796,7 +812,10 @@ function AppShellInner() {
   );
 }
 
-/** يؤجّل مزوّد أوقات الصلاة والجدولة — ١٠ث على الرئيسية لتخفيف TBT. */
+/**
+ * مزوّد المواقيت يبقى مركّبًا دائمًا (بلا إعادة mount للشجرة — كانت تسبب تعليقًا
+ * بعد ~١٠ث على الرئيسية). تُؤجَّل فقط جدولة الأذان/التنبيهات الثقيلة.
+ */
 function PrayerCountdownScope({
   deferMs,
   children,
@@ -804,13 +823,16 @@ function PrayerCountdownScope({
   deferMs: number;
   children: React.ReactNode;
 }) {
-  const [ready, setReady] = useState(deferMs === 0);
+  const [bootRuntime, setBootRuntime] = useState(deferMs === 0);
 
   useEffect(() => {
-    if (deferMs === 0) return;
+    if (deferMs === 0) {
+      setBootRuntime(true);
+      return;
+    }
     let cancelled = false;
     const reveal = () => {
-      if (!cancelled) setReady(true);
+      if (!cancelled) setBootRuntime(true);
     };
     const arm = () => {
       if (typeof window.requestIdleCallback === "function") {
@@ -827,10 +849,9 @@ function PrayerCountdownScope({
     };
   }, [deferMs]);
 
-  if (!ready) return <>{children}</>;
   return (
     <PrayerCountdownProvider>
-      <PrayerRuntimeBoot />
+      {bootRuntime ? <PrayerRuntimeBoot /> : null}
       {children}
     </PrayerCountdownProvider>
   );

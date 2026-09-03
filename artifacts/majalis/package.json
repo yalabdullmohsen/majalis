@@ -181,6 +181,7 @@
     "audit:audio:stratified": "AUDIT_AUDIO_MODE=stratified node scripts/audit-audio.mjs",
     "audit:audio:full": "AUDIT_AUDIO_MODE=full node scripts/audit-audio.mjs",
     "audit:hadith": "node scripts/hadith-section-audit.mjs",
+    "audit:quran-recitation": "node scripts/quran-recitation-audit.mjs",
     "test:adhan-catalog": "node --import tsx src/lib/__tests__/adhan-catalog.test.ts && pnpm run test:tafsir-audio",
     "test:tafsir-audio": "node --import tsx src/lib/__tests__/tafsir-audio-bus.test.ts",
     "test:adhan-fajr-thasweeb": "node --import tsx src/lib/__tests__/adhan-fajr-thasweeb.test.ts",
@@ -256,7 +257,7 @@
     "test:recitation-error-detector": "node --import tsx src/lib/recitation-ai/__tests__/error-detector.test.ts",
     "test:recitation-confidence": "node --import tsx src/lib/recitation-ai/__tests__/confidence-scorer.test.ts",
     "test:recitation-providers": "node --import tsx src/lib/recitation-ai/__tests__/asr-providers.test.ts",
-    "test:recitation-streaming": "node --import tsx src/lib/recitation-ai/__tests__/streaming-latency.test.ts",
+    "test:recitation-streaming": "node --import tsx src/lib/recitation-ai/__tests__/streaming-latency.test.ts && node --import tsx src/hooks/__tests__/useSpeechRecognition.test.ts && node --import tsx src/lib/recitation-ai/__tests__/recitation-module.test.ts",
     "test:recitation-mutashabihat": "node --import tsx src/lib/recitation-ai/__tests__/mutashabihat.test.ts",
     "test:recitation-freeform-start": "node --import tsx src/lib/recitation-ai/__tests__/freeform-start-detector.test.ts",
     "test:recitation-page-juz": "node --import tsx src/lib/recitation-ai/__tests__/page-juz-lookup.test.ts",
@@ -431,6 +432,10 @@
     "test:official-brand-seo": "node scripts/test-official-brand-seo.mjs",
     "generate:official-brand": "node scripts/generate-official-brand-assets.mjs",
     "audit:public-site": "node --import tsx scripts/audit-public-site.ts",
+    "audit:fiqh": "node --import tsx scripts/fiqh-section-audit.mjs",
+    "audit:legacy-routes": "node --import tsx scripts/legacy-routes-redirects-audit.mjs",
+    "audit:navigation": "node --import tsx scripts/navigation-consistency-audit.mjs",
+    "audit:lessons-quality": "node --import tsx scripts/lessons-quality-audit.mjs",
     "audit:data-completeness": "node scripts/audit-data-completeness.mjs",
     "audit:seo": "node scripts/audit-seo.mjs",
     "audit:feature-readiness": "node --import tsx scripts/audit-feature-readiness.ts",
@@ -485,7 +490,9 @@
     "test:content-audit-master": "node --import tsx src/lib/__tests__/content-audit-master-gate.test.ts",
     "test:prayer-respect-nudge": "node --import tsx src/lib/__tests__/prayer-respect-nudge.test.ts",
     "test:learn-lessons-not-paths": "node --import tsx src/lib/__tests__/learn-lessons-not-paths.test.ts",
-    "test:csp-inline-shell": "node --import tsx src/lib/__tests__/csp-inline-shell-hash-gate.test.ts"
+    "test:csp-inline-shell": "node --import tsx src/lib/__tests__/csp-inline-shell-hash-gate.test.ts",
+    "verify:lessons": "node --import tsx src/lib/__tests__/lesson-time-kuwait-asr.test.ts && node --import tsx src/lib/__tests__/lesson-live-window.test.ts",
+    "verify:ui": "pnpm run typecheck && pnpm run lint -- --max-warnings=50"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

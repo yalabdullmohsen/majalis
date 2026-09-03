@@ -1,5 +1,5 @@
 /**
- * بوابة — لا أيقونة absolute فوق شارة/نص هيرو الفقه، ووجود قاعدة safe-hero.
+ * بوابة — رأس الفقه مضغوط بلا تداخل أيقونة، ووجود قاعدة safe-hero لصفحات المواضيع.
  * Run: node --import tsx src/lib/__tests__/safe-hero-overlap-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -11,23 +11,21 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const view = read("src/pages/fiqh/ui/FiqhView.tsx");
-const fiqhCss = read("src/styles/pages/fiqh-hub.css");
+const compact = read("src/components/ui/CompactSectionHeader.tsx");
+const compactCss = read("src/components/ui/compact-section-header.css");
 const safe = read("src/styles/components/safe-hero.css");
 const topic = read("src/styles/components/topic-page.css");
 const topicTsx = read("src/components/topic/TopicPage.tsx");
 
-assert.match(view, /safe-hero/);
-assert.match(view, /fiqh-lux-hero__lead/);
-assert.match(view, /safe-hero__badge/);
+assert.match(view, /CompactSectionHeader/);
+assert.doesNotMatch(view, /FiqhLuxHero|fiqh-lux-hero/);
+assert.match(compact, /compact-section-header__icon/);
+assert.match(compactCss, /\.compact-section-header__icon[\s\S]*?flex-shrink:\s*0/);
 assert.doesNotMatch(
-  fiqhCss,
-  /\.fiqh-lux-hero__icon\s*\{[^}]*position:\s*absolute/,
-  "أيقونة هيرو الفقه ليست absolute فوق النص",
+  compactCss,
+  /\.compact-section-header__icon\s*\{[^}]*position:\s*absolute/,
+  "أيقونة الرأس المضغوط ليست absolute فوق النص",
 );
-assert.match(fiqhCss, /\.fiqh-lux-hero__icon\s*\{[\s\S]*?position:\s*static/);
-assert.match(fiqhCss, /\.fiqh-lux-hero__badge\s*\{[\s\S]*?white-space:\s*normal/);
-assert.match(fiqhCss, /padding-inline-end:\s*2\.85rem/);
-assert.match(fiqhCss, /padding:\s*1rem 1rem 2\.85rem/);
 
 assert.match(safe, /\.safe-hero\s*\{/);
 assert.match(safe, /\.safe-hero__body/);

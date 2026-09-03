@@ -16,6 +16,7 @@ import {
 } from "@/lib/lesson-time";
 import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
 import { classifyWomenAttendance } from "@/lib/lesson-women-attendance";
+import { dedupeLessons } from "@/lib/lessons/lessonDeduper";
 
 export type ActivityType = "درس" | "دورة";
 
@@ -110,24 +111,6 @@ export const CONTENT_KINDS = ["الكل", "دورة", "درس"] as const;
 
 function normalizeText(value: string) {
   return normalizeArabic(String(value || "").trim());
-}
-
-// Strips diacritics + normalizes Arabic letter variants so that spelling
-// differences (تشكيل, أ/ا/إ, ة/ه, ى/ي) don't defeat deduplication.
-function normDedup(value: string) {
-  return normalizeArabic(String(value || "")).replace(/\s+/g, "");
-}
-
-// Primary key: title + sheikh + time (+ day). Same title/sheikh/time merges once.
-// Mosque disambiguates only when time is empty (avoid collapsing distinct venues).
-function lessonDedupeKey(lesson: KuwaitLessonRecord) {
-  const title = normDedup(lesson.title);
-  const sheikh = normDedup(lesson.sheikhName);
-  const time = normDedup(lesson.time || "");
-  const day = normDedup(lesson.day);
-  const mosque = normDedup(lesson.mosque);
-  if (time) return [title, sheikh, time, day].join("|");
-  return [title, sheikh || mosque, day].join("|");
 }
 
 function computeCompleteness(lesson: KuwaitLessonRecord): { score: number; missing: string[] } {
@@ -352,25 +335,7 @@ export function splitKuwaitLessons(lessons: KuwaitLessonRecord[], nowMs = Date.n
 }
 
 export function dedupeKuwaitLessons(lessons: KuwaitLessonRecord[]): KuwaitLessonRecord[] {
-  // Keep the most-complete record when duplicates exist.
-  // "supabase" source beats "seed" when scores are equal.
-  const best = new Map<string, KuwaitLessonRecord>();
-  for (const lesson of lessons) {
-    const key = lessonDedupeKey(lesson);
-    const existing = best.get(key);
-    if (!existing) {
-      best.set(key, lesson);
-      continue;
-    }
-    const existingScore = existing.completeness ?? 0;
-    const newScore = lesson.completeness ?? 0;
-    const newIsDb = lesson.source === "supabase";
-    const existingIsDb = existing.source === "supabase";
-    if (newScore > existingScore || (newScore === existingScore && newIsDb && !existingIsDb)) {
-      best.set(key, lesson);
-    }
-  }
-  return Array.from(best.values());
+  return dedupeLessons(lessons);
 }
 
 export function sortKuwaitLessons(lessons: KuwaitLessonRecord[]): KuwaitLessonRecord[] {

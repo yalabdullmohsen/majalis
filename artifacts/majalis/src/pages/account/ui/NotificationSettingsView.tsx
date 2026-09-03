@@ -240,6 +240,10 @@ export default function NotificationSettingsPage() {
     setPermission(status);
     if (granted) {
       setPrefs(p => ({ ...p, enabled: true }));
+      // Remote Push: طلب إذن صريح من إعدادات المستخدم فقط (ليس عند الإقلاع).
+      void import("@/lib/notifications/apns-scaffold").then(({ maybeRegisterRemotePush }) => {
+        void maybeRegisterRemotePush({ requestPermission: true });
+      });
     }
     setRequesting(false);
   };

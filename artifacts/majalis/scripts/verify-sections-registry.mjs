@@ -101,7 +101,7 @@ const SPACING = new Set([8, 12, 16, 24]);
     fail(`الشريط السفلي المتوقع: ${expectedBottom.join(" · ")}`);
   }
   const bottomLabels = bottom.map((s) => s.navLabel ?? s.label);
-  if (bottomLabels[0] !== "مركز القرآن") fail("التبويب الأول يجب أن يكون «مركز القرآن»");
+  if (bottomLabels[0] !== "القرآن") fail("التبويب الأول يجب أن يكون «القرآن»");
   if (bottomLabels[4] !== "الأقسام") fail("التبويب الخامس يجب أن يكون «الأقسام»");
   if (bottomLabels.some((l) => l === "المزيد" || l === "قرآن")) {
     fail("تسميات قديمة (المزيد/قرآن) ما زالت في الشريط السفلي");

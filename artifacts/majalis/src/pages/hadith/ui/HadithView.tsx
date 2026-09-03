@@ -187,21 +187,6 @@ function collectionLabel(key: string | null): string {
   return COLLECTION_LABELS[key] ?? key;
 }
 
-function collectionBadgeClass(key: string | null): string {
-  if (!key) return "hadith-badge--collection";
-  const map: Record<string, string> = {
-    mutafaq:  "hadith-badge--mutafaq",
-    bukhari:  "hadith-badge--bukhari",
-    muslim:   "hadith-badge--muslim",
-    nawawi40: "hadith-badge--nawawi",
-    tirmidhi: "hadith-badge--tirmidhi",
-    abudawud: "hadith-badge--abudawud",
-    nasai:    "hadith-badge--nasai",
-    ibnmajah: "hadith-badge--ibnmajah",
-  };
-  return map[key] ?? "hadith-badge--collection";
-}
-
 // ─── HadithDetailModal ────────────────────────────────────────────────────────
 
 function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void }) {

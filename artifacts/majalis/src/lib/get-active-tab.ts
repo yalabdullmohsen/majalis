@@ -22,6 +22,9 @@ export function getActiveTab(pathname: string): BottomTabId {
   const path = (pathname.split("?")[0] || "/").replace(/\/+$/, "") || "/";
   if (path === "/" || path === "/more") return "sections";
   if (path === "/sections" || path.startsWith("/sections/")) return "sections";
+  // الشريط السفلي بلا تبويب أذكار/بحث — نربطهما بأقرب باب
+  if (path === "/adhkar" || path.startsWith("/adhkar/")) return "prayer";
+  if (path === "/search" || path.startsWith("/search/")) return "sections";
 
   const hits = TAB_IDS.filter(({ href }) => isTabActive(path, href));
   if (hits.length === 0) return "sections";

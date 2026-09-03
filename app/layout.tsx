@@ -8,13 +8,13 @@ import "./globals.css";
  * so Web and Native paths never double-register.
  */
 export const metadata: Metadata = {
-  title: "Majlisilm",
+  title: "سُنّة",
   description:
-    "تطبيق عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم.",
-  applicationName: "Majlisilm",
+    "تطبيق سُنّة يجمع القرآن الكريم، الدروس الشرعية، الفقه، الحديث، الأذكار، والمكتبة العلمية في واجهة عربية سهلة وهادئة.",
+  applicationName: "سُنّة",
   appleWebApp: {
     capable: true,
-    title: "Majlisilm",
+    title: "سُنّة",
     statusBarStyle: "black-translucent",
   },
   manifest: "/manifest.json",

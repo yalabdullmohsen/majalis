@@ -1,3 +1,4 @@
+import { isOutsideKuwaitHarvestItem } from "@/lib/lesson-kuwait-scope";
 /**
  * تحميل بطاقات حصاد المصادر من feed.json
  */
@@ -58,8 +59,9 @@ export async function loadHarvestFeed(): Promise<HarvestFeedCard[]> {
   if (!res.ok) return [];
   const data = await res.json();
   const items: HarvestFeedCard[] = Array.isArray(data.items) ? data.items : [];
-  feedCache = items;
-  return items;
+  const kuwaitOnly = items.filter((item) => !isOutsideKuwaitHarvestItem(item));
+  feedCache = kuwaitOnly;
+  return kuwaitOnly;
 }
 
 export async function loadHarvestAccounts(): Promise<HarvestAccount[]> {

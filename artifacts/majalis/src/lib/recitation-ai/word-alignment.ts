@@ -12,7 +12,15 @@
  * المرجع)، كلمة زائدة (إدراج من عند المستخدم).
  */
 
+import { matchNormalizedWords } from "./audio-matcher";
 import { softEqualNormalized } from "./soft-match";
+
+export type AlignmentMatchMode = "legacy-soft" | "tolerant" | "strict";
+
+export type AlignmentMatchOptions = {
+  /** الافتراضي legacy-soft — يحافظ على سلوك recitation-diff والاختبارات القديمة */
+  mode?: AlignmentMatchMode;
+};
 
 export type AlignOpType = "match" | "substitute" | "delete" | "insert";
 
@@ -27,8 +35,11 @@ const MATCH_SCORE = 2;
 const SUBSTITUTE_PENALTY = -1;
 const GAP_PENALTY = -1;
 
-function isMatch(ref: string, heard: string): boolean {
-  return softEqualNormalized(ref, heard);
+function isMatch(ref: string, heard: string, options?: AlignmentMatchOptions): boolean {
+  const mode = options?.mode ?? "legacy-soft";
+  if (mode === "legacy-soft") return softEqualNormalized(ref, heard);
+  if (mode === "strict") return matchNormalizedWords(ref, heard, true);
+  return matchNormalizedWords(ref, heard, false);
 }
 
 /**
@@ -37,7 +48,11 @@ function isMatch(ref: string, heard: string): boolean {
  * كلا المدخلين نصوص **مطبَّعة مسبقًا** (عبر normalizeQuranWord) — هذه
  * الوحدة لا تُطبّع بنفسها لتبقى عامة وقابلة لإعادة الاستخدام/الاختبار.
  */
-export function alignWindow(heardWindow: string[], refWindow: string[]): AlignOp[] {
+export function alignWindow(
+  heardWindow: string[],
+  refWindow: string[],
+  options?: AlignmentMatchOptions,
+): AlignOp[] {
   const n = refWindow.length;
   const m = heardWindow.length;
 
@@ -48,7 +63,7 @@ export function alignWindow(heardWindow: string[], refWindow: string[]): AlignOp
 
   for (let i = 1; i <= n; i++) {
     for (let j = 1; j <= m; j++) {
-      const matchScore = isMatch(refWindow[i - 1]!, heardWindow[j - 1]!) ? MATCH_SCORE : SUBSTITUTE_PENALTY;
+      const matchScore = isMatch(refWindow[i - 1]!, heardWindow[j - 1]!, options) ? MATCH_SCORE : SUBSTITUTE_PENALTY;
       const diag = dp[i - 1][j - 1] + matchScore;
       const up = dp[i - 1][j] + GAP_PENALTY;   // حذف: كلمة مرجعية بلا مقابل مسموع
       const left = dp[i][j - 1] + GAP_PENALTY; // إدراج: كلمة مسموعة بلا مقابل مرجعي
@@ -62,7 +77,7 @@ export function alignWindow(heardWindow: string[], refWindow: string[]): AlignOp
   let j = m;
   while (i > 0 || j > 0) {
     if (i > 0 && j > 0) {
-      const matched = isMatch(refWindow[i - 1]!, heardWindow[j - 1]!);
+      const matched = isMatch(refWindow[i - 1]!, heardWindow[j - 1]!, options);
       const matchScore = matched ? MATCH_SCORE : SUBSTITUTE_PENALTY;
       if (dp[i][j] === dp[i - 1][j - 1] + matchScore) {
         ops.push({
@@ -99,7 +114,11 @@ export function alignWindow(heardWindow: string[], refWindow: string[]): AlignOp
  * (كل الكلمات المسموعة استُهلكت) بدل الزاوية اليمنى السفلى حصرًا؛ نفس
  * جدول dp وبنفس عقوبات الحذف/الإدراج/التبديل تمامًا.
  */
-export function alignFittingWindow(heardWindow: string[], refWindow: string[]): AlignOp[] {
+export function alignFittingWindow(
+  heardWindow: string[],
+  refWindow: string[],
+  options?: AlignmentMatchOptions,
+): AlignOp[] {
   const n = refWindow.length;
   const m = heardWindow.length;
 
@@ -111,7 +130,7 @@ export function alignFittingWindow(heardWindow: string[], refWindow: string[]): 
 
   for (let i = 1; i <= n; i++) {
     for (let j = 1; j <= m; j++) {
-      const matchScore = isMatch(refWindow[i - 1]!, heardWindow[j - 1]!) ? MATCH_SCORE : SUBSTITUTE_PENALTY;
+      const matchScore = isMatch(refWindow[i - 1]!, heardWindow[j - 1]!, options) ? MATCH_SCORE : SUBSTITUTE_PENALTY;
       const diag = dp[i - 1][j - 1] + matchScore;
       const up = dp[i - 1][j] + GAP_PENALTY;
       const left = dp[i][j - 1] + GAP_PENALTY;
@@ -132,7 +151,7 @@ export function alignFittingWindow(heardWindow: string[], refWindow: string[]): 
   let j = m;
   while (i > 0 || j > 0) {
     if (i > 0 && j > 0) {
-      const matched = isMatch(refWindow[i - 1]!, heardWindow[j - 1]!);
+      const matched = isMatch(refWindow[i - 1]!, heardWindow[j - 1]!, options);
       const matchScore = matched ? MATCH_SCORE : SUBSTITUTE_PENALTY;
       if (dp[i][j] === dp[i - 1][j - 1] + matchScore) {
         ops.push({

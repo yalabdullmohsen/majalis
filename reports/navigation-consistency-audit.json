@@ -1,0 +1,272 @@
+{
+  "generatedAt": "2026-09-01T22:56:33.852Z",
+  "critical": 0,
+  "high": 0,
+  "medium": 0,
+  "info": 0,
+  "pass": true,
+  "primaryNav": [
+    {
+      "id": "home",
+      "href": "/",
+      "label": "الرئيسية"
+    },
+    {
+      "id": "lessons",
+      "href": "/lessons",
+      "label": "الدروس"
+    },
+    {
+      "id": "quran",
+      "href": "/quran-hub",
+      "label": "القرآن"
+    },
+    {
+      "id": "adhkar",
+      "href": "/adhkar",
+      "label": "الأذكار"
+    },
+    {
+      "id": "prayer",
+      "href": "/prayer-times",
+      "label": "الصلاة"
+    },
+    {
+      "id": "fiqh",
+      "href": "/fiqh",
+      "label": "الفقه"
+    },
+    {
+      "id": "search",
+      "href": "/search",
+      "label": "البحث"
+    }
+  ],
+  "secondaryNavCount": 13,
+  "footerGroups": [
+    "الأقسام العلمية",
+    "خدمات القرآن",
+    "الدروس والبحث",
+    "التواصل والسياسات"
+  ],
+  "issues": {
+    "critical": [],
+    "high": [],
+    "medium": [],
+    "info": []
+  },
+  "pages": [
+    {
+      "page": "/",
+      "navLinks": [
+        "الرئيسية",
+        "الدروس",
+        "القرآن",
+        "الأذكار",
+        "الصلاة",
+        "الفقه",
+        "البحث"
+      ],
+      "expected": [
+        "الرئيسية",
+        "الدروس",
+        "القرآن",
+        "الأذكار",
+        "الصلاة",
+        "الفقه",
+        "البحث"
+      ],
+      "diff": [],
+      "legacyLinks": [],
+      "fix": "noscript موحّد مع primaryNav",
+      "blocksDeploy": false
+    },
+    {
+      "page": "/lessons",
+      "navLinks": [
+        "الرئيسية",
+        "الدروس",
+        "القرآن",
+        "الأذكار",
+        "الصلاة",
+        "الفقه",
+        "البحث"
+      ],
+      "expected": [
+        "الرئيسية",
+        "الدروس",
+        "القرآن",
+        "الأذكار",
+        "الصلاة",
+        "الفقه",
+        "البحث"
+      ],
+      "diff": [],
+      "legacyLinks": [],
+      "fix": "prerenderNav من site.config",
+      "blocksDeploy": false
+    },
+    {
+      "page": "/hadith",
+      "navLinks": [
+        "الرئيسية",
+        "الدروس",
+        "القرآن",
+        "الأذكار",
+        "الصلاة",
+        "الفقه",
+        "البحث"
+      ],
+      "expected": [
+        "الرئيسية",
+        "الدروس",
+        "القرآن",
+        "الأذكار",
+        "الصلاة",
+        "الفقه",
+        "البحث"
+      ],
+      "diff": [],
+      "legacyLinks": [],
+      "fix": "prerenderNav من site.config",
+      "blocksDeploy": false
+    },
+    {
+      "page": "/fiqh",
+      "navLinks": [
+        "الرئيسية",
+        "الدروس",
+        "القرآن",
+        "الأذكار",
+        "الصلاة",
+        "الفقه",
+        "البحث"
+      ],
+      "expected": [
+        "الرئيسية",
+        "الدروس",
+        "القرآن",
+        "الأذكار",
+        "الصلاة",
+        "الفقه",
+        "البحث"
+      ],
+      "diff": [],
+      "legacyLinks": [],
+      "fix": "prerenderNav من site.config",
+      "blocksDeploy": false
+    },
+    {
+      "page": "/mushaf",
+      "navLinks": [
+        "الرئيسية",
+        "الدروس",
+        "القرآن",
+        "الأذكار",
+        "الصلاة",
+        "الفقه",
+        "البحث"
+      ],
+      "expected": [
+        "الرئيسية",
+        "الدروس",
+        "القرآن",
+        "الأذكار",
+        "الصلاة",
+        "الفقه",
+        "البحث"
+      ],
+      "diff": [],
+      "legacyLinks": [],
+      "fix": "prerenderNav من site.config",
+      "blocksDeploy": false
+    },
+    {
+      "page": "/adhkar",
+      "navLinks": [
+        "الرئيسية",
+        "الدروس",
+        "القرآن",
+        "الأذكار",
+        "الصلاة",
+        "الفقه",
+        "البحث"
+      ],
+      "expected": [
+        "الرئيسية",
+        "الدروس",
+        "القرآن",
+        "الأذكار",
+        "الصلاة",
+        "الفقه",
+        "البحث"
+      ],
+      "diff": [],
+      "legacyLinks": [],
+      "fix": "prerenderNav من site.config",
+      "blocksDeploy": false
+    },
+    {
+      "page": "/prayer-times",
+      "navLinks": [
+        "الرئيسية",
+        "الدروس",
+        "القرآن",
+        "الأذكار",
+        "الصلاة",
+        "الفقه",
+        "البحث"
+      ],
+      "expected": [
+        "الرئيسية",
+        "الدروس",
+        "القرآن",
+        "الأذكار",
+        "الصلاة",
+        "الفقه",
+        "البحث"
+      ],
+      "diff": [],
+      "legacyLinks": [],
+      "fix": "prerenderNav من site.config",
+      "blocksDeploy": false
+    },
+    {
+      "page": "/search",
+      "navLinks": [
+        "الرئيسية",
+        "الدروس",
+        "القرآن",
+        "الأذكار",
+        "الصلاة",
+        "الفقه",
+        "البحث"
+      ],
+      "expected": [
+        "الرئيسية",
+        "الدروس",
+        "القرآن",
+        "الأذكار",
+        "الصلاة",
+        "الفقه",
+        "البحث"
+      ],
+      "diff": [],
+      "legacyLinks": [],
+      "fix": "prerenderNav من site.config",
+      "blocksDeploy": false
+    }
+  ],
+  "labelCanonical": {
+    "/quran-hub": "القرآن",
+    "/mushaf": "المصحف",
+    "/prayer-times": "الصلاة",
+    "/hadith": "الحديث وعلومه",
+    "/library": "المكتبة",
+    "/fiqh": "الفقه",
+    "/adhkar": "الأذكار",
+    "/lessons": "الدروس",
+    "/search": "البحث"
+  },
+  "googleSnippetNote": "مقتطفات قوقل القديمة قد تعرض «المزيد» — لا تُعدّل الكود إلا إذا ظهر في HTML الحي."
+}

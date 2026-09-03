@@ -42,9 +42,11 @@ export { APNS_TOKEN_STORAGE_KEY } from "@/lib/pushNotifications";
  * تسجيل Remote Push داخل الغلاف الأصلي فقط.
  * لا يتعارض مع Web Push ولا مع مستمعي Local Notifications.
  */
-export async function maybeRegisterRemotePush(): Promise<ApnsRegistrationResult> {
+export async function maybeRegisterRemotePush(options?: {
+  requestPermission?: boolean;
+}): Promise<ApnsRegistrationResult> {
   if (!REMOTE_PUSH_ENABLED) {
-    if (isNative) {
+    if (isNative && import.meta.env.DEV) {
       console.info(
         "[notifications/apns] Remote Push disabled via VITE_REMOTE_PUSH_ENABLED=false",
       );
@@ -54,9 +56,12 @@ export async function maybeRegisterRemotePush(): Promise<ApnsRegistrationResult>
   if (!isNative) return { status: "unsupported" };
 
   const { registerNativePushNotifications } = await import("@/lib/pushNotifications");
-  const result = await registerNativePushNotifications();
+  // الإقلاع: تسجيل صامت إن كان الإذن ممنوحًا مسبقًا فقط — بلا حوار.
+  const result = await registerNativePushNotifications({
+    requestPermission: options?.requestPermission === true,
+  });
 
-  if (result.status === "registered") {
+  if (result.status === "registered" && import.meta.env.DEV) {
     console.info(
       "[notifications/apns] native push registered",
       result.platform,
