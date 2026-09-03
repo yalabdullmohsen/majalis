@@ -69,7 +69,7 @@ function FiqhLobbyBody({ lobby }: { lobby: LobbySpec }) {
 
   const featuredIssues = useMemo(() => {
     if (query.trim()) return searchResults;
-    return filterLessonsByDoor(listPublishedLessonHits(), door).slice(0, 8);
+    return filterLessonsByDoor(listPublishedLessonHits(), door).slice(0, 6);
   }, [query, door, searchResults]);
 
   useEffect(() => {
@@ -86,13 +86,22 @@ function FiqhLobbyBody({ lobby }: { lobby: LobbySpec }) {
 
   return (
     <div className="fiqh-lux-page fiqh-hub-layout">
-      <FiqhHubSearch query={query} onQueryChange={setQuery} />
-      <FiqhFilters value={door} onChange={setDoor} />
+      <p className="fiqh-hub-lead">
+        ابدأ بباب، أو ابحث عن مسألة. التصفية تضيّق الأبواب والمسائل معًا.
+      </p>
+
+      <div className="fiqh-hub-controls">
+        <FiqhHubSearch query={query} onQueryChange={setQuery} />
+        <FiqhFilters value={door} onChange={setDoor} />
+      </div>
 
       <section className="fiqh-hub-section" aria-labelledby="fiqh-doors-title">
-        <h2 id="fiqh-doors-title" className="fiqh-hub-section__title">
-          أبواب الفقه
-        </h2>
+        <header className="fiqh-hub-section__head">
+          <h2 id="fiqh-doors-title" className="fiqh-hub-section__title">
+            أبواب الفقه
+          </h2>
+          <p className="fiqh-hub-section__hint">اختر بابًا للقراءة المتدرجة في الأحكام.</p>
+        </header>
         <div className="fiqh-category-grid">
           {filteredDoors.map((item) => (
             <FiqhCategoryCard key={item.id} door={item} />
@@ -101,9 +110,16 @@ function FiqhLobbyBody({ lobby }: { lobby: LobbySpec }) {
       </section>
 
       <section className="fiqh-hub-section" aria-labelledby="fiqh-issues-title">
-        <h2 id="fiqh-issues-title" className="fiqh-hub-section__title">
-          {query.trim() ? "نتائج البحث" : "مسائل مهمة"}
-        </h2>
+        <header className="fiqh-hub-section__head">
+          <h2 id="fiqh-issues-title" className="fiqh-hub-section__title">
+            {query.trim() ? "نتائج البحث" : "مسائل مختارة"}
+          </h2>
+          <p className="fiqh-hub-section__hint">
+            {query.trim()
+              ? "أبرز المطابقات حسب بحثك والباب المحدد."
+              : "عيّنة قصيرة للدخول السريع — المزيد داخل كل باب."}
+          </p>
+        </header>
         {featuredIssues.length > 0 ? (
           <div className="fiqh-issue-grid">
             {featuredIssues.map((hit) => (
@@ -205,7 +221,6 @@ export default function FiqhPage() {
         title="الفقه"
         description="أبواب مرتّبة للطهارة والصلاة والزكاة والصيام والحج ثم المعاملات والأسرة."
         icon={Scale}
-        stats={headerStats}
         titleId="fiqh-compact-title"
       />
       {lobby ? (
@@ -215,6 +230,13 @@ export default function FiqhPage() {
           <p className="fiqh-lux-empty">جاري تجهيز أبواب الفقه…</p>
         </div>
       )}
+      <section className="fiqh-hub-stats" aria-label="حجم المحتوى">
+        {headerStats.map((stat) => (
+          <p key={stat.id} className="fiqh-hub-stats__item">
+            {stat.label}
+          </p>
+        ))}
+      </section>
     </div>
   );
 }
