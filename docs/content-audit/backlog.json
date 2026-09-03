@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
   "generatedAt": "2026-09-03",
-  "lastCompletedId": "b064",
-  "resumeFromId": "b065",
+  "lastCompletedId": "b065",
+  "resumeFromId": "b066",
   "items": [
     {
       "id": "b001",
@@ -783,6 +783,22 @@
         "artifacts/majalis/src/lib/__tests__/content-audit-b064-maqasid-arabic-fiqh-gate.test.ts"
       ],
       "finding": "أُضيف متن موجز فريد لكل درس في المقاصد (50) واللغة العربية (88) من مناهج قياسية بلا اختراع أحكام؛ رُبطت أبواب الأصول/القواعد/النوازل بعدّادات من محتواها القائم بدل «سيضاف قريبًا»؛ نُظّفت بقايا روابط المكتبة في updates-seed."
+    },
+    {
+      "id": "b065",
+      "section": "dalail_nubuwwah",
+      "title": "إثراء أقسام دلائل النبوة غير الحسّية بمتون موجزة وتمييز تكرار كتب الدلائل",
+      "severity": "medium",
+      "status": "done",
+      "verifiedAt": "2026-09-03",
+      "files": [
+        "artifacts/majalis/src/lib/dalail-nubuwwah-data.ts",
+        "artifacts/majalis/src/lib/__tests__/content-audit-b065-dalail-non-hissiyya-gate.test.ts",
+        "artifacts/majalis/src/lib/seo-routes.json",
+        "artifacts/majalis/src/lib/ia-final-structure.ts",
+        "artifacts/majalis/src/views/SourcesLicensesPage.tsx"
+      ],
+      "finding": "أُضيف متن موجز فريد لـ31 درسًا في المقدمة/القولية/الخلقية/البشارات/المنهج/كتب الدلائل من مناهج البيهقي وأبي نعيم وابن كثير بلا اختراع معجزات؛ أُعيد توجيه عناوين دروس الكتب التي كانت تكرر الحسّيات إلى منظور التخريج في الجوامع؛ نُظّفت صياغات «مكتبة» المتبقية في seo-routes وia-final-structure وSourcesLicensesPage؛ بوابة b065."
     }
   ]
 }

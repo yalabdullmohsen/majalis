@@ -207,6 +207,12 @@ export const CONTENT_AUDIT_GATES: ContentAuditGate[] = [
     path: "src/lib/__tests__/content-audit-b064-maqasid-arabic-fiqh-gate.test.ts",
     kind: "node-tsx",
   },
+  {
+    id: "b065-dalail-non-hissiyya",
+    dimension: "تدقيق",
+    path: "src/lib/__tests__/content-audit-b065-dalail-non-hissiyya-gate.test.ts",
+    kind: "node-tsx",
+  },
   // تصحيح — لغة وهوية ومصادر
   {
     id: "content-lang",
