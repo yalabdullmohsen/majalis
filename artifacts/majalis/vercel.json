@@ -1138,11 +1138,6 @@
       "permanent": true
     },
     {
-      "source": "/library/:path*",
-      "destination": "/search",
-      "permanent": true
-    },
-    {
       "source": "/latest",
       "destination": "/",
       "permanent": true
