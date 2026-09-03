@@ -576,7 +576,7 @@ export default function LessonsPage({
                 <label className="lesson-filters__search-field">
                   <span className="sr-only">بحث في الدروس</span>
                   <input
-                    type="search"
+                    type="text"
                     inputMode="search"
                     value={searchDraft}
                     onChange={(e) => setSearchDraft(e.target.value)}
