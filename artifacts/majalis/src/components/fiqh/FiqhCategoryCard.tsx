@@ -26,18 +26,20 @@ function statusClass(status: FiqhContentStatus): string {
 
 export function FiqhCategoryCard({ door, className }: Props) {
   const entryHref = door.bookHref ?? door.href;
-  const issueLabel = door.issueCount > 0 ? formatMasailCount(door.issueCount) : "لا مسائل بعد";
+  const showCount = door.hasVerifiedIssueCount && door.issueCount > 0;
 
   return (
     <article className={cn("fiqh-category-card", className)}>
       <div className="fiqh-category-card__head">
-        <h2 className="fiqh-category-card__title">{door.label}</h2>
+        <h3 className="fiqh-category-card__title">{door.label}</h3>
         <span className={cn("fiqh-status-badge", statusClass(door.status))}>
           {FIQH_STATUS_LABELS[door.status]}
         </span>
       </div>
       <p className="fiqh-category-card__desc">{door.desc}</p>
-      <p className="fiqh-category-card__meta">{issueLabel}</p>
+      {showCount ? (
+        <p className="fiqh-category-card__meta">{formatMasailCount(door.issueCount)}</p>
+      ) : null}
       <Link href={entryHref} className="fiqh-category-card__cta">
         <span>دخول الباب</span>
         <ArrowLeft size={16} strokeWidth={2.2} aria-hidden="true" />

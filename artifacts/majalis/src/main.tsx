@@ -82,13 +82,15 @@ function loadNonCriticalCss() {
   void import("./styles/index-deferred-pages.css");
   void import("./styles/design-system.css").then(() => {
     void import("./styles/brand-v4-components.css");
+    // بعد design-system حتمًا حتى لا يفوز blur(20px) على final-release
+    void import("./styles/final-release.css");
   });
   void import("./styles/components/instant-interaction.css");
   void import("./styles/components/compact-sources.css");
   void import("./styles/components/native-feel.css");
   void import("./styles/m2030/interactions.css");
   void import("./styles/m2030/pages.css");
-  void import("./styles/final-release.css");
+  // final-release يُحمَّل بعد design-system أعلاه — لا تحميل متوازٍ
   const isDark =
     document.documentElement.classList.contains("dark") ||
     document.documentElement.dataset.theme === "dark";

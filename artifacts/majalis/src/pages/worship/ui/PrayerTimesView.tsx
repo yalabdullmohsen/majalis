@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link, useLocation } from "wouter";
 import { ArrowRight, Bell, Compass, HandHeart, MapPin, CircleDot, Settings2 } from "lucide-react";
-import { usePrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
+import { useSharedPrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
 import {
   formatTime12,
   type PrayerSlot,
@@ -107,46 +107,6 @@ function displayTime12(p: PrayerSlot): string {
   return raw ? formatTime12(raw) : "—";
 }
 
-function MosqueSilhouette() {
-  return (
-    <svg
-      className="pts-mosque"
-      viewBox="0 0 360 220"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        d="M180 28c-28 22-42 48-42 78v14h84v-14c0-30-14-56-42-78Z"
-        fill="currentColor"
-        opacity="0.14"
-      />
-      <path d="M180 18v22" stroke="currentColor" strokeWidth="3" strokeLinecap="round" opacity="0.22" />
-      <circle cx="180" cy="14" r="4" fill="currentColor" opacity="0.28" />
-      <rect x="118" y="112" width="124" height="88" rx="6" fill="currentColor" opacity="0.12" />
-      <path
-        d="M130 112v-18c0-10 8-22 18-30 6 8 12 18 12 30v18H130Z"
-        fill="currentColor"
-        opacity="0.16"
-      />
-      <path
-        d="M200 112v-18c0-10 8-22 18-30 6 8 12 18 12 30v18H200Z"
-        fill="currentColor"
-        opacity="0.16"
-      />
-      <rect x="68" y="78" width="22" height="122" rx="4" fill="currentColor" opacity="0.13" />
-      <path d="M79 42c-10 10-14 22-14 34v10h28V76c0-12-4-24-14-34Z" fill="currentColor" opacity="0.16" />
-      <path d="M79 34v12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" opacity="0.25" />
-      <circle cx="79" cy="30" r="3.2" fill="currentColor" opacity="0.3" />
-      <rect x="270" y="98" width="18" height="102" rx="3" fill="currentColor" opacity="0.11" />
-      <path d="M279 68c-8 8-11 17-11 28v8h22v-8c0-11-3-20-11-28Z" fill="currentColor" opacity="0.14" />
-      <rect x="152" y="148" width="56" height="52" rx="4" fill="currentColor" opacity="0.1" />
-      <path d="M152 148h56v-10c-8 6-20 10-28 10s-20-4-28-10v10Z" fill="currentColor" opacity="0.14" />
-      <path d="M40 200h280" stroke="currentColor" strokeWidth="2" opacity="0.1" />
-    </svg>
-  );
-}
-
 /** حالة مختصرة لكل صف في قائمة المواقيت */
 function rowStatusLabel(
   key: string,
@@ -167,6 +127,7 @@ export default function PrayerTimesPage() {
   const [locLabel, setLocLabel] = useState(() => getActivePrayerLocation().label);
   const [locToken, setLocToken] = useState(0);
   const [govOpen, setGovOpen] = useState(false);
+  const [ranksOpen, setRanksOpen] = useState(false);
   const [calcMethod, setCalcMethod] = useState<PrayerCalcMethodId>(() => getPrayerCalcMethod());
   const [madhab, setMadhab] = useState<PrayerMadhabId>(() => getPrayerMadhab());
   const [highLat, setHighLat] = useState<HighLatitudeRuleId>(() => getHighLatitudeRule());
@@ -200,11 +161,10 @@ export default function PrayerTimesPage() {
     });
   }, []);
 
-  const { data, countdown, loading: _loading, reload } = usePrayerCountdown();
+  const { data, countdown, loading, reload } = useSharedPrayerCountdown();
   const [pinnedKey, setPinnedKey] = useState<string | null>(null);
   const timeZone = data?.timezone || getActivePrayerLocation().timeZone;
 
-  // re-bind when location prefs change
   useEffect(() => {
     void locToken;
     setLocLabel(getActivePrayerLocation().label);
@@ -231,51 +191,163 @@ export default function PrayerTimesPage() {
     reload();
   }
 
-  // لا شاشة تحميل تعترض — الهيكل يظهر دائماً؛ البيانات من الكاش/محلي فوراً
+  const headerChrome = (
+    <header className="pts-header">
+      <div className="pts-header__top">
+        <button
+          type="button"
+          className="pts-back pts-back--top"
+          onClick={handleBack}
+          aria-label="رجوع"
+        >
+          <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
+          <span>رجوع</span>
+        </button>
+        <button
+          type="button"
+          className="pts-location"
+          onClick={() => setGovOpen((v) => !v)}
+          aria-expanded={govOpen}
+          aria-controls="pts-gov-panel"
+        >
+          <MapPin size={15} strokeWidth={2} aria-hidden="true" />
+          <span>{locLabel}</span>
+        </button>
+        <Link href="/adhan-settings" className="pts-settings pts-settings--top" aria-label="إعدادات الصلاة والأذان">
+          <Settings2 size={16} strokeWidth={2} aria-hidden="true" />
+          <span>إعدادات</span>
+        </Link>
+      </div>
+      <div className="pts-dates">
+        <span>{zoneDateReadable(timeZone)}</span>
+      </div>
+      <h1 className="pts-title sr-only">مواقيت الصلاة</h1>
+    </header>
+  );
+
+  const locationPanel = govOpen ? (
+    <div id="pts-gov-panel" className="pts-gov-panel" role="region" aria-label="إعدادات الموقع والحساب">
+      <PrayerLocationPicker
+        onChanged={(next) => {
+          setLocLabel(next.label);
+          setLocToken((n) => n + 1);
+          setPinnedKey(null);
+          reload();
+        }}
+      />
+      <details className="pts-more">
+        <summary>خيارات متقدمة</summary>
+        <div className="pts-more__body">
+          <label className="pts-method" htmlFor="pts-calc-method">
+            <span className="pts-method__label">طريقة الحساب</span>
+            <select
+              id="pts-calc-method"
+              className="pts-method__select"
+              value={calcMethod}
+              onChange={(e) => handleCalcMethod(e.target.value as PrayerCalcMethodId)}
+              dir="rtl"
+            >
+              {PRAYER_CALC_METHODS.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.labelAr}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="pts-method" htmlFor="pts-madhab">
+            <span className="pts-method__label">مذهب العصر</span>
+            <select
+              id="pts-madhab"
+              className="pts-method__select"
+              value={madhab}
+              onChange={(e) => handleMadhab(e.target.value as PrayerMadhabId)}
+              dir="rtl"
+            >
+              <option value="Shafi">شافعي / مالكي / حنبلي</option>
+              <option value="Hanafi">حنفي</option>
+            </select>
+          </label>
+          <label className="pts-method" htmlFor="pts-highlat">
+            <span className="pts-method__label">مناطق خطوط العرض العالية</span>
+            <select
+              id="pts-highlat"
+              className="pts-method__select"
+              value={highLat}
+              onChange={(e) => handleHighLat(e.target.value as HighLatitudeRuleId)}
+              dir="rtl"
+            >
+              <option value="auto">تلقائي موصى به</option>
+              <option value="MiddleOfTheNight">منتصف الليل</option>
+              <option value="SeventhOfTheNight">سُبع الليل</option>
+              <option value="TwilightAngle">زاوية الشفق</option>
+            </select>
+          </label>
+          <PrayerAnnualTimetable />
+        </div>
+      </details>
+    </div>
+  ) : null;
+
+  const shortcuts = (
+    <nav className="pts-dock" aria-label="أدوات الصلاة">
+      <Link href="/adhkar" className="pts-dock__item">
+        <span className="pts-dock__icon"><HandHeart size={18} strokeWidth={1.8} /></span>
+        <span>الأذكار</span>
+      </Link>
+      <Link href="/tasbih" className="pts-dock__item">
+        <span className="pts-dock__icon"><CircleDot size={18} strokeWidth={1.8} /></span>
+        <span>التسبيح</span>
+      </Link>
+      <Link href="/adhan-settings" className="pts-dock__item">
+        <span className="pts-dock__icon"><Bell size={18} strokeWidth={1.8} /></span>
+        <span>تنبيهات الأذان</span>
+      </Link>
+      <Link href="/qibla" className="pts-dock__item">
+        <span className="pts-dock__icon"><Compass size={18} strokeWidth={1.8} /></span>
+        <span>القبلة</span>
+      </Link>
+    </nav>
+  );
+
+  // هيكل فوري — بلا شاشة بيضاء؛ إن لم تتوفر مواقيت حقيقية نطلب اختيار المدينة
   if (!countdown?.next) {
     return (
       <div className="pts-screen pts-screen--with-nav" dir="rtl">
-        <header className="pts-header">
-          <h1 className="pts-title">الصلاة</h1>
-        </header>
-        <p className="pts-error" role="alert">تعذّر تجهيز المواقيت محلياً. جرّب اختيار موقع آخر.</p>
-        <button type="button" className="pts-retry" onClick={reload} aria-label="إعادة محاولة تحميل المواقيت">
-          إعادة المحاولة
-        </button>
-        <PrayerLocationPicker
-          onChanged={() => {
-            setLocToken((n) => n + 1);
-            reload();
-          }}
-        />
-        <nav className="pts-chrome" aria-label="تنقّل الصفحة">
+        {headerChrome}
+        {locationPanel}
+        {loading ? (
+          <p className="pts-hint" role="status">جاري تجهيز المواقيت…</p>
+        ) : (
+          <p className="pts-error" role="alert">
+            اختر مدينتك لعرض مواقيت الصلاة بدقة. لا نعرض أوقاتًا تقديرية.
+          </p>
+        )}
+        {!govOpen && (
           <button
             type="button"
-            className="pts-back"
-            onClick={handleBack}
-            aria-label="رجوع"
+            className="pts-retry"
+            onClick={() => setGovOpen(true)}
+            aria-label="اختيار المدينة"
           >
-            <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
-            <span>رجوع</span>
+            اختيار المدينة
           </button>
-          <Link href="/adhan-settings" className="pts-settings" aria-label="إعدادات الصلاة والأذان">
-            <Settings2 size={16} strokeWidth={2} aria-hidden="true" />
-            <span>إعدادات</span>
-          </Link>
-        </nav>
+        )}
+        <button type="button" className="pts-retry pts-retry--ghost" onClick={reload} aria-label="إعادة محاولة تحميل المواقيت">
+          إعادة المحاولة
+        </button>
+        {shortcuts}
       </div>
     );
   }
 
   const prayers: PrayerSlot[] = (data?.prayers ?? []).filter((p) => p.time);
   const nowInfo = zoneNowSeconds(timeZone);
-
   const inGrace = !pinnedKey && countdown.sinceSeconds != null;
   const ranKey = countdown.next.key;
-
   const displayKey = pinnedKey ?? (inGrace ? ranKey : countdown.next.key);
   const displayItem = prayers.find((p) => p.key === displayKey);
   const displayName = PRAYER_AR[displayKey] ?? countdown.next.name;
+  const hijriStr = formatHijri(data?.date?.hijri ?? null);
 
   let displayHms: string;
   let isTomorrow = false;
@@ -289,6 +361,12 @@ export default function PrayerTimesPage() {
     displayHms = countdown.remainingHms ?? "--:--:--";
   }
 
+  const heroStatus = pinnedKey && pinnedKey !== countdown.next.key
+    ? (isTomorrow ? "غداً" : "قادمة")
+    : inGrace
+      ? "انتهت"
+      : "قادمة";
+
   const heroLabel = pinnedKey && pinnedKey !== countdown.next.key
     ? "الوقت المتبقي لـ"
     : inGrace
@@ -300,36 +378,23 @@ export default function PrayerTimesPage() {
   const isPast = (p: PrayerSlot) =>
     p.minutes != null && p.minutes < nowInfo.totalMinutes && !isNext(p.key) && !(inGrace && p.key === ranKey);
 
-  const hijriStr = formatHijri(data?.date?.hijri ?? null);
-  const gregStr = zoneDateReadable(timeZone);
+  const visibleRanks = ranksOpen ? RANKS : RANKS.slice(0, 2);
 
   return (
     <div className="pts-screen pts-screen--with-nav" dir="rtl">
-      <header className="pts-header pts-header--compact">
-        <div className="pts-header__top">
-          <button
-            type="button"
-            className="pts-location"
-            onClick={() => setGovOpen((v) => !v)}
-            aria-expanded={govOpen}
-            aria-controls="pts-gov-panel"
-          >
-            <MapPin size={15} strokeWidth={2} aria-hidden="true" />
-            <span>{locLabel}</span>
-          </button>
-          <Link href="/adhan-settings" className="pts-settings pts-settings--inline" aria-label="إعدادات الأذان">
-            <Bell size={15} strokeWidth={2} aria-hidden="true" />
-            <span>إعدادات الأذان</span>
-          </Link>
-        </div>
-        <h1 className="pts-title sr-only">مواقيت الصلاة</h1>
-      </header>
+      {headerChrome}
+      {hijriStr ? <p className="pts-hijri">{hijriStr}</p> : null}
+      {locationPanel}
 
-      <section className="pts-hero" aria-label="الصلاة القادمة والعدّ التنازلي">
-        <MosqueSilhouette />
+      <section className="pts-hero pts-hero--compact" aria-label="العداد التنازلي">
         <div className="pts-hero__content">
-          <p className="pts-hero__label">{heroLabel}</p>
-          <h2 className="pts-hero__name" key={displayKey}>
+          <div className="pts-hero__status-row">
+            <p className="pts-hero__label">{heroLabel}</p>
+            <span className={`pts-badge pts-badge--${inGrace && !pinnedKey ? "done" : "next"}`}>
+              {heroStatus}
+            </span>
+          </div>
+          <h2 className="pts-hero__name">
             {displayKey === "Sunrise" ? displayName : `صلاة ${displayName}`}
           </h2>
           <div
@@ -338,91 +403,24 @@ export default function PrayerTimesPage() {
             aria-live="polite"
             aria-atomic="true"
             aria-label={`الوقت: ${displayHms}`}
-            key={displayHms}
           >
             {displayHms}
           </div>
-          <div className="pts-dates pts-dates--hero">
-            {hijriStr && <span>{hijriStr}</span>}
-            {hijriStr && gregStr ? <span className="pts-dates__sep" aria-hidden="true">·</span> : null}
-            <span>{gregStr}</span>
-          </div>
+          {displayItem && (
+            <p className="pts-hero__clock" dir="ltr">{displayTime12(displayItem)}</p>
+          )}
           {inGrace && !pinnedKey && (
             <p className="pts-hero__hint">حتى مرور ٣٥ دقيقة ثم الانتقال للصلاة التالية</p>
           )}
           {pinnedKey && pinnedKey !== countdown.next.key && (
-            <div className="pts-hero__actions">
-              {isTomorrow && <span className="pts-badge">غداً</span>}
-              <button type="button" className="pts-hero__reset" onClick={() => setPinnedKey(null)}>
-                العودة للصلاة القادمة
-              </button>
-            </div>
+            <button type="button" className="pts-hero__reset" onClick={() => setPinnedKey(null)}>
+              العودة للصلاة القادمة
+            </button>
           )}
         </div>
       </section>
 
-      {govOpen && (
-        <div id="pts-gov-panel" className="pts-gov-panel" role="region" aria-label="إعدادات الموقع والحساب">
-          <PrayerLocationPicker
-            onChanged={(next) => {
-              setLocLabel(next.label);
-              setLocToken((n) => n + 1);
-              setPinnedKey(null);
-              reload();
-            }}
-          />
-          <details className="pts-more">
-            <summary>خيارات متقدمة</summary>
-            <div className="pts-more__body">
-              <label className="pts-method" htmlFor="pts-calc-method">
-                <span className="pts-method__label">طريقة الحساب</span>
-                <select
-                  id="pts-calc-method"
-                  className="pts-method__select"
-                  value={calcMethod}
-                  onChange={(e) => handleCalcMethod(e.target.value as PrayerCalcMethodId)}
-                  dir="rtl"
-                >
-                  {PRAYER_CALC_METHODS.map((m) => (
-                    <option key={m.id} value={m.id}>
-                      {m.labelAr}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label className="pts-method" htmlFor="pts-madhab">
-                <span className="pts-method__label">مذهب العصر</span>
-                <select
-                  id="pts-madhab"
-                  className="pts-method__select"
-                  value={madhab}
-                  onChange={(e) => handleMadhab(e.target.value as PrayerMadhabId)}
-                  dir="rtl"
-                >
-                  <option value="Shafi">شافعي / مالكي / حنبلي</option>
-                  <option value="Hanafi">حنفي</option>
-                </select>
-              </label>
-              <label className="pts-method" htmlFor="pts-highlat">
-                <span className="pts-method__label">مناطق خطوط العرض العالية</span>
-                <select
-                  id="pts-highlat"
-                  className="pts-method__select"
-                  value={highLat}
-                  onChange={(e) => handleHighLat(e.target.value as HighLatitudeRuleId)}
-                  dir="rtl"
-                >
-                  <option value="auto">تلقائي موصى به</option>
-                  <option value="MiddleOfTheNight">منتصف الليل</option>
-                  <option value="SeventhOfTheNight">سُبع الليل</option>
-                  <option value="TwilightAngle">زاوية الشفق</option>
-                </select>
-              </label>
-              <PrayerAnnualTimetable />
-            </div>
-          </details>
-        </div>
-      )}
+      {shortcuts}
 
       {prayers.length > 0 && (
         <nav className="pts-list" aria-label="صلوات اليوم">
@@ -449,6 +447,9 @@ export default function PrayerTimesPage() {
                   <span className="pts-row__name">{PRAYER_AR[p.key] ?? p.name}</span>
                   <span className="pts-row__status">{status}</span>
                 </span>
+                {next || (inGrace && p.key === ranKey) ? (
+                  <span className="pts-row__mark" aria-hidden="true" />
+                ) : null}
                 <span className="pts-row__time" dir="ltr">{displayTime12(p)}</span>
               </button>
             );
@@ -456,34 +457,15 @@ export default function PrayerTimesPage() {
         </nav>
       )}
 
-      <nav className="pts-dock" aria-label="أدوات الصلاة">
-        <Link href="/adhkar" className="pts-dock__item">
-          <span className="pts-dock__icon"><HandHeart size={20} strokeWidth={1.7} /></span>
-          <span>الأذكار</span>
-        </Link>
-        <Link href="/tasbih" className="pts-dock__item">
-          <span className="pts-dock__icon"><CircleDot size={20} strokeWidth={1.7} /></span>
-          <span>التسبيح</span>
-        </Link>
-        <Link href="/qibla" className="pts-dock__item">
-          <span className="pts-dock__icon"><Compass size={20} strokeWidth={1.7} /></span>
-          <span>القبلة</span>
-        </Link>
-        <Link href="/adhan-settings" className="pts-dock__item">
-          <span className="pts-dock__icon"><Bell size={20} strokeWidth={1.7} /></span>
-          <span>تنبيهات الأذان</span>
-        </Link>
-      </nav>
-
       <section className="pts-ranks" aria-labelledby="pts-ranks-title">
         <div className="pts-ranks__head">
           <h2 id="pts-ranks-title" className="pts-ranks__title">مراتب الناس في الصلاة</h2>
           <Link href="/prayer-ranks" className="pts-ranks__more">
-            التفاصيل والفضائل
+            التفاصيل
           </Link>
         </div>
         <ol className="pts-ranks__list">
-          {RANKS.map((rank, index) => (
+          {visibleRanks.map((rank, index) => (
             <li key={rank.title} className="pts-ranks__item">
               <span className="pts-ranks__num">{toArabicDigits(index + 1)}</span>
               <div className="pts-ranks__body">
@@ -493,23 +475,17 @@ export default function PrayerTimesPage() {
             </li>
           ))}
         </ol>
+        {RANKS.length > 2 && (
+          <button
+            type="button"
+            className="pts-ranks__toggle"
+            onClick={() => setRanksOpen((v) => !v)}
+            aria-expanded={ranksOpen}
+          >
+            {ranksOpen ? "طيّ القائمة" : "عرض الكل"}
+          </button>
+        )}
       </section>
-
-      <nav className="pts-chrome" aria-label="تنقّل الصفحة">
-        <button
-          type="button"
-          className="pts-back"
-          onClick={handleBack}
-          aria-label="رجوع إلى الصفحة السابقة"
-        >
-          <ArrowRight size={18} strokeWidth={2.5} aria-hidden="true" />
-          <span>رجوع</span>
-        </button>
-        <Link href="/adhan-settings" className="pts-settings" aria-label="إعدادات الصلاة والأذان">
-          <Settings2 size={16} strokeWidth={2} aria-hidden="true" />
-          <span>إعدادات</span>
-        </Link>
-      </nav>
     </div>
   );
 }

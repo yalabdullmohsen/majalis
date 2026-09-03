@@ -6,7 +6,7 @@
   background: var(--majalis-parchment);
   direction: rtl;
   font-family: var(--font-body);
-  padding-bottom: 3rem;
+  padding-bottom: calc(var(--bottom-nav-total, var(--nav-h, 64px)) + var(--inset-bottom, 0px) + 1rem);
 }
 
 /* ── Hero ── */

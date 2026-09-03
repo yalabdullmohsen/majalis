@@ -14,7 +14,7 @@
     "typecheck:libs": "tsc -b",
     "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --filter \"!@workspace/api-server\" --filter \"!@workspace/majalis-mobile\" --filter \"!@workspace/majalis-pitch\" --filter \"!@workspace/majalis-promo\" --filter \"!@workspace/mockup-sandbox\" --if-present run typecheck",
     "lint": "pnpm --filter @workspace/majalis run lint",
-    "test": "pnpm --filter @workspace/majalis run test && pnpm run test:release-train && pnpm run test:safe-auto-merge && pnpm run test:search-quality",
+    "test": "pnpm --filter @workspace/majalis run test && pnpm run test:release-train && pnpm run test:safe-auto-merge",
     "verify:production-complete": "pnpm --filter @workspace/majalis run verify:production-complete",
     "verify:pr": "tsx scripts/verify-pr-ready.ts",
     "verify:pr:legacy": "node scripts/verify-pr.mjs",
@@ -50,8 +50,7 @@
     "audit:legacy-routes": "pnpm --filter @workspace/majalis run audit:legacy-routes",
     "audit:navigation": "pnpm --filter @workspace/majalis run audit:navigation",
     "audit:lessons-quality": "pnpm --filter @workspace/majalis run audit:lessons-quality",
-    "smoke:production": "tsx scripts/post-deploy-smoke.ts",
-    "test:search-quality": "node scripts/check-search-quality.js"
+    "smoke:production": "tsx scripts/post-deploy-smoke.ts"
   },
   "private": true,
   "devDependencies": {

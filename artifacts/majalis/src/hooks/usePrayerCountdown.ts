@@ -3,8 +3,7 @@ import {
   computePrayerCountdown,
   fetchPrayerTimes,
   getCachedPrayerTimes,
-  getSelectedGovernorate,
-  staticPrayerFallback,
+  isEstimatedPrayerPayload,
   type PrayerCountdown,
   type PrayerTimesPayload,
 } from "@/lib/prayer-times";
@@ -12,6 +11,8 @@ import { getActivePrayerLocation } from "@/lib/prayer-location-prefs";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { subscribeSecondTick } from "@/lib/second-tick";
 import { subscribePrayerDayRollover } from "@/lib/prayer-day-rollover";
+
+const FETCH_TIMEOUT_MS = 4_000;
 
 function syncLessonCache(payload: PrayerTimesPayload) {
   const cache: Record<string, number> = {};
@@ -25,14 +26,37 @@ function activeTz(payload?: PrayerTimesPayload | null): string {
   return payload?.timezone || getActivePrayerLocation().timeZone || "Asia/Kuwait";
 }
 
-function initialPayload(governorateId?: string): PrayerTimesPayload {
+/** كاش حقيقي فقط — لا أوقات تقديرية وهمية تُعرض كصحيحة. */
+function initialPayload(governorateId?: string): PrayerTimesPayload | null {
   const cached = getCachedPrayerTimes(governorateId);
-  if (cached?.ok && cached.prayers?.length) return cached;
-  const loc = getActivePrayerLocation();
-  const city = governorateId
-    ? `الكويت – محافظة ${getSelectedGovernorate().name}`
-    : loc.label;
-  return staticPrayerFallback(city);
+  if (cached?.ok && cached.prayers?.length && !isEstimatedPrayerPayload(cached)) {
+    return cached;
+  }
+  return null;
+}
+
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T | null> {
+  return new Promise((resolve) => {
+    let settled = false;
+    const timer = window.setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      resolve(null);
+    }, ms);
+    promise
+      .then((value) => {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(timer);
+        resolve(value);
+      })
+      .catch(() => {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(timer);
+        resolve(null);
+      });
+  });
 }
 
 export type PrayerCountdownValue = {
@@ -47,12 +71,12 @@ export function usePrayerCountdownState(governorateId?: string): PrayerCountdown
   const [data, setData] = useState<PrayerTimesPayload | null>(() => initialPayload(governorateId));
   const [countdown, setCountdown] = useState<PrayerCountdown | null>(() => {
     const seed = initialPayload(governorateId);
-    return seed.prayers?.length
+    return seed?.prayers?.length
       ? computePrayerCountdown(seed.prayers, activeTz(seed))
       : null;
   });
   /** لا يمنع الرسم — يبقى للتوافق مع المستهلكين القدامى */
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(() => !initialPayload(governorateId));
   const [reloadToken, setReloadToken] = useState(0);
 
   const reload = useCallback(() => {
@@ -64,21 +88,22 @@ export function usePrayerCountdownState(governorateId?: string): PrayerCountdown
     const seed = initialPayload(governorateId);
     setData(seed);
     setCountdown(
-      seed.prayers?.length ? computePrayerCountdown(seed.prayers, activeTz(seed)) : null,
+      seed?.prayers?.length ? computePrayerCountdown(seed.prayers, activeTz(seed)) : null,
     );
-    syncLessonCache(seed);
-    setLoading(false);
+    if (seed?.prayers?.length) syncLessonCache(seed);
+    setLoading(!seed);
 
-    void fetchPrayerTimes(governorateId)
-      .then((payload) => {
-        if (cancelled || !payload?.prayers?.length) return;
-        setData(payload);
-        syncLessonCache(payload);
-        setCountdown(computePrayerCountdown(payload.prayers, activeTz(payload)));
-      })
-      .catch(() => {
-        /* الإبقاء على البذرة المحلية */
-      });
+    void withTimeout(fetchPrayerTimes(governorateId), FETCH_TIMEOUT_MS).then((payload) => {
+      if (cancelled) return;
+      setLoading(false);
+      if (!payload?.ok || !payload.prayers?.length || isEstimatedPrayerPayload(payload)) {
+        /* الإبقاء على الكاش الحقيقي إن وُجد؛ وإلا تبقى الواجهة بلا أوقات وهمية */
+        return;
+      }
+      setData(payload);
+      syncLessonCache(payload);
+      setCountdown(computePrayerCountdown(payload.prayers, activeTz(payload)));
+    });
 
     return () => {
       cancelled = true;

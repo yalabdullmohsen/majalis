@@ -99,7 +99,8 @@ function armControlledSwReload(): void {
       hadController = true;
       return;
     }
-    reloadOnce();
+    // بعد استقرار الجلسة: بنر هادئ فقط — لا reload قسري يكسر الجلسة/يُظهر وميضًا
+    signalQuietUpdate();
   });
 }
 

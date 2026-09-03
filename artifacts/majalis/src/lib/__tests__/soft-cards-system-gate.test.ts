@@ -47,10 +47,11 @@ assert.doesNotMatch(finalRelease, /^\s*button\s*\{/m, "لا قاعدة button ع
 assert.match(prayer, /--pts-radius:\s*var\(--radius-card,\s*24px\)/, "الصلاة تستخدم نصف قطر البطاقة الناعمة 24px");
 assert.match(prayer, /inset 0 1px 0 rgba\(255,\s*255,\s*255,\s*0\.12\)/, "highlight بطاقة البطل");
 assert.doesNotMatch(prayer, /\.pts-row--next[\s\S]{0,120}border:\s*1\.5px/, "لا إطار سميك للصلاة القادمة");
-assert.match(prayer, /\.pts-row\s*\{[\s\S]*?width:\s*min\(\s*78vw,\s*320px\)/, "بطاقات الصلاة متمركزة بعرض محدود");
-assert.match(prayer, /\.pts-row--next\s*\{[\s\S]*?width:\s*min\(\s*80vw,\s*328px\)/, "الصلاة القادمة أعرض قليلًا");
-assert.match(prayer, /\.pts-list\s*\{[\s\S]*?align-items:\s*center/, "قائمة المواقيت متمركزة");
+assert.match(prayer, /\.pts-row\s*\{[\s\S]*?grid-template-columns:/, "صفوف المواقيت أفقية مضغوطة");
+assert.match(prayer, /\.pts-list\s*\{[\s\S]*?flex-direction:\s*column/, "قائمة المواقيت عمودية");
+assert.match(prayer, /\.pts-dock\s*\{[\s\S]*?grid-template-columns:\s*repeat\(\s*2/, "اختصارات 2×2");
 assert.match(prayer, /border-radius:\s*1\.25rem\s+1\.25rem\s*0\s*0/, "حواف علوية ناعمة للشريط السفلي");
+assert.match(prayer, /\.pts-chrome\s*\{[\s\S]*?display:\s*none/, "لا شريط رجوع/إعدادات عائم سفلي");
 
 assert.match(prophets, /\.prophet-fact-card[\s\S]*?border-radius:\s*var\(--radius-tile/, "حقائق الأنبياء ناعمة");
 assert.match(prophets, /\.prophet-lesson-card[\s\S]*?border-radius:\s*var\(--radius-card/, "دروس الأنبياء ناعمة");

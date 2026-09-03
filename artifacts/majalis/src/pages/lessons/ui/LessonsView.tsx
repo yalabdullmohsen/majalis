@@ -550,31 +550,18 @@ export default function LessonsPage({
       }),
     [lobby.quad, activeLessons.length, archivedLessons.length],
   );
-  const nearest = featuredSections.upcoming[0];
-  const primary = lobby.primary
-    ? {
-        ...lobby.primary,
-        subtitle: nearest
-          ? [nearest.title, nearest.mosque].filter(Boolean).join(" — ")
-          : loading
-            ? "\u00a0"
-            : "لا درس قريب اليوم",
-      }
-    : undefined;
 
   return (
     <SectionLobby
       lobbyId="lessons"
       title={lobby.title}
-      primary={primary}
-      className="lessons-page-v2 lessons-page-v3 ds-page mj-page"
+      className="lessons-page-v2 lessons-page-v3 ds-page mj-page lessons-compact-header"
       chips={lobby.chips?.map((c) => ({
         ...c,
         active: tab === c.id,
         onSelect: () => setTab(c.id as TabId),
       }))}
-      groups={lobby.groups}
-      quad={quad}
+      groups={[]}
       filterSlot={
         <div className="lessons-v3-sticky">
           <FilterToggle
@@ -605,6 +592,26 @@ export default function LessonsPage({
             onRetry={() => safeLocationReload()}
           >
             <>
+                  <LessonFilters
+                    lessons={tabLessons}
+                    filters={quickFilters}
+                    onChange={setQuickFilters}
+                    searchSlot={
+                      <label className="lesson-filters__search-field">
+                        <span className="visually-hidden">بحث في الدروس</span>
+                        <input
+                          type="text"
+                          inputMode="search"
+                          value={searchDraft}
+                          onChange={(e) => setSearchDraft(e.target.value)}
+                          placeholder="بحث في العنوان، الشيخ، المكان، التصنيف…"
+                          dir="rtl"
+                          enterKeyHint="search"
+                        />
+                      </label>
+                    }
+                  />
+
               {showFeatured && featuredSections.upcoming.length > 0 && (
                     <section className="lessons-v2-section">
                       <h2 className="lessons-v2-section__title">
@@ -629,26 +636,6 @@ export default function LessonsPage({
                       {renderGrid(featuredSections.featured, "feat-", true)}
                     </section>
                   )}
-
-                  <LessonFilters
-                    lessons={tabLessons}
-                    filters={quickFilters}
-                    onChange={setQuickFilters}
-                    searchSlot={
-                      <label className="lesson-filters__search-field">
-                        <span className="visually-hidden">بحث في الدروس</span>
-                        <input
-                          type="text"
-                          inputMode="search"
-                          value={searchDraft}
-                          onChange={(e) => setSearchDraft(e.target.value)}
-                          placeholder="بحث في العنوان، الشيخ، المكان، التصنيف…"
-                          dir="rtl"
-                          enterKeyHint="search"
-                        />
-                      </label>
-                    }
-                  />
 
                   <section className="lessons-v2-section">
                     <h2 className="lessons-v2-section__title">
@@ -720,6 +707,18 @@ export default function LessonsPage({
           { href: "/fiqh", label: "الفقه والأحكام" },
         ]}
       />
+      <section className="lessons-page-stats" aria-label="إحصاءات الدروس">
+        <p className="lessons-page-stats__item">{activeLessons.length} درسًا نشطًا</p>
+        {archivedLessons.length > 0 ? (
+          <p className="lessons-page-stats__item">{archivedLessons.length} في الأرشيف</p>
+        ) : null}
+        {quad?.map((item) => (
+          <p key={item.id} className="lessons-page-stats__item">
+            {item.label}
+            {typeof item.count === "number" ? ` — ${item.count}` : ""}
+          </p>
+        ))}
+      </section>
       <div className="lessons-v3-footer-pad">
         <SectionQuiz route="/lessons" aria-label="اختبر معلوماتك في الدروس الشرعية" count={4} />
       </div>

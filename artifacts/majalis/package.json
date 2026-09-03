@@ -490,7 +490,9 @@
     "test:content-audit-master": "node --import tsx src/lib/__tests__/content-audit-master-gate.test.ts",
     "test:prayer-respect-nudge": "node --import tsx src/lib/__tests__/prayer-respect-nudge.test.ts",
     "test:learn-lessons-not-paths": "node --import tsx src/lib/__tests__/learn-lessons-not-paths.test.ts",
-    "test:csp-inline-shell": "node --import tsx src/lib/__tests__/csp-inline-shell-hash-gate.test.ts"
+    "test:csp-inline-shell": "node --import tsx src/lib/__tests__/csp-inline-shell-hash-gate.test.ts",
+    "verify:lessons": "node --import tsx src/lib/__tests__/lesson-time-kuwait-asr.test.ts && node --import tsx src/lib/__tests__/lesson-live-window.test.ts",
+    "verify:ui": "pnpm run typecheck && pnpm run lint -- --max-warnings=50"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
