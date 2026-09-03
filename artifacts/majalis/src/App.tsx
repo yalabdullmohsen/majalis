@@ -637,7 +637,10 @@ function AppShellInner() {
   const immersive = isImmersiveChromePath(location);
   const onPrayer = isPrayerTimesPath(location);
   const onAuthStandalone = isAuthStandalonePath(location);
-  const hideSiteChrome = immersive || onPrayer || onAuthStandalone;
+  /** غمري/مواقيت: بلا هيدر. الدخول يُبقي الهيدر والتيكر المتحرك. */
+  const hideTopChrome = immersive || onPrayer;
+  /** تذييل/مساعد/تحرير — مخفي أيضًا في صفحات الدخول المستقلة */
+  const hideSiteChrome = hideTopChrome || onAuthStandalone;
   const deferHomePrayerChrome = location === "/" || location === "";
   const isHomePath = deferHomePrayerChrome;
 
@@ -728,7 +731,7 @@ function AppShellInner() {
       </Suspense>
       <NativeNotificationsBootstrap />
       <IdleRuntimeBoot />
-      {!hideSiteChrome ? (
+      {!hideTopChrome ? (
         <div className="app-top-chrome">
           <Suspense fallback={<ChromeNavFallback />}>
             <NavBar />
@@ -738,7 +741,7 @@ function AppShellInner() {
       <Suspense fallback={null}>
         <TopSectionBar />
       </Suspense>
-      {/* شريط العدّ التنازلي العام يُخفى في مسارات المواقيت والمصحف */}
+      {/* شريط العدّ التنازلي العام يُخفى في مسارات المواقيت والمصحف والدخول */}
       {!hideSiteChrome && !onPrayer && (
         <Suspense fallback={null}>
           <DeferredPrayerCountdownBanner defer={deferHomePrayerChrome} />

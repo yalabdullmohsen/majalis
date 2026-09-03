@@ -54,6 +54,8 @@ assert.equal(isCompactHeaderPath("/profile"), true);
 assert.equal(isCompactHeaderPath("/settings"), true);
 assert.equal(isCompactHeaderPath("/prayer-times"), true);
 assert.equal(isCompactHeaderPath("/mushaf"), true);
+assert.equal(isCompactHeaderPath("/login"), false, "الدخول يُظهر الشريط المتحرك");
+assert.equal(isCompactHeaderPath("/register"), false, "التسجيل يُظهر الشريط المتحرك");
 assert.equal(isCompactHeaderPath("/"), false);
 assert.equal(isCompactHeaderPath("/hadith"), false);
 

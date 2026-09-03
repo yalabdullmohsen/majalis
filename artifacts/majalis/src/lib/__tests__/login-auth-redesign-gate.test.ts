@@ -20,7 +20,10 @@ const register = read("src/pages/account/ui/RegisterView.tsx");
 
 assert.match(immersive, /isAuthStandalonePath/);
 assert.match(app, /isAuthStandalonePath/);
+assert.match(app, /hideTopChrome/);
 assert.match(app, /onAuthStandalone/);
+assert.match(app, /!hideTopChrome \?/);
+assert.match(immersive, /الشريط المتحرك يظهر/);
 assert.match(fab, /isAuthStandalonePath/);
 
 assert.match(login, /login-app-icon/);
