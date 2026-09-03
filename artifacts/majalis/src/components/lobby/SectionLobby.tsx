@@ -18,6 +18,8 @@ type Props = {
   title: string;
   lobbyId: LobbySurfaceId;
   primary?: LobbyPrimary;
+  /** محتوى مخصّص بدل بطاقة primary الافتراضية (مثل بطاقة المصحف في مركز القرآن) */
+  primarySlot?: ReactNode;
   chips?: Array<LobbyChip & { href?: string; active?: boolean; onSelect?: () => void }>;
   groups: LobbyGroup[];
   quad?: LobbyQuadItem[];
@@ -53,6 +55,7 @@ export function SectionLobby({
   title,
   lobbyId,
   primary,
+  primarySlot,
   chips,
   groups,
   quad,
@@ -117,7 +120,11 @@ export function SectionLobby({
           )}
         </header>
 
-        {primary ? (
+        {primarySlot ? (
+          <div className="section-lobby__primary" aria-live="polite" aria-atomic="true">
+            {primarySlot}
+          </div>
+        ) : primary ? (
           <div className="section-lobby__primary" aria-live="polite" aria-atomic="true">
             <FeaturedSectionCard
               section={asSection(primary)}

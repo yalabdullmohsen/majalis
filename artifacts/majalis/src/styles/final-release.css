@@ -1993,6 +1993,7 @@ header.navbar-v3,
 .contact-ig-card {
   border-radius: var(--radius-card, 24px) !important;
 }
+.quran-open-mushaf,
 .quran-hub-open-mushaf {
   border-radius: var(--radius-card, 24px) !important;
 }

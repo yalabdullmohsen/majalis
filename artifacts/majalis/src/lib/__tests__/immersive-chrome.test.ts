@@ -98,10 +98,17 @@ assert.equal(prayerRanks.includes("SectionQuiz"), false, "مراتب الصلا�
 const quranHub = readFileSync(resolve(appRoot, "src/pages/quran/ui/QuranHubView.tsx"), "utf8");
 assert.equal(quranHub.includes("SectionQuiz"), false, "مركز القرآن الكريم بلا SectionQuiz");
 assert.match(quranHub, /SectionLobby/);
-assert.match(quranHub, /فتح المصحف|open-mushaf/);
-assert.match(quranHub, /\/mushaf|loadLastPageSync/);
+assert.match(quranHub, /QuranOpenMushafCard|فتح المصحف|open-mushaf/);
+assert.match(quranHub, /primarySlot/);
 assert.equal(quranHub.includes("قيد التطوير"), false);
 assert.equal(/٦٠٤|604\s*صفح/.test(quranHub), false, "بلا ذكر لعدد صفحات المصحف");
+
+const mushafCard = readFileSync(resolve(appRoot, "src/components/quran/QuranOpenMushafCard.tsx"), "utf8");
+assert.match(mushafCard, /\/mushaf/);
+assert.match(mushafCard, /loadPagePosition|resolveMushafResumeInfo/);
+assert.match(mushafCard, /فتح المصحف/);
+assert.match(mushafCard, /متابعة القراءة/);
+assert.match(mushafCard, /ابدأ القراءة من الفاتحة/);
 
 const mushafView = readFileSync(resolve(appRoot, "src/pages/quran/MushafReaderPage.tsx"), "utf8");
 assert.match(mushafView, /MushafViewport/);

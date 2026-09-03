@@ -1,7 +1,7 @@
 # تقرير نطاق التغييرات
 
-**التاريخ:** 2026-09-03T17:02:32.926Z
-**عدد الملفات:** 388
+**التاريخ:** 2026-09-03T17:09:33.968Z
+**عدد الملفات:** 396
 **النطاقات:** other، content/data، quran/mushaf، ui/layout، docs
 **docs-only:** لا
 
@@ -66,7 +66,7 @@
 - `artifacts/majalis/public/data/knowledge/prophets/idris.json` → content_data
 - `artifacts/majalis/public/data/knowledge/prophets/ilyas.json` → content_data
 
-… +348 ملفًا
+… +356 ملفًا
 
 ## سياسات
 
