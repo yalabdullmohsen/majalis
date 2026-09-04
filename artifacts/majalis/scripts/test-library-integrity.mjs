@@ -332,25 +332,37 @@ async function main() {
     );
     const targetBySource = new Map();
     for (const rule of rules) {
-      const from = String(rule.source).replace("/library/", "");
-      const to = String(rule.destination).replace("/library/", "");
-      if (seenIds.has(from)) {
+      const source = String(rule.source);
+      const dest = String(rule.destination);
+      const from = source.replace(/^\/library\//, "").replace(/\/:path\*$/, "");
+      // تحويل شامل للمكتبة المحذوفة → صفحة عامة (بحث/رئيسية) — ليس معرّف كتاب
+      if (!dest.startsWith("/library")) {
+        if (from && !from.includes(":") && !from.includes("*") && seenIds.has(from)) {
+          fail(
+            "VERCEL_REDIRECT_LIVE_SOURCE",
+            `vercel.json يحوّل ${source} وهو كتاب حيّ في الفهرس ⇒ الصفحة لا تُفتح.`
+          );
+        }
+        continue;
+      }
+      const to = dest.replace(/^\/library\//, "");
+      if (from && !from.includes(":") && !from.includes("*") && seenIds.has(from)) {
         fail(
           "VERCEL_REDIRECT_LIVE_SOURCE",
-          `vercel.json يحوّل ${rule.source} وهو كتاب حيّ في الفهرس ⇒ الصفحة لا تُفتح.`
+          `vercel.json يحوّل ${source} وهو كتاب حيّ في الفهرس ⇒ الصفحة لا تُفتح.`
         );
       }
       if (!seenIds.has(to)) {
         fail(
           "VERCEL_REDIRECT_DEAD_TARGET",
-          `vercel.json يحوّل ${rule.source} إلى ${rule.destination} وهو معرّف غير موجود في الفهرس.`
+          `vercel.json يحوّل ${source} إلى ${dest} وهو معرّف غير موجود في الفهرس.`
         );
       }
       const previous = targetBySource.get(from);
       if (previous && previous !== to) {
         fail(
           "VERCEL_REDIRECT_CONFLICT",
-          `vercel.json فيه قاعدتان متعارضتان لـ ${rule.source}: ${previous} و ${to} (تُنفَّذ الأولى فقط).`
+          `vercel.json فيه قاعدتان متعارضتان لـ ${source}: ${previous} و ${to} (تُنفَّذ الأولى فقط).`
         );
       }
       targetBySource.set(from, previous ?? to);
