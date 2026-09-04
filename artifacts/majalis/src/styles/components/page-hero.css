@@ -44,8 +44,12 @@ html.dark .pattern-backdrop {
   padding-block: 1.5rem 2rem;
   padding-inline: max(1rem, var(--page-gutter, 1rem));
   border-radius: 0;
-  background: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
-  color: #fff;
+  background-color: var(--mss-hero-from, var(--color-primary-dark, var(--mj-brand-deep, #123f2e)));
+  background-image: var(
+    --mss-hero-gradient,
+    linear-gradient(135deg, #0f4a3a 0%, #1f6b56 58%, #245f4d 100%)
+  );
+  color: var(--mss-on-hero, #fff);
 }
 .page-hero-mj--bleed .pattern-backdrop {
   color: #fff;
