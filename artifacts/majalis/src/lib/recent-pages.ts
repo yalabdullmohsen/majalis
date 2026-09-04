@@ -27,8 +27,8 @@ const LABEL_MAP: Record<string, string> = {
   "/quran-hub/qiraat":              "القراءات العشر",
   "/quran-hub/tilawa":              "التلاوة والقرّاء",
   "/quran-hub/terms":               "مصطلحات علوم القرآن",
-  "/quran/surah-stories":           "قصص السور",
-  "/surah-stories":                 "قصص السور",
+  "/quran/surah-stories":           "أسباب النزول",
+  "/surah-stories":                 "أسباب النزول",
   "/ulum-quran":                    "علوم القرآن",
   "/quran/people":                  "الذين ذُكروا في القرآن",
   "/sections":                      "الأقسام",
@@ -176,7 +176,7 @@ const LABEL_MAP: Record<string, string> = {
   "/occasions":                     "المناسبات الإسلامية",
   "/transcribe":                    "تفريغ الصوت",
   "/search":                        "البحث",
-  "/islamic-glossary":              "مفاهيم شرعية",
+  "/islamic-glossary":              "المعجم الشرعي",
 
   // ─── العلماء والمؤسسات ────────────────────────────────────────────
   "/universities":                  "الجامعات",

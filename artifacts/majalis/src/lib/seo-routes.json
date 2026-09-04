@@ -125,16 +125,16 @@
     },
     {
       "path": "/quran/surah-stories",
-      "title": "قصص القرآن",
-      "description": "قصص القرآن — أسماء السور، أسباب التسمية، المحاور، والقصص القرآنية الموثقة.",
+      "title": "أسباب النزول",
+      "description": "سياقات نزول سور القرآن وأسباب تسميتها ومحاورها الموثّقة مما ثبت في القرآن والسنة الصحيحة.",
       "keywords": [
-        "قصص القرآن",
-        "تفسير",
+        "أسباب النزول",
         "سور القرآن",
-        "مكية",
-        "مدنية"
+        "تفسير",
+        "سبب التسمية",
+        "علوم القرآن"
       ],
-      "sitemap": false,
+      "sitemap": true,
       "changefreq": "weekly",
       "priority": 0.84
     },
@@ -237,10 +237,9 @@
         "الأربعون النووية",
         "حديث"
       ],
-      "sitemap": false,
+      "sitemap": true,
       "changefreq": "monthly",
-      "priority": 0.82,
-      "robots": "noindex, follow"
+      "priority": 0.84
     },
     {
       "path": "/my-learning",
@@ -2292,17 +2291,17 @@
     },
     {
       "path": "/islamic-glossary",
-      "title": "مفاهيم شرعية",
-      "description": "موسوعة المصطلحات الإسلامية — تعريف المصطلحات الفقهية والعقدية والحديثية والقرآنية.",
+      "title": "المعجم الشرعي",
+      "description": "معجم المصطلحات الشرعية — تعريفات دقيقة في العقيدة والفقه والحديث وعلوم القرآن.",
       "keywords": [
+        "المعجم الشرعي",
         "المصطلحات الإسلامية",
         "تعريف المصطلحات الفقهية",
         "مصطلحات علم الحديث"
       ],
-      "sitemap": false,
+      "sitemap": true,
       "changefreq": "monthly",
-      "priority": 0.75,
-      "robots": "noindex, follow"
+      "priority": 0.78
     },
     {
       "path": "/islam-stats",
@@ -2829,10 +2828,9 @@
         "اللغة العربية",
         "طالب العلم"
       ],
-      "sitemap": false,
+      "sitemap": true,
       "changefreq": "weekly",
-      "priority": 0.7,
-      "robots": "noindex, follow"
+      "priority": 0.75
     },
     {
       "path": "/maqasid-sharia",
@@ -2843,10 +2841,9 @@
         "سُنّة",
         "طلب العلم"
       ],
-      "sitemap": false,
+      "sitemap": true,
       "changefreq": "weekly",
-      "priority": 0.7,
-      "robots": "noindex, follow"
+      "priority": 0.75
     },
     {
       "path": "/dalail-nubuwwah",
@@ -2857,10 +2854,9 @@
         "سُنّة",
         "طلب العلم"
       ],
-      "sitemap": false,
+      "sitemap": true,
       "changefreq": "weekly",
-      "priority": 0.7,
-      "robots": "noindex, follow"
+      "priority": 0.75
     },
     {
       "path": "/quran/surahs",

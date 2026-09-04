@@ -533,12 +533,17 @@
     },
     {
       "source": "/asbab-al-nuzul",
-      "destination": "/quran-knowledge",
+      "destination": "/quran/surah-stories",
+      "permanent": true
+    },
+    {
+      "source": "/hadith/arbaeen",
+      "destination": "/arbaeen-nawawi",
       "permanent": true
     },
     {
       "source": "/quran-stories",
-      "destination": "/quran-knowledge",
+      "destination": "/quran/surah-stories",
       "permanent": true
     },
     {

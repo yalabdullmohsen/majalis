@@ -8,7 +8,7 @@ export const ACCORDION_EXPLORE_LINKS = {
   maqasid: [
     { href: "/fiqh/usul", label: "أصول الفقه" },
     { href: "/fiqh", label: "بوابة الفقه" },
-    { href: "/fiqh/books/salah", label: "كتاب الصلاة" },
+    { href: "/islamic-glossary", label: "المعجم الشرعي" },
     { href: "/methodology", label: "منهجية التوثيق" },
   ],
   iman: [
@@ -26,6 +26,7 @@ export const ACCORDION_EXPLORE_LINKS = {
   ],
   arabic: [
     { href: "/quran-hub", label: "مركز القرآن الكريم" },
+    { href: "/islamic-glossary", label: "المعجم الشرعي" },
     { href: "/adab-talab-ilm", label: "آداب طالب العلم" },
     { href: "/tafsir", label: "علم التفسير" },
   ],
@@ -45,7 +46,7 @@ export const ACCORDION_EXPLORE_LINKS = {
   dalail: [
     { href: "/seerah", label: "السيرة النبوية" },
     { href: "/prophets", label: "قصص الأنبياء" },
-    { href: "/miracles", label: "الإعجاز العلمي" },
+    { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
     { href: "/tawhid", label: "التوحيد" },
     { href: "/hadith", label: "الحديث" },
   ],

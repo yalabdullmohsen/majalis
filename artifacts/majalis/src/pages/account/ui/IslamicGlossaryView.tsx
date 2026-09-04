@@ -1833,8 +1833,8 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
     ? CATEGORIES.filter((c) => c.id === lockedCategory)
     : CATEGORIES;
 
-  const heroTitle = lockedCategory === "quran" ? "مصطلحات علوم القرآن" : "مفاهيم شرعية";
-  const heroEyebrow = lockedCategory === "quran" ? "مركز القرآن الكريم" : "القاموس الإسلامي";
+  const heroTitle = lockedCategory === "quran" ? "مصطلحات علوم القرآن" : "المعجم الشرعي";
+  const heroEyebrow = lockedCategory === "quran" ? "مركز القرآن الكريم" : "المعجم والمصطلحات";
 
   return (
     <SectionTemplatePage
@@ -1843,10 +1843,10 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
       title={heroTitle}
       subtitle={
         lockedCategory === "quran"
-          ? "مصطلحات علوم القرآن من القاموس الإسلامي الموحّد — ليست نسخة ثانية من المحتوى."
+          ? "مصطلحات علوم القرآن من المعجم الشرعي الموحّد — ليست نسخة ثانية من المحتوى."
           : "تعريفات دقيقة موثّقة لأهم المصطلحات في العلوم الشرعية، مرجع لطالب العلم."
       }
-      groupTitle="أقسام المفاهيم الشرعية"
+      groupTitle="أقسام المعجم الشرعي"
     >
     <div className="gl-page mj-page" dir="rtl" data-islamic-glossary="1">
       <p className="gl-hero__actions">
@@ -1861,7 +1861,7 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
       </p>
 
       <div className="gl-container">
-        <div className="gl-cats" role="tablist" aria-label="تصنيفات المفاهيم الشرعية">
+        <div className="gl-cats" role="tablist" aria-label="تصنيفات المعجم الشرعي">
           {cats.map((c) => (
             <button
               key={c.id}

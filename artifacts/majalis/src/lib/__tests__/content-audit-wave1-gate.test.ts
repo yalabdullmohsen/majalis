@@ -14,12 +14,12 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const asbab = getSectionById("quran-asbab");
 assert.ok(asbab);
-assert.equal(asbab.label, "قصص السور");
+assert.equal(asbab.label, "أسباب النزول");
 assert.equal(asbab.route, "/quran/surah-stories");
-assert.match(asbab.subtitle, /محاور|قصص/);
+assert.match(asbab.subtitle, /نزول|محاور|تسمية/);
 
 const page = read("src/pages/quran/ui/SurahStoriesView.tsx");
-assert.match(page, /title="قصص القرآن"|قصص سور القرآن/);
+assert.match(page, /title="أسباب النزول"|أسباب النزول/);
 
 const texts = FAWAID_CURATED_SEED.map((f) => f.text);
 assert.equal(new Set(texts).size, texts.length, "لا تكرار حرفي لنص الفائدة");

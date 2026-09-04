@@ -9,6 +9,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
 import "@/styles/pages/arbaeen-nawawi.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 
 /* ══════════════════════════════════════════════════════════════════
    §178b، الأربعون النووية (.an-*)
@@ -277,6 +278,15 @@ export default function ArbaeenNawawiPage() {
 
       <ContentReportLink context="الأربعون النووية — سُنّة" />
       <RelatedKnowledge kind="hadith" query="الأربعون النووية" title="أحاديث ذات صلة" limit={6} />
+      <ExploreAlsoNav
+        title="استكشف أيضًا"
+        links={[
+          { href: "/hadith", label: "الحديث وعلومه" },
+          { href: "/hadith/sahih", label: "الأحاديث الصحيحة" },
+          { href: "/hadith-science", label: "مصطلح الحديث" },
+          { href: "/fawaid", label: "الفوائد" },
+        ]}
+      />
       <div className="an-quiz-wrap">
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث النبوي" count={4} />
       </div>

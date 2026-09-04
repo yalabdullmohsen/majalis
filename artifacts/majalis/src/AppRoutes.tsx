@@ -343,6 +343,7 @@ export default function AppRoutes() {
       <Route path="/fawaid"><SafeLazyRoute component={FawaidPage} /></Route>
       <Route path="/hadith/books"><SafeLazyRoute component={HadithBooksPage} /></Route>
       <Route path="/hadith/books-and-rulings"><SafeLazyRoute component={HadithBooksAndRulingsPage} /></Route>
+      <Route path="/hadith/arbaeen"><Redirect to="/arbaeen-nawawi" /></Route>
       <Route path="/hadith/arbaeen-love-of-allah"><SafeLazyRoute component={ArbaeenLovePage} /></Route>
       <Route path="/hadith/sahih"><SafeLazyRoute component={HadithSahihPage} /></Route>
       <Route path="/hadith/daif"><SafeLazyRoute component={HadithDaifPage} /></Route>
@@ -538,8 +539,8 @@ export default function AppRoutes() {
       <Route path="/occasions-lessons"><SafeLazyRoute component={OccasionsLessonsHubPage} /></Route>
       <Route path="/islamic-directory"><SafeLazyRoute component={IslamicDirectoryHubPage} /></Route>
       <Route path="/quran-index"><Redirect to="/quran-knowledge" /></Route>
-      <Route path="/asbab-al-nuzul"><Redirect to="/quran-knowledge" /></Route>
-      <Route path="/quran-stories"><Redirect to="/quran-knowledge" /></Route>
+      <Route path="/asbab-al-nuzul"><Redirect to="/quran/surah-stories" /></Route>
+      <Route path="/quran-stories"><Redirect to="/quran/surah-stories" /></Route>
       <Route path="/memorization-tests"><Redirect to="/memorization" /></Route>
       <Route path="/memorization-plans"><Redirect to="/memorization" /></Route>
       <Route path="/islamic-institutions"><Redirect to="/islamic-directory" /></Route>
