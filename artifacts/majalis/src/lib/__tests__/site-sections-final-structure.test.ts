@@ -162,6 +162,12 @@ for (const doc of searchIdx.docs) {
   const href = String(doc.href || "").split("?")[0].split("#")[0];
   assert.equal(href in IA_REDIRECTS, false, `search بلا redirect ${href}`);
   assert.equal(href === "/qa" || href.startsWith("/qa/"), false);
+  assert.equal(
+    HIDDEN_FROM_NAV_PATHS.has(href) ||
+      [...HIDDEN_FROM_NAV_PATHS].some((p) => p !== "/" && href.startsWith(`${p}/`)),
+    false,
+    `search بلا مسار مخفي ${href}`,
+  );
 }
 const toolTopics = searchIdx.docs.find((d: { id: string }) => d.id === "tool:topics");
 assert.equal(toolTopics, undefined, "فهرس البحث بلا قسم الموضوعات");

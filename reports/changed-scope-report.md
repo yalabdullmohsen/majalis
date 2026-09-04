@@ -1,45 +1,45 @@
 # تقرير نطاق التغييرات
 
-**التاريخ:** 2026-09-04T01:08:30.030Z
+**التاريخ:** 2026-09-04T04:09:38.502Z
 **عدد الملفات:** 15
-**النطاقات:** ci/config، other
+**النطاقات:** content/data، other، ui/layout، docs
 **docs-only:** لا
 
 ## البوابات المقترحة
 
 | البوابة | مطلوب |
 |---------|-------|
-| ui | — |
+| ui | ✓ |
 | api | — |
-| seo | — |
+| seo | ✓ |
 | pwa | — |
-| content | — |
+| content | ✓ |
 | ios | — |
 | full | ✓ |
 | mushaf | — |
 | build | ✓ |
-| visual | — |
-| lighthouse | — |
-| color_contrast | — |
-| data_audit | — |
+| visual | ✓ |
+| lighthouse | ✓ |
+| color_contrast | ✓ |
+| data_audit | ✓ |
 
 ## الملفات المتغيرة (أول 40)
 
-- `.github/workflows/release-majlisilm.yml` → ci_config
-- `artifacts/majalis/tests/snapshots/ui-regression/fiqh-dark.png` → other
-- `artifacts/majalis/tests/snapshots/ui-regression/fiqh-light.png` → other
-- `artifacts/majalis/tests/snapshots/ui-regression/hadith-dark.png` → other
-- `artifacts/majalis/tests/snapshots/ui-regression/hadith-light.png` → other
-- `artifacts/majalis/tests/snapshots/ui-regression/home-dark.png` → other
-- `artifacts/majalis/tests/snapshots/ui-regression/home-light.png` → other
-- `artifacts/majalis/tests/snapshots/ui-regression/lessons-dark.png` → other
-- `artifacts/majalis/tests/snapshots/ui-regression/lessons-light.png` → other
-- `artifacts/majalis/tests/snapshots/ui-regression/prayer-dark.png` → other
-- `artifacts/majalis/tests/snapshots/ui-regression/prayer-light.png` → other
-- `artifacts/majalis/tests/snapshots/ui-regression/quran-dark.png` → other
-- `artifacts/majalis/tests/snapshots/ui-regression/quran-light.png` → other
-- `artifacts/majalis/tests/snapshots/ui-regression/search-dark.png` → other
-- `artifacts/majalis/tests/snapshots/ui-regression/search-light.png` → other
+- `artifacts/majalis/public/data/search/index.json` → content_data
+- `artifacts/majalis/scripts/generate-unified-search-index.mjs` → other
+- `artifacts/majalis/seo-prerender/nations/ashab-ukhdud/index.html` → other
+- `artifacts/majalis/seo-prerender/nations/qawm-yunus/index.html` → other
+- `artifacts/majalis/src/config/navigation.ts` → ui_layout
+- `artifacts/majalis/src/config/sections.registry.ts` → ui_layout
+- `artifacts/majalis/src/features/search/__tests__/unified-search.test.ts` → ui_layout
+- `artifacts/majalis/src/lib/__tests__/sections-registry.test.ts` → ui_layout
+- `artifacts/majalis/src/lib/__tests__/site-sections-final-structure.test.ts` → ui_layout
+- `artifacts/majalis/src/lib/nations/data/knowledge-extras.ts` → ui_layout
+- `artifacts/majalis/src/lib/nav-visibility.ts` → ui_layout
+- `artifacts/majalis/src/lib/site-footer-nav.ts` → ui_layout
+- `artifacts/majalis/src/views/MiraclesPage.tsx` → ui_layout
+- `reports/changed-scope-report.md` → docs
+- `reports/changed-scope-verify.json` → other
 
 
 ## سياسات

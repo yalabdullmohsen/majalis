@@ -42,7 +42,6 @@ export const primaryNav: readonly NavLinkItem[] = [
 export const secondaryNav: readonly NavLinkItem[] = [
   { id: "scholars", href: "/scholars", label: "العلماء" },
   { id: "hadith", href: "/hadith", label: "الحديث وعلومه" },
-  { id: "glossary", href: "/islamic-glossary", label: "المصطلحات" },
   { id: "tarikh", href: "/tarikh-islami", label: "التاريخ الإسلامي" },
   { id: "seerah", href: "/seerah", label: "السيرة" },
   { id: "prophets", href: "/prophets", label: "قصص الأنبياء" },
@@ -62,7 +61,6 @@ export const footerNav: readonly FooterGroup[] = [
     links: [
       { href: "/hadith", label: "الحديث وعلومه" },
       { href: "/scholars", label: "العلماء" },
-      { href: "/islamic-glossary", label: "المصطلحات" },
       { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
       { href: "/seerah", label: "السيرة" },
       { href: "/prophets", label: "قصص الأنبياء" },
@@ -78,9 +76,8 @@ export const footerNav: readonly FooterGroup[] = [
     links: [
       { href: "/quran-hub", label: "القرآن" },
       { href: "/mushaf", label: "المصحف" },
-      { href: "/quran/tajweed", label: "التجويد" },
-      { href: "/ulum-quran", label: "علوم القرآن" },
-      { href: "/quran/surahs", label: "فهرس السور" },
+      { href: "/quran-hub/tajweed", label: "التجويد" },
+      { href: "/tafsir", label: "التفسير" },
       { href: "/duas-quran", label: "أدعية القرآن" },
     ],
   },

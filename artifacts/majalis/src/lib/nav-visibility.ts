@@ -145,8 +145,11 @@ export function isComingSoonPath(href: string): boolean {
 }
 
 export function isHiddenFromNav(href: string): boolean {
-  const clean = href.split("#")[0].split("?")[0] || href;
+  const clean = (href.split("#")[0].split("?")[0] || href).replace(/\/+$/, "") || "/";
   if (HIDDEN_FROM_NAV_PATHS.has(clean)) return true;
+  for (const path of HIDDEN_FROM_NAV_PATHS) {
+    if (path !== "/" && (clean === path || clean.startsWith(`${path}/`))) return true;
+  }
   return false;
 }
 
