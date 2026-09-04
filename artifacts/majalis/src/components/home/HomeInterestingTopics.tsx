@@ -17,14 +17,14 @@ const Icon = ({ d }: { d: string }) => (
 
 const TOPICS: { href: string; icon: string; label: string; desc: string; color: string }[] = [
   {
-    href: "/ulum-quran",
+    href: "/miracles",
     icon: '<circle cx="11" cy="9" r="4"/><path d="M11 13v3"/><path d="M7 16h8"/><path d="M14 6l2-3"/><path d="M8 6 6 3"/>',
     label: "وجوه الإعجاز القرآني",
     desc: "البياني والتشريعي والغيبي — بلا إعجاز عددي",
     color: "var(--mj-brand)",
   },
   {
-    href: "/flashcards",
+    href: "/fawaid",
     icon: '<path d="M11 2a5 5 0 0 1 5 5c0 2.4-1.5 4.5-3.5 5.4V14H9.5v-1.6C7.5 11.5 6 9.4 6 7a5 5 0 0 1 5-5z"/><line x1="9.5" y1="17" x2="12.5" y2="17"/><line x1="10" y1="20" x2="12" y2="20"/>',
     label: "الفوائد العلمية",
     desc: "لآلئ ودرر من كلام العلماء",
@@ -122,10 +122,10 @@ const TOPICS: { href: string; icon: string; label: string; desc: string; color: 
     color: "#0F5132",
   },
   {
-    href: "/fiqh-qawaid",
+    href: "/fiqh/usul",
     icon: '<rect x="2" y="16" width="18" height="3" rx="1"/><rect x="5" y="10" width="3" height="6"/><rect x="9.5" y="7" width="3" height="9"/><rect x="14" y="12" width="3" height="4"/>',
-    label: "القواعد الفقهية الكبرى",
-    desc: "القواعد الخمس وفروعها وتطبيقاتها",
+    label: "أصول الفقه",
+    desc: "مداخل الأدلة والاستنباط عند أهل السنة",
     color: "var(--mj-brand-deep)",
   },
 ];

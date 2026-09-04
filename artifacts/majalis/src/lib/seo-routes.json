@@ -83,9 +83,10 @@
         "دروس الكويت",
         "جدول الدروس"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "daily",
-      "priority": 0.88
+      "priority": 0.88,
+      "robots": "noindex, follow"
     },
     {
       "path": "/kuwait-lessons",
@@ -133,7 +134,7 @@
         "مكية",
         "مدنية"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
       "priority": 0.84
     },
@@ -161,9 +162,10 @@
         "محاسبة النفس",
         "ابن القيم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.76
+      "priority": 0.76,
+      "robots": "noindex, follow"
     },
     {
       "path": "/prayer-times",
@@ -222,9 +224,10 @@
         "رمضان",
         "عيد"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.8
+      "priority": 0.8,
+      "robots": "noindex, follow"
     },
     {
       "path": "/arbaeen-nawawi",
@@ -234,9 +237,10 @@
         "الأربعون النووية",
         "حديث"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.82
+      "priority": 0.82,
+      "robots": "noindex, follow"
     },
     {
       "path": "/my-learning",
@@ -909,9 +913,10 @@
         "فتاوى جماعية",
         "فقه معاصر"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.88
+      "priority": 0.88,
+      "robots": "noindex, follow"
     },
     {
       "path": "/fiqh-council/resolutions",
@@ -922,9 +927,10 @@
         "قرارات فقهية",
         "فقه معاصر"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.84
+      "priority": 0.84,
+      "robots": "noindex, follow"
     },
     {
       "path": "/fiqh-council/fatwas",
@@ -935,9 +941,10 @@
         "المجمع الفقهي",
         "فقه"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.84
+      "priority": 0.84,
+      "robots": "noindex, follow"
     },
     {
       "path": "/fiqh-council/research",
@@ -962,9 +969,10 @@
         "نوازل معاصرة",
         "المجمع الفقهي"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.86
+      "priority": 0.86,
+      "robots": "noindex, follow"
     },
     {
       "path": "/fiqh-council/search",
@@ -1017,9 +1025,10 @@
         "تصنيفات فقهية",
         "المجمع الفقهي"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.82
+      "priority": 0.82,
+      "robots": "noindex, follow"
     },
     {
       "path": "/fiqh-council/recommendations",
@@ -1059,9 +1068,10 @@
         "المجمع الفقهي",
         "قرارات فقهية"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.89
+      "priority": 0.89,
+      "robots": "noindex, follow"
     },
     {
       "path": "/fiqh-council/index",
@@ -1072,9 +1082,10 @@
         "المجمع الفقهي",
         "تصنيفات فقهية"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.87
+      "priority": 0.87,
+      "robots": "noindex, follow"
     },
     {
       "path": "/fiqh-council/stats",
@@ -1098,9 +1109,10 @@
         "المجمع الفقهي",
         "قرارات سابقة"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.78
+      "priority": 0.78,
+      "robots": "noindex, follow"
     },
     {
       "path": "/rulings",
@@ -1197,7 +1209,7 @@
         "حفظ الأحكام",
         "طلب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
       "priority": 0.75,
       "robots": "index, follow"
@@ -1369,9 +1381,10 @@
         "دور العلم",
         "معاهد شرعية"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.72
+      "priority": 0.72,
+      "robots": "noindex, follow"
     },
     {
       "path": "/universities",
@@ -1801,9 +1814,10 @@
         "المذهب الشافعي",
         "المذهب الحنبلي"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.78
+      "priority": 0.78,
+      "robots": "noindex, follow"
     },
     {
       "path": "/asma-husna",
@@ -1944,7 +1958,7 @@
         "علوم القرآن",
         "أسباب النزول"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
       "priority": 0.85
     },
@@ -1983,9 +1997,10 @@
         "خطط الحفظ",
         "مراجعة القرآن"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.8
+      "priority": 0.8,
+      "robots": "noindex, follow"
     },
     {
       "path": "/hadith-science",
@@ -1997,9 +2012,10 @@
         "الحديث الصحيح والضعيف",
         "الجرح والتعديل"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.78
+      "priority": 0.78,
+      "robots": "noindex, follow"
     },
     {
       "path": "/ulum-quran",
@@ -2011,7 +2027,7 @@
         "الناسخ والمنسوخ",
         "القراءات القرآنية"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
       "priority": 0.78
     },
@@ -2044,9 +2060,10 @@
         "القواعد الكلية",
         "تطبيقات فقهية"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.75
+      "priority": 0.75,
+      "robots": "noindex, follow"
     },
     {
       "path": "/mushaf",
@@ -2188,9 +2205,10 @@
         "خريطة العلوم الإسلامية",
         "تصور المعرفة الشرعية"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.65
+      "priority": 0.65,
+      "robots": "noindex, follow"
     },
     {
       "path": "/knowledge-map",
@@ -2281,9 +2299,10 @@
         "تعريف المصطلحات الفقهية",
         "مصطلحات علم الحديث"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.75
+      "priority": 0.75,
+      "robots": "noindex, follow"
     },
     {
       "path": "/islam-stats",
@@ -2469,7 +2488,7 @@
         "حفظ الآيات",
         "القرآن الكريم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
       "priority": 0.8
     },
@@ -2483,7 +2502,7 @@
         "تثبيت الحفظ",
         "مصحف المدينة"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
       "priority": 0.82
     },
@@ -2514,9 +2533,10 @@
         "المسجد الأقصى",
         "مساجد العالم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.75
+      "priority": 0.75,
+      "robots": "noindex, follow"
     },
     {
       "path": "/tajweed",
@@ -2661,9 +2681,10 @@
         "سُنّة",
         "طلب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.7
+      "priority": 0.7,
+      "robots": "noindex, follow"
     },
     {
       "path": "/durus-mutanawwia",
@@ -2674,9 +2695,10 @@
         "سُنّة",
         "طلب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.7
+      "priority": 0.7,
+      "robots": "noindex, follow"
     },
     {
       "path": "/iman-topics",
@@ -2687,9 +2709,10 @@
         "سُنّة",
         "طلب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.7
+      "priority": 0.7,
+      "robots": "noindex, follow"
     },
     {
       "path": "/quran-studies",
@@ -2714,9 +2737,10 @@
         "سُنّة",
         "طلب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.7
+      "priority": 0.7,
+      "robots": "noindex, follow"
     },
     {
       "path": "/tazkiya-topics",
@@ -2727,9 +2751,10 @@
         "سُنّة",
         "طلب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.7
+      "priority": 0.7,
+      "robots": "noindex, follow"
     },
     {
       "path": "/tarikh-islami",
@@ -2760,9 +2785,10 @@
         "سُنّة",
         "طلب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.7
+      "priority": 0.7,
+      "robots": "noindex, follow"
     },
     {
       "path": "/fikr-waqia",
@@ -2773,9 +2799,10 @@
         "سُنّة",
         "طلب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.7
+      "priority": 0.7,
+      "robots": "noindex, follow"
     },
     {
       "path": "/mawsuaat",
@@ -2786,9 +2813,10 @@
         "سُنّة",
         "طلب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.7
+      "priority": 0.7,
+      "robots": "noindex, follow"
     },
     {
       "path": "/arabic-language",
@@ -2801,9 +2829,10 @@
         "اللغة العربية",
         "طالب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.7
+      "priority": 0.7,
+      "robots": "noindex, follow"
     },
     {
       "path": "/maqasid-sharia",
@@ -2814,9 +2843,10 @@
         "سُنّة",
         "طلب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.7
+      "priority": 0.7,
+      "robots": "noindex, follow"
     },
     {
       "path": "/dalail-nubuwwah",
@@ -2827,9 +2857,10 @@
         "سُنّة",
         "طلب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.7
+      "priority": 0.7,
+      "robots": "noindex, follow"
     },
     {
       "path": "/learn/aqeedat-ahl-sunnah",
@@ -2899,9 +2930,9 @@
         "التعرف الصوتي"
       ],
       "sitemap": false,
-      "robots": "noindex, nofollow",
       "changefreq": "monthly",
-      "priority": 0.4
+      "priority": 0.4,
+      "robots": "noindex, nofollow"
     },
     {
       "path": "/quran/surahs",
@@ -2914,7 +2945,7 @@
         "المصحف",
         "سُنّة"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
       "priority": 0.7
     },
@@ -2929,9 +2960,9 @@
         "آيات قرآنية"
       ],
       "sitemap": false,
-      "robots": "noindex, follow",
       "changefreq": "monthly",
-      "priority": 0.3
+      "priority": 0.3,
+      "robots": "noindex, follow"
     },
     {
       "path": "/quran/revelation-order",

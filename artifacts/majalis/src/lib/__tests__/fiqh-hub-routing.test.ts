@@ -52,7 +52,11 @@ console.log("\n=== فقه — الأصول لا تُدمج في الدروس ا�
   assert(Boolean(usul), "موضوع أصول الفقه موجود");
   assert(usul!.href === "/fiqh/usul", "أصول الفقه → /fiqh/usul");
   assert(!(usul?.relatedGuides ?? []).some((g) => g.href === "/lessons"), "أصول الفقه لا يشير إلى /lessons");
-  assert((usul?.relatedGuides ?? []).some((g) => g.href === "/fiqh-qawaid"), "أصول الفقه يرتبط بالقواعد");
+  assert(
+    !(usul?.relatedGuides ?? []).some((g) => g.href === "/fiqh-qawaid" || g.href === "/madhahib" || g.href === "/maqasid-sharia"),
+    "أصول الفقه بلا روابط لأقسام مخفية من الاكتشاف",
+  );
+  assert((usul?.relatedGuides ?? []).some((g) => g.href === "/fiqh"), "أصول الفقه يرتبط ببوابة الفقه");
 }
 
 console.log("\n=== فقه — صفحة المحور من books.json ===");

@@ -128,7 +128,7 @@ export default function FiqhUsulPage() {
         <p className="fiqh-usul-page__nav">
           <Link href="/fiqh">← العودة إلى الفقه</Link>
           {" · "}
-          <Link href="/fiqh-qawaid">القواعد الفقهية</Link>
+          <Link href="/fiqh/books/salah">كتاب الصلاة</Link>
         </p>
         <div className="fiqh-fab-clearance" />
       </div>

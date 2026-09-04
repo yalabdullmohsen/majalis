@@ -13,6 +13,7 @@ import {
 } from "@/lib/fiqh-books";
 import { formatAbwabCount, formatMasailCount } from "@/lib/arabic-count";
 import { getSectionById } from "@/config/sections.registry";
+import { isHiddenFromNav } from "@/lib/nav-visibility";
 import type { LobbyItem, LobbySpec } from "@/config/section-lobbies";
 
 const SUPPORT_ICONS: Record<string, LucideIcon> = {
@@ -44,7 +45,8 @@ function fiqhBookItems(cat: FiqhBookCategory): LobbyItem[] {
 }
 
 function fiqhSupportingItems(): LobbyItem[] {
-  return FIQH_SUPPORTING_TOPICS.map((t) => {
+  // لا تُعرض المباحث ذات المسارات المخفية من الاكتشاف العام
+  return FIQH_SUPPORTING_TOPICS.filter((t) => !isHiddenFromNav(t.href)).map((t) => {
     if (t.id === "usul") {
       const usul = getSectionById("usul-fiqh");
       if (usul) {

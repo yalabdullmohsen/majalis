@@ -7,9 +7,9 @@ import type { ExploreAlsoLink } from "@/lib/explore-link-types";
 export const ACCORDION_EXPLORE_LINKS = {
   maqasid: [
     { href: "/fiqh/usul", label: "أصول الفقه" },
-    { href: "/fiqh-qawaid", label: "القواعد الفقهية" },
-    { href: "/madhahib", label: "المذاهب الأربعة" },
     { href: "/fiqh", label: "بوابة الفقه" },
+    { href: "/fiqh/books/salah", label: "كتاب الصلاة" },
+    { href: "/methodology", label: "منهجية التوثيق" },
   ],
   iman: [
     { href: "/tawhid", label: "التوحيد" },
@@ -37,11 +37,10 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/adab-talab-ilm", label: "آداب طالب العلم" },
   ],
   fikr: [
-    { href: "/fiqh", label: "فقه التقنية" },
-    { href: "/fiqh-council/nawazil", label: "النوازل المعاصرة" },
-    { href: "/fiqh-council", label: "فقه الأقليات" },
+    { href: "/fiqh", label: "بوابة الفقه" },
     { href: "/quiz", label: "سين جيم" },
     { href: "/discover-islam", label: "تعرّف على الإسلام" },
+    { href: "/methodology", label: "منهجية التوثيق" },
   ],
   dalail: [
     { href: "/seerah", label: "السيرة النبوية" },
@@ -52,9 +51,9 @@ export const ACCORDION_EXPLORE_LINKS = {
   ],
   durusImaniyya: [
     { href: "/tawhid", label: "التوحيد" },
-    { href: "/iman-topics", label: "موضوعات الإيمان" },
     { href: "/kids", label: "قسم الأطفال" },
     { href: "/lessons", label: "الدروس العلمية" },
+    { href: "/arkan", label: "أركان الإسلام والإيمان" },
   ],
   mawsuaat: [
     { href: "/fawaid", label: "الفوائد" },
@@ -73,15 +72,13 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/seerah", label: "السيرة النبوية" },
     { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
     { href: "/prophets", label: "قصص الأنبياء" },
-    { href: "/islamic-landmarks", label: "معالم إسلامية" },
     { href: "/nations", label: "الأمم السابقة" },
   ],
   sunnah: [
     { href: "/hadith", label: "الحديث وعلومه" },
-    { href: "/hadith-science", label: "مصطلح الحديث" },
-    { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
     { href: "/sunan-yawmiyya", label: "السنن اليومية" },
     { href: "/wasaya-nabawiyya", label: "الوصايا النبوية" },
+    { href: "/adhkar", label: "الأذكار" },
   ],
 } as const satisfies Record<string, readonly ExploreAlsoLink[]>;
 
@@ -109,7 +106,7 @@ export const PAGE_EXPLORE_LINKS = {
   adabTalabIlm: [
     { href: "/tawhid", label: "التوحيد" },
     { href: "/fiqh", label: "بوابة الفقه" },
-    { href: "/quran-knowledge", label: "القرآن وعلومه" },
+    { href: "/quran-hub", label: "مركز القرآن الكريم" },
     { href: "/lessons", label: "الدروس العلمية" },
     { href: "/fiqh/usul", label: "أصول الفقه" },
   ],
