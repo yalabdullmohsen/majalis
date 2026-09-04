@@ -29,7 +29,7 @@ function titleFromPath(path: string): string {
   "/lessons": "الدروس",
   "/hadith": "الحديث",
   "/fiqh": "الفقه",
-  "/library": "المكتبة",
+  "/library": "البحث",
   "/tarikh-islami": "التاريخ الإسلامي",
   "/adhkar": "الأذكار",
   "/prayer-times": "الصلاة",
