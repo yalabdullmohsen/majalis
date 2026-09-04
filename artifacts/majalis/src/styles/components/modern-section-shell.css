@@ -93,9 +93,16 @@
 }
 
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back {
-  color: var(--mss-hero-from) !important;
-  background: color-mix(in srgb, #fff 92%, transparent) !important;
-  border-color: color-mix(in srgb, #faf5ea 35%, transparent) !important;
+  color: #fff !important;
+  background: color-mix(in srgb, #fff 18%, transparent) !important;
+  border-color: color-mix(in srgb, #faf5ea 40%, transparent) !important;
+}
+
+.page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn.mj-btn--ghost,
+.page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn--ghost {
+  color: #fff !important;
+  background: color-mix(in srgb, #fff 18%, transparent) !important;
+  border-color: color-mix(in srgb, #faf5ea 40%, transparent) !important;
 }
 
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__desc {
@@ -181,11 +188,24 @@
   border: 0 !important;
   box-shadow: none !important;
   padding: 0 !important;
+  color: inherit !important;
 }
 
 .section-lobby[data-lessons-hub="1"] .section-lobby__head::after,
 .fiqh-lux-page .section-lobby__head::after {
   display: none !important;
+}
+
+.section-lobby[data-lessons-hub="1"] .section-lobby__title,
+.section-lobby[data-lessons-hub="1"] .quran-hub-page__title,
+.fiqh-lux-page .section-lobby__title,
+.fiqh-lux-page .quran-hub-page__title {
+  color: var(--on-surface, var(--mj-ink, #16241e)) !important;
+}
+
+.section-lobby[data-lessons-hub="1"] .section-lobby__title::after,
+.fiqh-lux-page .section-lobby__title::after {
+  background: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
 }
 
 /* —— بطاقات موحّدة —— */
