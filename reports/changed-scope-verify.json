@@ -1,18 +1,28 @@
 {
-  "generatedAt": "2026-09-04T00:09:38.782Z",
+  "generatedAt": "2026-09-04T01:08:30.029Z",
   "paths": [
     ".github/workflows/release-majlisilm.yml",
-    "reports/changed-scope-report.md",
-    "reports/changed-scope-verify.json"
+    "artifacts/majalis/tests/snapshots/ui-regression/fiqh-dark.png",
+    "artifacts/majalis/tests/snapshots/ui-regression/fiqh-light.png",
+    "artifacts/majalis/tests/snapshots/ui-regression/hadith-dark.png",
+    "artifacts/majalis/tests/snapshots/ui-regression/hadith-light.png",
+    "artifacts/majalis/tests/snapshots/ui-regression/home-dark.png",
+    "artifacts/majalis/tests/snapshots/ui-regression/home-light.png",
+    "artifacts/majalis/tests/snapshots/ui-regression/lessons-dark.png",
+    "artifacts/majalis/tests/snapshots/ui-regression/lessons-light.png",
+    "artifacts/majalis/tests/snapshots/ui-regression/prayer-dark.png",
+    "artifacts/majalis/tests/snapshots/ui-regression/prayer-light.png",
+    "artifacts/majalis/tests/snapshots/ui-regression/quran-dark.png",
+    "artifacts/majalis/tests/snapshots/ui-regression/quran-light.png",
+    "artifacts/majalis/tests/snapshots/ui-regression/search-dark.png",
+    "artifacts/majalis/tests/snapshots/ui-regression/search-light.png"
   ],
   "scopes": [
     "ci/config",
-    "docs",
     "other"
   ],
   "scopeIds": [
     "ci_config",
-    "docs",
     "other"
   ],
   "checks": {
@@ -31,7 +41,7 @@
     "data_audit": false
   },
   "outputs": {
-    "scopes": "ci/config,docs,other",
+    "scopes": "ci/config,other",
     "scope_need_build": "true",
     "scope_need_mushaf": "false",
     "scope_need_color_contrast": "false",
