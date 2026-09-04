@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { Star } from "lucide-react";
-import { SkeletonCardGrid, PageHeader } from "@/components/ui-common";
+import { CalendarDays, Star } from "lucide-react";
+import { SkeletonCardGrid } from "@/components/ui-common";
+import { CompactSectionHeader } from "@/components/ui/CompactSectionHeader";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
@@ -92,11 +93,17 @@ export default function OccasionsPage() {
   }, [occasions, monthFilter, search]);
 
   return (
-    <div className="page-shell">
-      <PageHeader
+    <div className="page-shell occasions-page">
+      <CompactSectionHeader
         eyebrow="المناسبات والدروس"
         title="المناسبات الإسلامية"
-        subtitle="مناسبات معتمدة مع الأعمال المستحبة والأدلة الصحيحة."
+        description="مناسبات معتمدة مع الأعمال المستحبة والأدلة الصحيحة — بتحفّظ علمي واضح."
+        icon={CalendarDays}
+        stats={
+          !loading
+            ? [{ id: "count", label: `${filtered.length.toLocaleString("ar-EG")} مناسبة` }]
+            : undefined
+        }
       />
 
       {!loading && (
@@ -139,7 +146,7 @@ export default function OccasionsPage() {
       ) : (
         <div className="occasions-list">
           {filtered.map((occasion) => (
-            <article key={occasion.id} className="occasion-detail ui-card">
+            <article key={occasion.id} className="occasion-detail soft-card soft-card--on-light">
               <div className="occasion-detail__head">
                 <h2>
                   {occasion.name}
@@ -161,7 +168,7 @@ export default function OccasionsPage() {
                 </p>
               )}
 
-              <p>{occasion.summary}</p>
+              <p className="occasion-detail__summary">{occasion.summary}</p>
               {occasion.caveat ? (
                 <p className="occasion-detail__caveat"><strong>تنبيه:</strong> {occasion.caveat}</p>
               ) : null}

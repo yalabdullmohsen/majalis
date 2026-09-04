@@ -131,15 +131,17 @@ const ResultCard = memo(function ResultCard({
   const verifiedLabel = statusMetaLabel(item.verification_status, Boolean(item.source_name));
   return (
     <article className="srch-result-card">
-      <div className="srch-result-card__top">
-        <span className="srch-result-card__kind">{kindLabel}</span>
-        {partial ? <span className="srch-result-card__status">قيد الإكمال</span> : null}
-        {verifiedLabel ? <span className="srch-result-card__status">{verifiedLabel}</span> : null}
-      </div>
-      <h3 className="srch-result-card__title">{highlightText(item.title, query)}</h3>
-      {snippet ? <p className="srch-result-card__excerpt">{highlightText(snippet, query)}</p> : null}
-      <Link href={href} className="srch-result-card__open">
-        فتح
+      <Link href={href} className="srch-result-card__link">
+        <div className="srch-result-card__top">
+          <span className="srch-result-card__kind">{kindLabel}</span>
+          {partial ? <span className="srch-result-card__status">قيد الإكمال</span> : null}
+          {verifiedLabel ? <span className="srch-result-card__status">{verifiedLabel}</span> : null}
+        </div>
+        <h3 className="srch-result-card__title">{highlightText(item.title, query)}</h3>
+        {snippet ? <p className="srch-result-card__excerpt">{highlightText(snippet, query)}</p> : null}
+        <span className="srch-result-card__open" aria-hidden="true">
+          فتح
+        </span>
       </Link>
     </article>
   );

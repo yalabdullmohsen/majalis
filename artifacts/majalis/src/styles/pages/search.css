@@ -773,50 +773,76 @@ html[data-theme="dark"] .srch-quick-card:hover {
 .srch-result-card {
   display: flex;
   flex-direction: column;
-  gap: 0.28rem;
-  padding: 0.7rem 0.8rem;
-  border-radius: 16px;
+  padding: 0;
+  border-radius: var(--radius-card, 24px);
   border: 1px solid color-mix(in srgb, var(--mn-border-default, #d8e3de) 75%, transparent);
   background: color-mix(in srgb, var(--color-surface, #fff) 96%, var(--mn-brand-soft, #e8f5f0));
   box-shadow:
     0 1px 2px color-mix(in srgb, #0f172a 6%, transparent),
     0 8px 20px color-mix(in srgb, #0f172a 4%, transparent);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+.srch-result-card:hover,
+.srch-result-card:focus-within {
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 35%, transparent);
+  box-shadow:
+    0 2px 4px color-mix(in srgb, #0f172a 8%, transparent),
+    0 12px 28px color-mix(in srgb, #0f172a 7%, transparent);
+}
+.srch-result-card__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.95rem 1rem;
+  text-decoration: none;
+  color: inherit;
+  border-radius: inherit;
+}
+.srch-result-card__link:focus-visible {
+  outline: 2px solid var(--mj-brand, #1f6b56);
+  outline-offset: 2px;
 }
 .srch-result-card__top {
   display: flex;
   align-items: center;
   gap: 0.35rem;
+  flex-wrap: wrap;
 }
 .srch-result-card__kind {
   display: inline-flex;
   align-items: center;
-  min-height: 1.35rem;
-  padding: 0.08rem 0.45rem;
+  min-height: 1.4rem;
+  padding: 0.1rem 0.5rem;
   border-radius: 999px;
   background: color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, transparent);
   color: var(--mj-brand-deep, #123f2e);
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 800;
 }
 .srch-result-card__title {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: var(--type-card-title, 1.05rem);
   font-weight: 800;
-  line-height: 1.4;
+  line-height: var(--lh-type-card, 1.45);
   color: var(--text-primary, var(--mj-ink, #12201a));
 }
 .srch-result-card__excerpt {
   margin: 0;
-  font-size: 0.8rem;
-  line-height: 1.5;
+  font-size: var(--type-card-body, 0.9rem);
+  line-height: var(--lh-type-prose, 1.75);
   color: var(--text-secondary, var(--mj-ink-2, #4a5a53));
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .srch-result-card__open {
   align-self: flex-start;
-  margin-top: 0.2rem;
-  font-size: 0.8rem;
+  margin-top: 0.15rem;
+  font-size: 0.8125rem;
   font-weight: 800;
   color: var(--mj-brand, #1f6b56);
+}
   text-decoration: none;
 }
 .srch-hl {

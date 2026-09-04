@@ -1,137 +1,179 @@
 /* ============================================================
    95 — OccasionsPage  (ocp-*)
+   عرض محسّن: رأس مضغوط + بطاقات soft-card مقروءة
    ============================================================ */
 .ocp-month-filter                   { max-width: 16rem; }
 .occasions-filter__count--empty     { padding: 1rem 0; }
 
-/* ── منقول من الطبقة الحرجة (elite-2026) ── */
-/* ══════════════════════════════════════════════
-   45. Occasions Page — المناسبات الإسلامية
-   ══════════════════════════════════════════════ */
-.occasions-filter {
-  display: flex;
-  align-items: center;
-  gap: var(--ds-space-2);
-  flex-wrap: wrap;
+.occasions-page .compact-section-header {
   margin-bottom: 1rem;
 }
 
+.occasions-filter {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2, 0.5rem);
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
 .occasions-filter__label {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: var(--elite-ink-soft, #5D726A);
+  color: var(--text-secondary, var(--mj-ink-2, #4a5a53));
 }
 
 .occasions-filter__count {
-  font-size: 0.8rem;
-  color: var(--elite-ink-muted, var(--mj-ink-2));
+  font-size: 0.8125rem;
+  color: var(--text-secondary, var(--mj-ink-2, #4a5a53));
 }
 
 .occasions-filter__sacred-note {
-  font-size: 0.8rem;
-  color: var(--elite-forest, var(--mj-brand-deep));
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8125rem;
+  color: var(--mj-brand-deep, #123f2e);
   font-weight: 600;
+}
+
+.ocp-search-wrap {
+  margin-bottom: 1rem;
+}
+
+.ocp-search-input {
+  width: 100%;
+  max-width: 28rem;
 }
 
 .occasions-list {
   display: flex;
   flex-direction: column;
-  gap: var(--ds-space-4);
+  gap: 1rem;
 }
 
 .occasion-detail {
-  padding: 1.25rem !important;
+  padding: 1.15rem 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: var(--ds-space-3);
+  gap: 0.65rem;
+  border-radius: var(--radius-card, 24px);
 }
 
 .occasion-detail__head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: var(--ds-space-3);
+  gap: 0.75rem;
   flex-wrap: wrap;
 }
 
 .occasion-detail__head h2 {
-  margin: 0 !important;
-  font-size: 1rem !important;
-  font-weight: 700 !important;
-  color: var(--elite-ink, var(--mj-brand-deep)) !important;
-  line-height: 1.4 !important;
+  margin: 0;
+  font-size: var(--type-card-title, clamp(1.05rem, 2.8vw, 1.2rem));
+  font-weight: 700;
+  color: var(--text-primary, var(--mj-brand-deep, #123f2e));
+  line-height: var(--lh-type-card, 1.45);
 }
 
 .occasion-detail__month-badge {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  color: var(--elite-forest, var(--mj-brand-deep));
-  background: var(--elite-sage-2, var(--mj-brand-soft));
-  border: 1px solid rgba(24,54,42,0.15);
-  border-radius: var(--ds-radius-full);
+  color: var(--mj-brand-deep, #123f2e);
+  background: var(--mj-brand-soft, #e8f5f0);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent);
+  border-radius: 999px;
   padding: 0.15rem 0.55rem;
   white-space: nowrap;
-  margin-inline-start: 0.35rem;
-  display: inline-block;
+  margin-inline-start: 0.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  vertical-align: middle;
 }
 
 .occasion-detail__countdown {
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--elite-ink-muted, var(--mj-ink-2));
+  color: var(--text-secondary, var(--mj-ink-2, #4a5a53));
   white-space: nowrap;
-  background: var(--elite-cream, #F4F4F1);
-  border-radius: var(--ds-radius-full);
-  padding: 0.25rem 0.65rem;
+  background: var(--color-surface-muted, #f2f4f3);
+  border-radius: 999px;
+  padding: 0.28rem 0.7rem;
   flex-shrink: 0;
 }
 
 .occasion-detail__countdown--soon {
-  color: #C0392B;
-  background: rgba(192,57,43,0.08);
+  color: #9b2c2c;
+  background: color-mix(in srgb, #c0392b 10%, #fff);
 }
 
 .occasion-detail__date {
-  font-size: 0.78rem;
-  color: var(--elite-ink-soft, #5D726A);
+  font-size: 0.8125rem;
+  color: var(--text-secondary, var(--mj-ink-2, #4a5a53));
   margin: 0;
 }
 
-.occasion-detail p {
-  font-size: var(--ds-text-sm);
-  color: var(--elite-ink-soft, #5D726A);
-  line-height: 1.7;
+.occasion-detail__summary {
+  font-size: var(--type-card-body, 0.9375rem);
+  color: var(--text-primary, var(--mj-ink, #12201a));
+  line-height: var(--lh-type-prose, 1.75);
   margin: 0;
+}
+
+.occasion-detail__caveat {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: var(--lh-type-prose, 1.75);
+  color: var(--text-secondary, var(--mj-ink-2, #4a5a53));
+  background: color-mix(in srgb, #c9a227 10%, transparent);
+  border-radius: 12px;
+  padding: 0.55rem 0.75rem;
 }
 
 .occasion-detail h3 {
-  font-size: 0.82rem !important;
-  font-weight: 700 !important;
-  color: var(--elite-forest, var(--mj-brand-deep)) !important;
-  margin: 0 !important;
-  text-transform: uppercase;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--mj-brand-deep, #123f2e);
+  margin: 0.15rem 0 0;
   letter-spacing: normal;
 }
 
 .occasion-detail ul {
   margin: 0;
-  padding-inline-start: 1.25rem;
+  padding-inline-start: 1.2rem;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.35rem;
 }
 
 .occasion-detail ul li {
-  font-size: 0.86rem;
-  color: var(--elite-ink, var(--mj-brand-deep));
-  line-height: 1.6;
+  font-size: 0.9rem;
+  color: var(--text-primary, var(--mj-ink, #12201a));
+  line-height: var(--lh-type-prose, 1.75);
 }
 
 .occasion-evidence {
-  font-size: 0.8rem;
-  color: var(--elite-ink-soft, #5D726A);
-  border-inline-start: 2.5px solid var(--elite-forest, var(--mj-brand-deep));
-  padding-inline-start: 0.65rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary, var(--mj-ink-2, #4a5a53));
+  border-inline-start: 3px solid var(--mj-brand, #1f6b56);
+  padding-inline-start: 0.7rem;
   margin: 0;
-  line-height: 1.6;
+  line-height: var(--lh-type-prose, 1.75);
+}
+
+html[data-theme="dark"] .occasion-detail__head h2,
+html.dark .occasion-detail__head h2,
+html[data-theme="dark"] .occasion-detail__summary,
+html.dark .occasion-detail__summary,
+html[data-theme="dark"] .occasion-detail ul li,
+html.dark .occasion-detail ul li {
+  color: var(--text-primary, #ecf2ef);
+}
+
+html[data-theme="dark"] .occasion-detail__date,
+html.dark .occasion-detail__date,
+html[data-theme="dark"] .occasion-evidence,
+html.dark .occasion-evidence {
+  color: var(--text-secondary, #c2cfca);
 }
