@@ -25,9 +25,9 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/fiqh", label: "بوابة الفقه" },
   ],
   arabic: [
-    { href: "/quran-knowledge", label: "القرآن وعلومه" },
+    { href: "/quran-hub", label: "مركز القرآن الكريم" },
     { href: "/adab-talab-ilm", label: "آداب طالب العلم" },
-    { href: "/islamic-glossary", label: "مفاهيم شرعية" },
+    { href: "/tafsir", label: "علم التفسير" },
   ],
   tazkiya: [
     { href: "/akhlaq", label: "الأخلاق" },
