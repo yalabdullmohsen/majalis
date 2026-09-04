@@ -175,13 +175,13 @@ export async function getUnifiedLessonById(id: string) {
   return { lesson, source };
 }
 
-/** بحث في الدروس الموحّدة — ترتيب حسب الصلة. */
+/** بحث في الدروس الموحّدة — ترتيب حسب الصلة (نطاق الكويت فقط للعرض). */
 export async function searchUnifiedLessons(query: string, limit = 24): Promise<KuwaitLessonRecord[]> {
   const trimmed = query.trim();
   if (!trimmed) return [];
 
   const { lessons } = await getUnifiedLessons();
-  return rankLessonsBySearch(lessons, trimmed, limit);
+  return rankLessonsBySearch(filterKuwaitOnlyForDisplay(lessons), trimmed, limit);
 }
 
 /** دروس مشابهة دون جلب القائمة كاملة مرتين. */
@@ -190,7 +190,7 @@ export async function fetchRelatedLessons(
   limit = 3,
 ): Promise<KuwaitLessonRecord[]> {
   const { lessons } = await fetchLessons();
-  return lessons
+  return filterKuwaitOnlyForDisplay(lessons)
     .filter(
       (candidate) =>
         candidate.id !== lesson.id &&
@@ -209,7 +209,7 @@ export async function fetchSameSheikhLessons(
   const key = sheikhNameKey(lesson.sheikhName);
   if (!key) return [];
   const { lessons } = await fetchLessons();
-  return lessons
+  return filterKuwaitOnlyForDisplay(lessons)
     .filter((candidate) => candidate.id !== lesson.id && sheikhNameKey(candidate.sheikhName) === key)
     .slice(0, limit);
 }

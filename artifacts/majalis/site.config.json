@@ -2,7 +2,7 @@
   "$comment": "المصدر الوحيد لهوية المنصة. يُقرأ من التطبيق (src/lib/site-config.ts) ومن سكربتات البناء (scripts/*.mjs). لا تكتب اسم المنصة أو نطاقها أو بريدها يدويًا في أي ملف آخر.",
   "siteName": "سُنّة",
   "siteShortName": "سُنّة",
-  "siteDescription": "تطبيق سُنّة يجمع القرآن الكريم، الدروس الشرعية، الفقه، الحديث، الأذكار، والمكتبة العلمية في واجهة عربية سهلة وهادئة.",
+  "siteDescription": "تطبيق سُنّة يجمع القرآن الكريم، الدروس الشرعية، الفقه، الحديث، والأذكار في واجهة عربية سهلة وهادئة.",
   "$domainNote": "النطاق الحي المعتمد: https://www.ssunnah.com (200 بلا redirect). ssunnah.com وmajlisilm.com وwww.majlisilm.com يحوّلان إليه بـ308 من لوحة Vercel. Capacitor يحمّل www.ssunnah.com مباشرة.",
   "siteUrl": "https://www.ssunnah.com",
   "legacyOrigins": [
@@ -44,7 +44,7 @@
     "/fiqh": "/brand/og-fiqh.png",
     "/hadith": "/brand/og-hadith.png",
     "/adhkar": "/brand/og-adhkar.png",
-    "/library": "/brand/og-library.png",
+    "/search": "/brand/og-home.png",
     "/contact": "/brand/og-contact.png"
   },
   "logoImage": "/brand/official.png?v=20260829",

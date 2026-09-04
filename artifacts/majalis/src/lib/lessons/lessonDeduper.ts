@@ -3,27 +3,20 @@ import {
   normalizeLessonDay,
   normalizeLessonPlace,
   normalizeLessonSheikh,
-  normalizeLessonTime,
   normalizeLessonTitle,
 } from "./lessonNormalize";
 
 /**
- * مفتاح التكرار الحقيقي:
- * - جلسات الكويت (`kw-…`) تُميَّز بمعرّفها حتى لا تُطمس جلسات الدورة الواحدة.
- * - غير ذلك: عنوان + شيخ + تاريخ + مكان + وقت.
- * المصدر (seed/supabase) لجودة الإبقاء عند التعارض فقط — لا يُدخل في المفتاح
- * حتى لا يتضاعف نفس الدرس من مصدرين.
+ * مفتاح التكرار الثابت للمنتج:
+ * عنوان + شيخ + تاريخ + مكان
+ * (الوقت لا يدخل المفتاح حتى لا تتضاعف نفس الجلسة بصيغ وقت مختلفة)
  */
 export function buildLessonDedupeKey(lesson: KuwaitLessonRecord): string {
-  const stableId = String(lesson.id || "").trim();
-  if (stableId.startsWith("kw-")) return `id:${stableId}`;
-
   const title = normalizeLessonTitle(lesson.title);
   const sheikh = normalizeLessonSheikh(lesson.sheikhName);
   const date = normalizeLessonDay(lesson.gregorianDate || lesson.day || "");
   const place = normalizeLessonPlace(lesson);
-  const time = normalizeLessonTime(lesson.time || "");
-  return [title, sheikh, date, place, time].join("|");
+  return [title, sheikh, date, place].join("|");
 }
 
 function lessonQualityScore(lesson: KuwaitLessonRecord): number {
@@ -32,6 +25,8 @@ function lessonQualityScore(lesson: KuwaitLessonRecord): number {
   if (lesson.description?.trim()) score += 0.005;
   if (lesson.mapsUrl) score += 0.002;
   if (lesson.time?.trim()) score += 0.001;
+  // تفضيل معرّف kw المستقر عند التساوي
+  if (String(lesson.id || "").startsWith("kw-")) score += 0.0005;
   return score;
 }
 

@@ -17,7 +17,7 @@ export const ar = {
   nav_home: "الرئيسية",
   nav_lessons: "الدروس",
   nav_quran: "القرآن الكريم",
-  nav_library: "المكتبة",
+  nav_library: "البحث",
   nav_adhkar: "الأذكار",
   nav_prayer: "الصلاة",
 

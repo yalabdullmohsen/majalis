@@ -42,14 +42,14 @@ assert.deepEqual(
     "salah",
     "zakat",
     "sawm",
+    "itikaf",
     "hajj",
-    "janaza",
+    "udhiya",
     "ayman",
+    "sayd",
     "atima",
     "libas",
-    "muamalat",
-    "buyu",
-    "riba",
+    "janaza",
   ],
 );
 assert.ok(FIQH_HUB_DOOR_ORDER.includes("usrah"));

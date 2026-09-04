@@ -660,7 +660,7 @@ export async function getLibrary({ type, category }: { type?: string; category?:
     return { data: result, error: null, usingSeed: false };
   } catch (err) {
     logSupabaseError("getLibrary", err);
-    // فهرس المكتبة العلمية مدمج في التطبيق — لا نُرجع قائمة فارغة عند فشل الشبكة.
+    // فهرس المراجع المحلي مدمج في التطبيق — لا نُرجع قائمة فارغة عند فشل الشبكة.
     return { data: catalogFiltered, error: null, usingSeed: true };
   }
 }

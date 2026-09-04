@@ -197,11 +197,11 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
 
       <div className="lesson-unified-card__body">
         <h3 className="lesson-unified-card__title">{lesson.title}</h3>
-        {lesson.sheikhName ? (
-          <p className="lesson-unified-card__sheikh">
-            {lesson.sheikhName.replace(/^الشيخ(?:ة)?:\s*/u, "")}
-          </p>
-        ) : null}
+        <p className="lesson-unified-card__sheikh">
+          {lesson.sheikhName
+            ? lesson.sheikhName.replace(/^الشيخ(?:ة)?:\s*/u, "")
+            : "الشيخ غير محدد"}
+        </p>
         {!compact && shortDescription ? (
           <p className="lesson-unified-card__desc">{shortDescription}</p>
         ) : null}
@@ -213,9 +213,9 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
           )}
 
         <div className="lesson-unified-card__facts" aria-label="معلومات الدرس">
-          <FactRow label="الموعد" value={scheduleValue} />
-          <FactRow label="المكان" value={displayPlace} />
-          <FactRow label="الحضور" value={delivery || undefined} />
+          <FactRow label="الموعد" value={scheduleValue || "الموعد غير محدد"} />
+          <FactRow label="المكان" value={displayPlace || "المكان غير محدد"} />
+          <FactRow label="الحضور" value={delivery || "غير محدد"} />
           {!compact && lesson.womenAttendance === "متاح" ? (
             <FactRow label="حضور النساء" value={lesson.womenAttendanceNote || "متاح"} />
           ) : null}
