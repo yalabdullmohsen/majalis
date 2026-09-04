@@ -39,8 +39,7 @@ const SCAN_FILES = [
   join(stylesRoot, "brand-v4-contrast-fixes.css"),
   join(stylesRoot, "pages", "prayer-times.css"),
   join(stylesRoot, "quran.css"),
-  join(stylesRoot, "recitation-ai.css"),
-];
+  ];
 
 /** ملفات مستثناة مؤقتًا (admin / أدوات داخلية). */
 const ALLOW_PATH_RE = /\/(admin|prophet-stories-admin)\b/i;

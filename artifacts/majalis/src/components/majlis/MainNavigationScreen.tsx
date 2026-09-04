@@ -1,7 +1,7 @@
 /**
  * Flutter `MainNavigationScreen` + `MajlisIlmApp` shell:
  * bottom nav (مصحف / مسارات) · search · endDrawer settings · RTL parchment.
- * Wires MajlisAudioService (just_audio) + AIRecitationWidget (speech_to_text).
+ * Wires MajlisAudioService (just_audio) + QuranReaderWidget.
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BookOpen, School, Search, Settings2 } from "lucide-react";
@@ -13,10 +13,8 @@ import { useQuranAppController } from "@/hooks/useQuranAppController";
 import { useImmersiveSystemUi } from "@/hooks/useImmersiveSystemUi";
 import { QuranReaderWidget } from "@/components/majlis/QuranReaderWidget";
 import { EducationalCoursesWidget } from "@/components/majlis/EducationalCoursesWidget";
-import { AIRecitationWidget } from "@/components/majlis/AIRecitationWidget";
 import { SmartSearchPanel } from "@/components/majlis/SmartSearchPanel";
 import { ImmersivePrefsDrawer } from "@/components/quran/ImmersivePrefsDrawer";
-import { QuranRepository } from "@/lib/quran-repository";
 import {
   QURAN_APP_FONT_MAX,
   QURAN_APP_FONT_MIN,
@@ -53,7 +51,6 @@ export function MajlisIlmApp({
     isDarkMode,
     textColor,
     fontSize,
-    selectedVerseIndex,
     updateFontSize,
     toggleTheme,
     stopAudio,
@@ -101,15 +98,6 @@ export function MajlisIlmApp({
     },
     [audioSvc, audioSurah, stopAudio],
   );
-
-  const targetVerse = useMemo(() => {
-    const verses = QuranRepository.getVerseTexts();
-    const idx =
-      selectedVerseIndex != null && selectedVerseIndex >= 0
-        ? selectedVerseIndex
-        : 0;
-    return verses[idx] ?? verses[0] ?? "";
-  }, [selectedVerseIndex]);
 
   const title = tab === 0 ? "المصحف الشريف" : "المسارات والأذكار";
   const ink = isDarkMode ? "#ffffff" : "rgba(0,0,0,0.87)";
@@ -160,7 +148,6 @@ export function MajlisIlmApp({
         ) : (
           <div className="majlisilm-app__edu">
             <EducationalCoursesWidget controller={eduController} />
-            <AIRecitationWidget targetVerse={targetVerse} />
           </div>
         )}
       </main>

@@ -42,6 +42,11 @@
       "permanent": true
     },
     {
+      "source": "/quran/recitation-test-ai",
+      "destination": "/quran-hub",
+      "permanent": true
+    },
+    {
       "source": "/library/:path*",
       "destination": "/search",
       "permanent": true
@@ -1058,19 +1063,6 @@
         {
           "key": "Cache-Control",
           "value": "private, no-store"
-        }
-      ]
-    },
-    {
-      "source": "/quran/recitation-test-ai",
-      "headers": [
-        {
-          "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(self), geolocation=(), interest-cohort=()"
-        },
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow"
         }
       ]
     },

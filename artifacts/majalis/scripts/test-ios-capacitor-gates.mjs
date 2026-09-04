@@ -69,53 +69,14 @@ ok(!/call\.resolve\(\[\]\)/.test(pluginSwift), "plugin does not resolve empty on
 ok(pluginSwift.includes("AUDIO_SESSION_FAILED"), "playback rejects with AUDIO_SESSION_FAILED code");
 ok(pluginSwift.includes("mediaServicesWereResetNotification"), "playback observes media services reset");
 
-const speechSwift = readFileSync(join(iosApp, "App", "MajlisSpeechRecognitionPlugin.swift"), "utf8");
-ok(speechSwift.includes("CAPBridgedPlugin"), "speech plugin conforms to CAPBridgedPlugin");
-ok(speechSwift.includes('jsName = "MajlisSpeechRecognition"'), "speech plugin jsName");
-ok(!/try\?/.test(speechSwift), "speech plugin does not swallow errors with try?");
-ok(
-  !/call\.resolve\(\[\s*"matches"\s*:\s*\[\s*\]\s*\]\)/.test(speechSwift),
-  "speech plugin does not silently resolve empty matches",
-);
-ok(speechSwift.includes('call.reject'), "speech plugin uses call.reject for failures");
-for (const code of [
-  "RECOGNIZER_UNAVAILABLE",
-  "SPEECH_DENIED",
-  "MICROPHONE_DENIED",
-  "AUDIO_SESSION_FAILED",
-  "NO_SPEECH_DETECTED",
-  "MEDIA_SERVICES_RESET",
-  "RECOGNITION_FAILED",
-]) {
-  ok(speechSwift.includes(`"${code}"`), `speech plugin classifies ${code}`);
-}
-ok(speechSwift.includes("mediaServicesWereResetNotification"), "speech observes media services reset");
-ok(speechSwift.includes("deinit"), "speech plugin cleans up in deinit");
-ok(speechSwift.includes('name: "prepare"'), "speech plugin exposes prepare for prewarm");
-ok(speechSwift.includes('name: "teardown"'), "speech plugin exposes teardown");
-ok(speechSwift.includes("NO_AUDIO_BUFFER"), "speech classifies no first buffer");
-ok(speechSwift.includes("shouldReportPartialResults"), "speech enables partial results");
-ok(speechSwift.includes("playAndRecord"), "speech uses playAndRecord to avoid category thrash");
-ok(speechSwift.includes("notifyListeners(\"latency\""), "speech emits latency metrics");
-ok(speechSwift.includes("notifyListeners(\"audioLevel\""), "speech emits audio level");
-ok(speechSwift.includes("sessionPrepared"), "speech keeps warm session state");
+ok(!existsSync(join(iosApp, "App", "MajlisSpeechRecognitionPlugin.swift")), "speech recognition plugin removed");
+ok(!existsSync(join(iosApp, "App", "RecitationAudioCapturePlugin.swift")), "recitation capture plugin removed");
+ok(!plist.includes("NSSpeechRecognitionUsageDescription"), "Info.plist has no speech recognition usage");
+ok(!plist.includes("NSMicrophoneUsageDescription"), "Info.plist has no microphone usage (AI recitation removed)");
+ok(!pbx.includes("MajlisSpeechRecognitionPlugin.swift"), "pbxproj has no speech plugin");
+ok(!pbx.includes("RecitationAudioCapturePlugin.swift"), "pbxproj has no capture plugin");
 
-ok(plist.includes("NSMicrophoneUsageDescription"), "Info.plist NSMicrophoneUsageDescription");
-ok(plist.includes("NSSpeechRecognitionUsageDescription"), "Info.plist NSSpeechRecognitionUsageDescription");
-
-const speechJs = readFileSync(join(root, "src", "lib", "plugins", "speech-recognition.ts"), "utf8");
-ok(speechJs.includes("prepare("), "JS speech bridge exposes prepare");
-ok(speechJs.includes("teardown("), "JS speech bridge exposes teardown");
-ok(speechJs.includes("stopQuranPlaybackForRecitation"), "JS stops Quran before recitation");
-ok(speechJs.includes("NO_AUDIO_BUFFER"), "JS classifies NO_AUDIO_BUFFER");
-
-const captureSwift = readFileSync(join(iosApp, "App", "RecitationAudioCapturePlugin.swift"), "utf8");
-ok(!/try\?/.test(captureSwift), "capture plugin does not swallow errors with try?");
-ok(captureSwift.includes("AUDIO_SESSION_FAILED"), "capture rejects deactivate with AUDIO_SESSION_FAILED");
-ok(captureSwift.includes("mediaServicesWereResetNotification"), "capture observes media services reset");
-
-const privacy = readFileSync(join(iosApp, "App", "PrivacyInfo.xcprivacy"), "utf8");
-ok(privacy.includes("NSPrivacyTracking"), "PrivacyInfo declares tracking key");
+const privacy = readFileSync(join(iosApp, "App", "PrivacyInfo.xcprivacy"), "utf8");ok(privacy.includes("NSPrivacyTracking"), "PrivacyInfo declares tracking key");
 ok(/NSPrivacyTracking<\/key>\s*<false\/>/s.test(privacy), "PrivacyInfo tracking=false");
 ok(privacy.includes("NSPrivacyAccessedAPICategoryUserDefaults"), "PrivacyInfo declares UserDefaults API reason");
 ok(

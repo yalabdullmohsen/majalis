@@ -93,7 +93,7 @@ export async function deleteResumeItem(
 
 export async function getUserProfileStats(userId: string): Promise<ProfileStats> {
   // Run DB queries in parallel
-  const [lessonsRes, bookmarksRes, badgesRes, pathsRes, recitationRes] = await Promise.all([
+  const [lessonsRes, bookmarksRes, badgesRes, pathsRes] = await Promise.all([
     supabase
       .from("lesson_registrations")
       .select("user_id", { count: "exact", head: true })
@@ -116,16 +116,6 @@ export async function getUserProfileStats(userId: string): Promise<ProfileStats>
       .select("lesson_id")
       .eq("user_id", userId)
       .eq("status", "completed"),
-
-    // اختبار التسميع بالذكاء الاصطناعي — جدول قد لا يزال بلا صفوف لمستخدم
-    // جديد، أو (نادرًا) بلا الجدول نفسه على قاعدة لم تُطبَّق عليها
-    // الهجرة بعد؛ كلا الحالتين تُعامَلان بأمان أدناه بقيم صفرية افتراضية.
-    supabase
-      .from("recitation_sessions")
-      .select("accuracy_pct,verses_count")
-      .eq("user_id", userId)
-      .eq("status", "completed")
-      .then((r) => r, () => ({ data: null, error: null } as { data: null; error: null })),
   ]);
 
   const completedLessons = lessonsRes.count ?? 0;
@@ -148,10 +138,10 @@ export async function getUserProfileStats(userId: string): Promise<ProfileStats>
 
   const pathsCompleted: string[] = (pathsRes.data ?? []).map((r: any) => r.lesson_id as string);
 
-  const recitationRows: Array<{ accuracy_pct: number | null; verses_count: number | null }> = recitationRes.data ?? [];
-  const recitationSessions = recitationRows.length;
-  const recitationPerfectSessions = recitationRows.filter((r) => r.accuracy_pct === 100).length;
-  const recitationVersesTotal = recitationRows.reduce((sum, r) => sum + (r.verses_count ?? 0), 0);
+  // تسميع الذكاء الاصطناعي أُزيل من المنتج — الإحصاءات تبقى صفرًا للتوافق.
+  const recitationSessions = 0;
+  const recitationPerfectSessions = 0;
+  const recitationVersesTotal = 0;
 
   // Local stats (localStorage — available in browser only)
   const tasbihItems = typeof window !== "undefined" ? readTasbeehAwrad() : [];

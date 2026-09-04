@@ -7,13 +7,7 @@
  */
 export function isImmersiveChromePath(pathname: string): boolean {
   const p = pathname.replace(/\/+$/, "") || "/";
-  if (p === "/mushaf" || p.startsWith("/mushaf/")) {
-    return true;
-  }
-  return (
-    p === "/quran/recitation-test-ai" ||
-    p.startsWith("/quran/recitation-test-ai/")
-  );
+  return p === "/mushaf" || p.startsWith("/mushaf/");
 }
 
 /** صفحات وظيفية — تُخفى فيها الشريط المتحرك الطويل؛ الوظيفة أولًا.

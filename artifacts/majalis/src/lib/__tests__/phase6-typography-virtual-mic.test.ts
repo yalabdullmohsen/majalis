@@ -1,5 +1,6 @@
 /**
- * بوابة المرحلة 6: خطوط عثماني / VirtualList / ميكروفون / ثيمات القارئ.
+ * بوابة المرحلة 6: خطوط عثماني / VirtualList / ثيمات القارئ.
+ * (أُزيل قسم الميكروفون مع حذف تسميع الذكاء الاصطناعي)
  * تشغيل: node --import tsx src/lib/__tests__/phase6-typography-virtual-mic.test.ts
  */
 import assert from "node:assert/strict";
@@ -11,11 +12,6 @@ import {
   QURAN_FONT_MIN_PX,
   clampQuranFontSize,
 } from "../quran-font-size";
-import {
-  detectMicHelpPlatform,
-  micHelpSteps,
-  queryMicPermission,
-} from "../mic-permission";
 import { DEFAULT_PREFERENCES } from "../user-preferences";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -72,20 +68,6 @@ assert.match(read("pages/account/ui/SearchView.tsx"), /VirtualList/);
 assert.match(read("pages/quran/ui/QuranSearchView.tsx"), /VirtualList/);
 assert.match(read("pages/hadith/ui/HadithBooksView.tsx"), /VirtualList/);
 assert.match(read("components/quran/QuranSurahJumpSearch.tsx"), /VirtualList/);
-
-// ── Mic permission UX ───────────────────────────────────────────────────────
-assert.ok(existsSync(resolve(src, "lib/mic-permission.ts")));
-assert.ok(existsSync(resolve(src, "components/MicPermissionHelp.tsx")));
-assert.equal(detectMicHelpPlatform({ isNative: true, isIOS: true }), "ios");
-assert.equal(detectMicHelpPlatform({ isNative: true, isAndroid: true }), "android");
-assert.match(micHelpSteps("chrome"), /الميكروفون/);
-assert.match(micHelpSteps("safari"), /سفاري/);
-assert.match(read("hooks/useRecitationTest.ts"), /ensureMicPermission/);
-assert.match(read("components/quran/RecitationTestPanel.tsx"), /MicPermissionHelp/);
-assert.match(read("pages/quran/ui/RecitationTestView.tsx"), /MicPermissionHelp/);
-
-const state = await queryMicPermission();
-assert.ok(["granted", "denied", "prompt", "unsupported"].includes(state));
 
 // ── Reader themes ───────────────────────────────────────────────────────────
 assert.equal(DEFAULT_PREFERENCES.readingTheme, "default");

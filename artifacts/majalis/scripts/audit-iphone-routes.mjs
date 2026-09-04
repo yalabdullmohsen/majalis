@@ -52,7 +52,7 @@ const BATCHES = {
     "/academic-research", "/universities", "/universities/compare",
     "/quran/surahs", "/quran/revelation-order", "/quran/makki-madani",
     "/quran-memorization", "/quran/memorization-plans", "/quran/tajweed",
-    "/quran/surah-stories", "/quran/recitation-test-ai",
+    "/quran/surah-stories", 
     "/discover-islam", "/discover-islam/questions", "/discover-islam/doubts",
     "/discover-islam/how-to-convert", "/discover-islam/new-muslim",
     "/discover-islam/contact", "/prayer-countdown", "/prayer-ranks",

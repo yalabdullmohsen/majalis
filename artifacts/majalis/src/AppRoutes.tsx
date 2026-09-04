@@ -56,7 +56,6 @@ const QuranHubPage = lazy(() => import("@/pages/quran/QuranHubPage"));
 const QuranNumbersPage = lazy(() => import("@/pages/quran/QuranNumbersPage"));
 const QuranPeoplePage = lazy(() => import("@/pages/quran/QuranPeoplePage"));
 const QuranPersonDetailPage = lazy(() => import("@/pages/quran/QuranPersonDetailPage"));
-const RecitationTestPage = lazy(() => import("@/pages/quran/RecitationTestPage"));
 const SurahStoriesPage = lazy(() => import("@/pages/quran/SurahStoriesPage"));
 const QuranTajweedPage = lazy(() => import("@/pages/quran/QuranTajweedPage"));
 const TajweedChapterPage = lazy(() => import("@/pages/quran/TajweedChapterPage"));
@@ -562,7 +561,7 @@ export default function AppRoutes() {
       <Route path="/quran-sciences"><Redirect to="/quran-knowledge" /></Route>
 
       <Route path="/kids"><SafeLazyRoute component={KidsPage} /></Route>
-      <Route path="/quran/recitation-test-ai"><SafeLazyRoute component={RecitationTestPage} /></Route>
+      <Route path="/quran/recitation-test-ai"><Redirect to="/quran-hub" /></Route>
       <Route path="/quran/surahs"><SafeLazyRoute component={SurahIndexPage} /></Route>
       <Route path="/quran/search"><SafeLazyRoute component={QuranSearchPage} /></Route>
       <Route path="/quran/people/:slug"><SafeLazyRoute component={QuranPersonDetailPage} /></Route>

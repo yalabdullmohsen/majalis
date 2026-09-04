@@ -23,7 +23,7 @@ const CRITICAL = [
   "/universities",
   "/universities/compare",
   "/quran-hub",
-  "/quran/recitation-test-ai",
+  
   "/contact",
   "/privacy",
   "/account-deletion",

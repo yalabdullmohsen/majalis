@@ -53,7 +53,6 @@ import {
   MapPin,
   Microscope,
   MessageCircleQuestion,
-  Mic,
   MoonStar,
   Mountain,
   Network,
@@ -197,6 +196,7 @@ export const SECTION_MERGE_REDIRECTS: ReadonlyArray<{ from: string; to: string; 
   { from: "/aqidah", to: "/tawhid", note: "عقيدة قديم → التوحيد/العقيدة" },
   { from: "/prayer", to: "/prayer-times", note: "صلاة مختصر → مواقيت الصلاة" },
   { from: "/more", to: "/", note: "المزيد (ملغاة) → الرئيسية" },
+  { from: "/quran/recitation-test-ai", to: "/quran-hub", note: "تسميع الذكاء الاصطناعي (ملغى) → مركز القرآن" },
 ];
 
 const NAV: Surface[] = ["moreHub", "home", "search"];
@@ -211,7 +211,6 @@ const QURAN_HUB_IDS = new Set([
   "quran-surahs",
   "tafsir",
   "quran-tilawa",
-  "quran-recitation",
   "quran-tajweed",
   "quran-qiraat",
   "quran-seven-ahruf",
@@ -351,26 +350,13 @@ const SECTION_SEEDS: SectionSeed[] = [
     hub: "quran",
   },
   {
-    id: "quran-recitation",
-    label: "تسميع بالذكاء الاصطناعي",
-    subtitle: "سجّل تلاوتك وقيّمها فورًا بالذكاء الاصطناعي",
-    route: "/quran/recitation-test-ai",
-    icon: Mic,
-    group: "sciences",
-    order: 5,
-    surfaces: ["search", "drawer", "quranHub"],
-    status: "live",
-    keywords: ["تلاوة", "تسميع", "ترتيل", "حفظ", "ميكروفون", "ذكاء اصطناعي"],
-    hub: "quran",
-  },
-  {
     id: "quran-tajweed",
     label: "التجويد",
     subtitle: "مخارج وصفات وأحكام التلاوة",
     route: "/quran-hub/tajweed",
     icon: AudioLines,
     group: "sciences",
-    order: 6,
+    order: 5,
     surfaces: SEARCH_ONLY,
     status: "live",
     keywords: [
