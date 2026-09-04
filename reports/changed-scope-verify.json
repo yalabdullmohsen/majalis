@@ -1,15 +1,10 @@
 {
-  "generatedAt": "2026-09-04T17:43:07.372Z",
+  "generatedAt": "2026-09-04T18:27:09.763Z",
   "paths": [
-    "artifacts/majalis/src/components/lessons/LessonFilters.tsx",
-    "artifacts/majalis/src/components/lessons/LessonScheduleGroup.tsx",
-    "artifacts/majalis/src/components/lessons/UnifiedLessonCard.tsx",
-    "artifacts/majalis/src/lib/__tests__/lessons-filter-chips-layout.test.ts",
-    "artifacts/majalis/src/lib/lesson-time.ts",
-    "artifacts/majalis/src/lib/unified-lesson-card.ts",
-    "artifacts/majalis/src/pages/lessons/ui/LessonsView.tsx",
-    "artifacts/majalis/src/styles/pages/lessons-legacy.css",
-    "artifacts/majalis/src/styles/pages/lessons.css"
+    "artifacts/majalis/src/components/HeaderTicker.tsx",
+    "artifacts/majalis/src/styles/components/header-ticker-polish.css",
+    "artifacts/majalis/src/styles/final-release.css",
+    "artifacts/majalis/src/styles/theme-aliases.css"
   ],
   "scopes": [
     "ui/layout"

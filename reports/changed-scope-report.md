@@ -1,7 +1,7 @@
 # تقرير نطاق التغييرات
 
-**التاريخ:** 2026-09-04T17:43:07.373Z
-**عدد الملفات:** 9
+**التاريخ:** 2026-09-04T18:27:09.764Z
+**عدد الملفات:** 4
 **النطاقات:** ui/layout
 **docs-only:** لا
 
@@ -25,15 +25,10 @@
 
 ## الملفات المتغيرة (أول 40)
 
-- `artifacts/majalis/src/components/lessons/LessonFilters.tsx` → ui_layout
-- `artifacts/majalis/src/components/lessons/LessonScheduleGroup.tsx` → ui_layout
-- `artifacts/majalis/src/components/lessons/UnifiedLessonCard.tsx` → ui_layout
-- `artifacts/majalis/src/lib/__tests__/lessons-filter-chips-layout.test.ts` → ui_layout
-- `artifacts/majalis/src/lib/lesson-time.ts` → ui_layout
-- `artifacts/majalis/src/lib/unified-lesson-card.ts` → ui_layout
-- `artifacts/majalis/src/pages/lessons/ui/LessonsView.tsx` → ui_layout
-- `artifacts/majalis/src/styles/pages/lessons-legacy.css` → ui_layout
-- `artifacts/majalis/src/styles/pages/lessons.css` → ui_layout
+- `artifacts/majalis/src/components/HeaderTicker.tsx` → ui_layout
+- `artifacts/majalis/src/styles/components/header-ticker-polish.css` → ui_layout
+- `artifacts/majalis/src/styles/final-release.css` → ui_layout
+- `artifacts/majalis/src/styles/theme-aliases.css` → ui_layout
 
 
 ## سياسات

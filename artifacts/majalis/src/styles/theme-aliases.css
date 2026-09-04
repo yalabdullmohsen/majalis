@@ -449,11 +449,13 @@ html.dark .header-ticker__label {
   ) !important;
   height: auto !important;
 }
-.header-ticker--paused .header-ticker__track {
+.header-ticker--paused .header-ticker__track,
+.header-ticker--paused .header-ticker__runner {
   animation-play-state: paused !important;
 }
 @media (prefers-reduced-motion: reduce) {
-  .header-ticker__track {
+  .header-ticker__track,
+  .header-ticker__runner {
     animation: none !important;
   }
 }
