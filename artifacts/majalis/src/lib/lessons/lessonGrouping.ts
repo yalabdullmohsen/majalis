@@ -1,7 +1,15 @@
+/**
+ * تجميع الدورات متعددة المجالس — الجلسات المنفردة تبقى بطاقات مستقلة.
+ * إن غاب courseId: تجميع بعنوان الدورة الأساسي + المكان عند تعدّد المشايخ.
+ */
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { cleanLessonDisplayTitle } from "@/lib/kuwait-lessons";
 import { formatSheikhName } from "@/lib/sheikh-name";
-import { extractCourseBaseTitle, getLessonDeliveryMode } from "./lessonNormalize";
+import {
+  extractCourseBaseTitle,
+  getLessonDeliveryMode,
+  normalizeLessonPlace,
+} from "./lessonNormalize";
 
 export type LessonCourseGroup = {
   id: string;
@@ -66,6 +74,14 @@ function buildCourseGroup(id: string, sessions: KuwaitLessonRecord[]): LessonCou
   };
 }
 
+function titlePlaceKey(lesson: KuwaitLessonRecord): string {
+  const title =
+    extractCourseBaseTitle(cleanLessonDisplayTitle(lesson.title, lesson.linkedLessons)) ||
+    lesson.title;
+  const place = normalizeLessonPlace(lesson);
+  return `${title}|${place}`;
+}
+
 /** تجميع الدورات متعددة المجالس — الجلسات المنفردة تبقى بطاقات مستقلة */
 export function groupLessonsForSchedule(lessons: KuwaitLessonRecord[]): LessonScheduleEntry[] {
   const byCourseId = new Map<string, KuwaitLessonRecord[]>();
@@ -84,14 +100,32 @@ export function groupLessonsForSchedule(lessons: KuwaitLessonRecord[]): LessonSc
   const entries: LessonScheduleEntry[] = [];
 
   for (const [courseId, sessions] of byCourseId) {
-    if (sessions.length > 1 || sessions[0]?.sessionCount && sessions[0].sessionCount > 1) {
+    if (sessions.length > 1 || (sessions[0]?.sessionCount && sessions[0].sessionCount > 1)) {
       entries.push({ kind: "course", course: buildCourseGroup(courseId, sessions) });
     } else {
       singles.push(...sessions);
     }
   }
 
+  // بلا courseId: إن اشترك العنوان+المكان واختلف المشايخ → بطاقة دورة واحدة
+  const byTitlePlace = new Map<string, KuwaitLessonRecord[]>();
+  const leftover: KuwaitLessonRecord[] = [];
   for (const lesson of singles) {
+    const key = titlePlaceKey(lesson);
+    const list = byTitlePlace.get(key) || [];
+    list.push(lesson);
+    byTitlePlace.set(key, list);
+  }
+  for (const [key, sessions] of byTitlePlace) {
+    const sheikhs = uniqueSheikhs(sessions);
+    if (sessions.length > 1 && sheikhs.length > 1) {
+      entries.push({ kind: "course", course: buildCourseGroup(`title:${key}`, sessions) });
+    } else {
+      leftover.push(...sessions);
+    }
+  }
+
+  for (const lesson of leftover) {
     entries.push({ kind: "lesson", lesson });
   }
 

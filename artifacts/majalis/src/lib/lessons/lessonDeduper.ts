@@ -11,7 +11,8 @@ import {
  * مفتاح التكرار الحقيقي:
  * - جلسات الكويت (`kw-…`) تُميَّز بمعرّفها حتى لا تُطمس جلسات الدورة الواحدة.
  * - غير ذلك: عنوان + شيخ + تاريخ + مكان + وقت.
- * المصدر لجودة الدمج فقط (seed vs supabase) لا للتفريق.
+ * المصدر (seed/supabase) لجودة الإبقاء عند التعارض فقط — لا يُدخل في المفتاح
+ * حتى لا يتضاعف نفس الدرس من مصدرين.
  */
 export function buildLessonDedupeKey(lesson: KuwaitLessonRecord): string {
   const stableId = String(lesson.id || "").trim();

@@ -337,7 +337,7 @@ export const FIQH_DOOR_META: Record<FiqhCanonicalDoor, FiqhDoorMeta> = {
     id: "nawazil",
     label: "النوازل المعاصرة",
     desc: "نوازل العصر عبر قرارات المجامع.",
-    href: "/fiqh",
+    href: "/fiqh-council/nawazil",
     sortOrder: 240,
     group: "muamalat",
   },
@@ -700,6 +700,22 @@ export function buildFiqhDoorSummaries(): FiqhDoorSummary[] {
       }
     }
   }
+
+  // لفّ الأبواب الفرعية داخل بطاقات البوابة العلنية (الجنايات←الحدود، القضاء←الشهادات)
+  const rollupInto = (target: FiqhCanonicalDoor, sources: FiqhCanonicalDoor[]) => {
+    const to = byDoor.get(target);
+    if (!to) return;
+    for (const src of sources) {
+      if (src === target) continue;
+      const from = byDoor.get(src);
+      if (!from) continue;
+      to.issues += from.issues;
+      for (const ch of from.chapters) to.chapters.add(ch);
+      to.statuses.push(...from.statuses);
+    }
+  };
+  rollupInto("jinayat", ["jinayat", "hudud", "diyat"]);
+  rollupInto("qada", ["qada", "shahadat", "iqrar"]);
 
   return FIQH_DOOR_ORDER.map((door) => {
     const meta = FIQH_DOOR_META[door];
