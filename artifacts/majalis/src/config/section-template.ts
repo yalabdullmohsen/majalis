@@ -59,6 +59,7 @@ const ROUTE_THEME: Record<string, TopicThemeId> = {
   "/miracles": "quran",
   "/maqasid-sharia": "usul",
   "/dalail-nubuwwah": "seerah",
+  "/arbaeen-nawawi": "hadith",
   "/sunnah-studies": "hadith",
 };
 
@@ -231,6 +232,24 @@ export const ROUTE_QUOTE: Record<string, SectionTemplateQuote> = {
     ref: "يوسف: ٢",
     type: "ayah",
     sectionId: "arabic-language",
+  },
+  "/maqasid-sharia": {
+    text: "وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ",
+    ref: "الأنبياء: ١٠٧",
+    type: "ayah",
+    sectionId: "maqasid-sharia",
+  },
+  "/dalail-nubuwwah": {
+    text: "قُلْ هَٰذِهِ سَبِيلِي أَدْعُو إِلَى اللَّهِ ۚ عَلَىٰ بَصِيرَةٍ أَنَا وَمَنِ اتَّبَعَنِي",
+    ref: "يوسف: ١٠٨",
+    type: "ayah",
+    sectionId: "dalail-nubuwwah",
+  },
+  "/arbaeen-nawawi": {
+    text: "مَنْ يُرِدِ اللَّهُ بِهِ خَيْرًا يُفَقِّهْهُ فِي الدِّينِ",
+    ref: "متفق عليه",
+    type: "hadith",
+    sectionId: "arbaeen-nawawi",
   },
   "/miracles": {
     text: "سَنُرِيهِمْ آيَاتِنَا فِي الْآفَاقِ وَفِي أَنفُسِهِمْ حَتَّىٰ يَتَبَيَّنَ لَهُمْ أَنَّهُ الْحَقُّ",

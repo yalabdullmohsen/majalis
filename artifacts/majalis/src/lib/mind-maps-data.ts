@@ -188,7 +188,7 @@ export const MIND_MAPS: MindMap[] = [
           children: [
             { id: "tf-1", label: "التفسير بالمأثور" },
             { id: "tf-2", label: "التفسير بالرأي" },
-            { id: "tf-3", label: "قصص السور", href: "/quran/surah-stories" },
+            { id: "tf-3", label: "أسباب النزول", href: "/quran/surah-stories" },
           ],
         },
         {

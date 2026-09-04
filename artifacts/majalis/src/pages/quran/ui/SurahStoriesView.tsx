@@ -15,15 +15,15 @@ export default function SurahStoriesPage() {
     const allStories = getAllSurahStories();
     applyPageSeo({
       path: "/quran/surah-stories",
-      title: "قصص سور القرآن | سُنّة",
-      description: "سبب التسمية ومحاور السور وقصصها من القرآن والسنة الصحيحة — بلا إسرائيليات ولا روايات ضعيفة في الفضائل. يُستغنى بما ثبت في الصحيح — سياسة",
-      keywords: ["قصص القرآن", "سور القرآن", "تفسير", "سبب التسمية"],
+      title: "أسباب النزول | سُنّة",
+      description: "سياقات نزول سور القرآن وأسباب تسميتها ومحاورها مما ثبت في القرآن والسنة الصحيحة — بلا إسرائيليات ولا روايات ضعيفة في الفضائل.",
+      keywords: ["أسباب النزول", "سور القرآن", "تفسير", "سبب التسمية", "علوم القرآن"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
-          name: "قصص سور القرآن الكريم",
-          description: "قصص وأسباب نزول ١١٤ سورة من سور القرآن الكريم؛ محتوى معتمد في منهج سُنّة؛ ؛ يُعرض للتذكّر والاعتبار بما ثبت من القرآن والسنة الصحيحة",
+          name: "أسباب النزول — سور القرآن الكريم",
+          description: "سياقات نزول وأسباب تسمية ١١٤ سورة؛ محتوى معتمد في منهج سُنّة؛ يُعرض للتذكّر والاعتبار بما ثبت من القرآن والسنة الصحيحة",
           numberOfItems: 114,
           itemListElement: allStories.slice(0, 20).map((s, i) => ({
             "@type": "ListItem",
@@ -41,21 +41,23 @@ export default function SurahStoriesPage() {
     <SectionTemplatePage
       route="/quran/surah-stories"
       eyebrow="القرآن وعلومه"
-      title="قصص القرآن"
-      subtitle="سبب التسمية، زمان ومكان النزول، المحاور، والقصص القرآنية الموثقة: ١١٤ سورة."
+      title="أسباب النزول"
+      subtitle="سياقات النزول، أسباب التسمية، المحاور، وما ثبت من القصص القرآنية: ١١٤ سورة."
       groupTitle="سور القرآن"
     >
     <div className="page-shell surah-stories-page ds-page">
 
       <aside className="ui-card quran-method-note" role="note" aria-label="تنبيه منهجي" style={{ maxWidth: 720, margin: "0 auto 1.25rem", padding: "0.9rem 1.1rem", lineHeight: 1.7 }}>
-        <strong>منهج القسم:</strong> نقتصر على ما ثبت في القرآن والسنة الصحيحة في القصص والفضائل.
+        <strong>منهج القسم:</strong> نقتصر على ما ثبت في القرآن والسنة الصحيحة في السياقات والفضائل.
         لا نسرد إسرائيليات ولا نعيّن أسماء/أعدادًا لم يرد بها نص، وأسباب النزول تُذكر عند ثبوتها لا بالتشهي.
+        العبرة بعموم اللفظ لا بخصوص السبب.
       </aside>
 
       <nav className="quran-subnav" aria-label="أقسام القرآن وعلومه">
-        <Link href="/quran-knowledge" className="quran-subnav__link">القرآن وعلومه</Link>
-        <Link href="/quran-hub/tajweed" className="quran-subnav__link">التجويد</Link>
-        <Link href="/quran/surah-stories" className="quran-subnav__link is-active">قصص القرآن</Link>
+        <Link href="/quran-hub" className="quran-subnav__link">مركز القرآن</Link>
+        <Link href="/ulum-quran" className="quran-subnav__link">علوم القرآن</Link>
+        <Link href="/quran/surah-stories" className="quran-subnav__link is-active">أسباب النزول</Link>
+        <Link href="/tafsir" className="quran-subnav__link">التفسير</Link>
       </nav>
 
       <div className="surah-stories-grid">
@@ -72,10 +74,11 @@ export default function SurahStoriesPage() {
       <ExploreAlsoNav
         title="استكشف أيضًا"
         links={[
-          { href: "/quran-knowledge", label: "القرآن وعلومه" },
+          { href: "/quran-hub", label: "مركز القرآن" },
           { href: "/mushaf", label: "المصحف" },
-          { href: "/stories", label: "القصص الإسلامية" },
           { href: "/ulum-quran", label: "علوم القرآن" },
+          { href: "/tafsir", label: "التفسير" },
+          { href: "/islamic-glossary", label: "المعجم الشرعي" },
         ]}
       />
     </div>
@@ -92,16 +95,16 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
     const path = `/quran/surah-stories/${story.number}`;
     applyPageSeo({
       path,
-      title: `قصة سورة ${story.name} | سُنّة`,
+      title: `أسباب النزول — سورة ${story.name} | سُنّة`,
       description: `${story.namingReason} — ${story.revelationTime}، ${story.revelationPlace}، ${story.ayahCount} آية. ${story.virtues || ""}`.slice(0, 300),
-      keywords: [story.name, "قصص القرآن", "أسباب النزول", ...story.keywords],
+      keywords: [story.name, "أسباب النزول", "سور القرآن", ...story.keywords],
       ogType: "article",
       canonicalPath: path,
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "Article",
-          headline: `قصة سورة ${story.name}`,
+          headline: `أسباب النزول — سورة ${story.name}`,
           description: story.namingReason,
           url: `https://www.ssunnah.com${path}`,
           inLanguage: "ar",
@@ -114,8 +117,8 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
     <div className="page-shell surah-story-detail">
       <PageHeader eyebrow={`سورة ${story.number}`} title={story.name} subtitle={story.revelationPlace} />
 
-      <nav className="quran-subnav" aria-label="تنقّل قصص السور">
-        <Link href="/quran/surah-stories" className="quran-subnav__link">← كل القصص</Link>
+      <nav className="quran-subnav" aria-label="تنقّل أسباب النزول">
+        <Link href="/quran/surah-stories" className="quran-subnav__link">← كل السور</Link>
         {prev && (
           <Link href={`/quran/surah-stories/${prev.number}`} className="quran-subnav__link">
             السابقة: {prev.name}
@@ -181,7 +184,7 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
         <Link href={`/mushaf/${story.number}`} className="mj-btn">قراءة السورة</Link>
 
         <div className="twh-share">
-          <ShareButtons title={`${story.name} — قصص سور القرآن | سُنّة`} url={`https://www.ssunnah.com/quran/surah-stories/${story.number}`} />
+          <ShareButtons title={`أسباب النزول — سورة ${story.name} | سُنّة`} url={`https://www.ssunnah.com/quran/surah-stories/${story.number}`} />
         </div>
         <div className="px-4 pb-6 mt-4">
           <SectionQuiz sectionId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />
@@ -192,9 +195,9 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
         title="استكشف أيضًا"
         links={[
           { href: `/mushaf/${story.number}`, label: `قراءة سورة ${story.name}` },
-          { href: "/quran/surah-stories", label: "كل قصص السور" },
-          { href: "/stories", label: "القصص الإسلامية" },
+          { href: "/quran/surah-stories", label: "أسباب النزول — كل السور" },
           { href: "/ulum-quran", label: "علوم القرآن" },
+          { href: "/tafsir", label: "التفسير" },
         ]}
       />
     </div>

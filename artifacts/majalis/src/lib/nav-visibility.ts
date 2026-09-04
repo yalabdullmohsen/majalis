@@ -42,12 +42,8 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/durus-imaniyya",
   "/durus-mutanawwia",
   "/iman-topics",
-  "/arabic-language",
-  "/maqasid-sharia",
-  "/dalail-nubuwwah",
 
   "/start-here",
-  "/islamic-glossary",
   "/rulings",
   "/fiqh-council",
   "/fiqh-council/issues",
@@ -64,7 +60,6 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/islamic-landmarks",
   "/ulum-quran",
   "/quran/surahs",
-  "/quran/surah-stories",
   "/quran-memorization",
   "/quran/memorization-plans",
   "/quran/tajweed",
@@ -73,8 +68,7 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/hadith/mawdu",
   "/hadith/books",
   "/hadith-science",
-  "/hadith/arbaeen",
-  "/arbaeen-nawawi",
+  "/hadith/arbaeen", // مسار قديم → /arbaeen-nawawi
   "/memorization", // تحت مركز القرآن الكريم
 ]);
 
@@ -108,8 +102,9 @@ export const MERGED_PATH_REDIRECTS: Record<string, string> = {
 
   // اختصارات قديمة → البوابات المدمجة (ليست صفحات المحتوى النهائية)
   "/quran-index": "/quran-knowledge",
-  "/asbab-al-nuzul": "/quran-knowledge",
-  "/quran-stories": "/quran-knowledge",
+  "/asbab-al-nuzul": "/quran/surah-stories",
+  "/quran-stories": "/quran/surah-stories",
+  "/hadith/arbaeen": "/arbaeen-nawawi",
   "/memorization-tests": "/memorization",
   "/memorization-plans": "/memorization",
   "/islamic-institutions": "/islamic-directory",

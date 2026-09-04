@@ -51,7 +51,8 @@ export const IA_FORBIDDEN_PUBLIC_LABELS = [
   "المسارات العلمية",
   "مسارات التعلم",
   "الموضوعات العلمية",
-  "مفاهيم شرعية",
+  "قصص السور", // الاسم القديم → أسباب النزول
+  "مفاهيم شرعية", // الاسم القديم → المعجم الشرعي
 ] as const;
 
 /**
@@ -59,13 +60,11 @@ export const IA_FORBIDDEN_PUBLIC_LABELS = [
  * (تُخفى من القوائم العامة عبر HIDDEN_FROM_NAV).
  */
 export const IA_NESTED_ONLY_PATHS = [
-  "/islamic-glossary",
   "/ulum-quran",
   "/quran-studies",
   "/quran/tajweed",
   "/quran/memorization-plans",
   "/quran/surahs",
-  "/quran/surah-stories",
   "/quran-knowledge",
   "/hadith/sahih",
   "/hadith/daif",
@@ -73,7 +72,6 @@ export const IA_NESTED_ONLY_PATHS = [
   "/hadith/books",
   "/hadith-science",
   "/hadith/arbaeen",
-  "/arbaeen-nawawi",
   "/fiqh-council",
   "/fiqh-council/issues",
   "/fiqh-council/nawazil",
