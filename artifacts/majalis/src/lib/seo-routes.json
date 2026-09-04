@@ -370,10 +370,9 @@
         "الحديث الصحيح",
         "السنة النبوية"
       ],
-      "sitemap": false,
+      "sitemap": true,
       "changefreq": "daily",
-      "priority": 0.75,
-      "robots": "noindex, follow"
+      "priority": 0.75
     },
     {
       "path": "/hadith/daif",
@@ -387,10 +386,9 @@
         "تخريج الحديث",
         "علم الحديث"
       ],
-      "sitemap": false,
+      "sitemap": true,
       "changefreq": "daily",
-      "priority": 0.6,
-      "robots": "noindex, follow"
+      "priority": 0.6
     },
     {
       "path": "/hadith/books",
@@ -405,10 +403,9 @@
         "سنن الترمذي",
         "علم الحديث"
       ],
-      "sitemap": false,
+      "sitemap": true,
       "changefreq": "monthly",
-      "priority": 0.82,
-      "robots": "noindex, follow"
+      "priority": 0.82
     },
     {
       "path": "/hadith/books-and-rulings",
@@ -436,10 +433,9 @@
         "التحذير من الأحاديث الموضوعة",
         "علم الحديث"
       ],
-      "sitemap": false,
+      "sitemap": true,
       "changefreq": "daily",
-      "priority": 0.6,
-      "robots": "noindex, follow"
+      "priority": 0.6
     },
     {
       "path": "/prophets/tree",

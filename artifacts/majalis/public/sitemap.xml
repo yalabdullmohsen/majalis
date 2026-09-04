@@ -66,9 +66,29 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/hadith/sahih</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/hadith/daif</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/hadith/books</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/hadith/books-and-rulings</loc>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/hadith/mawdu</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.ssunnah.com/prophets/tree</loc>
