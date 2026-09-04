@@ -150,6 +150,12 @@ export function isSameKuwaitDay(ms: number, nowMs = Date.now()): boolean {
   return a.year === b.year && a.month === b.month && a.day === b.day;
 }
 
+/** هل الموعد غداً بتوقيت الكويت؟ */
+export function isKuwaitTomorrow(ms: number, nowMs = Date.now()): boolean {
+  const tomorrowProbe = getKuwaitClock(new Date(nowMs)).dayStartMs + 36 * 3_600_000;
+  return isSameKuwaitDay(ms, tomorrowProbe);
+}
+
 /**
  * بداية الأسبوع الكويتي: السبت 00:00 Asia/Kuwait.
  * weekday: 0 أحد … 6 سبت.
@@ -499,11 +505,14 @@ export function formatRelativeTime(targetMs: number, now = Date.now()): string {
   }
   const hours = Math.floor(minutes / 60);
   const remMin = minutes % 60;
-  if (hours < 24) {
-    const hStr = hours === 1 ? "ساعة" : hours === 2 ? "ساعتين" : `${hours} ساعات`;
+  if (hours < 24 || isSameKuwaitDay(targetMs, now)) {
+    const hStr = hours === 1 ? "ساعة" : hours === 2 ? "ساعتين" : `${Math.max(hours, 1)} ساعات`;
     if (remMin === 0) return toArabicIndicDigits(`بعد ${hStr}`);
+    if (hours >= 24) return "اليوم";
     return toArabicIndicDigits(`بعد ${hStr} و${remMin} دقيقة`);
   }
+
+  if (isKuwaitTomorrow(targetMs, now)) return "غداً";
 
   const days = Math.floor(minutes / (24 * 60));
   if (days === 1) return "بعد يوم";

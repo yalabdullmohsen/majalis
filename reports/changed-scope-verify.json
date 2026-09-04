@@ -1,11 +1,15 @@
 {
-  "generatedAt": "2026-09-04T17:09:44.456Z",
+  "generatedAt": "2026-09-04T17:43:07.372Z",
   "paths": [
-    "artifacts/majalis/src/data/content-counts.json",
-    "artifacts/majalis/src/lib/__tests__/miracles-ui-gate.test.ts",
-    "artifacts/majalis/src/lib/miracles-seed.ts",
-    "artifacts/majalis/src/styles/pages/miracles.css",
-    "artifacts/majalis/src/views/MiraclesPage.tsx"
+    "artifacts/majalis/src/components/lessons/LessonFilters.tsx",
+    "artifacts/majalis/src/components/lessons/LessonScheduleGroup.tsx",
+    "artifacts/majalis/src/components/lessons/UnifiedLessonCard.tsx",
+    "artifacts/majalis/src/lib/__tests__/lessons-filter-chips-layout.test.ts",
+    "artifacts/majalis/src/lib/lesson-time.ts",
+    "artifacts/majalis/src/lib/unified-lesson-card.ts",
+    "artifacts/majalis/src/pages/lessons/ui/LessonsView.tsx",
+    "artifacts/majalis/src/styles/pages/lessons-legacy.css",
+    "artifacts/majalis/src/styles/pages/lessons.css"
   ],
   "scopes": [
     "ui/layout"

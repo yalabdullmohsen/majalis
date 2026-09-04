@@ -180,12 +180,12 @@
 }
 
 .lesson-unified-card--today {
-  border-color: var(--msk-gold-border);
-  box-shadow: var(--msk-shadow-sm), var(--msk-shadow-gold);
+  border-color: color-mix(in srgb, var(--majalis-emerald, #1a6b4f) 55%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--majalis-emerald, #1a6b4f) 25%, transparent);
 }
 
 .lesson-unified-card--soon {
-  border-color: rgba(217,174,92,.18);
+  border-color: color-mix(in srgb, var(--majalis-emerald, #1a6b4f) 28%, transparent);
 }
 
 .lesson-unified-card--archived {

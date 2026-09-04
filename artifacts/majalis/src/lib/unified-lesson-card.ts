@@ -8,6 +8,7 @@ import {
   formatHijriDate,
   formatRelativeTime,
   formatShortLessonTime,
+  isSameKuwaitDay,
 } from "./lesson-time";
 import type { ActivityType, KuwaitLessonRecord } from "./kuwait-lessons";
 import {
@@ -279,8 +280,8 @@ export async function shareLessonAtTimestamp(
 export function prominenceClass(sortKey: number, archived?: boolean): string {
   if (archived) return "lesson-unified-card--archived";
   const now = Date.now();
+  if (isSameKuwaitDay(sortKey, now) || sortKey - now <= 0) return "lesson-unified-card--today";
   const diffHours = (sortKey - now) / (60 * 60 * 1000);
-  if (diffHours <= 0) return "lesson-unified-card--today";
   if (diffHours <= 24) return "lesson-unified-card--soon";
   return "";
 }
