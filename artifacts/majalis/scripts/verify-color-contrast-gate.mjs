@@ -171,6 +171,25 @@ const ASSERTIONS = [
   { route: "/quran/people", selector: ".qp-people__intro", mode: "dark", min: 4.5 },
   { route: "/quran-knowledge", selector: ".hub-card__title", mode: "dark", min: 4.5 },
   { route: "/janaza", selector: ".jnz-step__title", mode: "dark", min: 4.5 },
+  // ── إعجاز علمي + فلاتر/شارات الدروس (منع رجوع تباين ضعيف بعد إعادة التصميم) ──
+  { route: "/miracles", selector: ".mk-hub-split__title", mode: "light", min: 4.5 },
+  { route: "/miracles", selector: ".mk-hub-split__title", mode: "dark", min: 4.5 },
+  { route: "/miracles", selector: ".mk-chip", mode: "light", min: 4.5 },
+  { route: "/miracles", selector: ".mk-chip", mode: "dark", min: 4.5 },
+  { route: "/miracles", selector: ".mk-chip.is-active", mode: "light", min: 4.5 },
+  { route: "/miracles", selector: ".mk-chip.is-active", mode: "dark", min: 4.5 },
+  { route: "/miracles", selector: ".mk-card__title", mode: "light", min: 4.5 },
+  { route: "/miracles", selector: ".mk-card__title", mode: "dark", min: 4.5 },
+  { route: "/miracles", selector: ".mk-card__summary", mode: "light", min: 4.5 },
+  { route: "/miracles", selector: ".mk-card__summary", mode: "dark", min: 4.5 },
+  { route: "/miracles", selector: ".mk-pill--topic", mode: "light", min: 4.5 },
+  { route: "/miracles", selector: ".mk-pill--topic", mode: "dark", min: 4.5 },
+  { route: "/lessons", selector: ".filter-chips__chip", mode: "light", min: 4.5 },
+  { route: "/lessons", selector: ".filter-chips__chip", mode: "dark", min: 4.5 },
+  { route: "/lessons", selector: ".filter-chips__chip.is-active", mode: "light", min: 4.5 },
+  { route: "/lessons", selector: ".filter-chips__chip.is-active", mode: "dark", min: 4.5 },
+  { route: "/lessons", selector: ".lesson-unified-card__title", mode: "light", min: 4.5 },
+  { route: "/lessons", selector: ".lesson-unified-card__title", mode: "dark", min: 4.5 },
 ];
 
 function isHeaderAdEnabled() {
@@ -215,25 +234,47 @@ const RATIO_FN = `(selector) => {
     if (!str || str === "transparent") return null;
     // rgb(255, 255, 255) | rgba(255, 255, 255, 0.8) | rgb(255 255 255 / 0.8)
     const m = str.match(/rgba?\\(([^)]+)\\)/);
-    if (!m) return null;
-    const body = m[1].trim();
-    let r, g, b, a = 1;
-    if (body.includes(",")) {
-      const parts = body.split(",").map((s) => parseFloat(s.trim()));
-      r = parts[0]; g = parts[1]; b = parts[2];
-      if (parts.length > 3 && Number.isFinite(parts[3])) a = parts[3];
-    } else {
+    if (m) {
+      const body = m[1].trim();
+      let r, g, b, a = 1;
+      if (body.includes(",")) {
+        const parts = body.split(",").map((s) => parseFloat(s.trim()));
+        r = parts[0]; g = parts[1]; b = parts[2];
+        if (parts.length > 3 && Number.isFinite(parts[3])) a = parts[3];
+      } else {
+        const [rgbPart, alphaPart] = body.split("/").map((s) => s.trim());
+        const parts = rgbPart.split(/\\s+/).map((s) => parseFloat(s));
+        r = parts[0]; g = parts[1]; b = parts[2];
+        if (alphaPart != null) {
+          a = alphaPart.endsWith("%") ? parseFloat(alphaPart) / 100 : parseFloat(alphaPart);
+        } else if (parts.length > 3) {
+          a = parts[3];
+        }
+      }
+      if (![r, g, b].every(Number.isFinite)) return null;
+      return { r, g, b, a: Number.isFinite(a) ? a : 1 };
+    }
+    // Chrome يُرجع color(srgb 0.97 0.95 0.92) لخلفيات color-mix
+    const srgb = str.match(/color\\(\\s*srgb\\s+([^)]+)\\)/i);
+    if (srgb) {
+      const body = srgb[1].trim();
       const [rgbPart, alphaPart] = body.split("/").map((s) => s.trim());
       const parts = rgbPart.split(/\\s+/).map((s) => parseFloat(s));
-      r = parts[0]; g = parts[1]; b = parts[2];
+      if (parts.length < 3 || !parts.slice(0, 3).every(Number.isFinite)) return null;
+      let a = 1;
       if (alphaPart != null) {
         a = alphaPart.endsWith("%") ? parseFloat(alphaPart) / 100 : parseFloat(alphaPart);
       } else if (parts.length > 3) {
         a = parts[3];
       }
+      return {
+        r: parts[0] <= 1 ? parts[0] * 255 : parts[0],
+        g: parts[1] <= 1 ? parts[1] * 255 : parts[1],
+        b: parts[2] <= 1 ? parts[2] * 255 : parts[2],
+        a: Number.isFinite(a) ? a : 1,
+      };
     }
-    if (![r, g, b].every(Number.isFinite)) return null;
-    return { r, g, b, a: Number.isFinite(a) ? a : 1 };
+    return null;
   }
   function relLum({ r, g, b }) {
     const f = (c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
@@ -513,21 +554,39 @@ async function main() {
           function parseColor(str) {
             if (!str || str === "transparent") return null;
             const m = str.match(/rgba?\(([^)]+)\)/);
-            if (!m) return null;
-            const body = m[1].trim();
-            let r, g, b, a = 1;
-            if (body.includes(",")) {
-              const parts = body.split(",").map((s) => parseFloat(s.trim()));
-              r = parts[0]; g = parts[1]; b = parts[2];
-              if (parts.length > 3 && Number.isFinite(parts[3])) a = parts[3];
-            } else {
+            if (m) {
+              const body = m[1].trim();
+              let r, g, b, a = 1;
+              if (body.includes(",")) {
+                const parts = body.split(",").map((s) => parseFloat(s.trim()));
+                r = parts[0]; g = parts[1]; b = parts[2];
+                if (parts.length > 3 && Number.isFinite(parts[3])) a = parts[3];
+              } else {
+                const [rgbPart, alphaPart] = body.split("/").map((s) => s.trim());
+                const parts = rgbPart.split(/\s+/).map((s) => parseFloat(s));
+                r = parts[0]; g = parts[1]; b = parts[2];
+                if (alphaPart != null) a = alphaPart.endsWith("%") ? parseFloat(alphaPart) / 100 : parseFloat(alphaPart);
+              }
+              if (![r, g, b].every(Number.isFinite)) return null;
+              return { r, g, b, a: Number.isFinite(a) ? a : 1 };
+            }
+            const srgb = str.match(/color\(\s*srgb\s+([^)]+)\)/i);
+            if (srgb) {
+              const body = srgb[1].trim();
               const [rgbPart, alphaPart] = body.split("/").map((s) => s.trim());
               const parts = rgbPart.split(/\s+/).map((s) => parseFloat(s));
-              r = parts[0]; g = parts[1]; b = parts[2];
+              if (parts.length < 3 || !parts.slice(0, 3).every(Number.isFinite)) return null;
+              let a = 1;
               if (alphaPart != null) a = alphaPart.endsWith("%") ? parseFloat(alphaPart) / 100 : parseFloat(alphaPart);
+              else if (parts.length > 3) a = parts[3];
+              return {
+                r: parts[0] <= 1 ? parts[0] * 255 : parts[0],
+                g: parts[1] <= 1 ? parts[1] * 255 : parts[1],
+                b: parts[2] <= 1 ? parts[2] * 255 : parts[2],
+                a: Number.isFinite(a) ? a : 1,
+              };
             }
-            if (![r, g, b].every(Number.isFinite)) return null;
-            return { r, g, b, a: Number.isFinite(a) ? a : 1 };
+            return null;
           }
           function relLum({ r, g, b }) {
             const f = (c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };

@@ -135,6 +135,24 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
     tickerSrc.includes("onPointerDown") || tickerSrc.includes("onTouchStart"),
     "إيقاف مؤقت أثناء اللمس فقط",
   );
+  assert(
+    tickerSrc.includes("onAnimationEnd") && tickerSrc.includes("header-ticker-marquee"),
+    "التبديل للنص التالي فقط بعد animationend لاسم الماركي",
+  );
+  assert(/to\s*=\s*-itemW/.test(tickerSrc), "نهاية الحركة خارج العرض بالكامل (-itemW) — لا قطع منتصف النص");
+  assert(/from\s*=\s*vpW/.test(tickerSrc), "بداية الحركة من خارج يمين الشاشة");
+  assert(
+    !/\bsetInterval\s*\(/.test(tickerSrc),
+    "بلا setInterval لتبديل النص أثناء الحركة",
+  );
+  assert(
+    tickerSrc.includes("displayText") && !/displayText\.slice\(/.test(tickerSrc),
+    "يعرض displayText كاملًا بلا قصّ slice في المكوّن",
+  );
+  assert(
+    tickerSrc.includes("--ticker-from") && tickerSrc.includes("--ticker-to"),
+    "مسار الحركة عبر متغيّرات CSS من القياس الحقيقي",
+  );
 
   const chipSrc = readFileSync(
     resolve(appRoot, "src/components/prayer/PrayerCountdownChip.tsx"),

@@ -1226,6 +1226,24 @@ html.dark .lesson-filters__search-field input {
   color: #fff !important;
 }
 
+html.dark .lessons-page-v3 .lesson-filters__chips .filter-chips__chip,
+html.dark .lessons-page-v3 .filter-chips__chip,
+[data-theme="dark"] .lessons-page-v3 .lesson-filters__chips .filter-chips__chip,
+[data-theme="dark"] .lessons-page-v3 .filter-chips__chip {
+  background: color-mix(in srgb, #5a9e88 16%, #15201c);
+  border-color: color-mix(in srgb, #5a9e88 30%, #2a3832);
+  color: #d8ebe2;
+}
+
+html.dark .lessons-page-v3 .lesson-filters__chips .filter-chips__chip.is-active,
+html.dark .lessons-page-v3 .filter-chips__chip.is-active,
+[data-theme="dark"] .lessons-page-v3 .lesson-filters__chips .filter-chips__chip.is-active,
+[data-theme="dark"] .lessons-page-v3 .filter-chips__chip.is-active {
+  background: #2f6b57 !important;
+  border-color: #3d8a70 !important;
+  color: #f2faf6 !important;
+}
+
 .lessons-page-v3 .lessons-v2-section {
   margin-bottom: 1rem;
 }
@@ -1337,6 +1355,12 @@ html.dark .lesson-filters__search-field input {
   font-size: 1rem;
   line-height: 1.4;
   margin: 0;
+  color: #124a38;
+}
+html.dark .section-lobby.lessons-page-v3 .lesson-unified-card__title,
+html[data-theme="dark"] .section-lobby.lessons-page-v3 .lesson-unified-card__title,
+.dark .section-lobby.lessons-page-v3 .lesson-unified-card__title {
+  color: #d8ebe2;
 }
 .section-lobby.lessons-page-v3 .lesson-unified-card--compact .lesson-unified-card__facts {
   gap: 0.25rem;

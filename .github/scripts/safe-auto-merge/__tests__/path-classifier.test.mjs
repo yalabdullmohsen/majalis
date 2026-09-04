@@ -19,10 +19,16 @@ describe("path-classifier", () => {
     assert.equal(r.needPostgres, false);
     assert.equal(r.needFastLane, true);
     assert.equal(r.needPolicyTests, false);
+    assert.equal(r.needVisual, false);
+    assert.equal(r.needColorContrast, false);
     assert.equal(r.requiredChecks.build, false);
     assert.equal(r.requiredChecks.mushafGates, false);
     assert.equal(r.requiredChecks.postgres, false);
+    assert.equal(r.requiredChecks.colorContrast, false);
+    assert.equal(r.requiredChecks.visualSnapshot, false);
     assert.equal(r.manualReview, false);
+    assert.equal(isCheckSatisfied("colorContrast", "skip", r), true);
+    assert.equal(isCheckSatisfied("visualSnapshot", "skip", r), true);
   });
 
   it("policy-only stays on fast lane with policy tests", () => {
@@ -50,7 +56,20 @@ describe("path-classifier", () => {
     assert.equal(quiz.needVisual, false);
     assert.equal(quiz.needColorContrast, false);
     assert.equal(quiz.requiredChecks.visualSnapshot, false);
+    assert.equal(quiz.requiredChecks.colorContrast, false);
     assert.equal(quiz.outputs.need_visual, "false");
+    assert.equal(quiz.outputs.need_color_contrast, "false");
+    assert.equal(isCheckSatisfied("colorContrast", "skip", quiz), true);
+    assert.equal(isCheckSatisfied("colorContrast", "pass", quiz), true);
+  });
+
+  it("color contrast never required without needBuild", () => {
+    const policy = classifyChangedPaths([
+      ".github/scripts/safe-auto-merge/path-classifier.mjs",
+    ]);
+    assert.equal(policy.needBuild, false);
+    assert.equal(policy.needColorContrast, false);
+    assert.equal(isCheckSatisfied("colorContrast", "skip", policy), true);
   });
 
   it("harvest scripts/data are content-only (no visual)", () => {

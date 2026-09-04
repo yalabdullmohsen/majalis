@@ -448,34 +448,54 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh run cancel "${{ github.run_id }}" || true
 
-  # لقطات بصرية — واجهة/مصحف/risky فقط (محتوى/حصاد يتخطّى دون إسقاط ci-required)
+  # لقطات بصرية — واجهة/مصحف/risky فقط.
+  # Path-lane: الوظيفة تعمل دائمًا بعد classify وتنجح حياديًا إن لم تُطلب
+  # (تجنب skipped=fail عند حماية الفرع / Verify build / ci-required).
   visual-snapshot:
     name: visual-snapshot
     needs: [classify, build]
-    if: |
-      always() &&
-      !cancelled() &&
-      needs.classify.result == 'success' &&
-      needs.build.result == 'success' &&
-      needs.classify.outputs.need_visual == 'true'
+    if: always() && !cancelled() && needs.classify.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - name: Path-lane gate
+        id: lane
+        env:
+          NEED: ${{ needs.classify.outputs.need_visual }}
+          BUILD: ${{ needs.build.result }}
+        run: |
+          set -euo pipefail
+          if [ "$NEED" != "true" ]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Path-lane: visual-snapshot not required — neutral success"
+            exit 0
+          fi
+          if [ "$BUILD" != "success" ]; then
+            echo "visual-snapshot required but build=$BUILD"
+            exit 1
+          fi
+          echo "run=true" >> "$GITHUB_OUTPUT"
+
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        if: steps.lane.outputs.run == 'true'
       - uses: ./.github/actions/setup-workspace
+        if: steps.lane.outputs.run == 'true'
         with:
           playwright: "true"
 
       - name: Download majalis dist (بلا إعادة بناء)
+        if: steps.lane.outputs.run == 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: majalis-dist
           path: artifacts/majalis/dist
 
       - name: UI layout gates (calendar + lessons above-fold)
+        if: steps.lane.outputs.run == 'true'
         run: pnpm --filter @workspace/majalis run test:ui-layout-gates
 
       - name: Start preview
+        if: steps.lane.outputs.run == 'true'
         working-directory: artifacts/majalis
         run: |
           set -euo pipefail
@@ -492,46 +512,64 @@ jobs:
 
       - name: Visual snapshot gates (عيّنة قابلة لإعادة الإنتاج)
         id: snapshot
+        if: steps.lane.outputs.run == 'true'
         env:
           MUSHAF_GATE_BASE_URL: http://127.0.0.1:24216
         run: pnpm --filter @workspace/majalis run test:visual
 
-      - name: visual-snapshot must not skip
-        if: always() && !cancelled()
+      - name: visual-snapshot must not skip when required
+        if: always() && !cancelled() && steps.lane.outputs.run == 'true'
         env:
           SNAPSHOT_OUTCOME: ${{ steps.snapshot.outcome }}
         run: |
           set -euo pipefail
           if [ "$SNAPSHOT_OUTCOME" != "success" ]; then
-            echo "visual-snapshot outcome=$SNAPSHOT_OUTCOME (Skipped/failure = fail)"
+            echo "visual-snapshot outcome=$SNAPSHOT_OUTCOME (failure = fail)"
             exit 1
           fi
 
       - name: Stop preview
-        if: always()
+        if: always() && steps.lane.outputs.run == 'true'
         run: kill "$(cat /tmp/mushaf-vite.pid)" 2>/dev/null || true
 
   # ---------------------------------------------------------------------------
   # ٧) تباين الألوان — ينزّل dist ولا يبني (كان يعيد البناء كاملًا)
+  # Path-lane: نجاح حيادي عندما need_color=false (لا skipped على البوابة المطلوبة).
   # ---------------------------------------------------------------------------
   color-contrast:
     name: Color contrast (Playwright)
     needs: [classify, build]
-    if: |
-      always() &&
-      !cancelled() &&
-      needs.classify.result == 'success' &&
-      needs.build.result == 'success' &&
-      needs.classify.outputs.need_color_contrast == 'true'
+    if: always() && !cancelled() && needs.classify.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
+      - name: Path-lane gate
+        id: lane
+        env:
+          NEED: ${{ needs.classify.outputs.need_color_contrast }}
+          BUILD: ${{ needs.build.result }}
+        run: |
+          set -euo pipefail
+          if [ "$NEED" != "true" ]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Path-lane: color contrast not required — neutral success"
+            exit 0
+          fi
+          if [ "$BUILD" != "success" ]; then
+            echo "Color contrast required but build=$BUILD"
+            exit 1
+          fi
+          echo "run=true" >> "$GITHUB_OUTPUT"
+
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        if: steps.lane.outputs.run == 'true'
       - uses: ./.github/actions/setup-workspace
+        if: steps.lane.outputs.run == 'true'
         with:
           playwright: "true"
 
       - name: Download majalis dist (بلا إعادة بناء)
+        if: steps.lane.outputs.run == 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: majalis-dist
@@ -539,55 +577,73 @@ jobs:
 
       - name: Color contrast gate
         id: contrast
+        if: steps.lane.outputs.run == 'true'
         run: pnpm --filter @workspace/majalis run test:color-contrast-gate
 
       - name: On-brand contrast gate (لا أسود على الأخضر)
         id: onbrand
-        if: always() && !cancelled()
+        if: always() && !cancelled() && steps.lane.outputs.run == 'true'
         run: pnpm --filter @workspace/majalis run test:on-brand-contrast
 
-      - name: Contrast gates must not skip
-        if: always() && !cancelled()
+      - name: Contrast gates must not skip when required
+        if: always() && !cancelled() && steps.lane.outputs.run == 'true'
         env:
           CONTRAST_OUTCOME: ${{ steps.contrast.outcome }}
           ONBRAND_OUTCOME: ${{ steps.onbrand.outcome }}
         run: |
           set -euo pipefail
           if [ "$CONTRAST_OUTCOME" != "success" ]; then
-            echo "Color contrast gate outcome=$CONTRAST_OUTCOME (Skipped/failure = fail)"
+            echo "Color contrast gate outcome=$CONTRAST_OUTCOME (failure = fail)"
             exit 1
           fi
           if [ "$ONBRAND_OUTCOME" != "success" ]; then
-            echo "On-brand contrast gate outcome=$ONBRAND_OUTCOME (Skipped/failure = fail)"
+            echo "On-brand contrast gate outcome=$ONBRAND_OUTCOME (failure = fail)"
             exit 1
           fi
 
   # بوابة انحدار Lighthouse على بناء الإنتاج (dist) — عتبات واقعية لا حلم 100.
-  # إلزامية مع كل بناء: Verify build وci-required ينتظرانها.
+  # Path-lane: حيادي عند need_visual=false؛ إلزامي مع نجاح البناء عند الحاجة.
   lhci-home:
     name: LHCI home (mobile)
     needs: [classify, build]
-    if: |
-      always() &&
-      !cancelled() &&
-      needs.classify.result == 'success' &&
-      needs.build.result == 'success' &&
-      needs.classify.outputs.need_visual == 'true'
+    if: always() && !cancelled() && needs.classify.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
+      - name: Path-lane gate
+        id: lane
+        env:
+          NEED: ${{ needs.classify.outputs.need_visual }}
+          BUILD: ${{ needs.build.result }}
+        run: |
+          set -euo pipefail
+          if [ "$NEED" != "true" ]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Path-lane: LHCI home not required — neutral success"
+            exit 0
+          fi
+          if [ "$BUILD" != "success" ]; then
+            echo "LHCI required but build=$BUILD"
+            exit 1
+          fi
+          echo "run=true" >> "$GITHUB_OUTPUT"
+
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        if: steps.lane.outputs.run == 'true'
       - uses: ./.github/actions/setup-workspace
+        if: steps.lane.outputs.run == 'true'
         with:
           playwright: "true"
 
       - name: Download majalis dist (بلا إعادة بناء)
+        if: steps.lane.outputs.run == 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: majalis-dist
           path: artifacts/majalis/dist
 
       - name: Start preview
+        if: steps.lane.outputs.run == 'true'
         working-directory: artifacts/majalis
         run: |
           set -euo pipefail
@@ -604,6 +660,7 @@ jobs:
 
       - name: LHCI home mobile (3 runs, regression thresholds)
         id: lhci
+        if: steps.lane.outputs.run == 'true'
         working-directory: artifacts/majalis
         env:
           LHCI_URL: http://127.0.0.1:24216/
@@ -615,7 +672,7 @@ jobs:
           pnpm run lighthouse:ci
 
       - name: Upload LHCI reports
-        if: always()
+        if: always() && steps.lane.outputs.run == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: lhci-home-reports
@@ -623,19 +680,19 @@ jobs:
           retention-days: 14
           if-no-files-found: warn
 
-      - name: LHCI must not skip
-        if: always() && !cancelled()
+      - name: LHCI must not skip when required
+        if: always() && !cancelled() && steps.lane.outputs.run == 'true'
         env:
           LHCI_OUTCOME: ${{ steps.lhci.outcome }}
         run: |
           set -euo pipefail
           if [ "$LHCI_OUTCOME" != "success" ]; then
-            echo "LHCI home outcome=$LHCI_OUTCOME (Skipped/failure = fail)"
+            echo "LHCI home outcome=$LHCI_OUTCOME (failure = fail)"
             exit 1
           fi
 
       - name: Stop preview
-        if: always()
+        if: always() && steps.lane.outputs.run == 'true'
         run: kill "$(cat /tmp/lhci-vite.pid)" 2>/dev/null || true
 
   postgres-integration:
@@ -763,10 +820,22 @@ jobs:
                 echo "optional job '$name' failed unexpectedly: $result"
                 exit 1
               fi
-              # skipped / cancelled / success مسموح عندما need=false
-              echo "OK optional $name=$result (skipped/cancelled allowed when not required)"
+              # skipped / cancelled / success مسموح عندما need=false (path-lane حيادي)
+              echo "OK optional $name=$result (path-lane skip/neutral allowed when not required)"
             fi
           }
+
+          # دفاع: لا تُلزم تباين/لقطات بلا مسار بناء — يحوّل التناقض إلى حيادي لا فشل زائف
+          EFFECTIVE_NEED_COLOR="$NEED_COLOR"
+          EFFECTIVE_NEED_VISUAL="$NEED_VISUAL"
+          if [ "$NEED_COLOR" = "true" ] && [ "$NEED_BUILD" != "true" ]; then
+            echo "WARN: need_color without need_build — treating color as optional (path-lane consistency)"
+            EFFECTIVE_NEED_COLOR="false"
+          fi
+          if [ "$NEED_VISUAL" = "true" ] && [ "$NEED_BUILD" != "true" ]; then
+            echo "WARN: need_visual without need_build — treating visual/lhci as optional"
+            EFFECTIVE_NEED_VISUAL="false"
+          fi
 
           check_req "fast-lane" "$NEED_FAST" "$FAST_RESULT"
           check_req "static-checks" "$NEED_BUILD" "$STATIC_RESULT"
@@ -775,15 +844,16 @@ jobs:
           check_req "mushaf-measure" "$NEED_MUSHAF" "$MEASURE_RESULT"
           check_req "mushaf-gates" "$NEED_MUSHAF" "$GATES_RESULT"
           check_req "layout-bands" "$NEED_MUSHAF" "$BANDS_RESULT"
-          check_req "visual-snapshot" "$NEED_VISUAL" "$VISUAL_RESULT"
-          check_req "color-contrast" "$NEED_COLOR" "$COLOR_RESULT"
-          check_req "lhci-home" "$NEED_VISUAL" "$LHCI_RESULT"
+          check_req "visual-snapshot" "$EFFECTIVE_NEED_VISUAL" "$VISUAL_RESULT"
+          check_req "color-contrast" "$EFFECTIVE_NEED_COLOR" "$COLOR_RESULT"
+          check_req "lhci-home" "$EFFECTIVE_NEED_VISUAL" "$LHCI_RESULT"
 
           echo "Verify build OK (lane=$LANE)"
 
   # ---------------------------------------------------------------------------
-  # ٩) المجمّع المطلوب لحماية الفرع — Skipped في بوابة إلزامية = فشل.
-  #    يبقى «Verify build» للتوافق؛ ci-required هو الفحص الإضافي الصريح.
+  # ٩) المجمّع المطلوب لحماية الفرع.
+  #    Path-lane: الوظائف الاختيارية تنجح حياديًا (لا skipped) أو تُقبل skipped
+  #    عندما need=false. المطلوب فعليًا يجب أن يكون success.
   # ---------------------------------------------------------------------------
   ci-required:
     name: ci-required
@@ -797,7 +867,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      - name: Required gates — Skipped is failure
+      - name: Required gates — path-lane aware
         env:
           NEED_BUILD: ${{ needs.classify.outputs.need_build }}
           NEED_VISUAL: ${{ needs.classify.outputs.need_visual }}
@@ -836,17 +906,26 @@ jobs:
                 echo "OK required $name=$result"
                 return 0
               fi
-              echo "required job '$name' not success: $result (Skipped = fail)"
+              echo "required job '$name' not success: $result"
               exit 1
             fi
             if [ "$result" = "failure" ]; then
               echo "optional job '$name' failed unexpectedly: $result"
               exit 1
             fi
-            echo "OK optional $name=$result"
+            echo "OK optional $name=$result (path-lane skip/neutral OK)"
           }
 
-          check_req "color-contrast" "$NEED_COLOR" "$COLOR_RESULT"
-          check_req "visual-snapshot" "$NEED_VISUAL" "$VISUAL_RESULT"
-          check_req "lhci-home" "$NEED_VISUAL" "$LHCI_RESULT"
+          EFFECTIVE_NEED_COLOR="$NEED_COLOR"
+          EFFECTIVE_NEED_VISUAL="$NEED_VISUAL"
+          if [ "$NEED_COLOR" = "true" ] && [ "$NEED_BUILD" != "true" ]; then
+            EFFECTIVE_NEED_COLOR="false"
+          fi
+          if [ "$NEED_VISUAL" = "true" ] && [ "$NEED_BUILD" != "true" ]; then
+            EFFECTIVE_NEED_VISUAL="false"
+          fi
+
+          check_req "color-contrast" "$EFFECTIVE_NEED_COLOR" "$COLOR_RESULT"
+          check_req "visual-snapshot" "$EFFECTIVE_NEED_VISUAL" "$VISUAL_RESULT"
+          check_req "lhci-home" "$EFFECTIVE_NEED_VISUAL" "$LHCI_RESULT"
           echo "ci-required OK"

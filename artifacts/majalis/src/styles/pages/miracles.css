@@ -68,20 +68,22 @@
   padding: 0.95rem 0.9rem;
   border-radius: 20px;
   border: 1px solid var(--mk-line);
-  background: linear-gradient(
+  background-color: #f3eee4;
+  background-image: linear-gradient(
     160deg,
     color-mix(in srgb, var(--mk-green) 8%, var(--mk-ivory)) 0%,
     var(--mk-surface) 72%
   );
   box-shadow: 0 10px 22px -18px color-mix(in srgb, var(--mk-green-deep) 45%, transparent);
-  color: var(--mj-ink, #16241e);
+  color: #16241e;
   cursor: pointer;
   font: inherit;
 }
 
 .mk-hub-split__card.is-active {
   border-color: color-mix(in srgb, var(--mk-green) 42%, transparent);
-  background: linear-gradient(
+  background-color: #e8f0eb;
+  background-image: linear-gradient(
     160deg,
     color-mix(in srgb, var(--mk-green) 16%, var(--mk-ivory)) 0%,
     color-mix(in srgb, var(--mk-green) 5%, #fff) 100%
@@ -205,7 +207,9 @@
   padding: 1rem 1.05rem 0.9rem;
   border-radius: 22px;
   border: 1px solid var(--mk-line);
-  background:
+  /* خلفية صلبة hex (قياس تباين) — color-mix وحده قد يُحسب color(srgb) */
+  background-color: #f7f3ea;
+  background-image:
     linear-gradient(
       165deg,
       color-mix(in srgb, var(--mk-ivory) 92%, #fff) 0%,
@@ -219,7 +223,8 @@
 }
 
 .mk-card--sunnah {
-  background:
+  background-color: color-mix(in srgb, var(--mk-ivory) 90%, #fff);
+  background-image:
     linear-gradient(
       165deg,
       color-mix(in srgb, var(--mk-ivory) 90%, #fff) 0%,
@@ -266,8 +271,9 @@
 }
 
 .mk-pill--topic {
-  background: color-mix(in srgb, var(--mk-green) 10%, transparent);
-  color: var(--mk-green-deep);
+  background-color: #e4eee9;
+  background: #e4eee9;
+  color: #12382e;
   border-color: color-mix(in srgb, var(--mk-green) 18%, transparent);
 }
 
@@ -548,13 +554,15 @@ html.dark .mk-page--embedded,
 
 html.dark .mk-card,
 [data-theme="dark"] .mk-card {
-  background: linear-gradient(165deg, #17241f 0%, #12201b 100%);
+  background-color: #17241f;
+  background-image: linear-gradient(165deg, #17241f 0%, #12201b 100%);
   box-shadow: 0 12px 28px -20px rgba(0, 0, 0, 0.55);
 }
 
 html.dark .mk-card--sunnah,
 [data-theme="dark"] .mk-card--sunnah {
-  background: linear-gradient(165deg, #1c241c 0%, #182018 100%);
+  background-color: #1c241c;
+  background-image: linear-gradient(165deg, #1c241c 0%, #182018 100%);
 }
 
 html.dark .mk-card__title,
@@ -618,8 +626,9 @@ html.dark .miracle-detail__label,
 
 html.dark .mk-hub-split__card,
 [data-theme="dark"] .mk-hub-split__card {
-  background: linear-gradient(160deg, color-mix(in srgb, #2f6b57 22%, #0c1c16) 0%, #0c1c16 75%);
-  color: var(--mj-ink, #eef5f1);
+  background-color: #0c1c16;
+  background-image: linear-gradient(160deg, color-mix(in srgb, #2f6b57 22%, #0c1c16) 0%, #0c1c16 75%);
+  color: #eef5f1;
 }
 
 html.dark .mk-hub-split__desc,
@@ -645,6 +654,40 @@ html.dark .mk-related__link,
 [data-theme="dark"] .mk-related__link {
   background: #15201c;
   border-color: color-mix(in srgb, #5a9e88 22%, #2a3832);
+}
+
+html.dark .mk-pill--topic,
+[data-theme="dark"] .mk-pill--topic {
+  background-color: #243830;
+  background: #243830;
+  color: #d8ebe2;
+  border-color: color-mix(in srgb, #5a9e88 32%, transparent);
+}
+
+html.dark .mk-pill--src,
+[data-theme="dark"] .mk-pill--src {
+  background: color-mix(in srgb, #c4a574 22%, transparent);
+  color: #f0e2c4;
+  border-color: color-mix(in srgb, #c4a574 40%, transparent);
+}
+
+html.dark .mk-pill--method,
+[data-theme="dark"] .mk-pill--method {
+  background: color-mix(in srgb, #5a9e88 12%, #1a2620);
+  color: #cfe0d8;
+  border-color: color-mix(in srgb, #5a9e88 28%, #2a3832);
+}
+
+html.dark .mk-pill--caution,
+[data-theme="dark"] .mk-pill--caution {
+  background: color-mix(in srgb, #5a9e88 14%, #1a2620);
+  color: #d8ebe2;
+}
+
+html.dark .mk-pill--signal,
+[data-theme="dark"] .mk-pill--signal {
+  background: color-mix(in srgb, #c4a574 16%, #1a2018);
+  color: #f0e2c4;
 }
 
 html.dark .mk-related__title,
