@@ -103,7 +103,7 @@ const ASSERTIONS = [
   { route: "/lessons", selector: ".section-lobby__title", mode: "light", min: 3 },
   { route: "/lessons", selector: ".section-lobby__title", mode: "dark", min: 3 },
   { route: "/lessons", selector: ".lesson-unified-card__title", mode: "dark", min: 3 },
-  { route: "/lessons", selector: ".lesson-unified-card__btn--ghost", mode: "dark", min: 4.5 },
+  { route: "/lessons", selector: ".lesson-unified-card__btn--secondary", mode: "dark", min: 4.5 },
   { route: "/quran-hub/numbers", selector: ".quran-hub-page__title", mode: "light", min: 3 },
   { route: "/quran-hub/numbers", selector: ".quran-hub-page__title", mode: "dark", min: 3 },
   { route: "/quran-hub/numbers", selector: ".quran-stat-card__label", mode: "light", min: 4.5 },

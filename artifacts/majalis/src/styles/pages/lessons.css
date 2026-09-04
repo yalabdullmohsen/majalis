@@ -891,6 +891,30 @@ html[data-theme="dark"] .lesson-detail-page .lesson-unified-card__facts {
   border-color: color-mix(in srgb, #5a9e88 20%, #2a3832);
 }
 
+
+html.dark .lessons-page-v2 .lesson-unified-card__title,
+html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__title,
+html.dark .section-lobby.lessons-page-v3 .lesson-unified-card__title,
+html[data-theme="dark"] .section-lobby.lessons-page-v3 .lesson-unified-card__title,
+html.dark .lesson-detail-page .lesson-unified-card__title,
+html[data-theme="dark"] .lesson-detail-page .lesson-unified-card__title {
+  color: #e8f2ed !important;
+}
+
+html.dark .lessons-page-v2 .lesson-unified-card__btn--secondary,
+html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__btn--secondary,
+html.dark .lessons-page-v2 .lesson-unified-card__actions--compact .favorite-btn,
+html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__actions--compact .favorite-btn {
+  background: color-mix(in srgb, #5a9e88 16%, #15201c) !important;
+  color: #e8f2ed !important;
+  border-color: color-mix(in srgb, #5a9e88 35%, #2a3832) !important;
+}
+
+html.dark .lessons-page-v2 .lesson-unified-card__sheikh,
+html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__sheikh {
+  color: #b7d4c6 !important;
+}
+
 html.dark .lesson-detail-page .lesson-detail-actions-panel,
 html[data-theme="dark"] .lesson-detail-page .lesson-detail-actions-panel {
   background: var(--surface-2, #222d29);
