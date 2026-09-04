@@ -196,7 +196,7 @@ export const SECTION_MERGE_REDIRECTS: ReadonlyArray<{ from: string; to: string; 
   { from: "/about-us", to: "/about", note: "من نحن → عن سُنّة" },
   { from: "/aqidah", to: "/tawhid", note: "عقيدة قديم → التوحيد/العقيدة" },
   { from: "/prayer", to: "/prayer-times", note: "صلاة مختصر → مواقيت الصلاة" },
-  { from: "/more", to: "/#explore", note: "المزيد (ملغاة) → الرئيسية /#explore" },
+  { from: "/more", to: "/", note: "المزيد (ملغاة) → الرئيسية" },
 ];
 
 const NAV: Surface[] = ["moreHub", "home", "search"];
@@ -814,15 +814,15 @@ const SECTION_SEEDS: SectionSeed[] = [
   // —— ٤. المكتبة والفهارس ——
   {
     id: "library",
-    label: "المكتبة",
-    subtitle: "كتب ومراجع علمية",
-    route: "/library",
+    label: "المراجع (محوّل)",
+    subtitle: "محوّل إلى البحث",
+    route: "/search",
     icon: Library,
     group: "library",
     order: 10,
     surfaces: [],
     status: "hidden",
-    keywords: ["كتب", "مراجع"],
+    keywords: [],
   },
   {
     id: "research",

@@ -1654,7 +1654,7 @@ html.dark .fiqh-filters__chip.is-active {
     0 1px 2px color-mix(in srgb, #0f172a 5%, transparent),
     0 4px 10px color-mix(in srgb, #0f172a 3%, transparent);
   min-height: 0;
-  max-height: 7.5rem;
+  max-height: 6.5rem;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
@@ -2097,7 +2097,7 @@ html.dark .fiqh-hub-search--compact .fiqh-hub-search__field input {
 .fiqh-lux-shell .fiqh-category-card,
 .fiqh-lux-page .fiqh-category-card {
   border-radius: 12px;
-  max-height: 7.5rem;
+  max-height: 6.5rem;
   padding: 0.5rem 0.55rem 0.45rem;
 }
 .fiqh-lux-shell .fiqh-category-card__title {

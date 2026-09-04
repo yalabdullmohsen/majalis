@@ -660,7 +660,7 @@ export default function AppRoutes() {
       <Route path="/updates/auto/:slug"><SafeLazyRoute component={AutoContentDetailPage} /></Route>
       <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
       <Route path="/sections"><SafeLazyRoute component={SectionsPage} /></Route>
-      <Route path="/more"><Redirect to="/#explore" /></Route>
+      <Route path="/more"><Redirect to="/" /></Route>
       <Route path="/whats-new"><Redirect to="/" /></Route>
       <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
       <Route path="/register"><SafeLazyRoute component={RegisterPage} /></Route>

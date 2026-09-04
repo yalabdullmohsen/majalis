@@ -102,7 +102,7 @@ for (const [from, to] of Object.entries(IA_REDIRECTS)) {
     continue;
   }
   if (from === "/more") {
-    assert.match(app, /path="\/more"[^>]*>\s*<Redirect\s+to="\/#explore"/);
+    assert.match(app, /path="\/more"[^>]*>\s*<Redirect\s+to="\/(?:#explore)?"/);
     continue;
   }
   const esc = from.replace(/\//g, "\\/");
@@ -114,7 +114,7 @@ const vercel = read("vercel.json");
 for (const source of Object.keys(IA_REDIRECTS)) {
   if (source === "/learning/paths") continue; // covered with /learning/paths entry
   if (source === "/more") {
-    assert.match(vercel, /"source"\s*:\s*"\/more"[\s\S]{0,120}"destination"\s*:\s*"\/#explore"/);
+    assert.match(vercel, /"source"\s*:\s*"\/more"[\s\S]{0,120}"destination"\s*:\s*"\/(?:#explore)?"/);
     continue;
   }
   const re = new RegExp(

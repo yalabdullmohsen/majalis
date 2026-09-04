@@ -420,7 +420,7 @@ const PATHS = [
   "/tracks"
 ] as const;
 
-const NAV_PATHS = new Set(["/","/quran-knowledge","/lessons","/hadith","/library","/adhkar","/prayer-times","/search"]);
+const NAV_PATHS = new Set(["/","/quran-hub","/lessons","/hadith","/adhkar","/prayer-times","/search"]);
 
 function inferSection(path: string): AppRouteSection {
   if (path === "/") return "other";

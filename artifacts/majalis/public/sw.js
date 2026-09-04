@@ -44,7 +44,6 @@ const CACHEABLE_API_PATHS = [
   "/api/prayer",
   "/api/adhkar",
   "/api/quiz",
-  "/api/library",
 ];
 
 const STATIC_SHELL_ASSETS = [
