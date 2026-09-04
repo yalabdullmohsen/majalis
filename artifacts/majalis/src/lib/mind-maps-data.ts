@@ -32,12 +32,12 @@ export const MIND_MAPS: MindMap[] = [
           label: "التوحيد",
           href: "/tawhid",
           children: [
-            { id: "tw-0", label: "أصول العقيدة", href: "/learn/aqeedah-intro" },
-            { id: "tw-1", label: "توحيد الربوبية", href: "/learn/aqsam-tawheed" },
-            { id: "tw-2", label: "توحيد الألوهية", href: "/learn/aqsam-tawheed" },
+            { id: "tw-0", label: "أصول العقيدة", href: "/tawhid" },
+            { id: "tw-1", label: "توحيد الربوبية", href: "/tawhid" },
+            { id: "tw-2", label: "توحيد الألوهية", href: "/tawhid" },
             { id: "tw-3", label: "توحيد الأسماء والصفات", href: "/asma-husna" },
-            { id: "tw-4", label: "الشرك وأنواعه", href: "/learn/shirk-anwauh" },
-            { id: "tw-5", label: "الولاء والبراء", href: "/learn/wala-bara" },
+            { id: "tw-4", label: "الشرك وأنواعه", href: "/tawhid" },
+            { id: "tw-5", label: "الولاء والبراء", href: "/tawhid" },
           ],
         },
         {
@@ -45,12 +45,12 @@ export const MIND_MAPS: MindMap[] = [
           label: "أركان الإيمان الستة",
           href: "/arkan-iman",
           children: [
-            { id: "ai-1", label: "الإيمان بالله", href: "/learn/iman-billah" },
+            { id: "ai-1", label: "الإيمان بالله", href: "/tawhid" },
             { id: "ai-2", label: "الإيمان بالملائكة", href: "/malaika" },
-            { id: "ai-3", label: "الإيمان بالكتب", href: "/learn/iman-kutub" },
-            { id: "ai-4", label: "الإيمان بالرسل", href: "/learn/iman-rusul" },
+            { id: "ai-3", label: "الإيمان بالكتب", href: "/tawhid" },
+            { id: "ai-4", label: "الإيمان بالرسل", href: "/tawhid" },
             { id: "ai-5", label: "الإيمان باليوم الآخر", href: "/janna-naar" },
-            { id: "ai-6", label: "الإيمان بالقدر", href: "/learn/iman-qadar" },
+            { id: "ai-6", label: "الإيمان بالقدر", href: "/tawhid" },
           ],
         },
         {
@@ -76,9 +76,9 @@ export const MIND_MAPS: MindMap[] = [
         {
           id: "ahl-sunnah",
           label: "عقيدة أهل السنة",
-          href: "/learn/aqeedat-ahl-sunnah",
+          href: "/tawhid",
           children: [
-            { id: "aswj-1", label: "معالم المنهج", href: "/learn/aqeedat-ahl-sunnah" },
+            { id: "aswj-1", label: "معالم المنهج", href: "/tawhid" },
             { id: "aswj-2", label: "الفرق والمذاهب", href: "/islamic-sects" },
           ],
         },
@@ -1274,9 +1274,9 @@ export const MIND_MAPS: MindMap[] = [
         {
           id: "kl-ahl-sunna",
           label: "أهل السنة والجماعة",
-          href: "/learn/aqeedat-ahl-sunnah",
+          href: "/tawhid",
           children: [
-            { id: "kl-as0", label: "معالم المنهج", href: "/learn/aqeedat-ahl-sunnah" },
+            { id: "kl-as0", label: "معالم المنهج", href: "/tawhid" },
             { id: "kl-as1", label: "الأشعرية — المنهج الكلامي", href: "/islamic-sects#ashariyya" },
             { id: "kl-as2", label: "الماتريدية — كلام ما وراء النهر", href: "/islamic-sects#maturidiyya" },
             { id: "kl-as3", label: "أهل الحديث — السلفية", href: "/islamic-sects#ahl-al-sunna" },

@@ -1,9 +1,9 @@
 /**
- * بوابة: لا واجهة عامة بصيغة «باب علمي / أبواب العلم / مسار علمي» في /learn.
+ * بوابة: دروس التعلّم (/learn) ملغاة — تحويل إلى /lessons، بلا قسم في السجل.
  * تشغيل: node --import tsx src/lib/__tests__/learn-lessons-not-paths.test.ts
  */
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -13,55 +13,44 @@ function read(rel: string): string {
   return readFileSync(resolve(root, rel), "utf8");
 }
 
-const LEARN_PAGES = [
+for (const rel of [
   "src/views/learn/LearnHubPage.tsx",
   "src/views/learn/LearnCategoryPage.tsx",
   "src/views/learn/LearnSeriesPage.tsx",
   "src/views/learn/LearnLessonPage.tsx",
-];
-
-const FORBIDDEN = [
-  /باب علمي/,
-  /أبواب العلم/,
-  /المسار العلمي/,
-  /مسارات وأبواب/,
-  /ابدأ من هنا/,
-];
-
-for (const rel of LEARN_PAGES) {
-  const src = read(rel);
-  for (const re of FORBIDDEN) {
-    assert.equal(re.test(src), false, `${rel} بلا «${re.source}»`);
-  }
+]) {
+  assert.equal(existsSync(resolve(root, rel)), false, `${rel} محذوف`);
 }
 
-const hub = read("src/views/learn/LearnHubPage.tsx");
-assert.match(hub, /دروس عادية مفصّلة|فهرس الدروس/);
-assert.match(hub, /الدروس المنشورة/);
-
-const cat = read("src/views/learn/LearnCategoryPage.tsx");
-assert.match(cat, /eyebrow="دروس"/);
-assert.equal(cat.includes("التصنيفات الفرعية"), false);
-assert.match(cat, /العودة للدروس/);
-
-const lesson = read("src/views/learn/LearnLessonPage.tsx");
-assert.match(lesson, /العودة للدروس|>الدروس</);
-
-const series = read("src/views/learn/LearnSeriesPage.tsx");
-assert.match(series, /العودة للدروس|سلسلة دروس/);
-
-const service = read("src/lib/learn-library-service.ts");
-assert.match(service, /\.in\("category_id", childIds\)/, "دروس الفروع تُعرض مسطّحة في التصنيف الأب");
-
-const seed = read("src/lib/learn-library-aqeedah-batch1-seed.ts");
-assert.match(seed, /أصول العقيدة الإسلامية/);
-assert.equal(seed.includes("مدخل إلى العقيدة"), false);
-assert.equal(seed.includes("مسار العقيدة"), false);
-assert.match(seed, /s-intro-4/);
-assert.match(seed, /s-intro-6/);
-
 const registry = read("src/config/sections.registry.ts");
-assert.match(registry, /label:\s*"دروس التعلّم"/);
-assert.equal(/subtitle:\s*"فهرس مسارات وأبواب التعلّم"/.test(registry), false);
+assert.equal(/id:\s*"knowledge-doors"/.test(registry), false, "بلا قسم knowledge-doors");
+assert.equal(/label:\s*"دروس التعلّم"/.test(registry), false, "بلا تسمية دروس التعلّم");
+assert.match(registry, /from:\s*"\/learn"/, "دمج /learn في SECTION_MERGE_REDIRECTS");
+
+const app = read("src/AppRoutes.tsx");
+assert.match(
+  app,
+  /path="\/learn"[^>]*>\s*<Redirect\s+to="\/lessons"/,
+  "/learn → /lessons",
+);
+assert.match(
+  app,
+  /path="\/learn\/:slug"[^>]*>\s*<Redirect\s+to="\/lessons"/,
+  "/learn/:slug → /lessons",
+);
+assert.equal(app.includes("LearnHubPage"), false, "بلا تحميل LearnHubPage");
+
+const vercel = read("vercel.json");
+assert.match(vercel, /"source":\s*"\/learn"/, "vercel يحوي تحويل /learn");
+assert.match(vercel, /"destination":\s*"\/lessons"/, "وجهة التحويل /lessons");
+assert.equal(
+  /"source":\s*"\/learn\/:path*"[\s\S]*?"destination":\s*"\/index\.html"/.test(vercel),
+  false,
+  "بلا SPA rewrite لـ /learn",
+);
+
+const seo = read("src/lib/seo-routes.json");
+assert.equal(seo.includes('"/learn/'), false, "seo-routes بلا مسارات /learn/");
+assert.equal(seo.includes('"/learn"'), false, "seo-routes بلا /learn");
 
 console.log("learn-lessons-not-paths.test.ts: ok");

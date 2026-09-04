@@ -226,10 +226,6 @@ const ContentProductionDashboardPage = lazyWithRetry(
 const FeatureStatusPage = lazyWithRetry(() => import("@/views/admin/FeatureStatusPage"), "FeatureStatusPage");
 const InternalStatusPage = lazyWithRetry(() => import("@/views/internal/InternalStatusPage"), "InternalStatusPage");
 const MyLearningPage = lazy(() => import("@/pages/lessons/MyLearningPage"));
-const LearnHubPage = lazy(() => import("@/views/learn/LearnHubPage"));
-const LearnCategoryPage = lazy(() => import("@/views/learn/LearnCategoryPage"));
-const LearnSeriesPage = lazy(() => import("@/views/learn/LearnSeriesPage"));
-const LearnLessonPage = lazy(() => import("@/views/learn/LearnLessonPage"));
 const AdhanSettingsPage = lazy(() => import("@/pages/worship/AdhanSettingsPage"));
 const AdhanHelpPage = lazy(() => import("@/pages/worship/AdhanHelpPage"));
 const UploadPage = lazy(() => import("@/views/UploadPage"));
@@ -465,10 +461,11 @@ export default function AppRoutes() {
       {/* مسارات التعلم أُلغيت — تحويل دائم إلى الدروس */}
       <Route path="/learning/paths/:slug"><Redirect to="/lessons" /></Route>
       <Route path="/learning/paths"><Redirect to="/lessons" /></Route>
-      <Route path="/learn/series/:slug"><SafeLazyRoute component={LearnSeriesPage} /></Route>
-      <Route path="/learn/lesson/:id"><SafeLazyRoute component={LearnLessonPage} /></Route>
-      <Route path="/learn/:slug"><SafeLazyRoute component={LearnCategoryPage} /></Route>
-      <Route path="/learn"><SafeLazyRoute component={LearnHubPage} /></Route>
+      {/* دروس التعلّم (/learn) أُلغيت — تحويل دائم إلى الدروس */}
+      <Route path="/learn/series/:slug"><Redirect to="/lessons" /></Route>
+      <Route path="/learn/lesson/:id"><Redirect to="/lessons" /></Route>
+      <Route path="/learn/:slug"><Redirect to="/lessons" /></Route>
+      <Route path="/learn"><Redirect to="/lessons" /></Route>
       <Route path="/learning/quiz/:slug"><Redirect to="/quiz" /></Route>
       <Route path="/learning/quiz"><Redirect to="/quiz" /></Route>
       <Route path="/learning/calendar"><Redirect to="/calendar" /></Route>

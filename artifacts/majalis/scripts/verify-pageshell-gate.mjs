@@ -80,7 +80,6 @@ const requiredLayouts = [
   "src/pages/account/ui/FawaidView.tsx",
   "src/views/TopicsIndexPage.tsx",
   "src/pages/worship/ui/TasbihView.tsx",
-  "src/views/learn/LearnHubPage.tsx",
   "src/pages/worship/ui/DuasView.tsx",
   "src/views/AsmaaHusnaPage.tsx",
 ];

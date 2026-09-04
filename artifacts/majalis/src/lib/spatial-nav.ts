@@ -16,7 +16,6 @@ const TAB_ROOTS = new Set<string>([
   "/adhkar",
   "/hadith",
   "/library",
-  "/learn",
   "/nations",
   "/seerah",
   "/stats",

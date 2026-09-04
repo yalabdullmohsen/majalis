@@ -162,6 +162,16 @@
       "permanent": true
     },
     {
+      "source": "/learn/:path*",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/learn",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
       "source": "/learning-paths/:path*",
       "destination": "/lessons",
       "permanent": true
@@ -704,10 +714,6 @@
     },
     {
       "source": "/mushaf/:path*",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/learn/:path*",
       "destination": "/index.html"
     },
     {

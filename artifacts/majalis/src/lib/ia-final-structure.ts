@@ -26,6 +26,7 @@ export const IA_REDIRECTS: Record<string, string> = {
   "/start-here": "/lessons",
   "/learning/paths": "/lessons",
   "/learning-paths": "/lessons",
+  "/learn": "/lessons",
   "/tracks": "/lessons",
   "/study-paths": "/lessons",
   "/qa": "/quiz",

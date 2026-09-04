@@ -264,8 +264,6 @@ const { MAWSUAAT } = await importSrc("src/lib/mawsuaat-data.ts");
 const { ARABIC_LANGUAGE } = await importSrc("src/lib/arabic-language-data.ts");
 const { MAQASID_SHARIA } = await importSrc("src/lib/maqasid-sharia-data.ts");
 const { DALAIL_NUBUWWAH } = await importSrc("src/lib/dalail-nubuwwah-data.ts");
-const { getSeedLessonsForSlug } = await importSrc("src/lib/learn-library-aqeedah-batch3-seed.ts");
-
 /** أقسام DarsSection → قائمة روابط مع عدد الدروس. */
 function darsSectionsLinks(basePath, sections) {
   return (sections || []).map((s) => ({
@@ -278,18 +276,6 @@ function darsSectionsLinks(basePath, sections) {
 function darsHubBody(intro, basePath, sections, related) {
   return `<p>${intro}</p>
 ${linkList("أقسام المحتوى", darsSectionsLinks(basePath, sections))}
-${related?.length ? linkList("روابط ذات صلة", related) : ""}`;
-}
-
-function learnSlugBody(intro, slug, related) {
-  const lessons = getSeedLessonsForSlug(slug);
-  const lessonLinks = lessons.map((l) => ({
-    name: l.title,
-    url: `/learn/lesson/${l.id}`,
-    note: (l.description || "").slice(0, 90),
-  }));
-  return `<p>${intro}</p>
-${linkList("دروس التصنيف", lessonLinks)}
 ${related?.length ? linkList("روابط ذات صلة", related) : ""}`;
 }
 
@@ -2319,9 +2305,6 @@ ${linkList("محاور دروس موسّعة", [
     [
       { name: "التوحيد والعقيدة", url: "/tawhid" },
       { name: "أركان الإيمان", url: "/arkan-iman" },
-      { name: "عقيدة أهل السنة", url: "/learn/aqeedat-ahl-sunnah" },
-      { name: "الإيمان بالله", url: "/learn/iman-billah" },
-      { name: "أقسام التوحيد", url: "/learn/aqsam-tawheed" },
       { name: "أسماء الله الحسنى", url: "/asma-husna" },
     ],
   ),
@@ -2439,51 +2422,6 @@ ${linkList("روابط ذات صلة", [
       { name: "الشمائل النبوية", url: "/shamael" },
       { name: "قصص الأنبياء", url: "/prophets" },
       { name: "التوحيد والعقيدة", url: "/tawhid" },
-    ],
-  ),
-  "/learn/aqeedat-ahl-sunnah": learnSlugBody(
-    "عقيدة أهل السنة والجماعة: معالم المنهج ومصدر التلقي والإيمان والصفات والصحابة والقدر والوسطية واليوم الآخر — من بذور تعليمية موثّقة.",
-    "aqeedat-ahl-sunnah",
-    [
-      { name: "التوحيد والعقيدة", url: "/tawhid" },
-      { name: "الإيمان بالله", url: "/learn/iman-billah" },
-      { name: "أقسام التوحيد", url: "/learn/aqsam-tawheed" },
-      { name: "نواقض الإسلام", url: "/learn/nawaqid-islam" },
-      { name: "موضوعات الإيمان", url: "/iman-topics" },
-      { name: "أبواب العلم", url: "/learn" },
-    ],
-  ),
-  "/learn/aqsam-tawheed": learnSlugBody(
-    "أقسام التوحيد الثلاثة: الربوبية والألوهية والأسماء والصفات — تقسيم اصطلاحي يضبط البيان على منهج السلف.",
-    "aqsam-tawheed",
-    [
-      { name: "التوحيد والعقيدة", url: "/tawhid" },
-      { name: "الإيمان بالله", url: "/learn/iman-billah" },
-      { name: "عقيدة أهل السنة", url: "/learn/aqeedat-ahl-sunnah" },
-      { name: "أسماء الله الحسنى", url: "/asma-husna" },
-      { name: "نواقض الإسلام", url: "/learn/nawaqid-islam" },
-    ],
-  ),
-  "/learn/nawaqid-islam": learnSlugBody(
-    "نواقض الإسلام: مدخل منضبط لمعنى الناقض مع ضوابط التكفير وعدم تكفير المعيّن بلا شروط وموانع.",
-    "nawaqid-islam",
-    [
-      { name: "التوحيد والعقيدة", url: "/tawhid" },
-      { name: "أقسام التوحيد", url: "/learn/aqsam-tawheed" },
-      { name: "عقيدة أهل السنة", url: "/learn/aqeedat-ahl-sunnah" },
-      { name: "موضوعات الإيمان", url: "/iman-topics" },
-      { name: "منهجيتنا", url: "/methodology" },
-    ],
-  ),
-  "/learn/iman-billah": learnSlugBody(
-    "الإيمان بالله: وجوده وربوبيته وألوهيته وأسمائه وصفاته على منهج السلف — الركن الأول من أركان الإيمان.",
-    "iman-billah",
-    [
-      { name: "التوحيد والعقيدة", url: "/tawhid" },
-      { name: "أقسام التوحيد", url: "/learn/aqsam-tawheed" },
-      { name: "أسماء الله الحسنى", url: "/asma-husna" },
-      { name: "أركان الإيمان", url: "/arkan-iman" },
-      { name: "عقيدة أهل السنة", url: "/learn/aqeedat-ahl-sunnah" },
     ],
   ),
 };

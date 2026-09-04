@@ -14,7 +14,6 @@ import { test, expect } from "@playwright/test";
 // يجب أن تتطابق مع src/lib/navigation.ts > PUBLIC_NAV_ITEMS
 const PUBLIC_ROUTES: Array<{ href: string; label: string }> = [
   { href: "/",               label: "الرئيسية" },
-  { href: "/learn",          label: "أبواب العلم" },
   { href: "/lessons",        label: "الدروس" },
   { href: "/annual-courses", label: "الدورات العلمية" },
   { href: "/library",        label: "المكتبة" },
@@ -56,6 +55,8 @@ const REDIRECT_ROUTES: Array<{ href: string; redirectsTo: string }> = [
   { href: "/learning-path",         redirectsTo: "/lessons" },
   { href: "/learning-paths",        redirectsTo: "/lessons" },
   { href: "/learning/paths",        redirectsTo: "/lessons" },
+  { href: "/learn",                 redirectsTo: "/lessons" },
+  { href: "/learn/aqeedat-ahl-sunnah", redirectsTo: "/lessons" },
   { href: "/knowledge-map",         redirectsTo: "/knowledge-graph" },
   { href: "/features-in-progress",  redirectsTo: "/updates" },
 ];

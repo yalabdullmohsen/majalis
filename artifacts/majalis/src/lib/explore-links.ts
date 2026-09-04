@@ -64,7 +64,7 @@ export const ACCORDION_EXPLORE_LINKS = {
   ],
   durusMutanawwia: [
     { href: "/lessons", label: "الدروس العلمية" },
-    { href: "/learn", label: "مركز التعلّم" },
+    { href: "/lessons", label: "الدروس" },
     { href: "/quiz", label: "المسابقة" },
     { href: "/islamic-directory", label: "دليل المؤسسات والمساجد" },
   ],
