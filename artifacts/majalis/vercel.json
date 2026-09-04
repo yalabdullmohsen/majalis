@@ -480,12 +480,19 @@
     },
     {
       "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "ssunnah.com"
-        }
-      ],
+      "has": [{"type": "host", "value": "ssunnah.com"}],
+      "destination": "https://www.ssunnah.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{"type": "host", "value": "majlisilm.com"}],
+      "destination": "https://www.ssunnah.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{"type": "host", "value": "www.majlisilm.com"}],
       "destination": "https://www.ssunnah.com/:path*",
       "permanent": true
     },
