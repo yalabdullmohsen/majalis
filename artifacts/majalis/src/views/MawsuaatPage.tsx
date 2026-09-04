@@ -7,6 +7,7 @@ export default function MawsuaatPage() {
     <SectionAccordionLayout
       eyebrow="الموسوعة العملية"
       title="دروس يومية · موقف وحكم · بين أمرين"
+      route="/mawsuaat"
       sections={MAWSUAAT}
       relatedLinks={accordionExploreLinks("mawsuaat")}
     />

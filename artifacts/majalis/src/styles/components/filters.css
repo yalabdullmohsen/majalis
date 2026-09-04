@@ -113,7 +113,7 @@ html.dark .mj-filter-chip.is-active,
   min-height: 44px;
   padding: 0.55rem 0.9rem;
   border: 1px solid var(--mj-hairline, var(--color-border));
-  border-radius: var(--mj-r-sm, 8px);
+  border-radius: 999px;
   background: var(--mj-surface, var(--color-surface));
   color: var(--mj-ink, var(--color-text));
   font: inherit;
@@ -138,7 +138,7 @@ html.dark .mj-filter-chip.is-active,
   overflow: auto;
   background: var(--mj-surface, #fff);
   border: 1px solid var(--mj-hairline, #d5ddd8);
-  border-radius: 8px;
+  border-radius: 18px;
   box-shadow: 0 8px 24px color-mix(in srgb, #0a1f18 12%, transparent);
 }
 
@@ -153,7 +153,7 @@ html.dark .mj-filter-chip.is-active,
   color: inherit;
   font: inherit;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 14px;
 }
 
 .mj-filter-bar__suggestions button:hover,
@@ -177,7 +177,7 @@ html.dark .mj-filter-chip.is-active,
 .mj-filter-bar__toggle-wrap .ds-filter-toggle {
   min-height: 44px;
   padding: 0.45rem 0.9rem;
-  border-radius: 8px;
+  border-radius: 999px;
   border: 1px solid var(--mj-brand, var(--mj-brand));
   background: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 10%, transparent);
   color: var(--mj-brand-deep, #0f3d30);

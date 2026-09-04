@@ -55,6 +55,11 @@ const ROUTE_THEME: Record<string, TopicThemeId> = {
   "/islamic-glossary": "aqeedah",
   "/universities": "aqeedah",
   "/discover-islam": "aqeedah",
+  "/arabic-language": "aqeedah",
+  "/miracles": "quran",
+  "/maqasid-sharia": "usul",
+  "/dalail-nubuwwah": "seerah",
+  "/sunnah-studies": "hadith",
 };
 
 /** اقتباسات موجودة مسبقاً في محتوى المنصة — لا توليد نص شرعي جديد */
@@ -220,6 +225,18 @@ export const ROUTE_QUOTE: Record<string, SectionTemplateQuote> = {
     ref: "البقرة: ١٣٧",
     type: "ayah",
     sectionId: "discover-islam",
+  },
+  "/arabic-language": {
+    text: "إِنَّا أَنزَلْنَاهُ قُرْآنًا عَرَبِيًّا لَّعَلَّكُمْ تَعْقِلُونَ",
+    ref: "يوسف: ٢",
+    type: "ayah",
+    sectionId: "arabic-language",
+  },
+  "/miracles": {
+    text: "سَنُرِيهِمْ آيَاتِنَا فِي الْآفَاقِ وَفِي أَنفُسِهِمْ حَتَّىٰ يَتَبَيَّنَ لَهُمْ أَنَّهُ الْحَقُّ",
+    ref: "فصّلت: ٥٣",
+    type: "ayah",
+    sectionId: "miracles",
   },
 };
 

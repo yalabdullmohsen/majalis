@@ -5,10 +5,9 @@ export default function DurusImaniyyaPage() {
     <LazySectionAccordionPage
       eyebrow="التربية والتزكية"
       title="الدروس الإيمانية والتربوية"
+      route="/durus-imaniyya"
       exportName="DURUS_IMANIYYA"
       relatedKey="durusImaniyya"
-      stat3Label="سلاسل"
-      stat3Value={5}
       load={() => import("@/lib/durus-imaniyya-data")}
     />
   );

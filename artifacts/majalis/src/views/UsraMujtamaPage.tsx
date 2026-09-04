@@ -7,6 +7,7 @@ export default function UsraMujtamaPage() {
     <SectionAccordionLayout
       eyebrow="الأسرة والمجتمع"
       title="العلاقات والأسرة والمسؤولية"
+      route="/usra-mujtama"
       sections={USRA_MUJTAMA}
       relatedLinks={accordionExploreLinks("usra")}
     />
