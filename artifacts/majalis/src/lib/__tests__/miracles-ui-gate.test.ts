@@ -14,10 +14,6 @@ const page = read("src/views/MiraclesPage.tsx");
 const fab = read("src/components/FloatingBackButton.tsx");
 const share = read("src/components/ShareFaida.tsx");
 
-assert.doesNotMatch(page, /mk-cats-bar/);
-assert.doesNotMatch(page, /ShareButtons/);
-assert.doesNotMatch(page, /twh-share/);
-assert.doesNotMatch(page, /FilterBottomSheet/);
 assert.match(page, /mk-search-bar/);
 assert.match(page, /ShareFaida[\s\S]*variant="icons"/);
 assert.match(page, /mk-card__footer/);
@@ -26,11 +22,23 @@ assert.match(page, /item\.verse/);
 assert.match(page, /tafsir_summary/);
 assert.match(page, /miracle-explain/);
 assert.match(page, /miracle-detail/);
+assert.match(page, /mk-chip/);
+assert.match(page, /اقرأ التفصيل العلمي/);
+assert.match(page, /مواد ذات صلة \(من نفس القسم\)/);
+assert.doesNotMatch(page, /RelatedKnowledge/);
+assert.doesNotMatch(page, /GeometricPattern/);
+assert.doesNotMatch(page, /mk-cats-bar/);
+assert.doesNotMatch(page, /FilterBottomSheet/);
+assert.doesNotMatch(page, /ShareButtons/);
+assert.doesNotMatch(page, /twh-share/);
 
 const css = read("src/styles/pages/miracles.css");
 assert.match(css, /\.miracle-ayah__text/);
 assert.match(css, /\.miracle-explain__label/);
+assert.match(css, /\.mk-chip/);
+assert.match(css, /inset-bottom/);
 assert.doesNotMatch(css, /\.miracle-item__ref\s*\{/);
+assert.doesNotMatch(css, /\.mk-cat--aldam/);
 
 assert.doesNotMatch(fab, /if \(deepScroll\) return null/);
 assert.doesNotMatch(fab, /ChevronUp/);

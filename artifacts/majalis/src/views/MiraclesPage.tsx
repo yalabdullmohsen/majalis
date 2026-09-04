@@ -1,129 +1,97 @@
 import { Link } from "wouter";
 import { useEffect, useMemo, useState } from "react";
 import {
-  AlertTriangle, Bone, BookOpen, Bug, Clock, Cloud, Cog, Dna,
-  Droplets, Globe, Globe2, Leaf, Lightbulb, Microscope,
-  Mountain, ScrollText, Search, SlidersHorizontal, Sparkles, Star, Stethoscope,
-  Telescope, Waves, Wind,
+  AlertTriangle,
+  BookOpen,
+  Search,
+  ScrollText,
 } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { useAuth } from "@/components/AuthProvider";
 import { getMiracles } from "@/lib/supabase";
-import { Chip } from "@/components/ui-common";
 import { AsyncDataView } from "@/components/AsyncDataView";
-import { MIRACLE_CATEGORIES } from "@/lib/miracles-seed";
+import type { MiracleSeedItem } from "@/lib/miracles-seed";
 import { safeLoadEffect } from "@/lib/safe-load";
-import { GeometricPattern } from "@/components/design/GeometricPattern";
 import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ShareFaida } from "@/components/ShareFaida";
-import "@/styles/pages/miracles.css";
-import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { TopicPage } from "@/components/topic/TopicPage";
+import {
+  MIRACLE_FIXED_CAUTION,
+  MIRACLE_TOPIC_FILTERS,
+  type MiracleTopicFilter,
+  cleanSummaryBoilerplate,
+  extractIntro,
+  extractLimitsNote,
+  extractScientificNote,
+  extractShariaMeaning,
+  filterByTopic,
+  miracleCardSummary,
+  miracleMethodBadge,
+  miracleShortSource,
+  miracleTopicLabel,
+  relatedMiracles,
+  sortMiraclesMethodically,
+} from "@/lib/miracles-ui";
+import "@/styles/pages/miracles.css";
 
-const CATEGORIES = MIRACLE_CATEGORIES;
-const SOURCE_TYPES = ["الكل", "قرآن", "سنة"];
+const SOURCE_TYPES = ["الكل", "قرآن", "سنة"] as const;
 
-type PatternType = "honeycomb" | "stars" | "waves" | "mountains" | "orbits" | "vines" | "metallic" | "circles";
-
-const CATEGORY_PATTERN: Record<string, PatternType> = {
-  "الكون": "orbits", "الفلك": "orbits", "الجبال": "mountains",
-  "البحار": "waves", "الأجنة": "circles", "النبات": "honeycomb",
-  "الحيوان": "vines", "الطب": "circles", "المياه": "waves",
-  "الحديد": "metallic", "الرياح": "waves", "السحاب": "orbits",
-  "الحشرات": "honeycomb", "الأرض": "mountains", "الزمن": "stars",
-  "الضوء": "metallic", "الجلد": "circles", "العظام": "metallic",
-  "النجوم": "stars", "الدم": "circles",
-};
-
-const MK_CAT_MOD: Record<string, string> = {
-  "الكون": "mk-cat--alkawn", "الفلك": "mk-cat--alfalak",
-  "الجبال": "mk-cat--aljibaal", "البحار": "mk-cat--albihaar",
-  "الأجنة": "mk-cat--alajinna", "النبات": "mk-cat--alnabaat",
-  "الحيوان": "mk-cat--alhayawan", "الطب": "mk-cat--altib",
-  "المياه": "mk-cat--almiyaah", "الحديد": "mk-cat--alhadeed",
-  "الرياح": "mk-cat--alriyaah", "السحاب": "mk-cat--alsahaab",
-  "الحشرات": "mk-cat--alhasharat", "الأرض": "mk-cat--alarth",
-  "الزمن": "mk-cat--alzaman", "الضوء": "mk-cat--althaw",
-  "الجلد": "mk-cat--aljild", "العظام": "mk-cat--alithaam",
-  "النجوم": "mk-cat--alnujoom", "الدم": "mk-cat--aldam",
-};
-
-const MK_CAT_ACCENT: Record<string, string> = {
-  "الكون": "#D6D5CE", "الفلك": "#D6D5CE", "الجبال": "#5C5C56",
-  "البحار": "#D6D5CE", "الأجنة": "#5C5C56", "النبات": "#5C5C56",
-  "الحيوان": "#5C5C56", "الطب": "#D6D5CE", "المياه": "#D6D5CE",
-  "الحديد": "#5C5C56", "الرياح": "#D6D5CE", "السحاب": "#D6D5CE",
-  "الحشرات": "#5C5C56", "الأرض": "#5C5C56", "الزمن": "#D6D5CE",
-  "الضوء": "#d4e8a0", "الجلد": "#D6D5CE", "العظام": "#d4c8a0",
-  "النجوم": "#c8d4e8", "الدم": "#e8a0a0",
-};
-
-const CATEGORY_ICONS: Record<string, LucideIcon> = {
-  "الكون": Globe, "الفلك": Telescope, "الجبال": Mountain,
-  "البحار": Waves, "الأجنة": Microscope, "النبات": Leaf,
-  "الحيوان": Bug, "الطب": Stethoscope, "المياه": Droplets,
-  "الحديد": Cog, "الرياح": Wind, "السحاب": Cloud,
-  "الحشرات": Bug, "الأرض": Globe2, "الزمن": Clock,
-  "الضوء": Lightbulb, "الجلد": Dna, "العظام": Bone,
-  "النجوم": Star, "الدم": Droplets,
-};
-
-const MK_SRC_MOD: Record<string, string> = {
-  "قرآن": "mk-src--quran",
-  "سنة":  "mk-src--sunna",
-};
+function topicFromQuery(raw: string | null): MiracleTopicFilter | null {
+  if (!raw) return null;
+  const decoded = decodeURIComponent(raw);
+  if ((MIRACLE_TOPIC_FILTERS as readonly string[]).includes(decoded)) {
+    return decoded as MiracleTopicFilter;
+  }
+  // توافق مع ?cat=التصنيف القديم
+  const mapped = miracleTopicLabel(decoded);
+  return mapped;
+}
 
 export default function MiraclesPage({
   initialItems,
 }: {
-  initialItems?: any[];
+  initialItems?: MiracleSeedItem[];
 } = {}) {
   const { isAdmin } = useAuth();
-  const [items, setItems] = useState<any[]>(initialItems ?? []);
+  const [items, setItems] = useState<MiracleSeedItem[]>(initialItems ?? []);
   const [loading, setLoading] = useState(!initialItems);
   const [error, setError] = useState<string | null>(null);
-  const [category, setCategory] = useState("الكل");
-  const [sourceType, setSourceType] = useState("الكل");
+  const [topic, setTopic] = useState<MiracleTopicFilter>("الكل");
+  const [sourceType, setSourceType] = useState<(typeof SOURCE_TYPES)[number]>("الكل");
   const [expanded, setExpanded] = useState<string | null>(null);
-  const [filtersOpen, setFiltersOpen] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
   const [search, setSearch] = useState("");
 
-  // رابط `?cat=...` في JSON-LD أسفل هذه الصفحة نفسها كان يُتجاهَل كليًا:
-  // `category` تُهيَّأ دائماً بـ"الكل" بلا قراءة أي شيء من الرابط الفعلي —
-  // عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف بالفحص المباشر
-  // 2026-07-18.
   useEffect(() => {
-    const cat = new URLSearchParams(window.location.search).get("cat");
-    if (cat) setCategory(cat);
+    const params = new URLSearchParams(window.location.search);
+    const fromCat = topicFromQuery(params.get("cat") || params.get("topic"));
+    if (fromCat) setTopic(fromCat);
+    const src = params.get("src");
+    if (src === "قرآن" || src === "سنة") setSourceType(src);
   }, []);
-
-  const displayed = useMemo(() => {
-    if (!search.trim()) return items;
-    return items.filter((i) => arabicMatchAny([i.title ?? "", i.body ?? "", i.category ?? "", i.scholarly_source ?? ""], search));
-  }, [items, search]);
 
   useEffect(() => {
     applyPageSeo({
       path: "/miracles",
       title: "الإعجاز العلمي في القرآن والسنة | سُنّة",
-      description: "تأملات علمية منضبطة في إشارات الوحي؛ بلا جزم قطعي بنظريات متغيّرة، وبلا إعجاز عددي.",
+      description:
+        "تأملات علمية منضبطة في إشارات الوحي؛ بلا جزم قطعي بنظريات متغيّرة، وبلا إعجاز عددي.",
       keywords: ["إعجاز علمي", "إعجاز القرآن", "إعجاز السنة", "إشارات كونية", "تفكر في الخلق"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "الإعجاز العلمي في القرآن والسنة",
-          description: "تأملات علمية منضبطة مع تنبيه منهجي؛ لا تُجعل النظريات تفسيراً قطعياً للنص الشرعي",
-          itemListElement: CATEGORIES.filter(c => c !== "الكل").map((cat, i) => ({
+          description:
+            "تأملات علمية منضبطة مع تنبيه منهجي؛ لا تُجعل النظريات تفسيراً قطعياً للنص الشرعي",
+          itemListElement: MIRACLE_TOPIC_FILTERS.filter((c) => c !== "الكل").map((cat, i) => ({
             "@type": "ListItem",
             position: i + 1,
             name: cat,
-            url: `https://www.ssunnah.com/miracles?cat=${encodeURIComponent(cat)}`,
+            url: `https://www.ssunnah.com/miracles?topic=${encodeURIComponent(cat)}`,
           })),
         },
       ],
@@ -131,18 +99,23 @@ export default function MiraclesPage({
   }, []);
 
   useEffect(() => {
-    if (initialItems && category === "الكل" && sourceType === "الكل" && reloadKey === 0) return;
+    if (initialItems && sourceType === "الكل" && reloadKey === 0) return;
     setError(null);
     return safeLoadEffect(
       setLoading,
-      () => getMiracles({ category: category === "الكل" ? undefined : category, sourceType: sourceType === "الكل" ? undefined : sourceType }),
-      ({ data }) => setItems(data ?? []),
-      (msg) => { setError(msg); setItems([]); },
-      { label: `miracles:${category}:${sourceType}:${reloadKey}` },
+      () =>
+        getMiracles({
+          sourceType: sourceType === "الكل" ? undefined : sourceType,
+        }),
+      ({ data }) => setItems((data as MiracleSeedItem[]) ?? []),
+      (msg) => {
+        setError(msg);
+        setItems([]);
+      },
+      { label: `miracles:${sourceType}:${reloadKey}` },
     );
-  }, [category, sourceType, initialItems, reloadKey]);
+  }, [sourceType, initialItems, reloadKey]);
 
-  // روابط عميقة عبر #id من البحث/التوصيات
   useEffect(() => {
     if (loading) return;
     const hashId = decodeURIComponent(window.location.hash.replace(/^#/, ""));
@@ -154,22 +127,25 @@ export default function MiraclesPage({
     return () => window.clearTimeout(timer);
   }, [loading, items]);
 
-  const status = loading ? "loading" : error ? "error" : items.length === 0 ? "empty" : "success";
+  const displayed = useMemo(() => {
+    let rows = sortMiraclesMethodically(filterByTopic(items, topic));
+    if (search.trim()) {
+      rows = rows.filter((i) =>
+        arabicMatchAny(
+          [i.title ?? "", i.body ?? "", i.category ?? "", i.scholarly_source ?? "", i.reference ?? ""],
+          search,
+        ),
+      );
+    }
+    return rows;
+  }, [items, topic, search]);
 
-  const filterPanel = (
-    <>
-      <div className="miracles-filters miracles-filters--sheet">
-        {CATEGORIES.map((c) => (
-          <Chip key={c} active={category === c} onClick={() => setCategory(c)}>{c}</Chip>
-        ))}
-      </div>
-      <div className="miracles-filters miracles-filters--sheet">
-        {SOURCE_TYPES.map((s) => (
-          <Chip key={s} active={sourceType === s} onClick={() => setSourceType(s)}>{s}</Chip>
-        ))}
-      </div>
-    </>
-  );
+  const status = loading ? "loading" : error ? "error" : displayed.length === 0 ? "empty" : "success";
+
+  const visibleTopics = useMemo(() => {
+    const present = new Set(items.map((m) => miracleTopicLabel(m)));
+    return MIRACLE_TOPIC_FILTERS.filter((t) => t === "الكل" || present.has(t));
+  }, [items]);
 
   return (
     <TopicPage
@@ -195,49 +171,61 @@ export default function MiraclesPage({
       ]}
       activeTab={sourceType === "قرآن" ? "quran" : sourceType === "سنة" ? "sunnah" : "all"}
       onTabChange={(id) => {
+        setExpanded(null);
         if (id === "quran") setSourceType("قرآن");
         else if (id === "sunnah") setSourceType("سنة");
         else setSourceType("الكل");
       }}
       syncTabParam={false}
     >
-    <div className="mk-page mk-page--embedded" dir="rtl">
+      <div className="mk-page mk-page--embedded" dir="rtl">
+        <div className="mk-hub-split" role="navigation" aria-label="أقسام الإعجاز">
+          <button
+            type="button"
+            className={`mk-hub-split__card${sourceType === "قرآن" ? " is-active" : ""}`}
+            onClick={() => {
+              setSourceType("قرآن");
+              setExpanded(null);
+            }}
+          >
+            <BookOpen size={18} strokeWidth={1.8} aria-hidden="true" />
+            <span className="mk-hub-split__title">الإعجاز العلمي في القرآن الكريم</span>
+            <span className="mk-hub-split__desc">
+              تأملات في آيات الخلق والكون — يُستأنس بها ولا تُجعل تفسيراً قطعياً.
+            </span>
+          </button>
+          <button
+            type="button"
+            className={`mk-hub-split__card${sourceType === "سنة" ? " is-active" : ""}`}
+            onClick={() => {
+              setSourceType("سنة");
+              setExpanded(null);
+            }}
+          >
+            <ScrollText size={18} strokeWidth={1.8} aria-hidden="true" />
+            <span className="mk-hub-split__title">الإعجاز العلمي في السنة النبوية</span>
+            <span className="mk-hub-split__desc">
+              إشارات في الحديث عند ثبوت المعنى — بصياغة: ذكر بعض الباحثين / من أوجه التأمل.
+            </span>
+          </button>
+        </div>
 
-      <div className="mk-hub-split" role="navigation" aria-label="أقسام الإعجاز">
-        <button
-          type="button"
-          className={`mk-hub-split__card${sourceType === "قرآن" ? " is-active" : ""}`}
-          onClick={() => setSourceType("قرآن")}
-        >
-          <BookOpen size={18} strokeWidth={1.8} aria-hidden="true" />
-          <span className="mk-hub-split__title">الإعجاز العلمي في القرآن الكريم</span>
-          <span className="mk-hub-split__desc">تأملات في آيات الخلق والكون — يُستأنس بها ولا تُجعل تفسيراً قطعياً.</span>
-        </button>
-        <button
-          type="button"
-          className={`mk-hub-split__card${sourceType === "سنة" ? " is-active" : ""}`}
-          onClick={() => setSourceType("سنة")}
-        >
-          <ScrollText size={18} strokeWidth={1.8} aria-hidden="true" />
-          <span className="mk-hub-split__title">الإعجاز العلمي في السنة النبوية</span>
-          <span className="mk-hub-split__desc">إشارات في الحديث عند ثبوت المعنى — بصياغة: ذكر بعض الباحثين / من أوجه التأمل.</span>
-        </button>
-      </div>
+        <p className="mk-hero__note">
+          <AlertTriangle size={16} strokeWidth={1.8} aria-hidden="true" />
+          <span>
+            هذا القسم يعرض تأملات علمية منضبطة، ولا يجعل النظريات المتغيرة تفسيراً قطعياً للنص الشرعي.
+            راجع{" "}
+            <Link href="/quran-hub" className="mk-hero__link">
+              مركز القرآن الكريم
+            </Link>{" "}
+            و{" "}
+            <Link href="/methodology" className="mk-hero__link">
+              منهج الموقع
+            </Link>
+            . {MIRACLE_FIXED_CAUTION}
+          </span>
+        </p>
 
-      <p className="mk-hero__note" style={{ marginBottom: "1rem" }}>
-        <AlertTriangle size={16} strokeWidth={1.8} aria-hidden="true" />
-        <span>
-          هذا القسم يعرض تأملات علمية منضبطة، ولا يجعل النظريات المتغيرة تفسيراً قطعياً للنص الشرعي.
-          راجع{" "}
-          <Link href="/quran-hub" className="mk-hero__link">مركز القرآن الكريم</Link>
-          {" "}و{" "}
-          <Link href="/methodology" className="mk-hero__link">منهج الموقع</Link>
-          . لا تُبنى عقيدة أو حكم على دعاوى علمية معاصرة.
-        </span>
-      </p>
-
-      {/* ══ بحث + تصفية قابلة للطي (بدون تكدس أوسام دائم) ══ */}
-      {status === "success" && (
         <div className="mk-search-bar">
           <form
             className="mk-search-bar__row"
@@ -250,185 +238,240 @@ export default function MiraclesPage({
               <input
                 type="search"
                 className="mk-search-bar__input"
-                placeholder="ابحث داخل قسم الإعجاز الحالي…"
+                placeholder="ابحث داخل قسم الإعجاز…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 aria-label="بحث في الإعجاز العلمي"
                 enterKeyHint="search"
               />
             </div>
-            <button
-              type="button"
-              className="mk-search-bar__filter-btn"
-              aria-expanded={filtersOpen}
-              onClick={() => setFiltersOpen((o) => !o)}
-            >
-              <SlidersHorizontal size={15} strokeWidth={2} aria-hidden="true" />
-              <span>تصفية</span>
-            </button>
           </form>
-          {!loading && (
-            <span className="mk-search-bar__count">{displayed.length} موضوع</span>
-          )}
-          {filtersOpen && (
-            <div className="mk-search-bar__filters" role="region" aria-label="تصفية الإشارات">
-              {filterPanel}
-            </div>
-          )}
+          {!loading && <span className="mk-search-bar__count">{displayed.length} موضوع</span>}
+
+          <div className="mk-chips" role="toolbar" aria-label="فلتر الموضوعات">
+            {visibleTopics.map((t) => (
+              <button
+                key={t}
+                type="button"
+                className={`mk-chip${topic === t ? " is-active" : ""}`}
+                aria-pressed={topic === t}
+                onClick={() => {
+                  setTopic(t);
+                  setExpanded(null);
+                }}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
         </div>
-      )}
 
-      {/* ══ شبكة المحتوى ══ */}
-      <AsyncDataView
-        status={status}
-        error={error}
-        onRetry={() => setReloadKey((k) => k + 1)}
-        emptyText="لا توجد مواد مطابقة في هذا التصنيف. جرّب تصنيفاً آخر أو أعد ضبط البحث."
-      >
-        <div className="mk-grid">
-          {displayed.map((item: any) => {
-            const ItemIcon: LucideIcon = CATEGORY_ICONS[item.category] ?? Sparkles;
-            const catMod    = MK_CAT_MOD[item.category]    ?? "mk-cat--alkawn";
-            const catAccent = MK_CAT_ACCENT[item.category] ?? "#86efac";
-            const srcMod    = MK_SRC_MOD[item.source_type] ?? "mk-src--quran";
-            const pattern   = CATEGORY_PATTERN[item.category] ?? "stars";
-            const isExpanded  = expanded === item.id;
-            const bodyText: string = item.body ?? "";
-            const preview = bodyText.slice(0, 240);
-            return (
-              <article id={item.id} key={item.id} className={`miracle-item mk-card ${catMod} ${srcMod}`}>
-                {/* رأس */}
-                <div className="miracle-item__head mk-card__head">
-                  <GeometricPattern pattern={pattern} color={catAccent} opacity={0.13} />
-                  <div className="miracle-item__head-row">
-                    <span className="miracle-item__icon" aria-hidden="true">
-                      <ItemIcon size={20} strokeWidth={1.5} />
-                    </span>
-                    <div className="miracle-item__head-info">
-                      <p className="miracle-item__title mk-card__title">{item.title}</p>
-                      <div className="miracle-item__badges">
-                        {item.category && (
-                          <span className="miracle-item__cat-badge mk-badge">
-                            <ItemIcon size={11} strokeWidth={2} aria-hidden="true" /> {item.category}
-                          </span>
-                        )}
-                        {item.source_type && (
-                          <span className="miracle-item__src-badge mk-src-badge">
-                            {item.source_type === "قرآن"
-                              ? <><BookOpen size={10} strokeWidth={2} aria-hidden="true" /> قرآن</>
-                              : <><ScrollText size={10} strokeWidth={2} aria-hidden="true" /> سنة</>}
-                          </span>
-                        )}
-                      </div>
+        <AsyncDataView
+          status={status}
+          error={error}
+          onRetry={() => setReloadKey((k) => k + 1)}
+          emptyText="لا توجد مواد مطابقة في هذا التصنيف. جرّب موضوعاً آخر أو أعد ضبط البحث."
+        >
+          <div className="mk-grid">
+            {displayed.map((item) => {
+              const isExpanded = expanded === item.id;
+              const topicLabel = miracleTopicLabel(item);
+              const badge = miracleMethodBadge(item);
+              const summary = miracleCardSummary(item);
+              const shortSrc = miracleShortSource(item.scholarly_source);
+              const related = isExpanded ? relatedMiracles(item, displayed) : [];
+
+              return (
+                <article
+                  id={item.id}
+                  key={item.id}
+                  className={`mk-card mk-card--${item.source_type === "سنة" ? "sunnah" : "quran"}${isExpanded ? " is-expanded" : ""}`}
+                >
+                  <header className="mk-card__head">
+                    <h2 className="mk-card__title">{item.title}</h2>
+                    <div className="mk-card__meta">
+                      <span className="mk-pill mk-pill--topic">{topicLabel}</span>
+                      <span className="mk-pill mk-pill--src">
+                        {item.source_type === "قرآن" ? "قرآن" : "سنة"}
+                      </span>
+                      <span className={`mk-pill mk-pill--method mk-pill--${badge === "تأمل منضبط" ? "caution" : "signal"}`}>
+                        {badge}
+                      </span>
                     </div>
-                  </div>
-                </div>
+                  </header>
 
-                {/* محتوى: آية ← شرح موجز ← تفصيل علمي */}
-                <div className="miracle-item__body-wrap mk-card__body">
-                  {(item.verse || item.reference) && (
-                    <figure className="miracle-ayah">
-                      {item.verse ? (
-                        <blockquote className="miracle-ayah__text" lang="ar" dir="rtl">
-                          ﴿ {item.verse} ﴾
-                        </blockquote>
-                      ) : null}
-                      {item.reference ? (
-                        <figcaption className="miracle-ayah__ref">
-                          <BookOpen size={12} strokeWidth={2} aria-hidden="true" />
-                          <span>{item.reference}</span>
-                        </figcaption>
-                      ) : null}
-                    </figure>
-                  )}
+                  <p className="mk-card__summary">{summary}</p>
 
-                  {item.tafsir_summary ? (
-                    <section className="miracle-explain" aria-label="شرح موجز للآية">
-                      <header className="miracle-explain__head">
-                        <span className="miracle-explain__mark" aria-hidden="true" />
-                        <h3 className="miracle-explain__label">شرح موجز</h3>
-                      </header>
-                      <p className="miracle-explain__text">{item.tafsir_summary}</p>
-                    </section>
-                  ) : null}
-
-                  {bodyText && (!item.tafsir_summary || isExpanded) ? (
-                    <section
-                      className={`miracle-detail${item.tafsir_summary ? " is-open" : " miracle-detail--solo"}`}
-                      aria-label="التفصيل العلمي"
-                    >
-                      {item.tafsir_summary ? (
-                        <>
-                          <header className="miracle-detail__head">
-                            <h3 className="miracle-detail__label">التفصيل العلمي</h3>
-                          </header>
-                          <p className="miracle-detail__text">{bodyText}</p>
-                        </>
-                      ) : (
-                        <p className="miracle-detail__text">
-                          {isExpanded || bodyText.length <= 240
-                            ? bodyText
-                            : `${preview}…`}
-                        </p>
-                      )}
-                    </section>
-                  ) : null}
-
-                  {item.scholarly_source && (
-                    <p className="miracle-item__source mk-card__source">
-                      <ScrollText size={12} strokeWidth={1.8} aria-hidden="true" /> {item.scholarly_source}
+                  {shortSrc ? (
+                    <p className="mk-card__source">
+                      <ScrollText size={12} strokeWidth={1.8} aria-hidden="true" />
+                      <span>{shortSrc}</span>
                     </p>
-                  )}
+                  ) : null}
+
+                  {isExpanded ? (
+                    <MiracleDetailLazy item={item} related={related} onOpenRelated={setExpanded} />
+                  ) : null}
+
                   <div className="mk-card__footer">
-                    {bodyText && (item.tafsir_summary || bodyText.length > 240) ? (
-                      <button
-                        type="button"
-                        className="mk-expand-btn"
-                        aria-expanded={isExpanded}
-                        onClick={() => setExpanded(isExpanded ? null : item.id)}
-                      >
-                        <BookOpen size={14} strokeWidth={2} aria-hidden="true" />
-                        {isExpanded
-                          ? "إخفاء التفصيل"
-                          : item.tafsir_summary
-                            ? "اقرأ التفصيل العلمي"
-                            : "تفاصيل الموضوع"}
-                      </button>
-                    ) : (
-                      <span />
-                    )}
+                    <button
+                      type="button"
+                      className="mk-expand-btn"
+                      aria-expanded={isExpanded}
+                      onClick={() => setExpanded(isExpanded ? null : item.id)}
+                    >
+                      <BookOpen size={14} strokeWidth={2} aria-hidden="true" />
+                      {isExpanded ? "إخفاء التفصيل" : "اقرأ التفصيل العلمي"}
+                    </button>
                     <ShareFaida
                       variant="icons"
                       title={item.title}
                       url={`https://www.ssunnah.com/miracles#${encodeURIComponent(item.id)}`}
                     />
                   </div>
-                </div>
-                {isAdmin && <AdminQuickEdit section="miracles" searchTerm={item.title} />}
-              </article>
-            );
-          })}
-        </div>
-      </AsyncDataView>
 
-      {isAdmin && <AdminQuickEdit section="miracles" />}
-      <RelatedKnowledge kind="book" query="علوم القرآن إعجاز بياني" title="مواد ذات صلة بعلوم القرآن" limit={6} />
-      <ExploreAlsoNav
-        title="استكشف أيضًا"
-        links={[
-          { href: "/quran-hub", label: "مركز القرآن الكريم" },
-          { href: "/tafsir", label: "علم التفسير" },
-          { href: "/tawhid", label: "التوحيد" },
-          { href: "/mushaf", label: "المصحف الشريف" },
-        ]}
-      />
-      <div className="mk-content-end" role="separator" aria-label="نهاية محتوى القسم">
-        نهاية محتوى القسم
+                  {isAdmin && <AdminQuickEdit section="miracles" searchTerm={item.title} />}
+                </article>
+              );
+            })}
+          </div>
+        </AsyncDataView>
+
+        {isAdmin && <AdminQuickEdit section="miracles" />}
+
+        <ExploreAlsoNav
+          title="استكشف أيضًا"
+          links={[
+            { href: "/quran-hub", label: "مركز القرآن الكريم" },
+            { href: "/tafsir", label: "علم التفسير" },
+            { href: "/hadith", label: "الحديث الشريف" },
+            { href: "/methodology", label: "منهج الموقع" },
+          ]}
+        />
+
+        <div className="mk-content-end" role="separator" aria-label="نهاية محتوى القسم">
+          نهاية محتوى القسم
+        </div>
+        <div className="mk-quiz-wrap">
+          <SectionQuiz sectionId="quran" title="اختبر معلوماتك حول التدبر والإشارات الكونية" count={4} />
+        </div>
       </div>
-      <div className="px-4 pb-6 mt-4">
-        <SectionQuiz sectionId="quran" title="اختبر معلوماتك حول التدبر والإشارات الكونية" count={4} />
-      </div>
-    </div>
     </TopicPage>
+  );
+}
+
+/** تفاصيل تُحمَّل فقط عند التوسيع (lazy content) */
+function MiracleDetailLazy({
+  item,
+  related,
+  onOpenRelated,
+}: {
+  item: MiracleSeedItem;
+  related: MiracleSeedItem[];
+  onOpenRelated: (id: string) => void;
+}) {
+  const intro = extractIntro(item.body);
+  const meaning =
+    extractShariaMeaning(item.body, item.tafsir_summary) ||
+    cleanSummaryBoilerplate(item.tafsir_summary || "");
+  const scientific = extractScientificNote(item.body);
+  const limits = extractLimitsNote(item.body);
+
+  return (
+    <div className="miracle-detail is-open" aria-label="التفصيل العلمي">
+      {intro ? (
+        <section className="mk-detail-block">
+          <h3 className="miracle-detail__label">مقدمة مختصرة</h3>
+          <p className="miracle-detail__text">{intro}</p>
+        </section>
+      ) : null}
+
+      {(item.verse || item.reference) && (
+        <figure className="miracle-ayah">
+          {item.verse ? (
+            <blockquote className="miracle-ayah__text" lang="ar" dir="rtl">
+              ﴿ {item.verse} ﴾
+            </blockquote>
+          ) : null}
+          {item.reference ? (
+            <figcaption className="miracle-ayah__ref">
+              <BookOpen size={12} strokeWidth={2} aria-hidden="true" />
+              <span>{item.reference}</span>
+            </figcaption>
+          ) : null}
+        </figure>
+      )}
+
+      {meaning ? (
+        <section className="miracle-explain" aria-label="المعنى الشرعي">
+          <header className="miracle-explain__head">
+            <span className="miracle-explain__mark" aria-hidden="true" />
+            <h3 className="miracle-explain__label">المعنى الشرعي أولاً</h3>
+          </header>
+          <p className="miracle-explain__text">{meaning}</p>
+        </section>
+      ) : null}
+
+      {scientific ? (
+        <section className="mk-detail-block">
+          <h3 className="miracle-detail__label">وجه التأمل العلمي (بصياغة حذرة)</h3>
+          <p className="miracle-detail__text">{scientific}</p>
+        </section>
+      ) : (
+        <section className="mk-detail-block">
+          <h3 className="miracle-detail__label">التفصيل</h3>
+          <p className="miracle-detail__text">{item.body}</p>
+        </section>
+      )}
+
+      <section className="mk-detail-block">
+        <h3 className="miracle-detail__label">حدود الاستدلال</h3>
+        <p className="miracle-detail__text">
+          {limits ||
+            "الملاحظة العلمية للتأمل فقط؛ لا تُجعل النظرية المعاصرة تفسيراً قطعياً للنص، ولا يُبنى عليها حكم أو عقيدة."}
+        </p>
+      </section>
+
+      {item.scholarly_source ? (
+        <section className="mk-detail-block">
+          <h3 className="miracle-detail__label">المصدر الشرعي والمراجع</h3>
+          <p className="miracle-detail__text">{item.scholarly_source}</p>
+        </section>
+      ) : null}
+
+      <aside className="mk-caution" role="note">
+        <AlertTriangle size={15} strokeWidth={1.8} aria-hidden="true" />
+        <p>{MIRACLE_FIXED_CAUTION}</p>
+      </aside>
+
+      {related.length > 0 ? (
+        <section className="mk-related" aria-label="مواد ذات صلة من قسم الإعجاز">
+          <h3 className="miracle-detail__label">مواد ذات صلة (من نفس القسم)</h3>
+          <ul className="mk-related__list">
+            {related.map((r) => (
+              <li key={r.id}>
+                <a
+                  href={`#${encodeURIComponent(r.id)}`}
+                  className="mk-related__link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onOpenRelated(r.id);
+                    window.history.replaceState(null, "", `#${encodeURIComponent(r.id)}`);
+                    window.setTimeout(() => {
+                      document.getElementById(r.id)?.scrollIntoView({ behavior: "smooth", block: "center" });
+                    }, 40);
+                  }}
+                >
+                  <span className="mk-related__title">{r.title}</span>
+                  <span className="mk-related__meta">
+                    {r.source_type} · {miracleTopicLabel(r)}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+    </div>
   );
 }

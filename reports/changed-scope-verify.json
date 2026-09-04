@@ -1,67 +1,47 @@
 {
-  "generatedAt": "2026-09-04T16:32:43.941Z",
+  "generatedAt": "2026-09-04T17:09:44.456Z",
   "paths": [
-    "artifacts/majalis/data/feature-registry.json",
-    "artifacts/majalis/lib/api-handlers/readyz.js",
-    "artifacts/majalis/lib/api-handlers/search.js",
-    "artifacts/majalis/lib/auto-knowledge-engine/seo-engine.mjs",
-    "artifacts/majalis/src/lib/feature-registry.ts",
-    "artifacts/majalis/src/lib/fiqh-hub-stats.ts",
-    "artifacts/majalis/src/lib/fiqh/fiqhNormalize.ts",
-    "artifacts/majalis/src/lib/lessons/lessonDeduper.ts",
-    "artifacts/majalis/src/lib/lessons/lessonGrouping.ts",
-    "artifacts/majalis/src/main.tsx",
-    "artifacts/majalis/src/pages/account/MorePage.tsx",
-    "artifacts/majalis/src/pages/account/ui/SearchView.tsx",
-    "artifacts/majalis/src/pages/library/ui/LibraryDetailView.tsx",
-    "artifacts/majalis/src/pages/library/ui/LibraryView.tsx",
-    "artifacts/majalis/src/styles/pages/fiqh-hub.css",
-    "reports/changed-scope-report.md",
-    "reports/changed-scope-verify.json"
+    "artifacts/majalis/src/data/content-counts.json",
+    "artifacts/majalis/src/lib/__tests__/miracles-ui-gate.test.ts",
+    "artifacts/majalis/src/lib/miracles-seed.ts",
+    "artifacts/majalis/src/styles/pages/miracles.css",
+    "artifacts/majalis/src/views/MiraclesPage.tsx"
   ],
   "scopes": [
-    "content/data",
-    "backend/api",
-    "other",
-    "ui/layout",
-    "docs"
+    "ui/layout"
   ],
   "scopeIds": [
-    "content_data",
-    "backend_api",
-    "other",
-    "ui_layout",
-    "docs"
+    "ui_layout"
   ],
   "checks": {
     "ui": true,
-    "api": true,
+    "api": false,
     "seo": true,
     "pwa": false,
-    "content": true,
+    "content": false,
     "ios": false,
-    "full": true,
+    "full": false,
     "mushaf": false,
     "build": true,
     "visual": true,
     "lighthouse": true,
     "color_contrast": true,
-    "data_audit": true
+    "data_audit": false
   },
   "outputs": {
-    "scopes": "content/data,backend/api,other,ui/layout,docs",
+    "scopes": "ui/layout",
     "scope_need_build": "true",
     "scope_need_mushaf": "false",
     "scope_need_color_contrast": "true",
-    "scope_need_data_audit": "true",
+    "scope_need_data_audit": "false",
     "scope_need_admin_privacy": "true",
     "scope_admin_only": "false",
     "scope_need_ui": "true",
-    "scope_need_api": "true",
+    "scope_need_api": "false",
     "scope_need_seo": "true",
     "scope_need_pwa": "false",
     "scope_need_ios": "false",
-    "scope_need_full": "true",
+    "scope_need_full": "false",
     "scope_need_visual": "true",
     "scope_docs_only": "false"
   },
