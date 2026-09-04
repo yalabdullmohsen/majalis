@@ -177,7 +177,7 @@ function TickerEntry({ item }: { item: TickerItem }) {
     ? `${item.label} — ${item.displayText} — المصدر: ${item.source}`
     : `${item.label} — ${item.displayText}`;
   return (
-    <Link href={item.href} className="header-ticker__item" aria-label={ariaLabel}>
+    <Link href={item.href} className="header-ticker__item" dir="rtl" aria-label={ariaLabel}>
       <item.Icon size={13} strokeWidth={1.8} className="header-ticker__icon" aria-hidden="true" />
       <span className="header-ticker__label">{item.label}</span>
       <span className="header-ticker__text" aria-hidden="true">
@@ -193,9 +193,9 @@ function TickerEntry({ item }: { item: TickerItem }) {
 }
 
 function durationForDistance(distancePx: number): number {
-  // ~50px/ث — قراءة مريحة للنصوص الطويلة بلا قفز
-  const sec = distancePx / 50;
-  return Math.max(10, Math.min(160, sec));
+  // ~95px/ث — أسرع من السابق (~50) مع بقاء القراءة ممكنة للنصوص الطويلة
+  const sec = distancePx / 95;
+  return Math.max(6, Math.min(90, sec));
 }
 
 type AnimSpec = { from: string; to: string; dur: string };
@@ -254,7 +254,8 @@ export function HeaderTicker() {
       const vpW = vp.clientWidth;
       const itemW = runner.scrollWidth;
       if (vpW < 8 || itemW < 8) return;
-      // من خارج يمين الشاشة إلى خارج يسارها بالكامل (محاور فيزيائية — مناسبة لـ RTL)
+      // فيزيائيًا يمين → يسار: يدخل من خارج اليمين (+vpW) ويخرج بالكامل من اليسار (-itemW).
+      // الـviewport مضبوط direction:ltr حتى لا يقلب flex/RTL نقطة الأصل.
       const from = vpW;
       const to = -itemW;
       const dur = durationForDistance(from - to);
@@ -319,7 +320,7 @@ export function HeaderTicker() {
         animationDuration: anim.dur,
       } as CSSProperties)
     : {
-        // إخفاء حتى القياس — يمنع وميض عند الموضع 0 قبل بدء الدورة
+        // إخفاء حتى القياس — يبدأ من خارج اليمين (نفس اتجاه الحركة)
         opacity: 0,
         transform: "translate3d(100%, 0, 0)",
       };

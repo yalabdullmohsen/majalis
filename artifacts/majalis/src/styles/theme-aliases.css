@@ -386,6 +386,8 @@ html.dark .navbar-v3 .navbar-brand__mark {
   min-width: 0;
   display: flex !important;
   align-items: center !important;
+  justify-content: flex-start !important;
+  direction: ltr !important;
   mask-image: none !important;
   -webkit-mask-image: none !important;
 }
