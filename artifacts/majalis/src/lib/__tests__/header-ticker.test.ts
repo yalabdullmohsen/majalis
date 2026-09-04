@@ -142,6 +142,18 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
   assert(/to\s*=\s*-itemW/.test(tickerSrc), "نهاية الحركة خارج العرض بالكامل (-itemW) — لا قطع منتصف النص");
   assert(/from\s*=\s*vpW/.test(tickerSrc), "بداية الحركة من خارج يمين الشاشة");
   assert(
+    /distancePx\s*\/\s*95/.test(tickerSrc) || tickerSrc.includes("/ 95"),
+    "سرعة الماركي أسرع (~95px/ث) من الإيقاع البطيء السابق",
+  );
+  assert(
+    cssSrc.includes("direction: ltr") && cssSrc.includes("header-ticker__viewport"),
+    "viewport بـ direction:ltr لتثبيت يمين→يسار فيزيائيًا",
+  );
+  assert(
+    tickerSrc.includes('dir="rtl"') || tickerSrc.includes("dir=\"rtl\""),
+    "نص العنصر يبقى rtl للقراءة العربية",
+  );
+  assert(
     !/\bsetInterval\s*\(/.test(tickerSrc),
     "بلا setInterval لتبديل النص أثناء الحركة",
   );

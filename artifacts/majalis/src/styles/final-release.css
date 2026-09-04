@@ -490,6 +490,9 @@ html.dark .navbar-menu-btn--drawer {
   min-width: 0;
   display: flex;
   align-items: center;
+  /* LTR للإحداثيات الفيزيائية فقط — النص العربي يبقى rtl على العنصر */
+  direction: ltr;
+  justify-content: flex-start;
   /* بلا قناع يقصّ بداية/نهاية النص */
   mask-image: none;
   -webkit-mask-image: none;
@@ -518,6 +521,7 @@ html.dark .navbar-menu-btn--drawer {
 }
 
 @keyframes header-ticker-marquee {
+  /* يمين → يسار: من خارج الإطار الأيمن إلى خارج الأيسر */
   from { transform: translate3d(var(--ticker-from, 100%), 0, 0); }
   to { transform: translate3d(var(--ticker-to, -100%), 0, 0); }
 }
