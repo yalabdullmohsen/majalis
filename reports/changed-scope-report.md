@@ -1,8 +1,8 @@
 # تقرير نطاق التغييرات
 
-**التاريخ:** 2026-09-04T04:09:38.502Z
-**عدد الملفات:** 15
-**النطاقات:** content/data، other، ui/layout، docs
+**التاريخ:** 2026-09-04T05:10:08.298Z
+**عدد الملفات:** 53
+**النطاقات:** docs، other، quran/mushaf، ui/layout
 **docs-only:** لا
 
 ## البوابات المقترحة
@@ -13,34 +13,60 @@
 | api | — |
 | seo | ✓ |
 | pwa | — |
-| content | ✓ |
+| content | — |
 | ios | — |
 | full | ✓ |
-| mushaf | — |
+| mushaf | ✓ |
 | build | ✓ |
 | visual | ✓ |
 | lighthouse | ✓ |
 | color_contrast | ✓ |
-| data_audit | ✓ |
+| data_audit | — |
 
 ## الملفات المتغيرة (أول 40)
 
-- `artifacts/majalis/public/data/search/index.json` → content_data
-- `artifacts/majalis/scripts/generate-unified-search-index.mjs` → other
-- `artifacts/majalis/seo-prerender/nations/ashab-ukhdud/index.html` → other
-- `artifacts/majalis/seo-prerender/nations/qawm-yunus/index.html` → other
-- `artifacts/majalis/src/config/navigation.ts` → ui_layout
-- `artifacts/majalis/src/config/sections.registry.ts` → ui_layout
-- `artifacts/majalis/src/features/search/__tests__/unified-search.test.ts` → ui_layout
-- `artifacts/majalis/src/lib/__tests__/sections-registry.test.ts` → ui_layout
-- `artifacts/majalis/src/lib/__tests__/site-sections-final-structure.test.ts` → ui_layout
-- `artifacts/majalis/src/lib/nations/data/knowledge-extras.ts` → ui_layout
-- `artifacts/majalis/src/lib/nav-visibility.ts` → ui_layout
-- `artifacts/majalis/src/lib/site-footer-nav.ts` → ui_layout
-- `artifacts/majalis/src/views/MiraclesPage.tsx` → ui_layout
-- `reports/changed-scope-report.md` → docs
-- `reports/changed-scope-verify.json` → other
+- `artifacts/majalis/content/fiqh/FIQH_CONTENT_QUEUE.md` → docs
+- `artifacts/majalis/content/fiqh/books.json` → other
+- `artifacts/majalis/public/sitemap.xml` → other
+- `artifacts/majalis/seo-prerender/arabic-language/index.html` → other
+- `artifacts/majalis/seo-prerender/arbaeen-nawawi/index.html` → other
+- `artifacts/majalis/seo-prerender/calendar/index.html` → other
+- `artifacts/majalis/seo-prerender/dalail-nubuwwah/index.html` → other
+- `artifacts/majalis/seo-prerender/durus-imaniyya/index.html` → other
+- `artifacts/majalis/seo-prerender/durus-mutanawwia/index.html` → other
+- `artifacts/majalis/seo-prerender/fikr-waqia/index.html` → other
+- `artifacts/majalis/seo-prerender/fiqh-council/archive/index.html` → other
+- `artifacts/majalis/seo-prerender/fiqh-council/categories/index.html` → other
+- `artifacts/majalis/seo-prerender/fiqh-council/fatwas/index.html` → other
+- `artifacts/majalis/seo-prerender/fiqh-council/index.html` → other
+- `artifacts/majalis/seo-prerender/fiqh-council/index/index.html` → other
+- `artifacts/majalis/seo-prerender/fiqh-council/issues/index.html` → other
+- `artifacts/majalis/seo-prerender/fiqh-council/nawazil/index.html` → other
+- `artifacts/majalis/seo-prerender/fiqh-council/resolutions/index.html` → other
+- `artifacts/majalis/seo-prerender/fiqh-qawaid/index.html` → other
+- `artifacts/majalis/seo-prerender/fiqh/index.html` → other
+- `artifacts/majalis/seo-prerender/hadith-science/index.html` → other
+- `artifacts/majalis/seo-prerender/hadith/books/index.html` → other
+- `artifacts/majalis/seo-prerender/hadith/daif/index.html` → other
+- `artifacts/majalis/seo-prerender/hadith/mawdu/index.html` → other
+- `artifacts/majalis/seo-prerender/hadith/sahih/index.html` → other
+- `artifacts/majalis/seo-prerender/iman-topics/index.html` → other
+- `artifacts/majalis/seo-prerender/institutions/index.html` → other
+- `artifacts/majalis/seo-prerender/islamic-glossary/index.html` → other
+- `artifacts/majalis/seo-prerender/islamic-landmarks/index.html` → other
+- `artifacts/majalis/seo-prerender/madhahib/index.html` → other
+- `artifacts/majalis/seo-prerender/maqasid-sharia/index.html` → other
+- `artifacts/majalis/seo-prerender/mawsuaat/index.html` → other
+- `artifacts/majalis/seo-prerender/memorization/index.html` → other
+- `artifacts/majalis/seo-prerender/mind-map/index.html` → other
+- `artifacts/majalis/seo-prerender/occasions/index.html` → other
+- `artifacts/majalis/seo-prerender/prayer-ranks/index.html` → other
+- `artifacts/majalis/seo-prerender/quran-knowledge/index.html` → other
+- `artifacts/majalis/seo-prerender/quran-memorization/index.html` → other
+- `artifacts/majalis/seo-prerender/quran/memorization-plans/index.html` → quran_mushaf
+- `artifacts/majalis/seo-prerender/quran/surah-stories/index.html` → quran_mushaf
 
+… +13 ملفًا
 
 ## سياسات
 

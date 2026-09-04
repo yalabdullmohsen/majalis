@@ -19,30 +19,15 @@
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/calendar</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.88</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/adhkar</loc>
     <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.82</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/quran/surah-stories</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.84</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/quran/makki-madani</loc>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/prayer-ranks</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.76</priority>
   </url>
   <url>
     <loc>https://www.ssunnah.com/prayer-times</loc>
@@ -66,16 +51,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/occasions</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/arbaeen-nawawi</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.82</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/sections</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -91,29 +66,9 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/hadith/sahih</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/hadith/daif</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/hadith/books</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.82</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/hadith/books-and-rulings</loc>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/hadith/mawdu</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.ssunnah.com/prophets/tree</loc>
@@ -176,46 +131,6 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/fiqh-council</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.88</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/fiqh-council/resolutions</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.84</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/fiqh-council/fatwas</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.84</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/fiqh-council/nawazil</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.86</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/fiqh-council/categories</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.82</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/fiqh-council/issues</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.89</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/fiqh-council/index</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.87</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/fiqh-council/archive</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.78</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/updates</loc>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
@@ -226,19 +141,9 @@
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/flashcards</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/tawhid</loc>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/institutions</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.72</priority>
   </url>
   <url>
     <loc>https://www.ssunnah.com/methodology</loc>
@@ -376,11 +281,6 @@
     <priority>0.78</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/madhahib</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.78</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/asma-husna</loc>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
@@ -427,11 +327,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/quran-knowledge</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/occasions-lessons</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -442,29 +337,9 @@
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/memorization</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/hadith-science</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.78</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/ulum-quran</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.78</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/tafsir</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/fiqh-qawaid</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
   </url>
   <url>
     <loc>https://www.ssunnah.com/mushaf</loc>
@@ -509,11 +384,6 @@
     <priority>0.65</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/mind-map</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.65</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/hikam-salaf</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -527,11 +397,6 @@
     <loc>https://www.ssunnah.com/sitemap</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/islamic-glossary</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
   </url>
   <url>
     <loc>https://www.ssunnah.com/prophetic-medicine</loc>
@@ -549,24 +414,9 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/quran-memorization</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/quran/memorization-plans</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.82</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/mutashabihat</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/islamic-landmarks</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
   </url>
   <url>
     <loc>https://www.ssunnah.com/sins-and-rights</loc>
@@ -574,65 +424,10 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/durus-imaniyya</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/durus-mutanawwia</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/iman-topics</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/sunnah-studies</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/tazkiya-topics</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/tarikh-islami</loc>
     <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/usra-mujtama</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/fikr-waqia</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/mawsuaat</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/arabic-language</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/maqasid-sharia</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/dalail-nubuwwah</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.ssunnah.com/learn/aqeedat-ahl-sunnah</loc>
@@ -653,11 +448,6 @@
     <loc>https://www.ssunnah.com/learn/iman-billah</loc>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/quran/surahs</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.ssunnah.com/quran/revelation-order</loc>

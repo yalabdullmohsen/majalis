@@ -168,9 +168,9 @@ export const USUL_HUB_TOPICS: UsulHubTopic[] = [
   {
     id: "qawaid",
     title: "القواعد الأصولية",
-    summary: "اربط بالقواعد الفقهية الكبرى المعروضة في قسم مستقل.",
+    summary: "اربط بأبواب الفقه الظاهرة بعد ضبط القواعد في مصادرها؛ الصفحة المستقلة للقواعد مخفية من الاكتشاف العام.",
     kind: "رابط",
     status: "ready",
-    href: "/fiqh-qawaid",
+    href: "/fiqh",
   },
 ];
