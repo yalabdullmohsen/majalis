@@ -37,16 +37,6 @@
   },
   "redirects": [
     {
-      "source": "/learn/:path*",
-      "destination": "/lessons",
-      "permanent": true
-    },
-    {
-      "source": "/learn",
-      "destination": "/lessons",
-      "permanent": true
-    },
-    {
       "source": "/more",
       "destination": "/",
       "permanent": true
@@ -168,6 +158,16 @@
     },
     {
       "source": "/start-here",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/learn/:path*",
+      "destination": "/lessons",
+      "permanent": true
+    },
+    {
+      "source": "/learn",
       "destination": "/lessons",
       "permanent": true
     },
