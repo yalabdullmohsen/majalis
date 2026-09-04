@@ -197,7 +197,6 @@ export const SECTION_MERGE_REDIRECTS: ReadonlyArray<{ from: string; to: string; 
   { from: "/more", to: "/", note: "المزيد (ملغاة) → الرئيسية" },
   { from: "/quran/recitation-test-ai", to: "/quran-hub", note: "تسميع الذكاء الاصطناعي (ملغى) → مركز القرآن" },
   { from: "/learn", to: "/lessons", note: "دروس التعلّم (ملغاة) → الدروس" },
-  { from: "/learn/:path*", to: "/lessons", note: "دروس التعلّم الفرعية (ملغاة) → الدروس" },
 ];
 
 const NAV: Surface[] = ["moreHub", "home", "search"];
