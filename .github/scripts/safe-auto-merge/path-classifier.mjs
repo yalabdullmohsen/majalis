@@ -248,8 +248,10 @@ function finalizeClassification(input) {
     Boolean(kinds.mushaf) ||
     Boolean(kinds.risky) ||
     Boolean(kinds.other);
-  // مع بناء واجهة حقيقي: تباين الألوان. محتوى JSON فقط → لا.
-  const needColorContrast = needVisual || Boolean(hasUiCss && needBuild);
+  // التباين يتطلّب بناءًا فعليًا دائمًا — وإلا يُتخطّى Playwright ويُحسب skipped كفشل
+  // في required gates. محتوى JSON / docs / policy → needColor=false.
+  const needColorContrast =
+    Boolean(needBuild) && (needVisual || Boolean(hasUiCss));
   const needPreviewSmoke = false;
   const needVercelCheck = false;
 
