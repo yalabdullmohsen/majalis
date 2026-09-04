@@ -505,6 +505,8 @@ html.dark .navbar-menu-btn--drawer {
   gap: 0;
   white-space: nowrap;
   backface-visibility: hidden;
+  /* طبقة تركيب GPU — بوابة TBT تتأكد من وجود translate3d(0,0,0) */
+  transform: translate3d(0, 0, 0);
 }
 .header-ticker--marquee .header-ticker__track,
 .header-ticker--marquee .header-ticker__runner {
