@@ -167,6 +167,14 @@ function SeoManager() {
     void import("@/lib/diagnostics").then(({ logDiagnostic }) => {
       logDiagnostic("custom", "route-change", { location });
     });
+    try {
+      const path = (location.split("?")[0] || "/").trim() || "/";
+      if (path && !path.includes("native-load-error")) {
+        sessionStorage.setItem("mj.last-path", path);
+      }
+    } catch {
+      /* ignore */
+    }
     const timer = window.setTimeout(() => {
       const rawTitle = document.title.split(" | ")[0]?.trim();
       recordRecentPage(location, rawTitle);

@@ -1,32 +1,28 @@
 {
-  "generatedAt": "2026-09-04T04:09:38.493Z",
+  "generatedAt": "2026-09-04T15:47:15.330Z",
   "paths": [
-    "artifacts/majalis/public/data/search/index.json",
-    "artifacts/majalis/scripts/generate-unified-search-index.mjs",
-    "artifacts/majalis/seo-prerender/nations/ashab-ukhdud/index.html",
-    "artifacts/majalis/seo-prerender/nations/qawm-yunus/index.html",
-    "artifacts/majalis/src/config/navigation.ts",
-    "artifacts/majalis/src/config/sections.registry.ts",
-    "artifacts/majalis/src/features/search/__tests__/unified-search.test.ts",
-    "artifacts/majalis/src/lib/__tests__/sections-registry.test.ts",
-    "artifacts/majalis/src/lib/__tests__/site-sections-final-structure.test.ts",
-    "artifacts/majalis/src/lib/nations/data/knowledge-extras.ts",
-    "artifacts/majalis/src/lib/nav-visibility.ts",
-    "artifacts/majalis/src/lib/site-footer-nav.ts",
-    "artifacts/majalis/src/views/MiraclesPage.tsx",
+    "artifacts/majalis/public/native-load-error.html",
+    "artifacts/majalis/src/App.tsx",
+    "artifacts/majalis/src/components/LazyRouteFallback.tsx",
+    "artifacts/majalis/src/components/topic/TopicPage.tsx",
+    "artifacts/majalis/src/lib/__tests__/canonical-apex-gate.test.ts",
+    "artifacts/majalis/src/lib/__tests__/prophets-final-routes.test.ts",
+    "artifacts/majalis/src/main.tsx",
+    "artifacts/majalis/src/styles/pages/prophet-stories.css",
+    "artifacts/majalis/src/views/ProphetStoriesPage.tsx",
     "reports/changed-scope-report.md",
     "reports/changed-scope-verify.json"
   ],
   "scopes": [
-    "content/data",
     "other",
     "ui/layout",
+    "content/data",
     "docs"
   ],
   "scopeIds": [
-    "content_data",
     "other",
     "ui_layout",
+    "content_data",
     "docs"
   ],
   "checks": {
@@ -45,7 +41,7 @@
     "data_audit": true
   },
   "outputs": {
-    "scopes": "content/data,other,ui/layout,docs",
+    "scopes": "other,ui/layout,content/data,docs",
     "scope_need_build": "true",
     "scope_need_mushaf": "false",
     "scope_need_color_contrast": "true",

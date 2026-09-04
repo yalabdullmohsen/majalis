@@ -65,16 +65,26 @@ html.dark .nb-table__row--clickable:hover td {
 
 /* ── Page Shell ── */
 .prophets-lux-page {
+  min-height: 100dvh;
   min-height: 100svh;
+  width: 100%;
+  margin: 0;
   background: var(--ps-canvas);
   color: var(--ps-ink);
   font-family: var(--font-body);
   direction: rtl;
-  padding-bottom: calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 16px);
+  padding-bottom: calc(var(--bottom-nav-height, var(--nav-h, 64px)) + var(--inset-bottom, 0px) + 24px);
+  box-sizing: border-box;
+}
+
+.prophets-lux-page--embedded {
+  min-height: 0;
+  padding-bottom: 0;
+  background: transparent;
 }
 
 .prophets-light-section {
-  background: var(--ps-canvas);
+  background: transparent;
 }
 
 /* ── Hero (قائمة) ── */
@@ -423,12 +433,18 @@ html.dark .nb-table__row--clickable:hover td {
 .prophet-detail-lux {
   position: relative;
   isolation: isolate;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  min-height: 100dvh;
   min-height: 100svh;
+  box-sizing: border-box;
   /* سطح صلب قابل لقياس التباين — التدرّج على ::before */
   background-color: #0B1A2E;
   background-image: none;
   color: var(--text-on-dark, #FFFFFF);
   direction: rtl;
+  padding-bottom: calc(var(--bottom-nav-height, var(--nav-h, 64px)) + var(--inset-bottom, 0px) + 28px);
   /* لون التمييز على الداكن: يُفتَّح بقوة حتى يبقى مقروءاً مع أغمق قيم PROPHET_HUE */
   --prophet-color-on-dark: color-mix(in srgb, var(--prophet-color, #1F6B56) 28%, #F4F7F5);
   --prophet-accent-on-dark: color-mix(in srgb, var(--prophet-accent, var(--mj-accent)) 55%, #FFFFFF);
@@ -439,6 +455,8 @@ html.dark .nb-table__row--clickable:hover td {
   --ps-detail-muted: var(--text-on-dark-secondary, #F3F5F4);
   --ps-detail-border: rgba(243, 245, 244, 0.22);
   --ps-detail-card: rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+  overflow: visible;
 }
 .prophet-detail-lux::before {
   content: "";
@@ -1251,14 +1269,28 @@ html.dark .nb-table__row--clickable:hover td {
   opacity: 0.7;
 }
 .prophet-not-found {
-  padding: var(--ds-space-8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
   text-align: center;
-  background: var(--ps-canvas);
-  min-height: 40vh;
+  padding: 3rem 1.5rem;
+  min-height: 60dvh;
+  background: transparent;
 }
 .prophet-not-found__msg {
-  color: var(--ps-ink-soft);
-  margin-top: 1rem;
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ps-text-primary, var(--ps-ink, #1A1A18));
+}
+.prophet-not-found__hint {
+  margin: 0;
+  max-width: 22rem;
+  line-height: 1.7;
+  color: var(--ps-detail-muted, var(--ps-ink-soft, #4A5560));
+  opacity: 0.95;
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -1810,3 +1842,159 @@ html.dark .nb-table__row--clickable:hover td {
 .nb-table__row--clickable .nb-table__count {
   color: var(--prophet-accent, var(--ps-emerald));
 }
+
+/* ════════════════════════════════════════════════════════════
+   Full-bleed — بلا حواف بيضاء حول القسم على الجوال
+   ════════════════════════════════════════════════════════════ */
+.topic-page.topic-page--prophets {
+  width: 100%;
+  max-width: none;
+  min-height: 100dvh;
+  min-height: 100svh;
+  margin: 0;
+  border-radius: 0;
+  overflow: visible;
+  background: var(--ps-canvas, var(--mj-bg, #FAF8F5));
+  padding-bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px);
+  box-sizing: border-box;
+}
+
+.topic-page.topic-page--prophets .topic-page__crumb,
+.topic-page.topic-page--prophets .topic-page__body,
+.topic-page.topic-page--prophets .topic-page__group-title {
+  background: transparent;
+  max-width: none;
+}
+
+.topic-page.topic-page--prophets .topic-page__hero,
+.topic-page.topic-page--prophets .topic-page__hero-inner,
+.topic-page.topic-page--prophets [data-section-hero] {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.topic-page.topic-page--prophets .topic-page__body {
+  padding-inline: max(0.75rem, var(--page-gutter, 1rem));
+}
+
+html[data-theme="dark"] .topic-page.topic-page--prophets,
+html.dark .topic-page.topic-page--prophets {
+  background: var(--ps-canvas, var(--bg, #131A18));
+}
+
+/* هيكل المسار الكسول — نفس خلفية القسم بلا وميض أبيض */
+.lrf-wrap.lrf-wrap--prophets,
+.lrf-wrap.lrf-wrap--prophet-detail {
+  width: 100%;
+  min-height: 100dvh;
+  min-height: 100svh;
+  margin: 0;
+  border-radius: 0;
+  box-sizing: border-box;
+  padding-bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px);
+}
+.lrf-wrap.lrf-wrap--prophets {
+  background: var(--mj-bg, #FAF8F5);
+}
+.lrf-wrap.lrf-wrap--prophet-detail {
+  background: #0B1A2E;
+}
+html[data-theme="dark"] .lrf-wrap.lrf-wrap--prophets,
+html.dark .lrf-wrap.lrf-wrap--prophets {
+  background: var(--bg, #131A18);
+}
+html[data-theme="dark"] .lrf-wrap.lrf-wrap--prophet-detail,
+html.dark .lrf-wrap.lrf-wrap--prophet-detail {
+  background: #0B1A2E;
+}
+.lrf-wrap--prophet-detail .lrf-skel__hero,
+.lrf-wrap--prophet-detail .lrf-skel__line,
+.lrf-wrap--prophet-detail .lrf-skel__card {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* طلاء غلاف التطبيق بنفس لون القسم — يمنع شرائط فاتحة حول المحتوى الداكن */
+.app-main:has([data-prophets-shell="1"]),
+.app-main:has(.prophet-detail-lux),
+.app-main:has(.topic-page--prophets),
+.app-main:has(.lrf-wrap--prophets),
+.app-main:has(.lrf-wrap--prophet-detail) {
+  padding-inline: 0 !important;
+}
+
+.app-shell:has(.prophet-detail-lux),
+.app-shell:has(.lrf-wrap--prophet-detail),
+#root:has(.prophet-detail-lux),
+#root:has(.lrf-wrap--prophet-detail),
+.app-main:has(.prophet-detail-lux),
+.app-main:has(.lrf-wrap--prophet-detail) {
+  background: #0B1A2E !important;
+}
+
+.app-shell:has(.topic-page--prophets),
+.app-shell:has(.prophets-lux-page),
+.app-shell:has(.lrf-wrap--prophets),
+#root:has(.topic-page--prophets),
+#root:has(.prophets-lux-page),
+#root:has(.lrf-wrap--prophets),
+.app-main:has(.topic-page--prophets),
+.app-main:has(.prophets-lux-page),
+.app-main:has(.lrf-wrap--prophets) {
+  background: var(--ps-canvas, var(--mj-bg, #FAF8F5)) !important;
+}
+
+html[data-theme="dark"] .app-shell:has(.topic-page--prophets),
+html.dark .app-shell:has(.topic-page--prophets),
+html[data-theme="dark"] .app-shell:has(.prophets-lux-page),
+html.dark .app-shell:has(.prophets-lux-page),
+html[data-theme="dark"] .app-shell:has(.lrf-wrap--prophets),
+html.dark .app-shell:has(.lrf-wrap--prophets),
+html[data-theme="dark"] #root:has(.topic-page--prophets),
+html.dark #root:has(.topic-page--prophets),
+html[data-theme="dark"] .app-main:has(.topic-page--prophets),
+html.dark .app-main:has(.topic-page--prophets),
+html[data-theme="dark"] .app-main:has(.prophets-lux-page),
+html.dark .app-main:has(.prophets-lux-page),
+html[data-theme="dark"] .app-main:has(.lrf-wrap--prophets),
+html.dark .app-main:has(.lrf-wrap--prophets) {
+  background: var(--ps-canvas, var(--bg, #131A18)) !important;
+}
+
+html[data-theme="dark"] .app-shell:has(.prophet-detail-lux),
+html.dark .app-shell:has(.prophet-detail-lux),
+html[data-theme="dark"] #root:has(.prophet-detail-lux),
+html.dark #root:has(.prophet-detail-lux),
+html[data-theme="dark"] .app-main:has(.prophet-detail-lux),
+html.dark .app-main:has(.prophet-detail-lux),
+html[data-theme="dark"] .app-main:has(.lrf-wrap--prophet-detail),
+html.dark .app-main:has(.lrf-wrap--prophet-detail) {
+  background: #0B1A2E !important;
+}
+
+/* الشريط السفلي فوق خلفية القسم — بلا كشف أبيض مخالف */
+@media (max-width: 879px) {
+  .app-shell:has(.prophet-detail-lux) .bottom-nav,
+  .app-shell:has(.prophet-detail-lux) .bottom-nav--v2,
+  .app-shell:has(.lrf-wrap--prophet-detail) .bottom-nav,
+  .app-shell:has(.lrf-wrap--prophet-detail) .bottom-nav--v2 {
+    background-color: #0B1A2E !important;
+    border-block-start-color: rgba(255, 255, 255, 0.12) !important;
+  }
+  .app-shell:has(.prophet-detail-lux) .bottom-nav--v2 .bottom-nav__tab,
+  .app-shell:has(.prophet-detail-lux) .bottom-nav .bottom-nav__tab,
+  .app-shell:has(.lrf-wrap--prophet-detail) .bottom-nav--v2 .bottom-nav__tab,
+  .app-shell:has(.lrf-wrap--prophet-detail) .bottom-nav .bottom-nav__tab {
+    color: rgba(243, 245, 244, 0.72) !important;
+  }
+  .app-shell:has(.prophet-detail-lux) .bottom-nav--v2 .bottom-nav__tab.is-active,
+  .app-shell:has(.prophet-detail-lux) .bottom-nav .bottom-nav__tab.is-active,
+  .app-shell:has(.lrf-wrap--prophet-detail) .bottom-nav--v2 .bottom-nav__tab.is-active,
+  .app-shell:has(.lrf-wrap--prophet-detail) .bottom-nav .bottom-nav__tab.is-active {
+    color: #f2dfaa !important;
+    background: color-mix(in srgb, #1f6b56 28%, transparent) !important;
+  }
+}
+

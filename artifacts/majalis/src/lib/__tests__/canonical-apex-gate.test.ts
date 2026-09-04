@@ -116,5 +116,9 @@ assert.equal(/\/lessons\?tab=/.test(appTsx), false, "App.tsx: بلا /lessons?ta
 const errorPage = readFileSync(resolve(root, "public/native-load-error.html"), "utf8");
 assert.match(errorPage, /https:\/\/www\.ssunnah\.com\//);
 assert.equal(/majlisilm\.com/.test(errorPage), false, "native-load-error: بلا majlisilm");
+assert.match(errorPage, /جاري إعادة التحميل/, "native-load-error: عنوان ناعم أولًا بلا خطأ فوري");
+assert.match(errorPage, /mj\.last-path/, "native-load-error: يعيد لنفس المسار عبر mj.last-path");
+assert.match(errorPage, /mj\.native-load-retry/, "native-load-error: إعادة تلقائية مرة واحدة");
+assert.match(errorPage, /navigator\.onLine/, "native-load-error: يفرّق offline عن فشل مؤقت");
 
 console.log("canonical-apex-gate.test.ts: ok");

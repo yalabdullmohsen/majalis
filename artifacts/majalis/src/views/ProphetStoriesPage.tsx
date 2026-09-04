@@ -1,6 +1,6 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import { CalendarDays, ChevronLeft, ChevronRight, HelpCircle, LayoutList, Sparkles } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { PROPHETS, getProphet, resolveProphetSlug, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -12,6 +12,7 @@ import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { truncateAtWord } from "@/lib/utils";
 import { ScholarlyTrustBadge } from "@/components/ScholarlyTrustBadge";
 import { GraphRelatedRail } from "@/widgets/RelatedRail";
+import { navigateTo } from "@/lib/navigation-intent";
 import "@/styles/pages/prophet-stories.css";
 
 function knowledgeBodyBlocks(body: string): { title?: string; paragraphs: string[] }[] {
@@ -352,30 +353,57 @@ function ProphetDetailView({
   }, [slug, p]);
 
   useEffect(() => {
+    let cancelled = false;
     setDbStory(null);
     setDbLoading(true);
-    supabase
-      .from("prophet_stories")
-      .select("content, citations")
-      .eq("slug", canonicalSlug)
-      .eq("is_approved", true)
-      .maybeSingle()
-      .then(({ data }) => {
+    void Promise.resolve(
+      supabase
+        .from("prophet_stories")
+        .select("content, citations")
+        .eq("slug", canonicalSlug)
+        .eq("is_approved", true)
+        .maybeSingle(),
+    )
+      .then(({ data, error }) => {
+        if (cancelled) return;
+        if (error && import.meta.env.DEV) {
+          console.warn("[prophets] db story", error.message);
+        }
         setDbStory(data ?? null);
         setDbLoading(false);
+      })
+      .catch((err: unknown) => {
+        if (cancelled) return;
+        if (import.meta.env.DEV) {
+          console.warn("[prophets] db story failed", err);
+        }
+        setDbStory(null);
+        setDbLoading(false);
       });
+    return () => {
+      cancelled = true;
+    };
   }, [canonicalSlug]);
 
   useEffect(() => {
     let cancelled = false;
     setKnowledge(null);
     setKnowledgeLoading(true);
-    void getKnowledgeItem("prophets", `prophet-${canonicalSlug}`).then((item) => {
-      if (!cancelled) {
-        setKnowledge(item);
+    void getKnowledgeItem("prophets", `prophet-${canonicalSlug}`)
+      .then((item) => {
+        if (!cancelled) {
+          setKnowledge(item);
+          setKnowledgeLoading(false);
+        }
+      })
+      .catch((err: unknown) => {
+        if (cancelled) return;
+        if (import.meta.env.DEV) {
+          console.warn("[prophets] knowledge failed", err);
+        }
+        setKnowledge(null);
         setKnowledgeLoading(false);
-      }
-    });
+      });
     return () => {
       cancelled = true;
     };
@@ -441,9 +469,17 @@ function ProphetDetailView({
 
   if (!p) {
     return (
-      <div className="prophet-not-found">
-        <button type="button" className="prophet-lux-back" onClick={onBack}>← العودة</button>
-        <p className="prophet-not-found__msg">النبي غير موجود</p>
+      <div className="prophet-detail-lux prophet-not-found" data-prophets-shell="1">
+        <button type="button" className="prophet-lux-back" onClick={onBack}>
+          ← العودة للقائمة
+        </button>
+        <p className="prophet-not-found__msg" role="status">
+          لم يتم العثور على هذا المحتوى.
+        </p>
+        <p className="prophet-not-found__hint">تأكد من رابط النبي أو اختر من قائمة الأنبياء والرسل.</p>
+        <button type="button" className="prophet-lux-back" onClick={onBack}>
+          عرض قائمة الأنبياء
+        </button>
       </div>
     );
   }
@@ -456,6 +492,7 @@ function ProphetDetailView({
   return (
     <div
       className="prophet-detail-lux"
+      data-prophets-shell="1"
       style={{
         "--prophet-color": color,
         "--prophet-accent": accent,
@@ -1013,35 +1050,56 @@ const TABS: { id: View; label: string }[] = [
   { id: "quiz",      label: "اختبر نفسك" },
 ];
 
-export default function ProphetStoriesPage() {
+export default function ProphetStoriesPage({
+  params,
+}: {
+  params?: { slug?: string };
+}) {
   const [search, setSearch] = useState("");
-  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [view, setView] = useState<View>("grid");
   const searchRef = useRef<HTMLInputElement>(null);
+  const [location] = useLocation();
+
+  /** slug من المسار فور الرسم — بلا انتظار useEffect (يمنع وميض القائمة/الخطأ) */
+  const routeSlug = useMemo(() => {
+    const raw = params?.slug;
+    if (raw) return resolveProphetSlug(raw);
+    const match = location.match(
+      /\/(?:prophets|prophet-stories|prophets-stories|anbiya)\/([^/?#]+)/,
+    );
+    return match ? resolveProphetSlug(match[1]) : null;
+  }, [params?.slug, location]);
+
+  const openProphet = useCallback((slug: string) => {
+    const next = resolveProphetSlug(slug);
+    navigateTo(`/prophets/${next}`, { mode: "screen" });
+  }, []);
+
+  const backToList = useCallback(() => {
+    navigateTo("/prophets", { mode: "screen" });
+  }, []);
 
   useEffect(() => {
+    if (routeSlug) return;
     applyPageSeo({
       path: "/prophets",
       title: "الأنبياء والرسل | سُنّة",
-      description: "قصص ٢٥ نبياً ورسولاً مذكورين في القرآن الكريم: سيرهم ومعجزاتهم وأقوامهم والدروس المستفادة، مع خط زمني ومقارنة وأولو العزم.",
+      description:
+        "قصص ٢٥ نبياً ورسولاً مذكورين في القرآن الكريم: سيرهم ومعجزاتهم وأقوامهم والدروس المستفادة، مع خط زمني ومقارنة وأولو العزم.",
       keywords: ["قصص الأنبياء", "الأنبياء في القرآن", "معجزات الأنبياء", "أولو العزم", "أنبياء الإسلام"],
     });
-  }, []);
+  }, [routeSlug]);
 
-  useEffect(() => {
-    const path = window.location.pathname;
-    const match = path.match(/\/(?:prophets|prophet-stories|prophets-stories|anbiya)\/([^/]+)$/);
-    if (match) setSelectedSlug(resolveProphetSlug(match[1]));
-  }, []);
+  // sessionStorage mj.last-path يُحدَّث عالميًا من SeoManager
 
   const results = searchProphets(search);
 
-  if (selectedSlug) {
+  if (routeSlug) {
     return (
       <ProphetDetailView
-        slug={selectedSlug}
-        onBack={() => setSelectedSlug(null)}
-        onNavigate={setSelectedSlug}
+        slug={routeSlug}
+        onBack={backToList}
+        onNavigate={openProphet}
       />
     );
   }
@@ -1053,12 +1111,13 @@ export default function ProphetStoriesPage() {
   return (
     <SectionTemplatePage
       route="/prophets"
+      className="topic-page--prophets"
       title="الأنبياء والرسل"
       subtitle={`أحسن القصص — ${PROPHETS.length} نبياً مذكوراً في القرآن الكريم · ٥ أولو العزم`}
       eyebrow="القصص والأعلام"
       groupTitle="عرض قصص الأنبياء"
     >
-    <div className="prophets-lux-page prophets-lux-page--embedded">
+    <div className="prophets-lux-page prophets-lux-page--embedded" data-prophets-shell="1">
       <p className="text-sm text-muted-foreground leading-relaxed mb-4 rounded-xl border border-border/60 bg-muted/20 px-3 py-2.5">
         هؤلاء الأنبياء والرسل الذين ذكرهم الله بأسمائهم في القرآن الكريم؛ وقد أخبر سبحانه أنه أرسل رسلاً آخرين لم يقصصهم علينا: ﴿وَرُسُلًا قَدْ قَصَصْنَاهُمْ عَلَيْكَ مِن قَبْلُ وَرُسُلًا لَّمْ نَقْصُصْهُمْ عَلَيْكَ﴾ [النساء: 164].
       </p>
@@ -1088,28 +1147,28 @@ export default function ProphetStoriesPage() {
         {/* خط الزمني */}
         {view === "timeline" && (
           <div role="tabpanel" id="pst-panel-timeline" aria-labelledby="pst-tab-timeline" className="prophets-lux-container">
-            <TimelineView onSelect={setSelectedSlug} />
+            <TimelineView onSelect={openProphet} />
           </div>
         )}
 
         {/* أولو العزم */}
         {view === "ulul-azm" && (
           <div className="prophets-lux-container nb-container">
-            <UlulAzmView onSelect={setSelectedSlug} />
+            <UlulAzmView onSelect={openProphet} />
           </div>
         )}
 
         {/* المعجزات */}
         {view === "miracles" && (
           <div role="tabpanel" id="pst-panel-miracles" aria-labelledby="pst-tab-miracles" className="prophets-lux-container nb-container">
-            <MiraclesView onSelect={setSelectedSlug} />
+            <MiraclesView onSelect={openProphet} />
           </div>
         )}
 
         {/* مقارنة */}
         {view === "compare" && (
           <div role="tabpanel" id="pst-panel-compare" aria-labelledby="pst-tab-compare" className="prophets-lux-container nb-container">
-            <CompareView onSelect={setSelectedSlug} />
+            <CompareView onSelect={openProphet} />
           </div>
         )}
 
@@ -1147,7 +1206,7 @@ export default function ProphetStoriesPage() {
                       key={p.slug}
                       prophet={p}
                       index={i}
-                      onSelect={() => setSelectedSlug(p.slug)}
+                      onSelect={() => openProphet(p.slug)}
                     />
                   ))}
                 </div>
