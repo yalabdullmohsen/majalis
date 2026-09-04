@@ -136,8 +136,7 @@
       ],
       "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.84,
-      "robots": "noindex, follow"
+      "priority": 0.84
     },
     {
       "path": "/quran/makki-madani",
@@ -2512,8 +2511,7 @@
       ],
       "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.82,
-      "robots": "noindex, follow"
+      "priority": 0.82
     },
     {
       "path": "/mutashabihat",
@@ -2939,9 +2937,9 @@
         "التعرف الصوتي"
       ],
       "sitemap": false,
-      "robots": "noindex, nofollow",
       "changefreq": "monthly",
-      "priority": 0.4
+      "priority": 0.4,
+      "robots": "noindex, nofollow"
     },
     {
       "path": "/quran/surahs",
@@ -2956,8 +2954,7 @@
       ],
       "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.7,
-      "robots": "noindex, follow"
+      "priority": 0.7
     },
     {
       "path": "/quran/search",
@@ -2970,9 +2967,9 @@
         "آيات قرآنية"
       ],
       "sitemap": false,
-      "robots": "noindex, follow",
       "changefreq": "monthly",
-      "priority": 0.3
+      "priority": 0.3,
+      "robots": "noindex, follow"
     },
     {
       "path": "/quran/revelation-order",
