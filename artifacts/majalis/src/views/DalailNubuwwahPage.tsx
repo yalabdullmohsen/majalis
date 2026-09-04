@@ -7,6 +7,7 @@ export default function DalailNubuwwahPage() {
     <SectionAccordionLayout
       eyebrow="السيرة والتاريخ"
       title="دلائل النبوة"
+      route="/dalail-nubuwwah"
       sections={DALAIL_NUBUWWAH}
       relatedLinks={accordionExploreLinks("dalail")}
     />

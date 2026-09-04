@@ -110,15 +110,15 @@ export default function MiraclesPage({
   useEffect(() => {
     applyPageSeo({
       path: "/miracles",
-      title: "الإعجاز العلمي | سُنّة",
-      description: "الإعجاز العلمي وإشارات كونية في الوحي بحذر منهجي؛ المعتمد: الإعجاز البياني والغيبي والتشريعي، لا ربط بنظريات قابلة للنقض.",
-      keywords: ["إعجاز علمي", "إشارات كونية", "تفكر في الخلق", "إعجاز بياني", "علوم القرآن"],
+      title: "الإعجاز العلمي في القرآن والسنة | سُنّة",
+      description: "تأملات علمية منضبطة في إشارات الوحي؛ بلا جزم قطعي بنظريات متغيّرة، وبلا إعجاز عددي.",
+      keywords: ["إعجاز علمي", "إعجاز القرآن", "إعجاز السنة", "إشارات كونية", "تفكر في الخلق"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
-          name: "الإعجاز العلمي",
-          description: "موضوعات للتأمل في آيات الخلق مع تنبيه منهجي على حدود الاستدلال؛ محتوى معتمد في منهج سُنّة",
+          name: "الإعجاز العلمي في القرآن والسنة",
+          description: "تأملات علمية منضبطة مع تنبيه منهجي؛ لا تُجعل النظريات تفسيراً قطعياً للنص الشرعي",
           itemListElement: CATEGORIES.filter(c => c !== "الكل").map((cat, i) => ({
             "@type": "ListItem",
             position: i + 1,
@@ -178,41 +178,83 @@ export default function MiraclesPage({
       breadcrumb={[
         { label: "الرئيسية", href: "/" },
         { label: "الأقسام", href: "/sections" },
-        { label: "الإعجاز العلمي" },
+        { label: "الإعجاز العلمي في القرآن والسنة" },
       ]}
-      eyebrow="بحذر منهجي"
-      title="الإعجاز العلمي"
-      subtitle="إشارات كونية في الوحي عند ثبوت المعنى — بلا إعجاز عددي ولا ربط بنظريات قابلة للنقض."
+      eyebrow="تأملات منضبطة"
+      title="الإعجاز العلمي في القرآن والسنة"
+      subtitle="قسمان واضحان: القرآن الكريم · السنة النبوية — بصياغة علمية آمنة بلا مبالغات."
       quote={{
         text: "﴿سَنُرِيهِمْ آيَاتِنَا فِي الْآفَاقِ وَفِي أَنفُسِهِمْ حَتَّىٰ يَتَبَيَّنَ لَهُمْ أَنَّهُ الْحَقُّ﴾",
         ref: "فصّلت: ٥٣",
         type: "ayah",
       }}
+      tabs={[
+        { id: "all", label: "الكل" },
+        { id: "quran", label: "الإعجاز العلمي في القرآن الكريم" },
+        { id: "sunnah", label: "الإعجاز العلمي في السنة النبوية" },
+      ]}
+      activeTab={sourceType === "قرآن" ? "quran" : sourceType === "سنة" ? "sunnah" : "all"}
+      onTabChange={(id) => {
+        if (id === "quran") setSourceType("قرآن");
+        else if (id === "sunnah") setSourceType("سنة");
+        else setSourceType("الكل");
+      }}
+      syncTabParam={false}
     >
     <div className="mk-page mk-page--embedded" dir="rtl">
+
+      <div className="mk-hub-split" role="navigation" aria-label="أقسام الإعجاز">
+        <button
+          type="button"
+          className={`mk-hub-split__card${sourceType === "قرآن" ? " is-active" : ""}`}
+          onClick={() => setSourceType("قرآن")}
+        >
+          <BookOpen size={18} strokeWidth={1.8} aria-hidden="true" />
+          <span className="mk-hub-split__title">الإعجاز العلمي في القرآن الكريم</span>
+          <span className="mk-hub-split__desc">تأملات في آيات الخلق والكون — يُستأنس بها ولا تُجعل تفسيراً قطعياً.</span>
+        </button>
+        <button
+          type="button"
+          className={`mk-hub-split__card${sourceType === "سنة" ? " is-active" : ""}`}
+          onClick={() => setSourceType("سنة")}
+        >
+          <ScrollText size={18} strokeWidth={1.8} aria-hidden="true" />
+          <span className="mk-hub-split__title">الإعجاز العلمي في السنة النبوية</span>
+          <span className="mk-hub-split__desc">إشارات في الحديث عند ثبوت المعنى — بصياغة: ذكر بعض الباحثين / من أوجه التأمل.</span>
+        </button>
+      </div>
 
       <p className="mk-hero__note" style={{ marginBottom: "1rem" }}>
         <AlertTriangle size={16} strokeWidth={1.8} aria-hidden="true" />
         <span>
-          للتقرير المنهجي راجع{" "}
+          هذا القسم يعرض تأملات علمية منضبطة، ولا يجعل النظريات المتغيرة تفسيراً قطعياً للنص الشرعي.
+          راجع{" "}
           <Link href="/ulum-quran" className="mk-hero__link">علوم القرآن</Link>
-          ؛ ولا تُبنى عقيدة أو حكم على دعاوى علمية معاصرة. الموضوعات غير المحرَّرة محجوبة عن العرض.
+          {" "}و{" "}
+          <Link href="/methodology" className="mk-hero__link">منهج الموقع</Link>
+          . لا تُبنى عقيدة أو حكم على دعاوى علمية معاصرة.
         </span>
       </p>
 
       {/* ══ بحث + تصفية قابلة للطي (بدون تكدس أوسام دائم) ══ */}
       {status === "success" && (
         <div className="mk-search-bar">
-          <div className="mk-search-bar__row">
+          <form
+            className="mk-search-bar__row"
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
             <div className="mk-search-bar__input-wrap">
               <Search size={16} strokeWidth={2} aria-hidden="true" className="mk-search-bar__icon" />
               <input
                 type="search"
                 className="mk-search-bar__input"
-                placeholder="ابحث في الإشارات الكونية..."
+                placeholder="ابحث داخل قسم الإعجاز الحالي…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                aria-label="بحث في الإشارات الكونية"
+                aria-label="بحث في الإعجاز العلمي"
+                enterKeyHint="search"
               />
             </div>
             <button
@@ -224,7 +266,7 @@ export default function MiraclesPage({
               <SlidersHorizontal size={15} strokeWidth={2} aria-hidden="true" />
               <span>تصفية</span>
             </button>
-          </div>
+          </form>
           {!loading && (
             <span className="mk-search-bar__count">{displayed.length} موضوع</span>
           )}
@@ -380,8 +422,11 @@ export default function MiraclesPage({
           { href: "/quran/surah-stories", label: "قصص السور" },
         ]}
       />
+      <div className="mk-content-end" role="separator" aria-label="نهاية محتوى القسم">
+        نهاية محتوى القسم
+      </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والإعجاز" count={4} />
+        <SectionQuiz sectionId="quran" title="اختبر معلوماتك حول التدبر والإشارات الكونية" count={4} />
       </div>
     </div>
     </TopicPage>

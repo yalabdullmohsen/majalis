@@ -7,6 +7,7 @@ export default function MaqasidShariaPage() {
     <SectionAccordionLayout
       eyebrow="أصول الفقه"
       title="مقاصد الشريعة الإسلامية"
+      route="/maqasid-sharia"
       sections={MAQASID_SHARIA}
       relatedLinks={accordionExploreLinks("maqasid")}
     />

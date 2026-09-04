@@ -5,6 +5,7 @@ export default function TazkiyaTopicsPage() {
     <LazySectionAccordionPage
       eyebrow="تزكية النفس والأخلاق"
       title="الأخلاق والأمراض والأسئلة الكبرى"
+      route="/tazkiya-topics"
       exportName="TAZKIYA_TOPICS"
       relatedKey="tazkiya"
       load={() => import("@/lib/tazkiya-topics-data")}

@@ -1,179 +1,236 @@
-import { useState } from "react";
-import { PageHeader } from "@/components/ui-common";
+import { useMemo, useState } from "react";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { ExploreAlsoNav, type ExploreAlsoLink } from "@/components/ExploreAlsoNav";
 import type { DarsSection } from "@/lib/dars-types";
+import { arabicMatchAny } from "@/lib/arabic-search";
+import { toArabicDigits } from "@/lib/utils";
+import "@/styles/pages/section-hub.css";
+
+/** ألوان هادئة ومتنوّعة للبطاقات — بلا ألوان debug الصارخة */
+const CARD_ACCENTS = [
+  "#1F6B56", // أخضر الهوية
+  "#3F6F5A", // زيتي
+  "#0E7490", // زمردي/سماوي هادئ
+  "#2563A8", // أزرق هادئ
+  "#8A6A2F", // ذهبي خفيف
+  "#7A3E52", // عنابي هادئ
+  "#5B4B8A", // بنفسجي علمي خفيف
+  "#2F6B4A", // أخضر ثانٍ
+] as const;
 
 type Props = {
   eyebrow: string;
   title: string;
   sections: DarsSection[];
-  stat3Label?: string;
-  stat3Value?: number;
-  /** مسار القسم — إن وُجد يُستخدم قالب العقيدة */
-  route?: string;
+  subtitle?: string;
+  description?: string;
+  /** مسار القسم — يفعّل SectionHero / قالب الأقسام الموحّد */
+  route: string;
   relatedLinks?: ExploreAlsoLink[];
   relatedTitle?: string;
+  /** تسميات الإحصاءات الاختيارية */
+  statsLabels?: { doors?: string; topics?: string; level?: string };
 };
 
 export function SectionAccordionLayout({
   eyebrow,
   title,
   sections,
-  stat3Label,
-  stat3Value,
+  subtitle,
+  description,
   route,
   relatedLinks,
   relatedTitle,
+  statsLabels,
 }: Props) {
   const [openId, setOpenId] = useState<string | null>(null);
+  const [filterId, setFilterId] = useState<string>("all");
+  const [search, setSearch] = useState("");
+  const [draft, setDraft] = useState("");
+
   const totalLessons = sections.reduce((s, sec) => s + sec.lessons.length, 0);
-  const avg = Math.round(totalLessons / sections.length);
+  const levelLabel = statsLabels?.level ?? "تدرّج ميسر";
 
-  const body = (
-    <>
-      <div className="max-w-3xl mx-auto px-4 mb-8">
-        <div className="grid grid-cols-3 gap-3">
-          <StatBox value={sections.length} label="باب" color="#16a34a" />
-          <StatBox value={totalLessons} label="موضوع" color="#0284c7" />
-          <StatBox
-            value={stat3Value ?? avg}
-            label={stat3Label ?? "موضوع/باب"}
-            color="#b45309"
-          />
-        </div>
-      </div>
+  const filtered = useMemo(() => {
+    const q = search.trim();
+    return sections
+      .filter((sec) => filterId === "all" || sec.id === filterId)
+      .map((sec) => {
+        if (!q) return sec;
+        const lessons = sec.lessons.filter((lesson) =>
+          arabicMatchAny(
+            [lesson.title, lesson.summary ?? "", lesson.body ?? "", sec.title],
+            q,
+          ),
+        );
+        return { ...sec, lessons };
+      })
+      .filter((sec) => sec.lessons.length > 0 || (!q && (filterId === "all" || filterId === sec.id)));
+  }, [sections, filterId, search]);
 
-      <div className="max-w-3xl mx-auto px-4 pb-8 space-y-3">
-        {sections.map((sec) => (
-          <SectionCard
-            key={sec.id}
-            section={sec}
-            open={openId === sec.id}
-            onToggle={() => setOpenId((prev) => (prev === sec.id ? null : sec.id))}
-          />
-        ))}
-      </div>
+  const resolvedSubtitle =
+    subtitle ??
+    `مسار ميسر — ${toArabicDigits(sections.length)} أبواب · ${toArabicDigits(totalLessons)} موضوعًا`;
 
-      {relatedLinks && relatedLinks.length > 0 && (
-        <div className="max-w-3xl mx-auto px-4 pb-20">
-          <ExploreAlsoNav title={relatedTitle ?? "استكشف أيضًا"} links={relatedLinks} />
-        </div>
-      )}
-    </>
-  );
-
-  if (route) {
-    return (
-      <SectionTemplatePage
-        route={route}
-        eyebrow={eyebrow}
-        title={title}
-        subtitle={`فهرس دراسي — ${sections.length} بابًا · ${totalLessons} موضوعًا (ملخصات ومتون موجزة للتعلّم الذاتي)`}
-        groupTitle={`أقسام ${title}`}
-      >
-        {body}
-      </SectionTemplatePage>
-    );
-  }
+  const intro =
+    description ??
+    "فهرس دراسي مرتّب للطلبة، ببطاقات واضحة وفلاتر موحّدة — دون عناصر تجريبية أو أرقام عشوائية.";
 
   return (
-    <div className="page-shell" dir="rtl">
-      <PageHeader
-        eyebrow={eyebrow}
-        title={title}
-        subtitle={`فهرس دراسي — ${sections.length} بابًا · ${totalLessons} موضوعًا (ملخصات ومتون موجزة للتعلّم الذاتي)`}
-      />
-      {body}
-    </div>
-  );
-}
-
-function StatBox({ value, label, color }: { value: number; label: string; color: string }) {
-  return (
-    <div
-      className="rounded-2xl p-4 text-center"
-      style={{ background: `${color}12`, border: `1px solid ${color}30` }}
+    <SectionTemplatePage
+      route={route}
+      eyebrow={eyebrow}
+      title={title}
+      subtitle={resolvedSubtitle}
+      groupTitle={`أبواب ${title}`}
     >
-      <div className="text-2xl font-extrabold" style={{ color }}>{value}</div>
-      <div className="text-xs text-gray-500 mt-0.5">{label}</div>
-    </div>
-  );
-}
-
-function SectionCard({
-  section,
-  open,
-  onToggle,
-}: {
-  section: DarsSection;
-  open: boolean;
-  onToggle: () => void;
-}) {
-  return (
-    <div
-      className="rounded-2xl border overflow-hidden bg-[var(--mj-surface)] shadow-sm"
-      style={{ borderColor: open ? `${section.color}60` : "var(--mj-hairline)" }}
-    >
-      <button
-        type="button"
-        onClick={onToggle}
-        className="w-full text-right flex items-center gap-3 px-5 py-4 transition-colors"
-        style={{ background: open ? `${section.color}10` : undefined }}
-      >
-        <span
-          className="flex-shrink-0 text-xs font-bold px-2.5 py-1 rounded-full text-white hidden sm:inline"
-          style={{ background: section.color }}
-        >
-          {section.num}
-        </span>
-        <span className="text-2xl flex-shrink-0">{section.icon}</span>
-        <div className="flex-1 min-w-0">
-          <h3 className="font-extrabold text-gray-900 dark:text-white text-base leading-tight">
-            {section.title}
-          </h3>
-          <span className="text-xs text-gray-400 dark:text-gray-300">{section.lessons.length} موضوعًا</span>
-        </div>
-        <span
-          className="flex-shrink-0 text-lg transition-transform duration-200"
-          style={{ color: section.color, transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
-        >
-          ▾
-        </span>
-      </button>
-
-      {open && (
-        <div className="px-5 pb-5">
-          <div className="h-0.5 mb-4 rounded-full" style={{ background: `${section.color}30` }} />
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {section.lessons.map((lesson, idx) => (
-              <li key={lesson.id}>
-                <div className="flex items-start gap-2.5 px-3 py-2.5 rounded-xl text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                  <span
-                    className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white text-xs font-bold mt-0.5"
-                    style={{ background: section.color }}
-                  >
-                    {idx + 1}
-                  </span>
-                  <span className="leading-snug font-medium">
-                    {lesson.title}
-                    {lesson.summary && (
-                      <span className="block mt-1 text-xs text-gray-500 dark:text-gray-300 leading-relaxed font-medium">
-                        {lesson.summary}
-                      </span>
-                    )}
-                    {lesson.body && (
-                      <span className="block mt-1.5 text-xs text-gray-600 dark:text-gray-300 leading-relaxed font-medium border-r-2 pr-2" style={{ borderColor: section.color }}>
-                        {lesson.body}
-                      </span>
-                    )}
-                  </span>
-                </div>
-              </li>
-            ))}
+      <div className="section-hub" dir="rtl">
+        <section className="section-hub__intro" aria-label="تعريف القسم">
+          <p className="section-hub__intro-text">{intro}</p>
+          <ul className="section-hub__stats" aria-label="إحصاءات القسم">
+            <li className="section-hub__stat">
+              <span className="section-hub__stat-value">{toArabicDigits(sections.length)}</span>
+              <span className="section-hub__stat-label">{statsLabels?.doors ?? "بابًا"}</span>
+            </li>
+            <li className="section-hub__stat">
+              <span className="section-hub__stat-value">{toArabicDigits(totalLessons)}</span>
+              <span className="section-hub__stat-label">{statsLabels?.topics ?? "موضوعًا"}</span>
+            </li>
+            <li className="section-hub__stat">
+              <span className="section-hub__stat-value" style={{ fontSize: "0.95rem" }}>
+                {levelLabel}
+              </span>
+              <span className="section-hub__stat-label">المستوى</span>
+            </li>
           </ul>
+        </section>
+
+        <div className="section-hub__toolbar">
+          <form
+            className="section-hub__search"
+            onSubmit={(e) => {
+              e.preventDefault();
+              setSearch(draft);
+            }}
+          >
+            <input
+              type="search"
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              placeholder="ابحث داخل هذا القسم…"
+              aria-label="بحث داخل القسم"
+              enterKeyHint="search"
+              autoComplete="off"
+              dir="rtl"
+            />
+            <button type="submit" className="section-hub__search-btn">
+              بحث
+            </button>
+          </form>
+          <div className="section-hub__chips" role="toolbar" aria-label="فلاتر الأبواب">
+            <button
+              type="button"
+              className={`section-hub__chip${filterId === "all" ? " is-active" : ""}`}
+              onClick={() => setFilterId("all")}
+            >
+              الكل
+            </button>
+            {sections.map((sec) => (
+              <button
+                key={sec.id}
+                type="button"
+                className={`section-hub__chip${filterId === sec.id ? " is-active" : ""}`}
+                onClick={() => {
+                  setFilterId(sec.id);
+                  setOpenId(sec.id);
+                }}
+              >
+                {sec.title}
+              </button>
+            ))}
+          </div>
         </div>
-      )}
-    </div>
+
+        {filtered.length === 0 ? (
+          <p className="section-hub__empty" role="status">
+            لا نتائج مطابقة — جرّب كلمات أخرى أو اختر بابًا من الفلاتر.
+          </p>
+        ) : (
+          <div className="section-hub__grid">
+            {filtered.map((sec, idx) => {
+              const open = openId === sec.id;
+              const accent = resolveAccent(sec.color, idx);
+              return (
+                <article
+                  key={sec.id}
+                  className={`section-hub__card${open ? " is-open" : ""}`}
+                  style={{ ["--card-accent" as string]: accent }}
+                >
+                  <span className="section-hub__card-kicker">الباب {toArabicDigits(idx + 1)}</span>
+                  <h3 className="section-hub__card-title">{sec.title}</h3>
+                  <p className="section-hub__card-meta">
+                    {toArabicDigits(sec.lessons.length)} موضوعًا
+                  </p>
+                  <div className="section-hub__card-actions">
+                    <button
+                      type="button"
+                      className="section-hub__cta"
+                      aria-expanded={open}
+                      onClick={() => setOpenId(open ? null : sec.id)}
+                    >
+                      {open ? "إخفاء الموضوعات" : "ابدأ الباب"}
+                    </button>
+                    {!open && (
+                      <button
+                        type="button"
+                        className="section-hub__cta section-hub__cta--ghost"
+                        onClick={() => setOpenId(sec.id)}
+                      >
+                        عرض الموضوعات
+                      </button>
+                    )}
+                  </div>
+
+                  {open && (
+                    <ul className="section-hub__topics">
+                      {sec.lessons.map((lesson) => (
+                        <li key={lesson.id} className="section-hub__topic">
+                          <h4 className="section-hub__topic-title">{lesson.title}</h4>
+                          {lesson.summary ? (
+                            <p className="section-hub__topic-summary">{lesson.summary}</p>
+                          ) : null}
+                          {lesson.body ? (
+                            <p className="section-hub__topic-body">{lesson.body}</p>
+                          ) : null}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        )}
+
+        <div className="section-hub__end" role="separator" aria-label="نهاية محتوى القسم">
+          نهاية محتوى القسم
+        </div>
+
+        {relatedLinks && relatedLinks.length > 0 ? (
+          <div className="section-hub__related">
+            <ExploreAlsoNav title={relatedTitle ?? "روابط ذات صلة"} links={relatedLinks} />
+          </div>
+        ) : null}
+      </div>
+    </SectionTemplatePage>
   );
+}
+
+function resolveAccent(raw: string | undefined, idx: number): string {
+  if (raw && /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(raw.trim())) {
+    // تجنّب ألوان debug الصارخة السابقة (أزرق/بنفسجي/أحمر فاقع)
+    const banned = new Set(["#1d4ed8", "#7c3aed", "#be123c", "#0284c7", "#16a34a", "#b45309"]);
+    if (!banned.has(raw.trim().toLowerCase())) return raw.trim();
+  }
+  return CARD_ACCENTS[idx % CARD_ACCENTS.length]!;
 }

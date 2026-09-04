@@ -12,16 +12,18 @@ export function LazySectionAccordionPage({
   load,
   exportName,
   relatedKey,
-  stat3Label,
-  stat3Value,
+  route,
+  subtitle,
+  description,
 }: {
   eyebrow: string;
   title: string;
   load: Loader;
   exportName: string;
   relatedKey: AccordionExploreKey;
-  stat3Label?: string;
-  stat3Value?: number;
+  route: string;
+  subtitle?: string;
+  description?: string;
 }) {
   const [sections, setSections] = useState<DarsSection[] | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -67,8 +69,9 @@ export function LazySectionAccordionPage({
       eyebrow={eyebrow}
       title={title}
       sections={sections}
-      stat3Label={stat3Label}
-      stat3Value={stat3Value}
+      route={route}
+      subtitle={subtitle}
+      description={description}
       relatedLinks={accordionExploreLinks(relatedKey)}
     />
   );
