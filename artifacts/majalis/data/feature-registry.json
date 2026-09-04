@@ -149,7 +149,7 @@
       "apiEndpoints": ["/api/assistant/health", "/api/assistant"],
       "requiredSecrets": ["ANTHROPIC_API_KEY"],
       "requiredTables": [],
-      "usesMock": true,
+      "usesMock": false,
       "phase": 1
     },
     {

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, BookOpen, Scale, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { useAssistantChat } from "@/hooks/useAssistantChat";
 import { AssistantChatView } from "@/components/assistant/AssistantChatView";
@@ -11,26 +11,9 @@ import "@/styles/pages/assistant-shell.css";
 import { SITE_URL } from "@/lib/site-config";
 export { ASSISTANT_FAILURE_MESSAGE as FAILURE_MESSAGE } from "@/hooks/useAssistantChat";
 
-const QUICK_PROMPTS = [
-  "ما فضل قراءة القرآن الكريم؟",
-  "ما هي شروط صحة الصلاة؟",
-  "ما حكم صيام يوم عرفة؟",
-  // أُزيل سؤال الميراث: باب المواريث محجوب في المساعد (يُحال لأهل العلم)،
-  // فاقتراحه يوهم المستخدم بأن المنصة تُفتي فيه.
-  "ما فضل ذكر الله وما أنواعه؟",
-  "ما هي أركان الإيمان الستة؟",
-  "ما فضل الصلاة على النبي ﷺ؟",
-  "ما هي أركان الإسلام الخمسة؟",
-  "ما هي أذكار الصباح والمساء المسنونة؟",
-  "ما شروط الوضوء وكيفيته؟",
-  "ما هي المحرمات في الزواج في الإسلام؟",
-  "ما حكم زيارة القبور وما آدابها؟",
-  "ما هي فضائل شهر رمضان؟",
-];
-
 const RESEARCHER_LINKS = [
-  { href: "/fiqh-council/research-assistant", label: "الباحث الفقهي" },
-  { href: "/fiqh", label: "الفقه والأحكام" },
+  { href: "/fiqh-council/research-assistant", label: "الباحث الفقهي", Icon: Scale },
+  { href: "/fiqh", label: "الفقه والأحكام", Icon: BookOpen },
 ];
 
 export default function AssistantPage() {
@@ -41,7 +24,8 @@ export default function AssistantPage() {
     applyPageSeo({
       path: "/assistant",
       title: "المساعد العلمي الذكي | سُنّة",
-      description: "مساعد شرعي ذكي يجيب على أسئلتك في الفقه والعقيدة والقرآن والحديث، مدعوم بالذكاء الاصطناعي.",
+      description:
+        "مساعد شرعي ذكي يجيب على أسئلتك في الفقه والعقيدة والقرآن والحديث، مدعوم بالذكاء الاصطناعي.",
       keywords: ["مساعد إسلامي", "مساعد شرعي", "أسئلة شرعية", "الذكاء الاصطناعي الإسلامي"],
       jsonLd: [
         {
@@ -59,50 +43,37 @@ export default function AssistantPage() {
   }, []);
 
   return (
-    <div className="assistant-page">
-      <header className="assistant-header">
-        <div className="assistant-header-top">
-          <h1 className="assistant-title">المساعد العلمي</h1>
+    <div className="assistant-page assistant-page--modern">
+      <header className="assistant-header assistant-header--modern">
+        <div className="asp-hero">
+          <div className="asp-hero__glow" aria-hidden="true" />
+          <div className="asp-hero__icon" aria-hidden="true">
+            <Sparkles size={26} strokeWidth={2} />
+          </div>
+          <div className="asp-hero__copy">
+            <p className="asp-hero__eyebrow">ذكاء اصطناعي · إرشاد علمي</p>
+            <h1 className="assistant-title">المساعد العلمي</h1>
+            <p className="assistant-intro">
+              اسأل في القرآن والسنة والفقه والعقيدة. نفضّل الإجابات المستندة إلى مصادر المنصة،
+              والفتوى الشخصية تُعرض على عالم مختص.
+            </p>
+          </div>
         </div>
-        <p className="assistant-intro">
-          مساعد ذكي يرشدك في المسائل العلمية العامة داخل سُنّة. الفتوى الشخصية تُعرض على
-          عالم مختص.
-        </p>
 
         <div className="asp-researcher-links">
-          {RESEARCHER_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="asp-researcher-link"
-            >
-              {link.label} ←
-            </Link>
-          ))}
+          {RESEARCHER_LINKS.map((link) => {
+            const Icon = link.Icon;
+            return (
+              <Link key={link.href} href={link.href} className="asp-researcher-link">
+                <Icon size={14} aria-hidden="true" />
+                {link.label}
+              </Link>
+            );
+          })}
         </div>
-
-        {chat.messages.length === 0 && (
-          <div className="asp-quick-prompts">
-            <p className="asp-quick-prompts__label">
-              أسئلة مقترحة:
-            </p>
-            <div className="asp-quick-prompts__grid">
-              {QUICK_PROMPTS.map((prompt) => (
-                <button
-                  key={prompt}
-                  type="button"
-                  onClick={() => chat.sendQuestion(prompt)}
-                  className="asp-quick-btn"
-                >
-                  {prompt}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
       </header>
 
-      <section className="assistant-chat" aria-label="محادثة المساعد العلمي">
+      <section className="assistant-chat assistant-chat--modern" aria-label="محادثة المساعد العلمي">
         <AssistantChatView
           messages={chat.messages}
           input={chat.input}
@@ -112,11 +83,14 @@ export default function AssistantPage() {
           bottomRef={chat.bottomRef}
           onQuickPrompt={chat.submitQuestion}
           onRetry={chat.retryLast}
+          onClear={chat.clearChat}
+          health={chat.health}
         />
       </section>
 
       <footer className="asp-footer">
-        <AlertTriangle size={13} className="inline ms-1" />الإجابات مولَّدة آليًا وتحتمل الخطأ، راجع أهل العلم في المسائل الشخصية الدقيقة.
+        <AlertTriangle size={13} className="inline ms-1" aria-hidden="true" />
+        الإجابات مولَّدة آليًا وتحتمل الخطأ، راجع أهل العلم في المسائل الشخصية الدقيقة.
       </footer>
     </div>
   );

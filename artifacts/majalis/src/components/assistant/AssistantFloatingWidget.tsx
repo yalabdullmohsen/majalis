@@ -70,18 +70,27 @@ export function AssistantFloatingWidget() {
             onClick={() => setOpen(false)}
           />
           <section
-            className="assistant-panel"
+            className="assistant-panel assistant-panel--modern"
             role="dialog"
             aria-modal="true"
             aria-labelledby="assistant-panel-title"
           >
             <header className="assistant-panel__head">
-              <div>
-                <p className="assistant-panel__eyebrow">إرشاد علمي</p>
-                <h2 id="assistant-panel-title">المساعد العلمي</h2>
+              <div className="assistant-panel__brand">
+                <span className="assistant-panel__icon" aria-hidden="true">
+                  <Sparkles size={18} />
+                </span>
+                <div>
+                  <p className="assistant-panel__eyebrow">إرشاد علمي بالذكاء الاصطناعي</p>
+                  <h2 id="assistant-panel-title">المساعد العلمي</h2>
+                </div>
               </div>
               <div className="assistant-panel__actions">
-                <Link href="/assistant" className="assistant-panel__full-link" onClick={() => setOpen(false)}>
+                <Link
+                  href="/assistant"
+                  className="assistant-panel__full-link"
+                  onClick={() => setOpen(false)}
+                >
                   صفحة كاملة
                 </Link>
                 <button
@@ -95,9 +104,6 @@ export function AssistantFloatingWidget() {
                 </button>
               </div>
             </header>
-            <p className="assistant-panel__intro">
-              مساعد ذكي للإرشاد العلمي العام. الفتوى الخاصة تُعرض على عالم مختص.
-            </p>
             <AssistantChatView
               compact
               messages={chat.messages}
@@ -107,6 +113,8 @@ export function AssistantFloatingWidget() {
               onSubmit={chat.submit}
               onQuickPrompt={chat.submitQuestion}
               onRetry={chat.retryLast}
+              onClear={chat.clearChat}
+              health={chat.health}
               bottomRef={chat.bottomRef}
             />
           </section>

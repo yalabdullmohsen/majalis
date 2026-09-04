@@ -969,7 +969,13 @@ async function handleAssistantRequest(req, res) {
   if (req.method === "OPTIONS") { endEmpty(res, 204); return; }
 
   if (req.method === "GET") {
-    sendJson(res, 200, { ok: true, available: true });
+    // المساعد متاح دائمًا (مصادر محلية + احتياطي)، و«ai» يُشير لوجود مفتاح Anthropic.
+    sendJson(res, 200, {
+      ok: true,
+      available: true,
+      ai: hasAnthropicApiKey(),
+      mode: hasAnthropicApiKey() ? "ai" : "local",
+    });
     return;
   }
 
@@ -1055,23 +1061,7 @@ async function handleAssistantRequest(req, res) {
     return;
   }
 
-  // 5. Anthropic — إجابة تعليمية عامة غير مسنَدة بمصادر محلية.
-  // لا تُوصف بأنها «مستندة» ولا تُصنَّف fiqh_answer، والتنبيه إلزامي.
-  if (hasAnthropicApiKey()) {
-    const anthropicAnswer = await tryCallAnthropic(userMessage, conversationHistory);
-    if (anthropicAnswer) {
-      sendJson(res, 200, successPayload(anthropicAnswer, {
-        safety_classification: "general_guidance",
-        disclaimer: ISLAMIC_DISCLAIMER,
-        citations: [],
-        confidence: 0.5,
-        grounded: false,
-      }));
-      return;
-    }
-  }
-
-  // 6. محرك الاستدلال الداخلي (Supabase) — يبحث في قاعدة المعرفة
+  // 5. محرك الاستدلال الداخلي (Supabase) أولًا — إجابات مستندة بمصادر عند توفرها.
   const isIslamicQuery = looksLikeIslamicKnowledgeQuery(userMessage);
   if (isIslamicQuery) {
     try {
@@ -1099,6 +1089,22 @@ async function handleAssistantRequest(req, res) {
       }
     } catch (groundedErr) {
       console.error("[assistant] Reasoning engine error:", groundedErr?.message || groundedErr);
+    }
+  }
+
+  // 6. Anthropic — إجابة تعليمية عامة غير مسنَدة بمصادر محلية (بعد فشل الاستناد).
+  // لا تُوصف بأنها «مستندة» ولا تُصنَّف fiqh_answer، والتنبيه إلزامي.
+  if (hasAnthropicApiKey()) {
+    const anthropicAnswer = await tryCallAnthropic(userMessage, conversationHistory);
+    if (anthropicAnswer) {
+      sendJson(res, 200, successPayload(anthropicAnswer, {
+        safety_classification: "general_guidance",
+        disclaimer: ISLAMIC_DISCLAIMER,
+        citations: [],
+        confidence: 0.5,
+        grounded: false,
+      }));
+      return;
     }
   }
 
