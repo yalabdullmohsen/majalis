@@ -43,6 +43,8 @@ import "./styles/breakpoints.css";
 import "./styles/typography-scale.css";
 import "./styles/typography-app.css";
 import "./index.css";
+/* لغة الهيرو/البطاقات العصرية — تُعمَّم على كل الأقسام */
+import "./styles/components/modern-section-shell.css";
 // contrast/a11y الثقيلة + صفحات متخصصة — بعد load (انظر loadNonCriticalCss)
 // جسر aliases: يوجّه --brand/--em-* /shadcn إلى لوحة --mj-* (آخر شيء)
 import "./styles/theme-aliases.css";

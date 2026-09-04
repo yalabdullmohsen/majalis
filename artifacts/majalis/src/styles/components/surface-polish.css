@@ -1,32 +1,42 @@
-/* تلميع سطحي — تباين أوضح وسطوع بطاقات أعلى */
+/* تلميع سطحي — مواءَم مع modern-section-shell (هيرو زمردي عصري) */
 .hp-featured-card {
-  border-radius: 20px !important;
-  border: 1px solid rgba(18, 54, 42, 0.16) !important;
-  background: #fffefb !important;
-  box-shadow: 0 8px 28px rgba(18, 54, 42, 0.07) !important;
+  border-radius: var(--mss-radius-card, 1.15rem) !important;
+  border: 1px solid color-mix(in srgb, #1f6b56 28%, transparent) !important;
+  background-color: var(--mss-hero-from, #0f4a3a) !important;
+  background-image: var(--mss-hero-gradient) !important;
+  box-shadow: var(--mss-shadow-hero, 0 16px 40px rgba(15, 74, 58, 0.22)) !important;
+  color: var(--mss-on-hero, #faf5ea) !important;
 }
 .hp-featured-card__title {
-  color: #12362a !important;
+  color: #fff !important;
   font-weight: 800 !important;
 }
 .hp-featured-card__desc {
-  color: #524e4a !important;
+  color: var(--mss-on-hero-muted, rgba(250, 245, 234, 0.88)) !important;
+}
+.hp-featured-card__cta {
+  color: var(--mss-on-hero-accent, #f2dfaa) !important;
+}
+.hp-featured-card__icon {
+  color: var(--mss-on-hero-accent, #f2dfaa) !important;
 }
 .hp-explore-item {
-  border-radius: 16px !important;
-  border: 1px solid rgba(18, 54, 42, 0.14) !important;
-  background: #fffefb !important;
+  border-radius: var(--mss-radius-card, 1.15rem) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent) !important;
+  background: var(--mj-surface, #fff) !important;
+  box-shadow: var(--mss-shadow-card, 0 10px 28px rgba(36, 31, 24, 0.08));
 }
 .hp-explore-item__title {
-  color: #161513 !important;
+  color: var(--mss-hero-from, #0f4a3a) !important;
   font-weight: 700 !important;
 }
 .hp-explore-item__desc {
-  color: #524e4a !important;
+  color: var(--mj-ink-2, #524e4a) !important;
 }
 .srch-quick-card {
-  border-radius: 16px !important;
-  border: 1px solid rgba(18, 54, 42, 0.16) !important;
-  background: #fffefb !important;
-  color: #12362a !important;
+  border-radius: var(--mss-radius-card, 1.15rem) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent) !important;
+  background: var(--mj-surface, #fff) !important;
+  color: var(--mss-hero-from, #0f4a3a) !important;
+  box-shadow: var(--mss-shadow-card, 0 10px 28px rgba(36, 31, 24, 0.08));
 }

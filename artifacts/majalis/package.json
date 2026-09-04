@@ -309,7 +309,7 @@
     "test:public-weak-content": "node --import tsx src/lib/__tests__/public-weak-content-gate.test.ts",
     "test:researches-library": "node --import tsx src/lib/__tests__/researches-library.test.ts",
     "test:evidence-purity": "node --import tsx src/lib/__tests__/evidence-text-purity.test.ts",
-    "test:section-hub-visual": "node --import tsx src/lib/__tests__/section-hub-visual-regression.test.ts",
+    "test:section-hub-visual": "node --import tsx src/lib/__tests__/section-hub-visual-regression.test.ts && node --import tsx src/lib/__tests__/modern-section-shell-gate.test.ts",
     "audit:duplicate-descs": "node scripts/strip-enrichment-boilerplate.mjs --report",
     "test:safe-reload": "node scripts/test-safe-reload.mjs",
     "verify:seo-prerender": "node scripts/verify-seo-prerender-coverage.mjs",

@@ -1,13 +1,13 @@
 /* قالب TopicPage — لافتة سمة + شرائح + بطاقات محايدة */
 
 .topic-page {
-  --topic-hero-from: #0F3D2E;
-  --topic-hero-to: #123F2E;
+  --topic-hero-from: var(--mss-hero-from, #0f4a3a);
+  --topic-hero-to: var(--mss-hero-to, #245f4d);
   --topic-accent: var(--mj-brand);
   --section-accent: var(--topic-accent);
-  --topic-on-hero: #FFFFFF;
-  --topic-on-hero-muted: #E8EEEC;
-  --topic-on-hero-accent: #E8D5A3;
+  --topic-on-hero: var(--mss-on-hero, #faf5ea);
+  --topic-on-hero-muted: var(--mss-on-hero-muted, #e8eeec);
+  --topic-on-hero-accent: var(--mss-on-hero-accent, #f2dfaa);
   direction: rtl;
   overflow-x: clip;
   padding-bottom: calc(var(--nav-h, 64px) + var(--fab-space, 56px) + 24px + var(--inset-bottom, 0px));
@@ -37,19 +37,20 @@
   max-width: 42rem;
   margin: 0.65rem max(0.75rem, var(--page-gutter, 1rem)) 0;
   margin-inline: auto;
-  border-radius: 22px;
+  border-radius: var(--mss-radius-hero, 22px);
   overflow: hidden;
   /* لون صلب أولاً — بوابة التباين ترفض background-image بلا background-color */
   background-color: var(--topic-hero-from);
   background-image: linear-gradient(
-    145deg,
+    135deg,
     var(--topic-hero-from) 0%,
+    var(--mss-hero-mid, #1f6b56) 55%,
     var(--topic-hero-to) 100%
   );
   color: var(--topic-on-hero);
   padding: max(1.75rem, 28px) max(1.5rem, 24px) 1.35rem;
   border: 1px solid color-mix(in srgb, #fff 12%, transparent);
-  box-shadow: 0 8px 24px -14px rgba(11, 32, 24, 0.4);
+  box-shadow: var(--mss-shadow-hero, 0 8px 24px -14px rgba(11, 32, 24, 0.4));
 }
 
 .topic-page__hero-inner {

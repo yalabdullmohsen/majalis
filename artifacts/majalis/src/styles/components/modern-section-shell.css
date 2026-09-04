@@ -1,0 +1,360 @@
+/**
+ * modern-section-shell — لغة التصميم العصرية الموحّدة لكل أقسام سُنّة.
+ * مصدر الهوية: هيرو المساعد العلمي (asp-hero) — زمردي غني + وهج ذهبي ناعم.
+ *
+ * تُطبَّق على:
+ * - PageHero الممتد (.page-hero-mj--bleed) لكل الصفحات الداخلية
+ * - SectionHero / TopicPage (.topic-page__hero)
+ * - لوبي الأقسام (.section-lobby__head) ما لم يُخفَ بصريًا
+ * - بطاقات المحتوى (.hub-card / .card)
+ */
+
+:root {
+  --mss-hero-from: #0f4a3a;
+  --mss-hero-mid: #1f6b56;
+  --mss-hero-to: #245f4d;
+  --mss-hero-glow: rgba(210, 180, 93, 0.22);
+  --mss-hero-glow-strong: rgba(210, 180, 93, 0.28);
+  --mss-on-hero: #faf5ea;
+  --mss-on-hero-muted: rgba(250, 245, 234, 0.88);
+  --mss-on-hero-accent: #f2dfaa;
+  --mss-radius-hero: 1.35rem;
+  --mss-radius-card: 1.15rem;
+  --mss-shadow-hero: 0 16px 40px rgba(15, 74, 58, 0.22);
+  --mss-shadow-card: 0 10px 28px rgba(36, 31, 24, 0.08);
+  --mss-hero-gradient: radial-gradient(
+      circle at 100% 0%,
+      var(--mss-hero-glow),
+      transparent 42%
+    ),
+    linear-gradient(
+      135deg,
+      var(--mss-hero-from) 0%,
+      var(--mss-hero-mid) 58%,
+      var(--mss-hero-to) 100%
+    );
+}
+
+/* —— خلفية هيرو عصرية قابلة لإعادة الاستخدام —— */
+.mss-hero-surface,
+.page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero),
+.topic-page__hero,
+.section-lobby__head:not(.section-lobby__head--bare) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  box-sizing: border-box;
+  background-color: var(--mss-hero-from);
+  background-image: var(--mss-hero-gradient);
+  color: var(--mss-on-hero);
+  border: 1px solid color-mix(in srgb, #1f6b56 28%, transparent);
+  box-shadow: var(--mss-shadow-hero);
+}
+
+.mss-hero-surface::after,
+.page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero)::after,
+.topic-page__hero::after,
+.section-lobby__head:not(.section-lobby__head--bare)::after {
+  content: "";
+  position: absolute;
+  inset: auto -18% -42% auto;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--mss-hero-glow-strong), transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* —— PageHero الداخلي (غير الرئيسية) —— */
+.page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) {
+  border-radius: 0;
+  border-inline: 0;
+  border-block-start: 0;
+  /* الحافة السفلية تُظهر انحناء الهوية داخل الصفحة */
+  border-block-end: 1px solid color-mix(in srgb, #1f6b56 35%, transparent);
+}
+
+.page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__content {
+  position: relative;
+  z-index: 1;
+}
+
+.page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__eyebrow {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 0.22rem 0.65rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, #fff 12%, transparent);
+  border: 1px solid color-mix(in srgb, #faf5ea 22%, transparent);
+  color: var(--mss-on-hero-accent) !important;
+  letter-spacing: 0.02em;
+  font-weight: 800;
+}
+
+.page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back {
+  color: #fff !important;
+  background: color-mix(in srgb, #fff 18%, transparent) !important;
+  border-color: color-mix(in srgb, #faf5ea 40%, transparent) !important;
+}
+
+.page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn.mj-btn--ghost,
+.page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn--ghost {
+  color: #fff !important;
+  background: color-mix(in srgb, #fff 18%, transparent) !important;
+  border-color: color-mix(in srgb, #faf5ea 40%, transparent) !important;
+}
+
+.page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__desc {
+  color: var(--mss-on-hero-muted) !important;
+}
+
+.page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .pattern-backdrop {
+  color: #fff;
+  opacity: 0.08;
+}
+
+/* —— Topic / Section hero —— */
+.topic-page__hero {
+  border-radius: var(--mss-radius-hero, 22px);
+}
+
+.topic-page__hero-inner,
+.topic-page__hero .safe-hero__body {
+  position: relative;
+  z-index: 1;
+}
+
+.topic-page__eyebrow,
+.topic-page__hero .safe-hero__badge {
+  color: var(--mss-on-hero-accent, var(--topic-on-hero-accent, #f2dfaa)) !important;
+  background: color-mix(in srgb, #fff 12%, transparent) !important;
+  border: 1px solid color-mix(in srgb, #faf5ea 22%, transparent);
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+.section-hero__icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(250, 245, 234, 0.28);
+  color: var(--mss-on-hero-accent, #f2dfaa);
+  flex-shrink: 0;
+}
+
+/* —— لوبي الأقسام: هيرو عنوان عصري —— */
+.section-lobby__head:not(.section-lobby__head--bare) {
+  gap: 0.55rem;
+  padding: 1.05rem 1.15rem;
+  border-radius: var(--mss-radius-hero);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.section-lobby__head:not(.section-lobby__head--bare) > * {
+  position: relative;
+  z-index: 1;
+}
+
+.section-lobby__head:not(.section-lobby__head--bare) .section-lobby__title,
+.section-lobby__head:not(.section-lobby__head--bare) .quran-hub-page__title {
+  color: #fff;
+}
+
+.section-lobby__head:not(.section-lobby__head--bare) .section-lobby__title::after,
+.section-lobby__head:not(.section-lobby__head--bare) .quran-hub-page__title::after {
+  background: var(--mss-on-hero-accent);
+}
+
+.section-lobby__head:not(.section-lobby__head--bare) .section-lobby__back-inline {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(250, 245, 234, 0.28);
+  color: var(--mss-on-hero-accent);
+}
+
+.section-lobby__head:not(.section-lobby__head--bare) .section-lobby__head-row {
+  border-bottom-color: color-mix(in srgb, #faf5ea 22%, transparent);
+}
+
+/* اللوبيات التي تُخفي الرأس بصريًا تبقى كما هي (lessons / fiqh lux) */
+.section-lobby[data-lessons-hub="1"] .section-lobby__head,
+.fiqh-lux-page .section-lobby__head {
+  background: none !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  color: inherit !important;
+}
+
+.section-lobby[data-lessons-hub="1"] .section-lobby__head::after,
+.fiqh-lux-page .section-lobby__head::after {
+  display: none !important;
+}
+
+.section-lobby[data-lessons-hub="1"] .section-lobby__title,
+.section-lobby[data-lessons-hub="1"] .quran-hub-page__title,
+.fiqh-lux-page .section-lobby__title,
+.fiqh-lux-page .quran-hub-page__title {
+  color: var(--on-surface, var(--mj-ink, #16241e)) !important;
+}
+
+.section-lobby[data-lessons-hub="1"] .section-lobby__title::after,
+.fiqh-lux-page .section-lobby__title::after {
+  background: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
+}
+
+/* —— بطاقات موحّدة (بلا قاعدة .card{} عامة — بوابة no-global-dangerous-css) —— */
+.hub-card {
+  box-shadow: var(--mss-shadow-card);
+  border-radius: var(--radius-tile, 24px);
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 20%, var(--mj-hairline, #e3e8e6));
+}
+
+.hub-card:hover {
+  box-shadow: 0 14px 32px rgba(15, 74, 58, 0.12);
+}
+
+.section-lobby .card,
+.hub-card-grid .hub-card {
+  box-shadow: var(--mss-shadow-card);
+}
+
+.card--featured {
+  background-color: var(--mss-hero-from) !important;
+  background-image: var(--mss-hero-gradient) !important;
+  border-color: color-mix(in srgb, #1f6b56 28%, transparent) !important;
+  box-shadow: var(--mss-shadow-hero) !important;
+}
+
+/* شرائح اللوبي */
+.section-lobby__chip {
+  border-radius: 999px !important;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.12s ease;
+}
+
+.section-lobby__chip:hover {
+  transform: translateY(-1px);
+}
+
+.section-lobby__chip.is-active {
+  background: var(--mss-hero-from) !important;
+  border-color: var(--mss-hero-from) !important;
+  color: #fff !important;
+}
+
+/* أسطح صفحات خفيفة أكثر ترابطًا */
+.page-shell,
+.topic-page,
+.section-lobby {
+  --mss-applied: 1;
+}
+
+html[data-theme="dark"] .hub-card,
+html[data-theme="dark"] .card {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+}
+
+/* —— استكشاف الرئيسية —— */
+.hp-explore__head {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.hp-explore__title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--mss-hero-from, #0f4a3a);
+}
+
+.hp-featured-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--mss-radius-card, 1.15rem) !important;
+  background-color: var(--mss-hero-from, #0f4a3a) !important;
+  background-image: var(--mss-hero-gradient) !important;
+  border: 1px solid color-mix(in srgb, #1f6b56 28%, transparent) !important;
+  box-shadow: var(--mss-shadow-hero) !important;
+  color: var(--mss-on-hero, #faf5ea) !important;
+}
+
+.hp-featured-card__title,
+.hp-featured-card__desc,
+.hp-featured-card__cta,
+.hp-featured-card__icon {
+  color: inherit !important;
+}
+
+.hp-featured-card__cta {
+  color: var(--mss-on-hero-accent, #f2dfaa) !important;
+  font-weight: 800;
+}
+
+.hp-explore__sitemap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--mss-hero-from, #0f4a3a) 10%, #fff);
+  border: 1px solid color-mix(in srgb, var(--mss-hero-from, #0f4a3a) 22%, transparent);
+  color: var(--mss-hero-from, #0f4a3a);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* هيروهات مخصّصة قديمة → نفس لغة mss */
+.twh-hub-hero,
+.fqh-hub-hero,
+.quran-hub-hero,
+.pts-hero,
+.pts-hero--compact {
+  background-color: var(--mss-hero-from, #0f4a3a) !important;
+  background-image: var(--mss-hero-gradient) !important;
+  color: var(--mss-on-hero, #faf5ea) !important;
+  border-color: color-mix(in srgb, #1f6b56 28%, transparent);
+  box-shadow: var(--mss-shadow-hero);
+}
+
+.twh-hub-hero,
+.fqh-hub-hero,
+.quran-hub-hero {
+  border-radius: var(--mss-radius-hero, 1.35rem);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.twh-hub-hero__title,
+.fqh-hub-hero__title,
+.quran-hub-hero__title,
+.pts-hero__title,
+.twh-hub-hero__sub,
+.fqh-hub-hero__sub,
+.quran-hub-hero__sub {
+  color: inherit !important;
+}
+
+.fqh-hub-hero__eyebrow,
+.twh-hub-hero__eyebrow {
+  color: var(--mss-on-hero-accent, #f2dfaa) !important;
+}
+
+/* —— قوالب صفحة عامة —— */
+.page-shell > .mj-card,
+.page-shell .mj-card--raised {
+  border-radius: var(--mss-radius-card, 1.15rem);
+  box-shadow: var(--mss-shadow-card);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, var(--mj-hairline, #e3e8e6));
+}
+

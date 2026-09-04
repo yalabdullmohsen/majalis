@@ -23,13 +23,12 @@
   gap: 0.9rem;
   align-items: center;
   padding: 1.05rem 1.15rem;
-  border-radius: 1.35rem;
+  border-radius: var(--mss-radius-hero, 1.35rem);
   border: 1px solid color-mix(in srgb, #1f6b56 22%, transparent);
-  background:
-    radial-gradient(circle at 100% 0%, rgba(210, 180, 93, 0.18), transparent 42%),
-    linear-gradient(135deg, #0f4a3a 0%, #1f6b56 58%, #245f4d 100%);
-  color: #faf5ea;
-  box-shadow: 0 16px 40px rgba(15, 74, 58, 0.22);
+  background-color: var(--mss-hero-from, #0f4a3a);
+  background-image: var(--mss-hero-gradient);
+  color: var(--mss-on-hero, #faf5ea);
+  box-shadow: var(--mss-shadow-hero, 0 16px 40px rgba(15, 74, 58, 0.22));
 }
 
 .asp-hero__glow {
@@ -66,7 +65,7 @@
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.02em;
-  color: #f2dfaa;
+  color: var(--mss-on-hero-accent, #f2dfaa);
 }
 
 .assistant-page--modern .assistant-title {
