@@ -3,19 +3,26 @@ import {
   normalizeLessonDay,
   normalizeLessonPlace,
   normalizeLessonSheikh,
+  normalizeLessonTime,
   normalizeLessonTitle,
 } from "./lessonNormalize";
 
 /**
- * مفتاح التكرار الحقيقي: عنوان + شيخ + تاريخ + مكان.
- * المصدر يُستخدم لجودة السجل عند الدمج (seed vs supabase) لا للتفريق.
+ * مفتاح التكرار الحقيقي:
+ * - جلسات الكويت (`kw-…`) تُميَّز بمعرّفها حتى لا تُطمس جلسات الدورة الواحدة.
+ * - غير ذلك: عنوان + شيخ + تاريخ + مكان + وقت.
+ * المصدر لجودة الدمج فقط (seed vs supabase) لا للتفريق.
  */
 export function buildLessonDedupeKey(lesson: KuwaitLessonRecord): string {
+  const stableId = String(lesson.id || "").trim();
+  if (stableId.startsWith("kw-")) return `id:${stableId}`;
+
   const title = normalizeLessonTitle(lesson.title);
   const sheikh = normalizeLessonSheikh(lesson.sheikhName);
   const date = normalizeLessonDay(lesson.gregorianDate || lesson.day || "");
   const place = normalizeLessonPlace(lesson);
-  return [title, sheikh, date, place].join("|");
+  const time = normalizeLessonTime(lesson.time || "");
+  return [title, sheikh, date, place, time].join("|");
 }
 
 function lessonQualityScore(lesson: KuwaitLessonRecord): number {

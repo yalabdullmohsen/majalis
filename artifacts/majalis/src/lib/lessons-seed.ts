@@ -83,7 +83,13 @@ export async function buildLessonsSeed(): Promise<LessonSeedRow[]> {
 
   function lecturerFromSessionLabel(label: string, fallback: string): string {
     const m = label.match(/—\s*([^—(]+?)(?:\s*\(|$)/u);
-    if (m?.[1]) return sheikhName.stripSheikhHonorifics(m[1]);
+    if (m?.[1]) {
+      const name = sheikhName.stripSheikhHonorifics(m[1]).trim();
+      // ارفض عناوين المحاضرات/الأبواب القصيرة التي ليست أسماء مشايخ
+      const looksLikePerson =
+        /^(د\.|الدكتور|الشيخ)\s/u.test(name) || name.split(/\s+/).filter(Boolean).length >= 2;
+      if (looksLikePerson) return name;
+    }
     return sheikhName.stripSheikhHonorifics(fallback);
   }
 

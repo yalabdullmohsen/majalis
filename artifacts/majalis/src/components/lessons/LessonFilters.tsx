@@ -30,10 +30,11 @@ export const DEFAULT_LESSON_QUICK_FILTERS: LessonQuickFilters = {
 
 const SCHEDULE_CHIPS: Array<{ id: LessonQuickFilterId; label: string }> = [
   { id: "all", label: "الكل" },
-  { id: "today", label: "اليوم" },
+  { id: "lessons", label: "دروس" },
+  { id: "courses", label: "دورات" },
   { id: "in_person", label: "حضوري" },
   { id: "remote", label: "عن بعد" },
-  { id: "this_week", label: "هذا الأسبوع" },
+  { id: "archive", label: "أرشيف" },
 ];
 
 function isStandaloneLesson(lesson: KuwaitLessonRecord): boolean {

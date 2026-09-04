@@ -32,13 +32,30 @@ assert.match(css, /fiqh-category-card--ibadat/);
 assert.match(css, /fiqh-category-card--muamalat/);
 assert.match(css, /fiqh-category-card--usrah/);
 assert.match(css, /fiqh-category-card--qada_jinayat/);
-assert.match(css, /max-height:\s*7\.5rem/);
+assert.match(css, /max-height:\s*6\.5rem/);
 
 assert.deepEqual([...FIQH_START_HERE_DOORS], ["tahara", "salah", "zakat", "sawm", "hajj"]);
 assert.deepEqual(
-  [...FIQH_HUB_DOOR_ORDER].slice(0, 8),
-  ["tahara", "salah", "janaza", "zakat", "sawm", "hajj", "buyu", "nikah"],
+  [...FIQH_HUB_DOOR_ORDER].slice(0, 12),
+  [
+    "tahara",
+    "salah",
+    "zakat",
+    "sawm",
+    "hajj",
+    "janaza",
+    "ayman",
+    "atima",
+    "libas",
+    "muamalat",
+    "buyu",
+    "riba",
+  ],
 );
+assert.ok(FIQH_HUB_DOOR_ORDER.includes("usrah"));
+assert.ok(FIQH_HUB_DOOR_ORDER.includes("nawazil"));
+assert.ok(FIQH_HUB_DOOR_ORDER.includes("qawaid"));
+assert.equal(FIQH_HUB_DOOR_ORDER.at(-1), "usul");
 
 const books = getAllFiqhBooks();
 const byId = Object.fromEntries(books.map((b) => [b.id, b]));

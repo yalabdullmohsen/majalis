@@ -972,21 +972,20 @@ export default function HadithPage() {
     applyPageSeo({
       path: "/hadith",
       title: "الحديث وعلومه | سُنّة",
-      description: "بوابة الحديث النبوي: صحيح وحسن وضعيف وموضوع، مع الأربعين النووية وكتب الحديث ومصطلحاته — المتن أولاً والحكم والمصدر بوضوح.",
+      description: "بوابة الحديث النبوي: صحيح وحسن وضعيف وموضوع، مع كتب الحديث ومصطلحاته — المتن أولاً والحكم والمصدر بوضوح.",
       keywords: ["أحاديث نبوية", "الحديث الشريف", "صحيح البخاري", "صحيح مسلم", "الحديث الضعيف", "مصطلح الحديث"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "أقسام الحديث وعلومه",
-          numberOfItems: 6,
+          numberOfItems: 5,
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "الأحاديث الصحيحة", url: "https://www.ssunnah.com/hadith/sahih" },
-            { "@type": "ListItem", position: 2, name: "الأحاديث الضعيفة", url: "https://www.ssunnah.com/hadith/daif" },
-            { "@type": "ListItem", position: 3, name: "الأحاديث الموضوعة", url: "https://www.ssunnah.com/hadith/mawdu" },
-            { "@type": "ListItem", position: 4, name: "كتب الحديث", url: "https://www.ssunnah.com/hadith/books" },
-            { "@type": "ListItem", position: 5, name: "مصطلح الحديث", url: "https://www.ssunnah.com/hadith-science" },
-            { "@type": "ListItem", position: 6, name: "الأربعون النووية", url: "https://www.ssunnah.com/arbaeen-nawawi" },
+            { "@type": "ListItem", position: 2, name: "كتب الحديث", url: "https://www.ssunnah.com/hadith/books" },
+            { "@type": "ListItem", position: 3, name: "مصطلح الحديث", url: "https://www.ssunnah.com/hadith-science" },
+            { "@type": "ListItem", position: 4, name: "الأحاديث الضعيفة", url: "https://www.ssunnah.com/hadith/daif" },
+            { "@type": "ListItem", position: 5, name: "الأحاديث الموضوعة", url: "https://www.ssunnah.com/hadith/mawdu" },
           ],
         },
       ],
@@ -995,11 +994,10 @@ export default function HadithPage() {
 
   const hubCards = [
     { href: "/hadith/sahih", title: "الأحاديث الصحيحة", desc: "متون الصحيحين مع المصدر والتخريج", tone: "sahih" },
-    { href: "/hadith/daif", title: "الأحاديث الضعيفة", desc: "للتخريج والتمييز لا للاحتجاج", tone: "daif" },
-    { href: "/hadith/mawdu", title: "الأحاديث الموضوعة", desc: "للتحذير والبيان", tone: "mawdu" },
     { href: "/hadith/books", title: "كتب الحديث", desc: "البخاري ومسلم بالأبواب", tone: "books" },
     { href: "/hadith-science", title: "مصطلح الحديث", desc: "درجات الحديث ومباحث المصطلح", tone: "science" },
-    { href: "/arbaeen-nawawi", title: "الأربعون النووية", desc: "أربعون حديثًا مع الشرح", tone: "arbaeen" },
+    { href: "/hadith/daif", title: "الأحاديث الضعيفة", desc: "للتخريج والتمييز لا للاحتجاج", tone: "daif" },
+    { href: "/hadith/mawdu", title: "الأحاديث الموضوعة", desc: "للتحذير والبيان", tone: "mawdu" },
   ] as const;
 
   return (
@@ -1007,7 +1005,7 @@ export default function HadithPage() {
       route="/hadith"
       eyebrow="علوم الحديث النبوي"
       title="الحديث وعلومه"
-      subtitle="صحيح وحسن وضعيف وموضوع — مع الأربعين النووية وكتب الحديث ومصطلح الحديث. المتن أوضح عنصر، والحكم والمصدر بجانب كل حديث."
+      subtitle="صحيح وحسن أولًا — مع كتب الحديث ومصطلح الحديث. الضعيف والموضوع في أقسامهما للتمييز لا للاحتجاج. المتن أوضح عنصر، والحكم والمصدر بجانب كل حديث."
       groupTitle="أقسام الحديث وعلومه"
     >
       <div className="hadith-page hadith-page--hub">
@@ -1022,6 +1020,9 @@ export default function HadithPage() {
           ))}
         </div>
         <HadithClassGuide kind="hub" />
+        <p className="hadith-page__browse-lead" role="note">
+          راجع التخريج قبل الاستشهاد — الحكم والمصدر ظاهران على كل بطاقة.
+        </p>
         <section className="hadith-page__browse" aria-labelledby="hadith-browse-title">
           <h2 id="hadith-browse-title" className="hadith-page__browse-title">
             تصفّح الأحاديث
@@ -1034,7 +1035,7 @@ export default function HadithPage() {
         <ExploreAlsoNav
           title="استكشف أيضًا"
           links={[
-            { href: "/flashcards", label: "بطاقات الحفظ" },
+            { href: "/fawaid", label: "الفوائد" },
             { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
             { href: "/quiz", label: "سين جيم" },
           ]}

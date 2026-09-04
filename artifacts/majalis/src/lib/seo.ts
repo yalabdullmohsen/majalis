@@ -195,12 +195,12 @@ function routeForPath(routes: SeoRoute[], path: string) {
     };
   }
 
-  if (normalized.startsWith("/library/")) {
+  if (normalized.startsWith("/library/") || normalized === "/library") {
     return {
-      ...requiredRoute(routes, "/library"),
-      title: "كتاب شرعي | سُنّة",
-      description: "تفاصيل الكتاب — المؤلف، التصنيف، ملخص المحتوى، وروابط التحميل.",
-      ogType: "book",
+      ...requiredRoute(routes, "/search"),
+      title: "البحث | سُنّة",
+      description: "ابحث في القرآن والحديث والفقه والدروس.",
+      robots: "noindex, follow",
     };
   }
 

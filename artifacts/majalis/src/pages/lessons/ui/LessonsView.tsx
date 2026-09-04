@@ -708,13 +708,14 @@ export default function LessonsPage({
         title="استكشف أيضًا"
         links={[
           { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
-          { href: "/quran-knowledge", label: "القرآن وعلومه" },
+          { href: "/quran-hub", label: "مركز القرآن الكريم" },
           { href: "/hadith", label: "الحديث وعلومه" },
           { href: "/fiqh", label: "الفقه والأحكام" },
         ]}
       />
       <section className="lessons-page-stats" aria-label="إحصاءات الدروس">
-        <p className="lessons-page-stats__item">{activeLessons.length} درسًا نشطًا</p>
+        <p className="lessons-page-stats__item">{scheduleEntries.length} بطاقة معروضة</p>
+        <p className="lessons-page-stats__item">{activeLessons.length} جلسة نشطة</p>
         {archivedLessons.length > 0 ? (
           <p className="lessons-page-stats__item">{archivedLessons.length} في الأرشيف</p>
         ) : null}

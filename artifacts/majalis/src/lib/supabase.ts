@@ -39,6 +39,19 @@ const LESSON_LIST_COLUMNS = [
   "updated_at",
   "audio_url",
   "video_url",
+  // تجميع الدورات في الواجهة يعتمد على هذه الأعمدة في قائمة القائمة
+  "activity_type",
+  "is_course",
+  "course_id",
+  "session_count",
+  "linked_titles",
+  "start_date",
+  "end_date",
+  "delivery",
+  "audience",
+  "live_url",
+  "maps_url",
+  "poster_image_url",
 ].join(",");
 
 /** تفصيل درس — أعمدة صريحة بدل select('*'). */
