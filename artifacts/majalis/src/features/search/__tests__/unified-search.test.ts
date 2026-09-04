@@ -64,12 +64,13 @@ for (const k of [
   "prophet",
   "dua",
   "tajweed",
-  "hifz",
   "settings",
-  "ulum",
 ]) {
   assert.ok(kinds.has(k), `القسم ${k} موجود في الفهرس`);
 }
+// hifz/ulum كانا عبر /memorization و /quran-knowledge — مخفيان من الاكتشاف العام فلا يُفهرسان
+assert.equal(kinds.has("hifz"), false, "لا فهرسة hifz لمسار مخفي");
+assert.equal(kinds.has("ulum"), false, "لا فهرسة ulum لمسار مخفي");
 assert.equal(kinds.has("book"), false, "فهرس الكتب (/library) أُزيل من البحث العلني");
 
 // حالات التطبيع الإلزامية على الفهرس الحقيقي
@@ -101,15 +102,13 @@ const sectionProbes: Record<string, string> = {
   history: "التاريخ",
   adhkar: "الصباح",
   nation: "عاد",
-  story: "قصة سورة",
+  story: "القصص",
   fiqh: "الفقه",
   seerah: "السيرة",
   prophet: "الأنبياء",
   dua: "أدعية",
   tajweed: "تجويد",
-  hifz: "الحفظ",
   settings: "الأذان",
-  ulum: "علوم",
 };
 for (const [kind, q] of Object.entries(sectionProbes)) {
   const g = searchUnifiedIndex(index.docs, q, 80);

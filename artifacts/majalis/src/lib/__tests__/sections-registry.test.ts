@@ -57,7 +57,10 @@ assert.equal(labels.size, SECTIONS.length);
 for (const s of SECTIONS) {
   assert.ok(s.subtitle.trim().length > 0, s.id);
   assert.ok([...s.subtitle].length <= 45, `${s.id} subtitle`);
-  assert.ok(s.surfaces.length > 0, s.id);
+  // الأقسام المحذوفة/المخفية قد تبقى في السجل بلا أسطح اكتشاف
+  if (s.status !== "hidden") {
+    assert.ok(s.surfaces.length > 0, s.id);
+  }
 }
 
 const more = sectionsForSurface("moreHub").map((s) => s.id);

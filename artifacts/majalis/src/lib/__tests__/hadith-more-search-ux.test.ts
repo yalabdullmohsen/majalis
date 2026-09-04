@@ -54,9 +54,10 @@ assert.ok(
     secondary.includes("الأدعية الشرعية"),
   "المزيد يتضمن الأذكار/الأدعية",
 );
-assert.ok(
+assert.equal(
   secondary.some((t) => t.includes("مفاهيم شرعية") || t.includes("القاموس")),
-  "المزيد يتضمن مفاهيم شرعية",
+  false,
+  "مفاهيم شرعية مخفية من الاكتشاف العام (IA_FORBIDDEN / HIDDEN_FROM_NAV)",
 );
 assert.equal(secondary.includes("الموضوعات"), false, "لا قسم الموضوعات في المزيد");
 assert.equal(secondary.includes("البحث"), false, "لا بطاقة بحث في المزيد");

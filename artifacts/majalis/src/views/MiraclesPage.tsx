@@ -416,10 +416,10 @@ export default function MiraclesPage({
       <ExploreAlsoNav
         title="استكشف أيضًا"
         links={[
-          { href: "/ulum-quran", label: "علوم القرآن" },
           { href: "/quran-hub", label: "مركز القرآن الكريم" },
+          { href: "/tafsir", label: "علم التفسير" },
           { href: "/tawhid", label: "التوحيد" },
-          { href: "/quran/surah-stories", label: "قصص السور" },
+          { href: "/mushaf", label: "المصحف الشريف" },
         ]}
       />
       <div className="mk-content-end" role="separator" aria-label="نهاية محتوى القسم">

@@ -76,6 +76,7 @@ import {
   Wand2,
   Waypoints,
 } from "lucide-react";
+import { isHiddenFromNav } from "@/lib/nav-visibility";
 
 export type SectionGroup =
   | "sciences"
@@ -1189,9 +1190,14 @@ function visible(s: SectionDef): boolean {
   return s.status !== "hidden";
 }
 
+/** لا يظهر في الاكتشاف العام إن كان مخفياً من التنقل أو غير معتمد. */
+function discoverable(s: SectionDef): boolean {
+  return visible(s) && !isHiddenFromNav(s.route);
+}
+
 export function sectionsForSurface(surface: Surface): SectionDef[] {
   return SECTIONS.filter((s) => {
-    if (!visible(s) || !s.surfaces.includes(surface)) return false;
+    if (!discoverable(s) || !s.surfaces.includes(surface)) return false;
     if (surface === "moreHub" || surface === "drawer" || surface === "home") {
       return s.hub === "sections";
     }
@@ -1208,7 +1214,7 @@ export function sectionsByGroup(
   surface: Surface = "moreHub",
 ): SectionDef[] {
   return SECTIONS.filter((s) => {
-    if (!visible(s) || s.group !== group || !s.surfaces.includes(surface) || s.order < 0) {
+    if (!discoverable(s) || s.group !== group || !s.surfaces.includes(surface) || s.order < 0) {
       return false;
     }
     if (surface === "moreHub" || surface === "drawer" || surface === "home") {
@@ -1219,7 +1225,7 @@ export function sectionsByGroup(
 }
 
 export function featuredSections(): SectionDef[] {
-  return SECTIONS.filter((s) => visible(s) && s.featured && s.hub === "sections").sort(
+  return SECTIONS.filter((s) => discoverable(s) && s.featured && s.hub === "sections").sort(
     (a, b) =>
       SECTION_GROUP_META[a.group].order - SECTION_GROUP_META[b.group].order ||
       a.order - b.order,
@@ -1272,7 +1278,7 @@ export function searchSectionsIndex(): Array<{
   keywords: string[];
   aliases: string[];
 }> {
-  return SECTIONS.filter((s) => visible(s) && s.surfaces.includes("search")).map((s) => ({
+  return SECTIONS.filter((s) => discoverable(s) && s.surfaces.includes("search")).map((s) => ({
     id: s.id,
     label: s.label,
     subtitle: s.subtitle,

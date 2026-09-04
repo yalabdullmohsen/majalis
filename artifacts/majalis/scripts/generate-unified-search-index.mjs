@@ -15,11 +15,10 @@ const { LIBRARY_CATALOG } = await import("../src/lib/library-catalog.ts");
 const { getSurahList } = await import("../src/lib/quran-api.ts");
 const { normalizeArabic } = await import("../src/shared/arabic-normalize.ts");
 const { ADHKAR_CATEGORIES, getAllAdhkarItems } = await import("../src/lib/adhkar-seed.ts");
-const { ARBAEEN_NAWAWI } = await import("../src/lib/arbaeen-nawawi-seed.ts");
 const { NATIONS } = await import("../src/lib/nations-seed.ts");
-const { getAllSurahStories } = await import("../src/lib/surah-stories.ts");
 const { MUSHAF_TAFSIR_EDITIONS } = await import("../src/lib/quran-data/tafsir-editions.ts");
 const { IA_REDIRECTS } = await import("../src/lib/ia-final-structure.ts");
+const { isHiddenFromNav } = await import("../src/lib/nav-visibility.ts");
 
 const REDIRECT_HREFS = new Set(Object.keys(IA_REDIRECTS));
 
@@ -39,6 +38,8 @@ function push(d) {
 function pushDoc(id, kind, titleAr, href, parts = [], meta) {
   const clean = String(href || "").split("?")[0].split("#")[0];
   if (REDIRECT_HREFS.has(clean) || clean === "/qa" || clean.startsWith("/qa/")) return;
+  // لا تُفهرس أقسام مخفية من الاكتشاف العام أو مساراتها الفرعية
+  if (isHiddenFromNav(clean)) return;
   push({
     id,
     kind,
@@ -93,16 +94,8 @@ pushDoc("tafsir:hub", "tafsir", "علم التفسير", "/tafsir", ["تفسير
 pushDoc("hadith:hub", "hadith", "الحديث وعلومه", "/hadith", ["صحيح البخاري", "صحيح مسلم", "أحاديث"], "قسم");
 pushDoc("hadith:bukhari", "hadith", "صحيح البخاري", "/hadith#bukhari", ["البخاري", "صحيح"], "جمع");
 pushDoc("hadith:muslim", "hadith", "صحيح مسلم", "/hadith#muslim", ["مسلم", "صحيح"], "جمع");
-for (const h of ARBAEEN_NAWAWI) {
-  pushDoc(
-    `hadith:nawawi:${h.id}`,
-    "hadith",
-    h.title,
-    "/arbaeen-nawawi",
-    [h.source, "الأربعون النووية", "نووي"],
-    h.source,
-  );
-}
+// الأربعون النووية وقصص السور مخفية من الاكتشاف العام — لا تُفهرس
+
 
 // ── الأذكار ────────────────────────────────────────────────────────────────
 for (const c of ADHKAR_CATEGORIES) {
@@ -144,17 +137,7 @@ for (const n of NATIONS) {
   );
 }
 
-// ── قصص السور ──────────────────────────────────────────────────────────────
-for (const s of getAllSurahStories()) {
-  pushDoc(
-    `story:surah:${s.number}`,
-    "story",
-    `قصة سورة ${s.name}`,
-    `/quran/surah-stories/${s.number}`,
-    [s.name, s.namingReason?.slice(0, 80), "قصص السور"],
-    "قصة سورة",
-  );
-}
+// ── قصص السور (مخفية من الاكتشاف العام — لا تُفهرس) ────────────────────────
 
 // ── الدروس (من البذرة) ─────────────────────────────────────────────────────
 const lessonsPath = path.join(appRoot, "public/data/lessons/chunk-000.json");
@@ -198,10 +181,8 @@ if (fs.existsSync(qaDir)) {
 // ── صفحات التطبيق والإعدادات ───────────────────────────────────────────────
 const APP_PAGES = [
   ["app:mushaf", "quran", "المصحف الشريف", "/mushaf", ["قرآن", "قراءة"]],
-  ["app:quran-knowledge", "ulum", "القرآن وعلومه", "/quran-knowledge", ["علوم القرآن", "أسباب نزول"]],
   ["app:tafsir", "tafsir", "التفسير", "/tafsir", ["تفسير"]],
   ["app:tajweed", "tajweed", "علم التجويد", "/quran-hub/tajweed", ["تجويد", "أحكام"]],
-  ["app:memorization", "hifz", "الحفظ والمراجعة", "/memorization", ["حفظ", "مراجعة", "خطط الحفظ"]],
   ["app:hadith", "hadith", "الحديث", "/hadith", ["سنة"]],
   ["app:fiqh", "fiqh", "الفقه والأحكام", "/fiqh", ["فقه", "أحكام"]],
   ["app:tarikh-islami", "history", "التاريخ الإسلامي", "/tarikh-islami", ["تاريخ", "سيرة", "حضارة"]],
@@ -213,8 +194,6 @@ const APP_PAGES = [
   ["app:adhkar", "adhkar", "الأذكار والأدعية", "/adhkar", ["أذكار", "أدعية"]],
   ["app:duas-quran", "dua", "أدعية القرآن", "/duas-quran", ["دعاء", "قرآن"]],
   ["app:lessons", "lesson", "الدروس", "/lessons", ["دروس"]],
-  ["app:courses", "course", "الدورات العلمية", "/courses", ["دورات"]],
-  ["app:glossary", "app", "مفاهيم شرعية", "/glossary", ["مصطلحات", "المصطلحات", "glossary"]],
   ["app:reciters", "app", "القرّاء", "/reciters", ["قراء", "تلاوة"]],
   ["app:prayer", "app", "مواقيت الصلاة", "/prayer-times", ["صلاة", "أذان"]],
   ["app:adhan-settings", "settings", "إعدادات الأذان", "/adhan-settings", ["أذان", "مؤذن"]],
@@ -341,14 +320,8 @@ try {
 }
 
 // ── أدوات مساعدة (ليست أبوابًا رئيسية) ─────────────────────────────────────
-pushDoc(
-  "tool:glossary",
-  "tool",
-  "مفاهيم شرعية",
-  "/islamic-glossary",
-  ["معجم", "مصطلحات", "المصطلحات", "بحث"],
-  "أداة بحث",
-);
+// /islamic-glossary مخفي من الاكتشاف — المفردة الظاهرة هي /glossary أعلاه
+
 
 const outDir = path.join(appRoot, "public/data/search");
 fs.mkdirSync(outDir, { recursive: true });
