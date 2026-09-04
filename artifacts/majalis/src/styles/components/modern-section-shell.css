@@ -208,19 +208,20 @@
   background: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
 }
 
-/* —— بطاقات موحّدة —— */
-.hub-card,
-.card {
-  box-shadow: var(--mss-shadow-card);
-}
-
+/* —— بطاقات موحّدة (بلا قاعدة .card{} عامة — بوابة no-global-dangerous-css) —— */
 .hub-card {
+  box-shadow: var(--mss-shadow-card);
   border-radius: var(--radius-tile, 24px);
   border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 20%, var(--mj-hairline, #e3e8e6));
 }
 
 .hub-card:hover {
   box-shadow: 0 14px 32px rgba(15, 74, 58, 0.12);
+}
+
+.section-lobby .card,
+.hub-card-grid .hub-card {
+  box-shadow: var(--mss-shadow-card);
 }
 
 .card--featured {
