@@ -843,8 +843,6 @@ html[data-theme="dark"] .srch-quick-card:hover {
   font-weight: 800;
   color: var(--mj-brand, #1f6b56);
 }
-  text-decoration: none;
-}
 .srch-hl {
   background: color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent);
   color: inherit;
