@@ -1964,8 +1964,7 @@
       ],
       "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.85,
-      "robots": "noindex, follow"
+      "priority": 0.85
     },
     {
       "path": "/occasions-lessons",
@@ -2034,8 +2033,7 @@
       ],
       "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.78,
-      "robots": "noindex, follow"
+      "priority": 0.78
     },
     {
       "path": "/tafsir",
@@ -2496,8 +2494,7 @@
       ],
       "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.8,
-      "robots": "noindex, follow"
+      "priority": 0.8
     },
     {
       "path": "/quran/memorization-plans",
