@@ -47,7 +47,6 @@ import {
   Layers,
   Library,
   Lightbulb,
-  ListTree,
   Lock,
   Map,
   MapPin,
@@ -197,6 +196,8 @@ export const SECTION_MERGE_REDIRECTS: ReadonlyArray<{ from: string; to: string; 
   { from: "/prayer", to: "/prayer-times", note: "صلاة مختصر → مواقيت الصلاة" },
   { from: "/more", to: "/", note: "المزيد (ملغاة) → الرئيسية" },
   { from: "/quran/recitation-test-ai", to: "/quran-hub", note: "تسميع الذكاء الاصطناعي (ملغى) → مركز القرآن" },
+  { from: "/learn", to: "/lessons", note: "دروس التعلّم (ملغاة) → الدروس" },
+  { from: "/learn/:path*", to: "/lessons", note: "دروس التعلّم الفرعية (ملغاة) → الدروس" },
 ];
 
 const NAV: Surface[] = ["moreHub", "home", "search"];
@@ -836,19 +837,6 @@ const SECTION_SEEDS: SectionSeed[] = [
     keywords: ["مصطلح", "معجم", "قاموس", "مصطلحات إسلامية"],
     aliases: ["القاموس الإسلامي", "مفاهيم شرعية", "مصطلحات", "المصطلحات", "المصطلحات الإسلامية"],
     hub: "sections",
-  },
-  {
-    id: "knowledge-doors",
-    label: "دروس التعلّم",
-    subtitle: "دروس شرعية مفصّلة في العقيدة وغيرها",
-    route: "/learn",
-    icon: ListTree,
-    group: "library",
-    order: 50,
-    surfaces: NAV,
-    status: "live",
-    keywords: ["تعلّم", "دروس", "عقيدة"],
-    aliases: ["فهرس الدروس", "دروس شرعية", "أبواب العلم"],
   },
   {
     id: "universities",

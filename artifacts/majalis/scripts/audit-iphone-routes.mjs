@@ -26,7 +26,7 @@ const BATCHES = {
   ],
   core: [
     "/", "/quran-hub", "/lessons", "/prayer-times", "/adhkar",
-    "/qa", "/library", "/hadith", "/learn", "/daily-wird",
+    "/qa", "/library", "/hadith", "/daily-wird",
     "/login", "/register", "/kids", "/start-here", "/contact",
     "/privacy", "/terms", "/methodology",
   ],

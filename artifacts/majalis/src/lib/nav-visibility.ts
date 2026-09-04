@@ -98,7 +98,7 @@ export const MERGED_PATH_REDIRECTS: Record<string, string> = {
 
   // أقسام محذوفة من الواجهة (صفحات عميقة تبقى؛ لا تحويل للرئيسية للمكتبة)
   "/start-here": "/lessons",
-  "/knowledge-graph": "/learn",
+  "/knowledge-graph": "/tawhid",
   "/courses": "/lessons",
   "/qa": "/quiz",
   "/researches": "/academic-research",

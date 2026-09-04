@@ -46,9 +46,9 @@ const SECTIONS = [
     icon: "aqeeda",
     links: [
       { href: "/tawhid",      label: "التوحيد والعقيدة",   desc: "أنواع التوحيد ومسائل العقيدة" },
-      { href: "/learn/aqeedat-ahl-sunnah", label: "عقيدة أهل السنة", desc: "معالم المنهج ودروس منظّمة" },
-      { href: "/learn/aqsam-tawheed", label: "أقسام التوحيد", desc: "الربوبية والألوهية والأسماء والصفات" },
-      { href: "/learn/nawaqid-islam", label: "نواقض الإسلام", desc: "مدخل منضبط مع ضوابط التكفير" },
+      { href: "/tawhid", label: "عقيدة أهل السنة", desc: "معالم المنهج ودروس منظّمة" },
+      { href: "/tawhid", label: "أقسام التوحيد", desc: "الربوبية والألوهية والأسماء والصفات" },
+      { href: "/tawhid", label: "نواقض الإسلام", desc: "مدخل منضبط مع ضوابط التكفير" },
       { href: "/arkan",       label: "أركان الإسلام",      desc: "الشهادتان والصلاة والزكاة..." },
       { href: "/arkan-iman",  label: "أركان الإيمان",      desc: "الإيمان بالله والملائكة..." },
       { href: "/asma-husna",  label: "الأسماء الحسنى",     desc: "٩٩ اسماً بمعانيها وآياتها" },

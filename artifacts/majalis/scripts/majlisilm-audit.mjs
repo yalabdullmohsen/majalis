@@ -67,7 +67,7 @@ const CONFIG = {
     "/hadith": ["/hadith/"],
     "/durus-imaniyya": ["/durus-imaniyya", "/tazkiya-topics", "/raqaiq", "/tawba", "/tawhid"],
     "/durus-mutanawwia": ["/durus-mutanawwia", "/fikr-waqia", "/usra-mujtama", "/fawaid", "/sections"],
-    "/iman-topics": ["/iman-topics", "/tawhid", "/arkan-iman", "/learn/", "/asma-husna"],
+    "/iman-topics": ["/iman-topics", "/tawhid", "/arkan-iman", "/asma-husna"],
     "/quran-studies": ["/quran-studies", "/quran/", "/mushaf", "/ulum-quran", "/quran-hub", "/duas-quran"],
     "/sunnah-studies": ["/sunnah-studies", "/hadith", "/sunan-yawmiyya", "/arbaeen-nawawi", "/shamael"],
     "/tazkiya-topics": ["/tazkiya-topics", "/durus-imaniyya", "/raqaiq", "/akhlaq", "/tawba", "/sins-and-rights"],
@@ -78,10 +78,6 @@ const CONFIG = {
     "/arabic-language": ["/arabic-language", "/ulum-quran", "/quran-studies", "/library", "/adab-talab-ilm"],
     "/maqasid-sharia": ["/maqasid-sharia", "/fiqh-qawaid", "/fiqh", "/fiqh-council", "/madhahib", "/rulings"],
     "/dalail-nubuwwah": ["/dalail-nubuwwah", "/seerah", "/miracles", "/shamael", "/prophets", "/tawhid"],
-    "/learn/aqeedat-ahl-sunnah": ["/learn/", "/tawhid", "/iman-topics", "/asma-husna"],
-    "/learn/aqsam-tawheed": ["/learn/", "/tawhid", "/asma-husna", "/iman-topics"],
-    "/learn/nawaqid-islam": ["/learn/", "/tawhid", "/iman-topics", "/methodology"],
-    "/learn/iman-billah": ["/learn/", "/tawhid", "/asma-husna", "/arkan-iman"],
   },
 
   // الأقسام التي يجب أن يظهر فيها دليل أو تخريج

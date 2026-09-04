@@ -3,7 +3,7 @@
  * تشغيل: node --import tsx src/lib/__tests__/content-audit-b071-sunnah-iman-bodies-gate.test.ts
  */
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { SUNNAH_STUDIES } from "../sunnah-studies-data";
@@ -28,12 +28,11 @@ function assertLessonsHaveBodies(label: string, sections: DarsSection[], minLess
 assertLessonsHaveBodies("دروس السنة", SUNNAH_STUDIES, 51);
 assertLessonsHaveBodies("موضوعات الإيمان", IMAN_TOPICS, 78);
 
-const hub = readFileSync(resolve(appRoot, "src/views/learn/LearnHubPage.tsx"), "utf8");
-assert.match(hub, /eyebrow="فهرس الدروس"/, "تعلّم: فهرس الدروس");
-assert.doesNotMatch(hub, /مكتبة الدروس/, "تعلّم بلا مكتبة الدروس");
+const appRoutes = readFileSync(resolve(appRoot, "src/AppRoutes.tsx"), "utf8");
+assert.match(appRoutes, /path="\/learn"[^>]*>\s*<Redirect\s+to="\/lessons"/, "تعلّم ملغى → دروس");
+assert.equal(existsSync(resolve(appRoot, "src/views/learn/LearnHubPage.tsx")), false, "LearnHub محذوف");
 
 const search = readFileSync(resolve(appRoot, "src/components/GlobalSearchModal.tsx"), "utf8");
-assert.match(search, /key:\s*"book",\s*label:\s*"مراجع"/, "بحث: شريحة مراجع");
 assert.doesNotMatch(search, /label:\s*"مكتبة"/, "بحث بلا شريحة مكتبة");
 
 const duas = readFileSync(resolve(appRoot, "src/pages/worship/ui/DuasView.tsx"), "utf8");

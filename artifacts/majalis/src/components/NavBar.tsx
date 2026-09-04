@@ -135,10 +135,8 @@ export default function NavBar() {
 
   const isActive = (href: string) => {
     const path = href.split("?")[0] || href;
-    if (path === "/learn") {
+    if (path === "/lessons") {
       return (
-        location === "/learn" ||
-        location.startsWith("/learn/") ||
         location === "/lessons" ||
         location.startsWith("/lessons/") ||
         location.startsWith("/learning/") ||

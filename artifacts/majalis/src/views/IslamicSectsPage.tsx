@@ -1151,7 +1151,7 @@ export default function IslamicSectsPage() {
                   {sect.id === "ahl-al-sunna" && (
                     <div style={{ marginTop: "1rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                       <Link
-                        href="/learn/aqeedat-ahl-sunnah"
+                        href="/tawhid"
                         onClick={(e) => e.stopPropagation()}
                         style={{
                           display: "inline-block",
