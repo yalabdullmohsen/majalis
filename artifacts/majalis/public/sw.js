@@ -227,6 +227,16 @@ async function networkFirstThenCache(req, cacheName) {
 
 /** Navigations must never be stored: current network document or offline page only. */
 async function networkFirstNavigation(req) {
+  const url = new URL(req.url);
+  // لا تُخدم/تُخزَّن صفحة الخطأ الأصلية كمستند صالح
+  if (url.pathname.includes("native-load-error")) {
+    try {
+      return await fetch(new Request(self.location.origin + "/", { cache: "no-store" }));
+    } catch {
+      return (await caches.match("/offline.html", { cacheName: OFFLINE_CACHE })) ||
+        new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain; charset=utf-8" } });
+    }
+  }
   try {
     // تجاوز كاش HTTP للمتصفح قدر الإمكان — مستند SPA يجب أن يشير إلى hashes النشر الحالي.
     let networkReq = req;
@@ -235,7 +245,15 @@ async function networkFirstNavigation(req) {
     } catch (_) {
       networkReq = req;
     }
-    return await fetchWithTimeout(networkReq);
+    const res = await fetchWithTimeout(networkReq);
+    // لا تخزّن استجابات خطأ HTML كصفحة صالحة
+    if (!res.ok) return res;
+    const ct = res.headers.get("content-type") || "";
+    if (ct.includes("text/html")) {
+      // مستندات التنقّل لا تُوضع في الكاش أصلًا
+      return res;
+    }
+    return res;
   } catch {
     return (await caches.match("/offline.html", { cacheName: OFFLINE_CACHE })) ||
       new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain; charset=utf-8" } });
@@ -264,7 +282,8 @@ self.addEventListener("fetch", (event) => {
     url.pathname === "/sw.js" ||
     url.pathname === "/manifest.json" ||
     url.pathname === "/site.webmanifest" ||
-    url.pathname === "/manifest.webmanifest"
+    url.pathname === "/manifest.webmanifest" ||
+    url.pathname === "/native-load-error.html"
   ) {
     event.respondWith(
       (async () => {

@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>تعذّر التحميل — سُنّة</title>
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+    <title>جاري التجهيز — سُنّة</title>
     <style>
       html,
       body {
@@ -25,6 +26,20 @@
         max-width: 22rem;
         text-align: center;
       }
+      .spin {
+        width: 2.25rem;
+        height: 2.25rem;
+        margin: 0 auto 1rem;
+        border-radius: 50%;
+        border: 3px solid color-mix(in srgb, #1f7a5a 25%, transparent);
+        border-top-color: #1f7a5a;
+        animation: spin 0.85s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
       h1 {
         margin: 0 0 0.75rem;
         font-size: 1.35rem;
@@ -37,6 +52,10 @@
         line-height: 1.65;
         color: #4a6b5f;
       }
+      .actions {
+        display: grid;
+        gap: 0.55rem;
+      }
       button {
         appearance: none;
         border: 0;
@@ -48,8 +67,20 @@
         background: #1f7a5a;
         color: #fff;
       }
+      button.secondary {
+        background: transparent;
+        color: #1f7a5a;
+        border: 1px solid color-mix(in srgb, #1f7a5a 35%, transparent);
+      }
       button:active {
         opacity: 0.92;
+      }
+      .is-loading .actions {
+        display: none;
+      }
+      .is-final .spin {
+        display: none;
+        animation: none;
       }
       @media (prefers-color-scheme: dark) {
         html,
@@ -60,29 +91,58 @@
         p {
           color: #9bb5a8;
         }
+        button.secondary {
+          color: #9fcabb;
+          border-color: color-mix(in srgb, #5a9e88 40%, transparent);
+        }
       }
     </style>
   </head>
   <body>
-    <main>
-      <h1 id="title">جاري إعادة التحميل…</h1>
-      <p id="msg">نجهّز الصفحة. إن استمر التأخير سنساعدك بإعادة المحاولة.</p>
-      <button type="button" id="retry">إعادة المحاولة</button>
+    <main id="root" class="is-loading">
+      <div class="spin" aria-hidden="true"></div>
+      <h1 id="title">جاري تجهيز الصفحة…</h1>
+      <p id="msg">نحمّل المحتوى. لا تغلق التطبيق.</p>
+      <div class="actions">
+        <button type="button" id="retry">إعادة المحاولة</button>
+        <button type="button" id="home" class="secondary">الصفحة الرئيسية</button>
+      </div>
     </main>
     <script>
       (function () {
         var LIVE = "https://www.ssunnah.com/";
+        var RETRY_KEY = "mj.native-load-retry";
+        var root = document.getElementById("root");
         var title = document.getElementById("title");
         var msg = document.getElementById("msg");
         var online = typeof navigator !== "undefined" ? navigator.onLine !== false : true;
 
-        function resolveTarget() {
+        function paintLoading(text, detail) {
+          root.className = "is-loading";
+          title.textContent = text || "جاري تجهيز الصفحة…";
+          msg.textContent = detail || "نحمّل المحتوى. لا تغلق التطبيق.";
+          document.title = "جاري التجهيز — سُنّة";
+        }
+
+        function paintFinal() {
+          root.className = "is-final";
+          if (!online) {
+            title.textContent = "أنت غير متصل بالإنترنت";
+            msg.textContent = "تحقق من الاتصال ثم اضغط إعادة المحاولة.";
+          } else {
+            title.textContent = "تعذّر تحميل المحتوى مؤقتًا";
+            msg.textContent = "أعد المحاولة. إن استمر الأمر افتح الصفحة الرئيسية.";
+          }
+          document.title = "تعذّر التحميل — سُنّة";
+        }
+
+        function resolveTarget(forceHome) {
+          if (forceHome) return LIVE;
           var path = "/";
           try {
             path = sessionStorage.getItem("mj.last-path") || "/";
           } catch (e0) {}
           if (!path || path.charAt(0) !== "/") path = "/";
-          // لا تُعد إلى صفحة الخطأ نفسها
           if (path.indexOf("native-load-error") !== -1) path = "/";
           var ref = "";
           try {
@@ -91,60 +151,80 @@
           if (ref && ref.indexOf("ssunnah.com") !== -1 && ref.indexOf("native-load-error") === -1) {
             return ref.split("#")[0];
           }
-          var base = LIVE.replace(/\/$/, "");
-          return base + path;
+          return LIVE.replace(/\/$/, "") + path;
         }
 
-        function paintSoft() {
-          title.textContent = "جاري إعادة التحميل…";
-          msg.textContent = "نجهّز الصفحة. إن استمر التأخير سنساعدك بإعادة المحاولة.";
-        }
-
-        function paintFinal() {
-          if (!online) {
-            title.textContent = "أنت غير متصل بالإنترنت";
-            msg.textContent = "تحقق من الاتصال ثم اضغط إعادة المحاولة.";
-            return;
-          }
-          title.textContent = "تعذّر تحميل المحتوى مؤقتًا";
-          msg.textContent = "أعد المحاولة. إن استمر الأمر فجرّب لاحقًا.";
-        }
-
-        function go() {
-          var target = resolveTarget();
+        function go(forceHome) {
+          var target = resolveTarget(!!forceHome);
+          var sep = target.indexOf("?") >= 0 ? "&" : "?";
           try {
-            location.replace(target + (target.indexOf("?") >= 0 ? "&" : "?") + "_r=" + Date.now());
+            location.replace(target + sep + "_r=" + Date.now());
           } catch (e2) {
             location.href = target;
           }
         }
 
-        document.getElementById("retry").addEventListener("click", go);
+        function readAttempts() {
+          try {
+            return parseInt(sessionStorage.getItem(RETRY_KEY) || "0", 10) || 0;
+          } catch (e3) {
+            return 0;
+          }
+        }
 
-        // لا تعرض خطأ فوريًا — أعِد التحميل بهدوء مرة، ثم أوضح السبب إن لزم
+        function writeAttempts(n) {
+          try {
+            sessionStorage.setItem(RETRY_KEY, String(n));
+          } catch (e4) {}
+        }
+
+        document.getElementById("retry").addEventListener("click", function () {
+          writeAttempts(0);
+          paintLoading("جاري إعادة التحميل…", "نحاول فتح الصفحة من جديد.");
+          setTimeout(function () {
+            go(false);
+          }, 400);
+        });
+        document.getElementById("home").addEventListener("click", function () {
+          writeAttempts(0);
+          paintLoading("فتح الصفحة الرئيسية…", "ننقلك إلى سُنّة.");
+          setTimeout(function () {
+            go(true);
+          }, 300);
+        });
+
+        // مسار صامت: لا خطأ فوري — محاولتان قبل عرض السبب
         if (!online) {
           paintFinal();
         } else {
-          paintSoft();
-          try {
-            if (sessionStorage.getItem("mj.native-load-retry") !== "1") {
-              sessionStorage.setItem("mj.native-load-retry", "1");
-              setTimeout(go, 1200);
-            } else {
-              setTimeout(paintFinal, 400);
-            }
-          } catch (e3) {
-            setTimeout(paintFinal, 400);
+          var attempts = readAttempts();
+          if (attempts < 1) {
+            writeAttempts(1);
+            paintLoading("جاري تجهيز الصفحة…", "نحمّل المحتوى. لا تغلق التطبيق.");
+            setTimeout(function () {
+              go(false);
+            }, 900);
+          } else if (attempts < 2) {
+            writeAttempts(2);
+            paintLoading("ما زلنا نجهّز الصفحة…", "محاولة إضافية بهدوء قبل أي رسالة خطأ.");
+            setTimeout(function () {
+              go(true);
+            }, 1600);
+          } else {
+            paintFinal();
           }
         }
 
         try {
           window.addEventListener("online", function () {
             online = true;
-            paintSoft();
-            go();
+            writeAttempts(0);
+            paintLoading("عادت الشبكة…", "نعيد فتح الصفحة.");
+            setTimeout(function () {
+              go(false);
+            }, 500);
           });
-        } catch (e4) {}
+        } catch (e5) {}
       })();
     </script>
   </body>

@@ -59,9 +59,14 @@ export function PageLoadingGuard({
   };
 
   if (timedOut && loading) {
+    const offline = typeof navigator !== "undefined" && navigator.onLine === false;
     return (
       <ErrorState
-        text="انتهت مهلة التحميل. تحقق من الاتصال وحاول مجددًا."
+        text={
+          offline
+            ? "أنت غير متصل بالإنترنت. اتصل بالشبكة ثم أعد المحاولة."
+            : "التحميل يستغرق وقتًا أطول من المعتاد. أعد المحاولة أو انتظر قليلًا."
+        }
         onRetry={onRetry}
       />
     );

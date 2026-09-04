@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { RequestManager } from "@/lib/request-manager";
 import { beginAbortScope, abortScope } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
+import { userMessageFromLoadError } from "@/lib/load-failure";
 
 export type AsyncStatus = "loading" | "success" | "error" | "empty";
 
@@ -58,16 +59,25 @@ export function useAsyncData<T>(
     setError(null);
     const signal = beginAbortScope(`async:${scopeKey}`);
 
-    try {
-      const result = await RequestManager.run(
+    const run = () =>
+      RequestManager.run(
         key,
         (sig) => {
-          // Prefer route abort; also honor RequestManager signal
           const combined = signal.aborted ? signal : sig;
           return loader(combined);
         },
         { dedupeKey: scopeKey, timeoutMs },
       );
+
+    try {
+      let result: T;
+      try {
+        result = await run();
+      } catch {
+        if (gen !== generation.current || signal.aborted) return;
+        // إعادة محاولة صامتة واحدة قبل اعتبارها فشلاً للمستخدم
+        result = await run();
+      }
       if (gen !== generation.current || signal.aborted) return;
 
       const isEmpty = emptyWhen ? emptyWhen(result) : Array.isArray(result) && result.length === 0;
@@ -80,7 +90,7 @@ export function useAsyncData<T>(
         logDiagnostic("nav-abort", scopeKey);
         return;
       }
-      setError(String((err as Error)?.message || err));
+      setError(userMessageFromLoadError(err));
       setStatus("error");
     }
   }, [enabled, key, loader, scopeKey, timeoutMs, emptyWhen, emptyMessage]);

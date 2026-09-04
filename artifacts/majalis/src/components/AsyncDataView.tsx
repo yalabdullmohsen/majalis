@@ -29,16 +29,17 @@ function Skeleton({ variant }: { variant: SkeletonVariant }) {
 
 export function AsyncDataView({
   status,
-  error: _error,
+  error,
   onRetry,
   emptyText = "لا توجد نتائج الآن. جرّب تعديل البحث أو الفلتر، أو عد لاحقًا.",
-  errorText = "تعذّر تحميل البيانات. تحقّق من الاتصال ثم اضغط «أعد المحاولة».",
+  errorText = "تعذّر تحميل البيانات مؤقتًا. أعد المحاولة.",
   skeleton = "list",
   children,
 }: AsyncDataViewProps) {
   if (status === "loading") return <Skeleton variant={skeleton} />;
   if (status === "error") {
-    return <ErrorState text={errorText} onRetry={onRetry} />;
+    const text = typeof error === "string" && error.trim() ? error : errorText;
+    return <ErrorState text={text} onRetry={onRetry} />;
   }
   if (status === "empty") return <Empty text={emptyText} />;
   return <>{children}</>;
