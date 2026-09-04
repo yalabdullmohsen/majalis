@@ -263,11 +263,11 @@ export function nextRotationDelayMs(rand: () => number = Math.random): number {
 export const REFRESH_ON_RETURN_AFTER_MS = 45_000;
 
 /**
- * مدة حركة الماركي (ثوانٍ): حسب عدد العناصر وطول النصوص حتى
- * يمرّ الحديث/الآية كاملًا بسرعة قابلة للقراءة (~35 حرفًا/ث).
+ * مدة حركة الماركي (ثوانٍ): حسب عدد العناصر وطول النصوص.
+ * أسرع من السابق (~٥٥ حرفًا/ث) مع بقاء القراءة مريحة.
  */
 export function marqueeDurationSec(itemCount: number, totalChars = 0): number {
-  const byCount = itemCount * 6;
-  const byChars = totalChars > 0 ? totalChars / 32 : 0;
-  return Math.max(30, Math.min(120, Math.max(byCount, byChars)));
+  const byCount = itemCount * 3.25;
+  const byChars = totalChars > 0 ? totalChars / 55 : 0;
+  return Math.max(14, Math.min(58, Math.max(byCount, byChars)));
 }
