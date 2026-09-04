@@ -69,14 +69,51 @@ ok(!/call\.resolve\(\[\]\)/.test(pluginSwift), "plugin does not resolve empty on
 ok(pluginSwift.includes("AUDIO_SESSION_FAILED"), "playback rejects with AUDIO_SESSION_FAILED code");
 ok(pluginSwift.includes("mediaServicesWereResetNotification"), "playback observes media services reset");
 
+// حذف تام لميزة التسميع بالذكاء الاصطناعي — افحص الإزالة، لا تقرأ ملفات محذوفة
 ok(!existsSync(join(iosApp, "App", "MajlisSpeechRecognitionPlugin.swift")), "speech recognition plugin removed");
 ok(!existsSync(join(iosApp, "App", "RecitationAudioCapturePlugin.swift")), "recitation capture plugin removed");
+ok(
+  !existsSync(join(root, "src", "lib", "plugins", "speech-recognition.ts")),
+  "JS speech-recognition bridge removed",
+);
+ok(
+  !existsSync(
+    join(root, "android", "app", "src", "main", "java", "com", "majlisilm", "app", "MajlisSpeechRecognitionPlugin.kt"),
+  ),
+  "Android speech recognition plugin removed",
+);
 ok(!plist.includes("NSSpeechRecognitionUsageDescription"), "Info.plist has no speech recognition usage");
 ok(!plist.includes("NSMicrophoneUsageDescription"), "Info.plist has no microphone usage (AI recitation removed)");
 ok(!pbx.includes("MajlisSpeechRecognitionPlugin.swift"), "pbxproj has no speech plugin");
 ok(!pbx.includes("RecitationAudioCapturePlugin.swift"), "pbxproj has no capture plugin");
+ok(!pbx.includes("MajlisSpeechRecognition"), "pbxproj has no MajlisSpeechRecognition symbol");
 
-const privacy = readFileSync(join(iosApp, "App", "PrivacyInfo.xcprivacy"), "utf8");ok(privacy.includes("NSPrivacyTracking"), "PrivacyInfo declares tracking key");
+// منع تكرار خلل f9995028: حذف التعريف مع بقاء استخدام المتغير
+{
+  const gateSrc = readFileSync(fileURLToPath(import.meta.url), "utf8");
+  // ابْنِ النمط دون كتابة المعرّف متبوعًا بـ .includes في المصدر (حتى لا يطابق الفحص نفسه)
+  const usesVarMethod = (name) => new RegExp(String.raw`\b${name}\s*\.\s*includes\b`).test(gateSrc);
+  ok(!/\bconst\s+speechSwift\b/.test(gateSrc), "gate must not declare speechSwift");
+  ok(!usesVarMethod("speechSwift"), "gate must not call methods on speechSwift");
+  ok(!/\bconst\s+captureSwift\b/.test(gateSrc), "gate must not declare captureSwift");
+  ok(!usesVarMethod("captureSwift"), "gate must not call methods on captureSwift");
+  ok(!/\bconst\s+speechJs\b/.test(gateSrc), "gate must not declare speechJs");
+  ok(
+    !/readFileSync\([^\n]*MajlisSpeechRecognitionPlugin\.swift/.test(gateSrc),
+    "gate must not readFileSync deleted speech plugin",
+  );
+  ok(
+    !/readFileSync\([^\n]*RecitationAudioCapturePlugin\.swift/.test(gateSrc),
+    "gate must not readFileSync deleted capture plugin",
+  );
+  ok(
+    !/readFileSync\([^\n]*speech-recognition\.ts/.test(gateSrc),
+    "gate must not readFileSync deleted JS speech bridge",
+  );
+}
+
+const privacy = readFileSync(join(iosApp, "App", "PrivacyInfo.xcprivacy"), "utf8");
+ok(privacy.includes("NSPrivacyTracking"), "PrivacyInfo declares tracking key");
 ok(/NSPrivacyTracking<\/key>\s*<false\/>/s.test(privacy), "PrivacyInfo tracking=false");
 ok(privacy.includes("NSPrivacyAccessedAPICategoryUserDefaults"), "PrivacyInfo declares UserDefaults API reason");
 ok(
@@ -207,6 +244,8 @@ ok(
 // Capacitor auto-discovers CAPBridgedPlugin — AppDelegate must not manually register a conflicting name
 const appDelegate = readFileSync(join(iosApp, "App", "AppDelegate.swift"), "utf8");
 ok(!appDelegate.includes("MajlisPlaybackAudio"), "AppDelegate does not manually register playback plugin (CAPBridgedPlugin auto-discovery)");
+ok(!appDelegate.includes("MajlisSpeechRecognition"), "AppDelegate has no speech recognition plugin");
+ok(!appDelegate.includes("RecitationAudioCapture"), "AppDelegate has no recitation capture plugin");
 ok(appDelegate.includes("import WebKit"), "AppDelegate imports WebKit for cache purge");
 ok(
   appDelegate.includes("WKWebsiteDataStore.default().removeData")
