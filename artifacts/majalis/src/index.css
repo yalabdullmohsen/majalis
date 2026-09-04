@@ -3344,7 +3344,25 @@ body.assistant-panel-open {
   gap: var(--ds-space-3);
   padding: 0.85rem 1rem 0.35rem;
   border-bottom: 1px solid var(--majalis-line);
-  background: linear-gradient(180deg, #fff, var(--majalis-parchment-deep));
+  background: linear-gradient(180deg, color-mix(in srgb, #1f6b56 8%, #fff), var(--majalis-parchment-deep));
+}
+
+.assistant-panel__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.assistant-panel__icon {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.75rem;
+  color: #fff;
+  background: linear-gradient(145deg, #1f6b56, #0f4a3a);
+  flex-shrink: 0;
 }
 
 .assistant-panel__actions {
