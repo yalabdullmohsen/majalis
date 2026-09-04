@@ -22,17 +22,11 @@ import {
   applyLessonQuickFilters,
   type LessonQuickFilters,
 } from "@/components/lessons/LessonFilters";
-import { LessonScheduleGroup } from "@/components/lessons/LessonScheduleGroup";
-import { groupLessonsForSchedule } from "@/lib/lessons/lessonGrouping";
-import { computeNextOccurrenceMs } from "@/lib/lesson-time";
 import { supabase } from "@/lib/supabase";
 import { safeLocationReload } from "@/lib/safe-reload";
-import {
-  DEFAULT_KUWAIT_FILTERS,
+import { DEFAULT_KUWAIT_FILTERS,
   extractFilterOptions,
-  filterFeaturedHomeLessons,
   filterKuwaitLessons,
-  getFeaturedHomeStatusLabel,
   sortKuwaitLessons,
   type KuwaitLessonFilters,
   type KuwaitLessonRecord,
@@ -345,47 +339,15 @@ export default function LessonsPage({
     return applyLessonQuickFilters(filtered, quickFilters);
   }, [archivedLessons, filtered, filters, quickFilters]);
 
-  const featuredSections = useMemo(() => {
-    const pool = filterFeaturedHomeLessons(tabLessons);
-    const sorted = sortKuwaitLessons(pool);
-    const now = Date.now();
-    const THRESHOLD_MS = 36 * 60 * 60 * 1000;
-    const upcoming = sorted
-      .filter((l) => {
-        const label = getFeaturedHomeStatusLabel(l);
-        if (!label) return false;
-        if (label === "مستمر") return true;
-        const nextMs = computeNextOccurrenceMs(l.day, l.time);
-        return nextMs - now <= THRESHOLD_MS;
-      })
-      .slice(0, 4);
-    return { upcoming };
-  }, [tabLessons]);
-
   const pageTitle =
     quickFilters.schedule === "archive"
       ? "أرشيف الدروس"
       : quickFilters.schedule === "today"
         ? "دروس اليوم"
         : "الدروس";
-  const showFeatured =
-    !filters.search &&
-    filters.governorate === "كل المحافظات" &&
-    quickFilters.schedule === "all";
-  const featuredIds = useMemo(() => {
-    if (!showFeatured) return new Set<string>();
-    return new Set(featuredSections.upcoming.map((l) => l.id));
-  }, [featuredSections, showFeatured]);
 
-  const mainList = useMemo(
-    () => quickFiltered.filter((l) => !featuredIds.has(l.id)),
-    [quickFiltered, featuredIds],
-  );
-
-  const scheduleEntries = useMemo(
-    () => groupLessonsForSchedule(mainList),
-    [mainList],
-  );
+  /** قائمة واحدة مرتّبة من الأقرب إلى الأبعد — بطاقة موحّدة فقط */
+  const listLessons = quickFiltered;
 
   const setFilter = <K extends keyof KuwaitLessonFilters>(key: K, value: KuwaitLessonFilters[K]) => {
     startTransition(() => {
@@ -646,21 +608,19 @@ export default function LessonsPage({
             onRetry={() => safeLocationReload()}
           >
             <>
-              {showFeatured && featuredSections.upcoming.length > 0 && (
-                    <section className="lessons-v2-section lessons-v2-section--first">
-                      {renderGrid(featuredSections.upcoming, "", true)}
-                    </section>
-                  )}
+              <section className="lessons-v2-section lessons-v2-section--first">
+                {listLessons.length === 0 ? (
+                  <Empty text="لا توجد دروس مطابقة — جرّب مسح الفلاتر أو توسيع البحث." />
+                ) : (
+                  renderGrid(
+                    listLessons,
+                    quickFilters.schedule === "archive" ? "archived-" : "",
+                    false,
+                  )
+                )}
+              </section>
 
-                  <section className="lessons-v2-section">
-                    {scheduleEntries.length === 0 && !(showFeatured && featuredSections.upcoming.length > 0) ? (
-                      <Empty text="لا توجد دروس مطابقة — جرّب مسح الفلاتر أو توسيع البحث." />
-                    ) : (
-                      <LessonScheduleGroup entries={scheduleEntries} />
-                    )}
-                  </section>
-
-              {!loading ? (
+              {!loading && quickFilters.schedule !== "archive" ? (
                 <section className="lessons-past-section" aria-labelledby="past-lessons-heading">
                   <h2 id="past-lessons-heading" className="lessons-past-section__title">الدروس السابقة</h2>
                   <p className="lessons-empty-state">
@@ -714,7 +674,7 @@ export default function LessonsPage({
         ]}
       />
       <section className="lessons-page-stats" aria-label="إحصاءات الدروس">
-        <p className="lessons-page-stats__item">{scheduleEntries.length} بطاقة معروضة</p>
+        <p className="lessons-page-stats__item">{listLessons.length} بطاقة معروضة</p>
         <p className="lessons-page-stats__item">{activeLessons.length} جلسة نشطة</p>
         {archivedLessons.length > 0 ? (
           <p className="lessons-page-stats__item">{archivedLessons.length} في الأرشيف</p>

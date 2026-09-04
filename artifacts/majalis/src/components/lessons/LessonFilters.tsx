@@ -28,14 +28,19 @@ export const DEFAULT_LESSON_QUICK_FILTERS: LessonQuickFilters = {
   category: "الكل",
 };
 
+/** فلاتر سريعة موحّدة أعلى صفحة الدروس */
 const SCHEDULE_CHIPS: Array<{ id: LessonQuickFilterId; label: string }> = [
   { id: "all", label: "الكل" },
   { id: "lessons", label: "دروس" },
   { id: "courses", label: "دورات" },
   { id: "in_person", label: "حضوري" },
   { id: "remote", label: "عن بعد" },
+  { id: "today", label: "اليوم" },
   { id: "archive", label: "أرشيف" },
 ];
+
+/** مدعوم برمجياً: هذا الأسبوع (غير ظاهر في الشريط المختصر) */
+export const LESSON_WEEK_FILTER_LABEL = "هذا الأسبوع";
 
 function isStandaloneLesson(lesson: KuwaitLessonRecord): boolean {
   return !(lesson.isCourse || lesson.activityType === "دورة");
@@ -91,7 +96,7 @@ export function LessonFilters({ filters, onChange, searchSlot, filterSlot }: Pro
             <button
               key={chip.id}
               type="button"
-              className={`filter-chips__chip${filters.schedule === chip.id ? " filter-chips__chip--active" : ""}`}
+              className={`filter-chips__chip${filters.schedule === chip.id ? " is-active" : ""}`}
               aria-pressed={filters.schedule === chip.id}
               onClick={() => onChange({ ...filters, schedule: chip.id })}
             >
