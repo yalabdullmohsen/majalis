@@ -1,13 +1,19 @@
 {
-  "generatedAt": "2026-09-03T23:23:55.259Z",
+  "generatedAt": "2026-09-04T00:09:38.782Z",
   "paths": [
-    ".github/workflows/release-majlisilm.yml"
+    ".github/workflows/release-majlisilm.yml",
+    "reports/changed-scope-report.md",
+    "reports/changed-scope-verify.json"
   ],
   "scopes": [
-    "ci/config"
+    "ci/config",
+    "docs",
+    "other"
   ],
   "scopeIds": [
-    "ci_config"
+    "ci_config",
+    "docs",
+    "other"
   ],
   "checks": {
     "ui": false,
@@ -25,7 +31,7 @@
     "data_audit": false
   },
   "outputs": {
-    "scopes": "ci/config",
+    "scopes": "ci/config,docs,other",
     "scope_need_build": "true",
     "scope_need_mushaf": "false",
     "scope_need_color_contrast": "false",

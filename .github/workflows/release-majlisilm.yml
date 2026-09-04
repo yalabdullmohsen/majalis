@@ -174,13 +174,13 @@ jobs:
             echo "::error::فرع الإصدار يحتوي merge commits — أوقف. استخدم squash فقط."
             exit 1
           fi
-          # ادفع فرع الإصدار فقط. محظور: git push origin HEAD:main (لا تُنفَّذ أبدًا).
+          # ادفع فرع الإصدار فقط. الدفع المباشر إلى الفرع الرئيسي محظور ولا يُنفَّذ.
           git push origin "HEAD:refs/heads/${RELEASE_BRANCH}"
           existing=$(gh pr list --base main --head "$RELEASE_BRANCH" --json number --jq '.[0].number // empty' || true)
           if [ -n "${existing}" ]; then
             echo "PR إصدار موجود #${existing}"
             echo "## PR الإصدار #${existing}" >> "$GITHUB_STEP_SUMMARY"
-            echo "الدمج عبر auto-merge-to-main (squash فقط) بعد خضار الفحوصات — لا gh pr merge هنا." >> "$GITHUB_STEP_SUMMARY"
+            echo "الدمج عبر مسار auto-merge المعتمد (squash فقط) بعد خضار الفحوصات." >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
           url=$(gh pr create --base main --head "$RELEASE_BRANCH" \
@@ -188,10 +188,9 @@ jobs:
             --body "$(cat <<'EOF'
           إصدار مُتحقَّق محلياً في هذا الـworkflow (typecheck + build + test:regression) بعد دمج `automation/content` و`automation/tasks` فوق `main` بـ **squash خطي** (بلا merge commits).
 
-          لا دفع مباشر إلى `main`. الدمج يتم عبر حماية الفرع و**auto-merge squash** بعد خضار الفحوصات المطلوبة (لا cancelled).
+          لا دفع مباشر إلى `main`. الدمج يتم عبر حماية الفرع ومسار auto-merge المعتمد (squash فقط) بعد خضار الفحوصات المطلوبة (لا cancelled).
 
           EOF
           )")
           echo "## PR الإصدار (بانتظار auto-merge squash)" >> "$GITHUB_STEP_SUMMARY"
           echo "$url" >> "$GITHUB_STEP_SUMMARY"
-          echo "ملاحظة: ممنوع gh pr merge داخل هذا الـworkflow — الدمج عبر auto-merge-to-main.yml فقط." >> "$GITHUB_STEP_SUMMARY"

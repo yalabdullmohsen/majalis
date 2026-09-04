@@ -1,8 +1,8 @@
 # تقرير نطاق التغييرات
 
-**التاريخ:** 2026-09-03T23:23:55.263Z
-**عدد الملفات:** 1
-**النطاقات:** ci/config
+**التاريخ:** 2026-09-04T00:09:38.787Z
+**عدد الملفات:** 3
+**النطاقات:** ci/config، docs، other
 **docs-only:** لا
 
 ## البوابات المقترحة
@@ -26,6 +26,8 @@
 ## الملفات المتغيرة (أول 40)
 
 - `.github/workflows/release-majlisilm.yml` → ci_config
+- `reports/changed-scope-report.md` → docs
+- `reports/changed-scope-verify.json` → other
 
 
 ## سياسات
