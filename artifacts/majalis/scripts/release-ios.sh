@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # release:ios — أمر واحد لرفع رقم البناء + sync + تجهيز TestFlight.
-# لا يغيّر Bundle ID ولا التوقيع. يُبقي server.url على https://majlisilm.com.
+# لا يغيّر Bundle ID ولا التوقيع. يُبقي server.url على https://www.ssunnah.com.
 #
 # الاستعمال (من artifacts/majalis أو عبر pnpm --filter):
 #   pnpm run release:ios
@@ -15,13 +15,14 @@ REPO_ROOT="$(cd "$ROOT/../.." && pwd)"
 PBX="$ROOT/ios/App/App.xcodeproj/project.pbxproj"
 CAP_TS="$ROOT/capacitor.config.ts"
 CAP_IOS="$ROOT/ios/App/App/capacitor.config.json"
+CANONICAL_URL="https://www.ssunnah.com"
 
 cd "$ROOT"
 
 echo "==> التحقق من ربط الموقع الحي (server.url)…"
 for f in "$CAP_TS" "$CAP_IOS"; do
-  if ! grep -q 'https://majlisilm.com' "$f"; then
-    echo "خطأ: $f لا يحتوي server.url = https://majlisilm.com" >&2
+  if ! grep -q "$CANONICAL_URL" "$f"; then
+    echo "خطأ: $f لا يحتوي server.url = $CANONICAL_URL" >&2
     exit 1
   fi
 done
@@ -55,9 +56,10 @@ export ALLOW_IOS_NON_MAIN_BUILD="${ALLOW_IOS_NON_MAIN_BUILD:-0}"
 bash "$ROOT/scripts/prepare-ios.sh"
 
 echo "==> إعادة التحقق أن server.url لم يُمس بعد sync…"
-grep -q 'https://majlisilm.com' "$CAP_IOS"
+grep -q "$CANONICAL_URL" "$CAP_IOS"
 
 echo ""
 echo "✓ جاهز للرفع. الخطوة التالية (لا تُنفَّذ تلقائيًا هنا لتجنب نشر غير مقصود):"
 echo "  cd $REPO_ROOT && gh workflow run ios-testflight-deploy.yml"
+echo "  أو: افتح Xcode → Product → Archive"
 echo "  أو: git tag vX.Y.Z && git push origin vX.Y.Z"
