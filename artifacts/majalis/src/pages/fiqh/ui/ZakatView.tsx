@@ -436,10 +436,10 @@ export default function ZakatPage() {
         <div className="zk-related__grid">
           {[
             { href: "/arkan",          label: "أركان الإسلام" },
-            { href: "/prayer-ranks",   label: "فضائل الصلاة" },
+            { href: "/fiqh/books/salah", label: "كتاب الصلاة" },
             { href: "/fiqh",           label: "الفقه الإسلامي" },
-            { href: "/fiqh-qawaid",    label: "القواعد الفقهية" },
-            { href: "/sunan-yawmiyya", label: "السنن اليومية" },
+            { href: "/fiqh/usul",      label: "أصول الفقه" },
+            { href: "/fiqh/books/zakat", label: "كتاب الزكاة" },
           ].map(({ href, label }) => (
             <Link key={href} href={href} className="zk-related__link">{label}</Link>
           ))}

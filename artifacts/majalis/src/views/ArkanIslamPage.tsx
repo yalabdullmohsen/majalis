@@ -289,9 +289,9 @@ export default function ArkanIslamPage() {
             { href: "/asma-husna", label: "الأسماء الحسنى" },
             { href: "/akhlaq",     label: "الأخلاق الإسلامية" },
             { href: "/duas",       label: "الأدعية الشرعية" },
-            { href: "/prayer-ranks", label: "فضائل الصلاة" },
+            { href: "/fiqh/books/salah", label: "كتاب الصلاة" },
             { href: "/hadith",     label: "الأحاديث النبوية" },
-            { href: "/fiqh-qawaid", label: "القواعد الفقهية" },
+            { href: "/fiqh/usul", label: "أصول الفقه" },
             { href: "/fiqh",       label: "الفقه الإسلامي" },
           ].map(({ href, label }) => (
             <Link key={href} href={href} className="arkan-related__link">
