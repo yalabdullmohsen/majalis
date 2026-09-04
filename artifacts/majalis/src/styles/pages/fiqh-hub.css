@@ -1645,17 +1645,15 @@ html.dark .fiqh-filters__chip.is-active {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  padding: 0.5rem 0.55rem 0.45rem;
-  border-radius: 12px;
-  border: 1px solid color-mix(in srgb, var(--mn-border-default, #d8e3de) 70%, transparent);
+  gap: 0.15rem;
+  padding: 0.45rem 0.5rem 0.4rem;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--mn-border-default, #d8e3de) 75%, transparent);
   background: var(--fq-surface, var(--cardBackground, #fff));
-  box-shadow:
-    0 1px 2px color-mix(in srgb, #0f172a 5%, transparent),
-    0 4px 10px color-mix(in srgb, #0f172a 3%, transparent);
+  box-shadow: 0 1px 2px color-mix(in srgb, #0f172a 4%, transparent);
   min-height: 0;
-  max-height: none;
-  overflow: visible;
+  max-height: 6.5rem;
+  overflow: hidden;
   text-decoration: none;
   color: inherit;
 }
@@ -1664,33 +1662,25 @@ html.dark .fiqh-filters__chip.is-active {
   position: absolute;
   inset-block-start: 0;
   inset-inline: 0;
-  height: 3px;
+  height: 2px;
   background: var(--fiqh-card-accent, var(--mj-brand, #1f6b56));
 }
 
 .fiqh-category-card--ibadat {
   --fiqh-card-accent: #0f5c4c;
-  background:
-    linear-gradient(165deg, color-mix(in srgb, #0f5c4c 10%, transparent), transparent 58%),
-    var(--fq-surface, #fff);
+  background: var(--fq-surface, #fff);
 }
 .fiqh-category-card--muamalat {
   --fiqh-card-accent: #6b7c3a;
-  background:
-    linear-gradient(165deg, color-mix(in srgb, #6b7c3a 12%, transparent), transparent 58%),
-    var(--fq-surface, #fff);
+  background: var(--fq-surface, #fff);
 }
 .fiqh-category-card--usrah {
   --fiqh-card-accent: #2f9e7b;
-  background:
-    linear-gradient(165deg, color-mix(in srgb, #2f9e7b 12%, transparent), transparent 58%),
-    var(--fq-surface, #fff);
+  background: var(--fq-surface, #fff);
 }
 .fiqh-category-card--qada_jinayat {
   --fiqh-card-accent: #1a3d34;
-  background:
-    linear-gradient(165deg, color-mix(in srgb, #1a3d34 12%, transparent), transparent 58%),
-    var(--fq-surface, #fff);
+  background: var(--fq-surface, #fff);
 }
 
 .fiqh-category-card--tahara { --fiqh-card-accent: #0d6b4f; }
@@ -1823,6 +1813,28 @@ html.dark .fiqh-filters__chip.is-active {
   margin: 0;
   font-size: 0.74rem;
   color: var(--fq-ink-soft, var(--text-secondary));
+}
+
+.fiqh-issue-card__disclaimer {
+  margin: 0.35rem 0 0;
+  padding: 0.35rem 0.45rem;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: #7a4a12;
+  background: color-mix(in srgb, #e3cb8c 22%, #fff);
+  border: 1px solid color-mix(in srgb, #c9a227 28%, transparent);
+}
+
+html[data-theme="dark"] .fiqh-issue-card__disclaimer,
+html.dark .fiqh-issue-card__disclaimer {
+  color: #f0dfb0;
+  background: color-mix(in srgb, #e3cb8c 12%, #0f2f28);
+}
+
+.fiqh-status-badge--documented {
+  background: color-mix(in srgb, #c9a227 18%, transparent);
+  color: #7a4a12;
 }
 
 .fiqh-status-badge {

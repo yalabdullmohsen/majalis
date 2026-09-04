@@ -20,7 +20,7 @@ const sections = [
   { file: "og-fiqh.png", title: "الفقه والأحكام", subtitle: "أبواب ومسائل وقواعد" },
   { file: "og-hadith.png", title: "الحديث وعلومه", subtitle: "صحيح وحسن وتمييز الضعيف" },
   { file: "og-adhkar.png", title: "الأذكار", subtitle: "صباح ومساء ونوم وسفر" },
-  { file: "og-library.png", title: "المكتبة العلمية", subtitle: "كتب ومتون ومراجع" },
+  { file: "og-search.png", title: "البحث", subtitle: "ابحث في الدروس والفقه والحديث" },
   { file: "og-contact.png", title: "تواصل معنا", subtitle: "سُنّة — منصة علمية" },
 ];
 

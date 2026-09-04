@@ -422,6 +422,36 @@ export default function PrayerTimesPage() {
 
       {shortcuts}
 
+      <section className="pts-ranks" aria-labelledby="pts-ranks-title">
+        <div className="pts-ranks__head">
+          <h2 id="pts-ranks-title" className="pts-ranks__title">مراتب الناس في الصلاة</h2>
+          <Link href="/prayer-ranks" className="pts-ranks__more">
+            التفاصيل
+          </Link>
+        </div>
+        <ol className="pts-ranks__list">
+          {visibleRanks.map((rank, index) => (
+            <li key={rank.title} className="pts-ranks__item">
+              <span className="pts-ranks__num">{toArabicDigits(index + 1)}</span>
+              <div className="pts-ranks__body">
+                <p className="pts-ranks__label">{rank.label}</p>
+                <p className="pts-ranks__ruling">{rank.ruling}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        {RANKS.length > 2 && (
+          <button
+            type="button"
+            className="pts-ranks__toggle"
+            onClick={() => setRanksOpen((v) => !v)}
+            aria-expanded={ranksOpen}
+          >
+            {ranksOpen ? "طيّ القائمة" : "عرض الكل"}
+          </button>
+        )}
+      </section>
+
       {prayers.length > 0 && (
         <nav className="pts-list" aria-label="صلوات اليوم">
           {prayers.map((p) => {
@@ -456,36 +486,6 @@ export default function PrayerTimesPage() {
           })}
         </nav>
       )}
-
-      <section className="pts-ranks" aria-labelledby="pts-ranks-title">
-        <div className="pts-ranks__head">
-          <h2 id="pts-ranks-title" className="pts-ranks__title">مراتب الناس في الصلاة</h2>
-          <Link href="/prayer-ranks" className="pts-ranks__more">
-            التفاصيل
-          </Link>
-        </div>
-        <ol className="pts-ranks__list">
-          {visibleRanks.map((rank, index) => (
-            <li key={rank.title} className="pts-ranks__item">
-              <span className="pts-ranks__num">{toArabicDigits(index + 1)}</span>
-              <div className="pts-ranks__body">
-                <p className="pts-ranks__label">{rank.label}</p>
-                <p className="pts-ranks__ruling">{rank.ruling}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-        {RANKS.length > 2 && (
-          <button
-            type="button"
-            className="pts-ranks__toggle"
-            onClick={() => setRanksOpen((v) => !v)}
-            aria-expanded={ranksOpen}
-          >
-            {ranksOpen ? "طيّ القائمة" : "عرض الكل"}
-          </button>
-        )}
-      </section>
     </div>
   );
 }

@@ -154,7 +154,7 @@ function loadLibrary() {
       title: t.replace(/title:\s*"/, '').replace('"', ''),
       description: 'مرجع علمي',
       source_url: 'https://majlisilm.com/library',
-      source_name: 'المكتبة العلمية',
+      source_name: 'المراجع الشرعية',
       category: 'كتب',
     }));
   } catch {

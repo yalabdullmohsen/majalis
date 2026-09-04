@@ -24,12 +24,15 @@ export type FiqhCanonicalDoor =
   | "salah"
   | "zakat"
   | "sawm"
+  | "itikaf"
   | "hajj"
-  | "janaza"
-  | "jihad"
+  | "udhiya"
   | "ayman"
+  | "sayd"
   | "atima"
   | "libas"
+  | "janaza"
+  | "jihad"
   | "muamalat"
   | "buyu"
   | "riba"
@@ -75,11 +78,14 @@ export const FIQH_DOOR_ORDER: FiqhCanonicalDoor[] = [
   "salah",
   "zakat",
   "sawm",
+  "itikaf",
   "hajj",
-  "janaza",
+  "udhiya",
   "ayman",
+  "sayd",
   "atima",
   "libas",
+  "janaza",
   "muamalat",
   "buyu",
   "riba",
@@ -144,6 +150,15 @@ export const FIQH_DOOR_META: Record<FiqhCanonicalDoor, FiqhDoorMeta> = {
     sortOrder: 40,
     group: "ibadat",
   },
+  itikaf: {
+    id: "itikaf",
+    label: "الاعتكاف",
+    desc: "أحكام الاعتكاف وشروطه ومبطلاته.",
+    href: "/fiqh/books/itikaf",
+    bookHref: "/fiqh/books/itikaf",
+    sortOrder: 45,
+    group: "ibadat",
+  },
   hajj: {
     id: "hajj",
     label: "الحج والعمرة",
@@ -153,13 +168,13 @@ export const FIQH_DOOR_META: Record<FiqhCanonicalDoor, FiqhDoorMeta> = {
     sortOrder: 50,
     group: "ibadat",
   },
-  janaza: {
-    id: "janaza",
-    label: "الجنائز",
-    desc: "تغسيل الميت والصلاة عليه والدفن.",
-    href: "/janaza",
-    bookHref: "/fiqh/books/janaza",
-    sortOrder: 60,
+  udhiya: {
+    id: "udhiya",
+    label: "الأضحية والعقيقة",
+    desc: "أحكام الأضحية والعقيقة وشروطهما.",
+    href: "/fiqh/books/udhiya",
+    bookHref: "/fiqh/books/udhiya",
+    sortOrder: 55,
     group: "ibadat",
   },
   ayman: {
@@ -168,16 +183,25 @@ export const FIQH_DOOR_META: Record<FiqhCanonicalDoor, FiqhDoorMeta> = {
     desc: "اليمين والنذر والكفارة.",
     href: "/fiqh/books/ayman",
     bookHref: "/fiqh/books/ayman",
-    sortOrder: 70,
+    sortOrder: 60,
+    group: "ibadat",
+  },
+  sayd: {
+    id: "sayd",
+    label: "الذكاة والصيد",
+    desc: "الذبح والصيد وشروط الحل.",
+    href: "/fiqh/books/dhaka",
+    bookHref: "/fiqh/books/dhaka",
+    sortOrder: 65,
     group: "ibadat",
   },
   atima: {
     id: "atima",
     label: "الأطعمة والأشربة",
-    desc: "الحلال والحرام في المطعومات والمشروبات والذبائح.",
+    desc: "الحلال والحرام في المطعومات والمشروبات.",
     href: "/fiqh/books/atima",
     bookHref: "/fiqh/books/atima",
-    sortOrder: 80,
+    sortOrder: 70,
     group: "ibadat",
   },
   libas: {
@@ -186,6 +210,15 @@ export const FIQH_DOOR_META: Record<FiqhCanonicalDoor, FiqhDoorMeta> = {
     desc: "أحكام اللباس والزينة.",
     href: "/fiqh/books/libas",
     bookHref: "/fiqh/books/libas",
+    sortOrder: 80,
+    group: "ibadat",
+  },
+  janaza: {
+    id: "janaza",
+    label: "الجنائز",
+    desc: "تغسيل الميت والصلاة عليه والدفن.",
+    href: "/janaza",
+    bookHref: "/fiqh/books/janaza",
     sortOrder: 90,
     group: "ibadat",
   },
@@ -411,11 +444,14 @@ export const FIQH_HUB_DOOR_ORDER: FiqhCanonicalDoor[] = [
   "salah",
   "zakat",
   "sawm",
+  "itikaf",
   "hajj",
-  "janaza",
+  "udhiya",
   "ayman",
+  "sayd",
   "atima",
   "libas",
+  "janaza",
   "muamalat",
   "buyu",
   "riba",
@@ -481,7 +517,21 @@ const FILTER_DOOR_EXPAND: Partial<Record<FiqhCanonicalDoor, FiqhCanonicalDoor[]>
 };
 
 const GROUP_DOOR_EXPAND: Record<FiqhDoorGroup, FiqhCanonicalDoor[]> = {
-  ibadat: ["tahara", "salah", "zakat", "sawm", "hajj", "janaza", "jihad", "ayman", "atima", "libas"],
+  ibadat: [
+    "tahara",
+    "salah",
+    "zakat",
+    "sawm",
+    "itikaf",
+    "hajj",
+    "udhiya",
+    "ayman",
+    "sayd",
+    "atima",
+    "libas",
+    "janaza",
+    "jihad",
+  ],
   muamalat: ["buyu", "muamalat", "riba", "ijara", "sharika", "qard", "waqf_hiba", "faraid"],
   usrah: ["usrah", "nikah", "talaq", "iddah_rida", "nafaqat"],
   qada_jinayat: ["jinayat", "diyat", "hudud", "qada", "shahadat", "iqrar"],
@@ -503,11 +553,11 @@ const BOOK_DOOR_MAP: Record<string, FiqhCanonicalDoor> = {
   janaza: "janaza",
   zakat: "zakat",
   sawm: "sawm",
-  itikaf: "sawm",
+  itikaf: "itikaf",
   hajj: "hajj",
-  udhiya: "hajj",
+  udhiya: "udhiya",
   ayman: "ayman",
-  dhaka: "atima",
+  dhaka: "sayd",
   atima: "atima",
   libas: "libas",
   buyu: "buyu",
