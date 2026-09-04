@@ -85,8 +85,12 @@ const personLd = personJsonLd({
 assert.equal(personLd["@type"], "Person");
 
 const libraryDetail = read("pages/library/ui/LibraryDetailView.tsx");
-assert.match(libraryDetail, /bookJsonLd\(/);
+// المكتبة العامة أُزيلت — التفاصيل تحوّل إلى البحث (لا bookJsonLd في الواجهة)
+assert.match(libraryDetail, /Redirect/);
+assert.match(libraryDetail, /\/search/);
 assert.doesNotMatch(libraryDetail, /cover_url|image_url/);
+// المساعد JSON-LD للكتب ما زال متاحًا للاستخدام عند الحاجة
+assert.equal(typeof bookJsonLd, "function");
 
 const historyDetail = read("views/TarikhIslamiDetailPage.tsx");
 assert.match(historyDetail, /applyPageSeo/);
