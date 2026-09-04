@@ -1,41 +1,31 @@
 # تقرير نطاق التغييرات
 
-**التاريخ:** 2026-09-04T15:47:15.331Z
-**عدد الملفات:** 11
-**النطاقات:** other، ui/layout، content/data، docs
+**التاريخ:** 2026-09-04T16:08:40.606Z
+**عدد الملفات:** 1
+**النطاقات:** ios/capacitor
 **docs-only:** لا
 
 ## البوابات المقترحة
 
 | البوابة | مطلوب |
 |---------|-------|
-| ui | ✓ |
+| ui | — |
 | api | — |
-| seo | ✓ |
+| seo | — |
 | pwa | — |
-| content | ✓ |
-| ios | — |
-| full | ✓ |
+| content | — |
+| ios | ✓ |
+| full | — |
 | mushaf | — |
 | build | ✓ |
-| visual | ✓ |
-| lighthouse | ✓ |
-| color_contrast | ✓ |
-| data_audit | ✓ |
+| visual | — |
+| lighthouse | — |
+| color_contrast | — |
+| data_audit | — |
 
 ## الملفات المتغيرة (أول 40)
 
-- `artifacts/majalis/public/native-load-error.html` → other
-- `artifacts/majalis/src/App.tsx` → ui_layout
-- `artifacts/majalis/src/components/LazyRouteFallback.tsx` → ui_layout
-- `artifacts/majalis/src/components/topic/TopicPage.tsx` → ui_layout
-- `artifacts/majalis/src/lib/__tests__/canonical-apex-gate.test.ts` → ui_layout
-- `artifacts/majalis/src/lib/__tests__/prophets-final-routes.test.ts` → content_data
-- `artifacts/majalis/src/main.tsx` → ui_layout
-- `artifacts/majalis/src/styles/pages/prophet-stories.css` → ui_layout
-- `artifacts/majalis/src/views/ProphetStoriesPage.tsx` → content_data
-- `reports/changed-scope-report.md` → docs
-- `reports/changed-scope-verify.json` → other
+- `artifacts/majalis/scripts/test-ios-capacitor-gates.mjs` → ios_capacitor
 
 
 ## سياسات

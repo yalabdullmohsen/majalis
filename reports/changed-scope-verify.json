@@ -1,60 +1,44 @@
 {
-  "generatedAt": "2026-09-04T15:47:15.330Z",
+  "generatedAt": "2026-09-04T16:08:40.605Z",
   "paths": [
-    "artifacts/majalis/public/native-load-error.html",
-    "artifacts/majalis/src/App.tsx",
-    "artifacts/majalis/src/components/LazyRouteFallback.tsx",
-    "artifacts/majalis/src/components/topic/TopicPage.tsx",
-    "artifacts/majalis/src/lib/__tests__/canonical-apex-gate.test.ts",
-    "artifacts/majalis/src/lib/__tests__/prophets-final-routes.test.ts",
-    "artifacts/majalis/src/main.tsx",
-    "artifacts/majalis/src/styles/pages/prophet-stories.css",
-    "artifacts/majalis/src/views/ProphetStoriesPage.tsx",
-    "reports/changed-scope-report.md",
-    "reports/changed-scope-verify.json"
+    "artifacts/majalis/scripts/test-ios-capacitor-gates.mjs"
   ],
   "scopes": [
-    "other",
-    "ui/layout",
-    "content/data",
-    "docs"
+    "ios/capacitor"
   ],
   "scopeIds": [
-    "other",
-    "ui_layout",
-    "content_data",
-    "docs"
+    "ios_capacitor"
   ],
   "checks": {
-    "ui": true,
+    "ui": false,
     "api": false,
-    "seo": true,
+    "seo": false,
     "pwa": false,
-    "content": true,
-    "ios": false,
-    "full": true,
+    "content": false,
+    "ios": true,
+    "full": false,
     "mushaf": false,
     "build": true,
-    "visual": true,
-    "lighthouse": true,
-    "color_contrast": true,
-    "data_audit": true
+    "visual": false,
+    "lighthouse": false,
+    "color_contrast": false,
+    "data_audit": false
   },
   "outputs": {
-    "scopes": "other,ui/layout,content/data,docs",
+    "scopes": "ios/capacitor",
     "scope_need_build": "true",
     "scope_need_mushaf": "false",
-    "scope_need_color_contrast": "true",
-    "scope_need_data_audit": "true",
-    "scope_need_admin_privacy": "true",
+    "scope_need_color_contrast": "false",
+    "scope_need_data_audit": "false",
+    "scope_need_admin_privacy": "false",
     "scope_admin_only": "false",
-    "scope_need_ui": "true",
+    "scope_need_ui": "false",
     "scope_need_api": "false",
-    "scope_need_seo": "true",
+    "scope_need_seo": "false",
     "scope_need_pwa": "false",
-    "scope_need_ios": "false",
-    "scope_need_full": "true",
-    "scope_need_visual": "true",
+    "scope_need_ios": "true",
+    "scope_need_full": "false",
+    "scope_need_visual": "false",
     "scope_docs_only": "false"
   },
   "docsOnly": false,
