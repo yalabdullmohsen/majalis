@@ -1,15 +1,20 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type AnimationEvent,
+  type CSSProperties,
+} from "react";
 import { Link } from "wouter";
-import { Repeat2, ScrollText, Heart, BookOpen, Sparkles, Megaphone } from "lucide-react";
+import { BookOpen, Heart, Megaphone, Repeat2, ScrollText, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import {
   buildTickerPool,
   pickNextBatch,
   readRecent,
   writeRecent,
-  nextRotationDelayMs,
-  marqueeDurationSec,
-  REFRESH_ON_RETURN_AFTER_MS,
   type TickerContentItem,
   type TickerKind,
 } from "@/lib/ticker-content";
@@ -19,10 +24,27 @@ type TickerItem = {
   key: string;
   Icon: LucideIcon;
   label: string;
-  previewText: string;
+  /** النص الكامل المعروض — بلا قصّ أثناء الحركة */
+  displayText: string;
   source?: string;
   href: string;
   kind?: TickerKind;
+};
+
+const KIND_ICON: Record<TickerKind, LucideIcon> = {
+  hadith: ScrollText,
+  dhikr: Repeat2,
+  ayah: BookOpen,
+  faida: Heart,
+  promo: Megaphone,
+};
+
+const FALLBACK_ITEM: TickerItem = {
+  key: "fallback",
+  Icon: Sparkles,
+  label: "سُنّة",
+  displayText: "تصفّح المصحف والدروس والفتاوى من مكان واحد",
+  href: "/quran-hub",
 };
 
 function useReducedMotion(): boolean {
@@ -37,93 +59,7 @@ function useReducedMotion(): boolean {
   return reduced;
 }
 
-const KIND_ICON: Record<TickerKind, LucideIcon> = {
-  hadith: ScrollText,
-  dhikr: Repeat2,
-  ayah: BookOpen,
-  faida: Heart,
-  promo: Megaphone,
-};
-
-/**
- * دفعة مسار الإعلان: مجمّع محلّي كبير، دفعة متنوّعة تتبدّل دوريًا،
- * بلا تكرار ضمن آخر 20 عرضًا.
- * الدفعة الأولى متزامنة — لا إطار فارغ ثم قفزة محتوى.
- */
-function useRotatingContent(): TickerContentItem[] {
-  const initRef = useRef<{ pool: TickerContentItem[]; batch: TickerContentItem[]; recent: string[] } | null>(
-    null,
-  );
-  if (!initRef.current) {
-    const pool = buildTickerPool();
-    const recent = readRecent();
-    const picked = pickNextBatch(pool, recent);
-    initRef.current = { pool, batch: picked.batch, recent: picked.recent };
-  }
-  const pool = initRef.current.pool;
-  const recentRef = useRef<string[]>(initRef.current.recent);
-  const [batch, setBatch] = useState<TickerContentItem[]>(initRef.current.batch);
-  const lastPickAtRef = useRef(Date.now());
-
-  useEffect(() => {
-    writeRecent(recentRef.current);
-  }, []);
-
-  const rotate = useCallback(() => {
-    const { batch: next, recent } = pickNextBatch(pool, recentRef.current);
-    recentRef.current = recent;
-    writeRecent(recent);
-    lastPickAtRef.current = Date.now();
-    setBatch(next);
-  }, [pool]);
-
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    const schedule = () => {
-      timer = setTimeout(() => {
-        rotate();
-        schedule();
-      }, nextRotationDelayMs());
-    };
-    schedule();
-    return () => clearTimeout(timer);
-  }, [rotate]);
-
-  useEffect(() => {
-    const onVisible = () => {
-      if (document.visibilityState !== "visible") return;
-      if (Date.now() - lastPickAtRef.current < REFRESH_ON_RETURN_AFTER_MS) return;
-      rotate();
-    };
-    document.addEventListener("visibilitychange", onVisible);
-    return () => document.removeEventListener("visibilitychange", onVisible);
-  }, [rotate]);
-
-  return batch;
-}
-
-function TickerEntry({ item }: { item: TickerItem & { kind?: TickerKind } }) {
-  const ariaLabel = item.source
-    ? `${item.label} — ${item.previewText} — المصدر: ${item.source}`
-    : `${item.label} — ${item.previewText}`;
-  return (
-    <Link href={item.href} className="header-ticker__item" aria-label={ariaLabel}>
-      <item.Icon size={13} strokeWidth={1.8} className="header-ticker__icon" aria-hidden="true" />
-      <span className="header-ticker__label">{item.label}</span>
-      <span className="header-ticker__text" aria-hidden="true">{item.previewText}</span>
-      {item.source ? (
-        <span className="header-ticker__source" aria-hidden="true">
-          — {item.source}
-        </span>
-      ) : null}
-    </Link>
-  );
-}
-
-/**
- * إيقاف مؤقت أثناء التفاعل فقط — بلا تبديل دائم عند نقر الروابط
- * (كان onClick على الحاوية يجمّد الأنيميشن بعد أول نقرة).
- */
+/** إيقاف مؤقت أثناء التفاعل فقط — يُستأنف من نفس الموضع عبر animation-play-state */
 function useTransientPause() {
   const [paused, setPaused] = useState(false);
   const handlers = useMemo(
@@ -146,168 +82,263 @@ function useTransientPause() {
 
 function waitUntilBootSettled(): Promise<void> {
   return new Promise((resolve) => {
+    let settled = false;
+    const done = () => {
+      if (settled) return;
+      settled = true;
+      resolve();
+    };
     const tryReady = () => {
-      const booting = document.documentElement.classList.contains("app-booting");
-      if (!booting) {
-        resolve();
+      if (!document.documentElement.classList.contains("app-booting")) {
+        done();
         return;
       }
       window.setTimeout(tryReady, 50);
     };
-    const afterFonts = () => {
-      tryReady();
-    };
     if (document.fonts?.ready) {
-      void document.fonts.ready.then(afterFonts).catch(afterFonts);
+      void document.fonts.ready.then(tryReady).catch(tryReady);
     } else {
-      afterFonts();
+      tryReady();
     }
-    window.setTimeout(resolve, 1600);
+    window.setTimeout(done, 1600);
   });
 }
 
-/** شريط إعلان علوي متحرّك مستمر (marquee) — أحاديث وأذكار ونبذ أقسام/مميزات.
- * بلا عدّاد صلاة — مواقيت الصلاة في الهيدر/الصفحة فقط. */
+function toTickerItem(c: TickerContentItem): TickerItem | null {
+  // النص الكامل أولًا؛ previewText احتياط فقط (بوابة المحتوى تتأكد من وجود المرجع)
+  const displayText = (c.text || c.previewText || "").trim();
+  if (!displayText) return null;
+  return {
+    key: c.id,
+    Icon: KIND_ICON[c.kind] ?? Sparkles,
+    label: c.label,
+    displayText,
+    source: c.source,
+    href: c.href,
+    kind: c.kind,
+  };
+}
+
+/**
+ * قائمة محلية تُحمَّل مرة — التبديل فقط بعد اكتمال خروج النص الحالي.
+ * الطابور في ref يمنع استبدال المحتوى أثناء الـ render / أثناء الحركة.
+ */
+function useTickerQueue() {
+  const poolRef = useRef<TickerContentItem[] | null>(null);
+  if (!poolRef.current) {
+    try {
+      poolRef.current = buildTickerPool();
+    } catch {
+      poolRef.current = [];
+    }
+  }
+  const recentRef = useRef<string[]>(readRecent());
+  const queueRef = useRef<TickerItem[]>([]);
+
+  const refill = useCallback(() => {
+    const pool = poolRef.current ?? [];
+    if (pool.length === 0) {
+      queueRef.current = [];
+      return;
+    }
+    const picked = pickNextBatch(pool, recentRef.current);
+    recentRef.current = picked.recent;
+    writeRecent(picked.recent);
+    queueRef.current = picked.batch
+      .map(toTickerItem)
+      .filter((x): x is TickerItem => x != null);
+  }, []);
+
+  const [current, setCurrent] = useState<TickerItem | null>(() => {
+    refill();
+    return queueRef.current.shift() ?? (poolRef.current?.length === 0 ? FALLBACK_ITEM : null);
+  });
+  const [cycle, setCycle] = useState(0);
+
+  const advance = useCallback(() => {
+    if (queueRef.current.length === 0) refill();
+    const next = queueRef.current.shift() ?? FALLBACK_ITEM;
+    // إن فرغ الطابور بعد السحب — عبّئه مسبقًا للدورة التالية بلا فراغ طويل
+    if (queueRef.current.length === 0) refill();
+    setCurrent(next);
+    setCycle((c) => c + 1);
+  }, [refill]);
+
+  return {
+    current: current ?? FALLBACK_ITEM,
+    cycle,
+    advance,
+    hasContent: current != null,
+  };
+}
+
+function TickerEntry({ item }: { item: TickerItem }) {
+  const ariaLabel = item.source
+    ? `${item.label} — ${item.displayText} — المصدر: ${item.source}`
+    : `${item.label} — ${item.displayText}`;
+  return (
+    <Link href={item.href} className="header-ticker__item" aria-label={ariaLabel}>
+      <item.Icon size={13} strokeWidth={1.8} className="header-ticker__icon" aria-hidden="true" />
+      <span className="header-ticker__label">{item.label}</span>
+      <span className="header-ticker__text" aria-hidden="true">
+        {item.displayText}
+      </span>
+      {item.source ? (
+        <span className="header-ticker__source" aria-hidden="true">
+          — {item.source}
+        </span>
+      ) : null}
+    </Link>
+  );
+}
+
+function durationForDistance(distancePx: number): number {
+  // ~50px/ث — قراءة مريحة للنصوص الطويلة بلا قفز
+  const sec = distancePx / 50;
+  return Math.max(10, Math.min(160, sec));
+}
+
+type AnimSpec = { from: string; to: string; dur: string };
+
+/**
+ * شريط علوي متحرّك: نص واحد يكمل خروجه بالكامل ثم ينتقل للتالي.
+ * بلا setInterval لتبديل النص، وبلا استبدال دفعة أثناء الحركة.
+ */
 export function HeaderTicker() {
-  const contentItems = useRotatingContent();
+  const { current, cycle, advance, hasContent } = useTickerQueue();
   const reducedMotion = useReducedMotion();
-  const [activeIndex, setActiveIndex] = useState(0);
   const { paused, handlers: pauseHandlers } = useTransientPause();
+
+  const [bootReady, setBootReady] = useState(false);
+  const [anim, setAnim] = useState<AnimSpec | null>(null);
+  /** يُزاد لإعادة القياس (تدوير الشاشة) دون الانتقال للنص التالي */
+  const [measureEpoch, setMeasureEpoch] = useState(0);
+
   const viewportRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [useRotateFallback, setUseRotateFallback] = useState(false);
-  const measuredKeyRef = useRef<string>("");
+  const runnerRef = useRef<HTMLDivElement>(null);
+  const advancingRef = useRef(false);
 
-  const items = useMemo<TickerItem[]>(() => {
-    return contentItems
-      .filter((c) => !!c.previewText?.trim())
-      .map((c) => ({
-        key: c.id,
-        Icon: KIND_ICON[c.kind] ?? Sparkles,
-        label: c.label,
-        previewText: c.previewText,
-        source: c.source,
-        href: c.href,
-        kind: c.kind,
-      }));
-  }, [contentItems]);
-
-  const itemsKey = useMemo(() => items.map((i) => i.key).join("|"), [items]);
-
-  const [marqueeEnabled, setMarqueeEnabled] = useState(false);
-  const preferRotate = reducedMotion || useRotateFallback;
-
-  /** ماركي بعد اكتمال الخطوط ورفع app-booting — لا قياس قبل ثبات المقاسات */
   useEffect(() => {
-    if (reducedMotion) return;
     let cancelled = false;
     void waitUntilBootSettled().then(() => {
-      if (!cancelled) setMarqueeEnabled(true);
+      if (!cancelled) setBootReady(true);
     });
     return () => {
       cancelled = true;
     };
-  }, [reducedMotion]);
+  }, []);
 
-  useEffect(() => {
-    if (!preferRotate || items.length === 0 || paused) return;
-    const t = setInterval(() => setActiveIndex((i) => (i + 1) % items.length), 6000);
-    return () => clearInterval(t);
-  }, [preferRotate, items.length, paused]);
+  const goNext = useCallback(() => {
+    if (advancingRef.current) return;
+    advancingRef.current = true;
+    setAnim(null);
+    advance();
+    window.requestAnimationFrame(() => {
+      advancingRef.current = false;
+    });
+  }, [advance]);
 
+  // قياس العرض الحقيقي (clientWidth/scrollWidth) ثم حركة واحدة حتى الخروج الكامل
   useEffect(() => {
-    if (activeIndex >= items.length) setActiveIndex(0);
-  }, [activeIndex, items.length]);
-
-  /** قياس عرض مرة واحدة لكل دفعة بعد الخطوط — تحديث الحالة فقط عند تغيّر النتيجة */
-  useEffect(() => {
-    if (reducedMotion || items.length === 0 || !marqueeEnabled) return;
+    if (!bootReady || reducedMotion) return;
     const vp = viewportRef.current;
-    const track = trackRef.current;
-    if (!vp || !track) return;
+    const runner = runnerRef.current;
+    if (!vp || !runner) return;
 
-    const measure = () => {
-      const contentWidth = track.scrollWidth / 2;
-      if (contentWidth < 8) return;
-      measuredKeyRef.current = itemsKey;
-      const next = contentWidth <= vp.clientWidth + 8;
-      setUseRotateFallback((prev) => (prev === next ? prev : next));
+    let cancelled = false;
+    let raf1 = 0;
+    let raf2 = 0;
+
+    const measureAndRun = () => {
+      if (cancelled) return;
+      const vpW = vp.clientWidth;
+      const itemW = runner.scrollWidth;
+      if (vpW < 8 || itemW < 8) return;
+      // من خارج يمين الشاشة إلى خارج يسارها بالكامل (محاور فيزيائية — مناسبة لـ RTL)
+      const from = vpW;
+      const to = -itemW;
+      const dur = durationForDistance(from - to);
+      setAnim({ from: `${from}px`, to: `${to}px`, dur: `${dur}s` });
     };
 
-    if (measuredKeyRef.current === itemsKey) return;
-
-    const id = window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(measure);
+    raf1 = window.requestAnimationFrame(() => {
+      raf2 = window.requestAnimationFrame(measureAndRun);
     });
 
     const onOrient = () => {
-      measuredKeyRef.current = "";
-      measure();
+      // إعادة قياس لنفس النص بعد التدوير — بدون الانتقال للنص التالي
+      setAnim(null);
+      setMeasureEpoch((n) => n + 1);
     };
     window.addEventListener("orientationchange", onOrient);
+
     return () => {
-      window.cancelAnimationFrame(id);
+      cancelled = true;
+      window.cancelAnimationFrame(raf1);
+      window.cancelAnimationFrame(raf2);
       window.removeEventListener("orientationchange", onOrient);
     };
-  }, [reducedMotion, itemsKey, marqueeEnabled, items.length]);
+  }, [bootReady, reducedMotion, current.key, cycle, measureEpoch]);
 
-  if (items.length === 0) {
-    return (
-      <div className="header-ticker header-ticker--static header-ticker--fallback" role="status">
-        <div className="header-ticker__single-item">
-          <TickerEntry
-            item={{
-              key: "fallback",
-              Icon: Sparkles,
-              label: "سُنّة",
-              previewText: "تصفّح المصحف والدروس والفتاوى",
-              href: "/quran-hub",
-            }}
-          />
-        </div>
-      </div>
-    );
-  }
+  // تقليل الحركة: عرض ثابت كامل ثم انتقال بعد وقت القراءة (لا أثناء الحركة)
+  useEffect(() => {
+    if (!reducedMotion || !current || paused) return;
+    const holdMs = Math.min(22_000, Math.max(6_000, current.displayText.length * 70));
+    const t = window.setTimeout(goNext, holdMs);
+    return () => window.clearTimeout(t);
+  }, [reducedMotion, current, paused, goNext, cycle]);
 
-  if (preferRotate) {
-    const activeItem = items[activeIndex % items.length];
+  const onAnimationEnd = (e: AnimationEvent<HTMLDivElement>) => {
+    if (e.target !== runnerRef.current) return;
+    const name = e.animationName || "";
+    if (!name.includes("header-ticker-marquee")) return;
+    goNext();
+  };
+
+  if (!hasContent && !current) return null;
+
+  if (reducedMotion) {
     return (
       <div
         className={`header-ticker header-ticker--static${paused ? " header-ticker--paused" : ""}`}
         aria-live="polite"
         {...pauseHandlers}
       >
-        {activeItem ? (
-          <div className="header-ticker__single-item" key={activeItem.key}>
-            <TickerEntry item={activeItem} />
-          </div>
-        ) : null}
+        <div className="header-ticker__single-item">
+          <TickerEntry item={current} />
+        </div>
       </div>
     );
   }
 
-  const loop = [...items, ...items];
-  const totalChars = items.reduce(
-    (sum, it) => sum + it.previewText.length + (it.source?.length ?? 0) + it.label.length,
-    0,
-  );
-  const durationSec = marqueeDurationSec(Math.max(items.length, 1), totalChars);
+  const running = Boolean(anim) && bootReady;
+  const runnerStyle: CSSProperties | undefined = anim
+    ? ({
+        ["--ticker-from" as string]: anim.from,
+        ["--ticker-to" as string]: anim.to,
+        animationDuration: anim.dur,
+      } as CSSProperties)
+    : {
+        // إخفاء حتى القياس — يمنع وميض عند الموضع 0 قبل بدء الدورة
+        opacity: 0,
+        transform: "translate3d(100%, 0, 0)",
+      };
 
   return (
     <div
-      className={`header-ticker${marqueeEnabled ? " header-ticker--marquee" : ""}${paused ? " header-ticker--paused" : ""}`}
+      className={`header-ticker${running ? " header-ticker--marquee" : ""}${paused ? " header-ticker--paused" : ""}`}
       aria-live="off"
       {...pauseHandlers}
     >
       <div className="header-ticker__viewport" ref={viewportRef}>
         <div
-          ref={trackRef}
-          className="header-ticker__track"
-          style={{ animationDuration: `${durationSec}s` }}
+          key={`${current.key}-${cycle}-${measureEpoch}`}
+          ref={runnerRef}
+          className="header-ticker__track header-ticker__runner"
+          style={runnerStyle}
+          onAnimationEnd={onAnimationEnd}
         >
-          {loop.map((item, i) => (
-            <TickerEntry key={`${item.key}-${i}`} item={item} />
-          ))}
+          <TickerEntry item={current} />
         </div>
       </div>
     </div>

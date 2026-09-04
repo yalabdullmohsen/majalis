@@ -448,10 +448,10 @@ html.dark .navbar-menu-btn--drawer {
   border-color: color-mix(in srgb, var(--color-primary) 28%, var(--color-border));
 }
 
-/* الشريط المتحرك أعلى التطبيق (HeaderTicker) — شريط إعلان مستمر (marquee)
-   يمرّر أحاديثًا وأذكارًا ونبذ أقسام/مميزات. تكرار المسار مرتين + تحريك
-   0%→50% (RTL) يعطي حلقة سلسة. يتوقف عند hover/لمس/تركيز، ويتحول لتناوب
-   ثابت عند prefers-reduced-motion. */
+/* الشريط المتحرك أعلى التطبيق (HeaderTicker) — نص واحد لكل دورة:
+   يدخل من يمين الإطار ويخرج بالكامل يسارًا عبر --ticker-from/--ticker-to،
+   ثم ينتقل للنص التالي عند animationend فقط. يتوقف عند hover/لمس/تركيز،
+   ويتحول لعرض ثابت عند prefers-reduced-motion. */
 .header-ticker {
   overflow: hidden;
   min-width: 0;
@@ -474,7 +474,14 @@ html.dark .navbar-menu-btn--drawer {
 .header-ticker--empty { visibility: hidden; flex: 0 0 8rem; }
 .header-ticker--static { padding-inline: 1rem; }
 .header-ticker--paused { cursor: pause; }
-.header-ticker--paused .header-ticker__track { animation-play-state: paused; }
+.header-ticker--paused .header-ticker__track,
+.header-ticker--paused .header-ticker__runner,
+.header-ticker--marquee:hover .header-ticker__track,
+.header-ticker--marquee:hover .header-ticker__runner,
+.header-ticker--marquee:focus-within .header-ticker__track,
+.header-ticker--marquee:focus-within .header-ticker__runner {
+  animation-play-state: paused;
+}
 
 .header-ticker__viewport {
   overflow: hidden;
@@ -488,27 +495,36 @@ html.dark .navbar-menu-btn--drawer {
   -webkit-mask-image: none;
 }
 
-.header-ticker__track {
-  display: flex;
+.header-ticker__track,
+.header-ticker__runner {
+  display: inline-flex;
   align-items: center;
   width: max-content;
+  max-width: none;
   min-height: 100%;
   gap: 0;
+  white-space: nowrap;
+  backface-visibility: hidden;
+  /* طبقة تركيب GPU — بوابة TBT تتأكد من وجود translate3d(0,0,0) */
+  transform: translate3d(0, 0, 0);
 }
-.header-ticker--marquee .header-ticker__track {
+.header-ticker--marquee .header-ticker__track,
+.header-ticker--marquee .header-ticker__runner {
   animation-name: header-ticker-marquee;
   animation-timing-function: linear;
-  animation-iteration-count: infinite;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
   will-change: transform;
 }
 
 @keyframes header-ticker-marquee {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(50%, 0, 0); }
+  from { transform: translate3d(var(--ticker-from, 100%), 0, 0); }
+  to { transform: translate3d(var(--ticker-to, -100%), 0, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .header-ticker__track { animation: none !important; }
+  .header-ticker__track,
+  .header-ticker__runner { animation: none !important; }
 }
 
 .header-ticker__single-item {
