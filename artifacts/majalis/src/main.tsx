@@ -261,6 +261,10 @@ async function mount() {
   // جديد بعد ساعات مثلاً بينما التبويب مفتوح) قادرًا على إعادة تحميل
   // تلقائية واحدة أيضًا، لا محظورًا للأبد لبقية عمر التبويب.
   setTimeout(() => {
+    try {
+      // نجاح الإقلاع — اسمح بمحاولة native-load-error ناعمة في الجلسة التالية
+      sessionStorage.removeItem("mj.native-load-retry");
+    } catch { /* تجاهل */ }
     void import("@/lib/lazy-with-retry").then(({ clearChunkReloadGuard }) => {
       clearChunkReloadGuard();
     }).catch(() => {

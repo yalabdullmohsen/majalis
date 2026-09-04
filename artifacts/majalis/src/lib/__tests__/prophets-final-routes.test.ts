@@ -157,10 +157,24 @@ assert.equal(
 const pageSrc = readFileSync(resolve(root, "src/views/ProphetStoriesPage.tsx"), "utf8");
 assert.match(pageSrc, /PROPHETS/);
 assert.match(pageSrc, /getProphet/);
+assert.match(pageSrc, /routeSlug/, "slug متزامن من المسار بلا انتظار effect");
+assert.match(pageSrc, /topic-page--prophets/, "قائمة الأنبياء بامتداد full-bleed");
+assert.match(pageSrc, /لم يتم العثور على هذا المحتوى/, "slug مفقود ≠ رسالة إنترنت");
 assert.doesNotMatch(
   pageSrc,
   /setLocation\(\s*["']\/["']\s*\)|navigate\(\s*["']\/["']\s*\)|Redirect\s+to=["']\/["']/,
   "صفحة الأنبياء لا تُسقط للرئيسية",
 );
+assert.doesNotMatch(
+  pageSrc,
+  /تحقق من الاتصال بالإنترنت/,
+  "صفحة الأنبياء لا تعرض رسالة offline مزيفة عند غياب slug",
+);
+
+const cssSrc = readFileSync(resolve(root, "src/styles/pages/prophet-stories.css"), "utf8");
+assert.match(cssSrc, /\.topic-page\.topic-page--prophets/, "CSS full-bleed للقائمة");
+assert.match(cssSrc, /min-height:\s*100dvh/, "امتداد ارتفاع الشاشة");
+assert.match(cssSrc, /\.app-main:has\(\.prophet-detail-lux\)/, "طلاء app-main لتفاصيل النبي");
+assert.match(cssSrc, /border-radius:\s*0/, "بلا زوايا حادة على إطار الصفحة");
 
 console.log(`prophets-final-routes: OK — ${PROPHETS.length} قصة، aliases زكريا، بلا homepage fallback`);

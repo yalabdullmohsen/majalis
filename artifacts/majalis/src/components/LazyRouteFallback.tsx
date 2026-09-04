@@ -6,11 +6,28 @@ import { useDeferredLoading } from "@/hooks/useDeferredLoading";
  */
 export function LazyRouteFallback() {
   const show = useDeferredLoading(true);
+  const path =
+    typeof window !== "undefined" ? window.location.pathname.split("?")[0] || "/" : "/";
+  const prophetsShell = /^\/(prophets|prophet-stories|prophets-stories|anbiya)(\/|$)/.test(path);
+  const prophetDetail = /^\/(prophets|prophet-stories|prophets-stories|anbiya)\/[^/]+/.test(path);
 
   if (!show) return null;
 
   return (
-    <div className="lrf-wrap lrf-wrap--skel" role="status" aria-busy="true" aria-label="تجهيز الصفحة">
+    <div
+      className={[
+        "lrf-wrap",
+        "lrf-wrap--skel",
+        prophetsShell ? "lrf-wrap--prophets" : "",
+        prophetDetail ? "lrf-wrap--prophet-detail" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      role="status"
+      aria-busy="true"
+      aria-label="تجهيز الصفحة"
+      data-prophets-shell={prophetsShell ? "1" : undefined}
+    >
       <div className="lrf-skel" aria-hidden="true">
         <div className="lrf-skel__hero" />
         <div className="lrf-skel__line" />

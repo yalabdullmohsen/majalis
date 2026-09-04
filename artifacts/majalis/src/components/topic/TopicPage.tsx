@@ -71,6 +71,8 @@ export type TopicPageProps = {
   groupTitle?: string;
   status?: TopicPageStatus;
   onRetry?: () => void;
+  /** صنف إضافي للصفحة (مثل topic-page--prophets للامتداد الكامل) */
+  className?: string;
   children?: ReactNode;
 };
 
@@ -99,6 +101,7 @@ export function TopicPage({
   groupTitle,
   status = "ready",
   onRetry,
+  className,
   children,
 }: TopicPageProps) {
   const theme = getTopicTheme(themeId);
@@ -164,7 +167,7 @@ export function TopicPage({
 
   return (
     <div
-      className="topic-page"
+      className={["topic-page", className].filter(Boolean).join(" ")}
       dir="rtl"
       data-topic-theme={theme.id}
       data-section-template="1"
@@ -240,7 +243,11 @@ export function TopicPage({
         ) : null}
         {status === "error" ? (
           <div className="topic-page__state" role="alert">
-            <p>تعذّر تحميل المحتوى.</p>
+            <p>
+              {typeof navigator !== "undefined" && navigator.onLine === false
+                ? "أنت غير متصل بالإنترنت. اتصل بالشبكة ثم أعد المحاولة."
+                : "تعذّر تحميل المحتوى. أعد المحاولة بعد لحظات."}
+            </p>
             {onRetry ? (
               <button type="button" className="topic-page__retry" onClick={onRetry}>
                 إعادة المحاولة

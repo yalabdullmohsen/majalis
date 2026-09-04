@@ -65,29 +65,86 @@
   </head>
   <body>
     <main>
-      <h1>تعذّر تحميل المحتوى</h1>
-      <p>تحقق من الاتصال بالإنترنت ثم حاول مرة أخرى.</p>
+      <h1 id="title">جاري إعادة التحميل…</h1>
+      <p id="msg">نجهّز الصفحة. إن استمر التأخير سنساعدك بإعادة المحاولة.</p>
       <button type="button" id="retry">إعادة المحاولة</button>
     </main>
     <script>
       (function () {
         var LIVE = "https://www.ssunnah.com/";
-        function go() {
+        var title = document.getElementById("title");
+        var msg = document.getElementById("msg");
+        var online = typeof navigator !== "undefined" ? navigator.onLine !== false : true;
+
+        function resolveTarget() {
+          var path = "/";
           try {
-            // لا تُعد تحميل صفحة الخطأ نفسها — ارجع للنطاق الحي بلا redirect.
-            location.replace(LIVE);
-          } catch (e) {
-            location.href = LIVE;
+            path = sessionStorage.getItem("mj.last-path") || "/";
+          } catch (e0) {}
+          if (!path || path.charAt(0) !== "/") path = "/";
+          // لا تُعد إلى صفحة الخطأ نفسها
+          if (path.indexOf("native-load-error") !== -1) path = "/";
+          var ref = "";
+          try {
+            ref = document.referrer || "";
+          } catch (e1) {}
+          if (ref && ref.indexOf("ssunnah.com") !== -1 && ref.indexOf("native-load-error") === -1) {
+            return ref.split("#")[0];
+          }
+          var base = LIVE.replace(/\/$/, "");
+          return base + path;
+        }
+
+        function paintSoft() {
+          title.textContent = "جاري إعادة التحميل…";
+          msg.textContent = "نجهّز الصفحة. إن استمر التأخير سنساعدك بإعادة المحاولة.";
+        }
+
+        function paintFinal() {
+          if (!online) {
+            title.textContent = "أنت غير متصل بالإنترنت";
+            msg.textContent = "تحقق من الاتصال ثم اضغط إعادة المحاولة.";
+            return;
+          }
+          title.textContent = "تعذّر تحميل المحتوى مؤقتًا";
+          msg.textContent = "أعد المحاولة. إن استمر الأمر فجرّب لاحقًا.";
+        }
+
+        function go() {
+          var target = resolveTarget();
+          try {
+            location.replace(target + (target.indexOf("?") >= 0 ? "&" : "?") + "_r=" + Date.now());
+          } catch (e2) {
+            location.href = target;
           }
         }
+
         document.getElementById("retry").addEventListener("click", go);
-        // إن بقي المستخدم هنا بسبب فشل شبكة مؤقت، أعد المحاولة تلقائيًا مرة واحدة.
-        try {
-          if (sessionStorage.getItem("mj.native-load-retry") !== "1") {
-            sessionStorage.setItem("mj.native-load-retry", "1");
-            setTimeout(go, 2500);
+
+        // لا تعرض خطأ فوريًا — أعِد التحميل بهدوء مرة، ثم أوضح السبب إن لزم
+        if (!online) {
+          paintFinal();
+        } else {
+          paintSoft();
+          try {
+            if (sessionStorage.getItem("mj.native-load-retry") !== "1") {
+              sessionStorage.setItem("mj.native-load-retry", "1");
+              setTimeout(go, 1200);
+            } else {
+              setTimeout(paintFinal, 400);
+            }
+          } catch (e3) {
+            setTimeout(paintFinal, 400);
           }
-        } catch (e2) {}
+        }
+
+        try {
+          window.addEventListener("online", function () {
+            online = true;
+            paintSoft();
+            go();
+          });
+        } catch (e4) {}
       })();
     </script>
   </body>
