@@ -3,16 +3,16 @@
 	"appName": "سُنّة",
 	"webDir": "dist",
 	"server": {
-		"cleartext": false,
-		"androidScheme": "https",
+		"url": "https://www.ssunnah.com",
+		"errorPath": "native-load-error.html",
 		"allowNavigation": [
 			"www.ssunnah.com",
 			"ssunnah.com",
 			"majlisilm.com",
 			"www.majlisilm.com"
 		],
-		"url": "https://www.ssunnah.com",
-		"errorPath": "native-load-error.html"
+		"cleartext": false,
+		"androidScheme": "https"
 	},
 	"plugins": {
 		"SplashScreen": {

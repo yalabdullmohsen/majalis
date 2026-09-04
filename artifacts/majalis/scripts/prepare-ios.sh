@@ -91,13 +91,13 @@ if (webDir !== "dist") {
   console.error(`webDir يجب أن يكون dist، الموجود: ${webDir}`);
   process.exit(1);
 }
-const LIVE = new Set(["https://majlisilm.com", "https://www.majlisilm.com"]);
-if (!LIVE.has(serverUrl)) {
-  console.error(`server.url يجب أن يكون https://majlisilm.com (أو www)، الموجود: ${serverUrl}`);
+const CANONICAL = "https://www.ssunnah.com";
+if (serverUrl !== CANONICAL) {
+  console.error(`server.url يجب أن يكون ${CANONICAL} (canonical الإنتاج)، الموجود: ${serverUrl}`);
   process.exit(1);
 }
-if (!LIVE.has(json?.server?.url)) {
-  console.error(`ios capacitor.config.json server.url غير حي: ${json?.server?.url}`);
+if (json?.server?.url !== CANONICAL) {
+  console.error(`ios capacitor.config.json server.url يجب أن يكون ${CANONICAL}، الموجود: ${json?.server?.url}`);
   process.exit(1);
 }
 if (json?.server?.cleartext !== false) {
