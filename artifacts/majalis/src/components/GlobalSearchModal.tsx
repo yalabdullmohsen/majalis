@@ -481,7 +481,7 @@ export function GlobalSearchModal({ onClose }: Props) {
                     { href: "/adhkar", label: "الأذكار", Icon: RotateCw },
                     { href: "/lessons", label: "الدروس", Icon: GraduationCap },
                     { href: "/fiqh", label: "الفقه والأحكام", Icon: Scale },
-                    { href: "/flashcards", label: "الفوائد", Icon: Lightbulb },
+                    { href: "/fawaid", label: "الفوائد", Icon: Lightbulb },
                     { href: "/seerah", label: "السيرة", Icon: Star },
                   ].map((l) => (
                     <button

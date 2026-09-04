@@ -229,7 +229,7 @@ export default function MiraclesPage({
         <span>
           هذا القسم يعرض تأملات علمية منضبطة، ولا يجعل النظريات المتغيرة تفسيراً قطعياً للنص الشرعي.
           راجع{" "}
-          <Link href="/ulum-quran" className="mk-hero__link">علوم القرآن</Link>
+          <Link href="/quran-hub" className="mk-hero__link">مركز القرآن الكريم</Link>
           {" "}و{" "}
           <Link href="/methodology" className="mk-hero__link">منهج الموقع</Link>
           . لا تُبنى عقيدة أو حكم على دعاوى علمية معاصرة.
