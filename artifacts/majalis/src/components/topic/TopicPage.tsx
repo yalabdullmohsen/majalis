@@ -246,7 +246,7 @@ export function TopicPage({
             <p>
               {typeof navigator !== "undefined" && navigator.onLine === false
                 ? "أنت غير متصل بالإنترنت. اتصل بالشبكة ثم أعد المحاولة."
-                : "تعذّر تحميل المحتوى. أعد المحاولة بعد لحظات."}
+                : "تعذّر تحميل المحتوى مؤقتًا. أعد المحاولة بعد لحظات."}
             </p>
             {onRetry ? (
               <button type="button" className="topic-page__retry" onClick={onRetry}>

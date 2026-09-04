@@ -75,11 +75,21 @@ for (const page of publicPages) {
 }
 
 const rm = readFileSync(join(root, "src/lib/request-manager.ts"), "utf8");
-if (!rm.includes("REQUEST_TIMEOUT_MS = 8000")) {
-  console.error("✗ RequestManager timeout must be 8000ms");
+const timeoutMatch = rm.match(/REQUEST_TIMEOUT_MS\s*=\s*(\d+)/);
+const timeoutMs = timeoutMatch ? Number(timeoutMatch[1]) : 0;
+if (!(timeoutMs >= 8000 && timeoutMs <= 30000)) {
+  console.error("✗ RequestManager timeout must be 8–30s (found: " + timeoutMs + ")");
   failed++;
 } else {
-  console.log("✓ RequestManager 8s timeout configured");
+  console.log(`✓ RequestManager ${timeoutMs}ms timeout configured`);
+}
+const pageTimeoutMatch = rm.match(/PAGE_LOAD_TIMEOUT_MS\s*=\s*(\d+)/);
+const pageTimeoutMs = pageTimeoutMatch ? Number(pageTimeoutMatch[1]) : 0;
+if (!(pageTimeoutMs >= 15000 && pageTimeoutMs <= 60000)) {
+  console.error("✗ PAGE_LOAD_TIMEOUT_MS must be 15–60s (found: " + pageTimeoutMs + ")");
+  failed++;
+} else {
+  console.log(`✓ Page load soft timeout ${pageTimeoutMs}ms configured`);
 }
 
 const dispatch = readFileSync(join(root, "lib/api-dispatch.mjs"), "utf8");

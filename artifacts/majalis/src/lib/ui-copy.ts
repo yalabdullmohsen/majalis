@@ -34,7 +34,7 @@ export const EMPTY = {
 export const STATUS = {
   pageUnavailable: "هذه الصفحة غير متاحة حاليًا.",
   sectionDisabled: "هذا القسم غير مفعل حاليًا.",
-  loadError: "تعذّر تحميل البيانات. حاول مجددًا.",
+  loadError: "تعذّر تحميل البيانات مؤقتًا. أعد المحاولة.",
 } as const;
 
 export const TERMS = {

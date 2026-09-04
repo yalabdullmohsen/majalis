@@ -19,9 +19,9 @@ import { structuredLog } from "@/lib/structured-logger";
 
 export { CircuitOpenError } from "@/lib/circuit-breaker";
 
-export const REQUEST_TIMEOUT_MS = 8000;
-/** Hard ceiling for page/route loading guards — never show loading longer than this. */
-export const PAGE_LOAD_TIMEOUT_MS = 8000;
+export const REQUEST_TIMEOUT_MS = 12000;
+/** Soft ceiling for page/route loading guards — skeleton first; soft timeout only after this. */
+export const PAGE_LOAD_TIMEOUT_MS = 20000;
 /** No timeout — use for long-running import job polling and batch uploads. */
 export const REQUEST_NO_TIMEOUT = 0;
 export const REQUEST_MAX_RETRIES = DEFAULT_RETRY_POLICY.maxRetries;
