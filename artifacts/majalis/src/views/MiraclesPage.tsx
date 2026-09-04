@@ -37,7 +37,7 @@ import {
 } from "@/lib/miracles-ui";
 import "@/styles/pages/miracles.css";
 
-const SOURCE_TYPES = ["الكل", "قرآن", "سنة"] as const;
+type SourceTypeFilter = "الكل" | "قرآن" | "سنة";
 
 function topicFromQuery(raw: string | null): MiracleTopicFilter | null {
   if (!raw) return null;
@@ -60,7 +60,7 @@ export default function MiraclesPage({
   const [loading, setLoading] = useState(!initialItems);
   const [error, setError] = useState<string | null>(null);
   const [topic, setTopic] = useState<MiracleTopicFilter>("الكل");
-  const [sourceType, setSourceType] = useState<(typeof SOURCE_TYPES)[number]>("الكل");
+  const [sourceType, setSourceType] = useState<SourceTypeFilter>("الكل");
   const [expanded, setExpanded] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
   const [search, setSearch] = useState("");
