@@ -1,7 +1,7 @@
 {
   "version": 2,
   "updatedAt": "2026-06-30",
-  "productionUrl": "https://majlisilm.com",
+  "productionUrl": "https://www.ssunnah.com",
   "releaseGate": {
     "allowedStates": ["Production", "Ready", "Blocked"],
     "blockReasons": ["Secret", "Migration", "Merge", "Build", "Bug", "Deploy", "Mock", "E2E"]
@@ -87,14 +87,16 @@
     },
     {
       "id": "library",
-      "name": "المكتبة",
+      "name": "المكتبة (محوّلة إلى البحث)",
       "routes": ["/library"],
       "codeMarkers": ["LibraryPage"],
       "productionMarkers": ["LibraryPage"],
-      "requiredSecrets": ["VITE_SUPABASE_URL"],
+      "requiredSecrets": [],
       "requiredTables": [],
       "usesMock": false,
-      "phase": 1
+      "phase": 1,
+      "status": "removed",
+      "notes": "الواجهة العامة تحوّل /library → /search؛ لا مكتبة علمية عامة."
     },
     {
       "id": "miracles",

@@ -96,7 +96,7 @@ function buildBreadcrumb(path, title) {
   if (path?.includes("/fatwa")) crumbs.push({ name: "الفتاوى", path: "/fiqh-council/fatwas" });
   else if (path?.includes("/fiqh")) crumbs.push({ name: "المجمع الفقهي", path: "/fiqh-council" });
   else if (path?.includes("/fawaid")) crumbs.push({ name: "الفوائد", path: "/fawaid" });
-  else if (path?.includes("/library")) crumbs.push({ name: "المكتبة", path: "/library" });
+  else if (path?.includes("/library")) crumbs.push({ name: "البحث", path: "/search" });
   else if (path?.includes("/lessons")) crumbs.push({ name: "الدروس", path: "/lessons" });
   else if (path?.includes("/updates")) crumbs.push({ name: "المستجدات", path: "/updates" });
   else crumbs.push({ name: "المحتوى", path: "/search" });
@@ -110,8 +110,8 @@ export function routeForKind(kind, recordId) {
     fiqh_decision: `/fiqh-council/${recordId}`,
     resolution: `/fiqh-council/${recordId}`,
     fawaid: `/fawaid`,
-    book: `/library`,
-    article: `/library`,
+    book: `/search`,
+    article: `/search`,
     lesson: `/lessons/${recordId}`,
     lecture: `/lessons/${recordId}`,
     course: `/lessons/${recordId}`,

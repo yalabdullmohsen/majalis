@@ -53,7 +53,25 @@ export default async function handler(req, res) {
     return;
   }
 
-  const version = versionStamp();
+  // الفحص العميق داخلي فقط — يتطلب سرًا مشتركًا؛ لا تُكشف جداول/أعمدة للعامة.
+  const deepSecret =
+    process.env.READYZ_DEEP_SECRET ||
+    process.env.CRON_SECRET ||
+    process.env.INTERNAL_HEALTH_SECRET ||
+    "";
+  const provided =
+    req.headers?.["x-readyz-secret"] ||
+    req.headers?.["x-cron-secret"] ||
+    req.headers?.authorization?.replace(/^Bearer\s+/i, "") ||
+    "";
+  if (isProductionRuntime() && (!deepSecret || provided !== deepSecret)) {
+    sendJson(res, 401, {
+      status: "unauthorized",
+      service: "ssunnah-web",
+      checks: { app_alive: true },
+    });
+    return;
+  }
 
   const checks = {
     app_alive: true,
@@ -168,17 +186,28 @@ export default async function handler(req, res) {
       JSON.stringify({
         level: "error",
         msg: "readyz_not_ready",
-        checks,
+        checks: {
+          app_alive: checks.app_alive,
+          database_reachable: checks.database_reachable,
+          deep: true,
+        },
         reason: details.reason,
-        version,
+        version: versionStamp().slice(0, 7),
       }),
     );
   }
 
+  // للعامة حتى مع السر: لا تُرجع أسماء جداول داخلية — فقط حيّة قاعدة البيانات
+  const publicChecks = {
+    app_alive: checks.app_alive,
+    database_ok: checks.database_reachable && checks.queue_tables_ready && checks.ai_circuit_table_ready,
+    deep: true,
+  };
+
   const payload = {
     status: ready ? "ok" : "not_ready",
     service: "ssunnah-web",
-    checks,
+    checks: publicChecks,
   };
   if (!ready) {
     payload.reason = publicReadyReason(details.reason);

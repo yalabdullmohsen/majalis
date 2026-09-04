@@ -19,8 +19,7 @@ import {
 import { hydrateNativeStorage } from "./lib/native-storage";
 import { installInAppNavigationGuard } from "./lib/in-app-navigation";
 import { initFinalPolish } from "./lib/init-final-polish";
-import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/resource-prewarm";
-import { refreshQuranAudioRemoteConfig } from "./lib/quran-audio-remote-config";
+import { prewarmTextApis, prewarmSupabaseOrigin } from "./lib/resource-prewarm";
 import { armNativeSplashController } from "./lib/splash-screen";
 import { awaitBootReadiness, registerBootStorageGate } from "./lib/boot-readiness";
 import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
@@ -163,16 +162,9 @@ if (typeof requestIdleCallback === "function") {
 
 function scheduleNetworkWarm() {
   const run = () => {
-    prewarmAudioCdns();
+    // لا تسخين أصوات قرآن/تفسير عند أول فتح — فقط أصول نصّية خفيفة
     prewarmTextApis();
     prewarmSupabaseOrigin();
-    void refreshQuranAudioRemoteConfig();
-    void import("./lib/adhan-audio-remote-config").then((m) =>
-      m.refreshAdhanAudioRemoteConfig(),
-    );
-    void import("./lib/tafsir-audio-remote-config").then((m) =>
-      m.refreshTafsirAudioRemoteConfig(),
-    );
   };
   const start = () => window.setTimeout(() => scheduleOnIdle(run), 20_000);
   if (document.readyState === "complete") start();

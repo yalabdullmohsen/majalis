@@ -18,18 +18,16 @@
 
 import { sendJson } from "../api/_http.mjs";
 import { createClient } from "@supabase/supabase-js";
+import { sendSafeError } from "../api/safe-error.mjs";
 
 // ─── إعداد Supabase ─────────────────────────────────────────────────────────
 
 function getSupabase() {
   const url = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || "";
-  // نقطة نهاية عامة غير مصادَق عليها — نُفضّل مفتاح anon المحكوم بـ RLS
-  // على service_role (الذي يتجاوز RLS بالكامل) لتفادي تسريب صفوف غير
-  // منشورة إن نُسي فلتر status في دالة بحث جديدة مستقبلاً.
+  // نقطة عامة — anon فقط. لا fallback إلى service_role (يتجاوز RLS).
   const key =
     process.env.VITE_SUPABASE_ANON_KEY ||
     process.env.SUPABASE_ANON_KEY ||
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
     "";
   if (!url || !key) return null;
   return createClient(url, key, {
@@ -80,21 +78,9 @@ async function searchLessons(supabase, normQuery, limit) {
   }));
 }
 
-async function searchLibrary(supabase, normQuery, limit) {
-  const { data } = await supabase
-    .from("library_items")
-    .select("id, title, description, category, type, author_name")
-    .eq("status", "approved")
-    .ilike("search_text", `%${normQuery}%`)
-    .limit(limit);
-  return (data || []).map((r) => ({
-    id: r.id,
-    type: "library",
-    title: r.title,
-    summary: r.description || "",
-    meta: [r.author_name, r.category].filter(Boolean).join(" · "),
-    href: `/library/${r.id}`,
-  }));
+async function searchLibrary(_supabase, _normQuery, _limit) {
+  // المكتبة العامة أُزيلت — لا نتائج /library في البحث العام
+  return [];
 }
 
 async function searchHadith(supabase, normQuery, limit) {
@@ -357,11 +343,10 @@ export default async function handler(req, res) {
       groups,
     });
   } catch (err) {
-    if (err.message === "search_timeout") {
-      sendJson(res, 408, { ok: false, error: "search_timeout", message: "انتهت مهلة البحث (3s)" });
+    if (err && err.message === "search_timeout") {
+      sendJson(res, 408, { ok: false, error: "search_timeout", userMessage: "انتهت مهلة البحث. حاول مجددًا." });
     } else {
-      console.error("[/api/search]", err);
-      sendJson(res, 500, { ok: false, error: err.message || "internal_error" });
+      sendSafeError(res, sendJson, err, { code: "search_error" });
     }
   }
 }
