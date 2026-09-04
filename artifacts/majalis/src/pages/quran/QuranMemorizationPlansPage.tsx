@@ -1,7 +1,7 @@
 import "@/styles/quran-memorization-plans.css";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { BookOpen, CalendarDays, Check, Mic, RotateCcw } from "lucide-react";
+import { BookOpen, CalendarDays, Check, RotateCcw } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -78,7 +78,7 @@ export default function QuranMemorizationPlansPage() {
         <p className="qmp-kind-note">كرّر المقطع حتى يستقر، ثم راجع مقدار الأمس وآخر مراجعة أسبوعية. إن فاتك يوم فتابع من هنا؛ لا يتراكم عليك مقدار عقابي.</p>
         <div className="qmp-actions">
           {!finished && <button type="button" className="ds-btn ds-btn--primary" onClick={() => setSaved((state) => ({ ...state, completed: Math.min(plan.sessions, state.completed + 1) }))}><Check size={17} /> أتممت الجلسة</button>}
-          <Link href="/quran/recitation-test-ai" className="ds-btn ds-btn--secondary"><Mic size={17} /> ابدأ التلاوة</Link>
+          <Link href="/mushaf" className="ds-btn ds-btn--secondary"><BookOpen size={17} /> افتح المصحف</Link>
           {saved.completed > 0 && <button type="button" className="ds-btn ds-btn--ghost" onClick={() => setSaved((state) => ({ ...state, completed: Math.max(0, state.completed - 1) }))}>تراجع عن آخر تسجيل</button>}
         </div>
       </section>

@@ -27,7 +27,6 @@ const vercel = readFileSync(resolve(root, "vercel.json"), "utf8");
 const lessonDetail = readFileSync(resolve(src, "pages/lessons/ui/LessonDetailView.tsx"), "utf8");
 const generateSeo = readFileSync(resolve(root, "scripts/generate-seo.mjs"), "utf8");
 const brand = readFileSync(resolve(src, "shared/config/brand.ts"), "utf8");
-const recitation = readFileSync(resolve(src, "pages/quran/ui/RecitationTestView.tsx"), "utf8");
 const notFound = readFileSync(resolve(src, "views/not-found.tsx"), "utf8");
 const card = readFileSync(resolve(src, "components/lessons/UnifiedLessonCard.tsx"), "utf8");
 
@@ -54,12 +53,11 @@ assert(!notFound.includes('href: "/rulings"'), "404 بلا /rulings");
 console.log("\n=== P1: SSR ===");
 assert(generateSeo.includes('"/search":'), "RICH_BODY لـ /search");
 assert(generateSeo.includes('role="search"'), "نموذج بحث في SSR");
-assert(generateSeo.includes('"/quran/recitation-test-ai":'), "RICH_BODY لاختبار التلاوة");
+assert(!generateSeo.includes("/quran/recitation-test-ai"), "بلا RICH_BODY لتسميع AI");
 assert(generateSeo.includes("إذن الميكروفون"), "شرح الميكروفون في SSR");
 
 console.log("\n=== P1: brand ===");
 assert(brand.includes('"سُنّة"'), "brand.ts موحّد");
-assert(!recitation.includes("خوادم مجالس"), "RecitationTestView بلا brand قديم");
 
 console.log("\n=== P1: جلسات الدروس ===");
 assert(card.includes("lesson-unified-card__facts"), "بطاقة تعرض حقائق الدرس داخل الإطار");

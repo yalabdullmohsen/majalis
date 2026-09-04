@@ -24,8 +24,7 @@ const MUST_NOT_SITEMAP = [
   "/login",
   "/register",
   "/search",
-  "/quran/recitation-test-ai",
-  "/fiqh-council/research-assistant",
+    "/fiqh-council/research-assistant",
   "/academic-research",
   "/fiqh-council/research",
   "/fiqh-council/issues/genetic-testing-ancestry-ruling",
@@ -42,14 +41,13 @@ for (const path of MUST_NOT_SITEMAP) {
 for (const path of [
   "/academic-research",
   "/fiqh-council/research",
-  "/quran/recitation-test-ai",
-  "/fiqh-council/research-assistant",
+    "/fiqh-council/research-assistant",
   "/fiqh-council/issues/genetic-testing-ancestry-ruling",
 ]) {
   assert.match(robots, new RegExp(`Disallow:\\s*${path.replace(/\//g, "\\/")}`));
 }
 
-for (const path of ["/academic-research", "/fiqh-council/research", "/register", "/quran/recitation-test-ai", "/search", "/login", "/dashboard"]) {
+for (const path of ["/academic-research", "/fiqh-council/research", "/register",  "/search", "/login", "/dashboard"]) {
   const row = routes.routes.find((r) => r.path === path);
   assert.ok(row, `seo-routes: ${path}`);
   assert.equal(row!.sitemap, false, `${path} خارج sitemap`);

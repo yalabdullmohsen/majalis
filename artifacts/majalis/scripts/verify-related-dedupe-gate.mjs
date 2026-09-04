@@ -45,7 +45,7 @@ for (const page of ["quiz", "tahara", "sitemap", "zakat", "sawm", "hajj"]) {
 
 const prerenderRoot = join(appRoot, "seo-prerender");
 if (existsSync(prerenderRoot)) {
-  for (const name of ["search", "quran/recitation-test-ai"]) {
+  for (const name of ["search"]) {
     auditPrerenderUlDupes(name);
   }
 }

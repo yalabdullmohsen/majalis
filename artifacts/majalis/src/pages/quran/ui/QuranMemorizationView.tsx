@@ -1,5 +1,5 @@
 import "@/styles/quran-memorization.css";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { fetchSurahList, type SurahSummary } from "@/lib/quran-api";
 import {
@@ -16,9 +16,7 @@ import {
   type QuizQuestion,
   type AyahCard,
 } from "@/lib/quran-memorization";
-import { BookOpen, ChevronLeft, Mic, MicOff, RotateCcw } from "lucide-react";
-import { isAndroid, isIOS, isNative } from "@/lib/capacitor-utils";
-import { getSpeechRecognitionPlugin } from "@/lib/plugins/speech-recognition";
+import { BookOpen, ChevronLeft, RotateCcw } from "lucide-react";
 
 const ALL_TEST_TYPES: TestType[] = [
   "complete-ayah",
@@ -52,108 +50,6 @@ function QuestionCard({
   const [textInput, setTextInput] = useState("");
   const [isCorrect, setIsCorrect] = useState(false);
   const [adjacentAyah, setAdjacentAyah] = useState<string | null>(null);
-  const [isListening, setIsListening] = useState(false);
-  const [voiceError, setVoiceError] = useState<string | null>(null);
-  const recognitionRef = useRef<{ stop: () => void } | null>(null);
-
-  const w = typeof window !== "undefined" ? (window as unknown as Record<string, unknown>) : {};
-  const hasWebSpeech = "SpeechRecognition" in w || "webkitSpeechRecognition" in w;
-  const hasNativeSpeech = isNative && (isIOS || isAndroid);
-  const hasSpeechSupport = hasNativeSpeech || hasWebSpeech;
-
-  const toggleVoice = async () => {
-    setVoiceError(null);
-    if (hasNativeSpeech) {
-      const plugin = getSpeechRecognitionPlugin();
-      if (!plugin) {
-        setVoiceError("التعرّف الصوتي غير متاح على هذا الجهاز.");
-        return;
-      }
-      if (isListening) {
-        try {
-          await plugin.stop();
-        } catch {
-          /* تجاهل */
-        }
-        setIsListening(false);
-        return;
-      }
-      try {
-        const avail = await plugin.available();
-        if (!avail.available) {
-          setVoiceError("التعرّف الصوتي غير متاح حاليًا.");
-          return;
-        }
-        const perm = await plugin.requestPermissions();
-        if (perm.speechRecognition === "denied" || perm.speechRecognition === "restricted") {
-          setVoiceError("إذن الميكروفون أو التعرّف على الكلام مرفوض. فعّله من إعدادات الجهاز.");
-          return;
-        }
-        if (perm.speechRecognition !== "granted") {
-          setVoiceError("لم يُمنح إذن التعرّف الصوتي.");
-          return;
-        }
-        setIsListening(true);
-        const res = await plugin.start({
-          language: "ar-SA",
-          partialResults: false,
-          popup: false,
-          maxResults: 1,
-        });
-        const text = (res.matches?.[0] || "").trim();
-        if (!text) {
-          setVoiceError("لم يُكتشف كلام واضح. حاول مجددًا بصوت أوضح.");
-        } else {
-          setTextInput((prev) => prev + text);
-        }
-      } catch (err) {
-        setVoiceError(err instanceof Error ? err.message : "تعذّر التعرّف الصوتي.");
-      } finally {
-        setIsListening(false);
-      }
-      return;
-    }
-
-    if (!hasWebSpeech) {
-      setVoiceError("المتصفح لا يدعم الإدخال الصوتي.");
-      return;
-    }
-    const SR = (w["SpeechRecognition"] || w["webkitSpeechRecognition"]) as (new () => {
-      lang: string; continuous: boolean; interimResults: boolean;
-      onresult: ((e: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void) | null;
-      onend: (() => void) | null;
-      onerror: ((e: { error?: string }) => void) | null;
-      start: () => void; stop: () => void;
-    }) | undefined;
-    if (!SR) return;
-    if (isListening) {
-      recognitionRef.current?.stop();
-      setIsListening(false);
-      return;
-    }
-    const rec = new SR();
-    rec.lang = "ar-SA";
-    rec.continuous = false;
-    rec.interimResults = false;
-    rec.onresult = (e) => {
-      const transcript = Array.from(e.results).map((r) => r[0].transcript).join("");
-      setTextInput((prev) => prev + transcript);
-    };
-    rec.onend = () => setIsListening(false);
-    rec.onerror = (e) => {
-      setIsListening(false);
-      if (e?.error === "not-allowed") {
-        setVoiceError("إذن الميكروفون مرفوض.");
-      } else if (e?.error === "no-speech") {
-        setVoiceError("لم يُكتشف كلام واضح.");
-      } else {
-        setVoiceError("تعذّر التعرّف الصوتي.");
-      }
-    };
-    recognitionRef.current = rec;
-    rec.start();
-    setIsListening(true);
-  };
 
   const isTextInput = ["complete-ayah", "fill-blank", "next-ayah", "prev-ayah", "order-ayahs"].includes(question.type);
   const isAutoReveal = ["next-ayah", "prev-ayah", "order-ayahs"].includes(question.type);
@@ -164,7 +60,6 @@ function QuestionCard({
     setTextInput("");
     setIsCorrect(false);
     setAdjacentAyah(null);
-    setVoiceError(null);
   }, [question.id]);
 
   useEffect(() => {
@@ -251,21 +146,7 @@ function QuestionCard({
                   disabled={answered}
                   dir="rtl"
                 />
-                {hasSpeechSupport && !answered && (
-                  <button
-                    type="button"
-                    className={`qmem-voice-btn${isListening ? " qmem-voice-btn--active" : ""}`}
-                    onClick={() => { void toggleVoice(); }}
-                    aria-label={isListening ? "إيقاف التسجيل" : "إدخال صوتي"}
-                    title={isListening ? "إيقاف التسجيل" : "إدخال صوتي"}
-                  >
-                    {isListening ? <MicOff size={16} /> : <Mic size={16} />}
-                  </button>
-                )}
               </div>
-              {voiceError ? (
-                <p className="qmem-voice-error" role="alert">{voiceError}</p>
-              ) : null}
               {!answered && (
                 <button
                   type="button"

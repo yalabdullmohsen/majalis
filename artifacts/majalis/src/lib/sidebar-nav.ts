@@ -42,7 +42,7 @@ const DRAWER_BROWSE_GROUPS: ReadonlyArray<{
     id: "quran",
     title: "القرآن والتلاوة",
     accent: "#2A7A6E",
-    navIds: ["mushaf", "quran-recitation", "quran"],
+    navIds: ["mushaf", "quran"],
   },
   {
     id: "sciences",

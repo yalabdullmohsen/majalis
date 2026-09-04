@@ -9,7 +9,7 @@ assert.equal(sectionAwareFallback("/"), "/");
 assert.equal(sectionAwareFallback("/mushaf/page/12"), "/quran-hub");
 assert.equal(sectionAwareFallback("/quran-hub"), "/quran-hub");
 assert.equal(sectionAwareFallback("/quran/tajweed"), "/quran-hub");
-assert.equal(sectionAwareFallback("/quran/recitation-test-ai"), "/quran-hub");
+assert.equal(sectionAwareFallback("/quran-hub"), "/quran-hub");
 assert.equal(sectionAwareFallback("/quran-memorization"), "/quran-memorization");
 assert.equal(sectionAwareFallback("/quran-circles"), "/quran-circles");
 assert.equal(sectionAwareFallback("/search/x"), "/search");

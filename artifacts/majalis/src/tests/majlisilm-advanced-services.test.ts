@@ -106,7 +106,7 @@ async function main() {
   for (const f of [
     "lib/majlis-audio-service.ts",
     "lib/majlis-local-storage-service.ts",
-    "components/majlis/AIRecitationWidget.tsx",
+    "components/majlis/EducationalCoursesWidget.tsx",
   ]) {
     check(existsSync(join(root, f)), f);
   }

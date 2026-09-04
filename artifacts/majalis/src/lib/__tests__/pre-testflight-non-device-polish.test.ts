@@ -28,7 +28,7 @@ assert.equal(sectionAwareFallback("/quran/recitation-test-ai"), "/quran-hub");
 assert.equal(sectionAwareFallback("/search/foo"), "/search");
 assert.equal(sectionAwareFallback("/mushaf/page/9"), "/quran-hub");
 
-assert.equal(isImmersiveChromePath("/quran/recitation-test-ai"), true);
+assert.equal(isImmersiveChromePath("/quran/recitation-test-ai"), false);
 assert.equal(isImmersiveChromePath("/lessons"), false);
 
 assert.equal(sanitizeAuthNext("/auth/update-password"), "/auth/update-password");
@@ -70,11 +70,7 @@ assert.match(mushafSrc, /MushafViewport/);
 assert.match(mushafSrc, /applyPageSeo/);
 assert.equal(isImmersiveChromePath("/mushaf"), true);
 
-const raiPageSrc = read("src/pages/quran/RecitationTestPage.tsx");
-assert.match(raiPageSrc, /goBackOrFallback\("\/quran\/recitation-test-ai"\)/);
-assert.match(raiPageSrc, /rai-back-btn/);
-assert.match(raiPageSrc, /aria-label="رجوع"/);
-assert.match(raiPageSrc, /RecitationModule/);
+assert.match(read("src/AppRoutes.tsx"), /path="\/quran\/recitation-test-ai"[\s\S]{0,120}Redirect\s+to="\/quran-hub"/);
 
 const prayerSrc = read("src/pages/worship/ui/PrayerTimesView.tsx");
 assert.match(prayerSrc, /reload/);

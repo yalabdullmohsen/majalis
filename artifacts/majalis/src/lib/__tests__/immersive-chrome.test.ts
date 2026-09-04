@@ -38,7 +38,7 @@ assert.equal(isImmersiveChromePath("/prayer-times"), false, "الصلاة ليس
 assert.equal(isImmersiveChromePath("/mushaf"), true, "قارئ المصحف غمري");
 assert.equal(isImmersiveChromePath("/mushaf/2"), true);
 assert.equal(isImmersiveChromePath("/quran-hub"), false, "مركز القرآن الكريم يظهر الشريط السفلي");
-assert.equal(isImmersiveChromePath("/quran/recitation-test-ai"), true);
+assert.equal(isImmersiveChromePath("/quran/recitation-test-ai"), false);
 assert.equal(isImmersiveChromePath("/"), false);
 assert.equal(isImmersiveChromePath("/hadith"), false);
 
@@ -116,7 +116,6 @@ assert.match(mushafView, /page=/);
 
 const servicesNav = readFileSync(resolve(appRoot, "src/lib/services-center-nav.ts"), "utf8");
 assert.match(servicesNav, /sections\.registry/);
-assert.match(readFileSync(resolve(appRoot, "src/config/sections.registry.ts"), "utf8"), /quran\/recitation-test-ai/);
 assert.match(quranHub, /SectionLobby/);
 
 const globalBack = readFileSync(resolve(appRoot, "src/components/FloatingBackButton.tsx"), "utf8");

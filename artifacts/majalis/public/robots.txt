@@ -37,7 +37,6 @@ Disallow: /fiqh-council/compare
 Disallow: /fiqh-council/recommendations
 Disallow: /profile
 Disallow: /settings
-Disallow: /quran/recitation-test-ai
 Disallow: /fiqh-council/research-assistant
 Disallow: /fiqh-council/research
 Disallow: /academic-research

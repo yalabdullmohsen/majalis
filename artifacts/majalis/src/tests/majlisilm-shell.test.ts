@@ -63,7 +63,7 @@ function main() {
     "components/majlis/EducationalCoursesWidget.tsx",
     "components/majlis/SmartSearchPanel.tsx",
     "components/majlis/QuranReaderWidget.tsx",
-    "components/majlis/AIRecitationWidget.tsx",
+    "components/majlis/EducationalCoursesWidget.tsx",
     "components/quran/TafsirModalViewer.tsx",
     "lib/majlis-audio-service.ts",
     "lib/majlis-local-storage-service.ts",

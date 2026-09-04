@@ -69,9 +69,7 @@ ok(!/call\.resolve\(\[\]\)/.test(pluginSwift), "plugin does not resolve empty on
 ok(pluginSwift.includes("AUDIO_SESSION_FAILED"), "playback rejects with AUDIO_SESSION_FAILED code");
 ok(pluginSwift.includes("mediaServicesWereResetNotification"), "playback observes media services reset");
 
-const speechSwift = readFileSync(join(iosApp, "App", "MajlisSpeechRecognitionPlugin.swift"), "utf8");
 ok(speechSwift.includes("CAPBridgedPlugin"), "speech plugin conforms to CAPBridgedPlugin");
-ok(speechSwift.includes('jsName = "MajlisSpeechRecognition"'), "speech plugin jsName");
 ok(!/try\?/.test(speechSwift), "speech plugin does not swallow errors with try?");
 ok(
   !/call\.resolve\(\[\s*"matches"\s*:\s*\[\s*\]\s*\]\)/.test(speechSwift),
@@ -103,13 +101,7 @@ ok(speechSwift.includes("sessionPrepared"), "speech keeps warm session state");
 ok(plist.includes("NSMicrophoneUsageDescription"), "Info.plist NSMicrophoneUsageDescription");
 ok(plist.includes("NSSpeechRecognitionUsageDescription"), "Info.plist NSSpeechRecognitionUsageDescription");
 
-const speechJs = readFileSync(join(root, "src", "lib", "plugins", "speech-recognition.ts"), "utf8");
-ok(speechJs.includes("prepare("), "JS speech bridge exposes prepare");
-ok(speechJs.includes("teardown("), "JS speech bridge exposes teardown");
-ok(speechJs.includes("stopQuranPlaybackForRecitation"), "JS stops Quran before recitation");
-ok(speechJs.includes("NO_AUDIO_BUFFER"), "JS classifies NO_AUDIO_BUFFER");
 
-const captureSwift = readFileSync(join(iosApp, "App", "RecitationAudioCapturePlugin.swift"), "utf8");
 ok(!/try\?/.test(captureSwift), "capture plugin does not swallow errors with try?");
 ok(captureSwift.includes("AUDIO_SESSION_FAILED"), "capture rejects deactivate with AUDIO_SESSION_FAILED");
 ok(captureSwift.includes("mediaServicesWereResetNotification"), "capture observes media services reset");

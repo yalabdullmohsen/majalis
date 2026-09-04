@@ -5,7 +5,6 @@ import {
   Check,
   Copy,
   Headphones,
-  Mic,
   Pause,
   Play,
   SkipBack,
@@ -18,7 +17,6 @@ import type { PlayerState } from "@/core/audio/AudioEngine";
 import { getReciter } from "@/lib/quran-audio";
 import { getSurahMeta } from "@/lib/quran-api";
 import { QURAN_DATA_FEATURES } from "@/lib/quran-data/flags";
-import { isAiTarteelEnabled } from "@/lib/recitation-ai/feature-flag";
 import {
   displayScholarLabel,
   findTafsirAudioForAyah,
@@ -586,17 +584,6 @@ export const AyahActionSheet = memo(function AyahActionSheet({
                   <p className="ayah-action-sheet__audio-state" role="status" data-testid="mushaf-audio-state">
                     {audioStateLabel}
                   </p>
-
-                  {isAiTarteelEnabled() && parsed ? (
-                    <a
-                      className="ayah-action-sheet__ai-tarteel"
-                      href={`/quran/recitation-test-ai?surah=${parsed.surah}&ayah=${parsed.ayah}`}
-                      data-testid="mushaf-ayah-ai-tarteel"
-                    >
-                      <Mic size={18} aria-hidden="true" />
-                      <span>تسميع بالذكاء الاصطناعي</span>
-                    </a>
-                  ) : null}
 
                   <button
                     type="button"

@@ -139,14 +139,6 @@ export const BADGE_DEFS: BadgeDef[] = [
     category: "streak",
     condition: (s) => (s.morningAdhkarStreak ?? 0) >= 7,
   },
-  {
-    key: "recitation_50_ayahs",
-    titleAr: "تسميع ٥٠ آية",
-    descAr: "سمّعت ٥٠ آية بنجاح عبر اختبار التسميع",
-    icon: "Mic",
-    category: "recitation",
-    condition: (s) => s.recitationVersesTotal >= 50,
-  },
 
   // ── المسارات الشرعية ─────────────────────────────────────────────
   {
@@ -172,40 +164,6 @@ export const BADGE_DEFS: BadgeDef[] = [
     icon: "Scale",
     category: "path",
     condition: (s) => s.pathsCompleted.some((p) => p.includes("fiqh") || p.includes("فقه")),
-  },
-
-  // ── اختبار التسميع بالذكاء الاصطناعي ─────────────────────────────
-  {
-    key: "recitation_first",
-    titleAr: "أول تسميع",
-    descAr: "أكملت أول جلسة اختبار تسميع بالذكاء الاصطناعي",
-    icon: "Mic",
-    category: "recitation",
-    condition: (s) => s.recitationSessions >= 1,
-  },
-  {
-    key: "recitation_10",
-    titleAr: "المُسمِّع المواظب",
-    descAr: "أكملت 10 جلسات تسميع",
-    icon: "Mic2",
-    category: "recitation",
-    condition: (s) => s.recitationSessions >= 10,
-  },
-  {
-    key: "recitation_perfect",
-    titleAr: "الحافظ المتقن",
-    descAr: "جلسة تسميع بدقة كاملة 100% بلا أي خطأ",
-    icon: "Award",
-    category: "recitation",
-    condition: (s) => s.recitationPerfectSessions >= 1,
-  },
-  {
-    key: "recitation_verses_100",
-    titleAr: "قارئ الآيات",
-    descAr: "سمّعت 100 آية أو أكثر إجمالًا",
-    icon: "BookOpenCheck",
-    category: "recitation",
-    condition: (s) => s.recitationVersesTotal >= 100,
   },
 
   // ── المحتوى المحفوظ ──────────────────────────────────────────────

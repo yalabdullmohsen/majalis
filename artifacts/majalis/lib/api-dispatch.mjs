@@ -127,25 +127,6 @@ const pushSubscribeRateLimit = createRateLimiter({
   keyPrefix: "push-subscribe",
 });
 
-// اختبار التسميع بالذكاء الاصطناعي — مقطع صوتي كل 2-4 ثوانٍ تقريبًا أثناء
-// الاستماع الفعلي؛ سقف سخي نسبيًا (يسمح بجلسة تسميع طويلة) لكن يمنع إساءة
-// استخدام واضحة (استدعاءات Groq مدفوعة خلف هذا المسار).
-const recitationTranscribeRateLimit = createRateLimiter({
-  windowMs: 60_000,
-  max: 60,
-  keyPrefix: "recitation-transcribe",
-});
-
-// تطبيق iOS/Android الأصلي (Capacitor) يستدعي هذا المسار برابط مطلق
-// (server-provider.ts) لأنه لا يملك خادمًا محليًا خاصًا به — أصله ليس
-// https://majlisilm.com بل أحد هذه المخططات المحلية، فيحتاج طلب
-// POST (Content-Type: application/json، لا "طلب بسيط" حسب CORS) إلى
-// preflight ناجح. الفرع العام لـOPTIONS أدناه ينهي الطلب فورًا قبل بلوغ
-// الوحدة (recitation-transcribe.js) نفسها — corsPreflightOrigins هنا هو
-// الآلية الوحيدة التي تتيح لمسار واحد محدَّد الإفلات من ذلك دون تغيير
-// سلوك كل مسار OPTIONS آخر في النظام.
-const NATIVE_APP_ORIGINS = new Set(["capacitor://localhost", "https://localhost", "http://localhost"]);
-
 /** Route table uses dynamic imports so Vercel bundles one lightweight function entrypoint. */
 export const API_ROUTES = [
   { prefix: "/api/healthz", module: "./api-handlers/healthz.js", allowGet: true, exact: true },
@@ -269,7 +250,6 @@ export const API_ROUTES = [
   { prefix: "/api/push/subscribe", module: "./api-handlers/push-subscribe.js", allowGet: true, exact: true, rateLimit: pushSubscribeRateLimit },
   { prefix: "/api/test-anthropic", module: "./api-handlers/test-anthropic.js", allowGet: true },
   { prefix: "/api/transcribe", module: "./api-handlers/transcribe.js", rateLimit: transcribeRateLimit },
-  { prefix: "/api/recitation-transcribe", module: "./api-handlers/recitation-transcribe.js", rateLimit: recitationTranscribeRateLimit, allowGet: true, exact: true, corsPreflightOrigins: NATIVE_APP_ORIGINS },
   { prefix: "/api/submissions", module: "./api-handlers/submissions.js", exact: true, rateLimit: submissionsRateLimit },
   { prefix: "/api/researches/submit", module: "./api-handlers/researches-submit.js", exact: true, rateLimit: submissionsRateLimit },
   { prefix: "/api/cron/researches-daily-import", module: "./api-handlers/cron/researches-daily-import.js", allowGet: true, exact: true },
