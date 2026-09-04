@@ -1,42 +1,23 @@
 {
-  "generatedAt": "2026-09-04T19:35:54.066Z",
+  "generatedAt": "2026-09-04T20:22:06.986Z",
   "paths": [
-    "artifacts/majalis/src/components/HeaderTicker.tsx",
-    "artifacts/majalis/src/lib/__tests__/phase5-audio-offline-seo.test.ts",
-    "artifacts/majalis/src/styles/components/header-ticker-polish.css",
-    "artifacts/majalis/src/styles/final-release.css",
-    "artifacts/majalis/src/styles/theme-aliases.css",
-    "reports/changed-scope-report.md",
-    "reports/changed-scope-verify.json",
-    "artifacts/majalis/index.html",
-    "artifacts/majalis/lib/assistant-founder.mjs",
     "artifacts/majalis/lib/scholarly-verification/seed-scanner.mjs",
-    "artifacts/majalis/public/404.html",
-    "artifacts/majalis/scripts/generate-section-og-images.mjs",
-    "artifacts/majalis/site.config.json",
-    "artifacts/majalis/src/components/fiqh/FiqhCategoryCard.tsx",
-    "artifacts/majalis/src/components/fiqh/FiqhIssueCard.tsx",
-    "artifacts/majalis/src/components/lessons/UnifiedLessonCard.tsx",
-    "artifacts/majalis/src/config/sections.registry.ts",
-    "artifacts/majalis/src/lib/__tests__/fiqh-hub-layout-gate.test.ts",
-    "artifacts/majalis/src/lib/fiqh/fiqhNormalize.ts",
-    "artifacts/majalis/src/lib/lessons-service.ts",
-    "artifacts/majalis/src/lib/lessons/lessonDeduper.ts",
-    "artifacts/majalis/src/lib/supabase.ts",
-    "artifacts/majalis/src/lib/updates-seed.ts",
-    "artifacts/majalis/src/locales/ar.ts",
-    "artifacts/majalis/src/pages/worship/ui/PrayerTimesView.tsx",
-    "artifacts/majalis/src/styles/pages/fiqh-hub.css"
+    "artifacts/majalis/scripts/generate-seo.mjs",
+    "artifacts/majalis/scripts/verify-body-meta-gate.mjs",
+    "artifacts/majalis/src/app/router/routes.ts",
+    "artifacts/majalis/src/lib/__tests__/phase5-audio-offline-seo.test.ts",
+    "reports/changed-scope-report.md",
+    "reports/changed-scope-verify.json"
   ],
   "scopes": [
+    "other",
     "ui/layout",
-    "docs",
-    "other"
+    "docs"
   ],
   "scopeIds": [
+    "other",
     "ui_layout",
-    "docs",
-    "other"
+    "docs"
   ],
   "checks": {
     "ui": true,
@@ -54,7 +35,7 @@
     "data_audit": false
   },
   "outputs": {
-    "scopes": "ui/layout,docs,other",
+    "scopes": "other,ui/layout,docs",
     "scope_need_build": "true",
     "scope_need_mushaf": "false",
     "scope_need_color_contrast": "true",

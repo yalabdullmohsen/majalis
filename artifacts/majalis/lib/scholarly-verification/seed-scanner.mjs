@@ -153,7 +153,7 @@ function loadLibrary() {
       id: `lib-${i}`,
       title: t.replace(/title:\s*"/, '').replace('"', ''),
       description: 'مرجع علمي',
-      source_url: 'https://majlisilm.com/library',
+      source_url: 'https://www.ssunnah.com/search',
       source_name: 'المراجع الشرعية',
       category: 'كتب',
     }));

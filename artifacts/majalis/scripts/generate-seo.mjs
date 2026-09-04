@@ -2588,57 +2588,13 @@ for (const row of PLATFORM_SEED.courses || []) {
   );
 }
 
+// المكتبة أُزيلت من الواجهة العامة — لا نولّد صفحات /library في prerender/sitemap.
+// الحلقة أدناه فارغة عمدًا (for … of []) حتى لا يُعاد تفعيل التوليد بالخطأ.
 for (const row of []) {
-  // المكتبة أُزيلت من الواجهة العامة — لا نولّد صفحات /library في prerender/sitemap.
   void row;
-  const related = LIBRARY_CATALOG.filter((b) => b.id !== row.id && b.category && b.category === row.category)
-    .slice(0, 6)
-    .map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author }));
-  const desc = tidyDesc(row.description || row.title);
-  // body = ظاهر كامل؛ description = meta (قد تُقصّ لاحقاً دون لمس الظاهر)
-  addPage(
-    {
-      path: `/library/${row.id}`,
-      title: row.title,
-      description: clamp(padDesc(desc, `كتاب من المكتبة الشرعية في ${SITE_NAME}`), META_DESC_MAX),
-      body: desc,
-      ogType: "book",
-    },
-    {
-      extraJsonLd: bookJsonLdScript({ ...row, description: desc }),
-      parents: [{ name: "البحث", path: "/search" }],
-      priority: 0.7,
-      richBody: `<h2>بيانات الكتاب</h2>
-<ul>
-  ${row.author ? `<li>المؤلف: ${escapeHtml(row.author)}</li>` : ""}
-  ${row.category ? `<li>التصنيف: ${escapeHtml(row.category)}</li>` : ""}
-  ${row.type ? `<li>النوع: ${escapeHtml(row.type)}</li>` : ""}
-  ${row.parts_label ? `<li>الأجزاء: ${escapeHtml(row.parts_label)}</li>` : ""}
-  ${(() => {
-    const label = librarySourceLabel(row.external_url);
-    if (!label || !row.external_url) return "";
-    return `<li>رابط قراءة/مرجع رقمي: <a href="${escapeHtml(row.external_url)}" rel="noopener noreferrer">${escapeHtml(label)}</a></li>`;
-  })()}
-</ul>
-${linkList("كتب ذات صلة في نفس التصنيف", related)}
-${linkList("روابط ذات صلة", [
-  { name: "البحث", url: "/search" },
-  { name: "التاريخ الإسلامي", url: "/tarikh-islami" },
-  ...(row.category === "حديث"
-    ? [
-        { name: "علوم الحديث", url: "/hadith-science" },
-        { name: "الأحاديث النبوية", url: "/hadith" },
-      ]
-    : []),
-  ...(row.category === "فقه" || /فقه/.test(row.category || "")
-    ? [{ name: "الفقه الإسلامي", url: "/fiqh" }]
-    : []),
-  ...(row.category === "تفسير" || /تفسير|قرآن/.test(row.category || "")
-    ? [{ name: "مركز القرآن", url: "/quran-hub" }]
-    : []),
-])}`,
-    },
-  );
+  void LIBRARY_CATALOG;
+  void bookJsonLdScript;
+  void librarySourceLabel;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

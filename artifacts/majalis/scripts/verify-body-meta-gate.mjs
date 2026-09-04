@@ -21,8 +21,15 @@ if (!/function visibleLeadHtml\s*\(/.test(gen)) {
 if (/<p>\$\{escapeHtml\(route\.description\)\}<\/p>/.test(gen)) {
   issues.push("generate-seo.mjs: لا يزال يضع route.description في الفقرة المرئية");
 }
-if (!/body:\s*(bioFull|detailFull)/.test(gen) || !/body:\s*desc/.test(gen)) {
-  issues.push("generate-seo.mjs: صفحات التاريخ/المكتبة يجب أن تمرّر route.body");
+if (!/body:\s*(bioFull|detailFull)/.test(gen)) {
+  issues.push("generate-seo.mjs: صفحات التاريخ/التراجم يجب أن تمرّر route.body");
+}
+// المكتبة العامة أُزيلت — لا يُطلب body: desc لمسارات /library
+if (/path:\s*`\/library\/\$\{/.test(gen) && !/for\s*\(\s*const\s+row\s+of\s+\[\s*\]\s*\)/.test(gen)) {
+  issues.push("generate-seo.mjs: لا يجوز توليد صفحات /library في SEO العلني");
+}
+if (!/المكتبة أُزيلت من الواجهة العامة|\/library removed from public SEO/.test(gen)) {
+  issues.push("generate-seo.mjs: يجب توثيق إزالة المكتبة من SEO العلني");
 }
 
 function walkHtml(dir, out = []) {
