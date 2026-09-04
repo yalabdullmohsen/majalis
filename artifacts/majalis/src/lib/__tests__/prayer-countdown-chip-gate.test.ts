@@ -46,7 +46,11 @@ console.log("\n=== عزل إعادة الرسم: الأب بلا usePrayerCountd
     false,
     "HeaderTicker لا يستدعي usePrayerCountdown (إعادة رسم الشريط عند الثانية = ٠)",
   );
-  assert.match(ticker, /PrayerCountdownChip/, "يعرض PrayerCountdownChip ابنًا مستقلًا");
+  assert.equal(
+    /PrayerCountdownChip/.test(ticker),
+    false,
+    "HeaderTicker بلا شريحة متبقي على الصلاة — الشريط للمحتوى فقط",
+  );
   assert.match(ticker, /header-ticker--marquee/, "ماركي CSS ما زال موجودًا");
   assert.match(
     ticker,

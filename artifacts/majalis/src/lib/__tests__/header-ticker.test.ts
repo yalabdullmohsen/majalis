@@ -108,7 +108,7 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
   assert(tickerSrc.includes("header-ticker--marquee"), "المكوّن يستخدم وضع الماركي المتحرّك");
   assert(tickerSrc.includes("Megaphone") || tickerSrc.includes("promo"), "يدعم عناصر ترويج الأقسام/المميزات");
   assert(tickerSrc.includes("header-ticker__source") && tickerSrc.includes("item.source"), "يعرض مصدر الحديث/الذكر مع النص");
-  assert(tickerSrc.includes("PrayerCountdownChip"), "شريحة الصلاة مكوّن مستقل خارج اشتراك الأب");
+  assert(!tickerSrc.includes("PrayerCountdownChip"), "الشريط المتحرك بلا متبقي على الصلاة");
   assert(!/offsetHeight|getBoundingClientRect/.test(tickerSrc), "ارتفاع الشريط من CSS لا من قياس JS");
   assert(!/useLayoutEffect/.test(tickerSrc), "لا useLayoutEffect يقيس ثم يكتب");
   assert(

@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import { Repeat2, ScrollText, Heart, BookOpen, Sparkles, Megaphone } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { PrayerCountdownChip } from "@/components/prayer/PrayerCountdownChip";
 import {
   buildTickerPool,
   pickNextBatch,
@@ -168,7 +167,7 @@ function waitUntilBootSettled(): Promise<void> {
 }
 
 /** شريط إعلان علوي متحرّك مستمر (marquee) — أحاديث وأذكار ونبذ أقسام/مميزات.
- * عدّاد الصلاة مكوّن ابن مستقل — لا اشتراك ثوانٍ هنا حتى لا يُعاد رسم الماركي. */
+ * بلا عدّاد صلاة — مواقيت الصلاة في الهيدر/الصفحة فقط. */
 export function HeaderTicker() {
   const contentItems = useRotatingContent();
   const reducedMotion = useReducedMotion();
@@ -254,8 +253,7 @@ export function HeaderTicker() {
 
   if (items.length === 0) {
     return (
-      <div className="header-ticker header-ticker--static header-ticker--with-prayer header-ticker--fallback" role="status">
-        <PrayerCountdownChip />
+      <div className="header-ticker header-ticker--static header-ticker--fallback" role="status">
         <div className="header-ticker__single-item">
           <TickerEntry
             item={{
@@ -275,11 +273,10 @@ export function HeaderTicker() {
     const activeItem = items[activeIndex % items.length];
     return (
       <div
-        className={`header-ticker header-ticker--static header-ticker--with-prayer${paused ? " header-ticker--paused" : ""}`}
+        className={`header-ticker header-ticker--static${paused ? " header-ticker--paused" : ""}`}
         aria-live="polite"
         {...pauseHandlers}
       >
-        <PrayerCountdownChip />
         {activeItem ? (
           <div className="header-ticker__single-item" key={activeItem.key}>
             <TickerEntry item={activeItem} />
@@ -298,11 +295,10 @@ export function HeaderTicker() {
 
   return (
     <div
-      className={`header-ticker${marqueeEnabled ? " header-ticker--marquee" : ""} header-ticker--with-prayer${paused ? " header-ticker--paused" : ""}`}
+      className={`header-ticker${marqueeEnabled ? " header-ticker--marquee" : ""}${paused ? " header-ticker--paused" : ""}`}
       aria-live="off"
       {...pauseHandlers}
     >
-      <PrayerCountdownChip />
       <div className="header-ticker__viewport" ref={viewportRef}>
         <div
           ref={trackRef}
