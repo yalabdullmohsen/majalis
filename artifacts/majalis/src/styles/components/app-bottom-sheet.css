@@ -7,9 +7,12 @@
   align-items: flex-end;
   justify-content: center;
   padding-block-end: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 12px);
+  pointer-events: auto;
 }
 .app-sheet-overlay--elevated {
-  z-index: 10060;
+  /* فوق الشريط السفلي (z≈200) وهيدر الجوال (z≈9999) وشيت الآية (~10020) */
+  z-index: 20100;
+  pointer-events: auto;
 }
 .app-sheet-overlay__scrim {
   position: absolute;
@@ -19,10 +22,36 @@
   margin: 0;
   background: color-mix(in srgb, var(--mj-ink, #0E241E) 45%, transparent);
   cursor: pointer;
+  pointer-events: auto;
 }
 .app-sheet-overlay > .app-sheet {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+/* أثناء أي شيت مفتوح: الشريط السفلي لا يسرق اللمس (خصوصًا iOS WebView) */
+body.app-sheet-open .bottom-nav,
+body.app-sheet-open .bottom-nav--v2,
+body.filter-sheet-open .bottom-nav,
+body.filter-sheet-open .bottom-nav--v2 {
+  pointer-events: none !important;
+}
+
+/*
+ * عزل اللمس عن #root أثناء شيت التحديث المرتفع:
+ * يمنع طبقة مصحف/spinner/صفحة بيضاء من سرقة اللمس فوق الزر في WKWebView.
+ * الشيت نفسه portaled على document.body خارج #root.
+ */
+body.app-sheet-open:has(.app-sheet-overlay--elevated) #root,
+body.app-sheet-open:has(.app-sheet-overlay--elevated) .app-shell,
+body.app-sheet-open:has(.app-sheet-overlay--elevated) #mj-launch-splash {
+  pointer-events: none !important;
+}
+body.app-sheet-open .app-sheet-overlay--elevated,
+body.app-sheet-open .app-sheet-overlay--elevated .app-sheet,
+body.app-sheet-open .app-sheet-overlay--elevated .app-sheet-overlay__scrim {
+  pointer-events: auto !important;
 }
 
 .app-sheet {
@@ -169,6 +198,30 @@ html.dark .app-sheet__footer {
   line-height: 1.7;
   color: var(--mj-ink-muted, var(--text-muted, #4a5c55));
   text-align: center;
+}
+
+.update-available-sheet__error {
+  margin: 0.85rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--mj-danger, #a94444);
+  text-align: center;
+}
+
+.update-available-sheet,
+.update-available-sheet .app-sheet__footer-slot,
+.update-available-sheet .app-sheet__footer,
+.update-available-sheet__update-btn,
+.update-available-sheet .app-sheet__close {
+  pointer-events: auto !important;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.update-available-sheet__update-btn:disabled {
+  opacity: 0.72;
+  cursor: progress;
 }
 
 body.app-sheet-open {
