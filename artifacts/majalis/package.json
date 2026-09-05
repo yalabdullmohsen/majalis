@@ -133,7 +133,7 @@
     "test:mobile-smoothness": "playwright test tests/mobile-smoothness.spec.ts --project=mobile",
     "test:pwa": "node --import tsx src/lib/__tests__/pwa-mobile-launch.test.ts && pnpm run test:quality-campaign",
     "test:login-auth-redesign": "node --import tsx src/lib/__tests__/login-auth-redesign-gate.test.ts",
-    "test:theme-boot-cache": "node --import tsx src/lib/__tests__/theme-boot-light-default-gate.test.ts && node --import tsx src/lib/__tests__/boot-fouc-fonts-mushaf-gate.test.ts && node --import tsx src/lib/__tests__/runtime-cache-purge-gate.test.ts && pnpm run test:login-auth-redesign",
+    "test:theme-boot-cache": "node --import tsx src/lib/__tests__/theme-boot-light-default-gate.test.ts && node --import tsx src/lib/__tests__/boot-fouc-fonts-mushaf-gate.test.ts && node --import tsx src/lib/__tests__/runtime-cache-purge-gate.test.ts && node --import tsx src/lib/__tests__/lhci-first-visit-no-purge-gate.test.ts && pnpm run test:login-auth-redesign",
     "test:sw-registration-gate": "node --import tsx src/lib/__tests__/service-worker-registration-gate.test.ts && pnpm run test:theme-boot-cache",
     "test:quran-db": "node --import tsx src/tests/database-manager.test.ts",
     "test:quran-scaffold": "node --import tsx src/tests/core-engine.sample.test.ts",

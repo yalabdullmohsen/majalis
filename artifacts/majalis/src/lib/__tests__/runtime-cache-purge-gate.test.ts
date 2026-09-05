@@ -40,6 +40,20 @@ assert.match(sw, /pathname === "\/sw-version\.js"/);
 
 assert.match(html, /v11-startup-stable-2026-08|v12-startup-gate-2026-08|v13-startup-shell-stable-2026-09|v14-release-fresh-2026-09/);
 assert.match(html, /majalis_force_cache_purge/);
+/* بوابة LCP: أول زيارة تبذر design-v فقط — لا force purge بدون نسخة سابقة (كان يسبب reload ويُسقِط LHCI) */
+assert.match(html, /var _prevDsv = localStorage\.getItem\("majalis-design-v"\)/);
+assert.match(
+  html,
+  /if \(_prevDsv\) \{[\s\S]*?majalis_force_cache_purge/,
+  "force purge فقط عند الترقية من نسخة تصميم سابقة",
+);
+assert.match(
+  html,
+  /\/\* أول زيارة: خزّن النسخة فقط — بلا reload \*\/[\s\S]*?if \(!prev\)/,
+  "version-boot: أول زيارة بلا reload",
+);
+assert.match(html, /navigator\.webdriver/, "تخطّي version-boot تحت الأتمتة/LHCI");
+
 assert.match(html, /classList\.add\("light"/);
 assert.match(html, /storedTheme === "auto"/);
 assert.doesNotMatch(
