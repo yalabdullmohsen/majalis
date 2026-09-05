@@ -67,16 +67,23 @@ export type PrayerCountdownValue = {
 };
 
 /** منطق العدّ — استخدم PrayerCountdownProvider + usePrayerCountdown من components/prayer. */
-export function usePrayerCountdownState(governorateId?: string): PrayerCountdownValue {
-  const [data, setData] = useState<PrayerTimesPayload | null>(() => initialPayload(governorateId));
+export function usePrayerCountdownState(
+  governorateId?: string,
+  options?: { enabled?: boolean },
+): PrayerCountdownValue {
+  const enabled = options?.enabled !== false;
+  const [data, setData] = useState<PrayerTimesPayload | null>(() =>
+    enabled ? initialPayload(governorateId) : null,
+  );
   const [countdown, setCountdown] = useState<PrayerCountdown | null>(() => {
+    if (!enabled) return null;
     const seed = initialPayload(governorateId);
     return seed?.prayers?.length
       ? computePrayerCountdown(seed.prayers, activeTz(seed))
       : null;
   });
   /** لا يمنع الرسم — يبقى للتوافق مع المستهلكين القدامى */
-  const [loading, setLoading] = useState(() => !initialPayload(governorateId));
+  const [loading, setLoading] = useState(() => (enabled ? !initialPayload(governorateId) : false));
   const [reloadToken, setReloadToken] = useState(0);
 
   const reload = useCallback(() => {
@@ -84,6 +91,10 @@ export function usePrayerCountdownState(governorateId?: string): PrayerCountdown
   }, []);
 
   useEffect(() => {
+    if (!enabled) {
+      setLoading(false);
+      return;
+    }
     let cancelled = false;
     const seed = initialPayload(governorateId);
     setData(seed);
@@ -108,11 +119,12 @@ export function usePrayerCountdownState(governorateId?: string): PrayerCountdown
     return () => {
       cancelled = true;
     };
-  }, [governorateId, reloadToken]);
+  }, [enabled, governorateId, reloadToken]);
 
   useEffect(() => {
-    if (!data?.prayers?.length) {
-      setCountdown(null);
+    if (!enabled || !data?.prayers?.length) {
+      if (!enabled) setCountdown(null);
+      else if (!data?.prayers?.length) setCountdown(null);
       return;
     }
 
@@ -122,15 +134,16 @@ export function usePrayerCountdownState(governorateId?: string): PrayerCountdown
     return subscribeSecondTick(() => {
       setCountdown(computePrayerCountdown(prayers, tz));
     });
-  }, [data]);
+  }, [enabled, data]);
 
   // عبور منتصف الليل → إعادة جلب مواقيت اليوم دون إعادة تشغيل التطبيق
   useEffect(() => {
+    if (!enabled) return;
     const tz = activeTz(data);
     return subscribePrayerDayRollover(tz, () => {
       setReloadToken((n) => n + 1);
     });
-  }, [data?.timezone, governorateId]);
+  }, [enabled, data?.timezone, governorateId]);
 
   return { data, countdown, loading, reload };
 }

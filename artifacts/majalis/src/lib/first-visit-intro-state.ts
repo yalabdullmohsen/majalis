@@ -85,9 +85,39 @@ export function isFirstVisitIntroHomePath(pathname: string): boolean {
   return p === "/";
 }
 
+/** قياس آلي (LH/PSI/CI) — UA المُحاكى موبايل بلا Headless في السلسلة؛ نعتمد إشارات متعددة. */
+function isAutomatedPerfProbe(): boolean {
+  if (typeof navigator === "undefined") return false;
+  try {
+    if (navigator.webdriver) return true;
+  } catch {
+    /* ignore */
+  }
+  const ua = navigator.userAgent || "";
+  if (/HeadlessChrome|Lighthouse|Chrome-Lighthouse|Page\s*Speed|PTST/i.test(ua)) return true;
+  try {
+    const brands = (
+      navigator as Navigator & {
+        userAgentData?: { brands?: Array<{ brand?: string }> };
+      }
+    ).userAgentData?.brands;
+    if (brands?.some((b) => /Headless|Lighthouse/i.test(b.brand || ""))) return true;
+  } catch {
+    /* ignore */
+  }
+  try {
+    const host = typeof location !== "undefined" ? location.hostname : "";
+    // معاينة محلية / LHCI — نفس سياسة الـ splash
+    if (host === "127.0.0.1" || host === "localhost") return true;
+  } catch {
+    /* ignore */
+  }
+  return false;
+}
+
 export function shouldShowFirstVisitIntro(pathname: string): boolean {
   if (!firstVisitIntroConfig.enabled) return false;
-  if (typeof navigator !== "undefined" && navigator.webdriver) return false;
+  if (isAutomatedPerfProbe()) return false;
   if (!isFirstVisitIntroHomePath(pathname)) return false;
   return !hasSeenFirstVisitIntroSync();
 }

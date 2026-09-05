@@ -350,7 +350,7 @@ export const FIQH_DOOR_META: Record<FiqhCanonicalDoor, FiqhDoorMeta> = {
   },
   qada: {
     id: "qada",
-    label: "القضاء والشهادات",
+    label: "القضاء",
     desc: "آداب القاضي والدعوى والشهادة.",
     href: "/fiqh/books/qada",
     bookHref: "/fiqh/books/qada",
@@ -437,7 +437,8 @@ export const FIQH_DOOR_META: Record<FiqhCanonicalDoor, FiqhDoorMeta> = {
 };
 
 /**
- * أبواب بوابة الفقه العلنية — مرتبة بـ sortOrder الثابت لا بترتيب المصفوفة وحده.
+ * أبواب بوابة الفقه العلنية — ١٦ بابًا بالترتيب المعتمد للإطلاق.
+ * الأبواب الفرعية (بيوع، نكاح، حدود…) تبقى في الفهرس والكتب ولا تُعرض كبطاقات مستقلة هنا.
  */
 export const FIQH_HUB_DOOR_ORDER: FiqhCanonicalDoor[] = [
   "tahara",
@@ -453,22 +454,9 @@ export const FIQH_HUB_DOOR_ORDER: FiqhCanonicalDoor[] = [
   "libas",
   "janaza",
   "muamalat",
-  "buyu",
-  "riba",
-  "ijara",
-  "sharika",
-  "qard",
-  "waqf_hiba",
   "usrah",
-  "nikah",
-  "talaq",
-  "iddah_rida",
-  "nafaqat",
   "jinayat",
   "qada",
-  "nawazil",
-  "qawaid",
-  "usul",
 ];
 
 /** أبواب «ابدأ من هنا» للمبتدئ. */

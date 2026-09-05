@@ -23,11 +23,14 @@ const EMPTY_DATA: PrayerDataValue = {
 export function PrayerCountdownProvider({
   children,
   governorateId,
+  enabled = true,
 }: {
   children: ReactNode;
   governorateId?: string;
+  /** عند false: لا جلب شبكة ولا عدّ ثانية — لإبقاء الإقلاع خفيفًا على الرئيسية */
+  enabled?: boolean;
 }) {
-  const { data, countdown, loading, reload } = usePrayerCountdownState(governorateId);
+  const { data, countdown, loading, reload } = usePrayerCountdownState(governorateId, { enabled });
   const dataValue = useMemo(
     () => ({ data, loading, reload }),
     [data, loading, reload],

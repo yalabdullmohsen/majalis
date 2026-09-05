@@ -11,8 +11,11 @@ export type BootFlags = {
   storageReady: boolean;
 };
 
-/** سقف انتظار خط الواجهة النشط — preload محلي؛ لا ننتظر خطّين كاملين بلا داعٍ. */
-const BOOT_FONT_TIMEOUT_MS = 1_200;
+/**
+ * سقف قصير يطابق نافذة font-display:optional (~100ms).
+ * لا نحبس Splash/LCP على تنزيل Amiri الكامل — المقاييس تمنع CLS.
+ */
+const BOOT_FONT_TIMEOUT_MS = 180;
 
 /** سقف مزامنة Preferences → localStorage داخل حارس الإقلاع (لا يحجب createRoot). */
 const BOOT_STORAGE_TIMEOUT_MS = 450;

@@ -3242,8 +3242,9 @@ body.mobile-nav-body-lock {
   padding-bottom: 0;
 }
 
+/* الزر ثابت فوق الشريط — لا نغيّر padding ديناميكيًا (كان مصدر CLS ~0.10) */
 body.has-assistant-fab .app-main {
-  padding-bottom: calc(var(--assistant-fab-size) + var(--assistant-fab-gap) + 0.5rem);
+  padding-bottom: 0;
 }
 
 body.assistant-panel-open {
@@ -4215,8 +4216,9 @@ body {
   max-width: 100vw;
 }
 
+/* لا padding ديناميكي — الزر ثابت ولا يجب أن يحرّك المحتوى بعد الرسم */
 body.has-assistant-fab .app-main {
-  padding-bottom: calc(var(--assistant-fab-size, 3.35rem) + var(--assistant-fab-gap, 1rem) + 1.25rem);
+  padding-bottom: 0;
 }
 
 @media (max-width: 640px) {

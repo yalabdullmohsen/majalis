@@ -1,5 +1,5 @@
 /**
- * روابط استعادة/تأكيد/OAuth يجب أن تعود إلى النطاق الإنتاجي majlisilm.com
+ * روابط استعادة/تأكيد/OAuth يجب أن تعود إلى النطاق الإنتاجي www.ssunnah.com
  * وليس إلى capacitor://localhost أو origin مؤقت — وإلا تكسر روابط البريد.
  */
 import { SITE_URL } from "@/lib/site-config";
@@ -17,7 +17,7 @@ export function sanitizeAuthNext(raw: string | null | undefined): string {
   return next;
 }
 
-/** مسار callback مطلق على majlisilm.com مع next داخلي آمن اختياري. */
+/** مسار callback مطلق على www.ssunnah.com مع next داخلي آمن اختياري. */
 export function getAuthCallbackUrl(nextPath?: string | null): string {
   const next = sanitizeAuthNext(nextPath);
   if (next && next !== "/") {

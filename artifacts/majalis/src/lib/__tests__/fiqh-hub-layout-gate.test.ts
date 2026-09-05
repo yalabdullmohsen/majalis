@@ -35,27 +35,26 @@ assert.match(css, /fiqh-category-card--qada_jinayat/);
 assert.match(css, /max-height:\s*6\.5rem/);
 
 assert.deepEqual([...FIQH_START_HERE_DOORS], ["tahara", "salah", "zakat", "sawm", "hajj"]);
-assert.deepEqual(
-  [...FIQH_HUB_DOOR_ORDER].slice(0, 12),
-  [
-    "tahara",
-    "salah",
-    "zakat",
-    "sawm",
-    "itikaf",
-    "hajj",
-    "udhiya",
-    "ayman",
-    "sayd",
-    "atima",
-    "libas",
-    "janaza",
-  ],
-);
-assert.ok(FIQH_HUB_DOOR_ORDER.includes("usrah"));
-assert.ok(FIQH_HUB_DOOR_ORDER.includes("nawazil"));
-assert.ok(FIQH_HUB_DOOR_ORDER.includes("qawaid"));
-assert.equal(FIQH_HUB_DOOR_ORDER.at(-1), "usul");
+assert.deepEqual([...FIQH_HUB_DOOR_ORDER], [
+  "tahara",
+  "salah",
+  "zakat",
+  "sawm",
+  "itikaf",
+  "hajj",
+  "udhiya",
+  "ayman",
+  "sayd",
+  "atima",
+  "libas",
+  "janaza",
+  "muamalat",
+  "usrah",
+  "jinayat",
+  "qada",
+]);
+assert.equal(FIQH_HUB_DOOR_ORDER.length, 16);
+assert.equal(FIQH_HUB_DOOR_ORDER.at(-1), "qada");
 
 const books = getAllFiqhBooks();
 const byId = Object.fromEntries(books.map((b) => [b.id, b]));

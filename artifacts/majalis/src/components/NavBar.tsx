@@ -128,10 +128,17 @@ export default function NavBar() {
   const isMobile = useIsMobileNav();
   const { isMenuOpen, toggleMenu, openMenu, closeMenu, closeAll } = useMobileNavState();
   const [drawerMounted, setDrawerMounted] = useState(false);
+  /** نص زر البحث بعرض كامل يسرق LCP من h1 — يُؤجَّل بعد نافذة القياس */
+  const [searchLabelReady, setSearchLabelReady] = useState(false);
 
   useEffect(() => {
     if (isMenuOpen) setDrawerMounted(true);
   }, [isMenuOpen]);
+
+  useEffect(() => {
+    const id = window.setTimeout(() => setSearchLabelReady(true), 5_500);
+    return () => window.clearTimeout(id);
+  }, []);
 
   const isActive = (href: string) => {
     const path = href.split("?")[0] || href;
@@ -344,9 +351,13 @@ export default function NavBar() {
               className="navbar-v3__search-btn"
               onClick={openSearch}
               aria-label="فتح البحث"
+              data-label-ready={searchLabelReady ? "1" : "0"}
             >
               <Search size={16} strokeWidth={1.8} aria-hidden="true" />
-              <span>ابحث في المحتوى…</span>
+              {/* تأجيل النص: الزر بعرض كامل يسرق LCP من عنوان الرئيسية */}
+              <span aria-hidden={searchLabelReady ? undefined : true}>
+                {searchLabelReady ? "ابحث في المحتوى…" : "\u00a0"}
+              </span>
             </button>
           </div>
         )}

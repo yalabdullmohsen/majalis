@@ -16,6 +16,7 @@ const preview = getPreviewThresholds();
 const lhciRc = require(resolve(root, "lighthouserc.cjs"));
 const html = readFileSync(resolve(root, "index.html"), "utf8");
 const home = readFileSync(resolve(root, "src/pages/account/ui/HomeView.tsx"), "utf8");
+const homeHero = readFileSync(resolve(root, "src/components/home/HomeHeroLcp.tsx"), "utf8");
 const prewarm = readFileSync(resolve(root, "src/lib/resource-prewarm.ts"), "utf8");
 const mainSrc = readFileSync(resolve(root, "src/main.tsx"), "utf8");
 const postBuild = readFileSync(resolve(root, "scripts/post-build-seo.mjs"), "utf8");
@@ -48,16 +49,19 @@ assert.match(html, /id="mj-theme-boot"|v6-direct-boot-2026-08/, "ثيم مبكر
   assert.doesNotMatch(crit, /Aref\s+Ruqaa/, "بلا رقعة في CSS الحرج");
 }
 
-assert.match(home, /title="سُنّة"/, "عنوان الرئيسية في React");
+assert.match(homeHero, /title="سُنّة"/, "عنوان الرئيسية في React (HomeHeroLcp)");
 assert.doesNotMatch(home, /titleDomId/, "لا تبنّي عقدة HTML");
 assert.doesNotMatch(hero, /titleDomId/, "PageHero بلا نقل عقدة");
+assert.doesNotMatch(homeHero, /titleDomId/, "HomeHeroLcp بلا نقل عقدة");
 assert.doesNotMatch(prewarm, /link\.rel = "preconnect"/, "prewarm لا يضيف preconnect");
 assert.doesNotMatch(mainSrc, /styles\/pages\/calendar\.css/, "تقويم خارج حزمة الإقلاع");
 assert.doesNotMatch(mainSrc, /homePageBoot|await homePageBoot/, "لا انتظار Home قبل createRoot");
 assert.doesNotMatch(mainSrc, /mj-app-mount/, "createRoot على #root");
 assert.match(home, /mj-home-lcp-ph/, "حجز ارتفاع في الرئيسية");
-assert.match(app, /function HomeInitialShell/, "fallback LCP فوري بلا aria-hidden");
-assert.doesNotMatch(app, /HomeInitialShell[\s\S]{0,120}aria-hidden/, "shell الرئيسية ليس مخفياً عن قارئ الشاشة");
+assert.match(app, /HomeHeroLcp/, "هيرو LCP ثابت خارج Suspense");
+assert.match(app, /HomeRestShell/, "fallback بقية الرئيسية بلا استبدال h1");
+assert.doesNotMatch(app, /HomeInitialShell/, "لا HomeInitialShell بعد فصل الهيرو");
+assert.doesNotMatch(app, /HomeHeroLcp[\s\S]{0,120}aria-hidden/, "هيرو الرئيسية ليس مخفياً عن قارئ الشاشة");
 assert.doesNotMatch(app, /scheduleRemoveHomeLcpStaticShell/, "لا إزالة صدفة HTML");
 assert.match(critical, /\.hsh-steps\s*\{[\s\S]*min-height:\s*22rem/, "حجز CLS لشبكة hsh-steps");
 assert.match(critical, /ascent-override/, "size-adjust/override للخط الاحتياطي");

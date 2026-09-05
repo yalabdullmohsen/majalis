@@ -922,10 +922,10 @@ html.dark .top-section-bar {
     align-items: stretch !important;
     justify-content: space-around !important;
     gap: 0 !important;
-    /* ارتفاع تلقائي من محتوى التبويب؛ Home Indicator مرة واحدة في padding-bottom فقط */
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
+    /* ارتفاع محجوز ثابت لتقليل CLS عند وصول هذا الملف مؤجّلًا — Safe Area في padding فقط */
+    height: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px)) !important;
+    min-height: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px)) !important;
+    max-height: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px)) !important;
     padding-top: 0.2rem !important;
     /* Safe Area السفلي بلون الصفحة --surface-app — درزة واحدة لا أبيض مستقل */
     padding-bottom: var(--inset-bottom) !important;
@@ -1023,9 +1023,10 @@ html.dark .top-section-bar {
     ) !important;
   }
 
+  /* لا زيادة ديناميكية عند ظهور زر المساعد — يُثبَّت فوق الحجز القائم للشريط السفلي */
   body.has-assistant-fab .app-main {
     padding-block-end: calc(
-      var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px + var(--assistant-fab-size, 3.35rem)
+      var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px
     ) !important;
   }
 

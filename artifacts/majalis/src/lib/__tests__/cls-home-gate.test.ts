@@ -40,7 +40,7 @@ assert.doesNotMatch(
   "لا min-height:unset في هيرو الرئيسية",
 );
 assert.doesNotMatch(fontsUi, /amiri-700/, "لا Amiri 700 في fonts-ui الإقلاع");
-assert.match(fontsUi, /amiri-400-ar[\s\S]*font-display:\s*block/, "Amiri 400 block — بلا FOUT");
+assert.match(fontsUi, /amiri-400-ar[\s\S]*font-display:\s*optional/, "Amiri 400 optional — لا يحجب LCP");
 assert.match(fontsBold, /amiri-700-ar[\s\S]*font-display:\s*optional/, "Amiri 700 optional مؤجّل — بلا CLS");
 assert.match(fontsBold, /Aref Ruqaa[\s\S]*font-display:\s*optional/, "Aref Ruqaa 700 optional");
 assert.equal(

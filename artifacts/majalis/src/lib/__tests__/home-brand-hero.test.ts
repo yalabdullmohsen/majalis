@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const home = readFileSync(resolve(root, "src/pages/account/ui/HomeView.tsx"), "utf8");
+const hero = readFileSync(resolve(root, "src/components/home/HomeHeroLcp.tsx"), "utf8");
 const css = readFileSync(resolve(root, "src/styles/components/home-brand-title.css"), "utf8");
 const wordmark = readFileSync(resolve(root, "src/components/brand/MajlisWordmark.tsx"), "utf8");
 
@@ -22,10 +23,10 @@ function assert(cond: boolean, label: string) {
 
 console.log("\n=== هيرو الترحيب بدون هوية مكررة ===");
 assert(!home.includes("HomeBrandTitle"), "HomeView بلا HomeBrandTitle");
-assert(home.includes("dailyCtx.greeting"), "التحية ظاهرة في الهيرو");
-assert(home.includes('title="سُنّة"'), "اسم التطبيق عنوان الهيرو");
-assert(home.includes("تصفح الأقسام"), "زر ثانوي لتصفح الأقسام");
-assert(!/title=\{<\s*HomeBrandTitle/.test(home), "لا عنوان هوية داخل البطاقة");
+assert(hero.includes("greeting"), "التحية ظاهرة في الهيرو الثابت");
+assert(hero.includes('title="سُنّة"') || hero.includes("title=\"سُنّة\""), "اسم التطبيق عنوان الهيرو");
+assert(hero.includes("تصفح الأقسام"), "زر ثانوي لتصفح الأقسام");
+assert(!home.includes("<PageHero"), "الهيرو ليس مكرراً داخل HomeView");
 assert(css.includes("home-page-hero"), "أنماط الهيرو المدمجة");
 assert(!css.includes("home-brand-title__panel"), "لا لوحة زخرفية للهوية في البطاقة");
 assert(!/min-height:\s*clamp\(11\.5rem,\s*33dvh/.test(css), "لا ارتفاع ثلث شاشة زائد");

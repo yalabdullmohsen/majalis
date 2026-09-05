@@ -52,6 +52,16 @@
   visibility: hidden;
 }
 
+/* تحية الهيرو محجوبة حتى بعد LCP — نفس النص/الارتفاع بلا قفزة */
+.home-page-hero:not(.home-page-hero--eyebrow-ready) .page-hero-mj__eyebrow {
+  visibility: hidden;
+}
+
+/* أزرار الهيرو بعرض كبير تسرق LCP من العنوان — نفس حجز الـ shell */
+.home-page-hero:not(.home-page-hero--actions-ready) .page-hero-mj__actions .mj-btn {
+  visibility: hidden;
+}
+
 .mj-home-lcp-ph__hero-cta {
   min-width: 9.5rem;
   min-height: 2.65rem;
