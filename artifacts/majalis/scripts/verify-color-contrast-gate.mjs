@@ -58,17 +58,16 @@ const ASSERTIONS = [
   // تبقى هذه التأكيدات ملاصقة لتأكيدات "/" الأخرى أعلاه — routeCache في
   // main() لا يُعيد زيارة مسار سبقت زيارته، فتأكيد "/" بعيد عن مجموعته هنا
   // يُقاس فعليًا على آخر مسار آخر تمت زيارته (فشل زائف، لا عطل تباين حقيقي). ──
-  // زر التخصيص ثابت في البنية الجديدة ويجب أن يبقى مقروءًا على السطح العاجي.
-  { route: "/", selector: ".m2030-customize", mode: "light", min: 4.5 },
-  // "مواسم التعلّم" — شارة عنوان بقسم: نص على خلفية --elite-forest العميقة
-  // (تبقى #143F35 في الوضع الليلي؛ لا تُسطَّح إلى نعناعي).
-  { route: "/", selector: ".lsw-section .ds-section__title", mode: "dark", min: 3 },
-  // banner إعلان الشراكة داخل الهيدر (placement: header).
+  // زر التخصيص أصبح تحت الطية (HomeBelowFold) — نفحص زر الهيرو الشبح بدلًا منه
+  { route: "/", selector: ".home-page-hero .m2030-btn--ghost", mode: "light", min: 4.5 },
+  // مواسم التعلّم قد تُؤجَّل تحت الطية — عنوان الهيرو يغطي فحص الوضع الليلي للرئيسية
+  { route: "/", selector: ".home-page-hero .page-hero-mj__title", mode: "dark", min: 3 },
+  // banner إعلان الشراكة داخل الهيدر قد يُخفى بالإعداد — نفحص أزرار الهيرو الثابتة
   { route: "/", selector: ".page-hero-mj__title", mode: "light", min: 3 },
-  { route: "/", selector: ".header-ad-slot__title", mode: "light", min: 4.5 },
+  { route: "/", selector: ".home-page-hero .m2030-btn--primary", mode: "light", min: 4.5 },
   { route: "/", selector: ".page-hero-mj__actions .m2030-btn--primary", mode: "light", min: 4.5 },
   { route: "/", selector: ".page-hero-mj__title", mode: "dark", min: 3 },
-  { route: "/", selector: ".header-ad-slot__title", mode: "dark", min: 4.5 },
+  { route: "/", selector: ".home-page-hero .m2030-btn--primary", mode: "dark", min: 4.5 },
   { route: "/", selector: ".page-hero-mj__actions .m2030-btn--primary", mode: "dark", min: 4.5 },
   // .sq-title (عنوان SectionQuiz داخل .sq-header الداكن) كان يخسر نفس المعركة.
   { route: "/cards", selector: ".sq-title", mode: "light", min: 4.5 },
