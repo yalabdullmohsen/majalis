@@ -139,15 +139,20 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
     tickerSrc.includes("onAnimationEnd") && tickerSrc.includes("header-ticker-marquee"),
     "التبديل للنص التالي فقط بعد animationend لاسم الماركي",
   );
-  assert(/to\s*=\s*-itemW/.test(tickerSrc), "نهاية الحركة خارج العرض بالكامل (-itemW) — لا قطع منتصف النص");
-  assert(/from\s*=\s*vpW/.test(tickerSrc), "بداية الحركة من خارج يمين الشاشة");
+  assert(/from\s*=\s*-itemW/.test(tickerSrc), "بداية الحركة من خارج اليسار (-itemW) — بداية النص العربي أولًا");
+  assert(/to\s*=\s*vpW/.test(tickerSrc), "نهاية الحركة خارج يمين الشاشة (vpW) بالكامل — لا قطع منتصف النص");
   assert(
     /distancePx\s*\/\s*95/.test(tickerSrc) || tickerSrc.includes("/ 95"),
     "سرعة الماركي أسرع (~95px/ث) من الإيقاع البطيء السابق",
   );
   assert(
     cssSrc.includes("direction: ltr") && cssSrc.includes("header-ticker__viewport"),
-    "viewport بـ direction:ltr لتثبيت يمين→يسار فيزيائيًا",
+    "viewport بـ direction:ltr لتثبيت المحاور الفيزيائية",
+  );
+  assert(
+    /translate3d\(\s*var\(--ticker-from,\s*-100%\)/.test(cssSrc) ||
+      cssSrc.includes("var(--ticker-from, -100%)"),
+    "keyframes الافتراضية تبدأ من -100% (يسار→يمين)",
   );
   assert(
     tickerSrc.includes('dir="rtl"') || tickerSrc.includes("dir=\"rtl\""),

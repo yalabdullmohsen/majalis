@@ -254,11 +254,12 @@ export function HeaderTicker() {
       const vpW = vp.clientWidth;
       const itemW = runner.scrollWidth;
       if (vpW < 8 || itemW < 8) return;
-      // فيزيائيًا يمين → يسار: يدخل من خارج اليمين (+vpW) ويخرج بالكامل من اليسار (-itemW).
-      // الـviewport مضبوط direction:ltr حتى لا يقلب flex/RTL نقطة الأصل.
-      const from = vpW;
-      const to = -itemW;
-      const dur = durationForDistance(from - to);
+      // للعربية (RTL): بداية الجملة على يمين الصندوق — لذلك نُدخل الصندوق من اليسار
+      // حتى يظهر طرفه الأيمن (بداية النص) أولًا، ثم يتحرّك يسار→يمين حتى يخرج يمينًا.
+      // الـviewport direction:ltr يثبّت المحاور الفيزيائية فقط.
+      const from = -itemW;
+      const to = vpW;
+      const dur = durationForDistance(to - from);
       setAnim({ from: `${from}px`, to: `${to}px`, dur: `${dur}s` });
     };
 
@@ -320,9 +321,9 @@ export function HeaderTicker() {
         animationDuration: anim.dur,
       } as CSSProperties)
     : {
-        // إخفاء حتى القياس — يبدأ من خارج اليمين (نفس اتجاه الحركة)
+        // إخفاء حتى القياس — يبدأ من خارج اليسار (نفس اتجاه الحركة المصحّح)
         opacity: 0,
-        transform: "translate3d(100%, 0, 0)",
+        transform: "translate3d(-100%, 0, 0)",
       };
 
   return (
