@@ -196,7 +196,7 @@
     "verify:adhan-caf-durations": "node scripts/verify-adhan-caf-durations.mjs",
     "test:ayah-gap-gate": "node --import tsx src/lib/__tests__/ayah-gap-gate.test.ts",
     "test:adhan-android-alarm": "node --import tsx src/lib/__tests__/adhan-android-alarm.test.ts",
-    "test:ios-final-polish": "node --import tsx src/lib/__tests__/navigation-back.test.ts && node --import tsx src/lib/__tests__/prayer-time-12h.test.ts && node --import tsx src/lib/__tests__/auth-redirect.test.ts && node --import tsx src/lib/__tests__/immersive-chrome.test.ts && node --import tsx src/lib/__tests__/pre-testflight-non-device-polish.test.ts && node --import tsx src/lib/__tests__/version-check-soft-update.test.ts && node --import tsx src/lib/__tests__/prefetch-top-routes.test.ts",
+    "test:ios-final-polish": "node --import tsx src/lib/__tests__/navigation-back.test.ts && node --import tsx src/lib/__tests__/prayer-time-12h.test.ts && node --import tsx src/lib/__tests__/auth-redirect.test.ts && node --import tsx src/lib/__tests__/immersive-chrome.test.ts && node --import tsx src/lib/__tests__/pre-testflight-non-device-polish.test.ts && node --import tsx src/lib/__tests__/version-check-soft-update.test.ts && node --import tsx src/lib/__tests__/update-available-prompt-gate.test.ts && node --import tsx src/lib/__tests__/prefetch-top-routes.test.ts",
     "test:critical-path-select": "node lib/__tests__/critical-path-no-select-star.test.mjs",
     "test:bundle-budget": "node scripts/test-bundle-budget.mjs",
     "analyze": "ANALYZE=1 vite build --config vite.config.ts && node -e \"console.log('تقرير الحزمة: dist/bundle-stats.html')\"",
