@@ -16,10 +16,45 @@ function deferAfterPaint(cb: () => void, ms: number): () => void {
   return () => window.clearTimeout(id);
 }
 
+/** هيكل ناعم لـ «ابدأ من هنا» — بدون مربع أبيض فارغ */
+export function HomeStartHereSoftSkeleton() {
+  return (
+    <section
+      aria-label="ابدأ من هنا"
+      aria-busy="true"
+      className="home-start-here mj-home-lcp-ph__start-here mj-home-lcp-ph__start-here--soft"
+    >
+      <div className="hsh-header" aria-hidden="true">
+        <span className="hsh-eyebrow mj-home-lcp-ph__kicker skeleton-base">&nbsp;</span>
+        <span className="hsh-title mj-home-lcp-ph__section-title skeleton-base">&nbsp;</span>
+        <p className="hsh-lead mj-home-lcp-ph__lead skeleton-base">&nbsp;</p>
+        <div className="hsh-actions">
+          <span className="mj-home-lcp-ph__action skeleton-base" />
+          <span className="mj-home-lcp-ph__action skeleton-base" />
+        </div>
+      </div>
+      <ol className="hsh-steps" aria-hidden="true">
+        {Array.from({ length: 3 }).map((_, idx) => (
+          <li key={idx} className="hsh-step">
+            <span className="hsh-step__num" aria-hidden="true">
+              {idx + 1}
+            </span>
+            <div className="hsh-step__body">
+              <span className="mj-home-lcp-ph__step-title skeleton-base" />
+              <span className="mj-home-lcp-ph__step-desc skeleton-base" />
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
 export function HomeHeroLcp() {
   const greeting = resolveDailyContext().greeting;
-  const [showEyebrow, setShowEyebrow] = useState(false);
-  const [showActions, setShowActions] = useState(false);
+  // أظهر التحية والأزرار فورًا — تأخير 4ث كان يترك شعارًا فقط ومربعات فارغة.
+  const [showEyebrow, setShowEyebrow] = useState(true);
+  const [showActions, setShowActions] = useState(true);
   const [isFirstVisit] = useState(() => {
     try {
       return !hasSeenFirstVisitIntroSync() && localStorage.getItem("majlis-home-welcomed-v1") !== "1";
@@ -30,10 +65,26 @@ export function HomeHeroLcp() {
   const [continueHref, setContinueHref] = useState("/lessons");
 
   useEffect(() => {
-    return deferAfterPaint(() => {
+    let cancelled = false;
+    let clearDefer: (() => void) | undefined;
+    const reveal = () => {
+      if (cancelled) return;
       setShowEyebrow(true);
       setShowActions(true);
-    }, 4_000);
+    };
+    const onPainted = () => {
+      clearDefer?.();
+      clearDefer = deferAfterPaint(reveal, 80);
+    };
+    window.addEventListener("mj:app-painted", onPainted, { once: true });
+    window.addEventListener("app:first-paint", onPainted, { once: true });
+    clearDefer = deferAfterPaint(reveal, 320);
+    return () => {
+      cancelled = true;
+      clearDefer?.();
+      window.removeEventListener("mj:app-painted", onPainted);
+      window.removeEventListener("app:first-paint", onPainted);
+    };
   }, []);
 
   useEffect(() => {
@@ -77,11 +128,7 @@ export function HomeRestShell() {
       </div>
 
       <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
-        <section
-          aria-label="ابدأ من هنا"
-          aria-busy="true"
-          className="home-start-here mj-home-lcp-ph__start-here"
-        />
+        <HomeStartHereSoftSkeleton />
       </section>
 
       <section
@@ -92,6 +139,15 @@ export function HomeRestShell() {
       >
         <div className="m2030-band__head">
           <h2 className="m2030-band__title">ورد اليوم</h2>
+        </div>
+        <div className="home-daily-wird__grid" aria-hidden="true">
+          {Array.from({ length: 2 }).map((_, idx) => (
+            <article key={idx} className="home-daily-wird__card mj-card mj-home-lcp-ph__daily-card">
+              <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
+              <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
+              <div className="home-daily-wird__meta mj-home-lcp-ph__daily-meta skeleton-base" />
+            </article>
+          ))}
         </div>
       </section>
     </>

@@ -24,7 +24,9 @@
 }
 
 .mj-home-below-fold-ph {
-  min-height: 28rem;
+  min-height: 8rem;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 2.5%, transparent);
 }
 
 .mj-home-lcp-ph .page-hero-mj__content {
@@ -80,6 +82,26 @@
 
 .mj-home-lcp-ph__start-here {
   min-height: 28rem;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 3%, var(--surface, #fff));
+  padding: 1rem 1rem 1.15rem;
+  box-sizing: border-box;
+}
+
+.mj-home-lcp-ph__kicker,
+.mj-home-lcp-ph__section-title,
+.mj-home-lcp-ph__lead,
+.mj-home-lcp-ph__action,
+.mj-home-lcp-ph__step-title,
+.mj-home-lcp-ph__step-desc {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 9%, var(--surface, #fff));
+  border-radius: 0.55rem;
+}
+
+.mj-home-lcp-ph__daily-line,
+.mj-home-lcp-ph__daily-meta {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, var(--surface, #fff));
+  border-radius: 0.45rem;
 }
 
 .mj-home-lcp-ph__kicker,

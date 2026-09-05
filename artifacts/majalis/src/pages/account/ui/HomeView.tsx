@@ -6,6 +6,7 @@ import { HomeUniversalSearch } from "@/components/home/HomeUniversalSearch";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import "@/styles/components/home-brand-title.css";
 import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
+import { HomeStartHereSoftSkeleton } from "@/components/home/HomeHeroLcp";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { shouldShowFirstVisitIntro } from "@/lib/first-visit-intro-state";
 import "@/styles/m2030/home.css";
@@ -71,13 +72,7 @@ function deferAfterPaint(cb: () => void, ms: number): () => void {
 }
 
 function HomeStartHereSkeleton() {
-  return (
-    <section
-      aria-label="ابدأ من هنا"
-      aria-busy="true"
-      className="home-start-here mj-home-lcp-ph__start-here"
-    />
-  );
+  return <HomeStartHereSoftSkeleton />;
 }
 
 /** يؤجّل نص الخطوات بعد نافذة LCP (~5s) حتى لا يسرق LCP من h1 «سُنّة» */
@@ -88,7 +83,7 @@ function HomeStartHereGate() {
     let cancelled = false;
     const cancel = deferAfterPaint(() => {
       if (!cancelled) setShow(true);
-    }, 5_500);
+    }, 2_200);
     return () => {
       cancelled = true;
       cancel();
@@ -107,7 +102,7 @@ function HomeSearchGate() {
     let cancelled = false;
     const cancel = deferAfterPaint(() => {
       if (!cancelled) setShow(true);
-    }, 5_500);
+    }, 1_600);
     return () => {
       cancelled = true;
       cancel();
@@ -140,7 +135,7 @@ function HomeLiveNowGate() {
     let cancelled = false;
     const cancel = deferAfterPaint(() => {
       if (!cancelled) setShow(true);
-    }, 4_000);
+    }, 2_400);
     return () => {
       cancelled = true;
       cancel();
@@ -165,7 +160,7 @@ function HomeDailyWirdGate() {
     let cancelled = false;
     const cancel = deferAfterPaint(() => {
       if (!cancelled) setShow(true);
-    }, 2_500);
+    }, 1_200);
     return () => {
       cancelled = true;
       cancel();
@@ -198,7 +193,7 @@ function HomeBelowFoldGate() {
     const watch = () => {
       const el = document.getElementById("mj-home-below-fold");
       if (!el || typeof IntersectionObserver === "undefined") {
-        cancelFallback = deferAfterPaint(reveal, 12_000);
+        cancelFallback = deferAfterPaint(reveal, 2_800);
         return;
       }
       io = new IntersectionObserver(
@@ -208,11 +203,11 @@ function HomeBelowFoldGate() {
             io?.disconnect();
           }
         },
-        { rootMargin: "240px 0px" },
+        { rootMargin: "480px 0px" },
       );
       io.observe(el);
       // احتياطي بعيد — لا rIC حتى لا يُحمَّل تحت الطية أثناء قياس Lighthouse
-      cancelFallback = deferAfterPaint(reveal, 12_000);
+      cancelFallback = deferAfterPaint(reveal, 2_800);
     };
 
     const id = window.requestAnimationFrame(watch);
