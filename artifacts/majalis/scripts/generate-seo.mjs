@@ -394,12 +394,25 @@ function sanitizeJsonLd(value) {
 
 function dedupeLessons(rows) {
   const seen = new Set();
-  return rows.filter((row) => {
-    const key = row.external_key || row.id;
-    if (seen.has(key)) return false;
+  const out = [];
+  for (const row of rows) {
+    const courseKey = row.course_id ? `course:${row.course_id}` : "";
+    const key =
+      courseKey ||
+      [
+        "t",
+        String(row.title || "").trim(),
+        String(row.speaker_name || "").trim(),
+        String(row.mosque || "").trim(),
+        String(row.day_of_week || row.schedule || "").trim(),
+      ].join("|") ||
+      row.external_key ||
+      row.id;
+    if (seen.has(key)) continue;
     seen.add(key);
-    return true;
-  });
+    out.push(row);
+  }
+  return out;
 }
 
 function lessonDescription(row) {
