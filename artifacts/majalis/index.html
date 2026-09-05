@@ -351,55 +351,19 @@
       }
     </style>
     <style id="mj-splash-critical">
-      :root{
-        --mj-splash-bg-dark:#101614;
-        --mj-splash-bg-light:#F2F4F3;
-        --mj-splash-bg:var(--mj-splash-bg-light);
-        --mj-splash-ink:#123f2e;
-      }
-      html[data-theme="dark"]{
-        --mj-splash-bg:var(--mj-splash-bg-dark);
-        --mj-splash-ink:#a8d5c0;
-      }
-      html, body, #root { background-color: var(--mj-splash-bg); }
-      html.capacitor-native, html.capacitor-native body, html.capacitor-native #root { background-color: var(--mj-splash-bg); }
-
-      #mj-launch-splash{
-        position:fixed;
-        inset:0;
-        z-index:2147483000;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        background:var(--mj-splash-bg);
-        color:var(--mj-splash-ink);
-        pointer-events:none;
-        opacity:1;
-        transition:opacity 90ms ease;
-      }
-      #mj-launch-splash.mj-launch-splash--out{
-        opacity:0;
-      }
-      .mj-launch-splash__inner{
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        text-align:center;
-      }
-      .mj-launch-splash__title{
-        margin:0;
-        min-height:2.85rem;
-        font-family:"Amiri","MajlisAmiriFallback","Noto Naskh Arabic",serif;
-        font-size:clamp(1.85rem,8.5vw,2.35rem);
-        font-weight:400;
-        line-height:1.2;
-        color:var(--mj-splash-ink);
-      }
-      @media (prefers-reduced-motion: reduce){
-        #mj-launch-splash,
-        #mj-launch-splash.mj-launch-splash--out{ transition:none; }
-      }
-    </style>
+:root{--mj-splash-bg-light:#F2F4F3;--mj-splash-bg-dark:#101614;--mj-splash-bg:var(--mj-splash-bg-light);--mj-splash-ink:#123f2e}
+html[data-theme="dark"]{--mj-splash-bg:var(--mj-splash-bg-dark);--mj-splash-ink:#a8d5c0}
+html,body,#root,html.capacitor-native,html.capacitor-native body,html.capacitor-native #root{background:var(--mj-splash-bg)}
+#mj-launch-splash{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;background:var(--mj-splash-bg);color:var(--mj-splash-ink);pointer-events:none;opacity:1;transition:opacity .09s ease}
+#mj-launch-splash.mj-launch-splash--out{opacity:0}
+.mj-launch-splash__inner{display:grid;justify-items:center;gap:.75rem;text-align:center;padding:1rem}
+.mj-launch-splash__mark{padding:.35rem .85rem;border-radius:.9rem;border:1px solid color-mix(in srgb,var(--mj-splash-ink) 22%,transparent);background:color-mix(in srgb,var(--mj-splash-ink) 12%,transparent)}
+.mj-launch-splash__title{margin:0;font:400 clamp(1.35rem,5.5vw,1.65rem)/1.2 "Amiri","MajlisAmiriFallback","Noto Naskh Arabic",serif;color:var(--mj-splash-ink)}
+.mj-launch-splash__pulse{width:2.4rem;height:.18rem;border-radius:999px;background:color-mix(in srgb,var(--mj-splash-ink) 22%,transparent);overflow:hidden;position:relative}
+.mj-launch-splash__pulse::after{content:"";position:absolute;inset:0;width:40%;border-radius:inherit;background:var(--mj-splash-ink);animation:mj-sp .9s ease-in-out infinite}
+@keyframes mj-sp{from{transform:translateX(150%)}to{transform:translateX(-250%)}}
+@media (prefers-reduced-motion:reduce){#mj-launch-splash,#mj-launch-splash.mj-launch-splash--out{transition:none}.mj-launch-splash__pulse::after{animation:none;width:100%;opacity:.45}}
+</style>
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="سُنّة" />
@@ -493,10 +457,13 @@
     </script>
   </head>
   <body>
-    <!-- Startup Gate: كلمة سُنّة فقط — بلا زخرفة ولا حركة -->
+    <!-- Startup Gate: شعار صغير + شريط خفيف — بلا مربعات فارغة -->
     <div id="mj-launch-splash" aria-hidden="true">
       <div class="mj-launch-splash__inner">
-        <p class="mj-launch-splash__title" id="mj-launch-splash__title">سُنّة</p>
+        <div class="mj-launch-splash__mark" aria-hidden="true">
+          <p class="mj-launch-splash__title" id="mj-launch-splash__title">سُنّة</p>
+        </div>
+        <div class="mj-launch-splash__pulse" aria-hidden="true"></div>
       </div>
     </div>
     <!-- defer: لا يحجب أول رسم؛ الدخولية تُدار بعد parse مباشرة دون تأخير LCP -->

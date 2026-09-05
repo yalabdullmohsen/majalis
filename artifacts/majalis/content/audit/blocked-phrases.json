@@ -1,0 +1,28 @@
+{
+  "$comment": "عبارات تجريبية ظاهرة للمستخدم — لا تُطبَّق على شارات UI «قريبًا» المقصودة أو ملفات الاختبار",
+  "critical": [
+    { "pattern": "lorem ipsum", "flags": "i", "message": "نص تجريبي لاتيني ظاهر" },
+    { "pattern": "نص تجريبي", "flags": "i", "message": "نص تجريبي عربي ظاهر" },
+    { "pattern": "placeholder text", "flags": "i", "message": "نص placeholder ظاهر" },
+    { "pattern": "FIXME:", "flags": "", "message": "FIXME ظاهر في المحتوى" },
+    { "pattern": "TODO:\\s*(أضف|اكتب|محتوى|نص|here|content)", "flags": "i", "message": "TODO محتوى ظاهر للمستخدم" }
+  ],
+  "high": [
+    { "pattern": "قيد الإضافة", "flags": "", "message": "عبارة «قيد الإضافة» ظاهرة" },
+    { "pattern": "سيتم لاحقًا", "flags": "", "message": "عبارة تأجيل ظاهرة" },
+    { "pattern": "محتوى غير مكتمل", "flags": "", "message": "إقرار بنقص محتوى ظاهر" },
+    { "pattern": "coming soon", "flags": "i", "message": "coming soon ظاهر" },
+    { "pattern": "test content", "flags": "i", "message": "محتوى اختباري ظاهر" },
+    { "pattern": "xxx+\\s*$", "flags": "im", "message": "حشو xxx ظاهر" }
+  ],
+  "uiAllowedSoonPaths": [
+    "/kids",
+    "ركن الأطفال",
+    "comingSoon",
+    "isComingSoon",
+    "__tests__",
+    ".test.",
+    "gate.test",
+    "FORBIDDEN"
+  ]
+}

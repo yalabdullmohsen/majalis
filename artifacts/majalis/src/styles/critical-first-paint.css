@@ -258,10 +258,14 @@ html.app-booting .hus-field {
 .daily-wird-card,
 [data-testid="daily-wird-card"] {
   min-height: 28rem;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 3%, var(--surface, #fff));
+  border-radius: 1rem;
 }
 
 .mj-home-below-fold-ph {
-  min-height: 28rem;
+  min-height: 8rem;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 2.5%, transparent);
 }
 
 .mj-home-lcp-ph__search .hus-field,
@@ -322,3 +326,23 @@ html.app-booting .hus-field {
 }
 
 .mj-home-lcp-ph__hero-cta{display:inline-flex;align-items:center;justify-content:center;min-width:9.5rem;min-height:2.65rem;}
+
+/* لا انتقالات هيكل حتى اكتمال أول رسم — يمنع وميض/قفز عند أول دخول */
+html:not(.app-hydrated) .app-shell,
+html:not(.app-hydrated) .app-top-chrome,
+html:not(.app-hydrated) .bottom-nav,
+html:not(.app-hydrated) .bottom-nav--v2,
+html:not(.app-hydrated) .app-main,
+html:not(.app-hydrated) #main-content {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* ارتفاع بصري ثابت: svh/dvh مع متغير visualViewport عند التوفر */
+#root,
+.app-shell {
+  min-height: 100svh;
+  min-height: 100dvh;
+  min-height: var(--app-vvh, 100dvh);
+}
+
