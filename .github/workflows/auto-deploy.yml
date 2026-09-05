@@ -316,7 +316,7 @@ jobs:
             gh pr comment "$PRN" --body "$BODY"
           fi
 
-    notify-success:
+  notify-success:
     name: notify-success
     needs: [deploy, psi-gate]
     if: >
