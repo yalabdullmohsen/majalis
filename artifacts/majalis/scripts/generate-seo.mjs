@@ -2654,6 +2654,39 @@ ${linkList("روابط ذات صلة", [
   );
 }
 
+
+// موضوعات بوابة التوحيد — مسارات /tawhid/:slug
+const TAWHID_TOPIC_PAGES = [
+  { slug: "tawhid-issues", title: "التوحيد ومسائله", description: "أنواع التوحيد الثلاثة، الشرك الأكبر والأصغر، البدعة، ومسائل عقدية مهمة على منهج أهل السنة والجماعة." },
+  { slug: "aqeedah-foundations", title: "أصول العقيدة", description: "تعريف العقيدة ومصدر تلقيها وأركانها الإجمالية، مع بيان منهج السلف في الإيمان بلا تحريف ولا تعطيل." },
+  { slug: "wala-bara", title: "الولاء والبراء", description: "موالاة أهل الإيمان والبراءة من الشرك اعتقادًا، مع ضابط البر والعدل مع المسالمين كما قرره أهل السنة." },
+  { slug: "ahl-sunnah", title: "عقيدة أهل السنة والجماعة", description: "معالم منهج أهل السنة: التلقي من الوحي، الإيمان، الأسماء والصفات، الصحابة، القدر، والوسطية بين الفرق." },
+  { slug: "tawhid-types", title: "أقسام التوحيد", description: "توحيد الربوبية والألوهية والأسماء والصفات بأدلته، مع بيان أن توحيد العبادة هو أصل دعوة الرسل." },
+  { slug: "nawaaqid", title: "نواقض الإسلام", description: "مدخل منضبط إلى نواقض الإسلام مع ضوابط التكفير عند أهل السنة، والتحذير من الغلو أو الإرجاء." },
+];
+for (const topic of TAWHID_TOPIC_PAGES) {
+  addPage(
+    {
+      path: `/tawhid/${topic.slug}`,
+      title: topic.title,
+      description: topic.description,
+      keywords: [topic.title, "التوحيد", "العقيدة", "أهل السنة"],
+      ogType: "article",
+    },
+    {
+      parents: [{ name: "العقيدة والتوحيد", path: "/tawhid" }],
+      richBody: `<p>${escapeHtml(topic.description)}</p>
+${linkList("روابط ذات صلة", [
+  { name: "العقيدة والتوحيد", url: "/tawhid" },
+  { name: "أركان الإيمان", url: "/arkan-iman" },
+  { name: "الفرق والمذاهب", url: "/islamic-sects" },
+])}`,
+      priority: 0.75,
+      changefreq: "monthly",
+    },
+  );
+}
+
 // الأنبياء — ٢٥ نبياً من prophets-data.ts
 for (const p of PROPHETS) {
   addPage(
