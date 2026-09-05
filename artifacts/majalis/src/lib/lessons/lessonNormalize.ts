@@ -33,7 +33,16 @@ export function normalizeLessonSheikh(name: string): string {
 }
 
 export function normalizeLessonPlace(lesson: Pick<KuwaitLessonRecord, "mosque" | "region" | "governorate">): string {
-  return normalizeLessonKey([lesson.mosque, lesson.region, lesson.governorate].filter(Boolean).join(" "));
+  // اجعل المفتاح مستقرًا أمام لاحقات الدولة/المدينة وصيغ «ديوان:» المتفاوتة
+  // حتى لا تظهر نفس الجلسة مرتين لاختلاف طفيف في نص المكان.
+  // ملاحظة: \b لا يعمل مع العربية — نستخدم حدودًا صريحة بالمسافات/الفواصل.
+  const raw = [lesson.mosque, lesson.region, lesson.governorate]
+    .filter(Boolean)
+    .join(" ")
+    .replace(/^[دD]يوان\s*:?\s*/u, "")
+    .replace(/(?:^|[\s،,.:؛/|_-]+)(?:الكويت|كويت|kuwait)(?=$|[\s،,.:؛/|_-]+)/giu, " ")
+    .replace(/[،,.:؛]/g, " ");
+  return normalizeLessonKey(raw);
 }
 
 export function normalizeLessonDay(day: string): string {
