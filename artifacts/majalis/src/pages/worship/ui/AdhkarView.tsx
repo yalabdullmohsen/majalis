@@ -11,6 +11,7 @@ import { adhkarCatRedirectPath, hrefAdhkar, resolveAdhkarCategory } from "@/lib/
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
+import { ShareButtons } from "@/components/ContentActions";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { haptics } from "@/lib/haptics";
 import { markMorningAdhkarDone } from "@/lib/local-milestones";
@@ -433,6 +434,7 @@ export default function AdhkarPage() {
         </Suspense>
       )}
       <div className="px-4 pb-6 mt-4 adhkar-page-footer">
+        <ShareButtons title="الأذكار — سُنّة" url="https://www.ssunnah.com/adhkar" />
         <ExploreAlsoNav
           title="استكشف أيضًا"
           links={[

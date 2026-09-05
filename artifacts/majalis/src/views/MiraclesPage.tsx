@@ -15,7 +15,7 @@ import { safeLoadEffect } from "@/lib/safe-load";
 import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { ShareFaida } from "@/components/ShareFaida";
+import { ShareButtons } from "@/components/ContentActions";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { TopicPage } from "@/components/topic/TopicPage";
 import {
@@ -323,11 +323,6 @@ export default function MiraclesPage({
                       <BookOpen size={14} strokeWidth={2} aria-hidden="true" />
                       {isExpanded ? "إخفاء التفصيل" : "اقرأ التفصيل العلمي"}
                     </button>
-                    <ShareFaida
-                      variant="icons"
-                      title={item.title}
-                      url={`https://www.ssunnah.com/miracles#${encodeURIComponent(item.id)}`}
-                    />
                   </div>
 
                   {isAdmin && <AdminQuickEdit section="miracles" searchTerm={item.title} />}
@@ -338,6 +333,8 @@ export default function MiraclesPage({
         </AsyncDataView>
 
         {isAdmin && <AdminQuickEdit section="miracles" />}
+
+        <ShareButtons title="الإعجاز العلمي — سُنّة" url="https://www.ssunnah.com/miracles" />
 
         <ExploreAlsoNav
           title="استكشف أيضًا"

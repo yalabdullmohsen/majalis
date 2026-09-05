@@ -23,6 +23,7 @@ import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { HubCard } from "@/components/ui/HubCard";
 import { ExclusiveChoiceGroup } from "@/components/ui/ExclusiveChoiceGroup";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
+import { ShareButtons } from "@/components/ContentActions";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { CitationActionBar } from "@/components/citation/CitationActionBar";
@@ -1034,6 +1035,7 @@ export default function HadithPage() {
           </p>
           <HadithSection authenticityClass="sahih" embedded showGradeFilters />
         </section>
+        <ShareButtons title="الحديث الشريف — سُنّة" url="https://www.ssunnah.com/hadith" />
         <ExploreAlsoNav
           title="استكشف أيضًا"
           links={[

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { supabase } from "@/lib/supabase";
 import "@/styles/components/content-actions-rag.css";
-import { ShareFaida } from "@/components/ShareFaida";
+import { SectionShareActions } from "@/components/common/SectionShareActions";
 
 interface Props {
   contentType: string;
@@ -13,7 +13,7 @@ interface Props {
 
 const REPORT_TYPES = ["خطأ_علمي", "خطأ_إملائي", "محتوى_غير_لائق", "رابط_مكسور", "أخرى"] as const;
 
-// ShareButtons — مشاركة «فائدة من سُنّة» (Web Share · واتساب · نسخ).
+// ShareButtons — مشاركة «فائدة من سُنّة» (Web Share · واتساب · نسخ) في نهاية القسم فقط.
 
 export function ShareButtons(props: { title?: string; url?: string }) {
   const title =
@@ -21,11 +21,10 @@ export function ShareButtons(props: { title?: string; url?: string }) {
     (typeof document !== "undefined"
       ? document.title.replace(/\s*\|\s*سُنّة\s*$/, "").trim()
       : "سُنّة");
-  const url = props.url;
-  return <ShareFaida title={title} url={url} />;
+  return <SectionShareActions title={title || "سُنّة"} url={props.url} />;
 }
 
-export default function ContentActions({ contentType, contentId, shareTitle, shareUrl }: Props) {
+export default function ContentActions({ contentType, contentId }: Props) {
   const [, navigate] = useLocation();
   const [rating, setRating] = useState(0);
   const [bookmarked, setBookmarked] = useState(false);
@@ -117,8 +116,6 @@ export default function ContentActions({ contentType, contentId, shareTitle, sha
 
   return (
     <div className="ca-root">
-      <ShareButtons title={shareTitle} url={shareUrl} />
-
       <div className="ca-actions-row">
         <div className="ca-stars" role="group" aria-label="تقييم المحتوى">
           {[1, 2, 3, 4, 5].map((star) => (

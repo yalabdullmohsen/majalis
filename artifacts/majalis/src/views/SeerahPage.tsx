@@ -5,7 +5,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { Link } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
-import { ShareButton } from "@/components/ShareButton";
+import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import "@/styles/pages/seerah.css";
@@ -387,13 +387,6 @@ export default function SeerahPage() {
               </div>
             )}
 
-            <ShareButton
-              title={`السيرة النبوية، ${active.title}`}
-              text={`${active.title} (${active.year})\n${active.desc}`}
-              size="sm"
-              className="seerah-panel__share"
-            />
-
             {/* Navigation */}
             <div className="seerah-panel__nav">
               {activeIdx > 0 && (
@@ -417,6 +410,8 @@ export default function SeerahPage() {
             </div>
           </div>
         </div>
+
+        <ShareButtons title="السيرة النبوية — سُنّة" url="https://www.ssunnah.com/seerah" />
 
         <nav className="seerah-related" aria-label="موضوعات ذات صلة">
           <h2 className="seerah-related__title">موضوعات ذات صلة</h2>

@@ -1,12 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { Check, Copy, Flag, Share2, Star } from "lucide-react";
+import { useState } from "react";
+import { Flag, Star } from "lucide-react";
 import { Link } from "wouter";
-import { absoluteUrl } from "@/lib/site-config";
-import { copyShareText } from "@/lib/share-faida";
 import { truncateAtWord } from "@/lib/utils";
 import {
-  buildHadithShareText,
-  formatHadithGradeLabel,
   normalizeHadithSource,
   sanitizeHadithDisplay,
   summarizeHadithMatn,
@@ -50,12 +46,11 @@ function collectionBadgeClass(key: string | null): string {
 type Props = {
   item: HadithRecord;
   onExpand: (item: HadithRecord) => void;
-  detailHref?: string;
+  detailHref?: string; // reserved for section-end share URL
 };
 
-/** بطاقة حديث — متن مختصر، مصدر، حكم، مشاركة. */
-export function HadithCard({ item: h, onExpand, detailHref }: Props) {
-  const [copied, setCopied] = useState(false);
+/** بطاقة حديث — متن مختصر، مصدر، حكم (المشاركة في نهاية القسم فقط). */
+export function HadithCard({ item: h, onExpand }: Props) {
   const [saved, setSaved] = useState(() => {
     try {
       const raw = localStorage.getItem("majalis:hadith-saved");
@@ -65,8 +60,6 @@ export function HadithCard({ item: h, onExpand, detailHref }: Props) {
       return false;
     }
   });
-  const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  useEffect(() => () => { if (copyTimerRef.current) clearTimeout(copyTimerRef.current); }, []);
 
   const preview = summarizeHadithMatn(h, 200);
   const source = normalizeHadithSource(h.source_name, h.grade);
@@ -74,32 +67,7 @@ export function HadithCard({ item: h, onExpand, detailHref }: Props) {
   const reportTopic = h.title || preview.slice(0, 60) || "حديث نبوي شريف";
   const ariaLabel = `قراءة المزيد: ${h.title ?? preview.slice(0, 48)}`;
 
-  function handleCopy(e: React.MouseEvent) {
-    e.stopPropagation();
-    const citation = `${preview}\n\n— ${source}${h.hadith_number ? ` ${h.hadith_number}` : ""}\n${formatHadithGradeLabel(h.grade)}`;
-    navigator.clipboard.writeText(citation).then(() => {
-      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
-      setCopied(true);
-      copyTimerRef.current = setTimeout(() => setCopied(false), 2000);
-    });
-  }
 
-  async function handleShare(e: React.MouseEvent) {
-    e.stopPropagation();
-    const pageUrl = absoluteUrl(detailHref ?? `/hadith#${h.id}`);
-    const text = buildHadithShareText(h, pageUrl);
-    try {
-      if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
-        await navigator.share({ title: "سُنّة", text, url: pageUrl });
-        return;
-      }
-      await copyShareText(text);
-    } catch (err) {
-      if (!(err instanceof DOMException && err.name === "AbortError")) {
-        await copyShareText(text);
-      }
-    }
-  }
 
   function handleSave(e: React.MouseEvent) {
     e.stopPropagation();
@@ -197,24 +165,6 @@ export function HadithCard({ item: h, onExpand, detailHref }: Props) {
           title={saved ? "محفوظ" : "حفظ"}
         >
           <Star size={16} strokeWidth={2} className={saved ? "icon-star--filled" : undefined} aria-hidden="true" />
-        </button>
-        <button
-          type="button"
-          className="hadith-action-btn"
-          onClick={handleShare}
-          aria-label="مشاركة الحديث"
-          title="مشاركة"
-        >
-          <Share2 size={16} strokeWidth={2} aria-hidden="true" />
-        </button>
-        <button
-          type="button"
-          className="hadith-action-btn"
-          onClick={handleCopy}
-          aria-label={copied ? "تم النسخ" : "نسخ المتن"}
-          title="نسخ"
-        >
-          {copied ? <Check size={16} strokeWidth={2} aria-hidden="true" /> : <Copy size={16} strokeWidth={2} aria-hidden="true" />}
         </button>
         <Link
           href={`/contact?topic=${encodeURIComponent(reportTopic)}`}
