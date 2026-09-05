@@ -742,6 +742,10 @@
       "destination": "/index.html"
     },
     {
+      "source": "/tawhid/:path*",
+      "destination": "/index.html"
+    },
+    {
       "source": "/prophet-stories/:path*",
       "destination": "/index.html"
     },
