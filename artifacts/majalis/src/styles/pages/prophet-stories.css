@@ -456,6 +456,7 @@ html.dark .nb-table__row--clickable:hover td {
   border-radius: var(--ds-radius-full);
   background: var(--ps-emerald);
   color: #FFFFFF;
+  pointer-events: none;
 }
 
 .prophets-lux-empty {

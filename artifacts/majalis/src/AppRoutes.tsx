@@ -72,6 +72,7 @@ const SurahStoryDetailRoute = lazy(() =>
   }))
 );
 const TawhidPage = lazy(() => import("@/views/TawhidPage"));
+const TawhidTopicPage = lazy(() => import("@/views/TawhidTopicPage"));
 const DiscoverIslamPage = lazy(() => import("@/views/DiscoverIslamPage"));
 const DiscoverIslamQuestionsPage = lazy(() => import("@/views/DiscoverIslamQuestionsPage"));
 const DiscoverIslamQuestionDetailPage = lazy(() => import("@/views/DiscoverIslamQuestionDetailPage"));
@@ -576,6 +577,7 @@ export default function AppRoutes() {
       <Route path="/surah-stories"><Redirect to="/quran/surah-stories" /></Route>
       <Route path="/quran/tajweed"><Redirect to="/quran-hub/tajweed" /></Route>
       {/* الفقه الإسلامي الموحّد + السيرة النبوية */}
+      <Route path="/tawhid/:slug"><SafeLazyRoute component={TawhidTopicPage} /></Route>
       <Route path="/tawhid"><SafeLazyRoute component={TawhidPage} /></Route>
       <Route path="/aqidah"><Redirect to="/tawhid" /></Route>
       <Route path="/discover-islam"><SafeLazyRoute component={DiscoverIslamPage} /></Route>

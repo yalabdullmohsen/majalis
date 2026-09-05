@@ -135,6 +135,7 @@
   font-size: var(--mj-fs-tiny);
   font-weight: 700;
   line-height: 1.3;
+  pointer-events: none;
 }
 
 .hub-card__soon {
@@ -461,6 +462,7 @@ article ul li,
   font-family: var(--mj-ui);
   font-size: var(--mj-fs-tiny);
   font-weight: 700;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

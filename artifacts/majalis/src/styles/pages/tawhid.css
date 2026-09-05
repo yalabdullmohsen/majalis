@@ -152,6 +152,7 @@
   font-weight: 600;
   color: var(--twh-hub-clr, var(--mj-brand));
   letter-spacing: 0;
+  pointer-events: none;
 }
 .twh-hub-card--current .twh-hub-card__body { padding-top: 0.85rem; }
 html[data-theme="dark"] .twh-hub-card__current-tag {
