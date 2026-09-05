@@ -40,6 +40,21 @@ const payload = {
 await writeFile(resolve(distDir, "version.json"), JSON.stringify(payload, null, 2) + "\n", "utf8");
 console.log(`[version] wrote dist/version.json → ${payload.shortCommit} @ ${payload.builtAt}`);
 
+// build-meta for /healthz+/readyz (no secrets — short commit + builtAt only)
+await writeFile(
+  resolve(__dirname, "..", "lib", "build-meta.json"),
+  JSON.stringify({ commit: shortCommit, builtAt: payload.builtAt, service: "ssunnah" }) + "\n",
+  "utf8",
+);
+console.log(`[version] wrote lib/build-meta.json → ${shortCommit}`);
+
+const healthPayload = { ok: true, service: "ssunnah", commit: shortCommit, builtAt: payload.builtAt };
+await writeFile(resolve(distDir, "healthz.json"), JSON.stringify(healthPayload) + "\n", "utf8");
+await writeFile(resolve(distDir, "readyz.json"), JSON.stringify(healthPayload) + "\n", "utf8");
+await writeFile(resolve(distDir, "healthz"), JSON.stringify(healthPayload) + "\n", "utf8");
+await writeFile(resolve(distDir, "readyz"), JSON.stringify(healthPayload) + "\n", "utf8");
+console.log(`[version] wrote dist/healthz.json + dist/readyz.json → ${shortCommit}`);
+
 // Also emit dist/sw-version.js — a tiny classic script the Service Worker
 // (public/sw.js) loads via importScripts() to derive its cache names from
 // the ACTUAL deployed commit instead of a hand-maintained "v18"-style

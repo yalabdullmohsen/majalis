@@ -3,22 +3,27 @@
  * المصادر خارج النطاق تُستبعد من العرض مع excludedReason — دون حذف المصدر من البذور.
  */
 import { sheikhNameKey } from "@/lib/sheikh-name";
+import { looksLikePersonSpeaker } from "@/lib/lesson-speaker-guard";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
-export type LessonExclusionReason = "outside_kuwait";
+export type LessonExclusionReason = "outside_kuwait" | "invalid_speaker";
 
 const OUTSIDE_KUWAIT_SHEIKH_KEYS = new Set(
   [
-    "عبد الرزاق البدر",
-    "عبدالرزاق البدر",
+    // مشايخ خارج نطاق دروس الكويت المعتمدة للعرض (حتى لو وُجدت في البذور)
     "عبد الرزاق البدر",
     "عبدالرزاق البدر",
     "راغب السرجاني",
     "صالح الفوزان",
+    "صالح بن فوزان الفوزان",
+    "عبدالعزيز بن فوزان الفوزان",
     "عبد الكريم الخضير",
     "عبدالكريم الخضير",
     "ناصر العمر",
     "محمد العريفي",
+    "محمد الأمين الشنقيطي",
+    "محمد الحسن الددو",
+    "محمد الحسن بن الددو",
   ].map((n) => sheikhNameKey(n)),
 );
 
@@ -78,6 +83,8 @@ export function partitionKuwaitDisplayLessons(lessons: KuwaitLessonRecord[]): {
   for (const lesson of lessons) {
     if (isOutsideKuwaitLesson(lesson)) {
       excluded.push({ ...lesson, excludedReason: "outside_kuwait" });
+    } else if (!looksLikePersonSpeaker(lesson.sheikhName || "")) {
+      excluded.push({ ...lesson, excludedReason: "invalid_speaker" });
     } else {
       visible.push(lesson);
     }

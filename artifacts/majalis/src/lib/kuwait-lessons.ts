@@ -17,6 +17,7 @@ import {
 import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
 import { classifyWomenAttendance } from "@/lib/lesson-women-attendance";
 import { dedupeLessons } from "@/lib/lessons/lessonDeduper";
+import { resolveSafeSpeaker, dedupeLessonTitleSegments, looksLikePersonSpeaker } from "@/lib/lesson-speaker-guard";
 
 export type ActivityType = "درس" | "دورة";
 
@@ -181,7 +182,7 @@ function enrichScheduleFields(
  * عندما يطابق اللاحق يوماً أو وقتاً أو تسمية جلسة عامة — دون تخمين محتوى علمي.
  */
 export function cleanLessonDisplayTitle(title: string, linkedLessons?: string[]): string {
-  const raw = String(title || "").trim();
+  const raw = dedupeLessonTitleSegments(String(title || "").trim());
   if (!raw.includes(" — ")) return raw;
   const parts = raw.split(" — ").map((p) => p.trim()).filter(Boolean);
   if (parts.length < 2) return raw;
@@ -234,7 +235,7 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
   const partialLesson = enrichScheduleFields({
     id,
     title: cleanLessonDisplayTitle(row.title, linkedLessons),
-    sheikhName: stripSheikhHonorifics(rawSheikh) || rawSheikh,
+    sheikhName: resolveSafeSpeaker(stripSheikhHonorifics(rawSheikh) || rawSheikh, "") || (looksLikePersonSpeaker(rawSheikh) ? stripSheikhHonorifics(rawSheikh) : ""),
     organizerName: row.organizer_name ? stripSheikhHonorifics(row.organizer_name) : undefined,
     sheikhImage: row.sheikh_image_url || resolveLessonSheikhImage(row),
     lessonImage: resolveLessonPosterUrl(row.poster_image_url),
