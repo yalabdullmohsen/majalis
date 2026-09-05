@@ -2054,3 +2054,12 @@ html.dark .bottom-nav--v2 {
   background-color: var(--surface-app, #131A18) !important;
   opacity: 1 !important;
 }
+
+
+/* app-back hit-area guard */
+.global-back-btn,
+.floating-back-btn,
+[data-app-back="1"][data-back-variant="floating"] {
+  z-index: var(--z-fab, 220) !important;
+  pointer-events: auto !important;
+}

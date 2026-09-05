@@ -189,3 +189,15 @@ export const HOME_MORE_SECTIONS = filterNavItems([...HOME_MORE_SECTIONS_RAW]);
 
 /** PRIMARY_NAV kept for legacy compatibility */
 export const PRIMARY_NAV = PRIMARY_NAV_ITEMS;
+
+/* === unified back navigation re-exports === */
+export {
+  normalizeNavPath,
+  recordNavigationVisit,
+  getPreviousInternalRoute,
+  sectionAwareFallback,
+  registryParentFallback,
+  sectionRootEscape,
+  prepareInstantBackNavigation,
+  goBackOrFallback,
+} from "@/lib/navigation-back";

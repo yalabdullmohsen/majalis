@@ -15,7 +15,7 @@ const css = read("src/components/lobby/section-lobby.css");
 assert.match(lobby, /data-section-back="1"/, "القالب يحمل زر الرجوع");
 assert.match(lobby, /isTabRootPath/, "جذور التبويب تخفي الزر العائم");
 assert.match(lobby, /showFloatingBack/);
-assert.match(lobby, /goBackOrFallback/);
+assert.match(lobby, /AppBackButton|goBackOrFallback/);
 assert.match(lobby, /DirectionalIcon/);
 assert.match(css, /\.section-lobby__back[\s\S]*min-height:\s*44px/, "منطقة لمس ≥44px");
 assert.match(css, /\.section-lobby__back[\s\S]*min-width:\s*44px/);

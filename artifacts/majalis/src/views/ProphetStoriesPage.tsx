@@ -13,6 +13,7 @@ import { truncateAtWord } from "@/lib/utils";
 import { ScholarlyTrustBadge } from "@/components/ScholarlyTrustBadge";
 import { GraphRelatedRail } from "@/widgets/RelatedRail";
 import { navigateTo } from "@/lib/navigation-intent";
+import { goBackOrFallback } from "@/lib/navigation-back";
 import "@/styles/pages/prophet-stories.css";
 
 function knowledgeBodyBlocks(body: string): { title?: string; paragraphs: string[] }[] {
@@ -1078,7 +1079,7 @@ export default function ProphetStoriesPage({
   }, []);
 
   const backToList = useCallback(() => {
-    navigateTo("/prophets", { mode: "screen" });
+    goBackOrFallback(window.location.pathname || "/prophets", "/prophets");
   }, []);
 
   useEffect(() => {

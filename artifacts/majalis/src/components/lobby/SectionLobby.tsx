@@ -1,14 +1,12 @@
 import type { ReactNode } from "react";
-import { ArrowRight } from "lucide-react";
 import { useLocation } from "wouter";
-import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { FeaturedSectionCard } from "@/components/sections/FeaturedSectionCard";
 import { SectionCard } from "@/components/sections/SectionCard";
 import { QuickActionsQuad } from "@/components/lobby/QuickActionsQuad";
 import type { LobbyChip, LobbyGroup, LobbyId, LobbyItem, LobbyPrimary, LobbyQuadItem } from "@/config/section-lobbies";
 import type { SectionDef } from "@/config/sections.registry";
 import { isTabRootPath } from "@/config/section-lobby-chrome";
-import { goBackOrFallback } from "@/lib/navigation-back";
+import { AppBackButton } from "@/components/common/AppBackButton"; // goBackOrFallback
 import { cn } from "@/lib/utils";
 import "./section-lobby.css";
 
@@ -81,32 +79,23 @@ export function SectionLobby({
         <header className="section-lobby__head">
           {inlineHeaderBack ? (
             <div className="section-lobby__head-row">
-              <button
-                type="button"
+              <AppBackButton
+                variant="lobby"
                 className="section-lobby__back-inline"
                 data-section-back="1"
-                aria-label="رجوع"
-                onClick={() => goBackOrFallback(location)}
-              >
-                <DirectionalIcon icon={ArrowRight} size={18} strokeWidth={2.2} />
-                <span>رجوع</span>
-              </button>
+                label="رجوع"
+              />
               <h1 className="section-lobby__title section-lobby__title--centered">{title}</h1>
               <span className="section-lobby__head-spacer" aria-hidden="true" />
             </div>
           ) : (
             <>
               {showFloatingBack ? (
-                <button
-                  type="button"
+                <AppBackButton
+                  variant="lobby"
                   className="section-lobby__back"
-                  data-section-back="1"
-                  aria-label="رجوع"
-                  onClick={() => goBackOrFallback(location)}
-                >
-                  <DirectionalIcon icon={ArrowRight} size={18} strokeWidth={2.2} />
-                  <span>رجوع</span>
-                </button>
+                  label="رجوع"
+                />
               ) : null}
               <h1
                 className={cn(

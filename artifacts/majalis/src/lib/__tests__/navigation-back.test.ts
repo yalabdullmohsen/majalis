@@ -26,4 +26,11 @@ assert.equal(sectionAwareFallback("/fawaid/curated"), "/fawaid");
 assert.equal(sectionAwareFallback("/admin/users"), "/admin");
 assert.equal(sectionAwareFallback("/unknown-section"), "/");
 
+assert.equal(sectionAwareFallback("/prophet-stories/seerah"), "/prophet-stories");
+assert.equal(sectionAwareFallback("/prophets/adam"), "/prophets");
+assert.equal(sectionAwareFallback("/seerah"), "/prophets");
+assert.equal(sectionAwareFallback("/tawhid/asma"), "/tawhid");
+assert.equal(sectionAwareFallback("/miracles/topic"), "/miracles");
+assert.equal(sectionAwareFallback("/tarikh-islami/x"), "/tarikh-islami");
+
 console.log("navigation-back.test.ts: ok");

@@ -49,3 +49,6 @@ export function FloatingBackButton() {
 
 /** توافق مع الاستيرادات القديمة */
 export { FloatingBackButton as GlobalBackButton };
+
+/** المكوّن الموحّد للرجوع في الصفحات */
+export { AppBackButton } from "@/components/common/AppBackButton";
