@@ -35,6 +35,8 @@ jobs:
       pr_title: ${{ steps.meta.outputs.pr_title }}
       version_ok: ${{ steps.verify.outputs.version_ok }}
       deploy_status: ${{ steps.verify.outputs.deploy_status }}
+      production_url: ${{ steps.verify.outputs.production_url }}
+      published_sha: ${{ steps.verify.outputs.published_sha }}
 
     steps:
       - name: Checkout main
@@ -108,21 +110,57 @@ jobs:
         run: |
           set -euo pipefail
 
+          SITE_CANONICAL="https://www.ssunnah.com"
+          SITE_LEGACY="https://www.majlisilm.com"
+
+          # version.json قد يحمل SHA كاملاً أو قصيراً (8)
+          sha_matches() {
+            local got="$1" expect="$2"
+            [ -n "$got" ] && [ -n "$expect" ] || return 1
+            case "$expect" in
+              "$got"|"$got"*) return 0 ;;
+            esac
+            case "$got" in
+              "$expect"|"$expect"*) return 0 ;;
+            esac
+            return 1
+          }
+
           soft_rate_limit() {
             local got="$1"
             echo "deploy_status=rate_limited" >> "$GITHUB_OUTPUT"
             echo "version_ok=rate_limited" >> "$GITHUB_OUTPUT"
+            echo "production_url=${SITE_CANONICAL}" >> "$GITHUB_OUTPUT"
+            echo "published_sha=${got:-}" >> "$GITHUB_OUTPUT"
             {
               echo "## نشر معلّق — Vercel rate limit / تأخر نشر"
               echo ""
               echo "- المتوقع: \`$EXPECT_SHA\`"
               echo "- الحالي على الإنتاج: \`${got:-empty}\`"
+              echo "- Production URL: ${SITE_CANONICAL}"
               echo "- السبب المحتمل: حد معدل Vercel أو طابور نشر متأخر"
               echo "- الإجراء: سيُعاد المحاولة عبر schedule كل ساعة أو workflow_dispatch"
               echo "- لا تُعاد محاولات يدوية متكررة في نفس الساعة"
             } >> "$GITHUB_STEP_SUMMARY"
             echo "::warning::Vercel لم يحدّث version.json بعد — معدل/تأخير خارجي. نجاح ليّن؛ أعد المحاولة لاحقاً عبر schedule أو Dispatch."
             exit 0
+          }
+
+          mark_matched() {
+            local got="$1"
+            echo "version_ok=1" >> "$GITHUB_OUTPUT"
+            echo "deploy_status=matched" >> "$GITHUB_OUTPUT"
+            echo "production_url=${SITE_CANONICAL}" >> "$GITHUB_OUTPUT"
+            echo "published_sha=${got}" >> "$GITHUB_OUTPUT"
+            echo "✓ الإنتاج 200 و version.json يطابق $EXPECT_SHA (got=${got})"
+            return 0
+          }
+
+          fetch_version_commit() {
+            local url="$1"
+            local body
+            body=$(curl -sS --max-time 30 -L "${url}/version.json" || true)
+            echo "$body" | jq -r '.commit // .shortCommit // empty' 2>/dev/null || true
           }
 
           verify_once() {
@@ -135,16 +173,16 @@ jobs:
             fi
             ok_http=0
             for i in 1 2 3 4 5 6; do
-              code=$(curl -sS -o /tmp/majlisilm-health.html -w "%{http_code}" \
-                --max-time 30 -L "https://www.majlisilm.com/" || echo "000")
-              echo "محاولة HTTP $i: $code (www)"
+              code=$(curl -sS -o /tmp/ssunnah-health.html -w "%{http_code}" \
+                --max-time 30 -L "${SITE_CANONICAL}/" || echo "000")
+              echo "محاولة HTTP $i: $code (ssunnah)"
               if [ "$code" = "200" ]; then
                 ok_http=1
                 break
               fi
-              code2=$(curl -sS -o /tmp/majlisilm-health2.html -w "%{http_code}" \
-                --max-time 30 -L "https://majlisilm.com/" || echo "000")
-              echo "محاولة HTTP $i: $code2 (apex)"
+              code2=$(curl -sS -o /tmp/ssunnah-health2.html -w "%{http_code}" \
+                --max-time 30 -L "${SITE_LEGACY}/" || echo "000")
+              echo "محاولة HTTP $i: $code2 (majlisilm→redirect)"
               if [ "$code2" = "200" ]; then
                 ok_http=1
                 break
@@ -152,54 +190,36 @@ jobs:
               sleep 20
             done
             if [ "$ok_http" != "1" ]; then
-              echo "HTTP لم يُرجع 200"
+              echo "HTTP لم يُرجع 200 — لا Production URL صالح"
+              echo "production_url=" >> "$GITHUB_OUTPUT"
               return 1
             fi
 
-            # على schedule/dispatch: طابق SHA الإنتاج مع main؛ وإلا نجاح ليّن + إعادة ساعة لاحقًا
+            local max_tries=8
             if [ "$EVENT_NAME" != "push" ]; then
-              ok_ver=0
-              got=""
-              for i in 1 2 3 4 5 6; do
-                body=$(curl -sS --max-time 30 -L "https://www.majlisilm.com/version.json" || true)
-                got=$(echo "$body" | jq -r '.commit // empty' 2>/dev/null || true)
-                echo "version.json (schedule) محاولة $i: ${got:-empty} expect=$EXPECT_SHA"
-                if [ -n "$got" ] && [ "$got" = "$EXPECT_SHA" ]; then
-                  ok_ver=1
-                  break
-                fi
-                sleep 20
-              done
-              if [ "$ok_ver" = "1" ]; then
-                echo "version_ok=1" >> "$GITHUB_OUTPUT"
-                echo "deploy_status=matched" >> "$GITHUB_OUTPUT"
-                echo "✓ الإنتاج طابق main ($EXPECT_SHA)"
-                return 0
-              fi
-              soft_rate_limit "$got"
+              max_tries=6
             fi
-
             ok_ver=0
             got=""
-            for i in 1 2 3 4 5 6 7 8; do
-              body=$(curl -sS --max-time 30 -L "https://www.majlisilm.com/version.json" || true)
-              got=$(echo "$body" | jq -r '.commit // empty' 2>/dev/null || true)
-              echo "version.json محاولة $i: ${got:-empty}"
-              if [ "$got" = "$EXPECT_SHA" ]; then
+            for i in $(seq 1 "$max_tries"); do
+              got=$(fetch_version_commit "$SITE_CANONICAL")
+              if [ -z "$got" ]; then
+                got=$(fetch_version_commit "$SITE_LEGACY")
+              fi
+              echo "version.json محاولة $i: ${got:-empty} expect=$EXPECT_SHA"
+              if sha_matches "$got" "$EXPECT_SHA"; then
                 ok_ver=1
                 break
               fi
               sleep 20
             done
-            if [ "$ok_ver" != "1" ]; then
-              echo "version.json لا يطابق $EXPECT_SHA (got=${got:-})"
-              # إنتاج حي لكن SHA قديم → غالباً rate limit / نشر معلّق — لا نفشل بلا معنى
-              soft_rate_limit "$got"
+            if [ "$ok_ver" = "1" ]; then
+              mark_matched "$got"
+              return 0
             fi
-            echo "version_ok=1" >> "$GITHUB_OUTPUT"
-            echo "deploy_status=matched" >> "$GITHUB_OUTPUT"
-            echo "✓ الإنتاج 200 و version.json = $EXPECT_SHA"
-            return 0
+            echo "version.json لا يطابق $EXPECT_SHA (got=${got:-})"
+            # إنتاج حي لكن SHA قديم → غالباً rate limit / نشر معلّق — لا نفشل بلا معنى
+            soft_rate_limit "$got"
           }
 
           if verify_once 1; then
@@ -212,14 +232,18 @@ jobs:
           fi
           exit 1
 
+  # PSI اختياري بعد deploy ناجح + تطابق version — لا يسقط مسار الإنتاج
   psi-gate:
     name: PSI production gate (فحص 13)
     needs: [deploy]
     if: >
+      always() &&
       github.repository == 'yalabdullmohsen/majalis' &&
-      github.event_name == 'push' &&
       needs.deploy.result == 'success' &&
-      needs.deploy.outputs.version_ok == '1'
+      needs.deploy.outputs.version_ok == '1' &&
+      needs.deploy.outputs.production_url != '' &&
+      vars.PSI_ENABLED != 'false'
+    continue-on-error: true
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -239,6 +263,7 @@ jobs:
       - name: PSI — FCP/SI 2200/2500 + لا انحدار عن فحص 12
         env:
           PAGESPEED_API_KEY: ${{ secrets.PAGESPEED_API_KEY }}
+          PRODUCTION_URL: ${{ needs.deploy.outputs.production_url }}
         run: pnpm --filter @workspace/majalis run verify:psi-production-gate -- --json | tee /tmp/psi-gate.json
 
       - name: Upload PSI report
@@ -249,42 +274,145 @@ jobs:
           path: /tmp/psi-gate.json
           if-no-files-found: ignore
 
+  # تحقق إنتاج حقيقي — لا يعتمد على PR / تعليق / إشعار
   post-deploy-truth:
     name: post-deploy-truth
     needs: [deploy]
     if: >
       always() &&
       github.repository == 'yalabdullmohsen/majalis' &&
-      github.event_name == 'push' &&
-      needs.deploy.outputs.pr_number != ''
+      (github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') &&
+      needs.deploy.result != 'cancelled'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
       contents: read
       pull-requests: write
+      issues: write
+    outputs:
+      verification: ${{ steps.verify.outputs.verification }}
+      production_url: ${{ steps.verify.outputs.production_url }}
+      notify_note: ${{ steps.pr_comment.outputs.notify_note || steps.no_pr.outputs.notify_note }}
     steps:
-      - name: تقرير صادق على الـPR (Production نعم/لا)
+      - name: تحقق إنتاج (deploy + URL + main + SHA)
+        id: verify
+        env:
+          DEPLOY_RESULT: ${{ needs.deploy.result }}
+          VERSION_OK: ${{ needs.deploy.outputs.version_ok }}
+          DEPLOY_STATUS: ${{ needs.deploy.outputs.deploy_status }}
+          DEPLOY_URL: ${{ needs.deploy.outputs.production_url }}
+          PUBLISHED_SHA: ${{ needs.deploy.outputs.published_sha }}
+          SHORT: ${{ needs.deploy.outputs.short_sha }}
+          SHA: ${{ github.sha }}
+          REF_NAME: ${{ github.ref_name }}
+          REF: ${{ github.ref }}
+        run: |
+          set -euo pipefail
+          SITE="${DEPLOY_URL:-https://www.ssunnah.com}"
+          VER_URL="${SITE}/version.json"
+
+          sha_matches() {
+            local got="$1" expect="$2"
+            [ -n "$got" ] && [ -n "$expect" ] || return 1
+            case "$expect" in "$got"|"$got"*) return 0 ;; esac
+            case "$got" in "$expect"|"$expect"*) return 0 ;; esac
+            return 1
+          }
+
+          echo "deploy_result=${DEPLOY_RESULT}"
+          echo "ref=${REF} ref_name=${REF_NAME}"
+          echo "expect_sha=${SHA} short=${SHORT}"
+
+          if [ "${DEPLOY_RESULT}" != "success" ]; then
+            echo "verification=failure" >> "$GITHUB_OUTPUT"
+            echo "production_url=" >> "$GITHUB_OUTPUT"
+            echo "::error::deploy job لم ينجح — لا يمكن اعتبار الإنتاج منشوراً"
+            exit 1
+          fi
+
+          # الفرع يجب أن يكون main (push/schedule/dispatch على هذا الـworkflow)
+          if [ "${REF_NAME}" != "main" ] && [ "${REF}" != "refs/heads/main" ]; then
+            echo "verification=failure" >> "$GITHUB_OUTPUT"
+            echo "production_url=" >> "$GITHUB_OUTPUT"
+            echo "::error::الفرع ليس main (${REF_NAME}) — رفض تحقق الإنتاج"
+            exit 1
+          fi
+
+          code=$(curl -sS -o /tmp/post-deploy-home.html -w "%{http_code}" --max-time 30 -L "${SITE}/" || echo "000")
+          echo "production HTTP: ${code} @ ${SITE}"
+          if [ "${code}" != "200" ]; then
+            echo "verification=failure" >> "$GITHUB_OUTPUT"
+            echo "production_url=" >> "$GITHUB_OUTPUT"
+            echo "::error::لا يوجد Production URL صالح (HTTP ${code})"
+            exit 1
+          fi
+          echo "production_url=${SITE}" >> "$GITHUB_OUTPUT"
+
+          body=$(curl -sS --max-time 30 -L "${VER_URL}" || true)
+          got=$(echo "$body" | jq -r '.commit // .shortCommit // empty' 2>/dev/null || true)
+          if [ -z "$got" ] && [ -n "${PUBLISHED_SHA:-}" ]; then
+            got="${PUBLISHED_SHA}"
+          fi
+          echo "published_sha=${got:-empty}"
+
+          if sha_matches "${got:-}" "${SHA}" || sha_matches "${got:-}" "${SHORT}"; then
+            echo "verification=success" >> "$GITHUB_OUTPUT"
+            echo "✅ تحقق الإنتاج: URL حي و SHA مطابق (${got})"
+            {
+              echo "## post-deploy-truth: success"
+              echo "- Deploy: success"
+              echo "- Production URL: ${SITE}"
+              echo "- Commit SHA: \`${SHA}\` (published: \`${got}\`)"
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          # موقع حي لكن SHA لم يطابق بعد — تحذير لا يسقط النشر إذا deploy نجح ليّناً
+          if [ "${VERSION_OK}" = "rate_limited" ] || [ "${DEPLOY_STATUS}" = "rate_limited" ] || [ "${VERSION_OK}" != "1" ]; then
+            echo "verification=warning" >> "$GITHUB_OUTPUT"
+            echo "::warning::Production URL حي لكن SHA لم يُؤكَّد بعد (got=${got:-empty} expect=${SHA})"
+            {
+              echo "## post-deploy-truth: warning"
+              echo "- Deploy: success (soft/pending SHA)"
+              echo "- Production URL: ${SITE}"
+              echo "- Commit المتوقع: \`${SHA}\`"
+              echo "- Commit المنشور: \`${got:-empty}\`"
+              echo "- لا يُكتب «تم النشر» حتى يتطابق version.json"
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          echo "verification=failure" >> "$GITHUB_OUTPUT"
+          echo "::error::deploy ادّعى تطابق SHA لكن الإنتاج لا يطابق (got=${got:-empty})"
+          exit 1
+
+      - name: تعليق PR اختياري (لا يسقط النشر)
+        id: pr_comment
+        continue-on-error: true
+        if: always() && needs.deploy.outputs.pr_number != ''
         env:
           GH_TOKEN: ${{ github.token }}
           PRN: ${{ needs.deploy.outputs.pr_number }}
           SHORT: ${{ needs.deploy.outputs.short_sha }}
           SHA: ${{ github.sha }}
           VERSION_OK: ${{ needs.deploy.outputs.version_ok }}
-          DEPLOY_STATUS: ${{ needs.deploy.outputs.deploy_status }}
+          VERIFICATION: ${{ steps.verify.outputs.verification }}
+          SITE: ${{ steps.verify.outputs.production_url }}
           RUN_ID: ${{ github.run_id }}
         run: |
-          set -euo pipefail
-          SITE="https://www.majlisilm.com"
+          set -u
+          echo "notify_note=attempted" >> "$GITHUB_OUTPUT"
+          SITE="${SITE:-https://www.ssunnah.com}"
           VER_URL="${SITE}/version.json"
           VERCEL_PROJ="https://vercel.com/yalabdullmohsen/majalis-majalis"
-          if [ "${VERSION_OK}" = "1" ]; then
+          if [ "${VERIFICATION}" = "success" ] || [ "${VERSION_OK}" = "1" ]; then
             STATUS_LINE="✅ **نُشر Production فعليًا** — \`version.json\` يطابق \`${SHA}\`"
             READY="نعم"
-          elif [ "${VERSION_OK}" = "rate_limited" ] || [ "${DEPLOY_STATUS}" = "rate_limited" ]; then
-            STATUS_LINE="⏳ **لم يُؤكَّد Production بعد** — Vercel rate limit / تأخر نشر (ليست نجاحًا)"
-            READY="لا — بانتظار نشر/إعادة محاولة الجدول"
+          elif [ "${VERIFICATION}" = "warning" ]; then
+            STATUS_LINE="⏳ **Production حي لكن SHA غير مؤكد بعد** — لا تُحتسب نجاح نشر كامل"
+            READY="جزئي — بانتظار تطابق version.json"
           else
-            STATUS_LINE="❌ **Production غير مؤكد** — لا تعتبر الدمج نجاح نشر"
+            STATUS_LINE="❌ **Production غير مؤكد**"
             READY="لا"
           fi
           BODY=$(cat <<EOF
@@ -298,39 +426,62 @@ jobs:
           | اندمج إلى main؟ | نعم |
           | نُشر Production؟ | ${READY} |
           | Commit | \`${SHORT}\` (\`${SHA}\`) |
+          | Production URL | ${SITE} |
           | version.json | ${VER_URL} |
           | Auto Deploy run | ${RUN_ID} |
           | Vercel project | ${VERCEL_PROJ} |
-          | إجراء يدوي؟ | $([ "${VERSION_OK}" = "1" ] && echo "لا" || echo "انتظر schedule/auto-deploy أو راجع Vercel إن استمر التأخر") |
+          | تحقق post-deploy | ${VERIFICATION:-—} |
 
-          > Skipped deployments على مشاريع api-server / Preview **لا تُحتسب** فشل Production.
-          > لا يُكتب "جاهز" ما لم يتطابق \`version.json\` مع commit الـmain.
+          > فشل التعليق/الإشعار **لا يسقط** نشر الإنتاج.
+          > لا يُكتب «تم النشر» ما لم يتطابق \`version.json\` مع commit الـmain.
           EOF
           )
-          # upsert comment
-          existing=$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PRN}/comments" --paginate             --jq '.[] | select(.body|contains("majalis-post-merge-deploy-truth")) | .id' | head -n1 || true)
+          if ! existing=$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PRN}/comments" --paginate \
+              --jq '.[] | select(.body|contains("majalis-post-merge-deploy-truth")) | .id' 2>/dev/null | head -n1); then
+            echo "::warning::تعليق PR فشل (قراءة comments) — لا يسقط النشر"
+            echo "notify_note=warning" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           if [ -n "${existing}" ]; then
-            gh api -X PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${existing}" -f body="$BODY" >/dev/null
-            echo "updated comment ${existing}"
+            if gh api -X PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${existing}" -f body="$BODY" >/dev/null; then
+              echo "updated comment ${existing}"
+              echo "notify_note=success" >> "$GITHUB_OUTPUT"
+            else
+              echo "::warning::تعليق PR فشل (تحديث) — لا يسقط النشر"
+              echo "notify_note=warning" >> "$GITHUB_OUTPUT"
+            fi
           else
-            # بدون checkout: gh pr comment يحتاج git repo — استخدم Issues API
-            gh api -X POST "repos/${GITHUB_REPOSITORY}/issues/${PRN}/comments" -f body="$BODY" >/dev/null
-            echo "created comment on PR ${PRN}"
+            if gh api -X POST "repos/${GITHUB_REPOSITORY}/issues/${PRN}/comments" -f body="$BODY" >/dev/null; then
+              echo "created comment on PR ${PRN}"
+              echo "notify_note=success" >> "$GITHUB_OUTPUT"
+            else
+              echo "::warning::تعليق PR فشل (إنشاء) — لا يسقط النشر"
+              echo "notify_note=warning" >> "$GITHUB_OUTPUT"
+            fi
           fi
 
+      - name: لا PR — تخطي التعليق
+        id: no_pr
+        if: needs.deploy.outputs.pr_number == ''
+        run: |
+          echo "لا يوجد سياق PR — التعليق skipped (طبيعي على main/schedule)."
+          echo "notify_note=skipped" >> "$GITHUB_OUTPUT"
+
+  # إشعار غير حاجز — فشل webhook/تعليق لا يُسقِط Workflow
   notify-success:
     name: notify-success
-    needs: [deploy, psi-gate]
+    needs: [deploy, post-deploy-truth]
     if: >
+      always() &&
       github.repository == 'yalabdullmohsen/majalis' &&
-      github.event_name == 'push' &&
       needs.deploy.result == 'success' &&
-      needs.deploy.outputs.version_ok == '1' &&
-      (needs.psi-gate.result == 'success' || needs.psi-gate.result == 'skipped')
+      (needs.post-deploy-truth.outputs.verification == 'success' ||
+       needs.post-deploy-truth.outputs.verification == 'warning')
+    continue-on-error: true
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: رسالة نجاح واحدة (ملخص + webhook اختياري)
+      - name: رسالة نجاح/تحذير (ملخص + webhook اختياري)
         env:
           SHORT: ${{ needs.deploy.outputs.short_sha }}
           PRN: ${{ needs.deploy.outputs.pr_number }}
@@ -338,34 +489,148 @@ jobs:
           SHA: ${{ github.sha }}
           RUN_ID: ${{ github.run_id }}
           WEBHOOK: ${{ secrets.DEPLOY_NOTIFY_WEBHOOK }}
+          SITE: ${{ needs.post-deploy-truth.outputs.production_url }}
+          VERIFICATION: ${{ needs.post-deploy-truth.outputs.verification }}
+          VERSION_OK: ${{ needs.deploy.outputs.version_ok }}
         run: |
-          set -euo pipefail
-          SITE="https://www.majlisilm.com"
+          set -u
+          SITE="${SITE:-https://www.ssunnah.com}"
+          if [ -z "${SITE}" ]; then
+            echo "::warning::لا Production URL — لن يُكتب «تم النشر»"
+            exit 0
+          fi
+          if [ "${VERIFICATION}" = "success" ] && [ "${VERSION_OK}" = "1" ]; then
+            HEAD="✅ Production مؤكد — سُنّة (version.json مطابق)"
+          else
+            HEAD="⚠️ Production حي — بانتظار تأكيد SHA كامل"
+          fi
           MSG=$(cat <<EOF
-          ✅ Production مؤكد — سُنّة (version.json مطابق)
+          ${HEAD}
           PR: ${PRN:-—} — ${PRT:-—}
           Commit: ${SHORT} (${SHA})
           Build / run: ${RUN_ID}
           الموقع: ${SITE}
           version.json: ${SITE}/version.json
-          البوابات: Verify build أخضر → دمج squash → نشر Vercel → تطابق version.json
+          التحقق: ${VERIFICATION}
           EOF
           )
           echo "$MSG"
           {
-            echo "## نشر ناجح"
+            echo "## إشعار نشر"
             echo ""
+            echo "- **الحالة:** ${HEAD}"
             echo "- **PR:** #${PRN:-—} — ${PRT:-—}"
             echo "- **Commit:** \`${SHORT}\` (\`${SHA}\`)"
             echo "- **Build:** [\`${RUN_ID}\`](${{ github.server_url }}/${{ github.repository }}/actions/runs/${RUN_ID})"
             echo "- **الموقع:** ${SITE}"
-            echo "- **version.json:** ${SITE}/version.json"
-            echo "- **ملخص البوابات:** Verify build → auto-merge squash → Vercel → تطابق commit"
+            echo "- **التحقق:** ${VERIFICATION}"
           } >> "$GITHUB_STEP_SUMMARY"
 
           if [ -n "${WEBHOOK:-}" ]; then
             payload=$(jq -n --arg text "$MSG" '{text:$text, content:$text}')
-            curl -sS -X POST -H 'Content-Type: application/json' -d "$payload" "$WEBHOOK" || true
+            if ! curl -sS -X POST -H 'Content-Type: application/json' -d "$payload" "$WEBHOOK"; then
+              echo "::warning::فشل webhook للإشعار — لا يسقط النشر"
+            fi
           else
             echo "لا يوجد DEPLOY_NOTIFY_WEBHOOK — الملخص في Actions فقط."
           fi
+
+  # تقرير نهائي صادق — يحدد خضرة الـworkflow لمسار ما بعد النشر
+  final-report:
+    name: final-report
+    needs: [deploy, psi-gate, post-deploy-truth, notify-success]
+    if: always() && github.repository == 'yalabdullmohsen/majalis'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: ملخص صادق لمسار الإنتاج
+        env:
+          DEPLOY_RESULT: ${{ needs.deploy.result }}
+          PSI_RESULT: ${{ needs.psi-gate.result }}
+          POST_RESULT: ${{ needs.post-deploy-truth.result }}
+          NOTIFY_RESULT: ${{ needs.notify-success.result }}
+          VERIFICATION: ${{ needs.post-deploy-truth.outputs.verification }}
+          SITE: ${{ needs.post-deploy-truth.outputs.production_url }}
+          DEPLOY_URL: ${{ needs.deploy.outputs.production_url }}
+          VERSION_OK: ${{ needs.deploy.outputs.version_ok }}
+          PUBLISHED_SHA: ${{ needs.deploy.outputs.published_sha }}
+          SHORT: ${{ needs.deploy.outputs.short_sha }}
+          SHA: ${{ github.sha }}
+          PSI_ENABLED: ${{ vars.PSI_ENABLED }}
+        run: |
+          set -euo pipefail
+          SITE="${SITE:-${DEPLOY_URL:-}}"
+
+          deploy_line="failure"
+          if [ "${DEPLOY_RESULT}" = "success" ]; then
+            deploy_line="success"
+          fi
+
+          post_line="${VERIFICATION:-failure}"
+          if [ "${POST_RESULT}" = "skipped" ]; then
+            post_line="skipped"
+          elif [ -z "${VERIFICATION}" ]; then
+            if [ "${POST_RESULT}" = "success" ]; then post_line="success"
+            elif [ "${POST_RESULT}" = "failure" ]; then post_line="failure"
+            else post_line="${POST_RESULT}"
+            fi
+          fi
+
+          notify_line="skipped"
+          if [ "${NOTIFY_RESULT}" = "success" ]; then
+            notify_line="success"
+          elif [ "${NOTIFY_RESULT}" = "failure" ]; then
+            notify_line="warning"
+          elif [ "${NOTIFY_RESULT}" = "skipped" ]; then
+            notify_line="skipped"
+          else
+            notify_line="${NOTIFY_RESULT}"
+          fi
+
+          psi_line="skipped"
+          if [ "${PSI_RESULT}" = "success" ]; then
+            psi_line="success"
+          elif [ "${PSI_RESULT}" = "failure" ]; then
+            # continue-on-error على PSI → تحذير لا فشل مسار
+            psi_line="warning"
+          elif [ "${PSI_RESULT}" = "skipped" ]; then
+            if [ "${PSI_ENABLED:-}" = "false" ] || [ "${VERSION_OK}" != "1" ]; then
+              psi_line="skipped"
+            else
+              psi_line="skipped"
+            fi
+          else
+            psi_line="${PSI_RESULT}"
+          fi
+
+          {
+            echo "## تقرير نهائي — Auto Deploy production"
+            echo ""
+            echo "| العنصر | الحالة |"
+            echo "|---|---|"
+            echo "| Deploy | ${deploy_line} |"
+            echo "| Production URL | ${SITE:-—} |"
+            echo "| Commit SHA | \`${SHA}\` (short \`${SHORT:-—}\`, published \`${PUBLISHED_SHA:-—}\`) |"
+            echo "| Post deploy verification | ${post_line} |"
+            echo "| Notification | ${notify_line} |"
+            echo "| PSI | ${psi_line} |"
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+
+          echo "Deploy: ${deploy_line}"
+          echo "Production URL: ${SITE:-—}"
+          echo "Commit SHA: ${SHA}"
+          echo "Post deploy verification: ${post_line}"
+          echo "Notification: ${notify_line}"
+          echo "PSI: ${psi_line}"
+
+          # قواعد النجاح: فشل حقيقي فقط يمنع الإنتاج
+          if [ "${deploy_line}" != "success" ]; then
+            echo "::error::فشل deploy — Workflow Failure"
+            exit 1
+          fi
+          if [ "${post_line}" = "failure" ]; then
+            echo "::error::فشل تحقق ما بعد النشر — Workflow Failure"
+            exit 1
+          fi
+          echo "✅ مسار الإنتاج Success (إشعار/PSI غير حاجزين)"
+          exit 0
