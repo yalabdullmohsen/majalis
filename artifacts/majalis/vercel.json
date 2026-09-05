@@ -495,34 +495,19 @@
     },
     {
       "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "ssunnah.com"
-        }
-      ],
+      "has": [{"type": "host", "value": "ssunnah.com"}],
       "destination": "https://www.ssunnah.com/:path*",
       "permanent": true
     },
     {
       "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "majlisilm.com"
-        }
-      ],
+      "has": [{"type": "host", "value": "majlisilm.com"}],
       "destination": "https://www.ssunnah.com/:path*",
       "permanent": true
     },
     {
       "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.majlisilm.com"
-        }
-      ],
+      "has": [{"type": "host", "value": "www.majlisilm.com"}],
       "destination": "https://www.ssunnah.com/:path*",
       "permanent": true
     },
@@ -900,10 +885,6 @@
         {
           "key": "Content-Security-Policy",
           "value": "default-src 'self'; script-src 'self' 'sha256-0OAC0iW6oqUDLWPZsCwyCPYTk/OMN15nxx3sc9K7kGk=' 'sha256-X6dm0g5wcU3v5vEPX+3J13h55AtCl7fXeijk5NXE9bM=' 'sha256-An6M4c9eW/HdAQbjnYOKxO/Xfou4R11AvCR8sBvSKUw=' 'sha256-zx29bupCX8cLrxa2tG1Jl1iU7ZcnbkfS5RnFoDd8oJE=' 'sha256-BHvT1ehiatDn/6+/2D8J9nhlIToTY8jMYax+25J/26c=' https://cdn.jsdelivr.net https://platform.twitter.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob: https://everyayah.com https://www.everyayah.com https://cdn.islamic.network https://*.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.alquran.cloud https://api.quran.com https://api.aladhan.com https://everyayah.com https://www.everyayah.com https://cdn.islamic.network https://*.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; frame-src 'self' https://platform.twitter.com https://syndication.twitter.com https://www.google.com https://maps.google.com https://www.youtube.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
-        },
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://www.ssunnah.com"
         }
       ]
     },
