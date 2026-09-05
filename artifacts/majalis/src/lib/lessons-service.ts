@@ -54,13 +54,22 @@ function readPersistedLessons(): FetchLessonsResult | null {
 }
 
 function writePersistedLessons(result: FetchLessonsResult) {
-  try {
-    localStorage.setItem(
-      PERSIST_KEY,
-      JSON.stringify({ ...result, savedAt: Date.now() }),
-    );
-  } catch {
-    /* quota */
+  const persist = () => {
+    try {
+      localStorage.setItem(
+        PERSIST_KEY,
+        JSON.stringify({ ...result, savedAt: Date.now() }),
+      );
+    } catch {
+      /* quota */
+    }
+  };
+  // بعد أول إطار — لا ننافس first paint
+  const w = typeof window !== "undefined" ? window : null;
+  if (w && typeof w.requestIdleCallback === "function") {
+    w.requestIdleCallback(() => persist(), { timeout: 2500 });
+  } else {
+    setTimeout(persist, 0);
   }
 }
 

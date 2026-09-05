@@ -1,11 +1,10 @@
 {
   "version": 1,
-  "total": 97,
-  "generatedAt": "2026-07-30T04:47:35.402Z",
   "chunks": [
     {
       "file": "chunk-000.json",
-      "count": 97
+      "count": 83
     }
-  ]
+  ],
+  "total": 83
 }

@@ -150,9 +150,8 @@ export async function buildLessonsSeed(): Promise<LessonSeedRow[]> {
     };
   }
 
-  const fromAds = lessonAds.flatMap((ad) =>
-    ad.sessions.map((_session, idx) => rowFromAdSession(ad, idx)),
-  );
+  // بطاقة واحدة لكل إعلان/دورة — الجلسات تُلخَّص في session_count وlinked_titles
+  const fromAds = lessonAds.map((ad) => rowFromAdSession(ad, 0));
   const fromCatalog = buildCatalogLessonRows();
   return [...fromAds, ...fromCatalog];
 }
