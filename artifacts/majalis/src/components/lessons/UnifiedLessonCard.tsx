@@ -1,13 +1,10 @@
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 import {
-  buildLessonCopyText,
-  buildLessonShareUrl,
   downloadUnifiedCalendar,
   openLessonExternalUrl,
   prominenceClass,
-  shareLesson,
   type UnifiedLesson,
 } from "@/lib/unified-lesson-card";
 import { cleanDisplayText } from "@/lib/display-text";
@@ -67,8 +64,6 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
   registered,
   onToggleRegister,
 }: Props) {
-  const [copied, setCopied] = useState(false);
-  const [linkCopied, setLinkCopied] = useState(false);
   const scheduleTime = lesson.scheduleTime || lesson.time;
   const scheduleConfirmed = hasConfirmedLessonSchedule(lesson.day || "", scheduleTime || "");
   const [statusLabel, setStatusLabel] = useState(
@@ -120,26 +115,6 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
       window.clearInterval(timer);
     };
   }, [lesson.day, scheduleTime, lesson.featuredHomeStatus, scheduleConfirmed]);
-
-  const handleCopy = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(buildLessonCopyText(lesson));
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* silent */
-    }
-  }, [lesson]);
-
-  const handleCopyLink = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(buildLessonShareUrl(lesson));
-      setLinkCopied(true);
-      setTimeout(() => setLinkCopied(false), 2000);
-    } catch {
-      /* silent */
-    }
-  }, [lesson]);
 
   const typeKind = kindBadge(lesson);
   const delivery = useMemo(
@@ -270,27 +245,6 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
                 }}
                 className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
               />
-              <button
-                type="button"
-                className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
-                onClick={handleCopyLink}
-              >
-                {linkCopied ? "تم النسخ" : "نسخ الرابط"}
-              </button>
-              <button
-                type="button"
-                className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
-                onClick={handleCopy}
-              >
-                {copied ? "تم النسخ" : "نسخ البيانات"}
-              </button>
-              <button
-                type="button"
-                className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
-                onClick={() => void shareLesson(lesson)}
-              >
-                مشاركة
-              </button>
               {lesson.streamUrl ? (
                 <button
                   type="button"

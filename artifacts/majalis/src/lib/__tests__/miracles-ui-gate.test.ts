@@ -1,5 +1,5 @@
 /**
- * بوابة — واجهة الإعجاز العلمي: بلا فلاتر مكدّسة ولا مشاركة متضخمة.
+ * بوابة — واجهة الإعجاز العلمي: بلا فلاتر مكدّسة، مشاركة مرة في نهاية القسم فقط.
  * Run: node --import tsx src/lib/__tests__/miracles-ui-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -13,9 +13,10 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 const page = read("src/views/MiraclesPage.tsx");
 const fab = read("src/components/FloatingBackButton.tsx");
 const share = read("src/components/ShareFaida.tsx");
+const section = read("src/components/common/SectionShareActions.tsx");
 
 assert.match(page, /mk-search-bar/);
-assert.match(page, /ShareFaida[\s\S]*variant="icons"/);
+assert.match(page, /ShareButtons/);
 assert.match(page, /mk-card__footer/);
 assert.match(page, /miracle-ayah/);
 assert.match(page, /item\.verse/);
@@ -29,7 +30,8 @@ assert.doesNotMatch(page, /RelatedKnowledge/);
 assert.doesNotMatch(page, /GeometricPattern/);
 assert.doesNotMatch(page, /mk-cats-bar/);
 assert.doesNotMatch(page, /FilterBottomSheet/);
-assert.doesNotMatch(page, /ShareButtons/);
+assert.doesNotMatch(page, /ShareFaida/);
+assert.doesNotMatch(page, /variant="icons"/);
 assert.doesNotMatch(page, /twh-share/);
 
 const css = read("src/styles/pages/miracles.css");
@@ -46,5 +48,7 @@ assert.match(fab, /بدون شرط تمرير/);
 
 assert.match(share, /variant === "icons"/);
 assert.match(share, /share-faida--icons/);
+assert.match(section, /data-section-share-actions/);
+assert.match(section, /ShareFaida/);
 
 console.log("miracles-ui-gate: ok");

@@ -17,9 +17,9 @@ import {
   fromDbLesson,
   fromKuwaitLesson,
   openLessonExternalUrl,
-  shareLesson,
   parseLessonShareTimestamp,
 } from "@/lib/unified-lesson-card";
+import { ShareButtons } from "@/components/ContentActions";
 import { LessonRecordingPlayer } from "@/components/lessons/LessonRecordingPlayer";
 import { cleanDisplayText } from "@/lib/display-text";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
@@ -466,13 +466,6 @@ export default function LessonDetailPage({
           <button
             type="button"
             className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
-            onClick={() => void shareLesson(unified)}
-          >
-            مشاركة
-          </button>
-          <button
-            type="button"
-            className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
             onClick={() => downloadUnifiedCalendar(unified)}
           >
             إضافة للتقويم
@@ -509,6 +502,8 @@ export default function LessonDetailPage({
           )}
           <ContentReportButton contentType="درس" contentId={unified.id} title={unified.title} />
         </div>
+
+        <ShareButtons title={unified.title} />
 
         {unified.qrCodeUrl && (
           <div className="lesson-detail-qr">

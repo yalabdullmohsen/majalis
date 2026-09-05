@@ -1,0 +1,24 @@
+/* شريط مشاركة خفيف — يظهر مرة في نهاية القسم فقط */
+.section-share-actions {
+  width: 100%;
+  max-width: 42rem;
+  margin-block: 1.25rem 0.75rem;
+  margin-inline: auto;
+  padding-inline: 0.25rem;
+  padding-bottom: calc(0.35rem + var(--inset-bottom, 0px));
+  box-sizing: border-box;
+}
+
+.section-share-actions--dup {
+  display: none !important;
+}
+
+.section-share-actions__faida.share-faida {
+  margin: 0;
+}
+
+@media (max-width: 430px) {
+  .section-share-actions {
+    margin-block: 1rem 0.5rem;
+  }
+}

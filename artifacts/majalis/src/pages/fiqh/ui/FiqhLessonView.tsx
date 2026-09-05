@@ -9,7 +9,7 @@ import {
   getFiqhLesson,
   getFiqhLessonAny,
 } from "@/lib/fiqh-books";
-import { ShareFaida } from "@/components/ShareFaida";
+import { ShareButtons } from "@/components/ContentActions";
 import { cn } from "@/lib/utils";
 import {
   breadcrumbJsonLd,
@@ -247,14 +247,15 @@ export default function FiqhLessonPage() {
         <div id="fiqh-sec-sources">
           <FiqhSourceLine sources={lesson.sources} status={contentStatus} />
         </div>
-        {related.length > 0 ? (
-          <div id="fiqh-sec-related">
-            <FiqhRelatedIssues issues={related} className="fiqh-related" />
-          </div>
-        ) : null}
       </div>
 
-      <ShareFaida title={lesson.title} url={hit.href} />
+      <ShareButtons title={lesson.title} url={hit.href} />
+
+      {related.length > 0 ? (
+        <div id="fiqh-sec-related">
+          <FiqhRelatedIssues issues={related} className="fiqh-related" />
+        </div>
+      ) : null}
 
       <nav className="fiqh-lux-pager" aria-label="المسألة التالية والسابقة">
         {nav.prev ? (

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { X } from "lucide-react";
 import type { AdhkarItem } from "@/lib/adhkar-seed";
 import { formatPublicGrade, normalizePublicSource } from "@/lib/content-display-zones";
-import { ShareButton } from "@/components/ShareButton";
 import { IsnadAttributionBar } from "@/components/IsnadAttributionBar";
 
 function toAr(n: number): string {
@@ -62,12 +61,6 @@ export function AdhkarDhikrSheet({ item, onClose }: Props) {
             reportContentType: "adhkar",
             reportContentId: item.id,
           }}
-        />
-        <ShareButton
-          title="ذكر"
-          text={`${item.text}${displaySource ? `\n— ${displaySource}` : ""}`}
-          size="sm"
-          className="adhkar-sheet-share"
         />
         <button type="button" className="adhkar-sheet-dismiss" onClick={onClose}>
           إغلاق

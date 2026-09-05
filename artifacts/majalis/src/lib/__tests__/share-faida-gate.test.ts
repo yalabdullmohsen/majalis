@@ -1,5 +1,5 @@
 /**
- * بوابة مشاركة «فائدة من سُنّة».
+ * بوابة مشاركة «فائدة من سُنّة» — عبر SectionShareActions في نهاية القسم فقط.
  * node --import tsx src/lib/__tests__/share-faida-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -28,14 +28,32 @@ assert.match(shareFaida, /مشاركة/);
 assert.match(shareFaida, /واتساب/);
 
 const contentActions = read("src/components/ContentActions.tsx");
-assert.match(contentActions, /ShareFaida/);
+assert.match(contentActions, /SectionShareActions/);
 assert.match(contentActions, /فائدة من سُنّة/);
+
+const section = read("src/components/common/SectionShareActions.tsx");
+assert.match(section, /ShareFaida/);
+assert.match(section, /data-section-share-actions/);
+assert.match(section, /section-share-actions--dup/);
 
 const contact = read("src/views/ContactPage.tsx");
 assert.doesNotMatch(contact, /ShareFaida/, "صفحة التواصل بلا ShareFaida");
 
-const shareButton = read("src/components/ShareButton.tsx");
-assert.doesNotMatch(shareButton, /return null/, "ShareButton مفعّل للأذكار");
-assert.match(shareButton, /واتساب/);
+const adhkarSheet = read("src/pages/worship/ui/AdhkarDhikrSheet.tsx");
+assert.doesNotMatch(adhkarSheet, /from ["']@\/components\/ShareButton["']/, "شيت الذكر بلا مشاركة داخلية");
+
+const seerah = read("src/views/SeerahPage.tsx");
+assert.doesNotMatch(seerah, /from ["']@\/components\/ShareButton["']/, "مراحل السيرة بلا مشاركة داخل اللوحة");
+assert.match(seerah, /ShareButtons/);
+
+const lessonCard = read("src/components/lessons/UnifiedLessonCard.tsx");
+assert.doesNotMatch(lessonCard, />\s*مشاركة\s*</);
+assert.doesNotMatch(lessonCard, /نسخ الرابط/);
+assert.doesNotMatch(lessonCard, /نسخ البيانات/);
+
+const hadithCard = read("src/components/hadith/HadithCard.tsx");
+assert.doesNotMatch(hadithCard, /Share2/);
+assert.doesNotMatch(hadithCard, /handleShare/);
+assert.doesNotMatch(hadithCard, /نسخ المتن/);
 
 console.log("share-faida-gate.test.ts: ok");

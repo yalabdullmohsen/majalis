@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { Search, Copy, Check, BookOpen, Star } from "lucide-react";
+import { Search, BookOpen, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -1001,7 +1001,6 @@ const DUAS: DuaEntry[] = [
 export default function DuasPage() {
   const [category, setCategory] = useState("الكل");
   const [search, setSearch] = useState("");
-  const [copied, setCopied] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
@@ -1036,14 +1035,6 @@ export default function DuasPage() {
       return matchCat && matchQ;
     });
   }, [category, search]);
-
-  const copyDua = async (dua: DuaEntry) => {
-    try {
-      await navigator.clipboard.writeText(dua.arabic);
-      setCopied(dua.id);
-      setTimeout(() => setCopied(null), 2000);
-    } catch { /* clipboard unavailable */ }
-  };
 
   return (
     <PageShell className="duas-page">
@@ -1120,15 +1111,6 @@ export default function DuasPage() {
                     <BookOpen size={14} className="dua-card__icon" aria-hidden="true" />
                     <span className="dua-card__title">{dua.title}</span>
                     <span className="dua-card__cat">{dua.category}</span>
-                  </button>
-                  <button
-                    type="button"
-                    className="dua-card__copy"
-                    onClick={() => copyDua(dua)}
-                    aria-label="نسخ الدعاء"
-                    title="نسخ"
-                  >
-                    {copied === dua.id ? <Check size={14} /> : <Copy size={14} />}
                   </button>
                 </div>
 
