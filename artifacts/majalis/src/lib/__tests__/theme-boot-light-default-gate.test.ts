@@ -18,7 +18,7 @@ const purge = read("src/lib/runtime-cache-purge.ts");
 const sw = read("public/sw.js");
 const vercel = read("vercel.json");
 
-assert.match(html, /v11-startup-stable-2026-08/);
+assert.match(html, /v13-startup-shell-stable-2026-09/);
 assert.match(html, /id="mj-version-boot"/);
 assert.match(html, /ssunnah-refreshing-version/);
 assert.match(html, /version\.json\?t=/);
@@ -44,8 +44,13 @@ assert.match(settings, /refreshAppAndPurgeCaches/);
 assert.match(versionHook, /purgeStaleRuntimeCaches/);
 assert.match(versionHook, /SKIP_WAITING/);
 assert.match(versionHook, /ssunnah-refreshing-version/);
-assert.match(versionHook, /setTimeout\(\(\) => \{\s*void check\(\);\s*\}, 0\)/);
-assert.doesNotMatch(versionHook, /2_500/, "لا تأخير 2.5s قبل فحص النسخة");
+assert.match(versionHook, /BOOT_QUIET_MS/, "نافذة هدوء قبل شيت التحديث");
+assert.match(
+  versionHook,
+  /shellReady \? 0 : BOOT_QUIET_MS/,
+  "فحص النسخة فوري بعد استقرار الهيكل وإلا بعد نافذة الهدوء",
+);
+assert.doesNotMatch(versionHook, /silentBootPurgeThenReload/, "لا reload صامت أثناء الإقلاع");
 assert.match(purge, /refreshAppAndPurgeCaches/);
 
 assert.match(sw, /SKIP_WAITING/);

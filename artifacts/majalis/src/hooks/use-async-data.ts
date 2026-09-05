@@ -5,7 +5,7 @@ import { beginAbortScope, abortScope } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { userMessageFromLoadError } from "@/lib/load-failure";
 
-export type AsyncStatus = "loading" | "success" | "error" | "empty";
+export type AsyncStatus = "loading" | "retrying" | "success" | "error" | "empty" | "offline";
 
 export type UseAsyncDataOptions<T> = {
   enabled?: boolean;
@@ -27,6 +27,7 @@ export type UseAsyncDataResult<T> = {
 /**
  * Guaranteed terminal state within timeout — never infinite loading.
  * Part 16: route-scoped abort + generation guard against unmounted setState.
+ * Silent retry stays in `retrying` (skeleton) — never flashes error on first fail.
  */
 export function useAsyncData<T>(
   key: string,
@@ -75,7 +76,8 @@ export function useAsyncData<T>(
         result = await run();
       } catch {
         if (gen !== generation.current || signal.aborted) return;
-        // إعادة محاولة صامتة واحدة قبل اعتبارها فشلاً للمستخدم
+        // إعادة محاولة صامتة — تبقى واجهة الهيكل بلا شاشة خطأ
+        setStatus("retrying");
         result = await run();
       }
       if (gen !== generation.current || signal.aborted) return;
@@ -90,8 +92,9 @@ export function useAsyncData<T>(
         logDiagnostic("nav-abort", scopeKey);
         return;
       }
+      const offline = typeof navigator !== "undefined" && navigator.onLine === false;
       setError(userMessageFromLoadError(err));
-      setStatus("error");
+      setStatus(offline ? "offline" : "error");
     }
   }, [enabled, key, loader, scopeKey, timeoutMs, emptyWhen, emptyMessage]);
 
@@ -113,6 +116,6 @@ export function useAsyncData<T>(
     status,
     error,
     retry,
-    isLoading: status === "loading",
+    isLoading: status === "loading" || status === "retrying",
   };
 }

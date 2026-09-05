@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#F2F4F3" />
-    <!-- ثيم+RTL+حجم خط قبل أي CSS/JS — أول إطار ثابت (v11-startup-stable-2026-08) -->
+    <!-- ثيم+RTL+حجم خط قبل أي CSS/JS — أول إطار ثابت (v13-startup-shell-stable-2026-09) -->
     <script id="mj-theme-boot">
       (function () {
         try {
@@ -14,7 +14,7 @@
           html.setAttribute("dir", "rtl");
           html.classList.add("app-booting");
           html.dataset.appBooting = "1";
-          var _dsv = "v12-startup-stable-first-frame-2026-08";
+          var _dsv = "v13-startup-shell-stable-2026-09";
           if (localStorage.getItem("majalis-design-v") !== _dsv) {
             localStorage.setItem("majalis-design-v", _dsv);
             /* لا تمسح تفضيل الخط — مسحه يسبب قفزة خط بعد أول إطار */
@@ -232,9 +232,21 @@
         background-color: #F2F4F3;
         margin: 0;
         min-height: 100dvh;
+        min-height: 100svh;
         color: #14241c;
         font-family: "Amiri", "MajlisAmiriFallback", "Noto Naskh Arabic", serif;
         font-weight: 400;
+        line-height: 1.7;
+      }
+      html.dark, html.dark body, html.dark #root,
+      html.theme-dark, html.theme-dark body, html.theme-dark #root,
+      html[data-theme="dark"], html[data-theme="dark"] body, html[data-theme="dark"] #root {
+        background-color: #101614;
+        color: #e8eeea;
+      }
+      button, input, textarea, select {
+        font-family: inherit;
+        line-height: inherit;
       }
       /* يمنع طلب amiri-700 قبل CSS المكوّنات (h1 افتراضيًا bold) */
       h1, h2, h3, h4, strong, b, button {
