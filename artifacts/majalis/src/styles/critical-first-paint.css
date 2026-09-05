@@ -258,20 +258,14 @@ html.app-booting .hus-field {
 .daily-wird-card,
 [data-testid="daily-wird-card"] {
   min-height: 28rem;
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--mj-brand, #1f6b56) 4%, var(--mj-splash-bg-light, #f2f4f3)) 0%,
-      color-mix(in srgb, var(--mj-brand, #1f6b56) 2%, #fff) 100%
-    );
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 3%, var(--surface, #fff));
   border-radius: 1rem;
 }
 
 .mj-home-below-fold-ph {
   min-height: 8rem;
   border-radius: 1rem;
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 3%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 2.5%, transparent);
 }
 
 .mj-home-lcp-ph__search .hus-field,
