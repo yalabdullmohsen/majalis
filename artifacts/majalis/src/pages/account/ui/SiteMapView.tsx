@@ -46,9 +46,9 @@ const SECTIONS = [
     icon: "aqeeda",
     links: [
       { href: "/tawhid",      label: "التوحيد والعقيدة",   desc: "أنواع التوحيد ومسائل العقيدة" },
-      { href: "/tawhid", label: "عقيدة أهل السنة", desc: "معالم المنهج ودروس منظّمة" },
-      { href: "/tawhid", label: "أقسام التوحيد", desc: "الربوبية والألوهية والأسماء والصفات" },
-      { href: "/tawhid", label: "نواقض الإسلام", desc: "مدخل منضبط مع ضوابط التكفير" },
+      { href: "/tawhid/ahl-sunnah", label: "عقيدة أهل السنة", desc: "معالم المنهج ودروس منظّمة" },
+      { href: "/tawhid/tawhid-types", label: "أقسام التوحيد", desc: "الربوبية والألوهية والأسماء والصفات" },
+      { href: "/tawhid/nawaaqid", label: "نواقض الإسلام", desc: "مدخل منضبط مع ضوابط التكفير" },
       { href: "/arkan",       label: "أركان الإسلام",      desc: "الشهادتان والصلاة والزكاة..." },
       { href: "/arkan-iman",  label: "أركان الإيمان",      desc: "الإيمان بالله والملائكة..." },
       { href: "/asma-husna",  label: "الأسماء الحسنى",     desc: "٩٩ اسماً بمعانيها وآياتها" },
@@ -207,7 +207,7 @@ export default function SiteMapPage() {
             <div className="sm-grid">
               {links.map(({ href, label, desc }) => (
                 <Link
-                  key={href}
+                  key={`${href}::${label}`}
                   href={href}
                   className={`sm-card${isComingSoonPath(href) ? " sm-card--soon" : ""}`}
                   aria-label={isComingSoonPath(href) ? `${label}` : undefined}

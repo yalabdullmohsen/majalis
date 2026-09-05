@@ -359,6 +359,7 @@ const PATHS = [
   "/tasbih",
   "/tawba",
   "/tawhid",
+  "/tawhid/:slug",
   "/tazkiya-topics",
   "/teachers",
   "/teachers/:slug",
