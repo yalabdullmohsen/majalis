@@ -149,6 +149,7 @@ export default function MiraclesPage({
 
   return (
     <TopicPage
+      className="topic-page--miracles"
       themeId="quran"
       sectionRoute="/miracles"
       breadcrumb={[
