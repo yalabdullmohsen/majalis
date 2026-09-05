@@ -449,9 +449,9 @@ html.dark .navbar-menu-btn--drawer {
 }
 
 /* الشريط المتحرك أعلى التطبيق (HeaderTicker) — نص واحد لكل دورة:
-   يدخل من يمين الإطار ويخرج بالكامل يسارًا عبر --ticker-from/--ticker-to،
-   ثم ينتقل للنص التالي عند animationend فقط. يتوقف عند hover/لمس/تركيز،
-   ويتحول لعرض ثابت عند prefers-reduced-motion. */
+   للعربية: يدخل من يسار الإطار (لتظهر بداية النص أولًا) ويخرج يمينًا عبر
+   --ticker-from/--ticker-to، ثم ينتقل للنص التالي عند animationend فقط.
+   يتوقف عند hover/لمس/تركيز، ويتحول لعرض ثابت عند prefers-reduced-motion. */
 .header-ticker {
   overflow: hidden;
   min-width: 0;
@@ -521,9 +521,9 @@ html.dark .navbar-menu-btn--drawer {
 }
 
 @keyframes header-ticker-marquee {
-  /* يمين → يسار: من خارج الإطار الأيمن إلى خارج الأيسر */
-  from { transform: translate3d(var(--ticker-from, 100%), 0, 0); }
-  to { transform: translate3d(var(--ticker-to, -100%), 0, 0); }
+  /* يسار → يمين (مناسب للعربية): من خارج الإطار الأيسر إلى خارج الأيمن */
+  from { transform: translate3d(var(--ticker-from, -100%), 0, 0); }
+  to { transform: translate3d(var(--ticker-to, 100%), 0, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
