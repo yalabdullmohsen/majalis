@@ -313,7 +313,9 @@ jobs:
             gh api -X PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${existing}" -f body="$BODY" >/dev/null
             echo "updated comment ${existing}"
           else
-            gh pr comment "$PRN" --body "$BODY"
+            # بدون checkout: gh pr comment يحتاج git repo — استخدم Issues API
+            gh api -X POST "repos/${GITHUB_REPOSITORY}/issues/${PRN}/comments" -f body="$BODY" >/dev/null
+            echo "created comment on PR ${PRN}"
           fi
 
   notify-success:
