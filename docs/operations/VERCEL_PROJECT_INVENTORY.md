@@ -38,3 +38,11 @@ Do **not** delete until compared: Git link, domains, env, build, output, product
 - Framework preset change on production (`vite` ↔ Next.js UI)
 - Deletion of projects
 - Enabling api-server as a production dependency
+
+
+## Merge → Production contract (2026-09)
+
+- Any push/merge to `main` must create a Production deployment for `majalis-majalis`.
+- PR `unlabeled` status must never be interpreted as “no Production deploy”.
+- Skipped deployments on `majalis-api-server*` are expected (`ignoreCommand` exit 0) and must not be counted as Production failure.
+- Dashboard Ignored Build Step must apply to Preview only — never to the `main` Production branch.

@@ -11,7 +11,11 @@ import {
   BLOCKING_LABELS,
   BRANCH_ALLOW_RE,
   BRANCH_EXCLUDE_RE,
+  BRANCH_SOFT_AUTOMATION_RE,
+  CLASSIFICATION_LABELS,
+  classifyLabelsFromPaths,
   CONTENT_SAFE_LABELS,
+  hasNoDeployLabel,
   CONTENT_SAFE_PATH_PATTERNS,
   DANGER_PATH_PATTERNS,
   isAutoMergeAllowlistedPath,
@@ -238,7 +242,12 @@ export function evaluateEligibility(input = {}) {
     hardBlockers.push(`branch pattern not allowed: ${branch}`);
   }
   if (branch && BRANCH_EXCLUDE_RE.test(branch)) {
-    hardBlockers.push(`dual automation branch excluded: ${branch}`);
+    hardBlockers.push(`automatic content-fill branch excluded: ${branch}`);
+  }
+  if (branch && BRANCH_SOFT_AUTOMATION_RE.test(branch)) {
+    warnings.push(
+      `dual automation branch ${branch} — auto-merge allowed when path/CI gates pass; labels auto-classified (not a Production blocker)`,
+    );
   }
   if (!hasSafeLabel) {
     warnings.push(
@@ -347,6 +356,24 @@ export function evaluateEligibility(input = {}) {
     warnings.push(
       `consider adding \`${SAFE_AUTO_MERGE_LABEL}\` for clearer reporting; it is no longer required for low-risk auto-merge`,
     );
+  }
+
+  // Auto-classify unlabeled PRs (reporting only — never gates Production).
+  const classified = classifyLabelsFromPaths(fileSummary.paths);
+  const hasClassification = CLASSIFICATION_LABELS.some((l) => labels.includes(l));
+  const hasAnySafe = SAFE_LABELS.some((l) => labels.includes(l));
+  if (!hasClassification && !hasAnySafe) {
+    for (const lab of classified) suggestedAddLabels.push(lab);
+    if (classified.length) {
+      warnings.push(
+        `auto-classification labels suggested: ${classified.map((l) => "`" + l + "`").join(", ")}`,
+      );
+    }
+  } else if (!hasClassification && hasAnySafe) {
+    // Keep domain safe:* ; still add a coarse CLASSIFICATION label for dashboards.
+    for (const lab of classified.slice(0, 1)) {
+      if (!labels.includes(lab)) suggestedAddLabels.push(lab);
+    }
   }
 
   // --- required checks (path-lane aware: skipped OK only when not required) ---
@@ -524,7 +551,23 @@ export function evaluateEligibility(input = {}) {
   const blockers = [...uniqueHard, ...uniqueWait];
   const waiting = uniqueHard.length === 0 && uniqueWait.length > 0;
   const eligible = uniqueHard.length === 0 && uniqueWait.length === 0;
-  const willDeployProduction = eligible || waiting;
+
+  // Production deploy is a property of merging into main + Vercel git settings.
+  // It must NOT be tied to auto-merge eligibility or missing classification labels.
+  const baseIsMain = !input.baseRefName || String(input.baseRefName) === "main";
+  const deployBlockedByLabel = hasNoDeployLabel(labels);
+  const willDeployProductionAfterMerge =
+    baseIsMain && !deployBlockedByLabel;
+
+  if (deployBlockedByLabel) {
+    warnings.push(
+      "Production deploy suppressed by explicit `no-deploy` or `hold` label",
+    );
+  } else if (!eligible && !waiting) {
+    warnings.push(
+      "not auto-merge eligible — if merged to main manually, Vercel Production still deploys (unless no-deploy/hold)",
+    );
+  }
 
   return {
     eligible,
@@ -547,7 +590,8 @@ export function evaluateEligibility(input = {}) {
     suggestedRemoveLabels: [...new Set(suggestedRemoveLabels)],
     needsManualReview: uniqueHard.length > 0,
     vercelPreviewKind,
-    willDeployProductionAfterMerge: willDeployProduction && !uniqueHard.length,
+    willDeployProductionAfterMerge,
+    productionDeployBlockedByLabel: deployBlockedByLabel,
     checks: {
       verifyBuild: verify,
       previewSmoke: preview,
