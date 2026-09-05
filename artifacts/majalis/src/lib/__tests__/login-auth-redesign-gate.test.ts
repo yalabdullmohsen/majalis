@@ -14,7 +14,7 @@ const login = read("src/pages/account/ui/LoginView.tsx");
 const css = read("src/styles/pages/auth.css");
 const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 const immersive = read("src/lib/immersive-chrome.ts");
-const fab = read("src/components/FloatingBackButton.tsx");
+const fab = read("src/components/common/AppBackButton.tsx");
 const msgs = read("src/lib/auth-messages.ts");
 const register = read("src/pages/account/ui/RegisterView.tsx");
 

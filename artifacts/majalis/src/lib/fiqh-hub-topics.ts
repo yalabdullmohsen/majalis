@@ -236,8 +236,8 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     rulingsCategory: "النوازل المعاصرة",
     rulingsSubcategory: "الطب",
     relatedGuides: [
-      { href: "/fiqh-council/nawazil", label: "نوازل المجمع" },
       { href: "/prophetic-medicine", label: "الطب النبوي" },
+      { href: "/fiqh-council", label: "المجمع الفقهي" },
     ],
   },
   {
@@ -252,7 +252,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     relatedGuides: [
       { href: "/riba", label: "الربا" },
       { href: "/zakat", label: "الزكاة" },
-      { href: "/fiqh/books/riba", label: "التمويل الإسلامي" },
+      { href: "/fiqh-council/nawazil", label: "النوازل المالية" },
     ],
   },
   {
@@ -304,7 +304,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     rulingsCategory: "النوازل المعاصرة",
     relatedGuides: [
       { href: "/fiqh-council", label: "المجمع الفقهي" },
-      { href: "/fiqh-council/nawazil", label: "النوازل" },
+      { href: "/fiqh", label: "بوابة الفقه" },
     ],
   },
   {
@@ -318,9 +318,9 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     rulingsCategory: "النوازل المعاصرة",
     rulingsSubcategory: "التقنية",
     relatedGuides: [
-      { href: "/fiqh-council/nawazil", label: "النوازل المعاصرة" },
       { href: "/fiqh/books/riba", label: "التمويل الإسلامي" },
       { href: "/fiqh-council", label: "المجمع الفقهي" },
+      { href: "/fiqh", label: "بوابة الفقه" },
     ],
   },
   {
@@ -334,9 +334,9 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     rulingsCategory: "النوازل المعاصرة",
     rulingsSubcategory: "الطب",
     relatedGuides: [
-      { href: "/fiqh/books/taharah", label: "كتاب الطهارة" },
       { href: "/fiqh/books/salah", label: "كتاب الصلاة" },
       { href: "/fiqh/books/sawm", label: "كتاب الصيام" },
+      { href: "/prophetic-medicine", label: "الطب النبوي" },
     ],
   },
   {
@@ -350,7 +350,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     rulingsCategory: "المعاملات",
     relatedGuides: [
       { href: "/riba", label: "الربا" },
-      { href: "/fiqh/books/riba", label: "المال الإسلامي" },
+      { href: "/zakat", label: "الزكاة" },
       { href: "/fiqh-council/nawazil", label: "النوازل" },
     ],
   },

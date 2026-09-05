@@ -186,7 +186,9 @@
             try {
               sessionStorage.setItem(FLAG, "1");
               localStorage.setItem("majalis_force_cache_purge", "1");
-              localStorage.setItem("majalis_app_version", live);
+              /* لا تكتب live في majalis_app_version هنا —
+                 وإلا boot-sequence يرى prev=live وbaked=قديم فيُعيد التحميل مجددًا.
+                 النسخة تُحدَّث بعد المسح من النسخة المضمَّنة في البناء فقط. */
             } catch (_) {}
             var reloadOnce = function () {
               try {
