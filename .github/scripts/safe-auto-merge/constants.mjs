@@ -43,6 +43,25 @@ export const RISKY_MANUAL_REVIEW_LABEL = "risky:manual-review";
 /** محتوى شرعي/علمي يحتاج مراجعة بشرية قبل الدمج. */
 export const NEEDS_CONTENT_REVIEW_LABEL = "needs-content-review";
 
+/**
+ * Labels that block Production deploy after merge to main.
+ * Classification labels must NEVER appear here.
+ */
+export const NO_DEPLOY_LABELS = Object.freeze(["no-deploy", "hold"]);
+
+/**
+ * Default classification labels auto-applied when a PR is unlabeled.
+ * Used for reporting only — never gate main Production deploy.
+ */
+export const CLASSIFICATION_LABELS = Object.freeze([
+  "content-safe",
+  "ui",
+  "perf",
+  "ios",
+  "ci",
+  "docs",
+]);
+
 export const MAX_FILES_FOR_AUTO_MERGE = 40;
 
 /** Aggregate deletions across the PR (lines). */
@@ -172,8 +191,17 @@ export const AUTOMATIC_CONTENT_AUDIT_TITLE_RE =
 export const BRANCH_ALLOW_RE =
   /^((cursor|session|claude|codex|automation|fix|feature|security|docs|chore)\/)/;
 
-export const BRANCH_EXCLUDE_RE =
-  /^(automation\/content|automation\/tasks|majalis-content-fill)$/;
+/**
+ * Hard-excluded from auto-merge only (automatic content-fill runner).
+ * `automation/content` and `automation/tasks` are allowed to auto-merge when
+ * path/size/CI gates pass — missing labels must not block, and a merge to
+ * `main` always triggers Vercel Production unless `no-deploy`/`hold`.
+ */
+export const BRANCH_EXCLUDE_RE = /^(majalis-content-fill)$/;
+
+/** Soft dual-automation branches — warn + auto-label, do not hard-block. */
+export const BRANCH_SOFT_AUTOMATION_RE =
+  /^(automation\/content|automation\/tasks)$/;
 
 /**
  * Check names required before enabling GitHub auto-merge.
@@ -202,3 +230,67 @@ export const PREVIEW_SMOKE_PATHS = Object.freeze([
   "/api/healthz",
   "/api/readyz",
 ]);
+
+
+/**
+ * Infer default classification labels from changed paths.
+ * @param {string[]} paths
+ * @returns {string[]}
+ */
+export function classifyLabelsFromPaths(paths = []) {
+  const labels = new Set();
+  const list = (paths || []).map((p) => String(p || ""));
+  if (!list.length) return ["docs"];
+
+  const contentOnly = list.every((p) =>
+    CONTENT_SAFE_PATH_PATTERNS.some((re) => re.test(p)) || /\.(md|mdx)$/i.test(p),
+  );
+  const anyContent = list.some((p) =>
+    CONTENT_SAFE_PATH_PATTERNS.some((re) => re.test(p)) ||
+    /^artifacts\/majalis\/(public\/)?data\//i.test(p),
+  );
+  const anyUi = list.some(
+    (p) =>
+      /^artifacts\/majalis\/src\//i.test(p) ||
+      /\.(css|scss|tsx|jsx)$/i.test(p) ||
+      /components\//i.test(p),
+  );
+  const anyPerf = list.some(
+    (p) => /perf|lighthouse|budget|lcp|cls|web-vitals/i.test(p),
+  );
+  const anyIos = list.some(
+    (p) =>
+      /^ios\//i.test(p) ||
+      /capacitor/i.test(p) ||
+      /\.(swift|pbxproj)$/i.test(p),
+  );
+  const anyCi = list.some(
+    (p) =>
+      /^\.github\//i.test(p) ||
+      /^scripts\//i.test(p) ||
+      /vercel\.json$/i.test(p),
+  );
+  const anyDocs = list.some((p) => /^docs\//i.test(p) || /\.(md|mdx)$/i.test(p));
+
+  if (contentOnly && anyContent) labels.add("content-safe");
+  else if (anyContent) labels.add("content-safe");
+  if (anyUi) labels.add("ui");
+  if (anyPerf) labels.add("perf");
+  if (anyIos) labels.add("ios");
+  if (anyCi) labels.add("ci");
+  if (anyDocs && !anyUi && !anyContent && !anyIos) labels.add("docs");
+  if (!labels.size) {
+    if (anyDocs) labels.add("docs");
+    else labels.add("ui");
+  }
+  return [...labels].filter((l) => CLASSIFICATION_LABELS.includes(l));
+}
+
+/**
+ * @param {string[]} labels
+ * @returns {boolean}
+ */
+export function hasNoDeployLabel(labels = []) {
+  const lower = labels.map((l) => String(l).toLowerCase());
+  return NO_DEPLOY_LABELS.some((l) => lower.includes(l));
+}

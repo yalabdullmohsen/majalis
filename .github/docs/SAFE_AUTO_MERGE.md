@@ -98,3 +98,12 @@ Aliases قديمة ما زالت مقبولة للتصنيف: `content-safe`, `u
 | `.github/workflows/scheduled-release-train.yml` | قطار 06:00 و18:00 الكويت |
 
 Bundle ID ثابت: `com.yousef.majlisilm`.
+
+
+## Production deploy truth
+
+- Merging into `main` triggers Vercel Production for `artifacts/majalis` (`git.deploymentEnabled.main = true`).
+- Missing classification labels (`unlabeled`) never blocks Production.
+- Skipped Vercel Preview / api-server Ignored Build Step is **not** a Production failure.
+- Only explicit labels `no-deploy` or `hold` suppress Production intent in reports.
+- Auto-merge eligibility and Production deploy are separate signals in the PR report.

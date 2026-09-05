@@ -249,7 +249,74 @@ jobs:
           path: /tmp/psi-gate.json
           if-no-files-found: ignore
 
-  notify-success:
+  post-deploy-truth:
+    name: post-deploy-truth
+    needs: [deploy]
+    if: >
+      always() &&
+      github.repository == 'yalabdullmohsen/majalis' &&
+      github.event_name == 'push' &&
+      needs.deploy.outputs.pr_number != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: تقرير صادق على الـPR (Production نعم/لا)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PRN: ${{ needs.deploy.outputs.pr_number }}
+          SHORT: ${{ needs.deploy.outputs.short_sha }}
+          SHA: ${{ github.sha }}
+          VERSION_OK: ${{ needs.deploy.outputs.version_ok }}
+          DEPLOY_STATUS: ${{ needs.deploy.outputs.deploy_status }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          SITE="https://www.majlisilm.com"
+          VER_URL="${SITE}/version.json"
+          VERCEL_PROJ="https://vercel.com/yalabdullmohsen/majalis-majalis"
+          if [ "${VERSION_OK}" = "1" ]; then
+            STATUS_LINE="✅ **نُشر Production فعليًا** — \`version.json\` يطابق \`${SHA}\`"
+            READY="نعم"
+          elif [ "${VERSION_OK}" = "rate_limited" ] || [ "${DEPLOY_STATUS}" = "rate_limited" ]; then
+            STATUS_LINE="⏳ **لم يُؤكَّد Production بعد** — Vercel rate limit / تأخر نشر (ليست نجاحًا)"
+            READY="لا — بانتظار نشر/إعادة محاولة الجدول"
+          else
+            STATUS_LINE="❌ **Production غير مؤكد** — لا تعتبر الدمج نجاح نشر"
+            READY="لا"
+          fi
+          BODY=$(cat <<EOF
+          <!-- majalis-post-merge-deploy-truth -->
+          ## تقرير نشر Production بعد الدمج
+
+          ${STATUS_LINE}
+
+          | | |
+          |---|---|
+          | اندمج إلى main؟ | نعم |
+          | نُشر Production؟ | ${READY} |
+          | Commit | \`${SHORT}\` (\`${SHA}\`) |
+          | version.json | ${VER_URL} |
+          | Auto Deploy run | ${RUN_ID} |
+          | Vercel project | ${VERCEL_PROJ} |
+          | إجراء يدوي؟ | $([ "${VERSION_OK}" = "1" ] && echo "لا" || echo "انتظر schedule/auto-deploy أو راجع Vercel إن استمر التأخر") |
+
+          > Skipped deployments على مشاريع api-server / Preview **لا تُحتسب** فشل Production.
+          > لا يُكتب "جاهز" ما لم يتطابق \`version.json\` مع commit الـmain.
+          EOF
+          )
+          # upsert comment
+          existing=$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PRN}/comments" --paginate             --jq '.[] | select(.body|contains("majalis-post-merge-deploy-truth")) | .id' | head -n1 || true)
+          if [ -n "${existing}" ]; then
+            gh api -X PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${existing}" -f body="$BODY" >/dev/null
+            echo "updated comment ${existing}"
+          else
+            gh pr comment "$PRN" --body "$BODY"
+          fi
+
+    notify-success:
     name: notify-success
     needs: [deploy, psi-gate]
     if: >
@@ -273,7 +340,7 @@ jobs:
           set -euo pipefail
           SITE="https://www.majlisilm.com"
           MSG=$(cat <<EOF
-          ✅ نُشر بنجاح — سُنّة
+          ✅ Production مؤكد — سُنّة (version.json مطابق)
           PR: ${PRN:-—} — ${PRT:-—}
           Commit: ${SHORT} (${SHA})
           Build / run: ${RUN_ID}

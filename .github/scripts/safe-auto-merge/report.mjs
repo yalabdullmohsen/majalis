@@ -84,9 +84,17 @@ export function formatEligibilityReport(result, meta = {}) {
               ? "❌ فشل Preview حقيقي (يمنع غير content-safe)"
               : "ℹ️ غير معروف";
 
-  const prodLine = result.willDeployProductionAfterMerge
-    ? "✅ نعم — بعد الدمج إلى `main` ينشر **Vercel Production** (`majalis-majalis`) تلقائيًا"
-    : "⛔ لا — لن يُدمَج تلقائيًا؛ لا نشر Production من هذا المسار";
+  const autoMergeLine = result.eligible
+    ? "✅ مؤهل للدمج التلقائي"
+    : result.waiting
+      ? "⏳ بانتظار الفحوصات"
+      : "🛑 غير مؤهل للدمج التلقائي (المراجعة اليدوية لا تمنع Production إن دُمج إلى main)";
+
+  const prodLine = result.productionDeployBlockedByLabel
+    ? "⛔ لا — وسم صريح `no-deploy` أو `hold` يمنع نشر Production"
+    : result.willDeployProductionAfterMerge
+      ? "✅ نعم — أي دمج إلى `main` يشغّل **Vercel Production** (`majalis-majalis`) تلقائيًا (مستقل عن أهلية auto-merge / unlabeled)"
+      : "⛔ لا — القاعدة لا تستهدف `main` أو شرط نشر مفقود";
 
   const fileBits = result.fileSummary || {};
   const flags = [
@@ -112,7 +120,8 @@ export function formatEligibilityReport(result, meta = {}) {
     `| الحذف | ${fileBits.totalDeletions ?? 0} سطر / ${fileBits.deletedFiles ?? 0} ملف (حدود ${MAX_TOTAL_DELETIONS}/${MAX_DELETED_FILES}) |`,
     `| إشارات | ${flags || "—"} |`,
     `| Vercel Preview | ${vercelHuman} |`,
-    `| نشر Production بعد الدمج | ${prodLine} |`,
+    `| الدمج التلقائي | ${autoMergeLine} |`,
+    `| نشر Production بعد الدمج إلى main | ${prodLine} |`,
     `| head | \`${meta.headSha || "?"}\` |`,
     meta.prNumber ? `| PR | #${meta.prNumber} |` : null,
     "",
@@ -158,8 +167,10 @@ export function formatEligibilityReport(result, meta = {}) {
     `- Labels اختيارية للتصنيف (ليست شرطًا للتغييرات منخفضة المخاطر): ${SAFE_LABELS.map((l) => `\`${l}\``).join(", ")}`,
     `- فحوص skipped مقبولة فقط إن قال path-lane إنها غير مطلوبة — لا تخطّي فحص مطلوب.`,
     `- \`content-safe\` / \`safe:content\`: مسارات مسموحة فقط — \`${CONTENT_SAFE_PATH_PATTERNS.map((r) => r.source).join(" | ")}\``,
-    "- Vercel Preview ignored/skipped **لا يمنع** تدقيق المحتوى الآمن.",
-    "- Production ينشر فقط بعد الدمج إلى `main` (مشروع **majalis-majalis**).",
+    "- Vercel Preview ignored/skipped **لا يمنع** الدمج ولا يُعد فشل Production.",
+    "- Labels للتصنيف فقط (`content-safe`/`ui`/`perf`/`ios`/`ci`/`docs`) — unlabeled لا يمنع نشر main.",
+    "- فقط `no-deploy` / `hold` يمنعان Production بعد الدمج إلى `main`.",
+    "- Production ينشر تلقائيًا بعد أي دمج إلى `main` عبر Vercel (`majalis-majalis`)؛ مشاريع api-server المSkipped متوقعة وليست فشل إنتاج.",
     "- `release-train-ready` ينتظر قطار الإصدار فقط (لا دمج فوري).",
     "- TestFlight / Supabase migrations: يدوي فقط.",
     "",

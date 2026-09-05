@@ -79,6 +79,47 @@ describe("safe-auto-merge eligibility", () => {
     assert.ok(r.blockers.some((b) => /content-safe PR may only touch/i.test(b)));
   });
 
+
+  it("treats unlabeled automation/content as auto-mergeable + Production deployable", () => {
+    const r = evaluateEligibility(
+      base({
+        labels: [],
+        headRefName: "automation/content",
+        files: [{ path: "artifacts/majalis/public/data/quiz/x.json", additions: 2, deletions: 0 }],
+        title: "محتوى: دفعة آمنة",
+      }),
+    );
+    assert.equal(r.eligible, true);
+    assert.equal(r.prType, "unlabeled");
+    assert.equal(r.willDeployProductionAfterMerge, true);
+    assert.equal(r.productionDeployBlockedByLabel, false);
+    assert.ok(r.suggestedAddLabels.includes("content-safe"));
+    assert.ok(!r.hardBlockers.some((b) => /excluded|unlabeled/i.test(b)));
+  });
+
+  it("blocks Production only with explicit no-deploy/hold labels", () => {
+    const r = evaluateEligibility(
+      base({
+        labels: ["content-safe", "no-deploy"],
+        files: [{ path: "artifacts/majalis/public/data/quiz/x.json", additions: 1, deletions: 0 }],
+      }),
+    );
+    assert.equal(r.willDeployProductionAfterMerge, false);
+    assert.equal(r.productionDeployBlockedByLabel, true);
+  });
+
+  it("still reports Production deploy when auto-merge is hard-blocked", () => {
+    const r = evaluateEligibility(
+      base({
+        labels: [],
+        isDraft: true,
+        files: [{ path: "docs/x.md", additions: 1, deletions: 0 }],
+      }),
+    );
+    assert.equal(r.eligible, false);
+    assert.equal(r.willDeployProductionAfterMerge, true);
+  });
+
   it("allows unlabeled low-risk PRs after green checks (label optional)", () => {
     const r = evaluateEligibility(
       base({
