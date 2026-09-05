@@ -263,7 +263,7 @@ export default function LessonsPage({
       canonicalPath: "/lessons",
       title: "الدروس الشرعية والعلمية | سُنّة",
       description:
-        "دروس شرعية وعلمية من أئمة وعلماء الكويت والعالم، فقه وعقيدة وقرآن وسيرة ولغة عربية. محتوى معتمد في منهج سُنّة",
+        "دروس شرعية وعلمية من أئمة وعلماء الكويت، فقه وعقيدة وقرآن وسيرة ولغة عربية. محتوى معتمد في منهج سُنّة",
       keywords: ["دروس شرعية", "دروس دينية", "دروس علمية", "علماء الكويت", "حلقات علمية"],
       jsonLd: [
         {
@@ -272,14 +272,14 @@ export default function LessonsPage({
           name: "الدروس الشرعية والدورات العلمية",
           description:
             "دروس ودورات علمية من أئمة وعلماء الكويت في الفقه والعقيدة والقرآن والسيرة؛ محتوى معتمد في منهج سُنّة",
-          numberOfItems: 1,
+          numberOfItems: Math.max(1, activeLessons.length || 1),
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "الدروس الشرعية والدورات العلمية", url: `${SITE_URL}/lessons` },
           ],
         },
       ],
     });
-  }, []);
+  }, [activeLessons.length]);
 
   useEffect(() => {
     if (initialActive) return;

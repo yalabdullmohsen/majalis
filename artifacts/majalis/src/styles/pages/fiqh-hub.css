@@ -438,15 +438,25 @@ html[data-theme="dark"] .fqh-hub-card__desc {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+.fiqh-hub-edu-note {
+  margin: 0 0 0.85rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--text-secondary, var(--majalis-ink-soft, #5b6570));
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent);
+}
 .fiqh-book-card {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   height: 100%;
   min-height: 0;
-  padding: 0.8rem 0.9rem;
+  padding: 0.62rem 0.72rem;
   border: 1px solid var(--majalis-line, var(--border));
-  border-radius: 0.75rem;
+  border-radius: 0.7rem;
   background: var(--majalis-panel, var(--surface));
   text-decoration: none;
   color: inherit;
