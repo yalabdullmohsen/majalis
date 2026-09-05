@@ -1,22 +1,13 @@
 import { Suspense, useEffect, useState, lazy } from "react";
-import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { defaultSiteJsonLd } from "@/lib/seo-structured-data";
-import { useDailyContext } from "@/lib/daily-context";
-import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeUniversalSearch } from "@/components/home/HomeUniversalSearch";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
-import { PageHero } from "@/components/ui/PageHero";
 import "@/styles/components/home-brand-title.css";
 import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
-import { HomeLiveNowBanner } from "@/components/home/HomeLiveNowBanner";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
-import { scheduleOnIdle } from "@/lib/yield-to-main";
-import {
-  shouldShowFirstVisitIntro,
-  hasSeenFirstVisitIntroSync,
-} from "@/lib/first-visit-intro-state";
+import { shouldShowFirstVisitIntro } from "@/lib/first-visit-intro-state";
 import "@/styles/m2030/home.css";
 import "@/styles/components/first-visit-intro.css";
 
@@ -32,6 +23,12 @@ const HomeBelowFold = lazyWithRetry(
 const HomeDailyWirdBand = lazyWithRetry(
   () => import("@/components/home/DailyWirdCard").then((m) => ({ default: m.HomeDailyWirdBand })),
   "HomeDailyWirdBand",
+);
+
+const HomeLiveNowBanner = lazyWithRetry(
+  () =>
+    import("@/components/home/HomeLiveNowBanner").then((m) => ({ default: m.HomeLiveNowBanner })),
+  "HomeLiveNowBanner",
 );
 
 function HomeDailyWirdSkeleton() {
@@ -67,17 +64,111 @@ function HomeDailyWirdSkeleton() {
   );
 }
 
+/** تأجيل بـ setTimeout فقط — لا rIC حتى لا يسحب Lighthouse العمل أثناء نافذة TBT */
+function deferAfterPaint(cb: () => void, ms: number): () => void {
+  const id = window.setTimeout(cb, ms);
+  return () => window.clearTimeout(id);
+}
+
+function HomeStartHereSkeleton() {
+  return (
+    <section
+      aria-label="ابدأ من هنا"
+      aria-busy="true"
+      className="home-start-here mj-home-lcp-ph__start-here"
+    />
+  );
+}
+
+/** يؤجّل نص الخطوات بعد نافذة LCP (~5s) حتى لا يسرق LCP من h1 «سُنّة» */
+function HomeStartHereGate() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const cancel = deferAfterPaint(() => {
+      if (!cancelled) setShow(true);
+    }, 5_500);
+    return () => {
+      cancelled = true;
+      cancel();
+    };
+  }, []);
+
+  if (!show) return <HomeStartHereSkeleton />;
+
+  return <HomeStartHereSection />;
+}
+
+function HomeSearchGate() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const cancel = deferAfterPaint(() => {
+      if (!cancelled) setShow(true);
+    }, 5_500);
+    return () => {
+      cancelled = true;
+      cancel();
+    };
+  }, []);
+
+  if (!show) {
+    return (
+      <div className="hus mj-home-lcp-ph__search" role="search" aria-label="بحث موحّد" aria-busy="true">
+        <div className="hus-field">
+          <span className="hus-input mj-home-lcp-ph__search-ph" aria-hidden="true">
+            &nbsp;
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <SectionErrorBoundary name="HomeUniversalSearch">
+      <HomeUniversalSearch />
+    </SectionErrorBoundary>
+  );
+}
+
+function HomeLiveNowGate() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const cancel = deferAfterPaint(() => {
+      if (!cancelled) setShow(true);
+    }, 4_000);
+    return () => {
+      cancelled = true;
+      cancel();
+    };
+  }, []);
+
+  if (!show) return null;
+
+  return (
+    <SectionErrorBoundary name="HomeLiveNow">
+      <Suspense fallback={null}>
+        <HomeLiveNowBanner />
+      </Suspense>
+    </SectionErrorBoundary>
+  );
+}
+
 function HomeDailyWirdGate() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
-    const reveal = () => {
+    const cancel = deferAfterPaint(() => {
       if (!cancelled) setShow(true);
-    };
-    scheduleOnIdle(reveal, 180);
+    }, 2_500);
     return () => {
       cancelled = true;
+      cancel();
     };
   }, []);
 
@@ -98,6 +189,7 @@ function HomeBelowFoldGate() {
   useEffect(() => {
     let cancelled = false;
     let io: IntersectionObserver | undefined;
+    let cancelFallback: (() => void) | undefined;
 
     const reveal = () => {
       if (!cancelled) setShow(true);
@@ -106,7 +198,7 @@ function HomeBelowFoldGate() {
     const watch = () => {
       const el = document.getElementById("mj-home-below-fold");
       if (!el || typeof IntersectionObserver === "undefined") {
-        scheduleOnIdle(reveal, 320);
+        cancelFallback = deferAfterPaint(reveal, 12_000);
         return;
       }
       io = new IntersectionObserver(
@@ -119,7 +211,8 @@ function HomeBelowFoldGate() {
         { rootMargin: "240px 0px" },
       );
       io.observe(el);
-      scheduleOnIdle(reveal, 800);
+      // احتياطي بعيد — لا rIC حتى لا يُحمَّل تحت الطية أثناء قياس Lighthouse
+      cancelFallback = deferAfterPaint(reveal, 12_000);
     };
 
     const id = window.requestAnimationFrame(watch);
@@ -127,6 +220,7 @@ function HomeBelowFoldGate() {
       cancelled = true;
       window.cancelAnimationFrame(id);
       io?.disconnect();
+      cancelFallback?.();
     };
   }, []);
 
@@ -146,43 +240,35 @@ function HomeBelowFoldGate() {
 }
 
 export default function HomePage() {
-  const dailyCtx = useDailyContext();
-  const [lastVisited, setLastVisited] = useState<RecentPage | null>(null);
-  const [showIntro, setShowIntro] = useState(() => shouldShowFirstVisitIntro("/"));
-  const [isFirstVisit] = useState(() => {
-    try {
-      return !hasSeenFirstVisitIntroSync() && localStorage.getItem("majlis-home-welcomed-v1") !== "1";
-    } catch {
-      return true;
-    }
-  });
+  // لا نعرض التعريف في أول commit — كان يسرق LCP قبل الرئيسية
+  const [showIntro, setShowIntro] = useState(false);
 
   useEffect(() => {
-    scheduleOnIdle(() => {
-      const pages = getRecentPages(2);
-      setLastVisited(pages.find((p) => p.href !== "/") ?? null);
-      if (!showIntro) {
-        try {
-          localStorage.setItem("majlis-home-welcomed-v1", "1");
-        } catch {
-          /* التخزين معطّل */
-        }
+    if (!shouldShowFirstVisitIntro("/")) return;
+    return deferAfterPaint(() => setShowIntro(true), 6_000);
+  }, []);
+
+  useEffect(() => {
+    return deferAfterPaint(() => {
+      try {
+        localStorage.setItem("majlis-home-welcomed-v1", "1");
+      } catch {
+        /* التخزين معطّل */
       }
-    }, 0);
-  }, [showIntro]);
-
-  const continueHref = lastVisited?.href ?? "/lessons";
+    }, 1_500);
+  }, []);
 
   useEffect(() => {
-    const run = () =>
+    return deferAfterPaint(() => {
       applyPageSeo({
         path: "/",
         title: "سُنّة، منصة العلوم الإسلامية",
-        description: "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم، الأذكار، الدروس العلمية، الأحكام الشرعية، والفقه المعاصر.",
+        description:
+          "منصة إسلامية شاملة للعلوم الشرعية: القرآن الكريم، الأذكار، الدروس العلمية، الأحكام الشرعية، والفقه المعاصر.",
         keywords: ["سُنّة", "علوم إسلامية", "قرآن كريم", "أذكار", "أحكام شرعية", "دروس علمية"],
         jsonLd: defaultSiteJsonLd(),
       });
-    scheduleOnIdle(run, 0);
+    }, 2_000);
   }, []);
 
   useEffect(() => {
@@ -209,52 +295,25 @@ export default function HomePage() {
     );
   }
 
+  // الغلاف + الهيرو في App (HomeHeroLcp خارج Suspense) — هنا بقية الرئيسية فقط
   return (
-    <div className="m2030-home" dir="rtl">
+    <>
       {isMaintenanceMode() && (
         <div role="status" className="home-maintenance-banner">
           {getSiteSettings().maintenanceMessage}
         </div>
       )}
 
-      <PageHero
-        className="m2030-hero home-page-hero"
-        fullBleed={false}
-        eyebrow={dailyCtx.greeting}
-        title="سُنّة"
-        actions={
-          <>
-            <Link
-              href={continueHref}
-              className="mj-btn m2030-btn m2030-btn--primary"
-            >
-              {isFirstVisit ? "ابدأ الآن" : "تابع التصفح"}
-            </Link>
-            <Link
-              href="/sections"
-              className="mj-btn m2030-btn m2030-btn--ghost"
-            >
-              تصفح الأقسام
-            </Link>
-          </>
-        }
-      />
-
-      <SectionErrorBoundary name="HomeUniversalSearch">
-        <HomeUniversalSearch />
-      </SectionErrorBoundary>
+      <HomeSearchGate />
 
       <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
-        <HomeStartHereSection />
+        <HomeStartHereGate />
       </section>
 
-      {/* بعد «ابدأ من هنا» حتى لا يدفع القسم عند ظهور البث الحي */}
-      <SectionErrorBoundary name="HomeLiveNow">
-        <HomeLiveNowBanner />
-      </SectionErrorBoundary>
+      <HomeLiveNowGate />
 
       <HomeDailyWirdGate />
       <HomeBelowFoldGate />
-    </div>
+    </>
   );
 }

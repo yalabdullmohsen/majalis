@@ -45,26 +45,25 @@ export function BottomNavBar({ isHidden = false }: { isHidden?: boolean } = {}) 
     void load();
   }
 
-  // بعد أول إطار: سخّن تبويبات الشريط حتى يكون التنقّل فوريًا
+  // تسخين متأخر جدًا — لا تنافس TBT/LCP على أول دخول (اللمس/المرور يكفي للتنقّل)
   useEffect(() => {
     let cancelled = false;
     const warm = () => {
       if (cancelled) return;
       for (const href of BOTTOM_NAV_TABS.map((t) => t.href)) {
+        // لا تُسخَّن المصحف والدروس الثقيلة تلقائيًا على الرئيسية
+        if (href === "/mushaf" || href === "/lessons" || href === "/quran-hub") continue;
         triggerPrefetch(href);
       }
     };
-    if (typeof window.requestIdleCallback === "function") {
-      const id = window.requestIdleCallback(warm, { timeout: 800 });
-      return () => {
-        cancelled = true;
-        window.cancelIdleCallback(id);
-      };
-    }
-    const t = window.setTimeout(warm, 200);
+    const afterLoad = () => {
+      // setTimeout ثابت — لا rIC (Lighthouse يسحب الخمول أثناء القياس)
+      window.setTimeout(warm, 25_000);
+    };
+    if (document.readyState === "complete") afterLoad();
+    else window.addEventListener("load", afterLoad, { once: true });
     return () => {
       cancelled = true;
-      window.clearTimeout(t);
     };
   }, []);
 

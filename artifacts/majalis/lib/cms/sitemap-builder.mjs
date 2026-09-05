@@ -52,10 +52,8 @@ export async function fetchDynamicUrls() {
     } catch { /* optional */ }
   }
 
-  const books = loadStaticCatalog("library-catalog.json");
-  for (const b of books) {
-    urls.push({ loc: `/library/${b.id}`, priority: 0.72, changefreq: "weekly" });
-  }
+  // المكتبة العامة أُزيلت من الواجهة وSEO — لا تُدرَج /library في الخريطة
+  // (المسارات القديمة تُحوَّل إلى /search عبر vercel + AppRoutes).
 
   // اكتُشف 2026-07-18: جدول fiqh_council_sessions غير موجود أصلاً في
   // القاعدة الحية — الصفحة الحية /fiqh-council/sessions/:slug تعمل فعلياً
@@ -70,12 +68,11 @@ export async function fetchDynamicUrls() {
   if (!admin) return urls;
 
   const [
-    lessons, sheikhs, library, qa, updates, learningPaths,
+    lessons, sheikhs, qa, updates, learningPaths,
     rulings, universities, fiqhIssues, fiqhItems, annualCourses,
   ] = await Promise.all([
     admin.from("lessons").select("id, updated_at, slug").eq("status", "approved").limit(2000),
     admin.from("sheikhs").select("id, updated_at").eq("is_verified", true).limit(500),
-    admin.from("library_items").select("id, updated_at").eq("status", "approved").limit(500),
     admin.from("qa_questions").select("id, updated_at").eq("status", "published").limit(500),
     // ملاحظة (2026-07-26، تدقيق جدول fawaid): استعلام fawaid أُزيل من هنا
     // لسببين معًا — (١) لا مسار `/fawaid/:id` في src/App.tsx إطلاقًا (المسار
@@ -118,9 +115,7 @@ export async function fetchDynamicUrls() {
     urls.push({ loc: `/lessons/${lessonId}`, lastmod: row.updated_at, priority: 0.85 });
   }
   // /sheikhs أُلغيت لصالح /lessons — لا تُدرَج في الخريطة
-  for (const row of library.data || []) {
-    urls.push({ loc: `/library/${row.id}`, lastmod: row.updated_at, priority: 0.72 });
-  }
+  // /library أُزيلت علنًا — لا تُدرَج من library_items
   // /qa دُمجت في /quiz — لا تُدرَج مسارات أسئلة منفردة
   for (const row of updates.data || []) {
     urls.push({ loc: `/updates/${row.id}`, lastmod: row.updated_at, priority: 0.65 });

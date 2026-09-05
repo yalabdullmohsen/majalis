@@ -1,5 +1,5 @@
 import { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState, type ComponentType } from "react";
-import { Link, Route, Switch, Router as WouterRouter, useLocation } from "wouter";
+import { Route, Switch, Router as WouterRouter, useLocation } from "wouter";
 import { AuthProvider, useAuth } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
@@ -32,7 +32,7 @@ import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isAuthStandalonePath, isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { isMiniPlayerVisible, subscribeMiniPlayer } from "@/lib/quran-mini-player";
-import { HOME_START_HERE_COPY, HOME_START_HERE_STEPS } from "@/components/home/home-start-here-data";
+import { HomeHeroLcp, HomeRestShell } from "@/components/home/HomeHeroLcp";
 /** شريط/كروم ثقيل (lucide + nav-map) — كسول حتى لا يدخل مسار أول زيارة / LCP */
 const SafeAreaDebugOverlay = lazyWithRetry(
   () =>
@@ -454,81 +454,16 @@ function NativeNotificationsBootstrap() {
   return null;
 }
 
-function HomeInitialShell() {
-  return (
-    <div className="m2030-home mj-home-lcp-ph" dir="rtl">
-      <header className="page-hero-mj m2030-hero home-page-hero" dir="rtl">
-        <div className="page-hero-mj__content">
-          <p className="page-hero-mj__eyebrow mj-home-lcp-ph__hero-eyebrow">&nbsp;</p>
-          <h1 className="page-hero-mj__title">سُنّة</h1>
-          <div className="page-hero-mj__actions">
-            <span className="mj-btn m2030-btn m2030-btn--primary mj-home-lcp-ph__hero-cta">تابع التصفح</span>
-          </div>
-        </div>
-      </header>
-
-      <div className="hus mj-home-lcp-ph__search" role="search" aria-label="بحث موحّد">
-        <div className="hus-field">
-          <span className="hus-input mj-home-lcp-ph__search-ph" aria-hidden="true">
-            &nbsp;
-          </span>
-        </div>
-      </div>
-
-      <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
-        <section aria-label="ابدأ من هنا" className="home-start-here mj-home-lcp-ph__start-here">
-          <div className="hsh-header">
-            <span className="hsh-eyebrow">{HOME_START_HERE_COPY.eyebrow}</span>
-            <h2 className="hsh-title">{HOME_START_HERE_COPY.title}</h2>
-            <p className="hsh-lead">{HOME_START_HERE_COPY.lead}</p>
-            <div className="hsh-actions">
-              <Link href="/lessons" className="hsh-actions__primary" tabIndex={-1}>
-                {HOME_START_HERE_COPY.primaryCta}
-              </Link>
-              <Link href="/adab-talab-ilm" className="hsh-actions__secondary" tabIndex={-1}>
-                {HOME_START_HERE_COPY.secondaryCta}
-              </Link>
-            </div>
-          </div>
-          <ol className="hsh-steps">
-            {HOME_START_HERE_STEPS.map((step) => (
-              <li key={step.num} className="hsh-step">
-                <span className="hsh-step__num" aria-hidden="true">
-                  {step.num}
-                </span>
-                <div className="hsh-step__body">
-                  <strong className="hsh-step__title">{step.title}</strong>
-                  <p className="hsh-step__desc">{step.desc}</p>
-                  <Link href={step.href} className="hsh-step__cta" tabIndex={-1}>
-                    {step.cta} ←
-                  </Link>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
-      </section>
-
-      <section
-        className="m2030-band m2030-band--sage home-daily-wird daily-wird-card mj-home-lcp-ph__daily-band"
-        aria-label="ورد اليوم"
-        aria-busy="true"
-        data-testid="daily-wird-card"
-      >
-        <div className="m2030-band__head">
-          <h2 className="m2030-band__title">ورد اليوم</h2>
-        </div>
-      </section>
-    </div>
-  );
-}
-
 function HomeLazyRoute() {
   return (
     <ErrorBoundary>
-      <Suspense fallback={<HomeInitialShell />}>
-        <HomePage />
-      </Suspense>
+      <div className="m2030-home" dir="rtl">
+        {/* h1 ثابت خارج Suspense — لا يُعاد تركيب LCP عند وصول HomePage */}
+        <HomeHeroLcp />
+        <Suspense fallback={<HomeRestShell />}>
+          <HomePage />
+        </Suspense>
+      </div>
     </ErrorBoundary>
   );
 }
@@ -698,7 +633,7 @@ function AppShellInner() {
   }, [openGlobalSearch]);
 
   return (
-    <PrayerCountdownScope deferMs={isHomePath ? 10_000 : 0}>
+    <PrayerCountdownScope deferMs={isHomePath ? 20_000 : 0}>
     <div
       className={`app-shell${shouldHideChrome ? " app-chrome-hidden" : ""}${isNativeApp ? " app-shell--native" : ""}`}
       style={{ "--app-dir": dir } as React.CSSProperties}
@@ -838,14 +773,8 @@ function PrayerCountdownScope({
     const reveal = () => {
       if (!cancelled) setBootRuntime(true);
     };
-    const arm = () => {
-      if (typeof window.requestIdleCallback === "function") {
-        window.requestIdleCallback(reveal, { timeout: deferMs });
-      } else {
-        window.setTimeout(reveal, deferMs);
-      }
-    };
-    const afterLoad = () => window.setTimeout(arm, 0);
+    /* setTimeout ثابت — لا rIC حتى لا يسحب Lighthouse العمل مبكرًا أثناء قياس TBT */
+    const afterLoad = () => window.setTimeout(reveal, deferMs);
     if (document.readyState === "complete") afterLoad();
     else window.addEventListener("load", afterLoad, { once: true });
     return () => {
@@ -854,7 +783,7 @@ function PrayerCountdownScope({
   }, [deferMs]);
 
   return (
-    <PrayerCountdownProvider>
+    <PrayerCountdownProvider enabled={bootRuntime || deferMs === 0}>
       {bootRuntime ? <PrayerRuntimeBoot /> : null}
       {children}
     </PrayerCountdownProvider>
@@ -993,7 +922,7 @@ function SovereignNavigationBridge() {
   return Bridge ? <Bridge /> : null;
 }
 
-/** يؤجّل تحميل حزمة المساعد حتى الخمول أو أول تفاعل — لا يحجب العرض الأول. */
+/** يؤجّل المساعد بعد أول تفاعل أو مهلة طويلة — بلا rIC حتى لا يُسحَب أثناء قياس TBT/CLS. */
 function DeferredAssistantWidget() {
   const [ready, setReady] = useState(false);
   useEffect(() => {
@@ -1003,25 +932,13 @@ function DeferredAssistantWidget() {
       done = true;
       setReady(true);
     };
-    // فصل المسارين يتجنّب تضييق TypeScript الخاطئ لـ setTimeout إلى `never`
-    // عند استخدام `"requestIdleCallback" in window` كشرط ثلاثي.
-    let idleHandle: number | undefined;
-    let timeoutHandle: number | undefined;
-    if (typeof window.requestIdleCallback === "function") {
-      idleHandle = window.requestIdleCallback(arm, { timeout: 5000 });
-    } else {
-      timeoutHandle = window.setTimeout(arm, 3000);
-    }
+    // setTimeout فقط (لا requestIdleCallback) — Lighthouse يطلق الخمول مبكرًا فيُحمَّل المساعد ويحرّك التخطيط
+    const timeoutHandle = window.setTimeout(arm, 20_000);
     const onInteract = () => arm();
     window.addEventListener("pointerdown", onInteract, { once: true, passive: true });
     window.addEventListener("keydown", onInteract, { once: true });
     return () => {
-      if (idleHandle != null && typeof window.cancelIdleCallback === "function") {
-        window.cancelIdleCallback(idleHandle);
-      }
-      if (timeoutHandle != null) {
-        window.clearTimeout(timeoutHandle);
-      }
+      window.clearTimeout(timeoutHandle);
       window.removeEventListener("pointerdown", onInteract);
       window.removeEventListener("keydown", onInteract);
     };

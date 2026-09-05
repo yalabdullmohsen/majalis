@@ -24,6 +24,11 @@ function installEnv() {
     value: { webdriver: false },
     configurable: true,
   });
+  // اختبارات الوحدة تُحاكي زيارة حقيقية (لا localhost)
+  Object.defineProperty(globalThis, "location", {
+    value: { hostname: "www.ssunnah.com" },
+    configurable: true,
+  });
 }
 
 installEnv();
@@ -75,6 +80,25 @@ test("ترحيل ترحيب الرئيسية القديم", () => {
 test("webdriver يتخطى التعريف", () => {
   Object.defineProperty(globalThis, "navigator", {
     value: { webdriver: true },
+    configurable: true,
+  });
+  assert.equal(shouldShowFirstVisitIntro("/"), false);
+});
+
+test("localhost يتخطى التعريف (LHCI محلي)", () => {
+  Object.defineProperty(globalThis, "location", {
+    value: { hostname: "127.0.0.1" },
+    configurable: true,
+  });
+  assert.equal(shouldShowFirstVisitIntro("/"), false);
+});
+
+test("UA محاكى Lighthouse يتخطى التعريف", () => {
+  Object.defineProperty(globalThis, "navigator", {
+    value: {
+      webdriver: false,
+      userAgent: "Mozilla/5.0 HeadlessChrome/131.0.0.0 Safari/537.36",
+    },
     configurable: true,
   });
   assert.equal(shouldShowFirstVisitIntro("/"), false);

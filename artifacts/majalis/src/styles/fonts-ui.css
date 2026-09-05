@@ -2,13 +2,14 @@
  * خطوط الواجهة مستضافة محليًا (woff2) — بلا Google Fonts.
  * SIL OFL: Amiri / Noto Naskh Arabic / Aref Ruqaa / Scheherazade New.
  * أوزان 400 فقط هنا — أوزان 700 في fonts-ui-bold.css بعد أول رسم.
- * block للخطوط الحرجة + مقاييس fallback مطابقة — يمنع FOUT/CLS؛ حارس الإقلاع ينتظر document.fonts.
+ * Amiri 400 = optional: لا يحجب أول نص LCP على الشبكة البطيئة؛ المقاييس تمنع CLS.
+ * Noto 400 = block لمسار الواجهة العام بعد أول إطار.
  */
 @font-face {
   font-family: "Amiri";
   font-style: normal;
   font-weight: 400;
-  font-display: block;
+  font-display: optional;
   src: url("/fonts/ui/amiri-400-ar.woff2") format("woff2");
   unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+0660-0669;
   ascent-override: 95%;
@@ -19,7 +20,7 @@
   font-family: "Amiri";
   font-style: normal;
   font-weight: 400;
-  font-display: block;
+  font-display: optional;
   src: url("/fonts/ui/amiri-400-lat.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC;
   ascent-override: 95%;
