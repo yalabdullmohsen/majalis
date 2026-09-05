@@ -113,7 +113,28 @@ export function sectionAwareFallback(currentPath: string): string {
   if (p.startsWith("/admin")) return "/admin";
   if (p.startsWith("/fawaid")) return "/fawaid";
   if (p.startsWith("/nations/")) return "/nations";
-  if (p.startsWith("/seerah") || p.startsWith("/prophet")) return "/seerah";
+  // قصص الأنبياء / السيرة — لا تُحوَّل /prophets* إلى /seerah
+  if (p.startsWith("/prophet-stories/")) return "/prophet-stories";
+  if (p === "/prophet-stories") return "/prophet-stories";
+  if (p.startsWith("/prophets-stories/")) return "/prophets-stories";
+  if (p === "/prophets-stories") return "/prophets-stories";
+  if (p.startsWith("/prophets/")) return "/prophets";
+  if (p === "/prophets") return "/prophets";
+  if (p.startsWith("/anbiya/")) return "/anbiya";
+  if (p === "/anbiya") return "/anbiya";
+  if (p.startsWith("/seerah/")) return "/seerah";
+  if (p === "/seerah") return "/prophets";
+  // توحيد / إعجاز / تاريخ
+  if (p.startsWith("/tawhid/")) return "/tawhid";
+  if (p === "/tawhid") return "/tawhid";
+  if (p.startsWith("/aqidah/")) return "/aqidah";
+  if (p === "/aqidah") return "/aqidah";
+  if (p.startsWith("/miracles/")) return "/miracles";
+  if (p === "/miracles") return "/miracles";
+  if (p.startsWith("/tarikh-islami/")) return "/tarikh-islami";
+  if (p === "/tarikh-islami") return "/tarikh-islami";
+  if (p.startsWith("/islamic-history/")) return "/islamic-history";
+  if (p === "/islamic-history") return "/islamic-history";
   if (p.startsWith("/search")) return "/search";
   const parts = p.split("/").filter(Boolean);
   if (parts.length >= 2) return `/${parts[0]}`;
@@ -132,6 +153,29 @@ export function registryParentFallback(currentPath: string): string {
  * إلغاء فوري لعمل الشاشة المغادَرة قبل history.back أو replace —
  * يمنع تعليق الواجهة بسبب طلبات شبكية أو async معلّقة.
  */
+
+/** جذور تبويب سفلية — الهروب منها بدون تاريخ يذهب للرئيسية. */
+const TAB_SECTION_ROOTS = new Set([
+  "/quran-hub",
+  "/lessons",
+  "/prayer-times",
+  "/fiqh",
+  "/sections",
+  "/competitions",
+  "/more",
+]);
+
+/**
+ * هروب من جذر قسم عند غياب تاريخ داخلي حتى لا يعلق زر الرجوع.
+ * التبويبات و /sections → / · بقية الجذور → /sections.
+ */
+export function sectionRootEscape(currentPath: string): string {
+  const p = normalizeNavPath(currentPath);
+  if (p === "/" || p === "") return "/";
+  if (TAB_SECTION_ROOTS.has(p) || p === "/sections") return "/";
+  return "/sections";
+}
+
 export function prepareInstantBackNavigation(leavingPath: string): void {
   const normalized = normalizeNavPath(leavingPath);
   abortScope(`route:${normalized}`);
@@ -160,7 +204,13 @@ export function goBackOrFallback(currentPath: string, fallbackHref?: string) {
     return;
   }
 
-  const target = normalizeNavPath(fallbackHref ?? registryParentFallback(current));
+  let target = normalizeNavPath(fallbackHref ?? registryParentFallback(current));
+  if (target === current) {
+    target = normalizeNavPath(sectionRootEscape(current));
+  }
+  if (target === current) {
+    target = "/";
+  }
   if (target !== current) {
     navigateBackTarget(target);
   }

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { useId, useState } from "react";
-import { goBackOrFallback } from "@/lib/navigation-back";
+import { useId } from "react";
+import { AppBackButton } from "@/components/common/AppBackButton";
 import { cn } from "@/lib/utils";
 import { PatternBackdrop } from "./PatternBackdrop";
 import "@/styles/components/page-hero.css";
@@ -36,8 +36,6 @@ export function PageHero({
   className,
   children,
 }: PageHeroProps) {
-  const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
-  const [nudge, setNudge] = useState(false);
   const titleId = useId();
 
   return (
@@ -49,18 +47,7 @@ export function PageHero({
       {withPattern ? <PatternBackdrop /> : null}
       <div className="page-hero-mj__content">
         {showBack ? (
-          <button
-            type="button"
-            className={cn("page-hero-mj__back mj-btn mj-btn--ghost mj-pressable", nudge && "mj-back-nudge")}
-            onClick={() => {
-              setNudge(true);
-              window.setTimeout(() => setNudge(false), 300);
-              goBackOrFallback(currentPath);
-            }}
-            aria-label="رجوع"
-          >
-            → رجوع
-          </button>
+          <AppBackButton variant="hero" className="page-hero-mj__back" />
         ) : null}
         {eyebrow ? <p className="page-hero-mj__eyebrow">{eyebrow}</p> : null}
         <h1 id={titleId} className="page-hero-mj__title">{title}</h1>

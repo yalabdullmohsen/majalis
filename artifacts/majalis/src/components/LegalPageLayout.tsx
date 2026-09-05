@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { goBackOrFallback } from "@/lib/navigation-back";
+import { AppBackButton } from "@/components/common/AppBackButton";
 import { PageShell, type PageShellDensity } from "@/components/layout/PageShell";
 
 type Props = {
@@ -12,11 +12,6 @@ type Props = {
   density?: PageShellDensity;
   className?: string;
 };
-
-function goBack() {
-  const currentPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
-  goBackOrFallback(currentPath);
-}
 
 export function LegalPageLayout({
   eyebrow,
@@ -36,9 +31,7 @@ export function LegalPageLayout({
       intro={
         <header className="legal-page-hero">
           <div className="legal-page-inner">
-            <button type="button" className="legal-back-btn" onClick={goBack} aria-label="رجوع إلى الصفحة السابقة">
-              → رجوع
-            </button>
+            <AppBackButton variant="legal" className="legal-back-btn" aria-label="رجوع إلى الصفحة السابقة" />
             <p className="legal-page-eyebrow">{eyebrow}</p>
             <h1 id="legal-page-title">{title}</h1>
             {updatedAt ? (
@@ -66,9 +59,7 @@ export function LegalSection({ title, children }: { title: string; children: Rea
 export function LegalBackLink() {
   return (
     <p className="legal-back">
-      <button type="button" className="legal-back-btn" onClick={goBack} aria-label="رجوع إلى الصفحة السابقة">
-        → رجوع
-      </button>
+      <AppBackButton variant="legal" className="legal-back-btn" aria-label="رجوع إلى الصفحة السابقة" />
     </p>
   );
 }

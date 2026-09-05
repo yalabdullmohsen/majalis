@@ -245,3 +245,23 @@ html[data-theme="dark"] .navbar-ticker-row .header-ticker {
 html[data-theme="dark"] .navbar-v3__search-row {
   background: var(--mj-bg, #0c1210);
 }
+
+/* Unified AppBackButton — فوق الهيرو/البطاقات وبمساحة ضغط مضمونة */
+.global-back-btn,
+.floating-back-btn,
+.app-back-btn--floating {
+  z-index: var(--z-fab, 220) !important;
+  pointer-events: auto !important;
+  touch-action: manipulation;
+  min-width: 44px;
+  min-height: 44px;
+}
+.app-back-btn--inline,
+.app-back-btn--hero,
+.app-back-btn--legal,
+.app-back-btn--lobby,
+.app-back-btn--plain {
+  pointer-events: auto !important;
+  min-height: 44px;
+  min-width: 44px;
+}

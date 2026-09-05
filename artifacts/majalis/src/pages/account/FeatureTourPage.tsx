@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect } from "react";
 import { useLocation } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { goBackOrFallback } from "@/lib/navigation-back";
 
 const AppFeatureTour = lazy(() =>
   import("@/components/onboarding/AppFeatureTour").then((m) => ({ default: m.AppFeatureTour })),
@@ -8,7 +9,7 @@ const AppFeatureTour = lazy(() =>
 
 /** مسار /feature-tour — إعادة عرض الجولة من الإعدادات أو الرابط المباشر. */
 export default function FeatureTourPage() {
-  const [, navigate] = useLocation();
+  const [location] = useLocation();
 
   useEffect(() => {
     applyPageSeo({
@@ -25,8 +26,7 @@ export default function FeatureTourPage() {
         open
         persistOnExit={false}
         onClose={() => {
-          if (window.history.length > 1) window.history.back();
-          else navigate("/");
+          goBackOrFallback(location || "/feature-tour", "/");
         }}
       />
     </Suspense>

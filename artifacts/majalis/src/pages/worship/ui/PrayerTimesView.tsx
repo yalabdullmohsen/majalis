@@ -22,7 +22,7 @@ import {
 import { getActivePrayerLocation } from "@/lib/prayer-location-prefs";
 import { PrayerLocationPicker } from "@/components/prayer/PrayerLocationPicker";
 import { PrayerAnnualTimetable } from "@/components/prayer/PrayerAnnualTimetable";
-import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
+import { goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
 import { toArabicDigits } from "@/lib/utils";
 import { RANKS } from "@/pages/worship/PrayerRanksPage";
 import "@/styles/pages/prayer-times.css";
@@ -123,7 +123,7 @@ function rowStatusLabel(
 }
 
 export default function PrayerTimesPage() {
-  const [location, navigate] = useLocation();
+  const [location] = useLocation();
   const [locLabel, setLocLabel] = useState(() => getActivePrayerLocation().label);
   const [locToken, setLocToken] = useState(0);
   const [govOpen, setGovOpen] = useState(false);
@@ -133,13 +133,7 @@ export default function PrayerTimesPage() {
   const [highLat, setHighLat] = useState<HighLatitudeRuleId>(() => getHighLatitudeRule());
 
   function handleBack() {
-    const current = normalizeNavPath(location);
-    const previous = getPreviousInternalRoute(current);
-    if (previous && previous !== current) {
-      goBackOrFallback(current, "/");
-      return;
-    }
-    navigate("/");
+    goBackOrFallback(normalizeNavPath(location), "/");
   }
 
   useEffect(() => {
