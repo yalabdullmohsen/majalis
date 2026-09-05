@@ -766,6 +766,8 @@ function ProphetDetailView({
         </footer>
       </article>
 
+      <ShareButtons title={`${p.arabicName} — قصص الأنبياء | سُنّة`} url={`https://www.ssunnah.com/prophets/${canonicalSlug}`} />
+
       <GraphRelatedRail kind="prophet" slug={slug} titleAr="من الرسم البياني" />
 
       <div className="prophet-nav-lux">

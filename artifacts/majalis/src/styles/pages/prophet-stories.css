@@ -273,25 +273,24 @@ html.dark .nb-table__row--clickable:hover td {
   .prophets-lux-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
-/* ── Prophet Card ── */
+/* ── Prophet Card — مضغوطة ومرتّبة ── */
 .prophet-lux-card {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: flex-start;
-  background: color-mix(in srgb, var(--ps-surface) 96%, var(--ps-emerald-bright) 4%);
+  background: color-mix(in srgb, var(--ps-surface) 97%, var(--ps-emerald-bright) 3%);
   background-image: linear-gradient(
     165deg,
-    color-mix(in srgb, var(--ps-surface) 94%, #e8f0ec) 0%,
-    color-mix(in srgb, var(--ps-emerald-bright) 6%, var(--ps-surface)) 100%
+    color-mix(in srgb, var(--ps-surface) 96%, #e8f0ec) 0%,
+    color-mix(in srgb, var(--ps-emerald-bright) 4%, var(--ps-surface)) 100%
   );
-  border: 1px solid color-mix(in srgb, var(--prophet-color, var(--ps-emerald)) 24%, var(--ps-line));
-  border-radius: var(--radius-card, 24px);
-  /* padding-inline متساوٍ؛ أسفل إضافي لمساحة زر الدخول دون دفع النص */
-  padding-block: 1.25rem 3.35rem;
-  padding-inline: 1.15rem;
-  min-height: 11rem;
+  border: 1px solid color-mix(in srgb, var(--prophet-color, var(--ps-emerald)) 18%, var(--ps-line));
+  border-radius: 16px;
+  padding-block: 0.95rem 2.75rem;
+  padding-inline: 0.95rem;
+  min-height: 0;
   width: 100%;
   max-width: 100%;
   margin-inline: auto;
@@ -299,11 +298,11 @@ html.dark .nb-table__row--clickable:hover td {
   cursor: pointer;
   transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
   overflow: hidden;
-  text-align: center;
+  text-align: start;
   direction: rtl;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.65),
-    0 14px 32px -18px rgba(11, 32, 24, 0.28);
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 8px 20px -16px rgba(11, 32, 24, 0.22);
 }
 .prophet-lux-card:hover,
 .prophet-lux-card:focus-visible {
@@ -332,7 +331,7 @@ html.dark .nb-table__row--clickable:hover td {
   font-weight: 700;
 }
 .prophet-lux-card__star {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.45rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -341,65 +340,69 @@ html.dark .nb-table__row--clickable:hover td {
 .prophet-lux-card__body {
   flex: 1;
   width: 100%;
-  max-width: 22rem;
-  margin-inline: auto;
+  max-width: 100%;
+  margin-inline: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: stretch;
+  text-align: start;
 }
 .prophet-lux-card__name {
   font-family: var(--font-body);
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   color: var(--ps-ink);
-  margin: 0 0 0.25rem;
-  line-height: 1.3;
+  margin: 0 0 0.15rem;
+  line-height: 1.35;
   text-align: center;
   width: 100%;
 }
 .prophet-lux-card__pbuh { font-size: var(--ds-text-xs); color: var(--ps-ink-soft); }
 .prophet-lux-card__quran {
   font-family: "Amiri Quran", "Amiri", serif;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--ps-emerald-bright);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
   text-align: center;
   width: 100%;
 }
 .prophet-lux-card__title {
   color: var(--prophet-color, var(--ps-emerald));
-  font-size: 0.85rem;
-  margin: 0 0 0.2rem;
+  font-size: 0.8rem;
+  margin: 0 0 0.15rem;
   font-weight: 600;
   text-align: center;
   width: 100%;
 }
 .prophet-lux-card__place {
   color: var(--ps-ink-soft);
-  font-size: 0.78rem;
-  margin: 0 0 0.4rem;
+  font-size: 0.74rem;
+  margin: 0 0 0.35rem;
   text-align: center;
   width: 100%;
 }
 .prophet-lux-card__bio {
   color: var(--ps-ink-soft);
-  font-size: 0.8rem;
-  line-height: 1.6;
-  margin: 0 0 0.75rem;
-  text-align: center;
+  font-size: 0.78rem;
+  line-height: 1.65;
+  margin: 0 0 0.5rem;
+  text-align: start;
   width: 100%;
   max-width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .prophet-lux-card__footer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.45rem 0.75rem;
+  gap: 0.35rem 0.6rem;
   font-size: var(--ds-text-xs);
   width: 100%;
   padding-inline: 0;
-  text-align: center;
+  text-align: start;
 }
 .prophet-lux-card__surahs { color: var(--ps-ink-soft); }
 .prophet-lux-card__read {
@@ -756,8 +759,15 @@ html.dark .nb-table__row--clickable:hover td {
   color: var(--ps-text-body, var(--text-on-dark, #FFFFFF));
   opacity: 1;
   font-weight: 500;
-  line-height: 1.9;
-  margin: 0;
+  line-height: 1.85;
+  margin: 0 auto 0.85rem;
+  max-width: 42rem;
+  width: 100%;
+  text-align: start;
+  direction: rtl;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-wrap: pretty;
 }
 
 .prophet-miracle-box {
@@ -843,7 +853,6 @@ html.dark .nb-table__row--clickable:hover td {
   .prophet-lessons-grid { grid-template-columns: repeat(2, 1fr); }
 }
 .prophet-lesson-card {
-  /* خلفية صلبة للقياس/التباين ثم تدرّج فوقها — لا rgba شفاف وحده */
   background-color: #143028;
   background-image: linear-gradient(
     145deg,
@@ -851,18 +860,19 @@ html.dark .nb-table__row--clickable:hover td {
     rgba(255, 255, 255, 0.04)
   );
   border: 1px solid var(--ps-detail-border);
-  border-radius: var(--radius-card, 24px);
-  padding: var(--ds-space-4);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
   display: flex;
-  gap: var(--ds-space-3);
+  gap: 0.75rem;
   align-items: flex-start;
   overflow: hidden;
+  text-align: start;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 12px 28px rgba(0, 0, 0, 0.14);
+    0 8px 18px rgba(0, 0, 0, 0.12);
 }
 .prophet-lesson-card__num {
-  font-size: var(--ds-text-xl);
+  font-size: 1.05rem;
   font-weight: 700;
   font-family: var(--font-body);
   flex-shrink: 0;
@@ -873,9 +883,12 @@ html.dark .nb-table__row--clickable:hover td {
   color: #ffffff;
   opacity: 1;
   font-weight: 500;
-  font-size: 0.9rem;
-  line-height: 1.75;
+  font-size: 0.88rem;
+  line-height: 1.7;
   margin: 0;
+  text-align: start;
+  direction: rtl;
+  letter-spacing: normal;
 }
 
 .prophet-story-lux__footer {
@@ -2073,15 +2086,17 @@ html.dark .app-main:has(.lrf-wrap--prophet-detail) {
 }
 
 /* ════════════════════════════════════════════════════════════
-   محاذاة وسط — بطاقات/هيرو قصص الأنبياء فقط (RTL محفوظ)
+   قراءة مريحة + بطاقات مضغوطة — قصص الأنبياء فقط
+   العناوين وسط، السرد من البداية (RTL)، بلا letter-spacing سالب
    ════════════════════════════════════════════════════════════ */
+
+/* هيرو القائمة + هيرو التفصيل: عناوين فقط في الوسط */
 .prophets-lux-page .prophets-lux-hero,
 .prophets-lux-page .prophets-lux-hero__content {
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   margin-inline: auto;
 }
 .prophets-lux-page .prophets-lux-hero__title,
@@ -2107,89 +2122,212 @@ html.dark .app-main:has(.lrf-wrap--prophet-detail) {
   max-width: 36rem;
 }
 
+/* عناوين الأقسام في الوسط — الفقرات من البداية */
+.prophet-section-lux__header {
+  justify-content: center;
+  text-align: center;
+}
+.prophet-section-lux__title {
+  text-align: center;
+  letter-spacing: normal !important;
+  transform: none !important;
+}
+
+.prophet-section-lux__text,
+.prophet-db-para,
+.prophet-miracle-box__text,
+.prophet-attrs-list__item,
+.prophet-citation-card__note,
+.prophet-lesson-card__text {
+  text-align: start !important;
+  direction: rtl;
+  letter-spacing: normal !important;
+  word-spacing: normal !important;
+  transform: none !important;
+  max-width: 42rem;
+  margin-inline: auto;
+  line-height: 1.85;
+}
+
+.prophet-miracle-box {
+  align-items: flex-start;
+  text-align: start;
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+.prophet-citation-card {
+  align-items: flex-start !important;
+  text-align: start !important;
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+}
+.prophet-citation-card__surah {
+  text-align: start;
+  width: auto;
+}
+.prophet-citation-card__ayahs,
+.prophet-citation-card__note {
+  text-align: start !important;
+  width: 100%;
+}
+
+/* بطاقات الحقائق: مضغوطة — التسمية وسط والقيمة مقروءة */
 .prophet-fact-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-inline: 1.1rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 14px;
 }
-.prophet-fact-card--wide { text-align: center; }
-.prophet-fact-card__label,
-.prophet-fact-card__value {
+.prophet-fact-card--wide {
+  align-items: stretch;
+  text-align: start;
+}
+.prophet-fact-card--wide .prophet-fact-card__label {
   text-align: center;
-  width: 100%;
+}
+.prophet-fact-card--wide .prophet-fact-card__value {
+  text-align: start;
+  line-height: 1.65;
 }
 
-.prophet-citation-card {
-  align-items: center;
-  text-align: center;
-  padding-inline: 1.15rem;
-}
-.prophet-citation-card__surah,
-.prophet-citation-card__ayahs,
-.prophet-citation-card__note {
-  text-align: center;
-  width: 100%;
-}
-
-.prophet-timeline__card {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-inline: auto;
-  padding-inline: 1.05rem;
-}
-.prophet-timeline__name,
-.prophet-timeline__title,
-.prophet-timeline__era {
-  text-align: center;
-  width: 100%;
-}
-
-.prophets-seerah-bridge { justify-content: center; }
-.prophets-seerah-bridge__body {
-  text-align: center;
-  align-items: center;
-}
-.prophets-seerah-bridge__eyebrow,
-.prophets-seerah-bridge__title,
-.prophets-seerah-bridge__desc {
-  text-align: center;
-}
-
+/* دروس: صف أفقي مرتب وليس عمودًا متوسطًا */
 .prophet-lesson-card,
 .prophet-lesson-card--interactive {
-  text-align: center;
-  align-items: center;
+  text-align: start !important;
+  align-items: flex-start !important;
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
 }
-.prophet-lesson-card__text { text-align: center; }
 
-.nb-azm-card {
-  align-items: center;
+/* بطاقة الشبكة: عنوان وسط + نبذة من البداية + حجم أصغر */
+.prophet-lux-card {
+  text-align: start;
+}
+.prophet-lux-card__name,
+.prophet-lux-card__quran,
+.prophet-lux-card__title,
+.prophet-lux-card__place {
   text-align: center;
 }
-.nb-azm-book { align-self: center; }
-.nb-azm-cta {
-  justify-content: center;
-  align-self: center;
+.prophet-lux-card__bio {
+  text-align: start !important;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.65;
+  max-height: none;
 }
+.prophet-lux-card__body {
+  align-items: stretch !important;
+  text-align: start !important;
+  max-width: 100% !important;
+}
+.prophet-lux-card__footer {
+  justify-content: space-between !important;
+  text-align: start !important;
+}
+
+/* الخط الزمني: بطاقات أصغر */
+.prophet-timeline__card {
+  text-align: start;
+  align-items: stretch;
+  padding: 0.75rem 0.9rem;
+  border-radius: 14px;
+  max-width: 18rem;
+}
+.prophet-timeline__name {
+  text-align: center;
+  width: 100%;
+}
+.prophet-timeline__title,
+.prophet-timeline__era {
+  text-align: start;
+  width: 100%;
+  line-height: 1.5;
+}
+
+/* جسر السيرة: عنوان وسط ووصف من البداية */
+.prophets-seerah-bridge { justify-content: center; }
+.prophets-seerah-bridge__body {
+  text-align: start;
+  align-items: stretch;
+  max-width: 36rem;
+}
+.prophets-seerah-bridge__eyebrow,
+.prophets-seerah-bridge__title {
+  text-align: center;
+}
+.prophets-seerah-bridge__desc {
+  text-align: start;
+  line-height: 1.7;
+}
+
+/* أولو العزم / المعجزات — عنوان وسط، سرد من البداية */
+.nb-azm-card,
 .nb-miracle-card {
-  align-items: center;
+  align-items: stretch;
+  text-align: start;
+  padding: 1rem;
+  border-radius: 16px;
+}
+.nb-azm-name,
+.nb-miracle-nabi {
   text-align: center;
 }
+.nb-azm-story,
+.nb-miracle-text {
+  text-align: start !important;
+  line-height: 1.7;
+}
+.nb-azm-book,
+.nb-azm-cta,
 .nb-miracle-cta {
-  justify-content: center;
   align-self: center;
+  justify-content: center;
+}
+
+/* شريط المشاركة في نهاية الصفحة فقط — مسافة آمنة من الشريط السفلي */
+.prophet-detail-lux .section-share-actions,
+.prophets-lux-page .section-share-actions,
+.prophet-detail-lux .share-faida,
+.prophets-lux-page .share-faida {
+  margin-block: 1.25rem 0.5rem;
+  padding-bottom: calc(0.5rem + var(--inset-bottom, 0px));
+}
+.prophet-detail-lux .prophet-nav-lux {
+  margin-bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 1rem);
 }
 
 @media (max-width: 430px) {
-  .prophet-lux-card { padding-inline: 1rem; }
+  .prophet-lux-card {
+    padding-block: 0.85rem 2.55rem;
+    padding-inline: 0.85rem;
+  }
   .prophet-lux-card__body { max-width: 100%; }
   .prophet-lux-card__go {
-    inset-inline-end: 0.7rem;
-    bottom: 0.7rem;
+    inset-inline-end: 0.65rem;
+    bottom: 0.65rem;
   }
+  .prophet-section-lux__text,
+  .prophet-db-para {
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+  .prophet-story-lux {
+    padding-inline: 1rem;
+    padding-bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 1.5rem);
+  }
+}
+
+@media (max-width: 390px) {
+  .prophets-lux-grid {
+    gap: 0.65rem;
+  }
+  .prophet-lux-card__name { font-size: 1rem; }
+  .prophet-fact-card { padding: 0.65rem 0.7rem; }
 }

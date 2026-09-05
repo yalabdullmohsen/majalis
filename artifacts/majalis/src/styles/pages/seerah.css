@@ -628,3 +628,207 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 }
 /* ══ نهاية بطاقة الانتقال ══════════════════════════════════════════════════ */
 
+/* ═══════════════════════════════════════════════════════════
+   seerah-readability-v2 — بطاقة مرحلة خفيفة + قائمة مراحل مضغوطة
+   ═══════════════════════════════════════════════════════════ */
+
+.seerah-layout {
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: calc(var(--bottom-nav-total, var(--nav-h, 64px)) + var(--inset-bottom, 0px) + 0.5rem);
+}
+
+.seerah-timeline {
+  width: min(210px, 100%);
+  padding: 0.45rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  gap: 0.15rem;
+  max-height: calc(100svh - 7rem);
+}
+
+.seerah-timeline__item {
+  gap: 0.45rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 8px;
+}
+
+.seerah-timeline__dot {
+  width: 26px;
+  height: 26px;
+  font-size: 0.68rem;
+  border-width: 1.5px;
+}
+
+.seerah-timeline__title {
+  font-size: 0.74rem;
+  line-height: 1.25;
+  max-width: 130px;
+}
+
+.seerah-timeline__year {
+  font-size: 0.65rem;
+  opacity: 0.85;
+}
+
+.seerah-timeline__item--active {
+  background: color-mix(in srgb, var(--phase-color, var(--majalis-emerald)) 10%, transparent);
+}
+
+.seerah-panel {
+  padding: 1.1rem 1.15rem 1.15rem;
+  border-radius: 14px;
+  min-height: 0;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+  max-width: 40rem;
+}
+
+.seerah-panel__header {
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom-width: 1px;
+}
+
+.seerah-panel__icon {
+  font-size: 1.55rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--panel-color, var(--majalis-emerald)) 10%, transparent);
+}
+
+.seerah-panel__num {
+  font-size: 0.72rem;
+  margin-bottom: 0.1rem;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.seerah-panel__title {
+  font-size: 1.15rem;
+  font-weight: 750;
+  margin: 0 0 0.15rem;
+  line-height: 1.3;
+  text-align: start;
+}
+
+.seerah-panel__year {
+  font-size: 0.78rem;
+  text-align: start;
+}
+
+.seerah-panel__desc {
+  font-size: 0.92rem;
+  line-height: 1.8;
+  margin: 0 0 0.85rem;
+  text-align: start;
+  direction: rtl;
+  letter-spacing: normal;
+  word-spacing: normal;
+  max-width: 38rem;
+}
+
+.seerah-panel__topics {
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
+}
+
+.seerah-panel__topic {
+  font-size: 0.72rem;
+  padding: 0.22rem 0.65rem;
+}
+
+.seerah-panel__events {
+  margin-bottom: 1rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--majalis-parchment, #f7f3ea) 88%, #fff);
+  border: 1px solid var(--majalis-line, #e6e0d4);
+}
+
+.seerah-panel__events-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin: 0 0 0.55rem;
+  text-align: start;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.seerah-panel__events-list {
+  gap: 0.4rem;
+}
+
+.seerah-panel__event-item {
+  font-size: 0.84rem;
+  line-height: 1.6;
+  text-align: start;
+  direction: rtl;
+}
+
+.seerah-panel__nav {
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  padding-bottom: 0.15rem;
+}
+
+.seerah-panel__nav-btn {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8rem;
+  border-radius: 999px;
+}
+
+/* لا أزرار مشاركة داخل بطاقة المرحلة */
+.seerah-panel__share,
+.seerah-panel .share-faida,
+.seerah-panel .section-share-actions {
+  display: none !important;
+}
+
+.seerah-page .section-share-actions,
+.seerah-page .share-faida {
+  margin-block: 1rem 0.75rem;
+}
+
+@media (max-width: 720px) {
+  .seerah-timeline {
+    width: 100%;
+    max-height: none;
+    padding: 0.4rem;
+    gap: 0.35rem;
+  }
+  .seerah-timeline__item {
+    min-width: 4.5rem;
+    padding: 0.4rem 0.35rem;
+  }
+  .seerah-timeline__dot {
+    width: 24px;
+    height: 24px;
+    font-size: 0.65rem;
+  }
+  .seerah-panel {
+    padding: 0.95rem 0.9rem 1rem;
+    width: 100%;
+    max-width: none;
+  }
+  .seerah-panel__title { font-size: 1.05rem; }
+  .seerah-panel__desc { font-size: 0.9rem; line-height: 1.75; }
+  .seerah-panel__icon { display: none; }
+}
+
+@media (max-width: 430px) {
+  .seerah-layout { padding-inline: 0.65rem; }
+  .seerah-panel__nav-btn { flex: 1 1 auto; text-align: center; }
+}
+
+html[data-theme="dark"] .seerah-panel__events,
+html.dark .seerah-panel__events {
+  background: color-mix(in srgb, var(--majalis-panel, #1c2420) 92%, #000);
+  border-color: color-mix(in srgb, #fff 12%, transparent);
+}
+
