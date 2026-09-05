@@ -74,9 +74,9 @@ const ASSERTIONS = [
   { route: "/", selector: ".bottom-nav__tab.is-active || .bottom-nav--v2 .bottom-nav__tab.is-active", mode: "dark", min: 4.5 },
   // .sq-title (عنوان SectionQuiz داخل .sq-header الداكن) كان يخسر نفس المعركة.
   { route: "/cards", selector: ".sq-title", mode: "light", min: 4.5 },
-  // .twh-hub-card__current-tag اكتسب خلفية داكنة بالخطأ (يطابق [class*="-card"]
-  // اسميًا رغم أنه شارة صغيرة لا حاوية)، فتطابق لون نصه الخاص تقريبًا.
-  { route: "/tawhid", selector: ".twh-hub-card__current-tag", mode: "dark", min: 3 },
+  // بطاقات بوابة التوحيد — لا تعتمد شارة «أنت هنا» بعد إصلاح التنقّل المستقل.
+  { route: "/tawhid", selector: ".hub-card__title", mode: "dark", min: 3 },
+  { route: "/tawhid", selector: ".hub-card__desc", mode: "dark", min: 4.5 },
   { route: "/quran-knowledge", selector: ".hub-card__title", mode: "light", min: 3 },
   { route: "/quran-knowledge", selector: ".hub-card__desc", mode: "light", min: 4.5 },
   { route: "/quran-knowledge", selector: ".hub-card__title", mode: "dark", min: 3 },
