@@ -33,7 +33,7 @@ export default function QuranKnowledgeHubPage() {
           Icon: BookMarked,
         },
         {
-          href: "/quran/surah-stories",
+          href: "/prophets",
           title: "قصص القرآن",
           desc: "قصص السور والعبر",
           Icon: BookOpen,

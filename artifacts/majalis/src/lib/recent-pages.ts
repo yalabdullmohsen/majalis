@@ -108,6 +108,12 @@ const LABEL_MAP: Record<string, string> = {
 
   // ─── العقيدة ──────────────────────────────────────────────────────
   "/tawhid":                        "التوحيد",
+  "/tawhid/tawhid-issues":          "التوحيد ومسائله",
+  "/tawhid/aqeedah-foundations":    "أصول العقيدة",
+  "/tawhid/wala-bara":              "الولاء والبراء",
+  "/tawhid/ahl-sunnah":             "عقيدة أهل السنة",
+  "/tawhid/tawhid-types":           "أقسام التوحيد",
+  "/tawhid/nawaaqid":               "نواقض الإسلام",
   "/arkan":                         "أركان الإسلام",
   "/arkan-iman":                    "أركان الإيمان",
   "/asma-husna":                    "الأسماء الحسنى",

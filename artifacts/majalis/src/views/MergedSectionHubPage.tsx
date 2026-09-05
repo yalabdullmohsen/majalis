@@ -58,7 +58,7 @@ export default function MergedSectionHubPage({ path, title, description, cards, 
       <div className="hub-card-grid">
         {cards.map((c) => (
           <HubCard
-            key={c.href}
+            key={`${c.href}::${c.title}`}
             href={c.href}
             title={c.title}
             description={c.desc}

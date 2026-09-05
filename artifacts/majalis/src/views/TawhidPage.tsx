@@ -14,72 +14,85 @@ import "@/styles/pages/misc-page-legacy.css";
 // ─── أقسام العقيدة والتوحيد ──────────────────────────────────────────────────
 
 type AqeedaSection = {
+  id: string;
   emoji: string;
   title: string;
   desc: string;
   href: string;
   badge: string;
   color: string;
-  isCurrent?: boolean;
+  featured?: boolean;
 };
 
 const AQEEDA_SECTIONS: AqeedaSection[] = [
   {
+    id: "tawhid-issues",
     emoji: "🕌", title: "التوحيد ومسائله",
     desc: "أنواع التوحيد، الشرك، البدعة، والمسائل العقدية",
-    href: "/tawhid", badge: "أنت هنا", color: "var(--mj-brand-deep)", isCurrent: true,
+    href: "/tawhid/tawhid-issues", badge: "أساس", color: "var(--mj-brand-deep)", featured: true,
   },
   {
+    id: "aqeedah-foundations",
     emoji: "📘", title: "أصول العقيدة",
     desc: "تعريف العقيدة ومصدرها وأركانها الإجمالية على منهج السلف",
-    href: "/tawhid", badge: "درس", color: "#0B3D2E",
+    href: "/tawhid/aqeedah-foundations", badge: "درس", color: "#0B3D2E",
   },
   {
+    id: "arkan-islam",
     emoji: "🌟", title: "أركان الإسلام",
     desc: "الشهادتان والصلاة والزكاة والصيام والحج",
     href: "/arkan", badge: "٥ أركان", color: "#0F5132",
   },
   {
+    id: "arkan-iman",
     emoji: "✨", title: "أركان الإيمان",
     desc: "الإيمان بالله وملائكته وكتبه ورسله واليوم الآخر والقدر",
     href: "/arkan-iman", badge: "٦ أركان", color: "#7C3AED",
   },
   {
+    id: "asma-husna",
     emoji: "💎", title: "الأسماء الحسنى",
     desc: "أسماء الله الحسنى الثابتة، مع بيان منهج الإحصاء والتحفّظ من السرد الضعيف",
     href: "/asma-husna", badge: "أسماء", color: "var(--mj-brand)",
   },
   {
+    id: "janna-naar",
     emoji: "🌿", title: "الجنة والنار",
     desc: "صفة الجنة ونعيمها وصفة النار وعذابها",
     href: "/janna-naar", badge: "عقيدة", color: "var(--mj-brand-deep)",
   },
   {
+    id: "alamat-saah",
     emoji: "⏳", title: "علامات الساعة",
     desc: "العلامات الصغرى والكبرى مرتبةً بالأدلة",
     href: "/alamat-saah", badge: "صغرى وكبرى", color: "var(--mj-brand)",
   },
   {
+    id: "malaika",
     emoji: "👼", title: "الملائكة في الإسلام",
     desc: "الإيمان بوجودهم وصفاتهم وما ثبت من أسمائهم ومهامهم في الوحي",
     href: "/malaika", badge: "غيبيات", color: "#5B21B6",
   },
   {
+    id: "wala-bara",
     emoji: "⚖️", title: "الولاء والبراء",
     desc: "موالاة أهل الإيمان والبراءة من الشرك بضابط البر والعدل مع المسالمين",
-    href: "/tawhid", badge: "درس", color: "#92400E",
+    href: "/tawhid/wala-bara", badge: "درس", color: "#92400E",
   },
   {
+    id: "aqeedah-path",
     emoji: "📖", title: "مسار تعلّم العقيدة",
     desc: "منهج متدرّج في أركان الإيمان والتوحيد من مصادر أهل السنة",
     href: "/lessons", badge: "مسار", color: "var(--mj-brand)",
   },
   {
+    id: "ahl-sunnah",
     emoji: "🌟", title: "عقيدة أهل السنة والجماعة",
     desc: "معالم المنهج: التلقي، الإيمان، الصفات، الصحابة، القدر، والوسطية",
-    href: "/tawhid", badge: "١٠ دروس", color: "#0B3D2E",
+    href: "/tawhid/ahl-sunnah", badge: "١٠ دروس", color: "#0B3D2E",
   },
   {
+    id: "islamic-sects",
     emoji: "📚", title: "الفرق والمذاهب",
     desc: "عرض تاريخي للفرق مع بيان موقف أهل السنة",
     href: "/islamic-sects", badge: "موسوعة", color: "#1E3A5F",
@@ -424,14 +437,13 @@ export default function TawhidPage() {
         <div className="hub-card-grid twh-hub-grid">
           {AQEEDA_SECTIONS.map((s) => (
             <HubCard
-              key={s.href}
+              key={s.id}
               href={s.href}
               title={s.title}
               description={s.desc}
               badge={s.badge}
               icon={<SectionIcon name={s.emoji} size={22} />}
-              className={s.isCurrent ? "hub-card--featured" : undefined}
-              footer={s.isCurrent ? <span className="twh-hub-card__current-tag">أنت هنا</span> : null}
+              featured={s.featured}
             />
           ))}
         </div>
@@ -446,7 +458,7 @@ export default function TawhidPage() {
         <a href="#asma-preview"   className="twh-jumpnav__btn">الأسماء الحسنى</a>
         <a href="#sources"        className="twh-jumpnav__btn">مصادر القسم</a>
         <a href="#recommended"    className="twh-jumpnav__btn">كتب مقترحة</a>
-        <Link href="/tawhid" className="twh-jumpnav__btn">دروس أهل السنة</Link>
+        <Link href="/tawhid/ahl-sunnah" className="twh-jumpnav__btn">دروس أهل السنة</Link>
         <Link href="/islamic-sects#ahl-al-sunna" className="twh-jumpnav__btn">أهل السنة في الفرق</Link>
       </nav>
 
@@ -561,7 +573,7 @@ export default function TawhidPage() {
         </ul>
         <div className="twh-subsection-link" style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
           <Link href="/methodology" className="twh-goto-btn">منهج الموقع ومصادره ←</Link>
-          <Link href="/tawhid" className="twh-goto-btn">أصول العقيدة ←</Link>
+          <Link href="/tawhid/aqeedah-foundations" className="twh-goto-btn">أصول العقيدة ←</Link>
         </div>
       </section>
 
@@ -589,11 +601,11 @@ export default function TawhidPage() {
           دروس منظّمة في معالم المنهج: مصدر التلقي، الإيمان، الأسماء والصفات، الصحابة، القدر، والوسطية بين الفرق — مع الإحالات إلى الواسطية والطحاوية.
         </p>
         <div className="twh-subsection-link" style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
-          <Link href="/tawhid" className="twh-goto-btn">دروس عقيدة أهل السنة ←</Link>
-          <Link href="/tawhid" className="twh-goto-btn">أصول العقيدة ←</Link>
-          <Link href="/tawhid" className="twh-goto-btn">أقسام التوحيد ←</Link>
-          <Link href="/tawhid" className="twh-goto-btn">نواقض الإسلام ←</Link>
-          <Link href="/tawhid" className="twh-goto-btn">الولاء والبراء ←</Link>
+          <Link href="/tawhid/ahl-sunnah" className="twh-goto-btn">دروس عقيدة أهل السنة ←</Link>
+          <Link href="/tawhid/aqeedah-foundations" className="twh-goto-btn">أصول العقيدة ←</Link>
+          <Link href="/tawhid/tawhid-types" className="twh-goto-btn">أقسام التوحيد ←</Link>
+          <Link href="/tawhid/nawaaqid" className="twh-goto-btn">نواقض الإسلام ←</Link>
+          <Link href="/tawhid/wala-bara" className="twh-goto-btn">الولاء والبراء ←</Link>
           <Link href="/islamic-sects#ahl-al-sunna" className="twh-goto-btn">صفحة الفرق — أهل السنة ←</Link>
         </div>
       </section>
