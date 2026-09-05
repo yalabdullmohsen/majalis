@@ -103,6 +103,10 @@ export default function FiqhLessonPage() {
               { name: "الرئيسية", path: "/" },
               { name: "الفقه", path: "/fiqh" },
               { name: hit.book.title, path: `/fiqh/books/${hit.book.id}` },
+              {
+                name: hit.chapter.title,
+                path: `/fiqh/books/${hit.book.id}/chapters/${hit.chapter.id}`,
+              },
               { name: hit.lesson.title, path: hit.href },
             ]),
           ],
@@ -160,6 +164,10 @@ export default function FiqhLessonPage() {
         <Link href="/fiqh">الفقه</Link>
         <span aria-hidden="true"> ← </span>
         <Link href={`/fiqh/books/${book.id}`}>{book.title}</Link>
+        <span aria-hidden="true"> ← </span>
+        <Link href={`/fiqh/books/${book.id}/chapters/${chapter.id}`}>{chapter.title}</Link>
+        <span aria-hidden="true"> ← </span>
+        <span aria-current="page">{lesson.title}</span>
       </nav>
 
       <header className="fiqh-lux-lesson-hero">

@@ -89,11 +89,7 @@ export function FiqhCategoryCard({ door, className, featured = false }: Props) {
         <h3 className="fiqh-category-card__title">{door.label}</h3>
       </div>
       <p className="fiqh-category-card__desc">{door.desc}</p>
-      {hasContent ? (
-        <p className="fiqh-category-card__meta">{metaLabel}</p>
-      ) : (
-        <p className="fiqh-category-card__soon">سيضاف محتوى هذا الباب قريبًا</p>
-      )}
+      {hasContent ? <p className="fiqh-category-card__meta">{metaLabel}</p> : null}
     </Link>
   );
 }

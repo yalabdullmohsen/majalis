@@ -63,7 +63,8 @@ console.log("\n=== فقه — صفحة المحور من books.json ===");
 {
   const pageSrc = readFileSync(resolve(srcRoot, "pages/fiqh/ui/FiqhView.tsx"), "utf8");
   const lobbySrc = readFileSync(resolve(srcRoot, "config/section-lobbies-fiqh.ts"), "utf8");
-  assert(pageSrc.includes("getFiqhLobby") && pageSrc.includes("SectionLobby"), "FiqhPage من SectionLobby والسجل");
+  assert(pageSrc.includes("publishedBooks") && pageSrc.includes("searchFiqhCatalog"), "FiqhPage من كتب الفقه والبحث");
+  assert(pageSrc.includes("كتب الفقه"), "صفحة الفقه تعرض الكتب");
   assert(lobbySrc.includes("publishedBooks"), "السجل يعرض الكتب المنشورة");
   assert(lobbySrc.includes("@/lib/fiqh-books"), "السجل يستورد fiqh-books");
   assert(!readFileSync(resolve(srcRoot, "config/section-lobbies.ts"), "utf8").includes("@/lib/fiqh-books"), "اللوبي الأساسي بلا fiqh-books");

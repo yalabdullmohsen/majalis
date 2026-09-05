@@ -25,6 +25,10 @@ for (const [id, rel] of PAGES) {
   const src = read(rel);
   if (id === "sections") {
     assert.match(src, /MoreHubFromRegistry/, `${id}: من السجل`);
+  } else if (id === "fiqh") {
+    assert.match(src, /publishedBooks/, `${id}: شبكة كتب منشورة`);
+    assert.match(src, /searchFiqhCatalog/, `${id}: بحث داخل الفقه`);
+    assert.match(src, /SectionTemplatePage/, `${id}: قالب القسم`);
   } else {
     assert.match(src, /SectionLobby/, `${id}: يستعمل SectionLobby`);
   }
@@ -131,6 +135,7 @@ for (const id of LOBBY_IDS) {
 const coreLobby = read("src/config/section-lobbies.ts");
 assert.doesNotMatch(coreLobby, /@\/lib\/fiqh-books/, "اللوبي الأساسي بلا fiqh-books");
 assert.match(read("src/config/section-lobbies-fiqh.ts"), /@\/lib\/fiqh-books/, "لوبي الفقه يستورد الكتب");
-assert.match(read("src/pages/fiqh/ui/FiqhView.tsx"), /getFiqhLobby/, "FiqhView من getFiqhLobby");
+assert.match(read("src/pages/fiqh/ui/FiqhView.tsx"), /publishedBooks/, "FiqhView يعرض الكتب المنشورة");
+assert.match(read("src/pages/fiqh/ui/FiqhView.tsx"), /searchFiqhCatalog/, "FiqhView يبحث داخل الفقه");
 
 console.log("section-lobby-gates.test.ts: ok");

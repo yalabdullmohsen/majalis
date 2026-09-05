@@ -57,7 +57,7 @@ console.log("\n=== بنية المكوّنات ===");
   assert(hubCardTsx.includes("hub-card__title"), "HubCard يعرّف العنوان");
   assert(hubCardTsx.includes("hub-card__go"), "HubCard: سهم مدمج");
   assert(tawhidPage.includes("HubCard"), "TawhidPage يرحّل إلى HubCard");
-  assert(fiqhPage.includes("SectionLobby"), "FiqhPage يرحّل إلى SectionLobby");
+  assert(fiqhPage.includes("publishedBooks") && fiqhPage.includes("searchFiqhCatalog"), "FiqhPage يعرض كتب الفقه مع البحث");
   assert(quranHub.includes("SectionLobby"), "QuranHubPage يرحّل إلى SectionLobby");
   assert(merged.includes("TopicPage"), "MergedSectionHubPage يرحّل إلى TopicPage");
   assert(topBar.includes('aria-label="أقسام رئيسية"'), "TopSectionBar موجود");

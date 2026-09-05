@@ -138,6 +138,7 @@ const FiqhCouncilPage = lazy(() => import("@/views/FiqhCouncilPage"));
 const FiqhCouncilItemDetailPage = lazy(() => import("@/views/FiqhCouncilItemDetailPage"));
 const FiqhPage = lazy(() => import("@/pages/fiqh/FiqhPage"));
 const FiqhBookPage = lazy(() => import("@/pages/fiqh/FiqhBookPage"));
+const FiqhChapterPage = lazy(() => import("@/pages/fiqh/FiqhChapterPage"));
 const FiqhLessonPage = lazy(() => import("@/pages/fiqh/FiqhLessonPage"));
 const FiqhUsulPage = lazy(() => import("@/pages/fiqh/FiqhUsulPage"));
 const FiqhTopicPage = lazy(() => import("@/pages/fiqh/FiqhTopicPage"));
@@ -591,6 +592,7 @@ export default function AppRoutes() {
       <Route path="/knowledge/:section"><SafeLazyRoute component={KnowledgeSectionPage} /></Route>
       <Route path="/knowledge"><Redirect to="/knowledge/intro-islam" /></Route>
       <Route path="/fiqh/books/:bookId/lessons/:lessonId"><SafeLazyRoute component={FiqhLessonPage} /></Route>
+      <Route path="/fiqh/books/:bookId/chapters/:chapterId"><SafeLazyRoute component={FiqhChapterPage} /></Route>
       <Route path="/fiqh/books/:bookId"><SafeLazyRoute component={FiqhBookPage} /></Route>
       <Route path="/fiqh/usul"><SafeLazyRoute component={FiqhUsulPage} /></Route>
       <Route path="/fiqh/topics/:topicId"><SafeLazyRoute component={FiqhTopicPage} /></Route>

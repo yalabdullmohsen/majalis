@@ -1,14 +1,17 @@
 /**
  * مصدر الفقه: content/fiqh/books.json — كتاب ← باب ← مسألة.
+ * المذهب المعتمد في العرض: الحنبلي (زاد / روض / كشاف / مغني / ممتعم).
  * لا تُعرض إلا المسائل المنشورة الموثَّقة، ولا يُخلط بالدروس العامة.
  */
 import booksJson from "../../content/fiqh/books.json";
+import aliasesJson from "../../content/fiqh/book-aliases.json";
 import { normalizeArabic } from "@/shared/arabic-normalize";
 import { arabicIncludes } from "@/lib/arabic-search";
 
 export type FiqhBookCategory = "ibadat" | "muamalat" | "usrah" | "jinayat" | "qada";
 export type FiqhLessonLevel = "مبتدئ" | "متوسط" | "متقدم";
 export type FiqhLessonStatus = "published" | "draft";
+export type FiqhChapterStatus = "published" | "draft";
 
 export type FiqhSource = { book: string; author: string; ref: string };
 
@@ -30,15 +33,29 @@ export type FiqhChapter = {
   id: string;
   title: string;
   order: number;
+  status?: FiqhChapterStatus;
+  definition?: string;
+  summary?: string;
+  evidence?: string;
+  sources?: FiqhSource[];
   lessons: FiqhLesson[];
 };
 
 export type FiqhBook = {
   id: string;
   title: string;
+  description?: string;
   category: FiqhBookCategory;
   order: number;
+  aliases?: string[];
   chapters: FiqhChapter[];
+};
+
+export type FiqhBookAlias = {
+  aliasTitle: string;
+  aliasId: string;
+  targetBookId: string;
+  targetChapterId?: string;
 };
 
 export type FiqhSupportingTopic = {
@@ -64,7 +81,6 @@ export const FIQH_CATEGORY_ORDER: FiqhBookCategory[] = [
   "jinayat",
   "qada",
 ];
-/* التدرج العلمي داخل العبادات: طهارة ← صلاة ← زكاة ← صيام ← حج (ثم متممات العبادات). */
 
 /** مباحث مساندة — ليست كتب فروع، ولا تُخلط بشبكة الكتب. */
 export const FIQH_SUPPORTING_TOPICS: FiqhSupportingTopic[] = [
@@ -113,9 +129,33 @@ export const FIQH_SUPPORTING_TOPICS: FiqhSupportingTopic[] = [
 ];
 
 const CATALOG = booksJson as { books: FiqhBook[] };
+const ALIASES = (aliasesJson as { aliases: FiqhBookAlias[] }).aliases ?? [];
+
+export function getFiqhBookAliases(): FiqhBookAlias[] {
+  return ALIASES.slice();
+}
+
+export function resolveFiqhBookId(bookIdOrAlias: string): string {
+  if (CATALOG.books.some((b) => b.id === bookIdOrAlias)) return bookIdOrAlias;
+  const hit = ALIASES.find((a) => a.aliasId === bookIdOrAlias);
+  return hit?.targetBookId ?? bookIdOrAlias;
+}
+
+export function resolveFiqhAliasTarget(bookIdOrAlias: string): FiqhBookAlias | undefined {
+  if (CATALOG.books.some((b) => b.id === bookIdOrAlias)) return undefined;
+  return ALIASES.find((a) => a.aliasId === bookIdOrAlias);
+}
 
 export function getAllFiqhBooks(): FiqhBook[] {
   return CATALOG.books.slice().sort((a, b) => a.order - b.order);
+}
+
+function sourcesComplete(sources: FiqhSource[] | undefined): boolean {
+  return (
+    Array.isArray(sources) &&
+    sources.length > 0 &&
+    sources.every((s) => s.book?.trim() && s.author?.trim() && s.ref?.trim())
+  );
 }
 
 export function isPublishedLesson(lesson: FiqhLesson): boolean {
@@ -123,9 +163,10 @@ export function isPublishedLesson(lesson: FiqhLesson): boolean {
     lesson.status === "published" &&
     Boolean(lesson.bookId) &&
     Boolean(lesson.chapterId) &&
-    Array.isArray(lesson.sources) &&
-    lesson.sources.length > 0 &&
-    lesson.sources.every((s) => s.book?.trim() && s.author?.trim() && s.ref?.trim())
+    Boolean(lesson.summary?.trim()) &&
+    Boolean(lesson.evidence?.trim()) &&
+    Boolean(lesson.preferred?.trim()) &&
+    sourcesComplete(lesson.sources)
   );
 }
 
@@ -133,10 +174,19 @@ export function publishedLessonsInChapter(chapter: FiqhChapter): FiqhLesson[] {
   return chapter.lessons.filter(isPublishedLesson);
 }
 
+export function isPublishedChapter(chapter: FiqhChapter): boolean {
+  const statusOk = (chapter.status ?? "published") === "published";
+  return (
+    statusOk &&
+    Boolean(chapter.definition?.trim()) &&
+    Boolean(chapter.summary?.trim()) &&
+    sourcesComplete(chapter.sources) &&
+    publishedLessonsInChapter(chapter).length > 0
+  );
+}
+
 export function publishedChapters(book: FiqhBook): FiqhChapter[] {
-  return book.chapters
-    .filter((c) => publishedLessonsInChapter(c).length > 0)
-    .sort((a, b) => a.order - b.order);
+  return book.chapters.filter(isPublishedChapter).sort((a, b) => a.order - b.order);
 }
 
 export function publishedBooks(books: FiqhBook[] = getAllFiqhBooks()): FiqhBook[] {
@@ -144,13 +194,27 @@ export function publishedBooks(books: FiqhBook[] = getAllFiqhBooks()): FiqhBook[
 }
 
 export function getFiqhBook(bookId: string): FiqhBook | undefined {
-  return getAllFiqhBooks().find((b) => b.id === bookId);
+  const resolved = resolveFiqhBookId(bookId);
+  return getAllFiqhBooks().find((b) => b.id === resolved);
 }
 
 export function getVisibleFiqhBook(bookId: string): FiqhBook | undefined {
   const book = getFiqhBook(bookId);
   if (!book) return undefined;
   return publishedChapters(book).length > 0 ? book : undefined;
+}
+
+export function getFiqhChapter(
+  bookId: string,
+  chapterId: string,
+): { book: FiqhBook; chapter: FiqhChapter } | undefined {
+  const book = getVisibleFiqhBook(bookId);
+  if (!book) return undefined;
+  const alias = resolveFiqhAliasTarget(bookId);
+  const wantChapterId = alias?.targetChapterId || chapterId;
+  const chapter = publishedChapters(book).find((c) => c.id === wantChapterId || c.id === chapterId);
+  if (!chapter) return undefined;
+  return { book, chapter };
 }
 
 export type FiqhLessonHit = {
@@ -169,8 +233,12 @@ export function lessonHref(book: FiqhBook, lesson: FiqhLesson): string {
   return `/fiqh/books/${book.id}/lessons/${lesson.id}`;
 }
 
+export function chapterHref(bookId: string, chapterId: string): string {
+  return `/fiqh/books/${bookId}/chapters/${chapterId}`;
+}
+
 export function bookHref(bookId: string): string {
-  return `/fiqh/books/${bookId}`;
+  return `/fiqh/books/${resolveFiqhBookId(bookId)}`;
 }
 
 export function listPublishedLessons(): FiqhLessonHit[] {
@@ -259,8 +327,56 @@ export function adjacentFiqhLessons(
 
 /** وصف عرضي من عنوان الكتاب — ليس حكماً شرعياً جديداً. */
 export function fiqhBookBlurb(book: FiqhBook): string {
+  if (book.description?.trim()) return book.description.trim();
   const topic = book.title.replace(/^كتاب\s+/, "").trim();
-  return `أبواب ${topic} ومسائلها المنشورة.`;
+  return `أبواب ${topic} ومسائلها المنشورة على المذهب الحنبلي.`;
+}
+
+export type FiqhChapterHit = {
+  book: FiqhBook;
+  chapter: FiqhChapter;
+  href: string;
+  path: string;
+};
+
+export function listPublishedChapters(): FiqhChapterHit[] {
+  const hits: FiqhChapterHit[] = [];
+  for (const book of publishedBooks()) {
+    for (const chapter of publishedChapters(book)) {
+      hits.push({
+        book,
+        chapter,
+        href: chapterHref(book.id, chapter.id),
+        path: `${book.title} ← ${chapter.title}`,
+      });
+    }
+  }
+  return hits;
+}
+
+export function searchFiqhCatalog(query: string): {
+  books: FiqhBook[];
+  chapters: FiqhChapterHit[];
+  lessons: FiqhLessonHit[];
+} {
+  const q = query.trim();
+  const books = publishedBooks().filter(
+    (b) =>
+      !q ||
+      arabicIncludes(b.title, q) ||
+      arabicIncludes(b.description ?? "", q) ||
+      (b.aliases ?? []).some((a) => arabicIncludes(a, q)),
+  );
+  const chapters = listPublishedChapters().filter(
+    (h) =>
+      !q ||
+      arabicIncludes(h.chapter.title, q) ||
+      arabicIncludes(h.chapter.summary ?? "", q) ||
+      arabicIncludes(h.chapter.definition ?? "", q) ||
+      arabicIncludes(h.book.title, q),
+  );
+  const lessons = searchFiqhLessons(q);
+  return { books, chapters, lessons };
 }
 
 /** مستوى تقريبي من المسائل المنشورة في الكتاب. */

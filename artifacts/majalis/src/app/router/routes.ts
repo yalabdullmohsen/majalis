@@ -163,6 +163,7 @@ const PATHS = [
   "/fiqh-council/stats",
   "/fiqh-qawaid",
   "/fiqh/books/:bookId",
+  "/fiqh/books/:bookId/chapters/:chapterId",
   "/fiqh/books/:bookId/lessons/:lessonId",
   "/fiqh/topics/:topicId",
   "/fiqh/usul",
