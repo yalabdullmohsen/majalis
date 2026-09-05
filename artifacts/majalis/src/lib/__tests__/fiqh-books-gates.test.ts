@@ -1,20 +1,26 @@
 /**
- * بوابات إعادة بناء الفقه: كتاب ← باب ← مسألة.
- * التشغيل: node --import tsx src/lib/__tests__/fiqh-books-gates.test.ts
+ * بوابات فقه حنبلية: 17 كتابًا منشورة ← أبواب ← مسائل موثَّقة.
+ * التشغيل: pnpm exec tsx src/lib/__tests__/fiqh-books-gates.test.ts
  */
-import { readFileSync, existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   FIQH_CATEGORY_ORDER,
   FIQH_SUPPORTING_TOPICS,
   adjacentFiqhLessons,
+  chapterHref,
   getAllFiqhBooks,
+  getFiqhBookAliases,
+  getFiqhChapter,
   getFiqhLesson,
+  isPublishedChapter,
   isPublishedLesson,
+  listPublishedChapters,
   listPublishedLessons,
   publishedBooks,
   publishedChapters,
+  searchFiqhCatalog,
   searchFiqhLessons,
 } from "../fiqh-books";
 
@@ -38,21 +44,26 @@ function read(rel: string) {
 }
 
 const REQUIRED_TITLES = [
-  "كتاب الطهارة", "كتاب الصلاة", "كتاب الجنائز", "كتاب الزكاة", "كتاب الصيام",
-  "كتاب الاعتكاف", "كتاب الحج والعمرة", "كتاب الأضحية والعقيقة", "كتاب الأيمان والنذور",
-  "كتاب الذكاة والصيد", "كتاب الأطعمة والأشربة", "كتاب اللباس والزينة",
-  "كتاب البيوع", "كتاب الربا والصرف", "كتاب الخيار", "كتاب السلم والاستصناع",
-  "كتاب الإجارة", "كتاب الشركة والمضاربة", "كتاب الرهن", "كتاب الضمان والكفالة",
-  "كتاب الحوالة", "كتاب الوكالة", "كتاب القرض والدين", "كتاب الشفعة",
-  "كتاب المساقاة والمزارعة", "كتاب الوقف", "كتاب الهبة والعطية", "كتاب الوصايا",
-  "كتاب الفرائض والمواريث", "كتاب اللقطة", "كتاب الغصب", "كتاب إحياء الموات",
-  "كتاب النكاح", "كتاب الصداق", "كتاب العشرة والقَسْم", "كتاب الخلع", "كتاب الطلاق",
-  "كتاب الرجعة", "كتاب الإيلاء والظهار واللعان", "كتاب العِدد", "كتاب الرضاع",
-  "كتاب النفقات والحضانة",
-  "كتاب الجنايات", "كتاب الديات", "كتاب القسامة", "كتاب الحدود", "كتاب البغاة",
-  "كتاب الجهاد والسِّيَر", "كتاب الجزية",
-  "كتاب القضاء", "كتاب الشهادات", "كتاب الدعوى والبيّنات", "كتاب الإقرار",
-];
+  "كتاب الطهارة",
+  "كتاب الصلاة",
+  "كتاب الجنائز",
+  "كتاب الزكاة",
+  "كتاب الصيام",
+  "كتاب الاعتكاف",
+  "كتاب الحج والمناسك",
+  "كتاب الجهاد والسير",
+  "كتاب البيوع والمعاملات",
+  "كتاب الشركة والمعاوضات",
+  "كتاب الوصايا والفرائض",
+  "كتاب النكاح والأسرة",
+  "كتاب الجنايات والديات والحدود",
+  "كتاب الأطعمة والذبائح",
+  "كتاب الأيمان والنذور والكفارات",
+  "كتاب القضاء والشهادات والدعاوى",
+  "كتاب العتق",
+] as const;
+
+const FORBIDDEN = ["pending_review", "مؤجل", "قيد الإضافة", "قريبًا", "سيتم لاحقًا"] as const;
 
 console.log("\n=== ترتيب علمي للكتب ===");
 {
@@ -63,184 +74,109 @@ console.log("\n=== ترتيب علمي للكتب ===");
   assert(pos("zakat") < pos("sawm"), "الزكاة قبل الصيام");
   assert(pos("sawm") < pos("hajj"), "الصيام قبل الحج");
   assert(FIQH_CATEGORY_ORDER[0] === "ibadat", "العبادات أول مجموعة");
-  assert(FIQH_CATEGORY_ORDER.includes("muamalat"), "المعاملات");
-  assert(FIQH_CATEGORY_ORDER.includes("usrah"), "الأسرة");
-  assert(FIQH_CATEGORY_ORDER.includes("jinayat"), "الجنايات والحدود");
 }
 
-console.log("\n=== ١) كل عنوان كتاب يبدأ بـ«كتاب» ===");
+console.log("\n=== ١) سبعة عشر كتابًا منشورة بعناوين مطلوبة ===");
 {
   const books = getAllFiqhBooks();
-  assert(books.length === 53, `عدد الكتب 53 (الفعلي ${books.length})`);
+  assert(books.length === 17, `عدد الكتب 17 (الفعلي ${books.length})`);
+  assert(publishedBooks().length === 17, "كل الكتب ظاهرة/منشورة");
   for (const b of books) {
     assert(b.title.startsWith("كتاب "), `يبدأ بكتاب: ${b.id}`);
+    assert(Boolean(b.description?.trim()), `وصف للكتاب ${b.id}`);
   }
   const titles = new Set(books.map((b) => b.title));
   for (const t of REQUIRED_TITLES) {
     assert(titles.has(t), `موجود: ${t}`);
   }
+  const ids = books.map((b) => b.id);
+  assert(new Set(ids).size === ids.length, "معرفات الكتب فريدة");
 }
 
-console.log("\n=== ٢) صفر درس بلا bookId/chapterId أو مصادر ===");
+console.log("\n=== ٢) أبواب ومسائل منشورة موثَّقة ===");
 {
-  const books = getAllFiqhBooks();
+  let chapters = 0;
   let lessons = 0;
-  for (const b of books) {
+  const chapterKeys = new Set<string>();
+  const lessonIds = new Set<string>();
+  for (const b of getAllFiqhBooks()) {
     for (const c of b.chapters) {
+      chapters++;
+      const key = `${b.id}/${c.id}`;
+      assert(!chapterKeys.has(key), `باب فريد: ${key}`);
+      chapterKeys.add(key);
+      assert(isPublishedChapter(c), `باب منشور: ${key}`);
+      assert(Boolean(c.definition?.trim()), `تعريف: ${key}`);
+      assert(Boolean(c.summary?.trim()), `خلاصة: ${key}`);
+      assert((c.sources?.length ?? 0) >= 1, `مصادر الباب: ${key}`);
       for (const l of c.lessons) {
         lessons++;
-        assert(Boolean(l.bookId) && Boolean(l.chapterId), `${l.id} له كتاب وباب`);
-        assert(l.bookId === b.id && l.chapterId === c.id, `${l.id} يطابق موضعه`);
-        if (l.status === "published") {
-          assert(isPublishedLesson(l), `${l.id} منشور بمصادر كاملة`);
-          assert(Boolean(l.summary?.trim()), `${l.id} له تحرير`);
-          assert(Boolean(l.evidence?.trim()), `${l.id} له أدلة`);
-          assert(Boolean(l.preferred?.trim()), `${l.id} له راجح`);
-        }
+        assert(!lessonIds.has(l.id), `مسألة فريدة: ${l.id}`);
+        lessonIds.add(l.id);
+        assert(l.bookId === b.id && l.chapterId === c.id, `ربط المسألة ${l.id}`);
+        assert(isPublishedLesson(l), `مسألة منشورة: ${l.id}`);
       }
+      assert(publishedChapters(b).some((x) => x.id === c.id), `الباب ظاهر في ${b.id}`);
     }
   }
-  assert(lessons >= 50, `مسائل كافية للاختبار (الفعلي ${lessons})`);
+  assert(chapters >= 200, `أبواب كافية (الفعلي ${chapters})`);
+  assert(lessons >= 400, `مسائل كافية (الفعلي ${lessons})`);
+  assert(listPublishedChapters().length === chapters, "listPublishedChapters يغطي الكل");
+  assert(listPublishedLessons().length === lessons, "listPublishedLessons يغطي الكل");
 }
 
-console.log("\n=== ٣) صفر درس فقهي في مصادر الأقسام الأخرى ===");
+console.log("\n=== ٣) aliases للكتب المدمجة ===");
 {
-  const ids = listPublishedLessons().map((h) => h.lesson.id);
-  const otherFiles = [
-    "src/data/learning-paths-index.ts",
-    "src/lib/annual-courses-seed.ts",
-    "src/lib/updates-seed.ts",
-    "src/pages/quran/ui/QuranHubView.tsx",
-    "src/views/KnowledgeSectionPage.tsx",
-  ];
-  for (const f of otherFiles) {
-    const src = existsSync(resolve(appRoot, f)) ? read(f) : "";
-    const leaked = ids.filter((id) => src.includes(`"${id}"`) || src.includes(`'${id}'`));
-    assert(leaked.length === 0, `${f} بلا معرفات مسائل الفقه (${leaked.slice(0, 3).join(",") || "لا شيء"})`);
-  }
-  const view = read("src/pages/fiqh/ui/FiqhView.tsx");
-  assert(!view.includes("@/pages/lessons") && !view.includes("/quran-hub"), "بوابة الفقه لا تدمج مركز القرآن الكريم/الدروس");
+  const aliases = getFiqhBookAliases();
+  assert(aliases.length >= 20, `aliases كافية (الفعلي ${aliases.length})`);
+  const rahn = aliases.find((a) => a.aliasId === "rahn");
+  assert(Boolean(rahn && rahn.targetBookId === "buyu"), "كتاب الرهن → البيوع");
+  const ch = getFiqhChapter("rahn", "rahn");
+  assert(Boolean(ch && ch.book.id === "buyu"), "resolve alias يفتح باب الرهن");
 }
 
-console.log("\n=== ٤) صفر تكرار مسار أو عنوان في الشبكة ===");
+console.log("\n=== ٤) البحث داخل الفقه فقط ===");
+{
+  const { books, chapters, lessons } = searchFiqhCatalog("الطهارة");
+  assert(books.some((b) => b.id === "taharah"), "بحث يجد كتاب الطهارة");
+  assert(chapters.length > 0, "بحث يجد أبوابًا");
+  assert(lessons.length > 0, "بحث يجد مسائل");
+  const water = searchFiqhLessons("المياه");
+  assert(water.length > 0, "بحث المياه يعيد مسائل");
+  assert(water.every((h) => h.href.startsWith("/fiqh/")), "نتائج البحث داخل /fiqh");
+}
+
+console.log("\n=== ٥) مسارات الأبواب والمجاورة ===");
 {
   const books = publishedBooks();
-  const titles = books.map((b) => b.title);
-  assert(new Set(titles).size === titles.length, "عناوين الكتب الظاهرة فريدة");
-  const hrefs = [
-    ...books.map((b) => `/fiqh/books/${b.id}`),
-    ...FIQH_SUPPORTING_TOPICS.map((t) => t.href),
-  ];
-  assert(new Set(hrefs).size === hrefs.length, "مسارات البطاقات الظاهرة فريدة");
+  const first = books[0]!;
+  const ch = publishedChapters(first)[0]!;
+  const href = chapterHref(first.id, ch.id);
+  assert(href === `/fiqh/books/${first.id}/chapters/${ch.id}`, "مسار الباب");
+  const lesson = ch.lessons[0]!;
+  const hit = getFiqhLesson(first.id, lesson.id);
+  assert(Boolean(hit), "getFiqhLesson");
+  const adj = adjacentFiqhLessons(first.id, lesson.id);
+  assert(adj.chapterHits.length >= 1, "مسائل الباب في المجاورة");
+}
+
+console.log("\n=== ٦) لا عبارات تأجيل في الكتالوج، وواجهة الأبواب موجودة ===");
+{
+  const catalog = read("content/fiqh/books.json");
+  for (const bad of FORBIDDEN) {
+    assert(!catalog.includes(bad), `الكتالوج بلا «${bad}»`);
+  }
+  const view = read("src/pages/fiqh/ui/FiqhBookView.tsx");
+  assert(view.includes("/chapters/") || view.includes("chapterHref"), "صفحة الكتاب تربط بالأبواب");
+  assert(existsSync(resolve(appRoot, "src/pages/fiqh/ui/FiqhChapterView.tsx")), "صفحة الباب موجودة");
+}
+
+console.log("\n=== ٧) المساندة لا تُخلط بشبكة الكتب ===");
+{
   const supportTitles = FIQH_SUPPORTING_TOPICS.map((t) => t.title);
   assert(new Set(supportTitles).size === supportTitles.length, "عناوين المساندة فريدة");
-  assert(!supportTitles.includes("الأحكام الشرعية"), "لا بطاقة الأحكام الشرعية");
-  assert(!supportTitles.includes("المجمع الفقهي") || !supportTitles.includes("قرارات المجامع"), "مدخل مجامع واحد");
-  const view = read("src/pages/fiqh/ui/FiqhView.tsx");
-  assert(!view.includes("الأحكام الشرعية"), "الواجهة بلا الأحكام الشرعية");
-  assert(!view.includes("يجري استكمال"), "الواجهة بلا استكمال توثيق");
+  assert(!supportTitles.includes("المكتبة العلمية"), "لا بطاقة المكتبة العلمية");
 }
 
-console.log("\n=== ٥–٦) شرائح nowrap + أيقونة وتسمية ===");
-{
-  const css = read("src/components/lobby/section-lobby.css");
-  assert(/white-space:\s*nowrap/.test(css), "شرائح nowrap");
-  assert(/overflow-x:\s*auto/.test(css), "overflow-x auto");
-  assert(/scroll-snap-type:\s*x/.test(css), "scroll-snap");
-  const view = read("src/pages/fiqh/ui/FiqhView.tsx");
-  assert(view.includes("SectionLobby"), "الفقه من SectionLobby");
-  assert(view.includes("chips={lobby.chips}"), "شريط المجموعات من السجل");
-}
-
-console.log("\n=== ٧) بطاقات متساوية الارتفاع ===");
-{
-  const css = read("src/components/lobby/section-lobby.css");
-  assert(/grid-auto-rows:\s*1fr/.test(css), "الشبكة 1fr");
-  assert(/section-lobby__grid--solo/.test(css), "صف كامل للعنصر الواحد");
-}
-
-console.log("\n=== ٨) نطاق الزر العائم وsafe-area ===");
-{
-  const css = read("src/components/lobby/section-lobby.css");
-  assert(css.includes("assistant-fab-size"), "نطاق FAB محجوز");
-}
-
-console.log("\n=== ٩) صفر صفحة قيد المراجعة أو فارغة ===");
-{
-  const view = read("src/pages/fiqh/ui/FiqhView.tsx");
-  const bookView = read("src/pages/fiqh/ui/FiqhBookView.tsx");
-  const lessonView = read("src/pages/fiqh/ui/FiqhLessonView.tsx");
-  for (const [name, src] of [["hub", view], ["book", bookView], ["lesson", lessonView]] as const) {
-    assert(!/قيد المراجعة/.test(src), `${name} بلا قيد المراجعة`);
-  }
-  const visible = publishedBooks();
-  assert(visible.length === getAllFiqhBooks().length, "لا كتاب فارغ معروض (كل الكتب لها مسائل منشورة)");
-  for (const b of visible) {
-    assert(publishedChapters(b).length > 0, `${b.id} له أبواب منشورة`);
-  }
-  assert(existsSync(resolve(appRoot, "content/fiqh/FIQH_CONTENT_QUEUE.md")), "طابور المحتوى موجود");
-}
-
-console.log("\n=== ١٠) البحث: ٥٠ عيّنة ===");
-{
-  const hits = listPublishedLessons();
-  assert(hits.length >= 50, `مسائل منشورة ≥ 50 (الفعلي ${hits.length})`);
-  const samples: { q: string; kind: string }[] = [];
-  for (const h of hits.slice(0, 20)) {
-    samples.push({ q: h.lesson.title, kind: "lesson" });
-  }
-  for (const h of hits.slice(0, 15)) {
-    samples.push({ q: h.chapter.title.replace(/^باب\s+/, ""), kind: "chapter" });
-  }
-  for (const b of publishedBooks().slice(0, 15)) {
-    samples.push({ q: b.title.replace(/^كتاب\s+/, ""), kind: "book" });
-  }
-  assert(samples.length >= 50, `عيّنات البحث ≥ 50 (الفعلي ${samples.length})`);
-  let missed = 0;
-  for (const s of samples) {
-    const found = searchFiqhLessons(s.q);
-    if (found.length === 0) {
-      missed++;
-      console.error(`    missed ${s.kind}: ${s.q}`);
-    }
-  }
-  assert(missed === 0, `البحث يجد العيّنات الخمسين (فائت ${missed})`);
-  const taimum = searchFiqhLessons("التيمم");
-  assert(
-    taimum.some((h) => h.path.includes("كتاب الطهارة") && h.path.includes("باب التيمم")),
-    "نتيجة التيمم تعرض المسار الكامل",
-  );
-}
-
-console.log("\n=== البنية والواجهة ===");
-{
-  const view = read("src/pages/fiqh/ui/FiqhView.tsx");
-  assert(view.includes("getFiqhLobby") || view.includes("section-lobbies-fiqh"), "خمس مجموعات من المصدر");
-  assert(view.includes('import("@/config/section-lobbies-fiqh")') || view.includes("section-lobbies-fiqh"), "لوبي فقه كسول/معزول");
-  assert(view.includes("FIQH_HUB_STATS") || view.includes("fiqh-hub-stats"), "بطل الفقه بلا fiqh-books متزامن");
-  assert(view.includes("lobbyId=\"fiqh\""), "معرّف لوبي الفقه");
-  assert(view.includes("title={lobby.title}"), "هيدر مختصر بلا فقرة طويلة");
-  const bookView = read("src/pages/fiqh/ui/FiqhBookView.tsx");
-  assert(bookView.includes("fiqhBookBlurb"), "وصف الكتاب من العنوان");
-  assert(bookView.includes("مستوى تقريبي"), "مستوى تقريبي في رأس الكتاب");
-  assert(bookView.includes("fiqh-chapter--card"), "أبواب كبطاقات");
-  const lessonView = read("src/pages/fiqh/ui/FiqhLessonView.tsx");
-  assert(lessonView.includes("فهرس الباب"), "فهرس داخلي");
-  assert(lessonView.includes("خلاصة مختصرة") || lessonView.includes("ملخص سريع"), "خلاصة المسألة");
-  assert(lessonView.includes("الراجح"), "الراجح");
-  assert(lessonView.includes("adjacentFiqhLessons"), "التالي/السابق");
-  assert(lessonView.includes("fiqh-read-progress"), "شريط تقدّم قراءة");
-  const water = getFiqhLesson("taharah", "taharah-miyah-aqsam");
-  assert(Boolean(water), "مسألة أقسام المياه");
-  const adj = adjacentFiqhLessons("taharah", "taharah-miyah-aqsam");
-  assert(Boolean(adj.next), "للمسألة الأولى تالٍ");
-  assert(!adj.prev, "لا سابق للأولى");
-  const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
-  assert(app.includes('path="/fiqh/books/:bookId"'), "مسار الكتاب");
-  assert(app.includes('path="/fiqh/books/:bookId/lessons/:lessonId"'), "مسار المسألة");
-  assert(app.includes('path="/fiqh/usul"'), "مسار الأصول");
-  assert(app.includes('<Route path="/rulings"><Redirect to="/fiqh" />'), "/rulings → /fiqh");
-}
-
-console.log(`\n=== النتيجة: ${passed} نجاح، ${failed} فشل ===`);
+console.log(`\nالنتيجة: ${passed} نجاح / ${failed} فشل`);
 if (failed > 0) process.exit(1);

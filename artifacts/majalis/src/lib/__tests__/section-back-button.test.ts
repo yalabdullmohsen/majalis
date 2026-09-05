@@ -35,7 +35,6 @@ assert.match(gate, /بلا زر رجوع عائم/);
 assert.ok((gate.match(/"[/][^"]+"/g) ?? []).length >= 8, "البوابة تزور مسارات الأقسام");
 
 const pages: Array<[string, string]> = [
-  ["fiqh", "src/pages/fiqh/ui/FiqhView.tsx"],
   ["quran", "src/pages/quran/ui/QuranHubView.tsx"],
   ["lessons", "src/pages/lessons/ui/LessonsView.tsx"],
   ["sections", "src/features/more/MoreHubFromRegistry.tsx"],
@@ -46,5 +45,10 @@ for (const [id, rel] of pages) {
   assert.match(src, /SectionLobby/, `${id}: يستهلك القالب — الرجوع من المصدر الواحد`);
   assert.doesNotMatch(src, /data-section-back/, `${id}: لا زر رجوع يدوي في الصفحة`);
 }
+
+const fiqh = read("src/pages/fiqh/ui/FiqhView.tsx");
+assert.match(fiqh, /publishedBooks/, "الفقه: شبكة كتب منشورة");
+assert.match(fiqh, /SectionTemplatePage/, "الفقه: قالب القسم يوفر الكروم/الرجوع");
+assert.doesNotMatch(fiqh, /data-section-back/, "الفقه: لا زر رجوع يدوي");
 
 console.log("section-back-button.test.ts: ok");

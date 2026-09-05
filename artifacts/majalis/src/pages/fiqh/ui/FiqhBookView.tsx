@@ -6,12 +6,14 @@ import { breadcrumbJsonLd, bookJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 import { Empty } from "@/components/ui-common";
 import {
+  chapterHref,
   fiqhBookApproxLevel,
   fiqhBookBlurb,
   fiqhBookCounts,
   getVisibleFiqhBook,
   publishedChapters,
   publishedLessonsInChapter,
+  resolveFiqhAliasTarget,
 } from "@/lib/fiqh-books";
 import { formatAbwabCount, formatMasailCount } from "@/lib/arabic-count";
 import "@/styles/pages/fiqh-hub.css";
@@ -19,17 +21,24 @@ import "@/styles/pages/fiqh-hub.css";
 export default function FiqhBookPage() {
   const params = useParams<{ bookId: string }>();
   const bookId = params.bookId ?? "";
+  const alias = resolveFiqhAliasTarget(bookId);
   const book = getVisibleFiqhBook(bookId);
 
   usePageView("fiqh-book", bookId || null);
 
   useEffect(() => {
     if (!book) return;
+    if (alias?.targetChapterId && typeof window !== "undefined") {
+      const target = chapterHref(book.id, alias.targetChapterId);
+      if (window.location.pathname !== target) {
+        window.history.replaceState(null, "", target);
+      }
+    }
     applyPageSeo({
       path: `/fiqh/books/${book.id}`,
       title: `${book.title} | الفقه | سُنّة`,
-      description: `${book.title}: أبواب ومسائل فقهية موثَّقة.`,
-      keywords: [book.title, "فقه", "سُنّة"],
+      description: fiqhBookBlurb(book).slice(0, 160),
+      keywords: [book.title, "فقه", "حنبلي", "سُنّة", ...(book.aliases ?? [])],
       jsonLd: [
         bookJsonLd({
           name: book.title,
@@ -43,12 +52,12 @@ export default function FiqhBookPage() {
         ]),
       ],
     });
-  }, [book]);
+  }, [book, alias]);
 
   if (!book) {
     return (
       <div className="fiqh-lux-shell fiqh-lux-book page-shell" dir="rtl">
-        <Empty title="كتاب غير منشور" text="هذا الكتاب غير مدرج في الكتب الظاهرة، أو لا مسائل منشورة فيه." />
+        <Empty title="كتاب غير منشور" text="هذا الكتاب غير مدرج في الكتب الظاهرة، أو لا أبواب منشورة فيه." />
         <p className="fiqh-lux-empty">
           <Link href="/fiqh">العودة إلى الفقه</Link>
         </p>
@@ -72,30 +81,26 @@ export default function FiqhBookPage() {
         <h1 className="fiqh-lux-book-hero__title">{book.title}</h1>
         <p className="fiqh-lux-book-hero__blurb">{fiqhBookBlurb(book)}</p>
         <p className="fiqh-lux-book-hero__meta">
-          {formatAbwabCount(counts.chapters)} · {formatMasailCount(counts.lessons)} · مستوى تقريبي:{" "}
-          {level}
+          {formatAbwabCount(counts.chapters)} · {formatMasailCount(counts.lessons)} · مستوى تقريبي: {level}
         </p>
+        {book.aliases && book.aliases.length > 0 ? (
+          <p className="fiqh-lux-book-hero__aliases" aria-label="أسماء مدمجة">
+            يشمل أيضًا: {book.aliases.join(" · ")}
+          </p>
+        ) : null}
       </header>
 
       <ol className="fiqh-lux-chapter-list">
         {chapters.map((ch, i) => {
           const lessons = publishedLessonsInChapter(ch);
-          const first = lessons[0];
           return (
             <li key={ch.id} className="fiqh-chapter fiqh-chapter--card fiqh-lux-chapter">
-              <Link
-                href={
-                  first
-                    ? `/fiqh/books/${book.id}/lessons/${first.id}`
-                    : `/fiqh/books/${book.id}`
-                }
-                className="fiqh-lux-chapter__head"
-              >
+              <Link href={chapterHref(book.id, ch.id)} className="fiqh-lux-chapter__head">
                 <span className="fiqh-lux-chapter__num">{i + 1}</span>
                 <span className="fiqh-lux-chapter__body">
                   <span className="fiqh-lux-chapter__title">{ch.title}</span>
-                  {first ? (
-                    <span className="fiqh-lux-chapter__preview">{first.title}</span>
+                  {ch.summary ? (
+                    <span className="fiqh-lux-chapter__preview">{ch.summary.slice(0, 100)}…</span>
                   ) : null}
                   <span className="fiqh-lux-chapter__count">{formatMasailCount(lessons.length)}</span>
                 </span>
@@ -103,21 +108,6 @@ export default function FiqhBookPage() {
                   <ChevronLeft size={16} strokeWidth={2.5} />
                 </span>
               </Link>
-              {lessons.length > 1 ? (
-                <ol className="fiqh-lux-lesson-list">
-                  {lessons.map((lesson, li) => (
-                    <li key={lesson.id}>
-                      <Link
-                        href={`/fiqh/books/${book.id}/lessons/${lesson.id}`}
-                        className="fiqh-lux-lesson-link"
-                      >
-                        <span className="fiqh-lux-lesson-link__num">{li + 1}</span>
-                        <span>{lesson.title}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ol>
-              ) : null}
             </li>
           );
         })}

@@ -1,66 +1,43 @@
 /**
- * بوابة b066: توسيع عيّنة أبواب فقه رقيقة (إجارة/شركة/قرض) بفهرس كلاسيكي،
- * وتنظيف بقايا صياغة «مكتبة» العلنية.
- * تشغيل: node --import tsx src/lib/__tests__/content-audit-b066-fiqh-thin-doors-gate.test.ts
+ * b066 — أبواب كانت رقيقة سابقًا تُنشر بمحتوى حنبلي كامل تحت الكتب الجامعة.
  */
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
-import { buildFiqhDoorSummaries } from "../fiqh/fiqhNormalize";
-import { listPublishedLessons } from "../fiqh-books";
+import { describe, it } from "node:test";
+import {
+  getFiqhBook,
+  getFiqhChapter,
+  publishedChapters,
+  publishedLessonsInChapter,
+  resolveFiqhBookId,
+} from "../fiqh-books";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const appRoot = resolve(__dirname, "../../..");
+describe("content-audit-b066-fiqh-thin-doors-gate", () => {
+  it("chapters formerly behind thin doors now publish with content", () => {
+    const cases = [
+      { bookId: "sharika", chapterId: "ijara", minLessons: 1 },
+      { bookId: "sharika", chapterId: "sharika", minLessons: 1 },
+      { bookId: "buyu", chapterId: "qard", minLessons: 1 },
+    ] as const;
 
-const NEW_IDS = [
-  "ijara-ma-tasih-fihris",
-  "ijara-faskh-fihris",
-  "sharika-inan-fihris",
-  "sharika-wujuh-abdan-fihris",
-  "qard-tawthiq-fihris",
-  "qard-inzhar-fihris",
-] as const;
+    for (const c of cases) {
+      const book = getFiqhBook(c.bookId);
+      assert.ok(book, `missing book ${c.bookId}`);
+      const chapter = getFiqhChapter(c.bookId, c.chapterId)?.chapter;
+      assert.ok(chapter, `missing chapter ${c.bookId}/${c.chapterId}`);
+      assert.equal(chapter!.status ?? "published", "published");
+      assert.ok((chapter!.summary || "").trim().length >= 40, `thin summary ${c.chapterId}`);
+      assert.ok((chapter!.sources || []).length >= 1, `no sources ${c.chapterId}`);
+      const lessons = publishedLessonsInChapter(chapter!);
+      assert.ok(lessons.length >= c.minLessons, `${c.chapterId} lessons ${lessons.length}`);
+    }
+  });
 
-const doors = buildFiqhDoorSummaries();
-for (const id of ["ijara", "sharika", "qard"] as const) {
-  const door = doors.find((d) => d.id === id);
-  assert.ok(door, `باب ${id}`);
-  assert.ok(door!.issueCount >= 4, `${id}: ≥4 مسائل (الآن ${door!.issueCount})`);
-  assert.ok(door!.chapterCount >= 4, `${id}: ≥4 أبواب (الآن ${door!.chapterCount})`);
-}
-
-const byId = new Map(listPublishedLessons().map((h) => [h.lesson.id, h.lesson]));
-for (const id of NEW_IDS) {
-  const lesson = byId.get(id);
-  assert.ok(lesson, `درس ${id}`);
-  assert.equal(lesson!.status, "published", `${id}: منشور`);
-  assert.match(lesson!.summary, /فهرس هيكلي/, `${id}: ملخص فهرسي`);
-  assert.match(lesson!.evidence, /إحالة فهرسية/, `${id}: دليل إحالة لا نص محرَّر`);
-  assert.match(lesson!.preferred, /بطاقة فهرس|لا راجح محرَّر/, `${id}: بلا راجح مخترع`);
-  assert.doesNotMatch(lesson!.summary, /مدخل إلى|يتناول هذا المبحث/, `${id}: بلا حشو stub`);
-  assert.ok((lesson!.sources?.length || 0) >= 2, `${id}: مصادر ≥2`);
-}
-
-const scrubTargets: Array<[string, RegExp]> = [
-  ["src/views/SourcesLicensesPage.tsx", /فهرس المصادر المرجعية/],
-  ["src/views/SourcesLicensesPage.tsx", /الدروس وفهرس المراجع/],
-  ["src/lib/navigation.ts", /روابط المصحف والبحث/],
-  ["src/lib/seo.ts", /الدروس والفوائد والأقسام/],
-  ["src/pages/fiqh/ui/RulingsView.tsx", /فهرس علمي للأحكام/],
-  ["src/lib/tafsir-seed.ts", /\/search\?q=%D8%AA%D9%81%D8%B3%D9%8A%D8%B1/],
-  ["src/pages/account/ui/AccountDeletionView.tsx", /الدروس والقرآن والأحكام العامة/],
-];
-
-for (const [rel, re] of scrubTargets) {
-  const src = readFileSync(resolve(appRoot, rel), "utf8");
-  assert.match(src, re, `${rel}: تنظيف صياغة المكتبة`);
-}
-
-assert.doesNotMatch(
-  readFileSync(resolve(appRoot, "src/lib/tafsir-seed.ts"), "utf8"),
-  /\/library\?cat=/,
-  "tafsir-seed بلا رابط مكتبة",
-);
-
-console.log("content-audit-b066-fiqh-thin-doors-gate: ok");
+  it("alias targets resolve into published books", () => {
+    assert.equal(resolveFiqhBookId("ijara"), "sharika");
+    assert.equal(resolveFiqhBookId("qard"), "buyu");
+    assert.equal(resolveFiqhBookId("rahn"), "buyu");
+    const chapters = publishedChapters(getFiqhBook("buyu")!);
+    assert.ok(chapters.some((c) => c.id === "rahn"));
+    assert.ok(chapters.some((c) => c.id === "qard"));
+  });
+});

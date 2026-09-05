@@ -1,0 +1,280 @@
+{
+  "aliases": [
+    {
+      "aliasTitle": "كتاب الرهن",
+      "aliasId": "rahn",
+      "targetBookId": "buyu",
+      "targetChapterId": "rahn"
+    },
+    {
+      "aliasTitle": "كتاب الحوالة",
+      "aliasId": "hawala",
+      "targetBookId": "buyu",
+      "targetChapterId": "hawala"
+    },
+    {
+      "aliasTitle": "كتاب المفلس",
+      "aliasId": "muflis",
+      "targetBookId": "buyu",
+      "targetChapterId": "taflis"
+    },
+    {
+      "aliasTitle": "كتاب التفليس",
+      "aliasId": "taflis",
+      "targetBookId": "buyu",
+      "targetChapterId": "taflis"
+    },
+    {
+      "aliasTitle": "كتاب الوكالة",
+      "aliasId": "wakala",
+      "targetBookId": "buyu",
+      "targetChapterId": "wakala"
+    },
+    {
+      "aliasTitle": "كتاب السلم",
+      "aliasId": "salam",
+      "targetBookId": "buyu",
+      "targetChapterId": "salam"
+    },
+    {
+      "aliasTitle": "كتاب القرض",
+      "aliasId": "qard",
+      "targetBookId": "buyu",
+      "targetChapterId": "qard"
+    },
+    {
+      "aliasTitle": "كتاب الربا",
+      "aliasId": "riba",
+      "targetBookId": "buyu",
+      "targetChapterId": "riba-sarf"
+    },
+    {
+      "aliasTitle": "كتاب الضمان",
+      "aliasId": "daman",
+      "targetBookId": "buyu",
+      "targetChapterId": "daman-kafala"
+    },
+    {
+      "aliasTitle": "كتاب الخيار",
+      "aliasId": "khiyar",
+      "targetBookId": "buyu",
+      "targetChapterId": "khiyar-bay"
+    },
+    {
+      "aliasTitle": "كتاب الوقف",
+      "aliasId": "waqf",
+      "targetBookId": "sharika",
+      "targetChapterId": "waqf"
+    },
+    {
+      "aliasTitle": "كتاب الهبة",
+      "aliasId": "hiba",
+      "targetBookId": "sharika",
+      "targetChapterId": "hiba"
+    },
+    {
+      "aliasTitle": "كتاب الوقوف والعطايا",
+      "aliasId": "wuquf",
+      "targetBookId": "sharika",
+      "targetChapterId": "waqf"
+    },
+    {
+      "aliasTitle": "كتاب الإجارة",
+      "aliasId": "ijara",
+      "targetBookId": "sharika",
+      "targetChapterId": "ijara"
+    },
+    {
+      "aliasTitle": "كتاب الشفعة",
+      "aliasId": "shufa",
+      "targetBookId": "sharika",
+      "targetChapterId": "shufa"
+    },
+    {
+      "aliasTitle": "كتاب اللقطة",
+      "aliasId": "luqata",
+      "targetBookId": "sharika",
+      "targetChapterId": "luqata"
+    },
+    {
+      "aliasTitle": "كتاب الغصب",
+      "aliasId": "ghasb",
+      "targetBookId": "sharika",
+      "targetChapterId": "ghasb"
+    },
+    {
+      "aliasTitle": "كتاب المساقاة",
+      "aliasId": "musaqa",
+      "targetBookId": "sharika",
+      "targetChapterId": "musaqa"
+    },
+    {
+      "aliasTitle": "كتاب إحياء الموات",
+      "aliasId": "mawat",
+      "targetBookId": "sharika",
+      "targetChapterId": "ihya-mawat"
+    },
+    {
+      "aliasTitle": "كتاب الفرائض",
+      "aliasId": "faraid",
+      "targetBookId": "wasaya-faraid",
+      "targetChapterId": "faraid"
+    },
+    {
+      "aliasTitle": "كتاب الوصايا",
+      "aliasId": "wasaya",
+      "targetBookId": "wasaya-faraid",
+      "targetChapterId": "wasaya"
+    },
+    {
+      "aliasTitle": "كتاب المواريث",
+      "aliasId": "mawarith",
+      "targetBookId": "wasaya-faraid",
+      "targetChapterId": "faraid"
+    },
+    {
+      "aliasTitle": "كتاب الطلاق",
+      "aliasId": "talaq",
+      "targetBookId": "nikah",
+      "targetChapterId": "talaq"
+    },
+    {
+      "aliasTitle": "كتاب النفقات",
+      "aliasId": "nafaqat",
+      "targetBookId": "nikah",
+      "targetChapterId": "nafaqat"
+    },
+    {
+      "aliasTitle": "كتاب العدة",
+      "aliasId": "iddah",
+      "targetBookId": "nikah",
+      "targetChapterId": "idad"
+    },
+    {
+      "aliasTitle": "كتاب الرضاع",
+      "aliasId": "rida",
+      "targetBookId": "nikah",
+      "targetChapterId": "rida"
+    },
+    {
+      "aliasTitle": "كتاب الخلع",
+      "aliasId": "khul",
+      "targetBookId": "nikah",
+      "targetChapterId": "khul"
+    },
+    {
+      "aliasTitle": "كتاب الرجعة",
+      "aliasId": "rajaa",
+      "targetBookId": "nikah",
+      "targetChapterId": "rajaa"
+    },
+    {
+      "aliasTitle": "كتاب الصداق",
+      "aliasId": "sadaq",
+      "targetBookId": "nikah",
+      "targetChapterId": "sadaq"
+    },
+    {
+      "aliasTitle": "كتاب الإيلاء",
+      "aliasId": "ila",
+      "targetBookId": "nikah",
+      "targetChapterId": "ila"
+    },
+    {
+      "aliasTitle": "كتاب الحدود",
+      "aliasId": "hudud",
+      "targetBookId": "jinayat",
+      "targetChapterId": "hudud"
+    },
+    {
+      "aliasTitle": "كتاب الديات",
+      "aliasId": "diyat",
+      "targetBookId": "jinayat",
+      "targetChapterId": "diyat"
+    },
+    {
+      "aliasTitle": "كتاب القصاص",
+      "aliasId": "qisas",
+      "targetBookId": "jinayat",
+      "targetChapterId": "shurut-qisas"
+    },
+    {
+      "aliasTitle": "كتاب القسامة",
+      "aliasId": "qasama",
+      "targetBookId": "jinayat",
+      "targetChapterId": "qasama"
+    },
+    {
+      "aliasTitle": "كتاب البغاة",
+      "aliasId": "bughat",
+      "targetBookId": "jinayat",
+      "targetChapterId": "ahl-baghy"
+    },
+    {
+      "aliasTitle": "كتاب الذكاة",
+      "aliasId": "dhaka",
+      "targetBookId": "atima",
+      "targetChapterId": "dhaka"
+    },
+    {
+      "aliasTitle": "كتاب الصيد",
+      "aliasId": "sayd",
+      "targetBookId": "atima",
+      "targetChapterId": "sayd"
+    },
+    {
+      "aliasTitle": "كتاب الأضاحي",
+      "aliasId": "udhiya",
+      "targetBookId": "atima",
+      "targetChapterId": "adahi-atima"
+    },
+    {
+      "aliasTitle": "كتاب النذور",
+      "aliasId": "nudhur",
+      "targetBookId": "ayman",
+      "targetChapterId": "nudhur"
+    },
+    {
+      "aliasTitle": "كتاب الكفارات",
+      "aliasId": "kaffarat",
+      "targetBookId": "ayman",
+      "targetChapterId": "kaffarat"
+    },
+    {
+      "aliasTitle": "كتاب الشهادات",
+      "aliasId": "shahadat",
+      "targetBookId": "qada",
+      "targetChapterId": "shahadat"
+    },
+    {
+      "aliasTitle": "كتاب الدعاوى",
+      "aliasId": "dawa",
+      "targetBookId": "qada",
+      "targetChapterId": "dawa-bayyinat"
+    },
+    {
+      "aliasTitle": "كتاب الإقرار",
+      "aliasId": "iqrar",
+      "targetBookId": "qada",
+      "targetChapterId": "iqrar"
+    },
+    {
+      "aliasTitle": "كتاب التدبير",
+      "aliasId": "tadbir",
+      "targetBookId": "itq",
+      "targetChapterId": "tadbir"
+    },
+    {
+      "aliasTitle": "كتاب الكتابة",
+      "aliasId": "kitaba",
+      "targetBookId": "itq",
+      "targetChapterId": "kitaba"
+    },
+    {
+      "aliasTitle": "كتاب المياه",
+      "aliasId": "miyah-book",
+      "targetBookId": "taharah",
+      "targetChapterId": "miyah"
+    }
+  ]
+}

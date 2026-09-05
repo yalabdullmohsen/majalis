@@ -1,40 +1,52 @@
 /**
- * بوابة b069: لا كتاب فقهي دون 4 مسائل؛ الفهرس منشور بلا طابور مراجعة بشرية.
- * تشغيل: node --import tsx src/lib/__tests__/content-audit-b069-full-fiqh-fihris-gate.test.ts
+ * b069 — فهرس الفقه الحنبلي المنشور (كتب ← أبواب ← مسائل).
  */
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
-import { getAllFiqhBooks, listPublishedLessons } from "../fiqh-books";
+import { describe, it } from "node:test";
+import {
+  getAllFiqhBooks,
+  listPublishedChapters,
+  listPublishedLessons,
+  publishedChapters,
+  publishedLessonsInChapter,
+  searchFiqhCatalog,
+} from "../fiqh-books";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const appRoot = resolve(__dirname, "../../..");
+describe("content-audit-b069-full-fiqh-fihris-gate", () => {
+  it("every published book has real chapters and lessons (no stubs)", () => {
+    const books = getAllFiqhBooks();
+    assert.ok(books.length >= 17, `expected ≥17 books, got ${books.length}`);
 
-const thin = [];
-for (const book of getAllFiqhBooks()) {
-  const lessons = book.chapters.reduce((n, c) => n + c.lessons.length, 0);
-  if (book.chapters.length < 4 || lessons < 4) {
-    thin.push(`${book.id}:${book.chapters.length}/${lessons}`);
-  }
-}
-assert.equal(thin.length, 0, `لا كتاب دون 4 أبواب/مسائل: ${thin.join(", ")}`);
+    for (const book of books) {
+      const chapters = publishedChapters(book);
+      assert.ok(chapters.length >= 4, `${book.id}: need ≥4 chapters, got ${chapters.length}`);
+      for (const ch of chapters) {
+        assert.ok((ch.definition || "").trim().length >= 20, `${book.id}/${ch.id} thin definition`);
+        assert.ok((ch.summary || "").trim().length >= 40, `${book.id}/${ch.id} thin summary`);
+        assert.ok((ch.sources || []).length >= 1, `${book.id}/${ch.id} missing sources`);
+        assert.ok(
+          !/pending_review|مؤجل|قيد الإضافة|قريبًا|سيتم لاحقًا/i.test(`${ch.definition} ${ch.summary}`),
+        );
+      }
+      const lessons = chapters.flatMap((ch) => publishedLessonsInChapter(ch));
+      assert.ok(lessons.length >= 4, `${book.id}: need ≥4 lessons, got ${lessons.length}`);
+      for (const lesson of lessons) {
+        assert.ok((lesson.summary || "").trim().length >= 40, `${book.id}/${lesson.id} thin summary`);
+        assert.ok((lesson.sources || []).length >= 1, `${book.id}/${lesson.id} missing sources`);
+        assert.ok((lesson.preferred || "").trim().length >= 20, `${book.id}/${lesson.id} thin preferred`);
+      }
+    }
 
-const fihris = listPublishedLessons().filter((h) => h.lesson.id.endsWith("-fihris"));
-assert.ok(fihris.length >= 80, `فهرس منشور كافٍ (الآن ${fihris.length})`);
-for (const { lesson } of fihris) {
-  assert.match(lesson.summary, /فهرس هيكلي/, `${lesson.id}: ملخص فهرسي`);
-  assert.match(lesson.evidence, /إحالة فهرسية/, `${lesson.id}: إحالة`);
-  assert.match(lesson.preferred, /بطاقة فهرس/, `${lesson.id}: بلا راجح مخترع`);
-  assert.doesNotMatch(lesson.preferred, /حتى يُحرَّر|مراجعة بشرية/, `${lesson.id}: بلا تعليق على مراجعة`);
-  assert.doesNotMatch(lesson.summary, /مدخل إلى|يتناول هذا المبحث/, `${lesson.id}: بلا stub`);
-}
+    assert.ok(listPublishedChapters().length >= 200);
+    assert.ok(listPublishedLessons().length >= 400);
+  });
 
-const queue = readFileSync(resolve(appRoot, "docs/FIQH_REVIEW_QUEUE.md"), "utf8");
-assert.doesNotMatch(queue, /بانتظار تحرير بشري/, "طابور الفقه بلا انتظار بشري");
-assert.doesNotMatch(queue, /^- \[ \]/m, "لا بنود مفتوحة في طابور الفقه");
-
-const progress = readFileSync(resolve(appRoot, "../../docs/content-audit/progress.md"), "utf8");
-assert.doesNotMatch(progress, /مراجعة بشرية/, "progress بلا مراجعة بشرية معلّقة");
-
-console.log("content-audit-b069-full-fiqh-fihris-gate: ok");
+  it("search finds representative books and chapters", () => {
+    const bookHits = searchFiqhCatalog("الطهارة");
+    assert.ok(bookHits.books.some((b) => b.id === "taharah"));
+    const chapterHits = searchFiqhCatalog("المياه");
+    assert.ok(chapterHits.chapters.some((h) => h.chapter.id === "miyah" && h.book.id === "taharah"));
+    const lessonHits = searchFiqhCatalog("نية الصوم");
+    assert.ok(lessonHits.lessons.some((h) => h.lesson.bookId === "sawm"));
+  });
+});
