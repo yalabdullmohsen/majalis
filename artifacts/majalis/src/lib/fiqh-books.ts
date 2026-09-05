@@ -6,7 +6,6 @@
 import booksJson from "../../content/fiqh/books.json";
 import aliasesJson from "../../content/fiqh/book-aliases.json";
 import { normalizeArabic } from "@/shared/arabic-normalize";
-import { arabicIncludes } from "@/lib/arabic-search";
 
 export type FiqhBookCategory = "ibadat" | "muamalat" | "usrah" | "jinayat" | "qada";
 export type FiqhLessonLevel = "مبتدئ" | "متوسط" | "متقدم";
@@ -380,6 +379,20 @@ export function listPublishedChapters(): FiqhChapterHit[] {
   return hits;
 }
 
+/**
+ * مطابقة فقهية صارمة (تطبيع عربي + تضمين) — بلا مطابقة متساهلة
+ * حتى لا تختلط «الصلاة/الطلاق» أو «الزكاة/الزاد».
+ */
+export function fiqhTextIncludes(haystack: string | null | undefined, needle: string): boolean {
+  const q = normalizeArabic(needle).trim();
+  if (!q) return true;
+  const hay = normalizeArabic(haystack ?? "");
+  if (!hay) return false;
+  if (hay.includes(q)) return true;
+  const stripAl = (s: string) => s.replace(/(^|[^\p{L}])ال(?=\p{L})/gu, "$1");
+  return stripAl(hay).includes(stripAl(q));
+}
+
 export function searchFiqhCatalog(query: string): {
   books: FiqhBook[];
   chapters: FiqhChapterHit[];
@@ -389,17 +402,20 @@ export function searchFiqhCatalog(query: string): {
   const books = publishedBooks().filter(
     (b) =>
       !q ||
-      arabicIncludes(b.title, q) ||
-      arabicIncludes(b.description ?? "", q) ||
-      (b.aliases ?? []).some((a) => arabicIncludes(a, q)),
+      fiqhTextIncludes(b.title, q) ||
+      fiqhTextIncludes(b.description ?? "", q) ||
+      fiqhTextIncludes(b.orderReason ?? "", q) ||
+      (b.aliases ?? []).some((a) => fiqhTextIncludes(a, q)),
   );
+  // الأبواب: مطابقة حقول الباب فقط (لا تُغرق النتائج بعنوان الكتاب الأب).
   const chapters = listPublishedChapters().filter(
     (h) =>
       !q ||
-      arabicIncludes(h.chapter.title, q) ||
-      arabicIncludes(h.chapter.summary ?? "", q) ||
-      arabicIncludes(h.chapter.definition ?? "", q) ||
-      arabicIncludes(h.book.title, q),
+      fiqhTextIncludes(h.chapter.title, q) ||
+      fiqhTextIncludes(h.chapter.summary ?? "", q) ||
+      fiqhTextIncludes(h.chapter.definition ?? "", q) ||
+      fiqhTextIncludes(h.chapter.notes ?? "", q) ||
+      (h.chapter.topics ?? []).some((t) => fiqhTextIncludes(t, q)),
   );
   const lessons = searchFiqhLessons(q);
   return { books, chapters, lessons };
@@ -431,16 +447,18 @@ export function searchFiqhLessons(query: string, filters: FiqhSearchFilters = {}
     if (filters.level && hit.lesson.level !== filters.level) return false;
     if (filters.madhhab) {
       const notes = hit.lesson.madhhabNotes ?? "";
-      if (!arabicIncludes(notes, filters.madhhab) && !arabicIncludes(hit.lesson.summary, filters.madhhab)) {
+      if (!fiqhTextIncludes(notes, filters.madhhab) && !fiqhTextIncludes(hit.lesson.summary, filters.madhhab)) {
         return false;
       }
     }
     if (!q) return true;
     return (
-      arabicIncludes(hit.lesson.title, q) ||
-      arabicIncludes(hit.chapter.title, q) ||
-      arabicIncludes(hit.book.title, q) ||
-      arabicIncludes(hit.lesson.summary, q)
+      fiqhTextIncludes(hit.lesson.title, q) ||
+      fiqhTextIncludes(hit.chapter.title, q) ||
+      fiqhTextIncludes(hit.book.title, q) ||
+      fiqhTextIncludes(hit.lesson.summary, q) ||
+      fiqhTextIncludes(hit.lesson.evidence, q) ||
+      fiqhTextIncludes(hit.lesson.preferred, q)
     );
   });
 }
