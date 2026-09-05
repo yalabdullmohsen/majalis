@@ -16,7 +16,9 @@ assert.match(lobby, /data-section-back="1"/, "القالب يحمل زر الر�
 assert.match(lobby, /isTabRootPath/, "جذور التبويب تخفي الزر العائم");
 assert.match(lobby, /showFloatingBack/);
 assert.match(lobby, /AppBackButton|goBackOrFallback/);
-assert.match(lobby, /DirectionalIcon/);
+const appBack = read("src/components/common/AppBackButton.tsx");
+assert.match(appBack, /DirectionalIcon/, "أيقونة الاتجاه في زر الرجوع الموحّد");
+assert.match(appBack, /goBackOrFallback/);
 assert.match(css, /\.section-lobby__back[\s\S]*min-height:\s*44px/, "منطقة لمس ≥44px");
 assert.match(css, /\.section-lobby__back[\s\S]*min-width:\s*44px/);
 assert.match(css, /\.section-lobby__back[\s\S]*text-align:\s*center/);
