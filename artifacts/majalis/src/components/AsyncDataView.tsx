@@ -36,7 +36,17 @@ export function AsyncDataView({
   skeleton = "list",
   children,
 }: AsyncDataViewProps) {
-  if (status === "loading") return <Skeleton variant={skeleton} />;
+  if (status === "loading" || status === "retrying") {
+    return <Skeleton variant={skeleton} />;
+  }
+  if (status === "offline") {
+    return (
+      <ErrorState
+        text="أنت غير متصل بالإنترنت. اتصل بالشبكة ثم أعد المحاولة."
+        onRetry={onRetry}
+      />
+    );
+  }
   if (status === "error") {
     const text = typeof error === "string" && error.trim() ? error : errorText;
     return <ErrorState text={text} onRetry={onRetry} />;

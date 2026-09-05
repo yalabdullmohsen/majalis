@@ -72,7 +72,25 @@ body {
   font-family: "Amiri", "MajlisAmiriFallback", "Noto Naskh Arabic", serif;
 }
 
-/* إخفاء رابط التجاوز من أول إطار — يمنع النص الأزرق قبل تحميل theme.css */
+/* أثناء الإقلاع: لا تغيّر ارتفاعات الهيكل بعد القفل */
+html.app-booting .app-top-chrome,
+html.app-booting .bottom-nav,
+html.app-booting .bottom-nav--v2,
+html.app-booting .header-ticker,
+html.app-booting .hus,
+html.app-booting .hus-field {
+  min-height: inherit;
+}
+html.app-booting .app-top-chrome {
+  min-height: var(--app-top-chrome-h, var(--header-h, 56px));
+}
+html.app-booting .bottom-nav,
+html.app-booting .bottom-nav--v2 {
+  min-height: var(--bottom-nav-height, 64px);
+}
+html.app-booting .hus-field {
+  min-height: 52px;
+}
 .skip-link,
 .mj-skip-link,
 .skip-link.mj-skip-link {

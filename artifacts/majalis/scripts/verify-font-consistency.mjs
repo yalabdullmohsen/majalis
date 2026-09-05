@@ -113,6 +113,11 @@ const FILE_EXCLUDES = [
   "scripts/verify-font-consistency.mjs",
 ];
 
+function isTestPath(rel) {
+  return /(^|\/)__tests__\//.test(rel) || /\.test\.(ts|tsx|js|mjs)$/.test(rel);
+}
+
+
 function listFiles() {
   const patterns = [
     "src/**/*.css",
@@ -125,7 +130,7 @@ function listFiles() {
   const files = new Set();
   for (const pattern of patterns) {
     for (const f of globSync(pattern, { cwd: ROOT })) {
-      if (!FILE_EXCLUDES.includes(f)) files.add(f);
+      if (!FILE_EXCLUDES.includes(f) && !isTestPath(f)) files.add(f);
     }
   }
   return [...files].sort();

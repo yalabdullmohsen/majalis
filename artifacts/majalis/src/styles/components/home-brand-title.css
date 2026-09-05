@@ -90,12 +90,21 @@ html.dark .home-page-hero .pattern-backdrop {
 
 .home-page-hero .m2030-btn--ghost {
   background: transparent;
-  color: var(--mj-brand-deep, #145a42);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 32%, transparent);
+  color: var(--brand-on-light, var(--mj-brand-deep, #146C4E));
+  border: 1px solid color-mix(in srgb, var(--color-primary, var(--mj-brand)) 32%, transparent);
 }
 
 html[data-theme="dark"] .home-page-hero .m2030-btn--ghost,
 html.dark .home-page-hero .m2030-btn--ghost {
-  color: #c8eedb;
-  border-color: color-mix(in srgb, #8fd4b0 32%, transparent);
+  color: var(--brand-on-light, #8FD4B0);
+  border-color: color-mix(in srgb, var(--color-primary, #8fd4b0) 32%, transparent);
+}
+
+/* أثناء بوابة التباين: أظهر أزرار الهيرو المؤجَّلة بلا انتظار 4ث */
+html[data-contrast-audit="1"] .home-page-hero .page-hero-mj__actions .mj-btn,
+html[data-contrast-audit="1"] .home-page-hero:not(.home-page-hero--actions-ready) .page-hero-mj__actions .mj-btn {
+  visibility: visible !important;
+}
+html[data-contrast-audit="1"] .home-page-hero:not(.home-page-hero--eyebrow-ready) .page-hero-mj__eyebrow {
+  visibility: visible !important;
 }

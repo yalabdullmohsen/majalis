@@ -9,11 +9,13 @@
 :root {
   /* تتبع لوحة theme.css (--mj-*) — لا تنافس brand-v4 على color-primary/bg */
   --color-background: var(--mj-bg);
+  --color-bg: var(--mj-bg);
   --color-surface: var(--mj-surface);
   --color-surface-muted: var(--mj-surface-2);
   --color-primary: var(--mj-brand);
   --color-primary-hover: var(--mj-brand);
   --color-primary-foreground: var(--mj-on-brand);
+  --color-primary-contrast: var(--mj-on-brand);
   --color-accent: var(--mj-accent);
   --color-text: var(--mj-ink);
   --color-text-muted: var(--mj-muted);

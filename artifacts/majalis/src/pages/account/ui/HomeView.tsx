@@ -245,7 +245,18 @@ export default function HomePage() {
 
   useEffect(() => {
     if (!shouldShowFirstVisitIntro("/")) return;
-    return deferAfterPaint(() => setShowIntro(true), 6_000);
+    let cancelStable: (() => void) | undefined;
+    let cancelDelay: (() => void) | undefined;
+    void import("@/lib/app-shell-stability").then(({ whenAppShellStable }) => {
+      cancelStable = whenAppShellStable(() => {
+        // بعد استقرار الهيكل فقط — وبدون استبدال الصفحة (overlay فوق الرئيسية)
+        cancelDelay = deferAfterPaint(() => setShowIntro(true), 2_500);
+      }, 800);
+    });
+    return () => {
+      cancelStable?.();
+      cancelDelay?.();
+    };
   }, []);
 
   useEffect(() => {
@@ -279,23 +290,8 @@ export default function HomePage() {
     return () => window.cancelAnimationFrame(id);
   }, []);
 
-  if (showIntro) {
-    return (
-      <Suspense
-        fallback={
-          <div className="first-visit-intro" aria-busy="true" aria-label="تحميل الترحيب">
-            <div className="first-visit-intro__inner">
-              <p className="first-visit-intro__badge">سُنّة</p>
-            </div>
-          </div>
-        }
-      >
-        <FirstVisitIntro onContinue={() => setShowIntro(false)} />
-      </Suspense>
-    );
-  }
-
   // الغلاف + الهيرو في App (HomeHeroLcp خارج Suspense) — هنا بقية الرئيسية فقط
+  // Intro كـ overlay فوق الرئيسية — لا استبدال كامل يسبب قفزة تخطيط
   return (
     <>
       {isMaintenanceMode() && (
@@ -314,6 +310,12 @@ export default function HomePage() {
 
       <HomeDailyWirdGate />
       <HomeBelowFoldGate />
+
+      {showIntro ? (
+        <Suspense fallback={null}>
+          <FirstVisitIntro onContinue={() => setShowIntro(false)} />
+        </Suspense>
+      ) : null}
     </>
   );
 }

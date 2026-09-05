@@ -115,6 +115,7 @@ export async function awaitBootReadiness(): Promise<BootFlags> {
     /* ignore */
   }
 
+  // الاستقرار الفعلي بعد زوال app-booting (index.html) — هنا نبثّ boot-ready فقط
   try {
     window.dispatchEvent(
       new CustomEvent("mj:boot-ready", { detail: { ...flags } }),

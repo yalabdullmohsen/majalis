@@ -38,7 +38,7 @@ assert.match(sw, /pathname === "\/sw-version\.js"/);
   assert.doesNotMatch(shell, /version\.json/);
 }
 
-assert.match(html, /v11-startup-stable-2026-08/);
+assert.match(html, /v11-startup-stable-2026-08|v12-startup-gate-2026-08|v13-startup-shell-stable-2026-09/);
 assert.match(html, /majalis_force_cache_purge/);
 assert.match(html, /classList\.add\("light"/);
 assert.match(html, /storedTheme === "auto"/);

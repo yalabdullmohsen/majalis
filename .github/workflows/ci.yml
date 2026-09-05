@@ -601,6 +601,15 @@ jobs:
             exit 1
           fi
 
+      - name: Upload contrast failure screenshots
+        if: failure() && steps.lane.outputs.run == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: color-contrast-failures
+          path: artifacts/majalis/test-results/contrast-gate/
+          if-no-files-found: ignore
+          retention-days: 14
+
   # بوابة انحدار Lighthouse على بناء الإنتاج (dist) — عتبات واقعية لا حلم 100.
   # Path-lane: حيادي عند need_visual=false؛ إلزامي مع نجاح البناء عند الحاجة.
   lhci-home:
@@ -809,19 +818,22 @@ jobs:
                 echo "OK required $name=$result"
                 return 0
               fi
+              BLOCKERS+=("$name=$result")
               if [ "$result" = "cancelled" ]; then
                 echo "required job '$name' was cancelled (غالبًا fail-fast من وظيفة أخرى) — ليس نجاحًا"
-                exit 1
+                return 1
               fi
               echo "required job '$name' not success: $result"
-              exit 1
+              return 1
             else
               if [ "$result" = "failure" ]; then
                 echo "optional job '$name' failed unexpectedly: $result"
-                exit 1
+                BLOCKERS+=("$name=$result(optional)")
+                return 1
               fi
               # skipped / cancelled / success مسموح عندما need=false (path-lane حيادي)
               echo "OK optional $name=$result (path-lane skip/neutral allowed when not required)"
+              return 0
             fi
           }
 
@@ -837,16 +849,31 @@ jobs:
             EFFECTIVE_NEED_VISUAL="false"
           fi
 
-          check_req "fast-lane" "$NEED_FAST" "$FAST_RESULT"
-          check_req "static-checks" "$NEED_BUILD" "$STATIC_RESULT"
-          check_req "build" "$NEED_BUILD" "$BUILD_RESULT"
-          check_req "repo-gates" "$NEED_BUILD" "$REPO_GATES_RESULT"
-          check_req "mushaf-measure" "$NEED_MUSHAF" "$MEASURE_RESULT"
-          check_req "mushaf-gates" "$NEED_MUSHAF" "$GATES_RESULT"
-          check_req "layout-bands" "$NEED_MUSHAF" "$BANDS_RESULT"
-          check_req "visual-snapshot" "$EFFECTIVE_NEED_VISUAL" "$VISUAL_RESULT"
-          check_req "color-contrast" "$EFFECTIVE_NEED_COLOR" "$COLOR_RESULT"
-          check_req "lhci-home" "$EFFECTIVE_NEED_VISUAL" "$LHCI_RESULT"
+          BLOCKERS=()
+          FAIL=0
+          check_req "fast-lane" "$NEED_FAST" "$FAST_RESULT" || FAIL=1
+          check_req "static-checks" "$NEED_BUILD" "$STATIC_RESULT" || FAIL=1
+          check_req "build" "$NEED_BUILD" "$BUILD_RESULT" || FAIL=1
+          check_req "repo-gates" "$NEED_BUILD" "$REPO_GATES_RESULT" || FAIL=1
+          check_req "mushaf-measure" "$NEED_MUSHAF" "$MEASURE_RESULT" || FAIL=1
+          check_req "mushaf-gates" "$NEED_MUSHAF" "$GATES_RESULT" || FAIL=1
+          check_req "layout-bands" "$NEED_MUSHAF" "$BANDS_RESULT" || FAIL=1
+          check_req "visual-snapshot" "$EFFECTIVE_NEED_VISUAL" "$VISUAL_RESULT" || FAIL=1
+          check_req "color-contrast" "$EFFECTIVE_NEED_COLOR" "$COLOR_RESULT" || FAIL=1
+          check_req "lhci-home" "$EFFECTIVE_NEED_VISUAL" "$LHCI_RESULT" || FAIL=1
+
+          if [ "$FAIL" -ne 0 ]; then
+            if [ "${#BLOCKERS[@]}" -eq 1 ] && [[ "${BLOCKERS[0]}" == color-contrast=* ]]; then
+              echo "Blocked by Color contrast only"
+              echo "### Root cause" >> "$GITHUB_STEP_SUMMARY"
+              echo "**Blocked by Color contrast only** (\`${BLOCKERS[0]}\`)" >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "Blocked by: ${BLOCKERS[*]}"
+              echo "### Root cause" >> "$GITHUB_STEP_SUMMARY"
+              echo "Blocked by: \`${BLOCKERS[*]}\`" >> "$GITHUB_STEP_SUMMARY"
+            fi
+            exit 1
+          fi
 
           echo "Verify build OK (lane=$LANE)"
 
@@ -894,7 +921,26 @@ jobs:
             echo "classify not success: $CLASSIFY_RESULT"
             exit 1
           fi
+
+          EFFECTIVE_NEED_COLOR="$NEED_COLOR"
+          EFFECTIVE_NEED_VISUAL="$NEED_VISUAL"
+          if [ "$NEED_COLOR" = "true" ] && [ "$NEED_BUILD" != "true" ]; then
+            EFFECTIVE_NEED_COLOR="false"
+          fi
+          if [ "$NEED_VISUAL" = "true" ] && [ "$NEED_BUILD" != "true" ]; then
+            EFFECTIVE_NEED_VISUAL="false"
+          fi
+
+          BLOCKERS=()
           if [ "$VERIFY_RESULT" != "success" ]; then
+            # اختصر السبب: إن كان التباين وحده فاشلًا والمجمّع فشل بسببه
+            if [ "$EFFECTIVE_NEED_COLOR" = "true" ] && [ "$COLOR_RESULT" != "success" ] \
+              && { [ "$EFFECTIVE_NEED_VISUAL" != "true" ] || { [ "$VISUAL_RESULT" = "success" ] && [ "$LHCI_RESULT" = "success" ]; }; }; then
+              echo "Blocked by Color contrast only (Verify build failed because color-contrast=$COLOR_RESULT)"
+              echo "### Root cause" >> "$GITHUB_STEP_SUMMARY"
+              echo "**Blocked by Color contrast only**" >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+            fi
             echo "Verify build not success: $VERIFY_RESULT (skipped/cancelled/failure = fail)"
             exit 1
           fi
@@ -906,26 +952,32 @@ jobs:
                 echo "OK required $name=$result"
                 return 0
               fi
+              BLOCKERS+=("$name=$result")
               echo "required job '$name' not success: $result"
-              exit 1
+              return 1
             fi
             if [ "$result" = "failure" ]; then
+              BLOCKERS+=("$name=$result(optional)")
               echo "optional job '$name' failed unexpectedly: $result"
-              exit 1
+              return 1
             fi
             echo "OK optional $name=$result (path-lane skip/neutral OK)"
+            return 0
           }
 
-          EFFECTIVE_NEED_COLOR="$NEED_COLOR"
-          EFFECTIVE_NEED_VISUAL="$NEED_VISUAL"
-          if [ "$NEED_COLOR" = "true" ] && [ "$NEED_BUILD" != "true" ]; then
-            EFFECTIVE_NEED_COLOR="false"
-          fi
-          if [ "$NEED_VISUAL" = "true" ] && [ "$NEED_BUILD" != "true" ]; then
-            EFFECTIVE_NEED_VISUAL="false"
-          fi
+          FAIL=0
+          check_req "color-contrast" "$EFFECTIVE_NEED_COLOR" "$COLOR_RESULT" || FAIL=1
+          check_req "visual-snapshot" "$EFFECTIVE_NEED_VISUAL" "$VISUAL_RESULT" || FAIL=1
+          check_req "lhci-home" "$EFFECTIVE_NEED_VISUAL" "$LHCI_RESULT" || FAIL=1
 
-          check_req "color-contrast" "$EFFECTIVE_NEED_COLOR" "$COLOR_RESULT"
-          check_req "visual-snapshot" "$EFFECTIVE_NEED_VISUAL" "$VISUAL_RESULT"
-          check_req "lhci-home" "$EFFECTIVE_NEED_VISUAL" "$LHCI_RESULT"
+          if [ "$FAIL" -ne 0 ]; then
+            if [ "${#BLOCKERS[@]}" -eq 1 ] && [[ "${BLOCKERS[0]}" == color-contrast=* ]]; then
+              echo "Blocked by Color contrast only"
+              echo "### Root cause" >> "$GITHUB_STEP_SUMMARY"
+              echo "**Blocked by Color contrast only**" >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "Blocked by: ${BLOCKERS[*]}"
+            fi
+            exit 1
+          fi
           echo "ci-required OK"

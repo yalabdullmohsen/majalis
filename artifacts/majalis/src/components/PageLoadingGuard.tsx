@@ -3,6 +3,7 @@ import { Empty, ErrorState, SkeletonCardGrid } from "@/components/ui-common";
 import { useDeferredLoading } from "@/hooks/useDeferredLoading";
 import { PAGE_LOAD_TIMEOUT_MS } from "@/lib/request-manager";
 import { EMPTY, STATUS } from "@/lib/ui-copy";
+import { shouldSuppressBootErrors } from "@/lib/app-shell-stability";
 
 type PageLoadingGuardProps = {
   loading: boolean;
@@ -46,6 +47,8 @@ export function PageLoadingGuard({
       setTimedOut(false);
       return;
     }
+    // سجّل المهلة دائمًا؛ العرض يُكبح عبر shouldSuppressBootErrors عند الرسم
+    // حتى لا يُفقد تنبيه الفشل الحقيقي بعد انتهاء نافذة الإقلاع
     const id = window.setTimeout(() => setTimedOut(true), PAGE_LOAD_TIMEOUT_MS);
     return () => window.clearTimeout(id);
   }, [loading]);
@@ -58,7 +61,9 @@ export function PageLoadingGuard({
     return <SkeletonCardGrid count={skeletonCount} />;
   };
 
-  if (timedOut && loading) {
+  const suppressBootError = shouldSuppressBootErrors();
+
+  if (timedOut && loading && !suppressBootError) {
     const offline = typeof navigator !== "undefined" && navigator.onLine === false;
     return (
       <ErrorState
@@ -70,6 +75,14 @@ export function PageLoadingGuard({
         onRetry={onRetry}
       />
     );
+  }
+
+  // أثناء الإقلاع أو إعادة المحاولة: أبقِ الهيكل — لا شاشة خطأ كاذبة
+  if (error && suppressBootError) {
+    if (loading || !hasContent) {
+      if (!showSkeleton && loading) return null;
+      return <>{renderSkeleton()}</>;
+    }
   }
 
   if (error && !(loading && keepPrevious && hasContent)) {

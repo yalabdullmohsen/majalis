@@ -1,6 +1,14 @@
 /**
  * Design tokens المركزية — نهاري + ليلي.
  * كل سطح/نص/حد يمر من هنا. يُحمَّل بعد theme.css وقبل الطبقات القديمة.
+ *
+ * عقد WCAG AA (أسماء ثابتة للمكوّنات/البوابات):
+ *   --color-bg / --color-surface / --color-surface-muted
+ *   --color-text / --color-text-muted
+ *   --color-primary / --color-primary-contrast
+ *   --color-border
+ * نص فوق أخضر صلب = فاتح (--color-primary-contrast).
+ * أخضر فوق سطح فاتح = --brand-on-light (لا --mj-brand الباهت).
  */
 :root {
   /* أسطح */
@@ -28,6 +36,19 @@
   --txt-muted: var(--mj-muted);
   --text-on-brand: var(--mj-on-brand);
   --text-on-brand-secondary: color-mix(in srgb, var(--mj-on-brand) 82%, transparent);
+
+  /* أخضر للنص على خلفية فاتحة — AA ≥ 4.5:1 (لا تستخدم --mj-brand الباهت كنص) */
+  --brand-on-light: var(--brand-on-white, #146C4E);
+
+  /* ── أسماء DS الثابتة (عقد التباين) ── */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-text: var(--text-primary);
+  --color-text-muted: var(--text-muted);
+  --color-primary: var(--mj-brand);
+  --color-primary-contrast: var(--text-on-brand);
+  --color-border: var(--border);
 
   /* أيقونات */
   --icon-primary: var(--mj-ink);
@@ -118,6 +139,7 @@ html.dark,
   /* فوق زر نعناعي فقط */
   --text-on-brand: #06231A;
   --text-on-brand-secondary: #0E2A22;
+  --brand-on-light: #8FD4B0;
   --icon-primary: #F8FAFC;
   --icon-muted: #C5D0CB;
   --accent: #5CC095;
@@ -126,6 +148,15 @@ html.dark,
   --danger: #F2B8C0;
   --warning: #D9B871;
   --success: #7BD6AE;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-text: var(--text-primary);
+  --color-text-muted: var(--text-muted);
+  --color-primary: var(--accent);
+  --color-primary-contrast: var(--text-on-brand);
+  --color-border: var(--border);
 }
 
 /* فوق الأسطح الخضراء الغامقة — أبيض دائمًا */

@@ -63,7 +63,7 @@ console.log("\n=== index.html: preconnect ≤٢ + خطوط محلية ===");
   assert.doesNotMatch(html, /mj-launch-splash__tagline/, "بلا عبارة تسويقية");
   assert.match(
     html,
-    /v6-direct-boot-2026-08|v7-boot-fouc-2026-08|v9-theme-light-default-2026-08|v10-pwa-single-paint-2026-08|v11-startup-stable-2026-08|v12-startup-gate-2026-08/,
+    /v6-direct-boot-2026-08|v7-boot-fouc-2026-08|v9-theme-light-default-2026-08|v10-pwa-single-paint-2026-08|v11-startup-stable-2026-08|v12-startup-gate-2026-08|v13-startup-shell-stable-2026-09/,
     "ترحيل ثيم يمنع وميض التصميم القديم",
   );
 }
