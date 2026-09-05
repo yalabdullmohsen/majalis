@@ -351,8 +351,8 @@
       }
     </style>
     <style id="mj-splash-critical">
-:root{--mj-splash-bg:#F2F4F3;--mj-splash-ink:#123f2e}
-html[data-theme=dark]{--mj-splash-bg:#101614;--mj-splash-ink:#a8d5c0}
+:root{--mj-splash-bg-light:#F2F4F3;--mj-splash-bg-dark:#101614;--mj-splash-bg:var(--mj-splash-bg-light);--mj-splash-ink:#123f2e}
+html[data-theme="dark"]{--mj-splash-bg:var(--mj-splash-bg-dark);--mj-splash-ink:#a8d5c0}
 html,body,#root,html.capacitor-native,html.capacitor-native body,html.capacitor-native #root{background:var(--mj-splash-bg)}
 #mj-launch-splash{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;background:var(--mj-splash-bg);color:var(--mj-splash-ink);pointer-events:none;opacity:1;transition:opacity .09s ease}
 #mj-launch-splash.mj-launch-splash--out{opacity:0}
@@ -361,7 +361,7 @@ html,body,#root,html.capacitor-native,html.capacitor-native body,html.capacitor-
 .mj-launch-splash__title{margin:0;font:400 clamp(1.35rem,5.5vw,1.65rem)/1.2 "Amiri","MajlisAmiriFallback","Noto Naskh Arabic",serif;color:var(--mj-splash-ink)}
 .mj-launch-splash__pulse{width:2.4rem;height:.18rem;border-radius:999px;background:color-mix(in srgb,var(--mj-splash-ink) 22%,transparent);overflow:hidden;position:relative}
 .mj-launch-splash__pulse::after{content:"";position:absolute;inset:0;width:40%;border-radius:inherit;background:var(--mj-splash-ink);animation:mj-sp .9s ease-in-out infinite}
-@keyframes mj-sp{to{transform:translateX(-250%)}from{transform:translateX(150%)}}
+@keyframes mj-sp{from{transform:translateX(150%)}to{transform:translateX(-250%)}}
 @media (prefers-reduced-motion:reduce){#mj-launch-splash,#mj-launch-splash.mj-launch-splash--out{transition:none}.mj-launch-splash__pulse::after{animation:none;width:100%;opacity:.45}}
 </style>
     <meta name="mobile-web-app-capable" content="yes" />
