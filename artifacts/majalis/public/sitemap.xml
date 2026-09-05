@@ -555,16 +555,6 @@
     <priority>0.72</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/lessons/kw-rashed-fundamental-course-1</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/lessons/kw-rashed-fundamental-course-2</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/lessons/kw-mansour-altafsir-alwadih-0</loc>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
@@ -610,21 +600,6 @@
     <priority>0.72</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/lessons/kw-ajraa-murtaqa-course-3-1</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/lessons/kw-ajraa-murtaqa-course-3-2</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/lessons/kw-ajraa-murtaqa-course-3-3</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/lessons/kw-murtaqa-madarij-altalab-0</loc>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
@@ -661,11 +636,6 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/lessons/kw-fiqh-ibadaat-course-0</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/lessons/kw-fiqh-ibadaat-course-1</loc>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
   </url>
@@ -735,17 +705,7 @@
     <priority>0.72</priority>
   </url>
   <url>
-    <loc>https://www.ssunnah.com/lessons/kw-mahboula-dosari-umdat-tawhid-2026-1</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
     <loc>https://www.ssunnah.com/lessons/kw-ahmadi-zad-muslim-ulum-quran-2026-0</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/lessons/kw-ahmadi-zad-muslim-ulum-quran-2026-1</loc>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
   </url>
@@ -756,16 +716,6 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/lessons/kw-ahmadi-zad-muslim-usool-athlatha-2026-0</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/lessons/kw-ahmadi-zad-muslim-usool-athlatha-2026-1</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/lessons/kw-ahmadi-zad-muslim-usool-athlatha-2026-2</loc>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
   </url>
@@ -991,26 +941,6 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/lessons/course-ijazati-taah-2026-0</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/lessons/course-ijazati-taah-2026-1</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/lessons/course-ijazati-taah-2026-2</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/lessons/course-ijazati-taah-2026-3</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
-    <loc>https://www.ssunnah.com/lessons/course-ijazati-taah-2026-4</loc>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
   </url>
