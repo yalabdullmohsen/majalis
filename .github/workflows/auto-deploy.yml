@@ -14,10 +14,12 @@ on:
     - cron: "0 * * * *"
   workflow_dispatch: {}
 
-# منع تكرار نشر لنفس الخط: تشغيل واحد فقط؛ إلغاء الأقدم عند دفع جديد.
+# طابور نشر الإنتاج: تشغيل واحد لكل مجموعة، لكن لا تُلغِ نشرًا جاريًا.
+# (cancel-in-progress: true كان يلغي push deploy عند تأخر schedule/run لاحق،
+# فيفشل final-report بلا Production URL رغم أن main اندمج.)
 concurrency:
   group: auto-deploy-main
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -557,6 +559,9 @@ jobs:
           SHORT: ${{ needs.deploy.outputs.short_sha }}
           SHA: ${{ github.sha }}
           PSI_ENABLED: ${{ vars.PSI_ENABLED }}
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
         run: |
           set -euo pipefail
           SITE="${SITE:-${DEPLOY_URL:-}}"
@@ -564,11 +569,13 @@ jobs:
           deploy_line="failure"
           if [ "${DEPLOY_RESULT}" = "success" ]; then
             deploy_line="success"
+          elif [ "${DEPLOY_RESULT}" = "cancelled" ]; then
+            deploy_line="cancelled"
           fi
 
           post_line="${VERIFICATION:-failure}"
-          if [ "${POST_RESULT}" = "skipped" ]; then
-            post_line="skipped"
+          if [ "${POST_RESULT}" = "skipped" ] || [ "${POST_RESULT}" = "cancelled" ]; then
+            post_line="${POST_RESULT}"
           elif [ -z "${VERIFICATION}" ]; then
             if [ "${POST_RESULT}" = "success" ]; then post_line="success"
             elif [ "${POST_RESULT}" = "failure" ]; then post_line="failure"
@@ -583,6 +590,8 @@ jobs:
             notify_line="warning"
           elif [ "${NOTIFY_RESULT}" = "skipped" ]; then
             notify_line="skipped"
+          elif [ "${NOTIFY_RESULT}" = "cancelled" ]; then
+            notify_line="cancelled"
           else
             notify_line="${NOTIFY_RESULT}"
           fi
@@ -593,14 +602,28 @@ jobs:
           elif [ "${PSI_RESULT}" = "failure" ]; then
             # continue-on-error على PSI → تحذير لا فشل مسار
             psi_line="warning"
-          elif [ "${PSI_RESULT}" = "skipped" ]; then
-            if [ "${PSI_ENABLED:-}" = "false" ] || [ "${VERSION_OK}" != "1" ]; then
-              psi_line="skipped"
-            else
-              psi_line="skipped"
-            fi
+          elif [ "${PSI_RESULT}" = "skipped" ] || [ "${PSI_RESULT}" = "cancelled" ]; then
+            psi_line="${PSI_RESULT}"
           else
             psi_line="${PSI_RESULT}"
+          fi
+
+          # عند إلغاء deploy (غالبًا concurrency سابق): أوضح الحالة ولا تفشل فقط لغياب URL
+          superseded="cancelled-no-failure"
+          if [ "${DEPLOY_RESULT}" = "cancelled" ]; then
+            SITE="${SITE:-https://www.ssunnah.com}"
+            # نجاح لاحق لنفس SHA على main ⇒ التشغيل مُستبدَل بنشر اكتمل
+            newer_count=$(gh api "repos/${REPO}/actions/workflows/auto-deploy.yml/runs?branch=main&per_page=25" \
+              --jq --arg rid "$RUN_ID" --arg sha "$SHA" '
+                [.workflow_runs[]
+                  | select((.id|tostring) != $rid)
+                  | select(.conclusion == "success")
+                  | select(.head_sha == $sha)
+                ] | length
+              ' 2>/dev/null || echo "0")
+            if [ "${newer_count:-0}" != "0" ]; then
+              superseded="yes-same-sha"
+            fi
           fi
 
           {
@@ -614,6 +637,9 @@ jobs:
             echo "| Post deploy verification | ${post_line} |"
             echo "| Notification | ${notify_line} |"
             echo "| PSI | ${psi_line} |"
+            if [ "${deploy_line}" = "cancelled" ]; then
+              echo "| Cancelled/superseded | ${superseded} |"
+            fi
           } | tee -a "$GITHUB_STEP_SUMMARY"
 
           echo "Deploy: ${deploy_line}"
@@ -623,6 +649,15 @@ jobs:
           echo "Notification: ${notify_line}"
           echo "PSI: ${psi_line}"
 
+          # إلغاء deploy ≠ فشل نشر حقيقي (لا Production URL لأن verify لم يكتمل)
+          if [ "${deploy_line}" = "cancelled" ]; then
+            echo "::warning::deploy أُلغي قبل اكتمال التحقق. التقرير يوضح الحالة؛ الفشل الحقيقي يبقى عند conclusion=failure فقط."
+            echo "Production URL (مرجع الموقع): ${SITE}"
+            echo "cancelled/superseded=${superseded}"
+            echo "✅ لا يُحتسب Workflow Failure بسبب الإلغاء وحده."
+            exit 0
+          fi
+
           # قواعد النجاح: فشل حقيقي فقط يمنع الإنتاج
           if [ "${deploy_line}" != "success" ]; then
             echo "::error::فشل deploy — Workflow Failure"
@@ -630,6 +665,11 @@ jobs:
           fi
           if [ "${post_line}" = "failure" ]; then
             echo "::error::فشل تحقق ما بعد النشر — Workflow Failure"
+            exit 1
+          fi
+          # نجاح deploy مع URL فارغ = فشل تحقق ناقص
+          if [ -z "${SITE}" ]; then
+            echo "::error::Deploy نجح لكن Production URL فارغ — Workflow Failure"
             exit 1
           fi
           echo "✅ مسار الإنتاج Success (إشعار/PSI غير حاجزين)"
