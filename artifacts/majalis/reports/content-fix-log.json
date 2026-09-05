@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-09-05T15:04:10.621Z",
+  "filesTouched": 0,
+  "totalEdits": 0,
+  "changed": [],
+  "cumulative": {
+    "note": "يجمع تشغيلات content:fix المتتالية في الجلسة إن وُجد سجل سابق غير فارغ",
+    "filesTouched": 4,
+    "totalEdits": 12,
+    "changed": [
+      {
+        "file": "public/data/tafsir/saadi/025.json",
+        "edits": 6,
+        "kinds": [
+          "الايات→الآيات×6"
+        ]
+      },
+      {
+        "file": "src/data/library-authors.json",
+        "edits": 3,
+        "kinds": [
+          "ابن القيم الجوزيه→ابن القيم الجوزية×1",
+          "ابي بكر→أبي بكر×2"
+        ]
+      },
+      {
+        "file": "src/data/library-catalog.json",
+        "edits": 2,
+        "kinds": [
+          "القران→القرآن×1",
+          "السنه→السنة×1"
+        ]
+      },
+      {
+        "file": "public/data/tafsir/saadi/077.json",
+        "edits": 1,
+        "kinds": [
+          "الملائكه→الملائكة×1"
+        ]
+      }
+    ]
+  }
+}
