@@ -48,7 +48,8 @@ const ASSERTIONS = [
   { route: "/", selector: ".m2030-btn--primary", mode: "light", min: 4.5 },
   { route: "/", selector: ".m2030-btn--primary", mode: "dark", min: 4.5 },
   { route: "/", selector: ".m2030-band__title", mode: "light", min: 4.5 },
-  { route: "/", selector: ".m2030-feature__title", mode: "light", min: 4.5 },
+  // بوّابات العلم تحت الطية مؤجّلة بعد LCP — نفحص عنوان الهيرو الثابت بدلًا من .m2030-feature__title
+  { route: "/", selector: ".home-page-hero .page-hero-mj__title", mode: "light", min: 4.5 },
   // ── تكليف ثانٍ (2026-07-19، بند 7): عناوين "شارة" أقسام (نص أبيض/خلفية
   // خضراء داكنة، §4c في elite-2026.css) كانت تخسر لونها الأبيض المقصود أمام
   // قواعد `.home-section h2`/`.page-shell h2:not(...)` عالية التخصيص (بفعل
