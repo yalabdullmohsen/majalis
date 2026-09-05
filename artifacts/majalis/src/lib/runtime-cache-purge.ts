@@ -96,10 +96,11 @@ export function purgeLegacyColdBootKeysSync(): number {
 export function resolveAppVersion(): string | null {
   const { commitHash, buildVersion } = getBuildMetadata();
   if (commitHash && commitHash !== "unknown" && commitHash !== "dev") {
-    return commitHash.slice(0, 12);
+    /* طابق /version.json shortCommit (8) لتفادي reload-loop */
+    return commitHash.slice(0, 8);
   }
   if (buildVersion && buildVersion !== "dev" && buildVersion !== "production") {
-    return buildVersion;
+    return buildVersion.slice(0, 8);
   }
   return null;
 }

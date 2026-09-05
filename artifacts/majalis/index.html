@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#F2F4F3" />
-    <!-- ثيم+RTL+حجم خط قبل أي CSS/JS — أول إطار ثابت (v13-startup-shell-stable-2026-09) -->
+    <!-- ثيم+RTL+حجم خط قبل أي CSS/JS — أول إطار ثابت (v14-release-fresh-2026-09) -->
     <script id="mj-theme-boot">
       (function () {
         try {
@@ -14,16 +14,20 @@
           html.setAttribute("dir", "rtl");
           html.classList.add("app-booting");
           html.dataset.appBooting = "1";
-          var _dsv = "v13-startup-shell-stable-2026-09";
-          if (localStorage.getItem("majalis-design-v") !== _dsv) {
+          var _dsv = "v14-release-fresh-2026-09";
+          var _prevDsv = localStorage.getItem("majalis-design-v");
+          if (_prevDsv !== _dsv) {
             localStorage.setItem("majalis-design-v", _dsv);
-            /* لا تمسح تفضيل الخط — مسحه يسبب قفزة خط بعد أول إطار */
-            try {
-              localStorage.setItem("majalis_force_cache_purge", "1");
-              localStorage.removeItem("majlis_intro_seen");
-              localStorage.removeItem("majalis-intro-seen");
-              localStorage.removeItem("majlis-home-welcomed-v1");
-            } catch (_) {}
+            /* أول زيارة: بذر فقط. الترقية من نسخة قديمة: اطلب مسح كاش العرض مرة */
+            if (_prevDsv) {
+              try {
+                localStorage.setItem("majalis_force_cache_purge", "1");
+                /* لا تمسح تفضيل الخط — مسحه يسبب قفزة خط بعد أول إطار */
+                localStorage.removeItem("majlis_intro_seen");
+                localStorage.removeItem("majalis-intro-seen");
+                localStorage.removeItem("majlis-home-welcomed-v1");
+              } catch (_) {}
+            }
           }
           /* أولوية: اختيار المستخدم (light|dark|auto) → الافتراضي نهاري.
              light لا يتأثر بوضع الجهاز. auto فقط يتبع النظام. */
@@ -131,7 +135,7 @@
         } catch (e) {}
       })();
     </script>
-    <!-- فحص نسخة مبكر: يجهّز المسح بهدوء — بلا reload أثناء أول إطار -->
+    <!-- فحص نسخة مبكر: عند اختلاف /version.json امسح الكاش ثم أعد التحميل مرة واحدة فقط -->
     <script id="mj-version-boot">
       (function () {
         var FLAG = "ssunnah-refreshing-version";
@@ -147,7 +151,6 @@
         try {
           prev = localStorage.getItem("majalis_app_version");
         } catch (_) {}
-        if (!prev) return;
         var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
         var timer =
           ctrl &&
@@ -166,26 +169,46 @@
           .then(function (j) {
             if (timer) clearTimeout(timer);
             if (!j) return;
-            var live = String(j.shortCommit || j.commit || "").slice(0, 12);
+            var live = String(j.shortCommit || j.commit || "").slice(0, 8);
             if (!live) return;
+            /* أول زيارة: خزّن النسخة فقط — بلا reload */
+            if (!prev) {
+              try {
+                localStorage.setItem("majalis_app_version", live);
+              } catch (_) {}
+              return;
+            }
             var same =
               live === prev ||
               prev.indexOf(live) === 0 ||
               live.indexOf(prev) === 0;
             if (same) return;
             try {
+              sessionStorage.setItem(FLAG, "1");
               localStorage.setItem("majalis_force_cache_purge", "1");
               localStorage.setItem("majalis_app_version", live);
             } catch (_) {}
-            /* مسح كاش قديم في الخلفية — لا reload مفاجئ أثناء أول فتح */
-            if (!window.caches || !caches.keys) return;
+            var reloadOnce = function () {
+              try {
+                var u = new URL(location.href);
+                u.searchParams.set("v", live);
+                location.replace(u.toString());
+              } catch (_) {
+                location.reload();
+              }
+            };
+            if (!window.caches || !caches.keys) {
+              reloadOnce();
+              return;
+            }
             caches
               .keys()
               .then(function (keys) {
                 return Promise.all(
                   keys.map(function (k) {
+                    /* امسح كاشات التطبيق القديمة؛ لا تمس كاشات غير ذات صلة إن وُجدت */
                     if (
-                      /intro|onboard|welcome|splash|boot-guide|first-?launch|first-?run/i.test(k) ||
+                      /ssunnah|majalis|majlisilm|workbox|vite|static-json|shell|offline/i.test(k) ||
                       (k.indexOf("ssunnah-v") === 0 && k.indexOf(live) < 0)
                     ) {
                       return caches.delete(k);
@@ -194,7 +217,10 @@
                   }),
                 );
               })
-              .catch(function () {});
+              .catch(function () {})
+              .then(function () {
+                reloadOnce();
+              });
           })
           .catch(function () {
             if (timer) clearTimeout(timer);
