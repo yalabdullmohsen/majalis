@@ -20,12 +20,17 @@ const appRoot = resolve(__dirname, "../../..");
 
 const FORBIDDEN = [
   "pending_review",
+  "reviewStatus",
   "مؤجل",
   "قيد الإضافة",
   "قريبًا",
+  "قريبا",
   "سيتم لاحقًا",
+  "سيتم لاحقا",
   "TODO",
   "FIXME",
+  "Placeholder",
+  "Lorem ipsum",
 ] as const;
 
 let passed = 0;
