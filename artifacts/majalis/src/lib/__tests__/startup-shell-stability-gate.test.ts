@@ -30,7 +30,7 @@ assert.ok(html.includes(["font", "-family: \"Amiri\""].join("")), "خط الوا
 assert.match(html, /button,\s*input,\s*textarea,\s*select/, "عناصر النموذج ترث الخط");
 assert.match(html, /min-height:\s*100(?:dvh|svh)/, "ارتفاع viewport ثابت لـ iOS");
 assert.ok(html.includes("#101614") || html.includes("#101614"), "خلفية ليلي قبل React");
-assert.match(html, /v13-startup-shell-stable/, "نسخة تصميم تُبطل الكاش القديم");
+assert.match(html, /v13-startup-shell-stable|v14-release-fresh-2026-09/, "نسخة تصميم تُبطل الكاش القديم");
 assert.match(html, /font-display:\s*optional/, "font-display optional بلا قفزة");
 
 assert.match(critical, /html\.app-booting[\s\S]*\.app-top-chrome/, "قفل هيدر أثناء الإقلاع");
