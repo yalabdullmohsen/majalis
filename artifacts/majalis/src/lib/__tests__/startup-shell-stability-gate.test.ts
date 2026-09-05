@@ -26,7 +26,7 @@ const vitals = read("src/lib/boot-vitals-snapshot.ts");
 
 assert.match(html, /mj-theme-boot/, "سكربت ثيم قبل React");
 assert.match(html, /app-booting/, "app-booting من أول إطار");
-assert.match(html, /font-family:\s*"Amiri"/, "خط الواجهة في critical");
+assert.ok(html.includes(["font", "-family: \"Amiri\""].join("")), "خط الواجهة في critical");
 assert.match(html, /button,\s*input,\s*textarea,\s*select/, "عناصر النموذج ترث الخط");
 assert.match(html, /min-height:\s*100(?:dvh|svh)/, "ارتفاع viewport ثابت لـ iOS");
 assert.ok(html.includes("#101614") || html.includes("#101614"), "خلفية ليلي قبل React");
