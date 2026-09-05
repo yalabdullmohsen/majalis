@@ -76,14 +76,19 @@ function FiqhHubSearch({
 
 function BookCard({ book }: { book: FiqhBook }) {
   const counts = fiqhBookCounts(book);
+  const blurb = fiqhBookBlurb(book);
   return (
-    <Link href={`/fiqh/books/${book.id}`} className="fiqh-book-card">
+    <Link
+      href={`/fiqh/books/${book.id}`}
+      className="fiqh-book-card"
+      aria-label={`${book.title} — ${formatAbwabCount(counts.chapters)} · ${formatMasailCount(counts.lessons)}`}
+    >
       <span className="fiqh-book-card__icon" aria-hidden="true">
         <BookOpen size={18} strokeWidth={1.9} />
       </span>
       <span className="fiqh-book-card__body">
         <span className="fiqh-book-card__title">{book.title}</span>
-        <span className="fiqh-book-card__desc">{fiqhBookBlurb(book)}</span>
+        {blurb ? <span className="fiqh-book-card__desc">{blurb}</span> : null}
         <span className="fiqh-book-card__meta">
           {formatAbwabCount(counts.chapters)} · {formatMasailCount(counts.lessons)}
         </span>
@@ -267,7 +272,7 @@ export default function FiqhPage() {
       path: "/fiqh",
       title: "الفقه | سُنّة",
       description:
-        "كتب فقه حنبلية مرتبة: الطهارة، الصلاة، الزكاة، الصيام، الاعتكاف، الحج، الأيمان، الأطعمة، الجنائز، ثم المعاملات والأسرة والحدود والقضاء.",
+        "كتب فقه حنبلية مرتبة: الطهارة، الصلاة، الزكاة، الصيام، الاعتكاف، الحج، الجنائز، البيوع، الشركة، الوصايا، النكاح، الأطعمة، الأيمان، الجنايات، القضاء، الجهاد، العتق.",
       keywords: ["فقه إسلامي", "كتب الفقه", "مذهب أحمد", "حنبلي", "سُنّة"],
       jsonLd: [
         webPageJsonLd(

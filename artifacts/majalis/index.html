@@ -382,22 +382,58 @@
       }
       .mj-launch-splash__inner{
         display:flex;
+        flex-direction:column;
         align-items:center;
         justify-content:center;
+        gap:0.85rem;
         text-align:center;
+        padding:1rem;
+      }
+      .mj-launch-splash__mark{
+        min-width:4.75rem;
+        min-height:2.75rem;
+        padding:0.35rem 0.85rem;
+        border-radius:0.9rem;
+        display:grid;
+        place-items:center;
+        background:color-mix(in srgb, var(--mj-splash-ink) 12%, transparent);
+        border:1px solid color-mix(in srgb, var(--mj-splash-ink) 22%, transparent);
       }
       .mj-launch-splash__title{
         margin:0;
-        min-height:2.85rem;
+        min-height:1.5rem;
         font-family:"Amiri","MajlisAmiriFallback","Noto Naskh Arabic",serif;
-        font-size:clamp(1.85rem,8.5vw,2.35rem);
+        font-size:clamp(1.35rem,5.5vw,1.65rem);
         font-weight:400;
         line-height:1.2;
         color:var(--mj-splash-ink);
+        letter-spacing:0.02em;
+      }
+      .mj-launch-splash__pulse{
+        width:2.5rem;
+        height:0.2rem;
+        border-radius:999px;
+        background:color-mix(in srgb, var(--mj-splash-ink) 22%, transparent);
+        overflow:hidden;
+        position:relative;
+      }
+      .mj-launch-splash__pulse::after{
+        content:"";
+        position:absolute;
+        inset:0;
+        width:40%;
+        border-radius:inherit;
+        background:var(--mj-splash-ink);
+        animation:mj-splash-pulse 0.9s ease-in-out infinite;
+      }
+      @keyframes mj-splash-pulse{
+        0%{ transform:translateX(150%); }
+        100%{ transform:translateX(-250%); }
       }
       @media (prefers-reduced-motion: reduce){
         #mj-launch-splash,
         #mj-launch-splash.mj-launch-splash--out{ transition:none; }
+        .mj-launch-splash__pulse::after{ animation:none; width:100%; opacity:0.45; }
       }
     </style>
     <meta name="mobile-web-app-capable" content="yes" />
@@ -493,10 +529,13 @@
     </script>
   </head>
   <body>
-    <!-- Startup Gate: كلمة سُنّة فقط — بلا زخرفة ولا حركة -->
+    <!-- Startup Gate: شعار صغير + شريط خفيف — بلا مربعات فارغة -->
     <div id="mj-launch-splash" aria-hidden="true">
       <div class="mj-launch-splash__inner">
-        <p class="mj-launch-splash__title" id="mj-launch-splash__title">سُنّة</p>
+        <div class="mj-launch-splash__mark" aria-hidden="true">
+          <p class="mj-launch-splash__title" id="mj-launch-splash__title">سُنّة</p>
+        </div>
+        <div class="mj-launch-splash__pulse" aria-hidden="true"></div>
       </div>
     </div>
     <!-- defer: لا يحجب أول رسم؛ الدخولية تُدار بعد parse مباشرة دون تأخير LCP -->

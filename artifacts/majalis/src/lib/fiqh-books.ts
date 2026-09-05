@@ -350,11 +350,29 @@ export function adjacentFiqhLessons(
   };
 }
 
-/** وصف عرضي من عنوان الكتاب — ليس حكماً شرعياً جديداً. */
+/** وصف عرضي مختصر للقائمة — بلا تكرار للعنوان، سطران كحد أقصى في الواجهة. */
 export function fiqhBookBlurb(book: FiqhBook): string {
-  if (book.description?.trim()) return book.description.trim();
-  const topic = book.title.replace(/^كتاب\s+/, "").trim();
-  return `أبواب ${topic} ومسائلها المنشورة على المذهب الحنبلي.`;
+  const title = book.title.trim();
+  const topic = title.replace(/^كتاب\s+/u, "").trim();
+  let text = (book.description?.trim() ?? "")
+    .replace(/في المذهب الحنبلي على طريقة الزاد والروض وكشاف القناع،?\s*/gu, "")
+    .trim();
+
+  // أزل العنوان الكامل فقط إن تكرّر في بداية الوصف (لا نحذف موضوعًا مفيدًا داخل الجملة).
+  if (title && text.startsWith(title)) {
+    text = text.slice(title.length).replace(/^[\s:：\-–—،]+/u, "").trim();
+  }
+  text = text.replace(/^كتاب\s+/u, "").trim();
+
+  const normalized = text.replace(/[.\s]+$/u, "");
+  if (!normalized || normalized === title || normalized === topic) {
+    return topic ? `أبواب ${topic} ومسائلها باختصار.` : "أبواب ومسائل مختصرة.";
+  }
+
+  if (text.length <= 96) return /[.!?…]$/u.test(text) ? text : `${text}.`;
+  const cut = text.slice(0, 92);
+  const at = Math.max(cut.lastIndexOf("،"), cut.lastIndexOf(" "));
+  return `${(at > 40 ? cut.slice(0, at) : cut).trim()}…`;
 }
 
 export type FiqhChapterHit = {
