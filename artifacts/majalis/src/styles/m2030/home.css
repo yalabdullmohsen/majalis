@@ -250,22 +250,23 @@
 }
 
 .m2030-btn--primary {
-  background: var(--mj-brand);
-  color: var(--mj-on-brand);
+  background: var(--color-primary, var(--mj-brand));
+  color: var(--color-primary-contrast, var(--mj-on-brand));
 }
 
 .m2030-btn--primary:hover {
   background: var(--mj-brand-deep, var(--mj-brand));
+  color: var(--color-primary-contrast, var(--mj-on-brand));
 }
 
 .m2030-btn--ghost {
-  background: var(--mj-surface);
-  color: var(--mj-ink);
-  border: 1px solid var(--mj-hairline);
+  background: var(--color-surface, var(--mj-surface));
+  color: var(--brand-on-light, var(--color-text, var(--mj-ink)));
+  border: 1px solid var(--color-border, var(--mj-hairline));
 }
 
 .m2030-btn--ghost:hover {
-  background: var(--mj-brand-soft);
+  background: var(--color-surface-muted, var(--mj-brand-soft));
 }
 
 .m2030-band {
@@ -495,9 +496,9 @@ html.dark .m2030-feature__title {
   margin: 0.15rem auto 0;
   padding: 0.4rem 0.75rem;
   font-size: 0.78rem;
-  color: var(--text);
-  background: var(--surface);
-  border: 1px solid var(--border-strong);
+  color: var(--color-text, var(--text));
+  background: var(--color-surface, var(--surface));
+  border: 1px solid var(--color-border, var(--border-strong));
   border-radius: var(--r-sm);
   cursor: pointer;
 }

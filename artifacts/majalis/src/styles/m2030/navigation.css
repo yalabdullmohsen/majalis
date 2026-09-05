@@ -103,7 +103,8 @@ header.navbar-v3,
 }
 
 .bottom-nav__tab.is-active {
-  color: var(--brand) !important;
+  /* نص أخضر على سطح فاتح: brand-on-light (≥4.5) لا --brand الباهت */
+  color: var(--brand-on-light, var(--brand-on-white, #146C4E)) !important;
   background: color-mix(in srgb, var(--mj-brand-deep, #123f2e) 7%, transparent) !important;
 }
 

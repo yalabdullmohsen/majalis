@@ -69,6 +69,9 @@ const ASSERTIONS = [
   { route: "/", selector: ".page-hero-mj__title", mode: "dark", min: 3 },
   { route: "/", selector: ".home-page-hero .m2030-btn--primary", mode: "dark", min: 4.5 },
   { route: "/", selector: ".page-hero-mj__actions .m2030-btn--primary", mode: "dark", min: 4.5 },
+  // أسطح أزرار رئيسية — primary / ghost / شريط سفلي نشط (عقد DS)
+  { route: "/", selector: ".bottom-nav__tab.is-active || .bottom-nav--v2 .bottom-nav__tab.is-active", mode: "light", min: 4.5 },
+  { route: "/", selector: ".bottom-nav__tab.is-active || .bottom-nav--v2 .bottom-nav__tab.is-active", mode: "dark", min: 4.5 },
   // .sq-title (عنوان SectionQuiz داخل .sq-header الداكن) كان يخسر نفس المعركة.
   { route: "/cards", selector: ".sq-title", mode: "light", min: 4.5 },
   // .twh-hub-card__current-tag اكتسب خلفية داكنة بالخطأ (يطابق [class*="-card"]
@@ -329,7 +332,15 @@ const RATIO_FN = `(selector) => {
   const blended = fg.a < 1
     ? { r: fg.r * fg.a + bg.r * (1 - fg.a), g: fg.g * fg.a + bg.g * (1 - fg.a), b: fg.b * fg.a + bg.b * (1 - fg.a) }
     : fg;
-  return { ratio: Math.round(contrast(blended, bg) * 100) / 100, color: cs.color, bg: \`rgb(\${bg.r},\${bg.g},\${bg.b})\` };
+  const text = (el.innerText || el.textContent || "").replace(/\\s+/g, " ").trim().slice(0, 80);
+  return {
+    ratio: Math.round(contrast(blended, bg) * 100) / 100,
+    color: cs.color,
+    bg: \`rgb(\${bg.r},\${bg.g},\${bg.b})\`,
+    text,
+    visibility: cs.visibility,
+    opacity: cs.opacity,
+  };
 }`;
 
 function cssToHex(cssColor) {
@@ -466,10 +477,34 @@ async function main() {
     try {
       localStorage.setItem("majalis.onboarding.onboarding_seen", "1");
       localStorage.setItem("majalis.onboarding.onboarding_major_version", "1");
+      // ترحيب/مقدمة أول زيارة — لا تحجب هيكل الرئيسية أثناء القياس
+      localStorage.setItem("majlis-home-welcomed-v1", "1");
+      localStorage.setItem("ssunnah-first-visit-intro-v1", "1");
     } catch { /* ignore */ }
   });
   const failures = [];
   let lastRoute = null;
+  const screenshotDir = resolve(appRoot, "test-results/contrast-gate");
+
+  async function prepareAuditSurface(mode) {
+    await page.evaluate((m) => {
+      const html = document.documentElement;
+      html.dataset.contrastAudit = "1";
+      html.dataset.theme = m;
+      html.classList.toggle("dark", m === "dark");
+      html.style.setProperty("color-scheme", m === "dark" ? "dark" : "light");
+      // أكمل أزرار الهيرو المؤجَّلة (LCP) حتى لا تُقاس وهي visibility:hidden
+      document.querySelectorAll(".home-page-hero, .m2030-hero").forEach((el) => {
+        el.classList.add("home-page-hero--actions-ready", "home-page-hero--eyebrow-ready");
+      });
+      // أوقف الحركات أثناء القياس — لا ألوان متحركة وسيطة
+      const style = document.getElementById("mj-contrast-audit-style") || document.createElement("style");
+      style.id = "mj-contrast-audit-style";
+      style.textContent =
+        "*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}";
+      document.head.appendChild(style);
+    }, mode);
+  }
 
   for (const a of contrastAssertions) {
     try {
@@ -478,14 +513,8 @@ async function main() {
         await page.waitForTimeout(400);
         lastRoute = a.route;
       }
-      const currentMode = await page.evaluate(() => document.documentElement.dataset.theme || "light");
-      if (currentMode !== a.mode) {
-        await page.evaluate((mode) => {
-          document.documentElement.dataset.theme = mode;
-          document.documentElement.classList.toggle("dark", mode === "dark");
-        }, a.mode);
-        await page.waitForTimeout(300);
-      }
+      await prepareAuditSurface(a.mode);
+      await page.waitForTimeout(120);
       // انتظار ظهور العنصر فعليًا قبل القياس — بعض ودجتات الرئيسية (مثل
       // .lsw-section/#home-library-heading) قد تستغرق أطول قليلاً من مهلة
       // الـ400ms العامة أعلاه عند أول تحميل بارد لخادم dev (تصريف Vite
@@ -496,7 +525,12 @@ async function main() {
       let result = { error: "NOT_FOUND" };
       let used = selectors[0] || a.selector;
       for (const sel of selectors) {
-        await page.waitForSelector(sel, { timeout: 4000 }).catch(() => {});
+        const loc = page.locator(sel).first();
+        await loc.waitFor({ state: "attached", timeout: a.lazy ? 8000 : 4000 }).catch(() => {});
+        if (a.lazy) {
+          await loc.scrollIntoViewIfNeeded().catch(() => {});
+          await page.waitForTimeout(200);
+        }
         result = await page.evaluate(`(${RATIO_FN})(${JSON.stringify(sel)})`);
         if (result.error !== "NOT_FOUND") {
           used = sel;
@@ -506,7 +540,10 @@ async function main() {
       if (result.error === "NOT_FOUND") {
         failures.push(violationRow({
           route: a.route, selector: selectors.join(" || "), mode: a.mode,
-          required: `${a.min}:1`, reason: "NOT_FOUND",
+          required: `${a.min}:1`,
+          reason: a.lazy
+            ? "NOT_FOUND (عنصر تحت الطية/كسول — لم يظهر بعد الانتظار)"
+            : "NOT_FOUND (المحدّد غير موجود في DOM بعد استقرار الصفحة)",
         }));
       } else if (result.error) {
         failures.push(violationRow({
@@ -520,7 +557,7 @@ async function main() {
           bg: `${result.bg} ${cssToHex(result.bg)}`.trim(),
           ratio: `${result.ratio}:1`,
           required: `${a.min}:1`,
-          reason: "LOW_CONTRAST",
+          reason: `LOW_CONTRAST text="${result.text || ""}"`,
         }));
       }
     } catch (e) {
@@ -529,6 +566,16 @@ async function main() {
         required: `${a.min}:1`, reason: `ERROR ${String(e).slice(0, 120)}`,
       }));
     }
+  }
+
+  if (failures.length) {
+    try {
+      const { mkdirSync } = await import("node:fs");
+      mkdirSync(screenshotDir, { recursive: true });
+      const shot = resolve(screenshotDir, `fail-${Date.now()}.png`);
+      await page.screenshot({ path: shot, fullPage: true }).catch(() => {});
+      console.error(`\n📸 لقطة فشل التباين: ${shot}`);
+    } catch { /* ignore screenshot errors */ }
   }
 
   // ── تغطية كل المسارات العامة: عنوان ظاهر ≥ 3:1 في الوضعين ──
