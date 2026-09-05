@@ -169,6 +169,31 @@
   display: none;
 }
 
+.hub-card--current {
+  cursor: default;
+  box-shadow: none;
+  outline: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 35%, transparent);
+}
+
+.hub-card--current .hub-card__go {
+  display: none;
+}
+
+@media (max-width: 430px) {
+  .hub-card {
+    min-height: 0;
+  }
+  .hub-card__desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .hub-card-grid {
+    gap: 0.75rem;
+  }
+}
+
 .hub-card--featured {
   border-color: color-mix(in srgb, var(--mj-accent, #b8963f) 42%, var(--mj-brand, var(--mj-brand)) 28%);
   background: color-mix(in srgb, var(--mj-brand-soft, var(--brand-soft, var(--mj-brand-soft))) 55%, var(--mj-surface, #fff));

@@ -113,15 +113,19 @@ export function sectionAwareFallback(currentPath: string): string {
   if (p.startsWith("/admin")) return "/admin";
   if (p.startsWith("/fawaid")) return "/fawaid";
   if (p.startsWith("/nations/")) return "/nations";
-  // قصص الأنبياء / السيرة — لا تُحوَّل /prophets* إلى /seerah
-  if (p.startsWith("/prophet-stories/")) return "/prophet-stories";
-  if (p === "/prophet-stories") return "/prophet-stories";
-  if (p.startsWith("/prophets-stories/")) return "/prophets-stories";
-  if (p === "/prophets-stories") return "/prophets-stories";
-  if (p.startsWith("/prophets/")) return "/prophets";
-  if (p === "/prophets") return "/prophets";
-  if (p.startsWith("/anbiya/")) return "/anbiya";
-  if (p === "/anbiya") return "/anbiya";
+  // قصص الأنبياء / السيرة — المسار الكنسي /prophets (الأسماء المستعارة تُعاد إليه)
+  if (
+    p.startsWith("/prophet-stories/") ||
+    p === "/prophet-stories" ||
+    p.startsWith("/prophets-stories/") ||
+    p === "/prophets-stories" ||
+    p.startsWith("/prophets/") ||
+    p === "/prophets" ||
+    p.startsWith("/anbiya/") ||
+    p === "/anbiya"
+  ) {
+    return "/prophets";
+  }
   if (p.startsWith("/seerah/")) return "/seerah";
   if (p === "/seerah") return "/prophets";
   // توحيد / إعجاز / تاريخ

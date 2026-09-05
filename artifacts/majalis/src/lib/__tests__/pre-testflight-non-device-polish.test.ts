@@ -77,10 +77,12 @@ assert.match(prayerSrc, /reload/);
 assert.match(prayerSrc, /pts-retry/);
 
 const globalBack = read("src/components/FloatingBackButton.tsx");
+const appBack = read("src/components/common/AppBackButton.tsx");
 /* زر الرجوع ظاهر دائمًا (بلا بوابة تمرير) — أوضح للخروج من الأقسام */
 assert.match(globalBack, /بدون شرط تمرير/);
-assert.match(globalBack, /haptics\.selection/);
+assert.match(appBack, /haptics\.selection/);
 assert.doesNotMatch(globalBack, /pastThreshold/);
+assert.doesNotMatch(appBack, /pastThreshold/);
 
 const finalCss = read("src/styles/final-release.css");
 assert.equal(/html\s*\{\s*-webkit-text-size-adjust:\s*100%/.test(finalCss), false);

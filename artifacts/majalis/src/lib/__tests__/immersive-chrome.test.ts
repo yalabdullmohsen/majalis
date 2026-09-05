@@ -118,7 +118,7 @@ const servicesNav = readFileSync(resolve(appRoot, "src/lib/services-center-nav.t
 assert.match(servicesNav, /sections\.registry/);
 assert.match(quranHub, /SectionLobby/);
 
-const globalBack = readFileSync(resolve(appRoot, "src/components/FloatingBackButton.tsx"), "utf8");
+const globalBack = readFileSync(resolve(appRoot, "src/components/common/AppBackButton.tsx"), "utf8");
 assert.match(globalBack, /isImmersiveChromePath/);
 
 const featureIdx = readFileSync(resolve(appRoot, "src/features/mushaf-madinah/index.ts"), "utf8");

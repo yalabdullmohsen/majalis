@@ -26,7 +26,10 @@ assert.equal(sectionAwareFallback("/fawaid/curated"), "/fawaid");
 assert.equal(sectionAwareFallback("/admin/users"), "/admin");
 assert.equal(sectionAwareFallback("/unknown-section"), "/");
 
-assert.equal(sectionAwareFallback("/prophet-stories/seerah"), "/prophet-stories");
+assert.equal(sectionAwareFallback("/prophet-stories/seerah"), "/prophets");
+assert.equal(sectionAwareFallback("/prophet-stories"), "/prophets");
+assert.equal(sectionAwareFallback("/prophets-stories"), "/prophets");
+assert.equal(sectionAwareFallback("/anbiya"), "/prophets");
 assert.equal(sectionAwareFallback("/prophets/adam"), "/prophets");
 assert.equal(sectionAwareFallback("/seerah"), "/prophets");
 assert.equal(sectionAwareFallback("/tawhid/asma"), "/tawhid");
