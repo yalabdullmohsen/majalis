@@ -75,9 +75,20 @@ export default function FiqhChapterPage() {
         </section>
       ) : null}
 
+      {chapter.topics && chapter.topics.length > 0 ? (
+        <section className="fiqh-lux-block" aria-labelledby="fiqh-ch-topics">
+          <h2 id="fiqh-ch-topics">موضوعات الباب</h2>
+          <ul className="fiqh-lux-sources">
+            {chapter.topics.map((topic) => (
+              <li key={topic}>{topic}</li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
       {chapter.summary ? (
         <section className="fiqh-lux-block" aria-labelledby="fiqh-ch-sum">
-          <h2 id="fiqh-ch-sum">خلاصة علمية</h2>
+          <h2 id="fiqh-ch-sum">خلاصة فقهية</h2>
           <p>{chapter.summary}</p>
         </section>
       ) : null}
@@ -86,6 +97,13 @@ export default function FiqhChapterPage() {
         <section className="fiqh-lux-block" aria-labelledby="fiqh-ch-ev">
           <h2 id="fiqh-ch-ev">أدلة عامة</h2>
           <p>{chapter.evidence}</p>
+        </section>
+      ) : null}
+
+      {chapter.notes ? (
+        <section className="fiqh-lux-block" aria-labelledby="fiqh-ch-notes">
+          <h2 id="fiqh-ch-notes">تنبيهات</h2>
+          <p>{chapter.notes}</p>
         </section>
       ) : null}
 

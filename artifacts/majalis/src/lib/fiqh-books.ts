@@ -35,8 +35,12 @@ export type FiqhChapter = {
   order: number;
   status?: FiqhChapterStatus;
   definition?: string;
+  /** موضوعات الباب — نقاط مختصرة لأبرز المسائل. */
+  topics?: string[];
   summary?: string;
   evidence?: string;
+  /** تنبيهات مختصرة (اختلاف الحال / الرجوع لأهل العلم). */
+  notes?: string;
   sources?: FiqhSource[];
   lessons: FiqhLesson[];
 };
@@ -45,9 +49,13 @@ export type FiqhBook = {
   id: string;
   title: string;
   description?: string;
+  /** سبب ترتيب الكتاب ضمن كتب الفقه. */
+  orderReason?: string;
   category: FiqhBookCategory;
   order: number;
+  status?: FiqhChapterStatus;
   aliases?: string[];
+  sources?: FiqhSource[];
   chapters: FiqhChapter[];
 };
 
@@ -176,10 +184,17 @@ export function publishedLessonsInChapter(chapter: FiqhChapter): FiqhLesson[] {
 
 export function isPublishedChapter(chapter: FiqhChapter): boolean {
   const statusOk = (chapter.status ?? "published") === "published";
+  const topicsOk =
+    Array.isArray(chapter.topics) &&
+    chapter.topics.length >= 1 &&
+    chapter.topics.every((t) => Boolean(t?.trim()));
   return (
     statusOk &&
     Boolean(chapter.definition?.trim()) &&
     Boolean(chapter.summary?.trim()) &&
+    Boolean(chapter.evidence?.trim()) &&
+    Boolean(chapter.notes?.trim()) &&
+    topicsOk &&
     sourcesComplete(chapter.sources) &&
     publishedLessonsInChapter(chapter).length > 0
   );
@@ -189,8 +204,19 @@ export function publishedChapters(book: FiqhBook): FiqhChapter[] {
   return book.chapters.filter(isPublishedChapter).sort((a, b) => a.order - b.order);
 }
 
+export function isPublishedBook(book: FiqhBook): boolean {
+  const statusOk = (book.status ?? "published") === "published";
+  return (
+    statusOk &&
+    Boolean(book.description?.trim()) &&
+    Boolean(book.orderReason?.trim()) &&
+    sourcesComplete(book.sources) &&
+    publishedChapters(book).length > 0
+  );
+}
+
 export function publishedBooks(books: FiqhBook[] = getAllFiqhBooks()): FiqhBook[] {
-  return books.filter((b) => publishedChapters(b).length > 0);
+  return books.filter(isPublishedBook);
 }
 
 export function getFiqhBook(bookId: string): FiqhBook | undefined {

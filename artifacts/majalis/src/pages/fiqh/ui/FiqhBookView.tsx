@@ -80,6 +80,11 @@ export default function FiqhBookPage() {
       <header className="fiqh-lux-book-hero">
         <h1 className="fiqh-lux-book-hero__title">{book.title}</h1>
         <p className="fiqh-lux-book-hero__blurb">{fiqhBookBlurb(book)}</p>
+        {book.orderReason ? (
+          <p className="fiqh-lux-book-hero__meta" aria-label="سبب الترتيب">
+            ترتيب الكتاب: {book.orderReason}
+          </p>
+        ) : null}
         <p className="fiqh-lux-book-hero__meta">
           {formatAbwabCount(counts.chapters)} · {formatMasailCount(counts.lessons)} · مستوى تقريبي: {level}
         </p>
@@ -89,6 +94,21 @@ export default function FiqhBookPage() {
           </p>
         ) : null}
       </header>
+
+      {book.sources && book.sources.length > 0 ? (
+        <section className="fiqh-lux-block" aria-labelledby="fiqh-book-src">
+          <h2 id="fiqh-book-src">مصادر الكتاب</h2>
+          <ul className="fiqh-lux-sources">
+            {book.sources.map((s, i) => (
+              <li key={`${s.book}-${i}`}>
+                <strong>{s.book}</strong>
+                {s.author ? ` — ${s.author}` : ""}
+                {s.ref ? `، ${s.ref}` : ""}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       <ol className="fiqh-lux-chapter-list">
         {chapters.map((ch, i) => {
