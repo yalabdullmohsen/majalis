@@ -860,7 +860,7 @@ html.dark .nb-table__row--clickable:hover td {
     rgba(255, 255, 255, 0.04)
   );
   border: 1px solid var(--ps-detail-border);
-  border-radius: 14px;
+  border-radius: var(--radius-card, 24px);
   padding: 0.85rem 1rem;
   display: flex;
   gap: 0.75rem;
@@ -2199,7 +2199,7 @@ html.dark .app-main:has(.lrf-wrap--prophet-detail) {
 .prophet-lesson-card--interactive {
   text-align: start !important;
   align-items: flex-start !important;
-  border-radius: 14px;
+  border-radius: var(--radius-card, 24px);
   padding: 0.85rem 1rem;
 }
 
