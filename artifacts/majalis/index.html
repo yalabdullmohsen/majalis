@@ -15,15 +15,19 @@
           html.classList.add("app-booting");
           html.dataset.appBooting = "1";
           var _dsv = "v14-release-fresh-2026-09";
-          if (localStorage.getItem("majalis-design-v") !== _dsv) {
+          var _prevDsv = localStorage.getItem("majalis-design-v");
+          if (_prevDsv !== _dsv) {
             localStorage.setItem("majalis-design-v", _dsv);
-            /* لا تمسح تفضيل الخط — مسحه يسبب قفزة خط بعد أول إطار */
-            try {
-              localStorage.setItem("majalis_force_cache_purge", "1");
-              localStorage.removeItem("majlis_intro_seen");
-              localStorage.removeItem("majalis-intro-seen");
-              localStorage.removeItem("majlis-home-welcomed-v1");
-            } catch (_) {}
+            /* أول زيارة: بذر فقط. الترقية من نسخة قديمة: اطلب مسح كاش العرض مرة */
+            if (_prevDsv) {
+              try {
+                localStorage.setItem("majalis_force_cache_purge", "1");
+                /* لا تمسح تفضيل الخط — مسحه يسبب قفزة خط بعد أول إطار */
+                localStorage.removeItem("majlis_intro_seen");
+                localStorage.removeItem("majalis-intro-seen");
+                localStorage.removeItem("majlis-home-welcomed-v1");
+              } catch (_) {}
+            }
           }
           /* أولوية: اختيار المستخدم (light|dark|auto) → الافتراضي نهاري.
              light لا يتأثر بوضع الجهاز. auto فقط يتبع النظام. */
