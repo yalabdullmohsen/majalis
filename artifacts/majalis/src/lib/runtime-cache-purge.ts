@@ -7,7 +7,8 @@ import { safeLocationReload } from "@/lib/safe-reload";
 
 export const APP_VERSION_STORAGE_KEY = "majalis_app_version";
 const FORCE_PURGE_KEY = "majalis_force_cache_purge";
-const PURGE_RELOAD_GUARD = "majalis-version-purge-reload.v1";
+/** يجب أن يطابق boot-legacy-cache.js و useVersionCheck لمنع reload loop */
+const PURGE_RELOAD_GUARD = "ssunnah-refreshing-version";
 
 const PRESERVE_LOCAL_STORAGE_EXACT = new Set([
   APP_VERSION_STORAGE_KEY,
@@ -170,6 +171,71 @@ async function notifyServiceWorkerPurge(): Promise<void> {
   }
 }
 
+export async function clearAllRuntimeCaches(): Promise<number> {
+  return clearCacheStorage();
+}
+
+export async function unregisterAllServiceWorkers(): Promise<number> {
+  if (!("serviceWorker" in navigator) || typeof navigator.serviceWorker.getRegistrations !== "function") {
+    return 0;
+  }
+  try {
+    const regs = await navigator.serviceWorker.getRegistrations();
+    await Promise.all(regs.map((reg) => reg.unregister().catch(() => false)));
+    return regs.length;
+  } catch {
+    return 0;
+  }
+}
+
+export type LiveVersionInfo = {
+  commit: string;
+  shortCommit: string;
+  builtAt: string | null;
+};
+
+/** جلب /version.json بدون كاش — للفشل الشبكي يُرجع null بصمت */
+export async function fetchLiveVersionInfo(): Promise<LiveVersionInfo | null> {
+  try {
+    if (typeof fetch === "undefined") return null;
+    const res = await fetch(`/version.json?force=${Date.now()}`, {
+      cache: "no-store",
+      credentials: "same-origin",
+    });
+    if (!res.ok) return null;
+    const data = (await res.json()) as Record<string, unknown>;
+    const commit =
+      (typeof data.commit === "string" && data.commit.trim()) ||
+      (typeof data.commitSha === "string" && data.commitSha.trim()) ||
+      (typeof data.shortCommit === "string" && data.shortCommit.trim()) ||
+      "";
+    if (!commit) return null;
+    const short =
+      (typeof data.shortCommit === "string" && data.shortCommit.trim()) ||
+      commit.slice(0, 8);
+    const builtAt =
+      (typeof data.builtAt === "string" && data.builtAt) ||
+      (typeof data.buildTime === "string" && data.buildTime) ||
+      null;
+    return { commit, shortCommit: short.slice(0, 8), builtAt };
+  } catch {
+    return null;
+  }
+}
+
+/** رقم النسخة المختصر المعروض في الإعدادات (محفوظ أو مضمّن في البناء) */
+export function getDisplayedAppVersion(): string {
+  try {
+    const stored = localStorage.getItem(APP_VERSION_STORAGE_KEY);
+    if (typeof stored === "string" && stored.trim()) {
+      return stored.trim().slice(0, 8);
+    }
+  } catch {
+    /* ignore */
+  }
+  return resolveAppVersion()?.slice(0, 8) ?? "—";
+}
+
 /** يسجّل النسخة الحالية دون مسح — للإقلاع الأول */
 export function ensureAppVersionMarker(): string | null {
   const version = resolveAppVersion();
@@ -244,14 +310,49 @@ export async function purgeStaleRuntimeCaches(options?: {
 
 /**
  * زر الإعدادات «تحديث النسخة»:
- * يمسح Cache Storage + كاش العرض، يحدّث SW، ثم يعيد التحميل مرة واحدة.
+ * يجلب /version.json، يمسح Cache Storage + SW، يخزّن commit، ثم hard reload مرة واحدة.
  * لا يمس الثيم/المفضلة/الصلاة/المصادقة.
  */
 export async function refreshAppAndPurgeCaches(): Promise<{
   purged: boolean;
   cachesCleared: number;
+  shortCommit: string | null;
+  ok: boolean;
 }> {
+  try {
+    if (sessionStorage.getItem(PURGE_RELOAD_GUARD) === "1") {
+      sessionStorage.removeItem(PURGE_RELOAD_GUARD);
+      return {
+        purged: false,
+        cachesCleared: 0,
+        shortCommit: getDisplayedAppVersion(),
+        ok: false,
+      };
+    }
+  } catch {
+    /* ignore */
+  }
+
+  const live = await fetchLiveVersionInfo();
+  const shortCommit = live?.shortCommit ?? getDisplayedAppVersion();
+
+  try {
+    localStorage.setItem(FORCE_PURGE_KEY, "1");
+  } catch {
+    /* ignore */
+  }
+
   const result = await purgeStaleRuntimeCaches({ force: true, reloadOnce: false });
+  await unregisterAllServiceWorkers();
+
+  if (live?.shortCommit) {
+    try {
+      localStorage.setItem(APP_VERSION_STORAGE_KEY, live.shortCommit);
+    } catch {
+      /* ignore */
+    }
+  }
+
   try {
     if ("serviceWorker" in navigator) {
       const reg = await navigator.serviceWorker.getRegistration();
@@ -262,15 +363,21 @@ export async function refreshAppAndPurgeCaches(): Promise<{
   } catch {
     /* ignore */
   }
+
   try {
-    if (sessionStorage.getItem(PURGE_RELOAD_GUARD) !== "1") {
-      sessionStorage.setItem(PURGE_RELOAD_GUARD, "1");
-      safeLocationReload();
-    }
+    sessionStorage.setItem(PURGE_RELOAD_GUARD, "1");
   } catch {
-    safeLocationReload();
+    /* ignore */
   }
-  return { purged: result.purged, cachesCleared: result.cachesCleared };
+
+  safeLocationReload({ force: true });
+
+  return {
+    purged: result.purged,
+    cachesCleared: result.cachesCleared,
+    shortCommit,
+    ok: true,
+  };
 }
 
 /** تشخيص: مسح كاش + طباعة /version.json في الـ console */

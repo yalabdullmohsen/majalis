@@ -87,7 +87,7 @@ function armControlledSwReload(): void {
   };
 
   navigator.serviceWorker.addEventListener("message", (event) => {
-    if (event.data?.type === "SW_UPDATED_QUIET") {
+    if (event.data?.type === "SW_UPDATED_QUIET" || event.data?.type === "CLIENT_UPDATE_AVAILABLE") {
       signalQuietUpdate();
       return;
     }
