@@ -40,7 +40,10 @@ import {
   isAdhanAndroidAlarmAvailable,
   openAndroidBatteryOptimizationSettings,
   openAndroidExactAlarmSettings,
+  playAndroidAdhanNow,
 } from "@/lib/adhan-android-alarm";
+import { getMuezzin } from "@/lib/adhan-audio";
+import { resolveAdhanClip } from "@/lib/adhan-playback-modes";
 import { loadNotifPrefs, saveNotifPrefs } from "@/lib/local-notifications";
 import "@/styles/pages/adhan-settings.css";
 
@@ -139,62 +142,118 @@ function NotificationPermBadge() {
   return <PermissionBadge value={state} />;
 }
 
-function AndroidBackgroundCard() {
+function AndroidAdhanNativeCard({
+  selectedMuezzinId,
+}: {
+  selectedMuezzinId: string;
+}) {
   const [perm, setPerm] = useState<{ exactAlarm: boolean; battery: boolean } | null>(null);
-  const [busy, setBusy] = useState(false);
-  const refresh = () => {
+  const [permBusy, setPermBusy] = useState(false);
+  const [fgsBusy, setFgsBusy] = useState(false);
+  const [fgsMsg, setFgsMsg] = useState<string | null>(null);
+
+  const refreshPerm = () => {
     void getAndroidAdhanPermissionStatus().then(setPerm);
   };
+
   useEffect(() => {
     if (!isAdhanAndroidAlarmAvailable()) return;
-    refresh();
+    refreshPerm();
   }, []);
+
   if (!isAdhanAndroidAlarmAvailable()) return null;
+
+  async function handleBatteryCheck() {
+    setPermBusy(true);
+    await openAndroidBatteryOptimizationSettings();
+    refreshPerm();
+    setPermBusy(false);
+  }
+
+  async function handleExactAlarmCheck() {
+    setPermBusy(true);
+    await openAndroidExactAlarmSettings();
+    refreshPerm();
+    setPermBusy(false);
+  }
+
+  async function handleFgsTest() {
+    setFgsBusy(true);
+    setFgsMsg(null);
+    const muezzin = getMuezzin(selectedMuezzinId);
+    const clip = resolveAdhanClip(muezzin, { isFajr: false, mode: "full" });
+    if (!clip) {
+      setFgsMsg("تعذّر تجهيز ملف الأذان المحلي.");
+      setFgsBusy(false);
+      return;
+    }
+    const ok = await playAndroidAdhanNow({
+      url: clip.url,
+      title: "تجربة الأذان",
+      prayerKey: "dhuhr",
+    });
+    setFgsMsg(
+      ok
+        ? "تُشغَّل الخدمة الأمامية — الأذان كاملاً حتى النهاية (ملف محلي)."
+        : "تعذّر تشغيل خدمة الأذان على هذا الجهاز.",
+    );
+    setFgsBusy(false);
+  }
+
   return (
-    <section className="ads-card" aria-labelledby="ads-android-head">
-      <div className="ads-card__head" id="ads-android-head">
+    <section className="ads-card" aria-labelledby="ads-android-native-head">
+      <div className="ads-card__head" id="ads-android-native-head">
         <Bell size={15} strokeWidth={2} aria-hidden="true" />
-        <span>حماية التنبيهات على أندرويد</span>
+        <span>حماية تشغيل الخلفية (أندroid)</span>
       </div>
       <div className="ads-card__body">
+        <p className="ads-adhan-desc" role="note">
+          الأذان الكامل يُجدول عبر منبه دقيق وخدمة أمامية — بلا اعتماد على الشبكة لحظة الصلاة.
+          تجاوز زر الصامت على iOS غير متاح دون امتياز Apple الرسمي.
+        </p>
         <div className="ads-row">
-          <span>المنبّه الدقيق</span>
-          <PermissionBadge value={perm?.exactAlarm ? "granted" : perm ? "denied" : "default"} />
+          <span>منبه دقيق (Exact Alarm)</span>
+          <PermissionBadge
+            value={perm?.exactAlarm ? "granted" : perm ? "denied" : "default"}
+          />
         </div>
         <div className="ads-row">
-          <span>استثناء البطارية</span>
-          <PermissionBadge value={perm?.battery ? "granted" : perm ? "denied" : "default"} />
+          <span>استثناء تحسين البطارية</span>
+          <PermissionBadge
+            value={perm?.battery ? "granted" : perm ? "denied" : "default"}
+          />
         </div>
         <div className="ads-prayer-muezzin-btns ads-sound-test-row">
           <button
             type="button"
             className="ads-pill-btn"
-            disabled={busy}
-            onClick={() => {
-              setBusy(true);
-              void openAndroidExactAlarmSettings().finally(() => {
-                refresh();
-                setBusy(false);
-              });
-            }}
+            disabled={permBusy}
+            onClick={() => void handleExactAlarmCheck()}
           >
-            فحص المنبّه
+            فحص المنبه الدقيق
           </button>
           <button
             type="button"
             className="ads-pill-btn"
-            disabled={busy}
-            onClick={() => {
-              setBusy(true);
-              void openAndroidBatteryOptimizationSettings().finally(() => {
-                refresh();
-                setBusy(false);
-              });
-            }}
+            disabled={permBusy}
+            onClick={() => void handleBatteryCheck()}
           >
-            فحص البطارية
+            فحص حماية البطارية ⚡
+          </button>
+          <button
+            type="button"
+            className="ads-pill-btn"
+            disabled={fgsBusy}
+            onClick={() => void handleFgsTest()}
+          >
+            {fgsBusy ? "…" : "تجربة خدمة الأذان 🔊"}
           </button>
         </div>
+        {fgsMsg ? (
+          <p className="ads-adhan-desc" role="status">
+            {fgsMsg}
+          </p>
+        ) : null}
       </div>
     </section>
   );
@@ -642,7 +701,7 @@ export default function AdhanSettingsPage() {
         </div>
       </section>
 
-      <AndroidBackgroundCard />
+      <AndroidAdhanNativeCard selectedMuezzinId={prefs.defaultMuezzinId} />
 
       <section className="ads-card" aria-labelledby="ads-test-head">
         <div className="ads-card__head" id="ads-test-head">
