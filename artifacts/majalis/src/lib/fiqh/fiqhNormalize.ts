@@ -208,8 +208,8 @@ export const FIQH_DOOR_META: Record<FiqhCanonicalDoor, FiqhDoorMeta> = {
     id: "libas",
     label: "اللباس والزينة",
     desc: "أحكام اللباس والزينة.",
-    href: "/fiqh/books/nikah",
-    bookHref: "/fiqh/books/nikah",
+    href: "/fiqh/books/libas",
+    bookHref: "/fiqh/books/libas",
     sortOrder: 80,
     group: "ibadat",
   },
@@ -628,6 +628,7 @@ export function hasCompleteSources(lesson: FiqhLesson): boolean {
 
 export function getLessonContentStatus(lesson: FiqhLesson): FiqhContentStatus {
   if (!lesson.title?.trim()) return "needs_completion";
+  if (lesson.needsReview === true) return "under_review";
   if (lesson.status !== "published") return "under_review";
   if (!hasCompleteSources(lesson)) return "under_review";
   if (!lesson.summary?.trim() || !lesson.evidence?.trim() || !lesson.preferred?.trim()) {

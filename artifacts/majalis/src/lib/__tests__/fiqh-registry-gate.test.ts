@@ -1,5 +1,5 @@
 /**
- * بوابة سجل الفقه — 17 كتابًا ظاهرة مع أبواب ومسائل.
+ * بوابة سجل الفقه — 18 كتابًا ظاهرة مع أبواب ومسائل.
  * تشغيل: pnpm exec tsx src/lib/__tests__/fiqh-registry-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -13,7 +13,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const pkg = readFileSync(resolve(root, "package.json"), "utf8");
 
 const registry = buildFiqhRegistry();
-assert.equal(registry.length, 17, `كتب ظاهرة = 17 (الآن ${registry.length})`);
+assert.equal(registry.length, 18, `كتب ظاهرة = 18 (الآن ${registry.length})`);
 
 for (const book of registry) {
   assert.match(book.title, /^كتاب /, `عنوان كتاب: ${book.id}`);
