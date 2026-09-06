@@ -658,14 +658,19 @@ jobs:
           set -euo pipefail
           pnpm exec vite preview --config vite.config.ts --host 127.0.0.1 --port 24216 > /tmp/lhci-vite.log 2>&1 &
           echo $! > /tmp/lhci-vite.pid
-          for i in $(seq 1 60); do
-            if curl -sf -o /dev/null "http://127.0.0.1:24216/"; then
-              echo "preview جاهز"
-              exit 0
+          for i in $(seq 1 90); do
+            if curl -sf -o /dev/null "http://127.0.0.1:24216/" \
+              && curl -sf -o /dev/null "http://127.0.0.1:24216/version.json"; then
+              # انتظر استقرار HTML (SPA shell) قبل LHCI — يقلّل فشل التحميل الكاذب
+              body="$(curl -sf "http://127.0.0.1:24216/" | head -c 800 || true)"
+              if printf '%s' "$body" | grep -Eqi '<div id="root"|<div id="app"|ssunnah|سُنّة|majalis'; then
+                echo "preview جاهز ومستقر (محاولة $i)"
+                exit 0
+              fi
             fi
             sleep 1
           done
-          echo "preview لم يبدأ"; tail -50 /tmp/lhci-vite.log; exit 1
+          echo "preview لم يصبح جاهزًا"; tail -80 /tmp/lhci-vite.log; exit 1
 
       - name: LHCI home mobile (3 runs, regression thresholds)
         id: lhci
@@ -678,7 +683,25 @@ jobs:
           export CHROME_PATH
           CHROME_PATH="$(node --input-type=module -e "import { chromium } from 'playwright'; console.log(chromium.executablePath())")"
           test -x "$CHROME_PATH"
-          pnpm run lighthouse:ci
+          # إعادة محاولة واحدة فقط عند فشل تحميل الصفحة (لا عند فشل العتبات)
+          set +e
+          out="$(pnpm run lighthouse:ci 2>&1)"
+          code=$?
+          printf '%s\n' "$out"
+          if [ "$code" -ne 0 ]; then
+            if printf '%s' "$out" | grep -Eqi 'FAILED_DOCUMENT_REQUEST|Unable to load|net::ERR_|Chrome did not launch|No such file|ECONNREFUSED|Navigation timeout|Page crashed'; then
+              echo "LHCI page-load failure — retry once after preview re-check"
+              for i in $(seq 1 30); do
+                curl -sf -o /dev/null "http://127.0.0.1:24216/" && break
+                sleep 1
+              done
+              sleep 2
+              pnpm run lighthouse:ci
+              code=$?
+            fi
+          fi
+          set -e
+          exit "$code"
 
       - name: Upload LHCI reports
         if: always() && steps.lane.outputs.run == 'true'
@@ -933,7 +956,7 @@ jobs:
 
           BLOCKERS=()
           if [ "$VERIFY_RESULT" != "success" ]; then
-            # اختصر السبب: إن كان التباين وحده فاشلًا والمجمّع فشل بسببه
+            # انسب السبب الحقيقي من نتائج الوظائف التابعة — لا تُبلّغ فشلًا مبهمًا
             if [ "$EFFECTIVE_NEED_COLOR" = "true" ] && [ "$COLOR_RESULT" != "success" ] \
               && { [ "$EFFECTIVE_NEED_VISUAL" != "true" ] || { [ "$VISUAL_RESULT" = "success" ] && [ "$LHCI_RESULT" = "success" ]; }; }; then
               echo "Blocked by Color contrast only (Verify build failed because color-contrast=$COLOR_RESULT)"
@@ -941,7 +964,16 @@ jobs:
               echo "**Blocked by Color contrast only**" >> "$GITHUB_STEP_SUMMARY"
               exit 1
             fi
-            echo "Verify build not success: $VERIFY_RESULT (skipped/cancelled/failure = fail)"
+            if [ "$EFFECTIVE_NEED_VISUAL" = "true" ] && [ "$LHCI_RESULT" != "success" ] \
+              && [ "$COLOR_RESULT" = "success" ] && [ "$VISUAL_RESULT" = "success" ]; then
+              echo "Blocked by LHCI home (mobile) only (Verify build failed because lhci-home=$LHCI_RESULT)"
+              echo "### Root cause" >> "$GITHUB_STEP_SUMMARY"
+              echo "**Blocked by LHCI home (mobile)** (\`lhci-home=$LHCI_RESULT\`)" >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+            fi
+            echo "Verify build not success: $VERIFY_RESULT (classify deps: color=$COLOR_RESULT visual=$VISUAL_RESULT lhci=$LHCI_RESULT)"
+            echo "### Root cause" >> "$GITHUB_STEP_SUMMARY"
+            echo "Verify build=\`$VERIFY_RESULT\` · color=\`$COLOR_RESULT\` · visual=\`$VISUAL_RESULT\` · lhci=\`$LHCI_RESULT\`" >> "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
 

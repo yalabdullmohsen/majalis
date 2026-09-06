@@ -48,6 +48,9 @@ import "./styles/components/modern-section-shell.css";
 // contrast/a11y الثقيلة + صفحات متخصصة — بعد load (انظر loadNonCriticalCss)
 // جسر aliases: يوجّه --brand/--em-* /shadcn إلى لوحة --mj-* (آخر شيء)
 import "./styles/theme-aliases.css";
+/* طبقة ألوان دلالية + إصلاح تباين/طبقات (بعد الجسور حتى تفوز) */
+import "./styles/semantic-layer-tokens.css";
+import "./styles/visual-layer-contrast-fix.css";
 // dark-mode-surfaces (~24KB) — فوري فقط إن كان الثيم داكنًا عند الإقلاع؛ وإلا بعد load
 {
   const bootDark =

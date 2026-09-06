@@ -100,14 +100,16 @@ export function LessonFilters({ filters, onChange, searchSlot, filterSlot }: Pro
               aria-pressed={filters.schedule === chip.id}
               onClick={() => onChange({ ...filters, schedule: chip.id })}
             >
-              {chip.label}
+              <span className="filter-chips__label">{chip.label}</span>
             </button>
           ))}
         </div>
-        <div className="lesson-filters__tools">
-          {searchSlot}
-          {filterSlot}
-        </div>
+        {(searchSlot || filterSlot) ? (
+          <div className="lesson-filters__tools">
+            {searchSlot}
+            {filterSlot}
+          </div>
+        ) : null}
       </div>
     </div>
   );

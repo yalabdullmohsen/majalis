@@ -45,13 +45,22 @@
   flex: 1 1 100%;
   min-width: 0;
 }
-/* أزرار تصفية الدروس — ناعمة (لا زوايا 6–8px الحادة) */
+/* أزرار تصفية الدروس — شرائح لا مربعات مرنة فارغة */
 .lessons-page-v2 .filter-chips,
 .lessons-page-v2 .filter-chips__chip {
-  border-radius: var(--radius-button, var(--mj-r-md, 18px)) !important;
+  border-radius: 999px !important;
 }
 .lessons-page-v2 .filter-chips {
-  border-radius: var(--radius-tile, var(--mj-r-lg, 24px)) !important;
+  border-radius: 16px !important;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  background: var(--surface-muted, var(--mj-bg));
+  border: 1px solid var(--border-soft, var(--mj-hairline));
+}
+.lessons-page-v2 .filter-chips__chip {
+  flex: 0 0 auto !important;
+  min-width: unset !important;
 }
 
 .lessons-page-v2 .page-hero-mj,

@@ -111,15 +111,15 @@ export default function FiqhChapterPage() {
         <span aria-current="page">{chapter.title}</span>
       </nav>
 
-      <header className="fiqh-lux-book-hero ve-hero">
-        <h1 className="fiqh-lux-book-hero__title ve-title-center">{editorial.title}</h1>
-        <p className="ve-hero__subtitle">
+      <header className="fiqh-lux-book-hero surface-brand" data-on-brand="light">
+        <h1 className="fiqh-lux-book-hero__title">{editorial.title}</h1>
+        <p className="fiqh-lux-book-hero__meta">
           {editorial.bookTitle}
           {editorial.chaptersTotal > 0
             ? ` · باب ${editorial.chapterIndex} من ${editorial.chaptersTotal}`
             : ""}
         </p>
-        <p className="fiqh-lux-book-hero__meta ve-body">
+        <p className="fiqh-lux-book-hero__meta">
           <span className="ve-badge">{editorial.bookBadge}</span> · {formatMasailCount(editorial.lessonsCount)}
         </p>
       </header>

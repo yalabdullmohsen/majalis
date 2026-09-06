@@ -175,28 +175,50 @@
   margin-bottom: 1.25rem;
   padding: 1.15rem 1.1rem;
   border-radius: var(--radius-card, 24px);
-  border: 1px solid var(--color-hairline, var(--mj-hairline));
+  border: 1px solid var(--border-soft, var(--color-hairline, var(--mj-hairline)));
   background:
     linear-gradient(
       160deg,
-      color-mix(in srgb, var(--color-brand-soft, #E2EFE8) 70%, var(--color-surface)) 0%,
-      var(--color-surface, #FFFCF7) 70%
+      color-mix(in srgb, var(--primary-soft, var(--color-brand-soft, #E2EFE8)) 70%, var(--surface, var(--color-surface))) 0%,
+      var(--surface, var(--color-surface, #FFFCF7)) 70%
     );
-  box-shadow: var(--shadow-mj, var(--mj-sh));
+  box-shadow: var(--shadow-soft, var(--shadow-mj, var(--mj-sh)));
+  color: var(--text-main, var(--color-ink, var(--mj-ink)));
+}
+
+/* لا تفرض نصًا داكنًا فوق هيرو العلامة الأخضر */
+.ve-hero.surface-brand,
+.ve-hero.fiqh-lux-book-hero,
+.fiqh-lux-book-hero.ve-hero {
+  background: var(--primary-strong, var(--fq-emerald, #0a3d2e));
+  color: var(--text-on-primary, #fff);
+  border-color: color-mix(in srgb, #fff 14%, transparent);
 }
 
 .ve-hero__subtitle {
   margin: 0.35rem 0 0;
-  color: var(--brand-on-white, #0C4F3A);
+  color: var(--primary-strong, var(--brand-on-white, #0C4F3A));
   font-weight: 600;
-  text-align: center;
+  text-align: start;
+}
+
+.ve-hero.surface-brand .ve-hero__subtitle,
+.fiqh-lux-book-hero .ve-hero__subtitle,
+.fiqh-lux-book-hero.ve-hero .ve-hero__subtitle {
+  color: var(--text-on-primary-muted, #e8f3ee);
 }
 
 .ve-hero__desc {
   margin: 0.75rem 0 0;
   text-align: start;
-  color: var(--color-ink-2, var(--mj-ink-2));
+  color: var(--text-muted, var(--color-ink-2, var(--mj-ink-2)));
   line-height: 1.75;
+}
+
+.ve-hero.surface-brand .ve-hero__desc,
+.fiqh-lux-book-hero .ve-hero__desc,
+.fiqh-lux-book-hero.ve-hero .ve-hero__desc {
+  color: var(--text-on-primary-muted, #e8f3ee);
 }
 
 .ve-hero__chips,

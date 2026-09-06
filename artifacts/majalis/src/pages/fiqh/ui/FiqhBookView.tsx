@@ -77,10 +77,10 @@ export default function FiqhBookPage() {
         <span aria-current="page">{book.title}</span>
       </nav>
 
-      <header className="fiqh-lux-book-hero ve-hero">
-        <h1 className="fiqh-lux-book-hero__title ve-title-center">{editorial.title}</h1>
-        <p className="ve-hero__subtitle">{editorial.subtitle}</p>
-        <p className="fiqh-lux-book-hero__blurb ve-hero__desc">{editorial.description}</p>
+      <header className="fiqh-lux-book-hero surface-brand" data-on-brand="light">
+        <h1 className="fiqh-lux-book-hero__title">{editorial.title}</h1>
+        <p className="fiqh-lux-book-hero__meta">{editorial.subtitle}</p>
+        <p className="fiqh-lux-book-hero__blurb">{editorial.description}</p>
         <div className="ve-hero__chips" aria-label="شارات الكتاب">
           <span className="ve-badge">{editorial.categoryLabel}</span>
           <span className="ve-badge ve-badge--secondary">{editorial.madhhabBadge}</span>

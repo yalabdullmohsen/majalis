@@ -45,9 +45,10 @@
   width: min(86vw, 360px);
   height: 100dvh;
   max-height: 100dvh;
-  background: #fbfbf8;
-  color: #1d1d1b;
-  border-inline-end: 1px solid rgba(18, 54, 42, 0.14);
+  background: var(--surface-muted, #f3efe6);
+  color: var(--text-main, #1d1d1b);
+  border-inline-end: 1px solid var(--border-soft, rgba(18, 54, 42, 0.14));
+  box-shadow: var(--shadow-soft, 0 8px 28px -18px rgba(10, 61, 46, 0.35));
   direction: rtl;
   overflow-y: auto;
   overflow-x: hidden;
@@ -162,10 +163,11 @@ html[dir="rtl"] .sidebar-panel {
 }
 
 .sidebar-item.active {
-  background: color-mix(in srgb, var(--sidebar-item-accent, #12362a) 12%, #ffffff);
-  border-color: color-mix(in srgb, var(--sidebar-item-accent, #12362a) 22%, transparent);
-  border-inline-start-color: var(--sidebar-item-accent, #12362a);
-  color: #12362a;
+  background: var(--primary-soft, color-mix(in srgb, var(--sidebar-item-accent, #12362a) 12%, #ffffff));
+  border-color: var(--border-soft, color-mix(in srgb, var(--sidebar-item-accent, #12362a) 22%, transparent));
+  border-inline-start-color: var(--primary-strong, var(--sidebar-item-accent, #12362a));
+  color: var(--primary-strong, #12362a);
+  box-shadow: none;
 }
 
 .sidebar-item-icon {
