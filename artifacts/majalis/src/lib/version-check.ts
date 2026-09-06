@@ -12,8 +12,11 @@ const FETCH_TIMEOUT_MS = 8000;
 type VersionPayload = {
   commit?: string;
   shortCommit?: string;
+  commitSha?: string;
   builtAt?: string;
+  buildTime?: string;
   ref?: string;
+  branch?: string;
 };
 
 /**
@@ -49,7 +52,7 @@ async function fetchLiveVersion(): Promise<VersionPayload | null> {
  */
 export async function isNewVersionAvailable(loadedCommit: string): Promise<boolean> {
   const live = await fetchLiveVersion();
-  const liveId = live?.shortCommit || live?.commit;
+  const liveId = live?.commitSha || live?.shortCommit || live?.commit;
   if (!liveId) return false;
   const a = liveId.slice(0, 8);
   const b = loadedCommit.slice(0, 8);

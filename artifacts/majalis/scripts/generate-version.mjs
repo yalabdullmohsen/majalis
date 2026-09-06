@@ -26,15 +26,23 @@ function resolveCommit() {
 
 const commitFull = resolveCommit();
 const shortCommit = commitFull === "unknown" ? "unknown" : commitFull.slice(0, 8);
+const builtAt = new Date().toISOString();
+const branch =
+  process.env.VERCEL_GIT_COMMIT_REF ||
+  process.env.GITHUB_REF_NAME ||
+  "main";
 /** الحمولة العامة: short فقط — لا نعرّض SHA كامل في endpoint عام. */
 const payload = {
   commit: shortCommit,
   shortCommit,
-  builtAt: new Date().toISOString(),
-  ref:
-    process.env.VERCEL_GIT_COMMIT_REF ||
-    process.env.GITHUB_REF_NAME ||
-    "main",
+  /** alias مطلوب للتشخيص/الإصدار — نفس shortCommit العلني */
+  commitSha: shortCommit,
+  builtAt,
+  /** alias لـ builtAt */
+  buildTime: builtAt,
+  ref: branch,
+  /** alias لـ ref */
+  branch,
 };
 
 await writeFile(resolve(distDir, "version.json"), JSON.stringify(payload, null, 2) + "\n", "utf8");

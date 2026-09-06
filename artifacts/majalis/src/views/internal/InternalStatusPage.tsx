@@ -7,7 +7,15 @@ type StatusPayload = {
   ok?: boolean;
   at?: string;
   productionUrl?: string;
-  version?: { commit?: string; shortCommit?: string; builtAt?: string };
+  version?: {
+    commit?: string;
+    shortCommit?: string;
+    commitSha?: string;
+    builtAt?: string;
+    buildTime?: string;
+    branch?: string;
+    ref?: string;
+  };
   healthz?: { status?: number; ok?: boolean };
   readyz?: { status?: number; ok?: boolean };
   search?: { ok?: boolean; terms?: Array<{ term: string; ok: boolean; total: number }> };
@@ -101,10 +109,11 @@ function InternalStatusView() {
         <tbody>
           <StatusRow
             label="آخر نسخة"
-            value={version?.shortCommit || version?.commit || "—"}
-            ok={Boolean(version?.commit)}
+            value={version?.commitSha || version?.shortCommit || version?.commit || "—"}
+            ok={Boolean(version?.commit || version?.commitSha || version?.shortCommit)}
           />
-          <StatusRow label="وقت البناء" value={version?.builtAt || "—"} />
+          <StatusRow label="الفرع" value={version?.branch || version?.ref || "—"} />
+          <StatusRow label="وقت البناء" value={version?.buildTime || version?.builtAt || "—"} />
           <StatusRow
             label="healthz"
             value={String(data?.healthz?.status ?? "—")}

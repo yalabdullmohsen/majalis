@@ -273,10 +273,27 @@ export async function refreshAppAndPurgeCaches(): Promise<{
   return { purged: result.purged, cachesCleared: result.cachesCleared };
 }
 
-/** تشخيص تطوير فقط */
+/** تشخيص: مسح كاش + طباعة /version.json في الـ console */
 export function installMajalisClearCacheDebug(): void {
   if (typeof window === "undefined") return;
-  (window as Window & {
+  const w = window as Window & {
     __MAJALIS_CLEAR_CACHE__?: () => Promise<unknown>;
-  }).__MAJALIS_CLEAR_CACHE__ = async () => refreshAppAndPurgeCaches();
+    __SSUNNAH_REFRESH_VERSION__?: () => Promise<unknown>;
+    __SSUNNAH_VERSION__?: unknown;
+  };
+  w.__MAJALIS_CLEAR_CACHE__ = async () => refreshAppAndPurgeCaches();
+  w.__SSUNNAH_REFRESH_VERSION__ = async () => refreshAppAndPurgeCaches();
+  void fetch(`/version.json?t=${Date.now()}`, { cache: "no-store" })
+    .then((r) => (r.ok ? r.json() : null))
+    .then((payload) => {
+      if (!payload) return;
+      w.__SSUNNAH_VERSION__ = payload;
+      const sha = payload.commitSha || payload.shortCommit || payload.commit;
+      const when = payload.buildTime || payload.builtAt;
+      const branch = payload.branch || payload.ref;
+      if (typeof console !== "undefined" && typeof console.info === "function") {
+        console.info(`[ssunnah-version] commitSha=${sha} branch=${branch} buildTime=${when}`);
+      }
+    })
+    .catch(() => undefined);
 }

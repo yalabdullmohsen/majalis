@@ -83,12 +83,12 @@ export function UpdateAvailableBanner() {
           aria-busy={busy}
           data-testid="update-available-apply"
         >
-          {busy ? "جاري التحديث…" : "تحديث"}
+          {busy ? "جاري التحديث…" : "تحديث النسخة"}
         </button>
       }
     >
       <p className="update-available-sheet__copy">
-        نُشرت نسخة أحدث من التطبيق. اضغط «تحديث» لتحميلها، أو «لاحقاً» للمتابعة بالنسخة الحالية.
+        نُشرت نسخة أحدث من التطبيق. اضغط «تحديث النسخة» لتحميلها، أو «لاحقاً» للمتابعة بالنسخة الحالية.
       </p>
       {error ? (
         <p className="update-available-sheet__error" role="alert" data-testid="update-available-error">

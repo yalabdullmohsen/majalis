@@ -31,7 +31,7 @@
           .then(function (j) {
             if (timer) clearTimeout(timer);
             if (!j) return;
-            var live = String(j.shortCommit || j.commit || "").slice(0, 8);
+            var live = String(j.commitSha || j.shortCommit || j.commit || "").slice(0, 8);
             if (!live) return;
             /* أول زيارة: خزّن النسخة فقط — بلا reload */
             if (!prev) {
