@@ -1,7 +1,7 @@
 {
-  "version": 6,
+  "version": 7,
   "visibility": "internal_review_only",
-  "note": "مسودات تعليمية حنبلية المصدر للمراجعة الداخلية فقط. النسخة 6: معاينة ترقية (promotionPreview) بشكل درس كتالوج جاهز للنسخ اليدوي بعد التوقيع البشري — دون إدراج فعلي في books.json ودون احتساب «اكمل» موافقة.",
+  "note": "مسودات تعليمية حنبلية المصدر للمراجعة الداخلية فقط. النسخة 7: أداة تطبيق مغلقة (apply-fiqh-promotion) + ورقة توقيع بشرية — بلا إدراج في books.json، و«اكمل» ليست موافقة.",
   "method": {
     "madhhab": "حنبلي",
     "sources": [
@@ -87,7 +87,7 @@
           "status": "proposed"
         }
       ],
-      "nextAction": "بعد التوقيع البشري فقط: تطبيق promotionPreview.insert على books.json يدويًا/بسكربت اعتماد، ثم ضبط humanDecision وpromotionApproved.",
+      "nextAction": "توقيع بشري في promotionReview ثم تشغيل apply-fiqh-promotion بالأمر الحرفي: اعتمد ترقية لباس الشهرة إلى books.json",
       "lessonCandidate": {
         "id": "libas-shuhra-muasir-candidate",
         "title": "ضابط لباس الشهرة في المذهب وما يتوقف عليه التنزيل",
@@ -280,6 +280,12 @@
           "humanDecision.promotionApproved": true,
           "allSignOffChecked": true,
           "explicitCommand": "اعتمد ترقية لباس الشهرة إلى books.json"
+        },
+        "applyTool": {
+          "script": "scripts/apply-fiqh-promotion.mjs",
+          "requiresExactApproveFlag": true,
+          "requiresJsonPromotionApproved": true,
+          "requiresCompleteSignOffChecklist": true
         }
       }
     },
@@ -483,7 +489,7 @@
           "status": "proposed"
         }
       ],
-      "nextAction": "بعد التوقيع البشري: إمّا تطبيق patchHints على overview فقط، أو insert الدرس التوضيحي، وفق recommendedMode.",
+      "nextAction": "توقيع بشري في promotionReview ثم تشغيل apply-fiqh-promotion بالأمر الحرفي: اعتمد ترقية زيارة النساء للقبور إلى books.json",
       "lessonCandidate": {
         "id": "ziyarat-nisa-qubur-candidate",
         "title": "زيارة القبور: الأصل العام وخصوصية النساء في العرض التعليمي",
@@ -676,8 +682,22 @@
           "humanDecision.promotionApproved": true,
           "allSignOffChecked": true,
           "explicitCommand": "اعتمد ترقية زيارة النساء للقبور إلى books.json"
+        },
+        "applyTool": {
+          "script": "scripts/apply-fiqh-promotion.mjs",
+          "requiresExactApproveFlag": true,
+          "requiresJsonPromotionApproved": true,
+          "requiresCompleteSignOffChecklist": true
         }
       }
     }
-  ]
+  ],
+  "applyTooling": {
+    "previewScript": "scripts/preview-fiqh-promotion.mjs",
+    "applyScript": "scripts/apply-fiqh-promotion.mjs",
+    "signOffSheet": "content/fiqh/PROMOTION_SIGNOFF.md",
+    "defaultBehavior": "refuse_without_exact_approve_and_json_signoff",
+    "ekmelIsNotApproval": true,
+    "insertedIntoBooksJson": false
+  }
 }
