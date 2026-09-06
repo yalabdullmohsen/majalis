@@ -33,7 +33,6 @@ import { dateISOInZone } from "./prayer-notification-ids";
 import { startPrayerLiveActivity, markPrayerLiveActivityEntered, endPrayerLiveActivity } from "./plugins/prayer-live-activity";
 import type { PrayerSoundProfile } from "./prayer-notification-sounds";
 import { PRAYER_ALERT_EVENT_NAME, type PrayerAlertEvent } from "./prayer-alert-events";
-import { isIOS, isNative } from "./capacitor-utils";
 
 export { PRAYER_ALERT_EVENT_NAME, type PrayerAlertEvent } from "./prayer-alert-events";
 
@@ -181,10 +180,7 @@ function resolveSlotAlertOpts(
   const pk = asPrayerKey(slotKey);
   const prayerOn = pk ? adhanPrefs.prayers[pk].enabled : true;
   const preMinutes = pk ? adhanPrefs.prayers[pk].advanceMinutes : prefs.preAlertMinutes;
-  const fullMode = false; // الأذان الكامل محذوف — لا مسار enter مزدوج
-  /**
-   * على iOS: إشعار الدخول القصير عبر scheduleIosAdhanSegments فقط عند الحاجة.
-   */
+  // الأذان الكامل محذوف — لا مسار enter مزدوج عبر مقاطع iOS
   const iosFullHandlesEnter = false;
   return {
     prayerEnabled: prayerOn,

@@ -23,7 +23,7 @@
       "license": "bundled-existing-short-clip",
       "source": "Existing iOS short CAF (adhan-short-makkah.caf) previously shipped in app bundle",
       "iosFile": "adhan-short-makkah.caf",
-      "webFile": "/audio/alerts/adhan-makkah-short.wav",
+      "webFile": "/audio/adhan/adhan-takbeerat-short.mp3",
       "durationSecApprox": 8,
       "notes": "Short notification-safe clip only; full adhan removed from product. iosFile mapped to currently bundled CAF."
     },
@@ -35,7 +35,7 @@
       "license": "bundled-existing-short-clip",
       "source": "Mapped from existing short makkah notification clip pending a distinct licensed Madinah short",
       "iosFile": "adhan-short-makkah.caf",
-      "webFile": "/audio/alerts/adhan-haram-madinah-short.wav",
+      "webFile": "/audio/adhan/adhan-takbeerat-short.mp3",
       "durationSecApprox": 8,
       "notes": "Temporary mapping; replace when a clearly licensed Madinah short is available. iosFile mapped to currently bundled CAF."
     },
@@ -47,7 +47,7 @@
       "license": "bundled-existing-short-clip",
       "source": "Existing iOS short CAF (adhan-short-egypt.caf)",
       "iosFile": "adhan-short-egypt.caf",
-      "webFile": "/audio/alerts/adhan-egypt-short.wav",
+      "webFile": "/audio/adhan/adhan-egypt-full.m4a",
       "durationSecApprox": 8,
       "notes": " iosFile mapped to currently bundled CAF."
     },
@@ -59,7 +59,7 @@
       "license": "bundled-existing-short-clip",
       "source": "Existing iOS short CAF (adhan-short-aqsa.caf)",
       "iosFile": "adhan-short-aqsa.caf",
-      "webFile": "/audio/alerts/adhan-aqsa-short.wav",
+      "webFile": "/audio/adhan/adhan-aqsa-full.mp3",
       "durationSecApprox": 8,
       "notes": " iosFile mapped to currently bundled CAF."
     },
@@ -71,7 +71,7 @@
       "license": "bundled-existing-short-clip",
       "source": "Existing iOS short CAF (adhan-short-takbeerat.caf)",
       "iosFile": "adhan-short-takbeerat.caf",
-      "webFile": "/audio/alerts/adhan-takbeerat-short.wav",
+      "webFile": "/audio/adhan/adhan-takbeerat-short.mp3",
       "durationSecApprox": 6,
       "notes": " iosFile mapped to currently bundled CAF."
     },
@@ -83,7 +83,7 @@
       "license": "original-ssunnah",
       "source": "Synthesized original tone owned by Ssunnah project",
       "iosFile": "prayer_default.caf",
-      "webFile": "/audio/alerts/alert-default-short.wav",
+      "webFile": "/audio/adhan/adhan-soft-alert.m4a",
       "durationSecApprox": 2.2,
       "notes": " iosFile mapped to currently bundled CAF."
     },
@@ -95,7 +95,7 @@
       "license": "original-ssunnah",
       "source": "Synthesized original tone owned by Ssunnah project",
       "iosFile": "prayer_soft.caf",
-      "webFile": "/audio/alerts/alert-soft-chime.wav",
+      "webFile": "/audio/adhan/adhan-soft-alert.m4a",
       "durationSecApprox": 2.8,
       "notes": " iosFile mapped to currently bundled CAF."
     },
@@ -107,7 +107,7 @@
       "license": "original-ssunnah",
       "source": "Synthesized original tone owned by Ssunnah project",
       "iosFile": "prayer_clear.caf",
-      "webFile": "/audio/alerts/alert-short-ring.wav",
+      "webFile": "/audio/adhan/adhan-soft-alert.m4a",
       "durationSecApprox": 1.8,
       "notes": " iosFile mapped to currently bundled CAF."
     },
@@ -119,7 +119,7 @@
       "license": "original-ssunnah",
       "source": "Synthesized original tone owned by Ssunnah project",
       "iosFile": "prayer_clear.caf",
-      "webFile": "/audio/alerts/alert-clear-ping.wav",
+      "webFile": "/audio/adhan/adhan-soft-alert.m4a",
       "durationSecApprox": 1.4,
       "notes": " iosFile mapped to currently bundled CAF."
     },
@@ -142,7 +142,7 @@
       "license": "original-ssunnah",
       "source": "Synthesized original tone owned by Ssunnah project",
       "iosFile": "prayer_quiet.caf",
-      "webFile": "/audio/alerts/alert-third-night.wav",
+      "webFile": "/audio/adhan/adhan-soft-alert.m4a",
       "durationSecApprox": 3.0,
       "notes": " iosFile mapped to currently bundled CAF."
     },
@@ -154,7 +154,7 @@
       "license": "original-ssunnah",
       "source": "Synthesized original tone owned by Ssunnah project",
       "iosFile": "prayer_quiet.caf",
-      "webFile": "/audio/alerts/alert-qiyam.wav",
+      "webFile": "/audio/adhan/adhan-soft-alert.m4a",
       "durationSecApprox": 2.8,
       "notes": " iosFile mapped to currently bundled CAF."
     },
@@ -166,7 +166,7 @@
       "license": "original-ssunnah",
       "source": "Synthesized original tone owned by Ssunnah project",
       "iosFile": "prayer_soft.caf",
-      "webFile": "/audio/alerts/alert-witr.wav",
+      "webFile": "/audio/adhan/adhan-soft-alert.m4a",
       "durationSecApprox": 2.6,
       "notes": " iosFile mapped to currently bundled CAF."
     },
@@ -178,7 +178,7 @@
       "license": "original-ssunnah",
       "source": "Synthesized original tone owned by Ssunnah project",
       "iosFile": "prayer_default.caf",
-      "webFile": "/audio/alerts/alert-istighfar.wav",
+      "webFile": "/audio/adhan/adhan-soft-alert.m4a",
       "durationSecApprox": 2.4,
       "notes": " iosFile mapped to currently bundled CAF."
     },
@@ -190,7 +190,7 @@
       "license": "original-ssunnah",
       "source": "Synthesized original tone owned by Ssunnah project",
       "iosFile": "prayer_soft.caf",
-      "webFile": "/audio/alerts/alert-dua.wav",
+      "webFile": "/audio/adhan/adhan-soft-alert.m4a",
       "durationSecApprox": 2.6,
       "notes": " iosFile mapped to currently bundled CAF."
     },
@@ -202,7 +202,7 @@
       "license": "original-ssunnah",
       "source": "Synthesized original tone owned by Ssunnah project",
       "iosFile": "prayer_clear.caf",
-      "webFile": "/audio/alerts/alert-salawat.wav",
+      "webFile": "/audio/adhan/adhan-soft-alert.m4a",
       "durationSecApprox": 2.5,
       "notes": " iosFile mapped to currently bundled CAF."
     },
@@ -214,7 +214,7 @@
       "license": "original-ssunnah",
       "source": "Synthesized original tone owned by Ssunnah project",
       "iosFile": "prayer_makkah.caf",
-      "webFile": "/audio/alerts/alert-quran-wird.wav",
+      "webFile": "/audio/adhan/adhan-soft-alert.m4a",
       "durationSecApprox": 2.8,
       "notes": " iosFile mapped to currently bundled CAF."
     },
@@ -226,7 +226,7 @@
       "license": "original-ssunnah",
       "source": "Synthesized original tone owned by Ssunnah project",
       "iosFile": "prayer_makkah.caf",
-      "webFile": "/audio/alerts/alert-kahf-friday.wav",
+      "webFile": "/audio/adhan/adhan-soft-alert.m4a",
       "durationSecApprox": 3.0,
       "notes": " iosFile mapped to currently bundled CAF."
     },
