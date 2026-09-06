@@ -110,7 +110,9 @@ body,
   color: var(--color-text);
 }
 
-/* أزرار موحّدة — يشمل CTA الرئيسية (.m2030-btn--primary) و.mj-btn الأساسي */
+/* أزرار موحّدة — يشمل CTA الرئيسية (.m2030-btn--primary) و.mj-btn الأساسي
+ * خلفية من --mj-brand الصلب مباشرة (لا عبر --color-primary) حتى لا تنهار عند أي دورة متغيّرات.
+ */
 .btn-primary,
 .ds-btn--primary,
 .mj-btn,
@@ -123,13 +125,36 @@ button.mj-btn--primary,
 button.primary,
 .page-hero .mj-btn--primary,
 .page-hero .m2030-btn--primary,
-.page-hero-mj__actions .m2030-btn--primary {
-  background: var(--color-primary) !important;
-  background-color: var(--color-primary) !important;
-  color: var(--mj-on-brand, #fff) !important;
-  border: 1px solid var(--color-primary-dark) !important;
+.page-hero-mj__actions .m2030-btn--primary,
+.home-page-hero .m2030-btn--primary {
+  background: var(--mj-brand, #0f5c45) !important;
+  background-color: var(--mj-brand, #0f5c45) !important;
+  background-image: none !important;
+  color: var(--mj-on-brand, #ffffff) !important;
+  border: 1px solid var(--mj-brand-deep, #0a3d2e) !important;
   border-radius: var(--radius-button) !important;
   box-shadow: none !important;
+}
+
+html[data-theme="dark"] .btn-primary,
+html.dark .btn-primary,
+html[data-theme="dark"] .ds-btn--primary,
+html.dark .ds-btn--primary,
+html[data-theme="dark"] .mj-btn,
+html.dark .mj-btn,
+html[data-theme="dark"] .mj-btn--primary,
+html.dark .mj-btn--primary,
+html[data-theme="dark"] .m2030-btn--primary,
+html.dark .m2030-btn--primary,
+html[data-theme="dark"] a.mj-btn,
+html.dark a.mj-btn,
+html[data-theme="dark"] button.mj-btn,
+html.dark button.mj-btn {
+  background: var(--mj-brand, #4fb48b) !important;
+  background-color: var(--mj-brand, #4fb48b) !important;
+  background-image: none !important;
+  color: var(--mj-on-brand, #06231a) !important;
+  border-color: var(--mj-brand-deep, #1e4d3c) !important;
 }
 
 .mj-btn--ghost,
@@ -156,10 +181,11 @@ button.secondary {
 
 /* بانر اختبار الأقسام: نص on-brand فوق خلفية العلامة */
 .sq-header {
-  background: var(--color-primary) !important;
-  background-color: var(--color-primary) !important;
-  color: var(--mj-on-brand, #fff) !important;
-  border-color: var(--color-primary-dark) !important;
+  background: var(--mj-brand, #0f5c45) !important;
+  background-color: var(--mj-brand, #0f5c45) !important;
+  background-image: none !important;
+  color: var(--mj-on-brand, #ffffff) !important;
+  border-color: var(--mj-brand-deep, #0a3d2e) !important;
 }
 
 .sq-header,
@@ -168,7 +194,30 @@ button.secondary {
 .sq-header .sq-meta,
 .sq-header .sq-toggle,
 .sq-header svg {
-  color: var(--mj-on-brand, #fff) !important;
+  color: var(--mj-on-brand, #ffffff) !important;
+}
+
+html[data-theme="dark"] .sq-header,
+html.dark .sq-header {
+  background: var(--mj-brand, #4fb48b) !important;
+  background-color: var(--mj-brand, #4fb48b) !important;
+  color: var(--mj-on-brand, #06231a) !important;
+  border-color: var(--mj-brand-deep, #1e4d3c) !important;
+}
+
+html[data-theme="dark"] .sq-header,
+html.dark .sq-header,
+html[data-theme="dark"] .sq-header .sq-title,
+html.dark .sq-header .sq-title,
+html[data-theme="dark"] .sq-header .sq-kicker,
+html.dark .sq-header .sq-kicker,
+html[data-theme="dark"] .sq-header .sq-meta,
+html.dark .sq-header .sq-meta,
+html[data-theme="dark"] .sq-header .sq-toggle,
+html.dark .sq-header .sq-toggle,
+html[data-theme="dark"] .sq-header svg,
+html.dark .sq-header svg {
+  color: var(--mj-on-brand, #06231a) !important;
 }
 
 /* فلاتر/شيبس — ليست دوائر ضخمة ولا أخضر صلب قاسٍ */
