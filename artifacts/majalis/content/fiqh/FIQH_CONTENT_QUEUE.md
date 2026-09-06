@@ -1,20 +1,21 @@
 # طابور محتوى الفقه
 
-الكتالوج العام مغلق ومكتمل (#1739). الحزمة الداخلية أُنشئت (#1740) وعُمّقت (#1741) ثم صُنّفت في v3.
+## مكتمل
+- الكتالوج العام (#1739)
+- حزمة النوازل + التعميق + التصنيف (#1740–#1742)
 
-## review_ready (بانتظار اعتماد بشري فقط)
+## v4: مرشّحو دروس (داخلي)
+- `libas-shuhra-muasir` → `libas-shuhra-muasir-candidate`
+- `ziyarat-nisa-qubur` → `ziyarat-nisa-qubur-candidate`
 
-- لباس الشهرة المعاصر — `libas-shuhra-muasir`
-- زيارة النساء للقبور — `ziyarat-nisa-qubur`
+كلاهما: `draft` + `needsReview` + `promotionApproved=false`.
 
-## hold (ممنوع الترقية الآن)
+## hold بلا ترقية
+- الشبهات الغذائية المعاصرة
+- نوازل الجهاد المعاصرة
 
-- الشبهات الغذائية المعاصرة — `shubuhat-ghidhaiyya-muasira`
-- نوازل الجهاد المعاصرة — `nawazil-jihad-muasira`
-
-## قواعد الترقية لاحقًا
-
-1. لا نقل إلى `books.json` قبل إزالة `needsReview` باعتماد بشري.
-2. `review_ready` يلزمها مراجعة نهائية لنص الدرس العام.
-3. موضوعات `hold` لا تُرقّى حتى تُغلق `holdReasons`.
-4. ممنوع لفظ «مؤجل» داخل `books.json`.
+## بوابة الترقية لاحقًا
+1. اعتماد بشري لـ `lessonCandidate`
+2. ضبط `promotionApproved=true`
+3. نقل صريح إلى `books.json` مع إزالة `needsReview`
+4. ممنوع التسريب الآلي من الحزمة الداخلية

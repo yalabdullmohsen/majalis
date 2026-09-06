@@ -121,12 +121,56 @@ if (!existsSync(deferredPath)) {
         }
       }
       if (!topic.nextAction?.trim()) fail(`nextAction ناقصة لـ review_ready: ${topic.id}`);
+      const candidate = topic.lessonCandidate;
+      if (!candidate || typeof candidate !== "object") {
+        fail(`lessonCandidate مطلوب لـ review_ready: ${topic.id}`);
+      } else {
+        const requiredText = [
+          "id", "title", "bookId", "chapterId", "definition", "summary",
+          "preferred", "ruling", "evidence", "practicalSummary",
+        ];
+        for (const key of requiredText) {
+          if (!candidate[key]?.trim()) {
+            fail(`lessonCandidate.${key} ناقص في ${topic.id}`);
+          }
+        }
+        if (candidate.status !== "draft") {
+          fail(`lessonCandidate.status يجب draft: ${topic.id}`);
+        }
+        if (candidate.needsReview !== true) {
+          fail(`lessonCandidate.needsReview يجب true: ${topic.id}`);
+        }
+        if (candidate.promotionApproved !== false) {
+          fail(`lessonCandidate.promotionApproved يجب false حتى الاعتماد: ${topic.id}`);
+        }
+        if ((candidate.summary?.trim().length || 0) < 120) {
+          fail(`lessonCandidate.summary قصيرة: ${topic.id}`);
+        }
+        if ((candidate.evidence?.trim().length || 0) < 40) {
+          fail(`lessonCandidate.evidence قصيرة: ${topic.id}`);
+        }
+        if (!sourcesOk(candidate.sources)) {
+          fail(`مصادر lessonCandidate ناقصة: ${topic.id}`);
+        }
+        if (!chapterKeys.has(`${candidate.bookId}/${candidate.chapterId}`)) {
+          fail(`lessonCandidate يشير لباب غير موجود: ${topic.id} → ${candidate.bookId}/${candidate.chapterId}`);
+        }
+        if (lessonIds.has(candidate.id) || booksRaw.includes(`"${candidate.id}"`)) {
+          fail(`lessonCandidate تسرب إلى books.json: ${candidate.id}`);
+        }
+        if (isPublishedLesson(candidate)) {
+          fail(`lessonCandidate يظهر كمنشور: ${candidate.id}`);
+        }
+      }
     }
     if (stage === "hold") {
       if (!Array.isArray(topic.holdReasons) || topic.holdReasons.length < 2) {
         fail(`holdReasons ناقصة لـ hold: ${topic.id}`);
       }
       if (!topic.nextAction?.trim()) fail(`nextAction ناقصة لـ hold: ${topic.id}`);
+      if (topic.lessonCandidate) {
+        fail(`موضوع hold لا يجوز أن يحمل lessonCandidate: ${topic.id}`);
+      }
     }
     if (!sourcesOk(topic.sources)) fail(`مصادر مؤجّلة ناقصة: ${topic.id}`);
     if (lessonIds.has(topic.id)) fail(`موضوع مؤجّل تسرب إلى books.json: ${topic.id}`);
@@ -149,6 +193,28 @@ if (errors.length) {
   for (const e of errors) console.error(" -", e);
   process.exit(1);
 }
+const deferredStats = (() => {
+  try {
+    const d = JSON.parse(readFileSync(deferredPath, "utf8"));
+    const topics = d.topics || [];
+    return {
+      deferredReviewReady: topics.filter((t) => t.reviewStage === "review_ready").length,
+      deferredHold: topics.filter((t) => t.reviewStage === "hold").length,
+      lessonCandidates: topics.filter((t) => t.lessonCandidate).length,
+      promotionApproved: topics.filter((t) => t.lessonCandidate?.promotionApproved === true).length,
+      deferredVersion: d.version ?? null,
+    };
+  } catch {
+    return {
+      deferredReviewReady: 0,
+      deferredHold: 0,
+      lessonCandidates: 0,
+      promotionApproved: 0,
+      deferredVersion: null,
+    };
+  }
+})();
+
 console.log(JSON.stringify({
   ok: true,
   books: books.length,
@@ -157,20 +223,5 @@ console.log(JSON.stringify({
   publishedLessons: publishedCount,
   needsReviewOrDraft: needsReviewCount,
   deferredNawazil: deferredCount,
-  deferredReviewReady: (() => {
-    try {
-      const d = JSON.parse(readFileSync(deferredPath, "utf8"));
-      return (d.topics || []).filter((t) => t.reviewStage === "review_ready").length;
-    } catch {
-      return 0;
-    }
-  })(),
-  deferredHold: (() => {
-    try {
-      const d = JSON.parse(readFileSync(deferredPath, "utf8"));
-      return (d.topics || []).filter((t) => t.reviewStage === "hold").length;
-    } catch {
-      return 0;
-    }
-  })(),
+  ...deferredStats,
 }, null, 2));
