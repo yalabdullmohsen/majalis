@@ -1,24 +1,30 @@
 import { Link, useParams } from "wouter";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 import { Empty } from "@/components/ui-common";
 import {
+  adjacentFiqhChapters,
   chapterHref,
   getFiqhChapter,
   lessonHref,
   publishedLessonsInChapter,
+  type FiqhChapterHit,
 } from "@/lib/fiqh-books";
+import { fiqhChapterEditorial } from "@/lib/fiqh-editorial";
 import { formatMasailCount } from "@/lib/arabic-count";
 import "@/styles/pages/fiqh-hub.css";
+
+type TocItem = { id: string; label: string };
 
 export default function FiqhChapterPage() {
   const params = useParams<{ bookId: string; chapterId: string }>();
   const bookId = params.bookId ?? "";
   const chapterId = params.chapterId ?? "";
   const hit = getFiqhChapter(bookId, chapterId);
+  const [activeToc, setActiveToc] = useState<string>("");
 
   usePageView("fiqh-chapter", chapterId || null);
 
@@ -39,9 +45,51 @@ export default function FiqhChapterPage() {
     });
   }, [hit]);
 
-  if (!hit) {
+  const adjacent = useMemo(
+    () =>
+      hit
+        ? adjacentFiqhChapters(hit.book.id, hit.chapter.id)
+        : { chapters: [] as FiqhChapterHit[] },
+    [hit],
+  );
+
+  const editorial = useMemo(() => {
+    if (!hit) return null;
+    const idx = adjacent.chapters.findIndex((c) => c.chapter.id === hit.chapter.id);
+    return fiqhChapterEditorial(
+      hit.book,
+      hit.chapter,
+      idx >= 0 ? idx + 1 : 0,
+      adjacent.chapters.length,
+    );
+  }, [hit, adjacent]);
+
+  const tocItems = useMemo(() => {
+    if (!editorial) return [] as TocItem[];
+    const items: TocItem[] = [{ id: "fiqh-ch-def", label: "التعريف" }];
+    if (editorial.learnings.length > 0) items.push({ id: "fiqh-ch-learn", label: "ماذا تتعلم؟" });
+    if (editorial.topics.length > 0) items.push({ id: "fiqh-ch-topics", label: "أبرز الموضوعات" });
+    if (editorial.summary) items.push({ id: "fiqh-ch-sum", label: "الخلاصة" });
+    if (editorial.notes) items.push({ id: "fiqh-ch-notes", label: "التنبيهات" });
+    if (editorial.evidence) items.push({ id: "fiqh-ch-ev", label: "الأدلة" });
+    items.push({ id: "fiqh-ch-masail", label: "المسائل" });
+    return items;
+  }, [editorial]);
+
+  useEffect(() => {
+    if (tocItems.length === 0 || typeof window === "undefined") return;
+    const onHash = () => {
+      const id = window.location.hash.replace(/^#/, "");
+      if (id) setActiveToc(id);
+    };
+    onHash();
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, [tocItems]);
+
+  if (!hit || !editorial) {
     return (
-      <div className="fiqh-lux-shell fiqh-lux-chapter-page page-shell" dir="rtl">
+      <div className="fiqh-lux-shell fiqh-lux-chapter-page page-shell ve-page" dir="rtl">
         <Empty title="باب غير منشور" text="هذا الباب غير مدرج، أو ينقصه توثيق منشور." />
         <p className="fiqh-lux-empty">
           <Link href={bookId ? `/fiqh/books/${bookId}` : "/fiqh"}>العودة</Link>
@@ -54,7 +102,7 @@ export default function FiqhChapterPage() {
   const lessons = publishedLessonsInChapter(chapter);
 
   return (
-    <div className="fiqh-lux-shell fiqh-lux-chapter-page page-shell" dir="rtl">
+    <div className="fiqh-lux-shell fiqh-lux-chapter-page page-shell ve-page" dir="rtl">
       <nav className="fiqh-lux-crumb" aria-label="مسار التنقل">
         <Link href="/fiqh">الفقه</Link>
         <span aria-hidden="true"> ← </span>
@@ -63,86 +111,166 @@ export default function FiqhChapterPage() {
         <span aria-current="page">{chapter.title}</span>
       </nav>
 
-      <header className="fiqh-lux-book-hero">
-        <h1 className="fiqh-lux-book-hero__title">{chapter.title}</h1>
-        <p className="fiqh-lux-book-hero__meta">{formatMasailCount(lessons.length)} منشورة</p>
+      <header className="fiqh-lux-book-hero ve-hero">
+        <h1 className="fiqh-lux-book-hero__title ve-title-center">{editorial.title}</h1>
+        <p className="ve-hero__subtitle">
+          {editorial.bookTitle}
+          {editorial.chaptersTotal > 0
+            ? ` · باب ${editorial.chapterIndex} من ${editorial.chaptersTotal}`
+            : ""}
+        </p>
+        <p className="fiqh-lux-book-hero__meta ve-body">
+          <span className="ve-badge">{editorial.bookBadge}</span> · {formatMasailCount(editorial.lessonsCount)}
+        </p>
       </header>
 
-      {chapter.definition ? (
-        <section className="fiqh-lux-block" aria-labelledby="fiqh-ch-def">
-          <h2 id="fiqh-ch-def">تعريف الباب</h2>
-          <p>{chapter.definition}</p>
-        </section>
-      ) : null}
-
-      {chapter.topics && chapter.topics.length > 0 ? (
-        <section className="fiqh-lux-block" aria-labelledby="fiqh-ch-topics">
-          <h2 id="fiqh-ch-topics">موضوعات الباب</h2>
-          <ul className="fiqh-lux-sources">
-            {chapter.topics.map((topic) => (
-              <li key={topic}>{topic}</li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
-
-      {chapter.summary ? (
-        <section className="fiqh-lux-block" aria-labelledby="fiqh-ch-sum">
-          <h2 id="fiqh-ch-sum">خلاصة فقهية</h2>
-          <p>{chapter.summary}</p>
-        </section>
-      ) : null}
-
-      {chapter.evidence ? (
-        <section className="fiqh-lux-block" aria-labelledby="fiqh-ch-ev">
-          <h2 id="fiqh-ch-ev">أدلة عامة</h2>
-          <p>{chapter.evidence}</p>
-        </section>
-      ) : null}
-
-      {chapter.notes ? (
-        <section className="fiqh-lux-block" aria-labelledby="fiqh-ch-notes">
-          <h2 id="fiqh-ch-notes">تنبيهات</h2>
-          <p>{chapter.notes}</p>
-        </section>
-      ) : null}
-
-      {chapter.sources && chapter.sources.length > 0 ? (
-        <section className="fiqh-lux-block" aria-labelledby="fiqh-ch-src">
-          <h2 id="fiqh-ch-src">المصادر</h2>
-          <ul className="fiqh-lux-sources">
-            {chapter.sources.map((s, i) => (
-              <li key={`${s.book}-${i}`}>
-                <strong>{s.book}</strong>
-                {s.author ? ` — ${s.author}` : ""}
-                {s.ref ? `، ${s.ref}` : ""}
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
-
-      <section className="fiqh-lux-block" aria-labelledby="fiqh-ch-masail">
-        <h2 id="fiqh-ch-masail">المسائل</h2>
-        <ol className="fiqh-lux-lesson-list fiqh-lux-lesson-list--standalone">
-          {lessons.map((lesson, li) => (
-            <li key={lesson.id}>
-              <Link href={lessonHref(book, lesson)} className="fiqh-lux-lesson-link">
-                <span className="fiqh-lux-lesson-link__num">{li + 1}</span>
-                <span className="fiqh-lux-lesson-link__body">
-                  <span className="fiqh-lux-lesson-link__title">{lesson.title}</span>
-                  <span className="fiqh-lux-lesson-link__sum">{lesson.summary.slice(0, 110)}…</span>
-                </span>
-                <span className="fiqh-lux-lesson-link__go" aria-hidden="true">
-                  <ChevronLeft size={16} strokeWidth={2.5} />
-                </span>
-              </Link>
-            </li>
+      {tocItems.length > 1 ? (
+        <nav className="ve-toc" aria-label="أقسام الباب">
+          {tocItems.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              className={activeToc === item.id ? "is-active" : undefined}
+              onClick={() => setActiveToc(item.id)}
+            >
+              {item.label}
+            </a>
           ))}
-        </ol>
-      </section>
+        </nav>
+      ) : null}
 
-      <div className="fiqh-fab-clearance" />
+      <div className="ve-accordion">
+        <details open id="fiqh-ch-def" className="ve-section">
+          <summary>التعريف</summary>
+          <div className="ve-accordion__body ve-body">
+            <p>{editorial.definition}</p>
+          </div>
+        </details>
+
+        {editorial.learnings.length > 0 ? (
+          <details open id="fiqh-ch-learn" className="ve-section">
+            <summary>ماذا تتعلم؟</summary>
+            <div className="ve-accordion__body ve-body">
+              <ul>
+                {editorial.learnings.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </details>
+        ) : null}
+
+        {editorial.topics.length > 0 ? (
+          <details open id="fiqh-ch-topics" className="ve-section">
+            <summary>أبرز الموضوعات</summary>
+            <div className="ve-accordion__body ve-body">
+              <ul>
+                {editorial.topics.map((topic) => (
+                  <li key={topic}>{topic}</li>
+                ))}
+              </ul>
+            </div>
+          </details>
+        ) : null}
+
+        {editorial.summary ? (
+          <details open id="fiqh-ch-sum" className="ve-section">
+            <summary>الخلاصة</summary>
+            <div className="ve-accordion__body ve-body">
+              <p>{editorial.summary}</p>
+            </div>
+          </details>
+        ) : null}
+
+        {editorial.notes ? (
+          <details open id="fiqh-ch-notes" className="ve-section">
+            <summary>التنبيهات</summary>
+            <div className="ve-accordion__body ve-body">
+              <aside className="ve-callout" role="note">
+                <span className="ve-callout__label">تنبيه</span>
+                {editorial.notes}
+              </aside>
+            </div>
+          </details>
+        ) : null}
+
+        {editorial.evidence ? (
+          <details open id="fiqh-ch-ev" className="ve-section">
+            <summary>الأدلة</summary>
+            <div className="ve-accordion__body ve-body">
+              <p>{editorial.evidence}</p>
+            </div>
+          </details>
+        ) : null}
+
+        {chapter.sources && chapter.sources.length > 0 ? (
+          <details id="fiqh-ch-src" className="ve-section">
+            <summary>المصادر</summary>
+            <div className="ve-accordion__body ve-body">
+              <ul className="fiqh-lux-sources">
+                {chapter.sources.map((s, i) => (
+                  <li key={`${s.book}-${i}`}>
+                    <strong>{s.book}</strong>
+                    {s.author ? ` — ${s.author}` : ""}
+                    {s.ref ? `، ${s.ref}` : ""}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </details>
+        ) : null}
+
+        <details open id="fiqh-ch-masail" className="ve-section">
+          <summary>المسائل</summary>
+          <div className="ve-accordion__body">
+            <ul className="ve-lesson-list">
+              {lessons.map((lesson, li) => (
+                <li key={lesson.id}>
+                  <Link href={lessonHref(book, lesson)} className="ve-chapter-card">
+                    <span className="ve-chapter-card__num" aria-hidden="true">
+                      {li + 1}
+                    </span>
+                    <span className="ve-chapter-card__body">
+                      <span className="ve-chapter-card__title">{lesson.title}</span>
+                      <span className="ve-chapter-card__preview">
+                        {lesson.summary.length > 110
+                          ? `${lesson.summary.slice(0, 100).trim()}…`
+                          : lesson.summary}
+                      </span>
+                    </span>
+                    <span className="ve-chapter-card__go" aria-hidden="true">
+                      <ChevronLeft size={16} strokeWidth={2.5} />
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      {(adjacent.prev || adjacent.next) && (
+        <nav className="ve-pager" aria-label="أبواب مجاورة">
+          {adjacent.prev ? (
+            <Link href={adjacent.prev.href}>
+              <span>الباب السابق</span>
+              <strong>{adjacent.prev.chapter.title}</strong>
+            </Link>
+          ) : (
+            <span />
+          )}
+          {adjacent.next ? (
+            <Link href={adjacent.next.href} className="ve-pager__next">
+              <span>الباب التالي</span>
+              <strong>{adjacent.next.chapter.title}</strong>
+            </Link>
+          ) : (
+            <span />
+          )}
+        </nav>
+      )}
+
+      <div className="fiqh-fab-clearance ve-bottom-clearance" />
     </div>
   );
 }
