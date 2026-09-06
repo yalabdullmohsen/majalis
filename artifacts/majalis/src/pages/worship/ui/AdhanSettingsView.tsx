@@ -317,6 +317,8 @@ export default function AdhanSettingsPage() {
   const [rescheduleBusy, setRescheduleBusy] = useState(false);
   const [rescheduleMsg, setRescheduleMsg] = useState<string | null>(null);
   const [notifTestMsg, setNotifTestMsg] = useState<string | null>(null);
+  const [statusBusy, setStatusBusy] = useState(false);
+  const [statusLines, setStatusLines] = useState<string[] | null>(null);
 
   const soundOptions = useMemo(() => listAvailableSettingsSounds(), []);
   const selectedSoundId = resolveSettingsSoundSelection(
@@ -432,19 +434,26 @@ export default function AdhanSettingsPage() {
       setSoundMsg(null);
       return;
     }
-    setSoundMsg(null);
+    setSoundMsg("جارٍ التحميل…");
+    const loadTimer = window.setTimeout(() => {
+      setPlayingId(null);
+      setSoundMsg("فشل التشغيل: انتهت مهلة التحميل.");
+    }, 12_000);
     const result = await playAdhanPreview(opt.muezzinId, "short", prefs.volume ?? 1);
+    window.clearTimeout(loadTimer);
     if (!result.ok) {
       setPlayingId(null);
-      setSoundMsg("تعذّر الاستماع — تجربة الصوت الافتراضي.");
+      setSoundMsg("فشل التشغيل: تعذّر الاستماع — تجربة الصوت الافتراضي.");
       const fallback = await playAdhanPreview("makkah", "short", prefs.volume ?? 1);
       if (fallback.ok) {
         setPlayingId(opt.id);
+        setSoundMsg(null);
         fallback.audio.addEventListener("ended", () => setPlayingId(null), { once: true });
       }
       return;
     }
     setPlayingId(opt.id);
+    setSoundMsg(null);
     result.audio.addEventListener("ended", () => setPlayingId(null), { once: true });
   }
 
@@ -470,6 +479,37 @@ export default function AdhanSettingsPage() {
       setNotifTestMsg("سيصل إشعار قصير خلال ١٥ ثانية.");
     } catch {
       setNotifTestMsg("تعذّر اختبار الإشعار.");
+    }
+  }
+
+  async function runAdhanStatusCheck() {
+    setStatusBusy(true);
+    setStatusLines(null);
+    try {
+      const [{ getNotificationPermissionStatus, listPendingPrayerNotifications }, { getAudioDiagnostics }, { loadPrayerScheduleStatus, formatScheduleStatusAr }] =
+        await Promise.all([
+          import("@/lib/prayer-local-notifications"),
+          import("@/lib/adhan-audio-service"),
+          import("@/lib/prayer-schedule-status").catch(async () => ({
+            loadPrayerScheduleStatus: () => null,
+            formatScheduleStatusAr: () => "حالة الجدولة: غير متاحة",
+          })),
+        ]);
+      const perm = await getNotificationPermissionStatus();
+      const pending = await listPendingPrayerNotifications();
+      const diag = getAudioDiagnostics();
+      const scheduleNote = formatScheduleStatusAr(loadPrayerScheduleStatus());
+      setStatusLines([
+        `إذن الإشعارات: ${perm}`,
+        `الإشعارات المجدولة: ${pending.count}`,
+        scheduleNote,
+        `آخر نجاح تشغيل: ${diag.lastSuccessAt ?? "—"}`,
+        `آخر خطأ صوت: ${diag.lastError ?? "—"}`,
+      ]);
+    } catch {
+      setStatusLines(["تعذّر فحص حالة الأذان."]);
+    } finally {
+      setStatusBusy(false);
     }
   }
 
@@ -722,7 +762,15 @@ export default function AdhanSettingsPage() {
               {playingId ? "إيقاف الصوت" : "اختبار الصوت"}
             </button>
             <button type="button" className="ads-pill-btn" onClick={() => void runNotifSoundTest()}>
-              اختبار الإشعار
+              اختبار إشعار بعد ١٥ ثانية
+            </button>
+            <button
+              type="button"
+              className="ads-pill-btn"
+              disabled={statusBusy}
+              onClick={() => void runAdhanStatusCheck()}
+            >
+              {statusBusy ? "جارٍ…" : "فحص حالة الأذان"}
             </button>
             <button
               type="button"
@@ -742,6 +790,13 @@ export default function AdhanSettingsPage() {
             </button>
           </div>
           {notifTestMsg ? <p className="ads-adhan-desc" role="status">{notifTestMsg}</p> : null}
+          {statusLines ? (
+            <ul className="ads-adhan-desc" role="status">
+              {statusLines.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
+          ) : null}
           {rescheduleMsg ? <p className="ads-adhan-desc" role="status">{rescheduleMsg}</p> : null}
         </div>
       </section>
