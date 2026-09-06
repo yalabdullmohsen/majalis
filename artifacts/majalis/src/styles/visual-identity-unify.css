@@ -1,0 +1,412 @@
+/**
+ * visual-identity-unify.css
+ * طبقة توحيد الهوية البصرية — مصحف هادئ (عاجي + أخضر عميق + ذهبي).
+ * تُحمَّل متأخرًا بعد theme-aliases / semantic-layer لتفوز بدون كسر الوظائف.
+ * لا تلمس نص المصحف أو مقاييس أسطره.
+ */
+
+:root {
+  /* ── لوحة موحّدة (نهاري) ─────────────────────────────────────────── */
+  --color-bg: #f7f3eb;
+  --color-surface: #fffcf7;
+  --color-surface-soft: #f3eee4;
+  --color-primary: #0f5c45;
+  --color-primary-dark: #0a3d2e;
+  --color-primary-soft: #e2efe8;
+  --color-accent: #b08a3e;
+  --color-border: #d9d2c6;
+  --color-text: #16241e;
+  --color-muted: #5e6e67;
+  --color-selected: #e8f3ee;
+  --shadow-soft: 0 8px 22px -14px rgba(10, 61, 46, 0.18);
+
+  /* مواءمة المصدر --mj-* */
+  --surface-app: var(--color-bg);
+  --mj-bg: var(--color-bg);
+  --mj-surface: var(--color-surface);
+  --mj-surface-2: var(--color-surface-soft);
+  --mj-surface-3: #ebe4d8;
+  --mj-hairline: var(--color-border);
+  --mj-ink: var(--color-text);
+  --mj-ink-2: #4a5a53;
+  --mj-muted: var(--color-muted);
+  --mj-brand: var(--color-primary);
+  --mj-brand-soft: var(--color-primary-soft);
+  --mj-brand-deep: var(--color-primary-dark);
+  --mj-accent: var(--color-accent);
+  --mj-accent-soft: #f5eedf;
+  --mj-on-brand: #ffffff;
+  --mj-sh: var(--shadow-soft);
+
+  --radius-card: 18px;
+  --radius-tile: 18px;
+  --radius-button: 14px;
+  --radius-sheet: 22px;
+}
+
+html[data-theme="dark"],
+html.dark {
+  --color-bg: #121816;
+  --color-surface: #1b2421;
+  --color-surface-soft: #222c28;
+  --color-primary: #4fb48b;
+  --color-primary-dark: #2f7a5c;
+  --color-primary-soft: rgba(79, 180, 139, 0.16);
+  --color-accent: #d9b871;
+  --color-border: #3a4641;
+  --color-text: #f3f7f5;
+  --color-muted: #a8b6af;
+  --color-selected: rgba(79, 180, 139, 0.18);
+  --shadow-soft: 0 10px 26px -16px rgba(0, 0, 0, 0.55);
+
+  --surface-app: var(--color-bg);
+  --mj-bg: var(--color-bg);
+  --mj-surface: var(--color-surface);
+  --mj-surface-2: var(--color-surface-soft);
+  --mj-surface-3: #27312d;
+  --mj-hairline: var(--color-border);
+  --mj-ink: var(--color-text);
+  --mj-ink-2: #c5d0cb;
+  --mj-muted: var(--color-muted);
+  --mj-brand: var(--color-primary);
+  --mj-brand-soft: var(--color-primary-soft);
+  --mj-brand-deep: #1e4d3c;
+  --mj-accent: var(--color-accent);
+  --mj-accent-soft: rgba(217, 184, 113, 0.16);
+  --mj-on-brand: #0b1511;
+  --mj-sh: var(--shadow-soft);
+}
+
+/* ── أسطح عامة ─────────────────────────────────────────────────────── */
+body,
+.app-shell,
+.app-main,
+#main-content {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* بطاقات عامة أخف */
+.soft-card,
+.hub-card,
+.section-card,
+.ds-card,
+.mj-card {
+  background: var(--color-surface) !important;
+  border: 1px solid color-mix(in srgb, var(--color-border) 88%, transparent) !important;
+  border-radius: var(--radius-card) !important;
+  box-shadow: var(--shadow-soft) !important;
+  color: var(--color-text);
+}
+
+/* أزرار موحّدة */
+.btn-primary,
+.ds-btn--primary,
+.mj-btn--primary,
+button.primary {
+  background: var(--color-primary) !important;
+  color: var(--mj-on-brand, #fff) !important;
+  border: 1px solid var(--color-primary-dark) !important;
+  border-radius: var(--radius-button) !important;
+  box-shadow: none !important;
+}
+
+.btn-secondary,
+.ds-btn--secondary,
+.mj-btn--secondary,
+button.secondary {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-button) !important;
+  box-shadow: none !important;
+}
+
+/* فلاتر/شيبس — ليست دوائر ضخمة ولا أخضر صلب قاسٍ */
+.filter-chips__chip,
+.mj-filter-chip,
+.ds-chip,
+.lessons-filter-tab,
+.section-hub__chip,
+.fiqh-hub-strip__tab {
+  min-height: 36px !important;
+  padding-block: 0.35rem !important;
+  padding-inline: 0.75rem !important;
+  border-radius: 999px !important;
+  border: 1px solid var(--color-border) !important;
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  box-shadow: none !important;
+  font-size: 0.86rem !important;
+}
+
+.filter-chips__chip.is-active,
+.mj-filter-chip.is-active,
+.ds-chip.is-active,
+.lessons-filter-tab--active,
+.lessons-filter-tab.is-active,
+.section-hub__chip.is-active,
+.fiqh-hub-strip__tab--active,
+.fiqh-hub-strip__tab.is-active {
+  background: var(--color-selected) !important;
+  color: var(--color-primary-dark) !important;
+  border-color: color-mix(in srgb, var(--color-primary) 55%, var(--color-border)) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .filter-chips__chip.is-active,
+html.dark .filter-chips__chip.is-active,
+html[data-theme="dark"] .lessons-filter-tab--active,
+html.dark .lessons-filter-tab--active,
+html[data-theme="dark"] .section-hub__chip.is-active,
+html.dark .section-hub__chip.is-active,
+html[data-theme="dark"] .fiqh-hub-strip__tab--active,
+html.dark .fiqh-hub-strip__tab--active {
+  color: var(--color-text) !important;
+  background: var(--color-selected) !important;
+  border-color: color-mix(in srgb, var(--color-primary) 45%, var(--color-border)) !important;
+}
+
+/* ── دخول ──────────────────────────────────────────────────────────── */
+.login-page {
+  --auth-green: var(--color-primary) !important;
+  --auth-green-deep: var(--color-primary-dark) !important;
+  --auth-ink: var(--color-text) !important;
+  --auth-muted: var(--color-muted) !important;
+  --auth-line: var(--color-border) !important;
+  --auth-surface: var(--color-surface) !important;
+  --auth-field: var(--color-surface-soft) !important;
+  background: var(--color-bg) !important;
+  color: var(--color-text) !important;
+}
+
+.login-card {
+  border: 1px solid var(--color-border) !important;
+  background: var(--color-surface) !important;
+  border-radius: var(--radius-sheet) !important;
+  box-shadow: var(--shadow-soft) !important;
+  max-width: 22rem;
+  padding: 1.15rem 1.05rem 1rem !important;
+}
+
+.login-card__brand {
+  color: var(--color-primary-dark) !important;
+}
+
+.login-tab.is-active,
+.login-submit {
+  background: var(--color-primary) !important;
+  border-color: var(--color-primary-dark) !important;
+  color: var(--mj-on-brand, #fff) !important;
+  box-shadow: none !important;
+}
+
+.login-field,
+.login-page input,
+.login-page .login-input {
+  background: var(--color-surface-soft) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text) !important;
+  border-radius: 12px !important;
+}
+
+/* ── قائمة جانبية ──────────────────────────────────────────────────── */
+.drawer-panel,
+.sidebar-panel {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-inline-end: 1px solid var(--color-border) !important;
+  box-shadow: var(--shadow-soft) !important;
+}
+
+.sidebar-item {
+  border-inline-start: 0 !important;
+  border-radius: 12px !important;
+  color: var(--color-text) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  min-height: 44px;
+}
+
+.sidebar-item.active,
+.sidebar-item[aria-current="page"],
+.sidebar-item.is-active {
+  background: var(--color-selected) !important;
+  color: var(--color-primary-dark) !important;
+  border-inline-start: 0 !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-primary) 35%, transparent) !important;
+}
+
+.sidebar-item.active .sidebar-item-icon,
+.sidebar-item.is-active .sidebar-item-icon {
+  background: color-mix(in srgb, var(--color-primary) 12%, transparent) !important;
+  color: var(--color-primary) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .sidebar-item.active,
+html.dark .sidebar-item.active {
+  color: var(--color-text) !important;
+}
+
+/* ── قرآن (مركز/بطاقات — دون المصحف) ───────────────────────────────── */
+.quran-hub,
+.quran-hub-page,
+.section-lobby {
+  background: var(--color-bg) !important;
+  color: var(--color-text) !important;
+}
+
+.quran-hub-hero,
+.quran-hub-closing,
+.card--featured,
+.section-lobby__featured {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: var(--shadow-soft) !important;
+}
+
+.quran-hub-hero__title,
+.quran-hub-hero__sub,
+.quran-hub-closing *,
+.card--featured,
+.card--featured * {
+  color: inherit !important;
+}
+
+.quran-open-mushaf__cta-btn,
+.quran-hub .btn-primary {
+  box-shadow: none !important;
+}
+
+/* ── دروس ──────────────────────────────────────────────────────────── */
+.lessons-page,
+.lessons-page-v2,
+.lessons-page-v3 {
+  --lesson-green: var(--color-primary) !important;
+  --lesson-green-deep: var(--color-primary-dark) !important;
+  --lesson-green-soft: var(--color-primary-soft) !important;
+  background: var(--color-bg) !important;
+  color: var(--color-text) !important;
+}
+
+.lesson-unified-card,
+.lessons-page .soft-card {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: var(--shadow-soft) !important;
+  border-radius: var(--radius-card) !important;
+}
+
+.lessons-page-v3 .page-hero-mj,
+.lessons-page-v2 .page-hero-mj,
+.lessons-v2-filters,
+.lessons-v3-sticky {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: none !important;
+}
+
+.lessons-page-v3 .filter-chips__chip.is-active,
+.lessons-filter-tabs .lessons-filter-tab--active {
+  background: var(--color-selected) !important;
+  color: var(--color-primary-dark) !important;
+}
+
+/* ── فقه ───────────────────────────────────────────────────────────── */
+.fqh-hub-hero,
+.fiqh-lux-book-hero,
+.page-hero-mj--bleed,
+.mss-hero-surface {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-primary-dark) 88%, #000) 0%,
+    var(--color-primary) 100%
+  ) !important;
+  color: #fffef9 !important;
+  box-shadow: var(--shadow-soft) !important;
+  min-height: 0 !important;
+  padding-block: 1.1rem !important;
+}
+
+.fqh-hub-hero {
+  border-radius: 0 0 var(--radius-sheet) var(--radius-sheet);
+  margin-bottom: 0.85rem;
+}
+
+.fqh-hub-card,
+.fiqh-hub .soft-card {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: var(--shadow-soft) !important;
+  border-radius: var(--radius-card) !important;
+  color: var(--color-text) !important;
+}
+
+/* ── أقسام ─────────────────────────────────────────────────────────── */
+.section-hub,
+.section-hub__intro,
+.section-hub__card {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: var(--shadow-soft) !important;
+  border-radius: var(--radius-card) !important;
+}
+
+.section-hub {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.section-hub__intro {
+  background: var(--color-surface-soft) !important;
+}
+
+/* أبطال الأقسام العامة — لا تبتلع الصفحة */
+.page-hero-mj,
+.mss-hero,
+.modern-section-hero {
+  box-shadow: var(--shadow-soft) !important;
+}
+
+.page-hero-mj:not(.page-hero-mj--bleed),
+.mss-hero:not(.mss-hero-surface) {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+/* أيقونات موحّدة الحجم/اللون في البطاقات */
+.hub-card svg,
+.section-card svg,
+.soft-card svg,
+.sidebar-item-icon svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  color: currentColor;
+}
+
+/* تباين نص عام */
+.login-page,
+.drawer-panel,
+.sidebar-panel,
+.quran-hub,
+.lessons-page,
+.lessons-page-v2,
+.lessons-page-v3,
+.section-hub,
+.fqh-hub,
+.fiqh-hub {
+  color: var(--color-text);
+}
+
+.login-page .muted,
+.sidebar-item__meta,
+.quran-hub .muted,
+.lessons-page .muted,
+.section-hub__meta {
+  color: var(--color-muted) !important;
+}

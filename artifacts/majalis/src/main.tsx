@@ -51,6 +51,8 @@ import "./styles/theme-aliases.css";
 /* طبقة ألوان دلالية + إصلاح تباين/طبقات (بعد الجسور حتى تفوز) */
 import "./styles/semantic-layer-tokens.css";
 import "./styles/visual-layer-contrast-fix.css";
+/* توحيد الهوية البصرية (مصحف هادئ) — بعد الجسور وإصلاح التباين */
+import "./styles/visual-identity-unify.css";
 // dark-mode-surfaces (~24KB) — فوري فقط إن كان الثيم داكنًا عند الإقلاع؛ وإلا بعد load
 {
   const bootDark =
