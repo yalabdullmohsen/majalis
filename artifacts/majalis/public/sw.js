@@ -136,6 +136,7 @@ self.addEventListener("activate", (event) => {
         const windows = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
         for (const client of windows) {
           client.postMessage({ type: "SW_UPDATED_QUIET" });
+          client.postMessage({ type: "CLIENT_UPDATE_AVAILABLE", buildId: SW_BUILD_ID });
         }
       }
     })(),

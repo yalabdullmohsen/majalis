@@ -42,7 +42,11 @@ import {
   restoreDefaultAppSettings,
   writeBackgroundPlaybackPref,
 } from "@/lib/restore-default-settings";
-import { refreshAppAndPurgeCaches } from "@/lib/runtime-cache-purge";
+import {
+  fetchLiveVersionInfo,
+  getDisplayedAppVersion,
+  refreshAppAndPurgeCaches,
+} from "@/lib/runtime-cache-purge";
 import "@/styles/pages/settings.css";
 
 const ReciterDownloadManager = lazy(() =>
@@ -94,6 +98,18 @@ export default function SettingsPage() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [cacheRefreshBusy, setCacheRefreshBusy] = useState(false);
   const [cacheRefreshNote, setCacheRefreshNote] = useState<string | null>(null);
+  const [displayedAppVersion, setDisplayedAppVersion] = useState<string | null>(() => getDisplayedAppVersion());
+
+  useEffect(() => {
+    setDisplayedAppVersion(getDisplayedAppVersion());
+    let cancelled = false;
+    void fetchLiveVersionInfo().then((live) => {
+      if (!cancelled && live?.shortCommit) setDisplayedAppVersion(live.shortCommit);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     applyPageSeo({
@@ -344,8 +360,14 @@ export default function SettingsPage() {
               setCacheRefreshBusy(true);
               setCacheRefreshNote("جاري تحديث النسخة ومسح الكاش…");
               void refreshAppAndPurgeCaches()
-                .then(() => {
-                  setCacheRefreshNote("تم تحديث النسخة — يُعاد التحميل…");
+                .then((result) => {
+                  if (result.shortCommit) setDisplayedAppVersion(result.shortCommit);
+                  if (result.ok) {
+                    setCacheRefreshNote("تم تحديث النسخة — يُعاد التحميل…");
+                  } else {
+                    setCacheRefreshBusy(false);
+                    setCacheRefreshNote("النسخة محدّثة بالفعل.");
+                  }
                 })
                 .catch(() => {
                   setCacheRefreshBusy(false);
@@ -356,6 +378,11 @@ export default function SettingsPage() {
           >
             {cacheRefreshBusy ? "جاري التحديث…" : "تحديث النسخة"}
           </button>
+          {displayedAppVersion ? (
+            <p className="settings-note" dir="ltr" data-testid="app-version-commit">
+              النسخة الحالية: {displayedAppVersion}
+            </p>
+          ) : null}
           {cacheRefreshNote ? <p className="settings-note">{cacheRefreshNote}</p> : null}
           <p className="settings-note">
             يمسح كاش الواجهة ويعيد تحميل آخر نسخة منشورة، ولا يمس الثيم أو المفضلة أو إعدادات الصلاة.
