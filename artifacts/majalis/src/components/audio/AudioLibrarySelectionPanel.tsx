@@ -24,9 +24,7 @@ export function AudioLibrarySelectionPanel() {
   const [selectedMuezzin, setSelectedMuezzin] = useState<SelectableMuezzinId>(() =>
     clampSelectableMuezzinId(loadAdhanPrefs().defaultMuezzinId),
   );
-  const [isFullAdhan, setIsFullAdhan] = useState(
-    () => loadAdhanPrefs().playbackMode === "full",
-  );
+  const [isFullAdhan, setIsFullAdhan] = useState(false);
 
   const muezzins = listFamousMuezzins();
   const reciters = listFamousReciters();
@@ -41,9 +39,10 @@ export function AudioLibrarySelectionPanel() {
     }
   }
 
-  function toggleFullAdhan(full: boolean) {
-    setIsFullAdhan(full);
-    patchAdhanPrefs({ playbackMode: full ? "full" : "short" });
+  function toggleFullAdhan(_full: boolean) {
+    // الأذان الكامل محذوف — نبقي short فقط
+    setIsFullAdhan(false);
+    patchAdhanPrefs({ playbackMode: "short" });
   }
 
   return (

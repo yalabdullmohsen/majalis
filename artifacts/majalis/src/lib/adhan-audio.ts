@@ -598,7 +598,7 @@ export function isAdhanPlaying() {
 export function playAdhan(
   muezzin: Muezzin,
   isFajr = false,
-  mode: AdhanPlaybackMode = "full",
+  mode: AdhanPlaybackMode = "short",
   volume = 1,
 ): HTMLAudioElement | null {
   const clip = resolveAdhanClip(muezzin, { isFajr, mode });
@@ -629,5 +629,5 @@ export async function previewAdhanAsync(
   volume = 0.8,
 ): Promise<AdhanPlayResult> {
   const { playAdhanPreview } = await import("@/lib/adhan-audio-service");
-  return playAdhanPreview(muezzin.id, "full", volume);
+  return playAdhanPreview(muezzin.id, "short", volume);
 }

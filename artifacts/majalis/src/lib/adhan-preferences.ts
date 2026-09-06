@@ -263,7 +263,7 @@ export function saveAdhanPrefs(prefs: AdhanPreferences): AdhanPreferences {
       safe.prayers[key] = { ...safe.prayers[key], muezzinId: "" };
     }
     const dm = safe.prayers[key]?.deliveryMode;
-    if (dm && dm !== "") {
+    if (typeof dm === "string" && dm.length > 0) {
       safe.prayers[key] = {
         ...safe.prayers[key],
         deliveryMode: normalizeAdhanPlaybackMode(dm),

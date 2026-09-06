@@ -181,7 +181,7 @@ export async function resumeAdhanInternally(opts?: {
     /* ويب أو فشل الجلسة — نكمل بـ HTMLAudio */
   }
 
-  const audio = playAdhan(muezzin, isFajr, "full", prefs.volume ?? 1);
+  const audio = playAdhan(muezzin, isFajr, "short", prefs.volume ?? 1);
   if (audio && typeof window !== "undefined") {
     const event: AdhanEvent = {
       type: "adhan",

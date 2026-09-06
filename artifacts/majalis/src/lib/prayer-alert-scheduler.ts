@@ -17,7 +17,6 @@ import { getActivePrayerLocation } from "./prayer-location-prefs";
 import { loadPrayerAlertPrefs, LIVE_ACTIVITY_LINGER_MINUTES } from "./prayer-alert-preferences";
 import {
   getEffectiveMuezzinId,
-  getEffectivePlaybackMode,
   loadAdhanPrefs,
   PRAYER_KEYS,
   type PrayerKey,
@@ -182,12 +181,11 @@ function resolveSlotAlertOpts(
   const pk = asPrayerKey(slotKey);
   const prayerOn = pk ? adhanPrefs.prayers[pk].enabled : true;
   const preMinutes = pk ? adhanPrefs.prayers[pk].advanceMinutes : prefs.preAlertMinutes;
-  const fullMode = pk ? getEffectivePlaybackMode(adhanPrefs, pk) === "full" : false;
+  const fullMode = false; // الأذان الكامل محذوف — لا مسار enter مزدوج
   /**
-   * على iOS الوضع الكامل: مقاطع الأذان (`scheduleIosFullAdhan`) هي إشعار الدخول.
-   * لا نُجدول enter منفصلًا هنا وإلا يتكرر الإشعار.
+   * على iOS: إشعار الدخول القصير عبر scheduleIosAdhanSegments فقط عند الحاجة.
    */
-  const iosFullHandlesEnter = isNative && isIOS && fullMode;
+  const iosFullHandlesEnter = false;
   return {
     prayerEnabled: prayerOn,
     preAlertMinutes: preMinutes,

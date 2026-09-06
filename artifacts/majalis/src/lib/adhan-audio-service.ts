@@ -251,7 +251,7 @@ async function playWithFallback(
 /** تجربة صوت للمؤذن/النوع مع صيغة التشغيل */
 export async function playAdhanPreview(
   adhanId: string,
-  playbackMode: AdhanPlaybackMode = "full",
+  playbackMode: AdhanPlaybackMode = "short",
   volume = 0.9,
 ): Promise<AdhanPlayResult> {
   lastMuezzinId = adhanId;
@@ -292,9 +292,7 @@ export async function playAdhanPreview(
   }
 
   const maxMs =
-    playbackMode === "full"
-      ? null
-      : clip.maxMs ?? (playbackMode === "takbir" ? 12_000 : 28_000);
+    clip.maxMs ?? (playbackMode === "takbir" ? 12_000 : 28_000);
 
   // بلا سلسلة احتياطي لأنواع أخرى — إن فشل الملف المختار يظهر الخطأ ولا يُشغَّل أذان مختلف.
   const played = await playAdhanFull(clip.url, {
@@ -314,7 +312,7 @@ export async function playAdhanPreview(
 /** توافق الاسم القديم */
 export async function testAdhanSound(
   muezzinId: string,
-  mode: AdhanPlaybackMode = "full",
+  mode: AdhanPlaybackMode = "short",
 ): Promise<AdhanPlayResult> {
   return playAdhanPreview(muezzinId, mode, 0.9);
 }
@@ -480,7 +478,7 @@ export async function playFullAdhan(style: AdhanStyleId): Promise<AdhanPlayResul
   if (path) {
     return playWithFallback(path, { volume: 1, maxMs: null, fadeIn: true });
   }
-  return playAdhanPreview(style === "custom" ? "makkah" : style, "full", 1);
+  return playAdhanPreview(style === "custom" ? "makkah" : style, "short", 1);
 }
 
 export async function testFullAdhan(style: AdhanStyleId): Promise<AdhanPlayResult> {
