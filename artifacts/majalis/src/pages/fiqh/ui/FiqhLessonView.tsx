@@ -58,10 +58,14 @@ function useReadingProgress(active: boolean): number {
 }
 
 type SectionId =
+  | "definition"
   | "summary"
   | "detail"
+  | "ruling"
   | "evidence"
+  | "notes"
   | "preferred"
+  | "practical"
   | "sources"
   | "related";
 
@@ -69,7 +73,12 @@ export default function FiqhLessonPage() {
   const params = useParams<{ bookId: string; lessonId: string }>();
   const publishedHit = getFiqhLesson(params.bookId ?? "", params.lessonId ?? "");
   const anyHit = getFiqhLessonAny(params.bookId ?? "", params.lessonId ?? "");
-  const hit = publishedHit ?? anyHit;
+  // لا تُعرض مسائل needsReview/draft حكمًا نهائيًا للمستخدم
+  const hit =
+    publishedHit ??
+    (anyHit && anyHit.lesson.needsReview !== true && anyHit.lesson.status === "published"
+      ? anyHit
+      : undefined);
   const nav = useMemo(
     () => adjacentFiqhLessons(params.bookId ?? "", params.lessonId ?? ""),
     [params.bookId, params.lessonId],
@@ -87,7 +96,7 @@ export default function FiqhLessonPage() {
       path: hit.href,
       title: `${hit.lesson.title} | ${hit.book.title} | سُنّة`,
       description: hit.lesson.summary.slice(0, 160),
-      keywords: [hit.lesson.title, hit.chapter.title, hit.book.title, "فقه"],
+      keywords: [...(hit.lesson.keywords ?? []), hit.lesson.title, hit.chapter.title, hit.book.title, "فقه"],
       robots: severelyIncomplete ? "noindex, follow" : undefined,
       jsonLd: severelyIncomplete
         ? undefined
@@ -128,12 +137,21 @@ export default function FiqhLessonPage() {
   const contentStatus = getLessonContentStatus(lesson);
   const { intro, rest } = firstSentence(lesson.summary);
   const detail = rest || (lesson.madhhabNotes ?? "");
+  const definition = lesson.definition?.trim() || "";
+  const ruling = lesson.ruling?.trim() || lesson.preferred?.trim() || "";
+  const notes = lesson.notes?.trim() || "";
+  const practical = lesson.practicalSummary?.trim() || lesson.preferred?.trim() || "";
+
 
   const sections: Array<{ id: SectionId; label: string; show: boolean }> = [
+    { id: "definition", label: "التعريف", show: Boolean(definition) },
     { id: "summary", label: "خلاصة", show: Boolean(intro) },
     { id: "detail", label: "التفصيل", show: Boolean(detail) },
+    { id: "ruling", label: "الحكم", show: Boolean(ruling) },
     { id: "evidence", label: "الدليل", show: Boolean(lesson.evidence?.trim()) },
+    { id: "notes", label: "تنبيهات", show: Boolean(notes) },
     { id: "preferred", label: "الراجح", show: Boolean(lesson.preferred?.trim()) },
+    { id: "practical", label: "الخلاصة العملية", show: Boolean(practical) },
     { id: "sources", label: "المصدر", show: true },
     { id: "related", label: "مسائل مرتبطة", show: related.length > 0 },
   ];
@@ -220,6 +238,12 @@ export default function FiqhLessonPage() {
       </nav>
 
       <div className="fiqh-lux-sections">
+        {definition ? (
+          <section id="fiqh-sec-definition" className="fiqh-lux-section">
+            <h2>التعريف المختصر</h2>
+            <p>{definition}</p>
+          </section>
+        ) : null}
         {intro ? (
           <section id="fiqh-sec-summary" className="fiqh-lux-section">
             <h2>خلاصة مختصرة</h2>
@@ -242,6 +266,24 @@ export default function FiqhLessonPage() {
           <section id="fiqh-sec-preferred" className="fiqh-lux-section">
             <h2>الراجح</h2>
             <p>{lesson.preferred}</p>
+          </section>
+        ) : null}
+        {ruling && ruling !== lesson.preferred?.trim() ? (
+          <section id="fiqh-sec-ruling" className="fiqh-lux-section">
+            <h2>الحكم المختصر</h2>
+            <p>{ruling}</p>
+          </section>
+        ) : null}
+        {notes ? (
+          <section id="fiqh-sec-notes" className="fiqh-lux-section">
+            <h2>أهم التنبيهات</h2>
+            <p>{notes}</p>
+          </section>
+        ) : null}
+        {practical ? (
+          <section id="fiqh-sec-practical" className="fiqh-lux-section">
+            <h2>الخلاصة العملية</h2>
+            <p>{practical}</p>
           </section>
         ) : null}
         <div id="fiqh-sec-sources">

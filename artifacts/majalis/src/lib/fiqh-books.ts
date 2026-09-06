@@ -23,9 +23,25 @@ export type FiqhLesson = {
   madhhabNotes?: string;
   sources: FiqhSource[];
   status: FiqhLessonStatus;
+  /** تعليم مختصر — ليس فتوى شخصية. */
   summary: string;
   evidence: string;
   preferred: string;
+  /** تعريف موجز اختياري للعرض الموحّد. */
+  definition?: string;
+  /** الحكم المختصر (إن اختلف عن preferred يُفضَّل تعبئته). */
+  ruling?: string;
+  /** وجه الاستدلال / تنبيهات عملية. */
+  notes?: string;
+  /** الخلاصة العملية للمكلَّف. */
+  practicalSummary?: string;
+  /** كلمات مفتاحية للبحث. */
+  keywords?: string[];
+  /**
+   * يحتاج تحريرًا علميًا — لا يُعرض للمستخدم حكمًا نهائيًا
+   * (يُستبعد من القوائم العامة عبر isPublishedLesson).
+   */
+  needsReview?: boolean;
 };
 
 export type FiqhChapter = {
@@ -168,6 +184,7 @@ function sourcesComplete(sources: FiqhSource[] | undefined): boolean {
 export function isPublishedLesson(lesson: FiqhLesson): boolean {
   return (
     lesson.status === "published" &&
+    lesson.needsReview !== true &&
     Boolean(lesson.bookId) &&
     Boolean(lesson.chapterId) &&
     Boolean(lesson.summary?.trim()) &&
@@ -496,7 +513,13 @@ export function searchFiqhLessons(query: string, filters: FiqhSearchFilters = {}
       fiqhTextIncludes(hit.book.title, q) ||
       fiqhTextIncludes(hit.lesson.summary, q) ||
       fiqhTextIncludes(hit.lesson.evidence, q) ||
-      fiqhTextIncludes(hit.lesson.preferred, q)
+      fiqhTextIncludes(hit.lesson.preferred, q) ||
+      fiqhTextIncludes(hit.lesson.definition ?? "", q) ||
+      fiqhTextIncludes(hit.lesson.ruling ?? "", q) ||
+      fiqhTextIncludes(hit.lesson.notes ?? "", q) ||
+      fiqhTextIncludes(hit.lesson.practicalSummary ?? "", q) ||
+      fiqhTextIncludes(hit.lesson.madhhabNotes ?? "", q) ||
+      (hit.lesson.keywords ?? []).some((k) => fiqhTextIncludes(k, q))
     );
   });
 }
