@@ -1,28 +1,28 @@
 # تدقيق محتوى الفقه
 
-- التاريخ: 2026-09-06 21:50 UTC
-- الجولة: v5 — حزم مراجعة ترقية (promotionReview) دون ترقية فعلية
+- التاريخ: 2026-09-06 22:01 UTC
+- الجولة: v6 — معاينة ترقية (promotionPreview) بلا إدراج فعلي
 - المسائل المنشورة: 1103 | أمثلة: 270 | نوازل داخلية: 4
-- review_ready: 2 | hold: 2 | lessonCandidate: 2 | promotionReview: 2 | promotionApproved: 0
+- review_ready: 2 | hold: 2 | promotionPreview: 2 | insertedIntoBooksJson: 0 | promotionApproved: 0
 
 ## الحالة
 
-- الكتالوج العام مكتمل.
-- مرشّحا الدروس + حزم التوقيع داخل `deferred-nawazil.json` فقط.
-- اكتشاف اتساق: باب زيارة القبور المنشور يذكر كراهة زيارة النساء؛ v5 يحاذي ذلك.
-- لا نقل إلى `books.json` قبل توقيع بشري صريح على `humanDecision.promotionApproved`.
+- الكتالوج العام مكتمل ولم يُمس.
+- معاينات الدروس النهائية المقترحة:
+  - `libas-shuhra-dawabit` (بعد `libas-isbal`)
+  - `janaza-ziyara-nisa-taalim` (اختياري بعد محاذاة overview)
+- «اكمل» لا تُفعّل الترقية؛ يلزم أمر اعتماد صريح لكل مرشّح.
 
 ## مؤجّل خارج الكتالوج العام
 
-| المعرّف | المرحلة | مرشّح | حزمة ترقية | الوضع المقترح |
-|---|---|---|---|---|
-| `libas-shuhra-muasir` | `review_ready` | نعم | awaiting_human_signoff | `insert_new_lesson` |
-| `ziyarat-nisa-qubur` | `review_ready` | نعم | awaiting_human_signoff | `align_existing_then_optional_insert` |
-| `shubuhat-ghidhaiyya-muasira` | `hold` | لا | لا | ممنوع |
-| `nawazil-jihad-muasira` | `hold` | لا | لا | ممنوع |
+| المعرّف | المرحلة | معاينة | مُدرج؟ |
+|---|---|---|---|
+| `libas-shuhra-muasir` | `review_ready` | `libas-shuhra-dawabit` | لا |
+| `ziyarat-nisa-qubur` | `review_ready` | `janaza-ziyara-nisa-taalim` | لا |
+| `shubuhat-ghidhaiyya-muasira` | `hold` | — | — |
+| `nawazil-jihad-muasira` | `hold` | — | — |
 
 ## المنهج
 
-- تعليمي حنبلية المصدر.
-- `promotionReview` يجهّز القرار البشري ولا ينفّذ الترقية.
-- `hold` بلا مرشّح وبلا حزمة ترقية.
+- `promotionPreview.lesson` شكل كتالوج نهائي مقترح فقط.
+- التطبيق الفعلي مشروط بـ `applyRequires.explicitCommand`.
