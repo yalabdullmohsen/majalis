@@ -1982,8 +1982,8 @@
     "book_url": "https://islamstory.com",
     "end_date": null,
     "is_recurring": true,
-    "activity_type": "درس",
-    "is_course": false,
+    "activity_type": "دورة إلكترونية",
+    "is_course": true,
     "sheikhs": {
       "name": "الشيخ راغب السرجاني"
     }
@@ -2080,8 +2080,8 @@
     ],
     "end_date": null,
     "is_recurring": true,
-    "activity_type": "درس",
-    "is_course": false,
+    "activity_type": "دورة إلكترونية",
+    "is_course": true,
     "sheikhs": {
       "name": "الدكتور إبراهيم الخليفي"
     }
@@ -2504,8 +2504,8 @@
     ],
     "end_date": null,
     "is_recurring": true,
-    "activity_type": "درس",
-    "is_course": false,
+    "activity_type": "دورة إلكترونية",
+    "is_course": true,
     "sheikhs": {
       "name": "أ. د. محمد السلمي"
     }
@@ -2631,8 +2631,8 @@
     ],
     "end_date": null,
     "is_recurring": true,
-    "activity_type": "درس",
-    "is_course": false,
+    "activity_type": "دورة إلكترونية",
+    "is_course": true,
     "sheikhs": {
       "name": "د. سمر العتيبي"
     }

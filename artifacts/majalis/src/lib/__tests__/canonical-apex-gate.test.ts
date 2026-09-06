@@ -57,8 +57,13 @@ assert.match(
 );
 assert.doesNotMatch(
   vercel,
-  /"source"\s*:\s*"\/\(\.\*\)"[\s\S]*?"Access-Control-Allow-Origin"/,
-  "vercel: لا CORS على HTML الثابت (/(.*))",
+  /Access-Control-Allow-Origin["']?\s*:\s*["']\*/,
+  "vercel: ممنوع Access-Control-Allow-Origin: *",
+);
+assert.match(
+  vercel,
+  /"source"\s*:\s*"\/\(\.\*\)"[\s\S]*?"Access-Control-Allow-Origin"\s*,\s*"value"\s*:\s*"https:\/\/www\.ssunnah\.com"/,
+  "vercel: CORS على الثابت مقيّد بنطاق الإنتاج فقط (تجاوز إعداد لوحة * )",
 );
 const searchApi = readFileSync(resolve(root, "lib/api-handlers/search.js"), "utf8");
 assert.match(searchApi, /Access-Control-Allow-Origin/, "search API: CORS عند الحاجة");

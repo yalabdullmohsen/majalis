@@ -1,80 +1,16 @@
 {
   "summary": {
-    "generatedAt": "2026-09-01T23:54:42.339Z",
-    "totalLessons": 97,
+    "generatedAt": "2026-09-06T07:13:42.964Z",
+    "totalLessons": 83,
     "duplicateClusters": 0,
-    "coursesWithSessions": 7,
+    "coursesWithSessions": 0,
     "courseCardsInSchedule": 7,
     "incompleteLessons": 2,
     "blockers": 0,
     "warnings": 0
   },
   "duplicateClusters": [],
-  "coursesGrouped": [
-    {
-      "courseId": "rashed-fundamental-course",
-      "title": "الدورة العلمية التأصيلية",
-      "sessionIds": [
-        "kw-rashed-fundamental-course-0",
-        "kw-rashed-fundamental-course-1",
-        "kw-rashed-fundamental-course-2"
-      ]
-    },
-    {
-      "courseId": "ajraa-murtaqa-course-3",
-      "title": "دورة الشيخ الأجراح العلمية",
-      "sessionIds": [
-        "kw-ajraa-murtaqa-course-3-0",
-        "kw-ajraa-murtaqa-course-3-1",
-        "kw-ajraa-murtaqa-course-3-2",
-        "kw-ajraa-murtaqa-course-3-3"
-      ]
-    },
-    {
-      "courseId": "fiqh-ibadaat-course",
-      "title": "دورة الفقه العملي للعبادات",
-      "sessionIds": [
-        "kw-fiqh-ibadaat-course-0",
-        "kw-fiqh-ibadaat-course-1"
-      ]
-    },
-    {
-      "courseId": "mahboula-dosari-umdat-tawhid-2026",
-      "title": "دورة عمدة الأحكام وكتاب التوحيد",
-      "sessionIds": [
-        "kw-mahboula-dosari-umdat-tawhid-2026-0",
-        "kw-mahboula-dosari-umdat-tawhid-2026-1"
-      ]
-    },
-    {
-      "courseId": "ahmadi-zad-muslim-ulum-quran-2026",
-      "title": "الميسر في علوم القرآن — دورة زاد المسلم العلمية الأولى — المجلس الأول",
-      "sessionIds": [
-        "kw-ahmadi-zad-muslim-ulum-quran-2026-0",
-        "kw-ahmadi-zad-muslim-ulum-quran-2026-1"
-      ]
-    },
-    {
-      "courseId": "ahmadi-zad-muslim-usool-athlatha-2026",
-      "title": "ثلاثة الأصول والقواعد الأربع",
-      "sessionIds": [
-        "kw-ahmadi-zad-muslim-usool-athlatha-2026-0",
-        "kw-ahmadi-zad-muslim-usool-athlatha-2026-1",
-        "kw-ahmadi-zad-muslim-usool-athlatha-2026-2"
-      ]
-    },
-    {
-      "courseId": "course-ijazati-taah-2026",
-      "title": "ملتقى إجازتي طاعة",
-      "sessionIds": [
-        "course-ijazati-taah-2026-0",
-        "course-ijazati-taah-2026-1",
-        "course-ijazati-taah-2026-2",
-        "course-ijazati-taah-2026-3",
-        "course-ijazati-taah-2026-4"
-      ]
-    }
-  ],
+  "coursesGrouped": [],
   "entries": [
     {
       "id": "kw-othman-tafsir-nahl-0",
@@ -120,34 +56,6 @@
     },
     {
       "id": "kw-rashed-fundamental-course-0",
-      "title": "الدورة العلمية التأصيلية",
-      "sheikh": "الشيخ: راشد صليهم فهد الصليهم",
-      "date": "الاثنين",
-      "place": "مسجد أبي واقد الليثي",
-      "isDuplicate": false,
-      "isMultiSessionCourse": true,
-      "status": "complete",
-      "suggestedFix": "مجمّع ضمن دورة",
-      "blocksDeploy": false,
-      "severity": "info",
-      "missingFields": []
-    },
-    {
-      "id": "kw-rashed-fundamental-course-1",
-      "title": "الدورة العلمية التأصيلية",
-      "sheikh": "الشيخ: راشد صليهم فهد الصليهم",
-      "date": "الاثنين",
-      "place": "مسجد أبي واقد الليثي",
-      "isDuplicate": false,
-      "isMultiSessionCourse": true,
-      "status": "complete",
-      "suggestedFix": "مجمّع ضمن دورة",
-      "blocksDeploy": false,
-      "severity": "info",
-      "missingFields": []
-    },
-    {
-      "id": "kw-rashed-fundamental-course-2",
       "title": "الدورة العلمية التأصيلية",
       "sheikh": "الشيخ: راشد صليهم فهد الصليهم",
       "date": "الاثنين",
@@ -274,7 +182,7 @@
     },
     {
       "id": "kw-ajraa-murtaqa-course-3-0",
-      "title": "دورة الشيخ الأجراح العلمية — الثالثة — شرح كتاب التوحيد — د.مطلق الجاسر (7/5–7/8)",
+      "title": "دورة الشيخ الأجراح العلمية — الثالثة — شرح كتاب التوحيد — د.مطلق الجاسر (7/5 — 7/8)",
       "sheikh": "الشيخ: مطلق الجاسر",
       "date": "الأحد",
       "place": "مسجد موضى السور",
@@ -287,51 +195,9 @@
       "missingFields": []
     },
     {
-      "id": "kw-ajraa-murtaqa-course-3-1",
-      "title": "دورة الشيخ الأجراح العلمية — الثالثة — شرح تنبيه الفقيه وتفقيه النبيه — الشيخ أسامة الشطي (7/12–7/15)",
-      "sheikh": "الشيخ: أسامة الشطي",
-      "date": "الاثنين",
-      "place": "مسجد موضى السور",
-      "isDuplicate": false,
-      "isMultiSessionCourse": true,
-      "status": "complete",
-      "suggestedFix": "مجمّع ضمن دورة",
-      "blocksDeploy": false,
-      "severity": "info",
-      "missingFields": []
-    },
-    {
-      "id": "kw-ajraa-murtaqa-course-3-2",
-      "title": "دورة الشيخ الأجراح العلمية — الثالثة — شرح فتح الرحيم الملك العلام — د.عبدالمحسن المعيلي (7/19–7/22)",
-      "sheikh": "الشيخ: عبدالمحسن المعيلي",
-      "date": "الثلاثاء",
-      "place": "مسجد موضى السور",
-      "isDuplicate": false,
-      "isMultiSessionCourse": true,
-      "status": "complete",
-      "suggestedFix": "مجمّع ضمن دورة",
-      "blocksDeploy": false,
-      "severity": "info",
-      "missingFields": []
-    },
-    {
-      "id": "kw-ajraa-murtaqa-course-3-3",
-      "title": "دورة الشيخ الأجراح العلمية — الثالثة — شرح متن الأجرومية — الشيخ خالد العتيبي (7/26–7/29)",
-      "sheikh": "الشيخ: خالد العتيبي",
-      "date": "الأربعاء",
-      "place": "مسجد موضى السور",
-      "isDuplicate": false,
-      "isMultiSessionCourse": true,
-      "status": "complete",
-      "suggestedFix": "مجمّع ضمن دورة",
-      "blocksDeploy": false,
-      "severity": "info",
-      "missingFields": []
-    },
-    {
       "id": "kw-murtaqa-madarij-altalab-0",
       "title": "دورة مدارج الطلب — المسار الانتقائي — متاح 24 ساعة",
-      "sheikh": "الشيخ: متاح 24 ساعة",
+      "sheikh": "الشيخ: يُعلن لاحقًا",
       "date": "غير محدد",
       "place": "منصة معهد مرتقى (أونلاين)",
       "isDuplicate": false,
@@ -429,22 +295,8 @@
     {
       "id": "kw-fiqh-ibadaat-course-0",
       "title": "دورة الفقه العملي للعبادات — الدرس الأول — الطهارة",
-      "sheikh": "الشيخ: الطهارة",
+      "sheikh": "الشيخ: يُعلن لاحقًا",
       "date": "الخميس",
-      "place": "مركز الفقه الكويتي",
-      "isDuplicate": false,
-      "isMultiSessionCourse": true,
-      "status": "complete",
-      "suggestedFix": "مجمّع ضمن دورة",
-      "blocksDeploy": false,
-      "severity": "info",
-      "missingFields": []
-    },
-    {
-      "id": "kw-fiqh-ibadaat-course-1",
-      "title": "دورة الفقه العملي للعبادات — الدرس الثاني — الصلاة",
-      "sheikh": "الشيخ: الصلاة",
-      "date": "الجمعة",
       "place": "مركز الفقه الكويتي",
       "isDuplicate": false,
       "isMultiSessionCourse": true,
@@ -597,7 +449,7 @@
     {
       "id": "kw-jahraa-muhimmat-aqeeda-women-2026-0",
       "title": "دورة مهمات في العقيدة — ثلاثة الأصول — القواعد الأربع — نواقض الإسلام",
-      "sheikh": "الشيخ: نواقض الإسلام",
+      "sheikh": "الشيخ: يُعلن لاحقًا",
       "date": "الأربعاء",
       "place": "مسجد الشيخ مبارك الحمد الصباح",
       "isDuplicate": false,
@@ -611,7 +463,7 @@
     {
       "id": "kw-asima-umdat-ahkam-sarra-2026-0",
       "title": "دورة عمدة الأحكام — للإمام عبدالغني المقدسي — عمدة الأحكام — 18 مجلساً",
-      "sheikh": "الشيخ: 18 مجلساً",
+      "sheikh": "الشيخ: يُعلن لاحقًا",
       "date": "من الأحد إلى الخميس يومياً",
       "place": "مسجد محمد عبدالرحمن البحر",
       "isDuplicate": false,
@@ -624,7 +476,7 @@
     },
     {
       "id": "kw-mahboula-dosari-umdat-tawhid-2026-0",
-      "title": "دورة عمدة الأحكام وكتاب التوحيد — المهبولة",
+      "title": "دورة عمدة الأحكام وكتاب التوحيد",
       "sheikh": "الشيخ: فهد بن سعود الدوسري",
       "date": "يومياً على فترتين",
       "place": "مسجد الشيخ خليفة الصباح",
@@ -637,37 +489,9 @@
       "missingFields": []
     },
     {
-      "id": "kw-mahboula-dosari-umdat-tawhid-2026-1",
-      "title": "دورة عمدة الأحكام وكتاب التوحيد — المهبولة",
-      "sheikh": "الشيخ: فهد بن سعود الدوسري",
-      "date": "يومياً عدا الاثنين والخميس",
-      "place": "مسجد الشيخ خليفة الصباح",
-      "isDuplicate": false,
-      "isMultiSessionCourse": true,
-      "status": "complete",
-      "suggestedFix": "مجمّع ضمن دورة",
-      "blocksDeploy": false,
-      "severity": "info",
-      "missingFields": []
-    },
-    {
       "id": "kw-ahmadi-zad-muslim-ulum-quran-2026-0",
-      "title": "الميسر في علوم القرآن — دورة زاد المسلم العلمية الأولى — المجلس الأول — علوم القرآن",
-      "sheikh": "الشيخ: علوم القرآن",
-      "date": "5 و6 و7 يوليو 2026",
-      "place": "مسجد فروة بن عمرو الأنصاري",
-      "isDuplicate": false,
-      "isMultiSessionCourse": true,
-      "status": "complete",
-      "suggestedFix": "مجمّع ضمن دورة",
-      "blocksDeploy": false,
-      "severity": "info",
-      "missingFields": []
-    },
-    {
-      "id": "kw-ahmadi-zad-muslim-ulum-quran-2026-1",
-      "title": "الميسر في علوم القرآن — دورة زاد المسلم العلمية الأولى — المجلس الثاني — علوم القرآن",
-      "sheikh": "الشيخ: علوم القرآن",
+      "title": "الميسر في علوم القرآن",
+      "sheikh": "الشيخ: يُعلن لاحقًا",
       "date": "5 و6 و7 يوليو 2026",
       "place": "مسجد فروة بن عمرو الأنصاري",
       "isDuplicate": false,
@@ -694,37 +518,9 @@
     },
     {
       "id": "kw-ahmadi-zad-muslim-usool-athlatha-2026-0",
-      "title": "ثلاثة الأصول والقواعد الأربع — دورة زاد المسلم العلمية الأولى",
+      "title": "ثلاثة الأصول والقواعد الأربع",
       "sheikh": "الشيخ: محمد عبدالله العتيبي",
       "date": "8 يوليو 2026",
-      "place": "مسجد فروة بن عمرو الأنصاري",
-      "isDuplicate": false,
-      "isMultiSessionCourse": true,
-      "status": "complete",
-      "suggestedFix": "مجمّع ضمن دورة",
-      "blocksDeploy": false,
-      "severity": "info",
-      "missingFields": []
-    },
-    {
-      "id": "kw-ahmadi-zad-muslim-usool-athlatha-2026-1",
-      "title": "ثلاثة الأصول والقواعد الأربع — دورة زاد المسلم العلمية الأولى",
-      "sheikh": "الشيخ: محمد عبدالله العتيبي",
-      "date": "8 يوليو 2026",
-      "place": "مسجد فروة بن عمرو الأنصاري",
-      "isDuplicate": false,
-      "isMultiSessionCourse": true,
-      "status": "complete",
-      "suggestedFix": "مجمّع ضمن دورة",
-      "blocksDeploy": false,
-      "severity": "info",
-      "missingFields": []
-    },
-    {
-      "id": "kw-ahmadi-zad-muslim-usool-athlatha-2026-2",
-      "title": "ثلاثة الأصول والقواعد الأربع — دورة زاد المسلم العلمية الأولى — الأصول الثلاثة — الجلسة الأولى والثانية",
-      "sheikh": "الشيخ: الجلسة الأولى والثانية",
-      "date": "9 يوليو 2026",
       "place": "مسجد فروة بن عمرو الأنصاري",
       "isDuplicate": false,
       "isMultiSessionCourse": true,
@@ -736,7 +532,7 @@
     },
     {
       "id": "kw-zad-aldawee-13-fitna-hadiths-2026-0",
-      "title": "أحاديث في الفتن والحوادث — المجلس الثالث عشر — المجلس الثالث عشر",
+      "title": "أحاديث في الفتن والحوادث — المجلس الثالث عشر",
       "sheikh": "الشيخ: محمد عبدالله العتيبي",
       "date": "الأربعاء",
       "place": "مجلس راشد المري",
@@ -1367,62 +1163,6 @@
       "sheikh": "الشيخ: نصار خالد نصار العجمي",
       "date": "الأحد",
       "place": "مسجد صقر الفرماوي",
-      "isDuplicate": false,
-      "isMultiSessionCourse": true,
-      "status": "complete",
-      "suggestedFix": "مجمّع ضمن دورة",
-      "blocksDeploy": false,
-      "severity": "info",
-      "missingFields": []
-    },
-    {
-      "id": "course-ijazati-taah-2026-1",
-      "title": "ملتقى إجازتي طاعة",
-      "sheikh": "الشيخ: حامد علي المسعد",
-      "date": "الثلاثاء",
-      "place": "مسجد سهل بن سعد",
-      "isDuplicate": false,
-      "isMultiSessionCourse": true,
-      "status": "complete",
-      "suggestedFix": "مجمّع ضمن دورة",
-      "blocksDeploy": false,
-      "severity": "info",
-      "missingFields": []
-    },
-    {
-      "id": "course-ijazati-taah-2026-2",
-      "title": "ملتقى إجازتي طاعة",
-      "sheikh": "الشيخ: فيصل زويد",
-      "date": "الأحد",
-      "place": "مسجد جبير بن مطعم",
-      "isDuplicate": false,
-      "isMultiSessionCourse": true,
-      "status": "complete",
-      "suggestedFix": "مجمّع ضمن دورة",
-      "blocksDeploy": false,
-      "severity": "info",
-      "missingFields": []
-    },
-    {
-      "id": "course-ijazati-taah-2026-3",
-      "title": "ملتقى إجازتي طاعة",
-      "sheikh": "الشيخ: سعد هزاع العتيبي",
-      "date": "الاثنين",
-      "place": "مسجد محمد الحبيب",
-      "isDuplicate": false,
-      "isMultiSessionCourse": true,
-      "status": "complete",
-      "suggestedFix": "مجمّع ضمن دورة",
-      "blocksDeploy": false,
-      "severity": "info",
-      "missingFields": []
-    },
-    {
-      "id": "course-ijazati-taah-2026-4",
-      "title": "ملتقى إجازتي طاعة",
-      "sheikh": "الشيخ: بندر محمد الميموني",
-      "date": "الثلاثاء",
-      "place": "مسجد مجاهد بن جبر",
       "isDuplicate": false,
       "isMultiSessionCourse": true,
       "status": "complete",
