@@ -193,7 +193,7 @@ export const FIQH_DOOR_META: Record<FiqhCanonicalDoor, FiqhDoorMeta> = {
     href: "/fiqh/books/atima",
     bookHref: "/fiqh/books/atima",
     sortOrder: 65,
-    group: "ibadat",
+    group: "muamalat",
   },
   atima: {
     id: "atima",
@@ -202,7 +202,7 @@ export const FIQH_DOOR_META: Record<FiqhCanonicalDoor, FiqhDoorMeta> = {
     href: "/fiqh/books/atima",
     bookHref: "/fiqh/books/atima",
     sortOrder: 70,
-    group: "ibadat",
+    group: "muamalat",
   },
   libas: {
     id: "libas",

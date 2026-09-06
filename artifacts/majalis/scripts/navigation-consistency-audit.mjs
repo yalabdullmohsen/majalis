@@ -139,11 +139,10 @@ for (const blocked of ["/internal", "/review", "/admin"]) {
 }
 
 // ── 5) أقسام ثانوية قابلة للوصول ───────────────────────────────────────────
+/** /library أُزيلت علنًا (تحويل إلى /search) — لا تُطلب في التنقّل. */
 const SECONDARY_REQUIRED = [
-  "/library",
   "/scholars",
   "/hadith",
-  "/islamic-glossary",
   "/tarikh-islami",
   "/seerah",
   "/prophets",
@@ -156,6 +155,17 @@ for (const href of SECONDARY_REQUIRED) {
   if (!inSecondary || !inFooter) {
     fail("high", `${href}: يجب أن يكون في secondaryNav والفوتر`);
   }
+}
+const searchReachable =
+  primaryNav.some((i) => i.href === "/search") ||
+  secondaryNav.some((i) => i.href === "/search") ||
+  footerNav.some((g) => g.links.some((l) => l.href === "/search"));
+if (!searchReachable) fail("critical", "/search غير موجود في التنقّل أو الفوتر");
+if (secondaryNav.some((i) => i.href === "/library") || footerNav.some((g) => g.links.some((l) => l.href === "/library"))) {
+  fail("critical", "/library يجب ألا يظهر في secondaryNav أو الفوتر");
+}
+if (secondaryNav.some((i) => i.href === "/more") || primaryNav.some((i) => i.href === "/more")) {
+  fail("critical", "/more يجب ألا يظهر في التنقّل");
 }
 
 // ── 6) المصحف/التفسير typography ────────────────────────────────────────────

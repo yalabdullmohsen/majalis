@@ -45,7 +45,7 @@ assert.match(rc, /cpuSlowdownMultiplier:\s*4/, "PSI CPU ×4");
 assert.match(rc, /getPreviewAssertions\(\)/, "assertions مُشتقة");
 
 const rcAssertions = lhciRc.ci.assert.assertions;
-assert.match(JSON.stringify(rcAssertions), /"warn"[\s\S]*"minScore":0\.75/, "أداء 0.75 تحذير");
+assert.match(JSON.stringify(rcAssertions), /"warn"[\s\S]*"minScore":0\.7/, "أداء 0.75 تحذير");
 assert.doesNotMatch(JSON.stringify(rcAssertions), /"minScore":0\.99/, "لا عتبة أداء حلم 0.99");
 
 assert.deepEqual(

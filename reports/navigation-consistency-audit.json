@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T22:56:33.852Z",
+  "generatedAt": "2026-09-06T07:13:43.653Z",
   "critical": 0,
   "high": 0,
   "medium": 0,
@@ -42,7 +42,7 @@
       "label": "البحث"
     }
   ],
-  "secondaryNavCount": 13,
+  "secondaryNavCount": 11,
   "footerGroups": [
     "الأقسام العلمية",
     "خدمات القرآن",
@@ -262,7 +262,6 @@
     "/mushaf": "المصحف",
     "/prayer-times": "الصلاة",
     "/hadith": "الحديث وعلومه",
-    "/library": "المكتبة",
     "/fiqh": "الفقه",
     "/adhkar": "الأذكار",
     "/lessons": "الدروس",

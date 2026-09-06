@@ -58,8 +58,9 @@ const uniqueLabels = new Set(doorLabels);
 if (uniqueLabels.size !== doorLabels.length) {
   fail("critical", "أبواب فقه بأسماء مكررة في FIQH_DOOR_META");
 }
-if (FIQH_DOOR_ORDER.length !== 8) {
-  fail("high", `عدد الأبواب الثابتة ${FIQH_DOOR_ORDER.length} بدل 8`);
+// الأبواب التفصيلية قد تزيد عن أبواب التجميع القديمة — لا نفرض 8 كحد صلب.
+if (FIQH_DOOR_ORDER.length < 8) {
+  fail("high", `عدد أبواب التجميع ${FIQH_DOOR_ORDER.length} أقل من 8`);
 }
 for (const door of doors) {
   if (!door.label?.trim()) fail("critical", `باب بلا اسم: ${door.id}`);
@@ -81,26 +82,29 @@ for (const hit of allHits) {
   }
 }
 
-// ── 4) مكوّنات الواجهة والشارات ─────────────────────────────────────────────
-const requiredComponents = [
-  "src/components/fiqh/FiqhCategoryCard.tsx",
-  "src/components/fiqh/FiqhFilters.tsx",
-  "src/components/fiqh/FiqhIssueCard.tsx",
-  "src/components/fiqh/FiqhSourceLine.tsx",
-  "src/components/fiqh/FiqhRelatedIssues.tsx",
-];
-for (const file of requiredComponents) {
-  if (!existsSync(resolve(root, file))) {
-    fail("critical", `مكوّن مفقود: ${file}`);
-  }
+// ── 4) ثبات البيانات والترتيب (بدون فرض مكوّنات UI قديمة) ────────────────
+const { getAllFiqhBooks, fiqhBookCounts } = await importSrc("src/lib/fiqh-books.ts");
+const { FIQH_HUB_STATS } = await importSrc("src/lib/fiqh-hub-stats.ts");
+const books = getAllFiqhBooks();
+const expectedPrefix = ["taharah","salah","zakat","sawm","itikaf","hajj","janaza","buyu"];
+const orderedIds = [...books].sort((a,b)=>(a.order??0)-(b.order??0)).map(b=>b.id);
+if (orderedIds.length !== 17) fail("critical", `عدد كتب الفقه ${orderedIds.length} بدل 17`);
+if (JSON.stringify(orderedIds.slice(0,8)) !== JSON.stringify(expectedPrefix)) {
+  fail("critical", `ترتيب أوائل الكتب تغيّر: ${orderedIds.slice(0,8).join(",")}`);
 }
-
+let chapters=0, lessons=0;
+for (const b of books) { const c = fiqhBookCounts(b); chapters += c.chapters; lessons += c.lessons; }
+if (FIQH_HUB_STATS.books !== books.length || FIQH_HUB_STATS.chapters !== chapters || FIQH_HUB_STATS.lessons !== lessons) {
+  fail("critical", "إحصاءات الفقه لا تطابق البيانات الحية");
+}
+const atima = books.find(b=>b.id==="atima");
+if (atima && atima.category === "ibadat") fail("high", "كتاب الأطعمة ما زال تحت عبادات دون توثيق");
+const jihad = books.find(b=>b.id==="jihad");
+if (jihad && jihad.category === "jinayat") fail("high", "كتاب الجهاد ما زال تحت الجنايات دون توثيق");
 const fiqhView = readText("src/pages/fiqh/ui/FiqhView.tsx");
 const fiqhLesson = readText("src/pages/fiqh/ui/FiqhLessonView.tsx");
-if (!fiqhView.includes("FiqhCategoryCard")) fail("high", "FiqhView لا يستخدم FiqhCategoryCard");
-if (!fiqhView.includes("FiqhFilters")) fail("high", "FiqhView لا يستخدم FiqhFilters");
-if (!fiqhLesson.includes("FiqhSourceLine")) fail("high", "FiqhLessonView لا يستخدم FiqhSourceLine");
-if (!fiqhLesson.includes("fiqh-status-badge")) fail("high", "صفحة المسألة بلا شارة حالة");
+hasMajlisilmLeak(fiqhView, "FiqhView");
+hasMajlisilmLeak(fiqhLesson, "FiqhLessonView");
 
 // ── 5) sitemap ────────────────────────────────────────────────────────────────
 const sitemapPath = resolve(root, "public/sitemap.xml");

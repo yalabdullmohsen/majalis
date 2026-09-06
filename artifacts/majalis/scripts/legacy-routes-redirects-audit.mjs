@@ -39,8 +39,8 @@ const FORBIDDEN_CANONICAL = [
   /127\.0\.0\.1/i,
 ];
 
+/** أقسام يجب أن تبقى قابلة للاكتشاف — بدون /library (محوّلة نهائيًا إلى /search). */
 const IMPORTANT_SECTIONS = [
-  { path: "/library", label: "المكتبة" },
   { path: "/scholars", label: "العلماء" },
   { path: "/hadith", label: "الحديث" },
   { path: "/competitions", label: "المسابقات" },
@@ -50,6 +50,7 @@ const IMPORTANT_SECTIONS = [
   { path: "/nations", label: "الأمم السابقة" },
   { path: "/quran/people", label: "الذين ذكروا في القرآن" },
   { path: "/sources", label: "المصادر" },
+  { path: "/search", label: "البحث" },
 ];
 
 const MUSHAF_TYPO_BASELINE = {
@@ -129,11 +130,12 @@ if (moreRewrite) {
 
 const seoRoutes = readJson("src/lib/seo-routes.json");
 const moreSeo = seoRoutes.routes.find((r) => r.path === "/more");
-if (!moreSeo) {
-  fail("high", "seo-routes: مسار /more مفقود (للتحويل/noindex)");
-} else {
-  if (moreSeo.sitemap !== false) fail("critical", "seo-routes: /more يجب sitemap=false");
-  if (!(moreSeo.robots || "").includes("noindex")) fail("high", "seo-routes: /more يجب noindex");
+const librarySeo = seoRoutes.routes.find((r) => r.path === "/library" || String(r.path||"").startsWith("/library/"));
+if (moreSeo) fail("critical", "seo-routes: /more يجب ألا يُدرج (تحويل صامت فقط)");
+if (librarySeo) fail("critical", "seo-routes: /library يجب ألا يُدرج (تحويل صامت إلى /search)");
+for (const r of seoRoutes.routes) {
+  const blob = JSON.stringify(r);
+  if (blob.includes("المكتبة العلمية")) fail("critical", `seo-routes: بقايا المكتبة العلمية في ${r.path}`);
 }
 
 if (existsSync(resolve(root, "seo-prerender/more/index.html"))) {
@@ -242,7 +244,7 @@ for (const p of ["/admin", "/internal", "/review", "/dashboard"]) {
 
 // ── 6) أقسام مهمة — وصول من الرئيسية/التذييل/البحث ─────────────────────────
 const homeCatalog = readText("src/lib/home-feature-catalog.ts");
-const footer = readText("src/lib/site-footer-nav.ts");
+const footer = readText("src/lib/site-footer-nav.ts") + "\n" + readText("src/config/navigation.ts");
 const sectionsRegistry = readText("src/config/sections.registry.ts");
 let searchDocs = "";
 const searchFile = resolve(root, "public/data/search/index.json");

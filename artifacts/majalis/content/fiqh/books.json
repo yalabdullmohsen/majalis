@@ -14408,7 +14408,7 @@
       "id": "atima",
       "title": "كتاب الأطعمة والذبائح",
       "description": "الأطعمة والذبائح والصيد والحلال والحرام.",
-      "category": "ibadat",
+      "category": "muamalat",
       "order": 12,
       "aliases": [
         "كتاب الذكاة",
@@ -18355,7 +18355,7 @@
       "id": "jihad",
       "title": "كتاب الجهاد والسير",
       "description": "الجهاد والسير والغنائم وأحكامها.",
-      "category": "jinayat",
+      "category": "ibadat",
       "order": 16,
       "aliases": [],
       "chapters": [

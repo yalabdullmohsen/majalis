@@ -1,70 +1,266 @@
 {
-  "generatedAt": "2026-09-01T21:10:10.645Z",
+  "generatedAt": "2026-09-06T07:13:45.607Z",
   "summary": {
     "critical": 0,
     "high": 0,
     "medium": 0,
     "info": 0,
-    "doors": 8,
-    "lessons": 156,
+    "doors": 36,
+    "lessons": 462,
     "searchTermsChecked": 7
   },
   "doors": [
     {
       "id": "tahara",
       "label": "الطهارة",
-      "issueCount": 12,
+      "issueCount": 39,
       "status": "complete",
       "href": "/tahara"
     },
     {
       "id": "salah",
       "label": "الصلاة",
-      "issueCount": 24,
+      "issueCount": 57,
       "status": "complete",
       "href": "/salah-guide"
     },
     {
       "id": "zakat",
       "label": "الزكاة",
-      "issueCount": 7,
+      "issueCount": 33,
       "status": "complete",
       "href": "/zakat"
     },
     {
       "id": "sawm",
       "label": "الصيام",
-      "issueCount": 9,
+      "issueCount": 12,
       "status": "complete",
       "href": "/sawm"
     },
     {
+      "id": "itikaf",
+      "label": "الاعتكاف",
+      "issueCount": 4,
+      "status": "complete",
+      "href": "/fiqh/books/itikaf"
+    },
+    {
       "id": "hajj",
-      "label": "الحج",
-      "issueCount": 11,
+      "label": "الحج والعمرة",
+      "issueCount": 26,
       "status": "complete",
       "href": "/hajj"
     },
     {
+      "id": "udhiya",
+      "label": "الأضحية والعقيقة",
+      "issueCount": 0,
+      "status": "needs_completion",
+      "href": "/fiqh/books/hajj"
+    },
+    {
+      "id": "ayman",
+      "label": "الأيمان والنذور",
+      "issueCount": 11,
+      "status": "complete",
+      "href": "/fiqh/books/ayman"
+    },
+    {
+      "id": "sayd",
+      "label": "الذكاة والصيد",
+      "issueCount": 0,
+      "status": "needs_completion",
+      "href": "/fiqh/books/atima"
+    },
+    {
+      "id": "atima",
+      "label": "الأطعمة والأشربة",
+      "issueCount": 13,
+      "status": "complete",
+      "href": "/fiqh/books/atima"
+    },
+    {
+      "id": "libas",
+      "label": "اللباس والزينة",
+      "issueCount": 0,
+      "status": "needs_completion",
+      "href": "/fiqh/books/nikah"
+    },
+    {
+      "id": "janaza",
+      "label": "الجنائز",
+      "issueCount": 14,
+      "status": "complete",
+      "href": "/janaza"
+    },
+    {
       "id": "muamalat",
       "label": "المعاملات",
-      "issueCount": 43,
+      "issueCount": 8,
       "status": "complete",
       "href": "/fiqh/books/buyu"
     },
     {
+      "id": "buyu",
+      "label": "البيوع",
+      "issueCount": 41,
+      "status": "complete",
+      "href": "/fiqh/books/buyu"
+    },
+    {
+      "id": "riba",
+      "label": "الربا والصرف",
+      "issueCount": 0,
+      "status": "needs_completion",
+      "href": "/fiqh/books/buyu"
+    },
+    {
+      "id": "ijara",
+      "label": "الإجارة",
+      "issueCount": 0,
+      "status": "needs_completion",
+      "href": "/fiqh/books/sharika"
+    },
+    {
+      "id": "sharika",
+      "label": "الشركة والمضاربة",
+      "issueCount": 29,
+      "status": "complete",
+      "href": "/fiqh/books/sharika"
+    },
+    {
+      "id": "qard",
+      "label": "القرض والدين",
+      "issueCount": 0,
+      "status": "needs_completion",
+      "href": "/fiqh/books/buyu"
+    },
+    {
+      "id": "waqf_hiba",
+      "label": "الوقف والهبة والوصايا",
+      "issueCount": 0,
+      "status": "needs_completion",
+      "href": "/fiqh/books/sharika"
+    },
+    {
       "id": "usrah",
       "label": "الأسرة",
-      "issueCount": 24,
+      "issueCount": 36,
       "status": "complete",
       "href": "/nikah"
     },
     {
+      "id": "nikah",
+      "label": "النكاح",
+      "issueCount": 58,
+      "status": "complete",
+      "href": "/nikah"
+    },
+    {
+      "id": "talaq",
+      "label": "الطلاق",
+      "issueCount": 0,
+      "status": "needs_completion",
+      "href": "/fiqh/books/nikah"
+    },
+    {
+      "id": "iddah_rida",
+      "label": "العِدد والرضاع",
+      "issueCount": 0,
+      "status": "needs_completion",
+      "href": "/fiqh/books/nikah"
+    },
+    {
+      "id": "nafaqat",
+      "label": "النفقات والحضانة",
+      "issueCount": 0,
+      "status": "needs_completion",
+      "href": "/fiqh/books/nikah"
+    },
+    {
       "id": "jinayat",
       "label": "الجنايات والحدود",
-      "issueCount": 26,
+      "issueCount": 42,
       "status": "complete",
-      "href": "/fiqh/books/hudud"
+      "href": "/fiqh/books/jinayat"
+    },
+    {
+      "id": "hudud",
+      "label": "الحدود",
+      "issueCount": 0,
+      "status": "needs_completion",
+      "href": "/fiqh/books/jinayat"
+    },
+    {
+      "id": "qada",
+      "label": "القضاء",
+      "issueCount": 28,
+      "status": "complete",
+      "href": "/fiqh/books/qada"
+    },
+    {
+      "id": "shahadat",
+      "label": "الشهادات",
+      "issueCount": 0,
+      "status": "needs_completion",
+      "href": "/fiqh/books/qada"
+    },
+    {
+      "id": "nawazil",
+      "label": "النوازل المعاصرة",
+      "issueCount": 16,
+      "status": "complete",
+      "href": "/fiqh-council/nawazil"
+    },
+    {
+      "id": "qawaid",
+      "label": "القواعد الفقهية",
+      "issueCount": 24,
+      "status": "complete",
+      "href": "/fiqh/usul"
+    },
+    {
+      "id": "usul",
+      "label": "أصول الفقه",
+      "issueCount": 9,
+      "status": "complete",
+      "href": "/fiqh/usul"
+    },
+    {
+      "id": "jihad",
+      "label": "الجهاد والسير",
+      "issueCount": 11,
+      "status": "complete",
+      "href": "/fiqh/books/jihad"
+    },
+    {
+      "id": "faraid",
+      "label": "الفرائض والمواريث",
+      "issueCount": 0,
+      "status": "needs_completion",
+      "href": "/fiqh/books/wasaya-faraid"
+    },
+    {
+      "id": "diyat",
+      "label": "الديات",
+      "issueCount": 0,
+      "status": "needs_completion",
+      "href": "/fiqh/books/jinayat"
+    },
+    {
+      "id": "iqrar",
+      "label": "الإقرار",
+      "issueCount": 0,
+      "status": "needs_completion",
+      "href": "/fiqh/books/qada"
+    },
+    {
+      "id": "other",
+      "label": "أبواب أخرى",
+      "issueCount": 0,
+      "status": "needs_completion",
+      "href": "/fiqh"
     }
   ],
   "findings": {
