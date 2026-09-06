@@ -91,7 +91,7 @@ function resolveOgImage(path, routeImage) {
   }
   return withAssetVersion(DEFAULT_IMAGE.replace(/\?v=[^&]+/, ""));
 }
-const THEME_COLOR = SITE.themeColor || "#1F7A5A";
+const THEME_COLOR = SITE.themeColor || "#0F5C45";
 const THEME_COLOR_DARK = SITE.themeColorDark || "#4FB48B";
 const OG_W = SITE.ogImageWidth || 1200;
 const OG_H = SITE.ogImageHeight || 630;
