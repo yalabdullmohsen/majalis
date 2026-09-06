@@ -90,7 +90,11 @@ function loadNonCriticalCss() {
   void import("./styles/design-system.css").then(() => {
     void import("./styles/brand-v4-components.css");
     // بعد design-system حتمًا حتى لا يفوز blur(20px) على final-release
-    void import("./styles/final-release.css");
+    void import("./styles/final-release.css").then(() => {
+      // إعادة طبقة التوحيد بعد final-release لتفوز قواعد الأزرار/البانر
+      // مع الإبقاء على الاستيراد المبكر للرموز الصلبة عند أول طلاء.
+      void import("./styles/visual-identity-unify.css");
+    });
   });
   void import("./styles/components/instant-interaction.css");
   void import("./styles/components/compact-sources.css");

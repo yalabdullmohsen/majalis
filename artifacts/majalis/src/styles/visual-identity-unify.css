@@ -6,37 +6,45 @@
  */
 
 :root {
-  /* ── لوحة موحّدة (نهاري) ─────────────────────────────────────────── */
-  --color-bg: #f7f3eb;
-  --color-surface: #fffcf7;
-  --color-surface-soft: #f3eee4;
-  --color-primary: #0f5c45;
-  --color-primary-dark: #0a3d2e;
-  --color-primary-soft: #e2efe8;
-  --color-accent: #b08a3e;
-  --color-border: #d9d2c6;
-  --color-text: #16241e;
-  --color-muted: #5e6e67;
-  --color-selected: #e8f3ee;
-  --shadow-soft: 0 8px 22px -14px rgba(10, 61, 46, 0.18);
-
-  /* مواءمة المصدر --mj-* */
-  --surface-app: var(--color-bg);
-  --mj-bg: var(--color-bg);
-  --mj-surface: var(--color-surface);
-  --mj-surface-2: var(--color-surface-soft);
+  /*
+   * لوحة موحّدة (نهاري).
+   * مهم: قيم --mj-* يجب أن تكون hex صلبة — لا var(--color-*)،
+   * لأن final-release.css (بعد هذه الطبقة) يعيد:
+   *   --color-primary: var(--mj-brand)
+   * فربط --mj-brand ← --color-primary يخلق دورة تُبطل اللون
+   * (خلفية شفافة + نص أبيض فوق العاجي ≈ 1.1:1).
+   */
+  --mj-bg: #f7f3eb;
+  --mj-surface: #fffcf7;
+  --mj-surface-2: #f3eee4;
   --mj-surface-3: #ebe4d8;
-  --mj-hairline: var(--color-border);
-  --mj-ink: var(--color-text);
+  --mj-hairline: #d9d2c6;
+  --mj-ink: #16241e;
   --mj-ink-2: #4a5a53;
-  --mj-muted: var(--color-muted);
-  --mj-brand: var(--color-primary);
-  --mj-brand-soft: var(--color-primary-soft);
-  --mj-brand-deep: var(--color-primary-dark);
-  --mj-accent: var(--color-accent);
+  --mj-muted: #5e6e67;
+  --mj-brand: #0f5c45;
+  --mj-brand-soft: #e2efe8;
+  --mj-brand-deep: #0a3d2e;
+  --mj-accent: #b08a3e;
   --mj-accent-soft: #f5eedf;
   --mj-on-brand: #ffffff;
-  --mj-sh: var(--shadow-soft);
+  --mj-sh: 0 8px 22px -14px rgba(10, 61, 46, 0.18);
+
+  --color-bg: var(--mj-bg);
+  --color-surface: var(--mj-surface);
+  --color-surface-soft: var(--mj-surface-2);
+  --color-primary: var(--mj-brand);
+  --color-primary-dark: var(--mj-brand-deep);
+  --color-primary-soft: var(--mj-brand-soft);
+  --color-primary-contrast: var(--mj-on-brand);
+  --color-primary-foreground: var(--mj-on-brand);
+  --color-accent: var(--mj-accent);
+  --color-border: var(--mj-hairline);
+  --color-text: var(--mj-ink);
+  --color-muted: var(--mj-muted);
+  --color-selected: #e8f3ee;
+  --shadow-soft: var(--mj-sh);
+  --surface-app: var(--mj-bg);
 
   --radius-card: 18px;
   --radius-tile: 18px;
@@ -46,35 +54,38 @@
 
 html[data-theme="dark"],
 html.dark {
-  --color-bg: #121816;
-  --color-surface: #1b2421;
-  --color-surface-soft: #222c28;
-  --color-primary: #4fb48b;
-  --color-primary-dark: #2f7a5c;
-  --color-primary-soft: rgba(79, 180, 139, 0.16);
-  --color-accent: #d9b871;
-  --color-border: #3a4641;
-  --color-text: #f3f7f5;
-  --color-muted: #a8b6af;
-  --color-selected: rgba(79, 180, 139, 0.18);
-  --shadow-soft: 0 10px 26px -16px rgba(0, 0, 0, 0.55);
-
-  --surface-app: var(--color-bg);
-  --mj-bg: var(--color-bg);
-  --mj-surface: var(--color-surface);
-  --mj-surface-2: var(--color-surface-soft);
+  --mj-bg: #121816;
+  --mj-surface: #1b2421;
+  --mj-surface-2: #222c28;
   --mj-surface-3: #27312d;
-  --mj-hairline: var(--color-border);
-  --mj-ink: var(--color-text);
+  --mj-hairline: #3a4641;
+  --mj-ink: #f3f7f5;
   --mj-ink-2: #c5d0cb;
-  --mj-muted: var(--color-muted);
-  --mj-brand: var(--color-primary);
-  --mj-brand-soft: var(--color-primary-soft);
+  --mj-muted: #a8b6af;
+  --mj-brand: #4fb48b;
+  --mj-brand-soft: rgba(79, 180, 139, 0.16);
   --mj-brand-deep: #1e4d3c;
-  --mj-accent: var(--color-accent);
+  --mj-accent: #d9b871;
   --mj-accent-soft: rgba(217, 184, 113, 0.16);
-  --mj-on-brand: #0b1511;
-  --mj-sh: var(--shadow-soft);
+  /* على أخضر فاتح ليلي: حبر داكن واضح (AA) */
+  --mj-on-brand: #06231a;
+  --mj-sh: 0 10px 26px -16px rgba(0, 0, 0, 0.55);
+
+  --color-bg: var(--mj-bg);
+  --color-surface: var(--mj-surface);
+  --color-surface-soft: var(--mj-surface-2);
+  --color-primary: var(--mj-brand);
+  --color-primary-dark: var(--mj-brand-deep);
+  --color-primary-soft: var(--mj-brand-soft);
+  --color-primary-contrast: var(--mj-on-brand);
+  --color-primary-foreground: var(--mj-on-brand);
+  --color-accent: var(--mj-accent);
+  --color-border: var(--mj-hairline);
+  --color-text: var(--mj-ink);
+  --color-muted: var(--mj-muted);
+  --color-selected: rgba(79, 180, 139, 0.18);
+  --shadow-soft: var(--mj-sh);
+  --surface-app: var(--mj-bg);
 }
 
 /* ── أسطح عامة ─────────────────────────────────────────────────────── */
@@ -99,15 +110,36 @@ body,
   color: var(--color-text);
 }
 
-/* أزرار موحّدة */
+/* أزرار موحّدة — يشمل CTA الرئيسية (.m2030-btn--primary) و.mj-btn الأساسي */
 .btn-primary,
 .ds-btn--primary,
+.mj-btn,
 .mj-btn--primary,
-button.primary {
+.m2030-btn--primary,
+a.mj-btn,
+a.mj-btn--primary,
+button.mj-btn,
+button.mj-btn--primary,
+button.primary,
+.page-hero .mj-btn--primary,
+.page-hero .m2030-btn--primary,
+.page-hero-mj__actions .m2030-btn--primary {
   background: var(--color-primary) !important;
+  background-color: var(--color-primary) !important;
   color: var(--mj-on-brand, #fff) !important;
   border: 1px solid var(--color-primary-dark) !important;
   border-radius: var(--radius-button) !important;
+  box-shadow: none !important;
+}
+
+.mj-btn--ghost,
+.m2030-btn--ghost,
+a.mj-btn--ghost,
+button.mj-btn--ghost {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
   box-shadow: none !important;
 }
 
@@ -120,6 +152,23 @@ button.secondary {
   border: 1px solid var(--color-border) !important;
   border-radius: var(--radius-button) !important;
   box-shadow: none !important;
+}
+
+/* بانر اختبار الأقسام: نص on-brand فوق خلفية العلامة */
+.sq-header {
+  background: var(--color-primary) !important;
+  background-color: var(--color-primary) !important;
+  color: var(--mj-on-brand, #fff) !important;
+  border-color: var(--color-primary-dark) !important;
+}
+
+.sq-header,
+.sq-header .sq-title,
+.sq-header .sq-kicker,
+.sq-header .sq-meta,
+.sq-header .sq-toggle,
+.sq-header svg {
+  color: var(--mj-on-brand, #fff) !important;
 }
 
 /* فلاتر/شيبس — ليست دوائر ضخمة ولا أخضر صلب قاسٍ */
@@ -208,6 +257,13 @@ html.dark .fiqh-hub-strip__tab--active {
   border: 1px solid var(--color-border) !important;
   color: var(--color-text) !important;
   border-radius: 12px !important;
+}
+
+.login-field input::placeholder,
+.login-page input::placeholder,
+.login-page .login-input::placeholder {
+  color: var(--mj-ink-2, #4a5a53) !important;
+  opacity: 1 !important;
 }
 
 /* ── قائمة جانبية ──────────────────────────────────────────────────── */
@@ -330,6 +386,32 @@ html.dark .sidebar-item.active {
   padding-block: 1.1rem !important;
 }
 
+/*
+ * زر الرجوع على الهيرو المتدرج يستخدم .mj-btn (أول مطابقة لبوابة التباين).
+ * خلفية شفافة/color() + تدرّج الأب → NO_COLOR. ثبّت خلفية صلبة + نص عاجي.
+ */
+.page-hero-mj--bleed .page-hero-mj__back,
+.page-hero-mj--bleed .mj-btn.mj-btn--ghost.app-back-btn,
+.page-hero-mj--bleed .mj-btn.mj-btn--ghost.app-back-btn--hero,
+.mss-hero-surface .page-hero-mj__back,
+.fqh-hub-hero .page-hero-mj__back,
+.fiqh-lux-book-hero .page-hero-mj__back {
+  background: #0a3d2e !important;
+  background-color: #0a3d2e !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border: 1px solid color-mix(in srgb, #ffffff 32%, transparent) !important;
+  box-shadow: none !important;
+}
+
+.page-hero-mj--bleed .page-hero-mj__back *,
+.page-hero-mj--bleed .mj-btn.mj-btn--ghost.app-back-btn *,
+.mss-hero-surface .page-hero-mj__back *,
+.fqh-hub-hero .page-hero-mj__back *,
+.fiqh-lux-book-hero .page-hero-mj__back * {
+  color: inherit !important;
+}
+
 .fqh-hub-hero {
   border-radius: 0 0 var(--radius-sheet) var(--radius-sheet);
   margin-bottom: 0.85rem;
@@ -408,5 +490,47 @@ html.dark .sidebar-item.active {
 .quran-hub .muted,
 .lessons-page .muted,
 .section-hub__meta {
-  color: var(--color-muted) !important;
+  /* ink-2 أوضح من muted على surface-soft (AA) */
+  color: var(--mj-ink-2, var(--color-muted)) !important;
+}
+
+/* شريط علوي / بحث — نص واضح فوق سطح فاتح */
+.header-ticker,
+.header-ticker__track,
+.app-header .global-search,
+.global-search input,
+.search-input,
+input[type="search"] {
+  color: var(--color-text) !important;
+}
+
+.global-search input::placeholder,
+.search-input::placeholder,
+input[type="search"]::placeholder {
+  color: var(--mj-ink-2, #4a5a53) !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .global-search input::placeholder,
+html.dark .global-search input::placeholder,
+html[data-theme="dark"] .search-input::placeholder,
+html.dark .search-input::placeholder,
+html[data-theme="dark"] input[type="search"]::placeholder,
+html.dark input[type="search"]::placeholder,
+html[data-theme="dark"] .login-field input::placeholder,
+html.dark .login-field input::placeholder {
+  color: var(--mj-ink-2, #c5d0cb) !important;
+}
+
+/* تبويب سفلي نشط — علامة عميقة واضحة */
+.bottom-nav__tab.is-active,
+.bottom-nav--v2 .bottom-nav__tab.is-active {
+  color: var(--color-primary-dark, var(--mj-brand-deep)) !important;
+}
+
+html[data-theme="dark"] .bottom-nav__tab.is-active,
+html.dark .bottom-nav__tab.is-active,
+html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active,
+html.dark .bottom-nav--v2 .bottom-nav__tab.is-active {
+  color: var(--mj-brand, var(--color-primary)) !important;
 }
