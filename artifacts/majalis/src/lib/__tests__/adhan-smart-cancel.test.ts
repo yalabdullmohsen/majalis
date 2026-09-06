@@ -1,5 +1,5 @@
 /**
- * إلغاء ذكي لسلسلة الأذان — حدود واستئناف.
+ * إلغاء ذكي لتنبيه الأذان القصير — بلا سلاسل.
  * تشغيل: node --import tsx src/lib/__tests__/adhan-smart-cancel.test.ts
  */
 import assert from "node:assert/strict";
@@ -17,7 +17,7 @@ import {
   cancelAdhanIosSegmentChain,
 } from "../adhan-ios-segments";
 
-assert.equal(adhanSmartCancelMaxSegments(), 4);
+assert.equal(adhanSmartCancelMaxSegments(), 1);
 
 clearAdhanResumeContext();
 rememberAdhanResumeContext({
@@ -39,11 +39,11 @@ const plan = buildAdhanIosSegmentPlan({
   startAtMs: start,
   durationsSec: [28, 28, 28, 28],
 });
-assert.equal(plan.length, 4);
+assert.equal(plan.length, 1);
 await scheduleAdhanIosSegmentChain(plan);
 
 const cancelled = await cancelAdhanNotificationChain({ resumeInternal: false });
-assert.equal(cancelled.cancelledIds.length, 4);
+assert.equal(cancelled.cancelledIds.length, 1);
 assert.equal(cancelled.resumed, false);
 
 // بعد الإلغاء لا تبقى سلسلة
@@ -59,7 +59,7 @@ rememberAdhanResumeContext({
 const handled = await onAdhanSegmentNotificationInteraction({
   adhanSegment: true,
   prayerKey: "isha",
-  segmentIndex: 1,
+  segmentIndex: 0,
 });
 assert.equal(handled, true);
 assert.equal(getAdhanResumeContext(), null, "يُمسح سياق الاستئناف بعد التفاعل");
