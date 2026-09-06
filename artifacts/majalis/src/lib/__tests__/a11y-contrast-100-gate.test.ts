@@ -16,7 +16,7 @@ const rootBlock = aliases.match(/:root \{[\s\S]*?\n\}/);
 assert.ok(rootBlock, "كتلة :root في theme-aliases");
 assert.match(rootBlock[0], /--text-brand:\s*var\(--brand-on-white\)/, "نص العلامة نهاري = brand-on-white");
 assert.match(rootBlock[0], /--msk-gold:\s*var\(--brand-on-white\)/, "روابط الرئيسية على brand-soft ≥4.5");
-assert.match(theme, /--brand-on-white\|#146C4E\|#E4F0EA\|4\.5/, "زوج brand-on-white على chip-bg في CONTRAST_PAIRS");
+assert.match(theme, /--brand-on-white\|#0C4F3A\|#E2EFE8\|4\.5/, "زوج brand-on-white على chip-bg في CONTRAST_PAIRS");
 assert.match(
   statusCss,
   /\.lesson-unified-card__status \{[\s\S]*?color:\s*var\(--chip-fg/,

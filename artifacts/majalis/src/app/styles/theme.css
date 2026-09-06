@@ -5,40 +5,42 @@
 
 @theme {
   /* سطح التطبيق الواحد — الأسطح المتلاصقة ترجع إليه لا إلى هكس مستقل */
-  --surface-app: #F2F4F3;
-  --color-bg: #F2F4F3;
-  --color-surface: #FFFFFF;
-  --color-surface-2: #E9EDEB;
-  --color-hairline: #E3E8E6;
+  --surface-app: #F7F3EB;
+  --color-bg: #F7F3EB;
+  --color-surface: #FFFCF7;
+  --color-surface-2: #EFE8DC;
+  --color-hairline: #D9D2C6;
   --color-ink: #16241E;
   --color-ink-2: #4A5A53;
   --color-muted: #5E6E67;
-  --color-brand: #1F7A5A;
-  --color-brand-soft: #E4F0EA;
-  --color-brand-deep: #123F2E;
+  --color-brand: #0F5C45;
+  --color-brand-soft: #E2EFE8;
+  --color-brand-deep: #0A3D2E;
   --color-on-brand: #FFFFFF;
+  --color-secondary: #5C6B4A;
+  --color-secondary-soft: #E8EBE3;
   /* أزواج تباين معتمدة (WCAG AA) — القيم من لوحة العلامة لا لون جديد.
    * CONTRAST_PAIRS_BEGIN
-   * --on-surface|#16241E|#FFFFFF|4.5
-   * --on-surface|#16241E|#F2F4F3|4.5
-   * --on-surface-muted|#4A5A53|#FFFFFF|4.5
-   * --on-surface-muted|#4A5A53|#F2F4F3|4.5
-   * --brand-on-white|#146C4E|#FFFFFF|4.5
-   * --brand-on-white|#146C4E|#F2F4F3|4.5
-   * --brand-on-white|#146C4E|#E4F0EA|4.5
-   * --chip-fg|#0F4A36|#E4F0EA|4.5
-   * --on-brand|#FFFFFF|#1F7A5A|4.5
-   * --on-brand-muted|#E8F3EE|#1F7A5A|4.5
-   * --color-muted|#5E6E67|#F2F4F3|4.5
+   * --on-surface|#16241E|#FFFCF7|4.5
+   * --on-surface|#16241E|#F7F3EB|4.5
+   * --on-surface-muted|#4A5A53|#FFFCF7|4.5
+   * --on-surface-muted|#4A5A53|#F7F3EB|4.5
+   * --brand-on-white|#0C4F3A|#FFFFFF|4.5
+   * --brand-on-white|#0C4F3A|#F7F3EB|4.5
+   * --brand-on-white|#0C4F3A|#E2EFE8|4.5
+   * --chip-fg|#0A3D2E|#E2EFE8|4.5
+   * --on-brand|#FFFFFF|#0F5C45|4.5
+   * --on-brand-muted|#E8F3EE|#0F5C45|4.5
+   * --color-muted|#5E6E67|#F7F3EB|4.5
    * CONTRAST_PAIRS_END
    */
-  --on-surface: #16241E;           /* على #FFFFFF 16.09:1 · على #F2F4F3 14.56:1 */
-  --on-surface-muted: #4A5A53;     /* على #FFFFFF 7.30:1 · على #F2F4F3 6.60:1 */
-  --brand-on-white: #146C4E;       /* أخضر أغمق للنص على الأبيض 6.39:1 */
-  --chip-bg: #E4F0EA;
-  --chip-fg: #0F4A36;              /* على --chip-bg 8.74:1 */
-  --on-brand: #FFFFFF;             /* على #1F7A5A 5.26:1 */
-  --on-brand-muted: #E8F3EE;       /* على #1F7A5A 4.63:1 — نص ثانوي فوق زمرد */
+  --on-surface: #16241E;           /* على #FFFCF7 · على #F7F3EB ≈14.5:1 */
+  --on-surface-muted: #4A5A53;     /* على #FFFCF7 · على #F7F3EB ≈6.6:1 */
+  --brand-on-white: #0C4F3A;       /* أخضر غامق للنص على الأبيض/العاجي */
+  --chip-bg: #E2EFE8;
+  --chip-fg: #0A3D2E;              /* على --chip-bg ≈10.3:1 */
+  --on-brand: #FFFFFF;             /* على #0F5C45 ≈8:1 */
+  --on-brand-muted: #E8F3EE;       /* على #0F5C45 ≈7:1 — نص ثانوي فوق زمرد */
   --color-accent: #B08A3E;
   --color-accent-soft: #F5EEDF;
   /* مصحف نمط «آية» / ورق المدينة */
@@ -75,7 +77,7 @@
   --radius-mj-lg: 22px;
   --radius-mj-pill: 999px;
 
-  --shadow-mj: 0 10px 26px -18px rgba(11, 32, 24, 0.45);
+  --shadow-mj: 0 14px 36px -16px rgba(10, 61, 46, 0.32);
 
   --spacing-mj-1: 4px;
   --spacing-mj-2: 8px;
@@ -176,34 +178,36 @@
   --keyboard-inset: 0px;
   --edge-deadzone: 20px;
 
-  --surface-app: #F2F4F3;
+  --surface-app: #F7F3EB;
   --mj-bg: var(--surface-app);
   --mj-more-sheet: var(--surface-app);
-  --mj-surface: #FFFFFF;
+  --mj-surface: #FFFCF7;
   --on-green: var(--mj-brand);
   --on-surface: var(--mj-ink);
   --on-surface-muted: var(--mj-ink-2);
   --on-dark-strong: #FFFFFF;
   --on-dark-body: #F8FAFC;
   --on-dark-secondary: #E8EEEC;
-  --mj-surface-2: #E9EDEB;
-  --mj-surface-3: #E3E8E6;
-  --mj-hairline: #E3E8E6;
+  --mj-surface-2: #EFE8DC;
+  --mj-surface-3: #E8E1D4;
+  --mj-hairline: #D9D2C6;
   --mj-ink: #16241E;
   --mj-ink-2: #4A5A53;
   --mj-muted: #5E6E67;
-  --mj-brand: #1F7A5A;
-  --mj-brand-soft: #E4F0EA;
-  --mj-brand-deep: #123F2E;
+  --mj-brand: #0F5C45;
+  --mj-brand-soft: #E2EFE8;
+  --mj-brand-deep: #0A3D2E;
+  --color-secondary: #5C6B4A;
+  --color-secondary-soft: #E8EBE3;
   /* أخضر الهوية الغامق الموحّد (بنر الفقه) — للتبويبات/البنرات الرئيسية */
   --color-primary-dark: var(--mj-brand-deep);
   --color-active-tab-bg: color-mix(in srgb, var(--mj-brand-deep) 12%, transparent);
   --mj-on-brand: #FFFFFF;
   --on-surface: #16241E;
   --on-surface-muted: #4A5A53;
-  --brand-on-white: #146C4E;
-  --chip-bg: #E4F0EA;
-  --chip-fg: #0F4A36;
+  --brand-on-white: #0C4F3A;
+  --chip-bg: #E2EFE8;
+  --chip-fg: #0A3D2E;
   --on-brand: #FFFFFF;
   --on-brand-muted: #E8F3EE;
   --mj-accent: #B08A3E;
@@ -236,7 +240,7 @@
   --mj-r-md: 18px;
   --mj-r-lg: 24px;
   --mj-r-pill: var(--radius-pill);
-  --mj-sh: 0 10px 26px -18px rgba(11, 32, 24, 0.45);
+  --mj-sh: 0 14px 36px -16px rgba(10, 61, 46, 0.32);
   --mj-s1: 4px;
   --mj-s2: 8px;
   --mj-s3: 12px;
@@ -331,7 +335,7 @@ html.dark,
   --brand-on-white: #7BD6AE;
   --chip-bg: #16261F;
   --chip-fg: #B8E0CC;
-  /* --on-brand-muted يبقى فاتحًا: الأسطح الزمردية الصلبة (#1F7A5A) لا تُقلَب ليلاً */
+  /* --on-brand-muted يبقى فاتحًا: الأسطح الزمردية الصلبة (#0F5C45) لا تُقلَب ليلاً */
   /* خلفية عميقة فقط — لا يُستخدم كلون نص (العناوين عبر --elite-forest / accent) */
   --mj-brand-deep: #0E1C17;
   --elite-forest: #8FD4B0;
@@ -604,7 +608,7 @@ a:active {
   inset-inline-start: var(--mj-s3, 0.75rem) !important;
   left: auto !important;
   right: auto !important;
-  background: var(--mj-brand, #1f7a5a) !important;
+  background: var(--mj-brand, #0f5c45) !important;
   color: var(--mj-on-brand, #fff) !important;
   border-radius: var(--mj-r-sm, 8px) !important;
   font-weight: 700 !important;
@@ -929,7 +933,7 @@ html.dark .mj-btn--ghost {
 /* سطح صلب للقائمة السفلية فقط — لا يعمَّم على الهيدر/البطاقات */
 .bottom-nav.mj-nav-skin,
 .bottom-nav--v2.mj-nav-skin {
-  background: var(--surface-app, var(--mj-surface, #F2F4F3)) !important;
+  background: var(--surface-app, var(--mj-surface, #F7F3EB)) !important;
   background-image: none !important;
   opacity: 1 !important;
   backdrop-filter: none !important;

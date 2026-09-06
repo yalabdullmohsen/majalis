@@ -8,13 +8,12 @@ import { Empty } from "@/components/ui-common";
 import {
   chapterHref,
   fiqhBookApproxLevel,
-  fiqhBookBlurb,
-  fiqhBookCounts,
   getVisibleFiqhBook,
   publishedChapters,
   publishedLessonsInChapter,
   resolveFiqhAliasTarget,
 } from "@/lib/fiqh-books";
+import { chapterPreviewText, fiqhBookEditorial } from "@/lib/fiqh-editorial";
 import { formatAbwabCount, formatMasailCount } from "@/lib/arabic-count";
 import "@/styles/pages/fiqh-hub.css";
 
@@ -34,15 +33,16 @@ export default function FiqhBookPage() {
         window.history.replaceState(null, "", target);
       }
     }
+    const editorial = fiqhBookEditorial(book);
     applyPageSeo({
       path: `/fiqh/books/${book.id}`,
       title: `${book.title} | الفقه | سُنّة`,
-      description: fiqhBookBlurb(book).slice(0, 160),
+      description: editorial.description.slice(0, 160),
       keywords: [book.title, "فقه", "حنبلي", "سُنّة", ...(book.aliases ?? [])],
       jsonLd: [
         bookJsonLd({
           name: book.title,
-          description: fiqhBookBlurb(book),
+          description: editorial.description,
           url: `/fiqh/books/${book.id}`,
         }),
         breadcrumbJsonLd([
@@ -56,7 +56,7 @@ export default function FiqhBookPage() {
 
   if (!book) {
     return (
-      <div className="fiqh-lux-shell fiqh-lux-book page-shell" dir="rtl">
+      <div className="fiqh-lux-shell fiqh-lux-book page-shell ve-page" dir="rtl">
         <Empty title="كتاب غير منشور" text="هذا الكتاب غير مدرج في الكتب الظاهرة، أو لا أبواب منشورة فيه." />
         <p className="fiqh-lux-empty">
           <Link href="/fiqh">العودة إلى الفقه</Link>
@@ -66,27 +66,42 @@ export default function FiqhBookPage() {
   }
 
   const chapters = publishedChapters(book);
-  const counts = fiqhBookCounts(book);
+  const editorial = fiqhBookEditorial(book);
   const level = fiqhBookApproxLevel(book);
 
   return (
-    <div className="fiqh-lux-shell fiqh-lux-book page-shell" dir="rtl">
+    <div className="fiqh-lux-shell fiqh-lux-book page-shell ve-page" dir="rtl">
       <nav className="fiqh-lux-crumb" aria-label="مسار التنقل">
         <Link href="/fiqh">الفقه</Link>
         <span aria-hidden="true"> ← </span>
         <span aria-current="page">{book.title}</span>
       </nav>
 
-      <header className="fiqh-lux-book-hero">
-        <h1 className="fiqh-lux-book-hero__title">{book.title}</h1>
-        <p className="fiqh-lux-book-hero__blurb">{fiqhBookBlurb(book)}</p>
-        {book.orderReason ? (
+      <header className="fiqh-lux-book-hero ve-hero">
+        <h1 className="fiqh-lux-book-hero__title ve-title-center">{editorial.title}</h1>
+        <p className="ve-hero__subtitle">{editorial.subtitle}</p>
+        <p className="fiqh-lux-book-hero__blurb ve-hero__desc">{editorial.description}</p>
+        <div className="ve-hero__chips" aria-label="شارات الكتاب">
+          <span className="ve-badge">{editorial.categoryLabel}</span>
+          <span className="ve-badge ve-badge--secondary">{editorial.madhhabBadge}</span>
+          <span className="ve-badge ve-badge--accent">مستوى تقريبي: {level}</span>
+        </div>
+        {editorial.keyTopics.length > 0 ? (
+          <div className="ve-hero__chips" aria-label="أبرز الموضوعات">
+            {editorial.keyTopics.map((topic) => (
+              <span key={topic} className="ve-chip">
+                {topic}
+              </span>
+            ))}
+          </div>
+        ) : null}
+        {editorial.orderReason ? (
           <p className="fiqh-lux-book-hero__meta" aria-label="سبب الترتيب">
-            ترتيب الكتاب: {book.orderReason}
+            ترتيب الكتاب: {editorial.orderReason}
           </p>
         ) : null}
         <p className="fiqh-lux-book-hero__meta">
-          {formatAbwabCount(counts.chapters)} · {formatMasailCount(counts.lessons)} · مستوى تقريبي: {level}
+          {formatAbwabCount(editorial.chaptersCount)} · {formatMasailCount(editorial.lessonsCount)}
         </p>
         {book.aliases && book.aliases.length > 0 ? (
           <p className="fiqh-lux-book-hero__aliases" aria-label="أسماء مدمجة">
@@ -110,21 +125,24 @@ export default function FiqhBookPage() {
         </section>
       ) : null}
 
-      <ol className="fiqh-lux-chapter-list">
+      <ol className="fiqh-lux-chapter-list ve-chapter-list">
         {chapters.map((ch, i) => {
           const lessons = publishedLessonsInChapter(ch);
           return (
-            <li key={ch.id} className="fiqh-chapter fiqh-chapter--card fiqh-lux-chapter">
-              <Link href={chapterHref(book.id, ch.id)} className="fiqh-lux-chapter__head">
-                <span className="fiqh-lux-chapter__num">{i + 1}</span>
-                <span className="fiqh-lux-chapter__body">
-                  <span className="fiqh-lux-chapter__title">{ch.title}</span>
-                  {ch.summary ? (
-                    <span className="fiqh-lux-chapter__preview">{ch.summary.slice(0, 100)}…</span>
-                  ) : null}
-                  <span className="fiqh-lux-chapter__count">{formatMasailCount(lessons.length)}</span>
+            <li key={ch.id} className="fiqh-chapter fiqh-chapter--card">
+              <Link href={chapterHref(book.id, ch.id)} className="ve-chapter-card">
+                <span className="ve-chapter-card__num" aria-hidden="true">
+                  {i + 1}
                 </span>
-                <span className="fiqh-lux-chapter__go" aria-hidden="true">
+                <span className="ve-chapter-card__body">
+                  <span className="ve-chapter-card__title">{ch.title}</span>
+                  <span className="ve-chapter-card__preview">{chapterPreviewText(ch)}</span>
+                  <span className="ve-chapter-card__meta">
+                    <span className="ve-badge">{editorial.title.replace(/^كتاب\s+/u, "") || editorial.title}</span>
+                    <span>{formatMasailCount(lessons.length)}</span>
+                  </span>
+                </span>
+                <span className="ve-chapter-card__go" aria-hidden="true">
                   <ChevronLeft size={16} strokeWidth={2.5} />
                 </span>
               </Link>
@@ -132,7 +150,7 @@ export default function FiqhBookPage() {
           );
         })}
       </ol>
-      <div className="fiqh-fab-clearance" />
+      <div className="fiqh-fab-clearance ve-bottom-clearance" />
     </div>
   );
 }

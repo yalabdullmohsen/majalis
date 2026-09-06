@@ -13,8 +13,6 @@ import {
   FIQH_CATEGORY_LABELS,
   FIQH_CATEGORY_ORDER,
   chapterHref,
-  fiqhBookBlurb,
-  fiqhBookCounts,
   publishedBooks,
   searchFiqhCatalog,
   type FiqhBook,
@@ -22,6 +20,7 @@ import {
   type FiqhChapterHit,
   type FiqhLessonHit,
 } from "@/lib/fiqh-books";
+import { fiqhBookEditorial } from "@/lib/fiqh-editorial";
 import "@/styles/pages/fiqh-hub.css";
 
 function FiqhHubSearch({
@@ -75,25 +74,30 @@ function FiqhHubSearch({
 }
 
 function BookCard({ book }: { book: FiqhBook }) {
-  const counts = fiqhBookCounts(book);
-  const blurb = fiqhBookBlurb(book);
+  const editorial = fiqhBookEditorial(book);
   return (
     <Link
       href={`/fiqh/books/${book.id}`}
-      className="fiqh-book-card"
-      aria-label={`${book.title} — ${formatAbwabCount(counts.chapters)} · ${formatMasailCount(counts.lessons)}`}
+      className="fiqh-book-card ve-book-card"
+      aria-label={`${editorial.title} — ${formatAbwabCount(editorial.chaptersCount)} · ${formatMasailCount(editorial.lessonsCount)}`}
     >
-      <span className="fiqh-book-card__icon" aria-hidden="true">
+      <span className="fiqh-book-card__icon ve-book-card__icon" aria-hidden="true">
         <BookOpen size={18} strokeWidth={1.9} />
       </span>
-      <span className="fiqh-book-card__body">
-        <span className="fiqh-book-card__title">{book.title}</span>
-        {blurb ? <span className="fiqh-book-card__desc">{blurb}</span> : null}
-        <span className="fiqh-book-card__meta">
-          {formatAbwabCount(counts.chapters)} · {formatMasailCount(counts.lessons)}
+      <span className="fiqh-book-card__body ve-book-card__body">
+        <span className="fiqh-book-card__title ve-book-card__title">{editorial.title}</span>
+        {editorial.description ? (
+          <span className="fiqh-book-card__desc ve-book-card__desc">{editorial.description}</span>
+        ) : null}
+        <span className="fiqh-book-card__meta ve-book-card__meta">
+          <span className="ve-badge">{editorial.categoryLabel}</span>
+          <span className="ve-badge ve-badge--secondary">{editorial.madhhabBadge}</span>
+          <span>
+            {formatAbwabCount(editorial.chaptersCount)} · {formatMasailCount(editorial.lessonsCount)}
+          </span>
         </span>
       </span>
-      <span className="fiqh-book-card__go" aria-hidden="true">
+      <span className="fiqh-book-card__go ve-book-card__go" aria-hidden="true">
         <ChevronLeft size={16} strokeWidth={2.5} />
       </span>
     </Link>
