@@ -90,9 +90,12 @@ function mockRes() {
   assert.equal(res.state.statusCode, 200);
   const body = JSON.parse(res.state.body);
   assert.equal(body.ok, true);
-  assert.equal(body.service, "ssunnah-web");
+  assert.equal(body.service, "ssunnah");
+  assert.equal(typeof body.commit, "string");
+  assert.ok(body.commit.length > 0 && body.commit.length <= 8);
+  assert.equal(typeof body.builtAt, "string");
   assert.equal(body.at, undefined);
-  assert.equal(body.commit, undefined);
+  assert.equal(body.env, undefined);
 }
 
 {
@@ -101,11 +104,12 @@ function mockRes() {
   await readyz({ method: "GET", query: {} }, res);
   assert.equal(res.state.statusCode, 200);
   const body = JSON.parse(res.state.body);
-  assert.equal(body.status, "ok");
-  assert.equal(body.service, "ssunnah-web");
-  assert.equal(body.checks?.app_alive, true);
-  assert.equal(body.version, undefined);
-  assert.equal(body.commit, undefined);
+  assert.equal(body.ok, true);
+  assert.equal(body.service, "ssunnah");
+  assert.equal(typeof body.commit, "string");
+  assert.ok(body.commit.length > 0 && body.commit.length <= 8);
+  assert.equal(typeof body.builtAt, "string");
+  assert.equal(body.env, undefined);
 }
 
 {

@@ -18,20 +18,26 @@ function fromEnv() {
   return { ok: true, service: "ssunnah", commit, builtAt };
 }
 
+/**
+ * Public health/readiness stamp — short commit + builtAt only.
+ * Prefer dist/version.json (build-time, gitignored) so CI does not dirty the tree.
+ */
 export function getPublicBuildMeta() {
-  try {
-    const raw = readFileSync(resolve(__dirname, "build-meta.json"), "utf8");
-    const j = JSON.parse(raw);
-    if (j && j.commit && j.builtAt) {
-      return {
-        ok: true,
-        service: "ssunnah",
-        commit: String(j.commit).slice(0, 8),
-        builtAt: String(j.builtAt),
-      };
+  const candidates = [
+    resolve(__dirname, "../dist/version.json"),
+    resolve(__dirname, "../dist/healthz.json"),
+  ];
+  for (const file of candidates) {
+    try {
+      const j = JSON.parse(readFileSync(file, "utf8"));
+      const commit = String(j.commit || j.shortCommit || "").slice(0, 8);
+      const builtAt = String(j.builtAt || "");
+      if (commit && builtAt) {
+        return { ok: true, service: "ssunnah", commit, builtAt };
+      }
+    } catch {
+      /* try next */
     }
-  } catch {
-    /* fall through */
   }
   return fromEnv();
 }

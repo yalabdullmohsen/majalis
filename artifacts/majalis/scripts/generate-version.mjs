@@ -40,13 +40,8 @@ const payload = {
 await writeFile(resolve(distDir, "version.json"), JSON.stringify(payload, null, 2) + "\n", "utf8");
 console.log(`[version] wrote dist/version.json → ${payload.shortCommit} @ ${payload.builtAt}`);
 
-// build-meta for /healthz+/readyz (no secrets — short commit + builtAt only)
-await writeFile(
-  resolve(__dirname, "..", "lib", "build-meta.json"),
-  JSON.stringify({ commit: shortCommit, builtAt: payload.builtAt, service: "ssunnah" }) + "\n",
-  "utf8",
-);
-console.log(`[version] wrote lib/build-meta.json → ${shortCommit}`);
+// Public health stamp lives only under dist/ (gitignored) so `git diff --exit-code`
+// in CI stays clean. API handlers read dist/version.json via getPublicBuildMeta().
 
 const healthPayload = { ok: true, service: "ssunnah", commit: shortCommit, builtAt: payload.builtAt };
 await writeFile(resolve(distDir, "healthz.json"), JSON.stringify(healthPayload) + "\n", "utf8");

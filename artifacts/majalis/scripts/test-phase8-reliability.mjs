@@ -16,7 +16,7 @@ assert.match(requestManager, /computeBackoffDelayMs/, "RequestManager uses expon
 assert.match(requestManager, /structuredLog/, "RequestManager emits structured logs");
 assert.match(requestManager, /run\.graceful_failure/, "graceful failure path logged");
 
-assert.match(server, /service:\s*"ssunnah-web"/, "healthz exposes ssunnah-web service");
+assert.match(server, /getPublicBuildMeta|\/api\/healthz/, "healthz route wired");
 assert.match(server, /Cache-Control.*s-maxage=60|no-store/, "healthz cache policy is set");
 
 assert.doesNotMatch(diagnostics, /@ts-expect-error|@ts-ignore/, "diagnostics must not suppress TypeScript");

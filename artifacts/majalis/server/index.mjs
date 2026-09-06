@@ -288,12 +288,10 @@ app.get("/api/user/citations",              runHandler(citationsHandler, "citati
 app.post("/api/user/citations/folders",     express.json({ limit: "4kb" }), runHandler(citationsHandler, "citations-folders"));
 app.post("/api/user/citations/export",      express.json({ limit: "8kb" }), runHandler(citationsHandler, "citations-export"));
 
-app.get("/api/healthz", (_req, res) => {
+app.get("/api/healthz", async (_req, res) => {
   res.setHeader("Cache-Control", "public, max-age=0, s-maxage=60, stale-while-revalidate=300");
-  res.json({
-    ok: true,
-    service: "ssunnah-web",
-  });
+  const { getPublicBuildMeta } = await import("../lib/build-meta.mjs");
+  res.json(getPublicBuildMeta());
 });
 
 function resolveStaticHtml(urlPath) {
