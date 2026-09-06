@@ -88,10 +88,11 @@ type Props = {
 };
 
 export function LessonFilters({ filters, onChange, searchSlot, filterSlot }: Props) {
+  const hasTools = Boolean(searchSlot || filterSlot);
   return (
     <div className="lesson-filters lesson-filters--compact">
-      <div className="lesson-filters__bar">
-        <div className="lesson-filters__chips filter-chips" role="toolbar" aria-label="تصفية سريعة">
+      <div className="lesson-filters__bar" role="toolbar" aria-label="تصفية سريعة">
+        <div className="lesson-filters__chips filter-chips">
           {SCHEDULE_CHIPS.map((chip) => (
             <button
               key={chip.id}
@@ -103,13 +104,13 @@ export function LessonFilters({ filters, onChange, searchSlot, filterSlot }: Pro
               <span className="filter-chips__label">{chip.label}</span>
             </button>
           ))}
+          {hasTools ? (
+            <div className="lesson-filters__tools" aria-label="أدوات التصفية">
+              {searchSlot}
+              {filterSlot}
+            </div>
+          ) : null}
         </div>
-        {(searchSlot || filterSlot) ? (
-          <div className="lesson-filters__tools">
-            {searchSlot}
-            {filterSlot}
-          </div>
-        ) : null}
       </div>
     </div>
   );

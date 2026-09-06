@@ -279,8 +279,21 @@ header.fiqh-lux-book-hero {
 .lesson-filters__tools {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   flex: 0 0 auto;
+  margin-inline-start: auto;
+}
+
+.lesson-filters__icon-btn {
+  background: var(--surface) !important;
+  color: var(--primary-strong) !important;
+  border: 1px solid var(--border-strong) !important;
+}
+
+.lesson-filters__icon-btn svg {
+  stroke: currentColor !important;
+  color: inherit !important;
+  opacity: 1 !important;
 }
 
 /* منع القص على الجوال */
