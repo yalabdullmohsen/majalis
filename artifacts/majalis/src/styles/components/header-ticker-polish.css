@@ -110,3 +110,16 @@ html.dark .header-ticker__source {
     background: color-mix(in srgb, #1f6b56 18%, #0f2f28) !important;
   }
 }
+
+
+/* مسار متواصل — فاصل مضغوط بلا فراغ طويل */
+.header-ticker__segment,
+.header-ticker__segment-wrap {
+  gap: 0;
+}
+.header-ticker__sep {
+  padding-inline: 0.7rem;
+}
+.header-ticker__item {
+  padding-inline: 0;
+}

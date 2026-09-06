@@ -21,7 +21,7 @@ const CDN = "https://cdn.jsdelivr.net/gh/mohsalvi/adhan-audio@main";
 export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
   {
     id: "makkah",
-    labelAr: "الأذان الافتراضي",
+    labelAr: "أذان الحرم المكي",
     local: {
       general: "/audio/adhan/adhan-makkah-full.m4a",
       fajr: "/audio/adhan/adhan-makkah-fajr.mp3",
@@ -38,7 +38,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
   },
   {
     id: "egypt",
-    labelAr: "الأذان المصري",
+    labelAr: "أذان تقليدي",
     local: {
       general: "/audio/adhan/adhan-egypt-full.m4a",
       short: "/audio/adhan/adhan-takbeerat-short.mp3",
@@ -68,7 +68,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
   },
   {
     id: "takbeerat",
-    labelAr: "تكبيرات قصيرة",
+    labelAr: "تنبيه قصير بدون أذان",
     local: {
       short: "/audio/adhan/adhan-takbeerat-short.mp3",
       takbir: "/audio/adhan/adhan-takbeerat-short.mp3",
@@ -83,7 +83,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
   },
   {
     id: "alharam",
-    labelAr: "أذان الحرم",
+    labelAr: "أذان الحرم المكي",
     local: {
       general: "/audio/adhan/adhan-haram-full.m4a",
       fajr: "/audio/adhan/adhan-makkah-fajr.mp3",
@@ -100,7 +100,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
   },
   {
     id: "soft",
-    labelAr: "تنبيه لطيف بدون أذان",
+    labelAr: "تنبيه قصير بدون أذان",
     local: {
       general: "/audio/adhan/adhan-soft-alert.m4a",
       short: "/audio/adhan/adhan-soft-alert.m4a",
@@ -115,7 +115,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
   },
   {
     id: "turkey",
-    labelAr: "أذان تركي",
+    labelAr: "تنبيه قصير",
     local: {
       general: "/audio/adhan/adhan-takbeerat-short.mp3",
       short: "/audio/adhan/adhan-takbeerat-short.mp3",
@@ -130,7 +130,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
   },
   {
     id: "kuwait",
-    labelAr: "أذان خليجي / كويتي",
+    labelAr: "أذان خليجي قصير",
     local: {
       general: "/audio/adhan/adhan-takbeerat-short.mp3",
       short: "/audio/adhan/adhan-takbeerat-short.mp3",
@@ -148,9 +148,8 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
 export const OFFLINE_FEATURED_MUEZZIN_IDS = [
   "makkah",
   "alharam",
-  "egypt",
   "aqsa",
-  "turkey",
+  "kuwait",
   "takbeerat",
   "soft",
 ] as const;
@@ -220,3 +219,4 @@ export function listBundledAdhanSoundPaths(): string[] {
 export function notificationSoundForAdhanPack(packId: string): string | null {
   return getOfflineAdhanPack(packId)?.notificationSound ?? null;
 }
+

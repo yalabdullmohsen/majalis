@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ChevronUp } from "lucide-react";
 import { useReadingProgress } from "@/hooks/useReadingProgress";
 
+/** زر صعود دائري 56×56 مع حلقة تقدّم داخل الحدود تمامًا. */
 export function ScrollToTop() {
   const [visible, setVisible] = useState(false);
   const progress = useReadingProgress();
@@ -14,9 +15,13 @@ export function ScrollToTop() {
 
   if (!visible) return null;
 
-  const R = 18;
+  const SIZE = 56;
+  const STROKE = 2.5;
+  const PAD = 3;
+  const R = SIZE / 2 - PAD - STROKE / 2;
   const C = 2 * Math.PI * R;
   const offset = C - (progress / 100) * C;
+  const CX = SIZE / 2;
 
   return (
     <button
@@ -25,21 +30,31 @@ export function ScrollToTop() {
       aria-label={`العودة إلى الأعلى — ${progress}%`}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
     >
-      {progress > 3 && (
-        <svg className="stt-ring" viewBox="0 0 44 44" aria-hidden="true">
+      {progress > 3 ? (
+        <svg className="stt-ring" viewBox={`0 0 ${SIZE} ${SIZE}`} aria-hidden="true">
           <circle
-            cx="22" cy="22" r={R}
+            cx={CX}
+            cy={CX}
+            r={R}
             fill="none"
-            stroke="rgba(255,255,255,0.80)"
-            strokeWidth="2.2"
+            stroke="rgba(255,255,255,0.28)"
+            strokeWidth={STROKE}
+          />
+          <circle
+            cx={CX}
+            cy={CX}
+            r={R}
+            fill="none"
+            stroke="rgba(255,255,255,0.92)"
+            strokeWidth={STROKE}
             strokeLinecap="round"
             strokeDasharray={C}
             strokeDashoffset={offset}
-            transform="rotate(-90 22 22)"
+            transform={`rotate(-90 ${CX} ${CX})`}
           />
         </svg>
-      )}
-      <ChevronUp size={17} strokeWidth={2.4} aria-hidden="true" className="stt-icon" />
+      ) : null}
+      <ChevronUp size={20} strokeWidth={2.4} aria-hidden="true" className="stt-icon" />
     </button>
   );
 }

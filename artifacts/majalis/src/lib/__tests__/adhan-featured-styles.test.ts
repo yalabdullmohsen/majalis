@@ -12,7 +12,7 @@ import { isOfflineFeaturedMuezzin, resolveOfflineClipUrl } from "../adhan-offlin
 import { buildPrayerScheduleSignature } from "../prayer-alert-scheduler";
 import { ADHAN_PREFS_CHANGED_EVENT } from "../adhan-preferences";
 
-assert.equal(FEATURED_ADHAN_STYLE_IDS.length, 7);
+assert.equal(FEATURED_ADHAN_STYLE_IDS.length, 5);
 for (const id of FEATURED_ADHAN_STYLE_IDS) {
   assert.ok(FEATURED_ADHAN_STYLE_LABELS[id], `تسمية ${id}`);
   assert.ok(isOfflineFeaturedMuezzin(id), `${id} أوفلاين مميز`);
@@ -25,10 +25,10 @@ for (const id of FEATURED_ADHAN_STYLE_IDS) {
   assert.ok(resolveOfflineClipUrl(id, "short") || resolveOfflineClipUrl(id, "general"), `${id} حزمة`);
 }
 
-assert.match(FEATURED_ADHAN_STYLE_LABELS.makkah, /الافتراضي|مكة/);
+assert.match(FEATURED_ADHAN_STYLE_LABELS.makkah, /الحرم المكي/);
 assert.ok(!("madinah" in FEATURED_ADHAN_STYLE_LABELS));
-assert.match(FEATURED_ADHAN_STYLE_LABELS.soft, /لطيف/);
-assert.match(FEATURED_ADHAN_STYLE_LABELS.turkey, /تركي/);
+assert.match(FEATURED_ADHAN_STYLE_LABELS.soft, /تنبيه قصير/);
+assert.ok(!("turkey" in FEATURED_ADHAN_STYLE_LABELS));
 
 const a = buildPrayerScheduleSignature({
   prayerKey: "dhuhr",

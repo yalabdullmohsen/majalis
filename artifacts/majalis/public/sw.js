@@ -275,6 +275,12 @@ self.addEventListener("fetch", (event) => {
   // Only handle same-origin from here
   if (url.origin !== self.location.origin) return;
 
+  // مستند الإقلاع نفسه — network-only دائمًا (لا كاش يمنع ظهور آخر نشر)
+  if (url.pathname === "/" || url.pathname === "/index.html") {
+    event.respondWith(networkFirstNavigation(req));
+    return;
+  }
+
   // ملفات يجب ألا تُخدم من كاش قديم أبدًا (نشر / هوية / SW)
   if (
     url.pathname === "/version.json" ||

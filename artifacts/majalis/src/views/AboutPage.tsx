@@ -6,7 +6,11 @@ import { applyPageSeo } from "@/lib/seo";
 
 type VersionInfo = {
   shortCommit?: string;
+  commitSha?: string;
   builtAt?: string;
+  buildTime?: string;
+  branch?: string;
+  ref?: string;
 };
 
 export default function AboutPage() {
@@ -59,10 +63,17 @@ export default function AboutPage() {
       <LegalSection title="رقم الإصدار">
         <p>
           الإصدار المعروض على الويب يتحدّث مع كل نشر إنتاجي.
-          {version?.shortCommit ? (
+          {version?.commitSha || version?.shortCommit ? (
             <>
-              {" "}الإصدار الحالي: <strong dir="ltr">{version.shortCommit}</strong>
-              {version.builtAt ? <> — بُني في {new Date(version.builtAt).toLocaleString("ar")}</> : null}.
+              {" "}الإصدار الحالي:{" "}
+              <strong dir="ltr">{version.commitSha || version.shortCommit}</strong>
+              {version.branch || version.ref ? (
+                <> (<span dir="ltr">{version.branch || version.ref}</span>)</>
+              ) : null}
+              {version.buildTime || version.builtAt ? (
+                <> — بُني في {new Date(String(version.buildTime || version.builtAt)).toLocaleString("ar")}</>
+              ) : null}
+              .
             </>
           ) : (
             <> يمكنك أيضاً الاطلاع على ملف <span dir="ltr">/version.json</span>.</>

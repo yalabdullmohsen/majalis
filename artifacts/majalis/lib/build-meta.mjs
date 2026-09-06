@@ -30,8 +30,8 @@ export function getPublicBuildMeta() {
   for (const file of candidates) {
     try {
       const j = JSON.parse(readFileSync(file, "utf8"));
-      const commit = String(j.commit || j.shortCommit || "").slice(0, 8);
-      const builtAt = String(j.builtAt || "");
+      const commit = String(j.commitSha || j.commit || j.shortCommit || "").slice(0, 8);
+      const builtAt = String(j.buildTime || j.builtAt || "");
       if (commit && builtAt) {
         return { ok: true, service: "ssunnah", commit, builtAt };
       }

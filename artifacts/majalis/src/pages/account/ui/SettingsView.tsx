@@ -342,22 +342,23 @@ export default function SettingsPage() {
             disabled={cacheRefreshBusy}
             onClick={() => {
               setCacheRefreshBusy(true);
-              setCacheRefreshNote("جاري تحديث التطبيق وحذف الكاش…");
+              setCacheRefreshNote("جاري تحديث النسخة ومسح الكاش…");
               void refreshAppAndPurgeCaches()
                 .then(() => {
-                  setCacheRefreshNote("تم التحديث — يُعاد التحميل…");
+                  setCacheRefreshNote("تم تحديث النسخة — يُعاد التحميل…");
                 })
                 .catch(() => {
                   setCacheRefreshBusy(false);
-                  setCacheRefreshNote("تعذّر التحديث. حاول مرة أخرى.");
+                  setCacheRefreshNote("تعذّر تحديث النسخة. حاول مرة أخرى.");
                 });
             }}
+            data-testid="refresh-app-version"
           >
-            {cacheRefreshBusy ? "جاري التحديث…" : "تحديث التطبيق وحذف الكاش"}
+            {cacheRefreshBusy ? "جاري التحديث…" : "تحديث النسخة"}
           </button>
           {cacheRefreshNote ? <p className="settings-note">{cacheRefreshNote}</p> : null}
           <p className="settings-note">
-            يحذف نسخة الواجهة القديمة فقط، ولا يمس الثيم أو المفضلة أو إعدادات الصلاة.
+            يمسح كاش الواجهة ويعيد تحميل آخر نسخة منشورة، ولا يمس الثيم أو المفضلة أو إعدادات الصلاة.
           </p>
           <ToggleRow
             label="وضع كبار السن"

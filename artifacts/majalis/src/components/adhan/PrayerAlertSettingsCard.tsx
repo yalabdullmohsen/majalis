@@ -131,7 +131,7 @@ export function PrayerAlertSettingsCard() {
     <div className="ads-card">
         <div className="ads-card__head">
         <BellRing size={15} strokeWidth={2} />
-        <span>تنبيهات الصلاة والأذان</span>
+        <span>تنبيهات الصلاة</span>
       </div>
       <div className="ads-card__body">
         {showExplainer && (
@@ -238,7 +238,7 @@ export function PrayerAlertSettingsCard() {
         <div className={`ads-row-sep${alertsOn ? "" : " is-disabled"}`}>
           <div>
             <div className="ads-global-label">تذكير الصامت بعد الأذان</div>
-            <div className="ads-global-desc">شريط داخل التطبيق ١٠ دقائق + إشعار بعد ١٠ دقائق</div>
+            <div className="ads-global-desc">تذكير بعد دخول الوقت</div>
           </div>
           <MiniToggle
             checked={prefs.postReminderEnabled}

@@ -31,31 +31,37 @@ assert.match(css, /\.ads-prayer-row__top/);
 
 const typesSrc = readFileSync(resolve(appRoot, "src/lib/adhan-selectable-types.ts"), "utf8");
 
-assert.match(view, /تنبيهات الصلاة والأذان/);
+assert.match(view, /تنبيهات الصلاة/);
 assert.match(view, /\/adhan-help/);
 assert.match(view, /حذف القديمة وإعادة الضبط/);
-assert.match(view, /اختيار المؤذن وصيغة الإشعار/);
-assert.match(view, /listSelectableMuezzins/);
-assert.match(view, /تشغيل الأذان كاملاً/);
-assert.match(view, /IosChainedAdhanCard/);
+assert.match(view, /صوت التنبيه/);
+assert.match(view, /listAvailableSettingsSounds/);
+assert.doesNotMatch(view, /تشغيل الأذان كاملاً/);
+assert.doesNotMatch(view, /IosChainedAdhanCard/);
 assert.match(view, /اختبار الصوت/);
-assert.match(view, /تخصيص كل صلاة/);
-assert.match(view, /تنبيه الإقامة/);
+assert.match(view, /تنبيهات الصلاة/);
+assert.match(view, /تفعيل الإقامة|تذكيرات إيمانية/);
 assert.match(view, /إعادة جدولة التنبيهات/);
 assert.match(view, /إذن الإشعارات/);
 assert.match(view, /إذن الموقع/);
-assert.match(view, /حالة الصوت/);
+assert.match(view, /اختبار الإشعارات/);
 assert.match(view, /playAdhanPreview/);
 assert.match(view, /getAndroidAdhanPermissionStatus/);
-assert.match(view, /playAndroidAdhanNow/);
 assert.match(view, /ads-prayer-row/);
 assert.match(view, /rounded-full icon-only/);
+assert.match(view, /استماع/);
 assert.doesNotMatch(view, /أذان المدينة/);
+assert.doesNotMatch(view, /أذان مصري/);
+assert.doesNotMatch(view, /أذان تركي/);
+assert.doesNotMatch(view, /أذان حجازي/);
+assert.doesNotMatch(view, /caf/i);
+assert.doesNotMatch(view, /m4a/i);
+
 assert.doesNotMatch(typesSrc, /muezzinId:\s*"madinah"/);
 assert.match(typesSrc, /madinah-full.*makkah-full/); // ترحيل قديم فقط
 
-assert.match(typesSrc, /الأذان الكامل/);
-assert.match(typesSrc, /تنبيه مختصر/);
+assert.match(typesSrc, /تنبيه أذان قصير متوافق مع iOS/);
+assert.match(typesSrc, /تنبيه أذان قصير متوافق مع iOS/);
 
 assert.match(alerts, /تفعيل تنبيهات الصلاة/);
 assert.match(alerts, /تنبيه قبل الصلاة/);

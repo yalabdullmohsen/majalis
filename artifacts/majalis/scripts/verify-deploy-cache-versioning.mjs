@@ -20,6 +20,15 @@ const swJs = await readFile(resolve(distDir, "sw.js"), "utf8");
 if (!versionJson.commit || versionJson.commit === "unknown") {
   failures.push("version.json: لا يحمل commit حقيقي");
 }
+if (!versionJson.commitSha || versionJson.commitSha !== versionJson.shortCommit) {
+  failures.push("version.json: commitSha يجب أن يطابق shortCommit");
+}
+if (!versionJson.buildTime || versionJson.buildTime !== versionJson.builtAt) {
+  failures.push("version.json: buildTime يجب أن يطابق builtAt");
+}
+if (!versionJson.branch || versionJson.branch !== versionJson.ref) {
+  failures.push("version.json: branch يجب أن يطابق ref");
+}
 
 const swBuildIdMatch = swVersionJs.match(/SW_BUILD_ID\s*=\s*["']([a-f0-9]+)["']/i);
 if (!swBuildIdMatch) {

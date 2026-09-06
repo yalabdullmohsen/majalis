@@ -41,7 +41,7 @@ assert.doesNotMatch(
 assert.match(theme, /return isThemePreference\(stored\) \? stored : "light"/);
 assert.match(theme, /classList\.add\("light"/);
 
-assert.match(settings, /تحديث التطبيق وحذف الكاش/);
+assert.match(settings, /تحديث النسخة/);
 assert.match(settings, /refreshAppAndPurgeCaches/);
 
 assert.match(versionHook, /purgeStaleRuntimeCaches/);

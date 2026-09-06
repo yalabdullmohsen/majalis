@@ -4,7 +4,6 @@ import {
   useMemo,
   useRef,
   useState,
-  type AnimationEvent,
   type CSSProperties,
 } from "react";
 import { Link } from "wouter";
@@ -12,6 +11,7 @@ import { BookOpen, Heart, Megaphone, Repeat2, ScrollText, Sparkles } from "lucid
 import type { LucideIcon } from "lucide-react";
 import {
   buildTickerPool,
+  marqueeDurationSec,
   pickNextBatch,
   readRecent,
   writeRecent,
@@ -39,13 +39,10 @@ const KIND_ICON: Record<TickerKind, LucideIcon> = {
   promo: Megaphone,
 };
 
-const FALLBACK_ITEM: TickerItem = {
-  key: "fallback",
-  Icon: Sparkles,
-  label: "سُنّة",
-  displayText: "تصفّح المصحف والدروس والفتاوى من مكان واحد",
-  href: "/quran-hub",
-};
+/** تكرار المسار داخل الشريط — يمنع فراغ نهاية الدورة */
+const TRACK_COPIES = 3;
+/** فاصل بصري بسيط بين العناصر */
+const ITEM_SEPARATOR = " • ";
 
 function useReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
@@ -105,7 +102,6 @@ function waitUntilBootSettled(): Promise<void> {
 }
 
 function toTickerItem(c: TickerContentItem): TickerItem | null {
-  // النص الكامل أولًا؛ previewText احتياط فقط (بوابة المحتوى تتأكد من وجود المرجع)
   const displayText = (c.text || c.previewText || "").trim();
   if (!displayText) return null;
   return {
@@ -119,57 +115,21 @@ function toTickerItem(c: TickerContentItem): TickerItem | null {
   };
 }
 
-/**
- * قائمة محلية تُحمَّل مرة — التبديل فقط بعد اكتمال خروج النص الحالي.
- * الطابور في ref يمنع استبدال المحتوى أثناء الـ render / أثناء الحركة.
- */
-function useTickerQueue() {
-  const poolRef = useRef<TickerContentItem[] | null>(null);
-  if (!poolRef.current) {
+/** دفعة عناصر للمسار المتواصل — بلا عنصر احتياطي يملأ شريطًا فارغًا */
+function useTickerItems(): TickerItem[] {
+  return useMemo(() => {
+    let pool: TickerContentItem[];
     try {
-      poolRef.current = buildTickerPool();
+      pool = buildTickerPool();
     } catch {
-      poolRef.current = [];
+      return [];
     }
-  }
-  const recentRef = useRef<string[]>(readRecent());
-  const queueRef = useRef<TickerItem[]>([]);
-
-  const refill = useCallback(() => {
-    const pool = poolRef.current ?? [];
-    if (pool.length === 0) {
-      queueRef.current = [];
-      return;
-    }
-    const picked = pickNextBatch(pool, recentRef.current);
-    recentRef.current = picked.recent;
+    if (pool.length === 0) return [];
+    const recent = readRecent();
+    const picked = pickNextBatch(pool, recent);
     writeRecent(picked.recent);
-    queueRef.current = picked.batch
-      .map(toTickerItem)
-      .filter((x): x is TickerItem => x != null);
+    return picked.batch.map(toTickerItem).filter((x): x is TickerItem => x != null);
   }, []);
-
-  const [current, setCurrent] = useState<TickerItem | null>(() => {
-    refill();
-    return queueRef.current.shift() ?? (poolRef.current?.length === 0 ? FALLBACK_ITEM : null);
-  });
-  const [cycle, setCycle] = useState(0);
-
-  const advance = useCallback(() => {
-    if (queueRef.current.length === 0) refill();
-    const next = queueRef.current.shift() ?? FALLBACK_ITEM;
-    // إن فرغ الطابور بعد السحب — عبّئه مسبقًا للدورة التالية بلا فراغ طويل
-    if (queueRef.current.length === 0) refill();
-    setCurrent(next);
-    setCycle((c) => c + 1);
-  }, [refill]);
-
-  return {
-    current: current ?? FALLBACK_ITEM,
-    cycle,
-    advance,
-    hasContent: current != null,
-  };
 }
 
 function TickerEntry({ item }: { item: TickerItem }) {
@@ -192,31 +152,39 @@ function TickerEntry({ item }: { item: TickerItem }) {
   );
 }
 
-function durationForDistance(distancePx: number): number {
-  // ~95px/ث — أسرع من السابق (~50) مع بقاء القراءة ممكنة للنصوص الطويلة
-  const sec = distancePx / 95;
-  return Math.max(6, Math.min(90, sec));
+function TickerSegment({ items, copyIndex }: { items: TickerItem[]; copyIndex: number }) {
+  return (
+    <div className="header-ticker__segment" data-copy={copyIndex} dir="rtl">
+      {items.map((item, idx) => (
+        <span key={`${copyIndex}-${item.key}-${idx}`} className="header-ticker__slot">
+          {idx > 0 ? (
+            <span className="header-ticker__sep" aria-hidden="true">
+              {ITEM_SEPARATOR}
+            </span>
+          ) : null}
+          <TickerEntry item={item} />
+        </span>
+      ))}
+    </div>
+  );
 }
 
-type AnimSpec = { from: string; to: string; dur: string };
-
 /**
- * شريط علوي متحرّك: نص واحد يكمل خروجه بالكامل ثم ينتقل للتالي.
- * بلا setInterval لتبديل النص، وبلا استبدال دفعة أثناء الحركة.
+ * شريط علوي متواصل: العناصر مكرَّرة داخل المسار (×3) مع فاصل " • "
+ * وحركة لا نهائية بلا فراغ بين نهاية الدورة وبدايتها.
  */
 export function HeaderTicker() {
-  const { current, cycle, advance, hasContent } = useTickerQueue();
+  const items = useTickerItems();
   const reducedMotion = useReducedMotion();
   const { paused, handlers: pauseHandlers } = useTransientPause();
 
   const [bootReady, setBootReady] = useState(false);
-  const [anim, setAnim] = useState<AnimSpec | null>(null);
-  /** يُزاد لإعادة القياس (تدوير الشاشة) دون الانتقال للنص التالي */
+  const [durationSec, setDurationSec] = useState(28);
   const [measureEpoch, setMeasureEpoch] = useState(0);
 
   const viewportRef = useRef<HTMLDivElement>(null);
-  const runnerRef = useRef<HTMLDivElement>(null);
-  const advancingRef = useRef(false);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const segmentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -228,76 +196,47 @@ export function HeaderTicker() {
     };
   }, []);
 
-  const goNext = useCallback(() => {
-    if (advancingRef.current) return;
-    advancingRef.current = true;
-    setAnim(null);
-    advance();
-    window.requestAnimationFrame(() => {
-      advancingRef.current = false;
-    });
-  }, [advance]);
+  const totalChars = useMemo(
+    () => items.reduce((n, it) => n + it.displayText.length + it.label.length, 0),
+    [items],
+  );
 
-  // قياس العرض الحقيقي (clientWidth/scrollWidth) ثم حركة واحدة حتى الخروج الكامل
+  const measureDuration = useCallback(() => {
+    const segment = segmentRef.current;
+    const viewport = viewportRef.current;
+    if (!segment || !viewport) {
+      setDurationSec(marqueeDurationSec(items.length, totalChars));
+      return;
+    }
+    const segmentW = segment.scrollWidth;
+    const vpW = viewport.clientWidth;
+    if (segmentW < 8 || vpW < 8) {
+      setDurationSec(marqueeDurationSec(items.length, totalChars));
+      return;
+    }
+    // ~90px/ث — مسار متواصل بلا توقف؛ مدة دورة = عرض مقطع واحد
+    const sec = Math.max(12, Math.min(72, segmentW / 90));
+    setDurationSec(sec);
+  }, [items.length, totalChars]);
+
   useEffect(() => {
-    if (!bootReady || reducedMotion) return;
-    const vp = viewportRef.current;
-    const runner = runnerRef.current;
-    if (!vp || !runner) return;
-
-    let cancelled = false;
+    if (!bootReady || reducedMotion || items.length === 0) return;
     let raf1 = 0;
     let raf2 = 0;
-
-    const measureAndRun = () => {
-      if (cancelled) return;
-      const vpW = vp.clientWidth;
-      const itemW = runner.scrollWidth;
-      if (vpW < 8 || itemW < 8) return;
-      // للعربية (RTL): بداية الجملة على يمين الصندوق — لذلك نُدخل الصندوق من اليسار
-      // حتى يظهر طرفه الأيمن (بداية النص) أولًا، ثم يتحرّك يسار→يمين حتى يخرج يمينًا.
-      // الـviewport direction:ltr يثبّت المحاور الفيزيائية فقط.
-      const from = -itemW;
-      const to = vpW;
-      const dur = durationForDistance(to - from);
-      setAnim({ from: `${from}px`, to: `${to}px`, dur: `${dur}s` });
-    };
-
     raf1 = window.requestAnimationFrame(() => {
-      raf2 = window.requestAnimationFrame(measureAndRun);
+      raf2 = window.requestAnimationFrame(measureDuration);
     });
-
-    const onOrient = () => {
-      // إعادة قياس لنفس النص بعد التدوير — بدون الانتقال للنص التالي
-      setAnim(null);
-      setMeasureEpoch((n) => n + 1);
-    };
+    const onOrient = () => setMeasureEpoch((n) => n + 1);
     window.addEventListener("orientationchange", onOrient);
-
     return () => {
-      cancelled = true;
       window.cancelAnimationFrame(raf1);
       window.cancelAnimationFrame(raf2);
       window.removeEventListener("orientationchange", onOrient);
     };
-  }, [bootReady, reducedMotion, current.key, cycle, measureEpoch]);
+  }, [bootReady, reducedMotion, items, measureDuration, measureEpoch]);
 
-  // تقليل الحركة: عرض ثابت كامل ثم انتقال بعد وقت القراءة (لا أثناء الحركة)
-  useEffect(() => {
-    if (!reducedMotion || !current || paused) return;
-    const holdMs = Math.min(22_000, Math.max(6_000, current.displayText.length * 70));
-    const t = window.setTimeout(goNext, holdMs);
-    return () => window.clearTimeout(t);
-  }, [reducedMotion, current, paused, goNext, cycle]);
-
-  const onAnimationEnd = (e: AnimationEvent<HTMLDivElement>) => {
-    if (e.target !== runnerRef.current) return;
-    const name = e.animationName || "";
-    if (!name.includes("header-ticker-marquee")) return;
-    goNext();
-  };
-
-  if (!hasContent && !current) return null;
+  // لا شريط فارغ
+  if (items.length === 0) return null;
 
   if (reducedMotion) {
     return (
@@ -307,40 +246,40 @@ export function HeaderTicker() {
         {...pauseHandlers}
       >
         <div className="header-ticker__single-item">
-          <TickerEntry item={current} />
+          <TickerEntry item={items[0]!} />
         </div>
       </div>
     );
   }
 
-  const running = Boolean(anim) && bootReady;
-  const runnerStyle: CSSProperties | undefined = anim
-    ? ({
-        ["--ticker-from" as string]: anim.from,
-        ["--ticker-to" as string]: anim.to,
-        animationDuration: anim.dur,
-      } as CSSProperties)
-    : {
-        // إخفاء حتى القياس — يبدأ من خارج اليسار (نفس اتجاه الحركة المصحّح)
-        opacity: 0,
-        transform: "translate3d(-100%, 0, 0)",
-      };
+  const running = bootReady;
+  const trackStyle: CSSProperties = {
+    ["--ticker-loop-duration" as string]: `${durationSec}s`,
+    ["--ticker-loop-shift" as string]: `${-(100 / TRACK_COPIES)}%`,
+  };
 
   return (
     <div
-      className={`header-ticker${running ? " header-ticker--marquee" : ""}${paused ? " header-ticker--paused" : ""}`}
+      className={`header-ticker header-ticker--marquee${running ? " is-running" : ""}${paused ? " header-ticker--paused" : ""}`}
       aria-live="off"
       {...pauseHandlers}
     >
-      <div className="header-ticker__viewport" ref={viewportRef}>
+      <div className="header-ticker__viewport" ref={viewportRef} dir="ltr">
         <div
-          key={`${current.key}-${cycle}-${measureEpoch}`}
-          ref={runnerRef}
+          ref={trackRef}
           className="header-ticker__track header-ticker__runner"
-          style={runnerStyle}
-          onAnimationEnd={onAnimationEnd}
+          style={trackStyle}
+          data-copies={TRACK_COPIES}
         >
-          <TickerEntry item={current} />
+          {Array.from({ length: TRACK_COPIES }, (_, copyIndex) => (
+            <div
+              key={`copy-${copyIndex}`}
+              className="header-ticker__segment-wrap"
+              ref={copyIndex === 0 ? segmentRef : undefined}
+            >
+              <TickerSegment items={items} copyIndex={copyIndex} />
+            </div>
+          ))}
         </div>
       </div>
     </div>
