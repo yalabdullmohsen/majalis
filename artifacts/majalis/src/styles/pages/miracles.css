@@ -16,14 +16,14 @@
 }
 
 .mk-page--embedded {
-  --mk-green: #0F5C45;
-  --mk-green-deep: #0A3D2E;
-  --mk-green-soft: #E2EFE8;
-  --mk-green-mid: #d4e8df;
-  --mk-surface: var(--color-surface, #FFFCF7);
-  --mk-surface-soft: var(--color-surface-2, #EFE8DC);
-  --mk-line: var(--color-hairline, #D9D2C6);
-  --mk-accent: #2f7a62;
+  --mk-green: var(--primary, #0F5C45);
+  --mk-green-deep: var(--primary-strong, #0A3D2E);
+  --mk-green-soft: var(--primary-soft, #E2EFE8);
+  --mk-green-mid: color-mix(in srgb, var(--primary, #0F5C45) 18%, var(--surface, #FFFCF7));
+  --mk-surface: var(--surface, var(--color-surface, #FFFCF7));
+  --mk-surface-soft: var(--surface-muted, var(--color-surface-2, #EFE8DC));
+  --mk-line: var(--border-soft, var(--color-hairline, #D9D2C6));
+  --mk-accent: var(--primary, #2f7a62);
   max-width: 100%;
   overflow-x: clip;
   padding-bottom: calc(

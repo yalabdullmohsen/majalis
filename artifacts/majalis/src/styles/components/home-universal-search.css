@@ -73,9 +73,14 @@ html.dark .hus-icon {
   min-height: 44px;
   border: 0;
   background: transparent;
-  color: inherit;
+  color: var(--text-main, inherit);
   font: inherit;
   font-size: 0.95rem;
+}
+
+.hus-input::placeholder {
+  color: var(--text-muted, #3f4f48);
+  opacity: 1;
 }
 
 .hus-input:focus {

@@ -29,7 +29,6 @@
    ══════════════════════════════════════════════════════════════ */
 html[data-theme="dark"] :is(
   .navbar-login,
-  .widget-shell__empty-cta,
   .hsh-eyebrow,
   .hsh-step__num,
   .kuwait-tab--active,
@@ -118,9 +117,30 @@ html[data-theme="dark"] .fiqh-hub-strip__sep {
   color: var(--text-2) !important;
 }
 
-/* زر «تسجيل الدخول» داخل الودجات الفارغة: رمادي فوق أخضر داكن. */
+/*
+ * زر CTA داخل الودجات الفارغة كان يُفرض عليه --text-on-brand (أبيض)
+ * فوق سطح كريمي #fffcf7 → تباين 1.02:1 وكسر LHCI accessibility.
+ * اجعله زر علامة حقيقي: خلفية خضراء + نص أبيض (وضعا فاتح/داكن).
+ */
 .widget-shell__empty-cta {
-  color: var(--text-on-brand) !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 40px;
+  padding: 0.4rem 0.95rem !important;
+  border-radius: 999px !important;
+  background-color: var(--brand, #0f5c45) !important;
+  color: var(--text-on-brand, #ffffff) !important;
+  border: 1px solid color-mix(in srgb, var(--brand, #0f5c45) 78%, #000) !important;
+  text-decoration: none !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="dark"] .widget-shell__empty-cta {
+  background-color: var(--brand, #5cc095) !important;
+  color: #06231a !important;
+  border-color: color-mix(in srgb, var(--brand, #5cc095) 55%, #fff) !important;
 }
 
 /* أبناء الحاويات التي أُعيد تلوين خلفيتها في (ب): بعضهم يحمل لونًا داكنًا

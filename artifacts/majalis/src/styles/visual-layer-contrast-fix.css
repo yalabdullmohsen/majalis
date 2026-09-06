@@ -1,0 +1,532 @@
+/**
+ * إصلاح الطبقات البصرية والتباين من الجذر.
+ * يُحمَّل أخيرًا (بعد theme-aliases) ليفوز على التعارضات القديمة.
+ */
+
+/* ─── خلفية التطبيق والبطاقات ─── */
+html,
+body,
+#root,
+.app-shell,
+.page-shell,
+.ds-page,
+.mj-page {
+  background-color: var(--bg-app);
+  color: var(--text-main);
+}
+
+.ui-card,
+.mj-card,
+.ds-card,
+.soft-card,
+.hub-card,
+.source-item-card,
+.fiqh-book-card,
+.ve-chapter-card,
+.fiqh-lux-chapter,
+.fiqh-chapter--card,
+.lessons-v2-filters,
+.notif-card {
+  background: var(--surface) !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border-soft) !important;
+  box-shadow: var(--shadow-soft) !important;
+}
+
+.ui-card--tinted,
+.surface-tinted,
+.fiqh-lux-block,
+.fiqh-note,
+.ve-callout {
+  background: var(--surface-tinted) !important;
+  border-color: var(--border-soft) !important;
+  color: var(--text-main) !important;
+}
+
+/* لا حدود سوداء قاسية */
+.ui-card,
+.mj-card,
+.ds-card,
+.soft-card,
+.hub-card,
+.fiqh-book-card,
+.ve-chapter-card,
+.fiqh-lux-chapter,
+.fiqh-chapter--card,
+.lesson-card,
+.filter-chips,
+.mj-filter-chip,
+.sidebar-item,
+.drawer-panel,
+.sidebar-panel {
+  border-color: var(--border-soft) !important;
+}
+
+/* نصوص ثانوية أوضح على الأسطح الفاتحة */
+.text-muted,
+.muted,
+.meta,
+.ve-hero__desc,
+.fiqh-book-card__desc,
+.fiqh-book-card__meta,
+.ve-chapter-card__preview,
+.ve-chapter-card__meta,
+.lesson-card__meta,
+.notif-row__sub {
+  color: var(--text-muted) !important;
+}
+
+/* ═══════════════════════════════════════════
+   هيرو أخضر + تعارض ve-hero (سبب اختفاء نص الطهارة)
+   ═══════════════════════════════════════════ */
+.fiqh-lux-book-hero,
+.fiqh-lux-book-hero.ve-hero,
+.fiqh-lux-book-hero.ve-hero.ve-hero,
+header.fiqh-lux-book-hero {
+  /* خلفية علامة داكنة ثابتة — لا تستخدم primary الفاتح الليلي */
+  background-color: #0a3d2e !important;
+  background-image:
+    linear-gradient(145deg, color-mix(in srgb, #fff 10%, transparent), transparent 62%) !important;
+  border: 1px solid color-mix(in srgb, #fff 16%, transparent) !important;
+  color: var(--text-on-brand) !important;
+  box-shadow: var(--shadow-soft) !important;
+  text-align: start !important;
+}
+
+.fiqh-lux-book-hero :is(
+  h1, h2, h3, p, span, small, strong, em, a, li, time, label
+),
+.fiqh-lux-book-hero .fiqh-lux-book-hero__title,
+.fiqh-lux-book-hero .ve-title-center,
+.fiqh-lux-book-hero .ve-hero__subtitle,
+.fiqh-lux-book-hero .ve-hero__desc,
+.fiqh-lux-book-hero .fiqh-lux-book-hero__blurb,
+.fiqh-lux-book-hero .fiqh-lux-book-hero__meta,
+.fiqh-lux-book-hero .fiqh-lux-book-hero__aliases {
+  color: var(--text-on-brand) !important;
+  text-align: start !important;
+  opacity: 1 !important;
+}
+
+.fiqh-lux-book-hero .ve-hero__subtitle,
+.fiqh-lux-book-hero .fiqh-lux-book-hero__meta,
+.fiqh-lux-book-hero .fiqh-lux-book-hero__aliases,
+.fiqh-lux-book-hero .ve-hero__desc,
+.fiqh-lux-book-hero .fiqh-lux-book-hero__blurb {
+  color: var(--text-on-brand-muted) !important;
+}
+
+.fiqh-lux-book-hero .ve-badge,
+.fiqh-lux-book-hero .ve-chip,
+.fiqh-lux-book-hero .ve-badge--secondary,
+.fiqh-lux-book-hero .ve-badge--accent {
+  background: color-mix(in srgb, #fff 18%, transparent) !important;
+  color: var(--text-on-brand) !important;
+  border: 1px solid color-mix(in srgb, #fff 24%, transparent) !important;
+}
+
+/* أي سطح علامة غامق: نص فاتح فقط (لا text-on-primary الليلي الداكن) */
+.surface-brand,
+.surface-brand-strong,
+[data-on-brand="light"],
+.page-hero--brand,
+.section-hero--brand {
+  color: var(--text-on-brand) !important;
+}
+.surface-brand :where(h1, h2, h3, p, span, small, a, li, strong, em, small),
+.surface-brand-strong :where(h1, h2, h3, p, span, small, a, li, strong, em, small),
+[data-on-brand="light"] :where(h1, h2, h3, p, span, small, a, li, strong, em, small) {
+  color: var(--text-on-brand) !important;
+  opacity: 1 !important;
+}
+
+/* ═══════════════════════════════════════════
+   بطاقات الفقه والأبواب
+   ═══════════════════════════════════════════ */
+.ve-chapter-card,
+.fiqh-chapter--card .ve-chapter-card,
+.fiqh-lux-chapter__head {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.95rem 1rem;
+  text-align: start;
+  text-decoration: none;
+  color: var(--text-main) !important;
+  background: var(--surface) !important;
+  border: 1px solid var(--border-soft) !important;
+  border-radius: 18px;
+  box-shadow: var(--shadow-soft);
+}
+
+.ve-chapter-card__title,
+.fiqh-book-card__title,
+.fiqh-lux-chapter__title {
+  color: var(--text-main) !important;
+  text-align: start !important;
+  font-weight: 800;
+}
+
+.ve-chapter-card__preview,
+.ve-chapter-card__meta,
+.fiqh-book-card__desc {
+  color: var(--text-muted) !important;
+  text-align: start !important;
+}
+
+.ve-chapter-card__go,
+.fiqh-book-card__go,
+.fiqh-lux-chapter__chev {
+  position: static !important;
+  flex-shrink: 0;
+  align-self: center;
+  color: var(--primary-strong) !important;
+  background: var(--primary-soft) !important;
+  border-radius: 999px;
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fiqh-lux-block,
+.fiqh-source-block,
+.fiqh-evidence,
+.fiqh-note--dalil,
+.fiqh-note--tanbih,
+.fiqh-note--source {
+  border-radius: 16px;
+  border: 1px solid var(--border-soft);
+  padding: 0.9rem 1rem;
+  text-align: start;
+}
+
+.fiqh-note--dalil,
+.fiqh-evidence {
+  background: var(--surface-info) !important;
+}
+.fiqh-note--tanbih {
+  background: var(--surface-warn) !important;
+}
+.fiqh-note--source,
+.fiqh-source-block {
+  background: var(--surface-muted) !important;
+}
+
+/* ═══════════════════════════════════════════
+   فلاتر الدروس — شريط chips مرتب بلا فراغات
+   ═══════════════════════════════════════════ */
+.lesson-filters,
+.lesson-filters--compact {
+  width: 100%;
+  min-width: 0;
+}
+
+.lesson-filters__bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.lesson-filters__chips,
+.lesson-filters__chips.filter-chips,
+.filter-chips,
+.mj-segmented-filter {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  padding: 0.35rem !important;
+  background: var(--surface-muted) !important;
+  border: 1px solid var(--border-soft) !important;
+  border-radius: 16px !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.lesson-filters__chips .filter-chips__chip,
+.filter-chips__chip,
+.mj-filter-chip {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: unset !important;
+  max-width: none !important;
+  min-height: 40px !important;
+  padding: 0.4rem 0.85rem !important;
+  border-radius: 999px !important;
+  border: 1px solid var(--border-soft) !important;
+  background: var(--surface) !important;
+  color: var(--text-main) !important;
+  box-shadow: none !important;
+  white-space: nowrap !important;
+}
+
+.lesson-filters__chips .filter-chips__chip.is-active,
+.filter-chips__chip.is-active,
+.mj-filter-chip.is-active {
+  background: var(--primary-strong) !important;
+  border-color: var(--primary-strong) !important;
+  color: var(--text-on-primary) !important;
+}
+
+.lesson-filters__tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 0 0 auto;
+  margin-inline-start: auto;
+}
+
+.lesson-filters__icon-btn {
+  background: var(--surface) !important;
+  color: var(--primary-strong) !important;
+  border: 1px solid var(--border-strong) !important;
+}
+
+.lesson-filters__icon-btn svg {
+  stroke: currentColor !important;
+  color: inherit !important;
+  opacity: 1 !important;
+}
+
+/* منع القص على الجوال */
+.lessons-page-v2,
+.lessons-page-v3,
+.lessons-v3-sticky {
+  overflow: visible !important;
+}
+
+@media (max-width: 720px) {
+  .lesson-filters__chips,
+  .filter-chips,
+  .mj-segmented-filter--scroll {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .lesson-filters__chips::-webkit-scrollbar,
+  .filter-chips::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   القائمة الجانبية
+   ═══════════════════════════════════════════ */
+.drawer-panel,
+.sidebar-panel {
+  background: var(--surface-muted) !important;
+  color: var(--text-main) !important;
+  border-inline-end: 1px solid var(--border-soft) !important;
+  box-shadow: var(--shadow-soft) !important;
+}
+
+.sidebar-item {
+  color: var(--text-main) !important;
+  border: 1px solid transparent !important;
+  border-inline-start-width: 3px !important;
+  margin-block: 2px;
+}
+
+.sidebar-item:hover {
+  background: color-mix(in srgb, var(--primary) 8%, var(--surface)) !important;
+}
+
+.sidebar-item.active,
+.sidebar-item.is-active,
+.side-nav-link--v2.is-active {
+  background: var(--primary-soft) !important;
+  border-color: var(--border-soft) !important;
+  border-inline-start-color: var(--primary-strong) !important;
+  color: var(--primary-strong) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.sidebar-item-icon {
+  background: var(--surface) !important;
+  border: 1px solid var(--border-soft) !important;
+  color: var(--primary-strong) !important;
+}
+
+.sidebar-section-title {
+  color: var(--text-muted) !important;
+}
+
+.sidebar-close {
+  background: var(--surface) !important;
+  color: var(--text-main) !important;
+}
+
+/* ═══════════════════════════════════════════
+   هيدر / بحث / شريط علوي
+   ═══════════════════════════════════════════ */
+.app-header,
+.top-chrome,
+.site-header,
+.mj-topbar {
+  background: color-mix(in srgb, var(--surface) 92%, var(--primary-soft)) !important;
+  border-bottom: 1px solid var(--border-soft) !important;
+  box-shadow: none !important;
+  color: var(--text-main) !important;
+}
+
+.global-search input,
+.search-input,
+.app-header input[type="search"],
+.mj-search-input,
+.hus-field,
+.hus-input {
+  background: var(--surface) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-strong) !important;
+  box-shadow: none !important;
+}
+
+.hus-field {
+  border: 1px solid var(--border-strong) !important;
+  box-shadow: var(--shadow-soft) !important;
+}
+
+.global-search input::placeholder,
+.search-input::placeholder,
+.hus-input::placeholder,
+input[type="search"]::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 1 !important;
+}
+
+/* الإعجاز + بطاقات الأقسام: حدود ناعمة بلا أسود قاسٍ */
+.mk-card,
+.mk-topic-card,
+.mk-page--embedded .card,
+.topic-page--miracles .topic-card,
+.sections-hub__card,
+.hub-card {
+  border: 1px solid var(--border-soft) !important;
+  box-shadow: var(--shadow-soft) !important;
+  background: var(--surface) !important;
+  color: var(--text-main) !important;
+}
+
+.mk-page--embedded {
+  --mk-green: var(--primary);
+  --mk-green-deep: var(--primary-strong);
+  --mk-green-soft: var(--primary-soft);
+  --mk-surface: var(--surface);
+  --mk-surface-soft: var(--surface-muted);
+  --mk-line: var(--border-soft);
+}
+
+/* تمييز أوضح للبطاقات فوق الخلفية الهادئة */
+.ui-card,
+.mj-card,
+.ds-card,
+.soft-card,
+.hub-card,
+.fiqh-book-card,
+.ve-chapter-card {
+  background: var(--surface-elevated) !important;
+}
+
+/* أزرار أساسية فقط خضراء قوية */
+.ds-btn--primary,
+.btn-primary,
+.mj-btn--primary,
+button.primary {
+  background: var(--primary-strong) !important;
+  color: var(--text-on-primary) !important;
+  border-color: var(--primary-strong) !important;
+}
+
+.ds-btn--ghost,
+.btn-ghost,
+.mj-btn--ghost {
+  background: var(--surface) !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border-soft) !important;
+}
+
+/* شارات هادئة */
+.ve-badge,
+.chip,
+.tag,
+.status-pill {
+  background: var(--primary-soft) !important;
+  color: var(--primary-strong) !important;
+  border: 1px solid var(--border-soft) !important;
+}
+
+/* RTL: محاذاة بداية للنصوص الطويلة */
+.fiqh-lux-shell,
+.fiqh-lux-book,
+.ve-page,
+.lessons-page-v3,
+.page-shell {
+  text-align: start;
+}
+
+.fiqh-lux-shell p,
+.fiqh-lux-book p,
+.ve-page p,
+.fiqh-lux-block p {
+  text-align: start !important;
+}
+
+/* الوضع الداكن: هيرو العلامة يبقى داكنًا بنص أبيض واضح */
+html.dark .fiqh-lux-book-hero,
+html[data-theme="dark"] .fiqh-lux-book-hero,
+html.dark .surface-brand,
+html[data-theme="dark"] .surface-brand,
+html.dark [data-on-brand="light"],
+html[data-theme="dark"] [data-on-brand="light"] {
+  background-color: #0a3d2e !important;
+  color: #ffffff !important;
+}
+
+html.dark .fiqh-lux-book-hero :is(h1, h2, h3, p, span, small, a, li, strong),
+html[data-theme="dark"] .fiqh-lux-book-hero :is(h1, h2, h3, p, span, small, a, li, strong),
+html.dark [data-on-brand="light"] :is(h1, h2, h3, p, span, small, a, li, strong),
+html[data-theme="dark"] [data-on-brand="light"] :is(h1, h2, h3, p, span, small, a, li, strong) {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+html.dark .fiqh-lux-book-hero .fiqh-lux-book-hero__meta,
+html.dark .fiqh-lux-book-hero .fiqh-lux-book-hero__blurb,
+html.dark .fiqh-lux-book-hero .fiqh-lux-book-hero__aliases,
+html[data-theme="dark"] .fiqh-lux-book-hero .fiqh-lux-book-hero__meta,
+html[data-theme="dark"] .fiqh-lux-book-hero .fiqh-lux-book-hero__blurb,
+html[data-theme="dark"] .fiqh-lux-book-hero .fiqh-lux-book-hero__aliases {
+  color: #d7eee4 !important;
+}
+
+/* بطاقات محتوى الباب: حدود ناعمة */
+.fiqh-lux-chapter .fiqh-lux-block,
+.fiqh-lux-chapter details,
+.fiqh-chapter-panel,
+.fiqh-lux-accordion,
+.ve-accordion,
+.fiqh-lux-shell details,
+.fiqh-lux-shell .card {
+  border: 1px solid var(--border-soft) !important;
+  box-shadow: var(--shadow-soft) !important;
+  background: var(--surface) !important;
+  color: var(--text-main) !important;
+}
+
+html.dark .sidebar-item.active,
+html[data-theme="dark"] .sidebar-item.active {
+  background: color-mix(in srgb, var(--primary) 18%, var(--surface)) !important;
+  color: var(--primary-strong) !important;
+}
