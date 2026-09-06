@@ -1,6 +1,11 @@
 /**
  * إطلاق إشعار تجريبي للتحقق من الصوت/البانر/الحمولة على الجهاز الحقيقي (TestFlight).
  */
+import {
+  getSettingsSoundOption,
+  resolveSelectedToneSoundId,
+} from "@/lib/adhan-settings-sound-catalog";
+import { loadPrayerAlertPrefs } from "@/lib/prayer-alert-preferences";
 import { isNative } from "@/lib/capacitor-utils";
 import { sendLocalNotification } from "@/lib/local-notifications";
 import {
@@ -28,10 +33,18 @@ export const TEST_NOTIFICATION_DELAY_MS = 15_000;
 function testNotificationSound(): string {
   if (!PRAYER_CUSTOM_SOUNDS_ENABLED) return DEFAULT_ALERT_SOUND;
   try {
-    const prefs = loadAdhanPrefs();
-    return resolveAdhanStyleNotificationSound(prefs.defaultMuezzinId || "makkah");
+    const alertPrefs = loadPrayerAlertPrefs();
+    const toneId = resolveSelectedToneSoundId(alertPrefs.soundProfile);
+    const opt = getSettingsSoundOption(toneId);
+    if (opt?.playbackMode === "silent" || !opt?.iosNotificationSound) return DEFAULT_ALERT_SOUND;
+    return platformNotificationSoundName(opt.iosNotificationSound);
   } catch {
-    return platformNotificationSoundName(PRAYER_SOUND_FILES.clear);
+    try {
+      const prefs = loadAdhanPrefs();
+      return resolveAdhanStyleNotificationSound(prefs.defaultMuezzinId || "makkah");
+    } catch {
+      return platformNotificationSoundName(PRAYER_SOUND_FILES.clear);
+    }
   }
 }
 

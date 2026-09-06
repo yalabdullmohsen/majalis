@@ -10,6 +10,10 @@
 		05B0407FBEE74C08BAD75898 /* PrayerLiveActivityBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6429A49DB14D2382B4F753 /* PrayerLiveActivityBundle.swift */; };
 		18A062D2627A492F88C48C0A /* PrayerActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C1C0E442F343FCA02B3616 /* PrayerActivityAttributes.swift */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
+		AA01BF04SHORTRING000001 /* short-ring.caf in Resources */ = {isa = PBXBuildFile; fileRef = AA01FR04SHORTRING000001 /* short-ring.caf */; };
+		AA01BF03SOFTRING0000001 /* soft-ring.caf in Resources */ = {isa = PBXBuildFile; fileRef = AA01FR03SOFTRING0000001 /* soft-ring.caf */; };
+		AA01BF02ALARMCLEAR00001 /* alarm-clear.caf in Resources */ = {isa = PBXBuildFile; fileRef = AA01FR02ALARMCLEAR00001 /* alarm-clear.caf */; };
+		AA01BF01PRAYERALERT0001 /* prayer-alert.caf in Resources */ = {isa = PBXBuildFile; fileRef = AA01FR01PRAYERALERT0001 /* prayer-alert.caf */; };
 		364D1D47522246B3A2925CB0 /* PrayerLiveActivityLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BFB99A02A44271A9C1823F /* PrayerLiveActivityLiveActivity.swift */; };
 		39CB341721E64235B5BF683A /* PrayerLiveActivityExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7E1242ECE587423F9C049CBF /* PrayerLiveActivityExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4D22ABE92AF431CB00220026 /* CapApp-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 4D22ABE82AF431CB00220026 /* CapApp-SPM */; };
@@ -174,6 +178,10 @@
 				AD10FR08A1B2C3D4E5F6071890 /* prayer_aqsa.caf */,
 				AD10FR09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf */,
 				AD11FR01A1B2C3D4E5F6071890 /* adhan-short-makkah.caf */,
+				AA01FR01PRAYERALERT0001 /* prayer-alert.caf */,
+				AA01FR02ALARMCLEAR00001 /* alarm-clear.caf */,
+				AA01FR03SOFTRING0000001 /* soft-ring.caf */,
+				AA01FR04SHORTRING000001 /* short-ring.caf */,
 				AD11FR03A1B2C3D4E5F6071890 /* adhan-short-aqsa.caf */,
 				AD11FR04A1B2C3D4E5F6071890 /* adhan-short-egypt.caf */,
 				AD11FR05A1B2C3D4E5F6071890 /* adhan-short-takbeerat.caf */,
@@ -330,6 +338,10 @@
 				AD10BF08A1B2C3D4E5F6071890 /* prayer_aqsa.caf in Resources */,
 				AD10BF09A1B2C3D4E5F6071890 /* prayer_takbeerat.caf in Resources */,
 				AD11BF01A1B2C3D4E5F6071890 /* adhan-short-makkah.caf in Resources */,
+				AA01BF04SHORTRING000001 /* short-ring.caf in Resources */,
+				AA01BF03SOFTRING0000001 /* soft-ring.caf in Resources */,
+				AA01BF02ALARMCLEAR00001 /* alarm-clear.caf in Resources */,
+				AA01BF01PRAYERALERT0001 /* prayer-alert.caf in Resources */,
 				AD11BF03A1B2C3D4E5F6071890 /* adhan-short-aqsa.caf in Resources */,
 				AD11BF04A1B2C3D4E5F6071890 /* adhan-short-egypt.caf in Resources */,
 				AD11BF05A1B2C3D4E5F6071890 /* adhan-short-takbeerat.caf in Resources */,

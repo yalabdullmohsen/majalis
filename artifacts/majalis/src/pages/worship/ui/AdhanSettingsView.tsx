@@ -23,7 +23,9 @@ import { PrayerAlertSettingsCard } from "@/components/adhan/PrayerAlertSettingsC
 import {
   listAvailableSettingsSounds,
   getSettingsSoundOption,
-  resolveSettingsSoundSelection,
+  rememberSettingsSoundSelection,
+  resolveSelectedAdhanSoundId,
+  resolveSelectedToneSoundId,
   type SettingsSoundOption,
 } from "@/lib/adhan-settings-sound-catalog";
 import { loadPrayerAlertPrefs, patchPrayerAlertPrefs } from "@/lib/prayer-alert-preferences";
@@ -273,7 +275,7 @@ function SoundOptionCard({
   onListen: () => void;
 }) {
   return (
-    <div className={`ads-style-card${selected ? " is-selected" : ""}`}>
+    <div className={`ads-style-card ads-style-card--compact${selected ? " is-selected" : ""}`}>
       <button
         type="button"
         role="radio"
@@ -282,17 +284,17 @@ function SoundOptionCard({
         onClick={onSelect}
       >
         <span className="ads-style-card__name">{opt.label}</span>
-        {selected ? <span className="ads-style-card__badge">مختار</span> : null}
+        {selected ? <span className="ads-style-card__badge" data-selected="1">مختار</span> : null}
       </button>
       {opt.playbackMode !== "silent" ? (
         <button
           type="button"
           className={`ads-style-card__preview${playing ? " is-playing" : ""}`}
           onClick={onListen}
-          aria-label={`استماع — ${opt.label}`}
+          aria-label={`معاينة — ${opt.label}`}
         >
           <Volume2 size={14} aria-hidden="true" />
-          {playing ? "إيقاف" : "استماع"}
+          {playing ? "إيقاف" : "معاينة"}
         </button>
       ) : null}
     </div>
@@ -321,11 +323,8 @@ export default function AdhanSettingsPage() {
   const [statusLines, setStatusLines] = useState<string[] | null>(null);
 
   const soundOptions = useMemo(() => listAvailableSettingsSounds(), []);
-  const selectedSoundId = resolveSettingsSoundSelection(
-    prefs.defaultMuezzinId,
-    prefs.playbackMode === "full" ? "short" : prefs.playbackMode,
-    alertPrefs.soundProfile,
-  );
+  const selectedAdhanSoundId = resolveSelectedAdhanSoundId(prefs.defaultMuezzinId);
+  const selectedToneSoundId = resolveSelectedToneSoundId(alertPrefs.soundProfile);
 
   useEffect(() => {
     applyPageSeo({
@@ -363,14 +362,24 @@ export default function AdhanSettingsPage() {
   }
 
   function selectSound(opt: SettingsSoundOption) {
-    setPrefs(
-      patchAdhanPrefs({
-        defaultMuezzinId: opt.muezzinId,
-        playbackMode: opt.playbackMode === "silent" ? "silent" : "short",
-        iosSequentialFullAdhan: false,
-      }),
-    );
-    setAlertPrefs(patchPrayerAlertPrefs({ soundProfile: opt.soundProfile }));
+    rememberSettingsSoundSelection(opt);
+    if (opt.group === "adhan") {
+      setPrefs(
+        patchAdhanPrefs({
+          defaultMuezzinId: opt.muezzinId,
+          playbackMode: "short",
+          iosSequentialFullAdhan: false,
+        }),
+      );
+    } else {
+      setPrefs(
+        patchAdhanPrefs({
+          playbackMode: opt.playbackMode === "silent" ? "silent" : prefs.playbackMode === "full" ? "short" : prefs.playbackMode,
+          iosSequentialFullAdhan: false,
+        }),
+      );
+      setAlertPrefs(patchPrayerAlertPrefs({ soundProfile: opt.soundProfile }));
+    }
     flashSaved();
   }
 
@@ -423,42 +432,36 @@ export default function AdhanSettingsPage() {
 
   async function listenToSound(opt: SettingsSoundOption) {
     if (opt.playbackMode === "silent") {
-      stopAdhanPreview();
-      setPlayingId(null);
-      setSoundMsg("صامت — بلا تشغيل");
+      setSoundMsg("الصامت لا يشغّل معاينة صوتية.");
       return;
     }
-    if (playingId === opt.id) {
-      stopAdhanPreview();
-      setPlayingId(null);
-      setSoundMsg(null);
-      return;
-    }
-    setSoundMsg("جارٍ التحميل…");
-    const loadTimer = window.setTimeout(() => {
-      setPlayingId(null);
-      setSoundMsg("فشل التشغيل: انتهت مهلة التحميل.");
-    }, 12_000);
-    const result = await playAdhanPreview(opt.muezzinId, "short", prefs.volume ?? 1);
-    window.clearTimeout(loadTimer);
-    if (!result.ok) {
-      setPlayingId(null);
-      setSoundMsg("فشل التشغيل: تعذّر الاستماع — تجربة الصوت الافتراضي.");
-      const fallback = await playAdhanPreview("makkah", "short", prefs.volume ?? 1);
-      if (fallback.ok) {
-        setPlayingId(opt.id);
-        setSoundMsg(null);
-        fallback.audio.addEventListener("ended", () => setPlayingId(null), { once: true });
-      }
-      return;
-    }
+    stopAdhanPreview();
     setPlayingId(opt.id);
     setSoundMsg(null);
-    result.audio.addEventListener("ended", () => setPlayingId(null), { once: true });
+    try {
+      if (opt.previewUrl) {
+        const audio = new Audio(opt.previewUrl);
+        audio.volume = Math.max(0.35, Math.min(1, prefs.volume ?? 1));
+        (window as unknown as { __ssunnahPreviewAudio?: HTMLAudioElement }).__ssunnahPreviewAudio = audio;
+        audio.onended = () => setPlayingId((id) => (id === opt.id ? null : id));
+        await audio.play();
+        setSoundMsg(opt.group === "tone" ? "معاينة صوت الإشعار داخل التطبيق." : "معاينة الأذان داخل التطبيق.");
+        return;
+      }
+      const result = await playAdhanPreview(opt.muezzinId, "short", prefs.volume ?? 1);
+      if (!result.ok) {
+        setSoundMsg("فشل التشغيل: تعذّر المعاينة — تجربة الصوت الافتراضي.");
+        const fallback = await playAdhanPreview("makkah", "short", prefs.volume ?? 1);
+        if (!fallback.ok) setPlayingId(null);
+      }
+    } catch {
+      setPlayingId(null);
+      setSoundMsg("تعذّر تشغيل المعاينة.");
+    }
   }
 
   async function runSoundTest() {
-    const opt = getSettingsSoundOption(selectedSoundId) ?? soundOptions[0];
+    const opt = getSettingsSoundOption(selectedToneSoundId) ?? getSettingsSoundOption(selectedAdhanSoundId) ?? soundOptions[0];
     if (!opt) return;
     await listenToSound(opt);
   }
@@ -467,7 +470,7 @@ export default function AdhanSettingsPage() {
     setNotifTestMsg(null);
     try {
       const { fireTestLocalNotification } = await import("@/lib/notifications/test-trigger");
-      const res = await fireTestLocalNotification(15_000);
+      const res = await fireTestLocalNotification(10_000);
       if (!res.ok) {
         setNotifTestMsg(
           res.reason === "permission"
@@ -476,7 +479,7 @@ export default function AdhanSettingsPage() {
         );
         return;
       }
-      setNotifTestMsg("سيصل إشعار قصير خلال ١٥ ثانية.");
+      setNotifTestMsg("سيصل إشعار قصير خلال ١٠ ثوانٍ.");
     } catch {
       setNotifTestMsg("تعذّر اختبار الإشعار.");
     }
@@ -598,16 +601,16 @@ export default function AdhanSettingsPage() {
       <section className="ads-card" aria-labelledby="ads-sound-head">
         <div className="ads-card__head" id="ads-sound-head">
           <Music size={15} strokeWidth={2} aria-hidden="true" />
-          <span>صوت التنبيه</span>
+          <span>أصوات الصلاة</span>
         </div>
         <div className="ads-card__body">
-          <p className="ads-gov-label">أصوات الأذان</p>
-          <div className="ads-style-grid" role="radiogroup" aria-label="أصوات الأذان">
+          <p className="ads-gov-label">الأذان داخل التطبيق</p>
+          <div className="ads-style-grid" role="radiogroup" aria-label="الأذان داخل التطبيق">
             {adhanSounds.map((opt) => (
               <SoundOptionCard
                 key={opt.id}
                 opt={opt}
-                selected={selectedSoundId === opt.id}
+                selected={selectedAdhanSoundId === opt.id}
                 playing={playingId === opt.id}
                 onSelect={() => selectSound(opt)}
                 onListen={() => void listenToSound(opt)}
@@ -615,13 +618,13 @@ export default function AdhanSettingsPage() {
             ))}
           </div>
 
-          <p className="ads-gov-label" style={{ marginTop: "0.85rem" }}>رنات التنبيه</p>
-          <div className="ads-style-grid" role="radiogroup" aria-label="رنات التنبيه">
+          <p className="ads-gov-label" style={{ marginTop: "0.85rem" }}>صوت إشعار الصلاة</p>
+          <div className="ads-style-grid" role="radiogroup" aria-label="صوت إشعار الصلاة">
             {toneSounds.map((opt) => (
               <SoundOptionCard
                 key={opt.id}
                 opt={opt}
-                selected={selectedSoundId === opt.id}
+                selected={selectedToneSoundId === opt.id}
                 playing={playingId === opt.id}
                 onSelect={() => selectSound(opt)}
                 onListen={() => void listenToSound(opt)}
@@ -759,10 +762,10 @@ export default function AdhanSettingsPage() {
           </div>
           <div className="ads-prayer-muezzin-btns ads-sound-test-row">
             <button type="button" className="ads-pill-btn" onClick={() => void runSoundTest()}>
-              {playingId ? "إيقاف الصوت" : "اختبار الصوت"}
+              {playingId ? "إيقاف الصوت" : "معاينة الصوت"}
             </button>
             <button type="button" className="ads-pill-btn" onClick={() => void runNotifSoundTest()}>
-              اختبار إشعار بعد ١٥ ثانية
+              اختبار الإشعار بعد ١٠ ثوانٍ
             </button>
             <button
               type="button"
