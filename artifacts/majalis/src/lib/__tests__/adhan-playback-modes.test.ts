@@ -1,11 +1,12 @@
 /**
- * صيغ تشغيل الأذان — كامل / قصير / تكبير / صامت + إقامة.
+ * صيغ تشغيل الأذان — قصير / تكبير / صامت (full محذوف → short).
  * تشغيل: node --import tsx src/lib/__tests__/adhan-playback-modes.test.ts
  */
 import assert from "node:assert/strict";
 import {
   ADHAN_SHORT_MAX_SEC,
   ADHAN_TAKBIR_MAX_SEC,
+  normalizeAdhanPlaybackMode,
   resolveAdhanClip,
   resolveIqamahClip,
 } from "../adhan-playback-modes";
@@ -20,13 +21,16 @@ const sources = {
 
 assert.equal(resolveAdhanClip(sources, { isFajr: false, mode: "silent" }), null);
 
-const full = resolveAdhanClip(sources, { isFajr: false, mode: "full" })!;
-assert.equal(full.url, sources.audioUrl);
-assert.equal(full.maxMs, null);
+assert.equal(normalizeAdhanPlaybackMode("full"), "short");
+
+const fullAsShort = resolveAdhanClip(sources, { isFajr: false, mode: "full" })!;
+assert.equal(fullAsShort.kind, "short");
+assert.equal(fullAsShort.url, sources.shortUrl);
+assert.ok((fullAsShort.maxMs ?? 0) <= ADHAN_SHORT_MAX_SEC * 1000);
 
 const fajr = resolveAdhanClip(sources, { isFajr: true, mode: "full" })!;
-assert.equal(fajr.url, sources.fajrUrl);
-assert.equal(fajr.kind, "fajr");
+assert.equal(fajr.url, sources.shortUrl);
+assert.equal(fajr.kind, "short");
 
 assert.equal(
   resolveAdhanClip({ audioUrl: sources.audioUrl }, { isFajr: true, mode: "full" }),

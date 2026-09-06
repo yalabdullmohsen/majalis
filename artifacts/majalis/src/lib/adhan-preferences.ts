@@ -11,6 +11,7 @@ import {
 } from "./adhan-audio";
 import {
   isAdhanPlaybackMode,
+  normalizeAdhanPlaybackMode,
   type AdhanPlaybackMode,
 } from "./adhan-playback-modes";
 import { clampAdhanMuezzinId, isAllowedAdhanMuezzinId } from "./adhan-selectable-types";
@@ -79,7 +80,7 @@ export type AdhanPreferences = {
   browserNotificationsEnabled: boolean;
   silentReminderEnabled: boolean;
   defaultMuezzinId: string;         // fallback muezzin for all prayers
-  /** صيغة التشغيل: كامل / قصير / تكبير / صامت — الافتراضي short؛ لا يُفعَّل full تلقائيًا */
+  /** صيغة التشغيل: قصير / تكبير / صامت — الأذان الكامل محذوف نهائيًا */
   playbackMode: AdhanPlaybackMode;
   /** تشغيل مقطع الإقامة بعد الأذان إن توفّر */
   iqamahEnabled: boolean;
@@ -95,8 +96,7 @@ export type AdhanPreferences = {
    */
   bypassSilentMode: boolean;
   /**
-   * تجريبي: أذان كامل عبر إشعارات متتابعة (مقاطع CAF).
-   * غير مضمون على iOS مع الصامت/Focus — الافتراضي false.
+   * الأذان الكامل المتتابع محذوف نهائيًا — يُحفظ الحقل للتوافق ويُفرض false دائمًا.
    */
   iosSequentialFullAdhan: boolean;
   prayers: Record<PrayerKey, PerPrayerPrefs>;
@@ -195,6 +195,10 @@ export function loadAdhanPrefs(): AdhanPreferences {
             ? p.iqamahEnabled
             : base.prayers[key].iqamahEnabled,
         muezzinId: safeMid,
+        deliveryMode:
+          p.deliveryMode === "" || p.deliveryMode == null
+            ? ""
+            : normalizeAdhanPlaybackMode(p.deliveryMode),
       };
     }
     const merged: AdhanPreferences = {
@@ -202,9 +206,8 @@ export function loadAdhanPrefs(): AdhanPreferences {
       browserNotificationsEnabled: parsed.browserNotificationsEnabled ?? base.browserNotificationsEnabled,
       silentReminderEnabled: parsed.silentReminderEnabled ?? base.silentReminderEnabled,
       defaultMuezzinId,
-      playbackMode: isAdhanPlaybackMode(parsed.playbackMode)
-        ? parsed.playbackMode
-        : base.playbackMode,
+      // ترحيل: أي playbackMode="full" قديم → short
+      playbackMode: normalizeAdhanPlaybackMode(parsed.playbackMode),
       iqamahEnabled: parsed.iqamahEnabled ?? base.iqamahEnabled,
       iqamahDelayMinutes:
         iqDelay === 0 || iqDelay === 5 || iqDelay === 10 || iqDelay === 15
@@ -213,7 +216,7 @@ export function loadAdhanPrefs(): AdhanPreferences {
       volume: vol,
       vibrateEnabled: parsed.vibrateEnabled ?? base.vibrateEnabled,
       bypassSilentMode: false, // Critical Alerts غير متوفر — لا نفعّل أبدًا من التخزين
-      iosSequentialFullAdhan: parsed.iosSequentialFullAdhan ?? base.iosSequentialFullAdhan,
+      iosSequentialFullAdhan: false, // الأذان الكامل محذوف — لا يُفعَّل أبدًا
       prayers,
       fridayBannerEnabled: parsed.fridayBannerEnabled ?? base.fridayBannerEnabled,
       lastTestedMuezzinId:
@@ -250,12 +253,21 @@ export function saveAdhanPrefs(prefs: AdhanPreferences): AdhanPreferences {
     ...prefs,
     defaultMuezzinId: clampAdhanMuezzinId(prefs.defaultMuezzinId),
     bypassSilentMode: false,
+    iosSequentialFullAdhan: false,
+    playbackMode: normalizeAdhanPlaybackMode(prefs.playbackMode),
   });
   // صفّر أي muezzinId غير مسموح في الصلوات
   for (const key of PRAYER_KEYS) {
     const mid = safe.prayers[key]?.muezzinId || "";
     if (mid && !isAllowedAdhanMuezzinId(mid)) {
       safe.prayers[key] = { ...safe.prayers[key], muezzinId: "" };
+    }
+    const dm = safe.prayers[key]?.deliveryMode;
+    if (dm && dm !== "") {
+      safe.prayers[key] = {
+        ...safe.prayers[key],
+        deliveryMode: normalizeAdhanPlaybackMode(dm),
+      };
     }
   }
   try {
@@ -304,10 +316,10 @@ export function getEffectivePlaybackMode(
   prefs: AdhanPreferences,
   key: PrayerKey,
 ): AdhanPlaybackMode {
-  const global = prefs.playbackMode ?? "short";
+  const global = normalizeAdhanPlaybackMode(prefs.playbackMode ?? "short");
   const per = prefs.prayers[key]?.deliveryMode;
-  if (isAdhanDeliveryMode(per)) return per;
-  return global;
+  if (per === "" || per == null) return global;
+  return normalizeAdhanPlaybackMode(per);
 }
 
 /** هل تُجدوَل الإقامة لهذه الصلاة؟ (عام + لكل صلاة) */

@@ -1,28 +1,29 @@
 /**
- * جدولة أذان كامل على iOS كمقاطع إشعار متتابعة ≤28ث (حد النظام 30ث).
- * الملفات يجب أن تكون مضمّنة في الحزمة (Sounds/*.caf) ومسجّلة في Xcode.
+ * جدولة تنبيه أذان قصير على iOS (إشعار واحد ≤28ث).
+ * الأذان الكامل وسلاسل المقاطع محذوفة نهائيًا — لا تُجدول أبدًا.
  */
 
 import { Capacitor } from "@capacitor/core";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { isIOS } from "./capacitor-utils";
 import { ADHAN_SHORT_MAX_SEC } from "./adhan-playback-modes";
+import {
+  DEFAULT_ADHAN_SHORT_SOUND_ID,
+  iosNotificationSoundName,
+} from "./notification-alert-catalog";
 
-export const ADHAN_IOS_MAX_SEGMENTS = 4;
+export const ADHAN_IOS_MAX_SEGMENTS = 1;
 export const ADHAN_IOS_SEGMENT_MAX_SEC = Math.min(28, ADHAN_SHORT_MAX_SEC);
-/** فاصل جدولة ثابت بين بداية المقاطع (ملف ≤28ث + هامش ١ث) */
+/** لم يعد يُستخدم للسلاسل — بقي للتوافق مع الاختبارات القديمة */
 export const ADHAN_IOS_SEGMENT_SCHEDULE_GAP_SEC = 29;
 
-/**
- * مقاطع الأذان الكامل المتعدّدة (`adhan-seq-makkah-0N.caf`) مضمّنة في الحزمة.
- * الوضع التجريبي فقط — غير افتراضي؛ قد يقطعها الصامت/Focus.
- */
-export const ADHAN_IOS_MULTI_SEGMENT_BUNDLED = true;
+/** السلاسل المتتابعة معطّلة نهائيًا */
+export const ADHAN_IOS_MULTI_SEGMENT_BUNDLED = false;
 
 export type AdhanIosSegmentPlan = {
   /** معرّف الإشعار */
   id: number;
-  /** اسم ملف الصوت في الحزمة بدون مسار (مثل adhan-seq-makkah-01.caf) */
+  /** اسم ملف الصوت في الحزمة بدون مسار (مثل adhan-makkah-short.caf) */
   sound: string;
   /** موعد الإطلاق */
   atMs: number;
@@ -49,23 +50,23 @@ function chainStoreKey(prayerKey: string, dayKey: string): string {
 }
 
 function chainIdBase(prayerKey: string, dayKey: string): number {
-  // نطاق بعيداً عن إشعارات الصلاة الأخرى
+  // نطاق بعيداً عن إشعارات الصلاة الأخرى وعن تذكيرات 70000
   let h = 0;
   const s = `${prayerKey}:${dayKey}`;
   for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
   return 710_000 + (h % 20_000);
 }
 
-/** أسماء المقاطع المتوقعة في الحزمة لتسجيل معيّن */
+/** أسماء المقاطع — تُرجع دائمًا مقطعًا قصيرًا (لا seq). */
 export function adhanIosSoundName(
   recordingId: string,
-  kind: "general" | "fajr",
-  segmentIndex1Based: number,
+  _kind: "general" | "fajr",
+  _segmentIndex1Based: number,
 ): string {
-  if (recordingId === "makkah" || recordingId === "makki" || recordingId === "alharam") {
-    return `adhan-seq-makkah-0${segmentIndex1Based}.caf`;
-  }
   const shortMap: Record<string, string> = {
+    makkah: "adhan-short-makkah.caf",
+    makki: "adhan-short-makkah.caf",
+    alharam: "adhan-short-makkah.caf",
     egypt: "adhan-short-egypt.caf",
     aqsa: "adhan-short-aqsa.caf",
     takbeerat: "adhan-short-takbeerat.caf",
@@ -75,8 +76,7 @@ export function adhanIosSoundName(
 }
 
 /**
- * يبني خطة ≤4 مقاطع بفجوات = مدة المقطع السابق.
- * durationsSec يجب أن يكون كل عنصر ≤28.
+ * يبني خطة إشعار قصير واحد فقط — لا سلاسل.
  */
 export function buildAdhanIosSegmentPlan(opts: {
   prayerKey: string;
@@ -84,34 +84,23 @@ export function buildAdhanIosSegmentPlan(opts: {
   recordingId: string;
   isFajr: boolean;
   startAtMs: number;
-  /** مدد المقاطع بالثواني (من الميتاداتا/التقطيع) */
+  /** مدد المقاطع — يُتجاهل ما بعد الأول */
   durationsSec: number[];
 }): AdhanIosSegmentPlan[] {
-  const clipped = opts.durationsSec
-    .slice(0, ADHAN_IOS_MAX_SEGMENTS)
-    .map((d) => Math.min(ADHAN_IOS_SEGMENT_MAX_SEC, Math.max(1, d)));
-  if (clipped.length === 0) return [];
-
   const dayKey = new Date(opts.startAtMs).toISOString().slice(0, 10);
   const base = chainIdBase(opts.prayerKey, dayKey);
   const kind = opts.isFajr ? "fajr" : "general";
-  const plan: AdhanIosSegmentPlan[] = [];
-
-  for (let i = 0; i < clipped.length; i++) {
-    const isFirst = i === 0;
-    plan.push({
-      id: base + i,
-      sound: adhanIosSoundName(opts.recordingId, kind, i + 1),
-      atMs: opts.startAtMs + i * ADHAN_IOS_SEGMENT_SCHEDULE_GAP_SEC * 1000,
-      title: isFirst ? `أذان ${opts.prayerName}` : `تتمة أذان ${opts.prayerName}`,
-      body: isFirst
-        ? "حيّ على الصلاة"
-        : `المقطع ${i + 1} من ${clipped.length}`,
+  return [
+    {
+      id: base,
+      sound: adhanIosSoundName(opts.recordingId, kind, 1),
+      atMs: opts.startAtMs,
+      title: `أذان ${opts.prayerName}`,
+      body: "حيّ على الصلاة",
       prayerKey: opts.prayerKey,
-      segmentIndex: i,
-    });
-  }
-  return plan;
+      segmentIndex: 0,
+    },
+  ];
 }
 
 let _memoryChains: ChainMap = {};
@@ -177,14 +166,16 @@ export async function cancelAdhanIosSegmentChain(prayerKey?: string): Promise<nu
 }
 
 /**
- * يجدول سلسلة مقاطع لصلاة واحدة. يلغي سلسلة نفس الصلاة/اليوم فقط — لا يمسح صلوات أخرى.
+ * يجدول إشعارًا قصيرًا واحدًا فقط — يقطع أي سلسلة أطول من مقطع.
  */
 export async function scheduleAdhanIosSegmentChain(
   plan: AdhanIosSegmentPlan[],
 ): Promise<{ ok: boolean; ids: number[] }> {
   if (!plan.length) return { ok: false, ids: [] };
-  const prayerKey = plan[0].prayerKey;
-  const dayKey = new Date(plan[0].atMs).toISOString().slice(0, 10);
+  // فرض مقطع واحد فقط — لا سلاسل
+  const single = plan.slice(0, 1);
+  const prayerKey = single[0].prayerKey;
+  const dayKey = new Date(single[0].atMs).toISOString().slice(0, 10);
   const map = readChainMap();
   const storeKey = chainStoreKey(prayerKey, dayKey);
   const prev = map[storeKey];
@@ -203,29 +194,27 @@ export async function scheduleAdhanIosSegmentChain(
   const rec: ChainRecord = {
     prayerKey,
     dayKey,
-    ids: plan.map((p) => p.id),
+    ids: single.map((p) => p.id),
     startedAt: Date.now(),
   };
 
   if (!isAdhanIosSegmentsAvailable()) {
     if (import.meta.env?.DEV) {
-      for (const p of plan) {
-        console.info("[adhan-schedule]", {
-          prayerName: p.title ?? plan[0].title,
-          prayerKey: p.prayerKey,
-          prayerTime: new Date(p.atMs).toISOString(),
-          mode: plan.length > 1 ? "sequential" : "short",
-          soundName: p.sound,
-          notificationId: p.id,
-          segmentIndex: p.segmentIndex,
-        });
-      }
+      console.info("[adhan-schedule]", {
+        prayerName: single[0].title,
+        prayerKey: single[0].prayerKey,
+        prayerTime: new Date(single[0].atMs).toISOString(),
+        mode: "short",
+        soundName: single[0].sound,
+        notificationId: single[0].id,
+        segmentIndex: 0,
+      });
     }
     upsertChain(rec);
     return { ok: true, ids: rec.ids };
   }
 
-  const notifications = plan.map((p) => ({
+  const notifications = single.map((p) => ({
     id: p.id,
     title: p.title || `أذان ${prayerKey}`,
     body: p.body || "حيّ على الصلاة",
@@ -234,49 +223,32 @@ export async function scheduleAdhanIosSegmentChain(
     extra: {
       adhanSegment: true,
       prayerKey: p.prayerKey,
-      segmentIndex: p.segmentIndex,
+      segmentIndex: 0,
       dayKey,
+      shortOnly: true,
     },
   }));
 
   await LocalNotifications.schedule({ notifications });
-  if (import.meta.env?.DEV) {
-    for (const p of plan) {
-      console.info("[adhan-schedule]", {
-        prayerName: p.title ?? plan[0].title,
-        prayerKey: p.prayerKey,
-        prayerTime: new Date(p.atMs).toISOString(),
-        mode: plan.length > 1 ? "sequential" : "short",
-        soundName: p.sound,
-        notificationId: p.id,
-        segmentIndex: p.segmentIndex,
-      });
-    }
-  }
   upsertChain(rec);
   return { ok: true, ids: rec.ids };
 }
 
-/** مدة افتراضية عند غياب ميتاداتا التقطيع — 4×28ث كحد أقصى */
-export function defaultAdhanSegmentDurations(count = ADHAN_IOS_MAX_SEGMENTS): number[] {
-  return Array.from({ length: Math.min(ADHAN_IOS_MAX_SEGMENTS, count) }, () =>
+/** مدة افتراضية — مقطع واحد فقط */
+export function defaultAdhanSegmentDurations(count = 1): number[] {
+  return Array.from({ length: Math.min(1, Math.max(1, count)) }, () =>
     ADHAN_IOS_SEGMENT_MAX_SEC,
   );
 }
 
-/** هل يتوفر تقطيع CAF متتابع لهذا التسجيل في الحزمة؟ */
-export function recordingSupportsIosChainedSegments(recordingId: string): boolean {
-  return (
-    recordingId === "makkah" ||
-    recordingId === "makki" ||
-    recordingId === "alharam"
-  );
+/** لا دعم لسلاسل بعد الآن */
+export function recordingSupportsIosChainedSegments(_recordingId: string): boolean {
+  return false;
 }
 
 /**
- * جدولة أذان على iOS من معرّف التسجيل.
- * وضع full + تسجيل يدعم السلسلة → حتى ٤ إشعارات متتابعة (≤٢٨ث لكل مقطع).
- * وضع short/takbir → إشعار واحد بصوت CAF قصير.
+ * جدولة أذان قصير فقط على iOS — أي mode=full يُرحَّل إلى short.
+ * لا سلاسل مقاطع.
  */
 export async function scheduleIosFullAdhan(opts: {
   prayerKey: string;
@@ -285,50 +257,43 @@ export async function scheduleIosFullAdhan(opts: {
   isFajr: boolean;
   startAtMs: number;
   durationsSec?: number[];
-  /** صيغة التسليم — full يفعّل السلسلة عند توفر المقاطع */
   deliveryMode?: "full" | "short" | "takbir" | "silent";
 }): Promise<{ ok: boolean; ids: number[] }> {
-  const mode = opts.deliveryMode ?? "full";
+  return scheduleIosAdhanSegments(opts);
+}
+
+/**
+ * نقطة الدخول الرسمية: إشعار قصير واحد بصوت CAF معتمد.
+ * لا يجدول سلسلة أبدًا.
+ */
+export async function scheduleIosAdhanSegments(opts: {
+  prayerKey: string;
+  prayerName: string;
+  recordingId: string;
+  isFajr: boolean;
+  startAtMs: number;
+  durationsSec?: number[];
+  deliveryMode?: "full" | "short" | "takbir" | "silent";
+}): Promise<{ ok: boolean; ids: number[] }> {
+  const mode = opts.deliveryMode === "silent" ? "silent" : "short";
   if (mode === "silent") return { ok: false, ids: [] };
 
-  const canChain =
-    ADHAN_IOS_MULTI_SEGMENT_BUNDLED &&
-    mode === "full" &&
-    recordingSupportsIosChainedSegments(opts.recordingId);
+  const dayKey = new Date(opts.startAtMs).toISOString().slice(0, 10);
+  const id = chainIdBase(opts.prayerKey, dayKey);
+  const catalogSound =
+    iosNotificationSoundName(DEFAULT_ADHAN_SHORT_SOUND_ID) ??
+    adhanIosSoundName(opts.recordingId, opts.isFajr ? "fajr" : "general", 1);
 
-  // الافتراضي والآمن: إشعار واحد بصوت قصير مضمّن
-  if (!canChain) {
-    const { resolveAdhanStyleNotificationSound } = await import(
-      "./prayer-notification-sounds"
-    );
-    const isMakkahStyle = opts.recordingId === "makkah" || opts.recordingId === "makki" || opts.recordingId === "alharam";
-    const dayKey = new Date(opts.startAtMs).toISOString().slice(0, 10);
-    const id = chainIdBase(opts.prayerKey, dayKey);
-    const sound =
-      opts.isFajr && isMakkahStyle ? "adhan-short-makkah-fajr.caf" : resolveAdhanStyleNotificationSound(opts.recordingId);
-    const plan: AdhanIosSegmentPlan[] = [
-      {
-        id,
-        sound,
-        atMs: opts.startAtMs,
-        title: `أذان ${opts.prayerName}`,
-        body: "حيّ على الصلاة، افتح التطبيق لسماع الأذان الكامل",
-        prayerKey: opts.prayerKey,
-        segmentIndex: 0,
-      },
-    ];
-    const result = await scheduleAdhanIosSegmentChain(plan);
-    return result;
-  }
-
-  const plan = buildAdhanIosSegmentPlan({
-    prayerKey: opts.prayerKey,
-    prayerName: opts.prayerName,
-    recordingId: opts.recordingId,
-    isFajr: opts.isFajr,
-    startAtMs: opts.startAtMs,
-    durationsSec: opts.durationsSec ?? defaultAdhanSegmentDurations(),
-  });
-  const result = await scheduleAdhanIosSegmentChain(plan);
-  return result;
+  const plan: AdhanIosSegmentPlan[] = [
+    {
+      id,
+      sound: catalogSound,
+      atMs: opts.startAtMs,
+      title: `أذان ${opts.prayerName}`,
+      body: "حيّ على الصلاة",
+      prayerKey: opts.prayerKey,
+      segmentIndex: 0,
+    },
+  ];
+  return scheduleAdhanIosSegmentChain(plan);
 }

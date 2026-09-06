@@ -1,9 +1,9 @@
 /**
- * أنواع الأذان المعروضة للمستخدم: صيغة التسليم (كامل / مختصر).
+ * أنواع الأذان المعروضة للمستخدم: تنبيه قصير فقط.
  * المؤذن يُختار من adhan-muezzin-library.
  *
  * داخل التطبيق: MP3/M4A من /audio/adhan أو CDN.
- * إشعار iOS: CAF قصير أو مقاطع متتابعة (مكة/الحرم) من حزمة Sounds.
+ * إشعار iOS: CAF قصير من حزمة Sounds.
  */
 import type { AdhanPlaybackMode } from "./adhan-playback-modes";
 import {
@@ -24,7 +24,8 @@ export type SelectableAdhanType = {
   label: string;
   hint: string;
   muezzinId: SelectableMuezzinId;
-  mode: "full" | "short";
+  /** دائماً short — full محذوف */
+  mode: "short";
   inAppUrl: string;
   notificationSound: string;
 };
@@ -56,20 +57,15 @@ export function isSelectableAdhanTypeId(v: unknown): v is SelectableAdhanTypeId 
 }
 
 function buildType(id: SelectableAdhanTypeId, muezzinId: SelectableMuezzinId): SelectableAdhanType {
-  const mode = id.endsWith("-full") ? "full" : "short";
+  // معرّف *-full للتوافق فقط — التسليم دائماً short
+  const mode = "short" as const;
   const entry = getMuezzinLibraryEntry(muezzinId);
   const inAppUrl = entry?.inAppUrl ?? "/audio/adhan/adhan-makkah-full.m4a";
   const notificationSound = entry?.notificationSound ?? "adhan-short-makkah.caf";
-  const chainHint =
-    mode === "full" && entry?.iosChainedSegments
-      ? " · على iOS: إشعارات متتابعة (≤٤×٢٨ث) ثم إكمال داخل التطبيق"
-      : mode === "full"
-        ? " · إشعار قصير + أذان كامل عند فتح التطبيق"
-        : " · صوت إشعار النظام (CAF ≤٢٩ث)";
   return {
     id,
-    label: mode === "full" ? "الأذان الكامل" : "تنبيه مختصر",
-    hint: `${entry?.label ?? "الأذان الافتراضي"}${chainHint}`,
+    label: "تنبيه مختصر",
+    hint: `${entry?.label ?? "الأذان الافتراضي"} · صوت إشعار قصير (CAF ≤٢٩ث)`,
     muezzinId,
     mode,
     inAppUrl,
@@ -89,27 +85,29 @@ export function getSelectableAdhanType(id: string): SelectableAdhanType {
 
 export function getAdhanTypeForMuezzinAndMode(
   muezzinId: string,
-  mode: AdhanPlaybackMode | "" | undefined,
+  _mode: AdhanPlaybackMode | "" | undefined,
 ): SelectableAdhanType {
   const mid = clampSelectableMuezzinId(muezzinId);
-  const clipped = mode === "full" ? "full" : "short";
-  return buildType(`makkah-${clipped}` as SelectableAdhanTypeId, mid);
+  // دائماً short — full محذوف
+  return buildType("makkah-short", mid);
 }
 
 export function clampAdhanMuezzinId(id: string | null | undefined): SelectableMuezzinId {
   return clampSelectableMuezzinId(id);
 }
 
-export function clampAdhanPlaybackMode(mode: unknown): "full" | "short" {
-  return mode === "full" ? "full" : "short";
+export function clampAdhanPlaybackMode(mode: unknown): "short" {
+  // أي full قديم يُرحَّل إلى short
+  void mode;
+  return "short";
 }
 
 export function typeIdFromPrefs(
   muezzinId: string,
-  mode: AdhanPlaybackMode | "" | undefined,
+  _mode: AdhanPlaybackMode | "" | undefined,
 ): SelectableAdhanTypeId {
-  const clipped = clampAdhanPlaybackMode(mode);
-  return `makkah-${clipped}` as SelectableAdhanTypeId;
+  void muezzinId;
+  return "makkah-short";
 }
 
 export function isAllowedAdhanMuezzinId(id: string): boolean {

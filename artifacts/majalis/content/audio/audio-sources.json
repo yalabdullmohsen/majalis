@@ -1,0 +1,296 @@
+{
+  "$schema": "https://ssunnah.com/schemas/audio-sources.json",
+  "updatedAt": "2026-09-06",
+  "policy": {
+    "maxDurationSec": 30,
+    "iosFormats": [
+      "caf"
+    ],
+    "webFormats": [
+      "wav",
+      "mp3",
+      "m4a"
+    ],
+    "fullAdhanAllowed": false,
+    "showOnlyLicensedBundled": true
+  },
+  "sounds": [
+    {
+      "id": "adhan-makkah-short",
+      "labelAr": "مؤذن الحرم المكي (قصير)",
+      "kind": "adhan_short",
+      "status": "approved",
+      "license": "bundled-existing-short-clip",
+      "source": "Existing iOS short CAF (adhan-short-makkah.caf) previously shipped in app bundle",
+      "iosFile": "adhan-short-makkah.caf",
+      "webFile": "/audio/alerts/adhan-makkah-short.wav",
+      "durationSecApprox": 8,
+      "notes": "Short notification-safe clip only; full adhan removed from product. iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "adhan-madinah-short",
+      "labelAr": "مؤذن الحرم النبوي (قصير)",
+      "kind": "adhan_short",
+      "status": "approved",
+      "license": "bundled-existing-short-clip",
+      "source": "Mapped from existing short makkah notification clip pending a distinct licensed Madinah short",
+      "iosFile": "adhan-short-makkah.caf",
+      "webFile": "/audio/alerts/adhan-haram-madinah-short.wav",
+      "durationSecApprox": 8,
+      "notes": "Temporary mapping; replace when a clearly licensed Madinah short is available. iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "adhan-egypt-short",
+      "labelAr": "أذان مصري قصير",
+      "kind": "adhan_short",
+      "status": "approved",
+      "license": "bundled-existing-short-clip",
+      "source": "Existing iOS short CAF (adhan-short-egypt.caf)",
+      "iosFile": "adhan-short-egypt.caf",
+      "webFile": "/audio/alerts/adhan-egypt-short.wav",
+      "durationSecApprox": 8,
+      "notes": " iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "adhan-aqsa-short",
+      "labelAr": "أذان الأقصى (قصير)",
+      "kind": "adhan_short",
+      "status": "approved",
+      "license": "bundled-existing-short-clip",
+      "source": "Existing iOS short CAF (adhan-short-aqsa.caf)",
+      "iosFile": "adhan-short-aqsa.caf",
+      "webFile": "/audio/alerts/adhan-aqsa-short.wav",
+      "durationSecApprox": 8,
+      "notes": " iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "adhan-takbeerat-short",
+      "labelAr": "تكبيرات قصيرة",
+      "kind": "adhan_short",
+      "status": "approved",
+      "license": "bundled-existing-short-clip",
+      "source": "Existing iOS short CAF (adhan-short-takbeerat.caf)",
+      "iosFile": "adhan-short-takbeerat.caf",
+      "webFile": "/audio/alerts/adhan-takbeerat-short.wav",
+      "durationSecApprox": 6,
+      "notes": " iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "alert-default-short",
+      "labelAr": "تنبيه قصير افتراضي",
+      "kind": "alert",
+      "status": "approved",
+      "license": "original-ssunnah",
+      "source": "Synthesized original tone owned by Ssunnah project",
+      "iosFile": "prayer_default.caf",
+      "webFile": "/audio/alerts/alert-default-short.wav",
+      "durationSecApprox": 2.2,
+      "notes": " iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "alert-soft-chime",
+      "labelAr": "رنة هادئة",
+      "kind": "alert",
+      "status": "approved",
+      "license": "original-ssunnah",
+      "source": "Synthesized original tone owned by Ssunnah project",
+      "iosFile": "prayer_soft.caf",
+      "webFile": "/audio/alerts/alert-soft-chime.wav",
+      "durationSecApprox": 2.8,
+      "notes": " iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "alert-short-ring",
+      "labelAr": "رنة قصيرة",
+      "kind": "alert",
+      "status": "approved",
+      "license": "original-ssunnah",
+      "source": "Synthesized original tone owned by Ssunnah project",
+      "iosFile": "prayer_clear.caf",
+      "webFile": "/audio/alerts/alert-short-ring.wav",
+      "durationSecApprox": 1.8,
+      "notes": " iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "alert-clear-ping",
+      "labelAr": "رنة تنبيه واضحة",
+      "kind": "alert",
+      "status": "approved",
+      "license": "original-ssunnah",
+      "source": "Synthesized original tone owned by Ssunnah project",
+      "iosFile": "prayer_clear.caf",
+      "webFile": "/audio/alerts/alert-clear-ping.wav",
+      "durationSecApprox": 1.4,
+      "notes": " iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "silent",
+      "labelAr": "صامت",
+      "kind": "silent",
+      "status": "approved",
+      "license": "n/a",
+      "source": "no audio",
+      "iosFile": null,
+      "webFile": null,
+      "durationSecApprox": 0
+    },
+    {
+      "id": "alert-third-night",
+      "labelAr": "تنبيه الثلث الأخير",
+      "kind": "alert",
+      "status": "approved",
+      "license": "original-ssunnah",
+      "source": "Synthesized original tone owned by Ssunnah project",
+      "iosFile": "prayer_quiet.caf",
+      "webFile": "/audio/alerts/alert-third-night.wav",
+      "durationSecApprox": 3.0,
+      "notes": " iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "alert-qiyam",
+      "labelAr": "تنبيه قيام الليل",
+      "kind": "alert",
+      "status": "approved",
+      "license": "original-ssunnah",
+      "source": "Synthesized original tone owned by Ssunnah project",
+      "iosFile": "prayer_quiet.caf",
+      "webFile": "/audio/alerts/alert-qiyam.wav",
+      "durationSecApprox": 2.8,
+      "notes": " iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "alert-witr",
+      "labelAr": "تنبيه الوتر",
+      "kind": "alert",
+      "status": "approved",
+      "license": "original-ssunnah",
+      "source": "Synthesized original tone owned by Ssunnah project",
+      "iosFile": "prayer_soft.caf",
+      "webFile": "/audio/alerts/alert-witr.wav",
+      "durationSecApprox": 2.6,
+      "notes": " iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "alert-istighfar",
+      "labelAr": "تذكير بالاستغفار",
+      "kind": "alert",
+      "status": "approved",
+      "license": "original-ssunnah",
+      "source": "Synthesized original tone owned by Ssunnah project",
+      "iosFile": "prayer_default.caf",
+      "webFile": "/audio/alerts/alert-istighfar.wav",
+      "durationSecApprox": 2.4,
+      "notes": " iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "alert-dua",
+      "labelAr": "تذكير بالدعاء",
+      "kind": "alert",
+      "status": "approved",
+      "license": "original-ssunnah",
+      "source": "Synthesized original tone owned by Ssunnah project",
+      "iosFile": "prayer_soft.caf",
+      "webFile": "/audio/alerts/alert-dua.wav",
+      "durationSecApprox": 2.6,
+      "notes": " iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "alert-salawat",
+      "labelAr": "تذكير بالصلاة على النبي ﷺ",
+      "kind": "alert",
+      "status": "approved",
+      "license": "original-ssunnah",
+      "source": "Synthesized original tone owned by Ssunnah project",
+      "iosFile": "prayer_clear.caf",
+      "webFile": "/audio/alerts/alert-salawat.wav",
+      "durationSecApprox": 2.5,
+      "notes": " iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "alert-quran-wird",
+      "labelAr": "تذكير بورد القرآن",
+      "kind": "alert",
+      "status": "approved",
+      "license": "original-ssunnah",
+      "source": "Synthesized original tone owned by Ssunnah project",
+      "iosFile": "prayer_makkah.caf",
+      "webFile": "/audio/alerts/alert-quran-wird.wav",
+      "durationSecApprox": 2.8,
+      "notes": " iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "alert-kahf-friday",
+      "labelAr": "تذكير بسورة الكهف",
+      "kind": "alert",
+      "status": "approved",
+      "license": "original-ssunnah",
+      "source": "Synthesized original tone owned by Ssunnah project",
+      "iosFile": "prayer_makkah.caf",
+      "webFile": "/audio/alerts/alert-kahf-friday.wav",
+      "durationSecApprox": 3.0,
+      "notes": " iosFile mapped to currently bundled CAF."
+    },
+    {
+      "id": "adhan-yasser-short",
+      "labelAr": "ياسر الدوسري (قصير)",
+      "kind": "adhan_short",
+      "status": "needs_license",
+      "license": "unclear",
+      "source": "Candidate commercial/reciter recording — not bundled",
+      "iosFile": null,
+      "webFile": null,
+      "rejectionReason": "No clear redistribution license for App Store bundling"
+    },
+    {
+      "id": "adhan-qattami-short",
+      "labelAr": "ناصر القطامي (قصير)",
+      "kind": "adhan_short",
+      "status": "needs_license",
+      "license": "unclear",
+      "source": "Candidate commercial/reciter recording — not bundled",
+      "iosFile": null,
+      "webFile": null,
+      "rejectionReason": "No clear redistribution license for App Store bundling"
+    },
+    {
+      "id": "adhan-shuraim-short",
+      "labelAr": "سعود الشريم (قصير)",
+      "kind": "adhan_short",
+      "status": "needs_license",
+      "license": "unclear",
+      "source": "Candidate commercial/reciter recording — not bundled",
+      "iosFile": null,
+      "webFile": null,
+      "rejectionReason": "No clear redistribution license for App Store bundling"
+    },
+    {
+      "id": "adhan-marwan-short",
+      "labelAr": "المؤذن مروان (قصير)",
+      "kind": "adhan_short",
+      "status": "needs_license",
+      "license": "unclear",
+      "source": "Candidate commercial/reciter recording — not bundled",
+      "iosFile": null,
+      "webFile": null,
+      "rejectionReason": "No clear redistribution license; egypt short used as style stand-in only under generic label"
+    },
+    {
+      "id": "adhan-full-any",
+      "labelAr": "أذان كامل",
+      "kind": "adhan_full",
+      "status": "rejected",
+      "license": "n/a",
+      "source": "Removed from product — iOS notification limit ~30s",
+      "iosFile": null,
+      "webFile": null,
+      "rejectionReason": "Full adhan cannot reliably play from iOS local notifications; removed from UI and scheduling"
+    }
+  ],
+  "rejectedForQuality": [],
+  "removedFeatures": [
+    "playbackMode=full",
+    "iosSequentialFullAdhan",
+    "adhan-seq-makkah-* notification chaining for full adhan",
+    "UI label الأذان الكامل"
+  ]
+}

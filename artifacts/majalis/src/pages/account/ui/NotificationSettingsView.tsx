@@ -228,6 +228,9 @@ export default function NotificationSettingsPage() {
     void import("@/lib/smart-local-notifications").then(({ syncSmartLocalNotifications }) => {
       void syncSmartLocalNotifications();
     });
+    void import("@/lib/notification-reminders").then(({ refreshReligiousRemindersSchedule }) => {
+      void refreshReligiousRemindersSchedule({ requestPermission: false });
+    });
     return () => clearTimeout(t);
   }, [prefs]);
 

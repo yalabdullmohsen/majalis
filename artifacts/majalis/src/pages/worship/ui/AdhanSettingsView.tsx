@@ -1,5 +1,5 @@
 /**
- * إعدادات الأذان — نوعان افتراضيان (كامل / مختصر).
+ * إعدادات الأذان — تنبيهات قصيرة معتمدة فقط.
  * داخل التطبيق: M4A من /audio/adhan.
  * إشعار iOS: CAF قصير من حزمة Sounds (≤٢٩ث). لا يُعرض خيار تجاوز الرنين — غير مدعوم.
  */
@@ -158,14 +158,11 @@ function NotificationPermBadge() {
 
 function IosChainedAdhanCard({
   muezzinId,
-  isFullMode,
 }: {
   muezzinId: string;
-  isFullMode: boolean;
 }) {
   if (!isNative || !isIOS) return null;
-  const entry = listSelectableMuezzins().find((m) => m.id === muezzinId);
-  const chained = Boolean(entry?.iosChainedSegments && isFullMode);
+  void muezzinId;
   return (
     <section className="ads-card" aria-labelledby="ads-ios-chain-head">
       <div className="ads-card__head" id="ads-ios-chain-head">
@@ -174,11 +171,7 @@ function IosChainedAdhanCard({
       </div>
       <div className="ads-card__body">
         <p className="ads-adhan-desc" role="note">
-          {chained
-            ? "الوضع الكامل: حتى ٤ إشعارات متتابعة (≤٢٨ث لكل مقطع) ثم إكمال الأذان داخل التطبيق عند الفتح."
-            : isFullMode
-              ? "الوضع الكامل: إشعار قصير واحد — افتح التطبيق لسماع الأذان كاملاً."
-              : "الوضع المختصر: إشعار واحد بصوت CAF قصير (تكبيرات أو مقطع ≤٢٩ث)."}
+          إشعار واحد بصوت CAF قصير معتمد (تكبيرات أو مقطع ≤٢٩ث). السلاسل المتتابعة محذوفة.
           {" "}
           تجاوز زر الصامت غير متاح دون امتياز Apple الرسمي.
         </p>
@@ -226,7 +219,7 @@ function AndroidAdhanNativeCard({
     setFgsBusy(true);
     setFgsMsg(null);
     const muezzin = getMuezzin(selectedMuezzinId);
-    const clip = resolveAdhanClip(muezzin, { isFajr: false, mode: "full" });
+    const clip = resolveAdhanClip(muezzin, { isFajr: false, mode: "short" });
     if (!clip) {
       setFgsMsg("تعذّر تجهيز ملف الأذان المحلي.");
       setFgsBusy(false);
@@ -239,7 +232,7 @@ function AndroidAdhanNativeCard({
     });
     setFgsMsg(
       ok
-        ? "تُشغَّل الخدمة الأمامية — الأذان كاملاً حتى النهاية (ملف محلي)."
+        ? "تُشغَّل الخدمة الأمامية — تنبيه قصير محلي."
         : "تعذّر تشغيل خدمة الأذان على هذا الجهاز.",
     );
     setFgsBusy(false);
@@ -253,7 +246,7 @@ function AndroidAdhanNativeCard({
       </div>
       <div className="ads-card__body">
         <p className="ads-adhan-desc" role="note">
-          الأذان الكامل يُجدول عبر منبه دقيق وخدمة أمامية — بلا اعتماد على الشبكة لحظة الصلاة.
+          التنبيه القصير يُجدول عبر منبه دقيق وخدمة أمامية — بلا اعتماد على الشبكة لحظة الصلاة.
           تجاوز زر الصامت على iOS غير متاح دون امتياز Apple الرسمي.
         </p>
         <div className="ads-row">
@@ -323,14 +316,13 @@ export default function AdhanSettingsPage() {
     prefs.defaultMuezzinId,
     prefs.playbackMode,
   );
-  const isFullMode = prefs.playbackMode === "full";
   const muezzinOptions = listSelectableMuezzins();
 
   useEffect(() => {
     applyPageSeo({
       path: "/adhan-settings",
       title: "تنبيهات الصلاة والأذان | سُنّة",
-      description: "فعّل تنبيهات الصلاة، اختر الأذان المختصر أو الكامل، واختبر الصوت مع مراعاة قيود iOS.",
+      description: "فعّل تنبيهات الصلاة، اختر صوت الأذان القصير، واختبر الصوت مع مراعاة قيود iOS.",
       keywords: ["تنبيهات الصلاة", "أذان", "إعدادات أذان", "إشعارات"],
       robots: "noindex, follow",
     });
@@ -338,6 +330,9 @@ export default function AdhanSettingsPage() {
 
   useEffect(() => {
     invalidatePrayerNativeSchedule();
+    void import("@/lib/notification-reminders").then(({ refreshReligiousRemindersSchedule }) => {
+      void refreshReligiousRemindersSchedule({ requestPermission: false });
+    });
   }, [prefs.defaultMuezzinId, prefs.playbackMode, prefs.globalEnabled, prefs.prayers, selectedGovId]);
 
   useEffect(() => {
@@ -374,11 +369,6 @@ export default function AdhanSettingsPage() {
 
   function selectMuezzin(id: SelectableMuezzinId) {
     setPrefs(patchAdhanPrefs({ defaultMuezzinId: id }));
-    flashSaved();
-  }
-
-  function setFullAdhanMode(full: boolean) {
-    setPrefs(patchAdhanPrefs({ playbackMode: full ? "full" : "short" }));
     flashSaved();
   }
 
@@ -482,7 +472,7 @@ export default function AdhanSettingsPage() {
       return;
     }
     setPlaying(true);
-    setSoundMsg("يعمل الآن — أذان كامل داخل التطبيق");
+    setSoundMsg("يعمل الآن — تنبيه قصير داخل التطبيق");
     result.audio.addEventListener("ended", () => {
       setPlaying(false);
       setSoundMsg("متوقف");
@@ -548,7 +538,7 @@ export default function AdhanSettingsPage() {
         `آخر نجاح تشغيل: ${diag.lastSuccessAt ?? "—"}`,
         `آخر خطأ صوت: ${diag.lastError ?? "—"}`,
         "تجاوز الرنين: غير متاح دون امتياز Apple الرسمي",
-        "قيد iOS: صوت الإشعار ≤٣٠ ثانية — الكامل داخل التطبيق أو مقاطع متتابعة",
+        "قيد iOS: صوت الإشعار ≤٣٠ ثانية — تنبيه قصير معتمد فقط",
       ];
       if (pending.items[0]?.friendlyKey) {
         lines.splice(6, 0, `عيّنة معرّف: ${pending.items[0].friendlyKey}`);
@@ -613,7 +603,7 @@ export default function AdhanSettingsPage() {
     <div className="ads-page">
       <h1 className="ads-title">تنبيهات الصلاة والأذان</h1>
       <p className="ads-subtitle">
-        إشعار النظام صوت قصير مضمون (≤٣٠ث) · الأذان الكامل يعمل داخل التطبيق، وعلى iOS قد يُقسَّم إلى مقاطع متتابعة عند تفعيل الوضع الكامل.
+        إشعار النظام صوت قصير مضمون (≤٣٠ث) من الكتالوج المعتمد فقط.
         {" "}
         <a href="/adhan-help" className="ads-help-link">مساعدة الأذان والتنبيهات</a>
       </p>
@@ -654,19 +644,18 @@ export default function AdhanSettingsPage() {
         <div className="ads-card__body">
           <div className="ads-row">
             <div>
-              <span className="ads-gov-label">تشغيل الأذان كاملاً</span>
+              <span className="ads-gov-label">تنبيه أذان قصير</span>
               <p className="ads-adhan-desc">
-                {isFullMode
-                  ? isIOS
-                    ? "على iOS: مقاطع متتابعة (≤٣٠ث) لمكة/الحرم ثم إكمال داخل التطبيق. الأذان الكامل الحقيقي يعمل داخل التطبيق دون انقطاع."
-                    : "إكمال الأذان داخل التطبيق بدون انقطاع"
-                  : "تنبيه مختصر مضمون — التكبيرات أو مقطع قصير فقط (≤٣٠ث)"}
+                تنبيه مختصر مضمون — التكبيرات أو مقطع قصير فقط (≤٣٠ث).
               </p>
             </div>
             <Toggle
-              checked={isFullMode}
-              onChange={setFullAdhanMode}
-              label="تشغيل الأذان كاملاً"
+              checked={prefs.playbackMode !== "silent"}
+              onChange={(on) => {
+                setPrefs(patchAdhanPrefs({ playbackMode: on ? "short" : "silent" }));
+                flashSaved();
+              }}
+              label="تنبيه أذان قصير"
             />
           </div>
           <p className="ads-gov-label">المؤذن</p>
@@ -721,7 +710,7 @@ export default function AdhanSettingsPage() {
 
       <PrayerAlertSettingsCard />
 
-      <IosChainedAdhanCard muezzinId={prefs.defaultMuezzinId} isFullMode={isFullMode} />
+      <IosChainedAdhanCard muezzinId={prefs.defaultMuezzinId} />
 
       <AndroidAdhanNativeCard selectedMuezzinId={selectedType.muezzinId} />
 

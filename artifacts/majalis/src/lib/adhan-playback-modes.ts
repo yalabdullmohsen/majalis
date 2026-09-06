@@ -1,22 +1,24 @@
 /**
- * صيغ تشغيل الأذان: كامل / قصير (≤28ث) / تكبير فقط / صامت مع إشعار.
- * الإقامة اختيارية كمقطع ثالث منفصل.
+ * صيغ تشغيل الأذان: قصير (≤28ث) / تكبير فقط / صامت مع إشعار.
+ * الأذان الكامل محذوف نهائيًا من المنتج — أي "full" قادم يُرحَّل إلى short.
  */
 
 export const ADHAN_SHORT_MAX_SEC = 28;
 export const ADHAN_TAKBIR_MAX_SEC = 12;
 
-export type AdhanPlaybackMode = "full" | "short" | "takbir" | "silent";
+/** أوضاع قابلة للاختيار — بلا full */
+export type AdhanPlaybackMode = "short" | "takbir" | "silent";
+
+/** قبول ترحيلي لقيم قديمة مخزّنة */
+export type LegacyAdhanPlaybackMode = AdhanPlaybackMode | "full";
 
 export const ADHAN_PLAYBACK_MODES: readonly AdhanPlaybackMode[] = [
-  "full",
   "short",
   "takbir",
   "silent",
 ] as const;
 
 export const ADHAN_PLAYBACK_MODE_LABELS: Record<AdhanPlaybackMode, string> = {
-  full: "أذان كامل",
   short: "قصير (≤ ٢٨ ثانية)",
   takbir: "تكبيرات فقط",
   silent: "إشعار نصي صامت",
@@ -33,10 +35,16 @@ export type ResolvedAdhanClip = {
   truncatedFromFull: boolean;
 };
 
+/** يرحّل full → short؛ لا يعيد true لـ "full". */
 export function isAdhanPlaybackMode(v: unknown): v is AdhanPlaybackMode {
-  return (
-    v === "full" || v === "short" || v === "takbir" || v === "silent"
-  );
+  return v === "short" || v === "takbir" || v === "silent";
+}
+
+/** ترحيل أي قيمة مخزّنة (بما فيها full) إلى وضع معتمد. */
+export function normalizeAdhanPlaybackMode(v: unknown): AdhanPlaybackMode {
+  if (v === "full") return "short";
+  if (isAdhanPlaybackMode(v)) return v;
+  return "short";
 }
 
 export type AdhanClipSources = {
@@ -50,13 +58,15 @@ export type AdhanClipSources = {
 /**
  * يختار رابط التشغيل وحدّ المدة حسب الصيغة.
  * silent → null (إشعار فقط بلا صوت).
- * short/takbir بلا ملف مخصّص → الكامل مع قصّ زمني (إلى أن تتوفّر مقاطع قصيرة مرخّصة).
+ * full (قديم) → يُعامل كـ short.
+ * short/takbir بلا ملف مخصّص → المصدر مع قصّ زمني.
  */
 export function resolveAdhanClip(
   sources: AdhanClipSources,
-  opts: { isFajr: boolean; mode: AdhanPlaybackMode },
+  opts: { isFajr: boolean; mode: LegacyAdhanPlaybackMode },
 ): ResolvedAdhanClip | null {
-  if (opts.mode === "silent") return null;
+  const mode = normalizeAdhanPlaybackMode(opts.mode);
+  if (mode === "silent") return null;
 
   if (opts.isFajr) {
     if (!sources.fajrUrl) return null;
@@ -65,16 +75,7 @@ export function resolveAdhanClip(
   const baseFull = opts.isFajr ? sources.fajrUrl! : sources.audioUrl;
   if (!baseFull) return null;
 
-  if (opts.mode === "full") {
-    return {
-      kind: opts.isFajr ? "fajr" : "full",
-      url: baseFull,
-      maxMs: null,
-      truncatedFromFull: false,
-    };
-  }
-
-  if (opts.mode === "short") {
+  if (mode === "short") {
     if (sources.shortUrl) {
       return {
         kind: "short",

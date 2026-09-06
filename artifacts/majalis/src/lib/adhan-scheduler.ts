@@ -33,9 +33,8 @@ import { ADHAN_EVENT_NAME, type AdhanEvent } from "./adhan-events";
 import {
   cancelAndroidFullAdhan,
   isAdhanAndroidAlarmAvailable,
-  scheduleAndroidFullAdhan,
 } from "./adhan-android-alarm";
-import { resolveAdhanClip } from "./adhan-playback-modes";
+import { normalizeAdhanPlaybackMode } from "./adhan-playback-modes";
 
 export type { AdhanEvent };
 export { ADHAN_EVENT_NAME };
@@ -148,8 +147,9 @@ function dispatchAdhanEvent(event: AdhanEvent) {
   showBrowserNotification(event);
 }
 
-function mapFullToSilent(mode: AdhanPlaybackMode): AdhanPlaybackMode {
-  return mode === "full" ? "silent" : mode;
+/** الأذان الكامل محذوف — أي full يُرحَّل إلى short (إشعار/مقطع قصير فقط). */
+function mapFullAway(mode: AdhanPlaybackMode | "full"): AdhanPlaybackMode {
+  return normalizeAdhanPlaybackMode(mode);
 }
 
 function scheduleForPrayer(
@@ -173,39 +173,28 @@ function scheduleForPrayer(
 
   const adhanTargetEpoch = Date.now() + adhanDelay;
   const deliveryMode = getEffectivePlaybackMode(prefs, key);
-  // طلب المستخدم: حذف تشغيل الأذان الكامل (full) والاكتفاء بإشعار وقت الصلاة.
-  // عمليًا نعامل mode=full كـsilent داخل الـscheduler فقط (لا نغيّر تفضيلات المستخدم).
-  const effectiveDeliveryMode = mapFullToSilent(deliveryMode);
+  // الأذان الكامل محذوف — نرحّل full→short ولا نسلك مسار Android/iOS full.
+  const effectiveDeliveryMode = mapFullAway(deliveryMode);
 
-  if (isAdhanAndroidAlarmAvailable() && effectiveDeliveryMode === "full") {
+  // لا مسار أذان كامل على Android أو iOS — القصير عبر إشعار/تشغيل داخل التطبيق فقط
+  if (isAdhanAndroidAlarmAvailable() && effectiveDeliveryMode === "short") {
     void cancelAndroidFullAdhan(key);
-    const muezzin = getMuezzin(getEffectiveMuezzinId(prefs, key));
-    const isFajr = key === "fajr";
-    const clip = resolveAdhanClip(muezzin, { isFajr, mode: "full" });
-    if (clip) {
-      void scheduleAndroidFullAdhan({
-        atMs: adhanTargetEpoch,
-        url: clip.url,
-        title: `أذان ${PRAYER_ARABIC[key] ?? slot.name}`,
-        prayerKey: key,
-      });
-    }
   }
 
-  if (iosFullAdhanActive() && effectiveDeliveryMode === "full") {
+  if (iosFullAdhanActive()) {
     const muezzin = getMuezzin(getEffectiveMuezzinId(prefs, key));
     const isFajr = key === "fajr";
-    if (!isFajr || hasFajrAdhan(muezzin)) {
+    if (effectiveDeliveryMode !== "silent" && (!isFajr || hasFajrAdhan(muezzin))) {
       const epochs = upcomingPrayerEpochs(slot);
-      void import("./adhan-ios-segments").then(({ scheduleIosFullAdhan }) => {
-        epochs.forEach((startAtMs, index) => {
-          void scheduleIosFullAdhan({
+      void import("./adhan-ios-segments").then(({ scheduleIosAdhanSegments }) => {
+        epochs.forEach((startAtMs) => {
+          void scheduleIosAdhanSegments({
             prayerKey: key,
             prayerName: PRAYER_ARABIC[key] ?? slot.name,
             recordingId: muezzin.id,
             isFajr,
             startAtMs,
-            deliveryMode: index === 0 ? deliveryMode : "short",
+            deliveryMode: effectiveDeliveryMode === "takbir" ? "takbir" : "short",
           });
         });
       });
@@ -219,33 +208,18 @@ function scheduleForPrayer(
     const fresh = loadAdhanPrefs();
     if (!fresh.globalEnabled || !fresh.prayers[key].enabled) return;
     const mode = getEffectivePlaybackMode(fresh, key);
-    const effectiveMode = mapFullToSilent(mode);
+    const effectiveMode = mapFullAway(mode);
     const muezzinId = getEffectiveMuezzinId(fresh, key);
     const muezzin = getMuezzin(muezzinId);
     const isFajr = key === "fajr";
 
-    if (effectiveMode === "full" && isAdhanAndroidAlarmAvailable()) {
-      if (fresh.vibrateEnabled) void hapticTap("medium");
-      dispatchAdhanEvent({
-        type: "adhan",
-        prayerKey: key,
-        prayerName: slot.name,
-        cityName,
-        prayerTimeLabel: slot.time,
-      });
-      return;
-    }
-
-    /**
-     * iOS كامل + التطبيق في الواجهة: شغّل الأذان الكامل داخل التطبيق بلا انقطاع،
-     * وألغِ بقية مقاطع الإشعار. إن كانت الشاشة مقفلة فالمقاطع المتتابعة تتولى الصوت.
-     */
-    if (effectiveMode === "full" && iosFullAdhanActive()) {
+    // لا مسار full — تشغيل قصير/تكبير داخل التطبيق عند الواجهة فقط
+    if (effectiveMode !== "silent" && iosFullAdhanActive()) {
       const inForeground =
         typeof document !== "undefined" && document.visibilityState === "visible";
       if (inForeground) {
         void import("./adhan-ios-segments").then((m) => m.cancelAdhanIosSegmentChain(key));
-        const audio = playAdhan(muezzin, isFajr, "full", fresh.volume ?? 1);
+        const audio = playAdhan(muezzin, isFajr, effectiveMode, fresh.volume ?? 1);
         if (!audio && isFajr) return;
       }
       if (fresh.vibrateEnabled) void hapticTap("medium");

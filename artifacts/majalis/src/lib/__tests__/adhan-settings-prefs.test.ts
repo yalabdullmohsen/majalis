@@ -44,14 +44,14 @@ assert.equal(
   "تجاوز الصامت يبقى معطّلاً بلا Critical Alerts",
 );
 
-patchPrayerPrefs("isha", { deliveryMode: "full" });
+patchPrayerPrefs("isha", { deliveryMode: "full" as never });
 const prefs = loadAdhanPrefs();
-assert.equal(getEffectivePlaybackMode(prefs, "isha"), "full");
+assert.equal(getEffectivePlaybackMode(prefs, "isha"), "short", "full يُرحَّل إلى short");
 assert.equal(getEffectivePlaybackMode(prefs, "dhuhr"), "short");
 
 patchAdhanPrefs({ playbackMode: "silent" });
-// تجاوز لكل صلاة يبقى ساريًا حتى لو الوضع العام صامت
-assert.equal(getEffectivePlaybackMode(loadAdhanPrefs(), "isha"), "full");
+// تجاوز لكل صلاة كان full → short بعد الترحيل
+assert.equal(getEffectivePlaybackMode(loadAdhanPrefs(), "isha"), "short");
 assert.equal(getEffectivePlaybackMode(loadAdhanPrefs(), "dhuhr"), "silent");
 
 patchPrayerPrefs("dhuhr", { deliveryMode: "takbir" });

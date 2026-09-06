@@ -36,8 +36,10 @@ assert.match(view, /\/adhan-help/);
 assert.match(view, /حذف القديمة وإعادة الضبط/);
 assert.match(view, /اختيار المؤذن وصيغة الإشعار/);
 assert.match(view, /listSelectableMuezzins/);
-assert.match(view, /تشغيل الأذان كاملاً/);
+assert.match(view, /تنبيه أذان قصير/);
 assert.match(view, /IosChainedAdhanCard/);
+assert.doesNotMatch(view, /تشغيل الأذان كاملاً/);
+assert.doesNotMatch(view, /أذان كامل/);
 assert.match(view, /اختبار الصوت/);
 assert.match(view, /تخصيص كل صلاة/);
 assert.match(view, /تنبيه الإقامة/);
@@ -54,8 +56,9 @@ assert.doesNotMatch(view, /أذان المدينة/);
 assert.doesNotMatch(typesSrc, /muezzinId:\s*"madinah"/);
 assert.match(typesSrc, /madinah-full.*makkah-full/); // ترحيل قديم فقط
 
-assert.match(typesSrc, /الأذان الكامل/);
+assert.doesNotMatch(typesSrc, /label:\s*"الأذان الكامل"/);
 assert.match(typesSrc, /تنبيه مختصر/);
+assert.ok(SELECTABLE_ADHAN_TYPES.every((t) => t.mode === "short" && t.label === "تنبيه مختصر"));
 
 assert.match(alerts, /تفعيل تنبيهات الصلاة/);
 assert.match(alerts, /تنبيه قبل الصلاة/);
