@@ -1,21 +1,13 @@
 import { sendJson } from "../api/_http.mjs";
+import { getPublicBuildMeta } from "../build-meta.mjs";
 
 /**
- * GET /api/healthz — فحص حيوية خفيف للاستخدام العام (App Store / probes).
- * لا يعرض commit ولا uptime ولا تفاصيل داخلية.
- * الفحص العميق: /api/deep-health (محمي بـ CRON_SECRET).
+ * GET /api/healthz (و /healthz عبر rewrite) — حيوية عامة بلا أسرار.
  */
 export default async function handler(_req, res) {
-  sendJson(
-    res,
-    200,
-    {
-      ok: true,
-      service: "ssunnah-web",
-    },
-    {
-      "Cache-Control": "public, max-age=0, s-maxage=60, stale-while-revalidate=300",
-      "CDN-Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
-    },
-  );
+  const meta = getPublicBuildMeta();
+  sendJson(res, 200, meta, {
+    "Cache-Control": "public, max-age=0, s-maxage=30, stale-while-revalidate=120",
+    "CDN-Cache-Control": "public, s-maxage=30, stale-while-revalidate=120",
+  });
 }

@@ -3,6 +3,7 @@
  * الفحص الثقيل لقاعدة البيانات عبر ?deep=1 فقط.
  */
 import { sendJson } from "../api/_http.mjs";
+import { getPublicBuildMeta } from "../build-meta.mjs";
 import {
   classifyDurablePgError,
   DURABLE_REASONS,
@@ -35,19 +36,14 @@ export default async function handler(req, res) {
 
   // المسار السريع: لا يستورد database ولا يفتح pool — مناسب لـ probes / CDN.
   if (!deep) {
+    const meta = getPublicBuildMeta();
     sendJson(
       res,
       200,
+      meta,
       {
-        status: "ok",
-        service: "ssunnah-web",
-        checks: {
-          app_alive: true,
-        },
-      },
-      {
-        "Cache-Control": "public, max-age=0, s-maxage=60, stale-while-revalidate=300",
-        "CDN-Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+        "Cache-Control": "public, max-age=0, s-maxage=30, stale-while-revalidate=120",
+        "CDN-Cache-Control": "public, s-maxage=30, stale-while-revalidate=120",
       },
     );
     return;

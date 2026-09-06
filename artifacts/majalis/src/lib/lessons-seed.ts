@@ -4,6 +4,7 @@
  */
 import { loadAllSeedChunks, peekSeedCache } from "./json-seed-loader";
 import type { LessonSeedRow } from "@/lib/lessons-types";
+import { resolveSafeSpeaker, dedupeLessonTitleSegments } from "@/lib/lesson-speaker-guard";
 
 export type { LessonSeedRow } from "@/lib/lessons-types";
 
@@ -83,14 +84,8 @@ export async function buildLessonsSeed(): Promise<LessonSeedRow[]> {
 
   function lecturerFromSessionLabel(label: string, fallback: string): string {
     const m = label.match(/—\s*([^—(]+?)(?:\s*\(|$)/u);
-    if (m?.[1]) {
-      const name = sheikhName.stripSheikhHonorifics(m[1]).trim();
-      // ارفض عناوين المحاضرات/الأبواب القصيرة التي ليست أسماء مشايخ
-      const looksLikePerson =
-        /^(د\.|الدكتور|الشيخ)\s/u.test(name) || name.split(/\s+/).filter(Boolean).length >= 2;
-      if (looksLikePerson) return name;
-    }
-    return sheikhName.stripSheikhHonorifics(fallback);
+    const extracted = m?.[1] ? sheikhName.stripSheikhHonorifics(m[1]).trim() : "";
+    return resolveSafeSpeaker(extracted, sheikhName.stripSheikhHonorifics(fallback));
   }
 
   function rowFromAdSession(ad: LessonAd, sessionIndex: number): LessonSeedRow {
@@ -101,7 +96,7 @@ export async function buildLessonsSeed(): Promise<LessonSeedRow[]> {
     const genericLabel =
       session.label === "المجلس الأسبوعي" || session.label === "البرنامج الأسبوعي";
     // العنوان المعروض = عنوان الإعلان النظيف فقط؛ الموعد/الجلسة في schedule وlinked_titles
-    const title = ad.title;
+    const title = dedupeLessonTitleSegments(ad.title);
     const externalKey = `kw-${ad.id}-${sessionIndex}`;
     const isCourse = ad.category === "course";
     const lecturer = lecturerFromSessionLabel(session.label, ad.teacher);

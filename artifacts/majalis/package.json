@@ -488,7 +488,14 @@
     "test:cards-filters-contrast-tokens": "node --import tsx src/lib/__tests__/cards-filters-contrast-tokens.test.ts",
     "test:design-token-contrast-aa": "node --import tsx src/lib/__tests__/design-token-contrast-aa.test.ts",
     "test:miracles-ui": "node --import tsx src/lib/__tests__/miracles-ui-gate.test.ts",
-    "test:boot-load-failure": "node --import tsx src/lib/__tests__/boot-load-failure-gate.test.ts"
+    "test:boot-load-failure": "node --import tsx src/lib/__tests__/boot-load-failure-gate.test.ts",
+    "validate:kuwait-lessons": "node scripts/validate-kuwait-lessons.mjs",
+    "verify:no-legacy-brand-html": "node scripts/verify-no-legacy-brand-html.mjs",
+    "smoke:launch-readiness": "node scripts/smoke-launch-readiness.mjs",
+    "test:fiqh-hub-order": "node --import tsx src/lib/__tests__/fiqh-hub-order-stats-gate.test.ts",
+    "test:lesson-speaker-guard": "node --import tsx src/lib/__tests__/lesson-speaker-guard.test.ts",
+    "verify:hadith-grades": "node scripts/verify-hadith-grades-gate.mjs",
+    "verify:no-secret-leak": "node scripts/verify-no-secret-leak.mjs"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

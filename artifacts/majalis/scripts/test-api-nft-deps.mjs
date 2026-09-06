@@ -24,15 +24,16 @@ assert.doesNotMatch(
   /platform-health\.mjs/,
   "healthz must not load platform-health — use /api/deep-health",
 );
-assert.match(healthz, /service:\s*"ssunnah-web"/, "healthz service name is ssunnah-web");
-assert.doesNotMatch(healthz, /VERCEL_GIT_COMMIT_SHA|uptimeMs/, "healthz must not expose internal deploy metadata");
+assert.match(healthz, /getPublicBuildMeta/, "healthz uses shared public build meta");
+assert.doesNotMatch(healthz, /uptimeMs|process\.env\b/, "healthz must not inline env dumps or uptime");
 
 const readyz = readFileSync(join(root, "lib/api-handlers/readyz.js"), "utf8");
-assert.match(readyz, /service:\s*"ssunnah-web"/, "readyz lite exposes ssunnah-web service");
+assert.match(readyz, /getPublicBuildMeta/, "readyz lite uses shared public build meta");
+assert.match(readyz, /service:\s*"ssunnah-web"/, "readyz deep path keeps ssunnah-web internal service label");
 assert.doesNotMatch(
   readyz,
-  /status:\s*"ok"[\s\S]{0,220}version,/,
-  "readyz lite must not expose version/commit in public JSON",
+  /sendJson\(\s*res,\s*200,\s*\{[^}]*version\s*:/,
+  "readyz must not dump full version objects on 200",
 );
 
 // Dedicated light function files are optional Phase-1 stretch; do not require them

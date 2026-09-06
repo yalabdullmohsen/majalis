@@ -13,6 +13,7 @@ const purge = read("src/lib/runtime-cache-purge.ts");
 const main = read("src/main.tsx");
 const sw = read("public/sw.js");
 const html = read("index.html");
+const versionBoot = read("public/boot-legacy-cache.js");
 const staticJson = read("src/lib/static-json-cache.ts");
 const vercel = read("vercel.json");
 
@@ -48,11 +49,12 @@ assert.match(
   "force purge فقط عند الترقية من نسخة تصميم سابقة",
 );
 assert.match(
-  html,
+  versionBoot,
   /\/\* أول زيارة: خزّن النسخة فقط — بلا reload \*\/[\s\S]*?if \(!prev\)/,
   "version-boot: أول زيارة بلا reload",
 );
-assert.match(html, /navigator\.webdriver/, "تخطّي version-boot تحت الأتمتة/LHCI");
+assert.match(versionBoot, /navigator\.webdriver/, "تخطّي version-boot تحت الأتمتة/LHCI");
+assert.match(html, /src="\/boot-legacy-cache\.js"/);
 
 assert.match(html, /classList\.add\("light"/);
 assert.match(html, /storedTheme === "auto"/);

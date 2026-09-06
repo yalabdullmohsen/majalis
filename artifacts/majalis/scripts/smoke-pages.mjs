@@ -10,7 +10,6 @@ const PAGES = [
   "/search",
   "/lessons",
   "/sheikhs",
-  "/library",
   "/qa",
   "/quran-hub",
   "/quran/tajweed",

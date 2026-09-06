@@ -28,7 +28,7 @@
   "functions": {
     "api/index.js": {
       "maxDuration": 60,
-      "includeFiles": "{lib/**,supabase/**,data/**,src/data/universities-catalog.json,dist/index.html}"
+      "includeFiles": "{lib/**,supabase/**,data/**,src/data/universities-catalog.json,dist/index.html,dist/version.json,dist/healthz.json}"
     },
     "api/lessons/[id].js": {
       "maxDuration": 60,
@@ -653,6 +653,14 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/healthz",
+      "destination": "/api/healthz"
+    },
+    {
+      "source": "/readyz",
+      "destination": "/api/readyz"
+    },
     {
       "source": "/feed.xml",
       "destination": "/api/feed"
