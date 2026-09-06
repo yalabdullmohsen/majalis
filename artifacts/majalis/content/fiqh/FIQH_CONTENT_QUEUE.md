@@ -2,20 +2,20 @@
 
 ## مكتمل
 - الكتالوج العام (#1739)
-- حزمة النوازل + التعميق + التصنيف (#1740–#1742)
+- حزمة النوازل + التعميق + التصنيف + المرشّحون (#1740–#1743)
 
-## v4: مرشّحو دروس (داخلي)
-- `libas-shuhra-muasir` → `libas-shuhra-muasir-candidate`
-- `ziyarat-nisa-qubur` → `ziyarat-nisa-qubur-candidate`
+## v5: حزم مراجعة الترقية (داخلي)
+- `libas-shuhra-muasir` → `insert_new_lesson` (بانتظار توقيع)
+- `ziyarat-nisa-qubur` → `align_existing_then_optional_insert` (بانتظار توقيع)
 
-كلاهما: `draft` + `needsReview` + `promotionApproved=false`.
+كلاهما: `promotionApproved=false` داخل المرشّح وداخل `humanDecision`.
 
 ## hold بلا ترقية
 - الشبهات الغذائية المعاصرة
 - نوازل الجهاد المعاصرة
 
-## بوابة الترقية لاحقًا
-1. اعتماد بشري لـ `lessonCandidate`
-2. ضبط `promotionApproved=true`
-3. نقل صريح إلى `books.json` مع إزالة `needsReview`
-4. ممنوع التسريب الآلي من الحزمة الداخلية
+## بوابة الترقية (بشرية فقط)
+1. إكمال `signOffChecklist` في `promotionReview`
+2. ضبط `humanDecision.promotionApproved=true` باسم المراجع وتاريخه
+3. عندها فقط: نقل صريح إلى `books.json` وإزالة `needsReview`
+4. ممنوع اعتبار أوامر «اكمل» الآلية موافقة ترقية
