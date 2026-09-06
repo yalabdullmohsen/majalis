@@ -226,6 +226,82 @@ if (!existsSync(deferredPath)) {
           fail(`تعارض promotionApproved بين المرشّح وhumanDecision: ${topic.id}`);
         }
       }
+      const preview = topic.promotionPreview;
+      if (!preview || typeof preview !== "object") {
+        fail(`promotionPreview مطلوب لـ review_ready: ${topic.id}`);
+      } else {
+        if (preview.previewOnly !== true) {
+          fail(`promotionPreview.previewOnly يجب true: ${topic.id}`);
+        }
+        if (preview.insertedIntoBooksJson !== false) {
+          fail(`promotionPreview ما زال غير مُدرج ويجب insertedIntoBooksJson=false: ${topic.id}`);
+        }
+        if (!preview.mode?.trim()) fail(`promotionPreview.mode ناقص: ${topic.id}`);
+        if (!preview.finalLessonId?.trim()) {
+          fail(`promotionPreview.finalLessonId ناقص: ${topic.id}`);
+        }
+        const lesson = preview.lesson;
+        if (!lesson || typeof lesson !== "object") {
+          fail(`promotionPreview.lesson مطلوب: ${topic.id}`);
+        } else {
+          const requiredText = [
+            "id", "title", "bookId", "chapterId", "definition", "summary",
+            "preferred", "ruling", "evidence", "practicalSummary",
+          ];
+          for (const key of requiredText) {
+            if (!lesson[key]?.trim()) {
+              fail(`promotionPreview.lesson.${key} ناقص في ${topic.id}`);
+            }
+          }
+          if (lesson.id !== preview.finalLessonId) {
+            fail(`finalLessonId لا يطابق lesson.id في ${topic.id}`);
+          }
+          if (!["مبتدئ", "متوسط", "متقدم"].includes(lesson.level)) {
+            fail(`مستوى معاينة غير صالح: ${topic.id}`);
+          }
+          if (!sourcesOk(lesson.sources)) {
+            fail(`مصادر معاينة الترقية ناقصة: ${topic.id}`);
+          }
+          if (!chapterKeys.has(`${lesson.bookId}/${lesson.chapterId}`)) {
+            fail(`معاينة تشير لباب غير موجود: ${topic.id}`);
+          }
+          if (lessonIds.has(lesson.id) || booksRaw.includes(`"${lesson.id}"`)) {
+            fail(`معاينة الترقية تسربت/موجودة في books.json: ${lesson.id}`);
+          }
+          // المعاينة تعرض الشكل النهائي المقترح، لكن يجب ألا تُحسب ضمن الكتالوج العام
+          if (lesson.status !== "published" || lesson.needsReview !== false) {
+            fail(`معاينة الترقية يجب أن تعرض الشكل النهائي published/needsReview=false: ${topic.id}`);
+          }
+        }
+        if (preview.insertAfterLessonId && !lessonIds.has(preview.insertAfterLessonId)) {
+          fail(`insertAfterLessonId غير موجود: ${preview.insertAfterLessonId}`);
+        }
+        if (preview.insertBeforeLessonId && !lessonIds.has(preview.insertBeforeLessonId)) {
+          fail(`insertBeforeLessonId غير موجود: ${preview.insertBeforeLessonId}`);
+        }
+        for (const [i, patch] of (preview.patchHints || []).entries()) {
+          if (!patch?.lessonId?.trim() || !lessonIds.has(patch.lessonId)) {
+            fail(`patchHints[${i}].lessonId غير صالح في ${topic.id}`);
+          }
+          if (!patch?.field?.trim() || !patch?.action?.trim()) {
+            fail(`patchHints[${i}] ناقصة في ${topic.id}`);
+          }
+        }
+        const req = preview.applyRequires;
+        if (!req || typeof req !== "object") {
+          fail(`applyRequires مطلوب: ${topic.id}`);
+        } else {
+          if (!req.explicitCommand?.trim()) {
+            fail(`applyRequires.explicitCommand مطلوب: ${topic.id}`);
+          }
+          if (req["humanDecision.promotionApproved"] !== true) {
+            fail(`applyRequires يجب أن يشترط humanDecision.promotionApproved=true: ${topic.id}`);
+          }
+          if (req.allSignOffChecked !== true) {
+            fail(`applyRequires يجب أن يشترط allSignOffChecked=true: ${topic.id}`);
+          }
+        }
+      }
     }
     if (stage === "hold") {
       if (!Array.isArray(topic.holdReasons) || topic.holdReasons.length < 2) {
@@ -237,6 +313,9 @@ if (!existsSync(deferredPath)) {
       }
       if (topic.promotionReview) {
         fail(`موضوع hold لا يجوز أن يحمل promotionReview: ${topic.id}`);
+      }
+      if (topic.promotionPreview) {
+        fail(`موضوع hold لا يجوز أن يحمل promotionPreview: ${topic.id}`);
       }
     }
     if (!sourcesOk(topic.sources)) fail(`مصادر مؤجّلة ناقصة: ${topic.id}`);
@@ -269,6 +348,8 @@ const deferredStats = (() => {
       deferredHold: topics.filter((t) => t.reviewStage === "hold").length,
       lessonCandidates: topics.filter((t) => t.lessonCandidate).length,
       promotionReviews: topics.filter((t) => t.promotionReview).length,
+      promotionPreviews: topics.filter((t) => t.promotionPreview).length,
+      insertedPreviews: topics.filter((t) => t.promotionPreview?.insertedIntoBooksJson === true).length,
       promotionApproved: topics.filter((t) =>
         t.lessonCandidate?.promotionApproved === true ||
         t.promotionReview?.humanDecision?.promotionApproved === true
@@ -281,6 +362,8 @@ const deferredStats = (() => {
       deferredHold: 0,
       lessonCandidates: 0,
       promotionReviews: 0,
+      promotionPreviews: 0,
+      insertedPreviews: 0,
       promotionApproved: 0,
       deferredVersion: null,
     };
