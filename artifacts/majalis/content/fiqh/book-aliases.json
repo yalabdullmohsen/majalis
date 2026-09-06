@@ -275,6 +275,11 @@
       "aliasId": "miyah-book",
       "targetBookId": "taharah",
       "targetChapterId": "miyah"
+    },
+    {
+      "aliasTitle": "كتاب اللباس",
+      "aliasId": "kitab-libas",
+      "targetBookId": "libas"
     }
   ]
 }
