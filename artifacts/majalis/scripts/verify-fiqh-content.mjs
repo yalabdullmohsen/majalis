@@ -334,6 +334,39 @@ if (!existsSync(deferredPath)) {
   }
 }
 
+// v7 tooling: gated apply + signoff sheet must exist; apply must refuse by default
+{
+  const applyScriptPath = resolve(root, "scripts/apply-fiqh-promotion.mjs");
+  const previewScriptPath = resolve(root, "scripts/preview-fiqh-promotion.mjs");
+  const signOffPath = resolve(root, "content/fiqh/PROMOTION_SIGNOFF.md");
+  if (!existsSync(applyScriptPath)) fail("scripts/apply-fiqh-promotion.mjs مفقود");
+  if (!existsSync(previewScriptPath)) fail("scripts/preview-fiqh-promotion.mjs مفقود");
+  if (!existsSync(signOffPath)) fail("content/fiqh/PROMOTION_SIGNOFF.md مفقود");
+  if (existsSync(deferredPath)) {
+    try {
+      const d = JSON.parse(readFileSync(deferredPath, "utf8"));
+      if (d.applyTooling?.ekmelIsNotApproval !== true) {
+        fail("applyTooling.ekmelIsNotApproval يجب true");
+      }
+      if (d.applyTooling?.insertedIntoBooksJson !== false) {
+        fail("applyTooling.insertedIntoBooksJson يجب false إلى حين الاعتماد");
+      }
+      const sheet = readFileSync(signOffPath, "utf8");
+      if (!/اكمل/.test(sheet)) {
+        fail("ورقة التوقيع يجب أن تصرّح بأن «اكمل» ليست موافقة");
+      }
+      for (const topic of (d.topics || []).filter((t) => t.reviewStage === "review_ready")) {
+        const cmd = topic.promotionPreview?.applyRequires?.explicitCommand;
+        if (cmd && !sheet.includes(cmd)) {
+          fail(`ورقة التوقيع تنقص أمر الاعتماد لـ ${topic.id}`);
+        }
+      }
+    } catch (e) {
+      fail(`تعذّر التحقق من أدوات الترقية: ${e.message}`);
+    }
+  }
+}
+
 if (errors.length) {
   console.error("❌ verify-fiqh-content failed:");
   for (const e of errors) console.error(" -", e);

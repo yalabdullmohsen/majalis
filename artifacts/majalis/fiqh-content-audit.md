@@ -1,21 +1,24 @@
 # تدقيق محتوى الفقه
 
-- التاريخ: 2026-09-06 22:01 UTC
-- الجولة: v6 — معاينة ترقية (promotionPreview) بلا إدراج فعلي
+- التاريخ: 2026-09-06 22:22 UTC
+- الجولة: v7 — أداة تطبيق مغلقة + ورقة توقيع (بلا إدراج)
 - المسائل المنشورة: 1103 | أمثلة: 270 | نوازل داخلية: 4
 - review_ready: 2 | hold: 2 | promotionPreview: 2 | insertedIntoBooksJson: 0 | promotionApproved: 0
 
 ## الحالة
 
 - الكتالوج العام مكتمل ولم يُمس.
-- معاينات الدروس النهائية المقترحة:
-  - `libas-shuhra-dawabit` (بعد `libas-isbal`)
-  - `janaza-ziyara-nisa-taalim` (اختياري بعد محاذاة overview)
-- «اكمل» لا تُفعّل الترقية؛ يلزم أمر اعتماد صريح لكل مرشّح.
+- أُضيف `scripts/apply-fiqh-promotion.mjs` ويرفض التشغيل بلا بوابات.
+- ورقة التوقيع: `content/fiqh/PROMOTION_SIGNOFF.md`
+- «اكمل» لا تُفعّل الترقية.
+
+## أوامر الاعتماد الحرفيّة (لاحقاً)
+- `اعتمد ترقية لباس الشهرة إلى books.json`
+- `اعتمد ترقية زيارة النساء للقبور إلى books.json`
 
 ## مؤجّل خارج الكتالوج العام
 
-| المعرّف | المرحلة | معاينة | مُدرج؟ |
+| المعرّف | المرحلة | المعاينة | مُدرج؟ |
 |---|---|---|---|
 | `libas-shuhra-muasir` | `review_ready` | `libas-shuhra-dawabit` | لا |
 | `ziyarat-nisa-qubur` | `review_ready` | `janaza-ziyara-nisa-taalim` | لا |
@@ -24,5 +27,5 @@
 
 ## المنهج
 
-- `promotionPreview.lesson` شكل كتالوج نهائي مقترح فقط.
-- التطبيق الفعلي مشروط بـ `applyRequires.explicitCommand`.
+- التطبيق الفعلي يحتاج: توقيع JSON + `--approve` الحرفي + اكتمال checklist.
+- المعاينة وحدها لا تكتب إلى `books.json`.
