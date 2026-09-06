@@ -87,13 +87,35 @@ if (!existsSync(deferredPath)) {
     if (!topic.title?.trim()) fail(`موضوع مؤجّل بلا عنوان: ${topic.id}`);
     if (topic.status !== "draft") fail(`موضوع مؤجّل يجب أن يكون draft: ${topic.id}`);
     if (topic.needsReview !== true) fail(`موضوع مؤجّل يجب needsReview=true: ${topic.id}`);
-    if (!topic.summary?.trim() || topic.summary.trim().length < 80) {
+    if (!topic.summary?.trim() || topic.summary.trim().length < 120) {
       fail(`خلاصة مؤجّلة قصيرة/فارغة: ${topic.id}`);
+    }
+    if (!topic.classicalFrame?.trim() || topic.classicalFrame.trim().length < 80) {
+      fail(`إطار مذهبي ناقص في المؤجّل: ${topic.id}`);
+    }
+    if (!topic.preferred?.trim() || topic.preferred.trim().length < 40) {
+      fail(`معتمد ناقص في المؤجّل: ${topic.id}`);
+    }
+    if (!Array.isArray(topic.boundaries) || topic.boundaries.length < 2) {
+      fail(`حدود النازلة ناقصة: ${topic.id}`);
+    }
+    if (!Array.isArray(topic.openIssues) || topic.openIssues.length < 2) {
+      fail(`مسائل مفتوحة ناقصة: ${topic.id}`);
+    }
+    if (!Array.isArray(topic.editorialChecklist) || topic.editorialChecklist.length < 2) {
+      fail(`قائمة تحريرية ناقصة: ${topic.id}`);
     }
     if (!sourcesOk(topic.sources)) fail(`مصادر مؤجّلة ناقصة: ${topic.id}`);
     if (lessonIds.has(topic.id)) fail(`موضوع مؤجّل تسرب إلى books.json: ${topic.id}`);
     if (booksRaw.includes(`"${topic.id}"`)) {
       fail(`معرّف مؤجّل موجود داخل books.json: ${topic.id}`);
+    }
+    // لا فتوى عملياتية/تنزيلية معاصرة في حزمة الجهاد التعليمية
+    if (topic.id === "nawazil-jihad-muasira") {
+      const blob = `${topic.summary}\n${topic.practicalSummary}\n${(topic.boundaries || []).join("\n")}`;
+      if (!/تعليم|تاريخ|عزل|دون تنزيل|لا تنزيل/.test(blob)) {
+        fail("نازلة الجهاد تفتقد تصريح العزل التعليمي عن التنزيل المعاصر");
+      }
     }
   }
 }
