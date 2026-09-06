@@ -334,6 +334,26 @@ function flattenBookLessons(book: FiqhBook): FiqhLessonHit[] {
   return hits;
 }
 
+export function adjacentFiqhChapters(
+  bookId: string,
+  chapterId: string,
+): { prev?: FiqhChapterHit; next?: FiqhChapterHit; chapters: FiqhChapterHit[] } {
+  const book = getVisibleFiqhBook(bookId);
+  if (!book) return { chapters: [] };
+  const chapters = publishedChapters(book).map((chapter) => ({
+    book,
+    chapter,
+    href: chapterHref(book.id, chapter.id),
+    path: `${book.title} ← ${chapter.title}`,
+  }));
+  const index = chapters.findIndex((h) => h.chapter.id === chapterId);
+  return {
+    prev: index > 0 ? chapters[index - 1] : undefined,
+    next: index >= 0 && index < chapters.length - 1 ? chapters[index + 1] : undefined,
+    chapters,
+  };
+}
+
 export function adjacentFiqhLessons(
   bookId: string,
   lessonId: string,

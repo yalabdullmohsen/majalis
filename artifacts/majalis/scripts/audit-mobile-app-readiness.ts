@@ -45,11 +45,11 @@ assertNoMatch(
 // 3) خلفية الإقلاع الأصلي = سطح الصفحة (لا أبيض) حتى يضبط PageChrome الصفحة
 assertMatch(
   read("src/main.tsx"),
-  /bootTheme === "dark" \? "#101614" : "#F2F4F3"/,
+  /bootTheme === "dark" \? "#101614" : "#F7F3EB"/,
   "لون status عند الإقلاع الأصلي يطابق سطح الصفحة",
 );
-assertMatch(read("capacitor.config.ts"), /StatusBar:\s*\{[^}]*backgroundColor:\s*["']#F2F4F3/s, "StatusBar فاتح للصفحات العامة");
-assertMatch(read("capacitor.config.ts"), /ios:\s*\{[\s\S]*?backgroundColor:\s*["']#F2F4F3/, "ios.backgroundColor فاتح لمنع فجوة بيضاء");
+assertMatch(read("capacitor.config.ts"), /StatusBar:\s*\{[^}]*backgroundColor:\s*["']#F7F3EB/s, "StatusBar فاتح للصفحات العامة");
+assertMatch(read("capacitor.config.ts"), /ios:\s*\{[\s\S]*?backgroundColor:\s*["']#F7F3EB/, "ios.backgroundColor فاتح لمنع فجوة بيضاء");
 assertMatch(read("capacitor.config.ts"), /errorPath:\s*["']native-load-error\.html["']/, "errorPath عند فشل تحميل الإنتاج");
 assertMatch(read("capacitor.config.ts"), /overlaysWebView:\s*true/, "StatusBar overlaysWebView");
 

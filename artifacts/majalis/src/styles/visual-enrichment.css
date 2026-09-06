@@ -1,0 +1,435 @@
+/**
+ * إثراء بصري للقراءة التفاعلية (فقه/كتب) — يعتمد على رموز theme.css.
+ * لا يمسّ المصحف ولا نصوص القرآن.
+ */
+
+.ve-page {
+  max-width: 42rem;
+  margin-inline: auto;
+  padding-inline: var(--page-gutter, 1rem) var(--page-gutter-end, 1rem);
+  color: var(--color-ink, var(--mj-ink));
+  background: transparent;
+  text-align: start;
+  line-height: 1.75;
+}
+
+.ve-page p,
+.ve-page li,
+.ve-body {
+  text-align: start;
+  line-height: 1.8;
+  color: var(--color-ink-2, var(--mj-ink-2));
+}
+
+.ve-title-center {
+  text-align: center;
+  line-height: 1.35;
+}
+
+.ve-book-card,
+.ve-chapter-card {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 0.85rem;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+  text-align: start;
+  padding: 1rem 1rem 1rem 0.9rem;
+  border-radius: var(--radius-card, 24px);
+  border: 1px solid var(--color-hairline, var(--mj-hairline));
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in srgb, var(--color-surface, #FFFCF7) 92%, var(--color-brand-soft, #E2EFE8)) 0%,
+      var(--color-surface, #FFFCF7) 100%
+    );
+  box-shadow: var(--shadow-mj, var(--mj-sh));
+  overflow: hidden;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.16s var(--mj-ease-spring, ease),
+    background 0.18s ease;
+}
+
+.ve-book-card::before,
+.ve-chapter-card::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 4px;
+  background: linear-gradient(
+    180deg,
+    var(--color-brand, #0F5C45) 0%,
+    var(--color-secondary, #5C6B4A) 100%
+  );
+  border-radius: 4px 0 0 4px;
+}
+
+.ve-book-card:hover,
+.ve-book-card:focus-visible,
+.ve-chapter-card:hover,
+.ve-chapter-card:focus-visible {
+  border-color: color-mix(in srgb, var(--color-brand, #0F5C45) 42%, var(--color-hairline));
+  box-shadow: 0 16px 40px -18px rgba(10, 61, 46, 0.36);
+}
+
+.ve-book-card:active,
+.ve-chapter-card:active {
+  transform: scale(0.985);
+}
+
+.ve-book-card.is-selected,
+.ve-chapter-card.is-selected,
+.ve-book-card[aria-current="page"],
+.ve-chapter-card[aria-current="page"] {
+  border-color: var(--color-brand, #0F5C45);
+  background: color-mix(in srgb, var(--color-brand-soft, #E2EFE8) 55%, var(--color-surface));
+}
+
+.ve-book-card__icon,
+.ve-chapter-card__num {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 14px;
+  background: var(--color-brand-soft, #E2EFE8);
+  color: var(--brand-on-white, #0C4F3A);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.ve-book-card__body,
+.ve-chapter-card__body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ve-book-card__title,
+.ve-chapter-card__title {
+  font-weight: 700;
+  color: var(--color-ink, var(--mj-ink));
+  line-height: 1.4;
+}
+
+.ve-book-card__desc,
+.ve-chapter-card__preview {
+  font-size: 0.9rem;
+  color: var(--color-ink-2, var(--mj-ink-2));
+  line-height: 1.55;
+}
+
+.ve-book-card__meta,
+.ve-chapter-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.55rem;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--color-muted, var(--mj-muted));
+}
+
+.ve-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: var(--chip-bg, #E2EFE8);
+  color: var(--chip-fg, #0A3D2E);
+  border: 1px solid color-mix(in srgb, var(--color-brand, #0F5C45) 14%, transparent);
+}
+
+.ve-badge--secondary {
+  background: var(--color-secondary-soft, #E8EBE3);
+  color: var(--color-secondary, #5C6B4A);
+  border-color: color-mix(in srgb, var(--color-secondary, #5C6B4A) 18%, transparent);
+}
+
+.ve-badge--accent {
+  background: var(--color-accent-soft, #F5EEDF);
+  color: color-mix(in srgb, var(--color-accent, #B08A3E) 82%, #16241E);
+  border-color: color-mix(in srgb, var(--color-accent, #B08A3E) 22%, transparent);
+}
+
+.ve-book-card__go,
+.ve-chapter-card__go {
+  flex: 0 0 auto;
+  align-self: center;
+  color: var(--brand-on-white, #0C4F3A);
+  opacity: 0.85;
+}
+
+.ve-hero {
+  margin-bottom: 1.25rem;
+  padding: 1.15rem 1.1rem;
+  border-radius: var(--radius-card, 24px);
+  border: 1px solid var(--color-hairline, var(--mj-hairline));
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--color-brand-soft, #E2EFE8) 70%, var(--color-surface)) 0%,
+      var(--color-surface, #FFFCF7) 70%
+    );
+  box-shadow: var(--shadow-mj, var(--mj-sh));
+}
+
+.ve-hero__subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--brand-on-white, #0C4F3A);
+  font-weight: 600;
+  text-align: center;
+}
+
+.ve-hero__desc {
+  margin: 0.75rem 0 0;
+  text-align: start;
+  color: var(--color-ink-2, var(--mj-ink-2));
+  line-height: 1.75;
+}
+
+.ve-hero__chips,
+.ve-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+}
+
+.ve-toc {
+  position: sticky;
+  top: calc(var(--header-h, 56px) + 0.35rem);
+  z-index: 2;
+  padding: 0.55rem 0.15rem;
+  margin-bottom: 0.75rem;
+  background: color-mix(in srgb, var(--color-bg, #F7F3EB) 88%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.ve-toc a,
+.ve-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--brand-on-white, #0C4F3A);
+  background: var(--color-brand-soft, #E2EFE8);
+  border: 1px solid color-mix(in srgb, var(--color-brand, #0F5C45) 16%, transparent);
+}
+
+.ve-toc a.is-active,
+.ve-toc a:target,
+.ve-chip.is-active {
+  background: var(--color-brand, #0F5C45);
+  color: var(--color-on-brand, #fff);
+  border-color: var(--color-brand, #0F5C45);
+}
+
+.ve-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-block: 0.75rem 1.25rem;
+}
+
+.ve-accordion details {
+  border: 1px solid var(--color-hairline, var(--mj-hairline));
+  border-radius: 18px;
+  background: var(--color-surface, #FFFCF7);
+  box-shadow: 0 8px 22px -18px rgba(10, 61, 46, 0.22);
+  overflow: clip;
+}
+
+.ve-accordion details[open] {
+  border-color: color-mix(in srgb, var(--color-brand, #0F5C45) 28%, var(--color-hairline));
+}
+
+.ve-accordion summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.9rem 1rem;
+  font-weight: 700;
+  color: var(--color-ink, var(--mj-ink));
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+.ve-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.ve-accordion summary::after {
+  content: "+";
+  margin-inline-start: auto;
+  color: var(--brand-on-white, #0C4F3A);
+  font-weight: 700;
+}
+
+.ve-accordion details[open] summary::after {
+  content: "−";
+}
+
+.ve-accordion .ve-accordion__body {
+  padding: 0 1rem 1rem;
+  text-align: start;
+  color: var(--color-ink-2, var(--mj-ink-2));
+  line-height: 1.8;
+}
+
+.ve-accordion .ve-accordion__body:target,
+.ve-section:target {
+  outline: 2px solid color-mix(in srgb, var(--color-brand, #0F5C45) 45%, transparent);
+  outline-offset: 2px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--color-brand-soft, #E2EFE8) 35%, transparent);
+}
+
+.ve-callout {
+  margin: 0.85rem 0;
+  padding: 0.85rem 1rem;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--color-accent, #B08A3E) 28%, var(--color-hairline));
+  background: var(--color-accent-soft, #F5EEDF);
+  color: var(--color-ink, var(--mj-ink));
+  text-align: start;
+  line-height: 1.7;
+}
+
+.ve-callout__label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--color-accent, #B08A3E) 75%, #16241E);
+  font-size: 0.85rem;
+}
+
+.ve-pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-block: 1.25rem 0.5rem;
+}
+
+.ve-pager a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-height: 48px;
+  padding: 0.75rem 0.9rem;
+  text-decoration: none;
+  border-radius: 16px;
+  border: 1px solid var(--color-hairline, var(--mj-hairline));
+  background: var(--color-surface, #FFFCF7);
+  box-shadow: 0 8px 20px -16px rgba(10, 61, 46, 0.24);
+  color: var(--color-ink, var(--mj-ink));
+}
+
+.ve-pager a span {
+  font-size: 0.75rem;
+  color: var(--color-muted, var(--mj-muted));
+}
+
+.ve-pager a strong {
+  font-size: 0.92rem;
+  color: var(--brand-on-white, #0C4F3A);
+}
+
+.ve-pager a.ve-pager__next {
+  text-align: end;
+}
+
+.ve-lesson-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.ve-chapter-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.ve-lesson-list > li,
+.ve-chapter-list > li {
+  margin: 0;
+}
+
+.ve-bottom-clearance {
+  height: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 1.5rem);
+}
+
+html[data-theme="dark"] .ve-book-card,
+html.dark .ve-book-card,
+html[data-theme="dark"] .ve-chapter-card,
+html.dark .ve-chapter-card,
+html[data-theme="dark"] .ve-hero,
+html.dark .ve-hero,
+html[data-theme="dark"] .ve-accordion details,
+html.dark .ve-accordion details,
+html[data-theme="dark"] .ve-pager a,
+html.dark .ve-pager a {
+  background: var(--color-surface, #1B2421);
+  border-color: var(--color-hairline, #35443F);
+  box-shadow: none;
+}
+
+html[data-theme="dark"] .ve-book-card__icon,
+html.dark .ve-book-card__icon,
+html[data-theme="dark"] .ve-chapter-card__num,
+html.dark .ve-chapter-card__num,
+html[data-theme="dark"] .ve-toc a,
+html.dark .ve-toc a,
+html[data-theme="dark"] .ve-chip,
+html.dark .ve-chip,
+html[data-theme="dark"] .ve-badge,
+html.dark .ve-badge {
+  background: var(--chip-bg, #16261F);
+  color: var(--chip-fg, #B8E0CC);
+  border-color: var(--color-hairline, #35443F);
+}
+
+html[data-theme="dark"] .ve-callout,
+html.dark .ve-callout {
+  background: var(--color-accent-soft, #2A3733);
+  border-color: var(--color-hairline, #35443F);
+  color: var(--color-ink, #F8FAFC);
+}
+
+html[data-theme="dark"] .ve-toc,
+html.dark .ve-toc {
+  background: color-mix(in srgb, var(--color-bg, #131A18) 90%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ve-book-card,
+  .ve-chapter-card {
+    transition: none;
+  }
+  .ve-book-card:active,
+  .ve-chapter-card:active {
+    transform: none;
+  }
+}

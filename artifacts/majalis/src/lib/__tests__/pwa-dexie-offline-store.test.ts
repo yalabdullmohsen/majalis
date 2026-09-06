@@ -22,8 +22,8 @@ assert.equal(manifest.short_name, "سُنّة");
 assert.equal(manifest.lang, "ar");
 assert.equal(manifest.dir, "rtl");
 assert.equal(manifest.display, "standalone");
-assert.equal(manifest.theme_color, "#F2F4F3");
-assert.equal(manifest.background_color, "#F2F4F3");
+assert.equal(manifest.theme_color, "#F7F3EB");
+assert.equal(manifest.background_color, "#F7F3EB");
 assert.ok(manifest.icons.some((i: { sizes: string }) => i.sizes.includes("192")));
 assert.ok(manifest.icons.some((i: { sizes: string }) => i.sizes.includes("512")));
 

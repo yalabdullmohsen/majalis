@@ -12,7 +12,7 @@ const site = JSON.parse(readFileSync(resolve(root, "site.config.json"), "utf8"))
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
 const themeCss = readFileSync(resolve(root, "src/app/styles/theme.css"), "utf8");
 
-assert.equal(site.themeColor, "#F2F4F3");
+assert.equal(site.themeColor, "#F7F3EB");
 assert.equal(site.themeColorDark, "#101614");
 assert.equal(VIEWPORT_CONTENT, "width=device-width, initial-scale=1, viewport-fit=cover");
 assert.match(indexHtml, new RegExp(VIEWPORT_CONTENT.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
@@ -23,8 +23,8 @@ assert.ok(existsSync(resolve(root, "src/styles/ios-edge.css")));
 assert.ok(existsSync(resolve(root, "src/components/SafeAreaDebugOverlay.tsx")));
 
 const manifest = JSON.parse(readFileSync(resolve(root, "public/manifest.json"), "utf8"));
-assert.equal(manifest.theme_color, "#F2F4F3");
+assert.equal(manifest.theme_color, "#F7F3EB");
 /** خلفية الإقلاع/الشاشة الأصلية */
-assert.equal(manifest.background_color, "#F2F4F3");
+assert.equal(manifest.background_color, "#F7F3EB");
 
 console.log("ios-edge-foundation.test.ts: ok");

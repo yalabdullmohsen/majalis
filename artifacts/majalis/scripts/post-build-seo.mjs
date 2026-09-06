@@ -20,7 +20,7 @@ const prerenderDir = resolve(appRoot, "seo-prerender");
 
 const SITE = JSON.parse(await readFile(resolve(appRoot, "site.config.json"), "utf8"));
 const SITE_URL = SITE.siteUrl || "https://www.ssunnah.com";
-const THEME_COLOR = SITE.themeColor || "#1F7A5A";
+const THEME_COLOR = SITE.themeColor || "#0F5C45";
 const THEME_COLOR_DARK = SITE.themeColorDark || "#4FB48B";
 const PRERENDER_NAV =
   Array.isArray(SITE.prerenderNav) && SITE.prerenderNav.length
@@ -130,7 +130,7 @@ function buildMergedHtml(seoTags, spaAssets, prerenderBody, spaBody) {
     ${seoTags}
     <style>
       #root{min-height:40vh;position:relative;z-index:1}
-      #seo-shell{position:fixed;inset:0;z-index:2;overflow:auto;background:#F2F4F3}
+      #seo-shell{position:fixed;inset:0;z-index:2;overflow:auto;background:#F7F3EB}
       html.dark #seo-shell,.dark #seo-shell{background:#101614}
       .js-ready #seo-shell{display:none!important}
     </style>

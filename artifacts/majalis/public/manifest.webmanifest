@@ -13,8 +13,8 @@
     "fullscreen",
     "minimal-ui"
   ],
-  "background_color": "#F2F4F3",
-  "theme_color": "#F2F4F3",
+  "background_color": "#F7F3EB",
+  "theme_color": "#F7F3EB",
   "orientation": "portrait-primary",
   "categories": [
     "education",

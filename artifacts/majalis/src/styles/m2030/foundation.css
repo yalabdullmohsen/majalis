@@ -4,7 +4,7 @@
 
 html {
   /* سطح التطبيق — لا bleed أسود تحت الشريط/Home Indicator */
-  background-color: var(--surface-app, var(--mj-bg, #F2F4F3));
+  background-color: var(--surface-app, var(--mj-bg, #F7F3EB));
   background-image:
     radial-gradient(ellipse 70% 40% at 100% 0%, color-mix(in srgb, var(--em-500) 6%, transparent), transparent 55%);
   color: var(--text);
@@ -19,7 +19,7 @@ html.dark {
 }
 
 body {
-  background-color: var(--surface-app, var(--mj-bg, #F2F4F3)) !important;
+  background-color: var(--surface-app, var(--mj-bg, #F7F3EB)) !important;
   background-image: none !important;
   color: var(--text) !important;
   font-family: var(--font-body) !important;

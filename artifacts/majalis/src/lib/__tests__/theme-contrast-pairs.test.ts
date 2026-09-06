@@ -61,7 +61,7 @@ for (const line of rows) {
   console.log(`  ✓ ${fgToken} ${fgHex} على ${bgHex} = ${ratio}:1 (≥${min})`);
 }
 
-assert.equal(tokenHex("--chip-bg"), "#E4F0EA");
+assert.equal(tokenHex("--chip-bg"), "#E2EFE8");
 assert.equal(tokenHex("--on-brand-muted"), "#E8F3EE");
 assert.equal(tokenHex("--color-muted"), "#5E6E67");
 

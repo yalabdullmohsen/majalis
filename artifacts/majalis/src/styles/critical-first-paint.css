@@ -228,7 +228,7 @@ html.app-booting .hus-field {
   padding-bottom: var(--inset-bottom, 0px);
   min-height: calc(var(--bottom-nav-height) + var(--inset-bottom, 0px));
   z-index: 200;
-  background-color: var(--surface-app, #F2F4F3);
+  background-color: var(--surface-app, #F7F3EB);
   background-image: none;
   opacity: 1;
   backdrop-filter: none;

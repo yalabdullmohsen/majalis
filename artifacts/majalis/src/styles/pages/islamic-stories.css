@@ -2,6 +2,11 @@
    49. Islamic Stories Page — القصص الإسلامية
    ══════════════════════════════════════════════ */
 
+.isp-page,
+.topic-page--islamic-stories .topic-page__body {
+  background: var(--color-bg, var(--surface-app, #F7F3EB));
+}
+
 /* إحصائيات التصنيفات */
 .isp-stats-row {
   display: flex;
@@ -317,10 +322,11 @@
 }
 
 .isp-detail__section {
-  background: var(--elite-white, var(--mj-bg));
-  border: 1px solid var(--elite-border, rgba(0,0,0,0.07));
+  background: var(--color-surface, var(--elite-white, #FFFCF7));
+  border: 1px solid var(--color-hairline, var(--elite-border, rgba(0,0,0,0.07)));
   border-radius: var(--elite-r-lg, 16px);
   padding: 1.25rem 1.5rem;
+  box-shadow: 0 10px 26px -18px rgba(10, 61, 46, 0.22);
 }
 
 .isp-detail__section--lessons  { background: rgba(21,128,61,0.05); border-color: rgba(21,128,61,0.15); }

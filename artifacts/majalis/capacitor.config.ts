@@ -24,7 +24,7 @@ const config: CapacitorConfig = {
       launchShowDuration: 0,
       launchAutoHide: false,
       /* سطح الرئيسية — بلا خلفية خضراء قديمة ولا أيقونة دعائية */
-      backgroundColor: "#F2F4F3",
+      backgroundColor: "#F7F3EB",
       showSpinner: false,
       androidSplashResourceName: "splash",
       androidScaleType: "CENTER_CROP",
@@ -35,7 +35,7 @@ const config: CapacitorConfig = {
       // يمتد الـWebView تحت الساعة — لون المنطقة من CSS (--app-status-bg) حسب الصفحة
       overlaysWebView: true,
       style: "DARK",
-      backgroundColor: "#F2F4F3",
+      backgroundColor: "#F7F3EB",
     },
     Keyboard: {
       resize: "body",
@@ -67,7 +67,7 @@ const config: CapacitorConfig = {
     // UIKit adjustment here would apply a second inset around the WKWebView.
     contentInset: "never",
     // سطح الرئيسية — يطابق أول إطار ويمنع وميض أخضر قديم
-    backgroundColor: "#F2F4F3",
+    backgroundColor: "#F7F3EB",
     scrollEnabled: true,
   },
 };

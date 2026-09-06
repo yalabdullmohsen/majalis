@@ -14,7 +14,7 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 const theme = read("src/app/styles/theme.css");
 assert.match(theme, /--color-primary-dark:\s*var\(--mj-brand-deep\)/);
 assert.match(theme, /--color-active-tab-bg:/);
-assert.match(theme, /--mj-brand-deep:\s*#123F2E/);
+assert.match(theme, /--mj-brand-deep:\s*#0A3D2E/);
 
 const featured = read("src/components/sections/section-cards.css");
 assert.match(featured, /\.card--featured[\s\S]{0,400}--color-primary-dark|--mj-brand-deep/);

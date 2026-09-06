@@ -36,7 +36,7 @@ export type HeaderAdConfig = {
 
 /** legacy — لم يعد يُفعَّل من TopSponsorBanner */
 export const TOP_SPONSOR_STATUS = {
-  light: { hex: "#F2F4F3", style: "dark" as const },
+  light: { hex: "#F7F3EB", style: "dark" as const },
   dark: { hex: "#101614", style: "light" as const },
 };
 

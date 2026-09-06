@@ -12,17 +12,17 @@
 }
 
 .topic-page--miracles .topic-page__body {
-  background: var(--surface-app, #f7faf8);
+  background: var(--color-bg, var(--surface-app, #F7F3EB));
 }
 
 .mk-page--embedded {
-  --mk-green: #1a5c48;
-  --mk-green-deep: #0f3d31;
-  --mk-green-soft: #e8f3ee;
+  --mk-green: #0F5C45;
+  --mk-green-deep: #0A3D2E;
+  --mk-green-soft: #E2EFE8;
   --mk-green-mid: #d4e8df;
-  --mk-surface: #ffffff;
-  --mk-surface-soft: #f6faf8;
-  --mk-line: color-mix(in srgb, var(--mk-green) 12%, #d5ddd8);
+  --mk-surface: var(--color-surface, #FFFCF7);
+  --mk-surface-soft: var(--color-surface-2, #EFE8DC);
+  --mk-line: var(--color-hairline, #D9D2C6);
   --mk-accent: #2f7a62;
   max-width: 100%;
   overflow-x: clip;
@@ -261,24 +261,24 @@
   padding: 1rem 1.05rem 0.95rem;
   border-radius: 16px;
   border: 1px solid var(--mk-line);
-  background-color: #ffffff;
+  background-color: var(--mk-surface, var(--color-surface, #FFFCF7));
   background-image: none;
-  box-shadow: 0 8px 22px -18px rgba(15, 61, 49, 0.22);
+  box-shadow: 0 10px 26px -16px rgba(10, 61, 46, 0.28);
   min-width: 0;
   overflow: hidden;
 }
 
 .mk-card--sunnah {
-  background-color: #ffffff;
+  background-color: var(--mk-surface, var(--color-surface, #FFFCF7));
   background-image: linear-gradient(
     180deg,
-    #ffffff 0%,
-    color-mix(in srgb, var(--mk-green) 3%, #fff) 100%
+    var(--mk-surface, #FFFCF7) 0%,
+    color-mix(in srgb, var(--mk-green) 3%, var(--mk-surface, #fff)) 100%
   );
 }
 
 .mk-card--quran {
-  background-color: #ffffff;
+  background-color: var(--mk-surface, var(--color-surface, #FFFCF7));
 }
 
 .mk-card.is-expanded {

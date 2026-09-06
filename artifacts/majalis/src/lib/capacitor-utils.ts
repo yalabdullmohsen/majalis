@@ -11,7 +11,7 @@ export const isAndroid = Capacitor.getPlatform() === "android";
 export const isIOS = Capacitor.getPlatform() === "ios";
 
 /** ألوان سطح افتراضية — تطابق theme-color / --mj-bg */
-export const STATUS_BAR_BG_LIGHT = "#F2F4F3";
+export const STATUS_BAR_BG_LIGHT = "#F7F3EB";
 export const STATUS_BAR_BG_DARK = "#101614";
 
 /**

@@ -23,7 +23,7 @@ function assert(cond: boolean, label: string) {
 }
 
 console.log("\n=== توكنات النص على الداكن ===");
-assert(/--surface-app:\s*#F2F4F3/.test(theme), "theme: --surface-app نهاري");
+assert(/--surface-app:\s*#F7F3EB/.test(theme), "theme: --surface-app نهاري");
 assert(/--mj-bg:\s*var\(--surface-app\)/.test(theme), "theme: --mj-bg ← --surface-app");
 assert(/\[data-on-dark\]/.test(theme), "theme: سياق [data-on-dark]");
 assert(/\.on-dark\s*\{/.test(theme), "theme: صنف .on-dark يعيد رموز النص");
