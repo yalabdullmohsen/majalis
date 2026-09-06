@@ -515,12 +515,12 @@ const GROUP_DOOR_EXPAND: Record<FiqhDoorGroup, FiqhCanonicalDoor[]> = {
     "udhiya",
     "ayman",
     "sayd",
-    "atima",
     "libas",
     "janaza",
     "jihad",
   ],
-  muamalat: ["buyu", "muamalat", "riba", "ijara", "sharika", "qard", "waqf_hiba", "faraid"],
+  // الأطعمة والذبائح مصنّفة معاملات في books.json — لا تُوسَّع ضمن عبادات
+  muamalat: ["buyu", "muamalat", "riba", "ijara", "sharika", "qard", "waqf_hiba", "faraid", "atima"],
   usrah: ["usrah", "nikah", "talaq", "iddah_rida", "nafaqat"],
   qada_jinayat: ["jinayat", "diyat", "hudud", "qada", "shahadat", "iqrar"],
 };

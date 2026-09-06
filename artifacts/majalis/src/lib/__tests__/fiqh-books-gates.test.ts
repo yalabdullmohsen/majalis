@@ -76,6 +76,7 @@ console.log("\n=== ترتيب علمي للكتب ===");
   assert(pos("sawm") < pos("itikaf"), "الصيام قبل الاعتكاف");
   assert(pos("itikaf") < pos("hajj"), "الاعتكاف قبل الحج");
   assert(pos("hajj") < pos("janaza"), "الحج قبل الجنائز — لا جنائز قبل الزكاة/الصيام");
+  assert(pos("janaza") < pos("buyu"), "الجنائز قبل البيوع والمعاملات");
   assert(pos("zakat") < pos("janaza"), "الزكاة قبل الجنائز");
   assert(pos("sawm") < pos("janaza"), "الصيام قبل الجنائز");
   assert(FIQH_CATEGORY_ORDER[0] === "ibadat", "العبادات أول مجموعة");

@@ -1,54 +1,54 @@
 {
-  "generatedAt": "2026-09-06T07:13:45.607Z",
+  "generatedAt": "2026-09-06T23:16:03.484Z",
   "summary": {
     "critical": 0,
     "high": 0,
     "medium": 0,
     "info": 0,
     "doors": 36,
-    "lessons": 462,
+    "lessons": 1103,
     "searchTermsChecked": 7
   },
   "doors": [
     {
       "id": "tahara",
       "label": "الطهارة",
-      "issueCount": 39,
+      "issueCount": 60,
       "status": "complete",
       "href": "/tahara"
     },
     {
       "id": "salah",
       "label": "الصلاة",
-      "issueCount": 57,
+      "issueCount": 124,
       "status": "complete",
       "href": "/salah-guide"
     },
     {
       "id": "zakat",
       "label": "الزكاة",
-      "issueCount": 33,
+      "issueCount": 72,
       "status": "complete",
       "href": "/zakat"
     },
     {
       "id": "sawm",
       "label": "الصيام",
-      "issueCount": 12,
+      "issueCount": 40,
       "status": "complete",
       "href": "/sawm"
     },
     {
       "id": "itikaf",
       "label": "الاعتكاف",
-      "issueCount": 4,
+      "issueCount": 26,
       "status": "complete",
       "href": "/fiqh/books/itikaf"
     },
     {
       "id": "hajj",
       "label": "الحج والعمرة",
-      "issueCount": 26,
+      "issueCount": 56,
       "status": "complete",
       "href": "/hajj"
     },
@@ -62,7 +62,7 @@
     {
       "id": "ayman",
       "label": "الأيمان والنذور",
-      "issueCount": 11,
+      "issueCount": 36,
       "status": "complete",
       "href": "/fiqh/books/ayman"
     },
@@ -76,35 +76,35 @@
     {
       "id": "atima",
       "label": "الأطعمة والأشربة",
-      "issueCount": 13,
+      "issueCount": 24,
       "status": "complete",
       "href": "/fiqh/books/atima"
     },
     {
       "id": "libas",
       "label": "اللباس والزينة",
-      "issueCount": 0,
-      "status": "needs_completion",
-      "href": "/fiqh/books/nikah"
+      "issueCount": 25,
+      "status": "complete",
+      "href": "/fiqh/books/libas"
     },
     {
       "id": "janaza",
       "label": "الجنائز",
-      "issueCount": 14,
+      "issueCount": 37,
       "status": "complete",
       "href": "/janaza"
     },
     {
       "id": "muamalat",
       "label": "المعاملات",
-      "issueCount": 8,
+      "issueCount": 26,
       "status": "complete",
       "href": "/fiqh/books/buyu"
     },
     {
       "id": "buyu",
       "label": "البيوع",
-      "issueCount": 41,
+      "issueCount": 84,
       "status": "complete",
       "href": "/fiqh/books/buyu"
     },
@@ -125,7 +125,7 @@
     {
       "id": "sharika",
       "label": "الشركة والمضاربة",
-      "issueCount": 29,
+      "issueCount": 60,
       "status": "complete",
       "href": "/fiqh/books/sharika"
     },
@@ -146,14 +146,14 @@
     {
       "id": "usrah",
       "label": "الأسرة",
-      "issueCount": 36,
+      "issueCount": 96,
       "status": "complete",
       "href": "/nikah"
     },
     {
       "id": "nikah",
       "label": "النكاح",
-      "issueCount": 58,
+      "issueCount": 128,
       "status": "complete",
       "href": "/nikah"
     },
@@ -181,7 +181,7 @@
     {
       "id": "jinayat",
       "label": "الجنايات والحدود",
-      "issueCount": 42,
+      "issueCount": 88,
       "status": "complete",
       "href": "/fiqh/books/jinayat"
     },
@@ -195,7 +195,7 @@
     {
       "id": "qada",
       "label": "القضاء",
-      "issueCount": 28,
+      "issueCount": 76,
       "status": "complete",
       "href": "/fiqh/books/qada"
     },
@@ -230,7 +230,7 @@
     {
       "id": "jihad",
       "label": "الجهاد والسير",
-      "issueCount": 11,
+      "issueCount": 45,
       "status": "complete",
       "href": "/fiqh/books/jihad"
     },
