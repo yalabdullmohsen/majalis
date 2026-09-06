@@ -88,7 +88,7 @@ const { FIQH_HUB_STATS } = await importSrc("src/lib/fiqh-hub-stats.ts");
 const books = getAllFiqhBooks();
 const expectedPrefix = ["taharah","salah","zakat","sawm","itikaf","hajj","janaza","buyu"];
 const orderedIds = [...books].sort((a,b)=>(a.order??0)-(b.order??0)).map(b=>b.id);
-if (orderedIds.length !== 17) fail("critical", `عدد كتب الفقه ${orderedIds.length} بدل 17`);
+if (orderedIds.length !== 18) fail("critical", `عدد كتب الفقه ${orderedIds.length} بدل 18`);
 if (JSON.stringify(orderedIds.slice(0,8)) !== JSON.stringify(expectedPrefix)) {
   fail("critical", `ترتيب أوائل الكتب تغيّر: ${orderedIds.slice(0,8).join(",")}`);
 }
