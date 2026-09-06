@@ -18,6 +18,8 @@ assert.ok(list.some((m) => m.id === "abdulbasit" && !m.bundled));
 assert.equal(clampSelectableMuezzinId("madinah"), "makkah");
 assert.equal(muezzinSupportsIosChaining("makkah"), true);
 assert.equal(muezzinSupportsIosChaining("aqsa"), false);
-assert.equal(recordingSupportsIosChainedSegments("alharam"), true);
+// السلاسل محذوفة نهائيًا من الجدولة حتى لو وُجدت ملفات seq في الحزمة
+assert.equal(recordingSupportsIosChainedSegments("alharam"), false);
+assert.equal(recordingSupportsIosChainedSegments("makkah"), false);
 
 console.log("adhan-muezzin-library.test.ts: ok");
