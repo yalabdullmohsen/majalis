@@ -105,6 +105,29 @@ if (!existsSync(deferredPath)) {
     if (!Array.isArray(topic.editorialChecklist) || topic.editorialChecklist.length < 2) {
       fail(`قائمة تحريرية ناقصة: ${topic.id}`);
     }
+    const stage = topic.reviewStage;
+    if (stage !== "review_ready" && stage !== "hold") {
+      fail(`reviewStage غير صالح في المؤجّل: ${topic.id}`);
+    }
+    if (stage === "review_ready") {
+      const resolutions = topic.proposedResolutions;
+      if (!Array.isArray(resolutions) || resolutions.length < 2) {
+        fail(`proposedResolutions ناقصة لـ review_ready: ${topic.id}`);
+      } else {
+        for (const [i, item] of resolutions.entries()) {
+          if (!item?.issue?.trim() || !item?.proposal?.trim()) {
+            fail(`proposedResolutions[${i}] ناقصة في ${topic.id}`);
+          }
+        }
+      }
+      if (!topic.nextAction?.trim()) fail(`nextAction ناقصة لـ review_ready: ${topic.id}`);
+    }
+    if (stage === "hold") {
+      if (!Array.isArray(topic.holdReasons) || topic.holdReasons.length < 2) {
+        fail(`holdReasons ناقصة لـ hold: ${topic.id}`);
+      }
+      if (!topic.nextAction?.trim()) fail(`nextAction ناقصة لـ hold: ${topic.id}`);
+    }
     if (!sourcesOk(topic.sources)) fail(`مصادر مؤجّلة ناقصة: ${topic.id}`);
     if (lessonIds.has(topic.id)) fail(`موضوع مؤجّل تسرب إلى books.json: ${topic.id}`);
     if (booksRaw.includes(`"${topic.id}"`)) {
@@ -112,6 +135,7 @@ if (!existsSync(deferredPath)) {
     }
     // لا فتوى عملياتية/تنزيلية معاصرة في حزمة الجهاد التعليمية
     if (topic.id === "nawazil-jihad-muasira") {
+      if (stage !== "hold") fail("نازلة الجهاد المعاصرة يجب أن تبقى hold");
       const blob = `${topic.summary}\n${topic.practicalSummary}\n${(topic.boundaries || []).join("\n")}`;
       if (!/تعليم|تاريخ|عزل|دون تنزيل|لا تنزيل/.test(blob)) {
         fail("نازلة الجهاد تفتقد تصريح العزل التعليمي عن التنزيل المعاصر");
@@ -133,4 +157,20 @@ console.log(JSON.stringify({
   publishedLessons: publishedCount,
   needsReviewOrDraft: needsReviewCount,
   deferredNawazil: deferredCount,
+  deferredReviewReady: (() => {
+    try {
+      const d = JSON.parse(readFileSync(deferredPath, "utf8"));
+      return (d.topics || []).filter((t) => t.reviewStage === "review_ready").length;
+    } catch {
+      return 0;
+    }
+  })(),
+  deferredHold: (() => {
+    try {
+      const d = JSON.parse(readFileSync(deferredPath, "utf8"));
+      return (d.topics || []).filter((t) => t.reviewStage === "hold").length;
+    } catch {
+      return 0;
+    }
+  })(),
 }, null, 2));
