@@ -60,15 +60,10 @@ function buildType(id: SelectableAdhanTypeId, muezzinId: SelectableMuezzinId): S
   const entry = getMuezzinLibraryEntry(muezzinId);
   const inAppUrl = entry?.inAppUrl ?? "/audio/adhan/adhan-makkah-full.m4a";
   const notificationSound = entry?.notificationSound ?? "adhan-short-makkah.caf";
-  const chainHint =
-    mode === "full" && entry?.iosChainedSegments
-      ? " · على iOS: إشعارات متتابعة (≤٤×٢٨ث) ثم إكمال داخل التطبيق"
-      : mode === "full"
-        ? " · إشعار قصير + أذان كامل عند فتح التطبيق"
-        : " · صوت إشعار النظام (CAF ≤٢٩ث)";
+  const chainHint = " — تنبيه أذان قصير متوافق مع iOS";
   return {
     id,
-    label: mode === "full" ? "الأذان الكامل" : "تنبيه مختصر",
+    label: "تنبيه أذان قصير متوافق مع iOS",
     hint: `${entry?.label ?? "الأذان الافتراضي"}${chainHint}`,
     muezzinId,
     mode,
@@ -100,8 +95,10 @@ export function clampAdhanMuezzinId(id: string | null | undefined): SelectableMu
   return clampSelectableMuezzinId(id);
 }
 
-export function clampAdhanPlaybackMode(mode: unknown): "full" | "short" {
-  return mode === "full" ? "full" : "short";
+export function clampAdhanPlaybackMode(mode: unknown): "short" | "silent" | "takbir" {
+  if (mode === "silent") return "silent";
+  if (mode === "takbir") return "takbir";
+  return "short";
 }
 
 export function typeIdFromPrefs(

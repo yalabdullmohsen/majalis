@@ -8,14 +8,11 @@ import {
   notificationSoundForAdhanPack,
 } from "./adhan-offline-assets";
 import { getMuezzin, type Muezzin } from "./adhan-audio";
+import { SETTINGS_MUEZZIN_LABELS } from "./adhan-settings-sound-catalog";
 
 /** مؤذنون إضافيون للتشغيل داخل التطبيق (CDN) — إشعار قصير حسب النمط */
 export const STREAMING_MUEZZIN_IDS = [
-  "abdulbasit",
   "qatami",
-  "nafees",
-  "alafasy",
-  "mansour",
 ] as const;
 
 export type BundledMuezzinId = (typeof OFFLINE_FEATURED_MUEZZIN_IDS)[number];
@@ -44,7 +41,7 @@ function entryFromMuezzin(m: Muezzin, bundled: boolean): MuezzinLibraryEntry {
     (m.audioAvailable && m.audioUrl.startsWith("/") ? m.audioUrl : null);
   return {
     id: m.id as SelectableMuezzinId,
-    label: m.name,
+    label: SETTINGS_MUEZZIN_LABELS[m.id] ?? m.name,
     inAppUrl: inApp,
     notificationSound:
       notificationSoundForAdhanPack(m.id) ??

@@ -1,12 +1,10 @@
 /**
- * أنواع الأذان المميزة المعروضة في الإعدادات — كلها قابلة للتجربة مع fallback محلي.
+ * أنواع الأذان المميزة في الإعدادات — أصول متوفرة بأسماء واضحة فقط.
  */
 export const FEATURED_ADHAN_STYLE_IDS = [
   "makkah",
-  "alharam",
   "aqsa",
-  "egypt",
-  "turkey",
+  "kuwait",
   "takbeerat",
   "soft",
 ] as const;
@@ -14,11 +12,9 @@ export const FEATURED_ADHAN_STYLE_IDS = [
 export type FeaturedAdhanStyleId = (typeof FEATURED_ADHAN_STYLE_IDS)[number];
 
 export const FEATURED_ADHAN_STYLE_LABELS: Record<FeaturedAdhanStyleId, string> = {
-  makkah: "الأذان الافتراضي",
-  alharam: "أذان الحرم",
+  makkah: "أذان الحرم المكي",
   aqsa: "أذان المسجد الأقصى",
-  egypt: "أذان مصري",
-  turkey: "أذان تركي",
-  takbeerat: "أذان مختصر",
-  soft: "تنبيه لطيف بدون أذان",
+  kuwait: "أذان خليجي قصير",
+  takbeerat: "تنبيه قصير بدون أذان",
+  soft: "تنبيه قصير بدون أذان",
 };

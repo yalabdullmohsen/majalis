@@ -95,7 +95,7 @@ function patternStyle(id: AdhanPatternId): string {
 export const MUEZZINS: Muezzin[] = [
   {
     id: "makkah",
-    name: "الأذان الافتراضي",
+    name: "أذان الحرم المكي",
     personName: null,
     attribution: "style_only",
     patternId: "makki",
@@ -128,7 +128,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "alharam",
-    name: "أذان الحرم",
+    name: "أذان الحرم المكي",
     personName: null,
     attribution: "style_only",
     patternId: "makki",
@@ -162,7 +162,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "egypt",
-    name: "أذان مصري",
+    name: "أذان تقليدي",
     personName: null,
     attribution: "style_only",
     patternId: "egyptian",
@@ -190,7 +190,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "abdulbasit",
-    name: "أذان مصري (تسجيل ثانٍ)",
+    name: "أذان تقليدي",
     personName: null,
     attribution: "style_only",
     patternId: "egyptian",
@@ -214,7 +214,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "alafasy",
-    name: "أذان خليجي معاصر",
+    name: "أذان خليجي قصير",
     personName: null,
     attribution: "style_only",
     patternId: "makki",
@@ -239,7 +239,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "qatami",
-    name: "أذان خليجي (تسجيل ثانٍ)",
+    name: "أذان ناصر القطامي",
     personName: null,
     attribution: "style_only",
     patternId: "makki",
@@ -262,7 +262,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "nafees",
-    name: "أذان حجازي",
+    name: "أذان الحرم المكي",
     personName: null,
     attribution: "style_only",
     patternId: "makki",
@@ -285,7 +285,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "mansour",
-    name: "أذان سعودي رسمي",
+    name: "أذان الحرم المكي",
     personName: null,
     attribution: "style_only",
     patternId: "makki",
@@ -338,7 +338,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "takbeerat",
-    name: "أذان مختصر",
+    name: "تنبيه قصير بدون أذان",
     personName: null,
     attribution: "style_only",
     patternId: "makki",
@@ -367,7 +367,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "soft",
-    name: "تنبيه لطيف بدون أذان",
+    name: "تنبيه قصير بدون أذان",
     personName: null,
     attribution: "style_only",
     patternId: "makki",
@@ -466,7 +466,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "turkey",
-    name: "أذان تركي",
+    name: "تنبيه قصير",
     personName: null,
     attribution: "style_only",
     patternId: "turkish",
@@ -494,7 +494,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "kuwait",
-    name: "أذان خليجي / كويتي",
+    name: "أذان خليجي قصير",
     personName: null,
     attribution: "style_only",
     patternId: "makki",

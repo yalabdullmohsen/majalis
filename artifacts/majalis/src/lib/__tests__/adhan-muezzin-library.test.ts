@@ -11,10 +11,10 @@ import {
 import { recordingSupportsIosChainedSegments } from "../adhan-ios-segments";
 
 const list = listSelectableMuezzins();
-assert.ok(list.length >= 7, "قائمة المؤذنين");
+assert.ok(list.length >= 6, "قائمة المؤذنين");
 assert.ok(list.some((m) => m.id === "makkah" && m.bundled));
 assert.ok(list.some((m) => m.id === "aqsa" && m.bundled));
-assert.ok(list.some((m) => m.id === "abdulbasit" && !m.bundled));
+assert.ok(list.some((m) => m.id === "qatami" && !m.bundled));
 assert.equal(clampSelectableMuezzinId("madinah"), "makkah");
 assert.equal(muezzinSupportsIosChaining("makkah"), true);
 assert.equal(muezzinSupportsIosChaining("aqsa"), false);

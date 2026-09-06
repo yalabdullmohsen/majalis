@@ -1,11 +1,9 @@
 /**
- * إعدادات الأذان — نوعان افتراضيان (كامل / مختصر).
- * داخل التطبيق: M4A من /audio/adhan.
- * إشعار iOS: CAF قصير من حزمة Sounds (≤٢٩ث). لا يُعرض خيار تجاوز الرنين — غير مدعوم.
+ * إعدادات تنبيهات الصلاة — تنبيه أذان قصير متوافق مع iOS.
  */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  CloudMoon, CloudSun, MapPin, Moon, Music, Bell, Sun, Sunset,
+  CloudMoon, CloudSun, MapPin, Moon, Music, Bell, Sun, Sunset, Volume2,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -15,30 +13,21 @@ import {
   PRAYER_KEYS,
   PRAYER_ARABIC,
   PRAYER_ICON,
-  getEffectiveMuezzinId,
-  getEffectivePlaybackMode,
   type AdhanPreferences,
   type PrayerKey,
   type AdvanceMinutes,
 } from "@/lib/adhan-preferences";
-import {
-  playAdhanPreview,
-  probeAdhanAssetExists,
-  stopAdhanPreview,
-  getAudioDiagnostics,
-} from "@/lib/adhan-audio-service";
+import { playAdhanPreview, stopAdhanPreview } from "@/lib/adhan-audio-service";
 import { invalidatePrayerNativeSchedule } from "@/lib/prayer-alert-scheduler";
 import { PrayerAlertSettingsCard } from "@/components/adhan/PrayerAlertSettingsCard";
 import {
-  getSelectableAdhanType,
-  getAdhanTypeForMuezzinAndMode,
-  typeIdFromPrefs,
-} from "@/lib/adhan-selectable-types";
-import {
-  listSelectableMuezzins,
-  type SelectableMuezzinId,
-} from "@/lib/adhan-muezzin-library";
-import { isIOS, isNative } from "@/lib/capacitor-utils";
+  listAvailableSettingsSounds,
+  getSettingsSoundOption,
+  resolveSettingsSoundSelection,
+  type SettingsSoundOption,
+} from "@/lib/adhan-settings-sound-catalog";
+import { loadPrayerAlertPrefs, patchPrayerAlertPrefs } from "@/lib/prayer-alert-preferences";
+import { isNative } from "@/lib/capacitor-utils";
 import {
   KUWAIT_GOVERNORATES,
   getSelectedGovernorate,
@@ -51,10 +40,8 @@ import {
   isAdhanAndroidAlarmAvailable,
   openAndroidBatteryOptimizationSettings,
   openAndroidExactAlarmSettings,
-  playAndroidAdhanNow,
 } from "@/lib/adhan-android-alarm";
-import { getMuezzin } from "@/lib/adhan-audio";
-import { resolveAdhanClip } from "@/lib/adhan-playback-modes";
+import { loadNotifPrefs, saveNotifPrefs } from "@/lib/local-notifications";
 import "@/styles/pages/adhan-settings.css";
 
 const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 30];
@@ -66,13 +53,11 @@ const PRAYER_ICON_MAP: Record<string, LucideIcon> = {
 function Toggle({
   checked,
   onChange,
-  id,
   label,
   disabled,
 }: {
   checked: boolean;
   onChange: (v: boolean) => void;
-  id?: string;
   label: string;
   disabled?: boolean;
 }) {
@@ -82,7 +67,6 @@ function Toggle({
       role="switch"
       aria-checked={checked}
       aria-label={label}
-      id={id}
       disabled={disabled}
       onClick={(e) => {
         e.stopPropagation();
@@ -145,8 +129,7 @@ function NotificationPermBadge() {
     let cancelled = false;
     void import("@/lib/prayer-local-notifications").then(({ getNotificationPermissionStatus }) =>
       getNotificationPermissionStatus().then((status) => {
-        if (cancelled) return;
-        setState(status === "prompt" ? "prompt" : status);
+        if (!cancelled) setState(status === "prompt" ? "prompt" : status);
       }),
     );
     return () => {
@@ -156,207 +139,153 @@ function NotificationPermBadge() {
   return <PermissionBadge value={state} />;
 }
 
-function IosChainedAdhanCard({
-  muezzinId,
-  isFullMode,
-}: {
-  muezzinId: string;
-  isFullMode: boolean;
-}) {
-  if (!isNative || !isIOS) return null;
-  const entry = listSelectableMuezzins().find((m) => m.id === muezzinId);
-  const chained = Boolean(entry?.iosChainedSegments && isFullMode);
-  return (
-    <section className="ads-card" aria-labelledby="ads-ios-chain-head">
-      <div className="ads-card__head" id="ads-ios-chain-head">
-        <Bell size={15} strokeWidth={2} aria-hidden="true" />
-        <span>إشعارات iOS (حد ٣٠ ثانية)</span>
-      </div>
-      <div className="ads-card__body">
-        <p className="ads-adhan-desc" role="note">
-          {chained
-            ? "الوضع الكامل: حتى ٤ إشعارات متتابعة (≤٢٨ث لكل مقطع) ثم إكمال الأذان داخل التطبيق عند الفتح."
-            : isFullMode
-              ? "الوضع الكامل: إشعار قصير واحد — افتح التطبيق لسماع الأذان كاملاً."
-              : "الوضع المختصر: إشعار واحد بصوت CAF قصير (تكبيرات أو مقطع ≤٢٩ث)."}
-          {" "}
-          تجاوز زر الصامت غير متاح دون امتياز Apple الرسمي.
-        </p>
-      </div>
-    </section>
-  );
-}
-
-function AndroidAdhanNativeCard({
-  selectedMuezzinId,
-}: {
-  selectedMuezzinId: string;
-}) {
+function AndroidBackgroundCard() {
   const [perm, setPerm] = useState<{ exactAlarm: boolean; battery: boolean } | null>(null);
-  const [permBusy, setPermBusy] = useState(false);
-  const [fgsBusy, setFgsBusy] = useState(false);
-  const [fgsMsg, setFgsMsg] = useState<string | null>(null);
-
-  const refreshPerm = () => {
+  const [busy, setBusy] = useState(false);
+  const refresh = () => {
     void getAndroidAdhanPermissionStatus().then(setPerm);
   };
-
   useEffect(() => {
     if (!isAdhanAndroidAlarmAvailable()) return;
-    refreshPerm();
+    refresh();
   }, []);
-
   if (!isAdhanAndroidAlarmAvailable()) return null;
-
-  async function handleBatteryCheck() {
-    setPermBusy(true);
-    await openAndroidBatteryOptimizationSettings();
-    refreshPerm();
-    setPermBusy(false);
-  }
-
-  async function handleExactAlarmCheck() {
-    setPermBusy(true);
-    await openAndroidExactAlarmSettings();
-    refreshPerm();
-    setPermBusy(false);
-  }
-
-  async function handleFgsTest() {
-    setFgsBusy(true);
-    setFgsMsg(null);
-    const muezzin = getMuezzin(selectedMuezzinId);
-    const clip = resolveAdhanClip(muezzin, { isFajr: false, mode: "full" });
-    if (!clip) {
-      setFgsMsg("تعذّر تجهيز ملف الأذان المحلي.");
-      setFgsBusy(false);
-      return;
-    }
-    const ok = await playAndroidAdhanNow({
-      url: clip.url,
-      title: "تجربة الأذان",
-      prayerKey: "dhuhr",
-    });
-    setFgsMsg(
-      ok
-        ? "تُشغَّل الخدمة الأمامية — الأذان كاملاً حتى النهاية (ملف محلي)."
-        : "تعذّر تشغيل خدمة الأذان على هذا الجهاز.",
-    );
-    setFgsBusy(false);
-  }
-
   return (
-    <section className="ads-card" aria-labelledby="ads-android-native-head">
-      <div className="ads-card__head" id="ads-android-native-head">
+    <section className="ads-card" aria-labelledby="ads-android-head">
+      <div className="ads-card__head" id="ads-android-head">
         <Bell size={15} strokeWidth={2} aria-hidden="true" />
-        <span>حماية تشغيل الخلفية (أندroid)</span>
+        <span>حماية التنبيهات على أندرويد</span>
       </div>
       <div className="ads-card__body">
-        <p className="ads-adhan-desc" role="note">
-          الأذان الكامل يُجدول عبر منبه دقيق وخدمة أمامية — بلا اعتماد على الشبكة لحظة الصلاة.
-          تجاوز زر الصامت على iOS غير متاح دون امتياز Apple الرسمي.
-        </p>
         <div className="ads-row">
-          <span>منبه دقيق (Exact Alarm)</span>
-          <PermissionBadge
-            value={perm?.exactAlarm ? "granted" : perm ? "denied" : "default"}
-          />
+          <span>المنبّه الدقيق</span>
+          <PermissionBadge value={perm?.exactAlarm ? "granted" : perm ? "denied" : "default"} />
         </div>
         <div className="ads-row">
-          <span>استثناء تحسين البطارية</span>
-          <PermissionBadge
-            value={perm?.battery ? "granted" : perm ? "denied" : "default"}
-          />
+          <span>استثناء البطارية</span>
+          <PermissionBadge value={perm?.battery ? "granted" : perm ? "denied" : "default"} />
         </div>
         <div className="ads-prayer-muezzin-btns ads-sound-test-row">
           <button
             type="button"
             className="ads-pill-btn"
-            disabled={permBusy}
-            onClick={() => void handleExactAlarmCheck()}
+            disabled={busy}
+            onClick={() => {
+              setBusy(true);
+              void openAndroidExactAlarmSettings().finally(() => {
+                refresh();
+                setBusy(false);
+              });
+            }}
           >
-            فحص المنبه الدقيق
+            فحص المنبّه
           </button>
           <button
             type="button"
             className="ads-pill-btn"
-            disabled={permBusy}
-            onClick={() => void handleBatteryCheck()}
+            disabled={busy}
+            onClick={() => {
+              setBusy(true);
+              void openAndroidBatteryOptimizationSettings().finally(() => {
+                refresh();
+                setBusy(false);
+              });
+            }}
           >
-            فحص حماية البطارية ⚡
-          </button>
-          <button
-            type="button"
-            className="ads-pill-btn"
-            disabled={fgsBusy}
-            onClick={() => void handleFgsTest()}
-          >
-            {fgsBusy ? "…" : "تجربة خدمة الأذان 🔊"}
+            فحص البطارية
           </button>
         </div>
-        {fgsMsg ? (
-          <p className="ads-adhan-desc" role="status">
-            {fgsMsg}
-          </p>
-        ) : null}
       </div>
     </section>
   );
 }
 
+function SoundOptionCard({
+  opt,
+  selected,
+  playing,
+  onSelect,
+  onListen,
+}: {
+  opt: SettingsSoundOption;
+  selected: boolean;
+  playing: boolean;
+  onSelect: () => void;
+  onListen: () => void;
+}) {
+  return (
+    <div className={`ads-style-card${selected ? " is-selected" : ""}`}>
+      <button
+        type="button"
+        role="radio"
+        aria-checked={selected}
+        className="ads-style-card__select"
+        onClick={onSelect}
+      >
+        <span className="ads-style-card__name">{opt.label}</span>
+        {selected ? <span className="ads-style-card__badge">مختار</span> : null}
+      </button>
+      {opt.playbackMode !== "silent" ? (
+        <button
+          type="button"
+          className={`ads-style-card__preview${playing ? " is-playing" : ""}`}
+          onClick={onListen}
+          aria-label={`استماع — ${opt.label}`}
+        >
+          <Volume2 size={14} aria-hidden="true" />
+          {playing ? "إيقاف" : "استماع"}
+        </button>
+      ) : null}
+    </div>
+  );
+}
+
 export default function AdhanSettingsPage() {
-  const [prefs, setPrefs] = useState<AdhanPreferences>(() => loadAdhanPrefs());
+  const [prefs, setPrefs] = useState<AdhanPreferences>(() => {
+    const loaded = loadAdhanPrefs();
+    if (loaded.playbackMode === "full") {
+      return patchAdhanPrefs({ playbackMode: "short", iosSequentialFullAdhan: false });
+    }
+    return loaded;
+  });
+  const [alertPrefs, setAlertPrefs] = useState(() => loadPrayerAlertPrefs());
+  const [notifPrefs, setNotifPrefs] = useState(() => loadNotifPrefs());
   const [saved, setSaved] = useState(false);
   const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [selectedGovId, setSelectedGovId] = useState(() => getSelectedGovernorate().id);
-  const [playing, setPlaying] = useState(false);
-  const [soundBusy, setSoundBusy] = useState(false);
+  const [playingId, setPlayingId] = useState<string | null>(null);
   const [soundMsg, setSoundMsg] = useState<string | null>(null);
-  const [audioReady, setAudioReady] = useState<boolean | null>(null);
   const [rescheduleBusy, setRescheduleBusy] = useState(false);
   const [rescheduleMsg, setRescheduleMsg] = useState<string | null>(null);
   const [notifTestMsg, setNotifTestMsg] = useState<string | null>(null);
-  const [statusBusy, setStatusBusy] = useState(false);
-  const [statusLines, setStatusLines] = useState<string[] | null>(null);
 
-  const selectedType = getAdhanTypeForMuezzinAndMode(
+  const soundOptions = useMemo(() => listAvailableSettingsSounds(), []);
+  const selectedSoundId = resolveSettingsSoundSelection(
     prefs.defaultMuezzinId,
-    prefs.playbackMode,
+    prefs.playbackMode === "full" ? "short" : prefs.playbackMode,
+    alertPrefs.soundProfile,
   );
-  const isFullMode = prefs.playbackMode === "full";
-  const muezzinOptions = listSelectableMuezzins();
 
   useEffect(() => {
     applyPageSeo({
       path: "/adhan-settings",
-      title: "تنبيهات الصلاة والأذان | سُنّة",
-      description: "فعّل تنبيهات الصلاة، اختر الأذان المختصر أو الكامل، واختبر الصوت مع مراعاة قيود iOS.",
-      keywords: ["تنبيهات الصلاة", "أذان", "إعدادات أذان", "إشعارات"],
+      title: "تنبيهات الصلاة | سُنّة",
+      description: "فعّل تنبيهات الصلاة واختر صوت تنبيه قصير متوافق مع iOS.",
+      keywords: ["تنبيهات الصلاة", "أذان", "إشعارات"],
       robots: "noindex, follow",
     });
   }, []);
 
   useEffect(() => {
     invalidatePrayerNativeSchedule();
-  }, [prefs.defaultMuezzinId, prefs.playbackMode, prefs.globalEnabled, prefs.prayers, selectedGovId]);
-
-  useEffect(() => {
-    let cancelled = false;
-    const timer = window.setTimeout(() => {
-      if (!cancelled) setAudioReady(false);
-    }, 10_000);
-    void probeAdhanAssetExists(selectedType.inAppUrl).then((ok) => {
-      window.clearTimeout(timer);
-      if (!cancelled) setAudioReady(ok);
-    }).catch(() => {
-      window.clearTimeout(timer);
-      if (!cancelled) setAudioReady(false);
-    });
-    return () => {
-      cancelled = true;
-      window.clearTimeout(timer);
-    };
-  }, [selectedType.inAppUrl]);
+  }, [
+    prefs.defaultMuezzinId,
+    prefs.playbackMode,
+    prefs.globalEnabled,
+    prefs.prayers,
+    selectedGovId,
+    alertPrefs.soundProfile,
+  ]);
 
   useEffect(
     () => () => {
@@ -372,24 +301,15 @@ export default function AdhanSettingsPage() {
     savedTimerRef.current = setTimeout(() => setSaved(false), 2000);
   }
 
-  function selectMuezzin(id: SelectableMuezzinId) {
-    setPrefs(patchAdhanPrefs({ defaultMuezzinId: id }));
-    flashSaved();
-  }
-
-  function setFullAdhanMode(full: boolean) {
-    setPrefs(patchAdhanPrefs({ playbackMode: full ? "full" : "short" }));
-    flashSaved();
-  }
-
-  function setPrayerTypeFromLegacyId(key: PrayerKey, value: string) {
-    if (!value) {
-      setPrefs(patchPrayerPrefs(key, { muezzinId: "", deliveryMode: "" }));
-      flashSaved();
-      return;
-    }
-    const t = getSelectableAdhanType(value);
-    setPrefs(patchPrayerPrefs(key, { muezzinId: t.muezzinId, deliveryMode: t.mode }));
+  function selectSound(opt: SettingsSoundOption) {
+    setPrefs(
+      patchAdhanPrefs({
+        defaultMuezzinId: opt.muezzinId,
+        playbackMode: opt.playbackMode === "silent" ? "silent" : "short",
+        iosSequentialFullAdhan: false,
+      }),
+    );
+    setAlertPrefs(patchPrayerAlertPrefs({ soundProfile: opt.soundProfile }));
     flashSaved();
   }
 
@@ -413,16 +333,11 @@ export default function AdhanSettingsPage() {
 
   function setGlobalIqamah(enabled: boolean) {
     const prayers = { ...prefs.prayers };
-    if (enabled) {
-      for (const key of PRAYER_KEYS) {
-        if (prayers[key].enabled) {
-          prayers[key] = { ...prayers[key], iqamahEnabled: true };
-        }
-      }
-    } else {
-      for (const key of PRAYER_KEYS) {
-        prayers[key] = { ...prayers[key], iqamahEnabled: false };
-      }
+    for (const key of PRAYER_KEYS) {
+      prayers[key] = {
+        ...prayers[key],
+        iqamahEnabled: enabled ? prayers[key].enabled : false,
+      };
     }
     setPrefs(patchAdhanPrefs({ iqamahEnabled: enabled, prayers }));
     flashSaved();
@@ -433,60 +348,51 @@ export default function AdhanSettingsPage() {
     flashSaved();
   }
 
-  function setPrayerType(key: PrayerKey, value: string) {
-    setPrayerTypeFromLegacyId(key, value);
-  }
-
   function setPrayerAdvance(key: PrayerKey, minutes: AdvanceMinutes) {
     setPrefs(patchPrayerPrefs(key, { advanceMinutes: minutes }));
     flashSaved();
   }
 
-  function handleGovChange(id: string) {
+  async function handleGovChange(id: string) {
     setSelectedGovernorate(id);
     setSelectedGovId(id);
+    flashSaved();
+    await runRescheduleAlerts();
+  }
+
+  async function listenToSound(opt: SettingsSoundOption) {
+    if (opt.playbackMode === "silent") {
+      stopAdhanPreview();
+      setPlayingId(null);
+      setSoundMsg("صامت — بلا تشغيل");
+      return;
+    }
+    if (playingId === opt.id) {
+      stopAdhanPreview();
+      setPlayingId(null);
+      setSoundMsg(null);
+      return;
+    }
+    setSoundMsg(null);
+    const result = await playAdhanPreview(opt.muezzinId, "short", prefs.volume ?? 1);
+    if (!result.ok) {
+      setPlayingId(null);
+      setSoundMsg("تعذّر الاستماع — تجربة الصوت الافتراضي.");
+      const fallback = await playAdhanPreview("makkah", "short", prefs.volume ?? 1);
+      if (fallback.ok) {
+        setPlayingId(opt.id);
+        fallback.audio.addEventListener("ended", () => setPlayingId(null), { once: true });
+      }
+      return;
+    }
+    setPlayingId(opt.id);
+    result.audio.addEventListener("ended", () => setPlayingId(null), { once: true });
   }
 
   async function runSoundTest() {
-    if (playing || soundBusy) {
-      stopAdhanPreview();
-      setPlaying(false);
-      setSoundBusy(false);
-      setSoundMsg("متوقف");
-      return;
-    }
-    setSoundBusy(true);
-    setSoundMsg("جاري التحميل…");
-    const loadTimer = window.setTimeout(() => {
-      setSoundBusy(false);
-      setSoundMsg("فشل التشغيل: انتهت مهلة التحميل.");
-    }, 12_000);
-    const result = await playAdhanPreview(
-      selectedType.muezzinId,
-      selectedType.mode,
-      prefs.volume ?? 1,
-    );
-    window.clearTimeout(loadTimer);
-    setSoundBusy(false);
-    if (!result.ok) {
-      setPlaying(false);
-      const reason =
-        result.code === "missing_file"
-          ? "الصوت غير موجود"
-          : result.code === "autoplay_blocked"
-            ? "الإذن غير مفعّل أو التشغيل محظور"
-            : result.code === "load_failed"
-              ? "فشل تحميل الملف"
-              : "قيود الجهاز أو جلسة الصوت غير جاهزة";
-      setSoundMsg(`فشل التشغيل: ${reason}.`);
-      return;
-    }
-    setPlaying(true);
-    setSoundMsg("يعمل الآن — أذان كامل داخل التطبيق");
-    result.audio.addEventListener("ended", () => {
-      setPlaying(false);
-      setSoundMsg("متوقف");
-    }, { once: true });
+    const opt = getSettingsSoundOption(selectedSoundId) ?? soundOptions[0];
+    if (!opt) return;
+    await listenToSound(opt);
   }
 
   async function runNotifSoundTest() {
@@ -497,92 +403,14 @@ export default function AdhanSettingsPage() {
       if (!res.ok) {
         setNotifTestMsg(
           res.reason === "permission"
-            ? "فعّل إذن الإشعارات أولًا من بطاقة التنبيهات أعلاه."
-            : "تعذّر جدولة إشعار الاختبار على هذا الجهاز.",
+            ? "فعّل إذن الإشعارات أولًا من بطاقة تنبيهات الصلاة."
+            : "تعذّر جدولة إشعار الاختبار.",
         );
         return;
       }
-      setNotifTestMsg(
-        `سيصل إشعار قصير خلال ١٥ ثانية · الصوت: ${res.soundName ?? selectedType.notificationSound}`,
-      );
+      setNotifTestMsg("سيصل إشعار قصير خلال ١٥ ثانية.");
     } catch {
-      setNotifTestMsg("تعذّر اختبار إشعار النظام.");
-    }
-  }
-
-  async function runAdhanStatusCheck() {
-    setStatusBusy(true);
-    setStatusLines(null);
-    try {
-      const [
-        { getNotificationPermissionStatus, listPendingPrayerNotifications },
-        { loadPrayerScheduleStatus, formatScheduleStatusAr },
-      ] = await Promise.all([
-        import("@/lib/prayer-local-notifications"),
-        import("@/lib/prayer-schedule-status"),
-      ]);
-      const perm = await getNotificationPermissionStatus();
-      const pending = await listPendingPrayerNotifications();
-      const diag = getAudioDiagnostics();
-      const scheduleNote = formatScheduleStatusAr(loadPrayerScheduleStatus());
-      const byKind = pending.items.reduce<Record<string, number>>((acc, it) => {
-        const k = it.kind ?? "unknown";
-        acc[k] = (acc[k] ?? 0) + 1;
-        return acc;
-      }, {});
-      if (typeof console !== "undefined" && console.info) {
-        console.info("[adhan/debug] pending notifications", {
-          count: pending.count,
-          byKind,
-          sample: pending.items.slice(0, 8),
-        });
-      }
-      const lines = [
-        `إذن الإشعارات: ${perm}`,
-        `نوع الأذان: ${selectedType.label}`,
-        `ملف إشعار النظام: ${selectedType.notificationSound}`,
-        `ملف داخل التطبيق: ${selectedType.inAppUrl.split("/").pop() ?? selectedType.inAppUrl}`,
-        `الإشعارات المجدولة: ${pending.count}`,
-        `توزيع الأنواع: pre=${byKind.pre ?? 0} · enter=${byKind.enter ?? 0} · post=${byKind.post ?? 0}`,
-        scheduleNote,
-        `آخر نجاح تشغيل: ${diag.lastSuccessAt ?? "—"}`,
-        `آخر خطأ صوت: ${diag.lastError ?? "—"}`,
-        "تجاوز الرنين: غير متاح دون امتياز Apple الرسمي",
-        "قيد iOS: صوت الإشعار ≤٣٠ ثانية — الكامل داخل التطبيق أو مقاطع متتابعة",
-      ];
-      if (pending.items[0]?.friendlyKey) {
-        lines.splice(6, 0, `عيّنة معرّف: ${pending.items[0].friendlyKey}`);
-      }
-      setStatusLines(lines);
-    } catch {
-      setStatusLines(["تعذّر فحص حالة الأذان."]);
-    } finally {
-      setStatusBusy(false);
-    }
-  }
-
-  async function runPurgeAndReschedule() {
-    setRescheduleBusy(true);
-    setRescheduleMsg(null);
-    try {
-      const { cancelAllPrayerNativeNotifications } = await import("@/lib/prayer-local-notifications");
-      await cancelAllPrayerNativeNotifications();
-      invalidatePrayerNativeSchedule();
-      const payload = await fetchPrayerTimes(selectedGovId);
-      const { startPrayerAlertScheduler } = await import("@/lib/prayer-alert-scheduler");
-      await startPrayerAlertScheduler(payload, { forceNativeReschedule: true });
-      await import("@/lib/adhan-scheduler").then((m) => m.startAdhanScheduler(payload));
-      setRescheduleMsg(
-        isNative
-          ? "حُذفت التنبيهات القديمة وأُعيدت الجدولة لليوم والغد."
-          : "أُعيدت الجدولة — على الويب تعمل أثناء فتح الصفحة.",
-      );
-      flashSaved();
-      void runAdhanStatusCheck();
-    } catch {
-      setRescheduleMsg("تعذّر الحذف وإعادة الجدولة. حاول مرة أخرى.");
-    } finally {
-      setRescheduleBusy(false);
+      setNotifTestMsg("تعذّر اختبار الإشعار.");
     }
   }
 
@@ -597,25 +425,47 @@ export default function AdhanSettingsPage() {
       await import("@/lib/adhan-scheduler").then((m) => m.startAdhanScheduler(payload));
       setRescheduleMsg(
         isNative
-          ? "أُعيدت جدولة تنبيهات الأذان لليوم والغد."
+          ? "أُعيدت جدولة تنبيهات الصلاة لليوم والغد."
           : "أُعيدت الجدولة — على الويب تعمل أثناء فتح الصفحة.",
       );
       flashSaved();
-      void runAdhanStatusCheck();
     } catch {
-      setRescheduleMsg("تعذّرت إعادة جدولة التنبيهات. حاول مرة أخرى.");
+      setRescheduleMsg("تعذّرت إعادة الجدولة. حاول مرة أخرى.");
     } finally {
       setRescheduleBusy(false);
     }
   }
 
+  async function runPurgeAndReschedule() {
+    setRescheduleBusy(true);
+    setRescheduleMsg(null);
+    try {
+      const { cancelAllPrayerNativeNotifications } = await import("@/lib/prayer-local-notifications");
+      await cancelAllPrayerNativeNotifications();
+      invalidatePrayerNativeSchedule();
+      const payload = await fetchPrayerTimes(selectedGovId);
+      const { startPrayerAlertScheduler } = await import("@/lib/prayer-alert-scheduler");
+      await startPrayerAlertScheduler(payload, { forceNativeReschedule: true });
+      await import("@/lib/adhan-scheduler").then((m) => m.startAdhanScheduler(payload));
+      setRescheduleMsg("حُذفت التنبيهات القديمة وأُعيد ضبطها.");
+      flashSaved();
+    } catch {
+      setRescheduleMsg("تعذّر الحذف وإعادة الضبط.");
+    } finally {
+      setRescheduleBusy(false);
+    }
+  }
+
+  const adhanSounds = soundOptions.filter((o) => o.group === "adhan");
+  const toneSounds = soundOptions.filter((o) => o.group === "tone");
+
   return (
     <div className="ads-page">
-      <h1 className="ads-title">تنبيهات الصلاة والأذان</h1>
+      <h1 className="ads-title">تنبيهات الصلاة</h1>
       <p className="ads-subtitle">
-        إشعار النظام صوت قصير مضمون (≤٣٠ث) · الأذان الكامل يعمل داخل التطبيق، وعلى iOS قد يُقسَّم إلى مقاطع متتابعة عند تفعيل الوضع الكامل.
+        تنبيه أذان قصير متوافق مع iOS.
         {" "}
-        <a href="/adhan-help" className="ads-help-link">مساعدة الأذان والتنبيهات</a>
+        <a href="/adhan-help" className="ads-help-link">مساعدة</a>
       </p>
 
       {saved ? (
@@ -635,7 +485,7 @@ export default function AdhanSettingsPage() {
             <select
               id="gov-select"
               value={selectedGovId}
-              onChange={(e) => handleGovChange(e.target.value)}
+              onChange={(e) => void handleGovChange(e.target.value)}
               className="ads-gov-select"
             >
               {KUWAIT_GOVERNORATES.map((g) => (
@@ -646,89 +496,49 @@ export default function AdhanSettingsPage() {
         </div>
       </section>
 
-      <section className="ads-card" aria-labelledby="ads-styles-head">
-        <div className="ads-card__head" id="ads-styles-head">
+      <section className="ads-card" aria-labelledby="ads-sound-head">
+        <div className="ads-card__head" id="ads-sound-head">
           <Music size={15} strokeWidth={2} aria-hidden="true" />
-          <span>اختيار المؤذن وصيغة الإشعار</span>
+          <span>صوت التنبيه</span>
         </div>
         <div className="ads-card__body">
-          <div className="ads-row">
-            <div>
-              <span className="ads-gov-label">تشغيل الأذان كاملاً</span>
-              <p className="ads-adhan-desc">
-                {isFullMode
-                  ? isIOS
-                    ? "على iOS: مقاطع متتابعة (≤٣٠ث) لمكة/الحرم ثم إكمال داخل التطبيق. الأذان الكامل الحقيقي يعمل داخل التطبيق دون انقطاع."
-                    : "إكمال الأذان داخل التطبيق بدون انقطاع"
-                  : "تنبيه مختصر مضمون — التكبيرات أو مقطع قصير فقط (≤٣٠ث)"}
-              </p>
-            </div>
-            <Toggle
-              checked={isFullMode}
-              onChange={setFullAdhanMode}
-              label="تشغيل الأذان كاملاً"
-            />
+          <p className="ads-gov-label">أصوات الأذان</p>
+          <div className="ads-style-grid" role="radiogroup" aria-label="أصوات الأذان">
+            {adhanSounds.map((opt) => (
+              <SoundOptionCard
+                key={opt.id}
+                opt={opt}
+                selected={selectedSoundId === opt.id}
+                playing={playingId === opt.id}
+                onSelect={() => selectSound(opt)}
+                onListen={() => void listenToSound(opt)}
+              />
+            ))}
           </div>
-          <p className="ads-gov-label">المؤذن</p>
-          <div className="ads-style-grid" role="radiogroup" aria-label="اختيار المؤذن">
-            {muezzinOptions.map((m) => {
-              const selected = prefs.defaultMuezzinId === m.id;
-              return (
-                <button
-                  key={m.id}
-                  type="button"
-                  role="radio"
-                  aria-checked={selected}
-                  className={`ads-style-card${selected ? " is-selected" : ""}`}
-                  onClick={() => selectMuezzin(m.id)}
-                >
-                  <span className="ads-style-card__name">{m.label}</span>
-                  {selected ? <span className="ads-style-card__badge">مختار</span> : null}
-                  {!m.bundled ? (
-                    <span className="ads-style-card__hint">بث</span>
-                  ) : null}
-                </button>
-              );
-            })}
+
+          <p className="ads-gov-label" style={{ marginTop: "0.85rem" }}>رنات التنبيه</p>
+          <div className="ads-style-grid" role="radiogroup" aria-label="رنات التنبيه">
+            {toneSounds.map((opt) => (
+              <SoundOptionCard
+                key={opt.id}
+                opt={opt}
+                selected={selectedSoundId === opt.id}
+                playing={playingId === opt.id}
+                onSelect={() => selectSound(opt)}
+                onListen={() => void listenToSound(opt)}
+              />
+            ))}
           </div>
-          <p className="ads-adhan-desc" role="note">{selectedType.hint}</p>
-          <div className="ads-prayer-muezzin-btns ads-sound-test-row">
-            <button
-              type="button"
-              className="ads-pill-btn"
-              onClick={() => void runSoundTest()}
-            >
-              {soundBusy && !playing ? "…" : playing ? "إيقاف" : "اختبار الصوت"}
-            </button>
-            <button
-              type="button"
-              className="ads-pill-btn"
-              onClick={() => void runNotifSoundTest()}
-            >
-              اختبار إشعار بعد ١٥ ثانية
-            </button>
-          </div>
-          {soundMsg ? (
-            <p className={`ads-adhan-desc${playing ? "" : " ads-audio-error"}`} role="status">
-              {soundMsg}
-            </p>
-          ) : null}
-          {notifTestMsg ? (
-            <p className="ads-adhan-desc" role="status">{notifTestMsg}</p>
-          ) : null}
+          {soundMsg ? <p className="ads-adhan-desc" role="status">{soundMsg}</p> : null}
         </div>
       </section>
 
       <PrayerAlertSettingsCard />
 
-      <IosChainedAdhanCard muezzinId={prefs.defaultMuezzinId} isFullMode={isFullMode} />
-
-      <AndroidAdhanNativeCard selectedMuezzinId={selectedType.muezzinId} />
-
-      <section className="ads-card" aria-labelledby="ads-iqamah-head">
-        <div className="ads-card__head" id="ads-iqamah-head">
+      <section className="ads-card" aria-labelledby="ads-faith-head">
+        <div className="ads-card__head" id="ads-faith-head">
           <Bell size={15} strokeWidth={2} aria-hidden="true" />
-          <span>تنبيه الإقامة</span>
+          <span>تذكيرات إيمانية</span>
         </div>
         <div className="ads-card__body">
           <div className="ads-row">
@@ -739,18 +549,45 @@ export default function AdhanSettingsPage() {
               label="تفعيل تنبيه الإقامة"
             />
           </div>
-          <div className="ads-chip-scroll" role="group" aria-label="دقائق بعد الأذان للإقامة">
-            {([0, 5, 10, 15] as const).map((min) => (
-              <button
-                key={min}
-                type="button"
-                disabled={!prefs.iqamahEnabled}
-                onClick={() => setIqamahDelay(min)}
-                className={`ads-chip${prefs.iqamahDelayMinutes === min ? " is-active" : ""}`}
-              >
-                {min === 0 ? "مع الأذان" : `${min} د`}
-              </button>
-            ))}
+          {prefs.iqamahEnabled ? (
+            <div className="ads-chip-scroll" role="group" aria-label="دقائق بعد الأذان للإقامة">
+              {([0, 5, 10, 15] as const).map((min) => (
+                <button
+                  key={min}
+                  type="button"
+                  onClick={() => setIqamahDelay(min)}
+                  className={`ads-chip${prefs.iqamahDelayMinutes === min ? " is-active" : ""}`}
+                >
+                  {min === 0 ? "مع الأذان" : `${min} د`}
+                </button>
+              ))}
+            </div>
+          ) : null}
+          <div className="ads-row">
+            <span>تذكير الأذكار</span>
+            <Toggle
+              checked={notifPrefs.adhkarReminder}
+              onChange={(v) => {
+                const next = { ...notifPrefs, adhkarReminder: v };
+                saveNotifPrefs(next);
+                setNotifPrefs(next);
+                flashSaved();
+              }}
+              label="تذكير الأذكار"
+            />
+          </div>
+          <div className="ads-row">
+            <span>تذكير الذكر</span>
+            <Toggle
+              checked={notifPrefs.dhikrPhraseReminder}
+              onChange={(v) => {
+                const next = { ...notifPrefs, dhikrPhraseReminder: v };
+                saveNotifPrefs(next);
+                setNotifPrefs(next);
+                flashSaved();
+              }}
+              label="تذكير الذكر"
+            />
           </div>
         </div>
       </section>
@@ -758,17 +595,12 @@ export default function AdhanSettingsPage() {
       <section className="ads-card" aria-labelledby="ads-prayers-head">
         <div className="ads-card__head" id="ads-prayers-head">
           <Bell size={15} strokeWidth={2} aria-hidden="true" />
-          <span>تخصيص كل صلاة</span>
+          <span>تنبيهات الصلاة</span>
         </div>
         <div className="ads-card__body ads-prayer-list">
           {PRAYER_KEYS.map((key) => {
             const Icon = PRAYER_ICON_MAP[PRAYER_ICON[key]] ?? Bell;
             const p = prefs.prayers[key];
-            const effectiveId = typeIdFromPrefs(
-              getEffectiveMuezzinId(prefs, key),
-              getEffectivePlaybackMode(prefs, key),
-            );
-            const hasOverride = !!p.muezzinId || !!p.deliveryMode;
             return (
               <div key={key} className="ads-prayer-row">
                 <div className="ads-prayer-row__top">
@@ -779,7 +611,7 @@ export default function AdhanSettingsPage() {
                   <Toggle
                     checked={p.enabled}
                     onChange={(v) => togglePrayer(key, v)}
-                    label={`${PRAYER_ARABIC[key]} — تشغيل الأذان`}
+                    label={`${PRAYER_ARABIC[key]} — تشغيل التنبيه`}
                   />
                 </div>
                 <div className="ads-prayer-row__top">
@@ -791,22 +623,6 @@ export default function AdhanSettingsPage() {
                     disabled={!p.enabled || !prefs.iqamahEnabled}
                   />
                 </div>
-                <label className="ads-gov-label" htmlFor={`ads-type-${key}`}>نوع الأذان</label>
-                <select
-                  id={`ads-type-${key}`}
-                  className="ads-gov-select"
-                  value={hasOverride ? effectiveId : ""}
-                  onChange={(e) => setPrayerType(key, e.target.value)}
-                  disabled={!p.enabled}
-                >
-                  <option value="">حسب الإعداد العام</option>
-                  {(["makkah-full", "makkah-short"] as const).map((tid) => {
-                    const t = getSelectableAdhanType(tid);
-                    return (
-                      <option key={tid} value={tid}>{t.label} — {getMuezzin(t.muezzinId).name}</option>
-                    );
-                  })}
-                </select>
                 <div className="ads-chip-scroll" role="group" aria-label={`تنبيه قبل ${PRAYER_ARABIC[key]}`}>
                   {ADVANCE_OPTIONS.map((min) => (
                     <button
@@ -826,10 +642,12 @@ export default function AdhanSettingsPage() {
         </div>
       </section>
 
-      <section className="ads-card" aria-labelledby="ads-status-head">
-        <div className="ads-card__head" id="ads-status-head">
+      <AndroidBackgroundCard />
+
+      <section className="ads-card" aria-labelledby="ads-test-head">
+        <div className="ads-card__head" id="ads-test-head">
           <Bell size={15} strokeWidth={2} aria-hidden="true" />
-          <span>الحالة</span>
+          <span>اختبار الإشعارات</span>
         </div>
         <div className="ads-card__body">
           <div className="ads-row">
@@ -840,13 +658,13 @@ export default function AdhanSettingsPage() {
             <span>إذن الموقع</span>
             <LocationPermBadge />
           </div>
-          <div className="ads-row">
-            <span>حالة الصوت</span>
-            <span className={`ads-perm-badge ${audioReady ? "ads-perm--ok" : "ads-perm--warn"}`}>
-              {audioReady == null ? "…" : audioReady ? "جاهز" : "غير جاهز"}
-            </span>
-          </div>
           <div className="ads-prayer-muezzin-btns ads-sound-test-row">
+            <button type="button" className="ads-pill-btn" onClick={() => void runSoundTest()}>
+              {playingId ? "إيقاف الصوت" : "اختبار الصوت"}
+            </button>
+            <button type="button" className="ads-pill-btn" onClick={() => void runNotifSoundTest()}>
+              اختبار الإشعار
+            </button>
             <button
               type="button"
               className="ads-pill-btn ads-reschedule-btn"
@@ -863,23 +681,9 @@ export default function AdhanSettingsPage() {
             >
               حذف القديمة وإعادة الضبط
             </button>
-            <button
-              type="button"
-              className="ads-pill-btn"
-              disabled={statusBusy}
-              onClick={() => void runAdhanStatusCheck()}
-            >
-              {statusBusy ? "جارٍ…" : "فحص حالة الأذان"}
-            </button>
           </div>
+          {notifTestMsg ? <p className="ads-adhan-desc" role="status">{notifTestMsg}</p> : null}
           {rescheduleMsg ? <p className="ads-adhan-desc" role="status">{rescheduleMsg}</p> : null}
-          {statusLines ? (
-            <ul className="ads-adhan-desc" role="status">
-              {statusLines.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
-          ) : null}
         </div>
       </section>
     </div>

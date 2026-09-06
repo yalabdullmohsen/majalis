@@ -7,7 +7,6 @@ import { Mic2, Volume2 } from "lucide-react";
 import {
   listFamousReciters,
   listFamousMuezzins,
-  describeMuezzinAdhanCapability,
 } from "@/lib/audio-library-engine";
 import {
   loadAdhanPrefs,
@@ -24,26 +23,18 @@ export function AudioLibrarySelectionPanel() {
   const [selectedMuezzin, setSelectedMuezzin] = useState<SelectableMuezzinId>(() =>
     clampSelectableMuezzinId(loadAdhanPrefs().defaultMuezzinId),
   );
-  const [isFullAdhan, setIsFullAdhan] = useState(
-    () => loadAdhanPrefs().playbackMode === "full",
-  );
 
   const muezzins = listFamousMuezzins();
   const reciters = listFamousReciters();
 
   function selectMuezzin(id: SelectableMuezzinId) {
     setSelectedMuezzin(id);
-    patchAdhanPrefs({ defaultMuezzinId: id });
+    patchAdhanPrefs({ defaultMuezzinId: id, playbackMode: "short" });
     try {
       localStorage.setItem(SELECTED_MUEZZIN_STORAGE_KEY, id);
     } catch {
       /* ignore */
     }
-  }
-
-  function toggleFullAdhan(full: boolean) {
-    setIsFullAdhan(full);
-    patchAdhanPrefs({ playbackMode: full ? "full" : "short" });
   }
 
   return (
@@ -80,25 +71,7 @@ export function AudioLibrarySelectionPanel() {
 
       {tab === "muezzins" ? (
         <div role="tabpanel" className="als-body">
-          <div className="als-row-toggle">
-            <div>
-              <span className="als-row-toggle__label">تشغيل الأذان كاملاً</span>
-              <p className="als-row-toggle__hint">
-                {describeMuezzinAdhanCapability(selectedMuezzin, isFullAdhan)}
-              </p>
-            </div>
-            <button
-              type="button"
-              role="switch"
-              aria-checked={isFullAdhan}
-              aria-label="تشغيل الأذان كاملاً"
-              className={`als-switch${isFullAdhan ? " is-on" : ""}`}
-              onClick={() => toggleFullAdhan(!isFullAdhan)}
-            >
-              <span className="als-switch__thumb" />
-            </button>
-          </div>
-
+          <p className="als-hint">تنبيه أذان قصير متوافق مع iOS.</p>
           <ul className="als-list">
             {muezzins.map((m) => {
               const selected = selectedMuezzin === m.id;
@@ -131,7 +104,7 @@ export function AudioLibrarySelectionPanel() {
       ) : (
         <div role="tabpanel" className="als-body">
           <p className="als-hint">
-            البث المباشر MP3 مع تخزين مؤقت — تنزيل السور كاملة للأوفلاين من الأسفل.
+            البث المباشر مع تخزين مؤقت — تنزيل السور للأوفلاين من الأسفل.
           </p>
           <ul className="als-list">
             {reciters.map((r) => (

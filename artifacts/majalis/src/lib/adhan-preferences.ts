@@ -202,9 +202,13 @@ export function loadAdhanPrefs(): AdhanPreferences {
       browserNotificationsEnabled: parsed.browserNotificationsEnabled ?? base.browserNotificationsEnabled,
       silentReminderEnabled: parsed.silentReminderEnabled ?? base.silentReminderEnabled,
       defaultMuezzinId,
-      playbackMode: isAdhanPlaybackMode(parsed.playbackMode)
-        ? parsed.playbackMode
-        : base.playbackMode,
+      playbackMode: (() => {
+        const mode = isAdhanPlaybackMode(parsed.playbackMode)
+          ? parsed.playbackMode
+          : base.playbackMode;
+        // الأذان الكامل أُزيل من المنتج — حوّل أي قيمة قديمة إلى تنبيه قصير متوافق مع iOS
+        return mode === "full" ? "short" : mode;
+      })(),
       iqamahEnabled: parsed.iqamahEnabled ?? base.iqamahEnabled,
       iqamahDelayMinutes:
         iqDelay === 0 || iqDelay === 5 || iqDelay === 10 || iqDelay === 15
@@ -213,7 +217,7 @@ export function loadAdhanPrefs(): AdhanPreferences {
       volume: vol,
       vibrateEnabled: parsed.vibrateEnabled ?? base.vibrateEnabled,
       bypassSilentMode: false, // Critical Alerts غير متوفر — لا نفعّل أبدًا من التخزين
-      iosSequentialFullAdhan: parsed.iosSequentialFullAdhan ?? base.iosSequentialFullAdhan,
+      iosSequentialFullAdhan: false,
       prayers,
       fridayBannerEnabled: parsed.fridayBannerEnabled ?? base.fridayBannerEnabled,
       lastTestedMuezzinId:

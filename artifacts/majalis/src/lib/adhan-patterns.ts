@@ -40,8 +40,8 @@ export const ADHAN_PATTERNS: readonly AdhanPattern[] = [
   },
   {
     id: "egyptian",
-    label: "أذان مصري",
-    shortLabel: "مصري",
+    label: "أذان تقليدي",
+    shortLabel: "تقليدي",
     description: "النمط المصري التقليدي (الأزهر وما حوله).",
   },
   {
@@ -52,8 +52,8 @@ export const ADHAN_PATTERNS: readonly AdhanPattern[] = [
   },
   {
     id: "turkish",
-    label: "أذان تركي / عثماني",
-    shortLabel: "تركي",
+    label: "تنبيه قصير",
+    shortLabel: "قصير",
     description: "النمط التركي / العثماني.",
   },
 ] as const;
