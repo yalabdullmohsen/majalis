@@ -162,6 +162,70 @@ if (!existsSync(deferredPath)) {
           fail(`lessonCandidate يظهر كمنشور: ${candidate.id}`);
         }
       }
+      const review = topic.promotionReview;
+      if (!review || typeof review !== "object") {
+        fail(`promotionReview مطلوب لـ review_ready: ${topic.id}`);
+      } else {
+        if (review.packetStatus !== "awaiting_human_signoff" &&
+            review.packetStatus !== "signed_pending_promotion") {
+          fail(`promotionReview.packetStatus غير صالح: ${topic.id}`);
+        }
+        if (!review.recommendedMode?.trim()) {
+          fail(`promotionReview.recommendedMode ناقص: ${topic.id}`);
+        }
+        if (!Array.isArray(review.relatedPublishedLessons) ||
+            review.relatedPublishedLessons.length < 1) {
+          fail(`relatedPublishedLessons ناقصة: ${topic.id}`);
+        } else {
+          for (const [i, rel] of review.relatedPublishedLessons.entries()) {
+            if (!rel?.id?.trim() || !rel?.relation?.trim()) {
+              fail(`relatedPublishedLessons[${i}] ناقصة في ${topic.id}`);
+            } else if (!lessonIds.has(rel.id)) {
+              fail(`relatedPublishedLesson غير موجود في الكتالوج: ${rel.id}`);
+            }
+          }
+        }
+        if (!Array.isArray(review.catalogConsistency) || review.catalogConsistency.length < 2) {
+          fail(`catalogConsistency ناقصة: ${topic.id}`);
+        }
+        if (!Array.isArray(review.riskFlags) || review.riskFlags.length < 1) {
+          fail(`riskFlags ناقصة: ${topic.id}`);
+        }
+        const example = review.appliedExampleDraft;
+        if (!example?.title?.trim() || !example?.scenario?.trim() ||
+            !example?.teachingPoint?.trim() || example.notFatwa !== true) {
+          fail(`appliedExampleDraft ناقص/غير تعليمي: ${topic.id}`);
+        }
+        const checklist = review.signOffChecklist;
+        if (!Array.isArray(checklist) || checklist.length < 3) {
+          fail(`signOffChecklist ناقصة: ${topic.id}`);
+        } else {
+          for (const [i, row] of checklist.entries()) {
+            if (!row?.item?.trim() || typeof row.checked !== "boolean") {
+              fail(`signOffChecklist[${i}] ناقصة في ${topic.id}`);
+            }
+          }
+        }
+        const decision = review.humanDecision;
+        if (!decision || typeof decision !== "object") {
+          fail(`humanDecision ناقصة: ${topic.id}`);
+        } else if (decision.promotionApproved === true) {
+          // الترقية الفعلية لـ books.json ما زالت يدوية؛ لكن نسمح بالتوقيع المسجّل
+          if (!decision.decidedBy?.trim() || !decision.decidedAt?.trim()) {
+            fail(`توقيع ترقية بلا decidedBy/decidedAt: ${topic.id}`);
+          }
+          if (checklist.some((row) => row.checked !== true)) {
+            fail(`promotionApproved مع checklist غير مكتملة: ${topic.id}`);
+          }
+        } else if (decision.promotionApproved !== false) {
+          fail(`humanDecision.promotionApproved يجب boolean: ${topic.id}`);
+        }
+        // منع التسريب: لا يُعتبر المرشّح معتمدًا للترقية الآلية في هذه الحزمة
+        if (topic.lessonCandidate?.promotionApproved === true &&
+            decision.promotionApproved !== true) {
+          fail(`تعارض promotionApproved بين المرشّح وhumanDecision: ${topic.id}`);
+        }
+      }
     }
     if (stage === "hold") {
       if (!Array.isArray(topic.holdReasons) || topic.holdReasons.length < 2) {
@@ -170,6 +234,9 @@ if (!existsSync(deferredPath)) {
       if (!topic.nextAction?.trim()) fail(`nextAction ناقصة لـ hold: ${topic.id}`);
       if (topic.lessonCandidate) {
         fail(`موضوع hold لا يجوز أن يحمل lessonCandidate: ${topic.id}`);
+      }
+      if (topic.promotionReview) {
+        fail(`موضوع hold لا يجوز أن يحمل promotionReview: ${topic.id}`);
       }
     }
     if (!sourcesOk(topic.sources)) fail(`مصادر مؤجّلة ناقصة: ${topic.id}`);
@@ -201,7 +268,11 @@ const deferredStats = (() => {
       deferredReviewReady: topics.filter((t) => t.reviewStage === "review_ready").length,
       deferredHold: topics.filter((t) => t.reviewStage === "hold").length,
       lessonCandidates: topics.filter((t) => t.lessonCandidate).length,
-      promotionApproved: topics.filter((t) => t.lessonCandidate?.promotionApproved === true).length,
+      promotionReviews: topics.filter((t) => t.promotionReview).length,
+      promotionApproved: topics.filter((t) =>
+        t.lessonCandidate?.promotionApproved === true ||
+        t.promotionReview?.humanDecision?.promotionApproved === true
+      ).length,
       deferredVersion: d.version ?? null,
     };
   } catch {
@@ -209,6 +280,7 @@ const deferredStats = (() => {
       deferredReviewReady: 0,
       deferredHold: 0,
       lessonCandidates: 0,
+      promotionReviews: 0,
       promotionApproved: 0,
       deferredVersion: null,
     };

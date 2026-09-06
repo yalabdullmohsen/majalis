@@ -1,27 +1,28 @@
 # تدقيق محتوى الفقه
 
-- التاريخ: 2026-09-06 21:33 UTC
-- الجولة: v4 — مرشّحو دروس عامة لنازلتي review_ready (دون ترقية للكتالوج)
+- التاريخ: 2026-09-06 21:50 UTC
+- الجولة: v5 — حزم مراجعة ترقية (promotionReview) دون ترقية فعلية
 - المسائل المنشورة: 1103 | أمثلة: 270 | نوازل داخلية: 4
-- review_ready: 2 | hold: 2 | lessonCandidate: 2 | promotionApproved: 0
+- review_ready: 2 | hold: 2 | lessonCandidate: 2 | promotionReview: 2 | promotionApproved: 0
 
 ## الحالة
 
 - الكتالوج العام مكتمل.
-- مرشّحا الدروس داخل `deferred-nawazil.json` فقط.
-- لا نقل إلى `books.json` قبل اعتماد بشري وإزالة `needsReview`.
+- مرشّحا الدروس + حزم التوقيع داخل `deferred-nawazil.json` فقط.
+- اكتشاف اتساق: باب زيارة القبور المنشور يذكر كراهة زيارة النساء؛ v5 يحاذي ذلك.
+- لا نقل إلى `books.json` قبل توقيع بشري صريح على `humanDecision.promotionApproved`.
 
 ## مؤجّل خارج الكتالوج العام
 
-| المعرّف | العنوان | المرحلة | مرشّح درس |
-|---|---|---|---|
-| `libas-shuhra-muasir` | لباس الشهرة المعاصر | `review_ready` | نعم |
-| `shubuhat-ghidhaiyya-muasira` | الشبهات الغذائية المعاصرة | `hold` | لا |
-| `nawazil-jihad-muasira` | نوازل الجهاد المعاصرة | `hold` | لا |
-| `ziyarat-nisa-qubur` | زيارة النساء للقبور | `review_ready` | نعم |
+| المعرّف | المرحلة | مرشّح | حزمة ترقية | الوضع المقترح |
+|---|---|---|---|---|
+| `libas-shuhra-muasir` | `review_ready` | نعم | awaiting_human_signoff | `insert_new_lesson` |
+| `ziyarat-nisa-qubur` | `review_ready` | نعم | awaiting_human_signoff | `align_existing_then_optional_insert` |
+| `shubuhat-ghidhaiyya-muasira` | `hold` | لا | لا | ممنوع |
+| `nawazil-jihad-muasira` | `hold` | لا | لا | ممنوع |
 
 ## المنهج
 
 - تعليمي حنبلية المصدر.
-- `lessonCandidate` مسودة شكل الدرس العام لا نشر فعلي.
-- `hold` يبقى بلا مرشّح ترقية.
+- `promotionReview` يجهّز القرار البشري ولا ينفّذ الترقية.
+- `hold` بلا مرشّح وبلا حزمة ترقية.
