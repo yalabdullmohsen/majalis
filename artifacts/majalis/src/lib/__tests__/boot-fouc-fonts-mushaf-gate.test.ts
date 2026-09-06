@@ -41,6 +41,7 @@ const theme = read("src/lib/theme-preference.ts");
 {
   assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com/);
   assert.match(html, /rel="preload"[^>]+\/fonts\/ui\/amiri-400-ar\.woff2/);
+  assert.match(html, /rel="preload"[^>]+\/fonts\/ui\/amiri-700-ar\.woff2/, "preload Amiri bold قبل React");
   assert.doesNotMatch(
     html,
     /rel="preload"[^>]+noto-naskh-400/,
@@ -50,14 +51,17 @@ const theme = read("src/lib/theme-preference.ts");
   assert.match(html, /app-booting/);
   assert.match(html, /majalis-user-settings-v1/);
   assert.match(html, /--ui-font-scale/);
+  assert.match(html, /font-synthesis:\s*none/);
+  assert.match(html, /-webkit-text-size-adjust:\s*100%/);
   assert.match(fontsQuran, /font-display:\s*block/);
   assert.doesNotMatch(fontsQuran, /font-display:\s*swap/);
   const fontsUi = read("src/styles/fonts-ui.css");
   assert.match(fontsUi, /amiri-400-ar[\s\S]*font-display:\s*optional/);
-  assert.match(fontsUi, /noto-naskh-400-ar[\s\S]*font-display:\s*block/);
-  assert.match(boot, /BOOT_FONT_TIMEOUT_MS\s*=\s*180/);
-  assert.match(boot, /document\.fonts\.load\(primary\)/);
-  assert.match(boot, /fonts\.check\(primary\)/);
+  assert.match(fontsUi, /amiri-700-ar[\s\S]*font-display:\s*optional/);
+  assert.match(fontsUi, /noto-naskh-400-ar[\s\S]*font-display:\s*optional/);
+  assert.match(boot, /BOOT_FONT_TIMEOUT_MS\s*=\s*280/);
+  assert.match(boot, /document\.fonts\.load\(regular\)/);
+  assert.match(boot, /document\.fonts\.load\(bold\)/);
   assert.match(boot, /"Amiri"/);
   assert.match(boot, /registerBootStorageGate|storageReady/);
   assert.match(main, /registerBootStorageGate/);

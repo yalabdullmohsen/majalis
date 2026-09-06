@@ -2,10 +2,15 @@
  * حجز الشاشة الأولى فقط — يُضمَّن في HTML. الباقي غير حاجب.
  * لا !important. الارتفاع من الرموز نفسها المستخدمة بعد التحميل.
  */
+:root {
+  --font-ui: "Amiri", "MajlisAmiriFallback", "MajlisFallback", "Traditional Arabic", serif;
+  --font-app: var(--font-ui);
+}
+
 @font-face {
   font-family: "Amiri";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400 500;
   /* optional: لا يحجب LCP؛ preload + مقاييس fallback تمنع CLS */
   font-display: optional;
   src: url("/fonts/ui/amiri-400-ar.woff2") format("woff2");
@@ -16,8 +21,20 @@
 }
 
 @font-face {
+  font-family: "Amiri";
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: optional;
+  src: url("/fonts/ui/amiri-700-ar.woff2") format("woff2");
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+0660-0669;
+  ascent-override: 95%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+@font-face {
   font-family: "MajlisAmiriFallback";
-  src: local("Noto Naskh Arabic");
+  src: local("Noto Naskh Arabic"), local("Geeza Pro"), local("Traditional Arabic");
   ascent-override: 95%;
   descent-override: 25%;
   line-gap-override: 0%;
@@ -57,6 +74,8 @@
 
 html {
   font-size: calc(100% * var(--ui-font-scale, 1));
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 html.app-booting,
@@ -69,7 +88,8 @@ html.app-booting *::after {
 }
 
 body {
-  font-family: "Amiri", "MajlisAmiriFallback", "Noto Naskh Arabic", serif;
+  font-family: var(--font-ui);
+  font-synthesis: none;
 }
 
 /* أثناء الإقلاع: لا تغيّر ارتفاعات الهيكل بعد القفل */

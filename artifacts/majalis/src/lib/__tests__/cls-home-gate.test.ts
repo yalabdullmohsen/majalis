@@ -39,10 +39,11 @@ assert.doesNotMatch(
   /min-height:\s*unset/,
   "لا min-height:unset في هيرو الرئيسية",
 );
-assert.doesNotMatch(fontsUi, /amiri-700/, "لا Amiri 700 في fonts-ui الإقلاع");
+assert.doesNotMatch(fontsUi, /font-display:\s*swap/, "لا font-display:swap لخطوط الواجهة");
 assert.match(fontsUi, /amiri-400-ar[\s\S]*font-display:\s*optional/, "Amiri 400 optional — لا يحجب LCP");
-assert.match(fontsBold, /amiri-700-ar[\s\S]*font-display:\s*optional/, "Amiri 700 optional مؤجّل — بلا CLS");
-assert.match(fontsBold, /Aref Ruqaa[\s\S]*font-display:\s*optional/, "Aref Ruqaa 700 optional");
+assert.match(fontsUi, /amiri-700-ar[\s\S]*font-display:\s*optional/, "Amiri 700 optional من الإقلاع — بلا قفزة وزن");
+assert.match(fontsBold, /Aref Ruqaa[\s\S]*font-display:\s*optional/, "Aref Ruqaa 700 optional مؤجّل زخرفيًا");
+assert.doesNotMatch(fontsBold, /amiri-700/, "Amiri 700 لم يعد مؤجّلًا في fonts-ui-bold");
 assert.equal(
   lhciRc.ci.assert.assertions["cumulative-layout-shift"][1].maxNumericValue,
   preview.cls,

@@ -105,7 +105,7 @@ function loadNonCriticalCss() {
 }
 function scheduleNonCriticalCss() {
   scheduleOnIdle(loadNonCriticalCss, 2500);
-  // أوزان 700 متأخرة جدًا — لا rIC (يطلق فور الخمول فيُحسب في Lighthouse)
+  // أوزان Aref Ruqaa الزخرفية متأخرة — Amiri 700 مُحمَّل عند الإقلاع (منع قفزة الوزن)
   window.setTimeout(() => {
     void import("./styles/fonts-ui-bold.css");
   }, 20000);
