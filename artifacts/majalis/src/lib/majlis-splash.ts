@@ -24,5 +24,5 @@ export const SPLASH_SESSION_KEY = "mj.launch-splash.session.v2";
 
 export const SPLASH_TAGLINE = "علم نافع، وعمل صالح";
 
-export const SPLASH_BG_LIGHT = "#F2F4F3";
+export const SPLASH_BG_LIGHT = "#F7F3EB";
 export const SPLASH_BG_DARK = "#101614";

@@ -68,7 +68,7 @@ html:not(.pts-immersive) body {
     pointer-events: auto;
     transform: translateY(0);
     opacity: 1 !important;
-    background-color: var(--surface-app, var(--mj-bg, #F2F4F3)) !important;
+    background-color: var(--surface-app, var(--mj-bg, #F7F3EB)) !important;
     background-image: none !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;

@@ -17,7 +17,7 @@ export const DEFAULT_IMAGE = config.defaultImage;
 export const LOGO_IMAGE = (config as { logoImage?: string }).logoImage ?? "/brand/official.png?v=20260825";
 export const ASSET_VERSION = (config as { assetVersion?: string }).assetVersion ?? "20260825";
 /** لون شريط الحالة / theme-color — سطح الصفحة نهاري (ليس لون العلامة). */
-export const BRAND_THEME_COLOR = (config as { themeColor?: string }).themeColor ?? "#F2F4F3";
+export const BRAND_THEME_COLOR = (config as { themeColor?: string }).themeColor ?? "#F7F3EB";
 /** لون شريط الحالة — ليلي. */
 export const BRAND_THEME_COLOR_DARK =
   (config as { themeColorDark?: string }).themeColorDark ?? "#101614";

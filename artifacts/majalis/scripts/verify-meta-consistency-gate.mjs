@@ -46,8 +46,8 @@ const indexHtml = read("index.html");
 if (!indexHtml.includes(`content="${theme}"`)) {
   issues.push(`index.html: theme-color السطح يجب أن يطابق ${theme}`);
 }
-if (!indexHtml.includes('content="#F2F4F3"')) {
-  issues.push("index.html: theme-color الإقلاع يجب #F2F4F3 مع خلفية السطح");
+if (!indexHtml.includes('content="#F7F3EB"')) {
+  issues.push("index.html: theme-color الإقلاع يجب #F7F3EB مع خلفية السطح");
 }
 /* اللون الداكن يُضبط من سكربت الإقلاع حسب اختيار المستخدم — لا meta بـ prefers-color-scheme */
 if (
@@ -92,7 +92,7 @@ for (const rel of ["public/manifest.json", "public/manifest.webmanifest", "publi
   if (m.name !== "سُنّة") issues.push(`${rel}: name خاطئ`);
   if (m.short_name !== shortName) issues.push(`${rel}: short_name يجب «${shortName}»`);
   if (m.theme_color !== theme) issues.push(`${rel}: theme_color يجب ${theme}`);
-  if (m.background_color !== "#F2F4F3") issues.push(`${rel}: background_color يجب #F2F4F3 (سطح التطبيق)`);
+  if (m.background_color !== "#F7F3EB") issues.push(`${rel}: background_color يجب #F7F3EB (سطح التطبيق)`);
   const iconSrcs = (m.icons || []).map((i) => String(i.src || ""));
   if (iconSrcs.some((s) => /majlisilm-og-2026|favicon\.svg/.test(s))) {
     issues.push(`${rel}: أيقونة قديمة في icons`);

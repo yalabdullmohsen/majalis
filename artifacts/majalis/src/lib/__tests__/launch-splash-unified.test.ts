@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "../../..");
-const BG = "#F2F4F3";
+const BG = "#F7F3EB";
 
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
 assert.match(indexHtml, /id="mj-launch-splash"/, "دخولية MajlisSplash في HTML الحرج");
@@ -35,7 +35,7 @@ assert.doesNotMatch(indexHtml, /id="mj-boot-skeleton"/, "بلا هيكل تحم�
 }
 assert.match(
   indexHtml,
-  new RegExp(`background-color:\\s*(${BG}|var\\(--mj-splash-bg\\)|#F2F4F3)`),
+  new RegExp(`background-color:\\s*(${BG}|var\\(--mj-splash-bg\\)|#F7F3EB)`),
   "خلفية html/body",
 );
 assert.match(indexHtml, new RegExp(`theme-color" content="${BG}"`), "theme-color الإقلاع مطابق");
@@ -136,7 +136,7 @@ assert.doesNotMatch(
 
 const manifest = JSON.parse(readFileSync(resolve(root, "public/manifest.json"), "utf8"));
 assert.equal(manifest.background_color, BG);
-assert.equal(manifest.theme_color, "#F2F4F3");
+assert.equal(manifest.theme_color, "#F7F3EB");
 
 const brand = readFileSync(resolve(root, "src/components/brand/MajlisWordmark.tsx"), "utf8");
 assert.match(brand, /سُنّة/, "وردمارك يعرض سُنّة");

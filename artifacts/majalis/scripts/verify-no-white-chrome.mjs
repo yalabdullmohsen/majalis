@@ -44,7 +44,7 @@ const pageChromeFiles = [
 ];
 
 const theme = readFileSync(join(root, "src/app/styles/theme.css"), "utf8");
-assert.match(theme, /--surface-app:\s*#F2F4F3/, "theme: --surface-app نهاري");
+assert.match(theme, /--surface-app:\s*#F7F3EB/, "theme: --surface-app نهاري");
 assert.match(theme, /--mj-bg:\s*var\(--surface-app\)/, "theme: --mj-bg ← --surface-app");
 assert.match(theme, /\[data-on-dark\]/, "theme: سياق on-dark");
 assert.match(theme, /\.on-dark\s*\{/, "theme: صنف .on-dark");

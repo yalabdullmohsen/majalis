@@ -81,14 +81,14 @@ article,
  */
 html.capacitor-native {
   --header-h: calc(var(--header-chrome, 56px) + var(--inset-top) + var(--ad-banner-height, 0px));
-  background-color: var(--surface-app, var(--mj-bg, #F2F4F3));
+  background-color: var(--surface-app, var(--mj-bg, #F7F3EB));
   min-height: 100dvh;
 }
 
 html.capacitor-native,
 html.capacitor-native body {
   overscroll-behavior-y: none;
-  background-color: var(--surface-app, var(--mj-bg, #F2F4F3));
+  background-color: var(--surface-app, var(--mj-bg, #F7F3EB));
 }
 
 html.capacitor-native[data-theme="dark"],
@@ -120,7 +120,7 @@ html.capacitor-native .site-footer--global {
 
 html.capacitor-native .app-shell--native {
   min-height: 100dvh;
-  background: var(--mj-bg, var(--app-status-bg, #F2F4F3));
+  background: var(--mj-bg, var(--app-status-bg, #F7F3EB));
 }
 
 html.capacitor-native .dcq__choice,

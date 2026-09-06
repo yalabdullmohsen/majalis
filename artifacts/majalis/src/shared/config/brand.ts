@@ -4,7 +4,7 @@ export const BRAND = {
   domain: "www.ssunnah.com",
   colorDay: "#1F7A5A",
   colorNight: "#4FB48B",
-  surfaceDay: "#F2F4F3",
+  surfaceDay: "#F7F3EB",
   surfaceNight: "#101614",
 } as const;
 

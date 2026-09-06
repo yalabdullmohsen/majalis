@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#F2F4F3" />
+    <meta name="theme-color" content="#F7F3EB" />
     <!-- ثيم+RTL+حجم خط قبل أي CSS/JS — أول إطار ثابت (v14-release-fresh-2026-09) -->
     <script id="mj-theme-boot">
       (function () {
@@ -53,7 +53,7 @@
             html.classList.remove("dark", "theme-dark");
           }
           html.style.colorScheme = resolved === "dark" ? "dark" : "light";
-          var splashBg = resolved === "dark" ? "#101614" : "#F2F4F3";
+          var splashBg = resolved === "dark" ? "#101614" : "#F7F3EB";
           document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
             m.setAttribute("content", splashBg);
             m.removeAttribute("media");
@@ -165,7 +165,7 @@
         font-size: calc(100% * var(--ui-font-scale, 1));
       }
       html, body, #root {
-        background-color: #F2F4F3;
+        background-color: #F7F3EB;
         margin: 0;
         min-height: 100dvh;
         min-height: 100svh;
@@ -277,7 +277,7 @@
       .bottom-nav, [data-bottom-nav] {
         min-height: var(--nav-h);
         box-sizing: border-box;
-        background-color: #F2F4F3;
+        background-color: #F7F3EB;
       }
       html.theme-dark .bottom-nav,
       html[data-theme="dark"] .bottom-nav,
@@ -287,7 +287,7 @@
       }
     </style>
     <style id="mj-splash-critical">
-:root{--mj-splash-bg-light:#F2F4F3;--mj-splash-bg-dark:#101614;--mj-splash-bg:var(--mj-splash-bg-light);--mj-splash-ink:#123f2e}
+:root{--mj-splash-bg-light:#F7F3EB;--mj-splash-bg-dark:#101614;--mj-splash-bg:var(--mj-splash-bg-light);--mj-splash-ink:#123f2e}
 html[data-theme="dark"]{--mj-splash-bg:var(--mj-splash-bg-dark);--mj-splash-ink:#a8d5c0}
 html,body,#root,html.capacitor-native,html.capacitor-native body,html.capacitor-native #root{background:var(--mj-splash-bg)}
 #mj-launch-splash{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;background:var(--mj-splash-bg);color:var(--mj-splash-ink);pointer-events:none;opacity:1;transition:opacity .09s ease}

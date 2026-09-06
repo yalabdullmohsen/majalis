@@ -32,7 +32,7 @@ assert.equal(prayer.statusBarStyle, "light");
 
 const quran = resolvePageChrome("/quran-hub", "light");
 assert.equal(quran.statusBarStyle, "dark");
-assert.equal(quran.statusBarColorHex, "#F2F4F3");
+assert.equal(quran.statusBarColorHex, "#F7F3EB");
 
 const mushaf = resolvePageChrome("/mushaf", "dark");
 assert.equal(mushaf.statusBarColorHex, MUSHAF_PAPER_HEX);
