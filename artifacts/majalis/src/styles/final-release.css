@@ -450,9 +450,9 @@ html.dark .navbar-menu-btn--drawer {
   border-color: color-mix(in srgb, var(--color-primary) 28%, var(--color-border));
 }
 
-/* الشريط المتحرك أعلى التطبيق (HeaderTicker) — نص واحد لكل دورة:
-   للعربية: يدخل من يسار الإطار (لتظهر بداية النص أولًا) ويخرج يمينًا عبر
-   --ticker-from/--ticker-to، ثم ينتقل للنص التالي عند animationend فقط.
+/* الشريط المتحرك أعلى التطبيق (HeaderTicker) — مسار متواصل:
+   العناصر مكرَّرة ×3 داخل المسار مع فاصل " • " وgap 16–24px،
+   والحركة لا نهائية بلا فراغ بين نهاية الدورة وبدايتها.
    يتوقف عند hover/لمس/تركيز، ويتحول لعرض ثابت عند prefers-reduced-motion. */
 .header-ticker {
   overflow: hidden;
@@ -468,12 +468,12 @@ html.dark .navbar-menu-btn--drawer {
   border-radius: var(--mj-r-sm, var(--radius-md));
   background: var(--mj-surface, var(--color-surface));
   padding-block: 0.35rem;
-  padding-inline: max(1rem, var(--inset-right, 0px))
-    max(1rem, var(--inset-left, 0px));
+  padding-inline: max(0.65rem, var(--inset-right, 0px))
+    max(0.65rem, var(--inset-left, 0px));
   box-sizing: border-box;
   cursor: pointer;
 }
-.header-ticker--empty { visibility: hidden; flex: 0 0 8rem; }
+.header-ticker--empty { display: none; }
 .header-ticker--static { padding-inline: 1rem; }
 .header-ticker--paused { cursor: pause; }
 .header-ticker--paused .header-ticker__track,
@@ -492,10 +492,9 @@ html.dark .navbar-menu-btn--drawer {
   min-width: 0;
   display: flex;
   align-items: center;
-  /* LTR للإحداثيات الفيزيائية فقط — النص العربي يبقى rtl على العنصر */
+  /* LTR للإحداثيات الفيزيائية فقط — النص العربي يبقى rtl على المقطع */
   direction: ltr;
   justify-content: flex-start;
-  /* بلا قناع يقصّ بداية/نهاية النص */
   mask-image: none;
   -webkit-mask-image: none;
 }
@@ -503,6 +502,7 @@ html.dark .navbar-menu-btn--drawer {
 .header-ticker__track,
 .header-ticker__runner {
   display: inline-flex;
+  flex-direction: row;
   align-items: center;
   width: max-content;
   max-width: none;
@@ -510,27 +510,57 @@ html.dark .navbar-menu-btn--drawer {
   gap: 0;
   white-space: nowrap;
   backface-visibility: hidden;
-  /* طبقة تركيب GPU — بوابة TBT تتأكد من وجود translate3d(0,0,0) */
   transform: translate3d(0, 0, 0);
 }
-.header-ticker--marquee .header-ticker__track,
-.header-ticker--marquee .header-ticker__runner {
+.header-ticker--marquee.is-running .header-ticker__track,
+.header-ticker--marquee.is-running .header-ticker__runner {
   animation-name: header-ticker-marquee;
   animation-timing-function: linear;
-  animation-iteration-count: 1;
-  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+  animation-fill-mode: none;
+  animation-duration: var(--ticker-loop-duration, 28s);
   will-change: transform;
 }
 
 @keyframes header-ticker-marquee {
-  /* يسار → يمين (مناسب للعربية): من خارج الإطار الأيسر إلى خارج الأيمن */
-  from { transform: translate3d(var(--ticker-from, -100%), 0, 0); }
-  to { transform: translate3d(var(--ticker-to, 100%), 0, 0); }
+  /* إزاحة مقطع واحد بالضبط (مع 3 نسخ = -33.333%) — بلا فجوة بين الدورات */
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(var(--ticker-loop-shift, -33.33333%), 0, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .header-ticker__track,
   .header-ticker__runner { animation: none !important; }
+}
+
+.header-ticker__segment-wrap,
+.header-ticker__segment {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  gap: 0;
+}
+
+.header-ticker__slot {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 0;
+  white-space: nowrap;
+}
+
+.header-ticker__sep {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  color: color-mix(in srgb, var(--color-primary) 55%, var(--color-text-muted, #6b7280));
+  font-size: 0.85rem;
+  line-height: 1;
+  user-select: none;
+  /* إجمالي الفراغ البصري بين العناصر ≈ 16–24px مع " • " */
+  padding-inline: 0.7rem;
 }
 
 .header-ticker__single-item {
@@ -552,20 +582,14 @@ html.dark .navbar-menu-btn--drawer {
   font-size: .85rem;
   line-height: 1.35;
   padding-block: 0.15rem;
-  padding-inline: 1rem;
+  padding-inline: 0;
   position: relative;
   white-space: nowrap;
 }
+/* الفاصل النصي " • " يغني عن النقطة المطلقة القديمة */
 .header-ticker__item + .header-ticker__item::before {
-  content: "";
-  position: absolute;
-  inset-inline-start: 0;
-  top: 50%;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--color-primary) 55%, transparent);
-  transform: translateY(-50%);
+  content: none;
+  display: none;
 }
 .header-ticker__icon { color: var(--color-primary); flex-shrink: 0; }
 .header-ticker__label {

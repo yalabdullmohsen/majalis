@@ -132,27 +132,37 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
   );
   assert(!tickerSrc.includes("setStickyPaused"), "لا stickyPaused — كان يجمّد الماركي بعد نقر الروابط");
   assert(
-    tickerSrc.includes("onPointerDown") || tickerSrc.includes("onTouchStart"),
+    tickerSrc.includes("onPointerDown") ||
+      tickerSrc.includes("onTouchStart") ||
+      tickerSrc.includes("onPointerDown") ||
+      tickerSrc.includes("onTouchStart"),
     "إيقاف مؤقت أثناء اللمس فقط",
   );
+  /* مسار متواصل: تكرار العناصر + فاصل • + حركة لا نهائية بلا فراغ */
   assert(
-    tickerSrc.includes("onAnimationEnd") && tickerSrc.includes("header-ticker-marquee"),
-    "التبديل للنص التالي فقط بعد animationend لاسم الماركي",
+    tickerSrc.includes("TRACK_COPIES") && /TRACK_COPIES\s*=\s*[23]/.test(tickerSrc),
+    "المسار مكرَّر مرتين أو ثلاث داخل الشريط",
   );
-  assert(/from\s*=\s*-itemW/.test(tickerSrc), "بداية الحركة من خارج اليسار (-itemW) — بداية النص العربي أولًا");
-  assert(/to\s*=\s*vpW/.test(tickerSrc), "نهاية الحركة خارج يمين الشاشة (vpW) بالكامل — لا قطع منتصف النص");
   assert(
-    /distancePx\s*\/\s*95/.test(tickerSrc) || tickerSrc.includes("/ 95"),
-    "سرعة الماركي أسرع (~95px/ث) من الإيقاع البطيء السابق",
+    tickerSrc.includes("ITEM_SEPARATOR") && tickerSrc.includes("•"),
+    "فاصل بسيط • بين العناصر",
+  );
+  assert(
+    tickerSrc.includes("items.length === 0") && tickerSrc.includes("return null"),
+    "لا يُعرض الشريط إن كانت القائمة فارغة",
+  );
+  assert(
+    cssSrc.includes("animation-iteration-count: infinite") ||
+      cssSrc.includes("animation-iteration-count:infinite"),
+    "حركة لا نهائية بلا إعادة من فراغ",
+  );
+  assert(
+    cssSrc.includes("--ticker-loop-shift") || cssSrc.includes("-33.333"),
+    "إزاحة مقطع واحد فقط لكل دورة — بلا فجوة",
   );
   assert(
     cssSrc.includes("direction: ltr") && cssSrc.includes("header-ticker__viewport"),
     "viewport بـ direction:ltr لتثبيت المحاور الفيزيائية",
-  );
-  assert(
-    /translate3d\(\s*var\(--ticker-from,\s*-100%\)/.test(cssSrc) ||
-      cssSrc.includes("var(--ticker-from, -100%)"),
-    "keyframes الافتراضية تبدأ من -100% (يسار→يمين)",
   );
   assert(
     tickerSrc.includes('dir="rtl"') || tickerSrc.includes("dir=\"rtl\""),
@@ -167,8 +177,8 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
     "يعرض displayText كاملًا بلا قصّ slice في المكوّن",
   );
   assert(
-    tickerSrc.includes("--ticker-from") && tickerSrc.includes("--ticker-to"),
-    "مسار الحركة عبر متغيّرات CSS من القياس الحقيقي",
+    tickerSrc.includes("--ticker-loop-duration") && tickerSrc.includes("--ticker-loop-shift"),
+    "مسار الحركة عبر متغيّرات CSS للحلقة المتواصلة",
   );
 
   const chipSrc = readFileSync(
