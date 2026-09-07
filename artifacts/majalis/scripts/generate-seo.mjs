@@ -119,8 +119,7 @@ const PLATFORM_SEED = JSON.parse(await readFile(resolve(__dirname, "platform-see
 // المصدر الوحيد لكتب المكتبة هو src/lib/library-catalog.ts (نفس ما تقرأه LibraryDetailPage.tsx فعليًا).
 // كان هذا الملف يقرأ سابقًا من src/data/library-catalog.json وهي مرآة يدوية انحرفت (102 مقابل 117 سجلًا حيًا).
 const { LIBRARY_CATALOG } = await importSrc("src/lib/library-catalog.ts");
-const { loadEncyclopediaRulingsForSeo, rulingRichBody } = await import("./generate-seo-rulings-helpers.mjs");
-const ENCYCLOPEDIA_RULINGS = await loadEncyclopediaRulingsForSeo(appRoot);
+// موسوعة الأحكام مؤرشفة — لا prerender لـ /rulings/:id (انظر التعليق عند حلقات addPage).
 
 const seoConfigPath = resolve(appRoot, "src/lib/seo-routes.json");
 const seoConfig = JSON.parse(await readFile(seoConfigPath, "utf8"));
@@ -146,8 +145,12 @@ const { FIQH_COUNCIL_PUBLISHED_SEED } = await importSrc("src/lib/fiqh-council-se
 const { FIQH_ITEM_TYPE_LABELS } = await importSrc("src/lib/fiqh-council-types.ts");
 const { SCHOLAR_PROFILES } = await importSrc("src/data/scholars-profiles.ts");
 const { ANNUAL_COURSES_SEED } = await importSrc("src/lib/annual-courses-seed.ts");
+/** دورات SEO من المصدر الحي — لا platform-seed.snapshot.json المجمَّد (b005). */
+const PUBLIC_ANNUAL_COURSES = ANNUAL_COURSES_SEED.filter(
+  (c) => c.status === "approved" || c.status === "published",
+);
 const ANNUAL_COURSE_SUMMARY = new Map(
-  ANNUAL_COURSES_SEED.map((c) => [c.id, c.summary || c.title]),
+  PUBLIC_ANNUAL_COURSES.map((c) => [c.id, c.summary || c.title]),
 );
 const {
   publishedBooks,
@@ -1304,7 +1307,7 @@ ${linkList("روابط ذات صلة", [
   "/annual-courses": `<p>الدورات العلمية السنوية والموسمية: برامج مرتّبة بمشايخ وجداول، مع روابط إلى الدروس والمسارات.</p>
 ${linkList(
   "من الدورات",
-  (PLATFORM_SEED.courses || []).slice(0, 12).map((c) => ({
+  PUBLIC_ANNUAL_COURSES.slice(0, 12).map((c) => ({
     name: c.title || c.name,
     url: `/annual-courses/${c.id}`,
   })),
@@ -2583,7 +2586,7 @@ for (const row of verifiedFiqhSessions) {
 
 // موسوعة الأحكام مؤرشفة — لا تُولَّد صفحات /rulings/:id في sitemap.
 
-for (const row of PLATFORM_SEED.courses || []) {
+for (const row of PUBLIC_ANNUAL_COURSES) {
   addPage(
     {
       path: `/annual-courses/${row.id}`,
@@ -2594,7 +2597,11 @@ for (const row of PLATFORM_SEED.courses || []) {
       ),
     },
     {
-      extraJsonLd: courseJsonLdScript(row),
+      extraJsonLd: courseJsonLdScript({
+        ...row,
+        description: row.summary || row.description || row.title,
+        instructor: Array.isArray(row.sheikh_names) ? row.sheikh_names[0] : row.instructor,
+      }),
       parents: [{ name: "الدورات العلمية", path: "/annual-courses" }],
       priority: 0.68,
     },
@@ -3070,7 +3077,7 @@ const rssItems = [
     description: `مادة من مجمع فقهي (${fiqhItemKind(row)}): ${row.title} — ${row.category || "المجمع الفقهي الإسلامي"}`,
     category: "مواد المجامع الفقهية",
   })),
-  ...(PLATFORM_SEED.courses || []).slice(0, 3).map((row) => ({
+  ...PUBLIC_ANNUAL_COURSES.slice(0, 3).map((row) => ({
     title: `[دورة علمية] ${row.title || row.name || "دورة شرعية"}`,
     link: absoluteUrl(`/annual-courses/${row.id}`),
     description: `دورة علمية: ${row.title || row.name || "دورة شرعية"} — ${SITE_NAME}`,
