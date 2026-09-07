@@ -507,11 +507,6 @@ export default function SinsAndRightsPage() {
                         {t.title}
                       </Link>
                     ))}
-                    {cat.topicSlugs.length > topics.length && (
-                      <span className="snr-topic-chip" style={{ opacity: 0.6 }}>
-                        + قيد الإعداد
-                      </span>
-                    )}
                   </div>
                 </div>
               );

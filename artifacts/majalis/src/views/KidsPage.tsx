@@ -1,58 +1,93 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
-import { Baby, BookOpen, Home, Star } from "lucide-react";
+import {
+  Baby,
+  BookOpen,
+  Sparkles,
+  Star,
+  Heart,
+  HelpCircle,
+  ChevronLeft,
+} from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/kids.css";
 
+const KIDS_ENTRIES = [
+  {
+    href: "/prophets",
+    title: "قصص الأنبياء",
+    desc: "من آدم إلى محمد ﷺ — قصص ميسّرة بعبر واضحة.",
+    Icon: Star,
+  },
+  {
+    href: "/adhkar",
+    title: "أذكار يومية",
+    desc: "أذكار الصباح والمساء والنوم بصيغ مختصرة مناسبة.",
+    Icon: Heart,
+  },
+  {
+    href: "/quran-hub",
+    title: "القرآن الكريم",
+    desc: "المصحف والاستماع وقراءة ميسّرة بمرافقة ولي الأمر.",
+    Icon: BookOpen,
+  },
+  {
+    href: "/quiz",
+    title: "أسئلة سين جيم",
+    desc: "أسئلة قصيرة للمراجعة مع الأسرة — اختر ما يناسب العمر.",
+    Icon: HelpCircle,
+  },
+  {
+    href: "/stories",
+    title: "قصص إيمانية",
+    desc: "قصص مختارة تُقرّب المعاني دون مسائل خلافية ثقيلة.",
+    Icon: Sparkles,
+  },
+] as const;
+
 /**
- * ركن الأطفال — معروض كـ«قريبًا» حتى يكتمل محتوى مخصّص للأطفال
- * (بدل مجرد روابط لصفحات عامة). المسار يبقى حيًا بروابط قديمة.
+ * ركن الأطفال — مدخل مخصّص يوجّه لصغار السن نحو محتوى موجود وآمن.
+ * لا يُنسب حكم قطعي بلا مصدر؛ المحتوى التفصيلي في الصفحات المرتبطة.
  */
 export default function KidsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/kids",
       title: "ركن الأطفال | سُنّة",
-      description: "ركن الأطفال في سُنّة — محتوى تعليمي ميسّر وآمن للصغار.",
-      keywords: ["الأطفال", "تعليم الأطفال"],
-      robots: "noindex, nofollow",
+      description:
+        "ركن الأطفال في سُنّة: قصص أنبياء وأذكار وقرآن وأسئلة ميسّرة بمرافقة ولي الأمر.",
+      keywords: ["الأطفال", "قصص الأنبياء", "أذكار الأطفال", "تعليم إسلامي"],
+      robots: "index, follow",
     });
   }, []);
 
   return (
-    <div className="kids-hub-page kids-hub-page--soon" dir="rtl">
-      <section className="kids-hub-intro kids-hub-soon soft-card soft-card--on-light mj-framed" aria-labelledby="kids-soon-title">
-        <span className="kids-hub-soon__badge">تحت الإعداد</span>
+    <div className="kids-hub-page" dir="rtl">
+      <section className="kids-hub-intro soft-card soft-card--on-light mj-framed" aria-labelledby="kids-title">
         <Baby size={36} className="kids-hub-intro__icon" aria-hidden="true" />
-        <h1 id="kids-soon-title" className="kids-hub-intro__title">ركن الأطفال</h1>
+        <h1 id="kids-title" className="kids-hub-intro__title">
+          ركن الأطفال
+        </h1>
         <p className="kids-hub-intro__sub">
-          نجهّز ركنًا تعليميًا ميسّرًا وآمنًا للأطفال بمحتوى مخصّص —
-          بلا مسائل خلافية وبأسلوب يناسب صغار السن.
+          مداخل ميسّرة لصغار السن من محتوى المنصة — بمرافقة ولي الأمر، وبلا مسائل
+          خلافية ثقيلة في هذا الركن.
         </p>
-        <ul className="kids-hub-soon__checklist" aria-label="ما سيُتضمَّن عند الإطلاق">
-          <li>قصص أنبياء بأسلوب ميسّر</li>
-          <li>آداب وأذكار يومية مناسبة للعمر</li>
-          <li>مسارات قصيرة بلا أحكام قطعية بلا مصدر</li>
-        </ul>
-        <p className="kids-hub-soon__note">
-          يمكنك الآن الاستفادة من الأقسام العامة للمنصة، وسيُفتح ركن الأطفال
-          الكامل عند اكتمال التجهيز والمراجعة.
-        </p>
-        <div className="kids-hub-soon__actions">
-          <Link href="/quran-hub" className="kids-hub-soon__btn kids-hub-soon__btn--primary">
-            <BookOpen size={18} strokeWidth={1.8} aria-hidden="true" />
-            مركز القرآن الكريم
-          </Link>
-          <Link href="/" className="kids-hub-soon__btn">
-            <Home size={18} strokeWidth={1.8} aria-hidden="true" />
-            الرئيسية
-          </Link>
-          <Link href="/prophets" className="kids-hub-soon__btn">
-            <Star size={18} strokeWidth={1.8} aria-hidden="true" />
-            قصص الأنبياء
-          </Link>
-        </div>
       </section>
+
+      <nav className="kids-hub-grid" aria-label="مداخل ركن الأطفال">
+        {KIDS_ENTRIES.map(({ href, title, desc, Icon }) => (
+          <Link key={href} href={href} className="kids-hub-card soft-card soft-card--on-light">
+            <span className="kids-hub-card__icon" aria-hidden="true">
+              <Icon size={22} strokeWidth={1.8} />
+            </span>
+            <span className="kids-hub-card__body">
+              <span className="kids-hub-card__title">{title}</span>
+              <span className="kids-hub-card__desc">{desc}</span>
+            </span>
+            <ChevronLeft size={18} className="kids-hub-card__chevron" aria-hidden="true" />
+          </Link>
+        ))}
+      </nav>
     </div>
   );
 }

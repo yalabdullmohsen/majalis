@@ -4,9 +4,8 @@
  * - hiddenFromNav: لا يُعرض في قوائم المستخدم (المسار قد يبقى للروابط العميقة/الأدمن).
  */
 
-export const COMING_SOON_PATHS = new Set<string>([
-  "/kids",
-]);
+/** لا مسارات «قريبًا» عامة حاليًا — ركن الأطفال أصبح مدخلًا حيًا. */
+export const COMING_SOON_PATHS = new Set<string>([]);
 
 /** عناصر أُزيلت من الاكتشاف العام حسب مراجعة الدمج/الإلغاء. */
 export const HIDDEN_FROM_NAV_PATHS = new Set<string>([

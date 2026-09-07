@@ -168,7 +168,7 @@ const SECTIONS = [
       { href: "/privacy", label: "سياسة الخصوصية", desc: "كيف نحمي بياناتك" },
       { href: "/terms", label: "الشروط والأحكام", desc: "شروط استخدام المنصة" },
       { href: "/account-deletion", label: "حذف الحساب", desc: "طلب حذف حسابك وبياناتك" },
-      { href: "/kids", label: "ركن الأطفال", desc: "محتوى تعليمي ميسّر — قريبًا" },
+      { href: "/kids", label: "ركن الأطفال", desc: "قصص وأذكار وقرآن وأسئلة ميسّرة" },
     ],
   },
 ];

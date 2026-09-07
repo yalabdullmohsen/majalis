@@ -55,13 +55,12 @@ export async function fetchDynamicUrls() {
   // المكتبة العامة أُزيلت من الواجهة وSEO — لا تُدرَج /library في الخريطة
   // (المسارات القديمة تُحوَّل إلى /search عبر vercel + AppRoutes).
 
-  // اكتُشف 2026-07-18: جدول fiqh_council_sessions غير موجود أصلاً في
-  // القاعدة الحية — الصفحة الحية /fiqh-council/sessions/:slug تعمل فعلياً
-  // عبر fallback ثابت في fiqh-council-sessions-service.ts (لا استعلام DB
-  // ممكن هنا لجدول غائب). مرآة ثابتة مثل scholars/library بالضبط، تُولَّد
-  // عبر scripts/regen-fiqh-sessions-json.mjs من fiqh-sessions-seed.ts.
+  // اكتُشف 2026-07-18: جدول fiqh_council_sessions غير موجود في القاعدة الحية.
+  // البذرة أُفرِغت (2026-07-26) من جلسات غير موثّقة؛ المرآة تُولَّد من
+  // fiqh-sessions-seed.ts عبر regen-fiqh-sessions-json.mjs — فارغة = بلا روابط ميتة.
   const fiqhSessions = loadStaticCatalog("fiqh-sessions-list.json");
   for (const s of fiqhSessions) {
+    if (!s?.slug) continue;
     urls.push({ loc: `/fiqh-council/sessions/${s.slug}`, lastmod: s.updated_at, priority: 0.6, changefreq: "yearly" });
   }
 

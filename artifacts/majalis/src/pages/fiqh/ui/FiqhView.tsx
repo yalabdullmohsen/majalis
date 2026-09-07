@@ -260,10 +260,14 @@ function FiqhBooksBody() {
       <ExploreAlsoNav
         title="استكشف أيضًا"
         links={[
-          { href: "/hadith", label: "الحديث وعلومه" },
-          { href: "/lessons", label: "الدروس العلمية" },
+          { href: "/fiqh-council", label: "المجمع الفقهي" },
+          { href: "/sins-and-rights", label: "المعاصي والحقوق" },
+          { href: "/mawarith", label: "المواريث" },
+          { href: "/fiqh/usul", label: "أصول الفقه" },
           { href: "/salah-guide", label: "دليل الصلاة" },
           { href: "/zakat", label: "الزكاة" },
+          { href: "/hadith", label: "الحديث وعلومه" },
+          { href: "/lessons", label: "الدروس العلمية" },
         ]}
       />
     </div>

@@ -50,13 +50,13 @@ console.log("\n=== واجهة المسابقات بلا /quiz وأسئلة ===")
     assert.doesNotMatch(src, /180\s*سؤال/, `${name}: بلا 180 سؤال`);
   }
   assert.match(hub, /data-competitions-empty/);
-  assert.match(hub, /لا مسابقات منشورة حاليًا/);
+  assert.match(hub, /لا مسابقات خارجية منشورة حاليًا/);
   assert.match(hub, /href="\/lessons"/);
+  assert.match(hub, /href="\/quiz"/);
   assert.match(hub, /inlineHeaderBack/);
   assert.doesNotMatch(hub, /ShareButtons/);
   assert.doesNotMatch(hub, /twh-share/);
   assert.doesNotMatch(hub, /روابط التسجيل والمصدر/);
-  assert.doesNotMatch(hub, /href="\/quiz"/);
   assert.match(hub, /COMPETITION_FILTERS/);
   assert.match(detail, /data-competition-detail|انتهى التسجيل/);
 }

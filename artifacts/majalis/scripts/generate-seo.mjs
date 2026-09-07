@@ -116,6 +116,25 @@ function prerenderNavHtml() {
 
 const LESSONS_SEED = JSON.parse(await readFile(resolve(__dirname, "lessons-seed.snapshot.json"), "utf8"));
 const PLATFORM_SEED = JSON.parse(await readFile(resolve(__dirname, "platform-seed.snapshot.json"), "utf8"));
+/** فئات اختبار سين جيم من المصدر الحي — لا qa_items المجمّدة في platform-seed. */
+const QUIZ_MANIFEST = JSON.parse(
+  await readFile(resolve(appRoot, "public/data/quiz/manifest.json"), "utf8"),
+);
+const QUIZ_SEO_TOPICS = (() => {
+  const seen = new Set();
+  const out = [];
+  for (const chunk of QUIZ_MANIFEST.chunks || []) {
+    const key = String(chunk?.key || "").trim();
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    out.push({
+      name: `أسئلة ${key.replaceAll("_", " ")}`,
+      url: "/quiz",
+    });
+    if (out.length >= 24) break;
+  }
+  return out;
+})();
 // المصدر الوحيد لكتب المكتبة هو src/lib/library-catalog.ts (نفس ما تقرأه LibraryDetailPage.tsx فعليًا).
 // كان هذا الملف يقرأ سابقًا من src/data/library-catalog.json وهي مرآة يدوية انحرفت (102 مقابل 117 سجلًا حيًا).
 const { LIBRARY_CATALOG } = await importSrc("src/lib/library-catalog.ts");
@@ -928,16 +947,17 @@ const LIST_JSON_LD = {
     "قرارات المجمع الفقهي",
   ),
   "/quiz": itemListJsonLdScript(
-    (PLATFORM_SEED.qa_items || []).slice(0, 24).map((r) => ({ name: r.question, url: `/quiz` })),
+    QUIZ_SEO_TOPICS.slice(0, 24),
     "أسئلة لعبة سين جيم",
   ),
   "/competitions": itemListJsonLdScript(
     [
-      { name: "مسابقة القرآن الكريم", url: "/quiz?cats=quran" },
-      { name: "مسابقة الحديث الشريف", url: "/quiz?cats=hadith" },
-      { name: "مسابقة السيرة النبوية", url: "/quiz?cats=sira" },
+      { name: "أسئلة القرآن الكريم", url: "/quiz" },
+      { name: "أسئلة الحديث الشريف", url: "/quiz" },
+      { name: "أسئلة السيرة النبوية", url: "/quiz" },
+      { name: "ركن الاختبارات", url: "/quiz" },
     ],
-    "مسابقات سُنّة",
+    "مسابقات وأسئلة سُنّة",
   ),
   "/lessons": itemListJsonLdScript(lessonRows.slice(0, 30).map((r) => ({ name: r.title, url: `/lessons/${r.id}` })), "الدروس الشرعية"),
   "/adhkar": itemListJsonLdScript(FEATURED_ADHKAR.map((c) => ({ name: c.name, url: `/adhkar/${c.slug}` })), "أقسام الأذكار"),
@@ -1064,8 +1084,8 @@ ${linkList("روابط ذات صلة", [
   { name: "قصص الأنبياء", url: "/prophets" },
 ])}`,
   "/quiz": linkList(
-    "من أسئلة سين جيم",
-    (PLATFORM_SEED.qa_items || []).slice(0, 12).map((q) => ({ name: q.question, url: `/quiz` })),
+    "من موضوعات سين جيم",
+    QUIZ_SEO_TOPICS.slice(0, 12),
   ),
   "/prophets": linkList(
     "قصص الأنبياء",
