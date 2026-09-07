@@ -25,7 +25,7 @@
    - إن تعذّر Auto-merge بعد نجاح البوابة: ادفع لـ`main` بعد build محلي ناجح حتى لا تبقى المهمة معلّقة.
    - لا تطلب من المستخدم دمجًا أو نشرًا يدويًا لمهمة أتممتها أنت.
    **استثناء (content-runner):** `scripts/content-runner.sh` يبقى على مساره التصميمي.
-   **نافذتا automation/content وautomation/tasks:** ادفعا لفرعيهما عبر `scripts/commit-and-push-branch.sh`؛ دمجهما عبر `.github/workflows/release-majlisilm.yml`.
+   **نافذتا automation/content وautomation/tasks:** ادفعا عبر `scripts/commit-and-push-branch.sh` (يفتح PR Ready + auto-merge squash إلى `main` تلقائيًا). لا تُترَك المهام في طابور مراجعة؛ الدمج والنشر تلقائيان بعد نجاح Verify build.
 6. بعد اكتمال الدمج والنشر فقط: انتقل للمهمة التالية.
 
 ## صمامات الأمان وكفاءة الرصيد
