@@ -245,6 +245,13 @@ if (preferAlignOnly) {
 preview.insertedIntoBooksJson = true;
 preview.previewOnly = false;
 preview.appliedAt = new Date().toISOString();
+topic.reviewStage = "applied";
+topic.nextAction = "منشور في الكتالوج العام — لا إعادة إدراج.";
+if (topic.lessonCandidate) {
+  topic.lessonCandidate.promotionApproved = true;
+  topic.lessonCandidate.status = "draft";
+  topic.lessonCandidate.needsReview = true;
+}
 if (topic.promotionReview) {
   topic.promotionReview.packetStatus = "applied_to_catalog";
 }
