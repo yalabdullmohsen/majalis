@@ -15,7 +15,7 @@ export default function NewMuslimPathPage() {
     applyPageSeo({
       path: "/discover-islam/new-muslim",
       title: "مسار المسلم الجديد — 30 يومًا | التعريف بالإسلام",
-      description: "برنامج تدريجي مدته 30 يومًا يرافقك خطوة بخطوة في أول أيامك مسلمًا. محتوى معتمد في منهج سُنّة",
+      description: "مسار تعليمي تمهيدي لمدة 30 يومًا يرافق حديث العهد بالإسلام خطوة بخطوة في أساسيات الإيمان والعبادة.",
     });
     getNewMuslimPath("all").then(setDays);
   }, []);
