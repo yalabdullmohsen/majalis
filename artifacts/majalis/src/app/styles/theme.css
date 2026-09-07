@@ -67,7 +67,7 @@
   --color-splash: #0E1A15;
 
   /* مرجع الإنتاج: فقرات/عناوين بطاقات /tafsir (.tf-intro + .tf-card__term) = Amiri نَسخي */
-  --font-app: "Amiri", "MajlisAmiriFallback", "MajlisFallback", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --font-app: "Amiri", "MajlisAmiriFallback", "MajlisFallback", "Traditional Arabic", serif;
   --font-face: var(--font-app);
   --font-ui: var(--font-app);
   --font-num: var(--font-app);
@@ -249,7 +249,8 @@
   --mj-s6: 24px;
   --mj-s8: 32px;
   --mj-s12: 48px;
-  --font-app: "Amiri", "MajlisAmiriFallback", "MajlisFallback", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --font-app: "Amiri", "MajlisAmiriFallback", "MajlisFallback", "Traditional Arabic", serif;
+  --font-ui: var(--font-app);
   --mj-face: var(--font-app);
   --mj-ui: var(--font-app);
   --mj-num: var(--font-app);
@@ -520,12 +521,13 @@ textarea {
 }
 
 body {
-  font-family: var(--font-app);
+  font-family: var(--font-ui, var(--font-app));
   font-size: var(--mj-fs-body);
   line-height: var(--mj-lh-body);
   color: var(--mj-ink);
   background: var(--surface-app);
   overflow-x: clip;
+  font-synthesis: none;
 }
 
 /* أهداف لمس وحدود تفاعل — ≥48px (مع استثناء واجهات المصحف/التسميع) */

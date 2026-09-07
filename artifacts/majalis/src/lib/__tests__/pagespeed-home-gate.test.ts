@@ -62,8 +62,11 @@ const lazyFallback = read("src/components/LazyRouteFallback.tsx");
 assert.doesNotMatch(lazyFallback, /from ["']@\/components\/ui-common["']|from ["']lucide-react["']/, "LazyRouteFallback بلا ui-common/lucide");
 const spatial = read("src/lib/spatial-nav.ts");
 assert.doesNotMatch(spatial, /from ["']@\/lib\/nav-map["']|from ["']lucide-react["']/, "spatial-nav بلا nav-map/lucide");
-assert.match(html, /font-weight:\s*400/, "وزن 400 في الدخولية/الحرج — يقلّل amiri-700");
-assert.match(main, /fonts-ui-bold\.css/, "أوزان 700 مؤجّلة بعد الرسم");
+assert.match(html, /font-weight:\s*400/, "وزن 400 للنص العادي في الحرج");
+assert.match(html, /rel="preload"[^>]+amiri-700-ar/, "preload Amiri 700 يمنع قفزة الوزن");
+assert.match(main, /fonts-ui-bold\.css/, "Aref Ruqaa 700 مؤجّل زخرفيًا");
 assert.match(main, /setTimeout\(\(\)\s*=>\s*\{\s*void import\("\.\/styles\/fonts-ui-bold\.css"\)/, "fonts-ui-bold عبر setTimeout لا rIC");
+assert.match(read("src/styles/fonts-ui.css"), /amiri-700-ar/, "Amiri 700 في مسار الإقلاع");
+assert.doesNotMatch(read("src/styles/fonts-ui-bold.css"), /amiri-700/, "لا تأجيل Amiri 700");
 
 console.log("pagespeed-home-gate.test.ts: ok");

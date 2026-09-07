@@ -12,10 +12,10 @@ export type BootFlags = {
 };
 
 /**
- * سقف قصير يطابق نافذة font-display:optional (~100ms).
- * لا نحبس Splash/LCP على تنزيل Amiri الكامل — المقاييس تمنع CLS.
+ * سقف قصير يطابق نافذة font-display:optional (~100ms) مع هامش لـ bold المُحمَّل مسبقًا.
+ * لا نحبس Splash/LCP على تنزيل طويل — المقاييس + preload تمنع CLS.
  */
-const BOOT_FONT_TIMEOUT_MS = 180;
+const BOOT_FONT_TIMEOUT_MS = 280;
 
 /** سقف مزامنة Preferences → localStorage داخل حارس الإقلاع (لا يحجب createRoot). */
 const BOOT_STORAGE_TIMEOUT_MS = 450;
@@ -55,13 +55,14 @@ export function registerBootStorageGate(promise: Promise<unknown>): void {
 async function waitUiFonts(timeoutMs: number): Promise<boolean> {
   if (typeof document === "undefined" || !document.fonts) return true;
   try {
-    // خط الواجهة الفعلي هو Amiri (--font-app) — لا ننتظر Noto في المسار الحرج
-    const primary = '16px "Amiri"';
+    // خط الواجهة الوحيد Amiri (--font-ui) — regular + bold من الإقلاع
+    const regular = '400 16px "Amiri"';
+    const bold = '700 16px "Amiri"';
     const load = (async () => {
-      await document.fonts.load(primary);
+      await Promise.all([document.fonts.load(regular), document.fonts.load(bold)]);
     })();
     await Promise.race([load, raceTimeout(timeoutMs)]);
-    return document.fonts.check(primary);
+    return document.fonts.check(regular) || document.fonts.check('16px "Amiri"');
   } catch {
     return false;
   }

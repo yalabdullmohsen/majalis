@@ -264,11 +264,10 @@ html.dark body {
   --color-parchment:     var(--msk-canvas,   #FFFFFF);
   --color-line:          var(--msk-border,   #E8E7E2);
 
-  /* ── الخطوط ── واجهة موحّدة --font-app (نسخ التفسير: Amiri) ──
+  /* ── الخطوط ── واجهة موحّدة --font-ui / --font-app (Amiri) ──
      المصحف (--font-quran) والعناوين التراثية (--font-heritage) استثناءات. */
-  /* aliases — المصدر @theme --font-app في theme.css */
+  /* aliases — المصدر @theme --font-ui في theme.css (لا تُعاد تعريف --font-ui هنا) */
   --font-primary:  var(--font-app);
-  --font-ui:       var(--font-app);
   --font-body:     var(--font-app);
   --font-display:  var(--font-app);
   --font-reading:  var(--font-app);
@@ -589,8 +588,9 @@ html[data-font="naskh"] {
 }
 
 body {
-  font-family: var(--font-body-ui, var(--font-app, var(--font-body)));
+  font-family: var(--font-body-ui, var(--font-ui, var(--font-app, var(--font-body))));
   font-weight: var(--font-weight-regular, 400);
+  font-synthesis: none;
   background: var(--msk-canvas);
   color: var(--msk-text);
   line-height: var(--lh-body, 1.75);
