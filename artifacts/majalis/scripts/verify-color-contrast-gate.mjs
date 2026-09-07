@@ -72,8 +72,11 @@ const ASSERTIONS = [
   // أسطح أزرار رئيسية — primary / ghost / شريط سفلي نشط (عقد DS)
   { route: "/", selector: ".bottom-nav__tab.is-active || .bottom-nav--v2 .bottom-nav__tab.is-active", mode: "light", min: 4.5 },
   { route: "/", selector: ".bottom-nav__tab.is-active || .bottom-nav--v2 .bottom-nav__tab.is-active", mode: "dark", min: 4.5 },
-  // .sq-title (عنوان SectionQuiz داخل .sq-header الداكن) كان يخسر نفس المعركة.
-  { route: "/cards", selector: ".sq-title", mode: "light", min: 4.5 },
+  // /cards: لا تعتمد على .sq-title — يظهر فقط إن وُجدت أسئلة SectionQuiz.
+  // عنوان الصفحة الثابت (.cards-page-title) هو هدف التباين الدائم (WCAG على parchment).
+  // مرتبط بفحص Color contrast — لا تُخفّف ألوان العنوان في cards.css دون إعادة هذا التأكيد.
+  { route: "/cards", selector: ".cards-page-title", mode: "light", min: 4.5 },
+  { route: "/cards", selector: ".cards-page-title", mode: "dark", min: 4.5 },
   // بطاقات بوابة التوحيد — لا تعتمد شارة «أنت هنا» بعد إصلاح التنقّل المستقل.
   { route: "/tawhid", selector: ".hub-card__title", mode: "dark", min: 3 },
   { route: "/tawhid", selector: ".hub-card__desc", mode: "dark", min: 4.5 },

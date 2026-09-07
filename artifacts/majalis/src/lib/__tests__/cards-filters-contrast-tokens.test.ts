@@ -33,4 +33,21 @@ assert.match(gate, /\.mk-chip\.is-active/);
 assert.match(gate, /\.filter-chips__chip/);
 assert.match(gate, /\.lesson-unified-card__title/);
 
+// /cards: عنوان الصفحة الثابت — لا .sq-title (يختفي إن خلت أسئلة الـquiz)
+assert.match(gate, /route:\s*"\/cards"/);
+assert.match(gate, /\.cards-page-title/);
+assert.doesNotMatch(
+  gate,
+  /route:\s*"\/cards"[^}]*selector:\s*"\.sq-title"/s,
+  "/cards لا يعتمد محدّد .sq-title الشرطي",
+);
+
+const cardsPage = readFileSync(resolve(root, "src/views/CardsPage.tsx"), "utf8");
+assert.match(cardsPage, /className="cards-page-title"/);
+assert.match(cardsPage, /sectionId="akhlaq"/);
+
+const cardsCss = readFileSync(resolve(root, "src/styles/pages/cards.css"), "utf8");
+assert.match(cardsCss, /\.cards-page-title/);
+assert.match(cardsCss, /CONTRAST GATE/);
+
 console.log("cards-filters-contrast-tokens: ok");

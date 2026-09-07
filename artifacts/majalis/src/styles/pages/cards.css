@@ -65,6 +65,7 @@
 
 .cond-page-title,
 .cards-page-title {
+  /* CONTRAST GATE: مفحوص في verify-color-contrast-gate (/cards) — لا تُخفّف دون اختبار */
   color: var(--majalis-emerald-deep);
   font-size: clamp(1.35rem, 3vw, 1.75rem);
   margin-bottom: 0.35rem;

@@ -612,6 +612,21 @@ export default function TawhidPage() {
 
       <RelatedKnowledge kind="lesson" query="عقيدة توحيد" title="دروس ومواد ذات صلة بالتوحيد" limit={6} />
 
+      <nav className="twh-related" aria-label="صفحات ذات صلة" style={{ marginTop: "1.5rem" }}>
+        <h2 className="twh-section-title" style={{ fontSize: "1.1rem" }}>استكشف أيضاً</h2>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
+          {[
+            { href: "/sins-and-rights", label: "الذنوب والحقوق" },
+            { href: "/tawba", label: "التوبة والاستغفار" },
+            { href: "/akhlaq", label: "مكارم الأخلاق" },
+            { href: "/asma-husna", label: "الأسماء الحسنى" },
+            { href: "/arkan-iman", label: "أركان الإيمان" },
+          ].map((r) => (
+            <Link key={r.href} href={r.href} className="twh-goto-btn">{r.label} ←</Link>
+          ))}
+        </div>
+      </nav>
+
       <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والتوحيد" count={4} />
 
       <div className="twh-share">
