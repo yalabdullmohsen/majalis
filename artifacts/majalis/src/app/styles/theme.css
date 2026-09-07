@@ -67,10 +67,10 @@
   --color-splash: #0E1A15;
 
   /* مرجع الإنتاج: فقرات/عناوين بطاقات /tafsir (.tf-intro + .tf-card__term) = Amiri نَسخي */
-  --font-ui: "Amiri", "MajlisAmiriFallback", "MajlisFallback", "Traditional Arabic", serif;
-  --font-app: var(--font-ui);
-  --font-face: var(--font-ui);
-  --font-num: var(--font-ui);
+  --font-app: "Amiri", "MajlisAmiriFallback", "MajlisFallback", "Traditional Arabic", serif;
+  --font-face: var(--font-app);
+  --font-ui: var(--font-app);
+  --font-num: var(--font-app);
 
   --radius-mj-sm: 12px;
   --radius-mj-md: 16px;
@@ -249,11 +249,11 @@
   --mj-s6: 24px;
   --mj-s8: 32px;
   --mj-s12: 48px;
-  --font-ui: "Amiri", "MajlisAmiriFallback", "MajlisFallback", "Traditional Arabic", serif;
-  --font-app: var(--font-ui);
-  --mj-face: var(--font-ui);
-  --mj-ui: var(--font-ui);
-  --mj-num: var(--font-ui);
+  --font-app: "Amiri", "MajlisAmiriFallback", "MajlisFallback", "Traditional Arabic", serif;
+  --font-ui: var(--font-app);
+  --mj-face: var(--font-app);
+  --mj-ui: var(--font-app);
+  --mj-num: var(--font-app);
   --mj-fs-display: 32px;
   --mj-fs-h1: 26px;
   --mj-fs-h2: 18px;

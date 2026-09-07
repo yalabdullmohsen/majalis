@@ -3,8 +3,8 @@
  * لا !important. الارتفاع من الرموز نفسها المستخدمة بعد التحميل.
  */
 :root {
-  --font-ui: "Amiri", "MajlisAmiriFallback", "MajlisFallback", "Traditional Arabic", serif;
-  --font-app: var(--font-ui);
+  --font-app: "Amiri", "MajlisAmiriFallback", "MajlisFallback", "Traditional Arabic", serif;
+  --font-ui: var(--font-app);
 }
 
 @font-face {
@@ -88,7 +88,7 @@ html.app-booting *::after {
 }
 
 body {
-  font-family: var(--font-ui);
+  font-family: var(--font-app);
   font-synthesis: none;
 }
 
