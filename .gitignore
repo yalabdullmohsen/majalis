@@ -52,6 +52,7 @@ reports/changed-scope.json
 reports/auto-maintenance/
 
 # ECC tools generated agent bundles (regenerable — do not track)
+# Keep patterns in sync with scripts/verify-no-tracked-ecc-bundles.mjs
 .claude/ecc-tools.json
 .claude/identity.json
 .claude/skills/

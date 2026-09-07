@@ -225,6 +225,9 @@ jobs:
       - name: Governance / auto-merge safety gate
         run: pnpm run verify:no-unsafe-auto-merge
 
+      - name: ECC / agent bundles must stay untracked
+        run: pnpm run verify:no-tracked-ecc-bundles
+
       - name: Release Train + safe auto-merge unit tests
         run: |
           pnpm run test:release-train
