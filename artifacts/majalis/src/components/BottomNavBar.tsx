@@ -9,6 +9,7 @@ import { isComingSoonPath } from "@/lib/nav-visibility";
 import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
 import { getActiveTab, type BottomTabId } from "@/lib/get-active-tab";
 import { haptics } from "@/lib/haptics";
+import { prefetchAppRoutesShell } from "@/lib/prefetch-app-routes";
 
 const HREF_TO_ID: Record<string, BottomTabId> = {
   "/mushaf": "quran",
@@ -39,25 +40,25 @@ export function BottomNavBar({ isHidden = false }: { isHidden?: boolean } = {}) 
   const activeId = getActiveTab(location);
 
   function triggerPrefetch(href: string) {
+    prefetchAppRoutesShell();
     const load = TAB_PREFETCH[href];
     if (!load || prefetched.current.has(href)) return;
     prefetched.current.add(href);
     void load();
   }
 
-  // تسخين متأخر جدًا — لا تنافس TBT/LCP على أول دخول (اللمس/المرور يكفي للتنقّل)
+  // تسخين متأخر: مراكز التبويب المهمة بعد الخمول — المصحف يبقى عند اللمس فقط
   useEffect(() => {
     let cancelled = false;
     const warm = () => {
       if (cancelled) return;
+      prefetchAppRoutesShell();
       for (const href of BOTTOM_NAV_TABS.map((t) => t.href)) {
-        // لا تُسخَّن المصحف والدروس الثقيلة تلقائيًا على الرئيسية
-        if (href === "/mushaf" || href === "/lessons" || href === "/quran-hub") continue;
+        if (href === "/mushaf") continue;
         triggerPrefetch(href);
       }
     };
     const afterLoad = () => {
-      // setTimeout ثابت — لا rIC (Lighthouse يسحب الخمول أثناء القياس)
       window.setTimeout(warm, 25_000);
     };
     if (document.readyState === "complete") afterLoad();
@@ -89,6 +90,7 @@ export function BottomNavBar({ isHidden = false }: { isHidden?: boolean } = {}) 
             className={`bottom-nav__tab${active ? " is-active" : ""}${soon ? " is-soon" : ""}`}
             aria-current={active ? "page" : undefined}
             aria-label={soon ? `${label} — قريبًا` : label}
+            onPointerDown={() => triggerPrefetch(href)}
             onTouchStart={() => triggerPrefetch(href)}
             onMouseEnter={() => triggerPrefetch(href)}
             onFocus={() => triggerPrefetch(href)}

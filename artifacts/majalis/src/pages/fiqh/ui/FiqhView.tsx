@@ -21,6 +21,7 @@ import {
   type FiqhLessonHit,
 } from "@/lib/fiqh-books";
 import { fiqhBookEditorial } from "@/lib/fiqh-editorial";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import "@/styles/pages/fiqh-hub.css";
 
 function FiqhHubSearch({
@@ -186,6 +187,7 @@ function SearchHitList({
 function FiqhBooksBody() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<FiqhBookCategory | "all">("all");
+  const debouncedQuery = useDebouncedValue(query, 280);
 
   const books = useMemo(() => {
     const all = publishedBooks();
@@ -194,8 +196,8 @@ function FiqhBooksBody() {
   }, [category]);
 
   const searchResults = useMemo(
-    () => (query.trim() ? searchFiqhCatalog(query) : null),
-    [query],
+    () => (debouncedQuery.trim() ? searchFiqhCatalog(debouncedQuery) : null),
+    [debouncedQuery],
   );
 
   return (
