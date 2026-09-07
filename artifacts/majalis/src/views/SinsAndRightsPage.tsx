@@ -139,6 +139,8 @@ const MINDMAP_NODES = [
       { label: "الربا", slug: "riba" },
       { label: "الشرك بالله", slug: "shirk" },
       { label: "منع الزكاة", slug: "tark-zakat" },
+      { label: "الزنا", slug: "zina" },
+      { label: "السحر", slug: "sihr" },
     ],
   },
   {
@@ -175,6 +177,7 @@ const MINDMAP_NODES = [
       { label: "خيانة الأمانة", slug: "khiyana-amana" },
       { label: "شهادة الزور", slug: "shahada-zur" },
       { label: "ظلم الجار", slug: "dhulm-jar" },
+      { label: "قتل النفس بغير حق", slug: "qatl" },
     ],
   },
   {
@@ -544,6 +547,10 @@ export default function SinsAndRightsPage() {
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginBottom: "1rem" }}>
             <Link href="/tawba" className="snr-related-link" style={{ flex: "1 1 160px" }}>
               <span className="snr-related-link-label">📖 التوبة والاستغفار</span>
+              <span className="snr-mindmap-child-arrow">‹</span>
+            </Link>
+            <Link href="/tawhid" className="snr-related-link" style={{ flex: "1 1 160px" }}>
+              <span className="snr-related-link-label">🕋 التوحيد والعقيدة</span>
               <span className="snr-mindmap-child-arrow">‹</span>
             </Link>
             <Link href="/fiqh" className="snr-related-link" style={{ flex: "1 1 160px" }}>

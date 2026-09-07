@@ -44,15 +44,15 @@ export default function UpdatesPage() {
     applyPageSeo({
       path: "/updates",
       title: "آخر المستجدات | سُنّة",
-      description: "آخر المستجدات العلمية والإضافات الجديدة في سُنّة، قرارات وفتاوى ودروس ودورات حديثة.",
-      keywords: ["مستجدات إسلامية", "أخبار علمية", "جديد سُنّة", "تحديثات شرعية", "أخبار فقهية"],
+      description: "آخر المستجدات العلمية والإضافات الجديدة في سُنّة: دروس ودورات وإعلانات ومواد محدّثة.",
+      keywords: ["مستجدات إسلامية", "أخبار علمية", "جديد سُنّة", "تحديثات شرعية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "آخر المستجدات العلمية",
           url: "https://www.ssunnah.com/updates",
-          description: "مستجدات وتحديثات سُنّة من دروس ودورات وفتاوى وقرارات حديثة",
+          description: "مستجدات وتحديثات سُنّة من دروس ودورات وإعلانات ومواد علمية",
           provider: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
         },
       ],
@@ -99,7 +99,7 @@ export default function UpdatesPage() {
       <PageHeader
         eyebrow="النشاط العلمي"
         title="آخر المستجدات"
-        subtitle="قرارات وفتاوى ودروس ودورات وكتب وإعلانات، مرتّبة زمنياً. يُحدَّث تلقائياً كل 6 ساعات من مصادر موثوقة."
+        subtitle="دروس ودورات وكتب وإعلانات ومستجدات علمية، مرتّبة زمنياً. يُحدَّث تلقائياً كل 6 ساعات من مصادر المنصة."
       />
 
       <div className="content-hub-chips" role="tablist" aria-label="تصفية المستجدات">

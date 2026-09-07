@@ -1130,7 +1130,7 @@ export default function AkhlaqPage() {
         <p className="akl-empty">لا يوجد خلق مطابق للبحث.</p>
       )}
 
-      <SectionQuiz sectionId="adhkar" title="اختبر معلوماتك في الأخلاق والصحابة" count={4} />
+      <SectionQuiz sectionId="akhlaq" title="اختبر معلوماتك في الأخلاق والصحابة" count={4} />
 
       <div className="twh-share">
         <ShareButtons title="الأخلاق الإسلامية — سُنّة" url="https://www.ssunnah.com/akhlaq" />
@@ -1141,12 +1141,12 @@ export default function AkhlaqPage() {
         <h2 className="akl-related__title">استكشف أيضاً</h2>
         <div className="akl-related__grid">
           {[
+            { href: "/sins-and-rights", label: "الذنوب والحقوق", desc: "كبائر الذنوب وحقوق العباد؛ مرتبطة بتزكية النفس." },
+            { href: "/tawba",         label: "التوبة والاستغفار", desc: "شروط التوبة وفضل الاستغفار من القرآن والسنة." },
             { href: "/asma-husna",   label: "الأسماء الحسنى",   desc: "99 اسماً لله؛ بوابةٌ تعليميةٌ مرتبطة بأخلاق المسلم وتزكية النفس." },
             { href: "/tawhid",       label: "التوحيد",           desc: "العقيدة الإسلامية؛ بوابةٌ تعليميةٌ مرتبطة بأخلاق المسلم وتزكية النفس." },
             { href: "/seerah",       label: "السيرة النبوية",    desc: "أخلاق النبي ﷺ؛ بوابةٌ تعليميةٌ مرتبطة بأخلاق المسلم وتزكية النفس." },
             { href: "/adhkar",       label: "الأذكار",           desc: "أذكار يومية؛ بوابةٌ تعليميةٌ مرتبطة بأخلاق المسلم وتزكية النفس." },
-            { href: "/tarikh-islami",     label: "التاريخ الإسلامي",     desc: "علماء ربانيون؛ بوابةٌ تعليميةٌ مرتبطة بأخلاق المسلم وتزكية النفس." },
-            { href: "/hadith",       label: "الأحاديث",          desc: "السنة النبوية؛ بوابةٌ تعليميةٌ مرتبطة بأخلاق المسلم وتزكية النفس." },
           ].map(({ href, label, desc }) => (
             <Link key={href} href={href} className="akl-related__card">
               <strong>{label}</strong>

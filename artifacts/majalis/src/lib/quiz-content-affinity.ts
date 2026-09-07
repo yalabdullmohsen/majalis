@@ -14,7 +14,7 @@ export const QUIZ_CATEGORY_TO_SECTION_ID: Record<string, string> = {
   fiqh: "fiqh",
   aqeeda: "aqidah",
   tarikh: "islamic-history",
-  akhlaq: "adhkar",
+  akhlaq: "akhlaq",
 };
 
 export type AffinityQuizQuestion = QuizQuestion & {
@@ -79,7 +79,6 @@ export const QUIZ_ROUTE_SECTION_OVERRIDES: Record<string, string> = {
   "/islamic-glossary": "glossary",
   "/duas-quran": "quran",
   "/adab-talab-ilm": "aqidah",
-  "/akhlaq": "adhkar",
   "/raqaiq": "hadith",
   "/tawba": "adhkar",
   "/sawm": "fiqh",

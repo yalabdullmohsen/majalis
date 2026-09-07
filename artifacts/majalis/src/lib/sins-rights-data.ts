@@ -1413,6 +1413,160 @@ export const SINS_TOPICS: SinTopic[] = [
     reviewStatus: "reviewed",
     reviewedAt: "2026-09",
   },
+  {
+    id: "zina",
+    slug: "zina",
+    title: "الزنا",
+    shortDescription: "إتيان الفاحشة خارج عقد النكاح الصحيح؛ من كبائر الذنوب المنصوص على تحريمها.",
+    rightsCategory: "allah",
+    sinSeverity: "kabira",
+    sinType: ["badani", "ijtimaaei"],
+    quranEvidence: [
+      {
+        text: "وَلَا تَقْرَبُوا الزِّنَا ۖ إِنَّهُ كَانَ فَاحِشَةً وَسَاءَ سَبِيلًا",
+        source: "سورة الإسراء: 32",
+      },
+      {
+        text: "الزَّانِيَةُ وَالزَّانِي فَاجْلِدُوا كُلَّ وَاحِدٍ مِّنْهُمَا مِائَةَ جَلْدَةٍ",
+        source: "سورة النور: 2",
+      },
+    ],
+    hadithEvidence: [
+      {
+        text: "لا يزني الزاني حين يزني وهو مؤمن",
+        source: "رواه البخاري ومسلم",
+        grade: "صحيح",
+      },
+    ],
+    explanation:
+      "الزنا كبيرة عظيمة حرّمها الله وشدّد الوعيد فيها. يدخل في معاني الاقتراب منه النظر المحرّم والخلوة المحرّمة ووسائل الإغراء. تفصيل الحدود وشروطها من اختصاص القضاء الشرعي؛ هذه الصفحة للتذكير والتحذير لا لإصدار أحكام قضائية.",
+    effects: [
+      "فساد الفطرة وذهاب الحياء",
+      "هدم الأسر واختلاط الأنساب إن ترتّب عليه حمل",
+      "تعريض النفس لوعيد الله الشديد",
+    ],
+    repentanceConditions: {
+      general: [
+        "الإقلاع فورًا والندم الصادق",
+        "العزم على عدم العودة واجتناب أسباب الفتنة",
+        "ستر النفس وعدم المجاهرة، مع سؤال أهل العلم عند الحاجة لأحكام خاصة",
+      ],
+      requiresRestitution: false,
+      requiresForgiveness: false,
+      hasExpiation: false,
+    },
+    commonMistakes: [
+      "الاستهانة بمقدّمات الزنا بحجة عدم الوقوع في الحدّ",
+      "المجاهرة بالذنب أو تزيينه في المجالس ووسائل التواصل",
+    ],
+    relatedSlugs: ["nazar-muharram", "qadhf", "shurb-khamr"],
+    references: ["الإسراء: ٣٢؛ النور: ٢؛ الصحيحان"],
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-09",
+  },
+  {
+    id: "qatl",
+    slug: "qatl",
+    title: "قتل النفس بغير حق",
+    shortDescription: "إزهاق نفس معصومة بغير مسوّغ شرعي؛ من أعظم الكبائر.",
+    rightsCategory: "shared",
+    sinSeverity: "kabira",
+    sinType: ["badani", "ijtimaaei"],
+    quranEvidence: [
+      {
+        text: "وَمَن يَقْتُلْ مُؤْمِنًا مُّتَعَمِّدًا فَجَزَاؤُهُ جَهَنَّمُ خَالِدًا فِيهَا وَغَضِبَ اللَّهُ عَلَيْهِ وَلَعَنَهُ وَأَعَدَّ لَهُ عَذَابًا عَظِيمًا",
+        source: "سورة النساء: 93",
+      },
+      {
+        text: "مِنْ أَجْلِ ذَٰلِكَ كَتَبْنَا عَلَىٰ بَنِي إِسْرَائِيلَ أَنَّهُ مَن قَتَلَ نَفْسًا بِغَيْرِ نَفْسٍ أَوْ فَسَادٍ فِي الْأَرْضِ فَكَأَنَّمَا قَتَلَ النَّاسَ جَمِيعًا",
+        source: "سورة المائدة: 32",
+      },
+    ],
+    hadithEvidence: [
+      {
+        text: "لن يزال المؤمن في فسحة من دينه ما لم يصب دمًا حرامًا",
+        source: "رواه البخاري",
+        grade: "صحيح",
+      },
+    ],
+    explanation:
+      "قتل النفس المعصومة بغير حق من أكبر الكبائر. أحكام القصاص والدية والكفارة ترجع إلى القضاء وأهل العلم بحسب كل واقعة؛ لا يُستغنى فيها عن الرجوع للجهات الشرعية المختصة.",
+    effects: [
+      "وعيد شديد في القرآن والسنة",
+      "إفساد أمن المجتمع وانتهاك حق الآدمي",
+      "بقاء حق أولياء الدم ما لم يُستوفَ شرعًا",
+    ],
+    repentanceConditions: {
+      general: [
+        "التوبة إلى الله بالندم والإقلاع والعزم",
+        "تمكين أولياء الدم من حقهم الشرعي أو ما يقرره القضاء",
+        "سؤال أهل العلم في الكفارة والديات بحسب الحال",
+      ],
+      requiresRestitution: true,
+      restitutionDetails:
+        "حق أولياء المقتول في القصاص أو الدية أو العفو — يُرجع فيه للقضاء الشرعي لا للاجتهاد الفردي.",
+      requiresForgiveness: true,
+      forgivenessDetails: "عفو أولياء الدم مسقط للقصاص عندهم إن وقع على وجهه الشرعي.",
+      hasExpiation: true,
+      expiationDetails: "في بعض صور القتل كفارة مبيّنة في كتب الفقه؛ يحدّدها أهل العلم لكل حالة.",
+    },
+    commonMistakes: [
+      "الاكتفاء بالاستغفار دون مراعاة حق أولياء الدم",
+      "التساهل في أسباب القتل الخطأ دون توبة وتدارك",
+    ],
+    relatedSlugs: ["ghasb", "sariqa", "shahada-zur"],
+    references: ["النساء: ٩٣؛ المائدة: ٣٢؛ صحيح البخاري"],
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-09",
+  },
+  {
+    id: "sihr",
+    slug: "sihr",
+    title: "السحر",
+    shortDescription: "تعاطي السحر أو طلبه؛ من الكبائر المنافية للتوحيد في كثير من صوره.",
+    rightsCategory: "allah",
+    sinSeverity: "kabira",
+    sinType: ["qalbi", "ibadi"],
+    quranEvidence: [
+      {
+        text: "وَاتَّبَعُوا مَا تَتْلُو الشَّيَاطِينُ عَلَىٰ مُلْكِ سُلَيْمَانَ ۖ وَمَا كَفَرَ سُلَيْمَانُ وَلَٰكِنَّ الشَّيَاطِينَ كَفَرُوا يُعَلِّمُونَ النَّاسَ السِّحْرَ",
+        source: "سورة البقرة: 102",
+      },
+    ],
+    hadithEvidence: [
+      {
+        text: "اجتنبوا السبع الموبقات… وذكر منها السحر",
+        source: "رواه البخاري ومسلم",
+        grade: "صحيح",
+      },
+    ],
+    explanation:
+      "السحر من الموبقات، وقد يكون كفرًا في صور تستلزم الاستعانة بالشياطين وصرف العبادة لغير الله. العلاج المشروع بالرقية الشرعية والدعاء وترك السحرة. مسائل التكفير والتفصيل تُسأل فيها أهل العلم الثقات.",
+    effects: [
+      "نقض التوحيد أو ضعفه بحسب الصورة",
+      "إيذاء الناس وظلمهم",
+      "تعريض النفس للموبقات السبع المذكورة في الحديث",
+    ],
+    repentanceConditions: {
+      general: [
+        "الإقلاع التام عن السحر وطلبه",
+        "الندم والعزم، وتعلّم التوحيد والرقية الشرعية",
+        "ردّ ما أُخذ من الناس بالباطل إن وُجد، وسؤال أهل العلم",
+      ],
+      requiresRestitution: true,
+      restitutionDetails: "إن ترتّب على السحر أخذ مال أو إضرار بمعصوم فيُرد الحق أو يُستحل صاحبه.",
+      requiresForgiveness: false,
+      hasExpiation: false,
+    },
+    commonMistakes: [
+      "اللجوء للسحرة بحجة «فك السحر» أو جلب منفعة",
+      "الخلط بين الرقية الشرعية والأعمال الشركية",
+    ],
+    relatedSlugs: ["shirk", "riyaa", "kibr"],
+    references: ["البقرة: ١٠٢؛ الصحيحان — السبع الموبقات"],
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-09",
+  },
 ];
 
 export const SINS_CATEGORIES: SinCategoryDef[] = [
@@ -1424,7 +1578,7 @@ export const SINS_CATEGORIES: SinCategoryDef[] = [
     rightsCategory: "allah",
     icon: "🕌",
     color: "var(--mj-brand-deep)",
-    topicSlugs: ["tark-salah", "riyaa", "kibr", "hasad", "shurb-khamr", "tark-sawm", "nazar-muharram", "riba", "shirk", "tark-zakat"],
+    topicSlugs: ["tark-salah", "riyaa", "kibr", "hasad", "shurb-khamr", "tark-sawm", "nazar-muharram", "riba", "shirk", "tark-zakat", "zina", "sihr"],
   },
   {
     id: "ibad",
@@ -1444,7 +1598,7 @@ export const SINS_CATEGORIES: SinCategoryDef[] = [
     rightsCategory: "shared",
     icon: "⚖️",
     color: "#7a3a1a",
-    topicSlugs: ["sariqa", "ghasb", "ghibah", "namima", "qadhf", "kadhib", "uquq-walidayn", "qat-rahim", "khiyana-amana", "shahada-zur"],
+    topicSlugs: ["sariqa", "ghasb", "ghibah", "namima", "qadhf", "kadhib", "uquq-walidayn", "qat-rahim", "khiyana-amana", "shahada-zur", "qatl"],
   },
 ];
 

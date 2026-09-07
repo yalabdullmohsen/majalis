@@ -10,6 +10,7 @@ import {
   Compass,
   Droplets,
   GraduationCap,
+  HandHeart,
   Heart,
   Landmark,
   Layers,
@@ -71,6 +72,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/malaika",       Icon: Sparkles, title: seoNavLabel("/malaika", "الملائكة في الإسلام"), desc: "أسماؤهم ومهامهم وصفاتهم وفضائلهم من الوحي" },
       { href: "/wasaya-nabawiyya", Icon: Scroll,  title: seoNavLabel("/wasaya-nabawiyya", "الوصايا النبوية"),    desc: "49 وصية جامعة وخاصة بالصحابة مع التطبيق" },
       { href: "/raqaiq",          Icon: Heart,  title: seoNavLabel("/raqaiq", "الرقائق والزهد"),      desc: "مواعظ تُليِّن القلوب وأقوال كبار الزاهدين والمحاسبة اليومية" },
+      { href: "/kids",            Icon: Sparkles, title: seoNavLabel("/kids", "ركن الأطفال"), desc: "قصص أنبياء وأذكار وقرآن وأسئلة ميسّرة بمرافقة ولي الأمر" },
     ],
   },
   {
@@ -86,6 +88,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/arkan-iman",         Icon: Star,         title: seoNavLabel("/arkan-iman", "أركان الإيمان الستة"),     desc: "الأركان الستة مع الأدلة وأقوال العلماء" },
       { href: "/asma-husna",         Icon: Star,         title: seoNavLabel("/asma-husna", "الأسماء الحسنى"),    desc: "99 اسماً لله بمعانيها ومنافعها" },
       { href: "/akhlaq",             Icon: Heart,        title: seoNavLabel("/akhlaq", "مكارم الأخلاق"), desc: "مكارم الأخلاق مع الآيات والأحاديث" },
+      { href: "/discover-islam",     Icon: HandHeart,    title: seoNavLabel("/discover-islam", "تعرّف إلى الإسلام"), desc: "مدخل تعريفي لغير المسلمين والمهتمين" },
       { href: "/zakat",               Icon: Scale,        title: seoNavLabel("/zakat", "الزكاة وأحكامها"),    desc: "دليل الزكاة مع حاسبة وأحكام الأنواع السبعة" },
       { href: "/sawm",                Icon: Moon,         title: seoNavLabel("/sawm", "الصيام وأحكامه"),      desc: "أنواع الصيام وشروطه ومفطراته وفضائل رمضان" },
       { href: "/hajj",                Icon: Landmark,     title: seoNavLabel("/hajj", "الحج والعمرة"),         desc: "أركان الحج وواجباته والمشاعر ومحظورات الإحرام" },
