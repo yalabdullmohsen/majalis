@@ -1,8 +1,8 @@
 {
   "$comment": "قائمة عمل مرتبة بالخطورة. كل عنصر: id, section, severity(critical/high/medium/low), status(pending/in_progress/done/needs_source/needs_decision/technical_handoff), nextAction.",
-  "generatedAt": "2026-09-03",
-  "lastCompletedId": "b077",
-  "resumeFromId": "b078",
+  "generatedAt": "2026-09-07",
+  "lastCompletedId": "b006",
+  "resumeFromId": null,
   "items": [
     {
       "id": "b001",
@@ -55,18 +55,22 @@
       "section": "technical_seo",
       "title": "platform-seed.snapshot.json مجمَّد — يفوّت 527 من 533 حكماً في seo-prerender",
       "severity": "high",
-      "status": "technical_handoff",
+      "status": "done",
       "detail": "راجع docs/content-audit/technical-handoff.md §1 (مُصحَّح 2026-07-24) — التشخيص الأول (b005 القديم) كان خاطئاً جزئياً؛ library/scholars مغطّيان بالكامل فعلياً وتحقّق منهما مباشرة في dist/. الفجوة الحقيقية محصورة في rulings/fiqh_decisions/courses/fiqh_sessions/qa_items عبر platform-seed.snapshot.json المجمَّد.",
-      "nextAction": "نافذة automation/tasks: سكربت يُحدّث platform-seed.snapshot.json من المصادر الحيّة، أو تعديل generate-seo.mjs ليقرأ مباشرة منها. أولوية قصوى: rulings."
+      "nextAction": "نافذة automation/tasks: سكربت يُحدّث platform-seed.snapshot.json من المصادر الحيّة، أو تعديل generate-seo.mjs ليقرأ مباشرة منها. أولوية قصوى: rulings.",
+      "closedAt": "2026-09-07",
+      "resolution": "rulings مؤرشفة بلا prerender عمداً؛ الدورات تُقرأ من ANNUAL_COURSES_SEED الحي في generate-seo.mjs. sync-seo لم يعد يكتب library-catalog."
     },
     {
       "id": "b006",
       "section": "technical_tooling",
       "title": "تعارض كاتبَين على src/data/library-catalog.json بمخططين مختلفين",
       "severity": "high",
-      "status": "technical_handoff",
+      "status": "done",
       "detail": "scripts/sync-seo-data.ts وscripts/regen-library-catalog-json.mjs يكتبان لنفس الملف بمخططين غير متوافقين. راجع technical-handoff.md.",
-      "nextAction": "نافذة automation/tasks تقرر أيهما مصدر الحقيقة وتوحّد، أو تفصل الملفين."
+      "nextAction": "نافذة automation/tasks تقرر أيهما مصدر الحقيقة وتوحّد، أو تفصل الملفين.",
+      "closedAt": "2026-09-07",
+      "resolution": "sync-seo-data.ts لم يعد يكتب src/data/library-catalog.json؛ المصدر regen-library-catalog-json.mjs فقط."
     },
     {
       "id": "b007",
