@@ -33,6 +33,7 @@ import { DEFAULT_KUWAIT_FILTERS,
 } from "@/lib/kuwait-lessons";
 import { getUnifiedLessonsSplit } from "@/lib/lessons-service";
 import { RequestManager } from "@/lib/request-manager";
+import { beginAbortScope, abortScope } from "@/lib/route-abort";
 import { regionsForGovernorate } from "@/lib/kuwait-regions";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import "@/styles/pages/lessons.css";
@@ -47,6 +48,9 @@ import { isWomenFriendlyLesson } from "@/lib/lesson-women-attendance";
 import { SITE_URL } from "@/lib/site-config";
 
 type TabId = "all" | "men" | "women" | "courses";
+
+/** أول دفعة بطاقات — الباقي بـ «عرض المزيد» لتجنّب رسم مئات البطاقات دفعة واحدة */
+const LESSONS_PAGE_SIZE = 24;
 
 function useTabFromUrl(): [TabId, (tab: TabId) => void] {
   const [tab, setTabState] = useState<TabId>(() => readTabFromUrl());
@@ -283,19 +287,34 @@ export default function LessonsPage({
 
   useEffect(() => {
     if (initialActive) return;
+    let cancelled = false;
+    const signal = beginAbortScope("lessons:page");
     setLoading(true);
     setLoadError(null);
-    RequestManager.run("lessons:unified-split", () => getUnifiedLessonsSplit())
+    RequestManager.run(
+      "lessons:unified-split",
+      async () => getUnifiedLessonsSplit(),
+      { signal, dedupeKey: "lessons:unified-split" },
+    )
       .then(({ active, archived }) => {
+        if (cancelled) return;
         setActiveLessons(active);
         setArchivedLessons(archived);
       })
       .catch((err) => {
+        if (cancelled || (err as Error)?.name === "AbortError") return;
         setLoadError(String((err as Error)?.message || err));
         setActiveLessons([]);
         setArchivedLessons([]);
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+      abortScope("lessons:page");
+      RequestManager.cancel("lessons:unified-split");
+    };
   }, [initialActive]);
 
   useEffect(() => {
@@ -348,6 +367,15 @@ export default function LessonsPage({
 
   /** قائمة واحدة مرتّبة من الأقرب إلى الأبعد — بطاقة موحّدة فقط */
   const listLessons = quickFiltered;
+  const [visibleCount, setVisibleCount] = useState(LESSONS_PAGE_SIZE);
+  useEffect(() => {
+    setVisibleCount(LESSONS_PAGE_SIZE);
+  }, [quickFilters, filters]);
+  const visibleLessons = useMemo(
+    () => listLessons.slice(0, visibleCount),
+    [listLessons, visibleCount],
+  );
+  const hasMoreLessons = listLessons.length > visibleCount;
 
   const setFilter = <K extends keyof KuwaitLessonFilters>(key: K, value: KuwaitLessonFilters[K]) => {
     startTransition(() => {
@@ -612,11 +640,26 @@ export default function LessonsPage({
                 {listLessons.length === 0 ? (
                   <Empty text="لا توجد دروس مطابقة — جرّب مسح الفلاتر أو توسيع البحث." />
                 ) : (
-                  renderGrid(
-                    listLessons,
-                    quickFilters.schedule === "archive" ? "archived-" : "",
-                    false,
-                  )
+                  <>
+                    {renderGrid(
+                      visibleLessons,
+                      quickFilters.schedule === "archive" ? "archived-" : "",
+                      false,
+                    )}
+                    {hasMoreLessons ? (
+                      <div className="lessons-v2-more">
+                        <button
+                          type="button"
+                          className="mj-btn mj-btn--ghost"
+                          onClick={() =>
+                            setVisibleCount((n) => Math.min(n + LESSONS_PAGE_SIZE, listLessons.length))
+                          }
+                        >
+                          عرض المزيد ({listLessons.length - visibleCount})
+                        </button>
+                      </div>
+                    ) : null}
+                  </>
                 )}
               </section>
 

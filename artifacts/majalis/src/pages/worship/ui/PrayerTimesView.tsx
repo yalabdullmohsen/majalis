@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link, useLocation } from "wouter";
 import { ArrowRight, Bell, Compass, HandHeart, MapPin, CircleDot, Settings2 } from "lucide-react";
@@ -21,11 +21,16 @@ import {
 } from "@/lib/prayer-calc-prefs";
 import { getActivePrayerLocation } from "@/lib/prayer-location-prefs";
 import { PrayerLocationPicker } from "@/components/prayer/PrayerLocationPicker";
-import { PrayerAnnualTimetable } from "@/components/prayer/PrayerAnnualTimetable";
 import { goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
 import { toArabicDigits } from "@/lib/utils";
-import { RANKS } from "@/pages/worship/PrayerRanksPage";
+import { RANKS } from "@/lib/prayer-ranks-data";
 import "@/styles/pages/prayer-times.css";
+
+const PrayerAnnualTimetable = lazy(() =>
+  import("@/components/prayer/PrayerAnnualTimetable").then((m) => ({
+    default: m.PrayerAnnualTimetable,
+  })),
+);
 
 const PRAYER_AR: Record<string, string> = {
   Fajr: "الفجر",
@@ -276,7 +281,9 @@ export default function PrayerTimesPage() {
               <option value="TwilightAngle">زاوية الشفق</option>
             </select>
           </label>
-          <PrayerAnnualTimetable />
+          <Suspense fallback={<div className="pts-timetable-skel" aria-hidden="true" />}>
+            <PrayerAnnualTimetable />
+          </Suspense>
         </div>
       </details>
     </div>

@@ -1,6 +1,8 @@
 /**
  * تحميل مسبق لوجهة البطاقة عند pointerdown — انتقال يبدو فوريًا.
  */
+import { prefetchAppRoutesShell } from "@/lib/prefetch-app-routes";
+
 const seen = new Set<string>();
 
 const CHUNK: Record<string, () => Promise<unknown>> = {
@@ -19,6 +21,7 @@ const CHUNK: Record<string, () => Promise<unknown>> = {
 };
 
 export function prefetchRoute(href: string): void {
+  prefetchAppRoutesShell();
   const path = (href.split("?")[0] || "/").split("#")[0] || "/";
   if (seen.has(path)) return;
   seen.add(path);

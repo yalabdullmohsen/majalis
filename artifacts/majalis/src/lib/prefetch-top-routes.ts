@@ -1,9 +1,14 @@
 /**
  * تحميل مسبق للمسارات الأكثر زيارة عند خمول المتصفح.
+ * خفيف نسبيًا: هيكل المسارات + مراكز التبويب (بلا مصحف/بحث ثقيل).
  */
-/** مسارات خفيفة فقط — لا مصحف ولا فقه ولا بحث ولا دروس ثقيلة على إقلاع الرئيسية */
+import { prefetchAppRoutesShell } from "@/lib/prefetch-app-routes";
+
 const TOP_ROUTES: Array<() => Promise<unknown>> = [
   () => import("@/pages/account/SectionsPage"),
+  () => import("@/pages/quran/QuranHubPage"),
+  () => import("@/pages/worship/PrayerTimesPage"),
+  () => import("@/pages/lessons/LessonsPage"),
 ];
 
 export function prefetchTopRoutesOnIdle(): void {
@@ -12,6 +17,7 @@ export function prefetchTopRoutesOnIdle(): void {
   const run = () => {
     if (done) return;
     done = true;
+    prefetchAppRoutesShell();
     for (const load of TOP_ROUTES) {
       void load().catch(() => undefined);
     }
