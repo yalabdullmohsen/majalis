@@ -2,22 +2,22 @@ import { useEffect, useState } from "react";
 import { ChevronUp } from "lucide-react";
 import { useReadingProgress } from "@/hooks/useReadingProgress";
 
-/** زر صعود دائري 56×56 مع حلقة تقدّم داخل الحدود تمامًا. */
+/** زر صعود مضغوط 44×44 مع حلقة تقدّم — يظهر بعد النزول فقط. */
 export function ScrollToTop() {
   const [visible, setVisible] = useState(false);
   const progress = useReadingProgress();
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 400);
+    const onScroll = () => setVisible(window.scrollY > 320);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   if (!visible) return null;
 
-  const SIZE = 56;
-  const STROKE = 2.5;
-  const PAD = 3;
+  const SIZE = 44;
+  const STROKE = 2.25;
+  const PAD = 2.5;
   const R = SIZE / 2 - PAD - STROKE / 2;
   const C = 2 * Math.PI * R;
   const offset = C - (progress / 100) * C;

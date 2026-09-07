@@ -14,21 +14,21 @@
    * فربط --mj-brand ← --color-primary يخلق دورة تُبطل اللون
    * (خلفية شفافة + نص أبيض فوق العاجي ≈ 1.1:1).
    */
-  --mj-bg: #f7f3eb;
+  --mj-bg: #f6f2ea;
   --mj-surface: #fffcf7;
-  --mj-surface-2: #f3eee4;
-  --mj-surface-3: #ebe4d8;
-  --mj-hairline: #d9d2c6;
+  --mj-surface-2: #f1ece3;
+  --mj-surface-3: #e9e3d8;
+  --mj-hairline: #d6d0c4;
   --mj-ink: #16241e;
-  --mj-ink-2: #4a5a53;
+  --mj-ink-2: #4f5f58;
   --mj-muted: #5e6e67;
-  --mj-brand: #0f5c45;
-  --mj-brand-soft: #e2efe8;
-  --mj-brand-deep: #0a3d2e;
+  --mj-brand: #146b52;
+  --mj-brand-soft: #e6f2ec;
+  --mj-brand-deep: #0d4a39;
   --mj-accent: #b08a3e;
   --mj-accent-soft: #f5eedf;
   --mj-on-brand: #ffffff;
-  --mj-sh: 0 8px 22px -14px rgba(10, 61, 46, 0.18);
+  --mj-sh: 0 4px 14px -10px rgba(10, 61, 46, 0.14);
 
   --color-bg: var(--mj-bg);
   --color-surface: var(--mj-surface);
@@ -46,10 +46,10 @@
   --shadow-soft: var(--mj-sh);
   --surface-app: var(--mj-bg);
 
-  --radius-card: 18px;
-  --radius-tile: 18px;
-  --radius-button: 14px;
-  --radius-sheet: 22px;
+  --radius-card: 16px;
+  --radius-tile: 16px;
+  --radius-button: 12px;
+  --radius-sheet: 20px;
 }
 
 html[data-theme="dark"],
@@ -62,14 +62,14 @@ html.dark {
   --mj-ink: #f3f7f5;
   --mj-ink-2: #c5d0cb;
   --mj-muted: #a8b6af;
-  --mj-brand: #4fb48b;
-  --mj-brand-soft: rgba(79, 180, 139, 0.16);
+  --mj-brand: #5fbf98;
+  --mj-brand-soft: rgba(95, 191, 152, 0.16);
   --mj-brand-deep: #1e4d3c;
   --mj-accent: #d9b871;
   --mj-accent-soft: rgba(217, 184, 113, 0.16);
   /* على أخضر فاتح ليلي: حبر داكن واضح (AA) */
   --mj-on-brand: #06231a;
-  --mj-sh: 0 10px 26px -16px rgba(0, 0, 0, 0.55);
+  --mj-sh: 0 6px 18px -12px rgba(0, 0, 0, 0.55);
 
   --color-bg: var(--mj-bg);
   --color-surface: var(--mj-surface);

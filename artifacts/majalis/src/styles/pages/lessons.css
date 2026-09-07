@@ -555,7 +555,7 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 }
 
 .lesson-detail-page .lesson-detail-card {
-  border-radius: var(--radius-card, 24px);
+  border-radius: var(--radius-card, 16px);
 }
 
 .lesson-detail-page .lesson-detail-actions--row .lesson-unified-card__btn,
@@ -583,46 +583,31 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 .lessons-page-v2 .lesson-unified-card,
 .lesson-detail-page .lesson-unified-card,
 .lessons-similar-section .lesson-unified-card {
-  --lesson-green: var(--color-primary, var(--mj-brand, #0f5c45));
-  --lesson-green-deep: var(--color-primary-dark, var(--mj-brand-deep, #0a3d2e));
-  --lesson-green-soft: var(--color-primary-soft, var(--mj-brand-soft, #e2efe8));
+  --lesson-green: var(--color-primary, var(--mj-brand, #146b52));
+  --lesson-green-deep: var(--color-primary-dark, var(--mj-brand-deep, #0d4a39));
+  --lesson-green-soft: var(--color-primary-soft, var(--mj-brand-soft, #e6f2ec));
   display: flex;
   flex-direction: column;
   width: 100%;
   margin: 0;
   padding: 0 !important;
   overflow: hidden;
-  background-color: #eef6f1 !important;
-  background-image:
-    linear-gradient(
-      165deg,
-      color-mix(in srgb, var(--lesson-green-soft) 88%, #fff) 0%,
-      color-mix(in srgb, var(--lesson-green) 5%, #fff) 100%
-    ) !important;
+  background-color: var(--surface, #fffcf7) !important;
+  background-image: none !important;
   color: var(--color-text, #14241c);
-  border: 1px solid color-mix(in srgb, var(--lesson-green) 22%, #d5e3db) !important;
-  border-radius: var(--radius-card, 24px) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.55),
-    0 10px 24px -18px rgba(18, 74, 56, 0.35);
+  border: 1px solid color-mix(in srgb, var(--lesson-green) 16%, var(--border, #d6d0c4)) !important;
+  border-radius: var(--radius-card, 16px) !important;
+  box-shadow: none;
   min-width: 0;
 }
 
 .lessons-page-v2 .lesson-unified-card--today,
 .lesson-detail-page .lesson-unified-card--today,
 .lessons-similar-section .lesson-unified-card--today {
-  border-color: color-mix(in srgb, var(--lesson-green) 55%, #9fcbb8) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.55),
-    0 0 0 1px color-mix(in srgb, var(--lesson-green) 28%, transparent),
-    0 12px 28px -16px rgba(18, 74, 56, 0.42);
-  background-color: color-mix(in srgb, var(--lesson-green) 14%, #fff) !important;
-  background-image:
-    linear-gradient(
-      165deg,
-      color-mix(in srgb, var(--lesson-green) 14%, #fff) 0%,
-      color-mix(in srgb, var(--lesson-green-soft) 70%, #fff) 100%
-    ) !important;
+  border-color: color-mix(in srgb, var(--lesson-green) 40%, var(--border, #d6d0c4)) !important;
+  box-shadow: none;
+  background-color: var(--surface, #fffcf7) !important;
+  background-image: none !important;
 }
 
 .lessons-page-v2 .lesson-unified-card__header,
@@ -753,15 +738,16 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 
 .lessons-page-v2 .lesson-unified-card__facts,
 .lesson-detail-page .lesson-unified-card__facts,
-.lessons-similar-section .lesson-unified-card__facts {
+.lessons-similar-section .lesson-unified-card__facts,
+.lessons-page-v3 .lesson-unified-card__facts {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.28rem;
-  margin: 0.1rem 0 0;
-  padding: 0.65rem 0.75rem;
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--lesson-green) 7%, #fff);
-  border: 1px solid color-mix(in srgb, var(--lesson-green) 14%, transparent);
+  gap: 0.22rem;
+  margin: 0.15rem 0 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
 }
 
 .lessons-page-v2 .lesson-unified-card__fact,
@@ -814,9 +800,10 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 
 .lessons-page-v2 .lesson-unified-card__btn,
 .lesson-detail-page .lesson-unified-card__btn,
-.lessons-similar-section .lesson-unified-card__btn {
-  min-height: 42px;
-  border-radius: 999px !important;
+.lessons-similar-section .lesson-unified-card__btn,
+.lessons-page-v3 .lesson-unified-card__btn {
+  min-height: 40px;
+  border-radius: 12px !important;
   appearance: none;
   -webkit-appearance: none;
   font-weight: 750;
@@ -854,7 +841,7 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
   gap: 0.5rem;
   margin-top: 0.85rem;
   padding: 0.85rem 0.95rem;
-  border-radius: var(--radius-card, 24px);
+  border-radius: var(--radius-card, 16px);
   background: color-mix(in srgb, var(--mj-brand, #1f6b56) 6%, var(--color-surface, #fff));
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, var(--color-border));
 }
@@ -900,9 +887,52 @@ html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__title {
 html.dark .lessons-page-v2 .lesson-unified-card__facts,
 html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__facts,
 html.dark .lesson-detail-page .lesson-unified-card__facts,
-html[data-theme="dark"] .lesson-detail-page .lesson-unified-card__facts {
-  background: color-mix(in srgb, #5a9e88 10%, #15201c);
-  border-color: color-mix(in srgb, #5a9e88 20%, #2a3832);
+html[data-theme="dark"] .lesson-detail-page .lesson-unified-card__facts,
+html.dark .lessons-page-v3 .lesson-unified-card__facts,
+html[data-theme="dark"] .lessons-page-v3 .lesson-unified-card__facts {
+  background: transparent !important;
+  border: 0 !important;
+}
+
+html.dark .lessons-page-v2 .lesson-unified-card__fact,
+html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__fact,
+html.dark .lessons-page-v3 .lesson-unified-card__fact,
+html[data-theme="dark"] .lessons-page-v3 .lesson-unified-card__fact,
+html.dark .lesson-detail-page .lesson-unified-card__fact,
+html[data-theme="dark"] .lesson-detail-page .lesson-unified-card__fact {
+  color: #d5e3dd !important;
+}
+
+html.dark .lessons-page-v2 .lesson-unified-card__fact-label,
+html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__fact-label,
+html.dark .lessons-page-v3 .lesson-unified-card__fact-label,
+html[data-theme="dark"] .lessons-page-v3 .lesson-unified-card__fact-label,
+html.dark .lesson-detail-page .lesson-unified-card__fact-label,
+html[data-theme="dark"] .lesson-detail-page .lesson-unified-card__fact-label {
+  color: #a8c4b8 !important;
+}
+
+html.dark .lessons-page-v2 .lesson-unified-card__fact-value,
+html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__fact-value,
+html.dark .lessons-page-v3 .lesson-unified-card__fact-value,
+html[data-theme="dark"] .lessons-page-v3 .lesson-unified-card__fact-value,
+html.dark .lesson-detail-page .lesson-unified-card__fact-value,
+html[data-theme="dark"] .lesson-detail-page .lesson-unified-card__fact-value {
+  color: #e8f2ed !important;
+}
+
+html.dark .lessons-page-v2 .lesson-unified-card__meta-label,
+html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__meta-label,
+html.dark .lessons-page-v3 .lesson-unified-card__meta-label,
+html[data-theme="dark"] .lessons-page-v3 .lesson-unified-card__meta-label {
+  color: #a8c4b8 !important;
+}
+
+html.dark .lessons-page-v2 .lesson-unified-card__meta-cell,
+html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__meta-cell,
+html.dark .lessons-page-v3 .lesson-unified-card__meta-cell,
+html[data-theme="dark"] .lessons-page-v3 .lesson-unified-card__meta-cell {
+  color: #d5e3dd !important;
 }
 
 
@@ -1132,14 +1162,16 @@ html[data-theme="dark"] .lesson-detail-page .lesson-detail-actions-panel {
   flex: 1 1 auto;
   min-width: 0;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  gap: 0.4rem;
-  overflow: visible;
-  padding: 0.4rem;
-  background: var(--surface-muted, var(--mj-bg, #f3efe6));
-  border: 1px solid var(--border-soft, color-mix(in srgb, #0f5c45 14%, transparent));
-  border-radius: 16px;
+  gap: 0.35rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.15rem 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
 }
 
 .lesson-filters__chips::-webkit-scrollbar {
@@ -1233,20 +1265,20 @@ html.dark .lesson-filters__search-field input {
 .lessons-page-v3 .lesson-filters__chips .filter-chips__chip,
 .lessons-page-v3 .filter-chips__chip {
   flex: 0 0 auto;
-  min-height: 2rem;
-  padding: 0.28rem 0.72rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, #1a6b4f 8%, #fff);
-  border-color: color-mix(in srgb, #1a6b4f 22%, transparent);
-  color: #124a38;
+  min-height: 36px;
+  padding: 0.3rem 0.78rem;
+  border-radius: 12px;
+  background: var(--surface, #fffcf7);
+  border: 1px solid var(--border, color-mix(in srgb, #146b52 18%, transparent));
+  color: var(--text, #124a38);
   font-size: 0.78rem;
 }
 
 .lessons-page-v3 .lesson-filters__chips .filter-chips__chip.is-active,
 .lessons-page-v3 .filter-chips__chip.is-active {
-  background: var(--color-selected, #e8f3ee) !important;
-  border-color: color-mix(in srgb, var(--color-primary, #0f5c45) 45%, transparent) !important;
-  color: var(--color-primary-dark, #0a3d2e) !important;
+  background: var(--primary, #146b52) !important;
+  border-color: var(--mj-brand-deep, #0d4a39) !important;
+  color: var(--mj-on-brand, #fff) !important;
 }
 
 html.dark .lessons-page-v3 .lesson-filters__chips .filter-chips__chip,
@@ -1262,9 +1294,9 @@ html.dark .lessons-page-v3 .lesson-filters__chips .filter-chips__chip.is-active,
 html.dark .lessons-page-v3 .filter-chips__chip.is-active,
 [data-theme="dark"] .lessons-page-v3 .lesson-filters__chips .filter-chips__chip.is-active,
 [data-theme="dark"] .lessons-page-v3 .filter-chips__chip.is-active {
-  background: #2f6b57 !important;
-  border-color: #3d8a70 !important;
-  color: #f2faf6 !important;
+  background: var(--primary, #5fbf98) !important;
+  border-color: color-mix(in srgb, #5fbf98 55%, #2a3832) !important;
+  color: #06231a !important;
 }
 
 .lessons-page-v3 .lessons-v2-section {
@@ -1351,24 +1383,18 @@ html.dark .lessons-page-v3 .filter-chips__chip.is-active,
   display: none;
 }
 .section-lobby.lessons-page-v3 .lesson-unified-card {
-  border: 1px solid color-mix(in srgb, #1a6b4f 22%, transparent);
-  border-radius: var(--radius-card, 24px);
-  background-color: #eef6f1;
-  background-image:
-    linear-gradient(
-      165deg,
-      color-mix(in srgb, #e7f4ee 90%, #fff) 0%,
-      color-mix(in srgb, #1a6b4f 5%, #fff) 100%
-    );
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.55),
-    0 10px 24px -18px rgba(18, 74, 56, 0.32);
+  border: 1px solid color-mix(in srgb, var(--primary, #146b52) 16%, var(--border, #d6d0c4));
+  border-radius: var(--radius-card, 16px);
+  background-color: var(--surface, #fffcf7);
+  background-image: none;
+  box-shadow: none;
 }
 :root[data-theme="dark"] .section-lobby.lessons-page-v3 .lesson-unified-card,
 .dark .section-lobby.lessons-page-v3 .lesson-unified-card {
-  background-color: #12201b;
-  background-image: linear-gradient(165deg, #17241f 0%, #12201b 100%);
-  box-shadow: 0 1px 2px color-mix(in srgb, #000 25%, transparent);
+  background-color: var(--surface, #1b2421);
+  background-image: none;
+  border-color: color-mix(in srgb, var(--primary, #5fbf98) 28%, #2a3832);
+  box-shadow: none;
 }
 .section-lobby.lessons-page-v3 .lesson-unified-card--compact {
   padding: 0;

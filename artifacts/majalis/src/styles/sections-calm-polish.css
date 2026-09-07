@@ -1,0 +1,471 @@
+/**
+ * sections-calm-polish.css
+ * تلميع ضيّق للأقسام (رئيسية/قرآن/دروس/إعجاز/قائمة/فلاتر) —
+ * بعد visual-identity-unify. بلا لمس لمقاييس المصحف أو الصوت/الأذان.
+ */
+
+:root {
+  /* Tokens موحّدة — أسماء صريحة + ربط للوحة الحالية */
+  --background: var(--mj-bg, #f6f2ea);
+  --surface: var(--mj-surface, #fffcf7);
+  --surface-soft: var(--mj-surface-2, #f1ece3);
+  --primary: var(--mj-brand, #146b52);
+  --primary-soft: var(--mj-brand-soft, #e6f2ec);
+  --border: var(--mj-hairline, #d6d0c4);
+  --text: var(--mj-ink, #16241e);
+  --text-muted: var(--mj-ink-2, #4f5f58);
+  --shadow: 0 4px 14px -10px rgba(10, 61, 46, 0.14);
+
+  /* تهدئة الهوية */
+  --mj-bg: #f6f2ea;
+  --mj-surface: #fffcf7;
+  --mj-surface-2: #f1ece3;
+  --mj-surface-3: #e9e3d8;
+  --mj-hairline: #d6d0c4;
+  --mj-brand: #146b52;
+  --mj-brand-soft: #e6f2ec;
+  --mj-brand-deep: #0d4a39;
+  --mj-sh: var(--shadow);
+
+  --color-bg: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-primary: var(--primary);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-dark: var(--mj-brand-deep);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-selected: #e8f3ee;
+  --shadow-soft: var(--shadow);
+
+  --radius-card: 16px;
+  --radius-tile: 16px;
+  --radius-button: 12px;
+  --radius-chip: 999px;
+  --radius-icon: 12px;
+}
+
+html[data-theme="dark"],
+html.dark {
+  --background: #121816;
+  --surface: #1b2421;
+  --surface-soft: #222c28;
+  --primary: #5fbf98;
+  --primary-soft: rgba(95, 191, 152, 0.16);
+  --border: #3a4641;
+  --text: #f3f7f5;
+  --text-muted: #b7c4be;
+  --shadow: 0 6px 18px -12px rgba(0, 0, 0, 0.55);
+
+  --mj-bg: var(--background);
+  --mj-surface: var(--surface);
+  --mj-surface-2: var(--surface-soft);
+  --mj-hairline: var(--border);
+  --mj-ink: var(--text);
+  --mj-ink-2: var(--text-muted);
+  --mj-muted: var(--text-muted);
+  --mj-brand: var(--primary);
+  --mj-brand-soft: var(--primary-soft);
+  --mj-brand-deep: #1e4d3c;
+  --mj-on-brand: #06231a;
+  --mj-sh: var(--shadow);
+
+  --color-bg: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-primary: var(--primary);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-dark: var(--mj-brand-deep);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-selected: rgba(95, 191, 152, 0.2);
+  --shadow-soft: var(--shadow);
+}
+
+/* ── بطاقات موحّدة ─────────────────────────────────────────────────── */
+.soft-card,
+.hub-card,
+.section-card,
+.section-hub__card,
+.ds-card,
+.mj-card,
+.lesson-unified-card,
+.fqh-hub-card,
+.topic-card,
+.mk-topic-card,
+.section-lobby__featured,
+.card--featured {
+  background: var(--surface) !important;
+  border: 1px solid color-mix(in srgb, var(--border) 80%, transparent) !important;
+  border-radius: var(--radius-card) !important;
+  box-shadow: none !important;
+  color: var(--text) !important;
+}
+
+.soft-card:hover,
+.hub-card:hover,
+.section-hub__card:hover,
+.lesson-unified-card:hover {
+  box-shadow: var(--shadow) !important;
+  border-color: color-mix(in srgb, var(--primary) 22%, var(--border)) !important;
+}
+
+/* أيقونة مربعة ثابتة — لا دوائر ضخمة */
+.hub-card__icon,
+.section-hub__icon,
+.section-card__icon,
+.topic-card__icon,
+.sidebar-item-icon,
+.quran-hub .hub-card [class*="icon"],
+.section-lobby [class*="__icon"] {
+  width: 2.25rem !important;
+  height: 2.25rem !important;
+  min-width: 2.25rem !important;
+  min-height: 2.25rem !important;
+  border-radius: var(--radius-icon) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--primary-soft) !important;
+  color: var(--mj-brand-deep, var(--primary)) !important;
+  border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .hub-card__icon,
+html.dark .hub-card__icon,
+html[data-theme="dark"] .sidebar-item-icon,
+html.dark .sidebar-item-icon {
+  color: var(--primary) !important;
+}
+
+.hub-card__icon svg,
+.section-hub__icon svg,
+.topic-card__icon svg,
+.sidebar-item-icon svg {
+  width: 1.05rem !important;
+  height: 1.05rem !important;
+}
+
+/* نصوص ثانوية مقروءة */
+.hub-card__meta,
+.section-hub__meta,
+.section-card__desc,
+.topic-card__desc,
+.lesson-unified-card__meta,
+.muted,
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+/* ── فلاتر: شرائح أفقية قابلة للتمرير ─────────────────────────────── */
+.lesson-filters__chips,
+.lesson-filters__chips.filter-chips,
+.lessons-page-v2 .filter-chips,
+.lessons-page-v3 .lesson-filters__chips,
+.mj-segmented-filter--scroll,
+.section-hub__chips,
+.section-lobby__chips {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0.2rem 0.1rem !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  overscroll-behavior-x: contain;
+}
+
+.lesson-filters__chips::-webkit-scrollbar,
+.filter-chips::-webkit-scrollbar,
+.section-hub__chips::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-chips__chip,
+.mj-filter-chip,
+.ds-chip,
+.lessons-filter-tab,
+.section-hub__chip,
+.section-lobby__chip,
+.fiqh-hub-strip__tab,
+.lessons-page-v3 .filter-chips__chip,
+.lessons-page-v3 .lesson-filters__chips .filter-chips__chip,
+.lessons-page-v2 .filter-chips__chip {
+  flex: 0 0 auto !important;
+  min-height: 40px !important;
+  min-width: unset !important;
+  height: auto !important;
+  padding: 0.4rem 0.9rem !important;
+  border-radius: 12px !important;
+  border: 1px solid var(--border) !important;
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  box-shadow: none !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+  line-height: 1.2 !important;
+}
+
+.filter-chips__chip.is-active,
+.mj-filter-chip.is-active,
+.ds-chip.is-active,
+.lessons-filter-tab--active,
+.lessons-filter-tab.is-active,
+.section-hub__chip.is-active,
+.section-lobby__chip.is-active,
+.fiqh-hub-strip__tab--active,
+.lessons-page-v3 .filter-chips__chip.is-active,
+.lessons-page-v3 .lesson-filters__chips .filter-chips__chip.is-active,
+.lessons-page-v2 .filter-chips__chip.is-active {
+  background: var(--primary) !important;
+  border-color: var(--mj-brand-deep, var(--primary)) !important;
+  color: var(--mj-on-brand, #ffffff) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .filter-chips__chip.is-active,
+html.dark .filter-chips__chip.is-active,
+html[data-theme="dark"] .lessons-page-v3 .filter-chips__chip.is-active,
+html.dark .lessons-page-v3 .filter-chips__chip.is-active,
+html[data-theme="dark"] .lessons-page-v3 .lesson-filters__chips .filter-chips__chip.is-active,
+html.dark .lessons-page-v3 .lesson-filters__chips .filter-chips__chip.is-active {
+  background: var(--primary) !important;
+  color: var(--mj-on-brand, #06231a) !important;
+  border-color: color-mix(in srgb, var(--primary) 55%, var(--border)) !important;
+}
+
+/* بطاقات الدروس: إزالة الصندوق الداخلي الثقيل */
+.lesson-unified-card,
+.lessons-page-v3 .lesson-unified-card,
+.lessons-page .lesson-unified-card {
+  padding: 0.8rem 0.85rem !important;
+  gap: 0.45rem !important;
+  background: var(--surface) !important;
+  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent) !important;
+  border-radius: var(--radius-card) !important;
+  box-shadow: none !important;
+}
+
+.lesson-unified-card__facts,
+.lessons-page-v3 .lesson-unified-card__facts {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 0.3rem 0.5rem !important;
+  margin: 0.25rem 0 0.45rem !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.lesson-unified-card [class*="facts"],
+.lesson-unified-card [class*="meta-box"],
+.lesson-unified-card [class*="info-box"] {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding-inline: 0 !important;
+}
+
+.lesson-unified-card__actions,
+.lesson-unified-card .lesson-card-actions,
+.lessons-page-v3 .lesson-unified-card__actions {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.35rem !important;
+  margin-top: 0.25rem !important;
+}
+
+.lesson-unified-card__actions .mj-btn--primary,
+.lesson-unified-card__actions a.mj-btn--primary,
+.lesson-unified-card .btn-primary,
+.lessons-page-v3 .lesson-unified-card a.mj-btn--primary {
+  flex: 1 1 7rem !important;
+  min-height: 40px !important;
+  border-radius: var(--radius-button) !important;
+}
+
+.lesson-unified-card__actions .mj-btn--secondary,
+.lesson-unified-card__actions .mj-btn--ghost,
+.lesson-unified-card__actions button.secondary,
+.lesson-unified-card button:not(.mj-btn--primary):not(.btn-primary) {
+  flex: 0 1 auto !important;
+  min-height: 40px !important;
+  border-radius: var(--radius-button) !important;
+  background: var(--surface-soft) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+}
+
+/* ── قائمة جانبية أخف ─────────────────────────────────────────────── */
+.drawer-panel,
+.sidebar-panel {
+  width: min(82vw, 300px) !important;
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border-inline-end: 1px solid var(--border) !important;
+  box-shadow: var(--shadow) !important;
+  padding: calc(var(--inset-top, 0px) + 8px) 10px calc(var(--inset-bottom, 0px) + 12px) !important;
+  gap: 2px !important;
+}
+
+.sidebar-header {
+  padding: 6px 2px 10px !important;
+  gap: 8px !important;
+  border-bottom-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+.sidebar-title {
+  font-size: 1rem !important;
+}
+
+.sidebar-close {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: var(--radius-button) !important;
+  background: var(--surface-soft) !important;
+  color: var(--text) !important;
+}
+
+.sidebar-section {
+  padding-top: 8px !important;
+  margin-top: 2px !important;
+}
+
+.sidebar-section-title {
+  padding: 0 8px 6px !important;
+  color: var(--text-muted) !important;
+  font-size: 0.7rem !important;
+}
+
+.sidebar-item {
+  min-height: 44px !important;
+  padding: 6px 10px !important;
+  gap: 10px !important;
+  border-radius: 12px !important;
+  color: var(--text) !important;
+}
+
+.sidebar-item.active,
+.sidebar-item.is-active,
+.sidebar-item[aria-current="page"] {
+  background: var(--color-selected) !important;
+  color: var(--mj-brand-deep, var(--primary)) !important;
+  border: 1px solid color-mix(in srgb, var(--primary) 28%, transparent) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .sidebar-item.active,
+html.dark .sidebar-item.active {
+  color: var(--text) !important;
+}
+
+.sidebar-item-title {
+  font-size: 0.92rem !important;
+}
+
+.sidebar-item-sub {
+  color: var(--text-muted) !important;
+  font-size: 0.72rem !important;
+}
+
+/* ── عناصر عائمة: لا تداخل مع البحث/الفلاتر/الشريط ─────────────────── */
+.global-back-btn,
+.floating-back-btn,
+.scroll-to-top {
+  bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 12px) !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  border-radius: 14px !important;
+  box-shadow: var(--shadow) !important;
+  z-index: 180 !important;
+}
+
+.global-back-btn,
+.floating-back-btn {
+  inset-inline-start: max(12px, var(--inset-left, 0px)) !important;
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.scroll-to-top {
+  inset-inline-end: max(12px, var(--inset-right, 0px)) !important;
+  background: var(--primary) !important;
+  color: var(--mj-on-brand, #fff) !important;
+  border: 1px solid var(--mj-brand-deep, transparent) !important;
+}
+
+.floating-back-btn--top {
+  background: var(--primary) !important;
+  color: var(--mj-on-brand, #fff) !important;
+  border-color: transparent !important;
+}
+
+/* حجز محتوى الأقسام فوق الشريط السفلي */
+.lessons-page,
+.lessons-page-v2,
+.lessons-page-v3,
+.quran-hub,
+.quran-hub-page,
+.section-hub,
+.section-lobby,
+.topic-page--miracles,
+.app-main {
+  padding-bottom: max(
+    var(--content-pb, 88px),
+    calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 20px)
+  );
+}
+
+/* شبكة بطاقات متساوية الارتفاع قدر الإمكان */
+.section-hub__grid,
+.section-lobby__grid,
+.quran-hub [class*="grid"],
+.fqh-hub-grid {
+  align-items: stretch;
+}
+
+.section-hub__grid > *,
+.section-lobby__grid > *,
+.fqh-hub-grid > * {
+  height: 100%;
+}
+
+/* إعجاز / مواضيع */
+.topic-page--miracles .topic-card,
+.mk-topic-card {
+  min-height: 7.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.45rem;
+  padding: 0.9rem !important;
+}
+
+/* بحث: لا يزاحمه زر عائم */
+.app-header .global-search,
+.lessons-v2-search,
+.lesson-filters__search-field {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 480px) {
+  .lesson-unified-card__facts {
+    grid-template-columns: 1fr !important;
+  }
+}
