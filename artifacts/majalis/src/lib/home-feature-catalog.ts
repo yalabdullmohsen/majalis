@@ -81,8 +81,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     label: "الفقه والأحكام",
     items: [
       { href: "/fiqh",               Icon: Scale,        title: seoNavLabel("/fiqh", "الفقه الإسلامي"),  desc: "بوابة الأحكام والأسئلة والمجمع الفقهي" },
-      { href: "/sins-and-rights",    Icon: Scale,        title: seoNavLabel("/sins-and-rights", "الذنوب والحقوق"), desc: "كبار الذنوب وحقوق الله والعباد وشروط التوبة" },
-      { href: "/tawba",              Icon: Heart,        title: seoNavLabel("/tawba", "التوبة والاستغفار"), desc: "شروط التوبة وفضل الاستغفار من القرآن والسنة" },
+      { href: "/tazkiya",             Icon: Heart,        title: seoNavLabel("/tazkiya", "التزكية والتوبة"), desc: "الذنوب والحقوق، والتوبة والاستغفار في باب واحد" },
       { href: "/tawhid",             Icon: BookMarked,   title: seoNavLabel("/tawhid", "التوحيد"),            desc: "العقيدة الإسلامية" },
       { href: "/arkan",              Icon: Landmark,     title: seoNavLabel("/arkan", "أركان الإسلام الخمسة"),     desc: "الأركان الخمسة مع الأدلة والتفاصيل" },
       { href: "/arkan-iman",         Icon: Star,         title: seoNavLabel("/arkan-iman", "أركان الإيمان الستة"),     desc: "الأركان الستة مع الأدلة وأقوال العلماء" },
@@ -111,7 +110,6 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/hikam-salaf",  Icon: BookOpen,    title: seoNavLabel("/hikam-salaf", "حكم السلف الصالح"),     desc: "أقوال الأئمة والصحابة والتابعين" },
       { href: "/fadail-aamal",      Icon: Star,      title: seoNavLabel("/fadail-aamal", "فضائل الأعمال"),         desc: "أحاديث في فضائل العبادات والأخلاق" },
       { href: "/adab-talab-ilm",   Icon: GraduationCap,  title: seoNavLabel("/adab-talab-ilm", "آداب طالب العلم"),      desc: "دليل طالب العلم من الفضل إلى الكتب المقررة" },
-      { href: "/tawba",         Icon: RotateCw,    title: seoNavLabel("/tawba", "التوبة والاستغفار"),          desc: "شروط التوبة النصوح وأفضل صيغ الاستغفار" },
       { href: "/amr-bil-maruf", Icon: Scroll,      title: seoNavLabel("/amr-bil-maruf", "الأمر بالمعروف والنهي عن المنكر"), desc: "مراتبه الثلاث وشروطه وأحكامه الفقهية" },
       { href: "/daily-wird",  Icon: BookOpen,    title: seoNavLabel("/daily-wird", "الورد اليومي"),         desc: "ختم يومي منتظم للقرآن" },
       { href: "/occasions-lessons", Icon: CalendarDays, title: seoNavLabel("/occasions-lessons", "المناسبات والدروس"), desc: "مناسبات وتقويم دروس" },

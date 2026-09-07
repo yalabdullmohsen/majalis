@@ -616,8 +616,7 @@ export default function TawhidPage() {
         <h2 className="twh-section-title" style={{ fontSize: "1.1rem" }}>استكشف أيضاً</h2>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
           {[
-            { href: "/sins-and-rights", label: "الذنوب والحقوق" },
-            { href: "/tawba", label: "التوبة والاستغفار" },
+            { href: "/tazkiya", label: "التزكية والتوبة" },
             { href: "/akhlaq", label: "مكارم الأخلاق" },
             { href: "/asma-husna", label: "الأسماء الحسنى" },
             { href: "/arkan-iman", label: "أركان الإيمان" },

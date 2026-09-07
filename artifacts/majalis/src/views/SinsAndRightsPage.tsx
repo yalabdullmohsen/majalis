@@ -545,6 +545,10 @@ export default function SinsAndRightsPage() {
 
           {/* روابط سريعة للأقسام الأخرى */}
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+            <Link href="/tazkiya" className="snr-related-link" style={{ flex: "1 1 160px" }}>
+              <span className="snr-related-link-label">🌱 التزكية والتوبة</span>
+              <span className="snr-mindmap-child-arrow">‹</span>
+            </Link>
             <Link href="/tawba" className="snr-related-link" style={{ flex: "1 1 160px" }}>
               <span className="snr-related-link-label">📖 التوبة والاستغفار</span>
               <span className="snr-mindmap-child-arrow">‹</span>
