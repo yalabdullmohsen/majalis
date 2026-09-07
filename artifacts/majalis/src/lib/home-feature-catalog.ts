@@ -64,7 +64,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     items: [
       { href: "/seerah",          Icon: Moon,     title: seoNavLabel("/seerah", "السيرة النبوية"),    desc: "حياته ﷺ من الميلاد إلى الوفاة" },
       { href: "/shamael",         Icon: Star,     title: seoNavLabel("/shamael", "صفةُ سيِّد الخلقِ ﷺ"),  desc: "صفته ﷺ خَلقاً وخُلُقاً وهَدياً من أصحّ الروايات" },
-      { href: "/sahabah",         Icon: Users,    title: seoNavLabel("/sahabah", "أعلام الصحابة"),     desc: "12 صحابياً بالتفصيل: سيرة وإرث وفضل" },
+      { href: "/sahabah",         Icon: Users,    title: seoNavLabel("/sahabah", "أعلام الصحابة"),     desc: "63 صحابياً بالتفصيل: سيرة وإرث وفضل" },
       { href: "/prophets",        Icon: Star,     title: seoNavLabel("/prophets", "قصص الأنبياء"),     desc: "من آدم إلى محمد ﷺ — ٢٥ نبيًا بقصصهم وعبرهم" },
       { href: "/janna-naar",      Icon: Sparkles, title: seoNavLabel("/janna-naar", "صفة الجنة"),  desc: "أبوابها وأنهارها وأسباب دخولها وأدعية الآخرة" },
       { href: "/alamat-saah",    Icon: Star,     title: seoNavLabel("/alamat-saah", "علامات الساعة"),      desc: "الصغرى والكبرى العشر والترتيب وكيف نستعد" },

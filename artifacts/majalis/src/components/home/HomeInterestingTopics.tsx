@@ -118,7 +118,7 @@ const TOPICS: { href: string; icon: string; label: string; desc: string; color: 
     href: "/sahabah",
     icon: '<circle cx="8" cy="7" r="3"/><circle cx="15" cy="7" r="3"/><path d="M1 18c0-3.3 3.1-6 7-6"/><path d="M11 18c0-3.3 2.6-6 6-6"/>',
     label: "أعلام الصحابة",
-    desc: "12 صحابياً بالسيرة والإرث والفضل",
+    desc: "63 صحابياً بالسيرة والإرث والفضل",
     color: "#0F5132",
   },
   {

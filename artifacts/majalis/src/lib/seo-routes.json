@@ -2183,17 +2183,18 @@
     },
     {
       "path": "/kids",
-      "title": "ركن الأطفال (قريبًا)",
-      "description": "ركن الأطفال في سُنّة قيد التجهيز — محتوى تعليمي ميسّر وآمن قريبًا.",
+      "title": "ركن الأطفال",
+      "description": "ركن الأطفال في سُنّة: قصص أنبياء وأذكار وقرآن وأسئلة ميسّرة بمرافقة ولي الأمر.",
       "keywords": [
         "الأطفال",
-        "تعليم الأطفال",
-        "قريبًا"
+        "قصص الأنبياء",
+        "أذكار الأطفال",
+        "تعليم إسلامي"
       ],
-      "sitemap": false,
+      "sitemap": true,
       "changefreq": "monthly",
-      "priority": 0.3,
-      "robots": "noindex, nofollow"
+      "priority": 0.55,
+      "robots": "index, follow"
     },
     {
       "path": "/mind-map",

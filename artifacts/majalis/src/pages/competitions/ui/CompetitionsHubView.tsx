@@ -116,10 +116,12 @@ export default function CompetitionsHubView() {
         {items.length === 0 ? (
           <div className="cmp-empty" role="status" data-competitions-empty="1">
             <Trophy size={36} strokeWidth={1.4} aria-hidden />
-            <p>لا مسابقات منشورة حاليًا. نضيف مسابقات موثوقة عند توفرها بإذن الله.</p>
+            <p>لا مسابقات خارجية منشورة حاليًا. نضيف مسابقات موثوقة عند توفر مصادرها بإذن الله.</p>
             <p className="cmp-empty__hint">
-              يمكنك في الأثناء الاستفادة من{" "}
-              <Link href="/lessons">الدروس</Link>.
+              في الأثناء جرّب{" "}
+              <Link href="/quiz">أسئلة سين جيم</Link>
+              {" "}أو{" "}
+              <Link href="/lessons">الدروس العلمية</Link>.
             </p>
           </div>
         ) : (
