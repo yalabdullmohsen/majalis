@@ -51,6 +51,8 @@ import "./styles/theme-aliases.css";
 /* طبقة ألوان دلالية + إصلاح تباين/طبقات (بعد الجسور حتى تفوز) */
 import "./styles/semantic-layer-tokens.css";
 import "./styles/visual-layer-contrast-fix.css";
+/* توحيد الهوية البصرية (مصحف هادئ) — بعد الجسور وإصلاح التباين */
+import "./styles/visual-identity-unify.css";
 // dark-mode-surfaces (~24KB) — فوري فقط إن كان الثيم داكنًا عند الإقلاع؛ وإلا بعد load
 {
   const bootDark =
@@ -88,7 +90,11 @@ function loadNonCriticalCss() {
   void import("./styles/design-system.css").then(() => {
     void import("./styles/brand-v4-components.css");
     // بعد design-system حتمًا حتى لا يفوز blur(20px) على final-release
-    void import("./styles/final-release.css");
+    void import("./styles/final-release.css").then(() => {
+      // إعادة طبقة التوحيد بعد final-release لتفوز قواعد الأزرار/البانر
+      // مع الإبقاء على الاستيراد المبكر للرموز الصلبة عند أول طلاء.
+      void import("./styles/visual-identity-unify.css");
+    });
   });
   void import("./styles/components/instant-interaction.css");
   void import("./styles/components/compact-sources.css");

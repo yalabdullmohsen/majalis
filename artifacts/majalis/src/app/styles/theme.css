@@ -240,7 +240,7 @@
   --mj-r-md: 18px;
   --mj-r-lg: 24px;
   --mj-r-pill: var(--radius-pill);
-  --mj-sh: 0 14px 36px -16px rgba(10, 61, 46, 0.32);
+  --mj-sh: 0 8px 22px -14px rgba(10, 61, 46, 0.18);
   --mj-s1: 4px;
   --mj-s2: 8px;
   --mj-s3: 12px;

@@ -50,3 +50,11 @@ artifacts/majalis/ios/build/
 reports/verify-pr-ready-latest.json
 reports/changed-scope.json
 reports/auto-maintenance/
+
+# ECC tools generated agent bundles (regenerable — do not track)
+.claude/ecc-tools.json
+.claude/identity.json
+.claude/skills/
+.claude/homunculus/
+.agents/skills/
+.codex/
