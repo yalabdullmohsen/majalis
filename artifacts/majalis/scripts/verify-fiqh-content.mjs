@@ -106,8 +106,26 @@ if (!existsSync(deferredPath)) {
       fail(`قائمة تحريرية ناقصة: ${topic.id}`);
     }
     const stage = topic.reviewStage;
-    if (stage !== "review_ready" && stage !== "hold") {
+    if (stage !== "review_ready" && stage !== "hold" && stage !== "applied") {
       fail(`reviewStage غير صالح في المؤجّل: ${topic.id}`);
+    }
+    if (stage === "applied") {
+      const review = topic.promotionReview;
+      const preview = topic.promotionPreview;
+      if (!review || review.packetStatus !== "applied_to_catalog") {
+        fail(`applied يتطلب packetStatus=applied_to_catalog: ${topic.id}`);
+      }
+      if (!preview || preview.insertedIntoBooksJson !== true || preview.previewOnly !== false) {
+        fail(`applied يتطلب معاينة مُطبَّقة (inserted=true, previewOnly=false): ${topic.id}`);
+      }
+      if (review.humanDecision?.promotionApproved !== true) {
+        fail(`applied يتطلب promotionApproved=true: ${topic.id}`);
+      }
+      if (preview.mode === "insert_new_lesson") {
+        if (!lessonIds.has(preview.finalLessonId) && !lessonIds.has(preview.lesson?.id)) {
+          fail(`applied insert بلا درس في الكتالوج: ${topic.id}`);
+        }
+      }
     }
     if (stage === "review_ready") {
       const resolutions = topic.proposedResolutions;
@@ -379,6 +397,7 @@ const deferredStats = (() => {
     return {
       deferredReviewReady: topics.filter((t) => t.reviewStage === "review_ready").length,
       deferredHold: topics.filter((t) => t.reviewStage === "hold").length,
+      deferredApplied: topics.filter((t) => t.reviewStage === "applied").length,
       lessonCandidates: topics.filter((t) => t.lessonCandidate).length,
       promotionReviews: topics.filter((t) => t.promotionReview).length,
       promotionPreviews: topics.filter((t) => t.promotionPreview).length,
@@ -393,6 +412,7 @@ const deferredStats = (() => {
     return {
       deferredReviewReady: 0,
       deferredHold: 0,
+      deferredApplied: 0,
       lessonCandidates: 0,
       promotionReviews: 0,
       promotionPreviews: 0,
