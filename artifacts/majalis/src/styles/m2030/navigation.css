@@ -183,6 +183,7 @@ header.navbar-v3,
 }
 
 .sidebar-item.active {
-  background: var(--brand-soft) !important;
-  box-shadow: inset -3px 0 0 var(--brand);
+  background: var(--color-selected, var(--brand-soft)) !important;
+  color: var(--color-primary-dark, var(--text-title)) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-primary, var(--brand)) 32%, transparent) !important;
 }

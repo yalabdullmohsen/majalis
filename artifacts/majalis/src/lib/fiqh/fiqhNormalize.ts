@@ -208,8 +208,8 @@ export const FIQH_DOOR_META: Record<FiqhCanonicalDoor, FiqhDoorMeta> = {
     id: "libas",
     label: "اللباس والزينة",
     desc: "أحكام اللباس والزينة.",
-    href: "/fiqh/books/nikah",
-    bookHref: "/fiqh/books/nikah",
+    href: "/fiqh/books/libas",
+    bookHref: "/fiqh/books/libas",
     sortOrder: 80,
     group: "ibadat",
   },
@@ -515,12 +515,12 @@ const GROUP_DOOR_EXPAND: Record<FiqhDoorGroup, FiqhCanonicalDoor[]> = {
     "udhiya",
     "ayman",
     "sayd",
-    "atima",
     "libas",
     "janaza",
     "jihad",
   ],
-  muamalat: ["buyu", "muamalat", "riba", "ijara", "sharika", "qard", "waqf_hiba", "faraid"],
+  // الأطعمة والذبائح مصنّفة معاملات في books.json — لا تُوسَّع ضمن عبادات
+  muamalat: ["buyu", "muamalat", "riba", "ijara", "sharika", "qard", "waqf_hiba", "faraid", "atima"],
   usrah: ["usrah", "nikah", "talaq", "iddah_rida", "nafaqat"],
   qada_jinayat: ["jinayat", "diyat", "hudud", "qada", "shahadat", "iqrar"],
 };
@@ -628,6 +628,7 @@ export function hasCompleteSources(lesson: FiqhLesson): boolean {
 
 export function getLessonContentStatus(lesson: FiqhLesson): FiqhContentStatus {
   if (!lesson.title?.trim()) return "needs_completion";
+  if (lesson.needsReview === true) return "under_review";
   if (lesson.status !== "published") return "under_review";
   if (!hasCompleteSources(lesson)) return "under_review";
   if (!lesson.summary?.trim() || !lesson.evidence?.trim() || !lesson.preferred?.trim()) {

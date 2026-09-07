@@ -73,3 +73,10 @@
 - `node scripts/audit-data-quality.mjs` → 4 تكرارات في Adhkar (راجع `data/data-quality-audit.json`) — عنصر backlog b008، سيُعالَج من نافذة المحتوى.
 - `node scripts/test-identity.mjs` → ناجح، لا مشكلة هوية.
 - `npx tsx scripts/generate-content-counts.ts` → الأعداد مشتقة آلياً بالفعل (books:133, scholars:99, fawaid:496, quizQuestions:978, mindMaps:23) — بند التكليف 4-3 (الأرقام الثابتة) **مُنفَّذ مسبقاً بالكامل**، لا حاجة لعمل إضافي.
+
+---
+
+## إغلاق 2026-09-07 (automation/tasks)
+
+- **b005:** `/rulings/:id` لا تُولَّد عمداً (موسوعة مؤرشفة). صفحات `/annual-courses/:id` أصبحت من `ANNUAL_COURSES_SEED` الحي بدل `platform-seed.snapshot.json`.
+- **b006:** `scripts/sync-seo-data.ts` لا يكتب `library-catalog.json` بعد الإصلاح السابق على main؛ المصدر `regen-library-catalog-json.mjs`.

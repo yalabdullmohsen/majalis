@@ -496,7 +496,10 @@
     "test:fiqh-hub-order": "node --import tsx src/lib/__tests__/fiqh-hub-order-stats-gate.test.ts",
     "test:lesson-speaker-guard": "node --import tsx src/lib/__tests__/lesson-speaker-guard.test.ts",
     "verify:hadith-grades": "node scripts/verify-hadith-grades-gate.mjs",
-    "verify:no-secret-leak": "node scripts/verify-no-secret-leak.mjs"
+    "verify:no-secret-leak": "node scripts/verify-no-secret-leak.mjs",
+    "preview:fiqh-promotion": "node scripts/preview-fiqh-promotion.mjs",
+    "apply:fiqh-promotion": "node scripts/apply-fiqh-promotion.mjs",
+    "verify:fiqh-content": "node scripts/verify-fiqh-content.mjs"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

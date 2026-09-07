@@ -15,7 +15,7 @@
   justify-content: space-between;
   padding: .9rem 1.2rem;
   background: var(--ds-emerald, var(--mj-brand));
-  color: #fff;
+  color: var(--mj-on-brand, #fff);
   cursor: pointer;
   user-select: none;
   gap: .75rem;
@@ -23,11 +23,9 @@
 .sq-header:focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
 .sq-header-content { display: flex; align-items: center; gap: .6rem; }
 .sq-title { font-size: var(--ds-text-base); font-weight: 700; margin: 0; }
-/* .sq-header بانر ملوَّن دومًا (نهاري وليلي) — نصه أبيض في كل الأحوال.
-   القاعدة العامة h1..h6 {color:var(--clr-text-1)!important} في هذا الملف
-   بلا استثناءات فتفوز بالنهاري (لا نسخة data-theme=dark لها هنا)، فينتج
-   نصًّا شبه أسود فوق أخضر داكن (2026-07-17). */
-.sq-header .sq-title { color: #fff !important; }
+/* .sq-header بانر علامة — نهاري: نص أبيض على أخضر عميق؛ ليلي: حبر داكن على أخضر فاتح
+   عبر --mj-on-brand (لا تثبت #fff ليلاً فيُضعف التباين). */
+.sq-header .sq-title { color: var(--mj-on-brand, #fff) !important; }
 .sq-toggle { font-size: .85rem; opacity: .8; flex-shrink: 0; }
 
 .sq-body { padding: 1.2rem 1rem 1rem; display: flex; flex-direction: column; gap: var(--ds-space-4); }

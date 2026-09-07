@@ -102,7 +102,7 @@ git add src/index.css   # يذهب لجذر المستودع وليس artifacts/
 **قواعد الوكلاء (لا تُخالف):**
 
 1. **PR واحد لكل مهمة.** يُمنع فتح سلسلة PRs متتابعة (phase2→phase3→…) للمهمة الواحدة. إن احتاجت المهمة مراحل، أبقِ العمل على فرع واحد وحدّث نفس الـ PR، أو ادمج التعديلات في الفرع الحالي قبل أي طلب جديد.
-2. القاعدة دائمًا `main` (ما عدا `automation/content` و`automation/tasks` اللتين تُدمجان عبر `release-majlisilm.yml`).
+2. القاعدة دائمًا `main`؛ نافذتا `automation/content` و`automation/tasks` تُدمجان إليه عبر PR Ready + auto-merge بعد الدفع.
 3. **كل مهمة تنتهي تُدمَج وتُنشَر.** بعد نجاح الفحوصات: ادفع → PR Ready واحد إلى `main` → تابع Auto-merge + نشر Vercel/`auto-deploy.yml` حتى يظهر الـcommit على الإنتاج. المهمة غير مكتملة ما دام الفرع غير مدموج أو النشر لم يكتمل. لا تطلب من المستخدم دمجًا/نشرًا يدويًا.
 4. لا تترك PRs مفتوحة/Draft/فاشلة CI بعد اكتمال العمل. أصلِح Verify build فورًا وأعد الدفع؛ إن بقي PR قديم متسلسل، أغلقه لصالح PR واحد يستهدف `main`.
-5. استثناء نافذتَي `automation/content` و`automation/tasks` يبقى عبر `release-majlisilm.yml` فقط.
+5. نافذتا `automation/content` و`automation/tasks`: بعد الدفع يُفتح PR Ready مع auto-merge إلى `main` (لا طابور مراجعة ولا انتظار يدوي).

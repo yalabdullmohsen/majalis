@@ -1,5 +1,5 @@
 /**
- * بوابات فقه حنبلية: 17 كتابًا منشورة ← أبواب ← مسائل موثَّقة.
+ * بوابات فقه حنبلية: 18 كتابًا منشورة ← أبواب ← مسائل موثَّقة.
  * التشغيل: pnpm exec tsx src/lib/__tests__/fiqh-books-gates.test.ts
  */
 import { existsSync, readFileSync } from "node:fs";
@@ -58,6 +58,7 @@ const REQUIRED_TITLES = [
   "كتاب النكاح والأسرة",
   "كتاب الجنايات والديات والحدود",
   "كتاب الأطعمة والذبائح",
+  "كتاب اللباس والزينة",
   "كتاب الأيمان والنذور والكفارات",
   "كتاب القضاء والشهادات والدعاوى",
   "كتاب العتق",
@@ -75,16 +76,19 @@ console.log("\n=== ترتيب علمي للكتب ===");
   assert(pos("sawm") < pos("itikaf"), "الصيام قبل الاعتكاف");
   assert(pos("itikaf") < pos("hajj"), "الاعتكاف قبل الحج");
   assert(pos("hajj") < pos("janaza"), "الحج قبل الجنائز — لا جنائز قبل الزكاة/الصيام");
+  assert(pos("janaza") < pos("buyu"), "الجنائز قبل البيوع والمعاملات");
   assert(pos("zakat") < pos("janaza"), "الزكاة قبل الجنائز");
   assert(pos("sawm") < pos("janaza"), "الصيام قبل الجنائز");
   assert(FIQH_CATEGORY_ORDER[0] === "ibadat", "العبادات أول مجموعة");
 }
 
-console.log("\n=== ١) سبعة عشر كتابًا منشورة بعناوين مطلوبة ===");
+console.log("\n=== ١) ثمانية عشر كتابًا منشورة بعناوين مطلوبة ===");
 {
   const books = getAllFiqhBooks();
-  assert(books.length === 17, `عدد الكتب 17 (الفعلي ${books.length})`);
-  assert(publishedBooks().length === 17, "كل الكتب ظاهرة/منشورة");
+  assert(books.length === 18, `عدد الكتب 18 (الفعلي ${books.length})`);
+  assert(publishedBooks().length === 18, "كل الكتب ظاهرة/منشورة");
+  const pos = (id: string) => books.findIndex((b) => b.id === id);
+  assert(pos("atima") >= 0 && pos("atima") < pos("libas"), "الأطعمة قبل اللباس");
   for (const b of books) {
     assert(b.title.startsWith("كتاب "), `يبدأ بكتاب: ${b.id}`);
     assert(Boolean(b.description?.trim()), `وصف للكتاب ${b.id}`);

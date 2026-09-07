@@ -1,5 +1,5 @@
 /**
- * بوابة: تسخين خفيف فقط عند الخمول — لا مصحف ولا فقه ولا بحث على إقلاع الرئيسية.
+ * بوابة: تسخين خفيف عند الخمول — بلا مصحف ولا بحث على إقلاع الرئيسية.
  * تشغيل: npx tsx src/lib/__tests__/prefetch-top-routes.test.ts
  */
 import assert from "node:assert/strict";
@@ -12,8 +12,12 @@ const src = readFileSync(resolve(root, "src/lib/prefetch-top-routes.ts"), "utf8"
 const main = readFileSync(resolve(root, "src/main.tsx"), "utf8");
 
 assert.match(src, /SectionsPage/);
-assert.doesNotMatch(src, /HomePage|LessonsPage|PrayerTimesPage|QuranHubPage|FiqhPage|SearchPage/);
+assert.match(src, /QuranHubPage/);
+assert.match(src, /PrayerTimesPage/);
+assert.match(src, /LessonsPage/);
+assert.match(src, /prefetchAppRoutesShell/);
+assert.doesNotMatch(src, /MushafReaderPage|FiqhPage|SearchPage|HomePage/);
 assert.match(src, /requestIdleCallback/);
 assert.match(src, /(?:10_000|25_000)/);
 assert.match(main, /prefetchTopRoutesOnIdle/);
-console.log("  ✓ prefetch-top-routes على الخمول (خفيف)");
+console.log("  ✓ prefetch-top-routes على الخمول (مراكز التبويب + هيكل المسارات)");

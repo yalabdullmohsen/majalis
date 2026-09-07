@@ -3,10 +3,14 @@
   width: 100%;
   max-width: none;
   box-sizing: border-box;
-  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 60%, var(--mj-brand-deep) 100%);
-  border-radius: 0;
-  padding: 2rem max(1rem, var(--page-gutter, 1rem)) 1.75rem;
-  margin-bottom: 1.5rem;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-primary-dark, var(--mj-brand-deep)) 92%, #000) 0%,
+    var(--color-primary, var(--mj-brand)) 100%
+  );
+  border-radius: 0 0 22px 22px;
+  padding: 1.15rem max(1rem, var(--page-gutter, 1rem)) 1.2rem;
+  margin-bottom: 1rem;
   color: #FFFFFF;
   position: relative;
   overflow: hidden;

@@ -93,15 +93,20 @@
 }
 
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back {
-  color: #fff !important;
-  background: color-mix(in srgb, #fff 18%, transparent) !important;
+  /* خلفية صلبة قابلة للقياس (لا color-mix شفاف فوق تدرّج → NO_COLOR في بوابة التباين) */
+  color: #ffffff !important;
+  background: #0a3d2e !important;
+  background-color: #0a3d2e !important;
+  background-image: none !important;
   border-color: color-mix(in srgb, #faf5ea 40%, transparent) !important;
 }
 
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn.mj-btn--ghost,
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn--ghost {
-  color: #fff !important;
-  background: color-mix(in srgb, #fff 18%, transparent) !important;
+  color: #ffffff !important;
+  background: #0a3d2e !important;
+  background-color: #0a3d2e !important;
+  background-image: none !important;
   border-color: color-mix(in srgb, #faf5ea 40%, transparent) !important;
 }
 

@@ -4,7 +4,7 @@ export const ar = {
   nav_close: "إغلاق",
   nav_search_placeholder: "بحث...",
   nav_search_btn: "بحث",
-  nav_more: "المزيد",
+  nav_more: "الأقسام",
   nav_login: "دخول",
   nav_register: "إنشاء حساب",
   nav_register_short: "حساب",

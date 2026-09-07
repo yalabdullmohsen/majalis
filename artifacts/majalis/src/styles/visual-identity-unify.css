@@ -1,0 +1,585 @@
+/**
+ * visual-identity-unify.css
+ * طبقة توحيد الهوية البصرية — مصحف هادئ (عاجي + أخضر عميق + ذهبي).
+ * تُحمَّل متأخرًا بعد theme-aliases / semantic-layer لتفوز بدون كسر الوظائف.
+ * لا تلمس نص المصحف أو مقاييس أسطره.
+ */
+
+:root {
+  /*
+   * لوحة موحّدة (نهاري).
+   * مهم: قيم --mj-* يجب أن تكون hex صلبة — لا var(--color-*)،
+   * لأن final-release.css (بعد هذه الطبقة) يعيد:
+   *   --color-primary: var(--mj-brand)
+   * فربط --mj-brand ← --color-primary يخلق دورة تُبطل اللون
+   * (خلفية شفافة + نص أبيض فوق العاجي ≈ 1.1:1).
+   */
+  --mj-bg: #f7f3eb;
+  --mj-surface: #fffcf7;
+  --mj-surface-2: #f3eee4;
+  --mj-surface-3: #ebe4d8;
+  --mj-hairline: #d9d2c6;
+  --mj-ink: #16241e;
+  --mj-ink-2: #4a5a53;
+  --mj-muted: #5e6e67;
+  --mj-brand: #0f5c45;
+  --mj-brand-soft: #e2efe8;
+  --mj-brand-deep: #0a3d2e;
+  --mj-accent: #b08a3e;
+  --mj-accent-soft: #f5eedf;
+  --mj-on-brand: #ffffff;
+  --mj-sh: 0 8px 22px -14px rgba(10, 61, 46, 0.18);
+
+  --color-bg: var(--mj-bg);
+  --color-surface: var(--mj-surface);
+  --color-surface-soft: var(--mj-surface-2);
+  --color-primary: var(--mj-brand);
+  --color-primary-dark: var(--mj-brand-deep);
+  --color-primary-soft: var(--mj-brand-soft);
+  --color-primary-contrast: var(--mj-on-brand);
+  --color-primary-foreground: var(--mj-on-brand);
+  --color-accent: var(--mj-accent);
+  --color-border: var(--mj-hairline);
+  --color-text: var(--mj-ink);
+  --color-muted: var(--mj-muted);
+  --color-selected: #e8f3ee;
+  --shadow-soft: var(--mj-sh);
+  --surface-app: var(--mj-bg);
+
+  --radius-card: 18px;
+  --radius-tile: 18px;
+  --radius-button: 14px;
+  --radius-sheet: 22px;
+}
+
+html[data-theme="dark"],
+html.dark {
+  --mj-bg: #121816;
+  --mj-surface: #1b2421;
+  --mj-surface-2: #222c28;
+  --mj-surface-3: #27312d;
+  --mj-hairline: #3a4641;
+  --mj-ink: #f3f7f5;
+  --mj-ink-2: #c5d0cb;
+  --mj-muted: #a8b6af;
+  --mj-brand: #4fb48b;
+  --mj-brand-soft: rgba(79, 180, 139, 0.16);
+  --mj-brand-deep: #1e4d3c;
+  --mj-accent: #d9b871;
+  --mj-accent-soft: rgba(217, 184, 113, 0.16);
+  /* على أخضر فاتح ليلي: حبر داكن واضح (AA) */
+  --mj-on-brand: #06231a;
+  --mj-sh: 0 10px 26px -16px rgba(0, 0, 0, 0.55);
+
+  --color-bg: var(--mj-bg);
+  --color-surface: var(--mj-surface);
+  --color-surface-soft: var(--mj-surface-2);
+  --color-primary: var(--mj-brand);
+  --color-primary-dark: var(--mj-brand-deep);
+  --color-primary-soft: var(--mj-brand-soft);
+  --color-primary-contrast: var(--mj-on-brand);
+  --color-primary-foreground: var(--mj-on-brand);
+  --color-accent: var(--mj-accent);
+  --color-border: var(--mj-hairline);
+  --color-text: var(--mj-ink);
+  --color-muted: var(--mj-muted);
+  --color-selected: rgba(79, 180, 139, 0.18);
+  --shadow-soft: var(--mj-sh);
+  --surface-app: var(--mj-bg);
+}
+
+/* ── أسطح عامة ─────────────────────────────────────────────────────── */
+body,
+.app-shell,
+.app-main,
+#main-content {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* بطاقات عامة أخف */
+.soft-card,
+.hub-card,
+.section-card,
+.ds-card,
+.mj-card {
+  background: var(--color-surface) !important;
+  border: 1px solid color-mix(in srgb, var(--color-border) 88%, transparent) !important;
+  border-radius: var(--radius-card) !important;
+  box-shadow: var(--shadow-soft) !important;
+  color: var(--color-text);
+}
+
+/* أزرار موحّدة — يشمل CTA الرئيسية (.m2030-btn--primary) و.mj-btn الأساسي
+ * خلفية من --mj-brand الصلب مباشرة (لا عبر --color-primary) حتى لا تنهار عند أي دورة متغيّرات.
+ */
+.btn-primary,
+.ds-btn--primary,
+.mj-btn,
+.mj-btn--primary,
+.m2030-btn--primary,
+a.mj-btn,
+a.mj-btn--primary,
+button.mj-btn,
+button.mj-btn--primary,
+button.primary,
+.page-hero .mj-btn--primary,
+.page-hero .m2030-btn--primary,
+.page-hero-mj__actions .m2030-btn--primary,
+.home-page-hero .m2030-btn--primary {
+  background: var(--mj-brand, #0f5c45) !important;
+  background-color: var(--mj-brand, #0f5c45) !important;
+  background-image: none !important;
+  color: var(--mj-on-brand, #ffffff) !important;
+  border: 1px solid var(--mj-brand-deep, #0a3d2e) !important;
+  border-radius: var(--radius-button) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .btn-primary,
+html.dark .btn-primary,
+html[data-theme="dark"] .ds-btn--primary,
+html.dark .ds-btn--primary,
+html[data-theme="dark"] .mj-btn,
+html.dark .mj-btn,
+html[data-theme="dark"] .mj-btn--primary,
+html.dark .mj-btn--primary,
+html[data-theme="dark"] .m2030-btn--primary,
+html.dark .m2030-btn--primary,
+html[data-theme="dark"] a.mj-btn,
+html.dark a.mj-btn,
+html[data-theme="dark"] button.mj-btn,
+html.dark button.mj-btn {
+  background: var(--mj-brand, #4fb48b) !important;
+  background-color: var(--mj-brand, #4fb48b) !important;
+  background-image: none !important;
+  color: var(--mj-on-brand, #06231a) !important;
+  border-color: var(--mj-brand-deep, #1e4d3c) !important;
+}
+
+.mj-btn--ghost,
+.m2030-btn--ghost,
+a.mj-btn--ghost,
+button.mj-btn--ghost {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: none !important;
+}
+
+.btn-secondary,
+.ds-btn--secondary,
+.mj-btn--secondary,
+button.secondary {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-button) !important;
+  box-shadow: none !important;
+}
+
+/* بانر اختبار الأقسام: نص on-brand فوق خلفية العلامة */
+.sq-header {
+  background: var(--mj-brand, #0f5c45) !important;
+  background-color: var(--mj-brand, #0f5c45) !important;
+  background-image: none !important;
+  color: var(--mj-on-brand, #ffffff) !important;
+  border-color: var(--mj-brand-deep, #0a3d2e) !important;
+}
+
+.sq-header,
+.sq-header .sq-title,
+.sq-header .sq-kicker,
+.sq-header .sq-meta,
+.sq-header .sq-toggle,
+.sq-header svg {
+  color: var(--mj-on-brand, #ffffff) !important;
+}
+
+html[data-theme="dark"] .sq-header,
+html.dark .sq-header {
+  background: var(--mj-brand, #4fb48b) !important;
+  background-color: var(--mj-brand, #4fb48b) !important;
+  color: var(--mj-on-brand, #06231a) !important;
+  border-color: var(--mj-brand-deep, #1e4d3c) !important;
+}
+
+html[data-theme="dark"] .sq-header,
+html.dark .sq-header,
+html[data-theme="dark"] .sq-header .sq-title,
+html.dark .sq-header .sq-title,
+html[data-theme="dark"] .sq-header .sq-kicker,
+html.dark .sq-header .sq-kicker,
+html[data-theme="dark"] .sq-header .sq-meta,
+html.dark .sq-header .sq-meta,
+html[data-theme="dark"] .sq-header .sq-toggle,
+html.dark .sq-header .sq-toggle,
+html[data-theme="dark"] .sq-header svg,
+html.dark .sq-header svg {
+  color: var(--mj-on-brand, #06231a) !important;
+}
+
+/* فلاتر/شيبس — ليست دوائر ضخمة ولا أخضر صلب قاسٍ */
+.filter-chips__chip,
+.mj-filter-chip,
+.ds-chip,
+.lessons-filter-tab,
+.section-hub__chip,
+.fiqh-hub-strip__tab {
+  min-height: 36px !important;
+  padding-block: 0.35rem !important;
+  padding-inline: 0.75rem !important;
+  border-radius: 999px !important;
+  border: 1px solid var(--color-border) !important;
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  box-shadow: none !important;
+  font-size: 0.86rem !important;
+}
+
+.filter-chips__chip.is-active,
+.mj-filter-chip.is-active,
+.ds-chip.is-active,
+.lessons-filter-tab--active,
+.lessons-filter-tab.is-active,
+.section-hub__chip.is-active,
+.fiqh-hub-strip__tab--active,
+.fiqh-hub-strip__tab.is-active {
+  background: var(--color-selected) !important;
+  color: var(--color-primary-dark) !important;
+  border-color: color-mix(in srgb, var(--color-primary) 55%, var(--color-border)) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .filter-chips__chip.is-active,
+html.dark .filter-chips__chip.is-active,
+html[data-theme="dark"] .lessons-filter-tab--active,
+html.dark .lessons-filter-tab--active,
+html[data-theme="dark"] .section-hub__chip.is-active,
+html.dark .section-hub__chip.is-active,
+html[data-theme="dark"] .fiqh-hub-strip__tab--active,
+html.dark .fiqh-hub-strip__tab--active {
+  color: var(--color-text) !important;
+  background: var(--color-selected) !important;
+  border-color: color-mix(in srgb, var(--color-primary) 45%, var(--color-border)) !important;
+}
+
+/* ── دخول ──────────────────────────────────────────────────────────── */
+.login-page {
+  --auth-green: var(--color-primary) !important;
+  --auth-green-deep: var(--color-primary-dark) !important;
+  --auth-ink: var(--color-text) !important;
+  --auth-muted: var(--color-muted) !important;
+  --auth-line: var(--color-border) !important;
+  --auth-surface: var(--color-surface) !important;
+  --auth-field: var(--color-surface-soft) !important;
+  background: var(--color-bg) !important;
+  color: var(--color-text) !important;
+}
+
+.login-card {
+  border: 1px solid var(--color-border) !important;
+  background: var(--color-surface) !important;
+  border-radius: var(--radius-sheet) !important;
+  box-shadow: var(--shadow-soft) !important;
+  max-width: 22rem;
+  padding: 1.15rem 1.05rem 1rem !important;
+}
+
+.login-card__brand {
+  color: var(--color-primary-dark) !important;
+}
+
+.login-tab.is-active,
+.login-submit {
+  background: var(--color-primary) !important;
+  border-color: var(--color-primary-dark) !important;
+  color: var(--mj-on-brand, #fff) !important;
+  box-shadow: none !important;
+}
+
+.login-field,
+.login-page input,
+.login-page .login-input {
+  background: var(--color-surface-soft) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text) !important;
+  border-radius: 12px !important;
+}
+
+.login-field input::placeholder,
+.login-page input::placeholder,
+.login-page .login-input::placeholder {
+  color: var(--mj-ink-2, #4a5a53) !important;
+  opacity: 1 !important;
+}
+
+/* ── قائمة جانبية ──────────────────────────────────────────────────── */
+.drawer-panel,
+.sidebar-panel {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-inline-end: 1px solid var(--color-border) !important;
+  box-shadow: var(--shadow-soft) !important;
+}
+
+.sidebar-item {
+  border-inline-start: 0 !important;
+  border-radius: 12px !important;
+  color: var(--color-text) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  min-height: 44px;
+}
+
+.sidebar-item.active,
+.sidebar-item[aria-current="page"],
+.sidebar-item.is-active {
+  background: var(--color-selected) !important;
+  color: var(--color-primary-dark) !important;
+  border-inline-start: 0 !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-primary) 35%, transparent) !important;
+}
+
+.sidebar-item.active .sidebar-item-icon,
+.sidebar-item.is-active .sidebar-item-icon {
+  background: color-mix(in srgb, var(--color-primary) 12%, transparent) !important;
+  color: var(--color-primary) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .sidebar-item.active,
+html.dark .sidebar-item.active {
+  color: var(--color-text) !important;
+}
+
+/* ── قرآن (مركز/بطاقات — دون المصحف) ───────────────────────────────── */
+.quran-hub,
+.quran-hub-page,
+.section-lobby {
+  background: var(--color-bg) !important;
+  color: var(--color-text) !important;
+}
+
+.quran-hub-hero,
+.quran-hub-closing,
+.card--featured,
+.section-lobby__featured {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: var(--shadow-soft) !important;
+}
+
+.quran-hub-hero__title,
+.quran-hub-hero__sub,
+.quran-hub-closing *,
+.card--featured,
+.card--featured * {
+  color: inherit !important;
+}
+
+.quran-open-mushaf__cta-btn,
+.quran-hub .btn-primary {
+  box-shadow: none !important;
+}
+
+/* ── دروس ──────────────────────────────────────────────────────────── */
+.lessons-page,
+.lessons-page-v2,
+.lessons-page-v3 {
+  --lesson-green: var(--color-primary) !important;
+  --lesson-green-deep: var(--color-primary-dark) !important;
+  --lesson-green-soft: var(--color-primary-soft) !important;
+  background: var(--color-bg) !important;
+  color: var(--color-text) !important;
+}
+
+.lesson-unified-card,
+.lessons-page .soft-card {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: var(--shadow-soft) !important;
+  border-radius: var(--radius-card) !important;
+}
+
+.lessons-page-v3 .page-hero-mj,
+.lessons-page-v2 .page-hero-mj,
+.lessons-v2-filters,
+.lessons-v3-sticky {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: none !important;
+}
+
+.lessons-page-v3 .filter-chips__chip.is-active,
+.lessons-filter-tabs .lessons-filter-tab--active {
+  background: var(--color-selected) !important;
+  color: var(--color-primary-dark) !important;
+}
+
+/* ── فقه ───────────────────────────────────────────────────────────── */
+.fqh-hub-hero,
+.fiqh-lux-book-hero,
+.page-hero-mj--bleed,
+.mss-hero-surface {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-primary-dark) 88%, #000) 0%,
+    var(--color-primary) 100%
+  ) !important;
+  color: #fffef9 !important;
+  box-shadow: var(--shadow-soft) !important;
+  min-height: 0 !important;
+  padding-block: 1.1rem !important;
+}
+
+/*
+ * زر الرجوع على الهيرو المتدرج يستخدم .mj-btn (أول مطابقة لبوابة التباين).
+ * خلفية شفافة/color() + تدرّج الأب → NO_COLOR. ثبّت خلفية صلبة + نص عاجي.
+ */
+.page-hero-mj--bleed .page-hero-mj__back,
+.page-hero-mj--bleed .mj-btn.mj-btn--ghost.app-back-btn,
+.page-hero-mj--bleed .mj-btn.mj-btn--ghost.app-back-btn--hero,
+.mss-hero-surface .page-hero-mj__back,
+.fqh-hub-hero .page-hero-mj__back,
+.fiqh-lux-book-hero .page-hero-mj__back {
+  background: #0a3d2e !important;
+  background-color: #0a3d2e !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border: 1px solid color-mix(in srgb, #ffffff 32%, transparent) !important;
+  box-shadow: none !important;
+}
+
+.page-hero-mj--bleed .page-hero-mj__back *,
+.page-hero-mj--bleed .mj-btn.mj-btn--ghost.app-back-btn *,
+.mss-hero-surface .page-hero-mj__back *,
+.fqh-hub-hero .page-hero-mj__back *,
+.fiqh-lux-book-hero .page-hero-mj__back * {
+  color: inherit !important;
+}
+
+.fqh-hub-hero {
+  border-radius: 0 0 var(--radius-sheet) var(--radius-sheet);
+  margin-bottom: 0.85rem;
+}
+
+.fqh-hub-card,
+.fiqh-hub .soft-card {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: var(--shadow-soft) !important;
+  border-radius: var(--radius-card) !important;
+  color: var(--color-text) !important;
+}
+
+/* ── أقسام ─────────────────────────────────────────────────────────── */
+.section-hub,
+.section-hub__intro,
+.section-hub__card {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: var(--shadow-soft) !important;
+  border-radius: var(--radius-card) !important;
+}
+
+.section-hub {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.section-hub__intro {
+  background: var(--color-surface-soft) !important;
+}
+
+/* أبطال الأقسام العامة — لا تبتلع الصفحة */
+.page-hero-mj,
+.mss-hero,
+.modern-section-hero {
+  box-shadow: var(--shadow-soft) !important;
+}
+
+.page-hero-mj:not(.page-hero-mj--bleed),
+.mss-hero:not(.mss-hero-surface) {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+/* أيقونات موحّدة الحجم/اللون في البطاقات */
+.hub-card svg,
+.section-card svg,
+.soft-card svg,
+.sidebar-item-icon svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  color: currentColor;
+}
+
+/* تباين نص عام */
+.login-page,
+.drawer-panel,
+.sidebar-panel,
+.quran-hub,
+.lessons-page,
+.lessons-page-v2,
+.lessons-page-v3,
+.section-hub,
+.fqh-hub,
+.fiqh-hub {
+  color: var(--color-text);
+}
+
+.login-page .muted,
+.sidebar-item__meta,
+.quran-hub .muted,
+.lessons-page .muted,
+.section-hub__meta {
+  /* ink-2 أوضح من muted على surface-soft (AA) */
+  color: var(--mj-ink-2, var(--color-muted)) !important;
+}
+
+/* شريط علوي / بحث — نص واضح فوق سطح فاتح */
+.header-ticker,
+.header-ticker__track,
+.app-header .global-search,
+.global-search input,
+.search-input,
+input[type="search"] {
+  color: var(--color-text) !important;
+}
+
+.global-search input::placeholder,
+.search-input::placeholder,
+input[type="search"]::placeholder {
+  color: var(--mj-ink-2, #4a5a53) !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .global-search input::placeholder,
+html.dark .global-search input::placeholder,
+html[data-theme="dark"] .search-input::placeholder,
+html.dark .search-input::placeholder,
+html[data-theme="dark"] input[type="search"]::placeholder,
+html.dark input[type="search"]::placeholder,
+html[data-theme="dark"] .login-field input::placeholder,
+html.dark .login-field input::placeholder {
+  color: var(--mj-ink-2, #c5d0cb) !important;
+}
+
+/* تبويب سفلي نشط — علامة عميقة واضحة */
+.bottom-nav__tab.is-active,
+.bottom-nav--v2 .bottom-nav__tab.is-active {
+  color: var(--color-primary-dark, var(--mj-brand-deep)) !important;
+}
+
+html[data-theme="dark"] .bottom-nav__tab.is-active,
+html.dark .bottom-nav__tab.is-active,
+html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active,
+html.dark .bottom-nav--v2 .bottom-nav__tab.is-active {
+  color: var(--mj-brand, var(--color-primary)) !important;
+}

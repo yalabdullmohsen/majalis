@@ -151,7 +151,7 @@ html[dir="rtl"] .sidebar-panel {
   text-decoration: none;
   background: transparent;
   border: 1px solid transparent;
-  border-inline-start: 3px solid transparent;
+  border-inline-start: 0;
   box-sizing: border-box;
   cursor: pointer;
   font: inherit;
@@ -163,11 +163,11 @@ html[dir="rtl"] .sidebar-panel {
 }
 
 .sidebar-item.active {
-  background: var(--primary-soft, color-mix(in srgb, var(--sidebar-item-accent, #12362a) 12%, #ffffff));
-  border-color: var(--border-soft, color-mix(in srgb, var(--sidebar-item-accent, #12362a) 22%, transparent));
-  border-inline-start-color: var(--primary-strong, var(--sidebar-item-accent, #12362a));
-  color: var(--primary-strong, #12362a);
-  box-shadow: none;
+  background: var(--color-selected, var(--primary-soft, color-mix(in srgb, var(--color-primary, #0f5c45) 12%, #ffffff)));
+  border-color: color-mix(in srgb, var(--color-primary, #0f5c45) 35%, transparent);
+  border-inline-start-color: transparent;
+  color: var(--color-primary-dark, var(--primary-strong, #0a3d2e));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-primary, #0f5c45) 28%, transparent);
 }
 
 .sidebar-item-icon {
@@ -184,9 +184,9 @@ html[dir="rtl"] .sidebar-panel {
 }
 
 .sidebar-item.active .sidebar-item-icon {
-  background: var(--sidebar-item-accent, #12362a);
-  color: #fff;
-  border-color: transparent;
+  background: color-mix(in srgb, var(--color-primary, #0f5c45) 14%, transparent);
+  color: var(--color-primary, #0f5c45);
+  border-color: color-mix(in srgb, var(--color-primary, #0f5c45) 28%, transparent);
 }
 
 .sidebar-item-text {

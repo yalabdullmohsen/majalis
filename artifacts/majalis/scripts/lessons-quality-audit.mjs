@@ -208,6 +208,96 @@ for (const file of scanFiles) {
   }
 }
 
+// حراس جودة: متحدث ≠ باب/مدة، ولا عناوين مكررة المقاطع، ومزامنة snapshot↔chunk
+const FORBIDDEN_SPEAKERS = new Set([
+  "الطهارة",
+  "علوم القرآن",
+  "نواقض الإسلام",
+  "18 مجلساً",
+  "متاح 24 ساعة",
+]);
+const DURATIONISH = /^(?:\d+\s*مجلس|\d+\s*ساعة|متاح\s*\d+|٢٤\s*ساعة)/u;
+
+function titleHasDupSegments(title) {
+  const parts = String(title || "")
+    .split(/\s*[—–\-]\s*/u)
+    .map((p) => p.trim())
+    .filter(Boolean);
+  for (let i = 1; i < parts.length; i += 1) {
+    if (parts[i] === parts[i - 1]) return true;
+  }
+  return false;
+}
+
+function assertSpeakerQuality(rows, sourceLabel) {
+  for (const row of rows) {
+    const speaker = String(row.speaker_name || row.sheikh_name || "").trim();
+    const title = String(row.title || "");
+    if (!speaker) continue;
+    if (
+      FORBIDDEN_SPEAKERS.has(speaker) ||
+      DURATIONISH.test(speaker)
+    ) {
+      addRow({
+        id: `speaker-${sourceLabel}-${row.id}`,
+        title,
+        sheikh: speaker,
+        date: "",
+        place: "",
+        isDuplicate: false,
+        isMultiSessionCourse: false,
+        status: "bad_speaker",
+        suggestedFix: "speaker يجب أن يكون اسم عالم لا بابًا/مدة/عنوانًا",
+        blocksDeploy: true,
+        severity: "critical",
+      });
+    }
+    if (titleHasDupSegments(title)) {
+      addRow({
+        id: `dup-title-${sourceLabel}-${row.id}`,
+        title,
+        sheikh: speaker,
+        date: "",
+        place: "",
+        isDuplicate: true,
+        isMultiSessionCourse: false,
+        status: "duplicate_title_segments",
+        suggestedFix: "إزالة تكرار مقاطع العنوان",
+        blocksDeploy: true,
+        severity: "critical",
+      });
+    }
+  }
+}
+
+const snapshotPath = "scripts/lessons-seed.snapshot.json";
+const snapshotRows = existsSync(resolve(root, snapshotPath)) ? readJson(snapshotPath) : [];
+assertSpeakerQuality(rawRows, "chunk");
+assertSpeakerQuality(Array.isArray(snapshotRows) ? snapshotRows : [], "snapshot");
+
+if (Array.isArray(snapshotRows) && snapshotRows.length) {
+  const chunkById = new Map(rawRows.map((r) => [r.id, r]));
+  for (const s of snapshotRows) {
+    const c = chunkById.get(s.id);
+    if (!c) continue;
+    if ((c.speaker_name || "") !== (s.speaker_name || "") || (c.title || "") !== (s.title || "")) {
+      addRow({
+        id: `sync-${s.id}`,
+        title: s.title || c.title || s.id,
+        sheikh: s.speaker_name || "",
+        date: "",
+        place: "",
+        isDuplicate: false,
+        isMultiSessionCourse: false,
+        status: "snapshot_chunk_drift",
+        suggestedFix: "زامن lessons-seed.snapshot.json مع public/data/lessons/chunk-000.json",
+        blocksDeploy: true,
+        severity: "critical",
+      });
+    }
+  }
+}
+
 // مصحف/تفسير
 const mushafCss = existsSync(resolve(root, "src/styles/pages/mushaf.css"))
   ? readText("src/styles/pages/mushaf.css")

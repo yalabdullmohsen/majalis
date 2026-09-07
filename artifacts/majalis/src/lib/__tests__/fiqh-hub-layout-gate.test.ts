@@ -21,8 +21,8 @@ assert.doesNotMatch(view, /المكتبة العلمية/);
 assert.match(css, /fiqh-book-grid|fiqh-book-card/);
 
 const books = publishedBooks();
-assert.equal(books.length, 17, `17 كتابًا منشورًا (الآن ${books.length})`);
-assert.equal(getAllFiqhBooks().length, 17);
+assert.equal(books.length, 18, `18 كتابًا منشورًا (الآن ${books.length})`);
+assert.equal(getAllFiqhBooks().length, 18);
 
 const hits = searchFiqhCatalog("الطهارة");
 assert.ok(hits.books.some((b) => b.id === "taharah"));

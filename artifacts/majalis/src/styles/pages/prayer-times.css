@@ -987,3 +987,9 @@ html.pts-immersive .bottom-nav {
 .pts-screen .pts-ranks__ruling {
   color: var(--pts-muted) !important;
 }
+
+.pts-timetable-skel {
+  min-height: 3rem;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--mj-brand, #0F5C45) 6%, transparent);
+}

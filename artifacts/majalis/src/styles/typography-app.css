@@ -1,11 +1,11 @@
 /**
  * طباعة واجهة التطبيق — خارج المصحف/QPC.
- * خط الواجهة الموحّد: Amiri عبر --font-app (كما كان قبل طبقة Noto Naskh).
+ * خط الواجهة الموحّد: Amiri عبر --font-ui (--font-app alias).
  */
 
 :root {
-  --font-heading: var(--font-app, "Amiri", "Traditional Arabic", serif);
-  --font-body-ui: var(--font-app, "Amiri", "Traditional Arabic", serif);
+  --font-heading: var(--font-ui, var(--font-app, "Amiri", "Traditional Arabic", serif));
+  --font-body-ui: var(--font-ui, var(--font-app, "Amiri", "Traditional Arabic", serif));
   --brand-contrast: var(--brand-on-white, var(--mj-brand-deep));
 
   /* مقاسات موحّدة */
@@ -18,6 +18,11 @@
   --lh-type-ui: 1.65;
   --lh-type-card: 1.55;
   --lh-type-prose: 1.75;
+
+  /* أوزان الواجهة فقط: 400 / 500 / 700 (مغطاة بملفات Amiri) */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
 
   /* نصوص فوق الخلفيات الداكنة/المتدرجة */
   --text-on-dark-primary: #ffffff;
@@ -48,7 +53,7 @@
   .fiqh-group__title
 ) {
   font-family: var(--font-heading);
-  font-weight: 700;
+  font-weight: var(--fw-bold, 700);
 }
 
 /* قصّ الأسطر الطويلة في البطاقات */
@@ -86,7 +91,7 @@
 .twh-hub-card__title {
   font-size: var(--type-card-title);
   line-height: var(--lh-type-card);
-  font-weight: 700;
+  font-weight: var(--fw-bold, 700);
 }
 
 .hub-card__desc,
@@ -94,7 +99,7 @@
 .twh-hub-card__desc {
   font-size: var(--type-card-desc);
   line-height: var(--lh-type-ui);
-  font-weight: 400;
+  font-weight: var(--fw-regular, 400);
   color: var(--text-secondary);
 }
 
@@ -103,7 +108,7 @@
 .fq-hero__title {
   font-size: var(--type-page-title) !important;
   line-height: 1.35 !important;
-  font-weight: 800 !important;
+  font-weight: var(--fw-bold, 700) !important;
 }
 
 /* خلفيات داكنة — تباين واضح (لا تُجاوز لون العناوين العامة h1/h2) */
@@ -143,7 +148,7 @@
 .fq-tab,
 .fiqh-chip {
   font-size: var(--type-card-desc);
-  font-weight: 600;
+  font-weight: var(--fw-medium, 500);
   line-height: var(--lh-type-ui);
   white-space: nowrap;
 }
