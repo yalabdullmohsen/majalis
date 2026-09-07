@@ -672,8 +672,8 @@ const HEAD_ASSETS = `<link rel="icon" href="/favicon.ico?v=${ASSET_VERSION}" siz
     <link rel="icon" type="image/png" href="/icon-512.png?v=${ASSET_VERSION}" sizes="512x512" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=${ASSET_VERSION}" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="preload" href="/fonts/ui/amiri-400-ar.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/ui/amiri-700-ar.woff2" as="font" type="font/woff2" crossorigin />`;
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />`;
 
 /**
  * D1: فصل حقول المحتوى
