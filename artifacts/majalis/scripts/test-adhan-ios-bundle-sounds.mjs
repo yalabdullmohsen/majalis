@@ -22,6 +22,10 @@ const required = [
   "adhan-seq-makkah-03.caf",
   "adhan-seq-makkah-04.caf",
   "adhan-short-makkah-fajr.caf",
+  "prayer-alert.caf",
+  "alarm-clear.caf",
+  "soft-ring.caf",
+  "short-ring.caf",
 ];
 
 for (const name of required) {
@@ -31,6 +35,10 @@ for (const name of required) {
   assert.ok(
     new RegExp(`\\/\\* ${name.replace(/\./g, "\\.")} in Resources \\*\\/ = \\{isa = PBXBuildFile`).test(pbx),
     `${name} بلا PBXBuildFile (مرجع معلق)`,
+  );
+  assert.ok(
+    new RegExp(`\\/\\* ${name.replace(/\./g, "\\.")} \\*\\/ = \\{isa = PBXFileReference`).test(pbx),
+    `${name} بلا PBXFileReference (مرجع معلق)`,
   );
 }
 

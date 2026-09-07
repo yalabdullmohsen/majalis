@@ -27,7 +27,7 @@ function assertDirBudget(dir: string, label: string): number {
     );
     total += st.size;
   }
-  assert.ok(total < 2_000_000, `حجم مجلد ${label} ${total} يتجاوز 2 ميغابايت`);
+  assert.ok(total < 3_500_000, `حجم مجلد ${label} ${total} يتجاوز 3.5 ميغابايت`);
   return total;
 }
 

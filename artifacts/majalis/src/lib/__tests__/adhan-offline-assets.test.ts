@@ -31,8 +31,8 @@ assert.ok(resolveOfflineClipUrl("alharam", "general")?.startsWith("/audio/adhan/
 assert.ok(resolveOfflineClipUrl("turkey", "general")?.startsWith("/audio/adhan/"));
 assert.ok(resolveOfflineClipUrl("soft", "short")?.startsWith("/audio/adhan/"));
 
-assert.equal(notificationSoundForAdhanPack("makkah"), "adhan-short-makkah.caf");
-assert.equal(notificationSoundForAdhanPack("madinah"), "adhan-short-makkah.caf");
+assert.equal(notificationSoundForAdhanPack("makkah"), "prayer-alert.caf");
+assert.equal(notificationSoundForAdhanPack("madinah"), "prayer-alert.caf");
 assert.equal(notificationSoundForAdhanPack("egypt"), "adhan-short-egypt.caf");
 
 const aqsa = getMuezzin("aqsa");

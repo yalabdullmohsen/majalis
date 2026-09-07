@@ -116,6 +116,10 @@
 		AD11FR08A1B2C3D4E5F6071890 /* adhan-seq-makkah-03.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-seq-makkah-03.caf; path = adhan-seq-makkah-03.caf; sourceTree = "<group>"; };
 		AD11FR09A1B2C3D4E5F6071890 /* adhan-seq-makkah-04.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-seq-makkah-04.caf; path = adhan-seq-makkah-04.caf; sourceTree = "<group>"; };
 		AD11FR10A1B2C3D4E5F6071890 /* adhan-short-makkah-fajr.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = adhan-short-makkah-fajr.caf; path = adhan-short-makkah-fajr.caf; sourceTree = "<group>"; };
+		AA01FR01PRAYERALERT0001 /* prayer-alert.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "prayer-alert.caf"; path = "Sounds/prayer-alert.caf"; sourceTree = "<group>"; };
+		AA01FR02ALARMCLEAR00001 /* alarm-clear.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "alarm-clear.caf"; path = "Sounds/alarm-clear.caf"; sourceTree = "<group>"; };
+		AA01FR03SOFTRING0000001 /* soft-ring.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "soft-ring.caf"; path = "Sounds/soft-ring.caf"; sourceTree = "<group>"; };
+		AA01FR04SHORTRING000001 /* short-ring.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "short-ring.caf"; path = "Sounds/short-ring.caf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

@@ -103,9 +103,9 @@ assert.notEqual(
 assert.equal(entitlements.includes("critical-alerts"), false);
 assert.doesNotMatch(settingsView, /تجاوز الصامت|Critical Alerts|تجاوز التركيز/);
 assert.match(prefsSrc, /bypassSilentMode:\s*false/);
-assert.match(settingsView, /12_000/);
+assert.match(settingsView, /fireTestLocalNotification\(10_000\)/);
 assert.match(settingsView, /فشل التشغيل/);
-assert.match(settingsView, /اختبار إشعار بعد ١٥ ثانية/);
+assert.match(settingsView, /اختبار الإشعار بعد ١٠ ثوانٍ/);
 assert.match(settingsView, /فحص حالة الأذان/);
 assert.doesNotMatch(settingsView, /adhan-makkah-short\.caf|adhan-madinah-short\.caf/);
 assert.doesNotMatch(localNotif, /adhan-makkah-short\.caf|adhan-madinah-short\.caf/);
