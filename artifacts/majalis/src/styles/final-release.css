@@ -1142,10 +1142,7 @@ html[data-theme="dark"] .bottom-nav--v2 {
   border-top-color: var(--color-border) !important;
   box-shadow: 0 -1px 0 color-mix(in srgb, #fff 8%, transparent) !important;
 }
-@media (max-width: 879px) {
-  html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab,
-  html[data-theme="dark"] .bottom-nav .bottom-nav__tab {
-    color: var(--color-text-muted) !important;
+@media (max-width: 56px;
     border-radius: var(--radius-nav, var(--mj-r-md, 28px)) !important;
   }
   html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active,
@@ -1159,6 +1156,8 @@ html[data-theme="dark"] .bottom-nav--v2 {
 .global-back-btn,
 .floating-back-btn,
 .scroll-to-top {
+  height: 56px;
+  border-radius: 50%;
   position: fixed;
   bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 16px);
   z-index: 185;
@@ -1269,10 +1268,15 @@ html[data-theme="dark"] .floating-back-btn:not(.floating-back-btn--top) {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  overflow: hidden;
+  display: block;
 }
 .stt-ring circle:last-child { transition: stroke-dashoffset 0.35s ease; }
-.stt-icon { position: relative; z-index: 1; flex-shrink: 0; }
+.stt-icon {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin: 0 auto;
+}
 @media (min-width: 880px) {
   .global-back-btn,
   .floating-back-btn,
@@ -2098,4 +2102,29 @@ html.dark .bottom-nav--v2 {
 [data-app-back="1"][data-back-variant="floating"] {
   z-index: var(--z-fab, 220) !important;
   pointer-events: auto !important;
+}
+
+
+/* stt-balance-fix */
+.scroll-to-top {
+  width: 56px !important;
+  height: 56px !important;
+  min-width: 56px !important;
+  min-height: 56px !important;
+  border-radius: 50% !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  padding: 0 !important;
+}
+.scroll-to-top .stt-ring {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+}
+.scroll-to-top .stt-icon {
+  position: relative;
+  z-index: 1;
+  margin: 0;
 }

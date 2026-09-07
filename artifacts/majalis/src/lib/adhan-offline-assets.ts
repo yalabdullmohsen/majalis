@@ -23,9 +23,9 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
     id: "makkah",
     labelAr: "أذان الحرم المكي",
     local: {
-      general: "/audio/adhan/adhan-makkah-full.m4a",
+      general: "/audio/adhan/adhan-makkah.mp3",
       fajr: "/audio/adhan/adhan-makkah-fajr.mp3",
-      short: "/audio/adhan/adhan-makkah-full.m4a",
+      short: "/audio/adhan/adhan-makkah.mp3",
       takbir: "/audio/adhan/adhan-takbeerat-short.mp3",
     },
     remote: {
@@ -34,7 +34,22 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
       short: `${CDN}/general/makkah-haram-02.mp3`,
       takbir: `${CDN}/general/makkah-haram-02.mp3`,
     },
-    notificationSound: "adhan-short-makkah.caf",
+    notificationSound: "prayer-alert.caf",
+  },
+  {
+    id: "qatami",
+    labelAr: "أذان ناصر القطامي",
+    local: {
+      general: "/audio/adhan/adhan-qatami.mp3",
+      short: "/audio/adhan/adhan-qatami.mp3",
+      takbir: "/audio/adhan/adhan-takbeerat-short.mp3",
+    },
+    remote: {
+      general: `${CDN}/general/nasser-al-qatami-01.mp3`,
+      short: `${CDN}/general/nasser-al-qatami-01.mp3`,
+      takbir: `${CDN}/general/makkah-haram-02.mp3`,
+    },
+    notificationSound: "prayer-alert.caf",
   },
   {
     id: "egypt",
@@ -79,7 +94,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
       takbir: `${CDN}/general/makkah-haram-02.mp3`,
       general: `${CDN}/general/makkah-haram-02.mp3`,
     },
-    notificationSound: "adhan-short-takbeerat.caf",
+    notificationSound: "short-ring.caf",
   },
   {
     id: "alharam",
@@ -96,7 +111,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
       short: `${CDN}/general/makkah-haram-02.mp3`,
       takbir: `${CDN}/general/makkah-haram-02.mp3`,
     },
-    notificationSound: "adhan-short-makkah.caf",
+    notificationSound: "prayer-alert.caf",
   },
   {
     id: "soft",
@@ -111,7 +126,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
       short: `${CDN}/general/makkah-haram-02.mp3`,
       takbir: `${CDN}/general/makkah-haram-02.mp3`,
     },
-    notificationSound: "adhan-short-takbeerat.caf",
+    notificationSound: "short-ring.caf",
   },
   {
     id: "turkey",
@@ -126,14 +141,14 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
       short: `${CDN}/general/makkah-haram-02.mp3`,
       takbir: `${CDN}/general/makkah-haram-02.mp3`,
     },
-    notificationSound: "adhan-short-takbeerat.caf",
+    notificationSound: "short-ring.caf",
   },
   {
     id: "kuwait",
     labelAr: "أذان خليجي قصير",
     local: {
-      general: "/audio/adhan/adhan-takbeerat-short.mp3",
-      short: "/audio/adhan/adhan-takbeerat-short.mp3",
+      general: "/audio/adhan/adhan-gulf-short.mp3",
+      short: "/audio/adhan/adhan-gulf-short.mp3",
       takbir: "/audio/adhan/adhan-takbeerat-short.mp3",
     },
     remote: {
@@ -141,7 +156,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
       short: `${CDN}/general/makkah-haram-02.mp3`,
       takbir: `${CDN}/general/makkah-haram-02.mp3`,
     },
-    notificationSound: "adhan-short-makkah.caf",
+    notificationSound: "prayer-alert.caf",
   },
 ];
 
