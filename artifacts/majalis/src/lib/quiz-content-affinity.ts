@@ -81,6 +81,8 @@ export const QUIZ_ROUTE_SECTION_OVERRIDES: Record<string, string> = {
   "/adab-talab-ilm": "aqidah",
   "/raqaiq": "hadith",
   "/tawba": "akhlaq",
+  "/tazkiya": "akhlaq",
+  "/sins-and-rights": "akhlaq",
   "/sawm": "fiqh",
   "/shimael": "seerah",
   "/wasaya-nabawiyya": "hadith",

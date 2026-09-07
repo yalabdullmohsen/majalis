@@ -15,9 +15,8 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/tawhid", label: "التوحيد" },
     { href: "/asma-husna", label: "أسماء الله الحسنى" },
     { href: "/arkan", label: "أركان الإسلام والإيمان" },
+    { href: "/tazkiya", label: "التزكية والتوبة" },
     { href: "/malaika", label: "الملائكة" },
-    { href: "/sins-and-rights", label: "الذنوب والحقوق" },
-    { href: "/tawba", label: "التوبة والاستغفار" },
   ],
   usra: [
     { href: "/fiqh/books/buyu", label: "كتاب البيوع" },
@@ -33,11 +32,10 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/tafsir", label: "علم التفسير" },
   ],
   tazkiya: [
+    { href: "/tazkiya", label: "التزكية والتوبة" },
     { href: "/akhlaq", label: "الأخلاق" },
     { href: "/raqaiq", label: "الرقائق" },
     { href: "/adhkar", label: "الأذكار" },
-    { href: "/sins-and-rights", label: "الذنوب والحقوق" },
-    { href: "/tawba", label: "التوبة والاستغفار" },
     { href: "/adab-talab-ilm", label: "آداب طالب العلم" },
   ],
   fikr: [

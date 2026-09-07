@@ -38,6 +38,9 @@ function titleFromPath(path: string): string {
   "/islamic-glossary": "المعجم الشرعي",
   "/quiz": "المسابقة",
   "/competitions": "المسابقات",
+  "/tazkiya": "التزكية والتوبة",
+  "/tawba": "التوبة والاستغفار",
+  "/sins-and-rights": "الذنوب والحقوق",
   "/settings": "الإعدادات",
   "/internal/status": "حالة المنصة"
 };
@@ -357,6 +360,7 @@ const PATHS = [
   "/scholars",
   "/scholars/:id",
   "/tasbih",
+  "/tazkiya",
   "/tawba",
   "/tawhid",
   "/tawhid/:slug",
