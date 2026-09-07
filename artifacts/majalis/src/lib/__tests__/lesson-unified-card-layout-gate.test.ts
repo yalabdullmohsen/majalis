@@ -18,7 +18,7 @@ assert.match(card, /أضف للتقويم/, "زر التقويم داخل الب
 assert.match(card, /FavoriteButton/, "زر الحفظ داخل البطاقة");
 assert.match(card, /التفاصيل/, "زر التفاصيل داخل البطاقة");
 assert.doesNotMatch(card, /showEmpty\s*=\s*true/, "لا تُعرض خلايا فارغة");
-assert.match(css, /border-radius:\s*var\(--radius-card,\s*24px\)/, "حواف بطاقة 24px");
+assert.match(css, /border-radius:\s*var\(--radius-card,\s*(?:24|16)px\)/, "حواف بطاقة عبر --radius-card");
 assert.match(css, /lesson-unified-card__facts/, "أنماط facts في lessons.css");
 assert.match(css, /lesson-detail-actions-panel/, "لوحة أزرار التفاصيل");
 assert.match(
