@@ -444,7 +444,7 @@ export default function AdhkarPage() {
             { href: "/mushaf", label: "المصحف" },
           ]}
         />
-        <SectionQuiz sectionId="adhkar" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />
+        <SectionQuiz sectionId="akhlaq" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />
       </div>
     </PageShell>
     </SectionTemplatePage>

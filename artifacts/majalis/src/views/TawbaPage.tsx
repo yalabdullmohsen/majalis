@@ -491,7 +491,7 @@ export default function TawbaPage() {
         </nav>
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz sectionId="adhkar" title="اختبر معلوماتك في التوبة والتزكية" count={4} />
+        <SectionQuiz sectionId="akhlaq" title="اختبر معلوماتك في التوبة والتزكية" count={4} />
       </div>
     </main>
   );

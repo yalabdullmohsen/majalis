@@ -80,7 +80,7 @@ export const QUIZ_ROUTE_SECTION_OVERRIDES: Record<string, string> = {
   "/duas-quran": "quran",
   "/adab-talab-ilm": "aqidah",
   "/raqaiq": "hadith",
-  "/tawba": "adhkar",
+  "/tawba": "akhlaq",
   "/sawm": "fiqh",
   "/shimael": "seerah",
   "/wasaya-nabawiyya": "hadith",
@@ -113,6 +113,10 @@ export function getQuestionsFor(opts: {
   if (!sectionId || !isValidSectionId(sectionId)) return [];
 
   let pool = TAGGED_QUIZ_POOL.filter((q) => q.sectionId === sectionId);
+  // صفحات كانت تستخدم sectionId=adhkar لأسئلة فئة الأخلاق — بعد نقل akhlaq→akhlaq
+  if (pool.length === 0 && sectionId === "adhkar") {
+    pool = TAGGED_QUIZ_POOL.filter((q) => q.sectionId === "akhlaq");
+  }
   if (lessonId) {
     const lessonPool = pool.filter((q) => q.lessonId === lessonId);
     if (lessonPool.length > 0) pool = lessonPool;
