@@ -99,7 +99,7 @@ export default function UpdatesPage() {
       <PageHeader
         eyebrow="النشاط العلمي"
         title="آخر المستجدات"
-        subtitle="دروس ودورات وكتب وإعلانات ومستجدات علمية، مرتّبة زمنياً. يُحدَّث تلقائياً كل 6 ساعات من مصادر المنصة."
+        subtitle="دروس ودورات وكتب وإعلانات ومستجدات علمية، مرتّبة زمنياً حسب ما يُنشر على المنصة."
       />
 
       <div className="content-hub-chips" role="tablist" aria-label="تصفية المستجدات">
