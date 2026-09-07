@@ -952,12 +952,11 @@ const LIST_JSON_LD = {
   ),
   "/competitions": itemListJsonLdScript(
     [
-      { name: "أسئلة القرآن الكريم", url: "/quiz" },
-      { name: "أسئلة الحديث الشريف", url: "/quiz" },
-      { name: "أسئلة السيرة النبوية", url: "/quiz" },
-      { name: "ركن الاختبارات", url: "/quiz" },
+      { name: "أسئلة سين جيم", url: "/quiz" },
+      { name: "الدروس العلمية", url: "/lessons" },
+      { name: "المسابقات (عند التوفر)", url: "/competitions" },
     ],
-    "مسابقات وأسئلة سُنّة",
+    "مسابقات وروابط ذات صلة",
   ),
   "/lessons": itemListJsonLdScript(lessonRows.slice(0, 30).map((r) => ({ name: r.title, url: `/lessons/${r.id}` })), "الدروس الشرعية"),
   "/adhkar": itemListJsonLdScript(FEATURED_ADHKAR.map((c) => ({ name: c.name, url: `/adhkar/${c.slug}` })), "أقسام الأذكار"),

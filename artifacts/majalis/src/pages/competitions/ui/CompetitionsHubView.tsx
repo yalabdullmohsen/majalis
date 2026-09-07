@@ -99,7 +99,7 @@ export default function CompetitionsHubView() {
           إعلانات مسابقات قرآنية وحديثية وتجويدية داخل التطبيق.
         </p>
 
-        <div className="cmp-filters" role="toolbar" aria-label="تصفية المسابقات">
+        <div className="cmp-filters" role="toolbar" aria-label="تصفية المسابقات" hidden={all.length === 0}>
           {COMPETITION_FILTERS.map((f) => (
             <button
               key={f.id}

@@ -1261,6 +1261,158 @@ export const SINS_TOPICS: SinTopic[] = [
     reviewStatus: "reviewed",
     reviewedAt: "2026-07",
   },
+  {
+    id: "riba",
+    slug: "riba",
+    title: "الربا",
+    shortDescription: "أخذ زيادة مشروطة على الدين أو البيع على وجه محرّم شرعًا.",
+    rightsCategory: "allah",
+    sinSeverity: "kabira",
+    sinType: ["mali", "ibadi"],
+    quranEvidence: [
+      {
+        text: "يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَذَرُوا مَا بَقِيَ مِنَ الرِّبَا إِن كُنتُم مُّؤْمِنِينَ",
+        source: "سورة البقرة: 278",
+      },
+      {
+        text: "وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا",
+        source: "سورة البقرة: 275",
+      },
+    ],
+    hadithEvidence: [
+      {
+        text: "لعن رسول الله ﷺ آكل الربا وموكله وكاتبه وشاهديه وقال: هم سواء",
+        source: "رواه مسلم",
+        grade: "صحيح",
+      },
+    ],
+    explanation:
+      "الربا من كبائر الذنوب التي جاء فيها وعيد شديد. أصله الزيادة المحرمة في الديون أو الأصناف الربوية. صوره المعاصرة كثيرة (فوائد القروض الربوية وغيرها) وتفصيلها يحتاج سؤال أهل العلم الثقات بحسب كل معاملة.",
+    effects: [
+      "محق البركة من المال كما جاء في النصوص",
+      "ظلم الطرف الضعيف وإشاعة الاستغلال المالي",
+      "تعريض النفس لوعيد الله الشديد في الربا",
+    ],
+    repentanceConditions: {
+      general: [
+        "الإقلاع فورًا عن التعامل الربوي",
+        "الندم والعزم على عدم العودة",
+        "الخروج من العقود الربوية بما يقرره أهل العلم الثقات لكل حالة",
+      ],
+      requiresRestitution: true,
+      restitutionDetails:
+        "رد الزيادة الربوية إن أمكن، أو التصرف فيها بما يفتي به أهل العلم عند تعذر الرد (وليست هذه فتوى شخصية).",
+      requiresForgiveness: false,
+      hasExpiation: false,
+    },
+    commonMistakes: [
+      "التفريق بين «فائدة بسيطة» وربا محرم بلا مستند",
+      "الاستمرار في العقد الربوي بحجة الضرورة دون سؤال عالم موثوق",
+    ],
+    relatedSlugs: ["dain", "ghish-ihtiyal", "sariqa"],
+    references: ["البقرة: ٢٧٥–٢٧٩؛ صحيح مسلم"],
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-09",
+  },
+  {
+    id: "shirk",
+    slug: "shirk",
+    title: "الشرك بالله",
+    shortDescription: "صرف شيء من العبادة لغير الله، أو مساواة مخلوق بالله في خصائصه.",
+    rightsCategory: "allah",
+    sinSeverity: "kabira",
+    sinType: ["qalbi", "ibadi"],
+    quranEvidence: [
+      {
+        text: "إِنَّ اللَّهَ لَا يَغْفِرُ أَن يُشْرَكَ بِهِ وَيَغْفِرُ مَا دُونَ ذَٰلِكَ لِمَن يَشَاءُ",
+        source: "سورة النساء: 48",
+      },
+      {
+        text: "وَإِذْ قَالَ لُقْمَانُ لِابْنِهِ وَهُوَ يَعِظُهُ يَا بُنَيَّ لَا تُشْرِكْ بِاللَّهِ ۖ إِنَّ الشِّرْكَ لَظُلْمٌ عَظِيمٌ",
+        source: "سورة لقمان: 13",
+      },
+    ],
+    hadithEvidence: [
+      {
+        text: "من مات وهو يدعو من دون الله ندًّا دخل النار",
+        source: "رواه البخاري",
+        grade: "صحيح",
+      },
+    ],
+    explanation:
+      "الشرك أعظم الذنوب لأنه ظلم عظيم بحق الله. منه الأكبر (كدعاء غير الله عبادة) ومنه ما دون ذلك مما بيّنه أهل العلم. التوبة منه بالإخلاص لله وترك ما يضاد التوحيد، ومسائله التفصيلية تُسأل فيها أهل العلم.",
+    effects: [
+      "إحباط الأعمال إن مات صاحبه عليه بلا توبة — كما دلت النصوص على الشرك الأكبر",
+      "نقض أصل الإيمان وفساد القلب",
+      "تعريض النفس لأعظم الوعيد",
+    ],
+    repentanceConditions: {
+      general: [
+        "التوحيد الخالص لله والكف عن كل ما يصرف العبادة لغيره",
+        "الندم الصادق والعزم على عدم العودة",
+        "تعلّم أصول التوحيد من مصادر موثوقة",
+      ],
+      requiresRestitution: false,
+      requiresForgiveness: false,
+      hasExpiation: false,
+    },
+    commonMistakes: [
+      "التساهل بما يُسمّى «تبركًا» أو «واسطة» إن دخل في صرف العبادة لغير الله",
+      "الاكتفاء بقول «أنا مسلم» مع بقاء أعمال تناقض التوحيد",
+    ],
+    relatedSlugs: ["riyaa", "tark-salah"],
+    references: ["النساء: ٤٨؛ لقمان: ١٣؛ صحيح البخاري"],
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-09",
+  },
+  {
+    id: "tark-zakat",
+    slug: "tark-zakat",
+    title: "منع الزكاة",
+    shortDescription: "الامتناع عن إخراج زكاة المال الواجبة مع القدرة والشروط.",
+    rightsCategory: "allah",
+    sinSeverity: "kabira",
+    sinType: ["mali", "ibadi"],
+    quranEvidence: [
+      {
+        text: "وَالَّذِينَ يَكْنِزُونَ الذَّهَبَ وَالْفِضَّةَ وَلَا يُنفِقُونَهَا فِي سَبِيلِ اللَّهِ فَبَشِّرْهُم بِعَذَابٍ أَلِيمٍ",
+        source: "سورة التوبة: 34",
+      },
+    ],
+    hadithEvidence: [
+      {
+        text: "ما من صاحب ذهب ولا فضة لا يؤدي منها حقها إلا إذا كان يوم القيامة صُفّحت له صفائح من نار…",
+        source: "رواه مسلم",
+        grade: "صحيح",
+      },
+    ],
+    explanation:
+      "الزكاة ركن من أركان الإسلام، ومنعها مع الوجوب كبيرة. حساب الأنصبة والمقدار يختلف بحسب نوع المال؛ يُرجع في التفصيل إلى أهل العلم وكتب الفقه المعتمدة.",
+    effects: [
+      "حرمان الفقراء من حقهم في المال",
+      "محق بركة المال وتعريض النفس للوعيد",
+      "إضاعة ركن من أركان الإسلام",
+    ],
+    repentanceConditions: {
+      general: [
+        "حساب ما وجب وإخراجه فورًا قدر الاستطاعة",
+        "الندم والعزم على أداء الزكاة في أوقاتها",
+        "سؤال أهل العلم عند الاشتباه في النصاب أو النوع",
+      ],
+      requiresRestitution: true,
+      restitutionDetails: "إخراج الزكاة الفائتة عن السنوات الماضية بحسب ما يقرره أهل العلم لكل حالة.",
+      requiresForgiveness: false,
+      hasExpiation: false,
+    },
+    commonMistakes: [
+      "الخلط بين الصدقة المستحبة والزكاة الواجبة",
+      "تأجيل الإخراج بلا عذر مع القدرة",
+    ],
+    relatedSlugs: ["tark-salah", "tark-sawm", "riba"],
+    references: ["التوبة: ٣٤–٣٥؛ صحيح مسلم"],
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-09",
+  },
 ];
 
 export const SINS_CATEGORIES: SinCategoryDef[] = [
@@ -1272,7 +1424,7 @@ export const SINS_CATEGORIES: SinCategoryDef[] = [
     rightsCategory: "allah",
     icon: "🕌",
     color: "var(--mj-brand-deep)",
-    topicSlugs: ["tark-salah", "riyaa", "kibr", "hasad", "shurb-khamr", "tark-sawm", "nazar-muharram"],
+    topicSlugs: ["tark-salah", "riyaa", "kibr", "hasad", "shurb-khamr", "tark-sawm", "nazar-muharram", "riba", "shirk", "tark-zakat"],
   },
   {
     id: "ibad",

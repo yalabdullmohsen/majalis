@@ -49,7 +49,7 @@ export const FEATURED: { href: string; Icon: LucideIcon; title: string; desc: st
   { href: "/prayer-times", Icon: Clock, title: seoNavLabel("/prayer-times", "مواقيت الصلاة"), desc: "المواقيت والقبلة والأذان", cta: "افتح" },
   { href: "/fiqh", Icon: Scale, title: seoNavLabel("/fiqh", "الفقه والأحكام"), desc: "الأحكام والقواعد والمجامع تحت باب واحد", cta: "افتح" },
   { href: "/adhkar", Icon: RotateCw, title: seoNavLabel("/adhkar", "الأذكار اليومية"), desc: "أذكار الصباح والمساء وما بينهما", cta: "افتح" },
-  { href: "/sections", Icon: Layers, title: seoNavLabel("/sections", "جميع الأقسام"), desc: "حديث وأعلام وسين جيم وأقسام أخرى", cta: "افتح" },
+  { href: "/sections", Icon: Layers, title: seoNavLabel("/sections", "جميع الأقسام"), desc: "فقه وحديث وأعلام وعبادات وأقسام أخرى", cta: "افتح" },
 ];
 
 /* ── أقسام مصنّفة ── */
@@ -69,7 +69,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/janna-naar",      Icon: Sparkles, title: seoNavLabel("/janna-naar", "صفة الجنة"),  desc: "أبوابها وأنهارها وأسباب دخولها وأدعية الآخرة" },
       { href: "/alamat-saah",    Icon: Star,     title: seoNavLabel("/alamat-saah", "علامات الساعة"),      desc: "الصغرى والكبرى العشر والترتيب وكيف نستعد" },
       { href: "/malaika",       Icon: Sparkles, title: seoNavLabel("/malaika", "الملائكة في الإسلام"), desc: "أسماؤهم ومهامهم وصفاتهم وفضائلهم من الوحي" },
-      { href: "/wasaya-nabawiyya", Icon: Scroll,  title: seoNavLabel("/wasaya-nabawiyya", "الوصايا النبوية"),    desc: "10 وصايا جامعة ووصايا خاصة بالصحابة مع التطبيق" },
+      { href: "/wasaya-nabawiyya", Icon: Scroll,  title: seoNavLabel("/wasaya-nabawiyya", "الوصايا النبوية"),    desc: "49 وصية جامعة وخاصة بالصحابة مع التطبيق" },
       { href: "/raqaiq",          Icon: Heart,  title: seoNavLabel("/raqaiq", "الرقائق والزهد"),      desc: "مواعظ تُليِّن القلوب وأقوال كبار الزاهدين والمحاسبة اليومية" },
     ],
   },
@@ -79,6 +79,8 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     label: "الفقه والأحكام",
     items: [
       { href: "/fiqh",               Icon: Scale,        title: seoNavLabel("/fiqh", "الفقه الإسلامي"),  desc: "بوابة الأحكام والأسئلة والمجمع الفقهي" },
+      { href: "/sins-and-rights",    Icon: Scale,        title: seoNavLabel("/sins-and-rights", "الذنوب والحقوق"), desc: "كبار الذنوب وحقوق الله والعباد وشروط التوبة" },
+      { href: "/tawba",              Icon: Heart,        title: seoNavLabel("/tawba", "التوبة والاستغفار"), desc: "شروط التوبة وفضل الاستغفار من القرآن والسنة" },
       { href: "/tawhid",             Icon: BookMarked,   title: seoNavLabel("/tawhid", "التوحيد"),            desc: "العقيدة الإسلامية" },
       { href: "/arkan",              Icon: Landmark,     title: seoNavLabel("/arkan", "أركان الإسلام الخمسة"),     desc: "الأركان الخمسة مع الأدلة والتفاصيل" },
       { href: "/arkan-iman",         Icon: Star,         title: seoNavLabel("/arkan-iman", "أركان الإيمان الستة"),     desc: "الأركان الستة مع الأدلة وأقوال العلماء" },
@@ -99,7 +101,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     label: "العبادة والأذكار",
     items: [
       { href: "/adhkar",          Icon: Star,        title: seoNavLabel("/adhkar", "الأذكار والأدعية"),     desc: "أذكار الصباح والمساء والأدعية المأثورة" },
-      { href: "/sunan-yawmiyya",  Icon: Check,       title: seoNavLabel("/sunan-yawmiyya", "السنن النبوية"),        desc: "25+ سنة يومية مع تتبع التطبيق" },
+      { href: "/sunan-yawmiyya",  Icon: Check,       title: seoNavLabel("/sunan-yawmiyya", "السنن النبوية"),        desc: "80+ سنة يومية مع تتبع التطبيق" },
       { href: "/duas-quran",  Icon: BookOpen,    title: seoNavLabel("/duas-quran", "أدعية القرآن"),        desc: "أدعية قرآنية للأنبياء والمؤمنين" },
       { href: "/fawaid",       Icon: Lightbulb,   title: seoNavLabel("/fawaid", "الفوائد الشرعية"),      desc: "فوائد شرعية موثّقة ومنتقاة" },
       { href: "/miracles",     Icon: Sparkles,    title: seoNavLabel("/miracles", "الإعجاز العلمي"),      desc: "إشارات كونية بحذر منهجي" },
