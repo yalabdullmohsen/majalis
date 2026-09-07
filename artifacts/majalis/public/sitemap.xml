@@ -16,7 +16,7 @@
     <loc>https://www.ssunnah.com/competitions</loc>
     <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.ssunnah.com/adhkar</loc>
@@ -3016,6 +3016,21 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/sins-and-rights/intihal-shakhsiya</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.68</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/sins-and-rights/riba</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.68</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/sins-and-rights/shirk</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.68</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/sins-and-rights/tark-zakat</loc>
     <changefreq>monthly</changefreq>
     <priority>0.68</priority>
   </url>

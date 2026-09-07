@@ -136,6 +136,9 @@ const MINDMAP_NODES = [
       { label: "ترك الصيام الواجب", slug: "tark-sawm" },
       { label: "شرب الخمر", slug: "shurb-khamr" },
       { label: "النظر المحرم", slug: "nazar-muharram" },
+      { label: "الربا", slug: "riba" },
+      { label: "الشرك بالله", slug: "shirk" },
+      { label: "منع الزكاة", slug: "tark-zakat" },
     ],
   },
   {

@@ -476,6 +476,7 @@ export default function TawbaPage() {
           <h2 className="tw-related__title">استكشف أيضاً</h2>
           <div className="tw-related__grid">
             {[
+              { href: "/sins-and-rights", label: "الذنوب والحقوق" },
               { href: "/adhkar", label: "الأذكار اليومية" },
               { href: "/duas", label: "الأدعية الشرعية" },
               { href: "/fadail-aamal", label: "فضائل الأعمال" },
