@@ -22,6 +22,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/seerah",
+        "label": "السيرة"
       }
     ],
     "startHere": true,
@@ -48,6 +52,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/seerah",
+        "label": "السيرة"
       }
     ],
     "timelineOrder": 602
@@ -113,6 +121,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/seerah",
+        "label": "السيرة"
       }
     ],
     "timelineOrder": 604
@@ -136,6 +148,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/seerah",
+        "label": "السيرة"
       }
     ],
     "timelineOrder": 605

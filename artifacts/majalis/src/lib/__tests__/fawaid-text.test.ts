@@ -43,11 +43,20 @@ const sample5 =
 const cleaned5 = stripFawaidBoilerplate(sample5);
 assert(cleaned5 === "من فقه الوفاء أن حفظ العهد", "يزيل جملة محبة النبي وذيل الفائدة التعليمية");
 
+const sample6 =
+  "ضبط النية أصل في قبول العمل، وأن العلم النافع يجمع بين صحة الدليل وحسن القصد. وهي فائدة محررة للتذكير والعمل، تقرأ مع مصادرها، ولا تجعل بديلا عن الفتوى.";
+const cleaned6 = stripFawaidBoilerplate(sample6);
+assert(cleaned6 === "ضبط النية أصل في قبول العمل", "يزيل جملة العلم النافع وذيل وهي فائدة");
+
 const seedPath = join(dirname(fileURLToPath(import.meta.url)), "../fawaid-curated-seed.ts");
 const seedSrc = readFileSync(seedPath, "utf8");
 assert(!/وهذه فائدة تعليمية/.test(seedSrc), "البذرة بلا ذيل «فائدة تعليمية»");
-assert(!/وهذا يُقرأ بضابط العلم/.test(seedSrc), "البذرة بلا ذيل «بضابط العلم»");
+assert(!/وهي فائدة/.test(seedSrc), "البذرة بلا ذيل «وهي فائدة»");
+assert(!/وهذا يُقرأ بضابط العلم|وهذا يقرأ بضابط العلم/.test(seedSrc), "البذرة بلا ذيل «بضابط العلم»");
 assert(!/وأن محبة النبي ﷺ (?:تظهر|تُصان)/.test(seedSrc), "البذرة بلا جملة محبة النبي القالبية");
+assert(!/وأن العلم(?:\s+النافع)?/.test(seedSrc), "البذرة بلا جملة العلم القالبية");
+assert(!/وهذا أصل يُسترشد به في فهم الأحكام الشرعية وتطبيقها/.test(seedSrc), "البذرة بلا ذيل «وتطبيقها»");
+assert(!/وهذا من هدي النبي ﷺ الذي يجب على المسلم معرفته والعمل به/.test(seedSrc), "البذرة بلا ذيل «على المسلم معرفته»");
 
 console.log(`\n=== النتيجة: ${passed} نجح / ${failed} فشل ===\n`);
 if (failed > 0) process.exit(1);

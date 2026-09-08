@@ -156,6 +156,14 @@
       {
         "href": "/seerah",
         "label": "السيرة النبوية"
+      },
+      {
+        "href": "/shamael",
+        "label": "الشمائل"
+      },
+      {
+        "href": "/prophets",
+        "label": "قصص الأنبياء"
       }
     ],
     "timelineOrder": 106
@@ -231,6 +239,14 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/seerah",
+        "label": "السيرة النبوية"
+      },
+      {
+        "href": "/prophets",
+        "label": "قصص الأنبياء"
       }
     ],
     "timelineOrder": 109
@@ -255,8 +271,12 @@
         "label": "التاريخ الإسلامي"
       },
       {
-        "href": "/tarikh-islami",
-        "label": "التاريخ الإسلامي"
+        "href": "/seerah",
+        "label": "السيرة النبوية"
+      },
+      {
+        "href": "/prophets",
+        "label": "قصص الأنبياء"
       }
     ],
     "timelineOrder": 110
@@ -279,6 +299,14 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/seerah",
+        "label": "السيرة النبوية"
+      },
+      {
+        "href": "/prophets",
+        "label": "قصص الأنبياء"
       }
     ],
     "timelineOrder": 111
@@ -301,6 +329,14 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/seerah",
+        "label": "السيرة النبوية"
+      },
+      {
+        "href": "/prophets",
+        "label": "قصص الأنبياء"
       }
     ],
     "timelineOrder": 112
@@ -352,6 +388,14 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/seerah",
+        "label": "السيرة النبوية"
+      },
+      {
+        "href": "/prophets",
+        "label": "قصص الأنبياء"
       }
     ],
     "lessons": "الوحدة والعدل من أسباب بقاء الأمة.",
