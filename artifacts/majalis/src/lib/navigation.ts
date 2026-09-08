@@ -128,13 +128,13 @@ export const HOME_FEATURE_CARDS = [
   {
     href: "/arbaeen-nawawi",
     title: seoNavLabel("/arbaeen-nawawi", "الأربعون النووية"),
-    description: "أحاديث مختصرة",
+    description: "أربعون حديثاً نووية بشرح موجز",
     icon: "scroll",
   },
   {
     href: "/qibla",
     title: seoNavLabel("/qibla", "القبلة"),
-    description: "اتجاه الكعبة",
+    description: "تحديد اتجاه القبلة من موقعك",
     icon: "compass",
   },
 ] as const;

@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const storiesDir = join(root, "public/data/stories");
 const FILLER = "تأمل في السياق";
+const EXTRA_FORBIDDEN = ["تُقرأ هذه السيرة", "بالتحقق والتأمل ثم تحويل المعنى"];
 const MIN_WORDS = 200;
 
 let failed = 0;
@@ -20,6 +21,12 @@ for (const name of readdirSync(storiesDir)) {
   if (raw.includes(FILLER)) {
     console.error(`  ✗ ${name}: يحتوي «${FILLER}»`);
     failed++;
+  }
+  for (const phrase of EXTRA_FORBIDDEN) {
+    if (raw.includes(phrase)) {
+      console.error(`  ✗ ${name}: يحتوي «${phrase}»`);
+      failed++;
+    }
   }
   const data = JSON.parse(raw) as unknown;
   if (!Array.isArray(data)) continue;

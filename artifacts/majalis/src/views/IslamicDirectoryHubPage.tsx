@@ -17,7 +17,7 @@ export default function IslamicDirectoryHubPage() {
         {
           href: "/institutions",
           title: "المؤسسات الإسلامية",
-          desc: "مساجد · مكتبات · مراكز",
+          desc: "دليل المساجد والمكتبات والمراكز الإسلامية للبحث المحلي",
           Icon: Landmark,
         },
         {

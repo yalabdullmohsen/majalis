@@ -18,6 +18,7 @@ import {
   isSameKuwaitDay,
 } from "@/lib/lesson-time";
 import { getLessonDeliveryMode } from "@/lib/lessons/lessonNormalize";
+import { looksLikePersonSpeaker } from "@/lib/lesson-speaker-guard";
 import { FavoriteButton } from "@/components/FavoriteButton";
 
 type Props = {
@@ -173,9 +174,11 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
       <div className="lesson-unified-card__body">
         <h3 className="lesson-unified-card__title">{lesson.title}</h3>
         <p className="lesson-unified-card__sheikh">
-          {lesson.sheikhName
+          {lesson.sheikhName && looksLikePersonSpeaker(lesson.sheikhName)
             ? lesson.sheikhName.replace(/^الشيخ(?:ة)?:\s*/u, "")
-            : "الشيخ غير محدد"}
+            : lesson.mosque
+              ? `محاضرو ${lesson.mosque}`
+              : "المحاضر يُذكر عند التسجيل"}
         </p>
         {!compact && shortDescription ? (
           <p className="lesson-unified-card__desc">{shortDescription}</p>

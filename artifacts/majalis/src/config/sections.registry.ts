@@ -244,7 +244,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "home",
     label: "الرئيسية",
-    subtitle: "بوابة سُنّة",
+    subtitle: "مدخل المنصة للأقسام والأدوات",
     route: "/",
     icon: Home,
     group: "sciences",
@@ -944,7 +944,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "tasbih",
     label: "التسبيح",
-    subtitle: "عداد تسبيح رقمي",
+    subtitle: "عدّاد للتسبيح والذكر بأهداف يومية",
     route: "/tasbih",
     icon: Hash,
     group: "worship",

@@ -250,8 +250,8 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     kind: "topic",
     rulingsCategory: "المعاملات",
     relatedGuides: [
-      { href: "/riba", label: "الربا" },
       { href: "/zakat", label: "الزكاة" },
+      { href: "/waqf", label: "الوقف" },
       { href: "/fiqh-council/nawazil", label: "النوازل المالية" },
     ],
   },
@@ -318,7 +318,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     rulingsCategory: "النوازل المعاصرة",
     rulingsSubcategory: "التقنية",
     relatedGuides: [
-      { href: "/fiqh/books/riba", label: "التمويل الإسلامي" },
+      { href: "/riba", label: "الربا والتمويل" },
       { href: "/fiqh-council", label: "المجمع الفقهي" },
       { href: "/fiqh", label: "بوابة الفقه" },
     ],
