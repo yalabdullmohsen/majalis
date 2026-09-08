@@ -79,17 +79,16 @@ export function BottomNavBar({ isHidden = false }: { isHidden?: boolean } = {}) 
       data-hidden={isHidden ? "true" : "false"}
       data-bottom-nav="sections-ia"
     >
-      {BOTTOM_NAV_TABS.map(({ href, label, Icon }) => {
+      {BOTTOM_NAV_TABS.filter(({ href }) => !isComingSoonPath(href)).map(({ href, label, Icon }) => {
         const id = HREF_TO_ID[href];
         const active = id === activeId;
-        const soon = isComingSoonPath(href);
         return (
           <Link
             key={href}
             href={href}
-            className={`bottom-nav__tab${active ? " is-active" : ""}${soon ? " is-soon" : ""}`}
+            className={`bottom-nav__tab${active ? " is-active" : ""}`}
             aria-current={active ? "page" : undefined}
-            aria-label={soon ? `${label} — قريبًا` : label}
+            aria-label={label}
             onPointerDown={() => triggerPrefetch(href)}
             onTouchStart={() => triggerPrefetch(href)}
             onMouseEnter={() => triggerPrefetch(href)}
@@ -104,7 +103,7 @@ export function BottomNavBar({ isHidden = false }: { isHidden?: boolean } = {}) 
             <span className="bottom-nav__tab-icon" aria-hidden="true">
               <Icon size={18} strokeWidth={active ? 2 : 1.5} aria-hidden={true} />
             </span>
-            <span className="bottom-nav__tab-label">{soon ? "قريبًا" : label}</span>
+            <span className="bottom-nav__tab-label">{label}</span>
           </Link>
         );
       })}

@@ -210,23 +210,21 @@ export function TopSectionBar() {
   return (
     <nav className="top-section-bar mj-nav-skin mj-chrome-stable" aria-label="أقسام رئيسية">
       <div className="top-section-bar__scroll" ref={scrollRef}>
-        {SECTION_TABS.map((tab) => {
+        {SECTION_TABS.filter((tab) => !isComingSoonPath(tab.href)).map((tab) => {
           const active = isTabActive(location, tab.href);
-          const soon = isComingSoonPath(tab.href);
           return (
             <Link
               key={tab.href}
               href={tab.href}
               ref={active ? activeRef : undefined}
-              className={`top-section-bar__tab${active ? " is-active" : ""}${soon ? " is-soon" : ""}`}
+              className={`top-section-bar__tab${active ? " is-active" : ""}`}
               aria-current={active ? "page" : undefined}
-              aria-label={soon ? `${tab.label} — قريبًا` : tab.label}
+              aria-label={tab.label}
               onTouchStart={() => triggerPrefetch(tab)}
               onMouseEnter={() => triggerPrefetch(tab)}
             >
               <tab.Icon size={14} strokeWidth={active ? 2.3 : 1.8} aria-hidden="true" />
               <span className="top-section-bar__tab-label">{tab.label}</span>
-              {soon ? <span className="top-section-bar__soon-badge">قريبًا</span> : null}
             </Link>
           );
         })}

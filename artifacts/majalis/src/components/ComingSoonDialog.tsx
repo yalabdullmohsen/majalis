@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Sparkles, X } from "lucide-react";
+import { X } from "lucide-react";
 
 type Props = {
   open: boolean;
@@ -7,6 +7,7 @@ type Props = {
   onClose: () => void;
 };
 
+/** حوار احتياطي لمسار غير متاح في الواجهة العامة. */
 export function ComingSoonDialog({ open, title, onClose }: Props) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
@@ -38,12 +39,12 @@ export function ComingSoonDialog({ open, title, onClose }: Props) {
         className="bottom-sheet coming-soon-dialog"
         role="dialog"
         aria-modal="true"
-        aria-label={`${title} قريبًا`}
+        aria-label={title}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="bottom-sheet__handle" />
         <div className="bottom-sheet__head">
-          <span>قريبًا</span>
+          <span>غير متاح</span>
           <button
             ref={closeRef}
             type="button"
@@ -56,10 +57,9 @@ export function ComingSoonDialog({ open, title, onClose }: Props) {
         </div>
         <div className="bottom-sheet__body">
           <div className="coming-soon-dialog__body">
-            <Sparkles size={26} strokeWidth={1.8} aria-hidden="true" />
             <h2 className="coming-soon-dialog__title">{title}</h2>
             <p className="coming-soon-dialog__text">
-              هذا القسم قيد التطوير حاليًا، وسيظهر كاملًا عند اكتمال التجهيز.
+              هذا القسم غير ظاهر في الواجهة العامة حاليًا. يمكنك متابعة التصفح من الأقسام المتاحة.
             </p>
           </div>
         </div>
