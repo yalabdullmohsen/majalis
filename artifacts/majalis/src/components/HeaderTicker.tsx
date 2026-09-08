@@ -11,6 +11,7 @@ import { BookOpen, Heart, Megaphone, Repeat2, ScrollText, Sparkles } from "lucid
 import type { LucideIcon } from "lucide-react";
 import {
   buildTickerPool,
+  durationFromSegmentWidth,
   marqueeDurationSec,
   pickNextBatch,
   readRecent,
@@ -179,8 +180,7 @@ export function HeaderTicker() {
   const { paused, handlers: pauseHandlers } = useTransientPause();
 
   const [bootReady, setBootReady] = useState(false);
-  const [durationSec, setDurationSec] = useState(28);
-  const [measureEpoch, setMeasureEpoch] = useState(0);
+  const [durationSec, setDurationSec] = useState(32);
 
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -214,26 +214,50 @@ export function HeaderTicker() {
       setDurationSec(marqueeDurationSec(items.length, totalChars));
       return;
     }
-    // ~90px/ث — مسار متواصل بلا توقف؛ مدة دورة = عرض مقطع واحد
-    const sec = Math.max(12, Math.min(72, segmentW / 90));
-    setDurationSec(sec);
+    setDurationSec(durationFromSegmentWidth(segmentW));
   }, [items.length, totalChars]);
 
   useEffect(() => {
     if (!bootReady || reducedMotion || items.length === 0) return;
     let raf1 = 0;
     let raf2 = 0;
-    raf1 = window.requestAnimationFrame(() => {
-      raf2 = window.requestAnimationFrame(measureDuration);
-    });
-    const onOrient = () => setMeasureEpoch((n) => n + 1);
+    let delayed = 0;
+    let roTimer = 0;
+    const scheduleMeasure = () => {
+      window.cancelAnimationFrame(raf1);
+      window.cancelAnimationFrame(raf2);
+      raf1 = window.requestAnimationFrame(() => {
+        raf2 = window.requestAnimationFrame(measureDuration);
+      });
+    };
+    scheduleMeasure();
+    // إعادة قياس بعد استقرار الخطوط/العرض — يمنع دورة قصيرة من قياس مبكر فيظهر الشريط سريعًا
+    delayed = window.setTimeout(scheduleMeasure, 400);
+    const onOrient = () => scheduleMeasure();
+    const onResize = () => scheduleMeasure();
     window.addEventListener("orientationchange", onOrient);
+    window.addEventListener("resize", onResize);
+    const viewport = viewportRef.current;
+    const segment = segmentRef.current;
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined" && (viewport || segment)) {
+      ro = new ResizeObserver(() => {
+        window.clearTimeout(roTimer);
+        roTimer = window.setTimeout(scheduleMeasure, 80);
+      });
+      if (viewport) ro.observe(viewport);
+      if (segment) ro.observe(segment);
+    }
     return () => {
       window.cancelAnimationFrame(raf1);
       window.cancelAnimationFrame(raf2);
+      window.clearTimeout(delayed);
+      window.clearTimeout(roTimer);
       window.removeEventListener("orientationchange", onOrient);
+      window.removeEventListener("resize", onResize);
+      ro?.disconnect();
     };
-  }, [bootReady, reducedMotion, items, measureDuration, measureEpoch]);
+  }, [bootReady, reducedMotion, items, measureDuration]);
 
   // لا شريط فارغ
   if (items.length === 0) return null;

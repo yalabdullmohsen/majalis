@@ -120,7 +120,14 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
     "عرض الماركي يُقاس مرة بعد الخطوط (وإعادة عند تدوير الشاشة)",
   );
   assert(!/measure\(\);\s*const ro/.test(tickerSrc), "لا قياس متزامن قبل ResizeObserver");
-  assert(!tickerSrc.includes("ResizeObserver"), "لا ResizeObserver يعيد القياس قبل ثبات الخط");
+  assert(
+    tickerSrc.includes("bootReady") && tickerSrc.includes("ResizeObserver"),
+    "ResizeObserver فقط بعد bootReady لإعادة القياس عند تغيّر العرض",
+  );
+  assert(
+    !/new ResizeObserver[\s\S]{0,200}waitUntilBootSettled/.test(tickerSrc),
+    "لا ResizeObserver قبل انتظار ثبات الإقلاع",
+  );
   assert(
     tickerSrc.includes("حان وقت") ||
       readFileSync(resolve(appRoot, "src/lib/prayer-ticker-copy.ts"), "utf-8").includes("حان وقت"),
@@ -180,6 +187,14 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
   assert(
     tickerSrc.includes("--ticker-loop-duration") && tickerSrc.includes("--ticker-loop-shift"),
     "مسار الحركة عبر متغيّرات CSS للحلقة المتواصلة",
+  );
+  assert(
+    tickerSrc.includes("durationFromSegmentWidth") && tickerSrc.includes("ResizeObserver"),
+    "مدة المسار من عرض المقطع مع إعادة قياس عند تغيّر الحجم",
+  );
+  assert(
+    !/segmentW\s*\/\s*90/.test(tickerSrc) && !/\/ 90\)/.test(tickerSrc),
+    "لا سرعة 90px/ث السابقة (سريعة للقراءة)",
   );
 
   const chipSrc = readFileSync(
