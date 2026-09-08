@@ -29,7 +29,7 @@ import {
 import { trackContinueReading } from "@/lib/continue-reading";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { recordNavigationVisit } from "@/lib/navigation-back";
-import { isAuthStandalonePath, isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
+import { isAuthStandalonePath, isImmersiveChromePath, isPinnedChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { isMiniPlayerVisible, subscribeMiniPlayer } from "@/lib/quran-mini-player";
 import { HomeHeroLcp, HomeRestShell } from "@/components/home/HomeHeroLcp";
@@ -599,7 +599,7 @@ function AppShellInner() {
   }, []);
 
   const { isHidden: shouldHideChrome } = useAutoHideBottomNav({
-    forceShow: searchOpen || comingSoonOpen || hideSiteChrome,
+    forceShow: searchOpen || comingSoonOpen || hideSiteChrome || isPinnedChromePath(location),
     routeKey: location,
   });
 

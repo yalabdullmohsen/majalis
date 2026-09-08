@@ -12,6 +12,7 @@ import {
   isAuthStandalonePath,
   isCompactHeaderPath,
   isImmersiveChromePath,
+  isPinnedChromePath,
   isPrayerTimesPath,
   isQuranImmersivePath,
 } from "../immersive-chrome";
@@ -54,6 +55,10 @@ assert.equal(isCompactHeaderPath("/profile"), true);
 assert.equal(isCompactHeaderPath("/settings"), true);
 assert.equal(isCompactHeaderPath("/prayer-times"), true);
 assert.equal(isCompactHeaderPath("/mushaf"), true);
+assert.equal(isCompactHeaderPath("/prophets"), true, "قصص الأنبياء بلا شريط متحرك");
+assert.equal(isCompactHeaderPath("/prophets/nuh"), true);
+assert.equal(isPinnedChromePath("/prophets"), true, "كروم قصص الأنبياء مثبَّت بلا إخفاء transform");
+assert.equal(isPinnedChromePath("/prophets/musa"), true);
 assert.equal(isCompactHeaderPath("/login"), false, "الدخول يُظهر الشريط المتحرك");
 assert.equal(isCompactHeaderPath("/register"), false, "التسجيل يُظهر الشريط المتحرك");
 assert.equal(isCompactHeaderPath("/"), false);
