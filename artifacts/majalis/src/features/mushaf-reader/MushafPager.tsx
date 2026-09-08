@@ -20,6 +20,7 @@ type PagerProps = {
   disabled?: boolean;
   onTapEmpty?: () => void;
   onNavigateStart?: () => void;
+  onNavigateCancel?: () => void;
   ignoreSelector?: string;
   pageSlot: ReactNode;
   prevPage?: ReactNode;
@@ -48,6 +49,7 @@ export const MushafPager = forwardRef<HTMLDivElement, PagerProps>(function Musha
     disabled = false,
     onTapEmpty,
     onNavigateStart,
+    onNavigateCancel,
     ignoreSelector = DEFAULT_IGNORE,
     pageSlot,
     prevPage,
@@ -75,6 +77,7 @@ export const MushafPager = forwardRef<HTMLDivElement, PagerProps>(function Musha
     disabled,
     onTapEmpty,
     onNavigateStart,
+    onNavigateCancel,
     ignoreSelector,
     shellRef,
   });

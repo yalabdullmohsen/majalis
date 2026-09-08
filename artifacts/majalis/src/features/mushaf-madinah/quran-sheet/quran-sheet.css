@@ -36,10 +36,14 @@ html[data-theme="dark"] .mm-reciter-sheet,
 html.dark .mm-reciter-sheet,
 html[data-theme="dark"] .mm-search-sheet,
 html.dark .mm-search-sheet {
+  --quran-sheet-bg: #152018;
+  --quran-sheet-bg-deep: #101810;
+  --quran-sheet-ink: #f3efe6;
+  --quran-sheet-muted: color-mix(in srgb, #f3efe6 72%, #9aa39a);
   --quran-action-primary: var(--mm-ui-accent, #5ec49a);
   --quran-action-primary-deep: var(--mm-ui-accent-deep, #3da87a);
   --quran-action-primary-fg: #0a1410;
-  --quran-action-selected-bg: color-mix(in srgb, var(--mm-ui-accent, #5ec49a) 18%, var(--mm-paper, #101820));
+  --quran-action-selected-bg: color-mix(in srgb, var(--mm-ui-accent, #5ec49a) 18%, #152018);
 }
 
 /* ─── Shell ─── */
@@ -117,7 +121,8 @@ html.dark .quran-sheet__scrim {
 }
 
 .quran-sheet--half .quran-sheet__panel {
-  max-height: min(50dvh, 28rem);
+  /* تفسير أوضح — حوالي ٦٠٪ من الشاشة بدل ٥٠٪ المنخفضة */
+  max-height: min(62dvh, 34rem);
 }
 
 .quran-sheet--full .quran-sheet__panel {
@@ -131,7 +136,8 @@ html.dark .quran-sheet__scrim {
   width: min(100%, 32rem);
   margin-inline: auto;
   padding-top: 0.15rem;
-  padding-bottom: calc(0.35rem + var(--inset-bottom, 0px));
+  /* فراغ أسفل يمنع التداخل مع شريط التلاوة / bottom nav */
+  padding-bottom: calc(0.85rem + var(--inset-bottom, 0px) + 4.5rem);
 }
 
 .quran-sheet__head {

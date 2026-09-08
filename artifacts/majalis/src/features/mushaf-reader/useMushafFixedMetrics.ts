@@ -5,9 +5,9 @@ import {
   resolveUniformMushafFontSize,
 } from "@/features/mushaf-madinah/fitPageFontSize";
 
-const HEADER_H = 36;
-const FOOTER_H = 32;
-const SIDE_PAD = 12;
+const HEADER_H = 34;
+const FOOTER_H = 30;
+const SIDE_PAD = 10;
 const LINE_HEIGHT = "1.85";
 /** QPC لا يدعم أوزانًا حقيقية — أي وزن >400 يفعّل faux-bold ويوسّع الحروف فيفيض السطر */
 const FONT_WEIGHT = "400";
@@ -16,6 +16,7 @@ const FONT_WEIGHT = "400";
  * مقاسات ثابتة قبل العرض — بلا ملاءمة خط بعد الرسم وبلا قفزات CLS.
  * يُستدعى عند التركيب وعند تغيّر حجم النافذة فقط.
  * لا يُعاد حسابه عند قلب الصفحة ولا يرتبط ببوابة canMountPage (كانت تعيد القياس فتسبب قفزة).
+ * تكبير طفيف (~4%) مع تخفيف هوامش الإطار لتعويض المساحة دون قص الأسطر.
  */
 export function useMushafFixedMetrics(
   rootRef: RefObject<HTMLElement | null>,
@@ -35,9 +36,11 @@ export function useMushafFixedMetrics(
       const bodyH = Math.max(160, h - HEADER_H - FOOTER_H);
       const bodyTop = HEADER_H;
 
+      const base = resolveUniformMushafFontSize(bodyW, bodyH);
+      /** +4% مقروئية — سقف MUSHAF_FIT_MAX يمنع الفيض */
       const size = Math.max(
         MUSHAF_FIT_MIN_PX,
-        Math.min(MUSHAF_FIT_MAX_PX, resolveUniformMushafFontSize(bodyW, bodyH)),
+        Math.min(MUSHAF_FIT_MAX_PX, Math.round(base * 1.04)),
       );
 
       root.style.setProperty("--mushaf-page-width", `${w}px`);
@@ -49,6 +52,7 @@ export function useMushafFixedMetrics(
       root.style.setProperty("--mushaf-body-width", `${bodyW}px`);
       root.style.setProperty("--mushaf-font-size", `${size}px`);
       root.style.setProperty("--mushaf-line-height", LINE_HEIGHT);
+      root.style.setProperty("--mushaf-letter-spacing", "0");
       root.style.setProperty("--mushaf-font-weight", FONT_WEIGHT);
       root.style.setProperty("--nm-qpc-size", `${size}px`);
       root.style.setProperty("--mm-qpc-size", `${size}px`);

@@ -119,6 +119,34 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     page,
   );
 
+  /**
+   * آخر صفحة جاهزة تبقى معروضة حتى تكتمل التالية — يمنع placeholder→QPC
+   * (سبب الإحساس بتكبير/تصغير النص عند القلب).
+   */
+  const [stableView, setStableView] = useState<{
+    layout: MushafPageLayout;
+    fontFamily: string;
+    page: number;
+  } | null>(() => {
+    const cached = getCachedMushafPage(page);
+    return cached ? { layout: cached, fontFamily: `"qpc-v2-p${page}"`, page } : null;
+  });
+
+  useLayoutEffect(() => {
+    if (error || !canMountPage || !layout || layout.pageNumber !== page || !fontReady) return;
+    setStableView((prev) => {
+      if (
+        prev &&
+        prev.page === page &&
+        prev.layout === layout &&
+        prev.fontFamily === fontFamily
+      ) {
+        return prev;
+      }
+      return { layout, fontFamily, page };
+    });
+  }, [error, canMountPage, layout, page, fontReady, fontFamily]);
+
   const metricsRootRef = useRef<HTMLDivElement | null>(null);
   /** مقاسات ثابتة من التركيب — لا تُربط بـ canMountPage (كانت تعيد القياس عند القلب) */
   useMushafFixedMetrics(metricsRootRef, true);
@@ -340,6 +368,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     const pending = pendingPageRef.current;
     if (pending == null || page !== pending) return;
     if (!fontReady || !layoutMatchesPage) return;
+    /* لا نُنهِ القلب قبل تثبيت العرض المستقر للصفحة الجديدة */
+    if (!stableView || stableView.page !== page) return;
 
     const shell = metricsRootRef.current?.querySelector<HTMLElement>(
       '[data-pane="current"] .nm-shell, [data-pane="current"] .mm-page-shell',
@@ -348,16 +378,16 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     if (shell && shell.scrollTop !== 0) shell.scrollTop = 0;
 
     finishPageTurn();
-  }, [page, fontReady, layoutMatchesPage, finishPageTurn]);
+  }, [page, fontReady, layoutMatchesPage, stableView, finishPageTurn]);
 
-  /* صمام أمان إن أُلغي السحب أو تعذّر اكتمال الموارد */
-  useEffect(() => {
-    if (pagerSettled && !bottomStackFrozen) return;
-    const id = window.setTimeout(() => {
-      finishPageTurn();
-    }, 900);
-    return () => window.clearTimeout(id);
-  }, [page, pagerSettled, bottomStackFrozen, finishPageTurn]);
+  useLayoutEffect(() => {
+    if (error && (bottomStackFrozen || !pagerSettled)) finishPageTurn();
+  }, [error, bottomStackFrozen, pagerSettled, finishPageTurn]);
+
+  const cancelPageTurnFreeze = useCallback(() => {
+    if (pendingPageRef.current != null) return;
+    finishPageTurn();
+  }, [finishPageTurn]);
 
   const versePreview = useCallback(
     (verseKey: string): string => {
@@ -583,6 +613,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       onNavigateStart={() => {
         beginPageTurn();
       }}
+      onNavigateCancel={cancelPageTurnFreeze}
       ignoreSelector=".nm-controls, .nm-verse-menu, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, input, textarea, select, button"
       onTapEmpty={() => {
         if (actionsOpen) {
@@ -616,14 +647,14 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       pageSlot={
         <div className="nm-shell mm-page-shell mushaf-page-frame" data-testid="mushaf-page-shell">
           {error ? <div className="nm-status">{error}</div> : null}
-          {/* شبكة ثابتة الأبعاد — لا نستبدل الصفحة بـ placeholder يغيّر الارتفاع */}
-          {!error && canMountPage && layout && layout.pageNumber === page ? (
+          {/* أبقِ آخر صفحة جاهزة حتى تكتمل التالية — بلا placeholder يغيّر الحجم */}
+          {!error && stableView ? (
             <MushafPage
-              layout={layout}
-              fontFamily={fontFamily}
-              displayPageNumber={page}
+              layout={stableView.layout}
+              fontFamily={stableView.fontFamily}
+              displayPageNumber={stableView.page}
               onSelectVerse={onSelectVerse}
-              selectionEnabled={pagerSettled}
+              selectionEnabled={pagerSettled && stableView.page === page}
               onPageNumberPress={() => {
                 setGotoOpen(true);
                 setChromeOpen(false);

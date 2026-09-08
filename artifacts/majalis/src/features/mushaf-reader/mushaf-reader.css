@@ -76,6 +76,23 @@
   text-size-adjust: 100%;
 }
 
+/* قفل مقاس QPC من token المقاسات فقط — بلا clamp(vh) يغيّر الحجم بين الإطارات */
+.nm-root[data-mushaf-metrics="1"] {
+  --mm-qpc-size: var(--mushaf-font-size);
+  --nm-qpc-size: var(--mushaf-font-size);
+  --mm-basmala-size: var(--mushaf-font-size);
+  --mushaf-line-height: var(--nm-line-height, 1.85);
+}
+
+.nm-root .nm-page__body,
+.nm-root .nm-page--opening .nm-page__body,
+.nm-root .nm-page--lead .nm-page__body {
+  font-size: var(--mushaf-font-size);
+  line-height: var(--mushaf-line-height, 1.85);
+  letter-spacing: var(--mushaf-letter-spacing, 0);
+  transform: none;
+}
+
 .nm-root *,
 .nm-root *::before,
 .nm-root *::after {
@@ -793,6 +810,34 @@
 .nm-root .mm-audio-dock__reciter-btn,
 .nm-root .mm-audio-dock__reciter-btn-name {
   color: var(--nm-ink);
+  overflow: visible;
+  text-overflow: unset;
+  white-space: normal;
+}
+
+html[data-theme="dark"] .nm-root,
+html.dark .nm-root {
+  --mushaf-page-bg: #152018;
+  --mushaf-text-color: #f3efe6;
+  --mushaf-meta-color: #cbb892;
+  --nm-paper: #152018;
+  --nm-paper-deep: #101810;
+  --nm-ink: #f3efe6;
+  --nm-meta: #cbb892;
+}
+
+html[data-theme="dark"] .nm-root .mm-audio-dock,
+html.dark .nm-root .mm-audio-dock {
+  background: #1a1f1c;
+  border-color: color-mix(in srgb, #cbb892 35%, transparent);
+  color: #f3efe6;
+}
+
+html[data-theme="dark"] .nm-root .mm-audio-dock__reciter-btn,
+html.dark .nm-root .mm-audio-dock__reciter-btn {
+  background: color-mix(in srgb, #f3efe6 10%, #1a1f1c);
+  border-color: color-mix(in srgb, #cbb892 40%, transparent);
+  color: #f3efe6;
 }
 
 .nm-root .mm-audio-dock__verse,
@@ -935,6 +980,34 @@
   height: 100%;
   position: relative;
   contain: layout paint;
+  /* شفافية خفيفة أثناء السحب فقط — بلا scale */
+  opacity: 1;
+  transition: opacity 140ms ease;
+}
+
+.nm-pager-scroller.is-panning .nm-pager__sheet[data-pane="current"],
+.nm-root .mm-pager-scroller.is-panning .nm-pager__sheet[data-pane="current"] {
+  opacity: 0.94;
+}
+
+/* طبقات: نص المصحف تحت الكروم؛ الشيتات/التلاوة فوق النص دون قصّه بـ overlay دائم */
+.nm-root .nm-controls {
+  z-index: 30;
+  pointer-events: none;
+}
+
+.nm-root .nm-controls__bar,
+.nm-root .nm-controls__exit {
+  pointer-events: auto;
+}
+
+.nm-root .mm-audio-dock,
+.nm-root .quran-audio-player {
+  z-index: 35;
+}
+
+.nm-root .nm-verse-menu {
+  z-index: 45;
 }
 
 @media (prefers-reduced-motion: reduce) {
