@@ -37,7 +37,10 @@
     "بلا نبي مسمّى",
     "إفساد"
   ],
-  "related": [],
+  "related": [
+    "nation-qawm-yunus",
+    "prophet-yunus"
+  ],
   "review_status": "verified",
   "updated_at": "2026-09-02",
   "section": "nations"

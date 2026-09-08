@@ -95,7 +95,10 @@
     "أمم",
     "موسّع"
   ],
-  "related": [],
+  "related": [
+    "nation-ashab-kahf",
+    "nation-ashab-fil"
+  ],
   "review_status": "verified",
   "updated_at": "2026-09-02",
   "section": "nations"

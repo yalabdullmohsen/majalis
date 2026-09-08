@@ -9,7 +9,12 @@ import { fileURLToPath } from "node:url";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const storiesDir = join(root, "public/data/stories");
 const FILLER = "تأمل في السياق";
-const EXTRA_FORBIDDEN = ["تُقرأ هذه السيرة", "بالتحقق والتأمل ثم تحويل المعنى"];
+const EXTRA_FORBIDDEN = [
+  "تُقرأ هذه السيرة",
+  "بالتحقق والتأمل ثم تحويل المعنى",
+  "مع مراعاة الدليل لا الشهرة",
+  "فالعبرة بالامتثال لا بكثرة الذكر",
+];
 const MIN_WORDS = 200;
 
 let failed = 0;

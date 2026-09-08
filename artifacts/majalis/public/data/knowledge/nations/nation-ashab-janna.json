@@ -144,7 +144,9 @@
     "أمم",
     "موسّع"
   ],
-  "related": [],
+  "related": [
+    "nation-saba"
+  ],
   "review_status": "verified",
   "updated_at": "2026-09-02",
   "section": "nations"
