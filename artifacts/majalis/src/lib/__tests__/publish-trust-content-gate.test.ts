@@ -56,10 +56,14 @@ assert.ok(published.length >= 80, `منشور ≥80 (الآن ${published.length
 
 for (const p of published) {
   assert.ok((p.nameAr || "").trim().length > 0, `عنوان مطلوب: ${p.slug}`);
-  assert.ok((p.definition || "").trim().length >= 160, `تعريف منشور ≥160: ${p.slug}`);
+  assert.ok((p.definition || "").trim().length >= 200, `تعريف منشور ≥200: ${p.slug}`);
   assert.ok(
     Array.isArray(p.occurrences) && p.occurrences.length > 0,
     `مواضع آيات مطلوبة: ${p.slug}`,
+  );
+  assert.ok(
+    Array.isArray(p.relatedLinks) && p.relatedLinks.length > 0,
+    `رابط داخلي واحد على الأقل: ${p.slug}`,
   );
   const blob = [p.nameAr, p.definition, p.whyMentioned, ...(p.lessons || [])].join("\n");
   for (const phrase of FORBIDDEN) {
@@ -98,6 +102,20 @@ assert.doesNotMatch(fiqhHub, /emoji:\s*"[^"]*[\u{1F300}-\u{1FAFF}]/u, "لا إي
 for (const phrase of FORBIDDEN) {
   assert.ok(!fiqhHub.includes(phrase), `fiqh-hub بلا «${phrase}»`);
 }
+
+const tawhidTopics = read("src/lib/tawhid-topics.ts");
+assert.doesNotMatch(
+  tawhidTopics,
+  /emoji:\s*"[^"]*[\u{1F300}-\u{1FAFF}]/u,
+  "لا إيموجي في موضوعات التوحيد",
+);
+
+const peopleCss = read("src/styles/pages/quran-people.css");
+assert.match(
+  peopleCss,
+  /padding-bottom:\s*calc\(\s*var\(--nav-h/,
+  "تفاصيل الأعلام تراعي ارتفاع الشريط السفلي",
+);
 
 const libraryCatalog = read("src/lib/library-catalog.ts").replace(
   /\/\*[\s\S]*?\*\//g,
