@@ -179,7 +179,7 @@ describe("safe-auto-merge eligibility", () => {
 
   it("blocks danger paths (workflows, ios, supabase, api, lockfile, capacitor)", () => {
     for (const path of [
-      ".github/workflows/ci.yml",
+      ".github/workflows/release-majlisilm.yml",
       "artifacts/majalis/ios/App/App/AppDelegate.swift",
       "ios/App/AppDelegate.swift",
       "artifacts/majalis/capacitor.config.ts",

@@ -120,10 +120,12 @@ export const DANGER_PATH_PATTERNS = Object.freeze([
 
 /**
  * مسارات مستثناة من danger-path للدمج التلقائي (throughput):
- * تعطيل فحوص مكررة / bootstrap يدوي / قصر نشر Vercel على main.
- * ci.yml وauto-deploy وrelease وios-testflight تبقى خطرًا.
+ * تعطيل فحوص مكررة / bootstrap يدوي / قصر نشر Vercel على main /
+ * concurrency وci-required بدون توسيع صلاحيات الدمج.
+ * auto-deploy وrelease وios-testflight تبقى خطرًا.
  */
 export const AUTO_MERGE_PATH_ALLOWLIST = Object.freeze([
+  /^\.github\/workflows\/ci\.yml$/i,
   /^\.github\/workflows\/auto-merge-to-main\.yml$/i,
   /^\.github\/workflows\/pr-safe-merge-report\.yml$/i,
   /^\.github\/workflows\/vercel-check\.yml$/i,
