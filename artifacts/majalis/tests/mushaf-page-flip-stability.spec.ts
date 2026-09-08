@@ -173,3 +173,35 @@ test("mushaf p2 — التفسير يفتح بعنوان واضح", async ({ pag
   await page.getByTestId("mushaf-tafsir-depth-full").click();
   await expect(page.getByTestId("mushaf-tafsir-depth-full")).toHaveAttribute("aria-selected", "true");
 });
+
+test("mushaf p4 — أسماء القراء ظاهرة وغير مقصوصة + موضع التفسير", async ({ page }) => {
+  await openMushaf(page, 2);
+  await page.locator('[data-pane="current"] .nm-word, [data-pane="current"] [data-testid="nm-word"]').first().click({
+    force: true,
+  });
+  const playBtn = page.getByRole("button", { name: /تشغيل|تلاوة|ابدأ/ }).first();
+  if (await playBtn.isVisible().catch(() => false)) {
+    await playBtn.click({ force: true });
+  }
+  const dock = page.getByTestId("mushaf-audio-dock");
+  await expect(dock).toBeVisible({ timeout: 15000 });
+  const reciter = page.getByTestId("mushaf-dock-reciter");
+  const reciterText = (await reciter.innerText()).trim();
+  expect(reciterText.length).toBeGreaterThan(2);
+  const overflow = await reciter.evaluate((el) => {
+    const style = getComputedStyle(el);
+    return style.textOverflow === "ellipsis" && el.scrollWidth > el.clientWidth + 1;
+  });
+  expect(overflow, "اسم القارئ مقصوص بـ ellipsis").toBe(false);
+
+  await page.getByRole("button", { name: /تفسير/ }).first().click();
+  const sheet = page.getByTestId("mushaf-tafsir-sheet");
+  await expect(sheet).toBeVisible({ timeout: 15000 });
+  const sheetBox = await sheet.locator(".quran-sheet__panel").boundingBox();
+  await expect(sheet.locator(".quran-sheet__close")).toBeVisible();
+  expect(sheetBox).not.toBeNull();
+  expect(sheetBox!.y, "التفسير يبدأ من منتصف الشاشة تقريبًا").toBeGreaterThan(VIEWPORT.height * 0.2);
+  expect(sheetBox!.y + sheetBox!.height, "التفسير لا يتجاوز أسفل الشاشة").toBeLessThanOrEqual(
+    VIEWPORT.height + 2,
+  );
+});

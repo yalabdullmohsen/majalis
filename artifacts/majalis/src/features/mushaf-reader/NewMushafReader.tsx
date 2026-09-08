@@ -60,7 +60,7 @@ import { prefetchAdjacentPageAudio } from "@/features/mushaf-madinah/prefetch-ad
 import { MUSHAF_CHROME_HIDE_MS } from "@/features/mushaf-madinah/layout-bands";
 import { MushafPage } from "./MushafPage";
 import { MushafControlsLayer, MushafVerseMenu } from "./MushafControlsLayer";
-import { useMushafFixedMetrics } from "./useMushafFixedMetrics";
+import { useStableMushafLayout } from "./useStableMushafLayout";
 import "./mushaf-reader.css";
 /* شيتات التلاوة/البحث/التفسير — فئات مشتركة */
 import "@/features/mushaf-madinah/mushaf-madinah.css";
@@ -151,8 +151,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   }, [error, canMountPage, layout, page, fontReady, fontFamily]);
 
   const metricsRootRef = useRef<HTMLDivElement | null>(null);
-  /** مقاسات ثابتة من التركيب — لا تُربط بـ canMountPage (كانت تعيد القياس عند القلب) */
-  useMushafFixedMetrics(metricsRootRef, true);
+  /** مصدر القياس الوحيد — لا يُعاد حساب الخط أثناء قلب الصفحة */
+  useStableMushafLayout(metricsRootRef, true);
 
   const hideTimer = useRef<number | null>(null);
   const pageRef = useRef(page);

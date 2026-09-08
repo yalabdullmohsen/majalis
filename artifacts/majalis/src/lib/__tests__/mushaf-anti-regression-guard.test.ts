@@ -80,8 +80,8 @@ assert.equal(
   `حماية المصحف فشلت:\n${failures.map((f) => ` - ${f}`).join("\n")}`,
 );
 
-/* رموز القياس الإلزامية */
-const metrics = readFileSync(resolve(root, "src/features/mushaf-reader/useMushafFixedMetrics.ts"), "utf8");
+/* رموز القياس الإلزامية — مصدر واحد */
+const metrics = readFileSync(resolve(root, "src/features/mushaf-reader/useStableMushafLayout.ts"), "utf8");
 for (const token of [
   "--mushaf-page-width",
   "--mushaf-font-size",
@@ -91,10 +91,19 @@ for (const token of [
   assert.match(metrics, new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `رمز ${token}`);
 }
 
+assert.match(metrics, /export function useStableMushafLayout/);
 assert.match(metrics, /data-pager-settled/);
 assert.match(metrics, /lockedWidthRef|WIDTH_LOCK/);
 assert.match(metrics, /data-mushaf-font-locked/);
 assert.doesNotMatch(metrics, /setTimeout/);
+assert.match(
+  readFileSync(resolve(root, "src/features/mushaf-reader/useMushafFixedMetrics.ts"), "utf8"),
+  /useStableMushafLayout/,
+);
+
+const fitHook = readFileSync(resolve(root, "src/features/mushaf-madinah/useMushafPageFontFit.ts"), "utf8");
+assert.match(fitHook, /data-mushaf-font-locked/);
+assert.match(fitHook, /stable-inherit/);
 
 const pager = readFileSync(resolve(root, "src/features/mushaf-reader/useMushafPager.ts"), "utf8");
 assert.match(pager, /SETTLE_MS = 160/);
@@ -102,6 +111,7 @@ assert.match(pager, /prefers-reduced-motion|prefersReducedMotion/);
 assert.doesNotMatch(pager, /bounce|spring/i);
 
 const reader = readFileSync(resolve(root, "src/features/mushaf-reader/NewMushafReader.tsx"), "utf8");
+assert.match(reader, /useStableMushafLayout/);
 assert.match(reader, /stableView/);
 assert.match(reader, /PrefetchPage/);
 assert.match(reader, /nm-page-placeholder--frame/);
@@ -116,5 +126,11 @@ assert.match(tafsir, /brief|مختصر/);
 assert.match(tafsir, /full|مطول/);
 assert.match(tafsir, /لم يتوفر تفسير لهذه الآية حاليًا/);
 assert.match(tafsir, /saveMushafTafsirEdition|DEPTH_PREF_KEY/);
+
+const sheetCss = readFileSync(
+  resolve(root, "src/features/mushaf-madinah/quran-sheet/quran-sheet.css"),
+  "utf8",
+);
+assert.match(sheetCss, /68dvh/);
 
 console.log(`mushaf-anti-regression-guard.test.ts: ok (${files.length} files)`);

@@ -15,11 +15,15 @@ const css = read("src/features/mushaf-reader/mushaf-reader.css");
 const page = read("src/features/mushaf-reader/MushafPage.tsx");
 const qpc = read("src/features/mushaf-madinah/useQpcPageFont.ts");
 const pager = read("src/features/mushaf-reader/useMushafPager.ts");
-const metrics = read("src/features/mushaf-reader/useMushafFixedMetrics.ts");
+const metrics = read("src/features/mushaf-reader/useStableMushafLayout.ts");
 const miniBar = read("src/components/quran/QuranMiniPlayerBar.tsx");
 const dock = read("src/features/mushaf-madinah/MushafAudioDock.tsx");
 const tafsir = read("src/features/mushaf-madinah/MushafTafsirSheet.tsx");
 const sheetCss = read("src/features/mushaf-madinah/quran-sheet/quran-sheet.css");
+
+assert.match(metrics, /useStableMushafLayout/);
+assert.match(metrics, /data-mushaf-layout-source/);
+assert.match(read("src/features/mushaf-reader/useMushafFixedMetrics.ts"), /useStableMushafLayout/);
 
 assert.match(qpc, /export function ensureQpcPageFont/);
 assert.match(qpc, /loaded\.has\(pageNumber\)/);
@@ -32,7 +36,7 @@ assert.match(reader, /getCachedMushafPage\(page\)/);
 assert.match(reader, /shell\.scrollTop = 0/);
 assert.match(reader, /ارتفاع الحاوية ثابت/);
 assert.match(reader, /dockRemainsAfterClear/);
-assert.match(reader, /useMushafFixedMetrics\(metricsRootRef,\s*true\)/);
+assert.match(reader, /useStableMushafLayout\(metricsRootRef,\s*true\)/);
 assert.match(reader, /stableView/);
 assert.match(reader, /onNavigateCancel/);
 assert.doesNotMatch(
@@ -66,7 +70,8 @@ assert.match(dock, /onPlayRange/);
 assert.match(dock, /وضع الحفظ/);
 assert.match(tafsir, /تفسير \$\{surahName\} · آية/);
 assert.match(tafsir, /setSnap/);
-assert.match(sheetCss, /62dvh/);
+assert.match(sheetCss, /68dvh/);
+assert.match(sheetCss, /mushaf-bottom-safe-space/);
 
 assert.match(reader, /audioDockMini|onMiniChange/);
 assert.match(reader, /playRange/);

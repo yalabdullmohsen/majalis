@@ -1696,11 +1696,33 @@ html.dark .mm-viewport .mm-page-footer__badge,
   padding: 0 0.35rem;
   font-size: 0.7rem;
   font-weight: 700;
+  color: #1a1a1a;
+  border: 1px solid color-mix(in srgb, #135034 28%, transparent);
+  background: #fff;
 }
 
 .mm-audio-dock__rates button[aria-pressed="true"] {
-  background: color-mix(in srgb, #135034 16%, #fff);
+  background: color-mix(in srgb, #135034 18%, #fff);
   border-color: #135034;
+  color: #0e3d27;
+}
+
+html[data-theme="dark"] .mm-audio-dock__rates button,
+html.dark .mm-audio-dock__rates button,
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__rates button,
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__rates button {
+  color: #f3efe6;
+  background: color-mix(in srgb, #152018 88%, #fff);
+  border-color: color-mix(in srgb, #5ec49a 40%, transparent);
+}
+
+html[data-theme="dark"] .mm-audio-dock__rates button[aria-pressed="true"],
+html.dark .mm-audio-dock__rates button[aria-pressed="true"],
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__rates button[aria-pressed="true"],
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__rates button[aria-pressed="true"] {
+  color: #0c1a12;
+  background: #5ec49a;
+  border-color: #5ec49a;
 }
 
 .mm-audio-dock__status {

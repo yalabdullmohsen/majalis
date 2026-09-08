@@ -98,7 +98,7 @@ const theme = read("src/lib/theme-preference.ts");
     "لا فرض mm-fit=0 من JSX (يعيد الإخفاء عند كل رسم)",
   );
   const liveReader = read("src/features/mushaf-reader/NewMushafReader.tsx");
-  assert.match(liveReader, /useMushafFixedMetrics|canMountPage/);
+  assert.match(liveReader, /useStableMushafLayout|useMushafFixedMetrics|canMountPage/);
   assert.match(read("src/features/mushaf-reader/MushafPage.tsx"), /data-mm-fit="1"/);
   assert.match(mushafCss, /data-mm-fit="1"|mm-pager-track|data-mm-fit="0"/);
   const qpc = read("src/features/mushaf-madinah/useQpcPageFont.ts");
