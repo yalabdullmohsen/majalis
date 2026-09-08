@@ -67,7 +67,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/shamael",         Icon: Star,     title: seoNavLabel("/shamael", "صفةُ سيِّد الخلقِ ﷺ"),  desc: "صفته ﷺ خَلقاً وخُلُقاً وهَدياً من أصحّ الروايات" },
       { href: "/sahabah",         Icon: Users,    title: seoNavLabel("/sahabah", "أعلام الصحابة"),     desc: "63 صحابياً بالتفصيل: سيرة وإرث وفضل" },
       { href: "/prophets",        Icon: Star,     title: seoNavLabel("/prophets", "قصص الأنبياء"),     desc: "من آدم إلى محمد ﷺ — ٢٥ نبيًا مذكورًا في القرآن" },
-      { href: "/janna-naar",      Icon: Sparkles, title: seoNavLabel("/janna-naar", "صفة الجنة والنار"),  desc: "أبواب النعيم وأسباب الدخول، مع صفة النار والاستعداد للآخرة" },
+      { href: "/janna-naar",      Icon: Sparkles, title: seoNavLabel("/janna-naar", "الجنة والنار"),  desc: "أبواب النعيم وأسباب الدخول، مع صفة النار والاستعداد للآخرة" },
       { href: "/alamat-saah",    Icon: Star,     title: seoNavLabel("/alamat-saah", "علامات الساعة"),      desc: "الصغرى والكبرى العشر والترتيب وكيف نستعد" },
       { href: "/malaika",       Icon: Sparkles, title: seoNavLabel("/malaika", "الملائكة في الإسلام"), desc: "أسماؤهم ومهامهم وصفاتهم وفضائلهم من الوحي" },
       { href: "/wasaya-nabawiyya", Icon: Scroll,  title: seoNavLabel("/wasaya-nabawiyya", "الوصايا النبوية"),    desc: "49 وصية جامعة وخاصة بالصحابة مع التطبيق" },

@@ -172,7 +172,7 @@ export default function UpdatesPage() {
         </div>
       )}
       <div className="twh-share">
-        <ShareButtons title="آخر التحديثات — سُنّة" url="https://www.ssunnah.com/updates" />
+        <ShareButtons title="آخر المستجدات — سُنّة" url="https://www.ssunnah.com/updates" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في التاريخ الإسلامي والفقه" count={4} />

@@ -159,7 +159,7 @@ const SECTIONS = [
     links: [
       { href: "/about", label: "من نحن", desc: "رسالتنا وأهدافنا" },
       { href: "/methodology", label: "منهجنا العلمي", desc: "منهج المراجعة والتوثيق" },
-      { href: "/sources", label: "المصادر والتراخيص", desc: "مراجع البيانات وملاحظات الترخيص" },
+      { href: "/sources", label: "دليل الجهات", desc: "الجهات والمراجع المعتمدة في المنصة" },
       { href: "/universities", label: "الجامعات الشرعية", desc: "دليل الجامعات والمقارنة" },
       { href: "/universities/compare", label: "مقارنة الجامعات", desc: "مقارنة البرامج الشرعية" },
       { href: "/adhan-settings", label: "إعدادات الأذان", desc: "تنبيهات الصلاة والمؤذن" },
