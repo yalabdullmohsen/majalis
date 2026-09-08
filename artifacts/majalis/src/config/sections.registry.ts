@@ -127,7 +127,7 @@ export interface SectionDef {
 export const SECTION_GROUP_ACCENT: Record<SectionGroup, string> = {
   sciences: BRAND.colorDay,
   stories: "#8B6914",
-  dawah: "#4A5590",
+  dawah: "#1F5C48",
   library: "#8B6914",
   worship: "#2A7A6E",
   learning: "#3D5A80",
@@ -152,7 +152,7 @@ const SECTION_ACCENT_BY_ID: Record<string, string> = {
   research: "#8B6914",
   glossary: "#8B6914",
   universities: "#8B6914",
-  "discover-islam": "#4A5590",
+  "discover-islam": "#1F5C48",
   fiqh: "#1F6B4A",
   "usul-fiqh": "#8B7A3A",
   adhkar: "#3A9A7A",
