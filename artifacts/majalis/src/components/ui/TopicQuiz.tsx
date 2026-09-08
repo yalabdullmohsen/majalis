@@ -72,7 +72,7 @@ function QuizBody({ questions, onRefresh }: QuizBodyProps) {
                 </div>
               ) : (
                 <span className={`sq-score-badge sq-score-badge--${scores[i] ? "correct" : "wrong"}`}>
-                  {scores[i] ? "✓ صح" : "✗ غلط"}
+                  {scores[i] ? "صح" : "غلط"}
                 </span>
               )}
             </>

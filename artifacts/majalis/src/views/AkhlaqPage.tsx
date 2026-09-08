@@ -1,6 +1,6 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useMemo, useState } from "react";
-import { Heart, Star, Users, BookOpen, ChevronDown, ChevronUp } from "lucide-react";
+import { Heart, Star, Users, BookOpen, ChevronDown, ChevronUp, Check } from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -1114,7 +1114,7 @@ export default function AkhlaqPage() {
                     <ul className="akl-practices">
                       {a.practices.map((p) => (
                         <li key={p} className="akl-practice">
-                          <span aria-hidden="true">✓</span> {p}
+                          <span aria-hidden="true"><Check size={14} /></span> {p}
                         </li>
                       ))}
                     </ul>

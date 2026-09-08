@@ -210,7 +210,7 @@ export default function LearningPathsPage() {
                             {path.totalSessions} جلسة{weeks.maxWeeks > 0 ? ` — نحو ${weeks.minWeeks}-${weeks.maxWeeks} أسابيع` : ""}
                           </span>
                         ) : (
-                          <span className="lpp-path-card__badge">قيد الإعداد</span>
+                          <span className="lpp-path-card__badge">لا جلسات بعد</span>
                         )}
                         {isEnrolled && (
                           <span className="lpp-path-card__badge lpp-path-card__badge--progress">مسجَّل</span>
