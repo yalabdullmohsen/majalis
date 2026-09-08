@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { stripFawaidBoilerplate } from "../fawaid-text";
 
 let passed = 0;
@@ -29,6 +32,22 @@ const sample3 =
   "من أنفق نفقة في سبيل الله كُتبت له بسبعمائة ضعف، وهذا أصل يُسترشد به في فهم الأحكام الشرعية وتطبيقها.";
 const cleaned3 = stripFawaidBoilerplate(sample3);
 assert(cleaned3 === "من أنفق نفقة في سبيل الله كُتبت له بسبعمائة ضعف", "يزيل ذيل «وتطبيقها»");
+
+const sample4 =
+  "معرفة أسباب النزول نافعة إذا ثبتت. وهذا يُقرأ بضابط العلم والعمل، مع ترك الغلو والاعتماد على الثابت من النصوص وكلام أهل العلم.";
+const cleaned4 = stripFawaidBoilerplate(sample4);
+assert(cleaned4 === "معرفة أسباب النزول نافعة إذا ثبتت.", "يزيل ذيل بضابط العلم");
+
+const sample5 =
+  "من فقه الوفاء أن حفظ العهد، وأن محبة النبي ﷺ تظهر في الاتباع والتثبّت وترك الاحتفال بما لم يُشرع. وهذه فائدة تعليمية للتذكير والمنهج.";
+const cleaned5 = stripFawaidBoilerplate(sample5);
+assert(cleaned5 === "من فقه الوفاء أن حفظ العهد", "يزيل جملة محبة النبي وذيل الفائدة التعليمية");
+
+const seedPath = join(dirname(fileURLToPath(import.meta.url)), "../fawaid-curated-seed.ts");
+const seedSrc = readFileSync(seedPath, "utf8");
+assert(!/وهذه فائدة تعليمية/.test(seedSrc), "البذرة بلا ذيل «فائدة تعليمية»");
+assert(!/وهذا يُقرأ بضابط العلم/.test(seedSrc), "البذرة بلا ذيل «بضابط العلم»");
+assert(!/وأن محبة النبي ﷺ (?:تظهر|تُصان)/.test(seedSrc), "البذرة بلا جملة محبة النبي القالبية");
 
 console.log(`\n=== النتيجة: ${passed} نجح / ${failed} فشل ===\n`);
 if (failed > 0) process.exit(1);
