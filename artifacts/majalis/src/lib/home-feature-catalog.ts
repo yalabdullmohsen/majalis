@@ -106,7 +106,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/sunan-yawmiyya",  Icon: Check,       title: seoNavLabel("/sunan-yawmiyya", "السنن النبوية"),        desc: "80+ سنة يومية مع تتبع التطبيق" },
       { href: "/duas-quran",  Icon: BookOpen,    title: seoNavLabel("/duas-quran", "أدعية القرآن"),        desc: "أدعية قرآنية للأنبياء والمؤمنين" },
       { href: "/fawaid",       Icon: Lightbulb,   title: seoNavLabel("/fawaid", "الفوائد الشرعية"),      desc: "مقتطفات موثّقة ومنتقاة للتأمل والعمل" },
-      { href: "/miracles",     Icon: Sparkles,    title: seoNavLabel("/miracles", "الإعجاز العلمي"),      desc: "إشارات كونية بحذر منهجي" },
+      { href: "/miracles",     Icon: Sparkles,    title: seoNavLabel("/miracles", "الإعجاز العلمي"),      desc: "تأملات علمية منضبطة في إشارات الوحي" },
       { href: "/hikam-salaf",  Icon: BookOpen,    title: seoNavLabel("/hikam-salaf", "حكم السلف الصالح"),     desc: "أقوال الأئمة والصحابة والتابعين" },
       { href: "/fadail-aamal",      Icon: Star,      title: seoNavLabel("/fadail-aamal", "فضائل الأعمال"),         desc: "أحاديث في فضائل العبادات والأخلاق" },
       { href: "/adab-talab-ilm",   Icon: GraduationCap,  title: seoNavLabel("/adab-talab-ilm", "آداب طالب العلم"),      desc: "دليل طالب العلم من الفضل إلى الكتب المقررة" },
