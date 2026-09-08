@@ -27,7 +27,7 @@ const TOPICS: { href: string; icon: string; label: string; desc: string; color: 
     href: "/fawaid",
     icon: '<path d="M11 2a5 5 0 0 1 5 5c0 2.4-1.5 4.5-3.5 5.4V14H9.5v-1.6C7.5 11.5 6 9.4 6 7a5 5 0 0 1 5-5z"/><line x1="9.5" y1="17" x2="12.5" y2="17"/><line x1="10" y1="20" x2="12" y2="20"/>',
     label: "الفوائد العلمية",
-    desc: "لآلئ ودرر من كلام العلماء",
+    desc: "مقتطفات موثّقة ومنتقاة من كلام أهل العلم",
     color: "var(--mj-brand-deep)",
   },
   {
@@ -55,7 +55,7 @@ const TOPICS: { href: string; icon: string; label: string; desc: string; color: 
     href: "/wasaya-nabawiyya",
     icon: '<path d="M5 3h9a2 2 0 0 1 2 2v12a1 1 0 0 1-1 1H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><line x1="7" y1="8" x2="14" y2="8"/><line x1="7" y1="12" x2="14" y2="12"/><line x1="7" y1="16" x2="11" y2="16"/>',
     label: "الوصايا النبوية",
-    desc: "كلمات جامعة ومعانٍ عظيمة",
+    desc: "وصايا نبوية جامعة للتذكير والعمل",
     color: "var(--mj-brand)",
   },
   {
@@ -69,7 +69,7 @@ const TOPICS: { href: string; icon: string; label: string; desc: string; color: 
     href: "/akhlaq",
     icon: '<path d="M11 19c-5-3.5-8-7-8-10a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 3-3 6.5-8 10z"/>',
     label: "الأخلاق الإسلامية",
-    desc: "مكارم الأخلاق من الوحي",
+    desc: "آيات وأحاديث في الخلق الحسن والتحلّي به",
     color: "var(--mj-brand-deep)",
   },
   {
@@ -83,7 +83,7 @@ const TOPICS: { href: string; icon: string; label: string; desc: string; color: 
     href: "/janna-naar",
     icon: '<path d="M11 2l2 5h5l-4 3 1.5 5.5L11 13l-4.5 2.5L8 10 4 7h5z"/>',
     label: "الجنة والنار",
-    desc: "صفة الجنة وأسباب دخولها وأدعية الآخرة",
+    desc: "صفة النعيم والنار وأسباب الدخول والاستعداد للآخرة",
     color: "var(--mj-brand-deep)",
   },
   {

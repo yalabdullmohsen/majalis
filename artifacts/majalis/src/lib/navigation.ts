@@ -60,7 +60,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/shamael",           label: seoNavLabel("/shamael", "صفةُ سيِّد الخلقِ ﷺ") },
   { href: "/islamic-glossary",  label: seoNavLabel("/islamic-glossary", "المعجم الشرعي") },
   { href: "/adab-talab-ilm",   label: seoNavLabel("/adab-talab-ilm", "آداب طالب العلم") },
-  { href: "/janna-naar",        label: seoNavLabel("/janna-naar", "صفة الجنة") },
+  { href: "/janna-naar",        label: seoNavLabel("/janna-naar", "الجنة والنار") },
   { href: "/alamat-saah",       label: seoNavLabel("/alamat-saah", "علامات الساعة") },
   { href: "/malaika",           label: seoNavLabel("/malaika", "الملائكة في الإسلام") },
   { href: "/wasaya-nabawiyya",  label: seoNavLabel("/wasaya-nabawiyya", "الوصايا النبوية") },
