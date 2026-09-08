@@ -70,6 +70,15 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     kind: "guide",
   },
   {
+    id: "itikaf",
+    emoji: "🏕️",
+    title: "الاعتكاف",
+    desc: "أحكام الاعتكاف: شروطه ومبطلاته وما يُشرع للمعتكف في المسجد.",
+    href: "/fiqh/books/itikaf",
+    color: "var(--mj-brand-deep)",
+    kind: "guide",
+  },
+  {
     id: "hajj",
     emoji: "",
     title: "الحج والعمرة",
@@ -86,6 +95,22 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     href: "/janaza",
     color: "#5C5C56",
     kind: "guide",
+  },
+  {
+    id: "muamalat",
+    emoji: "🤝",
+    title: "المعاملات",
+    desc: "أحكام المعاملات: البيع والإجارة والشركات والغرر، مع ضوابط الحلال والحرام في التجارة.",
+    href: "/fiqh/books/buyu",
+    color: "var(--mj-brand)",
+    kind: "topic",
+    rulingsCategory: "المعاملات",
+    relatedGuides: [
+      { href: "/riba", label: "الربا" },
+      { href: "/sadaqa", label: "الصدقة" },
+      { href: "/waqf", label: "الوقف" },
+      { href: "/zakat", label: "الزكاة" },
+    ],
   },
   {
     id: "jumuah",
@@ -250,8 +275,8 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     kind: "topic",
     rulingsCategory: "المعاملات",
     relatedGuides: [
-      { href: "/riba", label: "الربا" },
       { href: "/zakat", label: "الزكاة" },
+      { href: "/waqf", label: "الوقف" },
       { href: "/fiqh-council/nawazil", label: "النوازل المالية" },
     ],
   },

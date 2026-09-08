@@ -29,13 +29,13 @@ export function FiqhReportError({ lessonTitle, lessonHref, bookTitle }: Props) {
         `النوع: ${REPORT_KINDS.find((k) => k.id === kind)?.label ?? kind}`,
         `الكتاب: ${bookTitle}`,
         `المسألة: ${lessonTitle}`,
-        `الرابط: https://ssunnah.com${lessonHref}`,
+        `الرابط: https://www.ssunnah.com${lessonHref}`,
         "",
         "التفاصيل:",
         note.trim() || "(بدون تفاصيل إضافية)",
       ].join("\n"),
     );
-    return `mailto:Majlisilm.app@gmail.com?subject=${subject}&body=${body}`;
+    return `mailto:info@ssunnah.com?subject=${subject}&body=${body}`;
   }, [bookTitle, kind, lessonHref, lessonTitle, note]);
 
   return (

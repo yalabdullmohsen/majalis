@@ -21,7 +21,7 @@ assert.match(lessonView, /FiqhReportError/);
 assert.match(lessonView, /أسئلة مراجعة/);
 assert.match(lessonView, /أخطاء شائعة/);
 assert.match(sourceLine, /المصادر والمراجع/);
-assert.match(report, /Majlisilm\.app@gmail\.com/);
+assert.match(report, /info@ssunnah\.com/);
 assert.doesNotMatch(lessonView, /يحتاج مراجعة/);
 assert.doesNotMatch(lessonView, /بحاجة إلى استكمال/);
 

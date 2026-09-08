@@ -38,7 +38,7 @@
   "redirects": [
     {
       "source": "/more",
-      "destination": "/",
+      "destination": "/sections",
       "permanent": true
     },
     {
@@ -440,7 +440,17 @@
     },
     {
       "source": "/knowledge-map",
-      "destination": "/",
+      "destination": "/knowledge-graph",
+      "permanent": true
+    },
+    {
+      "source": "/islamic-history",
+      "destination": "/tarikh-islami",
+      "permanent": true
+    },
+    {
+      "source": "/islamic-history/:path*",
+      "destination": "/tarikh-islami",
       "permanent": true
     },
     {
@@ -593,7 +603,7 @@
     },
     {
       "source": "/explore",
-      "destination": "/",
+      "destination": "/sections",
       "permanent": true
     },
     {

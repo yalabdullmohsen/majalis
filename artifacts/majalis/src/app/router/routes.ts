@@ -189,6 +189,8 @@ const PATHS = [
   "/islamic-directory",
   "/islamic-events",
   "/islamic-glossary",
+  "/islamic-history",
+  "/islamic-history/:rest*",
   "/islamic-institutions",
   "/islamic-landmarks",
   "/islamic-sects",
