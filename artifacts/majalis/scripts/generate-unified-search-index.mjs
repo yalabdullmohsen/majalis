@@ -261,12 +261,22 @@ try {
   for (const p of peopleJson.people ?? []) {
     if (p.status !== "published") continue;
     if (p.category === "prophet") continue; // الأنبياء في فهرس /prophets
+    const defHint = String(p.definition || "")
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, 120);
     pushDoc(
       `person:${p.slug}`,
       "person",
       p.nameAr,
       `/quran/people/${p.slug}`,
-      [...(p.aliases ?? []), p.category, "الذين ذكروا في القرآن", "أشخاص القرآن"],
+      [
+        ...(p.aliases ?? []),
+        p.category,
+        "الذين ذكروا في القرآن",
+        "أشخاص القرآن",
+        defHint,
+      ].filter(Boolean),
       PERSON_META(p),
     );
   }

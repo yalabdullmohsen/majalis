@@ -71,7 +71,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "itikaf",
-    emoji: "🏕️",
+    emoji: "",
     title: "الاعتكاف",
     desc: "أحكام الاعتكاف: شروطه ومبطلاته وما يُشرع للمعتكف في المسجد.",
     href: "/fiqh/books/itikaf",
