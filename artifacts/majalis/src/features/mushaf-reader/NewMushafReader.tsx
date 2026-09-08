@@ -147,7 +147,9 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   useEffect(() => {
     let cancelled = false;
     setError(null);
-    setLayout(getCachedMushafPage(page));
+    /* لا نفرّغ layout عند غياب الكاش — إبقاء الصفحة السابقة يمنع قفزة النص للأعلى */
+    const cached = getCachedMushafPage(page);
+    if (cached) setLayout(cached);
     void loadMushafPage(page)
       .then((data) => {
         if (!cancelled) setLayout(data);
@@ -186,10 +188,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       setChromeOpen(false);
       return;
     }
-    setSelectedVerseKey(null);
-    setActionsOpen(false);
-    setTafsirOpen(false);
-    setStatus(null);
+    /* المسح يتم في onNavigateStart/go قبل القلب — لا نغيّر الحجز هنا لتجنّب قفزة الارتفاع */
     suppressPageSyncRef.current = false;
   }, [page]);
 
@@ -273,20 +272,62 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   }, [audio, recitation]);
 
   const [pagerSettled, setPagerSettled] = useState(true);
+  /** تجميد حجز الأسفل أثناء القلب حتى لا يتغيّر ارتفاع شبكة الآيات لحظةً */
+  const [bottomStackFrozen, setBottomStackFrozen] = useState(false);
+  const [freezeStackMode, setFreezeStackMode] = useState<"none" | "ayah" | "audio">("none");
+  const pageTurnLockRef = useRef(false);
+
+  const clearPageChrome = useCallback(() => {
+    setActionsOpen(false);
+    setSelectedVerseKey(null);
+    setTafsirOpen(false);
+    setStatus(null);
+    setChromeOpen(false);
+  }, []);
+
+  const beginPageTurn = useCallback(() => {
+    if (pageTurnLockRef.current) return;
+    pageTurnLockRef.current = true;
+    const mode: "none" | "ayah" | "audio" = actionsOpenRef.current
+      ? "ayah"
+      : audioDockOpen &&
+          (playerState === "playing" ||
+            playerState === "buffering" ||
+            playerState === "error" ||
+            chromeOpen)
+        ? "audio"
+        : "none";
+    setFreezeStackMode(mode);
+    setBottomStackFrozen(true);
+    setPagerSettled(false);
+    clearPageChrome();
+  }, [audioDockOpen, chromeOpen, clearPageChrome, playerState]);
 
   const go = useCallback(
     (next: number) => {
       suppressPageSyncRef.current = false;
       recitation.stop();
-      setPagerSettled(false);
+      beginPageTurn();
       onPageChange(clampMushafPage(next));
     },
-    [onPageChange, recitation],
+    [beginPageTurn, onPageChange, recitation],
   );
 
   useEffect(() => {
-    const id = window.requestAnimationFrame(() => setPagerSettled(true));
-    return () => window.cancelAnimationFrame(id);
+    let cancelled = false;
+    const id = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        if (cancelled) return;
+        setPagerSettled(true);
+        setBottomStackFrozen(false);
+        setFreezeStackMode("none");
+        pageTurnLockRef.current = false;
+      });
+    });
+    return () => {
+      cancelled = true;
+      window.cancelAnimationFrame(id);
+    };
   }, [page]);
 
   const versePreview = useCallback(
@@ -511,8 +552,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       onPageChange={go}
       disabled={edgesDisabled}
       onNavigateStart={() => {
-        setChromeOpen(false);
-        setPagerSettled(false);
+        beginPageTurn();
       }}
       ignoreSelector=".nm-controls, .nm-verse-menu, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, input, textarea, select, button"
       onTapEmpty={() => {
@@ -531,6 +571,9 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       data-chrome={chromeOpen ? "1" : "0"}
       data-ayah-bar={actionsOpen ? "1" : "0"}
       data-audio-dock={audioDockVisible ? "1" : "0"}
+      data-pager-settled={pagerSettled ? "1" : "0"}
+      data-bottom-freeze={bottomStackFrozen ? "1" : "0"}
+      data-freeze-stack={freezeStackMode}
       data-testid="mushaf-viewport"
       dir="rtl"
       nextPage={

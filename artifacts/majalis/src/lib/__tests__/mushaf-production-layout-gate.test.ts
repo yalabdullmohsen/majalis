@@ -30,7 +30,12 @@ assert.doesNotMatch(css, /mix-blend-mode:\s*multiply/);
 
 assert.match(reader, /data-ayah-bar=/);
 assert.match(reader, /data-audio-dock=/);
+assert.match(reader, /data-bottom-freeze=/);
+assert.match(reader, /data-freeze-stack=/);
+assert.match(reader, /beginPageTurn|pageTurnLockRef/);
 assert.match(reader, /nm-root/);
+assert.match(css, /data-bottom-freeze="1"/);
+assert.match(css, /data-freeze-stack="ayah"/);
 assert.doesNotMatch(reader, /scrollIntoView/);
 assert.doesNotMatch(reader, /\.scrollTo\(/);
 
