@@ -1,6 +1,7 @@
 /**
  * Flutter `ReviewAndModerationHub` — stats, ChoiceChips, feed, bulk approve.
  */
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useMemo, useState } from "react";
 import { CheckCheck } from "lucide-react";
 import {
@@ -84,9 +85,7 @@ export function ReviewHubWorkspace({
     <div className={`rh-workspace${className ? ` ${className}` : ""}`} dir="rtl">
       <ul className="rh-flutter-stats" aria-label="مؤشرات المراجع">
         <li className="rh-flutter-stats__card">
-          <span className="rh-flutter-stats__icon rh-flutter-stats__icon--orange" aria-hidden="true">
-            ⏳
-          </span>
+          <span className="rh-flutter-stats__icon rh-flutter-stats__icon--orange" aria-hidden="true"><SectionIcon name="⏳" size={18} /></span>
           <div>
             <p className="rh-flutter-stats__label">طلبات بانتظار المراجعة</p>
             <p className="rh-flutter-stats__value">{metrics.totalPending}</p>

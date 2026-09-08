@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useCallback, useEffect, useState } from "react";
 import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
@@ -319,7 +320,7 @@ function AutonomousPlatformContent() {
                   <div className="aup-source-row">
                     <strong className="aup-source-name">{s.name || s.slug}</strong>
                     <StatusBadge status={s.status} />
-                    {s.latencyMs && <span className="aup-source-meta">⏱ {fmtMs(s.latencyMs)}</span>}
+                    {s.latencyMs && <span className="aup-source-meta"><SectionIcon name="⏱" size={16} /> {fmtMs(s.latencyMs)}</span>}
                     {s.lastFetch && <span className="aup-source-meta">آخر جلب: {fmtDt(s.lastFetch)}</span>}
                   </div>
                   {s.lastError && <div className="aup-source-err">{s.lastError}</div>}

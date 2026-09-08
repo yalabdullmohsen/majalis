@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useMemo, useState } from "react";
 import {
   Archive, CheckCircle2, ChevronDown, ChevronUp, EyeOff,
@@ -50,7 +51,7 @@ function CategoryStatusChip({ status }: { status: string }) {
       className={`cat-status-chip cat-status-chip--${normalizeCategoryStatus(status)}`}
       title={meta.label}
     >
-      <span aria-hidden="true">{meta.icon}</span>
+      <span aria-hidden="true"><SectionIcon name={meta.icon} size={22} /></span>
       <StatusBadge status={normalizeCategoryStatus(status)} label={meta.label} />
     </span>
   );

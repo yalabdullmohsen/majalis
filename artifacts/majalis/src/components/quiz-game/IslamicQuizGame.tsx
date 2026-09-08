@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { useSearch } from "wouter";
 import { DirectQaCard } from "./DirectQaCard";
@@ -114,7 +115,7 @@ export function makeTeam(id: TeamId, name: string): Team {
 }
 
 /** دوران الأدوار العام: يعمل لأي عدد فرق (1-4) — يدور للفريق التالي في المصفوفة.
- *  لفريق واحد (وضع فردي) يعيد نفس المعرّف دائمًا (idx+1 % 1 === idx). */
+ * لفريق واحد (وضع فردي) يعيد نفس المعرّف دائمًا (idx+1 % 1 === idx). */
 export function nextTeamId(teams: Team[], currentId: TeamId): TeamId {
   const idx = teams.findIndex((t) => t.id === currentId);
   if (idx === -1) return currentId;
@@ -298,7 +299,7 @@ function TimerBar({ seconds, maxSeconds }: { seconds: number; maxSeconds: number
       style={{ "--qzg-timer-color": color, "--qzg-timer-pct": `${Math.max(0, pct * 100)}%` } as React.CSSProperties}
     >
       <div className="qzg-timer__head">
-        <span className="qzg-timer__label">⏱ الوقت</span>
+        <span className="qzg-timer__label"><SectionIcon name="⏱" size={18} /> الوقت</span>
         <span className="qzg-timer__count" aria-live={urgent ? "assertive" : "off"} aria-atomic="true">{label}</span>
       </div>
       <div className="qzg-timer__track">

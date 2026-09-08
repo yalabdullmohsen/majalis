@@ -379,7 +379,7 @@ export default function MawarithPage() {
                         </div>
                         {w.dalil && (
                           <div className="mw-dalil">
-                            <span className="mw-dalil__icon">📜</span>
+                            <span className="mw-dalil__icon"><SectionIcon name="📜" size={18} /></span>
                             <span>{w.dalil}</span>
                           </div>
                         )}
@@ -456,7 +456,7 @@ export default function MawarithPage() {
             </div>
 
             <div className="mw-note-box">
-              <span>📌</span>
+              <span><SectionIcon name="📌" size={18} /></span>
               <p>ترتيب العَصَبة بالنفس: الابن ثم ابن الابن ثم الأب ثم الجدّ ثم الأخ الشقيق ثم الأخ لأب ثم ابن الأخ ثم العمّ وهكذا، الأقرب يحجب الأبعد.</p>
             </div>
           </div>

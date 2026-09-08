@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { Check, CheckCircle2, Search, X } from "lucide-react";
+import { Check, CheckCircle2, Search, Sparkles, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -986,7 +986,7 @@ export default function SunanYawmiyyaPage() {
                 <div className="sy-card__source">{s.source}</div>
                 {s.reward && (
                   <div className="sy-card__reward">
-                    ✨ {s.reward}
+                    <Sparkles size={14} aria-hidden="true" /> {s.reward}
                   </div>
                 )}
                 {s.howTo && (

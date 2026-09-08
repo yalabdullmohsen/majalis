@@ -911,7 +911,7 @@ export default function IslamicSectsPage() {
         style={{ background: "linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand-deep) 100%)" }}
       >
         <div className="page-hero-content">
-          <div className="page-hero-icon" style={{ fontSize: "3rem" }}>🕌</div>
+          <div className="page-hero-icon" style={{ fontSize: "3rem" }}><SectionIcon name="🕌" size={28} /></div>
           <h1 className="page-hero-title">الفرق الإسلامية</h1>
           <p className="page-hero-desc">
             موسوعة علمية تاريخية في الفرق والمذاهب الإسلامية — نشأتها وعقائدها وأبرز علمائها وكتبها
@@ -1003,7 +1003,7 @@ export default function IslamicSectsPage() {
                 fontFamily: "inherit",
               }}
             >
-              {s === "الكل" ? "الكل" : s === "قائمة" ? "✅ قائمة" : "📜 تاريخية"}
+              {s === "الكل" ? "الكل" : s === "قائمة" ? "قائمة" : "تاريخية"}
             </button>
           ))}
         </div>
@@ -1084,7 +1084,7 @@ export default function IslamicSectsPage() {
                   fontWeight: "600",
                 }}
               >
-                {sect.status === "قائمة" ? "✅ قائمة" : "📜 تاريخية"}
+                {sect.status === "قائمة" ? "قائمة" : "تاريخية"}
               </span>
               <span style={{ fontSize: "0.75rem", color: "var(--mj-brand-deep)" }}>
                 {selected?.id === sect.id ? "▲ إغلاق" : "▼ التفاصيل"}

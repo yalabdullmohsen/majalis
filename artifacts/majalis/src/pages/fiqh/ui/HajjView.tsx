@@ -372,7 +372,7 @@ export default function HajjPage() {
       {/* hero */}
       <section className="hj-hero">
         <div className="hj-hero__badge">أركان الإسلام</div>
-        <div className="hj-hero__kaaba">🕋</div>
+        <div className="hj-hero__kaaba"><SectionIcon name="🕋" size={28} /></div>
         <h1 className="hj-hero__title">الحج والعمرة</h1>
         <p className="hj-hero__sub">
           الركن الخامس من أركان الإسلام، دليل شامل للمناسك والمشاعر والأحكام
@@ -534,7 +534,7 @@ export default function HajjPage() {
               </div>
             ))}
             <div className="hj-info-box">
-              <span className="hj-info-box__icon">💡</span>
+              <span className="hj-info-box__icon"><SectionIcon name="💡" size={18} /></span>
               <p>الدم في الفقه يعني ذبح شاة وتوزيع لحمها على فقراء الحرم. لا يجوز أكلها للحاج وإن كان مضطراً.</p>
             </div>
           </section>
@@ -586,7 +586,7 @@ export default function HajjPage() {
             </div>
 
             <div className="hj-info-box hj-info-box--mt">
-              <span className="hj-info-box__icon">📌</span>
+              <span className="hj-info-box__icon"><SectionIcon name="📌" size={18} /></span>
               <p>
                 <strong>العمرة في رمضان:</strong> «عمرة في رمضان تعدل حجة، أو حجة معي»
                 (متفق عليه)، أجرها كأجر الحج لا أنها تُسقطه.

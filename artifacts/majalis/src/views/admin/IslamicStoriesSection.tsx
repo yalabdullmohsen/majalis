@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState } from "react";
 import { BookOpen, Library } from "lucide-react";
 import { supabase } from "@/lib/supabase";
@@ -162,7 +163,7 @@ export function IslamicStoriesSection() {
                   aria-label={`${isExpanded ? "طي" : "توسيع"} قصة ${story.title}`}
                   onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && toggleExpand(story.id)}
                 >
-                  <span className="is-icon">{story.icon}</span>
+                  <span className="is-icon"><SectionIcon name={story.icon} size={22} /></span>
                   <div className="is-info">
                     <div className="is-name">{story.title}</div>
                     <div className="is-meta">
@@ -170,7 +171,7 @@ export function IslamicStoriesSection() {
                     </div>
                   </div>
                   <span className={`is-badge ${story.is_approved ? "done" : "pending"}`}>
-                    {story.is_approved ? "✓ معتمد" : "⏳ مراجعة"}
+                    {story.is_approved ? "✓ معتمد" : "مراجعة"}
                   </span>
                   <span className="is-toggle">{isExpanded ? "▲" : "▼"}</span>
                 </div>

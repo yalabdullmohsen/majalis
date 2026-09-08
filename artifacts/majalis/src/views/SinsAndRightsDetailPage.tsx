@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
@@ -88,8 +89,8 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
       }
     >
       {/* شارات التصنيف وحالة المراجعة — تبقى بتصميمها الخاص (ألوان دلالية لكل
-          نوع/شدة) بدل خانة "tags" العامة في القالب الموحّد، لأنها ليست وسومًا
-          عامة بل حالة مصنَّفة لونيًا لا يمكن التعبير عنها بشريحة نصية موحّدة. */}
+ نوع/شدة) بدل خانة "tags" العامة في القالب الموحّد، لأنها ليست وسومًا
+ عامة بل حالة مصنَّفة لونيًا لا يمكن التعبير عنها بشريحة نصية موحّدة. */}
       <div className="snr-detail-badges">
         <span className={`snr-badge snr-badge--${topic.rightsCategory}`}>
           {RIGHTS_CATEGORY_LABELS[topic.rightsCategory]}
@@ -122,7 +123,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
       {/* الشرح */}
       <section className="snr-detail-section">
         <div className="snr-detail-section-title">
-          <span>📘</span> الشرح
+          <span><SectionIcon name="📘" size={18} /></span> الشرح
         </div>
         <p style={{ fontSize: "0.95rem", color: "var(--elite-ink, var(--mj-brand-deep))", lineHeight: 1.75 }}>
           {topic.explanation}
@@ -133,7 +134,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
       {topic.quranEvidence.length > 0 && (
         <section className="snr-detail-section">
           <div className="snr-detail-section-title">
-            <span>📖</span> الدليل من القرآن الكريم
+            <span><SectionIcon name="📖" size={18} /></span> الدليل من القرآن الكريم
           </div>
           {topic.quranEvidence.map((ev, i) => (
             <div key={i} className="snr-evidence-item">
@@ -150,7 +151,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
       {topic.hadithEvidence.filter((ev) => !/ضعيف|موضوع|منكر|واه/.test(ev.grade || "")).length > 0 && (
         <section className="snr-detail-section">
           <div className="snr-detail-section-title">
-            <span>📜</span> الدليل من السنة النبوية
+            <span><SectionIcon name="📜" size={18} /></span> الدليل من السنة النبوية
           </div>
           {topic.hadithEvidence
             .filter((ev) => !/ضعيف|موضوع|منكر|واه/.test(ev.grade || ""))
@@ -170,7 +171,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
       {topic.effects.length > 0 && (
         <section className="snr-detail-section">
           <div className="snr-detail-section-title">
-            <span>⚠️</span> آثار الذنب
+            <span><SectionIcon name="⚠️" size={18} /></span> آثار الذنب
           </div>
           <ul className="snr-list">
             {topic.effects.map((e, i) => (
@@ -186,7 +187,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
       {/* شروط التوبة */}
       <section className="snr-detail-section">
         <div className="snr-detail-section-title">
-          <span>🔄</span> شروط التوبة
+          <span><SectionIcon name="🔄" size={18} /></span> شروط التوبة
         </div>
         <div className="snr-repentance-box">
           {topic.repentanceConditions.general.map((cond, i) => (
@@ -199,7 +200,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
 
         {topic.repentanceConditions.requiresRestitution && (
           <div className="snr-restitution-alert" role="note">
-            <span className="snr-restitution-alert-icon">⚠️</span>
+            <span className="snr-restitution-alert-icon"><SectionIcon name="⚠️" size={18} /></span>
             <div>
               <div style={{ fontWeight: 700, marginBottom: "0.25rem" }}>يستلزم رد حق</div>
               <div className="snr-restitution-alert-text">
@@ -207,7 +208,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
               </div>
               {topic.repentanceConditions.ifOwnerUnreachable && (
                 <div style={{ marginTop: "0.5rem", fontStyle: "normal", fontSize: "0.85rem" }}>
-                  💡 عند تعذر الوصول: {topic.repentanceConditions.ifOwnerUnreachable}
+                  <SectionIcon name="💡" size={16} /> عند تعذر الوصول: {topic.repentanceConditions.ifOwnerUnreachable}
                 </div>
               )}
             </div>
@@ -216,13 +217,13 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
 
         {topic.repentanceConditions.requiresForgiveness && topic.repentanceConditions.forgivenessDetails && (
           <div className="snr-guide-note" style={{ marginTop: "0.75rem" }}>
-            🤝 <strong>بشأن طلب المسامحة:</strong> {topic.repentanceConditions.forgivenessDetails}
+            <SectionIcon name="🤝" size={16} /> <strong>بشأن طلب المسامحة:</strong> {topic.repentanceConditions.forgivenessDetails}
           </div>
         )}
 
         {topic.repentanceConditions.hasExpiation && topic.repentanceConditions.expiationDetails && (
           <div style={{ background: "rgba(26,74,122,0.06)", borderRadius: "var(--elite-r-sm, 8px)", padding: "0.75rem 1rem", marginTop: "0.75rem", fontSize: "0.875rem", color: "#1a4a7a" }}>
-            📋 <strong>الكفارة:</strong> {topic.repentanceConditions.expiationDetails}
+            <SectionIcon name="📋" size={16} /> <strong>الكفارة:</strong> {topic.repentanceConditions.expiationDetails}
           </div>
         )}
       </section>
@@ -231,7 +232,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
       {topic.commonMistakes.length > 0 && (
         <section className="snr-detail-section">
           <div className="snr-detail-section-title">
-            <span>❌</span> أخطاء شائعة في فهم التوبة
+            <span><SectionIcon name="❌" size={18} /></span> أخطاء شائعة في فهم التوبة
           </div>
           <ul className="snr-list">
             {topic.commonMistakes.map((m, i) => (
@@ -248,7 +249,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
       {topic.references.length > 0 && (
         <section className="snr-detail-section">
           <div className="snr-detail-section-title">
-            <span>📚</span> المصادر والمراجع
+            <span><SectionIcon name="📚" size={18} /></span> المصادر والمراجع
           </div>
           <ul className="snr-list">
             {topic.references.map((ref, i) => (
@@ -262,8 +263,8 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
       )}
 
       {/* الموضوعات ذات الصلة: انتقلت إلى prop "related" أعلاه — القالب الموحّد
-          يعرضها عبر RelatedLinks/PlatformContentCard، نفس مكوّن صفحات الأحكام
-          والمجلس الفقهي، بدل تصميم مخصَّص لهذه الصفحة وحدها. */}
+ يعرضها عبر RelatedLinks/PlatformContentCard، نفس مكوّن صفحات الأحكام
+ والمجلس الفقهي، بدل تصميم مخصَّص لهذه الصفحة وحدها. */}
     </ContentDetailLayout>
   );
 }

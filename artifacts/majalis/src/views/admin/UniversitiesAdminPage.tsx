@@ -367,7 +367,7 @@ function AdminContent() {
             هذه تذكيرات للمراجعة البشرية، لا يُحدَّث أي محتوى تلقائياً.
           </p>
           {reminders.length === 0 && (
-            <div className="uap-empty">لا توجد تذكيرات معلّقة. ✅</div>
+            <div className="uap-empty">لا توجد تذكيرات معلّقة.</div>
           )}
           {reminders.map((r) => (
             <div key={r.id} className="uap-reminder-card">

@@ -241,19 +241,19 @@ export default function MadhahibPage() {
 
                   {/* الانتشار */}
                   <div className="mdb-section">
-                    <div className="mdb-section__title">🌍 الانتشار الجغرافي</div>
+                    <div className="mdb-section__title"><SectionIcon name="🌍" size={18} /> الانتشار الجغرافي</div>
                     <p className="mdb-section__body">{m.spread}</p>
                   </div>
 
                   {/* المنهج */}
                   <div className="mdb-section">
-                    <div className="mdb-section__title">🔎 المنهج الأصولي</div>
+                    <div className="mdb-section__title"><SectionIcon name="🔎" size={18} /> المنهج الأصولي</div>
                     <p className="mdb-section__body">{m.methodology}</p>
                   </div>
 
                   {/* المصادر */}
                   <div className="mdb-section">
-                    <div className="mdb-section__title">📌 مصادر التشريع</div>
+                    <div className="mdb-section__title"><SectionIcon name="📌" size={18} /> مصادر التشريع</div>
                     <div className="mdb-sources">
                       {m.sources.map((s, i) => (
                         <span key={i} className="mdb-source-chip">{s}</span>
@@ -263,7 +263,7 @@ export default function MadhahibPage() {
 
                   {/* مميزات */}
                   <div className="mdb-section">
-                    <div className="mdb-section__title">✨ أبرز المميزات</div>
+                    <div className="mdb-section__title"><SectionIcon name="✨" size={18} /> أبرز المميزات</div>
                     <ul className="mdb-features">
                       {m.features.map((f, i) => (
                         <li key={i} className="mdb-feature">{f}</li>
@@ -273,7 +273,7 @@ export default function MadhahibPage() {
 
                   {/* أهم الكتب */}
                   <div className="mdb-section">
-                    <div className="mdb-section__title">📚 أهم المصنَّفات</div>
+                    <div className="mdb-section__title"><SectionIcon name="📚" size={18} /> أهم المصنَّفات</div>
                     <div className="mdb-books">
                       {m.books.map((b, i) => (
                         <div key={i} className="mdb-book">
@@ -286,7 +286,7 @@ export default function MadhahibPage() {
 
                   {/* العلماء */}
                   <div className="mdb-section">
-                    <div className="mdb-section__title">🎓 كبار علماء المذهب</div>
+                    <div className="mdb-section__title"><SectionIcon name="🎓" size={18} /> كبار علماء المذهب</div>
                     <div className="mdb-scholars">
                       {m.scholars.map((s, i) => (
                         <span key={i} className="mdb-scholar-chip">{s}</span>

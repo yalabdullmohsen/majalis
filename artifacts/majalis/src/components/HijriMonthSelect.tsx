@@ -7,7 +7,7 @@ export type HijriMonthSelectProps = {
   /** إضافة خيار "كل الأشهر" في الأعلى (مناسب للفلاتر) */
   includeAll?: boolean;
   allLabel?: string;
-  /** إظهار مؤشر ⭐ بجانب الأشهر الحُرُم */
+  /** إظهار مؤشر ★ بجانب الأشهر الحُرُم */
   markSacred?: boolean;
   id?: string;
   name?: string;
@@ -51,7 +51,7 @@ export function HijriMonthSelect({
       {includeAll && <option value="">{allLabel}</option>}
       {HIJRI_MONTHS.map((m) => (
         <option key={m.number} value={m.number}>
-          {markSacred && m.sacred ? `${m.name} ⭐` : m.name}
+          {markSacred && m.sacred ? `${m.name} ★` : m.name}
         </option>
       ))}
     </select>

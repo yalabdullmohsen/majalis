@@ -1138,7 +1138,7 @@ export default function FadailAamalPage() {
 
         {filtered.length === 0 && (
           <div className="fa-empty">
-            <span className="fa-empty__icon">🔍</span>
+            <span className="fa-empty__icon"><SectionIcon name="🔍" size={18} /></span>
             <p>لا توجد نتائج مطابقة</p>
           </div>
         )}

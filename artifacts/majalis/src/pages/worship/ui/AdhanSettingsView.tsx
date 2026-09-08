@@ -240,7 +240,7 @@ function AndroidAdhanNativeCard({
             disabled={permBusy}
             onClick={() => void handleBatteryCheck()}
           >
-            فحص حماية البطارية ⚡
+            فحص حماية البطارية
           </button>
           <button
             type="button"
@@ -248,7 +248,7 @@ function AndroidAdhanNativeCard({
             disabled={fgsBusy}
             onClick={() => void handleFgsTest()}
           >
-            {fgsBusy ? "…" : "تجربة خدمة الأذان 🔊"}
+            {fgsBusy ? "…" : "تجربة خدمة الأذان"}
           </button>
         </div>
         {fgsMsg ? (

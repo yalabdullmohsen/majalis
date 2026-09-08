@@ -310,7 +310,7 @@ export default function TawbaPage() {
                     <p className="tw-shart-desc">{s.desc}</p>
                     {s.dalil && (
                       <div className="tw-shart-dalil">
-                        <span className="tw-shart-dalil__icon">📜</span>
+                        <span className="tw-shart-dalil__icon"><SectionIcon name="📜" size={18} /></span>
                         <span>{s.dalil}</span>
                       </div>
                     )}
@@ -320,7 +320,7 @@ export default function TawbaPage() {
             </div>
 
             <div className="tw-note-box">
-              <span className="tw-note-box__icon">💡</span>
+              <span className="tw-note-box__icon"><SectionIcon name="💡" size={18} /></span>
               <div>
                 <strong>ملاحظة:</strong> إذا كانت التوبة من معصية تتعلق بحق شخص آخر يُزاد شرط رابع هو ردّ الحق أو الاستحلال، فتصبح الشروط خمسة.
               </div>
@@ -381,7 +381,7 @@ export default function TawbaPage() {
                     {isOpen && (
                       <div className="tw-dhikr-body">
                         <div className="tw-dhikr-reward">
-                          <span className="tw-dhikr-reward__icon">⭐</span>
+                          <span className="tw-dhikr-reward__icon"><SectionIcon name="⭐" size={18} /></span>
                           <span>{d.reward}</span>
                         </div>
                         <span className="tw-dhikr-source">المصدر: {d.source}</span>
@@ -425,7 +425,7 @@ export default function TawbaPage() {
             <div className="tw-mawani-list">
               {filteredMawani.map((m, i) => (
                 <div key={i} className="tw-mani-card">
-                  <div className="tw-mani-num">⛔</div>
+                  <div className="tw-mani-num"><SectionIcon name="⛔" size={18} /></div>
                   <div>
                     <h3 className="tw-mani-title">{m.title}</h3>
                     <p className="tw-mani-desc">{m.desc}</p>

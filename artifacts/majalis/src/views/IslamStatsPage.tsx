@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { BarChart3, Globe, Heart, Star, TrendingUp, Users } from "lucide-react";
+import { AlertTriangle, BarChart3, BookOpen, Globe, Heart, Star, TrendingUp, Users } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -393,7 +393,7 @@ export default function IslamStatsPage() {
             </div>
 
             <div className="is-note">
-              📊 المصدر: مركز بيو للأبحاث، بيانات المشهد الديني العالمي ٢٠٢٠م المنشورة في ٢٠٢٥م
+              <BarChart3 size={14} aria-hidden="true" /> المصدر: مركز بيو للأبحاث، بيانات المشهد الديني العالمي ٢٠٢٠م المنشورة في ٢٠٢٥م
             </div>
           </div>
         )}
@@ -417,7 +417,7 @@ export default function IslamStatsPage() {
               ))}
             </div>
             <div className="is-note">
-              📖 الإحصاءات وفق رواية حفص عن عاصم، المعتمدة في معظم البلدان الإسلامية
+              <BookOpen size={14} aria-hidden="true" /> الإحصاءات وفق رواية حفص عن عاصم، المعتمدة في معظم البلدان الإسلامية
             </div>
           </div>
         )}
@@ -500,7 +500,7 @@ export default function IslamStatsPage() {
               ))}
             </div>
             <div className="is-note">
-              ⚠️ تنبيه: الدلالات الكونية يُقدَّم للاستدلال لا للتفسير، التفسير العلمي للقرآن يشترط شروطاً وضوابط علمية صارمة
+              <AlertTriangle size={14} aria-hidden="true" /> تنبيه: الدلالات الكونية يُقدَّم للاستدلال لا للتفسير، التفسير العلمي للقرآن يشترط شروطاً وضوابط علمية صارمة
             </div>
           </div>
         )}
