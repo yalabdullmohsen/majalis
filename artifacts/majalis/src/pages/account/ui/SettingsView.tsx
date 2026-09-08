@@ -691,7 +691,7 @@ export default function SettingsPage() {
             <Link href="/about" className="settings-legal-link">
               حول التطبيق
             </Link>
-            <Link href="/sources" className="settings-legal-link">
+            <Link href="/data-licenses" className="settings-legal-link">
               المصادر والتراخيص
             </Link>
             <Link href="/contact" className="settings-legal-link">

@@ -1108,7 +1108,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   },
   {
     id: "updates",
-    label: "آخر المستجدات العلمية",
+    label: "آخر المستجدات",
     navLabel: "المستجدات",
     subtitle: "قرارات وفتاوى ودروس وإعلانات مرتّبة زمنياً",
     route: "/updates",

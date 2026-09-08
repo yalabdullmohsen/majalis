@@ -85,7 +85,7 @@ export default function AboutPage() {
         <p>
           يُستمد المحتوى من مصادر شرعية معتبرة قدر الإمكان، مع العزو والمراجعة. التفصيل المنهجي
           في صفحة <Link href="/about">من نحن</Link> وصفحة <Link href="/methodology">منهجية التوثيق</Link>
-          وصفحة <Link href="/sources">المصادر والتراخيص</Link>.
+          وصفحة <Link href="/data-licenses">المصادر والتراخيص</Link>.
         </p>
       </LegalSection>
 

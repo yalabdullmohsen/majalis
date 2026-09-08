@@ -64,9 +64,9 @@ export function HomeLatestUpdates() {
       id="latest-updates"
       icon={<UpdatesIcon />}
       eyebrow="محتوى موثّق"
-      title="آخر التحديثات من المصادر الرسمية"
+      title="آخر المستجدات من المصادر الرسمية"
       moreHref="/updates"
-      moreLabel="جميع التحديثات"
+      moreLabel="جميع المستجدات"
       state="ready"
     >
       <div className="home-more-grid">
