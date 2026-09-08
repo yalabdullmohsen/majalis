@@ -120,13 +120,22 @@ console.log("\n=== حظر ذيول العرض في صفحات نُظّفت ===")
     join(viewsDir, "JannaNaarPage.tsx"),
     join(viewsDir, "RaqaiqPage.tsx"),
     join(viewsDir, "MadhahibPage.tsx"),
+    join(viewsDir, "HikamSalafPage.tsx"),
+    join(viewsDir, "AkhlaqPage.tsx"),
     join(srcRoot, "lib/islamic-landmarks-data.ts"),
+    join(srcRoot, "lib/miracles-seed.ts"),
+    join(srcRoot, "lib/prophetic-medicine-seed.ts"),
   ];
   const displayForbidden = [
     "وهو دليلٌ صحيح يُستحضر للعمل والاستعداد للآخرة لا للتشاؤم",
     "فيُستحضر عند زيارته أو دراسته أدب المسجد وصدق الاتباع",
     "من مواعظ الرقائق والزهد المعتمدة",
     "من أصول المذهب الفقهي المعتمد",
+    "مع مراجعة الموضع في المصدر عند الاستشهاد",
+    "ويُرجع إليه للتفصيل لا للاختزال",
+    "بوابةٌ تعليميةٌ مرتبطة بأخلاق المسلم وتزكية النفس",
+    "فلتُجدّد محبة الله وخشيته، وتقطع تعلق الرجاء بغيره",
+    "مع الاعتدال والرجوع للطبيب عند الحاجة؛ وهذا من باب الوقاية لا بديلاً عن العلاج الطبي المعتمد؛ وهذا من باب الوقاية لا بديلا عن العلاج الطبي المعتمد",
   ];
   for (const file of displayTargets) {
     const src = readFileSync(file, "utf8");
