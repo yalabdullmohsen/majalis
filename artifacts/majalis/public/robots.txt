@@ -1,5 +1,7 @@
 # https://www.ssunnah.com/robots.txt
 # سُنّة
+# ملاحظة: robots.txt تلميح زحف فقط — ليست حماية أمنية.
+# المسارات الخاصة محمية عبر noindex/auth ولا تُدرَج هنا حتى لا تُكشَف.
 
 User-agent: *
 Allow: /
@@ -12,35 +14,15 @@ Allow: /icon-512.png
 Allow: /manifest.webmanifest
 Allow: /manifest.json
 Allow: /site.webmanifest
-Disallow: /admin
-Disallow: /admin/
-Disallow: /dashboard
-Disallow: /dashboard/
-Disallow: /internal
-Disallow: /internal/
-Disallow: /login
-Disallow: /register
-Disallow: /auth/
-Disallow: /vault
-Disallow: /api/
+
 Disallow: /search
 Disallow: /search/
 Disallow: /assistant
 Disallow: /assistant/
-Disallow: /knowledge-graph
-Disallow: /knowledge-graph/
-Disallow: /adhan-settings
-Disallow: /adhan-settings/
-Disallow: /fiqh-council/live
-Disallow: /fiqh-council/stats
-Disallow: /fiqh-council/compare
-Disallow: /fiqh-council/recommendations
-Disallow: /profile
-Disallow: /settings
-Disallow: /fiqh-council/research-assistant
-Disallow: /fiqh-council/research
 Disallow: /academic-research
 Disallow: /academic-research/
+Disallow: /fiqh-council/research-assistant
+Disallow: /fiqh-council/research
 Disallow: /fiqh-council/issues/genetic-testing-ancestry-ruling
 
 Sitemap: https://www.ssunnah.com/sitemap.xml

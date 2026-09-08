@@ -46,9 +46,10 @@ for (const r of adminRoutes) {
   );
 }
 
-assert.match(robotsTxt, /Disallow:\s*\/admin/);
-assert.match(robotsTxt, /Disallow:\s*\/dashboard/);
-assert.match(robotsTxt, /Disallow:\s*\/internal/);
+assert.doesNotMatch(robotsTxt, /Disallow:\s*\/admin/, "لا تُكشَف /admin عبر robots");
+assert.doesNotMatch(robotsTxt, /Disallow:\s*\/dashboard/, "لا تُكشَف /dashboard عبر robots");
+assert.doesNotMatch(robotsTxt, /Disallow:\s*\/internal/, "لا تُكشَف /internal عبر robots");
+assert.match(robotsTxt, /Sitemap:\s*https:\/\/www\.ssunnah\.com\/sitemap\.xml/);
 
 assert.doesNotMatch(sitemap, /https?:\/\/[^<]+\/admin(\/|"|<)/);
 assert.equal(ADMIN_DEFAULT_ROBOTS.includes("noindex"), true);

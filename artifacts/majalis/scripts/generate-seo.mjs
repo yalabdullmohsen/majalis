@@ -3044,9 +3044,11 @@ ${sitemapPages
 </urlset>
 `;
 
-// robots.txt — يسمح صراحة بأصول العلامة وملفات الأيقونات/الـmanifest
+// robots.txt — تلميح زحف فقط؛ لا تُدرَج مسارات الإدارة هنا (كشف غير مرغوب)
 const robots = `# ${SITE_URL}/robots.txt
 # ${SITE_NAME}
+# ملاحظة: robots.txt تلميح زحف فقط — ليست حماية أمنية.
+# المسارات الخاصة محمية عبر noindex/auth ولا تُدرَج هنا حتى لا تُكشَف.
 
 User-agent: *
 Allow: /
@@ -3059,35 +3061,15 @@ Allow: /icon-512.png
 Allow: /manifest.webmanifest
 Allow: /manifest.json
 Allow: /site.webmanifest
-Disallow: /admin
-Disallow: /admin/
-Disallow: /dashboard
-Disallow: /dashboard/
-Disallow: /internal
-Disallow: /internal/
-Disallow: /login
-Disallow: /register
-Disallow: /auth/
-Disallow: /vault
-Disallow: /api/
+
 Disallow: /search
 Disallow: /search/
 Disallow: /assistant
 Disallow: /assistant/
-Disallow: /knowledge-graph
-Disallow: /knowledge-graph/
-Disallow: /adhan-settings
-Disallow: /adhan-settings/
-Disallow: /fiqh-council/live
-Disallow: /fiqh-council/stats
-Disallow: /fiqh-council/compare
-Disallow: /fiqh-council/recommendations
-Disallow: /profile
-Disallow: /settings
-Disallow: /fiqh-council/research-assistant
-Disallow: /fiqh-council/research
 Disallow: /academic-research
 Disallow: /academic-research/
+Disallow: /fiqh-council/research-assistant
+Disallow: /fiqh-council/research
 Disallow: /fiqh-council/issues/genetic-testing-ancestry-ruling
 
 Sitemap: ${SITE_URL}/sitemap.xml
