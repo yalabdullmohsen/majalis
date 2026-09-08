@@ -142,6 +142,7 @@ export const AUTO_MERGE_PATH_ALLOWLIST = Object.freeze([
   /^\.github\/workflows\/harvest-sources\.yml$/i,
   /^\.github\/workflows\/auto-maintenance\.yml$/i,
   /^scripts\/auto-maintenance\//i,
+  /^\.github\/scripts\/safe-auto-merge\//i,
   /^artifacts\/majalis\/vercel\.json$/i,
 ]);
 
