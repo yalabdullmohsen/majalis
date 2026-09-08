@@ -177,6 +177,7 @@ const waves = [
     title: "٢/٥ repo-gates (متوازية)",
     steps: [
       { name: "auto-merge safety", cmd: "pnpm", args: ["run", "verify:no-unsafe-auto-merge"] },
+      { name: "ecc bundles untracked", cmd: "pnpm", args: ["run", "verify:no-tracked-ecc-bundles"] },
       { name: "release-train", cmd: "pnpm", args: ["run", "test:release-train"] },
       { name: "safe-auto-merge", cmd: "pnpm", args: ["run", "test:safe-auto-merge"] },
       { name: "no runtime DDL", cmd: "pnpm", args: ["run", "verify:no-runtime-ddl"] },
