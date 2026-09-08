@@ -196,6 +196,20 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
     !/segmentW\s*\/\s*90/.test(tickerSrc) && !/\/ 90\)/.test(tickerSrc),
     "لا سرعة 90px/ث السابقة (سريعة للقراءة)",
   );
+  const tickerPolishCss = readFileSync(
+    resolve(appRoot, "src/styles/components/header-ticker-polish.css"),
+    "utf-8",
+  );
+  assert(
+    /overflow-x:\s*clip/.test(tickerPolishCss) || /overflow-x:\s*hidden/.test(tickerPolishCss),
+    "لا horizontal scroll على الحاوية",
+  );
+  assert(
+    tickerSrc.includes("header-ticker--empty") ||
+      navBarSrc.includes("header-ticker--empty") ||
+      tickerSrc.includes("items.length === 0"),
+    "fallback عند غياب بيانات الشريط",
+  );
 
   const chipSrc = readFileSync(
     resolve(appRoot, "src/components/prayer/PrayerCountdownChip.tsx"),

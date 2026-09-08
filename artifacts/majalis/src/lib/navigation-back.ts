@@ -108,7 +108,7 @@ export function sectionAwareFallback(currentPath: string): string {
   if (p.startsWith("/lessons") || p.startsWith("/kuwait-lessons")) return "/lessons";
   if (p.startsWith("/adhkar") || p.startsWith("/daily-wird")) return "/adhkar";
   if (p.startsWith("/discover-islam")) return "/discover-islam";
-  if (p.startsWith("/library")) return "/";
+  if (p.startsWith("/library")) return "/search";
   if (p.startsWith("/learn") || p.startsWith("/learning")) return "/lessons";
   if (p.startsWith("/admin")) return "/admin";
   if (p.startsWith("/fawaid")) return "/fawaid";
@@ -137,8 +137,7 @@ export function sectionAwareFallback(currentPath: string): string {
   if (p === "/miracles") return "/miracles";
   if (p.startsWith("/tarikh-islami/")) return "/tarikh-islami";
   if (p === "/tarikh-islami") return "/tarikh-islami";
-  if (p.startsWith("/islamic-history/")) return "/islamic-history";
-  if (p === "/islamic-history") return "/islamic-history";
+  if (p.startsWith("/islamic-history/") || p === "/islamic-history") return "/tarikh-islami";
   if (p.startsWith("/search")) return "/search";
   const parts = p.split("/").filter(Boolean);
   if (parts.length >= 2) return `/${parts[0]}`;

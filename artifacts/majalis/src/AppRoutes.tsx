@@ -386,7 +386,9 @@ export default function AppRoutes() {
       <Route path="/qa/:rest*"><Redirect to="/quiz" /></Route>
       <Route path="/quiz"><SafeLazyRoute component={QuizPage} /></Route>
       <Route path="/knowledge-graph"><SafeLazyRoute component={KnowledgeGraphPage} /></Route>
-      <Route path="/knowledge-map"><Redirect to="/" /></Route>
+      <Route path="/knowledge-map"><Redirect to="/knowledge-graph" /></Route>
+      <Route path="/islamic-history/:rest*"><Redirect to="/tarikh-islami" /></Route>
+      <Route path="/islamic-history"><Redirect to="/tarikh-islami" /></Route>
       <Route path="/mind-map"><SafeLazyRoute component={MindMapPage} /></Route>
       <Route path="/islamic-landmarks"><SafeLazyRoute component={IslamicLandmarksPage} /></Route>
       <Route path="/mutashabihat"><SafeLazyRoute component={MutashabihatPage} /></Route>
@@ -554,7 +556,7 @@ export default function AppRoutes() {
       <Route path="/scientific-library"><Redirect to="/" /></Route>
       <Route path="/latest"><Redirect to="/" /></Route>
       <Route path="/fatwas"><Redirect to="/fiqh" /></Route>
-      <Route path="/explore"><Redirect to="/" /></Route>
+      <Route path="/explore"><Redirect to="/sections" /></Route>
       <Route path="/news"><Redirect to="/" /></Route>
       <Route path="/events"><Redirect to="/occasions-lessons" /></Route>
       <Route path="/islamic-events"><Redirect to="/occasions-lessons" /></Route>
@@ -664,7 +666,7 @@ export default function AppRoutes() {
       <Route path="/updates/auto/:slug"><SafeLazyRoute component={AutoContentDetailPage} /></Route>
       <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
       <Route path="/sections"><SafeLazyRoute component={SectionsPage} /></Route>
-      <Route path="/more"><Redirect to="/" /></Route>
+      <Route path="/more"><Redirect to="/sections" /></Route>
       <Route path="/whats-new"><Redirect to="/" /></Route>
       <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
       <Route path="/register"><SafeLazyRoute component={RegisterPage} /></Route>
