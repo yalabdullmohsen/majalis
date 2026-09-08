@@ -123,6 +123,18 @@ for (const phrase of FORBIDDEN) {
   assert.ok(!peopleListUi.includes(phrase), `واجهة فهرس الأعلام بلا «${phrase}»`);
 }
 
+const noSoonUi = [
+  "src/components/BottomNavBar.tsx",
+  "src/components/TopSectionBar.tsx",
+  "src/components/ui/HubCard.tsx",
+  "src/components/ComingSoonDialog.tsx",
+  "src/components/filters/FilterChip.tsx",
+];
+for (const rel of noSoonUi) {
+  const src = read(rel);
+  assert.ok(!src.includes("قريبًا"), `${rel}: بلا عرض «قريبًا» للمستخدم`);
+}
+
 const libraryCatalog = read("src/lib/library-catalog.ts").replace(
   /\/\*[\s\S]*?\*\//g,
   "",

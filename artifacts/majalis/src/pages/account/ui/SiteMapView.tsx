@@ -204,17 +204,15 @@ export default function SiteMapPage() {
               {title}
             </h2>
             <div className="sm-grid">
-              {links.map(({ href, label, desc }) => (
+              {links
+                .filter(({ href }) => !isComingSoonPath(href))
+                .map(({ href, label, desc }) => (
                 <Link
                   key={`${href}::${label}`}
                   href={href}
-                  className={`sm-card${isComingSoonPath(href) ? " sm-card--soon" : ""}`}
-                  aria-label={isComingSoonPath(href) ? `${label}` : undefined}
+                  className="sm-card"
                 >
-                  <strong className="sm-card__label">
-                    {label}
-                    {isComingSoonPath(href) ? <span className="nav-soon-badge">قريبًا</span> : null}
-                  </strong>
+                  <strong className="sm-card__label">{label}</strong>
                   <span className="sm-card__desc">{desc}</span>
                 </Link>
               ))}

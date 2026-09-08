@@ -313,7 +313,7 @@ export default function IslamicStoriesPage() {
       <PageHeader
         eyebrow="التاريخ الإسلامي"
         title="القصص الإسلامية"
-        subtitle="صحابة الكرام · الفتوحات الإسلامية · التاريخ الحضاري"
+        subtitle="صحابة · فتوحات · تاريخ — قصص موثّقة بعِبَر واضحة"
       />
 
       {/* إحصائيات التصنيفات */}

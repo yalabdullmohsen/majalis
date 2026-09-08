@@ -26,7 +26,7 @@ function normalizePath(path: string): string {
 
 /**
  * بطاقة بوابة قسم — SectionGatewayCard: زوايا ناعمة، سهم مدمج، بلا تراكب.
- * لا تنتقل إلى نفس الصفحة الحالية، ولا تُعامل «قريبًا» كرابط.
+ * لا تنتقل إلى نفس الصفحة الحالية، ولا تُظهر بطاقة لقسم غير جاهز.
  */
 export const HubCard = memo(function HubCard({
   href,
@@ -42,22 +42,22 @@ export const HubCard = memo(function HubCard({
   footer,
 }: HubCardProps) {
   const [location] = useLocation();
+  if (soon) return null;
   const current = normalizePath(location);
   const target = normalizePath(href);
   const isCurrent = Boolean(target) && target === current;
-  const nonInteractive = Boolean(soon) || isCurrent;
+  const nonInteractive = isCurrent;
 
   const iconNode =
     icon ??
     (Icon ? (
       <Icon size={20} strokeWidth={1.8} aria-hidden="true" />
     ) : null);
-  const hasHead = badge != null || soon || isCurrent || iconNode != null;
+  const hasHead = badge != null || isCurrent || iconNode != null;
 
   const classNames = cn(
     "hub-card",
     featured && "hub-card--featured",
-    soon && "hub-card--soon",
     isCurrent && "hub-card--current",
     className,
   );
@@ -67,8 +67,7 @@ export const HubCard = memo(function HubCard({
       {hasHead ? (
         <div className="hub-card__head">
           {badge != null ? <span className="hub-card__chip mj-badge">{badge}</span> : null}
-          {soon ? <span className="hub-card__soon">قريبًا</span> : null}
-          {isCurrent && !soon ? <span className="hub-card__soon">أنت هنا</span> : null}
+          {isCurrent ? <span className="hub-card__soon">أنت هنا</span> : null}
           {iconNode ? <span className="hub-card__icon">{iconNode}</span> : null}
         </div>
       ) : null}
@@ -90,10 +89,9 @@ export const HubCard = memo(function HubCard({
     return (
       <div
         className={classNames}
-        aria-label={soon ? `${title} — قريبًا` : isCurrent ? `${title} — الصفحة الحالية` : title}
-        aria-current={isCurrent ? "page" : undefined}
-        data-hub-card-current={isCurrent ? "1" : undefined}
-        data-hub-card-soon={soon ? "1" : undefined}
+        aria-label={`${title} — الصفحة الحالية`}
+        aria-current="page"
+        data-hub-card-current="1"
       >
         {body}
       </div>

@@ -21,6 +21,7 @@ export function FilterChip({
   className,
   "aria-label": ariaLabel,
 }: FilterChipProps) {
+  if (soon) return null;
   return (
     <button
       type="button"
@@ -32,7 +33,6 @@ export function FilterChip({
     >
       <span className="mj-filter-chip__label">{label}</span>
       {active ? <span className="mj-filter-chip__mark" aria-hidden="true">●</span> : null}
-      {soon ? <span className="mj-filter-chip__soon">قريبًا</span> : null}
     </button>
   );
 }

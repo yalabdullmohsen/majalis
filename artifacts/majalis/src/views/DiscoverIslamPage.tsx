@@ -107,7 +107,7 @@ export default function DiscoverIslamPage() {
       route="/discover-islam"
       eyebrow="بوابة التعريف بالإسلام"
       title="تعرّف إلى الإسلام من مصادره"
-      subtitle="خطاب عقلاني وواضح، مبني على الأدلة، يحترم عقلك وحريتك في السؤال — بلا ضغط، بلا استعجال."
+      subtitle="تعريف واضح بالأدلة، يجيب عن الأسئلة ويرد على الشبهات بهدوء واحترام."
       groupTitle="مسارات التعرف"
     >
     <div className="page-shell narrow content-hub-page dii-page">
