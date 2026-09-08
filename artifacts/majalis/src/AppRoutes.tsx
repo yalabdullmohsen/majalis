@@ -19,6 +19,7 @@ const SourcesDirectoryPage = lazy(() => import("@/pages/sources/SourcesDirectory
 const SourceDetailPage = lazy(() => import("@/pages/sources/SourceDetailPage"));
 const SiteMapPage = lazy(() => import("@/pages/account/SiteMapPage"));
 const PrivacyPage = lazy(() => import("@/views/PrivacyPage"));
+const PrivacyCenterPage = lazy(() => import("@/views/PrivacyCenterPage"));
 const TermsPage = lazy(() => import("@/views/TermsPage"));
 const ContactPage = lazy(() => import("@/views/ContactPage"));
 const FatwaPolicyPage = lazy(() => import("@/pages/fiqh/FatwaPolicyPage"));
@@ -308,7 +309,7 @@ export default function AppRoutes() {
       <Route path="/fatwa-policy"><SafeLazyRoute component={FatwaPolicyPage} /></Route>
       <Route path="/sitemap"><SafeLazyRoute component={SiteMapPage} /></Route>
       <Route path="/privacy"><SafeLazyRoute component={PrivacyPage} /></Route>
-      <Route path="/privacy-center"><Redirect to="/privacy" /></Route>
+      <Route path="/privacy-center"><SafeLazyRoute component={PrivacyCenterPage} /></Route>
       <Route path="/privacy-policy"><Redirect to="/privacy" /></Route>
       <Route path="/terms"><SafeLazyRoute component={TermsPage} /></Route>
       <Route path="/account-deletion"><SafeLazyRoute component={AccountDeletionPage} /></Route>

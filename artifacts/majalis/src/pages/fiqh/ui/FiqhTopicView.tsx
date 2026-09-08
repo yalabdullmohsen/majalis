@@ -5,14 +5,14 @@ const TOPIC_REDIRECTS: Record<string, string> = {
   muamalat: "/fiqh#fiqh-muamalat",
   atima: "/fiqh/books/atima",
   medical: "/fiqh-council/nawazil",
-  "islamic-finance": "/fiqh/books/riba",
+  "islamic-finance": "/riba",
   "usul-fiqh": "/fiqh/usul",
   nawazil: "/fiqh-council/nawazil",
   hudud: "/fiqh/books/hudud",
   minorities: "/fiqh-council/nawazil",
   "tech-fiqh": "/fiqh-council/nawazil",
   patients: "/fiqh/books/taharah",
-  financing: "/fiqh/books/riba",
+  financing: "/riba",
 };
 
 export default function FiqhTopicPage() {
