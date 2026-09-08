@@ -98,7 +98,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "muamalat",
-    emoji: "🤝",
+    emoji: "",
     title: "المعاملات",
     desc: "أحكام المعاملات: البيع والإجارة والشركات والغرر، مع ضوابط الحلال والحرام في التجارة.",
     href: "/fiqh/books/buyu",
@@ -219,22 +219,6 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     href: "/fiqh-council",
     color: "#0F5132",
     kind: "council",
-  },
-  {
-    id: "muamalat",
-    emoji: "",
-    title: "المعاملات",
-    desc: "أحكام المعاملات: البيع والإجارة والشركات والغرر، مع ضوابط الحلال والحرام في التجارة.",
-    href: "/fiqh/books/buyu",
-    color: "var(--mj-brand)",
-    kind: "topic",
-    rulingsCategory: "المعاملات",
-    relatedGuides: [
-      { href: "/riba", label: "الربا" },
-      { href: "/sadaqa", label: "الصدقة" },
-      { href: "/waqf", label: "الوقف" },
-      { href: "/zakat", label: "الزكاة" },
-    ],
   },
   {
     id: "atima",
