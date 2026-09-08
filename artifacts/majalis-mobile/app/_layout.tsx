@@ -5,7 +5,6 @@ import {
   Inter_700Bold,
   useFonts,
 } from "@expo-google-fonts/inter";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { router, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect, useRef } from "react";
@@ -19,14 +18,13 @@ import type { Subscription } from "expo-notifications";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AuthProvider } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
+import { OfflineQueryProvider } from "@/lib/offline/OfflineQueryProvider";
 
 // Force RTL for Arabic
 I18nManager.allowRTL(true);
 I18nManager.forceRTL(true);
 
 SplashScreen.preventAutoHideAsync();
-
-const queryClient = new QueryClient();
 
 const API_BASE = process.env.EXPO_PUBLIC_DOMAIN
   ? `https://${process.env.EXPO_PUBLIC_DOMAIN}`
@@ -190,7 +188,7 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <ErrorBoundary>
-        <QueryClientProvider client={queryClient}>
+        <OfflineQueryProvider>
           <AuthProvider>
             <GestureHandlerRootView style={{ flex: 1 }}>
               <KeyboardProvider>
@@ -198,7 +196,7 @@ export default function RootLayout() {
               </KeyboardProvider>
             </GestureHandlerRootView>
           </AuthProvider>
-        </QueryClientProvider>
+        </OfflineQueryProvider>
       </ErrorBoundary>
     </SafeAreaProvider>
   );
