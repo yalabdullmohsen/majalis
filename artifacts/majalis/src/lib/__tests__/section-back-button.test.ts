@@ -24,7 +24,8 @@ assert.match(appBack, /goBackOrFallback/);
 assert.match(appBack, /aria-label.*=.*"رجوع"|ariaLabel = "رجوع"/);
 
 const fab = read("src/components/FloatingBackButton.tsx");
-assert.match(fab, /return null/, "العائم الثابت مُلغى");
+assert.match(fab, /variant="floating"/, "العائم العام مفعّل عبر AppBackButton");
+assert.doesNotMatch(fab, /return null/, "لا يُلغى العائم");
 
 const hero = read("src/components/topic/SectionHero.tsx");
 assert.match(hero, /AppBackButton/);

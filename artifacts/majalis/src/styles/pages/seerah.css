@@ -561,7 +561,16 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   border-top: 1.5px solid var(--clr-border, var(--mj-brand-soft));
 }
 .seerah-related__title { font-size: var(--ds-text-base); font-weight: 700; margin: 0 0 .85rem; color: var(--clr-text-1, var(--mj-brand-deep)); }
-.seerah-related__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .5rem; }
+.seerah-related__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.5rem;
+  max-width: min(40rem, 100%);
+  margin-inline: auto;
+  justify-content: center;
+  padding-inline: max(1.25rem, 20px);
+  box-sizing: border-box;
+}
 .seerah-related__link {
   display: block; text-align: center; padding: .65rem .5rem;
   border: 1px solid var(--clr-border, var(--mj-brand-soft)); border-radius: .55rem;
