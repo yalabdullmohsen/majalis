@@ -2,6 +2,7 @@
  * مشغّل تحفيظ A-B — يعرض آيات السورة مع تظليل الآية الجارية
  * ويربط بـ AudioEngine + ayah-loop-controller (بلا تكرار منطق التشغيل).
  */
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Pause, Play, Repeat, RotateCcw, Sliders } from "lucide-react";
 import { AudioEngine, type AudioEngineSnapshot } from "@/core/audio/AudioEngine";
@@ -224,7 +225,7 @@ export function HifzAudioLoopPlayer({ surah, reciterId }: HifzAudioLoopPlayerPro
               <span>تكرار التحفيظ (A-B)</span>
             </button>
             {isWaitingLoop ? (
-              <span className="hifz-loop__wait">⏱️ فترة صمت للترديد…</span>
+              <span className="hifz-loop__wait"><SectionIcon name="⏱️" size={18} /> فترة صمت للترديد…</span>
             ) : null}
           </div>
 

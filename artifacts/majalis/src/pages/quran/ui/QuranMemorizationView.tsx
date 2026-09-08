@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import "@/styles/quran-memorization.css";
 import { useEffect, useState, useCallback } from "react";
 import { applyPageSeo } from "@/lib/seo";
@@ -36,7 +37,7 @@ const ALL_TEST_TYPES: TestType[] = [
 type Phase = "setup" | "quiz" | "end";
 
 /* ═══════════════════════════════════════════════════
-   مكوّن السؤال
+ مكوّن السؤال
 ═══════════════════════════════════════════════════ */
 function QuestionCard({
   question,
@@ -221,7 +222,7 @@ function QuestionCard({
 }
 
 /* ═══════════════════════════════════════════════════
-   الصفحة الرئيسية
+ الصفحة الرئيسية
 ═══════════════════════════════════════════════════ */
 export default function QuranMemorizationPage() {
   const [surahList, setSurahList] = useState<SurahSummary[]>([]);
@@ -327,7 +328,7 @@ export default function QuranMemorizationPage() {
     <div className="qmem-page">
       {/* Hero */}
       <div className="qmem-hero">
-        <div className="qmem-hero__icon">📖</div>
+        <div className="qmem-hero__icon"><SectionIcon name="📖" size={28} /></div>
         <h1 className="qmem-hero__title">اختبارات الحفظ القرآني</h1>
         <p className="qmem-hero__sub">
           12 نوعًا من اختبارات الحفظ مع نظام المراجعة المتباعدة
@@ -457,7 +458,7 @@ export default function QuranMemorizationPage() {
         {phase === "end" && (
           <div className="qmem-end">
             <div className="qmem-end__icon">
-              {score >= questions.length * 0.8 ? "🌟" : score >= questions.length * 0.5 ? "📚" : "📖"}
+              {score >= questions.length * 0.8 ? "ممتاز" : score >= questions.length * 0.5 ? "جيد" : "واصل"}
             </div>
             <h2 className="qmem-end__title">انتهت الجلسة!</h2>
             <p className="qmem-end__sub">

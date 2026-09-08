@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { PageHeader } from "@/components/ui-common";
 
 type Ruling = {
@@ -160,7 +161,7 @@ export default function SujoodSahwPage() {
                 </p>
                 <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-3">
                   <p className="text-gray-600 dark:text-gray-400 text-xs leading-relaxed">
-                    📌 {r.detail}
+                    <SectionIcon name="📌" size={14} /> {r.detail}
                   </p>
                 </div>
                 <div className="mt-2 rounded-xl p-3 border-s-4" style={{ borderColor: r.color, background: `${r.color}0F` }}>

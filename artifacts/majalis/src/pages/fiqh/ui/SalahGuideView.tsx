@@ -431,7 +431,7 @@ export default function SalahGuidePage() {
         {tab === "wajibaat" && (
           <div role="tabpanel" id="sgp-panel-wajibaat" aria-labelledby="sgp-tab-wajibaat" className="sg-section">
             <div className="sg-info-box sg-info-box--intro">
-              <span>📘</span>
+              <span><SectionIcon name="📘" size={18} /></span>
               <div>
                 <p>
                   <strong>الفرق بين الأركان والواجبات:</strong> الأركان لا تسقط بحال، ومن ترك ركناً عمداً أو سهواً بطلت صلاته ما لم يتداركه.
@@ -460,7 +460,7 @@ export default function SalahGuidePage() {
                   <p className="sg-wajib-desc">{w.desc}</p>
                   {w.note && (
                     <div className="sg-step-note">
-                      <span>📌</span>
+                      <span><SectionIcon name="📌" size={18} /></span>
                       <span>{w.note}</span>
                     </div>
                   )}
@@ -469,7 +469,7 @@ export default function SalahGuidePage() {
             </div>
 
             <div className="sg-info-box sg-info-box--sujud">
-              <span>🙏</span>
+              <span><SectionIcon name="🙏" size={18} /></span>
               <div>
                 <strong>سجود السهو</strong>
                 <p>
@@ -509,7 +509,7 @@ export default function SalahGuidePage() {
                         )}
                         {s.note && (
                           <div className="sg-step-note">
-                            <span>📌</span>
+                            <span><SectionIcon name="📌" size={18} /></span>
                             <span>{s.note}</span>
                           </div>
                         )}
@@ -551,7 +551,7 @@ export default function SalahGuidePage() {
             </ul>
 
             <div className="sg-info-box">
-              <span>💡</span>
+              <span><SectionIcon name="💡" size={18} /></span>
               <p>الفرق بين المُبطِل والمكروه: المُبطِل يُلغي الصلاة وتجب إعادتها، المكروه يُنقص الأجر ولا يُلغيها. والسهو يُعالَج بسجدتَي السهو.</p>
             </div>
           </div>
@@ -643,7 +643,7 @@ export default function SalahGuidePage() {
                     </div>
                   </div>
                   <p className="sg-rank-card__text">{r.text}</p>
-                  {r.benefit && <p className="sg-rank-card__benefit">💡 {r.benefit}</p>}
+                  {r.benefit && <p className="sg-rank-card__benefit"><SectionIcon name="💡" size={16} /> {r.benefit}</p>}
                 </div>
               ))}
             </div>

@@ -719,7 +719,7 @@ export default function SawmPage() {
             </div>
 
             <div className="sw-info-box">
-              <span className="sw-info-box__icon">💡</span>
+              <span className="sw-info-box__icon"><SectionIcon name="💡" size={18} /></span>
               <p>
                 <strong>الفرق بين الشرط والركن:</strong> الشرط ما يجب تحققه قبل العبادة وخارجها،
                 أما الركن فما يكون جزءاً من العبادة ذاتها لا تتحقق إلا به.
@@ -750,7 +750,7 @@ export default function SawmPage() {
               </div>
             ))}
             <div className="sw-info-box">
-              <span className="sw-info-box__icon">📌</span>
+              <span className="sw-info-box__icon"><SectionIcon name="📌" size={18} /></span>
               <p>
                 <strong>تنبيه:</strong> النسيان لا يُفطر. من أكل أو شرب ناسياً فليُتمّ صومه
                 فإنما أطعمه الله وسقاه. (متفق عليه)

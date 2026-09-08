@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { fetchSurahDetail, type Ayah } from "@/lib/quran-api";
@@ -187,7 +188,7 @@ function MutashabihatCard({ pair }: { pair: MutashabihatPair }) {
                     lineHeight: 1.6,
                   }}
                 >
-                  💡 {pair.hint}
+                  <SectionIcon name="💡" size={16} /> {pair.hint}
                 </div>
               )}
             </div>
@@ -243,7 +244,7 @@ export default function MutashabihatPage() {
     <div style={S.page}>
       {/* Hero */}
       <div style={S.hero}>
-        <span style={S.heroIcon}>📜</span>
+        <span style={S.heroIcon}><SectionIcon name="📜" size={28} /></span>
         <h1 style={S.heroTitle}>الآيات المتشابهات في القرآن الكريم</h1>
         <p style={S.heroSub}>
           دراسة الآيات المتشابهة لفظًا مع بيان وجوه الاختلاف الدقيق بينها

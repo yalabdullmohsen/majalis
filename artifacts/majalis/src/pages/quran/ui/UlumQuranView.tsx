@@ -283,7 +283,7 @@ export default function UlumQuranPage() {
                   <p className="uq-type-card__desc">{n.desc}</p>
                   {n.dalil && (
                     <div className="uq-dalil-box">
-                      <span className="uq-dalil-box__icon">📜</span>
+                      <span className="uq-dalil-box__icon"><SectionIcon name="📜" size={18} /></span>
                       <span>{n.dalil}</span>
                     </div>
                   )}
@@ -326,7 +326,7 @@ export default function UlumQuranPage() {
             </div>
 
             <div className="uq-info-box">
-              <span className="uq-info-box__icon">ℹ️</span>
+              <span className="uq-info-box__icon"><SectionIcon name="ℹ️" size={18} /></span>
               <p>الفرق بين جمع أبي بكر وجمع عثمان: الأول جمع المتفرق في مكان واحد، والثاني وحّد القراءة على حرف واحد وأرسل نسخاً موحّدة للأمصار.</p>
             </div>
           </div>
@@ -424,7 +424,7 @@ export default function UlumQuranPage() {
             </div>
 
             <div className="uq-info-box uq-info-box--mt">
-              <span className="uq-info-box__icon">📌</span>
+              <span className="uq-info-box__icon"><SectionIcon name="📌" size={18} /></span>
               <p>آيات الأحكام في القرآن تُقدَّر بـ 500 آية، بعض العلماء يقدّرها بـ 200 آية آية صريحة الحكم.</p>
             </div>
           </div>
@@ -470,7 +470,7 @@ export default function UlumQuranPage() {
             </div>
 
             <div className="uq-info-box uq-info-box--mt">
-              <span className="uq-info-box__icon">📌</span>
+              <span className="uq-info-box__icon"><SectionIcon name="📌" size={18} /></span>
               <p>أشهر المراجع في القراءات: النشر في القراءات العشر لابن الجزري، والسبعة لابن مجاهد، وحرز الأماني الشاطبية للشاطبي.</p>
             </div>
           </div>

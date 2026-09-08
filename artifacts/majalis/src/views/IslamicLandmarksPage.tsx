@@ -10,6 +10,7 @@ import {
   type IslamicLandmark,
 } from "@/lib/islamic-landmarks-data";
 import { MapPin, LayoutGrid, List, X, ExternalLink, Users, Maximize2 } from "lucide-react";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { ShareButtons } from "@/components/ContentActions";
 
 // Leaflet — تحميل كسول لتجنب مشاكل SSR
@@ -60,7 +61,7 @@ function LandmarkCard({
           <div className="ilm-card__footer">
             {landmark.builtYear && (
               <span className="ilm-card__info">
-                🕌 {landmark.builtYear}
+                <SectionIcon name="🕌" size={11} /> {landmark.builtYear}
               </span>
             )}
             {landmark.capacity && (

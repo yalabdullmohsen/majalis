@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { Link } from "wouter";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { PROGRESS_TASKS } from "@/lib/daily-progress";
 import "@/styles/components/home/home-week-streak.css";
 
@@ -78,7 +79,7 @@ export function HomeWeekStreak() {
               سجل الأسبوع
               {streak > 0 && (
                 <span className="hws__streak-badge" aria-label={`${streak} أيام متتالية`}>
-                  🔥 {streak}
+                  <SectionIcon name="🔥" size={14} /> {streak}
                 </span>
               )}
             </h2>

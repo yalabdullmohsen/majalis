@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
@@ -277,11 +278,11 @@ function RepentanceGuide() {
             </div>
           ))}
           {result.notes?.map((note, i) => (
-            <div key={i} className="snr-guide-note">💡 {note}</div>
+            <div key={i} className="snr-guide-note"><SectionIcon name="💡" size={16} /> {note}</div>
           ))}
           {result.needsScholar && (
             <div className="snr-guide-scholar-note">
-              <span>⚠️</span>
+              <span><SectionIcon name="⚠️" size={18} /></span>
               <span>هذه المسألة قد تحتاج إلى تفصيل شرعي من عالم موثوق — يُنصح بسؤال أهل العلم.</span>
             </div>
           )}
@@ -389,7 +390,7 @@ function MindMap() {
               onKeyDown={(e) => e.key === "Enter" && toggle(node.id)}
             >
               <span className={`snr-mindmap-toggle${openNodes[node.id] ? " snr-mindmap-toggle--open" : ""}`} aria-hidden="true">‹</span>
-              <span className="snr-mindmap-node-icon">{node.icon}</span>
+              <span className="snr-mindmap-node-icon"><SectionIcon name={node.icon} size={22} /></span>
               <span className="snr-mindmap-node-label">{node.label}</span>
               <span className="snr-mindmap-node-count">{node.children.length}</span>
             </div>
@@ -467,7 +468,7 @@ export default function SinsAndRightsPage() {
 
       {/* تنبيه المحتوى */}
       <div className="snr-content-notice">
-        <span className="snr-content-notice-icon">ℹ️</span>
+        <span className="snr-content-notice-icon"><SectionIcon name="ℹ️" size={18} /></span>
         <span>
           المحتوى الشرعي مستند إلى القرآن الكريم والسنة النبوية الصحيحة وأقوال أهل العلم المعتبرين.
           لا يُغني هذا القسم عن سؤال العلماء في المسائل الفردية المعقدة.
@@ -498,9 +499,7 @@ export default function SinsAndRightsPage() {
               return (
                 <div key={cat.id} className="snr-category-card">
                   <div className="snr-category-card-header">
-                    <div className={`snr-category-icon snr-category-icon--${cat.rightsCategory}`}>
-                      {cat.icon}
-                    </div>
+                    <div className={`snr-category-icon snr-category-icon--${cat.rightsCategory}`}><SectionIcon name={cat.icon} size={22} /></div>
                     <div>
                       <div className="snr-category-title">{cat.title}</div>
                       <div className="snr-category-subtitle">{cat.subtitle}</div>
@@ -546,23 +545,23 @@ export default function SinsAndRightsPage() {
           {/* روابط سريعة للأقسام الأخرى */}
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginBottom: "1rem" }}>
             <Link href="/tazkiya" className="snr-related-link" style={{ flex: "1 1 160px" }}>
-              <span className="snr-related-link-label">🌱 التزكية والتوبة</span>
+              <span className="snr-related-link-label"><SectionIcon name="🌱" size={18} /> التزكية والتوبة</span>
               <span className="snr-mindmap-child-arrow">‹</span>
             </Link>
             <Link href="/tawba" className="snr-related-link" style={{ flex: "1 1 160px" }}>
-              <span className="snr-related-link-label">📖 التوبة والاستغفار</span>
+              <span className="snr-related-link-label"><SectionIcon name="📖" size={18} /> التوبة والاستغفار</span>
               <span className="snr-mindmap-child-arrow">‹</span>
             </Link>
             <Link href="/tawhid" className="snr-related-link" style={{ flex: "1 1 160px" }}>
-              <span className="snr-related-link-label">🕋 التوحيد والعقيدة</span>
+              <span className="snr-related-link-label"><SectionIcon name="🕋" size={18} /> التوحيد والعقيدة</span>
               <span className="snr-mindmap-child-arrow">‹</span>
             </Link>
             <Link href="/fiqh" className="snr-related-link" style={{ flex: "1 1 160px" }}>
-              <span className="snr-related-link-label">⚖️ الأحكام الشرعية</span>
+              <span className="snr-related-link-label"><SectionIcon name="⚖️" size={18} /> الأحكام الشرعية</span>
               <span className="snr-mindmap-child-arrow">‹</span>
             </Link>
             <Link href="/akhlaq" className="snr-related-link" style={{ flex: "1 1 160px" }}>
-              <span className="snr-related-link-label">🌿 الأخلاق الإسلامية</span>
+              <span className="snr-related-link-label"><SectionIcon name="🌿" size={18} /> الأخلاق الإسلامية</span>
               <span className="snr-mindmap-child-arrow">‹</span>
             </Link>
           </div>

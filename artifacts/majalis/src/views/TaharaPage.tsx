@@ -285,7 +285,7 @@ export default function TaharaPage() {
             </div>
 
             <div className="th-info-box">
-              <span>💡</span>
+              <span><SectionIcon name="💡" size={18} /></span>
               <p>
                 <strong>الحديث:</strong> «مِفْتَاحُ الصَّلَاةِ الطُّهُورُ، وَتَحْرِيمُهَا التَّكْبِيرُ، وَتَحْلِيلُهَا التَّسْلِيمُ»
                 (سنن الترمذي، صحيح)
@@ -339,7 +339,7 @@ export default function TaharaPage() {
             </ol>
 
             <div className="th-info-box">
-              <span>💡</span>
+              <span><SectionIcon name="💡" size={18} /></span>
               <p>
                 <strong>تنبيه:</strong> الغسل الصحيح يكفي بمجرد النية وإفاضة الماء على الجسد كله،
                 وما زاد فهو من السنن المستحبة.
@@ -386,7 +386,7 @@ export default function TaharaPage() {
             </div>
 
             <div className="th-info-box th-info-box--mt">
-              <span>📌</span>
+              <span><SectionIcon name="📌" size={18} /></span>
               <p>
                 <strong>نواقض التيمم:</strong> ينتقض التيمم بوجود الماء وبكل ما ينقض الوضوء.
                 كما ينتقض بزوال العذر الذي أباح التيمم.

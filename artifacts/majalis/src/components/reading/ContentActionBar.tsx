@@ -1,6 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import {
   readPreferences,
   writePreferences,
@@ -217,7 +218,7 @@ export function ContentActionBar({
           onClick={() => setShowCardModal(true)}
           title="تنزيل كبطاقة صورة"
         >
-          🖼 بطاقة
+          <SectionIcon name="🖼" size={16} /> بطاقة
         </button>
       )}
       {showPrint && (

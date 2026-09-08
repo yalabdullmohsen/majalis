@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { StarKhatam } from "@/components/IslamicDecorations";
@@ -121,7 +122,7 @@ export default function AmrBilMarufPage() {
         alignItems: "flex-start",
         gap: "0.75rem",
       }}>
-        <span style={{ fontSize: "1.4rem", flexShrink: 0 }}>⚖️</span>
+        <span style={{ fontSize: "1.4rem", flexShrink: 0 }}><SectionIcon name="⚖️" size={18} /></span>
         <div>
           <p style={{ fontWeight: 700, color: "var(--mj-brand)", margin: "0 0 0.2rem", fontSize: "0.88rem" }}>الحكم الشرعي</p>
           <p style={{ margin: 0, fontSize: "0.88rem", color: "var(--mj-brand)", lineHeight: 1.6 }}>
@@ -227,7 +228,7 @@ export default function AmrBilMarufPage() {
                   borderRight: `2px dashed ${clr.badge}`,
                 }}>
                   <p style={{ margin: 0, fontSize: "0.8rem", color: "#5C5C56", lineHeight: 1.6, fontStyle: "normal" }}>
-                    📚 {level.notes}
+                    <SectionIcon name="📚" size={14} /> {level.notes}
                   </p>
                 </div>
               </div>
@@ -300,7 +301,7 @@ export default function AmrBilMarufPage() {
             marginBottom: "0.5rem",
           }}>
             <p style={{ fontWeight: 700, color: "#DC2626", margin: "0 0 0.5rem", fontSize: "0.88rem" }}>
-              🚫 منكرات تستوجب الإنكار
+              <SectionIcon name="🚫" size={18} /> منكرات تستوجب الإنكار
             </p>
           </div>
           {MAJOR_MUNKARAAT.map((m) => (
@@ -330,7 +331,7 @@ export default function AmrBilMarufPage() {
             marginBottom: "0.5rem",
           }}>
             <p style={{ fontWeight: 700, color: "var(--mj-brand)", margin: "0 0 0.5rem", fontSize: "0.88rem" }}>
-              ✅ معروفات ينبغي الأمر بها
+              <SectionIcon name="✅" size={18} /> معروفات ينبغي الأمر بها
             </p>
           </div>
           {MAJOR_MAARUF.map((m) => (
@@ -391,7 +392,7 @@ export default function AmrBilMarufPage() {
         padding: "1.2rem",
       }}>
         <h3 style={{ fontSize: "0.95rem", fontWeight: 700, color: "#5C5C56", margin: "0 0 0.75rem" }}>
-          📚 المراجع الأساسية
+          <SectionIcon name="📚" size={18} /> المراجع الأساسية
         </h3>
         <ul style={{ margin: 0, paddingRight: "1.25rem", display: "flex", flexDirection: "column", gap: "0.35rem" }}>
           {AMR_BIL_MARUF_META.key_books.map((book, i) => (

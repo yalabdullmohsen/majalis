@@ -227,7 +227,7 @@ export default function StudyRoomPage() {
     <div className="page-shell narrow sr-page" dir="rtl">
       <PageHeader
         eyebrow="التعلّم الذكي"
-        title="⏱ غرفة الدراسة"
+        title="غرفة الدراسة"
         subtitle="جلسات Pomodoro مع تتبع وقت الدراسة الفعلي."
       />
 

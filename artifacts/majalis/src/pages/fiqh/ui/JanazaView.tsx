@@ -245,7 +245,7 @@ export default function JanazaPage() {
         {tab === "ghusl" && (
           <section role="tabpanel" id="jnz-panel-ghusl" aria-labelledby="jnz-tab-ghusl" className="jnz-section">
             <div className="jnz-info">
-              <span className="jnz-info__icon">📌</span>
+              <span className="jnz-info__icon"><SectionIcon name="📌" size={18} /></span>
               <p>
                 <strong>حكم غسل الميت:</strong> فرض كفاية على المسلمين إذا قام به بعضهم سقط عن الباقين.
                 ويُشترط أن يكون الغاسل مسلماً بالغاً عاقلاً.
@@ -277,7 +277,7 @@ export default function JanazaPage() {
         {tab === "takfin" && (
           <section role="tabpanel" id="jnz-panel-takfin" aria-labelledby="jnz-tab-takfin" className="jnz-section">
             <div className="jnz-info">
-              <span className="jnz-info__icon">📌</span>
+              <span className="jnz-info__icon"><SectionIcon name="📌" size={18} /></span>
               <p>
                 <strong>حكم التكفين:</strong> فرض كفاية. يُؤخذ كفن الميت من ماله قبل قسمة التركة،
                 ويُستحب أن يكون أبيض نظيفاً.
@@ -303,7 +303,7 @@ export default function JanazaPage() {
         {tab === "salah" && (
           <section role="tabpanel" id="jnz-panel-salah" aria-labelledby="jnz-tab-salah" className="jnz-section">
             <div className="jnz-info">
-              <span className="jnz-info__icon">📌</span>
+              <span className="jnz-info__icon"><SectionIcon name="📌" size={18} /></span>
               <p>
                 <strong>حكم صلاة الجنازة:</strong> فرض كفاية. تصح منفردة وفي جماعة، وتُؤدَّى بعد الغسل
                 والتكفين قبل الدفن. لا سجود فيها ولا ركوع.
@@ -331,7 +331,7 @@ export default function JanazaPage() {
             </div>
 
             <div className="jnz-info jnz-info--mt">
-              <span className="jnz-info__icon">💡</span>
+              <span className="jnz-info__icon"><SectionIcon name="💡" size={18} /></span>
               <p>
                 من فاتته التكبيرة الأولى يدخل مع الإمام ثم يقضي ما فاته بعد التسليم.
                 ويُستحب أن يكون الإمام أمام صدر الرجل ووسط المرأة.
@@ -344,7 +344,7 @@ export default function JanazaPage() {
         {tab === "dafn" && (
           <section role="tabpanel" id="jnz-panel-dafn" aria-labelledby="jnz-tab-dafn" className="jnz-section">
             <div className="jnz-info">
-              <span className="jnz-info__icon">📌</span>
+              <span className="jnz-info__icon"><SectionIcon name="📌" size={18} /></span>
               <p>
                 <strong>حكم الدفن:</strong> فرض كفاية، ويُستحب الإسراع به. ولا يجوز حرق الميت المسلم
                 ولا دفنه في البحر إلا لضرورة. ولا يُدفن في تابوت إلا لرطوبة الأرض.
@@ -368,7 +368,7 @@ export default function JanazaPage() {
         {tab === "aadab" && (
           <section role="tabpanel" id="jnz-panel-aadab" aria-labelledby="jnz-tab-aadab" className="jnz-section">
             <div className="jnz-info">
-              <span className="jnz-info__icon">📌</span>
+              <span className="jnz-info__icon"><SectionIcon name="📌" size={18} /></span>
               <p>
                 <strong>التعزية:</strong> سنة مؤكدة، وهي مواساة أهل الميت وتخفيف حزنهم.
                 قال النبي ﷺ: «مَا مِنْ مُؤْمِنٍ يُعَزِّي أَخَاهُ بِمُصِيبَةٍ إِلَّا كَسَاهُ اللَّهُ مِنْ حُلَلِ الْكَرَامَةِ يَوْمَ الْقِيَامَةِ». (سنن ابن ماجه، صحيح)

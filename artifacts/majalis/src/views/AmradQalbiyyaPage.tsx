@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { PageHeader } from "@/components/ui-common";
 
 type Disease = {
@@ -175,7 +176,13 @@ export default function AmradQalbiyyaPage() {
                 className="px-5 py-4 flex items-center gap-3"
                 style={{ background: `${d.color}15` }}
               >
-                <span className="text-3xl">{d.icon}</span>
+                <span
+                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-[var(--mj-primary,var(--mj-brand-deep))]"
+                  style={{ background: `${d.color}22` }}
+                  aria-hidden="true"
+                >
+                  <SectionIcon name={d.icon} size={22} />
+                </span>
                 <div>
                   <h3 className="font-extrabold text-gray-900 dark:text-white text-base">
                     {d.name}
@@ -221,7 +228,7 @@ export default function AmradQalbiyyaPage() {
                     className="text-xs font-bold mb-1"
                     style={{ color: d.color }}
                   >
-                    💊 طريق العلاج
+                    <SectionIcon name="💊" size={14} /> طريق العلاج
                   </h4>
                   <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
                     {d.remedy}
@@ -234,7 +241,7 @@ export default function AmradQalbiyyaPage() {
                   style={{ borderColor: d.color, background: `${d.color}0D` }}
                 >
                   <h4 className="text-xs font-extrabold mb-1" style={{ color: d.color }}>
-                    📖 الدليل
+                    <SectionIcon name="📖" size={14} /> الدليل
                   </h4>
                   <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
                     {d.evidence}

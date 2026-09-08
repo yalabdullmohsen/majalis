@@ -1626,7 +1626,7 @@ export default function HikamSalafPage() {
               onClick={() => { setShowFavsOnly((v) => !v); setCategory("الكل"); }}
               aria-pressed={showFavsOnly}
             >
-              ❤️ المحفوظات ({favorites.size})
+              <Heart size={14} aria-hidden="true" /> المحفوظات ({favorites.size})
             </button>
           )}
         </div>

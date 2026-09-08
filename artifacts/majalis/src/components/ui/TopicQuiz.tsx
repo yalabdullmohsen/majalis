@@ -1,3 +1,4 @@
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useState, useMemo } from "react";
 import { Brain, CheckCircle2, XCircle, RotateCcw } from "lucide-react";
 import {
@@ -59,7 +60,7 @@ function QuizBody({ questions, onRefresh }: QuizBodyProps) {
                 <span className="sq-answer-label">الإجابة:</span>
                 <span className="sq-answer-text">{q.a}</span>
               </div>
-              {q.hint && <p className="sq-hint">💡 {q.hint}</p>}
+              {q.hint && <p className="sq-hint"><SectionIcon name="💡" size={16} /> {q.hint}</p>}
               {scores[i] === null ? (
                 <div className="sq-score-btns">
                   <button type="button" className="sq-btn sq-btn--correct" onClick={() => mark(i, true)}>
@@ -83,7 +84,7 @@ function QuizBody({ questions, onRefresh }: QuizBodyProps) {
         <div className="sq-summary">
           <p className="sq-summary-score">
             {correctCount} / {questions.length} إجابة صحيحة
-            {correctCount === questions.length && " 🎉"}
+            {correctCount === questions.length && ""}
           </p>
           <button type="button" className="sq-refresh-btn" onClick={onRefresh}>
             <RotateCcw size={15} aria-hidden="true" /> أسئلة جديدة

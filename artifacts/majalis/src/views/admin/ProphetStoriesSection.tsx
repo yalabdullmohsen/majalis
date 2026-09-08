@@ -169,7 +169,7 @@ function StoryCard({
         {editing
           ? <span className="ps-badge edit-mode">✏ تعديل</span>
           : <span className={`ps-badge ${story.is_approved ? "done" : "pending"}`}>
-              {story.is_approved ? "✓ معتمد" : "⏳ ينتظر"}
+              {story.is_approved ? "✓ معتمد" : "ينتظر"}
             </span>
         }
         {!editing && <span className="ps-toggle">{open ? "▲" : "▼"}</span>}
