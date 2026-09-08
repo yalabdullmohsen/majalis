@@ -16,6 +16,27 @@ import {
 import "@/styles/pages/quran-hub.css";
 import "@/styles/pages/quran-people.css";
 
+function splitReadableParagraphs(text: string): string[] {
+  const raw = String(text || "").replace(/\s+/g, " ").trim();
+  if (!raw) return [];
+  const sentences = raw.split(/(?<=[.۔!?؟])\s+/).map((s) => s.trim()).filter(Boolean);
+  if (sentences.length <= 2) return [raw];
+  const paras: string[] = [];
+  let buf: string[] = [];
+  let len = 0;
+  for (const s of sentences) {
+    buf.push(s);
+    len += s.length;
+    if (buf.length >= 2 && len >= 140) {
+      paras.push(buf.join(" "));
+      buf = [];
+      len = 0;
+    }
+  }
+  if (buf.length) paras.push(buf.join(" "));
+  return paras;
+}
+
 export default function QuranPersonDetailView() {
   const params = useParams<{ slug?: string }>();
   const slug = params.slug ?? "";
@@ -31,9 +52,13 @@ export default function QuranPersonDetailView() {
       if (cancelled) return;
       if (p) {
         setPerson(p);
+        const seoDesc = String(p.definition || "")
+          .replace(/\s+/g, " ")
+          .trim()
+          .slice(0, 155);
         applyPageSeo({
           title: `${p.nameAr} في القرآن`,
-          description: p.definition,
+          description: seoDesc,
           path: `/quran/people/${p.slug}`,
         });
         return;
@@ -90,6 +115,9 @@ export default function QuranPersonDetailView() {
     );
   }
 
+  const definitionParas = splitReadableParagraphs(person.definition);
+  const whyParas = splitReadableParagraphs(person.whyMentioned);
+
   return (
     <SectionTemplatePage
       route="/quran/people"
@@ -106,18 +134,26 @@ export default function QuranPersonDetailView() {
       <div className="qp-people qp-person-detail" dir="rtl">
         <article className="qp-person-detail__card">
           <h2 className="qp-person-detail__h">التعريف</h2>
-          <p>{person.definition}</p>
+          <div className="qp-person-detail__prose">
+            {definitionParas.map((para) => (
+              <p key={para.slice(0, 48)}>{para}</p>
+            ))}
+          </div>
         </article>
 
         <article className="qp-person-detail__card">
           <h2 className="qp-person-detail__h">سبب الذكر</h2>
-          <p>{person.whyMentioned}</p>
+          <div className="qp-person-detail__prose">
+            {whyParas.map((para) => (
+              <p key={para.slice(0, 48)}>{para}</p>
+            ))}
+          </div>
         </article>
 
         {person.lessons.length > 0 && (
           <article className="qp-person-detail__card">
             <h2 className="qp-person-detail__h">العِبَر</h2>
-            <ul>
+            <ul className="qp-person-detail__lessons">
               {person.lessons.map((l) => (
                 <li key={l}>{l}</li>
               ))}
@@ -128,24 +164,30 @@ export default function QuranPersonDetailView() {
         {(person.prophetSlug || (person.relatedLinks?.length ?? 0) > 0) && (
           <article className="qp-person-detail__card">
             <h2 className="qp-person-detail__h">روابط مرتبطة</h2>
-            <ul>
+            <ul className="qp-person-detail__links">
               {person.prophetSlug && (
                 <li>
                   <Link href={prophetStoryHref(person.prophetSlug)}>
                     قصة {person.nameAr} في قصص الأنبياء
                   </Link>
-                  {" — دون إعادة سرد هنا"}
                 </li>
               )}
               {person.relatedLinks?.map((l) => (
-                <li key={l.href}><Link href={l.href}>{l.label}</Link></li>
+                <li key={l.href}>
+                  <Link href={l.href}>{l.label}</Link>
+                </li>
               ))}
             </ul>
           </article>
         )}
 
         <section className="qp-person-detail__ayahs" aria-labelledby="qp-ayahs-title">
-          <h2 id="qp-ayahs-title" className="qp-person-detail__h">مواضع الذكر في المصحف</h2>
+          <h2 id="qp-ayahs-title" className="qp-person-detail__h">
+            مواضع الذكر في المصحف
+          </h2>
+          <p className="qp-person-detail__ayah-lead">
+            {toArabicDigits(person.occurrences.length)} موضع — اضغط للانتقال إلى الآية في المصحف.
+          </p>
           <div className="qp-person-detail__ayah-grid">
             {person.occurrences.map((o) => {
               const surahName = getSurahMeta(o.surah)?.name ?? String(o.surah);
@@ -156,10 +198,14 @@ export default function QuranPersonDetailView() {
                   className="qp-person-detail__ayah"
                 >
                   <span>
-                    سورة {surahName} · آية {toArabicDigits(o.ayah)}
+                    سورة {surahName}
+                    <span className="qp-person-detail__ayah-meta">
+                      {" "}
+                      · آية {toArabicDigits(o.ayah)}
+                    </span>
                     {o.note ? <span className="qp-person-detail__note">{o.note}</span> : null}
                   </span>
-                  <span className="qp-person-detail__open">فتح المصحف</span>
+                  <span className="qp-person-detail__open">المصحف</span>
                 </Link>
               );
             })}

@@ -15,6 +15,7 @@ const FORBIDDEN = [
   "يحتاج مراجعة",
   "قيد الإضافة",
   "قيد الإعداد",
+  "طابور مراجعة",
   "placeholder",
   "TODO",
   "FIXME",
@@ -117,11 +118,16 @@ assert.match(
   "تفاصيل الأعلام تراعي ارتفاع الشريط السفلي",
 );
 
+const peopleListUi = read("src/pages/quran/ui/QuranPeopleView.tsx");
+for (const phrase of FORBIDDEN) {
+  assert.ok(!peopleListUi.includes(phrase), `واجهة فهرس الأعلام بلا «${phrase}»`);
+}
+
 const libraryCatalog = read("src/lib/library-catalog.ts").replace(
   /\/\*[\s\S]*?\*\//g,
   "",
 ).replace(/\/\/.*$/gm, "");
-for (const phrase of ["يحتاج مراجعة", "قيد الإضافة", "المصدر قيد الإضافة"] as const) {
+for (const phrase of ["يحتاج مراجعة", "قيد الإضافة", "المصدر قيد الإضافة", "طابور مراجعة"] as const) {
   assert.ok(!libraryCatalog.includes(phrase), `المكتبة لا تعرض «${phrase}» للمستخدم`);
 }
 
