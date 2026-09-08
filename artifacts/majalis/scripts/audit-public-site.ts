@@ -43,8 +43,11 @@ const BAD_EMAIL = /@majlis-?ilm\.old|example\.com|noreply@test/i;
 const BAD_TOKENS = /\bundefined\b|\bnull\b|\bTODO\b|\bFIXME\b|Cache miss|homepage fallback/i;
 const UNVERIFIED_CLAIM = /موثقة بالأدلة|معتمدة بلا مصدر|محتوى موثق بالكامل/i;
 
-if (!/Disallow:\s*\/admin/i.test(robots)) {
-  findings.push({ level: "error", msg: "robots.txt لا يمنع /admin" });
+if (/Disallow:\s*\/admin/i.test(robots)) {
+  findings.push({ level: "error", msg: "robots.txt لا يجب أن يكشف /admin عبر Disallow" });
+}
+if (!/Sitemap:\s*https:\/\/www\.ssunnah\.com\/sitemap\.xml/i.test(robots)) {
+  findings.push({ level: "error", msg: "robots.txt يجب أن يشير إلى sitemap الإنتاج" });
 }
 if (/https?:\/\/[^<\s]+\/admin(\/|"|<)/.test(sitemap)) {
   findings.push({ level: "error", msg: "sitemap يحتوي مسارات /admin" });
