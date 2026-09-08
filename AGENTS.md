@@ -9,7 +9,7 @@
 `corepack enable && pnpm install --frozen-lockfile && pnpm run verify:ci`
 لا commit/push عند الفشل. لا تضعف الفحوصات.
 
-**بعد الدفع:** راقب الحرجة بـ `gh pr checks --watch --fail-fast`. الدمج بعد نجاح Verify build + repo-gates + build + static-checks (وContrast/UI أو native حسب نطاق الـPR).
+**بعد الدفع:** فعّل `gh pr merge --auto --squash` وانتقل للمهمة التالية. لا تنتظر `gh pr checks --watch` ولا Vercel إلا عند فشل CI أو اعتماد المهمة التالية على نفس الملفات / DB / native / security.
 
 ## Cursor Cloud specific instructions
 
@@ -101,8 +101,8 @@ git add src/index.css   # يذهب لجذر المستودع وليس artifacts/
 
 **قواعد الوكلاء (لا تُخالف):**
 
-1. **PR واحد لكل مهمة.** يُمنع فتح سلسلة PRs متتابعة (phase2→phase3→…) للمهمة الواحدة. إن احتاجت المهمة مراحل، أبقِ العمل على فرع واحد وحدّث نفس الـ PR، أو ادمج التعديلات في الفرع الحالي قبل أي طلب جديد.
-2. القاعدة دائمًا `main`؛ نافذتا `automation/content` و`automation/tasks` تُدمجان إليه عبر PR Ready + auto-merge بعد الدفع.
-3. **كل مهمة تنتهي تُدمَج وتُنشَر.** بعد نجاح الفحوصات: ادفع → PR Ready واحد إلى `main` → تابع Auto-merge + نشر Vercel/`auto-deploy.yml` حتى يظهر الـcommit على الإنتاج. المهمة غير مكتملة ما دام الفرع غير مدموج أو النشر لم يكتمل. لا تطلب من المستخدم دمجًا/نشرًا يدويًا.
-4. لا تترك PRs مفتوحة/Draft/فاشلة CI بعد اكتمال العمل. أصلِح Verify build فورًا وأعد الدفع؛ إن بقي PR قديم متسلسل، أغلقه لصالح PR واحد يستهدف `main`.
-5. نافذتا `automation/content` و`automation/tasks`: بعد الدفع يُفتح PR Ready مع auto-merge إلى `main` (لا طابور مراجعة ولا انتظار يدوي).
+1. **PR واحد لكل مهمة مستقلة.** نفس الشاشة/الملفات → حدّث نفس الـPR. مهمة مستقلة → فرع + PR جديد فورًا بدون انتظار دمج السابق.
+2. القاعدة دائمًا `main`؛ نافذتا `automation/content` و`automation/tasks` عبر مساراتهما.
+3. **تسليم متوازٍ:** ادفع → Ready → auto-merge → أكمل التالي. الدمج والنشر خلفيًا (Vercel + `auto-deploy.yml`). لا تعلق الجلسة على merge/deploy.
+4. فشل CI → أصلح على نفس الـPR الفاشل (لا rerun عشوائي ولا تعطيل فحوص). DB / iOS native / security → انتظر الفحوص الحرجة قبل القفز إن وُجد خطر مباشر.
+5. Concurrency في CI حسب `github.ref` / رقم PR — لا تلغِ فحوص PR غير مرتبط.

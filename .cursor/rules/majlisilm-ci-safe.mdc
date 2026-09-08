@@ -46,16 +46,11 @@ pnpm run verify:ci
 
 ## بعد الدفع
 ```bash
-gh pr checks --watch --fail-fast
-# عند الفشل:
+gh pr merge --auto --squash
+# لا تنتظر watch/deploy — انتقل للمهمة التالية إن كانت مستقلة
+# عند إشعار فشل CI فقط:
 gh run view --log-failed
 ```
-لا دمج ولا نشر إلا بعد نجاح على الأقل:
-- Verify build
-- repo-gates
-- build
-- static-checks
-- Color contrast إذا كان التعديل UI
-- بوابات iOS/Android إذا كان التعديل native
+الفحوص الحرجة تبقى مطلوبة للدمج (Verify build / ci-required / repo-gates / build / static-checks + Contrast أو native حسب النطاق) — لكنها تعمل في الخلفية عبر auto-merge، لا تعلق الوكيل عليها.
 
-`verify:pr` مسار أسرع جزئي؛ **`verify:ci` هو البوابة الإلزامية قبل الدفع**.
+`verify:pr` مسار أسرع جزئي؛ قبل الدفع استخدم أضيق تحقق كافٍ للجودة (`verify:ci` أو `--changed`/`--ui`).

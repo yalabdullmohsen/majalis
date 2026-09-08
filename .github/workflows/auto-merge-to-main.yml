@@ -180,5 +180,14 @@ jobs:
             # Keep Auto-merge enabled; squash title = PR title (clear history).
             gh "${REPO_FLAG[@]}" pr merge "$n" --auto --squash --delete-branch \
               --subject "$pr_title" || true
+            # تعليق مختصر مرة واحدة: الدمج خلفي بعد نجاح الفحوص — لا يمنع فتح PRs أخرى.
+            if ! gh "${REPO_FLAG[@]}" api "repos/${GITHUB_REPOSITORY}/issues/${n}/comments" \
+              --jq '.[].body' 2>/dev/null | grep -Fq '<!-- auto-merge-bg -->'; then
+              gh "${REPO_FLAG[@]}" pr comment "$n" --body "$(cat <<'EOF'
+<!-- auto-merge-bg -->
+دمج تلقائي (squash) بعد نجاح الفحوصات المطلوبة. الوكلاء لا ينتظرون النشر — يمكن فتح PR مستقل بالتوازي.
+EOF
+)" || true
+            fi
             echo "::endgroup::"
           done
