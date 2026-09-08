@@ -1056,15 +1056,15 @@ const SECTION_SEEDS: SectionSeed[] = [
   },
   {
     id: "hijri-calendar",
-    label: "التقويم الهجري",
-    subtitle: "تواريخ هجرية ومناسبات",
+    label: "تقويم الدروس",
+    subtitle: "جدول الدروس والمواعيد",
     route: "/calendar",
     icon: Calendar,
     group: "worship",
     order: 50,
     surfaces: NAV,
     status: "live",
-    keywords: ["هجري", "تقويم"],
+    keywords: ["تقويم", "دروس", "مواعيد"],
   },
 
   // —— ٦. التعلّم الشخصي ——
