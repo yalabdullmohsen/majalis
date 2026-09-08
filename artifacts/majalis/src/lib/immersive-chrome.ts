@@ -10,11 +10,27 @@ export function isImmersiveChromePath(pathname: string): boolean {
   return p === "/mushaf" || p.startsWith("/mushaf/");
 }
 
+/** مسارات قراءة طويلة — يُثبَّت الكروم بلا إخفاء transform حتى لا ينزلق الشريط داخل المحتوى. */
+export function isPinnedChromePath(pathname: string): boolean {
+  const p = pathname.replace(/\/+$/, "") || "/";
+  return (
+    p === "/prophets" ||
+    p.startsWith("/prophets/") ||
+    p === "/prophet-stories" ||
+    p.startsWith("/prophet-stories/") ||
+    p === "/prophets-stories" ||
+    p.startsWith("/prophets-stories/") ||
+    p === "/anbiya" ||
+    p.startsWith("/anbiya/")
+  );
+}
+
 /** صفحات وظيفية — تُخفى فيها الشريط المتحرك الطويل؛ الوظيفة أولًا.
  * صفحة الدخول/التسجيل ليست ضمنها — الشريط المتحرك يظهر هناك. */
 export function isCompactHeaderPath(pathname: string): boolean {
   const p = pathname.replace(/\/+$/, "") || "/";
   if (isImmersiveChromePath(p)) return true;
+  if (isPinnedChromePath(p)) return true;
   return (
     p === "/search" ||
     p.startsWith("/search/") ||
