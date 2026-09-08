@@ -132,7 +132,7 @@
     "test:lhci-budget": "node --import tsx src/lib/__tests__/lhci-budget-gate.test.ts",
     "test:typography-readable": "node --import tsx src/lib/__tests__/typography-readable-gate.test.ts && node --import tsx src/lib/__tests__/typography-app-gate.test.ts && node --import tsx src/lib/__tests__/typography-render-gate.test.ts && node --import tsx src/lib/__tests__/typography-layout-sync-gate.test.ts",
     "test:app-first-run-host": "node --import tsx src/lib/__tests__/app-first-run-host.test.ts",
-    "test:playwright-smoke": "playwright test tests/01-smoke.spec.ts tests/10-critical-acceptance.spec.ts --project=desktop",
+    "test:playwright-smoke": "playwright test tests/01-smoke.spec.ts tests/boot-cold-start-smoke.spec.ts tests/10-critical-acceptance.spec.ts --project=desktop",
     "test:e2e": "playwright test --project=mobile",
     "test:mobile-smoothness": "playwright test tests/mobile-smoothness.spec.ts --project=mobile",
     "test:pwa": "node --import tsx src/lib/__tests__/pwa-mobile-launch.test.ts && pnpm run test:quality-campaign",
@@ -506,7 +506,8 @@
     "verify:no-secret-leak": "node scripts/verify-no-secret-leak.mjs",
     "preview:fiqh-promotion": "node scripts/preview-fiqh-promotion.mjs",
     "apply:fiqh-promotion": "node scripts/apply-fiqh-promotion.mjs",
-    "verify:fiqh-content": "node scripts/verify-fiqh-content.mjs"
+    "verify:fiqh-content": "node scripts/verify-fiqh-content.mjs",
+    "test:boot-cold-start": "playwright test tests/boot-cold-start-smoke.spec.ts --project=mobile"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

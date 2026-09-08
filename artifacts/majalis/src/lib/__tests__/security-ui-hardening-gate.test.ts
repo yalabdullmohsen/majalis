@@ -69,4 +69,13 @@ for (const file of files) {
 assert.ok(innerHits >= 0);
 assert.ok(blankHits >= 0);
 assert.equal(jsHits, 0);
+
+// healthz/readyz علنيان: short commit فقط، بلا أسرار env
+const healthz = readFileSync(join(root, "lib/api-handlers/healthz.js"), "utf8");
+const buildMeta = readFileSync(join(root, "lib/build-meta.mjs"), "utf8");
+assert.match(healthz, /getPublicBuildMeta/, "healthz يستخدم build meta العام");
+assert.doesNotMatch(healthz, /process\.env\.(ANTHROPIC|SUPABASE_SERVICE|DATABASE_URL|SECRET)/);
+assert.match(buildMeta, /\.slice\(0,\s*8\)/, "commit العام مقصوص إلى 8");
+assert.doesNotMatch(buildMeta, /ANTHROPIC_API_KEY|SERVICE_ROLE|POSTGRES_PASSWORD/);
+
 console.log("security-ui-hardening-gate: ok", { innerHits, blankHits });

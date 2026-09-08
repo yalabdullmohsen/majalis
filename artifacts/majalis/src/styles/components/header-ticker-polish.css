@@ -12,6 +12,9 @@
   height: var(--ticker-h, 2.65rem);
   max-height: var(--ticker-h, 2.65rem);
   padding-block: 0.35rem;
+  /* يمنع تمريرًا أفقيًا من مسار الماركي دون تغيير الشكل */
+  max-width: 100%;
+  overflow-x: clip;
 }
 html.dark .header-ticker {
   background: color-mix(in srgb, #1f6b56 18%, #0f2f28) !important;

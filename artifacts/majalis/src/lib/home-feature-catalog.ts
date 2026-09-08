@@ -33,8 +33,7 @@ import { filterNavItems } from "@/lib/nav-visibility";
 /* إجراءات سريعة مختصرة — 4 عناصر فقط (إعادة هيكلة الرئيسية، الأولوية 3):
    أكمل وردك / تابع تعلّمك / اختبر معلوماتك / أذكار اليوم، بالحرف كما ورد
    بالتكليف. القائمة الطويلة السابقة (١٩ رابطًا) كانت تكرارًا شبه كامل
-   لتبويب "المزيد" في الشريط السفلي — لا حذف وظيفة، كل تلك الروابط تبقى
-   متاحة عبر "المزيد" (MoreBottomSheet) أو /sitemap. */
+   عناصر كانت تحت تبويب ملغى — الروابط تبقى عبر الأقسام أو /sitemap. */
 export const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc: string }[] = [
   { href: "/daily-wird", Icon: Star,          label: seoNavLabel("/daily-wird", "أكمل وردك"),       desc: "ختم يومي منتظم للقرآن والأذكار" },
   { href: "/lessons",    Icon: GraduationCap, label: seoNavLabel("/lessons", "الدروس"),     desc: "تابع تعلّمك بدروس ودورات علمية" },
