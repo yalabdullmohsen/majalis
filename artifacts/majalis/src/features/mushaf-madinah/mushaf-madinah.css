@@ -1714,6 +1714,32 @@ html.dark .mm-viewport .mm-page-footer__badge,
   text-overflow: ellipsis;
 }
 
+.mm-audio-dock[data-loading="1"] .mm-audio-dock__status::before {
+  content: "";
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-inline-end: 0.35rem;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--mm-ui-accent, #135034) 35%, transparent);
+  border-top-color: var(--mm-ui-accent, #135034);
+  vertical-align: -0.05em;
+  animation: mm-audio-spin 0.7s linear infinite;
+}
+
+@keyframes mm-audio-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-audio-dock[data-loading="1"] .mm-audio-dock__status::before {
+    animation: none;
+    opacity: 0.75;
+  }
+}
+
 .mm-audio-dock[data-mini="1"] .mm-audio-dock__seek,
 .mm-audio-dock[data-mini="1"] .mm-audio-dock__status,
 .mm-audio-dock[data-mini="1"] .mm-audio-dock__rates {
@@ -2202,13 +2228,63 @@ html.dark .mm-reciter-sheet__search input {
   margin-inline-start: auto;
 }
 
+.mm-tafsir-sheet__panel {
+  width: min(100%, 32rem);
+}
+
 .mm-tafsir {
   display: grid;
   gap: 0.75rem;
 }
 
-.mm-tafsir-sheet__panel {
-  width: min(100%, 32rem);
+.mm-tafsir__toolbar {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.mm-tafsir__depth,
+.mm-tafsir__editions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.3rem;
+}
+
+.mm-tafsir__depth {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.mm-tafsir__depth-btn,
+.mm-tafsir__ed-btn {
+  appearance: none;
+  min-height: 40px;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--mm-gold, #a68b67) 28%, transparent);
+  background: color-mix(in srgb, var(--mm-paper, #fdf9f3) 92%, #fff);
+  color: var(--mm-ink, #111);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mm-tafsir__depth-btn.is-active,
+.mm-tafsir__ed-btn.is-active {
+  background: color-mix(in srgb, var(--mm-ui-accent, #135034) 14%, var(--mm-paper, #fdf9f3));
+  border-color: color-mix(in srgb, var(--mm-ui-accent, #135034) 42%, transparent);
+}
+
+.mm-tafsir__more {
+  appearance: none;
+  margin-top: 0.65rem;
+  border: 0;
+  background: transparent;
+  color: var(--mm-ui-accent, #135034);
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 .mm-tafsir__editions.quran-tabbar {

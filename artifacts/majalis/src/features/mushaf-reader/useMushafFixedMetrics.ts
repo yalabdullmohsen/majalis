@@ -34,6 +34,10 @@ export function useMushafFixedMetrics(
     const applyGeometry = (w: number, h: number, size: number) => {
       const bodyW = Math.max(120, Math.min(w - SIDE_PAD * 2, 28 * 16));
       const bodyH = Math.max(160, h - HEADER_H - FOOTER_H);
+      const bottomSafe =
+        root.style.getPropertyValue("--reader-bottom-stack").trim() ||
+        getComputedStyle(root).getPropertyValue("--reader-bottom-stack").trim() ||
+        "0px";
       root.style.setProperty("--mushaf-page-width", `${w}px`);
       root.style.setProperty("--mushaf-page-height", `${h}px`);
       root.style.setProperty("--mushaf-header-height", `${HEADER_H}px`);
@@ -45,6 +49,7 @@ export function useMushafFixedMetrics(
       root.style.setProperty("--mushaf-line-height", LINE_HEIGHT);
       root.style.setProperty("--mushaf-letter-spacing", "0");
       root.style.setProperty("--mushaf-font-weight", FONT_WEIGHT);
+      root.style.setProperty("--mushaf-bottom-safe-space", bottomSafe || "0px");
       root.style.setProperty("--nm-qpc-size", `${size}px`);
       root.style.setProperty("--mm-qpc-size", `${size}px`);
       root.style.setProperty("--nm-line-height", LINE_HEIGHT);
@@ -57,12 +62,17 @@ export function useMushafFixedMetrics(
       const h = Math.round(root.clientHeight || 0);
       if (w < 80 || h < 120) return;
 
+      /* أثناء قلب الصفحة: لا تُعاد حساب مقاس الخط إطلاقًا */
+      if (root.getAttribute("data-pager-settled") === "0" && lockedSizeRef.current > 0) {
+        applyGeometry(w, h, lockedSizeRef.current);
+        return;
+      }
+
       const widthChanged =
         lockedWidthRef.current === 0 ||
         Math.abs(w - lockedWidthRef.current) >= WIDTH_LOCK_PX;
 
       if (!widthChanged && lockedSizeRef.current > 0) {
-        /* ارتفاع الحاوية قد يتغيّر (رصيف) — نحدّث الهندسة فقط ونُبقي حجم الخط */
         applyGeometry(w, h, lockedSizeRef.current);
         return;
       }

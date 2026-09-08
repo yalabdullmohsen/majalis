@@ -91,6 +91,27 @@ test("mushaf p2 — قلبات محددة بلا قفزة حجم", async ({ page
   await assertStableFirstLine(page, "44→43 رجوع");
 });
 
+test("mushaf p3 — عشرون قلبة أمامًا وخلفًا بلا قفزة حجم", async ({ page }) => {
+  await openMushaf(page, 30);
+  let current = 30;
+  for (let i = 0; i < 20; i++) {
+    await flipNext(page);
+    current += 1;
+    await page.waitForSelector(`[data-testid="mushaf-page"][data-page="${current}"]`, {
+      timeout: 20000,
+    });
+    await assertStableFirstLine(page, `أمام ${i + 1} → ${current}`);
+  }
+  for (let i = 0; i < 20; i++) {
+    await flipPrev(page);
+    current -= 1;
+    await page.waitForSelector(`[data-testid="mushaf-page"][data-page="${current}"]`, {
+      timeout: 20000,
+    });
+    await assertStableFirstLine(page, `خلف ${i + 1} → ${current}`);
+  }
+});
+
 test("mushaf p2 — عشر قلبات + ثبات حجم", async ({ page }) => {
   await openMushaf(page, 20);
   let current = 20;
@@ -127,6 +148,12 @@ test("mushaf p2 — رصيف التلاوة لا يغطي آخر سطر + اسم
   expect(lastBottom).not.toBeNull();
   expect(dockBox).not.toBeNull();
   expect(dockBox!.y, "الرصيف يبدأ تحت آخر سطر").toBeGreaterThanOrEqual((lastBottom ?? 0) - 2);
+
+  /* قلب الصفحة لا يُزيل الرصيف أثناء التشغيل */
+  await flipNext(page);
+  await page.waitForSelector(`[data-testid="mushaf-page"][data-page="3"]`, { timeout: 20000 });
+  await expect(dock).toBeVisible();
+  await expect(page.getByTestId("mushaf-dock-reciter")).toBeVisible();
 });
 
 test("mushaf p2 — التفسير يفتح بعنوان واضح", async ({ page }) => {
@@ -141,4 +168,8 @@ test("mushaf p2 — التفسير يفتح بعنوان واضح", async ({ pag
   await expect(sheet).toBeVisible({ timeout: 15000 });
   await expect(sheet.getByRole("heading")).toContainText(/تفسير/);
   await expect(sheet.getByRole("heading")).toContainText(/آية/);
+  await expect(page.getByTestId("mushaf-tafsir-depth-brief")).toBeVisible();
+  await expect(page.getByTestId("mushaf-tafsir-depth-full")).toBeVisible();
+  await page.getByTestId("mushaf-tafsir-depth-full").click();
+  await expect(page.getByTestId("mushaf-tafsir-depth-full")).toHaveAttribute("aria-selected", "true");
 });

@@ -2,8 +2,9 @@ import { useEffect, useId, useState } from "react";
 import { getSurahMeta } from "@/lib/quran-api";
 import { fetchMushafAyahTafsir } from "@/lib/quran-data/fetch-ayah-content";
 import {
-  DEFAULT_MUSHAF_TAFSIR_EDITION,
+  loadMushafTafsirEdition,
   MUSHAF_TAFSIR_EDITIONS,
+  saveMushafTafsirEdition,
 } from "@/lib/quran-data/tafsir-editions";
 import { QuranSheetShell } from "./quran-sheet";
 import { parseVerseKey } from "./mushaf-page-for-ayah";
@@ -18,6 +19,27 @@ const PRIMARY_EDITIONS = MUSHAF_TAFSIR_EDITIONS.filter((e) =>
   EDITION_TABS.some((t) => t.id === e.id),
 );
 
+const BRIEF_CHARS = 520;
+const DEPTH_PREF_KEY = "majlisilm.mushaf.tafsir-depth";
+
+type Depth = "brief" | "full";
+
+function loadDepth(): Depth {
+  try {
+    return localStorage.getItem(DEPTH_PREF_KEY) === "full" ? "full" : "brief";
+  } catch {
+    return "brief";
+  }
+}
+
+function saveDepth(d: Depth) {
+  try {
+    localStorage.setItem(DEPTH_PREF_KEY, d);
+  } catch {
+    /* ignore */
+  }
+}
+
 type Props = {
   open: boolean;
   verseKey: string | null;
@@ -25,10 +47,11 @@ type Props = {
   onClose: () => void;
 };
 
-/** شيت تفسير فاتح — الميسّر / السعدي / ابن كثير (QuranSettingsSheet shell). */
+/** شيت تفسير — مختصر/مطول، يحفظ آخر اختيار، سحب للأعلى. */
 export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Props) {
   const titleId = useId();
-  const [editionId, setEditionId] = useState(DEFAULT_MUSHAF_TAFSIR_EDITION);
+  const [editionId, setEditionId] = useState(loadMushafTafsirEdition);
+  const [depth, setDepth] = useState<Depth>(loadDepth);
   const [text, setText] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -59,7 +82,7 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
       .then((res) => {
         if (ac.signal.aborted) return;
         if (!res?.text) {
-          setError("لا يوجد تفسير لهذه الآية حاليًا");
+          setError("لم يتوفر تفسير لهذه الآية حاليًا");
           setText(null);
         } else {
           setText(res.text);
@@ -67,7 +90,7 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
       })
       .catch(() => {
         if (!ac.signal.aborted) {
-          setError("لا يوجد تفسير لهذه الآية حاليًا");
+          setError("لم يتوفر تفسير لهذه الآية حاليًا");
         }
       })
       .finally(() => {
@@ -75,6 +98,22 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
       });
     return () => ac.abort();
   }, [open, parsed?.surah, parsed?.ayah, editionId]);
+
+  const selectEdition = (id: string) => {
+    setEditionId(id);
+    saveMushafTafsirEdition(id);
+  };
+
+  const selectDepth = (d: Depth) => {
+    setDepth(d);
+    saveDepth(d);
+    if (d === "full") setSnap("full");
+  };
+
+  const displayText =
+    text && depth === "brief" && text.length > BRIEF_CHARS
+      ? `${text.slice(0, BRIEF_CHARS).trim()}…`
+      : text;
 
   return (
     <QuranSheetShell
@@ -107,29 +146,64 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
             ) : null}
           </header>
         ) : null}
-        <div className="mm-tafsir__editions quran-tabbar" role="tablist" aria-label="مصدر التفسير">
-          {PRIMARY_EDITIONS.map((ed) => {
-            const tab = EDITION_TABS.find((t) => t.id === ed.id);
-            const active = editionId === ed.id;
-            return (
-              <button
-                key={ed.id}
-                type="button"
-                role="tab"
-                aria-selected={active}
-                className={`quran-tab quran-btn--segment${active ? " is-active" : ""}`}
-                onClick={() => setEditionId(ed.id)}
-              >
-                {tab?.label ?? ed.label}
-              </button>
-            );
-          })}
+
+        <div className="mm-tafsir__toolbar" role="group" aria-label="خيارات التفسير">
+          <div className="mm-tafsir__depth" role="tablist" aria-label="طول التفسير">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={depth === "brief"}
+              className={`mm-tafsir__depth-btn${depth === "brief" ? " is-active" : ""}`}
+              data-testid="mushaf-tafsir-depth-brief"
+              onClick={() => selectDepth("brief")}
+            >
+              مختصر
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={depth === "full"}
+              className={`mm-tafsir__depth-btn${depth === "full" ? " is-active" : ""}`}
+              data-testid="mushaf-tafsir-depth-full"
+              onClick={() => selectDepth("full")}
+            >
+              مطول
+            </button>
+          </div>
+          <div className="mm-tafsir__editions" role="tablist" aria-label="مصدر التفسير">
+            {PRIMARY_EDITIONS.map((ed) => {
+              const tab = EDITION_TABS.find((t) => t.id === ed.id);
+              const active = editionId === ed.id || editionId === ed.quranComSlug;
+              return (
+                <button
+                  key={ed.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  className={`mm-tafsir__ed-btn${active ? " is-active" : ""}`}
+                  onClick={() => selectEdition(ed.id)}
+                >
+                  {tab?.label ?? ed.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
+
         {loading ? <p className="mm-tafsir__status">جاري تحميل التفسير…</p> : null}
         {!loading && error ? <p className="mm-tafsir__status mm-tafsir__status--err">{error}</p> : null}
-        {!loading && text ? (
+        {!loading && displayText ? (
           <div className="mm-tafsir__body" dir="rtl" lang="ar">
-            {text}
+            {displayText}
+            {depth === "brief" && text && text.length > BRIEF_CHARS ? (
+              <button
+                type="button"
+                className="mm-tafsir__more"
+                onClick={() => selectDepth("full")}
+              >
+                عرض المطول
+              </button>
+            ) : null}
           </div>
         ) : null}
       </div>

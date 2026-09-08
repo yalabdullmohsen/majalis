@@ -114,8 +114,10 @@ export function MushafAudioDock({
         data-mini={mini ? "1" : "0"}
         data-expanded={mini ? "0" : "1"}
         data-testid="mushaf-audio-dock"
+        data-loading={loading ? "1" : "0"}
         role="region"
         aria-label="مشغّل التلاوة"
+        aria-busy={loading}
       >
         <div className="mm-audio-dock__head">
           <div className="mm-audio-dock__meta">

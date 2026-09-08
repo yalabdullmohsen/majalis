@@ -355,15 +355,15 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const go = useCallback(
     (next: number) => {
       const clamped = clampMushafPage(next);
-      suppressPageSyncRef.current = false;
-      recitation.stop();
+      /* قلب يدوي: لا نوقف التلاوة — نمنع مزامنة الصفحة من الصوت حتى لا تُرجع المستخدم */
+      suppressPageSyncRef.current = true;
       beginPageTurn();
       pendingPageRef.current = clamped;
       void ensureQpcPageFont(clamped).finally(() => {
         onPageChange(clamped);
       });
     },
-    [beginPageTurn, onPageChange, recitation],
+    [beginPageTurn, onPageChange],
   );
 
   /** ارتفاع الحاوية ثابت أثناء القلب — لا تُزلّ التجميد قبل جاهزية الخط+بيانات الصفحة */
@@ -862,7 +862,8 @@ const PrefetchPage = memo(function PrefetchPage({ pageNumber }: { pageNumber: nu
   }, [pageNumber]);
 
   if (!ready || !layout) {
-    return <div className="nm-page-placeholder" aria-hidden="true" />;
+    /* skeleton بنفس شبكة الإطار — لا يغيّر عرض/ارتفاع الحاوية */
+    return <div className="nm-page-placeholder nm-page-placeholder--frame" aria-hidden="true" />;
   }
   return (
     <MushafPage

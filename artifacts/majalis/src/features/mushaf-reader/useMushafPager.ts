@@ -16,7 +16,7 @@ import { MUSHAF_SETTLE_MS } from "@/features/mushaf-madinah/layout-bands";
 
 /** عتبة السحب الأفقي — من أي مكان في الصفحة */
 export const SWIPE_MIN_PX = 40;
-export const SETTLE_MS = 250;
+export const SETTLE_MS = 160;
 if (SETTLE_MS !== MUSHAF_SETTLE_MS) {
   throw new Error("SETTLE_MS must match layout-bands");
 }
