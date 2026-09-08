@@ -77,15 +77,6 @@ export default function TeachersIndexPage() {
               className="tch-card"
               role="listitem"
             >
-              <img
-                src={teacher.photoUrl}
-                alt=""
-                className="tch-card__photo"
-                loading="lazy"
-                decoding="async"
-                width={72}
-                height={72}
-              />
               <span className="tch-card__name">{teacher.name}</span>
               <span className="tch-card__count">
                 {toArabicDigits(String(teacher.lessonCount))} درس

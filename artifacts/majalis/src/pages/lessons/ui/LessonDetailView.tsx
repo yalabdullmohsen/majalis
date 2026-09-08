@@ -7,9 +7,6 @@ import ContentActions from "@/components/ContentActions";
 import { ContentReportButton } from "@/components/ContentReportButton";
 import { isDemoId } from "@/lib/demo-id";
 import { extractLessonSchedule, hasValue } from "@/lib/lesson-display";
-import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
-import { OptimizedSheikhImage } from "@/components/sheikh/OptimizedSheikhImage";
-import { OptimizedImage } from "@/components/media/OptimizedImage";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import {
@@ -28,7 +25,6 @@ import { useLessonSeo } from "@/lib/seo";
 import { usePageView } from "@/hooks/usePageView";
 import type { LessonEngagementStats } from "@/lib/lesson-stats";
 import { normalizeActivityLabel } from "@/lib/activity-label";
-import { resolveLessonPosterUrl } from "@/lib/lesson-image";
 import { stripSheikhHonorifics } from "@/lib/sheikh-name";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
@@ -38,6 +34,8 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { canonicalizeLessonPublicId, isOrphanKuwaitLessonHashId } from "@/lib/lesson-id-aliases";
 import { getLessonsModule, type LessonDbRow } from "@/features/lessons";
 import { applyPageSeo } from "@/lib/seo";
+import { getLessonDeliveryMode } from "@/lib/lessons/lessonNormalize";
+import { AppBackButton } from "@/components/common/AppBackButton";
 import "@/styles/pages/not-found.css";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
@@ -242,8 +240,6 @@ export default function LessonDetailPage({
       id: unified.id,
       title: unified.title,
       sheikhName: unified.sheikhName,
-      sheikhImage: resolveLessonSheikhImage(lesson),
-      lessonImage: resolveLessonPosterUrl(lesson.poster_image_url),
       governorate: unified.governorate || "",
       region: unified.region || "",
       mosque: unified.mosque || "",
@@ -272,17 +268,12 @@ export default function LessonDetailPage({
   if (!unified) return <LessonUnavailable lessonId={params.id} />;
 
   const sheikhName = unified.sheikhName;
-  const sheikhImage = kuwaitLesson?.sheikhImage || (lesson ? resolveLessonSheikhImage(lesson) : undefined);
-  const hasSheikhPhoto = Boolean(sheikhImage && !sheikhImage.includes("logo"));
-  const lessonPosterUrl =
-    kuwaitLesson?.lessonImage ||
-    resolveLessonPosterUrl(lesson?.poster_image_url);
   const { day, time, dateLabel } = lesson ? extractLessonSchedule(lesson) : { day: unified.day, time: unified.time, dateLabel: unified.gregorianDate };
   const mapsEmbed = buildMapsEmbed(unified.mapsUrl, unified.mosque, unified.region);
-  const activityLabel = normalizeActivityLabel(unified.activityType);
+  const activityLabel = normalizeActivityLabel(unified.activityType) || "درس";
+  const deliveryLabel = getLessonDeliveryMode(unified);
   const keywords = unified.keywords || [];
   const level = inferLessonLevel(unified.category);
-  const addedDate = lesson?.created_at || lesson?.updated_at || unified.gregorianDate;
 
   return (
     <div className="page-shell narrow lesson-detail-page mj-page">
@@ -295,69 +286,39 @@ export default function LessonDetailPage({
         <span>{unified.title}</span>
       </nav>
 
-      <Link href="/lessons" className="lesson-detail-back">
-        ← العودة إلى الدروس
-      </Link>
+      <AppBackButton variant="inline" fallbackHref="/lessons" label="العودة إلى الدروس" className="lesson-detail-back" />
 
       <SectionErrorBoundary name="تفاصيل الدرس">
-      <article className="ui-card lesson-detail-card mj-card mj-card--raised">
-        <div className={`lesson-detail-hero${hasSheikhPhoto ? "" : " lesson-detail-hero--text-only"}`}>
-          {hasSheikhPhoto && (
-            <OptimizedSheikhImage
-              src={sheikhImage}
-              name={sheikhName || "شيخ"}
-              size={136}
-              variant="portrait"
-              priority
-            />
-          )}
-          <div className="lesson-detail-hero__copy">
-            {hasValue(sheikhName) && (
-              <div className="lesson-detail-sheikh-row">
-                <p className="lesson-card-pro__sheikh">
-                  المحاضر: {stripSheikhHonorifics(sheikhName) || sheikhName}
-                </p>
-                {lesson?.sheikhs?.id && (
-                  <ScholarFollowButton sheikhId={lesson.sheikhs.id} compact />
-                )}
-              </div>
-            )}
-            {hasValue(kuwaitLesson?.organizerName) &&
-              stripSheikhHonorifics(kuwaitLesson?.organizerName || "") !==
-                stripSheikhHonorifics(sheikhName || "") && (
-              <p className="lesson-card-pro__organizer">تنظيم: {kuwaitLesson?.organizerName}</p>
-            )}
-            <h1 className="lesson-detail-title">{unified.title}</h1>
-            <div className="lesson-detail-tags">
-              {hasValue(unified.category) && <span className="page-tag">{unified.category}</span>}
-              <span className="page-soft-tag">{activityLabel}</span>
-              <span className="page-soft-tag">المستوى: {level}</span>
-              <span className="page-soft-tag">اللغة: العربية</span>
-              {unified.hasLiveStream && <span className="page-soft-tag">بث مباشر</span>}
-              {unified.hasRecording && <span className="page-soft-tag">تسجيل</span>}
-            </div>
-            {unified.note && (
-              <p className="lesson-detail-summary">
-                {cleanDisplayText(unified.note)}
+      <article className="ui-card lesson-detail-card mj-card lesson-detail-card--compact">
+        <header className="lesson-detail-head">
+          <h1 className="lesson-detail-title">{unified.title}</h1>
+          {hasValue(sheikhName) && (
+            <div className="lesson-detail-sheikh-row">
+              <p className="lesson-detail-sheikh">
+                المحاضر: {stripSheikhHonorifics(sheikhName) || sheikhName}
               </p>
-            )}
+              {lesson?.sheikhs?.id && (
+                <ScholarFollowButton sheikhId={lesson.sheikhs.id} compact />
+              )}
+            </div>
+          )}
+          {hasValue(kuwaitLesson?.organizerName) &&
+            stripSheikhHonorifics(kuwaitLesson?.organizerName || "") !==
+              stripSheikhHonorifics(sheikhName || "") && (
+            <p className="lesson-detail-organizer">تنظيم: {kuwaitLesson?.organizerName}</p>
+          )}
+          <div className="lesson-detail-tags" aria-label="تصنيف الدرس">
+            <span className="page-soft-tag">{activityLabel}</span>
+            {hasValue(unified.category) && <span className="page-tag">{unified.category}</span>}
+            {deliveryLabel && <span className="page-soft-tag">{deliveryLabel}</span>}
+            <span className="page-soft-tag">المستوى: {level}</span>
+            {unified.hasLiveStream && <span className="page-soft-tag">بث مباشر</span>}
+            {unified.hasRecording && <span className="page-soft-tag">تسجيل</span>}
           </div>
-        </div>
-
-        {lessonPosterUrl && (
-          <figure className="lesson-detail-poster">
-            <OptimizedImage
-              src={lessonPosterUrl}
-              alt={unified.title}
-              aspect="16/9"
-              priority={!hasSheikhPhoto}
-              sizes="(max-width: 720px) 100vw, 720px"
-            />
-          </figure>
-        )}
+        </header>
 
         {recordingSrc && (
-          <div className="lesson-detail-body">
+          <div className="lesson-detail-body lesson-detail-body--tight">
             <LessonRecordingPlayer
               lesson={unified}
               src={recordingSrc}
@@ -366,23 +327,12 @@ export default function LessonDetailPage({
           </div>
         )}
 
-        <div className="lesson-detail-stats-row">
-          <StatPill label="المشاهدات" value={stats.views} />
-          <StatPill label="الحفظ" value={stats.saves} />
-          {unified.sessionCount != null && unified.sessionCount > 0 && (
-            <StatPill label="اللقاءات" value={unified.sessionCount} />
-          )}
-        </div>
-
-        <dl className="lesson-card-pro__meta lesson-detail-meta">
+        <dl className="lesson-detail-info-grid" aria-label="معلومات الدرس">
           {hasValue(day) && (
             <div><dt>اليوم</dt><dd>{day}</dd></div>
           )}
           {hasValue(unified.gregorianDate || dateLabel) && (
             <div><dt>التاريخ</dt><dd>{unified.gregorianDate || dateLabel}</dd></div>
-          )}
-          {hasValue(unified.hijriDate) && (
-            <div><dt>التاريخ الهجري</dt><dd>{unified.hijriDate}</dd></div>
           )}
           {hasValue(time || unified.time) && (
             <div><dt>الوقت</dt><dd>{formatShortLessonTime(time || unified.time)}</dd></div>
@@ -396,59 +346,27 @@ export default function LessonDetailPage({
           {hasValue(unified.governorate) && (
             <div><dt>المحافظة</dt><dd>{unified.governorate}</dd></div>
           )}
-          {addedDate && (
-            <div><dt>تاريخ الإضافة</dt><dd>{String(addedDate).slice(0, 10)}</dd></div>
+          {deliveryLabel && (
+            <div><dt>الحضور</dt><dd>{deliveryLabel}</dd></div>
+          )}
+          {hasValue(unified.hijriDate) && (
+            <div><dt>الهجري</dt><dd>{unified.hijriDate}</dd></div>
+          )}
+          {unified.sessionCount != null && unified.sessionCount > 0 && (
+            <div><dt>اللقاءات</dt><dd>{unified.sessionCount.toLocaleString("ar")}</dd></div>
           )}
         </dl>
 
-        <div className="lesson-detail-body">
-          <h2>عن الدرس</h2>
-          <p>{cleanDisplayText(unified.description || buildAutoDescription(unified))}</p>
-        </div>
-
-        {sheikhBio && (
-          <div className="lesson-detail-body">
-            <h2>نبذة الشيخ</h2>
-            <p>{cleanDisplayText(sheikhBio)}</p>
-          </div>
-        )}
-
-        {keywords.length > 0 && (
-          <div className="lesson-detail-body">
-            <h2>الكلمات المفتاحية</h2>
-            <div className="lesson-detail-tags">
-              {keywords.map((kw) => (
-                <span key={kw} className="page-soft-tag">{kw}</span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {unified.linkedLessons && unified.linkedLessons.length > 0 && (
-          <div className="lesson-detail-body">
-            <h2>الدروس المرتبطة</h2>
-            <ul className="lesson-detail-linked">
-              {unified.linkedLessons.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {mapsEmbed && (
-          <div className="lesson-detail-map">
-            <h2>الموقع على الخريطة</h2>
-            <iframe
-              title={`خريطة ${unified.mosque}`}
-              src={mapsEmbed}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
-          </div>
-        )}
-
         <div className="lesson-detail-actions lesson-detail-actions--row lesson-detail-actions-panel">
+          <FavoriteButton contentType="lesson" contentId={unified.id} />
+          <button
+            type="button"
+            className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
+            onClick={() => downloadUnifiedCalendar(unified)}
+          >
+            إضافة للتقويم
+          </button>
+          <AppBackButton variant="inline" fallbackHref="/lessons" label="رجوع" className="lesson-detail-actions__back" />
           <AdminInlineEdit
             contentType="lesson"
             contentId={unified.id}
@@ -462,14 +380,6 @@ export default function LessonDetailPage({
               description: unified.description,
             }}
           />
-          <FavoriteButton contentType="lesson" contentId={unified.id} />
-          <button
-            type="button"
-            className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
-            onClick={() => downloadUnifiedCalendar(unified)}
-          >
-            إضافة للتقويم
-          </button>
           {unified.streamUrl && (
             <button
               type="button"
@@ -503,13 +413,61 @@ export default function LessonDetailPage({
           <ContentReportButton contentType="درس" contentId={unified.id} title={unified.title} />
         </div>
 
-        <ShareButtons title={unified.title} />
-
-        {unified.qrCodeUrl && (
-          <div className="lesson-detail-qr">
-            <img src={unified.qrCodeUrl} alt={`رمز QR للدرس: ${unified.title}`} loading="lazy" decoding="async" width="200" height="200" />
+        {(unified.note || unified.description) && (
+          <div className="lesson-detail-body lesson-detail-body--tight">
+            <h2>عن الدرس</h2>
+            <p>{cleanDisplayText(unified.note || unified.description || buildAutoDescription(unified))}</p>
           </div>
         )}
+
+        {sheikhBio && (
+          <div className="lesson-detail-body lesson-detail-body--tight">
+            <h2>نبذة المحاضر</h2>
+            <p>{cleanDisplayText(sheikhBio)}</p>
+          </div>
+        )}
+
+        {keywords.length > 0 && (
+          <div className="lesson-detail-body lesson-detail-body--tight">
+            <h2>الكلمات المفتاحية</h2>
+            <div className="lesson-detail-tags">
+              {keywords.map((kw) => (
+                <span key={kw} className="page-soft-tag">{kw}</span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {unified.linkedLessons && unified.linkedLessons.length > 0 && (
+          <div className="lesson-detail-body lesson-detail-body--tight">
+            <h2>الدروس المرتبطة</h2>
+            <ul className="lesson-detail-linked">
+              {unified.linkedLessons.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {mapsEmbed && (
+          <div className="lesson-detail-map">
+            <h2>الموقع على الخريطة</h2>
+            <iframe
+              title={`خريطة ${unified.mosque}`}
+              src={mapsEmbed}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
+        )}
+
+        <div className="lesson-detail-stats-row" aria-label="إحصاءات">
+          <StatPill label="المشاهدات" value={stats.views} />
+          <StatPill label="الحفظ" value={stats.saves} />
+        </div>
+
+        <ShareButtons title={unified.title} />
       </article>
       </SectionErrorBoundary>
 
