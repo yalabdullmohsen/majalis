@@ -264,10 +264,24 @@ export const REFRESH_ON_RETURN_AFTER_MS = 45_000;
 
 /**
  * مدة حركة الماركي (ثوانٍ): حسب عدد العناصر وطول النصوص.
- * أسرع من السابق (~٥٥ حرفًا/ث) مع بقاء القراءة مريحة.
+ * ~٤٢ حرفًا/ث — قراءة مريحة بلا استعجال ولا بطء ظاهر.
  */
 export function marqueeDurationSec(itemCount: number, totalChars = 0): number {
-  const byCount = itemCount * 3.25;
-  const byChars = totalChars > 0 ? totalChars / 55 : 0;
-  return Math.max(14, Math.min(58, Math.max(byCount, byChars)));
+  const byCount = itemCount * 4.2;
+  const byChars = totalChars > 0 ? totalChars / 42 : 0;
+  return Math.max(18, Math.min(72, Math.max(byCount, byChars)));
+}
+
+/** سرعة المسار المقاسة (بكسل/ث) — ثابتة عبر الصفحات بعد اكتمال التخطيط. */
+export const TICKER_PX_PER_SEC = 58;
+/** أدنى مدة دورة حتى لا يُستعجل الشريط عند قياس مبكر ضيّق. */
+export const TICKER_MIN_DURATION_SEC = 18;
+export const TICKER_MAX_DURATION_SEC = 72;
+
+export function durationFromSegmentWidth(segmentW: number): number {
+  if (!(segmentW > 0)) return TICKER_MIN_DURATION_SEC;
+  return Math.max(
+    TICKER_MIN_DURATION_SEC,
+    Math.min(TICKER_MAX_DURATION_SEC, segmentW / TICKER_PX_PER_SEC),
+  );
 }

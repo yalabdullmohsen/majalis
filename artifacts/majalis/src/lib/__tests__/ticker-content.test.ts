@@ -11,6 +11,10 @@ import {
   RECENT_LIMIT,
   RECENT_STORAGE_KEY,
   VISIBLE_ITEMS,
+  marqueeDurationSec,
+  durationFromSegmentWidth,
+  TICKER_PX_PER_SEC,
+  TICKER_MIN_DURATION_SEC,
 } from "../ticker-content";
 
 let passed = 0;
@@ -145,6 +149,16 @@ console.log("\n=== التخزين المحلي ===");
   let threw = false;
   try { writeRecent(["x"], broken); readRecent(broken); } catch { threw = true; }
   assert(!threw, "تعطّل التخزين لا يُسقِط الشريط");
+}
+
+console.log("\n=== سرعة الماركي — قراءة مريحة ===");
+{
+  assert(TICKER_PX_PER_SEC >= 50 && TICKER_PX_PER_SEC <= 65, `سرعة بكسل معتدلة (الفعلي ${TICKER_PX_PER_SEC})`);
+  assert(TICKER_MIN_DURATION_SEC >= 16, "أدنى مدة دورة لا تقل عن 16ث");
+  const dChars = marqueeDurationSec(6, 420);
+  assert(dChars >= 18 && dChars <= 72, `مدة احتياطية ضمن المدى (الفعلي ${dChars})`);
+  const dSeg = durationFromSegmentWidth(2900);
+  assert(dSeg >= 18 && Math.abs(dSeg - 2900 / TICKER_PX_PER_SEC) < 0.01, `مدة من العرض = عرض/سرعة (الفعلي ${dSeg})`);
 }
 
 console.log(`\n${"─".repeat(44)}`);
