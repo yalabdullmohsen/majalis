@@ -263,14 +263,40 @@ html.dark .nb-table__row--clickable:hover td {
 /* ── Grid ── */
 .prophets-lux-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--ds-space-4);
+  width: 100%;
+  max-width: min(40rem, 100%);
+  margin-inline: auto;
+  justify-content: center;
+  padding-inline: max(1.25rem, 20px);
+  box-sizing: border-box;
+}
+.prophets-lux-grid > :last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  max-width: calc(50% - 0.5rem);
+  justify-self: center;
+  width: 100%;
 }
 @media (min-width: 640px) {
-  .prophets-lux-grid { grid-template-columns: repeat(3, 1fr); }
+  .prophets-lux-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: min(56rem, 100%);
+  }
+  .prophets-lux-grid > :last-child:nth-child(odd) {
+    grid-column: auto;
+    max-width: none;
+  }
+  .prophets-lux-grid > :last-child:nth-child(3n + 1):not(:only-child) {
+    grid-column: 1 / -1;
+    max-width: calc((100% - 2 * var(--ds-space-4, 1rem)) / 3);
+    justify-self: center;
+  }
 }
 @media (min-width: 1024px) {
-  .prophets-lux-grid { grid-template-columns: repeat(4, 1fr); }
+  .prophets-lux-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 /* ── Prophet Card — مضغوطة ومرتّبة ── */

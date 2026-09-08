@@ -1,22 +1,31 @@
 /* مشغّل تلاوة مصغّر ثابت — 56px مطوي، توسعة spring فوق شريط التنقّل */
 .quran-mini-player {
   --qmp-h: 56px;
+  --qmp-ink: var(--mj-on-brand, #f7faf8);
+  --qmp-ink-muted: color-mix(in srgb, var(--qmp-ink) 78%, transparent);
   position: fixed;
   inset-inline: 0;
   bottom: calc(var(--bottom-nav-h, 56px) + var(--inset-bottom, 0px));
   z-index: 60;
   display: flex;
   flex-direction: column;
-  max-height: min(72vh, 28rem);
-  background: var(--color-mushaf-surface, var(--mj-brand-deep, #0f3d2e));
-  color: var(--mj-on-brand, #fff);
-  border-block-start: 1px solid color-mix(in srgb, var(--mj-on-brand, #fff) 18%, transparent);
-  box-shadow: 0 -4px 20px rgb(0 0 0 / 0.18);
+  max-height: min(58vh, 22rem);
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--mj-brand, #146b52) 88%, #1a8f6e) 0%,
+      var(--mj-brand-deep, #0d4a39) 100%
+    );
+  color: var(--qmp-ink);
+  border-block-start: 1px solid color-mix(in srgb, #fff 22%, transparent);
+  border-radius: 1.25rem 1.25rem 0 0;
+  box-shadow: 0 -10px 32px -16px rgb(0 0 0 / 0.35);
   transition:
     max-height 360ms var(--mj-ease-spring, cubic-bezier(0.22, 1.15, 0.36, 1)),
     transform 360ms var(--mj-ease-spring, cubic-bezier(0.22, 1.15, 0.36, 1));
   will-change: max-height;
   touch-action: pan-y;
+  overflow: hidden;
 }
 
 .quran-mini-player--immersive {
@@ -87,6 +96,7 @@
 .quran-mini-player__meta strong {
   font-size: 0.82rem;
   font-weight: 600;
+  color: var(--qmp-ink);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -95,7 +105,7 @@
 
 .quran-mini-player__meta span {
   font-size: 0.72rem;
-  opacity: 0.85;
+  color: var(--qmp-ink-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -210,14 +220,17 @@
   gap: 0.55rem 0.65rem;
   margin: 0;
   padding: 0.55rem 0.65rem 0.75rem;
-  border: 1px solid color-mix(in srgb, var(--mj-on-brand, #fff) 16%, transparent);
-  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, #fff 22%, transparent);
+  border-radius: 1rem;
+  background: color-mix(in srgb, #fff 10%, transparent);
+  color: var(--qmp-ink);
 }
 
 .quran-mini-player__hifz legend {
   padding-inline: 0.35rem;
   font-size: 0.82rem;
   font-weight: 600;
+  color: var(--qmp-ink);
 }
 
 .quran-mini-player__hifz label {
@@ -225,18 +238,23 @@
   flex-direction: column;
   gap: 0.2rem;
   font-size: 0.75rem;
-  opacity: 0.95;
+  color: var(--qmp-ink-muted);
 }
 
 .quran-mini-player__hifz input,
 .quran-mini-player__hifz select {
   min-height: 44px;
   padding: 0.35rem 0.5rem;
-  border-radius: 8px;
-  border: 1px solid color-mix(in srgb, var(--mj-on-brand, #fff) 22%, transparent);
-  background: color-mix(in srgb, var(--mj-on-brand, #fff) 8%, transparent);
-  color: inherit;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in srgb, #fff 28%, transparent);
+  background: color-mix(in srgb, #fff 14%, transparent);
+  color: var(--qmp-ink);
   font: inherit;
+  color-scheme: dark;
+}
+
+.quran-mini-player__hifz input::placeholder {
+  color: var(--qmp-ink-muted);
 }
 
 .quran-mini-player__hifz-actions {

@@ -17,6 +17,7 @@ import {
   CONTENT_SAFE_LABELS,
   hasNoDeployLabel,
   CONTENT_SAFE_PATH_PATTERNS,
+  AUTO_MERGE_FILE_COUNT_EXEMPT_PATTERNS,
   DANGER_PATH_PATTERNS,
   isAutoMergeAllowlistedPath,
   MAX_DELETED_FILES,
@@ -77,7 +78,16 @@ export function summarizeFiles(files = []) {
     if (ct === "DELETED" || ct === "REMOVED") deletedFiles += 1;
     else if (del > 0 && Number(f.additions || 0) === 0) deletedFiles += 1;
   }
-  return { paths, totalDeletions, deletedFiles, fileCount: paths.length };
+  const countedPaths = paths.filter(
+    (p) => !AUTO_MERGE_FILE_COUNT_EXEMPT_PATTERNS.some((re) => re.test(p)),
+  );
+  return {
+    paths,
+    totalDeletions,
+    deletedFiles,
+    fileCount: countedPaths.length,
+    rawFileCount: paths.length,
+  };
 }
 
 /**
@@ -102,7 +112,10 @@ export function findDangerousFiles(paths = []) {
  */
 export function findNonContentSafeFiles(paths = []) {
   return paths.filter(
-    (p) => !CONTENT_SAFE_PATH_PATTERNS.some((re) => re.test(p)),
+    (p) =>
+      !CONTENT_SAFE_PATH_PATTERNS.some((re) => re.test(p)) &&
+      !AUTO_MERGE_FILE_COUNT_EXEMPT_PATTERNS.some((re) => re.test(p)) &&
+      !isAutoMergeAllowlistedPath(p),
   );
 }
 

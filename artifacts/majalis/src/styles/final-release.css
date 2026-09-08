@@ -1124,8 +1124,13 @@ html.dark .top-section-bar {
     min-height: 44px;
   }
   .scroll-to-top { inset-inline-end: max(1rem, var(--inset-right)); }
-  .global-back-btn,
-  .floating-back-btn { inset-inline-start: max(20px, var(--inset-left)); }
+  .global-back-btn.floating-back-btn,
+  .floating-back-btn.app-back-btn--floating {
+    right: calc(var(--inset-right, 0px) + 16px);
+    left: auto;
+    inset-inline-start: auto;
+    inset-inline-end: auto;
+  }
   .section-lobby__back,
   .section-lobby__back-inline {
     position: relative;
@@ -1203,11 +1208,14 @@ html[data-theme="dark"] .bottom-nav--v2 {
 
 .global-back-btn,
 .floating-back-btn {
-  /* يمين في RTL / يسار في LTR — فوق الشريط السفلي دائمًا */
-  inset-inline-start: max(20px, var(--inset-left));
-  background: var(--majalis-panel, var(--mj-surface, #fff));
-  color: var(--majalis-ink, #1A1A18);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, var(--majalis-line, rgba(0,0,0,.08)));
+  /* أسفل يمين الشاشة — فوق الشريط السفلي */
+  right: calc(var(--inset-right, 0px) + 16px);
+  left: auto;
+  inset-inline-start: auto;
+  inset-inline-end: auto;
+  background: color-mix(in srgb, var(--mj-surface, #fff) 92%, var(--mj-brand-soft, #e2efe8));
+  color: var(--mj-brand-deep, #0d4a39);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 28%, transparent);
   opacity: 1;
   z-index: 200;
   border-radius: 999px;
