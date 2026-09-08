@@ -54,6 +54,7 @@ function isLastSurahLine(words: QpcWord[], layout: MushafPageLayout): boolean {
 /**
  * MushafPage — صفحة ثابتة القياس من أول إطار.
  * شبكة ١٥ سطرًا لكل الصفحات (نفس bodyTop) — بلا توسيط flex يقفز النص.
+ * ارتفاع الحاوية/المتن ثابت عبر --mushaf-* لمنع layout shift عند قلب الصفحة.
  */
 export const MushafPage = memo(function MushafPage({
   layout,

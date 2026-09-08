@@ -89,6 +89,7 @@
   height: 100%;
   max-width: var(--nm-page-max-w);
   margin-inline: auto;
+  /* ارتفاع الحاوية ثابت من الـviewport — الحجز السفلي عبر متغير لا يغيّر شبكة الآيات أثناء القلب */
   padding: var(--nm-top-pad) var(--nm-side-pad)
     calc(var(--nm-bottom-pad) + var(--reader-bottom-stack, 0px) + 16px);
   /* يهزم حشو mm-page-shell المزدوج من mushaf-madinah.css */
@@ -98,6 +99,7 @@
   display: flex;
   flex-direction: column;
   background: var(--nm-paper);
+  contain: layout style;
 }
 
 .nm-root[data-ayah-bar="1"] {
@@ -119,6 +121,7 @@
 /* لا نكدّس الارتفاعين — الرصيف يُخفى عند فتح قائمة الآية */
 
 .nm-page {
+  /* شبكة رأس/متن/ذيل ثابتة — لا يعتمد موضع الآيات على محتوى يتغيّر بعد القلب */
   position: relative;
   flex: 1 1 auto;
   min-height: 0;
@@ -184,7 +187,9 @@
   z-index: 1;
   flex: 1 1 auto;
   min-height: 0;
-  height: 100%;
+  /* ارتفاع متن ثابت من المقاسات — يمنع تمدّد الشبكة بعد أول إطار عند القلب */
+  height: var(--mushaf-body-height, 100%);
+  max-height: 100%;
   width: 100%;
   max-width: 100%;
   display: grid;
@@ -216,9 +221,16 @@
   min-width: 0;
   min-height: 0;
   display: flex;
-  align-items: center;
+  /* أعلى الخانة — توسيط عمودي يجعل السطر ينزل عند تغيّر ارتفاع الشبكة */
+  align-items: flex-start;
   justify-content: center;
   overflow: visible;
+  padding-block: 0;
+}
+
+.nm-slot[data-kind="banner"],
+.nm-slot[data-kind="basmala"] {
+  align-items: center;
 }
 
 .nm-slot[data-kind="empty"] {

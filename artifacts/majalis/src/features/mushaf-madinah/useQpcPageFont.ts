@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { getPowerSaverState } from "@/lib/power-saver-engine";
 
 const loaded = new Set<number>();
@@ -62,16 +62,27 @@ function loadFace(pageNumber: number): Promise<boolean> {
     });
 }
 
+/** جاهزية متزامنة من كاش الوحدة — بلا حالة React قديمة لصفحة سابقة. */
+export function isQpcPageFontReady(pageNumber: number): boolean {
+  return loaded.has(pageNumber);
+}
+
+/** يضمن تحميل خط الصفحة قبل قلب الواجهة (يمنع FOUT/قفزة المقاسات). */
+export function ensureQpcPageFont(pageNumber: number): Promise<boolean> {
+  return loadFace(pageNumber);
+}
+
 /** يحمّل خط QPC V2 الخاص بالصفحة (`/fonts/qpc-v2/pN.woff2`) ويُحمّل مسبقاً ±١. */
 export function useQpcPageFont(pageNumber: number): { fontFamily: string; ready: boolean } {
   const fontFamily = fontFamilyName(pageNumber);
-  const [ready, setReady] = useState(() => loaded.has(pageNumber));
+  /** epoch لإعادة الرسم عند اكتمال التحميل؛ الجاهزية تُقرأ من `loaded` كل رسم. */
+  const [, setEpoch] = useState(0);
+  const ready = loaded.has(pageNumber);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let cancelled = false;
-    setReady(loaded.has(pageNumber));
     void loadFace(pageNumber).then((ok) => {
-      if (!cancelled && ok) setReady(true);
+      if (!cancelled && ok) setEpoch((n) => n + 1);
     });
     const saver = getPowerSaverState();
     if (saver.mode !== "aggressive") {
