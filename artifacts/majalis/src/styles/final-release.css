@@ -523,9 +523,13 @@ html.dark .navbar-menu-btn--drawer {
 }
 
 @keyframes header-ticker-marquee {
-  /* إزاحة مقطع واحد بالضبط (مع 3 نسخ = -33.333%) — بلا فجوة بين الدورات */
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(var(--ticker-loop-shift, -33.33333%), 0, 0); }
+  /*
+   * اتجاه عربي: النص يدخل من اليسار ويخرج من اليمين (عكس الماركي الإنجليزي).
+   * نبدأ بإزاحة مقطع واحد سالبة ثم نعود إلى 0 → حركة فيزيائية نحو اليمين.
+   * --ticker-loop-shift يبقى سالبًا (-33.333% مع 3 نسخ) لضمان حلقة بلا فجوة.
+   */
+  from { transform: translate3d(var(--ticker-loop-shift, -33.33333%), 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {

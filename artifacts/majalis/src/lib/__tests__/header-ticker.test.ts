@@ -157,8 +157,9 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
     "حركة لا نهائية بلا إعادة من فراغ",
   );
   assert(
-    cssSrc.includes("--ticker-loop-shift") || cssSrc.includes("-33.333"),
-    "إزاحة مقطع واحد فقط لكل دورة — بلا فجوة",
+    /from\s*\{\s*transform:\s*translate3d\(\s*var\(--ticker-loop-shift/s.test(cssSrc) &&
+      /to\s*\{\s*transform:\s*translate3d\(\s*0/s.test(cssSrc),
+    "ماركي عربي: من إزاحة سالبة إلى 0 (حركة نحو اليمين)",
   );
   assert(
     cssSrc.includes("direction: ltr") && cssSrc.includes("header-ticker__viewport"),
