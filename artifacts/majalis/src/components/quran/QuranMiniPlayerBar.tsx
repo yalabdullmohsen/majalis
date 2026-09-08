@@ -157,6 +157,8 @@ export function QuranMiniPlayerBar() {
 
   if (!visible) return null;
   if (snap.surah == null || snap.ayah == null) return null;
+  /* المصحف له رصيف تلاوة داخلي — الشريط الأخضر العام يغطي الآيات */
+  if (immersive) return null;
 
   const surahName = getSurahMeta(snap.surah).name.replace(/^سُورَةُ\s*/u, "");
   const reciterName = getReciter(snap.reciterId).nameAr;

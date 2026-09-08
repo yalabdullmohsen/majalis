@@ -57,6 +57,26 @@ test("mushaf page flip — لا قفزة لأول سطر بعد الظهور", a
   }
 });
 
+test("mushaf page flip — صفحات ٦→٧ و٤٣→٤٤ بلا قفزة", async ({ page }) => {
+  for (const [from, to] of [
+    [6, 7],
+    [43, 44],
+  ] as const) {
+    await openMushaf(page, from);
+    await flipNext(page);
+    await page.waitForSelector(`[data-testid="mushaf-page"][data-page="${to}"]`, {
+      timeout: 20000,
+    });
+    const early = await firstLineBox(page);
+    expect(early, `سطر أول على صفحة ${to}`).not.toBeNull();
+    await page.waitForTimeout(300);
+    const late = await firstLineBox(page);
+    expect(late).not.toBeNull();
+    const dy = Math.abs(late!.top - early!.top);
+    expect(dy, `قفزة رأسية ${dy}px على ${from}→${to}`).toBeLessThanOrEqual(MAX_JUMP_PX);
+  }
+});
+
 test("mushaf page flip — صفحات وسطية سريعة", async ({ page }) => {
   await openMushaf(page, 20);
 

@@ -120,7 +120,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   );
 
   const metricsRootRef = useRef<HTMLDivElement | null>(null);
-  useMushafFixedMetrics(metricsRootRef, canMountPage);
+  /** مقاسات ثابتة من التركيب — لا تُربط بـ canMountPage (كانت تعيد القياس عند القلب) */
+  useMushafFixedMetrics(metricsRootRef, true);
 
   const hideTimer = useRef<number | null>(null);
   const pageRef = useRef(page);
@@ -302,20 +303,15 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const beginPageTurn = useCallback(() => {
     if (pageTurnLockRef.current) return;
     pageTurnLockRef.current = true;
-    const mode: "none" | "ayah" | "audio" = actionsOpenRef.current
-      ? "ayah"
-      : audioDockOpen &&
-          (playerState === "playing" ||
-            playerState === "buffering" ||
-            playerState === "error" ||
-            chromeOpen)
-        ? "audio"
-        : "none";
-    setFreezeStackMode(mode);
+    /* نُغلق شريط الآية/الكروم دائمًا — جمّد فقط ما سيبقى بعد المسح (رصيف الصوت أثناء التشغيل) */
+    const dockRemainsAfterClear =
+      audioDockOpen &&
+      (playerState === "playing" || playerState === "buffering" || playerState === "error");
+    setFreezeStackMode(dockRemainsAfterClear ? "audio" : "none");
     setBottomStackFrozen(true);
     setPagerSettled(false);
     clearPageChrome();
-  }, [audioDockOpen, chromeOpen, clearPageChrome, playerState]);
+  }, [audioDockOpen, clearPageChrome, playerState]);
 
   const finishPageTurn = useCallback(() => {
     setPagerSettled(true);
@@ -348,7 +344,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     const shell = metricsRootRef.current?.querySelector<HTMLElement>(
       '[data-pane="current"] .nm-shell, [data-pane="current"] .mm-page-shell',
     );
-    if (shell) shell.scrollTop = 0;
+    /* overflow مخفي — أعد الموضع فقط إن خرج عن الصفر (بلا قفزة بصرية) */
+    if (shell && shell.scrollTop !== 0) shell.scrollTop = 0;
 
     finishPageTurn();
   }, [page, fontReady, layoutMatchesPage, finishPageTurn]);
@@ -619,15 +616,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       pageSlot={
         <div className="nm-shell mm-page-shell mushaf-page-frame" data-testid="mushaf-page-shell">
           {error ? <div className="nm-status">{error}</div> : null}
-          {!error && !canMountPage ? (
-            <div
-              className="nm-page-placeholder"
-              role="status"
-              aria-label="سُنّة"
-              aria-busy="true"
-            />
-          ) : null}
-          {canMountPage && layout && layout.pageNumber === page ? (
+          {/* شبكة ثابتة الأبعاد — لا نستبدل الصفحة بـ placeholder يغيّر الارتفاع */}
+          {!error && canMountPage && layout && layout.pageNumber === page ? (
             <MushafPage
               layout={layout}
               fontFamily={fontFamily}
@@ -639,6 +629,13 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
                 setChromeOpen(false);
                 setActionsOpen(false);
               }}
+            />
+          ) : !error ? (
+            <div
+              className="nm-page-placeholder nm-page-placeholder--frame"
+              role="status"
+              aria-label="سُنّة"
+              aria-busy="true"
             />
           ) : null}
         </div>

@@ -25,7 +25,7 @@
   /* طبقات سفلية داخل القارئ */
   --bottom-nav-height: 64px;
   --reader-action-height: 120px;
-  --audio-player-height: 128px;
+  --audio-player-height: 7.5rem;
   --safe-bottom: var(--inset-bottom, 0px);
   --reader-bottom-stack: 0px;
 
@@ -757,18 +757,25 @@
   width: 100%;
   max-width: none;
   transform: none;
-  border-radius: 1rem 1rem 0 0;
+  border-radius: 1.25rem 1.25rem 0 0;
   border: 0;
-  border-top: 1px solid color-mix(in srgb, var(--nm-gold) 22%, transparent);
-  background: var(--nm-paper);
+  border-top: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 18%, transparent);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--mj-brand-soft, #e2efe8) 55%, var(--nm-paper)) 0%,
+      var(--nm-paper) 42%
+    );
   color: var(--nm-ink);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  min-height: var(--audio-player-height, 112px);
-  max-height: min(46%, 14.5rem);
-  padding: 0.55rem 0.85rem calc(0.65rem + var(--safe-bottom, 0px));
-  box-shadow: 0 -4px 14px color-mix(in srgb, #000 5%, transparent);
+  min-height: var(--audio-player-height, 7.5rem);
+  max-height: var(--audio-player-height, 7.5rem);
+  padding: 0.55rem 0.85rem calc(0.55rem + var(--safe-bottom, 0px));
+  box-shadow: 0 -8px 28px -18px color-mix(in srgb, var(--mj-brand-deep, #0d4a39) 35%, transparent);
   gap: 0.35rem;
+  z-index: 8;
+  overflow: hidden;
 }
 
 .nm-root .mm-audio-dock[data-open="1"] {
@@ -865,20 +872,36 @@
 }
 
 .nm-page-placeholder {
-  flex: 1;
-  min-height: 70dvh;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
   display: grid;
-  place-items: center;
+  grid-template-rows:
+    var(--mushaf-header-height, 36px)
+    minmax(0, 1fr)
+    var(--mushaf-footer-height, 32px);
   background: var(--nm-paper);
   color: var(--nm-meta);
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
   user-select: none;
 }
 
-.nm-page-placeholder::before {
+.nm-page-placeholder--frame::before {
+  content: none;
+}
+
+.nm-page-placeholder:not(.nm-page-placeholder--frame) {
+  place-items: center;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.nm-page-placeholder:not(.nm-page-placeholder--frame)::before {
   content: "سُنّة";
+  grid-row: 2;
+  align-self: center;
+  justify-self: center;
 }
 
 /* تقليب translate3d — بلا scroll-snap */
