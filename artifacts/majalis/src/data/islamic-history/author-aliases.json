@@ -3,810 +3,945 @@
     "legacyId": "abu-hanifa",
     "name": "أبو حنيفة النعمان",
     "fullName": "النعمان بن ثابت الكوفي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "malik",
     "name": "الإمام مالك",
     "fullName": "مالك بن أنس الأصبحي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "shafi",
     "name": "الإمام الشافعي",
     "fullName": "محمد بن إدريس الشافعي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ahmad",
     "name": "الإمام أحمد",
     "fullName": "أحمد بن محمد بن حنبل الشيباني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "bukhari",
     "name": "الإمام البخاري",
     "fullName": "محمد بن إسماعيل البخاري",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "muslim",
     "name": "الإمام مسلم",
     "fullName": "مسلم بن الحجاج القشيري النيسابوري",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-taymiyya",
     "name": "ابن تيمية",
     "fullName": "أحمد بن عبد الحليم بن تيمية الحراني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-qayyim",
     "name": "ابن القيم",
     "fullName": "محمد بن أبي بكر بن قيم الجوزية",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "nawawi",
     "name": "الإمام النووي",
     "fullName": "أبو زكريا يحيى بن شرف النووي الدمشقي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-hajar",
     "name": "ابن حجر العسقلاني",
     "fullName": "أحمد بن علي بن حجر العسقلاني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "shawkani",
     "name": "الشوكاني",
     "fullName": "محمد بن علي بن محمد الشوكاني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-baz",
     "name": "الشيخ ابن باز",
     "fullName": "عبد العزيز بن عبد الله بن باز",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-uthaymeen",
     "name": "الشيخ ابن عثيمين",
     "fullName": "محمد بن صالح بن محمد العثيمين",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "albani",
     "name": "الشيخ الألباني",
     "fullName": "محمد ناصر الدين الألباني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "qaradawi",
     "name": "الشيخ القرضاوي",
     "fullName": "يوسف بن عبد الله القرضاوي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "tirmidhi",
     "name": "الإمام الترمذي",
     "fullName": "محمد بن عيسى بن سَوْرة الترمذي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-majah",
     "name": "ابن ماجه",
     "fullName": "محمد بن يزيد القزويني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ghazali",
     "name": "الإمام الغزالي",
     "fullName": "محمد بن محمد الغزالي الطوسي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-kathir",
     "name": "ابن كثير",
     "fullName": "إسماعيل بن عمر بن كثير الدمشقي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-khaldun",
     "name": "ابن خلدون",
     "fullName": "عبد الرحمن بن محمد بن خلدون",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-ashur",
     "name": "ابن عاشور",
     "fullName": "محمد الطاهر بن محمد ابن عاشور",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "fawzan",
     "name": "الشيخ صالح الفوزان",
     "fullName": "صالح بن فوزان بن عبد الله الفوزان",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "al-suyuti",
     "name": "الإمام السيوطي",
     "fullName": "جلال الدين عبد الرحمن السيوطي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "abu-dawud",
     "name": "أبو داود السجستاني",
     "fullName": "سليمان بن الأشعث السجستاني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "nasai",
     "name": "الإمام النسائي",
     "fullName": "أحمد بن شعيب بن علي النسائي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "daraqutni",
     "name": "الإمام الدارقطني",
     "fullName": "علي بن عمر الدارقطني البغدادي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "bayhaki",
     "name": "الإمام البيهقي",
     "fullName": "أبو بكر أحمد بن الحسين بن علي البيهقي الخراساني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-juzayy",
     "name": "ابن جزي الكلبي",
     "fullName": "أبو القاسم محمد بن أحمد بن محمد بن جزي الكلبي الغرناطي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "shatbi",
     "name": "الإمام الشاطبي",
     "fullName": "إبراهيم بن موسى اللخمي الغرناطي الشاطبي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "shanqiti",
     "name": "الشنقيطي",
     "fullName": "محمد الأمين بن محمد المختار الشنقيطي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "bint-al-shati",
     "name": "بنت الشاطئ",
     "fullName": "عائشة عبد الرحمن المعروفة ببنت الشاطئ",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "zuhayli",
     "name": "الشيخ وهبة الزحيلي",
     "fullName": "وهبة مصطفى الزحيلي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "abu-zayd",
     "name": "الشيخ بكر أبو زيد",
     "fullName": "بكر بن عبد الله أبو زيد",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "muhammad-ghazali",
     "name": "الشيخ محمد الغزالي",
     "fullName": "محمد الغزالي السقا",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "mubarakfuri",
     "name": "المباركفوري",
     "fullName": "أبو العلا محمد عبد الرحمن بن عبد الرحيم المباركفوري",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "tabari",
     "name": "الطبري",
     "fullName": "محمد بن جرير الطبري",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-jawzi",
     "name": "ابن الجوزي",
     "fullName": "عبد الرحمن بن علي بن الجوزي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-rajab",
     "name": "ابن رجب الحنبلي",
     "fullName": "عبد الرحمن بن أحمد بن رجب الحنبلي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-abd-al-barr",
     "name": "ابن عبد البر",
     "fullName": "يوسف بن عبد الله بن عبد البر النمري القرطبي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "dhahabi",
     "name": "الإمام الذهبي",
     "fullName": "محمد بن أحمد بن عثمان الذهبي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "izz-ibn-abd-al-salam",
     "name": "العز بن عبد السلام",
     "fullName": "أبو محمد عز الدين عبد العزيز بن عبد السلام السلمي الدمشقي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-abd-al-wahhab",
     "name": "الشيخ محمد بن عبد الوهاب",
     "fullName": "محمد بن عبد الوهاب بن سليمان التميمي النجدي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-abidin",
     "name": "ابن عابدين",
     "fullName": "محمد أمين بن عمر بن عبد العزيز ابن عابدين الشامي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "rashid-rida",
     "name": "رشيد رضا",
     "fullName": "محمد رشيد بن علي رضا القلموني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "muhammad-abdu",
     "name": "الشيخ محمد عبده",
     "fullName": "محمد بن عبده بن حسن خيرالله",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-badis",
     "name": "عبد الحميد بن باديس",
     "fullName": "عبد الحميد بن محمد المصطفى بن مكي بن باديس",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "abu-yusuf",
     "name": "الإمام أبو يوسف",
     "fullName": "يعقوب بن إبراهيم بن حبيب الأنصاري",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "shaybani",
     "name": "الإمام محمد الشيباني",
     "fullName": "محمد بن الحسن بن فرقد الشيباني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "muzani",
     "name": "الإمام المزني",
     "fullName": "إسماعيل بن يحيى المزني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-hibban",
     "name": "الإمام ابن حبان",
     "fullName": "محمد بن حبان بن أحمد التميمي البُستي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-khuzayma",
     "name": "الإمام ابن خزيمة",
     "fullName": "محمد بن إسحاق بن خزيمة النيسابوري",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "hakim",
     "name": "الإمام الحاكم",
     "fullName": "محمد بن عبد الله بن محمد النيسابوري",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-mubarak",
     "name": "الإمام عبد الله بن المبارك",
     "fullName": "أبو عبد الرحمن عبد الله بن المبارك المروزي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "sufyan-thawri",
     "name": "الإمام سفيان الثوري",
     "fullName": "سفيان بن سعيد بن مسروق الثوري الكوفي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "awzai",
     "name": "الإمام الأوزاعي",
     "fullName": "عبد الرحمن بن عمرو الأوزاعي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "laith-ibn-sad",
     "name": "الإمام الليث بن سعد",
     "fullName": "الليث بن سعد بن عبد الرحمن الفهمي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-al-mundhir",
     "name": "الإمام ابن المنذر",
     "fullName": "محمد بن إبراهيم بن المنذر النيسابوري",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "khattabi",
     "name": "الإمام الخطابي",
     "fullName": "حمد بن محمد بن إبراهيم الخطابي البُستي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-hajar-haytami",
     "name": "ابن حجر الهيتمي",
     "fullName": "أبو العباس أحمد بن محمد بن علي بن حجر الهيتمي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ali-tantawi",
     "name": "الشيخ علي الطنطاوي",
     "fullName": "علي بن مصطفى بن أحمد الطنطاوي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "shaarawi",
     "name": "الشيخ الشعراوي",
     "fullName": "محمد متولي الشعراوي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-ghudiyan",
     "name": "الشيخ عبد الله بن غديان",
     "fullName": "عبد الله بن عبد الرحمن بن عبد الرزاق بن قاسم آل غديان",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "afifi",
     "name": "الشيخ عبد الرزاق عفيفي",
     "fullName": "عبد الرزاق بن عفيفي بن عطية بن عبد البر بن شرف الدين النوبي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "sufyan-uyayna",
     "name": "الإمام سفيان بن عيينة",
     "fullName": "سفيان بن عيينة بن أبي عمران الهلالي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "muqbil",
     "name": "الشيخ مقبل بن هادي الوادعي",
     "fullName": "مقبل بن هادي بن مقبل الوادعي الهمداني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-muflih",
     "name": "الإمام ابن مفلح",
     "fullName": "محمد بن مفلح بن محمد المقدسي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-rushd",
     "name": "ابن رشد",
     "fullName": "محمد بن أحمد بن محمد بن رشد القرطبي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-hazm",
     "name": "ابن حزم الأندلسي",
     "fullName": "علي بن أحمد بن سعيد بن حزم القرطبي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-asakir",
     "name": "ابن عساكر",
     "fullName": "علي بن الحسن بن هبة الله بن عساكر",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-nujaym",
     "name": "ابن نجيم",
     "fullName": "زين الدين بن إبراهيم بن محمد بن نجيم المصري",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "khatib-baghdadi",
     "name": "الخطيب البغدادي",
     "fullName": "أبو بكر أحمد بن علي بن ثابت الخطيب البغدادي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "al-amir-al-sanani",
     "name": "الأمير الصنعاني",
     "fullName": "محمد بن إسماعيل بن صلاح الأمير الصنعاني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "kawakibi",
     "name": "عبد الرحمن الكواكبي",
     "fullName": "عبد الرحمن بن أحمد بن مسعود الكواكبي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "khayr-al-din",
     "name": "خير الدين التونسي",
     "fullName": "خير الدين بن مصطفى التونسي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "mustafa-zarqa",
     "name": "مصطفى أحمد الزرقا",
     "fullName": "مصطفى أحمد بن محمد أبو سنة الزرقا",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-faris",
     "name": "ابن فارس",
     "fullName": "أحمد بن فارس بن زكريا القزويني الرازي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "zarkashi",
     "name": "الزركشي",
     "fullName": "بدر الدين محمد بن عبد الله الزركشي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-jibreen",
     "name": "الشيخ ابن جبرين",
     "fullName": "عبد الله بن عبد الرحمن بن جبرين",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "syed-saabiq",
     "name": "الشيخ سيد سابق",
     "fullName": "سيد سابق محمد التهامي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "abd-al-karim-al-khudair",
     "name": "الشيخ عبد الكريم الخضير",
     "fullName": "عبد الكريم بن عبد الله بن عبد الرحمن الخضير",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-qudama",
     "name": "ابن قدامة المقدسي",
     "fullName": "أبو محمد موفق الدين عبد الله بن قدامة المقدسي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "juwayny",
     "name": "إمام الحرمين الجويني",
     "fullName": "أبو المعالي عبد الملك بن عبد الله الجويني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-salah",
     "name": "ابن الصلاح",
     "fullName": "أبو عمرو عثمان بن عبد الرحمن ابن الصلاح الشهرزوري",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "al-qarafi",
     "name": "الإمام القرافي",
     "fullName": "أبو العباس شهاب الدين أحمد بن إدريس القرافي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "fakhr-razi",
     "name": "الفخر الرازي",
     "fullName": "أبو عبد الله محمد بن عمر فخر الدين الرازي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "al-mizzi",
     "name": "الإمام المزي",
     "fullName": "أبو الحجاج جمال الدين يوسف بن عبد الرحمن المزي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "al-saadi",
     "name": "الشيخ عبد الرحمن السعدي",
     "fullName": "عبد الرحمن بن ناصر بن عبد الله السعدي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-aqil",
     "name": "ابن عقيل الحنبلي",
     "fullName": "أبو الوفاء علي بن عقيل البغدادي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ahmad-shakir",
     "name": "الشيخ أحمد محمد شاكر",
     "fullName": "أحمد محمد شاكر العرابي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "al-mundhiri",
     "name": "الحافظ المنذري",
     "fullName": "أبو محمد زكي الدين عبد العظيم المنذري",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-daqiq",
     "name": "ابن دقيق العيد",
     "fullName": "أبو الفتح تقي الدين محمد بن علي ابن دقيق العيد",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-battuta",
     "name": "ابن بطوطة",
     "fullName": "أبو عبد الله محمد بن عبد الله اللواتي الطنجي ابن بطوطة",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "al-mawardi",
     "name": "الماوردي",
     "fullName": "أبو الحسن علي بن محمد بن حبيب البصري الماوردي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-ata-allah-al-sakandari",
     "name": "ابن عطاء الله السكندري",
     "fullName": "أحمد بن محمد بن عبد الكريم ابن عطاء الله الشاذلي الإسكندري",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "al-sakhawi",
     "name": "السخاوي",
     "fullName": "أبو الخير محمد بن عبد الرحمن بن محمد السخاوي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "al-ajurri",
     "name": "الآجري",
     "fullName": "أبو بكر محمد بن الحسين الآجري البغدادي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-al-wazir",
     "name": "ابن الوزير",
     "fullName": "أبو عبدالله محمد بن إبراهيم بن علي بن المرتضى ابن الوزير اليماني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-abi-shaybah",
     "name": "ابن أبي شيبة",
     "fullName": "أبو بكر عبد الله بن محمد بن إبراهيم ابن أبي شيبة العبسي الكوفي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "al-qurtubi",
     "name": "القرطبي",
     "fullName": "أبو عبد الله محمد بن أحمد بن أبي بكر الأنصاري القرطبي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "abu-nuaym",
     "name": "أبو نعيم الأصبهاني",
     "fullName": "أحمد بن عبد الله بن أحمد أبو نعيم الأصبهاني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "alusi",
     "name": "الآلوسي",
     "fullName": "محمود بن عبد الله الحسيني الآلوسي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "baghawi",
     "name": "البغوي",
     "fullName": "الحسين بن مسعود البغوي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "sarakhsi",
     "name": "السرخسي",
     "fullName": "محمد بن أحمد بن أبي سهل شمس الأئمة السرخسي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "kasani",
     "name": "الكاساني",
     "fullName": "أبو بكر بن مسعود بن أحمد الكاساني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "zamakhshari",
     "name": "الزمخشري",
     "fullName": "محمود بن عمر جار الله الزمخشري",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "wahidi",
     "name": "الواحدي",
     "fullName": "علي بن أحمد الواحدي النيسابوري",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-atiyya",
     "name": "ابن عطية",
     "fullName": "عبد الحق بن غالب بن عطية الأندلسي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "baydawi",
     "name": "البيضاوي",
     "fullName": "عبد الله بن عمر البيضاوي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "munawi",
     "name": "المناوي",
     "fullName": "عبد الرؤوف بن تاج العارفين المناوي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "tahawi",
     "name": "الطحاوي",
     "fullName": "أحمد بن محمد بن سلامة أبو جعفر الطحاوي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "marghinani",
     "name": "المرغيناني",
     "fullName": "علي بن أبي بكر المرغيناني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-al-athir",
     "name": "ابن الأثير",
     "fullName": "علي بن محمد عز الدين ابن الأثير الجزري",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "abu-hayyan",
     "name": "أبو حيان الأندلسي",
     "fullName": "محمد بن يوسف أبو حيان الغرناطي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "qadi-iyad",
     "name": "القاضي عياض",
     "fullName": "عياض بن موسى اليحصبي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-abi-dunya",
     "name": "ابن أبي الدنيا",
     "fullName": "عبد الله بن محمد ابن أبي الدنيا",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "amidi",
     "name": "الآمدي",
     "fullName": "علي بن أبي علي بن محمد بن سالم سيف الدين الآمدي التغلبي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "hasan-basri",
     "name": "الحسن البصري",
     "fullName": "الحسن بن يسار البصري",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-abi-izz",
     "name": "ابن أبي العز",
     "fullName": "علي بن علي بن محمد ابن أبي العز الحنفي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ramli",
     "name": "الرملي",
     "fullName": "محمد بن أحمد شمس الدين الرملي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "bahuti",
     "name": "البهوتي",
     "fullName": "منصور بن يونس البهوتي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "hajjawi",
     "name": "الحجاوي",
     "fullName": "موسى بن أحمد الحجاوي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "mardawi",
     "name": "المرداوي",
     "fullName": "علي بن سليمان علاء الدين المرداوي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ayni",
     "name": "العيني",
     "fullName": "محمود بن أحمد بدر الدين العيني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "khiraqi",
     "name": "الخرقي",
     "fullName": "عمر بن الحسين أبو القاسم الخرقي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-humam",
     "name": "ابن الهمام",
     "fullName": "كمال الدين محمد بن عبد الواحد السيواسي ابن الهمام",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "khalil-ibn-ishaq",
     "name": "خليل بن إسحاق",
     "fullName": "خليل بن إسحاق الجندي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "ibn-abi-hatim",
     "name": "ابن أبي حاتم",
     "fullName": "عبد الرحمن بن محمد بن إدريس الرازي ابن أبي حاتم",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "qastallani",
     "name": "القسطلاني",
     "fullName": "أحمد بن محمد شهاب الدين القسطلاني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "zaylai",
     "name": "الزيلعي",
     "fullName": "جمال الدين عبد الله بن يوسف الزيلعي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "dardir",
     "name": "الدردير",
     "fullName": "أحمد بن محمد العدوي الدردير",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "al-dusuki",
     "name": "الدسوقي",
     "fullName": "محمد بن أحمد بن عرفة الدسوقي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "al-hattab",
     "name": "الحطّاب",
     "fullName": "محمد بن محمد الحطّاب الرعيني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "al-kharashi",
     "name": "الخرشي",
     "fullName": "محمد بن عبد الله الخرشي",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "baqillani",
     "name": "الباقلاني",
     "fullName": "القاضي أبو بكر محمد بن الطيب الباقلاني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   },
   {
     "legacyId": "al-sanusi",
     "name": "السنوسي",
     "fullName": "محمد بن يوسف السنوسي الحسني",
-    "href": "/search"
+    "href": "/search",
+    "relatedLinks": []
   }
 ]

@@ -320,9 +320,8 @@
     "test:researches-library": "node --import tsx src/lib/__tests__/researches-library.test.ts",
     "test:evidence-purity": "node --import tsx src/lib/__tests__/evidence-text-purity.test.ts",
     "test:updates-seed-hrefs": "node --import tsx src/lib/__tests__/updates-seed-hrefs-gate.test.ts",
+    "test:history-related-links": "node --import tsx src/lib/__tests__/islamic-history-related-links-gate.test.ts",
     "test:stories-reflection-filler": "node --import tsx src/lib/__tests__/stories-reflection-filler-gate.test.ts",
-    "test:islamic-history-redirect": "node --import tsx src/lib/__tests__/islamic-history-redirect-gate.test.ts",
-    "test:content-catalog-blurbs": "node --import tsx src/lib/__tests__/content-catalog-blurbs-gate.test.ts",
     "test:section-hub-visual": "node --import tsx src/lib/__tests__/section-hub-visual-regression.test.ts && node --import tsx src/lib/__tests__/modern-section-shell-gate.test.ts",
     "audit:duplicate-descs": "node scripts/strip-enrichment-boilerplate.mjs --report",
     "test:safe-reload": "node scripts/test-safe-reload.mjs",
@@ -504,7 +503,9 @@
     "verify:no-secret-leak": "node scripts/verify-no-secret-leak.mjs",
     "preview:fiqh-promotion": "node scripts/preview-fiqh-promotion.mjs",
     "apply:fiqh-promotion": "node scripts/apply-fiqh-promotion.mjs",
-    "verify:fiqh-content": "node scripts/verify-fiqh-content.mjs"
+    "verify:fiqh-content": "node scripts/verify-fiqh-content.mjs",
+    "test:islamic-history-redirect": "node --import tsx src/lib/__tests__/islamic-history-redirect-gate.test.ts",
+    "test:content-catalog-blurbs": "node --import tsx src/lib/__tests__/content-catalog-blurbs-gate.test.ts"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

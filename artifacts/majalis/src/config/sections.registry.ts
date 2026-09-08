@@ -204,7 +204,7 @@ export const SECTION_MERGE_REDIRECTS: ReadonlyArray<{ from: string; to: string; 
   { from: "/about-us", to: "/about", note: "من نحن → عن سُنّة" },
   { from: "/aqidah", to: "/tawhid", note: "عقيدة قديم → التوحيد/العقيدة" },
   { from: "/prayer", to: "/prayer-times", note: "صلاة مختصر → مواقيت الصلاة" },
-  { from: "/more", to: "/", note: "المزيد (ملغاة) → الرئيسية" },
+  { from: "/more", to: "/sections", note: "المزيد (ملغاة) → الأقسام" },
   { from: "/quran/recitation-test-ai", to: "/quran-hub", note: "تسميع الذكاء الاصطناعي (ملغى) → مركز القرآن" },
   { from: "/learn", to: "/lessons", note: "دروس التعلّم (ملغاة) → الدروس" },
 ];
@@ -892,7 +892,8 @@ const SECTION_SEEDS: SectionSeed[] = [
     id: "library",
     label: "المراجع (محوّل)",
     subtitle: "البحث في الكتب والمراجع الشرعية",
-    route: "/search",
+    label: "المراجع (بحث)",
+    subtitle: "يُفتح عبر البحث العلمي الموحد",    route: "/search",
     icon: Library,
     group: "library",
     order: 10,

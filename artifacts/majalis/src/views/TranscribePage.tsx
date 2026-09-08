@@ -172,7 +172,7 @@ export default function TranscribePage() {
           .eq("id", record.id);
         setProgress(100);
         setStatus("done");
-        setErrorMessage("تم حفظ رابط يوتيوب. التفريغ التلقائي قيد التطوير، استخدم تبويب «نص مباشر» للتحليل الآن.");
+        setErrorMessage("تم حفظ رابط يوتيوب. التفريغ من الرابط غير متاح بعد؛ استخدم تبويب «نص مباشر» للتحليل الآن.");
         return;
       }
 
