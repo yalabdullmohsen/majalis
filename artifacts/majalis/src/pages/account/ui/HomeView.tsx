@@ -5,8 +5,6 @@ import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeUniversalSearch } from "@/components/home/HomeUniversalSearch";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import "@/styles/components/home-brand-title.css";
-import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
-import { HomeStartHereSoftSkeleton } from "@/components/home/HomeHeroLcp";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { shouldShowFirstVisitIntro } from "@/lib/first-visit-intro-state";
 import "@/styles/m2030/home.css";
@@ -71,56 +69,8 @@ function deferAfterPaint(cb: () => void, ms: number): () => void {
   return () => window.clearTimeout(id);
 }
 
-function HomeStartHereSkeleton() {
-  return <HomeStartHereSoftSkeleton />;
-}
-
-/** يؤجّل نص الخطوات بعد نافذة LCP (~5s) حتى لا يسرق LCP من h1 «سُنّة» */
-function HomeStartHereGate() {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    const cancel = deferAfterPaint(() => {
-      if (!cancelled) setShow(true);
-    }, 2_200);
-    return () => {
-      cancelled = true;
-      cancel();
-    };
-  }, []);
-
-  if (!show) return <HomeStartHereSkeleton />;
-
-  return <HomeStartHereSection />;
-}
-
+/** البحث يظهر فور جاهزية HomePage — الفهرس يُحمَّل كسولًا عند التركيز فقط */
 function HomeSearchGate() {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    const cancel = deferAfterPaint(() => {
-      if (!cancelled) setShow(true);
-    }, 1_600);
-    return () => {
-      cancelled = true;
-      cancel();
-    };
-  }, []);
-
-  if (!show) {
-    return (
-      <div className="hus mj-home-lcp-ph__search" role="search" aria-label="بحث موحّد" aria-busy="true">
-        <div className="hus-field">
-          <span className="hus-input mj-home-lcp-ph__search-ph" aria-hidden="true">
-            &nbsp;
-          </span>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <SectionErrorBoundary name="HomeUniversalSearch">
       <HomeUniversalSearch />
@@ -297,9 +247,7 @@ export default function HomePage() {
 
       <HomeSearchGate />
 
-      <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
-        <HomeStartHereGate />
-      </section>
+      {/* «ابدأ من هنا» يُرسم في App خارج Suspense — لا تكرار هنا */}
 
       <HomeLiveNowGate />
 
