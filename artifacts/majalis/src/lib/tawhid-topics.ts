@@ -36,7 +36,7 @@ export const TAWHID_TOPICS: Record<TawhidTopicSlug, TawhidTopic> = {
     slug: "tawhid-issues",
     title: "التوحيد ومسائله",
     description: "أنواع التوحيد، الشرك، البدعة، والمسائل العقدية",
-    emoji: "🕌",
+    emoji: "",
     blocks: [
       {
         title: "توحيد الربوبية",
@@ -105,7 +105,7 @@ export const TAWHID_TOPICS: Record<TawhidTopicSlug, TawhidTopic> = {
     slug: "aqeedah-foundations",
     title: "أصول العقيدة",
     description: "تعريف العقيدة ومصدرها وأركانها الإجمالية على منهج السلف",
-    emoji: "📘",
+    emoji: "",
     blocks: [
       {
         title: "تعريف العقيدة",
@@ -154,7 +154,7 @@ export const TAWHID_TOPICS: Record<TawhidTopicSlug, TawhidTopic> = {
     slug: "wala-bara",
     title: "الولاء والبراء",
     description: "موالاة أهل الإيمان والبراءة من الشرك بضابط البر والعدل مع المسالمين",
-    emoji: "⚖️",
+    emoji: "",
     blocks: [
       {
         title: "الولاء والبراء",
@@ -183,7 +183,7 @@ export const TAWHID_TOPICS: Record<TawhidTopicSlug, TawhidTopic> = {
     slug: "ahl-sunnah",
     title: "عقيدة أهل السنة والجماعة",
     description: "معالم المنهج: التلقي، الإيمان، الصفات، الصحابة، القدر، والوسطية",
-    emoji: "🌟",
+    emoji: "",
     blocks: [
       {
         title: "معالم المنهج",
@@ -220,7 +220,7 @@ export const TAWHID_TOPICS: Record<TawhidTopicSlug, TawhidTopic> = {
     slug: "tawhid-types",
     title: "أقسام التوحيد",
     description: "توحيد الربوبية والألوهية والأسماء والصفات",
-    emoji: "🕌",
+    emoji: "",
     blocks: [
       {
         title: "توحيد الربوبية",
@@ -253,7 +253,7 @@ export const TAWHID_TOPICS: Record<TawhidTopicSlug, TawhidTopic> = {
     slug: "nawaaqid",
     title: "نواقض الإسلام",
     description: "مدخل منضبط مع ضوابط التكفير",
-    emoji: "⚠️",
+    emoji: "",
     blocks: [
       {
         title: "الشرك الأكبر",

@@ -28,73 +28,73 @@ type AqeedaSection = {
 const AQEEDA_SECTIONS: AqeedaSection[] = [
   {
     id: "tawhid-issues",
-    emoji: "🕌", title: "التوحيد ومسائله",
+    emoji: "", title: "التوحيد ومسائله",
     desc: "أنواع التوحيد، الشرك، البدعة، والمسائل العقدية",
     href: "/tawhid/tawhid-issues", badge: "أساس", color: "var(--mj-brand-deep)", featured: true,
   },
   {
     id: "aqeedah-foundations",
-    emoji: "📘", title: "أصول العقيدة",
+    emoji: "", title: "أصول العقيدة",
     desc: "تعريف العقيدة ومصدرها وأركانها الإجمالية على منهج السلف",
     href: "/tawhid/aqeedah-foundations", badge: "درس", color: "#0B3D2E",
   },
   {
     id: "arkan-islam",
-    emoji: "🌟", title: "أركان الإسلام",
+    emoji: "", title: "أركان الإسلام",
     desc: "الشهادتان والصلاة والزكاة والصيام والحج",
     href: "/arkan", badge: "٥ أركان", color: "#0F5132",
   },
   {
     id: "arkan-iman",
-    emoji: "✨", title: "أركان الإيمان",
+    emoji: "", title: "أركان الإيمان",
     desc: "الإيمان بالله وملائكته وكتبه ورسله واليوم الآخر والقدر",
     href: "/arkan-iman", badge: "٦ أركان", color: "#7C3AED",
   },
   {
     id: "asma-husna",
-    emoji: "💎", title: "الأسماء الحسنى",
+    emoji: "", title: "الأسماء الحسنى",
     desc: "أسماء الله الحسنى الثابتة، مع بيان منهج الإحصاء والتحفّظ من السرد الضعيف",
     href: "/asma-husna", badge: "أسماء", color: "var(--mj-brand)",
   },
   {
     id: "janna-naar",
-    emoji: "🌿", title: "الجنة والنار",
+    emoji: "", title: "الجنة والنار",
     desc: "صفة الجنة ونعيمها وصفة النار وعذابها",
     href: "/janna-naar", badge: "عقيدة", color: "var(--mj-brand-deep)",
   },
   {
     id: "alamat-saah",
-    emoji: "⏳", title: "علامات الساعة",
+    emoji: "", title: "علامات الساعة",
     desc: "العلامات الصغرى والكبرى مرتبةً بالأدلة",
     href: "/alamat-saah", badge: "صغرى وكبرى", color: "var(--mj-brand)",
   },
   {
     id: "malaika",
-    emoji: "👼", title: "الملائكة في الإسلام",
+    emoji: "", title: "الملائكة في الإسلام",
     desc: "الإيمان بوجودهم وصفاتهم وما ثبت من أسمائهم ومهامهم في الوحي",
     href: "/malaika", badge: "غيبيات", color: "#5B21B6",
   },
   {
     id: "wala-bara",
-    emoji: "⚖️", title: "الولاء والبراء",
+    emoji: "", title: "الولاء والبراء",
     desc: "موالاة أهل الإيمان والبراءة من الشرك بضابط البر والعدل مع المسالمين",
     href: "/tawhid/wala-bara", badge: "درس", color: "#92400E",
   },
   {
     id: "aqeedah-path",
-    emoji: "📖", title: "مسار تعلّم العقيدة",
+    emoji: "", title: "مسار تعلّم العقيدة",
     desc: "منهج متدرّج في أركان الإيمان والتوحيد من مصادر أهل السنة",
     href: "/lessons", badge: "مسار", color: "var(--mj-brand)",
   },
   {
     id: "ahl-sunnah",
-    emoji: "🌟", title: "عقيدة أهل السنة والجماعة",
+    emoji: "", title: "عقيدة أهل السنة والجماعة",
     desc: "معالم المنهج: التلقي، الإيمان، الصفات، الصحابة، القدر، والوسطية",
     href: "/tawhid/ahl-sunnah", badge: "١٠ دروس", color: "#0B3D2E",
   },
   {
     id: "islamic-sects",
-    emoji: "📚", title: "الفرق والمذاهب",
+    emoji: "", title: "الفرق والمذاهب",
     desc: "عرض تاريخي للفرق مع بيان موقف أهل السنة",
     href: "/islamic-sects", badge: "موسوعة", color: "#1E3A5F",
   },
@@ -483,7 +483,7 @@ export default function TawhidPage() {
 
       {/* ══ أنواع التوحيد الثلاثة ══ */}
       <section id="tawhid-types" aria-labelledby="types-heading" className="twh-section">
-        <SectionLabel emoji="🕌" label="أنواع التوحيد الثلاثة" />
+        <SectionLabel emoji="" label="أنواع التوحيد الثلاثة" />
         <h2 id="types-heading" className="tawheed-principles-heading">أنواع التوحيد الثلاثة</h2>
         <div className="tawheed-types-grid">
           {TAWHEED_TYPES.map((t, idx) => (
@@ -500,7 +500,7 @@ export default function TawhidPage() {
 
       {/* ══ أركان الإيمان الستة ══ */}
       <section id="iman-pillars" aria-labelledby="iman-heading" className="twh-section">
-        <SectionLabel emoji="✨" label="أركان الإيمان" />
+        <SectionLabel emoji="" label="أركان الإيمان" />
         <h2 id="iman-heading" className="tawheed-principles-heading">أركان الإيمان الستة</h2>
         <p className="twh-section-intro">
           قال ﷺ: «الإيمان أن تؤمن بالله وملائكته وكتبه ورسله واليوم الآخر وتؤمن بالقدر خيره وشرّه»
@@ -525,7 +525,7 @@ export default function TawhidPage() {
 
       {/* ══ مسائل التوحيد ══ */}
       <section id="principles" aria-labelledby="principles-heading" className="twh-section">
-        <SectionLabel emoji="📐" label="مسائل التوحيد" />
+        <SectionLabel emoji="" label="مسائل التوحيد" />
         <h2 id="principles-heading" className="tawheed-principles-heading">مسائل مهمة في التوحيد</h2>
         <div className="tawheed-principles-grid">
           {filteredPrinciples.map((p) => (
@@ -545,7 +545,7 @@ export default function TawhidPage() {
 
       {/* ══ من الأسماء الحسنى (عينة) ══ */}
       <section id="asma-preview" aria-labelledby="asma-heading" className="twh-section">
-        <SectionLabel emoji="💎" label="الأسماء الحسنى" />
+        <SectionLabel emoji="" label="الأسماء الحسنى" />
         <h2 id="asma-heading" className="tawheed-principles-heading">من الأسماء الحسنى الثابتة</h2>
         <p className="twh-section-intro">
           ﴿وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَى فَادْعُوهُ بِهَا﴾
@@ -567,7 +567,7 @@ export default function TawhidPage() {
 
       {/* ══ مصادر القسم ══ */}
       <section id="sources" aria-labelledby="sources-heading" className="twh-section">
-        <SectionLabel emoji="📌" label="مصادر القسم" />
+        <SectionLabel emoji="" label="مصادر القسم" />
         <h2 id="sources-heading" className="tawheed-principles-heading">مصادر قسم العقيدة والتوحيد</h2>
         <p className="twh-section-intro">
           يُعتمد في هذا القسم على كتب أئمة السلف وشروحهم المعتمدة، لا على الرأي أو الذوق. أبرز المراجع:
@@ -587,7 +587,7 @@ export default function TawhidPage() {
 
       {/* ══ كتب مقترحة ══ */}
       <section id="recommended" aria-labelledby="books-heading" className="twh-section">
-        <SectionLabel emoji="📚" label="كتب مقترحة" />
+        <SectionLabel emoji="" label="كتب مقترحة" />
         <h2 id="books-heading" className="tawheed-principles-heading">كتب مقترحة في العقيدة</h2>
         <div className="twh-books-grid">
           {filteredBooks.map((b) => (
@@ -603,7 +603,7 @@ export default function TawhidPage() {
 
       {/* ══ مسار أهل السنة ══ */}
       <section aria-labelledby="aswj-heading" className="twh-section">
-        <SectionLabel emoji="🌟" label="أهل السنة والجماعة" />
+        <SectionLabel emoji="" label="أهل السنة والجماعة" />
         <h2 id="aswj-heading" className="tawheed-principles-heading">أكمل دراسة منهج أهل السنة</h2>
         <p className="twh-section-intro">
           دروس منظّمة في معالم المنهج: مصدر التلقي، الإيمان، الأسماء والصفات، الصحابة، القدر، والوسطية بين الفرق — مع الإحالات إلى الواسطية والطحاوية.

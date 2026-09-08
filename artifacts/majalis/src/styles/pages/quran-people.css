@@ -291,7 +291,7 @@ html.dark .qp-person-card__cta {
 .qp-person-detail {
   display: grid;
   gap: 0.85rem;
-  padding-bottom: 2.5rem;
+  padding-bottom: calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 1.25rem);
 }
 .qp-person-detail__card {
   margin: 0;

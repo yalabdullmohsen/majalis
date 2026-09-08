@@ -265,6 +265,10 @@ try {
       .replace(/\s+/g, " ")
       .trim()
       .slice(0, 120);
+    const whyHint = String(p.whyMentioned || "")
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, 80);
     pushDoc(
       `person:${p.slug}`,
       "person",
@@ -276,6 +280,7 @@ try {
         "الذين ذكروا في القرآن",
         "أشخاص القرآن",
         defHint,
+        whyHint,
       ].filter(Boolean),
       PERSON_META(p),
     );
