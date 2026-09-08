@@ -178,19 +178,20 @@
   --keyboard-inset: 0px;
   --edge-deadzone: 20px;
 
+  /* ورقة عاجية واحدة (#F7F3EB) + أبيض مرفوع + غسلة خضراء — بلا سلّم بيج متعدد */
   --surface-app: #F7F3EB;
   --mj-bg: var(--surface-app);
   --mj-more-sheet: var(--surface-app);
-  --mj-surface: #FFFCF7;
+  --mj-surface: #FFFFFF;
   --on-green: var(--mj-brand);
   --on-surface: var(--mj-ink);
   --on-surface-muted: var(--mj-ink-2);
   --on-dark-strong: #FFFFFF;
   --on-dark-body: #F8FAFC;
   --on-dark-secondary: #E8EEEC;
-  --mj-surface-2: #EFE8DC;
-  --mj-surface-3: #E8E1D4;
-  --mj-hairline: #D9D2C6;
+  --mj-surface-2: #E8F0EC;
+  --mj-surface-3: #DCE7E1;
+  --mj-hairline: #D0DBD5;
   --mj-ink: #16241E;
   --mj-ink-2: #4A5A53;
   --mj-muted: #5E6E67;

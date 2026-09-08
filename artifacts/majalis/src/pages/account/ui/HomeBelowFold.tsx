@@ -121,7 +121,10 @@ export default function HomeBelowFold() {
   }, [user?.id]);
 
   const visibleWidgets = visibleWidgetOrder(homePrefs);
-  const restWidgetOrder = visibleWidgets.filter((id) => id !== "lessons" && id !== "continue");
+  /* سنن الوقت تُعرض فوق الطية في App — لا تكرار تحت الطية */
+  const restWidgetOrder = visibleWidgets.filter(
+    (id) => id !== "lessons" && id !== "continue" && id !== "sunnah-time",
+  );
 
   return (
     <>

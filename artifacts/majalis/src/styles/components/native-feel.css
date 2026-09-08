@@ -26,10 +26,11 @@
   .ds-chip:active,
   .ds-filter-toggle:active,
   .app-sheet__close:active {
-    transform: scale(0.94);
-    opacity: 0.88;
+    /* ضغط خفيف بلا scale يسبب وميض تكبير/تصغير */
+    transform: translate3d(0, 1px, 0);
+    opacity: 0.9;
     transition:
-      transform 140ms cubic-bezier(0.22, 1.2, 0.36, 1),
+      transform 140ms cubic-bezier(0.22, 1, 0.36, 1),
       opacity 120ms ease;
   }
 }

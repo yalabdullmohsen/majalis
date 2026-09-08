@@ -31,6 +31,8 @@ import "./styles/fonts-ui.css";
 // هوية identity-v2 — الرموز أولاً (@theme + --mj-*) قبل أي طبقة قديمة
 import "./app/styles/theme.css";
 import "./styles/soft-cards.css";
+import "./styles/ds-clarity.css";
+import "./styles/ds-clarity.css";
 import "./styles/visual-enrichment.css";
 // page-hero / filters / hub-card تُحمَّل مع مكوّناتها (خارج CSS الحرج)
 // طبقات الأساس m2030 — foundation/navigation مؤجّلة (ليست حرجة لأول شاشة)

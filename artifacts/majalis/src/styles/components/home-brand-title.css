@@ -1,30 +1,32 @@
 /**
- * هيرو الرئيسية: بطاقة ناعمة + عنوان «سُنّة» بلا قصّ للحركات.
- * السبب السابق للقص: overflow:hidden + line-height ضيق (1.25) على عنوان عربي مشكّل.
+ * هيرو الرئيسية: شريط أخضر بتدرج ناعم + عنوان «سُنّة» بلا قصّ للحركات.
  */
 
 .home-page-hero.page-hero-mj {
   position: relative;
   isolation: isolate;
-  /* لا تقصّ الشدّة/الضمّة فوق «سُنّة» */
   overflow: visible;
-  min-height: 11rem;
+  min-height: 12.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  margin-inline: max(0.75rem, var(--m2030-pad, 1rem));
-  margin-block: 0.35rem 0.85rem;
-  padding-block: 1.2rem 1.35rem;
-  padding-inline: 1.15rem;
-  border-radius: var(--radius-2xl, var(--mj-r-xl, 1.75rem));
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 9%, var(--mj-hairline, transparent));
-  background-color: transparent !important;
-  background-image: none !important;
-  color: var(--mj-ink);
-  box-shadow:
-    0 1px 0 color-mix(in srgb, #fff 45%, transparent),
-    0 18px 42px -26px color-mix(in srgb, var(--mj-brand-deep, #123f2e) 22%, transparent);
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding-block: 1.25rem 1.5rem;
+  padding-inline: max(1rem, var(--m2030-pad, 1rem));
+  border-radius: 0 0 var(--radius-card, 24px) var(--radius-card, 24px);
+  border: 0;
+  background-color: var(--mj-brand-deep, #0a3d2e) !important;
+  background-image: linear-gradient(
+    155deg,
+    #0a3d2e 0%,
+    #0f5c45 48%,
+    #1a6b52 100%
+  ) !important;
+  color: #fff;
+  box-shadow: 0 12px 28px -18px rgba(10, 61, 46, 0.35);
 }
 
 .home-page-hero.page-hero-mj::before {
@@ -34,50 +36,24 @@
   z-index: 0;
   pointer-events: none;
   border-radius: inherit;
-  background-image:
-    radial-gradient(
-      120% 90% at 50% -10%,
-      color-mix(in srgb, var(--mj-brand, #1f6b56) 16%, transparent),
-      transparent 58%
-    ),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--mj-brand-soft, #e2efe8) 72%, var(--mj-bg, #f5f1e8)) 0%,
-      color-mix(in srgb, var(--mj-brand-soft, #e2efe8) 28%, var(--mj-bg, #f5f1e8)) 48%,
-      color-mix(in srgb, var(--mj-bg, #f5f1e8) 92%, transparent) 100%
-    );
-  opacity: 1;
+  background-image: radial-gradient(
+    90% 70% at 80% 0%,
+    color-mix(in srgb, var(--mj-accent, #b08a3e) 22%, transparent),
+    transparent 62%
+  );
+  opacity: 0.9;
 }
 
-/* تلاشي ناعم أسفل البطاقة نحو خلفية الصفحة — بلا حافة مربعة */
 .home-page-hero.page-hero-mj::after {
-  content: "";
-  position: absolute;
-  inset-inline: 8%;
-  bottom: -0.85rem;
-  height: 1.4rem;
-  z-index: 0;
-  pointer-events: none;
-  border-radius: 999px;
-  background: radial-gradient(
-    70% 100% at 50% 0%,
-    color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, transparent),
-    transparent 72%
-  );
-  filter: blur(10px);
-  opacity: 0.85;
+  content: none;
 }
 
 .home-page-hero .pattern-backdrop {
   z-index: 0;
-  opacity: 0.05;
+  opacity: 0.06;
+  color: #fff;
   border-radius: inherit;
   overflow: hidden;
-}
-
-html[data-theme="dark"] .home-page-hero .pattern-backdrop,
-html.dark .home-page-hero .pattern-backdrop {
-  opacity: 0.035;
 }
 
 .home-page-hero .page-hero-mj__content {
@@ -88,7 +64,7 @@ html.dark .home-page-hero .pattern-backdrop {
   margin-inline: auto;
   align-items: center;
   text-align: center;
-  gap: 0.65rem;
+  gap: 0.55rem;
 }
 
 .home-page-hero .page-hero-mj__eyebrow {
@@ -98,7 +74,7 @@ html.dark .home-page-hero .pattern-backdrop {
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.45;
-  color: var(--mj-ink-2, var(--color-text-muted));
+  color: rgba(255, 255, 255, 0.86);
 }
 
 .home-page-hero .page-hero-mj__title-slot {
@@ -107,19 +83,37 @@ html.dark .home-page-hero .pattern-backdrop {
 }
 
 .home-page-hero .page-hero-mj__title {
-  color: var(--mj-ink) !important;
-  font-size: clamp(1.85rem, 6.5vw, 2.55rem);
+  color: #fff !important;
+  font-size: clamp(2.2rem, 8.5vw, 3rem);
   font-weight: 700;
-  /* عربي مشكّل يحتاج ارتفاعاً أكبر من 1.25 حتى لا تُقصّ الشدّة */
-  line-height: 1.55;
+  line-height: 1.45;
   margin: 0;
-  padding-block: 0.28em 0.2em;
+  padding-block: 0.2em 0.15em;
   overflow: visible;
   text-wrap: balance;
 }
 
+.home-page-hero .page-hero-mj__headline,
+.home-page-hero .home-hero-meta {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
 .home-page-hero .page-hero-mj__desc {
-  display: none;
+  display: block;
+  margin: 0.35rem 0 0;
+  max-width: 28rem;
+  margin-inline: auto;
+}
+
+.home-page-hero .home-hero-quote {
+  display: block;
+  font-family: var(--font-heading, "Amiri", serif);
+  font-size: clamp(1.05rem, 3.5vw, 1.2rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.94);
 }
 
 .home-page-hero .page-hero-mj__actions {
@@ -127,45 +121,29 @@ html.dark .home-page-hero .pattern-backdrop {
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
-  margin-top: 0.35rem;
+  margin-top: 0.45rem;
   gap: 0.55rem;
 }
 
+.home-page-hero .m2030-btn--primary {
+  border-radius: var(--radius-button, 18px);
+  background: color-mix(in srgb, var(--mj-accent, #b08a3e) 90%, #fff);
+  color: #0a3d2e;
+  border: 0;
+  font-weight: 700;
+}
+
 .home-page-hero .m2030-btn--ghost {
-  background: color-mix(in srgb, var(--mj-surface, #fff) 78%, transparent);
-  color: var(--brand-on-light, var(--mj-brand-deep, #146C4E));
-  border: 1px solid color-mix(in srgb, var(--color-primary, var(--mj-brand)) 28%, transparent);
+  border-radius: var(--radius-button, 18px);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 html[data-theme="dark"] .home-page-hero.page-hero-mj,
 html.dark .home-page-hero.page-hero-mj {
-  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 22%, var(--mj-hairline, #35443f));
-  box-shadow:
-    0 1px 0 color-mix(in srgb, #fff 6%, transparent),
-    0 16px 40px -24px rgba(0, 0, 0, 0.55);
-}
-
-html[data-theme="dark"] .home-page-hero.page-hero-mj::before,
-html.dark .home-page-hero.page-hero-mj::before {
-  background-image:
-    radial-gradient(
-      120% 90% at 50% -10%,
-      color-mix(in srgb, var(--mj-brand, #5cc095) 22%, transparent),
-      transparent 58%
-    ),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--mj-brand-deep, #123f2e) 55%, var(--mj-bg, #131a18)) 0%,
-      color-mix(in srgb, var(--mj-surface, #1b2421) 70%, var(--mj-bg, #131a18)) 55%,
-      color-mix(in srgb, var(--mj-bg, #131a18) 94%, transparent) 100%
-    );
-}
-
-html[data-theme="dark"] .home-page-hero .m2030-btn--ghost,
-html.dark .home-page-hero .m2030-btn--ghost {
-  background: color-mix(in srgb, var(--mj-surface, #1b2421) 70%, transparent);
-  color: var(--brand-on-light, #8FD4B0);
-  border-color: color-mix(in srgb, var(--color-primary, #8fd4b0) 32%, transparent);
+  background-image: linear-gradient(155deg, #071410 0%, #0a3d2e 55%, #0f5c45 100%) !important;
+  box-shadow: 0 12px 28px -16px rgba(0, 0, 0, 0.55);
 }
 
 /* أثناء بوابة التباين: أظهر أزرار الهيرو المؤجَّلة بلا انتظار */

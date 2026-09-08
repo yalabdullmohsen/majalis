@@ -2,10 +2,11 @@
  * هيرو الرئيسية خارج Suspense — يبقى h1 «سُنّة» في DOM من أول رسم App
  * حتى لا يُعاد قياس LCP عند استبدال HomePage الكسول.
  */
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { PageHero } from "@/components/ui/PageHero";
 import { resolveDailyContext } from "@/lib/daily-context";
+import { formatHijriDate } from "@/lib/lesson-time";
 import { hasSeenFirstVisitIntroSync } from "@/lib/first-visit-intro-state";
 import { getRecentPages } from "@/lib/recent-pages";
 import "@/styles/components/home-brand-title.css";
@@ -51,7 +52,16 @@ export function HomeStartHereSoftSkeleton() {
 }
 
 export function HomeHeroLcp() {
-  const greeting = resolveDailyContext().greeting;
+  const daily = useMemo(() => resolveDailyContext(), []);
+  const greeting = daily.greeting;
+  const quote = daily.event || daily.subGreeting;
+  const hijriLabel = useMemo(() => {
+    try {
+      return formatHijriDate(new Date());
+    } catch {
+      return "";
+    }
+  }, []);
   // أظهر التحية والأزرار فورًا — تأخير 4ث كان يترك شعارًا فقط ومربعات فارغة.
   const [showEyebrow, setShowEyebrow] = useState(true);
   const [showActions, setShowActions] = useState(true);
@@ -96,11 +106,19 @@ export function HomeHeroLcp() {
 
   return (
     <PageHero
-      className={`m2030-hero home-page-hero${showEyebrow ? " home-page-hero--eyebrow-ready" : ""}${showActions ? " home-page-hero--actions-ready" : ""}`}
-      fullBleed={false}
+      className={`m2030-hero home-page-hero page-hero-mj--bleed${showEyebrow ? " home-page-hero--eyebrow-ready" : ""}${showActions ? " home-page-hero--actions-ready" : ""}`}
+      fullBleed
       withPattern={false}
       eyebrow={greeting}
       title="سُنّة"
+      headline={hijriLabel ? <span className="home-hero-meta">{hijriLabel}</span> : undefined}
+      description={
+        quote ? (
+          <span className="home-hero-quote" dir="rtl" lang="ar">
+            {quote}
+          </span>
+        ) : undefined
+      }
       actions={
         <>
           <Link href={continueHref} className="mj-btn m2030-btn m2030-btn--primary">
