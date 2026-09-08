@@ -4,6 +4,7 @@ import {
   Suspense,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -48,7 +49,10 @@ import {
   parseVerseKey,
   uniqueVerseKeysFromRows,
 } from "@/features/mushaf-madinah/mushaf-page-for-ayah";
-import { useQpcPageFont } from "@/features/mushaf-madinah/useQpcPageFont";
+import {
+  ensureQpcPageFont,
+  useQpcPageFont,
+} from "@/features/mushaf-madinah/useQpcPageFont";
 import { useMushafResourceGate } from "@/features/mushaf-madinah/useMushafResourceGate";
 import { prefetchAdjacentPageAudio } from "@/features/mushaf-madinah/prefetch-adjacent-audio";
 import { MUSHAF_CHROME_HIDE_MS } from "@/features/mushaf-madinah/layout-bands";
@@ -107,9 +111,11 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const [iosAudioHint, setIosAudioHint] = useState<string | null>(null);
 
   const { fontFamily, ready: fontReady } = useQpcPageFont(page);
+  /** لا نعرض صفحة برقم مختلف عن الهدف — يمنع خلط خط جديد مع بيانات قديمة */
+  const layoutMatchesPage = Boolean(layout && layout.pageNumber === page);
   const { canMountPage, allowOffscreenPrefetch } = useMushafResourceGate(
     fontReady,
-    Boolean(layout) && !error,
+    layoutMatchesPage && !error,
     page,
   );
 
@@ -143,6 +149,12 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       );
     };
   }, [recitation]);
+
+  useLayoutEffect(() => {
+    /* قبل أول paint: طبّق كاش الصفحة الجديدة حتى لا يُرسم خط الصفحة الجديدة على بيانات قديمة */
+    const cached = getCachedMushafPage(page);
+    if (cached) setLayout(cached);
+  }, [page]);
 
   useEffect(() => {
     let cancelled = false;
@@ -276,6 +288,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const [bottomStackFrozen, setBottomStackFrozen] = useState(false);
   const [freezeStackMode, setFreezeStackMode] = useState<"none" | "ayah" | "audio">("none");
   const pageTurnLockRef = useRef(false);
+  /** الصفحة المستهدفة بعد beginPageTurn — لا تُزلّ التجميد قبل وصولها */
+  const pendingPageRef = useRef<number | null>(null);
 
   const clearPageChrome = useCallback(() => {
     setActionsOpen(false);
@@ -303,32 +317,50 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     clearPageChrome();
   }, [audioDockOpen, chromeOpen, clearPageChrome, playerState]);
 
+  const finishPageTurn = useCallback(() => {
+    setPagerSettled(true);
+    setBottomStackFrozen(false);
+    setFreezeStackMode("none");
+    pageTurnLockRef.current = false;
+    pendingPageRef.current = null;
+  }, []);
+
   const go = useCallback(
     (next: number) => {
+      const clamped = clampMushafPage(next);
       suppressPageSyncRef.current = false;
       recitation.stop();
       beginPageTurn();
-      onPageChange(clampMushafPage(next));
+      pendingPageRef.current = clamped;
+      void ensureQpcPageFont(clamped).finally(() => {
+        onPageChange(clamped);
+      });
     },
     [beginPageTurn, onPageChange, recitation],
   );
 
+  /** ارتفاع الحاوية ثابت أثناء القلب — لا تُزلّ التجميد قبل جاهزية الخط+بيانات الصفحة */
+  useLayoutEffect(() => {
+    const pending = pendingPageRef.current;
+    if (pending == null || page !== pending) return;
+    if (!fontReady || !layoutMatchesPage) return;
+
+    const shell = metricsRootRef.current?.querySelector<HTMLElement>(
+      '[data-pane="current"] .nm-shell, [data-pane="current"] .mm-page-shell',
+    );
+    if (shell) shell.scrollTop = 0;
+
+    finishPageTurn();
+  }, [page, fontReady, layoutMatchesPage, finishPageTurn]);
+
+  /* صمام أمان إن أُلغي السحب أو تعذّر اكتمال الموارد */
   useEffect(() => {
-    let cancelled = false;
-    const id = window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(() => {
-        if (cancelled) return;
-        setPagerSettled(true);
-        setBottomStackFrozen(false);
-        setFreezeStackMode("none");
-        pageTurnLockRef.current = false;
-      });
-    });
-    return () => {
-      cancelled = true;
-      window.cancelAnimationFrame(id);
-    };
-  }, [page]);
+    if (pagerSettled && !bottomStackFrozen) return;
+    const id = window.setTimeout(() => {
+      finishPageTurn();
+    }, 900);
+    return () => window.clearTimeout(id);
+  }, [page, pagerSettled, bottomStackFrozen, finishPageTurn]);
 
   const versePreview = useCallback(
     (verseKey: string): string => {
@@ -595,7 +627,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
               aria-busy="true"
             />
           ) : null}
-          {canMountPage && layout ? (
+          {canMountPage && layout && layout.pageNumber === page ? (
             <MushafPage
               layout={layout}
               fontFamily={fontFamily}
