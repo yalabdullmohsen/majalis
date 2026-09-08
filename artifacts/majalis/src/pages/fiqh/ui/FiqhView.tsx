@@ -262,12 +262,10 @@ function FiqhBooksBody() {
         links={[
           { href: "/fiqh-council", label: "المجمع الفقهي" },
           { href: "/sins-and-rights", label: "المعاصي والحقوق" },
-          { href: "/mawarith", label: "المواريث" },
-          { href: "/fiqh/usul", label: "أصول الفقه" },
-          { href: "/salah-guide", label: "دليل الصلاة" },
-          { href: "/zakat", label: "الزكاة" },
           { href: "/hadith", label: "الحديث وعلومه" },
           { href: "/lessons", label: "الدروس العلمية" },
+          { href: "/madhahib", label: "المذاهب الفقهية" },
+          { href: "/methodology", label: "منهجية التوثيق" },
         ]}
       />
     </div>
