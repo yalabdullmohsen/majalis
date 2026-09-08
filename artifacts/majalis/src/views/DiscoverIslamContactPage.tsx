@@ -57,7 +57,7 @@ export default function DiscoverIslamContactPage() {
       <div className="page-shell narrow">
         <PageHeader eyebrow="التعريف بالإسلام" title="تم استلام طلبك" />
         <div className="ui-card dii-answer-card">
-          <p>سيتواصل معك أحد الدعاة قريبًا على الوسيلة التي حدّدتها. رمز المتابعة الخاص بك:</p>
+          <p>تم استلام طلبك. سيتواصل معك أحد الدعاة على الوسيلة التي اخترتها. رمز المتابعة:</p>
           <p className="dii-tracking-code">{result.trackingCode}</p>
           <p className="page-desc">احتفظ بهذا الرمز إن احتجت للاستفسار عن حالة طلبك لاحقًا.</p>
         </div>

@@ -1101,7 +1101,7 @@ ${linkList("روابط ذات صلة", [
   { name: "قصص السور", url: "/quran/surah-stories" },
   { name: "مركز القرآن", url: "/quran-hub" },
 ])}`,
-  "/quran/people": `<p>فهرس من ذُكروا في القرآن من غير الأنبياء، مع مواضع الآيات والاقتصار على ما ثبت دون إسرائيليات مجزوم بها. الأنبياء عليهم السلام في قسم قصص الأنبياء.</p>
+  "/quran/people": `<p>فهرس للذين ذُكروا في القرآن بأسمائهم الصريحة من غير الأنبياء، مع مواضع الآيات وروابط للسياق. الأنبياء عليهم السلام في قسم قصص الأنبياء.</p>
 ${linkList(
   "من الذين ذكروا في القرآن",
   QURAN_PEOPLE.map((p) => ({ name: p.nameAr, url: `/quran/people/${p.slug}` })),
@@ -2786,7 +2786,7 @@ for (const n of NATIONS) {
 
 // الذين ذكروا في القرآن — من people.json
 for (const person of QURAN_PEOPLE) {
-  const peopleSuffix = `${person.nameAr} في فهرس الذين ذكروا في القرآن، مع مواضع الآيات دون توسع في غير الثابت.`;
+  const peopleSuffix = `${person.nameAr} في فهرس الذين ذكروا في القرآن، مع التعريف وسبب الذكر ومواضع الآيات.`;
   addPage(
     {
       path: `/quran/people/${person.slug}`,
