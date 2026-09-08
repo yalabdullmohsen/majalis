@@ -1864,7 +1864,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .favorite-btn--compact {
-  min-height: 40px;
+  min-height: 44px;
   padding: 0.45rem 0.85rem;
   font-size: 0.8125rem;
 }

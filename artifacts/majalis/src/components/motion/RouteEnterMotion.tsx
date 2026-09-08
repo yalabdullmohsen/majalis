@@ -7,6 +7,7 @@ import {
   reducedMotionPreferred,
   type NavMotionKind,
 } from "@/lib/spatial-nav";
+import { consumeSkipCssRouteMotion } from "@/lib/view-transition-nav";
 
 const MOTION_CLASSES: Record<Exclude<NavMotionKind, "none">, string> = {
   push: "mj-route-push",
@@ -48,7 +49,13 @@ export function RouteEnterMotion() {
     const wasPop = isPopRef.current;
     isPopRef.current = false;
 
-    if (isImmersiveChromePath(location) || reducedMotionPreferred()) {
+    // View Transitions يغطي الحركة — لا تكرار CSS. المصحف بلا حركة نصية.
+    if (
+      consumeSkipCssRouteMotion() ||
+      isImmersiveChromePath(location) ||
+      isImmersiveChromePath(from) ||
+      reducedMotionPreferred()
+    ) {
       clearMotion(main);
       return;
     }

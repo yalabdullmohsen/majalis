@@ -33,6 +33,7 @@ assert.match(native, /mj-chrome-stable/);
 const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 assert.match(app, /EdgeSwipeBack/);
 assert.match(app, /RouteEnterMotion/);
+assert.match(app, /ViewTransitionNav/);
 
 assert.ok(existsSync(resolve(root, "src/lib/spatial-nav.ts")));
 

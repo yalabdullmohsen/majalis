@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Search } from "lucide-react";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { PageShell } from "@/components/layout/PageShell";
+import { AppImage } from "@/components/media/AppImage";
 import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { getUnifiedLessonsSplit } from "@/lib/lessons-service";
@@ -77,14 +78,16 @@ export default function TeachersIndexPage() {
               className="tch-card"
               role="listitem"
             >
-              <img
+              <AppImage
                 src={teacher.photoUrl}
                 alt=""
                 className="tch-card__photo"
-                loading="lazy"
-                decoding="async"
+                wrapperClassName="tch-card__photo-wrap"
+                aspect="1/1"
                 width={72}
                 height={72}
+                lazy
+                skeleton={false}
               />
               <span className="tch-card__name">{teacher.name}</span>
               <span className="tch-card__count">

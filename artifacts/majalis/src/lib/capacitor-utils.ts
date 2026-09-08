@@ -88,7 +88,7 @@ export async function openExternalUrl(
  * Haptics، وعلى الويب عبر Vibration API.
  */
 const WEB_VIBRATE_MS: Record<"light" | "medium" | "heavy", number> = {
-  light: 15,
+  light: 8,
   medium: 35,
   heavy: 60,
 };

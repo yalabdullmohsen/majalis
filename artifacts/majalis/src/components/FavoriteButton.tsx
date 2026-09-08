@@ -4,6 +4,7 @@ import {
   isLocalBookmarked,
   toggleLocalBookmark,
 } from "@/lib/local-bookmarks";
+import { triggerHaptic } from "@/lib/haptics";
 
 type Props = {
   contentType: string;
@@ -23,6 +24,7 @@ export function FavoriteButton({
   const [bookmarked, setBookmarked] = useState(false);
   const [busy, setBusy] = useState(false);
   const [mode, setMode] = useState<"local" | "cloud">("local");
+  const [errorHint, setErrorHint] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -56,6 +58,12 @@ export function FavoriteButton({
   const toggle = async () => {
     if (busy) return;
     setBusy(true);
+    setErrorHint(null);
+    const prev = bookmarked;
+    // واجهة متفائلة — حفظ/مفضلة فقط (آمن للتراجع)
+    setBookmarked(!prev);
+    triggerHaptic("selection");
+
     try {
       const {
         data: { user },
@@ -74,25 +82,30 @@ export function FavoriteButton({
       }
 
       setMode("cloud");
-      if (bookmarked) {
-        await supabase
+      if (prev) {
+        const { error } = await supabase
           .from("bookmarks")
           .delete()
           .match({ user_id: user.id, content_type: contentType, content_id: contentId });
-        // أزل النسخة المحلية إن وُجدت لتفادي ازدواج الحالة
+        if (error) throw error;
         if (isLocalBookmarked(contentType, contentId)) {
           toggleLocalBookmark({ contentType, contentId });
         }
         setBookmarked(false);
       } else {
-        await supabase.from("bookmarks").insert({
+        const { error } = await supabase.from("bookmarks").insert({
           user_id: user.id,
           content_type: contentType,
           content_id: contentId,
           title: title ?? null,
         });
+        if (error) throw error;
         setBookmarked(true);
       }
+    } catch {
+      setBookmarked(prev);
+      setErrorHint("تعذّر الحفظ — أعد المحاولة");
+      triggerHaptic("error");
     } finally {
       setBusy(false);
     }
@@ -103,10 +116,16 @@ export function FavoriteButton({
       type="button"
       onClick={toggle}
       disabled={busy}
-      className={`favorite-btn${bookmarked ? " favorite-btn--active" : ""}${compact ? " favorite-btn--compact" : ""} ${className}`.trim()}
+      className={`favorite-btn mj-pressable mj-touch-target${bookmarked ? " favorite-btn--active" : ""}${compact ? " favorite-btn--compact" : ""} ${className}`.trim()}
       aria-pressed={bookmarked}
       aria-label={bookmarked ? "إزالة من المفضلة" : "إضافة للمفضلة"}
-      title={mode === "local" ? "يُحفظ على هذا الجهاز" : "يُحفظ في حسابك"}
+      title={
+        errorHint
+          ? errorHint
+          : mode === "local"
+            ? "يُحفظ على هذا الجهاز"
+            : "يُحفظ في حسابك"
+      }
     >
       {bookmarked ? (compact ? "محفوظ" : "في المفضلة") : compact ? "حفظ" : "إضافة للمفضلة"}
     </button>

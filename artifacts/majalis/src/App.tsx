@@ -140,6 +140,11 @@ const RouteEnterMotion = lazyWithRetry(
     import("@/components/motion/RouteEnterMotion").then((m) => ({ default: m.RouteEnterMotion })),
   "RouteEnterMotion",
 );
+const ViewTransitionNav = lazyWithRetry(
+  () =>
+    import("@/components/motion/ViewTransitionNav").then((m) => ({ default: m.ViewTransitionNav })),
+  "ViewTransitionNav",
+);
 const DeferredAchievementBoot = lazyWithRetry(
   () =>
     import("@/components/DeferredAchievementBoot").then((m) => ({
@@ -662,6 +667,9 @@ function AppShellInner() {
       </Suspense>
       <NavigationBinder />
       <NativeBackButtonListener />
+      <Suspense fallback={null}>
+        <ViewTransitionNav />
+      </Suspense>
       <Suspense fallback={null}>
         <RouteEnterMotion />
       </Suspense>
