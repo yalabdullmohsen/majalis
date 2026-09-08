@@ -35,7 +35,7 @@ export const FIQH_ENCYCLOPEDIA_HREF = "/fiqh";
 export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   {
     id: "tahara",
-    emoji: "🚿",
+    emoji: "",
     title: "الطهارة",
     desc: "الوضوء والغسل والتيمم ونواقضها بترتيب عملي للمبتدئ.",
     href: "/tahara",
@@ -44,7 +44,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "salah",
-    emoji: "🕌",
+    emoji: "",
     title: "الصلاة",
     desc: "أحكام الصلاة: أركانها وشروطها وواجباتها وسننها وأوقاتها، مع ما يتعلق بالجماعة والمسافر.",
     href: "/salah-guide",
@@ -53,7 +53,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "zakat",
-    emoji: "💰",
+    emoji: "",
     title: "الزكاة",
     desc: "أحكام الزكاة: أنواعها وشروط وجوبها ونصابها ومصارفها، مع حاسبة مبسّطة للأموال الزكوية.",
     href: "/zakat",
@@ -62,7 +62,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "sawm",
-    emoji: "🌙",
+    emoji: "",
     title: "الصيام",
     desc: "أحكام الصيام: فرض رمضان والنوافل والقضاء والكفارة، مع ما يتعلق بالمسافر والمريض والحامل.",
     href: "/sawm",
@@ -71,7 +71,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "hajj",
-    emoji: "🕋",
+    emoji: "",
     title: "الحج والعمرة",
     desc: "مناسك الحج والعمرة: أركانها وواجباتها ومحرمات الإحرام، مرتّبة على مراحل السفر والطواف والرمي.",
     href: "/hajj",
@@ -80,7 +80,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "janaza",
-    emoji: "🕯️",
+    emoji: "",
     title: "الجنائز",
     desc: "أحكام الجنائز: غسل الميت والكفن والصلاة والدفن والتعزية، مع آداب زيارة القبور والدعاء للمتوفى.",
     href: "/janaza",
@@ -89,7 +89,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "jumuah",
-    emoji: "📿",
+    emoji: "",
     title: "صلاة الجمعة",
     desc: "حكم الجمعة وشروطها وهيئة الخطبة والصلاة وآداب اليوم، مع ما يسقط الحضور من الأعذار.",
     href: "/jumuah",
@@ -98,7 +98,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "riba",
-    emoji: "🚫",
+    emoji: "",
     title: "الربا",
     desc: "تعريف الربا وأنواعه وحرمة الفائدة، مع البدائل الشرعية وضوابط التحرز من الشبهات المعاصرة.",
     href: "/riba",
@@ -107,7 +107,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "nikah",
-    emoji: "💍",
+    emoji: "",
     title: "النكاح",
     desc: "أركان عقد النكاح وشروطه والمهر وحقوق الزوجين، مع المحاذير الشرعية في العقود.",
     href: "/nikah",
@@ -116,7 +116,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "talaq",
-    emoji: "📄",
+    emoji: "",
     title: "الطلاق والعدة",
     desc: "أنواع الطلاق والعدة والخلع وأدب الفراق وحفظ حقوق الأولاد بعد الفرقة.",
     href: "/talaq",
@@ -125,7 +125,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "udhiya",
-    emoji: "🐐",
+    emoji: "",
     title: "الأضحية",
     desc: "حكم الأضحية وشروطها ووقتها وعيوبها المانعة وآداب الذبح والتوزيع.",
     href: "/udhiya",
@@ -134,7 +134,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "ruqya",
-    emoji: "📖",
+    emoji: "",
     title: "الرقية الشرعية",
     desc: "مشروعية الرقية وضوابط التوحيد وما يُحذر منه من الشرك والدجل، مع الجمع بين الرقية والطب.",
     href: "/ruqya",
@@ -143,7 +143,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "waqf",
-    emoji: "🕊️",
+    emoji: "",
     title: "الوقف",
     desc: "حقيقة الوقف وشروطه وأمانة النظّار، والفرق بينه وبين الصدقة الجارية المعاصرة.",
     href: "/waqf",
@@ -152,7 +152,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "sadaqa",
-    emoji: "🤲",
+    emoji: "",
     title: "الصدقة",
     desc: "فضل الصدقة وآداب الإنفاق والفرق بينها وبين الزكاة، وصدقة كل معروف.",
     href: "/sadaqa",
@@ -161,7 +161,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "mawarith",
-    emoji: "⚖️",
+    emoji: "",
     title: "المواريث",
     desc: "حاسبة الفرائض: توزيع التركة على الورثة وفق أنصبتهم الشرعية، مع بيان الحجب والعصبة والمسائل الشائعة.",
     href: "/mawarith",
@@ -170,7 +170,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "fiqh-qawaid",
-    emoji: "📐",
+    emoji: "",
     title: "القواعد الفقهية",
     desc: "القواعد الخمس الكبرى بأمثلة عملية تساعد على ضبط الاجتهاد وفهم الخلاف دون إفتاء مستقل.",
     href: "/fiqh-qawaid",
@@ -179,7 +179,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "madhahib",
-    emoji: "📚",
+    emoji: "",
     title: "المذاهب الأربعة",
     desc: "تعريف موجز بالمذاهب الأربعة ومناهجها، مع روابط لكتب الفقه المعتمدة في كل مذهب.",
     href: "/madhahib",
@@ -188,7 +188,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "fiqh-council",
-    emoji: "🏛️",
+    emoji: "",
     title: "المجمع الفقهي",
     desc: "بوابة لقرارات المجامع والنوازل المعاصرة بإحالات موثّقة، دون إفتاء مباشر من المنصة.",
     href: "/fiqh-council",
@@ -197,7 +197,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "muamalat",
-    emoji: "🤝",
+    emoji: "",
     title: "المعاملات",
     desc: "أحكام المعاملات: البيع والإجارة والشركات والغرر، مع ضوابط الحلال والحرام في التجارة.",
     href: "/fiqh/books/buyu",
@@ -213,7 +213,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "atima",
-    emoji: "🥩",
+    emoji: "",
     title: "الأطعمة",
     desc: "أحكام الأطعمة والأشربة: الحلال والحرام والذبائح وشروط الذبح، مع ما يتعلق بالمذبوحات والمشتبهات.",
     href: "/fiqh/books/atima",
@@ -227,7 +227,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "medical",
-    emoji: "🏥",
+    emoji: "",
     title: "الفقه الطبي",
     desc: "الفقه الطبي: أحكام العلاج والأدوية والعمليات والتبرع بالأعضاء، مع ضوابط الشرع في الطب الحديث.",
     href: "/fiqh-council/nawazil",
@@ -242,7 +242,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "islamic-finance",
-    emoji: "🏦",
+    emoji: "",
     title: "المال الإسلامي",
     desc: "المال الإسلامي: أحكام البنوك والتأمين والاستثمار والصكوك، مع ضوابط التمويل الحلال.",
     href: "/fiqh/books/buyu",
@@ -257,7 +257,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "usul-fiqh",
-    emoji: "📖",
+    emoji: "",
     title: "أصول الفقه",
     desc: "أصول الفقه: مصادر التشريع من قرآن وسنة وإجماع وقياس، وطرق الاستنباط والترجيح بين الأقوال.",
     href: "/fiqh/usul",
@@ -273,7 +273,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "nawazil",
-    emoji: "⚡",
+    emoji: "",
     title: "النوازل المعاصرة",
     desc: "النوازل المعاصرة تُحال إلى قرارات المجامع وهيئات الفتوى المعتمدة عبر بوابة الفقه؛ لا يُفتى فيها ابتداءً هنا.",
     href: "/fiqh-council/nawazil",
@@ -282,7 +282,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "hudud",
-    emoji: "🔐",
+    emoji: "",
     title: "الحدود والجنايات",
     desc: "أحكام الحدود والقصاص والديات: شروطها وضوابطها وما يتعلق بالجرائم والعقوبات في الشريعة.",
     href: "/fiqh/books/hudud",
@@ -295,7 +295,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "minorities",
-    emoji: "🌍",
+    emoji: "",
     title: "فقه الأقليات",
     desc: "فقه الأقليات: مسائل المسلمين في غير بلاد الإسلام، عبر قرارات المجمع الفقهي المعتمد والفتاوى الرسمية.",
     href: "/fiqh-council/nawazil",
@@ -309,7 +309,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "tech-fiqh",
-    emoji: "💻",
+    emoji: "",
     title: "فقه التقنية",
     desc: "فقه التقنية: نوازل الإنترنت والذكاء الاصطناعي والعملات الرقمية، عبر قرارات المجامع الفقهية المعتمدة.",
     href: "/fiqh-council/nawazil",
@@ -325,7 +325,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
   },
   {
     id: "patients",
-    emoji: "🩺",
+    emoji: "",
     title: "فقه العبادات للمرضى",
     desc: "فقه العبادات للمرضى: أحكام الصلاة والصيام والطهارة عند العجز أو المرض، مع الرخص الشرعية المعتمدة.",
     href: "/fiqh/books/salah",

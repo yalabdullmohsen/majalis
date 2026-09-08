@@ -37,9 +37,16 @@ export type FiqhLesson = {
   practicalSummary?: string;
   /** كلمات مفتاحية للبحث. */
   keywords?: string[];
+  /** أقوال/تحرير مذهبي للعرض التعليمي. */
+  scholarlyNotes?: string;
+  /** أخطاء شائعة يُحذر منها المتعلم. */
+  commonMistakes?: string[];
+  /** أمثلة تطبيقية قصيرة. */
+  examples?: string[];
+  /** أسئلة مراجعة ذاتية. */
+  reviewQuestions?: string[];
   /**
-   * يحتاج تحريرًا علميًا — لا يُعرض للمستخدم حكمًا نهائيًا
-   * (يُستبعد من القوائم العامة عبر isPublishedLesson).
+   * للمحتوى الداخلي غير المنشور فقط — لا يُعرض للمستخدم حكمًا نهائيًا.
    */
   needsReview?: boolean;
 };
@@ -112,42 +119,42 @@ export const FIQH_SUPPORTING_TOPICS: FiqhSupportingTopic[] = [
     title: "أصول الفقه",
     href: "/fiqh/usul",
     desc: "أدلة الأحكام وطرق الاستنباط عند أهل السنة.",
-    icon: "📖",
+    icon: "book",
   },
   {
     id: "qawaid",
     title: "القواعد الفقهية",
     href: "/fiqh-qawaid",
     desc: "القواعد الخمس الكبرى وما يتفرع عنها.",
-    icon: "📐",
+    icon: "rules",
   },
   {
     id: "madhahib",
     title: "المذاهب الأربعة",
     href: "/madhahib",
     desc: "الحنفي والمالكي والشافعي والحنبلي: أصولها وانتشارها.",
-    icon: "📚",
+    icon: "library",
   },
   {
     id: "nawazil",
     title: "النوازل المعاصرة",
     href: "/fiqh-council/nawazil",
     desc: "نوازل العصر عبر قرارات المجامع المعتمدة.",
-    icon: "⚡",
+    icon: "compass",
   },
   {
     id: "majami",
     title: "قرارات المجامع الفقهية",
     href: "/fiqh-council",
     desc: "مدخل واحد لقرارات المجامع وفتاواها الموثَّقة.",
-    icon: "🏛️",
+    icon: "landmark",
   },
   {
     id: "fatawa",
     title: "الفتاوى",
     href: "/fiqh-council/fatwas",
     desc: "فتاوى المجمع بهيئاته، لا إفتاء فردي من المنصة.",
-    icon: "📜",
+    icon: "scroll",
   },
 ];
 
@@ -519,6 +526,9 @@ export function searchFiqhLessons(query: string, filters: FiqhSearchFilters = {}
       fiqhTextIncludes(hit.lesson.notes ?? "", q) ||
       fiqhTextIncludes(hit.lesson.practicalSummary ?? "", q) ||
       fiqhTextIncludes(hit.lesson.madhhabNotes ?? "", q) ||
+      fiqhTextIncludes(hit.lesson.scholarlyNotes ?? "", q) ||
+      (hit.lesson.commonMistakes ?? []).some((k) => fiqhTextIncludes(k, q)) ||
+      (hit.lesson.examples ?? []).some((k) => fiqhTextIncludes(k, q)) ||
       (hit.lesson.keywords ?? []).some((k) => fiqhTextIncludes(k, q))
     );
   });
