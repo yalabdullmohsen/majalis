@@ -14,9 +14,10 @@ const m2030 = readFileSync(resolve(root, "src/styles/m2030/pages.css"), "utf8");
 const detail = readFileSync(resolve(root, "src/pages/lessons/ui/LessonDetailView.tsx"), "utf8");
 
 assert.match(card, /lesson-unified-card__facts/, "حقائق الدرس داخل البطاقة");
-assert.match(card, /أضف للتقويم/, "زر التقويم داخل البطاقة");
+assert.match(card, /التقويم/, "زر التقويم داخل البطاقة");
 assert.match(card, /FavoriteButton/, "زر الحفظ داخل البطاقة");
 assert.match(card, /التفاصيل/, "زر التفاصيل داخل البطاقة");
+assert.match(card, /lesson-unified-card__actions-secondary/, "أزرار ثانوية مجمّعة");
 assert.doesNotMatch(card, /showEmpty\s*=\s*true/, "لا تُعرض خلايا فارغة");
 assert.match(css, /border-radius:\s*var\(--radius-card,\s*(?:24|16)px\)/, "حواف بطاقة عبر --radius-card");
 assert.match(css, /lesson-unified-card__facts/, "أنماط facts في lessons.css");
