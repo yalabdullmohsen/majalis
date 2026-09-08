@@ -1696,11 +1696,33 @@ html.dark .mm-viewport .mm-page-footer__badge,
   padding: 0 0.35rem;
   font-size: 0.7rem;
   font-weight: 700;
+  color: #1a1a1a;
+  border: 1px solid color-mix(in srgb, #135034 28%, transparent);
+  background: #fff;
 }
 
 .mm-audio-dock__rates button[aria-pressed="true"] {
-  background: color-mix(in srgb, #135034 16%, #fff);
+  background: color-mix(in srgb, #135034 18%, #fff);
   border-color: #135034;
+  color: #0e3d27;
+}
+
+html[data-theme="dark"] .mm-audio-dock__rates button,
+html.dark .mm-audio-dock__rates button,
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__rates button,
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__rates button {
+  color: #f3efe6;
+  background: color-mix(in srgb, #152018 88%, #fff);
+  border-color: color-mix(in srgb, #5ec49a 40%, transparent);
+}
+
+html[data-theme="dark"] .mm-audio-dock__rates button[aria-pressed="true"],
+html.dark .mm-audio-dock__rates button[aria-pressed="true"],
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__rates button[aria-pressed="true"],
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__rates button[aria-pressed="true"] {
+  color: #0c1a12;
+  background: #5ec49a;
+  border-color: #5ec49a;
 }
 
 .mm-audio-dock__status {
@@ -1712,6 +1734,32 @@ html.dark .mm-viewport .mm-page-footer__badge,
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.mm-audio-dock[data-loading="1"] .mm-audio-dock__status::before {
+  content: "";
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-inline-end: 0.35rem;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--mm-ui-accent, #135034) 35%, transparent);
+  border-top-color: var(--mm-ui-accent, #135034);
+  vertical-align: -0.05em;
+  animation: mm-audio-spin 0.7s linear infinite;
+}
+
+@keyframes mm-audio-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-audio-dock[data-loading="1"] .mm-audio-dock__status::before {
+    animation: none;
+    opacity: 0.75;
+  }
 }
 
 .mm-audio-dock[data-mini="1"] .mm-audio-dock__seek,
@@ -2202,13 +2250,63 @@ html.dark .mm-reciter-sheet__search input {
   margin-inline-start: auto;
 }
 
+.mm-tafsir-sheet__panel {
+  width: min(100%, 32rem);
+}
+
 .mm-tafsir {
   display: grid;
   gap: 0.75rem;
 }
 
-.mm-tafsir-sheet__panel {
-  width: min(100%, 32rem);
+.mm-tafsir__toolbar {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.mm-tafsir__depth,
+.mm-tafsir__editions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.3rem;
+}
+
+.mm-tafsir__depth {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.mm-tafsir__depth-btn,
+.mm-tafsir__ed-btn {
+  appearance: none;
+  min-height: 40px;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--mm-gold, #a68b67) 28%, transparent);
+  background: color-mix(in srgb, var(--mm-paper, #fdf9f3) 92%, #fff);
+  color: var(--mm-ink, #111);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mm-tafsir__depth-btn.is-active,
+.mm-tafsir__ed-btn.is-active {
+  background: color-mix(in srgb, var(--mm-ui-accent, #135034) 14%, var(--mm-paper, #fdf9f3));
+  border-color: color-mix(in srgb, var(--mm-ui-accent, #135034) 42%, transparent);
+}
+
+.mm-tafsir__more {
+  appearance: none;
+  margin-top: 0.65rem;
+  border: 0;
+  background: transparent;
+  color: var(--mm-ui-accent, #135034);
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 .mm-tafsir__editions.quran-tabbar {

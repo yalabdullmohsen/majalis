@@ -387,7 +387,7 @@
     "test:mushaf-cartouche-center": "node -e \"console.log('mushaf UI gates disabled — skipped')\"",
     "test:mushaf-ref-visual": "node -e \"console.log('mushaf UI gates disabled — skipped')\"",
     "test:mushaf-page-curl": "node -e \"console.log('mushaf UI gates disabled — skipped')\"",
-    "test:mushaf-page-flip": "node --import tsx src/lib/__tests__/mushaf-page-flip-stability-gate.test.ts",
+    "test:mushaf-page-flip": "node --import tsx src/lib/__tests__/mushaf-page-flip-stability-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-anti-regression-guard.test.ts",
     "test:mushaf-ink-collision": "node -e \"console.log('mushaf UI gates disabled — skipped')\"",
     "test:mushaf-typescale": "node -e \"console.log('mushaf UI gates disabled — skipped')\"",
     "test:phase6-typography-virtual-mic": "node --import tsx src/lib/__tests__/phase6-typography-virtual-mic.test.ts",

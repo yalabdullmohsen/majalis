@@ -60,7 +60,7 @@ import { prefetchAdjacentPageAudio } from "@/features/mushaf-madinah/prefetch-ad
 import { MUSHAF_CHROME_HIDE_MS } from "@/features/mushaf-madinah/layout-bands";
 import { MushafPage } from "./MushafPage";
 import { MushafControlsLayer, MushafVerseMenu } from "./MushafControlsLayer";
-import { useMushafFixedMetrics } from "./useMushafFixedMetrics";
+import { useStableMushafLayout } from "./useStableMushafLayout";
 import "./mushaf-reader.css";
 /* شيتات التلاوة/البحث/التفسير — فئات مشتركة */
 import "@/features/mushaf-madinah/mushaf-madinah.css";
@@ -151,8 +151,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   }, [error, canMountPage, layout, page, fontReady, fontFamily]);
 
   const metricsRootRef = useRef<HTMLDivElement | null>(null);
-  /** مقاسات ثابتة من التركيب — لا تُربط بـ canMountPage (كانت تعيد القياس عند القلب) */
-  useMushafFixedMetrics(metricsRootRef, true);
+  /** مصدر القياس الوحيد — لا يُعاد حساب الخط أثناء قلب الصفحة */
+  useStableMushafLayout(metricsRootRef, true);
 
   const hideTimer = useRef<number | null>(null);
   const pageRef = useRef(page);
@@ -355,15 +355,15 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const go = useCallback(
     (next: number) => {
       const clamped = clampMushafPage(next);
-      suppressPageSyncRef.current = false;
-      recitation.stop();
+      /* قلب يدوي: لا نوقف التلاوة — نمنع مزامنة الصفحة من الصوت حتى لا تُرجع المستخدم */
+      suppressPageSyncRef.current = true;
       beginPageTurn();
       pendingPageRef.current = clamped;
       void ensureQpcPageFont(clamped).finally(() => {
         onPageChange(clamped);
       });
     },
-    [beginPageTurn, onPageChange, recitation],
+    [beginPageTurn, onPageChange],
   );
 
   /** ارتفاع الحاوية ثابت أثناء القلب — لا تُزلّ التجميد قبل جاهزية الخط+بيانات الصفحة */
@@ -862,7 +862,8 @@ const PrefetchPage = memo(function PrefetchPage({ pageNumber }: { pageNumber: nu
   }, [pageNumber]);
 
   if (!ready || !layout) {
-    return <div className="nm-page-placeholder" aria-hidden="true" />;
+    /* skeleton بنفس شبكة الإطار — لا يغيّر عرض/ارتفاع الحاوية */
+    return <div className="nm-page-placeholder nm-page-placeholder--frame" aria-hidden="true" />;
   }
   return (
     <MushafPage

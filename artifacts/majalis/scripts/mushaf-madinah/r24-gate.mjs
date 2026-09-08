@@ -25,7 +25,7 @@ const spec = read("docs/MUSHAF_SPEC.md");
 
 assert.match(bands, /MUSHAF_HEADER_Y = 0\.083/);
 assert.match(bands, /MUSHAF_OPEN_BANNER_Y = 0\.277/);
-assert.match(bands, /MUSHAF_SETTLE_MS = 250/);
+assert.match(bands, /MUSHAF_SETTLE_MS = 160/);
 assert.match(bands, /MUSHAF_HIZB_START_PAGES = 60/);
 assert.match(bands, /MUSHAF_WORD_COUNT = 83665/);
 
@@ -38,7 +38,7 @@ assert.match(fit, /mushafUniformFitCacheKey/);
 assert.doesNotMatch(fit, /pageNumber\s*===\s*3/);
 assert.doesNotMatch(page, /pageNumber\s*===\s*3/);
 
-assert.match(pager, /SETTLE_MS\s*=\s*250|MUSHAF_SETTLE_MS/);
+assert.match(pager, /SETTLE_MS\s*=\s*160|MUSHAF_SETTLE_MS/);
 assert.match(pager, /translate3d|data-snap/);
 assert.doesNotMatch(pager, /rotateY/);
 assert.match(css, /\.mm-pager-track/);

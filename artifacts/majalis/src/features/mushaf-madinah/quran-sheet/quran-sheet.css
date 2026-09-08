@@ -121,8 +121,8 @@ html.dark .quran-sheet__scrim {
 }
 
 .quran-sheet--half .quran-sheet__panel {
-  /* تفسير أوضح — حوالي ٦٠٪ من الشاشة بدل ٥٠٪ المنخفضة */
-  max-height: min(62dvh, 34rem);
+  /* تفسير أوضح وأعلى — دون تغطية كاملة للنص المحدد */
+  max-height: min(68dvh, 36rem);
 }
 
 .quran-sheet--full .quran-sheet__panel {
@@ -137,7 +137,9 @@ html.dark .quran-sheet__scrim {
   margin-inline: auto;
   padding-top: 0.15rem;
   /* فراغ أسفل يمنع التداخل مع شريط التلاوة / bottom nav */
-  padding-bottom: calc(0.85rem + var(--inset-bottom, 0px) + 4.5rem);
+  padding-bottom: calc(
+    0.85rem + var(--inset-bottom, 0px) + var(--mushaf-bottom-safe-space, 5.5rem)
+  );
 }
 
 .quran-sheet__head {
