@@ -1418,12 +1418,14 @@ html.dark .mm-viewport .mm-page-footer__badge,
 
 .mm-audio-dock__reciter-name {
   margin: 0;
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: #0e3d27;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: visible;
+  text-overflow: unset;
+  white-space: normal;
+  line-height: 1.3;
+  word-break: break-word;
 }
 
 .mm-audio-dock__verse {
@@ -1455,7 +1457,7 @@ html.dark .mm-viewport .mm-page-footer__badge,
   color: #0e3d27;
   font: inherit;
   font-weight: 700;
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   min-height: 40px;
   padding: 0.3rem 0.65rem;
   cursor: pointer;
@@ -1464,9 +1466,13 @@ html.dark .mm-viewport .mm-page-footer__badge,
 
 .mm-audio-dock__reciter-btn-name {
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  flex: 1 1 auto;
+  overflow: visible;
+  text-overflow: unset;
+  white-space: normal;
+  line-height: 1.3;
+  word-break: break-word;
+  color: inherit;
 }
 
 .mm-audio-dock__reciter-btn-quality {
@@ -2055,6 +2061,12 @@ html.dark .mm-reciter-sheet__search input {
 .mm-reciter-sheet__name {
   flex: 1 1 auto;
   min-width: 0;
+  color: var(--quran-sheet-ink, var(--mm-ink, #111));
+  font-weight: 700;
+  white-space: normal;
+  overflow: visible;
+  word-break: break-word;
+  line-height: 1.35;
 }
 
 .mm-reciter-sheet__play {
@@ -2088,6 +2100,16 @@ html.dark .mm-reciter-sheet__search input {
 
 .mm-tafsir-sheet__panel {
   width: min(100%, 32rem);
+}
+
+.mm-tafsir__editions.quran-tabbar {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+.mm-tafsir__editions .quran-tab {
+  min-height: 44px;
+  font-weight: 700;
 }
 
 .mm-tafsir__meta {

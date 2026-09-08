@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { Check, ChevronDown, Pause, Play, SkipBack, SkipForward, X } from "lucide-react";
 import type { PlayerState } from "@/core/audio/AudioEngine";
 import { DEFAULT_VERIFIED_RECITER_IDS } from "@/lib/audio-registry";
+import { getReciter } from "@/lib/quran-audio";
 import { useVerifiedReciters } from "@/hooks/useVerifiedReciters";
 import { useMushafAudioClock } from "./mushaf-audio-clock-store";
 
@@ -61,6 +62,10 @@ export function MushafAudioDock({
   const loading = playerState === "loading" || playerState === "buffering";
   const reciters = useVerifiedReciters();
   const activeReciter = reciters.find((r) => r.id === reciterId);
+  const reciterLabel =
+    activeReciter?.nameAr?.trim() ||
+    (reciters.length === 0 ? "اختر القارئ" : getReciter(reciterId).nameAr?.trim()) ||
+    "اختر القارئ";
   const filtered = useMemo(() => {
     const q = readerQuery.trim();
     if (!q) return reciters;
@@ -100,7 +105,7 @@ export function MushafAudioDock({
         <div className="mm-audio-dock__head">
           <div className="mm-audio-dock__meta">
             {mini ? (
-              <p className="mm-audio-dock__reciter-name">{activeReciter?.nameAr ?? "اختر القارئ"}</p>
+              <p className="mm-audio-dock__reciter-name">{reciterLabel}</p>
             ) : (
               <button
                 type="button"
@@ -110,9 +115,7 @@ export function MushafAudioDock({
                 aria-expanded={readersOpen}
                 onClick={() => setReadersOpen(true)}
               >
-                <span className="mm-audio-dock__reciter-btn-name">
-                  {activeReciter?.nameAr ?? "اختر القارئ"}
-                </span>
+                <span className="mm-audio-dock__reciter-btn-name">{reciterLabel}</span>
                 {activeReciter?.qualityLabel ? (
                   <span className="mm-audio-dock__reciter-btn-quality">{activeReciter.qualityLabel}</span>
                 ) : null}

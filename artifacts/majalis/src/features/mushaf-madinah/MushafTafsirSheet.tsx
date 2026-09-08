@@ -32,10 +32,18 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
   const [text, setText] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [snap, setSnap] = useState<"half" | "full">("half");
 
   const parsed = verseKey ? parseVerseKey(verseKey) : null;
   const surahName = parsed ? getSurahMeta(parsed.surah).name : "";
-  const title = parsed ? `تفسير ${surahName} · ${parsed.ayah}` : "التفسير";
+  const title = parsed ? `تفسير ${surahName} · آية ${parsed.ayah}` : "التفسير";
+
+  useEffect(() => {
+    if (!open) {
+      setSnap("half");
+      return;
+    }
+  }, [open]);
 
   useEffect(() => {
     if (!open || !parsed) {
@@ -75,9 +83,16 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
       title={title}
       titleId={titleId}
       onClose={onClose}
-      snap="half"
+      snap={snap}
       testId="mushaf-tafsir-sheet"
       panelClassName="mm-tafsir-sheet__panel"
+      onDragEnd={(dy) => {
+        if (dy < -48) setSnap("full");
+        else if (dy > 72) {
+          if (snap === "full") setSnap("half");
+          else onClose();
+        }
+      }}
     >
       <div className="mm-tafsir quran-sheet__body">
         {parsed ? (

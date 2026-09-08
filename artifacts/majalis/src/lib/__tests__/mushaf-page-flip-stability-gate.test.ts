@@ -15,7 +15,11 @@ const css = read("src/features/mushaf-reader/mushaf-reader.css");
 const page = read("src/features/mushaf-reader/MushafPage.tsx");
 const qpc = read("src/features/mushaf-madinah/useQpcPageFont.ts");
 const pager = read("src/features/mushaf-reader/useMushafPager.ts");
+const metrics = read("src/features/mushaf-reader/useMushafFixedMetrics.ts");
 const miniBar = read("src/components/quran/QuranMiniPlayerBar.tsx");
+const dock = read("src/features/mushaf-madinah/MushafAudioDock.tsx");
+const tafsir = read("src/features/mushaf-madinah/MushafTafsirSheet.tsx");
+const sheetCss = read("src/features/mushaf-madinah/quran-sheet/quran-sheet.css");
 
 assert.match(qpc, /export function ensureQpcPageFont/);
 assert.match(qpc, /loaded\.has\(pageNumber\)/);
@@ -29,14 +33,34 @@ assert.match(reader, /shell\.scrollTop = 0/);
 assert.match(reader, /ارتفاع الحاوية ثابت/);
 assert.match(reader, /dockRemainsAfterClear/);
 assert.match(reader, /useMushafFixedMetrics\(metricsRootRef,\s*true\)/);
+assert.match(reader, /stableView/);
+assert.match(reader, /onNavigateCancel/);
+assert.doesNotMatch(
+  reader,
+  /setTimeout\(\s*\(\)\s*=>\s*\{\s*finishPageTurn/,
+  "لا setTimeout لإخفاء قفزة القلب",
+);
 assert.match(miniBar, /if \(immersive\) return null/);
+
+assert.match(metrics, /1\.04/);
+assert.match(metrics, /--mushaf-letter-spacing/);
 
 assert.match(css, /\.nm-slot\s*\{[^}]*align-items:\s*flex-start/s);
 assert.match(css, /height:\s*var\(--mushaf-body-height/);
 assert.match(css, /contain:\s*layout style/);
+assert.match(css, /data-mushaf-metrics/);
+assert.doesNotMatch(css, /transform:\s*scale\(/);
 assert.match(page, /منع layout shift عند قلب الصفحة/);
 
 assert.match(pager, /translate3d/);
+assert.match(pager, /onNavigateCancel/);
 assert.doesNotMatch(pager, /marginTop|paddingTop|scrollTop\s*=/);
+assert.doesNotMatch(pager, /scale\(/);
+
+assert.match(dock, /اختر القارئ/);
+assert.match(dock, /getReciter/);
+assert.match(tafsir, /تفسير \$\{surahName\} · آية/);
+assert.match(tafsir, /setSnap/);
+assert.match(sheetCss, /62dvh/);
 
 console.log("mushaf-page-flip-stability-gate.test.ts: ok");

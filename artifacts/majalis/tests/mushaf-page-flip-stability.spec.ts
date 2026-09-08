@@ -1,11 +1,13 @@
 /**
  * ثبات موضع أول سطر آيات عند قلب الصفحة — iPhone viewport.
- * يفشل إذا تحرّك الصندوق المحيط لمنطقة الآيات أكثر من 2px خلال 300ms بعد الظهور.
+ * يفشل إذا تحرّك الصندوق المحيط لمنطقة الآيات أكثر من 2px خلال 300ms بعد الظهور،
+ * أو تغيّر ارتفاع السطر (تكبير/تصغير الخط).
  */
 import { test, expect, type Page } from "@playwright/test";
 
 const VIEWPORT = { width: 390, height: 844 };
 const MAX_JUMP_PX = 2;
+const MAX_SIZE_DELTA_PX = 1;
 
 test.use({ viewport: VIEWPORT });
 
@@ -31,12 +33,27 @@ async function firstLineBox(page: Page) {
       document.querySelector<HTMLElement>('[data-pane="current"] .nm-line');
     if (!line) return null;
     const r = line.getBoundingClientRect();
-    return { top: r.top, left: r.left, height: r.height };
+    const fs = Number.parseFloat(getComputedStyle(line).fontSize) || 0;
+    return { top: r.top, left: r.left, height: r.height, fontSize: fs };
   });
 }
 
 async function flipNext(page: Page) {
   await page.locator(".mm-page-edge--next").click({ force: true });
+}
+
+async function assertStableFirstLine(page: Page, label: string) {
+  const early = await firstLineBox(page);
+  expect(early, `سطر أول — ${label}`).not.toBeNull();
+  await page.waitForTimeout(300);
+  const late = await firstLineBox(page);
+  expect(late).not.toBeNull();
+  const dy = Math.abs(late!.top - early!.top);
+  const dh = Math.abs(late!.height - early!.height);
+  const dfs = Math.abs(late!.fontSize - early!.fontSize);
+  expect(dy, `قفزة رأسية ${dy}px — ${label}`).toBeLessThanOrEqual(MAX_JUMP_PX);
+  expect(dh, `تغيّر ارتفاع السطر ${dh}px — ${label}`).toBeLessThanOrEqual(MAX_SIZE_DELTA_PX);
+  expect(dfs, `تغيّر font-size ${dfs}px — ${label}`).toBeLessThanOrEqual(MAX_SIZE_DELTA_PX);
 }
 
 test("mushaf page flip — لا قفزة لأول سطر بعد الظهور", async ({ page }) => {
@@ -47,13 +64,7 @@ test("mushaf page flip — لا قفزة لأول سطر بعد الظهور", a
     await page.waitForSelector(`[data-testid="mushaf-page"][data-page="${target}"]`, {
       timeout: 20000,
     });
-    const early = await firstLineBox(page);
-    expect(early, `سطر أول على صفحة ${target}`).not.toBeNull();
-    await page.waitForTimeout(300);
-    const late = await firstLineBox(page);
-    expect(late).not.toBeNull();
-    const dy = Math.abs((late!.top) - (early!.top));
-    expect(dy, `قفزة رأسية ${dy}px على صفحة ${target}`).toBeLessThanOrEqual(MAX_JUMP_PX);
+    await assertStableFirstLine(page, `صفحة ${target}`);
   }
 });
 
@@ -67,17 +78,11 @@ test("mushaf page flip — صفحات ٦→٧ و٤٣→٤٤ بلا قفزة", as
     await page.waitForSelector(`[data-testid="mushaf-page"][data-page="${to}"]`, {
       timeout: 20000,
     });
-    const early = await firstLineBox(page);
-    expect(early, `سطر أول على صفحة ${to}`).not.toBeNull();
-    await page.waitForTimeout(300);
-    const late = await firstLineBox(page);
-    expect(late).not.toBeNull();
-    const dy = Math.abs(late!.top - early!.top);
-    expect(dy, `قفزة رأسية ${dy}px على ${from}→${to}`).toBeLessThanOrEqual(MAX_JUMP_PX);
+    await assertStableFirstLine(page, `${from}→${to}`);
   }
 });
 
-test("mushaf page flip — صفحات وسطية سريعة", async ({ page }) => {
+test("mushaf page flip — عشر قلبات متتالية بلا قفزة حجم", async ({ page }) => {
   await openMushaf(page, 20);
 
   for (const target of [21, 22]) {
@@ -85,24 +90,16 @@ test("mushaf page flip — صفحات وسطية سريعة", async ({ page }) =
     await page.waitForSelector(`[data-testid="mushaf-page"][data-page="${target}"]`, {
       timeout: 20000,
     });
-    const early = await firstLineBox(page);
-    expect(early).not.toBeNull();
-    await page.waitForTimeout(300);
-    const late = await firstLineBox(page);
-    expect(late).not.toBeNull();
-    expect(Math.abs(late!.top - early!.top)).toBeLessThanOrEqual(MAX_JUMP_PX);
+    await assertStableFirstLine(page, `صفحة ${target}`);
   }
 
-  /* عشر قلبات متتالية — لا انهيار ولا قفزة كبيرة على آخر ظهور */
+  let current = 22;
   for (let i = 0; i < 10; i++) {
     await flipNext(page);
-    await page.waitForTimeout(80);
+    current += 1;
+    await page.waitForSelector(`[data-testid="mushaf-page"][data-page="${current}"]`, {
+      timeout: 20000,
+    });
+    await assertStableFirstLine(page, `قلبة ${i + 1} → ${current}`);
   }
-  await page.waitForSelector('[data-testid="mushaf-page"]', { timeout: 20000 });
-  const early = await firstLineBox(page);
-  expect(early).not.toBeNull();
-  await page.waitForTimeout(300);
-  const late = await firstLineBox(page);
-  expect(late).not.toBeNull();
-  expect(Math.abs(late!.top - early!.top)).toBeLessThanOrEqual(MAX_JUMP_PX);
 });
