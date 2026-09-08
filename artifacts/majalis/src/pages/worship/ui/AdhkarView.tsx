@@ -16,7 +16,9 @@ import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { haptics } from "@/lib/haptics";
 import { markMorningAdhkarDone } from "@/lib/local-milestones";
 import { recordUserActivity } from "@/lib/user-streak";
+import { AdhkarFocusNav } from "./AdhkarFocusNav";
 import "@/styles/pages/adhkar.css";
+import "@/styles/pages/tasbih.css";
 import "@/styles/components/thumb-zone.css";
 
 const AdhkarDhikrSheet = lazy(() =>
@@ -308,9 +310,16 @@ export default function AdhkarPage() {
             الذكر {toAr(currentIndex + 1)} من {toAr(total)}
           </p>
 
-          {/* نص الذكر */}
-          <div key={animKey} className="adhkar-focus-card adhkar-anim-fade">
-            <p className="adhkar-focus-text" lang="ar" dir="rtl">{current.text}</p>
+          {/* نص الذكر — بطاقة بارتفاع ثابت حتى لا تتحرك أزرار التنقل */}
+          <div className="adhkar-focus-card">
+            <p
+              key={animKey}
+              className="adhkar-focus-text adhkar-anim-fade"
+              lang="ar"
+              dir="rtl"
+            >
+              {current.text}
+            </p>
           </div>
 
           {/* زر النقر للعدّ (التسبيح) — المنطقة بارتفاع ثابت لإبقاء الأزرار في مكانها */}
@@ -336,24 +345,29 @@ export default function AdhkarPage() {
                     )}
                   </div>
                 </button>
-                {done && (
-                  <button
-                    type="button"
-                    className="adhkar-focus-btn adhkar-focus-btn--reset"
-                    onClick={() => {
-                      resetCounter();
-                      ssSave(category, currentIndex, 0);
-                    }}
-                  >
-                    إعادة ضبط
-                  </button>
-                )}
-                {!done && (
-                  <p className="adhkar-tapper__hint">اضغط للعدّ</p>
-                )}
-                {done && isLast && (
-                  <p className="adhkar-tapper__complete"><Leaf size={15} strokeWidth={1.8} aria-hidden="true" /> أكملت جميع الأذكار</p>
-                )}
+                <div className="adhkar-tapper-status" aria-live="polite">
+                  {done ? (
+                    <>
+                      <button
+                        type="button"
+                        className="adhkar-focus-btn adhkar-focus-btn--reset"
+                        onClick={() => {
+                          resetCounter();
+                          ssSave(category, currentIndex, 0);
+                        }}
+                      >
+                        إعادة ضبط
+                      </button>
+                      {isLast ? (
+                        <p className="adhkar-tapper__complete">
+                          <Leaf size={15} strokeWidth={1.8} aria-hidden="true" /> أكملت جميع الأذكار
+                        </p>
+                      ) : null}
+                    </>
+                  ) : (
+                    <p className="adhkar-tapper__hint">اضغط للعدّ</p>
+                  )}
+                </div>
               </div>
             ) : (
               /* ذكر مرة واحدة — زر تم واضح */
@@ -378,53 +392,20 @@ export default function AdhkarPage() {
             )}
           </div>
 
-          {/* أزرار التنقل */}
-          <div className="adhkar-focus-nav">
-            <button
-              type="button"
-              className="adhkar-focus-btn adhkar-focus-btn--prev"
-              onClick={goPrev}
-              disabled={currentIndex === 0}
-              aria-label="الذكر السابق"
-            >← السابق</button>
-
-            <button
-              type="button"
-              className="adhkar-focus-btn adhkar-focus-btn--details"
-              onClick={() => setShowSheet(true)}
-              aria-label="عرض تفاصيل الذكر"
-            >التفاصيل</button>
-
-            <button
-              type="button"
-              className="adhkar-focus-btn adhkar-focus-btn--next"
-              onClick={goNext}
-              disabled={currentIndex === total - 1}
-              aria-label="الذكر التالي"
-            >التالي →</button>
-          </div>
-
-          <div className="adhkar-focus-nav adhkar-focus-nav--reset">
-            <button
-              type="button"
-              className="adhkar-focus-btn adhkar-focus-btn--ghost"
-              onClick={() => {
-                setCurrentIndex(0);
-                resetCounter();
-                ssSave(category, 0, 0);
-              }}
-            >
-              إعادة ضبط التقدّم
-            </button>
-          </div>
-
-          {/* شريط تقدم الأذكار */}
-          <div className="adhkar-focus-progress" role="progressbar" aria-valuenow={currentIndex + 1} aria-valuemax={total}>
-            <div
-              className="adhkar-focus-progress-fill adhkar-prog-fill"
-              style={{ "--adhkar-pct": `${((currentIndex + 1) / total) * 100}%` } as React.CSSProperties}
-            />
-          </div>
+          <AdhkarFocusNav
+            onPrev={goPrev}
+            onNext={goNext}
+            onDetails={() => setShowSheet(true)}
+            onResetProgress={() => {
+              setCurrentIndex(0);
+              resetCounter();
+              ssSave(category, 0, 0);
+            }}
+            canPrev={currentIndex > 0}
+            canNext={currentIndex < total - 1}
+            progressIndex={currentIndex}
+            progressTotal={total}
+          />
         </div>
       ) : null}
 
