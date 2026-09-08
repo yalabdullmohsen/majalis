@@ -890,10 +890,9 @@ const SECTION_SEEDS: SectionSeed[] = [
   // —— ٤. الفهارس والمراجع ——
   {
     id: "library",
-    label: "المراجع (محوّل)",
-    subtitle: "البحث في الكتب والمراجع الشرعية",
     label: "المراجع (بحث)",
-    subtitle: "يُفتح عبر البحث العلمي الموحد",    route: "/search",
+    subtitle: "يُفتح عبر البحث العلمي الموحد",
+    route: "/search",
     icon: Library,
     group: "library",
     order: 10,
