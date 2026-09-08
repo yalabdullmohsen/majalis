@@ -72,8 +72,8 @@ for (const p of published) {
   assert.ok(!hasForbiddenSoon(blob), `${p.slug}: بلا «قريبًا» واجهية`);
   assert.ok(!EMOJI_RE.test(blob), `${p.slug}: بلا إيموجي`);
   assert.ok(
-    (p.whyMentioned || "").trim().length >= 60,
-    `سبب الذكر ≥60: ${p.slug}`,
+    (p.whyMentioned || "").trim().length >= 90,
+    `سبب الذكر ≥90: ${p.slug}`,
   );
   assert.doesNotMatch(
     p.whyMentioned || "",
