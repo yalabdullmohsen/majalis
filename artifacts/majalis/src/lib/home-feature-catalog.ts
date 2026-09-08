@@ -122,10 +122,10 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     label: "أدوات التعلم",
     items: [
       { href: "/my-learning",     Icon: Layers,      title: seoNavLabel("/my-learning", "حسابي"),   desc: "متابعة تقدمك في الدروس والبطاقات للمراجعة السريعة" },
-      { href: "/quiz",            Icon: Target,      title: seoNavLabel("/quiz", "لعبة سين جيم"),   desc: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة" },
+      { href: "/quiz",            Icon: Target,      title: seoNavLabel("/quiz", "لعبة سين جيم"),   desc: "أسئلة شرعية ومعرفية متدرجة للمراجعة" },
       { href: "/assistant",       Icon: Bot,         title: seoNavLabel("/assistant", "المساعد العلمي"),    desc: "محادثة فورية بالذكاء الاصطناعي في العلوم الشرعية" },
       { href: "/occasions", Icon: CalendarDays, title: seoNavLabel("/occasions", "المناسبات الإسلامية"), desc: "التواريخ الهجرية والمناسبات الشرعية" },
-      { href: "/islamic-directory", Icon: Landmark, title: seoNavLabel("/islamic-directory", "دليل المؤسسات والمساجد"), desc: "مؤسسات ومساجد ومعالم إسلامية" },
+      { href: "/islamic-directory", Icon: Landmark, title: seoNavLabel("/islamic-directory", "دليل المؤسسات والمساجد"), desc: "مؤسسات ومساجد ومعالم مرتّبة للبحث المحلي" },
       { href: "/universities", Icon: GraduationCap, title: seoNavLabel("/universities", "دليل الجامعات الشرعية"), desc: "جامعات وكليات الدراسات الشرعية حول العالم" },
       { href: "/academic-research", Icon: Scroll, title: seoNavLabel("/academic-research", "رسائل الماجستير والدكتوراه"), desc: "فهرس الأبحاث والرسائل الشرعية الموثّقة" },
       { href: "/tarikh-islami",   Icon: Users,       title: seoNavLabel("/tarikh-islami", "التاريخ الإسلامي"),          desc: "أحداث الأمة مرتّبة زمنياً من ما قبل البعثة إلى العصر الحديث" },
@@ -147,9 +147,9 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     Icon: Monitor,
     label: "الأدوات الرقمية",
     items: [
-      { href: "/qibla",        Icon: Compass,     title: seoNavLabel("/qibla", "اتجاه القبلة"),    desc: "بوصلة لمعرفة اتجاه الكعبة" },
+      { href: "/qibla",        Icon: Compass,     title: seoNavLabel("/qibla", "اتجاه القبلة"),    desc: "حدد اتجاه القبلة من موقعك للصلاة والسفر" },
       { href: "/prayer-times", Icon: Clock,       title: seoNavLabel("/prayer-times", "مواقيت الصلاة والقبلة"),   desc: "مواقيت دقيقة مع القبلة والأذان" },
-      { href: "/submit",       Icon: Upload,      title: seoNavLabel("/submit", "أضف محتوى"),       desc: "ساهم في إثراء محتوى المنصة" },
+      { href: "/submit",       Icon: Upload,      title: seoNavLabel("/submit", "أضف محتوى"),       desc: "أرسل درسًا أو فائدة أو تصويبًا لمراجعة المحررين" },
     ],
   },
 ];
