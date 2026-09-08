@@ -233,6 +233,21 @@ const APP_PAGES = [
     "/quran-hub/tilawa",
     ["تلاوة", "قرّاء", "استماع"],
   ],
+  ["app:tawhid", "aqidah", "العقيدة والتوحيد", "/tawhid", ["عقيدة", "توحيد"]],
+  ["app:arkan-iman", "aqidah", "أركان الإيمان", "/arkan-iman", ["إيمان", "عقيدة"]],
+  ["app:janna-naar", "aqidah", "الجنة والنار", "/janna-naar", ["آخرة", "جنة", "نار"]],
+  ["app:akhlaq", "akhlaq", "مكارم الأخلاق", "/akhlaq", ["أخلاق", "تزكية"]],
+  ["app:hikam-salaf", "raqaiq", "حِكَم السلف", "/hikam-salaf", ["حكم", "سلف"]],
+  ["app:raqaiq", "raqaiq", "الرقائق والزهد", "/raqaiq", ["رقائق", "زهد"]],
+  ["app:wasaya", "hadith", "الوصايا النبوية", "/wasaya-nabawiyya", ["وصايا", "نصيحة"]],
+  ["app:fadail", "hadith", "فضائل الأعمال", "/fadail-aamal", ["فضائل", "أعمال"]],
+  ["app:fawaid", "fawaid", "الفوائد", "/fawaid", ["فوائد"]],
+  ["app:miracles", "miracles", "الإعجاز العلمي", "/miracles", ["إعجاز", "كون"]],
+  ["app:prophetic-medicine", "medicine", "الطب النبوي", "/prophetic-medicine", ["طب", "تداوي"]],
+  ["app:updates", "news", "آخر المستجدات", "/updates", ["مستجدات", "تحديثات"]],
+  ["app:privacy-center", "settings", "مركز الخصوصية", "/privacy-center", ["خصوصية", "بيانات"]],
+  ["app:madhahib", "fiqh", "المذاهب الفقهية", "/madhahib", ["مذاهب", "فقه"]],
+  ["app:sects", "aqidah", "الفرق والمذاهب", "/islamic-sects", ["فرق", "عقيدة"]],
 ];
 
 for (const [id, kind, title, href, parts] of APP_PAGES) {
