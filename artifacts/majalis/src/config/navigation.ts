@@ -43,7 +43,7 @@ export const secondaryNav: readonly NavLinkItem[] = [
   { id: "scholars", href: "/scholars", label: "العلماء" },
   { id: "hadith", href: "/hadith", label: "الحديث وعلومه" },
   { id: "tarikh", href: "/tarikh-islami", label: "التاريخ الإسلامي" },
-  { id: "seerah", href: "/seerah", label: "السيرة" },
+  { id: "seerah", href: "/seerah", label: "السيرة النبوية" },
   { id: "prophets", href: "/prophets", label: "قصص الأنبياء" },
   { id: "nations", href: "/nations", label: "الأمم السابقة" },
   { id: "quran-people", href: "/quran/people", label: "الذين ذكروا في القرآن" },
