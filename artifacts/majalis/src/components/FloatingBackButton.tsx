@@ -1,10 +1,11 @@
 /**
- * الرجوع العائم الثابت أُلغي — كان يغطي المحتوى ويتداخل مع ScrollToTop.
- * الرجوع داخل تدفق الصفحة: هيدر اللوبي / SectionHero / أزرار الصفحة.
- * يُبقى المكوّن كـ no-op لتوافق الاستيرادات القديمة في App.tsx والبوابات.
+ * زر الرجوع العائم العام — أسفل يمين الشاشة فوق الشريط السفلي.
+ * السلوك عبر AppBackButton + goBackOrFallback.
  */
+import { AppBackButton } from "@/components/common/AppBackButton";
+
 export function FloatingBackButton() {
-  return null;
+  return <AppBackButton variant="floating" autoHideFloating />;
 }
 
 /** توافق مع الاستيرادات القديمة */

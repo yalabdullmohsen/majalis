@@ -15,7 +15,7 @@ assert.doesNotMatch(appBack, /isTabRootPath/);
 assert.match(appBack, /ariaLabel = "رجوع"/);
 
 const fab = read("src/components/FloatingBackButton.tsx");
-assert.match(fab, /return null/);
+assert.match(fab, /variant="floating"/);
 
 const lobby = read("src/components/lobby/SectionLobby.tsx");
 assert.match(lobby, /inlineHeaderBack = true/);
