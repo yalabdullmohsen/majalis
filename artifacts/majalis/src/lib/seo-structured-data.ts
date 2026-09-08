@@ -82,7 +82,7 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
 
 export function lessonJsonLd(lesson: KuwaitLessonRecord) {
   const path = `/lessons/${lesson.id}`;
-  const image = lesson.sheikhImage || lesson.lessonImage || DEFAULT_IMAGE;
+  const image = DEFAULT_IMAGE;
   const sheikh = String(lesson.sheikhName || "")
     .replace(/^الشيخ:\s*/u, "")
     .trim();
@@ -167,7 +167,7 @@ export function lessonSeoMeta(lesson: KuwaitLessonRecord) {
     ...(lesson.keywords || []),
   ].filter(Boolean);
 
-  const image = lesson.sheikhImage || lesson.lessonImage || DEFAULT_IMAGE;
+  const image = DEFAULT_IMAGE;
 
   return {
     title,

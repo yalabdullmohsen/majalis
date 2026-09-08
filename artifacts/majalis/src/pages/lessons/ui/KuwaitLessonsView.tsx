@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties, type RefObject } from "react";
 import { KUWAIT_SHEIKHS } from "@/lib/kuwait-sheikhs";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -9,7 +9,7 @@ declare global {
   interface Window { twttr?: { widgets?: { load: (el?: HTMLElement) => void } } }
 }
 
-function useTwitterEmbed(ref: React.RefObject<HTMLDivElement | null>) {
+function useTwitterEmbed(ref: RefObject<HTMLDivElement | null>) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -37,6 +37,9 @@ function useTwitterEmbed(ref: React.RefObject<HTMLDivElement | null>) {
 
 
 function SheikhCard({ sheikh }: { sheikh: (typeof KUWAIT_SHEIKHS)[number] }) {
+  const initials = sheikh.name.trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join("");
+  const hue = sheikh.name.split("").reduce((a, c) => a + c.charCodeAt(0), 0) % 6;
+  const avatarBg = ["#1b5e3b", "var(--mj-brand-deep)", "#1b3a5e", "#5e1b1b", "#3b1b5e", "var(--mj-brand-deep)"][hue];
   return (
     <a
       href={sheikh.drosq8Url}
@@ -45,38 +48,13 @@ function SheikhCard({ sheikh }: { sheikh: (typeof KUWAIT_SHEIKHS)[number] }) {
       aria-label={`دروس ${sheikh.name} على موقع دروس الكويت`}
     >
       <div className="sheikh-card__avatar-wrap">
-        {sheikh.twitterHandle ? (
-          <>
-            <img
-              src={`https://unavatar.io/twitter/${sheikh.twitterHandle}?fallback=false`}
-              alt={sheikh.name}
-              className="sheikh-avatar sheikh-avatar--photo"
-              onError={(e) => {
-                const el = e.currentTarget as HTMLImageElement;
-                el.style.display = "none";
-                const sib = el.nextElementSibling as HTMLElement | null;
-                if (sib) sib.style.display = "flex";
-              }}
-              loading="lazy"
-              decoding="async"
-            />
-            <span
-              className="sheikh-avatar sheikh-avatar--initials sheikh-avatar--hidden"
-              style={{ "--avatar-bg": ["#1b5e3b","var(--mj-brand-deep)","#1b3a5e","#5e1b1b","#3b1b5e","var(--mj-brand-deep)"][sheikh.name.split("").reduce((a,c)=>a+c.charCodeAt(0),0) % 6] } as React.CSSProperties}
-              aria-hidden="true"
-            >
-              {sheikh.name.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("")}
-            </span>
-          </>
-        ) : (
-          <span
-            className="sheikh-avatar sheikh-avatar--initials"
-            style={{ "--avatar-bg": ["#1b5e3b","var(--mj-brand-deep)","#1b3a5e","#5e1b1b","#3b1b5e","var(--mj-brand-deep)"][sheikh.name.split("").reduce((a,c)=>a+c.charCodeAt(0),0) % 6] } as React.CSSProperties}
-            aria-hidden="true"
-          >
-            {sheikh.name.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("")}
-          </span>
-        )}
+        <span
+          className="sheikh-avatar sheikh-avatar--initials"
+          style={{ "--avatar-bg": avatarBg } as CSSProperties}
+          aria-hidden="true"
+        >
+          {initials}
+        </span>
       </div>
       <div className="sheikh-card__body">
         <h3 className="sheikh-card__name">{sheikh.name}</h3>

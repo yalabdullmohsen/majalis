@@ -11,6 +11,7 @@ export function isPlaceholderLessonImage(url?: string | null): boolean {
   return PLACEHOLDER_PATTERNS.some((pattern) => pattern.test(url.trim()));
 }
 
+/** @deprecated صور الدروس/الدورات لم تعد تُعرض في الواجهة — الحقل اختياري للتوافق فقط */
 export function resolveLessonPosterUrl(url?: string | null): string | undefined {
   if (isPlaceholderLessonImage(url)) return undefined;
   return url?.trim() || undefined;

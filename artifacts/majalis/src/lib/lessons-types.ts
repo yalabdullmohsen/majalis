@@ -7,6 +7,7 @@ export type LessonSeedRow = {
   /** منظّم الدورة إن اختلف عن المحاضر */
   organizer_name?: string;
   sheikh_image_url?: string;
+  /** @deprecated اختياري — لا يُعرض في واجهة الدروس/الدورات */
   poster_image_url?: string;
   category: string;
   city: string;
