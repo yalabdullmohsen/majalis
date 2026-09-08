@@ -326,18 +326,18 @@ html.dark .mj-filter-fields label,
 .isp-filter-chips .isp-chip.is-active,
 .ads-chip.is-active,
 .kng-filter-chip.is-active {
-  background: var(--color-primary-dark, var(--mj-brand-deep, #123f2e)) !important;
-  border-color: var(--color-primary-dark, var(--mj-brand-deep, #123f2e)) !important;
-  color: #fff !important;
+  background: var(--mj-chip-active-bg, var(--color-primary-dark, var(--mj-brand-deep, #123f2e))) !important;
+  border-color: var(--mj-chip-active-bg, var(--color-primary-dark, var(--mj-brand-deep, #123f2e))) !important;
+  color: var(--mj-chip-active-fg, #fff) !important;
 }
 
 html.dark .filter-chips__chip.is-active,
 html.dark .ds-chip.is-active,
 [data-theme="dark"] .filter-chips__chip.is-active,
 [data-theme="dark"] .ds-chip.is-active {
-  background: #059669 !important;
-  border-color: #059669 !important;
-  color: #ffffff !important;
+  background: var(--mj-chip-active-bg, #5fbf98) !important;
+  border-color: var(--mj-chip-active-bg, #5fbf98) !important;
+  color: var(--mj-chip-active-fg, #06231a) !important;
 }
 
 

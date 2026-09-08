@@ -1,11 +1,9 @@
 import type { ReactNode } from "react";
-import { useLocation } from "wouter";
 import { FeaturedSectionCard } from "@/components/sections/FeaturedSectionCard";
 import { SectionCard } from "@/components/sections/SectionCard";
 import { QuickActionsQuad } from "@/components/lobby/QuickActionsQuad";
 import type { LobbyChip, LobbyGroup, LobbyId, LobbyItem, LobbyPrimary, LobbyQuadItem } from "@/config/section-lobbies";
 import type { SectionDef } from "@/config/sections.registry";
-import { isTabRootPath } from "@/config/section-lobby-chrome";
 import { AppBackButton } from "@/components/common/AppBackButton"; // goBackOrFallback
 import { cn } from "@/lib/utils";
 import "./section-lobby.css";
@@ -62,9 +60,6 @@ export function SectionLobby({
   className,
   inlineHeaderBack = false,
 }: Props) {
-  const [location] = useLocation();
-  /* جذور التبويب تعتمد القائمة السفلية — لا زر رجوع عائم يغطي البطاقات */
-  const showFloatingBack = !inlineHeaderBack && !isTabRootPath(location);
   return (
     <div
       className={cn("section-lobby", className)}
@@ -89,23 +84,15 @@ export function SectionLobby({
               <span className="section-lobby__head-spacer" aria-hidden="true" />
             </div>
           ) : (
-            <>
-              {showFloatingBack ? (
-                <AppBackButton
-                  variant="lobby"
-                  className="section-lobby__back"
-                  label="رجوع"
-                />
-              ) : null}
-              <h1
-                className={cn(
-                  "section-lobby__title",
-                  lobbyId === "quran" && "quran-hub-page__title",
-                )}
-              >
-                {title}
-              </h1>
-            </>
+            /* الرجوع العائم من FloatingBackButton العالمي — بلا تكرار يغطي البطاقات */
+            <h1
+              className={cn(
+                "section-lobby__title",
+                lobbyId === "quran" && "quran-hub-page__title",
+              )}
+            >
+              {title}
+            </h1>
           )}
         </header>
 

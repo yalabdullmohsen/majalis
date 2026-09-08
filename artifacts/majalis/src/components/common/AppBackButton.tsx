@@ -3,7 +3,6 @@ import { ArrowRight } from "lucide-react";
 import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { useLocation } from "wouter";
 import { isAuthStandalonePath, isImmersiveChromePath } from "@/lib/immersive-chrome";
-import { isTabRootPath } from "@/config/section-lobby-chrome";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { haptics } from "@/lib/haptics";
 import { cn } from "@/lib/utils";
@@ -14,7 +13,7 @@ type AppBackButtonProps = {
   /** مسار أب صريح عند غياب تاريخ داخلي حقيقي */
   fallbackHref?: string;
   variant?: AppBackVariant;
-  /** إخفاء تلقائي لنسخة floating على الجذور/الكروم الخاص */
+  /** إخفاء تلقائي لنسخة floating على الرئيسية/المصحف/الدخول فقط */
   autoHideFloating?: boolean;
   label?: ReactNode;
   className?: string;
@@ -46,10 +45,11 @@ export function AppBackButton({
   const [nudge, setNudge] = useState(false);
 
   if (variant === "floating" && autoHideFloating) {
-    if (location === "/") return null;
-    if (isImmersiveChromePath(location) || isTabRootPath(location)) return null;
-    if (isAuthStandalonePath(location)) return null;
     const path = location.replace(/\/+$/, "") || "/";
+    /* يظهر في كل الصفحات الداخلية بما فيها جذور التبويب؛ يُخفى في الرئيسية/المصحف/الدخول فقط */
+    if (path === "/") return null;
+    if (isImmersiveChromePath(location)) return null;
+    if (isAuthStandalonePath(location)) return null;
     if (path === "/support" || path === "/contact") return null;
   }
 

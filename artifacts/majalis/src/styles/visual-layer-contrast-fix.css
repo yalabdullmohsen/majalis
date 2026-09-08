@@ -238,17 +238,21 @@ header.fiqh-lux-book-hero {
 .filter-chips,
 .mj-segmented-filter {
   display: flex !important;
-  flex-wrap: wrap !important;
+  flex-wrap: nowrap !important;
   align-items: center !important;
-  gap: 0.4rem !important;
+  gap: 0.3rem !important;
   width: 100% !important;
   min-width: 0 !important;
-  padding: 0.35rem !important;
-  background: var(--surface-muted) !important;
-  border: 1px solid var(--border-soft) !important;
-  border-radius: 16px !important;
+  padding: 0.1rem 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
   box-shadow: none !important;
-  overflow: visible !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
 }
 
 .lesson-filters__chips .filter-chips__chip,
@@ -258,12 +262,12 @@ header.fiqh-lux-book-hero {
   width: auto !important;
   min-width: unset !important;
   max-width: none !important;
-  min-height: 40px !important;
-  padding: 0.4rem 0.85rem !important;
+  min-height: 36px !important;
+  padding: 0.32rem 0.7rem !important;
   border-radius: 999px !important;
-  border: 1px solid var(--border-soft) !important;
-  background: var(--surface) !important;
-  color: var(--text-main) !important;
+  border: 1px solid var(--mj-chip-border, var(--border-soft)) !important;
+  background: var(--mj-chip-bg, var(--surface)) !important;
+  color: var(--mj-chip-fg, var(--text-main)) !important;
   box-shadow: none !important;
   white-space: nowrap !important;
 }
@@ -271,9 +275,9 @@ header.fiqh-lux-book-hero {
 .lesson-filters__chips .filter-chips__chip.is-active,
 .filter-chips__chip.is-active,
 .mj-filter-chip.is-active {
-  background: var(--primary-strong) !important;
-  border-color: var(--primary-strong) !important;
-  color: var(--text-on-primary) !important;
+  background: var(--mj-chip-active-bg, var(--primary-strong)) !important;
+  border-color: var(--mj-chip-active-bg, var(--primary-strong)) !important;
+  color: var(--mj-chip-active-fg, var(--text-on-primary, #fff)) !important;
 }
 
 .lesson-filters__tools {

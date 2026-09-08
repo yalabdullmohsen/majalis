@@ -55,8 +55,9 @@ assert.doesNotMatch(merged, /<PageHero/);
 assert.doesNotMatch(merged, /lobbyId="sections"/);
 
 const back = read("src/components/common/AppBackButton.tsx");
-assert.match(back, /isTabRootPath/);
-assert.match(back, /section-lobby-chrome/);
+assert.doesNotMatch(back, /isTabRootPath/, "جذور التبويب لا تخفي الزر العائم العالمي");
+assert.match(back, /goBackOrFallback/);
+assert.match(back, /ariaLabel = "رجوع"/);
 
 const css = read("src/components/lobby/section-lobby.css");
 assert.match(css, /font-size:\s*24px/);
