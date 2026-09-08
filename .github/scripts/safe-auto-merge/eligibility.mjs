@@ -72,9 +72,12 @@ export function summarizeFiles(files = []) {
   let totalDeletions = 0;
   let deletedFiles = 0;
   for (const f of files) {
+    const p = String(f.path || "");
+    const exempt = AUTO_MERGE_FILE_COUNT_EXEMPT_PATTERNS.some((re) => re.test(p));
     const del = Number(f.deletions || 0);
-    totalDeletions += del;
+    if (!exempt) totalDeletions += del;
     const ct = String(f.changeType || "").toUpperCase();
+    if (exempt) continue;
     if (ct === "DELETED" || ct === "REMOVED") deletedFiles += 1;
     else if (del > 0 && Number(f.additions || 0) === 0) deletedFiles += 1;
   }
