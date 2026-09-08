@@ -479,7 +479,7 @@
     "test:ui-regression-gates": "pnpm run test:no-global-css && pnpm run test:ui-regression-checklist && pnpm run test:soft-cards-system && pnpm run test:scroll-layout-gap && pnpm run test:mobile-header-gap",
     "test:csp-seo-shell": "node --import tsx src/lib/__tests__/csp-seo-shell-hash-gate.test.ts",
     "test:framed-chrome": "node --import tsx src/lib/__tests__/framed-chrome-gate.test.ts",
-    "test:lesson-unified-card": "node --import tsx src/lib/__tests__/lesson-unified-card-layout-gate.test.ts",
+    "test:lesson-unified-card": "node --import tsx src/lib/__tests__/lesson-unified-card-layout-gate.test.ts && node --import tsx src/lib/__tests__/lessons-prayer-mobile-ui-gate.test.ts",
     "test:content-audit-master": "node --import tsx src/lib/__tests__/content-audit-master-gate.test.ts",
     "test:prayer-respect-nudge": "node --import tsx src/lib/__tests__/prayer-respect-nudge.test.ts",
     "test:learn-lessons-not-paths": "node --import tsx src/lib/__tests__/learn-lessons-not-paths.test.ts",

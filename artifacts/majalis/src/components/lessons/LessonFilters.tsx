@@ -104,13 +104,13 @@ export function LessonFilters({ filters, onChange, searchSlot, filterSlot }: Pro
               <span className="filter-chips__label">{chip.label}</span>
             </button>
           ))}
-          {hasTools ? (
-            <div className="lesson-filters__tools" aria-label="أدوات التصفية">
-              {searchSlot}
-              {filterSlot}
-            </div>
-          ) : null}
         </div>
+        {hasTools ? (
+          <div className="lesson-filters__tools" aria-label="أدوات التصفية">
+            {searchSlot}
+            {filterSlot}
+          </div>
+        ) : null}
       </div>
     </div>
   );

@@ -215,19 +215,21 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
               التفاصيل
             </Link>
           ) : null}
-          <FavoriteButton
-            contentType="lesson"
-            contentId={lesson.id}
-            compact
-            className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
-          />
-          <button
-            type="button"
-            className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
-            onClick={() => downloadUnifiedCalendar(lesson)}
-          >
-            أضف للتقويم
-          </button>
+          <div className="lesson-unified-card__actions-secondary">
+            <FavoriteButton
+              contentType="lesson"
+              contentId={lesson.id}
+              compact
+              className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
+            />
+            <button
+              type="button"
+              className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
+              onClick={() => downloadUnifiedCalendar(lesson)}
+            >
+              التقويم
+            </button>
+          </div>
 
           {!compact && (
             <>
