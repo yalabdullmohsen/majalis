@@ -23,7 +23,7 @@ async function dismissSplash(page: Page) {
     window.localStorage.setItem("majalis-theme", "light");
     window.localStorage.setItem("majlis_intro_seen", "1");
     window.localStorage.setItem("majalis-intro-seen", "1");
-    window.sessionStorage.setItem("mj.launch-splash.session.v2", "1");
+    window.sessionStorage.setItem("mj.launch-splash.session.v3", "1");
   });
 }
 
