@@ -38,7 +38,7 @@
   "redirects": [
     {
       "source": "/more",
-      "destination": "/",
+      "destination": "/sections",
       "permanent": true
     },
     {

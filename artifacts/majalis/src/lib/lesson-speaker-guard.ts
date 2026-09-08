@@ -10,6 +10,8 @@ const SESSION_COUNT_RE = /^\d+\s*مجلس/u;
 const AVAILABILITY_RE = /متاح(?:\s*24|\s*٢٤)?|24\s*ساعة|ساعة\s*يوميا|أونلاين\s*فقط|متاح\s*على\s*مدار/u;
 const NON_PERSON_RE =
   /^(الدرس|المجلس|الفصل|الجلسة|الباب|الكتاب|الشرح|المسار|المستوى|البرنامج)\b/u;
+const PLACEHOLDER_SPEAKER_RE =
+  /^(يُعلن لاحقًا|يعلن لاحقا|يُعلن لاحقاً|يُذكر عند التسجيل|يذكر عند التسجيل|الشيخ غير محدد|غير محدد)$/u;
 
 export function normalizeSpeakerCandidate(raw: string): string {
   return String(raw || "")
@@ -22,6 +24,7 @@ export function normalizeSpeakerCandidate(raw: string): string {
 export function looksLikePersonSpeaker(raw: string): boolean {
   const name = normalizeSpeakerCandidate(raw);
   if (!name || name.length < 3) return false;
+  if (PLACEHOLDER_SPEAKER_RE.test(name)) return false;
   if (/^\d+$/u.test(name)) return false;
   if (SESSION_COUNT_RE.test(name)) return false;
   if (AVAILABILITY_RE.test(name)) return false;
