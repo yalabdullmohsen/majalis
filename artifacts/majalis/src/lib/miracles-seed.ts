@@ -61,7 +61,7 @@ export const MIRACLES_SEED: MiracleSeedItem[] = [
 ملاحظة للتفكر: انتظام الكون ودوران الأرض حول محورها ينتج تعاقب الليل والنهار — وهذا مما يُستدل به على الحكمة لا على إثبات نظرية بعينها.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — آل عمران —",
+    scholarly_source: "تفسير ابن كثير — آل عمران",
     verification_status: "verified",
     status: "approved",
   },
@@ -81,7 +81,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: القمر يعكس ضوء الشمس — وهذا مما يُستدل به للتأمل في دقة الوصف القرآني دون الجزم بكل تفسير علمي لاحق.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير السعدي — يونس —",
+    scholarly_source: "تفسير السعدي — يونس",
     verification_status: "verified",
     status: "approved",
   },
@@ -101,7 +101,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: علم الجيولوجيا يرى دور الجبال في استقرار القشرة الأرضية (Earth's crust) — يُعرض للتفكر لا كإثبات علمي قطعي من الآية وحدها.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — النبأ —",
+    scholarly_source: "تفسير ابن كثير — النبأ",
     verification_status: "verified",
     status: "approved",
   },
@@ -121,7 +121,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: علم الأجنة يصف مراحل متتابعة للتكوين — يُعرض للتأمل دون الجزم بمطابقة كل مصطلح علمي حديث لكل لفظ قرآني.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — المؤمنون —",
+    scholarly_source: "تفسير ابن كثير — المؤمنون",
     verification_status: "verified",
     status: "approved",
   },
@@ -181,7 +181,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: لا يُستعمل هذا النص لإنكار الطب أو ادعاء شفاء جسدي قطعي دون دليل شرعي.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — يونس —",
+    scholarly_source: "تفسير ابن كثير — يونس",
     verification_status: "verified",
     status: "approved",
   },
@@ -257,7 +257,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 التفسير: الله جعل الأرض فراشًا مهيأةً للحياة، يستقر عليها الإنسان وينتفع بخيراتها، فيستدل بذلك على قدرة الخالق ونعمه. ويُعرض المعنى الشرعي أولًا ثم ملاحظات تفكرية بحذر دون الجزم في الإعجاز العلمي.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — الذاريات —",
+    scholarly_source: "تفسير ابن كثير — الذاريات",
     verification_status: "verified",
     status: "approved",
   },
@@ -277,7 +277,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 تنبيه: لا يُستخدم هذا النص لإثبات نظريات فيزيائية عن الزمن دون تفسير علمي معتبر ودليل شرعي.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — الحج —",
+    scholarly_source: "تفسير ابن كثير — الحج",
     verification_status: "verified",
     status: "approved",
   },
@@ -335,7 +335,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: يعرف علم الأرصاد أن الرياح تنقل جسيمات ونوى تكاثف تسهم في تشكل قطرات المطر.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير الطبري — الحجر —",
+    scholarly_source: "تفسير الطبري — الحجر",
     verification_status: "verified",
     status: "approved",
   },
@@ -355,7 +355,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: مراحل تكوين السحاب الركامي (Cumulonimbus) التي يصفها العلماء تنسجم إجمالاً مع هذه الخطوات.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — النور —",
+    scholarly_source: "تفسير ابن كثير — النور",
     verification_status: "verified",
     status: "approved",
   },
@@ -375,7 +375,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: يقرر علم الفلك أن الشمس تتحرك داخل مجرة درب التبانة ضمن نظام كوني مقدّر، وتُذكر تقديرات سرعتها واتجاهها في الدراسات الفلكية المعاصرة.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير القرطبي — يس —",
+    scholarly_source: "تفسير القرطبي — يس",
     verification_status: "verified",
     status: "approved",
   },
@@ -415,7 +415,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: تُذكر في الدراسات الجيولوجية جذور للجبال داخل القشرة؛ وهذا من أوجه التأمل المحتملة ولا يُجعل تفسيراً قطعياً للآية ولا يُبنى عليه حكم علمي نهائي.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — النبأ —",
+    scholarly_source: "تفسير ابن كثير — النبأ",
     verification_status: "verified",
     status: "approved",
   },
@@ -435,7 +435,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 يُضاف إلى ذلك ما يُشير إليه الحديث النبوي من أن آخر الزمان يقترب وتتسارع الأوقات — وهو ما يُفسره بعض العلماء رمزياً لا حقيقياً.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير الطبري — آل عمران —",
+    scholarly_source: "تفسير الطبري — آل عمران",
     verification_status: "verified",
     status: "approved",
   },
@@ -455,7 +455,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 تقرر الجيولوجيا الحديثة أن الأرض تحتوي على نواة شديدة الحرارة غنية بالحديد، وأن الزلازل والبراكين من مظاهر الطاقة الداخلية للأرض.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير القرطبي — الزلزلة —",
+    scholarly_source: "تفسير القرطبي — الزلزلة",
     verification_status: "verified",
     status: "approved",
   },
@@ -491,7 +491,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 يُشير المفسرون إلى أن وصف العظام بـ«الرميم» دقيق؛ إذ تتحلل وتتفتت بعد الموت فتبدو لا شيء. لكن العلم الحديث يُقرر أن العظام نسيج حيّ يحتوي على خلايا حية تُسمى (Osteocytes) تتجدد وتُكسّر باستمرار خلال الحياة، مما يُؤكد أن الخالق الذي أنشأها أول مرة يعلم تركيبتها الدقيقة.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير الطبري — يس —",
+    scholarly_source: "تفسير الطبري — يس",
     verification_status: "verified",
     status: "approved",
   },
@@ -610,7 +610,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 كما يُلاحظ الأطباء ارتباطاً وثيقاً بين ضعف العظام (هشاشة العظام) وضعف العضلات (ضمور العضلات)، وإن كانت العلاقة السببية بينهما تلازمية أكثر منها تتابعاً حتمياً في كل الحالات.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير الطبري — مريم | مجلة طب الشيخوخة الأمريكية —",
+    scholarly_source: "تفسير الطبري — مريم | مجلة طب الشيخوخة الأمريكية",
     verification_status: "verified",
     status: "approved",
   },

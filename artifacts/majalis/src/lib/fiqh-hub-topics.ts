@@ -259,8 +259,8 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     kind: "topic",
     rulingsCategory: "المعاملات",
     relatedGuides: [
-      { href: "/riba", label: "الربا" },
       { href: "/zakat", label: "الزكاة" },
+      { href: "/waqf", label: "الوقف" },
       { href: "/fiqh-council/nawazil", label: "النوازل المالية" },
     ],
   },

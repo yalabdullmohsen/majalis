@@ -37,11 +37,12 @@
         "history-biatha"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 1
-      }
+      },
+      "summary": "القرون السابقة لمبعث النبي ﷺ، وتُعرف عند المؤرخين بـ«الجاهلية» — كانت جزيرة العرب قبل البعثة على بقايا من ملة إبراهيم عليه السلام، مع انتشار الشرك وعبادة الأوثان حول…"
     },
     {
       "id": "history-biatha",
@@ -80,11 +81,12 @@
         "history-hijra"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 2
-      }
+      },
+      "summary": "سنة البعثة نحو ٤٠ من عمر النبي ﷺ (حوالي سنة ١٣ قبل الهجرة)، ثم ثلاث عشرة سنةً مكيةً حتى الهجرة — نزل الوحي على النبي محمد ﷺ في غار حراء بأول ما نزل من سورة العلق، فدعا…"
     },
     {
       "id": "history-hijra",
@@ -123,11 +125,12 @@
         "history-madinah"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 3
-      }
+      },
+      "summary": "سنة ١ هـ / ٦٢٢ م تقريباً — لما اشتد أذى قريش أذن الله لنبيه ﷺ بالهجرة إلى يثرب، بعد بيعتَي العقبة مع الأنصار الذين بايعوا على النصرة"
     },
     {
       "id": "history-madinah",
@@ -166,11 +169,12 @@
         "history-abu-bakr"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 4
-      }
+      },
+      "summary": "من سنة ١ إلى ١١ هـ — في المدينة نزلت أحكام الشريعة الكبرى: الصلاة والزكاة والصيام والحج والمعاملات والجهاد وآداب المجتمع، وقامت"
     },
     {
       "id": "history-abu-bakr",
@@ -209,11 +213,12 @@
         "history-umar"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 5
-      }
+      },
+      "summary": "١١–١٣ هـ — بويع أبو بكر الصديق رضي الله عنه بالخلافة بعد وفاة النبي ﷺ في سقيفة بني ساعدة ثم تمّت البيعة العامة، فثبت على"
     },
     {
       "id": "history-umar",
@@ -252,11 +257,12 @@
         "history-uthman"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 6
-      }
+      },
+      "summary": "١٣–٢٣ هـ — تولّى عمر بن الخطاب رضي الله عنه الخلافة بعد أبي بكر بوصيةٍ منه وبيعة المسلمين، فاتسعت الفتوح في الشام ومصر"
     },
     {
       "id": "history-uthman",
@@ -295,11 +301,12 @@
         "history-ali"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 7
-      }
+      },
+      "summary": "٢٣–٣٥ هـ — بويع عثمان بن عفان رضي الله عنه بعد شورى الستة التي رتّبها عمر، فتابع الفتوح في إفريقية وخراسان وأرمينية"
     },
     {
       "id": "history-ali",
@@ -338,11 +345,12 @@
         "history-fitnah"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 8
-      }
+      },
+      "summary": "٣٥–٤٠ هـ — بويع علي بن أبي طالب رضي الله عنه بعد مقتل عثمان، فسعى لضبط الأمر وجمع الكلمة في ظرفٍ شديد الاضطراب، ونقل"
     },
     {
       "id": "history-fitnah",
@@ -381,11 +389,12 @@
         "history-umayyad"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 9
-      }
+      },
+      "summary": "تقريباً ٣٥–٤١ هـ — وقع بعد استشهاد عثمان رضي الله عنه ما يُعرف بالفتنة: اختلافٌ واجتهادٌ بين أكابر الصحابة في كيفية إقامة الحدّ"
     },
     {
       "id": "history-umayyad",
@@ -424,11 +433,12 @@
         "history-abbasid"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 10
-      }
+      },
+      "summary": "٤١–١٣٢ هـ — استقرت الخلافة لمعاوية رضي الله عنه ثم لبني أمية من بعده، فاتسعت الفتوح إلى المغرب والأندلس والهند وما وراء"
     },
     {
       "id": "history-abbasid",
@@ -467,11 +477,12 @@
         "history-andalus"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 11
-      }
+      },
+      "summary": "١٣٢–٦٥٦ هـ — قامت الدولة العباسية بعد الثورة على الأمويين، واتخذت بغداد حاضرةً للخلافة، فازدهر العلم والترجمة والتأليف في"
     },
     {
       "id": "history-andalus",
@@ -510,11 +521,12 @@
         "history-crusades"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 12
-      }
+      },
+      "summary": "٩٢–٨٩٧ هـ تقريباً — فُتحت الأندلس في عهد الوليد بن عبد الملك على يد طارق بن زياد وموسى بن نصير، فقام فيها حكمٌ إسلاميٌّ طويل"
     },
     {
       "id": "history-crusades",
@@ -553,11 +565,12 @@
         "history-mongol"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 13
-      }
+      },
+      "summary": "تقريباً ٤٩٠–٦٩٠ هـ — هاجم الفرنج سواحل الشام وبيت المقدس أواخر القرن الخامس الهجري بعد ضعفٍ وتفرّقٍ في صفوف المسلمين، فاحتلّوا"
     },
     {
       "id": "history-mongol",
@@ -596,11 +609,12 @@
         "history-mamluk"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 14
-      }
+      },
+      "summary": "القرن السابع الهجري — اجتاح المغول بلاد الإسلام من الشرق بقوةٍ هائلة، فسقطت بغداد حاضرة الخلافة العباسية وقُتل الخليفة المستعصم،"
     },
     {
       "id": "history-mamluk",
@@ -639,11 +653,12 @@
         "history-ottoman"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 15
-      }
+      },
+      "summary": "٦٤٨–٩٢٣ هـ تقريباً — برز المماليك بعد الأيوبيين حكاماً لمصر والشام، فصدّوا المغول في عين جالوت، وأجهزوا على بقايا الصليبيين في"
     },
     {
       "id": "history-ottoman",
@@ -682,11 +697,12 @@
         "history-modern"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 16
-      }
+      },
+      "summary": "تقريباً ٦٩٩–١٣٤٢ هـ — نشأت الدولة العثمانية في الأناضول إمارةً صغيرة، فاتسعت حتى جمعت أقطاراً واسعة في آسيا وأوروبا وإفريقية،"
     },
     {
       "id": "history-modern",
@@ -725,12 +741,13 @@
         "intro-islam-overview"
       ],
       "review_status": "verified",
-      "updated_at": "2026-09-02",
+      "updated_at": "2026-09-08",
       "section": "history",
       "meta": {
         "era_order": 17
-      }
+      },
+      "summary": "من أوائل القرن الرابع عشر الهجري إلى عصرنا — تفتّتت الخلافة العثمانية وقامت دولٌ حديثةٌ على حدودٍ جديدة رسمها الواقع الدولي، ودخل كثيرٌ من ديار المسلمين"
     }
   ],
-  "updated_at": "2026-09-02"
+  "updated_at": "2026-09-08"
 }

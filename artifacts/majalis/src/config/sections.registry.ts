@@ -244,7 +244,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "home",
     label: "الرئيسية",
-    subtitle: "بوابة سُنّة",
+    subtitle: "مدخل المنصة للأقسام والأدوات",
     route: "/",
     icon: Home,
     group: "sciences",
@@ -270,7 +270,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "lessons",
     label: "الدروس",
-    subtitle: "دروس وشروح مسجّلة",
+    subtitle: "دروس ودورات علمية مرتّبة للحضور",
     route: "/lessons",
     icon: GraduationCap,
     group: "learning",
@@ -282,7 +282,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "prayer",
     label: "الصلاة",
-    subtitle: "مواقيت وقبلة وأذان",
+    subtitle: "مواقيت الصلاة والقبلة وتنبيهات الأذان",
     route: "/prayer-times",
     icon: MoonStar,
     group: "worship",
@@ -512,7 +512,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "quran-circles",
     label: "حلقات القرآن",
-    subtitle: "حلقات تحفيظ ودورات",
+    subtitle: "حلقات تحفيظ ودورات تجويد منظمة",
     route: "/quran-circles",
     icon: School,
     group: "learning",
@@ -666,7 +666,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     id: "fiqh",
     label: "الفقه والأحكام",
     navLabel: "الفقه",
-    subtitle: "أبواب الفقه والفتاوى",
+    subtitle: "أحكام العبادات والمعاملات بأدلتها",
     route: "/fiqh",
     icon: Scale,
     group: "sciences",
@@ -744,7 +744,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "seerah",
     label: "السيرة النبوية",
-    subtitle: "سيرة النبي ﷺ ومغازيه",
+    subtitle: "سيرة النبي ﷺ من المولد إلى الوفاة",
     route: "/seerah",
     icon: Mountain,
     group: "sciences",
@@ -811,7 +811,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "prophets",
     label: "قصص الأنبياء",
-    subtitle: "سير الأنبياء والرسل",
+    subtitle: "قصص الأنبياء في القرآن للعبرة",
     route: "/prophets",
     icon: BookHeart,
     group: "stories",
@@ -837,7 +837,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "nations",
     label: "الأمم السابقة",
-    subtitle: "قصص الأمم في القرآن",
+    subtitle: "أمم سابقة ورد ذكرها في القرآن",
     route: "/nations",
     icon: Church,
     group: "stories",
@@ -944,7 +944,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "tasbih",
     label: "التسبيح",
-    subtitle: "عداد تسبيح رقمي",
+    subtitle: "عدّاد للتسبيح والذكر بأهداف يومية",
     route: "/tasbih",
     icon: Hash,
     group: "worship",
@@ -1236,7 +1236,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "fatwa-policy",
     label: "سياسة الفتوى",
-    subtitle: "ضوابط عرض الأحكام",
+    subtitle: "ضوابط عرض الأحكام والفتاوى المعتمدة",
     route: "/fatwa-policy",
     icon: Gavel,
     group: "account",

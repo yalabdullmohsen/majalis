@@ -23,12 +23,12 @@ function assert(cond: boolean, msg: string) {
 console.log("\n=== روابط updates-seed ===");
 assert(!/id:\s*"update-news-conference"/.test(src), "لا خبر مؤتمر غير موثّق");
 assert(!/source_url:\s*"\/sources"/.test(src), "لا توجيه كتب إلى /sources");
+assert(!/source_url:\s*"\/"\s*,/.test(src), "لا تحديثات تشير إلى الصفحة الرئيسية فقط");
 assert(!/id:\s*"update-sheikhs-[^"]+"[\s\S]{0,280}source_url:\s*"\/tarikh-islami"/.test(src), "تحديثات العلماء لا تشير إلى التاريخ");
 assert(!/id:\s*"update-lesson-tafsir"[\s\S]{0,220}source_url:\s*"\/lessons"\s*,/.test(src), "درس النحل له مسار عميق");
 assert(/id:\s*"update-course-ijazah"[\s\S]{0,280}source_url:\s*"\/annual-courses\/course-ijazah-tahrir-2026"/.test(src), "دورة الإجازة بمسار عميق");
-assert(!/id:\s*"update-topics-12"[\s\S]{0,280}source_url:\s*"\/"\s*,/.test(src), "مواضيع مشوقة لا تشير للرئيسية");
-assert(!/id:\s*"update-daily-ayah"[\s\S]{0,280}source_url:\s*"\/"\s*,/.test(src), "آية اليوم لا تشير للرئيسية");
-assert(!/id:\s*"update-courses-44"[\s\S]{0,280}source_url:\s*"\/lessons"\s*,/.test(src), "دورات سنوية لا تُربط بـ/lessons العام فقط");
+assert(/id:\s*"update-topics-12"[\s\S]{0,220}source_url:\s*"\/shamael"/.test(src), "شبكة المواضيع تشير للشمائل");
+assert(/id:\s*"update-daily-ayah"[\s\S]{0,220}source_url:\s*"\/mushaf"/.test(src), "آيات اليوم تشير للمصحف");
 
 console.log(`\n=== النتيجة: ${passed} نجح / ${failed} فشل ===\n`);
 if (failed > 0) process.exit(1);
