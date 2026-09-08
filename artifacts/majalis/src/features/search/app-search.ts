@@ -309,6 +309,15 @@ export async function runAppSearch(
   results = await mergeLazySources(query, scope, results, opts.signal);
   if (opts.signal?.aborted) throw new DOMException("Aborted", "AbortError");
 
+  // إزالة التكرار حسب المسار (ثم المعرّف) — نفس منطق البحث الموحّد للرئيسية
+  const seenKeys = new Set<string>();
+  results = results.filter((r) => {
+    const key = r.href || r.id;
+    if (seenKeys.has(key)) return false;
+    seenKeys.add(key);
+    return true;
+  });
+
   results.sort((a, b) => titleFirstRank(a, query) - titleFirstRank(b, query));
   if (results.length > limit) results = results.slice(0, limit);
 
