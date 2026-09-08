@@ -131,7 +131,7 @@ const SECTIONS = [
       { href: "/assistant",        label: "المساعد الذكي",        desc: "استفسر عن أي مسألة" },
       { href: "/hikam-salaf",      label: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة" },
       { href: "/flashcards",           label: "الفوائد والبطاقات",      desc: "فوائد ومراجعة سريعة" },
-      { href: "/miracles",         label: "الإشارات الكونية",     desc: "آيات كونية بضوابط علمية" },
+      { href: "/miracles",         label: "الإعجاز العلمي",     desc: "تأملات منضبطة في إشارات الوحي" },
       { href: "/mind-map",         label: "الخرائط الذهنية",      desc: "خرائط لموضوعات العلوم الشرعية" },
       { href: "/islamic-glossary", label: "المعجم الشرعي",        desc: "مصطلحات العقيدة والفقه والحديث" },
       { href: "/maqasid-sharia",   label: "مقاصد الشريعة",        desc: "مدخل المقاصد الخمس" },

@@ -63,7 +63,7 @@ const SUNNAH_TOPIC_ORDER: MiracleTopicFilter[] = [
   "نبات",
 ];
 
-export type MiracleMethodBadge = "تأمل منضبط" | "إشارة علمية";
+export type MiracleMethodBadge = "تأمل منضبط" | "إشارة علمية" | "يحتاج حذر";
 
 export function miracleTopicLabel(
   item: Pick<MiracleSeedItem, "category" | "source_type"> | string,
@@ -84,12 +84,38 @@ export function miracleTopicLabel(
   return CATEGORY_TO_TOPIC[item.category] ?? "كونيات";
 }
 
-/** لا نستخدم «إعجاز قطعي» في الواجهة — أقصى شارة: إشارة علمية / تأمل منضبط */
+/** تسمية تصنيف ظاهرة على البطاقة */
+export function miracleCategoryChip(
+  item: Pick<MiracleSeedItem, "category" | "source_type">,
+): string {
+  const topic = miracleTopicLabel(item);
+  const map: Partial<Record<MiracleTopicFilter, string>> = {
+    كونيات: "الكون",
+    "خلق الإنسان": "خلق الإنسان",
+    طب: "الطب",
+    أرض: "الأرض",
+    نبات: "النبات",
+    حيوان: "الحيوان",
+    بحر: "البحار",
+    زمن: "الزمن",
+    "صحة ووقاية": "صحة ووقاية",
+  };
+  return map[topic] || topic;
+}
+
+/** لا نستخدم «إعجاز قطعي» في الواجهة */
 export function miracleMethodBadge(
-  item: Pick<MiracleSeedItem, "source_type" | "category">,
+  item: Pick<MiracleSeedItem, "source_type" | "category" | "id">,
 ): MiracleMethodBadge {
+  const cautionIds = new Set([
+    "miracle-fly-wing-1",
+    "miracle-embryo-1",
+    "miracle-embryo-2",
+    "miracle-deep-ocean-darkness",
+  ]);
+  if (cautionIds.has(item.id) || item.category === "الأجنة") return "يحتاج حذر";
   if (item.source_type === "سنة") return "تأمل منضبط";
-  if (item.category === "الطب" || item.category === "الأجنة") return "تأمل منضبط";
+  if (item.category === "الطب") return "تأمل منضبط";
   return "إشارة علمية";
 }
 

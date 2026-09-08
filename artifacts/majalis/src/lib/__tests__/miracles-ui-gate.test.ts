@@ -1,5 +1,5 @@
 /**
- * بوابة — واجهة الإعجاز العلمي: بلا فلاتر مكدّسة، مشاركة مرة في نهاية القسم فقط.
+ * بوابة — واجهة الإعجاز العلمي: مساران (قرآن/سنة) بلا فلاتر، ومصادر هادئة.
  * Run: node --import tsx src/lib/__tests__/miracles-ui-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -14,33 +14,50 @@ const page = read("src/views/MiraclesPage.tsx");
 const fab = read("src/components/FloatingBackButton.tsx");
 const share = read("src/components/ShareFaida.tsx");
 const section = read("src/components/common/SectionShareActions.tsx");
+const routes = read("src/AppRoutes.tsx");
+const registry = read("src/config/sections.registry.ts");
 
-assert.match(page, /mk-search-bar/);
+assert.match(page, /mk-hub-lanes/);
+assert.match(page, /mk-lane-card/);
+assert.match(page, /\/miracles\/quran/);
+assert.match(page, /\/miracles\/sunnah/);
+assert.match(page, /\/miracles\/topic\//);
+assert.match(page, /اقرأ التفصيل/);
+assert.match(page, /إظهار المصادر/);
+assert.match(page, /المعنى الشرعي أولًا/);
+assert.match(page, /وجه التأمل العلمي/);
+assert.match(page, /حدود الاستدلال/);
+assert.match(page, /المصادر والمراجع/);
+assert.match(page, /مواد ذات صلة/);
+assert.match(page, /mk-inline-back/);
 assert.match(page, /ShareButtons/);
-assert.match(page, /mk-card__footer/);
-assert.match(page, /miracle-ayah/);
-assert.match(page, /item\.verse/);
-assert.match(page, /tafsir_summary/);
-assert.match(page, /miracle-explain/);
-assert.match(page, /miracle-detail/);
-assert.match(page, /mk-chip/);
-assert.match(page, /اقرأ التفصيل العلمي/);
-assert.match(page, /مواد ذات صلة \(من نفس القسم\)/);
+assert.doesNotMatch(page, /activeTab/);
+assert.doesNotMatch(page, /onTabChange/);
+assert.doesNotMatch(page, /mk-chip/);
+assert.doesNotMatch(page, /SourceTypeFilter/);
+assert.doesNotMatch(page, /FilterBottomSheet/);
 assert.doesNotMatch(page, /RelatedKnowledge/);
 assert.doesNotMatch(page, /GeometricPattern/);
-assert.doesNotMatch(page, /mk-cats-bar/);
-assert.doesNotMatch(page, /FilterBottomSheet/);
-assert.doesNotMatch(page, /ShareFaida/);
-assert.doesNotMatch(page, /variant="icons"/);
-assert.doesNotMatch(page, /twh-share/);
+assert.doesNotMatch(page, /tabs=\{\[/);
+
+assert.match(routes, /\/miracles\/quran/);
+assert.match(routes, /\/miracles\/sunnah/);
+assert.match(routes, /\/miracles\/topic\/:slug/);
+
+assert.match(registry, /id:\s*"miracles"[\s\S]*?label:\s*"الإعجاز العلمي"/);
+assert.doesNotMatch(
+  registry,
+  /id:\s*"miracles"[\s\S]*?label:\s*"الإعجاز العلمي في القرآن والسنة"/,
+);
 
 const css = read("src/styles/pages/miracles.css");
+assert.match(css, /\.mk-lane-card/);
 assert.match(css, /\.miracle-ayah__text/);
 assert.match(css, /\.miracle-explain__label/);
-assert.match(css, /\.mk-chip/);
-assert.match(css, /inset-bottom/);
-assert.doesNotMatch(css, /\.miracle-item__ref\s*\{/);
-assert.doesNotMatch(css, /\.mk-cat--aldam/);
+assert.match(css, /\.mk-sources-quiet/);
+assert.match(css, /mk-fab-clearance/);
+assert.doesNotMatch(css, /\.mk-chip\s*\{/);
+assert.doesNotMatch(css, /\.mk-hub-split\s*\{/);
 
 assert.doesNotMatch(fab, /if \(deepScroll\) return null/);
 assert.doesNotMatch(fab, /ChevronUp/);

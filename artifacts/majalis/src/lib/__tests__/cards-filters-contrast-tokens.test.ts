@@ -14,9 +14,9 @@ const lessons = readFileSync(resolve(root, "src/styles/pages/lessons.css"), "utf
 const gate = readFileSync(resolve(root, "scripts/verify-color-contrast-gate.mjs"), "utf8");
 
 assert.match(miracles, /\.mk-card__title/);
-assert.match(miracles, /\.mk-chip\.is-active/);
+assert.match(miracles, /\.mk-lane-card__title/);
+assert.match(miracles, /\.mk-lane-card__cta/);
 assert.match(miracles, /html\.dark \.mk-card__title/);
-assert.match(miracles, /html\.dark \.mk-chip/);
 assert.match(miracles, /html\.dark \.mk-pill--topic/);
 assert.doesNotMatch(
   miracles,
@@ -29,7 +29,7 @@ assert.match(lessons, /color:\s*#fff\s*!important/);
 assert.match(lessons, /\.lesson-unified-card--today/);
 
 assert.match(gate, /route:\s*"\/miracles"/);
-assert.match(gate, /\.mk-chip\.is-active/);
+assert.match(gate, /\.mk-lane-card__title/);
 assert.match(gate, /\.filter-chips__chip/);
 assert.match(gate, /\.lesson-unified-card__title/);
 
