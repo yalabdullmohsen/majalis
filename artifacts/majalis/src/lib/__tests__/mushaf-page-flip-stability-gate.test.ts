@@ -42,13 +42,16 @@ assert.doesNotMatch(
 );
 assert.match(miniBar, /if \(immersive\) return null/);
 
-assert.match(metrics, /1\.04/);
+assert.match(metrics, /1\.05/);
 assert.match(metrics, /--mushaf-letter-spacing/);
+assert.match(metrics, /data-mushaf-font-locked|WIDTH_LOCK|lockedWidthRef/);
+assert.match(metrics, /عرض الشاشة|عرض الحاوية|lockedWidth/);
 
 assert.match(css, /\.nm-slot\s*\{[^}]*align-items:\s*flex-start/s);
 assert.match(css, /height:\s*var\(--mushaf-body-height/);
 assert.match(css, /contain:\s*layout style/);
 assert.match(css, /data-mushaf-metrics/);
+assert.match(css, /transition:\s*none/);
 assert.doesNotMatch(css, /transform:\s*scale\(/);
 assert.match(page, /منع layout shift عند قلب الصفحة/);
 
@@ -59,8 +62,13 @@ assert.doesNotMatch(pager, /scale\(/);
 
 assert.match(dock, /اختر القارئ/);
 assert.match(dock, /getReciter/);
+assert.match(dock, /onPlayRange/);
+assert.match(dock, /وضع الحفظ/);
 assert.match(tafsir, /تفسير \$\{surahName\} · آية/);
 assert.match(tafsir, /setSnap/);
 assert.match(sheetCss, /62dvh/);
+
+assert.match(reader, /audioDockMini|onMiniChange/);
+assert.match(reader, /playRange/);
 
 console.log("mushaf-page-flip-stability-gate.test.ts: ok");

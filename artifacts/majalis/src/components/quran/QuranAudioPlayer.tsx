@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { PlayerState } from "@/core/audio/AudioEngine";
 import { QuranRecitationService } from "@/lib/quran/quranRecitationService";
 import { MushafAudioDock } from "@/features/mushaf-madinah/MushafAudioDock";
+import type { RecitationRange } from "@/features/mushaf-madinah/mushaf-page-for-ayah";
 
 type Props = {
   open: boolean;
@@ -26,6 +27,7 @@ type Props = {
   onClose?: () => void;
   onSeek?: (seconds: number) => void;
   onSpeed?: (rate: number) => void;
+  onPlayRange?: (range: RecitationRange, repeatCount: number, delayMs?: number) => void;
 };
 
 export function QuranAudioPlayer({
@@ -48,6 +50,7 @@ export function QuranAudioPlayer({
   onClose,
   onSeek,
   onSpeed,
+  onPlayRange,
 }: Props) {
   const [readersForced, setReadersForced] = useState(false);
   const showError = playerState === "error" || Boolean(audioError);
@@ -56,7 +59,7 @@ export function QuranAudioPlayer({
     : null;
 
   return (
-    <div className="quran-audio-player" data-testid="quran-audio-player">
+    <div className="quran-audio-player" data-testid="quran-audio-player" data-mini={mini ? "1" : "0"}>
       <MushafAudioDock
         open={open}
         verseLabel={verseLabel}
@@ -74,12 +77,13 @@ export function QuranAudioPlayer({
         onClose={onClose}
         onSeek={onSeek}
         onSpeed={onSpeed}
+        onPlayRange={onPlayRange}
         readersOpen={readersForced}
         onReadersOpenChange={setReadersForced}
       />
       {showError ? (
         <div className="quran-audio-player__fallback" role="alert">
-          <p>{userMessage}</p>
+          <p>{userMessage || "تعذر تشغيل التلاوة الآن"}</p>
           <div className="quran-audio-player__fallback-actions">
             {onRetry ? (
               <button type="button" className="quran-audio-player__btn" onClick={onRetry}>
