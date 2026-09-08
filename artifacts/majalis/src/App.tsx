@@ -33,6 +33,7 @@ import { isAuthStandalonePath, isImmersiveChromePath, isPinnedChromePath, isPray
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { isMiniPlayerVisible, subscribeMiniPlayer } from "@/lib/quran-mini-player";
 import { HomeHeroLcp, HomeRestShell } from "@/components/home/HomeHeroLcp";
+import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
 /** شريط/كروم ثقيل (lucide + nav-map) — كسول حتى لا يدخل مسار أول زيارة / LCP */
 const SafeAreaDebugOverlay = lazyWithRetry(
   () =>
@@ -458,8 +459,11 @@ function HomeLazyRoute() {
   return (
     <ErrorBoundary>
       <div className="m2030-home" dir="rtl">
-        {/* h1 ثابت خارج Suspense — لا يُعاد تركيب LCP عند وصول HomePage */}
+        {/* h1 + «ابدأ من هنا» خارج Suspense — يمنع تأخير 2.2s من سرقة LCP تحت throttling */}
         <HomeHeroLcp />
+        <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
+          <HomeStartHereSection />
+        </section>
         <Suspense fallback={<HomeRestShell />}>
           <HomePage />
         </Suspense>

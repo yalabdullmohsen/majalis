@@ -708,6 +708,7 @@ jobs:
 
       - name: Upload LHCI reports
         if: always() && steps.lane.outputs.run == 'true'
+        continue-on-error: true
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: lhci-home-reports
@@ -721,6 +722,7 @@ jobs:
           LHCI_OUTCOME: ${{ steps.lhci.outcome }}
         run: |
           set -euo pipefail
+          # النتيجة تُقاس بخطوة lighthouse فقط — فشل رفع الـartifact (403 Infra) لا يُسقط البوابة
           if [ "$LHCI_OUTCOME" != "success" ]; then
             echo "LHCI home outcome=$LHCI_OUTCOME (failure = fail)"
             exit 1

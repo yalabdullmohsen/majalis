@@ -115,7 +115,7 @@ export function HomeHeroLcp() {
   );
 }
 
-/** هيكل ما تحت الهيرو أثناء تحميل HomePage — بلا h1 حتى لا يُستبدل عنصر LCP */
+/** هيكل ما تحت الهيرو أثناء تحميل HomePage — بلا تكرار «ابدأ من هنا» (صار خارج Suspense) */
 export function HomeRestShell() {
   return (
     <>
@@ -126,10 +126,6 @@ export function HomeRestShell() {
           </span>
         </div>
       </div>
-
-      <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
-        <HomeStartHereSoftSkeleton />
-      </section>
 
       <section
         className="m2030-band m2030-band--sage home-daily-wird daily-wird-card mj-home-lcp-ph__daily-band"

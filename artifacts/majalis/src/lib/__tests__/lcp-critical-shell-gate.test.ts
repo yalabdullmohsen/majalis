@@ -60,7 +60,9 @@ assert.doesNotMatch(mainSrc, /homePageBoot|await homePageBoot/, "لا انتظا
 assert.doesNotMatch(mainSrc, /mj-app-mount/, "createRoot على #root");
 assert.match(home, /mj-home-lcp-ph/, "حجز ارتفاع في الرئيسية");
 assert.match(app, /HomeHeroLcp/, "هيرو LCP ثابت خارج Suspense");
+assert.match(app, /HomeStartHereSection/, "ابدأ من هنا خارج Suspense مع الهيرو");
 assert.match(app, /HomeRestShell/, "fallback بقية الرئيسية بلا استبدال h1");
+assert.doesNotMatch(home, /HomeStartHereGate|2_200/, "لا تأخير اصطناعي يسرق LCP بعد الرسم");
 assert.doesNotMatch(app, /HomeInitialShell/, "لا HomeInitialShell بعد فصل الهيرو");
 assert.doesNotMatch(app, /HomeHeroLcp[\s\S]{0,120}aria-hidden/, "هيرو الرئيسية ليس مخفياً عن قارئ الشاشة");
 assert.doesNotMatch(app, /scheduleRemoveHomeLcpStaticShell/, "لا إزالة صدفة HTML");
