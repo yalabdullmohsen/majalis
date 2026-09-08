@@ -87,7 +87,13 @@ export const CONTENT_SAFE_PATH_PATTERNS = Object.freeze([
   /^artifacts\/majalis\/public\/data\/quiz\//i,
   /^artifacts\/majalis\/public\/data\//i,
   /^artifacts\/majalis\/data\//i,
+  /^artifacts\/majalis\/seo-prerender\//i,
   /^CONTINUATION_PLAN\.md$/i,
+]);
+
+/** Generated SEO shells — لا تُحسب ضمن سقف الملفات (تتجدّد مع المحتوى). */
+export const AUTO_MERGE_FILE_COUNT_EXEMPT_PATTERNS = Object.freeze([
+  /^artifacts\/majalis\/seo-prerender\//i,
 ]);
 
 export const DANGER_PATH_PATTERNS = Object.freeze([
