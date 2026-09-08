@@ -91,6 +91,14 @@
   line-height: var(--mushaf-line-height, 1.85);
   letter-spacing: var(--mushaf-letter-spacing, 0);
   transform: none;
+  /* ممنوع transition على مقاس الخط — سبب الإحساس بالتكبير/التصغير */
+  transition: none;
+}
+
+.nm-root .nm-line,
+.nm-root .nm-word,
+.nm-root .nm-slot {
+  transition: color 120ms ease, background-color 120ms ease;
 }
 
 .nm-root *,
@@ -124,6 +132,11 @@
 }
 .nm-root[data-audio-dock="1"] {
   --reader-bottom-stack: calc(var(--audio-player-height) + var(--safe-bottom));
+  --audio-player-height: 11rem;
+}
+
+.nm-root[data-audio-dock="1"][data-audio-mini="1"] {
+  --audio-player-height: 3.75rem;
 }
 /* تجميد الحجز أثناء القلب — نفس القيمة قبل مسح شريط الآية */
 .nm-root[data-bottom-freeze="1"][data-freeze-stack="ayah"] {
@@ -792,7 +805,16 @@
   box-shadow: 0 -8px 28px -18px color-mix(in srgb, var(--mj-brand-deep, #0d4a39) 35%, transparent);
   gap: 0.35rem;
   z-index: 8;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.nm-root .mm-audio-dock[data-mini="1"] {
   overflow: hidden;
+  min-height: var(--audio-player-height, 3.75rem);
+  max-height: var(--audio-player-height, 3.75rem);
+  padding: 0.35rem 0.75rem calc(0.35rem + var(--safe-bottom, 0px));
 }
 
 .nm-root .mm-audio-dock[data-open="1"] {
@@ -987,7 +1009,11 @@ html.dark .nm-root .mm-audio-dock__reciter-btn {
 
 .nm-pager-scroller.is-panning .nm-pager__sheet[data-pane="current"],
 .nm-root .mm-pager-scroller.is-panning .nm-pager__sheet[data-pane="current"] {
-  opacity: 0.94;
+  opacity: 0.92;
+}
+
+.nm-root[data-pager-settled="0"] .nm-pager__sheet[data-pane="current"] {
+  opacity: 0.97;
 }
 
 /* طبقات: نص المصحف تحت الكروم؛ الشيتات/التلاوة فوق النص دون قصّه بـ overlay دائم */
