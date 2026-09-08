@@ -21,11 +21,17 @@ assert.doesNotMatch(view, /المكتبة العلمية/);
 assert.match(css, /fiqh-book-grid|fiqh-book-card/);
 
 const books = publishedBooks();
-assert.equal(books.length, 18, `18 كتابًا منشورًا (الآن ${books.length})`);
-assert.equal(getAllFiqhBooks().length, 18);
+assert.equal(books.length, 19, `19 كتابًا منشورًا (الآن ${books.length})`);
+assert.equal(getAllFiqhBooks().length, 19);
 
 const hits = searchFiqhCatalog("الطهارة");
 assert.ok(hits.books.some((b) => b.id === "taharah"));
 assert.ok(hits.chapters.length > 0);
+
+const adabHits = searchFiqhCatalog("السلام");
+assert.ok(
+  adabHits.lessons.some((l) => l.book.id === "adab") || adabHits.books.some((b) => b.id === "adab"),
+  "بحث الآداب يجد محتوى",
+);
 
 console.log("fiqh-hub-layout-gate.test.ts: ok");

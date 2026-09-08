@@ -28,7 +28,7 @@ export function FiqhSourceLine({ sources, status, className }: Props) {
   if (!sources.length) {
     return (
       <div className={cn("fiqh-source-line fiqh-source-line--empty", className)}>
-        <h2 className="fiqh-source-line__title">المصدر أو المرجع</h2>
+        <h2 className="fiqh-source-line__title">المصادر والمراجع</h2>
         <span className={cn("fiqh-status-badge", badgeClass("under_review"))}>
           {FIQH_STATUS_LABELS.under_review}
         </span>
@@ -42,9 +42,9 @@ export function FiqhSourceLine({ sources, status, className }: Props) {
   return (
     <section className={cn("fiqh-source-line", className)} aria-labelledby="fiqh-source-title">
       <div className="fiqh-source-line__head">
-        <h2 id="fiqh-source-title" className="fiqh-source-line__title">
-          المصدر أو المرجع
-        </h2>
+          <h2 id="fiqh-source-title" className="fiqh-source-line__title">
+            المصادر والمراجع
+          </h2>
         {resolved !== "complete" ? (
           <span className={cn("fiqh-status-badge", badgeClass(resolved))}>
             {FIQH_STATUS_LABELS[resolved]}

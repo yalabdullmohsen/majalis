@@ -1,5 +1,5 @@
 /**
- * بوابات فقه حنبلية: 18 كتابًا منشورة ← أبواب ← مسائل موثَّقة.
+ * بوابات فقه حنبلية: 19 كتابًا منشورة ← أبواب ← مسائل موثَّقة.
  * التشغيل: pnpm exec tsx src/lib/__tests__/fiqh-books-gates.test.ts
  */
 import { existsSync, readFileSync } from "node:fs";
@@ -62,6 +62,7 @@ const REQUIRED_TITLES = [
   "كتاب الأيمان والنذور والكفارات",
   "كتاب القضاء والشهادات والدعاوى",
   "كتاب العتق",
+  "كتاب الآداب الشرعية",
 ] as const;
 
 const FORBIDDEN = ["pending_review", "مؤجل", "قيد الإضافة", "قريبًا", "سيتم لاحقًا"] as const;
@@ -82,13 +83,14 @@ console.log("\n=== ترتيب علمي للكتب ===");
   assert(FIQH_CATEGORY_ORDER[0] === "ibadat", "العبادات أول مجموعة");
 }
 
-console.log("\n=== ١) ثمانية عشر كتابًا منشورة بعناوين مطلوبة ===");
+console.log("\n=== ١) تسعة عشر كتابًا منشورة بعناوين مطلوبة ===");
 {
   const books = getAllFiqhBooks();
-  assert(books.length === 18, `عدد الكتب 18 (الفعلي ${books.length})`);
-  assert(publishedBooks().length === 18, "كل الكتب ظاهرة/منشورة");
+  assert(books.length === 19, `عدد الكتب 19 (الفعلي ${books.length})`);
+  assert(publishedBooks().length === 19, "كل الكتب ظاهرة/منشورة");
   const pos = (id: string) => books.findIndex((b) => b.id === id);
   assert(pos("atima") >= 0 && pos("atima") < pos("libas"), "الأطعمة قبل اللباس");
+  assert(pos("adab") === books.length - 1 || pos("adab") > pos("itq"), "الآداب بعد العتق أو في الذيل");
   for (const b of books) {
     assert(b.title.startsWith("كتاب "), `يبدأ بكتاب: ${b.id}`);
     assert(Boolean(b.description?.trim()), `وصف للكتاب ${b.id}`);
