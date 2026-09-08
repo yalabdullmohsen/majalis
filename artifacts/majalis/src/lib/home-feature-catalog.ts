@@ -121,7 +121,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     Icon: Wrench,
     label: "أدوات التعلم",
     items: [
-      { href: "/my-learning",     Icon: Layers,      title: seoNavLabel("/my-learning", "حسابي"),   desc: "تقدمك والبطاقات للمراجعة" },
+      { href: "/my-learning",     Icon: Layers,      title: seoNavLabel("/my-learning", "حسابي"),   desc: "متابعة تقدمك في الدروس والبطاقات للمراجعة السريعة" },
       { href: "/quiz",            Icon: Target,      title: seoNavLabel("/quiz", "لعبة سين جيم"),   desc: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة" },
       { href: "/assistant",       Icon: Bot,         title: seoNavLabel("/assistant", "المساعد العلمي"),    desc: "محادثة فورية بالذكاء الاصطناعي في العلوم الشرعية" },
       { href: "/occasions", Icon: CalendarDays, title: seoNavLabel("/occasions", "المناسبات الإسلامية"), desc: "التواريخ الهجرية والمناسبات الشرعية" },

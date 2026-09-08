@@ -282,7 +282,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "prayer",
     label: "الصلاة",
-    subtitle: "مواقيت وأذان",
+    subtitle: "مواقيت وقبلة وأذان",
     route: "/prayer-times",
     icon: MoonStar,
     group: "worship",
@@ -294,7 +294,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "sections",
     label: "الأقسام",
-    subtitle: "كل أقسام سُنّة",
+    subtitle: "فهرس الأقسام الشرعية والأدوات",
     route: "/sections",
     icon: Layers,
     group: "account",
