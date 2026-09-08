@@ -25,6 +25,7 @@ export function isPolicyPath(p) {
   return (
     /^\.github\/scripts\/safe-auto-merge\//i.test(s) ||
     /^scripts\/verify-no-unsafe-auto-merge\.mjs$/i.test(s) ||
+    /^\.github\/workflows\/ci\.yml$/i.test(s) ||
     /^\.github\/workflows\/auto-merge-to-main\.yml$/i.test(s) ||
     /^\.github\/workflows\/pr-safe-merge-report\.yml$/i.test(s) ||
     /^\.github\/workflows\/vercel-check\.yml$/i.test(s) ||
@@ -104,6 +105,7 @@ export function isUiCssPath(p) {
  */
 function isPolicyWorkflowAllowlist(p) {
   return (
+    /^\.github\/workflows\/ci\.yml$/i.test(p) ||
     /^\.github\/workflows\/auto-merge-to-main\.yml$/i.test(p) ||
     /^\.github\/workflows\/pr-safe-merge-report\.yml$/i.test(p) ||
     /^\.github\/workflows\/vercel-check\.yml$/i.test(p) ||
