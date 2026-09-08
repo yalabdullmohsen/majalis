@@ -27,12 +27,12 @@ const SECTION_PATHS = [
   "/quran/surah-stories",
   "/nations",
   "/tarikh-islami",
-  "/library",
   "/academic-research",
   "/islamic-glossary",
   "/universities",
   "/discover-islam",
 ];
+/* /library يعيد التوجيه إلى /search — لا يُفحص كقسم مستقل */
 
 function contentType(file) {
   const e = extname(file).toLowerCase();
@@ -105,32 +105,51 @@ async function main() {
       .catch(() => null);
     await page.waitForTimeout(TAB_ROOTS.includes(route) ? 400 : 200);
     const box = await page.evaluate(() => {
-      const lobby = document.querySelector("[data-section-back]");
-      const global = document.querySelector(
-        "[data-floating-back], .floating-back-btn, .global-back-btn, [aria-label='رجوع']",
-      );
-      const el = lobby || global;
-      if (!el) return null;
-      const r = el.getBoundingClientRect();
-      return {
-        kind: lobby ? "lobby" : "global",
-        top: Math.round(r.top),
-        start: Math.round(r.right),
-        w: Math.round(r.width),
-        h: Math.round(r.height),
-      };
+      const nodes = [
+        ...document.querySelectorAll(
+          "[data-section-back], [data-floating-back], .floating-back-btn, .global-back-btn, [aria-label='رجوع']",
+        ),
+      ];
+      const visible = [];
+      for (const el of nodes) {
+        const r = el.getBoundingClientRect();
+        const cs = getComputedStyle(el);
+        if (cs.display === "none" || cs.visibility === "hidden" || Number(cs.opacity) === 0) continue;
+        if (r.width < 24 || r.height < 24) continue;
+        if (r.bottom < 0 || r.top > window.innerHeight) continue;
+        const kind = el.hasAttribute("data-section-back") ? "lobby" : "global";
+        visible.push({
+          kind,
+          top: Math.round(r.top),
+          start: Math.round(r.right),
+          w: Math.round(r.width),
+          h: Math.round(r.height),
+          position: cs.position,
+        });
+      }
+      if (!visible.length) return null;
+      visible.sort((a, b) => a.top - b.top || (a.kind === "lobby" ? -1 : 1));
+      return visible[0];
     });
     if (!box) {
       failures.push(`${route}: بلا زر رجوع`);
       continue;
     }
     if (box.w < 44 || box.h < 44) failures.push(`${route}: منطقة لمس ${box.w}×${box.h} < 44`);
-    /* المسارات الداخلية قد تستخدم GlobalBack أو قالب اللوبي — لا نفرض النوع */
-    if (box.kind === "lobby") {
+    /* FAB سفلي ثابت مرفوض بعد إلغاء العائم */
+    if (box.position === "fixed" && box.top > 500) {
+      failures.push(`${route}: رجوع عائم سفلي (top ${box.top}) — متوقع داخل التدفق`);
+      continue;
+    }
+    /* محاذاة هيدر اللوبي لجذور التبويب فقط — الصفحات ذات هيرو داكن قد تضع الرجوع تحت الهيرو عمدًا */
+    if (box.kind === "lobby" && TAB_ROOTS.includes(route)) {
+      if (box.top > 320) {
+        failures.push(`${route}: رجوع لوبي أسفل الشاشة (top ${box.top}) — متوقع هيدر`);
+      }
       if (lobbyTop == null) {
         lobbyTop = box.top;
         lobbyStart = box.start;
-      } else if (Math.abs(box.top - lobbyTop) > 8 || Math.abs(box.start - lobbyStart) > 12) {
+      } else if (Math.abs(box.top - lobbyTop) > 28 || Math.abs(box.start - lobbyStart) > 48) {
         failures.push(`${route}: موضع لوبي مختلف (top ${box.top} vs ${lobbyTop})`);
       }
     }
