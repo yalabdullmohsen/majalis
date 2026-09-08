@@ -76,7 +76,7 @@ export default function DiscoverIslamQuestionDetailPage() {
         </div>
       ) : (
         <div className="ui-card" style={{ marginTop: "1rem" }}>
-          <p className="page-desc">التفصيل الكامل متاح بالعربية حاليًا فقط. الترجمة الكاملة قيد الإعداد.</p>
+          <p className="page-desc">التفصيل الكامل والأدلة متاحان بالعربية. اختر العربية أعلاه لقراءة الجواب المفصّل، أو ابقَ على المختصر بهذه اللغة.</p>
         </div>
       )}
 

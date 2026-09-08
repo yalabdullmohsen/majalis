@@ -23,6 +23,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/stories",
+        "label": "قصص وعبر تاريخية"
       }
     ],
     "startHere": true,
@@ -87,8 +91,8 @@
         "label": "التاريخ الإسلامي"
       },
       {
-        "href": "/tarikh-islami",
-        "label": "التاريخ الإسلامي"
+        "href": "/stories",
+        "label": "قصص وعبر تاريخية"
       }
     ],
     "featured": true,
@@ -113,6 +117,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/stories",
+        "label": "قصص وعبر تاريخية"
       }
     ],
     "timelineOrder": 704
@@ -138,8 +146,8 @@
         "label": "التاريخ الإسلامي"
       },
       {
-        "href": "/tarikh-islami",
-        "label": "التاريخ الإسلامي"
+        "href": "/stories",
+        "label": "قصص وعبر تاريخية"
       }
     ],
     "timelineOrder": 705
@@ -165,8 +173,8 @@
         "label": "التاريخ الإسلامي"
       },
       {
-        "href": "/tarikh-islami",
-        "label": "التاريخ الإسلامي"
+        "href": "/stories",
+        "label": "قصص وعبر تاريخية"
       }
     ],
     "timelineOrder": 706
@@ -190,6 +198,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/stories",
+        "label": "قصص وعبر تاريخية"
       }
     ],
     "timelineOrder": 707
@@ -215,6 +227,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/stories",
+        "label": "قصص وعبر تاريخية"
       }
     ],
     "timelineOrder": 708

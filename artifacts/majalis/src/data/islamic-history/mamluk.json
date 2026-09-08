@@ -22,6 +22,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/stories",
+        "label": "قصص وعبر تاريخية"
       }
     ],
     "startHere": true,
@@ -48,6 +52,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/stories",
+        "label": "قصص وعبر تاريخية"
       }
     ],
     "timelineOrder": 602
@@ -113,6 +121,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/stories",
+        "label": "قصص وعبر تاريخية"
       }
     ],
     "timelineOrder": 604
@@ -136,6 +148,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/stories",
+        "label": "قصص وعبر تاريخية"
       }
     ],
     "timelineOrder": 605
