@@ -24,7 +24,7 @@ import { AppBackButton } from "@/components/common/AppBackButton";
 import { applyPageSeo } from "@/lib/seo";
 import { useLanguage } from "@/components/LanguageProvider";
 import { LANG_META } from "@/lib/language-preference";
-import { getFeaturedQuestions, getFeaturedShubuhat, getDawahCategories, type DawahQuestion, type DawahShubha, type DawahCategory } from "@/lib/dawah-service";
+import { getFeaturedQuestions, getFeaturedShubuhat, getDawahCategories, getArticlesByCategory, type DawahQuestion, type DawahShubha, type DawahCategory, type DawahArticle } from "@/lib/dawah-service";
 import "@/styles/discover-islam.css";
 import "@/components/sections/section-cards.css";
 
@@ -86,6 +86,7 @@ export default function DiscoverIslamPage() {
   const [questions, setQuestions] = useState<DawahQuestion[]>([]);
   const [shubuhat, setShubuhat] = useState<DawahShubha[]>([]);
   const [categories, setCategories] = useState<DawahCategory[]>([]);
+  const [articles, setArticles] = useState<DawahArticle[]>([]);
 
   useEffect(() => {
     applyPageSeo({
@@ -100,6 +101,7 @@ export default function DiscoverIslamPage() {
     getFeaturedQuestions(6).then(setQuestions);
     getFeaturedShubuhat(6).then(setShubuhat);
     getDawahCategories().then(setCategories);
+    getArticlesByCategory(undefined, 6).then(setArticles);
   }, []);
 
   return (
@@ -160,6 +162,25 @@ export default function DiscoverIslamPage() {
           المقالات والمسارات أدناه متاحة الآن. عند فراغ قاعدة البيانات تُعرض أسئلة مميزة معتمدة محليًا إلى حين التحديث.
         </p>
       ) : null}
+
+      {articles.length > 0 && (
+        <section aria-labelledby="dii-articles-heading" className="dii-section">
+          <div className="page-stats-row">
+            <h2 id="dii-articles-heading" className="page-section-title" style={{ margin: 0 }}>مقالات تأسيسية</h2>
+            <Link href="/discover-islam/articles/what-is-islam" className="page-link-inline">ابدأ بـ«ما الإسلام؟»</Link>
+          </div>
+          <div className="page-card-grid">
+            {articles.map((a) => (
+              <Link key={a.id} href={`/discover-islam/articles/${a.slug}`} className="platform-card-link">
+                <article className="page-card platform-content-card">
+                  <div className="page-card-header"><p>{a.title_ar}</p></div>
+                  <p className="page-desc">{a.summary_ar}</p>
+                </article>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {categories.length > 0 && (
         <section aria-labelledby="dii-categories-heading" className="dii-section">
