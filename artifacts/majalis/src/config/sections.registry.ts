@@ -201,7 +201,6 @@ export const SECTION_MERGE_REDIRECTS: ReadonlyArray<{ from: string; to: string; 
   { from: "/my-citations", to: "/flashcards", note: "المحفوظات → بطاقات الحفظ والمراجعة" },
   { from: "/citations", to: "/flashcards", note: "citations → بطاقات الحفظ والمراجعة" },
   { from: "/support", to: "/contact", note: "الدعم → تواصل معنا (canonical)" },
-  { from: "/privacy-center", to: "/privacy", note: "مركز الخصوصية → الخصوصية" },
   { from: "/about-us", to: "/about", note: "من نحن → عن سُنّة" },
   { from: "/aqidah", to: "/tawhid", note: "عقيدة قديم → التوحيد/العقيدة" },
   { from: "/prayer", to: "/prayer-times", note: "صلاة مختصر → مواقيت الصلاة" },
