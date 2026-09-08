@@ -25,6 +25,7 @@ assert.match(appBack, /data-floating-back=\{variant === "floating" \? "1" : unde
 assert.match(appBack, /goBackOrFallback/);
 assert.match(appBack, /path === "\/support"/);
 assert.match(appBack, /path === "\/contact"/);
+assert.doesNotMatch(appBack, /isTabRootPath/, "جذور التبويب تظهر الزر العائم");
 assert.doesNotMatch(appBack, /\/prophets/, "قصص الأنبياء مشمولة في الزر العائم");
 
 const legacy = read("src/components/GlobalBackButton.tsx");

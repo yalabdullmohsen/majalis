@@ -1,5 +1,5 @@
 /**
- * بوابة: زر رجوع موحّد من قالب SectionLobby — الفقه وكل جذور التبويبات.
+ * بوابة: زر الرجوع العائم العالمي يظهر في جذور الأقسام؛ اللوبي بلا تكرار.
  * تشغيل: node --import tsx src/lib/__tests__/section-back-button.test.ts
  */
 import assert from "node:assert/strict";
@@ -12,29 +12,27 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const lobby = read("src/components/lobby/SectionLobby.tsx");
 const css = read("src/components/lobby/section-lobby.css");
-assert.match(lobby, /data-section-back="1"/, "القالب يحمل زر الرجوع");
-assert.match(lobby, /isTabRootPath/, "جذور التبويب تخفي الزر العائم");
-assert.match(lobby, /showFloatingBack/);
-assert.match(lobby, /AppBackButton|goBackOrFallback/);
+assert.match(lobby, /inlineHeaderBack/, "اللوبي يدعم رجوع الهيدر عند الحاجة");
+assert.doesNotMatch(lobby, /showFloatingBack/, "لا زر عائم مكرر داخل اللوبي");
+assert.doesNotMatch(lobby, /section-lobby__back(?!-inline)/, "العائم من FloatingBackButton فقط");
+assert.match(lobby, /AppBackButton/);
+assert.match(css, /\.section-lobby__back[\s\S]*min-height:\s*44px/, "منطقة لمس ≥44px للتوافق");
+assert.match(css, /\.section-lobby__back[\s\S]*position:\s*fixed/);
+
 const appBack = read("src/components/common/AppBackButton.tsx");
 assert.match(appBack, /DirectionalIcon/, "أيقونة الاتجاه في زر الرجوع الموحّد");
 assert.match(appBack, /goBackOrFallback/);
-assert.match(css, /\.section-lobby__back[\s\S]*min-height:\s*44px/, "منطقة لمس ≥44px");
-assert.match(css, /\.section-lobby__back[\s\S]*min-width:\s*44px/);
-assert.match(css, /\.section-lobby__back[\s\S]*text-align:\s*center/);
-assert.match(css, /\.section-lobby__back[\s\S]*position:\s*fixed/, "عائم أسفل يمين كبقية الأقسام");
-assert.match(css, /\.section-lobby__back[\s\S]*inset-inline-start:\s*1rem/, "يمين في RTL");
-assert.match(
-  css,
-  /\.section-lobby__back[\s\S]*bottom:\s*calc\(\s*var\(--bottom-nav-height[^)]*\)\s*\+\s*var\(--inset-bottom[^)]*\)\s*\+\s*16px/,
-  "فوق الشريط السفلي بـ16px دون تداخل",
+assert.match(appBack, /aria-label.*=.*"رجوع"|ariaLabel = "رجوع"/);
+assert.doesNotMatch(
+  appBack,
+  /isTabRootPath/,
+  "جذور التبويب لا تخفي الزر العائم — يظهر في الفقه/الدروس/الأقسام",
 );
+assert.match(appBack, /path === "\/"/, "يُخفى في الرئيسية فقط من الجذور");
 
 const gate = read("scripts/section-back-button-gate.mjs");
 assert.match(gate, /\/fiqh/);
-assert.match(gate, /data-section-back/);
-assert.match(gate, /بلا زر رجوع عائم/);
-assert.ok((gate.match(/"[/][^"]+"/g) ?? []).length >= 8, "البوابة تزور مسارات الأقسام");
+assert.match(gate, /data-floating-back|floating-back-btn|aria-label=['"]رجوع['"]/);
 
 const pages: Array<[string, string]> = [
   ["quran", "src/pages/quran/ui/QuranHubView.tsx"],

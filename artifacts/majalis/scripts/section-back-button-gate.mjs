@@ -96,18 +96,14 @@ async function main() {
 
   for (const route of SECTION_PATHS) {
     await page.goto(`${base}${route}`, { waitUntil: "domcontentloaded", timeout: 60_000 });
-    if (TAB_ROOTS.includes(route)) {
-      await page.waitForTimeout(400);
-    } else {
-      // GlobalBackButton يُحمَّل lazy — انتظر ظهور زر الرجوع قبل الحكم
-      await page
-        .waitForSelector("[data-section-back], [data-floating-back], .floating-back-btn, .global-back-btn, [aria-label='رجوع']", {
-          timeout: 12_000,
-          state: "attached",
-        })
-        .catch(() => null);
-      await page.waitForTimeout(200);
-    }
+    // GlobalBackButton يُحمَّل lazy — انتظر ظهور زر الرجوع قبل الحكم
+    await page
+      .waitForSelector("[data-section-back], [data-floating-back], .floating-back-btn, .global-back-btn, [aria-label='رجوع']", {
+        timeout: 12_000,
+        state: "attached",
+      })
+      .catch(() => null);
+    await page.waitForTimeout(TAB_ROOTS.includes(route) ? 400 : 200);
     const box = await page.evaluate(() => {
       const lobby = document.querySelector("[data-section-back]");
       const global = document.querySelector(
@@ -124,10 +120,6 @@ async function main() {
         h: Math.round(r.height),
       };
     });
-    if (TAB_ROOTS.includes(route)) {
-      if (box) failures.push(`${route}: جذر تبويب — يُتوقَّع بلا زر رجوع عائم`);
-      continue;
-    }
     if (!box) {
       failures.push(`${route}: بلا زر رجوع`);
       continue;

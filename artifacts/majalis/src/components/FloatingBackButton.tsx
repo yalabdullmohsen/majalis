@@ -6,7 +6,7 @@ import { AppBackButton } from "@/components/common/AppBackButton";
  * مساحة لمس ≥44px عبر CSS؛ موضع ثابت + احترام safe-area.
  * الصعود للأعلى يبقى عبر ScrollToTop في الزاوية المقابلة.
  *
- * صفحات /support و /contact تُخفى تلقائيًا داخل AppBackButton (autoHideFloating).
+ * يُخفى في الرئيسية والمصحف وصفحات الدخول/الدعم فقط (autoHideFloating).
  */
 export function FloatingBackButton() {
   return <AppBackButton variant="floating" autoHideFloating />;
