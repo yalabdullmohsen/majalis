@@ -19,6 +19,14 @@ export {
 let hidden = false;
 let armedAt = 0;
 
+function prefersReducedMotion(): boolean {
+  try {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch {
+    return false;
+  }
+}
+
 /** يزيل #mj-launch-splash حتى لو حُظر سكربت الإقلاع بـ CSP. */
 export function dismissHtmlLaunchSplash(immediate = false): void {
   try {
@@ -35,7 +43,8 @@ export function dismissHtmlLaunchSplash(immediate = false): void {
       /* ignore */
     }
   };
-  if (immediate) {
+  const skipFade = immediate || prefersReducedMotion();
+  if (skipFade) {
     remove();
     return;
   }
@@ -51,7 +60,7 @@ export async function hideNativeSplash(immediate = false): Promise<void> {
   try {
     const { SplashScreen } = await import("@capacitor/splash-screen");
     await SplashScreen.hide({
-      fadeOutDuration: immediate ? 0 : SPLASH_FADE_OUT_MS,
+      fadeOutDuration: immediate || prefersReducedMotion() ? 0 : SPLASH_FADE_OUT_MS,
     });
   } catch {
     /* منصّة بلا ملحق */
@@ -92,7 +101,8 @@ export function armNativeSplashController(): void {
   armedAt = performance.now();
 
   const deadline = window.setTimeout(() => {
-    void hideNativeSplash(true);
+    /* سقف زمني — مع تلاشي ناعم (لا إزالة فورية تسبب وميض) */
+    void hideNativeSplash(false);
   }, SPLASH_MAX_VISIBLE_MS);
 
   const hide = () => {
@@ -103,9 +113,9 @@ export function armNativeSplashController(): void {
   window.addEventListener("mj:app-painted", hide, { once: true });
   window.addEventListener("app:first-paint", hide, { once: true });
   window.addEventListener("mj:boot-ready", hide, { once: true });
-  // صمام إضافي: إن لم تصل أحداث الرسم خلال ضعف السقف، أخفِ فورًا
+  // صمام إضافي: إن لم تصل أحداث الرسم، أخفِ بتلاشي
   window.setTimeout(() => {
-    void hideNativeSplash(true);
+    void hideNativeSplash(false);
   }, SPLASH_MAX_VISIBLE_MS * 2);
 }
 

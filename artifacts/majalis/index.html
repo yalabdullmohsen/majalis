@@ -142,12 +142,13 @@
 :root{--mj-splash-bg-light:#F7F3EB;--mj-splash-bg-dark:#101614;--mj-splash-bg:var(--mj-splash-bg-light);--mj-splash-ink:#123f2e}
 html[data-theme="dark"]{--mj-splash-bg:var(--mj-splash-bg-dark);--mj-splash-ink:#a8d5c0}
 html,body,#root,html.capacitor-native,html.capacitor-native body,html.capacitor-native #root{background:var(--mj-splash-bg)}
-#mj-launch-splash{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;background:var(--mj-splash-bg);color:var(--mj-splash-ink);pointer-events:none;opacity:1;transition:opacity .09s ease}
+#mj-launch-splash{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;background:var(--mj-splash-bg);color:var(--mj-splash-ink);pointer-events:none;opacity:1;transition:opacity .32s ease}
 #mj-launch-splash.mj-launch-splash--out{opacity:0}
-.mj-launch-splash__inner{display:grid;justify-items:center;gap:.75rem;text-align:center;padding:1rem}
-.mj-launch-splash__mark{padding:.35rem .85rem;border-radius:.9rem;border:1px solid color-mix(in srgb,var(--mj-splash-ink) 22%,transparent);background:color-mix(in srgb,var(--mj-splash-ink) 12%,transparent)}
-.mj-launch-splash__title{margin:0;font:400 clamp(1.35rem,5.5vw,1.65rem)/1.2 var(--font-ui,"Amiri","MajlisAmiriFallback",serif);color:var(--mj-splash-ink)}
-.mj-launch-splash__pulse{width:2.4rem;height:.18rem;border-radius:999px;background:color-mix(in srgb,var(--mj-splash-ink) 22%,transparent);overflow:hidden;position:relative}
+.mj-launch-splash__inner{display:grid;justify-items:center;gap:.55rem;text-align:center;padding:1rem}
+.mj-launch-splash__mark{padding:.4rem .9rem;border-radius:.9rem;border:1px solid color-mix(in srgb,var(--mj-splash-ink) 22%,transparent);background:color-mix(in srgb,var(--mj-splash-ink) 10%,transparent)}
+.mj-launch-splash__title{margin:0;font:700 clamp(1.4rem,5.5vw,1.7rem)/1.2 var(--font-ui,"Amiri","MajlisAmiriFallback",serif);color:var(--mj-splash-ink);letter-spacing:.01em}
+.mj-launch-splash__tagline{margin:0;font:500 .92rem/1.45 var(--font-ui,"Amiri","MajlisAmiriFallback",serif);color:color-mix(in srgb,var(--mj-splash-ink) 78%,transparent);max-width:16rem}
+.mj-launch-splash__pulse{width:2.4rem;height:.18rem;border-radius:999px;background:color-mix(in srgb,var(--mj-splash-ink) 22%,transparent);overflow:hidden;position:relative;margin-block-start:.15rem}
 .mj-launch-splash__pulse::after{content:"";position:absolute;inset:0;width:40%;border-radius:inherit;background:var(--mj-splash-ink);animation:mj-sp .9s ease-in-out infinite}
 @keyframes mj-sp{from{transform:translateX(150%)}to{transform:translateX(-250%)}}
 @media (prefers-reduced-motion:reduce){#mj-launch-splash,#mj-launch-splash.mj-launch-splash--out{transition:none}.mj-launch-splash__pulse::after{animation:none;width:100%;opacity:.45}}
@@ -251,6 +252,7 @@ html,body,#root,html.capacitor-native,html.capacitor-native body,html.capacitor-
         <div class="mj-launch-splash__mark" aria-hidden="true">
           <p class="mj-launch-splash__title" id="mj-launch-splash__title">سُنّة</p>
         </div>
+        <p class="mj-launch-splash__tagline">معك في العلم والعمل</p>
         <div class="mj-launch-splash__pulse" aria-hidden="true"></div>
       </div>
     </div>

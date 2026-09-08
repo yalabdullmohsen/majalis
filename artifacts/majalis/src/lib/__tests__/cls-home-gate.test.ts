@@ -26,7 +26,7 @@ assert.doesNotMatch(html, /#mj-boot-skeleton/, "بلا أنماط هيكل إق�
 assert.match(html, /id="mj-launch-splash"/, "دخولية MajlisSplash");
 const boot = readFileSync(resolve(root, "public/mj-launch-splash-boot.js"), "utf8");
 assert.match(html, /src="\/mj-launch-splash-boot\.js"/);
-assert.match(boot, /SOFT_MAX_MS\s*=\s*420/, "هدف LCP ليّن");
+assert.match(boot, /SOFT_MAX_MS\s*=\s*480/, "هدف LCP ليّن");
 assert.match(boot, /MAX_MS\s*=\s*1400/, "سقف انتظار خطوط");
 assert.match(critical, /\.hsh-steps[\s\S]*min-height:\s*22rem/, "حجز ارتفاع hsh-steps");
 assert.match(critical, /\.hsh-step[\s\S]*min-height:\s*6\.25rem/, "حجز ارتفاع hsh-step");

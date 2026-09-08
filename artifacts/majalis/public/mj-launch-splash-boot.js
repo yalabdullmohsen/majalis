@@ -1,18 +1,23 @@
       (function () {
         var el = document.getElementById("mj-launch-splash");
         if (!el) return;
-        var KEY = "mj.launch-splash.session.v2";
+        var KEY = "mj.launch-splash.session.v3";
         var done = false;
         var appReady = false;
-        var MIN_MS = 120;
-        var SOFT_MAX_MS = 420;
+        var MIN_MS = 220;
+        var SOFT_MAX_MS = 480;
         var MAX_MS = 1400;
-        var EXIT_MS = 90;
+        var EXIT_MS = 320;
         var bootReady = false;
         var shellStable = false;
         var start = (window.performance && performance.now) ? performance.now() : Date.now();
         try { window.__mjSplashStart = start; } catch (e) {}
         function now() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
+        function reducedMotion() {
+          try {
+            return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          } catch (e) { return false; }
+        }
         function fontsLikelyReady() {
           try {
             if (!document.fonts || !document.fonts.check) return true;
@@ -24,7 +29,8 @@
           done = true;
           try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
           if (!el.parentNode) return;
-          if (immediate) {
+          var skipFade = immediate || reducedMotion();
+          if (skipFade) {
             try { el.remove(); } catch (e) {}
             return;
           }
@@ -92,7 +98,7 @@
           try {
             var C = window.Capacitor;
             if (C && C.isNativePlatform && C.isNativePlatform() && C.Plugins && C.Plugins.SplashScreen) {
-              C.Plugins.SplashScreen.hide({ fadeOutDuration: 0 });
+              C.Plugins.SplashScreen.hide({ fadeOutDuration: EXIT_MS });
             }
           } catch (eCap) {}
         }, MAX_MS);
