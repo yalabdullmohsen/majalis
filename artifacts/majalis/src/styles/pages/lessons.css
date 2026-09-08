@@ -975,20 +975,88 @@ html.dark .lesson-detail-info-grid dd,
 
 .lesson-detail-page .lesson-detail-actions-panel {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 0.55rem;
   margin-top: 0.85rem;
-  padding: 0.85rem 0.95rem;
-  border-radius: var(--radius-card, 16px);
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 6%, var(--color-surface, #fff));
+  padding: 0.75rem 0.85rem;
+  border-radius: var(--radius-card, 18px);
+  background: var(--color-surface-muted, var(--mj-surface-2, var(--color-surface)));
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, var(--color-border));
+}
+
+.lesson-detail-actions__primary,
+.lesson-detail-actions__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: stretch;
 }
 
 .lesson-detail-page .lesson-detail-actions-panel .lesson-unified-card__btn,
 .lesson-detail-page .lesson-detail-actions-panel button,
 .lesson-detail-page .lesson-detail-actions-panel a {
-  border-radius: var(--radius-button, 18px);
+  border-radius: var(--radius-button, 14px);
   min-height: 44px;
+}
+
+.lesson-detail-page .lesson-unified-card__btn--secondary {
+  background: var(--color-primary-soft, var(--mj-brand-soft)) !important;
+  color: var(--color-primary-dark, var(--mj-brand-deep)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand) 30%, transparent) !important;
+}
+
+.lesson-detail-report {
+  margin-block-start: 1.1rem;
+  padding-block-start: 0.75rem;
+  border-block-start: 1px solid var(--color-border, var(--mj-hairline));
+  display: flex;
+  justify-content: center;
+}
+
+.lesson-detail-report .crb-btn,
+.crb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 40px;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius-control, 12px);
+  border: 1px solid var(--color-border, var(--mj-hairline));
+  background: transparent;
+  color: var(--color-text-muted, var(--mj-ink-2));
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.lesson-detail-report .crb-btn:hover,
+.crb-btn:hover {
+  color: var(--color-primary, var(--mj-brand));
+  border-color: color-mix(in srgb, var(--mj-brand) 35%, transparent);
+}
+
+.section-hero__chrome {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.75rem;
+  margin-block-end: 0.55rem;
+}
+
+.section-hero__back,
+.app-back-btn--inline.section-hero__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 44px;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-button, 14px);
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 28%, var(--color-border));
+  background: var(--color-primary-soft, var(--mj-brand-soft));
+  color: var(--color-primary-dark, var(--mj-brand-deep));
+  font-weight: 700;
+  text-decoration: none;
 }
 
 html.dark .lessons-page-v2 .lesson-unified-card,

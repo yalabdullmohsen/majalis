@@ -9,6 +9,7 @@ import {
   topicThemeCssVars,
   type TopicThemeId,
 } from "@/config/topic-themes";
+import { AppBackButton } from "@/components/common/AppBackButton";
 import "@/styles/components/topic-page.css";
 import "@/styles/components/safe-hero.css";
 
@@ -56,6 +57,8 @@ export function SectionHero({
     ...topicThemeCssVars(theme),
     "--section-accent": sectionAccent,
   } as CSSProperties;
+  const parentHref =
+    [...(breadcrumb ?? [])].reverse().find((c) => Boolean(c.href))?.href ?? "/";
 
   return (
     <div
@@ -65,23 +68,32 @@ export function SectionHero({
       style={{ "--section-accent": sectionAccent } as CSSProperties}
       dir="rtl"
     >
-      {breadcrumb && breadcrumb.length > 0 ? (
-        <nav className="topic-page__crumb" aria-label="مسار التنقل" data-section-crumb="1">
-          {breadcrumb.map((item, i) => {
-            const last = i === breadcrumb.length - 1;
-            return (
-              <span key={`${item.label}-${i}`} className="topic-page__crumb-item">
-                {i > 0 ? <span aria-hidden="true"> / </span> : null}
-                {item.href && !last ? (
-                  <Link href={item.href}>{item.label}</Link>
-                ) : (
-                  <span aria-current={last ? "page" : undefined}>{item.label}</span>
-                )}
-              </span>
-            );
-          })}
-        </nav>
-      ) : null}
+      <div className="section-hero__chrome">
+        <AppBackButton
+          variant="inline"
+          fallbackHref={parentHref}
+          label="رجوع"
+          className="section-hero__back"
+          data-section-back="1"
+        />
+        {breadcrumb && breadcrumb.length > 0 ? (
+          <nav className="topic-page__crumb" aria-label="مسار التنقل" data-section-crumb="1">
+            {breadcrumb.map((item, i) => {
+              const last = i === breadcrumb.length - 1;
+              return (
+                <span key={`${item.label}-${i}`} className="topic-page__crumb-item">
+                  {i > 0 ? <span aria-hidden="true"> / </span> : null}
+                  {item.href && !last ? (
+                    <Link href={item.href}>{item.label}</Link>
+                  ) : (
+                    <span aria-current={last ? "page" : undefined}>{item.label}</span>
+                  )}
+                </span>
+              );
+            })}
+          </nav>
+        ) : null}
+      </div>
 
       <header
         className="topic-page__hero on-dark safe-hero"

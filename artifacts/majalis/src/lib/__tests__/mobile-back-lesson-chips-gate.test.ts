@@ -1,5 +1,5 @@
 /**
- * بوابة: زر رجوع عائم في الأقسام + تباين chips الدروس ليلاً.
+ * بوابة: رجوع داخل هيدر الأقسام + تباين chips الدروس ليلاً (بلا عائم ثابت).
  * تشغيل: node --import tsx src/lib/__tests__/mobile-back-lesson-chips-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -13,15 +13,12 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 const appBack = read("src/components/common/AppBackButton.tsx");
 assert.doesNotMatch(appBack, /isTabRootPath/);
 assert.match(appBack, /ariaLabel = "رجوع"/);
-assert.match(appBack, /variant === "floating"/);
 
 const fab = read("src/components/FloatingBackButton.tsx");
-assert.match(fab, /autoHideFloating/);
+assert.match(fab, /return null/);
 
-const finalCss = read("src/styles/final-release.css");
-assert.match(finalCss, /\.floating-back-btn[\s\S]*?min-width:\s*48px/);
-assert.match(finalCss, /\.floating-back-btn[\s\S]*?bottom:\s*calc\(\s*var\(--bottom-nav-height/);
-assert.match(finalCss, /var\(--inset-bottom/);
+const lobby = read("src/components/lobby/SectionLobby.tsx");
+assert.match(lobby, /inlineHeaderBack = true/);
 
 const polish = read("src/styles/sections-calm-polish.css");
 assert.match(polish, /--mj-chip-bg:/);
@@ -30,6 +27,7 @@ assert.match(polish, /--mj-chip-active-bg:/);
 assert.match(polish, /--mj-chip-active-fg:/);
 assert.match(polish, /html\.dark[\s\S]*?--mj-chip-active-fg:\s*#06231a/);
 assert.match(polish, /html\.dark[\s\S]*?--mj-chip-fg:\s*#f3f7f5/);
+assert.match(polish, /\.floating-back-btn[\s\S]*?display:\s*none/);
 
 const lessonsCss = read("src/styles/pages/lessons.css");
 assert.match(lessonsCss, /--mj-chip-active-fg/);

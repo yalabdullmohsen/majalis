@@ -66,7 +66,7 @@ export function UpdateAvailableBanner() {
       open={Boolean(updateAvailable && shellReady)}
       onClose={onLater}
       title="تتوفر نسخة جديدة"
-      snap="half"
+      snap="auto"
       closeLabel="لاحقاً"
       elevated
       className="update-available-sheet"

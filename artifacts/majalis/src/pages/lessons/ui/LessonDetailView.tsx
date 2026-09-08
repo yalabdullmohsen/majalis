@@ -358,59 +358,61 @@ export default function LessonDetailPage({
         </dl>
 
         <div className="lesson-detail-actions lesson-detail-actions--row lesson-detail-actions-panel">
-          <FavoriteButton contentType="lesson" contentId={unified.id} />
-          <button
-            type="button"
-            className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
-            onClick={() => downloadUnifiedCalendar(unified)}
-          >
-            إضافة للتقويم
-          </button>
-          <AppBackButton variant="inline" fallbackHref="/lessons" label="رجوع" className="lesson-detail-actions__back" />
-          <AdminInlineEdit
-            contentType="lesson"
-            contentId={unified.id}
-            initialData={{
-              title: unified.title,
-              category: unified.category,
-              mosque: unified.mosque,
-              region: unified.region,
-              day_of_week: unified.day,
-              lesson_time: unified.time,
-              description: unified.description,
-            }}
-          />
-          {unified.streamUrl && (
+          <div className="lesson-detail-actions__primary">
+            <FavoriteButton contentType="lesson" contentId={unified.id} />
             <button
               type="button"
-              className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
-              onClick={() => openLessonExternalUrl(unified.streamUrl!)}
+              className="lesson-unified-card__btn lesson-unified-card__btn--secondary"
+              onClick={() => downloadUnifiedCalendar(unified)}
             >
-              رابط البث
+              إضافة للتقويم
             </button>
-          )}
-          {unified.mapsUrl && (
-            <button
-              type="button"
-              className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
-              onClick={() => openLessonExternalUrl(unified.mapsUrl!)}
-            >
-              الاتجاه للمسجد
-            </button>
-          )}
-          {unified.siteUrl && (
-            <button
-              type="button"
-              className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
-              onClick={() => openLessonExternalUrl(unified.siteUrl!)}
-            >
-              رابط الموقع
-            </button>
-          )}
+            <AdminInlineEdit
+              contentType="lesson"
+              contentId={unified.id}
+              initialData={{
+                title: unified.title,
+                category: unified.category,
+                mosque: unified.mosque,
+                region: unified.region,
+                day_of_week: unified.day,
+                lesson_time: unified.time,
+                description: unified.description,
+              }}
+            />
+          </div>
+          <div className="lesson-detail-actions__links">
+            {unified.streamUrl && (
+              <button
+                type="button"
+                className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
+                onClick={() => openLessonExternalUrl(unified.streamUrl!)}
+              >
+                رابط البث
+              </button>
+            )}
+            {unified.mapsUrl && (
+              <button
+                type="button"
+                className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
+                onClick={() => openLessonExternalUrl(unified.mapsUrl!)}
+              >
+                الاتجاه للمسجد
+              </button>
+            )}
+            {unified.siteUrl && (
+              <button
+                type="button"
+                className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
+                onClick={() => openLessonExternalUrl(unified.siteUrl!)}
+              >
+                رابط الموقع
+              </button>
+            )}
+          </div>
           {!isDemoId(unified.id) && !unified.id.startsWith("kw-") && (
             <ContentActions contentType="lesson" contentId={unified.id} />
           )}
-          <ContentReportButton contentType="درس" contentId={unified.id} title={unified.title} />
         </div>
 
         {(unified.note || unified.description) && (
@@ -468,6 +470,10 @@ export default function LessonDetailPage({
         </div>
 
         <ShareButtons title={unified.title} />
+
+        <footer className="lesson-detail-report">
+          <ContentReportButton contentType="درس" contentId={unified.id} title={unified.title} />
+        </footer>
       </article>
       </SectionErrorBoundary>
 

@@ -7,18 +7,14 @@
 
 :root {
   /*
-   * لوحة موحّدة (نهاري).
-   * مهم: قيم --mj-* يجب أن تكون hex صلبة — لا var(--color-*)،
-   * لأن final-release.css (بعد هذه الطبقة) يعيد:
-   *   --color-primary: var(--mj-brand)
-   * فربط --mj-brand ← --color-primary يخلق دورة تُبطل اللون
-   * (خلفية شفافة + نص أبيض فوق العاجي ≈ 1.1:1).
+   * لوحة موحّدة (نهاري) — درجتان فقط للبيج:
+   * خلفية عامة + سطح بطاقة. السطح الهادئ = نفس الخلفية بمزج خفيف.
    */
-  --mj-bg: #f6f2ea;
-  --mj-surface: #fffcf7;
-  --mj-surface-2: #f1ece3;
-  --mj-surface-3: #e9e3d8;
-  --mj-hairline: #d6d0c4;
+  --mj-bg: #f7f4ee;
+  --mj-surface: #fffcf8;
+  --mj-surface-2: #f7f4ee;
+  --mj-surface-3: #f7f4ee;
+  --mj-hairline: #d9d3c8;
   --mj-ink: #16241e;
   --mj-ink-2: #4f5f58;
   --mj-muted: #5e6e67;
@@ -26,29 +22,33 @@
   --mj-brand-soft: #e6f2ec;
   --mj-brand-deep: #0d4a39;
   --mj-accent: #b08a3e;
-  --mj-accent-soft: #f5eedf;
+  --mj-accent-soft: #f3ecdf;
   --mj-on-brand: #ffffff;
-  --mj-sh: 0 4px 14px -10px rgba(10, 61, 46, 0.14);
+  --mj-sh: 0 3px 12px -10px rgba(10, 61, 46, 0.12);
 
   --color-bg: var(--mj-bg);
   --color-surface: var(--mj-surface);
   --color-surface-soft: var(--mj-surface-2);
+  --color-surface-muted: var(--mj-surface-2);
   --color-primary: var(--mj-brand);
   --color-primary-dark: var(--mj-brand-deep);
   --color-primary-soft: var(--mj-brand-soft);
   --color-primary-contrast: var(--mj-on-brand);
   --color-primary-foreground: var(--mj-on-brand);
   --color-accent: var(--mj-accent);
+  --color-accent-gold: var(--mj-accent);
   --color-border: var(--mj-hairline);
   --color-text: var(--mj-ink);
+  --color-text-muted: var(--mj-ink-2);
   --color-muted: var(--mj-muted);
   --color-selected: #e8f3ee;
   --shadow-soft: var(--mj-sh);
   --surface-app: var(--mj-bg);
 
-  --radius-card: 16px;
-  --radius-tile: 16px;
-  --radius-button: 12px;
+  --radius-card: 18px;
+  --radius-tile: 18px;
+  --radius-button: 14px;
+  --radius-control: 12px;
   --radius-sheet: 20px;
 }
 
@@ -56,8 +56,8 @@ html[data-theme="dark"],
 html.dark {
   --mj-bg: #121816;
   --mj-surface: #1b2421;
-  --mj-surface-2: #222c28;
-  --mj-surface-3: #27312d;
+  --mj-surface-2: #121816;
+  --mj-surface-3: #121816;
   --mj-hairline: #3a4641;
   --mj-ink: #f3f7f5;
   --mj-ink-2: #c5d0cb;
@@ -74,14 +74,17 @@ html.dark {
   --color-bg: var(--mj-bg);
   --color-surface: var(--mj-surface);
   --color-surface-soft: var(--mj-surface-2);
+  --color-surface-muted: var(--mj-surface-2);
   --color-primary: var(--mj-brand);
   --color-primary-dark: var(--mj-brand-deep);
   --color-primary-soft: var(--mj-brand-soft);
   --color-primary-contrast: var(--mj-on-brand);
   --color-primary-foreground: var(--mj-on-brand);
   --color-accent: var(--mj-accent);
+  --color-accent-gold: var(--mj-accent);
   --color-border: var(--mj-hairline);
   --color-text: var(--mj-ink);
+  --color-text-muted: var(--mj-ink-2);
   --color-muted: var(--mj-muted);
   --color-selected: rgba(79, 180, 139, 0.18);
   --shadow-soft: var(--mj-sh);

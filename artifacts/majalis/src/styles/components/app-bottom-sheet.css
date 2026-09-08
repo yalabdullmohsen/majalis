@@ -75,6 +75,40 @@ body.app-sheet-open .app-sheet-overlay--elevated .app-sheet-overlay__scrim {
 
 .app-sheet--half { max-height: min(55svh, 85svh); }
 .app-sheet--full { max-height: 85svh; }
+.app-sheet--auto {
+  max-height: min(72svh, 85svh);
+  height: auto;
+}
+.app-sheet--auto .app-sheet__body {
+  flex: 0 1 auto;
+  overflow: visible;
+  background: var(--mj-surface, var(--surface, #fff));
+}
+.app-sheet--auto .app-sheet__head {
+  background: var(--mj-surface, var(--surface, #fff));
+}
+
+/* شيت التحديث: ارتفاع حسب المحتوى بلا فراغ أبيض */
+.update-available-sheet.app-sheet--auto,
+.update-available-sheet {
+  height: auto;
+  max-height: min(72svh, 85svh);
+}
+.update-available-sheet .app-sheet__body {
+  flex: 0 1 auto;
+  padding-block: 0.35rem 0.75rem;
+  background: var(--mj-surface, var(--color-surface));
+}
+.update-available-sheet .app-sheet__head {
+  background: var(--mj-surface, var(--color-surface));
+  border-bottom-color: color-mix(in srgb, var(--mj-hairline) 70%, transparent);
+}
+.update-available-sheet .app-sheet__footer-slot {
+  padding-block-start: 0.25rem;
+}
+.update-available-sheet .app-sheet__footer {
+  padding-block-start: 0.35rem;
+}
 
 .app-sheet__handle {
   flex-shrink: 0;

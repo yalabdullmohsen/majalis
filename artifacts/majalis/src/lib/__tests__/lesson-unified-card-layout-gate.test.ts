@@ -19,7 +19,7 @@ assert.match(card, /FavoriteButton/, "زر الحفظ داخل البطاقة");
 assert.match(card, /التفاصيل/, "زر التفاصيل داخل البطاقة");
 assert.match(card, /lesson-unified-card__actions-secondary/, "أزرار ثانوية مجمّعة");
 assert.doesNotMatch(card, /showEmpty\s*=\s*true/, "لا تُعرض خلايا فارغة");
-assert.match(css, /border-radius:\s*var\(--radius-card,\s*(?:24|16)px\)/, "حواف بطاقة عبر --radius-card");
+assert.match(css, /border-radius:\s*var\(--radius-card,\s*(?:24|18|16)px\)/, "حواف بطاقة عبر --radius-card");
 assert.match(css, /lesson-unified-card__facts/, "أنماط facts في lessons.css");
 assert.match(css, /lesson-detail-actions-panel/, "لوحة أزرار التفاصيل");
 assert.match(

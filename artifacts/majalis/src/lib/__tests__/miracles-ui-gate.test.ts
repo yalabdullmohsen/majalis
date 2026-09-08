@@ -44,7 +44,7 @@ assert.doesNotMatch(css, /\.mk-cat--aldam/);
 
 assert.doesNotMatch(fab, /if \(deepScroll\) return null/);
 assert.doesNotMatch(fab, /ChevronUp/);
-assert.match(fab, /بدون شرط تمرير/);
+assert.match(fab, /return null/);
 
 assert.match(share, /variant === "icons"/);
 assert.match(share, /share-faida--icons/);

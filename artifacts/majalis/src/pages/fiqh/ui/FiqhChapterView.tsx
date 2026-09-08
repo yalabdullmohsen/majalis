@@ -250,23 +250,22 @@ export default function FiqhChapterPage() {
       </div>
 
       {(adjacent.prev || adjacent.next) && (
-        <nav className="ve-pager" aria-label="أبواب مجاورة">
+        <nav
+          className={`ve-pager${adjacent.prev && adjacent.next ? "" : " ve-pager--single"}`}
+          aria-label="أبواب مجاورة"
+        >
           {adjacent.prev ? (
             <Link href={adjacent.prev.href}>
               <span>الباب السابق</span>
               <strong>{adjacent.prev.chapter.title}</strong>
             </Link>
-          ) : (
-            <span />
-          )}
+          ) : null}
           {adjacent.next ? (
             <Link href={adjacent.next.href} className="ve-pager__next">
               <span>الباب التالي</span>
               <strong>{adjacent.next.chapter.title}</strong>
             </Link>
-          ) : (
-            <span />
-          )}
+          ) : null}
         </nav>
       )}
 
