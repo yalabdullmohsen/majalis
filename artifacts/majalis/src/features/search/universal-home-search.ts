@@ -174,7 +174,9 @@ export async function runUniversalSearch(
   if (qNorm && qaDocs.length > 0) {
     const qaHits: UnifiedSearchHit[] = [];
     for (const d of qaDocs) {
-      if (!d.norm.includes(qNorm) && !d.titleAr.includes(query)) continue;
+      // طبّع العنوان أيضاً — وإلا يفشل البحث عند اختلاف الهمزة/التاء المربوطة
+      // بين الاستعلام والعنوان الخام رغم تطابقهما بعد التطبيع.
+      if (!d.norm.includes(qNorm) && !normalizeArabic(d.titleAr).includes(qNorm)) continue;
       qaHits.push({
         id: d.id,
         kind: d.kind,
