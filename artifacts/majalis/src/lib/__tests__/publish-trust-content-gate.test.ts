@@ -67,6 +67,21 @@ for (const p of published) {
   }
   assert.ok(!hasForbiddenSoon(blob), `${p.slug}: بلا «قريبًا» واجهية`);
   assert.ok(!EMOJI_RE.test(blob), `${p.slug}: بلا إيموجي`);
+  assert.ok(
+    (p.whyMentioned || "").trim().length >= 60,
+    `سبب الذكر ≥60: ${p.slug}`,
+  );
+  assert.doesNotMatch(
+    p.whyMentioned || "",
+    /والحكمة الجامعة من ذكر الأعلام/,
+    `لا whyMentioned عام: ${p.slug}`,
+  );
+  assert.ok(
+    !(p.lessons || []).some((l) =>
+      /للعبرة والتوحيد لا للاشتغال|وليسأل القارئ|تُقرأ على النفس/.test(l),
+    ),
+    `لا دروس حشو آلي: ${p.slug}`,
+  );
   for (const link of p.relatedLinks || []) {
     const href = (link.href || "").trim();
     assert.ok(href.startsWith("/"), `${p.slug}: رابط داخلي يبدأ بـ / (${href})`);
