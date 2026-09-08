@@ -56,10 +56,9 @@ export function normalizeCheckState(raw, description = "") {
   }
   if (/^(pass|success|completed_success)$/.test(s)) return "pass";
   if (/^(fail|failure|timed_out|action_required|error)$/.test(s)) return "fail";
-  if (/^(cancel|canceled|cancelled)$/.test(s)) {
-    // Bare cancel without Ignored description — treat as skip for Preview contexts only upstream.
-    return "fail";
-  }
+  // Cancelled = غالبًا run قديم استُبدل بـ commit أحدث، أو إلغاء داخل نفس الـPR.
+  // لا يُعد فشلًا دائمًا — ننتظر آخر run (pending) بدل hard-block.
+  if (/^(cancel|canceled|cancelled)$/.test(s)) return "pending";
   if (/^(pending|queued|in_progress|expected|waiting|requested)$/.test(s)) return "pending";
   if (/^(skip|skipped|neutral)$/.test(s)) return "skip";
   return "other";
@@ -194,14 +193,31 @@ export function evaluateEligibility(input = {}) {
   const req = pathLane.requiredChecks;
 
   function findCheck(re) {
-    const row = checks.find((c) => re.test(c.name));
-    if (!row) return { name: null, state: "missing", description: "", ignoredPreview: false };
-    const state = normalizeCheckState(row.state, row.description);
+    const matches = checks.filter((c) => c?.name && re.test(c.name));
+    if (!matches.length) {
+      return { name: null, state: "missing", description: "", ignoredPreview: false };
+    }
+    const rank = { pass: 5, pending: 4, skip: 3, other: 2, fail: 1, missing: 0 };
+    let best = null;
+    for (const row of matches) {
+      const state = normalizeCheckState(row.state, row.description);
+      const nameBonus = /^Verify build$/i.test(row.name) ? 10 : 0;
+      const score = (rank[state] ?? 0) + nameBonus;
+      if (!best || score > best.score) {
+        best = {
+          score,
+          name: row.name,
+          state,
+          description: row.description || "",
+          ignoredPreview: isIgnorablePreviewStatus(row) || state === "skip",
+        };
+      }
+    }
     return {
-      name: row.name,
-      state,
-      description: row.description || "",
-      ignoredPreview: isIgnorablePreviewStatus(row) || state === "skip",
+      name: best.name,
+      state: best.state,
+      description: best.description,
+      ignoredPreview: best.ignoredPreview,
     };
   }
 

@@ -179,7 +179,7 @@ describe("safe-auto-merge eligibility", () => {
 
   it("blocks danger paths (workflows, ios, supabase, api, lockfile, capacitor)", () => {
     for (const path of [
-      ".github/workflows/ci.yml",
+      ".github/workflows/release-majlisilm.yml",
       "artifacts/majalis/ios/App/App/AppDelegate.swift",
       "ios/App/AppDelegate.swift",
       "artifacts/majalis/capacitor.config.ts",
@@ -338,6 +338,37 @@ describe("safe-auto-merge eligibility", () => {
     );
     assert.equal(r.eligible, true, r.blockers.join("; "));
     assert.equal(r.vercelPreviewKind, "ignored");
+  });
+
+  it("waits (not hard-fail) when Verify build is cancelled/superseded", () => {
+    const r = evaluateEligibility(
+      base({
+        checks: greenChecks.map((c) =>
+          c.name === "Verify build" ? { ...c, state: "cancelled" } : c,
+        ),
+      }),
+    );
+    assert.equal(r.eligible, false);
+    assert.equal(r.waiting, true);
+    assert.equal(r.needsManualReview, false);
+    assert.ok(r.waitBlockers.some((b) => /Verify build/i.test(b)));
+    assert.ok(!r.hardBlockers.some((b) => /Verify build/i.test(b)));
+  });
+
+  it("prefers Verify build success over cancelled quality twin", () => {
+    const r = evaluateEligibility(
+      base({
+        checks: [
+          { name: "quality", state: "cancelled" },
+          { name: "Verify build", state: "pass" },
+          ...greenChecks.filter(
+            (c) => c.name !== "Verify build" && c.name !== "quality" && c.name !== "ci-required",
+          ),
+          { name: "ci-required", state: "pass" },
+        ],
+      }),
+    );
+    assert.equal(r.eligible, true, r.blockers.join("; "));
   });
 
   it("waits (not hard-fail) when Verify build is pending", () => {

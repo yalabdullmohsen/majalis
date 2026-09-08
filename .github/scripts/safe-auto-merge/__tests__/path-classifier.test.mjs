@@ -126,14 +126,20 @@ describe("path-classifier", () => {
     assert.equal(r.needFastLane, false);
   });
 
-  it(".github/workflows remains manual review", () => {
-    const r = classifyChangedPaths([".github/workflows/ci.yml"]);
+  it(".github/workflows (non-policy) remains manual review", () => {
+    const r = classifyChangedPaths([".github/workflows/release-majlisilm.yml"]);
     assert.equal(r.lane, "risky");
     assert.equal(r.manualReview, true);
     assert.equal(r.needPostgres, true);
     assert.equal(r.needFastLane, false);
   });
 
+  it("ci.yml concurrency/policy is Fast Lane policy-only", () => {
+    const r = classifyChangedPaths([".github/workflows/ci.yml"]);
+    assert.equal(r.lane, "policy-only");
+    assert.equal(r.manualReview, false);
+    assert.equal(r.needFastLane, true);
+  });
   it("auto-maintenance workflow/scripts are policy paths", () => {
     assert.equal(classifyOnePath(".github/workflows/auto-maintenance.yml"), "policy");
     assert.equal(classifyOnePath("scripts/auto-maintenance/policy.mjs"), "policy");
@@ -180,6 +186,7 @@ describe("path-classifier", () => {
 
   it("throughput workflows + majalis vercel.json are policy not risky", () => {
     const r = classifyChangedPaths([
+      ".github/workflows/ci.yml",
       ".github/workflows/vercel-check.yml",
       ".github/workflows/preview-smoke.yml",
       ".github/workflows/harvest-sources.yml",
