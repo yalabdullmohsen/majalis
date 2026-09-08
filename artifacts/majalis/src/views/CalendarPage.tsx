@@ -170,10 +170,10 @@ export default function CalendarPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/calendar",
-      title: "التقويم الإسلامي والدروس | سُنّة",
-      description: "تقويم الدروس والمناسبات الإسلامية، عرض شهري وأسبوعي ويومي مع الأحداث والحلقات العلمية.",
-      keywords: ["تقويم إسلامي", "مواعيد دروس", "التقويم الهجري", "الأحداث الإسلامية", "جدول الدروس"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "التقويم الإسلامي والدروس", url: "https://www.ssunnah.com/calendar", about: { "@type": "Thing", name: "التقويم الهجري والمناسبات الإسلامية" } }],
+      title: "تقويم الدروس | سُنّة",
+      description: "جدول شهري وأسبوعي ويومي لمواعيد الدروس والحلقات العلمية في سُنّة.",
+      keywords: ["تقويم الدروس", "مواعيد دروس", "جدول الدروس", "حلقات علمية"],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "تقويم الدروس", url: "https://www.ssunnah.com/calendar", about: { "@type": "Thing", name: "مواعيد الدروس والحلقات العلمية" } }],
     });
   }, []);
 
@@ -332,7 +332,7 @@ export default function CalendarPage() {
       {modalEvent ? <EventModal event={modalEvent} onClose={() => setModalEvent(null)} /> : null}
 
       <div className="twh-share">
-        <ShareButtons aria-label="التقويم الهجري والمناسبات الإسلامية — سُنّة" url="https://www.ssunnah.com/calendar" />
+        <ShareButtons aria-label="تقويم الدروس — سُنّة" url="https://www.ssunnah.com/calendar" />
       </div>
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="islamic-history" aria-label="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
