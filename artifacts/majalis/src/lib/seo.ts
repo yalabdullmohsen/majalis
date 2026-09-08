@@ -283,7 +283,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
       ...requiredRoute(routes, "/quran/people"),
       path: normalized,
       title: `${personSlug} في القرآن | سُنّة`,
-      description: `من ذكروا في القرآن: «${personSlug}» — مواضع الآيات والتعريف بما ثبت دون توسع في غير الثابت.`,
+      description: `«${personSlug}» في فهرس الذين ذكروا في القرآن — التعريف وسبب الذكر ومواضع الآيات.`,
       ogType: "article",
     };
   }

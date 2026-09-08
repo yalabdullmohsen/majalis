@@ -71,10 +71,13 @@ export default function NationsPage() {
       route="/nations"
       eyebrow="قصص القرآن"
       title="الأمم السابقة"
-      subtitle={`${NATIONS.length} أمة وقوماً — بالآيات والأحاديث الصحيحة، مع تمييز ما ثبت مما لم يثبت`}
+      subtitle={`${NATIONS.length} أمة وقومًا مذكورة في القرآن — بالآيات وما صحّ من السنة`}
       groupTitle="أقسام الأمم السابقة"
     >
     <div className="page-shell nations-page" dir="rtl">
+      <p className="nations-page-lead">
+        قصص الأمم التي قصّها القرآن: دعوتهم، وما وقع عليهم، والعِبَر المستفادة — مع الاقتصار على ما يدل عليه النص دون الجزم بما لم يثبت.
+      </p>
       <div className="nations-toolbar">
         <div className="nations-view-switch" role="tablist" aria-label="طريقة العرض">
           <button

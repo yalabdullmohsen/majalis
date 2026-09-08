@@ -11,6 +11,20 @@
   padding-bottom: 4rem;
 }
 
+.nations-page-lead {
+  max-width: 60rem;
+  margin: 0 auto 1rem;
+  padding-inline: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--nat-ink) 78%, transparent);
+}
+
+html[data-theme="dark"] .nations-page-lead,
+html.dark .nations-page-lead {
+  color: var(--text-secondary, #C2CFCA);
+}
+
 /* ── شريط الأدوات والبحث ─────────────────────────────────────── */
 .nations-toolbar {
   display: flex;

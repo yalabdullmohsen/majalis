@@ -1189,12 +1189,12 @@ export default function ProphetStoriesPage({
       route="/prophets"
       className="topic-page--prophets"
       title="الأنبياء والرسل"
-      subtitle={`أحسن القصص — ${PROPHETS.length} نبياً مذكوراً في القرآن الكريم · ٥ أولو العزم`}
+      subtitle={`أحسن القصص — ${PROPHETS.length} نبيًا مذكورًا في القرآن · خمسة من أولي العزم`}
       eyebrow="القصص والأعلام"
       groupTitle="عرض قصص الأنبياء"
     >
     <div className="prophets-lux-page prophets-lux-page--embedded" data-prophets-shell="1">
-      <p className="text-sm text-muted-foreground leading-relaxed mb-4 rounded-xl border border-border/60 bg-muted/20 px-3 py-2.5">
+      <p className="prophets-page-lead">
         هؤلاء الأنبياء والرسل الذين ذكرهم الله بأسمائهم في القرآن الكريم؛ وقد أخبر سبحانه أنه أرسل رسلاً آخرين لم يقصصهم علينا: ﴿وَرُسُلًا قَدْ قَصَصْنَاهُمْ عَلَيْكَ مِن قَبْلُ وَرُسُلًا لَّمْ نَقْصُصْهُمْ عَلَيْكَ﴾ [النساء: 164].
       </p>
 

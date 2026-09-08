@@ -83,6 +83,19 @@ html.dark .nb-table__row--clickable:hover td {
   background: transparent;
 }
 
+.prophets-page-lead {
+  margin: 0 0 1rem;
+  max-width: 42rem;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text-secondary, #4a5a53);
+}
+
+html[data-theme="dark"] .prophets-page-lead,
+html.dark .prophets-page-lead {
+  color: var(--text-secondary, #C2CFCA);
+}
+
 .prophets-light-section {
   background: transparent;
 }
