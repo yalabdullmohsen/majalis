@@ -87,10 +87,10 @@ export function classifyNavMotion(from: string, to: string, isPop: boolean): Nav
 }
 
 export const NAV_MOTION_MS: Record<Exclude<NavMotionKind, "none">, number> = {
-  push: 340,
-  pop: 300,
-  tab: 220,
-  modal: 360,
+  push: 160,
+  pop: 150,
+  tab: 140,
+  modal: 180,
 };
 
 export function reducedMotionPreferred(): boolean {

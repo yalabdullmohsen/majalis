@@ -2,7 +2,7 @@ import { useState, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
 import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { useLocation } from "wouter";
-import { isAuthStandalonePath, isImmersiveChromePath } from "@/lib/immersive-chrome";
+import { isAuthStandalonePath, isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { haptics } from "@/lib/haptics";
 import { cn } from "@/lib/utils";
@@ -49,6 +49,7 @@ export function AppBackButton({
     /* يظهر في كل الصفحات الداخلية بما فيها جذور التبويب؛ يُخفى في الرئيسية/المصحف/الدخول فقط */
     if (path === "/") return null;
     if (isImmersiveChromePath(location)) return null;
+    if (isPrayerTimesPath(location)) return null;
     if (isAuthStandalonePath(location)) return null;
     if (path === "/support" || path === "/contact") return null;
   }

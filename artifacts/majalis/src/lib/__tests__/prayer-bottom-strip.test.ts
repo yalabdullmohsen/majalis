@@ -83,11 +83,16 @@ assert.match(css, /\.pts-chrome\s*\{[\s\S]*?display:\s*none/);
 assert.match(css, /\.pts-dock\s*\{[\s\S]*?grid-template-columns:\s*repeat\(\s*2/);
 assert.match(css, /\.pts-ranks__toggle/);
 
-assert.match(page, /pts-back--top/, "رجوع أعلى الصفحة");
-assert.match(page, /pts-settings--top/, "إعدادات أعلى الصفحة");
+assert.match(page, /pts-toolbar/, "شريط أدوات تحت الصلاة القادمة");
+assert.match(page, /className="pts-back"/, "رجوع داخل شريط الأدوات");
+assert.match(page, /className="pts-settings"/, "إعدادات داخل شريط الأدوات");
+assert.match(page, /pts-location--chip/, "الموقع شريحة مضغوطة");
+assert.doesNotMatch(page, /pts-header__top/, "لا صف مزدحم أعلى الصفحة");
 assert.doesNotMatch(page, /pts-chrome/, "لا شريط عائم سفلي");
 assert.match(page, /عرض الكل/, "مراتب قابلة للتوسيع");
 assert.match(page, /useSharedPrayerCountdown/, "مشاركة العدّاد مع المزوّد");
+assert.match(css, /\.pts-toolbar\s*\{/, "أنماط شريط الأدوات");
+assert.match(css, /\.pts-header__top\s*\{[\s\S]*?display:\s*none/, "إخفاء الصف العلوي المزدحم");
 
 const chromeScroll = readFileSync(
   resolve(appRoot, "src/styles/components/app-chrome-scroll.css"),

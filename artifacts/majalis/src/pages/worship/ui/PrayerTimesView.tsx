@@ -192,36 +192,34 @@ export default function PrayerTimesPage() {
 
   const headerChrome = (
     <header className="pts-header">
-      <div className="pts-header__top">
-        <button
-          type="button"
-          className="pts-back pts-back--top"
-          onClick={handleBack}
-          aria-label="رجوع"
-        >
-          <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
-          <span>رجوع</span>
-        </button>
-        <button
-          type="button"
-          className="pts-location"
-          onClick={() => setGovOpen((v) => !v)}
-          aria-expanded={govOpen}
-          aria-controls="pts-gov-panel"
-        >
-          <MapPin size={15} strokeWidth={2} aria-hidden="true" />
-          <span>{locLabel}</span>
-        </button>
-        <Link href="/adhan-settings" className="pts-settings pts-settings--top" aria-label="إعدادات الصلاة والأذان">
-          <Settings2 size={16} strokeWidth={2} aria-hidden="true" />
-          <span>إعدادات</span>
-        </Link>
-      </div>
-      <div className="pts-dates">
+      <h1 className="pts-title">الصلاة</h1>
+      <p className="pts-dates">
         <span>{zoneDateReadable(timeZone)}</span>
-      </div>
-      <h1 className="pts-title sr-only">مواقيت الصلاة</h1>
+      </p>
     </header>
+  );
+
+  const toolsBar = (
+    <div className="pts-toolbar" role="group" aria-label="أدوات الصفحة">
+      <button
+        type="button"
+        className="pts-location pts-location--chip"
+        onClick={() => setGovOpen((v) => !v)}
+        aria-expanded={govOpen}
+        aria-controls="pts-gov-panel"
+      >
+        <MapPin size={15} strokeWidth={2} aria-hidden="true" />
+        <span>{locLabel}</span>
+      </button>
+      <Link href="/adhan-settings" className="pts-settings" aria-label="إعدادات الصلاة والأذان">
+        <Settings2 size={16} strokeWidth={2} aria-hidden="true" />
+        <span>إعدادات</span>
+      </Link>
+      <button type="button" className="pts-back" onClick={handleBack} aria-label="رجوع">
+        <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" />
+        <span>رجوع</span>
+      </button>
+    </div>
   );
 
   const locationPanel = govOpen ? (
@@ -315,6 +313,7 @@ export default function PrayerTimesPage() {
     return (
       <div className="pts-screen pts-screen--with-nav" dir="rtl">
         {headerChrome}
+        {toolsBar}
         {locationPanel}
         {loading ? (
           <p className="pts-hint" role="status">جاري تجهيز المواقيت…</p>
@@ -385,7 +384,6 @@ export default function PrayerTimesPage() {
     <div className="pts-screen pts-screen--with-nav" dir="rtl">
       {headerChrome}
       {hijriStr ? <p className="pts-hijri">{hijriStr}</p> : null}
-      {locationPanel}
 
       <section className="pts-hero pts-hero--compact" aria-label="العداد التنازلي">
         <div className="pts-hero__content">
@@ -421,6 +419,8 @@ export default function PrayerTimesPage() {
         </div>
       </section>
 
+      {toolsBar}
+      {locationPanel}
       {shortcuts}
 
       <section className="pts-ranks" aria-labelledby="pts-ranks-title">
