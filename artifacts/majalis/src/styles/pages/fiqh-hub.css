@@ -1750,10 +1750,10 @@ html.dark .fiqh-filters__chip.is-active {
   flex-direction: column;
   gap: 0.15rem;
   padding: 0.45rem 0.5rem 0.4rem;
-  border-radius: 10px;
+  border-radius: var(--radius-button, 18px);
   border: 1px solid color-mix(in srgb, var(--mn-border-default, #d8e3de) 75%, transparent);
   background: var(--fq-surface, var(--cardBackground, #fff));
-  box-shadow: 0 1px 2px color-mix(in srgb, #0f172a 4%, transparent);
+  box-shadow: var(--ss-shadow-soft, 0 1px 2px color-mix(in srgb, #0f172a 4%, transparent));
   min-height: 0;
   max-height: 6.5rem;
   overflow: hidden;

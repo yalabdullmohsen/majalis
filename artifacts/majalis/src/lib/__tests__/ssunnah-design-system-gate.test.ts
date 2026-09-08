@@ -33,6 +33,9 @@ assert.match(index, /AppCard/);
 assert.match(index, /FeatureCard/);
 assert.match(index, /ContentCard/);
 assert.match(index, /ActionButton/);
+assert.match(index, /PrimaryButton/);
+assert.match(index, /SecondaryButton/);
+assert.match(index, /IconButton/);
 assert.match(index, /LessonCard/);
 assert.match(index, /FloatingBackButton/);
 

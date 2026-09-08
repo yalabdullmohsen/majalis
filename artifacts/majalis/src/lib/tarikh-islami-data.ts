@@ -129,7 +129,7 @@ export const TARIKH_ISLAMI: DarsSection[] = [
     num: "2",
     title: "مدن صنعت التاريخ الإسلامي",
     icon: "🌆",
-    color: "#1d4ed8",
+    color: "#0A3D2E",
     lessons: ls("mudun", [
       [
         "مكة المكرمة",

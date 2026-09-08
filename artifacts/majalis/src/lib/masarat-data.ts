@@ -60,7 +60,7 @@ export const MASARAT: Masar[] = [
     title: "مسار طالب العلم",
     subtitle: "منهج منظم للارتقاء في العلم الشرعي",
     icon: "📚",
-    color: "#1d4ed8",
+    color: "#0A3D2E",
     level: "متقدم",
     duration: "سنة فأكثر",
     steps: [

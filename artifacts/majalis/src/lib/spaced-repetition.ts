@@ -175,7 +175,7 @@ export const QUALITY_OPTIONS: { value: ReviewQuality; label: string; color: stri
   { value: 0, label: "لم أتذكر", color: "#dc2626" },
   { value: 3, label: "صعب", color: "var(--mj-brand-deep)" },
   { value: 4, label: "عرفته", color: "#16a34a" },
-  { value: 5, label: "سهل", color: "#0284c7" },
+  { value: 5, label: "سهل", color: "#0F5C45" },
 ];
 
 /** Same buttons as QUALITY_OPTIONS with Anki-style English keys for logic layers. */

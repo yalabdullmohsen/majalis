@@ -84,7 +84,7 @@ export const TOPIC_THEMES: Record<TopicThemeId, TopicTheme> = {
     labelAr: "الملائكة · الغيبيات",
     heroFrom: "#152238",
     heroTo: "#1E3352",
-    accent: "#3D5A80",
+    accent: "#1F5C48",
     onHero: "#FFFFFF",
     onHeroMuted: "#E4EAF2",
     onHeroAccent: "#C5D4E8",

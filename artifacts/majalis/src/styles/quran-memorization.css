@@ -474,7 +474,7 @@
 
 .qmem-rating-btn--0 { background: #fee2e2; color: #7f1d1d; }
 .qmem-rating-btn--1 { background: #fef3c7; color: #78350f; }
-.qmem-rating-btn--3 { background: #dbeafe; color: #1e40af; }
+.qmem-rating-btn--3 { background: color-mix(in srgb, var(--ss-primary-green, #0F5C45) 12%, #fff); color: var(--ss-deep-green, #0A3D2E); }
 .qmem-rating-btn--5 { background: #d1fae5; color: var(--mj-brand); }
 
 .qmem-rating-btn:hover { opacity: 0.8; }

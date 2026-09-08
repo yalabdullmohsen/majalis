@@ -454,3 +454,138 @@ html[data-theme="dark"] .card__subtitle,
 html.dark .card__subtitle {
   color: var(--ss-muted-text, #c5d0cb);
 }
+
+/* ── شبكة الميزات (الرئيسية) ── */
+.ss-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.75rem, 2.5vw, 1rem);
+  width: 100%;
+  max-width: min(40rem, 100%);
+  margin-inline: auto;
+  padding-inline: clamp(0.75rem, 3.5vw, 1.25rem);
+  justify-items: center;
+  box-sizing: border-box;
+}
+
+@media (min-width: 720px) {
+  .ss-feature-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: min(56rem, 100%);
+  }
+}
+
+.home-primary-portals,
+.home-daily-progress-band,
+.home-sacred-day {
+  margin-block: 0.85rem 1.15rem;
+}
+
+.m2030-band + .m2030-band {
+  margin-top: 0.35rem;
+}
+
+/* ── أزرار أيقونة ── */
+.ss-icon-btn {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill, 999px);
+  border: 1px solid color-mix(in srgb, var(--ss-primary-green) 22%, var(--ss-border));
+  background: color-mix(in srgb, var(--ss-primary-green) 10%, var(--ss-card-bg));
+  color: var(--ss-deep-green, var(--brand-on-light));
+  cursor: pointer;
+  padding: 0;
+}
+
+.ss-icon-btn--muted {
+  background: var(--ss-card-bg);
+  color: var(--ss-muted-text);
+}
+
+.ss-icon-btn--gold {
+  background: color-mix(in srgb, var(--ss-soft-gold) 18%, var(--ss-card-bg));
+  border-color: color-mix(in srgb, var(--ss-soft-gold) 35%, transparent);
+  color: #1a1510;
+}
+
+/* ── قراءة أوضح (غير المصحف) ── */
+.app-main:not([data-mushaf]) p,
+.topic-card__body,
+.hub-card__desc,
+.card__subtitle,
+.ss-content-card__excerpt,
+.section-lobby__lead {
+  line-height: 1.75;
+}
+
+.hub-card__title,
+.card__label,
+.ss-feature-card__title,
+.m2030-band__title {
+  font-weight: 750;
+  color: var(--mj-ink);
+}
+
+.hub-card__desc,
+.card__subtitle {
+  color: var(--mj-ink-2, var(--ss-muted-text));
+  opacity: 1;
+}
+
+/* ── توحيد بطاقات قديمة شائعة ── */
+.page-card,
+.ui-card,
+.mj-card,
+.dii-card,
+.lessons-card,
+.hadith-card,
+.twh-card,
+.mk-card,
+.fiqh-book-card,
+.topic-card {
+  border-radius: var(--radius-card, 24px) !important;
+}
+
+.mj-pressable:active:not(.floating-back-btn):not(.global-back-btn):not(.hub-card):not(.card) {
+  /* الضغط الخفيف — opacity فقط على الأزرار؛ البطاقات لها قواعدها */
+}
+
+/* ── أوراق سفلية / درج — حركة ناعمة ── */
+.app-sheet__panel,
+.more-sheet,
+[data-bottom-sheet="1"] {
+  transition: transform 220ms var(--mj-ease-spring, cubic-bezier(0.22, 1.15, 0.36, 1)),
+    opacity 180ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-sheet__panel,
+  .more-sheet,
+  .drawer-panel,
+  .sidebar-panel {
+    transition: none !important;
+  }
+}
+
+/* ── تداخلات: مساحة أسفل للشيت/عائم ── */
+.page-shell,
+.section-lobby,
+.topic-page,
+.search-page,
+.pts-screen {
+  padding-bottom: calc(var(--content-pb, 88px) + 0.75rem);
+}
+
+/* لا يغطي العائم المشغّل — يرفع فوق الشريط فقط */
+.floating-back-btn {
+  bottom: calc(var(--nav-h, 64px) + 12px + var(--inset-bottom, 0px)) !important;
+  z-index: 40;
+}
+
+html.audio-dock-open .floating-back-btn,
+html[data-audio-dock="1"] .floating-back-btn {
+  bottom: calc(var(--nav-h, 64px) + var(--audio-dock-h, 72px) + 16px + var(--inset-bottom, 0px)) !important;
+}

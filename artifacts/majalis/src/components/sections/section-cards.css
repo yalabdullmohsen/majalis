@@ -50,7 +50,9 @@
 }
 
 .card:active {
-  transform: scale(0.98);
+  /* بلا scale على بطاقات النص */
+  opacity: 0.92;
+  transform: none;
 }
 
 .card__icon {

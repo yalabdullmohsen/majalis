@@ -373,8 +373,8 @@ html.dark .nations-page-lead {
 .nation-evidence__ref { font-size: 0.75rem; opacity: 0.75; font-style: normal; }
 .nation-evidence--hadith { border-inline-start-color: var(--mj-brand); }
 .nation-evidence--hadith .nation-evidence__kind { background: var(--mj-brand); }
-.nation-evidence--tafsir { border-inline-start-color: #1d4ed8; }
-.nation-evidence--tafsir .nation-evidence__kind { background: #1d4ed8; }
+.nation-evidence--tafsir { border-inline-start-color: var(--ss-deep-green, #0A3D2E); }
+.nation-evidence--tafsir .nation-evidence__kind { background: var(--ss-deep-green, #0A3D2E); }
 .nation-evidence--disputed { border-inline-start-color: #b45309; }
 .nation-evidence--disputed .nation-evidence__kind { background: #b45309; }
 .nation-evidence--unverified { border-inline-start-color: #9b1c1c; }

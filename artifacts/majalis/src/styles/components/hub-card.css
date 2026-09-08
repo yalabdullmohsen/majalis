@@ -66,30 +66,33 @@
   min-height: 10.5rem;
   padding: 0.95rem 1rem 1rem;
   padding-inline-end: 2.75rem;
-  background: color-mix(in srgb, var(--mj-surface, #fff) 96%, var(--mj-brand-soft, var(--brand-soft, var(--mj-brand-soft))));
-  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 22%, var(--mj-hairline, #e3e8e6));
-  border-radius: 22px;
-  box-shadow: 0 2px 10px -6px rgba(11, 32, 24, 0.18);
+  background: color-mix(in srgb, var(--ss-card-bg, var(--mj-surface, #fff)) 96%, var(--mj-brand-soft, var(--brand-soft, var(--mj-brand-soft))));
+  border: 1px solid color-mix(in srgb, var(--ss-primary-green, var(--mj-brand)) 22%, var(--ss-border, var(--mj-hairline, #e3e8e6)));
+  border-radius: var(--radius-card, 24px);
+  box-shadow: var(--ss-shadow-soft, 0 2px 10px -6px rgba(11, 32, 24, 0.14));
   text-decoration: none;
   color: inherit;
   min-width: 0;
   overflow: hidden;
+  margin-inline: auto;
+  max-width: 22rem;
+  width: 100%;
   transition:
     border-color 0.16s ease,
     box-shadow 0.16s ease,
-    transform 0.16s ease,
+    opacity 0.14s ease,
     background 0.16s ease;
 }
 
 .hub-card:hover {
-  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 48%, var(--mj-accent, #b8963f) 12%);
-  box-shadow: 0 6px 18px -8px rgba(11, 32, 24, 0.22);
+  border-color: color-mix(in srgb, var(--ss-primary-green, var(--mj-brand)) 48%, var(--ss-soft-gold, var(--mj-accent, #b8963f)) 12%);
+  box-shadow: var(--ss-shadow, 0 6px 18px -8px rgba(11, 32, 24, 0.18));
   text-decoration: none;
-  transform: translateY(-1px);
 }
 
 .hub-card:active {
-  transform: scale(0.985);
+  /* بلا scale — يمنع قفز النص/التخطيط */
+  opacity: 0.92;
 }
 
 .hub-card:focus-visible {

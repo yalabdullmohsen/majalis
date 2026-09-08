@@ -191,11 +191,11 @@
 .qzg-q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: var(--ds-space-2); }
 .qzg-q-cat-label { font-size: 0.82rem; color: var(--majalis-ink-soft); }
 .qzg-q-points-badge { padding: 0.3rem 0.875rem; border-radius: 9999px; background: var(--ds-emerald-soft, var(--majalis-emerald-muted)); color: var(--ds-emerald-deep, var(--majalis-emerald-deep)); font-weight: 800; font-size: var(--ds-text-base); border: 1px solid var(--ds-emerald, var(--majalis-emerald)); }
-.qzg-q-passed-banner { padding: 0.5rem 0.75rem; background: #EFF6FF; border-radius: var(--ds-radius, 0.5rem); margin-bottom: 0.875rem; font-size: 0.82rem; color: #1D4ED8; border: 1px solid #BFDBFE; }
+.qzg-q-passed-banner { padding: 0.5rem 0.75rem; background: #EEF6F2; border-radius: var(--ds-radius, 0.5rem); margin-bottom: 0.875rem; font-size: 0.82rem; color: #0A3D2E; border: 1px solid #D5E8DF; }
 .qzg-q-text { margin: 0; font-size: 1.2rem; font-weight: 700; color: var(--majalis-ink); line-height: 1.9; text-align: center; padding: 0.75rem 0; }
 .qzg-q-noq  { margin: 0; color: var(--majalis-ink-soft); text-align: center; font-size: 0.9rem; }
 .qzg-q-transfer-row { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--ds-line-color); text-align: center; }
-.qzg-btn-transfer { padding: 0.45rem 1.1rem; border-radius: var(--ds-radius, 0.5rem); background: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; cursor: pointer; font-size: 0.82rem; font-weight: 600; font-family: inherit; }
+.qzg-btn-transfer { padding: 0.45rem 1.1rem; border-radius: var(--ds-radius, 0.5rem); background: #EEF6F2; color: #0A3D2E; border: 1px solid #D5E8DF; cursor: pointer; font-size: 0.82rem; font-weight: 600; font-family: inherit; }
 .qzg-btn-gold--wide { width: 100%; }
 .qzg-btn-gold--mb   { margin-bottom: 0.75rem; }
 .qzg-btn-gold--px   { padding-inline: 2.5rem; }

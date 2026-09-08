@@ -130,7 +130,7 @@ export const SECTION_GROUP_ACCENT: Record<SectionGroup, string> = {
   dawah: "#1F5C48",
   library: "#8B6914",
   worship: "#2A7A6E",
-  learning: "#3D5A80",
+  learning: "#1F5C48",
   account: BRAND.colorDay,
 };
 
