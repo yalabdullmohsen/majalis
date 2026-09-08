@@ -8,11 +8,16 @@ on:
   merge_group:
     types: [checks_requested]
 
-# إلغاء التشغيلات المتجاوَزة لنفس المرجع — مُعطَّل على PRs لتجنب «خضرة/حمرة كاذبة».
-# merge_group لا يُلغى — كل دفعة merge queue يجب أن تكمل.
+# إلغاء لنفس الـPR/المرجع فقط عند commit أحدث — لا تلغِ PR آخر ولا main بسبب PR.
+# merge_group: كل دفعة merge queue تكمل (group فريد بـ run_id).
 concurrency:
-  group: ci-${{ github.event_name == 'merge_group' && github.run_id || github.ref }}
-  cancel-in-progress: false
+  group: >-
+    ${{ github.workflow }}-${{
+      github.event_name == 'merge_group' && github.run_id
+      || github.event.pull_request.number
+      || github.ref
+    }}
+  cancel-in-progress: ${{ github.event_name != 'merge_group' }}
 
 permissions:
   contents: read
@@ -203,11 +208,6 @@ jobs:
       - name: Deploy output verify
         run: pnpm --filter @workspace/majalis run verify:deploy
 
-      - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
-        if: failure()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh run cancel "${{ github.run_id }}" || true
 
   # ---------------------------------------------------------------------------
   # ٥) بوابات المستودع (وحدات + SQL + سياسات) — تتوازى مع البناء
@@ -251,11 +251,6 @@ jobs:
       - name: Unit / package tests (بدون بوابات مصحف Playwright)
         run: pnpm --filter @workspace/majalis run test:ci-unit
 
-      - name: fail-fast — إلغاء بقية الوظائف عند فشل repo-gates
-        if: failure()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh run cancel "${{ github.run_id }}" || true
 
       - name: Verify no runtime DDL
         run: pnpm verify:no-runtime-ddl
@@ -343,11 +338,6 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-      - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
-        if: failure()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh run cancel "${{ github.run_id }}" || true
 
   mushaf-gates:
     name: mushaf-gates
@@ -412,11 +402,6 @@ jobs:
         if: always()
         run: kill "$(cat /tmp/mushaf-vite.pid)" 2>/dev/null || true
 
-      - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
-        if: failure()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh run cancel "${{ github.run_id }}" || true
 
   layout-bands:
     name: layout-bands
@@ -445,11 +430,6 @@ jobs:
           MUSHAF_SINGLE_PASS_IN_DIR: /tmp/mushaf-measurements
         run: pnpm --filter @workspace/majalis run test:mushaf-single-pass:assert
 
-      - name: fail-fast — إلغاء بقية الوظائف عند فشل حقيقي
-        if: failure()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh run cancel "${{ github.run_id }}" || true
 
   # لقطات بصرية — واجهة/مصحف/risky فقط.
   # Path-lane: الوظيفة تعمل دائمًا بعد classify وتنجح حياديًا إن لم تُطلب
@@ -848,7 +828,7 @@ jobs:
               fi
               BLOCKERS+=("$name=$result")
               if [ "$result" = "cancelled" ]; then
-                echo "required job '$name' was cancelled (غالبًا fail-fast من وظيفة أخرى) — ليس نجاحًا"
+                echo "required job '$name' cancelled — غالبًا استبدال بنفس الـPR أو إلغاء التشغيل؛ ليس نجاحًا"
                 return 1
               fi
               echo "required job '$name' not success: $result"

@@ -45,10 +45,13 @@ env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  # يُلغى Auto-merge فقط عند فشل الفحص المطلوب لحماية main (Verify build)،
-  # لا عند فشل أي job اختياري داخل workflow CI (مثل Color contrast).
+  # يُلغى Auto-merge فقط عند فشل حقيقي لـ Verify build / ci-required.
+  # conclusion=cancelled (استبدال commit / concurrency لنفس الـPR) ≠ فشل — لا تعطّل auto-merge.
   cancel-on-ci-failure:
-    if: github.repository == 'yalabdullmohsen/majalis' && github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure'
+    if: >-
+      github.repository == 'yalabdullmohsen/majalis'
+      && github.event_name == 'workflow_run'
+      && github.event.workflow_run.conclusion == 'failure'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -59,11 +62,11 @@ jobs:
           WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
         run: |
           set -euo pipefail
-          # هل فشل الفحص المطلوب «Verify build» أو المجمّع «ci-required»؟
+          # تجاهل cancelled/skipped — فقط failure على البوابة المطلوبة
           verify_failed=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${WORKFLOW_RUN_ID}/jobs" \
             --jq '[.jobs[] | select((.name=="Verify build" or .name=="ci-required") and .conclusion=="failure")] | length' || echo "0")
           if [ "${verify_failed}" = "0" ]; then
-            echo "skip: CI failed but required checks Verify build/ci-required did not fail — keep auto-merge"
+            echo "skip: no required Verify build/ci-required failure (cancelled≠fail) — keep auto-merge"
             exit 0
           fi
           nums=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${WORKFLOW_HEAD_SHA}/pulls" \
