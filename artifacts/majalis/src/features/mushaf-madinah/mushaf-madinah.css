@@ -1298,12 +1298,13 @@ html.dark .mm-viewport .mm-page-footer__badge,
   opacity: 0;
   cursor: pointer;
   z-index: 4;
-  pointer-events: none;
+  pointer-events: auto;
   -webkit-tap-highlight-color: transparent;
 }
 
 .mm-page-edge:disabled {
   pointer-events: none;
+  cursor: default;
 }
 
 .mm-page-edge--next {
@@ -1325,19 +1326,17 @@ html.dark .mm-viewport .mm-page-footer__badge,
   max-width: none;
 }
 
-.mm-viewport[data-ayah-bar="1"] .mm-page-edge {
-  pointer-events: none;
-}
+/* الحواف تبقى قابلة للضغط حتى مع شيت الآية — beginPageTurn يغلق الشيت */
 
 /* شريط صوت مضغوط أسفل المصحف */
 .mm-audio-dock {
-  position: absolute;
+  position: fixed;
   left: 50%;
   bottom: calc(var(--inset-bottom, 0px) + 0.5rem);
   transform: translateX(-50%) translate3d(0, 12px, 0);
   width: min(430px, calc(100% - 1rem));
   max-width: calc(100% - 1rem);
-  z-index: 6;
+  z-index: 60;
   display: grid;
   gap: 0.25rem;
   padding: 0.45rem 0.65rem 0.5rem;
