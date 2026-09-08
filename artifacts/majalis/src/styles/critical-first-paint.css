@@ -170,24 +170,26 @@ html.app-booting .hus-field {
 .home-page-hero.page-hero-mj {
   box-sizing: border-box;
   min-height: 11rem;
+  overflow: visible;
 }
 
 .home-page-hero .page-hero-mj__eyebrow {
   min-height: 1.5rem;
-  line-height: 1.35;
-  max-height: 1.5rem;
-  overflow: hidden;
+  line-height: 1.45;
+  max-height: none;
+  overflow: visible;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-/* تثبيت عنوان LCP مبكرًا بحجم أوضح من بطاقات «ابدأ من هنا» */
+/* تثبيت عنوان LCP — بلا contain/paint يقصّ الحركات العربية */
 .home-page-hero .page-hero-mj__title {
   font-size: clamp(2.15rem, 8vw, 2.75rem);
-  line-height: 1.25;
-  min-height: 2.7rem;
+  line-height: 1.55;
+  min-height: 3.15rem;
+  padding-block: 0.18em 0.12em;
   font-weight: 800;
-  contain: layout paint;
+  overflow: visible;
 }
 
 .home-page-hero .page-hero-mj__desc {

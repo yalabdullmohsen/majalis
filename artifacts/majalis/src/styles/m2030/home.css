@@ -9,12 +9,12 @@
   padding-block-end: calc(var(--bottom-nav-h, 3rem) + 1.1rem);
 }
 
-/* Hero — الهوية عبر PageHero + زخرفة ثلث الشاشة (انظر home-brand-title.css) */
+/* Hero — الهوية عبر PageHero + بطاقة ناعمة (انظر home-brand-title.css) */
 .m2030-hero.page-hero-mj,
 .home-page-hero.page-hero-mj {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  overflow: visible;
   color: var(--mj-ink);
   min-height: 11rem;
 }

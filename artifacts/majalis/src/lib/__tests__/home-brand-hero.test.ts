@@ -32,6 +32,9 @@ assert(!css.includes("home-brand-title__panel"), "لا لوحة زخرفية ل�
 assert(!/min-height:\s*clamp\(11\.5rem,\s*33dvh/.test(css), "لا ارتفاع ثلث شاشة زائد");
 assert(!/min-height:\s*unset/.test(css), "لا إلغاء حجز ارتفاع الهيرو");
 assert(/min-height:\s*11rem/.test(css), "ارتفاع الهيرو محجوز");
+assert(/overflow:\s*visible/.test(css), "الهيرو لا يقصّ عنوان سُنّة");
+assert(/line-height:\s*1\.55/.test(css), "ارتفاع سطر كافٍ للحركات العربية");
+assert(/border-radius:\s*var\(--radius-2xl/.test(css), "زوايا البطاقة ناعمة");
 assert(/width\s*\?\?\s*138/.test(wordmark), "عرض SVG Intrinsic يحجز قبل CSS");
 assert(/height\s*\?\?\s*33/.test(wordmark), "ارتفاع SVG Intrinsic يحجز قبل CSS");
 
