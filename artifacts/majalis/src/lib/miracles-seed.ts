@@ -61,7 +61,7 @@ export const MIRACLES_SEED: MiracleSeedItem[] = [
 ملاحظة للتفكر: انتظام الكون ودوران الأرض حول محورها ينتج تعاقب الليل والنهار — وهذا مما يُستدل به على الحكمة لا على إثبات نظرية بعينها.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — آل عمران — مع مراجعة الموضع في المصدر عند الاستشهاد.",
+    scholarly_source: "تفسير ابن كثير — آل عمران —",
     verification_status: "verified",
     status: "approved",
   },
@@ -81,7 +81,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: القمر يعكس ضوء الشمس — وهذا مما يُستدل به للتأمل في دقة الوصف القرآني دون الجزم بكل تفسير علمي لاحق.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير السعدي — يونس — مع مراجعة الموضع في المصدر عند الاستشهاد.",
+    scholarly_source: "تفسير السعدي — يونس —",
     verification_status: "verified",
     status: "approved",
   },
@@ -101,7 +101,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: علم الجيولوجيا يرى دور الجبال في استقرار القشرة الأرضية (Earth's crust) — يُعرض للتفكر لا كإثبات علمي قطعي من الآية وحدها.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — النبأ — مع مراجعة الموضع في المصدر عند الاستشهاد.",
+    scholarly_source: "تفسير ابن كثير — النبأ —",
     verification_status: "verified",
     status: "approved",
   },
@@ -121,7 +121,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: علم الأجنة يصف مراحل متتابعة للتكوين — يُعرض للتأمل دون الجزم بمطابقة كل مصطلح علمي حديث لكل لفظ قرآني.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — المؤمنون — مع مراجعة الموضع في المصدر عند الاستشهاد.",
+    scholarly_source: "تفسير ابن كثير — المؤمنون —",
     verification_status: "verified",
     status: "approved",
   },
@@ -141,7 +141,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: دورة الحياة في النبات معروفة — للتفكر في قدرة الخالق.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير السعدي — يس ويُرجع إليه للتفصيل لا للاختزال.",
+    scholarly_source: "تفسير السعدي — يس",
     verification_status: "verified",
     status: "approved",
   },
@@ -161,7 +161,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: الماء عنصر أساسي للحياة — يُستدل به للتفكر لا كحكم علمي مطلق من الآية وحدها.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — النور ويُرجع إليه للتفصيل لا للاختزال.",
+    scholarly_source: "تفسير ابن كثير — النور",
     verification_status: "verified",
     status: "approved",
   },
@@ -181,7 +181,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: لا يُستعمل هذا النص لإنكار الطب أو ادعاء شفاء جسدي قطعي دون دليل شرعي.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — يونس — مع مراجعة الموضع في المصدر عند الاستشهاد.",
+    scholarly_source: "تفسير ابن كثير — يونس —",
     verification_status: "verified",
     status: "approved",
   },
@@ -201,7 +201,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: دورة الماء في الطبيعة معروفة — للتفكر في قدرة الله.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير السعدي — الفرقان ويُرجع إليه للتفصيل لا للاختزال.",
+    scholarly_source: "تفسير السعدي — الفرقان",
     verification_status: "verified",
     status: "approved",
   },
@@ -221,7 +221,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: دور الرياح في دورة الطقس والمطر — للتفكر.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير السعدي — الأعراف ويُرجع إليه للتفصيل لا للاختزال.",
+    scholarly_source: "تفسير السعدي — الأعراف",
     verification_status: "verified",
     status: "approved",
   },
@@ -239,7 +239,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 التفسير: الرياح تُثير السحاب وتسوقه إلى بلدٍ ميت (لا نبات فيه)، فيُحيي الله به الأرض بعد موتها، ثم ضرب الله بذلك مثلاً مباشراً على إحياء الموتى يوم القيامة («كذلك النشور»).
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — فاطر ويُرجع إليه للتفصيل لا للاختزال.",
+    scholarly_source: "تفسير ابن كثير — فاطر",
     verification_status: "verified",
     status: "approved",
   },
@@ -257,7 +257,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 التفسير: الله جعل الأرض فراشًا مهيأةً للحياة، يستقر عليها الإنسان وينتفع بخيراتها، فيستدل بذلك على قدرة الخالق ونعمه. ويُعرض المعنى الشرعي أولًا ثم ملاحظات تفكرية بحذر دون الجزم في الإعجاز العلمي.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — الذاريات — مع مراجعة الموضع في المصدر عند الاستشهاد.",
+    scholarly_source: "تفسير ابن كثير — الذاريات —",
     verification_status: "verified",
     status: "approved",
   },
@@ -277,7 +277,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 تنبيه: لا يُستخدم هذا النص لإثبات نظريات فيزيائية عن الزمن دون تفسير علمي معتبر ودليل شرعي.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — الحج — مع مراجعة الموضع في المصدر عند الاستشهاد.",
+    scholarly_source: "تفسير ابن كثير — الحج —",
     verification_status: "verified",
     status: "approved",
   },
@@ -295,7 +295,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 التفسير: التسبيح لمن خلق الأصناف والأزواج من النبات والإنسان وما لا يعلمه الخلق. والعبرة تعظيم الخالق وتنزيهه، لا حمل اللفظ على اصطلاح علمي معاصر.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — يس | في ظلال القرآن — سيد قطب ويُرجع إليه للتفصيل لا للاختزال.",
+    scholarly_source: "تفسير ابن كثير — يس | في ظلال القرآن — سيد قطب",
     verification_status: "verified",
     status: "approved",
   },
@@ -315,7 +315,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: من أوجه التأمل أن أصوات الطيور وأنماط تواصلها مجال بحث علمي معاصر؛ ولا يُجعل ذلك تفسيراً قطعياً للآية.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — النور ويُرجع إليه للتفصيل لا للاختزال.",
+    scholarly_source: "تفسير ابن كثير — النور",
     verification_status: "verified",
     status: "approved",
   },
@@ -335,7 +335,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: يعرف علم الأرصاد أن الرياح تنقل جسيمات ونوى تكاثف تسهم في تشكل قطرات المطر.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير الطبري — الحجر — مع مراجعة الموضع في المصدر عند الاستشهاد.",
+    scholarly_source: "تفسير الطبري — الحجر —",
     verification_status: "verified",
     status: "approved",
   },
@@ -355,7 +355,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: مراحل تكوين السحاب الركامي (Cumulonimbus) التي يصفها العلماء تنسجم إجمالاً مع هذه الخطوات.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — النور — مع مراجعة الموضع في المصدر عند الاستشهاد.",
+    scholarly_source: "تفسير ابن كثير — النور —",
     verification_status: "verified",
     status: "approved",
   },
@@ -375,7 +375,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: يقرر علم الفلك أن الشمس تتحرك داخل مجرة درب التبانة ضمن نظام كوني مقدّر، وتُذكر تقديرات سرعتها واتجاهها في الدراسات الفلكية المعاصرة.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير القرطبي — يس — مع مراجعة الموضع في المصدر عند الاستشهاد.",
+    scholarly_source: "تفسير القرطبي — يس —",
     verification_status: "verified",
     status: "approved",
   },
@@ -415,7 +415,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ملاحظة للتفكر: تُذكر في الدراسات الجيولوجية جذور للجبال داخل القشرة؛ وهذا من أوجه التأمل المحتملة ولا يُجعل تفسيراً قطعياً للآية ولا يُبنى عليه حكم علمي نهائي.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — النبأ — مع مراجعة الموضع في المصدر عند الاستشهاد.",
+    scholarly_source: "تفسير ابن كثير — النبأ —",
     verification_status: "verified",
     status: "approved",
   },
@@ -435,7 +435,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 يُضاف إلى ذلك ما يُشير إليه الحديث النبوي من أن آخر الزمان يقترب وتتسارع الأوقات — وهو ما يُفسره بعض العلماء رمزياً لا حقيقياً.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير الطبري — آل عمران — مع مراجعة الموضع في المصدر عند الاستشهاد.",
+    scholarly_source: "تفسير الطبري — آل عمران —",
     verification_status: "verified",
     status: "approved",
   },
@@ -455,7 +455,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 تقرر الجيولوجيا الحديثة أن الأرض تحتوي على نواة شديدة الحرارة غنية بالحديد، وأن الزلازل والبراكين من مظاهر الطاقة الداخلية للأرض.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير القرطبي — الزلزلة — مع مراجعة الموضع في المصدر عند الاستشهاد.",
+    scholarly_source: "تفسير القرطبي — الزلزلة —",
     verification_status: "verified",
     status: "approved",
   },
@@ -473,7 +473,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 التفسير: نور الله هدايته في السموات والأرض؛ والمثل بعده تقريب لنور الإيمان في قلب المؤمن عند أهل التفسير. نقف عند دلالته الشرعية بلا تشبيه ذات الله بالمخلوقات.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن القيم — مفتاح دار السعادة ويُرجع إليه للتفصيل لا للاختزال.",
+    scholarly_source: "تفسير ابن القيم — مفتاح دار السعادة",
     verification_status: "verified",
     status: "approved",
   },
@@ -491,7 +491,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 يُشير المفسرون إلى أن وصف العظام بـ«الرميم» دقيق؛ إذ تتحلل وتتفتت بعد الموت فتبدو لا شيء. لكن العلم الحديث يُقرر أن العظام نسيج حيّ يحتوي على خلايا حية تُسمى (Osteocytes) تتجدد وتُكسّر باستمرار خلال الحياة، مما يُؤكد أن الخالق الذي أنشأها أول مرة يعلم تركيبتها الدقيقة.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير الطبري — يس — مع مراجعة الموضع في المصدر عند الاستشهاد.",
+    scholarly_source: "تفسير الطبري — يس —",
     verification_status: "verified",
     status: "approved",
   },
@@ -509,7 +509,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 ذكر المفسرون أن الآية تُشير إلى وظيفتين للنجوم: الزينة الظاهرة للسماء، والرجم بما يُرمى به الشياطين المسترقة للسمع. ويُلاحظ المتأمل أن ظاهرة الشهب (النيازك الاحتراقية) ظاهرة معروفة يراها الرائي بالعين المجردة كأنها رمي. أما تفصيل العلاقة بين هذه الظواهر الكونية وما يخص الشياطين فهذا من علم الغيب الذي لا يُدرك بالعلم التجريبي وحده.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — الملك ويُرجع إليه للتفصيل لا للاختزال.",
+    scholarly_source: "تفسير ابن كثير — الملك",
     verification_status: "verified",
     status: "approved",
   },
@@ -529,7 +529,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 كما أن تحريم الدم يتوافق مع تجنب انتقال الأمراض الدموية (كالتهاب الكبد وغيره) عبر الاستهلاك المباشر.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير القرطبي — الأنعام ويُرجع إليه للتفصيل لا للاختزال.",
+    scholarly_source: "تفسير القرطبي — الأنعام",
     verification_status: "verified",
     status: "approved",
   },
@@ -549,7 +549,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 هذا التمييز اللغوي الدقيق في القرآن يدعو إلى التأمل في مصدر هذه المعرفة في عصر لم يكن البشر يُفرقون فيه علمياً بين المضيء الذاتي والعاكس.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — نوح ويُرجع إليه للتفصيل لا للاختزال.",
+    scholarly_source: "تفسير ابن كثير — نوح",
     verification_status: "verified",
     status: "approved",
   },
@@ -590,7 +590,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 هذا يجعل العظام من أكثر الأعضاء «حيوية» في الجسم البشري، والخالق الذي أنشأها يعلم ما فيها من أسرار الحياة المخفية.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن كثير — يس | علم وظائف الأعضاء الحديث ويُرجع إليه للتفصيل لا للاختزال.",
+    scholarly_source: "تفسير ابن كثير — يس | علم وظائف الأعضاء الحديث",
     verification_status: "verified",
     status: "approved",
   },
@@ -610,7 +610,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 كما يُلاحظ الأطباء ارتباطاً وثيقاً بين ضعف العظام (هشاشة العظام) وضعف العضلات (ضمور العضلات)، وإن كانت العلاقة السببية بينهما تلازمية أكثر منها تتابعاً حتمياً في كل الحالات.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير الطبري — مريم | مجلة طب الشيخوخة الأمريكية — مع مراجعة الموضع في المصدر عند الاستشهاد.",
+    scholarly_source: "تفسير الطبري — مريم | مجلة طب الشيخوخة الأمريكية —",
     verification_status: "verified",
     status: "approved",
   },
@@ -629,7 +629,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 التفسير: من نعم الله جعل علامات ونجوم يهتدي بها المسافر في البر والبحر. والنص يذكر الاهتداء لا تقنيّات الملاحة الحديثة.
 
 ${SCIENTIFIC_DISCLAIMER}`,
-    scholarly_source: "تفسير ابن عاشور — النحل | تاريخ الفلك الإسلامي ويُرجع إليه للتفصيل لا للاختزال.",
+    scholarly_source: "تفسير ابن عاشور — النحل | تاريخ الفلك الإسلامي",
     verification_status: "verified",
     status: "approved",
   },

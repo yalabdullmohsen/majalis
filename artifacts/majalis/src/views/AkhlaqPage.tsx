@@ -1143,10 +1143,10 @@ export default function AkhlaqPage() {
           {[
             { href: "/tazkiya", label: "التزكية والتوبة", desc: "الذنوب والحقوق، والتوبة والاستغفار في باب واحد." },
             { href: "/raqaiq", label: "الرقائق والزهد", desc: "مواعظ تُليِّن القلوب." },
-            { href: "/asma-husna",   label: "الأسماء الحسنى",   desc: "99 اسماً لله؛ بوابةٌ تعليميةٌ مرتبطة بأخلاق المسلم وتزكية النفس." },
-            { href: "/tawhid",       label: "التوحيد",           desc: "العقيدة الإسلامية؛ بوابةٌ تعليميةٌ مرتبطة بأخلاق المسلم وتزكية النفس." },
-            { href: "/seerah",       label: "السيرة النبوية",    desc: "أخلاق النبي ﷺ؛ بوابةٌ تعليميةٌ مرتبطة بأخلاق المسلم وتزكية النفس." },
-            { href: "/adhkar",       label: "الأذكار",           desc: "أذكار يومية؛ بوابةٌ تعليميةٌ مرتبطة بأخلاق المسلم وتزكية النفس." },
+            { href: "/asma-husna",   label: "الأسماء الحسنى",   desc: "٩٩ اسماً لله" },
+            { href: "/tawhid",       label: "التوحيد",           desc: "العقيدة الإسلامية" },
+            { href: "/seerah",       label: "السيرة النبوية",    desc: "أخلاق النبي ﷺ" },
+            { href: "/adhkar",       label: "الأذكار",           desc: "أذكار يومية" },
           ].map(({ href, label, desc }) => (
             <Link key={href} href={href} className="akl-related__card">
               <strong>{label}</strong>
