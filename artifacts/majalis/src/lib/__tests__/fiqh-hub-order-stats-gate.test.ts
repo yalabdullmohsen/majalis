@@ -23,6 +23,21 @@ const expectedPrefix = [
 
 assert.deepEqual(FIQH_HUB_DOOR_ORDER.slice(0, expectedPrefix.length), [...expectedPrefix]);
 
+/** ترتيب بطاقات FIQH_HUB_TOPICS للأبواب الأساسية */
+{
+  const topicsSrc = readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), "../fiqh-hub-topics.ts"), "utf8");
+  const ids = [...topicsSrc.matchAll(/id:\s*"(tahara|salah|zakat|sawm|itikaf|hajj|janaza|muamalat)"/g)].map(
+    (m) => m[1],
+  );
+  const firstEight = [];
+  for (const id of ids) {
+    if (firstEight.includes(id)) continue;
+    firstEight.push(id);
+    if (firstEight.length >= 8) break;
+  }
+  assert.deepEqual(firstEight, [...expectedPrefix], "FIQH_HUB_TOPICS: ترتيب الأبواب الثمانية");
+}
+
 const books = getAllFiqhBooks();
 let chapters = 0;
 let lessons = 0;

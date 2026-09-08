@@ -30,7 +30,7 @@ export const SEARCH_SCOPE_DEFS: SearchScopeDef[] = [
   { id: "tafsir", title: "التفسير", desc: "معاني الآيات وشرحها", href: "/tafsir" },
   { id: "seerah", title: "السيرة النبوية", desc: "حياة النبي ﷺ", href: "/seerah" },
   { id: "history", title: "التاريخ الإسلامي", desc: "أحداث وحضارة الأمة", href: "/tarikh-islami" },
-  { id: "prophet", title: "قصص الأنبياء", desc: "قصص وعبر", href: "/prophets" },
+  { id: "prophet", title: "قصص الأنبياء", desc: "قصص الأنبياء والأمم للعبرة والتعلّم", href: "/prophets" },
   { id: "fiqh", title: "الفقه", desc: "أحكام العبادات والمعاملات", href: "/fiqh" },
   { id: "hadith", title: "الحديث", desc: "السنة والآثار", href: "/hadith" },
   { id: "adhkar", title: "الأذكار", desc: "أذكار وأدعية مأثورة", href: "/adhkar" },

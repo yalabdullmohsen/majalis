@@ -1,5 +1,5 @@
 /**
- * /more ملغاة — التحويل إلى الرئيسية (المسار في AppRoutes يحوّل أيضًا).
+ * /more ملغاة — التحويل إلى الأقسام (المسار في AppRoutes يحوّل أيضًا).
  */
 import { useEffect } from "react";
 import { Redirect } from "wouter";
@@ -7,10 +7,10 @@ import { Redirect } from "wouter";
 export default function MorePage() {
   useEffect(() => {
     try {
-      window.history.replaceState(null, "", "/");
+      window.history.replaceState(null, "", "/sections");
     } catch {
       /* ignore */
     }
   }, []);
-  return <Redirect to="/" />;
+  return <Redirect to="/sections" />;
 }

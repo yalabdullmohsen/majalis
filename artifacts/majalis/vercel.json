@@ -38,7 +38,7 @@
   "redirects": [
     {
       "source": "/more",
-      "destination": "/",
+      "destination": "/sections",
       "permanent": true
     },
     {
@@ -440,7 +440,17 @@
     },
     {
       "source": "/knowledge-map",
-      "destination": "/",
+      "destination": "/knowledge-graph",
+      "permanent": true
+    },
+    {
+      "source": "/islamic-history",
+      "destination": "/tarikh-islami",
+      "permanent": true
+    },
+    {
+      "source": "/islamic-history/:path*",
+      "destination": "/tarikh-islami",
       "permanent": true
     },
     {
@@ -593,7 +603,7 @@
     },
     {
       "source": "/explore",
-      "destination": "/",
+      "destination": "/sections",
       "permanent": true
     },
     {
@@ -872,7 +882,7 @@
         },
         {
           "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+          "value": "camera=(), microphone=(), geolocation=(self), interest-cohort=()"
         },
         {
           "key": "Strict-Transport-Security",
@@ -888,7 +898,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'sha256-ftROnEg2KVbOBuMDDJUSYwab88RBevLs4hrCMdUqeU0=' 'sha256-X6dm0g5wcU3v5vEPX+3J13h55AtCl7fXeijk5NXE9bM=' 'sha256-An6M4c9eW/HdAQbjnYOKxO/Xfou4R11AvCR8sBvSKUw=' 'sha256-zx29bupCX8cLrxa2tG1Jl1iU7ZcnbkfS5RnFoDd8oJE=' 'sha256-BHvT1ehiatDn/6+/2D8J9nhlIToTY8jMYax+25J/26c=' https://cdn.jsdelivr.net https://platform.twitter.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob: https://everyayah.com https://www.everyayah.com https://cdn.islamic.network https://*.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.alquran.cloud https://api.quran.com https://api.aladhan.com https://everyayah.com https://www.everyayah.com https://cdn.islamic.network https://*.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; frame-src 'self' https://platform.twitter.com https://syndication.twitter.com https://www.google.com https://maps.google.com https://www.youtube.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+          "value": "default-src 'self'; script-src 'self' 'sha256-ftROnEg2KVbOBuMDDJUSYwab88RBevLs4hrCMdUqeU0=' 'sha256-X6dm0g5wcU3v5vEPX+3J13h55AtCl7fXeijk5NXE9bM=' 'sha256-An6M4c9eW/HdAQbjnYOKxO/Xfou4R11AvCR8sBvSKUw=' 'sha256-zx29bupCX8cLrxa2tG1Jl1iU7ZcnbkfS5RnFoDd8oJE=' 'sha256-BHvT1ehiatDn/6+/2D8J9nhlIToTY8jMYax+25J/26c=' https://cdn.jsdelivr.net https://platform.twitter.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https:; media-src 'self' blob: https://everyayah.com https://www.everyayah.com https://cdn.islamic.network https://*.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.alquran.cloud https://api.quran.com https://api.aladhan.com https://everyayah.com https://www.everyayah.com https://cdn.islamic.network https://*.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net https://www.ssunnah.com; worker-src 'self' blob:; manifest-src 'self'; frame-src 'self' https://platform.twitter.com https://syndication.twitter.com https://www.google.com https://maps.google.com https://www.youtube.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
         }
       ]
     },
@@ -1243,6 +1253,19 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=3600, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/.well-known/security.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, must-revalidate"
         }
       ]
     },
