@@ -87,7 +87,8 @@ export default function LearningPathsPage() {
       });
   }, [user?.id]);
 
-  const grouped = paths.reduce<Record<string, PathSummary[]>>((acc, p) => {
+  const pathsReady = paths.filter((p) => p.coursesCount > 0);
+  const grouped = pathsReady.reduce<Record<string, PathSummary[]>>((acc, p) => {
     const cat = p.category || "other";
     if (!acc[cat]) acc[cat] = [];
     acc[cat].push(p);
@@ -96,8 +97,8 @@ export default function LearningPathsPage() {
 
   const allCategories = Object.keys(grouped);
   const displayed = activeCategory === ALL_CAT ? grouped : { [activeCategory]: grouped[activeCategory] ?? [] };
-  const totalSessions = paths.reduce((s, p) => s + p.totalSessions, 0);
-  const pathsWithContent = paths.filter((p) => p.coursesCount > 0).length;
+  const totalSessions = pathsReady.reduce((s, p) => s + p.totalSessions, 0);
+  const pathsWithContent = pathsReady.length;
 
   return (
     <div className="page-shell lpp-page">
@@ -110,7 +111,7 @@ export default function LearningPathsPage() {
       {/* Stats bar */}
       <div className="lpp-stats-bar">
         <div className="lpp-stat">
-          <strong>{paths.length}</strong>
+          <strong>{pathsReady.length}</strong>
           <span>مساراً علمياً</span>
         </div>
         <div className="lpp-stat-divider" />
@@ -210,7 +211,7 @@ export default function LearningPathsPage() {
                             {path.totalSessions} جلسة{weeks.maxWeeks > 0 ? ` — نحو ${weeks.minWeeks}-${weeks.maxWeeks} أسابيع` : ""}
                           </span>
                         ) : (
-                          <span className="lpp-path-card__badge">قيد الإعداد</span>
+                          <span className="lpp-path-card__badge">بدون دورات منشورة بعد</span>
                         )}
                         {isEnrolled && (
                           <span className="lpp-path-card__badge lpp-path-card__badge--progress">مسجَّل</span>

@@ -7,12 +7,12 @@ import { getDayIndex } from "@/lib/daily-content";
 import { toArabicDigits } from "@/lib/utils";
 
 const FALLBACK_POPULAR = [
-  { href: "/mushaf", title: "المصحف" },
-  { href: "/adhkar", title: "الأذكار" },
-  { href: "/lessons", title: "الدروس" },
+  { href: "/mushaf", title: "المصحف الشريف" },
+  { href: "/adhkar", title: "الأذكار اليومية" },
+  { href: "/lessons", title: "الدروس والدورات" },
   { href: "/prophets", title: "قصص الأنبياء" },
-  { href: "/fiqh", title: "الفقه" },
-  { href: "/quiz", title: "سين جيم" },
+  { href: "/fiqh", title: "الفقه والأحكام" },
+  { href: "/quiz", title: "لعبة سين جيم" },
 ] as const;
 
 const TODAY_SUGGESTIONS = [

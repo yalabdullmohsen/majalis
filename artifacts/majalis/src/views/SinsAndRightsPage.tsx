@@ -396,8 +396,7 @@ function MindMap() {
             </div>
             {openNodes[node.id] && (
               <div className="snr-mindmap-children">
-                {node.children.map((child) =>
-                  child.slug ? (
+                {node.children.map((child) => (
                     <Link
                       key={child.slug}
                       href={`/sins-and-rights/${child.slug}`}
@@ -406,18 +405,7 @@ function MindMap() {
                       <span>{child.label}</span>
                       <span className="snr-mindmap-child-arrow">‹</span>
                     </Link>
-                  ) : (
-                    <div
-                      key={child.label}
-                      className="snr-mindmap-child-link"
-                      style={{ opacity: 0.6, cursor: "default" }}
-                      title="قيد الإعداد والمراجعة"
-                    >
-                      <span>{child.label}</span>
-                      <span className="snr-badge snr-badge--pending" style={{ fontSize: "0.65rem" }}>غير منشور</span>
-                    </div>
-                  )
-                )}
+                  ))}
               </div>
             )}
           </div>
