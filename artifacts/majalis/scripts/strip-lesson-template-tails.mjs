@@ -60,9 +60,10 @@ function cleanBody(title, summary, body) {
     next = afterBab;
     changed = true;
   }
-  // إن بقي المتن = الملخص فقط
-  if (next === summary || !next) {
-    return { body: summary, changed: true, dropBody: true };
+  // إن بقي المتن فارغاً أو = الملخص: أعد بناء متن مميّز من العنوان+الملخص (لا تسقط الثلاثية)
+  if (!next || next === summary) {
+    const rebuilt = `باب «${title}»: ${summary}`.trim();
+    return { body: rebuilt, changed: true, dropBody: false };
   }
   return { body: next, changed, dropBody: false };
 }
@@ -88,10 +89,9 @@ for (const name of TARGETS) {
       let sum = summary;
       for (const re of TAILS) sum = sum.replace(re, "").trim();
       sum = sum.replace(/\s*[—\-–]\s*بيان موجز لموضوع\s*«[^»]+»\.?\s*$/u, "").trim() || summary;
-      if (result.dropBody || result.body === sum) {
-        return `["${escapeTs(title)}", "${escapeTs(sum)}"]`;
-      }
-      return `["${escapeTs(title)}", "${escapeTs(sum)}", "${escapeTs(result.body)}"]`;
+      let body = result.body;
+      if (!body || body === sum) body = `باب «${title}»: ${sum}`;
+      return `["${escapeTs(title)}", "${escapeTs(sum)}", "${escapeTs(body)}"]`;
     },
   );
   // أيضاً ثنائيات الملخص التي فيها بيان موجز فقط
