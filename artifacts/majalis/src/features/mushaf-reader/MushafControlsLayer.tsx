@@ -210,16 +210,17 @@ export const MushafVerseMenu = memo(function MushafVerseMenu({
       role="dialog"
       aria-label="إجراءات الآية"
     >
-      <button
-        type="button"
-        className="nm-controls__btn"
-        onClick={onClose}
-        style={{ position: "absolute", insetInlineStart: "0.75rem", top: "0.55rem" }}
-        aria-label="إغلاق"
-      >
-        إغلاق
-      </button>
-      <span className="nm-verse-menu__label">{label}</span>
+      <div className="nm-verse-menu__head">
+        <button
+          type="button"
+          className="nm-verse-menu__close"
+          onClick={onClose}
+          aria-label="إغلاق"
+        >
+          إغلاق
+        </button>
+        <span className="nm-verse-menu__label">{label}</span>
+      </div>
       <div className="nm-verse-menu__grid">
         <button type="button" className="nm-verse-menu__action" onClick={onPlay}>
           استماع

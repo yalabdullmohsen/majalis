@@ -1359,9 +1359,37 @@ html.dark .mm-viewport .mm-page-footer__badge,
 
 .mm-viewport[data-mushaf-theme="night"] .mm-audio-dock,
 .mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock {
-  border-color: color-mix(in srgb, var(--mm-gold) 35%, transparent);
-  background: #f7f3ea;
-  color: #111111;
+  border-color: color-mix(in srgb, #cbb892 35%, transparent);
+  background: #1a1f1c;
+  color: #f3efe6;
+}
+
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__reciter-name,
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__reciter-name,
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__reciter-btn,
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__reciter-btn,
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__close,
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__close,
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__mini,
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__mini,
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__controls button,
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__controls button {
+  color: #f3efe6;
+}
+
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__verse,
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__verse,
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__status,
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__status {
+  color: color-mix(in srgb, #f3efe6 72%, #9aa39a);
+}
+
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__reciter-btn,
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__reciter-btn,
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__controls button,
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__controls button {
+  background: color-mix(in srgb, #f3efe6 8%, #1a1f1c);
+  border-color: color-mix(in srgb, #cbb892 40%, transparent);
 }
 
 .mm-audio-dock[data-open="1"] {
