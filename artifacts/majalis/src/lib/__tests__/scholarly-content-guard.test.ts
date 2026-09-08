@@ -53,6 +53,7 @@ console.log("\n=== عدد الأنبياء — لا صياغة توهم أن ك�
     "src/pages/account/ui/SiteMapView.tsx",
     "src/components/home/HomeInterestingTopics.tsx",
     "src/views/ProphetsFamilyTreePage.tsx",
+    "src/lib/home-feature-catalog.ts",
   ];
   for (const rel of filesWithProphetCount) {
     const src = readSrc(rel);

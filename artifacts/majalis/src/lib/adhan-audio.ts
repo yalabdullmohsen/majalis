@@ -394,7 +394,7 @@ export const MUEZZINS: Muezzin[] = [
     sourceId: "mohsalvi-adhan-audio",
     licenseNote: "حزمة أوفلاين محلية — راجع CREDITS.md",
   },
-  /* أنماط بلا ملف مرخّص مثبت بعد — ظاهرة في الفهرس كـ«قريبًا» وغير قابلة للاختيار */
+  /* أنماط بلا ملف مرخّص مثبت — غير قابلة للاختيار (audioAvailable: false) */
   {
     id: "madinah-retired",
     name: "أذان المدينة (أُزيل)",
@@ -420,7 +420,7 @@ export const MUEZZINS: Muezzin[] = [
   },
   {
     id: "aqsa-pending",
-    name: "أذان المسجد الأقصى (قريبًا)",
+    name: "أذان المسجد الأقصى (غير متاح)",
     personName: null,
     attribution: "style_only",
     patternId: "aqsa",

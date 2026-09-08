@@ -113,8 +113,8 @@ export default function QuranQiraatView() {
       <section className="qr-section">
         <h2>التلاوات الصوتية بقراءات أخرى</h2>
         <p>
-          الكتالوج الصوتي فارغ عمدًا ({formatArabicNumber(QIRAAT_AUDIO_CATALOG.length)} تسجيل) حتى
-          يُوثَّق الترخيص في سجل مخاطر التراخيص.
+          التلاوات الإضافية بقراءات أخرى تُضاف هنا بعد توثيق الترخيص في سجل مخاطر التراخيص
+          ({formatArabicNumber(QIRAAT_AUDIO_CATALOG.length)} تسجيل متاح حاليًا).
         </p>
       </section>
     </div>

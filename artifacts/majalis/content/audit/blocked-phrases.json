@@ -12,6 +12,9 @@
     { "pattern": "سيتم لاحقًا", "flags": "", "message": "عبارة تأجيل ظاهرة" },
     { "pattern": "محتوى غير مكتمل", "flags": "", "message": "إقرار بنقص محتوى ظاهر" },
     { "pattern": "coming soon", "flags": "i", "message": "coming soon ظاهر" },
+    { "pattern": "\\(قريبًا\\)", "flags": "", "message": "شارة «(قريبًا)» ظاهرة في المحتوى" },
+    { "pattern": "يُراجع بضابط الملخص المنقول", "flags": "", "message": "حشو قالبي في متن درس" },
+    { "pattern": "بيان موجز لموضوع", "flags": "", "message": "حشو «بيان موجز لموضوع»" },
     { "pattern": "test content", "flags": "i", "message": "محتوى اختباري ظاهر" },
     { "pattern": "xxx+\\s*$", "flags": "im", "message": "حشو xxx ظاهر" }
   ],
