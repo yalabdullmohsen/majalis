@@ -35,7 +35,7 @@ assert.match(drawerCss, /inset-inline-start:\s*0/, "الدرج من الحافة
 assert.doesNotMatch(drawerCss, /inset-inline-end:\s*0/, "لا تثبيت على inline-end (يسار في RTL)");
 assert.doesNotMatch(drawerCss, /(?:^|\n)\s*(?:left|right)\s*:/, "صفر left/right فيزيائية في CSS الدرج");
 assert.match(drawerCss, /html\[dir="rtl"\] \.drawer-panel/, "حركة RTL عبر dir لا إشارة يدوية وحدها");
-assert.match(drawerCss, /transition:\s*transform 200ms/, "مدة الحركة 200ms");
+assert.match(drawerCss, /transition:\s*transform 180ms/, "مدة الحركة 180ms");
 assert.match(navBar, /touchstart/, "إيماءة فتح من الحافة");
 assert.match(drawerCss, /opacity/, "التعتيم على opacity");
 assert.doesNotMatch(drawerCss, /transition:[^;]*(width|right|left|filter|box-shadow)/, "لا تحريك width/right/filter");
