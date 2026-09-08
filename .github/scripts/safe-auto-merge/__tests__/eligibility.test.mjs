@@ -352,7 +352,7 @@ describe("safe-auto-merge eligibility", () => {
     assert.equal(r.waiting, true);
     assert.equal(r.needsManualReview, false);
     assert.ok(r.waitBlockers.some((b) => /Verify build/i.test(b)));
-    assert.ok(!r.blockers.some((b) => /Verify build/i.test(b)));
+    assert.ok(!r.hardBlockers.some((b) => /Verify build/i.test(b)));
   });
 
   it("prefers Verify build success over cancelled quality twin", () => {
