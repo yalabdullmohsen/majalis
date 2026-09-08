@@ -47,7 +47,7 @@ export const secondaryNav: readonly NavLinkItem[] = [
   { id: "prophets", href: "/prophets", label: "قصص الأنبياء" },
   { id: "nations", href: "/nations", label: "الأمم السابقة" },
   { id: "quran-people", href: "/quran/people", label: "الذين ذكروا في القرآن" },
-  { id: "sources", href: "/sources", label: "المصادر" },
+  { id: "sources", href: "/sources", label: "دليل الجهات" },
   { id: "sections", href: "/sections", label: "الأقسام" },
   { id: "quiz", href: "/quiz", label: "سين جيم" },
   { id: "competitions", href: "/competitions", label: "المسابقات" },
@@ -99,12 +99,12 @@ export const footerNav: readonly FooterGroup[] = [
     title: "التواصل والسياسات",
     links: [
       { href: "/methodology", label: "منهجيتنا في التوثيق" },
-      { href: "/fatwa-policy", label: "سياسة الفتوى" },
+      { href: "/fatwa-policy", label: "سياسة الفتوى والمراجعة" },
       { href: "/about", label: "من نحن" },
       { href: "/data-licenses", label: "المصادر والتراخيص" },
       { href: "/sources", label: "دليل الجهات" },
       { href: "/contact", label: "تواصل معنا" },
-      { href: "/privacy", label: "الخصوصية" },
+      { href: "/privacy", label: "سياسة الخصوصية" },
       { href: "/privacy-center", label: "مركز الخصوصية" },
       { href: "/terms", label: "شروط الاستخدام" },
       { href: "/account-deletion", label: "حذف الحساب" },
@@ -130,7 +130,7 @@ export const sitemapEligibleSections: readonly NavLinkItem[] = [
   { href: "/about", label: "من نحن" },
   { href: "/contact", label: "تواصل معنا" },
   { href: "/methodology", label: "منهجيتنا" },
-  { href: "/privacy", label: "الخصوصية" },
+  { href: "/privacy", label: "سياسة الخصوصية" },
   { href: "/terms", label: "شروط الاستخدام" },
 ];
 
