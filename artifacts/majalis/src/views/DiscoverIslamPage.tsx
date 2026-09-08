@@ -112,7 +112,7 @@ export default function DiscoverIslamPage() {
     >
     <div className="page-shell narrow content-hub-page dii-page">
       <div className="dii-page-toolbar">
-        <AppBackButton variant="inline" fallbackHref="/" label="رجوع" className="dii-page-back" />
+        <AppBackButton variant="inline" fallbackHref="/" label="رجوع" className="dii-page-back" data-section-back="1" />
       </div>
 
       <div className="dii-lang-row">

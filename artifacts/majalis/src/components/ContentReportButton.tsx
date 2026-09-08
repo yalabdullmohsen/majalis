@@ -24,7 +24,7 @@ export function ContentReportButton({ contentType, contentId, title }: Props) {
   return (
     <a
       href={`mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`}
-      className="crb-btn"
+      className="crb-btn mj-content-report__link"
       aria-label="الإبلاغ عن خطأ في هذا المحتوى"
       dir="rtl"
     >

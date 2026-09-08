@@ -1,15 +1,10 @@
-import { AppBackButton } from "@/components/common/AppBackButton";
-
 /**
- * زر عائم عالمي للرجوع — ظاهر دائمًا بدون شرط تمرير.
- * يمر عبر AppBackButton الموحّد (goBackOrFallback) لتفادي مسار رجوع مزدوج.
- * مساحة لمس ≥44px عبر CSS؛ موضع ثابت + احترام safe-area.
- * الصعود للأعلى يبقى عبر ScrollToTop في الزاوية المقابلة.
- *
- * يُخفى في الرئيسية والمصحف وصفحات الدخول/الدعم فقط (autoHideFloating).
+ * الرجوع العائم الثابت أُلغي — كان يغطي المحتوى ويتداخل مع ScrollToTop.
+ * الرجوع داخل تدفق الصفحة: هيدر اللوبي / SectionHero / أزرار الصفحة.
+ * يُبقى المكوّن كـ no-op لتوافق الاستيرادات القديمة في App.tsx والبوابات.
  */
 export function FloatingBackButton() {
-  return <AppBackButton variant="floating" autoHideFloating />;
+  return null;
 }
 
 /** توافق مع الاستيرادات القديمة */

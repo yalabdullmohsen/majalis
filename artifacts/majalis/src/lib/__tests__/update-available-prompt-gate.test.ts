@@ -15,6 +15,7 @@ const hook = read("src/hooks/useVersionCheck.ts");
 const sheetCss = read("src/styles/components/app-bottom-sheet.css");
 const safeReload = read("src/lib/safe-reload.ts");
 
+assert.match(banner, /snap="auto"/, "شيت التحديث بارتفاع المحتوى");
 assert.match(banner, /data-testid="update-available-apply"/, "زر تحديث قابل للاستهداف");
 assert.match(banner, /onClick=\{onUpdate\}/, "زر تحديث مربوط بـ onClick");
 assert.match(banner, /onPointerUp/, "pointerUp لموثوقية اللمس على iOS");
@@ -58,6 +59,17 @@ assert.match(
   sheetCss,
   /\.update-available-sheet__update-btn[\s\S]*?pointer-events:\s*auto/,
   "أزرار التحديث تستقبل اللمس",
+);
+
+assert.match(
+  sheetCss,
+  /\.app-sheet--auto[\s\S]*?height:\s*auto/,
+  "snap auto بلا فراغ نصف الشاشة",
+);
+assert.match(
+  sheetCss,
+  /\.update-available-sheet[\s\S]*?\.app-sheet__body[\s\S]*?flex:\s*0/,
+  "جسم شيت التحديث لا يتمدد بفراغ",
 );
 
 assert.match(safeReload, /force\?:\s*boolean/, "safeLocationReload يدعم force");

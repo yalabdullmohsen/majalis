@@ -15,7 +15,7 @@ type Props = {
   onClose: () => void;
   title: string;
   children: ReactNode;
-  snap?: "half" | "full";
+  snap?: "half" | "full" | "auto";
   closeLabel?: string;
   footer?: ReactNode;
   /** محتوى إضافي في الترويسة (مثل زر الوضع الليلي) */

@@ -78,8 +78,8 @@ assert.match(prayerSrc, /pts-retry/);
 
 const globalBack = read("src/components/FloatingBackButton.tsx");
 const appBack = read("src/components/common/AppBackButton.tsx");
-/* زر الرجوع ظاهر دائمًا (بلا بوابة تمرير) — أوضح للخروج من الأقسام */
-assert.match(globalBack, /بدون شرط تمرير/);
+/* الرجوع العائم الثابت مُلغى — الرجوع داخل تدفق الصفحة */
+assert.match(globalBack, /return null/);
 assert.match(appBack, /haptics\.selection/);
 assert.doesNotMatch(globalBack, /pastThreshold/);
 assert.doesNotMatch(appBack, /pastThreshold/);

@@ -4185,7 +4185,9 @@ svg {
 
 @media (max-width: 640px) {
   .lesson-detail-page {
-    padding-bottom: max(1rem, var(--inset-bottom));
+    padding-bottom: calc(
+      var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 1.5rem
+    );
   }
 
   .lesson-detail-actions--row {

@@ -156,9 +156,13 @@ header.navbar-v3,
   bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 16px);
 }
 
-.section-lobby__back {
-  z-index: var(--z-fab);
-  bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 16px);
+/* رجوع اللوبي داخل الهيدر — لا يُعامل كـ FAB */
+.section-lobby__back,
+.section-lobby__back-inline {
+  position: relative;
+  inset: auto;
+  bottom: auto;
+  z-index: 1;
 }
 
 .bottom-nav,

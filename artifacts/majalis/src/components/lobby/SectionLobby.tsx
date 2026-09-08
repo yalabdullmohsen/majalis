@@ -23,7 +23,7 @@ type Props = {
   filterSlot?: ReactNode;
   children?: ReactNode;
   className?: string;
-  /** زر رجوع في الهيدر (أعلى) — للمسابقات وغير جذور التبويب */
+  /** زر رجوع في الهيدر (أعلى) — الافتراضي مفعّل بدل العائم الثابت */
   inlineHeaderBack?: boolean;
 };
 
@@ -58,7 +58,7 @@ export function SectionLobby({
   filterSlot,
   children,
   className,
-  inlineHeaderBack = false,
+  inlineHeaderBack = true,
 }: Props) {
   return (
     <div
@@ -84,7 +84,6 @@ export function SectionLobby({
               <span className="section-lobby__head-spacer" aria-hidden="true" />
             </div>
           ) : (
-            /* الرجوع العائم من FloatingBackButton العالمي — بلا تكرار يغطي البطاقات */
             <h1
               className={cn(
                 "section-lobby__title",
