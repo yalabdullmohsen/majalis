@@ -33,7 +33,7 @@ assert.match(libraryBlock, /Redirect\s+to=["']\/search["']/, "/library → /sear
 assert.doesNotMatch(libraryBlock, /Redirect\s+to=["']\/["']/, "/library لا يحوّل إلى الرئيسية");
 
 const moreBlock = routeBlock("/more");
-assert.match(moreBlock, /Redirect\s+to=["']\/#explore["']|Redirect\s+to=["']\/["']/, "/more → الرئيسية (/#explore)");
+assert.match(moreBlock, /Redirect\s+to=["']\/sections["']/, "/more → /sections");
 
 assert.match(app, /path="\/prayer"[^>]*>\s*<Redirect\s+to="\/prayer-times"/);
 assert.match(app, /path="\/quran\/mushaf"[^>]*>\s*<Redirect\s+to="\/mushaf"/);

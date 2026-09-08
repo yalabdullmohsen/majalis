@@ -30,7 +30,8 @@ assert.equal(
   "ممنوع no-store على /",
 );
 assert.match(robots, /Disallow:\s*\/search/);
-assert.match(robots, /Disallow:\s*\/admin/);
+assert.doesNotMatch(robots, /Disallow:\s*\/admin/, "لا تُكشَف /admin في robots");
+assert.match(robots, /Sitemap:\s*https:\/\/www\.ssunnah\.com\/sitemap\.xml/);
 assert.equal(sitemap.includes(`<loc>${CANON}/search</loc>`), false);
 assert.match(sitemap, new RegExp(`<loc>${CANON.replace(/\./g, "\\.")}/hadith/sahih</loc>`));
 assert.match(sitemap, new RegExp(`<loc>${CANON.replace(/\./g, "\\.")}/hadith/daif</loc>`));

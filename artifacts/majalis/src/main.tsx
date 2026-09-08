@@ -33,7 +33,7 @@ import "./app/styles/theme.css";
 import "./styles/soft-cards.css";
 import "./styles/visual-enrichment.css";
 // page-hero / filters / hub-card تُحمَّل مع مكوّناتها (خارج CSS الحرج)
-// Majlisilm 2030 + طبقات الأساس — foundation/navigation مؤجّلة (ليست حرجة لأول شاشة)
+// طبقات الأساس m2030 — foundation/navigation مؤجّلة (ليست حرجة لأول شاشة)
 import "./styles/brand-v4.css";
 // أزواج (سطح ← لون فوقه) — يشتق من brand-v4 ويجب أن يليه مباشرة
 import "./styles/tokens.css";

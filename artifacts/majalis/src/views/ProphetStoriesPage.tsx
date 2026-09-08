@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from "react";
-import { CalendarDays, ChevronLeft, ChevronRight, HelpCircle, LayoutList, Sparkles } from "lucide-react";
+import { CalendarDays, ChevronLeft, ChevronRight, HelpCircle, LayoutList, Sparkles, Square, Volume2 } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { PROPHETS, getProphet, resolveProphetSlug, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
@@ -14,6 +14,11 @@ import { ScholarlyTrustBadge } from "@/components/ScholarlyTrustBadge";
 import { GraphRelatedRail } from "@/widgets/RelatedRail";
 import { navigateTo } from "@/lib/navigation-intent";
 import { goBackOrFallback } from "@/lib/navigation-back";
+import {
+  isSpeechReadAloudSupported,
+  speakArabicText,
+  stopSpeechReadAloud,
+} from "@/lib/speech-read-aloud";
 import "@/styles/pages/prophet-stories.css";
 
 function knowledgeBodyBlocks(body: string): { title?: string; paragraphs: string[] }[] {
@@ -302,10 +307,63 @@ function ProphetDetailView({
   const [knowledgeLoading, setKnowledgeLoading] = useState(true);
   const [readPct, setReadPct] = useState(0);
   const [activeSection, setActiveSection] = useState("bio");
+  const [speechPlaying, setSpeechPlaying] = useState(false);
+  const [speechUnsupported, setSpeechUnsupported] = useState(false);
   const articleRef = useRef<HTMLElement>(null);
   const prevProphet = p && p.id > 1 ? PROPHETS[p.id - 2] : null;
   const nextProphet = p && p.id < PROPHETS.length ? PROPHETS[p.id] : null;
   const knowledgeBlocks = knowledge?.body ? knowledgeBodyBlocks(knowledge.body) : [];
+
+  const speakableText = useMemo(() => {
+    if (!p) return "";
+    const parts: string[] = [
+      p.arabicName,
+      p.title,
+      p.briefBio,
+      ...p.keyAttributes,
+      ...p.lessons,
+    ];
+    if (sup?.miracle) parts.push(sup.miracle);
+    for (const block of knowledgeBlocks) {
+      if (block.title) parts.push(block.title);
+      parts.push(...block.paragraphs);
+    }
+    if (dbStory?.content) {
+      parts.push(...dbStory.content.split("\n").filter(Boolean));
+    }
+    return parts.filter(Boolean).join(". ");
+  }, [p, knowledgeBlocks, dbStory, sup]);
+
+  useEffect(() => {
+    stopSpeechReadAloud();
+    setSpeechPlaying(false);
+    setSpeechUnsupported(false);
+    return () => {
+      stopSpeechReadAloud();
+    };
+  }, [slug]);
+
+  const toggleSpeech = useCallback(() => {
+    if (speechPlaying) {
+      stopSpeechReadAloud();
+      setSpeechPlaying(false);
+      return;
+    }
+    if (!isSpeechReadAloudSupported()) {
+      setSpeechUnsupported(true);
+      return;
+    }
+    const state = speakArabicText(speakableText, {
+      rate: 0.92,
+      onEnd: () => setSpeechPlaying(false),
+      onError: () => {
+        setSpeechPlaying(false);
+        setSpeechUnsupported(true);
+      },
+    });
+    if (state === "speaking") setSpeechPlaying(true);
+    else if (state === "unsupported") setSpeechUnsupported(true);
+  }, [speechPlaying, speakableText]);
 
   const sections: DetailSection[] = [
     { id: "bio", label: "نبذة" },
@@ -513,12 +571,27 @@ function ProphetDetailView({
       <div className="prophet-detail-lux__topbar">
         <button type="button" className="prophet-lux-back" onClick={onBack}>← قائمة الأنبياء</button>
         <div className="prophet-detail-lux__actions">
+          <button
+            type="button"
+            className={`prophet-speech-btn${speechPlaying ? " prophet-speech-btn--active" : ""}`}
+            onClick={toggleSpeech}
+            aria-pressed={speechPlaying}
+            aria-label={speechPlaying ? "إيقاف القراءة" : "استماع لنص القصة"}
+          >
+            {speechPlaying ? <Square size={14} strokeWidth={2} aria-hidden="true" /> : <Volume2 size={14} strokeWidth={2} aria-hidden="true" />}
+            <span>{speechPlaying ? "إيقاف" : "استماع"}</span>
+          </button>
           <div className="prophet-font-controls">
             <button type="button" onClick={() => setFontSize(s => Math.max(13, s - 1))} aria-label="تصغير الخط">أ−</button>
             <button type="button" onClick={() => setFontSize(s => Math.min(22, s + 1))} aria-label="تكبير الخط">أ+</button>
           </div>
         </div>
       </div>
+      {speechUnsupported ? (
+        <p className="prophet-speech-unsupported" role="status">
+          القراءة الصوتية غير مدعومة على هذا الجهاز
+        </p>
+      ) : null}
 
       <div className="prophet-detail-lux__hero">
         <div className="prophet-detail-lux__hero-pattern" aria-hidden="true">

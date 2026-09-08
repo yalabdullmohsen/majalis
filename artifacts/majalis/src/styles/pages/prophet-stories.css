@@ -988,50 +988,58 @@ html.dark .nb-table__row--clickable:hover td {
   font-family: var(--font-body);
 }
 
-/* ── Timeline (قائمة) ── */
+/* ── Timeline (قائمة) — محور RTL واحد؛ بطاقات بعرض مريح ── */
 .prophet-timeline {
   position: relative;
-  padding: 2rem 1rem;
-  max-width: 900px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 40rem;
+  margin-inline: auto;
+  padding-block: 1.5rem 2rem;
+  padding-inline: 0.75rem;
+  box-sizing: border-box;
+  overflow-x: clip;
+  padding-bottom: calc(var(--bottom-nav-height, var(--nav-h, 64px)) + var(--inset-bottom, 0px) + 2rem);
 }
 .prophet-timeline__line {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 50%;
+  inset-inline-start: 1.15rem;
+  left: auto;
   width: 2px;
+  transform: none;
   background: linear-gradient(
     180deg,
     transparent,
     color-mix(in srgb, var(--ps-emerald) 45%, transparent),
     transparent
   );
-  transform: translateX(-50%);
 }
 .prophet-timeline__item {
   display: flex;
-  gap: var(--ds-space-4);
-  margin-bottom: 1.5rem;
-  align-items: center;
+  gap: var(--ds-space-3);
+  margin-bottom: 1.15rem;
+  align-items: stretch;
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
 }
-.prophet-timeline__item--right {
-  flex-direction: row;
-  justify-content: flex-end;
-  padding-inline-start: 55%;
-}
+.prophet-timeline__item--right,
 .prophet-timeline__item--left {
-  flex-direction: row-reverse;
-  justify-content: flex-end;
-  padding-inline-end: 55%;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding-inline-start: 3rem;
+  padding-inline-end: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 .prophet-timeline__dot {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 32px;
-  height: 32px;
+  inset-inline-start: calc(1.15rem - 15px);
+  left: auto;
+  transform: none;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1044,7 +1052,7 @@ html.dark .nb-table__row--clickable:hover td {
   background: var(--item-color, var(--ps-emerald));
   box-shadow: 0 0 12px color-mix(in srgb, var(--item-color, var(--ps-emerald)) 38%, transparent);
 }
-.prophet-timeline__dot:hover { transform: translateX(-50%) scale(1.2); }
+.prophet-timeline__dot:hover { transform: scale(1.12); }
 .prophet-timeline__card {
   background: var(--ps-surface);
   background-image: linear-gradient(
@@ -1054,15 +1062,20 @@ html.dark .nb-table__row--clickable:hover td {
   );
   border: 1px solid var(--ps-line);
   border-radius: var(--radius-tile, 24px);
-  padding: 0.85rem 1.05rem;
+  padding: 0.9rem 1.05rem;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
   overflow: hidden;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.65),
     0 10px 22px -14px rgba(11, 32, 24, 0.22);
-  max-width: 180px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  text-align: start;
+  direction: rtl;
 }
 .prophet-timeline__card:hover {
   border-color: var(--ps-emerald-bright);
@@ -1073,31 +1086,30 @@ html.dark .nb-table__row--clickable:hover td {
   font-size: var(--ds-text-base);
   margin: 0 0 0.2rem;
   color: var(--item-color, var(--ps-ink));
+  text-align: start;
 }
 .prophet-timeline__title {
   font-size: var(--ds-text-xs);
   color: var(--ps-ink-soft);
   margin: 0 0 0.15rem;
+  text-align: start;
 }
 .prophet-timeline__era {
   font-size: 0.7rem;
-  color: #7A8480;
+  color: var(--ps-ink-soft);
   margin: 0;
+  text-align: start;
 }
 
 @media (max-width: 640px) {
-  .prophet-timeline__line { inset-inline-start: 20px; }
+  .prophet-timeline__line { inset-inline-start: 0.95rem; }
   .prophet-timeline__item--right,
   .prophet-timeline__item--left {
-    flex-direction: row;
-    justify-content: flex-start;
-    padding-inline-start: 0;
-    padding-inline-end: 0;
-    padding-inline-start: 60px;
+    padding-inline-start: 2.75rem;
   }
-  .prophet-timeline__dot { inset-inline-start: 20px; transform: translateX(-50%); }
-  .prophet-timeline__dot:hover { transform: translateX(-50%) scale(1.15); }
-  .prophet-timeline__card { max-width: 100%; }
+  .prophet-timeline__dot { inset-inline-start: calc(0.95rem - 15px); transform: none; }
+  .prophet-timeline__dot:hover { transform: scale(1.1); }
+  .prophet-timeline__card { max-width: none; width: 100%; }
 }
 
 /* ── Quiz (قائمة فاتحة) ── */
@@ -2233,23 +2245,144 @@ html.dark .app-main:has(.lrf-wrap--prophet-detail) {
   text-align: start !important;
 }
 
-/* الخط الزمني: بطاقات أصغر */
+/* الخط الزمني: بطاقات بعرض مريح ومتوازنة */
 .prophet-timeline__card {
   text-align: start;
   align-items: stretch;
-  padding: 0.75rem 0.9rem;
+  padding: 0.9rem 1.05rem;
   border-radius: 14px;
-  max-width: 18rem;
+  max-width: none;
+  width: 100%;
 }
 .prophet-timeline__name {
-  text-align: center;
+  text-align: start;
   width: 100%;
 }
 .prophet-timeline__title,
 .prophet-timeline__era {
   text-align: start;
+}
+
+/* شريط استماع + مصدر على خلفية التفصيل الداكنة */
+.prophet-speech-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  border: 1px solid var(--ps-detail-border, rgba(243, 245, 244, 0.22));
+  background: color-mix(in srgb, var(--prophet-color-on-dark, #5CC095) 16%, transparent);
+  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+.prophet-speech-btn--active {
+  background: color-mix(in srgb, var(--prophet-accent-on-dark, #E8C56A) 28%, transparent);
+  border-color: var(--prophet-accent-on-dark, #E8C56A);
+}
+.prophet-speech-unsupported {
+  margin: 0.35rem 1.25rem 0;
+  color: var(--ps-detail-muted, var(--text-on-dark-secondary, #F3F5F4));
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.prophet-story-lux__footer {
+  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF)) !important;
+  opacity: 1;
+}
+.prophet-story-lux__footer span {
+  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  font-weight: 600;
+}
+
+/* شارة التوثيق داخل صفحة التفصيل الداكنة — لا ترث ألوان النهاري */
+.prophet-detail-lux .stb-wrap {
+  background: color-mix(in srgb, var(--ps-detail-card, rgba(255, 255, 255, 0.1)) 100%, transparent);
+  border-color: var(--ps-detail-border, rgba(243, 245, 244, 0.22));
+}
+.prophet-detail-lux .stb-header {
+  border-bottom-color: var(--ps-detail-border, rgba(243, 245, 244, 0.22));
+}
+.prophet-detail-lux .stb-verified {
+  color: var(--ps-text-primary, #FFFFFF);
+  background: color-mix(in srgb, var(--prophet-color-on-dark, #5CC095) 22%, transparent);
+}
+.prophet-detail-lux .stb-row__label {
+  color: var(--ps-detail-muted, var(--text-on-dark-secondary, #F3F5F4));
+}
+.prophet-detail-lux .stb-row__value {
+  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+}
+.prophet-detail-lux .stb-row__icon {
+  color: var(--prophet-color-on-dark, #5CC095);
+}
+.prophet-detail-lux .stb-type,
+.prophet-detail-lux .stb-madhab {
+  color: var(--ps-detail-muted, #F3F5F4);
+  background: rgba(255, 255, 255, 0.08);
+}
+.prophet-detail-lux .stb-source-link,
+.prophet-detail-lux .stb-methodology-link {
+  color: var(--prophet-color-on-dark, #5CC095);
+}
+.prophet-detail-lux .stb-footer {
+  border-top-color: var(--ps-detail-border, rgba(243, 245, 244, 0.22));
+}
+
+/* حاوية متمركزة بلا إزاحة يمين */
+.prophets-lux-page,
+.prophet-detail-lux {
   width: 100%;
-  line-height: 1.5;
+  max-width: 100%;
+  margin-inline: auto;
+  overflow-x: clip;
+  box-sizing: border-box;
+}
+.prophets-lux-container,
+.prophet-story-lux {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: max(0.85rem, var(--page-gutter, 1rem));
+  box-sizing: border-box;
+}
+.prophets-lux-container {
+  max-width: min(1200px, 100%);
+}
+.prophet-story-lux {
+  max-width: 42rem;
+}
+.prophet-facts-grid {
+  width: 100%;
+  max-width: 48rem;
+  margin-inline: auto;
+  padding-inline: max(0.85rem, var(--page-gutter, 1rem));
+  box-sizing: border-box;
+}
+.prophets-lux-tabs {
+  top: 0;
+  /* بلا sticky داخل محتوى يزحف مع الكروم — يبقى شريط تبويب عادي */
+  position: relative;
+  z-index: 1;
+}
+.prophet-detail-toc {
+  top: 0;
+  position: sticky;
+  /* بعد إخفاء التيكّر وتثبيت الكروم — لا يزحف فوق النص كشريط متحرك */
+  z-index: 20;
+}
+
+.prophet-fact-card {
+  background: var(--ps-detail-card, rgba(255, 255, 255, 0.1));
+  border-color: var(--ps-detail-border, rgba(243, 245, 244, 0.22));
+}
+.prophet-fact-card__label {
+  color: var(--ps-detail-muted, var(--text-on-dark-secondary, #F3F5F4));
+}
+.prophet-fact-card__value {
+  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
 }
 
 /* جسر السيرة: عنوان وسط ووصف من البداية */

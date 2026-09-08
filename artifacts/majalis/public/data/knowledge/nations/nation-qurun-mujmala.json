@@ -43,7 +43,10 @@
     "بلا نبي مسمّى",
     "مجمل"
   ],
-  "related": [],
+  "related": [
+    "nation-aad",
+    "nation-thamud"
+  ],
   "review_status": "verified",
   "updated_at": "2026-09-02",
   "section": "nations"

@@ -58,8 +58,12 @@ function runNode(script) {
   }
   if (existsSync(robotsPath)) {
     const rb = readFileSync(robotsPath, "utf8");
-    if (!/Disallow:\s*\/admin/i.test(rb)) {
-      findings.push(finding("P0", "robots.txt يجب Disallow: /admin"));
+    // لا تُدرَج /admin في robots (كشف مسار) — الحماية عبر noindex/auth
+    if (/Disallow:\s*\/admin/i.test(rb)) {
+      findings.push(finding("P1", "robots.txt لا يجب أن يكشف /admin عبر Disallow", { path: "/admin" }));
+    }
+    if (!/Sitemap:\s*https:\/\/www\.ssunnah\.com\/sitemap\.xml/i.test(rb)) {
+      findings.push(finding("P0", "robots.txt يجب أن يشير إلى sitemap الإنتاج"));
     }
   }
 }
