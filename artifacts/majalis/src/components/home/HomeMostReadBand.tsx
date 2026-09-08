@@ -18,8 +18,8 @@ const FALLBACK_POPULAR = [
 const TODAY_SUGGESTIONS = [
   { href: "/mushaf", title: "اقرأ صفحة من المصحف", desc: "ثبّت وردك من القرآن اليوم" },
   { href: "/adhkar/morning", title: "أذكار الصباح", desc: "تابع أذكارك بعدد التكرار" },
-  { href: "/lessons", title: "درس علمي قريب", desc: "تصفّح دروس اليوم والقادمة" },
-  { href: "/prophets", title: "قصة نبي", desc: "من قصص الأنبياء في القرآن" },
+  { href: "/lessons", title: "دروس علمية قريبة", desc: "جدولة الدروس والدورات حسب منطقتك" },
+  { href: "/prophets", title: "قصص الأنبياء", desc: "سير الأنبياء من القرآن والسنة بترتيب هادئ" },
   { href: "/daily-wird", title: "الورد اليومي", desc: "أكمل صفحاتك المقررة" },
   { href: "/quiz", title: "سؤال سين جيم", desc: "اختبر معلوماتك بلعبة قصيرة" },
 ] as const;

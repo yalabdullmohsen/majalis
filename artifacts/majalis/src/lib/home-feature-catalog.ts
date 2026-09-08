@@ -39,7 +39,7 @@ export const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc:
   { href: "/daily-wird", Icon: Star,          label: seoNavLabel("/daily-wird", "أكمل وردك"),       desc: "ختم يومي منتظم للقرآن والأذكار" },
   { href: "/lessons",    Icon: GraduationCap, label: seoNavLabel("/lessons", "الدروس"),     desc: "تابع تعلّمك بدروس ودورات علمية" },
   { href: "/quiz",       Icon: Target,        label: seoNavLabel("/quiz", "لعبة سين جيم"),  desc: "أسئلة شرعية ومعرفية للمراجعة" },
-  { href: "/adhkar",     Icon: RotateCw,      label: seoNavLabel("/adhkar", "أذكار اليوم"),     desc: "أذكار الصباح والمساء والنوم" },
+  { href: "/adhkar",     Icon: RotateCw,      label: seoNavLabel("/adhkar", "أذكار اليوم"),     desc: "أذكار الصباح والمساء والنوم مع عدّ التكرار" },
 ];
 
 
@@ -47,9 +47,9 @@ export const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc:
 export const FEATURED: { href: string; Icon: LucideIcon; title: string; desc: string; cta: string }[] = [
   { href: "/quran-hub", Icon: BookMarked, title: seoNavLabel("/quran-hub", "مركز القرآن"), desc: "المصحف والتجويد والحفظ وعلوم القرآن", cta: "افتح" },
   { href: "/lessons", Icon: GraduationCap, title: seoNavLabel("/lessons", "الدروس والدورات"), desc: "دروس ودورات مرتّبة بحسب الموضوع والمستوى", cta: "افتح" },
-  { href: "/prayer-times", Icon: Clock, title: seoNavLabel("/prayer-times", "مواقيت الصلاة"), desc: "المواقيت والقبلة والأذان", cta: "افتح" },
-  { href: "/fiqh", Icon: Scale, title: seoNavLabel("/fiqh", "الفقه والأحكام"), desc: "الأحكام والقواعد والمجامع تحت باب واحد", cta: "افتح" },
-  { href: "/adhkar", Icon: RotateCw, title: seoNavLabel("/adhkar", "الأذكار اليومية"), desc: "أذكار الصباح والمساء وما بينهما", cta: "افتح" },
+      { href: "/prayer-times", Icon: Clock, title: seoNavLabel("/prayer-times", "مواقيت الصلاة"), desc: "مواقيت دقيقة بحسب موقعك مع القبلة والأذان", cta: "افتح" },
+  { href: "/fiqh", Icon: Scale, title: seoNavLabel("/fiqh", "الفقه والأحكام"), desc: "بوابة الفقه: أحكام، أسئلة، ومجمع فقهي بإحالات موثّقة", cta: "افتح" },
+  { href: "/adhkar", Icon: RotateCw, title: seoNavLabel("/adhkar", "الأذكار اليومية"), desc: "أذكار الصباح والمساء وما بينهما بترتيب يومي", cta: "افتح" },
   { href: "/sections", Icon: Layers, title: seoNavLabel("/sections", "جميع الأقسام"), desc: "فهرس يجمع الفقه والحديث والأعلام والعبادات", cta: "افتح" },
 ];
 
@@ -80,14 +80,14 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     Icon: Scale,
     label: "الفقه والأحكام",
     items: [
-      { href: "/fiqh",               Icon: Scale,        title: seoNavLabel("/fiqh", "الفقه الإسلامي"),  desc: "مدخل للأحكام والأسئلة والمجمع الفقهي" },
+      { href: "/fiqh",               Icon: Scale,        title: seoNavLabel("/fiqh", "الفقه الإسلامي"),  desc: "كتب الفقه والفتاوى المنظمة حسب الأبواب والمذاهب" },
       { href: "/tazkiya",             Icon: Heart,        title: seoNavLabel("/tazkiya", "التزكية والتوبة"), desc: "الذنوب والحقوق، والتوبة والاستغفار في باب واحد" },
       { href: "/tawhid",             Icon: BookMarked,   title: seoNavLabel("/tawhid", "التوحيد"),            desc: "مسائل أنواع التوحيد الثلاثة بأدلتها على منهج أهل السنة" },
       { href: "/arkan",              Icon: Landmark,     title: seoNavLabel("/arkan", "أركان الإسلام الخمسة"),     desc: "الشهادة والصلاة والزكاة والصيام والحج بالأدلة" },
-      { href: "/arkan-iman",         Icon: Star,         title: seoNavLabel("/arkan-iman", "أركان الإيمان الستة"),     desc: "بيان الأركان الستة من القرآن والسنة" },
-      { href: "/asma-husna",         Icon: Star,         title: seoNavLabel("/asma-husna", "الأسماء الحسنى"),    desc: "99 اسماً لله بمعانيها ومنافعها" },
+      { href: "/arkan-iman",         Icon: Star,         title: seoNavLabel("/arkan-iman", "أركان الإيمان الستة"),     desc: "الإيمان بالله وملائكته وكتبه ورسله واليوم الآخر والقدر" },
+      { href: "/asma-husna",         Icon: Star,         title: seoNavLabel("/asma-husna", "الأسماء الحسنى"),    desc: "أسماء الله الحسنى بمعانيها وفضل إحصائها" },
       { href: "/akhlaq",             Icon: Heart,        title: seoNavLabel("/akhlaq", "مكارم الأخلاق"), desc: "أخلاق الإسلام من القرآن والسنة مع مواضع التطبيق" },
-      { href: "/discover-islam",     Icon: HandHeart,    title: seoNavLabel("/discover-islam", "تعرّف إلى الإسلام"), desc: "مدخل تعريفي لغير المسلمين والمهتمين" },
+      { href: "/discover-islam",     Icon: HandHeart,    title: seoNavLabel("/discover-islam", "تعرّف إلى الإسلام"), desc: "تعريف هادئ بأصول الإسلام لمن يسأل عنه أول مرة" },
       { href: "/zakat",               Icon: Scale,        title: seoNavLabel("/zakat", "الزكاة وأحكامها"),    desc: "دليل الزكاة مع حاسبة وأحكام الأنواع السبعة" },
       { href: "/sawm",                Icon: Moon,         title: seoNavLabel("/sawm", "الصيام وأحكامه"),      desc: "أنواع الصيام وشروطه ومفطراته وفضائل رمضان" },
       { href: "/hajj",                Icon: Landmark,     title: seoNavLabel("/hajj", "الحج والعمرة"),         desc: "أركان الحج وواجباته والمشاعر ومحظورات الإحرام" },
@@ -103,8 +103,8 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     label: "العبادة والأذكار",
     items: [
       { href: "/adhkar",          Icon: Star,        title: seoNavLabel("/adhkar", "الأذكار والأدعية"),     desc: "أذكار الصباح والمساء والأدعية المأثورة" },
-      { href: "/sunan-yawmiyya",  Icon: Check,       title: seoNavLabel("/sunan-yawmiyya", "السنن النبوية"),        desc: "80+ سنة يومية مع تتبع التطبيق" },
-      { href: "/duas-quran",  Icon: BookOpen,    title: seoNavLabel("/duas-quran", "أدعية القرآن"),        desc: "أدعية قرآنية للأنبياء والمؤمنين" },
+      { href: "/sunan-yawmiyya",  Icon: Check,       title: seoNavLabel("/sunan-yawmiyya", "السنن النبوية"),        desc: "سنن يومية مع تتبّع التطبيق والالتزام" },
+      { href: "/duas-quran",  Icon: BookOpen,    title: seoNavLabel("/duas-quran", "أدعية القرآن"),        desc: "أدعية الأنبياء والمؤمنين كما وردت في القرآن" },
       { href: "/fawaid",       Icon: Lightbulb,   title: seoNavLabel("/fawaid", "الفوائد الشرعية"),      desc: "فوائد مختصرة من كتب أهل العلم، مرتّبة للقراءة السريعة" },
       { href: "/miracles",     Icon: Sparkles,    title: seoNavLabel("/miracles", "الإعجاز العلمي"),      desc: "إشارات كونية في الوحي معروضة بضوابط علمية حذرة" },
       { href: "/hikam-salaf",  Icon: BookOpen,    title: seoNavLabel("/hikam-salaf", "حكم السلف الصالح"),     desc: "حكم مأثورة عن الصحابة والتابعين والأئمة" },
@@ -113,7 +113,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/amr-bil-maruf", Icon: Scroll,      title: seoNavLabel("/amr-bil-maruf", "الأمر بالمعروف والنهي عن المنكر"), desc: "مراتبه الثلاث وشروطه وأحكامه الفقهية" },
       { href: "/daily-wird",  Icon: BookOpen,    title: seoNavLabel("/daily-wird", "الورد اليومي"),         desc: "ختم يومي منتظم للقرآن الكريم" },
       { href: "/occasions-lessons", Icon: CalendarDays, title: seoNavLabel("/occasions-lessons", "المناسبات والدروس"), desc: "تقويم المناسبات والدروس المرتبطة بها" },
-      { href: "/tasbih",      Icon: RotateCw,    title: seoNavLabel("/tasbih", "التسبيح والذكر"),       desc: "عداد للتسبيح والذكر مع أهداف يومية" },
+      { href: "/tasbih",      Icon: RotateCw,    title: seoNavLabel("/tasbih", "التسبيح والذكر"),       desc: "عداد تسبيح وذكر مع أهداف يومية قابلة للتخصيص" },
     ],
   },
   {
@@ -124,7 +124,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/my-learning",     Icon: Layers,      title: seoNavLabel("/my-learning", "حسابي"),   desc: "متابعة تقدمك في الدروس والبطاقات للمراجعة السريعة" },
       { href: "/quiz",            Icon: Target,      title: seoNavLabel("/quiz", "لعبة سين جيم"),   desc: "أسئلة شرعية ومعرفية متدرجة للمراجعة" },
       { href: "/assistant",       Icon: Bot,         title: seoNavLabel("/assistant", "المساعد العلمي"),    desc: "محادثة فورية بالذكاء الاصطناعي في العلوم الشرعية" },
-      { href: "/occasions", Icon: CalendarDays, title: seoNavLabel("/occasions", "المناسبات الإسلامية"), desc: "التواريخ الهجرية والمناسبات الشرعية" },
+      { href: "/occasions", Icon: CalendarDays, title: seoNavLabel("/occasions", "المناسبات الإسلامية"), desc: "التواريخ الهجرية والمواسم الشرعية المرتبطة بها" },
       { href: "/islamic-directory", Icon: Landmark, title: seoNavLabel("/islamic-directory", "دليل المؤسسات والمساجد"), desc: "مؤسسات ومساجد ومعالم مرتّبة للبحث المحلي" },
       { href: "/universities", Icon: GraduationCap, title: seoNavLabel("/universities", "دليل الجامعات الشرعية"), desc: "جامعات وكليات الدراسات الشرعية حول العالم" },
       { href: "/academic-research", Icon: Scroll, title: seoNavLabel("/academic-research", "رسائل الماجستير والدكتوراه"), desc: "فهرس الأبحاث والرسائل الشرعية الموثّقة" },

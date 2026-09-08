@@ -17,6 +17,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/fiqh",
+        "label": "الفقه"
       }
     ],
     "featured": true,
@@ -44,8 +48,8 @@
         "label": "التاريخ الإسلامي"
       },
       {
-        "href": "/tarikh-islami",
-        "label": "التاريخ الإسلامي"
+        "href": "/fiqh",
+        "label": "الفقه"
       }
     ],
     "featured": true,
@@ -71,8 +75,8 @@
         "label": "التاريخ الإسلامي"
       },
       {
-        "href": "/tarikh-islami",
-        "label": "التاريخ الإسلامي"
+        "href": "/fiqh",
+        "label": "الفقه"
       }
     ],
     "featured": true,
@@ -98,8 +102,8 @@
         "label": "التاريخ الإسلامي"
       },
       {
-        "href": "/tarikh-islami",
-        "label": "التاريخ الإسلامي"
+        "href": "/fiqh",
+        "label": "الفقه"
       }
     ],
     "timelineOrder": 304
@@ -124,8 +128,8 @@
         "label": "التاريخ الإسلامي"
       },
       {
-        "href": "/tarikh-islami",
-        "label": "التاريخ الإسلامي"
+        "href": "/fiqh",
+        "label": "الفقه"
       }
     ],
     "timelineOrder": 305
@@ -174,6 +178,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/fiqh",
+        "label": "الفقه"
       }
     ],
     "timelineOrder": 307
@@ -195,6 +203,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/fiqh",
+        "label": "الفقه"
       }
     ],
     "timelineOrder": 308
@@ -216,6 +228,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/fiqh",
+        "label": "الفقه"
       }
     ],
     "timelineOrder": 309
@@ -240,8 +256,8 @@
         "label": "التاريخ الإسلامي"
       },
       {
-        "href": "/tarikh-islami",
-        "label": "التاريخ الإسلامي"
+        "href": "/fiqh",
+        "label": "الفقه"
       }
     ],
     "featured": true,
@@ -266,6 +282,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/fiqh",
+        "label": "الفقه"
       }
     ],
     "featured": true,

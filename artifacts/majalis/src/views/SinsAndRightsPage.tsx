@@ -411,7 +411,7 @@ function MindMap() {
                       key={child.label}
                       className="snr-mindmap-child-link"
                       style={{ opacity: 0.6, cursor: "default" }}
-                      title="قيد الإعداد والمراجعة"
+                      title="غير منشور بعد"
                     >
                       <span>{child.label}</span>
                       <span className="snr-badge snr-badge--pending" style={{ fontSize: "0.65rem" }}>غير منشور</span>

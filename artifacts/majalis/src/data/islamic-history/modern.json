@@ -41,6 +41,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/discover-islam",
+        "label": "تعرّف إلى الإسلام"
       }
     ],
     "timelineOrder": 910

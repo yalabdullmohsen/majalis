@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link, Redirect, useRoute } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { SectionIcon } from "@/components/ui/SectionIcon";
 import { getTawhidTopic } from "@/lib/tawhid-topics";
 import { topicThemeCssVars, getTopicTheme } from "@/config/topic-themes";
 import "@/styles/pages/tawhid.css";
@@ -47,7 +48,9 @@ export default function TawhidTopicPage() {
         <div className="twh-hub-hero__inner">
           <p className="home-eyebrow">العقيدة والتوحيد</p>
           <h1 className="twh-hub-hero__title">
-            <span aria-hidden="true">{topic.emoji} </span>
+            <span className="twh-hub-hero__icon" aria-hidden="true">
+              <SectionIcon name={topic.emoji} size={28} />
+            </span>{" "}
             {topic.title}
           </h1>
           <p className="twh-hub-hero__sub">{topic.description}</p>

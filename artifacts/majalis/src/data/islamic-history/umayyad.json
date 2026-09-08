@@ -20,8 +20,8 @@
         "label": "التاريخ الإسلامي"
       },
       {
-        "href": "/tarikh-islami",
-        "label": "التاريخ الإسلامي"
+        "href": "/seerah",
+        "label": "السيرة"
       }
     ],
     "featured": true,
@@ -46,6 +46,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/seerah",
+        "label": "السيرة"
       }
     ],
     "timelineOrder": 202
@@ -70,8 +74,8 @@
         "label": "التاريخ الإسلامي"
       },
       {
-        "href": "/tarikh-islami",
-        "label": "التاريخ الإسلامي"
+        "href": "/seerah",
+        "label": "السيرة"
       }
     ],
     "timelineOrder": 203
@@ -95,6 +99,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/seerah",
+        "label": "السيرة"
       }
     ],
     "featured": true,
@@ -118,6 +126,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/seerah",
+        "label": "السيرة"
       }
     ],
     "timelineOrder": 205
@@ -142,8 +154,8 @@
         "label": "التاريخ الإسلامي"
       },
       {
-        "href": "/tarikh-islami",
-        "label": "التاريخ الإسلامي"
+        "href": "/seerah",
+        "label": "السيرة"
       }
     ],
     "featured": true,
@@ -167,6 +179,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/seerah",
+        "label": "السيرة"
       }
     ],
     "timelineOrder": 207
@@ -189,6 +205,10 @@
       {
         "href": "/tarikh-islami",
         "label": "التاريخ الإسلامي"
+      },
+      {
+        "href": "/seerah",
+        "label": "السيرة"
       }
     ],
     "timelineOrder": 208
@@ -213,8 +233,8 @@
         "label": "التاريخ الإسلامي"
       },
       {
-        "href": "/tarikh-islami",
-        "label": "التاريخ الإسلامي"
+        "href": "/seerah",
+        "label": "السيرة"
       }
     ],
     "timelineOrder": 209
