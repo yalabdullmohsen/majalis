@@ -1,7 +1,7 @@
 /**
  * بوابة توحيد الوسوم:
  * - theme-color من site.config.json فقط
- * - OG افتراضي = brand/og-home.png مع cache-bust
+ * - OG افتراضي = og-image.png مع cache-bust
  * - لا meta keywords
  * - تنقّل prerender موحّد
  *
@@ -22,7 +22,7 @@ function read(rel) {
 const site = JSON.parse(read("site.config.json"));
 const theme = site.themeColor || "#1F7A5A";
 const themeDark = site.themeColorDark || "#4FB48B";
-const defaultImage = site.defaultImage || "/brand/og-home.png?v=20260825";
+const defaultImage = site.defaultImage || "/og-image.png?v=20260825";
 const logoImage = site.logoImage || "/brand/official.png?v=20260825";
 const ogW = String(site.ogImageWidth || 1200);
 const ogH = String(site.ogImageHeight || 630);
@@ -32,8 +32,8 @@ const shortName = site.siteShortName || "سُنّة";
 if (!/^#[0-9A-Fa-f]{6}$/.test(theme) || !/^#[0-9A-Fa-f]{6}$/.test(themeDark)) {
   issues.push("site.config.json: themeColor / themeColorDark يجب أن يكونا hex سداسي");
 }
-if (!String(defaultImage).includes("/brand/og-home.png")) {
-  issues.push(`defaultImage يجب أن يشير إلى /brand/og-home.png (وجد ${defaultImage})`);
+if (!String(defaultImage).includes("/og-image.png")) {
+  issues.push(`defaultImage يجب أن يشير إلى /og-image.png (وجد ${defaultImage})`);
 }
 if (!String(logoImage).includes("/brand/official.png")) {
   issues.push(`logoImage يجب أن يشير إلى /brand/official.png (وجد ${logoImage})`);
@@ -71,8 +71,8 @@ if (!/name="color-scheme"[^>]*content="light dark"/.test(indexHtml)) {
 if (/name="keywords"/.test(indexHtml)) {
   issues.push("index.html: احذف meta keywords");
 }
-if (!indexHtml.includes("brand/og-home.png")) {
-  issues.push("index.html: OG يجب أن يستخدم brand/og-home.png");
+if (!indexHtml.includes("og-image.png")) {
+  issues.push("index.html: OG يجب أن يستخدم og-image.png");
 }
 if (/majlisilm-og-2026/.test(indexHtml)) {
   issues.push("index.html: لا تستخدم majlisilm-og-2026");
@@ -125,6 +125,9 @@ if (!postBuild.includes("theme-color") && !postBuild.includes("themeColor")) {
 
 if (!existsSync(resolve(appRoot, "public/brand/official.png"))) {
   issues.push("public/brand/official.png مفقود");
+}
+if (!existsSync(resolve(appRoot, "public/og-image.png"))) {
+  issues.push("public/og-image.png مفقود");
 }
 if (!existsSync(resolve(appRoot, "public/brand/og-home.png"))) {
   issues.push("public/brand/og-home.png مفقود");

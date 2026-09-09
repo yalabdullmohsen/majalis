@@ -1,11 +1,12 @@
 import { SEO_SITE } from "./seo-nav-labels";
+import { SITE_DESCRIPTION } from "./site-config";
 import type { KuwaitLessonRecord } from "./kuwait-lessons";
 import { formatSheikhName, stripSheikhHonorifics } from "./sheikh-name";
 
 const SITE_URL = SEO_SITE.siteUrl;
 const SITE_NAME = SEO_SITE.siteName;
 const LOGO_PATH = SEO_SITE.logoImage || "/brand/official.png?v=20260825";
-const DEFAULT_IMAGE = SEO_SITE.defaultImage || "/brand/og-home.png?v=20260825";
+const DEFAULT_IMAGE = SEO_SITE.defaultImage || "/og-image.png?v=20260910";
 
 function absoluteUrl(path: string) {
   return new URL(path, SITE_URL).toString();
@@ -31,8 +32,7 @@ export function organizationJsonLd() {
       url: absoluteUrl(LOGO_PATH),
     },
     image: absoluteUrl(DEFAULT_IMAGE),
-    description:
-      "منصة علمية عربية تجمع الدروس الشرعية والدورات والقرآن والأذكار والفوائد في مكان واحد.",
+    description: SITE_DESCRIPTION,
     inLanguage: "ar",
   };
 }
@@ -45,8 +45,7 @@ export function websiteJsonLd() {
     url: SITE_URL,
     image: absoluteUrl(DEFAULT_IMAGE),
     inLanguage: "ar",
-    description:
-      "منصة علمية عربية للدروس الشرعية والدورات العلمية وطلب العلم — القرآن، السنة، الأذكار، والفوائد.",
+    description: SITE_DESCRIPTION,
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,

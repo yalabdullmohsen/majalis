@@ -312,7 +312,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
   return requiredRoute(routes, "/404");
 }
 
-function upsertMeta(attribute: "name" | "property", key: string, content: string) {
+function upsertMeta(attribute: "name" | "property" | "itemprop", key: string, content: string) {
   let element = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
   if (!element) {
     element = document.createElement("meta");
@@ -408,6 +408,8 @@ export function applyPageSeo(options: PageSeoOptions) {
   upsertMeta("property", "og:description", description);
   upsertMeta("property", "og:url", canonical);
   upsertMeta("property", "og:image", image);
+  upsertMeta("property", "og:image:secure_url", image);
+  upsertMeta("property", "og:image:type", "image/png");
   upsertMeta("property", "og:image:alt", title);
   upsertMeta("property", "og:image:width", String(SEO_SITE.ogImageWidth));
   upsertMeta("property", "og:image:height", String(SEO_SITE.ogImageHeight));
@@ -416,7 +418,12 @@ export function applyPageSeo(options: PageSeoOptions) {
   upsertMeta("name", "twitter:title", title);
   upsertMeta("name", "twitter:description", description);
   upsertMeta("name", "twitter:image", image);
+  upsertMeta("name", "twitter:image:alt", title);
   upsertMeta("name", "twitter:url", canonical);
+
+  upsertMeta("itemprop", "name", title);
+  upsertMeta("itemprop", "description", description);
+  upsertMeta("itemprop", "image", image);
 
   upsertCanonical(canonical);
 

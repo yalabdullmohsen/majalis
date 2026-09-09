@@ -571,7 +571,7 @@ function siteJsonLdScript() {
     applicationCategory: "EducationalApplication",
     operatingSystem: "Web, iOS, Android",
     inLanguage: "ar",
-    image: absoluteUrl(withAssetVersion("/brand/og-home.png")),
+    image: absoluteUrl(withAssetVersion("/og-image.png")),
     offers: { "@type": "Offer", price: "0", priceCurrency: "KWD" },
   };
   return jsonLdScript([org, site, app]);

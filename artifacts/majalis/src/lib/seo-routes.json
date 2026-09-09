@@ -2,7 +2,7 @@
   "$comment": "titleSuffix يُضاف برمجيًا من site.config.json — لا تكتب «| سُنّة» داخل title. siteUrl/siteName/defaultImage مرآة لـ site.config.json (يحرسها scripts/test-seo.mjs).",
   "siteUrl": "https://www.ssunnah.com",
   "siteName": "سُنّة",
-  "defaultImage": "/brand/og-home.png?v=20260829",
+  "defaultImage": "/og-image.png?v=20260910b",
   "logoImage": "/brand/official.png?v=20260829",
   "ogImageWidth": 1200,
   "ogImageHeight": 630,
@@ -21,9 +21,9 @@
   "routes": [
     {
       "path": "/",
-      "title": "سُنّة — دروس شرعية ودورات علمية",
+      "title": "سُنّة | قرآن ودروس شرعية",
       "suffix": false,
-      "description": "منصة علمية عربية تجمع الدروس الشرعية والقرآن والفقه والحديث والأذكار في واجهة واحدة لطالب العلم.",
+      "description": "مشروع تعليمي إسلامي رقمي يهدف إلى تسهيل الوصول إلى العلوم الشرعية، والمحاضرات الدعوية والعلمية وتسهيل طلب العلم الشرعي عبر تجربة رقمية بسيطة وموثوقة.",
       "keywords": [
         "سُنّة",
         "دروس علمية",
@@ -329,7 +329,11 @@
       "path": "/miracles/quran",
       "title": "الإعجاز العلمي في القرآن الكريم",
       "description": "موضوعات تأمل علمي منضبطة في آيات القرآن — بلا جزم قطعي بالنظريات المعاصرة.",
-      "keywords": ["إعجاز القرآن", "إعجاز علمي", "آيات كونية"],
+      "keywords": [
+        "إعجاز القرآن",
+        "إعجاز علمي",
+        "آيات كونية"
+      ],
       "sitemap": true,
       "changefreq": "weekly",
       "priority": 0.7
@@ -338,7 +342,11 @@
       "path": "/miracles/sunnah",
       "title": "الإعجاز العلمي في السنة النبوية",
       "description": "موضوعات تأمل علمي منضبطة في السنة الثابتة — بلا عرض لما لم يثبت.",
-      "keywords": ["إعجاز السنة", "إعجاز علمي", "أحاديث ثابتة"],
+      "keywords": [
+        "إعجاز السنة",
+        "إعجاز علمي",
+        "أحاديث ثابتة"
+      ],
       "sitemap": true,
       "changefreq": "weekly",
       "priority": 0.7
