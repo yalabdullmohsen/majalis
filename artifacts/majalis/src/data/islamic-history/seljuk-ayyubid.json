@@ -1,5 +1,137 @@
 [
   {
+    "id": "seljuk-alp-arslan",
+    "title": "ألب أرسلان ومسار السلاجقة",
+    "kind": "era",
+    "category": "seljuk-ayyubid",
+    "era": "455–465هـ",
+    "place": "خراسان · الأناضول",
+    "featured": true,
+    "verification": "confirmed",
+    "summary": "سلطان سجّل انتصار ملاذكرد ومهّد لدخول التركمان الأناضول؛ عُرف بالقوة مع نظام الملك.",
+    "detail": "ألب أرسلان من عظماء سلاطين السلاجقة. نظّم الجيوش ووسّع النفوذ شرقًا وغربًا، وانتصر في ملاذكرد 463هـ على البيزنطيين ففُتحت أبواب الأناضول. كان بجانبه نظام الملك في الإدارة والتعليم. قصته تكمل مسار دخول السلاجقة بغداد ومدرسة النظامية. يُستفاد من الجمع بين القوة العسكرية والإصلاح الإداري. يُضبط ذكر الحدث بتمحيص كتب التاريخ الموثوقة، مع حفظ مقام الصحابة حيث وُجدوا، وطلب العبرة دون تشفٍّ أو غلوّ، وترك ما شجر بين الصحابة بلا طعن. والسنن الإلهية في قيام الدول وسقوطها قائمة: العدل والوحدة والإعداد أسباب قوة، والظلم والفرقة أسباب ضعف.",
+    "causes": "تمدد السلاجقة وحاجة لصدّ البيزنطيين وتثبيت السلطنة.",
+    "outcomes": "فتح الأناضول تدريجيًا، وتعزيز مكانة السلاجقة.",
+    "lessons": "النصر العسكري يثبت إذا تبعه تنظيم وإصلاح.",
+    "relatedPersons": [
+      "ألب أرسلان",
+      "نظام الملك",
+      "ملكشاه"
+    ],
+    "sources": [
+      "البداية والنهاية",
+      "الكامل في التاريخ",
+      "تاريخ ابن الأثير"
+    ],
+    "relatedLinks": [
+      {
+        "href": "/tarikh-islami/seljuk-manzikert",
+        "label": "ملاذكرد"
+      },
+      {
+        "href": "/tarikh-islami/seljuk-malikshah",
+        "label": "ملكشاه"
+      },
+      {
+        "href": "/tarikh-islami/seljuk-nizamiyya",
+        "label": "النظامية"
+      },
+      {
+        "href": "/tarikh-islami/seljuk-rise",
+        "label": "صعود السلاجقة"
+      }
+    ],
+    "timelineOrder": 503.5
+  },
+  {
+    "id": "seljuk-malikshah",
+    "title": "ملكشاه ونظام الملك",
+    "kind": "era",
+    "category": "seljuk-ayyubid",
+    "era": "465–485هـ",
+    "place": "أصفهان · بغداد",
+    "featured": true,
+    "verification": "confirmed",
+    "summary": "بلغ السلاجقة ذروة الإدارة في عهد ملكشاه بوزارة نظام الملك والمدارس النظامية.",
+    "detail": "في عهد ملكشاه اتسعت السلطنة السلجوقية واستقرّت إدارتها على يد الوزير نظام الملك، باني المدارس النظامية. امتزج دعم الخلافة العباسية شكليًا بقوة السلطان الفعلية. اغتيال نظام الملك ثم موت ملكشاه فتحا باب تنازع الأمراء. العهد نموذج لربط القوة بالعلم المؤسسي. ويُضبط العرض على منهج أهل السنة: تمحيص النقل، والكفّ عما شجر بين الصحابة، وترك الغلوّ.",
+    "causes": "تراكم قوة السلاجقة بعد ملاذكرد ودخول بغداد، وحاجة لتنظيم الملك.",
+    "outcomes": "ذروة سلجوقية، ومدارس، ثم فراغ سياسي بعده.",
+    "lessons": "الوزارة الصالحة تبني الدول؛ وقتل الكفاءات يسرّع الانهيار.",
+    "relatedPersons": [
+      "ملكشاه",
+      "نظام الملك",
+      "ألب أرسلان"
+    ],
+    "sources": [
+      "الكامل في التاريخ",
+      "سياست نامه",
+      "البداية والنهاية"
+    ],
+    "relatedLinks": [
+      {
+        "href": "/tarikh-islami/seljuk-nizamiyya",
+        "label": "النظامية"
+      },
+      {
+        "href": "/tarikh-islami/seljuk-manzikert",
+        "label": "ملاذكرد"
+      },
+      {
+        "href": "/tarikh-islami/seljuk-rise",
+        "label": "صعود السلاجقة"
+      },
+      {
+        "href": "/tarikh-islami/abbasid-seljuk-entry",
+        "label": "دخول بغداد"
+      }
+    ],
+    "timelineOrder": 501
+  },
+  {
+    "id": "ayyubid-saladin-egypt",
+    "title": "صلاح الدين وإسقاط العبيديين بمصر",
+    "kind": "event",
+    "category": "seljuk-ayyubid",
+    "era": "567هـ",
+    "place": "القاهرة",
+    "featured": true,
+    "verification": "confirmed",
+    "summary": "أنهى صلاح الدين الدولة العبيدية في مصر وأظهر شعار العباسيين، فمهّد للدولة الأيوبية وتحرير القدس.",
+    "detail": "دخل صلاح الدين مصر في سياق صراع الفاطميين والزنكيين والصليبيين، ثم أسقط الدعوة العبيدية وأعاد الخطبة للعباسيين. وحّد مصر والشام لاحقًا ومهّد لحطين. يُذكر بإحيائه مذهب أهل السنة في مصر وتقوية الجبهة ضد الصليبيين. التفاصيل في كتب التاريخ الأيوبي. ويُضبط العرض على منهج أهل السنة: تمحيص النقل، والكفّ عما شجر بين الصحابة، وترك الغلوّ.",
+    "causes": "ضعف الفاطميين، وخطر الصليبيين، وسياسة نور الدين في توحيد الجبهة.",
+    "outcomes": "قيام الأيوبيين، ونصرة السنّة في مصر، وتهيئة لتحرير القدس.",
+    "lessons": "توحيد مصر والشام قوة للأمة؛ وإظهار السنّة يحمي الثغور علميًا وعسكريًا.",
+    "relatedPersons": [
+      "صلاح الدين الأيوبي",
+      "نور الدين محمود",
+      "أسد الدين شيركوه"
+    ],
+    "sources": [
+      "الكامل في التاريخ",
+      "الروضتين",
+      "البداية والنهاية"
+    ],
+    "relatedLinks": [
+      {
+        "href": "/tarikh-islami/ayyubid-founding",
+        "label": "تأسيس الأيوبيين"
+      },
+      {
+        "href": "/tarikh-islami/battle-hattin",
+        "label": "حطين"
+      },
+      {
+        "href": "/tarikh-islami/jerusalem-liberation",
+        "label": "تحرير القدس"
+      },
+      {
+        "href": "/tarikh-islami/nur-ad-din",
+        "label": "نور الدين"
+      }
+    ],
+    "timelineOrder": 502
+  },
+  {
     "id": "seljuk-rise",
     "title": "قيام الدولة السلجوقية",
     "kind": "event",
@@ -41,7 +173,7 @@
       }
     ],
     "startHere": true,
-    "timelineOrder": 501
+    "timelineOrder": 503
   },
   {
     "id": "seljuk-nizamiyya",
@@ -85,7 +217,7 @@
         "label": "بيت الحكمة"
       }
     ],
-    "timelineOrder": 502
+    "timelineOrder": 504
   },
   {
     "kind": "event",
@@ -132,7 +264,7 @@
     "id": "seljuk-manzikert",
     "title": "معركة ملاذكرد",
     "category": "seljuk-ayyubid",
-    "timelineOrder": 503
+    "timelineOrder": 505
   },
   {
     "id": "nur-ad-din",
@@ -178,7 +310,7 @@
     ],
     "featured": true,
     "startHere": true,
-    "timelineOrder": 504
+    "timelineOrder": 506
   },
   {
     "id": "ayyubid-founding",
@@ -222,7 +354,7 @@
         "label": "إرث الدولة الأيوبية"
       }
     ],
-    "timelineOrder": 505
+    "timelineOrder": 507
   },
   {
     "id": "battle-hattin",
@@ -269,7 +401,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 506
+    "timelineOrder": 508
   },
   {
     "id": "jerusalem-liberation",
@@ -315,7 +447,7 @@
     ],
     "featured": true,
     "startHere": true,
-    "timelineOrder": 507
+    "timelineOrder": 509
   },
   {
     "id": "crusader-states",
@@ -359,7 +491,7 @@
         "label": "فتح القدس"
       }
     ],
-    "timelineOrder": 508
+    "timelineOrder": 510
   },
   {
     "id": "ayyubid-legacy",
@@ -403,6 +535,6 @@
         "label": "الطب الإسلامي"
       }
     ],
-    "timelineOrder": 509
+    "timelineOrder": 511
   }
 ]
