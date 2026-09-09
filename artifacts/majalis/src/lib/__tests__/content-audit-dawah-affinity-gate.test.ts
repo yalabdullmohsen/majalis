@@ -26,20 +26,26 @@ console.log("\n=== مسار المسلم الجديد ===");
   }
   const svc = read("src/lib/dawah-service.ts");
   assert.match(svc, /STATIC_NEW_MUSLIM_PATH\.length/, "مسار ناقص من القاعدة → ثابت كامل");
-  assert.match(svc, /getShubuhatByCategory[\s\S]*STATIC_DAWAH_SHUBUHAT/, "شبهات: احتياطي ثابت");
-  assert.match(svc, /getQuestionsByCategory[\s\S]*STATIC_DAWAH_QUESTIONS/, "أسئلة: احتياطي ثابت");
+  assert.match(svc, /getShubuhatByCategory[\s\S]*staticShubuhatByCategorySlug/, "شبهات: احتياطي ثابت بالفئة");
+  assert.match(svc, /getQuestionsByCategory[\s\S]*staticQuestionsByCategorySlug/, "أسئلة: احتياطي ثابت بالفئة");
 }
 
 console.log("\n=== أسئلة وشبهات ثابتة ===");
 {
-  assert.ok(STATIC_DAWAH_QUESTIONS.length >= 6, "≥ ٦ أسئلة ثابتة");
+  assert.ok(STATIC_DAWAH_QUESTIONS.length >= 12, "≥ ١٢ أسئلة ثابتة");
   assert.ok(STATIC_DAWAH_SHUBUHAT.length >= 8, "≥ ٨ شبهات ثابتة");
   for (const q of STATIC_DAWAH_QUESTIONS) {
     assert.ok(q.slug && q.title && q.short_answer, `سؤال مكتمل: ${q.slug}`);
+    assert.ok((q.detailed_answer || "").trim().length >= 120, `تفصيل كافٍ: ${q.slug}`);
+    assert.ok(q.category_id, `فئة للسؤال: ${q.slug}`);
   }
   for (const s of STATIC_DAWAH_SHUBUHAT) {
     assert.ok(s.slug && s.title && s.short_answer, `شبهة مكتملة: ${s.slug}`);
+    assert.ok(s.category_id, `فئة للشبهة: ${s.slug}`);
   }
+  const svc = read("src/lib/dawah-service.ts");
+  assert.match(svc, /STATIC_DAWAH_CATEGORIES/, "التصنيفات الثابتة موصولة بالخدمة");
+  assert.match(svc, /staticQuestionsByCategorySlug/, "أسئلة الفئة من الثابت عند الفراغ");
 }
 
 console.log("\n=== ملاءمة آيات لوحات الأقسام ===");

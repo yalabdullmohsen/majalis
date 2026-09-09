@@ -2,14 +2,91 @@
  * محتوى ثابت احتياطي لبوابة «اكتشف الإسلام» عند فراغ Supabase.
  * لا يُعرض كحقيقة قطعية خارج ما ثبت في الكتاب والسنة المعتمدة.
  */
-import type { DawahArticle, DawahQuestion, DawahShubha, NewMuslimDay } from "@/lib/dawah-service";
+import type { DawahArticle, DawahCategory, DawahQuestion, DawahShubha, NewMuslimDay } from "@/lib/dawah-service";
 
-const STATIC_TS = "2026-08-22T00:00:00.000Z";
+const STATIC_TS = "2026-09-09T00:00:00.000Z";
+
+export const STATIC_DAWAH_CATEGORIES: DawahCategory[] = [
+  {
+    id: "cat-god-existence",
+    slug: "god-existence",
+    name_ar: "وجود الله",
+    name_en: "God's existence",
+    description_ar: "أدلة الفطرة والعقل والوحي على وجود الخالق ووحدانيته.",
+    icon: "Sparkles",
+    sort_order: 1,
+  },
+  {
+    id: "cat-purpose-of-life",
+    slug: "purpose-of-life",
+    name_ar: "غاية الحياة",
+    name_en: "Purpose of life",
+    description_ar: "لماذا خُلقنا، وما معنى العبادة والابتلاء والآخرة.",
+    icon: "Compass",
+    sort_order: 2,
+  },
+  {
+    id: "cat-prophethood",
+    slug: "prophethood",
+    name_ar: "النبوة والرسل",
+    name_en: "Prophethood",
+    description_ar: "محمد ﷺ والأنبياء قبله، وختم النبوة، ودلائل الرسالة.",
+    icon: "Star",
+    sort_order: 3,
+  },
+  {
+    id: "cat-quran",
+    slug: "quran",
+    name_ar: "القرآن الكريم",
+    name_en: "The Quran",
+    description_ar: "ما القرآن، وكيف حُفظ، ولماذا هو معجز ومرجع التشريع.",
+    icon: "BookOpen",
+    sort_order: 4,
+  },
+  {
+    id: "cat-worship",
+    slug: "worship",
+    name_ar: "العبادة",
+    name_en: "Worship",
+    description_ar: "الصلاة والزكاة والصوم والحج وأسرار التعبد لله.",
+    icon: "Moon",
+    sort_order: 5,
+  },
+  {
+    id: "cat-afterlife",
+    slug: "afterlife",
+    name_ar: "الآخرة",
+    name_en: "Afterlife",
+    description_ar: "الموت والبعث والحساب والجنة والنار.",
+    icon: "Heart",
+    sort_order: 6,
+  },
+  {
+    id: "cat-ethics",
+    slug: "ethics",
+    name_ar: "الأخلاق والمجتمع",
+    name_en: "Ethics & society",
+    description_ar: "حقوق الناس، المرأة، الأسرة، والعدل في المعاملات.",
+    icon: "Users",
+    sort_order: 7,
+  },
+  {
+    id: "cat-comparative",
+    slug: "comparative",
+    name_ar: "حوار الأديان",
+    name_en: "Comparative",
+    description_ar: "عيسى وموسى عليهما السلام، وأهل الكتاب، والأسئلة المقارنة.",
+    icon: "Globe",
+    sort_order: 8,
+  },
+];
+
+const CAT = Object.fromEntries(STATIC_DAWAH_CATEGORIES.map((c) => [c.slug, c.id])) as Record<string, string>;
 
 export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
   "what-is-islam": {
     id: "static-article-what-is-islam",
-    category_id: null,
+    category_id: CAT["purpose-of-life"],
     slug: "what-is-islam",
     title_ar: "ما الإسلام؟",
     title_en: "What is Islam?",
@@ -19,16 +96,18 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
 
 أركان الإسلام خمسة: الشهادتان، وإقام الصلاة، وإيتاء الزكاة، وصوم رمضان، وحج البيت لمن استطاع إليه سبيلًا. وأركان الإيمان ستة: الإيمان بالله وملائكته وكتبه ورسله واليوم الآخر والقدر خيره وشره.
 
-الإسلام ليس مجرد هوية ثقافية ولا عادات اجتماعية؛ هو عقد بين العبد وربه: يعبّد العبد ربه وحده، ويتبع رسوله محمدًا ﷺ فيما جاء به من الهدى.
+الإسلام ليس مجرد هوية ثقافية ولا عادات اجتماعية؛ هو عقد بين العبد وربه: يعبّد العبد ربه وحده، ويتبع رسوله محمدًا ﷺ فيما جاء به من الهدى. ميزانه الكتاب والسنة، ومنهجه التيسير مع الضبط: لا إفراط يُحرّم الحلال، ولا تفريط يُميع الواجبات.
 
-لا يُشترط للدخول في الإسلام حضور وسيط أو موافقة جهة؛ يكفي الإيمان بالقلب ونطق الشهادتين. والتعلم بعد ذلك تدريجي، والله يُحب التأني في العمل.`,
+لا يُشترط للدخول في الإسلام حضور وسيط أو موافقة جهة؛ يكفي الإيمان بالقلب ونطق الشهادتين. والتعلم بعد ذلك تدريجي: صلاة، ثم أخلاق، ثم فقه أوسع، والله يُحب التأني في العمل والإخلاص فيه.
+
+إن كنت تتعرّف لأول مرة فابدأ بهذا المقال، ثم اقرأ «من محمد ﷺ؟» و«أركان الإيمان»، واسأل عبر صفحة الأسئلة أو التواصل السرّي إن احتجت بيانًا خاصًا بظروفك.`,
     cover_image_url: null,
     tags: ["تعريف", "أساسيات"],
     updated_at: STATIC_TS,
   },
   "who-is-muhammad": {
     id: "static-article-who-is-muhammad",
-    category_id: null,
+    category_id: CAT["prophethood"],
     slug: "who-is-muhammad",
     title_ar: "من هو محمد ﷺ؟",
     title_en: "Who is Muhammad?",
@@ -36,18 +115,18 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
     summary_en: null,
     body_ar: `محمد ﷺ ابن عبد الله بن عبد المطلب، من قبيلة قريش في مكة. وُلد عام الفيل، ونشأ يُعرف بالصدق والأمانة قبل البعثة، فكان يُلقّب بالصادق الأمين.
 
-نزل عليه الوحي وهو ابن أربعين سنة في غار حراء، فحمل رسالة التوحيد: أن لا يُعبد إلا الله وحده لا شريك له. دعا قومه إلى الإسلام فآمن معه قلة ثم كثر المسلمون، وهاجر إلى المدينة حيث أسّس أول مجتمع إسلامي على العدل والشورى.
+نزل عليه الوحي وهو ابن أربعين سنة في غار حراء، فحمل رسالة التوحيد: أن لا يُعبد إلا الله وحده لا شريك له. دعا قومه إلى الإسلام فآمن معه قلة ثم كثر المسلمون، وهاجر إلى المدينة حيث أسّس أول مجتمع إسلامي على العدل والشورى والتكافل.
 
-ختم الله به النبوة؛ فلا نبي بعده. القرآن الكريم وحيٌ أُنزل عليه، وسنته التطبيق العملي لهذا الوحي في العبادة والمعاملة والأخلاق.
+ختم الله به النبوة؛ فلا نبي بعده. القرآن الكريم وحيٌ أُنزل عليه، وسنته التطبيق العملي لهذا الوحي في العبادة والمعاملة والأخلاق. من سيرته يتعلّم المسلم الرحمة في موضعها، والشدة على العدوان بضوابطها، وبرّ البيت وحسن العهد.
 
-المسلمون يحبّون النبي ﷺ ويتبعون هديه، ولا يُعبدونه ولا يُرفعونه فوق مقامه؛ فالعبادة لله وحده.`,
+المسلمون يحبّون النبي ﷺ ويتبعون هديه، ولا يُعبدونه ولا يُرفعونه فوق مقامه؛ فالعبادة لله وحده، والنبي عبد رسول بلّغ الرسالة وأدّى الأمانة.`,
     cover_image_url: null,
     tags: ["نبوة", "سيرة"],
     updated_at: STATIC_TS,
   },
   "pillars-of-faith": {
     id: "static-article-pillars-of-faith",
-    category_id: null,
+    category_id: CAT["purpose-of-life"],
     slug: "pillars-of-faith",
     title_ar: "أركان الإيمان والإسلام",
     title_en: "Pillars of Faith and Islam",
@@ -57,14 +136,48 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
 
 وأركان الإيمان ستة: الإيمان بالله وملائكته وكتبه ورسله واليوم الآخر والقدر خيره وشره.
 
-الفرق بينهما: الإسلام أعمال ظاهرة يُعرف بها المسلم، والإيمان اعتقاد بالقلب يُظهره العمل. المسلم الجديد يبدأ بالشهادتين ثم يتعلم الصلاة تدريجيًا، ولا يُثقّل عليه بإتقان كل الفقه دفعة واحدة.`,
+الفرق بينهما: الإسلام أعمال ظاهرة يُعرف بها المسلم، والإيمان اعتقاد بالقلب يُظهره العمل. المسلم الجديد يبدأ بالشهادتين ثم يتعلم الصلاة تدريجيًا، ولا يُثقّل عليه بإتقان كل الفقه دفعة واحدة. من ضبط هذه الأركان فقد وضع أساسًا يبني عليه الأخلاق والمعاملات بقية عمره.`,
     cover_image_url: null,
     tags: ["عقيدة", "أساسيات"],
     updated_at: STATIC_TS,
   },
+  "the-quran-intro": {
+    id: "static-article-the-quran-intro",
+    category_id: CAT["quran"],
+    slug: "the-quran-intro",
+    title_ar: "مدخل إلى القرآن الكريم",
+    title_en: "Introduction to the Quran",
+    summary_ar: "القرآن كلام الله المحفوظ، يُتلى ويُعمل به؛ هذا مدخل لغير المسلم وحديث العهد.",
+    summary_en: null,
+    body_ar: `القرآن كتاب الله المنزل على محمد ﷺ، آخر الكتب السماوية، محفوظ اللفظ والمعنى. يقرأه المسلم تعبّدًا، ويتدبر معانيه، ويحكمه في حياته بقدر علمه.
+
+للمبتدئ: ابدأ بقصار المفصّل (من الضحى إلى الناس)، وتعلّم الفاتحة لأنها ركن الصلاة، واستعن بترجمة موثوقة للمعاني إن لم تكن عربيًا، دون أن تستبدل الترجمة بالنص في التلاوة التعبدية.
+
+لا تجعل كثرة الشبهات حول القرآن تمنعك من قراءته مباشرة؛ اقرأ، ثم اسأل. قسم الأسئلة والشبهات في المنصة يجيب عن أشهر الإشكالات بمنهج هادئ.`,
+    cover_image_url: null,
+    tags: ["قرآن", "تعريف"],
+    updated_at: STATIC_TS,
+  },
+  "women-dignity": {
+    id: "static-article-women-dignity",
+    category_id: CAT["ethics"],
+    slug: "women-dignity",
+    title_ar: "كرامة المرأة في الإسلام",
+    title_en: "Women's dignity in Islam",
+    summary_ar: "بيان موجز لحقوق المرأة الشرعية بعيدًا عن العادات المخلوطة باسم الدين.",
+    summary_en: null,
+    body_ar: `أثبت الإسلام للمرأة أهلية كاملة في الملك والتعاقد والعبادة، وجعل برّ الأم من أعظم القربات، وفرض لها نصيبًا في الميراث بعد أن كانت تُحرم في جاهليات شتى.
+
+يُميَّز بين النص الشرعي وبين عادات قد تُظلم المرأة باسم الدين؛ النص يُحترم، والممارسة الخاطئة تُصلح. الحجاب والعفاف تكليف ستر وكرامة لا امتهان، والقوامة مسؤولية نفقة ورعاية لا استبداد.
+
+إن كان لديك سؤال محدد عن الميراث أو الشهادة أو العمل فارجع لصفحة الأسئلة أو الشبهات، أو تواصل مع داعية سرّيًا لسياق بلدك.`,
+    cover_image_url: null,
+    tags: ["أخلاق", "مرأة"],
+    updated_at: STATIC_TS,
+  },
   "prayer-in-islam": {
     id: "static-article-prayer-in-islam",
-    category_id: null,
+    category_id: CAT["worship"],
     slug: "prayer-in-islam",
     title_ar: "الصلاة في الإسلام",
     title_en: "Prayer in Islam",
@@ -83,7 +196,7 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
   },
   "zakat-in-islam": {
     id: "static-article-zakat-in-islam",
-    category_id: null,
+    category_id: CAT["worship"],
     slug: "zakat-in-islam",
     title_ar: "الزكاة في الإسلام",
     title_en: "Zakat in Islam",
@@ -102,7 +215,7 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
   },
   "sawm-in-islam": {
     id: "static-article-sawm-in-islam",
-    category_id: null,
+    category_id: CAT["worship"],
     slug: "sawm-in-islam",
     title_ar: "الصوم في الإسلام",
     title_en: "Fasting in Islam",
@@ -121,7 +234,7 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
   },
   "hajj-in-islam": {
     id: "static-article-hajj-in-islam",
-    category_id: null,
+    category_id: CAT["worship"],
     slug: "hajj-in-islam",
     title_ar: "الحج في الإسلام",
     title_en: "Hajj in Islam",
@@ -140,7 +253,7 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
   },
   "friday-prayer": {
     id: "static-article-friday-prayer",
-    category_id: null,
+    category_id: CAT["worship"],
     slug: "friday-prayer",
     title_ar: "صلاة الجمعة",
     title_en: "Friday Prayer",
@@ -159,7 +272,7 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
   },
   "halal-food": {
     id: "static-article-halal-food",
-    category_id: null,
+    category_id: CAT["ethics"],
     slug: "halal-food",
     title_ar: "الطعام الحلال في الإسلام",
     title_en: "Halal Food in Islam",
@@ -178,7 +291,7 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
   },
   "wudu-in-islam": {
     id: "static-article-wudu-in-islam",
-    category_id: null,
+    category_id: CAT["worship"],
     slug: "wudu-in-islam",
     title_ar: "الوضوء في الإسلام",
     title_en: "Wudu (Ablution) in Islam",
@@ -195,7 +308,7 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
   },
   "adhan-in-islam": {
     id: "static-article-adhan-in-islam",
-    category_id: null,
+    category_id: CAT["worship"],
     slug: "adhan-in-islam",
     title_ar: "الأذان في الإسلام",
     title_en: "The Adhan in Islam",
@@ -215,33 +328,83 @@ export const STATIC_DAWAH_ARTICLES: Record<string, DawahArticle> = {
 export const STATIC_DAWAH_QUESTIONS: DawahQuestion[] = [
   {
     id: "static-q-god",
-    category_id: null,
+    category_id: CAT["god-existence"],
     slug: "why-believe-in-god",
     title: "لماذا يُؤمن المسلم بوجود الله؟",
-    short_answer: "لأن هذا الكون المُحكم يدلّ على خالق قادر عالم، ولأن الفطرة السليمة تميل إلى معرفة خالقها.",
-    detailed_answer: "الإيمان بالله ليس تعصّبًا أعمى؛ بل هو استجابة لدلائل العقل والفطرة: نظام الكون، وتنوع المخلوقات، وضبط القوانين الكونية، وإدراك العبد لحاجته إلى معبود يستند إليه. والقرآن يدعو إلى التفكر في الآيات والنظر في ملكوت السماوات والأرض.",
+    short_answer: "لأن هذا الكون المُحكم يدلّ على خالق قادر عالم، ولأن الفطرة السليمة تميل إلى معرفة خالقها، والوحي يُصدّق ذلك ويُفصّله.",
+    detailed_answer: `الإيمان بالله ليس تعصّبًا أعمى؛ بل هو استجابة لدلائل العقل والفطرة والوحي معًا.
+
+من دلائل العقل: نظام الكون ودقّة قوانينه، وتنوع المخلوقات، وإدراك الإنسان لحاجته إلى معبود يستند إليه. ومن دلائل الفطرة: ميل القلب إلى طلب الخالق عند الشدة والاطمئنان. ومن دلائل الوحي: القرآن يدعو إلى التفكر في الآيات والنظر في ملكوت السماوات والأرض، ويُبيّن أسماء الله وصفاته بلا تشبيه ولا تعطيل.
+
+المسلم لا يكتفي بـ«وجود إله» عام؛ بل يؤمن بالله الواحد الذي لا شريك له، المستحق وحده للعبادة. هذا التوحيد هو أصل الدين، وعليه تُبنى النبوة والشريعة والأخلاق.`,
     evidences: [{ type: "quran", ref: "آل عمران: 190-191", text: "إن في خلق السماوات والأرض واختلاف الليل والنهار لآيات لأولي الألباب" }],
-    glossary_terms: [],
-    sources: [],
-    related_question_ids: [],
-    keywords: ["الله", "وجود", "دليل"],
+    glossary_terms: [{ term: "التوحيد", definition: "إفراد الله بما يختص به من الربوبية والألوهية والأسماء والصفات." }],
+    sources: [{ title: "القرآن الكريم — دعوة التفكر في الآيات الكونية" }],
+    related_question_ids: ["static-q-purpose", "static-q-worship"],
+    keywords: ["الله", "وجود", "دليل", "فطرة"],
     target_religion: "atheist_agnostic",
     reviewed_at: STATIC_TS,
     view_count: 0,
     updated_at: STATIC_TS,
   },
   {
+    id: "static-q-tawhid",
+    category_id: CAT["god-existence"],
+    slug: "what-is-tawhid",
+    title: "ما التوحيد؟",
+    short_answer: "إفراد الله بالخلق والتدبير، وبالعبادة، وبما ثبت له من الأسماء والصفات بلا تمثيل ولا تعطيل.",
+    detailed_answer: `التوحيد ثلاثة معانٍ مترابطة يفهمها المتعلم تدريجيًا:
+
+توحيد الربوبية: الإقرار بأن الله وحده الخالق الرازق المدبّر. وتوحيد الألوهية: إفراد الله بالعبادة فلا يُدعى مع الله أحد ولا يُصرف له ركوع أو نذر أو استعانة عبادية. وتوحيد الأسماء والصفات: إثبات ما أثبت الله لنفسه في كتابه وعلى لسان رسوله ﷺ من غير تحريف ولا تشبيه ولا تعطيل.
+
+أكثر ما يُخلّ به الناس بعد الإقرار بالخالق هو صرف العبادة لغيره: دعاء الأموات، أو التبرك المحرّم، أو الطاعة المطلقة لغير الله في التحليل والتحريم. لذلك يبدأ مسار التعريف بالإسلام من التوحيد قبل كثرة الفروع.`,
+    evidences: [{ type: "quran", ref: "الإخلاص: 1-4", text: "قل هو الله أحد × الله الصمد × لم يلد ولم يولد × ولم يكن له كفوًا أحد" }],
+    glossary_terms: [{ term: "الألوهية", definition: "استحقاق الله وحده أن يُعبد." }],
+    sources: [{ title: "سورة الإخلاص — أصل التوحيد المختصر" }],
+    related_question_ids: ["static-q-god", "static-q-worship"],
+    keywords: ["توحيد", "شرك", "عبادة"],
+    target_religion: null,
+    reviewed_at: STATIC_TS,
+    view_count: 0,
+    updated_at: STATIC_TS,
+  },
+  {
     id: "static-q-quran",
-    category_id: null,
+    category_id: CAT["quran"],
     slug: "what-is-quran",
     title: "ما القرآن؟",
-    short_answer: "القرآن كلام الله المنزل على محمد ﷺ باللفظ والمعنى، معجز بلفظه، وهو آخر الكتب المنزلة.",
-    detailed_answer: "القرآن وحيٌ أُنزل على النبي ﷺ عبر جبريل عليه السلام، حُفظ في الصدور والسطور، ونُقل بالتواتر. هو معجز في بيانه، مصدر التشريع الأول، لا يأتيه الباطل من بين يديه ولا من خلفه. المسلم يتلوه تعبّدًا ويعمل به بقدر علمه، ويسأل أهل العلم عند الإشكال.",
+    short_answer: "القرآن كلام الله المنزل على محمد ﷺ باللفظ والمعنى، معجز بلفظه، وهو آخر الكتب المنزلة والمحفوظ إلى قيام الساعة.",
+    detailed_answer: `القرآن وحيٌ أُنزل على النبي ﷺ عبر جبريل عليه السلام، حُفظ في الصدور والسطور، ونُقل بالتواتر جيلاً بعد جيل. هو معجز في بيانه، مصدر التشريع الأول، لا يأتيه الباطل من بين يديه ولا من خلفه.
+
+يتميّز القرآن بأنه كلام الله بلفظه العربي، يُتلى تعبّدًا، ويُعمل به بقدر العلم، ويُسأل أهل العلم عند الإشكال. حفظه الله وعدًا صادقًا، والقراءات المتواترة وجه من وجوه الأداء الصحيح لا تحريف للنص.
+
+للمسلم الجديد: ابدأ بسور قصيرة، واقرأ تفسيرًا موجزًا موثوقًا، ولا تجعل كثرة التفاصيل تمنعك من التلاوة اليومية ولو آيات قليلة.`,
     evidences: [{ type: "quran", ref: "الحجر: 9", text: "إنا نحن نزلنا الذكر وإنا له لحافظون" }],
-    glossary_terms: [],
+    glossary_terms: [{ term: "الوحي", definition: "إعلام الله أنبياءه بما يريد تبليغه للناس." }],
     sources: [{ title: "القرآن الكريم — نص الوحي المحفوظ" }],
-    related_question_ids: [],
-    keywords: ["قرآن", "وحي"],
+    related_question_ids: ["static-q-prophet", "static-q-arabic"],
+    keywords: ["قرآن", "وحي", "حفظ"],
+    target_religion: null,
+    reviewed_at: STATIC_TS,
+    view_count: 0,
+    updated_at: STATIC_TS,
+  },
+  {
+    id: "static-q-arabic",
+    category_id: CAT["quran"],
+    slug: "why-arabic-quran",
+    title: "لماذا نزل القرآن بالعربية؟",
+    short_answer: "لأن النبي ﷺ عربي، والرسالة بدأت في قومه بلسانهم المبين؛ والترجمة تقرب المعنى ولا تقوم مقام النص العربي في التعبد والتلاوة.",
+    detailed_answer: `قال تعالى إنّا أنزلناه قرآنًا عربيًا لعلكم تعقلون. نزول القرآن بلسان قوم النبي ﷺ من سنن الرسالات: يُبلَّغ الناس بلسان يفهمونه. والعربية وعاء للوحي؛ إعجازه مرتبط بنظمه العربي.
+
+هذا لا يعني أن غير العربي محروم من الهداية: الترجمة الصحيحة تقرب المعاني، والتعلّم التدريجي للعربية مطلوب للتعبد بالقرآن في الصلاة قدر الاستطاعة. الفاتحة تُتعلَّم أولًا لأنها ركن في الصلاة، ثم يتسع الأفق.
+
+الإسلام عالمي الرسالة، والقرآن عربي اللفظ؛ والجمع بينهما: تعلّم النص، وفهم المعنى، والعمل بالمقتضى.`,
+    evidences: [{ type: "quran", ref: "يوسف: 2", text: "إنا أنزلناه قرآنًا عربيًا لعلكم تعقلون" }],
+    glossary_terms: [],
+    sources: [{ title: "علوم القرآن — لسان الوحي" }],
+    related_question_ids: ["static-q-quran"],
+    keywords: ["عربية", "ترجمة", "قرآن"],
     target_religion: null,
     reviewed_at: STATIC_TS,
     view_count: 0,
@@ -249,16 +412,20 @@ export const STATIC_DAWAH_QUESTIONS: DawahQuestion[] = [
   },
   {
     id: "static-q-purpose",
-    category_id: null,
+    category_id: CAT["purpose-of-life"],
     slug: "purpose-of-life",
     title: "لماذا خُلق الإنسان؟",
-    short_answer: "ليعبد الله وحده ويستخلف في الأرض على ضوء هدايته.",
-    detailed_answer: "قال تعالى: ﴿وما خلقت الجن والإنس إلا ليعبدون﴾. العبادة هنا شاملة: توحيد القلب، وطاعة الأمر، واجتناب النهي، والعمل الصالح. والحياة الدنيا مزرعة للآخرة.",
+    short_answer: "ليعبد الله وحده، ويستخلف في الأرض على ضوء هدايته، ويُختبر بالأوامر والنواهي ثم يُجازى في الآخرة.",
+    detailed_answer: `قال تعالى: ﴿وما خلقت الجن والإنس إلا ليعبدون﴾. العبادة هنا شاملة: توحيد القلب، وطاعة الأمر، واجتناب النهي، والعمل الصالح، وحسن الخلق مع الخلق.
+
+الحياة الدنيا مزرعة للآخرة وليست عبثًا. الابتلاء بالخير والشر جزء من الامتحان، والرزق والعمر أمانة. من فهم الغاية صار للضراء صبرًا وللسراء شكرًا، ولم يُفرّغ وجوده في اللذة وحدها ولا في اليأس.
+
+للسائل الجديد: ابدأ بتصحيح العلاقة مع الله (التوحيد والصلاة)، ثم وسّع دائرة العمل الصالح؛ الغاية تتجلى بالفعل لا بالنظرية وحدها.`,
     evidences: [{ type: "quran", ref: "الذاريات: 56", text: "وما خلقت الجن والإنس إلا ليعبدون" }],
-    glossary_terms: [],
-    sources: [],
-    related_question_ids: [],
-    keywords: ["هدف", "حياة"],
+    glossary_terms: [{ term: "العبادة", definition: "كل ما يحبه الله ويرضاه من الأقوال والأعمال الظاهرة والباطنة." }],
+    sources: [{ title: "الذاريات ٥٦ — غاية الخلق" }],
+    related_question_ids: ["static-q-worship", "static-q-afterlife"],
+    keywords: ["هدف", "حياة", "عبادة"],
     target_religion: null,
     reviewed_at: STATIC_TS,
     view_count: 0,
@@ -266,16 +433,20 @@ export const STATIC_DAWAH_QUESTIONS: DawahQuestion[] = [
   },
   {
     id: "static-q-prophet",
-    category_id: null,
+    category_id: CAT["prophethood"],
     slug: "why-muhammad",
     title: "لماذا يُؤمن المسلم بمحمد ﷺ؟",
-    short_answer: "لأنه الرسول الخاتم الذي بُعث بالقرآن، وثبتت نبوته بالمعجزات والسيرة والتواتر.",
-    detailed_answer: "آمن المسلمون بمحمد ﷺ لأن القرآن وحيٌ معجز محفوظ، ولأن سيرته قبل البعثة وبعدها شاهدة على صدقه وأمانته، ولأن دعوته أكملت رسالات الأنبياء في التوحيد والعدل والرحمة. خاتم النبيين فلا نبي بعده، واتباعه من لوازم الشهادة.",
+    short_answer: "لأنه الرسول الخاتم الذي بُعث بالقرآن، وثبتت نبوته بالمعجزات والسيرة والتواتر، واتباعه من لوازم الشهادة.",
+    detailed_answer: `آمن المسلمون بمحمد ﷺ لأن القرآن وحيٌ معجز محفوظ، ولأن سيرته قبل البعثة وبعدها شاهدة على صدقه وأمانته، ولأن دعوته أكملت رسالات الأنبياء في التوحيد والعدل والرحمة.
+
+خاتم النبيين فلا نبي بعده. محبته واتباعه ليسا عبادة له؛ العبادة لله وحده، والنبي مبلغ وهادٍ. من أراد معرفة النبي ﷺ يقرأ سيرته من مصادر موثوقة، ويتأمل أخلاقه في السلم والحرب والبيت والمجتمع.
+
+دلائل النبوة متنوعة: إعجاز القرآن، وأخبار الغيب، واستجابة الدعوة، وبقاء الأثر في هداية الأمم.`,
     evidences: [{ type: "quran", ref: "الأحزاب: 40", text: "ما كان محمد أبا أحد من رجالكم ولكن رسول الله وخاتم النبيين" }],
-    glossary_terms: [],
+    glossary_terms: [{ term: "خاتم النبيين", definition: "آخر الرسل؛ لا نبي بعده إلى قيام الساعة." }],
     sources: [{ title: "السيرة النبوية — شواهد الصدق والأمانة" }],
-    related_question_ids: [],
-    keywords: ["نبي", "محمد"],
+    related_question_ids: ["static-q-jesus", "static-q-quran"],
+    keywords: ["نبي", "محمد", "رسالة"],
     target_religion: null,
     reviewed_at: STATIC_TS,
     view_count: 0,
@@ -283,16 +454,41 @@ export const STATIC_DAWAH_QUESTIONS: DawahQuestion[] = [
   },
   {
     id: "static-q-worship",
-    category_id: null,
+    category_id: CAT["worship"],
     slug: "why-worship-god",
     title: "لماذا نعبد الله؟",
     short_answer: "لأنه الخالق الرازق المالك، والعبادة حقه وشكر نعمه وطريق السعادة في الدارين.",
-    detailed_answer: "العبادة استحقاق لله باعتباره الرب الحق، وهي أيضًا مصلحة العبد: تُنظّم حياته، وتُطهّر قلبه، وتُقربه إلى ربه. ولا تناقض بين العقل والعبادة حين تُفهم على ضوء الوحي الصحيح.",
+    detailed_answer: `العبادة استحقاق لله باعتباره الرب الحق، وهي أيضًا مصلحة العبد: تُنظّم حياته، وتُطهّر قلبه، وتُقربه إلى ربه. ولا تناقض بين العقل والعبادة حين تُفهم على ضوء الوحي الصحيح.
+
+الصلاة والزكاة والصوم والحج أركان ظاهرة، ووراءها أعمال القلوب: الخوف والرجاء والمحبة والتوكل. من اقتصر على الحركات بلا حضور قلب نقص نصيبه؛ ومن اقتصر على الشعور بلا امتثال للأمر نقص أيضًا.
+
+ابدأ بما تستطيع: صلاة متقنة، وذكر يسير، وتركٍ لما حُرّم بيقين، ثم زد. الله لا يكلّف نفسًا إلا وسعها.`,
     evidences: [{ type: "quran", ref: "الذاريات: 56", text: "وما خلقت الجن والإنس إلا ليعبدون" }],
     glossary_terms: [],
-    sources: [],
-    related_question_ids: [],
-    keywords: ["عبادة", "توحيد"],
+    sources: [{ title: "أركان الإسلام — مدخل عملي للعبادة" }],
+    related_question_ids: ["static-q-purpose", "static-q-prayer"],
+    keywords: ["عبادة", "توحيد", "شكر"],
+    target_religion: null,
+    reviewed_at: STATIC_TS,
+    view_count: 0,
+    updated_at: STATIC_TS,
+  },
+  {
+    id: "static-q-prayer",
+    category_id: CAT["worship"],
+    slug: "why-five-prayers",
+    title: "لماذا خمس صلوات في اليوم؟",
+    short_answer: "فرضها الله على عباده مواقيت معلومة؛ تحفظ الصلة اليومية به، وتنهى عن الفحشاء، وتروّض النفس على النظام.",
+    detailed_answer: `الصلاة كتاب موقوت: الفجر والظهر والعصر والمغرب والعشاء. هي أول ما يُحاسب عليه العبد يوم القيامة، وهي فرقان عملي بين المسلم وغيره في الشعائر الظاهرة.
+
+حكمتها تشمل تجديد ذكر الله على مدار اليوم، وكسر الغفلة، وتطهير الذنوب الصغيرة بالمداومة، وبناء مجتمع يلتقي في المساجد. المسلم الجديد يتعلمها تدريجيًا: يتقن صلاة ثم يُضيف، ولا يترك الفرض انتظارًا لكمال الأداء.
+
+من شقّ عليه الوقت لظرف قاهر يسأل أهل العلم عن الرخص الشرعية؛ الأصل المحافظة لا التعطيل.`,
+    evidences: [{ type: "quran", ref: "النساء: 103", text: "إن الصلاة كانت على المؤمنين كتابًا موقوتًا" }],
+    glossary_terms: [],
+    sources: [{ title: "دليل الصلاة — تعلم عملي" }],
+    related_question_ids: ["static-q-worship", "static-q-convert"],
+    keywords: ["صلاة", "مواقيت"],
     target_religion: null,
     reviewed_at: STATIC_TS,
     view_count: 0,
@@ -300,16 +496,20 @@ export const STATIC_DAWAH_QUESTIONS: DawahQuestion[] = [
   },
   {
     id: "static-q-convert",
-    category_id: null,
+    category_id: CAT["purpose-of-life"],
     slug: "how-to-enter-islam",
     title: "كيف أدخل الإسلام؟",
-    short_answer: "بنطق الشهادتين مع اعتقاد معناهما: لا إله إلا الله، محمد رسول الله.",
-    detailed_answer: "لا يُشترط وسيط أو موعد أو احتفال. يكفي أن يعتقد القلب وينطق اللسان: أشهد أن لا إله إلا الله وأشهد أن محمدًا رسول الله. قال تعالى: ﴿وَمَن يَبْتَغِ غَيْرَ الْإِسْلَامِ دِينًا فَلَن يُقْبَلَ مِنْهُ﴾. بعدها يتعلّم الصلاة والعبادات تدريجيًا؛ راجع صفحة «كيف أصبح مسلمًا» و«مسار الثلاثين يومًا».",
+    short_answer: "بنطق الشهادتين مع اعتقاد معناهما: لا إله إلا الله، محمد رسول الله — بلا وسيط ولا رسوم.",
+    detailed_answer: `لا يُشترط وسيط أو موعد أو احتفال. يكفي أن يعتقد القلب وينطق اللسان: أشهد أن لا إله إلا الله وأشهد أن محمدًا رسول الله. بعدها يتعلّم الصلاة والعبادات تدريجيًا.
+
+إن خفت على نفسك فلا يُلزمك إعلان عام؛ العلاقة بينك وبين الله مباشرة. يُستحب الاغتسال بعد الإسلام، ثم تعلّم الوضوء والفاتحة، واتباع مسار المسلم الجديد إن أحببت خطوات منظمة.
+
+راجع صفحة «كيف أصبح مسلمًا؟» للتفاصيل العملية، وتواصل سرّيًا مع داعٍ إن احتجت مرافقة.`,
     evidences: [{ type: "quran", ref: "آل عمران: 85", text: "ومن يبتغ غير الإسلام دينًا فلن يقبل منه وهو في الآخرة من الخاسرين" }],
-    glossary_terms: [],
+    glossary_terms: [{ term: "الشهادتان", definition: "الإقرار بأنه لا معبود بحق إلا الله، وأن محمدًا رسول الله." }],
     sources: [{ title: "اكتشف الإسلام — كيف أُسلم؟" }],
-    related_question_ids: [],
-    keywords: ["إسلام", "شهادة"],
+    related_question_ids: ["static-q-tawhid", "static-q-prayer"],
+    keywords: ["إسلام", "شهادة", "دخول"],
     target_religion: null,
     reviewed_at: STATIC_TS,
     view_count: 0,
@@ -317,33 +517,125 @@ export const STATIC_DAWAH_QUESTIONS: DawahQuestion[] = [
   },
   {
     id: "static-q-jesus",
-    category_id: null,
+    category_id: CAT["comparative"],
     slug: "jesus-in-islam",
     title: "كيف ينظر الإسلام إلى عيسى عليه السلام؟",
-    short_answer: "عيسى عليه السلام عبد الله ورسوله وكلمته ألقاها إلى مريم؛ يُكرَّم ولا يُعبد.",
-    detailed_answer: "يؤمن المسلمون بعيسى ابن مريم عليه السلام نبيًا رسولًا، وُلد بمعجزة من غير أب، وأُيّد بالبيّنات. ويُفرّق الإسلام بين تكريمه وبين عبادته؛ فالعبادة لله وحده. وهذا أصل مشترك للتحاور مع النصارى بلا إساءة.",
+    short_answer: "عيسى عليه السلام عبد الله ورسوله وكلمته ألقاها إلى مريم؛ يُكرَّم ولا يُعبد، ويُؤمَن به كسائر الرسل.",
+    detailed_answer: `يؤمن المسلمون بعيسى ابن مريم عليه السلام نبيًا رسولًا، وُلد بمعجزة من غير أب، وأُيّد بالبيّنات، وبشّر برسول يأتي من بعده. ويُفرّق الإسلام بين تكريمه وبين عبادته؛ فالعبادة لله وحده.
+
+هذا أصل مشترك للتحاور مع النصارى بلا إساءة: احترام المسيح عليه السلام مع رفض تأليهه. القرآن يصحح ما نُسب إليه من بنوّة أو صلب بمعنى الاعتقاد المسيحي الشائع، ويدعو إلى كلمة سواء: ألا نعبد إلا الله.
+
+من أراد التوسع يقرأ آيات آل عمران والنساء ومريم بهدوء مع تفسير موثوق.`,
     evidences: [{ type: "quran", ref: "النساء: 171", text: "إنما المسيح عيسى ابن مريم رسول الله وكلمته ألقاها إلى مريم" }],
     glossary_terms: [],
-    sources: [],
-    related_question_ids: [],
-    keywords: ["عيسى", "نصارى"],
+    sources: [{ title: "القرآن — بيان مقام المسيح عليه السلام" }],
+    related_question_ids: ["static-q-prophet", "static-q-moses"],
+    keywords: ["عيسى", "نصارى", "مسيح"],
     target_religion: "christian",
     reviewed_at: STATIC_TS,
     view_count: 0,
     updated_at: STATIC_TS,
   },
   {
+    id: "static-q-moses",
+    category_id: CAT["comparative"],
+    slug: "moses-in-islam",
+    title: "كيف ينظر الإسلام إلى موسى عليه السلام؟",
+    short_answer: "موسى عليه السلام من أولي العزم، كلّمه الله، وأُرسل إلى بني إسرائيل بالتوحيد؛ والمسلمون يؤمنون به ويحبّونه.",
+    detailed_answer: `قصة موسى عليه السلام من أكثر القصص ورودًا في القرآن: ولادته، ورسالته إلى فرعون، والتوراة، وصبره مع قومه. يؤمن المسلمون به رسولًا صادقًا، ويأخذون من قصته دروس التوحيد والصبر والعدل.
+
+الإيمان بموسى لا يعني اعتماد نصوص محرّفة نُسبت إليه لاحقًا؛ الميزان هو القرآن وما صح من السنة. الحوار مع اليهود يقوم على الاحترام والبيان لا على الإساءة للأنبياء.
+
+من قرأ طه والقصص والأعراف عرف مقام موسى عليه السلام في الوجدان الإسلامي.`,
+    evidences: [{ type: "quran", ref: "النساء: 164", text: "وكلم الله موسى تكليمًا" }],
+    glossary_terms: [],
+    sources: [{ title: "قصص الأنبياء — موسى عليه السلام" }],
+    related_question_ids: ["static-q-jesus", "static-q-prophet"],
+    keywords: ["موسى", "يهود", "توراه"],
+    target_religion: "jewish",
+    reviewed_at: STATIC_TS,
+    view_count: 0,
+    updated_at: STATIC_TS,
+  },
+  {
     id: "static-q-afterlife",
-    category_id: null,
+    category_id: CAT["afterlife"],
     slug: "afterlife-in-islam",
     title: "ماذا بعد الموت في الإسلام؟",
-    short_answer: "بعث وحساب وجنة أو نار؛ والدنيا مزرعة للآخرة.",
-    detailed_answer: "يؤمن المسلم بالبعث بعد الموت، وبالحساب على الأعمال، وبالجنة والنار. هذا الإيمان يضبط السلوك: الصبر على البلاء، والعدل مع الناس، والأمل برحمة الله مع الخوف من معصيته.",
+    short_answer: "بعث وحساب وجنة أو نار؛ والدنيا مزرعة للآخرة، والعمل في الدنيا هو الزاد.",
+    detailed_answer: `يؤمن المسلم بالبعث بعد الموت، وبالحساب على الأعمال، وبالجنة والنار. هذا الإيمان يضبط السلوك: الصبر على البلاء، والعدل مع الناس، والأمل برحمة الله مع الخوف من معصيته.
+
+الموت انتقال لا فناء مطلق. البرزخ ثم القيام ثم العرض ثم الجزاء. لا يغني نسب ولا مال بغير عمل صالح وإيمان. ومن رحمة الله قبول التوبة ما لم يغرغر، وتكفير السيئات بالحسنات.
+
+للمبتدئ: لا تخض في تفاصيل الغيبيات قبل تثبيت التوحيد والصلاة؛ اقرأ المختصر الموثوق، ودع الجدل الثقيل لأهل التخصص.`,
     evidences: [{ type: "quran", ref: "الزلزلة: 7-8", text: "فمن يعمل مثقال ذرة خيرًا يره × ومن يعمل مثقال ذرة شرًا يره" }],
+    glossary_terms: [{ term: "البرزخ", definition: "المرحلة بين الموت والبعث." }],
+    sources: [{ title: "العقيدة — الإيمان باليوم الآخر" }],
+    related_question_ids: ["static-q-purpose", "static-q-qadar"],
+    keywords: ["آخرة", "بعث", "حساب"],
+    target_religion: null,
+    reviewed_at: STATIC_TS,
+    view_count: 0,
+    updated_at: STATIC_TS,
+  },
+  {
+    id: "static-q-qadar",
+    category_id: CAT["purpose-of-life"],
+    slug: "free-will-and-qadar",
+    title: "هل الإنسان مسيّر أم مخيّر؟",
+    short_answer: "لله الخلق والمشيئة، وللعبد اختيار وكسب يُحاسب عليه؛ والإيمان بالقدر لا يُلغي المسؤولية.",
+    detailed_answer: `الإيمان بالقدر خيره وشره ركن من أركان الإيمان: علم الله الشامل، وكتابته، ومشيئته، وخلقه. ومع ذلك أمر الله ونهى، ووعد وأوعد؛ فلو كان العبد بلا اختيار لما صح التكليف.
+
+المسلم يعمل بالأسباب ويتوكل، ولا يحتج بالقدر على المعصية بعد وقوعها ليبرّر التفريط. القدر يُفهم عند المصيبة للتسليم، وعند الطاعة للشكر، لا كذريعة للكسل.
+
+هذا باب دقيق؛ إن أشكل عليك فاقرأ متنًا عقديًا مختصرًا موثوقًا أو اسأل عالمًا، ولا تبنِ عقيدتك على مقاطع جدلية.`,
+    evidences: [{ type: "quran", ref: "التكوير: 29", text: "وما تشاءون إلا أن يشاء الله رب العالمين" }],
+    glossary_terms: [{ term: "القدر", definition: "علم الله بما يكون وكتابته ومشيئته وخلقه له." }],
+    sources: [{ title: "أركان الإيمان — القدر" }],
+    related_question_ids: ["static-q-afterlife", "static-q-purpose"],
+    keywords: ["قدر", "اختيار", "تكليف"],
+    target_religion: "atheist_agnostic",
+    reviewed_at: STATIC_TS,
+    view_count: 0,
+    updated_at: STATIC_TS,
+  },
+  {
+    id: "static-q-women",
+    category_id: CAT["ethics"],
+    slug: "women-in-islam",
+    title: "ما مكانة المرأة في الإسلام؟",
+    short_answer: "المسلمة إنسان مكلّف مكرّم؛ لها ذمة مالية وحق تعلم وعبادة، والكرامة ثابتة للجنسين مع أحكام تناسب الفطرة والمسؤوليات.",
+    detailed_answer: `القرآن يخاطب الرجال والنساء في أصل التكليف، ويثبت للمرأة ملكها وميراثها وشهادتها في مواضعها، ويأمر بالإحسان إلى الأم ويُعلي برها. ما يُنسب أحيانًا للإسلام من امتهان قد يكون عادة ثقافية أو سوء تطبيق.
+
+الأحكام المختلفة بين الجنسين — كبعض تفاصيل الميراث أو اللباس أو القوامة — تُفهم ضمن منظومة النفقة والتكامل الأسري لا كـ«دونية». العدل في الشريعة يوازن الحقوق والواجبات.
+
+إن رأيت ظلمًا واقعًا على امرأة باسم الدين فانقد الممارسة لا النص الثابت؛ وارجع لأهل العلم في النوازل.`,
+    evidences: [{ type: "quran", ref: "النساء: 1", text: "يا أيها الناس اتقوا ربكم الذي خلقكم من نفس واحدة" }],
     glossary_terms: [],
-    sources: [],
-    related_question_ids: [],
-    keywords: ["آخرة", "بعث"],
+    sources: [{ title: "حقوق المرأة في ضوء النصوص" }],
+    related_question_ids: ["static-q-mercy"],
+    keywords: ["مرأة", "حقوق", "أسرة"],
+    target_religion: null,
+    reviewed_at: STATIC_TS,
+    view_count: 0,
+    updated_at: STATIC_TS,
+  },
+  {
+    id: "static-q-mercy",
+    category_id: CAT["ethics"],
+    slug: "mercy-in-islam",
+    title: "هل الإسلام دين رحمة؟",
+    short_answer: "نعم؛ بُعث النبي ﷺ رحمة للعالمين، والشريعة تقوم على جلب المصالح ودرء المفاسد مع عدل وصرامة عند العدوان.",
+    detailed_answer: `وصف الله نبيه بأنه رؤوف رحيم، وجعل الرحمة صفة واسعة في أسمائه. الرحمة في الإسلام ليست تمييعًا للحدود؛ بل رفق بالضعيف، وعدل للمظلوم، وعفو عند المقدرة، ودعوة بالتي هي أحسن.
+
+من رأى قسوة من منتسبين للإسلام فليرجع للنص والسيرة: النهي عن الغدر، وحماية المدنيين، وحق الجار، وإكرام اليتيم. التطرف يُردّ بالنص لا بالتنصل من الدين.
+
+ابدأ بتطبيق الرحمة في بيتك ولسانك؛ فهي أقرب دليل عملي للسائل.`,
+    evidences: [{ type: "quran", ref: "الأنبياء: 107", text: "وما أرسلناك إلا رحمة للعالمين" }],
+    glossary_terms: [],
+    sources: [{ title: "السيرة — نماذج الرحمة النبوية" }],
+    related_question_ids: ["static-q-women", "static-q-worship"],
+    keywords: ["رحمة", "أخلاق", "عدل"],
     target_religion: null,
     reviewed_at: STATIC_TS,
     view_count: 0,
@@ -387,7 +679,7 @@ export const STATIC_NEW_MUSLIM_PATH: NewMuslimDay[] = [
 export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
   {
     id: "static-sh-1",
-    category_id: null,
+    category_id: CAT["ethics"],
     slug: "spread-by-sword",
     title: "هل انتشر الإسلام بالسيف؟",
     complexity_level: "basic",
@@ -405,7 +697,7 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
   },
   {
     id: "static-sh-2",
-    category_id: null,
+    category_id: CAT["ethics"],
     slug: "women-oppressed",
     title: "هل الإسلام يُقصي المرأة؟",
     complexity_level: "basic",
@@ -423,7 +715,7 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
   },
   {
     id: "static-sh-3",
-    category_id: null,
+    category_id: CAT["quran"],
     slug: "quran-copied-bible",
     title: "هل نُسخ القرآن من الكتاب المقدس؟",
     complexity_level: "intermediate",
@@ -441,7 +733,7 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
   },
   {
     id: "static-sh-4",
-    category_id: null,
+    category_id: CAT["worship"],
     slug: "too-many-rules",
     title: "لماذا كثير من الأحكام في الإسلام؟",
     complexity_level: "basic",
@@ -459,7 +751,7 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
   },
   {
     id: "static-sh-5",
-    category_id: null,
+    category_id: CAT["god-existence"],
     slug: "science-contradicts-islam",
     title: "هل العلم يتعارض مع الإسلام؟",
     complexity_level: "intermediate",
@@ -477,7 +769,7 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
   },
   {
     id: "static-sh-6",
-    category_id: null,
+    category_id: CAT["ethics"],
     slug: "islam-equals-violence",
     title: "هل الإسلام دين عنف؟",
     complexity_level: "basic",
@@ -495,7 +787,7 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
   },
   {
     id: "static-sh-7",
-    category_id: null,
+    category_id: CAT["prophethood"],
     slug: "hadith-unreliable",
     title: "هل الحديث النبوي غير موثوق؟",
     complexity_level: "intermediate",
@@ -513,7 +805,7 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
   },
   {
     id: "static-sh-8",
-    category_id: null,
+    category_id: CAT["god-existence"],
     slug: "islam-against-reason",
     title: "هل الإسلام ضد العقل؟",
     complexity_level: "basic",
@@ -531,7 +823,7 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
   },
   {
     id: "static-sh-9",
-    category_id: null,
+    category_id: CAT["quran"],
     slug: "quran-not-preserved",
     title: "هل حُرّف القرآن؟",
     complexity_level: "intermediate",
@@ -549,7 +841,7 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
   },
   {
     id: "static-sh-10",
-    category_id: null,
+    category_id: CAT["ethics"],
     slug: "islam-hates-nonmuslims",
     title: "هل يكره الإسلام غير المسلمين؟",
     complexity_level: "basic",
@@ -567,7 +859,7 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
   },
   {
     id: "static-sh-11",
-    category_id: null,
+    category_id: CAT["prophethood"],
     slug: "quran-only-reject-sunnah",
     title: "هل يكفي القرآن دون السنة؟",
     complexity_level: "basic",
@@ -592,7 +884,7 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
   },
   {
     id: "static-sh-12",
-    category_id: null,
+    category_id: CAT["ethics"],
     slug: "inheritance-unfair",
     title: "هل ظلم الإسلام المرأة في الميراث؟",
     complexity_level: "basic",
@@ -616,6 +908,29 @@ export const STATIC_DAWAH_SHUBUHAT: DawahShubha[] = [
     updated_at: STATIC_TS,
   },
 ];
+
+
+export function staticQuestionsByCategorySlug(categorySlug?: string): DawahQuestion[] {
+  if (!categorySlug) return STATIC_DAWAH_QUESTIONS;
+  const cat = STATIC_DAWAH_CATEGORIES.find((c) => c.slug === categorySlug);
+  if (!cat) return [];
+  return STATIC_DAWAH_QUESTIONS.filter((q) => q.category_id === cat.id);
+}
+
+export function staticShubuhatByCategorySlug(categorySlug?: string): DawahShubha[] {
+  if (!categorySlug) return STATIC_DAWAH_SHUBUHAT;
+  const cat = STATIC_DAWAH_CATEGORIES.find((c) => c.slug === categorySlug);
+  if (!cat) return [];
+  return STATIC_DAWAH_SHUBUHAT.filter((s) => s.category_id === cat.id);
+}
+
+export function staticArticlesByCategorySlug(categorySlug?: string): DawahArticle[] {
+  const all = Object.values(STATIC_DAWAH_ARTICLES);
+  if (!categorySlug) return all;
+  const cat = STATIC_DAWAH_CATEGORIES.find((c) => c.slug === categorySlug);
+  if (!cat) return [];
+  return all.filter((a) => a.category_id === cat.id);
+}
 
 export function getStaticArticleBySlug(slug: string): DawahArticle | null {
   return STATIC_DAWAH_ARTICLES[slug] ?? null;

@@ -10,11 +10,14 @@ import type { Lang } from "@/lib/language-preference";
 import {
   getStaticArticleBySlug,
   getStaticQuestionBySlug,
-  STATIC_DAWAH_ARTICLES,
+  STATIC_DAWAH_CATEGORIES,
   STATIC_DAWAH_QUESTIONS,
   STATIC_NEW_MUSLIM_PATH,
   STATIC_DAWAH_SHUBUHAT,
   getStaticShubhaBySlug,
+  staticQuestionsByCategorySlug,
+  staticShubuhatByCategorySlug,
+  staticArticlesByCategorySlug,
 } from "@/lib/dawah-static-fallback";
 
 export type DawahCategory = {
@@ -159,7 +162,7 @@ export async function getDawahCategories(): Promise<DawahCategory[]> {
     .select("id, slug, name_ar, name_en, description_ar, icon, sort_order")
     .eq("is_active", true)
     .order("sort_order");
-  if (error) return [];
+  if (error || !data?.length) return STATIC_DAWAH_CATEGORIES;
   return (data || []) as DawahCategory[];
 }
 
@@ -179,9 +182,7 @@ export async function getQuestionsByCategory(categorySlug?: string, limit = 50):
   if (categorySlug) q = q.eq("dawah_categories.slug", categorySlug);
   const { data, error } = await q;
   if (error || !data?.length) {
-    // بدون فئة في الثابت — عند غياب الفئة أو فشل الانضمام الداخلي نعرض القائمة الاحتياطية كاملة
-    if (categorySlug) return [];
-    return STATIC_DAWAH_QUESTIONS.slice(0, limit);
+    return staticQuestionsByCategorySlug(categorySlug).slice(0, limit);
   }
   return data as DawahQuestion[];
 }
@@ -257,9 +258,7 @@ export async function getShubuhatByCategory(categorySlug?: string, complexity?: 
   if (complexity) q = q.eq("complexity_level", complexity);
   const { data, error } = await q;
   if (error || !data?.length) {
-    // !inner يفشل عند غياب الفئة؛ نرجع الثابت عند عدم تحديد فئة
-    if (categorySlug) return [];
-    let list = STATIC_DAWAH_SHUBUHAT;
+    let list = staticShubuhatByCategorySlug(categorySlug);
     if (complexity) list = list.filter((s) => s.complexity_level === complexity);
     return list;
   }
@@ -277,8 +276,7 @@ export async function getArticlesByCategory(categorySlug?: string, limit = 30): 
   if (categorySlug) q = q.eq("dawah_categories.slug", categorySlug);
   const { data, error } = await q;
   if (error || !data?.length) {
-    if (categorySlug) return [];
-    return Object.values(STATIC_DAWAH_ARTICLES).slice(0, limit);
+    return staticArticlesByCategorySlug(categorySlug).slice(0, limit);
   }
   return data as DawahArticle[];
 }
