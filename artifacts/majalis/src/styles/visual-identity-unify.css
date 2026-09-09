@@ -113,17 +113,35 @@ body,
   color: var(--color-text);
 }
 
-/* بطاقات عامة أخف */
+/* بطاقات عامة أخف — يشمل بطاقات أقسام المحتوى */
 .soft-card,
 .hub-card,
 .section-card,
 .ds-card,
-.mj-card {
+.mj-card,
+.hadith-card,
+.isp-card,
+.sect-card,
+.akl-card,
+.tarikh-card,
+.mk-card,
+.mk-lane-card,
+.fiqh-book-card,
+.dii-hub-card,
+.lesson-unified-card,
+.fqh-hub-card,
+.topic-card {
   background: var(--color-surface) !important;
   border: 1px solid color-mix(in srgb, var(--color-border) 88%, transparent) !important;
   border-radius: var(--radius-card) !important;
   box-shadow: var(--shadow-soft) !important;
   color: var(--color-text);
+}
+
+/* تفاصيل قراءة/حديث: نصف قطر موحّد دون فرض خلفية (تحتفظ بألوان دلالية) */
+.hadith-detail-card,
+.rsc {
+  border-radius: var(--radius-card) !important;
 }
 
 /* أزرار موحّدة — يشمل CTA الرئيسية (.m2030-btn--primary) و.mj-btn الأساسي

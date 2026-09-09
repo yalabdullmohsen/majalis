@@ -20,7 +20,7 @@
   --mk-line: var(--border-soft, #d9d2c6);
   --mk-ink: var(--mj-ink, #16241e);
   --mk-muted: var(--mj-muted, #4a5a53);
-  --mk-radius: 18px;
+  --mk-radius: var(--radius-card, 24px);
   --mk-fab-clearance: calc(
     var(--bottom-nav-total, var(--nav-h, 64px)) + var(--inset-bottom, 0px) + 4.5rem
   );
@@ -73,7 +73,7 @@
   gap: 0.85rem;
   align-items: center;
   padding: 1.15rem 1.2rem;
-  border-radius: 22px;
+  border-radius: var(--radius-card, 24px);
   text-decoration: none;
   color: inherit;
   background: var(--mk-surface);

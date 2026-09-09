@@ -52,12 +52,15 @@
   --mj-chip-active-bg: var(--mj-brand-deep, #0d4a39);
   --mj-chip-active-fg: #ffffff;
 
-  --radius-card: 18px;
-  --radius-tile: 18px;
-  --radius-button: 14px;
-  --radius-control: 12px;
+  /* مطابقة soft-cards / visual-identity-unify — لا 18px القديمة */
+  --radius-card: 24px;
+  --radius-tile: 24px;
+  --radius-button: 18px;
+  --radius-control: 14px;
   --radius-chip: 999px;
   --radius-icon: 12px;
+  --radius-sheet: 28px;
+  --radius-pill: 999px;
 }
 
 html[data-theme="dark"],
@@ -108,7 +111,7 @@ html.dark {
   --mj-chip-active-fg: #06231a;
 }
 
-/* ── بطاقات موحّدة ─────────────────────────────────────────────────── */
+/* ── بطاقات موحّدة (أقسام المحتوى + الهيكل) ─────────────────────────── */
 .soft-card,
 .hub-card,
 .section-card,
@@ -120,12 +123,27 @@ html.dark {
 .topic-card,
 .mk-topic-card,
 .section-lobby__featured,
-.card--featured {
+.card--featured,
+.hadith-card,
+.isp-card,
+.sect-card,
+.akl-card,
+.tarikh-card,
+.mk-card,
+.mk-lane-card,
+.fiqh-book-card,
+.dii-hub-card {
   background: var(--surface) !important;
   border: 1px solid color-mix(in srgb, var(--border) 80%, transparent) !important;
   border-radius: var(--radius-card) !important;
   box-shadow: none !important;
   color: var(--text) !important;
+}
+
+/* تفاصيل قراءة/حديث: نصف قطر فقط */
+.hadith-detail-card,
+.rsc {
+  border-radius: var(--radius-card) !important;
 }
 
 .soft-card:hover,

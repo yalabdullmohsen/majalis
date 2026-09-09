@@ -1,0 +1,60 @@
+/**
+ * بوابة: توحيد الهوية البصرية عبر التطبيق (نصف قطر + بطاقات أقسام).
+ * تشغيل: node --import tsx src/lib/__tests__/visual-identity-unify-gate.test.ts
+ */
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
+const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
+
+const calm = read("src/styles/sections-calm-polish.css");
+const unify = read("src/styles/visual-identity-unify.css");
+const soft = read("src/styles/soft-cards.css");
+const ds = read("src/styles/design-system.css");
+const miracles = read("src/styles/pages/miracles.css");
+const rsc = read("src/styles/components/reading-section-card.css");
+const filters = read("src/styles/components/filters.css");
+
+console.log("=== نصف قطر البطاقة موحّد 24px ===");
+assert.match(soft, /--radius-card:\s*24px/);
+assert.match(unify, /--radius-card:\s*24px/);
+assert.match(calm, /--radius-card:\s*24px/, "calm-polish يجب ألا يخفض إلى 18px");
+assert.doesNotMatch(calm, /--radius-card:\s*18px/, "لا تعارض 18px في calm-polish");
+assert.match(calm, /--radius-tile:\s*24px/);
+assert.match(calm, /--radius-button:\s*18px/);
+
+console.log("=== بطاقات الأقسام ضمن طبقة التوحيد ===");
+for (const cls of [
+  "hadith-card",
+  "isp-card",
+  "sect-card",
+  "akl-card",
+  "tarikh-card",
+  "mk-card",
+  "mk-lane-card",
+  "fiqh-book-card",
+  "dii-hub-card",
+]) {
+  assert.match(calm, new RegExp(`\\.${cls}`), `calm يشمل .${cls}`);
+  assert.match(unify, new RegExp(`\\.${cls}`), `unify يشمل .${cls}`);
+}
+assert.match(calm, /\.hadith-detail-card/);
+assert.match(calm, /\.rsc\b/);
+assert.match(unify, /\.hadith-detail-card/);
+assert.match(unify, /\.rsc\b/);
+
+console.log("=== ds-radius مربوطة بالهوية ===");
+assert.match(ds, /--ds-radius-lg:\s*var\(--radius-button/);
+assert.match(ds, /--ds-radius-xl:\s*var\(--radius-card/);
+assert.match(ds, /--card-radius:\s*var\(--radius-card/);
+
+console.log("=== إعجاز + بطاقات قراءة + فلاتر ===");
+assert.match(miracles, /--mk-radius:\s*var\(--radius-card/);
+assert.doesNotMatch(miracles, /--mk-radius:\s*18px/);
+assert.match(rsc, /border-radius:\s*var\(--radius-card/);
+assert.match(filters, /\.ds-filter-toggle[\s\S]*?border-radius:\s*var\(--radius-pill/);
+
+console.log("visual-identity-unify-gate.test.ts: ok");

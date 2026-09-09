@@ -344,11 +344,11 @@ html.dark .ds-chip.is-active,
 }
 
 
-/* زر فتح الفلاتر — واضح في كل الصفحات */
+/* زر فتح الفلاتر — pill ناعم موحّد */
 .ds-filter-toggle {
   min-height: 44px;
   padding: 0.45rem 0.95rem;
-  border-radius: 8px;
+  border-radius: var(--radius-pill, 999px);
   border: 1px solid var(--mj-brand, var(--mj-brand));
   background: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 12%, transparent);
   color: var(--mj-brand-deep, #0f3d30);
