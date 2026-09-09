@@ -79,7 +79,9 @@ html[data-theme="dark"] .assistant-message-bubble {
   margin-bottom: 0.5rem;
 }
 
-.assistant-header p {
+/* لا تطبق على نص الهيرو الأخضر (.asp-hero) — كانت تكسر التباين (ink على أخضر) */
+.assistant-header > p,
+.assistant-header p:not(.asp-hero__eyebrow):not(.assistant-intro) {
   color: var(--msk-text-2, #5C5C56);
   font-size: 0.95rem;
   line-height: 1.85;

@@ -359,9 +359,16 @@ html[data-theme="dark"] .card {
 .twh-hub-hero__eyebrow,
 .twh-hub-hero .home-eyebrow,
 .fqh-hub-hero .home-eyebrow,
-.quran-hub-hero .home-eyebrow {
+.quran-hub-hero .home-eyebrow,
+.asp-hero .asp-hero__eyebrow,
+.asp-hero .assistant-title,
+.asp-hero .assistant-intro {
   color: var(--mss-on-hero, #ffffff) !important;
   opacity: 1 !important;
+}
+
+.asp-hero .assistant-intro {
+  color: var(--mss-on-hero-muted, #f3efe6) !important;
 }
 
 /* —— قوالب صفحة عامة —— */
