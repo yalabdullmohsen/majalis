@@ -81,31 +81,15 @@ function FiqhHubSearch({
 function BookCard({ book }: { book: FiqhBook }) {
   const editorial = fiqhBookEditorial(book);
   return (
-    <Link
+    <SectionEntryCard
       href={`/fiqh/books/${book.id}`}
-      className="fiqh-book-card ve-book-card"
-      aria-label={`${editorial.title} — ${formatAbwabCount(editorial.chaptersCount)} · ${formatMasailCount(editorial.lessonsCount)}`}
-    >
-      <span className="fiqh-book-card__icon ve-book-card__icon" aria-hidden="true">
-        <BookOpen size={18} strokeWidth={1.9} />
-      </span>
-      <span className="fiqh-book-card__body ve-book-card__body">
-        <span className="fiqh-book-card__title ve-book-card__title">{editorial.title}</span>
-        {editorial.description ? (
-          <span className="fiqh-book-card__desc ve-book-card__desc">{editorial.description}</span>
-        ) : null}
-        <span className="fiqh-book-card__meta ve-book-card__meta">
-          <span className="ve-badge">{editorial.categoryLabel}</span>
-          <span className="ve-badge ve-badge--secondary">{editorial.madhhabBadge}</span>
-          <span>
-            {formatAbwabCount(editorial.chaptersCount)} · {formatMasailCount(editorial.lessonsCount)}
-          </span>
-        </span>
-      </span>
-      <span className="fiqh-book-card__go ve-book-card__go" aria-hidden="true">
-        <ChevronLeft size={16} strokeWidth={2.5} />
-      </span>
-    </Link>
+      title={editorial.title}
+      subtitle={editorial.description || undefined}
+      badge={editorial.categoryLabel}
+      meta={`${editorial.madhhabBadge} · ${formatAbwabCount(editorial.chaptersCount)} · ${formatMasailCount(editorial.lessonsCount)}`}
+      Icon={BookOpen}
+      className="fiqh-book-card"
+    />
   );
 }
 
@@ -129,7 +113,7 @@ function SearchHitList({
           <h3 id="fiqh-search-books" className="fiqh-hub-section__title">
             كتب
           </h3>
-          <div className="fiqh-book-grid">
+          <div className="hub-card-grid fiqh-book-grid">
             {books.map((book) => (
               <BookCard key={book.id} book={book} />
             ))}
@@ -249,7 +233,7 @@ function FiqhBooksBody() {
               كتب الفقه
             </h2>
           </header>
-          <div className="fiqh-book-grid">
+          <div className="hub-card-grid fiqh-book-grid">
             {books.map((book) => (
               <BookCard key={book.id} book={book} />
             ))}

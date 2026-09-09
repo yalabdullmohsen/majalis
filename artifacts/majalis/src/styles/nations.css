@@ -147,11 +147,12 @@ html.dark .nations-page-lead {
   gap: 0.6rem;
   padding: 1rem;
   border: 1px solid var(--nat-line);
-  border-radius: 1rem;
+  border-radius: var(--radius-card, 24px);
   background: var(--surface, #fff);
   text-decoration: none;
   color: inherit;
   transition: border-color 0.15s ease, transform 0.15s ease;
+  box-shadow: var(--shadow-soft, var(--mj-sh, none));
 }
 .nation-card:hover,
 .nation-card:focus-visible { border-color: var(--nat-ink); transform: translateY(-2px); }
