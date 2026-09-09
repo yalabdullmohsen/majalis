@@ -654,3 +654,26 @@ html[data-theme="dark"] .seerah-sources__note,
 html[data-theme="dark"] .an-card__text {
   color: var(--mj-ink-2, #c5d0cb) !important;
 }
+
+/* موجة هوية: رقائق / ملائكة / أشراط / إحصاءات */
+.rq-card,
+.ml-card,
+.as-card,
+.is-stat-card {
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, var(--color-border))) !important;
+  border-radius: var(--radius-card, 24px) !important;
+  color: var(--color-text, var(--mj-ink)) !important;
+}
+html.dark .rq-card,
+html.dark .ml-card,
+html.dark .as-card,
+html.dark .is-stat-card,
+html[data-theme="dark"] .rq-card,
+html[data-theme="dark"] .ml-card,
+html[data-theme="dark"] .as-card,
+html[data-theme="dark"] .is-stat-card {
+  background: var(--mj-surface, #1b2421) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+  color: var(--mj-ink, #f3f7f5) !important;
+}

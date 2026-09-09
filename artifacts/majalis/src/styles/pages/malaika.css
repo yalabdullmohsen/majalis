@@ -34,7 +34,7 @@
 .mk-tab {
   padding: .45rem 1.1rem; border-radius: var(--ds-radius-full);
   border: 1.5px solid var(--clr-border);
-  background: #fff; font-size: .88rem; cursor: pointer; color: var(--clr-text-2);
+  background: var(--ss-card-bg, var(--mj-surface, #fff)); font-size: .88rem; cursor: pointer; color: var(--clr-text-2);
   transition: all .18s;
 }
 .mk-tab:hover  { border-color: #1a3a5c; color: #1a3a5c; }
@@ -54,7 +54,7 @@
 .mk-aqida-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .mk-aqida-card {
   display: flex; gap: var(--ds-space-4); align-items: flex-start;
-  background: #fff; border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, #fff)); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1.1rem 1.25rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
 }
@@ -73,7 +73,7 @@
 }
 .mk-malak-card {
   display: flex; gap: .85rem; align-items: flex-start;
-  background: #fff; border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, #fff)); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1.1rem 1.1rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
 }
@@ -98,7 +98,7 @@
 .mk-awsaf-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .mk-wasf-card {
   display: flex; gap: var(--ds-space-4); align-items: flex-start;
-  background: #fff; border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, #fff)); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1rem 1.2rem;
 }
 .mk-wasf-icon  { color: #1a3a5c; font-size: 1.1rem; flex-shrink: 0; margin-top: .15rem; }
@@ -109,7 +109,7 @@
 /* Fadail */
 .mk-fadail-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .mk-fadl-card {
-  background: #fff; border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, #fff)); border: 1px solid var(--clr-border);
   border-inline-end: 4px solid #1a3a5c;
   border-radius: .75rem; padding: 1.1rem 1.25rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
@@ -123,7 +123,7 @@
   display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.1rem;
 }
 .mk-amal-card {
-  background: #fff; border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, #fff)); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1.2rem 1.2rem 1rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
 }
