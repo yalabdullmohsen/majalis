@@ -16,8 +16,8 @@ const MOTION_CLASSES: Record<Exclude<NavMotionKind, "none">, string> = {
 };
 
 /**
- * انتقالات مكانية على #main-content (transform + opacity فقط).
- * push: دخول من اليمين · pop: كشف من اليسار · tab: خفوت · modal: من الأسفل.
+ * انتقالات مكانية على #main-content (تلاشي بهوية التطبيق).
+ * push/tab/modal: خفوت بيج/زمرد · pop: كشف ناعم.
  */
 export function RouteEnterMotion() {
   const [location] = useLocation();

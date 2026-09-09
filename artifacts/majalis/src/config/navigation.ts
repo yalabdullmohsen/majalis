@@ -148,7 +148,8 @@ export const NAV_LABEL_CANONICAL: Record<string, string> = {
 
 // ── الشريط السفلي والدرج (من سجل الأقسام) ─────────────────────────────────
 
-const BOTTOM_IDS = ["quran", "lessons", "prayer", "home", "sections"] as const;
+/** الرئيسية في الوسط (تبويب ثالث من ٥). */
+const BOTTOM_IDS = ["quran", "lessons", "home", "prayer", "sections"] as const;
 const DRAWER_IDS = [
   "open-mushaf",
   "quran",

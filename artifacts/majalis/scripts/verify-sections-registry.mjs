@@ -96,13 +96,13 @@ const SPACING = new Set([8, 12, 16, 24]);
     fail(`الأبواب المميّزة يجب أن تكون 7 وليس ${featured.length}`);
   }
   const bottom = bottomNavSections();
-  const expectedBottom = ["quran", "lessons", "prayer", "home", "sections"];
+  const expectedBottom = ["quran", "lessons", "home", "prayer", "sections"];
   if (bottom.map((s) => s.id).join(",") !== expectedBottom.join(",")) {
     fail(`الشريط السفلي المتوقع: ${expectedBottom.join(" · ")}`);
   }
   const bottomLabels = bottom.map((s) => s.navLabel ?? s.label);
   if (bottomLabels[0] !== "القرآن") fail("التبويب الأول يجب أن يكون «القرآن»");
-  if (bottomLabels[3] !== "الرئيسية") fail("التبويب الرابع يجب أن يكون «الرئيسية»");
+  if (bottomLabels[2] !== "الرئيسية") fail("التبويب الأوسط يجب أن يكون «الرئيسية»");
   if (bottomLabels[4] !== "الأقسام") fail("التبويب الخامس يجب أن يكون «الأقسام»");
   if (bottomLabels.some((l) => l === "المزيد" || l === "قرآن" || l === "الفقه")) {
     fail("تسميات قديمة (المزيد/قرآن/الفقه) ما زالت في الشريط السفلي");

@@ -33,8 +33,10 @@ skipNextRouteMotion();
 assert.equal(classifyNavMotion("/a", "/b", true), "none");
 
 const native = read("src/styles/components/native-feel.css");
-assert.match(native, /mj-route-push-in/);
-assert.match(native, /mj-route-pop-in/);
+assert.match(native, /mj-route-brand-fade/);
+assert.match(native, /mj-route-brand-wash/);
+assert.match(native, /mj-route-brand-fade-soft/);
+assert.match(native, /#main-content\.mj-route-push/);
 assert.match(native, /mj-edge-swipe-scrim/);
 assert.match(native, /mj-back-nudge/);
 
