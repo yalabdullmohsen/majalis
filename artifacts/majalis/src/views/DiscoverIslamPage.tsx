@@ -20,7 +20,6 @@ import {
 } from "lucide-react";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { HubCard } from "@/components/ui/HubCard";
-import { AppBackButton } from "@/components/common/AppBackButton";
 import { applyPageSeo } from "@/lib/seo";
 import { useLanguage } from "@/components/LanguageProvider";
 import { LANG_META } from "@/lib/language-preference";
@@ -111,9 +110,6 @@ export default function DiscoverIslamPage() {
       groupTitle="مسارات التعرف"
     >
     <div className="page-shell narrow content-hub-page dii-page">
-      <div className="dii-page-toolbar">
-        <AppBackButton variant="inline" fallbackHref="/" label="رجوع" className="dii-page-back" data-section-back="1" />
-      </div>
 
       <div className="dii-lang-row">
         <span className="dii-lang-label">اختر لغتك:</span>

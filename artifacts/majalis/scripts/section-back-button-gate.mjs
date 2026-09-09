@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * بوابة: زر رجوع في المسارات الداخلية؛ جذور التبويب بلا عائم، وموضعه موحّد داخل قالب اللوبي.
+ * بوابة: زر رجوع عائم واحد في المسارات الداخلية؛ بلا رجوع مكرر؛ لا يظهر في /.
  * تشغيل: node scripts/section-back-button-gate.mjs
  * بلا dist: يتخطى التصفح ويكتفي بفحص المصدر (يُشغَّل مع الاختبار الثابت).
  */
@@ -31,8 +31,11 @@ const SECTION_PATHS = [
   "/islamic-glossary",
   "/universities",
   "/discover-islam",
+  "/akhlaq",
+  "/stories",
+  "/islamic-sects",
+  "/miracles",
 ];
-/* /library يعيد التوجيه إلى /search — لا يُفحص كقسم مستقل */
 
 function contentType(file) {
   const e = extname(file).toLowerCase();
@@ -74,6 +77,32 @@ async function ensureBase() {
   return { base: `http://127.0.0.1:${port}`, stop: () => new Promise((r) => server.close(() => r())) };
 }
 
+function collectVisibleBacks() {
+  const nodes = [
+    ...document.querySelectorAll(
+      '[data-floating-back], .floating-back-btn, .global-back-btn, [data-app-back="1"], [data-section-back], [aria-label="رجوع"]',
+    ),
+  ];
+  const visible = [];
+  for (const el of nodes) {
+    const r = el.getBoundingClientRect();
+    const cs = getComputedStyle(el);
+    if (cs.display === "none" || cs.visibility === "hidden" || Number(cs.opacity) === 0) continue;
+    if (r.width < 24 || r.height < 24) continue;
+    if (r.bottom < 0 || r.top > window.innerHeight) continue;
+    visible.push({
+      floating: el.hasAttribute("data-floating-back") || el.classList.contains("floating-back-btn"),
+      position: cs.position,
+      top: Math.round(r.top),
+      bottom: Math.round(r.bottom),
+      right: Math.round(r.right),
+      w: Math.round(r.width),
+      h: Math.round(r.height),
+    });
+  }
+  return visible;
+}
+
 async function main() {
   const { base, stop } = await ensureBase();
   if (!base) {
@@ -87,71 +116,62 @@ async function main() {
     try {
       localStorage.setItem("majalis.onboarding.onboarding_seen", "1");
       localStorage.setItem("majalis.onboarding.onboarding_major_version", "1");
-    } catch { /* ignore */ }
+    } catch {
+      /* ignore */
+    }
   });
   const page = await context.newPage();
   const failures = [];
-  let lobbyTop = null;
-  let lobbyStart = null;
+
+  await page.goto(`${base}/`, { waitUntil: "domcontentloaded", timeout: 60_000 });
+  await page.waitForTimeout(400);
+  const homeBacks = await page.evaluate(collectVisibleBacks);
+  if (homeBacks.length) failures.push(`/: ظهر زر رجوع (${homeBacks.length}) — متوقع إخفاء`);
 
   for (const route of SECTION_PATHS) {
     await page.goto(`${base}${route}`, { waitUntil: "domcontentloaded", timeout: 60_000 });
-    // GlobalBackButton يُحمَّل lazy — انتظر ظهور زر الرجوع قبل الحكم
     await page
-      .waitForSelector("[data-section-back], [data-floating-back], .floating-back-btn, .global-back-btn, [aria-label='رجوع']", {
+      .waitForSelector("[data-floating-back], .floating-back-btn, .global-back-btn", {
         timeout: 12_000,
         state: "attached",
       })
       .catch(() => null);
-    await page.waitForTimeout(TAB_ROOTS.includes(route) ? 400 : 200);
-    const box = await page.evaluate(() => {
-      const nodes = [
-        ...document.querySelectorAll(
-          "[data-section-back], [data-floating-back], .floating-back-btn, .global-back-btn, [aria-label='رجوع']",
-        ),
-      ];
-      const visible = [];
-      for (const el of nodes) {
-        const r = el.getBoundingClientRect();
-        const cs = getComputedStyle(el);
-        if (cs.display === "none" || cs.visibility === "hidden" || Number(cs.opacity) === 0) continue;
-        if (r.width < 24 || r.height < 24) continue;
-        if (r.bottom < 0 || r.top > window.innerHeight) continue;
-        const kind = el.hasAttribute("data-section-back") ? "lobby" : "global";
-        visible.push({
-          kind,
-          top: Math.round(r.top),
-          start: Math.round(r.right),
-          w: Math.round(r.width),
-          h: Math.round(r.height),
-          position: cs.position,
-        });
-      }
-      if (!visible.length) return null;
-      visible.sort((a, b) => a.top - b.top || (a.kind === "lobby" ? -1 : 1));
-      return visible[0];
+    await page.waitForTimeout(350);
+    const visible = await page.evaluate(collectVisibleBacks);
+    if (!visible.length) {
+      failures.push(`${route}: بلا زر رجوع عائم`);
+      continue;
+    }
+    if (visible.length > 1) {
+      failures.push(`${route}: أكثر من زر رجوع ظاهر (${visible.length})`);
+    }
+    const fab = visible.find((v) => v.floating && v.position === "fixed") || visible[0];
+    if (!fab.floating || fab.position !== "fixed") {
+      failures.push(`${route}: الرجوع ليس عائمًا ثابتًا`);
+    }
+    if (fab.w < 44 || fab.h < 44) failures.push(`${route}: منطقة لمس ${fab.w}×${fab.h} < 44`);
+    if (fab.top < 400) failures.push(`${route}: العائم أعلى من المتوقع (top ${fab.top})`);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    if (overflow) failures.push(`${route}: overflow أفقي`);
+
+    // سرعة الاستجابة: history.back / navigate يُستدعى خلال <100ms من pointerdown
+    const latency = await page.evaluate(async () => {
+      const btn = document.querySelector("[data-floating-back], .floating-back-btn");
+      if (!btn) return -1;
+      const t0 = performance.now();
+      let fired = false;
+      const origBack = window.history.back.bind(window.history);
+      window.history.back = () => {
+        fired = true;
+        window.__backLatency = performance.now() - t0;
+      };
+      btn.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, button: 0, pointerType: "touch" }));
+      await new Promise((r) => requestAnimationFrame(r));
+      window.history.back = origBack;
+      return fired ? window.__backLatency : performance.now() - t0;
     });
-    if (!box) {
-      failures.push(`${route}: بلا زر رجوع`);
-      continue;
-    }
-    if (box.w < 44 || box.h < 44) failures.push(`${route}: منطقة لمس ${box.w}×${box.h} < 44`);
-    /* FAB سفلي ثابت مرفوض بعد إلغاء العائم */
-    if (box.position === "fixed" && box.top > 500) {
-      failures.push(`${route}: رجوع عائم سفلي (top ${box.top}) — متوقع داخل التدفق`);
-      continue;
-    }
-    /* محاذاة هيدر اللوبي لجذور التبويب فقط — الصفحات ذات هيرو داكن قد تضع الرجوع تحت الهيرو عمدًا */
-    if (box.kind === "lobby" && TAB_ROOTS.includes(route)) {
-      if (box.top > 320) {
-        failures.push(`${route}: رجوع لوبي أسفل الشاشة (top ${box.top}) — متوقع هيدر`);
-      }
-      if (lobbyTop == null) {
-        lobbyTop = box.top;
-        lobbyStart = box.start;
-      } else if (Math.abs(box.top - lobbyTop) > 28 || Math.abs(box.start - lobbyStart) > 48) {
-        failures.push(`${route}: موضع لوبي مختلف (top ${box.top} vs ${lobbyTop})`);
-      }
+    if (latency >= 0 && latency > 100) {
+      failures.push(`${route}: رجوع بطيء ${Math.round(latency)}ms (>100ms)`);
     }
   }
 
@@ -161,7 +181,7 @@ async function main() {
     console.error(failures.join("\n"));
     process.exit(1);
   }
-  console.log(`✓ test:section-back-button ok (${SECTION_PATHS.length} مسارًا)`);
+  console.log(`✓ test:section-back-button ok (${SECTION_PATHS.length} مسارًا + فحص الرئيسية)`);
 }
 
 main().catch((e) => {

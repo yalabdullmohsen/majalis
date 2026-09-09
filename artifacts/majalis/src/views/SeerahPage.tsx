@@ -1,4 +1,3 @@
-import { AppBackButton } from "@/components/common/AppBackButton";
 import { useEffect, useState } from "react";
 import { Bird, BookOpen, Gem, Heart, Landmark, Lightbulb, Library, MapPin, Megaphone, Moon, ScrollText, Sparkles, Sprout, Swords } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -296,10 +295,8 @@ export default function SeerahPage() {
       groupTitle="مراحل السيرة النبوية"
     >
       <div className="seerah-page" dir="rtl">
-
-        {/* رابط عكسي لقصص الأنبياء */}
         <div className="seerah-back-wrap">
-          <AppBackButton variant="inline" className="seerah-back-link" fallbackHref="/prophets" label="← قصص الأنبياء" />
+          <Link href="/prophets" className="seerah-back-link">قصص الأنبياء</Link>
         </div>
 
         {/* لافتة الربط: السيرة امتداد لقصص الأنبياء */}

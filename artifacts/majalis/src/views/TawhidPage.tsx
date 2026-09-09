@@ -7,7 +7,6 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { HubCard } from "@/components/ui/HubCard";
-import { AppBackButton } from "@/components/common/AppBackButton";
 import { topicThemeCssVars, getTopicTheme } from "@/config/topic-themes";
 import "@/styles/pages/tawhid.css";
 import "@/styles/pages/misc-page-legacy.css";
@@ -408,13 +407,6 @@ export default function TawhidPage() {
     <div className="page-shell" dir="rtl">
       {/* مسار التنقل */}
       <nav className="tawheed-breadcrumb" aria-label="مسار التنقل">
-        <AppBackButton
-          variant="inline"
-          fallbackHref="/sections"
-          label="رجوع"
-          className="twh-page-back"
-          data-section-back="1"
-        />
         <Link href="/">الرئيسية</Link>
         <span aria-hidden="true"> / </span>
         <span aria-current="page">العقيدة والتوحيد</span>

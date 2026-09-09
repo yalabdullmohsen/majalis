@@ -1,4 +1,4 @@
-import { useState, type ButtonHTMLAttributes, type ReactNode } from "react";
+import { useRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
 import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { useLocation } from "wouter";
@@ -8,6 +8,7 @@ import {
   goBackOrFallback,
   normalizeNavPath,
   sectionAwareFallback,
+  sectionRootEscape,
 } from "@/lib/navigation-back";
 import { haptics } from "@/lib/haptics";
 import { cn } from "@/lib/utils";
@@ -23,7 +24,7 @@ type AppBackButtonProps = {
   label?: ReactNode;
   className?: string;
   "aria-label"?: string;
-} & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onClick" | "type" | "aria-label">;
+} & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onClick" | "onPointerDown" | "type" | "aria-label">;
 
 const VARIANT_CLASS: Record<AppBackVariant, string> = {
   floating: "floating-back-btn global-back-btn app-back-btn app-back-btn--floating mj-pressable",
@@ -35,7 +36,8 @@ const VARIANT_CLASS: Record<AppBackVariant, string> = {
 };
 
 /**
- * زر الرجوع الموحّد — كل واجهات الرجوع في التطبيق/الموقع تمر عبر goBackOrFallback.
+ * زر الرجوع الموحّد — العائم العام هو المسار الرسمي؛ inline/hero/lobby للتوافق فقط.
+ * الرجوع فوري عبر onPointerDown بلا debounce ولا تأخير قبل التنقّل.
  */
 export function AppBackButton({
   fallbackHref,
@@ -47,7 +49,7 @@ export function AppBackButton({
   ...rest
 }: AppBackButtonProps) {
   const [location] = useLocation();
-  const [nudge, setNudge] = useState(false);
+  const firedRef = useRef(false);
 
   if (variant === "floating" && autoHideFloating) {
     const path = normalizeNavPath(location);
@@ -57,15 +59,20 @@ export function AppBackButton({
     if (isAuthStandalonePath(location)) return null;
     if (path === "/support" || path === "/contact") return null;
     const prev = getPreviousInternalRoute(location);
-    const fallback = fallbackHref || sectionAwareFallback(location);
-    if (!prev && normalizeNavPath(fallback) === path) return null;
+    let fallback = normalizeNavPath(fallbackHref || sectionAwareFallback(location));
+    if (fallback === path) fallback = normalizeNavPath(sectionRootEscape(path));
+    if (!prev && fallback === path) return null;
   }
 
   const goBack = () => {
+    if (firedRef.current) return;
+    firedRef.current = true;
     haptics.selection();
-    setNudge(true);
-    window.setTimeout(() => setNudge(false), 300);
     goBackOrFallback(location, fallbackHref);
+    // يسمح بضغطة لاحقة إن بقي المكوّن بعد فشل نادر
+    queueMicrotask(() => {
+      firedRef.current = false;
+    });
   };
 
   const showIcon = variant === "floating" || variant === "lobby" || variant === "inline";
@@ -79,13 +86,21 @@ export function AppBackButton({
   return (
     <button
       type="button"
-      className={cn(VARIANT_CLASS[variant], nudge && "mj-back-nudge", className)}
+      className={cn(VARIANT_CLASS[variant], className)}
       data-app-back="1"
       data-back-variant={variant}
       data-floating-back={variant === "floating" ? "1" : undefined}
       data-mode="back"
       data-section-back={variant === "lobby" ? "1" : undefined}
-      onClick={goBack}
+      onPointerDown={(e) => {
+        if (e.button !== 0) return;
+        e.preventDefault();
+        goBack();
+      }}
+      onClick={(e) => {
+        e.preventDefault();
+        goBack();
+      }}
       aria-label={ariaLabel}
       title={typeof label === "string" ? label : "رجوع"}
       {...rest}

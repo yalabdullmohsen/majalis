@@ -430,6 +430,23 @@ html.dark .sidebar-item.active {
 }
 
 /* ── عناصر عائمة: رجوع عام أسفل اليمين + صعود بعد التمرير ───────── */
+/* إخفاء أي رجوع داخلي متبقٍ — العائم العام هو المصدر الوحيد */
+.section-lobby__back,
+.section-lobby__back-inline,
+.section-hero__back,
+.page-hero-mj__back,
+.legal-back-btn,
+.dii-page-back,
+.twh-page-back,
+.lesson-detail-back,
+.app-back-btn--inline,
+.app-back-btn--hero,
+.app-back-btn--lobby,
+.app-back-btn--legal {
+  display: none !important;
+  pointer-events: none !important;
+}
+
 .section-lobby__back:not(.section-lobby__back-inline):not(.app-back-btn--lobby) {
   display: none !important;
   pointer-events: none !important;
@@ -446,8 +463,8 @@ button.floating-back-btn[data-floating-back="1"] {
   inset-inline-start: auto !important;
   inset-inline-end: auto !important;
   bottom: calc(
-    var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 16px +
-      var(--quran-mini-player-offset, 0px)
+    var(--bottom-nav-height, 88px) + env(safe-area-inset-bottom, 0px) +
+      var(--inset-bottom, 0px) + 16px + var(--quran-mini-player-offset, 0px)
   ) !important;
   z-index: 185 !important;
   width: 48px !important;
@@ -461,7 +478,16 @@ button.floating-back-btn[data-floating-back="1"] {
   box-shadow: 0 8px 22px -12px color-mix(in srgb, var(--mj-brand-deep, #0d4a39) 45%, transparent) !important;
   opacity: 1 !important;
   transform: translateZ(0);
-  transition: opacity 0.2s ease, transform 0.2s ease !important;
+  transition: opacity 120ms ease, transform 120ms ease !important;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.global-back-btn.floating-back-btn:active,
+.floating-back-btn.app-back-btn--floating:active,
+button.floating-back-btn[data-floating-back="1"]:active {
+  transform: scale(0.96) translateZ(0) !important;
+  opacity: 0.9 !important;
 }
 
 html[data-theme="dark"] .global-back-btn.floating-back-btn,

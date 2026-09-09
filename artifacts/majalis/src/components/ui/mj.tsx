@@ -6,7 +6,7 @@ export function PageHeader({
   eyebrow,
   title,
   subtitle,
-  showBack = true,
+  showBack = false,
   className,
 }: {
   eyebrow?: string;

@@ -18,7 +18,8 @@ const fab = read("src/components/FloatingBackButton.tsx");
 assert.match(fab, /variant="floating"/);
 
 const lobby = read("src/components/lobby/SectionLobby.tsx");
-assert.match(lobby, /inlineHeaderBack = true/);
+assert.doesNotMatch(lobby, /AppBackButton/);
+assert.doesNotMatch(lobby, /data-section-back/);
 
 const polish = read("src/styles/sections-calm-polish.css");
 assert.match(polish, /--mj-chip-bg:/);

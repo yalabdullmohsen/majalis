@@ -391,13 +391,13 @@ html.dark .sidebar-item.active {
 }
 
 .floating-back-btn.app-back-btn--floating {
-  /* ثابت — بلا حركة عند الضغط (يمنع القفز) */
-  transform: none !important;
+  transform: translateZ(0);
+  transition: opacity 120ms ease, transform 120ms ease;
 }
 
 .floating-back-btn.app-back-btn--floating:active {
-  transform: none !important;
-  opacity: 0.92;
+  transform: scale(0.96) translateZ(0);
+  opacity: 0.9;
 }
 
 /* ── أقسام علمية: هيرو هادئ موحّد ── */
