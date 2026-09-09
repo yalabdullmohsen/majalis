@@ -1445,6 +1445,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/rashidun-saad-qadisiyyah</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/rashidun-uthman</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1536,6 +1541,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/umayyad-abd-malik</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/umayyad-dome-rock</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -1666,6 +1676,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/abbasid-tahirids</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/abbasid-nizamiyya-context</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -2061,6 +2076,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/modern-salafi-reform</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/modern-afghanistan-jihad</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
