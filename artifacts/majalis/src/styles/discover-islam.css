@@ -61,7 +61,7 @@
 .dii-hub-card.hub-card,
 .dii-page .hub-card {
   min-height: 0;
-  border-radius: var(--radius-card, 18px);
+  border-radius: var(--radius-card, 24px) !important;
   box-shadow: none;
   border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 16%, var(--mj-hairline, #d9d3c8));
   background: var(--color-surface, var(--mj-surface, #fffcf8));
@@ -110,7 +110,7 @@
   flex-direction: column;
   gap: 0.35rem;
   padding: 0.9rem 1rem;
-  border-radius: var(--radius-card, 18px);
+  border-radius: var(--radius-card, 24px) !important;
   text-decoration: none;
   color: inherit;
   background: var(--color-surface, var(--mj-surface));
@@ -152,7 +152,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  border-radius: var(--radius-card, 18px);
+  border-radius: var(--radius-card, 24px) !important;
   background: var(--color-surface-muted, var(--mj-surface-2, var(--mj-bg)));
   border: 1px solid var(--color-border, var(--mj-hairline));
   text-decoration: none;
@@ -183,12 +183,12 @@ html.dark .dii-journey-step {
 .dii-contact-cta h2 { margin: 0 0 .4rem; font-size: 1.05rem; }
 .dii-contact-cta p { margin: 0 0 .85rem; color: var(--color-text-muted); font-size: .88rem; }
 
-.dii-answer-card, .dii-shubha-text-card { padding: 1.1rem !important; border-radius: var(--radius-card, 18px); }
+.dii-answer-card, .dii-shubha-text-card { padding: 1.1rem !important; border-radius: var(--radius-card, 24px); }
 .dii-short-answer { font-size: 1.05rem; font-weight: 600; line-height: 1.8; margin: .5rem 0 0; color: var(--mj-brand-deep); }
 .dii-detailed-answer { line-height: 2; white-space: pre-line; }
 
 .dii-evidence-list { list-style: none; margin: .5rem 0 0; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
-.dii-evidence-item { padding: .9rem !important; border-radius: var(--radius-card, 18px); }
+.dii-evidence-item { padding: .9rem !important; border-radius: var(--radius-card, 24px); }
 .dii-evidence-item p { margin: .4rem 0 0; line-height: 1.9; font-family: var(--font-quran, inherit); }
 .dii-evidence-grading { font-size: .78rem !important; color: var(--color-text-muted) !important; font-family: var(--font-body) !important; }
 
@@ -221,7 +221,7 @@ html.dark .dii-journey-step {
   display: flex; align-items: center; gap: .75rem;
   padding: .85rem 1rem !important;
   text-decoration: none; color: inherit;
-  border-radius: var(--radius-card, 18px);
+  border-radius: var(--radius-card, 24px) !important;
 }
 .dii-path-day--done { border-color: var(--mj-brand) !important; }
 .dii-path-day-num {
@@ -233,7 +233,7 @@ html.dark .dii-journey-step {
 }
 .dii-path-day-title { flex: 1; font-weight: 600; }
 
-.dii-contact-form { display: flex; flex-direction: column; gap: .85rem; padding: 1.25rem !important; border-radius: var(--radius-card, 18px); }
+.dii-contact-form { display: flex; flex-direction: column; gap: .85rem; padding: 1.25rem !important; border-radius: var(--radius-card, 24px); }
 .dii-checkbox-label { display: flex; align-items: center; gap: .5rem; font-size: .88rem; }
 .dii-contact-method-row { display: flex; gap: .5rem; flex-wrap: wrap; }
 .dii-contact-method-row select { flex: 0 0 auto; }
@@ -246,7 +246,7 @@ html.dark .dii-journey-step {
   color: var(--mj-brand-deep);
 }
 
-.dii-article-cover { width: 100%; border-radius: var(--radius-card, 18px); margin: 1rem 0; max-height: 320px; object-fit: cover; }
+.dii-article-cover { width: 100%; border-radius: var(--radius-card, 24px); margin: 1rem 0; max-height: 320px; object-fit: cover; }
 
 html[data-theme="dark"] .dii-hub-card.hub-card,
 html.dark .dii-hub-card.hub-card {

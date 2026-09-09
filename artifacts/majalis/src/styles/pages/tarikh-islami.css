@@ -86,7 +86,7 @@
   max-width: 10.5rem;
   min-height: 44px;
   padding: 0.55rem 0.7rem;
-  border-radius: var(--radius-card, 18px);
+  border-radius: var(--radius-card, 24px);
   border: 1px solid color-mix(in srgb, var(--tarikh-accent, var(--primary)) 28%, transparent);
   background:
     linear-gradient(

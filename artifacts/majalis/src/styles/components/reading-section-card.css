@@ -15,7 +15,7 @@
   box-sizing: border-box;
   background: var(--rsc-bg);
   border: 1px solid var(--rsc-border);
-  border-radius: var(--ds-radius-lg, 16px);
+  border-radius: var(--radius-card, 24px);
   box-shadow: 0 10px 26px -20px color-mix(in srgb, var(--mj-brand, #1f6b56) 35%, transparent);
 }
 
