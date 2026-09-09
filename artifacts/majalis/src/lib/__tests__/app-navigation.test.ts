@@ -15,7 +15,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const bottom = navFor("bottom");
 assert.deepEqual(
   bottom.map((i) => i.href),
-  ["/quran-hub", "/lessons", "/prayer-times", "/", "/sections"],
+  ["/quran-hub", "/lessons", "/", "/prayer-times", "/sections"],
   "ترتيب الشريط السفلي",
 );
 assert.deepEqual(

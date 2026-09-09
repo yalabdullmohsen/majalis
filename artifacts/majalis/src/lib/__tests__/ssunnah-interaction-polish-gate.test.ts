@@ -25,7 +25,7 @@ assert.doesNotMatch(
   "ممنوع scale على :active للعناصر التفاعلية",
 );
 assert.doesNotMatch(native, /scale\(0\.94\)/, "لا scale(0.94) في إحساس اللمس");
-assert.match(native, /mj-route-push-in[\s\S]*translate3d\(0,\s*8px/, "دخول الصفحة: fade + translateY");
+assert.match(native, /mj-route-brand-fade[\s\S]*translate3d\(0,\s*4px/, "دخول الصفحة: تلاشي هوية + translateY خفيف");
 assert.match(sheet, /ss-sheet-in/, "شيت سفلي بحركة دخول ناعمة");
 assert.match(sheet, /--radius-sheet,\s*28px/, "حواف شيت ناعمة");
 assert.match(sheet, /app-sheet__handle/, "مقبض الشيت موجود");

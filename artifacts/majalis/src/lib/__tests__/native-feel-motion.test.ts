@@ -23,9 +23,9 @@ const instant = read("src/styles/components/instant-interaction.css");
 assert.match(instant, /touch-action:\s*manipulation/);
 
 const native = read("src/styles/components/native-feel.css");
-assert.match(native, /mj-route-enter/);
+assert.match(native, /mj-route-brand-fade/);
+assert.match(native, /mj-route-brand-wash/);
 assert.match(native, /mj-route-push/);
-assert.match(native, /mj-route-pop/);
 assert.match(native, /mj-smooth-image/);
 assert.match(native, /cubic-bezier\(0\.22/);
 assert.match(native, /mj-chrome-stable/);

@@ -66,32 +66,27 @@
   display: none;
 }
 
-/* —— انتقالات مكانية (Instagram-grade): transform + opacity فقط —— */
-@keyframes mj-route-enter {
-  from {
-    opacity: 0.01;
-    transform: translate3d(0, 6px, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes mj-route-push-in {
+/* —— انتقالات: تلاشي بهوية التطبيق (بيج دافئ + زمرد ناعم) —— */
+@keyframes mj-route-brand-fade {
   from {
     opacity: 0;
-    transform: translate3d(0, 8px, 0);
+    transform: translate3d(0, 4px, 0);
+    filter: saturate(0.88);
+  }
+  40% {
+    opacity: 0.72;
+    filter: saturate(0.96);
   }
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
+    filter: none;
   }
 }
 
-@keyframes mj-route-pop-in {
+@keyframes mj-route-brand-fade-soft {
   from {
-    opacity: 0.92;
+    opacity: 0.2;
     transform: translate3d(0, 2px, 0);
   }
   to {
@@ -100,25 +95,12 @@
   }
 }
 
-@keyframes mj-route-tab-in {
+@keyframes mj-route-brand-wash {
   from {
-    opacity: 0;
-    transform: translate3d(0, 0, 0);
+    opacity: 0.55;
   }
   to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes mj-route-modal-in {
-  from {
     opacity: 0;
-    transform: translate3d(0, 8px, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -131,26 +113,72 @@
   -webkit-backface-visibility: hidden;
 }
 
+#main-content.mj-route-push,
+#main-content.mj-route-pop,
+#main-content.mj-route-tab,
+#main-content.mj-route-modal,
+#main-content.mj-route-enter {
+  position: relative;
+  isolation: isolate;
+}
+
+#main-content.mj-route-push::before,
+#main-content.mj-route-pop::before,
+#main-content.mj-route-tab::before,
+#main-content.mj-route-modal::before,
+#main-content.mj-route-enter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--mj-brand-soft, #e6f2ec) 70%, var(--mj-bg, #f7f4ee)) 0%,
+      color-mix(in srgb, var(--mj-accent-soft, #f3ecdf) 45%, var(--mj-bg, #f7f4ee)) 100%
+    );
+  animation: mj-route-brand-wash 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+html.dark #main-content.mj-route-push::before,
+html.dark #main-content.mj-route-pop::before,
+html.dark #main-content.mj-route-tab::before,
+html.dark #main-content.mj-route-modal::before,
+html.dark #main-content.mj-route-enter::before,
+html[data-theme="dark"] #main-content.mj-route-push::before,
+html[data-theme="dark"] #main-content.mj-route-pop::before,
+html[data-theme="dark"] #main-content.mj-route-tab::before,
+html[data-theme="dark"] #main-content.mj-route-modal::before,
+html[data-theme="dark"] #main-content.mj-route-enter::before {
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--mj-brand, #5fbf98) 18%, var(--mj-bg, #121816)) 0%,
+      color-mix(in srgb, var(--mj-surface, #1b2421) 88%, #0f3d2e) 100%
+    );
+}
+
 #main-content.mj-route-enter > * {
-  animation: mj-route-enter 110ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: mj-route-brand-fade 160ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-#main-content.mj-route-push {
-  animation: mj-route-push-in 120ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  box-shadow: none;
+/* المحتوى يتلاشى؛ غطاء الهوية على ::before مستقل عن opacity الحاوية */
+#main-content.mj-route-push > *,
+#main-content.mj-route-tab > *,
+#main-content.mj-route-modal > * {
+  animation: mj-route-brand-fade 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-#main-content.mj-route-pop {
-  /* رجوع شبه فوري — بلا وميض opacity كامل */
-  animation: mj-route-pop-in 90ms ease-out both;
+#main-content.mj-route-pop > * {
+  animation: mj-route-brand-fade-soft 160ms ease-out both;
 }
 
-#main-content.mj-route-tab {
-  animation: mj-route-tab-in 90ms ease both;
-}
-
+#main-content.mj-route-push,
+#main-content.mj-route-pop,
+#main-content.mj-route-tab,
 #main-content.mj-route-modal {
-  animation: mj-route-modal-in 120ms cubic-bezier(0.22, 1.05, 0.36, 1) both;
+  box-shadow: none;
 }
 
 /* سحب حافة تفاعلي */
@@ -190,12 +218,24 @@
 
 @media (prefers-reduced-motion: reduce) {
   #main-content.mj-route-enter > *,
-  #main-content.mj-route-push,
-  #main-content.mj-route-pop,
-  #main-content.mj-route-tab,
-  #main-content.mj-route-modal,
+  #main-content.mj-route-push > *,
+  #main-content.mj-route-pop > *,
+  #main-content.mj-route-tab > *,
+  #main-content.mj-route-modal > *,
+  #main-content.mj-route-push::before,
+  #main-content.mj-route-pop::before,
+  #main-content.mj-route-tab::before,
+  #main-content.mj-route-modal::before,
+  #main-content.mj-route-enter::before,
   .mj-back-nudge {
     animation: none !important;
+  }
+  #main-content.mj-route-push::before,
+  #main-content.mj-route-pop::before,
+  #main-content.mj-route-tab::before,
+  #main-content.mj-route-modal::before,
+  #main-content.mj-route-enter::before {
+    display: none;
   }
   .mj-pressable:active,
   .bottom-nav__tab:active {
