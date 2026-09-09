@@ -334,11 +334,12 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const beginPageTurn = useCallback(() => {
     if (pageTurnLockRef.current) return;
     pageTurnLockRef.current = true;
-    /* نُغلق شريط الآية/الكروم دائمًا — جمّد فقط ما سيبقى بعد المسح (رصيف الصوت أثناء التشغيل) */
+    /* جمّد ارتفاع شريط الآية إن كان مفتوحًا — يمنع قفزة الشبكة عند المسح أثناء القلب */
+    const ayahWasOpen = actionsOpenRef.current;
     const dockRemainsAfterClear =
       audioDockOpen &&
       (playerState === "playing" || playerState === "buffering" || playerState === "error");
-    setFreezeStackMode(dockRemainsAfterClear ? "audio" : "none");
+    setFreezeStackMode(dockRemainsAfterClear ? "audio" : ayahWasOpen ? "ayah" : "none");
     setBottomStackFrozen(true);
     setPagerSettled(false);
     clearPageChrome();
@@ -421,10 +422,6 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         setActionsOpen(false);
         return;
       }
-      if (selectedVerseKey === verseKey && !actionsOpen) {
-        clearSelection();
-        return;
-      }
       haptics.selection();
       setSelectedVerseKey(verseKey);
       setActionsOpen(true);
@@ -432,8 +429,22 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       setStatus(null);
       setAudioError(null);
     },
-    [actionsOpen, clearSelection, selectedVerseKey],
+    [actionsOpen, selectedVerseKey],
   );
+
+  const onLongPressVerse = useCallback((verseKey: string) => {
+    haptics.selection();
+    setSelectedVerseKey(verseKey);
+    setActionsOpen(false);
+    setChromeOpen(false);
+    setStatus(null);
+    setTafsirOpen(true);
+  }, []);
+
+  const openTafsir = useCallback(() => {
+    setActionsOpen(false);
+    setTafsirOpen(true);
+  }, []);
 
   const closeActions = useCallback(() => setActionsOpen(false), []);
 
@@ -697,6 +708,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
               fontFamily={stableView.fontFamily}
               displayPageNumber={stableView.page}
               onSelectVerse={onSelectVerse}
+              onLongPressVerse={onLongPressVerse}
               selectionEnabled={pagerSettled && stableView.page === page}
               onPageNumberPress={() => {
                 setGotoOpen(true);
@@ -803,19 +815,19 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           verseKey={selectedVerseKey}
           status={status}
           onPlay={() => void playSelected()}
-          onTafsir={() => setTafsirOpen(true)}
+          onTafsir={openTafsir}
           onCopy={() => void onCopy()}
           onBookmark={() => void onBookmark()}
           onClose={closeActions}
         />
       ) : null}
 
-      {tafsirOpen ? (
+      {tafsirOpen && selectedVerseKey ? (
         <Suspense fallback={null}>
           <MushafTafsirSheet
             open={tafsirOpen}
             verseKey={selectedVerseKey}
-            ayahText=""
+            ayahText={versePreview(selectedVerseKey)}
             onClose={() => setTafsirOpen(false)}
           />
         </Suspense>

@@ -389,7 +389,12 @@
 
 .nm-word.is-selected,
 .nm-basmala.is-selected {
-  color: color-mix(in srgb, var(--nm-ink) 68%, #1a1208);
+  color: color-mix(in srgb, var(--nm-ink) 58%, #140e08);
+}
+
+.nm-word.is-playing,
+.nm-basmala.is-playing {
+  color: color-mix(in srgb, var(--nm-ink) 72%, #3a2a14);
 }
 
 .nm-word:focus-visible {
@@ -397,7 +402,7 @@
   outline-offset: 1px;
 }
 
-/* طبقة تحديد آية كاملة — شرائط سطرية */
+/* طبقة تحديد آية كاملة — شرائط سطرية أوضح بلا قفزة تخطيط */
 .nm-ayah-sel {
   position: absolute;
   inset: 0;
@@ -409,17 +414,17 @@
 .nm-ayah-sel__band {
   position: absolute;
   pointer-events: none;
-  border-radius: 8px;
+  border-radius: 6px;
   background: rgba(120, 92, 48, 0.22);
 }
 
 .nm-ayah-sel__band--playing {
-  background: rgba(147, 121, 82, 0.16);
+  background: rgba(147, 121, 82, 0.18);
 }
 
 .nm-ayah-sel__band--selected {
-  background: rgba(110, 82, 40, 0.22);
-  box-shadow: none;
+  background: rgba(120, 88, 42, 0.3);
+  box-shadow: inset 0 0 0 1px rgba(90, 64, 28, 0.14);
 }
 
 /* رقم آية — دائرة نصية بسيطة ثابتة الحجم بلا رفع للسطر */

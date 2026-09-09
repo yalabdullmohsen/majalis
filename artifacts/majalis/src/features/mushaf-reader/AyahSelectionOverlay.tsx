@@ -72,6 +72,7 @@ export const AyahSelectionOverlay = memo(function AyahSelectionOverlay({
 
   useLayoutEffect(() => {
     if (!container || !enabled) {
+      clearTextMeasureCache();
       setSelected([]);
       setPlaying([]);
       return;
@@ -92,6 +93,8 @@ export const AyahSelectionOverlay = memo(function AyahSelectionOverlay({
       rafRef.current = window.requestAnimationFrame(measureNow);
     };
 
+    /* أعد القياس بعد تبديل الصفحة/الخط دون الاعتماد على كاش قديم */
+    clearTextMeasureCache();
     measureNow();
 
     const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(schedule) : null;
