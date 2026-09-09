@@ -634,7 +634,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
 
   const mediaPlaying =
     playerState === "playing" || playerState === "buffering" || playerState === "loading";
-  const edgesDisabled = actionsOpen || tafsirOpen || searchOpen || indexOpen;
+  /* شيت الآية لا يمنع قلب الصفحة من الحواف */
+  const edgesDisabled = tafsirOpen || searchOpen || indexOpen;
   /* إخفاء الرصيف عند فتح قائمة الآية لتفادي تعارض أزرار التشغيل */
   const audioDockVisible =
     !actionsOpen &&
@@ -642,6 +643,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     (chromeOpen ||
       playerState === "playing" ||
       playerState === "buffering" ||
+      playerState === "loading" ||
       playerState === "error");
 
   return (

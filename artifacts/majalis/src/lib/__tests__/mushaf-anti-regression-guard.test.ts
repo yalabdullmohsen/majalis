@@ -117,6 +117,11 @@ assert.match(reader, /PrefetchPage/);
 assert.match(reader, /nm-page-placeholder--frame/);
 assert.doesNotMatch(
   reader,
+  /edgesDisabled = actionsOpen\s*\|\|/,
+  "شيت الآية لا يعطّل حواف القلب",
+);
+assert.doesNotMatch(
+  reader,
   /const go = useCallback\(\s*\(next: number\) => \{[^}]*recitation\.stop\(\)/s,
   "قلب الصفحة لا يوقف التلاوة",
 );

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, useSearch } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
 import { NewMushafReader as MushafViewport } from "@/features/mushaf-reader";
@@ -19,8 +19,14 @@ export default function MushafReaderPage() {
   const params = useParams<{ page?: string; surah?: string }>();
   const search = useSearch();
   const paintReady = useNavigationPaintGate(100);
+  /** لا تفكّ تركيب القارئ عند كل ?page= — وإلا ينكسر القلب المتتالي والتلاوة */
+  const [readerMounted, setReaderMounted] = useState(false);
 
   const pageNumber = useMemo(() => resolvePage(params, search), [params, search]);
+
+  useEffect(() => {
+    if (paintReady) setReaderMounted(true);
+  }, [paintReady]);
 
   useEffect(() => {
     void import("@/lib/font-ready").then((m) => {
@@ -45,7 +51,7 @@ export default function MushafReaderPage() {
     }
   }, [pageNumber, params.page, params.surah]);
 
-  if (!paintReady) {
+  if (!readerMounted) {
     return (
       <div
         className="mm-page-placeholder"
