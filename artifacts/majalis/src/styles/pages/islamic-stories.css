@@ -1,13 +1,29 @@
-/* ══════════════════════════════════════════════
-   49. Islamic Stories Page — القصص الإسلامية
-   ══════════════════════════════════════════════ */
+/* القصص الإسلامية — بطاقات فاتحة موحّدة مع قالب TopicPage */
 
 .isp-page,
 .topic-page--islamic-stories .topic-page__body {
   background: var(--color-bg, var(--surface-app, #F7F3EB));
 }
 
-/* إحصائيات التصنيفات */
+.isp-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: min(42rem, 100%);
+  margin-inline: auto;
+  padding-inline: max(0.85rem, var(--gutter-inline-start, 14px));
+  padding-bottom: calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 1.25rem);
+  box-sizing: border-box;
+}
+
+.isp-page--detail {
+  max-width: min(42rem, 100%);
+  margin-inline: auto;
+  padding-inline: max(0.85rem, var(--gutter-inline-start, 14px));
+  padding-bottom: calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 1.25rem);
+}
+
 .isp-stats-row {
   display: flex;
   gap: 0.6rem;
@@ -72,21 +88,27 @@
 
 .isp-filter-chips {
   display: flex;
-  gap: 0.4rem;
-  flex-wrap: wrap;
+  gap: 0.45rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  padding-block: 0.15rem 0.35rem;
 }
 
 .isp-chip {
-  padding: 0.3rem 0.85rem;
-  background: var(--elite-white, var(--mj-bg));
-  border: 1px solid var(--elite-border-2, rgba(24,54,42,0.15));
-  border-radius: var(--ds-radius-full);
-  color: var(--elite-ink-soft, #5D726A);
-  font-size: 0.8rem;
-  font-weight: 600;
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 0.35rem 0.9rem;
+  background: var(--ss-card-bg, #fffcf7);
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 28%, var(--ss-border));
+  border-radius: 999px;
+  color: var(--brand-on-light, var(--mj-brand-deep));
+  font-size: 0.82rem;
+  font-weight: 650;
   font-family: inherit;
   cursor: pointer;
-  transition: all 0.15s;
+  white-space: nowrap;
 }
 
 .isp-chip:hover {
@@ -95,9 +117,15 @@
 }
 
 .isp-chip.is-active {
-  background: var(--elite-forest, var(--mj-brand-deep));
-  border-color: transparent;
+  background: var(--mj-brand-deep, #0d4a39);
+  border-color: var(--mj-brand-deep, #0d4a39);
   color: var(--on-dark-strong, #FFFFFF);
+}
+html.dark .isp-chip.is-active,
+[data-theme="dark"] .isp-chip.is-active {
+  background: var(--mj-brand, #5fbf98);
+  color: var(--mj-on-brand, #06231a);
+  border-color: var(--mj-brand, #5fbf98);
 }
 
 .isp-result-count {
@@ -108,38 +136,64 @@
 
 /* شبكة البطاقات */
 .isp-grid {
+  --isp-gap: 0.85rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--ds-space-4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--isp-gap);
+  width: 100%;
+}
+.isp-grid > :last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  max-width: calc((100% - var(--isp-gap)) / 2);
+  justify-self: center;
+  width: 100%;
+}
+@media (min-width: 720px) {
+  .isp-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .isp-grid > :last-child:nth-child(odd) {
+    grid-column: auto;
+    max-width: none;
+  }
+  .isp-grid > :last-child:nth-child(3n + 1):not(:only-child) {
+    grid-column: 1 / -1;
+    max-width: calc((100% - 2 * var(--isp-gap)) / 3);
+    justify-self: center;
+  }
 }
 
-/* بطاقة القصة */
+/* بطاقة القصة — فاتحة ناعمة */
 .isp-card {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  padding: 1.25rem 1.1rem;
-  background: var(--elite-forest, var(--mj-brand-deep));
-  border: 1px solid rgba(190,199,195,0.2);
-  border-radius: var(--elite-r-lg, 16px);
+  gap: 0.55rem;
+  padding: 1.1rem 1.05rem;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, #e3e8e6));
+  border-radius: var(--radius-card, 24px);
+  box-shadow: var(--ss-shadow-soft, 0 2px 10px -6px rgba(11, 32, 24, 0.14));
   cursor: pointer;
-  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s, background 0.18s;
-  text-align: end;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  text-align: start;
   direction: rtl;
+  min-width: 0;
+  width: 100%;
+  color: inherit;
 }
 
 .isp-card:hover,
 .isp-card:focus-visible {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(24,54,42,0.28);
-  border-color: rgba(190,199,195,0.45);
-  background: var(--mj-brand-deep);
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--mj-brand) 40%, var(--ss-border));
   outline: none;
 }
 
-.isp-card--companions:hover { border-color: rgba(151,165,159,0.6); }
-.isp-card--conquests:hover  { border-color: rgba(122,144,144,0.6); }
-.isp-card--history:hover    { border-color: rgba(107,136,136,0.6); }
+.isp-card--companions:hover,
+.isp-card--conquests:hover,
+.isp-card--history:hover {
+  border-color: color-mix(in srgb, var(--mj-brand) 45%, var(--ss-border));
+}
 
 .isp-card__head {
   display: flex;
@@ -148,9 +202,15 @@
 }
 
 .isp-card__icon {
-  font-size: 1.75rem;
-  line-height: 1;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 14px;
   flex-shrink: 0;
+  background: color-mix(in srgb, var(--mj-brand) 12%, var(--ss-card-bg));
+  color: var(--brand-on-light, var(--mj-brand-deep));
+  line-height: 1;
 }
 
 .isp-card__meta-badges {
@@ -168,8 +228,8 @@
   font-weight: 700;
 }
 
-.isp-badge--cat  { background: rgba(190,199,195,0.18); color: #D6D5CE; border: 1px solid rgba(190,199,195,0.3); }
-.isp-badge--era  { background: rgba(255,255,255,0.07); color: var(--on-dark-secondary, #E8EEEC); }
+.isp-badge--cat  { background: color-mix(in srgb, var(--mj-brand) 12%, transparent); color: var(--brand-on-light, var(--mj-brand-deep)); border: 1px solid color-mix(in srgb, var(--mj-brand) 22%, transparent); }
+.isp-badge--era  { background: color-mix(in srgb, var(--mj-accent, #c4a574) 14%, transparent); color: color-mix(in srgb, var(--mj-accent, #c4a574) 55%, var(--mj-ink)); border: 1px solid color-mix(in srgb, var(--mj-accent) 28%, transparent); }
 
 .isp-card__divider {
   height: 1px;
@@ -179,16 +239,16 @@
 }
 
 .isp-card__title {
-  color: #fff;
-  font-size: 0.9rem;
-  font-weight: 700;
+  color: var(--color-text, var(--mj-ink));
+  font-size: 1.02rem;
+  font-weight: 800;
   margin: 0;
   line-height: 1.45;
 }
 
 .isp-card__summary {
-  color: var(--on-dark-body, #F8FAFC);
-  font-size: 0.82rem;
+  color: var(--color-text-muted, var(--mj-ink-2));
+  font-size: 0.86rem;
   line-height: 1.65;
   margin: 0;
   flex: 1;
@@ -201,11 +261,11 @@
 }
 
 .isp-tag {
-  background: rgba(255,255,255,0.06);
-  color: rgba(190,199,195,0.85);
-  border-radius: var(--ds-radius-full);
+  background: color-mix(in srgb, var(--mj-brand) 8%, transparent);
+  color: var(--color-text-muted, var(--mj-muted));
+  border-radius: 999px;
   padding: 0.15rem 0.55rem;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 }
 
 .isp-tag--large {
@@ -214,15 +274,14 @@
 }
 
 .isp-card__cta {
-  color: var(--elite-mist, #D6D5CE);
-  font-size: 0.78rem;
-  font-weight: 600;
+  color: var(--brand-on-light, var(--mj-brand-deep));
+  font-size: 0.8rem;
+  font-weight: 700;
   margin-top: 0.2rem;
-  transition: color 0.15s;
 }
 
 .isp-card:hover .isp-card__cta {
-  color: #fff;
+  color: var(--mj-brand-deep);
 }
 
 /* حالات خاصة */
@@ -288,14 +347,14 @@
 }
 
 .isp-detail__hero {
-  background: var(--elite-forest, var(--mj-brand-deep));
-  background-image: url("/star-pattern.svg");
-  background-size: 100px 100px;
-  border-radius: var(--elite-r-xl, 24px);
-  padding: 2rem 1.75rem;
+  background: var(--ss-card-bg, #fffcf7);
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border));
+  border-radius: var(--radius-card, 24px);
+  padding: 1.35rem 1.2rem;
   display: flex;
   flex-direction: column;
-  gap: var(--ds-space-3);
+  gap: 0.65rem;
+  box-shadow: var(--ss-shadow-soft, 0 2px 10px -6px rgba(11, 32, 24, 0.14));
 }
 
 .isp-detail__badges {
@@ -307,15 +366,15 @@
 .isp-detail__icon { font-size: 2.5rem; line-height: 1; }
 
 .isp-detail__title {
-  color: #fff;
-  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  color: var(--color-text, var(--mj-ink));
+  font-size: clamp(1.25rem, 4vw, 1.65rem);
   font-weight: 800;
   margin: 0;
-  line-height: 1.3;
+  line-height: 1.35;
 }
 
 .isp-detail__summary {
-  color: var(--on-dark-body, #F8FAFC);
+  color: var(--color-text-muted, var(--mj-ink-2));
   font-size: 0.95rem;
   line-height: 1.75;
   margin: 0;
@@ -330,7 +389,7 @@
 }
 
 .isp-detail__section--lessons  { background: rgba(21,128,61,0.05); border-color: rgba(21,128,61,0.15); }
-.isp-detail__section--figures  { background: #F5F3FF; border-color: rgba(109,40,217,0.15); }
+.isp-detail__section--figures  { background: color-mix(in srgb, var(--mj-brand) 6%, var(--ss-card-bg)); border-color: color-mix(in srgb, var(--mj-brand) 18%, transparent); }
 .isp-detail__section--sources  { background: #f0faf5; border-color: rgba(31,77,58,0.18); }
 
 .isp-detail__section-title {
@@ -345,7 +404,7 @@
 }
 
 .isp-detail__section-title--green  { color: var(--mj-brand) !important; }
-.isp-detail__section-title--purple { color: #6D28D9 !important; }
+.isp-detail__section-title--purple { color: var(--brand-on-light, var(--mj-brand-deep)) !important; }
 .isp-detail__section-title--gold   { color: var(--majalis-emerald,var(--mj-brand)) !important; }
 
 .isp-detail__body {

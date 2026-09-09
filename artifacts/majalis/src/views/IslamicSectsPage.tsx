@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { ChevronLeft } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionIcon } from "@/components/ui/SectionIcon";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
+import "@/styles/pages/islamic-sects.css";
 
 type Sect = {
   id: string;
@@ -858,13 +861,6 @@ const SECTS: Sect[] = [
 const CATEGORIES = ["الكل", "مدرسة سنية", "شيعة", "مدرسة عقدية", "فرقة مستقلة", "فرقة تاريخية"];
 const STATUS_FILTER = ["الكل", "قائمة", "تاريخية"];
 
-const CATEGORY_COLOR: Record<string, string> = {
-  "مدرسة سنية": "var(--mj-brand-deep)",
-  "شيعة": "#2D5A8E",
-  "مدرسة عقدية": "#4A6741",
-  "فرقة مستقلة": "var(--mj-brand)",
-  "فرقة تاريخية": "#666",
-};
 
 export default function IslamicSectsPage() {
   const [category, setCategory] = useState("الكل");
@@ -904,295 +900,144 @@ export default function IslamicSectsPage() {
   });
 
   return (
-    <div className="page-container" dir="rtl">
-      {/* Hero */}
-      <div
-        className="page-hero"
-        style={{ background: "linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand-deep) 100%)" }}
-      >
-        <div className="page-hero-content">
-          <div className="page-hero-icon" style={{ fontSize: "3rem" }}><SectionIcon name="🕌" size={28} /></div>
-          <h1 className="page-hero-title">الفرق الإسلامية</h1>
-          <p className="page-hero-desc">
-            موسوعة علمية تاريخية في الفرق والمذاهب الإسلامية — نشأتها وعقائدها وأبرز علمائها وكتبها
-          </p>
-          <div style={{ marginTop: "1rem", display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-            <span className="badge" style={{ background: "rgba(255,255,255,0.2)", color: "#fff", padding: "0.4rem 1rem", borderRadius: "999px", fontSize: "0.85rem" }}>
-              {SECTS.length} فرقة ومدرسة
-            </span>
-            <span className="badge" style={{ background: "rgba(255,255,255,0.2)", color: "#fff", padding: "0.4rem 1rem", borderRadius: "999px", fontSize: "0.85rem" }}>
-              {SECTS.filter((s) => s.status === "قائمة").length} قائمة •{" "}
-              {SECTS.filter((s) => s.status === "تاريخية").length} تاريخية
-            </span>
-          </div>
-          <div style={{ marginTop: "1rem" }}>
-            <ShareButtons title="الفرق الإسلامية — سُنّة" />
-          </div>
-        </div>
-      </div>
+    <SectionTemplatePage
+      route="/islamic-sects"
+      title="الفرق الإسلامية"
+      subtitle="موسوعة علمية تاريخية في الفرق والمذاهب — نشأتها وعقائدها وأبرز علمائها"
+      groupTitle="الفرق والمذاهب"
+      className="topic-page--sects"
+      eyebrow="العقيدة والتوحيد"
+    >
+      <div className="sect-hub">
+        <p className="sect-hub__note">
+          <strong>ملاحظة منهجية:</strong> هذه الصفحة استعراض علمي تاريخي وفق ما دوّنه العلماء في كتب الملل والنحل والفرق، ولا تمثل فتوى شرعية. الحكم التفصيلي على الفرق يُرجع فيه إلى علماء أهل السنة المعتمدين.
+        </p>
 
-      {/* Notice */}
-      <div
-        style={{
-          background: "#fff8e1",
-          border: "1px solid #f0c040",
-          borderRadius: "0.75rem",
-          padding: "1rem 1.25rem",
-          margin: "1.5rem auto",
-          maxWidth: "760px",
-          fontSize: "0.92rem",
-          color: "#5a4300",
-          lineHeight: "1.7",
-        }}
-      >
-        <strong>ملاحظة منهجية:</strong> هذه الصفحة استعراض علمي تاريخي وفق ما دوّنه العلماء في كتب الملل والنحل والفرق، ولا تمثل فتوى شرعية. الحكم التفصيلي على الفرق يُرجع فيه إلى علماء أهل السنة المعتمدين.
-      </div>
-
-      {/* Search */}
-      <div style={{ maxWidth: "900px", margin: "0 auto 1rem", padding: "0 1rem" }}>
         <input
           type="search"
           value={search}
-          onChange={e => setSearch(e.target.value)}
-          placeholder="ابحث في الفرق والمذاهب..."
-          className="page-search-input"
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="ابحث في الفرق والمذاهب…"
+          className="sect-hub__search"
           aria-label="بحث في الفرق الإسلامية"
-          style={{ width: "100%" }}
         />
-      </div>
 
-      {/* Filters */}
-      <div style={{ maxWidth: "900px", margin: "0 auto 1.5rem", padding: "0 1rem" }}>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
-          {CATEGORIES.map((c) => (
-            <button
-              type="button"
-              key={c}
-              onClick={() => setCategory(c)}
-              style={{
-                padding: "0.4rem 0.9rem",
-                borderRadius: "999px",
-                border: "1px solid",
-                fontSize: "0.85rem",
-                cursor: "pointer",
-                background: category === c ? "var(--mj-brand-deep)" : "transparent",
-                color: category === c ? "#fff" : "var(--mj-brand-deep)",
-                borderColor: "var(--mj-brand-deep)",
-                fontFamily: "inherit",
-              }}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-          {STATUS_FILTER.map((s) => (
-            <button
-              type="button"
-              key={s}
-              onClick={() => setStatusF(s)}
-              style={{
-                padding: "0.35rem 0.8rem",
-                borderRadius: "999px",
-                border: "1px solid",
-                fontSize: "0.82rem",
-                cursor: "pointer",
-                background: statusF === s ? "var(--mj-brand-deep)" : "transparent",
-                color: statusF === s ? "#fff" : "var(--mj-brand-deep)",
-                borderColor: "var(--mj-brand-deep)",
-                fontFamily: "inherit",
-              }}
-            >
-              {s === "الكل" ? "الكل" : s === "قائمة" ? "قائمة" : "تاريخية"}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Cards */}
-      <div
-        style={{
-          maxWidth: "900px",
-          margin: "0 auto",
-          padding: "0 1rem 3rem",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-          gap: "1.25rem",
-        }}
-      >
-        {filtered.map((sect) => (
-          <div
-            key={sect.id}
-            onClick={() => setSelected(selected?.id === sect.id ? null : sect)}
-            role="button"
-            tabIndex={0}
-            aria-pressed={selected?.id === sect.id}
-            aria-label={`عرض تفاصيل ${sect.name}`}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                setSelected(selected?.id === sect.id ? null : sect);
-              }
-            }}
-            style={{
-              background: "#fff",
-              borderRadius: "1rem",
-              padding: "1.25rem",
-              boxShadow: selected?.id === sect.id ? "0 0 0 3px var(--mj-brand-deep)" : "0 2px 8px rgba(0,0,0,0.08)",
-              cursor: "pointer",
-              transition: "box-shadow 0.2s, transform 0.15s",
-              border: `2px solid ${selected?.id === sect.id ? "var(--mj-brand-deep)" : "transparent"}`,
-            }}
-          >
-            {/* Header */}
-            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.75rem" }}>
-              <span style={{ fontSize: "2rem" }}><SectionIcon name={sect.icon} size={24} /></span>
-              <div>
-                <div style={{ fontWeight: "700", fontSize: "1rem", color: "var(--mj-brand-deep)" }}>{sect.name}</div>
-                <div style={{ fontSize: "0.78rem", color: "#888" }}>{sect.era}</div>
-              </div>
-            </div>
-
-            {/* Category badge */}
-            <span
-              style={{
-                display: "inline-block",
-                fontSize: "0.75rem",
-                padding: "0.2rem 0.7rem",
-                borderRadius: "999px",
-                background: CATEGORY_COLOR[sect.category] + "20",
-                color: CATEGORY_COLOR[sect.category],
-                border: `1px solid ${CATEGORY_COLOR[sect.category]}40`,
-                marginBottom: "0.65rem",
-              }}
-            >
-              {sect.category}
-            </span>
-
-            <div style={{ fontSize: "0.83rem", color: "#555", lineHeight: "1.6", marginBottom: "0.75rem" }}>
-              {sect.foundingCause}
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span
-                style={{
-                  fontSize: "0.75rem",
-                  padding: "0.2rem 0.6rem",
-                  borderRadius: "999px",
-                  background: sect.status === "قائمة" ? "#e8f5e9" : "#f5f5f5",
-                  color: sect.status === "قائمة" ? "var(--mj-brand-deep)" : "#888",
-                  fontWeight: "600",
-                }}
+        <div className="sect-hub__filters">
+          <p className="sect-hub__filter-label">التصنيف</p>
+          <div className="sect-hub__chips" role="group" aria-label="تصفية التصنيف">
+            {CATEGORIES.map((c) => (
+              <button
+                type="button"
+                key={c}
+                className={`sect-hub__chip${category === c ? " is-active" : ""}`}
+                onClick={() => setCategory(c)}
               >
-                {sect.status === "قائمة" ? "قائمة" : "تاريخية"}
-              </span>
-              <span style={{ fontSize: "0.75rem", color: "var(--mj-brand-deep)" }}>
-                {selected?.id === sect.id ? "▲ إغلاق" : "▼ التفاصيل"}
-              </span>
-            </div>
+                {c}
+              </button>
+            ))}
+          </div>
+          <p className="sect-hub__filter-label">الحالة</p>
+          <div className="sect-hub__chips" role="group" aria-label="تصفية الحالة">
+            {STATUS_FILTER.map((s) => (
+              <button
+                type="button"
+                key={s}
+                className={`sect-hub__chip${statusF === s ? " is-active" : ""}`}
+                onClick={() => setStatusF(s)}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        </div>
 
-            {/* Expanded detail */}
-            {selected?.id === sect.id && (
+        <div className="sect-hub__grid">
+          {filtered.map((sect) => {
+            const open = selected?.id === sect.id;
+            return (
               <div
-                style={{
-                  marginTop: "1rem",
-                  borderTop: "1px solid #e5e5e5",
-                  paddingTop: "1rem",
+                key={sect.id}
+                id={sect.id}
+                className={`sect-card${open ? " is-open" : ""}`}
+                onClick={() => setSelected(open ? null : sect)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setSelected(open ? null : sect);
+                  }
                 }}
+                role="button"
+                tabIndex={0}
+                aria-expanded={open}
+                aria-label={`عرض تفاصيل ${sect.name}`}
               >
-                <div style={{ fontSize: "0.82rem", color: "#444", lineHeight: "1.8" }}>
-                  <p><strong>الاسم الكامل:</strong> {sect.fullName}</p>
-                  <p><strong>المؤسس:</strong> {sect.founder}</p>
-                  <p><strong>المنشأ:</strong> {sect.origin}</p>
-                  {sect.spread && <p><strong>الانتشار:</strong> {sect.spread}</p>}
-
-                  <div style={{ marginTop: "0.75rem" }}>
-                    <strong>أبرز المعتقدات:</strong>
-                    <ul style={{ paddingRight: "1.2rem", marginTop: "0.4rem" }}>
-                      {sect.keyBeliefs.map((b, i) => (
-                        <li key={i} style={{ marginBottom: "0.25rem" }}>{b}</li>
-                      ))}
-                    </ul>
+                <div className="sect-card__head">
+                  <span className="sect-card__icon" aria-hidden="true">
+                    <SectionIcon name={sect.icon} size={22} />
+                  </span>
+                  <div>
+                    <h3 className="sect-card__title">{sect.name}</h3>
+                    <p className="sect-card__era">{sect.era}</p>
                   </div>
+                </div>
+                <div className="sect-card__badges">
+                  <span className="sect-card__pill">{sect.category}</span>
+                  <span className={`sect-card__pill${sect.status === "تاريخية" ? " sect-card__pill--muted" : ""}`}>
+                    {sect.status}
+                  </span>
+                </div>
+                <p className="sect-card__desc">{sect.foundingCause}</p>
+                <span className="sect-card__cta">
+                  {open ? "إغلاق" : "التفاصيل"}
+                  <ChevronLeft size={16} aria-hidden="true" />
+                </span>
 
-                  {sect.keyBooks.length > 0 && (
-                    <div style={{ marginTop: "0.75rem" }}>
-                      <strong>أبرز الكتب:</strong>
-                      <ul style={{ paddingRight: "1.2rem", marginTop: "0.4rem" }}>
-                        {sect.keyBooks.map((b, i) => (
-                          <li key={i} style={{ marginBottom: "0.2rem" }}>{b}</li>
+                {open ? (
+                  <div className="sect-card__detail">
+                    <p><strong>الاسم الكامل:</strong> {sect.fullName}</p>
+                    <p><strong>المؤسس:</strong> {sect.founder}</p>
+                    <p><strong>المنشأ:</strong> {sect.origin}</p>
+                    {sect.spread ? <p><strong>الانتشار:</strong> {sect.spread}</p> : null}
+                    <div>
+                      <strong>أبرز المعتقدات:</strong>
+                      <ul>
+                        {sect.keyBeliefs.map((b, i) => (
+                          <li key={i}>{b}</li>
                         ))}
                       </ul>
                     </div>
-                  )}
-
-                  {sect.keyScholars.length > 0 && (
-                    <div style={{ marginTop: "0.75rem" }}>
-                      <strong>أبرز العلماء:</strong>{" "}
-                      <span style={{ color: "#555" }}>{sect.keyScholars.join("، ")}</span>
-                    </div>
-                  )}
-
-                  {sect.quote && (
-                    <blockquote
-                      style={{
-                        marginTop: "0.9rem",
-                        borderRight: "3px solid var(--mj-brand-deep)",
-                        paddingRight: "0.75rem",
-                        color: "#444",
-                        fontStyle: "normal",
-                        lineHeight: "1.7",
-                      }}
-                    >
-                      {sect.quote}
-                    </blockquote>
-                  )}
-
-                  {sect.id === "ahl-al-sunna" && (
-                    <div style={{ marginTop: "1rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                      <Link
-                        href="/tawhid"
-                        onClick={(e) => e.stopPropagation()}
-                        style={{
-                          display: "inline-block",
-                          background: "var(--mj-brand-deep)",
-                          color: "#fff",
-                          padding: "0.55rem 0.9rem",
-                          borderRadius: "0.6rem",
-                          fontWeight: 700,
-                          fontSize: "0.85rem",
-                          textAlign: "center",
-                        }}
-                      >
-                        دروس عقيدة أهل السنة والجماعة ←
-                      </Link>
-                      <Link
-                        href="/tawhid"
-                        onClick={(e) => e.stopPropagation()}
-                        style={{
-                          display: "inline-block",
-                          border: "1px solid var(--mj-brand-deep)",
-                          color: "var(--mj-brand-deep)",
-                          padding: "0.5rem 0.9rem",
-                          borderRadius: "0.6rem",
-                          fontWeight: 600,
-                          fontSize: "0.85rem",
-                          textAlign: "center",
-                        }}
-                      >
-                        بوابة العقيدة والتوحيد ←
-                      </Link>
-                    </div>
-                  )}
-                </div>
+                    {sect.keyBooks.length > 0 ? (
+                      <div>
+                        <strong>أبرز الكتب:</strong>
+                        <ul>
+                          {sect.keyBooks.map((b, i) => (
+                            <li key={i}>{b}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : null}
+                    {sect.keyScholars.length > 0 ? (
+                      <p><strong>أبرز العلماء:</strong> {sect.keyScholars.join("، ")}</p>
+                    ) : null}
+                    {sect.quote ? <blockquote className="sect-card__quote">{sect.quote}</blockquote> : null}
+                    {sect.id === "ahl-al-sunna" ? (
+                      <div className="sect-card__links">
+                        <Link href="/tawhid" className="sect-card__link">دروس عقيدة أهل السنة والجماعة</Link>
+                        <Link href="/tawhid" className="sect-card__link sect-card__link--ghost">بوابة العقيدة والتوحيد</Link>
+                      </div>
+                    ) : null}
+                  </div>
+                ) : null}
               </div>
-            )}
-          </div>
-        ))}
-      </div>
-      <div className="px-4 pb-6 mt-4">
+            );
+          })}
+        </div>
+
+        <div className="sect-hub__share">
+          <ShareButtons title="الفرق الإسلامية — سُنّة" />
+        </div>
         <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والفرق" count={4} />
       </div>
-    </div>
+    </SectionTemplatePage>
   );
 }

@@ -1,9 +1,8 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect } from "react";
 import { applyPageSeo } from "@/lib/seo";
-import { StarKhatam } from "@/components/IslamicDecorations";
-import { IslamicDivider } from "@/components/ui-common";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import {
   AMR_BIL_MARUF_LEVELS,
   AMR_BIL_MARUF_CONDITIONS,
@@ -38,38 +37,15 @@ export default function AmrBilMarufPage() {
   }, []);
 
   return (
-    <div className="page-shell narrow" dir="rtl" style={{ paddingBottom: "3rem" }}>
-      {/* ═══ الهيدر ═══ */}
-      <div style={{
-        background: "linear-gradient(160deg, var(--mj-brand-deep) 0%, #163728 55%, #0e2619 100%)",
-        borderRadius: "1rem",
-        padding: "2rem 1.5rem",
-        marginBottom: "2rem",
-        position: "relative",
-        overflow: "hidden",
-        textAlign: "center",
-      }}>
-        <div className="home-hero-pattern" aria-hidden="true" style={{ pointerEvents: "none" }} />
-        <div style={{ position: "relative" }}>
-          <StarKhatam size={52} color="rgba(255,255,255,0.35)" opacity={0.7} />
-          <h1 className="amr-hero__title" style={{
-            color: "#fff",
-            fontSize: "clamp(1.4rem, 4vw, 2rem)",
-            fontWeight: 800,
-            margin: "0.5rem 0 0.25rem",
-            letterSpacing: "-0.02em",
-          }}>
-            الأمر بالمعروف والنهي عن المنكر
-          </h1>
-          <p style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.92rem", margin: 0, lineHeight: 1.6 }}>
-            مراتبه الثلاث، شروطه، وأحكامه في الفقه الإسلامي
-          </p>
-          <div style={{ marginTop: "1rem", display: "flex", justifyContent: "center" }}>
-            <IslamicDivider width={260} color="rgba(255,255,255,0.7)" opacity={0.6} />
-          </div>
-        </div>
-      </div>
-
+    <SectionTemplatePage
+      route="/amr-bil-maruf"
+      title="الأمر بالمعروف والنهي عن المنكر"
+      subtitle="مراتبه الثلاث، شروطه، وأحكامه في الفقه الإسلامي"
+      groupTitle="المراتب والشروط"
+      className="topic-page--amr"
+      eyebrow="الفقه والآداب"
+    >
+      <div className="amr-page" style={{ paddingBottom: "calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 1rem)", maxWidth: "42rem", marginInline: "auto", paddingInline: "max(0.85rem, 14px)" }}>
       {/* ═══ الآية والحديث الأساسيان ═══ */}
       <section style={{
         background: "var(--msk-canvas, #FAFAF8)",
@@ -404,5 +380,6 @@ export default function AmrBilMarufPage() {
         <SectionQuiz sectionId="akhlaq" title="اختبر معلوماتك في الأمر بالمعروف" count={4} />
       </div>
     </div>
+    </SectionTemplatePage>
   );
 }
