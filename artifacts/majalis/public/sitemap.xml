@@ -1475,6 +1475,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/rashidun-basra-kufa</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/rashidun-ali</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1750,6 +1755,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/abbasid-mustansiriyya</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/andalus-uqab</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1815,6 +1825,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/umayyad-abd-rahman-dakhil-prep</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/andalus-ibn-hafsun</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1871,6 +1886,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/seljuk-manzikert</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/seljuk-zengi-line</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -1991,6 +2011,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/mamluk-faraj</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/mamluk-qaitbay</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -2150,6 +2175,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/ottoman-lepanto</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/modern-print-nahda</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -2176,6 +2206,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/modern-un-partition-1947</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/modern-opec-1973</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -2236,6 +2271,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/civ-bayt-mal</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/civ-calligraphy</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
