@@ -170,3 +170,25 @@ html.dark .compact-sources {
   outline: 2px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 55%, transparent);
   outline-offset: 2px;
 }
+
+.compact-sources--nested {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.compact-sources--nested .compact-sources__item,
+.compact-sources--nested .compact-sources__text {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--mj-ink, var(--elite-ink, #12241d));
+  font-weight: 500;
+}
+
+html[data-theme="dark"] .compact-sources--nested .compact-sources__item,
+html.dark .compact-sources--nested .compact-sources__item,
+html[data-theme="dark"] .compact-sources--nested .compact-sources__text,
+html.dark .compact-sources--nested .compact-sources__text {
+  color: var(--mj-ink, #e8efeb);
+}

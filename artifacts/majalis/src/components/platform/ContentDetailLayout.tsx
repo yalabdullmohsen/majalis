@@ -1,5 +1,4 @@
 import { type ReactNode } from "react";
-import { Link } from "wouter";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { AdminInlineEdit, type InlineEditContentType } from "@/components/AdminInlineEdit";
 import { ReadingProgressBar } from "@/components/ReadingProgressBar";
@@ -9,6 +8,8 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { PageShell } from "@/components/layout/PageShell";
 import { dedupeLinksByHref } from "@/lib/link-dedupe";
 import { CompactSources } from "@/components/content/CompactSources";
+import { ReadingSectionCard } from "@/components/content/ReadingSectionCard";
+import { RelatedContentCard } from "@/components/content/RelatedContentCard";
 
 function estimateReadMinutes(text?: string): number | null {
   if (!text || text.length < 200) return null;
@@ -98,36 +99,39 @@ export function ContentDetailLayout({
       </header>
 
       {body && (
-        <article className="content-detail-body">
+        <ReadingSectionCard title="الشرح" variant="default" className="content-detail-body">
           <div className="highlighted-card__highlight">
             {body.split("\n").map((line, i) => {
-            const trimmed = line.trim();
-            if (!trimmed) return <br key={i} />;
-            if (trimmed.startsWith("**") && trimmed.endsWith("**")) {
-              return <h2 key={i} className="content-detail-heading">{trimmed.slice(2, -2)}</h2>;
-            }
-            return <p key={i}>{trimmed}</p>;
-          })}
+              const trimmed = line.trim();
+              if (!trimmed) return <br key={i} />;
+              if (trimmed.startsWith("**") && trimmed.endsWith("**")) {
+                return <h3 key={i} className="content-detail-heading">{trimmed.slice(2, -2)}</h3>;
+              }
+              return <p key={i}>{trimmed}</p>;
+            })}
           </div>
-        </article>
+        </ReadingSectionCard>
       )}
 
       {children}
 
       {sourceUrls && sourceUrls.length > 0 && (
-        <CompactSources
-          title="المراجع الأصلية"
-          items={sourceUrls.map((url) => {
-            let summary: string;
-            try {
-              const u = new URL(url);
-              summary = u.hostname.replace(/^www\./, "") + (u.pathname !== "/" ? u.pathname.slice(0, 28) : "");
-            } catch {
-              summary = url.length > 48 ? `${url.slice(0, 47)}…` : url;
-            }
-            return { summary, detail: url };
-          })}
-        />
+        <ReadingSectionCard title="المراجع الأصلية" variant="sources">
+          <CompactSources
+            title=""
+            className="compact-sources--nested"
+            items={sourceUrls.map((url) => {
+              let summary: string;
+              try {
+                const u = new URL(url);
+                summary = u.hostname.replace(/^www\./, "") + (u.pathname !== "/" ? u.pathname.slice(0, 28) : "");
+              } catch {
+                summary = url.length > 48 ? `${url.slice(0, 47)}…` : url;
+              }
+              return { summary, detail: url };
+            })}
+          />
+        </ReadingSectionCard>
       )}
 
       <ShareButtons
@@ -136,10 +140,9 @@ export function ContentDetailLayout({
       />
 
       {related && (
-        <section className="content-detail-related">
-          <h2>محتوى ذو صلة</h2>
+        <ReadingSectionCard title="محتوى ذو صلة" variant="related" className="content-detail-related">
           {related}
-        </section>
+        </ReadingSectionCard>
       )}
 
       <div className="px-4 pb-6 mt-4">
@@ -159,16 +162,12 @@ type CardProps = {
 
 export function PlatformContentCard({ href, title, meta, tag, summary }: CardProps) {
   return (
-    <Link href={href} className="platform-card-link">
-      <article className="page-card platform-content-card">
-        <div className="page-card-header">
-          <p>{title}</p>
-          {tag && <span className="page-tag">{tag}</span>}
-        </div>
-        {meta && <p className="page-meta">{meta}</p>}
-        {summary && <p className="page-desc">{summary}</p>}
-      </article>
-    </Link>
+    <RelatedContentCard
+      href={href}
+      title={title}
+      category={tag || meta}
+      summary={summary || (tag && meta ? meta : undefined)}
+    />
   );
 }
 
@@ -176,10 +175,12 @@ export function RelatedLinks({ items }: { items: { href: string; title: string; 
   const unique = dedupeLinksByHref(items.map((item) => ({ href: item.href, title: item.title, meta: item.meta })));
   if (unique.length === 0) return null;
   return (
-    <div className="page-card-grid">
+    <ul className="rsc-stack">
       {unique.map((item) => (
-        <PlatformContentCard key={item.href} href={item.href} title={item.title!} meta={item.meta} />
+        <li key={item.href}>
+          <RelatedContentCard href={item.href} title={item.title!} category={item.meta} />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

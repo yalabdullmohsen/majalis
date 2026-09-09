@@ -1,8 +1,14 @@
 import { useEffect, useMemo } from "react";
 import { Link, useRoute } from "wouter";
-import { PageShell } from "@/components/layout/PageShell";
+import { TopicPage } from "@/components/topic/TopicPage";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import {
+  ReadingBulletList,
+  ReadingProse,
+  ReadingSectionCard,
+} from "@/components/content/ReadingSectionCard";
+import { RelatedContentStack } from "@/components/content/RelatedContentCard";
 import {
   getHistoryItem,
   HISTORY_CATEGORIES,
@@ -64,30 +70,42 @@ export default function TarikhIslamiDetailPage() {
 
   if (!item) {
     return (
-      <PageShell variant="narrow" className="tarikh-page">
-        <p className="tarikh-empty">لم يُعثر على هذا العنصر.</p>
+      <TopicPage
+        themeId="history"
+        sectionRoute="/tarikh-islami"
+        breadcrumb={[
+          { label: "الرئيسية", href: "/" },
+          { label: "التاريخ الإسلامي", href: "/tarikh-islami" },
+          { label: "غير موجود" },
+        ]}
+        eyebrow="التاريخ الإسلامي"
+        title="عنصر غير موجود"
+        subtitle="لم يُعثر على هذا العنصر في فهرس التاريخ الإسلامي."
+        className="topic-page--tarikh-detail"
+      >
         <Link href="/tarikh-islami" className="tarikh-link">
           العودة إلى التاريخ الإسلامي
         </Link>
-      </PageShell>
+      </TopicPage>
     );
   }
 
   return (
-    <PageShell variant="narrow" className="tarikh-page tarikh-detail" as="article">
-      <nav className="tarikh-breadcrumbs" aria-label="مسار التصفح">
-        <Link href="/">الرئيسية</Link>
-        <span aria-hidden="true">›</span>
-        <Link href="/tarikh-islami">التاريخ الإسلامي</Link>
-        <span aria-hidden="true">›</span>
-        <span>{item.title}</span>
-      </nav>
-
-      <header className="tarikh-detail__head">
-        <p className="tarikh-detail__eyebrow">{HISTORY_CATEGORIES[item.category]}</p>
-        <h1 className="tarikh-detail__title">{item.title}</h1>
-        <p className="tarikh-detail__summary">{item.summary}</p>
-        <div className="tarikh-detail__meta">
+    <TopicPage
+      themeId="history"
+      sectionRoute="/tarikh-islami"
+      breadcrumb={[
+        { label: "الرئيسية", href: "/" },
+        { label: "التاريخ الإسلامي", href: "/tarikh-islami" },
+        { label: item.title },
+      ]}
+      eyebrow={HISTORY_CATEGORIES[item.category]}
+      title={item.title}
+      subtitle={item.summary}
+      className="topic-page--tarikh-detail"
+    >
+      <div className="tarikh-detail-reading">
+        <div className="tarikh-detail__meta" aria-label="بيانات الحدث">
           {item.hijriDate ? <span>هـ: {item.hijriDate}</span> : null}
           {item.gregorianDate ? <span>م: {item.gregorianDate}</span> : null}
           {item.place ? <span>{item.place}</span> : null}
@@ -95,95 +113,82 @@ export default function TarikhIslamiDetailPage() {
             {VERIFICATION_LABEL[item.verification]}
           </span>
         </div>
+
         {item.portalHref ? (
           <Link href={item.portalHref} className="tarikh-chip tarikh-chip--portal">
             {item.portalLabel || "ادخل القسم التفصيلي"}
           </Link>
         ) : null}
-        <ShareButtons title={item.title} />
-      </header>
 
-      <section className="tarikh-detail__section">
-        <h2>الشرح</h2>
-        <p className="tarikh-detail__body">{item.detail}</p>
-      </section>
+        <ReadingSectionCard title="نبذة مختصرة" variant="summary">
+          <ReadingProse text={item.summary} />
+        </ReadingSectionCard>
 
-      {item.causes ? (
-        <section className="tarikh-detail__section">
-          <h2>الأسباب</h2>
-          <p className="tarikh-detail__body">{item.causes}</p>
-        </section>
-      ) : null}
+        <ReadingSectionCard title="الشرح" variant="default">
+          <ReadingProse text={item.detail} />
+        </ReadingSectionCard>
 
-      {item.outcomes ? (
-        <section className="tarikh-detail__section">
-          <h2>النتائج</h2>
-          <p className="tarikh-detail__body">{item.outcomes}</p>
-        </section>
-      ) : null}
+        {item.causes ? (
+          <ReadingSectionCard title="الأسباب" variant="default">
+            <ReadingProse text={item.causes} />
+          </ReadingSectionCard>
+        ) : null}
 
-      {item.lessons ? (
-        <section className="tarikh-detail__section">
-          <h2>العبر والفوائد</h2>
-          <p className="tarikh-detail__body">{item.lessons}</p>
-        </section>
-      ) : null}
+        {item.outcomes ? (
+          <ReadingSectionCard title="النتائج" variant="default">
+            <ReadingProse text={item.outcomes} />
+          </ReadingSectionCard>
+        ) : null}
 
-      {item.relatedPersons?.length ? (
-        <section className="tarikh-detail__section">
-          <h2>شخصيات مرتبطة</h2>
-          <ul className="tarikh-detail__list">
-            {item.relatedPersons.map((p) => (
-              <li key={p}>{p}</li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
+        {item.lessons ? (
+          <ReadingSectionCard title="العبر والفوائد" variant="lessons">
+            <ReadingProse text={item.lessons} />
+          </ReadingSectionCard>
+        ) : null}
 
-      <section className="tarikh-detail__section">
-        <h2>المصادر</h2>
-        <ul className="tarikh-detail__list">
-          {item.sources.map((s) => (
-            <li key={s}>{s}</li>
-          ))}
-        </ul>
-      </section>
+        {item.relatedPersons?.length ? (
+          <ReadingSectionCard title="شخصيات مرتبطة" variant="default">
+            <ReadingBulletList items={item.relatedPersons} />
+          </ReadingSectionCard>
+        ) : null}
 
-      {item.relatedLinks?.length ? (
-        <section className="tarikh-detail__section">
-          <h2>روابط ذات صلة</h2>
-          <div className="tarikh-related-links">
-            {item.relatedLinks.map((l) => (
-              <Link key={l.href} href={l.href} className="tarikh-chip">
-                {l.label}
-              </Link>
-            ))}
-          </div>
-        </section>
-      ) : null}
+        <ReadingSectionCard title="المصادر" variant="sources">
+          <ReadingBulletList items={item.sources} />
+        </ReadingSectionCard>
 
-      {related.length > 0 ? (
-        <section className="tarikh-detail__section">
-          <h2>اقرأ أيضًا</h2>
-          <ul className="tarikh-card-list">
-            {related.map((r) => (
-              <li key={r.id}>
-                <Link href={`/tarikh-islami/${r.id}`} className="tarikh-card">
-                  <span className="tarikh-card__cat">{HISTORY_CATEGORIES[r.category as HistoryCategory]}</span>
-                  <span className="tarikh-card__title">{r.title}</span>
-                  <span className="tarikh-card__summary">{r.summary}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
+        {item.relatedLinks?.length ? (
+          <ReadingSectionCard title="روابط ذات صلة" variant="related">
+            <RelatedContentStack
+              items={item.relatedLinks.map((l) => ({
+                href: l.href,
+                title: l.label,
+                category: "رابط ذو صلة",
+              }))}
+            />
+          </ReadingSectionCard>
+        ) : null}
 
-      <footer className="tarikh-detail__foot">
-        <Link href="/tarikh-islami" className="tarikh-link">
-          العودة إلى فهرس التاريخ الإسلامي
-        </Link>
-      </footer>
-    </PageShell>
+        {related.length > 0 ? (
+          <ReadingSectionCard title="اقرأ أيضًا" variant="related" className="tarikh-detail-read-also">
+            <RelatedContentStack
+              paddedForNav
+              items={related.map((r) => ({
+                href: `/tarikh-islami/${r.id}`,
+                title: r.title,
+                category: HISTORY_CATEGORIES[r.category as HistoryCategory],
+                summary: r.summary,
+              }))}
+            />
+          </ReadingSectionCard>
+        ) : null}
+
+        <div className="tarikh-detail__share">
+          <ShareButtons
+            title={`${item.title} — سُنّة`}
+            url={`https://www.ssunnah.com/tarikh-islami/${item.id}`}
+          />
+        </div>
+      </div>
+    </TopicPage>
   );
 }
