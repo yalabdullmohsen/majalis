@@ -22,8 +22,8 @@ import {
   type FiqhLessonHit,
 } from "@/lib/fiqh-books";
 import { fiqhBookEditorial } from "@/lib/fiqh-editorial";
+import { SectionEntryCard } from "@/components/ui/HubCard";
 import { isHiddenFromNav } from "@/lib/nav-visibility";
-import { HubCard } from "@/components/ui/HubCard";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import "@/styles/pages/fiqh-hub.css";
 import "@/styles/components/hub-card.css";
@@ -270,11 +270,12 @@ function FiqhBooksBody() {
           </header>
           <div className="hub-card-grid">
             {FIQH_SUPPORTING_TOPICS.filter((t) => !isHiddenFromNav(t.href)).map((topic) => (
-              <HubCard
+              <SectionEntryCard
                 key={topic.id}
                 href={topic.href}
                 title={topic.title}
-                description={topic.desc}
+                subtitle={topic.desc}
+                variant="primary"
               />
             ))}
           </div>

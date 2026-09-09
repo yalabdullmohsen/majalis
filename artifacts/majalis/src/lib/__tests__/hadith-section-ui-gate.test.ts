@@ -22,13 +22,16 @@ assert.doesNotMatch(
   /<HadithSection[^>]*embedded/,
   "صفحة hub لا تحمّل HadithSection مضمّنة (corpus ثقيل)",
 );
-assert.match(hadithView, /hadith-browse-cta/, "CTA خفيف للانتقال إلى /hadith/sahih");
+assert.match(hadithView, /SectionEntryCard/, "صفحة hub تستخدم SectionEntryCard");
+assert.match(hadithView, /href="\/hadith\/sahih"/, "CTA/بطاقات تنتقل إلى /hadith/sahih");
+assert.doesNotMatch(hadithView, /hadith-browse-cta/, "لا بطاقة CTA قديمة منفصلة");
 
 console.log("=== prefetch مسارات الحديث ===");
 assert.match(prefetch, /"\/hadith\/sahih"/);
 assert.match(prefetch, /"\/arbaeen-nawawi"/);
 assert.match(prefetch, /"\/hadith\/mawdu"/);
 assert.match(hubCard, /prefetchRoute/);
+assert.match(hubCard, /SectionEntryCard/);
 assert.match(hubCard, /onPointerDown=\{warmRoute\}/);
 
 console.log("=== تفاصيل الحديث داخل بطاقات ===");

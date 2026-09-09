@@ -3,7 +3,7 @@ import type { LucideIcon } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
-import { HubCard } from "@/components/ui/HubCard";
+import { SectionEntryCard } from "@/components/ui/HubCard";
 import { sectionTemplateChrome } from "@/config/section-template";
 import "@/components/sections/section-cards.css";
 
@@ -55,14 +55,15 @@ export default function MergedSectionHubPage({ path, title, description, cards, 
       quote={chrome.quote}
       groupTitle={chrome.groupTitle}
     >
-      <div className="hub-card-grid">
+      <div className="hub-card-grid" data-section-entry-grid="1">
         {cards.map((c) => (
-          <HubCard
+          <SectionEntryCard
             key={`${c.href}::${c.title}`}
             href={c.href}
             title={c.title}
-            description={c.desc}
+            subtitle={c.desc}
             Icon={c.Icon}
+            variant="primary"
           />
         ))}
       </div>

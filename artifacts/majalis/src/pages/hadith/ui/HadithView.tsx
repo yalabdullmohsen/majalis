@@ -1,6 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
-import { AlertTriangle } from "lucide-react";
+import {
+  AlertTriangle,
+  Ban,
+  BookMarked,
+  BookOpenCheck,
+  Library,
+  ScrollText,
+  type LucideIcon,
+} from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { truncateAtWord } from "@/lib/utils";
@@ -20,7 +28,7 @@ import {
 } from "@/lib/hadith-access";
 import { PageHeader, SkeletonCardGrid, Empty, Chip } from "@/components/ui-common";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
-import { HubCard } from "@/components/ui/HubCard";
+import { SectionEntryCard } from "@/components/ui/HubCard";
 import { ExclusiveChoiceGroup } from "@/components/ui/ExclusiveChoiceGroup";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { ShareButtons } from "@/components/ContentActions";
@@ -994,14 +1002,55 @@ export default function HadithPage() {
     });
   }, []);
 
-  const hubCards = [
-    { href: "/hadith/sahih", title: "الأحاديث الصحيحة", desc: "متون الصحيحين مع المصدر والتخريج", tone: "sahih" },
-    { href: "/hadith/books", title: "كتب الحديث", desc: "البخاري ومسلم بالأبواب", tone: "books" },
-    { href: "/arbaeen-nawawi", title: "الأربعون النووية", desc: "أربعون حديثاً جامعاً مع الشرح", tone: "nawawi" },
-    { href: "/hadith-science", title: "مصطلح الحديث", desc: "درجات الحديث ومباحث المصطلح", tone: "science" },
-    { href: "/hadith/daif", title: "الأحاديث الضعيفة", desc: "للتخريج والتمييز لا للاحتجاج", tone: "daif" },
-    { href: "/hadith/mawdu", title: "الأحاديث الموضوعة", desc: "للتحذير والبيان", tone: "mawdu" },
-  ] as const;
+  const hubCards: Array<{
+    href: string;
+    title: string;
+    desc: string;
+    Icon: LucideIcon;
+    featured?: boolean;
+    badge?: string;
+  }> = [
+    {
+      href: "/hadith/sahih",
+      title: "الأحاديث الصحيحة",
+      desc: "متون الصحيحين مع المصدر والتخريج",
+      Icon: BookOpenCheck,
+      featured: true,
+      badge: "أساس",
+    },
+    {
+      href: "/hadith/books",
+      title: "كتب الحديث",
+      desc: "البخاري ومسلم مرتّبان بالأبواب",
+      Icon: Library,
+    },
+    {
+      href: "/arbaeen-nawawi",
+      title: "الأربعون النووية",
+      desc: "أربعون حديثاً جامعاً مع الشرح",
+      Icon: BookMarked,
+    },
+    {
+      href: "/hadith-science",
+      title: "مصطلح الحديث",
+      desc: "درجات الحديث ومباحث المصطلح",
+      Icon: ScrollText,
+    },
+    {
+      href: "/hadith/daif",
+      title: "الأحاديث الضعيفة",
+      desc: "للتمييز والتخريج لا للاحتجاج",
+      Icon: AlertTriangle,
+      badge: "تنبيه",
+    },
+    {
+      href: "/hadith/mawdu",
+      title: "الأحاديث الموضوعة",
+      desc: "للتحذير والبيان دون الاحتجاج",
+      Icon: Ban,
+      badge: "تحذير",
+    },
+  ];
 
   return (
     <SectionTemplatePage
@@ -1012,13 +1061,17 @@ export default function HadithPage() {
       groupTitle="أقسام الحديث وعلومه"
     >
       <div className="hadith-page hadith-page--hub">
-        <div className="hub-card-grid">
+        <div className="hub-card-grid" data-section-entry-grid="1">
           {hubCards.map((c) => (
-            <HubCard
+            <SectionEntryCard
               key={c.href}
               href={c.href}
               title={c.title}
-              description={c.desc}
+              subtitle={c.desc}
+              Icon={c.Icon}
+              badge={c.badge}
+              featured={c.featured}
+              variant="primary"
             />
           ))}
         </div>
@@ -1033,10 +1086,15 @@ export default function HadithPage() {
           <p className="hadith-page__browse-lead">
             ابحث وفلتر حسب الحكم في قسم الأحاديث الصحيحة — الصحيح والحسن للاستفادة، والضعيف في قسمه المخصّص.
           </p>
-          <Link href="/hadith/sahih" className="hadith-browse-cta soft-card mj-pressable">
-            <span className="hadith-browse-cta__title">الأحاديث الصحيحة</span>
-            <span className="hadith-browse-cta__desc">متون الصحيحين مع المصدر والتخريج والبحث</span>
-          </Link>
+          <div className="hub-card-grid hub-card-grid--solo">
+            <SectionEntryCard
+              href="/hadith/sahih"
+              title="الأحاديث الصحيحة"
+              subtitle="بحث وتصفية مع المصدر والتخريج"
+              Icon={BookOpenCheck}
+              variant="soft"
+            />
+          </div>
         </section>
         <ShareButtons title="الحديث الشريف — سُنّة" url="https://www.ssunnah.com/hadith" />
         <ExploreAlsoNav

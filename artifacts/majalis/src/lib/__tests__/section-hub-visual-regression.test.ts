@@ -30,13 +30,23 @@ console.log("\n=== قواعد CSS الحرجة لصفحات الأقسام ===")
   assert(indexCss.includes("overflow-x: clip") || indexCss.includes("overflow-x: hidden"), "html/body يمنع التمرير الأفقي");
   assert(hubCard.includes(".hub-card-grid"), "شبكة HubCard موحّدة");
   assert(hubCard.includes("repeat(2, minmax(0, 1fr))"), "عمودان على الجوال");
-  assert(hubCard.includes("background: var(--mj-surface)"), "بطاقة بسطح فاتح");
-  assert(hubCard.includes("background: var(--mj-brand-soft)"), "أيقونة بخلفية soft");
+  assert(
+    hubCard.includes("var(--ss-card-bg") || hubCard.includes("var(--mj-surface)"),
+    "بطاقة بسطح فاتح",
+  );
+  assert(
+    hubCard.includes("var(--mj-brand-soft") || hubCard.includes("hub-card__icon"),
+    "أيقونة بهوية التطبيق",
+  );
+  assert(hubCard.includes("hub-card__foot"), "تذييل مدمج مع السهم");
   assert(
     hubCard.includes(".quran-hub-card__header") && hubCard.includes("display: none"),
     "إبطال الكتل الداكنة الفارغة",
   );
-  assert(hubCard.includes("color: var(--mj-ink-2)"), "وصف البطاقة بتباين كافٍ");
+  assert(
+    hubCard.includes("var(--text-secondary") || hubCard.includes("var(--mj-ink-2)"),
+    "وصف البطاقة بتباين كافٍ",
+  );
   assert(lobbyCss.includes("scroll-snap-type"), "تبويبات اللوبي: scroll-snap");
   assert(finalCss.includes("scroll-snap-type: x proximity"), "شريط الأقسام: scroll-snap");
 
@@ -54,9 +64,12 @@ console.log("\n=== بنية المكوّنات ===");
   const merged = readFileSync(resolve(root, "src/views/MergedSectionHubPage.tsx"), "utf8");
   const topBar = readFileSync(resolve(root, "src/components/TopSectionBar.tsx"), "utf8");
 
-  assert(hubCardTsx.includes("hub-card__title"), "HubCard يعرّف العنوان");
+  assert(hubCardTsx.includes("SectionEntryCard"), "SectionEntryCard مُعرَّف");
   assert(hubCardTsx.includes("hub-card__go"), "HubCard: سهم مدمج");
+  assert(hubCardTsx.includes("hub-card__foot"), "تذييل مدمج في المكوّن");
   assert(tawhidPage.includes("HubCard"), "TawhidPage يرحّل إلى HubCard");
+  assert(merged.includes("SectionEntryCard"), "MergedSectionHub يستخدم SectionEntryCard");
+
   assert(fiqhPage.includes("publishedBooks") && fiqhPage.includes("searchFiqhCatalog"), "FiqhPage يعرض كتب الفقه مع البحث");
   assert(quranHub.includes("SectionLobby"), "QuranHubPage يرحّل إلى SectionLobby");
   assert(merged.includes("TopicPage"), "MergedSectionHubPage يرحّل إلى TopicPage");
