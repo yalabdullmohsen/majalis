@@ -25,9 +25,25 @@ let rulingsTotal = 0;
 try {
   const rulingsManifest = JSON.parse(await readFile(rulingsArchiveManifest, "utf8")) as { total: number };
   rulingsTotal = 0; // أُزيلت من الواجهة العامة — العدد المؤرشف لا يُعرض
+  void rulingsManifest;
 } catch {
   rulingsTotal = 0;
 }
+
+async function readPublicManifestTotal(rel: string): Promise<number> {
+  try {
+    const raw = JSON.parse(await readFile(resolve(appRoot, rel), "utf8")) as { total?: number };
+    return typeof raw.total === "number" && raw.total >= 0 ? raw.total : 0;
+  } catch {
+    return 0;
+  }
+}
+
+const [quizFromPublic, qaFromPublic] = await Promise.all([
+  readPublicManifestTotal("public/data/quiz/manifest.json"),
+  readPublicManifestTotal("public/data/qa/manifest.json"),
+]);
+
 const { ANNUAL_COURSES_SEED } = await import("../src/lib/annual-courses-seed.js");
 const { MIRACLES_SEED } = await import("../src/lib/miracles-seed.js");
 const { ADHKAR_ITEMS } = await import("../src/lib/adhkar-seed.js");
@@ -40,14 +56,15 @@ const counts = {
   books: LIBRARY_CATALOG.length,
   islamicHistory: ISLAMIC_HISTORY_ITEMS.length,
   fawaid: SEED_FAWAID.length,
-  quizQuestions: DEMO_QUIZ_QUESTIONS.length,
+  // المصدر الرسمي المنشور: public/data/*/manifest.json (البذور التجريبية قد تكون فارغة)
+  quizQuestions: quizFromPublic || DEMO_QUIZ_QUESTIONS.length,
   mindMaps: MIND_MAPS.length,
   rulings: rulingsTotal,
   courses: ANNUAL_COURSES_SEED.length,
   miracles: MIRACLES_SEED.filter((m) => m.status === "approved" && m.verification_status === "verified")
     .length,
   adhkar: ADHKAR_ITEMS.length,
-  qa: SEED_QA.length,
+  qa: qaFromPublic || SEED_QA.length,
   nations: NATIONS.length,
 };
 

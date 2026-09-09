@@ -123,7 +123,7 @@ html[data-theme="dark"] .tf-stat span {
   padding: 0.85rem 1rem;
   border-radius: var(--ds-radius-lg);
   border: 1.5px solid var(--mj-brand-soft);
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   text-decoration: none;
   color: var(--mj-brand-deep);
   transition: border-color 0.15s, box-shadow 0.15s;
@@ -152,7 +152,7 @@ html[data-theme="dark"] .tf-stat span {
   border-radius: var(--ds-radius-lg);
   font-size: 0.9rem;
   color: var(--mj-brand-deep);
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   outline: none;
   box-sizing: border-box;
   font-family: inherit;
@@ -177,7 +177,7 @@ html[data-theme="dark"] .tf-stat span {
   padding: 0.35rem 0.9rem;
   border-radius: var(--ds-radius-full);
   border: 1.5px solid var(--mj-brand-soft);
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--mj-brand-deep);
@@ -198,7 +198,7 @@ html[data-theme="dark"] .tf-stat span {
 .tf-grid { display: flex; flex-direction: column; gap: 0.6rem; }
 
 .tf-card {
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--radius-card, 24px);
   overflow: hidden;
@@ -265,7 +265,7 @@ html[data-theme="dark"] .tf-stat span {
   padding: 0.85rem 1rem;
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius-lg);
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   text-decoration: none;
   color: inherit;
   transition: border-color 0.15s;
@@ -298,7 +298,7 @@ html[data-theme="dark"] .tf-stat span {
   padding: 0.45rem 0.9rem;
   border-radius: var(--ds-radius-full);
   border: 1.5px solid var(--mj-brand-soft);
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   color: var(--mj-brand-deep);
   font-size: 0.82rem;
   font-weight: 600;
@@ -400,7 +400,7 @@ html[data-theme="dark"] .tf-stat span {
 }
 .tf-timeline__body {
   flex: 1;
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius-lg);
   padding: 0.85rem 1rem;
@@ -430,7 +430,7 @@ html[data-theme="dark"] .tf-stat span {
   gap: 0.7rem;
 }
 .tf-path-card {
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--radius-card, 24px);
   padding: 1rem;
