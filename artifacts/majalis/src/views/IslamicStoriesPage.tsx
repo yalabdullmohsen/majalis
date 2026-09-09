@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { AlertTriangle, Bird, BookOpen, Castle, Compass, Flower2, Gem, Landmark, Leaf, Lightbulb, Map as MapIcon, Moon, Ruler, Sailboat, Scale, Shield, Star, Sun, Sword, Users } from "lucide-react";
+import { AlertTriangle, Bird, BookOpen, Castle, Compass, Flower2, Gem, Landmark, Leaf, Map as MapIcon, Moon, Ruler, Sailboat, Scale, Shield, Star, Sun, Sword } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { supabase } from "@/lib/supabase";
@@ -15,6 +15,11 @@ import { truncateAtWord } from "@/lib/utils";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
+import {
+  ReadingBulletList,
+  ReadingProse,
+  ReadingSectionCard,
+} from "@/components/content/ReadingSectionCard";
 import "@/styles/pages/islamic-stories.css";
 
 const STORY_ICON_MAP: Record<string, LucideIcon> = {
@@ -87,15 +92,11 @@ function StoryCard({ story, onSelect }: { story: IslamicStory; onSelect: () => v
 }
 
 // ─────────────────── Story Detail ────────────────────────────────────────────
-function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => void }) {
+function StoryDetail({ story }: { story: IslamicStory }) {
   useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [story.slug]);
 
   return (
     <div className="isp-detail">
-      <button type="button" className="isp-detail__back" onClick={onBack}>
-        ← العودة إلى القصص
-      </button>
-
       <div className="isp-detail__hero">
         <div className="isp-detail__badges">
           <span className="isp-badge isp-badge--cat">{story.category}</span>
@@ -106,48 +107,31 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
         <p className="isp-detail__summary">{story.summary}</p>
       </div>
 
-      <section className="isp-detail__section isp-detail__section--content">
-        <h2 className="isp-detail__section-title"><BookOpen size={18} strokeWidth={1.8} aria-hidden="true" /> تفاصيل القصة</h2>
-        <div className="isp-detail__body">{story.full_content.replace(/\*\*([^*]+)\*\*/g, "$1")}</div>
-      </section>
+      <ReadingSectionCard title="نبذة مختصرة" variant="summary">
+        <ReadingProse text={story.summary} />
+      </ReadingSectionCard>
+
+      <ReadingSectionCard title="تفاصيل القصة" variant="default">
+        <ReadingProse text={story.full_content.replace(/\*\*([^*]+)\*\*/g, "$1")} />
+      </ReadingSectionCard>
 
       {story.key_lessons.length > 0 && (
-        <section className="isp-detail__section isp-detail__section--lessons">
-          <h2 className="isp-detail__section-title isp-detail__section-title--green"><Lightbulb size={18} strokeWidth={1.8} aria-hidden="true" /> الدروس المستفادة</h2>
-          <ul className="isp-lessons-list">
-            {story.key_lessons.map((lesson, i) => (
-              <li key={i} className="isp-lessons-list__item">
-                <span className="isp-lessons-list__star">✦</span>
-                <span>{lesson}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
+        <ReadingSectionCard title="الدروس المستفادة" variant="lessons">
+          <ReadingBulletList items={story.key_lessons} />
+        </ReadingSectionCard>
       )}
 
-      <div className="isp-detail__grid">
-        {story.related_figures.length > 0 && (
-          <section className="isp-detail__section isp-detail__section--figures">
-            <h2 className="isp-detail__section-title isp-detail__section-title--brand"><Users size={18} strokeWidth={1.8} aria-hidden="true" /> الشخصيات</h2>
-            <div className="isp-detail__list">
-              {story.related_figures.map((fig, i) => (
-                <span key={i} className="isp-detail__list-item">• {fig}</span>
-              ))}
-            </div>
-          </section>
-        )}
+      {story.related_figures.length > 0 && (
+        <ReadingSectionCard title="الشخصيات" variant="default">
+          <ReadingBulletList items={story.related_figures} />
+        </ReadingSectionCard>
+      )}
 
-        {story.sources.length > 0 && (
-          <section className="isp-detail__section isp-detail__section--sources">
-            <h2 className="isp-detail__section-title isp-detail__section-title--gold"><BookOpen size={18} strokeWidth={1.8} aria-hidden="true" /> المصادر</h2>
-            <div className="isp-detail__list">
-              {story.sources.map((src, i) => (
-                <span key={i} className="isp-detail__list-item">• {src}</span>
-              ))}
-            </div>
-          </section>
-        )}
-      </div>
+      {story.sources.length > 0 && (
+        <ReadingSectionCard title="المصادر" variant="sources">
+          <ReadingBulletList items={story.sources} />
+        </ReadingSectionCard>
+      )}
 
       {story.tags.length > 0 && (
         <div className="isp-detail__tags">
@@ -174,23 +158,28 @@ export default function IslamicStoriesPage() {
   const [era, setEra] = useState<Era>("الكل");
   const [search, setSearch] = useState("");
 
-  const syncSlugToUrl = useCallback((slug: string | null) => {
+  const syncSlugToUrl = useCallback((slug: string | null, mode: "replace" | "push" = "replace") => {
     const url = new URL(window.location.href);
     if (slug) url.searchParams.set("slug", slug);
     else url.searchParams.delete("slug");
     const next = `${url.pathname}${url.search}${url.hash}`;
-    window.history.replaceState(null, "", next);
+    if (mode === "push") window.history.pushState(null, "", next);
+    else window.history.replaceState(null, "", next);
   }, []);
 
   const openStory = useCallback((slug: string) => {
     setSelectedSlug(slug);
-    syncSlugToUrl(slug);
+    syncSlugToUrl(slug, "push");
   }, [syncSlugToUrl]);
 
-  const closeStory = useCallback(() => {
-    setSelectedSlug(null);
-    syncSlugToUrl(null);
-  }, [syncSlugToUrl]);
+  useEffect(() => {
+    const onPop = () => {
+      const slug = new URLSearchParams(window.location.search).get("slug");
+      setSelectedSlug(slug);
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
 
   // رابط `?cat=...` و`?slug=...` للمشاركة العميقة
   useEffect(() => {
@@ -296,7 +285,7 @@ export default function IslamicStoriesPage() {
   if (selectedStory) {
     return (
       <div className="isp-page isp-page--detail">
-        <StoryDetail story={selectedStory} onBack={closeStory} />
+        <StoryDetail story={selectedStory} />
         <ExploreAlsoNav
           title="استكشف أيضًا"
           links={[
