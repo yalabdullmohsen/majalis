@@ -93,7 +93,14 @@
   letter-spacing: 0;
   background: rgba(255, 255, 255, 0.06);
 }
-.twh-hub-hero__ayah cite { font-size: 0.78rem; color: rgba(255,255,255,0.65); font-style: normal; display: block; margin-top: 0.25rem; }
+.twh-hub-hero__ayah cite {
+  font-size: 0.85rem;
+  color: var(--mss-on-hero-muted, var(--topic-on-hero-muted, #f3efe6));
+  font-style: normal;
+  display: block;
+  margin-top: 0.25rem;
+  opacity: 1;
+}
 
 .twh-hub-grid {
   display: grid;
@@ -271,7 +278,10 @@ html[data-theme="dark"] .twh-hub-card__desc {
 }
 .twh-book-level--beginner { background: #D1FAE5; color: var(--mj-brand); }
 .twh-book-level--mid      { background: rgba(23,61,53,.12); color: var(--mj-brand); }
-.twh-book-level--adv      { background: #EDE9FE; color: #5B21B6; }
+.twh-book-level--adv {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, var(--ss-card-bg, #fffcf7));
+  color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
+}
 /* --mid وحدها خلفيتها شفافة (تتلوّن بلون البطاقة المحيطة) فتصبح داكنة في
    الوضع الليلي بينما نصها var(--mj-brand) يبقى داكنًا — نفس تصادم .sw-badge--wajib. */
 html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
@@ -280,8 +290,15 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 /* ============================================================
    69 — TawhidPage  (twh-*)
    ============================================================ */
-.twh-section { margin-bottom: 2rem; padding-bottom: calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 4px); }
-.twh-section--mb3 { margin-bottom: 3rem; }
+.twh-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0;
+}
+.topic-page--tawhid .tawhid-hub > .twh-section:last-of-type,
+.topic-page--tawhid-topic .tawhid-hub > .twh-section:last-of-type {
+  padding-bottom: 0.25rem;
+}
+.twh-section--mb3 { margin-bottom: 2rem; }
 .twh-hadith-wrap { margin-top: 0.5rem; }
 .twh-hadith-text {
   font-family: var(--font-body);

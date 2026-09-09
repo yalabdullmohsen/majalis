@@ -578,7 +578,7 @@ html.pts-immersive .scroll-to-top {
   border-color: rgba(255, 255, 255, 0.18);
 }
 .pts-row--past {
-  opacity: 0.62;
+  opacity: 0.82;
 }
 .pts-row--past .pts-row__name {
   color: var(--pts-muted);
