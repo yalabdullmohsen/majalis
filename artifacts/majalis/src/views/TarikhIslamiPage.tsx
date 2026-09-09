@@ -3,8 +3,9 @@ import { Link, useLocation } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { SectionHero } from "@/components/topic/SectionHero";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SEARCH_INPUT_ATTRS, handleSearchEnterKey } from "@/lib/search-input";
 import {
   getHistoryErasWithEvents,
   HISTORY_CATEGORIES,
@@ -204,27 +205,15 @@ export default function TarikhIslamiPage() {
   };
 
   return (
-    <div className="page-shell tarikh-page" dir="rtl" style={{ ["--section-accent" as string]: "#7A6B3A" }}>
-      <SectionHero
-        themeId="history"
-        accent="#7A6B3A"
-        className="tarikh-hero"
-        breadcrumb={[
-          { label: "الرئيسية", href: "/" },
-          { label: "التاريخ الإسلامي" },
-        ]}
-        eyebrow="الدول والعصور — تفاعلي"
-        title="التاريخ الإسلامي"
-        subtitle="اسلك العصور بالترتيب: اضغط الدولة لترى ماذا حدث فيها. قصة النبي ﷺ عبر بوابة السيرة، ثم الخلافة والدول حتى يومنا هذا."
-        quote={{
-          text: "الَّذِينَ إِن مَّكَّنَّاهُمْ فِي الْأَرْضِ أَقَامُوا الصَّلَاةَ وَآتَوُا الزَّكَاةَ وَأَمَرُوا بِالْمَعْرُوفِ وَنَهَوْا عَنِ الْمُنكَرِ",
-          ref: "الحج: ٤١",
-          type: "ayah",
-        }}
-      >
-        <ShareButtons title="التاريخ الإسلامي — سُنّة" />
-      </SectionHero>
-
+    <SectionTemplatePage
+      route="/tarikh-islami"
+      title="التاريخ الإسلامي"
+      subtitle="اسلك العصور بالترتيب: اضغط الدولة لترى ماذا حدث فيها. قصة النبي ﷺ عبر بوابة السيرة، ثم الخلافة والدول حتى يومنا هذا."
+      groupTitle="الدول والعصور بالترتيب"
+      className="topic-page--tarikh"
+      eyebrow="الدول والعصور — تفاعلي"
+    >
+      <div className="tarikh-hub">
       <nav className="tarikh-rail" aria-label="مسار الدول الإسلامية">
         <button
           type="button"
@@ -259,11 +248,11 @@ export default function TarikhIslamiPage() {
         <label className="tarikh-search">
           <span className="sr-only">بحث في التاريخ الإسلامي</span>
           <input
-            type="search"
+            {...SEARCH_INPUT_ATTRS}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => handleSearchEnterKey(e)}
             placeholder="ابحث عن حدث أو دولة…"
-            autoComplete="off"
           />
         </label>
         {!query ? (
@@ -314,7 +303,7 @@ export default function TarikhIslamiPage() {
         </section>
       ) : (
         <section className="tarikh-section">
-          <h2 className="tarikh-section__title">
+          <h2 className="tarikh-section__title sr-only">
             {filter === "all" ? "الدول والعصور بالترتيب" : filterLabel(filter)}
           </h2>
           <div className="tarikh-eras" role="list">
@@ -352,7 +341,12 @@ export default function TarikhIslamiPage() {
         </ul>
       </section>
 
+      <div className="tarikh-share">
+        <ShareButtons title="التاريخ الإسلامي — سُنّة" />
+      </div>
+
       <SectionQuiz sectionId="islamic-history" />
-    </div>
+      </div>
+    </SectionTemplatePage>
   );
 }

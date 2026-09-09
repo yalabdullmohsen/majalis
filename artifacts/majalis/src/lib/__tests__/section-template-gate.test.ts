@@ -120,10 +120,11 @@ for (const [label, rel] of HUB_PAGES) {
 
 {
   const tarikh = read("src/views/TarikhIslamiPage.tsx");
-  assert.match(tarikh, /tarikh-hero/, "التاريخ: واجهة مخصصة");
-  assert.match(tarikh, /SectionHero/, "التاريخ: يستعمل SectionHero");
+  assert.match(tarikh, /SectionTemplatePage/, "التاريخ: قالب القسم الموحّد");
+  assert.doesNotMatch(tarikh, /SectionHero/, "التاريخ: بلا SectionHero محلي مكرر");
+  assert.doesNotMatch(tarikh, /tarikh-hero/, "التاريخ: بلا هيرو مخصص مكرر");
   assert.match(tarikh, /ISLAMIC_HISTORY_ITEMS/, "التاريخ: بيانات موحدة");
-  assert.match(tarikh, /type=["']search["']/, "التاريخ: بحث داخلي مقصود");
+  assert.match(tarikh, /SEARCH_INPUT_ATTRS/, "التاريخ: بحث داخلي مقصود عبر attrs موحّدة");
   assert.doesNotMatch(tarikh, /SectionAccordionLayout/, "التاريخ: بلا أكورديون قديم");
 }
 

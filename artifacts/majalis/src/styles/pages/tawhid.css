@@ -1,4 +1,44 @@
-/* 69b — TawhidPage Hub & Flow Layout */
+/* العقيدة والتوحيد — داخل SectionTemplatePage (بلا هيرو محلي مكرر) */
+.topic-page--tawhid .topic-page__body {
+  background: var(--color-bg, var(--surface-app, #f7f3eb));
+}
+
+.tawhid-hub {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: min(56rem, 100%);
+  margin-inline: auto;
+  padding-inline: max(1rem, var(--page-gutter, 16px));
+  padding-bottom: calc(var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 1.25rem);
+  box-sizing: border-box;
+}
+
+.twh-search-wrap {
+  width: 100%;
+}
+
+.twh-search-input,
+.tawhid-hub .page-search-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.65rem 1rem;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--ss-primary-green, var(--mj-brand)) 22%, var(--ss-border, #e3e8e6));
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  color: var(--color-text, var(--mj-ink));
+  font: inherit;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.topic-page--tawhid .twh-hub-hero,
+.tawhid-hub .twh-hub-hero {
+  display: none !important;
+}
+
+/* 69b — TawhidPage Hub & Flow Layout (legacy hero kept for topic subpages only) */
 .twh-hub-hero {
   width: calc(100% - 2 * max(1rem, var(--page-gutter, 1rem)));
   max-width: min(64rem, calc(100% - 2 * max(1rem, var(--page-gutter, 1rem))));

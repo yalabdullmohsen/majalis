@@ -23,7 +23,7 @@ const VIEWPORTS = [
 const ROUTES = ["/", "/sections", "/fiqh", "/lessons", "/prayer-times", "/quran-hub", "/competitions", "/more"];
 
 /** مسارات أقسام كانت قديمة — فحص overflow فقط على جوال */
-const LEGACY_SECTION_ROUTES = ["/islamic-sects", "/akhlaq", "/stories", "/search"] as const;
+const LEGACY_SECTION_ROUTES = ["/islamic-sects", "/akhlaq", "/stories", "/search", "/tarikh-islami", "/tawhid"] as const;
 const MOBILE_VIEWPORTS = [
   { name: "android-sm", width: 360, height: 740 },
   { name: "iphone-14-pro", width: 390, height: 844 },

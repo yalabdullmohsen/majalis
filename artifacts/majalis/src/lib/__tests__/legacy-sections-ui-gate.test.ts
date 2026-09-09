@@ -61,11 +61,20 @@ assert.match(storiesCss, /\.isp-chip[\s\S]{0,80}?min-height:\s*44px/, "Stories c
 
 assert.doesNotMatch(amr, /linear-gradient\(160deg,\s*var\(--mj-brand-deep\)/, "Low contrast text found inside dark hero");
 
+const tarikh = read("src/views/TarikhIslamiPage.tsx");
+const tawhid = read("src/views/TawhidPage.tsx");
+assert.match(tarikh, /SectionTemplatePage/, "tarikh يستخدم SectionTemplatePage");
+assert.doesNotMatch(tarikh, /SectionHero/, "التاريخ بلا SectionHero محلي مكرر");
+assert.match(tawhid, /SectionTemplatePage/, "tawhid يستخدم SectionTemplatePage");
+assert.doesNotMatch(tawhid, /twh-hub-hero|misc-page-legacy/, "العقيدة بلا هيرو قديم محلي");
+
 for (const [name, src] of [
   ["sects", sects],
   ["akhlaq", akhlaq],
   ["stories", stories],
   ["amr", amr],
+  ["tarikh", tarikh],
+  ["tawhid", tawhid],
 ] as const) {
   assert.doesNotMatch(
     src,

@@ -46,6 +46,7 @@ const ROUTE_THEME: Record<string, TopicThemeId> = {
   "/duas": "adhkar",
   "/fawaid": "hadith",
   "/lessons": "aqeedah",
+  "/tawhid": "aqeedah",
   "/quiz": "aqeedah",
   "/memorization": "quran",
   "/islamic-directory": "history",

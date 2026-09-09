@@ -7,9 +7,9 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { HubCard } from "@/components/ui/HubCard";
-import { topicThemeCssVars, getTopicTheme } from "@/config/topic-themes";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
+import { SEARCH_INPUT_ATTRS, handleSearchEnterKey } from "@/lib/search-input";
 import "@/styles/pages/tawhid.css";
-import "@/styles/pages/misc-page-legacy.css";
 
 // ─── أقسام العقيدة والتوحيد ──────────────────────────────────────────────────
 
@@ -404,36 +404,18 @@ export default function TawhidPage() {
   }, []);
 
   return (
-    <div className="page-shell" dir="rtl">
-      {/* مسار التنقل */}
-      <nav className="tawheed-breadcrumb" aria-label="مسار التنقل">
-        <Link href="/">الرئيسية</Link>
-        <span aria-hidden="true"> / </span>
-        <span aria-current="page">العقيدة والتوحيد</span>
-      </nav>
-
-      {/* رأس القسم — سمة العقيدة + on-dark */}
-      <header
-        className="twh-hub-hero on-dark"
-        data-on-dark
-        style={topicThemeCssVars(getTopicTheme("aqeedah"))}
-      >
-        <div className="twh-hub-hero__inner">
-          <p className="home-eyebrow">عقيدة أهل السنة والجماعة</p>
-          <h1 className="twh-hub-hero__title">العقيدة والتوحيد</h1>
-          <p className="twh-hub-hero__sub">
-            أقسام العقيدة كاملةً، من التوحيد وأركان الإيمان حتى الغيبيات وعلامات الساعة
-          </p>
-          <blockquote className="twh-hub-hero__ayah">
-            ﴿وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ﴾
-            <cite>، الذاريات: ٥٦</cite>
-          </blockquote>
-        </div>
-      </header>
-
+    <SectionTemplatePage
+      route="/tawhid"
+      title="العقيدة والتوحيد"
+      subtitle="أقسام العقيدة كاملةً، من التوحيد وأركان الإيمان حتى الغيبيات وعلامات الساعة"
+      groupTitle="أقسام العقيدة والتوحيد"
+      className="topic-page--tawhid"
+      eyebrow="عقيدة أهل السنة والجماعة"
+    >
+      <div className="tawhid-hub">
       {/* ══ شبكة أقسام العقيدة ══ */}
       <section aria-labelledby="hub-sections-heading" className="twh-section">
-        <h2 id="hub-sections-heading" className="tawheed-principles-heading">أقسام العقيدة والتوحيد</h2>
+        <h2 id="hub-sections-heading" className="sr-only">أقسام العقيدة والتوحيد</h2>
         <div className="hub-card-grid twh-hub-grid">
           {AQEEDA_SECTIONS.map((s) => (
             <HubCard
@@ -464,9 +446,10 @@ export default function TawhidPage() {
 
       <div className="twh-search-wrap">
         <input
-          type="search"
+          {...SEARCH_INPUT_ATTRS}
           value={search}
           onChange={e => setSearch(e.target.value)}
+          onKeyDown={(e) => handleSearchEnterKey(e)}
           placeholder="ابحث في مسائل التوحيد والأسماء الحسنى والكتب..."
           className="page-search-input twh-search-input"
           aria-label="بحث في صفحة التوحيد"
@@ -631,6 +614,7 @@ export default function TawhidPage() {
       <div className="twh-share">
         <ShareButtons title="العقيدة والتوحيد — سُنّة" url="https://www.ssunnah.com/tawhid" />
       </div>
-    </div>
+      </div>
+    </SectionTemplatePage>
   );
 }

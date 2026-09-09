@@ -147,6 +147,18 @@ for (const [name, src] of [
     `Duplicate back buttons visible: ${name} page must rely on global FAB only`,
   );
 }
+
+const tarikhPage = read("src/views/TarikhIslamiPage.tsx");
+const tawhidPage = read("src/views/TawhidPage.tsx");
+assert.match(tarikhPage, /SectionTemplatePage/, "tarikh-islami must use SectionTemplatePage");
+assert.doesNotMatch(tarikhPage, /SectionHero/, "Duplicate section hero on tarikh-islami");
+assert.match(tawhidPage, /SectionTemplatePage/, "tawhid must use SectionTemplatePage");
+assert.doesNotMatch(
+  tawhidPage,
+  /twh-hub-hero|misc-page-legacy/,
+  "Low contrast text found inside dark hero: tawhid must not use local dark hub hero",
+);
+assert.match(read("src/config/section-template.ts"), /"\/tawhid":\s*"aqeedah"/);
 assert.doesNotMatch(
   sectsCss + akhlaqCss + storiesCss,
   /#(?:1d4ed8|2563eb|3b82f6|6D28D9|7c3aed)\b/i,
