@@ -28,9 +28,10 @@ export function CompactSources({
   className?: string;
 }) {
   if (!items.length) return null;
+  const heading = title.trim();
   return (
-    <section className={`compact-sources ${className}`.trim()} aria-label={title}>
-      <h2 className="compact-sources__title">{title}</h2>
+    <section className={`compact-sources ${className}`.trim()} aria-label={heading || "المصادر"}>
+      {heading ? <h2 className="compact-sources__title">{heading}</h2> : null}
       <ul className="compact-sources__list">
         {items.map((item, i) => (
           <CompactSourceRow key={`${item.summary}-${i}`} item={item} />

@@ -1,0 +1,204 @@
+/**
+ * بطاقات قراءة موحّدة لتفاصيل الأقسام النصية (تاريخ / قصص / محتوى تفصيلي).
+ */
+.rsc {
+  --rsc-bg: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  --rsc-border: var(--soft-tile-border, color-mix(in srgb, var(--mj-brand, #1f6b56) 16%, transparent));
+  --rsc-ink: var(--mj-ink, var(--elite-ink, #12241d));
+  --rsc-muted: var(--mj-ink-2, var(--majalis-ink-soft, #3d5349));
+  --rsc-title: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
+  margin: 0 0 0.85rem;
+  padding: 1.05rem 1.15rem;
+  max-width: 42rem;
+  width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+  background: var(--rsc-bg);
+  border: 1px solid var(--rsc-border);
+  border-radius: var(--ds-radius-lg, 16px);
+  box-shadow: 0 10px 26px -20px color-mix(in srgb, var(--mj-brand, #1f6b56) 35%, transparent);
+}
+
+.rsc--summary {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 6%, var(--rsc-bg));
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 20%, transparent);
+}
+
+.rsc--lessons {
+  background: color-mix(in srgb, #15803d 5%, var(--rsc-bg));
+  border-color: color-mix(in srgb, #15803d 18%, transparent);
+}
+
+.rsc--sources {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 7%, var(--rsc-bg));
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent);
+}
+
+.rsc--related {
+  background: var(--rsc-bg);
+  padding-bottom: 0.85rem;
+}
+
+.rsc__title {
+  margin: 0 0 0.7rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--rsc-title);
+}
+
+.rsc__body {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: var(--rsc-ink);
+  text-align: start;
+  max-width: 40rem;
+}
+
+.rsc__body p {
+  margin: 0 0 0.75rem;
+}
+
+.rsc__body p:last-child {
+  margin-bottom: 0;
+}
+
+.rsc__prose {
+  white-space: pre-wrap;
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.rsc-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.rsc-list__item {
+  position: relative;
+  padding-inline-start: 0.95rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--rsc-ink);
+}
+
+.rsc-list__item::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.55em;
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: var(--mj-brand, #1f6b56);
+}
+
+.rsc-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rsc-stack--padded {
+  padding-bottom: calc(0.5rem + var(--bottom-nav-height, 4.5rem));
+}
+
+/* بطاقة رابط ذات صلة / اقرأ أيضًا */
+.rcc {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto auto;
+  column-gap: 0.65rem;
+  row-gap: 0.2rem;
+  align-items: start;
+  padding: 0.85rem 0.95rem;
+  border-radius: var(--ds-radius-md, 14px);
+  border: 1px solid var(--rsc-border);
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 4%, var(--rsc-bg));
+  text-decoration: none;
+  color: inherit;
+  min-height: 44px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.rcc:hover {
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 35%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, var(--rsc-bg));
+}
+
+.rcc__cat {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--mj-brand, #1f6b56);
+}
+
+.rcc__title {
+  grid-column: 1;
+  grid-row: 2;
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--rsc-ink);
+}
+
+.rcc__summary {
+  grid-column: 1;
+  grid-row: 3;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--rsc-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.rcc__arrow {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  align-self: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--mj-brand, #1f6b56);
+  line-height: 1;
+}
+
+html[data-theme="dark"] .rsc,
+html.dark .rsc {
+  --rsc-bg: var(--ss-card-bg, #1b2421);
+  --rsc-border: color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, #2a3832);
+  --rsc-ink: var(--mj-ink, #e8efeb);
+  --rsc-muted: var(--mj-ink-2, #c5d0cb);
+  --rsc-title: #7ed4b5;
+}
+
+html[data-theme="dark"] .rsc--summary,
+html.dark .rsc--summary,
+html[data-theme="dark"] .rsc--lessons,
+html.dark .rsc--lessons,
+html[data-theme="dark"] .rsc--sources,
+html.dark .rsc--sources {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, var(--rsc-bg));
+}
+
+html[data-theme="dark"] .rcc,
+html.dark .rcc {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, var(--rsc-bg));
+}
+
+html[data-theme="dark"] .rcc__summary,
+html.dark .rcc__summary {
+  color: var(--rsc-muted);
+}

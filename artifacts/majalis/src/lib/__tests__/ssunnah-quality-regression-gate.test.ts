@@ -149,9 +149,42 @@ for (const [name, src] of [
 }
 
 const tarikhPage = read("src/views/TarikhIslamiPage.tsx");
+const tarikhDetail = read("src/views/TarikhIslamiDetailPage.tsx");
 const tawhidPage = read("src/views/TawhidPage.tsx");
+const readingCard = read("src/components/content/ReadingSectionCard.tsx");
+const relatedCard = read("src/components/content/RelatedContentCard.tsx");
+const readingCss = read("src/styles/components/reading-section-card.css");
 assert.match(tarikhPage, /SectionTemplatePage/, "tarikh-islami must use SectionTemplatePage");
 assert.doesNotMatch(tarikhPage, /SectionHero/, "Duplicate section hero on tarikh-islami");
+assert.match(tarikhDetail, /TopicPage/, "tarikh detail must use TopicPage shell");
+assert.match(tarikhDetail, /ReadingSectionCard/, "tarikh detail explanation must be inside ReadingSectionCard");
+assert.match(tarikhDetail, /title="الشرح"/, "tarikh detail must expose شرح section card");
+assert.match(tarikhDetail, /title="المصادر"/, "tarikh detail sources must be inside a clear card");
+assert.match(tarikhDetail, /RelatedContentStack|RelatedContentCard/, "tarikh related/read-also must use related cards");
+assert.doesNotMatch(
+  tarikhDetail,
+  /<p className="tarikh-detail__body">/,
+  "Bare tarikh explanation paragraphs outside reading cards are not allowed",
+);
+assert.doesNotMatch(
+  tarikhDetail,
+  /AppBackButton|FloatingBackButton|showBack\s*=/,
+  "Duplicate back buttons visible: tarikh detail must rely on global FAB only",
+);
+assert.match(readingCard, /rsc__title/, "ReadingSectionCard must render titled section cards");
+assert.match(relatedCard, /rcc__arrow/, "RelatedContentCard must show a clear enter arrow");
+assert.match(readingCss, /\.rsc\s*\{/, "reading-section-card.css must define .rsc");
+assert.doesNotMatch(
+  readingCss,
+  /\.rsc__body[^{]*\{[^}]*opacity:\s*0\.[0-4]\b/s,
+  "Low contrast text: reading body must not use heavy opacity fade",
+);
+assert.match(storiesPage, /ReadingSectionCard/, "islamic stories detail must use ReadingSectionCard");
+assert.doesNotMatch(
+  storiesPage,
+  /isp-detail__back/,
+  "Duplicate back buttons visible: stories detail must not render local back",
+);
 assert.match(tawhidPage, /SectionTemplatePage/, "tawhid must use SectionTemplatePage");
 assert.doesNotMatch(
   tawhidPage,

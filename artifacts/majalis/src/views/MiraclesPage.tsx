@@ -24,6 +24,11 @@ import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { TopicPage } from "@/components/topic/TopicPage";
 import { AppBackButton } from "@/components/common/AppBackButton";
 import {
+  ReadingProse,
+  ReadingSectionCard,
+} from "@/components/content/ReadingSectionCard";
+import { RelatedContentStack } from "@/components/content/RelatedContentCard";
+import {
   MIRACLE_FIXED_CAUTION,
   cleanSummaryBoilerplate,
   extractIntro,
@@ -513,37 +518,34 @@ function MiracleDetailPage({ slug }: { slug: string }) {
           )}
 
           {intro && intro !== meaning ? (
-            <section className="mk-detail-block">
-              <h2 className="miracle-detail__label">النص في سياقه</h2>
-              <p className="miracle-detail__text">{intro}</p>
-            </section>
+            <ReadingSectionCard title="النص في سياقه" variant="default">
+              <ReadingProse text={intro} />
+            </ReadingSectionCard>
           ) : null}
 
           {meaning ? (
-            <section className="miracle-explain" aria-label="المعنى الشرعي">
-              <header className="miracle-explain__head">
-                <span className="miracle-explain__mark" aria-hidden="true" />
-                <h2 className="miracle-explain__label">المعنى الشرعي أولًا</h2>
-              </header>
-              <p className="miracle-explain__text">{meaning}</p>
-            </section>
+            <ReadingSectionCard title="المعنى الشرعي أولًا" variant="summary">
+              <ReadingProse text={meaning} />
+            </ReadingSectionCard>
           ) : null}
 
-          <section className="mk-detail-block">
-            <h2 className="miracle-detail__label">وجه التأمل العلمي (بصياغة حذرة)</h2>
-            <p className="miracle-detail__text">
-              {scientific ||
-                "يذكر بعض الباحثين أوجه تقارب للتأمل؛ ولا يلزم منه تفسير قطعي للآية أو الحديث بنظرية معاصرة."}
-            </p>
-          </section>
+          <ReadingSectionCard title="وجه التأمل العلمي (بصياغة حذرة)" variant="default">
+            <ReadingProse
+              text={
+                scientific ||
+                "يذكر بعض الباحثين أوجه تقارب للتأمل؛ ولا يلزم منه تفسير قطعي للآية أو الحديث بنظرية معاصرة."
+              }
+            />
+          </ReadingSectionCard>
 
-          <section className="mk-detail-block">
-            <h2 className="miracle-detail__label">حدود الاستدلال</h2>
-            <p className="miracle-detail__text">
-              {limits ||
-                "الملاحظة العلمية للتأمل فقط؛ لا تُجعل النظرية المعاصرة تفسيرًا قطعيًا للنص، ولا يُبنى عليها حكم أو عقيدة."}
-            </p>
-          </section>
+          <ReadingSectionCard title="حدود الاستدلال" variant="default">
+            <ReadingProse
+              text={
+                limits ||
+                "الملاحظة العلمية للتأمل فقط؛ لا تُجعل النظرية المعاصرة تفسيرًا قطعيًا للنص، ولا يُبنى عليها حكم أو عقيدة."
+              }
+            />
+          </ReadingSectionCard>
 
           <aside className="mk-caution" role="note">
             <AlertTriangle size={15} strokeWidth={1.8} aria-hidden="true" />
@@ -551,31 +553,23 @@ function MiracleDetailPage({ slug }: { slug: string }) {
           </aside>
 
           {item.scholarly_source ? (
-            <section className="mk-detail-block mk-detail-block--sources">
-              <h2 className="miracle-detail__label">المصادر والمراجع</h2>
-              <p className="miracle-detail__text mk-sources-quiet">{item.scholarly_source}</p>
-            </section>
+            <ReadingSectionCard title="المصادر والمراجع" variant="sources">
+              <ReadingProse text={item.scholarly_source} />
+            </ReadingSectionCard>
           ) : null}
 
           {related.length > 0 ? (
-            <section className="mk-related" aria-label="مواد ذات صلة">
-              <h2 className="miracle-detail__label">مواد ذات صلة</h2>
-              <ul className="mk-related__list">
-                {related.map((r) => (
-                  <li key={r.id}>
-                    <Link
-                      href={`/miracles/topic/${encodeURIComponent(r.slug)}`}
-                      className="mk-related__link"
-                    >
-                      <span className="mk-related__title">{r.title}</span>
-                      <span className="mk-related__meta">
-                        {miracleCategoryChip(r)} · {miracleMethodBadge(r)}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </section>
+            <ReadingSectionCard title="مواد ذات صلة" variant="related">
+              <RelatedContentStack
+                paddedForNav
+                items={related.map((r) => ({
+                  href: `/miracles/topic/${encodeURIComponent(r.slug)}`,
+                  title: r.title,
+                  category: miracleCategoryChip(r),
+                  summary: miracleMethodBadge(r),
+                }))}
+              />
+            </ReadingSectionCard>
           ) : null}
         </article>
 
