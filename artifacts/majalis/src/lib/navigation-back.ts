@@ -133,6 +133,8 @@ export function sectionAwareFallback(currentPath: string): string {
   if (p === "/tawhid") return "/tawhid";
   if (p.startsWith("/aqidah/")) return "/aqidah";
   if (p === "/aqidah") return "/aqidah";
+  if (p.startsWith("/miracles/topic/")) return "/miracles";
+  if (p === "/miracles/quran" || p === "/miracles/sunnah") return "/miracles";
   if (p.startsWith("/miracles/")) return "/miracles";
   if (p === "/miracles") return "/miracles";
   if (p.startsWith("/tarikh-islami/")) return "/tarikh-islami";

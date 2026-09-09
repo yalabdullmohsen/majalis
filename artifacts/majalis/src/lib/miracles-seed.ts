@@ -1393,6 +1393,16 @@ export function filterMiraclesSeed(opts?: { category?: string; sourceType?: stri
   return rows;
 }
 
+export function getMiracleSeedBySlug(slug: string): MiracleSeedItem | null {
+  const s = String(slug || "").trim();
+  if (!s) return null;
+  return (
+    MIRACLES_SEED.find(
+      (m) => m.slug === s && m.status === "approved" && m.verification_status === "verified",
+    ) ?? null
+  );
+}
+
 export function searchMiraclesSeed(query: string) {
   const q = query.trim();
   if (!q) return [];
