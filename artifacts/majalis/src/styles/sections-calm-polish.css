@@ -132,7 +132,9 @@ html.dark {
 .mk-card,
 .mk-lane-card,
 .fiqh-book-card,
-.dii-hub-card {
+.dii-hub-card,
+.hs-card,
+.hb-hadith-row {
   background: var(--surface) !important;
   border: 1px solid color-mix(in srgb, var(--border) 80%, transparent) !important;
   border-radius: var(--radius-card) !important;
@@ -142,7 +144,11 @@ html.dark {
 
 /* تفاصيل قراءة/حديث: نصف قطر فقط */
 .hadith-detail-card,
-.rsc {
+.rsc,
+.ahd-section,
+.isp-detail__section,
+.tarikh-detail__section,
+.akl-block {
   border-radius: var(--radius-card) !important;
 }
 
@@ -587,4 +593,62 @@ html.chrome-immersive .global-back-btn.floating-back-btn {
   .lesson-unified-card__facts {
     grid-template-columns: 1fr !important;
   }
+}
+
+/* ── لمس وأزرار موحّدة (هوية التطبيق) ─────────────────────────────── */
+button:not([disabled]),
+a.mj-btn,
+a.m2030-btn,
+.hub-card,
+.soft-card.mj-pressable,
+.hs-cat-chip,
+.hb-tab,
+.ds-filter-toggle,
+.filter-chips__chip,
+.mj-filter-chip {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:not([disabled]):not(.floating-back-btn):not(.global-back-btn),
+a.mj-btn,
+a.m2030-btn,
+.ds-filter-toggle,
+.hs-cat-chip,
+.hb-tab,
+.filter-chips__chip,
+.mj-filter-chip,
+.hadith-card__read-more,
+.hadith-action-btn,
+.hadith-pagination__btn {
+  min-height: 44px;
+}
+
+.btn-primary,
+.ds-btn--primary,
+.mj-btn,
+.mj-btn--primary,
+.m2030-btn--primary {
+  border-radius: var(--radius-button, 18px) !important;
+  min-height: 48px;
+  padding-inline: 1.1rem;
+}
+
+.hadith-card__read-more {
+  border-radius: var(--radius-button, 18px) !important;
+  min-height: 44px !important;
+  padding: 0.45rem 0.95rem !important;
+}
+
+.hadith-action-btn {
+  min-width: 44px !important;
+  min-height: 44px !important;
+  border-radius: var(--radius-button, 18px) !important;
+}
+
+.fiqh-category-card,
+.fiqh-issue-card,
+.hs-card,
+.hb-hadith-row {
+  border-radius: var(--radius-card, 24px) !important;
 }

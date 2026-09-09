@@ -385,7 +385,7 @@ html.dark .isp-chip.is-active,
 .isp-detail__section {
   background: var(--color-surface, var(--elite-white, #FFFCF7));
   border: 1px solid var(--color-hairline, var(--elite-border, rgba(0,0,0,0.07)));
-  border-radius: var(--elite-r-lg, 16px);
+  border-radius: var(--radius-card, 24px);
   padding: 1.25rem 1.5rem;
   box-shadow: 0 10px 26px -18px rgba(10, 61, 46, 0.22);
 }

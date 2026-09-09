@@ -39,16 +39,26 @@ test.describe("Hadith — الحديث", () => {
     expect(body.length, "صفحة الأحاديث الصحيحة فارغة").toBeGreaterThan(50);
   });
 
-  test("hadith card opens detail modal on click", async ({ page }) => {
+  test("hadith card opens detail modal or navigates to detail page", async ({ page }) => {
     await openSahihList(page);
     const cards = page.locator('[data-testid="hadith-card"], [class*="hadith-card"]').filter({ hasText: /حديث|قال|روى|النبي/ });
     if (await cards.count() > 0) {
-      await cards.first().click();
-      await page.waitForTimeout(400);
-      const modal = page.locator('[role="dialog"], [class*="modal"]');
-      const bodyText = await page.locator("body").innerText();
-      const hasDetail = (await modal.count()) > 0 || bodyText.includes("المصدر");
-      expect(hasDetail, "النقر على بطاقة الحديث يجب أن يفتح التفاصيل").toBe(true);
+      const readMore = cards.first().locator('a.hadith-card__read-more, button.hadith-card__read-more').first();
+      if (await readMore.count() > 0) {
+        const tag = await readMore.evaluate((el) => el.tagName.toLowerCase());
+        if (tag === "a") {
+          await readMore.click();
+          await page.waitForURL(/\/hadith\//, { timeout: 5000 });
+          expect(page.url()).toMatch(/\/hadith\//);
+        } else {
+          await readMore.click();
+          await page.waitForTimeout(400);
+          const modal = page.locator('[role="dialog"], [class*="modal"]');
+          const bodyText = await page.locator("body").innerText();
+          const hasDetail = (await modal.count()) > 0 || bodyText.includes("المصدر");
+          expect(hasDetail, "النقر على قراءة المزيد يجب أن يفتح التفاصيل").toBe(true);
+        }
+      }
     }
   });
 

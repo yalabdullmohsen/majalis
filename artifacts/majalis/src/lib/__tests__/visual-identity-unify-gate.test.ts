@@ -37,14 +37,28 @@ for (const cls of [
   "mk-lane-card",
   "fiqh-book-card",
   "dii-hub-card",
+  "hs-card",
+  "hb-hadith-row",
 ]) {
   assert.match(calm, new RegExp(`\\.${cls}`), `calm يشمل .${cls}`);
   assert.match(unify, new RegExp(`\\.${cls}`), `unify يشمل .${cls}`);
 }
 assert.match(calm, /\.hadith-detail-card/);
 assert.match(calm, /\.rsc\b/);
+assert.match(calm, /\.ahd-section/);
 assert.match(unify, /\.hadith-detail-card/);
 assert.match(unify, /\.rsc\b/);
+
+const mustalah = read("src/styles/pages/hadith-mustalah.css");
+const books = read("src/styles/pages/hadith-books.css");
+const arbaeen = read("src/styles/pages/arbaeen-detail.css");
+const card = read("src/components/hadith/HadithCard.tsx");
+assert.match(mustalah, /\.hs-card[\s\S]*?border-radius:\s*var\(--radius-card/);
+assert.match(books, /\.hb-hadith-row[\s\S]*?border-radius:\s*var\(--radius-card/);
+assert.match(arbaeen, /\.ahd-section[\s\S]*?border-radius:\s*var\(--radius-card/);
+assert.match(card, /resolveHadithDetailHref/);
+assert.match(calm, /touch-action:\s*manipulation/);
+assert.match(calm, /min-height:\s*44px/);
 
 console.log("=== ds-radius مربوطة بالهوية ===");
 assert.match(ds, /--ds-radius-lg:\s*var\(--radius-button/);

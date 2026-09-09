@@ -8,6 +8,12 @@ import {
   summarizeHadithMatn,
   type HadithRecord,
 } from "@/lib/hadith/hadithNormalize";
+import {
+  formatHadithId,
+  isHadithBookCode,
+  parseHadithId,
+  type HadithBookCode,
+} from "@/lib/hadith-corpus/ids";
 import { HadithGradeBadge } from "./HadithGradeBadge";
 
 const COLLECTION_LABELS: Record<string, string> = {
@@ -27,6 +33,16 @@ const COLLECTION_LABELS: Record<string, string> = {
   various: "متفرقات مشهورة",
 };
 
+const COLLECTION_TO_BOOK: Record<string, HadithBookCode> = {
+  bukhari: "bukhari",
+  muslim: "muslim",
+  tirmidhi: "tirmidhi",
+  abudawud: "abudawud",
+  nasai: "nasai",
+  ibnmajah: "ibnmajah",
+  muwatta: "malik",
+};
+
 function collectionLabel(key: string | null): string {
   if (!key) return "";
   return COLLECTION_LABELS[key] ?? key;
@@ -43,14 +59,25 @@ function collectionBadgeClass(key: string | null): string {
   return map[key] ?? "hadith-badge--collection";
 }
 
+/** رابط تفاصيل ثابت إن وُجد معرّف كتاب:رقم قابل للتحليل */
+export function resolveHadithDetailHref(item: HadithRecord): string | null {
+  if (parseHadithId(item.id)) return `/hadith/${item.id}`;
+  const num = Number(item.hadith_number);
+  if (!Number.isFinite(num) || num < 1) return null;
+  const col = item.collection?.toLowerCase() ?? "";
+  const book = COLLECTION_TO_BOOK[col] ?? (isHadithBookCode(col) ? col : null);
+  if (!book) return null;
+  return `/hadith/${formatHadithId(book, num)}`;
+}
+
 type Props = {
   item: HadithRecord;
   onExpand: (item: HadithRecord) => void;
-  detailHref?: string; // reserved for section-end share URL
+  detailHref?: string;
 };
 
 /** بطاقة حديث — متن مختصر، مصدر، حكم (المشاركة في نهاية القسم فقط). */
-export function HadithCard({ item: h, onExpand }: Props) {
+export function HadithCard({ item: h, onExpand, detailHref }: Props) {
   const [saved, setSaved] = useState(() => {
     try {
       const raw = localStorage.getItem("majalis:hadith-saved");
@@ -66,8 +93,7 @@ export function HadithCard({ item: h, onExpand }: Props) {
   const category = sanitizeHadithDisplay(h.chapter) || sanitizeHadithDisplay(h.collection ? collectionLabel(h.collection) : "");
   const reportTopic = h.title || preview.slice(0, 60) || "حديث نبوي شريف";
   const ariaLabel = `قراءة المزيد: ${h.title ?? preview.slice(0, 48)}`;
-
-
+  const href = detailHref ?? resolveHadithDetailHref(h);
 
   function handleSave(e: React.MouseEvent) {
     e.stopPropagation();
@@ -149,14 +175,24 @@ export function HadithCard({ item: h, onExpand }: Props) {
       ) : null}
 
       <div className="hadith-card__actions">
-        <button
-          type="button"
-          className="hadith-card__read-more"
-          onClick={() => onExpand(h)}
-          aria-label={ariaLabel}
-        >
-          قراءة المزيد
-        </button>
+        {href ? (
+          <Link
+            href={href}
+            className="hadith-card__read-more mj-pressable"
+            aria-label={ariaLabel}
+          >
+            قراءة المزيد
+          </Link>
+        ) : (
+          <button
+            type="button"
+            className="hadith-card__read-more mj-pressable"
+            onClick={() => onExpand(h)}
+            aria-label={ariaLabel}
+          >
+            قراءة المزيد
+          </button>
+        )}
         <button
           type="button"
           className={`hadith-action-btn ${saved ? "hadith-action-btn--active" : ""}`}

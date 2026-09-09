@@ -128,6 +128,8 @@ body,
 .mk-lane-card,
 .fiqh-book-card,
 .dii-hub-card,
+.hs-card,
+.hb-hadith-row,
 .lesson-unified-card,
 .fqh-hub-card,
 .topic-card {
@@ -140,7 +142,11 @@ body,
 
 /* تفاصيل قراءة/حديث: نصف قطر موحّد دون فرض خلفية (تحتفظ بألوان دلالية) */
 .hadith-detail-card,
-.rsc {
+.rsc,
+.ahd-section,
+.isp-detail__section,
+.tarikh-detail__section,
+.akl-block {
   border-radius: var(--radius-card) !important;
 }
 
