@@ -39,7 +39,7 @@ export const HISTORY_ERA_META: Record<HistoryCategory, HistoryEraMeta> = {
     title: "الدولة الأموية",
     period: "41–132هـ",
     center: "دمشق",
-    blurb: "اتساع الدولة وتعريب الدواوين وفتح الأندلس — مع تمحيص ما وقع من فتن.",
+    blurb: "اتساع الدولة وتعريب الدواوين وفتح الأندلس والقيروان وذات الصواري — مع تمحيص ما وقع من فتن.",
     accent: "#8a6a32",
   },
   abbasid: {
@@ -55,7 +55,7 @@ export const HISTORY_ERA_META: Record<HistoryCategory, HistoryEraMeta> = {
     title: "الأندلس",
     period: "92–897هـ",
     center: "قرطبة · غرناطة",
-    blurb: "ثمانية قرون من الفتح إلى سقوط غرناطة — علم وعمران ثم تشرذم.",
+    blurb: "ثمانية قرون: من الفتح إلى ملوك الطوائف فالمرابطين والموحدين حتى سقوط غرناطة.",
     accent: "#5c6b3a",
   },
   "seljuk-ayyubid": {
