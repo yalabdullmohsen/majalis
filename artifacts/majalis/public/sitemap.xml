@@ -1310,6 +1310,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/seerah-hijra</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/seerah-badr</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1800,6 +1805,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/ayyubid-third-crusade</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/crusader-states</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1866,6 +1876,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/mamluk-ibn-taymiyya-era</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/mamluk-faraj</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -1980,6 +1995,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/ottoman-devshirme</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/civ-travel</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -2016,6 +2036,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/modern-caliphate-abolition</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/modern-oic</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -2076,6 +2101,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/civ-bimaristan</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/civ-ajnad-ribat</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
