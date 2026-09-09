@@ -10,7 +10,7 @@
   --topic-on-hero-accent: var(--mss-on-hero-accent, #fff1c4);
   direction: rtl;
   overflow-x: clip;
-  padding-bottom: calc(var(--nav-h, 64px) + var(--fab-space, 56px) + 24px + var(--inset-bottom, 0px));
+  padding-bottom: calc(var(--bottom-nav-height, 88px) + var(--fab-space, 56px) + 24px + var(--inset-bottom, 0px));
 }
 
 .topic-page__crumb {

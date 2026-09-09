@@ -192,5 +192,5 @@ html[data-theme="dark"] .asp-researcher-link {
 }
 
 html[data-theme="dark"] .asp-footer {
-  color: #a8a29a;
+  color: var(--mj-ink-2, #c2cfca);
 }

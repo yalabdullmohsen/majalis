@@ -11,7 +11,7 @@
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   padding-top: max(0.75rem, var(--inset-top, 0px));
-  padding-bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px);
+  padding-bottom: calc(var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 24px + var(--fab-space, 48px));
   box-sizing: border-box;
 }
 

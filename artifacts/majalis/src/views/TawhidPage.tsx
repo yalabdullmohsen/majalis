@@ -47,7 +47,7 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
     id: "arkan-iman",
     emoji: "", title: "أركان الإيمان",
     desc: "الإيمان بالله وملائكته وكتبه ورسله واليوم الآخر والقدر",
-    href: "/arkan-iman", badge: "٦ أركان", color: "#7C3AED",
+    href: "/arkan-iman", badge: "٦ أركان", color: "var(--mj-brand-deep, #0B3D2E)",
   },
   {
     id: "asma-husna",
@@ -71,13 +71,13 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
     id: "malaika",
     emoji: "", title: "الملائكة في الإسلام",
     desc: "الإيمان بوجودهم وصفاتهم وما ثبت من أسمائهم ومهامهم في الوحي",
-    href: "/malaika", badge: "غيبيات", color: "#5B21B6",
+    href: "/malaika", badge: "غيبيات", color: "var(--mj-brand, #1f6b56)",
   },
   {
     id: "wala-bara",
     emoji: "", title: "الولاء والبراء",
     desc: "موالاة أهل الإيمان والبراءة من الشرك بضابط البر والعدل مع المسالمين",
-    href: "/tawhid/wala-bara", badge: "درس", color: "#92400E",
+    href: "/tawhid/wala-bara", badge: "درس", color: "var(--mj-brand-deep, #0B3D2E)",
   },
   {
     id: "aqeedah-path",
@@ -95,7 +95,7 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
     id: "islamic-sects",
     emoji: "", title: "الفرق والمذاهب",
     desc: "عرض تاريخي للفرق مع بيان موقف أهل السنة",
-    href: "/islamic-sects", badge: "موسوعة", color: "#1E3A5F",
+    href: "/islamic-sects", badge: "موسوعة", color: "var(--mj-brand-deep, #0B3D2E)",
   },
 ];
 
@@ -118,7 +118,7 @@ const TAWHEED_TYPES = [
     num: "٣", title: "توحيد الأسماء والصفات", subtitle: "توحيد الإثبات والتنزيه",
     desc: "إثبات ما أثبته الله ورسوله من الأسماء والصفات بلا تحريف ولا تعطيل ولا تمثيل.",
     ayah: "لَيْسَ كَمِثْلِهِ شَيْءٌ وَهُوَ السَّمِيعُ الْبَصِيرُ",
-    ref: "الشورى: ١١", variant: "purple",
+    ref: "الشورى: ١١", variant: "brand",
   },
 ];
 
@@ -479,7 +479,7 @@ export default function TawhidPage() {
         <h2 id="types-heading" className="tawheed-principles-heading">أنواع التوحيد الثلاثة</h2>
         <div className="tawheed-types-grid">
           {TAWHEED_TYPES.map((t, idx) => (
-            <div key={t.num} className={`tawheed-type-card tawheed-type-card--${idx === 2 ? "purple" : "emerald"}`}>
+            <div key={t.num} className={`tawheed-type-card tawheed-type-card--${t.variant === "brand" ? "brand" : "emerald"}`}>
               <div className="tawheed-type-card__num">{t.num}</div>
               <p className="tawheed-type-card__title">{t.title}</p>
               <p className="tawheed-type-card__subtitle">{t.subtitle}</p>

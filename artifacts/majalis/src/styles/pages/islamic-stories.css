@@ -13,7 +13,7 @@
   max-width: min(42rem, 100%);
   margin-inline: auto;
   padding-inline: max(0.85rem, var(--gutter-inline-start, 14px));
-  padding-bottom: calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 1.25rem);
+  padding-bottom: calc(var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 1.25rem);
   box-sizing: border-box;
 }
 
@@ -21,7 +21,7 @@
   max-width: min(42rem, 100%);
   margin-inline: auto;
   padding-inline: max(0.85rem, var(--gutter-inline-start, 14px));
-  padding-bottom: calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 1.25rem);
+  padding-bottom: calc(var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 1.25rem);
 }
 
 .isp-stats-row {
@@ -404,7 +404,7 @@ html.dark .isp-chip.is-active,
 }
 
 .isp-detail__section-title--green  { color: var(--mj-brand) !important; }
-.isp-detail__section-title--purple { color: var(--brand-on-light, var(--mj-brand-deep)) !important; }
+.isp-detail__section-title--brand { color: var(--brand-on-light, var(--mj-brand-deep)) !important; }
 .isp-detail__section-title--gold   { color: var(--majalis-emerald,var(--mj-brand)) !important; }
 
 .isp-detail__body {
