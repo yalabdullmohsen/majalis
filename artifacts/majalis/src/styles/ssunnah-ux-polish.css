@@ -589,3 +589,117 @@ html.audio-dock-open .floating-back-btn,
 html[data-audio-dock="1"] .floating-back-btn {
   bottom: calc(var(--nav-h, 64px) + var(--audio-dock-h, 72px) + 16px + var(--inset-bottom, 0px)) !important;
 }
+
+/* ── مرحلة 3: تفاعل / حالات / a11y ── */
+.ss-state-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.65rem;
+  margin: 1rem auto;
+  max-width: min(28rem, calc(100% - 1.5rem));
+  padding: 1.25rem 1.1rem;
+  border-radius: var(--radius-card, 24px);
+  border: 1px solid color-mix(in srgb, var(--ss-primary-green, var(--mj-brand)) 14%, var(--ss-border));
+  background: var(--ss-card-bg, var(--mj-surface));
+  box-shadow: var(--ss-shadow-soft);
+}
+
+.ss-state-card__title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--mj-ink);
+  line-height: 1.4;
+}
+
+.ss-state-card__action {
+  margin-top: 0.35rem;
+  text-decoration: none;
+}
+
+.hub-card:active,
+.card:active,
+.ss-feature-card:active .ss-feature-card__inner,
+.soft-card.mj-pressable:active,
+.m2030-tile:active,
+.bottom-nav__tab:active {
+  box-shadow: var(--ss-shadow-soft, 0 1px 2px rgba(11, 32, 24, 0.08));
+}
+
+.bottom-nav__tab,
+.srch-home-submit,
+.search-page-submit,
+.app-sheet__close,
+.sidebar-close,
+.ss-icon-btn,
+.ss-action-btn {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.srch-home-field input:focus,
+.search-page input:focus,
+.search-page input:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--ss-primary-green, var(--mj-brand)) 55%, transparent);
+  outline-offset: 2px;
+  border-color: color-mix(in srgb, var(--ss-primary-green) 40%, var(--ss-border));
+}
+
+.app-sheet__close:focus-visible,
+.ss-action-btn:focus-visible,
+.ss-icon-btn:focus-visible,
+.bottom-nav__tab:focus-visible {
+  outline: 2px solid var(--ss-primary-green, var(--mj-brand));
+  outline-offset: 2px;
+}
+
+/* shimmer خفيف للهيكل — بلا وميض قوي */
+.ds-skeleton,
+.skeleton-base,
+.qa-skeleton-line {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--ss-border, #d9d2c6) 55%, var(--ss-card-bg, #fff)) 0%,
+    color-mix(in srgb, var(--ss-primary-green, #0f5c45) 6%, var(--ss-card-bg, #fff)) 50%,
+    color-mix(in srgb, var(--ss-border, #d9d2c6) 55%, var(--ss-card-bg, #fff)) 100%
+  );
+  background-size: 180% 100%;
+  animation: ss-skel-shimmer 1.35s ease-in-out infinite;
+  border-radius: 10px;
+}
+
+@keyframes ss-skel-shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -80% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-skeleton,
+  .skeleton-base,
+  .qa-skeleton-line {
+    animation: none !important;
+  }
+}
+
+/* تقليل فراغ علوي في لوبي/موضوع (عتبة visual 160px) */
+.section-lobby {
+  padding-top: 12px;
+}
+
+.section-lobby__head {
+  padding-block-start: 0;
+  margin-block-start: 0;
+}
+
+.topic-page__hero {
+  margin-block-start: 0;
+  padding-block-start: 0.65rem;
+}
+
+html[data-theme="dark"] .ss-state-card,
+html.dark .ss-state-card {
+  background: var(--ss-card-bg, #1b2421);
+  border-color: color-mix(in srgb, var(--ss-primary-green) 22%, var(--ss-border));
+}

@@ -121,12 +121,26 @@ export function PageStatusShell({
 }
 
 export function ErrorState({ text, onRetry }: { text: string; onRetry?: () => void }) {
+  const safe =
+    !text?.trim() ||
+    /fetch|network|timeout|TypeError|ECONN|supabase|stack|undefined|null is not|500|502|503|404|CORS|JWT/i.test(
+      text,
+    ) ||
+    text.length > 140
+      ? "تعذر تحميل المحتوى. حاول مرة أخرى."
+      : text;
+
   return (
-    <div className="adv-error-state" role="alert" aria-live="assertive" dir="rtl">
+    <div className="adv-error-state ss-state-card" role="alert" aria-live="assertive" dir="rtl">
       <AlertTriangle size={28} strokeWidth={1.5} className="adv-error-state__icon" aria-hidden="true" />
-      <p className="adv-error-state__msg">{text}</p>
+      <p className="adv-error-state__msg">{safe}</p>
       {onRetry && (
-        <button type="button" className="adv-error-state__retry" onClick={onRetry} aria-label="إعادة المحاولة">
+        <button
+          type="button"
+          className="adv-error-state__retry ss-action-btn ss-action-btn--primary mj-pressable"
+          onClick={onRetry}
+          aria-label="إعادة المحاولة"
+        >
           <RefreshCw size={14} aria-hidden="true" />
           إعادة المحاولة
         </button>
@@ -135,11 +149,36 @@ export function ErrorState({ text, onRetry }: { text: string; onRetry?: () => vo
   );
 }
 
-export function Empty({ text, title }: { text: string; title?: string }) {
+export function Empty({
+  text,
+  title,
+  actionLabel,
+  onAction,
+  actionHref,
+}: {
+  text: string;
+  title?: string;
+  actionLabel?: string;
+  onAction?: () => void;
+  actionHref?: string;
+}) {
   return (
-    <div className="ds-empty" role="status" aria-live="polite">
-      {title ? <h2>{title}</h2> : null}
+    <div className="ds-empty ss-state-card" role="status" aria-live="polite">
+      {title ? <h2 className="ss-state-card__title">{title}</h2> : null}
       <p className="ds-empty__text">{text}</p>
+      {actionHref ? (
+        <a href={actionHref} className="ss-action-btn ss-action-btn--secondary mj-pressable ss-state-card__action">
+          {actionLabel || "متابعة"}
+        </a>
+      ) : actionLabel && onAction ? (
+        <button
+          type="button"
+          className="ss-action-btn ss-action-btn--secondary mj-pressable ss-state-card__action"
+          onClick={onAction}
+        >
+          {actionLabel}
+        </button>
+      ) : null}
     </div>
   );
 }

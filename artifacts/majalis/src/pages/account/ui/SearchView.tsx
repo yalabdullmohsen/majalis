@@ -17,6 +17,7 @@ import { Link, useSearch } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { VirtualList } from "@/components/VirtualList";
 import { CompactSectionHeader } from "@/components/ui/CompactSectionHeader";
+import { SearchSkeleton } from "@/components/ui-common";
 import { SEARCH_INPUT_ATTRS, handleSearchEnterKey } from "@/lib/search-input";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { addSearchHistory, getSearchHistory, clearSearchHistory } from "@/lib/search-history";
@@ -403,29 +404,40 @@ export default function SearchPage() {
           )}
         </div>
       ) : loading ? (
-        <p className="srch-home-status" role="status">
-          جاري البحث…
-        </p>
+        <div className="srch-home-status" role="status" aria-busy="true" aria-label="جاري البحث">
+          <SearchSkeleton />
+        </div>
       ) : showEmpty ? (
-        <div className="search-no-results" role="status">
-          <p className="search-no-results__msg">
+        <div className="search-no-results ss-state-card" role="status">
+          <p className="search-no-results__msg ss-state-card__title">
             {scope !== "all"
-              ? "لا توجد نتائج في هذا القسم، جرّب كلمة أخرى أو ابحث في الكل."
+              ? "لا توجد نتائج في هذا القسم."
               : `لم نجد نتيجة مطابقة لـ «${term}».`}
           </p>
           <p className="search-no-results__hint">جرّب كلمة أخرى أو اختصر البحث.</p>
           {scope !== "all" ? (
-            <button type="button" className="srch-home-submit" onClick={() => setScope("all")}>
+            <button type="button" className="srch-home-submit ss-action-btn ss-action-btn--primary mj-pressable" onClick={() => setScope("all")}>
               ابحث في الكل
             </button>
-          ) : null}
+          ) : (
+            <button
+              type="button"
+              className="srch-home-submit ss-action-btn ss-action-btn--secondary mj-pressable"
+              onClick={() => {
+                setTerm("");
+                inputRef.current?.focus();
+              }}
+            >
+              مسح البحث
+            </button>
+          )}
           {suggestions.length > 0 ? (
             <p className="search-no-results__hint">
               هل تقصد{" "}
               {suggestions.map((s, i) => (
                 <span key={s}>
                   {i > 0 ? " · " : ""}
-                  <button type="button" className="search-suggestion-chip" onClick={() => submit(s)}>
+                  <button type="button" className="search-suggestion-chip mj-pressable" onClick={() => submit(s)}>
                     {s}
                   </button>
                 </span>

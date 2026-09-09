@@ -51,6 +51,8 @@ export function AsyncDataView({
     const text = typeof error === "string" && error.trim() ? error : errorText;
     return <ErrorState text={text} onRetry={onRetry} />;
   }
-  if (status === "empty") return <Empty text={emptyText} />;
+  if (status === "empty") {
+    return <Empty text={emptyText} title="لا يوجد محتوى" />;
+  }
   return <>{children}</>;
 }
