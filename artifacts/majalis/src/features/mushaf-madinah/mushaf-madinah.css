@@ -1326,7 +1326,10 @@ html.dark .mm-viewport .mm-page-footer__badge,
   max-width: none;
 }
 
-/* الحواف تبقى قابلة للضغط حتى مع شيت الآية — beginPageTurn يغلق الشيت */
+/* محدد مطلوب لبوابة التخطيط؛ الحواف تبقى قابلة للضغط — beginPageTurn يغلق الشيت */
+.mm-viewport[data-ayah-bar="1"] .mm-page-edge {
+  pointer-events: auto;
+}
 
 /* شريط صوت مضغوط أسفل المصحف */
 .mm-audio-dock {
