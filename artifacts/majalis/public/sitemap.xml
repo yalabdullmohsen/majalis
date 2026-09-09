@@ -1590,6 +1590,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/umayyad-berber-revolt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/umayyad-fall</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1686,6 +1691,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/abbasid-tahirids</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/abbasid-aghlabids</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -1910,6 +1920,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/mamluk-barsbay</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/mamluk-faraj</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -2066,6 +2081,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/modern-hijaz-railway</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/modern-balfour-nakba-context</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
