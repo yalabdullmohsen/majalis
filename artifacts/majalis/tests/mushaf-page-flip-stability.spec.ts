@@ -1,11 +1,11 @@
 /**
- * ثبات موضع أول سطر آيات عند قلب الصفحة — iPhone viewport.
- * يفشل إذا تحرّك الصندوق المحيط لمنطقة الآيات أكثر من 2px خلال 300ms بعد الظهور.
+ * ثبات موضع/حجم أول سطر + رصيف التلاوة لا يغطي آخر آية + أسماء القراء.
  */
 import { test, expect, type Page } from "@playwright/test";
 
 const VIEWPORT = { width: 390, height: 844 };
 const MAX_JUMP_PX = 2;
+const MAX_SIZE_DELTA_PX = 1;
 
 test.use({ viewport: VIEWPORT });
 
@@ -31,7 +31,20 @@ async function firstLineBox(page: Page) {
       document.querySelector<HTMLElement>('[data-pane="current"] .nm-line');
     if (!line) return null;
     const r = line.getBoundingClientRect();
-    return { top: r.top, left: r.left, height: r.height };
+    const fs = Number.parseFloat(getComputedStyle(line).fontSize) || 0;
+    return { top: r.top, left: r.left, height: r.height, fontSize: fs };
+  });
+}
+
+async function lastLineBottom(page: Page) {
+  return page.evaluate(() => {
+    const lines = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        '[data-pane="current"] [data-testid="nm-verse-line"], [data-pane="current"] .nm-line',
+      ),
+    );
+    const last = lines[lines.length - 1];
+    return last ? last.getBoundingClientRect().bottom : null;
   });
 }
 
@@ -39,27 +52,30 @@ async function flipNext(page: Page) {
   await page.locator(".mm-page-edge--next").click({ force: true });
 }
 
-test("mushaf page flip — لا قفزة لأول سطر بعد الظهور", async ({ page }) => {
-  await openMushaf(page, 1);
+async function flipPrev(page: Page) {
+  await page.locator(".mm-page-edge--prev").click({ force: true });
+}
 
-  for (const target of [2, 3, 4]) {
-    await flipNext(page);
-    await page.waitForSelector(`[data-testid="mushaf-page"][data-page="${target}"]`, {
-      timeout: 20000,
-    });
-    const early = await firstLineBox(page);
-    expect(early, `سطر أول على صفحة ${target}`).not.toBeNull();
-    await page.waitForTimeout(300);
-    const late = await firstLineBox(page);
-    expect(late).not.toBeNull();
-    const dy = Math.abs((late!.top) - (early!.top));
-    expect(dy, `قفزة رأسية ${dy}px على صفحة ${target}`).toBeLessThanOrEqual(MAX_JUMP_PX);
-  }
-});
+async function assertStableFirstLine(page: Page, label: string) {
+  const early = await firstLineBox(page);
+  expect(early, `سطر أول — ${label}`).not.toBeNull();
+  await page.waitForTimeout(300);
+  const late = await firstLineBox(page);
+  expect(late).not.toBeNull();
+  expect(Math.abs(late!.top - early!.top), `قفزة رأسية — ${label}`).toBeLessThanOrEqual(MAX_JUMP_PX);
+  expect(Math.abs(late!.height - early!.height), `ارتفاع السطر — ${label}`).toBeLessThanOrEqual(
+    MAX_SIZE_DELTA_PX,
+  );
+  expect(Math.abs(late!.fontSize - early!.fontSize), `font-size — ${label}`).toBeLessThanOrEqual(
+    MAX_SIZE_DELTA_PX,
+  );
+}
 
-test("mushaf page flip — صفحات ٦→٧ و٤٣→٤٤ بلا قفزة", async ({ page }) => {
+test("mushaf p2 — قلبات محددة بلا قفزة حجم", async ({ page }) => {
   for (const [from, to] of [
-    [6, 7],
+    [2, 3],
+    [3, 4],
+    [13, 14],
     [43, 44],
   ] as const) {
     await openMushaf(page, from);
@@ -67,42 +83,125 @@ test("mushaf page flip — صفحات ٦→٧ و٤٣→٤٤ بلا قفزة", as
     await page.waitForSelector(`[data-testid="mushaf-page"][data-page="${to}"]`, {
       timeout: 20000,
     });
-    const early = await firstLineBox(page);
-    expect(early, `سطر أول على صفحة ${to}`).not.toBeNull();
-    await page.waitForTimeout(300);
-    const late = await firstLineBox(page);
-    expect(late).not.toBeNull();
-    const dy = Math.abs(late!.top - early!.top);
-    expect(dy, `قفزة رأسية ${dy}px على ${from}→${to}`).toBeLessThanOrEqual(MAX_JUMP_PX);
+    await assertStableFirstLine(page, `${from}→${to}`);
+  }
+
+  await flipPrev(page);
+  await page.waitForSelector(`[data-testid="mushaf-page"][data-page="43"]`, { timeout: 20000 });
+  await assertStableFirstLine(page, "44→43 رجوع");
+});
+
+test("mushaf p3 — عشرون قلبة أمامًا وخلفًا بلا قفزة حجم", async ({ page }) => {
+  await openMushaf(page, 30);
+  let current = 30;
+  for (let i = 0; i < 20; i++) {
+    await flipNext(page);
+    current += 1;
+    await page.waitForSelector(`[data-testid="mushaf-page"][data-page="${current}"]`, {
+      timeout: 20000,
+    });
+    await assertStableFirstLine(page, `أمام ${i + 1} → ${current}`);
+  }
+  for (let i = 0; i < 20; i++) {
+    await flipPrev(page);
+    current -= 1;
+    await page.waitForSelector(`[data-testid="mushaf-page"][data-page="${current}"]`, {
+      timeout: 20000,
+    });
+    await assertStableFirstLine(page, `خلف ${i + 1} → ${current}`);
   }
 });
 
-test("mushaf page flip — صفحات وسطية سريعة", async ({ page }) => {
+test("mushaf p2 — عشر قلبات + ثبات حجم", async ({ page }) => {
   await openMushaf(page, 20);
-
-  for (const target of [21, 22]) {
-    await flipNext(page);
-    await page.waitForSelector(`[data-testid="mushaf-page"][data-page="${target}"]`, {
-      timeout: 20000,
-    });
-    const early = await firstLineBox(page);
-    expect(early).not.toBeNull();
-    await page.waitForTimeout(300);
-    const late = await firstLineBox(page);
-    expect(late).not.toBeNull();
-    expect(Math.abs(late!.top - early!.top)).toBeLessThanOrEqual(MAX_JUMP_PX);
-  }
-
-  /* عشر قلبات متتالية — لا انهيار ولا قفزة كبيرة على آخر ظهور */
+  let current = 20;
   for (let i = 0; i < 10; i++) {
     await flipNext(page);
-    await page.waitForTimeout(80);
+    current += 1;
+    await page.waitForSelector(`[data-testid="mushaf-page"][data-page="${current}"]`, {
+      timeout: 20000,
+    });
+    await assertStableFirstLine(page, `قلبة ${i + 1} → ${current}`);
   }
-  await page.waitForSelector('[data-testid="mushaf-page"]', { timeout: 20000 });
-  const early = await firstLineBox(page);
-  expect(early).not.toBeNull();
-  await page.waitForTimeout(300);
-  const late = await firstLineBox(page);
-  expect(late).not.toBeNull();
-  expect(Math.abs(late!.top - early!.top)).toBeLessThanOrEqual(MAX_JUMP_PX);
+});
+
+test("mushaf p2 — رصيف التلاوة لا يغطي آخر سطر + اسم قارئ", async ({ page }) => {
+  await openMushaf(page, 2);
+  await page.locator('[data-pane="current"] .nm-word, [data-pane="current"] [data-testid="nm-word"]').first().click({
+    force: true,
+  });
+  await page.waitForTimeout(200);
+  const playBtn = page.getByRole("button", { name: /تشغيل|تلاوة|ابدأ/ }).first();
+  if (await playBtn.isVisible().catch(() => false)) {
+    await playBtn.click({ force: true });
+  }
+
+  const dock = page.getByTestId("mushaf-audio-dock");
+  await expect(dock).toBeVisible({ timeout: 15000 });
+  await expect(page.getByTestId("mushaf-dock-reciter")).toBeVisible();
+  const reciterText = (await page.getByTestId("mushaf-dock-reciter").innerText()).trim();
+  expect(reciterText.length).toBeGreaterThan(2);
+  expect(reciterText).not.toBe("");
+
+  const lastBottom = await lastLineBottom(page);
+  const dockBox = await dock.boundingBox();
+  expect(lastBottom).not.toBeNull();
+  expect(dockBox).not.toBeNull();
+  expect(dockBox!.y, "الرصيف يبدأ تحت آخر سطر").toBeGreaterThanOrEqual((lastBottom ?? 0) - 2);
+
+  /* قلب الصفحة لا يُزيل الرصيف أثناء التشغيل */
+  await flipNext(page);
+  await page.waitForSelector(`[data-testid="mushaf-page"][data-page="3"]`, { timeout: 20000 });
+  await expect(dock).toBeVisible();
+  await expect(page.getByTestId("mushaf-dock-reciter")).toBeVisible();
+});
+
+test("mushaf p2 — التفسير يفتح بعنوان واضح", async ({ page }) => {
+  await openMushaf(page, 2);
+  await page.locator('[data-pane="current"] .nm-word, [data-pane="current"] [data-testid="nm-word"]').first().click({
+    force: true,
+  });
+  const tafsirBtn = page.getByRole("button", { name: /تفسير/ }).first();
+  await expect(tafsirBtn).toBeVisible({ timeout: 10000 });
+  await tafsirBtn.click();
+  const sheet = page.getByTestId("mushaf-tafsir-sheet");
+  await expect(sheet).toBeVisible({ timeout: 15000 });
+  await expect(sheet.getByRole("heading")).toContainText(/تفسير/);
+  await expect(sheet.getByRole("heading")).toContainText(/آية/);
+  await expect(page.getByTestId("mushaf-tafsir-depth-brief")).toBeVisible();
+  await expect(page.getByTestId("mushaf-tafsir-depth-full")).toBeVisible();
+  await page.getByTestId("mushaf-tafsir-depth-full").click();
+  await expect(page.getByTestId("mushaf-tafsir-depth-full")).toHaveAttribute("aria-selected", "true");
+});
+
+test("mushaf p4 — أسماء القراء ظاهرة وغير مقصوصة + موضع التفسير", async ({ page }) => {
+  await openMushaf(page, 2);
+  await page.locator('[data-pane="current"] .nm-word, [data-pane="current"] [data-testid="nm-word"]').first().click({
+    force: true,
+  });
+  const playBtn = page.getByRole("button", { name: /تشغيل|تلاوة|ابدأ/ }).first();
+  if (await playBtn.isVisible().catch(() => false)) {
+    await playBtn.click({ force: true });
+  }
+  const dock = page.getByTestId("mushaf-audio-dock");
+  await expect(dock).toBeVisible({ timeout: 15000 });
+  const reciter = page.getByTestId("mushaf-dock-reciter");
+  const reciterText = (await reciter.innerText()).trim();
+  expect(reciterText.length).toBeGreaterThan(2);
+  const overflow = await reciter.evaluate((el) => {
+    const style = getComputedStyle(el);
+    return style.textOverflow === "ellipsis" && el.scrollWidth > el.clientWidth + 1;
+  });
+  expect(overflow, "اسم القارئ مقصوص بـ ellipsis").toBe(false);
+
+  await page.getByRole("button", { name: /تفسير/ }).first().click();
+  const sheet = page.getByTestId("mushaf-tafsir-sheet");
+  await expect(sheet).toBeVisible({ timeout: 15000 });
+  const sheetBox = await sheet.locator(".quran-sheet__panel").boundingBox();
+  await expect(sheet.locator(".quran-sheet__close")).toBeVisible();
+  expect(sheetBox).not.toBeNull();
+  expect(sheetBox!.y, "التفسير يبدأ من منتصف الشاشة تقريبًا").toBeGreaterThan(VIEWPORT.height * 0.2);
+  expect(sheetBox!.y + sheetBox!.height, "التفسير لا يتجاوز أسفل الشاشة").toBeLessThanOrEqual(
+    VIEWPORT.height + 2,
+  );
 });

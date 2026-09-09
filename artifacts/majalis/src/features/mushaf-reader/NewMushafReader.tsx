@@ -47,7 +47,9 @@ import { setMushafAyahSyncKeys } from "@/features/mushaf-madinah/mushaf-ayah-syn
 import {
   findMushafPageForAyah,
   parseVerseKey,
+  resolveRecitationLoop,
   uniqueVerseKeysFromRows,
+  type RecitationRange,
 } from "@/features/mushaf-madinah/mushaf-page-for-ayah";
 import {
   ensureQpcPageFont,
@@ -58,7 +60,7 @@ import { prefetchAdjacentPageAudio } from "@/features/mushaf-madinah/prefetch-ad
 import { MUSHAF_CHROME_HIDE_MS } from "@/features/mushaf-madinah/layout-bands";
 import { MushafPage } from "./MushafPage";
 import { MushafControlsLayer, MushafVerseMenu } from "./MushafControlsLayer";
-import { useMushafFixedMetrics } from "./useMushafFixedMetrics";
+import { useStableMushafLayout } from "./useStableMushafLayout";
 import "./mushaf-reader.css";
 /* شيتات التلاوة/البحث/التفسير — فئات مشتركة */
 import "@/features/mushaf-madinah/mushaf-madinah.css";
@@ -106,6 +108,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const [playerState, setPlayerState] = useState<PlayerState>("idle");
   const [playingVerseKey, setPlayingVerseKey] = useState<string | null>(null);
   const [audioDockOpen, setAudioDockOpen] = useState(false);
+  const [audioDockMini, setAudioDockMini] = useState(true);
   const [audioError, setAudioError] = useState<string | null>(null);
   const [audioStatus, setAudioStatus] = useState<string | null>(null);
   const [iosAudioHint, setIosAudioHint] = useState<string | null>(null);
@@ -119,9 +122,37 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     page,
   );
 
+  /**
+   * آخر صفحة جاهزة تبقى معروضة حتى تكتمل التالية — يمنع placeholder→QPC
+   * (سبب الإحساس بتكبير/تصغير النص عند القلب).
+   */
+  const [stableView, setStableView] = useState<{
+    layout: MushafPageLayout;
+    fontFamily: string;
+    page: number;
+  } | null>(() => {
+    const cached = getCachedMushafPage(page);
+    return cached ? { layout: cached, fontFamily: `"qpc-v2-p${page}"`, page } : null;
+  });
+
+  useLayoutEffect(() => {
+    if (error || !canMountPage || !layout || layout.pageNumber !== page || !fontReady) return;
+    setStableView((prev) => {
+      if (
+        prev &&
+        prev.page === page &&
+        prev.layout === layout &&
+        prev.fontFamily === fontFamily
+      ) {
+        return prev;
+      }
+      return { layout, fontFamily, page };
+    });
+  }, [error, canMountPage, layout, page, fontReady, fontFamily]);
+
   const metricsRootRef = useRef<HTMLDivElement | null>(null);
-  /** مقاسات ثابتة من التركيب — لا تُربط بـ canMountPage (كانت تعيد القياس عند القلب) */
-  useMushafFixedMetrics(metricsRootRef, true);
+  /** مصدر القياس الوحيد — لا يُعاد حساب الخط أثناء قلب الصفحة */
+  useStableMushafLayout(metricsRootRef, true);
 
   const hideTimer = useRef<number | null>(null);
   const pageRef = useRef(page);
@@ -324,15 +355,15 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const go = useCallback(
     (next: number) => {
       const clamped = clampMushafPage(next);
-      suppressPageSyncRef.current = false;
-      recitation.stop();
+      /* قلب يدوي: لا نوقف التلاوة — نمنع مزامنة الصفحة من الصوت حتى لا تُرجع المستخدم */
+      suppressPageSyncRef.current = true;
       beginPageTurn();
       pendingPageRef.current = clamped;
       void ensureQpcPageFont(clamped).finally(() => {
         onPageChange(clamped);
       });
     },
-    [beginPageTurn, onPageChange, recitation],
+    [beginPageTurn, onPageChange],
   );
 
   /** ارتفاع الحاوية ثابت أثناء القلب — لا تُزلّ التجميد قبل جاهزية الخط+بيانات الصفحة */
@@ -340,6 +371,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     const pending = pendingPageRef.current;
     if (pending == null || page !== pending) return;
     if (!fontReady || !layoutMatchesPage) return;
+    /* لا نُنهِ القلب قبل تثبيت العرض المستقر للصفحة الجديدة */
+    if (!stableView || stableView.page !== page) return;
 
     const shell = metricsRootRef.current?.querySelector<HTMLElement>(
       '[data-pane="current"] .nm-shell, [data-pane="current"] .mm-page-shell',
@@ -348,16 +381,16 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     if (shell && shell.scrollTop !== 0) shell.scrollTop = 0;
 
     finishPageTurn();
-  }, [page, fontReady, layoutMatchesPage, finishPageTurn]);
+  }, [page, fontReady, layoutMatchesPage, stableView, finishPageTurn]);
 
-  /* صمام أمان إن أُلغي السحب أو تعذّر اكتمال الموارد */
-  useEffect(() => {
-    if (pagerSettled && !bottomStackFrozen) return;
-    const id = window.setTimeout(() => {
-      finishPageTurn();
-    }, 900);
-    return () => window.clearTimeout(id);
-  }, [page, pagerSettled, bottomStackFrozen, finishPageTurn]);
+  useLayoutEffect(() => {
+    if (error && (bottomStackFrozen || !pagerSettled)) finishPageTurn();
+  }, [error, bottomStackFrozen, pagerSettled, finishPageTurn]);
+
+  const cancelPageTurnFreeze = useCallback(() => {
+    if (pendingPageRef.current != null) return;
+    finishPageTurn();
+  }, [finishPageTurn]);
 
   const versePreview = useCallback(
     (verseKey: string): string => {
@@ -448,6 +481,43 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const pageVerseKeys = useMemo(
     () => (layout ? uniqueVerseKeysFromRows(layout.rows) : []),
     [layout],
+  );
+
+  const playRange = useCallback(
+    async (range: RecitationRange, repeatCount: number, delayMs = 0) => {
+      const key = selectedVerseKey ?? playingVerseKey;
+      if (!key) {
+        setAudioError("اختر آية أولاً");
+        return;
+      }
+      const parsed = parseVerseKey(key);
+      if (!parsed) {
+        setAudioError("اختر آية أولاً");
+        return;
+      }
+      const loop = resolveRecitationLoop(
+        range,
+        parsed,
+        pageVerseKeys,
+        getSurahMeta(parsed.surah).ayahs,
+      );
+      const repeat = repeatCount <= 0 ? Number.POSITIVE_INFINITY : repeatCount;
+      setAudioError(null);
+      setAudioDockOpen(true);
+      setAudioDockMini(false);
+      bumpChrome();
+      suppressPageSyncRef.current = true;
+      audio.setLoopConfig(loop.surah, {
+        startAyah: loop.startAyah,
+        endAyah: loop.endAyah,
+        repeatCount: repeat,
+        delayMs: Math.max(0, delayMs),
+      });
+      const start = range === "page" || range === "surah" ? loop.startAyah : parsed.ayah;
+      setAudioStatus("جاري تحميل التلاوة...");
+      await audio.playAyah(loop.surah, start, reciterId);
+    },
+    [audio, bumpChrome, pageVerseKeys, playingVerseKey, reciterId, selectedVerseKey],
   );
 
   const playPage = useCallback(async () => {
@@ -583,6 +653,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       onNavigateStart={() => {
         beginPageTurn();
       }}
+      onNavigateCancel={cancelPageTurnFreeze}
       ignoreSelector=".nm-controls, .nm-verse-menu, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, input, textarea, select, button"
       onTapEmpty={() => {
         if (actionsOpen) {
@@ -600,6 +671,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       data-chrome={chromeOpen ? "1" : "0"}
       data-ayah-bar={actionsOpen ? "1" : "0"}
       data-audio-dock={audioDockVisible ? "1" : "0"}
+      data-audio-mini={audioDockVisible && audioDockMini ? "1" : "0"}
       data-pager-settled={pagerSettled ? "1" : "0"}
       data-bottom-freeze={bottomStackFrozen ? "1" : "0"}
       data-freeze-stack={freezeStackMode}
@@ -616,14 +688,14 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       pageSlot={
         <div className="nm-shell mm-page-shell mushaf-page-frame" data-testid="mushaf-page-shell">
           {error ? <div className="nm-status">{error}</div> : null}
-          {/* شبكة ثابتة الأبعاد — لا نستبدل الصفحة بـ placeholder يغيّر الارتفاع */}
-          {!error && canMountPage && layout && layout.pageNumber === page ? (
+          {/* أبقِ آخر صفحة جاهزة حتى تكتمل التالية — بلا placeholder يغيّر الحجم */}
+          {!error && stableView ? (
             <MushafPage
-              layout={layout}
-              fontFamily={fontFamily}
-              displayPageNumber={page}
+              layout={stableView.layout}
+              fontFamily={stableView.fontFamily}
+              displayPageNumber={stableView.page}
               onSelectVerse={onSelectVerse}
-              selectionEnabled={pagerSettled}
+              selectionEnabled={pagerSettled && stableView.page === page}
               onPageNumberPress={() => {
                 setGotoOpen(true);
                 setChromeOpen(false);
@@ -671,8 +743,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           audioError={audioError}
           audioStatus={audioStatus}
           iosHint={iosAudioHint}
-          mini={false}
-          onMiniChange={() => {}}
+          mini={audioDockMini}
+          onMiniChange={setAudioDockMini}
           onTogglePlay={() => void togglePlay()}
           onPrev={() => {
             suppressPageSyncRef.current = false;
@@ -687,8 +759,10 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           onRetry={() => void retryPlayback()}
           onSeek={(seconds) => audio.seek(seconds)}
           onSpeed={(rate) => audio.setPlaybackRate(rate)}
+          onPlayRange={(range, repeat, delayMs) => void playRange(range, repeat, delayMs)}
           onClose={() => {
             setAudioDockOpen(false);
+            setAudioDockMini(true);
             recitation.pause();
           }}
         />
@@ -788,7 +862,8 @@ const PrefetchPage = memo(function PrefetchPage({ pageNumber }: { pageNumber: nu
   }, [pageNumber]);
 
   if (!ready || !layout) {
-    return <div className="nm-page-placeholder" aria-hidden="true" />;
+    /* skeleton بنفس شبكة الإطار — لا يغيّر عرض/ارتفاع الحاوية */
+    return <div className="nm-page-placeholder nm-page-placeholder--frame" aria-hidden="true" />;
   }
   return (
     <MushafPage

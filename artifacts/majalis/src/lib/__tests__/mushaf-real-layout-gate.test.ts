@@ -98,7 +98,7 @@ assert.match(pager, /dx > 0/);
 assert.match(pager, /go\(page \+ 1\)/);
 assert.match(pager, /go\(page - 1\)/);
 assert.match(pager, /SWIPE_MIN_PX\s*=\s*40/);
-assert.match(pager, /SETTLE_MS\s*=\s*250/);
+assert.match(pager, /SETTLE_MS\s*=\s*160/);
 assert.doesNotMatch(pager, /rotateY/);
 assert.match(viewport, /suppressPageSyncRef/);
 assert.match(viewport, /useMediaSession/);

@@ -84,7 +84,7 @@ export const CONTENT_TYPE_LABEL: Record<CitationContentType, string> = {
 
 export const CONTENT_TYPE_COLOR: Record<CitationContentType, string> = {
   quran_ayah:   "var(--mj-brand)",
-  hadith:       "#1d4ed8",
+  hadith:       "#0A3D2E",
   scholar_quote:"#7c3aed",
   fatwa:        "var(--mj-brand-deep)",
   book:         "var(--mj-brand-deep)",

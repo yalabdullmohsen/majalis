@@ -16,7 +16,7 @@ import { MUSHAF_SETTLE_MS } from "@/features/mushaf-madinah/layout-bands";
 
 /** عتبة السحب الأفقي — من أي مكان في الصفحة */
 export const SWIPE_MIN_PX = 40;
-export const SETTLE_MS = 250;
+export const SETTLE_MS = 160;
 if (SETTLE_MS !== MUSHAF_SETTLE_MS) {
   throw new Error("SETTLE_MS must match layout-bands");
 }
@@ -39,6 +39,8 @@ type Opts = {
   disabled?: boolean;
   onTapEmpty?: () => void;
   onNavigateStart?: () => void;
+  /** سحب أُلغي دون التزام بصفحة — لإزالة تجميد الأسفل بلا setTimeout */
+  onNavigateCancel?: () => void;
   ignoreSelector: string;
   shellRef: RefObject<HTMLElement | null>;
 };
@@ -60,6 +62,7 @@ export function useMushafPager({
   disabled = false,
   onTapEmpty,
   onNavigateStart,
+  onNavigateCancel,
   ignoreSelector,
   shellRef,
 }: Opts): MushafPagerApi {
@@ -84,8 +87,11 @@ export function useMushafPager({
     const track = trackRef.current;
     if (!track) return;
     const ms = prefersReducedMotion() ? 0 : SETTLE_MS;
+    /* حركة ناعمة: translate فقط (+ opacity عبر CSS أثناء السحب) — بلا scale */
     track.style.transition =
-      animate && ms > 0 ? `transform ${ms}ms cubic-bezier(0.22, 1, 0.36, 1)` : "none";
+      animate && ms > 0
+        ? `transform ${ms}ms cubic-bezier(0.22, 1, 0.36, 1)`
+        : "none";
     track.style.transform = `translate3d(${x}px, 0, 0)`;
   }, []);
 
@@ -151,6 +157,7 @@ export function useMushafPager({
       const commit = pendingCommit.current;
       if (commit == null) {
         locking.current = false;
+        onNavigateCancel?.();
         return;
       }
       pendingCommit.current = null;
@@ -159,7 +166,7 @@ export function useMushafPager({
     };
     track.addEventListener("transitionend", onEnd);
     return () => track.removeEventListener("transitionend", onEnd);
-  }, [go, resetToCurrent]);
+  }, [go, onNavigateCancel, resetToCurrent]);
 
   const onPointerDown = (e: ReactPointerEvent) => {
     if (disabled || locking.current) {
@@ -228,6 +235,7 @@ export function useMushafPager({
       if (dx > 0) {
         if (pageNow >= MUSHAF_PAGE_MAX) {
           locking.current = true;
+          pendingCommit.current = null;
           resetToCurrent(true);
           return;
         }
@@ -239,6 +247,7 @@ export function useMushafPager({
       if (dx < 0) {
         if (pageNow <= MUSHAF_PAGE_MIN) {
           locking.current = true;
+          pendingCommit.current = null;
           resetToCurrent(true);
           return;
         }
@@ -251,6 +260,7 @@ export function useMushafPager({
 
     if (panning.current) {
       locking.current = true;
+      pendingCommit.current = null;
       resetToCurrent(true);
       return;
     }
@@ -295,6 +305,7 @@ export function useMushafPager({
     scrollerRef.current?.classList.remove("is-panning");
     if (panning.current) {
       locking.current = true;
+      pendingCommit.current = null;
       resetToCurrent(true);
     }
     panning.current = false;

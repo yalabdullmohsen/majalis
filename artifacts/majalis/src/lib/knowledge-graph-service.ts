@@ -85,7 +85,7 @@ export const NODE_TYPE_LABEL: Record<KnNodeType, string> = {
 
 export const NODE_TYPE_COLOR: Record<KnNodeType, string> = {
   quran_ayah:    "var(--mj-brand)", // أخضر داكن
-  hadith:        "#1d4ed8", // أزرق
+  hadith:        "var(--ss-deep-green, #0A3D2E)", // أزرق
   fatwa:         "#7c3aed", // بنفسجي
   scholar:       "var(--mj-brand-deep)", // ذهبي
   book:          "var(--mj-brand-deep)", // بني

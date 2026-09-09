@@ -13,7 +13,7 @@ import "@/styles/pages/updates.css";
 
 const TYPE_COLORS: Record<string, string> = {
   قرار: "#123F2E",
-  فتوى: "#2563EB",
+  فتوى: "#0F5C45",
   درس: "#7C3AED",
   دورة: "#1E4A37",
   كتاب: "#059669",

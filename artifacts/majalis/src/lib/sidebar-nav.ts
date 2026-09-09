@@ -53,7 +53,7 @@ const DRAWER_BROWSE_GROUPS: ReadonlyArray<{
   {
     id: "worship",
     title: "العبادة والأدوات",
-    accent: "#3D5A80",
+    accent: "#1F5C48",
     navIds: ["prayer", "adhkar", "qibla", "tasbih"],
   },
 ];

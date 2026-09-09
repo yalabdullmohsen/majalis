@@ -69,7 +69,7 @@ export const CONTENT_TYPE_HREF = SHARED_CONTENT_TYPE_HREF;
 
 export const CONTENT_TYPE_COLOR: Record<RecContentType, string> = {
   lesson:     "var(--majalis-emerald, var(--mj-brand-deep))",
-  hadith:     "#1d4ed8",
+  hadith:     "var(--ss-deep-green, #0A3D2E)",
   fatwa:      "var(--majalis-emerald, var(--mj-brand-deep))",
   benefit:    "var(--majalis-emerald-deep, var(--mj-brand-deep))",
   book:       "var(--majalis-emerald, var(--mj-brand-deep))",

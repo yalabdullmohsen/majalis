@@ -224,6 +224,15 @@ export function useMushafPageFontFit(
     if (!ready) return;
     const el = pageRef.current;
     if (!el) return;
+
+    /* إنتاج NewMushafReader يقفل المقاس عبر useStableMushafLayout — لا مسار قياس ثانٍ */
+    const lockedRoot = el.closest("[data-mushaf-font-locked='1']");
+    if (lockedRoot) {
+      el.dataset.mmFit = "1";
+      el.dataset.mmFitSource = "stable-inherit";
+      return;
+    }
+
     let cancelled = false;
     let lastGeom = "";
 

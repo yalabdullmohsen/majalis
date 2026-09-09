@@ -4,4 +4,4 @@ export { MushafPager, MushafPageViewport, SWIPE_MIN_PX, SETTLE_MS } from "./Mush
 export { AyahSelectionOverlay } from "./AyahSelectionOverlay";
 export { readerBottomStackPx, READER_BOTTOM } from "./ReaderBottomLayer";
 export { useMushafPager } from "./useMushafPager";
-export { useMushafFixedMetrics } from "./useMushafFixedMetrics";
+export { useStableMushafLayout, useMushafFixedMetrics } from "./useStableMushafLayout";

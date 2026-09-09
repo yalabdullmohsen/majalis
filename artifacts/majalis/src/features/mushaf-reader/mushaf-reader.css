@@ -76,6 +76,31 @@
   text-size-adjust: 100%;
 }
 
+/* قفل مقاس QPC من token المقاسات فقط — بلا clamp(vh) يغيّر الحجم بين الإطارات */
+.nm-root[data-mushaf-metrics="1"] {
+  --mm-qpc-size: var(--mushaf-font-size);
+  --nm-qpc-size: var(--mushaf-font-size);
+  --mm-basmala-size: var(--mushaf-font-size);
+  --mushaf-line-height: var(--nm-line-height, 1.85);
+}
+
+.nm-root .nm-page__body,
+.nm-root .nm-page--opening .nm-page__body,
+.nm-root .nm-page--lead .nm-page__body {
+  font-size: var(--mushaf-font-size);
+  line-height: var(--mushaf-line-height, 1.85);
+  letter-spacing: var(--mushaf-letter-spacing, 0);
+  transform: none;
+  /* ممنوع transition على مقاس الخط — سبب الإحساس بالتكبير/التصغير */
+  transition: none;
+}
+
+.nm-root .nm-line,
+.nm-root .nm-word,
+.nm-root .nm-slot {
+  transition: color 120ms ease, background-color 120ms ease;
+}
+
 .nm-root *,
 .nm-root *::before,
 .nm-root *::after {
@@ -107,6 +132,11 @@
 }
 .nm-root[data-audio-dock="1"] {
   --reader-bottom-stack: calc(var(--audio-player-height) + var(--safe-bottom));
+  --audio-player-height: 11rem;
+}
+
+.nm-root[data-audio-dock="1"][data-audio-mini="1"] {
+  --audio-player-height: 3.75rem;
 }
 /* تجميد الحجز أثناء القلب — نفس القيمة قبل مسح شريط الآية */
 .nm-root[data-bottom-freeze="1"][data-freeze-stack="ayah"] {
@@ -775,7 +805,16 @@
   box-shadow: 0 -8px 28px -18px color-mix(in srgb, var(--mj-brand-deep, #0d4a39) 35%, transparent);
   gap: 0.35rem;
   z-index: 8;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.nm-root .mm-audio-dock[data-mini="1"] {
   overflow: hidden;
+  min-height: var(--audio-player-height, 3.75rem);
+  max-height: var(--audio-player-height, 3.75rem);
+  padding: 0.35rem 0.75rem calc(0.35rem + var(--safe-bottom, 0px));
 }
 
 .nm-root .mm-audio-dock[data-open="1"] {
@@ -793,6 +832,34 @@
 .nm-root .mm-audio-dock__reciter-btn,
 .nm-root .mm-audio-dock__reciter-btn-name {
   color: var(--nm-ink);
+  overflow: visible;
+  text-overflow: unset;
+  white-space: normal;
+}
+
+html[data-theme="dark"] .nm-root,
+html.dark .nm-root {
+  --mushaf-page-bg: #152018;
+  --mushaf-text-color: #f3efe6;
+  --mushaf-meta-color: #cbb892;
+  --nm-paper: #152018;
+  --nm-paper-deep: #101810;
+  --nm-ink: #f3efe6;
+  --nm-meta: #cbb892;
+}
+
+html[data-theme="dark"] .nm-root .mm-audio-dock,
+html.dark .nm-root .mm-audio-dock {
+  background: #1a1f1c;
+  border-color: color-mix(in srgb, #cbb892 35%, transparent);
+  color: #f3efe6;
+}
+
+html[data-theme="dark"] .nm-root .mm-audio-dock__reciter-btn,
+html.dark .nm-root .mm-audio-dock__reciter-btn {
+  background: color-mix(in srgb, #f3efe6 10%, #1a1f1c);
+  border-color: color-mix(in srgb, #cbb892 40%, transparent);
+  color: #f3efe6;
 }
 
 .nm-root .mm-audio-dock__verse,
@@ -935,6 +1002,38 @@
   height: 100%;
   position: relative;
   contain: layout paint;
+  /* شفافية خفيفة أثناء السحب فقط — بلا scale */
+  opacity: 1;
+  transition: opacity 140ms ease;
+}
+
+.nm-pager-scroller.is-panning .nm-pager__sheet[data-pane="current"],
+.nm-root .mm-pager-scroller.is-panning .nm-pager__sheet[data-pane="current"] {
+  opacity: 0.92;
+}
+
+.nm-root[data-pager-settled="0"] .nm-pager__sheet[data-pane="current"] {
+  opacity: 0.97;
+}
+
+/* طبقات: نص المصحف تحت الكروم؛ الشيتات/التلاوة فوق النص دون قصّه بـ overlay دائم */
+.nm-root .nm-controls {
+  z-index: 30;
+  pointer-events: none;
+}
+
+.nm-root .nm-controls__bar,
+.nm-root .nm-controls__exit {
+  pointer-events: auto;
+}
+
+.nm-root .mm-audio-dock,
+.nm-root .quran-audio-player {
+  z-index: 35;
+}
+
+.nm-root .nm-verse-menu {
+  z-index: 45;
 }
 
 @media (prefers-reduced-motion: reduce) {

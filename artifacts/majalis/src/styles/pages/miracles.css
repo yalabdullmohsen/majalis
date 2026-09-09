@@ -147,8 +147,9 @@
   gap: 0.2rem;
   padding: 0.45rem 0.7rem;
   border-radius: 999px;
-  background: var(--mk-green);
-  color: var(--on-brand, #fff);
+  /* نهاري: أخضر عميق + نص فاتح (AA) */
+  background: var(--mk-green-deep, var(--mj-brand-deep, #0d4a39));
+  color: var(--on-dark-strong, #fff);
   font-size: 0.8rem;
   font-weight: 700;
   white-space: nowrap;
@@ -482,6 +483,19 @@ html.dark .mk-page,
   --mk-ink: var(--mj-ink, #eef4f0);
   --mk-muted: var(--mj-muted, #a7b5ad);
   --mk-green-soft: color-mix(in srgb, var(--primary, #3d8f72) 22%, #161d1a);
+}
+
+/* ليلي: نعناع العلامة + نص on-brand الداكن (نفس عقد الشارات/الأزرار الأولية) */
+html.dark .mk-lane-card__cta,
+[data-theme="dark"] .mk-lane-card__cta {
+  background: var(--mj-brand, #5fbf98);
+  color: var(--mj-on-brand, #06231a);
+}
+
+html.dark .mk-lane-card--sunnah .mk-lane-card__cta,
+[data-theme="dark"] .mk-lane-card--sunnah .mk-lane-card__cta {
+  background: var(--mj-accent, #d9b871);
+  color: var(--mj-on-brand, #06231a);
 }
 
 html.dark .mk-card__title,

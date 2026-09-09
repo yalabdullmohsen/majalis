@@ -39,7 +39,7 @@ assert.doesNotMatch(pageView, /MushafDecorFrame/);
 assert.doesNotMatch(pageView, /DecorFrame/);
 
 assert.match(newReader, /MushafPager/);
-assert.match(newReader, /useMushafFixedMetrics/);
+assert.match(newReader, /useStableMushafLayout/);
 assert.doesNotMatch(newReader, /features\/mushaf-madinah\/MushafPager/);
 
 assert.match(verse, /word\.glyphText/);
@@ -86,12 +86,12 @@ assert.doesNotMatch(css, /\.nm-page__stage[^{]*\{[^}]*border:\s*1\.5px/);
 assert.doesNotMatch(css, /env\(safe-area/);
 assert.ok(!existsSync(resolve(root, "src/features/mushaf-reader/MushafDecorFrame.tsx")));
 
-const fitHook = read("src/features/mushaf-reader/useMushafFixedMetrics.ts");
+const fitHook = read("src/features/mushaf-reader/useStableMushafLayout.ts");
 assert.match(fitHook, /resolveUniformMushafFontSize/);
 assert.match(fitHook, /--mushaf-font-size/);
 assert.match(fitHook, /useLayoutEffect/);
 assert.doesNotMatch(fitHook, /fitPageFontSize\(/);
-assert.doesNotMatch(read("src/features/mushaf-reader/MushafPage.tsx"), /useNewMushafFontFit|useMushafFixedMetrics/);
+assert.doesNotMatch(read("src/features/mushaf-reader/MushafPage.tsx"), /useNewMushafFontFit|useMushafFixedMetrics|useStableMushafLayout/);
 assert.match(read("src/features/mushaf-reader/MushafPage.tsx"), /data-mm-fit="1"/);
 assert.match(read("src/features/mushaf-reader/useMushafPager.ts"), /translate3d/);
 assert.match(read("src/features/mushaf-reader/MushafPager.tsx"), /data-pane="next"/);
