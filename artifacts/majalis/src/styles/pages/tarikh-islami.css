@@ -664,3 +664,16 @@ html.dark .tarikh-badge--needs-review {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+html[data-theme="dark"] .tarikh-card,
+html.dark .tarikh-card,
+html[data-theme="dark"] .tarikh-era,
+html.dark .tarikh-era {
+  background: var(--ss-card-bg, #1b2421);
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, #2a3832);
+}
+
+html[data-theme="dark"] .tarikh-card__summary,
+html.dark .tarikh-card__summary {
+  color: var(--mj-ink-2, #C5D0CB);
+}
