@@ -78,8 +78,9 @@
 }
 .hs-cats { display: flex; flex-wrap: wrap; gap: var(--ds-space-2); }
 .hs-cat-chip {
-  padding: 0.35rem 0.9rem;
-  border-radius: var(--ds-radius-full);
+  min-height: 44px;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-pill, 999px);
   border: 1.5px solid var(--mj-brand-soft);
   background: #FFFFFF;
   font-size: 0.8rem;
@@ -88,6 +89,7 @@
   cursor: pointer;
   transition: all 0.15s;
   font-family: inherit;
+  touch-action: manipulation;
 }
 .hs-cat-chip:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
 .hs-cat-chip--active { background: var(--mj-brand); border-color: var(--mj-brand); color: #FFFFFF; }
@@ -97,9 +99,9 @@
 
 /* بطاقة */
 .hs-card {
-  background: #FFFFFF;
+  background: var(--color-surface, #FFFFFF);
   border: 1.5px solid var(--mj-brand-soft);
-  border-radius: 0.9rem;
+  border-radius: var(--radius-card, 24px);
   overflow: hidden;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
@@ -111,6 +113,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-height: 48px;
   padding: 0.9rem 1.1rem;
   background: none;
   border: none;
@@ -118,6 +121,7 @@
   text-align: end;
   gap: var(--ds-space-3);
   transition: background 0.15s;
+  touch-action: manipulation;
 }
 .hs-card__header:hover { background: rgba(31,77,58,0.04); }
 .hs-card__header-main { flex: 1; min-width: 0; }

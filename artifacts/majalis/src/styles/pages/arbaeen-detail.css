@@ -68,7 +68,13 @@
   margin: 0 0 1.5rem;
 }
 
-.ahd-section { margin-bottom: 1.25rem; }
+.ahd-section {
+  margin-bottom: 1.25rem;
+  padding: 1rem 1.05rem;
+  border-radius: var(--radius-card, 24px);
+  border: 1px solid var(--majalis-line, var(--mj-hairline, #d9d3c8));
+  background: var(--majalis-panel, var(--color-surface, #fffcf8));
+}
 .ahd-section__title {
   display: flex;
   align-items: center;
@@ -90,13 +96,14 @@
   width: 100%;
   min-height: 48px;
   border: none;
-  border-radius: .75rem;
+  border-radius: var(--radius-button, 18px);
   background: var(--majalis-emerald-deep);
   color: #fff;
   font-size: .9rem;
   font-weight: 700;
   cursor: pointer;
   margin: 1.5rem 0;
+  touch-action: manipulation;
 }
 
 .ahd-quiz {
