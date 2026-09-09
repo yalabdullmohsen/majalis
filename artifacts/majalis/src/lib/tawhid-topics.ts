@@ -35,7 +35,7 @@ export const TAWHID_TOPICS: Record<TawhidTopicSlug, TawhidTopic> = {
     id: "tawhid-issues",
     slug: "tawhid-issues",
     title: "التوحيد ومسائله",
-    description: "مسار موجز في أنواع التوحيد، الشرك الأكبر والأصغر، السنة والبدعة، والتوسل المشروع على منهج أهل السنة",
+    description: "مسار موجز في أنواع التوحيد الثلاثة، والشرك الأكبر والأصغر، والسنة والبدعة، والتوسل المشروع على منهج أهل السنة",
     emoji: "",
     blocks: [
       {
@@ -104,7 +104,7 @@ export const TAWHID_TOPICS: Record<TawhidTopicSlug, TawhidTopic> = {
     id: "aqeedah-foundations",
     slug: "aqeedah-foundations",
     title: "أصول العقيدة",
-    description: "تعريف العقيدة ومصدرها من الكتاب والسنة بفهم السلف، مع أركان الإيمان ومراتب الدين بإجمال منضبط",
+    description: "تعريف العقيدة ومصدرها من الكتاب والسنة بفهم السلف، مع أركان الإيمان الستة ومراتب الدين بإجمال منضبط على منهج أهل السنة",
     emoji: "",
     blocks: [
       {
