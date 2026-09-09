@@ -1385,6 +1385,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/seerah-wada</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/rashidun-madain</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1506,6 +1511,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/rashidun-arbitration</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/rashidun-fayyum</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -2211,6 +2221,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/modern-opec-1973</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/modern-mosque-burn-1969</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
