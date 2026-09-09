@@ -156,9 +156,10 @@
 }
 
 .section-lobby[data-lessons-hub="1"] .section-lobby__chip {
-  min-height: 32px;
-  padding: 4px 10px;
+  min-height: 44px;
+  padding: 8px 12px;
   font-size: 12px;
+  touch-action: manipulation;
 }
 
 .section-lobby[data-lessons-hub="1"] .quick-quad[data-count="5"] .quick-quad__cell {

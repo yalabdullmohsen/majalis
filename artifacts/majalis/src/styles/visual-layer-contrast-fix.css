@@ -262,8 +262,8 @@ header.fiqh-lux-book-hero {
   width: auto !important;
   min-width: unset !important;
   max-width: none !important;
-  min-height: 36px !important;
-  padding: 0.32rem 0.7rem !important;
+  min-height: 44px !important;
+  padding: 0.4rem 0.85rem !important;
   border-radius: 999px !important;
   border: 1px solid var(--mj-chip-border, var(--border-soft)) !important;
   background: var(--mj-chip-bg, var(--surface)) !important;

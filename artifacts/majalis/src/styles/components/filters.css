@@ -267,8 +267,8 @@ html.dark .mj-active-filters__count,
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  min-height: 36px;
-  padding: 0.25rem 0.65rem;
+  min-height: 44px;
+  padding: 0.35rem 0.75rem;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 40%, transparent);
   background: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 12%, transparent);
@@ -277,6 +277,7 @@ html.dark .mj-active-filters__count,
   font-size: 0.82rem;
   font-weight: 700;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 .mj-active-filters__pill.is-static {

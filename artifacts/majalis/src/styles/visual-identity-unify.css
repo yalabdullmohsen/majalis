@@ -275,9 +275,7 @@ html.dark .sq-header svg {
 .lessons-filter-tab,
 .section-hub__chip,
 .fiqh-hub-strip__tab {
-  min-height: 36px !important;
-  padding-block: 0.32rem !important;
-  padding-inline: 0.7rem !important;
+  min-height: 44px !important;
   border-radius: 999px !important;
   border: 1px solid var(--mj-chip-border, var(--color-border)) !important;
   background: var(--mj-chip-bg, var(--color-surface)) !important;

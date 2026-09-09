@@ -59,6 +59,16 @@ assert.match(arbaeen, /\.ahd-section[\s\S]*?border-radius:\s*var\(--radius-card/
 assert.match(card, /resolveHadithDetailHref/);
 assert.match(calm, /touch-action:\s*manipulation/);
 assert.match(calm, /min-height:\s*44px/);
+assert.match(calm, /z-index:\s*var\(--z-fab/);
+assert.doesNotMatch(
+  unify,
+  /\.filter-chips__chip[\s\S]{0,120}min-height:\s*36px\s*!important/,
+  "شيبس الفلاتر لا تقل عن 44px",
+);
+assert.match(
+  unify,
+  /\.filter-chips__chip[\s\S]{0,120}min-height:\s*44px\s*!important/,
+);
 
 console.log("=== ds-radius مربوطة بالهوية ===");
 assert.match(ds, /--ds-radius-lg:\s*var\(--radius-button/);

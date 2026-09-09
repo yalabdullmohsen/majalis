@@ -131,8 +131,8 @@
 
 .section-hub__chip {
   flex-shrink: 0;
-  min-height: 36px;
-  padding: 0.35rem 0.85rem;
+  min-height: 44px;
+  padding: 0.4rem 0.95rem;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--sh-accent) 16%, var(--mj-hairline, #d5ddd9));
   background: var(--mj-surface, #fff);
@@ -142,6 +142,7 @@
   font-weight: 650;
   cursor: pointer;
   white-space: nowrap;
+  touch-action: manipulation;
 }
 
 .section-hub__chip.is-active {
@@ -220,8 +221,8 @@
 }
 
 .section-hub__cta {
-  min-height: 36px;
-  padding: 0.35rem 0.8rem;
+  min-height: 44px;
+  padding: 0.4rem 0.95rem;
   border-radius: 999px;
   border: 0;
   background: color-mix(in srgb, var(--card-accent, var(--sh-accent)) 90%, #0a1f18);
@@ -230,6 +231,7 @@
   font-size: 0.78rem;
   font-weight: 700;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 .section-hub__cta--ghost {
