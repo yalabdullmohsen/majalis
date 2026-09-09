@@ -1,5 +1,49 @@
 [
   {
+    "id": "andalus-uqab",
+    "title": "معركة العقاب",
+    "kind": "event",
+    "category": "andalus",
+    "era": "609هـ",
+    "hijriDate": "609هـ",
+    "gregorianDate": "1212م",
+    "place": "العقاب · الأندلس",
+    "featured": true,
+    "verification": "confirmed",
+    "summary": "هُزم الموحدون في العقاب سنة 609هـ أمام تحالف نصارى الشمال، فتسارعت وتيرة سقوط الأندلس بعدها.",
+    "detail": "بعد أمجاد الموحدين جاءت هزيمة العقاب (لاس نافاس) سنة 609هـ/1212م ثقيلة الأثر. انكسرت هيبة الدولة في الأندلس، وتوالت سقوط المدن في العقود التالية حتى غرناطة آخر معقل. تُروى المعركة في مصادر المغرب والأندلس، وتُفهم عبرةً في الاغترار بعد النصر والتفرّق وتبدّل الموازين. ليست نهاية الإسلام في الأندلس فورًا، لكنها مفترقٌ نحو الانحسار. ويُضبط النقل بالمصادر ويُتجنّب الغلوّ والطعن بلا بيّنة. ويُضبط النقل بالمصادر ويُتجنّب الغلوّ والطعن بلا بيّنة. ويُضبط النقل بالمصادر ويُتجنّب الغلوّ والطعن بلا بيّنة. ويُضبط النقل بالمصادر ويُتجنّب الغلوّ والطعن بلا بيّنة. ويُضبط النقل بالمصادر ويُتجنّب الغلوّ والطعن بلا بيّنة. ويُضبط النقل بالمصادر ويُتجنّب الغلوّ والطعن بلا بيّنة.",
+    "causes": "تحالف ممالك الشمال، وإرهاق الموحدين، وثغرات في التعبئة والقيادة.",
+    "outcomes": "ضعف الموحدين في الأندلس، وتسارع سقوط المدن، وبقاء غرناطة لاحقًا.",
+    "lessons": "النصر لا يدوم مع التفرّق والظلم؛ ومراجعة الصف عند الخطر أولى من المكابرة.",
+    "relatedPersons": [
+      "محمد الناصر الموحدي"
+    ],
+    "sources": [
+      "البيان المغرب",
+      "الكامل في التاريخ",
+      "تاريخ ابن خلدون"
+    ],
+    "relatedLinks": [
+      {
+        "href": "/tarikh-islami/andalus-almohad",
+        "label": "الموحدون"
+      },
+      {
+        "href": "/tarikh-islami/andalus-alhambra",
+        "label": "الحمراء"
+      },
+      {
+        "href": "/tarikh-islami/andalus-fall-granada",
+        "label": "سقوط غرناطة"
+      },
+      {
+        "href": "/tarikh-islami/andalus-zalaka",
+        "label": "الزلّاقة"
+      }
+    ],
+    "timelineOrder": 401
+  },
+  {
     "id": "andalus-tariq",
     "title": "فتح طارق بن زياد لأيبيريا",
     "kind": "event",
@@ -45,7 +89,7 @@
     ],
     "featured": true,
     "startHere": true,
-    "timelineOrder": 401
+    "timelineOrder": 402
   },
   {
     "id": "andalus-umayyad-emirate",
@@ -89,7 +133,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 402
+    "timelineOrder": 403
   },
   {
     "id": "andalus-abd-arrahman",
@@ -132,7 +176,7 @@
         "label": "قصص وعبر تاريخية"
       }
     ],
-    "timelineOrder": 403
+    "timelineOrder": 404
   },
   {
     "id": "andalus-cordoba-caliphate",
@@ -178,7 +222,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 404
+    "timelineOrder": 405
   },
   {
     "id": "andalus-toledo-school",
@@ -221,7 +265,7 @@
         "label": "خلافة قرطبة"
       }
     ],
-    "timelineOrder": 405
+    "timelineOrder": 406
   },
   {
     "id": "andalus-muluk-tawaif",
@@ -264,7 +308,7 @@
         "label": "الموحدون في الأندلس"
       }
     ],
-    "timelineOrder": 406
+    "timelineOrder": 407
   },
   {
     "id": "andalus-toledo-fall",
@@ -311,7 +355,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 407
+    "timelineOrder": 408
   },
   {
     "id": "andalus-almoravid",
@@ -358,7 +402,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 408
+    "timelineOrder": 409
   },
   {
     "id": "andalus-zalaka",
@@ -369,7 +413,7 @@
     "hijriDate": "479هـ",
     "gregorianDate": "1086م",
     "place": "الزلّاقة · الأندلس",
-    "timelineOrder": 409,
+    "timelineOrder": 410,
     "featured": true,
     "verification": "confirmed",
     "summary": "انتصر يوسف بن تاشفين ومعه ملوك الطوائف على Alfonso السادس في الزلّاقة، فأخر سقوط الأندلس عقودًا.",
@@ -449,7 +493,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 410
+    "timelineOrder": 411
   },
   {
     "id": "andalus-alhambra",
@@ -493,7 +537,7 @@
         "label": "دخول المرابطين والزلاّقة"
       }
     ],
-    "timelineOrder": 411
+    "timelineOrder": 412
   },
   {
     "id": "andalus-fall-granada",
@@ -539,6 +583,6 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 412
+    "timelineOrder": 413
   }
 ]

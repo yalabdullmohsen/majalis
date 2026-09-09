@@ -1,5 +1,53 @@
 [
   {
+    "id": "umayyad-walid-conquests",
+    "title": "فتوح الوليد بن عبد الملك",
+    "kind": "era",
+    "category": "umayyad",
+    "era": "86–96هـ",
+    "hijriDate": "86–96هـ",
+    "place": "الشام · الأندلس · السند · ما وراء النهر",
+    "featured": true,
+    "verification": "confirmed",
+    "summary": "في عهد الوليد اتسعت الفتوح شرقًا وغربًا: الأندلس والسند وما وراء النهر، مع عمران دمشق والمسجد الأموي.",
+    "detail": "يُعدّ عهد الوليد بن عبد الملك من أوسع عهود التمدد الأموي. فُتحت الأندلس على يد طارق وموسى، وامتدت الجيوش في السند وما وراء النهر، وشهدت دمشق عمرانًا عظيمًا كالمسجد الأموي. تُروى الإنجازات مع وجوب تمحيص المظالم المنسوبة لبعض الولاة. العهد يجمع بين الفتوح والعمران في ذروة قوة بني أمية قبل الفتن اللاحقة. ويُضبط النقل بالمصادر ويُتجنّب الغلوّ والطعن بلا بيّنة. ويُضبط النقل بالمصادر ويُتجنّب الغلوّ والطعن بلا بيّنة. ويُضبط النقل بالمصادر ويُتجنّب الغلوّ والطعن بلا بيّنة. ويُضبط النقل بالمصادر ويُتجنّب الغلوّ والطعن بلا بيّنة. ويُضبط النقل بالمصادر ويُتجنّب الغلوّ والطعن بلا بيّنة. ويُضبط النقل بالمصادر ويُتجنّب الغلوّ والطعن بلا بيّنة.",
+    "causes": "استقرار نسبي بعد عبد الملك، وقادة أكفاء في الثغور، وموارد الدولة.",
+    "outcomes": "اتساع دار الإسلام شرقًا وغربًا، وازدهار عمراني في الشام.",
+    "lessons": "قوة الدولة تظهر في العدل مع الفتح؛ والعمران آية حضارة إن قام على حق.",
+    "relatedPersons": [
+      "الوليد بن عبد الملك",
+      "طارق بن زياد",
+      "موسى بن نصير",
+      "قتيبة بن مسلم",
+      "محمد بن القاسم"
+    ],
+    "sources": [
+      "تاريخ الطبري",
+      "فتوح البلدان",
+      "البداية والنهاية",
+      "الكامل في التاريخ"
+    ],
+    "relatedLinks": [
+      {
+        "href": "/tarikh-islami/andalus-tariq",
+        "label": "فتح الأندلس"
+      },
+      {
+        "href": "/tarikh-islami/umayyad-abd-malik",
+        "label": "عبد الملك"
+      },
+      {
+        "href": "/tarikh-islami/umayyad-qayrawan",
+        "label": "القيروان"
+      },
+      {
+        "href": "/tarikh-islami/umayyad-damascus",
+        "label": "دمشق"
+      }
+    ],
+    "timelineOrder": 201
+  },
+  {
     "id": "umayyad-era",
     "title": "الدولة الأموية",
     "kind": "era",
@@ -42,7 +90,7 @@
     ],
     "featured": true,
     "startHere": true,
-    "timelineOrder": 201
+    "timelineOrder": 202
   },
   {
     "id": "umayyad-dhat-sawari",
@@ -89,7 +137,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 202
+    "timelineOrder": 203
   },
   {
     "id": "umayyad-muawiyah",
@@ -131,7 +179,7 @@
         "label": "دمشق عاصمة الأمويين"
       }
     ],
-    "timelineOrder": 203,
+    "timelineOrder": 204,
     "place": "دمشق — الشام"
   },
   {
@@ -179,7 +227,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 204
+    "timelineOrder": 205
   },
   {
     "id": "umayyad-abd-malik",
@@ -222,7 +270,7 @@
         "label": "دمشق عاصمة الأمويين"
       }
     ],
-    "timelineOrder": 205,
+    "timelineOrder": 206,
     "place": "دمشق — بيت المقدس"
   },
   {
@@ -271,7 +319,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 206
+    "timelineOrder": 207
   },
   {
     "id": "umayyad-conquest-spain",
@@ -316,7 +364,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 207
+    "timelineOrder": 208
   },
   {
     "id": "umayyad-siege-constantinople",
@@ -354,7 +402,7 @@
         "label": "إصلاحات عبد الملك"
       }
     ],
-    "timelineOrder": 208,
+    "timelineOrder": 209,
     "place": "القسطنطينية"
   },
   {
@@ -399,7 +447,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 209,
+    "timelineOrder": 210,
     "place": "دمشق — المدينة"
   },
   {
@@ -447,7 +495,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 210
+    "timelineOrder": 211
   },
   {
     "id": "umayyad-fall",
@@ -490,7 +538,7 @@
         "label": "دمشق عاصمة الأمويين"
       }
     ],
-    "timelineOrder": 211,
+    "timelineOrder": 212,
     "place": "دمشق — خراسان"
   },
   {
@@ -533,7 +581,7 @@
         "label": "سقوط الأمويين"
       }
     ],
-    "timelineOrder": 212,
+    "timelineOrder": 213,
     "place": "دمشق"
   },
   {
@@ -572,7 +620,7 @@
         "label": "حركة الترجمة العباسية"
       }
     ],
-    "timelineOrder": 213,
+    "timelineOrder": 214,
     "place": "دمشق — الأمصار"
   }
 ]

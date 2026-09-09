@@ -23,7 +23,7 @@ export const HISTORY_ERA_META: Record<HistoryCategory, HistoryEraMeta> = {
     title: "قبل البعثة والسيرة",
     period: "قبل 610م — 11هـ",
     center: "مكة · المدينة",
-    blurb: "سياق ما قبل الوحي، ثم بوابة إلى السيرة النبوية المفصّلة.",
+    blurb: "مغازي كالخندق ومؤتة وتبوك، ثم بوابة إلى السيرة النبوية المفصّلة.",
     accent: "#135034",
   },
   rashidun: {

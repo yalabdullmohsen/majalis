@@ -1435,6 +1435,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/umayyad-walid-conquests</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/umayyad-era</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1561,6 +1566,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/abbasid-sack-baghdad</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/andalus-uqab</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -1756,6 +1766,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/ottoman-dissolution</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/civ-ibn-khaldun</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
