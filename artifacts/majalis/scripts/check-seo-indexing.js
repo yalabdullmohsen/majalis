@@ -15,7 +15,7 @@ const LEGACY_DESC_RE =
   /ضمن منصة|محتوى شرعي موثّ?ق|تصفّح الأقسام المرتبطة في|اطّلع على التفاصيل والمصادر في/u;
 
 const SECTION_OG = {
-  "/": "/brand/og-home.png",
+  "/": "/og-image.png",
   "/quran-hub": "/brand/og-quran.png",
   "/mushaf": "/brand/og-quran.png",
   "/lessons": "/brand/og-lessons.png",

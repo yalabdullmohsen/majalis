@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { SITE_DESCRIPTION } from "@/lib/site-config";
 
 type VersionInfo = {
   shortCommit?: string;
@@ -20,7 +21,7 @@ export default function AboutPage() {
     applyPageSeo({
       path: "/about",
       title: "حول التطبيق | سُنّة",
-      description: "ماذا يقدّم تطبيق سُنّة: الأقسام، الأدوات، رقم الإصدار، مصادر المحتوى، وشكر للمراجع.",
+      description: SITE_DESCRIPTION,
       keywords: ["حول التطبيق", "سُنّة", "إصدار", "أقسام"],
       jsonLd: [
         {
@@ -45,8 +46,9 @@ export default function AboutPage() {
   return (
     <LegalPageLayout eyebrow="التطبيق" title="حول التطبيق">
       <LegalSection title="ماذا يقدّم التطبيق">
+        <p>{SITE_DESCRIPTION}</p>
         <p>
-          تطبيق سُنّة يجمع لطالب العلم والمسلم العام أدوات يومية ومراجع شرعية في مكان واحد:
+          يجمع التطبيق لطالب العلم والمسلم العام أدوات يومية ومراجع شرعية في مكان واحد:
           مصحف رقمي، أذكار موثّقة، مواقيت صلاة، مسارات علم، وبحث سريع في المحتوى.
         </p>
       </LegalSection>
