@@ -200,6 +200,15 @@ html.dark .ss-action-btn--ghost {
   animation: ss-reveal-up 420ms var(--mj-ease-spring, cubic-bezier(0.22, 1.15, 0.36, 1)) both;
 }
 
+/* حجز ارتفاع أثناء التأجيل/Suspense — يطابق بطاقة المحتوى التقريبية */
+.home-sacred-day--ph {
+  min-height: 9.75rem;
+  box-sizing: border-box;
+  border-radius: var(--radius-card, 24px);
+  background: color-mix(in srgb, var(--ss-primary-green, var(--brand)) 6%, var(--ss-card-bg, var(--mj-surface)));
+  animation: none;
+}
+
 .home-sacred-day__date {
   margin: 0 0 0.5rem;
   font-size: 0.8125rem;

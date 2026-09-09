@@ -34,6 +34,36 @@ assert.match(critical, /\.home-page-hero\.page-hero-mj[\s\S]*min-height:\s*11rem
 assert.match(critical, /\.hus-field[\s\S]*min-height:\s*52px/, "حجز شريط البحث");
 assert.match(critical, /\.daily-wird-card[\s\S]*min-height:\s*28rem/, "حجز ورد اليوم يطابق المحتوى");
 assert.match(critical, /\.navbar-v3__tagline-mark[\s\S]*aspect-ratio/, "حجز وردمارك الهيدر");
+{
+  const home = readFileSync(resolve(root, "src/pages/account/ui/HomeView.tsx"), "utf8");
+  assert.match(home, /home-sacred-day--ph/, "هيكل آية/حديث اليوم يحجز الارتفاع");
+  assert.doesNotMatch(
+    home,
+    /HomeSacredOfDayGate[\s\S]*if \(!show\) return null/,
+    "لا إدراج آية اليوم من null بلا حجز",
+  );
+}
+{
+  const finalRelease = readFileSync(resolve(root, "src/styles/final-release.css"), "utf8");
+  assert.doesNotMatch(
+    finalRelease,
+    /\.header-ticker--empty\s*\{\s*display:\s*none/,
+    "لا طي شريط الأخبار الفارغ بـ display:none",
+  );
+  assert.match(finalRelease, /\.header-ticker--empty[\s\S]*visibility:\s*hidden/, "حجز ارتفاع الشريط الفارغ");
+}
+{
+  const polish = readFileSync(resolve(root, "src/styles/ssunnah-ux-polish.css"), "utf8");
+  assert.match(polish, /\.home-sacred-day--ph[\s\S]*min-height:\s*9\.75rem/, "min-height لهيكل آية اليوم");
+}
+{
+  const boot = readFileSync(resolve(root, "public/mj-launch-splash-boot.js"), "utf8");
+  assert.match(
+    boot,
+    /if\s*\(\s*!shellStable\s*&&\s*elapsed\s*<\s*MAX_MS\s*\)\s*return/,
+    "الدخولية تنتظر shell-stable",
+  );
+}
 assert.doesNotMatch(
   readFileSync(resolve(root, "src/styles/components/home-brand-title.css"), "utf8"),
   /min-height:\s*unset/,

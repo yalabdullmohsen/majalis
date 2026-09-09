@@ -1,5 +1,8 @@
 /**
  * متحكّم شاشة الإطلاق — ويب (index.html) + Capacitor SplashScreen.
+ *
+ * HTML (#mj-launch-splash): يُخفى بعد mj:shell-stable (أو السقف) حتى لا يُكشف الهيكل وهو لا يزال app-booting.
+ * Capacitor: يُخفى مبكّرًا بعد أول رسم — لا يسبب قفزة تخطيط على الويب.
  */
 import { Capacitor } from "@capacitor/core";
 import {
@@ -16,7 +19,8 @@ export {
   SPLASH_MIN_VISIBLE_MS,
 };
 
-let hidden = false;
+let htmlDismissed = false;
+let capacitorHidden = false;
 let armedAt = 0;
 
 function prefersReducedMotion(): boolean {
@@ -29,6 +33,8 @@ function prefersReducedMotion(): boolean {
 
 /** يزيل #mj-launch-splash حتى لو حُظر سكربت الإقلاع بـ CSP. */
 export function dismissHtmlLaunchSplash(immediate = false): void {
+  if (htmlDismissed) return;
+  htmlDismissed = true;
   try {
     sessionStorage.setItem(SPLASH_SESSION_KEY, "1");
   } catch {
@@ -52,10 +58,9 @@ export function dismissHtmlLaunchSplash(immediate = false): void {
   window.setTimeout(remove, SPLASH_FADE_OUT_MS);
 }
 
-export async function hideNativeSplash(immediate = false): Promise<void> {
-  if (hidden) return;
-  hidden = true;
-  dismissHtmlLaunchSplash(immediate);
+async function hideCapacitorSplash(immediate = false): Promise<void> {
+  if (capacitorHidden) return;
+  capacitorHidden = true;
   if (!Capacitor.isNativePlatform()) return;
   try {
     const { SplashScreen } = await import("@capacitor/splash-screen");
@@ -65,6 +70,12 @@ export async function hideNativeSplash(immediate = false): Promise<void> {
   } catch {
     /* منصّة بلا ملحق */
   }
+}
+
+/** يخفي دخولية HTML + Capacitor معًا (بعد استقرار الهيكل أو السقف). */
+export async function hideNativeSplash(immediate = false): Promise<void> {
+  dismissHtmlLaunchSplash(immediate);
+  await hideCapacitorSplash(immediate);
 }
 
 /** @deprecated الاسم السابق — يُبقي الاستدعاءات القديمة */
@@ -77,24 +88,18 @@ function elapsedSinceArm(): number {
   return performance.now() - armedAt;
 }
 
-function scheduleNativeHide(): void {
-  const run = () => {
-    const wait = Math.max(0, SPLASH_MIN_VISIBLE_MS - elapsedSinceArm());
-    window.setTimeout(() => {
-      void hideNativeSplash(false);
-    }, wait);
-  };
-
-  if (elapsedSinceArm() >= SPLASH_MIN_VISIBLE_MS) {
-    void hideNativeSplash(false);
+function scheduleAfterMinVisible(run: () => void): void {
+  const wait = Math.max(0, SPLASH_MIN_VISIBLE_MS - elapsedSinceArm());
+  if (wait === 0) {
+    run();
     return;
   }
-  run();
+  window.setTimeout(run, wait);
 }
 
 /**
- * يخفي دخولية HTML (#mj-launch-splash) على الويب والأصلي،
- * ويخفي Capacitor SplashScreen على الأصلي فقط.
+ * يخفي دخولية HTML (#mj-launch-splash) على الويب والأصلي بعد استقرار الهيكل،
+ * ويخفي Capacitor SplashScreen مبكّرًا بعد أول رسم على الأصلي فقط.
  * يجب أن يعمل على الويب أيضًا — وإلا تبقى «سُنّة» إن حُظر سكربت الإقلاع بـ CSP.
  */
 export function armNativeSplashController(): void {
@@ -105,15 +110,25 @@ export function armNativeSplashController(): void {
     void hideNativeSplash(false);
   }, SPLASH_MAX_VISIBLE_MS);
 
-  const hide = () => {
-    window.clearTimeout(deadline);
-    scheduleNativeHide();
+  const hideCapacitorEarly = () => {
+    scheduleAfterMinVisible(() => {
+      void hideCapacitorSplash(false);
+    });
   };
 
-  window.addEventListener("mj:app-painted", hide, { once: true });
-  window.addEventListener("app:first-paint", hide, { once: true });
-  window.addEventListener("mj:boot-ready", hide, { once: true });
-  // صمام إضافي: إن لم تصل أحداث الرسم، أخفِ بتلاشي
+  const hideHtmlAndNative = () => {
+    window.clearTimeout(deadline);
+    scheduleAfterMinVisible(() => {
+      void hideNativeSplash(false);
+    });
+  };
+
+  /* أصلي فقط مبكرًا — لا تكشف HTML قبل shell-stable */
+  window.addEventListener("mj:app-painted", hideCapacitorEarly, { once: true });
+  window.addEventListener("app:first-paint", hideCapacitorEarly, { once: true });
+  window.addEventListener("mj:boot-ready", hideCapacitorEarly, { once: true });
+  window.addEventListener("mj:shell-stable", hideHtmlAndNative, { once: true });
+  // صمام إضافي: إن لم تصل أحداث الاستقرار، أخفِ بتلاشي
   window.setTimeout(() => {
     void hideNativeSplash(false);
   }, SPLASH_MAX_VISIBLE_MS * 2);

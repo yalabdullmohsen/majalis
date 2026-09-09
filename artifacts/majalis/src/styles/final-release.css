@@ -473,7 +473,11 @@ html.dark .navbar-menu-btn--drawer {
   box-sizing: border-box;
   cursor: pointer;
 }
-.header-ticker--empty { display: none; }
+/* لا display:none — يطوي ارتفاع الشريط ويسبب قفزة عند دخول المحتوى بعد الإقلاع */
+.header-ticker--empty {
+  visibility: hidden;
+  pointer-events: none;
+}
 .header-ticker--static { padding-inline: 1rem; }
 .header-ticker--paused { cursor: pause; }
 .header-ticker--paused .header-ticker__track,
