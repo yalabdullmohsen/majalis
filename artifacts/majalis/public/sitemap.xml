@@ -1305,6 +1305,11 @@
     <priority>0.68</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/seerah-isra-miraj</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/seerah-badr</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1450,6 +1455,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/rashidun-fustat</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/rashidun-arbitration</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1481,6 +1491,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/umayyad-walid-conquests</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/umayyad-qutayba</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -1630,6 +1645,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/abbasid-baramika</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/fatimid-cairo</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1700,6 +1720,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/andalus-ibn-rushd</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/seljuk-malikshah</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1726,6 +1751,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/seljuk-manzikert</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/ayyubid-edessa</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -1815,6 +1845,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/mamluk-ibn-taymiyya-era</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/ottoman-suleyman-peak</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1866,6 +1901,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/ottoman-dissolution</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/ottoman-mehmed-conquest-prep</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -1941,6 +1981,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/civ-libraries</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/modern-print-nahda</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
