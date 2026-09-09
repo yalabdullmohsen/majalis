@@ -43,6 +43,26 @@ for (const cls of [
   assert.match(calm, new RegExp(`\\.${cls}`), `calm يشمل .${cls}`);
   assert.match(unify, new RegExp(`\\.${cls}`), `unify يشمل .${cls}`);
 }
+assert.match(calm, /\.notif-card/);
+assert.match(calm, /\.an-card/);
+assert.match(calm, /\.hlr__card/);
+assert.match(unify, /\.notif-card/);
+assert.match(unify, /\.an-card/);
+assert.match(unify, /\.hlr__card/);
+assert.match(calm, /--section-stack-gap/);
+assert.match(calm, /\.scroll-to-top[\s\S]*?border-radius:\s*var\(--radius-pill/);
+assert.match(calm, /\.ss-action-btn--sm/);
+
+const notif = read("src/styles/pages/notifications.css");
+assert.doesNotMatch(notif, /border-radius:\s*18px\s*!important/);
+assert.match(notif, /border-radius:\s*var\(--radius-card/);
+
+const nawawiList = read("src/styles/pages/arbaeen-nawawi.css");
+assert.match(nawawiList, /\.an-card[\s\S]*?border-radius:\s*var\(--radius-card/);
+
+const ux = read("src/styles/ssunnah-ux-polish.css");
+assert.match(ux, /\.floating-back-btn[\s\S]*?z-index:\s*var\(--z-fab/);
+assert.match(ux, /\.ss-action-btn--sm[\s\S]*?min-height:\s*44px/);
 assert.match(calm, /\.hadith-detail-card/);
 assert.match(calm, /\.rsc\b/);
 assert.match(calm, /\.ahd-section/);

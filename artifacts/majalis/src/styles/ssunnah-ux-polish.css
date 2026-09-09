@@ -138,8 +138,8 @@ html.dark .ss-app-card.soft-card--accent {
 }
 
 .ss-action-btn--sm {
-  min-height: 40px;
-  padding: 0.4rem 0.9rem;
+  min-height: 44px;
+  padding: 0.45rem 0.95rem;
   font-size: 0.9rem;
 }
 
@@ -582,8 +582,11 @@ html.dark .card__subtitle {
 
 /* لا يغطي العائم المشغّل — يرفع فوق الشريط فقط */
 .floating-back-btn {
-  bottom: calc(var(--bottom-nav-height, var(--nav-h, 64px)) + 12px + var(--inset-bottom, 0px)) !important;
-  z-index: 40;
+  bottom: calc(
+    var(--bottom-nav-height, var(--nav-h, 64px)) + 16px + var(--inset-bottom, 0px) +
+      var(--quran-mini-player-offset, 0px)
+  ) !important;
+  z-index: var(--z-fab, 220) !important;
 }
 
 html.audio-dock-open .floating-back-btn,

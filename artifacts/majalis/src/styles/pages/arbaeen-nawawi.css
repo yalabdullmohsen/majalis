@@ -55,7 +55,14 @@
 .an-empty { text-align: center; color: #9ca3af; padding: 3rem 1rem; font-size: 0.9rem; }
 
 /* Card */
-.an-card { background: #fff; border-radius: 0.9rem; padding: 1.1rem; border: 1.5px solid #e5e7eb; border-inline-start: 4px solid var(--majalis-emerald); transition: box-shadow 0.15s, border-color 0.15s; }
+.an-card {
+  background: var(--color-surface, #fff);
+  border-radius: var(--radius-card, 24px);
+  padding: 1.1rem;
+  border: 1.5px solid var(--mj-hairline, #e5e7eb);
+  border-inline-start: 4px solid var(--majalis-emerald);
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
 .an-card:hover { box-shadow: 0 4px 16px rgba(31,77,58,0.1); }
 .an-card--read { border-inline-start-color: #6ee7b7; background: #f0fdf4; }
 .an-card--today { border-color: var(--majalis-emerald); box-shadow: 0 0 0 2px rgba(31,77,58,0.15); }
