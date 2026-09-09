@@ -140,7 +140,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 ملاحظة للتفكر: دورة الحياة في النبات معروفة — للتفكر في قدرة الخالق.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} والعبرة أنّ الآية الكونية تذكّر بقدرته سبحانه، لا أن تُجعل بدل الدليل الشرعي أو تُحمَّل ما لا تحتمل.`,
     scholarly_source: "تفسير السعدي — يس",
     verification_status: "verified",
     status: "approved",
@@ -160,7 +160,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 ملاحظة للتفكر: الماء عنصر أساسي للحياة — يُستدل به للتفكر لا كحكم علمي مطلق من الآية وحدها.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} والعبرة أنّ الآية الكونية تذكّر بقدرته سبحانه، لا أن تُجعل بدل الدليل الشرعي أو تُحمَّل ما لا تحتمل.`,
     scholarly_source: "تفسير ابن كثير — النور",
     verification_status: "verified",
     status: "approved",
@@ -180,7 +180,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 ملاحظة للتفكر: لا يُستعمل هذا النص لإنكار الطب أو ادعاء شفاء جسدي قطعي دون دليل شرعي.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُعرض هذا على منهج أهل السنة: التعظيم للنص، والتواضع في تفسير الظواهر، وترك القطع بما لم يقم عليه برهان.`,
     scholarly_source: "تفسير ابن كثير — يونس",
     verification_status: "verified",
     status: "approved",
@@ -200,7 +200,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 ملاحظة للتفكر: دورة الماء في الطبيعة معروفة — للتفكر في قدرة الله.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُربط التفكر بالعمل: خشية الله، وشكر النعمة، وترك الغرور بالعلم المادي إذا عارض الوحي.`,
     scholarly_source: "تفسير السعدي — الفرقان",
     verification_status: "verified",
     status: "approved",
@@ -220,7 +220,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 ملاحظة للتفكر: دور الرياح في دورة الطقس والمطر — للتفكر.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} والعبرة أنّ الآية الكونية تذكّر بقدرته سبحانه، لا أن تُجعل بدل الدليل الشرعي أو تُحمَّل ما لا تحتمل.`,
     scholarly_source: "تفسير السعدي — الأعراف",
     verification_status: "verified",
     status: "approved",
@@ -256,7 +256,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: الله جعل الأرض فراشًا مهيأةً للحياة، يستقر عليها الإنسان وينتفع بخيراتها، فيستدل بذلك على قدرة الخالق ونعمه. ويُعرض المعنى الشرعي أولًا ثم ملاحظات تفكرية بحذر دون الجزم في الإعجاز العلمي.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُربط التفكر بالعمل: خشية الله، وشكر النعمة، وترك الغرور بالعلم المادي إذا عارض الوحي.`,
     scholarly_source: "تفسير ابن كثير — الذاريات",
     verification_status: "verified",
     status: "approved",
@@ -276,7 +276,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 تنبيه: لا يُستخدم هذا النص لإثبات نظريات فيزيائية عن الزمن دون تفسير علمي معتبر ودليل شرعي.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُعرض هذا على منهج أهل السنة: التعظيم للنص، والتواضع في تفسير الظواهر، وترك القطع بما لم يقم عليه برهان.`,
     scholarly_source: "تفسير ابن كثير — الحج",
     verification_status: "verified",
     status: "approved",
@@ -314,7 +314,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 ملاحظة للتفكر: من أوجه التأمل أن أصوات الطيور وأنماط تواصلها مجال بحث علمي معاصر؛ ولا يُجعل ذلك تفسيراً قطعياً للآية.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} والعبرة أنّ الآية الكونية تذكّر بقدرته سبحانه، لا أن تُجعل بدل الدليل الشرعي أو تُحمَّل ما لا تحتمل.`,
     scholarly_source: "تفسير ابن كثير — النور",
     verification_status: "verified",
     status: "approved",
@@ -334,7 +334,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 ملاحظة للتفكر: يعرف علم الأرصاد أن الرياح تنقل جسيمات ونوى تكاثف تسهم في تشكل قطرات المطر.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُربط التفكر بالعمل: خشية الله، وشكر النعمة، وترك الغرور بالعلم المادي إذا عارض الوحي.`,
     scholarly_source: "تفسير الطبري — الحجر",
     verification_status: "verified",
     status: "approved",
@@ -472,7 +472,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: نور الله هدايته في السموات والأرض؛ والمثل بعده تقريب لنور الإيمان في قلب المؤمن عند أهل التفسير. نقف عند دلالته الشرعية بلا تشبيه ذات الله بالمخلوقات.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُعرض هذا على منهج أهل السنة: التعظيم للنص، والتواضع في تفسير الظواهر، وترك القطع بما لم يقم عليه برهان.`,
     scholarly_source: "تفسير ابن القيم — مفتاح دار السعادة",
     verification_status: "verified",
     status: "approved",
@@ -628,7 +628,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: من نعم الله جعل علامات ونجوم يهتدي بها المسافر في البر والبحر. والنص يذكر الاهتداء لا تقنيّات الملاحة الحديثة.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُربط التفكر بالعمل: خشية الله، وشكر النعمة، وترك الغرور بالعلم المادي إذا عارض الوحي.`,
     scholarly_source: "تفسير ابن عاشور — النحل | تاريخ الفلك الإسلامي",
     verification_status: "verified",
     status: "approved",
@@ -693,7 +693,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: الرد على منكري البعث: الله قادر على إعادة الإنسان حتى أدقّ خلقه. والبنان أطراف الأصابع في لغة العرب؛ ولا يُجعل النص دليلًا على «بصمة» اصطلاحية معاصرة.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُعرض هذا على منهج أهل السنة: التعظيم للنص، والتواضع في تفسير الظواهر، وترك القطع بما لم يقم عليه برهان.`,
     scholarly_source: "تفسير القرطبي وابن كثير — القيامة 3-4 | Forensic Science International — Fingerprint Uniqueness | Galton F. (1892)",
     verification_status: "verified",
     status: "approved",
@@ -711,7 +711,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: يتعاقب الليل والنهار فيدخل كلٌّ على الآخر. والتكوير في اللغة اللفّ والإدخال؛ والعبرة انتظام الخلق الدال على التدبير، لا إثبات نموذج فلكي بعينه.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُعرض هذا على منهج أهل السنة: التعظيم للنص، والتواضع في تفسير الظواهر، وترك القطع بما لم يقم عليه برهان.`,
     scholarly_source: "تفسير ابن كثير — الزمر 5 | NASA Earth Observation — Day-Night Boundary",
     verification_status: "verified",
     status: "approved",
@@ -749,7 +749,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: مثل لضلال الكافر وتراكب ظلماته. والسياق تمثيل للهداية والضلال، لا تقرير جغرافيا بحرية تفصيلية.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} والعبرة أنّ الآية الكونية تذكّر بقدرته سبحانه، لا أن تُجعل بدل الدليل الشرعي أو تُحمَّل ما لا تحتمل.`,
     scholarly_source: "تفسير الطبري وابن كثير — النور: سياق المثل؛ وما يُذكر من وصف أعماق البحار المعاصر للتأمل فقط لا كتفسير ملزم",
     verification_status: "verified",
     status: "approved",
@@ -814,7 +814,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: كل شيء يسبّح بحمد الله تسبيحًا حقيقيًا على الوجه اللائق، وإن خفي علينا كيفيته. ولا يُفسَّر التسبيح بعملية حيوية معاصرة.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُربط التفكر بالعمل: خشية الله، وشكر النعمة، وترك الغرور بالعلم المادي إذا عارض الوحي.`,
     scholarly_source: "تفسير ابن كثير — الإسراء | كتاب The Hidden Life of Trees — Peter Wohlleben",
     verification_status: "verified",
     status: "approved",
@@ -833,7 +833,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: بيان طول يوم من أيام الله أو يوم العذاب/القيامة عند كثير من المفسرين، أو تقريب لبطء استعجال الكفار للعذاب. لا يُحمَّل نظرية النسبية.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُربط التفكر بالعمل: خشية الله، وشكر النعمة، وترك الغرور بالعلم المادي إذا عارض الوحي.`,
     scholarly_source: "تفسير القرطبي — الحج | نظرية النسبية — Einstein 1905",
     verification_status: "verified",
     status: "approved",
@@ -851,7 +851,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: يوم عظيم في سياق المعارج والحساب عند أهل التفسير؛ واختلاف المقادير في الآيات بحسب السياق لا بمعيار فيزيائي.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُعرض هذا على منهج أهل السنة: التعظيم للنص، والتواضع في تفسير الظواهر، وترك القطع بما لم يقم عليه برهان.`,
     scholarly_source: "تفسير الطبري — المعارج | Hawking: A Brief History of Time",
     verification_status: "verified",
     status: "approved",
@@ -920,7 +920,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: جمهور السلف على أنها النجوم تخنس نهارًا وتكنس في أفلاكها، أو الظباء الكنّس في قول. نلتزم التفسير اللغوي المأثور بلا ربط بـ«ثقب أسود».
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُربط التفكر بالعمل: خشية الله، وشكر النعمة، وترك الغرور بالعلم المادي إذا عارض الوحي.`,
     scholarly_source: "تفسير الطبري وابن كثير والقرطبي — التكوير (التفسير التقليدي: الكواكب والنجوم، لا الثقوب السوداء)",
     verification_status: "verified",
     status: "approved",
@@ -969,7 +969,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: بيان أطوار خلق الإنسان للنعم والتذكير بالبعث. والألفاظ عربية؛ ولا تُجعل مطابقة حرفيّة لمصطلحات جنينية حديثة.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} والعبرة أنّ الآية الكونية تذكّر بقدرته سبحانه، لا أن تُجعل بدل الدليل الشرعي أو تُحمَّل ما لا تحتمل.`,
     scholarly_source: "Keith Moore — The Developing Human (1982) | Journal of Embryology — Embryo Stage Nomenclature | تفسير ابن كثير — المؤمنون",
     verification_status: "verified",
     status: "approved",
@@ -987,7 +987,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: الإنزال قد يكون بمعنى الخلق والتقدير أو جعل الحديد في متناول الناس؛ وفيه بأس في السلاح ومنافع في المعاش. لا يُجزم بأصل فلكي للنص.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} والعبرة أنّ الآية الكونية تذكّر بقدرته سبحانه، لا أن تُجعل بدل الدليل الشرعي أو تُحمَّل ما لا تحتمل.`,
     scholarly_source: "Nature Geoscience — Extraterrestrial Origin of Earth's Iron (2011) | NASA Astrophysics — Supernova Element Synthesis | تفسير الطبري — الحديد",
     verification_status: "verified",
     status: "approved",
@@ -1162,7 +1162,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: إلهام النحل اتخاذ البيوت وأكل الثمرات وإخراج الشراب المختلف الألوان فيه شفاء. والعبرة القدرة والحكمة، لا وصف «لغة تواصل» علمية.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} والعبرة أنّ الآية الكونية تذكّر بقدرته سبحانه، لا أن تُجعل بدل الدليل الشرعي أو تُحمَّل ما لا تحتمل.`,
     scholarly_source: "Karl von Frisch (Nobel 1973), Waggle Dance | تفسير الشعراوي والطبري — النحل: 68",
     verification_status: "verified",
     status: "approved",
@@ -1180,7 +1180,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: آية في تسخير النمل لسليمان وفهمه منطقها؛ وفيها أدب التحذير من الهلاك. نقف عند النص بلا بناء «حضارة نمل» معاصرة.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُعرض هذا على منهج أهل السنة: التعظيم للنص، والتواضع في تفسير الظواهر، وترك القطع بما لم يقم عليه برهان.`,
     scholarly_source: "Myrmecology: Wilson & Hölldobler (Ants 1990, Pulitzer) | Wilson E.O., The Insect Societies (1971) | Journal of Experimental Biology — Ant Communication 2009 | تفسير القرطبي — النمل: 18",
     verification_status: "verified",
     status: "approved",
@@ -1198,7 +1198,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: تعداد أطوار الخلق لإثبات القدرة على البعث. والمضغة في اللغة القطعة الممضوغة شكلًا؛ بلا إسقاط تشريحي متكلَّف.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُربط التفكر بالعمل: خشية الله، وشكر النعمة، وترك الغرور بالعلم المادي إذا عارض الوحي.`,
     scholarly_source: "Keith Moore, The Developing Human (8th ed.) | تفسير الطبري وابن كثير — الحج: 5",
     verification_status: "verified",
     status: "approved",
@@ -1216,7 +1216,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: بنيناها بقوة، وإنا لذو سعة وقدرة أو موسعون في الرزق عند طائفة من المفسرين. لا يُجزم بنظرية توسّع كونية من اللفظ وحده.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُربط التفكر بالعمل: خشية الله، وشكر النعمة، وترك الغرور بالعلم المادي إذا عارض الوحي.`,
     scholarly_source: "Hubble (1929), Nobel Prize 2011 (Perlmutter, Schmidt, Riess) | تفسير ابن عاشور والزمخشري — الذاريات: 47",
     verification_status: "verified",
     status: "approved",
@@ -1234,7 +1234,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 التفسير: بالماء أخرج الله أصنافًا شتّى من النبات. والامتنان بالرزق والخلق؛ لا ربط بكيمياء التربة الحديثة.
 
-${SCIENTIFIC_DISCLAIMER}`,
+${SCIENTIFIC_DISCLAIMER} ويُعرض هذا على منهج أهل السنة: التعظيم للنص، والتواضع في تفسير الظواهر، وترك القطع بما لم يقم عليه برهان.`,
     scholarly_source: "Camerarius, De Sexu Plantarum Epistola (1694) | Linnaeus Sexual System (1730s) | تفسير الرازي والقرطبي — طه: 53",
     verification_status: "verified",
     status: "approved",
