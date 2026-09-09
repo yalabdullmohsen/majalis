@@ -2170,6 +2170,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/ottoman-haremeyn-service</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/civ-house-wisdom</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -2281,6 +2286,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/modern-lessons</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/civ-translation-bayt</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
