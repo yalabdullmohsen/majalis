@@ -148,7 +148,7 @@ export const NAV_LABEL_CANONICAL: Record<string, string> = {
 
 // ── الشريط السفلي والدرج (من سجل الأقسام) ─────────────────────────────────
 
-const BOTTOM_IDS = ["quran", "lessons", "prayer", "fiqh", "sections"] as const;
+const BOTTOM_IDS = ["quran", "lessons", "prayer", "home", "sections"] as const;
 const DRAWER_IDS = [
   "open-mushaf",
   "quran",
@@ -171,6 +171,7 @@ const LABEL_OVERRIDE: Record<string, string> = {
   quran: NAV_LABEL_CANONICAL["/quran-hub"],
   prayer: NAV_LABEL_CANONICAL["/prayer-times"],
   fiqh: NAV_LABEL_CANONICAL["/fiqh"],
+  home: "الرئيسية",
 };
 
 function entryFromId(id: string, surfaces: readonly NavPlacement[]): NavEntry | null {

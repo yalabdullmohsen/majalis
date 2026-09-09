@@ -249,7 +249,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     icon: Home,
     group: "sciences",
     order: -10,
-    surfaces: ["search", "home"],
+    surfaces: ["bottomNav", "search", "home"],
     status: "live",
     keywords: ["رئيسية", "home"],
   },
@@ -672,7 +672,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     group: "sciences",
     order: 50,
     featured: true,
-    surfaces: ["bottomNav", "moreHub", "home", "search"],
+    surfaces: ["moreHub", "home", "search"],
     status: "live",
     keywords: ["فقه", "أحكام", "فتاوى"],
     aliases: ["الفقه"],
@@ -1344,7 +1344,7 @@ export function featuredSections(): SectionDef[] {
 }
 
 export function bottomNavSections(): SectionDef[] {
-  const order = ["quran", "lessons", "prayer", "fiqh", "sections"];
+  const order = ["quran", "lessons", "prayer", "home", "sections"];
   return order
     .map((id) => SECTIONS.find((s) => s.id === id && s.surfaces.includes("bottomNav")))
     .filter((s): s is SectionDef => Boolean(s));

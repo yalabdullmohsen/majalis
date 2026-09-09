@@ -1,6 +1,6 @@
 /**
  * الشريط السفلي — مشتق من سجل الأقسام فقط.
- * مركز القرآن · الدروس · الصلاة · فقه · الأقسام
+ * مركز القرآن · الدروس · الصلاة · الرئيسية · الأقسام
  */
 import { useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
@@ -12,12 +12,12 @@ import { haptics } from "@/lib/haptics";
 import { prefetchAppRoutesShell } from "@/lib/prefetch-app-routes";
 
 const HREF_TO_ID: Record<string, BottomTabId> = {
+  "/": "home",
   "/mushaf": "quran",
   "/quran-hub": "quran",
   "/quran-knowledge": "quran",
   "/lessons": "lessons",
   "/prayer-times": "prayer",
-  "/fiqh": "fiqh",
   "/sections": "sections",
   "/more": "sections",
 };

@@ -4,27 +4,30 @@
 import { isTabActive } from "@/components/TopSectionBar";
 import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
 
-export type BottomTabId = "quran" | "lessons" | "prayer" | "fiqh" | "sections";
+export type BottomTabId = "quran" | "lessons" | "prayer" | "home" | "sections";
 
 const TAB_IDS: { id: BottomTabId; href: string }[] = [
   { id: "quran", href: "/quran-hub" },
   { id: "lessons", href: "/lessons" },
   { id: "prayer", href: "/prayer-times" },
-  { id: "fiqh", href: "/fiqh" },
+  { id: "home", href: "/" },
   { id: "sections", href: "/sections" },
 ];
 
 /**
  * يُرجع تبويباً واحداً فقط.
- * الجذر "/" → sections (لا تبويب رئيسية في الشريط).
+ * الجذر "/" → الرئيسية.
  */
 export function getActiveTab(pathname: string): BottomTabId {
   const path = (pathname.split("?")[0] || "/").replace(/\/+$/, "") || "/";
-  if (path === "/" || path === "/more") return "sections";
+  if (path === "/") return "home";
+  if (path === "/more") return "sections";
   if (path === "/sections" || path.startsWith("/sections/")) return "sections";
   // الشريط السفلي بلا تبويب أذكار/بحث — نربطهما بأقرب باب
   if (path === "/adhkar" || path.startsWith("/adhkar/")) return "prayer";
   if (path === "/search" || path.startsWith("/search/")) return "sections";
+  // الفقه من الأقسام — أبرز تبويب الأقسام عند التصفح فيه
+  if (path === "/fiqh" || path.startsWith("/fiqh/")) return "sections";
 
   const hits = TAB_IDS.filter(({ href }) => isTabActive(path, href));
   if (hits.length === 0) return "sections";
