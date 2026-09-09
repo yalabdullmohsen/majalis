@@ -43,7 +43,7 @@
 }
 .as-tab {
   padding: .45rem 1.1rem; border-radius: var(--ds-radius-full); border: 1.5px solid var(--clr-border);
-  background: #fff; font-size: .88rem; cursor: pointer; color: var(--clr-text-2);
+  background: var(--ss-card-bg, var(--mj-surface, #fff)); font-size: .88rem; cursor: pointer; color: var(--clr-text-2);
   transition: all .18s;
 }
 .as-tab:hover { border-color: var(--clr-primary); color: var(--clr-primary); }
@@ -79,7 +79,7 @@
 .as-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 
 .as-alama-card {
-  background: #fff; border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, #fff)); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1.1rem 1.25rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
 }
@@ -111,7 +111,7 @@
   display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.1rem;
 }
 .as-kubra-card {
-  background: #fff; border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, #fff)); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1.2rem 1.2rem 1rem;
   position: relative; overflow: hidden;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);

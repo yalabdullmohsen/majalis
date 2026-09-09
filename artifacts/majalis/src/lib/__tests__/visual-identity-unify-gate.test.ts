@@ -138,3 +138,7 @@ assert.match(fiqhView, /SectionEntryCard/);
 assert.match(fiqhView, /hub-card-grid fiqh-book-grid/);
 
 console.log("visual-identity-unify-gate.test.ts: ok");
+
+console.log("=== بطاقات الدليل ===");
+assert.match(unify, /\.ilm-card/);
+assert.match(unify, /\.inst-card/);

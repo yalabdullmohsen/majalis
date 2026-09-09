@@ -59,7 +59,7 @@
   display: flex;
   align-items: center;
   gap: var(--ds-space-2);
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: 0.65rem;
   padding: 0.55rem 0.75rem;
@@ -83,8 +83,8 @@
 
 /* حاسبة الزكاة */
 .zk-calc {
-  background: #F8FBF9;
-  border: 1.5px solid #C8DDD5;
+  background: var(--color-surface-soft, var(--mj-surface-2, #f7f4ee));
+  border: 1.5px solid color-mix(in srgb, var(--mj-brand) 22%, var(--ss-border, var(--color-border, #d9d3c8)));
   border-radius: var(--ds-radius-xl);
   padding: var(--ds-space-5);
   margin-bottom: 1.75rem;
@@ -114,8 +114,8 @@
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: 0.6rem;
   font-size: 0.9rem;
-  color: var(--mj-brand-deep);
-  background: #FFFFFF;
+  color: var(--color-text, var(--mj-brand-deep));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
   outline: none;
   width: 100%;
   box-sizing: border-box;
@@ -154,10 +154,9 @@
 
 /* بطاقة النوع */
 .zk-card {
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
   border: 1.5px solid var(--mj-brand-soft);
-  border-radius: 0.9rem;
-  overflow: hidden;
+  border-radius: var(--radius-card, 0.9rem);
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 .zk-card--open { border-color: var(--mj-brand); box-shadow: 0 3px 14px rgba(31,77,58,0.1); }
@@ -219,12 +218,12 @@
   text-decoration: none;
   font-size: 0.83rem;
   font-weight: 600;
-  color: var(--mj-brand-deep);
-  background: #FFFFFF;
+  color: var(--color-text, var(--mj-brand-deep));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
   transition: all 0.15s;
   text-align: center;
 }
-.zk-related__link:hover { border-color: var(--mj-brand); background: rgba(31,77,58,0.05); color: var(--mj-brand); }
+.zk-related__link:hover { border-color: var(--mj-brand); background: color-mix(in srgb, var(--mj-brand) 6%, transparent); color: var(--mj-brand); }
 
 @media (max-width: 600px) {
   .zk-hero__title { font-size: 1.65rem; }

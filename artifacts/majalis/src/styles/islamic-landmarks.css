@@ -316,7 +316,7 @@
 
 .ilm-badge--era {
   background: rgba(91,33,182,0.08);
-  color: #5B21B6;
+  color: var(--mj-accent, #b08a3e);
 }
 
 .ilm-card__location {
@@ -524,3 +524,42 @@
 [data-theme="dark"] .ilm-select,
 [data-theme="dark"] .ilm-search { background: rgba(255,255,255,0.06); color: #fff; border-color: rgba(255,255,255,0.1); }
 [data-theme="dark"] .ilm-tab { border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
+
+
+/* ── توحيد هوية الدليل مع ثيم الأقسام ───────────────────────────── */
+.ilm-card {
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  border-color: color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, var(--color-border, #d9d3c8)));
+  border-radius: var(--radius-card, 24px);
+  box-shadow: var(--ss-shadow-soft, none);
+  color: var(--color-text, var(--mj-ink, #16241e));
+}
+.ilm-card__name { color: var(--color-text, var(--mj-ink)); }
+.ilm-card__desc,
+.ilm-card__meta { color: var(--color-text-muted, var(--mj-ink-2, #4f5f58)); }
+.ilm-chip {
+  background: color-mix(in srgb, var(--mj-brand) 10%, var(--ss-card-bg, transparent));
+  color: var(--mj-brand-deep, #0d4a39);
+  border-color: color-mix(in srgb, var(--mj-brand) 22%, transparent);
+}
+.ilm-chip--era {
+  background: color-mix(in srgb, var(--mj-accent, #b08a3e) 14%, var(--ss-card-bg, transparent));
+  color: color-mix(in srgb, var(--mj-accent, #b08a3e) 70%, #3a2a10);
+}
+html.dark .ilm-card,
+html[data-theme="dark"] .ilm-card {
+  background: var(--mj-surface, #1b2421) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+  color: var(--mj-ink, #f3f7f5) !important;
+}
+html.dark .ilm-card__name,
+html[data-theme="dark"] .ilm-card__name { color: var(--mj-ink, #f3f7f5) !important; }
+html.dark .ilm-card__desc,
+html.dark .ilm-card__meta,
+html[data-theme="dark"] .ilm-card__desc,
+html[data-theme="dark"] .ilm-card__meta { color: var(--mj-ink-2, #c5d0cb) !important; }
+html.dark .ilm-page,
+html[data-theme="dark"] .ilm-page {
+  background: var(--mj-bg, #121816);
+  color: var(--mj-ink, #f3f7f5);
+}

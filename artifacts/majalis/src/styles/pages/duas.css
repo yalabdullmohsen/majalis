@@ -90,7 +90,7 @@
   font-weight: 600;
   cursor: pointer;
   border: 1.5px solid #C6D6CE;
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
   color: var(--mj-brand-deep);
   transition: all 0.15s;
 }
@@ -111,7 +111,7 @@
 
 /* Card */
 .dua-card {
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius-xl);
   overflow: hidden;

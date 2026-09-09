@@ -66,8 +66,8 @@
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius-lg);
   font-size: 0.88rem;
-  color: var(--mj-brand-deep);
-  background: #FFFFFF;
+  color: var(--color-text, var(--mj-brand-deep));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
   outline: none;
   transition: border-color 0.15s;
   box-sizing: border-box;
@@ -92,10 +92,10 @@
   padding: 0.32rem 0.85rem;
   border-radius: var(--ds-radius-full);
   border: 1.5px solid var(--mj-brand-soft);
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--mj-brand-deep);
+  color: var(--color-text, var(--mj-brand-deep));
   cursor: pointer;
   transition: all 0.15s;
   font-family: inherit;
@@ -110,20 +110,20 @@
 .sy-card {
   display: flex;
   gap: var(--ds-space-3);
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
   border: 1.5px solid var(--mj-brand-soft);
-  border-radius: 0.9rem;
+  border-radius: var(--radius-card, 0.9rem);
   padding: 1rem 1.1rem;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
-.sy-card--done { border-color: var(--mj-brand); background: rgba(31,77,58,0.03); }
+.sy-card--done { border-color: var(--mj-brand); background: color-mix(in srgb, var(--mj-brand) 5%, var(--ss-card-bg, transparent)); }
 .sy-card__check {
   flex-shrink: 0;
   width: 26px;
   height: 26px;
   border-radius: 50%;
   border: 2px solid var(--mj-brand-soft);
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -152,8 +152,8 @@
 }
 .sy-card__howto {
   font-size: 0.8rem;
-  color: var(--mj-brand-deep);
-  background: #F8FBF9;
+  color: var(--color-text, var(--mj-brand-deep));
+  background: var(--color-surface-soft, var(--mj-surface-2, #f7f4ee));
   border: 1px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius);
   padding: 0.4rem 0.65rem;
@@ -176,12 +176,12 @@
   text-decoration: none;
   font-size: 0.83rem;
   font-weight: 600;
-  color: var(--mj-brand-deep);
-  background: #FFFFFF;
+  color: var(--color-text, var(--mj-brand-deep));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
   transition: all 0.15s;
   text-align: center;
 }
-.sy-related__link:hover { border-color: var(--mj-brand); background: rgba(31,77,58,0.05); color: var(--mj-brand); }
+.sy-related__link:hover { border-color: var(--mj-brand); background: color-mix(in srgb, var(--mj-brand) 6%, transparent); color: var(--mj-brand); }
 
 @media (max-width: 600px) {
   .sy-hero__title { font-size: 1.55rem; }

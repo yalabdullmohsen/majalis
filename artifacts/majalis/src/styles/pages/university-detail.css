@@ -49,10 +49,11 @@
 .udp-deadline-val { font-weight: 500; color: var(--majalis-emerald); display: flex; align-items: center; gap: .25rem; }
 .udp-website-btn {
   display: inline-flex; align-items: center; gap: .375rem;
-  padding: .5rem 1rem; background: #fff;
+  padding: .5rem 1rem; background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
   color: var(--majalis-emerald); border-radius: .75rem;
   font-size: .875rem; font-weight: 600; transition: opacity .15s;
   text-decoration: none;
+  border: 1px solid var(--majalis-line, var(--ss-border, #d9d3c8));
 }
 .udp-website-btn:hover { opacity: .9; }
 .udp-section-title { font-size: var(--ds-text-lg); font-weight: 700; color: var(--majalis-ink); margin-bottom: .75rem; }

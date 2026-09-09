@@ -75,6 +75,43 @@ assert.match(atl, /\.atl-card[\s\S]*?--ss-card-bg/);
 assert.doesNotMatch(hs, /\.hs-search\s*\{[^}]*background:\s*#FFFFFF/i);
 assert.match(hs, /\.hs-search[\s\S]*?--ss-card-bg/);
 
+console.log("=== دليل المعالم/المؤسسات ضمن الثيم ===");
+assert.match(theme, /\.ilm-card/);
+assert.match(theme, /\.inst-card/);
+
+console.log("=== زكاة / سنن يومية بلا #fff صلب على البطاقة ===");
+const zakat = read("src/styles/pages/zakat.css");
+const sunan = read("src/styles/pages/sunan-yawmiyya.css");
+const arkanIslam = read("src/styles/pages/arkan-islam.css");
+assert.doesNotMatch(zakat, /\.zk-card\s*\{[^}]*background:\s*#FFFFFF/i);
+assert.match(zakat, /\.zk-card[\s\S]*?--ss-card-bg/);
+assert.doesNotMatch(sunan, /\.sy-card\s*\{[^}]*background:\s*#FFFFFF/i);
+assert.match(sunan, /\.sy-card[\s\S]*?--ss-card-bg/);
+assert.doesNotMatch(arkanIslam, /\.arkan-related__link\s*\{[^}]*background:\s*#FFFFFF/i);
+assert.match(arkanIslam, /\.arkan-related__link[\s\S]*?--ss-card-bg/);
+assert.doesNotMatch(arkanIslam, /rgba\(124,\s*58,\s*237/);
+assert.match(theme, /\.zk-card/);
+assert.match(theme, /\.sy-card/);
+assert.match(theme, /html\.dark[\s\S]*?\.zk-card[\s\S]*?--mj-surface/);
+assert.match(theme, /html\.dark[\s\S]*?\.sy-card[\s\S]*?--mj-surface/);
+
+console.log("=== سيرة / أدعية / أربعين بلا #fff صلب على البطاقة ===");
+const seerah = read("src/styles/pages/seerah.css");
+const duas = read("src/styles/pages/duas.css");
+const arbaeen = read("src/styles/pages/arbaeen-nawawi.css");
+assert.doesNotMatch(seerah, /\.seerah-panel\s*\{[^}]*background:\s*#fff/i);
+assert.match(seerah, /\.seerah-panel[\s\S]*?--ss-card-bg/);
+assert.doesNotMatch(duas, /\.dua-card\s*\{[^}]*background:\s*#FFFFFF/i);
+assert.match(duas, /\.dua-card[\s\S]*?--ss-card-bg/);
+assert.doesNotMatch(arbaeen, /\.an-search\s*\{[^}]*background:\s*#fff(?![a-f0-9])/i);
+assert.match(arbaeen, /\.an-card[\s\S]*?--ss-card-bg/);
+assert.match(theme, /\.seerah-panel/);
+assert.match(theme, /\.dua-card/);
+assert.match(theme, /\.an-card/);
+assert.match(theme, /html\.dark[\s\S]*?\.seerah-panel[\s\S]*?--mj-surface/);
+assert.match(theme, /html\.dark[\s\S]*?\.dua-card[\s\S]*?--mj-surface/);
+assert.match(theme, /html\.dark[\s\S]*?\.an-card[\s\S]*?--mj-surface/);
+
 console.log("=== أعداد المحتوى: اختبارات وأسئلة غير صفرية ===");
 const counts = JSON.parse(read("src/data/content-counts.json")) as {
   quizQuestions: number;

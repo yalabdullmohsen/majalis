@@ -196,7 +196,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  background: rgba(124,58,237,0.04);
+  background: color-mix(in srgb, var(--mj-brand) 6%, var(--ss-card-bg, transparent));
   border-radius: var(--ds-radius-lg);
   padding: 0.85rem 1rem;
   border-inline-end: 3px solid var(--brand, var(--mj-brand));
@@ -233,12 +233,12 @@
   text-decoration: none;
   font-size: 0.83rem;
   font-weight: 600;
-  color: var(--mj-brand-deep);
-  background: #FFFFFF;
+  color: var(--color-text, var(--mj-brand-deep));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
   transition: all 0.15s;
   text-align: center;
 }
-.arkan-related__link:hover { border-color: var(--mj-brand); background: rgba(31,77,58,0.05); color: var(--mj-brand); }
+.arkan-related__link:hover { border-color: var(--mj-brand); background: color-mix(in srgb, var(--mj-brand) 6%, transparent); color: var(--mj-brand); }
 
 @media (max-width: 600px) {
   .arkan-hero__title { font-size: 1.7rem; }
