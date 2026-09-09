@@ -216,7 +216,11 @@ export default function NavBar() {
 
   const openSearch = () => {
     closeAll();
-    const filter = LOBBY_SEARCH_FILTER[getActiveTab(location)] ?? "all";
+    const tab = getActiveTab(location);
+    const filter =
+      tab === "home" || tab === "sections"
+        ? "all"
+        : (LOBBY_SEARCH_FILTER[tab as keyof typeof LOBBY_SEARCH_FILTER] ?? "all");
     try {
       sessionStorage.setItem("gsm-initial-filter", filter);
     } catch {

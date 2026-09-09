@@ -6,7 +6,7 @@ import assert from "node:assert/strict";
 import { countActiveBottomTabs, getActiveTab } from "../get-active-tab";
 
 const cases: Array<{ path: string; expect: ReturnType<typeof getActiveTab> }> = [
-  { path: "/", expect: "sections" },
+  { path: "/", expect: "home" },
   { path: "/sections", expect: "sections" },
   { path: "/more", expect: "sections" },
   { path: "/prayer-times", expect: "prayer" },
@@ -19,7 +19,8 @@ const cases: Array<{ path: string; expect: ReturnType<typeof getActiveTab> }> = 
   { path: "/mushaf", expect: "quran" },
   { path: "/lessons", expect: "lessons" },
   { path: "/lessons/kw-example", expect: "lessons" },
-  { path: "/fiqh", expect: "fiqh" },
+  { path: "/fiqh", expect: "sections" },
+  { path: "/fiqh/usul", expect: "sections" },
   { path: "/quiz", expect: "sections" },
   { path: "/qa", expect: "sections" },
   { path: "/tarikh-islami/abbasid-house-of-wisdom", expect: "sections" },
@@ -30,7 +31,7 @@ const cases: Array<{ path: string; expect: ReturnType<typeof getActiveTab> }> = 
   { path: "/qibla", expect: "prayer" },
 ];
 
-const allowed = new Set(["quran", "lessons", "prayer", "fiqh", "sections"]);
+const allowed = new Set(["quran", "lessons", "prayer", "home", "sections"]);
 
 console.log("\n=== getActiveTab ===");
 for (const c of cases) {
