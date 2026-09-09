@@ -1119,7 +1119,7 @@ html.dark .top-section-bar {
   .scroll-to-top,
   .global-back-btn,
   .floating-back-btn {
-    bottom: calc(var(--bottom-nav-height, 88px) + env(safe-area-inset-bottom, 0px) + var(--inset-bottom, 0px) + 16px);
+    bottom: calc(var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 16px);
     min-width: 44px;
     min-height: 44px;
   }
@@ -1170,7 +1170,7 @@ html[data-theme="dark"] .bottom-nav--v2 {
   height: 56px;
   border-radius: 50%;
   position: fixed;
-  bottom: calc(var(--bottom-nav-height, 88px) + env(safe-area-inset-bottom, 0px) + var(--inset-bottom, 0px) + 16px);
+  bottom: calc(var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 16px);
   z-index: 185;
   padding: 0;
   border-radius: var(--radius-pill, 999px);
