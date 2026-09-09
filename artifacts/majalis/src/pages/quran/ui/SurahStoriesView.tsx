@@ -181,7 +181,9 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
           </SectionErrorBoundary>
         )}
         <p className="quran-source-note">{story.trustNote}{story.lastReviewed ? ` · آخر مراجعة: ${story.lastReviewed}` : ""}</p>
-        <Link href={`/mushaf/${story.number}`} className="mj-btn">قراءة السورة</Link>
+        <Link href={`/mushaf/${story.number}`} className="mj-btn mj-btn--primary surah-story-read-btn">
+          قراءة السورة
+        </Link>
 
         <div className="twh-share">
           <ShareButtons title={`أسباب النزول — سورة ${story.name} | سُنّة`} url={`https://www.ssunnah.com/quran/surah-stories/${story.number}`} />

@@ -27,6 +27,7 @@
   --mj-brand: #146b52;
   --mj-brand-soft: #e6f2ec;
   --mj-brand-deep: #0d4a39;
+  --mj-on-brand: #ffffff;
   --mj-sh: var(--shadow);
 
   --color-bg: var(--background);

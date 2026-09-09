@@ -146,10 +146,18 @@ button.primary,
   background: var(--mj-brand, #0f5c45) !important;
   background-color: var(--mj-brand, #0f5c45) !important;
   background-image: none !important;
-  color: var(--mj-on-brand, #ffffff) !important;
+  color: #ffffff !important;
   border: 1px solid var(--mj-brand-deep, #0a3d2e) !important;
   border-radius: var(--radius-button) !important;
   box-shadow: none !important;
+}
+
+/* CTA قراءة السورة داخل بطاقة أسباب النزول */
+.surah-story-article a.mj-btn,
+a.surah-story-read-btn {
+  color: #ffffff !important;
+  background: var(--mj-brand-deep, #0d4a39) !important;
+  background-color: var(--mj-brand-deep, #0d4a39) !important;
 }
 
 html[data-theme="dark"] .btn-primary,
