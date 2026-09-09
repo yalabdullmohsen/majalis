@@ -53,8 +53,3 @@ export function LegalSection({ title, children }: { title: string; children: Rea
     </section>
   );
 }
-
-/** @deprecated الرجوع عبر FloatingBackButton فقط */
-export function LegalBackLink() {
-  return null;
-}

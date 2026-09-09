@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
-import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
+import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -76,9 +76,7 @@ export default function AboutUsPage() {
           ولمصادر البيانات والتراخيص راجع <Link href="/data-licenses">المصادر والتراخيص</Link>.
         </p>
       </LegalSection>
-
-      <LegalBackLink />
-      <ShareButtons title="من نحن — سُنّة" url="https://www.ssunnah.com/about-us" />
+<ShareButtons title="من نحن — سُنّة" url="https://www.ssunnah.com/about-us" />
     </LegalPageLayout>
   );
 }

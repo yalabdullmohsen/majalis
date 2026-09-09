@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Download, Shield, Trash2, Cookie, Wifi } from "lucide-react";
-import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
+import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { applyPageSeo } from "@/lib/seo";
 import { useAuth } from "@/components/AuthProvider";
 import { supabase } from "@/lib/supabase";
@@ -126,8 +126,6 @@ export default function PrivacyCenterPage() {
           </Link>
         </div>
       </LegalSection>
-
-      <LegalBackLink />
-    </LegalPageLayout>
+</LegalPageLayout>
   );
 }

@@ -49,7 +49,7 @@ export default function DiscoverIslamQuestionDetailPage() {
   return (
     <div className="page-shell narrow dii-question-page">
       <div dir={viewLang === "ar" ? "rtl" : "ltr"}>
-        <PageHeader eyebrow="سؤال وجواب" title={displayTitle} showBack />
+        <PageHeader eyebrow="سؤال وجواب" title={displayTitle} />
       </div>
 
       {translations.length > 0 && (

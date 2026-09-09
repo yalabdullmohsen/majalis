@@ -93,7 +93,7 @@ export default function CompetitionsHubView() {
   }, []);
 
   return (
-    <SectionLobby lobbyId="hub" title="المسابقات" groups={[]} inlineHeaderBack>
+    <SectionLobby lobbyId="hub" title="المسابقات" groups={[]}>
       <div className="cmp-hub" data-competitions-hub="1">
         <p className="cmp-hub__lead">
           إعلانات مسابقات قرآنية وحديثية وتجويدية داخل التطبيق.

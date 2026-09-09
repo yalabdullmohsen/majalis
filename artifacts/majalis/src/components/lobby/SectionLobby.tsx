@@ -22,8 +22,6 @@ type Props = {
   filterSlot?: ReactNode;
   children?: ReactNode;
   className?: string;
-  /** @deprecated الرجوع عبر FloatingBackButton فقط — يُتجاهل */
-  inlineHeaderBack?: boolean;
 };
 
 function asSection(item: LobbyItem): SectionDef {

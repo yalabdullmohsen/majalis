@@ -53,7 +53,7 @@ console.log("\n=== واجهة المسابقات بلا /quiz وأسئلة ===")
   assert.match(hub, /لا مسابقات خارجية منشورة حاليًا/);
   assert.match(hub, /href="\/lessons"/);
   assert.match(hub, /href="\/quiz"/);
-  assert.match(hub, /inlineHeaderBack/);
+  assert.doesNotMatch(hub, /inlineHeaderBack/, "الرجوع عبر العائم العام فقط");
   assert.doesNotMatch(hub, /ShareButtons/);
   assert.doesNotMatch(hub, /twh-share/);
   assert.doesNotMatch(hub, /روابط التسجيل والمصدر/);

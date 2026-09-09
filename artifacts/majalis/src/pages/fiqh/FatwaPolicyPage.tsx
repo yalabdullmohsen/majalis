@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
-import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
+import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 
@@ -84,7 +84,6 @@ export default function FatwaPolicyPage() {
       <div className="twh-share">
         <ShareButtons title="سياسة الفتوى والمراجعة — سُنّة" url="https://www.ssunnah.com/fatwa-policy" />
       </div>
-      <LegalBackLink />
-    </LegalPageLayout>
+</LegalPageLayout>
   );
 }

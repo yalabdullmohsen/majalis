@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
-import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
+import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { CONTACT_EMAIL } from "@/lib/site-config";
@@ -116,7 +116,6 @@ export default function TermsPage() {
       <div className="twh-share">
         <ShareButtons title="شروط الاستخدام — سُنّة" url="https://www.ssunnah.com/terms" />
       </div>
-      <LegalBackLink />
-    </LegalPageLayout>
+</LegalPageLayout>
   );
 }

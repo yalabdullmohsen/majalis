@@ -9,26 +9,6 @@
   max-width: 100%;
 }
 
-.dii-page-toolbar {
-  display: flex;
-  align-items: center;
-  margin: 0.15rem 0 0.65rem;
-}
-
-.dii-page-back,
-.dii-page .app-back-btn--inline {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  min-height: 44px;
-  padding: 0.4rem 0.75rem;
-  border-radius: var(--radius-button, 14px);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 26%, var(--color-border, #d9d3c8));
-  background: var(--color-primary-soft, var(--mj-brand-soft, #e6f2ec));
-  color: var(--color-primary-dark, var(--mj-brand-deep, #0d4a39));
-  font-weight: 700;
-}
-
 /* لا زر رجوع داخل الهيرو الداكن لهذه الصفحة */
 .dii-page ~ .section-hero .section-hero__back,
 .topic-page:has(.dii-page) .section-hero__back,

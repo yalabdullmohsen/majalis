@@ -447,11 +447,6 @@ html.dark .sidebar-item.active {
   pointer-events: none !important;
 }
 
-.section-lobby__back:not(.section-lobby__back-inline):not(.app-back-btn--lobby) {
-  display: none !important;
-  pointer-events: none !important;
-}
-
 .global-back-btn.floating-back-btn,
 .floating-back-btn.app-back-btn--floating,
 button.floating-back-btn[data-floating-back="1"] {

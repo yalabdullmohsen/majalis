@@ -61,7 +61,7 @@ export function SectionHero({
       className={`section-hero${className ? ` ${className}` : ""}`}
       data-section-shell="1"
       data-topic-theme={theme.id}
-      style={{ "--section-accent": sectionAccent } as CSSProperties}
+      style={heroStyle}
       dir="rtl"
     >
       {breadcrumb && breadcrumb.length > 0 ? (
@@ -88,7 +88,6 @@ export function SectionHero({
         className="topic-page__hero on-dark safe-hero"
         data-on-dark
         data-section-hero="1"
-        style={heroStyle}
       >
         <div className="topic-page__hero-inner safe-hero__body">
           <div className="section-hero__title-row">

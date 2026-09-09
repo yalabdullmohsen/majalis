@@ -79,7 +79,6 @@ export default function LessonsArchivePage() {
       <PageHeader
         title="أرشيف الدروس"
         subtitle="دروس ودورات انتهت مواعيدها. القائمة النشطة لا تعرض المنتهي."
-        showBack={false}
       />
 
       <p className="lessons-archive-back">

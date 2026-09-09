@@ -50,7 +50,7 @@ export default function NewMuslimDayDetailPage() {
 
   return (
     <div className="page-shell narrow dii-question-page">
-      <PageHeader eyebrow={`اليوم ${dayNum} من ${days.length}`} title={item.title} showBack />
+      <PageHeader eyebrow={`اليوم ${dayNum} من ${days.length}`} title={item.title} />
       <div className="ui-card">
         <p className="page-desc dii-detailed-answer">{item.content_ar}</p>
       </div>

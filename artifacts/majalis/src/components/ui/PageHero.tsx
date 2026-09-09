@@ -11,8 +11,6 @@ type PageHeroProps = {
   headline?: ReactNode;
   description?: ReactNode;
   actions?: ReactNode;
-  /** @deprecated الرجوع عبر FloatingBackButton فقط — يُتجاهل */
-  showBack?: boolean;
   withPattern?: boolean;
   /** بطل بعرض الشاشة الكامل وخلفية هوية عميقة (افتراضي للصفحات الداخلية) */
   fullBleed?: boolean;
@@ -23,6 +21,7 @@ type PageHeroProps = {
 /**
  * بطل صفحة موحّد: تباين مضمون (--mj-ink / --mj-ink-2 على --mj-bg)
  * مع زخرفة عبر PatternBackdrop فقط.
+ * الرجوع عبر FloatingBackButton فقط (لا زر داخل الهيرو).
  */
 export function PageHero({
   eyebrow,

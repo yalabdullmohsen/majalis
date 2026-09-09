@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
+import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -95,9 +95,7 @@ export default function AboutPage() {
           تصويب عبر <Link href="/contact">تواصل معنا</Link>.
         </p>
       </LegalSection>
-
-      <LegalBackLink />
-      <ShareButtons title="حول التطبيق — سُنّة" url="https://www.ssunnah.com/about" />
+<ShareButtons title="حول التطبيق — سُنّة" url="https://www.ssunnah.com/about" />
     </LegalPageLayout>
   );
 }
