@@ -1119,7 +1119,7 @@ html.dark .top-section-bar {
   .scroll-to-top,
   .global-back-btn,
   .floating-back-btn {
-    bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 16px);
+    bottom: calc(var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 16px);
     min-width: 44px;
     min-height: 44px;
   }
@@ -1170,7 +1170,7 @@ html[data-theme="dark"] .bottom-nav--v2 {
   height: 56px;
   border-radius: 50%;
   position: fixed;
-  bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 16px);
+  bottom: calc(var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 16px);
   z-index: 185;
   padding: 0;
   border-radius: var(--radius-pill, 999px);
@@ -1179,7 +1179,7 @@ html[data-theme="dark"] .bottom-nav--v2 {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: opacity .2s, transform .2s, background .15s, box-shadow .15s;
+  transition: opacity 120ms, transform 120ms, background 120ms, box-shadow 120ms;
   opacity: .9;
   box-shadow: 0 6px 18px -8px rgba(11, 32, 24, 0.35);
   /* تثبيت طبقة التركيب أثناء التمرير السريع — بلا reflow */

@@ -4,7 +4,8 @@ import type { LucideIcon } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { supabase } from "@/lib/supabase";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
-import { PageHeader, SkeletonCardGrid, Chip, Empty } from "@/components/ui-common";
+import { SkeletonCardGrid, Empty } from "@/components/ui-common";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { loadIslamicStoriesSeed } from "@/lib/islamic-stories-seed";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -127,7 +128,7 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
       <div className="isp-detail__grid">
         {story.related_figures.length > 0 && (
           <section className="isp-detail__section isp-detail__section--figures">
-            <h2 className="isp-detail__section-title isp-detail__section-title--purple"><Users size={18} strokeWidth={1.8} aria-hidden="true" /> الشخصيات</h2>
+            <h2 className="isp-detail__section-title isp-detail__section-title--brand"><Users size={18} strokeWidth={1.8} aria-hidden="true" /> الشخصيات</h2>
             <div className="isp-detail__list">
               {story.related_figures.map((fig, i) => (
                 <span key={i} className="isp-detail__list-item">• {fig}</span>
@@ -294,7 +295,7 @@ export default function IslamicStoriesPage() {
 
   if (selectedStory) {
     return (
-      <div className="page-shell narrow isp-page">
+      <div className="isp-page isp-page--detail">
         <StoryDetail story={selectedStory} onBack={closeStory} />
         <ExploreAlsoNav
           title="استكشف أيضًا"
@@ -309,13 +310,15 @@ export default function IslamicStoriesPage() {
   }
 
   return (
-    <div className="page-shell narrow isp-page">
-      <PageHeader
-        eyebrow="التاريخ الإسلامي"
-        title="القصص الإسلامية"
-        subtitle="صحابة · فتوحات · تاريخ — قصص موثّقة بعِبَر واضحة"
-      />
-
+    <SectionTemplatePage
+      route="/stories"
+      title="القصص الإسلامية"
+      subtitle="صحابة · فتوحات · تاريخ — قصص موثّقة بعِبَر واضحة"
+      groupTitle="القصص"
+      className="topic-page--islamic-stories"
+      eyebrow="التاريخ الإسلامي"
+    >
+      <div className="isp-page">
       {/* إحصائيات التصنيفات */}
       {!loading && stories.length > 0 && (
         <div className="isp-stats-row">
@@ -341,9 +344,14 @@ export default function IslamicStoriesPage() {
             <span className="isp-filter-label">التصنيف</span>
             <div className="isp-filter-chips" role="group" aria-label="تصفية التصنيف">
               {CATEGORY_LABELS.map((cat) => (
-                <Chip key={cat} active={category === cat} className="isp-chip" onClick={() => setCategory(cat)}>
+                <button
+                  type="button"
+                  key={cat}
+                  className={`isp-chip${category === cat ? " is-active" : ""}`}
+                  onClick={() => setCategory(cat)}
+                >
                   {cat}
-                </Chip>
+                </button>
               ))}
             </div>
           </div>
@@ -352,9 +360,14 @@ export default function IslamicStoriesPage() {
             <span className="isp-filter-label">الحقبة الزمنية</span>
             <div className="isp-filter-chips" role="group" aria-label="تصفية الحقبة">
               {ERA_LABELS.map((e) => (
-                <Chip key={e} active={era === e} className="isp-chip" onClick={() => setEra(e)}>
+                <button
+                  type="button"
+                  key={e}
+                  className={`isp-chip${era === e ? " is-active" : ""}`}
+                  onClick={() => setEra(e)}
+                >
                   {e}
-                </Chip>
+                </button>
               ))}
             </div>
           </div>
@@ -404,6 +417,7 @@ export default function IslamicStoriesPage() {
           <SectionQuiz sectionId="prophets" title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
         </>
       )}
-    </div>
+      </div>
+    </SectionTemplatePage>
   );
 }

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
-import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
+import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -271,7 +271,6 @@ export default function PrivacyPage() {
       <div className="twh-share">
         <ShareButtons title="سياسة الخصوصية — سُنّة" url="https://www.ssunnah.com/privacy" />
       </div>
-      <LegalBackLink />
-    </LegalPageLayout>
+</LegalPageLayout>
   );
 }

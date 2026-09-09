@@ -35,7 +35,6 @@ import { canonicalizeLessonPublicId, isOrphanKuwaitLessonHashId } from "@/lib/le
 import { getLessonsModule, type LessonDbRow } from "@/features/lessons";
 import { applyPageSeo } from "@/lib/seo";
 import { getLessonDeliveryMode } from "@/lib/lessons/lessonNormalize";
-import { AppBackButton } from "@/components/common/AppBackButton";
 import "@/styles/pages/not-found.css";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
@@ -285,8 +284,6 @@ export default function LessonDetailPage({
         <span aria-hidden="true"> / </span>
         <span>{unified.title}</span>
       </nav>
-
-      <AppBackButton variant="inline" fallbackHref="/lessons" label="العودة إلى الدروس" className="lesson-detail-back" />
 
       <SectionErrorBoundary name="تفاصيل الدرس">
       <article className="ui-card lesson-detail-card mj-card lesson-detail-card--compact">

@@ -1,11 +1,12 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useMemo, useState } from "react";
-import { Heart, Star, Users, BookOpen, ChevronDown, ChevronUp, Check } from "lucide-react";
+import { ChevronDown, ChevronUp, Check } from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import "@/styles/pages/akhlaq.css";
 
 /* ─── بيانات الأخلاق ─── */
@@ -1016,24 +1017,15 @@ export default function AkhlaqPage() {
   const toggle = (id: string) => setExpanded((p) => (p === id ? null : id));
 
   return (
-    <div className="page-shell akl-page">
-      {/* ═══ Hero ═══ */}
-      <div className="akl-hero">
-        <p className="akl-hero__eyebrow">الأخلاق الإسلامية</p>
-        <h1 className="akl-hero__title">مكارم الأخلاق</h1>
-        <p className="akl-hero__sub">
-          «إِنَّمَا بُعِثْتُ لِأُتَمِّمَ مَكَارِمَ الْأَخْلَاقِ»
-          <span className="akl-hero__source">أحمد ٨٩٣٩ — حسّنه الألباني</span>
-        </p>
-        <div className="akl-hero__badges">
-          <span><Heart size={13} /> {AKHLAQ.length} خلقاً</span>
-          <span><BookOpen size={13} /> آيات وأحاديث</span>
-          <span><Star size={13} /> أقوال علماء</span>
-          <span><Users size={13} /> تطبيق عملي</span>
-        </div>
-      </div>
-
-
+    <SectionTemplatePage
+      route="/akhlaq"
+      title="مكارم الأخلاق"
+      subtitle="أخلاق المسلم من القرآن والسنة — تصنيف عملي مع أدلة وتطبيق"
+      groupTitle="أبواب الأخلاق"
+      className="topic-page--akhlaq"
+      eyebrow="الأخلاق الإسلامية"
+    >
+      <div className="akl-page">
       {/* ═══ فلاتر وبحث ═══ */}
       <div className="akl-controls">
         <input
@@ -1155,6 +1147,7 @@ export default function AkhlaqPage() {
           ))}
         </div>
       </div>
-    </div>
+      </div>
+    </SectionTemplatePage>
   );
 }

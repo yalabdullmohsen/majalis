@@ -91,8 +91,8 @@
 
 @keyframes mj-route-pop-in {
   from {
-    opacity: 0;
-    transform: translate3d(0, 4px, 0);
+    opacity: 0.92;
+    transform: translate3d(0, 2px, 0);
   }
   to {
     opacity: 1;
@@ -132,24 +132,25 @@
 }
 
 #main-content.mj-route-enter > * {
-  animation: mj-route-enter 150ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: mj-route-enter 110ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 #main-content.mj-route-push {
-  animation: mj-route-push-in 160ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: mj-route-push-in 120ms cubic-bezier(0.22, 1, 0.36, 1) both;
   box-shadow: none;
 }
 
 #main-content.mj-route-pop {
-  animation: mj-route-pop-in 150ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  /* رجوع شبه فوري — بلا وميض opacity كامل */
+  animation: mj-route-pop-in 90ms ease-out both;
 }
 
 #main-content.mj-route-tab {
-  animation: mj-route-tab-in 140ms ease both;
+  animation: mj-route-tab-in 90ms ease both;
 }
 
 #main-content.mj-route-modal {
-  animation: mj-route-modal-in 180ms cubic-bezier(0.22, 1.05, 0.36, 1) both;
+  animation: mj-route-modal-in 120ms cubic-bezier(0.22, 1.05, 0.36, 1) both;
 }
 
 /* سحب حافة تفاعلي */
@@ -241,13 +242,12 @@
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transform: translateZ(0) scale(1.02);
-  transition: opacity 280ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateZ(0);
+  transition: opacity 140ms ease;
 }
 
 .mj-smooth-image.is-loaded .mj-smooth-image__img {
   opacity: 1;
-  transform: translateZ(0) scale(1);
 }
 
 .mj-smooth-image.is-loaded .mj-smooth-image__skel {

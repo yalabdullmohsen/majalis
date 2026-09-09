@@ -60,28 +60,39 @@
   min-width: 0;
 }
 
-.asp-hero__eyebrow {
-  margin: 0 0 0.25rem;
-  font-size: 0.72rem;
+.asp-hero__eyebrow,
+.assistant-page--modern .asp-hero .asp-hero__eyebrow {
+  margin: 0 0 0.35rem;
+  display: inline-flex;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.02em;
-  color: var(--mss-on-hero-accent, #f2dfaa);
+  /* أبيض صلب فوق الأخضر — يتغلّب على .assistant-header p */
+  color: var(--color-hero-fg, var(--mss-on-hero, #ffffff)) !important;
+  background: color-mix(in srgb, #fff 18%, transparent);
+  border: 1px solid color-mix(in srgb, #fff 42%, transparent);
+  opacity: 1 !important;
 }
 
+.assistant-page--modern .asp-hero .assistant-title,
 .assistant-page--modern .assistant-title {
   margin: 0;
-  color: #fff;
+  color: var(--color-hero-fg, #ffffff) !important;
   font-size: clamp(1.35rem, 3.6vw, 1.75rem);
   line-height: 1.3;
 }
 
+.assistant-page--modern .asp-hero .assistant-intro,
 .assistant-page--modern .assistant-intro {
   margin: 0.4rem 0 0;
   max-width: 40rem;
-  color: rgba(250, 245, 234, 0.88);
-  font-size: 0.88rem;
+  color: var(--color-hero-fg-muted, var(--mss-on-hero-muted, #f3efe6)) !important;
+  font-size: 0.9rem;
   line-height: 1.75;
   text-align: start;
+  opacity: 1 !important;
 }
 
 .asp-researcher-links {
@@ -181,5 +192,5 @@ html[data-theme="dark"] .asp-researcher-link {
 }
 
 html[data-theme="dark"] .asp-footer {
-  color: #a8a29a;
+  color: var(--mj-ink-2, #c2cfca);
 }

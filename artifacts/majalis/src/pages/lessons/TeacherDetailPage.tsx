@@ -46,7 +46,7 @@ export default function TeacherDetailPage() {
   if (loading) {
     return (
       <PageShell variant="narrow" className="tch-page">
-        <PageHeader eyebrow="دروس الكويت" title="المشيخ" showBack />
+        <PageHeader eyebrow="دروس الكويت" title="المشيخ" />
         <SkeletonCardGrid count={4} />
       </PageShell>
     );
@@ -55,7 +55,7 @@ export default function TeacherDetailPage() {
   if (!teacher) {
     return (
       <PageShell variant="narrow" className="tch-page">
-        <PageHeader eyebrow="دروس الكويت" title="المشيخ غير موجود" showBack />
+        <PageHeader eyebrow="دروس الكويت" title="المشيخ غير موجود" />
         <p className="tch-empty">
           لم نجد مشيخًا بهذا المعرّف في دروس الكويت.
           {" "}
@@ -72,7 +72,6 @@ export default function TeacherDetailPage() {
         eyebrow="مشايخ معاصرون من دروس الكويت"
         title={teacher.name}
         subtitle={`${toArabicDigits(String(teacher.lessonCount))} درسًا في الجدول — بيانات من مواعيد الدروس فقط.`}
-        showBack
       />
 
       <p className="tch-notice">

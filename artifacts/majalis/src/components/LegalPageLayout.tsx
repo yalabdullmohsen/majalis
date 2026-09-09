@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { AppBackButton } from "@/components/common/AppBackButton";
 import { PageShell, type PageShellDensity } from "@/components/layout/PageShell";
 
 type Props = {
@@ -31,7 +30,6 @@ export function LegalPageLayout({
       intro={
         <header className="legal-page-hero">
           <div className="legal-page-inner">
-            <AppBackButton variant="legal" className="legal-back-btn" aria-label="رجوع إلى الصفحة السابقة" />
             <p className="legal-page-eyebrow">{eyebrow}</p>
             <h1 id="legal-page-title">{title}</h1>
             {updatedAt ? (
@@ -53,13 +51,5 @@ export function LegalSection({ title, children }: { title: string; children: Rea
       <h2>{title}</h2>
       {children}
     </section>
-  );
-}
-
-export function LegalBackLink() {
-  return (
-    <p className="legal-back">
-      <AppBackButton variant="legal" className="legal-back-btn" aria-label="رجوع إلى الصفحة السابقة" />
-    </p>
   );
 }

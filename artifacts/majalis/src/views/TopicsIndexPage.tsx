@@ -9,6 +9,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SEARCH_INPUT_ATTRS, handleSearchEnterKey } from "@/lib/search-input";
 import "@/styles/pages/topics-index.css";
 
 // ── Static fallback topics per category ──────────────────────────────────────
@@ -170,11 +171,12 @@ export default function TopicsIndexPage() {
 
       <div className="tip-search-wrap">
         <input
-          type="search"
+          {...SEARCH_INPUT_ATTRS}
           className="ds-input tip-search-input"
           placeholder="ابحث في الموضوعات..."
           value={search}
           onChange={e => setSearch(e.target.value)}
+          onKeyDown={(e) => handleSearchEnterKey(e)}
           aria-label="بحث في الموضوعات الشرعية"
         />
       </div>

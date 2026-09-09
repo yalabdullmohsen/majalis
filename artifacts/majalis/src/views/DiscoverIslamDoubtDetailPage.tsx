@@ -30,7 +30,7 @@ export default function DiscoverIslamDoubtDetailPage() {
 
   return (
     <div className="page-shell narrow dii-question-page">
-      <PageHeader eyebrow="شبهة وتفنيد" title={item.title} showBack />
+      <PageHeader eyebrow="شبهة وتفنيد" title={item.title} />
 
       <div className="ui-card dii-shubha-text-card">
         <span className="page-tag">نص الشبهة</span>

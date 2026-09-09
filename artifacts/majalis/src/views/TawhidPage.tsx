@@ -7,10 +7,9 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { HubCard } from "@/components/ui/HubCard";
-import { AppBackButton } from "@/components/common/AppBackButton";
-import { topicThemeCssVars, getTopicTheme } from "@/config/topic-themes";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
+import { SEARCH_INPUT_ATTRS, handleSearchEnterKey } from "@/lib/search-input";
 import "@/styles/pages/tawhid.css";
-import "@/styles/pages/misc-page-legacy.css";
 
 // ─── أقسام العقيدة والتوحيد ──────────────────────────────────────────────────
 
@@ -48,7 +47,7 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
     id: "arkan-iman",
     emoji: "", title: "أركان الإيمان",
     desc: "الإيمان بالله وملائكته وكتبه ورسله واليوم الآخر والقدر",
-    href: "/arkan-iman", badge: "٦ أركان", color: "#7C3AED",
+    href: "/arkan-iman", badge: "٦ أركان", color: "var(--mj-brand-deep, #0B3D2E)",
   },
   {
     id: "asma-husna",
@@ -72,13 +71,13 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
     id: "malaika",
     emoji: "", title: "الملائكة في الإسلام",
     desc: "الإيمان بوجودهم وصفاتهم وما ثبت من أسمائهم ومهامهم في الوحي",
-    href: "/malaika", badge: "غيبيات", color: "#5B21B6",
+    href: "/malaika", badge: "غيبيات", color: "var(--mj-brand, #1f6b56)",
   },
   {
     id: "wala-bara",
     emoji: "", title: "الولاء والبراء",
     desc: "موالاة أهل الإيمان والبراءة من الشرك بضابط البر والعدل مع المسالمين",
-    href: "/tawhid/wala-bara", badge: "درس", color: "#92400E",
+    href: "/tawhid/wala-bara", badge: "درس", color: "var(--mj-brand-deep, #0B3D2E)",
   },
   {
     id: "aqeedah-path",
@@ -96,7 +95,7 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
     id: "islamic-sects",
     emoji: "", title: "الفرق والمذاهب",
     desc: "عرض تاريخي للفرق مع بيان موقف أهل السنة",
-    href: "/islamic-sects", badge: "موسوعة", color: "#1E3A5F",
+    href: "/islamic-sects", badge: "موسوعة", color: "var(--mj-brand-deep, #0B3D2E)",
   },
 ];
 
@@ -119,7 +118,7 @@ const TAWHEED_TYPES = [
     num: "٣", title: "توحيد الأسماء والصفات", subtitle: "توحيد الإثبات والتنزيه",
     desc: "إثبات ما أثبته الله ورسوله من الأسماء والصفات بلا تحريف ولا تعطيل ولا تمثيل.",
     ayah: "لَيْسَ كَمِثْلِهِ شَيْءٌ وَهُوَ السَّمِيعُ الْبَصِيرُ",
-    ref: "الشورى: ١١", variant: "purple",
+    ref: "الشورى: ١١", variant: "brand",
   },
 ];
 
@@ -405,43 +404,18 @@ export default function TawhidPage() {
   }, []);
 
   return (
-    <div className="page-shell" dir="rtl">
-      {/* مسار التنقل */}
-      <nav className="tawheed-breadcrumb" aria-label="مسار التنقل">
-        <AppBackButton
-          variant="inline"
-          fallbackHref="/sections"
-          label="رجوع"
-          className="twh-page-back"
-          data-section-back="1"
-        />
-        <Link href="/">الرئيسية</Link>
-        <span aria-hidden="true"> / </span>
-        <span aria-current="page">العقيدة والتوحيد</span>
-      </nav>
-
-      {/* رأس القسم — سمة العقيدة + on-dark */}
-      <header
-        className="twh-hub-hero on-dark"
-        data-on-dark
-        style={topicThemeCssVars(getTopicTheme("aqeedah"))}
-      >
-        <div className="twh-hub-hero__inner">
-          <p className="home-eyebrow">عقيدة أهل السنة والجماعة</p>
-          <h1 className="twh-hub-hero__title">العقيدة والتوحيد</h1>
-          <p className="twh-hub-hero__sub">
-            أقسام العقيدة كاملةً، من التوحيد وأركان الإيمان حتى الغيبيات وعلامات الساعة
-          </p>
-          <blockquote className="twh-hub-hero__ayah">
-            ﴿وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ﴾
-            <cite>، الذاريات: ٥٦</cite>
-          </blockquote>
-        </div>
-      </header>
-
+    <SectionTemplatePage
+      route="/tawhid"
+      title="العقيدة والتوحيد"
+      subtitle="أقسام العقيدة كاملةً، من التوحيد وأركان الإيمان حتى الغيبيات وعلامات الساعة"
+      groupTitle="أقسام العقيدة والتوحيد"
+      className="topic-page--tawhid"
+      eyebrow="عقيدة أهل السنة والجماعة"
+    >
+      <div className="tawhid-hub">
       {/* ══ شبكة أقسام العقيدة ══ */}
       <section aria-labelledby="hub-sections-heading" className="twh-section">
-        <h2 id="hub-sections-heading" className="tawheed-principles-heading">أقسام العقيدة والتوحيد</h2>
+        <h2 id="hub-sections-heading" className="sr-only">أقسام العقيدة والتوحيد</h2>
         <div className="hub-card-grid twh-hub-grid">
           {AQEEDA_SECTIONS.map((s) => (
             <HubCard
@@ -472,9 +446,10 @@ export default function TawhidPage() {
 
       <div className="twh-search-wrap">
         <input
-          type="search"
+          {...SEARCH_INPUT_ATTRS}
           value={search}
           onChange={e => setSearch(e.target.value)}
+          onKeyDown={(e) => handleSearchEnterKey(e)}
           placeholder="ابحث في مسائل التوحيد والأسماء الحسنى والكتب..."
           className="page-search-input twh-search-input"
           aria-label="بحث في صفحة التوحيد"
@@ -486,8 +461,8 @@ export default function TawhidPage() {
         <SectionLabel emoji="" label="أنواع التوحيد الثلاثة" />
         <h2 id="types-heading" className="tawheed-principles-heading">أنواع التوحيد الثلاثة</h2>
         <div className="tawheed-types-grid">
-          {TAWHEED_TYPES.map((t, idx) => (
-            <div key={t.num} className={`tawheed-type-card tawheed-type-card--${idx === 2 ? "purple" : "emerald"}`}>
+          {TAWHEED_TYPES.map((t) => (
+            <div key={t.num} className={`tawheed-type-card tawheed-type-card--${t.variant === "brand" ? "brand" : "emerald"}`}>
               <div className="tawheed-type-card__num">{t.num}</div>
               <p className="tawheed-type-card__title">{t.title}</p>
               <p className="tawheed-type-card__subtitle">{t.subtitle}</p>
@@ -639,6 +614,7 @@ export default function TawhidPage() {
       <div className="twh-share">
         <ShareButtons title="العقيدة والتوحيد — سُنّة" url="https://www.ssunnah.com/tawhid" />
       </div>
-    </div>
+      </div>
+    </SectionTemplatePage>
   );
 }

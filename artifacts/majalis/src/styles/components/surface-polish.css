@@ -12,13 +12,15 @@
   font-weight: 800 !important;
 }
 .hp-featured-card__desc {
-  color: var(--mss-on-hero-muted, rgba(250, 245, 234, 0.88)) !important;
+  color: var(--mss-on-hero-muted, #f3efe6) !important;
+  opacity: 1 !important;
 }
 .hp-featured-card__cta {
-  color: var(--mss-on-hero-accent, #f2dfaa) !important;
+  color: var(--mss-on-hero, #ffffff) !important;
+  font-weight: 700 !important;
 }
 .hp-featured-card__icon {
-  color: var(--mss-on-hero-accent, #f2dfaa) !important;
+  color: var(--mss-on-hero-accent, #fff1c4) !important;
 }
 .hp-explore-item {
   border-radius: var(--mss-radius-card, 1.15rem) !important;

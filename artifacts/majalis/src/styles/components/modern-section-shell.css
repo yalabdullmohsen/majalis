@@ -15,13 +15,18 @@
   --mss-hero-to: #245f4d;
   --mss-hero-glow: rgba(210, 180, 93, 0.22);
   --mss-hero-glow-strong: rgba(210, 180, 93, 0.28);
-  --mss-on-hero: #faf5ea;
-  --mss-on-hero-muted: rgba(250, 245, 234, 0.88);
-  --mss-on-hero-accent: #f2dfaa;
+  /* نص فوق الهيرو الأخضر — صلب بلا شفافية ضعيفة (WCAG AA) */
+  --mss-on-hero: #ffffff;
+  --mss-on-hero-muted: #f3efe6;
+  --mss-on-hero-accent: #fff1c4;
   --mss-radius-hero: 1.35rem;
   --mss-radius-card: 1.15rem;
   --mss-shadow-hero: 0 16px 40px rgba(15, 74, 58, 0.22);
   --mss-shadow-card: 0 10px 28px rgba(36, 31, 24, 0.08);
+  --color-hero-bg: var(--mss-hero-from);
+  --color-hero-fg: var(--mss-on-hero);
+  --color-hero-fg-muted: var(--mss-on-hero-muted);
+  --color-hero-fg-accent: var(--mss-on-hero-accent);
   --mss-hero-gradient: radial-gradient(
       circle at 100% 0%,
       var(--mss-hero-glow),
@@ -85,9 +90,9 @@
   align-self: flex-start;
   padding: 0.22rem 0.65rem;
   border-radius: 999px;
-  background: color-mix(in srgb, #fff 12%, transparent);
-  border: 1px solid color-mix(in srgb, #faf5ea 22%, transparent);
-  color: var(--mss-on-hero-accent) !important;
+  background: color-mix(in srgb, #fff 18%, transparent);
+  border: 1px solid color-mix(in srgb, #fff 40%, transparent);
+  color: var(--mss-on-hero, #ffffff) !important;
   letter-spacing: 0.02em;
   font-weight: 800;
 }
@@ -132,9 +137,9 @@
 
 .topic-page__eyebrow,
 .topic-page__hero .safe-hero__badge {
-  color: var(--mss-on-hero-accent, var(--topic-on-hero-accent, #f2dfaa)) !important;
-  background: color-mix(in srgb, #fff 12%, transparent) !important;
-  border: 1px solid color-mix(in srgb, #faf5ea 22%, transparent);
+  color: var(--mss-on-hero, #ffffff) !important;
+  background: color-mix(in srgb, #fff 18%, transparent) !important;
+  border: 1px solid color-mix(in srgb, #fff 40%, transparent);
   border-radius: 999px;
   font-weight: 800;
 }
@@ -351,8 +356,19 @@ html[data-theme="dark"] .card {
 }
 
 .fqh-hub-hero__eyebrow,
-.twh-hub-hero__eyebrow {
-  color: var(--mss-on-hero-accent, #f2dfaa) !important;
+.twh-hub-hero__eyebrow,
+.twh-hub-hero .home-eyebrow,
+.fqh-hub-hero .home-eyebrow,
+.quran-hub-hero .home-eyebrow,
+.asp-hero .asp-hero__eyebrow,
+.asp-hero .assistant-title,
+.asp-hero .assistant-intro {
+  color: var(--mss-on-hero, #ffffff) !important;
+  opacity: 1 !important;
+}
+
+.asp-hero .assistant-intro {
+  color: var(--mss-on-hero-muted, #f3efe6) !important;
 }
 
 /* —— قوالب صفحة عامة —— */

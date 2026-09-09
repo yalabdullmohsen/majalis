@@ -9,7 +9,6 @@ import {
   topicThemeCssVars,
   type TopicThemeId,
 } from "@/config/topic-themes";
-import { AppBackButton } from "@/components/common/AppBackButton";
 import "@/styles/components/topic-page.css";
 import "@/styles/components/safe-hero.css";
 
@@ -57,26 +56,16 @@ export function SectionHero({
     ...topicThemeCssVars(theme),
     "--section-accent": sectionAccent,
   } as CSSProperties;
-  const parentHref =
-    [...(breadcrumb ?? [])].reverse().find((c) => Boolean(c.href))?.href ?? "/";
-
   return (
     <div
       className={`section-hero${className ? ` ${className}` : ""}`}
       data-section-shell="1"
       data-topic-theme={theme.id}
-      style={{ "--section-accent": sectionAccent } as CSSProperties}
+      style={heroStyle}
       dir="rtl"
     >
-      <div className="section-hero__chrome">
-        <AppBackButton
-          variant="inline"
-          fallbackHref={parentHref}
-          label="رجوع"
-          className="section-hero__back"
-          data-section-back="1"
-        />
-        {breadcrumb && breadcrumb.length > 0 ? (
+      {breadcrumb && breadcrumb.length > 0 ? (
+        <div className="section-hero__chrome">
           <nav className="topic-page__crumb" aria-label="مسار التنقل" data-section-crumb="1">
             {breadcrumb.map((item, i) => {
               const last = i === breadcrumb.length - 1;
@@ -92,14 +81,13 @@ export function SectionHero({
               );
             })}
           </nav>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
 
       <header
         className="topic-page__hero on-dark safe-hero"
         data-on-dark
         data-section-hero="1"
-        style={heroStyle}
       >
         <div className="topic-page__hero-inner safe-hero__body">
           <div className="section-hero__title-row">

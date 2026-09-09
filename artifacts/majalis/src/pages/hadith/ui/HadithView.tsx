@@ -791,7 +791,7 @@ export function HadithSection({
   const inner = (
     <>
       {!embedded && (
-        <PageHeader eyebrow={meta.eyebrow} title={meta.title} subtitle={meta.subtitle} showBack={false} />
+        <PageHeader eyebrow={meta.eyebrow} title={meta.title} subtitle={meta.subtitle} />
       )}
 
       {!embedded && meta.notice && (

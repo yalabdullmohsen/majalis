@@ -196,6 +196,23 @@ const ASSERTIONS = [
   { route: "/lessons", selector: ".filter-chips__chip.is-active", mode: "dark", min: 4.5 },
   { route: "/lessons", selector: ".lesson-unified-card__title", mode: "light", min: 4.5 },
   { route: "/lessons", selector: ".lesson-unified-card__title", mode: "dark", min: 4.5 },
+  // ── نص فوق هيرو أخضر (منع رجوع ذهب/شفافية باهتة) ──
+  { route: "/assistant", selector: ".asp-hero__eyebrow", mode: "light", min: 4.5 },
+  { route: "/assistant", selector: ".asp-hero__eyebrow", mode: "dark", min: 4.5 },
+  { route: "/assistant", selector: ".assistant-title", mode: "light", min: 4.5 },
+  { route: "/assistant", selector: ".assistant-title", mode: "dark", min: 4.5 },
+  { route: "/assistant", selector: ".assistant-intro", mode: "light", min: 4.5 },
+  { route: "/assistant", selector: ".assistant-intro", mode: "dark", min: 4.5 },
+  { route: "/tawhid", selector: ".topic-page__eyebrow", mode: "light", min: 4.5 },
+  { route: "/tawhid", selector: ".topic-page__eyebrow", mode: "dark", min: 4.5 },
+  { route: "/tawhid", selector: ".topic-page__title", mode: "light", min: 4.5 },
+  { route: "/tawhid", selector: ".topic-page__title", mode: "dark", min: 4.5 },
+  { route: "/tafsir", selector: ".topic-page__eyebrow", mode: "light", min: 4.5 },
+  { route: "/tafsir", selector: ".topic-page__eyebrow", mode: "dark", min: 4.5 },
+  { route: "/tafsir", selector: ".topic-page__title", mode: "light", min: 4.5 },
+  { route: "/islamic-sects", selector: ".topic-page__title", mode: "light", min: 4.5 },
+  { route: "/akhlaq", selector: ".topic-page__title", mode: "light", min: 4.5 },
+  { route: "/stories", selector: ".topic-page__title", mode: "light", min: 4.5 },
 ];
 
 function isHeaderAdEnabled() {

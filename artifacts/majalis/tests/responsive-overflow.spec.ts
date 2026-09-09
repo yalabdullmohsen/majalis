@@ -8,6 +8,7 @@ import { waitForContent } from "./helpers";
 
 const VIEWPORTS = [
   { name: "iphone-se", width: 320, height: 568 },
+  { name: "android-sm", width: 360, height: 740 },
   { name: "iphone-13", width: 375, height: 812 },
   { name: "iphone-14-pro", width: 390, height: 844 },
   { name: "iphone-15-pro-max", width: 430, height: 932 },
@@ -20,6 +21,14 @@ const VIEWPORTS = [
 ] as const;
 
 const ROUTES = ["/", "/sections", "/fiqh", "/lessons", "/prayer-times", "/quran-hub", "/competitions", "/more"];
+
+/** مسارات أقسام كانت قديمة — فحص overflow فقط على جوال */
+const LEGACY_SECTION_ROUTES = ["/islamic-sects", "/akhlaq", "/stories", "/search", "/tarikh-islami", "/tawhid"] as const;
+const MOBILE_VIEWPORTS = [
+  { name: "android-sm", width: 360, height: 740 },
+  { name: "iphone-14-pro", width: 390, height: 844 },
+  { name: "iphone-15-pro-max", width: 430, height: 932 },
+] as const;
 
 async function assertNoDocOverflow(page: Page, label: string) {
   const result = await page.evaluate(() => {
@@ -61,6 +70,22 @@ test.describe("responsive-overflow gate", () => {
         await assertNoDocOverflow(page, label);
         await assertNoHeaderStatusOverlap(page, label);
         await expect(page.locator("body")).toBeVisible();
+      });
+    }
+  }
+});
+
+test.describe("legacy-sections mobile overflow", () => {
+  for (const vp of MOBILE_VIEWPORTS) {
+    for (const route of LEGACY_SECTION_ROUTES) {
+      test(`${vp.name} ${route}`, async ({ page }) => {
+        await page.setViewportSize({ width: vp.width, height: vp.height });
+        await page.goto(route, { waitUntil: "domcontentloaded" });
+        await waitForContent(page);
+        await page.waitForTimeout(250);
+        const label = `${vp.name}@${route}`;
+        await assertNoDocOverflow(page, label);
+        await assertNoHeaderStatusOverlap(page, label);
       });
     }
   }

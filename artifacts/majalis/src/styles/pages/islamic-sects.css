@@ -1,0 +1,307 @@
+/* الفرق الإسلامية — قالب حديث (عقيدة/تفسير) بلا هيرو أخضر حاد */
+
+.topic-page--sects .topic-page__body {
+  background: var(--color-bg, var(--surface-app, #f7f3eb));
+}
+
+.sect-hub {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: min(42rem, 100%);
+  margin-inline: auto;
+  padding-inline: max(1rem, var(--gutter-inline-start, 16px));
+  padding-bottom: calc(var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 1.25rem);
+  box-sizing: border-box;
+}
+
+.sect-hub__note {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-card, 18px);
+  border: 1px solid color-mix(in srgb, var(--mj-accent, #c4a574) 45%, var(--ss-border, #e3e8e6));
+  background: color-mix(in srgb, var(--mj-accent, #c4a574) 12%, var(--ss-card-bg, #fffcf7));
+  color: var(--color-text, var(--mj-ink, #16241e));
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.sect-hub__search {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.65rem 1rem;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--ss-primary-green, var(--mj-brand)) 22%, var(--ss-border, #e3e8e6));
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  color: var(--color-text, var(--mj-ink));
+  font: inherit;
+  font-size: 0.92rem;
+  box-sizing: border-box;
+}
+
+.sect-hub__search:focus {
+  outline: 2px solid color-mix(in srgb, var(--mj-brand) 45%, transparent);
+  border-color: var(--mj-brand);
+}
+
+.sect-hub__filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.sect-hub__filter-label {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-text-muted, var(--mj-muted));
+}
+
+.sect-hub__chips {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.45rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  padding-inline: 0.35rem;
+  padding-block: 0.15rem 0.35rem;
+  overscroll-behavior-x: contain;
+}
+
+.sect-hub__chip {
+  appearance: none;
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 28%, var(--ss-border, #e3e8e6));
+  background: var(--ss-card-bg, #fffcf7);
+  color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 650;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.sect-hub__chip.is-active {
+  background: var(--mj-brand-deep, #0d4a39);
+  border-color: var(--mj-brand-deep, #0d4a39);
+  color: var(--on-dark-strong, #fff);
+}
+
+html.dark .sect-hub__chip.is-active,
+[data-theme="dark"] .sect-hub__chip.is-active {
+  background: var(--mj-brand, #5fbf98);
+  border-color: var(--mj-brand, #5fbf98);
+  color: var(--mj-on-brand, #06231a);
+}
+
+.sect-hub__grid {
+  --sect-gap: 0.85rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sect-gap);
+  width: 100%;
+  justify-items: stretch;
+}
+
+.sect-hub__grid > :last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  max-width: calc((100% - var(--sect-gap)) / 2);
+  justify-self: center;
+  width: 100%;
+}
+
+.sect-hub__grid > :only-child {
+  grid-column: 1 / -1;
+  max-width: min(22rem, 100%);
+  justify-self: center;
+}
+
+@media (min-width: 720px) {
+  .sect-hub__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .sect-hub__grid > :last-child:nth-child(odd) {
+    grid-column: auto;
+    max-width: none;
+    justify-self: stretch;
+  }
+  .sect-hub__grid > :last-child:nth-child(3n + 1):not(:only-child) {
+    grid-column: 1 / -1;
+    max-width: calc((100% - 2 * var(--sect-gap)) / 3);
+    justify-self: center;
+  }
+}
+
+.sect-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-width: 0;
+  width: 100%;
+  padding: 1rem 1.05rem;
+  border-radius: var(--radius-card, 24px);
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, #e3e8e6));
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  box-shadow: var(--ss-shadow-soft, 0 2px 10px -6px rgba(11, 32, 24, 0.14));
+  text-align: start;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+
+.sect-card:hover,
+.sect-card:focus-visible {
+  border-color: color-mix(in srgb, var(--mj-brand) 40%, var(--ss-border));
+  outline: none;
+}
+
+.sect-card.is-open {
+  border-color: color-mix(in srgb, var(--mj-brand-deep) 55%, var(--ss-border));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--mj-brand) 28%, transparent);
+}
+
+.sect-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+
+.sect-card__icon {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 14px;
+  flex-shrink: 0;
+  background: color-mix(in srgb, var(--mj-brand) 12%, var(--ss-card-bg, #fffcf7));
+  color: var(--brand-on-light, var(--mj-brand-deep));
+}
+
+.sect-card__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.45;
+  color: var(--color-text, var(--mj-ink));
+}
+
+.sect-card__era {
+  margin: 0.15rem 0 0;
+  font-size: 0.78rem;
+  color: var(--color-text-muted, var(--mj-muted));
+}
+
+.sect-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.sect-card__pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--mj-brand) 12%, transparent);
+  color: var(--brand-on-light, var(--mj-brand-deep));
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 22%, transparent);
+}
+
+.sect-card__pill--muted {
+  background: color-mix(in srgb, var(--mj-muted) 12%, transparent);
+  color: var(--color-text-muted, var(--mj-muted));
+  border-color: color-mix(in srgb, var(--mj-muted) 22%, transparent);
+}
+
+.sect-card__desc {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.65;
+  color: var(--color-text-muted, var(--mj-ink-2, #4a5a53));
+}
+
+.sect-card__cta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--brand-on-light, var(--mj-brand-deep));
+}
+
+.sect-card__detail {
+  margin-top: 0.35rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid color-mix(in srgb, var(--mj-brand) 14%, var(--ss-border));
+  font-size: 0.84rem;
+  line-height: 1.75;
+  color: var(--color-text, var(--mj-ink));
+}
+
+.sect-card__detail ul {
+  margin: 0.35rem 0 0;
+  padding-inline-start: 1.1rem;
+}
+
+.sect-card__quote {
+  margin: 0.75rem 0 0;
+  padding: 0.65rem 0.75rem;
+  border-inline-start: 3px solid var(--mj-brand-deep);
+  background: color-mix(in srgb, var(--mj-brand) 8%, var(--ss-card-bg));
+  border-radius: 0 12px 12px 0;
+  color: var(--color-text, var(--mj-ink));
+}
+
+.sect-card__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+}
+
+.sect-card__link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 42px;
+  padding: 0.5rem 0.85rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  background: var(--mj-brand-deep);
+  color: var(--on-dark-strong, #fff);
+}
+
+.sect-card__link--ghost {
+  background: transparent;
+  color: var(--brand-on-light, var(--mj-brand-deep));
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep) 45%, transparent);
+}
+
+html.dark .sect-card,
+[data-theme="dark"] .sect-card {
+  background: var(--ss-card-bg, #1b2421);
+  border-color: color-mix(in srgb, var(--mj-brand) 28%, #2a3832);
+}
+
+html.dark .sect-card__title,
+[data-theme="dark"] .sect-card__title {
+  color: var(--mj-ink, #eef4f0);
+}
+
+html.dark .sect-hub__chip,
+[data-theme="dark"] .sect-hub__chip {
+  background: #15201c;
+  border-color: color-mix(in srgb, #5a9e88 28%, #2a3832);
+  color: #d8ebe2;
+}

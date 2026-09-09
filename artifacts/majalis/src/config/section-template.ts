@@ -46,6 +46,7 @@ const ROUTE_THEME: Record<string, TopicThemeId> = {
   "/duas": "adhkar",
   "/fawaid": "hadith",
   "/lessons": "aqeedah",
+  "/tawhid": "aqeedah",
   "/quiz": "aqeedah",
   "/memorization": "quran",
   "/islamic-directory": "history",
@@ -61,6 +62,10 @@ const ROUTE_THEME: Record<string, TopicThemeId> = {
   "/dalail-nubuwwah": "seerah",
   "/arbaeen-nawawi": "hadith",
   "/sunnah-studies": "hadith",
+  "/akhlaq": "aqeedah",
+  "/stories": "history",
+  "/islamic-sects": "aqeedah",
+  "/amr-bil-maruf": "aqeedah",
 };
 
 /** اقتباسات موجودة مسبقاً في محتوى المنصة — لا توليد نص شرعي جديد */
@@ -256,6 +261,24 @@ export const ROUTE_QUOTE: Record<string, SectionTemplateQuote> = {
     ref: "فصّلت: ٥٣",
     type: "ayah",
     sectionId: "miracles",
+  },
+  "/akhlaq": {
+    text: "إِنَّمَا بُعِثْتُ لِأُتَمِّمَ مَكَارِمَ الْأَخْلَاقِ",
+    ref: "أحمد ٨٩٣٩ — حسّنه الألباني",
+    type: "hadith",
+    sectionId: "akhlaq",
+  },
+  "/stories": {
+    text: "لَقَدْ كَانَ فِي قَصَصِهِمْ عِبْرَةٌ لِّأُولِي الْأَلْبَابِ",
+    ref: "يوسف: ١١١",
+    type: "ayah",
+    sectionId: "stories",
+  },
+  "/islamic-sects": {
+    text: "وَاعْتَصِمُوا بِحَبْلِ اللَّهِ جَمِيعًا وَلَا تَفَرَّقُوا",
+    ref: "آل عمران: ١٠٣",
+    type: "ayah",
+    sectionId: "islamic-sects",
   },
 };
 

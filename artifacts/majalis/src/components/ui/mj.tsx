@@ -6,13 +6,11 @@ export function PageHeader({
   eyebrow,
   title,
   subtitle,
-  showBack = true,
   className,
 }: {
   eyebrow?: string;
   title: string;
   subtitle?: string;
-  showBack?: boolean;
   className?: string;
 }) {
   return (
@@ -20,7 +18,6 @@ export function PageHeader({
       eyebrow={eyebrow}
       title={title}
       description={subtitle}
-      showBack={showBack}
       withPattern
       className={cn("mj-page-head", className)}
     />

@@ -35,7 +35,8 @@
   --txt-secondary: var(--mj-ink-2);
   --txt-muted: var(--mj-muted);
   --text-on-brand: var(--mj-on-brand);
-  --text-on-brand-secondary: color-mix(in srgb, var(--mj-on-brand) 82%, transparent);
+  /* ثانوي فوق سطح أخضر داكن — لا شفافية أقل من ~90% للنص المقروء */
+  --text-on-brand-secondary: #ecf2ef;
 
   /* أخضر للنص على خلفية فاتحة — AA ≥ 4.5:1 (لا تستخدم --mj-brand الباهت كنص) */
   --brand-on-light: var(--brand-on-white, #146C4E);
@@ -43,12 +44,22 @@
   /* ── أسماء DS الثابتة (عقد التباين) ── */
   --color-bg: var(--bg);
   --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-muted);
   --color-surface-muted: var(--surface-muted);
   --color-text: var(--text-primary);
+  --color-muted: var(--text-muted);
+  --color-muted-foreground: var(--text-muted);
   --color-text-muted: var(--text-muted);
   --color-primary: var(--mj-brand);
+  --color-primary-foreground: var(--text-on-brand);
   --color-primary-contrast: var(--text-on-brand);
   --color-border: var(--border);
+  --color-chip-bg: color-mix(in srgb, var(--mj-brand) 12%, var(--surface));
+  --color-chip-fg: var(--brand-on-light);
+  --color-hero-bg: var(--mss-hero-from, #0f4a3a);
+  --color-hero-fg: var(--mss-on-hero, #ffffff);
+  --color-hero-fg-muted: var(--mss-on-hero-muted, #f3efe6);
+  --color-hero-fg-accent: var(--mss-on-hero-accent, #fff1c4);
 
   /* أيقونات */
   --icon-primary: var(--mj-ink);

@@ -4,7 +4,6 @@ import { SectionCard } from "@/components/sections/SectionCard";
 import { QuickActionsQuad } from "@/components/lobby/QuickActionsQuad";
 import type { LobbyChip, LobbyGroup, LobbyId, LobbyItem, LobbyPrimary, LobbyQuadItem } from "@/config/section-lobbies";
 import type { SectionDef } from "@/config/sections.registry";
-import { AppBackButton } from "@/components/common/AppBackButton"; // goBackOrFallback
 import { cn } from "@/lib/utils";
 import "./section-lobby.css";
 
@@ -23,8 +22,6 @@ type Props = {
   filterSlot?: ReactNode;
   children?: ReactNode;
   className?: string;
-  /** زر رجوع في الهيدر (أعلى) — الافتراضي مفعّل بدل العائم الثابت */
-  inlineHeaderBack?: boolean;
 };
 
 function asSection(item: LobbyItem): SectionDef {
@@ -58,7 +55,6 @@ export function SectionLobby({
   filterSlot,
   children,
   className,
-  inlineHeaderBack = true,
 }: Props) {
   return (
     <div
@@ -72,27 +68,14 @@ export function SectionLobby({
     >
       <div className="section-lobby__shot" data-lobby-shot="1">
         <header className="section-lobby__head">
-          {inlineHeaderBack ? (
-            <div className="section-lobby__head-row">
-              <AppBackButton
-                variant="lobby"
-                className="section-lobby__back-inline"
-                data-section-back="1"
-                label="رجوع"
-              />
-              <h1 className="section-lobby__title section-lobby__title--centered">{title}</h1>
-              <span className="section-lobby__head-spacer" aria-hidden="true" />
-            </div>
-          ) : (
-            <h1
-              className={cn(
-                "section-lobby__title",
-                lobbyId === "quran" && "quran-hub-page__title",
-              )}
-            >
-              {title}
-            </h1>
-          )}
+          <h1
+            className={cn(
+              "section-lobby__title",
+              lobbyId === "quran" && "quran-hub-page__title",
+            )}
+          >
+            {title}
+          </h1>
         </header>
 
         {primarySlot ? (

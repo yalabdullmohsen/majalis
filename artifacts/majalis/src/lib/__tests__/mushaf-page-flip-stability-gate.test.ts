@@ -42,7 +42,7 @@ assert.match(reader, /onNavigateCancel/);
 assert.doesNotMatch(
   reader,
   /setTimeout\(\s*\(\)\s*=>\s*\{\s*finishPageTurn/,
-  "لا setTimeout لإخفاء قفزة القلب",
+  "No setTimeout used to patch mushaf layout after flip",
 );
 assert.match(miniBar, /if \(immersive\) return null/);
 
@@ -56,13 +56,13 @@ assert.match(css, /height:\s*var\(--mushaf-body-height/);
 assert.match(css, /contain:\s*layout style/);
 assert.match(css, /data-mushaf-metrics/);
 assert.match(css, /transition:\s*none/);
-assert.doesNotMatch(css, /transform:\s*scale\(/);
-assert.match(page, /منع layout shift عند قلب الصفحة/);
+assert.doesNotMatch(css, /transform:\s*scale\(/, "Mushaf font-size changed after page flip: transform:scale forbidden");
+assert.match(page, /منع layout shift عند قلب الصفحة/, "MushafPage must guard layout shift on flip");
 
 assert.match(pager, /translate3d/);
 assert.match(pager, /onNavigateCancel/);
 assert.doesNotMatch(pager, /marginTop|paddingTop|scrollTop\s*=/);
-assert.doesNotMatch(pager, /scale\(/);
+assert.doesNotMatch(pager, /scale\(/, "Mushaf pager must not use transform:scale");
 
 assert.match(dock, /اختر القارئ/);
 assert.match(dock, /getReciter/);

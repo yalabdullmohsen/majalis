@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { useId } from "react";
-import { AppBackButton } from "@/components/common/AppBackButton";
 import { cn } from "@/lib/utils";
 import { PatternBackdrop } from "./PatternBackdrop";
 import "@/styles/components/page-hero.css";
@@ -12,7 +11,6 @@ type PageHeroProps = {
   headline?: ReactNode;
   description?: ReactNode;
   actions?: ReactNode;
-  showBack?: boolean;
   withPattern?: boolean;
   /** بطل بعرض الشاشة الكامل وخلفية هوية عميقة (افتراضي للصفحات الداخلية) */
   fullBleed?: boolean;
@@ -23,6 +21,7 @@ type PageHeroProps = {
 /**
  * بطل صفحة موحّد: تباين مضمون (--mj-ink / --mj-ink-2 على --mj-bg)
  * مع زخرفة عبر PatternBackdrop فقط.
+ * الرجوع عبر FloatingBackButton فقط (لا زر داخل الهيرو).
  */
 export function PageHero({
   eyebrow,
@@ -30,7 +29,6 @@ export function PageHero({
   headline,
   description,
   actions,
-  showBack = false,
   withPattern = true,
   fullBleed = true,
   className,
@@ -46,9 +44,6 @@ export function PageHero({
     >
       {withPattern ? <PatternBackdrop /> : null}
       <div className="page-hero-mj__content">
-        {showBack ? (
-          <AppBackButton variant="hero" className="page-hero-mj__back" />
-        ) : null}
         {eyebrow ? <p className="page-hero-mj__eyebrow">{eyebrow}</p> : null}
         <h1 id={titleId} className="page-hero-mj__title">{title}</h1>
         {headline ? <p className="page-hero-mj__headline">{headline}</p> : null}

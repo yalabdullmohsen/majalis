@@ -777,6 +777,18 @@ input, textarea, select { font-family: inherit; }
   text-transform: uppercase;
 }
 
+/* eyebrow فوق هيرو أخضر داكن — أبيض صلب (لا نحاس باهت) */
+.on-dark .home-eyebrow,
+.twh-hub-hero .home-eyebrow,
+.fqh-hub-hero .home-eyebrow,
+.quran-hub-hero .home-eyebrow,
+.mss-hero-surface .home-eyebrow,
+.topic-page__hero .home-eyebrow,
+.page-hero-mj--bleed .home-eyebrow {
+  color: var(--mss-on-hero, #ffffff) !important;
+  opacity: 1 !important;
+}
+
 .home-primary-action,
 .home-secondary-action {
   display: inline-flex;
@@ -3392,15 +3404,17 @@ body.assistant-panel-open {
 
 .assistant-panel__eyebrow {
   margin: 0;
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 800;
-  color: var(--majalis-brass-deep);
+  color: var(--brand-on-light, var(--majalis-emerald-deep, #0d4a39));
+  opacity: 1;
 }
 
 .assistant-panel__head h2 {
   margin: 0.15rem 0 0;
   font-size: 1.05rem;
-  color: var(--majalis-emerald-deep);
+  color: var(--color-text, var(--majalis-emerald-deep, #0d4a39));
+  font-weight: 800;
 }
 
 .assistant-panel__close {
@@ -5055,11 +5069,11 @@ body.has-assistant-fab .app-main {
 /* Fade in عند تحميل الصفحة */
 
 .page-fade-in {
-  animation: page-enter 240ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: page-enter 120ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes page-enter {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0.96; transform: translateY(4px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
