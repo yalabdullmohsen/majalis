@@ -7,21 +7,21 @@
   background: rgba(24,54,42,0.07) !important;
   color: var(--elite-forest, var(--mj-brand-deep)) !important;
   border: 1px solid rgba(24,54,42,0.22) !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-button, 18px) !important;
   font-weight: 600 !important;
 }
 .notif-banner--err {
   background: #FEF2F2 !important;
   color: var(--mj-danger-deep) !important;
   border: 1px solid rgba(185,28,28,0.22) !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-button, 18px) !important;
 }
 
 /* بطاقة إعداد */
 .notif-card {
   background: #fff !important;
   border: 1px solid rgba(24,54,42,0.09) !important;
-  border-radius: 18px !important;
+  border-radius: var(--radius-card, 24px) !important;
   box-shadow: 0 2px 16px rgba(24,54,42,0.05) !important;
   padding: 1.25rem 1.4rem !important;
   overflow: hidden !important;
@@ -83,7 +83,7 @@ html.dark .notif-row__label {
   background: var(--elite-forest, var(--mj-brand-deep)) !important;
   color: #fff !important;
   border: none !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-button, 18px) !important;
   font-weight: 700 !important;
   font-size: 0.9rem !important;
   padding: 0.8rem !important;
@@ -99,7 +99,7 @@ html.dark .notif-row__label {
   background: var(--elite-forest, var(--mj-brand-deep)) !important;
   color: #fff !important;
   border: none !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-button, 18px) !important;
   box-shadow: 0 4px 20px rgba(24,54,42,0.25) !important;
   text-align: center !important;
   padding: 0.65rem 1rem !important;
@@ -112,7 +112,7 @@ html.dark .notif-row__label {
 .nh-section {
   background: #fff !important;
   border: 1px solid rgba(24,54,42,0.09) !important;
-  border-radius: 18px !important;
+  border-radius: var(--radius-card, 24px) !important;
   box-shadow: 0 2px 16px rgba(24,54,42,0.05) !important;
   overflow: hidden !important;
 }
@@ -177,7 +177,7 @@ html.dark .notif-row__label {
   width: 100% !important;
   background: #fff !important;
   border: 1.5px solid rgba(24,54,42,0.12) !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-button, 18px) !important;
   color: var(--mj-brand-deep) !important;
   font-size: 0.875rem !important;
   padding: 0.55rem 2rem 0.55rem 0.9rem !important;
