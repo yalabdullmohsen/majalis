@@ -1,5 +1,49 @@
 [
   {
+    "id": "ottoman-suleyman-peak",
+    "title": "ذروة التوسع في عهد سليمان القانوني",
+    "kind": "era",
+    "category": "ottoman",
+    "era": "926–974هـ",
+    "place": "إسطنبول · البلقان · العراق",
+    "featured": true,
+    "verification": "confirmed",
+    "summary": "بلغ العثمانيون في عهد سليمان القانوني أوسع امتداد تشريعي وعسكري، مع تقنين وعمارة وجهاد في أوروبا والشرق.",
+    "detail": "يُعدّ عهد سليمان القانوني من ذرى الدولة العثمانية: توسّع في أوروبا والعراق، وتنظيم للقضاء والإدارة، وعمارة فاخرة. سُمّي بالقانوني لكثرة التنظيمات. تُروى فتوحه مع وجوب النظر الشرعي في المظالم البشرية لأي دولة. العهد يمثّل قوة مركزية جمعت شعوبًا شتى تحت راية الخلافة العثمانية آنذاك، قبل علائم التراجع اللاحقة. ويُعرض بتمحيصٍ على منهج أهل السنة بلا طعن في الصحابة ولا تهوين للفتن. ويُعرض بتمحيصٍ على منهج أهل السنة بلا طعن في الصحابة ولا تهوين للفتن. ويُعرض بتمحيصٍ على منهج أهل السنة بلا طعن في الصحابة ولا تهوين للفتن. ويُعرض بتمحيصٍ على منهج أهل السنة بلا طعن في الصحابة ولا تهوين للفتن. ويُعرض بتمحيصٍ على منهج أهل السنة بلا طعن في الصحابة ولا تهوين للفتن.",
+    "causes": "تراكم قوة بعد فتح القسطنطينية ومصر، وكفاءة عسكرية وإدارية.",
+    "outcomes": "أوسع نفوذ عثماني، ومدونات قانونية، وهيبة دولية.",
+    "lessons": "التشريع والإدارة يحفظان الملك مع القوة؛ والإسراف والظلم ينخران الدول من داخلها.",
+    "relatedPersons": [
+      "سليمان القانوني",
+      "ممّر سنان",
+      "خواجة جلي"
+    ],
+    "sources": [
+      "تاريخ الدولة العثمانية",
+      "البداية والنهاية",
+      "كتب التاريخ العثماني"
+    ],
+    "relatedLinks": [
+      {
+        "href": "/tarikh-islami/ottoman-suleyman",
+        "label": "سليمان القانوني"
+      },
+      {
+        "href": "/tarikh-islami/ottoman-istanbul",
+        "label": "فتح القسطنطينية"
+      },
+      {
+        "href": "/tarikh-islami/ottoman-egypt",
+        "label": "فتح مصر"
+      },
+      {
+        "href": "/tarikh-islami/ottoman-decline",
+        "label": "علامات التدهور"
+      }
+    ],
+    "timelineOrder": 701
+  },
+  {
     "id": "ottoman-founding",
     "title": "تأسيس الدولة العثمانية",
     "kind": "event",
@@ -44,7 +88,7 @@
     ],
     "startHere": true,
     "featured": true,
-    "timelineOrder": 701
+    "timelineOrder": 702
   },
   {
     "id": "ottoman-ankara",
@@ -91,7 +135,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 702
+    "timelineOrder": 703
   },
   {
     "id": "ottoman-istanbul",
@@ -138,7 +182,7 @@
     ],
     "featured": true,
     "startHere": true,
-    "timelineOrder": 703
+    "timelineOrder": 704
   },
   {
     "id": "ottoman-egypt",
@@ -185,7 +229,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 704
+    "timelineOrder": 705
   },
   {
     "id": "ottoman-suleyman",
@@ -229,7 +273,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 705
+    "timelineOrder": 706
   },
   {
     "id": "ottoman-millet",
@@ -271,7 +315,7 @@
         "label": "منهج الموقع"
       }
     ],
-    "timelineOrder": 706
+    "timelineOrder": 707
   },
   {
     "id": "ottoman-waqf",
@@ -314,7 +358,7 @@
         "label": "قصص وعبر تاريخية"
       }
     ],
-    "timelineOrder": 707
+    "timelineOrder": 708
   },
   {
     "id": "ottoman-science",
@@ -356,7 +400,7 @@
         "label": "الأوقاف العثمانية"
       }
     ],
-    "timelineOrder": 708
+    "timelineOrder": 709
   },
   {
     "id": "ottoman-decline",
@@ -399,7 +443,7 @@
         "label": "منهج الموقع"
       }
     ],
-    "timelineOrder": 709
+    "timelineOrder": 710
   },
   {
     "id": "ottoman-dissolution",
@@ -443,6 +487,6 @@
         "label": "الأمة إلى يومنا"
       }
     ],
-    "timelineOrder": 710
+    "timelineOrder": 711
   }
 ]

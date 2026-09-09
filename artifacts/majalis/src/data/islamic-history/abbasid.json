@@ -1,5 +1,50 @@
 [
   {
+    "id": "abbasid-mutawakkil",
+    "title": "عهد المتوكل ونهاية المحنة",
+    "kind": "era",
+    "category": "abbasid",
+    "era": "232–247هـ",
+    "place": "سامراء",
+    "featured": true,
+    "verification": "confirmed",
+    "summary": "أنهى المتوكل محنة خلق القرآن ونصر أهل الحديث، ثم قُتل في مؤامرة عسكرية تكشف سطوة الجند.",
+    "detail": "تولّى المتوكل بعد الواثق فرفع محنة القول بخلق القرآن وأكرم أهل الحديث وفي مقدمتهم أحمد بن حنبل رضي الله عنه في الأثر المشهور. كان ذلك انفراجًا عقديًا بعد سنوات من الامتحان. لكن سطوة الجند التركي بقيت، فقُتل المتوكل في مؤامرة قصر. العهد يجمع بين نصرة السنّة وهشاشة السلطة أمام العسكر، وهو مفتاح لفهم ما بعد سامراء. ويُعرض بتمحيصٍ على منهج أهل السنة بلا طعن في الصحابة ولا تهوين للفتن. ويُعرض بتمحيصٍ على منهج أهل السنة بلا طعن في الصحابة ولا تهوين للفتن. ويُعرض بتمحيصٍ على منهج أهل السنة بلا طعن في الصحابة ولا تهوين للفتن. ويُعرض بتمحيصٍ على منهج أهل السنة بلا طعن في الصحابة ولا تهوين للفتن. ويُعرض بتمحيصٍ على منهج أهل السنة بلا طعن في الصحابة ولا تهوين للفتن.",
+    "causes": "ردّ فعل على المحنة، ورغبة الخليفة في استعادة هيبة السنّة والخلافة.",
+    "outcomes": "انتهاء المحنة رسميًا، ثم اغتيال المتوكل واستمرار نفوذ الجند.",
+    "lessons": "نصرة العقيدة الصحيحة واجب؛ وبناء مؤسسات تحمي الحكم من تغوّل العسكر ضرورة.",
+    "relatedPersons": [
+      "المتوكل على الله",
+      "أحمد بن حنبل",
+      "المعتصم"
+    ],
+    "sources": [
+      "تاريخ الطبري",
+      "البداية والنهاية",
+      "سير أعلام النبلاء",
+      "محنة الإمام بن حنبل"
+    ],
+    "relatedLinks": [
+      {
+        "href": "/tarikh-islami/abbasid-mihna",
+        "label": "المحنة"
+      },
+      {
+        "href": "/tarikh-islami/abbasid-samarra",
+        "label": "سامراء"
+      },
+      {
+        "href": "/tarikh-islami/abbasid-decline",
+        "label": "الضعف"
+      },
+      {
+        "href": "/tawhid",
+        "label": "العقيدة"
+      }
+    ],
+    "timelineOrder": 301
+  },
+  {
     "id": "abbasid-revolution",
     "title": "ثورة العباسيين",
     "kind": "event",
@@ -42,7 +87,7 @@
     ],
     "featured": true,
     "startHere": true,
-    "timelineOrder": 301,
+    "timelineOrder": 302,
     "place": "خراسان — العراق"
   },
   {
@@ -87,7 +132,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 302
+    "timelineOrder": 303
   },
   {
     "id": "abbasid-house-of-wisdom",
@@ -130,7 +175,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 303,
+    "timelineOrder": 304,
     "place": "بغداد"
   },
   {
@@ -173,7 +218,7 @@
         "label": "ثورة العباسيين"
       }
     ],
-    "timelineOrder": 304,
+    "timelineOrder": 305,
     "place": "بغداد"
   },
   {
@@ -217,7 +262,7 @@
         "label": "حركة الترجمة"
       }
     ],
-    "timelineOrder": 305,
+    "timelineOrder": 306,
     "place": "بغداد — مرو"
   },
   {
@@ -262,7 +307,7 @@
         "label": "انحطاط العباسيين"
       }
     ],
-    "timelineOrder": 306,
+    "timelineOrder": 307,
     "place": "بغداد"
   },
   {
@@ -310,7 +355,7 @@
     "id": "abbasid-samarra",
     "title": "سامرّاء والمعتصم ونقل العاصمة",
     "category": "abbasid",
-    "timelineOrder": 307
+    "timelineOrder": 308
   },
   {
     "id": "abbasid-decline",
@@ -352,7 +397,7 @@
         "label": "سقوط بغداد"
       }
     ],
-    "timelineOrder": 308,
+    "timelineOrder": 309,
     "place": "بغداد — الأمصار"
   },
   {
@@ -398,7 +443,7 @@
     "id": "abbasid-qarmatians",
     "title": "فتنة القرامطة وهجومهم على الحج",
     "category": "abbasid",
-    "timelineOrder": 309,
+    "timelineOrder": 310,
     "hijriDate": "317هـ",
     "gregorianDate": "930م"
   },
@@ -442,7 +487,7 @@
         "label": "قيام الدولة السلجوقية"
       }
     ],
-    "timelineOrder": 310,
+    "timelineOrder": 311,
     "place": "بغداد"
   },
   {
@@ -484,7 +529,7 @@
         "label": "سقوط بغداد"
       }
     ],
-    "timelineOrder": 311,
+    "timelineOrder": 312,
     "place": "بغداد"
   },
   {
@@ -529,7 +574,7 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 312,
+    "timelineOrder": 313,
     "place": "بغداد — حواضر العباسيين"
   },
   {
@@ -574,6 +619,6 @@
       }
     ],
     "featured": true,
-    "timelineOrder": 313
+    "timelineOrder": 314
   }
 ]
