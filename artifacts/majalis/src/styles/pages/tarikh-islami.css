@@ -915,6 +915,10 @@ html.dark .tarikh-badge--needs-review {
 
 .tarikh-detail__section {
   margin-bottom: 1.1rem;
+  padding: 1rem 1.05rem;
+  border-radius: var(--radius-card, 24px);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 16%, transparent);
+  background: var(--color-surface, var(--ss-card-bg, #fffcf8));
 }
 
 .tarikh-detail__section h2 {

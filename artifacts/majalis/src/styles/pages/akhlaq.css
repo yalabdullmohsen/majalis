@@ -193,7 +193,7 @@ html.dark .akl-cat--active,
 
 .akl-block {
   background: color-mix(in srgb, var(--mj-brand) 6%, var(--ss-card-bg));
-    border-radius: var(--radius-button, 18px);
+  border-radius: var(--radius-card, 24px);
   padding: 0.85rem 1rem;
   border-inline-start: 3px solid color-mix(in srgb, var(--mj-brand) 55%, transparent);
 }

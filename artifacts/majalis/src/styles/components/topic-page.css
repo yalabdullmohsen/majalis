@@ -166,9 +166,9 @@
 
 .topic-page__tab {
   flex: 0 0 auto;
-  height: 36px;
-  min-height: 36px;
-  padding: 0 0.95rem;
+  height: auto;
+  min-height: 44px;
+  padding: 0 1rem;
   border-radius: 999px;
   border: 1.5px solid var(--msk-border, var(--mj-hairline));
   background: var(--mj-surface, #fff);
@@ -179,6 +179,7 @@
   white-space: nowrap;
   cursor: pointer;
   transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+  touch-action: manipulation;
 }
 .topic-page__tab:focus-visible {
   outline: 2px solid var(--topic-accent, var(--mj-brand));

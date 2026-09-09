@@ -132,7 +132,9 @@ html.dark {
 .mk-card,
 .mk-lane-card,
 .fiqh-book-card,
-.dii-hub-card {
+.dii-hub-card,
+.hs-card,
+.hb-hadith-row {
   background: var(--surface) !important;
   border: 1px solid color-mix(in srgb, var(--border) 80%, transparent) !important;
   border-radius: var(--radius-card) !important;
@@ -142,7 +144,11 @@ html.dark {
 
 /* تفاصيل قراءة/حديث: نصف قطر فقط */
 .hadith-detail-card,
-.rsc {
+.rsc,
+.ahd-section,
+.isp-detail__section,
+.tarikh-detail__section,
+.akl-block {
   border-radius: var(--radius-card) !important;
 }
 
@@ -242,7 +248,7 @@ html.dark .sidebar-item-icon {
 .lessons-page-v3 .lesson-filters__chips .filter-chips__chip,
 .lessons-page-v2 .filter-chips__chip {
   flex: 0 0 auto !important;
-  min-height: 40px !important;
+  min-height: 44px !important;
   min-width: unset !important;
   height: auto !important;
   padding: 0.35rem 0.75rem !important;
@@ -359,7 +365,7 @@ html.dark .lessons-page-v2 .filter-chips__chip.is-active {
 .lesson-unified-card .btn-primary,
 .lessons-page-v3 .lesson-unified-card a.mj-btn--primary {
   flex: 1 1 7rem !important;
-  min-height: 40px !important;
+  min-height: 44px !important;
   border-radius: var(--radius-button) !important;
 }
 
@@ -368,7 +374,7 @@ html.dark .lessons-page-v2 .filter-chips__chip.is-active {
 .lesson-unified-card__actions button.secondary,
 .lesson-unified-card button:not(.mj-btn--primary):not(.btn-primary) {
   flex: 0 1 auto !important;
-  min-height: 40px !important;
+  min-height: 44px !important;
   border-radius: var(--radius-button) !important;
   background: var(--surface-soft) !important;
   color: var(--text) !important;
@@ -480,7 +486,7 @@ button.floating-back-btn[data-floating-back="1"] {
     var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 16px +
       var(--quran-mini-player-offset, 0px)
   ) !important;
-  z-index: 185 !important;
+  z-index: var(--z-fab, 220) !important;
   width: 48px !important;
   height: 48px !important;
   min-width: 48px !important;
@@ -587,4 +593,68 @@ html.chrome-immersive .global-back-btn.floating-back-btn {
   .lesson-unified-card__facts {
     grid-template-columns: 1fr !important;
   }
+}
+
+/* ── لمس وأزرار موحّدة (هوية التطبيق) ─────────────────────────────── */
+button:not([disabled]),
+a.mj-btn,
+a.m2030-btn,
+.hub-card,
+.soft-card.mj-pressable,
+.hs-cat-chip,
+.hb-tab,
+.ds-filter-toggle,
+.filter-chips__chip,
+.mj-filter-chip {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:not([disabled]):not(.floating-back-btn):not(.global-back-btn),
+a.mj-btn,
+a.m2030-btn,
+.ds-filter-toggle,
+.hs-cat-chip,
+.hb-tab,
+.filter-chips__chip,
+.mj-filter-chip,
+.hadith-card__read-more,
+.hadith-action-btn,
+.hadith-pagination__btn,
+.section-hub__chip,
+.section-hub__cta,
+.section-lobby__chip,
+.topic-page__tab,
+.twh-jumpnav__btn,
+.fiqh-hub-strip__tab {
+  min-height: 44px !important;
+}
+
+.btn-primary,
+.ds-btn--primary,
+.mj-btn,
+.mj-btn--primary,
+.m2030-btn--primary {
+  border-radius: var(--radius-button, 18px) !important;
+  min-height: 48px;
+  padding-inline: 1.1rem;
+}
+
+.hadith-card__read-more {
+  border-radius: var(--radius-button, 18px) !important;
+  min-height: 44px !important;
+  padding: 0.45rem 0.95rem !important;
+}
+
+.hadith-action-btn {
+  min-width: 44px !important;
+  min-height: 44px !important;
+  border-radius: var(--radius-button, 18px) !important;
+}
+
+.fiqh-category-card,
+.fiqh-issue-card,
+.hs-card,
+.hb-hadith-row {
+  border-radius: var(--radius-card, 24px) !important;
 }
