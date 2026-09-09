@@ -19,6 +19,7 @@ const CHUNK: Record<string, () => Promise<unknown>> = {
   "/lessons/archive": () => import("@/pages/lessons/LessonsArchivePage"),
   "/prayer-times": () => import("@/pages/worship/PrayerTimesPage"),
   "/fiqh": () => import("@/pages/fiqh/FiqhPage"),
+  "/fiqh/usul": () => import("@/pages/fiqh/FiqhUsulPage"),
   "/sections": () => import("@/pages/account/SectionsPage"),
   "/qibla": () => import("@/pages/worship/QiblaPage"),
   "/duas": () => import("@/pages/worship/DuasPage"),

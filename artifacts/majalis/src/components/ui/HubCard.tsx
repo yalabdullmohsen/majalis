@@ -1,4 +1,4 @@
-import { memo, useCallback, type ReactNode } from "react";
+import { memo, useCallback, type MouseEvent, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { ChevronLeft, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -25,9 +25,15 @@ function normalizePath(path: string): string {
   return bare.replace(/\/+$/, "") || "/";
 }
 
+function hrefHash(href: string): string {
+  const i = String(href || "").indexOf("#");
+  return i >= 0 ? href.slice(i + 1).split("?")[0] : "";
+}
+
 /**
  * بطاقة بوابة قسم — SectionGatewayCard: زوايا ناعمة، سهم مدمج، بلا تراكب.
- * لا تنتقل إلى نفس الصفحة الحالية، ولا تُظهر بطاقة لقسم غير جاهز.
+ * لا تنتقل إلى نفس الصفحة الحالية (بلا مرسى)، ولا تُظهر بطاقة لقسم غير جاهز.
+ * المراسي داخل الصفحة (`#id` أو `/path#id`) تبقى تفاعلية وتتمرّر دون wouter.
  */
 export const HubCard = memo(function HubCard({
   href,
@@ -45,8 +51,11 @@ export const HubCard = memo(function HubCard({
   const [location] = useLocation();
   if (soon) return null;
   const current = normalizePath(location);
-  const target = normalizePath(href);
-  const isCurrent = Boolean(target) && target === current;
+  const hashOnly = href.startsWith("#");
+  const hash = hrefHash(href);
+  const target = hashOnly ? current : normalizePath(href);
+  const samePathHash = Boolean(hash) && target === current;
+  const isCurrent = Boolean(target) && target === current && !hash;
   const nonInteractive = isCurrent;
 
   const iconNode =
@@ -64,9 +73,23 @@ export const HubCard = memo(function HubCard({
   );
 
   const warmRoute = useCallback(() => {
-    if (nonInteractive) return;
+    if (nonInteractive || samePathHash) return;
     prefetchRoute(href);
-  }, [href, nonInteractive]);
+  }, [href, nonInteractive, samePathHash]);
+
+  const scrollToHash = useCallback(
+    (event: MouseEvent<HTMLAnchorElement>) => {
+      if (!hash) return;
+      const el = document.getElementById(hash);
+      if (!el) return;
+      event.preventDefault();
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (typeof history !== "undefined") {
+        history.pushState(null, "", `#${hash}`);
+      }
+    },
+    [hash],
+  );
 
   const body = (
     <>
@@ -101,6 +124,19 @@ export const HubCard = memo(function HubCard({
       >
         {body}
       </div>
+    );
+  }
+
+  if (samePathHash) {
+    return (
+      <a
+        href={`#${hash}`}
+        className={classNames}
+        aria-label={title}
+        onClick={scrollToHash}
+      >
+        {body}
+      </a>
     );
   }
 

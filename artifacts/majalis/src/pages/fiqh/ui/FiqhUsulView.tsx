@@ -52,7 +52,7 @@ export default function FiqhUsulPage() {
           {USUL_HUB_TOPICS.map((topic) => (
             <HubCard
               key={topic.id}
-              href={topic.href ?? `#usul-${topic.id}`}
+              href={topic.href ?? `/fiqh/usul#usul-${topic.id}`}
               title={topic.title}
               description={topic.summary}
               badge={topic.kind}
