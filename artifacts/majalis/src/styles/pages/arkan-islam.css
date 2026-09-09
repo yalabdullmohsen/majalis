@@ -71,11 +71,12 @@
 
 /* Card */
 .arkan-card {
-  background: #FFFFFF;
-  border: 1.5px solid var(--mj-brand-soft);
-  border-radius: var(--ds-radius-xl);
+  background: var(--ss-card-bg, #fffcf7);
+  border: 1.5px solid color-mix(in srgb, var(--mj-brand) 18%, var(--mj-brand-soft, #e2efe8));
+  border-radius: var(--radius-card, 24px);
   overflow: hidden;
   transition: all 0.15s;
+  color: var(--color-text, var(--mj-ink));
 }
 .arkan-card:hover { border-color: #9BC5B3; }
 .arkan-card--open { border-color: var(--mj-brand); box-shadow: 0 4px 20px rgba(31,77,58,0.12); }
@@ -104,16 +105,16 @@
 .arkan-card__title {
   font-size: var(--ds-text-base);
   font-weight: 700;
-  color: var(--mj-brand-deep);
+  color: var(--color-text, var(--mj-ink));
   margin: 0.15rem 0;
   line-height: 1.4;
 }
-.arkan-card__sub { font-size: var(--ds-text-xs); color: #497061; }
+.arkan-card__sub { font-size: var(--ds-text-xs); color: var(--color-text-muted, var(--mj-ink-2)); }
 .arkan-card__chevron { color: var(--mj-brand); flex-shrink: 0; }
 .arkan-card__summary {
   padding: 0 1.25rem 1rem;
   font-size: 0.88rem;
-  color: var(--mj-brand-deep);
+  color: var(--color-text-muted, var(--mj-ink-2));
   line-height: 1.75;
   margin: 0;
 }

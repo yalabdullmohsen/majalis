@@ -120,9 +120,15 @@ html[data-theme="dark"] .uq-hero .uq-stat__label {
 
 /* facts grid */
 .uq-facts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-bottom: 1.5rem; }
-.uq-fact-item { background: #F0F7F4; border: 1px solid #BBF7D0; border-radius: .65rem; padding: .6rem .8rem; }
+.uq-fact-item {
+  background: color-mix(in srgb, var(--mj-brand) 8%, var(--ss-card-bg, #fffcf7));
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 22%, var(--ss-border, #d9d3c8));
+  border-radius: var(--radius-card, 24px);
+  padding: .6rem .8rem;
+  color: var(--color-text, var(--mj-ink));
+}
 .uq-fact-item__label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--majalis-emerald,var(--mj-brand)); margin-bottom: .2rem; }
-.uq-fact-item__value { font-size: .82rem; color: var(--mj-brand-deep); font-weight: 600; }
+.uq-fact-item__value { font-size: .82rem; color: var(--color-text, var(--mj-ink)); font-weight: 600; }
 
 /* types */
 .uq-types-list { display: flex; flex-direction: column; gap: .75rem; }
@@ -133,8 +139,13 @@ html[data-theme="dark"] .uq-hero .uq-stat__label {
 .uq-type-card__desc  { font-size: .83rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0 0 .5rem; }
 .uq-dalil-box {
   display: flex; gap: .4rem; align-items: flex-start;
-  background: #EEF2FF; border-radius: .5rem; padding: .45rem .65rem;
-  font-size: .75rem; color: #3730A3; line-height: 1.5;
+  background: color-mix(in srgb, var(--mj-brand) 10%, var(--ss-card-bg, #fffcf7));
+  border-radius: var(--radius-card, 24px);
+  padding: .45rem .65rem;
+  font-size: .75rem;
+  color: var(--color-text, var(--mj-ink));
+  line-height: 1.5;
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 18%, transparent);
 }
 .uq-dalil-box__icon { flex-shrink: 0; }
 
@@ -163,8 +174,12 @@ html[data-theme="dark"] .uq-hero .uq-stat__label {
 /* info box */
 .uq-info-box {
   display: flex; gap: .65rem; align-items: flex-start;
-  background: #FFFBEB; border: 1px solid #FDE68A; border-radius: .7rem;
-  padding: .85rem 1rem; font-size: .83rem; color: #78350F; line-height: 1.6;
+  background: color-mix(in srgb, var(--mj-accent, #b08a3e) 12%, var(--ss-card-bg, #fffcf7));
+  border: 1px solid color-mix(in srgb, var(--mj-accent, #b08a3e) 35%, var(--ss-border, #d9d3c8));
+  border-radius: var(--radius-card, 24px);
+  padding: .85rem 1rem; font-size: .83rem;
+  color: var(--color-text, var(--mj-ink));
+  line-height: 1.6;
 }
 .uq-info-box__icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .05rem; }
 .uq-info-box p { margin: 0; }

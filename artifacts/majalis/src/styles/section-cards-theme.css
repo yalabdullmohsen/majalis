@@ -1,0 +1,278 @@
+/**
+ * section-cards-theme.css
+ * تباين بطاقات الدخول/المحتوى — نهاري وليلي.
+ * يُحمَّل بعد section-makarim-pattern حتى تفوز التوكنات على #fff الصلبة.
+ * لا يمسّ نص القرآن/التشكيل.
+ */
+
+/* ── soft-card على خلفية فاتحة: في الليل = سطح الهوية الداكن ───────── */
+html.dark .soft-card--on-light,
+html[data-theme="dark"] .soft-card--on-light,
+html.dark .soft-tile--on-light,
+html[data-theme="dark"] .soft-tile--on-light {
+  --soft-card-grad: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--mj-surface, #1b2421) 92%, #0f3d2e) 0%,
+    color-mix(in srgb, var(--mj-brand, #5fbf98) 10%, var(--mj-surface, #1b2421)) 100%
+  );
+  --soft-tile-grad: var(--soft-card-grad);
+  --soft-card-border: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, var(--mj-hairline, #3a4641));
+  --soft-tile-border: var(--soft-card-border);
+  --soft-card-shadow: 0 6px 18px -12px rgba(0, 0, 0, 0.55);
+  --soft-tile-shadow: var(--soft-card-shadow);
+  background-color: var(--mj-surface, #1b2421);
+  color: var(--mj-ink, #f3f7f5);
+}
+
+/* ── عائلة بطاقات المحتوى (معجم / عقيدة / علوم / توحيد / مكارم…) ───── */
+.gl-term,
+.gl-cat,
+.ai-card,
+.ai-detail,
+.ai-related__link,
+.arkan-card,
+.arkan-detail,
+.twh-hub-card,
+.twh-pillar-card,
+.twh-jumpnav__btn,
+.tawheed-type-card,
+.uq-fact-item,
+.uq-dalil-box,
+.uq-info-box,
+.uq-mm-examples__item,
+.akl-card,
+.sect-card,
+.mdb-card,
+.hk-card,
+.tf-card,
+.hub-card,
+.soft-card,
+.mj-card {
+  color: var(--color-text, var(--mj-ink, #16241e));
+}
+
+.gl-term,
+.ai-card,
+.ai-detail,
+.ai-related__link,
+.arkan-card,
+.twh-hub-card,
+.twh-pillar-card,
+.tawheed-type-card,
+.uq-fact-item,
+.uq-dalil-box,
+.uq-info-box,
+.uq-mm-examples__item {
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, var(--color-border, #d9d3c8))) !important;
+  border-radius: var(--radius-card, 24px) !important;
+  box-shadow: var(--ss-shadow-soft, var(--shadow-soft, none)) !important;
+}
+
+/* نص داخلي — لا حبر داكن صلب فوق سطح ليلي */
+.gl-term__arabic,
+.gl-term__detail p,
+.ai-card__title,
+.ai-card__summary,
+.arkan-card__title,
+.arkan-card__summary,
+.twh-hub-card__title,
+.tawheed-type-card__title,
+.uq-fact-item,
+.uq-info-box {
+  color: var(--color-text, var(--mj-ink)) !important;
+}
+
+.gl-term__plural,
+.gl-term__def-preview,
+.gl-results-count,
+.gl-term__source,
+.gl-empty,
+.ai-card__subtitle,
+.arkan-card__sub,
+.twh-hub-card__desc,
+.uq-fact-item p,
+.uq-dalil-box,
+.uq-info-box p {
+  color: var(--color-text-muted, var(--mj-ink-2, #4f5f58)) !important;
+  opacity: 1 !important;
+}
+
+.gl-term__chevron,
+.ai-card__chevron,
+.arkan-card__chevron {
+  color: var(--mj-brand) !important;
+  opacity: 1 !important;
+}
+
+.gl-term__head:hover {
+  background: color-mix(in srgb, var(--mj-brand) 6%, var(--ss-card-bg, transparent)) !important;
+}
+
+.gl-cat {
+  background: var(--ss-card-bg, #fffcf7) !important;
+  color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand) 28%, var(--ss-border, #d9d3c8)) !important;
+  min-height: 44px;
+}
+
+.gl-cat--active {
+  background: var(--mj-brand-deep, #0d4a39) !important;
+  color: var(--on-dark-strong, #fff) !important;
+  border-color: var(--mj-brand-deep, #0d4a39) !important;
+}
+
+html.dark .gl-cat--active,
+html[data-theme="dark"] .gl-cat--active {
+  background: var(--mj-brand, #5fbf98) !important;
+  color: var(--mj-on-brand, #06231a) !important;
+  border-color: var(--mj-brand, #5fbf98) !important;
+}
+
+/* أرقام دوائر العقيدة — تباين صريح */
+.ai-card__num,
+.arkan-card__num,
+.tawheed-type-card__num,
+.amr-level__rank {
+  color: var(--mj-brand) !important;
+  background: color-mix(in srgb, var(--mj-brand) 14%, var(--ss-card-bg, transparent));
+  border-radius: var(--radius-button, 18px);
+}
+
+.tawheed-type-card__num {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  font-weight: 800;
+}
+
+/* صناديق علوم القرآن — لا باستيل ثابت */
+.uq-dalil-box,
+.uq-info-box {
+  color: var(--color-text, var(--mj-ink)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand) 22%, var(--ss-border)) !important;
+}
+
+.uq-info-box {
+  background: color-mix(in srgb, var(--mj-accent, #b08a3e) 12%, var(--ss-card-bg)) !important;
+}
+
+.uq-dalil-box {
+  background: color-mix(in srgb, var(--mj-brand) 10%, var(--ss-card-bg)) !important;
+}
+
+.uq-fact-item {
+  background: color-mix(in srgb, var(--mj-brand) 8%, var(--ss-card-bg)) !important;
+}
+
+/* صفحة المعجم — سطح التطبيق + هامش للشريط/العائم */
+.gl-page {
+  background: var(--color-bg, var(--surface-app, #f7f4ee)) !important;
+  padding-bottom: calc(
+    var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) +
+      max(4.5rem, var(--assistant-fab-size, 3.35rem) + 3.25rem)
+  ) !important;
+  color: var(--color-text, var(--mj-ink));
+}
+
+.gl-container {
+  max-width: min(42rem, 100%);
+  padding-bottom: 1.5rem;
+}
+
+.gl-term {
+  cursor: pointer;
+}
+
+.gl-term--open {
+  border-color: color-mix(in srgb, var(--mj-brand-deep) 50%, var(--ss-border)) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--mj-brand) 25%, transparent) !important;
+}
+
+.gl-term__body {
+  border-top-color: color-mix(in srgb, var(--mj-brand) 12%, var(--ss-border)) !important;
+}
+
+/* ليلي صريح — أسطح داكنة + حبر فاتح */
+html.dark .gl-page,
+html[data-theme="dark"] .gl-page,
+html.dark .ai-page,
+html[data-theme="dark"] .ai-page,
+html.dark .arkan-page,
+html[data-theme="dark"] .arkan-page {
+  background: var(--mj-bg, #121816) !important;
+  color: var(--mj-ink, #f3f7f5) !important;
+}
+
+html.dark .gl-term,
+html.dark .gl-cat:not(.gl-cat--active),
+html.dark .ai-card,
+html.dark .ai-detail,
+html.dark .ai-related__link,
+html.dark .arkan-card,
+html.dark .twh-hub-card,
+html.dark .twh-pillar-card,
+html.dark .twh-jumpnav__btn,
+html.dark .tawheed-type-card,
+html.dark .uq-fact-item,
+html.dark .uq-dalil-box,
+html.dark .uq-info-box,
+html.dark .uq-mm-examples__item,
+html[data-theme="dark"] .gl-term,
+html[data-theme="dark"] .gl-cat:not(.gl-cat--active),
+html[data-theme="dark"] .ai-card,
+html[data-theme="dark"] .ai-detail,
+html[data-theme="dark"] .arkan-card,
+html[data-theme="dark"] .twh-hub-card,
+html[data-theme="dark"] .twh-pillar-card,
+html[data-theme="dark"] .tawheed-type-card,
+html[data-theme="dark"] .uq-fact-item,
+html[data-theme="dark"] .uq-dalil-box,
+html[data-theme="dark"] .uq-info-box {
+  background: var(--mj-surface, #1b2421) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+  color: var(--mj-ink, #f3f7f5) !important;
+}
+
+html.dark .gl-term__arabic,
+html.dark .ai-card__title,
+html.dark .arkan-card__title,
+html.dark .twh-hub-card__title,
+html.dark .tawheed-type-card__title,
+html[data-theme="dark"] .gl-term__arabic,
+html[data-theme="dark"] .ai-card__title,
+html[data-theme="dark"] .arkan-card__title,
+html[data-theme="dark"] .twh-hub-card__title {
+  color: var(--mj-ink, #f3f7f5) !important;
+}
+
+html.dark .gl-term__def-preview,
+html.dark .gl-term__detail p,
+html.dark .ai-card__summary,
+html.dark .arkan-card__summary,
+html.dark .twh-hub-card__desc,
+html[data-theme="dark"] .gl-term__def-preview,
+html[data-theme="dark"] .gl-term__detail p,
+html[data-theme="dark"] .ai-card__summary,
+html[data-theme="dark"] .twh-hub-card__desc {
+  color: var(--mj-ink-2, #c5d0cb) !important;
+}
+
+/* أزرار/شارات نشطة ليلية — لا نص أبيض/40 */
+html.dark .gl-cat--active .gl-cat__count,
+html[data-theme="dark"] .gl-cat--active .gl-cat__count {
+  background: color-mix(in srgb, var(--mj-on-brand, #06231a) 18%, transparent);
+  color: inherit;
+}
+
+/* الزر العائم: لا يغطي آخر بطاقة — مساحة إضافية في قوائم البطاقات */
+.gl-page,
+.ai-page,
+.arkan-page,
+.akl-page,
+.sect-hub,
+.mdb-page,
+.uq-page {
+  scroll-padding-bottom: calc(var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 5rem);
+}

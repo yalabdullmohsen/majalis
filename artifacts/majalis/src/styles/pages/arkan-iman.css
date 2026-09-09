@@ -55,12 +55,13 @@
 
 /* بطاقة الركن */
 .ai-card {
-  background: #FFFFFF;
-  border: 1.5px solid var(--mj-brand-soft);
-  border-radius: var(--ds-radius-xl);
+  background: var(--ss-card-bg, #fffcf7);
+  border: 1.5px solid color-mix(in srgb, var(--mj-brand) 18%, var(--mj-brand-soft, #e2efe8));
+  border-radius: var(--radius-card, 24px);
   overflow: hidden;
-  box-shadow: 0 1px 6px rgba(31,77,58,0.06);
+  box-shadow: var(--ss-shadow-soft, 0 1px 6px rgba(31,77,58,0.06));
   transition: box-shadow 0.18s, border-color 0.18s;
+  color: var(--color-text, var(--mj-ink));
 }
 .ai-card--open { border-color: var(--mj-brand); box-shadow: 0 4px 16px rgba(31,77,58,0.12); }
 .ai-card__header {
@@ -80,13 +81,13 @@
 .ai-card__header-right { display: flex; align-items: center; gap: 0.85rem; flex: 1; min-width: 0; }
 .ai-card__icon { font-size: 2rem; flex-shrink: 0; line-height: 1; }
 .ai-card__num { font-size: 0.72rem; font-weight: 700; color: var(--mj-brand); text-transform: uppercase; letter-spacing: normal; margin-bottom: 0.15rem; }
-.ai-card__title { font-size: 0.98rem; font-weight: 800; color: var(--mj-brand-deep); line-height: 1.35; }
-.ai-card__subtitle { font-size: 0.8rem; color: var(--mj-brand); margin-top: 0.15rem; }
+.ai-card__title { font-size: 0.98rem; font-weight: 800; color: var(--color-text, var(--mj-ink)); line-height: 1.35; }
+.ai-card__subtitle { font-size: 0.8rem; color: var(--color-text-muted, var(--mj-ink-2)); margin-top: 0.15rem; }
 .ai-card__chevron { flex-shrink: 0; color: var(--mj-brand); transition: transform 0.2s; }
 
 /* محتوى البطاقة */
 .ai-card__body { padding: 0 1.25rem 1.25rem; border-top: 1.5px solid var(--mj-brand-soft); }
-.ai-card__summary { font-size: 0.9rem; color: var(--mj-brand-deep); line-height: 1.75; margin: 1rem 0 1.25rem; }
+.ai-card__summary { font-size: 0.9rem; color: var(--color-text-muted, var(--mj-ink-2)); line-height: 1.75; margin: 1rem 0 1.25rem; }
 
 /* كتل الأدلة */
 .ai-dalil {
@@ -124,13 +125,13 @@
 /* تفاصيل عقدية */
 .ai-details { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 1rem; }
 .ai-detail {
-  background: #F8FBF9;
-  border: 1px solid var(--mj-brand-soft);
-  border-radius: 0.65rem;
+  background: var(--mj-surface-2, var(--color-surface-soft, #f7f4ee));
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 16%, var(--mj-brand-soft, #e2efe8));
+  border-radius: var(--radius-card, 24px);
   padding: 0.75rem 1rem;
 }
 .ai-detail__label { font-size: 0.8rem; font-weight: 800; color: var(--mj-brand); margin-bottom: 0.3rem; }
-.ai-detail__body { font-size: 0.87rem; color: var(--mj-brand-deep); line-height: 1.65; }
+.ai-detail__body { font-size: 0.87rem; color: var(--color-text, var(--mj-ink)); line-height: 1.65; }
 
 /* قول عالم */
 .ai-scholar {
@@ -154,13 +155,13 @@
 .ai-related__link {
   display: block;
   padding: 0.6rem 0.85rem;
-  border: 1.5px solid var(--mj-brand-soft);
-  border-radius: 0.65rem;
+  border: 1.5px solid color-mix(in srgb, var(--mj-brand) 18%, var(--mj-brand-soft, #e2efe8));
+  border-radius: var(--radius-card, 24px);
   text-decoration: none;
   font-size: 0.83rem;
   font-weight: 600;
-  color: var(--mj-brand-deep);
-  background: #FFFFFF;
+  color: var(--color-text, var(--mj-ink));
+  background: var(--ss-card-bg, #fffcf7);
   transition: all 0.15s;
   text-align: center;
 }

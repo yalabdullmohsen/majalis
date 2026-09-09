@@ -52,6 +52,9 @@ for (const cls of [
   "hb-hadith-row",
   "quran-hub-card",
   "twh-hub-card",
+  "gl-term",
+  "uq-fact-item",
+  "tawheed-type-card",
 ]) {
   assert.match(calm, new RegExp(`\\.${cls}`), `calm يشمل .${cls}`);
   assert.match(unify, new RegExp(`\\.${cls}`), `unify يشمل .${cls}`);

@@ -1894,14 +1894,10 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
             const isOpen = openTerm === term.id;
             return (
               <Card key={term.id} className={`gl-term${isOpen ? " gl-term--open" : ""}`} raised={isOpen}>
-                <div
+                <button
+                  type="button"
                   className="gl-term__head"
                   onClick={() => setOpenTerm(isOpen ? null : term.id)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) =>
-                    (e.key === "Enter" || e.key === " ") && setOpenTerm(isOpen ? null : term.id)
-                  }
                   aria-expanded={isOpen}
                 >
                   <div className="gl-term__title-wrap">
@@ -1913,7 +1909,7 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
                   <span className="gl-term__chevron" aria-hidden="true">
                     {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                   </span>
-                </div>
+                </button>
 
                 {isOpen && (
                   <div className="gl-term__body">
