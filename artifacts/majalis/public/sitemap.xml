@@ -1325,6 +1325,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/seerah-bayt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/seerah-badr</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1715,6 +1720,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/fatimid-mahdiyya</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/abbasid-nizamiyya-context</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1810,6 +1820,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/andalus-gharnata-siege</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/seljuk-malikshah</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1831,6 +1846,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/seljuk-nizamiyya</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/seljuk-kilij-arslan</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -2015,6 +2035,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/ottoman-challdiran</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/ottoman-mehmed-conquest-prep</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -2135,6 +2160,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/modern-un-partition-1947</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/modern-oic</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -2191,6 +2221,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/civ-bayt-mal</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/civ-suq-markets</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
