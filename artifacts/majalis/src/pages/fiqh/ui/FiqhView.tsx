@@ -12,6 +12,7 @@ import { formatAbwabCount, formatMasailCount } from "@/lib/arabic-count";
 import {
   FIQH_CATEGORY_LABELS,
   FIQH_CATEGORY_ORDER,
+  FIQH_SUPPORTING_TOPICS,
   chapterHref,
   publishedBooks,
   searchFiqhCatalog,
@@ -21,8 +22,11 @@ import {
   type FiqhLessonHit,
 } from "@/lib/fiqh-books";
 import { fiqhBookEditorial } from "@/lib/fiqh-editorial";
+import { isHiddenFromNav } from "@/lib/nav-visibility";
+import { HubCard } from "@/components/ui/HubCard";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import "@/styles/pages/fiqh-hub.css";
+import "@/styles/components/hub-card.css";
 
 function FiqhHubSearch({
   query,
@@ -254,17 +258,39 @@ function FiqhBooksBody() {
         </section>
       )}
 
+      {!searchResults ? (
+        <section
+          className="fiqh-hub-section fiqh-group fiqh-group--supporting"
+          aria-labelledby="fiqh-support-title"
+        >
+          <header className="fiqh-hub-section__head">
+            <h2 id="fiqh-support-title" className="fiqh-hub-section__title">
+              المباحث المساندة
+            </h2>
+          </header>
+          <div className="hub-card-grid">
+            {FIQH_SUPPORTING_TOPICS.filter((t) => !isHiddenFromNav(t.href)).map((topic) => (
+              <HubCard
+                key={topic.id}
+                href={topic.href}
+                title={topic.title}
+                description={topic.desc}
+              />
+            ))}
+          </div>
+        </section>
+      ) : null}
+
       <div className="twh-share">
         <ShareButtons title="الفقه الإسلامي — سُنّة" url="https://www.ssunnah.com/fiqh" />
       </div>
       <ExploreAlsoNav
         title="استكشف أيضًا"
         links={[
-          { href: "/fiqh-council", label: "المجمع الفقهي" },
+          { href: "/fiqh/usul", label: "أصول الفقه" },
           { href: "/sins-and-rights", label: "المعاصي والحقوق" },
           { href: "/hadith", label: "الحديث وعلومه" },
           { href: "/lessons", label: "الدروس العلمية" },
-          { href: "/madhahib", label: "المذاهب الفقهية" },
           { href: "/methodology", label: "منهجية التوثيق" },
         ]}
       />
