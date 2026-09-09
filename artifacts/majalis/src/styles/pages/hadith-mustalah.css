@@ -55,7 +55,7 @@
   border-radius: var(--ds-radius-lg);
   font-size: 0.9rem;
   color: var(--mj-brand-deep);
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   outline: none;
   transition: border-color 0.15s;
   box-sizing: border-box;
@@ -82,7 +82,7 @@
   padding: 0.45rem 1rem;
   border-radius: var(--radius-pill, 999px);
   border: 1.5px solid var(--mj-brand-soft);
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--mj-brand-deep);
@@ -181,7 +181,7 @@
   font-size: 0.83rem;
   font-weight: 600;
   color: var(--mj-brand-deep);
-  background: #FFFFFF;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   transition: all 0.15s;
   text-align: center;
 }

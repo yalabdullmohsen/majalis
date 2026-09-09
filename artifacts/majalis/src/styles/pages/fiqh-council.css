@@ -16,7 +16,7 @@
   border-radius: 999px;
   border: 1px solid rgba(22, 78, 60, 0.15);
   color: var(--fiqh-accent, var(--mj-brand-deep));
-  background: #fff;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   font-size: 0.8125rem;
   font-weight: 600;
   text-decoration: none;
@@ -120,7 +120,7 @@
   padding: 0.45rem 0.65rem;
   border: 1px solid rgba(22, 78, 60, 0.15);
   border-radius: var(--ds-radius);
-  background: #fff;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   font-family: inherit;
   font-size: 0.8125rem;
 }
@@ -146,7 +146,7 @@
   padding: 0.65rem;
   border-radius: var(--ds-radius-lg);
   border: 1px solid rgba(22, 78, 60, 0.12);
-  background: #fff;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   box-shadow: 0 12px 32px rgba(36, 31, 24, 0.12);
 }
 
@@ -204,7 +204,7 @@
   padding: 0.45rem 0.85rem;
   border-radius: 999px;
   border: 1px solid rgba(22, 78, 60, 0.15);
-  background: #fff;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   cursor: pointer;
   font-family: inherit;
   font-size: 0.8125rem;
@@ -220,7 +220,7 @@
   padding: 0.85rem;
   border: 1px solid rgba(22, 78, 60, 0.12);
   border-radius: var(--ds-radius);
-  background: #fff;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   font-size: 0.8125rem;
 }
 
@@ -254,7 +254,7 @@
   padding: 0.9rem 1rem;
   border-radius: var(--ds-radius-lg);
   border: 1px solid rgba(22, 78, 60, 0.12);
-  background: #fff;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   font-size: 0.8125rem;
 }
 
@@ -285,7 +285,7 @@
   padding: 0.9rem 1rem;
   border-radius: var(--ds-radius-lg);
   border: 1px solid rgba(22, 78, 60, 0.12);
-  background: #fff;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   text-align: end;
   cursor: pointer;
   font-family: inherit;
@@ -374,7 +374,7 @@
   padding: var(--ds-space-4);
   border: 1px solid rgba(22, 78, 60, 0.12);
   border-radius: var(--ds-radius-lg);
-  background: #fff;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
 }
 
 .fiqh-compare-column h3 {
@@ -432,7 +432,7 @@
   padding: 0.85rem 1rem;
   border-radius: var(--ds-radius-lg);
   border: 1px solid rgba(22, 78, 60, 0.12);
-  background: #fff;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
 }
 
 .fiqh-category-tree-main strong {
@@ -452,7 +452,7 @@
   padding: var(--ds-space-3);
   border-radius: var(--ds-radius);
   border: 1px solid rgba(22, 78, 60, 0.12);
-  background: #fff;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   text-align: center;
 }
 
@@ -526,7 +526,7 @@
 }
 
 .fiqh-research-msg--assistant {
-  background: #fff;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   border: 1px solid rgba(22, 78, 60, 0.12);
   margin-inline-end: 2rem;
 }

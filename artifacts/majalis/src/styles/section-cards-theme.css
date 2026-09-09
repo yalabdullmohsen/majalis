@@ -273,6 +273,229 @@ html[data-theme="dark"] .gl-cat--active .gl-cat__count {
 .akl-page,
 .sect-hub,
 .mdb-page,
-.uq-page {
+.uq-page,
+.jn-page,
+.hs-page,
+.atl-page,
+.tf-page,
+.an-page,
+.nations-page,
+.fiqh-council-page,
+.notif-page,
+.nh-page {
   scroll-padding-bottom: calc(var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 5rem);
+  padding-bottom: calc(
+    var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 4.5rem
+  ) !important;
+}
+
+/* ── موجة 2: أقسام داخلية كانت ما زالت بيضاء ليلاً ───────────────── */
+.jn-page,
+.atl-page,
+.hs-page,
+.tf-page,
+.an-page,
+.fiqh-council-page {
+  background: var(--color-bg, var(--surface-app, #f7f4ee)) !important;
+  color: var(--color-text, var(--mj-ink)) !important;
+}
+
+.jn-desc-card,
+.jn-sabab-card,
+.jn-dua-card,
+.jn-related__link,
+.jn-tab:not(.jn-tab--active),
+.atl-card,
+.atl-tab:not(.atl-tab--active),
+.atl-section-intro,
+.atl-acc-item,
+.atl-stage,
+.atl-kitab,
+.hs-card,
+.hs-search,
+.hs-cat-chip:not(.hs-cat-chip--active),
+.hs-related__link,
+.hs-card__example,
+.tf-card,
+.tf-search,
+.tf-cat-chip:not(.is-active),
+.tf-cta__link,
+.tf-intro,
+.tf-path-card,
+.tf-spotlight-card,
+.tf-edition-card,
+.an-card,
+.fiqh-council-category-card,
+.fiqh-council-subnav-link:not(.fiqh-council-subnav-link--active),
+.fiqh-council-related-link,
+.notif-card,
+.nh-section,
+.nh-list,
+.nh-row,
+.nh-search {
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, var(--color-border))) !important;
+  color: var(--color-text, var(--mj-ink)) !important;
+  border-radius: var(--radius-card, 24px) !important;
+}
+
+.jn-tab,
+.atl-tab,
+.hs-cat-chip,
+.tf-cat-chip,
+.fiqh-council-subnav-link {
+  border-radius: 999px !important;
+  min-height: 44px;
+}
+
+/* لا نفرض لونًا موحّدًا على .jn-tab--active — ألوان الجنة/النار مقصودة */
+.atl-tab--active,
+.hs-cat-chip--active,
+.tf-cat-chip.is-active,
+.fiqh-council-subnav-link--active {
+  background: var(--mj-brand-deep, #0d4a39) !important;
+  color: var(--on-dark-strong, #fff) !important;
+  border-color: var(--mj-brand-deep, #0d4a39) !important;
+}
+
+html.dark .atl-tab--active,
+html.dark .hs-cat-chip--active,
+html.dark .fiqh-council-subnav-link--active,
+html[data-theme="dark"] .atl-tab--active,
+html[data-theme="dark"] .hs-cat-chip--active,
+html[data-theme="dark"] .fiqh-council-subnav-link--active {
+  background: var(--mj-brand, #5fbf98) !important;
+  color: var(--mj-on-brand, #06231a) !important;
+  border-color: var(--mj-brand, #5fbf98) !important;
+}
+
+.jn-desc-card__title,
+.jn-sabab-title,
+.jn-related__title,
+.jn-dua-text,
+.atl-section-intro p,
+.atl-card__title,
+.atl-acc-title,
+.atl-stage__title,
+.atl-kitab__name,
+.hs-card__term,
+.tf-card__term,
+.notif-card__title,
+.notif-row__label,
+.nh-header__title,
+.fiqh-council-category-name,
+.fiqh-council-section-title {
+  color: var(--color-text, var(--mj-ink)) !important;
+  opacity: 1 !important;
+}
+
+.jn-desc-card__text,
+.jn-sabab-text,
+.atl-card__text,
+.atl-acc-body p,
+.atl-stage__focus,
+.hs-card__def,
+.tf-card__def,
+.notif-row__sub,
+.notif-time__hint {
+  color: var(--color-text-muted, var(--mj-ink-2)) !important;
+  opacity: 1 !important;
+}
+
+html.dark .jn-page,
+html.dark .atl-page,
+html.dark .hs-page,
+html.dark .tf-page,
+html.dark .an-page,
+html.dark .fiqh-council-page,
+html[data-theme="dark"] .jn-page,
+html[data-theme="dark"] .atl-page,
+html[data-theme="dark"] .hs-page,
+html[data-theme="dark"] .tf-page,
+html[data-theme="dark"] .an-page,
+html[data-theme="dark"] .fiqh-council-page {
+  background: var(--mj-bg, #121816) !important;
+  color: var(--mj-ink, #f3f7f5) !important;
+}
+
+html.dark .jn-desc-card,
+html.dark .jn-sabab-card,
+html.dark .jn-dua-card,
+html.dark .jn-related__link,
+html.dark .jn-tab:not(.jn-tab--active),
+html.dark .atl-card,
+html.dark .atl-tab:not(.atl-tab--active),
+html.dark .atl-section-intro,
+html.dark .atl-acc-item,
+html.dark .atl-stage,
+html.dark .atl-kitab,
+html.dark .hs-card,
+html.dark .hs-search,
+html.dark .hs-cat-chip:not(.hs-cat-chip--active),
+html.dark .hs-related__link,
+html.dark .hs-card__example,
+html.dark .tf-card,
+html.dark .tf-search,
+html.dark .tf-cat-chip:not(.is-active),
+html.dark .tf-cta__link,
+html.dark .tf-intro,
+html.dark .tf-path-card,
+html.dark .tf-spotlight-card,
+html.dark .tf-edition-card,
+html.dark .an-card,
+html.dark .fiqh-council-category-card,
+html.dark .fiqh-council-subnav-link:not(.fiqh-council-subnav-link--active),
+html.dark .fiqh-council-related-link,
+html.dark .notif-card,
+html.dark .nh-section,
+html.dark .nh-list,
+html.dark .nh-row,
+html.dark .nh-search,
+html[data-theme="dark"] .jn-desc-card,
+html[data-theme="dark"] .jn-sabab-card,
+html[data-theme="dark"] .jn-dua-card,
+html[data-theme="dark"] .atl-card,
+html[data-theme="dark"] .atl-acc-item,
+html[data-theme="dark"] .atl-stage,
+html[data-theme="dark"] .hs-card,
+html[data-theme="dark"] .tf-card,
+html[data-theme="dark"] .an-card,
+html[data-theme="dark"] .fiqh-council-category-card,
+html[data-theme="dark"] .notif-card,
+html[data-theme="dark"] .nh-section,
+html[data-theme="dark"] .nh-list {
+  background: var(--mj-surface, #1b2421) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+  color: var(--mj-ink, #f3f7f5) !important;
+}
+
+html.dark .jn-desc-card__title,
+html.dark .jn-sabab-title,
+html.dark .jn-dua-text,
+html.dark .atl-card__title,
+html.dark .atl-acc-title,
+html.dark .atl-stage__title,
+html.dark .hs-card__term,
+html.dark .tf-card__term,
+html.dark .notif-card__title,
+html.dark .notif-row__label,
+html[data-theme="dark"] .jn-desc-card__title,
+html[data-theme="dark"] .atl-card__title,
+html[data-theme="dark"] .hs-card__term,
+html[data-theme="dark"] .notif-row__label {
+  color: var(--mj-ink, #f3f7f5) !important;
+}
+
+html.dark .jn-desc-card__text,
+html.dark .jn-sabab-text,
+html.dark .atl-card__text,
+html.dark .atl-acc-body p,
+html.dark .hs-card__def,
+html.dark .tf-card__def,
+html.dark .notif-row__sub,
+html[data-theme="dark"] .jn-desc-card__text,
+html[data-theme="dark"] .atl-card__text,
+html[data-theme="dark"] .hs-card__def,
+html[data-theme="dark"] .notif-row__sub {
+  color: var(--mj-ink-2, #c5d0cb) !important;
 }

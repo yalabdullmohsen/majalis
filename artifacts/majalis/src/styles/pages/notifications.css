@@ -19,7 +19,7 @@
 
 /* بطاقة إعداد */
 .notif-card {
-  background: #fff !important;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
   border: 1px solid rgba(24,54,42,0.09) !important;
   border-radius: var(--radius-card, 24px) !important;
   box-shadow: 0 2px 16px rgba(24,54,42,0.05) !important;
@@ -46,7 +46,7 @@
    نص فاتح هنا = تباين ~1.2:1. يبقى الحبر الغامق في الوضعين. */
 html[data-theme="dark"] .notif-row__label,
 html.dark .notif-row__label {
-  color: var(--mj-brand-deep) !important;
+  color: var(--mj-ink, #f3f7f5) !important;
 }
 
 /* التبديل */
@@ -110,7 +110,7 @@ html.dark .notif-row__label {
 
 /* ── سجل الإشعارات (nh-*) ── */
 .nh-section {
-  background: #fff !important;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
   border: 1px solid rgba(24,54,42,0.09) !important;
   border-radius: var(--radius-card, 24px) !important;
   box-shadow: 0 2px 16px rgba(24,54,42,0.05) !important;
@@ -175,7 +175,7 @@ html.dark .notif-row__label {
 }
 .nh-search {
   width: 100% !important;
-  background: #fff !important;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
   border: 1.5px solid rgba(24,54,42,0.12) !important;
   border-radius: var(--radius-button, 18px) !important;
   color: var(--mj-brand-deep) !important;
@@ -230,7 +230,7 @@ html.dark .notif-row__label {
 }
 
 /* قائمة */
-.nh-list { background: #fff !important; }
+.nh-list { background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important; }
 
 .nh-row {
   display: flex !important;
@@ -352,7 +352,7 @@ html.dark .notif-row__label {
   padding: 0.3rem 0.7rem;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--mj-emerald-950, var(--mj-brand-deep)) 20%, transparent);
-  background: #fff;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   color: var(--mj-emerald-text, var(--mj-brand-deep));
   font-size: 0.72rem;
   font-weight: 600;
@@ -384,7 +384,7 @@ html.dark .notif-row__label {
   box-sizing: border-box;
   min-height: 40px;
 }
-.nh-search:focus { outline: none; border-color: var(--mj-emerald-950, var(--mj-brand-deep)); background: #fff; }
+.nh-search:focus { outline: none; border-color: var(--mj-emerald-950, var(--mj-brand-deep)); background: var(--ss-card-bg, var(--color-surface, #fffcf7)); }
 .nh-search::placeholder { color: var(--majalis-ink-soft, var(--mj-ink-2)); }
 .nh-search-clear {
   position: absolute;
@@ -455,7 +455,7 @@ html.dark .notif-row__label {
   display: flex;
   gap: var(--ds-space-3);
   padding: 0.875rem 1rem;
-  background: #fff;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   border-bottom: 1px solid color-mix(in srgb, var(--mj-emerald-950, var(--mj-brand-deep)) 6%, transparent);
   cursor: pointer;
   transition: background 0.12s;
@@ -464,7 +464,7 @@ html.dark .notif-row__label {
 }
 .nh-row-wrap:last-child .nh-row { border-bottom: none; }
 .nh-row:hover { background: var(--mj-ivory-50, var(--mj-bg)); }
-.nh-row--read { background: #fff; }
+.nh-row--read { background: var(--ss-card-bg, var(--color-surface, #fffcf7)); }
 
 .nh-row__icon {
   width: 30px;
@@ -603,7 +603,7 @@ html.dark .notif-row__label {
   top: 3px; inset-inline-end: 3px;
   width: 21px; height: 21px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   transition: right 0.2s;
 }
