@@ -5,9 +5,9 @@
   --topic-hero-to: var(--mss-hero-to, #245f4d);
   --topic-accent: var(--mj-brand);
   --section-accent: var(--topic-accent);
-  --topic-on-hero: var(--mss-on-hero, #faf5ea);
-  --topic-on-hero-muted: var(--mss-on-hero-muted, #e8eeec);
-  --topic-on-hero-accent: var(--mss-on-hero-accent, #f2dfaa);
+  --topic-on-hero: var(--mss-on-hero, #ffffff);
+  --topic-on-hero-muted: var(--mss-on-hero-muted, #f3efe6);
+  --topic-on-hero-accent: var(--mss-on-hero-accent, #fff1c4);
   direction: rtl;
   overflow-x: clip;
   padding-bottom: calc(var(--nav-h, 64px) + var(--fab-space, 56px) + 24px + var(--inset-bottom, 0px));
