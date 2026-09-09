@@ -259,13 +259,16 @@
   flex-direction: column;
   gap: 0.65rem;
   padding: 1rem 1.05rem 0.95rem;
-  border-radius: 16px;
+  border-radius: var(--radius-card, 24px);
   border: 1px solid var(--mk-line);
-  background-color: var(--mk-surface, var(--color-surface, #FFFCF7));
+  background-color: var(--mk-surface, var(--ss-card-bg, var(--color-surface, #FFFCF7)));
   background-image: none;
-  box-shadow: 0 10px 26px -16px rgba(10, 61, 46, 0.28);
+  box-shadow: var(--ss-shadow-soft, 0 10px 26px -16px rgba(10, 61, 46, 0.22));
   min-width: 0;
   overflow: hidden;
+  margin-inline: auto;
+  max-width: 42rem;
+  width: 100%;
 }
 
 .mk-card--sunnah {

@@ -18,7 +18,7 @@
 /* ── نُقل إلى styles/components/islamic-quiz-game.css ── */
 /* ── Shared dynamic color utility ───────────────────────────────────────────── */
 .rw-type--lesson     { --rw-color: var(--majalis-emerald, var(--mj-brand)); }
-.rw-type--hadith     { --rw-color: #1d4ed8; }
+.rw-type--hadith     { --rw-color: var(--ss-deep-green, #0A3D2E); }
 .rw-type--fatwa,
 .rw-type--book,
 .rw-type--dhikr,

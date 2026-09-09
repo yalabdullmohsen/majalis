@@ -34,37 +34,37 @@ const POPULAR_QUERIES = [
 
 const KIND_META: Record<string, { label: string; Icon: LucideIcon; color: string }> = {
   lesson:        { label: "درس",       Icon: GraduationCap, color: "var(--majalis-emerald, var(--mj-brand-deep))" },
-  hadith:        { label: "حديث",      Icon: Scroll,        color: "#1E40AF" },
+  hadith:        { label: "حديث",      Icon: Scroll,        color: "#0A3D2E" },
   book:          { label: "كتاب",      Icon: BookOpen,      color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   library:       { label: "كتاب",      Icon: BookOpen,      color: "var(--majalis-emerald, var(--mj-brand-deep))" },
-  fatwa:         { label: "فتوى",      Icon: Scale,         color: "#5B21B6" },
+  fatwa:         { label: "فتوى",      Icon: Scale,         color: "#1F5C48" },
   fiqh:          { label: "فقه",       Icon: Scale,         color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   fiqh_decision: { label: "قرار فقهي", Icon: Scale,         color: "var(--majalis-emerald, var(--mj-brand-deep))" },
-  ruling:        { label: "حكم",       Icon: FileText,      color: "#1E40AF" },
+  ruling:        { label: "حكم",       Icon: FileText,      color: "#0A3D2E" },
   fawaid:        { label: "فائدة",     Icon: Lightbulb,     color: "var(--majalis-emerald, var(--mj-brand-deep))" },
-  qa:            { label: "سؤال",      Icon: HelpCircle,    color: "#5B21B6" },
+  qa:            { label: "سؤال",      Icon: HelpCircle,    color: "#1F5C48" },
   surah:         { label: "سورة",      Icon: BookMarked,    color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   quran:         { label: "قرآن",      Icon: BookMarked,    color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   tafsir:        { label: "تفسير",     Icon: BookOpen,      color: "var(--majalis-emerald, var(--mj-brand-deep))" },
-  course:        { label: "دورة",      Icon: GraduationCap, color: "#1E40AF" },
+  course:        { label: "دورة",      Icon: GraduationCap, color: "#0A3D2E" },
   miracle:       { label: "إعجاز",     Icon: Star,          color: "var(--majalis-emerald, var(--mj-brand-deep))" },
-  article:       { label: "مقال",      Icon: Newspaper,     color: "#5B21B6" },
+  article:       { label: "مقال",      Icon: Newspaper,     color: "#1F5C48" },
   update:        { label: "مستجد",     Icon: Bell,          color: "var(--majalis-emerald, var(--mj-brand-deep))" },
-  topic:         { label: "موضوع",     Icon: Tag,           color: "#1E40AF" },
+  topic:         { label: "موضوع",     Icon: Tag,           color: "#0A3D2E" },
   knowledge:     { label: "معرفة",     Icon: Layers,        color: "var(--majalis-emerald, var(--mj-brand-deep))" },
-  scholar:       { label: "عالم",      Icon: User,          color: "#5B21B6" },
-  sheikh:        { label: "شيخ",       Icon: User,          color: "#5B21B6" },
+  scholar:       { label: "عالم",      Icon: User,          color: "#1F5C48" },
+  sheikh:        { label: "شيخ",       Icon: User,          color: "#1F5C48" },
   adhkar:        { label: "ذكر",       Icon: RotateCw,      color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   dua:           { label: "دعاء",      Icon: RotateCw,      color: "var(--majalis-emerald, var(--mj-brand-deep))" },
-  seerah:        { label: "سيرة",      Icon: Star,          color: "#1E40AF" },
-  story:         { label: "قصة",       Icon: BookOpen,      color: "#5B21B6" },
-  nation:        { label: "أمة",       Icon: Layers,        color: "#1E40AF" },
+  seerah:        { label: "سيرة",      Icon: Star,          color: "#0A3D2E" },
+  story:         { label: "قصة",       Icon: BookOpen,      color: "#1F5C48" },
+  nation:        { label: "أمة",       Icon: Layers,        color: "#0A3D2E" },
   prophet:       { label: "نبي",       Icon: Star,          color: "var(--majalis-emerald, var(--mj-brand-deep))" },
-  tajweed:       { label: "تجويد",     Icon: Mic2,          color: "#1E40AF" },
-  ulum:          { label: "علوم",      Icon: BookMarked,    color: "#5B21B6" },
+  tajweed:       { label: "تجويد",     Icon: Mic2,          color: "#0A3D2E" },
+  ulum:          { label: "علوم",      Icon: BookMarked,    color: "#1F5C48" },
   hifz:          { label: "حفظ",       Icon: Layers,        color: "var(--majalis-emerald, var(--mj-brand-deep))" },
-  settings:      { label: "إعدادات",   Icon: Wrench,        color: "#5B21B6" },
-  app:           { label: "صفحة",      Icon: Layers,        color: "#1E40AF" },
+  settings:      { label: "إعدادات",   Icon: Wrench,        color: "#1F5C48" },
+  app:           { label: "صفحة",      Icon: Layers,        color: "#0A3D2E" },
 };
 
 const FILTER_CHIPS: { key: SearchScopeId; label: string }[] = [
@@ -137,7 +137,7 @@ function ResultCard({
   query: string;
   onSelect: (r: AppSearchResult) => void;
 }) {
-  const meta = KIND_META[result.kind] ?? { label: result.kind, Icon: FileText, color: "#5B21B6" };
+  const meta = KIND_META[result.kind] ?? { label: result.kind, Icon: FileText, color: "#1F5C48" };
   return (
     <button
       type="button"

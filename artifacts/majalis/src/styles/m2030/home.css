@@ -697,7 +697,7 @@ html.dark .m2030-feature__title {
   color: #92400e;
 }
 .search-status-badge--review {
-  background: color-mix(in srgb, #1d4ed8 12%, transparent);
+  background: color-mix(in srgb, var(--ss-deep-green, #0A3D2E) 12%, transparent);
   color: #1e3a8a;
 }
 @media (max-width: 879px) {

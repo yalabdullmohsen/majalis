@@ -80,7 +80,7 @@
   display: flex; align-items: center; justify-content: center;
   font-size: .9rem; font-weight: 800; flex-shrink: 0;
 }
-.mw-gender-badge--m { background: #DBEAFE; color: #1D4ED8; }
+.mw-gender-badge--m { background: #E6F2EC; color: #0A3D2E; }
 .mw-gender-badge--f { background: #FCE7F3; color: #BE185D; }
 .mw-warith-name   { flex: 1; font-weight: 700; font-size: .9rem; color: var(--mj-ink); }
 .mw-warith-shares { display: flex; gap: .3rem; flex-wrap: wrap; }

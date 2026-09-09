@@ -56,7 +56,7 @@ export const HubCard = memo(function HubCard({
   const hasHead = badge != null || isCurrent || iconNode != null;
 
   const classNames = cn(
-    "hub-card",
+    "hub-card soft-card soft-card--on-light ss-hub-card mj-pressable",
     featured && "hub-card--featured",
     isCurrent && "hub-card--current",
     className,

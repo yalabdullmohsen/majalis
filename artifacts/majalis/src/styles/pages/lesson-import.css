@@ -14,7 +14,7 @@
 .lip-error-msg     { font-size: 0.8125rem; color: var(--mj-danger-deep); margin-top: 0.5rem; background: var(--mj-danger-soft); padding: 0.5rem 0.75rem; border-radius: var(--ds-radius-sm); }
 .lip-upload-hint   { font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); margin-top: 0.5rem; }
 .lip-badges-row    { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; margin-bottom: 0.75rem; }
-.lip-sheikh-badge  { padding: 0.25rem 0.625rem; border-radius: var(--ds-radius-full); background: #DBEAFE; color: #1D4ED8; font-size: var(--ds-text-xs); }
+.lip-sheikh-badge  { padding: 0.25rem 0.625rem; border-radius: var(--ds-radius-full); background: #E6F2EC; color: #0A3D2E; font-size: var(--ds-text-xs); }
 .lip-draft-grid    { display: grid; gap: var(--ds-space-4); grid-template-columns: minmax(240px, 1fr) minmax(280px, 2fr); margin-bottom: 1rem; }
 .lip-panel         { background: var(--majalis-panel, #f9f7f1); border: 1px solid var(--majalis-line); border-radius: 0.625rem; padding: var(--ds-space-4); }
 .lip-panel-h3      { margin: 0 0 0.75rem; font-size: 0.9375rem; color: var(--majalis-emerald-deep); }

@@ -55,6 +55,8 @@ import "./styles/visual-layer-contrast-fix.css";
 import "./styles/visual-identity-unify.css";
 /* تلميع الأقسام: بطاقات/فلاتر/قائمة/عائم — بعد طبقة التوحيد */
 import "./styles/sections-calm-polish.css";
+/* صقل منتج سُنّة — توكنات/بطاقات/درج/بحث/ليلي */
+import "./styles/ssunnah-ux-polish.css";
 // dark-mode-surfaces (~24KB) — فوري فقط إن كان الثيم داكنًا عند الإقلاع؛ وإلا بعد load
 {
   const bootDark =

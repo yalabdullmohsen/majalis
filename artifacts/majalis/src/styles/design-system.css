@@ -1974,7 +1974,7 @@ hr.decorative,
 }
 
 .push-prompt--warn { border-color: #fcd34d; background: rgba(23,61,53,0.06); }
-.push-prompt--info { border-color: #93c5fd; background: #eff6ff; font-size: 0.82rem; color: #1e40af; }
+.push-prompt--info { border-color: color-mix(in srgb, var(--ss-primary-green, #0F5C45) 28%, #fff); background: color-mix(in srgb, var(--ss-primary-green, #0F5C45) 8%, #fff); font-size: 0.82rem; color: var(--ss-deep-green, #0A3D2E); }
 
 .push-prompt__text {
   display: flex;
