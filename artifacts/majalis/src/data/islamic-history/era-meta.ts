@@ -31,7 +31,7 @@ export const HISTORY_ERA_META: Record<HistoryCategory, HistoryEraMeta> = {
     title: "الخلفاء الراشدون",
     period: "11–40هـ",
     center: "المدينة · الكوفة",
-    blurb: "خلافة على منهاج النبوة: جمع القرآن والفتوحات والفتن بضوابط أهل السنة.",
+    blurb: "خلافة على منهاج النبوة: الردة، اليرموك والقادسية وفتح مصر، جمع القرآن، ثم الفتن بضوابط أهل السنة.",
     accent: "#1a6b45",
   },
   umayyad: {
@@ -79,7 +79,7 @@ export const HISTORY_ERA_META: Record<HistoryCategory, HistoryEraMeta> = {
     title: "الدولة العثمانية",
     period: "699–1342هـ",
     center: "إسطنبول",
-    blurb: "من التأسيس إلى فتح القسطنطينية، ثم الامتداد فالضعف حتى إلغاء الخلافة.",
+    blurb: "من التأسيس إلى فتح محمد الفاتح للقسطنطينية، ففتح مصر وانتقال الرعاية للحرمين، ثم الامتداد فالضعف حتى إلغاء الخلافة.",
     accent: "#4a5c38",
   },
   civilization: {

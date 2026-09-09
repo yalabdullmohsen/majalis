@@ -70,28 +70,35 @@ export function getHistoryItem(id: string): IslamicHistoryItem | undefined {
 }
 
 export function getHistoryByCategory(category: HistoryCategory): IslamicHistoryItem[] {
-  return ISLAMIC_HISTORY_ITEMS.filter((item) => item.category === category);
+  return ISLAMIC_HISTORY_ITEMS.filter((item) => item.category === category).sort(compareTimeline);
 }
 
 export function getFeaturedItems(): IslamicHistoryItem[] {
-  return ISLAMIC_HISTORY_ITEMS.filter((item) => item.featured);
+  return ISLAMIC_HISTORY_ITEMS.filter((item) => item.featured).sort(compareTimeline);
 }
 
 export function getStartHereItems(): IslamicHistoryItem[] {
-  return ISLAMIC_HISTORY_ITEMS.filter((item) => item.startHere);
+  return ISLAMIC_HISTORY_ITEMS.filter((item) => item.startHere).sort(compareTimeline);
 }
 
 export function searchHistoryItems(query: string): IslamicHistoryItem[] {
   const q = query.trim();
   if (!q) return [];
-  return ISLAMIC_HISTORY_ITEMS.filter(
-    (item) =>
-      item.title.includes(q) ||
-      item.summary.includes(q) ||
-      item.detail.includes(q) ||
-      (item.place?.includes(q) ?? false) ||
-      (item.era.includes(q) ?? false),
-  );
+  return ISLAMIC_HISTORY_ITEMS.filter((item) => {
+    const hay = [
+      item.title,
+      item.summary,
+      item.detail,
+      item.era,
+      item.place ?? "",
+      item.causes ?? "",
+      item.outcomes ?? "",
+      item.lessons ?? "",
+      ...(item.relatedPersons ?? []),
+      ...item.sources,
+    ].join("\n");
+    return hay.includes(q);
+  });
 }
 
 /** مجموعات الدول/العصور مع أحداثها مرتّبة زمنياً */

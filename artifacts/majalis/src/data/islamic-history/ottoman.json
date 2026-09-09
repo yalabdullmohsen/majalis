@@ -48,7 +48,7 @@
   },
   {
     "id": "ottoman-istanbul",
-    "title": "فتح القسطنطينية",
+    "title": "فتح محمد الفاتح للقسطنطينية",
     "kind": "event",
     "category": "ottoman",
     "era": "857هـ / 1453م",
@@ -85,13 +85,60 @@
         "label": "العمارة الإسلامية"
       },
       {
-        "href": "/seerah",
-        "label": "السيرة النبوية"
+        "href": "/tarikh-islami/ottoman-egypt",
+        "label": "فتح مصر العثمانية"
       }
     ],
     "featured": true,
     "startHere": true,
     "timelineOrder": 702
+  },
+  {
+    "id": "ottoman-egypt",
+    "title": "فتح سليم الأول لمصر وانتقال رعاية الحرمين",
+    "kind": "event",
+    "category": "ottoman",
+    "era": "923هـ / 1517م",
+    "summary": "هزم السلطان سليم الأول المماليك ودخل القاهرة نحو 923هـ/1517م؛ فانتقلت رعاية الحرمين والنفوذ الخلافي رمزًا وعملاً إلى العثمانيين.",
+    "detail": "بعد صراع مع المماليك في الشام ومصر انتصر سليم الأول ودخل القاهرة نحو سنة 923هـ / 1517م. انتهى الحكم المملوكي، وصارت مصر ولاية عثمانية مهمة للخراج والجند والعلم. ارتبطت بالفتح رواية انتقال الخلافة أو البيعة الرمزية ورعاية الحرمين من بقايا العباسيين في القاهرة إلى السلاطين العثمانيين؛ فيُروى ذلك بتمحيص دون مبالغة أسطورية. المهم تاريخيًا: صارت إسطنبول مركز القرار السياسي، وبقيت مكة والمدينة تحت رعاية عثمانية قرونًا. يُقرأ الحدث بلا تشفٍّ في المماليك ولا غلوّ في الأشخاص: الدول تنتقل بالسنن من قوة إلى قوة. مصر بعد الفتح بقيت منارة علم ومذهب، والعبرة في حفظ المقدسات والعدل في الولايات. بذلك اتّسع السلطان العثماني من الأناضول إلى قلب العالم الإسلامي.",
+    "causes": "صراع النفوذ بين العثمانيين والمماليك بعد توسّع عثماني في الأناضول والبلقان وضعف مملوكي نسبي.",
+    "outcomes": "سقوط سلطنة المماليك، وضم مصر والشام، وانتقال رعاية الحرمين والرمز الخلافي إلى العثمانيين.",
+    "lessons": "انتقال الدول سنّة كونية؛ وحفظ الحرمين والعدل في الرعية أبقى أثرًا من مجرّد الاتّساع العسكري.",
+    "relatedPersons": [
+      "سليم الأول",
+      "طومان باي",
+      "قانصوه الغوري"
+    ],
+    "sources": [
+      "تاريخ الدولة العثمانية",
+      "البداية والنهاية",
+      "الكامل في التاريخ",
+      "الشقائق النعمانية"
+    ],
+    "verification": "confirmed",
+    "hijriDate": "923هـ",
+    "gregorianDate": "1517م",
+    "place": "القاهرة",
+    "relatedLinks": [
+      {
+        "href": "/tarikh-islami/ottoman-istanbul",
+        "label": "فتح القسطنطينية"
+      },
+      {
+        "href": "/tarikh-islami/ottoman-suleyman",
+        "label": "عصر سليمان القانوني"
+      },
+      {
+        "href": "/tarikh-islami/mamluk-decline",
+        "label": "تدهور المماليك"
+      },
+      {
+        "href": "/tarikh-islami/civ-al-azhar",
+        "label": "الجامع الأزهر"
+      }
+    ],
+    "featured": true,
+    "timelineOrder": 703
   },
   {
     "id": "ottoman-suleyman",
@@ -122,20 +169,20 @@
         "label": "فتح القسطنطينية"
       },
       {
+        "href": "/tarikh-islami/ottoman-egypt",
+        "label": "فتح مصر العثمانية"
+      },
+      {
         "href": "/tarikh-islami/ottoman-millet",
         "label": "نظام الملل"
       },
       {
         "href": "/tarikh-islami/ottoman-waqf",
         "label": "الأوقاف العثمانية"
-      },
-      {
-        "href": "/tarikh-islami/civ-architecture",
-        "label": "العمارة الإسلامية"
       }
     ],
     "featured": true,
-    "timelineOrder": 703
+    "timelineOrder": 704
   },
   {
     "id": "ottoman-millet",
@@ -177,7 +224,7 @@
         "label": "منهج الموقع"
       }
     ],
-    "timelineOrder": 704
+    "timelineOrder": 705
   },
   {
     "id": "ottoman-waqf",
@@ -220,7 +267,7 @@
         "label": "قصص وعبر تاريخية"
       }
     ],
-    "timelineOrder": 705
+    "timelineOrder": 706
   },
   {
     "id": "ottoman-science",
@@ -262,7 +309,7 @@
         "label": "الأوقاف العثمانية"
       }
     ],
-    "timelineOrder": 706
+    "timelineOrder": 707
   },
   {
     "id": "ottoman-decline",
@@ -305,7 +352,7 @@
         "label": "منهج الموقع"
       }
     ],
-    "timelineOrder": 707
+    "timelineOrder": 708
   },
   {
     "id": "ottoman-dissolution",
@@ -349,6 +396,6 @@
         "label": "الأمة إلى يومنا"
       }
     ],
-    "timelineOrder": 708
+    "timelineOrder": 709
   }
 ]
