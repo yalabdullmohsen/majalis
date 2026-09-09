@@ -75,6 +75,26 @@ assert.match(atl, /\.atl-card[\s\S]*?--ss-card-bg/);
 assert.doesNotMatch(hs, /\.hs-search\s*\{[^}]*background:\s*#FFFFFF/i);
 assert.match(hs, /\.hs-search[\s\S]*?--ss-card-bg/);
 
+console.log("=== دليل المعالم/المؤسسات ضمن الثيم ===");
+assert.match(theme, /\.ilm-card/);
+assert.match(theme, /\.inst-card/);
+
+console.log("=== زكاة / سنن يومية بلا #fff صلب على البطاقة ===");
+const zakat = read("src/styles/pages/zakat.css");
+const sunan = read("src/styles/pages/sunan-yawmiyya.css");
+const arkanIslam = read("src/styles/pages/arkan-islam.css");
+assert.doesNotMatch(zakat, /\.zk-card\s*\{[^}]*background:\s*#FFFFFF/i);
+assert.match(zakat, /\.zk-card[\s\S]*?--ss-card-bg/);
+assert.doesNotMatch(sunan, /\.sy-card\s*\{[^}]*background:\s*#FFFFFF/i);
+assert.match(sunan, /\.sy-card[\s\S]*?--ss-card-bg/);
+assert.doesNotMatch(arkanIslam, /\.arkan-related__link\s*\{[^}]*background:\s*#FFFFFF/i);
+assert.match(arkanIslam, /\.arkan-related__link[\s\S]*?--ss-card-bg/);
+assert.doesNotMatch(arkanIslam, /rgba\(124,\s*58,\s*237/);
+assert.match(theme, /\.zk-card/);
+assert.match(theme, /\.sy-card/);
+assert.match(theme, /html\.dark[\s\S]*?\.zk-card[\s\S]*?--mj-surface/);
+assert.match(theme, /html\.dark[\s\S]*?\.sy-card[\s\S]*?--mj-surface/);
+
 console.log("=== أعداد المحتوى: اختبارات وأسئلة غير صفرية ===");
 const counts = JSON.parse(read("src/data/content-counts.json")) as {
   quizQuestions: number;

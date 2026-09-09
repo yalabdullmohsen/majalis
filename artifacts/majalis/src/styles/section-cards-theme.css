@@ -47,7 +47,9 @@ html[data-theme="dark"] .soft-tile--on-light {
 .tf-card,
 .hub-card,
 .soft-card,
-.mj-card {
+.mj-card,
+.ilm-card,
+.inst-card {
   color: var(--color-text, var(--mj-ink, #16241e));
 }
 
@@ -497,5 +499,95 @@ html[data-theme="dark"] .jn-desc-card__text,
 html[data-theme="dark"] .atl-card__text,
 html[data-theme="dark"] .hs-card__def,
 html[data-theme="dark"] .notif-row__sub {
+  color: var(--mj-ink-2, #c5d0cb) !important;
+}
+
+
+/* ── دليل المؤسسات/المعالم ─────────────────────────────────────── */
+.ilm-card,
+.inst-card {
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, var(--color-border))) !important;
+  border-radius: var(--radius-card, 24px) !important;
+  box-shadow: var(--ss-shadow-soft, var(--shadow-soft, none)) !important;
+  color: var(--color-text, var(--mj-ink)) !important;
+}
+html.dark .ilm-card,
+html.dark .inst-card,
+html[data-theme="dark"] .ilm-card,
+html[data-theme="dark"] .inst-card {
+  background: var(--mj-surface, #1b2421) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+  color: var(--mj-ink, #f3f7f5) !important;
+}
+
+/* ── موجة: زكاة / سنن يومية / أركان الإسلام (روابط ذات صلة) ───────── */
+.zk-page,
+.sy-page {
+  background: var(--color-bg, var(--surface-app, #f7f4ee));
+  color: var(--color-text, var(--mj-ink));
+}
+
+.zk-card,
+.zk-mustahiq__item,
+.zk-related__link,
+.zk-calc,
+.zk-calc__input,
+.sy-card,
+.sy-search,
+.sy-cat-chip:not(.sy-cat-chip--active),
+.sy-related__link,
+.sy-card__check,
+.arkan-related__link {
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, var(--color-border))) !important;
+  color: var(--color-text, var(--mj-ink)) !important;
+}
+
+html.dark .zk-page,
+html.dark .sy-page,
+html[data-theme="dark"] .zk-page,
+html[data-theme="dark"] .sy-page {
+  background: var(--mj-bg, #121816) !important;
+  color: var(--mj-ink, #f3f7f5) !important;
+}
+
+html.dark .zk-card,
+html.dark .zk-mustahiq__item,
+html.dark .zk-related__link,
+html.dark .zk-calc,
+html.dark .zk-calc__input,
+html.dark .sy-card,
+html.dark .sy-search,
+html.dark .sy-cat-chip:not(.sy-cat-chip--active),
+html.dark .sy-related__link,
+html.dark .sy-card__check,
+html.dark .arkan-related__link,
+html[data-theme="dark"] .zk-card,
+html[data-theme="dark"] .zk-calc,
+html[data-theme="dark"] .sy-card,
+html[data-theme="dark"] .sy-search,
+html[data-theme="dark"] .arkan-related__link {
+  background: var(--mj-surface, #1b2421) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+  color: var(--mj-ink, #f3f7f5) !important;
+}
+
+html.dark .zk-card__title,
+html.dark .zk-mustahiq__title,
+html.dark .zk-kinds__title,
+html.dark .sy-card__title,
+html.dark .sy-related__title,
+html[data-theme="dark"] .zk-card__title,
+html[data-theme="dark"] .sy-card__title {
+  color: var(--mj-ink, #f3f7f5) !important;
+}
+
+html.dark .zk-card__rate,
+html.dark .zk-detail,
+html.dark .sy-card__text,
+html.dark .sy-card__time,
+html[data-theme="dark"] .zk-detail,
+html[data-theme="dark"] .sy-card__text {
   color: var(--mj-ink-2, #c5d0cb) !important;
 }
