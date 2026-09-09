@@ -6,6 +6,8 @@ import {
   parseHadithId,
   type HadithRecord,
 } from "@/lib/hadith-corpus";
+import { HadithGradeBadge } from "@/components/hadith/HadithGradeBadge";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import "@/styles/pages/hadith.css";
 
 function ShareBlock({ hadith }: { hadith: HadithRecord }) {
@@ -23,6 +25,16 @@ function ShareBlock({ hadith }: { hadith: HadithRecord }) {
     >
       نسخ للمشاركة
     </button>
+  );
+}
+
+function HadithDetailSkeleton() {
+  return (
+    <div className="page-shell hadith-by-id" dir="rtl" aria-busy="true" aria-label="جاري تحميل الحديث">
+      <div className="hadith-detail-card hadith-detail-card--matn hadith-detail-skeleton" />
+      <div className="hadith-detail-card hadith-detail-skeleton hadith-detail-skeleton--short" />
+      <div className="hadith-detail-card hadith-detail-skeleton hadith-detail-skeleton--tall" />
+    </div>
   );
 }
 
@@ -61,37 +73,34 @@ export default function HadithByIdView() {
   if (!parseHadithId(raw)) {
     return (
       <div className="page-shell hadith-by-id" dir="rtl">
-        <p>معرّف غير صالح. الصيغة: <code>bukhari:1</code></p>
-        <Link href="/hadith">← العودة للحديث</Link>
+        <div className="hadith-detail-card hadith-detail-card--notice">
+          <p>معرّف غير صالح. الصيغة: <code>bukhari:1</code></p>
+          <Link href="/hadith/sahih" className="hadith-detail-link">تصفّح الأحاديث الصحيحة</Link>
+        </div>
       </div>
     );
   }
 
   if (loading) {
-    return (
-      <div className="page-shell hadith-by-id" dir="rtl" aria-busy="true">
-        <p>جاري تحميل الحديث…</p>
-      </div>
-    );
+    return <HadithDetailSkeleton />;
   }
 
   if (!hadith) {
     return (
       <div className="page-shell hadith-by-id" dir="rtl">
-        <p>لم يُعثر على الحديث في المصادر المحمّلة بعد.</p>
-        <Link href="/hadith">← العودة للحديث</Link>
+        <div className="hadith-detail-card hadith-detail-card--notice">
+          <p>لم يُعثر على الحديث في المصادر المحمّلة بعد.</p>
+          <Link href="/hadith/sahih" className="hadith-detail-link">تصفّح الأحاديث الصحيحة</Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <article className={`page-shell hadith-by-id${hadith.isMawdu ? " hadith-by-id--mawdu" : ""}`} dir="rtl">
-      <nav className="hadith-by-id__nav">
-        <Link href="/hadith">الحديث</Link>
-        <span aria-hidden="true"> · </span>
-        <span>{hadith.id}</span>
-      </nav>
-
+    <article
+      className={`page-shell hadith-by-id${hadith.isMawdu ? " hadith-by-id--mawdu" : ""}`}
+      dir="rtl"
+    >
       {hadith.isMawdu ? (
         <div className="hadith-mawdu-banner" role="alert">
           <strong>{hadith.mawduWarning || "حديث موضوع لا يصحّ"}</strong>
@@ -103,7 +112,8 @@ export default function HadithByIdView() {
         </div>
       ) : null}
 
-      <header className="hadith-by-id__head">
+      <header className="hadith-detail-card hadith-detail-card--head">
+        <p className="hadith-detail-card__eyebrow">{hadith.numberingSystem}</p>
         <h1 className="hadith-by-id__id">
           <button
             type="button"
@@ -120,31 +130,60 @@ export default function HadithByIdView() {
           </button>
           {copied ? <span className="hadith-id-copied">تم النسخ</span> : null}
         </h1>
-        <p className="hadith-by-id__meta">
-          {hadith.numberingSystem}
-          {hadith.chapter ? ` · ${hadith.chapter}` : ""}
-          {hadith.narrator ? ` · الراوي: ${hadith.narrator}` : ""}
-        </p>
+        {hadith.chapter ? (
+          <p className="hadith-by-id__meta">{hadith.chapter}</p>
+        ) : null}
       </header>
 
-      <div className="hadith-by-id__matn">
-        <p>{hadith.matn}</p>
-      </div>
+      <section className="hadith-detail-card hadith-detail-card--matn" aria-label="متن الحديث">
+        <h2 className="hadith-detail-card__title">المتن</h2>
+        <blockquote className="hadith-detail-matn">{hadith.matn}</blockquote>
+      </section>
 
-      <section className="hadith-by-id__grade" aria-label="الحكم">
+      <section className="hadith-detail-card" aria-label="الراوي والمصدر">
+        <h2 className="hadith-detail-card__title">الراوي والمصدر</h2>
+        <dl className="hadith-detail-dl">
+          {hadith.narrator ? (
+            <>
+              <dt>الراوي</dt>
+              <dd>{hadith.narrator}</dd>
+            </>
+          ) : null}
+          <dt>المصدر</dt>
+          <dd>{hadith.numberingSystem}</dd>
+        </dl>
+      </section>
+
+      <section className="hadith-detail-card" aria-label="الحكم والتخريج">
+        <h2 className="hadith-detail-card__title">الحكم والتخريج</h2>
         {hadith.grade ? (
-          <p>
-            <strong>الحكم المنقول:</strong> {hadith.grade.quote}
-            <br />
-            <span className="hadith-by-id__grade-src">المصدر: {hadith.grade.source}</span>
-          </p>
+          <div className="hadith-detail-grade">
+            <HadithGradeBadge grade={hadith.grade.quote || hadith.grade.verdict || null} />
+            <p className="hadith-detail-grade__quote">{hadith.grade.quote}</p>
+            <p className="hadith-by-id__grade-src">المصدر: {hadith.grade.source}</p>
+          </div>
         ) : (
           <p className="hadith-by-id__ungraded">لم يُوثَّق حكمه في مصادرنا بعد</p>
         )}
-        {hadith.takhrij ? <p>التخريج: {hadith.takhrij}</p> : null}
+        {hadith.takhrij ? (
+          <p className="hadith-detail-takhrij">
+            <span className="hadith-meta-label">التخريج:</span> {hadith.takhrij}
+          </p>
+        ) : null}
       </section>
 
-      <ShareBlock hadith={hadith} />
+      <div className="hadith-detail-card hadith-detail-card--actions">
+        <ShareBlock hadith={hadith} />
+      </div>
+
+      <ExploreAlsoNav
+        title="اقرأ أيضاً"
+        links={[
+          { href: "/hadith/sahih", label: "الأحاديث الصحيحة" },
+          { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
+          { href: "/hadith-science", label: "مصطلح الحديث" },
+        ]}
+      />
     </article>
   );
 }

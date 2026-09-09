@@ -18,6 +18,8 @@ assert.match(hadithView, /hadith-page--hub/);
 assert.match(hadithView, /الحديث وعلومه/);
 assert.match(hadithView, /TopicPage/);
 assert.doesNotMatch(hadithView, /hadith-hub-search/);
+assert.doesNotMatch(hadithView, /<HadithSection[^>]*embedded/, "hub لا يحمّل corpus مضمّناً");
+assert.match(hadithView, /hadith-browse-cta/);
 assert.match(hadithView, /hadith-scientific-notice/);
 assert.match(hadithView, /لا يُحتج بالحديث الضعيف/);
 assert.match(hadithView, /لا يجوز نسبته|لا يُنسب الموضوع|بيان وضعه/);
