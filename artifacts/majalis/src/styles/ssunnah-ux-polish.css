@@ -683,19 +683,32 @@ html[data-audio-dock="1"] .floating-back-btn {
   }
 }
 
-/* تقليل فراغ علوي في لوبي/موضوع (عتبة visual 160px) */
+/* تقليل فراغ علوي تيكر→h1 (عتبة visual ≤160px على /fiqh و/hadith) */
 .section-lobby {
-  padding-top: 12px;
+  padding-top: 8px;
 }
 
 .section-lobby__head {
   padding-block-start: 0;
   margin-block-start: 0;
+  gap: 6px;
+}
+
+.topic-page__crumb {
+  padding-block: 0.15rem 0.2rem !important;
+  padding-inline: var(--page-gutter, 1rem);
 }
 
 .topic-page__hero {
+  margin-block-start: 0 !important;
+  margin-block-end: 0.5rem;
+  padding-block-start: 1rem !important;
+  padding-block-end: 1.1rem;
+}
+
+.topic-page__title,
+.topic-page__hero h1 {
   margin-block-start: 0;
-  padding-block-start: 0.65rem;
 }
 
 html[data-theme="dark"] .ss-state-card,
