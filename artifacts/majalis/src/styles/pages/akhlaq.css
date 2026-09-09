@@ -53,12 +53,14 @@
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
+  padding-inline: 0.35rem;
   padding-block: 0.15rem 0.35rem;
+  overscroll-behavior-x: contain;
 }
 
 .akl-cat {
   flex: 0 0 auto;
-  min-height: 36px;
+  min-height: 44px;
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
   font-size: 0.82rem;

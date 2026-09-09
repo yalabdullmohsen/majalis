@@ -66,15 +66,15 @@
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
+  padding-inline: 0.35rem;
   padding-block: 0.15rem 0.35rem;
-  padding-inline: 0.1rem;
-  margin-inline: -0.1rem;
+  overscroll-behavior-x: contain;
 }
 
 .sect-hub__chip {
   appearance: none;
   flex: 0 0 auto;
-  min-height: 36px;
+  min-height: 44px;
   padding: 0.35rem 0.9rem;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--mj-brand) 28%, var(--ss-border, #e3e8e6));

@@ -39,22 +39,39 @@ assert.doesNotMatch(
   "الفرق بلا هيرو أخضر حاد مضمّن",
 );
 assert.match(sectsCss, /\.sect-hub__grid/);
-assert.match(sectsCss, /justify-self:\s*center/);
+assert.match(sectsCss, /justify-self:\s*center/, "Section card is not centered");
 assert.match(sectsCss, /padding-bottom:\s*calc\(var\(--(?:nav-h|bottom-nav-height)/);
+assert.match(sectsCss, /\.sect-hub__chip[\s\S]{0,80}?min-height:\s*44px/, "Filter chips touch target < 44px");
+assert.match(sectsCss, /\.sect-hub__chips[\s\S]{0,220}?padding-inline/, "Filter chips clipped at edge: need padding-inline");
 
 assert.match(akhlaqCss, /topic-page--akhlaq \.akl-hero/);
 assert.match(akhlaqCss, /display:\s*none/);
-assert.doesNotMatch(akhlaqCss, /#6D28D9|#7c3aed/i);
+assert.doesNotMatch(akhlaqCss, /#6D28D9|#7c3aed/i, "Off-brand purple found in akhlaq.css");
+assert.match(akhlaqCss, /\.akl-cat[\s\S]{0,80}?min-height:\s*44px/, "Akhlaq chips touch target < 44px");
 
 assert.doesNotMatch(
   storiesCss,
   /\.isp-card\s*\{[^}]*background:\s*var\(--elite-forest/s,
-  "بطاقات القصص ليست خلفية غابة داكنة",
+  "Heavy dark-green section cards found in stories",
 );
 assert.match(storiesCss, /\.isp-card\s*\{[^}]*--ss-card-bg/s);
-assert.match(storiesCss, /\.isp-grid\s*>\s*:last-child:nth-child\(odd\)/);
-assert.doesNotMatch(storiesCss, /#6D28D9/);
+assert.match(storiesCss, /\.isp-grid\s*>\s*:last-child:nth-child\(odd\)/, "Section card is not centered");
+assert.doesNotMatch(storiesCss, /#6D28D9/, "Off-brand purple found in stories.css");
+assert.match(storiesCss, /\.isp-chip[\s\S]{0,80}?min-height:\s*44px/, "Stories chips touch target < 44px");
 
-assert.doesNotMatch(amr, /linear-gradient\(160deg,\s*var\(--mj-brand-deep\)/);
+assert.doesNotMatch(amr, /linear-gradient\(160deg,\s*var\(--mj-brand-deep\)/, "Low contrast text found inside dark hero");
+
+for (const [name, src] of [
+  ["sects", sects],
+  ["akhlaq", akhlaq],
+  ["stories", stories],
+  ["amr", amr],
+] as const) {
+  assert.doesNotMatch(
+    src,
+    /AppBackButton|FloatingBackButton/,
+    `Duplicate back buttons visible: ${name} must not render local back`,
+  );
+}
 
 console.log("legacy-sections-ui-gate: ok");

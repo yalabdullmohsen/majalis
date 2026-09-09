@@ -93,12 +93,14 @@
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
+  padding-inline: 0.35rem;
   padding-block: 0.15rem 0.35rem;
+  overscroll-behavior-x: contain;
 }
 
 .isp-chip {
   flex: 0 0 auto;
-  min-height: 36px;
+  min-height: 44px;
   padding: 0.35rem 0.9rem;
   background: var(--ss-card-bg, #fffcf7);
   border: 1px solid color-mix(in srgb, var(--mj-brand) 28%, var(--ss-border));
