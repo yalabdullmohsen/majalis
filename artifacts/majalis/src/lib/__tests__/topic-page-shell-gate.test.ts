@@ -37,7 +37,11 @@ assert.ok(malaika.includes("<TopicPage"), "Malaika: يصيّر TopicPage");
 assert.ok(!malaika.includes("mk-hero"), "Malaika: بلا hero قديم");
 assert.ok(!malaika.includes("mk-tabs"), "Malaika: بلا tabs قديمة");
 
-assert.ok(css.includes("padding-bottom: calc(var(--nav-h"), "CSS: نطاق سفلي للـfab");
+assert.ok(
+  css.includes("padding-bottom: calc(var(--nav-h") ||
+    css.includes("padding-bottom: calc(var(--bottom-nav-height"),
+  "CSS: نطاق سفلي للـfab",
+);
 assert.ok(css.includes("--inset-top") || css.includes("inset-top"), "CSS: safe-area علوي عبر الفتات");
 assert.ok(/mask-image|webkit-mask/.test(css), "CSS: تلاشٍ طرفي للشرائح");
 

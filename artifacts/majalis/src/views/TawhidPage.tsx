@@ -478,7 +478,7 @@ export default function TawhidPage() {
         <SectionLabel emoji="" label="أنواع التوحيد الثلاثة" />
         <h2 id="types-heading" className="tawheed-principles-heading">أنواع التوحيد الثلاثة</h2>
         <div className="tawheed-types-grid">
-          {TAWHEED_TYPES.map((t, idx) => (
+          {TAWHEED_TYPES.map((t) => (
             <div key={t.num} className={`tawheed-type-card tawheed-type-card--${t.variant === "brand" ? "brand" : "emerald"}`}>
               <div className="tawheed-type-card__num">{t.num}</div>
               <p className="tawheed-type-card__title">{t.title}</p>

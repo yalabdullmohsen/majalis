@@ -40,7 +40,7 @@ assert.doesNotMatch(
 );
 assert.match(sectsCss, /\.sect-hub__grid/);
 assert.match(sectsCss, /justify-self:\s*center/);
-assert.match(sectsCss, /padding-bottom:\s*calc\(var\(--nav-h/);
+assert.match(sectsCss, /padding-bottom:\s*calc\(var\(--(?:nav-h|bottom-nav-height)/);
 
 assert.match(akhlaqCss, /topic-page--akhlaq \.akl-hero/);
 assert.match(akhlaqCss, /display:\s*none/);
