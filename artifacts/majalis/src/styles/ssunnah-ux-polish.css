@@ -582,13 +582,13 @@ html.dark .card__subtitle {
 
 /* لا يغطي العائم المشغّل — يرفع فوق الشريط فقط */
 .floating-back-btn {
-  bottom: calc(var(--nav-h, 64px) + 12px + var(--inset-bottom, 0px)) !important;
+  bottom: calc(var(--bottom-nav-height, var(--nav-h, 64px)) + 12px + var(--inset-bottom, 0px)) !important;
   z-index: 40;
 }
 
 html.audio-dock-open .floating-back-btn,
 html[data-audio-dock="1"] .floating-back-btn {
-  bottom: calc(var(--nav-h, 64px) + var(--audio-dock-h, 72px) + 16px + var(--inset-bottom, 0px)) !important;
+  bottom: calc(var(--bottom-nav-height, var(--nav-h, 64px)) + var(--audio-dock-h, 72px) + 16px + var(--inset-bottom, 0px)) !important;
 }
 
 /* ── مرحلة 3: تفاعل / حالات / a11y ── */
@@ -716,4 +716,85 @@ html[data-theme="dark"] .ss-state-card,
 html.dark .ss-state-card {
   background: var(--ss-card-bg, #1b2421);
   border-color: color-mix(in srgb, var(--ss-primary-green) 22%, var(--ss-border));
+}
+
+/* ── مرحلة 2: إحساس يومي (iPhone) — انتقالات سريعة + قراءة + overflow ── */
+.app-main,
+.page-shell,
+.topic-page,
+.search-page {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+body {
+  line-height: 1.7;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+p,
+.topic-page__lede,
+.section-lobby__desc,
+.search-empty-hint,
+.ss-state-card p {
+  line-height: 1.75;
+  color: var(--mj-ink, var(--color-text));
+}
+
+.topic-page__lede,
+.section-lobby__desc,
+.ss-muted,
+.text-muted,
+.muted {
+  color: var(--mj-ink-2, #4A5A53) !important;
+  opacity: 1;
+}
+
+.navbar-v3,
+.top-section-bar,
+.compact-section-header,
+.topic-page__crumb {
+  min-height: 2.75rem;
+  box-sizing: border-box;
+}
+
+.bottom-nav,
+.bottom-nav--v2 {
+  box-shadow: 0 -1px 0 color-mix(in srgb, var(--mj-ink, #122) 8%, transparent);
+}
+
+html[data-theme="dark"] .hub-card,
+html.dark .hub-card,
+html[data-theme="dark"] .ss-feature-card,
+html.dark .ss-feature-card,
+html[data-theme="dark"] .soft-card,
+html.dark .soft-card,
+html[data-theme="dark"] .isp-card,
+html.dark .isp-card,
+html[data-theme="dark"] .sect-hub__card,
+html.dark .sect-hub__card {
+  background: var(--ss-card-bg, #1b2421);
+  border-color: color-mix(in srgb, var(--ss-primary-green, #1f6b56) 28%, var(--ss-border, #2a3531));
+  box-shadow: none;
+}
+
+html[data-theme="dark"] .srch-home-form,
+html.dark .srch-home-form,
+html[data-theme="dark"] .search-page .search-page-form,
+html.dark .search-page .search-page-form {
+  background: var(--surface-app, #131A18);
+}
+
+.scroll-to-top {
+  bottom: calc(var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 72px) !important;
+}
+
+@media (max-width: 430px) {
+  .page-shell,
+  .topic-page__body,
+  .sect-hub,
+  .search-page {
+    padding-inline: max(0.85rem, var(--page-gutter, 14px));
+  }
 }

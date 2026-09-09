@@ -7,6 +7,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
+import { SEARCH_INPUT_ATTRS, handleSearchEnterKey } from "@/lib/search-input";
 import "@/styles/pages/islamic-sects.css";
 
 type Sect = {
@@ -914,9 +915,10 @@ export default function IslamicSectsPage() {
         </p>
 
         <input
-          type="search"
+          {...SEARCH_INPUT_ATTRS}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={(e) => handleSearchEnterKey(e)}
           placeholder="ابحث في الفرق والمذاهب…"
           className="sect-hub__search"
           aria-label="بحث في الفرق الإسلامية"

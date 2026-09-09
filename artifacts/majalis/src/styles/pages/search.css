@@ -19,8 +19,7 @@
   position: sticky;
   top: 0;
   z-index: 5;
-  background: color-mix(in srgb, var(--mj-bg, #f7f6f2) 92%, transparent);
-  backdrop-filter: blur(8px);
+  background: var(--mj-bg, #f7f6f2);
   padding-block: 0.35rem 0.55rem;
   margin-inline: -0.15rem;
   padding-inline: 0.15rem;
@@ -174,9 +173,9 @@
 }
 
 .search-empty-hint {
-  font-size: 0.9rem;
-  color: var(--elite-ink-soft, #5D726A);
-  line-height: 1.7;
+  font-size: 0.95rem;
+  color: var(--mj-ink-2, #4A5A53);
+  line-height: 1.75;
   max-width: 40rem;
   margin: 0;
 }
@@ -606,8 +605,7 @@ html[data-theme="dark"] .srch-quick-card:hover {
   position: sticky;
   top: 0;
   z-index: 5;
-  background: color-mix(in srgb, var(--mj-bg, #f7f6f2) 92%, transparent);
-  backdrop-filter: blur(8px);
+  background: var(--mj-bg, #f7f6f2);
   padding-block: 0.2rem 0.35rem;
 }
 .srch-home-field {
@@ -616,7 +614,7 @@ html[data-theme="dark"] .srch-quick-card:hover {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  min-height: 2.75rem;
+  min-height: 44px;
   padding: 0.2rem 0.7rem;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, var(--mj-hairline, #e3e8e6));
@@ -630,12 +628,13 @@ html[data-theme="dark"] .srch-quick-card:hover {
   border: 0;
   background: transparent;
   font: inherit;
-  font-size: 0.92rem;
+  font-size: 1rem;
   color: inherit;
-  min-height: 2.35rem;
+  min-height: 44px;
 }
 .srch-home-field input::placeholder {
-  color: var(--text-secondary, var(--mj-ink-2, #6b7a73));
+  color: var(--mj-ink-2, #4A5A53);
+  opacity: 1;
 }
 .srch-home-field input:focus {
   outline: none;
@@ -648,8 +647,10 @@ html[data-theme="dark"] .srch-quick-card:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border: 0;
   border-radius: 999px;
   background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, transparent);
@@ -658,7 +659,8 @@ html[data-theme="dark"] .srch-quick-card:hover {
 }
 .srch-home-submit {
   flex: 0 0 auto;
-  min-height: 2.75rem;
+  min-height: 44px;
+  min-width: 44px;
   padding: 0 1rem;
   border: 0;
   border-radius: 999px;

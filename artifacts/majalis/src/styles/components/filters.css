@@ -16,7 +16,10 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   padding-block: 0.15rem;
+  padding-inline: 0.15rem 0.35rem;
+  margin-inline: -0.15rem;
   overscroll-behavior-x: contain;
+  touch-action: pan-x;
 }
 
 .mj-segmented-filter--scroll::-webkit-scrollbar {
@@ -32,7 +35,7 @@
   min-height: 44px;
   min-width: 44px;
   padding: 0.45rem 0.95rem;
-  border-radius: var(--mj-r-sm, 8px);
+  border-radius: var(--radius-chip, var(--mj-r-sm, 12px));
   border: 1px solid var(--mj-hairline, var(--color-border, #d5ddd8));
   background: var(--majalis-parchment, #f7f5f0);
   color: var(--mj-brand-deep, var(--em-800, #0f3d30));
@@ -42,7 +45,7 @@
   white-space: nowrap;
   cursor: pointer;
   box-sizing: border-box;
-  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+  transition: background 100ms ease, border-color 100ms ease, color 100ms ease;
 }
 
 .mj-filter-chip__mark {
