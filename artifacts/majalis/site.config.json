@@ -2,7 +2,7 @@
   "$comment": "المصدر الوحيد لهوية المنصة. يُقرأ من التطبيق (src/lib/site-config.ts) ومن سكربتات البناء (scripts/*.mjs). لا تكتب اسم المنصة أو نطاقها أو بريدها يدويًا في أي ملف آخر.",
   "siteName": "سُنّة",
   "siteShortName": "سُنّة",
-  "siteDescription": "مشروع تعليمي إسلامي رقمي يهدف إلى تسهيل الوصول إلى العلوم الشرعية، والمحاضرات الدعوية والعلمية وتسهيل طلب العلم الشرعي عبر تجربة سهلة وبسيطة وموثوقة.",
+  "siteDescription": "مشروع تعليمي إسلامي رقمي يهدف إلى تسهيل الوصول إلى العلوم الشرعية، والمحاضرات الدعوية والعلمية وتسهيل طلب العلم الشرعي عبر تجربة رقمية بسيطة وموثوقة.",
   "siteTagline": "منصة إسلامية تجمع القرآن الكريم، التفسير، الحديث، الفقه، العقيدة، السيرة، والأقسام التعليمية بأسلوب واضح ومرتب.",
   "$domainNote": "النطاق الحي المعتمد: https://www.ssunnah.com (200 بلا redirect). ssunnah.com وmajlisilm.com وwww.majlisilm.com يحوّلان إليه بـ308 من لوحة Vercel. Capacitor يحمّل www.ssunnah.com مباشرة.",
   "siteUrl": "https://www.ssunnah.com",
@@ -35,8 +35,8 @@
     "yahoo.com"
   ],
   "$brandAssetsNote": "مصدر الصور الرسمي الوحيد — لا majlisilm-og-2026 ولا شعارات قديمة في meta/manifest/JSON-LD.",
-  "assetVersion": "20260910",
-  "defaultImage": "/og-image.png?v=20260910",
+  "assetVersion": "20260910b",
+  "defaultImage": "/og-image.png?v=20260910b",
   "ogSectionImages": {
     "/": "/og-image.png",
     "/quran-hub": "/brand/og-quran.png",

@@ -2,7 +2,7 @@
   "$comment": "titleSuffix يُضاف برمجيًا من site.config.json — لا تكتب «| سُنّة» داخل title. siteUrl/siteName/defaultImage مرآة لـ site.config.json (يحرسها scripts/test-seo.mjs).",
   "siteUrl": "https://www.ssunnah.com",
   "siteName": "سُنّة",
-  "defaultImage": "/og-image.png?v=20260910",
+  "defaultImage": "/og-image.png?v=20260910b",
   "logoImage": "/brand/official.png?v=20260829",
   "ogImageWidth": 1200,
   "ogImageHeight": 630,
@@ -23,7 +23,7 @@
       "path": "/",
       "title": "سُنّة | قرآن ودروس شرعية",
       "suffix": false,
-      "description": "مشروع تعليمي إسلامي رقمي يهدف إلى تسهيل الوصول إلى العلوم الشرعية، والمحاضرات الدعوية والعلمية وتسهيل طلب العلم الشرعي عبر تجربة سهلة وبسيطة وموثوقة.",
+      "description": "مشروع تعليمي إسلامي رقمي يهدف إلى تسهيل الوصول إلى العلوم الشرعية، والمحاضرات الدعوية والعلمية وتسهيل طلب العلم الشرعي عبر تجربة رقمية بسيطة وموثوقة.",
       "keywords": [
         "سُنّة",
         "دروس علمية",
