@@ -104,6 +104,21 @@
   --ds-muted: var(--text-muted);
   --ds-danger: var(--danger);
   --ds-success: var(--success);
+
+  /*
+   * أسماء منتج سُنّة (ثابتة للمكوّنات الجديدة) — جسر فقط، بلا ألوان مكرّرة.
+   * primary green · deep green · soft gold · warm/card bg · muted · borders
+   */
+  --ss-primary-green: var(--mj-brand, #0F5C45);
+  --ss-deep-green: var(--mj-brand-deep, #0A3D2E);
+  --ss-soft-gold: var(--mj-accent, #B08A3E);
+  --ss-warm-bg: var(--mj-bg, #F7F3EB);
+  --ss-card-bg: var(--mj-surface, #FFFCF7);
+  --ss-muted-text: var(--mj-muted, #5E6E67);
+  --ss-border: var(--mj-hairline, #D9D2C6);
+  --ss-shadow: var(--mj-elev-2, 0 4px 12px -4px rgba(11, 32, 24, 0.12));
+  --ss-shadow-soft: var(--mj-elev-1, 0 1px 2px rgba(11, 32, 24, 0.06));
+  --gold: var(--ss-soft-gold);
 }
 
 @media (min-width: 768px) {
@@ -157,6 +172,17 @@ html.dark,
   --color-primary: var(--accent);
   --color-primary-contrast: var(--text-on-brand);
   --color-border: var(--border);
+
+  --ss-primary-green: var(--mj-brand, #4FB48B);
+  --ss-deep-green: var(--elite-forest, #8FD4B0);
+  --ss-soft-gold: var(--mj-accent, #D9B871);
+  --ss-warm-bg: var(--mj-bg, #131A18);
+  --ss-card-bg: var(--mj-surface, #1B2421);
+  --ss-muted-text: var(--mj-muted, #C5D0CB);
+  --ss-border: var(--mj-hairline, #35443F);
+  --ss-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.45);
+  --ss-shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.28);
+  --gold: var(--ss-soft-gold);
 }
 
 /* فوق الأسطح الخضراء الغامقة — أبيض دائمًا */

@@ -10,7 +10,7 @@
 .srp-stat-card--pending  { --srp-stat-bg: #F0F9FF;                             --srp-stat-color: #0369A1; }
 .srp-stat-card--approved { --srp-stat-bg: var(--majalis-emerald-soft,#EBF5F0); --srp-stat-color: var(--majalis-emerald-deep,var(--mj-brand-deep)); }
 .srp-stat-card--rejected { --srp-stat-bg: var(--majalis-danger-muted,rgba(155,28,28,0.07)); --srp-stat-color: var(--majalis-danger,#9B1C1C); }
-.srp-stat-card--split    { --srp-stat-bg: #eff6ff; --srp-stat-color: #1d4ed8; }
+.srp-stat-card--split    { --srp-stat-bg: color-mix(in srgb, var(--ss-primary-green, #0F5C45) 8%, #fff); --srp-stat-color: var(--ss-deep-green, #0A3D2E); }
 .srp-stat-val   { font-size: var(--ds-text-xl); font-weight: 800; color: var(--srp-stat-color, var(--mj-ink-2)); }
 .srp-stat-label { font-size: 0.6rem; color: var(--srp-stat-color, var(--mj-ink-2)); font-weight: 600; margin-top: 0.1rem; }
 
@@ -100,7 +100,7 @@
   font-family: inherit;
 }
 .srp-publish-btn:disabled { background: #9ca3af; cursor: not-allowed; }
-.srp-publish-btn--lesson  { background: #1d4ed8; }
+.srp-publish-btn--lesson  { background: var(--ss-deep-green, #0A3D2E); }
 .srp-publish-btn--lesson:disabled { background: #9ca3af; }
 
 .srp-review-actions { margin-top: 1rem; display: flex; flex-direction: column; gap: var(--ds-space-2-5); }

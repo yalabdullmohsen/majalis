@@ -45,11 +45,24 @@
   --shadow-soft: var(--mj-sh);
   --surface-app: var(--mj-bg);
 
-  --radius-card: 18px;
-  --radius-tile: 18px;
-  --radius-button: 14px;
-  --radius-control: 12px;
-  --radius-sheet: 20px;
+  /* حواف ناعمة موحّدة مع soft-cards (لا 18px القديمة) */
+  --radius-card: 24px;
+  --radius-tile: 24px;
+  --radius-button: 18px;
+  --radius-control: 14px;
+  --radius-sheet: 28px;
+  --radius-nav: 28px;
+  --radius-pill: 999px;
+
+  --ss-primary-green: var(--mj-brand);
+  --ss-deep-green: var(--mj-brand-deep);
+  --ss-soft-gold: var(--mj-accent);
+  --ss-warm-bg: var(--mj-bg);
+  --ss-card-bg: var(--mj-surface);
+  --ss-muted-text: var(--mj-muted);
+  --ss-border: var(--mj-hairline);
+  --ss-shadow: var(--shadow-soft);
+  --gold: var(--mj-accent);
 }
 
 html[data-theme="dark"],

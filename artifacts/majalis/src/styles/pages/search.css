@@ -432,28 +432,28 @@ a.search-suggestion-chip {
   border: 1px solid rgba(154, 52, 18, 0.2);
 }
 .search-status-badge--review {
-  background: #EFF6FF;
-  color: #1D4ED8;
+  background: #EEF6F2;
+  color: #0A3D2E;
   border: 1px solid rgba(29, 78, 216, 0.2);
 }
 
-.search-kind-badge--lesson      { background: #EFF6FF; color: #1D4ED8; border-color: rgba(29,78,216,0.2); }
+.search-kind-badge--lesson      { background: #EEF6F2; color: #0A3D2E; border-color: rgba(29,78,216,0.2); }
 .search-kind-badge--fatwa       { background: rgba(23,61,53,.10); color: var(--mj-brand); border-color: rgba(23,61,53,.2); }
 .search-kind-badge--ruling      { background: rgba(23,61,53,.10); color: var(--mj-brand); border-color: rgba(23,61,53,.2); }
-.search-kind-badge--qa          { background: #F5F3FF; color: #6D28D9; border-color: rgba(109,40,217,0.2); }
+.search-kind-badge--qa          { background: #F5F3FF; color: #0A3D2E; border-color: rgba(109,40,217,0.2); }
 .search-kind-badge--fawaid      { background: #e8f5f0; color: var(--mj-brand); border-color: rgba(31,77,58,0.2); }
 .search-kind-badge--adhkar      { background: var(--mj-brand-soft); color: var(--mj-brand); border-color: rgba(21,128,61,0.2); }
-.search-kind-badge--library     { background: #FDF4FF; color: #7E22CE; border-color: rgba(126,34,206,0.2); }
+.search-kind-badge--library     { background: #FDF4FF; color: #B08A3E; border-color: rgba(126,34,206,0.2); }
 .search-kind-badge--hadith      { background: #FFF1F2; color: #BE123C; border-color: rgba(190,18,60,0.2); }
 .search-kind-badge--quran       { background: var(--mj-brand-soft); color: var(--mj-brand); border-color: rgba(21,128,61,0.2); }
 .search-kind-badge--story,
 .search-kind-badge--stories     { background: rgba(23,61,53,.10); color: var(--mj-brand); border-color: rgba(23,61,53,.2); }
 .search-kind-badge--fiqh-council,
-.search-kind-badge--fiqh-decision { background: #EFF6FF; color: #1D4ED8; border-color: rgba(29,78,216,0.2); }
+.search-kind-badge--fiqh-decision { background: #EEF6F2; color: #0A3D2E; border-color: rgba(29,78,216,0.2); }
 .search-kind-badge--miracle,
 .search-kind-badge--miracles    { background: #F0FDFA; color: var(--mj-brand); border-color: rgba(15,118,110,0.2); }
 .search-kind-badge--course,
-.search-kind-badge--courses     { background: #EFF6FF; color: #1D4ED8; border-color: rgba(29,78,216,0.2); }
+.search-kind-badge--courses     { background: #EEF6F2; color: #0A3D2E; border-color: rgba(29,78,216,0.2); }
 .search-kind-badge--update,
 .search-kind-badge--updates     { background: #F1F5F9; color: #475569; border-color: rgba(71,85,105,0.2); }
 

@@ -27,11 +27,11 @@
   --soft-card-border: rgba(255, 255, 255, 0.14);
   --soft-tile-border: rgba(255, 255, 255, 0.13);
   --soft-card-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 18px 44px rgba(0, 0, 0, 0.18);
-  --soft-tile-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 12px 28px rgba(0, 0, 0, 0.14);
+    0 10px 28px -16px rgba(0, 0, 0, 0.22);
+  --soft-tile-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 20px -12px rgba(0, 0, 0, 0.18);
 }
 
 /* أسطح فاتحة — تدرّج هادئ بلا سطوع زائد */
@@ -50,11 +50,11 @@
   --soft-card-border: color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, var(--mj-hairline, #d5ddd9));
   --soft-tile-border: color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, var(--mj-hairline, #d5ddd9));
   --soft-card-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.75),
-    0 14px 32px -18px rgba(11, 32, 24, 0.28);
-  --soft-tile-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.7),
-    0 10px 22px -14px rgba(11, 32, 24, 0.22);
+    0 10px 24px -16px rgba(11, 32, 24, 0.18);
+  --soft-tile-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 8px 18px -12px rgba(11, 32, 24, 0.14);
 }
 
 .soft-card {

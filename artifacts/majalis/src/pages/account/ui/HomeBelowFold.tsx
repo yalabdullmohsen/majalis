@@ -28,6 +28,7 @@ import { HomeContentHub } from "@/components/home/HomeContentHub";
 import { HomeMostReadBand } from "@/components/home/HomeMostReadBand";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { ShareFaida } from "@/components/ShareFaida";
+import { FeatureCard } from "@/components/design-system";
 import { QUICK_LINKS } from "@/lib/home-feature-catalog";
 import { IA_HOME_PRIMARY } from "@/lib/ia-final-structure";
 import {
@@ -121,10 +122,37 @@ export default function HomeBelowFold() {
   }, [user?.id]);
 
   const visibleWidgets = visibleWidgetOrder(homePrefs);
-  const restWidgetOrder = visibleWidgets.filter((id) => id !== "lessons" && id !== "continue");
+  const restWidgetOrder = visibleWidgets.filter(
+    (id) => id !== "lessons" && id !== "continue" && id !== "daily-progress",
+  );
 
   return (
     <>
+      <section className="m2030-band home-primary-portals" aria-label="أقسام أساسية">
+        <div className="m2030-band__head">
+          <h2 className="m2030-band__title">بوابات العلم</h2>
+        </div>
+        <div className="ss-feature-grid" data-cards-grid="1">
+          {FEATURED_CATS.map(({ href, title, desc, Icon }) => (
+            <FeatureCard
+              key={href}
+              href={href}
+              title={title}
+              description={desc}
+              icon={<Icon size={20} strokeWidth={1.8} aria-hidden="true" />}
+            />
+          ))}
+        </div>
+      </section>
+
+      {visibleWidgets.includes("daily-progress") ? (
+        <section className="m2030-band home-daily-progress-band" aria-label="تقدمك اليومي">
+          <SafeHomeSection name="daily-progress">
+            <HomeDailyProgress />
+          </SafeHomeSection>
+        </section>
+      ) : null}
+
       {visibleWidgets.includes("lessons") && (
         <section className="m2030-band m2030-band--sage m2030-band--defer" aria-label="دروس اليوم">
           <div className="m2030-band__head">
@@ -142,7 +170,7 @@ export default function HomeBelowFold() {
         <div className="m2030-band__head">
           <h2 className="m2030-band__title">أكمل من حيث توقفت</h2>
         </div>
-        <div className="m2030-panel mj-card mj-card--raised">
+        <div className="m2030-panel mj-card mj-card--raised soft-card soft-card--on-light">
           <SafeHomeSection name="local-resume">
             <HomeLocalResumeCard />
           </SafeHomeSection>
@@ -160,7 +188,7 @@ export default function HomeBelowFold() {
         </div>
         <div className="m2030-quick">
           {QUICK_LINKS.map(({ href, Icon: Ico, label, desc }) => (
-            <Link key={label + href} href={href} className="m2030-tile" aria-label={label}>
+            <Link key={label + href} href={href} className="m2030-tile soft-tile soft-tile--on-light mj-pressable" aria-label={label}>
               <span className="m2030-tile__icon" aria-hidden="true">
                 <Ico size={14} strokeWidth={2} />
               </span>
@@ -173,22 +201,6 @@ export default function HomeBelowFold() {
 
       <section className="m2030-band" aria-label="محتوى أساسي">
         <HomeContentHub />
-      </section>
-
-      <section className="m2030-band" aria-label="أقسام علمية">
-        <div className="m2030-band__head">
-          <h2 className="m2030-band__title">بوابات العلم</h2>
-        </div>
-        <div className="m2030-featured">
-          {FEATURED_CATS.map(({ href, title, desc, cta, Icon }) => (
-            <Link key={href} href={href} className="m2030-feature">
-              <Icon size={18} strokeWidth={1.8} aria-hidden="true" />
-              <h3 className="m2030-feature__title">{title}</h3>
-              <p className="m2030-feature__desc">{desc}</p>
-              <span className="m2030-feature__cta">{cta}</span>
-            </Link>
-          ))}
-        </div>
       </section>
 
       <div className="m2030-band">

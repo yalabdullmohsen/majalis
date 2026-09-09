@@ -24,6 +24,11 @@ const HomeDailyWirdBand = lazyWithRetry(
   "HomeDailyWirdBand",
 );
 
+const HomeSacredOfDay = lazyWithRetry(
+  () => import("@/components/home/HomeSacredOfDay").then((m) => ({ default: m.HomeSacredOfDay })),
+  "HomeSacredOfDay",
+);
+
 const HomeLiveNowBanner = lazyWithRetry(
   () =>
     import("@/components/home/HomeLiveNowBanner").then((m) => ({ default: m.HomeLiveNowBanner })),
@@ -98,6 +103,31 @@ function HomeLiveNowGate() {
     <SectionErrorBoundary name="HomeLiveNow">
       <Suspense fallback={null}>
         <HomeLiveNowBanner />
+      </Suspense>
+    </SectionErrorBoundary>
+  );
+}
+
+function HomeSacredOfDayGate() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const cancel = deferAfterPaint(() => {
+      if (!cancelled) setShow(true);
+    }, 600);
+    return () => {
+      cancelled = true;
+      cancel();
+    };
+  }, []);
+
+  if (!show) return null;
+
+  return (
+    <SectionErrorBoundary name="HomeSacredOfDay">
+      <Suspense fallback={null}>
+        <HomeSacredOfDay />
       </Suspense>
     </SectionErrorBoundary>
   );
@@ -248,6 +278,8 @@ export default function HomePage() {
       <HomeSearchGate />
 
       {/* «ابدأ من هنا» يُرسم في App خارج Suspense — لا تكرار هنا */}
+
+      <HomeSacredOfDayGate />
 
       <HomeLiveNowGate />
 

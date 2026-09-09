@@ -61,16 +61,33 @@ body.app-sheet-open .app-sheet-overlay--elevated .app-sheet-overlay__scrim {
   flex-direction: column;
   background: var(--mj-surface, var(--surface, #fff));
   color: var(--mj-ink, var(--text));
-  border-radius: 20px 20px 0 0;
+  border-radius: var(--radius-sheet, 28px) var(--radius-sheet, 28px) 0 0;
   box-shadow: var(--mj-sh, 0 -8px 28px rgba(11, 32, 24, 0.18));
   margin-block-end: 0;
-  transition: transform 280ms cubic-bezier(0.22, 1.15, 0.36, 1);
+  transition:
+    transform 280ms cubic-bezier(0.22, 1.15, 0.36, 1),
+    opacity 200ms ease;
   will-change: transform;
   transform: translateZ(0);
+  animation: ss-sheet-in 280ms cubic-bezier(0.22, 1.15, 0.36, 1) both;
+}
+
+@keyframes ss-sheet-in {
+  from {
+    opacity: 0.92;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .app-sheet { transition: none !important; }
+  .app-sheet {
+    transition: none !important;
+    animation: none !important;
+  }
 }
 
 .app-sheet--half { max-height: min(55svh, 85svh); }
@@ -112,15 +129,15 @@ body.app-sheet-open .app-sheet-overlay--elevated .app-sheet-overlay__scrim {
 
 .app-sheet__handle {
   flex-shrink: 0;
-  width: 2.75rem;
-  height: 0.32rem;
-  margin: 0.65rem auto 0.35rem;
+  width: 3rem;
+  height: 0.36rem;
+  margin: 0.7rem auto 0.4rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mj-ink, #0E241E) 28%, transparent);
+  background: color-mix(in srgb, var(--ss-muted-text, var(--mj-ink, #0E241E)) 32%, transparent);
   touch-action: none;
   cursor: grab;
-  /* منطقة لمس أوسع للمقبض */
-  padding-block: 0.55rem;
+  /* منطقة لمس أوسع للمقبض ≥ 44px عموديًا */
+  padding-block: 0.65rem;
   box-sizing: content-box;
   background-clip: content-box;
 }
