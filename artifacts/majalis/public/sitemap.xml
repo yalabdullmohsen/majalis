@@ -1315,6 +1315,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/seerah-isra-masjid</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/seerah-aqabah</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1725,6 +1730,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/abbasid-ahl-hadith</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/abbasid-baramika</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -2010,6 +2020,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/mamluk-scholarship-damascus</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/mamluk-barsbay</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -2196,6 +2211,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/modern-print-nahda</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/modern-print-mushaf</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
