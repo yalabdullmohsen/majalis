@@ -108,6 +108,18 @@ function HomeLiveNowGate() {
   );
 }
 
+/** هيكل يحجز ارتفاع بطاقة آية/حديث اليوم — يمنع قفزة الإدراج بعد الإقلاع */
+function HomeSacredOfDaySkeleton() {
+  return (
+    <div
+      className="home-sacred-day home-sacred-day--ph"
+      aria-busy="true"
+      aria-label="آية أو حديث اليوم"
+      data-testid="home-sacred-of-day"
+    />
+  );
+}
+
 function HomeSacredOfDayGate() {
   const [show, setShow] = useState(false);
 
@@ -122,11 +134,11 @@ function HomeSacredOfDayGate() {
     };
   }, []);
 
-  if (!show) return null;
+  if (!show) return <HomeSacredOfDaySkeleton />;
 
   return (
     <SectionErrorBoundary name="HomeSacredOfDay">
-      <Suspense fallback={null}>
+      <Suspense fallback={<HomeSacredOfDaySkeleton />}>
         <HomeSacredOfDay />
       </Suspense>
     </SectionErrorBoundary>

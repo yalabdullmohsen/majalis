@@ -55,8 +55,10 @@ const splashTs = readFileSync(resolve(root, "src/lib/splash-screen.ts"), "utf8")
 assert.match(splashTs, /SplashScreen\.hide/, "يخفي الإطلاق الأصلي");
 assert.match(splashTs, /SPLASH_MIN_VISIBLE_MS/);
 assert.match(splashTs, /SPLASH_MAX_VISIBLE_MS/);
-assert.match(splashTs, /mj:boot-ready/, "إخفاء بعد جاهزية الإقلاع/الخطوط");
-assert.match(splashTs, /mj:app-painted/, "إخفاء بعد أول رسم معلَن");
+assert.match(splashTs, /mj:boot-ready/, "إخفاء Capacitor بعد جاهزية الإقلاع/الخطوط");
+assert.match(splashTs, /mj:app-painted/, "إخفاء Capacitor بعد أول رسم معلَن");
+assert.match(splashTs, /mj:shell-stable/, "إخفاء HTML بعد استقرار الهيكل");
+assert.match(splashTs, /hideCapacitorSplash|hideCapacitor/, "مسار أصلي مبكر بلا كشف HTML");
 assert.doesNotMatch(
   splashTs,
   /requestAnimationFrame\(\(\)\s*=>\s*\{\s*requestAnimationFrame\(hide\)/,

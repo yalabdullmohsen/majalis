@@ -44,8 +44,8 @@
           var fontsOk = bootReady || fontsLikelyReady();
           if (!fontsOk && elapsed < MAX_MS) return;
           if (!appReady && !bootReady && elapsed < MAX_MS) return;
-          /* انتظر رفع app-booting حتى لا يظهر #root ثم يخفى */
-          if (!shellStable && document.documentElement.classList.contains("app-booting") && elapsed < MAX_MS) return;
+          /* انتظر mj:shell-stable حتى لا يُكشف الهيكل أثناء app-booting */
+          if (!shellStable && elapsed < MAX_MS) return;
           if (fontsOk && (bootReady || appReady)) {
             dismiss(false);
             return;
