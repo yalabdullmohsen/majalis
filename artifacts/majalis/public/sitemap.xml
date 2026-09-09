@@ -1375,6 +1375,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/rashidun-bayan</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/rashidun-abu-bakr</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1535,6 +1540,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/umayyad-musa-tariq</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/umayyad-conquest-spain</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1650,6 +1660,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/abbasid-tahirids</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/fatimid-cairo</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1716,6 +1731,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/andalus-fall-granada</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/andalus-ibn-hafsun</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -1990,6 +2010,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/modern-hijaz-railway</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/modern-caliphate-abolition</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -2041,6 +2066,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/civ-bayt-mal</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/civ-hisba</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
