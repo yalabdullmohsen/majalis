@@ -50,6 +50,12 @@ const { ADHKAR_ITEMS } = await import("../src/lib/adhkar-seed.js");
 const { SEED_QA } = await import("../src/lib/qa-seed.js");
 const { NATIONS } = await import("../src/lib/nations-seed.js");
 
+const { ISLAMIC_LANDMARKS } = await import("../src/lib/islamic-landmarks-data.js");
+const { INSTITUTIONS } = await import("../src/data/institutions-catalog.js");
+const universitiesCatalog = JSON.parse(
+  await readFile(resolve(appRoot, "src/data/universities-catalog.json"), "utf8"),
+) as unknown[];
+
 const counts = {
   $comment:
     "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
@@ -66,7 +72,11 @@ const counts = {
   adhkar: ADHKAR_ITEMS.length,
   qa: qaFromPublic || SEED_QA.length,
   nations: NATIONS.length,
+  landmarks: ISLAMIC_LANDMARKS.length,
+  institutions: INSTITUTIONS.length,
+  universities: Array.isArray(universitiesCatalog) ? universitiesCatalog.length : 0,
 };
+
 
 const next = `${JSON.stringify(counts, null, 2)}\n`.replace(/\r\n/g, "\n");
 let current: string | null = null;

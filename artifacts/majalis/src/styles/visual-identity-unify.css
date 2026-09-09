@@ -675,3 +675,10 @@ html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active,
 html.dark .bottom-nav--v2 .bottom-nav__tab.is-active {
   color: var(--mj-brand, var(--color-primary)) !important;
 }
+
+
+/* دليل المعالم والمؤسسات */
+.ilm-card,
+.inst-card {
+  border-radius: var(--radius-card, 24px);
+}

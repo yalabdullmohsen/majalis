@@ -1,29 +1,35 @@
 import { Landmark, MapPin, GraduationCap } from "lucide-react";
 import MergedSectionHubPage from "@/views/MergedSectionHubPage";
+import contentCounts from "@/data/content-counts.json";
+import { toArabicDigits } from "@/lib/utils";
 
 export default function IslamicDirectoryHubPage() {
+  const universities = toArabicDigits(contentCounts.universities ?? 0);
+  const institutions = toArabicDigits(contentCounts.institutions ?? 0);
+  const landmarks = toArabicDigits(contentCounts.landmarks ?? 0);
+
   return (
     <MergedSectionHubPage
       path="/islamic-directory"
       title="الدليل الإسلامي"
-      description="دليل المؤسسات الإسلامية والمساجد والمشاهد في قسم واحد."
+      description="دليل موحّد للجامعات الشرعية والمؤسسات الإسلامية والمساجد والمشاهد التاريخية — بهوية واحدة وبيانات مُدقَّقة."
       cards={[
         {
           href: "/universities",
           title: "دليل الجامعات والكليات الشرعية",
-          desc: "جامعات ومعاهد الدراسات الشرعية حول العالم مع المقارنة",
+          desc: `${universities} جامعة ومعهدًا — برامج وأسئلة شائعة ومقارنة`,
           Icon: GraduationCap,
         },
         {
           href: "/institutions",
           title: "المؤسسات الإسلامية",
-          desc: "دليل المساجد والمكتبات والمراكز الإسلامية للبحث المحلي",
+          desc: `${institutions} مؤسسة — مساجد ومكتبات ومراكز وهيئات`,
           Icon: Landmark,
         },
         {
           href: "/islamic-landmarks",
           title: "المساجد والمشاهد",
-          desc: "خريطة المشاهد الإسلامية التاريخية",
+          desc: `${landmarks} معلمًا على الخريطة عبر العصور الإسلامية`,
           Icon: MapPin,
         },
       ]}
