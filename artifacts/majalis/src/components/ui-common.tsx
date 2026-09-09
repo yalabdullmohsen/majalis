@@ -96,7 +96,8 @@ export {
   ActiveFilters,
   FilterResetButton,
 } from "@/components/filters";
-export { HubCard } from "@/components/ui/HubCard";
+export { SectionEntryCard, HubCard } from "@/components/ui/HubCard";
+export type { SectionEntryCardProps, HubCardProps } from "@/components/ui/HubCard";
 
 export function Loading({ title }: { label?: string; title?: string } = {}) {
   return <SkeletonPage title={title} />;
