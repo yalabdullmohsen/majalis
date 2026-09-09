@@ -10,29 +10,28 @@ import {
   MAJOR_MUNKARAAT,
   MAJOR_MAARUF,
 } from "@/lib/amr-bil-maruf-seed";
-
-const RANK_COLOR: Record<number, { bg: string; border: string; badge: string }> = {
-  1: { bg: "rgba(23,61,53,.08)", border: "var(--mj-brand)", badge: "var(--mj-brand)" },
-  2: { bg: "#ECFDF5", border: "#10B981", badge: "#059669" },
-  3: { bg: "#EEF6F2", border: "#0F5C45", badge: "#0A3D2E" },
-};
+import "@/styles/section-makarim-pattern.css";
 
 export default function AmrBilMarufPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/amr-bil-maruf",
       title: "الأمر بالمعروف والنهي عن المنكر | سُنّة",
-      description: "مراتب الأمر بالمعروف والنهي عن المنكر الثلاث وشروطها وأحكامها وفق المذاهب الفقهية الأربعة. محتوى معتمد في منهج سُنّة",
+      description:
+        "مراتب الأمر بالمعروف والنهي عن المنكر الثلاث وشروطها وأحكامها وفق المذاهب الفقهية الأربعة. محتوى معتمد في منهج سُنّة",
       keywords: ["أمر بالمعروف", "نهي عن المنكر", "مراتب", "شروط", "فقه"],
-      jsonLd: [{
-        "@context": "https://schema.org",
-        "@type": "Article",
-        headline: "الأمر بالمعروف والنهي عن المنكر",
-        description: "مراتب الأمر بالمعروف والنهي عن المنكر الثلاث وشروطها وأحكامها وفق المذاهب الفقهية الأربعة. محتوى معتمد في منهج سُنّة",
-        url: "https://www.ssunnah.com/amr-bil-maruf",
-        inLanguage: "ar",
-        publisher: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
-      }],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: "الأمر بالمعروف والنهي عن المنكر",
+          description:
+            "مراتب الأمر بالمعروف والنهي عن المنكر الثلاث وشروطها وأحكامها وفق المذاهب الفقهية الأربعة. محتوى معتمد في منهج سُنّة",
+          url: "https://www.ssunnah.com/amr-bil-maruf",
+          inLanguage: "ar",
+          publisher: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
+        },
+      ],
     });
   }, []);
 
@@ -45,341 +44,152 @@ export default function AmrBilMarufPage() {
       className="topic-page--amr"
       eyebrow="الفقه والآداب"
     >
-      <div className="amr-page" style={{ paddingBottom: "calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 1rem)", maxWidth: "42rem", marginInline: "auto", paddingInline: "max(0.85rem, 14px)" }}>
-      {/* ═══ الآية والحديث الأساسيان ═══ */}
-      <section style={{
-        background: "var(--msk-canvas, #FAFAF8)",
-        border: "1.5px solid #d1e7da",
-        borderRadius: "0.75rem",
-        padding: "1.4rem 1.5rem",
-        marginBottom: "1.75rem",
-      }}>
-        <p style={{ fontSize: "0.8rem", color: "#5C5C56", marginBottom: "0.4rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "normal" }}>
-          الأساس الشرعي
-        </p>
-        <blockquote style={{
-          fontSize: "clamp(1rem, 2.5vw, 1.18rem)",
-          fontWeight: 700,
-          color: "var(--mj-brand-deep)",
-          margin: "0 0 0.6rem",
-          lineHeight: 1.8,
-          borderRight: "3px solid var(--mj-brand-deep)",
-          paddingRight: "1rem",
-        }}>
-          {AMR_BIL_MARUF_META.quran_basis}
-        </blockquote>
-        <p style={{ fontSize: "0.8rem", color: "#4B5563", margin: "0 0 1.2rem", paddingRight: "1rem" }}>
-          {AMR_BIL_MARUF_META.quran_source}
-        </p>
-        <blockquote style={{
-          fontSize: "0.95rem",
-          fontStyle: "normal",
-          color: "#5C5C56",
-          margin: "0",
-          borderRight: "3px solid #10B981",
-          paddingRight: "1rem",
-          lineHeight: 1.7,
-        }}>
-          «{AMR_BIL_MARUF_META.main_hadith}»
-        </blockquote>
-        <p style={{ fontSize: "0.78rem", color: "#4B5563", marginTop: "0.3rem", paddingRight: "1rem" }}>
-          {AMR_BIL_MARUF_META.main_hadith_source}
-        </p>
-      </section>
+      <div className="amr-page">
+        <section className="amr-basis" aria-labelledby="amr-basis-title">
+          <span className="amr-basis__label" id="amr-basis-title">
+            الأساس الشرعي
+          </span>
+          <p className="amr-basis__quran">{AMR_BIL_MARUF_META.quran_basis}</p>
+          <p className="amr-basis__ref">{AMR_BIL_MARUF_META.quran_source}</p>
+          <p className="amr-basis__hadith">«{AMR_BIL_MARUF_META.main_hadith}»</p>
+          <p className="amr-basis__ref">{AMR_BIL_MARUF_META.main_hadith_source}</p>
+        </section>
 
-      {/* ═══ الحكم العام ═══ */}
-      <div style={{
-        background: "#F0FDF4",
-        border: "1px solid #86EFAC",
-        borderRadius: "0.65rem",
-        padding: "0.9rem 1.2rem",
-        marginBottom: "2rem",
-        display: "flex",
-        alignItems: "flex-start",
-        gap: "0.75rem",
-      }}>
-        <span style={{ fontSize: "1.4rem", flexShrink: 0 }}><SectionIcon name="⚖️" size={18} /></span>
-        <div>
-          <p style={{ fontWeight: 700, color: "var(--mj-brand)", margin: "0 0 0.2rem", fontSize: "0.88rem" }}>الحكم الشرعي</p>
-          <p style={{ margin: 0, fontSize: "0.88rem", color: "var(--mj-brand)", lineHeight: 1.6 }}>
-            {AMR_BIL_MARUF_META.ruling}
-          </p>
+        <div className="amr-ruling">
+          <span className="amr-ruling__icon" aria-hidden="true">
+            <SectionIcon name="⚖️" size={18} />
+          </span>
+          <div>
+            <span className="amr-ruling__label">الحكم الشرعي</span>
+            <p className="amr-level__desc">{AMR_BIL_MARUF_META.ruling}</p>
+          </div>
         </div>
-      </div>
 
-      {/* ═══ المراتب الثلاث ═══ */}
-      <h2 style={{ fontSize: "1.15rem", fontWeight: 800, color: "var(--mj-brand-deep)", marginBottom: "1rem" }}>
-        المراتب الثلاث
-      </h2>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", marginBottom: "2.5rem" }}>
-        {AMR_BIL_MARUF_LEVELS.map((level) => {
-          const clr = RANK_COLOR[level.rank];
-          return (
-            <article key={level.id} style={{
-              border: `1.5px solid ${clr.border}`,
-              borderRadius: "0.85rem",
-              background: clr.bg,
-              overflow: "hidden",
-            }}>
-              {/* رأس البطاقة */}
-              <div style={{
-                background: clr.badge,
-                padding: "0.75rem 1.2rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.75rem",
-              }}>
-                <span style={{
-                  background: "rgba(255,255,255,0.25)",
-                  color: "#fff",
-                  borderRadius: "50%",
-                  width: 32,
-                  height: 32,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontWeight: 900,
-                  fontSize: "0.95rem",
-                  flexShrink: 0,
-                }}>
+        <h2 className="amr-section-title">المراتب الثلاث</h2>
+        <div className="amr-levels">
+          {AMR_BIL_MARUF_LEVELS.map((level) => (
+            <article key={level.id} className="amr-level">
+              <div className="amr-level__header">
+                <span className="amr-level__rank" aria-hidden="true">
                   {level.rank}
                 </span>
                 <div>
-                  <h3 className="amr-level__title" style={{ margin: 0, color: "#fff", fontWeight: 800, fontSize: "1.05rem", lineHeight: 1.2 }}>
-                    {level.title}
-                  </h3>
-                  <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.85)" }}>
+                  <h3 className="amr-level__title">{level.title}</h3>
+                  <p className="amr-level__meta">
                     {level.is_obligatory ? "فرض عين" : "فرض كفاية"} — {level.who_can_do}
-                  </span>
+                  </p>
                 </div>
               </div>
-
-              <div style={{ padding: "1.2rem" }}>
-                <p style={{ margin: "0 0 1rem", color: "#5C5C56", lineHeight: 1.65, fontSize: "0.9rem" }}>
-                  {level.description}
-                </p>
-
-                {/* الشروط */}
-                <div style={{ marginBottom: "1rem" }}>
-                  <p style={{ fontWeight: 700, fontSize: "0.82rem", color: "#5C5C56", margin: "0 0 0.5rem" }}>الشروط والضوابط</p>
-                  <ul style={{ margin: 0, paddingRight: "1.25rem", display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+              <div className="amr-level__body">
+                <p className="amr-level__desc">{level.description}</p>
+                <div>
+                  <p className="amr-level__block-title">الشروط والضوابط</p>
+                  <ul className="amr-level__list">
                     {level.conditions.map((c, i) => (
-                      <li key={i} style={{ fontSize: "0.83rem", color: "#4B5563", lineHeight: 1.55 }}>{c}</li>
+                      <li key={i}>{c}</li>
                     ))}
                   </ul>
                 </div>
-
-                {/* الأدلة */}
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", marginBottom: "0.9rem" }}>
+                <div className="amr-conditions">
                   {level.evidence.map((ev, i) => (
-                    <div key={i} style={{
-                      background: "rgba(255,255,255,0.65)",
-                      borderRadius: "0.5rem",
-                      padding: "0.6rem 0.85rem",
-                      borderRight: `3px solid ${clr.badge}`,
-                    }}>
-                      <span style={{
-                        fontSize: "0.68rem",
-                        fontWeight: 700,
-                        color: clr.badge,
-                        textTransform: "uppercase",
-                        letterSpacing: "normal",
-                      }}>
-                        {ev.type}
-                      </span>
-                      <p style={{ margin: "0.15rem 0 0.1rem", fontSize: "0.84rem", color: "#1F2937", lineHeight: 1.6, fontWeight: 500 }}>
+                    <div
+                      key={i}
+                      className={`amr-evidence${ev.type === "حديث" ? " amr-evidence--hadith" : " amr-evidence--quran"}`}
+                    >
+                      <span className="amr-evidence__type">{ev.type}</span>
+                      <p className="amr-evidence__text">
                         {ev.type === "حديث" ? `«${ev.text}»` : ev.text}
                       </p>
-                      <p style={{ margin: 0, fontSize: "0.8rem", color: "#5C5C56" }}>{ev.source}</p>
+                      <p className="amr-evidence__src">{ev.source}</p>
                     </div>
                   ))}
                 </div>
-
-                {/* ملاحظة العلماء */}
-                <div style={{
-                  background: "rgba(255,255,255,0.5)",
-                  borderRadius: "0.5rem",
-                  padding: "0.65rem 0.9rem",
-                  borderRight: `2px dashed ${clr.badge}`,
-                }}>
-                  <p style={{ margin: 0, fontSize: "0.8rem", color: "#5C5C56", lineHeight: 1.6, fontStyle: "normal" }}>
-                    <SectionIcon name="📚" size={14} /> {level.notes}
-                  </p>
-                </div>
+                <p className="amr-notes">
+                  <SectionIcon name="📚" size={14} /> {level.notes}
+                </p>
               </div>
             </article>
-          );
-        })}
-      </div>
+          ))}
+        </div>
 
-      {/* ═══ الشروط العامة ═══ */}
-      <h2 style={{ fontSize: "1.15rem", fontWeight: 800, color: "var(--mj-brand-deep)", marginBottom: "1rem" }}>
-        الشروط العامة للأمر بالمعروف والنهي عن المنكر
-      </h2>
+        <h2 className="amr-section-title">الشروط العامة للأمر بالمعروف والنهي عن المنكر</h2>
+        <div className="amr-conditions">
+          {AMR_BIL_MARUF_CONDITIONS.map((cond, i) => (
+            <div key={cond.id} className="amr-condition">
+              <h3 className="amr-condition__title">
+                {i + 1}. {cond.title}
+              </h3>
+              <p className="amr-condition__body">{cond.detail}</p>
+              {cond.scholar_note ? (
+                <p className="amr-notes amr-notes--flush">{cond.scholar_note}</p>
+              ) : null}
+            </div>
+          ))}
+        </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "0.9rem", marginBottom: "2.5rem" }}>
-        {AMR_BIL_MARUF_CONDITIONS.map((cond, i) => (
-          <div key={cond.id} style={{
-            background: "#fff",
-            border: "1px solid #E8E7E2",
-            borderRadius: "0.7rem",
-            padding: "1rem",
-            borderTop: "3px solid var(--mj-brand-deep)",
-          }}>
-            <div style={{ display: "flex", gap: "0.6rem", alignItems: "flex-start" }}>
-              <span style={{
-                background: "var(--mj-brand-deep)",
-                color: "#fff",
-                borderRadius: "50%",
-                width: 24,
-                height: 24,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "0.7rem",
-                fontWeight: 800,
-                flexShrink: 0,
-                marginTop: "0.1rem",
-              }}>
-                {i + 1}
+        <h2 className="amr-section-title">أمثلة على المنكرات والمعروفات الكبرى</h2>
+        <div className="amr-levels">
+          <div className="amr-level">
+            <div className="amr-level__header">
+              <span className="amr-level__rank" aria-hidden="true">
+                <SectionIcon name="🚫" size={16} />
               </span>
-              <div>
-                <h3 style={{ margin: "0 0 0.35rem", fontSize: "0.88rem", fontWeight: 700, color: "#1A1A18", lineHeight: 1.35 }}>
-                  {cond.title}
-                </h3>
-                <p style={{ margin: "0 0 0.5rem", fontSize: "0.8rem", color: "#4B5563", lineHeight: 1.6 }}>
-                  {cond.detail}
-                </p>
-                {cond.scholar_note && (
-                  <p style={{ margin: 0, fontSize: "0.75rem", color: "#5C5C56", fontStyle: "normal", lineHeight: 1.5 }}>
-                    {cond.scholar_note}
-                  </p>
-                )}
-              </div>
+              <h3 className="amr-level__title">منكرات تستوجب الإنكار</h3>
+            </div>
+            <div className="amr-level__body">
+              {MAJOR_MUNKARAAT.map((m) => (
+                <div key={m.id} className="amr-condition">
+                  <h4 className="amr-condition__title">{m.title}</h4>
+                  <p className="amr-condition__body">{m.explanation}</p>
+                </div>
+              ))}
             </div>
           </div>
-        ))}
-      </div>
-
-      {/* ═══ المنكرات والمعروفات ═══ */}
-      <h2 style={{ fontSize: "1.15rem", fontWeight: 800, color: "var(--mj-brand-deep)", marginBottom: "1rem" }}>
-        أمثلة على المنكرات والمعروفات الكبرى
-      </h2>
-
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.9rem", marginBottom: "2.5rem" }}>
-        <div>
-          <div style={{
-            background: "#FEF2F2",
-            border: "1px solid #FCA5A5",
-            borderRadius: "0.7rem",
-            padding: "0.85rem 1rem",
-            marginBottom: "0.5rem",
-          }}>
-            <p style={{ fontWeight: 700, color: "#DC2626", margin: "0 0 0.5rem", fontSize: "0.88rem" }}>
-              <SectionIcon name="🚫" size={18} /> منكرات تستوجب الإنكار
-            </p>
-          </div>
-          {MAJOR_MUNKARAAT.map((m) => (
-            <div key={m.id} style={{
-              background: "#FFF1F2",
-              border: "1px solid #FECDD3",
-              borderRadius: "0.6rem",
-              padding: "0.7rem 0.85rem",
-              marginBottom: "0.45rem",
-            }}>
-              <p style={{ fontWeight: 700, fontSize: "0.83rem", color: "#9F1239", margin: "0 0 0.2rem" }}>
-                {m.title}
-              </p>
-              <p style={{ margin: 0, fontSize: "0.76rem", color: "#4B5563", lineHeight: 1.55 }}>
-                {m.explanation}
-              </p>
+          <div className="amr-level">
+            <div className="amr-level__header">
+              <span className="amr-level__rank" aria-hidden="true">
+                <SectionIcon name="✅" size={16} />
+              </span>
+              <h3 className="amr-level__title">معروفات ينبغي الأمر بها</h3>
             </div>
+            <div className="amr-level__body">
+              {MAJOR_MAARUF.map((m) => (
+                <div key={m.id} className="amr-condition">
+                  <h4 className="amr-condition__title">{m.title}</h4>
+                  <p className="amr-condition__body">{m.explanation}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <h2 className="amr-section-title">أقوال العلماء</h2>
+        <div className="amr-conditions">
+          {AMR_BIL_MARUF_META.scholars_sayings.map((s, i) => (
+            <figure key={i} className="amr-evidence amr-evidence--hadith">
+              <blockquote className="amr-evidence__text">«{s.saying}»</blockquote>
+              <figcaption className="amr-evidence__src">
+                {s.scholar} — {s.source}
+              </figcaption>
+            </figure>
           ))}
         </div>
 
-        <div>
-          <div style={{
-            background: "#F0FDF4",
-            border: "1px solid #86EFAC",
-            borderRadius: "0.7rem",
-            padding: "0.85rem 1rem",
-            marginBottom: "0.5rem",
-          }}>
-            <p style={{ fontWeight: 700, color: "var(--mj-brand)", margin: "0 0 0.5rem", fontSize: "0.88rem" }}>
-              <SectionIcon name="✅" size={18} /> معروفات ينبغي الأمر بها
-            </p>
-          </div>
-          {MAJOR_MAARUF.map((m) => (
-            <div key={m.id} style={{
-              background: "#F0FDF4",
-              border: "1px solid #BBF7D0",
-              borderRadius: "0.6rem",
-              padding: "0.7rem 0.85rem",
-              marginBottom: "0.45rem",
-            }}>
-              <p style={{ fontWeight: 700, fontSize: "0.83rem", color: "#14532D", margin: "0 0 0.2rem" }}>
-                {m.title}
-              </p>
-              <p style={{ margin: 0, fontSize: "0.76rem", color: "#4B5563", lineHeight: 1.55 }}>
-                {m.explanation}
-              </p>
-            </div>
-          ))}
+        <section className="amr-basis" aria-labelledby="amr-refs-title">
+          <h3 className="amr-condition__title" id="amr-refs-title">
+            <SectionIcon name="📚" size={18} /> المراجع الأساسية
+          </h3>
+          <ul className="amr-level__list">
+            {AMR_BIL_MARUF_META.key_books.map((book, i) => (
+              <li key={i}>{book}</li>
+            ))}
+          </ul>
+        </section>
+
+        <div className="px-4 pb-6 mt-4">
+          <SectionQuiz sectionId="akhlaq" title="اختبر معلوماتك في الأمر بالمعروف" count={4} />
         </div>
       </div>
-
-      {/* ═══ أقوال العلماء ═══ */}
-      <h2 style={{ fontSize: "1.15rem", fontWeight: 800, color: "var(--mj-brand-deep)", marginBottom: "1rem" }}>
-        أقوال العلماء
-      </h2>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem", marginBottom: "2.5rem" }}>
-        {AMR_BIL_MARUF_META.scholars_sayings.map((s, i) => (
-          <figure key={i} style={{
-            margin: 0,
-            background: "#FAFAF8",
-            border: "1px solid #E8E7E2",
-            borderRadius: "0.7rem",
-            padding: "1rem 1.2rem",
-            borderRight: "3px solid var(--mj-brand-deep)",
-          }}>
-            <blockquote style={{
-              margin: "0 0 0.5rem",
-              fontSize: "0.88rem",
-              color: "#1F2937",
-              lineHeight: 1.7,
-              fontStyle: "normal",
-            }}>
-              «{s.saying}»
-            </blockquote>
-            <figcaption style={{ fontSize: "0.76rem", color: "#5C5C56", fontWeight: 600 }}>
-              {s.scholar} — {s.source}
-            </figcaption>
-          </figure>
-        ))}
-      </div>
-
-      {/* ═══ المراجع ═══ */}
-      <section style={{
-        background: "#F9FAFB",
-        border: "1px solid #E8E7E2",
-        borderRadius: "0.7rem",
-        padding: "1.2rem",
-      }}>
-        <h3 style={{ fontSize: "0.95rem", fontWeight: 700, color: "#5C5C56", margin: "0 0 0.75rem" }}>
-          <SectionIcon name="📚" size={18} /> المراجع الأساسية
-        </h3>
-        <ul style={{ margin: 0, paddingRight: "1.25rem", display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-          {AMR_BIL_MARUF_META.key_books.map((book, i) => (
-            <li key={i} style={{ fontSize: "0.82rem", color: "#4B5563", lineHeight: 1.55 }}>{book}</li>
-          ))}
-        </ul>
-      </section>
-      <div className="px-4 pb-6 mt-4">
-        <SectionQuiz sectionId="akhlaq" title="اختبر معلوماتك في الأمر بالمعروف" count={4} />
-      </div>
-    </div>
     </SectionTemplatePage>
   );
 }

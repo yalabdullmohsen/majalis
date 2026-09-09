@@ -55,6 +55,8 @@ import "./styles/visual-layer-contrast-fix.css";
 import "./styles/visual-identity-unify.css";
 /* تلميع الأقسام: بطاقات/فلاتر/قائمة/عائم — بعد طبقة التوحيد */
 import "./styles/sections-calm-polish.css";
+/* نمط مكارم الأخلاق — للأقسام الموضوعية المناسبة فقط */
+import "./styles/section-makarim-pattern.css";
 /* صقل منتج سُنّة — توكنات/بطاقات/درج/بحث/ليلي */
 import "./styles/ssunnah-ux-polish.css";
 // dark-mode-surfaces (~24KB) — فوري فقط إن كان الثيم داكنًا عند الإقلاع؛ وإلا بعد load
@@ -98,7 +100,9 @@ function loadNonCriticalCss() {
       // إعادة طبقة التوحيد بعد final-release لتفوز قواعد الأزرار/البانر
       // مع الإبقاء على الاستيراد المبكر للرموز الصلبة عند أول طلاء.
       void import("./styles/visual-identity-unify.css").then(() => {
-        void import("./styles/sections-calm-polish.css");
+        void import("./styles/sections-calm-polish.css").then(() => {
+          void import("./styles/section-makarim-pattern.css");
+        });
       });
     });
   });

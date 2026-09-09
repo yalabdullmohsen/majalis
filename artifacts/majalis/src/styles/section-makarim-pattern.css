@@ -1,0 +1,552 @@
+/**
+ * section-makarim-pattern.css
+ * نمط عرض مكارم الأخلاق (akl-*) يُعمَّم على الأقسام المناسبة فقط:
+ * فرق / مذاهب / أركان / وصايا / رقائق / علامات الساعة / حكم / تفسير-بطاقات / أمر بالمعروف.
+ * لا يمسّ المصحف ولا هوبات كتب الفقه/الحديث ولا السيرة/الأنبياء.
+ * يُحمَّل بعد sections-calm-polish.
+ */
+
+/* ── غلاف الصفحة (عرض مكارم: ~42rem) ─────────────────────────────── */
+.mdb-page,
+.ai-page,
+.hk-page,
+.rq-page,
+.wn-page,
+.as-page,
+.arkan-page,
+.amr-page {
+  width: 100%;
+  max-width: min(42rem, 100%);
+  margin-inline: auto;
+  padding-inline: max(0.85rem, var(--gutter-inline-start, 14px));
+  padding-bottom: calc(var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 1.25rem);
+  box-sizing: border-box;
+  background: var(--color-bg, var(--surface-app, #f7f3eb));
+  color: var(--color-text, var(--mj-ink));
+}
+
+.rq-container,
+.wn-container,
+.as-container {
+  max-width: min(42rem, 100%);
+  margin-inline: auto;
+  padding-inline: 0;
+}
+
+/* ── هيرو: تدرّج العلامة (لا أسود/ذهبي غريب) ─────────────────────── */
+.rq-hero,
+.wn-hero {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--mj-brand-deep, #0d4a39) 88%, #000) 0%,
+    var(--mj-brand, #146b52) 100%
+  ) !important;
+  color: #fffef9 !important;
+  box-shadow: var(--shadow-soft, 0 3px 12px -10px rgba(10, 61, 46, 0.12));
+}
+
+.rq-hero::before,
+.rq-hero::after,
+.wn-hero::before,
+.wn-hero::after {
+  opacity: 0.35;
+}
+
+.mdb-hero,
+.ai-hero,
+.hk-hero,
+.arkan-hero,
+.as-hero {
+  border-radius: var(--radius-sheet, 28px) !important;
+  box-shadow: var(--shadow-soft, 0 3px 12px -10px rgba(10, 61, 46, 0.12)) !important;
+}
+
+/* ── بحث = akl-search ───────────────────────────────────────────── */
+.sect-hub__search,
+.hk-search,
+.wn-search-input,
+.rq-search-input,
+.as-search-input,
+.mdb-search,
+.ai-search {
+  width: 100%;
+  min-height: 44px !important;
+  padding: 0.65rem 1rem !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 22%, var(--ss-border, #e3e8e6)) !important;
+  border-radius: var(--radius-button, 18px) !important;
+  background: var(--ss-card-bg, #fffcf7) !important;
+  color: var(--color-text, var(--mj-ink)) !important;
+  outline: none;
+  box-sizing: border-box;
+  direction: rtl;
+}
+
+.sect-hub__search:focus,
+.hk-search:focus,
+.wn-search-input:focus,
+.rq-search-input:focus,
+.as-search-input:focus {
+  border-color: var(--mj-brand) !important;
+  outline: 2px solid color-mix(in srgb, var(--mj-brand) 40%, transparent);
+}
+
+/* ── شيبس/تبويبات = akl-cat ─────────────────────────────────────── */
+.sect-hub__chip,
+.akl-cat,
+.rq-tab,
+.wn-tab,
+.as-tab,
+.hk-cat,
+.mdb-hero__nav-btn,
+.ai-hero__nav-btn {
+  min-height: 44px !important;
+  border-radius: 999px !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 28%, var(--ss-border, #e3e8e6)) !important;
+  background: var(--ss-card-bg, #fffcf7) !important;
+  color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39)) !important;
+  font-weight: 650;
+  box-shadow: none !important;
+}
+
+.mdb-hero__nav-btn,
+.ai-hero__nav-btn {
+  background: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  color: #fff !important;
+  border-radius: var(--radius-button, 18px) !important;
+}
+
+.sect-hub__chip.is-active,
+.akl-cat--active,
+.rq-tab--active,
+.wn-tab--active,
+.as-tab--active,
+.hk-cat--active {
+  background: var(--mj-brand-deep, #0d4a39) !important;
+  color: var(--on-dark-strong, #fff) !important;
+  border-color: var(--mj-brand-deep, #0d4a39) !important;
+}
+
+html.dark .sect-hub__chip.is-active,
+html.dark .akl-cat--active,
+html.dark .rq-tab--active,
+html.dark .wn-tab--active,
+html.dark .as-tab--active,
+[data-theme="dark"] .sect-hub__chip.is-active,
+[data-theme="dark"] .akl-cat--active,
+[data-theme="dark"] .rq-tab--active,
+[data-theme="dark"] .wn-tab--active,
+[data-theme="dark"] .as-tab--active {
+  background: var(--mj-brand, #5fbf98) !important;
+  color: var(--mj-on-brand, #06231a) !important;
+  border-color: var(--mj-brand, #5fbf98) !important;
+}
+
+.mdb-hero__nav-btn--active,
+.ai-hero__nav-btn--active {
+  background: rgba(255, 255, 255, 0.32) !important;
+  border-color: #fff !important;
+  color: #fff !important;
+}
+
+/* ── شبكات البطاقات (عمودان كـ مكارم من 640px) ─────────────────── */
+.mdb-list,
+.ai-list,
+.rq-list,
+.wn-list,
+.as-list,
+.arkan-list,
+.hk-grid,
+.amr-levels {
+  display: grid !important;
+  grid-template-columns: 1fr;
+  gap: 0.85rem !important;
+}
+
+@media (min-width: 640px) {
+  .mdb-list,
+  .ai-list,
+  .rq-list,
+  .wn-list,
+  .as-list,
+  .arkan-list,
+  .hk-grid,
+  .amr-levels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mdb-list > :last-child:nth-child(odd),
+  .ai-list > :last-child:nth-child(odd),
+  .rq-list > :last-child:nth-child(odd),
+  .wn-list > :last-child:nth-child(odd),
+  .as-list > :last-child:nth-child(odd),
+  .arkan-list > :last-child:nth-child(odd),
+  .hk-grid > :last-child:nth-child(odd),
+  .amr-levels > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: calc(50% - 0.425rem);
+    justify-self: center;
+    width: 100%;
+  }
+}
+
+/* شبكة الفرق: عمودان كـ مكارم على الجوال (بدل 2 مبكرًا بثلاثية على سطح المكتب تبقى) */
+@media (max-width: 639px) {
+  .sect-hub__grid {
+    grid-template-columns: 1fr !important;
+  }
+  .sect-hub__grid > :last-child:nth-child(odd) {
+    grid-column: auto;
+    max-width: none;
+  }
+}
+
+/* ── بطاقات الموضوع = akl-card ──────────────────────────────────── */
+.sect-card,
+.mdb-card,
+.ai-card,
+.rq-card,
+.wn-card,
+.as-alama-card,
+.as-kubra-card,
+.arkan-card,
+.hk-card,
+.tf-card,
+.tf-path-card,
+.tf-spotlight-card,
+.tf-edition-card,
+.amr-level,
+.amr-basis,
+.amr-ruling {
+  background: var(--ss-card-bg, #fffcf7) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, #e3e8e6)) !important;
+  border-radius: var(--radius-card, 24px) !important;
+  box-shadow: var(--ss-shadow-soft, 0 2px 10px -6px rgba(11, 32, 24, 0.14)) !important;
+  overflow: hidden;
+  color: var(--color-text, var(--mj-ink));
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.sect-card:hover,
+.mdb-card:hover,
+.ai-card:hover,
+.rq-card:hover,
+.wn-card:hover,
+.arkan-card:hover,
+.hk-card:hover,
+.tf-card:hover,
+.amr-level:hover {
+  border-color: color-mix(in srgb, var(--mj-brand) 40%, var(--ss-border)) !important;
+}
+
+.sect-card.is-open,
+.mdb-card--open,
+.ai-card--open,
+.arkan-card--open,
+.tf-card--open {
+  border-color: color-mix(in srgb, var(--mj-brand-deep) 50%, var(--ss-border)) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--mj-brand) 25%, transparent) !important;
+}
+
+/* رأس البطاقة */
+.sect-card__icon,
+.mdb-card__icon,
+.ai-card__icon,
+.wn-card__num,
+.arkan-card__emoji,
+.amr-level__rank {
+  display: grid !important;
+  place-items: center;
+  width: 2.6rem !important;
+  height: 2.6rem !important;
+  border-radius: var(--radius-button, 18px) !important;
+  flex-shrink: 0;
+  background: color-mix(in srgb, var(--mj-brand) 12%, var(--ss-card-bg, #fffcf7)) !important;
+  color: var(--brand-on-light, var(--mj-brand-deep)) !important;
+  line-height: 1;
+}
+
+.wn-card__num {
+  font-size: 0.85rem !important;
+  font-weight: 800;
+}
+
+.rq-card__dot {
+  width: 0.55rem !important;
+  height: 0.55rem !important;
+  border-radius: 999px !important;
+  background: var(--mj-brand) !important;
+}
+
+.sect-card__title,
+.mdb-card__name,
+.ai-card__title,
+.rq-card__title,
+.wn-card__title,
+.as-alama-card__title,
+.as-kubra-title,
+.arkan-card__title,
+.hk-card__scholar,
+.amr-level__title {
+  margin: 0;
+  color: var(--color-text, var(--mj-ink)) !important;
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.amr-notes--flush {
+  margin-block-start: 0.5rem;
+}
+
+/* كتل الأدلة داخل البطاقة = akl-block */
+.mdb-section,
+.ai-dalil,
+.arkan-section,
+.arkan-dalil,
+.rq-card__body,
+.wn-card__body,
+.arkan-card__body,
+.sect-card__detail,
+.amr-evidence,
+.amr-notes {
+  background: color-mix(in srgb, var(--mj-brand) 6%, var(--ss-card-bg, #fffcf7));
+  border-radius: var(--radius-card, 24px);
+  border-inline-start: 3px solid color-mix(in srgb, var(--mj-brand) 55%, transparent);
+}
+
+.ai-dalil--quran,
+.amr-evidence--quran {
+  border-inline-start-color: var(--mj-brand);
+}
+
+.ai-dalil--hadith,
+.amr-evidence--hadith {
+  border-inline-start-color: var(--mj-brand-deep);
+}
+
+/* علامات الساعة: إزالة بنفسجي غير هويّة */
+.as-status--lam-taqaa {
+  --as-status-color: var(--mj-accent, #b08a3e) !important;
+  --as-status-bg: color-mix(in srgb, var(--mj-accent, #b08a3e) 14%, transparent) !important;
+}
+
+/* أمر بالمعروف — هيكل مكارم */
+.amr-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.amr-basis,
+.amr-ruling {
+  padding: 1rem 1.1rem;
+}
+
+.amr-basis__label,
+.amr-ruling__label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--brand-on-light, var(--mj-brand-deep));
+  margin-bottom: 0.4rem;
+}
+
+.amr-basis__quran,
+.amr-basis__hadith {
+  margin: 0 0 0.25rem;
+  line-height: 1.8;
+  color: var(--color-text, var(--mj-ink));
+}
+
+.amr-basis__quran {
+  font-weight: 700;
+  border-inline-start: 3px solid var(--mj-brand-deep);
+  padding-inline-start: 0.85rem;
+}
+
+.amr-basis__hadith {
+  border-inline-start: 3px solid var(--mj-brand);
+  padding-inline-start: 0.85rem;
+  color: var(--color-text-muted, var(--mj-ink-2));
+}
+
+.amr-basis__ref {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text-muted, var(--mj-muted));
+  margin: 0 0 0.85rem;
+  padding-inline-start: 0.85rem;
+}
+
+.amr-ruling {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.amr-ruling__icon {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: var(--radius-button, 18px);
+  background: color-mix(in srgb, var(--mj-brand) 12%, var(--ss-card-bg));
+  color: var(--mj-brand-deep);
+  flex-shrink: 0;
+}
+
+.amr-section-title {
+  margin: 0.35rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--color-text, var(--mj-ink));
+}
+
+.amr-level {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.amr-level__header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem 0.55rem;
+  background: color-mix(in srgb, var(--mj-brand) 8%, var(--ss-card-bg));
+  border: none;
+  width: 100%;
+  text-align: start;
+  direction: rtl;
+  color: inherit;
+}
+
+.amr-level__meta {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--brand-on-light, var(--mj-brand-deep));
+}
+
+.amr-level__body {
+  padding: 0 1.1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.amr-level__desc {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--color-text-muted, var(--mj-ink-2));
+}
+
+.amr-level__block-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--brand-on-light, var(--mj-brand-deep));
+}
+
+.amr-level__list {
+  margin: 0;
+  padding-inline-start: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--color-text, var(--mj-ink));
+}
+
+.amr-evidence {
+  padding: 0.85rem 1rem;
+}
+
+.amr-evidence__type {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--brand-on-light, var(--mj-brand-deep));
+  margin-bottom: 0.25rem;
+}
+
+.amr-evidence__text {
+  margin: 0 0 0.2rem;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--color-text, var(--mj-ink));
+}
+
+.amr-evidence__src {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text-muted, var(--mj-muted));
+}
+
+.amr-notes {
+  padding: 0.75rem 0.95rem;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--color-text-muted, var(--mj-ink-2));
+  margin: 0;
+}
+
+.amr-conditions {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.amr-condition {
+  background: var(--ss-card-bg, #fffcf7);
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border));
+  border-radius: var(--radius-card, 24px);
+  padding: 0.85rem 1rem;
+  box-shadow: var(--ss-shadow-soft, 0 2px 8px -6px rgba(11, 32, 24, 0.12));
+}
+
+.amr-condition__title {
+  margin: 0 0 0.25rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--color-text, var(--mj-ink));
+}
+
+.amr-condition__body {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--color-text-muted, var(--mj-ink-2));
+}
+
+html.dark .sect-card,
+html.dark .mdb-card,
+html.dark .ai-card,
+html.dark .rq-card,
+html.dark .wn-card,
+html.dark .as-alama-card,
+html.dark .as-kubra-card,
+html.dark .arkan-card,
+html.dark .hk-card,
+html.dark .tf-card,
+html.dark .amr-level,
+html.dark .amr-basis,
+html.dark .amr-ruling,
+html.dark .amr-condition,
+[data-theme="dark"] .sect-card,
+[data-theme="dark"] .mdb-card,
+[data-theme="dark"] .ai-card,
+[data-theme="dark"] .rq-card,
+[data-theme="dark"] .wn-card,
+[data-theme="dark"] .arkan-card,
+[data-theme="dark"] .hk-card,
+[data-theme="dark"] .tf-card,
+[data-theme="dark"] .amr-level,
+[data-theme="dark"] .amr-basis,
+[data-theme="dark"] .amr-ruling,
+[data-theme="dark"] .amr-condition {
+  background: var(--ss-card-bg, #1b2421) !important;
+  border-color: color-mix(in srgb, var(--mj-brand) 28%, #2a3832) !important;
+}
