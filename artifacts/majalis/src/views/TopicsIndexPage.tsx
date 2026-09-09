@@ -84,7 +84,7 @@ const CATEGORY_META: Record<string, { label: string; Icon: LucideIcon; color: st
   aqeedah: { label: "العقيدة",          Icon: Shapes,     color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   akhlaq:  { label: "الأخلاق",          Icon: Leaf,       color: "#2d6a4f" },
   quran:   { label: "القرآن الكريم",   Icon: BookMarked, color: "#0A3D2E" },
-  hadith:  { label: "الحديث النبوي",  Icon: ScrollText,  color: "#7c3aed" },
+  hadith:  { label: "الحديث النبوي",  Icon: ScrollText,  color: "var(--mj-brand-deep, #0d4a39)" },
   seerah:  { label: "السيرة النبوية",  Icon: Moon,       color: "var(--majalis-emerald-deep, var(--mj-brand-deep))" },
   other:   { label: "أخرى",            Icon: BookOpen,   color: "var(--majalis-ink-soft)" },
 };
