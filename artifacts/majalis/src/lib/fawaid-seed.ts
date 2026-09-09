@@ -6694,6 +6694,231 @@ export const SEED_FAWAID = [
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-26T00:00:00.000Z"
   },
+  {
+    id: "seed-fawaid-638",
+    text: "أصل الدين إفراد الله بالعبادة؛ فمن صرف شيئًا من العبادة لغير الله فقد ناقض التوحيد.",
+    category: "فوائد عقدية",
+    source: "مقتضى نصوص الكتاب والسنة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-639",
+    text: "الإيمان قول وعمل واعتقاد؛ يزيد بالطاعة وينقص بالمعصية عند أهل السنة.",
+    category: "فوائد عقدية",
+    source: "عقيدة أهل السنة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-640",
+    text: "الدين النصيحة: لله ولكتابه ولرسوله ولأئمة المسلمين وعامتهم.",
+    category: "فوائد حديثية",
+    source: "رواه مسلم",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-641",
+    text: "من حسن إسلام المرء تركه ما لا يعنيه؛ فحفظ الوقت واللسان من أعظم الأدب.",
+    category: "فوائد تربوية",
+    source: "رواه الترمذي وحسّنه الألباني",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-642",
+    text: "تدبّر القرآن مقصد الإنزال؛ ﴿كِتَابٌ أَنزَلْنَاهُ إِلَيْكَ مُبَارَكٌ لِّيَدَّبَّرُوا آيَاتِهِ﴾.",
+    category: "فوائد قرآنية",
+    source: "ص، ٢٩",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-643",
+    text: "الأصل في العبادات التوقيف؛ فلا يُعبد الله إلا بما شرع.",
+    category: "فوائد فقهية",
+    source: "قاعدة أهل العلم",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-644",
+    text: "الدعوة بالحكمة والموعظة الحسنة؛ والرفق ما كان في شيء إلا زانه.",
+    category: "فوائد دعوية",
+    source: "الكتاب والسنة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-645",
+    text: "ليس الشديد بالصُّرعة؛ إنما الشديد الذي يملك نفسه عند الغضب.",
+    category: "آداب وأخلاق",
+    source: "متفق عليه",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-646",
+    text: "البرّ حسن الخلق؛ وصلة الرحم وحسن المعاملة من أصول النجاة الاجتماعية.",
+    category: "فوائد تربوية",
+    source: "رواه مسلم",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-647",
+    text: "محبة الصحابة دين؛ والكفّ عما شجر بينهم من أصول أهل السنة.",
+    category: "فوائد عقدية",
+    source: "عقيدة أهل السنة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-648",
+    text: "من سلك طريقًا يلتمس فيه علمًا سهّل الله له به طريقًا إلى الجنة.",
+    category: "فوائد حديثية",
+    source: "رواه مسلم",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-649",
+    text: "الخشوع في الصلاة ثمرة تعظيم المناجاة؛ ويُطلب بتحضير القلب قبل التكبير.",
+    category: "فوائد قرآنية",
+    source: "مستفاد من هدي السلف",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-650",
+    text: "اليقين لا يزول بالشك؛ قاعدة عظيمة ترفع الحرج في الطهارة والصلاة ونحوها.",
+    category: "فوائد فقهية",
+    source: "قواعد الفقه",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-651",
+    text: "ابدأ بنفسك وأهل بيتك؛ فالإصلاح القريب مقدّمة البلاغ العام.",
+    category: "فوائد دعوية",
+    source: "هدي الأنبياء",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-652",
+    text: "الكلمة الطيبة صدقة؛ وطلاقة الوجه من المعروف اليسير العظيم الأجر.",
+    category: "آداب وأخلاق",
+    source: "السنة الصحيحة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-653",
+    text: "علّموا أولادكم الصلاة لسبع؛ والتأديب بحكمة لا عنفًا مذمومًا.",
+    category: "فوائد تربوية",
+    source: "معنى السنة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-654",
+    text: "الأسماء والصفات تُثبت كما جاءت من غير تحريف ولا تعطيل ولا تمثيل.",
+    category: "فوائد عقدية",
+    source: "عقيدة أهل السنة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-655",
+    text: "المسلم من سلم المسلمون من لسانه ويده؛ فكفّ الأذى شعبة إيمان.",
+    category: "فوائد حديثية",
+    source: "متفق عليه",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-656",
+    text: "الاستعاذة عند القراءة أدبٌ ودفعٌ لوسوسة الشيطان عند كلام الله.",
+    category: "فوائد قرآنية",
+    source: "النحل، ٩٨",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-657",
+    text: "التواضع يرفع العبد؛ ومن تواضع لله رفعه.",
+    category: "آداب وأخلاق",
+    source: "معنى السنة الصحيحة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-658",
+    text: "الولاء والبراء أصل عظيم؛ يُضبط بالعدل والشرع لا بالهوى.",
+    category: "فوائد عقدية",
+    source: "عقيدة أهل السنة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-659",
+    text: "من كان يؤمن بالله واليوم الآخر فليقل خيرًا أو ليصمت.",
+    category: "فوائد حديثية",
+    source: "متفق عليه",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-660",
+    text: "لا ضرر ولا ضرار؛ قاعدة تضبط المعاملات والجوار والقضاء.",
+    category: "فوائد فقهية",
+    source: "حديث حسن",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-661",
+    text: "مراعاة أحوال المخاطبين من فقه الدعوة؛ وليس كل حق يُقال في كل مقام.",
+    category: "فوائد دعوية",
+    source: "هدي السلف",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
+  {
+    id: "seed-fawaid-662",
+    text: "الصاحب ساحب؛ فاختيار الجلساء يحفظ الدين والخلق.",
+    category: "فوائد تربوية",
+    source: "معنى الآثار الصحيحة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-09-09T00:00:00.000Z"
+  },
 ];
 
 export function searchFawaid(query: string) {

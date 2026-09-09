@@ -1,4 +1,4 @@
-import type { HistoryCategory, IslamicHistoryItem } from "./types";
+import type { HistoryCategory, HistoryKind, IslamicHistoryItem } from "./types";
 import { HISTORY_ERA_META, type HistoryEraMeta } from "./era-meta";
 
 import seerah from "./seerah.json";
@@ -15,6 +15,14 @@ import modern from "./modern.json";
 export type { HistoryCategory, HistoryKind, VerificationLevel, IslamicHistoryItem } from "./types";
 export type { HistoryEraMeta } from "./era-meta";
 export { HISTORY_ERA_META } from "./era-meta";
+
+/** تسميات نوع العنصر للعرض — لا تختلق تصنيفات أدق من البيانات */
+export const HISTORY_KIND_LABELS: Record<HistoryKind, string> = {
+  era: "عصر",
+  event: "حدث",
+  institution: "مؤسسة",
+  city: "مدينة",
+};
 
 export const HISTORY_CATEGORIES: Record<HistoryCategory, string> = {
   seerah: HISTORY_ERA_META.seerah.title,
@@ -110,4 +118,66 @@ export function getHistoryErasWithEvents(): Array<{
     meta: HISTORY_ERA_META[id],
     events: getHistoryByCategory(id),
   }));
+}
+
+/** فهرس المرحلة داخل المسار (1-based) */
+export function getEraStageInfo(category: HistoryCategory): {
+  index: number;
+  total: number;
+  meta: HistoryEraMeta;
+  eventCount: number;
+} {
+  const index = HISTORY_CATEGORY_ORDER.indexOf(category) + 1;
+  return {
+    index: Math.max(index, 1),
+    total: HISTORY_CATEGORY_ORDER.length,
+    meta: HISTORY_ERA_META[category],
+    eventCount: getHistoryByCategory(category).length,
+  };
+}
+
+export function getAdjacentEra(
+  category: HistoryCategory,
+): { prev?: HistoryCategory; next?: HistoryCategory } {
+  const i = HISTORY_CATEGORY_ORDER.indexOf(category);
+  if (i < 0) return {};
+  return {
+    prev: i > 0 ? HISTORY_CATEGORY_ORDER[i - 1] : undefined,
+    next: i < HISTORY_CATEGORY_ORDER.length - 1 ? HISTORY_CATEGORY_ORDER[i + 1] : undefined,
+  };
+}
+
+/** الحدث السابق/التالي ضمن نفس المرحلة (ثم على الخط الزمني العام إن لزم) */
+export function getAdjacentHistoryItems(id: string): {
+  prev?: IslamicHistoryItem;
+  next?: IslamicHistoryItem;
+} {
+  const item = getHistoryItem(id);
+  if (!item) return {};
+  const sameEra = getHistoryByCategory(item.category);
+  const localIdx = sameEra.findIndex((x) => x.id === id);
+  if (localIdx >= 0) {
+    return {
+      prev: localIdx > 0 ? sameEra[localIdx - 1] : undefined,
+      next: localIdx < sameEra.length - 1 ? sameEra[localIdx + 1] : undefined,
+    };
+  }
+  const globalIdx = ISLAMIC_HISTORY_ITEMS.findIndex((x) => x.id === id);
+  if (globalIdx < 0) return {};
+  return {
+    prev: globalIdx > 0 ? ISLAMIC_HISTORY_ITEMS[globalIdx - 1] : undefined,
+    next:
+      globalIdx < ISLAMIC_HISTORY_ITEMS.length - 1
+        ? ISLAMIC_HISTORY_ITEMS[globalIdx + 1]
+        : undefined,
+  };
+}
+
+export function getSameEraRelated(
+  item: IslamicHistoryItem,
+  limit = 6,
+): IslamicHistoryItem[] {
+  return getHistoryByCategory(item.category)
+    .filter((x) => x.id !== item.id)
+    .slice(0, limit);
 }
