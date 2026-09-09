@@ -27,7 +27,7 @@ const intro = JSON.parse(
   readFileSync(resolve(root, "public/data/knowledge/intro-islam/topics.json"), "utf8"),
 ) as { items: { id: string; body: string; review_status?: string }[] };
 
-assert.equal(intro.items.length, 14, "14 موضوع تعريف");
+assert.equal(intro.items.length, 16, "16 موضوع تعريف");
 for (const it of intro.items) {
   assert.equal(it.review_status, "verified", `${it.id}: verified`);
   assert.ok(wc(it.body) >= 40, `${it.id}: أقصر من حد intro-islam`);
