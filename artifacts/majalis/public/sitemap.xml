@@ -1305,6 +1305,11 @@
     <priority>0.68</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/seerah-taif</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/seerah-isra-miraj</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1830,6 +1835,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/ayyubid-damascus-base</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/ayyubid-founding</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -2161,6 +2171,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/civ-bimaristan</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/civ-qibla-miqat</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
