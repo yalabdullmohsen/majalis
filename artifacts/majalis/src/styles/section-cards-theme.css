@@ -591,3 +591,66 @@ html[data-theme="dark"] .zk-detail,
 html[data-theme="dark"] .sy-card__text {
   color: var(--mj-ink-2, #c5d0cb) !important;
 }
+
+/* ── موجة: سيرة / أدعية / أربعين نووية ───────────────────────────── */
+.seerah-page,
+.duas-page,
+.an-page {
+  color: var(--color-text, var(--mj-ink));
+}
+
+.seerah-timeline,
+.seerah-panel,
+.seerah-sources,
+.seerah-related__link,
+.duas-cat:not(.duas-cat--active),
+.dua-card,
+.an-search,
+.an-card,
+.an-row {
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, var(--color-border))) !important;
+  color: var(--color-text, var(--mj-ink)) !important;
+}
+
+html.dark .seerah-timeline,
+html.dark .seerah-panel,
+html.dark .seerah-sources,
+html.dark .seerah-related__link,
+html.dark .duas-cat:not(.duas-cat--active),
+html.dark .dua-card,
+html.dark .an-search,
+html.dark .an-card,
+html.dark .an-row,
+html[data-theme="dark"] .seerah-timeline,
+html[data-theme="dark"] .seerah-panel,
+html[data-theme="dark"] .seerah-sources,
+html[data-theme="dark"] .seerah-related__link,
+html[data-theme="dark"] .duas-cat:not(.duas-cat--active),
+html[data-theme="dark"] .dua-card,
+html[data-theme="dark"] .an-search,
+html[data-theme="dark"] .an-card,
+html[data-theme="dark"] .an-row {
+  background: var(--mj-surface, #1b2421) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+  color: var(--mj-ink, #f3f7f5) !important;
+}
+
+html.dark .seerah-sources__title,
+html.dark .seerah-related__title,
+html.dark .dua-card__title,
+html.dark .an-card__title,
+html[data-theme="dark"] .seerah-sources__title,
+html[data-theme="dark"] .seerah-related__title,
+html[data-theme="dark"] .an-card__title {
+  color: var(--mj-ink, #f3f7f5) !important;
+}
+
+html.dark .seerah-sources__note,
+html.dark .dua-card__text,
+html.dark .an-card__text,
+html.dark .an-card__expl,
+html[data-theme="dark"] .seerah-sources__note,
+html[data-theme="dark"] .an-card__text {
+  color: var(--mj-ink-2, #c5d0cb) !important;
+}
