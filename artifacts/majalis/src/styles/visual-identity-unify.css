@@ -133,7 +133,6 @@ body,
 .lesson-unified-card,
 .fqh-hub-card,
 .topic-card,
-.notif-card,
 .hlr__card {
   background: var(--color-surface) !important;
   border: 1px solid color-mix(in srgb, var(--color-border) 88%, transparent) !important;
@@ -142,7 +141,9 @@ body,
   color: var(--color-text);
 }
 
-.an-card {
+.an-card,
+.notif-card,
+.nh-section {
   border-radius: var(--radius-card) !important;
 }
 

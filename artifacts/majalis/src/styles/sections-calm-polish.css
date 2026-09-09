@@ -135,8 +135,6 @@ html.dark {
 .dii-hub-card,
 .hs-card,
 .hb-hadith-row,
-.notif-card,
-.nh-section,
 .hlr__card,
 .page-card,
 .ss-state-card {
@@ -147,8 +145,10 @@ html.dark {
   color: var(--text) !important;
 }
 
-/* الأربعين: نصف قطر فقط (تحتفظ بحالات مقروء/اليوم) */
-.an-card {
+/* الأربعين/إشعارات: نصف قطر فقط (تحتفظ بألوانها الدلالية) */
+.an-card,
+.notif-card,
+.nh-section {
   border-radius: var(--radius-card) !important;
 }
 
@@ -743,8 +743,6 @@ a.m2030-btn,
   border-radius: var(--radius-control, 14px) !important;
 }
 
-html[data-theme="dark"] .notif-card,
-html.dark .notif-card,
 html[data-theme="dark"] .an-card,
 html.dark .an-card,
 html[data-theme="dark"] .hlr__card,
