@@ -25,7 +25,6 @@ import { useLanguage } from "@/components/LanguageProvider";
 import { LANG_META } from "@/lib/language-preference";
 import { getFeaturedQuestions, getFeaturedShubuhat, getDawahCategories, getArticlesByCategory, type DawahQuestion, type DawahShubha, type DawahCategory, type DawahArticle } from "@/lib/dawah-service";
 import "@/styles/discover-islam.css";
-import "@/components/sections/section-cards.css";
 
 /** Allowlist — avoids `import * as LucideIcons` pulling the entire icon set into this route. */
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
@@ -106,7 +105,7 @@ export default function DiscoverIslamPage() {
   return (
     <SectionTemplatePage
       route="/discover-islam"
-      eyebrow="بوابة التعريف بالإسلام"
+      eyebrow="التعريف بالإسلام"
       title="تعرّف إلى الإسلام من مصادره"
       subtitle="تعريف واضح بالأدلة، يجيب عن الأسئلة ويرد على الشبهات بهدوء واحترام."
       groupTitle="مسارات التعرف"
@@ -165,14 +164,16 @@ export default function DiscoverIslamPage() {
             <h2 id="dii-articles-heading" className="page-section-title" style={{ margin: 0 }}>مقالات تأسيسية</h2>
             <Link href="/discover-islam/articles/what-is-islam" className="page-link-inline">ابدأ بـ«ما الإسلام؟»</Link>
           </div>
-          <div className="page-card-grid">
+          <div className="hub-card-grid dii-list-grid">
             {articles.map((a) => (
-              <Link key={a.id} href={`/discover-islam/articles/${a.slug}`} className="platform-card-link">
-                <article className="page-card platform-content-card">
-                  <div className="page-card-header"><p>{a.title_ar}</p></div>
-                  <p className="page-desc">{a.summary_ar}</p>
-                </article>
-              </Link>
+              <HubCard
+                key={a.id}
+                href={`/discover-islam/articles/${a.slug}`}
+                title={a.title_ar}
+                description={a.summary_ar || undefined}
+                badge="مقال"
+                className="dii-hub-card dii-list-card"
+              />
             ))}
           </div>
         </section>
@@ -198,44 +199,48 @@ export default function DiscoverIslamPage() {
       )}
 
       {questions.length > 0 && (
-        <section aria-labelledby="dii-questions-heading" style={{ marginTop: "2.5rem" }}>
+        <section aria-labelledby="dii-questions-heading" className="dii-section">
           <div className="page-stats-row">
             <h2 id="dii-questions-heading" className="page-section-title" style={{ margin: 0 }}>أشهر الأسئلة</h2>
             <Link href="/discover-islam/questions" className="page-link-inline">عرض الكل</Link>
           </div>
-          <div className="page-card-grid">
+          <div className="hub-card-grid dii-list-grid">
             {questions.map((q) => (
-              <Link key={q.id} href={`/discover-islam/questions/${q.slug}`} className="platform-card-link">
-                <article className="page-card platform-content-card">
-                  <div className="page-card-header"><p>{q.title}</p></div>
-                  <p className="page-desc">{q.short_answer}</p>
-                </article>
-              </Link>
+              <HubCard
+                key={q.id}
+                href={`/discover-islam/questions/${q.slug}`}
+                title={q.title}
+                description={q.short_answer}
+                badge="سؤال"
+                className="dii-hub-card dii-list-card"
+              />
             ))}
           </div>
         </section>
       )}
 
       {shubuhat.length > 0 && (
-        <section aria-labelledby="dii-shubuhat-heading" style={{ marginTop: "2.5rem" }}>
+        <section aria-labelledby="dii-shubuhat-heading" className="dii-section">
           <div className="page-stats-row">
             <h2 id="dii-shubuhat-heading" className="page-section-title" style={{ margin: 0 }}>أشهر الشبهات</h2>
             <Link href="/discover-islam/doubts" className="page-link-inline">عرض الكل</Link>
           </div>
-          <div className="page-card-grid">
+          <div className="hub-card-grid dii-list-grid">
             {shubuhat.map((s) => (
-              <Link key={s.id} href={`/discover-islam/doubts/${s.slug}`} className="platform-card-link">
-                <article className="page-card platform-content-card">
-                  <div className="page-card-header"><p>{s.title}</p></div>
-                  <p className="page-desc">{s.short_answer}</p>
-                </article>
-              </Link>
+              <HubCard
+                key={s.id}
+                href={`/discover-islam/doubts/${s.slug}`}
+                title={s.title}
+                description={s.short_answer}
+                badge="شبهة"
+                className="dii-hub-card dii-list-card"
+              />
             ))}
           </div>
         </section>
       )}
 
-      <section aria-labelledby="dii-journey-heading" style={{ marginTop: "2.5rem" }}>
+      <section aria-labelledby="dii-journey-heading" className="dii-section">
         <h2 id="dii-journey-heading" className="page-section-title">اكتشف الإسلام خطوة بخطوة</h2>
         <ol className="dii-journey">
           {JOURNEY_STEPS.map((step, i) => (
@@ -249,7 +254,7 @@ export default function DiscoverIslamPage() {
         </ol>
       </section>
 
-      <section className="dii-contact-cta ui-card" style={{ marginTop: "2.5rem" }}>
+      <section className="dii-contact-cta dii-block dii-block--accent dii-section">
         <h2>هل تحتاج التحدث مع شخص مباشرة؟</h2>
         <p>تواصل سري وآمن مع داعٍ أو داعية — بلا أي إلزام، وبلا نشر بياناتك لأحد.</p>
         <Link href="/discover-islam/contact" className="asp-run-btn">ابدأ التواصل السري</Link>

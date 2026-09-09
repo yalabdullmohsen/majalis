@@ -3,7 +3,7 @@ import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { useLanguage } from "@/components/LanguageProvider";
 import { submitDawahContactRequest, CONTACT_RELIGIONS, type ReligionCode } from "@/lib/dawah-service";
-import "@/styles/discover-islam.css";
+import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
 
 export default function DiscoverIslamContactPage() {
   const { lang } = useLanguage();
@@ -54,22 +54,22 @@ export default function DiscoverIslamContactPage() {
 
   if (result?.ok) {
     return (
-      <div className="page-shell narrow">
+      <DiscoverIslamShell detail>
         <PageHeader eyebrow="التعريف بالإسلام" title="تم استلام طلبك" />
-        <div className="ui-card dii-answer-card">
+        <div className="dii-block dii-block--accent dii-answer-card">
           <p>تم استلام طلبك. سيتواصل معك أحد الدعاة على الوسيلة التي اخترتها. رمز المتابعة:</p>
           <p className="dii-tracking-code">{result.trackingCode}</p>
           <p className="page-desc">احتفظ بهذا الرمز إن احتجت للاستفسار عن حالة طلبك لاحقًا.</p>
         </div>
-      </div>
+      </DiscoverIslamShell>
     );
   }
 
   return (
-    <div className="page-shell narrow">
+    <DiscoverIslamShell detail>
       <PageHeader eyebrow="التعريف بالإسلام" title="تواصل سرّي مع داعية" subtitle="بياناتك تُستخدَم فقط للتواصل معك، ولا تُعرض لأي طرف آخر أبدًا." />
 
-      <form onSubmit={onSubmit} className="dii-contact-form ui-card">
+      <form onSubmit={onSubmit} className="dii-contact-form dii-block dii-block--muted">
         <label className="dii-checkbox-label">
           <input type="checkbox" checked={isAnonymous} onChange={(e) => setIsAnonymous(e.target.checked)} />
           أفضّل عدم كتابة اسمي
@@ -113,6 +113,6 @@ export default function DiscoverIslamContactPage() {
 
         <button type="submit" disabled={busy} className="asp-run-btn">{busy ? "جارٍ الإرسال..." : "إرسال الطلب"}</button>
       </form>
-    </div>
+    </DiscoverIslamShell>
   );
 }

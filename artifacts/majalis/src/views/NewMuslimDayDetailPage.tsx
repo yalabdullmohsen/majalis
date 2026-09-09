@@ -4,7 +4,7 @@ import { PageHeader, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { useAuth } from "@/components/AuthProvider";
 import { getNewMuslimPath, getNewMuslimProgress, markNewMuslimDayComplete, type NewMuslimDay } from "@/lib/dawah-service";
-import "@/styles/discover-islam.css";
+import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
 
 export default function NewMuslimDayDetailPage() {
   const { day } = useParams<{ day: string }>();
@@ -41,17 +41,29 @@ export default function NewMuslimDayDetailPage() {
     }
   };
 
-  if (days === null) return <div className="page-shell narrow"><PageHeader eyebrow="المسلم الجديد" title="اليوم" /></div>;
-  if (!item) return <div className="page-shell narrow"><Empty text="لم يُعثر على هذا اليوم." /></div>;
+  if (days === null) {
+    return (
+      <DiscoverIslamShell detail>
+        <PageHeader eyebrow="التعريف بالإسلام" title="اليوم" />
+      </DiscoverIslamShell>
+    );
+  }
+  if (!item) {
+    return (
+      <DiscoverIslamShell detail>
+        <Empty text="لم يُعثر على هذا اليوم." />
+      </DiscoverIslamShell>
+    );
+  }
 
   const isDone = completed.includes(dayNum);
   const next = days.find((d) => d.day_number === dayNum + 1);
   const prev = days.find((d) => d.day_number === dayNum - 1);
 
   return (
-    <div className="page-shell narrow dii-question-page">
-      <PageHeader eyebrow={`اليوم ${dayNum} من ${days.length}`} title={item.title} />
-      <div className="ui-card">
+    <DiscoverIslamShell detail>
+      <PageHeader eyebrow={`التعريف بالإسلام · اليوم ${dayNum} من ${days.length}`} title={item.title} />
+      <div className="dii-block dii-block--muted">
         <p className="page-desc dii-detailed-answer">{item.content_ar}</p>
       </div>
 
@@ -63,11 +75,11 @@ export default function NewMuslimDayDetailPage() {
         <p className="dii-path-day-title" style={{ marginTop: "1rem" }}>سجّل الدخول لحفظ تقدّمك عبر الأيام.</p>
       )}
 
-      <div className="dii-cta-row" style={{ marginTop: "1.5rem" }}>
+      <div className="dii-cta-row dii-section">
         {prev && <Link href={`/discover-islam/new-muslim/${prev.day_number}`} className="asp-add-btn">اليوم السابق</Link>}
         <Link href="/discover-islam/new-muslim" className="page-link-inline">كل الأيام</Link>
         {next && <Link href={`/discover-islam/new-muslim/${next.day_number}`} className="asp-run-btn">اليوم التالي</Link>}
       </div>
-    </div>
+    </DiscoverIslamShell>
   );
 }

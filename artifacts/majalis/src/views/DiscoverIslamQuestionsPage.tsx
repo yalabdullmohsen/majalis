@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link } from "wouter";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
+import { HubCard } from "@/components/ui/HubCard";
+import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
 import { applyPageSeo } from "@/lib/seo";
 import { getDawahCategories, getQuestionsByCategory, getQuestionsByReligion, searchDawahQuestions, RELIGIONS, type DawahCategory, type DawahQuestion, type ReligionCode } from "@/lib/dawah-service";
-import "@/styles/discover-islam.css";
 
 function useDebounced<T>(value: T, ms = 350): T {
   const [d, setD] = useState(value);
@@ -58,7 +58,7 @@ export default function DiscoverIslamQuestionsPage() {
   };
 
   return (
-    <div className="page-shell narrow content-hub-page">
+    <DiscoverIslamShell>
       <PageHeader eyebrow="التعريف بالإسلام" title="أسئلة وأجوبة" subtitle="إجابات موثّقة، مختصرة ومفصّلة، عن أهم الأسئلة حول الإسلام." />
 
       <input
@@ -94,17 +94,19 @@ export default function DiscoverIslamQuestionsPage() {
       ) : items.length === 0 ? (
         <Empty text="لا توجد أسئلة مطابقة بعد." />
       ) : (
-        <div className="page-card-grid">
+        <div className="hub-card-grid dii-list-grid dii-section">
           {items.map((q) => (
-            <Link key={q.id} href={`/discover-islam/questions/${q.slug}`} className="platform-card-link">
-              <article className="page-card platform-content-card">
-                <div className="page-card-header"><p>{q.title}</p></div>
-                <p className="page-desc">{q.short_answer}</p>
-              </article>
-            </Link>
+            <HubCard
+              key={q.id}
+              href={`/discover-islam/questions/${q.slug}`}
+              title={q.title}
+              description={q.short_answer}
+              badge="سؤال"
+              className="dii-hub-card dii-list-card"
+            />
           ))}
         </div>
       )}
-    </div>
+    </DiscoverIslamShell>
   );
 }
