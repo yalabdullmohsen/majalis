@@ -37,6 +37,8 @@ for (const cls of [
   "mk-lane-card",
   "fiqh-book-card",
   "dii-hub-card",
+  "dii-list-card",
+  "dii-block",
   "hs-card",
   "hb-hadith-row",
 ]) {

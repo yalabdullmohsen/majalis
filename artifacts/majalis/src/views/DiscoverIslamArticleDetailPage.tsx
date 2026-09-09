@@ -4,7 +4,7 @@ import { PageHeader, Empty } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { getArticleBySlug, getArticleTranslations, type DawahArticle, type DawahTranslation } from "@/lib/dawah-service";
-import "@/styles/discover-islam.css";
+import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
 
 const LANG_LABELS: Record<string, string> = { en: "English", fr: "Français", tr: "Türkçe", ur: "اردو", id: "Bahasa Indonesia" };
 const FULL_TEXT_NOTE: Record<string, string> = {
@@ -39,17 +39,29 @@ export default function DiscoverIslamArticleDetailPage() {
     });
   }, [slug]);
 
-  if (item === undefined) return <div className="page-shell narrow"><PageHeader eyebrow="التعريف بالإسلام" title="المقال" /></div>;
-  if (item === null) return <div className="page-shell narrow"><Empty text="لم يُعثر على هذا المقال." /></div>;
+  if (item === undefined) {
+    return (
+      <DiscoverIslamShell detail>
+        <PageHeader eyebrow="التعريف بالإسلام" title="المقال" />
+      </DiscoverIslamShell>
+    );
+  }
+  if (item === null) {
+    return (
+      <DiscoverIslamShell detail>
+        <Empty text="لم يُعثر على هذا المقال." />
+      </DiscoverIslamShell>
+    );
+  }
 
   const activeTranslation = viewLang === "ar" ? null : translations.find((t) => t.lang === viewLang);
   const displayTitle = activeTranslation?.title || item.title_ar;
   const isRtlLang = viewLang === "ar" || viewLang === "ur";
 
   return (
-    <div className="page-shell narrow dii-question-page">
+    <DiscoverIslamShell detail>
       <div dir={isRtlLang ? "rtl" : "ltr"}>
-        <PageHeader eyebrow="مقال" title={displayTitle} />
+        <PageHeader eyebrow="التعريف بالإسلام" title={displayTitle} />
       </div>
 
       {translations.length > 0 && (
@@ -67,19 +79,19 @@ export default function DiscoverIslamArticleDetailPage() {
       {item.cover_image_url && <img src={item.cover_image_url} alt="" className="dii-article-cover" loading="lazy" />}
 
       {viewLang === "ar" ? (
-        <div className="ui-card">
+        <div className="dii-block dii-block--muted">
           <p className="page-desc dii-detailed-answer">{item.body_ar}</p>
         </div>
       ) : (
-        <div className="ui-card" dir={isRtlLang ? "rtl" : "ltr"}>
+        <div className="dii-block dii-block--muted" dir={isRtlLang ? "rtl" : "ltr"}>
           <p className="dii-short-answer">{activeTranslation?.summary}</p>
           <p className="page-desc" style={{ marginTop: "1rem" }}>{FULL_TEXT_NOTE[viewLang] || FULL_TEXT_NOTE.en}</p>
         </div>
       )}
 
-      <div className="twh-share" style={{ marginTop: "1.5rem" }}>
+      <div className="twh-share dii-section">
         <ShareButtons title={displayTitle} url={`https://www.ssunnah.com/discover-islam/articles/${item.slug}`} />
       </div>
-    </div>
+    </DiscoverIslamShell>
   );
 }

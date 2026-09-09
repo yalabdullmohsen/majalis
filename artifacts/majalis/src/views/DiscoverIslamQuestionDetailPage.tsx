@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "wouter";
 import { PageHeader, Empty } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
+import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
 import { applyPageSeo } from "@/lib/seo";
 import { getQuestionBySlug, getQuestionTranslations, type DawahQuestion, type DawahTranslation } from "@/lib/dawah-service";
 import { supabase } from "@/lib/supabase";
-import "@/styles/discover-islam.css";
 
 const LANG_LABELS: Record<string, string> = { en: "English", fr: "Français", es: "Español" };
 
@@ -39,17 +39,29 @@ export default function DiscoverIslamQuestionDetailPage() {
     });
   }, [slug]);
 
-  if (item === undefined) return <div className="page-shell narrow"><PageHeader eyebrow="التعريف بالإسلام" title="السؤال" /></div>;
-  if (item === null) return <div className="page-shell narrow"><Empty text="لم يُعثر على هذا السؤال." /></div>;
+  if (item === undefined) {
+    return (
+      <DiscoverIslamShell detail>
+        <PageHeader eyebrow="التعريف بالإسلام" title="السؤال" />
+      </DiscoverIslamShell>
+    );
+  }
+  if (item === null) {
+    return (
+      <DiscoverIslamShell detail>
+        <Empty text="لم يُعثر على هذا السؤال." />
+      </DiscoverIslamShell>
+    );
+  }
 
   const activeTranslation = viewLang === "ar" ? null : translations.find((t) => t.lang === viewLang);
   const displayTitle = activeTranslation?.title || item.title;
   const displayShortAnswer = activeTranslation?.summary || item.short_answer;
 
   return (
-    <div className="page-shell narrow dii-question-page">
+    <DiscoverIslamShell detail>
       <div dir={viewLang === "ar" ? "rtl" : "ltr"}>
-        <PageHeader eyebrow="سؤال وجواب" title={displayTitle} />
+        <PageHeader eyebrow="التعريف بالإسلام" title={displayTitle} />
       </div>
 
       {translations.length > 0 && (
@@ -64,28 +76,28 @@ export default function DiscoverIslamQuestionDetailPage() {
         </div>
       )}
 
-      <div className="ui-card dii-answer-card" dir={viewLang === "ar" ? "rtl" : "ltr"}>
+      <div className="dii-block dii-block--accent dii-answer-card" dir={viewLang === "ar" ? "rtl" : "ltr"}>
         <span className="page-tag">{viewLang === "ar" ? "الجواب المختصر" : "Short Answer"}</span>
         <p className="dii-short-answer">{displayShortAnswer}</p>
       </div>
 
       {viewLang === "ar" ? (
-        <div className="ui-card" style={{ marginTop: "1rem" }}>
+        <div className="dii-block dii-block--muted">
           <span className="page-tag">التفصيل</span>
           <p className="page-desc dii-detailed-answer">{item.detailed_answer}</p>
         </div>
       ) : (
-        <div className="ui-card" style={{ marginTop: "1rem" }}>
+        <div className="dii-block dii-block--muted">
           <p className="page-desc">التفصيل الكامل والأدلة متاحان بالعربية. اختر العربية أعلاه لقراءة الجواب المفصّل، أو ابقَ على المختصر بهذه اللغة.</p>
         </div>
       )}
 
       {viewLang === "ar" && item.evidences?.length > 0 && (
-        <section style={{ marginTop: "1.5rem" }}>
+        <section className="dii-section">
           <h2 className="page-section-title">الأدلة</h2>
           <ul className="dii-evidence-list">
             {item.evidences.map((e, i) => (
-              <li key={i} className="ui-card dii-evidence-item">
+              <li key={i} className="dii-block dii-block--evidence dii-evidence-item">
                 <span className="page-tag">{e.type === "quran" ? "قرآن" : "حديث"} — {e.ref}</span>
                 <p>{e.text}</p>
                 {e.grading && <p className="dii-evidence-grading">الدرجة: {e.grading}</p>}
@@ -96,7 +108,7 @@ export default function DiscoverIslamQuestionDetailPage() {
       )}
 
       {viewLang === "ar" && item.glossary_terms?.length > 0 && (
-        <section style={{ marginTop: "1.5rem" }}>
+        <section className="dii-section">
           <h2 className="page-section-title">مصطلحات</h2>
           <dl className="dii-glossary">
             {item.glossary_terms.map((g, i) => (
@@ -107,7 +119,7 @@ export default function DiscoverIslamQuestionDetailPage() {
       )}
 
       {viewLang === "ar" && item.sources?.length > 0 && (
-        <section style={{ marginTop: "1.5rem" }}>
+        <section className="dii-section">
           <h2 className="page-section-title">المصادر</h2>
           <ul className="dii-sources-list">
             {item.sources.map((s, i) => (
@@ -117,10 +129,10 @@ export default function DiscoverIslamQuestionDetailPage() {
         </section>
       )}
 
-      <div className="twh-share" style={{ marginTop: "1.5rem" }}>
+      <div className="twh-share dii-section">
         <ShareButtons title={item.title} url={`https://www.ssunnah.com/discover-islam/questions/${item.slug}`} />
         <Link href="/discover-islam/contact" className="page-link-inline">لديك سؤال آخر؟ تحدّث مع داعية ←</Link>
       </div>
-    </div>
+    </DiscoverIslamShell>
   );
 }

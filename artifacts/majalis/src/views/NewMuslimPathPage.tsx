@@ -4,7 +4,7 @@ import { PageHeader, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { useAuth } from "@/components/AuthProvider";
 import { getNewMuslimPath, getNewMuslimProgress, type NewMuslimDay } from "@/lib/dawah-service";
-import "@/styles/discover-islam.css";
+import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
 
 export default function NewMuslimPathPage() {
   const { user } = useAuth();
@@ -25,8 +25,8 @@ export default function NewMuslimPathPage() {
   }, [user?.id]);
 
   return (
-    <div className="page-shell narrow content-hub-page">
-      <PageHeader eyebrow="المسلم الجديد" title="مسار الثلاثين يومًا" subtitle="لا سباق ولا حساب للتأخر — أكمل بالسرعة التي تناسبك، وارجع إلى أي يوم متى شئت." />
+    <DiscoverIslamShell>
+      <PageHeader eyebrow="التعريف بالإسلام" title="مسار الثلاثين يومًا" subtitle="لا سباق ولا حساب للتأخر — أكمل بالسرعة التي تناسبك، وارجع إلى أي يوم متى شئت." />
 
       {days === null ? (
         <p className="page-desc" role="status">جاري تحميل المسار…</p>
@@ -38,7 +38,7 @@ export default function NewMuslimPathPage() {
             const done = completed.includes(d.day_number);
             return (
               <li key={d.id}>
-                <Link href={`/discover-islam/new-muslim/${d.day_number}`} className={`dii-path-day ui-card${done ? " dii-path-day--done" : ""}`}>
+                <Link href={`/discover-islam/new-muslim/${d.day_number}`} className={`dii-path-day dii-block${done ? " dii-path-day--done" : ""}`}>
                   <span className="dii-path-day-num">{d.day_number}</span>
                   <span className="dii-path-day-title">{d.title}</span>
                   {done && <span className="page-tag">تم</span>}
@@ -48,6 +48,6 @@ export default function NewMuslimPathPage() {
           })}
         </ol>
       )}
-    </div>
+    </DiscoverIslamShell>
   );
 }
