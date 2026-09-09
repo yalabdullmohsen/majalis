@@ -1310,6 +1310,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/seerah-aqabah</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/seerah-hijra</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1391,6 +1396,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/rashidun-ridda-wars</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/rashidun-yamamah</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -1765,6 +1775,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/andalus-ibn-arabi-caution</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/seljuk-malikshah</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1971,6 +1986,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/civ-waqf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/ottoman-mohacs</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
