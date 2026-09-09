@@ -10,6 +10,7 @@ type Props = {
   fontFamily: string;
   displayPageNumber?: number;
   onSelectVerse?: (verseKey: string) => void;
+  onLongPressVerse?: (verseKey: string) => void;
   /** قياس التحديد بعد استقرار القلب فقط */
   selectionEnabled?: boolean;
   /** فتح انتقال الصفحة عند الضغط على رقم الصفحة */
@@ -61,6 +62,7 @@ export const MushafPage = memo(function MushafPage({
   fontFamily,
   displayPageNumber,
   onSelectVerse,
+  onLongPressVerse,
   selectionEnabled = true,
   onPageNumberPress,
 }: Props) {
@@ -90,6 +92,10 @@ export const MushafPage = memo(function MushafPage({
   const onSelectFatiha = useMemo(
     () => (onSelectVerse ? () => onSelectVerse("1:1") : undefined),
     [onSelectVerse],
+  );
+  const onLongPressFatiha = useMemo(
+    () => (onLongPressVerse ? () => onLongPressVerse("1:1") : undefined),
+    [onLongPressVerse],
   );
 
   return (
@@ -150,12 +156,14 @@ export const MushafPage = memo(function MushafPage({
                       words={cell.words}
                       numbered
                       onSelect={onSelectFatiha}
+                      onLongPress={onLongPressFatiha}
                     />
                   ) : (
                     <MushafVerseLayer
                       words={cell.words}
                       centered={isOpeningP1 || isLeadP2 || isLastSurahLine(cell.words, layout)}
                       onSelectVerse={onSelectVerse}
+                      onLongPressVerse={onLongPressVerse}
                     />
                   )
                 ) : null}

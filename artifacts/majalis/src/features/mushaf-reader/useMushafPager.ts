@@ -68,7 +68,13 @@ export function useMushafPager({
 }: Opts): MushafPagerApi {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
-  const touchRef = useRef<{ x: number; y: number; t: number } | null>(null);
+  const touchRef = useRef<{
+    x: number;
+    y: number;
+    t: number;
+    /** بدأ اللمس على كلمة آية — لا نأسر المؤشر حتى يثبت السحب */
+    onAyah: boolean;
+  } | null>(null);
   const panning = useRef(false);
   const locking = useRef(false);
   const dragDx = useRef(0);
@@ -76,6 +82,9 @@ export function useMushafPager({
   const pendingCommit = useRef<number | null>(null);
   const pageRef = useRef(page);
   pageRef.current = page;
+
+  /** عتبة أعلى فوق الآيات لتقليل تعارض التحديد مع السحب */
+  const panSlopFor = (onAyah: boolean) => (onAyah ? 18 : 10);
 
   const measureWidth = useCallback(() => {
     const w = scrollerRef.current?.clientWidth || 0;
@@ -182,11 +191,17 @@ export function useMushafPager({
     dragDx.current = 0;
     measureWidth();
     setTrackX(baseX(), false);
-    touchRef.current = { x: e.clientX, y: e.clientY, t: Date.now() };
-    try {
-      (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
-    } catch {
-      /* ignore */
+    const onAyah = Boolean(
+      t.closest(".nm-word, .nm-basmala, [data-testid='mushaf-ayah-hit'], [data-testid='mushaf-basmala']"),
+    );
+    touchRef.current = { x: e.clientX, y: e.clientY, t: Date.now(), onAyah };
+    /* فوق الآية: اترك أحداث الرفع للكلمة — الأسر فقط بعد ثبوت سحب أفقي */
+    if (!onAyah) {
+      try {
+        (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+      } catch {
+        /* ignore */
+      }
     }
   };
 
@@ -196,9 +211,17 @@ export function useMushafPager({
     const dx = e.clientX - start.x;
     const dy = e.clientY - start.y;
     if (!panning.current) {
-      if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
+      const slop = panSlopFor(start.onAyah);
+      if (Math.abs(dx) > slop && Math.abs(dx) > Math.abs(dy)) {
         panning.current = true;
         scrollerRef.current?.classList.add("is-panning");
+        if (start.onAyah) {
+          try {
+            (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+          } catch {
+            /* ignore */
+          }
+        }
         onNavigateStart?.();
       } else {
         return;

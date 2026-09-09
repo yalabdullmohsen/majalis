@@ -18,17 +18,19 @@ type LineProps = {
   words: QpcWord[];
   centered?: boolean;
   onSelectVerse?: (verseKey: string) => void;
+  /** ضغط مطوّل → تفسير مباشرة */
+  onLongPressVerse?: (verseKey: string) => void;
 };
 
-const TAP_SLOP_PX = 40;
-const SHORT_SELECT_MS = 200;
+const TAP_SLOP_PX = 28;
+const LONG_PRESS_MS = 480;
 
 type PressState = {
   verseKey: string;
   x: number;
   y: number;
-  timer: number;
-  fired: boolean;
+  longTimer: number;
+  longFired: boolean;
 };
 
 function verseAriaLabel(verseKey: string): string {
@@ -104,25 +106,36 @@ export const MushafVerseLayer = memo(function MushafVerseLayer({
   words,
   centered = false,
   onSelectVerse,
+  onLongPressVerse,
 }: LineProps) {
   const pressRef = useRef<PressState | null>(null);
 
   const clearPress = () => {
     const cur = pressRef.current;
-    if (cur) window.clearTimeout(cur.timer);
+    if (cur) window.clearTimeout(cur.longTimer);
     pressRef.current = null;
   };
 
   const startPress = (verseKey: string, e: ReactPointerEvent<HTMLElement>) => {
-    if (!onSelectVerse) return;
+    if (!onSelectVerse && !onLongPressVerse) return;
     clearPress();
-    const timer = window.setTimeout(() => {
+    const longTimer = window.setTimeout(() => {
       const cur = pressRef.current;
-      if (!cur || cur.fired) return;
-      cur.fired = true;
-      onSelectVerse(verseKey);
-    }, SHORT_SELECT_MS);
-    pressRef.current = { verseKey, x: e.clientX, y: e.clientY, timer, fired: false };
+      if (!cur || cur.longFired) return;
+      cur.longFired = true;
+      if (onLongPressVerse) {
+        onLongPressVerse(verseKey);
+      } else {
+        onSelectVerse?.(verseKey);
+      }
+    }, LONG_PRESS_MS);
+    pressRef.current = {
+      verseKey,
+      x: e.clientX,
+      y: e.clientY,
+      longTimer,
+      longFired: false,
+    };
   };
 
   const movePress = (e: ReactPointerEvent<HTMLElement>) => {
@@ -135,8 +148,7 @@ export const MushafVerseLayer = memo(function MushafVerseLayer({
 
   const endPress = (verseKey: string) => {
     const cur = pressRef.current;
-    if (cur && !cur.fired && cur.verseKey === verseKey && onSelectVerse) {
-      cur.fired = true;
+    if (cur && cur.verseKey === verseKey && !cur.longFired && onSelectVerse) {
       onSelectVerse(verseKey);
     }
     clearPress();
@@ -168,12 +180,14 @@ type BasmalaProps = {
   words?: QpcWord[] | null;
   numbered?: boolean;
   onSelect?: () => void;
+  onLongPress?: () => void;
 };
 
 export const MushafBasmalaView = memo(function MushafBasmalaView({
   words = null,
   numbered = false,
   onSelect,
+  onLongPress,
 }: BasmalaProps) {
   const qpc = words && words.length > 0 ? words : BASMALA_QPC_WORDS;
   const body = qpc.filter((w) => w.charType !== "end");
@@ -181,6 +195,15 @@ export const MushafBasmalaView = memo(function MushafBasmalaView({
   const selected = useMushafAyahWordSelected("1:1");
   const playing = useMushafAyahWordPlaying("1:1");
   const state = [selected ? "is-selected" : "", playing ? "is-playing" : ""].filter(Boolean).join(" ");
+  const pressRef = useRef<{ x: number; y: number; longTimer: number; longFired: boolean } | null>(
+    null,
+  );
+
+  const clear = () => {
+    const cur = pressRef.current;
+    if (cur) window.clearTimeout(cur.longTimer);
+    pressRef.current = null;
+  };
 
   return (
     <div
@@ -191,23 +214,42 @@ export const MushafBasmalaView = memo(function MushafBasmalaView({
       data-ayah="1:1"
       dir="rtl"
       lang="ar"
-      role={onSelect ? "button" : undefined}
-      tabIndex={onSelect ? 0 : undefined}
+      role={onSelect || onLongPress ? "button" : undefined}
+      tabIndex={onSelect || onLongPress ? 0 : undefined}
+      onPointerDown={(e) => {
+        if (!onLongPress && !onSelect) return;
+        clear();
+        const longTimer = window.setTimeout(() => {
+          const cur = pressRef.current;
+          if (!cur || cur.longFired) return;
+          cur.longFired = true;
+          (onLongPress ?? onSelect)?.();
+        }, LONG_PRESS_MS);
+        pressRef.current = { x: e.clientX, y: e.clientY, longTimer, longFired: false };
+      }}
+      onPointerMove={(e) => {
+        const cur = pressRef.current;
+        if (!cur) return;
+        if (Math.abs(e.clientX - cur.x) > TAP_SLOP_PX || Math.abs(e.clientY - cur.y) > TAP_SLOP_PX) {
+          clear();
+        }
+      }}
+      onPointerUp={() => {
+        const cur = pressRef.current;
+        if (cur && !cur.longFired) onSelect?.();
+        clear();
+      }}
+      onPointerCancel={clear}
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        onSelect?.();
       }}
-      onKeyDown={
-        onSelect
-          ? (e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                onSelect();
-              }
-            }
-          : undefined
-      }
+      onKeyDown={(e) => {
+        if ((e.key === "Enter" || e.key === " ") && onSelect) {
+          e.preventDefault();
+          onSelect();
+        }
+      }}
     >
       {body.map((w) => (
         <span key={w.id}>{w.glyphText}</span>
