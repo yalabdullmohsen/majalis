@@ -326,7 +326,7 @@ html.dark .prophets-page-lead {
     color-mix(in srgb, var(--ps-emerald-bright) 4%, var(--ps-surface)) 100%
   );
   border: 1px solid color-mix(in srgb, var(--prophet-color, var(--ps-emerald)) 18%, var(--ps-line));
-  border-radius: 16px;
+  border-radius: var(--radius-card, 24px);
   padding-block: 0.95rem 2.75rem;
   padding-inline: 0.95rem;
   min-height: 0;
@@ -2446,7 +2446,7 @@ html.dark .app-main:has(.lrf-wrap--prophet-detail) {
   align-items: stretch;
   text-align: start;
   padding: 1rem;
-  border-radius: 16px;
+  border-radius: var(--radius-card, 24px);
 }
 .nb-azm-name,
 .nb-miracle-nabi {

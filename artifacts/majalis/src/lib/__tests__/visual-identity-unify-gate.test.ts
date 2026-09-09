@@ -36,11 +36,22 @@ for (const cls of [
   "mk-card",
   "mk-lane-card",
   "fiqh-book-card",
+  "ve-book-card",
+  "ve-chapter-card",
+  "nation-card",
+  "prophet-lux-card",
+  "seerah-panel",
+  "tf-card",
+  "tf-path-card",
+  "tf-spotlight-card",
+  "tf-edition-card",
   "dii-hub-card",
   "dii-list-card",
   "dii-block",
   "hs-card",
   "hb-hadith-row",
+  "quran-hub-card",
+  "twh-hub-card",
 ]) {
   assert.match(calm, new RegExp(`\\.${cls}`), `calm يشمل .${cls}`);
   assert.match(unify, new RegExp(`\\.${cls}`), `unify يشمل .${cls}`);
@@ -102,5 +113,25 @@ assert.match(miracles, /--mk-radius:\s*var\(--radius-card/);
 assert.doesNotMatch(miracles, /--mk-radius:\s*18px/);
 assert.match(rsc, /border-radius:\s*var\(--radius-card/);
 assert.match(filters, /\.ds-filter-toggle[\s\S]*?border-radius:\s*var\(--radius-pill/);
+
+console.log("=== صفحات داخلية: نصف القطر من الهوية ===");
+const fiqhHub = read("src/styles/pages/fiqh-hub.css");
+const nations = read("src/styles/nations.css");
+const prophets = read("src/styles/pages/prophet-stories.css");
+const seerah = read("src/styles/pages/seerah.css");
+const tafsir = read("src/styles/pages/tafsir.css");
+const hubCard = read("src/styles/components/hub-card.css");
+assert.match(fiqhHub, /\.fiqh-book-card[\s\S]*?border-radius:\s*var\(--radius-card/);
+assert.match(nations, /\.nation-card[\s\S]*?border-radius:\s*var\(--radius-card/);
+assert.match(prophets, /\.prophet-lux-card[\s\S]*?border-radius:\s*var\(--radius-card/);
+assert.match(seerah, /\.seerah-panel[\s\S]*?border-radius:\s*var\(--radius-card/);
+assert.match(tafsir, /\.tf-card[\s\S]*?border-radius:\s*var\(--radius-card/);
+assert.match(tafsir, /\.tf-edition-card[\s\S]*?border-radius:\s*var\(--radius-card/);
+assert.doesNotMatch(hubCard, /border-radius:\s*22px/);
+assert.match(hubCard, /\.quran-hub-card[\s\S]*?border-radius:\s*var\(--radius-card/);
+
+const fiqhView = read("src/pages/fiqh/ui/FiqhView.tsx");
+assert.match(fiqhView, /SectionEntryCard/);
+assert.match(fiqhView, /hub-card-grid fiqh-book-grid/);
 
 console.log("visual-identity-unify-gate.test.ts: ok");

@@ -468,7 +468,7 @@ html[data-theme="dark"] .fqh-hub-card__desc {
   height: auto;
   padding: 0.75rem 0.85rem;
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, var(--majalis-line, var(--border)));
-  border-radius: 1rem;
+  border-radius: var(--radius-card, 24px);
   background:
     linear-gradient(
       180deg,
@@ -479,6 +479,38 @@ html[data-theme="dark"] .fqh-hub-card__desc {
   text-decoration: none;
   color: inherit;
   transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+/* بطاقة دخول موحّدة: لا تُطبَّق شبكة الكتب الأفقية على .hub-card */
+.hub-card.fiqh-book-card {
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: none;
+  align-items: stretch;
+  gap: 0.65rem;
+  min-height: var(--sec-entry-min-h, 11rem);
+  padding: var(--sec-entry-pad, 1rem 1.05rem 0.95rem);
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--mj-brand, #1f6b56) 6%, var(--mj-surface, #fffcf8)) 0%,
+      var(--mj-surface, #fffcf8) 55%
+    );
+  box-shadow: 0 2px 12px -8px rgba(11, 32, 24, 0.14);
+}
+/* شبكة كتب الفقه مع بطاقات الدخول = نفس شبكة الأقسام الخارجية */
+.hub-card-grid.fiqh-book-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--hub-grid-gap, 0.75rem);
+  max-width: min(40rem, 100%);
+  margin-inline: auto;
+  padding-inline: max(1.25rem, var(--gutter-inline-start, 16px), var(--gutter-inline-end, 16px));
+}
+@media (min-width: 720px) {
+  .hub-card-grid.fiqh-book-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: min(56rem, 100%);
+    gap: var(--hub-grid-gap, 1rem);
+  }
 }
 .fiqh-book-card:hover,
 .fiqh-book-card:focus-visible {

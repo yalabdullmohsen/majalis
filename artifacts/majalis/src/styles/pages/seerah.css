@@ -121,7 +121,7 @@ html.dark .seerah-hero {
   padding: 0.9rem 1.25rem;
   background: var(--majalis-panel);
   border: 1px solid var(--majalis-line);
-  border-radius: 12px;
+  border-radius: var(--radius-card, 24px);
   font-size: 0.85rem;
   color: var(--majalis-emerald);
   line-height: 1.7;
@@ -154,7 +154,7 @@ html.dark .seerah-hero {
   gap: 0;
   background: #fff;
   border: 1px solid var(--majalis-line);
-  border-radius: 14px;
+  border-radius: var(--radius-card, 24px);
   padding: var(--ds-space-2);
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   max-height: calc(100svh - 2rem);
@@ -308,7 +308,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 .seerah-panel {
   flex: 1;
   background: #fff;
-  border-radius: 16px;
+  border-radius: var(--radius-card, 24px);
   border: 1px solid var(--majalis-line);
   padding: 1.75rem;
   min-height: 340px;
@@ -435,7 +435,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   padding: var(--ds-space-6);
   background: #fff;
   border: 1px solid var(--majalis-line);
-  border-radius: 14px;
+  border-radius: var(--radius-card, 24px);
   box-shadow: 0 1px 6px rgba(0,0,0,0.04);
 }
 @media (max-width: 640px) {
@@ -492,7 +492,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   padding: 0.9rem 1.25rem;
   background: var(--majalis-emerald-muted, rgba(31,77,58,.06));
   border: 1px solid color-mix(in srgb, var(--majalis-emerald) 15%, transparent);
-  border-radius: 12px;
+  border-radius: var(--radius-control, 14px);
   display: flex;
   align-items: center;
   gap: 0.9rem;
@@ -604,7 +604,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 }
 .seerah-phase {
   padding: 1.25rem 1.25rem 1.25rem 1.25rem !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-card, 24px) !important;
   border: 1px solid var(--v2-border, #D8D2C7) !important;
   background: var(--v2-surface, var(--mj-bg)) !important;
   margin-bottom: 1rem !important;
@@ -650,7 +650,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 .seerah-timeline {
   width: min(210px, 100%);
   padding: 0.45rem;
-  border-radius: 12px;
+  border-radius: var(--radius-card, 24px);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   gap: 0.15rem;
   max-height: calc(100svh - 7rem);
@@ -686,7 +686,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 
 .seerah-panel {
   padding: 1.1rem 1.15rem 1.15rem;
-  border-radius: 14px;
+  border-radius: var(--radius-card, 24px);
   min-height: 0;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
   max-width: 40rem;
@@ -755,7 +755,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 .seerah-panel__events {
   margin-bottom: 1rem;
   padding: 0.75rem 0.85rem;
-  border-radius: 12px;
+  border-radius: var(--radius-control, 14px);
   background: color-mix(in srgb, var(--majalis-parchment, #f7f3ea) 88%, #fff);
   border: 1px solid var(--majalis-line, #e6e0d4);
 }
