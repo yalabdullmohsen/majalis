@@ -1525,6 +1525,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/umayyad-walid-mosque</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/umayyad-qutayba</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1695,6 +1700,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/abbasid-bukhari-era</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/abbasid-tahirids</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1781,6 +1791,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/andalus-ibn-hafsun</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/andalus-ibn-hazm</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -1935,6 +1950,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/mamluk-cyprus</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/mamluk-faraj</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -2035,6 +2055,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/ottoman-preveza</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/civ-medicine</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -2091,6 +2116,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/modern-hijaz-railway</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/modern-sykes-picot</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
