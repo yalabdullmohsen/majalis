@@ -1400,6 +1400,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/rashidun-saqifa</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/rashidun-uthman-mushaf</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1561,6 +1566,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/umayyad-qutayba</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/umayyad-indus</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -1865,6 +1875,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/andalus-ibn-tumart</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/andalus-ibn-arabi-caution</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1896,6 +1911,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/seljuk-nizamiyya</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/seljuk-nizam-assassination</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -2031,6 +2051,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/mamluk-cyprus</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/mamluk-plague</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -2210,6 +2235,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/ottoman-tanzimat</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/modern-print-nahda</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -2236,6 +2266,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/modern-caliphate-abolition</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/modern-makkah-conference</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
