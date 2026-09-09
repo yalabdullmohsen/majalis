@@ -8,6 +8,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SEARCH_INPUT_ATTRS, handleSearchEnterKey } from "@/lib/search-input";
 import {
   getHistoryErasWithEvents,
+  getStartHereItems,
   HISTORY_CATEGORIES,
   HISTORY_CATEGORY_ORDER,
   HISTORY_ERA_META,
@@ -44,9 +45,14 @@ function HistoryCard({ item }: { item: IslamicHistoryItem }) {
   return (
     <Link
       href={itemHref(item)}
-      className={`tarikh-card${isPortal ? " tarikh-card--portal" : ""}`}
+      className={`tarikh-card${isPortal ? " tarikh-card--portal" : ""}${item.featured ? " tarikh-card--featured" : ""}`}
       data-portal={isPortal ? "1" : undefined}
     >
+      <span className="tarikh-card__top">
+        <span className="tarikh-card__cat">{HISTORY_CATEGORIES[item.category]}</span>
+        {item.startHere ? <span className="tarikh-card__badge">ابدأ من هنا</span> : null}
+        {item.featured && !item.startHere ? <span className="tarikh-card__badge tarikh-card__badge--featured">مفصلي</span> : null}
+      </span>
       <span className="tarikh-card__title">{item.title}</span>
       <span className="tarikh-card__summary">{item.summary}</span>
       <span className="tarikh-card__meta">
@@ -157,6 +163,7 @@ export default function TarikhIslamiPage() {
   }, [location]);
 
   const eras = useMemo(() => getHistoryErasWithEvents(), []);
+  const startHere = useMemo(() => getStartHereItems().slice(0, 8), []);
 
   const visibleEras = useMemo(() => {
     if (filter === "all") return eras;
@@ -171,8 +178,10 @@ export default function TarikhIslamiPage() {
     return ISLAMIC_HISTORY_ITEMS.filter(
       (i) =>
         ids.has(i.id) ||
-        arabicMatchAny([i.title, i.summary, i.detail], q) ||
-        i.sources.some((s) => arabicMatchAny([s], q)),
+        arabicMatchAny(
+          [i.title, i.summary, i.detail, i.place ?? "", ...(i.relatedPersons ?? []), ...i.sources],
+          q,
+        ),
     );
   }, [query]);
 
@@ -302,22 +311,41 @@ export default function TarikhIslamiPage() {
           )}
         </section>
       ) : (
-        <section className="tarikh-section">
-          <h2 className="tarikh-section__title sr-only">
-            {filter === "all" ? "الدول والعصور بالترتيب" : filterLabel(filter)}
-          </h2>
-          <div className="tarikh-eras" role="list">
-            {visibleEras.map(({ meta, events }) => (
-              <EraPanel
-                key={meta.id}
-                meta={meta}
-                events={events}
-                open={openEras.has(meta.id) || filter === meta.id}
-                onToggle={() => toggleEra(meta.id)}
-              />
-            ))}
-          </div>
-        </section>
+        <>
+          {filter === "all" && startHere.length > 0 ? (
+            <section className="tarikh-section tarikh-section--start" aria-labelledby="tarikh-start-heading">
+              <h2 id="tarikh-start-heading" className="tarikh-section__title">
+                ابدأ من هنا
+              </h2>
+              <p className="tarikh-section__lede">
+                مداخل مختارة للقارئ الجديد — ثم أكمل المسار عبر الدول بالترتيب.
+              </p>
+              <ul className="tarikh-card-list tarikh-card-list--compact">
+                {startHere.map((item) => (
+                  <li key={item.id}>
+                    <HistoryCard item={item} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
+          <section className="tarikh-section">
+            <h2 className="tarikh-section__title sr-only">
+              {filter === "all" ? "الدول والعصور بالترتيب" : filterLabel(filter)}
+            </h2>
+            <div className="tarikh-eras" role="list">
+              {visibleEras.map(({ meta, events }) => (
+                <EraPanel
+                  key={meta.id}
+                  meta={meta}
+                  events={events}
+                  open={openEras.has(meta.id) || filter === meta.id}
+                  onToggle={() => toggleEra(meta.id)}
+                />
+              ))}
+            </div>
+          </section>
+        </>
       )}
 
       <section className="tarikh-section tarikh-section--muted">

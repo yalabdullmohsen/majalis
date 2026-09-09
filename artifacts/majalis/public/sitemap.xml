@@ -1340,6 +1340,21 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/rashidun-yarmouk</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/rashidun-qadisiyyah</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/rashidun-egypt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/rashidun-conquest-jerusalem</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1615,6 +1630,11 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/ottoman-egypt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
     <loc>https://www.ssunnah.com/tarikh-islami/ottoman-suleyman</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -1691,6 +1711,11 @@
   </url>
   <url>
     <loc>https://www.ssunnah.com/tarikh-islami/civ-house-wisdom</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ssunnah.com/tarikh-islami/civ-al-azhar</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>

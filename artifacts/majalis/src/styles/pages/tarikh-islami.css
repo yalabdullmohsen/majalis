@@ -413,10 +413,51 @@
   background: color-mix(in srgb, var(--mj-brand) 6%, var(--ss-card-bg, var(--card, var(--background))));
 }
 
+.tarikh-card__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  margin-bottom: 0.1rem;
+}
+
 .tarikh-card__cat {
   font-size: 0.72rem;
   font-weight: 700;
   color: var(--brand-on-light, var(--mj-brand-deep));
+}
+
+.tarikh-card__badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.35rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, transparent);
+  color: var(--mj-brand, #1f6b56);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent);
+}
+
+.tarikh-card__badge--featured {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, var(--ss-card-bg, #fffcf7));
+}
+
+.tarikh-card--featured {
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 32%, var(--ss-border, #e3e8e6));
+}
+
+.tarikh-section__lede {
+  margin: -0.15rem 0 0.85rem;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--mj-ink-2, #4A5A53);
+  max-width: 40rem;
+}
+
+.tarikh-section--start {
+  margin-bottom: 1.25rem;
 }
 
 .tarikh-card__title {
