@@ -4,14 +4,18 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
+import { HistoryStageIndicator } from "@/components/history/HistoryStageIndicator";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SEARCH_INPUT_ATTRS, handleSearchEnterKey } from "@/lib/search-input";
 import {
+  getAdjacentEra,
+  getEraStageInfo,
   getHistoryErasWithEvents,
   getStartHereItems,
   HISTORY_CATEGORIES,
   HISTORY_CATEGORY_ORDER,
   HISTORY_ERA_META,
+  HISTORY_KIND_LABELS,
   ISLAMIC_HISTORY_ITEMS,
   searchHistoryItems,
   type HistoryCategory,
@@ -22,8 +26,6 @@ import "@/styles/pages/tarikh-islami.css";
 
 type FilterId = HistoryCategory | "all";
 
-const FILTER_ORDER: FilterId[] = ["all", ...HISTORY_CATEGORY_ORDER];
-
 const RELATED_HISTORY = [
   { href: "/seerah", label: "السيرة النبوية" },
   { href: "/nations", label: "الأمم السابقة" },
@@ -32,36 +34,58 @@ const RELATED_HISTORY = [
 ];
 
 function filterLabel(id: FilterId): string {
-  if (id === "all") return "كل العصور";
+  if (id === "all") return "عرض الكل";
   return HISTORY_CATEGORIES[id];
 }
 
-function itemHref(item: IslamicHistoryItem): string {
-  return item.portalHref || `/tarikh-islami/${item.id}`;
+function detailHref(item: IslamicHistoryItem): string {
+  return `/tarikh-islami/${item.id}`;
 }
 
-function HistoryCard({ item }: { item: IslamicHistoryItem }) {
-  const isPortal = Boolean(item.portalHref);
+function HistoryCard({
+  item,
+  index,
+}: {
+  item: IslamicHistoryItem;
+  index?: number;
+}) {
+  const isSeerahPortal = Boolean(item.portalHref) && item.category === "seerah";
+  const dateLabel = [item.hijriDate, item.gregorianDate].filter(Boolean).join(" / ");
   return (
-    <Link
-      href={itemHref(item)}
-      className={`tarikh-card${isPortal ? " tarikh-card--portal" : ""}${item.featured ? " tarikh-card--featured" : ""}`}
-      data-portal={isPortal ? "1" : undefined}
+    <article
+      className={`tarikh-card${item.featured ? " tarikh-card--featured" : ""}${
+        isSeerahPortal ? " tarikh-card--portal" : ""
+      }`}
     >
-      <span className="tarikh-card__top">
+      <div className="tarikh-card__top">
+        {typeof index === "number" ? (
+          <span className="tarikh-card__n" aria-label={`الحدث ${index}`}>
+            {index}
+          </span>
+        ) : null}
         <span className="tarikh-card__cat">{HISTORY_CATEGORIES[item.category]}</span>
+        <span className="tarikh-card__kind">{HISTORY_KIND_LABELS[item.kind]}</span>
         {item.startHere ? <span className="tarikh-card__badge">ابدأ من هنا</span> : null}
-        {item.featured && !item.startHere ? <span className="tarikh-card__badge tarikh-card__badge--featured">مفصلي</span> : null}
-      </span>
-      <span className="tarikh-card__title">{item.title}</span>
-      <span className="tarikh-card__summary">{item.summary}</span>
-      <span className="tarikh-card__meta">
-        {[item.hijriDate || item.era, item.place].filter(Boolean).join(" · ")}
-      </span>
-      {isPortal && item.portalLabel ? (
-        <span className="tarikh-card__portal">{item.portalLabel}</span>
-      ) : null}
-    </Link>
+        {item.featured && !item.startHere ? (
+          <span className="tarikh-card__badge tarikh-card__badge--featured">مفصلي</span>
+        ) : null}
+      </div>
+      <h3 className="tarikh-card__title">{item.title}</h3>
+      <p className="tarikh-card__summary">{item.summary}</p>
+      <p className="tarikh-card__meta">
+        {[dateLabel || item.era, item.place].filter(Boolean).join(" · ")}
+      </p>
+      <div className="tarikh-card__actions">
+        <Link href={detailHref(item)} className="tarikh-card__cta">
+          اقرأ التفاصيل
+        </Link>
+        {isSeerahPortal && item.portalHref ? (
+          <Link href={item.portalHref} className="tarikh-card__cta tarikh-card__cta--secondary">
+            {item.portalLabel || "السيرة النبوية"}
+          </Link>
+        ) : null}
+      </div>
+    </article>
   );
 }
 
@@ -70,11 +94,13 @@ function EraPanel({
   events,
   open,
   onToggle,
+  stageIndex,
 }: {
   meta: HistoryEraMeta;
   events: IslamicHistoryItem[];
   open: boolean;
   onToggle: () => void;
+  stageIndex: number;
 }) {
   const panelId = `tarikh-era-${meta.id}`;
   return (
@@ -82,6 +108,7 @@ function EraPanel({
       className={`tarikh-era${open ? " is-open" : ""}`}
       style={{ ["--tarikh-accent" as string]: meta.accent }}
       data-era={meta.id}
+      data-stage={stageIndex}
     >
       <button
         type="button"
@@ -90,7 +117,9 @@ function EraPanel({
         aria-controls={panelId}
         onClick={onToggle}
       >
-        <span className="tarikh-era__index" aria-hidden="true" />
+        <span className="tarikh-era__index" aria-hidden="true">
+          {stageIndex}
+        </span>
         <span className="tarikh-era__text">
           <span className="tarikh-era__title">{meta.title}</span>
           <span className="tarikh-era__period">{meta.period}</span>
@@ -103,8 +132,8 @@ function EraPanel({
       <div className="tarikh-era__body" id={panelId} hidden={!open}>
         <ol className="tarikh-era__events">
           {events.map((item, index) => (
-            <li key={item.id} className="tarikh-era__event" data-step={index + 1}>
-              <HistoryCard item={item} />
+            <li key={item.id} className="tarikh-era__event">
+              <HistoryCard item={item} index={index + 1} />
             </li>
           ))}
         </ol>
@@ -117,14 +146,16 @@ export default function TarikhIslamiPage() {
   const [location] = useLocation();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<FilterId>("all");
-  const [openEras, setOpenEras] = useState<Set<HistoryCategory>>(() => new Set(["seerah", "rashidun"]));
+  const [openEras, setOpenEras] = useState<Set<HistoryCategory>>(
+    () => new Set(["seerah", "rashidun"]),
+  );
 
   useEffect(() => {
     applyPageSeo({
       path: "/tarikh-islami",
       title: "التاريخ الإسلامي | سُنّة",
       description:
-        "ترتيب تفاعلي للدول والعصور الإسلامية وما حدث في كل منها — من قبل البعثة إلى يومنا، مع بوابة للسيرة النبوية.",
+        "تصفّح العصور الإسلامية بالمراحل: ابحث، صفِّ حسب العصر، وانتقل حدثًا بحدث من قبل البعثة إلى يومنا.",
       keywords: [
         "التاريخ الإسلامي",
         "الدول الإسلامية",
@@ -170,6 +201,22 @@ export default function TarikhIslamiPage() {
     return eras.filter((e) => e.meta.id === filter);
   }, [eras, filter]);
 
+  const activeStageCategory: HistoryCategory =
+    filter === "all"
+      ? openEras.size === 1
+        ? ([...openEras][0] as HistoryCategory)
+        : "seerah"
+      : filter;
+
+  const stageInfo = useMemo(
+    () => getEraStageInfo(activeStageCategory),
+    [activeStageCategory],
+  );
+  const adjacent = useMemo(
+    () => getAdjacentEra(activeStageCategory),
+    [activeStageCategory],
+  );
+
   const searchResults = useMemo(() => {
     const q = query.trim();
     if (!q) return [];
@@ -213,167 +260,192 @@ export default function TarikhIslamiPage() {
     });
   };
 
+  const showFullPath = () => {
+    setFilter("all");
+    setOpenEras(new Set(["seerah", "rashidun"]));
+  };
+
   return (
     <SectionTemplatePage
       route="/tarikh-islami"
       title="التاريخ الإسلامي"
-      subtitle="اسلك العصور بالترتيب: اضغط الدولة لترى ماذا حدث فيها. قصة النبي ﷺ عبر بوابة السيرة، ثم الخلافة والدول حتى يومنا هذا."
+      subtitle="اختر مرحلة، ابحث عن حدث، أو ابدأ من المداخل المختارة — ثم اقرأ التفاصيل مرتّبة."
       groupTitle="الدول والعصور بالترتيب"
       className="topic-page--tarikh"
-      eyebrow="الدول والعصور — تفاعلي"
+      eyebrow="خط زمني بالمراحل"
     >
       <div className="tarikh-hub">
-      <nav className="tarikh-rail" aria-label="مسار الدول الإسلامية">
-        <button
-          type="button"
-          className={`tarikh-rail__chip${filter === "all" ? " is-active" : ""}`}
-          onClick={() => {
-            setFilter("all");
-            setOpenEras(new Set(["seerah", "rashidun"]));
-          }}
-        >
-          المسار كاملًا
-        </button>
-        {HISTORY_CATEGORY_ORDER.map((id, i) => {
-          const meta = HISTORY_ERA_META[id];
-          return (
-            <button
-              key={id}
-              id={`tarikh-rail-${id}`}
-              type="button"
-              className={`tarikh-rail__chip${filter === id ? " is-active" : ""}`}
-              style={{ ["--tarikh-accent" as string]: meta.accent }}
-              onClick={() => focusEra(id)}
-            >
-              <span className="tarikh-rail__n">{i + 1}</span>
-              <span className="tarikh-rail__label">{meta.title}</span>
-              <span className="tarikh-rail__period">{meta.period}</span>
-            </button>
-          );
-        })}
-      </nav>
+        <nav className="tarikh-rail" aria-label="مسار العصور الإسلامية">
+          <button
+            type="button"
+            className={`tarikh-rail__chip${filter === "all" ? " is-active" : ""}`}
+            onClick={showFullPath}
+          >
+            <span className="tarikh-rail__label">المسار كاملاً</span>
+            <span className="tarikh-rail__period">كل المراحل</span>
+          </button>
+          {HISTORY_CATEGORY_ORDER.map((id, i) => {
+            const meta = HISTORY_ERA_META[id];
+            return (
+              <button
+                key={id}
+                id={`tarikh-rail-${id}`}
+                type="button"
+                className={`tarikh-rail__chip${filter === id ? " is-active" : ""}`}
+                style={{ ["--tarikh-accent" as string]: meta.accent }}
+                onClick={() => focusEra(id)}
+              >
+                <span className="tarikh-rail__n">{i + 1}</span>
+                <span className="tarikh-rail__label">{meta.title}</span>
+                <span className="tarikh-rail__period">{meta.period}</span>
+              </button>
+            );
+          })}
+        </nav>
 
-      <div className="tarikh-toolbar">
-        <label className="tarikh-search">
-          <span className="sr-only">بحث في التاريخ الإسلامي</span>
-          <input
-            {...SEARCH_INPUT_ATTRS}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => handleSearchEnterKey(e)}
-            placeholder="ابحث عن حدث أو دولة…"
+        {!query.trim() ? (
+          <HistoryStageIndicator
+            mode={filter === "all" ? "all" : "era"}
+            stageIndex={filter === "all" ? stageInfo.index : stageInfo.index}
+            stageTotal={stageInfo.total}
+            eventCount={
+              filter === "all"
+                ? ISLAMIC_HISTORY_ITEMS.length
+                : stageInfo.eventCount
+            }
+            meta={filter === "all" ? undefined : stageInfo.meta}
+            onPrev={
+              adjacent.prev
+                ? () => focusEra(adjacent.prev as HistoryCategory)
+                : filter !== "all"
+                  ? showFullPath
+                  : undefined
+            }
+            onNext={
+              adjacent.next ? () => focusEra(adjacent.next as HistoryCategory) : undefined
+            }
+            prevLabel={
+              adjacent.prev
+                ? HISTORY_ERA_META[adjacent.prev].title
+                : filter !== "all"
+                  ? "المسار كاملاً"
+                  : undefined
+            }
+            nextLabel={adjacent.next ? HISTORY_ERA_META[adjacent.next].title : undefined}
           />
-        </label>
-        {!query ? (
-          <div className="tarikh-era-actions">
-            <div className="tarikh-era-actions__row">
-              <button type="button" className="tarikh-text-btn" onClick={expandAll}>
-                فتح كل الدول
-              </button>
-              <button type="button" className="tarikh-text-btn" onClick={collapseAll}>
-                طيّ الكل
-              </button>
-            </div>
-            <div className="tarikh-filters" role="tablist" aria-label="تصفية حسب العصر">
-              {FILTER_ORDER.map((id) => (
-                <button
-                  key={id}
-                  type="button"
-                  role="tab"
-                  className={`tarikh-filter${filter === id ? " is-active" : ""}`}
-                  aria-selected={filter === id}
-                  onClick={() => {
-                    setFilter(id);
-                    if (id !== "all") setOpenEras(new Set([id]));
-                  }}
-                >
-                  {filterLabel(id)}
-                </button>
-              ))}
-            </div>
-          </div>
         ) : null}
-      </div>
 
-      {query.trim() ? (
-        <section className="tarikh-section">
-          <h2 className="tarikh-section__title">نتائج البحث ({searchResults.length})</h2>
-          {searchResults.length === 0 ? (
-            <p className="tarikh-empty">لا توجد نتائج مطابقة.</p>
-          ) : (
-            <ul className="tarikh-card-list">
-              {searchResults.map((item) => (
-                <li key={item.id}>
-                  <HistoryCard item={item} />
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
-      ) : (
-        <>
-          {filter === "all" && startHere.length > 0 ? (
-            <section className="tarikh-section tarikh-section--start" aria-labelledby="tarikh-start-heading">
-              <h2 id="tarikh-start-heading" className="tarikh-section__title">
-                ابدأ من هنا
-              </h2>
-              <p className="tarikh-section__lede">
-                مداخل مختارة للقارئ الجديد — ثم أكمل المسار عبر الدول بالترتيب.
-              </p>
-              <ul className="tarikh-card-list tarikh-card-list--compact">
-                {startHere.map((item) => (
+        <div className="tarikh-toolbar">
+          <label className="tarikh-search">
+            <span className="sr-only">بحث في التاريخ الإسلامي</span>
+            <input
+              {...SEARCH_INPUT_ATTRS}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => handleSearchEnterKey(e)}
+              placeholder="ابحث عن حدث أو شخصية أو مكان…"
+            />
+          </label>
+          {!query ? (
+            <div className="tarikh-era-actions">
+              <div className="tarikh-era-actions__row">
+                <button type="button" className="tarikh-text-btn" onClick={expandAll}>
+                  فتح كل المراحل
+                </button>
+                <button type="button" className="tarikh-text-btn" onClick={collapseAll}>
+                  طي الكل
+                </button>
+                <button type="button" className="tarikh-text-btn" onClick={showFullPath}>
+                  عرض الكل
+                </button>
+              </div>
+            </div>
+          ) : null}
+        </div>
+
+        {query.trim() ? (
+          <section className="tarikh-section">
+            <h2 className="tarikh-section__title">نتائج البحث ({searchResults.length})</h2>
+            {searchResults.length === 0 ? (
+              <p className="tarikh-empty">لا توجد نتائج مطابقة.</p>
+            ) : (
+              <ul className="tarikh-card-list">
+                {searchResults.map((item) => (
                   <li key={item.id}>
                     <HistoryCard item={item} />
                   </li>
                 ))}
               </ul>
-            </section>
-          ) : null}
-          <section className="tarikh-section">
-            <h2 className="tarikh-section__title sr-only">
-              {filter === "all" ? "الدول والعصور بالترتيب" : filterLabel(filter)}
-            </h2>
-            <div className="tarikh-eras" role="list">
-              {visibleEras.map(({ meta, events }) => (
-                <EraPanel
-                  key={meta.id}
-                  meta={meta}
-                  events={events}
-                  open={openEras.has(meta.id) || filter === meta.id}
-                  onToggle={() => toggleEra(meta.id)}
-                />
-              ))}
-            </div>
+            )}
           </section>
-        </>
-      )}
+        ) : (
+          <>
+            {filter === "all" && startHere.length > 0 ? (
+              <section
+                className="tarikh-section tarikh-section--start"
+                aria-labelledby="tarikh-start-heading"
+              >
+                <h2 id="tarikh-start-heading" className="tarikh-section__title">
+                  ابدأ من هنا
+                </h2>
+                <p className="tarikh-section__lede">
+                  مداخل مختارة للقارئ الجديد — ثم أكمل عبر المراحل بالترتيب.
+                </p>
+                <ul className="tarikh-card-list tarikh-card-list--compact">
+                  {startHere.map((item) => (
+                    <li key={item.id}>
+                      <HistoryCard item={item} />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
+            <section className="tarikh-section">
+              <h2 className="tarikh-section__title">
+                {filter === "all" ? "المراحل بالترتيب" : filterLabel(filter)}
+              </h2>
+              <div className="tarikh-eras" role="list">
+                {visibleEras.map(({ meta, events }) => (
+                  <EraPanel
+                    key={meta.id}
+                    meta={meta}
+                    events={events}
+                    stageIndex={HISTORY_CATEGORY_ORDER.indexOf(meta.id) + 1}
+                    open={openEras.has(meta.id) || filter === meta.id}
+                    onToggle={() => toggleEra(meta.id)}
+                  />
+                ))}
+              </div>
+            </section>
+          </>
+        )}
 
-      <section className="tarikh-section tarikh-section--muted">
-        <h2 className="tarikh-section__title">روابط ذات صلة</h2>
-        <div className="tarikh-related-links">
-          {RELATED_HISTORY.map((l) => (
-            <Link key={l.href} href={l.href} className="tarikh-chip">
-              {l.label}
-            </Link>
-          ))}
+        <section className="tarikh-section tarikh-section--muted">
+          <h2 className="tarikh-section__title">روابط ذات صلة</h2>
+          <div className="tarikh-related-links">
+            {RELATED_HISTORY.map((l) => (
+              <Link key={l.href} href={l.href} className="tarikh-chip">
+                {l.label}
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="tarikh-section tarikh-method">
+          <h2 className="tarikh-section__title">منهجنا في التاريخ</h2>
+          <ul className="tarikh-method__list">
+            <li>نرتّب العصور زمنياً، ونفتح أحداث كل مرحلة داخلها.</li>
+            <li>نُبقي تفاصيل السيرة النبوية في قسمها، مع ربط واضح من أحداث السيرة.</li>
+            <li>نُميّز بين ما ثبت وما اختلف فيه، ولا نُسقط أحكامًا على أعيان بلا دليل.</li>
+            <li>نضبط الكلام في الصحابة والفتن بضوابط أهل السنة، ونجتنب الإسرائيليات.</li>
+          </ul>
+        </section>
+
+        <div className="tarikh-share">
+          <ShareButtons title="التاريخ الإسلامي — سُنّة" />
         </div>
-      </section>
 
-      <section className="tarikh-section tarikh-method">
-        <h2 className="tarikh-section__title">منهجنا في التاريخ</h2>
-        <ul className="tarikh-method__list">
-          <li>نرتّب الدول والعصور زمنياً، ونفتح أحداث كل دولة داخلها.</li>
-          <li>نُحيل التفصيل الطويل (كالسيرة) إلى أقسامه المخصصة ببطاقة دخول.</li>
-          <li>نُميّز بين ما ثبت وما اختلف فيه، ولا نُسقط أحكامًا على أعيان بلا دليل.</li>
-          <li>نضبط الكلام في الصحابة والفتن بضوابط أهل السنة، ونجتنب الإسرائيليات.</li>
-        </ul>
-      </section>
-
-      <div className="tarikh-share">
-        <ShareButtons title="التاريخ الإسلامي — سُنّة" />
-      </div>
-
-      <SectionQuiz sectionId="islamic-history" />
+        <SectionQuiz sectionId="islamic-history" />
       </div>
     </SectionTemplatePage>
   );

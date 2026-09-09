@@ -10,10 +10,13 @@ import {
 } from "@/components/content/ReadingSectionCard";
 import { RelatedContentStack } from "@/components/content/RelatedContentCard";
 import {
+  getAdjacentHistoryItems,
+  getEraStageInfo,
   getHistoryItem,
+  getSameEraRelated,
   HISTORY_CATEGORIES,
-  ISLAMIC_HISTORY_ITEMS,
-  type HistoryCategory,
+  HISTORY_ERA_META,
+  HISTORY_KIND_LABELS,
   type VerificationLevel,
 } from "@/data/islamic-history";
 import "@/styles/pages/tarikh-islami.css";
@@ -25,19 +28,35 @@ const VERIFICATION_LABEL: Record<VerificationLevel, string> = {
   "needs-review": "راجح",
 };
 
+type TocItem = { id: string; label: string };
+
 export default function TarikhIslamiDetailPage() {
   const [, params] = useRoute("/tarikh-islami/:id");
   const id = params?.id ?? "";
   const item = getHistoryItem(id);
 
-  const related = useMemo(() => {
+  const adjacent = useMemo(() => (item ? getAdjacentHistoryItems(item.id) : {}), [item]);
+  const sameEra = useMemo(() => (item ? getSameEraRelated(item, 6) : []), [item]);
+  const stage = useMemo(
+    () => (item ? getEraStageInfo(item.category) : null),
+    [item],
+  );
+
+  const toc = useMemo((): TocItem[] => {
     if (!item) return [];
-    return ISLAMIC_HISTORY_ITEMS.filter(
-      (x) =>
-        x.id !== item.id &&
-        (x.category === item.category ||
-          x.relatedPersons?.some((p) => item.relatedPersons?.includes(p))),
-    ).slice(0, 6);
+    const items: TocItem[] = [
+      { id: "tarikh-sec-summary", label: "نبذة" },
+      { id: "tarikh-sec-context", label: "السياق" },
+      { id: "tarikh-sec-detail", label: "الشرح" },
+    ];
+    if (item.causes) items.push({ id: "tarikh-sec-causes", label: "الأسباب" });
+    if (item.outcomes) items.push({ id: "tarikh-sec-outcomes", label: "النتائج" });
+    if (item.lessons) items.push({ id: "tarikh-sec-lessons", label: "الفوائد" });
+    if (item.relatedPersons?.length) {
+      items.push({ id: "tarikh-sec-persons", label: "شخصيات" });
+    }
+    items.push({ id: "tarikh-sec-sources", label: "المصادر" });
+    return items;
   }, [item]);
 
   useEffect(() => {
@@ -90,6 +109,22 @@ export default function TarikhIslamiDetailPage() {
     );
   }
 
+  const eraMeta = HISTORY_ERA_META[item.category];
+  const eraHref = `/tarikh-islami?tab=${item.category}`;
+  const isSeerahPortal = Boolean(item.portalHref) && item.category === "seerah";
+
+  const contextLines = [
+    `المرحلة: ${eraMeta.title} (${eraMeta.period})`,
+    eraMeta.center ? `المركز: ${eraMeta.center}` : null,
+    item.place ? `المكان: ${item.place}` : null,
+    item.hijriDate || item.gregorianDate
+      ? `الزمن: ${[item.hijriDate, item.gregorianDate].filter(Boolean).join(" · ")}`
+      : item.era
+        ? `الزمن: ${item.era}`
+        : null,
+    `التصنيف: ${HISTORY_KIND_LABELS[item.kind]}`,
+  ].filter(Boolean) as string[];
+
   return (
     <TopicPage
       themeId="history"
@@ -97,9 +132,12 @@ export default function TarikhIslamiDetailPage() {
       breadcrumb={[
         { label: "الرئيسية", href: "/" },
         { label: "التاريخ الإسلامي", href: "/tarikh-islami" },
+        { label: HISTORY_CATEGORIES[item.category], href: eraHref },
         { label: item.title },
       ]}
-      eyebrow={HISTORY_CATEGORIES[item.category]}
+      eyebrow={`${HISTORY_CATEGORIES[item.category]}${
+        stage ? ` · المرحلة ${stage.index}/${stage.total}` : ""
+      }`}
       title={item.title}
       subtitle={item.summary}
       className="topic-page--tarikh-detail"
@@ -109,52 +147,107 @@ export default function TarikhIslamiDetailPage() {
           {item.hijriDate ? <span>هـ: {item.hijriDate}</span> : null}
           {item.gregorianDate ? <span>م: {item.gregorianDate}</span> : null}
           {item.place ? <span>{item.place}</span> : null}
+          <span className="tarikh-badge">{HISTORY_KIND_LABELS[item.kind]}</span>
           <span className={`tarikh-badge tarikh-badge--${item.verification}`}>
             {VERIFICATION_LABEL[item.verification]}
           </span>
         </div>
 
-        {item.portalHref ? (
+        {isSeerahPortal && item.portalHref ? (
           <Link href={item.portalHref} className="tarikh-chip tarikh-chip--portal">
-            {item.portalLabel || "ادخل القسم التفصيلي"}
+            {item.portalLabel || "السيرة النبوية"}
           </Link>
         ) : null}
 
-        <ReadingSectionCard title="نبذة مختصرة" variant="summary">
-          <ReadingProse text={item.summary} />
-        </ReadingSectionCard>
+        <nav className="tarikh-toc" aria-label="فهرس أقسام الصفحة">
+          {toc.map((t) => (
+            <a key={t.id} href={`#${t.id}`} className="tarikh-toc__link">
+              {t.label}
+            </a>
+          ))}
+        </nav>
 
-        <ReadingSectionCard title="الشرح" variant="default">
-          <ReadingProse text={item.detail} />
-        </ReadingSectionCard>
+        <nav className="tarikh-adjacent" aria-label="التنقل بين أحداث المرحلة">
+          {adjacent.prev ? (
+            <Link
+              href={`/tarikh-islami/${adjacent.prev.id}`}
+              className="tarikh-adjacent__link tarikh-adjacent__link--prev"
+            >
+              <span className="tarikh-adjacent__dir">السابق</span>
+              <span className="tarikh-adjacent__title">{adjacent.prev.title}</span>
+            </Link>
+          ) : (
+            <span className="tarikh-adjacent__link is-empty" />
+          )}
+          {adjacent.next ? (
+            <Link
+              href={`/tarikh-islami/${adjacent.next.id}`}
+              className="tarikh-adjacent__link tarikh-adjacent__link--next"
+            >
+              <span className="tarikh-adjacent__dir">التالي</span>
+              <span className="tarikh-adjacent__title">{adjacent.next.title}</span>
+            </Link>
+          ) : (
+            <span className="tarikh-adjacent__link is-empty" />
+          )}
+        </nav>
+
+        <div id="tarikh-sec-summary">
+          <ReadingSectionCard title="نبذة مختصرة" variant="summary">
+            <ReadingProse text={item.summary} />
+          </ReadingSectionCard>
+        </div>
+
+        <div id="tarikh-sec-context">
+          <ReadingSectionCard title="السياق التاريخي" variant="default">
+            <ReadingBulletList items={contextLines} />
+            <p className="tarikh-context-blurb">{eraMeta.blurb}</p>
+          </ReadingSectionCard>
+        </div>
+
+        <div id="tarikh-sec-detail">
+          <ReadingSectionCard title="الشرح" variant="default">
+            <ReadingProse text={item.detail} />
+          </ReadingSectionCard>
+        </div>
 
         {item.causes ? (
-          <ReadingSectionCard title="الأسباب" variant="default">
-            <ReadingProse text={item.causes} />
-          </ReadingSectionCard>
+          <div id="tarikh-sec-causes">
+            <ReadingSectionCard title="الأسباب" variant="default">
+              <ReadingProse text={item.causes} />
+            </ReadingSectionCard>
+          </div>
         ) : null}
 
         {item.outcomes ? (
-          <ReadingSectionCard title="النتائج" variant="default">
-            <ReadingProse text={item.outcomes} />
-          </ReadingSectionCard>
+          <div id="tarikh-sec-outcomes">
+            <ReadingSectionCard title="النتائج" variant="default">
+              <ReadingProse text={item.outcomes} />
+            </ReadingSectionCard>
+          </div>
         ) : null}
 
         {item.lessons ? (
-          <ReadingSectionCard title="العبر والفوائد" variant="lessons">
-            <ReadingProse text={item.lessons} />
-          </ReadingSectionCard>
+          <div id="tarikh-sec-lessons">
+            <ReadingSectionCard title="العبر والفوائد" variant="lessons">
+              <ReadingProse text={item.lessons} />
+            </ReadingSectionCard>
+          </div>
         ) : null}
 
         {item.relatedPersons?.length ? (
-          <ReadingSectionCard title="شخصيات مرتبطة" variant="default">
-            <ReadingBulletList items={item.relatedPersons} />
-          </ReadingSectionCard>
+          <div id="tarikh-sec-persons">
+            <ReadingSectionCard title="شخصيات مرتبطة" variant="default">
+              <ReadingBulletList items={item.relatedPersons} />
+            </ReadingSectionCard>
+          </div>
         ) : null}
 
-        <ReadingSectionCard title="المصادر" variant="sources">
-          <ReadingBulletList items={item.sources} />
-        </ReadingSectionCard>
+        <div id="tarikh-sec-sources">
+          <ReadingSectionCard title="المصادر" variant="sources">
+            <ReadingBulletList items={item.sources} />
+          </ReadingSectionCard>
+        </div>
 
         {item.relatedLinks?.length ? (
           <ReadingSectionCard title="روابط ذات صلة" variant="related">
@@ -168,14 +261,14 @@ export default function TarikhIslamiDetailPage() {
           </ReadingSectionCard>
         ) : null}
 
-        {related.length > 0 ? (
+        {sameEra.length > 0 ? (
           <ReadingSectionCard title="اقرأ أيضًا" variant="related" className="tarikh-detail-read-also">
             <RelatedContentStack
               paddedForNav
-              items={related.map((r) => ({
+              items={sameEra.map((r) => ({
                 href: `/tarikh-islami/${r.id}`,
                 title: r.title,
-                category: HISTORY_CATEGORIES[r.category as HistoryCategory],
+                category: HISTORY_CATEGORIES[r.category],
                 summary: r.summary,
               }))}
             />
