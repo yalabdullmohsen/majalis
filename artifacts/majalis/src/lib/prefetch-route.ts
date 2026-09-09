@@ -6,6 +6,13 @@ import { prefetchAppRoutesShell } from "@/lib/prefetch-app-routes";
 const seen = new Set<string>();
 
 const CHUNK: Record<string, () => Promise<unknown>> = {
+  "/hadith": () => import("@/pages/hadith/HadithPage"),
+  "/hadith/sahih": () => import("@/pages/hadith/HadithSahihPage"),
+  "/hadith/daif": () => import("@/pages/hadith/HadithDaifPage"),
+  "/hadith/mawdu": () => import("@/pages/hadith/HadithMawduPage"),
+  "/hadith/books": () => import("@/pages/hadith/HadithBooksPage"),
+  "/arbaeen-nawawi": () => import("@/pages/hadith/ArbaeenNawawiPage"),
+  "/hadith-science": () => import("@/pages/hadith/HadithSciencePage"),
   "/quran-hub": () => import("@/pages/quran/QuranHubPage"),
   "/mushaf": () => import("@/pages/quran/MushafReaderPage"),
   "/lessons": () => import("@/pages/lessons/LessonsPage"),

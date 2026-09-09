@@ -32,7 +32,7 @@ test.describe("Search — البحث", () => {
   });
 
   test("hadith page search works", async ({ page }) => {
-    await page.goto("/hadith");
+    await page.goto("/hadith/sahih");
     await waitForContent(page);
     await page.waitForTimeout(1000);
     const searchInput = page.locator('input[type="search"], input[placeholder*="بحث"]').first();

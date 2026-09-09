@@ -1026,14 +1026,17 @@ export default function HadithPage() {
         <p className="hadith-page__browse-lead" role="note">
           راجع التخريج قبل الاستشهاد — الحكم والمصدر ظاهران على كل بطاقة.
         </p>
-        <section className="hadith-page__browse" aria-labelledby="hadith-browse-title">
+        <section className="hadith-page__browse hadith-page__browse--cta" aria-labelledby="hadith-browse-title">
           <h2 id="hadith-browse-title" className="hadith-page__browse-title">
             تصفّح الأحاديث
           </h2>
           <p className="hadith-page__browse-lead">
-            ابحث وفلتر حسب الحكم — الصحيح والحسن للاستفادة، والضعيف في قسمه المخصّص.
+            ابحث وفلتر حسب الحكم في قسم الأحاديث الصحيحة — الصحيح والحسن للاستفادة، والضعيف في قسمه المخصّص.
           </p>
-          <HadithSection authenticityClass="sahih" embedded showGradeFilters />
+          <Link href="/hadith/sahih" className="hadith-browse-cta soft-card mj-pressable">
+            <span className="hadith-browse-cta__title">الأحاديث الصحيحة</span>
+            <span className="hadith-browse-cta__desc">متون الصحيحين مع المصدر والتخريج والبحث</span>
+          </Link>
         </section>
         <ShareButtons title="الحديث الشريف — سُنّة" url="https://www.ssunnah.com/hadith" />
         <ExploreAlsoNav

@@ -1,7 +1,8 @@
-import { memo, type ReactNode } from "react";
+import { memo, useCallback, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { ChevronLeft, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { prefetchRoute } from "@/lib/prefetch-route";
 import "@/styles/components/hub-card.css";
 
 export type HubCardProps = {
@@ -62,6 +63,11 @@ export const HubCard = memo(function HubCard({
     className,
   );
 
+  const warmRoute = useCallback(() => {
+    if (nonInteractive) return;
+    prefetchRoute(href);
+  }, [href, nonInteractive]);
+
   const body = (
     <>
       {hasHead ? (
@@ -99,7 +105,13 @@ export const HubCard = memo(function HubCard({
   }
 
   return (
-    <Link href={href} className={classNames} aria-label={title}>
+    <Link
+      href={href}
+      className={classNames}
+      aria-label={title}
+      onPointerEnter={warmRoute}
+      onPointerDown={warmRoute}
+    >
       {body}
     </Link>
   );
