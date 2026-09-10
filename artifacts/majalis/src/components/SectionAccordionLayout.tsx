@@ -4,18 +4,26 @@ import { ExploreAlsoNav, type ExploreAlsoLink } from "@/components/ExploreAlsoNa
 import type { DarsSection } from "@/lib/dars-types";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { toArabicDigits } from "@/lib/utils";
+import {
+  BodyText,
+  CardTitle,
+  SupportingText,
+  Caption,
+  LabelText,
+  ExplanationText,
+} from "@/components/design-system/text";
 import "@/styles/pages/section-hub.css";
 
-/** ألوان هادئة ومتنوّعة للبطاقات — بلا ألوان debug الصارخة */
+/** ألوان بطاقات من رموز الهوية — بلا هكس نصّي عشوائي */
 const CARD_ACCENTS = [
-  "#1F6B56", // أخضر الهوية
-  "#3F6F5A", // زيتي
-  "#0E7490", // زمردي/سماوي هادئ
-  "#2563A8", // أزرق هادئ
-  "#8A6A2F", // ذهبي خفيف
-  "#7A3E52", // عنابي هادئ
-  "#5B4B8A", // بنفسجي علمي خفيف
-  "#2F6B4A", // أخضر ثانٍ
+  "var(--ss-color-brand)",
+  "var(--ss-color-brand-deep)",
+  "var(--mj-brand)",
+  "var(--color-brand)",
+  "var(--color-secondary)",
+  "var(--color-accent)",
+  "var(--mj-brand-deep)",
+  "var(--ss-color-brand)",
 ] as const;
 
 type Props = {
@@ -86,21 +94,19 @@ export function SectionAccordionLayout({
     >
       <div className="section-hub" dir="rtl">
         <section className="section-hub__intro" aria-label="تعريف القسم">
-          <p className="section-hub__intro-text">{intro}</p>
+          <ExplanationText className="section-hub__intro-text">{intro}</ExplanationText>
           <ul className="section-hub__stats" aria-label="إحصاءات القسم">
             <li className="section-hub__stat">
-              <span className="section-hub__stat-value">{toArabicDigits(sections.length)}</span>
-              <span className="section-hub__stat-label">{statsLabels?.doors ?? "بابًا"}</span>
+              <LabelText className="section-hub__stat-value">{toArabicDigits(sections.length)}</LabelText>
+              <Caption className="section-hub__stat-label">{statsLabels?.doors ?? "بابًا"}</Caption>
             </li>
             <li className="section-hub__stat">
-              <span className="section-hub__stat-value">{toArabicDigits(totalLessons)}</span>
-              <span className="section-hub__stat-label">{statsLabels?.topics ?? "موضوعًا"}</span>
+              <LabelText className="section-hub__stat-value">{toArabicDigits(totalLessons)}</LabelText>
+              <Caption className="section-hub__stat-label">{statsLabels?.topics ?? "موضوعًا"}</Caption>
             </li>
             <li className="section-hub__stat">
-              <span className="section-hub__stat-value" style={{ fontSize: "0.95rem" }}>
-                {levelLabel}
-              </span>
-              <span className="section-hub__stat-label">المستوى</span>
+              <LabelText className="section-hub__stat-value">{levelLabel}</LabelText>
+              <Caption className="section-hub__stat-label">المستوى</Caption>
             </li>
           </ul>
         </section>
@@ -152,9 +158,9 @@ export function SectionAccordionLayout({
         </div>
 
         {filtered.length === 0 ? (
-          <p className="section-hub__empty" role="status">
+          <BodyText className="section-hub__empty" role="status">
             لا نتائج مطابقة — جرّب كلمات أخرى أو اختر بابًا من الفلاتر.
-          </p>
+          </BodyText>
         ) : (
           <div className="section-hub__grid">
             {filtered.map((sec, idx) => {
@@ -166,11 +172,11 @@ export function SectionAccordionLayout({
                   className={`section-hub__card${open ? " is-open" : ""}`}
                   style={{ ["--card-accent" as string]: accent }}
                 >
-                  <span className="section-hub__card-kicker">الباب {toArabicDigits(idx + 1)}</span>
-                  <h3 className="section-hub__card-title">{sec.title}</h3>
-                  <p className="section-hub__card-meta">
+                  <Caption className="section-hub__card-kicker">الباب {toArabicDigits(idx + 1)}</Caption>
+                  <CardTitle className="section-hub__card-title">{sec.title}</CardTitle>
+                  <SupportingText className="section-hub__card-meta">
                     {toArabicDigits(sec.lessons.length)} موضوعًا
-                  </p>
+                  </SupportingText>
                   <div className="section-hub__card-actions">
                     <button
                       type="button"
@@ -195,12 +201,16 @@ export function SectionAccordionLayout({
                     <ul className="section-hub__topics">
                       {sec.lessons.map((lesson) => (
                         <li key={lesson.id} className="section-hub__topic">
-                          <h4 className="section-hub__topic-title">{lesson.title}</h4>
+                          <CardTitle as="h4" className="section-hub__topic-title">
+                            {lesson.title}
+                          </CardTitle>
                           {lesson.summary ? (
-                            <p className="section-hub__topic-summary">{lesson.summary}</p>
+                            <SupportingText className="section-hub__topic-summary">
+                              {lesson.summary}
+                            </SupportingText>
                           ) : null}
                           {lesson.body ? (
-                            <p className="section-hub__topic-body">{lesson.body}</p>
+                            <BodyText className="section-hub__topic-body">{lesson.body}</BodyText>
                           ) : null}
                         </li>
                       ))}
@@ -227,10 +237,7 @@ export function SectionAccordionLayout({
 }
 
 function resolveAccent(raw: string | undefined, idx: number): string {
-  if (raw && /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(raw.trim())) {
-    // تجنّب ألوان debug الصارخة السابقة (أزرق/بنفسجي/أحمر فاقع)
-    const banned = new Set(["#1d4ed8", "#7c3aed", "#be123c", "#0284c7", "#16a34a", "#b45309"]);
-    if (!banned.has(raw.trim().toLowerCase())) return raw.trim();
-  }
+  // المحتوى قد يحمل لونًا قديمًا — نتجاهله ونستخدم رموز الهوية فقط
+  void raw;
   return CARD_ACCENTS[idx % CARD_ACCENTS.length]!;
 }

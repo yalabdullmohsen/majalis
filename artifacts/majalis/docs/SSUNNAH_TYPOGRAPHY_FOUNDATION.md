@@ -110,14 +110,14 @@ Heuristic: **نظام** = يعتمد أصناف/توكنات مشتركة؛ **م
 
 | دفعة | النطاق | الهدف | معيار اكتمال |
 |---|---|---|---|
-| **0 — هذا PR** | بنية فقط | `--ss-*` + مكوّنات نص + حصر + بوابة | لا تغيير شاشات؛ بوابة foundation خضراء |
-| **1** | قوالب مشتركة | استبدال عناوين `TopicPage` / `PageHero` / `HubCard` بمكوّنات SsText حيث لا يتغير المحتوى | لقطات قبل/بعد؛ تباين AA |
-| **2** | الرئيسية + بحث | Home* + SearchView + GlobalSearchModal | إزالة `text-[`/`fontSize` المباشر |
-| **3** | حديث + تفسير + تفاصيل | Hadith* + Tafsir + LessonDetail | ScriptureText للمتن المعروض فقط |
-| **4** | تعريف/شرح outliers | TawhidPage, SujoodSahw, … | لا هكس نصي |
-| **5** | صلاة + إعدادات + فارغ/خطأ | worship + settings + empty | موحّد Caption/Label |
-| **6** | قرآن غير المصحف | فهارس/تاجويد (المصحف يبقى مسار عرض خاص) | بدون لمس نص المصحف |
-| **7** | Admin + بقايا | تنظيف | اختياري |
+| **0 — أساس** | بنية فقط | `--ss-*` + مكوّنات نص + حصر + بوابة | ✅ في هذا المسار |
+| **1 — مكوّنات مشتركة** | TopicPage / SectionHero / PageHero / HubCard / CompactSectionHeader / SectionAccordionLayout | SsText + إزالة fontSize/هكس مباشر | ✅ هذه الدفعة |
+| **2** | الرئيسية + بحث | Home* + SearchView + GlobalSearchModal | متبقٍ |
+| **3** | حديث + تفسير + تفاصيل | Hadith* + Tafsir + LessonDetail | متبقٍ |
+| **4** | تعريف/شرح outliers | TawhidPage, SujoodSahw, … | متبقٍ |
+| **5** | صلاة + إعدادات + فارغ/خطأ | worship + settings + empty | متبقٍ |
+| **6** | قرآن غير المصحف | فهارس/تاجويد (المصحف يبقى مسار عرض خاص) | متبقٍ |
+| **7** | Admin + بقايا | تنظيف | متبقٍ |
 
 ### ضوابط كل دفعة
 1. لا تعديل محتوى شرعي — عرض/غلاف فقط.  
