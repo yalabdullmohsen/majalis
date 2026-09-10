@@ -571,7 +571,13 @@ function DeferredPrayerCountdownBanner({ defer }: { defer: boolean }) {
 function ChromeNavFallback() {
   return (
     <header className="navbar-v3 chrome-boot-ph" aria-hidden="true">
-      <div className="navbar-v3__inner" />
+      <div className="navbar-v3__inner">
+        <div className="navbar-v3__start" />
+        <div className="navbar-v3__mid-spacer" />
+        <div className="navbar-v3__end">
+          <span className="navbar-mobile-login navbar-mobile-login--pending" />
+        </div>
+      </div>
       <div className="navbar-v3__search-row" />
       <div className="navbar-ticker-row" />
     </header>

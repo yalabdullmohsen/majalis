@@ -45,9 +45,14 @@ assert.match(auth, /setTimeout\(startBootstrap,\s*20000\)/, "تأجيل auth ل�
 assert.doesNotMatch(auth, /requestIdleCallback\(startBootstrap/, "لا rIC يطلق فور الخمول");
 assert.match(auth, /shouldBootstrapSoon/, "bootstrap فوري عند جلسة/مسار حساس");
 assert.match(auth, /bootstrapStarted/, "منع bootstrap مزدوج");
-assert.match(main, /setTimeout\(startAfterPaint,\s*20000\)/, "تأجيل supabase-bootstrap 20s (لا rIC)");
+assert.match(main, /setTimeout\(startAfterPaint,\s*20000\)/, "تأجيل afterPaint 20s (لا rIC)");
 assert.match(main, /afterPaintStarted/, "منع تشغيل afterPaint مزدوج");
-assert.doesNotMatch(main, /scheduleOnIdle\(afterPaint/, "لا scheduleOnIdle لـ supabase بعد الرسم");
+assert.doesNotMatch(main, /scheduleOnIdle\(afterPaint/, "لا scheduleOnIdle لـ afterPaint");
+assert.doesNotMatch(
+  main,
+  /bootstrapSupabaseFromServer/,
+  "تهيئة Supabase من AuthProvider فقط — بلا مسار مزدوج في main",
+);
 
 assert.doesNotMatch(home, /home-legacy\.css/, "لا CSS قديم فوق الطية");
 assert.match(below, /home-legacy\.css/, "CSS قديم تحت الطية فقط");

@@ -72,6 +72,17 @@ body {
   font-family: "Amiri", "MajlisAmiriFallback", "Noto Naskh Arabic", serif;
 }
 
+/* هيكل كروم الإقلاع — يبقى بعد زوال app-booting حتى يصل NavBar الحقيقي */
+.chrome-boot-ph.navbar-v3 {
+  min-height: var(--app-top-chrome-h, var(--header-h, 56px));
+  box-sizing: border-box;
+}
+.chrome-boot-ph.bottom-nav,
+.chrome-boot-ph[data-bottom-nav] {
+  min-height: var(--nav-h, var(--bottom-nav-height, 64px));
+  box-sizing: border-box;
+}
+
 /* أثناء الإقلاع: لا تغيّر ارتفاعات الهيكل بعد القفل */
 html.app-booting .app-top-chrome,
 html.app-booting .bottom-nav,

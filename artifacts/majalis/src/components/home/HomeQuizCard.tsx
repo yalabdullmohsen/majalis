@@ -26,7 +26,7 @@ const CATS = [
  * يطابق القياس المباشر لـ src/data/islamicQuizData.ts.
  */
 export function HomeQuizCard() {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, loading: authLoading } = useAuth();
   const [stats, setStats] = useState<HomeQuizStats | null>(null);
   const [statsLoading, setStatsLoading] = useState(true);
   const [challenge, setChallenge] = useState<DailyChallengeQuestion | null>(null);
@@ -36,13 +36,19 @@ export function HomeQuizCard() {
   }, []);
 
   useEffect(() => {
-    if (!isLoggedIn) { setStatsLoading(false); return; }
+    if (authLoading) return;
+    if (!isLoggedIn) {
+      setStats(null);
+      setStatsLoading(false);
+      return;
+    }
     let cancelled = false;
+    setStatsLoading(true);
     fetchHomeQuizStats()
       .then((s) => { if (!cancelled) setStats(s); })
       .finally(() => { if (!cancelled) setStatsLoading(false); });
     return () => { cancelled = true; };
-  }, [isLoggedIn]);
+  }, [authLoading, isLoggedIn]);
 
   const totalQuestions = totalQuestionBankSize();
 
@@ -72,9 +78,9 @@ export function HomeQuizCard() {
         </div>
 
         {/* إحصاءات حقيقية — لتسجيلي الدخول فقط، من quiz_attempts الحي */}
-        {isLoggedIn && (
-          <div className="ds-quiz-home-card__stats" aria-label="إحصاءاتي في اللعبة">
-            {statsLoading ? (
+        {(authLoading || isLoggedIn) && (
+          <div className="ds-quiz-home-card__stats" aria-label="إحصاءاتي في اللعبة" aria-busy={authLoading || statsLoading}>
+            {authLoading || statsLoading ? (
               <div className="ds-quiz-home-card__stats-skel" aria-hidden="true" />
             ) : !stats || stats.totalAttempts === 0 ? (
               <p className="ds-quiz-home-card__stats-empty">العب أول جولة لتبدأ إحصاءاتك بالظهور هنا.</p>

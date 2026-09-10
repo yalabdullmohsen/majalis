@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { ADMIN_GOVERNANCE_ROLES, LEGACY_ROLE_MAP } from "@/lib/governance-roles";
 import { hasUnrestrictedAdminAccess, isOwnerProfile, isOwnerAuthUser, resolveUserEmail } from "@/lib/owner-config";
 import { RequestManager, PAGE_LOAD_TIMEOUT_MS } from "@/lib/request-manager";
@@ -7,9 +8,14 @@ type SupabaseAuthModule = typeof import("@/lib/supabase");
 
 export type AuthUser = Awaited<ReturnType<SupabaseAuthModule["getCurrentUser"]>>;
 
+/** حالة جلسة مستقلة — لا تعرض دخول/حساب قبل اكتمال التهيئة */
+export type AuthStatus = "initializing" | "authenticated" | "unauthenticated" | "error";
+
 type AuthContextValue = {
   user: AuthUser;
+  /** true طالما status === initializing */
   loading: boolean;
+  status: AuthStatus;
   isLoggedIn: boolean;
   isAdmin: boolean;
   isOwner: boolean;
@@ -26,8 +32,9 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 const noopAuth = async () => ({ data: null, error: new Error("Auth not ready") } as never);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const queryClient = useQueryClient();
   const [user, setUser] = useState<AuthUser>(null);
-  const [loading, setLoading] = useState(true);
+  const [status, setStatus] = useState<AuthStatus>("initializing");
   const [authApi, setAuthApi] = useState<SupabaseAuthModule | null>(null);
   const activeRef = useRef(true);
   const signedOutGeneration = useRef(0);
@@ -43,7 +50,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     activeRef.current = true;
     let unsubscribe: (() => void) | undefined;
     const authTimeout = window.setTimeout(() => {
-      if (activeRef.current) setLoading(false);
+      if (!activeRef.current) return;
+      setStatus((prev) => (prev === "initializing" ? "unauthenticated" : prev));
     }, PAGE_LOAD_TIMEOUT_MS);
 
     const generationAtStart = signedOutGeneration.current;
@@ -63,25 +71,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         bootstrapDone.current = true;
         try {
           const next = await RequestManager.run("auth:getCurrentUser", () => mod.getCurrentUser());
-          if (
-            activeRef.current &&
-            signedOutGeneration.current === generationAtStart &&
-            next !== null &&
-            next !== undefined
-          ) {
+          if (!activeRef.current || signedOutGeneration.current !== generationAtStart) return mod;
+          if (next !== null && next !== undefined) {
             setUser(next);
+            setStatus("authenticated");
             if (next?.id) {
               void import("@/lib/guest-cloud-merge").then((m) =>
                 m.scheduleGuestCloudMerge(next.id),
               );
             }
+          } else {
+            setUser(null);
+            setStatus("unauthenticated");
           }
         } catch {
           if (activeRef.current && signedOutGeneration.current === generationAtStart) {
             setUser(null);
+            setStatus("error");
           }
         } finally {
-          if (activeRef.current) setLoading(false);
           window.clearTimeout(authTimeout);
         }
       }
@@ -115,7 +123,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             // لا عمل ثقيل داخل callback — جدولة دقيقة فقط
             if (event === "SIGNED_OUT") {
               signedOutGeneration.current += 1;
-              if (activeRef.current) setUser(null);
+              if (activeRef.current) {
+                setUser(null);
+                setStatus("unauthenticated");
+                queryClient.clear();
+              }
               return;
             }
 
@@ -133,6 +145,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                   if (signedOutGeneration.current !== gen) return; // سباق sign-out
                   if (next !== null && next !== undefined) {
                     setUser(next);
+                    setStatus("authenticated");
                     if (event === "SIGNED_IN" && next.id) {
                       void import("@/lib/guest-cloud-merge").then((m) =>
                         m.scheduleGuestCloudMerge(next.id),
@@ -150,7 +163,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .catch(() => {
           if (activeRef.current) {
             setUser(null);
-            setLoading(false);
+            setStatus("error");
           }
           window.clearTimeout(authTimeout);
         });
@@ -163,7 +176,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } else {
       // زائر بلا جلسة: لا تحمّل supabase في نافذة Lighthouse.
       // مهم: لا تستخدم requestIdleCallback هنا — يُطلق فور الخمول (~ثوانٍ) فيُحسب Unused JS.
-      if (activeRef.current) setLoading(false);
+      if (activeRef.current) setStatus("unauthenticated");
       delayHandle = window.setTimeout(startBootstrap, 20000);
       window.addEventListener("pointerdown", armInteraction, { once: true, passive: true });
       window.addEventListener("keydown", armInteraction, { once: true });
@@ -177,7 +190,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       window.removeEventListener("keydown", armInteraction);
       unsubscribe?.();
     };
-  }, []);
+  }, [queryClient]);
 
   const refreshUser = useCallback(async () => {
     if (!authApi) return null;
@@ -185,6 +198,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const next = await authApi.getCurrentUser();
     if (signedOutGeneration.current !== gen) return null;
     setUser(next);
+    setStatus(next ? "authenticated" : "unauthenticated");
     return next;
   }, [authApi]);
 
@@ -192,12 +206,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!authApi) return { error: null };
     signedOutGeneration.current += 1;
     setUser(null);
+    setStatus("unauthenticated");
+    queryClient.clear();
     try {
       return await authApi.signOut();
     } catch (error) {
       return { error };
     }
-  }, [authApi]);
+  }, [authApi, queryClient]);
 
   const value = useMemo<AuthContextValue>(() => {
     const governanceRole =
@@ -225,7 +241,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     return {
       user,
-      loading,
+      loading: status === "initializing",
+      status,
       isLoggedIn: !!user,
       isAdmin,
       isOwner,
@@ -236,7 +253,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       logout,
       refreshUser,
     };
-  }, [authApi, user, loading, logout, refreshUser]);
+  }, [authApi, user, status, logout, refreshUser]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

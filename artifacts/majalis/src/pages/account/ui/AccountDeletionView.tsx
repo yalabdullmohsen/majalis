@@ -7,7 +7,7 @@ import { supabase } from "@/lib/supabase";
 import "@/styles/pages/account-deletion.css";
 
 export default function AccountDeletionPage() {
-  const { user, isLoggedIn, logout } = useAuth();
+  const { user, isLoggedIn, logout, loading: authLoading } = useAuth();
   const search = useSearch();
   const startConfirm = /(?:^|[?&])confirm=1(?:&|$)/.test(search);
   const [step, setStep] = useState<"info" | "confirm" | "typing" | "deleting" | "done">(
@@ -130,7 +130,7 @@ export default function AccountDeletionPage() {
         </p>
       </section>
 
-      {!isLoggedIn && (
+      {!authLoading && !isLoggedIn && (
         <div className="accd-login-prompt">
           <p>يجب تسجيل الدخول أولاً لحذف حسابك.</p>
           <Link href="/login" className="btn-primary">
@@ -139,7 +139,13 @@ export default function AccountDeletionPage() {
         </div>
       )}
 
-      {isLoggedIn && step === "info" && (
+      {authLoading && (
+        <div className="accd-login-prompt" aria-busy="true" aria-label="جاري تجهيز الحساب">
+          <p>تجهيز الحساب…</p>
+        </div>
+      )}
+
+      {!authLoading && isLoggedIn && step === "info" && (
         <div className="accd-actions">
           <p className="accd-actions__email">
             تسجيل الدخول الحالي: <strong>{user?.email}</strong>
@@ -153,7 +159,7 @@ export default function AccountDeletionPage() {
         </div>
       )}
 
-      {isLoggedIn && (step === "confirm" || step === "typing") && (
+      {!authLoading && isLoggedIn && (step === "confirm" || step === "typing") && (
         <div
           className="accd-confirm ui-card"
           role="alertdialog"
