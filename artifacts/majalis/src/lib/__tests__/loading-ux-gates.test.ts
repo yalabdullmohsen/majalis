@@ -22,14 +22,23 @@ function walkTs(dir: string, out: string[] = []): string[] {
 }
 
 const files = walkTs(srcRoot);
-const hits: string[] = [];
+const loadHits: string[] = [];
+const busyHits: string[] = [];
+const busyRoots = ["pages/", "components/NavBar.tsx", "components/SideNavDrawer.tsx", "components/UpdateAvailableBanner.tsx", "features/mushaf-madinah/MushafSearchSheet.tsx", "views/PrivacyCenterPage.tsx", "views/TranscribePage.tsx"];
 for (const f of files) {
+  const rel = f.replace(srcRoot + "/", "");
   const text = readFileSync(f, "utf8");
   if (/جارٍ\s*التحميل|جاري\s*التحميل|جارٍ\s*تحميل|جاري\s*تحميل/.test(text)) {
-    hits.push(f.replace(srcRoot + "/", ""));
+    loadHits.push(rel);
+  }
+  if (busyRoots.some((root) => rel === root || rel.startsWith(root))) {
+    if (/جاري\s*تجهيز|جارٍ\s*تجهيز|جاري\s*البحث|جاري\s*التحديث|جاري\s*الرفع|جاري\s*التحليل|جاري\s*المعالجة|جاري\s*التصدير/.test(text)) {
+      busyHits.push(rel);
+    }
   }
 }
-assert.equal(hits.length, 0, `صفر ظهور لسلسلة التحميل. بقي: ${hits.join(", ")}`);
+assert.equal(loadHits.length, 0, `صفر ظهور لسلسلة التحميل. بقي: ${loadHits.join(", ")}`);
+assert.equal(busyHits.length, 0, `صفر ظهور لنصوص الانشغال الظاهرة. بقي: ${busyHits.join(", ")}`);
 
 assert.ok(!existsSync(resolve(srcRoot, "components/BrandReveal.tsx")), "BrandReveal محذوف");
 

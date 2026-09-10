@@ -1003,3 +1003,11 @@ html.pts-immersive .scroll-to-top {
   border-radius: 12px;
   background: color-mix(in srgb, var(--mj-brand, #0F5C45) 6%, transparent);
 }
+
+
+.pts-hint--skeleton {
+  min-height: 4.5rem;
+  border-radius: var(--radius-card, 24px);
+  background: color-mix(in srgb, var(--surface-muted, #f3efe6) 88%, var(--primary, #146b52));
+  opacity: 0.55;
+}

@@ -167,9 +167,9 @@ export default function SettingsPage() {
   const sections: SectionDef[] = [
     { id: "account", title: "الحساب والملف الشخصي", keywords: "حساب دخول تسجيل خروج حذف الحساب ملف" },
     {
-      id: "reading",
+      id: "appearance",
       title: "المظهر والقراءة والمصحف",
-      keywords: "خط سمة ثيم كبار السن قراءة قرآن مصحف تفسير كثافة تباين مظهر",
+      keywords: "سمة ثيم مظهر تباين كثافة كبار السن خط واجهة قراءة قرآن مصحف تفسير",
     },
     {
       id: "sound",
@@ -184,7 +184,7 @@ export default function SettingsPage() {
     {
       id: "downloads",
       title: "التنزيلات والتخزين",
-      keywords: "تنزيل كاش مساحة دون اتصال تخزين",
+      keywords: "تنزيل كاش مساحة دون اتصال تخزين نسخة تحديث",
     },
     {
       id: "privacy",
@@ -270,8 +270,8 @@ export default function SettingsPage() {
           </div>
           <div className="settings-actions">
             {authLoading ? (
-              <p className="settings-auth-pending" aria-busy="true">
-                تجهيز الحساب…
+              <p className="settings-auth-pending" aria-busy="true" aria-label="تحديث الحساب">
+                …
               </p>
             ) : isLoggedIn ? (
               <>
@@ -341,6 +341,7 @@ export default function SettingsPage() {
             <LanguageSwitcher />
           </div>
           <p className="settings-note">{t("lang_overlay_note")}</p>
+          <p className="settings-subhead">المظهر والواجهة</p>
           <p className="settings-note">السمة والمظهر</p>
           <div className="settings-option-grid" role="group" aria-label="اختيار الوضع">
             {THEME_OPTIONS.map((option) => (
@@ -357,41 +358,6 @@ export default function SettingsPage() {
           </div>
           <p className="settings-note">
             الوضع الحالي: {resolvedTheme === "dark" ? "داكن" : "فاتح"}
-          </p>
-          <button
-            type="button"
-            className="page-action-btn page-action-btn--secondary"
-            disabled={cacheRefreshBusy}
-            onClick={() => {
-              setCacheRefreshBusy(true);
-              setCacheRefreshNote("جاري تحديث النسخة ومسح الكاش…");
-              void refreshAppAndPurgeCaches()
-                .then((result) => {
-                  if (result.shortCommit) setDisplayedAppVersion(result.shortCommit);
-                  if (result.ok) {
-                    setCacheRefreshNote("تم تحديث النسخة — يُعاد التحميل…");
-                  } else {
-                    setCacheRefreshBusy(false);
-                    setCacheRefreshNote("النسخة محدّثة بالفعل.");
-                  }
-                })
-                .catch(() => {
-                  setCacheRefreshBusy(false);
-                  setCacheRefreshNote("تعذّر تحديث النسخة. حاول مرة أخرى.");
-                });
-            }}
-            data-testid="refresh-app-version"
-          >
-            {cacheRefreshBusy ? "جاري التحديث…" : "تحديث النسخة"}
-          </button>
-          {displayedAppVersion ? (
-            <p className="settings-note" dir="ltr" data-testid="app-version-commit">
-              النسخة الحالية: {displayedAppVersion}
-            </p>
-          ) : null}
-          {cacheRefreshNote ? <p className="settings-note">{cacheRefreshNote}</p> : null}
-          <p className="settings-note">
-            يمسح كاش الواجهة ويعيد تحميل آخر نسخة منشورة، ولا يمس الثيم أو المفضلة أو إعدادات الصلاة.
           </p>
           <ToggleRow
             label="وضع كبار السن"
@@ -417,6 +383,7 @@ export default function SettingsPage() {
               <option>كبير</option>
             </select>
           </label>
+          <p className="settings-subhead">القراءة والمصحف</p>
           <label className="settings-field">
             <span>{t("settings_reading_size")}</span>
             <input
@@ -575,6 +542,41 @@ export default function SettingsPage() {
 
       {visible(sections[4]!) && (
         <LegalSection title={sections[4]!.title}>
+          <button
+            type="button"
+            className="page-action-btn page-action-btn--secondary"
+            disabled={cacheRefreshBusy}
+            onClick={() => {
+              setCacheRefreshBusy(true);
+              setCacheRefreshNote("يُحدَّث الآن…");
+              void refreshAppAndPurgeCaches()
+                .then((result) => {
+                  if (result.shortCommit) setDisplayedAppVersion(result.shortCommit);
+                  if (result.ok) {
+                    setCacheRefreshNote("تم تحديث النسخة — يُعاد التحميل…");
+                  } else {
+                    setCacheRefreshBusy(false);
+                    setCacheRefreshNote("النسخة محدّثة بالفعل.");
+                  }
+                })
+                .catch(() => {
+                  setCacheRefreshBusy(false);
+                  setCacheRefreshNote("تعذّر تحديث النسخة. حاول مرة أخرى.");
+                });
+            }}
+            data-testid="refresh-app-version"
+          >
+            {cacheRefreshBusy ? "يُحدَّث…" : "تحديث النسخة"}
+          </button>
+          {displayedAppVersion ? (
+            <p className="settings-note" dir="ltr" data-testid="app-version-commit">
+              النسخة الحالية: {displayedAppVersion}
+            </p>
+          ) : null}
+          {cacheRefreshNote ? <p className="settings-note">{cacheRefreshNote}</p> : null}
+          <p className="settings-note">
+            يمسح كاش الواجهة ويعيد تحميل آخر نسخة منشورة، ولا يمس الثيم أو المفضلة أو إعدادات الصلاة.
+          </p>
           <p className="settings-note">
             تنزيل تلاوة السور كاملة للقرّاء المُحقَّقين QA — للاستماع دون اتصال.
           </p>

@@ -231,7 +231,7 @@ export default function NavBar() {
 
   // Desktop only: full auth bar — لا تعرض دخول/خروج قبل اكتمال استعادة الجلسة
   const desktopAuthLinks = authLoading ? (
-    <div className="navbar-auth navbar-auth--pending" aria-busy="true" aria-label="جاري تجهيز الحساب">
+    <div className="navbar-auth navbar-auth--pending" aria-busy="true" aria-label="تحديث الحساب">
       <span className="navbar-auth-skel" aria-hidden="true" />
     </div>
   ) : isLoggedIn ? (
@@ -341,7 +341,7 @@ export default function NavBar() {
               <span
                 className="navbar-mobile-login navbar-mobile-login--pending"
                 aria-busy="true"
-                aria-label="جاري تجهيز الحساب"
+                aria-label="تحديث الحساب"
               >
                 <User size={16} strokeWidth={1.8} aria-hidden="true" />
               </span>

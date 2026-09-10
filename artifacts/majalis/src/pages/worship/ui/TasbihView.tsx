@@ -243,7 +243,7 @@ export default function TasbihPage() {
 
       <div className="tasbih-offline-note" aria-live="polite">
         {authLoading
-          ? "جاري تجهيز الحساب…"
+          ? "…"
           : isLoggedIn
             ? "يُحفظ محلياً ويُزامَن مع حسابك عند التحديث."
             : "يُحفظ في هذا الجهاز. سجّل الدخول للمزامنة مع حسابك."}

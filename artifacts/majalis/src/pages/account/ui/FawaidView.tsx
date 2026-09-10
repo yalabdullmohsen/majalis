@@ -257,9 +257,9 @@ export default function FawaidPage({
           <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
         </div>
 
-        {loading ? (
+        {loading && displayItems.length === 0 ? (
           <SkeletonCardGrid count={8} />
-        ) : displayItems.length === 0 ? (
+        ) : displayItems.length === 0 && !loading ? (
           <Empty text={debouncedSearch.trim() ? `لا توجد فوائد مطابقة لـ «${debouncedSearch.trim()}». جرّب كلمة أخرى.` : "لا توجد فوائد في هذا القسم حاليًا."} />
         ) : (
           <>

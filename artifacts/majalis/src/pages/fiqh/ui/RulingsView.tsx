@@ -258,9 +258,9 @@ export default function RulingsPage() {
         <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
       </div>
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <SkeletonCardGrid />
-      ) : dbState.dbError && !dbState.needsSeed ? (
+      ) : !loading && dbState.dbError && !dbState.needsSeed ? (
         <ErrorState
           text={
             isAdmin

@@ -298,7 +298,7 @@ export default function AdhkarPage() {
 
       {/* منطقة الذكر */}
       {isLoading ? (
-        <p className="adhkar-loading-hint">تحديث الأذكار…</p>
+        <div className="adhkar-loading-hint" role="status" aria-busy="true" aria-label="تحديث الأذكار" />
       ) : isError ? (
         <Empty text="تعذّر تحميل الأذكار." />
       ) : total === 0 ? (

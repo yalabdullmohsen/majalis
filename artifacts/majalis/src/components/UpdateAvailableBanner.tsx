@@ -83,7 +83,7 @@ export function UpdateAvailableBanner() {
           aria-busy={busy}
           data-testid="update-available-apply"
         >
-          {busy ? "جاري التحديث…" : "تحديث النسخة"}
+          {busy ? "يُحدَّث…" : "تحديث النسخة"}
         </button>
       }
     >

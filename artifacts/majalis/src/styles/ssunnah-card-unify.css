@@ -15,7 +15,10 @@
 .lesson-card:not(.lesson-card--legacy-ok),
 .settings-card,
 .nf2-card,
-.page-card {
+.page-card,
+.ads-card,
+.srch-result-card,
+.section-hub__card:not([data-scripture]) {
   border-radius: var(--radius-card, 24px);
   background: var(--surface, var(--mj-surface, #fffcf8));
   border: 1px solid color-mix(in srgb, var(--primary, var(--mj-brand, #146b52)) 14%, var(--border, var(--mj-hairline, #d9d3c8)));

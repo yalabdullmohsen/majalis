@@ -140,7 +140,7 @@ export default function AccountDeletionPage() {
       )}
 
       {authLoading && (
-        <div className="accd-login-prompt" aria-busy="true" aria-label="جاري تجهيز الحساب">
+        <div className="accd-login-prompt" aria-busy="true" aria-label="تحديث الحساب">
           <p>تجهيز الحساب…</p>
         </div>
       )}
@@ -218,7 +218,7 @@ export default function AccountDeletionPage() {
       {step === "deleting" && (
         <div className="accd-deleting" role="status" aria-live="polite">
           <div className="accd-deleting__spinner" aria-hidden="true" />
-          <p>جارٍ حذف حسابك وبياناتك…</p>
+          <p role="status" aria-busy="true">يُحذف الحساب…</p>
         </div>
       )}
 

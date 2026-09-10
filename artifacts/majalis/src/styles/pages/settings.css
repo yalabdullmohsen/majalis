@@ -340,3 +340,16 @@
   border: 0 !important;
 }
 
+
+
+.settings-subhead {
+  margin: 1.25rem 0 0.5rem;
+  font-size: var(--type-sectionLabel, 0.8125rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--textSecondary, var(--mj-ink-2));
+}
+
+.settings-subhead:first-child {
+  margin-top: 0;
+}
