@@ -9,6 +9,13 @@ import {
   topicThemeCssVars,
   type TopicThemeId,
 } from "@/config/topic-themes";
+import {
+  ScreenTitle,
+  SupportingText,
+  Caption,
+  ScriptureText,
+  LabelText,
+} from "@/components/design-system/text";
 import "@/styles/components/topic-page.css";
 import "@/styles/components/safe-hero.css";
 
@@ -98,24 +105,41 @@ export function SectionHero({
             ) : null}
             <div className="section-hero__title-stack">
               {eyebrow ? (
-                <p className="topic-page__eyebrow safe-hero__badge" data-section-eyebrow="1">
+                <LabelText
+                  as="p"
+                  className="topic-page__eyebrow safe-hero__badge"
+                  data-section-eyebrow="1"
+                  tone="onBrand"
+                >
                   {eyebrow}
-                </p>
+                </LabelText>
               ) : null}
-              <h1 className="topic-page__title" data-section-title="1">
+              <ScreenTitle
+                className="topic-page__title"
+                data-section-title="1"
+                tone="onBrand"
+              >
                 {title}
-              </h1>
+              </ScreenTitle>
             </div>
           </div>
           {subtitle ? (
-            <p className="topic-page__sub" data-section-sub="1">
+            <SupportingText
+              className="topic-page__sub"
+              data-section-sub="1"
+              tone="onBrand"
+            >
               {subtitle}
-            </p>
+            </SupportingText>
           ) : null}
           {quote ? (
             <blockquote className="topic-page__quote" data-section-quote="1">
-              <p className="topic-page__quote-text">{quote.text}</p>
-              <cite className="topic-page__quote-ref">{quote.ref}</cite>
+              <ScriptureText className="topic-page__quote-text" tone="onBrand">
+                {quote.text}
+              </ScriptureText>
+              <Caption as="cite" className="topic-page__quote-ref" tone="onBrand">
+                {quote.ref}
+              </Caption>
             </blockquote>
           ) : null}
           {children}

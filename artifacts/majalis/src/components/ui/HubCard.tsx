@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { ChevronLeft, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { prefetchRoute } from "@/lib/prefetch-route";
+import { CardTitle, SupportingText, Caption, LabelText } from "@/components/design-system/text";
 import "@/styles/components/hub-card.css";
 
 export type SectionEntryVariant = "primary" | "soft" | "compact";
@@ -125,17 +126,21 @@ export const SectionEntryCard = memo(function SectionEntryCard({
         {iconNode ? <span className="hub-card__icon">{iconNode}</span> : null}
         <div className="hub-card__top-meta">
           {badge != null ? <span className="hub-card__chip mj-badge">{badge}</span> : null}
-          {isCurrent ? <span className="hub-card__soon">أنت هنا</span> : null}
-          {loading ? <span className="hub-card__soon">تجهيز…</span> : null}
+          {isCurrent ? (
+            <LabelText className="hub-card__soon">أنت هنا</LabelText>
+          ) : null}
+          {loading ? (
+            <LabelText className="hub-card__soon">تجهيز…</LabelText>
+          ) : null}
         </div>
       </div>
       <div className="hub-card__body">
-        <h3 className="hub-card__title">{title}</h3>
-        {desc ? <p className="hub-card__desc">{desc}</p> : null}
+        <CardTitle className="hub-card__title">{title}</CardTitle>
+        {desc ? <SupportingText className="hub-card__desc">{desc}</SupportingText> : null}
       </div>
       <div className="hub-card__foot">
         <div className="hub-card__foot-start">
-          {meta ? <p className="hub-card__meta">{meta}</p> : null}
+          {meta ? <Caption className="hub-card__meta">{meta}</Caption> : null}
           {footer}
         </div>
         {!nonInteractive || samePathHash ? (
