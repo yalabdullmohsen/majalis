@@ -15,6 +15,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const SCAN_DIRS = [
   "src/features/mushaf-reader",
   "src/features/mushaf-madinah",
+  "src/lib/mushaf-v2",
 ] as const;
 
 const EXT = new Set([".css", ".tsx", ".ts"]);

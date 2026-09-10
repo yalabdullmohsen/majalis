@@ -12,6 +12,7 @@ import { loadReadingAyahKey, SURAH_START_PAGES } from "@/lib/quran-api";
 import { ayahKeyToPage } from "@/lib/quran-my-bookmarks";
 import { useNavigationPaintGate } from "@/hooks/useNavigationPaintGate";
 import { ScriptureScreen } from "@/components/design-system/screens";
+import { migrateMushafUserData, isMushafReaderV2Enabled } from "@/lib/mushaf-v2";
 
 /**
  * مسار المصحف الحقيقي `/mushaf` — NewMushafReader (واجهة جديدة عبر alias MushafViewport)، بلا PDF.
@@ -28,6 +29,10 @@ export default function MushafReaderPage() {
   useEffect(() => {
     if (paintReady) setReaderMounted(true);
   }, [paintReady]);
+
+  useEffect(() => {
+    if (isMushafReaderV2Enabled()) migrateMushafUserData();
+  }, []);
 
   useEffect(() => {
     void import("@/lib/font-ready").then((m) => {
