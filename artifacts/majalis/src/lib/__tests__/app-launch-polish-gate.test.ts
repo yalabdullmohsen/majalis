@@ -30,6 +30,9 @@ assert.doesNotMatch(miracles, /AppBackButton/);
 assert.doesNotMatch(miracles, /جارٍ التحميل|جاري التحميل/);
 assert.match(miracles, /mk-detail-skel/);
 
+const prophets = read("src/views/ProphetStoriesPage.tsx");
+assert.doesNotMatch(prophets, /prophet-lux-back/, "قصص الأنبياء بلا رجوع مكرر");
+
 const feature = read("src/components/design-system/FeatureCard.tsx");
 assert.match(feature, /usePrefetchRoute/);
 
