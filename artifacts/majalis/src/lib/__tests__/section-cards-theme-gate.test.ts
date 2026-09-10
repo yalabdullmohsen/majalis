@@ -138,4 +138,24 @@ const counts = JSON.parse(read("src/data/content-counts.json")) as {
 assert.ok(counts.quizQuestions > 0, `quizQuestions=${counts.quizQuestions}`);
 assert.ok(counts.qa > 0, `qa=${counts.qa}`);
 
+
+console.log("=== موجة 2 ترحيل JSX: إعجاز/أخلاق/علوم قرآن/استكشاف ===");
+assert.match(theme, /موجة 2/);
+assert.match(theme, /\.mk-card__hit/);
+assert.match(theme, /\.akl-related__card/);
+assert.match(theme, /\.uq-usul-card/);
+const explore = read("src/components/ExploreAlsoNav.tsx");
+assert.match(explore, /InternalLinkCard/);
+const miracles = read("src/views/MiraclesPage.tsx");
+assert.match(miracles, /SectionEntryCard/);
+assert.match(miracles, /mk-card__hit/);
+const ulumView = read("src/pages/quran/ui/UlumQuranView.tsx");
+assert.match(ulumView, /InternalLinkCard/);
+const akhlaq = read("src/views/AkhlaqPage.tsx");
+assert.match(akhlaq, /InternalLinkCard/);
+const sects = read("src/views/IslamicSectsPage.tsx");
+assert.match(sects, /InternalLinkCard/);
+const hadithScience = read("src/pages/hadith/ui/HadithScienceView.tsx");
+assert.match(hadithScience, /InternalLinkCard/);
+
 console.log("section-cards-theme-gate.test.ts: ok");

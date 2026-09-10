@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "wouter";
+import { InternalLinkCard } from "@/components/ui/InternalCards";
 import { ChevronLeft } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -957,45 +957,42 @@ export default function IslamicSectsPage() {
           {filtered.map((sect) => {
             const open = selected?.id === sect.id;
             return (
-              <div
+              <article
                 key={sect.id}
                 id={sect.id}
                 className={`sect-card${open ? " is-open" : ""}`}
-                onClick={() => setSelected(open ? null : sect)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    setSelected(open ? null : sect);
-                  }
-                }}
-                role="button"
-                tabIndex={0}
-                aria-expanded={open}
-                aria-label={`عرض تفاصيل ${sect.name}`}
               >
-                <div className="sect-card__head">
-                  <span className="sect-card__icon" aria-hidden="true">
-                    <SectionIcon name={sect.icon} size={22} />
-                  </span>
-                  <div>
-                    <h3 className="sect-card__title">{sect.name}</h3>
-                    <p className="sect-card__era">{sect.era}</p>
+                <button
+                  type="button"
+                  className="sect-card__toggle"
+                  aria-expanded={open}
+                  aria-controls={`${sect.id}-detail`}
+                  onClick={() => setSelected(open ? null : sect)}
+                >
+                  <div className="sect-card__head">
+                    <span className="sect-card__icon" aria-hidden="true">
+                      <SectionIcon name={sect.icon} size={22} />
+                    </span>
+                    <div>
+                      <h3 className="sect-card__title">{sect.name}</h3>
+                      <p className="sect-card__era">{sect.era}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="sect-card__badges">
-                  <span className="sect-card__pill">{sect.category}</span>
-                  <span className={`sect-card__pill${sect.status === "تاريخية" ? " sect-card__pill--muted" : ""}`}>
-                    {sect.status}
+                  <div className="sect-card__badges">
+                    <span className="sect-card__pill">{sect.category}</span>
+                    <span className={`sect-card__pill${sect.status === "تاريخية" ? " sect-card__pill--muted" : ""}`}>
+                      {sect.status}
+                    </span>
+                  </div>
+                  <p className="sect-card__desc">{sect.foundingCause}</p>
+                  <span className="sect-card__cta">
+                    {open ? "إغلاق" : "التفاصيل"}
+                    <ChevronLeft size={16} aria-hidden="true" />
                   </span>
-                </div>
-                <p className="sect-card__desc">{sect.foundingCause}</p>
-                <span className="sect-card__cta">
-                  {open ? "إغلاق" : "التفاصيل"}
-                  <ChevronLeft size={16} aria-hidden="true" />
-                </span>
+                </button>
 
                 {open ? (
-                  <div className="sect-card__detail">
+                  <div className="sect-card__detail" id={`${sect.id}-detail`}>
                     <p><strong>الاسم الكامل:</strong> {sect.fullName}</p>
                     <p><strong>المؤسس:</strong> {sect.founder}</p>
                     <p><strong>المنشأ:</strong> {sect.origin}</p>
@@ -1023,14 +1020,14 @@ export default function IslamicSectsPage() {
                     ) : null}
                     {sect.quote ? <blockquote className="sect-card__quote">{sect.quote}</blockquote> : null}
                     {sect.id === "ahl-al-sunna" ? (
-                      <div className="sect-card__links">
-                        <Link href="/tawhid" className="sect-card__link">دروس عقيدة أهل السنة والجماعة</Link>
-                        <Link href="/tawhid" className="sect-card__link sect-card__link--ghost">بوابة العقيدة والتوحيد</Link>
+                      <div className="sect-card__links hub-card-grid">
+                        <InternalLinkCard href="/tawhid" title="دروس عقيدة أهل السنة والجماعة" variant="compact" className="sect-card__link" />
+                        <InternalLinkCard href="/tawhid" title="بوابة العقيدة والتوحيد" variant="compact" className="sect-card__link sect-card__link--ghost" />
                       </div>
                     ) : null}
                   </div>
                 ) : null}
-              </div>
+              </article>
             );
           })}
         </div>

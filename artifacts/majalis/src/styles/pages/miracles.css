@@ -515,3 +515,28 @@ html.dark .mk-pill--topic,
     transition: none;
   }
 }
+
+
+/* موجة 2: البطاقة كاملة قابلة للضغط */
+.mk-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.mk-card__hit {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+  flex: 1;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+  border-radius: inherit;
+}
+.mk-card__hit:focus-visible {
+  outline: 2px solid var(--mj-brand, #1f6b56);
+  outline-offset: 2px;
+}
+.mk-expand-btn {
+  pointer-events: none;
+}

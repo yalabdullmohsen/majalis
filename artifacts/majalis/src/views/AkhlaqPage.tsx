@@ -1,7 +1,7 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useMemo, useState } from "react";
 import { ChevronDown, ChevronUp, Check } from "lucide-react";
-import { Link } from "wouter";
+import { InternalLinkCard } from "@/components/ui/InternalCards";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -1140,10 +1140,14 @@ export default function AkhlaqPage() {
             { href: "/seerah",       label: "السيرة النبوية",    desc: "أخلاق النبي ﷺ وهديه في التعامل والتعبّد." },
             { href: "/adhkar",       label: "الأذكار",           desc: "أذكار الصباح والمساء وما يُقال في اليوم والليلة." },
           ].map(({ href, label, desc }) => (
-            <Link key={href} href={href} className="akl-related__card">
-              <strong>{label}</strong>
-              <span>{desc}</span>
-            </Link>
+            <InternalLinkCard
+              key={href}
+              href={href}
+              title={label}
+              description={desc}
+              variant="compact"
+              className="akl-related__card"
+            />
           ))}
         </div>
       </div>

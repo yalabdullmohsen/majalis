@@ -303,3 +303,24 @@ html.dark .sect-hub__chip,
   border-color: color-mix(in srgb, #5a9e88 28%, #2a3832);
   color: #d8ebe2;
 }
+
+
+.sect-card__toggle {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+.sect-card__toggle:focus-visible {
+  outline: 2px solid var(--mj-brand, #1f6b56);
+  outline-offset: 3px;
+  border-radius: var(--radius-card, 20px);
+}

@@ -4,7 +4,6 @@ import {
   AlertTriangle,
   ArrowLeft,
   BookOpen,
-  ChevronLeft,
   ScrollText,
 } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
@@ -21,6 +20,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ShareButtons } from "@/components/ContentActions";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
+import { SectionEntryCard } from "@/components/ui/InternalCards";
 import { TopicPage } from "@/components/topic/TopicPage";
 import { AppBackButton } from "@/components/common/AppBackButton";
 import {
@@ -127,40 +127,23 @@ function MiraclesHub() {
           </span>
         </p>
 
-        <div className="mk-hub-lanes" role="navigation" aria-label="مسارات الإعجاز العلمي">
-          <Link href="/miracles/quran" className="mk-lane-card mk-lane-card--quran">
-            <span className="mk-lane-card__icon" aria-hidden="true">
-              <BookOpen size={28} strokeWidth={1.7} />
-            </span>
-            <span className="mk-lane-card__body">
-              <span className="mk-lane-card__title">الإعجاز العلمي في القرآن الكريم</span>
-              <span className="mk-lane-card__desc">
-                تأملات في آيات الخلق والكون — يُستأنس بها ولا تُجعل تفسيرًا قطعيًا.
-              </span>
-              <span className="mk-lane-card__meta">{quranCount} موضوعًا</span>
-            </span>
-            <span className="mk-lane-card__cta">
-              دخول
-              <ChevronLeft size={16} strokeWidth={2} aria-hidden="true" />
-            </span>
-          </Link>
-
-          <Link href="/miracles/sunnah" className="mk-lane-card mk-lane-card--sunnah">
-            <span className="mk-lane-card__icon" aria-hidden="true">
-              <ScrollText size={28} strokeWidth={1.7} />
-            </span>
-            <span className="mk-lane-card__body">
-              <span className="mk-lane-card__title">الإعجاز العلمي في السنة النبوية</span>
-              <span className="mk-lane-card__desc">
-                إشارات عند ثبوت الحديث — بصياغة: يذكر بعض الباحثين / وجه تأمل.
-              </span>
-              <span className="mk-lane-card__meta">{sunnahCount} موضوعًا</span>
-            </span>
-            <span className="mk-lane-card__cta">
-              دخول
-              <ChevronLeft size={16} strokeWidth={2} aria-hidden="true" />
-            </span>
-          </Link>
+        <div className="mk-hub-lanes hub-card-grid" role="navigation" aria-label="مسارات الإعجاز العلمي">
+          <SectionEntryCard
+            href="/miracles/quran"
+            title="الإعجاز العلمي في القرآن الكريم"
+            description="تأملات في آيات الخلق والكون — يُستأنس بها ولا تُجعل تفسيرًا قطعيًا."
+            meta={`${quranCount} موضوعًا`}
+            Icon={BookOpen}
+            className="mk-lane-card mk-lane-card--quran"
+          />
+          <SectionEntryCard
+            href="/miracles/sunnah"
+            title="الإعجاز العلمي في السنة النبوية"
+            description="إشارات عند ثبوت الحديث — بصياغة: يذكر بعض الباحثين / وجه تأمل."
+            meta={`${sunnahCount} موضوعًا`}
+            Icon={ScrollText}
+            className="mk-lane-card mk-lane-card--sunnah"
+          />
         </div>
 
         <ExploreAlsoNav
@@ -275,10 +258,12 @@ function MiraclesListPage({
               const sourcesOpen = Boolean(openSources[item.id]);
 
               return (
-                <article
-                  key={item.id}
-                  className={`mk-card mk-card--${lane}`}
-                >
+                <article key={item.id} className={`mk-card mk-card--${lane}`}>
+                  <Link
+                    href={`/miracles/topic/${encodeURIComponent(item.slug)}`}
+                    className="mk-card__hit"
+                    aria-label={`اقرأ تفصيل: ${item.title}`}
+                  >
                   <header className="mk-card__head">
                     <h2 className="mk-card__title">{item.title}</h2>
                     <div className="mk-card__meta">
@@ -316,9 +301,11 @@ function MiraclesListPage({
                         type="button"
                         className="mk-sources-toggle"
                         aria-expanded={sourcesOpen}
-                        onClick={() =>
-                          setOpenSources((prev) => ({ ...prev, [item.id]: !sourcesOpen }))
-                        }
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setOpenSources((prev) => ({ ...prev, [item.id]: !sourcesOpen }));
+                        }}
                       >
                         {sourcesOpen ? "إخفاء المصادر" : "إظهار المصادر"}
                       </button>
@@ -329,15 +316,13 @@ function MiraclesListPage({
                   ) : null}
 
                   <div className="mk-card__footer">
-                    <Link
-                      href={`/miracles/topic/${encodeURIComponent(item.slug)}`}
-                      className="mk-expand-btn"
-                    >
+                    <span className="mk-expand-btn" aria-hidden="true">
                       <BookOpen size={14} strokeWidth={2} aria-hidden="true" />
                       اقرأ التفصيل
                       <ArrowLeft size={14} strokeWidth={2} aria-hidden="true" />
-                    </Link>
+                    </span>
                   </div>
+                  </Link>
 
                   {isAdmin && <AdminQuickEdit section="miracles" searchTerm={item.title} />}
                 </article>

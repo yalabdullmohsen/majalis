@@ -865,3 +865,100 @@ html[data-theme="dark"] .isp-card__cta {
 .uq-type-card__icon {
   border-radius: 16px !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   موجة 2 — إعجاز / أخلاق / علوم قرآن / فرق / روابط استكشاف
+   ═══════════════════════════════════════════════════════════════ */
+.mk-lane-card,
+.mk-card,
+.uq-usul-card,
+.uq-tafsir-card,
+.uq-qiraat-card,
+.uq-related__link,
+.akl-related__card,
+.sect-card,
+.hs-related__link,
+.fg-related__link,
+.gl-term,
+.internal-link-card,
+.ss-internal-link-card {
+  border-radius: var(--radius-card, 24px) !important;
+}
+
+.mk-card__hit {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+  flex: 1;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+  border-radius: inherit;
+}
+
+.mk-expand-btn,
+.sect-card__cta,
+.mk-lane-card__cta {
+  pointer-events: none;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--mj-brand, #1f6b56) !important;
+  font-weight: 700;
+}
+
+html.dark .mk-expand-btn,
+html.dark .sect-card__cta,
+html[data-theme="dark"] .mk-expand-btn,
+html[data-theme="dark"] .sect-card__cta {
+  color: var(--mj-brand, #5fbf98) !important;
+}
+
+/* روابط الفرق: بطاقات ناعمة بدل أزرار صلبة */
+.sect-card__links {
+  display: grid;
+  gap: 0.55rem;
+}
+.sect-card__link.hub-card,
+.sect-card__link.internal-link-card,
+.sect-card__link.ss-internal-link-card {
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
+  color: var(--color-text, var(--mj-ink, #16241e)) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, #d9d3c8)) !important;
+  justify-content: flex-start !important;
+}
+
+html.dark .sect-card__link.hub-card,
+html.dark .sect-card__link.internal-link-card,
+html[data-theme="dark"] .sect-card__link.hub-card {
+  background: var(--mj-surface, #1b2421) !important;
+  color: var(--mj-ink, #f3f7f5) !important;
+}
+
+.hub-card-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.fg-related__grid.hub-card-grid {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .fg-related__grid.hub-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.fg-related__link.hub-card,
+.fg-related__link.internal-link-card {
+  border-radius: var(--radius-card, 24px) !important;
+  min-height: 3.25rem;
+}
+
+/* aliases موجة 2 — أسماء الصفحات الفعلية */
+.mk-expand-btn { pointer-events: none; }
+.uq-usul-card,
+.akl-related__card,
+.hs-related__link {
+  border-radius: var(--radius-card, 24px) !important;
+}
