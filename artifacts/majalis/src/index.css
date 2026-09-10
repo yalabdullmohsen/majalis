@@ -2905,6 +2905,26 @@ html.dark .navbar-menu-btn--drawer {
 
 .navbar-auth--guest { flex-wrap: nowrap; }
 
+.navbar-auth--pending {
+  min-width: 5.5rem;
+  min-height: 1.75rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.navbar-auth-skel {
+  display: block;
+  width: 4.75rem;
+  height: 1.1rem;
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--majalis-line) 70%, transparent);
+}
+
+.navbar-mobile-login--pending {
+  pointer-events: none;
+  opacity: 0.45;
+}
+
 .navbar-user-link { color: var(--majalis-ink-soft); text-decoration: none; font-size: 0.78rem; }
 
 .navbar-user-link:hover { color: var(--majalis-emerald-deep); text-decoration: underline; }

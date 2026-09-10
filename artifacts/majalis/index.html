@@ -131,7 +131,17 @@
             },
             { once: true },
           );
-          window.setTimeout(clearBooting, 900);
+          window.addEventListener(
+            "mj:app-painted",
+            function () {
+              requestAnimationFrame(function () {
+                requestAnimationFrame(clearBooting);
+              });
+            },
+            { once: true },
+          );
+          /* سقف أمان = MAX_MS للدخولية — لا 900ms يُزيل app-booting قبل الطلاء */
+          window.setTimeout(clearBooting, 1400);
         } catch (e) {}
       })();
     </script>

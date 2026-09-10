@@ -24,7 +24,7 @@ export const SideNavDrawer = memo(function SideNavDrawer({
   onLogout,
 }: DrawerProps) {
   const [pathname] = useLocation();
-  const { isAdmin, isLoggedIn, user } = useAuth();
+  const { isAdmin, isLoggedIn, user, loading: authLoading } = useAuth();
   const panelRef = useRef<HTMLElement | null>(null);
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
@@ -149,7 +149,13 @@ export const SideNavDrawer = memo(function SideNavDrawer({
                 </div>
               ) : null}
 
-              {!isLoggedIn ? (
+              {authLoading ? (
+                <div className="sidebar-item sidebar-item--pending" aria-busy="true" aria-label="جاري تجهيز الحساب">
+                  <span className="sidebar-item-text">
+                    <span className="sidebar-item-title">تجهيز الحساب…</span>
+                  </span>
+                </div>
+              ) : !isLoggedIn ? (
                 <>
                   <Link href="/login" onClick={onClose} className="sidebar-item" aria-label="تسجيل الدخول">
                     <span className="sidebar-item-icon" aria-hidden="true">

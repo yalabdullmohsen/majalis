@@ -89,7 +89,7 @@ type SectionDef = {
 };
 
 export default function SettingsPage() {
-  const { user, isLoggedIn, logout } = useAuth();
+  const { user, isLoggedIn, logout, loading: authLoading } = useAuth();
   const [query, setQuery] = useState("");
   const [reciterId, setReciterIdState] = useState(loadReciterId);
   const [tafsirId, setTafsirIdState] = useState(readStoredTafsirEdition);
@@ -267,7 +267,11 @@ export default function SettingsPage() {
             </div>
           </div>
           <div className="settings-actions">
-            {isLoggedIn ? (
+            {authLoading ? (
+              <p className="settings-auth-pending" aria-busy="true">
+                تجهيز الحساب…
+              </p>
+            ) : isLoggedIn ? (
               <>
                 <button type="button" className="page-action-btn" onClick={() => logout()}>
                   {t("settings_logout")}

@@ -63,7 +63,12 @@
             dismiss(true);
             return;
           }
-          if (!forceBench && sessionStorage.getItem(KEY) === "1") {
+          /* على Capacitor لا تُلغَ الدخولية فورًا بمفتاح الجلسة — WKWebView قد يحتفظ بـ sessionStorage عبر إعادة فتح تبدو باردة */
+          var nativeCap = false;
+          try {
+            nativeCap = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+          } catch (eN) {}
+          if (!forceBench && !nativeCap && sessionStorage.getItem(KEY) === "1") {
             try {
               document.documentElement.classList.remove("app-booting");
               document.documentElement.dataset.appBooting = "0";

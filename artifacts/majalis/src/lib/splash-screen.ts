@@ -2,7 +2,7 @@
  * متحكّم شاشة الإطلاق — ويب (index.html) + Capacitor SplashScreen.
  *
  * HTML (#mj-launch-splash): يُخفى بعد mj:shell-stable (أو السقف) حتى لا يُكشف الهيكل وهو لا يزال app-booting.
- * Capacitor: يُخفى مبكّرًا بعد أول رسم — لا يسبب قفزة تخطيط على الويب.
+ * Capacitor: يُخفى مع HTML عند shell-stable — مصدر إخفاء واحد بلا كشف مبكر.
  */
 import { Capacitor } from "@capacitor/core";
 import {
@@ -99,7 +99,7 @@ function scheduleAfterMinVisible(run: () => void): void {
 
 /**
  * يخفي دخولية HTML (#mj-launch-splash) على الويب والأصلي بعد استقرار الهيكل،
- * ويخفي Capacitor SplashScreen مبكّرًا بعد أول رسم على الأصلي فقط.
+ * ويخفي Capacitor SplashScreen مع HTML عند mj:shell-stable (مصدر إخفاء واحد).
  * يجب أن يعمل على الويب أيضًا — وإلا تبقى «سُنّة» إن حُظر سكربت الإقلاع بـ CSP.
  */
 export function armNativeSplashController(): void {
@@ -110,12 +110,6 @@ export function armNativeSplashController(): void {
     void hideNativeSplash(false);
   }, SPLASH_MAX_VISIBLE_MS);
 
-  const hideCapacitorEarly = () => {
-    scheduleAfterMinVisible(() => {
-      void hideCapacitorSplash(false);
-    });
-  };
-
   const hideHtmlAndNative = () => {
     window.clearTimeout(deadline);
     scheduleAfterMinVisible(() => {
@@ -123,10 +117,7 @@ export function armNativeSplashController(): void {
     });
   };
 
-  /* أصلي فقط مبكرًا — لا تكشف HTML قبل shell-stable */
-  window.addEventListener("mj:app-painted", hideCapacitorEarly, { once: true });
-  window.addEventListener("app:first-paint", hideCapacitorEarly, { once: true });
-  window.addEventListener("mj:boot-ready", hideCapacitorEarly, { once: true });
+  /* مصدر واحد: لا تخفِ Capacitor قبل استقرار الهيكل (يمنع وميض الكروم تحت Splash) */
   window.addEventListener("mj:shell-stable", hideHtmlAndNative, { once: true });
   // صمام إضافي: إن لم تصل أحداث الاستقرار، أخفِ بتلاشي
   window.setTimeout(() => {

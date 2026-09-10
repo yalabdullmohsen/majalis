@@ -121,7 +121,7 @@ function DeferredHeaderTicker() {
 }
 
 export default function NavBar() {
-  const { isAdmin, isLoggedIn, user, logout } = useAuth();
+  const { isAdmin, isLoggedIn, user, logout, loading: authLoading } = useAuth();
   const { t } = useLanguage();
   const { resolvedTheme, toggleDark } = useThemePreference();
   const [location, navigate] = useLocation();
@@ -229,8 +229,12 @@ export default function NavBar() {
     window.dispatchEvent(new CustomEvent("global-search-open", { detail: { filter } }));
   };
 
-  // Desktop only: full auth bar
-  const desktopAuthLinks = isLoggedIn ? (
+  // Desktop only: full auth bar — لا تعرض دخول/خروج قبل اكتمال استعادة الجلسة
+  const desktopAuthLinks = authLoading ? (
+    <div className="navbar-auth navbar-auth--pending" aria-busy="true" aria-label="جاري تجهيز الحساب">
+      <span className="navbar-auth-skel" aria-hidden="true" />
+    </div>
+  ) : isLoggedIn ? (
     <div className="navbar-auth">
       <Link href="/stats" className="navbar-user-link">{user?.profile?.full_name || user?.email || t("nav_my_account")}</Link>
       {isAdmin && (
@@ -291,7 +295,7 @@ export default function NavBar() {
                   {item.label}
                 </Link>
               ))}
-              {isAdmin && (
+              {isAdmin && !authLoading && (
                 <Link href="/admin" className={tabCls(location.startsWith("/admin"), "nav-tab--admin")} aria-current={location.startsWith("/admin") ? "page" : undefined}>
                   {t("nav_admin_panel")}
                 </Link>
@@ -332,14 +336,23 @@ export default function NavBar() {
             {!isMobile && !isImmersiveChromePath(location) && !isCompactHeaderPath(location) && <DeferredHeaderTicker />}
             {!isMobile && desktopAuthLinks}
 
-            {/* Mobile: زر دخول/حساب واضح دائمًا — لا يُترك مخفيًا داخل قائمة الهامبرغر فقط */}
-            {isMobile && !isLoggedIn && (
+            {/* Mobile: زر دخول/حساب — ثابت الأبعاد أثناء استعادة الجلسة لتفادي وميض دخول→حساب */}
+            {isMobile && authLoading && (
+              <span
+                className="navbar-mobile-login navbar-mobile-login--pending"
+                aria-busy="true"
+                aria-label="جاري تجهيز الحساب"
+              >
+                <User size={16} strokeWidth={1.8} aria-hidden="true" />
+              </span>
+            )}
+            {isMobile && !authLoading && !isLoggedIn && (
               <Link href="/login" className="navbar-mobile-login" aria-label="تسجيل الدخول">
                 <User size={16} strokeWidth={1.8} aria-hidden="true" />
                 <span className="navbar-mobile-login__label">دخول</span>
               </Link>
             )}
-            {isMobile && isLoggedIn && (
+            {isMobile && !authLoading && isLoggedIn && (
               <Link href="/stats" className="navbar-mobile-login navbar-mobile-login--active" aria-label="حسابي">
                 <User size={16} strokeWidth={1.8} aria-hidden="true" />
               </Link>

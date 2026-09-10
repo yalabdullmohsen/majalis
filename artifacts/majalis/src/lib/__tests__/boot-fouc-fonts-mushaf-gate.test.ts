@@ -125,7 +125,7 @@ const theme = read("src/lib/theme-preference.ts");
   assert.match(boot, /awaitBootReadiness/);
   assert.match(boot, /fontsReady/);
   assert.match(main, /awaitBootReadiness/);
-  assert.match(splash, /mj:boot-ready/);
+  assert.match(splash, /mj:shell-stable/);
   assert.doesNotMatch(
     splash,
     /requestAnimationFrame\(\(\)\s*=>\s*\{\s*requestAnimationFrame\(hide\)/,

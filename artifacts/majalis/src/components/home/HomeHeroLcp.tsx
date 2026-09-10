@@ -62,7 +62,13 @@ export function HomeHeroLcp() {
       return true;
     }
   });
-  const [continueHref, setContinueHref] = useState("/lessons");
+  const [continueHref] = useState(() => {
+    try {
+      return getRecentPages(2).find((p) => p.href !== "/")?.href || "/lessons";
+    } catch {
+      return "/lessons";
+    }
+  });
 
   useEffect(() => {
     let cancelled = false;
@@ -85,13 +91,6 @@ export function HomeHeroLcp() {
       window.removeEventListener("mj:app-painted", onPainted);
       window.removeEventListener("app:first-paint", onPainted);
     };
-  }, []);
-
-  useEffect(() => {
-    return deferAfterPaint(() => {
-      const next = getRecentPages(2).find((p) => p.href !== "/")?.href;
-      if (next) setContinueHref(next);
-    }, 1_500);
   }, []);
 
   return (
@@ -135,13 +134,22 @@ export function HomeRestShell() {
       >
         <div className="m2030-band__head">
           <h2 className="m2030-band__title">ورد اليوم</h2>
+          <div className="daily-wird-card__actions" aria-hidden="true">
+            <span className="daily-wird-card__done-btn mj-home-lcp-ph__daily-done">تم</span>
+            <span className="m2030-band__link mj-home-lcp-ph__daily-link">الورد الكامل</span>
+          </div>
         </div>
         <div className="home-daily-wird__grid" aria-hidden="true">
-          {Array.from({ length: 2 }).map((_, idx) => (
+          {Array.from({ length: 4 }).map((_, idx) => (
             <article key={idx} className="home-daily-wird__card mj-card mj-home-lcp-ph__daily-card">
+              <header className="home-daily-wird__card-head">
+                <span className="mj-home-lcp-ph__daily-icon" aria-hidden="true" />
+                <span className="mj-home-lcp-ph__daily-label">&nbsp;</span>
+              </header>
               <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
               <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
               <div className="home-daily-wird__meta mj-home-lcp-ph__daily-meta skeleton-base" />
+              <div className="home-daily-wird__cta mj-home-lcp-ph__daily-cta skeleton-base" />
             </article>
           ))}
         </div>
