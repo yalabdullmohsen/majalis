@@ -33,6 +33,7 @@ import {
 import "@/styles/pages/search.css";
 import "@/styles/pages/search-legacy.css";
 import { ACTION, EMPTY, SEARCH } from "@/lib/ui-copy";
+import { ListScreen } from "@/components/design-system/screens";
 
 const SCOPE_ICONS = {
   quran: BookOpen,
@@ -292,6 +293,7 @@ export default function SearchPage() {
   const resultItems = useMemo(() => results, [results]);
 
   return (
+    <ListScreen compose="mark">
     <div className="page-shell narrow search-page search-home ds-page" dir="rtl">
       <CompactSectionHeader
         title="البحث"
@@ -469,5 +471,6 @@ export default function SearchPage() {
         </div>
       )}
     </div>
+    </ListScreen>
   );
 }

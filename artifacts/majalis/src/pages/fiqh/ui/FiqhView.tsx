@@ -23,6 +23,7 @@ import {
 } from "@/lib/fiqh-books";
 import { fiqhBookEditorial } from "@/lib/fiqh-editorial";
 import { SectionEntryCard } from "@/components/ui/HubCard";
+import { GridScreen } from "@/components/design-system/screens";
 import { isHiddenFromNav } from "@/lib/nav-visibility";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import "@/styles/pages/fiqh-hub.css";
@@ -311,24 +312,26 @@ export default function FiqhPage() {
   );
 
   return (
-    <SectionTemplatePage
-      route="/fiqh"
-      title="الفقه"
-      subtitle="كتب فقه مرتبة: كتاب ← باب ← مسائل موثّقة على المذهب الحنبلي."
-    >
-      <div className="fiqh-lux-shell" dir="rtl">
-        <p className="fiqh-hub-edu-note" role="note">
-          محتوى تعليمي موثّق على المذهب الحنبلي — للفهم والتعلّم، وليس فتوى شخصية من المنصة.
-        </p>
-        <FiqhBooksBody />
-        <section className="fiqh-hub-stats" aria-label="حجم المحتوى">
-          {headerStats.map((stat) => (
-            <p key={stat.id} className="fiqh-hub-stats__item">
-              {stat.label}
-            </p>
-          ))}
-        </section>
-      </div>
-    </SectionTemplatePage>
+    <GridScreen compose="mark" columns={2}>
+      <SectionTemplatePage
+        route="/fiqh"
+        title="الفقه"
+        subtitle="كتب فقه مرتبة: كتاب ← باب ← مسائل موثّقة على المذهب الحنبلي."
+      >
+        <div className="fiqh-lux-shell" dir="rtl">
+          <p className="fiqh-hub-edu-note" role="note">
+            محتوى تعليمي موثّق على المذهب الحنبلي — للفهم والتعلّم، وليس فتوى شخصية من المنصة.
+          </p>
+          <FiqhBooksBody />
+          <section className="fiqh-hub-stats" aria-label="حجم المحتوى">
+            {headerStats.map((stat) => (
+              <p key={stat.id} className="fiqh-hub-stats__item">
+                {stat.label}
+              </p>
+            ))}
+          </section>
+        </div>
+      </SectionTemplatePage>
+    </GridScreen>
   );
 }

@@ -8,6 +8,7 @@ import {
 } from "@/lib/hadith-corpus";
 import { HadithGradeBadge } from "@/components/hadith/HadithGradeBadge";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
+import { ReaderScreen } from "@/components/design-system/screens";
 import "@/styles/pages/hadith.css";
 
 function ShareBlock({ hadith }: { hadith: HadithRecord }) {
@@ -97,6 +98,7 @@ export default function HadithByIdView() {
   }
 
   return (
+    <ReaderScreen compose="mark">
     <article
       className={`page-shell hadith-by-id${hadith.isMawdu ? " hadith-by-id--mawdu" : ""}`}
       dir="rtl"
@@ -185,5 +187,6 @@ export default function HadithByIdView() {
         ]}
       />
     </article>
+    </ReaderScreen>
   );
 }

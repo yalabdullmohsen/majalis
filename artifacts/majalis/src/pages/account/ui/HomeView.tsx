@@ -7,6 +7,7 @@ import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import "@/styles/components/home-brand-title.css";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { shouldShowFirstVisitIntro } from "@/lib/first-visit-intro-state";
+import { DashboardScreen } from "@/components/design-system/screens";
 import "@/styles/m2030/home.css";
 import "@/styles/components/first-visit-intro.css";
 
@@ -288,7 +289,7 @@ export default function HomePage() {
   // الغلاف + الهيرو في App (HomeHeroLcp خارج Suspense) — هنا بقية الرئيسية فقط
   // Intro كـ overlay فوق الرئيسية — لا استبدال كامل يسبب قفزة تخطيط
   return (
-    <>
+    <DashboardScreen compose="mark" density="regular">
       {isMaintenanceMode() && (
         <div role="status" className="home-maintenance-banner">
           {getSiteSettings().maintenanceMessage}
@@ -311,6 +312,6 @@ export default function HomePage() {
           <FirstVisitIntro onContinue={() => setShowIntro(false)} />
         </Suspense>
       ) : null}
-    </>
+    </DashboardScreen>
   );
 }
