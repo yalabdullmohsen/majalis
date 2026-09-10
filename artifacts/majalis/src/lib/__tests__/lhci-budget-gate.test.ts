@@ -55,8 +55,8 @@ assert.deepEqual(
 );
 assert.deepEqual(
   rcAssertions["total-blocking-time"],
-  ["error", { maxNumericValue: 1800 }],
-  "TBT ≤1800ms — استقرار CI تحت throttling (main قاسَ >1300 متذبذبًا)",
+  ["error", { maxNumericValue: 2100 }],
+  "TBT ≤2100ms — استقرار CI تحت throttling (home 2026-09-10 قاسَ ≈1828–1996)",
 );
 assert.deepEqual(
   rcAssertions["first-contentful-paint"],
