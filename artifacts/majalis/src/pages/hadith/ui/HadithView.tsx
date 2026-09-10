@@ -799,7 +799,7 @@ export function HadithSection({
   const inner = (
     <>
       {!embedded && (
-        <PageHeader eyebrow={meta.eyebrow} title={meta.title} subtitle={meta.subtitle} />
+        <PageHeader eyebrow={meta.eyebrow} title={meta.title} subtitle={meta.subtitle} className="hadith-page-hero" />
       )}
 
       {!embedded && meta.notice && (
@@ -873,7 +873,7 @@ export function HadithSection({
             key={cat.id}
             role="radio"
             active={activeCategory === cat.id}
-            className="hadith-quick-cat"
+            className={`hadith-quick-cat${activeCategory === cat.id ? " hadith-quick-cat--active" : ""}`}
             onClick={() => setActiveCategory(cat.id)}
           >
             {cat.label}

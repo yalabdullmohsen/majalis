@@ -1,6 +1,7 @@
 import { memo, useCallback, type MouseEvent, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { ChevronLeft, type LucideIcon } from "lucide-react";
+import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { cn } from "@/lib/utils";
 import { prefetchRoute } from "@/lib/prefetch-route";
 import "@/styles/components/hub-card.css";
@@ -140,7 +141,7 @@ export const SectionEntryCard = memo(function SectionEntryCard({
         </div>
         {!nonInteractive || samePathHash ? (
           <span className="hub-card__go" aria-hidden="true">
-            <ChevronLeft size={16} strokeWidth={2.5} />
+            <DirectionalIcon icon={ChevronLeft} size={16} strokeWidth={2.5} />
           </span>
         ) : null}
       </div>

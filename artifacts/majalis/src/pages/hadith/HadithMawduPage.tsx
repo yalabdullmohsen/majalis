@@ -1,9 +1,11 @@
 import { useEffect } from "react";
+import { Link } from "wouter";
 import { HadithSection } from "./HadithPage";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { HadithClassGuide } from "@/pages/hadith/ui/HadithClassGuide";
+import { AppBackButton } from "@/components/common/AppBackButton";
+import "@/styles/pages/hadith.css";
 
 export default function HadithMawduPage() {
   useEffect(() => {
@@ -27,15 +29,24 @@ export default function HadithMawduPage() {
   }, []);
 
   return (
-    <>
-      <HadithClassGuide kind="mawdu" />
+    <div className="hadith-route" dir="rtl">
+      <div className="hadith-page__chrome">
+        <AppBackButton variant="inline" fallbackHref="/hadith" label="الحديث وعلومه" />
+      </div>
+      <p className="hadith-def-callout" role="note">
+        لتعريف الموضوع وحكم روايته راجع{" "}
+        <Link href="/hadith-science" className="hadith-def-callout__link">
+          مصطلح الحديث
+        </Link>
+        .
+      </p>
       <HadithSection authenticityClass="mawdu" />
-      <div className="twh-share">
+      <div className="twh-share hadith-route__footer">
         <ShareButtons title="الأحاديث الموضوعة — سُنّة" url="https://www.ssunnah.com/hadith/mawdu" />
       </div>
-      <div className="px-4 pb-6 mt-4">
+      <div className="hadith-page__quiz hadith-route__footer">
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في علوم الحديث" count={4} />
       </div>
-    </>
+    </div>
   );
 }

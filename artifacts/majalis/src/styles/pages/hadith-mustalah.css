@@ -2,7 +2,30 @@
    223 — صفحة مصطلح الحديث (.hs-*)
    ══════════════════════════════════════════════════════════ */
 
-.hs-page { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+.hs-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0.75rem 1rem var(--content-pb, calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px));
+  box-sizing: border-box;
+}
+.hs-page__chrome {
+  padding-inline: 0;
+  padding-block: 0.15rem 0.35rem;
+}
+.hs-page .hadith-page__chrome .app-back-btn--inline {
+  display: inline-flex !important;
+  pointer-events: auto !important;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.5rem;
+  padding: 0.25rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--mj-brand-deep, #163828);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
 
 /* هيرو */
 .hs-hero {
@@ -192,6 +215,28 @@
   .hs-stats { gap: 0.6rem; }
   .hs-stat { padding: 0.5rem 0.75rem; }
   .hs-related__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* شاشات قصيرة — بعد قواعد الأساس حتى لا تُلغى */
+@media (max-height: 760px) {
+  .hs-page { padding-top: 0.35rem; }
+  .hs-page__chrome { padding-block: 0 0.15rem; }
+  .hs-hero {
+    padding: 1rem 1rem 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+  .hs-hero__title { font-size: 1.45rem; margin-bottom: 0.35rem; }
+  .hs-hero__badge { margin-bottom: 0.45rem; }
+  .hs-hero__sub {
+    margin-bottom: 0.55rem !important;
+    font-size: 0.8rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .hs-stats { display: none !important; }
+  .hs-controls { margin-bottom: 0.85rem; }
 }
 
 /* ── نهاية 223 ─────────────────────────────────────────── */

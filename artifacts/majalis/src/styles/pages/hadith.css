@@ -79,6 +79,7 @@
   color: var(--majalis-accent, var(--emerald-500, var(--mj-brand-deep))) !important;
 }
 .hadith-page .hadith-quick-cat[aria-pressed="true"],
+.hadith-page .hadith-quick-cat[aria-checked="true"],
 .hadith-page .hadith-quick-cat--active,
 .hadith-quick-cat--active {
   background: var(--majalis-accent, var(--emerald-500, var(--mj-brand-deep))) !important;
@@ -1085,34 +1086,43 @@ html[data-theme="dark"] .hadith-stat strong {
   font-size: 0.72rem;
 }
 
-/* ── خانات الأقسام الثلاث ── */
+/* ── خانات الأقسام: صف أفقي قابل للتمرير — لا شبكة 3 تُفرّد «الموضوع» ── */
 .hadith-class-switch {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.5rem;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
   margin: 0.75rem 0 1rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  padding-inline: 0.1rem 0.35rem;
+  scroll-padding-inline: 0.35rem;
 }
+.hadith-class-switch::-webkit-scrollbar { display: none; }
 .hadith-class-switch__link {
+  flex: 0 0 auto;
   text-align: center;
   justify-content: center;
-  min-height: 46px;
-  font-weight: 800;
+  min-height: 2.5rem;
+  padding-inline: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 .hadith-class-switch__link--books {
-  grid-column: 1 / -1;
-  min-height: 40px;
+  grid-column: unset;
+  min-height: 2.5rem;
   font-weight: 700;
-  opacity: 0.92;
+  opacity: 0.95;
   background: var(--emerald-50, #EEF1F0);
   border-color: var(--emerald-200, #AEBEB6);
   color: var(--emerald-deep, var(--mj-brand-deep));
 }
 @media (min-width: 720px) {
   .hadith-class-switch {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  .hadith-class-switch__link--books {
-    grid-column: auto;
+    flex-wrap: wrap;
+    overflow-x: visible;
   }
 }
 
@@ -1138,7 +1148,7 @@ html[data-theme="dark"] .hadith-stat strong {
 .hadith-toolbar {
   display: flex;
   gap: 0.5rem;
-  align-items: stretch;
+  align-items: center;
   margin-bottom: 0.65rem;
 }
 .hadith-toolbar__search { flex: 1; min-width: 0; }
@@ -1300,6 +1310,7 @@ html[data-theme="dark"] .hadith-stat strong {
 }
 
 .hadith-page .hadith-quick-cat[aria-pressed="true"],
+.hadith-page .hadith-quick-cat[aria-checked="true"],
 .hadith-page .hadith-quick-cat--active,
 .hadith-quick-cat--active {
   background: var(--mj-brand, var(--majalis-accent, #173d35)) !important;
@@ -1654,8 +1665,216 @@ html.dark .hadith-card.ui-card {
 
 .hadith-page .ds-filter-toggle,
 .hadith-toolbar .ds-filter-toggle {
-  border-radius: 999px;
-  min-width: 5.5rem;
+  border-radius: var(--radius-md, 0.75rem);
+  min-width: 4.25rem;
+  width: auto;
+  height: 2.75rem;
+  min-height: 2.75rem;
+  max-height: 2.75rem;
+  padding-inline: 0.85rem;
+  flex: 0 0 auto;
+  align-self: center;
+  white-space: nowrap;
+  writing-mode: horizontal-tb;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── مسار قائمة الحديث (صحيح/ضعيف/موضوع) — بلا تكديس تعريف كامل ── */
+.hadith-route {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+/* رجوع داخلي ظاهر: FAB مُخفى على مسارات الحديث */
+.hadith-page__chrome .app-back-btn--inline,
+.hadith-route .hadith-page__chrome .app-back-btn--inline,
+.hadith-page--hub .hadith-page__chrome .app-back-btn--inline {
+  display: inline-flex !important;
+  pointer-events: auto !important;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.5rem;
+  padding: 0.35rem 0.15rem;
+  border: 0;
+  background: transparent;
+  color: var(--mj-brand-deep, #163828);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.hadith-page__chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem max(1rem, var(--page-gutter, 1rem)) 0.25rem;
+  min-height: 0;
+}
+.hadith-def-callout {
+  margin: 0.15rem max(1rem, var(--page-gutter, 1rem)) 0;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-md, 0.75rem);
+  background: color-mix(in srgb, var(--mj-brand, #0d5c4d) 7%, var(--mj-surface, #fff));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #0d5c4d) 16%, transparent);
+  color: var(--mj-ink-2, #4b625a);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+/* إلغاء الشريط الرمادي بين التنويه والهيرو */
+.hadith-route > .hadith-def-callout + .page-shell,
+.hadith-route > .hadith-def-callout + .hadith-page,
+.hadith-route .hadith-def-callout {
+  margin-bottom: 0;
+}
+.hadith-route .page-shell.hadith-page {
+  padding-top: 0.65rem;
+}
+.hadith-route .hadith-page-hero.page-hero-mj--bleed {
+  border-radius: var(--mss-radius-hero, 1.35rem);
+  margin-inline: max(0.75rem, var(--page-gutter, 1rem));
+  width: auto;
+  max-width: none;
+}
+.hadith-def-callout__link {
+  color: var(--brand-on-light, var(--mj-brand-deep, #146C4E));
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+.hadith-route__footer {
+  padding-inline: max(1rem, var(--page-gutter, 1rem));
+  padding-bottom: 0.75rem;
+}
+.hadith-page__quiz {
+  padding-bottom: calc(var(--bottom-nav-total, 5rem) + 1.25rem);
+}
+.hadith-page.hadith-page--hub .hub-card-grid {
+  padding-bottom: 0.5rem;
+}
+.hadith-grade-filters {
+  margin-bottom: 0.65rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 0.15rem;
+}
+.hadith-grade-filters::-webkit-scrollbar { display: none; }
+.hadith-grade-filters .exclusive-choice {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-inline-end: 0.75rem;
+  overscroll-behavior-x: contain;
+}
+.hadith-grade-filters .exclusive-choice::-webkit-scrollbar { display: none; }
+.hadith-grade-filters .exclusive-choice__opt {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.hadith-page-hero.page-hero-mj--bleed {
+  padding-block: 1.1rem 1.35rem;
+}
+.hadith-class-switch {
+  padding-inline-end: 1rem;
+  mask-image: linear-gradient(to left, transparent 0, #000 12px, #000 calc(100% - 10px), transparent 100%);
+}
+
+/* جوال: ضغط هيرو المركز حتى لا تغطي البطاقات شريط التنقل */
+@media (max-width: 480px) {
+  .topic-page:has(.hadith-page--hub) .topic-page__quote {
+    display: none;
+  }
+  .topic-page:has(.hadith-page--hub) .topic-page__hero {
+    padding: 1.1rem 1.15rem 1rem;
+  }
+  .topic-page:has(.hadith-page--hub) .topic-page__sub {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .topic-page:has(.hadith-page--hub) .hub-card__desc {
+    display: none;
+  }
+  .topic-page:has(.hadith-page--hub) .hub-card {
+    min-height: 0;
+    padding: 0.75rem 0.8rem;
+  }
+}
+
+/* شاشات قصيرة (iPhone SE): لا يغطي Bottom Nav عنوان الأقسام / البحث */
+@media (max-height: 760px) {
+  .topic-page:has(.hadith-page--hub) .topic-page__quote {
+    display: none;
+  }
+  .topic-page:has(.hadith-page--hub) .topic-page__hero {
+    padding: 0.95rem 1rem 0.85rem;
+    margin-top: 0.25rem;
+  }
+  .topic-page:has(.hadith-page--hub) .topic-page__sub {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .topic-page:has(.hadith-page--hub) .topic-page__group-title {
+    margin-top: 0.55rem;
+    margin-bottom: 0.35rem;
+  }
+  .topic-page:has(.hadith-page--hub) .topic-page__crumb {
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+  }
+  .topic-page:has(.hadith-page--hub) .hub-card {
+    min-height: 0;
+    padding: 0.55rem 0.65rem;
+    gap: 0.15rem;
+  }
+  .topic-page:has(.hadith-page--hub) .hub-card__desc {
+    display: none;
+  }
+  .topic-page:has(.hadith-page--hub) .hub-card__foot {
+    min-height: 0;
+    margin-top: 0;
+  }
+  .topic-page:has(.hadith-page--hub) .hub-card__go {
+    width: 1.45rem;
+    height: 1.45rem;
+  }
+  .hadith-route .hadith-page-hero.page-hero-mj--bleed {
+    padding-block: 0.85rem 1rem;
+  }
+  .hadith-route .hadith-page-hero .page-hero-mj__desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .hadith-route .hadith-class-switch {
+    margin-top: 0.45rem;
+    margin-bottom: 0.55rem;
+  }
+}
+.hadith-page-hero .page-hero-mj__desc {
+  max-width: 36rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+/* بطاقات hub داخل الحديث: ارتفاع محتوى لا فراغ ثابت */
+.hadith-page--hub .hub-card {
+  --sec-entry-min-h: 0;
+  min-height: 0;
+  height: auto;
+}
+.hadith-page--hub .hub-card__desc {
+  min-height: 0;
+}
+.hadith-page--hub .hub-card__go {
+  width: 1.75rem;
+  height: 1.75rem;
 }
 
 .hadith-by-id {
