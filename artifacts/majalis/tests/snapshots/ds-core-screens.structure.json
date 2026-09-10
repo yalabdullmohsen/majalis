@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "note": "لقطة بنية مصدرية للشاشات/القوالب الأساسية — تمنع رجوع نص خام أو قيم مباشرة في المسارات الحرجة",
+  "screens": {
+    "src/components/ui/PageHero.tsx": {
+      "mustImport": ["design-system/text|ScreenTitle|SsText"],
+      "mustMatch": ["ScreenTitle"],
+      "mustNotMatch": ["fontSize:\\s*[\"']", "<h1[\\s>]"]
+    },
+    "src/components/topic/TopicPage.tsx": {
+      "mustImport": ["design-system/text|SsText|ScreenTitle"],
+      "mustMatch": ["ss-text|ScreenTitle|SectionTitle"]
+    },
+    "src/components/ui/HubCard.tsx": {
+      "mustMatch": ["CardTitle"],
+      "mustNotMatch": ["<h3 className=\"hub-card__title\""]
+    },
+    "src/components/design-system/ContentCard.tsx": {
+      "mustMatch": ["CardTitle"],
+      "mustNotMatch": ["<h3[\\s>]"]
+    },
+    "src/pages/hadith/ui/HadithView.tsx": {
+      "mustMatch": ["PageHero|TopicPage|hadith"],
+      "mustNotMatch": ["style=\\{\\{[^}]*fontSize:\\s*[\"'][0-9]"]
+    },
+    "src/pages/account/ui/HomeView.tsx": {
+      "mustMatch": ["Home"],
+      "mustNotMatch": ["style=\\{\\{[^}]*fontSize:\\s*[\"'][0-9]+px"]
+    },
+    "src/pages/account/ui/SearchView.tsx": {
+      "mustNotMatch": ["style=\\{\\{[^}]*fontSize:\\s*[\"'][0-9]+px"]
+    },
+    "src/pages/fiqh/FiqhPage.tsx": {
+      "mustNotMatch": ["style=\\{\\{[^}]*fontSize:\\s*[\"'][0-9]+px"]
+    }
+  }
+}
