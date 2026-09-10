@@ -21,6 +21,12 @@ import { sectionTemplateChrome } from "@/config/section-template";
 import { HubCard } from "@/components/ui/HubCard";
 import { SectionHero } from "@/components/topic/SectionHero";
 import { navigateTo } from "@/lib/navigation-intent";
+import {
+  SectionTitle,
+  BodyText,
+  CardTitle,
+  Caption,
+} from "@/components/design-system/text";
 import "@/styles/components/topic-page.css";
 import "@/styles/components/safe-hero.css";
 
@@ -184,9 +190,9 @@ export function TopicPage({
       />
 
       {groupTitle ? (
-        <h2 className="topic-page__group-title" data-section-group-title="1">
+        <SectionTitle className="topic-page__group-title" data-section-group-title="1">
           {groupTitle}
-        </h2>
+        </SectionTitle>
       ) : null}
 
       {tabs && tabs.length > 0 ? (
@@ -238,16 +244,16 @@ export function TopicPage({
         ) : null}
         {status === "empty" ? (
           <div className="topic-page__state" role="status">
-            <p>لا محتوى في هذا القسم حالياً.</p>
+            <BodyText>لا محتوى في هذا القسم حالياً.</BodyText>
           </div>
         ) : null}
         {status === "error" ? (
           <div className="topic-page__state" role="alert">
-            <p>
+            <BodyText>
               {typeof navigator !== "undefined" && navigator.onLine === false
                 ? "أنت غير متصل بالإنترنت. اتصل بالشبكة ثم أعد المحاولة."
                 : "تعذّر تحميل المحتوى مؤقتًا. أعد المحاولة بعد لحظات."}
-            </p>
+            </BodyText>
             {onRetry ? (
               <button type="button" className="topic-page__retry" onClick={onRetry}>
                 إعادة المحاولة
@@ -287,7 +293,7 @@ export function TopicPage({
                   featured={Boolean(r.isCurrent)}
                   footer={
                     r.isCurrent ? (
-                      <span className="topic-page__here">أنت هنا</span>
+                      <Caption className="topic-page__here">أنت هنا</Caption>
                     ) : null
                   }
                 />
@@ -314,15 +320,15 @@ export function TopicCard({
 }) {
   return (
     <article className="topic-card">
-      <h3 className="topic-card__title">{title}</h3>
-      {body ? <p className="topic-card__body">{body}</p> : null}
+      <CardTitle className="topic-card__title">{title}</CardTitle>
+      {body ? <BodyText className="topic-card__body">{body}</BodyText> : null}
       {children}
       {evidence && evidence.length > 0 ? (
         <footer className="topic-card__evidence">
           {evidence.map((e, i) => (
-            <span key={`${e.ref}-${i}`} className="topic-card__ref">
+            <Caption key={`${e.ref}-${i}`} className="topic-card__ref">
               {e.ref}
-            </span>
+            </Caption>
           ))}
         </footer>
       ) : null}

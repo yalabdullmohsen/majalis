@@ -147,3 +147,11 @@
 .ss-text--muted {
   color: var(--ss-color-text-muted);
 }
+
+/* قوالب مشتركة فوق هيرو داكن: اللون من الحاوية (on-dark / bleed) */
+.page-hero-mj--bleed .ss-text,
+.topic-page__hero .ss-text,
+.safe-hero .ss-text,
+.on-dark .ss-text {
+  color: inherit;
+}
