@@ -312,7 +312,24 @@
 }
 
 .section-hub__related {
-  margin-bottom: 0.5rem;
+  margin: 0.25rem 0 1.25rem;
+  padding: 1rem 0.85rem 0.35rem;
+  border-radius: var(--sh-radius, 16px);
+  border: 1px dashed color-mix(in srgb, var(--sh-accent, var(--mj-brand, #1f6b56)) 28%, var(--mj-hairline, #d5ddd9));
+  background: color-mix(in srgb, var(--mj-surface-2, #f4f7f5) 88%, transparent);
+}
+
+.section-hub__related .fg-related--footer {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+html.dark .section-hub__related,
+[data-theme="dark"] .section-hub__related {
+  background: color-mix(in srgb, var(--sh-accent, #1f6b56) 10%, rgba(12, 28, 22, 0.72));
+  border-color: color-mix(in srgb, var(--sh-accent, #1f6b56) 32%, transparent);
 }
 
 html.dark .section-hub__intro,

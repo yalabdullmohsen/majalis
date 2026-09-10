@@ -109,7 +109,7 @@ export function SourceBox({
 }
 
 export function RelatedLinksBox({
-  title = "روابط ذات صلة",
+  title = "تصفّح صفحاتًا أخرى",
   links,
   className = "",
 }: {
@@ -119,20 +119,25 @@ export function RelatedLinksBox({
 }) {
   if (!links.length) return null;
   return (
-    <ReadingSectionCard title={title} variant="related" className={className}>
-      <div className="cr-related-grid hub-card-grid">
-        {links.map((l) => (
-          <SectionEntryCard
-            key={l.href}
-            href={l.href}
-            title={l.title}
-            description={l.description}
-            variant="compact"
-            className="cr-related-link internal-link-card ss-internal-link-card"
-          />
-        ))}
-      </div>
-    </ReadingSectionCard>
+    <aside className={`cr-related-footer ${className}`.trim()} data-related-footer="1">
+      <p className="cr-related-footer__note">
+        ملحق تنقّل · روابط لصفحات وأقسام أخرى — ليست جزءًا من محتوى هذه الصفحة
+      </p>
+      <ReadingSectionCard title={title} variant="related" className="cr-related-footer__card">
+        <div className="cr-related-grid hub-card-grid">
+          {links.map((l) => (
+            <SectionEntryCard
+              key={l.href}
+              href={l.href}
+              title={l.title}
+              description={l.description}
+              variant="compact"
+              className="cr-related-link internal-link-card ss-internal-link-card"
+            />
+          ))}
+        </div>
+      </ReadingSectionCard>
+    </aside>
   );
 }
 

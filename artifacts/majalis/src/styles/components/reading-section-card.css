@@ -218,3 +218,37 @@ html[data-theme="dark"] .rcc__summary,
 html.dark .rcc__summary {
   color: var(--rsc-muted);
 }
+
+
+/* ملحق روابط ذات صلة — خارج مادة القسم/الصفحة */
+.cr-related-footer {
+  margin: 1.5rem auto 1rem;
+  max-width: 42rem;
+  padding: 0.85rem 0.75rem 0.35rem;
+  border-radius: var(--radius-card, 20px);
+  border: 1px dashed color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent);
+  background: color-mix(in srgb, var(--mj-surface-2, #f4f7f5) 90%, transparent);
+  box-sizing: border-box;
+}
+.cr-related-footer__note {
+  margin: 0 0.4rem 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 650;
+  line-height: 1.55;
+  color: var(--rsc-muted, #5a6b63);
+}
+.cr-related-footer__card.rsc--related {
+  margin: 0;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  padding: 0.25rem 0.35rem 0.55rem;
+}
+.rsc--related {
+  background: transparent;
+}
+html.dark .cr-related-footer,
+[data-theme="dark"] .cr-related-footer {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, rgba(12, 28, 22, 0.75));
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 34%, transparent);
+}
