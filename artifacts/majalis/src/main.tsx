@@ -254,12 +254,10 @@ async function mount() {
   });
 
   // خلفيات غير حاجبة للإقلاع — تأجيل طويل (لا rIC: يطلق فور الخمول فيُحسب Unused JS).
+  // تهيئة Supabase ملك AuthProvider فقط — لا مسار reset مزدوج هنا.
   const afterPaint = () => {
     void purgeNativeWebRuntimeCaches().catch(() => {});
     void storageHydrate;
-    void import("./lib/supabase-bootstrap")
-      .then((m) => m.bootstrapSupabaseFromServer().then(() => m.resetSupabaseClient()))
-      .catch(() => {});
   };
   let afterPaintStarted = false;
   const startAfterPaint = () => {

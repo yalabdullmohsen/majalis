@@ -11,7 +11,7 @@ import { readCookieConsent, writeCookieConsent } from "@/lib/cookie-consent";
  * Interactive privacy hub — rights + consent + export/delete links.
  */
 export default function PrivacyCenterPage() {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, loading: authLoading } = useAuth();
   const [consent, setConsent] = useState(() => readCookieConsent());
   const [exporting, setExporting] = useState(false);
   const [exportMsg, setExportMsg] = useState("");
@@ -26,6 +26,10 @@ export default function PrivacyCenterPage() {
   }, []);
 
   async function handleServerExport() {
+    if (authLoading) {
+      setExportMsg("جاري تجهيز الحساب…");
+      return;
+    }
     if (!isLoggedIn) {
       setExportMsg("سجّل الدخول لتصدير بيانات الحساب من الخادم.");
       return;
@@ -95,8 +99,15 @@ export default function PrivacyCenterPage() {
 
       <LegalSection title="تصدير البيانات">
         <p>احصل على ملف JSON يتضمن بيانات حسابك المرتبطة في المنصة (أفضل جهد للجداول المتاحة).</p>
-        <button type="button" className="ui-card-btn" disabled={exporting} onClick={() => void handleServerExport()}>
-          <Download size={16} aria-hidden="true" /> {exporting ? "جاري التصدير…" : "تصدير بيانات الحساب"}
+        <button
+          type="button"
+          className="ui-card-btn"
+          disabled={exporting || authLoading}
+          onClick={() => void handleServerExport()}
+          aria-busy={authLoading || exporting}
+        >
+          <Download size={16} aria-hidden="true" />{" "}
+          {authLoading ? "تجهيز الحساب…" : exporting ? "جاري التصدير…" : "تصدير بيانات الحساب"}
         </button>
         {exportMsg && <p className="settings-note">{exportMsg}</p>}
         <p className="settings-note">

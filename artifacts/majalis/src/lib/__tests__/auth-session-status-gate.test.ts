@@ -26,6 +26,13 @@ assert.doesNotMatch(
   "لا loading منفصل — status هو المصدر",
 );
 
+const main = readFileSync(resolve(root, "src/main.tsx"), "utf8");
+assert.doesNotMatch(main, /bootstrapSupabaseFromServer/, "لا bootstrap مزدوج من main");
+
+const crit = readFileSync(resolve(root, "src/styles/critical-first-paint.css"), "utf8");
+assert.match(crit, /\.chrome-boot-ph\.navbar-v3/, "حجز ارتفاع هيكل الكروم");
+assert.match(crit, /\.chrome-boot-ph\.bottom-nav|\.chrome-boot-ph\[data-bottom-nav\]/, "حجز ارتفاع الشريط السفلي");
+
 const nav = readFileSync(resolve(root, "src/components/NavBar.tsx"), "utf8");
 assert.match(nav, /loading:\s*authLoading|authLoading/);
 assert.match(nav, /navbar-auth--pending|authLoading/);
