@@ -22,7 +22,7 @@ export const UniversityCard = memo(function UniversityCard({ university: u, comp
   const accMod = `univ-acc--${u.accreditation_status}`;
 
   return (
-    <div dir="rtl" className="univ-card univ-card--pressable">
+    <div dir="rtl" className="univ-card univ-card--pressable soft-card soft-card--on-light mj-pressable">
       <Link href={`/universities/${u.slug}`} className="univ-card__hit" aria-label={`تفاصيل ${u.name_ar}`}>
       {/* رأس البطاقة */}
       <div className="univ-card__head">

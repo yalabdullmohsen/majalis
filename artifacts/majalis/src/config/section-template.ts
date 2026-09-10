@@ -50,6 +50,8 @@ const ROUTE_THEME: Record<string, TopicThemeId> = {
   "/quiz": "aqeedah",
   "/memorization": "quran",
   "/islamic-directory": "history",
+  "/institutions": "history",
+  "/islamic-landmarks": "history",
   "/flashcards": "quran",
   "/library": "aqeedah",
   "/academic-research": "aqeedah",
@@ -225,6 +227,18 @@ export const ROUTE_QUOTE: Record<string, SectionTemplateQuote> = {
     ref: "المجادلة: ١١",
     type: "ayah",
     sectionId: "universities",
+  },
+  "/institutions": {
+    text: "وَتَعَاوَنُوا عَلَى الْبِرِّ وَالتَّقْوَىٰ",
+    ref: "المائدة: ٢",
+    type: "ayah",
+    sectionId: "institutions",
+  },
+  "/islamic-landmarks": {
+    text: "فِي بُيُوتٍ أَذِنَ اللَّهُ أَن تُرْفَعَ وَيُذْكَرَ فِيهَا اسْمُهُ",
+    ref: "النور: ٣٦",
+    type: "ayah",
+    sectionId: "islamic-landmarks",
   },
   "/discover-islam": {
     text: "فَإِنْ آمَنُوا بِمِثْلِ مَا آمَنتُم بِهِ فَقَدِ اهْتَدَوا",
