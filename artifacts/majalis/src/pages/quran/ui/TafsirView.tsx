@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
+import { InternalLinkCard } from "@/components/ui/InternalCards";
 import {
   AlertTriangle,
   BookMarked,
@@ -200,27 +201,12 @@ export default function TafsirPage() {
         </div>
       </section>
 
-      <nav className="tf-cta" aria-label="مداخل سريعة">
-        <Link href="/mushaf" className="tf-cta__link">
-          <strong>المصحف الشريف</strong>
-          <span>اقرأ مع أدوات الاستكشاف</span>
-        </Link>
-        <Link href="/ulum-quran" className="tf-cta__link">
-          <strong>علوم القرآن</strong>
-          <span>النزول والجمع والإعجاز</span>
-        </Link>
-        <Link href="/lessons" className="tf-cta__link">
-          <strong>مسار التفسير</strong>
-          <span>تعلّم منظّم مرحلي</span>
-        </Link>
-        <Link href="/hadith-science" className="tf-cta__link">
-          <strong>علوم الحديث</strong>
-          <span>لتمييز الرواية في التفسير</span>
-        </Link>
-        <Link href="/quran-hub" className="tf-cta__link">
-          <strong>مركز القرآن الكريم</strong>
-          <span>بوابة أقسام القرآن</span>
-        </Link>
+      <nav className="tf-cta hub-card-grid" aria-label="مداخل سريعة">
+        <InternalLinkCard href="/mushaf" title="المصحف الشريف" description="اقرأ مع أدوات الاستكشاف" className="tf-cta__link" />
+        <InternalLinkCard href="/ulum-quran" title="علوم القرآن" description="النزول والجمع والإعجاز" className="tf-cta__link" />
+        <InternalLinkCard href="/lessons" title="مسار التفسير" description="تعلّم منظّم مرحلي" className="tf-cta__link" />
+        <InternalLinkCard href="/hadith-science" title="علوم الحديث" description="لتمييز الرواية في التفسير" className="tf-cta__link" />
+        <InternalLinkCard href="/quran-hub" title="مركز القرآن الكريم" description="بوابة أقسام القرآن" className="tf-cta__link" />
       </nav>
 
       <section className="tf-section tf-mushaf-section" aria-labelledby="tf-mushaf-title">
@@ -236,16 +222,16 @@ export default function TafsirPage() {
         </p>
         <div className="tf-editions-grid">
           {MUSHAF_TAFSIR_EDITIONS.map((ed) => (
-            <article key={ed.id} className="tf-edition-card">
+            <Link key={ed.id} href="/mushaf" className="tf-edition-card" aria-label={`افتح ${ed.label} في المصحف`}>
               <div className="tf-edition-card__level">{ed.level}</div>
               <h3>{ed.label}</h3>
               <p className="tf-edition-card__author">{ed.author}</p>
               {ed.caution ? <p className="tf-edition-card__caution">{ed.caution}</p> : null}
-              <Link href="/mushaf" className="tf-inline-link">
+              <span className="tf-inline-link" aria-hidden="true">
                 افتح في المصحف
                 <ChevronLeft size={14} aria-hidden />
-              </Link>
-            </article>
+              </span>
+            </Link>
           ))}
         </div>
       </section>
@@ -453,7 +439,7 @@ export default function TafsirPage() {
           <ShieldCheck size={18} aria-hidden />
           <h2 className="tf-related__title">أكمل رحلتك</h2>
         </div>
-        <div className="tf-related__grid">
+        <div className="tf-related__grid hub-card-grid">
           {[
             { href: "/quran-hub", label: "مركز القرآن الكريم" },
             { href: "/mushaf", label: "المصحف" },
@@ -465,9 +451,7 @@ export default function TafsirPage() {
             { href: "/lessons", label: "مسار التفسير" },
             { href: "/tafsir", label: "علم التفسير" },
           ].map(({ href, label }) => (
-            <Link key={href} href={href} className="tf-related__link">
-              {label}
-            </Link>
+            <InternalLinkCard key={href} href={href} title={label} variant="compact" className="tf-related__link" />
           ))}
         </div>
       </section>

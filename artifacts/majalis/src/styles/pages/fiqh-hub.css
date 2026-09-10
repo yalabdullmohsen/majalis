@@ -2376,3 +2376,23 @@ html.dark .fiqh-report,html[data-theme="dark"] .fiqh-report{background:color-mix
   border-radius: var(--radius-card, 24px) !important;
   min-height: 10.5rem;
 }
+
+
+/* موجة 3 — بطاقات الفصول/المسائل بهوية موحّدة */
+.ve-chapter-card.hub-card,
+.ve-chapter-card.internal-link-card,
+.fiqh-lux-chapter__head.hub-card,
+.fiqh-lux-lesson-link.hub-card {
+  display: flex;
+  width: 100%;
+  text-align: inherit;
+}
+.ve-lesson-list.hub-card-grid,
+.fiqh-lux-chapter-list.hub-card-grid,
+.fiqh-lux-lesson-list.hub-card-grid {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}

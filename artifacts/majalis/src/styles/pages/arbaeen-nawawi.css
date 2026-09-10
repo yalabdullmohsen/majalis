@@ -72,7 +72,7 @@
 .an-card__today-badge { font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: var(--ds-radius-full); background: var(--majalis-emerald); color: #FFFFFF; flex-shrink: 0; }
 .an-card__text { font-size: 0.85rem; line-height: 1.8; color: var(--mj-ink-2); font-family: var(--font-quran, serif); border: none; padding: 0; margin: 0 0 0.6rem; }
 .an-card__expl { font-size: 0.8rem; line-height: 1.7; color: #4b5563; border-inline-start: 2px solid #d1fae5; padding-inline-start: 0.7rem; margin-bottom: 0.6rem; }
-.an-card__benefit { display: flex; gap: var(--ds-space-2); font-size: 0.78rem; color: var(--mj-brand); background: #ecfdf5; border-radius: 16px; padding: 0.5rem 0.7rem; margin-bottom: 0.6rem; align-items: flex-start; }
+.an-card__benefit { display: flex; gap: var(--ds-space-2); font-size: 0.78rem; color: var(--mj-brand); background: #ecfdf5; border-radius: var(--radius-card, 22px); padding: 0.5rem 0.7rem; margin-bottom: 0.6rem; align-items: flex-start; }
 .an-card__benefit-label { font-weight: 700; flex-shrink: 0; color: var(--mj-brand); }
 .an-card__footer { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; flex-wrap: wrap; }
 .an-card__source { font-size: 0.8rem; color: #9ca3af; }
@@ -234,7 +234,7 @@
   font-size: 0.78rem;
   color: var(--mj-brand-deep, var(--brand-deep, var(--mj-brand-deep)));
   background: color-mix(in srgb, var(--mj-brand, #173d35) 7%, transparent);
-  border-radius: 16px;
+  border-radius: var(--radius-card, 22px);
   padding: 0.45rem 0.6rem;
   margin-bottom: 0.55rem;
 }

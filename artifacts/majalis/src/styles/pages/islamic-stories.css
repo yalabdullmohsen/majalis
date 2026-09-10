@@ -476,3 +476,37 @@ html.dark .isp-chip.is-active,
 .isp-filter-chips .isp-chip.ds-btn--ghost:not(.ds-btn--primary) {
   /* يحتفظ بمظهر isp-chip إن وُجد */
 }
+
+
+.isp-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.isp-card__hit {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  padding: inherit;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+  border-radius: inherit;
+}
+.isp-card__hit:focus-visible {
+  outline: 2px solid var(--mj-brand, #1f6b56);
+  outline-offset: 3px;
+}
+.isp-card__admin {
+  position: absolute;
+  inset-block-start: 0.55rem;
+  inset-inline-end: 0.55rem;
+  z-index: 2;
+}

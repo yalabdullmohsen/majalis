@@ -1,4 +1,5 @@
-import { Link, useLocation } from "wouter";
+import { useLocation } from "wouter";
+import { InternalLinkCard } from "@/components/ui/InternalCards";
 import "@/styles/pages/fiqh-guide.css";
 import type { ExploreAlsoLink } from "@/lib/explore-link-types";
 
@@ -39,11 +40,15 @@ export function ExploreAlsoNav({
   return (
     <nav className="fg-related" aria-label={ariaLabel}>
       <h2 className="fg-related__title">{title}</h2>
-      <div className="fg-related__grid">
+      <div className="fg-related__grid hub-card-grid">
         {filtered.map((g) => (
-          <Link key={`${g.href}::${g.label}`} href={g.href} className="fg-related__link">
-            {g.label}
-          </Link>
+          <InternalLinkCard
+            key={`${g.href}::${g.label}`}
+            href={g.href}
+            title={g.label}
+            variant="compact"
+            className="fg-related__link"
+          />
         ))}
       </div>
     </nav>

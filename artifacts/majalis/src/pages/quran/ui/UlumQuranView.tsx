@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
+import { InternalLinkCard } from "@/components/ui/InternalCards";
 import "@/styles/pages/ulum-quran.css";
 
 
@@ -482,15 +483,16 @@ export default function UlumQuranPage() {
             <p className="uq-lead">
               أبواب مكمّلة لعلوم القرآن: آداب التلاوة، والوقف والابتداء، ورسم المصحف، وغريب الألفاظ — باختصار منهجي بلا إسرائيليات ولا دعاوى عددية.
             </p>
-            <div className="uq-qiraat-usul">
+            <div className="uq-qiraat-usul hub-card-grid">
               {ADAWAT_CARDS.map((c) => (
-                <div key={c.title} className="uq-usul-card">
-                  <h3 className="uq-usul-card__title">{c.title}</h3>
-                  <p className="uq-usul-card__desc">{c.desc}</p>
-                  <p className="uq-usul-card__desc" style={{ marginTop: "0.5rem" }}>
-                    <a href={c.href} className="uq-related__link">{c.linkLabel} ←</a>
-                  </p>
-                </div>
+                <InternalLinkCard
+                  key={c.title}
+                  href={c.href}
+                  title={c.title}
+                  description={c.desc}
+                  meta={c.linkLabel}
+                  className="uq-usul-card"
+                />
               ))}
             </div>
           </div>
@@ -503,7 +505,7 @@ export default function UlumQuranPage() {
         {/* related */}
         <nav className="uq-related" aria-label="صفحات ذات صلة">
           <h2 className="uq-related__title">استكشف أيضاً</h2>
-          <div className="uq-related__grid">
+          <div className="uq-related__grid hub-card-grid">
             {[
               { href: "/quran-knowledge", label: "القرآن وعلومه" },
               { href: "/mushaf", label: "المصحف" },
@@ -512,7 +514,7 @@ export default function UlumQuranPage() {
               { href: "/quran-hub/tajweed", label: "علم التجويد" },
               { href: "/duas-quran", label: "أدعية القرآن" },
             ].map((r) => (
-              <a key={r.href} href={r.href} className="uq-related__link">{r.label}</a>
+              <InternalLinkCard key={r.href} href={r.href} title={r.label} variant="compact" className="uq-related__link" />
             ))}
           </div>
         </nav>

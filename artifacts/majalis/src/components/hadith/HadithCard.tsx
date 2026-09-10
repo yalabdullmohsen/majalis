@@ -120,9 +120,79 @@ export function HadithCard({ item: h, onExpand, detailHref }: Props) {
   return (
     <article
       id={h.id}
-      className="hadith-card ui-card"
+      className="hadith-card ui-card hadith-card--pressable"
       data-testid="hadith-card"
     >
+      {href ? (
+        <Link href={href} className="hadith-card__hit" aria-label={ariaLabel}>
+          <HadithCardBody
+            h={h}
+            preview={preview}
+            source={source}
+            category={category}
+            takhrijShort={takhrijShort}
+            compRef={compRef}
+          />
+          <span className="hadith-card__read-more" aria-hidden="true">قراءة المزيد</span>
+        </Link>
+      ) : (
+        <button
+          type="button"
+          className="hadith-card__hit"
+          aria-label={ariaLabel}
+          onClick={() => onExpand(h)}
+        >
+          <HadithCardBody
+            h={h}
+            preview={preview}
+            source={source}
+            category={category}
+            takhrijShort={takhrijShort}
+            compRef={compRef}
+          />
+          <span className="hadith-card__read-more" aria-hidden="true">قراءة المزيد</span>
+        </button>
+      )}
+      <div className="hadith-card__actions hadith-card__actions--tools">
+        <button
+          type="button"
+          className={`hadith-action-btn ${saved ? "hadith-action-btn--active" : ""}`}
+          onClick={handleSave}
+          aria-label={saved ? "إزالة من المفضلة" : "حفظ في المفضلة"}
+          title={saved ? "محفوظ" : "حفظ"}
+        >
+          <Star size={16} strokeWidth={2} className={saved ? "icon-star--filled" : undefined} aria-hidden="true" />
+        </button>
+        <Link
+          href={`/contact?topic=${encodeURIComponent(reportTopic)}`}
+          className="hadith-action-btn hadith-action-btn--link"
+          aria-label="بلاغ عن خطأ في المحتوى"
+          title="بلاغ"
+        >
+          <Flag size={16} strokeWidth={2} aria-hidden="true" />
+        </Link>
+      </div>
+    </article>
+  );
+}
+
+function HadithCardBody({
+  h,
+  preview,
+  source,
+  category,
+  takhrijShort,
+  compRef,
+}: {
+  h: HadithRecord;
+  preview: string;
+  source: string;
+  category: string;
+  takhrijShort: string | null;
+  compRef: string | undefined;
+}) {
+  return (
+    <>
       <header className="hadith-card__header">
         <div className="hadith-card__badges">
           {h.collection ? (
@@ -173,44 +243,6 @@ export function HadithCard({ item: h, onExpand, detailHref }: Props) {
           ))}
         </div>
       ) : null}
-
-      <div className="hadith-card__actions">
-        {href ? (
-          <Link
-            href={href}
-            className="hadith-card__read-more mj-pressable"
-            aria-label={ariaLabel}
-          >
-            قراءة المزيد
-          </Link>
-        ) : (
-          <button
-            type="button"
-            className="hadith-card__read-more mj-pressable"
-            onClick={() => onExpand(h)}
-            aria-label={ariaLabel}
-          >
-            قراءة المزيد
-          </button>
-        )}
-        <button
-          type="button"
-          className={`hadith-action-btn ${saved ? "hadith-action-btn--active" : ""}`}
-          onClick={handleSave}
-          aria-label={saved ? "إزالة من المفضلة" : "حفظ في المفضلة"}
-          title={saved ? "محفوظ" : "حفظ"}
-        >
-          <Star size={16} strokeWidth={2} className={saved ? "icon-star--filled" : undefined} aria-hidden="true" />
-        </button>
-        <Link
-          href={`/contact?topic=${encodeURIComponent(reportTopic)}`}
-          className="hadith-action-btn hadith-action-btn--link"
-          aria-label="بلاغ عن خطأ في المحتوى"
-          title="بلاغ"
-        >
-          <Flag size={16} strokeWidth={2} aria-hidden="true" />
-        </Link>
-      </div>
-    </article>
+    </>
   );
 }

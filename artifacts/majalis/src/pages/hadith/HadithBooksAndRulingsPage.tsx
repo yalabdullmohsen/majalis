@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { Link } from "wouter";
-import { ArrowLeft, FileText, Gavel, Landmark, Scale } from "lucide-react";
+import { FileText, Gavel, Landmark, Scale } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { PageHeader } from "@/components/ui-common";
+import { SectionEntryCard } from "@/components/ui/InternalCards";
 
 /**
  * "المتون الحديثية وأحاديث الأحكام" — تصنيف أوسع يجمع الأربعين النووية (المحتوى القائم،
@@ -35,53 +35,39 @@ export default function HadithBooksAndRulingsPage() {
         subtitle="الأربعون النووية متاحة بمادتها المعتمدة؛ ولا يُنشر متن أو حكم على حديث في بقية الكتب حتى اعتماد مصدر موثوق ومراجعة علمية."
       />
 
-      <div className="hadith-index-grid">
-        <Link href="/arbaeen-nawawi" className="hadith-index-card hadith-index-card--books">
-          <span className="hadith-index-card__icon" aria-hidden="true">
-            <FileText size={22} strokeWidth={2} color="#fff" />
-          </span>
-          <h2 className="hadith-index-card__title">الأربعون النووية</h2>
-          <p className="hadith-index-card__desc">
-            الأحاديث الأربعون التي جمعها الإمام النووي، مع شرح لكل حديث وتتبّع تقدّمك في حفظها.
-          </p>
-          <span className="hadith-index-card__count">٤٢ حديثاً</span>
-          <span className="hadith-index-card__go">
-            تصفّح الأربعين <ArrowLeft size={16} aria-hidden="true" />
-          </span>
-        </Link>
-
-        <div className="hadith-index-card hadith-index-card--soon" aria-disabled="true">
-          <span className="hadith-index-card__icon" aria-hidden="true">
-            <Scale size={22} strokeWidth={2} color="var(--mj-brand)" />
-          </span>
-          <h2 className="hadith-index-card__title">عمدة الأحكام</h2>
-          <p className="hadith-index-card__desc">
-            جمع الإمام عبد الغني المقدسي للأحاديث المتفق عليها بين البخاري ومسلم في الأحكام الفقهية.
-          </p>
-          <span className="hadith-index-card__count">بانتظار مصدر معتمد</span>
-        </div>
-
-        <div className="hadith-index-card hadith-index-card--soon" aria-disabled="true">
-          <span className="hadith-index-card__icon" aria-hidden="true">
-            <Gavel size={22} strokeWidth={2} color="var(--mj-brand)" />
-          </span>
-          <h2 className="hadith-index-card__title">بلوغ المرام</h2>
-          <p className="hadith-index-card__desc">
-            جمع الحافظ ابن حجر العسقلاني لأحاديث الأحكام مع بيان درجتها، من أشهر مراجع فقه الحديث.
-          </p>
-          <span className="hadith-index-card__count">بانتظار مصدر معتمد</span>
-        </div>
-
-        <div className="hadith-index-card hadith-index-card--soon" aria-disabled="true">
-          <span className="hadith-index-card__icon" aria-hidden="true">
-            <Landmark size={22} strokeWidth={2} color="var(--mj-brand)" />
-          </span>
-          <h2 className="hadith-index-card__title">المنتقى من أخبار المصطفى ﷺ</h2>
-          <p className="hadith-index-card__desc">
-            جمع مجد الدين ابن تيمية (جدّ شيخ الإسلام) لأحاديث الأحكام مرتّبة على أبواب الفقه.
-          </p>
-          <span className="hadith-index-card__count">بانتظار مصدر معتمد</span>
-        </div>
+      <div className="hadith-index-grid hub-card-grid">
+        <SectionEntryCard
+          href="/arbaeen-nawawi"
+          title="الأربعون النووية"
+          description="الأحاديث الأربعون التي جمعها الإمام النووي، مع شرح لكل حديث وتتبّع تقدّمك في حفظها."
+          meta="٤٢ حديثاً"
+          Icon={FileText}
+          className="hadith-index-card hadith-index-card--books"
+        />
+        <SectionEntryCard
+          title="عمدة الأحكام"
+          description="جمع الإمام عبد الغني المقدسي للأحاديث المتفق عليها بين البخاري ومسلم في الأحكام الفقهية."
+          meta="بانتظار مصدر معتمد"
+          Icon={Scale}
+          disabled
+          className="hadith-index-card hadith-index-card--soon"
+        />
+        <SectionEntryCard
+          title="بلوغ المرام"
+          description="جمع الحافظ ابن حجر العسقلاني لأحاديث الأحكام مع بيان درجتها، من أشهر مراجع فقه الحديث."
+          meta="بانتظار مصدر معتمد"
+          Icon={Gavel}
+          disabled
+          className="hadith-index-card hadith-index-card--soon"
+        />
+        <SectionEntryCard
+          title="المنتقى من أخبار المصطفى ﷺ"
+          description="جمع مجد الدين ابن تيمية (جدّ شيخ الإسلام) لأحاديث الأحكام مرتّبة على أبواب الفقه."
+          meta="بانتظار مصدر معتمد"
+          Icon={Landmark}
+          disabled
+          className="hadith-index-card hadith-index-card--soon"
+        />
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
+import { InternalLinkCard } from "@/components/ui/InternalCards";
 import { BookOpen, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -1167,7 +1168,7 @@ export default function HadithSciencePage() {
             { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
             { href: "/islamic-glossary", label: "المصطلحات الشرعية" },
           ].map(({ href, label }) => (
-            <Link key={href} href={href} className="hs-related__link">{label}</Link>
+            <InternalLinkCard key={href} href={href} title={label} variant="compact" className="hs-related__link" />
           ))}
         </div>
       </section>
