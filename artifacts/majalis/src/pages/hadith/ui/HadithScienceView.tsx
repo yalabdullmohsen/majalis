@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { InternalLinkCard } from "@/components/ui/InternalCards";
+import { FAQBox, RelatedLinksBox, SourceBox } from "@/components/content/ContentReading";
 import { BookOpen, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -1124,54 +1124,53 @@ export default function HadithSciencePage() {
         <ShareButtons title="علوم الحديث — سُنّة" url="https://www.ssunnah.com/hadith-science" />
       </div>
 
-      {/* مصادر للمزيد */}
-      <section className="hs-related" aria-labelledby="hs-faq-title">
-        <h2 id="hs-faq-title" className="hs-related__title">أسئلة مختصرة</h2>
-        <div className="hs-related__grid">
-          <article className="hs-card">
-            <h3 className="hs-card__term">ما الفرق بين الصحيح والحسن؟</h3>
-            <p className="hs-card__def">
-              كلاهما مقبول يُحتج به؛ الفرق في درجة ضبط الرواة: الصحيح تام الضبط، والحسن خفيف الضبط مع اتصال السند وانتفاء الشذوذ والعلة.
-            </p>
-          </article>
-          <article className="hs-card">
-            <h3 className="hs-card__term">هل يُعمل بالحديث الضعيف؟</h3>
-            <p className="hs-card__def">
-              على منهج هذه المنصة: لا يُحتج به في العقائد ولا الأحكام ولا الترغيب؛ يُستغنى بالثابت، ويُعرض الضعيف هنا للتخريج والتمييز فقط.
-            </p>
-          </article>
-          <article className="hs-card">
-            <h3 className="hs-card__term">أين أقرأ أمثلة عملية؟</h3>
-            <p className="hs-card__def">
-              تصفّح <Link href="/hadith/sahih">الصحيح</Link> و<Link href="/hadith/daif">الضعيف</Link> و
-              <Link href="/hadith/mawdu">الموضوع</Link>، مع <Link href="/arbaeen-nawawi">الأربعين النووية</Link> كمختصر عملي.
-            </p>
-          </article>
-          <article className="hs-card">
-            <h3 className="hs-card__term">مصادر أولية للطلبة</h3>
-            <p className="hs-card__def">
-              مقدمة ابن الصلاح، نخبة الفكر لابن حجر، وتيسير مصطلح الحديث للطحان — مع الرجوع لأهل الاختصاص عند الإشكال دون الاكتفاء بالمختصرات وحدها.
-            </p>
-          </article>
-        </div>
-      </section>
+      <FAQBox
+        title="أسئلة مختصرة"
+        items={[
+          {
+            q: "ما الفرق بين الصحيح والحسن؟",
+            a: "كلاهما مقبول يُحتج به؛ الفرق في درجة ضبط الرواة: الصحيح تام الضبط، والحسن خفيف الضبط مع اتصال السند وانتفاء الشذوذ والعلة.",
+          },
+          {
+            q: "هل يُعمل بالحديث الضعيف؟",
+            a: "على منهج هذه المنصة: لا يُحتج به في العقائد ولا الأحكام ولا الترغيب؛ يُستغنى بالثابت، ويُعرض الضعيف هنا للتخريج والتمييز فقط.",
+          },
+          {
+            q: "أين أقرأ أمثلة عملية؟",
+            a: (
+              <>
+                تصفّح <Link href="/hadith/sahih">الصحيح</Link> و<Link href="/hadith/daif">الضعيف</Link> و
+                <Link href="/hadith/mawdu">الموضوع</Link>، مع <Link href="/arbaeen-nawawi">الأربعين النووية</Link> كمختصر عملي.
+              </>
+            ),
+          },
+          {
+            q: "مصادر أولية للطلبة",
+            a: "مقدمة ابن الصلاح، نخبة الفكر لابن حجر، وتيسير مصطلح الحديث للطحان — مع الرجوع لأهل الاختصاص عند الإشكال دون الاكتفاء بالمختصرات وحدها.",
+          },
+        ]}
+      />
 
-      {/* مصادر للمزيد */}
-      <section className="hs-related">
-        <h2 className="hs-related__title">استكشف أيضاً</h2>
-        <div className="hs-related__grid">
-          {[
-            { href: "/hadith",         label: "الأحاديث النبوية" },
-            { href: "/hadith/sahih",   label: "الأحاديث الصحيحة" },
-            { href: "/hadith/daif",    label: "الأحاديث الضعيفة" },
-            { href: "/hadith/mawdu",   label: "الأحاديث الموضوعة" },
-            { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
-            { href: "/islamic-glossary", label: "المصطلحات الشرعية" },
-          ].map(({ href, label }) => (
-            <InternalLinkCard key={href} href={href} title={label} variant="compact" className="hs-related__link" />
-          ))}
-        </div>
-      </section>
+      <SourceBox
+        title="مصادر أولية"
+        sources={[
+          "علوم الحديث — ابن الصلاح",
+          "نزهة النظر شرح نخبة الفكر — ابن حجر",
+          "تيسير مصطلح الحديث — محمود الطحان",
+        ]}
+      />
+
+      <RelatedLinksBox
+        title="استكشف أيضاً"
+        links={[
+          { href: "/hadith", title: "الأحاديث النبوية" },
+          { href: "/hadith/sahih", title: "الأحاديث الصحيحة" },
+          { href: "/hadith/daif", title: "الأحاديث الضعيفة" },
+          { href: "/hadith/mawdu", title: "الأحاديث الموضوعة" },
+          { href: "/arbaeen-nawawi", title: "الأربعون النووية" },
+          { href: "/islamic-glossary", title: "المصطلحات الشرعية" },
+        ]}
+      />
       <RelatedKnowledge kind="hadith" query="مصطلح الحديث" title="مواد في علوم الحديث" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في علوم الحديث" count={4} />

@@ -4,6 +4,10 @@ import "@/styles/components/reading-section-card.css";
 export type ReadingSectionVariant =
   | "default"
   | "summary"
+  | "definition"
+  | "evidence"
+  | "quote"
+  | "faq"
   | "lessons"
   | "sources"
   | "related";

@@ -1,0 +1,259 @@
+/**
+ * غلاف قراءة موحّد — يرقّي الحاويات القديمة (.qr-section / .hs-card / .gl-term / .uq-*)
+ * إلى بطاقات ناعمة مقروءة دون إعادة كتابة كل صفحة.
+ */
+.cr-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-width: 42rem;
+  margin-inline: auto;
+  width: 100%;
+  padding-inline: 0.15rem;
+  padding-bottom: calc(0.75rem + var(--bottom-nav-height, 4.5rem));
+}
+
+.cr-note {
+  margin: 0;
+  padding: 0.9rem 1.05rem;
+  border-radius: var(--radius-card, 24px);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 7%, var(--ss-card-bg, #fffcf7));
+  color: var(--mj-ink, #16241e);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  font-weight: 550;
+}
+
+.cr-related-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .cr-related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.cr-faq {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cr-faq__item {
+  padding: 0.75rem 0.85rem;
+  border-radius: 18px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 4%, transparent);
+}
+
+.cr-faq__q {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
+  line-height: 1.4;
+}
+
+.cr-faq__a {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--mj-ink, #16241e);
+  font-weight: 500;
+}
+
+/* مصادر داخل بطاقة قراءة */
+.compact-sources--in-rsc {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.compact-sources--in-rsc .compact-sources__item,
+.compact-sources--in-rsc .compact-sources__text {
+  font-size: 0.86rem;
+  line-height: 1.65;
+  color: var(--mj-ink-2, #3d5349);
+  font-weight: 550;
+}
+
+/* ── ترقية الحاويات القديمة إلى بطاقة قراءة ── */
+.qr-section,
+.uq-section,
+.uq-dalil-box,
+.uq-info-box,
+.uq-fact-item,
+.hs-card,
+.gl-term,
+.tf-card,
+.content-detail-body > section,
+.mk-detail .mk-block,
+.tawheed-principle-card {
+  border-radius: var(--radius-card, 24px) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 16%, var(--ss-border, #d9d3c8)) !important;
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
+  box-shadow: 0 10px 26px -20px color-mix(in srgb, var(--mj-brand, #1f6b56) 35%, transparent) !important;
+  color: var(--mj-ink, #16241e) !important;
+}
+
+.qr-section,
+.uq-section,
+.hs-card__body,
+.gl-term__detail,
+.tawheed-principle-card {
+  padding: 1.05rem 1.15rem !important;
+}
+
+.qr-section h2,
+.uq-section h2,
+.hs-card__term,
+.gl-term__title,
+.tawheed-principle-card h2,
+.tawheed-principle-card h3 {
+  color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39)) !important;
+  font-weight: 800 !important;
+  opacity: 1 !important;
+}
+
+.qr-section p,
+.uq-section p,
+.hs-card__def,
+.hs-card__note,
+.gl-term__body,
+.gl-term__detail,
+.tawheed-principle-card p {
+  color: var(--mj-ink, #16241e) !important;
+  opacity: 1 !important;
+  line-height: 1.85 !important;
+  font-weight: 500 !important;
+}
+
+.qr-source,
+.gl-term__source,
+.hs-card__example,
+.uq-dalil-box,
+.content-detail-sources {
+  margin-top: 0.75rem !important;
+  padding: 0.7rem 0.85rem !important;
+  border-radius: 18px !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 7%, transparent) !important;
+  color: var(--mj-ink-2, #3d5349) !important;
+  font-size: 0.86rem !important;
+  line-height: 1.65 !important;
+  font-weight: 550 !important;
+  opacity: 1 !important;
+}
+
+.qr-source strong,
+.gl-term__source strong {
+  color: var(--mj-brand-deep, #0d4a39) !important;
+  font-weight: 800 !important;
+}
+
+.qr-related {
+  display: grid !important;
+  gap: 0.65rem !important;
+  grid-template-columns: 1fr !important;
+  margin-bottom: 0.5rem !important;
+}
+
+@media (min-width: 640px) {
+  .qr-related {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+.qr-related a {
+  display: flex !important;
+  align-items: center !important;
+  min-height: 3rem !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: var(--radius-card, 24px) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 16%, transparent) !important;
+  background: var(--ss-card-bg, #fffcf7) !important;
+  color: var(--mj-ink, #16241e) !important;
+  text-decoration: none !important;
+  font-weight: 700 !important;
+  box-shadow: 0 8px 20px -18px rgba(15, 40, 30, 0.2) !important;
+}
+
+.qr-note {
+  border-radius: var(--radius-card, 24px) !important;
+  color: var(--mj-ink, #16241e) !important;
+  font-weight: 550 !important;
+}
+
+html.dark .cr-note,
+html[data-theme="dark"] .cr-note,
+html.dark .qr-section,
+html.dark .uq-section,
+html.dark .uq-dalil-box,
+html.dark .uq-info-box,
+html.dark .hs-card,
+html.dark .gl-term,
+html.dark .tf-card,
+html.dark .tawheed-principle-card,
+html[data-theme="dark"] .qr-section,
+html[data-theme="dark"] .hs-card,
+html[data-theme="dark"] .gl-term {
+  background: var(--mj-surface, #1b2421) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+  color: var(--mj-ink, #e8efeb) !important;
+}
+
+html.dark .qr-section h2,
+html.dark .hs-card__term,
+html.dark .gl-term__title,
+html.dark .cr-faq__q,
+html[data-theme="dark"] .qr-section h2,
+html[data-theme="dark"] .hs-card__term {
+  color: #7ed4b5 !important;
+}
+
+html.dark .qr-section p,
+html.dark .hs-card__def,
+html.dark .gl-term__detail,
+html.dark .cr-faq__a,
+html.dark .cr-note,
+html[data-theme="dark"] .qr-section p,
+html[data-theme="dark"] .hs-card__def {
+  color: var(--mj-ink, #e8efeb) !important;
+}
+
+html.dark .qr-source,
+html.dark .gl-term__source,
+html.dark .hs-card__example,
+html.dark .content-detail-sources,
+html[data-theme="dark"] .qr-source {
+  background: color-mix(in srgb, var(--mj-brand, #5fbf98) 12%, #1b2421) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, transparent) !important;
+  color: var(--mj-ink-2, #c5d0cb) !important;
+}
+
+html.dark .qr-related a,
+html[data-theme="dark"] .qr-related a {
+  background: var(--mj-surface, #1b2421) !important;
+  color: var(--mj-ink, #e8efeb) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+}
+
+html.dark .cr-faq__item,
+html[data-theme="dark"] .cr-faq__item {
+  background: color-mix(in srgb, var(--mj-brand, #5fbf98) 10%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 24%, transparent);
+}
+
+html.dark .compact-sources--in-rsc .compact-sources__item,
+html.dark .compact-sources--in-rsc .compact-sources__text,
+html[data-theme="dark"] .compact-sources--in-rsc .compact-sources__item {
+  color: var(--mj-ink-2, #c5d0cb);
+}
