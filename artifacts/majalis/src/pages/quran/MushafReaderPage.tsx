@@ -11,6 +11,7 @@ import {
 import { loadReadingAyahKey, SURAH_START_PAGES } from "@/lib/quran-api";
 import { ayahKeyToPage } from "@/lib/quran-my-bookmarks";
 import { useNavigationPaintGate } from "@/hooks/useNavigationPaintGate";
+import { ScriptureScreen } from "@/components/design-system/screens";
 
 /**
  * مسار المصحف الحقيقي `/mushaf` — NewMushafReader (واجهة جديدة عبر alias MushafViewport)، بلا PDF.
@@ -64,12 +65,14 @@ export default function MushafReaderPage() {
   }
 
   return (
-    <MushafViewport
-      pageNumber={pageNumber}
-      onPageChange={(n) => navigateTo(`/mushaf?page=${clampMushafPage(n)}`, { mode: "state" })}
-      onExit={() => navigateTo("/quran-hub", { mode: "screen" })}
-      onIndex={() => navigateTo("/quran-hub", { mode: "screen" })}
-    />
+    <ScriptureScreen compose="mark">
+      <MushafViewport
+        pageNumber={pageNumber}
+        onPageChange={(n) => navigateTo(`/mushaf?page=${clampMushafPage(n)}`, { mode: "state" })}
+        onExit={() => navigateTo("/quran-hub", { mode: "screen" })}
+        onIndex={() => navigateTo("/quran-hub", { mode: "screen" })}
+      />
+    </ScriptureScreen>
   );
 }
 

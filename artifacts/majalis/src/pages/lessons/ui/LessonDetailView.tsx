@@ -18,6 +18,7 @@ import {
 } from "@/lib/unified-lesson-card";
 import { ShareButtons } from "@/components/ContentActions";
 import { LessonRecordingPlayer } from "@/components/lessons/LessonRecordingPlayer";
+import { DetailScreen } from "@/components/design-system/screens";
 import { cleanDisplayText } from "@/lib/display-text";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { formatShortLessonTime } from "@/lib/lesson-time";
@@ -275,6 +276,7 @@ export default function LessonDetailPage({
   const level = inferLessonLevel(unified.category);
 
   return (
+    <DetailScreen compose="mark">
     <div className="page-shell narrow lesson-detail-page mj-page">
       <ReadingProgressBar />
       <nav className="lesson-detail-breadcrumb" aria-label="مسار التصفح">
@@ -534,5 +536,6 @@ export default function LessonDetailPage({
         <SectionQuiz route="/lessons" title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
+    </DetailScreen>
   );
 }

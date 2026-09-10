@@ -35,6 +35,30 @@ export { LazyRouteFallback as RouteFallback, LazyRouteFallback } from "@/compone
 export { TopicPage as AppPage, SectionTemplatePage } from "@/components/topic/TopicPage";
 export { SectionHero } from "@/components/topic/SectionHero";
 export {
+  ScreenShell,
+  GridScreen,
+  ListScreen,
+  ReaderScreen,
+  ScriptureScreen,
+  PlayerScreen,
+  DetailScreen,
+  DashboardScreen,
+  UtilityScreen,
+  type ScreenShellProps,
+  type ScreenShellStatus,
+} from "./screens";
+
+export {
+  SS_SCREEN_PATTERNS,
+  SS_SCREEN_PATTERN_META,
+  SS_SCREEN_ROUTE_PATTERN,
+  isSsScreenPattern,
+  type SsScreenPattern,
+  type SsScreenDensity,
+  type SsScreenColumns,
+} from "@/lib/ssunnah-screen-patterns";
+
+export {
   ContentSection,
   DefinitionBox,
   EvidenceBox,

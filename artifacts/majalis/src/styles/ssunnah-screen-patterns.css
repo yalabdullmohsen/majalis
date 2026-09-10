@@ -1,0 +1,123 @@
+/**
+ * تخطيط أنماط الشاشات فقط — لا ألوان/خطوط جديدة.
+ * المسافات من --ss-space-* أو --spacing-mj-*؛ البطاقات عبر soft-card / AppCard.
+ */
+
+.ss-screen {
+  width: 100%;
+  min-width: 0;
+}
+
+.ss-screen__state {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--ss-space-3, var(--spacing-mj-3, 0.75rem));
+  padding-block: var(--ss-space-6, var(--spacing-mj-6, 1.5rem));
+}
+
+.ss-screen__skeleton {
+  height: 0.75rem;
+  border-radius: var(--ss-radius-md, var(--radius-mj-md, 12px));
+  background: color-mix(in srgb, var(--ss-color-muted, var(--mj-muted)) 18%, transparent);
+  animation: ss-screen-pulse 1.2s ease-in-out infinite;
+}
+
+.ss-screen__skeleton--short {
+  width: 62%;
+}
+
+.ss-screen__retry {
+  align-self: flex-start;
+  margin-top: var(--ss-space-2, var(--spacing-mj-2, 0.5rem));
+  padding: var(--ss-space-2, 0.5rem) var(--ss-space-4, 1rem);
+  border-radius: var(--ss-radius-md, var(--radius-mj-md, 12px));
+  border: 1px solid var(--ss-color-border, var(--mj-border, currentColor));
+  background: var(--ss-color-surface, var(--mj-surface, transparent));
+  color: var(--ss-color-fg, var(--mj-fg, inherit));
+  font: inherit;
+  cursor: pointer;
+}
+
+@keyframes ss-screen-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ss-screen__skeleton {
+    animation: none;
+  }
+}
+
+/* كثافة — مسافات فقط */
+.ss-screen--density-compact .ss-screen-grid,
+.ss-screen--density-compact .ss-screen-list,
+.ss-screen--density-compact .ss-screen-dashboard,
+.ss-screen--density-compact .ss-screen-utility {
+  gap: var(--ss-space-2, var(--spacing-mj-2, 0.5rem));
+}
+
+.ss-screen--density-regular .ss-screen-grid,
+.ss-screen--density-regular .ss-screen-list,
+.ss-screen--density-regular .ss-screen-dashboard {
+  gap: var(--ss-space-3, var(--spacing-mj-3, 0.75rem));
+}
+
+.ss-screen--density-comfortable .ss-screen-grid,
+.ss-screen--density-comfortable .ss-screen-list,
+.ss-screen--density-comfortable .ss-screen-reader,
+.ss-screen--density-comfortable .ss-screen-detail {
+  gap: var(--ss-space-4, var(--spacing-mj-4, 1rem));
+}
+
+.ss-screen-grid {
+  display: grid;
+  gap: var(--ss-space-3, var(--spacing-mj-3, 0.75rem));
+  grid-template-columns: 1fr;
+}
+
+.ss-screen-grid--2 {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 480px) {
+  .ss-screen-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.ss-screen-grid--1 {
+  grid-template-columns: 1fr;
+}
+
+.ss-screen-list,
+.ss-screen-dashboard,
+.ss-screen-detail,
+.ss-screen-player,
+.ss-screen-utility {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ss-space-3, var(--spacing-mj-3, 0.75rem));
+  min-width: 0;
+}
+
+.ss-screen-reader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ss-space-4, var(--spacing-mj-4, 1rem));
+  max-width: 42rem;
+  margin-inline: auto;
+  width: 100%;
+}
+
+/* المصحف: لا نقيّد عرض النص الشرعي — الغلاف فقط */
+.ss-screen-scripture {
+  width: 100%;
+  min-width: 0;
+}

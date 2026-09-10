@@ -8,6 +8,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ErrorState, Empty } from "@/components/ui-common";
 import { HarvestFeedPanel } from "@/components/lessons/HarvestFeedPanel";
 import { SectionLobby } from "@/components/lobby/SectionLobby";
+import { ListScreen } from "@/components/design-system/screens";
 import {
   ActiveFilters,
   FilterSheet,
@@ -562,6 +563,7 @@ export default function LessonsPage({
   );
 
   return (
+    <ListScreen compose="mark">
     <SectionLobby
       lobbyId="lessons"
       title={pageTitle}
@@ -740,5 +742,6 @@ export default function LessonsPage({
         <SectionQuiz route="/lessons" aria-label="اختبر معلوماتك في الدروس الشرعية" count={4} />
       </div>
     </SectionLobby>
+    </ListScreen>
   );
 }
