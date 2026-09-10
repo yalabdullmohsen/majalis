@@ -529,16 +529,13 @@ function ProphetDetailView({
   if (!p) {
     return (
       <div className="prophet-detail-lux prophet-not-found" data-prophets-shell="1">
-        <button type="button" className="prophet-lux-back" onClick={onBack}>
-          ← العودة للقائمة
-        </button>
         <p className="prophet-not-found__msg" role="status">
           لم يتم العثور على هذا المحتوى.
         </p>
         <p className="prophet-not-found__hint">تأكد من رابط النبي أو اختر من قائمة الأنبياء والرسل.</p>
-        <button type="button" className="prophet-lux-back" onClick={onBack}>
+        <Link href="/prophets" className="prophet-action-btn prophet-not-found__cta">
           عرض قائمة الأنبياء
-        </button>
+        </Link>
       </div>
     );
   }
@@ -569,7 +566,6 @@ function ProphetDetailView({
       </div>
 
       <div className="prophet-detail-lux__topbar">
-        <button type="button" className="prophet-lux-back" onClick={onBack}>← قائمة الأنبياء</button>
         <div className="prophet-detail-lux__actions">
           <button
             type="button"

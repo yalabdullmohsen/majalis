@@ -280,7 +280,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       } else if (snap.playerState === "loading" || snap.playerState === "buffering") {
         setAudioError(null);
         setIosAudioHint(null);
-        setAudioStatus("جاري التحميل");
+        setAudioStatus("تجهيز الصوت");
       } else if (snap.playerState === "playing") {
         setAudioError(null);
         setIosAudioHint(null);

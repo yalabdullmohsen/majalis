@@ -92,7 +92,7 @@ export function MushafAudioDock({
       : playerState === "paused"
         ? "متوقف"
         : loading
-          ? "جاري التحميل"
+          ? "تجهيز الصوت"
           : playerState === "ended"
             ? "انتهت التلاوة"
             : playerState === "error"

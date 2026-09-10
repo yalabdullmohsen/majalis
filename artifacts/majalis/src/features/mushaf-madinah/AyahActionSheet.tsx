@@ -126,7 +126,7 @@ export const AyahActionSheet = memo(function AyahActionSheet({
       : playerState === "paused"
         ? "استئناف التلاوة"
         : loading
-          ? "جاري التحميل…"
+          ? "تجهيز…"
           : "ابدأ التلاوة";
   const audioStateLabel =
     audioError || playerState === "error"
@@ -134,7 +134,7 @@ export const AyahActionSheet = memo(function AyahActionSheet({
       : playerState === "playing"
         ? "يعمل الآن"
         : loading
-          ? "جاري التحميل"
+          ? "تجهيز الصوت"
           : playerState === "paused"
             ? "متوقف"
             : "جاهز";
@@ -710,7 +710,7 @@ export const AyahActionSheet = memo(function AyahActionSheet({
                 {copyStatus}
               </p>
             ) : null}
-            {loading && !audioError ? <p className="mm-ayah-bar__loading" role="status">جاري التحميل…</p> : null}
+            {loading && !audioError ? <p className="mm-ayah-bar__loading" role="status">تجهيز…</p> : null}
             </div>
           </div>
         </div>
