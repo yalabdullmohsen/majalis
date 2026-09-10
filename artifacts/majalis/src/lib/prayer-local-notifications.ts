@@ -24,6 +24,7 @@ import {
   allPrayerNotificationIdsForWindow,
   dateISOInZone,
   friendlyAdhanNotificationKey,
+  logicalPrayerNotificationId,
   hashPrayerNotificationId,
 } from "@/lib/prayer-notification-ids";
 import {
@@ -94,7 +95,7 @@ type NativeNotif = {
     prayerAtMs: number;
     dateISO: string;
     /** adhan-fajr-yyyy-mm-dd — للتشخيص؛ id الرقمي لـ Capacitor */
-    friendlyKey: string;
+    friendlyKey: string; logicalId: string;
   };
 };
 
@@ -309,6 +310,7 @@ export async function schedulePrayerNativeNotifications(opts: {
           prayerAtMs: opts.prayerTimeEpochMs,
           dateISO: opts.dateISO,
           friendlyKey: friendlyAdhanNotificationKey(opts.prayerKey, opts.dateISO, "pre"),
+        logicalId: logicalPrayerNotificationId(opts.prayerKey, opts.dateISO, "pre", opts.preAlertMinutes),
         },
       });
       scheduled.push({ id, kind: "pre", atMs: preAlertEpoch });
@@ -338,6 +340,7 @@ export async function schedulePrayerNativeNotifications(opts: {
           prayerAtMs: opts.prayerTimeEpochMs,
           dateISO: opts.dateISO,
           friendlyKey: friendlyAdhanNotificationKey(opts.prayerKey, opts.dateISO, "enter"),
+        logicalId: logicalPrayerNotificationId(opts.prayerKey, opts.dateISO, "enter"),
         },
       });
       scheduled.push({ id, kind: "enter", atMs: opts.prayerTimeEpochMs });
@@ -367,6 +370,7 @@ export async function schedulePrayerNativeNotifications(opts: {
           prayerAtMs: opts.prayerTimeEpochMs,
           dateISO: opts.dateISO,
           friendlyKey: friendlyAdhanNotificationKey(opts.prayerKey, opts.dateISO, "post"),
+        logicalId: logicalPrayerNotificationId(opts.prayerKey, opts.dateISO, "post"),
         },
       });
       scheduled.push({ id, kind: "post", atMs: postEpoch });
@@ -405,6 +409,7 @@ export async function schedulePrayerNativeNotifications(opts: {
           prayerAtMs: opts.prayerTimeEpochMs,
           dateISO: opts.dateISO,
           friendlyKey: friendlyAdhanNotificationKey(opts.prayerKey, opts.dateISO, "iqamah"),
+        logicalId: logicalPrayerNotificationId(opts.prayerKey, opts.dateISO, "iqamah"),
         },
       });
       scheduled.push({ id, kind: "iqamah", atMs: iqamahEpoch });
@@ -427,21 +432,23 @@ export async function schedulePrayerNativeNotifications(opts: {
 /** قائمة معلّقات الصلاة للتشخيص (عدد + عيّنة friendlyKey/sound). */
 export async function listPendingPrayerNotifications(): Promise<{
   count: number;
-  items: Array<{ id: number; at: string | null; sound: string | null; friendlyKey: string | null; kind: string | null }>;
+  items: Array<{ id: number; at: string | null; sound: string | null; friendlyKey: string | null; logicalId: string | null; kind: string | null; prayerKey: string | null }>;
 }> {
   if (!isNative) return { count: 0, items: [] };
   try {
     const { LocalNotifications } = await import("@capacitor/local-notifications");
     const { notifications } = await LocalNotifications.getPending();
     const items = notifications.map((n) => {
-      const extra = (n.extra ?? {}) as { friendlyKey?: string; kind?: string };
+      const extra = (n.extra ?? {}) as { friendlyKey?: string; logicalId?: string; kind?: string; prayerKey?: string };
       const raw = n as { sound?: unknown };
       return {
         id: n.id,
         at: n.schedule?.at ? new Date(n.schedule.at).toISOString() : null,
         sound: typeof raw.sound === "string" ? raw.sound : null,
         friendlyKey: extra.friendlyKey ?? null,
+        logicalId: extra.logicalId ?? null,
         kind: extra.kind ?? null,
+        prayerKey: extra.prayerKey ?? null,
       };
     });
     return { count: items.length, items };

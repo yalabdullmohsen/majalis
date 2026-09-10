@@ -82,3 +82,18 @@ assert.match(adhanSched, /NATIVE_ALERTS_OWN_AUDIO_V1/);
 assert.match(adhanSched, /loadPrayerAlertPrefs/);
 
 console.log("prayer-engine-p0-gate.test.ts: ok");
+
+
+// ── مصالحة موحّدة ──
+{
+  const sched = read("src/lib/prayer-notification-scheduler.ts");
+  assert.match(sched, /planPrayerNotificationReconcile/);
+  assert.match(sched, /withPrayerScheduleLock/);
+  assert.match(sched, /validateDesiredAgainstPending/);
+  assert.match(sched, /computeSafeScheduleDayWindow/);
+  const ids = read("src/lib/prayer-notification-ids.ts");
+  assert.match(ids, /logicalPrayerNotificationId/);
+  assert.match(ids, /prayer\.\$\{pk\}\.\$\{dateISO\}\.entry|prayer\.\$\{pk\}\.\$\{dateISO\}\.entry/);
+  assert.match(ids, /prayer\./);
+  console.log("  ✓ notification scheduler reconcile API");
+}

@@ -184,7 +184,7 @@
     "test:ios-notifications": "node scripts/test-ios-notifications.mjs",
     "diagnose:prayer-times": "node --import tsx scripts/diagnose-prayer-times.mjs",
     "test:prayer-notif-timing": "node --import tsx src/lib/__tests__/prayer-notif-timing.test.ts",
-    "test:prayer-engine-p0": "node --import tsx src/lib/__tests__/prayer-engine-p0-gate.test.ts",
+    "test:prayer-engine-p0": "node --import tsx src/lib/__tests__/prayer-engine-p0-gate.test.ts && pnpm run test:prayer-notification-scheduler",
     "test:ios-stability": "node --import tsx src/lib/__tests__/ios-stability-audit.test.ts",
     "audit:audio": "node scripts/audit-audio.mjs",
     "audit:audio:quick": "AUDIT_AUDIO_MODE=quick node scripts/audit-audio.mjs",
@@ -200,7 +200,7 @@
     "test:adhan-ios-segments": "node --import tsx src/lib/__tests__/adhan-muezzin-library.test.ts && node --import tsx src/lib/__tests__/adhan-ios-segments.test.ts",
     "test:adhan-smart-cancel": "node --import tsx src/lib/__tests__/adhan-smart-cancel.test.ts",
     "test:adhan-apple-precision": "node --import tsx src/lib/__tests__/adhan-apple-precision.test.ts",
-    "test:adhan-settings-prefs": "node --import tsx src/lib/__tests__/adhan-settings-prefs.test.ts && node --import tsx src/lib/__tests__/adhan-settings-ui.test.ts && node --import tsx src/lib/__tests__/adhan-help-page.test.ts && node --import tsx src/lib/__tests__/adhan-apple-precision.test.ts && node --import tsx src/lib/__tests__/adhan-featured-styles.test.ts && node --import tsx src/lib/__tests__/adhan-scheduler-iqamah-gate.test.ts && node --import tsx src/lib/__tests__/prayer-ticker-copy.test.ts && node --import tsx src/lib/__tests__/release-lockdown-gate.test.ts && pnpm run test:prayer-engine-p0",
+    "test:adhan-settings-prefs": "node --import tsx src/lib/__tests__/adhan-settings-prefs.test.ts && node --import tsx src/lib/__tests__/adhan-settings-ui.test.ts && node --import tsx src/lib/__tests__/adhan-help-page.test.ts && node --import tsx src/lib/__tests__/adhan-apple-precision.test.ts && node --import tsx src/lib/__tests__/adhan-featured-styles.test.ts && node --import tsx src/lib/__tests__/adhan-scheduler-iqamah-gate.test.ts && node --import tsx src/lib/__tests__/prayer-ticker-copy.test.ts && node --import tsx src/lib/__tests__/release-lockdown-gate.test.ts && pnpm run test:prayer-engine-p0 && pnpm run test:prayer-notification-scheduler",
     "test:adhan-bundle-sounds": "node --import tsx src/lib/__tests__/adhan-bundle-sounds.test.ts && node --import tsx src/lib/__tests__/adhan-offline-assets.test.ts && node --import tsx src/lib/__tests__/adhan-ios-bundle-resources.test.ts && node --import tsx src/lib/__tests__/adhan-audio-service.test.ts && node --import tsx src/lib/__tests__/release-lockdown-gate.test.ts",
     "adhan:normalize": "node scripts/adhan-audio/normalize-adhan-loudness.mjs",
     "generate:adhan-bundle": "node scripts/adhan-audio/generate-adhan-bundle.mjs",
@@ -519,7 +519,8 @@
     "test:security-ui-hardening": "node --import tsx src/lib/__tests__/security-ui-hardening-gate.test.ts",
     "test:boot-cold-start": "playwright test tests/boot-cold-start-smoke.spec.ts --project=mobile",
     "test:mushaf-page-flip-stability": "playwright test tests/mushaf-page-flip-stability.spec.ts --project=mobile",
-    "test:section-entry-card": "node --import tsx src/lib/__tests__/section-entry-card-gate.test.ts"
+    "test:section-entry-card": "node --import tsx src/lib/__tests__/section-entry-card-gate.test.ts",
+    "test:prayer-notification-scheduler": "node --import tsx src/lib/__tests__/prayer-notification-scheduler.test.ts"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

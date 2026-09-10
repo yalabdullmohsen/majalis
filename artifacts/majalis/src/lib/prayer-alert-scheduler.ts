@@ -36,6 +36,7 @@ import {
   hashPrayerNotificationId,
   type PrayerNotifIdKind,
 } from "./prayer-notification-ids";
+import { withPrayerScheduleLock } from "./prayer-notification-scheduler";
 import { startPrayerLiveActivity, markPrayerLiveActivityEntered, endPrayerLiveActivity } from "./plugins/prayer-live-activity";
 import type { PrayerSoundProfile } from "./prayer-notification-sounds";
 import { PRAYER_ALERT_EVENT_NAME, type PrayerAlertEvent } from "./prayer-alert-events";
@@ -267,7 +268,27 @@ async function rescheduleAllNativePrayers(
   }
 
   const pending = await listPendingPrayerNotifications();
-  console.info("[adhan/debug] pending after reschedule", {
+  
+  {
+    const pendingList = await listPendingPrayerNotifications();
+    let verified = 0;
+    for (const e of expected) {
+      const hit = pendingList.items.find((p) => {
+        if (!p.at) return false;
+        const at = Date.parse(p.at);
+        return Number.isFinite(at) && Math.abs(at - e.atMs) <= 60_000;
+      });
+      if (hit) verified += 1;
+    }
+    if (expected.length > 0 && verified !== expected.length) {
+      console.error("[prayer-alert] verification mismatch", {
+        expected: expected.length,
+        verified,
+      });
+    }
+  }
+
+console.info("[adhan/debug] pending after reschedule", {
     count: pending.count,
     items: pending.items.map((i) => ({
       id: i.id,
@@ -331,7 +352,9 @@ export async function startPrayerAlertScheduler(
   if (opts?.forceNativeReschedule || batchSig !== _lastScheduleSig) {
     _lastScheduleSig = batchSig;
     try {
-      await rescheduleAllNativePrayers(slots, prefs);
+      await withPrayerScheduleLock(async () => {
+        await rescheduleAllNativePrayers(slots, prefs);
+      });
       const { savePrayerScheduleStatus } = await import("./prayer-schedule-status");
       savePrayerScheduleStatus({
         ok: true,

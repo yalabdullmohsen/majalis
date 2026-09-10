@@ -74,3 +74,51 @@ export function dateISOInZone(timeZone: string, date = new Date()): string {
     }).format(date);
   }
 }
+
+
+/**
+ * معرّف منطقي ثابت قابل للتحليل (ليس UUID):
+ *   prayer.{prayerId}.{localDate}.{type}
+ *   prayer.{prayerId}.{localDate}.pre.{minutes}
+ * type: entry | iqamah | post | pre
+ */
+export function logicalPrayerNotificationId(
+  prayerKey: string,
+  dateISO: string,
+  kind: PrayerNotifIdKind,
+  preMinutes?: number,
+): string {
+  const pk = prayerKey.toLowerCase().replace(/^prayer-/, "");
+  if (kind === "enter") return `prayer.${pk}.${dateISO}.entry`;
+  if (kind === "pre") {
+    const m = typeof preMinutes === "number" && preMinutes > 0 ? preMinutes : 0;
+    return `prayer.${pk}.${dateISO}.pre.${m}`;
+  }
+  if (kind === "iqamah") return `prayer.${pk}.${dateISO}.iqamah`;
+  return `prayer.${pk}.${dateISO}.post`;
+}
+
+export function parseLogicalPrayerNotificationId(id: string): {
+  prayerId: string;
+  localDate: string;
+  kind: PrayerNotifIdKind;
+  preMinutes?: number;
+} | null {
+  const m = /^prayer\.([a-z]+)\.(\d{4}-\d{2}-\d{2})\.(entry|iqamah|post|pre)(?:\.(\d+))?$/.exec(id);
+  if (!m) return null;
+  const kindRaw = m[3];
+  const kind: PrayerNotifIdKind =
+    kindRaw === "entry" ? "enter" : kindRaw === "pre" ? "pre" : kindRaw === "iqamah" ? "iqamah" : "post";
+  return {
+    prayerId: m[1],
+    localDate: m[2],
+    kind,
+    preMinutes: kind === "pre" && m[4] ? Number(m[4]) : undefined,
+  };
+}
+
+/** هل المفتاح/الودّي يخص مساحة أسماء الصلاة؟ */
+export function isPrayerNotificationNamespace(key: string | null | undefined): boolean {
+  if (!key) return false;
+  return key.startsWith("prayer.") || key.startsWith("adhan-");
+}
