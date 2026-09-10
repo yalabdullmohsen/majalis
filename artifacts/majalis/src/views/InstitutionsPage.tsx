@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { BookOpen, Building2, GraduationCap, Globe, Library, MapPin, Search } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import "@/styles/pages/institutions.css";
 
 import { INSTITUTIONS, type Institution } from "@/data/institutions-catalog";
@@ -36,7 +36,7 @@ const TYPE_FILTERS: { key: Institution["type"] | "all"; label: string }[] = [
 
 function InstitutionCard({ inst }: { inst: Institution }) {
   return (
-    <div className="inst-card">
+    <div className="inst-card soft-card soft-card--on-light mj-pressable" id={inst.id}>
       <div className="inst-card__head">
         <span className="inst-card__icon" aria-hidden="true">{(() => { const I = TYPE_ICONS[inst.type]; return <I size={22} strokeWidth={1.5} />; })()}</span>
         <div className="inst-card__meta">
@@ -109,30 +109,35 @@ export default function InstitutionsPage() {
   });
 
   return (
-    <div className="page-shell inst-page" dir="rtl">
-      <div className="home-container">
-        <PageHeader
-          eyebrow="الدليل الإسلامي"
-          title="دليل المؤسسات الإسلامية"
-          subtitle="فهرس بأبرز المساجد والجامعات والمراكز البحثية والمكتبات الإسلامية في العالم."
-        />
-
-        {/* Search */}
+    <SectionTemplatePage
+      route="/institutions"
+      title="دليل المؤسسات الإسلامية"
+      subtitle="فهرس بأبرز المساجد والجامعات والمراكز البحثية والمكتبات الإسلامية في العالم."
+      eyebrow="الدليل الإسلامي"
+      breadcrumb={[
+        { label: "الرئيسية", href: "/" },
+        { label: "الدليل الإسلامي", href: "/islamic-directory" },
+        { label: "المؤسسات" },
+      ]}
+    >
+      <div className="inst-page" dir="rtl">
         <div className="inst-search-wrap">
           <input
             type="text"
             className="vault-search"
-            aria-label="ابحث باسم المؤسسة أو البلد أو المدينة…" placeholder="ابحث باسم المؤسسة أو البلد أو المدينة…"
+            aria-label="ابحث باسم المؤسسة أو البلد أو المدينة…"
+            placeholder="ابحث باسم المؤسسة أو البلد أو المدينة…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             dir="rtl"
           />
           {search && (
-            <button type="button" className="vault-search-clear" onClick={() => setSearch("")} aria-label="مسح البحث">✕</button>
+            <button type="button" className="vault-search-clear" onClick={() => setSearch("")} aria-label="مسح البحث">
+              ✕
+            </button>
           )}
         </div>
 
-        {/* Filter tabs */}
         <div className="inst-filters" role="tablist" aria-label="تصفية حسب نوع المؤسسة">
           {TYPE_FILTERS.map((f) => (
             <button
@@ -153,15 +158,13 @@ export default function InstitutionsPage() {
           ))}
         </div>
 
-        {/* Results count */}
-        {search && (
-          <p className="inst-results-count">{filtered.length} نتيجة لـ "{search}"</p>
-        )}
+        {search && <p className="inst-results-count">{filtered.length} نتيجة لـ "{search}"</p>}
 
-        {/* Grid */}
         {filtered.length === 0 ? (
           <div className="vault-empty">
-            <div className="vault-empty__icon" aria-hidden="true"><Search size={40} strokeWidth={1.3} /></div>
+            <div className="vault-empty__icon" aria-hidden="true">
+              <Search size={40} strokeWidth={1.3} />
+            </div>
             <p>لا توجد نتائج مطابقة.</p>
           </div>
         ) : (
@@ -183,6 +186,6 @@ export default function InstitutionsPage() {
           <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
         </div>
       </div>
-    </div>
+    </SectionTemplatePage>
   );
 }

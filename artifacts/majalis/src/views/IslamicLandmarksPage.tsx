@@ -31,7 +31,7 @@ function LandmarkCard({
   return (
     <button
       type="button"
-      className={`ilm-card${listView ? " ilm-card--list" : ""}`}
+      className={`ilm-card soft-card soft-card--on-light mj-pressable${listView ? " ilm-card--list" : ""}`}
       onClick={onClick}
       aria-label={`فتح تفاصيل ${landmark.name}`}
     >
@@ -211,7 +211,7 @@ export default function IslamicLandmarksPage() {
       path: "/islamic-landmarks",
       title: "المشاهد الإسلامية والمساجد التاريخية | سُنّة",
       description:
-        "استكشف أبرز المشاهد الإسلامية والمساجد التاريخية حول العالم: المسجد الحرام، المسجد النبوي، المسجد الأقصى، الجامع الأزهر، وأكثر من 19 موقعًا",
+        "استكشف أبرز المشاهد الإسلامية والمساجد التاريخية حول العالم: المسجد الحرام، المسجد النبوي، المسجد الأقصى، الجامع الأزهر، وأكثر من أربعين موقعًا",
       keywords: [
         "مساجد إسلامية",
         "مشاهد إسلامية",
