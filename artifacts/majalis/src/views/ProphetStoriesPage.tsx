@@ -920,7 +920,8 @@ function UlulAzmView({ onSelect }: { onSelect: (slug: string) => void }) {
           const color = prophetColor(p.slug);
           const accent = prophetAccent(p.slug);
           return (
-            <div
+            <button
+              type="button"
               key={p.slug}
               className="nb-azm-card"
               style={{
@@ -929,9 +930,6 @@ function UlulAzmView({ onSelect }: { onSelect: (slug: string) => void }) {
                 "--card-i": i,
               } as React.CSSProperties}
               onClick={() => onSelect(p.slug)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={e => (e.key === "Enter" || e.key === " ") && onSelect(p.slug)}
               aria-label={`قصة ${p.arabicName}`}
             >
               <div className="nb-azm-rank">{i + 1}</div>
@@ -947,8 +945,8 @@ function UlulAzmView({ onSelect }: { onSelect: (slug: string) => void }) {
               {sup && (
                 <div className="nb-azm-mentions">ذُكر في القرآن {sup.mentioned} مرة</div>
               )}
-              <span className="nb-azm-cta">اقرأ القصة <ChevronLeft size={14} aria-hidden="true" /></span>
-            </div>
+              <span className="nb-azm-cta" aria-hidden="true">اقرأ القصة <ChevronLeft size={14} aria-hidden="true" /></span>
+            </button>
           );
         })}
       </div>

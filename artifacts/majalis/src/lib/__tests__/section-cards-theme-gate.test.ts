@@ -158,4 +158,11 @@ assert.match(sects, /InternalLinkCard/);
 const hadithScience = read("src/pages/hadith/ui/HadithScienceView.tsx");
 assert.match(hadithScience, /InternalLinkCard/);
 
+console.log("=== موجة 2ب: كتب حديث/بطاقة حديث/تفسير/قصص ===");
+
+assert.match(read("src/pages/hadith/HadithBooksAndRulingsPage.tsx"), /SectionEntryCard/);
+assert.match(read("src/components/hadith/HadithCard.tsx"), /hadith-card__hit/);
+assert.match(read("src/pages/quran/ui/TafsirView.tsx"), /InternalLinkCard/);
+assert.match(read("src/views/ProphetStoriesPage.tsx"), /button[\s\S]*nb-azm-card/);
+
 console.log("section-cards-theme-gate.test.ts: ok");

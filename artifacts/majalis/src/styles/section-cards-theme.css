@@ -962,3 +962,26 @@ html[data-theme="dark"] .sect-card__link.hub-card {
 .hs-related__link {
   border-radius: var(--radius-card, 24px) !important;
 }
+
+.nb-azm-cta,
+.tf-inline-link {
+  pointer-events: none;
+}
+.hadith-index-card,
+.tf-edition-card,
+.nb-azm-card {
+  border-radius: var(--radius-card, 24px) !important;
+}
+.tf-edition-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-decoration: none;
+  color: inherit;
+}
+button.nb-azm-card {
+  width: 100%;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
