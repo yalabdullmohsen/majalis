@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { AsyncStatus } from "@/hooks/use-async-data";
 import { Empty, ErrorState, QaSkeleton, SearchSkeleton } from "@/components/ui-common";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import "@/styles/components/async-data-error.css";
 
 type SkeletonVariant = "list" | "search" | "spinner";
@@ -31,8 +32,8 @@ export function AsyncDataView({
   status,
   error,
   onRetry,
-  emptyText = "لا توجد نتائج الآن. جرّب تعديل البحث أو الفلتر، أو عد لاحقًا.",
-  errorText = "تعذّر تحميل البيانات مؤقتًا. أعد المحاولة.",
+  emptyText = EMPTY.search,
+  errorText = STATUS.loadError,
   skeleton = "list",
   children,
 }: AsyncDataViewProps) {
@@ -42,7 +43,7 @@ export function AsyncDataView({
   if (status === "offline") {
     return (
       <ErrorState
-        text="أنت غير متصل بالإنترنت. اتصل بالشبكة ثم أعد المحاولة."
+        text={STATUS.networkError}
         onRetry={onRetry}
       />
     );
@@ -52,7 +53,7 @@ export function AsyncDataView({
     return <ErrorState text={text} onRetry={onRetry} />;
   }
   if (status === "empty") {
-    return <Empty text={emptyText} title="لا يوجد محتوى" />;
+    return <Empty text={emptyText} title={EMPTY.generic} />;
   }
   return <>{children}</>;
 }

@@ -99,13 +99,13 @@ export const ar = {
   stats_login_btn: "تسجيل الدخول",
 
   // ── Common ──
-  loading: "تجهيز المحتوى",
+  loading: "جارٍ تحميل المحتوى",
   back: "رجوع",
   save: "حفظ",
   cancel: "إلغاء",
   confirm: "تأكيد",
   close: "إغلاق",
-  error: "حدث خطأ",
+  error: "تعذر إكمال العملية. أعد المحاولة.",
   not_found: "الصفحة غير موجودة",
   skip_to_content: "تجاوز إلى المحتوى",
 

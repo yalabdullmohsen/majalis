@@ -16,25 +16,43 @@ export const BUTTON = {
 } as const;
 
 export const EMPTY = {
-  generic: "لم يتم العثور على محتوى مطابق.",
-  search:
-    "لا توجد نتائج الآن، جرّب كلمة أقصر أو اختر من الاقتراحات.",
-  searchShort: "لا توجد نتائج مطابقة للبحث الحالي.",
+  generic: "لا يوجد محتوى متاح في هذا القسم حاليًا.",
+  search: "لم نجد نتائج مطابقة. جرّب كلمات بحث أخرى.",
+  searchShort: "لم نجد نتائج مطابقة.",
   lessonsCategory: "لا توجد دروس لهذا التصنيف حاليًا.",
   competitions: "لا توجد مسابقات حالية.",
-  data: "لا توجد بيانات لعرضها حاليًا.",
+  data: "لا يوجد محتوى متاح في هذا القسم حاليًا.",
   library: "لا توجد كتب في هذا القسم حاليًا.",
-  librarySearch: "لا توجد نتائج مطابقة. جرّب كلمة أخرى أو أزل التصفية.",
+  librarySearch: "لم نجد نتائج مطابقة. جرّب كلمة أخرى أو أزل التصفية.",
   notifications: "لا توجد إشعارات جديدة.",
   notificationsArchived: "لا توجد إشعارات مؤرشفة.",
-  citations: "لا توجد اقتباسات محفوظة بعد.",
+  citations: "احفظ المواد المهمة لتعود إليها بسهولة.",
   folders: "لا توجد مجلدات بعد.",
+  continue: "تابع من حيث توقفت",
+  continueEmpty: "ابدأ رحلتك في طلب العلم",
+  savedEmpty: "احفظ المواد المهمة لتعود إليها بسهولة.",
+} as const;
+
+export const SEARCH = {
+  placeholder: "ابحث عن درس، محاضرة، سلسلة أو عالم",
 } as const;
 
 export const STATUS = {
   pageUnavailable: "هذه الصفحة غير متاحة حاليًا.",
   sectionDisabled: "هذا القسم غير مفعل حاليًا.",
-  loadError: "تعذّر تحميل البيانات مؤقتًا. أعد المحاولة.",
+  loadError: "تعذر تحميل المحتوى حاليًا.",
+  networkError: "تعذر الاتصال. تحقق من الشبكة ثم أعد المحاولة.",
+  contentLoading: "جارٍ تحميل المحتوى",
+  updating: "تحديث المحتوى",
+} as const;
+
+export const ACTION = {
+  retry: "إعادة المحاولة",
+  browseAll: "استعرض جميع الدروس",
+  discoverMore: "اكتشف المزيد في هذا القسم",
+  continueListening: "أكمل استماعك",
+  viewSeries: "انتقل إلى السلسلة",
+  clearSearchHistory: "امسح سجل البحث",
 } as const;
 
 export const TERMS = {

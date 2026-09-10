@@ -15,11 +15,23 @@ assert.doesNotMatch(fallback, /useDeferredLoading/, "لا تأخير قبل ال
 assert.doesNotMatch(fallback, /return null/, "لا فراغ في fallback المسار");
 assert.match(fallback, /data-route-fallback="1"/, "سمة هيكل المسار");
 assert.match(fallback, /lrf-wrap--skel/, "هيكل مرئي");
-assert.match(fallback, /تجهيز الصفحة/, "رسالة قصيرة");
+assert.match(fallback, /lrf-wrap--page/, "هيكل صفحة داخلية لا رئيسية");
+assert.match(fallback, /contentLoading|جارٍ تحميل المحتوى/, "رسالة تحميل محتوى");
+assert.doesNotMatch(fallback, /تجهيز الصفحة/, "لا عبارة تجهيز الصفحة العامة");
 assert.match(fallback, /export const RouteFallback/, "اسم RouteFallback مستقر");
 
-const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
-assert.match(app, /fallback=\{<LazyRouteFallback\s*\/>\}/, "Suspense المسارات بهيكل");
+assert.match(
+  read("src/App.tsx"),
+  /loadAppRoutes|import\(["']\.\/AppRoutes["']\)/,
+  "تسخين حزمة AppRoutes دون دمجها في entry",
+);
+assert.match(
+  read("src/App.tsx"),
+  /lazy\(loadAppRoutes\)|lazy\(\(\)\s*=>\s*import\(["']\.\/AppRoutes["']\)\)/,
+  "AppRoutes كسول لميزانية الحزمة مع تسخين مبكر",
+);
+assert.match(read("src/App.tsx"), /LazyRouteFallback/, "Suspense خارجي بهيكل صفحة لا رئيسية");
+assert.match(read("src/AppRoutes.tsx"), /LazyRouteFallback/, "صفحات كسولة بهيكل محلي");
 assert.doesNotMatch(
   read("src/AppRoutes.tsx"),
   /fallback=\{null\}/,

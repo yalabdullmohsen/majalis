@@ -34,9 +34,9 @@ assert.match(app, /restoreScrollSnapshot/, "استعادة التمرير عند
 assert.match(app, /captureScrollSnapshot/, "حفظ موضع التمرير قبل المغادرة");
 assert.match(app, /isPop/, "التمييز بين push و pop للتمرير");
 
-assert.match(ui, /تعذر تحميل المحتوى/, "رسائل خطأ عربية واضحة");
+assert.match(ui, /STATUS\.loadError|تعذر تحميل المحتوى/, "رسائل خطأ عربية واضحة");
 assert.match(ui, /actionLabel/, "Empty يدعم إجراءً");
-assert.match(asyncV, /أنت غير متصل/, "حالة عدم اتصال واضحة");
+assert.match(asyncV, /STATUS\.networkError|تعذر الاتصال|أنت غير متصل/, "حالة عدم اتصال واضحة");
 assert.match(search, /SearchSkeleton/, "بحث: هيكل تحميل بدل نص فارغ");
 assert.match(search, /مسح البحث/, "Empty بحث مع إجراء");
 

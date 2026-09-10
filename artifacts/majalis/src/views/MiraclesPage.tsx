@@ -410,7 +410,7 @@ function MiracleDetailPage({ slug }: { slug: string }) {
         title="…"
         eyebrow="الإعجاز العلمي"
       >
-        <div className="mk-page" dir="rtl" role="status" aria-busy="true" aria-label="تجهيز الصفحة">
+        <div className="mk-page" dir="rtl" role="status" aria-busy="true" aria-label="جارٍ تحميل المحتوى">
           <div className="mk-detail-skel" aria-hidden="true">
             <div className="mk-detail-skel__hero" />
             <div className="mk-detail-skel__line" />
@@ -418,7 +418,7 @@ function MiracleDetailPage({ slug }: { slug: string }) {
             <div className="mk-detail-skel__card" />
             <div className="mk-detail-skel__card" />
           </div>
-          <p className="mk-detail-skel__label">تجهيز الصفحة…</p>
+          <p className="mk-detail-skel__label">جارٍ تحميل المحتوى</p>
         </div>
       </TopicPage>
     );

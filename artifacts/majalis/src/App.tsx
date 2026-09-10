@@ -15,9 +15,9 @@ import { useAutoHideBottomNav } from "@/hooks/useAutoHideBottomNav";
 import { ErrorBoundary, SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
-import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { useSharedPrayerData } from "@/components/prayer/PrayerCountdownProvider";
 import { recordRouteTransitionEnd, recordRouteTransitionStart } from "@/lib/route-transition-timing";
+import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { PRAYER_ALERT_PREFS_CHANGED_EVENT } from "@/lib/prayer-alert-preferences";
 import { recordRecentPage } from "@/lib/recent-pages";
 import {
@@ -77,6 +77,20 @@ const OfflineBanner = lazyWithRetry(
 );
 
 const lazy = lazyWithRetry;
+
+/** مسارات غير الرئيسية — كسول لميزانية entry، مع تسخين فوري بعد الإقلاع */
+const loadAppRoutes = () => import("./AppRoutes");
+const AppRoutesLazy = lazy(loadAppRoutes);
+if (typeof window !== "undefined") {
+  const warm = () => {
+    void loadAppRoutes();
+  };
+  if (typeof window.requestIdleCallback === "function") {
+    window.requestIdleCallback(warm, { timeout: 900 });
+  } else {
+    window.setTimeout(warm, 0);
+  }
+}
 
 /**
  * تحميل كسول للمساعد الذكي العائم — مكوّن ثانوي (تفاعلي عند الطلب فقط)
@@ -484,8 +498,6 @@ function HomeLazyRoute() {
   );
 }
 
-const AppRoutes = lazy(() => import("./AppRoutes"));
-
 function Router() {
   return (
     <Switch>
@@ -494,7 +506,7 @@ function Router() {
       </Route>
       <Route>
         <Suspense fallback={<LazyRouteFallback />}>
-          <AppRoutes />
+          <AppRoutesLazy />
         </Suspense>
       </Route>
     </Switch>
