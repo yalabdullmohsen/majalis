@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect } from "react";
 import { useLocation } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { goBackOrFallback } from "@/lib/navigation-back";
+import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 
 const AppFeatureTour = lazy(() =>
   import("@/components/onboarding/AppFeatureTour").then((m) => ({ default: m.AppFeatureTour })),
@@ -21,7 +22,7 @@ export default function FeatureTourPage() {
   }, []);
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<LazyRouteFallback />}>
       <AppFeatureTour
         open
         persistOnExit={false}

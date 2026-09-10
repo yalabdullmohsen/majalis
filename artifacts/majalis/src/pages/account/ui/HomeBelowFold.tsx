@@ -31,6 +31,7 @@ import { ShareFaida } from "@/components/ShareFaida";
 import { FeatureCard } from "@/components/design-system";
 import { QUICK_LINKS } from "@/lib/home-feature-catalog";
 import { IA_HOME_PRIMARY } from "@/lib/ia-final-structure";
+import { prefetchHomeWarmRoutes, prefetchRoute } from "@/lib/prefetch-route";
 import {
   HOME_WIDGET_DEFS,
   getLocalHomepagePrefs,
@@ -121,6 +122,28 @@ export default function HomeBelowFold() {
     });
   }, [user?.id]);
 
+  // تسخين مبكر للأقسام الأساسية بعد ثبات الرئيسية (بلا انتظار 25ث)
+  useEffect(() => {
+    let cancelled = false;
+    const warm = () => {
+      if (cancelled) return;
+      prefetchHomeWarmRoutes();
+      for (const item of QUICK_LINKS) prefetchRoute(item.href);
+    };
+    const idle =
+      typeof window.requestIdleCallback === "function"
+        ? window.requestIdleCallback(warm, { timeout: 4_000 })
+        : window.setTimeout(warm, 2_200);
+    return () => {
+      cancelled = true;
+      if (typeof window.cancelIdleCallback === "function" && typeof idle === "number") {
+        window.cancelIdleCallback(idle);
+      } else {
+        window.clearTimeout(idle as number);
+      }
+    };
+  }, []);
+
   const visibleWidgets = visibleWidgetOrder(homePrefs);
   const restWidgetOrder = visibleWidgets.filter(
     (id) => id !== "lessons" && id !== "continue" && id !== "daily-progress",
@@ -188,7 +211,15 @@ export default function HomeBelowFold() {
         </div>
         <div className="m2030-quick">
           {QUICK_LINKS.map(({ href, Icon: Ico, label, desc }) => (
-            <Link key={label + href} href={href} className="m2030-tile soft-tile soft-tile--on-light mj-pressable" aria-label={label}>
+            <Link
+              key={label + href}
+              href={href}
+              className="m2030-tile soft-tile soft-tile--on-light mj-pressable"
+              aria-label={label}
+              onPointerEnter={() => prefetchRoute(href)}
+              onPointerDown={() => prefetchRoute(href)}
+              onFocus={() => prefetchRoute(href)}
+            >
               <span className="m2030-tile__icon" aria-hidden="true">
                 <Ico size={14} strokeWidth={2} />
               </span>

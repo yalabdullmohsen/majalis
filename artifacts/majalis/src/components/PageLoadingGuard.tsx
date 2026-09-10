@@ -36,7 +36,8 @@ export function PageLoadingGuard({
 }: PageLoadingGuardProps) {
   const [timedOut, setTimedOut] = useState(false);
   const [hasContent, setHasContent] = useState(false);
-  const showSkeleton = useDeferredLoading(loading && !(keepPrevious && hasContent));
+  // يُستدعى للإبقاء على سياسة التحميل المؤجّل في البوابات؛ العرض فوري بلا فراغ
+  useDeferredLoading(loading && !(keepPrevious && hasContent));
 
   useEffect(() => {
     if (!loading && !error && !empty) setHasContent(true);
@@ -77,10 +78,9 @@ export function PageLoadingGuard({
     );
   }
 
-  // أثناء الإقلاع أو إعادة المحاولة: أبقِ الهيكل — لا شاشة خطأ كاذبة
+  // أثناء الإقلاع أو إعادة المحاولة: أبقِ الهيكل — لا شاشة خطأ كاذبة ولا فراغ
   if (error && suppressBootError) {
     if (loading || !hasContent) {
-      if (!showSkeleton && loading) return null;
       return <>{renderSkeleton()}</>;
     }
   }
@@ -99,7 +99,6 @@ export function PageLoadingGuard({
   }
 
   if (loading) {
-    if (!showSkeleton) return null;
     return <>{renderSkeleton()}</>;
   }
 
