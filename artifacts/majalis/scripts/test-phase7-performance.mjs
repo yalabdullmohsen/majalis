@@ -47,10 +47,17 @@ assert.match(queryClient, /mutations:[\s\S]*retry:\s*false/, "mutations must not
 assert.match(queryClient, /networkMode:\s*"online"/, "queries respect online mode (no offline spam)");
 assert.match(prewarm, /prewarmSupabaseOrigin/, "runtime Supabase origin prewarm");
 assert.match(main, /prewarmSupabaseOrigin\(\)/, "main mounts Supabase prewarm on idle");
-assert.match(main, /import\("\.\/lib\/supabase-bootstrap"\)/, "Supabase bootstrap is dynamic");
+// Bootstrap ملك AuthProvider فقط — لا مسار مزدوج من main (سباق جلسة/FOUC)
+assert.doesNotMatch(main, /bootstrapSupabaseFromServer|supabase-bootstrap/, "no Supabase bootstrap from main");
+const authProvider = readFileSync(join(root, "src/components/AuthProvider.tsx"), "utf8");
+assert.match(
+  authProvider,
+  /await import\("@\/lib\/supabase-bootstrap"\)/,
+  "Supabase bootstrap is dynamic via AuthProvider",
+);
 assert.doesNotMatch(
-  main,
-  /import \{[^}]*bootstrapSupabaseFromServer[^}]*\} from "\.\/lib\/supabase-bootstrap"/,
+  authProvider,
+  /import \{[^}]*bootstrapSupabaseFromServer[^}]*\} from ["']@\/lib\/supabase-bootstrap["']/,
   "must not statically import supabase-bootstrap on boot",
 );
 assert.match(main, /void import\("\.\/styles\/design-system\.css"\)/, "design-system deferred from critical CSS");
