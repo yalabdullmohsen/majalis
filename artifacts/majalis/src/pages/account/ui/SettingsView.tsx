@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
+import { UtilityScreen } from "@/components/design-system/screens";
 import { useAuth } from "@/components/AuthProvider";
 import { useFontPreference } from "@/components/FontPreferenceProvider";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
@@ -215,6 +216,7 @@ export default function SettingsPage() {
   };
 
   return (
+    <UtilityScreen compose="mark">
     <LegalPageLayout
       eyebrow={t("settings_eyebrow")}
       title={t("settings_title")}
@@ -711,5 +713,6 @@ export default function SettingsPage() {
         </LegalSection>
       )}
 </LegalPageLayout>
+    </UtilityScreen>
   );
 }

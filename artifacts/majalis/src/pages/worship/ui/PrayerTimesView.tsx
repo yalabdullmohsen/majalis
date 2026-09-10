@@ -23,6 +23,7 @@ import { getActivePrayerLocation } from "@/lib/prayer-location-prefs";
 import { PrayerLocationPicker } from "@/components/prayer/PrayerLocationPicker";
 import { goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
 import { toArabicDigits } from "@/lib/utils";
+import { DashboardScreen } from "@/components/design-system/screens";
 import { RANKS } from "@/lib/prayer-ranks-data";
 import "@/styles/pages/prayer-times.css";
 
@@ -381,6 +382,7 @@ export default function PrayerTimesPage() {
   const visibleRanks = ranksOpen ? RANKS : RANKS.slice(0, 2);
 
   return (
+    <DashboardScreen compose="mark">
     <div className="pts-screen pts-screen--with-nav" dir="rtl">
       {headerChrome}
       {hijriStr ? <p className="pts-hijri">{hijriStr}</p> : null}
@@ -488,5 +490,6 @@ export default function PrayerTimesPage() {
         </nav>
       )}
     </div>
+    </DashboardScreen>
   );
 }

@@ -180,6 +180,29 @@ export default tseslint.config(
       ],
     },
   },
+  /* أنماط الشاشات: هوية واحدة — ممنوع قيم مباشرة في طبقة الأنماط */
+  {
+    files: ["src/components/design-system/screens/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector:
+            "JSXAttribute[name.name='style'] ObjectExpression > Property[key.name='fontSize'] > Literal",
+          message: "أنماط الشاشات: لا fontSize حرفي — استخدم --ss-type-* / SsText",
+        },
+        {
+          selector:
+            "JSXAttribute[name.name='style'] ObjectExpression > Property[key.name=/^(color|background|backgroundColor|borderColor)$/] > Literal[value=/^#|^rgb|^hsl/i]",
+          message: "أنماط الشاشات: لا لون حرفي — استخدم --ss-color-* / --mj-*",
+        },
+        {
+          selector: "JSXAttribute[name.name='className'] Literal[value=/text-\\[[0-9]/]",
+          message: "أنماط الشاشات: لا text-[N…] — استخدم أدوار Typography",
+        },
+      ],
+    },
+  },
   /*
    * شاشات المنتج: قيود القيم المباشرة (fontSize/لون/text-[]).
    * عناوين h1–h6 تُرصد ببوابة التغطية (لا error شامل حتى تكتمل دفعات الهجرة).

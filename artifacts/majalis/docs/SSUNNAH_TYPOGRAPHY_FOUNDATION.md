@@ -113,6 +113,7 @@ Heuristic: **نظام** = يعتمد أصناف/توكنات مشتركة؛ **م
 | **0 — أساس** | بنية فقط | `--ss-*` + مكوّنات نص + حصر + بوابة | ✅ في هذا المسار |
 | **1 — مكوّنات مشتركة** | TopicPage / SectionHero / PageHero / HubCard / CompactSectionHeader / SectionAccordionLayout (+ ContentCard) | SsText + إزالة fontSize/هكس مباشر | ✅ |
 | **Lockdown** | ESLint + allowlist + تغطية + لقطات | منع رجوع القيم المباشرة | ✅ انظر `SSUNNAH_DESIGN_SYSTEM.md` |
+| **أنماط شاشات** | ScreenShell + Grid/List/Reader/… | هوية واحدة · تخطيط متنوع | ✅ انظر `SSUNNAH_SCREEN_PATTERNS.md` |
 | **2** | الرئيسية + بحث | Home* + SearchView + GlobalSearchModal | متبقٍ |
 | **3** | حديث + تفسير + تفاصيل | Hadith* + Tafsir + LessonDetail | متبقٍ |
 | **4** | تعريف/شرح outliers | TawhidPage, SujoodSahw, … | متبقٍ |

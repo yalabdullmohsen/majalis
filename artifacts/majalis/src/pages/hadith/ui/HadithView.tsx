@@ -29,6 +29,7 @@ import {
 import { PageHeader, SkeletonCardGrid, Empty, Chip } from "@/components/ui-common";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { SectionEntryCard } from "@/components/ui/HubCard";
+import { GridScreen } from "@/components/design-system/screens";
 import { ExclusiveChoiceGroup } from "@/components/ui/ExclusiveChoiceGroup";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { ShareButtons } from "@/components/ContentActions";
@@ -1053,60 +1054,62 @@ export default function HadithPage() {
   ];
 
   return (
-    <SectionTemplatePage
-      route="/hadith"
-      eyebrow="علوم الحديث النبوي"
-      title="الحديث وعلومه"
-      subtitle="صحيح وحسن أولًا — مع كتب الحديث ومصطلح الحديث. الضعيف والموضوع في أقسامهما للتمييز لا للاحتجاج. المتن أوضح عنصر، والحكم والمصدر بجانب كل حديث."
-      groupTitle="أقسام الحديث وعلومه"
-    >
-      <div className="hadith-page hadith-page--hub">
-        <div className="hub-card-grid" data-section-entry-grid="1">
-          {hubCards.map((c) => (
-            <SectionEntryCard
-              key={c.href}
-              href={c.href}
-              title={c.title}
-              subtitle={c.desc}
-              Icon={c.Icon}
-              badge={c.badge}
-              featured={c.featured}
-              variant="primary"
-            />
-          ))}
-        </div>
-        <HadithClassGuide kind="hub" />
-        <p className="hadith-page__browse-lead" role="note">
-          راجع التخريج قبل الاستشهاد — الحكم والمصدر ظاهران على كل بطاقة.
-        </p>
-        <section className="hadith-page__browse hadith-page__browse--cta" aria-labelledby="hadith-browse-title">
-          <h2 id="hadith-browse-title" className="hadith-page__browse-title">
-            تصفّح الأحاديث
-          </h2>
-          <p className="hadith-page__browse-lead">
-            ابحث وفلتر حسب الحكم في قسم الأحاديث الصحيحة — الصحيح والحسن للاستفادة، والضعيف في قسمه المخصّص.
-          </p>
-          <div className="hub-card-grid hub-card-grid--solo">
-            <SectionEntryCard
-              href="/hadith/sahih"
-              title="الأحاديث الصحيحة"
-              subtitle="بحث وتصفية مع المصدر والتخريج"
-              Icon={BookOpenCheck}
-              variant="soft"
-            />
+    <GridScreen compose="mark" columns={2}>
+      <SectionTemplatePage
+        route="/hadith"
+        eyebrow="علوم الحديث النبوي"
+        title="الحديث وعلومه"
+        subtitle="صحيح وحسن أولًا — مع كتب الحديث ومصطلح الحديث. الضعيف والموضوع في أقسامهما للتمييز لا للاحتجاج. المتن أوضح عنصر، والحكم والمصدر بجانب كل حديث."
+        groupTitle="أقسام الحديث وعلومه"
+      >
+        <div className="hadith-page hadith-page--hub">
+          <div className="hub-card-grid" data-section-entry-grid="1">
+            {hubCards.map((c) => (
+              <SectionEntryCard
+                key={c.href}
+                href={c.href}
+                title={c.title}
+                subtitle={c.desc}
+                Icon={c.Icon}
+                badge={c.badge}
+                featured={c.featured}
+                variant="primary"
+              />
+            ))}
           </div>
-        </section>
-        <ShareButtons title="الحديث الشريف — سُنّة" url="https://www.ssunnah.com/hadith" />
-        <ExploreAlsoNav
-          title="استكشف أيضًا"
-          links={[
-            { href: "/fawaid", label: "الفوائد" },
-            { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
-            { href: "/quiz", label: "سين جيم" },
-          ]}
-        />
-        <SectionQuiz sectionId="hadith" aria-label="اختبر معلوماتك في علوم الحديث" count={4} />
-      </div>
-    </SectionTemplatePage>
+          <HadithClassGuide kind="hub" />
+          <p className="hadith-page__browse-lead" role="note">
+            راجع التخريج قبل الاستشهاد — الحكم والمصدر ظاهران على كل بطاقة.
+          </p>
+          <section className="hadith-page__browse hadith-page__browse--cta" aria-labelledby="hadith-browse-title">
+            <h2 id="hadith-browse-title" className="hadith-page__browse-title">
+              تصفّح الأحاديث
+            </h2>
+            <p className="hadith-page__browse-lead">
+              ابحث وفلتر حسب الحكم في قسم الأحاديث الصحيحة — الصحيح والحسن للاستفادة، والضعيف في قسمه المخصّص.
+            </p>
+            <div className="hub-card-grid hub-card-grid--solo">
+              <SectionEntryCard
+                href="/hadith/sahih"
+                title="الأحاديث الصحيحة"
+                subtitle="بحث وتصفية مع المصدر والتخريج"
+                Icon={BookOpenCheck}
+                variant="soft"
+              />
+            </div>
+          </section>
+          <ShareButtons title="الحديث الشريف — سُنّة" url="https://www.ssunnah.com/hadith" />
+          <ExploreAlsoNav
+            title="استكشف أيضًا"
+            links={[
+              { href: "/fawaid", label: "الفوائد" },
+              { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
+              { href: "/quiz", label: "سين جيم" },
+            ]}
+          />
+          <SectionQuiz sectionId="hadith" aria-label="اختبر معلوماتك في علوم الحديث" count={4} />
+        </div>
+      </SectionTemplatePage>
+    </GridScreen>
   );
 }
