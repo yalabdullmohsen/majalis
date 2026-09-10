@@ -850,6 +850,19 @@
   white-space: normal;
 }
 
+
+/* مظهر ليلي للمصحف — خلفية داكنة غير سوداء حادة، بلا قلب ألوان عشوائي */
+html[data-mushaf-appearance="night"] .nm-root,
+.nm-root[data-mushaf-appearance="night"] {
+  --mushaf-page-bg: #152018;
+  --mushaf-text-color: #f3efe6;
+  --mushaf-meta-color: #cbb892;
+  --nm-paper: #152018;
+  --nm-paper-deep: #101810;
+  --nm-ink: #f3efe6;
+  --nm-meta: #cbb892;
+}
+
 html[data-theme="dark"] .nm-root,
 html.dark .nm-root {
   --mushaf-page-bg: #152018;

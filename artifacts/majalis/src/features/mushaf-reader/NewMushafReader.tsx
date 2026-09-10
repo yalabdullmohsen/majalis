@@ -37,6 +37,14 @@ import {
   scheduleNonCriticalWork,
 } from "@/lib/power-saver-engine";
 import { clampMushafPage, MUSHAF_PAGE_MAX } from "@/lib/quran-last-page";
+import {
+  isMushafReaderV2Enabled,
+  migrateMushafUserData,
+  MushafReaderController,
+  MushafPageRepository,
+  applyMushafAppearanceMode,
+  loadMushafAppearanceMode,
+} from "@/lib/mushaf-v2";
 import { useMediaSession } from "@/hooks/useMediaSession";
 import { MushafPager } from "./MushafPager";
 import {
@@ -95,6 +103,11 @@ type Props = {
  */
 export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _onIndex }: Props) {
   const page = clampMushafPage(pageNumber);
+  const v2Enabled = isMushafReaderV2Enabled();
+  const readerControllerRef = useRef<MushafReaderController | null>(null);
+  if (v2Enabled && readerControllerRef.current == null) {
+    readerControllerRef.current = new MushafReaderController(page);
+  }
   const [layout, setLayout] = useState<MushafPageLayout | null>(() => getCachedMushafPage(page));
   const [error, setError] = useState<string | null>(null);
   const [chromeOpen, setChromeOpen] = useState(false);
@@ -169,11 +182,15 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
 
   useEffect(() => {
     beginPowerSaverSession();
+    if (isMushafReaderV2Enabled()) migrateMushafUserData();
+    applyMushafAppearanceMode(loadMushafAppearanceMode());
     void import("@/lib/apply-page-chrome").then(({ applyMushafThemeChrome }) => {
       void applyMushafThemeChrome("paper");
     });
     return () => {
       endPowerSaverSession();
+      readerControllerRef.current?.dispose();
+      readerControllerRef.current = null;
       recitation.stop();
       const resolved =
         document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
@@ -234,7 +251,12 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         });
       }
     }
-    savePagePosition(page);
+    if (v2Enabled && readerControllerRef.current) {
+      readerControllerRef.current.syncExternalPage(page);
+      MushafPageRepository.prefetchAdjacent(page);
+    } else {
+      savePagePosition(page);
+    }
     return () => {
       cancelled = true;
     };
@@ -353,6 +375,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const beginPageTurn = useCallback(() => {
     if (pageTurnLockRef.current) return;
     pageTurnLockRef.current = true;
+    if (v2Enabled) readerControllerRef.current?.beginNavigation();
     /* جمّد ارتفاع شريط الآية إن كان مفتوحًا — يمنع قفزة الشبكة عند المسح أثناء القلب */
     const ayahWasOpen = actionsOpenRef.current;
     const dockRemainsAfterClear =
@@ -370,7 +393,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     setFreezeStackMode("none");
     pageTurnLockRef.current = false;
     pendingPageRef.current = null;
-  }, []);
+    if (v2Enabled) readerControllerRef.current?.endNavigation(pageRef.current);
+  }, [v2Enabled]);
 
   const go = useCallback(
     (next: number) => {

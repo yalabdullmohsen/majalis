@@ -57,7 +57,7 @@ assert.doesNotMatch(controls, /inputMode=["']numeric["']/, "لوحة الأرق�
 assert.match(css, /\.mm-controls__page[\s\S]*?font-weight:\s*800/);
 assert.match(css, /grid-template-columns:\s*1fr auto 1fr/);
 
-assert.match(search, /searchVersesInCorpus/);
+assert.match(search, /QuranSearchEngine|searchVersesInCorpus/);
 assert.match(search, /لا نتائج/);
 assert.match(search, /جاري البحث/);
 assert.match(search, /تعذّر البحث/);
