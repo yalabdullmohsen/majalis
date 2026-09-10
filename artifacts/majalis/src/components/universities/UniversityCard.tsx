@@ -22,7 +22,8 @@ export const UniversityCard = memo(function UniversityCard({ university: u, comp
   const accMod = `univ-acc--${u.accreditation_status}`;
 
   return (
-    <div dir="rtl" className="univ-card">
+    <div dir="rtl" className="univ-card univ-card--pressable">
+      <Link href={`/universities/${u.slug}`} className="univ-card__hit" aria-label={`تفاصيل ${u.name_ar}`}>
       {/* رأس البطاقة */}
       <div className="univ-card__head">
         {u.logo_url ? (
@@ -87,11 +88,12 @@ export const UniversityCard = memo(function UniversityCard({ university: u, comp
         </p>
       </div>
 
+      </Link>
       {/* أزرار */}
-      <div className="px-4 pb-4 flex gap-2 flex-wrap">
-        <Link href={`/universities/${u.slug}`} className="univ-btn univ-btn--primary flex-1 text-center">
+      <div className="univ-card__actions px-4 pb-4 flex gap-2 flex-wrap">
+        <span className="univ-btn univ-btn--primary univ-btn--primary-ghost flex-1 text-center" aria-hidden="true">
           عرض التفاصيل
-        </Link>
+        </span>
 
         {u.website_url && (
           <a
