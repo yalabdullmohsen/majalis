@@ -33,6 +33,10 @@ assert.match(back, /path\.startsWith\("\/hadith"\)|\/hadith/, "إخفاء FAB ع
 
 assert.match(css, /flex-wrap:\s*nowrap/, "أقسام الحديث صف أفقي بلا تفريد الموضوع");
 assert.match(css, /aria-checked/, "حالة شريحة التصنيف عبر aria-checked");
+assert.match(css, /hadith-page__chrome[\s\S]*?app-back-btn--inline[\s\S]*?display:\s*inline-flex\s*!important/, "رجوع داخلي ظاهر رغم إخفاء العائم");
+assert.match(css, /hadith-toolbar[\s\S]*?align-items:\s*center/, "شريط البحث/التصفية بمحاذاة مركز");
+assert.match(css, /\.ds-filter-toggle[\s\S]*?white-space:\s*nowrap/, "زر التصفية بلا لفّ عمودي");
+assert.match(css, /hadith-grade-filters[\s\S]*?exclusive-choice[\s\S]*?flex-wrap:\s*nowrap/, "شرائح الحكم صف واحد قابل للتمرير");
 assert.match(view, /hadith-quick-cat--active/, "صنف نشط على الشريحة");
 
 console.log("hadith-layout-chrome-gate.test.ts: ok");

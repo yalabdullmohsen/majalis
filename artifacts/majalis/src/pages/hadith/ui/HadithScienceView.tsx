@@ -8,6 +8,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/hadith-mustalah.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { AppBackButton } from "@/components/common/AppBackButton";
 
 /* ─── أنواع البيانات ─── */
 type HadithTerm = {
@@ -1023,6 +1024,9 @@ export default function HadithSciencePage() {
 
   return (
     <main className="hs-page" dir="rtl">
+      <div className="hadith-page__chrome hs-page__chrome">
+        <AppBackButton variant="inline" fallbackHref="/hadith" label="الحديث وعلومه" />
+      </div>
       {/* هيرو */}
       <section className="hs-hero">
         <div className="hs-hero__badge">علوم الحديث</div>
