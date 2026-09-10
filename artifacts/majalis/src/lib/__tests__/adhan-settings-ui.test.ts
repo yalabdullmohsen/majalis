@@ -31,6 +31,11 @@ assert.match(css, /\.ads-prayer-row__top/);
 
 const typesSrc = readFileSync(resolve(appRoot, "src/lib/adhan-selectable-types.ts"), "utf8");
 
+
+assert.match(view, /useAdhanDeveloperTools/);
+assert.match(view, /import\.meta\.env\.DEV/);
+assert.match(view, /adhanDebug/);
+assert.match(view, /showDeveloperTools \?/);
 assert.match(view, /تنبيهات الصلاة/);
 assert.match(view, /\/adhan-help/);
 assert.match(view, /حذف القديمة وإعادة الضبط/);

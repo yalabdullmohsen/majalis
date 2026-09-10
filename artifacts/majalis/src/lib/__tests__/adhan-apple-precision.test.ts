@@ -107,6 +107,8 @@ assert.match(settingsView, /fireTestLocalNotification\(10_000\)/);
 assert.match(settingsView, /فشل التشغيل/);
 assert.match(settingsView, /اختبار الإشعار بعد ١٠ ثوانٍ/);
 assert.match(settingsView, /فحص حالة الأذان/);
+assert.match(settingsView, /useAdhanDeveloperTools/);
+assert.match(settingsView, /showDeveloperTools \?/);
 assert.doesNotMatch(settingsView, /adhan-makkah-short\.caf|adhan-madinah-short\.caf/);
 assert.doesNotMatch(localNotif, /adhan-makkah-short\.caf|adhan-madinah-short\.caf/);
 
