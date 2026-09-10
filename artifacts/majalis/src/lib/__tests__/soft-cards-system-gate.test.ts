@@ -55,8 +55,9 @@ assert.match(prayer, /\.pts-chrome\s*\{[\s\S]*?display:\s*none/, "لا شريط 
 
 assert.match(prophets, /\.prophet-fact-card[\s\S]*?border-radius:\s*var\(--radius-tile/, "حقائق الأنبياء ناعمة");
 assert.match(prophets, /\.prophet-lesson-card[\s\S]*?border-radius:\s*var\(--radius-card/, "دروس الأنبياء ناعمة");
-assert.match(prophets, /\.prophet-lux-back[\s\S]*?border-radius:\s*var\(--radius-pill/, "رجوع pill");
+assert.match(prophets, /\.prophet-action-btn[\s\S]*?border-radius:\s*var\(--radius-pill/, "أزرار إجراءات pill");
 assert.match(prophets, /\.prophet-chip-lux[\s\S]*?border-radius:\s*var\(--radius-pill/, "تصنيفات pill");
+assert.doesNotMatch(prophets, /\.prophet-lux-back\s*\{/, "بلا رجوع مكرر داخل صفحة الأنبياء");
 
 const contact = read("src/styles/pages/contact.css");
 assert.match(contact, /\.contact-faq__trigger\s*\{[\s\S]*?border-radius:\s*var\(--radius-button/, "أسئلة التواصل بحواف ناعمة");
