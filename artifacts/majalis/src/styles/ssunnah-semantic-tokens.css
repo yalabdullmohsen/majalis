@@ -1,0 +1,84 @@
+/**
+ * رموز دلالية موحّدة — أسماء منتج ثابتة (جسر فقط إلى الهوية الحالية).
+ * لا تُعرّف هكسًا جديدًا هنا؛ المصدر: visual-identity-unify / design-tokens / mj-*.
+ */
+:root {
+  /* Surfaces */
+  --background: var(--mj-bg, var(--bg, #f7f4ee));
+  --backgroundSubtle: var(--mj-surface-2, var(--surface-muted, var(--background)));
+  --surface: var(--mj-surface, var(--color-surface, #fffcf8));
+  --surfaceElevated: var(--mj-surface, var(--surface-elevated, var(--surface)));
+  --surfaceInteractive: color-mix(in srgb, var(--mj-brand, #146b52) 6%, var(--surface));
+
+  /* Brand */
+  --primary: var(--mj-brand, #146b52);
+  --primaryHover: color-mix(in srgb, var(--primary) 88%, #000);
+  --primaryPressed: var(--mj-brand-deep, #0d4a39);
+  --primaryContainer: var(--mj-brand-soft, #e6f2ec);
+  --onPrimary: var(--mj-on-brand, #ffffff);
+
+  /* Text */
+  --textPrimary: var(--mj-ink, #16241e);
+  --textSecondary: var(--mj-ink-2, #4f5f58);
+  --textMuted: var(--mj-muted, #5e6e67);
+  --textOnColor: var(--onPrimary);
+
+  /* Borders / chrome */
+  --border: var(--mj-hairline, #d9d3c8);
+  --borderStrong: color-mix(in srgb, var(--mj-ink, #16241e) 18%, var(--border));
+  --divider: var(--border);
+  --selected: color-mix(in srgb, var(--primary) 12%, var(--surface));
+  --success: var(--primary);
+  --warning: var(--mj-accent, #b08a3e);
+  --error: var(--mj-danger, #b54a4a);
+  --disabled: color-mix(in srgb, var(--textMuted) 55%, transparent);
+  --focus: color-mix(in srgb, var(--primary) 55%, transparent);
+  --skeletonBase: color-mix(in srgb, var(--textPrimary) 8%, transparent);
+  --skeletonHighlight: color-mix(in srgb, var(--textPrimary) 14%, transparent);
+  --overlay: color-mix(in srgb, var(--mj-ink, #16241e) 42%, transparent);
+
+  /* Typography roles */
+  --type-display: clamp(1.75rem, 4vw, 2.25rem);
+  --type-screenTitle: var(--ss-type-screen-title, clamp(1.35rem, 3.2vw, 1.75rem));
+  --type-sectionTitle: var(--ss-type-section-title, 1.2rem);
+  --type-cardTitle: var(--ss-type-card-title, 1.05rem);
+  --type-bodyLarge: 1.0625rem;
+  --type-body: var(--ss-type-body, 1rem);
+  --type-scriptureText: var(--ss-type-scripture, 1.25rem);
+  --type-explanationText: var(--ss-type-explanation, 1rem);
+  --type-supportingText: var(--ss-type-supporting, 0.9375rem);
+  --type-label: var(--ss-type-label, 0.875rem);
+  --type-buttonLabel: 0.9375rem;
+  --type-caption: var(--ss-type-caption, 0.8125rem);
+  --type-badge: 0.75rem;
+
+  /* Motion */
+  --durationFast: var(--motion-fast, 120ms);
+  --durationNormal: var(--motion-normal, 220ms);
+  --durationEmphasized: var(--motion-slow, 350ms);
+  --easingStandard: var(--ease-standard, cubic-bezier(0.2, 0, 0, 1));
+  --easingDecelerate: cubic-bezier(0, 0, 0.2, 1);
+  --easingAccelerate: cubic-bezier(0.4, 0, 1, 1);
+
+  /* Radius — لا حواف حادة في الأسطح التفاعلية */
+  --radius-xs: 10px;
+  --radius-sm: 14px;
+  --radius-md: 18px;
+  --radius-lg: 22px;
+  --radius-card: 24px;
+  --radius-sheet: 28px;
+}
+
+html[data-theme="dark"],
+html.dark {
+  --background: var(--mj-bg);
+  --backgroundSubtle: var(--mj-surface-2);
+  --surface: var(--mj-surface);
+  --surfaceElevated: var(--mj-surface);
+  --textPrimary: var(--mj-ink);
+  --textSecondary: var(--mj-ink-2);
+  --textMuted: var(--mj-muted);
+  --border: var(--mj-hairline);
+  --primary: var(--mj-brand);
+  --onPrimary: var(--mj-on-brand);
+}

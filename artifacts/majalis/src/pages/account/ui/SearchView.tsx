@@ -415,7 +415,7 @@ export default function SearchPage() {
           <p className="search-no-results__msg ss-state-card__title">
             {scope !== "all"
               ? "لا توجد نتائج في هذا القسم."
-              : EMPTY.search}
+              : EMPTY.search /* لم نجد نتيجة مطابقة — جرّب */}
           </p>
           {scope !== "all" ? (
             <button type="button" className="srch-home-submit ss-action-btn ss-action-btn--primary mj-pressable" onClick={() => setScope("all")}>

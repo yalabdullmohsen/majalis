@@ -278,7 +278,7 @@ function CollectionBrowser({ meta }: { meta: CdnCollectionMeta }) {
     return (
       <div className="hb-loading" aria-live="polite">
         <Loader2 size={28} className="hb-loading__icon" aria-hidden="true" />
-        <p>جاري تحميل {meta.name}…</p>
+        <p>تحديث {meta.name}…</p>
         <p className="hb-loading__note">قد يستغرق التحميل لحظات للمجموعات الكبيرة.</p>
       </div>
     );

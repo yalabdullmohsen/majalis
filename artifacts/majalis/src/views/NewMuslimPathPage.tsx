@@ -29,7 +29,11 @@ export default function NewMuslimPathPage() {
       <PageHeader eyebrow="التعريف بالإسلام" title="مسار الثلاثين يومًا" subtitle="لا سباق ولا حساب للتأخر — أكمل بالسرعة التي تناسبك، وارجع إلى أي يوم متى شئت." />
 
       {days === null ? (
-        <p className="page-desc" role="status">جاري تحميل المسار…</p>
+        <div className="dii-path-list dii-path-list--skel" role="status" aria-busy="true" aria-label="تحديث المسار">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="dii-path-day dii-path-day--skel" aria-hidden="true" />
+          ))}
+        </div>
       ) : days.length === 0 ? (
         <Empty text="تعذّر تحميل أيام المسار. تحقق من الاتصال ثم أعد المحاولة." />
       ) : (

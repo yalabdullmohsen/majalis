@@ -291,7 +291,7 @@ export function MushafAudioDock({
 
         <p className="mm-audio-dock__status" role="status">
           {statusLabel}
-          {loading ? " · جاري تحميل التلاوة…" : ""}
+          {loading ? " · تجهيز التلاوة…" : ""}
           {audioError || playerState === "error"
             ? ` · ${audioError || "تعذر تشغيل التلاوة الآن"}`
             : ""}

@@ -376,7 +376,7 @@ export default function IslamicLandmarksPage() {
         <div className="ilm-map-wrap">
           <Suspense fallback={
             <div style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: "#6b7280" }}>
-              جارٍ تحميل الخريطة...
+              تحديث الخريطة…
             </div>
           }>
             <MapSection

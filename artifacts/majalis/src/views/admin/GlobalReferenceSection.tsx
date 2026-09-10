@@ -60,7 +60,7 @@ export function GlobalReferenceSection() {
     }
   };
 
-  if (loading) return <p>جاري تحميل المنظومة المرجعية...</p>;
+  if (loading) return <p>تحديث المنظومة…</p>;
 
   return (
     <div>

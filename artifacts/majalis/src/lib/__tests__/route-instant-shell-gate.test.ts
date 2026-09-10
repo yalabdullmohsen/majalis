@@ -16,8 +16,8 @@ assert.doesNotMatch(fallback, /return null/, "لا فراغ في fallback الم
 assert.match(fallback, /data-route-fallback="1"/, "سمة هيكل المسار");
 assert.match(fallback, /lrf-wrap--skel/, "هيكل مرئي");
 assert.match(fallback, /lrf-wrap--page/, "هيكل صفحة داخلية لا رئيسية");
-assert.match(fallback, /contentLoading|جارٍ تحميل المحتوى/, "رسالة تحميل محتوى");
-assert.doesNotMatch(fallback, /تجهيز الصفحة/, "لا عبارة تجهيز الصفحة العامة");
+assert.match(fallback, /STATUS\.updating|aria-busy/, "حالة تحديث عبر aria بلا نص ظاهر");
+assert.doesNotMatch(fallback, /lrf-label|تجهيز الصفحة|جارٍ تحميل|جاري تحميل/, "لا عبارة تحميل ظاهرة");
 assert.match(fallback, /export const RouteFallback/, "اسم RouteFallback مستقر");
 
 assert.match(

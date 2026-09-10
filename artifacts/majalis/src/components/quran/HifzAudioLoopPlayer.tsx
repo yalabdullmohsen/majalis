@@ -171,7 +171,7 @@ export function HifzAudioLoopPlayer({ surah, reciterId }: HifzAudioLoopPlayerPro
   );
 
   if (loadingAyahs) {
-    return <div className="hifz-loop hifz-loop__loading">جاري تحميل الآيات…</div>;
+    return <div className="hifz-loop hifz-loop__loading">تجهيز الآيات…</div>;
   }
 
   if (!ayahs.length) {

@@ -73,7 +73,7 @@ function InternalStatusView() {
     return (
       <div className="login-page" role="status">
         <div className="login-card">
-          <p className="ds-empty">جارٍ تحميل حالة المنصة…</p>
+          <p className="ds-empty">تحديث الحالة…</p>
         </div>
       </div>
     );

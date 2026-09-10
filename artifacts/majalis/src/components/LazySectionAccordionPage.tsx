@@ -59,7 +59,7 @@ export function LazySectionAccordionPage({
   if (!sections) {
     return (
       <div className="page-shell" dir="rtl" aria-busy="true">
-        <p>جارٍ تحميل الفهرس…</p>
+        <p>تحديث الفهرس…</p>
       </div>
     );
   }

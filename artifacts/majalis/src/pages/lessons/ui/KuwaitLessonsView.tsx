@@ -142,7 +142,7 @@ export default function KuwaitLessonsPage() {
             data-chrome="noheader nofooter noborders"
             href="https://twitter.com/drosq8"
           >
-            جارٍ تحميل إعلانات الدروس…
+            تحديث إعلانات الدروس…
           </a>
         </div>
         <p className="kuwait-lessons-attribution">

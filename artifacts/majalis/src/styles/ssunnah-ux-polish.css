@@ -810,3 +810,41 @@ html.dark .search-page .search-page-form {
     padding-inline: max(0.85rem, var(--page-gutter, 14px));
   }
 }
+
+/* هيكل فوري لمسار المسلم الجديد — بلا نص تحميل */
+.TMP {
+  min-height: 3.25rem;
+  border-radius: var(--radius-card, 24px);
+  background: linear-gradient(
+    90deg,
+    var(--skeletonBase, rgba(22, 36, 30, 0.06)) 0%,
+    var(--skeletonHighlight, rgba(22, 36, 30, 0.12)) 50%,
+    var(--skeletonBase, rgba(22, 36, 30, 0.06)) 100%
+  );
+  background-size: 200% 100%;
+  animation: ss-skel-shimmer 1.2s ease-in-out infinite;
+}
+.TMP2 {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@keyframes ss-skel-shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .TMP { animation: none; }
+}
+.lrf-wrap--silent .lrf-label { display: none; }
+
+.dii-path-day--skel {
+  min-height: 3.25rem;
+  border-radius: var(--radius-card, 24px);
+  background: linear-gradient(90deg, var(--skeletonBase, rgba(22,36,30,.06)), var(--skeletonHighlight, rgba(22,36,30,.12)), var(--skeletonBase, rgba(22,36,30,.06)));
+  background-size: 200% 100%;
+  animation: ss-skel-shimmer 1.2s ease-in-out infinite;
+}
+.dii-path-list--skel { display:grid; gap:.65rem; margin:0; padding:0; list-style:none; }

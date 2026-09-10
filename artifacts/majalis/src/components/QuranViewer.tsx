@@ -652,7 +652,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
                       aria-label={`تفسير الآية ${toArabicDigits(ayah.numberInSurah)}`}
                     >
                       {tafsirLoading && !ayahTafsir ? (
-                        <span className="qe-ayah__tafsir-status">جاري تحميل التفسير…</span>
+                        <span className="qe-ayah__tafsir-status">تجهيز التفسير…</span>
                       ) : ayahTafsir ? (
                         <p className="qe-ayah__tafsir-text">{ayahTafsir}</p>
                       ) : tafsirError ? (

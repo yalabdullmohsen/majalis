@@ -1,0 +1,89 @@
+/**
+ * جسر توحيد البطاقات القديمة → هوية soft-card / AppCard.
+ * لا يغيّر المصحف ولا أسطح القراءة الشرعية ذات السمات الخاصة.
+ */
+
+.ui-card:not([data-scripture]):not(.mushaf-page):not(.ayah-card),
+.mj-card:not([data-scripture]),
+.ss-card:not([data-scripture]),
+.section-card:not([data-scripture]),
+.content-card:not([data-scripture]),
+.hub-card:not([data-legacy-ok]),
+.inst-card,
+.ilm-card,
+.topic-card:not([data-scripture]),
+.lesson-card:not(.lesson-card--legacy-ok),
+.settings-card,
+.nf2-card,
+.page-card {
+  border-radius: var(--radius-card, 24px);
+  background: var(--surface, var(--mj-surface, #fffcf8));
+  border: 1px solid color-mix(in srgb, var(--primary, var(--mj-brand, #146b52)) 14%, var(--border, var(--mj-hairline, #d9d3c8)));
+  box-shadow: var(--ss-shadow-soft, var(--mj-sh, 0 3px 12px -10px rgba(10, 61, 46, 0.12)));
+  color: var(--textPrimary, var(--mj-ink, #16241e));
+}
+
+.ui-card__title,
+.mj-card__title,
+.hub-card__title,
+.section-card__title,
+.lesson-card__title,
+.topic-card__title {
+  color: var(--textPrimary, var(--mj-ink));
+  font-size: var(--type-cardTitle, 1.05rem);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.ui-card__desc,
+.mj-card__desc,
+.hub-card__desc,
+.section-card__desc,
+.lesson-card__meta,
+.topic-card__meta,
+.settings-toggle-desc {
+  color: var(--textSecondary, var(--mj-ink-2));
+  font-size: var(--type-supportingText, 0.9375rem);
+  line-height: 1.65;
+}
+
+/* حواف حادة ممنوعة على الأسطح العامة (بدون !important على المصحف) */
+.card:not([data-scripture]):not(.mushaf *):not(.qpc-page),
+.rounded-none.card,
+.rounded-none.ui-card {
+  border-radius: var(--radius-card, 24px);
+}
+
+/* ضغط تفاعلي موحّد */
+a.ui-card,
+a.mj-card,
+a.hub-card,
+button.ui-card,
+.ui-card[role="link"],
+.hub-card[role="link"] {
+  transition: transform var(--durationFast, 120ms) var(--easingStandard),
+    box-shadow var(--durationFast, 120ms) var(--easingStandard),
+    background-color var(--durationFast, 120ms) var(--easingStandard);
+}
+
+a.ui-card:active,
+a.mj-card:active,
+a.hub-card:active,
+button.ui-card:active {
+  transform: scale(0.985);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.ui-card,
+  a.mj-card,
+  a.hub-card,
+  button.ui-card {
+    transition: none;
+  }
+  a.ui-card:active,
+  a.mj-card:active,
+  a.hub-card:active,
+  button.ui-card:active {
+    transform: none;
+  }
+}

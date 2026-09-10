@@ -66,7 +66,7 @@ export function AutonomousAiSection() {
     }
   };
 
-  if (loading) return <p>جاري تحميل لوحة المراقبة الذاتية...</p>;
+  if (loading) return <p>تحديث اللوحة…</p>;
 
   return (
     <div>

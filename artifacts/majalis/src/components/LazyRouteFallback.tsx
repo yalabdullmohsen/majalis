@@ -1,6 +1,7 @@
 /**
  * هيكل مسار كسول — منطقة المحتوى فقط أثناء تحميل حزمة الصفحة.
- * لا يشبه الرئيسية (بلا بحث/ورد/بطاقات كبيرة) ولا يُعيد رسم الكروم.
+ * هيكل ثابت فورًا بلا نص «تحميل» ظاهر؛ aria فقط لقارئ الشاشة.
+ * لا يشبه الرئيسية ولا يُعيد رسم الكروم.
  */
 import { STATUS } from "@/lib/ui-copy";
 
@@ -17,6 +18,7 @@ export function LazyRouteFallback() {
         "lrf-wrap--skel",
         "lrf-wrap--instant",
         "lrf-wrap--page",
+        "lrf-wrap--silent",
         prophetsShell ? "lrf-wrap--prophets" : "",
         prophetDetail ? "lrf-wrap--prophet-detail" : "",
       ]
@@ -24,7 +26,7 @@ export function LazyRouteFallback() {
         .join(" ")}
       role="status"
       aria-busy="true"
-      aria-label={STATUS.contentLoading}
+      aria-label={STATUS.updating}
       data-prophets-shell={prophetsShell ? "1" : undefined}
       data-route-fallback="1"
     >
@@ -36,7 +38,6 @@ export function LazyRouteFallback() {
         <div className="lrf-skel__block" />
         <div className="lrf-skel__block lrf-skel__block--short" />
       </div>
-      <p className="lrf-label">{STATUS.contentLoading}</p>
     </div>
   );
 }

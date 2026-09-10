@@ -171,7 +171,7 @@ export default function QuranSearchPage() {
 
       {loadingDb ? (
         <p className="quran-search-page__status" role="status">
-          جاري تحميل نص المصحف للبحث المحلي…
+          تجهيز فهرس البحث…
         </p>
       ) : null}
 

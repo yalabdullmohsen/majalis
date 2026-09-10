@@ -418,7 +418,7 @@ export const AyahActionSheet = memo(function AyahActionSheet({
             <div className="ayah-action-sheet__body">
             {parsed ? (
               <div className={tab === "tafsir" ? undefined : "sr-only"} aria-hidden={tab !== "tafsir"}>
-                <Suspense fallback={<p className="mm-ayah-bar__status">جاري تحميل التفسير…</p>}>
+                <Suspense fallback={<p className="mm-ayah-bar__status">تجهيز التفسير…</p>}>
                   <TafsirTabPanel
                     surah={parsed.surah}
                     ayah={parsed.ayah}
@@ -437,7 +437,7 @@ export const AyahActionSheet = memo(function AyahActionSheet({
             {tab === "tafsir-audio" ? (
               <div className="ayah-action-sheet__tafsir-audio">
                 {tafsirAudioLoading ? (
-                  <p className="mm-ayah-bar__status">جاري تحميل التفسير الصوتي…</p>
+                  <p className="mm-ayah-bar__status">تجهيز التفسير الصوتي…</p>
                 ) : tafsirAudioClip ? (
                   <>
                     <div className="ayah-action-sheet__primary" role="group" aria-label="تشغيل التفسير الصوتي">

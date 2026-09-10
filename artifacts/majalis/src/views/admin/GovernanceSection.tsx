@@ -63,7 +63,7 @@ export function GovernanceSection() {
     }
   };
 
-  if (loading) return <p>جاري تحميل منظومة الحوكمة...</p>;
+  if (loading) return <p>تحديث المنظومة…</p>;
 
   const m = dashboard?.monitoring;
   const q = dashboard?.quality;

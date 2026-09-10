@@ -102,7 +102,7 @@ export function IslamicIntelligenceSection() {
     }
   };
 
-  if (loading) return <p>جاري تحميل منصة الاستخبارات العلمية...</p>;
+  if (loading) return <p>تحديث اللوحة…</p>;
 
   const agents = dashboard?.agents ? Object.entries(dashboard.agents) : [];
 

@@ -57,7 +57,7 @@ function AyahText({ surah, ayah: ayahNum, surahName }: { surah: number; ayah: nu
       }}
     >
       {loading ? (
-        <span style={{ color: "#9ca3af", fontSize: "0.85rem" }}>جارٍ تحميل الآية...</span>
+        <span style={{ color: "#9ca3af", fontSize: "0.85rem" }}>تحديث الآية…</span>
       ) : (
         <>
           ﴿{text}﴾

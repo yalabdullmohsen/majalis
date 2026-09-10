@@ -181,7 +181,7 @@ export function SearchSuggestions({
       {showLoadingHint && (
         <div className="search-suggestions-panel" role="status" aria-live="polite">
           <div className="search-suggestions-group">
-            <p className="search-suggestions-group-label">جارٍ تحميل الاقتراحات…</p>
+            <p className="search-suggestions-group-label">تحديث الاقتراحات…</p>
           </div>
         </div>
       )}

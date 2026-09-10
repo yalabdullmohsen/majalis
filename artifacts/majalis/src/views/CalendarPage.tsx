@@ -127,7 +127,7 @@ function downloadIcs(content: string, filename: string) {
 
 function CalendarGridSkeleton() {
   return (
-    <div className="cal-month ui-card" aria-busy="true" aria-label="جاري تحميل التقويم">
+    <div className="cal-month ui-card" aria-busy="true" aria-label="تحديث التقويم">
       <div className="cal-weekdays">
         {CALENDAR_WEEKDAY_LABELS.map((d) => (
           <span key={d}>{d}</span>
