@@ -19,6 +19,8 @@ import { useSharedPrayerData } from "@/components/prayer/PrayerCountdownProvider
 import { recordRouteTransitionEnd, recordRouteTransitionStart } from "@/lib/route-transition-timing";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { PRAYER_ALERT_PREFS_CHANGED_EVENT } from "@/lib/prayer-alert-preferences";
+import { getActivePrayerLocation } from "@/lib/prayer-location-prefs";
+import { migratePrayerSettingsIfNeeded } from "@/lib/prayer-settings-migration";
 import { recordRecentPage } from "@/lib/recent-pages";
 import {
   captureScrollSnapshot,
@@ -393,8 +395,9 @@ function PrayerAlertSchedulerBootstrap() {
       });
     };
     let lastTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const prayerDayTz = () => getActivePrayerLocation().timeZone || "Asia/Kuwait";
     let lastDateKey = new Intl.DateTimeFormat("en-CA", {
-      timeZone: "Asia/Kuwait",
+      timeZone: prayerDayTz(),
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
@@ -402,7 +405,7 @@ function PrayerAlertSchedulerBootstrap() {
     const onClockTick = () => {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
       const dateKey = new Intl.DateTimeFormat("en-CA", {
-        timeZone: "Asia/Kuwait",
+        timeZone: prayerDayTz(),
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
@@ -824,9 +827,22 @@ function PrayerCountdownScope({
   );
 }
 
+
+function PrayerSettingsMigrationBoot() {
+  useEffect(() => {
+    try {
+      migratePrayerSettingsIfNeeded();
+    } catch {
+      /* ignore */
+    }
+  }, []);
+  return null;
+}
+
 function PrayerRuntimeBoot() {
   return (
     <>
+      <PrayerSettingsMigrationBoot />
       <IslamicReminderBootstrap />
       <AdhanSchedulerBootstrap />
       <PrayerAlertSchedulerBootstrap />

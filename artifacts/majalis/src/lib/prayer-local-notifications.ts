@@ -265,11 +265,13 @@ export async function schedulePrayerNativeNotifications(opts: {
         : "fajr") as "fajr" | "dhuhr" | "asr" | "maghrib" | "isha",
     );
 
+    const { getActivePrayerLocation } = await import("./prayer-location-prefs");
+    const displayTz = getActivePrayerLocation().timeZone || "Asia/Kuwait";
     const time24 =
       opts.prayerMinutesOfDay != null
         ? minutesToTime24(opts.prayerMinutesOfDay)
         : new Intl.DateTimeFormat("en-GB", {
-            timeZone: "Asia/Kuwait",
+            timeZone: displayTz,
             hour: "2-digit",
             minute: "2-digit",
             hour12: false,
@@ -453,7 +455,8 @@ export async function cancelAllPrayerNativeNotifications(): Promise<void> {
   if (!isNative) return;
   try {
     const { LocalNotifications } = await import("@capacitor/local-notifications");
-    const tz = "Asia/Kuwait";
+    const { getActivePrayerLocation } = await import("./prayer-location-prefs");
+    const tz = getActivePrayerLocation().timeZone || "Asia/Kuwait";
     const today = dateISOInZone(tz);
     const tomorrow = dateISOInZone(tz, new Date(Date.now() + 24 * 3600_000));
     const ids = allPrayerNotificationIdsForWindow([today, tomorrow]);
@@ -502,7 +505,8 @@ export async function cancelPrayerNativeNotifications(prayerKey: string): Promis
   if (!isNative) return;
   try {
     const { LocalNotifications } = await import("@capacitor/local-notifications");
-    const tz = "Asia/Kuwait";
+    const { getActivePrayerLocation } = await import("./prayer-location-prefs");
+    const tz = getActivePrayerLocation().timeZone || "Asia/Kuwait";
     const today = dateISOInZone(tz);
     const tomorrow = dateISOInZone(tz, new Date(Date.now() + 24 * 3600_000));
     await LocalNotifications.cancel({
@@ -517,6 +521,43 @@ export async function cancelPrayerNativeNotifications(prayerKey: string): Promis
         { id: hashPrayerNotificationId(prayerKey, tomorrow, "iqamah") },
       ],
     });
+  } catch {
+    /* تجاهل */
+  }
+}
+
+/**
+ * يُلغي فقط معلّقات الصلاة التي ليست ضمن مجموعة المعرّفات المطلوبة —
+ * يقلّل فجوة «إلغاء الكل ثم الفشل» أثناء إعادة الجدولة.
+ */
+export async function cancelPrayerNativeNotificationsExcept(
+  keepIds: ReadonlySet<number>,
+): Promise<void> {
+  if (!isNative) return;
+  try {
+    const { LocalNotifications } = await import("@capacitor/local-notifications");
+    const { notifications } = await LocalNotifications.getPending();
+    const toCancel: Array<{ id: number }> = [];
+    for (const n of notifications) {
+      if (keepIds.has(n.id)) continue;
+      const extra = (n.extra ?? {}) as {
+        kind?: string;
+        adhanSegment?: boolean;
+        friendlyKey?: string;
+        prayerKey?: string;
+      };
+      const pk = String(extra.prayerKey || "").toLowerCase();
+      const isPrayer =
+        String(extra.kind || "").startsWith("prayer-") ||
+        extra.adhanSegment === true ||
+        String(extra.friendlyKey || "").startsWith("adhan-") ||
+        (PRAYER_ORDER as readonly string[]).includes(pk);
+      if (isPrayer) toCancel.push({ id: n.id });
+    }
+    if (toCancel.length) {
+      await LocalNotifications.cancel({ notifications: toCancel });
+    }
+    await purgePastPrayerNativeNotifications();
   } catch {
     /* تجاهل */
   }

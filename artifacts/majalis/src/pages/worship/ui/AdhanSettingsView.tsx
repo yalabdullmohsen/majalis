@@ -51,6 +51,17 @@ import "@/styles/pages/adhan-settings.css";
 
 const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 30];
 
+
+/** أدوات مطور/تشخيص — لا تُعرض في الإصدار العام. */
+function useAdhanDeveloperTools(): boolean {
+  if (import.meta.env.DEV) return true;
+  try {
+    return new URLSearchParams(window.location.search).get("adhanDebug") === "1";
+  } catch {
+    return false;
+  }
+}
+
 const PRAYER_ICON_MAP: Record<string, LucideIcon> = {
   Moon, Sun, CloudSun, Sunset, CloudMoon,
 };
@@ -149,6 +160,7 @@ function AndroidAdhanNativeCard({
 }: {
   selectedMuezzinId: string;
 }) {
+  const showDeveloperTools = useAdhanDeveloperTools();
   const [perm, setPerm] = useState<{ exactAlarm: boolean; battery: boolean } | null>(null);
   const [permBusy, setPermBusy] = useState(false);
   const [fgsBusy, setFgsBusy] = useState(false);
@@ -226,7 +238,9 @@ function AndroidAdhanNativeCard({
           />
         </div>
         <div className="ads-prayer-muezzin-btns ads-sound-test-row">
-          <button
+          {showDeveloperTools ? (
+            <>
+            <button
             type="button"
             className="ads-pill-btn"
             disabled={permBusy}
@@ -250,6 +264,8 @@ function AndroidAdhanNativeCard({
           >
             {fgsBusy ? "…" : "تجربة خدمة الأذان"}
           </button>
+            </>
+          ) : null}
         </div>
         {fgsMsg ? (
           <p className="ads-adhan-desc" role="status">
@@ -302,6 +318,7 @@ function SoundOptionCard({
 }
 
 export default function AdhanSettingsPage() {
+  const showDeveloperTools = useAdhanDeveloperTools();
   const [prefs, setPrefs] = useState<AdhanPreferences>(() => {
     const loaded = loadAdhanPrefs();
     if (loaded.playbackMode === "full") {
@@ -767,6 +784,8 @@ export default function AdhanSettingsPage() {
             <button type="button" className="ads-pill-btn" onClick={() => void runNotifSoundTest()}>
               اختبار الإشعار بعد ١٠ ثوانٍ
             </button>
+            {showDeveloperTools ? (
+            <>
             <button
               type="button"
               className="ads-pill-btn"
@@ -791,7 +810,9 @@ export default function AdhanSettingsPage() {
             >
               حذف القديمة وإعادة الضبط
             </button>
-          </div>
+            </>
+          ) : null}
+            </div>
           {notifTestMsg ? <p className="ads-adhan-desc" role="status">{notifTestMsg}</p> : null}
           {statusLines ? (
             <ul className="ads-adhan-desc" role="status">

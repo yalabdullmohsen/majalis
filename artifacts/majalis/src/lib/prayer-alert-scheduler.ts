@@ -24,13 +24,18 @@ import {
 } from "./adhan-preferences";
 import {
   cancelAllPrayerNativeNotifications,
+  cancelPrayerNativeNotificationsExcept,
   listPendingPrayerNotifications,
   MAX_NATIVE_PRAYER_NOTIFS,
   purgePastPrayerNativeNotifications,
   schedulePrayerNativeNotifications,
   verifyPendingAgainstExpected,
 } from "./prayer-local-notifications";
-import { dateISOInZone } from "./prayer-notification-ids";
+import {
+  dateISOInZone,
+  hashPrayerNotificationId,
+  type PrayerNotifIdKind,
+} from "./prayer-notification-ids";
 import { startPrayerLiveActivity, markPrayerLiveActivityEntered, endPrayerLiveActivity } from "./plugins/prayer-live-activity";
 import type { PrayerSoundProfile } from "./prayer-notification-sounds";
 import { PRAYER_ALERT_EVENT_NAME, type PrayerAlertEvent } from "./prayer-alert-events";
@@ -208,11 +213,24 @@ async function rescheduleAllNativePrayers(
     prefs.alertsEnabled &&
     (prefs.preAlertEnabled || prefs.enterAlertEnabled || prefs.postReminderEnabled);
 
-  // قبل كل جدولة: إلغاء الكل ثم إعادة البناء
-  await cancelAllPrayerNativeNotifications();
+  if (!anyAlert) {
+    await cancelAllPrayerNativeNotifications();
+    await purgePastPrayerNativeNotifications();
+    return;
+  }
+
   await purgePastPrayerNativeNotifications();
 
-  if (!anyAlert) return;
+  /** معرّفات مطلوبة لهذه النافذة — لا نمسح الكل أولًا */
+  const keepIds = new Set<number>();
+  const kinds: PrayerNotifIdKind[] = ["pre", "enter", "post", "iqamah"];
+  for (const { slot, dateISO } of slots) {
+    const pk = slot.key.toLowerCase();
+    for (const kind of kinds) {
+      keepIds.add(hashPrayerNotificationId(pk, dateISO, kind));
+    }
+  }
+  await cancelPrayerNativeNotificationsExcept(keepIds);
 
   const expected: Array<{ prayerKey: string; atMs: number; kind: string }> = [];
   let budget = MAX_NATIVE_PRAYER_NOTIFS;

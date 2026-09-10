@@ -10,6 +10,7 @@
  * جيل جدولة (_scheduleGen) يمنع تداخل المؤقتات عند إعادة التشغيل المتزامنة.
  */
 
+import { loadPrayerAlertPrefs } from "./prayer-alert-preferences";
 import {
   calendarNoonInZone,
   epochAtZoneMinutes,
@@ -257,6 +258,22 @@ function scheduleForPrayer(
         prayerTimeLabel: slot.time,
       });
       return;
+    }
+
+    // NATIVE_ALERTS_OWN_AUDIO_V1: على iOS/Android الأصلي إشعار النظام يملك صوت دخول الوقت.
+    if (isNative) {
+      const alertPrefs = loadPrayerAlertPrefs();
+      if (alertPrefs.alertsEnabled && alertPrefs.enterAlertEnabled && effectiveMode !== "full") {
+        if (fresh.vibrateEnabled) void hapticTap("medium");
+        dispatchAdhanEvent({
+          type: "adhan",
+          prayerKey: key,
+          prayerName: slot.name,
+          cityName,
+          prayerTimeLabel: slot.time,
+        });
+        return;
+      }
     }
 
     const audio = playAdhan(muezzin, isFajr, effectiveMode, fresh.volume ?? 1);
