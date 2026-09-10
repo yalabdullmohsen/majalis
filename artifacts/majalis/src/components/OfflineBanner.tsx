@@ -74,14 +74,21 @@ export function OfflineBanner() {
         <>
           <WifiOff size={14} aria-hidden="true" className="offline-banner__icon" />
           <span className="offline-banner__text">
-            أنت غير متصل، سيتم عرض المحتوى المحفوظ
+            أنت غير متصل — يمكنك متابعة المحتوى المحفوظ
             {pending > 0 ? ` · ${pending} تغيير بانتظار المزامنة` : ""}
           </span>
+          <button
+            type="button"
+            className="offline-banner__retry mj-pressable"
+            onClick={() => window.location.reload()}
+          >
+            إعادة المحاولة
+          </button>
         </>
       ) : showPendingOnly ? (
         <>
           <RefreshCw size={14} aria-hidden="true" className="offline-banner__icon" />
-          <span className="offline-banner__text">محفوظ محليًا — جاري مزامنة {pending} عنصرًا</span>
+          <span className="offline-banner__text">محفوظ محليًا — تتم مزامنة {pending} عنصرًا</span>
         </>
       ) : (
         <>

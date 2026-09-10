@@ -74,24 +74,30 @@ export function FavoriteButton({
       }
 
       setMode("cloud");
-      if (bookmarked) {
-        await supabase
-          .from("bookmarks")
-          .delete()
-          .match({ user_id: user.id, content_type: contentType, content_id: contentId });
-        // أزل النسخة المحلية إن وُجدت لتفادي ازدواج الحالة
-        if (isLocalBookmarked(contentType, contentId)) {
-          toggleLocalBookmark({ contentType, contentId });
+      const previous = bookmarked;
+      // تحديث تفاؤلي فوري مع تراجع عند الفشل
+      setBookmarked(!previous);
+      try {
+        if (previous) {
+          const { error } = await supabase
+            .from("bookmarks")
+            .delete()
+            .match({ user_id: user.id, content_type: contentType, content_id: contentId });
+          if (error) throw error;
+          if (isLocalBookmarked(contentType, contentId)) {
+            toggleLocalBookmark({ contentType, contentId });
+          }
+        } else {
+          const { error } = await supabase.from("bookmarks").insert({
+            user_id: user.id,
+            content_type: contentType,
+            content_id: contentId,
+            title: title ?? null,
+          });
+          if (error) throw error;
         }
-        setBookmarked(false);
-      } else {
-        await supabase.from("bookmarks").insert({
-          user_id: user.id,
-          content_type: contentType,
-          content_id: contentId,
-          title: title ?? null,
-        });
-        setBookmarked(true);
+      } catch {
+        setBookmarked(previous);
       }
     } finally {
       setBusy(false);

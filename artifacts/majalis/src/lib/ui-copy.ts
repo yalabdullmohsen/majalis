@@ -31,6 +31,10 @@ export const EMPTY = {
   continue: "تابع من حيث توقفت",
   continueEmpty: "ابدأ رحلتك في طلب العلم",
   savedEmpty: "احفظ المواد المهمة لتعود إليها بسهولة.",
+  bookmarks: "لم تحفظ مواد بعد.",
+  downloads: "لا توجد مواد منزّلة.",
+  seriesLessons: "لا توجد دروس منشورة في هذه السلسلة حاليًا.",
+  offline: "تعذر الاتصال. يمكنك متابعة المحتوى المحفوظ.",
 } as const;
 
 export const SEARCH = {
@@ -66,6 +70,10 @@ export const ACTION = {
   continueListening: "أكمل استماعك",
   viewSeries: "انتقل إلى السلسلة",
   clearSearchHistory: "امسح سجل البحث",
+  browseContent: "استعرض المحتوى",
+  clearSearch: "مسح البحث",
+  browseMaterials: "استعرض المواد",
+  retryConnection: "إعادة المحاولة",
 } as const;
 
 

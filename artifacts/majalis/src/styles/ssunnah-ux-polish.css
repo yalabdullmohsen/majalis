@@ -812,7 +812,7 @@ html.dark .search-page .search-page-form {
 }
 
 /* هيكل فوري لمسار المسلم الجديد — بلا نص تحميل */
-.TMP {
+.dii-path-day--skel {
   min-height: 3.25rem;
   border-radius: var(--radius-card, 24px);
   background: linear-gradient(
@@ -824,7 +824,7 @@ html.dark .search-page .search-page-form {
   background-size: 200% 100%;
   animation: ss-skel-shimmer 1.2s ease-in-out infinite;
 }
-.TMP2 {
+.dii-path-list--skel {
   display: grid;
   gap: 0.65rem;
   margin: 0;
@@ -836,15 +836,31 @@ html.dark .search-page .search-page-form {
   100% { background-position: -100% 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .TMP { animation: none; }
+  .dii-path-day--skel { animation: none; }
 }
 .lrf-wrap--silent .lrf-label { display: none; }
 
-.dii-path-day--skel {
-  min-height: 3.25rem;
-  border-radius: var(--radius-card, 24px);
-  background: linear-gradient(90deg, var(--skeletonBase, rgba(22,36,30,.06)), var(--skeletonHighlight, rgba(22,36,30,.12)), var(--skeletonBase, rgba(22,36,30,.06)));
-  background-size: 200% 100%;
-  animation: ss-skel-shimmer 1.2s ease-in-out infinite;
+.mj-empty__action,
+.offline-banner__retry {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  margin-inline-start: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-md, 14px);
+  border: 1px solid color-mix(in srgb, var(--primary, #146b52) 28%, transparent);
+  background: var(--surface, #fffcf8);
+  color: var(--textPrimary, #16241e);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
 }
-.dii-path-list--skel { display:grid; gap:.65rem; margin:0; padding:0; list-style:none; }
+
+.offline-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}

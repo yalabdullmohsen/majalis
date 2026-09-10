@@ -69,10 +69,10 @@ export function AppBackButton({
     firedRef.current = true;
     haptics.selection();
     goBackOrFallback(location, fallbackHref);
-    // يسمح بضغطة لاحقة إن بقي المكوّن بعد فشل نادر
-    queueMicrotask(() => {
+    // قفل قصير يمنع النقر المزدوج دون تعطيل الرجوع اللاحق
+    window.setTimeout(() => {
       firedRef.current = false;
-    });
+    }, 420);
   };
 
   const showIcon = variant === "floating" || variant === "lobby" || variant === "inline";

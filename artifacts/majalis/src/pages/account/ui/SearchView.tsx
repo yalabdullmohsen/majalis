@@ -242,7 +242,7 @@ export default function SearchPage() {
     abortRef.current?.abort();
     const ctrl = new AbortController();
     abortRef.current = ctrl;
-    const q = raw.trim();
+    const q = raw.replace(/\s+/g, " ").trim();
     if (!q && nextScope === "all") {
       setResults([]);
       setSuggestions([]);
@@ -430,7 +430,7 @@ export default function SearchPage() {
                 inputRef.current?.focus();
               }}
             >
-              مسح البحث
+              {ACTION.clearSearch}
             </button>
           )}
           {suggestions.length > 0 ? (
