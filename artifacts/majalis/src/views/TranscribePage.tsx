@@ -22,7 +22,7 @@ type AnalysisResult = {
 const PENDING_WHISPER_TRANSCRIPT = "__pending_whisper__";
 
 export default function TranscribePage() {
-  const { isLoggedIn } = useAuth() as { isLoggedIn: boolean };
+  const { isLoggedIn, loading: authLoading } = useAuth();
   const [file, setFile] = useState<File | null>(null);
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [title, setTitle] = useState("");
@@ -99,6 +99,11 @@ export default function TranscribePage() {
     }
 
     const safeTitle = sanitizeText(title, 200);
+
+    if (authLoading) {
+      setErrorMessage("جاري تجهيز الحساب…");
+      return;
+    }
 
     if (!isLoggedIn) {
       setErrorMessage("يجب تسجيل الدخول أولاً.");
@@ -230,11 +235,15 @@ export default function TranscribePage() {
         <h1 className="trp-title">تفريغ الدروس</h1>
         <p className="trp-subtitle">حوّل الصوت والفيديو إلى نص مع تلخيص ذكي واستخراج الفوائد</p>
 
-        {!isLoggedIn && (
+        {authLoading ? (
+          <div className="trp-login-notice" role="status" aria-live="polite" aria-busy="true">
+            تجهيز الحساب…
+          </div>
+        ) : !isLoggedIn ? (
           <div className="trp-login-notice">
             يجب <Link href="/login?next=/transcribe" className="font-bold underline">تسجيل الدخول</Link> لاستخدام التفريغ.
           </div>
-        )}
+        ) : null}
 
         <div className="trp-tabs-nav">
           {[
@@ -342,7 +351,7 @@ export default function TranscribePage() {
           <button
             type="button"
             onClick={handleProcess}
-            disabled={!isLoggedIn || status === "uploading" || status === "processing"}
+            disabled={authLoading || !isLoggedIn || status === "uploading" || status === "processing"}
             className="trp-submit-btn"
           >
             {status === "uploading" || status === "processing" ? "جاري المعالجة..." : "ابدأ التحليل الذكي"}

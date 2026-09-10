@@ -37,4 +37,24 @@ const nav = readFileSync(resolve(root, "src/components/NavBar.tsx"), "utf8");
 assert.match(nav, /loading:\s*authLoading|authLoading/);
 assert.match(nav, /navbar-auth--pending|authLoading/);
 
+const continueWidget = readFileSync(
+  resolve(root, "src/components/home/HomeContinueWidget.tsx"),
+  "utf8",
+);
+assert.match(continueWidget, /loading:\s*authLoading/);
+assert.match(continueWidget, /authLoading[\s\S]*\? "loading"/);
+
+const recentProgress = readFileSync(resolve(root, "src/hooks/useRecentProgress.ts"), "utf8");
+assert.match(recentProgress, /loading:\s*authLoading/);
+assert.match(recentProgress, /if \(authLoading\)/);
+
+const transcribe = readFileSync(resolve(root, "src/views/TranscribePage.tsx"), "utf8");
+assert.match(transcribe, /loading:\s*authLoading/);
+assert.match(transcribe, /authLoading \?/);
+assert.doesNotMatch(
+  transcribe,
+  /\{!isLoggedIn && \(\s*<div className="trp-login-notice"/,
+  "لا إشعار دخول قبل اكتمال تهيئة الجلسة",
+);
+
 console.log("auth-session-status-gate.test.ts: ok");

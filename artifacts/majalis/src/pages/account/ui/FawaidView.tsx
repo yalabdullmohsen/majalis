@@ -66,7 +66,7 @@ export default function FawaidPage({
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [visibleCount, setVisibleCount] = useState(FAWAID_PAGE_SIZE);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
-  const { user, isLoggedIn, isAdmin } = useAuth();
+  const { user, isLoggedIn, isAdmin, loading: authLoading } = useAuth();
 
   // رابط `?cat=...` في JSON-LD أسفل هذه الصفحة نفسها كان يُتجاهَل كليًا:
   // `category` تُهيَّأ دائماً بـ"الكل" بلا قراءة أي شيء من الرابط الفعلي —
@@ -283,7 +283,7 @@ export default function FawaidPage({
         </p>
         <RelatedKnowledge kind="fawaid" title="فوائد ذات صلة" />
 
-        {isLoggedIn && (
+        {!authLoading && isLoggedIn && (
           <div className="ui-card content-submit-panel">
             <h2>أرسل فائدة</h2>
             {submitted ? (

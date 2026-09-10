@@ -80,7 +80,7 @@ function LoadingDots() {
 }
 
 export default function ScholarlyResearchPage() {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, loading: authLoading } = useAuth();
   const [view,      setView]      = useState<View>("search");
   const [query,     setQuery]     = useState("");
   const [intent,    setIntent]    = useState<string>("all");
@@ -128,13 +128,13 @@ export default function ScholarlyResearchPage() {
 
   // Load library when switching to library tab
   useEffect(() => {
-    if (view !== "library" || !isLoggedIn) return;
+    if (view !== "library" || authLoading || !isLoggedIn) return;
     setLibLoading(true);
     fetchResearchLibrary({ limit: 50 })
       .then(setLibrary)
       .catch(() => setLibrary([]))
       .finally(() => setLibLoading(false));
-  }, [view, isLoggedIn]);
+  }, [view, authLoading, isLoggedIn]);
 
   const handleSearch = useCallback(async (q: string) => {
     const trimmed = q.trim();
@@ -408,19 +408,23 @@ export default function ScholarlyResearchPage() {
         {/* ══════════════════════════ LIBRARY VIEW */}
         {view === "library" && (
           <div role="tabpanel" id="srp-panel-library" aria-labelledby="srp-tab-library" className="srp-library">
-            {!isLoggedIn && (
+            {authLoading ? (
+              <div className="srp-login-notice" role="status" aria-live="polite" aria-busy="true">
+                تجهيز الحساب…
+              </div>
+            ) : !isLoggedIn ? (
               <div className="srp-login-notice">
                 يجب <Link href="/login" className="underline font-medium">تسجيل الدخول</Link> لعرض مكتبتك البحثية الخاصة.
               </div>
-            )}
+            ) : null}
 
-            {isLoggedIn && libLoading && (
+            {!authLoading && isLoggedIn && libLoading && (
               <div className="srp-empty" role="status" aria-live="polite">
                 تجهيز…
               </div>
             )}
 
-            {isLoggedIn && !libLoading && library.length === 0 && (
+            {!authLoading && isLoggedIn && !libLoading && library.length === 0 && (
               <div className="srp-empty">
                 <Inbox size={40} strokeWidth={1.3} aria-hidden="true" className="srp-empty__icon" />
                 <p>لم تحفظ أي بحث بعد.</p>
@@ -430,7 +434,7 @@ export default function ScholarlyResearchPage() {
               </div>
             )}
 
-            {isLoggedIn && !libLoading && library.map((item) => (
+            {!authLoading && isLoggedIn && !libLoading && library.map((item) => (
               <div key={item.id} className="srp-lib-item">
                 <div className="srp-lib-item__head">
                   <h3 className="srp-lib-title">{item.title || item.query_text}</h3>
