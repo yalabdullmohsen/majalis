@@ -49,7 +49,9 @@ export function AppBackButton({
   ...rest
 }: AppBackButtonProps) {
   const [location] = useLocation();
-  const firedRef = useRef(false);
+  /** قفل زمني بلا setTimeout — يتوافق مع بوابة الرجوع العائم */
+  const lastBackAtRef = useRef(0);
+  const BACK_LOCK_MS = 420;
 
   if (variant === "floating" && autoHideFloating) {
     const path = normalizeNavPath(location);
@@ -65,14 +67,11 @@ export function AppBackButton({
   }
 
   const goBack = () => {
-    if (firedRef.current) return;
-    firedRef.current = true;
+    const now = Date.now();
+    if (now - lastBackAtRef.current < BACK_LOCK_MS) return;
+    lastBackAtRef.current = now;
     haptics.selection();
     goBackOrFallback(location, fallbackHref);
-    // قفل قصير يمنع النقر المزدوج دون تعطيل الرجوع اللاحق
-    window.setTimeout(() => {
-      firedRef.current = false;
-    }, 420);
   };
 
   const showIcon = variant === "floating" || variant === "lobby" || variant === "inline";

@@ -23,8 +23,9 @@ const bottom = read("src/components/BottomNavBar.tsx");
 assert.match(bottom, /shouldAllowNavigation/, "الشريط السفلي يستخدم حارس النقر");
 
 const back = read("src/components/common/AppBackButton.tsx");
-assert.match(back, /setTimeout/, "قفل رجوع زمني");
-assert.match(back, /420/, "مدة قفل الرجوع 420ms");
+assert.doesNotMatch(back, /window\.setTimeout|setTimeout\s*\(/, "بلا setTimeout في زر الرجوع");
+assert.match(back, /BACK_LOCK_MS\s*=\s*420|420/, "مدة قفل الرجوع 420ms");
+assert.match(back, /lastBackAtRef|Date\.now\(\)/, "قفل رجوع زمني فوري");
 
 const copy = read("src/lib/ui-copy.ts");
 assert.match(copy, /bookmarks:\s*"/, "نص فارغ للمحفوظات");

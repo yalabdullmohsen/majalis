@@ -864,3 +864,34 @@ html.dark .search-page .search-page-form {
   align-items: center;
   gap: 0.5rem;
 }
+/* reader bottom clearance — يمنع تغطية آخر فقرة بالشريط السفلي */
+.reader-screen,
+.page-reader,
+.list-screen--reader,
+.ds-screen--reader,
+.article-body,
+.hadith-detail,
+.lesson-detail-body {
+  padding-bottom: max(
+    1.5rem,
+    calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 1.25rem)
+  );
+}
+
+/* a11y: تركيز واضح في الإعدادات والاختيارات */
+.settings-page .settings-choice:focus-visible,
+.settings-page .settings-toggle-row input:focus-visible,
+.settings-page button:focus-visible,
+.settings-page a:focus-visible,
+.legal-section a:focus-visible {
+  outline: 2px solid var(--ss-primary-green, var(--mj-brand));
+  outline-offset: 2px;
+}
+
+/* أداء قوائم طويلة — المصحف مستثنى عبر عدم استهداف .mushaf */
+.list-screen .content-card,
+.section-lobby__grid > *,
+.more-hub-grid > * {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 120px;
+}
