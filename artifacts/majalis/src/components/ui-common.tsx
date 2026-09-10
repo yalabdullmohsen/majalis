@@ -2,6 +2,7 @@ import { AlertTriangle, RefreshCw } from "lucide-react";
 import { Link } from "wouter";
 import { C } from "@/lib/theme";
 import type { ShariaRulingExtended } from "@/lib/rulings-types";
+import { ACTION, BUTTON, STATUS } from "@/lib/ui-copy";
 
 /* ── Skeleton primitives ── */
 
@@ -27,7 +28,7 @@ export function SkeletonCard() {
 /** شبكة بطاقات هيكلية */
 export function SkeletonCardGrid({ count = 6 }: { count?: number }) {
   return (
-    <div role="status" aria-busy="true" aria-live="polite" aria-label="تجهيز المحتوى">
+    <div role="status" aria-busy="true" aria-live="polite" aria-label={STATUS.contentLoading}>
       <div className="sk-card-grid" aria-hidden="true">
         {Array.from({ length: count }).map((_, i) => <SkeletonCard key={i} />)}
       </div>
@@ -38,7 +39,7 @@ export function SkeletonCardGrid({ count = 6 }: { count?: number }) {
 /** جدول هيكلي: رأس + صفوف */
 export function SkeletonTable({ rows = 5, cols = 4 }: { rows?: number; cols?: number }) {
   return (
-    <div role="status" aria-busy="true" aria-live="polite" aria-label="تجهيز المحتوى">
+    <div role="status" aria-busy="true" aria-live="polite" aria-label={STATUS.contentLoading}>
       <div className="sk-table" aria-hidden="true">
         <div className="sk-table__head">
           {Array.from({ length: cols }).map((_, i) => (
@@ -60,7 +61,7 @@ export function SkeletonTable({ rows = 5, cols = 4 }: { rows?: number; cols?: nu
 /** حالة تحميل صفحة تفصيلية — مقال أو محتوى مفرد */
 export function SkeletonPage({ title }: { title?: string } = {}) {
   return (
-    <div role="status" aria-busy="true" aria-live="polite" aria-label="تجهيز المحتوى">
+    <div role="status" aria-busy="true" aria-live="polite" aria-label={STATUS.contentLoading}>
       {title ? <h1 className="page-status-shell__title">{title}</h1> : null}
       <div className="sk-page sk-page--article" aria-hidden="true">
         <div className="ds-skeleton sk-page__meta" />
@@ -122,14 +123,20 @@ export function PageStatusShell({
 }
 
 export function ErrorState({ text, onRetry }: { text: string; onRetry?: () => void }) {
+  const offline =
+    typeof navigator !== "undefined" &&
+    navigator.onLine === false &&
+    (!text?.trim() || /fetch|network|offline|timeout/i.test(text));
   const safe =
-    !text?.trim() ||
-    /fetch|network|timeout|TypeError|ECONN|supabase|stack|undefined|null is not|500|502|503|404|CORS|JWT/i.test(
-      text,
-    ) ||
-    text.length > 140
-      ? "تعذر تحميل المحتوى. حاول مرة أخرى."
-      : text;
+    offline
+      ? STATUS.networkError
+      : !text?.trim() ||
+          /fetch|network|timeout|TypeError|ECONN|supabase|stack|undefined|null is not|500|502|503|404|CORS|JWT/i.test(
+            text,
+          ) ||
+          text.length > 140
+        ? STATUS.loadError
+        : text;
 
   return (
     <div className="adv-error-state ss-state-card" role="alert" aria-live="assertive" dir="rtl">
@@ -140,10 +147,10 @@ export function ErrorState({ text, onRetry }: { text: string; onRetry?: () => vo
           type="button"
           className="adv-error-state__retry ss-action-btn ss-action-btn--primary mj-pressable"
           onClick={onRetry}
-          aria-label="إعادة المحاولة"
+          aria-label={ACTION.retry}
         >
           <RefreshCw size={14} aria-hidden="true" />
-          إعادة المحاولة
+          {BUTTON.retry}
         </button>
       )}
     </div>

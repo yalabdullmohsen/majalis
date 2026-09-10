@@ -4,6 +4,7 @@ import { useRecentProgress } from "@/hooks/useRecentProgress";
 import { useAuth } from "@/components/AuthProvider";
 import { Widget, type WidgetState } from "@/components/widgets/Widget";
 import type { ContentType } from "@/lib/user-progress-service";
+import { EMPTY, ACTION } from "@/lib/ui-copy";
 
 const ICONS: Record<ContentType, typeof BookOpen> = {
   lesson: PlayCircle,
@@ -45,16 +46,16 @@ export function HomeContinueWidget() {
     <Widget
       id="continue"
       eyebrow="متابعة التعلم"
-      title="متابعة القراءة / الاستماع"
-      description="آخر الدروس والمحتويات التي توقفت عندها."
+      title="متابعة من حيث توقفت"
+      description="آخر الدروس والمحتويات التي كنت تتابعها."
       moreHref="/my-learning"
-      moreLabel="كل نشاطي"
+      moreLabel={ACTION.continueListening}
       state={state}
       skeletonRows={3}
       emptyIcon={EmptyIcon}
-      emptyMessage="لا يوجد نشاط تعلّم بعد."
+      emptyMessage={EMPTY.continueEmpty}
       emptyCtaHref="/lessons"
-      emptyCtaLabel="تصفّح الدروس"
+      emptyCtaLabel={ACTION.browseAll}
       authMessage="سجّل الدخول لمتابعة آخر ما كنت تتعلّمه."
     >
       <div className="hcw-grid">

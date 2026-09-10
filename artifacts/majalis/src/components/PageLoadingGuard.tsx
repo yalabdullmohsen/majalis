@@ -70,7 +70,7 @@ export function PageLoadingGuard({
       <ErrorState
         text={
           offline
-            ? "أنت غير متصل بالإنترنت. اتصل بالشبكة ثم أعد المحاولة."
+            ? STATUS.networkError
             : "التحميل يستغرق وقتًا أطول من المعتاد. أعد المحاولة أو انتظر قليلًا."
         }
         onRetry={onRetry}

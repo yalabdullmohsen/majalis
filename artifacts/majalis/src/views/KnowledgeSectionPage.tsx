@@ -94,8 +94,8 @@ export default function KnowledgeSectionPage() {
 
   if (loading) {
     return (
-      <div className="page-shell narrow" dir="rtl" role="status" aria-busy="true" aria-label="تجهيز الصفحة">
-        <PageHeader eyebrow="معرفة" title="تجهيز الصفحة…" />
+      <div className="page-shell narrow" dir="rtl" role="status" aria-busy="true" aria-label="جارٍ تحميل المحتوى">
+        <PageHeader eyebrow="معرفة" title="جارٍ تحميل المحتوى" />
         <div className="skeleton-base hp-skel" aria-hidden="true" style={{ minHeight: "8rem" }} />
       </div>
     );

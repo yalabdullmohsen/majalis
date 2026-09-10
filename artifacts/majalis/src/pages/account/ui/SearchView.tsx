@@ -32,6 +32,7 @@ import {
 } from "@/features/search";
 import "@/styles/pages/search.css";
 import "@/styles/pages/search-legacy.css";
+import { ACTION, EMPTY, SEARCH } from "@/lib/ui-copy";
 
 const SCOPE_ICONS = {
   quran: BookOpen,
@@ -313,8 +314,8 @@ export default function SearchPage() {
             ref={inputRef}
             {...SEARCH_INPUT_ATTRS}
             value={term}
-            placeholder="ابحث في المحتوى..."
-            aria-label="ابحث في المحتوى"
+            placeholder={SEARCH.placeholder}
+            aria-label={SEARCH.placeholder}
             onChange={(e) => setTerm(e.target.value)}
             onKeyDown={(e) => handleSearchEnterKey(e, { onSearch: () => submit(term) })}
           />
@@ -388,7 +389,7 @@ export default function SearchPage() {
                     setRecent([]);
                   }}
                 >
-                  مسح الكل
+                  {ACTION.clearSearchHistory}
                 </button>
               </div>
               <div className="srch-history-chips">
@@ -412,9 +413,8 @@ export default function SearchPage() {
           <p className="search-no-results__msg ss-state-card__title">
             {scope !== "all"
               ? "لا توجد نتائج في هذا القسم."
-              : `لم نجد نتيجة مطابقة لـ «${term}».`}
+              : EMPTY.search}
           </p>
-          <p className="search-no-results__hint">جرّب كلمة أخرى أو اختصر البحث.</p>
           {scope !== "all" ? (
             <button type="button" className="srch-home-submit ss-action-btn ss-action-btn--primary mj-pressable" onClick={() => setScope("all")}>
               ابحث في الكل

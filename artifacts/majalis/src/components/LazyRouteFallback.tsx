@@ -1,7 +1,9 @@
 /**
- * هيكل مسار كسول — يظهر فورًا بلا فراغ أثناء تحميل الحزمة.
- * هيكل ذاتي بلا أيقونات خارجية حتى تبقى حزمة الإقلاع خفيفة (LCP).
+ * هيكل مسار كسول — منطقة المحتوى فقط أثناء تحميل حزمة الصفحة.
+ * لا يشبه الرئيسية (بلا بحث/ورد/بطاقات كبيرة) ولا يُعيد رسم الكروم.
  */
+import { STATUS } from "@/lib/ui-copy";
+
 export function LazyRouteFallback() {
   const path =
     typeof window !== "undefined" ? window.location.pathname.split("?")[0] || "/" : "/";
@@ -14,6 +16,7 @@ export function LazyRouteFallback() {
         "lrf-wrap",
         "lrf-wrap--skel",
         "lrf-wrap--instant",
+        "lrf-wrap--page",
         prophetsShell ? "lrf-wrap--prophets" : "",
         prophetDetail ? "lrf-wrap--prophet-detail" : "",
       ]
@@ -21,22 +24,19 @@ export function LazyRouteFallback() {
         .join(" ")}
       role="status"
       aria-busy="true"
-      aria-label="تجهيز الصفحة"
+      aria-label={STATUS.contentLoading}
       data-prophets-shell={prophetsShell ? "1" : undefined}
       data-route-fallback="1"
     >
-      <div className="lrf-skel" aria-hidden="true">
-        <div className="lrf-skel__hero" />
+      <div className="lrf-skel lrf-skel--page" aria-hidden="true">
+        <div className="lrf-skel__eyebrow" />
         <div className="lrf-skel__title" />
         <div className="lrf-skel__line" />
         <div className="lrf-skel__line lrf-skel__line--short" />
-        <div className="lrf-skel__cards">
-          {Array.from({ length: 6 }, (_, i) => (
-            <div key={i} className="lrf-skel__card" />
-          ))}
-        </div>
+        <div className="lrf-skel__block" />
+        <div className="lrf-skel__block lrf-skel__block--short" />
       </div>
-      <p className="lrf-label">تجهيز الصفحة…</p>
+      <p className="lrf-label">{STATUS.contentLoading}</p>
     </div>
   );
 }

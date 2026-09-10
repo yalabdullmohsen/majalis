@@ -115,6 +115,19 @@
   --ds-muted: var(--text-muted);
   --ds-danger: var(--danger);
   --ds-success: var(--success);
+  --ds-warning: var(--warning);
+  --ds-disabled: color-mix(in srgb, var(--text-muted) 55%, transparent);
+  --ds-skeletonBase: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  --ds-skeletonHighlight: color-mix(in srgb, var(--text-primary) 14%, transparent);
+  --ds-overlay: color-mix(in srgb, var(--mj-ink, #16241e) 42%, transparent);
+  --ds-divider: var(--border);
+
+  /* حركة موحّدة */
+  --motion-fast: 120ms;
+  --motion-normal: 220ms;
+  --motion-slow: 350ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
 
   /*
    * أسماء منتج سُنّة (ثابتة للمكوّنات الجديدة) — جسر فقط، بلا ألوان مكرّرة.
