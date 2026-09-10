@@ -27,16 +27,19 @@ function ProgressBar({ pct }: { pct: number }) {
  * لتسجيل الدخول بدل الاختفاء الصامت (2026-07-18).
  */
 export function HomeContinueWidget() {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, loading: authLoading } = useAuth();
   const { items, loading } = useRecentProgress(4);
 
-  const state: WidgetState = !isLoggedIn
-    ? "auth-required"
-    : loading
-      ? "loading"
-      : items.length === 0
-        ? "empty"
-        : "ready";
+  // أثناء initializing لا نعرض «سجّل الدخول» ثم نقلب فجأة — هيكل تحميل ثابت
+  const state: WidgetState = authLoading
+    ? "loading"
+    : !isLoggedIn
+      ? "auth-required"
+      : loading
+        ? "loading"
+        : items.length === 0
+          ? "empty"
+          : "ready";
 
   return (
     <Widget

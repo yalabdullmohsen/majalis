@@ -14,20 +14,22 @@ type Props = {
 };
 
 export function ScholarFollowButton({ sheikhId, compact = false }: Props) {
-  const { user, isLoggedIn } = useAuth();
+  const { user, isLoggedIn, loading: authLoading } = useAuth();
   const [following, setFollowing] = useState(false);
   const [count, setCount] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!sheikhId) return;
+    if (!sheikhId || authLoading) return;
     getFollowerCount(sheikhId).then(setCount).catch(() => {});
     if (isLoggedIn && user?.id) {
       isFollowingSheikh(user.id, sheikhId).then(setFollowing).catch(() => {});
+    } else {
+      setFollowing(false);
     }
-  }, [sheikhId, isLoggedIn, user?.id]);
+  }, [sheikhId, authLoading, isLoggedIn, user?.id]);
 
-  if (!isLoggedIn) return null;
+  if (authLoading || !isLoggedIn) return null;
 
   const toggle = async () => {
     if (!user?.id || loading) return;

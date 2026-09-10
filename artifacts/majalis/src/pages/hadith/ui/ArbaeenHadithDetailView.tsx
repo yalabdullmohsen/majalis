@@ -21,7 +21,7 @@ import "@/styles/pages/arbaeen-detail.css";
  */
 export default function ArbaeenHadithDetailPage() {
   const params = useParams<{ id: string }>();
-  const { user, isLoggedIn } = useAuth();
+  const { user, isLoggedIn, loading: authLoading } = useAuth();
   const hadithId = Math.min(42, Math.max(1, Number(params.id) || 1));
   const hadith = ARBAEEN_NAWAWI.find((h) => h.id === hadithId) ?? ARBAEEN_NAWAWI[0];
 
@@ -55,13 +55,13 @@ export default function ArbaeenHadithDetailPage() {
   }, [hadith]);
 
   useEffect(() => {
-    if (!isLoggedIn || !user?.id) return;
+    if (authLoading || !isLoggedIn || !user?.id) return;
     let cancelled = false;
     fetchArbaeenReviewStates(user.id).then((states) => {
       if (!cancelled) setReviewState(states.get(hadith.id));
     });
     return () => { cancelled = true; };
-  }, [isLoggedIn, user?.id, hadith.id]);
+  }, [authLoading, isLoggedIn, user?.id, hadith.id]);
 
   function startQuiz() {
     setQuizOpen(true);
@@ -139,7 +139,9 @@ export default function ArbaeenHadithDetailPage() {
       ) : quizDone ? (
         <div className="ahd-quiz-result">
           <p className="ahd-quiz-result__score">{quizScore.correct} / {quizScore.total} صحيحة</p>
-          {isLoggedIn ? (
+          {authLoading ? (
+            <p className="ahd-quiz-result__login" role="status" aria-busy="true">تجهيز الحساب…</p>
+          ) : isLoggedIn ? (
             <>
               <p className="ahd-quiz-result__prompt">كيف كان مستوى تذكّرك لهذا الحديث؟</p>
               <div className="ahd-quiz-result__buttons">

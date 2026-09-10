@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { Scale } from "lucide-react";
 import { Link, useSearch } from "wouter";
@@ -87,6 +87,7 @@ export default function QaPage({
   const [filtersOpen, setFiltersOpen] = useState(false);
   const debouncedSearch = useDebouncedValue(search);
   const urlSearch = useSearch();
+  const questionsKeyRef = useRef<string | null>(null);
 
   const items = useMemo(() => normalizeQaItems(rawItems), [rawItems]);
 
@@ -153,12 +154,18 @@ export default function QaPage({
 
   const loadQuestions = useCallback(async () => {
     setLoading(true);
+    const dedupeKey = `qa:questions:${categorySlug}:${debouncedSearch.trim()}`;
+    if (questionsKeyRef.current) RequestManager.cancel(questionsKeyRef.current);
+    questionsKeyRef.current = dedupeKey;
     try {
-      const { data } = await RequestManager.run("qa:questions", () =>
-        getQaQuestions({
-          categoryId: categorySlug === "all" ? undefined : categorySlug,
-          search: debouncedSearch,
-        }),
+      const { data } = await RequestManager.run(
+        dedupeKey,
+        () =>
+          getQaQuestions({
+            categoryId: categorySlug === "all" ? undefined : categorySlug,
+            search: debouncedSearch,
+          }),
+        { dedupeKey },
       );
       if (data.length > 0) {
         setRawItems(data);

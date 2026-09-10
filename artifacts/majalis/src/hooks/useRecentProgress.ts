@@ -39,11 +39,15 @@ export function localProgressSeed(limit = 6): ProgressRow[] {
 }
 
 export function useRecentProgress(limit = 6) {
-  const { user, isLoggedIn } = useAuth();
+  const { user, isLoggedIn, loading: authLoading } = useAuth();
   const [items, setItems] = useState<ProgressRow[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (authLoading) {
+      setLoading(true);
+      return;
+    }
     if (!isLoggedIn || !user?.id) {
       setItems([]);
       setLoading(false);
@@ -68,7 +72,7 @@ export function useRecentProgress(limit = 6) {
     return () => {
       cancelled = true;
     };
-  }, [isLoggedIn, user?.id, limit]);
+  }, [authLoading, isLoggedIn, user?.id, limit]);
 
-  return { items, loading };
+  return { items, loading: authLoading || loading };
 }

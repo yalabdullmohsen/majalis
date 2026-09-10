@@ -15,12 +15,12 @@ type ResumeHint = {
  * Shows when cloud resume mushaf page differs from local last page.
  */
 export function CrossDeviceResumeToast() {
-  const { user, isLoggedIn } = useAuth();
+  const { user, isLoggedIn, loading: authLoading } = useAuth();
   const [, navigate] = useLocation();
   const [hint, setHint] = useState<ResumeHint | null>(null);
 
   useEffect(() => {
-    if (!isLoggedIn || !user?.id) return;
+    if (authLoading || !isLoggedIn || !user?.id) return;
     let cancelled = false;
     void (async () => {
       try {
@@ -60,7 +60,7 @@ export function CrossDeviceResumeToast() {
     return () => {
       cancelled = true;
     };
-  }, [isLoggedIn, user?.id]);
+  }, [authLoading, isLoggedIn, user?.id]);
 
   if (!hint) return null;
 

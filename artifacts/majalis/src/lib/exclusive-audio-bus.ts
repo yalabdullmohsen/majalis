@@ -8,6 +8,7 @@ export type AudioBusOwner =
   | "adhan"
   | "majlis"
   | "recitation"
+  | "lesson"
   | "other";
 
 type Stopper = () => void | Promise<void>;

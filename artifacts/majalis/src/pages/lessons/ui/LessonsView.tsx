@@ -243,7 +243,7 @@ export default function LessonsPage({
   const [searchOpen, setSearchOpen] = useState(() => Boolean(filters.search.trim()));
   const [myReg, setMyReg] = useState<string[]>([]);
   const [, setTab] = useTabFromUrl();
-  const { user, isLoggedIn, isAdmin } = useAuth();
+  const { user, isLoggedIn, isAdmin, loading: authLoading } = useAuth();
 
   useEffect(() => {
     setFilters((prev) => (prev.search === debouncedSearch ? prev : { ...prev, search: debouncedSearch }));
@@ -318,10 +318,23 @@ export default function LessonsPage({
   }, [initialActive]);
 
   useEffect(() => {
-    if (isLoggedIn && user?.id) {
-      getMyRegistrations(user.id).then(setMyReg).catch(() => setMyReg([]));
+    if (authLoading) return;
+    if (!isLoggedIn || !user?.id) {
+      setMyReg([]);
+      return;
     }
-  }, [isLoggedIn, user]);
+    let cancelled = false;
+    getMyRegistrations(user.id)
+      .then((rows) => {
+        if (!cancelled) setMyReg(rows);
+      })
+      .catch(() => {
+        if (!cancelled) setMyReg([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [authLoading, isLoggedIn, user]);
 
   useEffect(() => {
     const scrollToList = () => {

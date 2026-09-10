@@ -37,17 +37,24 @@ export function FiqhCouncilSearchBox({
       setOpen(false);
       return;
     }
+    let cancelled = false;
     setLoading(true);
     Promise.all([
       searchFiqhCouncil(debounced, 8),
       getFiqhSearchSuggestions(debounced),
     ])
       .then(([searchRes, sugg]) => {
+        if (cancelled) return;
         setResults(searchRes.data);
         setSuggestions(sugg);
         setOpen(true);
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [debounced]);
 
   return (

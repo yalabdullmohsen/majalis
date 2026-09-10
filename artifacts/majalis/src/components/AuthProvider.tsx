@@ -128,6 +128,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 setStatus("unauthenticated");
                 queryClient.clear();
               }
+              void import("@/lib/quran-audio-resume").then((m) => m.clearAudioResumeState());
+              void import("@/lib/lesson-audio-resume").then((m) => m.clearAllLessonAudioResume());
               return;
             }
 
@@ -208,6 +210,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
     setStatus("unauthenticated");
     queryClient.clear();
+    void import("@/lib/quran-audio-resume").then((m) => m.clearAudioResumeState());
+    void import("@/lib/lesson-audio-resume").then((m) => m.clearAllLessonAudioResume());
     try {
       return await authApi.signOut();
     } catch (error) {

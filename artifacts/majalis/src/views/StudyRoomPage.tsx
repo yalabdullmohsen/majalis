@@ -97,7 +97,7 @@ function SessionHistory({ sessions }: { sessions: StudySession[] }) {
 // ─── Main page ────────────────────────────────────────────────────────────────
 
 export default function StudyRoomPage() {
-  const { user, isLoggedIn } = useAuth();
+  const { user, isLoggedIn, loading: authLoading } = useAuth();
 
   useEffect(() => {
     applyPageSeo({
@@ -153,8 +153,9 @@ export default function StudyRoomPage() {
   }, [user?.id]);
 
   useEffect(() => {
-    if (isLoggedIn) refreshStats();
-  }, [isLoggedIn, refreshStats]);
+    if (authLoading || !isLoggedIn) return;
+    refreshStats();
+  }, [authLoading, isLoggedIn, refreshStats]);
 
   // Reset timer when preset changes (only when idle)
   useEffect(() => {
@@ -296,18 +297,16 @@ export default function StudyRoomPage() {
         )}
       </div>
 
-      {/* Stats */}
-      {isLoggedIn ? (
-        loadingData ? (
-          <div className="profile-loading stp-loading-center">
-            <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
-          </div>
-        ) : (
-          <>
-            {stats && <StatsPanel stats={stats} />}
-            <SessionHistory sessions={sessions} />
-          </>
-        )
+      {/* Stats — لا دعوة دخول أثناء تهيئة الجلسة */}
+      {authLoading || (isLoggedIn && loadingData) ? (
+        <div className="profile-loading stp-loading-center" role="status" aria-live="polite" aria-busy="true">
+          <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
+        </div>
+      ) : isLoggedIn ? (
+        <>
+          {stats && <StatsPanel stats={stats} />}
+          <SessionHistory sessions={sessions} />
+        </>
       ) : (
         <div className="sr-login-hint">
           <Link href="/login?next=/study-room">سجّل الدخول</Link> لحفظ جلسات دراستك وعرض إحصاءاتك.

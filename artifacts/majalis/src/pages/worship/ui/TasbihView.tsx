@@ -32,7 +32,7 @@ function writeAwrad(items: TasbeehWird[]) {
 }
 
 export default function TasbihPage() {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, loading: authLoading } = useAuth();
   const [items, setItems] = useState<TasbeehWird[]>(() => readTasbeehAwrad());
   const [activeId, setActiveId] = useState(() => readTasbeehAwrad()[0]?.id || DEFAULT_TASBEEH_AWRAD[0].id);
   const [newPhrase, setNewPhrase] = useState("");
@@ -241,10 +241,12 @@ export default function TasbihPage() {
         </div>
       </section>
 
-      <div className="tasbih-offline-note">
-        {isLoggedIn
-          ? "يُحفظ محلياً ويُزامَن مع حسابك عند التحديث."
-          : "يُحفظ في هذا الجهاز. سجّل الدخول للمزامنة مع حسابك."}
+      <div className="tasbih-offline-note" aria-live="polite">
+        {authLoading
+          ? "جاري تجهيز الحساب…"
+          : isLoggedIn
+            ? "يُحفظ محلياً ويُزامَن مع حسابك عند التحديث."
+            : "يُحفظ في هذا الجهاز. سجّل الدخول للمزامنة مع حسابك."}
       </div>
 
       <div className="twh-share">

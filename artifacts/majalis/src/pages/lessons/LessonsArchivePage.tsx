@@ -8,6 +8,7 @@ import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { applyPageSeo } from "@/lib/seo";
 import { getUnifiedLessonsSplit } from "@/lib/lessons-service";
 import { RequestManager } from "@/lib/request-manager";
+import { beginAbortScope, abortScope } from "@/lib/route-abort";
 import {
   DEFAULT_KUWAIT_FILTERS,
   filterKuwaitLessons,
@@ -58,15 +59,31 @@ export default function LessonsArchivePage() {
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
+    const signal = beginAbortScope("lessons:archive");
     setLoading(true);
     setLoadError(null);
-    RequestManager.run("lessons:archive-split", () => getUnifiedLessonsSplit())
-      .then(({ archived: rows }) => setArchived(rows))
+    RequestManager.run(
+      "lessons:archive-split",
+      () => getUnifiedLessonsSplit(),
+      { signal, dedupeKey: "lessons:archive-split" },
+    )
+      .then(({ archived: rows }) => {
+        if (!cancelled) setArchived(rows);
+      })
       .catch((err) => {
+        if (cancelled || (err as Error)?.name === "AbortError") return;
         setLoadError(String((err as Error)?.message || err));
         setArchived([]);
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+      abortScope("lessons:archive");
+      RequestManager.cancel("lessons:archive-split");
+    };
   }, []);
 
   const filtered = useMemo(

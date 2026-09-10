@@ -6,6 +6,8 @@ import { PageShell } from "@/components/layout/PageShell";
 import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { getUnifiedLessonsSplit } from "@/lib/lessons-service";
+import { RequestManager } from "@/lib/request-manager";
+import { beginAbortScope, abortScope } from "@/lib/route-abort";
 import { buildTeachersFromLessons } from "@/lib/teachers-index";
 import { hrefTeachers } from "@/lib/content-href";
 import { toArabicDigits } from "@/lib/utils";
@@ -27,10 +29,29 @@ export default function TeachersIndexPage() {
   }, []);
 
   useEffect(() => {
-    getUnifiedLessonsSplit()
-      .then(({ lessons }) => setTeachers(buildTeachersFromLessons(lessons)))
-      .catch(() => setTeachers([]))
-      .finally(() => setLoading(false));
+    let cancelled = false;
+    const signal = beginAbortScope("teachers:index");
+    setLoading(true);
+    RequestManager.run(
+      "teachers:index-split",
+      () => getUnifiedLessonsSplit(),
+      { signal, dedupeKey: "teachers:index-split" },
+    )
+      .then(({ lessons }) => {
+        if (!cancelled) setTeachers(buildTeachersFromLessons(lessons));
+      })
+      .catch((err) => {
+        if (cancelled || (err as Error)?.name === "AbortError") return;
+        setTeachers([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+      abortScope("teachers:index");
+      RequestManager.cancel("teachers:index-split");
+    };
   }, []);
 
   const filtered = useMemo(() => {

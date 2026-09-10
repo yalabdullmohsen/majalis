@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { BookOpen, Headphones } from "lucide-react";
 import { getSurahMeta, loadPagePosition, loadReadingAyahKey } from "@/lib/quran-api";
-import { loadAudioResumeState } from "@/lib/quran-audio-resume";
+import { AUDIO_RESUME_CHANGED_EVENT, loadAudioResumeState } from "@/lib/quran-audio-resume";
 import { getContinueReadingEntries, type ContinueSection } from "@/lib/continue-reading";
 import { ayahKeyToPage } from "@/lib/quran-my-bookmarks";
 import { toArabicDigits } from "@/lib/utils";
@@ -92,9 +92,11 @@ export function HomeLocalResumeCard() {
   useEffect(() => {
     const refresh = () => setItems(buildItems());
     window.addEventListener(FEATURE_TOUR_HYDRATED_EVENT, refresh);
+    window.addEventListener(AUDIO_RESUME_CHANGED_EVENT, refresh);
     window.addEventListener("storage", refresh);
     return () => {
       window.removeEventListener(FEATURE_TOUR_HYDRATED_EVENT, refresh);
+      window.removeEventListener(AUDIO_RESUME_CHANGED_EVENT, refresh);
       window.removeEventListener("storage", refresh);
     };
   }, []);
