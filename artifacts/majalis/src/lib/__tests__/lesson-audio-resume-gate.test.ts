@@ -19,6 +19,7 @@ assert.match(resume, /loadLessonAudioResume/);
 assert.match(resume, /clearAllLessonAudioResume/);
 assert.match(player, /loadLessonAudioResume/);
 assert.match(player, /saveLessonAudioResume/);
+assert.match(player, /claimAudio\("lesson"\)/);
 assert.match(audio, /clearAudioResumeState/);
 assert.match(courses, /beginAbortScope/);
 assert.match(courses, /RequestManager\.cancel/);
@@ -26,5 +27,12 @@ assert.match(courses, /state=\{state\}/);
 assert.doesNotMatch(courses, /return null/);
 assert.match(teachers, /beginAbortScope/);
 assert.match(teachers, /RequestManager\.cancel/);
+
+const bus = readFileSync(resolve(root, "src/lib/exclusive-audio-bus.ts"), "utf8");
+assert.match(bus, /\| "lesson"/);
+
+const homeLessons = readFileSync(resolve(root, "src/components/home/HomeUpcomingLessons.tsx"), "utf8");
+assert.match(homeLessons, /beginAbortScope/);
+assert.match(homeLessons, /RequestManager\.cancel/);
 
 console.log("lesson-audio-resume-gate.test.ts: ok");

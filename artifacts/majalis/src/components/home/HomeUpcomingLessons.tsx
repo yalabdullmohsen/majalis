@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { RequestManager } from "@/lib/request-manager";
+import { beginAbortScope, abortScope } from "@/lib/route-abort";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
@@ -54,14 +55,19 @@ export function HomeUpcomingLessons({
   const loadLessons = useCallback(() => {
     setLoading(true);
     setLoadError(null);
-    void RequestManager.run("home:upcoming-lessons", () => getUnifiedActiveLessons())
+    const signal = beginAbortScope("home:upcoming-lessons");
+    void RequestManager.run(
+      "home:upcoming-lessons",
+      () => getUnifiedActiveLessons(),
+      { signal, dedupeKey: "home:upcoming-lessons" },
+    )
       .then(({ lessons: items }) => {
         if (!mountedRef.current) return;
         const safeItems = Array.isArray(items) ? items : [];
         setAllLessons(safeItems.filter((l) => !isCourse(l)));
       })
-      .catch(() => {
-        if (!mountedRef.current) return;
+      .catch((err) => {
+        if (!mountedRef.current || (err as Error)?.name === "AbortError") return;
         setAllLessons([]);
         setLoadError("تعذّر تحميل دروس اليوم. حاول مجددًا.");
       })
@@ -73,6 +79,10 @@ export function HomeUpcomingLessons({
   useEffect(() => {
     if (initialLessons) return;
     loadLessons();
+    return () => {
+      abortScope("home:upcoming-lessons");
+      RequestManager.cancel("home:upcoming-lessons");
+    };
   }, [initialLessons, loadLessons]);
 
   const clock = getKuwaitClock();

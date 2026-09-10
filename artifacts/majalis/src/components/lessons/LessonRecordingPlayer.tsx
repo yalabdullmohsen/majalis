@@ -1,5 +1,5 @@
 /**
- * مشغّل تسجيل الدرس — يدعم ?t= واستئناف الموضع المحلي.
+ * مشغّل تسجيل الدرس — يدعم ?t= واستئناف الموضع المحلي + صوت حصري.
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -8,6 +8,7 @@ import {
   type UnifiedLesson,
 } from "@/lib/unified-lesson-card";
 import { loadLessonAudioResume, saveLessonAudioResume } from "@/lib/lesson-audio-resume";
+import { claimAudio, registerAudioStopper, releaseAudio } from "@/lib/exclusive-audio-bus";
 import { recordUserActivity } from "@/lib/user-streak";
 
 type Props = {
@@ -30,6 +31,19 @@ export function LessonRecordingPlayer({ lesson, src, startAtSeconds }: Props) {
   useEffect(() => {
     seekApplied.current = false;
   }, [src, startAtSeconds, lesson.id]);
+
+  useEffect(() => {
+    const stop = () => {
+      const el = audioRef.current;
+      if (!el) return;
+      el.pause();
+    };
+    const unregister = registerAudioStopper("lesson", stop);
+    return () => {
+      unregister();
+      releaseAudio("lesson");
+    };
+  }, []);
 
   const applySeek = useCallback(() => {
     const el = audioRef.current;
@@ -104,9 +118,16 @@ export function LessonRecordingPlayer({ lesson, src, startAtSeconds }: Props) {
           setCurrentTime(t);
           persist(t);
         }}
-        onPause={(e) => saveLessonAudioResume(lesson.id, e.currentTarget.currentTime)}
+        onPause={(e) => {
+          saveLessonAudioResume(lesson.id, e.currentTarget.currentTime);
+          releaseAudio("lesson");
+        }}
+        onEnded={() => releaseAudio("lesson")}
         onDurationChange={(e) => setDuration(e.currentTarget.duration)}
-        onPlay={() => recordUserActivity("lesson")}
+        onPlay={() => {
+          recordUserActivity("lesson");
+          void claimAudio("lesson");
+        }}
       />
       <div className="lesson-recording-player__actions">
         <button
