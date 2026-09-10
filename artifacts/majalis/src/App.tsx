@@ -176,6 +176,13 @@ function SeoManager() {
     } catch {
       /* ignore */
     }
+    if (import.meta.env.DEV) {
+      try {
+        performance.mark(`route-nav:${location}`);
+      } catch {
+        /* ignore */
+      }
+    }
     const timer = window.setTimeout(() => {
       const rawTitle = document.title.split(" | ")[0]?.trim();
       recordRecentPage(location, rawTitle);

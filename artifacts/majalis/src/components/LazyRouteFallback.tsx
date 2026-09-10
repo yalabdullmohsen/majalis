@@ -1,23 +1,19 @@
-import { useDeferredLoading } from "@/hooks/useDeferredLoading";
-
 /**
- * هيكل مسار كسول — يظهر بعد 80ms بلا نص تحميل ظاهر.
+ * هيكل مسار كسول — يظهر فورًا بلا فراغ أثناء تحميل الحزمة.
  * هيكل ذاتي بلا أيقونات خارجية حتى تبقى حزمة الإقلاع خفيفة (LCP).
  */
 export function LazyRouteFallback() {
-  const show = useDeferredLoading(true);
   const path =
     typeof window !== "undefined" ? window.location.pathname.split("?")[0] || "/" : "/";
   const prophetsShell = /^\/(prophets|prophet-stories|prophets-stories|anbiya)(\/|$)/.test(path);
   const prophetDetail = /^\/(prophets|prophet-stories|prophets-stories|anbiya)\/[^/]+/.test(path);
-
-  if (!show) return null;
 
   return (
     <div
       className={[
         "lrf-wrap",
         "lrf-wrap--skel",
+        "lrf-wrap--instant",
         prophetsShell ? "lrf-wrap--prophets" : "",
         prophetDetail ? "lrf-wrap--prophet-detail" : "",
       ]
@@ -27,9 +23,11 @@ export function LazyRouteFallback() {
       aria-busy="true"
       aria-label="تجهيز الصفحة"
       data-prophets-shell={prophetsShell ? "1" : undefined}
+      data-route-fallback="1"
     >
       <div className="lrf-skel" aria-hidden="true">
         <div className="lrf-skel__hero" />
+        <div className="lrf-skel__title" />
         <div className="lrf-skel__line" />
         <div className="lrf-skel__line lrf-skel__line--short" />
         <div className="lrf-skel__cards">
@@ -38,6 +36,10 @@ export function LazyRouteFallback() {
           ))}
         </div>
       </div>
+      <p className="lrf-label">تجهيز الصفحة…</p>
     </div>
   );
 }
+
+/** اسم مستقر للواجهات — نفس LazyRouteFallback */
+export const RouteFallback = LazyRouteFallback;

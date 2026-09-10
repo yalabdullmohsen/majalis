@@ -46,11 +46,23 @@ button,
 
 /* هيكل مسار lazy */
 .lrf-wrap--skel {
-  min-height: 50dvh;
-  padding: 1.25rem 1rem 2rem;
+  min-height: min(70dvh, 32rem);
+  padding: 1.25rem 1rem calc(var(--bottom-nav-height, 4.25rem) + var(--inset-bottom, 0px) + 1.25rem);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+}
+
+.lrf-wrap--instant {
+  /* يظهر فورًا — بلا نافذة فراغ 80ms */
+  opacity: 1;
+}
+
+.lrf-skel__title {
+  height: 1.35rem;
+  width: min(14rem, 55%);
+  border-radius: 10px;
+  background: color-mix(in srgb, currentColor 8%, transparent);
 }
 
 .lrf-skel {
@@ -59,6 +71,12 @@ button,
   gap: 0.65rem;
   width: min(100%, 36rem);
   margin-inline: auto;
+}
+
+.lrf-skel__hero,
+.lrf-skel__line,
+.lrf-skel__card {
+  background: color-mix(in srgb, currentColor 8%, transparent);
 }
 
 .lrf-skel__hero {
