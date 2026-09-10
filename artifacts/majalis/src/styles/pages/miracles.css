@@ -540,3 +540,38 @@ html.dark .mk-pill--topic,
 .mk-expand-btn {
   pointer-events: none;
 }
+
+/* هيكل تفصيل فوري — بلا فراغ أثناء الجلب */
+.mk-detail-skel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 0.25rem;
+}
+.mk-detail-skel__hero,
+.mk-detail-skel__line,
+.mk-detail-skel__card {
+  background: color-mix(in srgb, currentColor 8%, transparent);
+  border-radius: 14px;
+}
+.mk-detail-skel__hero {
+  height: 6.5rem;
+  border-radius: var(--mk-radius, 24px);
+}
+.mk-detail-skel__line {
+  height: 0.85rem;
+  width: 88%;
+}
+.mk-detail-skel__line--short {
+  width: 58%;
+}
+.mk-detail-skel__card {
+  height: 5.25rem;
+  border-radius: var(--mk-radius, 24px);
+}
+.mk-detail-skel__label {
+  margin: 0.75rem 0 0;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--mk-muted, #4a5a53);
+}

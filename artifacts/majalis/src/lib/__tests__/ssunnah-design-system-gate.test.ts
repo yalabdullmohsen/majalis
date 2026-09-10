@@ -38,6 +38,10 @@ assert.match(index, /SecondaryButton/);
 assert.match(index, /IconButton/);
 assert.match(index, /LessonCard/);
 assert.match(index, /FloatingBackButton/);
+assert.match(index, /RouteFallback|LazyRouteFallback/);
+assert.match(index, /AppPage|TopicPage/);
+assert.match(index, /SectionHero/);
+assert.match(index, /SourceBox|ContentDetailReadingShell/);
 
 assert.match(polish, /\.home-sacred-day/);
 assert.match(polish, /prefers-reduced-motion/);

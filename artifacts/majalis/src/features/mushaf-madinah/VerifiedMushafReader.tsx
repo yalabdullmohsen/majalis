@@ -353,7 +353,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         });
       } else if (snap.playerState === "loading" || snap.playerState === "buffering") {
         setAudioError(null);
-        setAudioStatus("جاري التحميل");
+        setAudioStatus("تجهيز الصوت");
       } else if (snap.playerState === "playing") {
         setAudioError(null);
         setAudioStatus("يعمل الآن");

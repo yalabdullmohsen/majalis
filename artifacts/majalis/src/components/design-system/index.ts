@@ -15,6 +15,19 @@ export { SectionEntryCard, HubCard as SectionHubCard } from "@/components/ui/Hub
 export type { SectionEntryCardProps, SectionEntryVariant } from "@/components/ui/HubCard";
 export { UnifiedLessonCard as LessonCard } from "@/components/lessons/UnifiedLessonCard";
 export { FloatingBackButton, AppBackButton } from "@/components/FloatingBackButton";
+export { LazyRouteFallback as RouteFallback, LazyRouteFallback } from "@/components/LazyRouteFallback";
+export { TopicPage as AppPage, SectionTemplatePage } from "@/components/topic/TopicPage";
+export { SectionHero } from "@/components/topic/SectionHero";
+export {
+  ContentSection,
+  DefinitionBox,
+  EvidenceBox,
+  SourceBox,
+  RelatedLinksBox,
+  FAQBox,
+  QuotePanel,
+  ContentDetailReadingShell,
+} from "@/components/content/ContentReading";
 
 export {
   TopicCard,
