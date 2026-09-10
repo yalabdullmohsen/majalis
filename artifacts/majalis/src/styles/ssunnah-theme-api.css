@@ -1,0 +1,149 @@
+/**
+ * واجهة رموز سُنّة العامة — المصدر الوحيد للاستهلاك في المكوّنات الجديدة.
+ *
+ * القيم الحرفية للألوان/المسافات/الحواف/الطباعة الأساسية تعيش في:
+ *   `app/styles/theme.css` (@theme + :root --mj-* / --text-mj-* / --spacing-mj-* / --radius-mj-*)
+ *
+ * هذا الملف لا يعرّف هكسًا ولا remًا جديدًا — جسر دلالي فقط (var → theme).
+ * لا تعدّل الشاشات القديمة هنا؛ الهجرة تتم عبر مكوّنات `components/design-system/text`.
+ */
+
+:root {
+  /* ── Typography (أدوار دلالية) ── */
+  --ss-type-screen-title: var(--text-mj-h1);
+  --ss-type-section-title: var(--text-mj-h2);
+  --ss-type-card-title: var(--text-mj-h2);
+  --ss-type-body: var(--text-mj-body);
+  --ss-type-scripture: var(--text-mj-sacred, var(--text-mj-h2));
+  --ss-type-explanation: var(--text-mj-body);
+  --ss-type-supporting: var(--text-mj-small);
+  --ss-type-label: var(--text-mj-small);
+  --ss-type-caption: var(--text-mj-tiny);
+
+  --ss-lh-tight: 1.35;
+  --ss-lh-title: 1.4;
+  --ss-lh-body: 1.75;
+  --ss-lh-scripture: 1.9;
+  --ss-lh-ui: 1.5;
+
+  --ss-fw-regular: 400;
+  --ss-fw-medium: 500;
+  --ss-fw-semibold: 600;
+  --ss-fw-bold: 700;
+  --ss-fw-extrabold: 800;
+
+  /* ── Colors / text ── */
+  --ss-color-bg: var(--color-bg, var(--mj-bg));
+  --ss-color-surface: var(--color-surface, var(--mj-surface));
+  --ss-color-surface-2: var(--color-surface-2, var(--mj-surface-2));
+  --ss-color-text: var(--color-ink, var(--mj-ink));
+  --ss-color-text-secondary: var(--color-ink-2, var(--mj-ink-2));
+  --ss-color-text-muted: var(--color-muted, var(--mj-muted));
+  --ss-color-brand: var(--color-brand, var(--mj-brand));
+  --ss-color-brand-deep: var(--color-brand-deep, var(--mj-brand-deep));
+  --ss-color-brand-on-light: var(--brand-on-white, var(--brand-on-light));
+  --ss-color-on-brand: var(--color-on-brand, var(--mj-on-brand));
+  --ss-color-border: var(--color-hairline, var(--mj-hairline));
+  --ss-color-danger: var(--color-danger, var(--mj-danger));
+
+  /* ── Spacing ── */
+  --ss-space-1: var(--spacing-mj-1);
+  --ss-space-2: var(--spacing-mj-2);
+  --ss-space-3: var(--spacing-mj-3);
+  --ss-space-4: var(--spacing-mj-4);
+  --ss-space-6: var(--spacing-mj-6);
+  --ss-space-8: var(--spacing-mj-8);
+  --ss-space-12: var(--spacing-mj-12);
+
+  /* ── Radius / borders ── */
+  --ss-radius-sm: var(--radius-mj-sm);
+  --ss-radius-md: var(--radius-mj-md);
+  --ss-radius-lg: var(--radius-mj-lg);
+  --ss-radius-card: var(--radius-card, var(--radius-mj-lg));
+  --ss-radius-pill: var(--radius-mj-pill);
+  --ss-border-width: 1px;
+}
+
+/* ── مكوّنات نص سُنّة — تعتمد على الأدوار أعلاه فقط ── */
+.ss-text {
+  margin: 0;
+  font-family: var(--font-app);
+  color: var(--ss-color-text);
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+.ss-text--screen-title {
+  font-size: var(--ss-type-screen-title);
+  font-weight: var(--ss-fw-extrabold);
+  line-height: var(--ss-lh-title);
+  color: var(--ss-color-text);
+}
+
+.ss-text--section-title {
+  font-size: var(--ss-type-section-title);
+  font-weight: var(--ss-fw-bold);
+  line-height: var(--ss-lh-title);
+  color: var(--ss-color-text);
+}
+
+.ss-text--card-title {
+  font-size: var(--ss-type-card-title);
+  font-weight: var(--ss-fw-bold);
+  line-height: var(--ss-lh-tight);
+  color: var(--ss-color-text);
+}
+
+.ss-text--body {
+  font-size: var(--ss-type-body);
+  font-weight: var(--ss-fw-regular);
+  line-height: var(--ss-lh-body);
+  color: var(--ss-color-text);
+}
+
+.ss-text--scripture {
+  font-size: var(--ss-type-scripture);
+  font-weight: var(--ss-fw-medium);
+  line-height: var(--ss-lh-scripture);
+  color: var(--ss-color-text);
+}
+
+.ss-text--explanation {
+  font-size: var(--ss-type-explanation);
+  font-weight: var(--ss-fw-regular);
+  line-height: var(--ss-lh-body);
+  color: var(--ss-color-text-secondary);
+}
+
+.ss-text--supporting {
+  font-size: var(--ss-type-supporting);
+  font-weight: var(--ss-fw-regular);
+  line-height: var(--ss-lh-ui);
+  color: var(--ss-color-text-secondary);
+}
+
+.ss-text--label {
+  font-size: var(--ss-type-label);
+  font-weight: var(--ss-fw-semibold);
+  line-height: var(--ss-lh-ui);
+  color: var(--ss-color-text);
+}
+
+.ss-text--caption {
+  font-size: var(--ss-type-caption);
+  font-weight: var(--ss-fw-medium);
+  line-height: var(--ss-lh-ui);
+  color: var(--ss-color-text-muted);
+}
+
+.ss-text--on-brand {
+  color: var(--ss-color-on-brand);
+}
+
+.ss-text--brand {
+  color: var(--ss-color-brand-on-light);
+}
+
+.ss-text--muted {
+  color: var(--ss-color-text-muted);
+}
