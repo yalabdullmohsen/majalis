@@ -2,12 +2,26 @@
  * نزول القرآن على سبعة أحرف — قسم داخل مركز القرآن الكريم.
  */
 import { useEffect } from "react";
-import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { AHRUF_SECTIONS } from "@/lib/quran-ahruf/content";
+import {
+  ContentDetailReadingShell,
+  ContentSection,
+  SourceBox,
+  RelatedLinksBox,
+  type ReadingSectionVariant,
+} from "@/components/content/ContentReading";
 import "@/styles/pages/qiraat.css";
+
+function sectionVariant(id: string): ReadingSectionVariant {
+  if (id === "meaning") return "definition";
+  if (id.startsWith("hadith")) return "evidence";
+  if (id === "hikmah") return "lessons";
+  if (id === "aqwal") return "quote";
+  return "default";
+}
 
 export default function QuranSevenAhrufView() {
   useEffect(() => {
@@ -27,27 +41,47 @@ export default function QuranSevenAhrufView() {
       subtitle="نزول القرآن على سبعة أحرف: معناه، أدلته، والفرق بينه وبين القراءات العشر."
       groupTitle="أبواب الأحرف السبعة"
     >
-      <div className="qr-page" dir="rtl" data-quran-seven-ahruf="1">
-        <p className="qr-note" role="note">
-          المحتوى على منهج أهل السنة والجماعة. كل نقل بمصدره الظاهر تحت كل باب.
-        </p>
-
-        <nav className="qr-related" aria-label="روابط ذات صلة">
-          <Link href="/quran-hub/qiraat">القراءات العشر</Link>
-          <Link href="/quran-hub/tajweed">التجويد</Link>
-          <Link href="/mushaf">المصحف</Link>
-        </nav>
+      <ContentDetailReadingShell
+        className="qr-page"
+        note="المحتوى على منهج أهل السنة والجماعة. كل نقل بمصدره الظاهر تحت كل باب."
+      >
+        <RelatedLinksBox
+          title="روابط ذات صلة"
+          links={[
+            {
+              href: "/quran-hub/qiraat",
+              title: "القراءات العشر",
+              description: "الأوجه المتواترة وعلاقتها بالأحرف.",
+            },
+            {
+              href: "/quran-hub/tajweed",
+              title: "التجويد",
+              description: "أداء التلاوة وضوابط المخارج.",
+            },
+            {
+              href: "/mushaf",
+              title: "المصحف",
+              description: "قراءة المصحف برواية حفص عن عاصم.",
+            },
+            {
+              href: "/ulum-quran",
+              title: "علوم القرآن",
+              description: "أبواب علوم القرآن المرتبطة.",
+            },
+          ]}
+        />
 
         {AHRUF_SECTIONS.map((sec) => (
-          <section key={sec.id} className="qr-section" id={sec.id}>
-            <h2>{sec.title}</h2>
-            {sec.body.map((p) => (
-              <p key={p.slice(0, 32)}>{p}</p>
-            ))}
-            <p className="qr-source">
-              <strong>المصادر:</strong> {sec.sources.join(" · ")}
-            </p>
-          </section>
+          <div key={sec.id} id={sec.id} className="cr-section-wrap">
+            <ContentSection
+              title={sec.title}
+              paragraphs={sec.body}
+              variant={sectionVariant(sec.id)}
+            />
+            {sec.sources.length ? (
+              <SourceBox title="المصادر" sources={sec.sources} />
+            ) : null}
+          </div>
         ))}
 
         <SectionQuiz
@@ -55,7 +89,7 @@ export default function QuranSevenAhrufView() {
           title="اختبر معلوماتك في الأحرف السبعة"
           count={4}
         />
-      </div>
+      </ContentDetailReadingShell>
     </SectionTemplatePage>
   );
 }

@@ -20,6 +20,16 @@ export {
 } from "@/components/design-system/AppCard";
 
 export { ReadingSectionCard as ReadingCard } from "@/components/content/ReadingSectionCard";
+export {
+  ContentSection,
+  DefinitionBox,
+  EvidenceBox,
+  SourceBox,
+  RelatedLinksBox,
+  FAQBox,
+  QuotePanel,
+  ContentDetailReadingShell,
+} from "@/components/content/ContentReading";
 
 import { memo } from "react";
 import { SectionEntryCard, type SectionEntryCardProps } from "./HubCard";

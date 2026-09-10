@@ -156,7 +156,8 @@ assert.match(akhlaq, /InternalLinkCard/);
 const sects = read("src/views/IslamicSectsPage.tsx");
 assert.match(sects, /InternalLinkCard/);
 const hadithScience = read("src/pages/hadith/ui/HadithScienceView.tsx");
-assert.match(hadithScience, /InternalLinkCard/);
+assert.match(hadithScience, /RelatedLinksBox|InternalLinkCard/);
+assert.match(hadithScience, /FAQBox|SourceBox/);
 
 console.log("=== موجة 2ب: كتب حديث/بطاقة حديث/تفسير/قصص ===");
 

@@ -112,6 +112,8 @@ function loadNonCriticalCss() {
   });
   void import("./styles/components/instant-interaction.css");
   void import("./styles/components/compact-sources.css");
+  void import("./styles/components/content-reading-shell.css");
+  void import("./styles/components/reading-section-card.css");
   void import("./styles/components/native-feel.css");
   void import("./styles/m2030/interactions.css");
   void import("./styles/m2030/pages.css");

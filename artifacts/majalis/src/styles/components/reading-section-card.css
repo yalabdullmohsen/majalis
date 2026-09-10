@@ -19,11 +19,19 @@
   box-shadow: 0 10px 26px -20px color-mix(in srgb, var(--mj-brand, #1f6b56) 35%, transparent);
 }
 
-.rsc--summary {
+.rsc--summary,
+.rsc--definition {
   background: color-mix(in srgb, var(--mj-brand, #1f6b56) 6%, var(--rsc-bg));
   border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 20%, transparent);
 }
 
+.rsc--evidence,
+.rsc--quote {
+  background: color-mix(in srgb, var(--mj-accent, #b8963f) 7%, var(--rsc-bg));
+  border-color: color-mix(in srgb, var(--mj-accent, #b8963f) 22%, transparent);
+}
+
+.rsc--faq,
 .rsc--lessons {
   background: color-mix(in srgb, #15803d 5%, var(--rsc-bg));
   border-color: color-mix(in srgb, #15803d 18%, transparent);
@@ -186,10 +194,18 @@ html.dark .rsc {
 
 html[data-theme="dark"] .rsc--summary,
 html.dark .rsc--summary,
+html[data-theme="dark"] .rsc--definition,
+html.dark .rsc--definition,
 html[data-theme="dark"] .rsc--lessons,
 html.dark .rsc--lessons,
+html[data-theme="dark"] .rsc--faq,
+html.dark .rsc--faq,
 html[data-theme="dark"] .rsc--sources,
-html.dark .rsc--sources {
+html.dark .rsc--sources,
+html[data-theme="dark"] .rsc--evidence,
+html.dark .rsc--evidence,
+html[data-theme="dark"] .rsc--quote,
+html.dark .rsc--quote {
   background: color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, var(--rsc-bg));
 }
 
