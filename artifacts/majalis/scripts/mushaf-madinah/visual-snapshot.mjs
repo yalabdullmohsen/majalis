@@ -8,6 +8,11 @@ import { createReadStream, existsSync, mkdirSync, writeFileSync, statSync, readF
 import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
+import {
+  stabilizeVisualContext,
+  waitForVisualReady,
+  VISUAL_CONTEXT_OPTIONS,
+} from "../lib/visual-test-stabilize.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "../..");
@@ -71,10 +76,15 @@ async function main() {
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
     viewport,
-    deviceScaleFactor: 2,
-    locale: "ar-SA",
+    ...VISUAL_CONTEXT_OPTIONS,
   });
+  await stabilizeVisualContext(context);
   const page = await context.newPage();
+  try {
+    await page.clock?.install?.({ time: new Date("2026-09-11T12:00:00+03:00") });
+  } catch {
+    /* ignore */
+  }
   const report = [];
 
   try {
@@ -87,7 +97,7 @@ async function main() {
         const el = document.querySelector('[data-testid="mushaf-controls"]');
         if (el) el.setAttribute("data-open", "0");
       });
-      await page.waitForTimeout(400);
+      await waitForVisualReady(page, { settleMs: 200 });
       const paint = await page.evaluate(() => {
         const current = document.querySelector('[data-pane="current"]');
         const pageEl = current?.querySelector('[data-testid="mushaf-page"]');

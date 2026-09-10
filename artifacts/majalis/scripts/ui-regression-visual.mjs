@@ -18,6 +18,11 @@ import {
 import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
+import {
+  stabilizeVisualContext,
+  waitForVisualReady,
+  VISUAL_CONTEXT_OPTIONS,
+} from "./lib/visual-test-stabilize.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
@@ -182,8 +187,9 @@ async function measure(page) {
 
 async function auditPage(page, base, route, theme) {
   await page.goto(`${base}${route.path}`, { waitUntil: "domcontentloaded", timeout: 60_000 });
-  await page.waitForTimeout(900);
+  await waitForVisualReady(page, { settleMs: 200 });
   await applyTheme(page, theme);
+  await waitForVisualReady(page, { settleMs: 80 });
   const m = await measure(page);
 
   if (m.skipOpacity > 0.05) throw new Error(`${route.id}/${theme}: skip-link ظاهر`);
@@ -331,12 +337,15 @@ async function main() {
   const browser = await chromium.launch({ headless: true });
   const ctx = await browser.newContext({
     viewport,
-    deviceScaleFactor: 2,
-    isMobile: true,
-    hasTouch: true,
-    locale: "ar-SA",
+    ...VISUAL_CONTEXT_OPTIONS,
   });
+  await stabilizeVisualContext(ctx);
   const page = await ctx.newPage();
+  try {
+    await page.clock?.install?.({ time: new Date("2026-09-11T12:00:00+03:00") });
+  } catch {
+    /* إصدارات بلا clock API */
+  }
   const errors = [];
 
   try {
