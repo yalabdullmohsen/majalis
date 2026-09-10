@@ -3,8 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import { router } from "expo-router";
 import React from "react";
 import {
-  ActivityIndicator,
-  FlatList,
   Platform,
   Pressable,
   ScrollView,
@@ -31,13 +29,15 @@ export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const topPad = Platform.OS === "web" ? 67 : insets.top;
 
-  const { data: lessonsData, isLoading: lessonsLoading } = useQuery({
+  const { data: lessonsData, isLoading: lessonsLoading, isError: lessonsError, refetch: refetchLessons } = useQuery({
     queryKey: ["lessons-home"],
     queryFn: () => getLessons(),
+    staleTime: 60_000,
   });
-  const { data: fawaidData } = useQuery({
+  const { data: fawaidData, isLoading: fawaidLoading } = useQuery({
     queryKey: ["fawaid-home"],
     queryFn: getApprovedFawaid,
+    staleTime: 60_000,
   });
 
   const recentLessons = (lessonsData?.data || []).slice(0, 5);
@@ -93,13 +93,34 @@ export default function HomeScreen() {
           </Pressable>
         </View>
         {lessonsLoading ? (
-          <ActivityIndicator color={colors.primary} style={{ marginTop: 12 }} />
+          <View style={styles.skelBlock} accessibilityLabel="جاري تحميل الدروس">
+            {[0, 1, 2].map((i) => (
+              <View
+                key={`lesson-skel-${i}`}
+                style={[styles.lessonCard, styles.skelCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+              >
+                <View style={[styles.skelLine, { backgroundColor: colors.border, width: "78%" }]} />
+                <View style={[styles.skelLine, { backgroundColor: colors.border, width: "42%", marginTop: 10 }]} />
+              </View>
+            ))}
+          </View>
+        ) : lessonsError ? (
+          <Pressable
+            onPress={() => void refetchLessons()}
+            accessibilityRole="button"
+            accessibilityLabel="إعادة محاولة تحميل الدروس"
+            style={[styles.errorBox, { borderColor: colors.border, backgroundColor: colors.card }]}
+          >
+            <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>
+              تعذّر تحميل الدروس. اضغط للمحاولة مجددًا
+            </Text>
+          </Pressable>
         ) : recentLessons.length === 0 ? (
           <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>
             لا توجد دروس حالياً
           </Text>
         ) : (
-          recentLessons.map((lesson: any) => (
+          recentLessons.map((lesson) => (
             <View
               key={lesson.id}
               style={[styles.lessonCard, { backgroundColor: colors.card, borderColor: colors.border }]}
@@ -123,7 +144,22 @@ export default function HomeScreen() {
       </View>
 
       {/* Fawaid */}
-      {fawaidList.length > 0 && (
+      {fawaidLoading ? (
+        <View style={[styles.section, { marginBottom: 8 }]}>
+          <View style={styles.sectionHeader}>
+            <Text style={[styles.sectionTitle, { color: colors.foreground }]}>الفوائد</Text>
+          </View>
+          {[0, 1].map((i) => (
+            <View
+              key={`fawaid-skel-${i}`}
+              style={[styles.fawaidCard, styles.skelCard, { backgroundColor: colors.parchmentDeep, borderColor: colors.border, borderRightColor: colors.brass, minHeight: 72 }]}
+            >
+              <View style={[styles.skelLine, { backgroundColor: colors.border, width: "92%" }]} />
+              <View style={[styles.skelLine, { backgroundColor: colors.border, width: "55%", marginTop: 10 }]} />
+            </View>
+          ))}
+        </View>
+      ) : fawaidList.length > 0 ? (
         <View style={[styles.section, { marginBottom: 8 }]}>
           <View style={styles.sectionHeader}>
             <Text style={[styles.sectionTitle, { color: colors.foreground }]}>الفوائد</Text>
@@ -131,7 +167,7 @@ export default function HomeScreen() {
               <Text style={[styles.seeAll, { color: colors.primary }]}>عرض الكل</Text>
             </Pressable>
           </View>
-          {fawaidList.map((f: any) => (
+          {fawaidList.map((f) => (
             <View
               key={f.id}
               style={[styles.fawaidCard, { backgroundColor: colors.parchmentDeep, borderColor: colors.border, borderRightColor: colors.brass }]}
@@ -143,7 +179,7 @@ export default function HomeScreen() {
             </View>
           ))}
         </View>
-      )}
+      ) : null}
     </ScrollView>
   );
 }
@@ -206,4 +242,13 @@ const styles = StyleSheet.create({
   fawaidText: { fontSize: 15, lineHeight: 24, textAlign: "right" },
   fawaidAuthor: { fontSize: 13, textAlign: "right", marginTop: 6, fontStyle: "italic" },
   emptyText: { textAlign: "center", padding: 20, fontSize: 14 },
+  skelBlock: { gap: 0 },
+  skelCard: { minHeight: 64, justifyContent: "center" },
+  skelLine: { height: 12, borderRadius: 6, alignSelf: "flex-end" },
+  errorBox: {
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingVertical: 16,
+    paddingHorizontal: 12,
+  },
 });

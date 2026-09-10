@@ -24,12 +24,14 @@ type Mode = "login" | "register";
 export default function AccountScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { user, isAdmin, signOut } = useAuth();
+  const { user, isAdmin, status, loading: authLoading, signOut } = useAuth();
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
+  const authPending = status === "initializing" || authLoading;
 
   const handleSubmit = async () => {
     if (!email.trim() || !password.trim()) {
@@ -60,6 +62,18 @@ export default function AccountScreen() {
       setLoading(false);
     }
   };
+
+  if (authPending) {
+    return (
+      <View
+        style={[styles.container, styles.bootGate, { backgroundColor: colors.background }]}
+        accessibilityLabel="جاري تجهيز الحساب"
+      >
+        <ActivityIndicator size="large" color={colors.primary} />
+        <Text style={[styles.bootText, { color: colors.mutedForeground }]}>تجهيز الحساب…</Text>
+      </View>
+    );
+  }
 
   if (user) {
     return (
@@ -100,13 +114,26 @@ export default function AccountScreen() {
               style={[styles.menuItem, { borderTopWidth: 1, borderColor: colors.border }]}
               accessibilityRole="button"
               accessibilityLabel="تسجيل الخروج"
+              disabled={signingOut}
               onPress={async () => {
-                await signOut();
-                Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+                if (signingOut) return;
+                setSigningOut(true);
+                try {
+                  await signOut();
+                  Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+                } finally {
+                  setSigningOut(false);
+                }
               }}
             >
-              <Ionicons name="log-out-outline" size={20} color={colors.destructive} />
-              <Text style={[styles.menuText, { color: colors.destructive }]}>تسجيل الخروج</Text>
+              {signingOut ? (
+                <ActivityIndicator size="small" color={colors.destructive} />
+              ) : (
+                <Ionicons name="log-out-outline" size={20} color={colors.destructive} />
+              )}
+              <Text style={[styles.menuText, { color: colors.destructive }]}>
+                {signingOut ? "جارٍ الخروج…" : "تسجيل الخروج"}
+              </Text>
             </Pressable>
           </View>
         </View>
@@ -175,9 +202,11 @@ export default function AccountScreen() {
         </View>
 
         <Pressable
-          style={[styles.submitBtn, { backgroundColor: colors.primary }]}
+          style={[styles.submitBtn, { backgroundColor: colors.primary, opacity: loading ? 0.7 : 1 }]}
           onPress={handleSubmit}
           disabled={loading}
+          accessibilityRole="button"
+          accessibilityState={{ disabled: loading, busy: loading }}
         >
           {loading ? (
             <ActivityIndicator color="#FFF" />
@@ -206,6 +235,8 @@ export default function AccountScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
+  bootGate: { alignItems: "center", justifyContent: "center", gap: 12 },
+  bootText: { fontSize: 15, textAlign: "center" },
   titleArea: { alignItems: "center", gap: 10, marginBottom: 32 },
   title: { fontSize: 26, fontWeight: "800", fontFamily: "Inter_700Bold" },
   subtitle: { fontSize: 14, textAlign: "center", lineHeight: 20 },

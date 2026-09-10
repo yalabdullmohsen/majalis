@@ -32,8 +32,22 @@ const TABS: { key: Section; label: string; icon: string }[] = [
 export default function AdminScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, status, loading } = useAuth();
   const [section, setSection] = useState<Section>("sheikhs");
+
+  if (status === "initializing" || loading) {
+    return (
+      <View
+        style={{ flex: 1, alignItems: "center", justifyContent: "center", gap: 12, backgroundColor: colors.background }}
+        accessibilityLabel="جاري التحقق من الصلاحيات"
+      >
+        <Ionicons name="shield-checkmark-outline" size={36} color={colors.primary} />
+        <Text style={{ fontSize: 15, color: colors.mutedForeground, textAlign: "center" }}>
+          تجهيز لوحة الإشراف…
+        </Text>
+      </View>
+    );
+  }
 
   if (!user || !isAdmin) {
     return (

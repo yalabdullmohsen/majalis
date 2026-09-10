@@ -2,7 +2,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import {
-  ActivityIndicator,
   FlatList,
   Linking,
   Platform,
@@ -14,6 +13,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { ListLoadingSkeleton } from "@/components/ListLoadingSkeleton";
 import { useColors } from "@/hooks/useColors";
 import { getMiracles } from "@/lib/supabase";
 
@@ -84,7 +84,7 @@ export default function MiraclesScreen() {
       </ScrollView>
 
       {isLoading ? (
-        <ActivityIndicator color={colors.primary} style={{ marginTop: 40 }} />
+        <ListLoadingSkeleton rows={5} minHeight={100} />
       ) : (
         <FlatList
           data={miracles}

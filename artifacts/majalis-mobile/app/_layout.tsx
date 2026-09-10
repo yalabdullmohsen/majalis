@@ -17,22 +17,33 @@ import * as Notifications from "expo-notifications";
 import type { Subscription } from "expo-notifications";
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { AuthProvider } from "@/context/AuthContext";
+import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
 
-// Force RTL for Arabic
-I18nManager.allowRTL(true);
-I18nManager.forceRTL(true);
+// Force RTL for Arabic — مرة واحدة عند الإقلاع
+if (!I18nManager.isRTL) {
+  I18nManager.allowRTL(true);
+  I18nManager.forceRTL(true);
+}
 
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync().catch(() => undefined);
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60_000,
+      gcTime: 30 * 60_000,
+      retry: 1,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: true,
+    },
+  },
+});
 
 const API_BASE = process.env.EXPO_PUBLIC_DOMAIN
   ? `https://${process.env.EXPO_PUBLIC_DOMAIN}`
   : "";
 
-// Configure how incoming notifications are handled when the app is foregrounded
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -43,10 +54,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-/** Navigate to the correct screen based on notification data payload */
-function handleNotificationNavigation(
-  response: Notifications.NotificationResponse,
-) {
+function handleNotificationNavigation(response: Notifications.NotificationResponse) {
   const data = response.notification.request.content.data as
     | { screen?: string; id?: string }
     | undefined;
@@ -70,7 +78,6 @@ function handleNotificationNavigation(
   }
 }
 
-/** Request permission and register the Expo push token with the API server */
 async function registerForPushNotifications(userId?: string): Promise<void> {
   if (Platform.OS === "web") return;
   if (!API_BASE) return;
@@ -99,39 +106,54 @@ async function registerForPushNotifications(userId?: string): Promise<void> {
       }),
     });
   } catch {
-    // Push notifications are a best-effort enhancement — never crash the app
+    /* best-effort */
   }
+}
+
+function SplashController() {
+  const { status } = useAuth();
+  useEffect(() => {
+    if (status === "initializing") return;
+    void SplashScreen.hideAsync();
+  }, [status]);
+  return null;
 }
 
 function RootLayoutNav() {
   const colors = useColors();
+  const { status, user } = useAuth();
   const notificationListener = useRef<Subscription | null>(null);
   const responseListener = useRef<Subscription | null>(null);
+  const pushRegistered = useRef(false);
 
+  // الإشعارات بعد استقرار الإقلاع — لا تنافس أول رسم
   useEffect(() => {
-    // Request permission and register push token on first load
-    registerForPushNotifications();
+    if (status !== "ready" && status !== "error") return;
+    if (pushRegistered.current) return;
+    pushRegistered.current = true;
 
-    // Cold start: user tapped a notification that launched the app
+    const idle =
+      typeof requestAnimationFrame === "function"
+        ? requestAnimationFrame(() => {
+            void registerForPushNotifications(user?.id);
+          })
+        : 0;
+
     void Notifications.getLastNotificationResponseAsync().then((response) => {
       if (response) handleNotificationNavigation(response);
     });
 
-    // Foreground notification listener (already shown via setNotificationHandler)
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener(() => {});
-
-    // Tap handler — navigate to the correct screen
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener(
-        handleNotificationNavigation,
-      );
+    notificationListener.current = Notifications.addNotificationReceivedListener(() => {});
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(
+      handleNotificationNavigation,
+    );
 
     return () => {
+      if (idle) cancelAnimationFrame(idle);
       notificationListener.current?.remove();
       responseListener.current?.remove();
     };
-  }, []);
+  }, [status, user?.id]);
 
   return (
     <Stack
@@ -144,6 +166,8 @@ function RootLayoutNav() {
         },
         headerBackTitle: "رجوع",
         contentStyle: { backgroundColor: colors.background },
+        animation: "fade",
+        animationDuration: 180,
       }}
     >
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -171,6 +195,13 @@ function RootLayoutNav() {
   );
 }
 
+function BootGate({ children }: { children: React.ReactNode }) {
+  const { status } = useAuth();
+  // أبقِ الشجرة فارغة تحت الـ Splash الأصلي حتى لا تومض شاشة دخول/رئيسية خاطئة
+  if (status === "initializing") return null;
+  return <>{children}</>;
+}
+
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
     Inter_400Regular,
@@ -179,24 +210,23 @@ export default function RootLayout() {
     Inter_700Bold,
   });
 
-  useEffect(() => {
-    if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
+  const fontsReady = fontsLoaded || Boolean(fontError);
 
-  if (!fontsLoaded && !fontError) return null;
+  if (!fontsReady) return null;
 
   return (
     <SafeAreaProvider>
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-              <KeyboardProvider>
-                <RootLayoutNav />
-              </KeyboardProvider>
-            </GestureHandlerRootView>
+            <SplashController />
+            <BootGate>
+              <GestureHandlerRootView style={{ flex: 1 }}>
+                <KeyboardProvider>
+                  <RootLayoutNav />
+                </KeyboardProvider>
+              </GestureHandlerRootView>
+            </BootGate>
           </AuthProvider>
         </QueryClientProvider>
       </ErrorBoundary>

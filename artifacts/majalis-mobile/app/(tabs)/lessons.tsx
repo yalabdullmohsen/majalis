@@ -3,7 +3,6 @@ import * as Haptics from "expo-haptics";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import {
-  ActivityIndicator,
   Alert,
   FlatList,
   Platform,
@@ -16,6 +15,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { ListLoadingSkeleton } from "@/components/ListLoadingSkeleton";
 import { useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
 import {
@@ -165,7 +165,7 @@ export default function LessonsScreen() {
       </ScrollView>
 
       {isLoading ? (
-        <ActivityIndicator color={colors.primary} style={{ marginTop: 40 }} />
+        <ListLoadingSkeleton rows={6} minHeight={96} />
       ) : (
         <FlatList
           data={lessons}

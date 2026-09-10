@@ -16,6 +16,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
 
+import { ListLoadingSkeleton } from "@/components/ListLoadingSkeleton";
 import { useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
@@ -54,7 +55,7 @@ export default function FawaidScreen() {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       {isLoading ? (
-        <ActivityIndicator color={colors.primary} style={{ marginTop: 60 }} />
+        <ListLoadingSkeleton rows={5} minHeight={88} />
       ) : (
         <FlatList
           data={fawaid}

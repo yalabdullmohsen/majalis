@@ -2,7 +2,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import {
-  ActivityIndicator,
   FlatList,
   Platform,
   Pressable,
@@ -14,6 +13,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { ListLoadingSkeleton } from "@/components/ListLoadingSkeleton";
 import { useColors } from "@/hooks/useColors";
 import { getQaCategories, getQaQuestions } from "@/lib/supabase";
 
@@ -81,7 +81,7 @@ export default function QaScreen() {
       </ScrollView>
 
       {isLoading ? (
-        <ActivityIndicator color={colors.primary} style={{ marginTop: 40 }} />
+        <ListLoadingSkeleton rows={6} minHeight={72} />
       ) : (
         <FlatList
           data={questions}
