@@ -75,8 +75,8 @@ npx cap open ios
 - [ ] تصوير 5 لقطات شاشة لـ Android (1080×1920 أو 1440×2960)
 - [ ] رفع الأيقونة 1024×1024
 - [ ] ملء نموذج تصنيف المحتوى (IARC لـ Play — 4+ لـ App Store)
-- [ ] إدخال رابط سياسة الخصوصية: https://majlisilm.com/privacy
-- [ ] إدخال رابط حذف الحساب: https://majlisilm.com/account-deletion (مطلوب Play)
+- [ ] إدخال رابط سياسة الخصوصية: https://www.ssunnah.com/privacy
+- [ ] إدخال رابط حذف الحساب: https://www.ssunnah.com/account-deletion (مطلوب Play / App Store)
 
 ---
 

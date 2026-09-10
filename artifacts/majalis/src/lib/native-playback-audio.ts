@@ -91,20 +91,10 @@ export async function ensureNativePlaybackAudioSession(
   playbackRefCount += 1;
 }
 
-/** Switch to recording before speech / recitation capture. */
+/** Recording disabled for production — no mic feature; keep API as safe no-op. */
 export async function ensureNativeRecordingAudioSession(): Promise<void> {
-  const plugin = await getPlugin();
-  if (!plugin) return;
-  const android = await getAndroidMediaPlugin();
-  if (android) {
-    await android.stopForeground().catch(() => undefined);
-  }
-  const result = await plugin.enableRecording();
-  if (!result?.ok) {
-    throw new Error("audio_session_recording_failed");
-  }
-  activeMode = "recording";
-  playbackRefCount = 0;
+  // Feature freeze: do not activate .playAndRecord without NSMicrophoneUsageDescription.
+  return;
 }
 
 /** Release session when no playback/recording is needed. */

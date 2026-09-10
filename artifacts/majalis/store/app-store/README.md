@@ -14,8 +14,9 @@
   - Geolocation: صفحة القبلة فقط، آني، لا يُخزَّن
   - Device Orientation: صفحة القبلة فقط، بوصلة الاتجاه
   - Local Notifications: تذكيرات الصلاة والأذكار، اختيارية
+  - Push Notifications (Capacitor): مفعّلة في البناء الأصلي عند قبول المستخدم — راجع entitlements وApp Privacy
   - Vibration API: عداد التسبيح والأذكار، بلا إذن
-- **لا يوجد:** Camera، Filesystem، Contacts، Push Notifications (Capacitor)
+- **لا يوجد:** Camera، Filesystem، Contacts، Microphone / Audio Data collection
 
 ### المرحلة 1 — إعدادات iOS
 - **Info.plist**: محدَّث بـ:

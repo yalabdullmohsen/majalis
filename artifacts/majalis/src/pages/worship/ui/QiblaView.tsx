@@ -237,7 +237,7 @@ export default function QiblaPage() {
         setError("لم يُمنح إذن تحديد الموقع. اختر مدينتك يدوياً:");
         setManualMode(true);
       },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60_000 },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 60_000 },
     );
   }
 
