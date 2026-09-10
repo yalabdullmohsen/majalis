@@ -37,8 +37,24 @@ html[data-theme="dark"] :is(
   .tip-cat-btn--active,
   .lpp-cat-btn--active,
   .adhkar-focus-btn--next
+),
+html.dark :is(
+  .navbar-login,
+  .hsh-eyebrow,
+  .hsh-step__num,
+  .kuwait-tab--active,
+  .lib-sort-btn--active,
+  .content-hub-chip--active,
+  .tip-cat-btn--active,
+  .lpp-cat-btn--active,
+  .adhkar-focus-btn--next
 ) {
-  color: var(--em-950) !important;
+  color: var(--em-950, var(--mj-on-brand, #06231a)) !important;
+}
+
+html[data-theme="dark"] .adhkar-focus-btn--next,
+html.dark .adhkar-focus-btn--next {
+  background: var(--mj-brand, #4fb48b) !important;
 }
 
 /* ══════════════════════════════════════════════════════════════
