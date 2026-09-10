@@ -97,11 +97,19 @@ function HomeLiveNowGate() {
     };
   }, []);
 
-  if (!show) return null;
+  if (!show) {
+    return (
+      <div
+        className="home-live-now-ph"
+        aria-hidden="true"
+        style={{ minHeight: "3.25rem" }}
+      />
+    );
+  }
 
   return (
     <SectionErrorBoundary name="HomeLiveNow">
-      <Suspense fallback={null}>
+      <Suspense fallback={<div className="home-live-now-ph" style={{ minHeight: "3.25rem" }} aria-hidden="true" />}>
         <HomeLiveNowBanner />
       </Suspense>
     </SectionErrorBoundary>
