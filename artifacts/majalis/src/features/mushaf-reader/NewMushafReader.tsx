@@ -53,6 +53,7 @@ import {
 } from "@/features/mushaf-madinah/mushaf-page-for-ayah";
 import {
   ensureQpcPageFont,
+  isQpcPageFontReady,
   useQpcPageFont,
 } from "@/features/mushaf-madinah/useQpcPageFont";
 import { useMushafResourceGate } from "@/features/mushaf-madinah/useMushafResourceGate";
@@ -187,6 +188,24 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     const cached = getCachedMushafPage(page);
     if (cached) setLayout(cached);
   }, [page]);
+
+  /**
+   * عرض الصفحة الحالية من الكاش+الخط الجاهز في نفس إطار الرسم —
+   * حتى عند reset المسار بعد القلب لا تظهر الصفحة القديمة.
+   */
+  const displayView = useMemo(() => {
+    if (error) return null;
+    const cached = getCachedMushafPage(page);
+    if (cached && (fontReady || isQpcPageFontReady(page))) {
+      return {
+        layout: cached,
+        fontFamily: fontFamily || `"qpc-v2-p${page}"`,
+        page,
+      };
+    }
+    if (stableView) return stableView;
+    return null;
+  }, [error, page, fontReady, fontFamily, stableView, layout]);
 
   useEffect(() => {
     let cancelled = false;
@@ -360,9 +379,13 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       suppressPageSyncRef.current = true;
       beginPageTurn();
       pendingPageRef.current = clamped;
-      void ensureQpcPageFont(clamped).finally(() => {
-        onPageChange(clamped);
-      });
+      const commitNav = () => onPageChange(clamped);
+      /* إن كان الخط جاهزًا (prefetch) — حدّث الصفحة في نفس الإطار بلا انتظار */
+      if (isQpcPageFontReady(clamped)) {
+        commitNav();
+        return;
+      }
+      void ensureQpcPageFont(clamped).finally(commitNav);
     },
     [beginPageTurn, onPageChange],
   );
@@ -373,7 +396,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     if (pending == null || page !== pending) return;
     if (!fontReady || !layoutMatchesPage) return;
     /* لا نُنهِ القلب قبل تثبيت العرض المستقر للصفحة الجديدة */
-    if (!stableView || stableView.page !== page) return;
+    if (!displayView || displayView.page !== page) return;
 
     const shell = metricsRootRef.current?.querySelector<HTMLElement>(
       '[data-pane="current"] .nm-shell, [data-pane="current"] .mm-page-shell',
@@ -382,7 +405,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     if (shell && shell.scrollTop !== 0) shell.scrollTop = 0;
 
     finishPageTurn();
-  }, [page, fontReady, layoutMatchesPage, stableView, finishPageTurn]);
+  }, [page, fontReady, layoutMatchesPage, displayView, finishPageTurn]);
 
   useLayoutEffect(() => {
     if (error && (bottomStackFrozen || !pagerSettled)) finishPageTurn();
@@ -702,14 +725,14 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         <div className="nm-shell mm-page-shell mushaf-page-frame" data-testid="mushaf-page-shell">
           {error ? <div className="nm-status">{error}</div> : null}
           {/* أبقِ آخر صفحة جاهزة حتى تكتمل التالية — بلا placeholder يغيّر الحجم */}
-          {!error && stableView ? (
+          {!error && displayView ? (
             <MushafPage
-              layout={stableView.layout}
-              fontFamily={stableView.fontFamily}
-              displayPageNumber={stableView.page}
+              layout={displayView.layout}
+              fontFamily={displayView.fontFamily}
+              displayPageNumber={displayView.page}
               onSelectVerse={onSelectVerse}
               onLongPressVerse={onLongPressVerse}
-              selectionEnabled={pagerSettled && stableView.page === page}
+              selectionEnabled={pagerSettled && displayView.page === page}
               onPageNumberPress={() => {
                 setGotoOpen(true);
                 setChromeOpen(false);

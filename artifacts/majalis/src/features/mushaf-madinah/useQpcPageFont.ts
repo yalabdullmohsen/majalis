@@ -88,6 +88,8 @@ export function useQpcPageFont(pageNumber: number): { fontFamily: string; ready:
     if (saver.mode !== "aggressive") {
       void loadFace(pageNumber - 1);
       void loadFace(pageNumber + 1);
+      void loadFace(pageNumber - 2);
+      void loadFace(pageNumber + 2);
     }
     /* بسملة المطلع تستخدم دائماً محارف الصفحة ١ → جهّز الخط مسبقاً */
     void loadFace(1);

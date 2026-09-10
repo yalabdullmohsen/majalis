@@ -5,8 +5,8 @@ import {
   resolveUniformMushafFontSize,
 } from "@/features/mushaf-madinah/fitPageFontSize";
 
-const HEADER_H = 32;
-const FOOTER_H = 28;
+const HEADER_H = 36;
+const FOOTER_H = 40;
 const SIDE_PAD = 8;
 const LINE_HEIGHT = "1.85";
 /** QPC لا يدعم أوزانًا حقيقية — أي وزن >400 يفعّل faux-bold ويوسّع الحروف فيفيض السطر */
@@ -18,6 +18,7 @@ const WIDTH_LOCK_PX = 4;
  * مصدر القياس الوحيد لمصحف الإنتاج (`NewMushafReader`).
  * يضبط مرة واحدة: عرض الصفحة، حجم الخط، ارتفاع السطر، المساحة السفلية، safe-area.
  * لا يتغيّر أثناء قلب الصفحة؛ يُعاد الحساب فقط عند تغيّر عرض الحاوية.
+ * ارتفاع المتن (--mushaf-body-height) يُقفل مع العرض حتى لا يمدّد شريط الأسفل شبكة الآيات.
  */
 export function useStableMushafLayout(
   rootRef: RefObject<HTMLElement | null>,
@@ -25,15 +26,15 @@ export function useStableMushafLayout(
 ): void {
   const lockedWidthRef = useRef(0);
   const lockedSizeRef = useRef(0);
+  const lockedBodyHRef = useRef(0);
 
   useLayoutEffect(() => {
     if (!enabled) return;
     const root = rootRef.current;
     if (!root) return;
 
-    const applyGeometry = (w: number, h: number, size: number) => {
+    const applyGeometry = (w: number, h: number, size: number, bodyH: number) => {
       const bodyW = Math.max(120, Math.min(w - SIDE_PAD * 2, 28 * 16));
-      const bodyH = Math.max(160, h - HEADER_H - FOOTER_H);
       const bottomSafe =
         root.style.getPropertyValue("--reader-bottom-stack").trim() ||
         getComputedStyle(root).getPropertyValue("--reader-bottom-stack").trim() ||
@@ -63,9 +64,16 @@ export function useStableMushafLayout(
       const h = Math.round(root.clientHeight || 0);
       if (w < 80 || h < 120) return;
 
-      /* أثناء قلب الصفحة: لا تُعاد حساب مقاس الخط إطلاقًا */
+      const measuredBodyH = Math.max(160, h - HEADER_H - FOOTER_H);
+
+      /* أثناء قلب الصفحة: لا تُعاد حساب مقاس الخط ولا ارتفاع المتن */
       if (root.getAttribute("data-pager-settled") === "0" && lockedSizeRef.current > 0) {
-        applyGeometry(w, h, lockedSizeRef.current);
+        applyGeometry(
+          w,
+          h,
+          lockedSizeRef.current,
+          lockedBodyHRef.current > 0 ? lockedBodyHRef.current : measuredBodyH,
+        );
         return;
       }
 
@@ -74,13 +82,18 @@ export function useStableMushafLayout(
         Math.abs(w - lockedWidthRef.current) >= WIDTH_LOCK_PX;
 
       if (!widthChanged && lockedSizeRef.current > 0) {
-        /* تحديث المساحة السفلية فقط عند ثبات العرض — بلا تغيير للخط */
-        applyGeometry(w, h, lockedSizeRef.current);
+        /* ثبات العرض: حدّث المساحة السفلية فقط — بلا تمديد شبكة الآيات */
+        applyGeometry(
+          w,
+          h,
+          lockedSizeRef.current,
+          lockedBodyHRef.current > 0 ? lockedBodyHRef.current : measuredBodyH,
+        );
         return;
       }
 
       const bodyW = Math.max(120, Math.min(w - SIDE_PAD * 2, 28 * 16));
-      const bodyH = Math.max(160, h - HEADER_H - FOOTER_H);
+      const bodyH = measuredBodyH;
       const base = resolveUniformMushafFontSize(bodyW, bodyH);
       const size = Math.max(
         MUSHAF_FIT_MIN_PX,
@@ -89,7 +102,8 @@ export function useStableMushafLayout(
 
       lockedWidthRef.current = w;
       lockedSizeRef.current = size;
-      applyGeometry(w, h, size);
+      lockedBodyHRef.current = bodyH;
+      applyGeometry(w, h, size, bodyH);
     };
 
     apply();

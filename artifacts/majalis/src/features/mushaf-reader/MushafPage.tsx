@@ -176,7 +176,7 @@ export const MushafPage = memo(function MushafPage({
       <footer
         className="nm-page__footer"
         data-layout="pageFooter"
-        style={{ height: "var(--mushaf-footer-height, 32px)", minHeight: "var(--mushaf-footer-height, 32px)" }}
+        style={{ height: "var(--mushaf-footer-height, 40px)", minHeight: "var(--mushaf-footer-height, 40px)" }}
       >
         <span className="nm-page__footer-hizb">{hizbLabel}</span>
         <button

@@ -31,6 +31,8 @@ assert.match(qpc, /useLayoutEffect/);
 assert.doesNotMatch(qpc, /setReady\(loaded\.has/);
 
 assert.match(reader, /ensureQpcPageFont\(clamped\)/);
+assert.match(reader, /isQpcPageFontReady/);
+assert.match(reader, /displayView/);
 assert.match(reader, /layout\.pageNumber === page/);
 assert.match(reader, /getCachedMushafPage\(page\)/);
 assert.match(reader, /shell\.scrollTop = 0/);
@@ -54,7 +56,8 @@ assert.match(miniBar, /if \(immersive\) return null/);
 
 assert.match(metrics, /1\.05/);
 assert.match(metrics, /--mushaf-letter-spacing/);
-assert.match(metrics, /data-mushaf-font-locked|WIDTH_LOCK|lockedWidthRef/);
+assert.match(metrics, /data-mushaf-font-locked|WIDTH_LOCK|lockedWidth/);
+assert.match(metrics, /lockedBodyHRef/);
 assert.match(metrics, /عرض الشاشة|عرض الحاوية|lockedWidth/);
 
 assert.match(css, /\.nm-slot\s*\{[^}]*align-items:\s*flex-start/s);
@@ -63,12 +66,26 @@ assert.match(css, /contain:\s*layout style/);
 assert.match(css, /data-mushaf-metrics/);
 assert.match(css, /transition:\s*none/);
 assert.doesNotMatch(css, /transform:\s*scale\(/, "Mushaf font-size changed after page flip: transform:scale forbidden");
+assert.doesNotMatch(
+  css,
+  /is-panning[^}]*opacity:\s*0\.9/,
+  "Pager sheet opacity flicker during pan forbidden",
+);
 assert.match(page, /منع layout shift عند قلب الصفحة/, "MushafPage must guard layout shift on flip");
+assert.match(page, /mushaf-page-number/);
+assert.match(page, /mushaf-footer-height, 40px/);
 
 assert.match(pager, /translate3d/);
 assert.match(pager, /onNavigateCancel/);
+assert.match(pager, /لا resetToCurrent قبل go/);
 assert.doesNotMatch(pager, /marginTop|paddingTop|scrollTop\s*=/);
 assert.doesNotMatch(pager, /scale\(/, "Mushaf pager must not use transform:scale");
+/* كان: reset ثم go → وميض الصفحة القديمة؛ الآن go ثم reset عبر [page] */
+assert.doesNotMatch(
+  pager,
+  /pendingCommit\.current = null;\s*resetToCurrent\(false\);\s*go\(commit\)/,
+  "Must not snap track back before committing page",
+);
 
 assert.match(dock, /اختر القارئ/);
 assert.match(dock, /getReciter/);

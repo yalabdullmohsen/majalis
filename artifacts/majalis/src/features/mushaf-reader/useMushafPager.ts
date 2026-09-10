@@ -170,12 +170,16 @@ export function useMushafPager({
         return;
       }
       pendingCommit.current = null;
-      resetToCurrent(false);
+      /*
+       * لا resetToCurrent قبل go — ذلك يُظهر اللوحة القديمة لحظةً (وميض/توسّع).
+       * نُبقي المسار على اللوحة المُلتزَم بها؛ useLayoutEffect على [page]
+       * يعيد translate بعد أن يصبح محتوى current هو الصفحة الجديدة.
+       */
       go(commit);
     };
     track.addEventListener("transitionend", onEnd);
     return () => track.removeEventListener("transitionend", onEnd);
-  }, [go, onNavigateCancel, resetToCurrent]);
+  }, [go, onNavigateCancel]);
 
   const onPointerDown = (e: ReactPointerEvent) => {
     if (disabled || locking.current) {
