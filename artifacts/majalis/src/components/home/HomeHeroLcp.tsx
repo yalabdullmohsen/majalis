@@ -10,6 +10,7 @@ import { hasSeenFirstVisitIntroSync } from "@/lib/first-visit-intro-state";
 import { getRecentPages } from "@/lib/recent-pages";
 import "@/styles/components/home-brand-title.css";
 import "@/styles/m2030/home.css";
+import "@/styles/components/home-modern-shell.css";
 
 function deferAfterPaint(cb: () => void, ms: number): () => void {
   const id = window.setTimeout(cb, ms);
@@ -101,6 +102,7 @@ export function HomeHeroLcp() {
       withPattern={false}
       eyebrow={greeting}
       title="سُنّة"
+      description="علوم شرعية مرتّبة — قرآن، أذكار، دروس، وأحكام."
       actions={
         <>
           <Link href={continueHref} className="mj-btn m2030-btn m2030-btn--primary">

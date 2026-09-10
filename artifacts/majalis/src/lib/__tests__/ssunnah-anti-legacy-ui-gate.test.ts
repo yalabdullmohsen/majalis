@@ -90,7 +90,9 @@ for (const name of [
   assert.match(dsIndex, new RegExp(name), `المكوّن الموحّد ناقص من الفهرس: ${name}`);
 }
 
-assert.match(below, /FeatureCard/, "الرئيسية تستخدم FeatureCard للبوابات");
-assert.match(below, /home-primary-portals/, "بوابات العلم أعلى تحت الطية");
+assert.match(below, /HomePrimaryPortals|FeatureCard/, "الرئيسية تستخدم FeatureCard للبوابات");
+const portals = readFileSync(resolve(src, "components/home/HomePrimaryPortals.tsx"), "utf8");
+assert.match(portals, /FeatureCard/);
+assert.match(portals, /home-primary-portals/, "بوابات العلم أعلى تحت الطية");
 
 console.log("ssunnah-anti-legacy-ui-gate.test.ts: ok");

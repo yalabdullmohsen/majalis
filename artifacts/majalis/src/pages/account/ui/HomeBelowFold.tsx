@@ -3,15 +3,7 @@
  */
 import { Suspense, useEffect, useState } from "react";
 import { Link } from "wouter";
-import {
-  BookMarked,
-  BookOpen,
-  Clock,
-  GraduationCap,
-  LayoutGrid,
-  Scale,
-  Wrench,
-} from "lucide-react";
+import { Wrench } from "lucide-react";
 import contentCounts from "@/data/content-counts.json";
 import { useAuth } from "@/components/AuthProvider";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
@@ -26,11 +18,10 @@ import { HomeRecentPagesBar } from "@/components/home/HomeRecentPagesBar";
 import { HomeExplorePlatform } from "@/components/home/HomeExplorePlatform";
 import { HomeContentHub } from "@/components/home/HomeContentHub";
 import { HomeMostReadBand } from "@/components/home/HomeMostReadBand";
+import { HomePrimaryPortals } from "@/components/home/HomePrimaryPortals";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { ShareFaida } from "@/components/ShareFaida";
-import { FeatureCard } from "@/components/design-system";
 import { QUICK_LINKS } from "@/lib/home-feature-catalog";
-import { IA_HOME_PRIMARY } from "@/lib/ia-final-structure";
 import {
   HOME_WIDGET_DEFS,
   getLocalHomepagePrefs,
@@ -91,20 +82,13 @@ const WIDGET_RENDERERS: Record<string, () => React.ReactNode> = {
 
 const WIDGET_LABEL: Record<string, string> = Object.fromEntries(HOME_WIDGET_DEFS.map((w) => [w.id, w.label]));
 
-const HOME_PRIMARY_ICONS = {
-  "/quran-hub": BookMarked,
-  "/lessons": GraduationCap,
-  "/prayer-times": Clock,
-  "/fiqh": Scale,
-  "/adhkar": BookOpen,
-  "/more": LayoutGrid,
-} as const;
-
-const FEATURED_CATS = IA_HOME_PRIMARY.map((item) => ({
-  ...item,
-  cta: "افتح",
-  Icon: HOME_PRIMARY_ICONS[item.href as keyof typeof HOME_PRIMARY_ICONS] ?? BookOpen,
-}));
+/** ودجتات مُثبّتة في ترتيب الصفحة — لا تُعاد في ذيل التخصيص */
+const PINNED_WIDGETS = new Set([
+  "lessons",
+  "continue",
+  "daily-progress",
+  "learning-seasons",
+]);
 
 export default function HomeBelowFold() {
   const { isAdmin, user } = useAuth();
@@ -122,31 +106,17 @@ export default function HomeBelowFold() {
   }, [user?.id]);
 
   const visibleWidgets = visibleWidgetOrder(homePrefs);
-  const restWidgetOrder = visibleWidgets.filter(
-    (id) => id !== "lessons" && id !== "continue" && id !== "daily-progress",
-  );
+  const restWidgetOrder = visibleWidgets.filter((id) => !PINNED_WIDGETS.has(id));
 
   return (
     <>
-      <section className="m2030-band home-primary-portals" aria-label="أقسام أساسية">
-        <div className="m2030-band__head">
-          <h2 className="m2030-band__title">بوابات العلم</h2>
-        </div>
-        <div className="ss-feature-grid" data-cards-grid="1">
-          {FEATURED_CATS.map(({ href, title, desc, Icon }) => (
-            <FeatureCard
-              key={href}
-              href={href}
-              title={title}
-              description={desc}
-              icon={<Icon size={20} strokeWidth={1.8} aria-hidden="true" />}
-            />
-          ))}
-        </div>
-      </section>
+      <HomePrimaryPortals title="وصول سريع" />
 
       {visibleWidgets.includes("daily-progress") ? (
-        <section className="m2030-band home-daily-progress-band" aria-label="تقدمك اليومي">
+        <section className="m2030-band home-daily-progress-band" aria-label="تقدمك اليوم">
+          <div className="m2030-band__head">
+            <h2 className="m2030-band__title">تقدمك اليوم</h2>
+          </div>
           <SafeHomeSection name="daily-progress">
             <HomeDailyProgress />
           </SafeHomeSection>
@@ -154,7 +124,7 @@ export default function HomeBelowFold() {
       ) : null}
 
       {visibleWidgets.includes("lessons") && (
-        <section className="m2030-band m2030-band--sage m2030-band--defer" aria-label="دروس اليوم">
+        <section className="m2030-band m2030-band--sage m2030-band--defer" aria-label="آخر الدروس والدورات">
           <div className="m2030-band__head">
             <h2 className="m2030-band__title">آخر الدروس</h2>
             <Link href="/lessons" className="m2030-band__link">كل الدروس</Link>
@@ -166,11 +136,21 @@ export default function HomeBelowFold() {
         </section>
       )}
 
-      <section className="m2030-band" aria-label="متابعة القراءة والاستماع">
+      <HomeMostReadBand />
+
+      {visibleWidgets.includes("learning-seasons") ? (
+        <section className="m2030-band home-seasons-band" aria-label="مواسم التعلم">
+          <SafeHomeSection name="learning-seasons">
+            <HomeLearningSeasonsWidget />
+          </SafeHomeSection>
+        </section>
+      ) : null}
+
+      <section className="m2030-band home-resume-band" aria-label="أكمل من حيث توقفت">
         <div className="m2030-band__head">
           <h2 className="m2030-band__title">أكمل من حيث توقفت</h2>
         </div>
-        <div className="m2030-panel mj-card mj-card--raised soft-card soft-card--on-light">
+        <div className="m2030-panel mj-card mj-card--raised soft-card soft-card--on-light home-resume-panel">
           <SafeHomeSection name="local-resume">
             <HomeLocalResumeCard />
           </SafeHomeSection>
@@ -180,11 +160,9 @@ export default function HomeBelowFold() {
         </div>
       </section>
 
-      <HomeMostReadBand />
-
-      <section className="m2030-band m2030-band--sage" aria-label="إجراءات سريعة">
+      <section className="m2030-band m2030-band--sage home-quick-actions" aria-label="إجراءات سريعة">
         <div className="m2030-band__head">
-          <h2 className="m2030-band__title">وصول سريع</h2>
+          <h2 className="m2030-band__title">إجراءات سريعة</h2>
         </div>
         <div className="m2030-quick">
           {QUICK_LINKS.map(({ href, Icon: Ico, label, desc }) => (
@@ -199,7 +177,7 @@ export default function HomeBelowFold() {
         </div>
       </section>
 
-      <section className="m2030-band" aria-label="محتوى أساسي">
+      <section className="m2030-band home-content-hub-band" aria-label="محتوى أساسي">
         <HomeContentHub />
       </section>
 
@@ -215,7 +193,7 @@ export default function HomeBelowFold() {
         <ShareFaida title="سُنّة — منصة تعليمية إسلامية" url="https://www.ssunnah.com/" />
       </section>
 
-      <div className="m2030-band" style={{ textAlign: "center" }}>
+      <div className="m2030-band home-customize-row">
         <button type="button" className="m2030-customize" onClick={() => setCustomizeOpen(true)}>
           <Wrench size={13} strokeWidth={2} aria-hidden="true" /> تخصيص الصفحة
         </button>
@@ -229,7 +207,7 @@ export default function HomeBelowFold() {
         ))}
 
         {isAdmin && (
-          <p className="m2030-band__sub" style={{ textAlign: "center" }}>
+          <p className="m2030-band__sub home-admin-meta">
             محتوى مرجعي: {toArabicDigits(contentCounts.islamicHistory)} عنصر تاريخ · {toArabicDigits(contentCounts.quizQuestions)} سؤال
           </p>
         )}

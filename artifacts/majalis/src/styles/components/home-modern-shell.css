@@ -1,0 +1,256 @@
+/**
+ * غلاف بصرية حديثة للصفحة الرئيسية — هوية خضراء ناعمة، تباين واضح، تباعد متزن.
+ */
+.m2030-home {
+  --home-radius: var(--radius-card, 24px);
+  --home-gap: clamp(0.85rem, 2.4vw, 1.25rem);
+  --home-pad: clamp(0.9rem, 3.2vw, 1.35rem);
+  --m2030-pad: var(--home-pad);
+  padding-block-end: calc(
+    var(--bottom-nav-height, var(--bottom-nav-h, 4.25rem)) + var(--inset-bottom, 0px) + 1.5rem
+  ) !important;
+  background:
+    radial-gradient(120% 70% at 50% -8%, color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, transparent), transparent 55%),
+    var(--mj-bg, #f5f1e8);
+}
+
+html.dark .m2030-home,
+html[data-theme="dark"] .m2030-home {
+  background:
+    radial-gradient(120% 70% at 50% -8%, color-mix(in srgb, var(--mj-brand, #5fbf98) 14%, transparent), transparent 55%),
+    var(--mj-bg, #121916);
+}
+
+.m2030-home .m2030-band {
+  margin-block: 0.55rem 0.85rem;
+  padding-inline: var(--home-pad);
+}
+
+.m2030-home .m2030-band__title {
+  font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.2rem);
+  font-weight: 800;
+  color: var(--mj-ink, #16241e);
+  letter-spacing: -0.01em;
+  opacity: 1 !important;
+}
+
+.m2030-home .m2030-band__sub,
+.m2030-home .m2030-band__link {
+  color: var(--mj-ink-2, #3d5349) !important;
+  opacity: 1 !important;
+  font-weight: 600;
+}
+
+.m2030-home .m2030-band__link {
+  color: var(--mj-brand-deep, #0d4a39) !important;
+}
+
+html.dark .m2030-home .m2030-band__title,
+html[data-theme="dark"] .m2030-home .m2030-band__title {
+  color: var(--mj-ink, #eef4f1) !important;
+}
+
+html.dark .m2030-home .m2030-band__sub,
+html.dark .m2030-home .m2030-band__link,
+html[data-theme="dark"] .m2030-home .m2030-band__sub,
+html[data-theme="dark"] .m2030-home .m2030-band__link {
+  color: var(--mj-ink-2, #c5d0cb) !important;
+}
+
+html.dark .m2030-home .m2030-band__link,
+html[data-theme="dark"] .m2030-home .m2030-band__link {
+  color: #7ed4b5 !important;
+}
+
+/* بحث بارز */
+.m2030-home .home-universal-search,
+.m2030-home .hus {
+  margin-inline: var(--home-pad);
+  margin-block: 0.35rem 0.75rem;
+}
+
+.m2030-home .hus-field,
+.m2030-home .home-universal-search input {
+  border-radius: calc(var(--home-radius) - 4px) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent) !important;
+  background: var(--ss-card-bg, #fffcf7) !important;
+  color: var(--mj-ink, #16241e) !important;
+  box-shadow: 0 10px 28px -22px color-mix(in srgb, var(--mj-brand, #1f6b56) 40%, transparent);
+  min-height: 48px;
+}
+
+html.dark .m2030-home .hus-field,
+html.dark .m2030-home .home-universal-search input,
+html[data-theme="dark"] .m2030-home .hus-field {
+  background: var(--mj-surface, #1b2421) !important;
+  color: var(--mj-ink, #eef4f1) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+}
+
+/* ابدأ من هنا — مضغوط وواضح */
+.m2030-home .home-start-here {
+  border-radius: var(--home-radius) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 16%, transparent) !important;
+  background: var(--ss-card-bg, #fffcf7) !important;
+  box-shadow: 0 12px 30px -22px color-mix(in srgb, var(--mj-brand, #1f6b56) 35%, transparent);
+  padding: 1rem 1.05rem !important;
+}
+
+.m2030-home .hsh-title {
+  color: var(--mj-brand-deep, #0d4a39) !important;
+  font-weight: 800 !important;
+  opacity: 1 !important;
+}
+
+.m2030-home .hsh-lead,
+.m2030-home .hsh-step__desc,
+.m2030-home .hsh-eyebrow {
+  color: var(--mj-ink-2, #3d5349) !important;
+  opacity: 1 !important;
+  font-weight: 550;
+}
+
+.m2030-home .hsh-step {
+  border-radius: 18px !important;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, transparent);
+}
+
+html.dark .m2030-home .home-start-here,
+html[data-theme="dark"] .m2030-home .home-start-here {
+  background: var(--mj-surface, #1b2421) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+}
+
+html.dark .m2030-home .hsh-title,
+html[data-theme="dark"] .m2030-home .hsh-title {
+  color: #7ed4b5 !important;
+}
+
+html.dark .m2030-home .hsh-lead,
+html.dark .m2030-home .hsh-step__desc,
+html.dark .m2030-home .hsh-eyebrow,
+html[data-theme="dark"] .m2030-home .hsh-lead {
+  color: var(--mj-ink-2, #c5d0cb) !important;
+}
+
+/* شبكة الوصول السريع */
+.m2030-home .home-quick-access__grid,
+.m2030-home .ss-feature-grid {
+  gap: 0.7rem !important;
+}
+
+.m2030-home .ss-feature-card,
+.m2030-home .feature-card,
+.m2030-home .home-primary-portals a {
+  border-radius: var(--home-radius) !important;
+}
+
+/* بلاطات الإجراءات */
+.m2030-home .m2030-tile {
+  border-radius: var(--home-radius) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, transparent) !important;
+  background: var(--ss-card-bg, #fffcf7) !important;
+  box-shadow: 0 8px 22px -18px rgba(15, 40, 30, 0.2);
+  padding: 0.85rem 0.9rem !important;
+}
+
+.m2030-home .m2030-tile__label {
+  color: var(--mj-ink, #16241e) !important;
+  font-weight: 800 !important;
+  opacity: 1 !important;
+}
+
+.m2030-home .m2030-tile__desc {
+  color: var(--mj-ink-2, #3d5349) !important;
+  opacity: 1 !important;
+  font-weight: 550;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+html.dark .m2030-home .m2030-tile,
+html[data-theme="dark"] .m2030-home .m2030-tile {
+  background: var(--mj-surface, #1b2421) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+}
+
+html.dark .m2030-home .m2030-tile__label,
+html[data-theme="dark"] .m2030-home .m2030-tile__label {
+  color: var(--mj-ink, #eef4f1) !important;
+}
+
+html.dark .m2030-home .m2030-tile__desc,
+html[data-theme="dark"] .m2030-home .m2030-tile__desc {
+  color: var(--mj-ink-2, #c5d0cb) !important;
+}
+
+/* آية/حديث وورد اليوم */
+.m2030-home .home-sacred-day,
+.m2030-home .home-daily-wird,
+.m2030-home .daily-wird-card,
+.m2030-home .home-resume-panel,
+.m2030-home .m2030-panel {
+  border-radius: var(--home-radius) !important;
+}
+
+.m2030-home .home-sacred-day {
+  margin-inline: var(--home-pad);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 16%, transparent);
+  background: var(--ss-card-bg, #fffcf7);
+  box-shadow: 0 10px 26px -20px color-mix(in srgb, var(--mj-brand, #1f6b56) 35%, transparent);
+}
+
+.m2030-home .home-daily-wird__card {
+  border-radius: 20px !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, transparent) !important;
+  background: var(--ss-card-bg, #fffcf7) !important;
+}
+
+.m2030-home .home-customize-row {
+  text-align: center;
+}
+
+.m2030-home .m2030-customize {
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 20%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, transparent);
+  color: var(--mj-brand-deep, #0d4a39);
+  font-weight: 700;
+  padding: 0.55rem 1rem;
+}
+
+html.dark .m2030-home .home-sacred-day,
+html.dark .m2030-home .home-daily-wird__card,
+html.dark .m2030-home .home-resume-panel,
+html[data-theme="dark"] .m2030-home .home-sacred-day {
+  background: var(--mj-surface, #1b2421) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+  color: var(--mj-ink, #eef4f1);
+}
+
+html.dark .m2030-home .m2030-customize,
+html[data-theme="dark"] .m2030-home .m2030-customize {
+  color: #7ed4b5;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 30%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #5fbf98) 12%, transparent);
+}
+
+/* وصف الهيرو */
+.m2030-home .home-page-hero .page-hero-mj__desc {
+  max-width: 22rem;
+  margin-inline: auto;
+  color: var(--mj-ink-2, #3d5349) !important;
+  font-weight: 550;
+  opacity: 1 !important;
+  line-height: 1.55;
+}
+
+html.dark .m2030-home .home-page-hero .page-hero-mj__desc,
+html[data-theme="dark"] .m2030-home .home-page-hero .page-hero-mj__desc {
+  color: var(--mj-ink-2, #c5d0cb) !important;
+}

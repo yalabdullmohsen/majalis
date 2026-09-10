@@ -8,6 +8,7 @@ import "@/styles/components/home-brand-title.css";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { shouldShowFirstVisitIntro } from "@/lib/first-visit-intro-state";
 import "@/styles/m2030/home.css";
+import "@/styles/components/home-modern-shell.css";
 import "@/styles/components/first-visit-intro.css";
 
 const FirstVisitIntro = lazy(() =>

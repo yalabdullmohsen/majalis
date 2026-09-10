@@ -458,7 +458,7 @@ function NativeNotificationsBootstrap() {
 function HomeLazyRoute() {
   return (
     <ErrorBoundary>
-      <div className="m2030-home" dir="rtl">
+      <div className="m2030-home m2030-home--modern" dir="rtl">
         {/* h1 + «ابدأ من هنا» خارج Suspense — يمنع تأخير 2.2s من سرقة LCP تحت throttling */}
         <HomeHeroLcp />
         <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">

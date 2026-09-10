@@ -35,10 +35,10 @@ import { filterNavItems } from "@/lib/nav-visibility";
    بالتكليف. القائمة الطويلة السابقة (١٩ رابطًا) كانت تكرارًا شبه كامل
    عناصر كانت تحت تبويب ملغى — الروابط تبقى عبر الأقسام أو /sitemap. */
 export const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc: string }[] = [
-  { href: "/daily-wird", Icon: Star,          label: seoNavLabel("/daily-wird", "أكمل وردك"),       desc: "ختم يومي منتظم للقرآن والأذكار مع تتبّع التقدم" },
-  { href: "/lessons",    Icon: GraduationCap, label: seoNavLabel("/lessons", "الدروس"),     desc: "تابع تعلّمك بدروس ودورات علمية مرتّبة بالمستوى" },
-  { href: "/quiz",       Icon: Target,        label: seoNavLabel("/quiz", "لعبة سين جيم"),  desc: "أسئلة شرعية ومعرفية متدرجة للمراجعة والاختبار" },
-  { href: "/adhkar",     Icon: RotateCw,      label: seoNavLabel("/adhkar", "أذكار اليوم"),     desc: "أذكار الصباح والمساء والنوم وما بينهما" },
+  { href: "/daily-wird", Icon: Star,          label: seoNavLabel("/daily-wird", "أكمل وردك"),       desc: "قرآن وأذكار مع تتبّع يومي" },
+  { href: "/lessons",    Icon: GraduationCap, label: seoNavLabel("/lessons", "الدروس"),     desc: "دروس ودورات مرتّبة" },
+  { href: "/quiz",       Icon: Target,        label: seoNavLabel("/quiz", "لعبة سين جيم"),  desc: "أسئلة للمراجعة والاختبار" },
+  { href: "/adhkar",     Icon: RotateCw,      label: seoNavLabel("/adhkar", "أذكار اليوم"),     desc: "صباح ومساء وما بينهما" },
 ];
 
 

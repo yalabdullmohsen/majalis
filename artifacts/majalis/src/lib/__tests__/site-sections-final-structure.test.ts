@@ -81,7 +81,10 @@ for (const rel of SURFACES) {
   assert.equal(src.includes("المسارات العلمية"), false);
 }
 
-const home = read("src/pages/account/ui/HomeView.tsx") + read("src/pages/account/ui/HomeBelowFold.tsx");
+const home =
+  read("src/pages/account/ui/HomeView.tsx") +
+  read("src/pages/account/ui/HomeBelowFold.tsx") +
+  read("src/components/home/HomePrimaryPortals.tsx");
 assert.match(home, /IA_HOME_PRIMARY/);
 assert.equal(home.includes("/quran-knowledge"), false, "لا بوابة قرآن قديمة في الرئيسية");
 assert.equal(home.includes("المسارات العلمية"), false);
