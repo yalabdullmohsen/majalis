@@ -57,4 +57,12 @@ assert.doesNotMatch(
   "لا إشعار دخول قبل اكتمال تهيئة الجلسة",
 );
 
+const studyRoom = readFileSync(resolve(root, "src/views/StudyRoomPage.tsx"), "utf8");
+assert.match(studyRoom, /loading:\s*authLoading/);
+assert.match(studyRoom, /authLoading \|\| \(isLoggedIn && loadingData\)/);
+
+const readingPlans = readFileSync(resolve(root, "src/pages/library/ui/ReadingPlansView.tsx"), "utf8");
+assert.match(readingPlans, /loading:\s*authLoading/);
+assert.match(readingPlans, /authLoading \?/);
+
 console.log("auth-session-status-gate.test.ts: ok");

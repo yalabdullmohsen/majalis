@@ -254,7 +254,7 @@ function NewPlanForm({ userId, onCreated, onClose }: { userId: string; onCreated
 }
 
 export default function ReadingPlansPage() {
-  const { user, isLoggedIn } = useAuth();
+  const { user, isLoggedIn, loading: authLoading } = useAuth();
   const [plans, setPlans] = useState<BookReadingPlan[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -282,7 +282,9 @@ export default function ReadingPlansPage() {
         subtitle="خطة قراءة ذكية لأي كتاب — نتابع تقدّمك مقابل الجدول ونقترح التعويض عند التأخر."
       />
 
-      {!isLoggedIn ? (
+      {authLoading ? (
+        <Loading />
+      ) : !isLoggedIn ? (
         <Empty text="سجّل الدخول لإنشاء خطط قراءة ومتابعة تقدّمك." />
       ) : loading ? (
         <Loading />
