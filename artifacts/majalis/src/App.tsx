@@ -47,6 +47,11 @@ const BottomNavBar = lazyWithRetry(
   () => import("@/components/BottomNavBar").then((m) => ({ default: m.BottomNavBar })),
   "BottomNavBar",
 );
+/** على Capacitor ابدأ تحميل الكروم فورًا لتقليل فترة ChromeNavFallback */
+if (isNativeApp) {
+  void import("@/components/NavBar");
+  void import("@/components/BottomNavBar");
+}
 const TopSectionBar = lazyWithRetry(
   () => import("@/components/TopSectionBar").then((m) => ({ default: m.TopSectionBar })),
   "TopSectionBar",

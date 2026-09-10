@@ -21,7 +21,7 @@ assert.match(majlisSplash, /SPLASH_FADE_OUT_MS\s*=\s*320/);
 assert.match(splash, /SPLASH_MIN_VISIBLE_MS/);
 assert.match(splash, /SPLASH_MAX_VISIBLE_MS/);
 assert.match(splash, /SPLASH_FADE_OUT_MS/);
-assert.match(splash, /app:first-paint/);
+assert.match(splash, /mj:shell-stable/);
 assert.match(splash, /hideNativeSplash\(false\)/, "السقف الزمني بتلاشي لا فوري");
 assert.doesNotMatch(
   splash,
