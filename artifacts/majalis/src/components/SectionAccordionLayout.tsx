@@ -225,13 +225,17 @@ export function SectionAccordionLayout({
         <div className="section-hub__end" role="separator" aria-label="نهاية محتوى القسم">
           نهاية محتوى القسم
         </div>
-
-        {relatedLinks && relatedLinks.length > 0 ? (
-          <div className="section-hub__related">
-            <ExploreAlsoNav title={relatedTitle ?? "روابط ذات صلة"} links={relatedLinks} />
-          </div>
-        ) : null}
       </div>
+
+      {relatedLinks && relatedLinks.length > 0 ? (
+        <footer className="section-hub__related" data-section-related-footer="1">
+          <ExploreAlsoNav
+            title={relatedTitle ?? "تصفّح أقسامًا أخرى"}
+            links={relatedLinks}
+            footerNote="ملحق تنقّل · روابط لأقسام وصفحات أخرى — ليست جزءًا من محتوى هذا القسم"
+          />
+        </footer>
+      ) : null}
     </SectionTemplatePage>
   );
 }

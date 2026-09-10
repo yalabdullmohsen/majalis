@@ -139,15 +139,20 @@ export function ContentDetailLayout({
         url={shareUrl || (typeof window !== "undefined" ? window.location.href : undefined)}
       />
 
-      {related && (
-        <ReadingSectionCard title="محتوى ذو صلة" variant="related" className="content-detail-related">
-          {related}
-        </ReadingSectionCard>
-      )}
-
-      <div className="px-4 pb-6 mt-4">
+      <div className="px-4 pb-2 mt-4">
         {quizSectionId ? <SectionQuiz sectionId={quizSectionId} title="اختبر معلوماتك" count={4} /> : null}
       </div>
+
+      {related ? (
+        <aside className="cr-related-footer content-detail-related" data-related-footer="1">
+          <p className="cr-related-footer__note">
+            ملحق تنقّل · روابط لمحتوى آخر — ليست جزءًا من نص هذه المادة
+          </p>
+          <ReadingSectionCard title="تصفّح محتوى آخر" variant="related" className="cr-related-footer__card">
+            {related}
+          </ReadingSectionCard>
+        </aside>
+      ) : null}
     </PageShell>
   );
 }
