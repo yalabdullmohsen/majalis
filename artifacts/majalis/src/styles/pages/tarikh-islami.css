@@ -506,7 +506,7 @@
   justify-content: center;
   min-height: 40px;
   padding: 0.35rem 0.85rem;
-  border-radius: 0.85rem;
+  border-radius: var(--radius-card, 24px);
   font-size: 0.82rem;
   font-weight: 750;
   text-decoration: none;
@@ -591,7 +591,7 @@
   min-height: 40px;
   min-width: 3.5rem;
   padding: 0.35rem 0.55rem;
-  border-radius: 0.75rem;
+  border-radius: var(--radius-card, 24px);
   border: 1px solid color-mix(in srgb, var(--tarikh-accent) 28%, transparent);
   background: var(--ss-card-bg, var(--card, #fff));
   color: var(--tarikh-accent);
@@ -636,7 +636,7 @@
   padding: 0.45rem 0.15rem;
   margin: 0 0 0.75rem;
   background: color-mix(in srgb, var(--background, #f7f3eb) 92%, transparent);
-  border-radius: 0.85rem;
+  border-radius: var(--radius-card, 24px);
 }
 
 .tarikh-toc__link {
@@ -645,7 +645,7 @@
   align-items: center;
   min-height: 36px;
   padding: 0.2rem 0.7rem;
-  border-radius: 0.75rem;
+  border-radius: var(--radius-card, 24px);
   border: 1px solid color-mix(in srgb, var(--mj-brand) 22%, transparent);
   background: var(--ss-card-bg, var(--card, #fff));
   color: var(--mj-brand-deep, #0d4a39);
@@ -1000,4 +1000,16 @@ html.dark .tarikh-card__cta--secondary {
 html[data-theme="dark"] .tarikh-toc,
 html.dark .tarikh-toc {
   background: color-mix(in srgb, var(--background, #121816) 92%, transparent);
+}
+
+/* البطاقة كاملة قابلة للضغط */
+.tarikh-card__hit {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  border-radius: inherit;
+}
+.tarikh-card__hit:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--mj-brand) 55%, transparent);
+  outline-offset: 2px;
 }

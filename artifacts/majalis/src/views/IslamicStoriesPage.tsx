@@ -86,7 +86,7 @@ function StoryCard({ story, onSelect }: { story: IslamicStory; onSelect: () => v
         ))}
       </div>
 
-      <span className="isp-card__cta">اقرأ القصة ←</span>
+      <span className="isp-card__cta" aria-hidden="true">اقرأ القصة</span>
     </div>
   );
 }

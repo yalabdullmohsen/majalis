@@ -117,6 +117,19 @@ assert.match(theme, /\.sh-bab/);
 assert.match(theme, /\.wn-card/);
 assert.match(theme, /\.qb-card|\.rs-card|\.sm-card/);
 
+
+console.log("=== توحيد بطاقات داخلية: تاريخ/قصص/فقه/حديث ===");
+assert.match(theme, /\.tarikh-card/);
+assert.match(theme, /\.isp-card/);
+assert.match(theme, /\.hadith-card/);
+assert.match(theme, /\.fiqh-category-card/);
+assert.match(theme, /\.uq-type-card|\.uq-card/);
+const internalCards = read("src/components/ui/InternalCards.tsx");
+assert.match(internalCards, /SectionEntryCard/);
+assert.match(internalCards, /TopicCard/);
+assert.match(internalCards, /InternalLinkCard/);
+assert.match(internalCards, /ReadingCard/);
+
 console.log("=== أعداد المحتوى: اختبارات وأسئلة غير صفرية ===");
 const counts = JSON.parse(read("src/data/content-counts.json")) as {
   quizQuestions: number;
