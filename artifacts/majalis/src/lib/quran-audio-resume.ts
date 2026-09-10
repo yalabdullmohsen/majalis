@@ -10,6 +10,8 @@ import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
 import { registerUnloadPersist } from "@/lib/unload-persist";
 
 export const AUDIO_RESUME_LS_KEY = "majalis-quran-audio-resume-v1";
+/** يُبث عند تغيّر/مسح استئناف التلاوة لتحديث بطاقات المتابعة في نفس التبويب */
+export const AUDIO_RESUME_CHANGED_EVENT = "mj:audio-resume-changed";
 const LS_KEY = AUDIO_RESUME_LS_KEY;
 const IDB_NAME = "majalis-quran-audio-resume";
 const IDB_STORE = "resume";
@@ -70,6 +72,7 @@ export function saveAudioResumeState(state: QuranAudioResumeState): void {
     // Keep legacy position in sync for existing Mushaf resume UX
     savePosition(payload.surah, payload.ayah);
     void idbPut(payload);
+    notifyAudioResumeChanged();
   } catch {
     /* silent */
   }
@@ -125,6 +128,16 @@ export function clearAudioResumeState(): void {
     /* private mode */
   }
   void idbClear();
+  notifyAudioResumeChanged();
+}
+
+function notifyAudioResumeChanged(): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.dispatchEvent(new CustomEvent(AUDIO_RESUME_CHANGED_EVENT));
+  } catch {
+    /* ignore */
+  }
 }
 
 export async function loadAudioResumeStateAsync(): Promise<QuranAudioResumeState | null> {

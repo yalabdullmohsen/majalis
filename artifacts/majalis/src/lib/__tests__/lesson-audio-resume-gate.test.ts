@@ -21,6 +21,11 @@ assert.match(player, /loadLessonAudioResume/);
 assert.match(player, /saveLessonAudioResume/);
 assert.match(player, /claimAudio\("lesson"\)/);
 assert.match(audio, /clearAudioResumeState/);
+assert.match(audio, /AUDIO_RESUME_CHANGED_EVENT/);
+assert.match(audio, /notifyAudioResumeChanged|dispatchEvent/);
+
+const localResume = readFileSync(resolve(root, "src/components/home/HomeLocalResumeCard.tsx"), "utf8");
+assert.match(localResume, /AUDIO_RESUME_CHANGED_EVENT/);
 assert.match(courses, /beginAbortScope/);
 assert.match(courses, /RequestManager\.cancel/);
 assert.match(courses, /state=\{state\}/);
