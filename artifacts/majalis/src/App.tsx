@@ -20,7 +20,7 @@ import { recordRouteTransitionEnd, recordRouteTransitionStart } from "@/lib/rout
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { PRAYER_ALERT_PREFS_CHANGED_EVENT } from "@/lib/prayer-alert-preferences";
 import { getActivePrayerLocation } from "@/lib/prayer-location-prefs";
-import { migratePrayerSettingsIfNeeded } from "@/lib/prayer-settings-migration";
+import { migratePrayerSettingsIfNeeded } from "@/lib/prayer-settings-upgrade";
 import { recordRecentPage } from "@/lib/recent-pages";
 import {
   captureScrollSnapshot,

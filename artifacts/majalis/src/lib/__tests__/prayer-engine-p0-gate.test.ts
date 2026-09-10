@@ -16,7 +16,7 @@ function read(rel: string): string {
 
 for (const rel of [
   "src/lib/prayer-time-engine.ts",
-  "src/lib/prayer-settings-migration.ts",
+  "src/lib/prayer-settings-upgrade.ts",
   "src/lib/prayer-alert-scheduler.ts",
   "src/lib/prayer-local-notifications.ts",
   "src/pages/worship/ui/AdhanSettingsView.tsx",
@@ -27,7 +27,7 @@ for (const rel of [
 const scheduler = read("src/lib/prayer-alert-scheduler.ts");
 const localNotif = read("src/lib/prayer-local-notifications.ts");
 const settingsView = read("src/pages/worship/ui/AdhanSettingsView.tsx");
-const migration = read("src/lib/prayer-settings-migration.ts");
+const migration = read("src/lib/prayer-settings-upgrade.ts");
 const engine = read("src/lib/prayer-time-engine.ts");
 const app = read("src/App.tsx");
 const adhanSched = read("src/lib/adhan-scheduler.ts");
