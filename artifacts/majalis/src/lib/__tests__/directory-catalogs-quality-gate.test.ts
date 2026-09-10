@@ -30,7 +30,7 @@ const landmarkIds = new Set<string>();
 for (const L of ISLAMIC_LANDMARKS) {
   assert.ok(L.id && !landmarkIds.has(L.id), `id مكرر/فارغ: ${L.id}`);
   landmarkIds.add(L.id);
-  assert.ok((L.description || "").length >= 90, `وصف قصير: ${L.id}`);
+  assert.ok((L.description || "").length >= 180, `وصف قصير: ${L.id}`);
   assert.ok((L.significance || "").length >= 40, `أهمية قصيرة: ${L.id}`);
   assert.ok(Number.isFinite(L.lat) && Number.isFinite(L.lng), `إحداثيات: ${L.id}`);
 }
@@ -38,21 +38,32 @@ for (const L of ISLAMIC_LANDMARKS) {
 console.log("=== جودة المؤسسات ===");
 const instIds = new Set<string>();
 const instNames = new Set<string>();
+const boilerplate = "يُعرَض هنا تعريفًا مرجعيًا";
 for (const I of INSTITUTIONS) {
   assert.ok(I.id && !instIds.has(I.id), `id مكرر: ${I.id}`);
   instIds.add(I.id);
   const nameKey = I.name.replace(/\s+/g, " ").trim();
   assert.ok(!instNames.has(nameKey), `اسم مكرر: ${nameKey}`);
   instNames.add(nameKey);
-  assert.ok((I.description || "").length >= 80, `وصف قصير: ${I.id}`);
+  assert.ok((I.description || "").length >= 150, `وصف قصير: ${I.id}`);
+  assert.ok(
+    !(I.description || "").includes(boilerplate),
+    `وصف قالبي ممنوع: ${I.id}`,
+  );
 }
 
 console.log("=== جودة الجامعات ===");
 for (const U of universities) {
   assert.ok(U.slug && U.name_ar, "slug/name");
-  assert.ok((U.about || "").length >= 180, `about قصير: ${U.slug}`);
+  assert.ok((U.about || "").length >= 220, `about قصير: ${U.slug}`);
   assert.ok(Array.isArray(U.faqs) && U.faqs.length >= 2, `faqs ناقصة: ${U.slug}`);
   assert.ok(Array.isArray(U.programs) && U.programs.length >= 1, `programs ناقصة: ${U.slug}`);
+  for (const faq of U.faqs as Array<{ answer?: string }>) {
+    assert.ok(
+      ((faq?.answer || "").trim().length) >= 80,
+      `إجابة FAQ قصيرة: ${U.slug}`,
+    );
+  }
 }
 
 console.log("=== هوية CSS للدليل ===");
