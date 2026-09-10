@@ -1,3 +1,40 @@
+.univ-card {
+  border-radius: var(--radius-card, 24px);
+  background: var(--ss-card-bg, #fffcf7);
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 16%, var(--ss-border, #e3e8e6));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.univ-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  background: linear-gradient(135deg, var(--mj-brand-deep, #0d4a39), var(--mj-brand, #1f6b56));
+}
+.univ-card__head-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, #fff 18%, transparent);
+  color: #fff;
+  font-weight: 800;
+}
+.univ-card__head-en {
+  color: color-mix(in srgb, #fff 78%, transparent);
+  font-size: 0.72rem;
+  margin-top: 0.15rem;
+}
+.univ-card__actions {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  padding: 0 1rem 1rem;
+}
 /* ── 192 — UniversityCard helpers ─────────────────────────────────────────── */
 .univ-card__logo     { background: color-mix(in srgb, var(--ss-card-bg, #fff) 90%, transparent); }
 .univ-card__location { color: var(--majalis-ink-soft); }

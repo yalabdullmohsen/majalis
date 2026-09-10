@@ -21,8 +21,8 @@ const universities = JSON.parse(
 }>;
 
 console.log("=== أحجام الكتالوج ===");
-assert.ok(ISLAMIC_LANDMARKS.length >= 30, `معالم متوقعة ≥25 وجدنا ${ISLAMIC_LANDMARKS.length}`);
-assert.ok(INSTITUTIONS.length >= 35, `مؤسسات متوقعة ≥30 وجدنا ${INSTITUTIONS.length}`);
+assert.ok(ISLAMIC_LANDMARKS.length >= 38, `معالم متوقعة ≥38 وجدنا ${ISLAMIC_LANDMARKS.length}`);
+assert.ok(INSTITUTIONS.length >= 42, `مؤسسات متوقعة ≥42 وجدنا ${INSTITUTIONS.length}`);
 assert.ok(universities.length >= 35, `جامعات متوقعة ≥35 وجدنا ${universities.length}`);
 
 console.log("=== جودة المعالم ===");
@@ -64,5 +64,21 @@ assert.match(ilmCss, /\.ilm-card/, "ilm-card موجود");
 assert.match(instCss, /html\.dark \.inst-card|html\[data-theme="dark"\] \.inst-card/);
 assert.match(theme, /\.ilm-card/);
 assert.match(theme, /\.inst-card/);
+
+
+console.log("=== روابط المؤسسات والمسافات ===");
+for (const I of INSTITUTIONS) {
+  assert.ok(I.website || I.mapQuery, `رابط/خريطة ناقص: ${I.id}`);
+  assert.equal(I.name, I.name.replace(/\s+/g, " ").trim(), `مسافات الاسم: ${I.id}`);
+  assert.equal(I.description, I.description.replace(/\s+/g, " ").trim(), `مسافات الوصف: ${I.id}`);
+}
+for (const L of ISLAMIC_LANDMARKS) {
+  assert.equal(L.name, L.name.replace(/\s+/g, " ").trim(), `مسافات معلم: ${L.id}`);
+  assert.equal(L.description, L.description.replace(/\s+/g, " ").trim(), `مسافات وصف معلم: ${L.id}`);
+}
+
+console.log("=== بطاقة الجامعة في الثيم ===");
+assert.match(theme, /\.univ-card/);
+assert.match(theme, /html\.dark \.univ-card|html\[data-theme="dark"\] \.univ-card/);
 
 console.log("✓ directory-catalogs-quality-gate");
