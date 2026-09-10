@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 import { AppCard } from "./AppCard";
+import { BodyText, Caption, CardTitle } from "./text";
 
 export type ContentCardProps = {
   href?: string;
@@ -21,9 +22,15 @@ export function ContentCard({ href, title, meta, excerpt, footer, className, chi
       className={cn("ss-content-card", href && "ss-content-card--link", className)}
       data-content-card="1"
     >
-      {meta ? <p className="ss-content-card__meta">{meta}</p> : null}
-      <h3 className="ss-content-card__title">{title}</h3>
-      {excerpt ? <p className="ss-content-card__excerpt">{excerpt}</p> : null}
+      {meta ? (
+        <Caption as="p" className="ss-content-card__meta">
+          {meta}
+        </Caption>
+      ) : null}
+      <CardTitle className="ss-content-card__title">{title}</CardTitle>
+      {excerpt ? (
+        <BodyText className="ss-content-card__excerpt">{excerpt}</BodyText>
+      ) : null}
       {children}
       {footer ? <div className="ss-content-card__footer">{footer}</div> : null}
     </AppCard>
