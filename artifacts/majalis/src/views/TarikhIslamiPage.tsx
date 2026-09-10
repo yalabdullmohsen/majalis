@@ -53,38 +53,40 @@ function HistoryCard({
   const dateLabel = [item.hijriDate, item.gregorianDate].filter(Boolean).join(" / ");
   return (
     <article
-      className={`tarikh-card${item.featured ? " tarikh-card--featured" : ""}${
+      className={`tarikh-card soft-card soft-card--on-light${item.featured ? " tarikh-card--featured" : ""}${
         isSeerahPortal ? " tarikh-card--portal" : ""
       }`}
     >
-      <div className="tarikh-card__top">
-        {typeof index === "number" ? (
-          <span className="tarikh-card__n" aria-label={`الحدث ${index}`}>
-            {index}
-          </span>
-        ) : null}
-        <span className="tarikh-card__cat">{HISTORY_CATEGORIES[item.category]}</span>
-        <span className="tarikh-card__kind">{HISTORY_KIND_LABELS[item.kind]}</span>
-        {item.startHere ? <span className="tarikh-card__badge">ابدأ من هنا</span> : null}
-        {item.featured && !item.startHere ? (
-          <span className="tarikh-card__badge tarikh-card__badge--featured">مفصلي</span>
-        ) : null}
-      </div>
-      <h3 className="tarikh-card__title">{item.title}</h3>
-      <p className="tarikh-card__summary">{item.summary}</p>
-      <p className="tarikh-card__meta">
-        {[dateLabel || item.era, item.place].filter(Boolean).join(" · ")}
-      </p>
-      <div className="tarikh-card__actions">
-        <Link href={detailHref(item)} className="tarikh-card__cta">
+      <Link href={detailHref(item)} className="tarikh-card__hit" aria-label={item.title}>
+        <div className="tarikh-card__top">
+          {typeof index === "number" ? (
+            <span className="tarikh-card__n" aria-label={`الحدث ${index}`}>
+              {index}
+            </span>
+          ) : null}
+          <span className="tarikh-card__cat">{HISTORY_CATEGORIES[item.category]}</span>
+          <span className="tarikh-card__kind">{HISTORY_KIND_LABELS[item.kind]}</span>
+          {item.startHere ? <span className="tarikh-card__badge">ابدأ من هنا</span> : null}
+          {item.featured && !item.startHere ? (
+            <span className="tarikh-card__badge tarikh-card__badge--featured">مفصلي</span>
+          ) : null}
+        </div>
+        <h3 className="tarikh-card__title">{item.title}</h3>
+        <p className="tarikh-card__summary">{item.summary}</p>
+        <p className="tarikh-card__meta">
+          {[dateLabel || item.era, item.place].filter(Boolean).join(" · ")}
+        </p>
+        <span className="tarikh-card__cta" aria-hidden="true">
           اقرأ التفاصيل
-        </Link>
-        {isSeerahPortal && item.portalHref ? (
+        </span>
+      </Link>
+      {isSeerahPortal && item.portalHref ? (
+        <div className="tarikh-card__actions">
           <Link href={item.portalHref} className="tarikh-card__cta tarikh-card__cta--secondary">
             {item.portalLabel || "السيرة النبوية"}
           </Link>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
     </article>
   );
 }

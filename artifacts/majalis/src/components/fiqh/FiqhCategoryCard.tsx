@@ -1,4 +1,3 @@
-import { Link } from "wouter";
 import {
   BookOpen,
   Droplets,
@@ -21,6 +20,7 @@ import {
   type FiqhDoorSummary,
 } from "@/lib/fiqh/fiqhNormalize";
 import { cn } from "@/lib/utils";
+import { SectionEntryCard } from "@/components/ui/HubCard";
 
 type Props = {
   door: FiqhDoorSummary;
@@ -70,8 +70,13 @@ export function FiqhCategoryCard({ door, className, featured = false }: Props) {
     : formatMasailCount(door.issueCount);
 
   return (
-    <Link
+    <SectionEntryCard
       href={entryHref}
+      title={door.label}
+      description={door.desc}
+      meta={hasContent ? metaLabel : undefined}
+      Icon={Icon}
+      featured={featured}
       className={cn(
         "fiqh-category-card",
         `fiqh-category-card--${group}`,
@@ -79,17 +84,6 @@ export function FiqhCategoryCard({ door, className, featured = false }: Props) {
         `fiqh-category-card--${door.id}`,
         className,
       )}
-      aria-label={door.label}
-    >
-      <span className="fiqh-category-card__accent" aria-hidden="true" />
-      <div className="fiqh-category-card__head">
-        <span className="fiqh-category-card__icon" aria-hidden="true">
-          <Icon size={16} strokeWidth={1.9} />
-        </span>
-        <h3 className="fiqh-category-card__title">{door.label}</h3>
-      </div>
-      <p className="fiqh-category-card__desc">{door.desc}</p>
-      {hasContent ? <p className="fiqh-category-card__meta">{metaLabel}</p> : null}
-    </Link>
+    />
   );
 }

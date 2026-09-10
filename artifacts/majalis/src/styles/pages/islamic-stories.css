@@ -56,7 +56,7 @@
   padding: 0.65rem 1rem;
   background: var(--elite-white, var(--mj-bg));
   border: 1.5px solid var(--elite-border-2, rgba(24,54,42,0.15));
-  border-radius: 0.65rem;
+  border-radius: 18px;
   color: var(--elite-ink, var(--mj-brand-deep));
   font-size: 0.9rem;
   font-family: inherit;
@@ -208,7 +208,7 @@ html.dark .isp-chip.is-active,
   place-items: center;
   width: 2.6rem;
   height: 2.6rem;
-  border-radius: 14px;
+  border-radius: var(--radius-card, 24px);
   flex-shrink: 0;
   background: color-mix(in srgb, var(--mj-brand) 12%, var(--ss-card-bg));
   color: var(--brand-on-light, var(--mj-brand-deep));

@@ -41,7 +41,7 @@
 
 /* Filters */
 .an-filters { max-width: 860px; margin: 0 auto 1.5rem; padding: 0 1rem; display: flex; flex-direction: column; gap: 0.8rem; }
-.an-search { width: 100%; padding: 0.65rem 1rem; border: 1.5px solid #d1d5db; border-radius: 0.6rem; font-size: 0.9rem; background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7))); color: #1A1A18; outline: none; transition: border-color 0.15s; }
+.an-search { width: 100%; padding: 0.65rem 1rem; border: 1.5px solid #d1d5db; border-radius: 18px; font-size: 0.9rem; background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7))); color: #1A1A18; outline: none; transition: border-color 0.15s; }
 .an-search:focus { border-color: var(--majalis-emerald); }
 .an-cats { display: flex; flex-wrap: wrap; gap: var(--ds-space-2); }
 .an-cat { padding: 0.35rem 0.9rem; border-radius: var(--ds-radius-full); border: 1.5px solid #d1d5db; background: transparent; font-size: 0.8rem; color: var(--mj-ink-2); cursor: pointer; transition: background 0.15s, border-color 0.15s, color 0.15s; }
@@ -72,7 +72,7 @@
 .an-card__today-badge { font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: var(--ds-radius-full); background: var(--majalis-emerald); color: #FFFFFF; flex-shrink: 0; }
 .an-card__text { font-size: 0.85rem; line-height: 1.8; color: var(--mj-ink-2); font-family: var(--font-quran, serif); border: none; padding: 0; margin: 0 0 0.6rem; }
 .an-card__expl { font-size: 0.8rem; line-height: 1.7; color: #4b5563; border-inline-start: 2px solid #d1fae5; padding-inline-start: 0.7rem; margin-bottom: 0.6rem; }
-.an-card__benefit { display: flex; gap: var(--ds-space-2); font-size: 0.78rem; color: var(--mj-brand); background: #ecfdf5; border-radius: 0.4rem; padding: 0.5rem 0.7rem; margin-bottom: 0.6rem; align-items: flex-start; }
+.an-card__benefit { display: flex; gap: var(--ds-space-2); font-size: 0.78rem; color: var(--mj-brand); background: #ecfdf5; border-radius: 16px; padding: 0.5rem 0.7rem; margin-bottom: 0.6rem; align-items: flex-start; }
 .an-card__benefit-label { font-weight: 700; flex-shrink: 0; color: var(--mj-brand); }
 .an-card__footer { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; flex-wrap: wrap; }
 .an-card__source { font-size: 0.8rem; color: #9ca3af; }
@@ -100,7 +100,7 @@
 }
 .an-search {
   min-height: 44px;
-  border-radius: 0.75rem;
+  border-radius: var(--radius-card, 24px);
   border: 1px solid var(--mj-hairline, #d1d5db);
   background: var(--ss-card-bg, var(--mj-surface, #fffcf7));
   color: var(--mj-ink, #1a1a18);
@@ -141,7 +141,7 @@
 
 .an-row {
   border: 1px solid color-mix(in srgb, var(--mj-brand, #173d35) 14%, transparent);
-  border-radius: 0.8rem;
+  border-radius: var(--radius-card, 24px);
   background: var(--ss-card-bg, var(--mj-surface, #fffcf7));
   overflow: hidden;
 }
@@ -234,7 +234,7 @@
   font-size: 0.78rem;
   color: var(--mj-brand-deep, var(--brand-deep, var(--mj-brand-deep)));
   background: color-mix(in srgb, var(--mj-brand, #173d35) 7%, transparent);
-  border-radius: 0.45rem;
+  border-radius: 16px;
   padding: 0.45rem 0.6rem;
   margin-bottom: 0.55rem;
 }

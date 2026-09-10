@@ -709,3 +709,159 @@ html[data-theme="dark"] .sa-card {
   border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
   color: var(--mj-ink, #f3f7f5) !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   موجة توحيد البطاقات الداخلية — حديث / فقه / تاريخ / قصص / علوم
+   ═══════════════════════════════════════════════════════════════ */
+.tarikh-card,
+.isp-card,
+.hadith-card,
+.hb-book-card,
+.hb-hadith-row,
+.fiqh-category-card,
+.uq-type-card,
+.uq-jam-card,
+.uq-ijaz-card,
+.uq-mm-card,
+.uq-naskh-card,
+.uq-card,
+.sect-card,
+.akl-card,
+.hs-card,
+.tf-edition-card,
+.tf-path-card,
+.tf-related__link,
+.tf-cta__link,
+.topic-card,
+.ss-topic-card,
+.internal-link-card,
+.ss-content-card,
+.gl-term {
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand) 16%, var(--ss-border, var(--color-border, #d9d3c8))) !important;
+  border-radius: var(--radius-card, 24px) !important;
+  box-shadow: var(--ss-shadow-soft, 0 6px 18px -12px rgba(15, 40, 30, 0.14)) !important;
+  color: var(--color-text, var(--mj-ink, #16241e)) !important;
+}
+
+html.dark .tarikh-card,
+html.dark .isp-card,
+html.dark .hadith-card,
+html.dark .hb-book-card,
+html.dark .hb-hadith-row,
+html.dark .fiqh-category-card,
+html.dark .uq-type-card,
+html.dark .uq-jam-card,
+html.dark .uq-ijaz-card,
+html.dark .uq-mm-card,
+html.dark .uq-naskh-card,
+html.dark .uq-card,
+html.dark .sect-card,
+html.dark .akl-card,
+html.dark .hs-card,
+html.dark .tf-edition-card,
+html.dark .tf-path-card,
+html.dark .tf-related__link,
+html.dark .tf-cta__link,
+html.dark .topic-card,
+html.dark .ss-content-card,
+html.dark .gl-term,
+html[data-theme="dark"] .tarikh-card,
+html[data-theme="dark"] .isp-card,
+html[data-theme="dark"] .hadith-card,
+html[data-theme="dark"] .hb-book-card,
+html[data-theme="dark"] .hb-hadith-row,
+html[data-theme="dark"] .fiqh-category-card,
+html[data-theme="dark"] .uq-type-card,
+html[data-theme="dark"] .uq-jam-card,
+html[data-theme="dark"] .uq-ijaz-card,
+html[data-theme="dark"] .uq-mm-card,
+html[data-theme="dark"] .uq-naskh-card,
+html[data-theme="dark"] .sect-card,
+html[data-theme="dark"] .akl-card,
+html[data-theme="dark"] .hs-card,
+html[data-theme="dark"] .tf-edition-card,
+html[data-theme="dark"] .tf-path-card,
+html[data-theme="dark"] .ss-content-card,
+html[data-theme="dark"] .gl-term {
+  background: var(--mj-surface, #1b2421) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+  color: var(--mj-ink, #f3f7f5) !important;
+  box-shadow: 0 6px 18px -12px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* عناوين/وصف — تباين نهاري/ليلي بلا opacity على النص المهم */
+.tarikh-card__title,
+.isp-card__title,
+.hadith-card__title,
+.fiqh-category-card__title,
+.sect-card__title,
+.akl-card__title,
+.hs-card__term,
+.uq-type-card__title,
+.tf-edition-card__title {
+  color: var(--color-text, var(--mj-ink, #16241e)) !important;
+  opacity: 1 !important;
+}
+.tarikh-card__summary,
+.isp-card__summary,
+.hadith-card__text,
+.fiqh-category-card__desc,
+.sect-card__desc,
+.akl-card__body,
+.hs-card__def {
+  color: var(--color-text-muted, var(--mj-ink-2, #4f5f58)) !important;
+  opacity: 1 !important;
+}
+html.dark .tarikh-card__title,
+html.dark .isp-card__title,
+html.dark .hadith-card__title,
+html.dark .fiqh-category-card__title,
+html.dark .sect-card__title,
+html.dark .akl-card__title,
+html.dark .hs-card__term,
+html[data-theme="dark"] .tarikh-card__title,
+html[data-theme="dark"] .isp-card__title,
+html[data-theme="dark"] .fiqh-category-card__title {
+  color: var(--mj-ink, #f3f7f5) !important;
+}
+html.dark .tarikh-card__summary,
+html.dark .isp-card__summary,
+html.dark .hadith-card__text,
+html.dark .fiqh-category-card__desc,
+html.dark .sect-card__desc,
+html[data-theme="dark"] .tarikh-card__summary,
+html[data-theme="dark"] .isp-card__summary,
+html[data-theme="dark"] .fiqh-category-card__desc {
+  color: var(--mj-ink-2, #c5d0cb) !important;
+}
+
+/* البطاقة كاملة قابلة للضغط — أخفِ أزرار CTA المنفصلة كأزرار، أبقِها كتلميح */
+.tarikh-card__cta,
+.isp-card__cta,
+.an-read-btn--sm,
+.hadith-card__expand-btn {
+  pointer-events: none;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--mj-brand, #1f6b56) !important;
+  font-weight: 700;
+  padding-inline: 0 !important;
+  min-height: 0 !important;
+}
+html.dark .tarikh-card__cta,
+html.dark .isp-card__cta,
+html[data-theme="dark"] .tarikh-card__cta,
+html[data-theme="dark"] .isp-card__cta {
+  color: var(--mj-brand, #5fbf98) !important;
+}
+
+/* أيقونة داخل مربع ناعم */
+.tarikh-card__icon,
+.isp-card__icon,
+.fiqh-category-card__icon,
+.sect-card__icon,
+.uq-type-card__icon {
+  border-radius: 16px !important;
+}

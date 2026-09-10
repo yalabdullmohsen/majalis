@@ -15,3 +15,9 @@ export { SectionEntryCard, HubCard as SectionHubCard } from "@/components/ui/Hub
 export type { SectionEntryCardProps, SectionEntryVariant } from "@/components/ui/HubCard";
 export { UnifiedLessonCard as LessonCard } from "@/components/lessons/UnifiedLessonCard";
 export { FloatingBackButton, AppBackButton } from "@/components/FloatingBackButton";
+
+export {
+  TopicCard,
+  InternalLinkCard,
+  ReadingCard,
+} from "@/components/ui/InternalCards";
