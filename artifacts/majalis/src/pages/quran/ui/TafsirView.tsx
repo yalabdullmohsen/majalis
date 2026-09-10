@@ -439,7 +439,7 @@ export default function TafsirPage() {
           <ShieldCheck size={18} aria-hidden />
           <h2 className="tf-related__title">أكمل رحلتك</h2>
         </div>
-        <div className="tf-related__grid">
+        <div className="tf-related__grid hub-card-grid">
           {[
             { href: "/quran-hub", label: "مركز القرآن الكريم" },
             { href: "/mushaf", label: "المصحف" },
@@ -451,9 +451,7 @@ export default function TafsirPage() {
             { href: "/lessons", label: "مسار التفسير" },
             { href: "/tafsir", label: "علم التفسير" },
           ].map(({ href, label }) => (
-            <Link key={href} href={href} className="tf-related__link">
-              {label}
-            </Link>
+            <InternalLinkCard key={href} href={href} title={label} variant="compact" className="tf-related__link" />
           ))}
         </div>
       </section>

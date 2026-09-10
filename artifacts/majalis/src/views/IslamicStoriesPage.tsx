@@ -57,37 +57,38 @@ const CATEGORY_LABELS: Category[] = ["الكل", "صحابة", "فتوحات", "
 // ─────────────────── Story Card ───────────────────────────────────────────────
 function StoryCard({ story, onSelect }: { story: IslamicStory; onSelect: () => void }) {
   return (
-    <div
+    <article
       className={`isp-card isp-card--${story.category === "صحابة" ? "companions" : story.category === "فتوحات" ? "conquests" : "history"}`}
-      onClick={onSelect}
-      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onSelect()}
-      tabIndex={0}
-      role="button"
-      aria-label={`اقرأ قصة: ${story.title}`}
     >
-      <div className="isp-card__head">
-        <span className="isp-card__icon"><StoryIconEl name={story.icon} /></span>
-        <div className="isp-card__meta-badges">
-          <span className="isp-badge isp-badge--cat">{story.category}</span>
-          <span className="isp-badge isp-badge--era">{story.era}</span>
+      <button
+        type="button"
+        className="isp-card__hit"
+        onClick={onSelect}
+        aria-label={`اقرأ قصة: ${story.title}`}
+      >
+        <div className="isp-card__head">
+          <span className="isp-card__icon"><StoryIconEl name={story.icon} /></span>
+          <div className="isp-card__meta-badges">
+            <span className="isp-badge isp-badge--cat">{story.category}</span>
+            <span className="isp-badge isp-badge--era">{story.era}</span>
+          </div>
         </div>
-      </div>
 
-      <div className="isp-card__divider" aria-hidden="true">
+        <h3 className="isp-card__title">{story.title}</h3>
+        <p className="isp-card__summary">{truncateAtWord(story.summary, 120)}</p>
+
+        <div className="isp-card__tags">
+          {story.tags.slice(0, 3).map((tag) => (
+            <span key={tag} className="isp-tag">#{tag}</span>
+          ))}
+        </div>
+
+        <span className="isp-card__cta" aria-hidden="true">اقرأ القصة</span>
+      </button>
+      <div className="isp-card__admin">
         <AdminQuickEdit section="islamic-stories" />
       </div>
-
-      <h3 className="isp-card__title">{story.title}</h3>
-      <p className="isp-card__summary">{truncateAtWord(story.summary, 120)}</p>
-
-      <div className="isp-card__tags">
-        {story.tags.slice(0, 3).map((tag) => (
-          <span key={tag} className="isp-tag">#{tag}</span>
-        ))}
-      </div>
-
-      <span className="isp-card__cta" aria-hidden="true">اقرأ القصة</span>
-    </div>
+    </article>
   );
 }
 

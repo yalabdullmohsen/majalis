@@ -985,3 +985,42 @@ button.nb-azm-card {
   text-align: inherit;
   cursor: pointer;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   موجة 3 — فقه فصول/مسائل + أربعين + قصص + تفسير روابط
+   ═══════════════════════════════════════════════════════════════ */
+.ve-chapter-card,
+.fiqh-lux-chapter__head,
+.fiqh-lux-lesson-link,
+.an-row,
+.tf-related__link,
+.isp-card {
+  border-radius: var(--radius-card, 24px) !important;
+  border-color: color-mix(in srgb, var(--mj-brand) 16%, var(--ss-border, var(--color-border, #d9d3c8))) !important;
+  box-shadow: var(--ss-shadow-soft, 0 6px 18px -12px rgba(15, 40, 30, 0.14)) !important;
+}
+.ve-chapter-card__go,
+.fiqh-lux-chapter__go,
+.fiqh-lux-lesson-link__go,
+.an-row__chevron {
+  pointer-events: none;
+}
+html.dark .ve-chapter-card,
+html.dark .fiqh-lux-chapter__head,
+html.dark .fiqh-lux-lesson-link,
+html.dark .an-row,
+html.dark .isp-card,
+html[data-theme="dark"] .ve-chapter-card,
+html[data-theme="dark"] .fiqh-lux-chapter__head,
+html[data-theme="dark"] .fiqh-lux-lesson-link,
+html[data-theme="dark"] .an-row,
+html[data-theme="dark"] .isp-card {
+  background: var(--mj-surface, #1b2421) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+  color: var(--mj-ink, #f3f7f5) !important;
+}
+.ve-chapter-card.hub-card,
+.fiqh-lux-chapter__head.hub-card,
+.fiqh-lux-lesson-link.hub-card {
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
+}

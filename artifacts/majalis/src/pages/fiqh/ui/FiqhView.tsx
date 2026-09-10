@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "wouter";
-import { BookOpen, ChevronLeft, Search, X } from "lucide-react";
+import { BookOpen, Search, X } from "lucide-react";
+import { InternalLinkCard } from "@/components/ui/InternalCards";
 import { usePageView } from "@/hooks/usePageView";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd, webPageJsonLd } from "@/lib/seo-structured-data";
@@ -126,18 +126,16 @@ function SearchHitList({
           <h3 id="fiqh-search-chapters" className="fiqh-hub-section__title">
             أبواب
           </h3>
-          <ul className="fiqh-lux-chapter-list">
+          <ul className="fiqh-lux-chapter-list hub-card-grid">
             {chapters.slice(0, 24).map((hit) => (
               <li key={`${hit.book.id}-${hit.chapter.id}`}>
-                <Link href={chapterHref(hit.book.id, hit.chapter.id)} className="fiqh-lux-chapter__head">
-                  <span className="fiqh-lux-chapter__body">
-                    <span className="fiqh-lux-chapter__title">{hit.chapter.title}</span>
-                    <span className="fiqh-lux-chapter__count">{hit.book.title}</span>
-                  </span>
-                  <span className="fiqh-lux-chapter__go" aria-hidden="true">
-                    <ChevronLeft size={16} strokeWidth={2.5} />
-                  </span>
-                </Link>
+                <InternalLinkCard
+                  href={chapterHref(hit.book.id, hit.chapter.id)}
+                  title={hit.chapter.title}
+                  description={hit.book.title}
+                  variant="compact"
+                  className="fiqh-lux-chapter__head"
+                />
               </li>
             ))}
           </ul>
@@ -149,20 +147,16 @@ function SearchHitList({
           <h3 id="fiqh-search-lessons" className="fiqh-hub-section__title">
             مسائل
           </h3>
-          <ul className="fiqh-lux-lesson-list fiqh-lux-lesson-list--standalone">
+          <ul className="fiqh-lux-lesson-list fiqh-lux-lesson-list--standalone hub-card-grid">
             {lessons.slice(0, 24).map((hit) => (
               <li key={hit.lesson.id}>
-                <Link href={hit.href} className="fiqh-lux-lesson-link">
-                  <span className="fiqh-lux-lesson-link__body">
-                    <span className="fiqh-lux-lesson-link__title">{hit.lesson.title}</span>
-                    <span className="fiqh-lux-lesson-link__sum">
-                      {hit.book.title} ← {hit.chapter.title}
-                    </span>
-                  </span>
-                  <span className="fiqh-lux-lesson-link__go" aria-hidden="true">
-                    <ChevronLeft size={16} strokeWidth={2.5} />
-                  </span>
-                </Link>
+                <InternalLinkCard
+                  href={hit.href}
+                  title={hit.lesson.title}
+                  description={`${hit.book.title} ← ${hit.chapter.title}`}
+                  variant="compact"
+                  className="fiqh-lux-lesson-link"
+                />
               </li>
             ))}
           </ul>

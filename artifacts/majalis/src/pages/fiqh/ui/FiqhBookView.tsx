@@ -1,6 +1,6 @@
 import { Link, useParams } from "wouter";
 import { useEffect } from "react";
-import { ChevronLeft } from "lucide-react";
+import { InternalLinkCard } from "@/components/ui/InternalCards";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd, bookJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
@@ -130,22 +130,14 @@ export default function FiqhBookPage() {
           const lessons = publishedLessonsInChapter(ch);
           return (
             <li key={ch.id} className="fiqh-chapter fiqh-chapter--card">
-              <Link href={chapterHref(book.id, ch.id)} className="ve-chapter-card">
-                <span className="ve-chapter-card__num" aria-hidden="true">
-                  {i + 1}
-                </span>
-                <span className="ve-chapter-card__body">
-                  <span className="ve-chapter-card__title">{ch.title}</span>
-                  <span className="ve-chapter-card__preview">{chapterPreviewText(ch)}</span>
-                  <span className="ve-chapter-card__meta">
-                    <span className="ve-badge">{editorial.title.replace(/^كتاب\s+/u, "") || editorial.title}</span>
-                    <span>{formatMasailCount(lessons.length)}</span>
-                  </span>
-                </span>
-                <span className="ve-chapter-card__go" aria-hidden="true">
-                  <ChevronLeft size={16} strokeWidth={2.5} />
-                </span>
-              </Link>
+              <InternalLinkCard
+                href={chapterHref(book.id, ch.id)}
+                title={ch.title}
+                description={chapterPreviewText(ch)}
+                meta={formatMasailCount(lessons.length)}
+                badge={String(i + 1)}
+                className="ve-chapter-card"
+              />
             </li>
           );
         })}

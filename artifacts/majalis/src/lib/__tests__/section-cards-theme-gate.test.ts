@@ -165,4 +165,14 @@ assert.match(read("src/components/hadith/HadithCard.tsx"), /hadith-card__hit/);
 assert.match(read("src/pages/quran/ui/TafsirView.tsx"), /InternalLinkCard/);
 assert.match(read("src/views/ProphetStoriesPage.tsx"), /button[\s\S]*nb-azm-card/);
 
+
+console.log("=== موجة 3: فقه/تفسير روابط/قصص ===");
+assert.match(theme, /موجة 3/);
+assert.match(read("src/pages/fiqh/ui/FiqhChapterView.tsx"), /InternalLinkCard/);
+assert.match(read("src/pages/fiqh/ui/FiqhBookView.tsx"), /InternalLinkCard/);
+assert.match(read("src/pages/fiqh/ui/FiqhView.tsx"), /InternalLinkCard/);
+assert.match(read("src/pages/quran/ui/TafsirView.tsx"), /tf-related__link[\s\S]*InternalLinkCard|InternalLinkCard[\s\S]*tf-related__link/);
+assert.match(read("src/views/IslamicStoriesPage.tsx"), /isp-card__hit/);
+
 console.log("section-cards-theme-gate.test.ts: ok");
+

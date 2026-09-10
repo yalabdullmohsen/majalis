@@ -1,6 +1,6 @@
 import { Link, useParams } from "wouter";
 import { useEffect, useMemo, useState } from "react";
-import { ChevronLeft } from "lucide-react";
+import { InternalLinkCard } from "@/components/ui/InternalCards";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
@@ -223,25 +223,20 @@ export default function FiqhChapterPage() {
         <details open id="fiqh-ch-masail" className="ve-section">
           <summary>المسائل</summary>
           <div className="ve-accordion__body">
-            <ul className="ve-lesson-list">
+            <ul className="ve-lesson-list hub-card-grid">
               {lessons.map((lesson, li) => (
                 <li key={lesson.id}>
-                  <Link href={lessonHref(book, lesson)} className="ve-chapter-card">
-                    <span className="ve-chapter-card__num" aria-hidden="true">
-                      {li + 1}
-                    </span>
-                    <span className="ve-chapter-card__body">
-                      <span className="ve-chapter-card__title">{lesson.title}</span>
-                      <span className="ve-chapter-card__preview">
-                        {lesson.summary.length > 110
-                          ? `${lesson.summary.slice(0, 100).trim()}…`
-                          : lesson.summary}
-                      </span>
-                    </span>
-                    <span className="ve-chapter-card__go" aria-hidden="true">
-                      <ChevronLeft size={16} strokeWidth={2.5} />
-                    </span>
-                  </Link>
+                  <InternalLinkCard
+                    href={lessonHref(book, lesson)}
+                    title={lesson.title}
+                    description={
+                      lesson.summary.length > 110
+                        ? `${lesson.summary.slice(0, 100).trim()}…`
+                        : lesson.summary
+                    }
+                    badge={String(li + 1)}
+                    className="ve-chapter-card"
+                  />
                 </li>
               ))}
             </ul>
