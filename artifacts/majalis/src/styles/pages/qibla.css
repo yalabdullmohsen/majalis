@@ -75,7 +75,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.15rem;
-  background: #fff;
+  background: var(--ss-card-bg, var(--mj-surface, #fff));
   border: 1px solid rgba(22, 163, 74, 0.15);
   border-radius: var(--ds-radius-lg);
   padding: 0.6rem 1.1rem;
@@ -164,7 +164,7 @@
   border: 1px solid rgba(22, 163, 74, 0.25);
   border-radius: 0.55rem;
   padding: 0.5rem 0.65rem;
-  background: #fff;
+  background: var(--ss-card-bg, var(--mj-surface, #fff));
   font: inherit;
 }
 
@@ -194,7 +194,7 @@
 
 .qibla-calib-modal {
   width: min(100%, 22rem);
-  background: #fff;
+  background: var(--ss-card-bg, var(--mj-surface, #fff));
   border-radius: 1rem;
   padding: 1.35rem 1.25rem 1.2rem;
   text-align: center;

@@ -21,8 +21,8 @@ const universities = JSON.parse(
 }>;
 
 console.log("=== أحجام الكتالوج ===");
-assert.ok(ISLAMIC_LANDMARKS.length >= 25, `معالم متوقعة ≥25 وجدنا ${ISLAMIC_LANDMARKS.length}`);
-assert.ok(INSTITUTIONS.length >= 30, `مؤسسات متوقعة ≥30 وجدنا ${INSTITUTIONS.length}`);
+assert.ok(ISLAMIC_LANDMARKS.length >= 30, `معالم متوقعة ≥25 وجدنا ${ISLAMIC_LANDMARKS.length}`);
+assert.ok(INSTITUTIONS.length >= 35, `مؤسسات متوقعة ≥30 وجدنا ${INSTITUTIONS.length}`);
 assert.ok(universities.length >= 35, `جامعات متوقعة ≥35 وجدنا ${universities.length}`);
 
 console.log("=== جودة المعالم ===");

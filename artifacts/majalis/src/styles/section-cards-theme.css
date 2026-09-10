@@ -677,3 +677,35 @@ html[data-theme="dark"] .is-stat-card {
   border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
   color: var(--mj-ink, #f3f7f5) !important;
 }
+
+/* موجة 2: شمائل / وصايا / قبلة / أبحاث / خريطة الموقع */
+.sh-bab,
+.wn-card,
+.wn-umma-card,
+.qb-card,
+.rs-card,
+.sm-card,
+.sa-card {
+  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, var(--color-border))) !important;
+  border-radius: var(--radius-card, 24px) !important;
+  color: var(--color-text, var(--mj-ink)) !important;
+}
+html.dark .sh-bab,
+html.dark .wn-card,
+html.dark .wn-umma-card,
+html.dark .qb-card,
+html.dark .rs-card,
+html.dark .sm-card,
+html.dark .sa-card,
+html[data-theme="dark"] .sh-bab,
+html[data-theme="dark"] .wn-card,
+html[data-theme="dark"] .wn-umma-card,
+html[data-theme="dark"] .qb-card,
+html[data-theme="dark"] .rs-card,
+html[data-theme="dark"] .sm-card,
+html[data-theme="dark"] .sa-card {
+  background: var(--mj-surface, #1b2421) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+  color: var(--mj-ink, #f3f7f5) !important;
+}
