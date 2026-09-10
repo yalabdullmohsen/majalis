@@ -29,7 +29,9 @@ assert.match(lessons, /color:\s*#fff\s*!important/);
 assert.match(lessons, /\.lesson-unified-card--today/);
 
 assert.match(gate, /route:\s*"\/miracles"/);
-assert.match(gate, /\.mk-lane-card__title/);
+assert.match(gate, /\.hub-card__title/);
+assert.match(gate, /\.hub-card__desc/);
+assert.match(gate, /\.hub-card__go/);
 assert.match(gate, /\.filter-chips__chip/);
 assert.match(gate, /\.lesson-unified-card__title/);
 
