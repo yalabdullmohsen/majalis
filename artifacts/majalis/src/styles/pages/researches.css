@@ -38,7 +38,7 @@
   border-radius: 0.75rem;
   padding: 0.65rem 0.9rem;
   font: inherit;
-  background: #fff;
+  background: var(--ss-card-bg, var(--mj-surface, #fff));
   color: var(--color-text, #1a1a18);
 }
 .sr-btn {
@@ -56,7 +56,7 @@
   font: inherit;
 }
 .sr-btn--primary {
-  background: #fff;
+  background: var(--ss-card-bg, var(--mj-surface, #fff));
   color: var(--emerald-500, var(--mj-brand-deep));
 }
 .sr-btn--ghost {

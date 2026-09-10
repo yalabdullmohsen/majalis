@@ -162,7 +162,7 @@
 }
 
 .sci-ann-btn--secondary {
-  background: #fff;
+  background: var(--ss-card-bg, var(--mj-surface, #fff));
   color: var(--majalis-emerald-deep);
   border-color: rgba(26, 60, 46, 0.18);
 }

@@ -112,6 +112,11 @@ assert.match(theme, /html\.dark[\s\S]*?\.seerah-panel[\s\S]*?--mj-surface/);
 assert.match(theme, /html\.dark[\s\S]*?\.dua-card[\s\S]*?--mj-surface/);
 assert.match(theme, /html\.dark[\s\S]*?\.an-card[\s\S]*?--mj-surface/);
 
+console.log("=== موجة 2: شمائل/وصايا/قبلة ضمن الثيم ===");
+assert.match(theme, /\.sh-bab/);
+assert.match(theme, /\.wn-card/);
+assert.match(theme, /\.qb-card|\.rs-card|\.sm-card/);
+
 console.log("=== أعداد المحتوى: اختبارات وأسئلة غير صفرية ===");
 const counts = JSON.parse(read("src/data/content-counts.json")) as {
   quizQuestions: number;
