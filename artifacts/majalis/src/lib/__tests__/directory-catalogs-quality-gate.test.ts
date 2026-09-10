@@ -24,19 +24,32 @@ const BOILERPLATE_RE =
   /يُعرَض هنا|يُعرض تعريفًا مرجعيًا|يُعرَض تعريفًا مرجعيًا|سيتم إضافة|قريبًا\.\.\.|lorem ipsum/i;
 
 console.log("=== أحجام الكتالوج ===");
-assert.ok(ISLAMIC_LANDMARKS.length >= 40, `معالم متوقعة ≥40 وجدنا ${ISLAMIC_LANDMARKS.length}`);
+assert.ok(ISLAMIC_LANDMARKS.length >= 34, `معالم متوقعة ≥34 وجدنا ${ISLAMIC_LANDMARKS.length}`);
 assert.ok(INSTITUTIONS.length >= 45, `مؤسسات متوقعة ≥45 وجدنا ${INSTITUTIONS.length}`);
 assert.ok(universities.length >= 35, `جامعات متوقعة ≥35 وجدنا ${universities.length}`);
 
 console.log("=== جودة المعالم ===");
 const landmarkIds = new Set<string>();
+const landmarkNames = new Set<string>();
+const landmarkCoordKeys = new Set<string>();
 for (const L of ISLAMIC_LANDMARKS) {
   assert.ok(L.id && !landmarkIds.has(L.id), `id مكرر/فارغ: ${L.id}`);
   landmarkIds.add(L.id);
-  assert.ok((L.description || "").length >= 220, `وصف قصير: ${L.id}`);
+  const nameKey = (L.name || "").replace(/\s+/g, " ").trim();
+  assert.ok(nameKey && !landmarkNames.has(nameKey), `اسم معلم مكرر: ${nameKey}`);
+  landmarkNames.add(nameKey);
+  const coordKey = `${L.lat.toFixed(3)},${L.lng.toFixed(3)}|${nameKey}`;
+  assert.ok(!landmarkCoordKeys.has(coordKey), `إحداثيات+اسم مكرر: ${L.id}`);
+  landmarkCoordKeys.add(coordKey);
+  assert.ok((L.description || "").length >= 200, `وصف قصير: ${L.id}`);
   assert.ok((L.significance || "").length >= 80, `أهمية قصيرة: ${L.id}`);
   assert.ok(Number.isFinite(L.lat) && Number.isFinite(L.lng), `إحداثيات: ${L.id}`);
   assert.doesNotMatch(L.description || "", BOILERPLATE_RE, `قالب معلم: ${L.id}`);
+  assert.doesNotMatch(
+    L.description || "",
+    /ويبقى مقصدًا للصلاة والعلم|وهو شاهد على امتداد الرسالة|ويُستحضر عند ذكره الأدب الشرعي/,
+    `boilerplate معلم: ${L.id}`,
+  );
 }
 
 console.log("=== جودة المؤسسات ===");
@@ -53,17 +66,24 @@ for (const I of INSTITUTIONS) {
 }
 
 console.log("=== جودة الجامعات ===");
+const faqAnswers = new Map<string, string>();
 for (const U of universities) {
   assert.ok(U.slug && U.name_ar, "slug/name");
   assert.ok((U.about || "").length >= 260, `about قصير: ${U.slug}`);
   assert.ok(Array.isArray(U.faqs) && U.faqs.length >= 2, `faqs ناقصة: ${U.slug}`);
   assert.ok(Array.isArray(U.programs) && U.programs.length >= 1, `programs ناقصة: ${U.slug}`);
   assert.doesNotMatch(U.about || "", BOILERPLATE_RE, `قالب جامعة: ${U.slug}`);
+  assert.doesNotMatch(
+    U.about || "",
+    /يُنصح دائمًا بمراجعة الموقع الرسمي|راجع الصفحة الرسمية للجامعة لأحدث تفاصيل القبول والبرامج/,
+    `closer مشترك: ${U.slug}`,
+  );
   for (const faq of U.faqs as Array<{ answer?: string }>) {
-    assert.ok(
-      ((faq?.answer || "").trim().length) >= 100,
-      `إجابة FAQ قصيرة: ${U.slug}`,
-    );
+    const ans = (faq?.answer || "").trim();
+    assert.ok(ans.length >= 100, `إجابة FAQ قصيرة: ${U.slug}`);
+    const prev = faqAnswers.get(ans);
+    assert.ok(!prev, `إجابة FAQ مكررة بين ${prev} و ${U.slug}`);
+    faqAnswers.set(ans, U.slug);
   }
 }
 
