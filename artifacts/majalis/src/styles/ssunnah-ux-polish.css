@@ -810,3 +810,88 @@ html.dark .search-page .search-page-form {
     padding-inline: max(0.85rem, var(--page-gutter, 14px));
   }
 }
+
+/* هيكل فوري لمسار المسلم الجديد — بلا نص تحميل */
+.dii-path-day--skel {
+  min-height: 3.25rem;
+  border-radius: var(--radius-card, 24px);
+  background: linear-gradient(
+    90deg,
+    var(--skeletonBase, rgba(22, 36, 30, 0.06)) 0%,
+    var(--skeletonHighlight, rgba(22, 36, 30, 0.12)) 50%,
+    var(--skeletonBase, rgba(22, 36, 30, 0.06)) 100%
+  );
+  background-size: 200% 100%;
+  animation: ss-skel-shimmer 1.2s ease-in-out infinite;
+}
+.dii-path-list--skel {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@keyframes ss-skel-shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dii-path-day--skel { animation: none; }
+}
+.lrf-wrap--silent .lrf-label { display: none; }
+
+.mj-empty__action,
+.offline-banner__retry {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  margin-inline-start: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-md, 14px);
+  border: 1px solid color-mix(in srgb, var(--primary, #146b52) 28%, transparent);
+  background: var(--surface, #fffcf8);
+  color: var(--textPrimary, #16241e);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.offline-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+/* reader bottom clearance — يمنع تغطية آخر فقرة بالشريط السفلي */
+.reader-screen,
+.page-reader,
+.list-screen--reader,
+.ds-screen--reader,
+.article-body,
+.hadith-detail,
+.lesson-detail-body {
+  padding-bottom: max(
+    1.5rem,
+    calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 1.25rem)
+  );
+}
+
+/* a11y: تركيز واضح في الإعدادات والاختيارات */
+.settings-page .settings-choice:focus-visible,
+.settings-page .settings-toggle-row input:focus-visible,
+.settings-page button:focus-visible,
+.settings-page a:focus-visible,
+.legal-section a:focus-visible {
+  outline: 2px solid var(--ss-primary-green, var(--mj-brand));
+  outline-offset: 2px;
+}
+
+/* أداء قوائم طويلة — المصحف مستثنى عبر عدم استهداف .mushaf */
+.list-screen .content-card,
+.section-lobby__grid > *,
+.more-hub-grid > * {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 120px;
+}

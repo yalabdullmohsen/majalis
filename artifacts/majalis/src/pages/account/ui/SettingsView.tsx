@@ -165,33 +165,33 @@ export default function SettingsPage() {
   const tafsirs = useMemo(() => MUSHAF_TAFSIR_EDITIONS, []);
 
   const sections: SectionDef[] = [
-    { id: "account", title: t("settings_account"), keywords: "حساب دخول تسجيل خروج حذف الحساب" },
+    { id: "account", title: "الحساب والملف الشخصي", keywords: "حساب دخول تسجيل خروج حذف الحساب ملف" },
     {
       id: "reading",
-      title: "القراءة",
-      keywords: "خط سمة ثيم كبار السن قراءة قرآن كثافة تباين",
+      title: "المظهر والقراءة والمصحف",
+      keywords: "خط سمة ثيم كبار السن قراءة قرآن مصحف تفسير كثافة تباين مظهر",
     },
     {
       id: "sound",
-      title: "الصوت",
-      keywords: "قارئ سرعة تلاوة تشغيل خلفي صوت",
+      title: "الصوت والوسائط",
+      keywords: "قارئ سرعة تلاوة تشغيل خلفي صوت وسائط",
     },
     {
       id: "reminders",
-      title: "التذكيرات",
-      keywords: "إشعار تذكير أذان دروس محتوى",
+      title: "الصلاة والتنبيهات",
+      keywords: "إشعار تذكير أذان صلاة مواقيت تنبيه دروس محتوى",
     },
     {
       id: "downloads",
-      title: "التحميلات والمساحة",
-      keywords: "تنزيل كاش مساحة دون اتصال",
+      title: "التنزيلات والتخزين",
+      keywords: "تنزيل كاش مساحة دون اتصال تخزين",
     },
     {
       id: "privacy",
-      title: "البيانات والخصوصية",
+      title: "الخصوصية والبيانات",
       keywords: "خصوصية تصدير حذف بيانات",
     },
-    { id: "about", title: "عن التطبيق", keywords: "حول سياسة شروط دعم مصادر جولة مزايا" },
+    { id: "about", title: "الدعم وحول التطبيق", keywords: "حول سياسة شروط دعم مصادر جولة مزايا مساعدة" },
   ];
 
   const q = query.trim().toLowerCase();
@@ -578,7 +578,7 @@ export default function SettingsPage() {
           <p className="settings-note">
             تنزيل تلاوة السور كاملة للقرّاء المُحقَّقين QA — للاستماع دون اتصال.
           </p>
-          <Suspense fallback={<p className="settings-note">جاري تحميل إدارة التنزيلات…</p>}>
+          <Suspense fallback={<p className="settings-note">تحديث إدارة التنزيلات…</p>}>
             <ReciterDownloadManager />
           </Suspense>
           <div className="settings-legal-links">

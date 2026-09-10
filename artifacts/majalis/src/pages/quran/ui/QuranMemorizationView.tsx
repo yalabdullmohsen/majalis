@@ -392,7 +392,7 @@ export default function QuranMemorizationPage() {
                   ))}
                 </select>
               ) : (
-                <div style={{ color: "#6b7280", fontSize: "0.9rem" }}>جارٍ تحميل السور...</div>
+                <div style={{ color: "#6b7280", fontSize: "0.9rem" }}>تحديث السور…</div>
               )}
               <button
                 type="button"

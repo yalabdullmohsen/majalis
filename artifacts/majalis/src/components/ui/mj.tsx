@@ -164,16 +164,32 @@ export function EmptyState({
   title,
   description,
   className,
+  actionHref,
+  actionLabel,
+  onAction,
 }: {
   title: string;
   description?: string;
   className?: string;
+  actionHref?: string;
+  actionLabel?: string;
+  onAction?: () => void;
 }) {
   return (
-    <div className={cn("mj-empty", className)}>
-      <div className="mj-dot" />
+    <div className={cn("mj-empty", className)} role="status">
+      <div className="mj-dot" aria-hidden="true" />
       <b>{title}</b>
       {description ? <span>{description}</span> : null}
+      {actionHref && actionLabel ? (
+        <a href={actionHref} className="mj-empty__action mj-pressable">
+          {actionLabel}
+        </a>
+      ) : null}
+      {!actionHref && actionLabel && onAction ? (
+        <button type="button" className="mj-empty__action mj-pressable" onClick={onAction}>
+          {actionLabel}
+        </button>
+      ) : null}
     </div>
   );
 }

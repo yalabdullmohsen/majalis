@@ -32,7 +32,7 @@ export function SearchAnalyticsSection() {
     }
   };
 
-  if (loading) return <p>جاري تحميل تحليلات البحث...</p>;
+  if (loading) return <p>تحديث التحليلات…</p>;
 
   return (
     <div>

@@ -64,7 +64,7 @@ export function LessonRecordingPlayer({ lesson, src, startAtSeconds }: Props) {
   const persist = useCallback(
     (t: number) => {
       const now = Date.now();
-      if (now - lastPersistAt.current < 4000 && t > 3) return;
+      if (now - lastPersistAt.current < 8000 && t > 3) return;
       lastPersistAt.current = now;
       saveLessonAudioResume(lesson.id, t);
     },
@@ -126,7 +126,9 @@ export function LessonRecordingPlayer({ lesson, src, startAtSeconds }: Props) {
         onDurationChange={(e) => setDuration(e.currentTarget.duration)}
         onPlay={() => {
           recordUserActivity("lesson");
-          void claimAudio("lesson");
+          void claimAudio("lesson").catch(() => {
+            audioRef.current?.pause();
+          });
         }}
       />
       <div className="lesson-recording-player__actions">

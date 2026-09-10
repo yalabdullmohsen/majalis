@@ -25,7 +25,9 @@ const files = walkTs(srcRoot);
 const hits: string[] = [];
 for (const f of files) {
   const text = readFileSync(f, "utf8");
-  if (/جارٍ التحميل|جاري التحميل/.test(text)) hits.push(f.replace(srcRoot + "/", ""));
+  if (/جارٍ\s*التحميل|جاري\s*التحميل|جارٍ\s*تحميل|جاري\s*تحميل/.test(text)) {
+    hits.push(f.replace(srcRoot + "/", ""));
+  }
 }
 assert.equal(hits.length, 0, `صفر ظهور لسلسلة التحميل. بقي: ${hits.join(", ")}`);
 

@@ -190,7 +190,7 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
           </div>
         </div>
 
-        {loading ? <p className="mm-tafsir__status">جاري تحميل التفسير…</p> : null}
+        {loading ? <p className="mm-tafsir__status">تجهيز التفسير…</p> : null}
         {!loading && error ? <p className="mm-tafsir__status mm-tafsir__status--err">{error}</p> : null}
         {!loading && displayText ? (
           <div className="mm-tafsir__body" dir="rtl" lang="ar">

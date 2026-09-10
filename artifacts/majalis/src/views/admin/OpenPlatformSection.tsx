@@ -110,7 +110,7 @@ export function OpenPlatformSection() {
     }
   };
 
-  if (loading) return <p>جاري تحميل لوحة المطورين...</p>;
+  if (loading) return <p>تحديث اللوحة…</p>;
 
   return (
     <div>

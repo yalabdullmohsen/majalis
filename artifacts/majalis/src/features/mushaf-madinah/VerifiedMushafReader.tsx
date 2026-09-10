@@ -509,7 +509,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         delayMs: Math.max(0, delayMs),
       });
       const start = range === "page" || range === "surah" ? loop.startAyah : parsed.ayah;
-      setAudioStatus("جاري تحميل التلاوة...");
+      setAudioStatus("تجهيز التلاوة…");
       await audio.playAyah(loop.surah, start, reciterId);
     },
     [audio, bumpChrome, pageVerseKeys, playingVerseKey, reciterId, selectedVerseKey],
@@ -547,7 +547,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       ayahKey,
       audioUrl: urls[0] ?? null,
     });
-    setAudioStatus("جاري تحميل التلاوة...");
+    setAudioStatus("تجهيز التلاوة…");
     await audio.playAyah(parsed.surah, parsed.ayah, reciterId);
   }, [audio, bumpChrome, playerState, playingVerseKey, reciterId, selectedVerseKey]);
 
@@ -585,7 +585,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         reason: "reciter-change",
       });
       if (playerState === "playing" || playerState === "paused" || playerState === "buffering") {
-        setAudioStatus("جاري تحميل التلاوة...");
+        setAudioStatus("تجهيز التلاوة…");
         await audio.playAyah(parsed.surah, parsed.ayah, id);
       }
     },
@@ -610,7 +610,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       setAudioError(null);
       setAudioDockOpen(true);
       suppressPageSyncRef.current = true;
-      setAudioStatus("جاري تحميل التلاوة...");
+      setAudioStatus("تجهيز التلاوة…");
       await audio.playAyah(parsed.surah, parsed.ayah, id);
     },
     [audio, playingVerseKey, selectedVerseKey],
@@ -827,7 +827,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
             <div
               className="mm-page-placeholder"
               role="status"
-              aria-label="جاري تحميل الصفحة"
+              aria-label="تحديث الصفحة"
               aria-busy="true"
             />
           ) : null}

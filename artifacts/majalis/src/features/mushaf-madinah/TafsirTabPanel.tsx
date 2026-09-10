@@ -224,7 +224,7 @@ export const TafsirTabPanel = memo(function TafsirTabPanel({
       <div className="ayah-action-sheet__tafsir-scroll">
         {loading ? (
           <p className="mm-ayah-bar__status" aria-busy="true">
-            جاري تحميل التفسير…
+            تجهيز التفسير…
           </p>
         ) : text ? (
           <p

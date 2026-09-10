@@ -709,7 +709,7 @@ export function LearningPathTreeEditor({ pathId }: { pathId: string }) {
 
   useEffect(() => { load(); }, [pathId]);
 
-  if (loading) return <p className="adm-empty-msg">جاري تحميل مراحل المسار…</p>;
+  if (loading) return <p className="adm-empty-msg">تحديث المراحل…</p>;
 
   const sorted = [...stages].sort((a, b) => a.sort_order - b.sort_order);
 

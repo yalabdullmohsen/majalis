@@ -31,7 +31,7 @@ function ShareBlock({ hadith }: { hadith: HadithRecord }) {
 
 function HadithDetailSkeleton() {
   return (
-    <div className="page-shell hadith-by-id" dir="rtl" aria-busy="true" aria-label="جاري تحميل الحديث">
+    <div className="page-shell hadith-by-id" dir="rtl" aria-busy="true" aria-label="تحديث الحديث">
       <div className="hadith-detail-card hadith-detail-card--matn hadith-detail-skeleton" />
       <div className="hadith-detail-card hadith-detail-skeleton hadith-detail-skeleton--short" />
       <div className="hadith-detail-card hadith-detail-skeleton hadith-detail-skeleton--tall" />

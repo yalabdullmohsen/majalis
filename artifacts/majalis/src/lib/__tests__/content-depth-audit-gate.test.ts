@@ -56,7 +56,7 @@ assert.match(searchView, /جرّب|تحقق|اختصر|كلمة أخرى|كلم�
 
 const newMuslim = read("src/views/NewMuslimPathPage.tsx");
 assert.doesNotMatch(newMuslim, /قيد الإعداد/, "مسار المسلم الجديد لا يعرض «قيد الإعداد»");
-assert.match(newMuslim, /جاري تحميل/, "مسار المسلم الجديد يعرض حالة تحميل");
+assert.match(newMuslim, /aria-busy|dii-path-day--skel|Skeleton/, "مسار المسلم الجديد يعرض هيكلًا فوريًا");
 
 const normalize = read("src/shared/arabic-normalize.ts");
 assert.match(normalize, /ة/g, "تطبيع التاء المربوطة");

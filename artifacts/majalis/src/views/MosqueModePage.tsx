@@ -112,7 +112,7 @@ export default function MosqueModePage() {
             </>
           )
         ) : (
-          <p className="mosque-mode__prayer-label">جارٍ تحميل مواقيت الصلاة…</p>
+          <p className="mosque-mode__prayer-label">تحديث مواقيت الصلاة…</p>
         )}
       </div>
 

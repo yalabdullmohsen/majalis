@@ -111,7 +111,7 @@ function PrayerCountdownChipInner() {
         {data?.prayers?.length ? (
           <PrayerTimesSheetList prayers={data.prayers} />
         ) : (
-          <p className="prayer-chip-sheet__empty">جاري تحميل المواقيت…</p>
+          <p className="prayer-chip-sheet__empty">تحديث المواقيت…</p>
         )}
         {data?.city ? (
           <p className="prayer-chip-sheet__meta">{data.city}</p>

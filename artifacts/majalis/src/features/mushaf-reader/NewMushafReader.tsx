@@ -497,7 +497,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     }
 
     listAyahAudioUrls(parsed.surah, parsed.ayah, reciterId);
-    setAudioStatus("جاري تحميل التلاوة...");
+    setAudioStatus("تجهيز التلاوة…");
     setStatus("جاري التلاوة…");
     await recitation.playAyah(parsed.surah, parsed.ayah, reciterId);
   }, [bumpChrome, playerState, playingVerseKey, recitation, reciterId, selectedVerseKey]);
@@ -548,7 +548,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         delayMs: Math.max(0, delayMs),
       });
       const start = range === "page" || range === "surah" ? loop.startAyah : parsed.ayah;
-      setAudioStatus("جاري تحميل التلاوة...");
+      setAudioStatus("تجهيز التلاوة…");
       await audio.playAyah(loop.surah, start, reciterId);
     },
     [audio, bumpChrome, pageVerseKeys, playingVerseKey, reciterId, selectedVerseKey],
@@ -610,7 +610,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       setActionsOpen(false);
       setAudioDockOpen(true);
       suppressPageSyncRef.current = true;
-      setAudioStatus("جاري تحميل التلاوة...");
+      setAudioStatus("تجهيز التلاوة…");
       await recitation.playAyah(parsed.surah, parsed.ayah, id);
     },
     [playingVerseKey, recitation, selectedVerseKey],

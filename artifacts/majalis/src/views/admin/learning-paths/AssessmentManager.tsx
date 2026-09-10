@@ -203,7 +203,7 @@ export function AssessmentManager({
     load();
   };
 
-  if (loading) return <p className="adm-empty-msg">جاري تحميل التقييمات…</p>;
+  if (loading) return <p className="adm-empty-msg">تحديث التقييمات…</p>;
 
   return (
     <div>

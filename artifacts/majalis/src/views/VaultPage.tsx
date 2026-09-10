@@ -41,6 +41,7 @@ import {
 } from "@/lib/text-highlights";
 import "@/styles/pages/vault.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { ACTION, EMPTY } from "@/lib/ui-copy";
 
 const SECTION_HREF: Record<ReadingSection, string> = {
   adhkar: "/adhkar",
@@ -399,7 +400,8 @@ function GuestVault() {
           {filteredBookmarks.length === 0 && (
             <div className="vault-empty">
               <div className="vault-empty__icon"><BookmarkCheck size={32} strokeWidth={1.3} /></div>
-              <p>{search ? "لا نتائج للبحث." : "لا توجد محفوظات بعد. استخدم زر «حفظ» على أي محتوى."}</p>
+              <p>{search ? "لا نتائج للبحث." : EMPTY.bookmarks}</p>
+              <a className="vault-empty__cta mj-pressable" href="/lessons">{ACTION.browseContent}</a>
             </div>
           )}
           {filteredBookmarks.map((b) => (
@@ -630,7 +632,8 @@ export default function VaultPage() {
               {filteredBookmarks.length === 0 && (
                 <div className="vault-empty">
                   <div className="vault-empty__icon"><BookmarkCheck size={32} strokeWidth={1.3} /></div>
-                  <p>{search ? "لا نتائج للبحث." : "لا توجد محفوظات بعد. احفظ دروساً وكتباً من صفحاتها."}</p>
+                  <p>{search ? "لا نتائج للبحث." : EMPTY.bookmarks}</p>
+              <a className="vault-empty__cta mj-pressable" href="/lessons">{ACTION.browseContent}</a>
                 </div>
               )}
               {filteredBookmarks.map((b) => (

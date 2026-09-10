@@ -371,9 +371,10 @@ html.dark .adhkar-focus-btn:disabled {
 }
 html[data-theme="dark"] .adhkar-focus-btn--next,
 html.dark .adhkar-focus-btn--next {
-  background: var(--mj-brand, var(--mj-brand));
-  color: var(--mj-on-brand, var(--bg, var(--surface-1)));
-  border-color: transparent;
+  /* خلفية زمردية صلبة + نص داكن — يمنع انحدار التباين (نص فاتح على أبيض) */
+  background: var(--mj-brand, #4fb48b) !important;
+  color: var(--mj-on-brand, #06231a) !important;
+  border-color: transparent !important;
 }
 html[data-theme="dark"] .adhkar-focus-btn--next:disabled,
 html.dark .adhkar-focus-btn--next:disabled {

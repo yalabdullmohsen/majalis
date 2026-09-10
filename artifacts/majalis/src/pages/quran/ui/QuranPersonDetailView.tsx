@@ -85,7 +85,7 @@ export default function QuranPersonDetailView() {
       <SectionTemplatePage
         route="/quran/people"
         title="الذين ذكروا في القرآن"
-        subtitle="جارٍ تحميل المحتوى"
+        subtitle="تحديث المحتوى"
         groupTitle="المذكورون في القرآن"
       >
         <p className="qp-people__status" role="status"></p>

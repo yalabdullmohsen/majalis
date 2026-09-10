@@ -397,7 +397,7 @@ export default function QuranCirclesPage() {
       </FilterSheet>
 
       {loading ? (
-        <p className="qc-empty">جارٍ تحميل الدليل…</p>
+        <p className="qc-empty">تحديث الدليل…</p>
       ) : visible.length === 0 ? (
         <p className="qc-empty">لا توجد حلقات مطابقة لهذا الفلتر حاليًا</p>
       ) : (

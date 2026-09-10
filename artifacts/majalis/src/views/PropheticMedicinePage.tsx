@@ -146,7 +146,7 @@ export default function PropheticMedicinePage() {
 
       {/* الشبكة */}
       <div className="ds-grid">
-        {!dataReady && <p className="pmp-count" aria-busy="true">جارٍ تحميل الموسوعة…</p>}
+        {!dataReady && <p className="pmp-count" aria-busy="true">تحديث الموسوعة…</p>}
         {items.map((item) => {
           const isOpen = expanded === item.id;
 

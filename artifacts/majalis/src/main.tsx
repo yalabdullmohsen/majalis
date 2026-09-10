@@ -64,6 +64,8 @@ import "./styles/section-makarim-pattern.css";
 import "./styles/section-cards-theme.css";
 /* صقل منتج سُنّة — توكنات/بطاقات/درج/بحث/ليلي */
 import "./styles/ssunnah-ux-polish.css";
+import "./styles/ssunnah-semantic-tokens.css";
+import "./styles/ssunnah-card-unify.css";
 // dark-mode-surfaces (~24KB) — فوري فقط إن كان الثيم داكنًا عند الإقلاع؛ وإلا بعد load
 {
   const bootDark =

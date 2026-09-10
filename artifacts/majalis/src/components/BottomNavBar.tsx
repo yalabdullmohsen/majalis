@@ -10,6 +10,7 @@ import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
 import { getActiveTab, type BottomTabId } from "@/lib/get-active-tab";
 import { haptics } from "@/lib/haptics";
 import { prefetchAppRoutesShell } from "@/lib/prefetch-app-routes";
+import { shouldAllowNavigation } from "@/lib/nav-click-guard";
 
 const HREF_TO_ID: Record<string, BottomTabId> = {
   "/": "home",
@@ -93,7 +94,11 @@ export function BottomNavBar({ isHidden = false }: { isHidden?: boolean } = {}) 
             onTouchStart={() => triggerPrefetch(href)}
             onMouseEnter={() => triggerPrefetch(href)}
             onFocus={() => triggerPrefetch(href)}
-            onClick={() => {
+            onClick={(e) => {
+              if (!shouldAllowNavigation(href)) {
+                e.preventDefault();
+                return;
+              }
               haptics.selection();
               if (!active) {
                 window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
