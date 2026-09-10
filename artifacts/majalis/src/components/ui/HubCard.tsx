@@ -126,7 +126,7 @@ export const SectionEntryCard = memo(function SectionEntryCard({
         <div className="hub-card__top-meta">
           {badge != null ? <span className="hub-card__chip mj-badge">{badge}</span> : null}
           {isCurrent ? <span className="hub-card__soon">أنت هنا</span> : null}
-          {loading ? <span className="hub-card__soon">جاري التحميل…</span> : null}
+          {loading ? <span className="hub-card__soon">تجهيز…</span> : null}
         </div>
       </div>
       <div className="hub-card__body">

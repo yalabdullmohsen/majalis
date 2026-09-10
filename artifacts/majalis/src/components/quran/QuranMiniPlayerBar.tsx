@@ -210,7 +210,7 @@ export function QuranMiniPlayerBar() {
           <strong>{reciterName}</strong>
           <span>
             {surahName} · آية {toArabicDigits(snap.ayah)}
-            {isLoading ? " · جارٍ التحميل…" : ""}
+            {isLoading ? " · تجهيز…" : ""}
           </span>
         </button>
 

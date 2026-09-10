@@ -118,7 +118,7 @@ assert.match(css, /scroll-margin-bottom/);
 assert.match(css, /scrollbar-width:\s*none/);
 assert.match(css, /\.mm-page-edge--next\s*\{[^}]*inset-inline-start:\s*0/);
 
-assert.match(actions, /جاري التحميل|جاري تحميل التلاوة/);
+assert.match(actions, /تجهيز…|تجهيز الصوت|جاري تحميل التلاوة/);
 assert.match(actions, /تعذر تشغيل هذه الآية لهذا القارئ/);
 assert.match(actions, /mushaf-ayah-play/);
 assert.match(actions, /handlePlayClick|onTogglePlay/);

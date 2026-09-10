@@ -140,7 +140,7 @@ console.log("\n=== إصلاحات تدقيق الواجهة ===");
   );
 
   const research = read("src/pages/library/ui/ScholarlyResearchView.tsx");
-  assert.match(research, /جاري التحميل…/, "مكتبة البحث تعرض رسالة تحميل");
+  assert.match(research, /تجهيز…/, "مكتبة البحث تعرض رسالة تجهيز");
 
   const hajj = read("src/pages/fiqh/ui/HajjView.tsx");
   assert.doesNotMatch(hajj, /طواف الوداع[\s\S]{0,200}— \./, "طواف الوداع بلا ذيل مقطوع");

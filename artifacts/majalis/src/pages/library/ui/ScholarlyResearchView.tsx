@@ -416,7 +416,7 @@ export default function ScholarlyResearchPage() {
 
             {isLoggedIn && libLoading && (
               <div className="srp-empty" role="status" aria-live="polite">
-                جاري التحميل…
+                تجهيز…
               </div>
             )}
 

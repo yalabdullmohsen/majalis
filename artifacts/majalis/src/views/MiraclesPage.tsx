@@ -22,12 +22,12 @@ import { ShareButtons } from "@/components/ContentActions";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { SectionEntryCard } from "@/components/ui/InternalCards";
 import { TopicPage } from "@/components/topic/TopicPage";
-import { AppBackButton } from "@/components/common/AppBackButton";
 import {
   ReadingProse,
   ReadingSectionCard,
 } from "@/components/content/ReadingSectionCard";
 import { RelatedContentStack } from "@/components/content/RelatedContentCard";
+import { prefetchRoute } from "@/lib/prefetch-route";
 import {
   MIRACLE_FIXED_CAUTION,
   cleanSummaryBoilerplate,
@@ -111,14 +111,6 @@ function MiraclesHub() {
       }}
     >
       <div className="mk-page mk-page--hub" dir="rtl">
-        <AppBackButton
-          variant="inline"
-          fallbackHref="/sections"
-          label="رجوع"
-          className="mk-inline-back"
-          data-section-back="1"
-        />
-
         <p className="mk-hero__note">
           <AlertTriangle size={16} strokeWidth={1.8} aria-hidden="true" />
           <span>
@@ -236,14 +228,6 @@ function MiraclesListPage({
       }
     >
       <div className={`mk-page mk-page--list mk-page--${lane}`} dir="rtl">
-        <AppBackButton
-          variant="inline"
-          fallbackHref="/miracles"
-          label="رجوع للإعجاز"
-          className="mk-inline-back"
-          data-section-back="1"
-        />
-
         <AsyncDataView
           status={status}
           error={error}
@@ -258,11 +242,17 @@ function MiraclesListPage({
               const sourcesOpen = Boolean(openSources[item.id]);
 
               return (
-                <article key={item.id} className={`mk-card mk-card--${lane}`}>
+                <article key={item.id} className={`mk-card mk-card--${lane} soft-card soft-card--on-light`}>
                   <Link
                     href={`/miracles/topic/${encodeURIComponent(item.slug)}`}
-                    className="mk-card__hit"
+                    className="mk-card__hit mj-pressable"
                     aria-label={`اقرأ تفصيل: ${item.title}`}
+                    onPointerEnter={() =>
+                      prefetchRoute(`/miracles/topic/${encodeURIComponent(item.slug)}`)
+                    }
+                    onPointerDown={() =>
+                      prefetchRoute(`/miracles/topic/${encodeURIComponent(item.slug)}`)
+                    }
                   >
                   <header className="mk-card__head">
                     <h2 className="mk-card__title">{item.title}</h2>
@@ -420,8 +410,15 @@ function MiracleDetailPage({ slug }: { slug: string }) {
         title="…"
         eyebrow="الإعجاز العلمي"
       >
-        <div className="mk-page" dir="rtl">
-          <p className="page-desc">جاري التحميل…</p>
+        <div className="mk-page" dir="rtl" role="status" aria-busy="true" aria-label="تجهيز الصفحة">
+          <div className="mk-detail-skel" aria-hidden="true">
+            <div className="mk-detail-skel__hero" />
+            <div className="mk-detail-skel__line" />
+            <div className="mk-detail-skel__line mk-detail-skel__line--short" />
+            <div className="mk-detail-skel__card" />
+            <div className="mk-detail-skel__card" />
+          </div>
+          <p className="mk-detail-skel__label">تجهيز الصفحة…</p>
         </div>
       </TopicPage>
     );
@@ -442,7 +439,6 @@ function MiracleDetailPage({ slug }: { slug: string }) {
         eyebrow="الإعجاز العلمي"
       >
         <div className="mk-page" dir="rtl">
-          <AppBackButton variant="inline" fallbackHref="/miracles" label="رجوع" className="mk-inline-back" />
           <p className="page-desc">{error || "تعذّر عرض هذا الموضوع."}</p>
           <Link href="/miracles" className="mk-expand-btn">العودة للإعجاز العلمي</Link>
         </div>
@@ -477,14 +473,6 @@ function MiracleDetailPage({ slug }: { slug: string }) {
       subtitle={`${miracleCategoryChip(item)} · ${badge}`}
     >
       <div className={`mk-page mk-page--detail mk-page--${item.source_type === "سنة" ? "sunnah" : "quran"}`} dir="rtl">
-        <AppBackButton
-          variant="inline"
-          fallbackHref={listHref}
-          label="رجوع للموضوعات"
-          className="mk-inline-back"
-          data-section-back="1"
-        />
-
         <article className="mk-detail">
           {(item.verse || item.reference) && (
             <figure className="miracle-ayah">
