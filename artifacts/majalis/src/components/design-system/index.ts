@@ -1,5 +1,5 @@
 /**
- * نظام مكوّنات واجهة سُنّة — بطاقات وأزرار موحّدة.
+ * نظام مكوّنات واجهة سُنّة — بطاقات وأزرار ونص دلالي.
  * SectionCard / LessonCard / FloatingBack موجودة مسبقًا وتُعاد تصديرها هنا.
  */
 export { AppCard, type AppCardProps } from "./AppCard";
@@ -7,6 +7,22 @@ export { FeatureCard, type FeatureCardProps } from "./FeatureCard";
 export { ContentCard, type ContentCardProps } from "./ContentCard";
 export { ActionButton, type ActionButtonProps } from "./ActionButton";
 export { PrimaryButton, SecondaryButton, IconButton } from "./Buttons";
+
+export {
+  SsText,
+  ScreenTitle,
+  SectionTitle,
+  CardTitle,
+  BodyText,
+  ScriptureText,
+  ExplanationText,
+  SupportingText,
+  LabelText,
+  LabelText as SsLabel,
+  Caption,
+  type SsTextProps,
+  type SsTextTone,
+} from "./text";
 
 export { SectionCard } from "@/components/sections/SectionCard";
 export { FeaturedSectionCard } from "@/components/sections/FeaturedSectionCard";
@@ -34,3 +50,12 @@ export {
   InternalLinkCard,
   ReadingCard,
 } from "@/components/ui/InternalCards";
+
+export {
+  SS_TYPE,
+  SS_COLOR,
+  SS_SPACE,
+  SS_RADIUS,
+  SS_TEXT_ROLES,
+  type SsTextRole,
+} from "@/lib/ssunnah-theme";

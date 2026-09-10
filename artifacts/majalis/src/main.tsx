@@ -30,6 +30,8 @@ import { logLcpCandidateHint } from "./lib/home-lcp-static-shell";
 import "./styles/fonts-ui.css";
 // هوية identity-v2 — الرموز أولاً (@theme + --mj-*) قبل أي طبقة قديمة
 import "./app/styles/theme.css";
+// واجهة استهلاك سُنّة (--ss-*) + أصناف .ss-text — جسر فقط بلا قيم حرفية جديدة
+import "./styles/ssunnah-theme-api.css";
 import "./styles/soft-cards.css";
 import "./styles/visual-enrichment.css";
 // page-hero / filters / hub-card تُحمَّل مع مكوّناتها (خارج CSS الحرج)
