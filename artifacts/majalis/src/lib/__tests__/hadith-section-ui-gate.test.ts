@@ -45,7 +45,8 @@ assert.match(hadithCss, /\.hadith-detail-card[\s\S]*border-radius:\s*var\(--radi
 assert.match(hadithCss, /--bottom-nav-total/);
 assert.match(
   hadithCss,
-  /border-radius:\s*999px[\s\S]*\.ds-filter-toggle|\.ds-filter-toggle[\s\S]*border-radius:\s*999px/,
+  /\.ds-filter-toggle[\s\S]{0,120}border-radius:\s*var\(--radius-md|border-radius:\s*var\(--radius-md[\s\S]{0,80}\.ds-filter-toggle/,
+  "زر التصفية متوازن مع البحث (لا قرص ضخم)",
 );
 assert.doesNotMatch(
   hadithCss,

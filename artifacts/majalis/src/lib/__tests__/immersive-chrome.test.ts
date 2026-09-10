@@ -62,7 +62,10 @@ assert.equal(isPinnedChromePath("/prophets/musa"), true);
 assert.equal(isCompactHeaderPath("/login"), false, "الدخول يُظهر الشريط المتحرك");
 assert.equal(isCompactHeaderPath("/register"), false, "التسجيل يُظهر الشريط المتحرك");
 assert.equal(isCompactHeaderPath("/"), false);
-assert.equal(isCompactHeaderPath("/hadith"), false);
+assert.equal(isCompactHeaderPath("/hadith"), true, "قسم الحديث بلا تيكر/بحث رئيسي");
+assert.equal(isCompactHeaderPath("/hadith/sahih"), true);
+assert.equal(isCompactHeaderPath("/hadith-science"), true);
+assert.equal(isCompactHeaderPath("/arbaeen-nawawi"), true);
 
 const prayerSrc = readFileSync(resolve(appRoot, "src/pages/worship/ui/PrayerTimesView.tsx"), "utf8");
 assert.equal(prayerSrc.includes("SectionQuiz"), false, "صفحة الصلاة بلا SectionQuiz");

@@ -29,6 +29,7 @@ import {
 import { PageHeader, SkeletonCardGrid, Empty, Chip } from "@/components/ui-common";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { SectionEntryCard } from "@/components/ui/HubCard";
+import { AppBackButton } from "@/components/common/AppBackButton";
 import { ExclusiveChoiceGroup } from "@/components/ui/ExclusiveChoiceGroup";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { ShareButtons } from "@/components/ContentActions";
@@ -799,7 +800,7 @@ export function HadithSection({
   const inner = (
     <>
       {!embedded && (
-        <PageHeader eyebrow={meta.eyebrow} title={meta.title} subtitle={meta.subtitle} />
+        <PageHeader eyebrow={meta.eyebrow} title={meta.title} subtitle={meta.subtitle} className="hadith-page-hero" />
       )}
 
       {!embedded && meta.notice && (
@@ -873,7 +874,7 @@ export function HadithSection({
             key={cat.id}
             role="radio"
             active={activeCategory === cat.id}
-            className="hadith-quick-cat"
+            className={`hadith-quick-cat${activeCategory === cat.id ? " hadith-quick-cat--active" : ""}`}
             onClick={() => setActiveCategory(cat.id)}
           >
             {cat.label}
@@ -1061,6 +1062,9 @@ export default function HadithPage() {
       groupTitle="أقسام الحديث وعلومه"
     >
       <div className="hadith-page hadith-page--hub">
+        <div className="hadith-page__chrome">
+          <AppBackButton variant="inline" fallbackHref="/" label="الرئيسية" />
+        </div>
         <div className="hub-card-grid" data-section-entry-grid="1">
           {hubCards.map((c) => (
             <SectionEntryCard

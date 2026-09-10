@@ -45,7 +45,13 @@ export function isCompactHeaderPath(pathname: string): boolean {
     p === "/prayer-times" ||
     p.startsWith("/prayer-times/") ||
     p === "/mushaf" ||
-    p.startsWith("/mushaf/")
+    p.startsWith("/mushaf/") ||
+    p === "/hadith" ||
+    p.startsWith("/hadith/") ||
+    p === "/hadith-science" ||
+    p.startsWith("/hadith-science/") ||
+    p === "/arbaeen-nawawi" ||
+    p.startsWith("/arbaeen-nawawi/")
   );
 }
 

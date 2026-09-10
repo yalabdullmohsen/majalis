@@ -1,11 +1,12 @@
 import { useEffect } from "react";
+import { Link } from "wouter";
 import { HadithSection } from "./HadithPage";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { Breadcrumbs } from "@/components/platform/Breadcrumbs";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { HadithClassGuide } from "@/pages/hadith/ui/HadithClassGuide";
+import { AppBackButton } from "@/components/common/AppBackButton";
 import { WEAK_HADITH_EDUCATIONAL_DISCLAIMER } from "@/lib/content-display-zones";
 import "@/styles/pages/hadith.css";
 
@@ -42,20 +43,29 @@ export default function HadithDaifPage() {
   }, []);
 
   return (
-    <>
+    <div className="hadith-route" dir="rtl">
+      <div className="hadith-page__chrome">
+        <AppBackButton variant="inline" fallbackHref="/hadith" label="الحديث وعلومه" />
+      </div>
       <Breadcrumbs items={HADITH_DAIF_BREADCRUMBS} />
       <div className="hadith-weak-banner" role="note">
-        <h1 className="hadith-weak-banner__title">أحاديث ضعيفة للتنبيه والتمييز</h1>
+        <p className="hadith-weak-banner__title">تنبيه علمي</p>
         <p className="hadith-weak-banner__text">{WEAK_HADITH_EDUCATIONAL_DISCLAIMER}</p>
       </div>
-      <HadithClassGuide kind="daif" />
+      <p className="hadith-def-callout" role="note">
+        لتعريف الضعيف وشروط القبول راجع{" "}
+        <Link href="/hadith-science" className="hadith-def-callout__link">
+          مصطلح الحديث
+        </Link>
+        .
+      </p>
       <HadithSection authenticityClass="daif" />
-      <div className="twh-share">
+      <div className="twh-share hadith-route__footer">
         <ShareButtons title="أحاديث ضعيفة للتنبيه والتمييز — سُنّة" url="https://www.ssunnah.com/hadith/daif" />
       </div>
-      <div className="px-4 pb-6 mt-4">
+      <div className="hadith-page__quiz hadith-route__footer">
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في علوم الحديث" count={4} />
       </div>
-    </>
+    </div>
   );
 }

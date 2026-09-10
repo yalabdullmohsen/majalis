@@ -2,7 +2,7 @@ import { useRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
 import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { useLocation } from "wouter";
-import { isAuthStandalonePath, isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
+import { isAuthStandalonePath, isCompactHeaderPath, isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import {
   getPreviousInternalRoute,
   goBackOrFallback,
@@ -58,6 +58,10 @@ export function AppBackButton({
     if (isPrayerTimesPath(location)) return null;
     if (isAuthStandalonePath(location)) return null;
     if (path === "/support" || path === "/contact") return null;
+    // صفحات الحديث لها رجوع داخل الصفحة — لا زر عائم يغطي التصفية
+    if (isCompactHeaderPath(location) && (path === "/hadith" || path.startsWith("/hadith") || path.startsWith("/arbaeen-nawawi"))) {
+      return null;
+    }
     const prev = getPreviousInternalRoute(location);
     let fallback = normalizeNavPath(fallbackHref || sectionAwareFallback(location));
     if (fallback === path) fallback = normalizeNavPath(sectionRootEscape(path));

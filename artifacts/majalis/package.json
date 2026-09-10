@@ -259,7 +259,7 @@
     "test:daily-content-consolidation": "node --import tsx src/lib/__tests__/daily-content-consolidation.test.ts",
     "test:header-ticker": "node --import tsx src/lib/__tests__/header-ticker.test.ts && node --import tsx src/lib/__tests__/prayer-countdown-chip-gate.test.ts",
     "test:hadith-corpus-stats": "node --import tsx src/lib/__tests__/hadith-corpus-stats-gate.test.ts",
-    "test:hadith-section-ui": "node --import tsx src/lib/__tests__/hadith-section-ui-gate.test.ts",
+    "test:hadith-section-ui": "node --import tsx src/lib/__tests__/hadith-section-ui-gate.test.ts && node --import tsx src/lib/__tests__/hadith-layout-chrome-gate.test.ts",
     "test:tafsir-coverage": "node --import tsx src/lib/__tests__/tafsir-coverage-gate.test.ts",
     "test:tafsir-encoding": "node --import tsx src/lib/__tests__/tafsir-encoding-gate.test.ts",
     "test:tafsir-audio-map": "node --import tsx src/lib/__tests__/tafsir-audio-map-gate.test.ts",
