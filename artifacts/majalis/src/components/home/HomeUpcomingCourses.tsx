@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { SkeletonCardGrid } from "@/components/ui-common";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
+import { RequestManager } from "@/lib/request-manager";
+import { beginAbortScope, abortScope } from "@/lib/route-abort";
 import { sortKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
-import { Widget } from "@/components/widgets/Widget";
+import { Widget, type WidgetState } from "@/components/widgets/Widget";
 
 function isCourse(lesson: KuwaitLessonRecord) {
   return lesson.isCourse || lesson.activityType === "دورة";
@@ -21,16 +22,34 @@ export function HomeUpcomingCourses() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getUnifiedActiveLessons()
+    let cancelled = false;
+    const signal = beginAbortScope("home:upcoming-courses");
+    setLoading(true);
+    RequestManager.run(
+      "home:upcoming-courses",
+      () => getUnifiedActiveLessons(),
+      { signal, dedupeKey: "home:upcoming-courses" },
+    )
       .then(({ lessons: items }) => {
+        if (cancelled) return;
         const safeItems = Array.isArray(items) ? items : [];
         setCourses(sortKuwaitLessons(safeItems.filter(isCourse)).slice(0, 4));
       })
-      .catch(() => setCourses([]))
-      .finally(() => setLoading(false));
+      .catch((err) => {
+        if (cancelled || (err as Error)?.name === "AbortError") return;
+        setCourses([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+      abortScope("home:upcoming-courses");
+      RequestManager.cancel("home:upcoming-courses");
+    };
   }, []);
 
-  if (!loading && courses.length === 0) return null;
+  const state: WidgetState = loading ? "loading" : courses.length === 0 ? "empty" : "ready";
 
   return (
     <Widget
@@ -41,17 +60,17 @@ export function HomeUpcomingCourses() {
       description="دورات علمية منظّمة مرتّبة حسب أقرب موعد."
       moreHref="/lessons#courses"
       moreLabel="كل الدورات"
-      state="ready"
+      state={state}
+      skeletonRows={3}
+      emptyMessage="لا توجد دورات قادمة حالياً."
+      emptyCtaHref="/lessons"
+      emptyCtaLabel="تصفّح الدروس"
     >
-      {loading ? (
-        <SkeletonCardGrid count={4} />
-      ) : (
-        <div className="home-kuwait-grid lesson-unified-grid">
-          {courses.map((lesson) => (
-            <UnifiedLessonCard key={lesson.id} lesson={fromKuwaitLesson(lesson)} compact />
-          ))}
-        </div>
-      )}
+      <div className="home-kuwait-grid lesson-unified-grid">
+        {courses.map((lesson) => (
+          <UnifiedLessonCard key={lesson.id} lesson={fromKuwaitLesson(lesson)} compact />
+        ))}
+      </div>
     </Widget>
   );
 }

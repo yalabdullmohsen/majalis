@@ -1,5 +1,5 @@
 /**
- * مشغّل تسجيل الدرس — يدعم الانتقال لوقت محدد من الرابط (?t=).
+ * مشغّل تسجيل الدرس — يدعم ?t= واستئناف الموضع المحلي.
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -7,6 +7,7 @@ import {
   shareLessonAtTimestamp,
   type UnifiedLesson,
 } from "@/lib/unified-lesson-card";
+import { loadLessonAudioResume, saveLessonAudioResume } from "@/lib/lesson-audio-resume";
 import { recordUserActivity } from "@/lib/user-streak";
 
 type Props = {
@@ -21,18 +22,22 @@ export function LessonRecordingPlayer({ lesson, src, startAtSeconds }: Props) {
   const [duration, setDuration] = useState(0);
   const [shareHint, setShareHint] = useState<string | null>(null);
   const seekApplied = useRef(false);
+  const lastPersistAt = useRef(0);
+  const resumeSeconds = startAtSeconds != null && startAtSeconds > 0
+    ? startAtSeconds
+    : loadLessonAudioResume(lesson.id);
 
   useEffect(() => {
     seekApplied.current = false;
-  }, [src, startAtSeconds]);
+  }, [src, startAtSeconds, lesson.id]);
 
   const applySeek = useCallback(() => {
     const el = audioRef.current;
-    if (!el || seekApplied.current || startAtSeconds == null || startAtSeconds <= 0) return;
+    if (!el || seekApplied.current || resumeSeconds == null || resumeSeconds <= 0) return;
     if (!Number.isFinite(el.duration) || el.duration <= 0) return;
-    el.currentTime = Math.min(startAtSeconds, el.duration - 0.5);
+    el.currentTime = Math.min(resumeSeconds, Math.max(0, el.duration - 0.5));
     seekApplied.current = true;
-  }, [startAtSeconds]);
+  }, [resumeSeconds]);
 
   useEffect(() => {
     const el = audioRef.current;
@@ -41,6 +46,33 @@ export function LessonRecordingPlayer({ lesson, src, startAtSeconds }: Props) {
     el.addEventListener("loadedmetadata", onMeta);
     return () => el.removeEventListener("loadedmetadata", onMeta);
   }, [applySeek]);
+
+  const persist = useCallback(
+    (t: number) => {
+      const now = Date.now();
+      if (now - lastPersistAt.current < 4000 && t > 3) return;
+      lastPersistAt.current = now;
+      saveLessonAudioResume(lesson.id, t);
+    },
+    [lesson.id],
+  );
+
+  useEffect(() => {
+    const flush = () => {
+      const t = audioRef.current?.currentTime;
+      if (typeof t === "number" && t >= 3) saveLessonAudioResume(lesson.id, t);
+    };
+    const onVis = () => {
+      if (document.visibilityState === "hidden") flush();
+    };
+    window.addEventListener("pagehide", flush);
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      window.removeEventListener("pagehide", flush);
+      document.removeEventListener("visibilitychange", onVis);
+      flush();
+    };
+  }, [lesson.id]);
 
   const handleShareAt = useCallback(async () => {
     const t = Math.floor(audioRef.current?.currentTime ?? currentTime);
@@ -52,9 +84,10 @@ export function LessonRecordingPlayer({ lesson, src, startAtSeconds }: Props) {
   return (
     <div className="lesson-recording-player" data-testid="lesson-recording-player">
       <h2>تسجيل الدرس</h2>
-      {startAtSeconds != null && startAtSeconds > 0 && (
+      {resumeSeconds != null && resumeSeconds > 0 && (
         <p className="lesson-recording-player__seek-note">
-          بدء من {formatLessonTimestampLabel(startAtSeconds)}
+          بدء من {formatLessonTimestampLabel(resumeSeconds)}
+          {startAtSeconds == null || startAtSeconds <= 0 ? " (آخر موضع)" : ""}
         </p>
       )}
       {/* تسجيل صوتي للدرس — بلا ترجمة نصية متاحة */}
@@ -66,7 +99,12 @@ export function LessonRecordingPlayer({ lesson, src, startAtSeconds }: Props) {
         playsInline
         src={src}
         className="lesson-recording-player__audio"
-        onTimeUpdate={(e) => setCurrentTime(e.currentTarget.currentTime)}
+        onTimeUpdate={(e) => {
+          const t = e.currentTarget.currentTime;
+          setCurrentTime(t);
+          persist(t);
+        }}
+        onPause={(e) => saveLessonAudioResume(lesson.id, e.currentTarget.currentTime)}
         onDurationChange={(e) => setDuration(e.currentTarget.duration)}
         onPlay={() => recordUserActivity("lesson")}
       />

@@ -5,6 +5,8 @@ import { PageShell } from "@/components/layout/PageShell";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { applyPageSeo } from "@/lib/seo";
 import { getUnifiedLessonsSplit } from "@/lib/lessons-service";
+import { RequestManager } from "@/lib/request-manager";
+import { beginAbortScope, abortScope } from "@/lib/route-abort";
 import {
   buildTeachersFromLessons,
   filterLessonsForTeacher,
@@ -28,10 +30,29 @@ export default function TeacherDetailPage() {
   );
 
   useEffect(() => {
-    getUnifiedLessonsSplit()
-      .then(({ lessons: rows }) => setLessons(rows))
-      .catch(() => setLessons([]))
-      .finally(() => setLoading(false));
+    let cancelled = false;
+    const signal = beginAbortScope("teachers:detail");
+    setLoading(true);
+    RequestManager.run(
+      "teachers:detail-split",
+      () => getUnifiedLessonsSplit(),
+      { signal, dedupeKey: "teachers:detail-split" },
+    )
+      .then(({ lessons: rows }) => {
+        if (!cancelled) setLessons(rows);
+      })
+      .catch((err) => {
+        if (cancelled || (err as Error)?.name === "AbortError") return;
+        setLessons([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+      abortScope("teachers:detail");
+      RequestManager.cancel("teachers:detail-split");
+    };
   }, []);
 
   useEffect(() => {

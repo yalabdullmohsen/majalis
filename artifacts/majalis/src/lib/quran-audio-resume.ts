@@ -116,6 +116,17 @@ export function loadAudioResumeState(): QuranAudioResumeState | null {
   };
 }
 
+/** مسح استئناف التلاوة عند الخروج — يمنع ظهور موضع مستخدم سابق لزائر/حساب جديد */
+export function clearAudioResumeState(): void {
+  pendingResume = null;
+  try {
+    localStorage.removeItem(LS_KEY);
+  } catch {
+    /* private mode */
+  }
+  void idbClear();
+}
+
 export async function loadAudioResumeStateAsync(): Promise<QuranAudioResumeState | null> {
   try {
     const fromIdb = await idbGet();
@@ -184,6 +195,26 @@ async function idbPut(state: QuranAudioResumeState): Promise<void> {
     try {
       const tx = db.transaction(IDB_STORE, "readwrite");
       tx.objectStore(IDB_STORE).put(state, IDB_KEY);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => resolve();
+    } catch {
+      resolve();
+    }
+  });
+  try {
+    db.close();
+  } catch {
+    /* ignore */
+  }
+}
+
+async function idbClear(): Promise<void> {
+  const db = await openDb();
+  if (!db) return;
+  await new Promise<void>((resolve) => {
+    try {
+      const tx = db.transaction(IDB_STORE, "readwrite");
+      tx.objectStore(IDB_STORE).delete(IDB_KEY);
       tx.oncomplete = () => resolve();
       tx.onerror = () => resolve();
     } catch {

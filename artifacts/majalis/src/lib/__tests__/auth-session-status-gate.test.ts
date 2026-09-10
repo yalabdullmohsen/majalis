@@ -17,6 +17,8 @@ assert.match(auth, /"unauthenticated"/);
 assert.match(auth, /"error"/);
 assert.match(auth, /loading:\s*status\s*===\s*"initializing"/);
 assert.match(auth, /queryClient\.clear\(\)/);
+assert.match(auth, /clearAudioResumeState/);
+assert.match(auth, /clearAllLessonAudioResume/);
 assert.match(auth, /useQueryClient/);
 assert.match(auth, /setStatus\("authenticated"\)/);
 assert.match(auth, /setStatus\("unauthenticated"\)/);
