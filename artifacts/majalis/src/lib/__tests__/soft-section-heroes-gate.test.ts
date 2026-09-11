@@ -16,6 +16,7 @@ for (const hero of [
   ".ldb-hero", ".myl2-hero", ".lpd2-hero", ".pmp-hero", ".mw-hero", ".srp-hero",
   ".seerah-hero", ".th-hero", ".sh-hero",
   ".sg-hero", ".hj-hero", ".duas-hero", ".ai-hero", ".arkan-hero",
+  ".ah-hero", ".jnz-hero", ".hs-hero",
 ]) {
   assert.match(shell, new RegExp(hero.replace(".", "\\.")), `modern-section-shell يشمل ${hero}`);
 }
@@ -37,7 +38,7 @@ assert.doesNotMatch(
   /:where\([^)]*\.sw-hero[^)]*\)\s*\{[^}]*color:\s*var\(--on-dark/,
   "الوضع الداكن لا يفرض نصًا أبيض على .sw-hero soft",
 );
-for (const h of [".seerah-hero", ".th-hero", ".sh-hero"]) {
+for (const h of [".seerah-hero", ".th-hero", ".sh-hero", ".ah-hero", ".jnz-hero", ".hs-hero"]) {
   assert.doesNotMatch(
     dark,
     new RegExp(`:where\\([^)]*\\${h.slice(1)}[^)]*\\)\\s*\\{[^}]*color:\\s*var\\(--on-dark`),
@@ -59,6 +60,9 @@ for (const [file, banned] of [
   ["src/styles/pages/duas.css", /\.duas-hero\s*\{[^}]*linear-gradient/s],
   ["src/styles/pages/arkan-iman.css", /\.ai-hero\s*\{[^}]*linear-gradient/s],
   ["src/styles/pages/arkan-islam.css", /\.arkan-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/asmaa-husna.css", /\.ah-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/janaza.css", /\.jnz-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/hadith-mustalah.css", /\.hs-hero\s*\{[^}]*linear-gradient/s],
 ] as const) {
   const css = read(file);
   assert.doesNotMatch(css, banned, `${file}: لا تدرّج أخضر على جذر الهيرو`);

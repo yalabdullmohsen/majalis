@@ -73,7 +73,10 @@
 .arkan-hero,
 .seerah-hero,
 .th-hero,
-.sh-hero {
+.sh-hero,
+.ah-hero,
+.jnz-hero,
+.hs-hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -136,7 +139,13 @@
 .th-hero::before,
 .th-hero::after,
 .sh-hero::before,
-.sh-hero::after {
+.sh-hero::after,
+.ah-hero::before,
+.ah-hero::after,
+.jnz-hero::before,
+.jnz-hero::after,
+.hs-hero::before,
+.hs-hero::after {
   content: none !important;
   display: none !important;
 }
@@ -520,6 +529,10 @@ html[data-theme="dark"] .card {
 .seerah-hero .seerah-hero__badge,
 .th-hero .th-hero__badge,
 .sh-hero .sh-hero__badge,
+.ah-hero .ah-hero__badge,
+.ah-hero .ah-hero__bismillah,
+.jnz-hero .jnz-hero__badge,
+.hs-hero .hs-hero__badge,
 .sg-hero .sg-hero__badge,
 .hj-hero .hj-hero__badge,
 .duas-hero .duas-hero__bismillah,
@@ -539,6 +552,9 @@ html[data-theme="dark"] .card {
 .th-hero .th-hero__title,
 .th-hero .th-hero__emoji,
 .sh-hero .sh-hero__title,
+.ah-hero .ah-hero__title,
+.jnz-hero .jnz-hero__title,
+.hs-hero .hs-hero__title,
 .sh-hero .sh-hero__sallam,
 .sg-hero .sg-hero__title,
 .hj-hero .hj-hero__title,
@@ -559,6 +575,16 @@ html[data-theme="dark"] .card {
 .th-hero .th-ayah__text,
 .th-hero .th-ayah__ref,
 .sh-hero .sh-hero__sub,
+.ah-hero .ah-hero__sub,
+.ah-hero .ah-hero__source,
+.ah-hero .ah-hero__stats,
+.jnz-hero .jnz-hero__sub,
+.jnz-hero .jnz-ayah__text,
+.jnz-hero .jnz-ayah__ref,
+.hs-hero .hs-hero__sub,
+.hs-hero .hs-stat,
+.hs-hero .hs-stat__val,
+.hs-hero .hs-stat__lbl,
 .sh-hero .sh-stat,
 .sh-hero .sh-stat__val,
 .sh-hero .sh-stat__lbl,
@@ -576,7 +602,9 @@ html[data-theme="dark"] .card {
 }
 
 .th-hero .th-ayah,
-.hj-hero .hj-talbiya {
+.hj-hero .hj-talbiya,
+.jnz-hero .jnz-ayah,
+.hs-hero .hs-stat {
   background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, transparent) !important;
   border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
 }

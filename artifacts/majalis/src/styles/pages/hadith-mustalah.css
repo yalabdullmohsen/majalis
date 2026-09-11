@@ -6,10 +6,11 @@
 
 /* هيرو */
 .hs-hero {
-  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 55%, var(--mj-brand) 100%);
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   border-radius: var(--ds-radius-2xl);
   padding: 2.5rem 1.5rem 2rem;
-  color: var(--mj-white, #ffffff);
+  color: inherit;
   text-align: center;
   margin-bottom: 1.75rem;
   box-shadow: 0 4px 24px rgba(31,77,58,0.18);
@@ -18,7 +19,7 @@
   display: inline-block;
   background: rgba(255,255,255,0.15);
   border: 1px solid rgba(255,255,255,0.25);
-  color: var(--mj-white, #ffffff);
+  color: inherit;
   font-size: 0.78rem;
   font-weight: 700;
   padding: 0.25rem 0.85rem;
@@ -26,8 +27,8 @@
   margin-bottom: 0.75rem;
   letter-spacing: normal;
 }
-.hs-hero__title { font-size: 2rem; font-weight: 900; color: var(--mj-white, #ffffff); margin: 0 0 0.6rem; }
-.hs-hero__sub { font-size: 0.9rem; color: rgba(255,255,255,0.87); max-width: 520px; margin: 0 auto 1.5rem; line-height: 1.7; }
+.hs-hero__title { font-size: 2rem; font-weight: 900; color: inherit; margin: 0 0 0.6rem; }
+.hs-hero__sub { font-size: 0.9rem; color: inherit; max-width: 520px; margin: 0 auto 1.5rem; line-height: 1.7; }
 
 /* إحصائيات */
 .hs-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--ds-space-4); }
@@ -41,7 +42,7 @@
   padding: 0.6rem 1.1rem;
   min-width: 64px;
 }
-.hs-stat strong { font-size: 1.4rem; font-weight: 900; color: var(--mj-white, #ffffff); line-height: 1.1; }
+.hs-stat strong { font-size: 1.4rem; font-weight: 900; color: inherit; line-height: 1.1; }
 .hs-stat span { font-size: 0.72rem; color: rgba(255,255,255,0.78); margin-top: 0.15rem; }
 
 /* شريط التحكم */
@@ -92,7 +93,7 @@
   touch-action: manipulation;
 }
 .hs-cat-chip:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
-.hs-cat-chip--active { background: var(--mj-brand); border-color: var(--mj-brand); color: var(--mj-white, #ffffff); }
+.hs-cat-chip--active { background: var(--mj-brand); border-color: var(--mj-brand); color: inherit; }
 
 /* شبكة المصطلحات */
 .hs-grid { display: flex; flex-direction: column; gap: 0.6rem; }
