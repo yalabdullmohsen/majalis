@@ -111,7 +111,7 @@
   border: 1px solid var(--ds-line-color);
   background: none;
   cursor: pointer;
-  color: #dc2626;
+  color: var(--mj-danger);
   font-size: 0.8rem;
   display: flex;
   align-items: center;

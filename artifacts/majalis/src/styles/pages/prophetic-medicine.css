@@ -15,7 +15,7 @@
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: normal;
-  color: #A7F3D0;
+  color: var(--mj-brand-soft);
   margin-bottom: 0.5rem;
   text-transform: uppercase;
 }

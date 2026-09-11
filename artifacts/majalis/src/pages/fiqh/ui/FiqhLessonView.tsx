@@ -21,6 +21,7 @@ import { FiqhReportError } from "@/components/fiqh/FiqhReportError";
 import { isSeverelyIncompleteLesson } from "@/lib/fiqh/fiqhNormalize";
 import { relatedFiqhIssues, fiqhDoorBackHref } from "@/lib/fiqh/fiqhRelated";
 import "@/styles/pages/fiqh-hub.css";
+import { DetailScreen } from "@/components/design-system/screens";
 
 function firstSentence(text: string): { intro: string; rest: string } {
   const trimmed = text.trim();
@@ -180,6 +181,7 @@ export default function FiqhLessonPage() {
   };
 
   return (
+    <DetailScreen compose="mark">
     <article
       className="fiqh-lux-shell fiqh-lux-lesson page-shell fiqh-lesson-page"
       dir="rtl"
@@ -367,5 +369,6 @@ export default function FiqhLessonPage() {
       </p>
       <div className="fiqh-fab-clearance" />
     </article>
+    </DetailScreen>
   );
 }

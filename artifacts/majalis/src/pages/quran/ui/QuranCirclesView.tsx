@@ -19,6 +19,7 @@ import {
 } from "@/lib/quran-circles-service";
 import "@/styles/components/filters.css";
 import "@/styles/pages/quran-circles.css";
+import { ListScreen } from "@/components/design-system/screens";
 
 const LEVELS = ["الكل", "مبتدئ", "متوسط", "متقدم"] as const;
 const TRACKS = ["الكل", "رجال", "نساء", "أطفال", "عام"] as const;
@@ -263,6 +264,7 @@ export default function QuranCirclesPage() {
   }, [visible]);
 
   return (
+    <ListScreen compose="mark">
     <div className="qc-page" dir="rtl">
       <header className="qc-hero">
         <p className="qc-hero__eyebrow">دليل التحفيظ</p>
@@ -423,5 +425,6 @@ export default function QuranCirclesPage() {
         . أي تعارض مع الموقع الرسمي يُقدَّم فيه قول الأوقاف.
       </footer>
     </div>
+    </ListScreen>
   );
 }

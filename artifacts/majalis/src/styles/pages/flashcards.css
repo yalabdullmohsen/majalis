@@ -12,7 +12,7 @@
   --fc-surface-2:#E9EDEB;
   --fc-hairline:#E3E8E6;
   /* النص */
-  --fc-ink:#16241E;
+  --fc-ink:var(--mj-ink);
   --fc-ink-2:#4A5A53;
   --fc-muted:#6B7B74;
   /* حالات التقييم — ثلاثة لا رابع لها */
@@ -46,7 +46,7 @@
 [data-theme="dark"] .fc,
 .fc[data-theme="dark"]{
   --fc-bg:#101614; --fc-surface:#17201C; --fc-surface-2:#1E2925; --fc-hairline:#26332D;
-  --fc-ink:#E9EFEC; --fc-ink-2:#B4C2BC; --fc-muted:#8A9A93;
+  --fc-ink:var(--mj-surface-2); --fc-ink-2:#B4C2BC; --fc-muted:#8A9A93;
   --fc-ok:var(--mj-brand); --fc-ok-soft:var(--mj-brand-soft);
   --fc-later:#D2A445; --fc-later-soft:#332A16;
   --fc-hard:#D77558; --fc-hard-soft:#33201A;

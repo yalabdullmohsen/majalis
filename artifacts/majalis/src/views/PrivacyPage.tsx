@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function PrivacyPage() {
   useEffect(() => {
@@ -16,6 +17,7 @@ export default function PrivacyPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <LegalPageLayout eyebrow="الخصوصية" title="سياسة الخصوصية" updatedAt="2026-08-07">
       <LegalSection title="البيانات التي نجمعها">
         <p>
@@ -272,5 +274,6 @@ export default function PrivacyPage() {
         <ShareButtons title="سياسة الخصوصية — سُنّة" url="https://www.ssunnah.com/privacy" />
       </div>
 </LegalPageLayout>
+    </UtilityScreen>
   );
 }

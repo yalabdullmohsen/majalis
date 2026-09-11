@@ -7,6 +7,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 import "@/styles/pages/annual-course-detail.css";
+import { DetailScreen } from "@/components/design-system/screens";
 
 function buildMapsEmbed(mapUrl?: string, venue?: string, city?: string) {
   if (mapUrl?.includes("google.com/maps") || mapUrl?.includes("maps.app")) {
@@ -87,6 +88,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
   const copyText = [item.title, item.summary, item.body].filter(Boolean).join("\n\n");
 
   return (
+    <DetailScreen compose="mark">
     <ContentDetailLayout
       breadcrumbs={[
         { label: "الرئيسية", href: "/" },
@@ -172,5 +174,6 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
         </section>
       )}
     </ContentDetailLayout>
+    </DetailScreen>
   );
 }

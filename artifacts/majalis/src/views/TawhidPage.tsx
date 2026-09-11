@@ -10,6 +10,7 @@ import { HubCard } from "@/components/ui/HubCard";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { SEARCH_INPUT_ATTRS, handleSearchEnterKey } from "@/lib/search-input";
 import "@/styles/pages/tawhid.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 // ─── أقسام العقيدة والتوحيد ──────────────────────────────────────────────────
 
@@ -404,6 +405,7 @@ export default function TawhidPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <SectionTemplatePage
       route="/tawhid"
       title="العقيدة والتوحيد"
@@ -616,5 +618,6 @@ export default function TawhidPage() {
       </div>
       </div>
     </SectionTemplatePage>
+    </UtilityScreen>
   );
 }

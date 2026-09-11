@@ -146,7 +146,7 @@
 }
 
 .section-hub__chip.is-active {
-  background: color-mix(in srgb, var(--sh-accent) 88%, #0a1f18);
+  background: color-mix(in srgb, var(--sh-accent) 88%, var(--mj-brand-deep));
   border-color: transparent;
   color: #fff;
   box-shadow: 0 6px 14px -8px color-mix(in srgb, var(--sh-accent) 55%, transparent);
@@ -225,7 +225,7 @@
   padding: 0.4rem 0.95rem;
   border-radius: 999px;
   border: 0;
-  background: color-mix(in srgb, var(--card-accent, var(--sh-accent)) 90%, #0a1f18);
+  background: color-mix(in srgb, var(--card-accent, var(--sh-accent)) 90%, var(--mj-brand-deep));
   color: #fff;
   font: inherit;
   font-size: 0.78rem;

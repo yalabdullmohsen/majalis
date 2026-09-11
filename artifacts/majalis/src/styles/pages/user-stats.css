@@ -170,7 +170,7 @@
   padding: 0.6rem 0.4rem;
   border-radius: 0.75rem;
   border: 1.5px solid var(--ds-line-color);
-  background: color-mix(in srgb, var(--majalis-panel) 90%, #f3f4f6);
+  background: color-mix(in srgb, var(--majalis-panel) 90%, var(--mj-surface-2));
   opacity: 0.5;
   text-align: center;
   position: relative;
@@ -246,7 +246,7 @@
   flex-shrink: 0;
   opacity: 0.5;
 }
-.profile-resume__del:hover { opacity: 1; color: #ef4444; }
+.profile-resume__del:hover { opacity: 1; color: var(--mj-danger); }
 
 /* ── روابط سريعة ────────────────────────────────────────────────── */
 .profile-quick-links {

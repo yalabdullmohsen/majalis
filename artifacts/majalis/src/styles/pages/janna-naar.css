@@ -52,7 +52,7 @@
 }
 .jn-desc-card__title { font-size: .9rem; font-weight: 800; color: var(--color-text, var(--mj-ink)); margin: 0; }
 .jn-desc-card__text { font-size: .86rem; color: var(--color-text-muted, var(--mj-ink-2)); line-height: 1.75; margin: 0; }
-.jn-desc-card__ref { font-size: 0.8rem; color: #94A3B8; margin: 0; }
+.jn-desc-card__ref { font-size: 0.8rem; color: var(--mj-muted); margin: 0; }
 
 .jn-naar-warn {
   background: rgba(155,28,28,.07); border: 1px solid rgba(155,28,28,.2);
@@ -76,7 +76,7 @@
 }
 .jn-sabab-title { font-size: .9rem; font-weight: 800; color: var(--color-text, var(--mj-ink)); margin: 0; }
 .jn-sabab-text { font-size: .83rem; color: var(--color-text-muted, var(--mj-ink-2)); line-height: 1.7; margin: 0; }
-.jn-ref { font-size: .72rem; color: #94A3B8; margin: 0; }
+.jn-ref { font-size: .72rem; color: var(--mj-muted); margin: 0; }
 
 .jn-intro--naar { background: rgba(155,28,28,.05); border-right-color: #9B1C1C; }
 .jn-intro--naar p { color: #7F1D1D; }

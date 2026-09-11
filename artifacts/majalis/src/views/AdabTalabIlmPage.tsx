@@ -7,6 +7,7 @@ import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { PAGE_EXPLORE_LINKS } from "@/lib/explore-links";
 import "@/styles/pages/adab-talab-ilm.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 /* ══════════════════════════════════════════════════════════════════
    §243، آداب طالب العلم  (.atl-*)
@@ -508,6 +509,7 @@ export default function AdabTalabIlmPage() {
   }, [activeTab]);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="atl-page" dir="rtl">
       {/* Hero */}
       <section className="atl-hero">
@@ -758,5 +760,6 @@ export default function AdabTalabIlmPage() {
         <SectionQuiz route="/adab-talab-ilm" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

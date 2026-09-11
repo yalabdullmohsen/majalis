@@ -12,6 +12,7 @@ import {
 import { QUALITY_OPTIONS, type ReviewQuality } from "@/lib/spaced-repetition";
 import { useAuth } from "@/components/AuthProvider";
 import "@/styles/pages/arbaeen-detail.css";
+import { DetailScreen } from "@/components/design-system/screens";
 
 /**
  * صفحة تعلّم كاملة لحديث واحد من الأربعين النووية (المرحلة 11) — نص/شرح/فائدة/
@@ -108,6 +109,7 @@ export default function ArbaeenHadithDetailPage() {
   const nextId = hadith.id < 42 ? hadith.id + 1 : null;
 
   return (
+    <DetailScreen compose="mark">
     <div className="ahd-page" dir="rtl">
       <Link href="/arbaeen-nawawi" className="ahd-back">
         <ChevronRight size={16} aria-hidden="true" /> فهرس الأربعين النووية
@@ -199,5 +201,6 @@ export default function ArbaeenHadithDetailPage() {
         {nextId && <Link href={`/arbaeen-nawawi/${nextId}`} className="ahd-nav__link">الحديث التالي <ChevronLeft size={14} aria-hidden="true" /></Link>}
       </nav>
     </div>
+    </DetailScreen>
   );
 }

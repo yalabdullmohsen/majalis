@@ -15,6 +15,7 @@ import {
 import { formatArabicNumber } from "@/lib/numerals";
 import { findMushafPageForAyah } from "@/features/mushaf-madinah/mushaf-page-for-ayah";
 import "@/styles/pages/tajweed.css";
+import { DashboardScreen } from "@/components/design-system/screens";
 
 function mushafHref(surah: number, ayah: number): string {
   const page = findMushafPageForAyah(surah, ayah);
@@ -105,6 +106,7 @@ export default function QuranTajweedHubView() {
   }, []);
 
   return (
+    <DashboardScreen compose="mark">
     <SectionTemplatePage
       route="/quran-hub/tajweed"
       title={TAJWEED_HUB_INTRO.title}
@@ -146,5 +148,6 @@ export default function QuranTajweedHubView() {
       </ol>
     </div>
     </SectionTemplatePage>
+    </DashboardScreen>
   );
 }

@@ -84,7 +84,7 @@
 }
 .kng-view-link {
   padding: 0.35rem 0.75rem; font-size: 0.8rem;
-  background: #f3f4f6; color: var(--majalis-ink);
+  background: var(--mj-surface-2); color: var(--majalis-ink);
   border-radius: 4px; text-decoration: none;
   border: 1px solid var(--majalis-line, #e5e7eb);
 }
@@ -162,7 +162,7 @@
 .kng-nt--book          { --kng-nc: var(--mj-brand); }
 .kng-nt--lesson        { --kng-nc: #0369a1; }
 .kng-nt--benefit       { --kng-nc: var(--mj-brand); }
-.kng-nt--prophet_story { --kng-nc: #dc2626; }
+.kng-nt--prophet_story { --kng-nc: var(--mj-danger); }
 .kng-nt--term          { --kng-nc: var(--text-2, var(--mj-ink-2)); }
 .kng-nt--fawaid        { --kng-nc: var(--mj-brand); }
 .kng-nt--question      { --kng-nc: var(--text-2, var(--mj-ink-2)); }

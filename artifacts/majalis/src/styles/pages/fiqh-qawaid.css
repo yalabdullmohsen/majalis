@@ -3,9 +3,9 @@
    ══════════════════════════════════════════════════════════════════════ */
 
 /* hero */
-.fq-page { background: #F8FAFC; min-height: 100svh; }
+.fq-page { background: var(--mj-surface-2); min-height: 100svh; }
 .fq-hero {
-  background: linear-gradient(135deg, #0F172A 0%, #1E3A5F 60%, var(--mj-brand) 100%);
+  background: linear-gradient(135deg, var(--mj-ink) 0%, #1E3A5F 60%, var(--mj-brand) 100%);
   padding: 3.5rem 1.25rem 2.5rem; text-align: center; color: #fff;
 }
 .fq-hero__inner { max-width: 700px; margin: 0 auto; }
@@ -79,7 +79,7 @@
 .fq-card__chevron { color: var(--text-muted, #9CA3AF); flex-shrink: 0; display: flex; width: 1rem; height: 1rem; opacity: 0.75; }
 
 .fq-card__body {
-  border-top: 1px solid #F3F4F6; padding: 1.1rem 1.25rem;
+  border-top: 1px solid var(--mj-surface-2); padding: 1.1rem 1.25rem;
   display: flex; flex-direction: column; gap: var(--ds-space-4);
 }
 .fq-card__meaning, .fq-card__origin, .fq-card__section { display: flex; flex-direction: column; gap: .4rem; }
@@ -104,27 +104,27 @@
   padding: .65rem .8rem; font-size: .85rem;
 }
 .fq-example__sit { flex: 1; color: var(--mj-ink-2); line-height: 1.5; }
-.fq-example__arrow { color: #9CA3AF; flex-shrink: 0; font-size: .8rem; padding-top: .15rem; }
+.fq-example__arrow { color: var(--mj-muted); flex-shrink: 0; font-size: .8rem; padding-top: .15rem; }
 .fq-example__hukm { flex: 1; color: var(--mj-brand-deep); font-weight: 700; line-height: 1.5; }
 
 /* مؤلفون */
 .fq-card__scholars {
   display: flex; align-items: center; gap: .4rem;
   color: var(--mj-ink-2); font-size: .78rem; padding-top: .5rem;
-  border-top: 1px solid #F3F4F6;
+  border-top: 1px solid var(--mj-surface-2);
 }
 
 /* قواعد فرعية */
 .fq-search-bar {
   display: flex; align-items: center; gap: .5rem;
   background: var(--mj-surface); border: 1px solid var(--mj-hairline); border-radius: .75rem;
-  padding: .55rem .9rem; color: #9CA3AF;
+  padding: .55rem .9rem; color: var(--mj-muted);
 }
 .fq-search-input {
   flex: 1; border: none; background: transparent; font-family: inherit;
   font-size: .9rem; color: var(--mj-ink); outline: none; direction: rtl;
 }
-.fq-empty { text-align: center; color: #9CA3AF; padding: var(--ds-space-8); }
+.fq-empty { text-align: center; color: var(--mj-muted); padding: var(--ds-space-8); }
 .fq-faraa-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--ds-space-4); }
 .fq-faraa-card {
   background: var(--mj-surface); border: 1px solid var(--mj-hairline); border-radius: .9rem; padding: 1rem 1.1rem;
@@ -137,7 +137,7 @@
   border-radius: var(--ds-radius-full); padding: .2rem .7rem; font-size: .68rem; font-weight: 700;
   align-self: flex-start;
 }
-.fq-faraa-card__text { font-size: 1.05rem; font-weight: 800; color: #0F172A; margin: 0; font-family: var(--font-body); }
+.fq-faraa-card__text { font-size: 1.05rem; font-weight: 800; color: var(--mj-ink); margin: 0; font-family: var(--font-body); }
 .fq-faraa-card__explain { font-size: .83rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0; }
 .fq-faraa-card__example {
   display: flex; align-items: flex-start; gap: .4rem;
@@ -154,17 +154,17 @@
   padding: .9rem 1.1rem; cursor: pointer; user-select: none;
 }
 .fq-daabit__icon { font-size: 1.4rem; flex-shrink: 0; }
-.fq-daabit__science { font-size: var(--ds-text-base); font-weight: 800; color: #0F172A; flex: 1; }
+.fq-daabit__science { font-size: var(--ds-text-base); font-weight: 800; color: var(--mj-ink); flex: 1; }
 .fq-daabit__count {
   font-size: .7rem; color: var(--majalis-emerald,var(--mj-brand)); font-weight: 700;
   background: rgba(31,77,58,.1); padding: .2rem .65rem; border-radius: var(--ds-radius-full); flex-shrink: 0;
 }
 .fq-daabit__body {
-  border-top: 1px solid #F3F4F6; padding: 1rem 1.25rem;
+  border-top: 1px solid var(--mj-surface-2); padding: 1rem 1.25rem;
   display: flex; flex-direction: column; gap: .75rem;
 }
 .fq-daabit__rule { display: flex; flex-direction: column; gap: .3rem; }
-.fq-daabit__rule-text { font-size: .95rem; font-weight: 700; color: #0F172A; margin: 0; font-family: var(--font-body); }
+.fq-daabit__rule-text { font-size: .95rem; font-weight: 700; color: var(--mj-ink); margin: 0; font-family: var(--font-body); }
 .fq-daabit__rule-ex {
   display: flex; align-items: flex-start; gap: .35rem;
   font-size: .8rem; color: var(--mj-ink-2); line-height: 1.5;
@@ -185,9 +185,9 @@
   font-size: .8rem; font-weight: 900; flex-shrink: 0;
 }
 .fq-tatbiq__info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .15rem; }
-.fq-tatbiq__title { font-size: .95rem; font-weight: 800; color: #0F172A; }
+.fq-tatbiq__title { font-size: .95rem; font-weight: 800; color: var(--mj-ink); }
 .fq-tatbiq__qaaida { font-size: .75rem; color: var(--majalis-emerald,var(--mj-brand)); font-weight: 600; }
-.fq-tatbiq__body { border-top: 1px solid #F3F4F6; padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: .75rem; }
+.fq-tatbiq__body { border-top: 1px solid var(--mj-surface-2); padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: .75rem; }
 .fq-tatbiq__q {
   display: flex; align-items: flex-start; gap: .5rem;
   background: #EFF6FF; border-radius: .6rem; padding: .75rem .9rem;
@@ -195,18 +195,18 @@
 }
 .fq-tatbiq__q p { margin: 0; }
 .fq-tatbiq__a { font-size: .88rem; color: var(--mj-ink-2); line-height: 1.7; margin: 0; }
-.fq-tatbiq__source { font-size: .75rem; color: #9CA3AF; margin: 0; font-style: normal; }
+.fq-tatbiq__source { font-size: .75rem; color: var(--mj-muted); margin: 0; font-style: normal; }
 
 /* مراجع */
 .fq-ref { margin-top: 2.5rem; padding: var(--ds-space-6); background: var(--mj-surface); border: 1px solid var(--mj-hairline); border-radius: var(--ds-radius-xl); }
-.fq-ref__title { font-size: var(--ds-text-base); font-weight: 800; color: #0F172A; margin: 0 0 1rem; }
+.fq-ref__title { font-size: var(--ds-text-base); font-weight: 800; color: var(--mj-ink); margin: 0 0 1rem; }
 .fq-ref__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .75rem; }
 .fq-ref__book {
   display: flex; align-items: flex-start; gap: .6rem;
-  background: #F8FAFC; border: 1px solid var(--mj-hairline); border-radius: .65rem; padding: .75rem .9rem;
+  background: var(--mj-surface-2); border: 1px solid var(--mj-hairline); border-radius: .65rem; padding: .75rem .9rem;
   color: var(--majalis-emerald,var(--mj-brand));
 }
-.fq-ref__book-title { font-size: .85rem; font-weight: 700; color: #0F172A; margin: 0; }
+.fq-ref__book-title { font-size: .85rem; font-weight: 700; color: var(--mj-ink); margin: 0; }
 .fq-ref__book-author { font-size: .75rem; color: var(--mj-ink-2); margin: 0; }
 
 @media (max-width: 640px) {

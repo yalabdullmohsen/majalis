@@ -896,9 +896,9 @@ html.dark .topic-page--tarikh-detail .tarikh-detail__meta {
 
 .tarikh-badge--disputed,
 .tarikh-badge--needs-review {
-  background: color-mix(in srgb, #9a3412 10%, transparent);
-  border-color: color-mix(in srgb, #9a3412 28%, transparent);
-  color: #9a3412;
+  background: color-mix(in srgb, var(--mj-warning) 10%, transparent);
+  border-color: color-mix(in srgb, var(--mj-warning) 28%, transparent);
+  color: var(--mj-warning);
 }
 
 html[data-theme="dark"] .tarikh-badge--confirmed,

@@ -366,7 +366,7 @@ export function AssistantChatView({
             type="submit"
             className="assistant-send-btn"
             disabled={loading || !input.trim()}
-            aria-label={loading ? "جارٍ البحث" : "إرسال السؤال"}
+            aria-label={loading ? "تحديث النتائج" : "إرسال السؤال"}
           >
             {loading ? (
               <span className="assistant-send-btn__spinner" aria-hidden="true" />

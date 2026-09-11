@@ -5,6 +5,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/raqaiq.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { ListScreen } from "@/components/design-system/screens";
 
 /* ══════════════════════════════════════════════════════════════════
    §249، الرقائق والزهد  (.rq-*)
@@ -439,6 +440,7 @@ export default function RaqaiqPage() {
   }, []);
 
   return (
+    <ListScreen compose="mark">
     <div className="rq-page" dir="rtl">
       {/* Hero */}
       <section className="rq-hero">
@@ -602,5 +604,6 @@ export default function RaqaiqPage() {
         <SectionQuiz sectionId="akhlaq" title="اختبر معلوماتك في الأخلاق والزهد" count={4} />
       </div>
     </div>
+    </ListScreen>
   );
 }

@@ -4,6 +4,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import "@/styles/pages/duas-quran.css";
+import { ListScreen } from "@/components/design-system/screens";
 
 
 type DuaCategory = "الكل" | "الأنبياء" | "الرزق والهداية" | "المغفرة" | "الأسرة" | "الدنيا والآخرة" | "الصبر والنصر";
@@ -353,6 +354,7 @@ export default function DuasQuranPage() {
   });
 
   return (
+    <ListScreen compose="mark">
     <main className="dq-page" dir="rtl">
       {/* hero */}
       <section className="dq-hero">
@@ -497,5 +499,6 @@ export default function DuasQuranPage() {
       <div className="px-4 pb-6 mt-4">
       </div>
     </main>
+    </ListScreen>
   );
 }

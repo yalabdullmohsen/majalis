@@ -15,6 +15,7 @@ import {
 import { formatArabicNumber } from "@/lib/numerals";
 import { findMushafPageForAyah } from "@/features/mushaf-madinah/mushaf-page-for-ayah";
 import "@/styles/pages/qiraat.css";
+import { DashboardScreen } from "@/components/design-system/screens";
 
 function mushafHref(surah: number, ayah: number): string {
   const page = findMushafPageForAyah(surah, ayah);
@@ -38,6 +39,7 @@ export default function QuranQiraatView() {
   }, []);
 
   return (
+    <DashboardScreen compose="mark">
     <SectionTemplatePage
       route="/quran-hub/qiraat"
       title="القراءات العشر"
@@ -119,5 +121,6 @@ export default function QuranQiraatView() {
       </section>
     </div>
     </SectionTemplatePage>
+    </DashboardScreen>
   );
 }

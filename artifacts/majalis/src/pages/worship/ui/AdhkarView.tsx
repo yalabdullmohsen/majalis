@@ -299,9 +299,9 @@ export default function AdhkarPage() {
       )}
 
       {/* منطقة الذكر */}
-      {isLoading ? (
+      {isLoading && publishedItems.length === 0 ? (
         <div className="adhkar-loading-hint" role="status" aria-busy="true" aria-label="تحديث الأذكار" />
-      ) : isError ? (
+      ) : isError && publishedItems.length === 0 ? (
         <Empty text="تعذّر تحميل الأذكار." />
       ) : total === 0 ? (
         <Empty text="لا توجد أذكار في هذا القسم حاليًا. جرّب قسمًا آخر." />

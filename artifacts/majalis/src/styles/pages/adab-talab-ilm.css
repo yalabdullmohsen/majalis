@@ -71,7 +71,7 @@
 .atl-card--hadith { border-top: 3px solid var(--mj-brand); }
 .atl-card__title { font-size: .9rem; font-weight: 800; color: var(--mj-brand); margin: 0 0 .45rem; }
 .atl-card__text { font-size: .88rem; color: var(--color-text-muted, var(--mj-ink-2)); line-height: 1.75; margin: 0 0 .4rem; }
-.atl-card__source { font-size: 0.8rem; color: #94A3B8; margin: 0; }
+.atl-card__source { font-size: 0.8rem; color: var(--mj-muted); margin: 0; }
 
 /* Accordion */
 .atl-accordion { display: flex; flex-direction: column; gap: .5rem; }
@@ -90,7 +90,7 @@
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .atl-acc-title { flex: 1; font-size: .9rem; font-weight: 700; color: var(--color-text, var(--mj-ink)); }
-.atl-acc-head svg { color: #94A3B8; flex-shrink: 0; }
+.atl-acc-head svg { color: var(--mj-muted); flex-shrink: 0; }
 
 .atl-acc-body { padding: .75rem 1rem 1rem 1rem; border-top: 1px solid var(--mj-hairline, #d9d3c8); }
 .atl-acc-body p { font-size: .88rem; color: var(--color-text-muted, var(--mj-ink-2)); line-height: 1.75; margin: 0 0 .4rem; }

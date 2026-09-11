@@ -23,6 +23,7 @@ import { normalizeArabic } from "@/shared/arabic-normalize";
 import { scoreTolerantMatch } from "@/features/search/tolerant-match";
 import "@/components/sections/section-cards.css";
 import "@/styles/pages/quran-numbers.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const GROUPS: QuranStatGroup[] = ["bunya", "alfaz", "mawdoo", "suwar", "ajaib"];
 
@@ -103,6 +104,7 @@ export default function QuranNumbersPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="quran-numbers-page sections-hub" dir="rtl" data-quran-numbers="1">
       <header className="quran-hub-page__head quran-hub-page__head--title-only">
         <h1 className="quran-hub-page__title">القرآن في أرقام</h1>
@@ -276,5 +278,6 @@ export default function QuranNumbersPage() {
         ) : null}
       </AppBottomSheet>
     </div>
+    </UtilityScreen>
   );
 }

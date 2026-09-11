@@ -16,6 +16,7 @@ import {
 import { chapterPreviewText, fiqhBookEditorial } from "@/lib/fiqh-editorial";
 import { formatAbwabCount, formatMasailCount } from "@/lib/arabic-count";
 import "@/styles/pages/fiqh-hub.css";
+import { DetailScreen } from "@/components/design-system/screens";
 
 export default function FiqhBookPage() {
   const params = useParams<{ bookId: string }>();
@@ -70,6 +71,7 @@ export default function FiqhBookPage() {
   const level = fiqhBookApproxLevel(book);
 
   return (
+    <DetailScreen compose="mark">
     <div className="fiqh-lux-shell fiqh-lux-book page-shell ve-page" dir="rtl">
       <nav className="fiqh-lux-crumb" aria-label="مسار التنقل">
         <Link href="/fiqh">الفقه</Link>
@@ -144,5 +146,6 @@ export default function FiqhBookPage() {
       </ol>
       <div className="fiqh-fab-clearance ve-bottom-clearance" />
     </div>
+    </DetailScreen>
   );
 }

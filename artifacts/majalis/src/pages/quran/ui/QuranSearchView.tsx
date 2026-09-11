@@ -21,6 +21,7 @@ import { mushafPageHref } from "@/lib/quran-surah-list";
 import { PageHeader } from "@/components/ui-common";
 import { VirtualList } from "@/components/VirtualList";
 import "@/styles/pages/quran-search.css";
+import { ListScreen } from "@/components/design-system/screens";
 
 const DEBOUNCE_MS = 200;
 
@@ -123,6 +124,7 @@ export default function QuranSearchPage() {
   }
 
   return (
+    <ListScreen compose="mark">
     <div className="ds-page quran-search-page" dir="rtl">
       <PageHeader
         eyebrow="القرآن الكريم"
@@ -276,5 +278,6 @@ export default function QuranSearchPage() {
         <Link href="/quran/surahs">فهرس السور</Link>
       </p>
     </div>
+    </ListScreen>
   );
 }

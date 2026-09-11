@@ -9,6 +9,7 @@ import { getAllSurahStories, getSurahStory } from "@/lib/surah-stories";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { truncateAtWord } from "@/lib/utils";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
+import { DetailScreen } from "@/components/design-system/screens";
 
 export default function SurahStoriesPage() {
   useEffect(() => {
@@ -114,6 +115,7 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
   }, [story.number, story.name, story.namingReason, story.revelationTime, story.revelationPlace, story.ayahCount, story.virtues, story.keywords]);
 
   return (
+    <DetailScreen compose="mark">
     <div className="page-shell surah-story-detail">
       <PageHeader eyebrow={`سورة ${story.number}`} title={story.name} subtitle={story.revelationPlace} />
 
@@ -203,5 +205,6 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
         ]}
       />
     </div>
+    </DetailScreen>
   );
 }

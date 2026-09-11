@@ -150,7 +150,7 @@
   background: transparent;
   border: 1px solid rgba(192,57,43,0.3);
   border-radius: var(--ds-radius-full);
-  color: #C0392B;
+  color: var(--mj-danger, #C0392B);
   font-size: var(--ds-text-xs);
   font-weight: 600;
   font-family: inherit;
@@ -493,7 +493,7 @@ a.search-suggestion-chip {
   border-radius: 0.3rem;
   transition: color 0.15s;
 }
-.srch-history-clear:hover { color: #c0392b; }
+.srch-history-clear:hover { color: var(--mj-danger, #C0392B); }
 .srch-history-chips {
   display: flex;
   flex-wrap: wrap;
@@ -620,7 +620,7 @@ html[data-theme="dark"] .srch-quick-card:hover {
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, var(--mj-hairline, #e3e8e6));
   background: var(--mj-surface, var(--color-surface, #fff));
   color: var(--text-primary, var(--mj-ink, #12201a));
-  box-shadow: 0 1px 2px color-mix(in srgb, #0f172a 5%, transparent);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--mj-ink, #0f172a) 5%, transparent);
 }
 .srch-home-field input {
   flex: 1;
@@ -695,7 +695,7 @@ html[data-theme="dark"] .srch-quick-card:hover {
   background:
     linear-gradient(160deg, color-mix(in srgb, var(--mj-brand, #1f6b56) 7%, transparent), transparent 62%),
     var(--mj-surface, var(--color-surface, #fff));
-  box-shadow: 0 1px 2px color-mix(in srgb, #0f172a 5%, transparent);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--mj-ink, #0f172a) 5%, transparent);
   color: var(--text-primary, var(--mj-ink, #12201a));
   cursor: pointer;
   font: inherit;
@@ -780,16 +780,16 @@ html[data-theme="dark"] .srch-quick-card:hover {
   border: 1px solid color-mix(in srgb, var(--mn-border-default, #d8e3de) 75%, transparent);
   background: color-mix(in srgb, var(--color-surface, #fff) 96%, var(--mn-brand-soft, #e8f5f0));
   box-shadow:
-    0 1px 2px color-mix(in srgb, #0f172a 6%, transparent),
-    0 8px 20px color-mix(in srgb, #0f172a 4%, transparent);
+    0 1px 2px color-mix(in srgb, var(--mj-ink, #0f172a) 6%, transparent),
+    0 8px 20px color-mix(in srgb, var(--mj-ink, #0f172a) 4%, transparent);
   transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 .srch-result-card:hover,
 .srch-result-card:focus-within {
   border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 35%, transparent);
   box-shadow:
-    0 2px 4px color-mix(in srgb, #0f172a 8%, transparent),
-    0 12px 28px color-mix(in srgb, #0f172a 7%, transparent);
+    0 2px 4px color-mix(in srgb, var(--mj-ink, #0f172a) 8%, transparent),
+    0 12px 28px color-mix(in srgb, var(--mj-ink, #0f172a) 7%, transparent);
 }
 .srch-result-card__link {
   display: flex;
@@ -872,9 +872,9 @@ html[data-theme="dark"] .srch-scope-card,
 html.dark .srch-scope-card,
 html[data-theme="dark"] .srch-result-card,
 html.dark .srch-result-card {
-  background: color-mix(in srgb, var(--color-surface, #1c1917) 92%, #0f3d32);
+  background: color-mix(in srgb, var(--color-surface, #1c1917) 92%, var(--mj-brand-deep, #0f3d32));
   color: var(--text-primary, #ecf2ef);
-  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 28%, #2a3531);
+  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 28%, var(--mj-ink-2, #2a3531));
   box-shadow: 0 1px 2px color-mix(in srgb, #000 25%, transparent);
 }
 html[data-theme="dark"] .srch-home-submit,

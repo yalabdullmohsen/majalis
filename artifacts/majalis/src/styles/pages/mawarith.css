@@ -88,10 +88,10 @@
   background: var(--brand-soft, var(--mj-brand-soft)); border-radius: .35rem; padding: .15rem .45rem;
   font-size: 0.8rem; font-weight: 700; color: var(--brand, var(--mj-brand));
 }
-.mw-chevron { font-size: .8rem; color: #9CA3AF; transition: transform .2s; flex-shrink: 0; }
+.mw-chevron { font-size: .8rem; color: var(--mj-muted); transition: transform .2s; flex-shrink: 0; }
 .mw-chevron--open { transform: rotate(180deg); }
 
-.mw-warith-body { padding: .5rem 1rem .85rem; border-top: 1px solid #F3F4F6; }
+.mw-warith-body { padding: .5rem 1rem .85rem; border-top: 1px solid var(--mj-surface-2); }
 .mw-subs-list   { display: flex; flex-direction: column; gap: .45rem; margin-bottom: .6rem; }
 .mw-sub-row     { display: flex; justify-content: space-between; align-items: flex-start; gap: .6rem; font-size: .82rem; }
 .mw-sub-condition { color: var(--mj-ink-2); flex: 1; line-height: 1.4; }
@@ -113,7 +113,7 @@
   display: flex; align-items: center; justify-content: center;
   font-size: .85rem; font-weight: 800;
 }
-.mw-haqq-priority { font-size: .65rem; color: #9CA3AF; font-weight: 600; }
+.mw-haqq-priority { font-size: .65rem; color: var(--mj-muted); font-weight: 600; }
 .mw-haqq-content  { background: var(--bg, var(--mj-bg)); border: 1px solid var(--mj-hairline); border-radius: .7rem; padding: .7rem .9rem; flex: 1; }
 .mw-haqq-title    { font-weight: 700; font-size: .88rem; color: var(--mj-ink); margin: 0 0 .25rem; }
 .mw-haqq-desc     { font-size: .82rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0; }
@@ -162,7 +162,7 @@
 .mw-hajb-case  { font-size: .82rem; color: var(--mj-ink-2); line-height: 1.5; }
 .mw-hajb-case::before { content: "✗ "; color: var(--mj-danger); font-weight: 700; }
 .mw-radd-box {
-  background: linear-gradient(135deg,var(--mj-brand-soft),#ECFDF5);
+  background: linear-gradient(135deg,var(--mj-brand-soft),var(--mj-brand-tint));
   border: 1px solid #BBF7D0; border-radius: .8rem; padding: 1rem 1.1rem;
 }
 .mw-radd-box__title { font-size: .9rem; font-weight: 700; color: var(--mj-brand-deep); margin: 0 0 .4rem; }
@@ -408,7 +408,7 @@
   font-size: 0.85rem;
   padding: 0.15rem 0.4rem;
 }
-.mwc-saved__delete:hover { color: #C0392B; }
+.mwc-saved__delete:hover { color: var(--mj-danger); }
 
 .mwc-heir-group { margin-top: 1.5rem; }
 .mwc-heir-group__title {
@@ -469,7 +469,7 @@
   font-size: 0.9rem;
   padding: 0.3rem;
 }
-.mwc-asset-row__remove:hover { color: #C0392B; }
+.mwc-asset-row__remove:hover { color: var(--mj-danger); }
 .mwc-add-asset {
   align-self: flex-start;
   background: none;

@@ -11,6 +11,7 @@ import { UnsourcedBadge } from "@/components/UnsourcedBadge";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { PageShell } from "@/components/layout/PageShell";
 import { PAGE_EXPLORE_LINKS } from "@/lib/explore-links";
+import { ListScreen } from "@/components/design-system/screens";
 
 const CATEGORIES = [...ASMA_CATEGORIES];
 const STATUS_FILTERS: Array<"الكل" | AsmaStatus> = ["الكل", "ثابت", "مشهور"];
@@ -89,6 +90,7 @@ export default function AsmaaHusnaPage() {
   }), []);
 
   return (
+    <ListScreen compose="mark">
     <PageShell className="ah-page">
       {/* ═══ Hero ═══ */}
       <div className="ah-hero">
@@ -278,5 +280,6 @@ export default function AsmaaHusnaPage() {
         links={[...PAGE_EXPLORE_LINKS.asmaHusna]}
       />
     </PageShell>
+    </ListScreen>
   );
 }

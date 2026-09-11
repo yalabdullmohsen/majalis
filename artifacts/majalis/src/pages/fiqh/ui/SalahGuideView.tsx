@@ -6,6 +6,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { RANKS } from "@/pages/worship/PrayerRanksPage";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 
 type SalahTab = "shurut" | "wajibaat" | "kayfiyya" | "mubtilatat" | "khushuu" | "fawaid" | "maratib" | "suwar";
@@ -351,6 +352,7 @@ export default function SalahGuidePage() {
   [search]);
 
   return (
+    <UtilityScreen compose="mark">
     <main className="sg-page" dir="rtl">
       {/* hero */}
       <section className="sg-hero">
@@ -717,5 +719,6 @@ export default function SalahGuidePage() {
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه" count={4} />
       </div>
     </main>
+    </UtilityScreen>
   );
 }

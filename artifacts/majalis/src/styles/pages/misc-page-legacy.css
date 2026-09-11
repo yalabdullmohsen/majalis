@@ -382,7 +382,7 @@
 }
 
 .fiqh-review-issue--error {
-  color: #b91c1c;
+  color: var(--mj-danger);
 }
 
 .fiqh-review-actions {

@@ -92,22 +92,22 @@
 .udp-compare-active-btn { color: var(--majalis-emerald); font-weight: 600; }
 
 /* ── نُقل إلى styles/pages/universities-admin.css ── */
-.is-summary { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--ds-radius); padding: 0.75rem 1rem; font-size: var(--ds-text-sm); line-height: 1.65; color: #334155; margin-bottom: 0.9rem; }
-.is-full-toggle { background: none; border: 1px solid #cbd5e1; border-radius: var(--ds-radius-sm); padding: 0.35rem 0.75rem; font-size: 0.8rem; color: #475569; cursor: pointer; font-family: inherit; margin-bottom: 0.75rem; transition: border-color 0.15s; }
-.is-full-toggle:hover { border-color: #94a3b8; color: #1e293b; }
-.is-content { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--ds-radius); padding: 1rem 1.1rem; font-size: var(--ds-text-sm); line-height: 1.7; color: #334155; white-space: pre-wrap; margin-bottom: 0.9rem; max-height: 380px; overflow-y: auto; }
+.is-summary { background: var(--mj-surface-2); border: 1px solid var(--mj-surface-2); border-radius: var(--ds-radius); padding: 0.75rem 1rem; font-size: var(--ds-text-sm); line-height: 1.65; color: var(--mj-ink-2); margin-bottom: 0.9rem; }
+.is-full-toggle { background: none; border: 1px solid var(--mj-hairline); border-radius: var(--ds-radius-sm); padding: 0.35rem 0.75rem; font-size: 0.8rem; color: #475569; cursor: pointer; font-family: inherit; margin-bottom: 0.75rem; transition: border-color 0.15s; }
+.is-full-toggle:hover { border-color: var(--mj-muted); color: #1e293b; }
+.is-content { background: var(--mj-surface-2); border: 1px solid var(--mj-surface-2); border-radius: var(--ds-radius); padding: 1rem 1.1rem; font-size: var(--ds-text-sm); line-height: 1.7; color: var(--mj-ink-2); white-space: pre-wrap; margin-bottom: 0.9rem; max-height: 380px; overflow-y: auto; }
 .is-lessons { margin-bottom: 0.9rem; }
-.is-lesson-item { display: flex; gap: var(--ds-space-2); align-items: flex-start; font-size: 0.8125rem; color: #334155; margin-bottom: 0.35rem; }
+.is-lesson-item { display: flex; gap: var(--ds-space-2); align-items: flex-start; font-size: 0.8125rem; color: var(--mj-ink-2); margin-bottom: 0.35rem; }
 .is-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
 .is-btn { padding: 0.45rem 1rem; border-radius: var(--ds-radius-sm); font-size: 0.8125rem; font-weight: 600; cursor: pointer; font-family: inherit; border: none; transition: all 0.15s; }
 .is-btn.approve { background: var(--mj-brand); color: #fff; }
 .is-btn.approve:hover { background: var(--mj-brand); }
-.is-btn.revoke { background: #fff; color: #dc2626; border: 1px solid #fca5a5; }
+.is-btn.revoke { background: #fff; color: var(--mj-danger); border: 1px solid #fca5a5; }
 .is-btn.revoke:hover { background: #fef2f2; }
 .is-btn.disabled { opacity: 0.45; cursor: not-allowed; }
-.is-verified-info { font-size: 0.7375rem; color: #64748b; padding: 0.3rem 0; }
+.is-verified-info { font-size: 0.7375rem; color: var(--mj-muted); padding: 0.3rem 0; }
 .is-sources { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.9rem; }
-.is-source { font-size: 0.8rem; color: #475569; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--ds-radius-sm); padding: 0.3rem 0.6rem; }
+.is-source { font-size: 0.8rem; color: #475569; background: var(--mj-surface-2); border: 1px solid var(--mj-surface-2); border-radius: var(--ds-radius-sm); padding: 0.3rem 0.6rem; }
 
 
 /* ============================================================

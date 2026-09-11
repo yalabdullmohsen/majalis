@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function AboutUsPage() {
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function AboutUsPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <LegalPageLayout eyebrow="تعرّف علينا" title="من نحن" updatedAt="2026-08-05">
       <LegalSection title="رسالة المنصة وغايتها">
         <p>
@@ -78,5 +80,6 @@ export default function AboutUsPage() {
       </LegalSection>
 <ShareButtons title="من نحن — سُنّة" url="https://www.ssunnah.com/about-us" />
     </LegalPageLayout>
+    </UtilityScreen>
   );
 }

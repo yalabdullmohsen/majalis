@@ -80,8 +80,8 @@ html.dark .jnz-subtitle {
 
 .jnz-info--mt { margin-top: .5rem; }
 .jnz-info {
-  background: #ECFDF5;
-  border: 1px solid #A7F3D0;
+  background: var(--mj-brand-tint);
+  border: 1px solid var(--mj-brand-soft);
   border-radius: .65rem;
   padding: .85rem 1rem;
   display: flex;
@@ -99,7 +99,7 @@ html.dark .jnz-subtitle {
   gap: var(--ds-space-4);
   align-items: flex-start;
   padding: .9rem 1rem;
-  border-bottom: 1px solid #F3F4F6;
+  border-bottom: 1px solid var(--mj-surface-2);
 }
 .jnz-step:last-child { border-bottom: none; }
 .jnz-step__num {
@@ -183,11 +183,11 @@ html.dark .jnz-subtitle {
   border: 2px solid var(--majalis-emerald, var(--mj-brand));
 }
 .jnz-rukn-card__title { display: block; font-size: .88rem; font-weight: 700; color: var(--mj-ink); margin-bottom: .2rem; }
-.jnz-rukn-card__desc { font-size: .79rem; color: #4B5563; line-height: 1.5; margin: 0; }
+.jnz-rukn-card__desc { font-size: .79rem; color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
 
 .jnz-dua-box {
   background: var(--mj-brand-soft);
-  border: 1px solid #6EE7B7;
+  border: 1px solid var(--mj-brand-soft);
   border-radius: .7rem;
   padding: 1rem 1.1rem;
   display: flex;
@@ -211,7 +211,7 @@ html.dark .jnz-subtitle {
 }
 .jnz-dafn-card__icon { font-size: 1.4rem; flex-shrink: 0; }
 .jnz-dafn-card__title { display: block; font-size: .88rem; font-weight: 700; color: var(--mj-ink); margin-bottom: .2rem; }
-.jnz-dafn-card__desc { font-size: .8rem; color: #4B5563; line-height: 1.55; margin: 0; }
+.jnz-dafn-card__desc { font-size: .8rem; color: var(--mj-ink-2); line-height: 1.55; margin: 0; }
 
 .jnz-adab-card {
   background: var(--mj-surface);

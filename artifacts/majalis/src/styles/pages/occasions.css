@@ -105,7 +105,7 @@
 
 .occasion-detail__countdown--soon {
   color: #9b2c2c;
-  background: color-mix(in srgb, #c0392b 10%, #fff);
+  background: color-mix(in srgb, var(--mj-danger) 10%, #fff);
 }
 
 .occasion-detail__date {

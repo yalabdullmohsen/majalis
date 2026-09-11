@@ -6,6 +6,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { Droplets } from "lucide-react";
 import { SectionIcon } from "@/components/ui/SectionIcon";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 
 type TaharaTab = "wudu" | "ghusl" | "tayammum" | "najasat";
@@ -184,6 +185,7 @@ export default function TaharaPage() {
   }, [search]);
 
   return (
+    <UtilityScreen compose="mark">
     <main className="th-page" dir="rtl">
       {/* hero */}
       <section className="th-hero">
@@ -459,5 +461,6 @@ export default function TaharaPage() {
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه" count={4} />
       </div>
     </main>
+    </UtilityScreen>
   );
 }

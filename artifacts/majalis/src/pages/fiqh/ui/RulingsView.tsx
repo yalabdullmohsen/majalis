@@ -151,8 +151,7 @@ export default function RulingsPage() {
       setTotal(result.total);
       setDbState({ needsSeed: result.needsSeed, dbError: result.dbError });
     } catch (err) {
-      setItems([]);
-      setTotal(0);
+      // أبقِ القائمة السابقة عند فشل إعادة الجلب
       setDbState({ dbError: String((err as Error)?.message || err) });
     } finally {
       setLoading(false);

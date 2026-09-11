@@ -23,6 +23,7 @@ import {
   type IslamicHistoryItem,
 } from "@/data/islamic-history";
 import "@/styles/pages/tarikh-islami.css";
+import { DashboardScreen } from "@/components/design-system/screens";
 
 type FilterId = HistoryCategory | "all";
 
@@ -268,6 +269,7 @@ export default function TarikhIslamiPage() {
   };
 
   return (
+    <DashboardScreen compose="mark">
     <SectionTemplatePage
       route="/tarikh-islami"
       title="التاريخ الإسلامي"
@@ -450,5 +452,6 @@ export default function TarikhIslamiPage() {
         <SectionQuiz sectionId="islamic-history" />
       </div>
     </SectionTemplatePage>
+    </DashboardScreen>
   );
 }

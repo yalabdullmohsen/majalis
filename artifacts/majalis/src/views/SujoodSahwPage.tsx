@@ -1,5 +1,6 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { PageHeader } from "@/components/ui-common";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 type Ruling = {
   id: string;
@@ -101,6 +102,7 @@ const TIMING_COLORS: Record<Ruling["timing"], string> = {
 
 export default function SujoodSahwPage() {
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell" dir="rtl">
       <PageHeader
         eyebrow="الفقه العملي"
@@ -189,5 +191,6 @@ export default function SujoodSahwPage() {
         </div>
       </div>
     </div>
+    </UtilityScreen>
   );
 }

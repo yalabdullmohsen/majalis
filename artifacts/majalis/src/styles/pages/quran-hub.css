@@ -167,7 +167,7 @@
 
 html[data-theme="dark"] .quran-open-mushaf,
 html.dark .quran-open-mushaf {
-  background: color-mix(in srgb, var(--mj-surface, #1a221f) 94%, #123f2e 6%);
+  background: color-mix(in srgb, var(--mj-surface, #1a221f) 94%, var(--mj-brand-deep) 6%);
   border-color: color-mix(in srgb, var(--qom-accent) 28%, var(--mj-hairline, rgba(255, 255, 255, 0.08)));
   box-shadow: 0 8px 22px -16px rgba(0, 0, 0, 0.55);
 }
