@@ -78,7 +78,7 @@
 .ocp-search-input { width: 100%; }
 .wn-tab {
   padding: .45rem 1.1rem; border-radius: var(--ds-radius-full);
-  border: 1.5px solid var(--clr-border); background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff)));
+  border: 1.5px solid var(--clr-border); background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff))));
   font-size: .88rem; cursor: pointer; color: var(--clr-text-2); transition: all .18s;
 }
 .wn-tab:hover  { border-color: var(--mj-accent); color: var(--mj-accent); }
@@ -96,7 +96,7 @@
 
 /* Accordion cards */
 .wn-list { display: flex; flex-direction: column; gap: .75rem; }
-.wn-card { background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid var(--clr-border); border-radius: .75rem; overflow: hidden; }
+.wn-card { background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid var(--clr-border); border-radius: .75rem; overflow: hidden; }
 .wn-card__head {
   display: flex; align-items: center; justify-content: space-between;
   padding: .9rem 1.2rem; cursor: pointer; gap: .5rem; width: 100%;
@@ -137,7 +137,7 @@
 /* Khasisa list */
 .wn-khasisa-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .wn-khasisa-card {
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid var(--clr-border);
   border-inline-end: 4px solid var(--mj-accent); border-radius: .75rem;
   padding: 1.1rem 1.25rem;
 }
@@ -145,7 +145,7 @@
 
 /* Umma list */
 .wn-umma-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
-.wn-umma-card { display: flex; gap: var(--ds-space-4); align-items: flex-start; background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid var(--clr-border); border-radius: .75rem; padding: 1.1rem 1.2rem; }
+.wn-umma-card { display: flex; gap: var(--ds-space-4); align-items: flex-start; background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid var(--clr-border); border-radius: .75rem; padding: 1.1rem 1.2rem; }
 .wn-umma-num {
   width: 2rem; height: 2rem; flex-shrink: 0; border-radius: 50%;
   background: var(--mj-warning); color: var(--mj-white, #ffffff); font-weight: 700; font-size: .85rem;
@@ -158,7 +158,7 @@
   display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--ds-space-4);
 }
 .wn-pick-card {
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1rem 1.1rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
 }

@@ -34,7 +34,7 @@
   min-width: 4.75rem;
   padding: 0.7rem 1rem;
   border-radius: var(--radius-card, 24px);
-  background: var(--surface-card, var(--mj-surface, var(--mj-white, #ffffff)));
+  background: var(--surface-card, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff))));
   border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #123F32) 14%, var(--majalis-line, var(--mj-hairline)));
   box-shadow: 0 1px 2px color-mix(in srgb, var(--mj-brand-deep, #123F32) 6%, transparent);
   text-align: center;

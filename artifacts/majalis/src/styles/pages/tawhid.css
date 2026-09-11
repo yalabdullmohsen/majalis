@@ -410,7 +410,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: var(--mj-brand, #7ed4b5) !
 }
 
 .twh-asma-card {
-  background: var(--majalis-panel, var(--mj-white, #ffffff));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
   border: 1px solid var(--majalis-line, #d4e6de);
   border-radius: var(--ds-radius-lg);
   padding: 0.875rem 1rem;
@@ -447,7 +447,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: var(--mj-brand, #7ed4b5) !
 }
 
 .twh-book-card {
-  background: var(--majalis-panel, var(--mj-white, #ffffff));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
   border: 1px solid var(--majalis-line, #d4e6de);
   border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: var(--ds-radius-lg);

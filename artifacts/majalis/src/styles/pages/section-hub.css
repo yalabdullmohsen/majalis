@@ -17,7 +17,7 @@
   margin: 0 0 1rem;
   padding: 0.95rem 1.05rem;
   border-radius: var(--sh-radius);
-  background: color-mix(in srgb, var(--sh-accent) 8%, var(--mj-surface, var(--mj-white, #ffffff)));
+  background: color-mix(in srgb, var(--sh-accent) 8%, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff))));
   border: 1px solid color-mix(in srgb, var(--sh-accent) 16%, var(--mj-hairline, #e3e8e6));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.65),
@@ -45,7 +45,7 @@
   text-align: center;
   padding: 0.7rem 0.4rem;
   border-radius: 18px;
-  background: color-mix(in srgb, var(--mj-surface, var(--mj-white, #ffffff)) 88%, var(--sh-accent));
+  background: color-mix(in srgb, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff))) 88%, var(--sh-accent));
   border: 1px solid color-mix(in srgb, var(--sh-accent) 14%, var(--mj-hairline, #e3e8e6));
 }
 
@@ -90,7 +90,7 @@
   padding: 0.55rem 1rem;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--sh-accent) 18%, var(--mj-hairline, #e3e8e6));
-  background: var(--mj-surface, var(--mj-white, #ffffff));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   color: var(--mj-ink, #12241d);
   font: inherit;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
@@ -135,7 +135,7 @@
   padding: 0.4rem 0.95rem;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--sh-accent) 16%, var(--mj-hairline, #e3e8e6));
-  background: var(--mj-surface, var(--mj-white, #ffffff));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   color: var(--mj-ink-2, #3d4f47);
   font: inherit;
   font-size: 0.8rem;
@@ -175,7 +175,7 @@
   background:
     linear-gradient(
       165deg,
-      color-mix(in srgb, var(--card-accent, var(--sh-accent)) 10%, var(--mj-surface, var(--mj-white, #ffffff))) 0%,
+      color-mix(in srgb, var(--card-accent, var(--sh-accent)) 10%, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))) 0%,
       var(--mj-surface, var(--mj-white, #ffffff)) 72%
     );
   box-shadow:
@@ -282,7 +282,7 @@
   padding: 1.1rem;
   text-align: center;
   border-radius: var(--sh-radius);
-  background: var(--mj-surface, var(--mj-white, #ffffff));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   border: 1px dashed color-mix(in srgb, var(--sh-accent) 22%, var(--mj-hairline, #e3e8e6));
   color: var(--mj-ink-2, #3d4f47);
   font-size: 0.9rem;
@@ -383,6 +383,6 @@ html.dark .section-hub__card,
 
 html.dark .section-hub__chip.is-active,
 [data-theme="dark"] .section-hub__chip.is-active {
-  background: color-mix(in srgb, var(--sh-accent) 75%, var(--mj-white, #ffffff));
+  background: color-mix(in srgb, var(--sh-accent) 75%, var(--mj-white, var(--mj-white, #ffffff)));
   color: var(--mj-ink, #0a1f18);
 }

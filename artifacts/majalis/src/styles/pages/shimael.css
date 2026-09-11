@@ -39,7 +39,7 @@
 /* tabs */
 .sh-tabs {
   display: flex; gap: .4rem; flex-wrap: nowrap; margin-bottom: 1.75rem;
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid rgba(23,61,53,.15); border-radius: var(--ds-radius-xl); padding: .35rem;
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid rgba(23,61,53,.15); border-radius: var(--ds-radius-xl); padding: .35rem;
   overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
 }
 .sh-tabs::-webkit-scrollbar { display: none; }
@@ -65,7 +65,7 @@
 
 /* باب */
 .sh-bab {
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid rgba(23,61,53,.15); border-radius: var(--ds-radius-xl); overflow: hidden;
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid rgba(23,61,53,.15); border-radius: var(--ds-radius-xl); overflow: hidden;
   transition: box-shadow .15s;
 }
 .sh-bab:hover { box-shadow: 0 2px 16px rgba(23,61,53,.1); }
@@ -120,7 +120,7 @@
 
 .sh-mahabbah-list { display: flex; flex-direction: column; gap: .75rem; }
 .sh-mahabbah-card {
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid rgba(23,61,53,.15); border-radius: var(--ds-radius-xl); overflow: hidden;
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid rgba(23,61,53,.15); border-radius: var(--ds-radius-xl); overflow: hidden;
 }
 .sh-mahabbah-card__head {
   display: flex; align-items: center; gap: .75rem; padding: .85rem 1.1rem;

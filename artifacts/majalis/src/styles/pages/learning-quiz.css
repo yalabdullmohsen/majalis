@@ -53,7 +53,7 @@
   to   { opacity: 1; transform: none; }
 }
 .lqp2-question-card {
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
   border: 1.5px solid rgba(23,61,53,.15);
   border-top: 3px solid var(--mj-brand);
   border-radius: var(--ds-radius-xl);
@@ -93,7 +93,7 @@
   align-items: flex-start;
   gap: 0.7rem;
   padding: 0.85rem 0.9rem;
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
   border: 1.5px solid var(--clr-border, rgba(0,0,0,.12));
   border-radius: var(--ds-radius-lg);
   text-align: end;
@@ -146,7 +146,7 @@
   font-size: var(--ds-text-base);
   font-weight: 700;
   cursor: pointer;
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
   color: var(--clr-ink, var(--mj-ink));
   transition: border-color .15s, background .15s;
 }
@@ -165,7 +165,7 @@
   border-radius: var(--ds-radius-lg);
   font-size: 0.95rem;
   font-family: inherit;
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
   color: var(--clr-ink, var(--mj-ink));
   text-align: end;
   margin-bottom: 1.25rem;
@@ -234,7 +234,7 @@
   display: flex;
   align-items: center;
   gap: var(--ds-space-6);
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
   border: 1.5px solid rgba(23,61,53,.15);
   border-radius: var(--ds-radius-2xl);
   padding: var(--ds-space-6);
@@ -271,7 +271,7 @@
 .lqp2-error-card {
   display: flex;
   gap: 0.85rem;
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
   border: 1.5px solid rgba(220,38,38,.15);
   border-radius: var(--ds-radius-lg);
   padding: 0.9rem 1rem;
@@ -345,7 +345,7 @@ html[data-theme="dark"] .lqp2-error-card { background: rgba(255,255,255,.04); bo
 .lcp2-event {
   display: flex;
   gap: var(--ds-space-4);
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
   border: 1.5px solid var(--clr-border, rgba(0,0,0,.1));
   border-radius: var(--ds-radius-xl);
   padding: 1rem 1.1rem;

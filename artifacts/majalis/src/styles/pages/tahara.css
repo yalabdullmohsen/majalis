@@ -66,7 +66,7 @@
 }
 .th-tab:hover { background: var(--on-brand-hover-bg, rgba(255,255,255,.22)); color: var(--mj-white, #ffffff); }
 .th-tab--active {
-  background: var(--color-surface, var(--mj-surface, var(--mj-white, #ffffff)));
+  background: var(--color-surface, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff))));
   color: var(--color-brand-deep, var(--mj-brand-deep));
   font-weight: 700;
 }
@@ -98,7 +98,7 @@
 /* fardh */
 .th-fardh-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; }
 .th-fardh-card {
-  background: var(--mj-surface, var(--surface-1, var(--mj-white, #ffffff)));
+  background: var(--mj-surface, var(--surface-1, var(--mj-white, var(--mj-white, #ffffff))));
   border: 1px solid var(--mj-hairline, var(--border-subtle));
   border-radius: .7rem;
   padding: .85rem .9rem;
@@ -135,7 +135,7 @@
 /* nawaqidh */
 .th-nawaqidh-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; }
 .th-naqidh-card {
-  background: var(--mj-surface, var(--surface-1, var(--mj-white, #ffffff)));
+  background: var(--mj-surface, var(--surface-1, var(--mj-white, var(--mj-white, #ffffff))));
   border: 1px solid var(--mj-hairline);
   border-radius: .65rem;
   padding: .8rem .9rem;
@@ -167,7 +167,7 @@
 /* ghusl */
 .th-mujibat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; }
 .th-mujib-card {
-  background: var(--mj-surface, var(--surface-1, var(--mj-white, #ffffff)));
+  background: var(--mj-surface, var(--surface-1, var(--mj-white, var(--mj-white, #ffffff))));
   border: 1px solid var(--mj-hairline);
   border-radius: .65rem;
   padding: .8rem .9rem;

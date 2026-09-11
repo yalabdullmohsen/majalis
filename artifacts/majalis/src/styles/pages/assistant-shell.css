@@ -120,7 +120,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 
 .assistant-page-minimal .assistant-message-assistant:not(.assistant-message-failure) {
   align-self: flex-end;
-  background: var(--mj-white, #ffffff);
+  background: var(--mj-white, var(--mj-white, #ffffff));
 }
 
 .assistant-message-failure {
@@ -249,7 +249,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 
 .assistant-home-btn:hover {
   transform: translateY(-1px);
-  background: var(--mj-white, #ffffff);
+  background: var(--mj-white, var(--mj-white, #ffffff));
 }
 
 .assistant-service-warning {
@@ -297,7 +297,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 
 .assistant-retry-btn {
   border: 1px solid color-mix(in srgb, var(--mj-danger) 22%, white);
-  background: var(--mj-white, #ffffff);
+  background: var(--mj-white, var(--mj-white, #ffffff));
   color: var(--mj-danger);
   border-radius: var(--ds-radius);
   padding: 0.35rem 0.75rem;
@@ -411,7 +411,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 
 .assistant-message-assistant {
   align-self: flex-end;
-  background: var(--mj-white, #ffffff);
+  background: var(--mj-white, var(--mj-white, #ffffff));
   max-width: 42rem;
   width: 100%;
 }
@@ -453,7 +453,7 @@ html[data-theme="dark"] .assistant-message-bubble {
   gap: 0;
   padding: var(--ds-space-4);
   border-top: 1px solid var(--majalis-line);
-  background: color-mix(in srgb, var(--majalis-parchment-deep, #f7f4ee) 55%, transparent);
+  background: color-mix(in srgb, var(--majalis-parchment-deep, var(--mj-bg)) 55%, transparent);
 }
 
 .assistant-form textarea {

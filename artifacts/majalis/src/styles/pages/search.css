@@ -436,23 +436,23 @@ a.search-suggestion-chip {
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1e5f4b) 22%, transparent);
 }
 
-.search-kind-badge--lesson      { background: color-mix(in srgb, var(--mj-brand) 10%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-brand-deep); border-color: color-mix(in srgb, var(--mj-brand) 22%, transparent); }
+.search-kind-badge--lesson      { background: color-mix(in srgb, var(--mj-brand) 10%, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); color: var(--mj-brand-deep); border-color: color-mix(in srgb, var(--mj-brand) 22%, transparent); }
 .search-kind-badge--fatwa       { background: color-mix(in srgb, var(--mj-brand) 10%, transparent); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
 .search-kind-badge--ruling      { background: color-mix(in srgb, var(--mj-brand) 10%, transparent); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
 .search-kind-badge--qa          { background: color-mix(in srgb, var(--mj-ink, #16241e) 6%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-brand-deep); border-color: color-mix(in srgb, var(--mj-ink) 14%, transparent); }
-.search-kind-badge--fawaid      { background: color-mix(in srgb, var(--mj-brand) 10%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
+.search-kind-badge--fawaid      { background: color-mix(in srgb, var(--mj-brand) 10%, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
 .search-kind-badge--adhkar      { background: var(--mj-brand-soft); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
 .search-kind-badge--library     { background: color-mix(in srgb, var(--mj-accent, #b08a3e) 12%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-accent, #B08A3E); border-color: color-mix(in srgb, var(--mj-accent) 22%, transparent); }
-.search-kind-badge--hadith      { background: color-mix(in srgb, var(--mj-danger, var(--mj-danger)) 10%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-danger, #BE123C); border-color: color-mix(in srgb, var(--mj-danger) 22%, transparent); }
+.search-kind-badge--hadith      { background: color-mix(in srgb, var(--mj-danger, var(--mj-danger)) 10%, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); color: var(--mj-danger, #BE123C); border-color: color-mix(in srgb, var(--mj-danger) 22%, transparent); }
 .search-kind-badge--quran       { background: var(--mj-brand-soft); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
 .search-kind-badge--story,
 .search-kind-badge--stories     { background: color-mix(in srgb, var(--mj-brand) 10%, transparent); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
 .search-kind-badge--fiqh-council,
-.search-kind-badge--fiqh-decision { background: color-mix(in srgb, var(--mj-brand) 10%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-brand-deep); border-color: color-mix(in srgb, var(--mj-brand) 22%, transparent); }
+.search-kind-badge--fiqh-decision { background: color-mix(in srgb, var(--mj-brand) 10%, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); color: var(--mj-brand-deep); border-color: color-mix(in srgb, var(--mj-brand) 22%, transparent); }
 .search-kind-badge--miracle,
-.search-kind-badge--miracles    { background: color-mix(in srgb, var(--mj-brand) 8%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 18%, transparent); }
+.search-kind-badge--miracles    { background: color-mix(in srgb, var(--mj-brand) 8%, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 18%, transparent); }
 .search-kind-badge--course,
-.search-kind-badge--courses     { background: color-mix(in srgb, var(--mj-brand) 10%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-brand-deep); border-color: color-mix(in srgb, var(--mj-brand) 22%, transparent); }
+.search-kind-badge--courses     { background: color-mix(in srgb, var(--mj-brand) 10%, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); color: var(--mj-brand-deep); border-color: color-mix(in srgb, var(--mj-brand) 22%, transparent); }
 .search-kind-badge--update,
 .search-kind-badge--updates     { background: var(--mj-surface-2, var(--mj-surface-2)); color: var(--mj-ink-2, var(--mj-muted)); border-color: color-mix(in srgb, var(--mj-ink) 14%, transparent); }
 
@@ -540,7 +540,7 @@ a.search-suggestion-chip {
   align-items: center;
   gap: 0.3rem;
   padding: 0.65rem 0.4rem;
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
   border-radius: var(--ds-radius-lg);
   border: 1.5px solid var(--clr-border, rgba(31,77,58,.12));
   text-decoration: none;
@@ -618,7 +618,7 @@ html[data-theme="dark"] .srch-quick-card:hover {
   padding: 0.2rem 0.7rem;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand, #1f6b56)) 18%, var(--mj-hairline, #e3e8e6));
-  background: var(--mj-surface, var(--color-surface, var(--mj-white, #ffffff)));
+  background: var(--mj-surface, var(--color-surface, var(--mj-white, var(--mj-white, #ffffff))));
   color: var(--text-primary, var(--mj-ink, #12201a));
   box-shadow: 0 1px 2px color-mix(in srgb, var(--mj-ink, var(--mj-info)) 5%, transparent);
 }
@@ -778,7 +778,7 @@ html[data-theme="dark"] .srch-quick-card:hover {
   padding: 0;
   border-radius: var(--radius-card, 24px);
   border: 1px solid color-mix(in srgb, var(--mn-border-default, #d8e3de) 75%, transparent);
-  background: color-mix(in srgb, var(--color-surface, var(--mj-white, #ffffff)) 96%, var(--mn-brand-soft, #e8f5f0));
+  background: color-mix(in srgb, var(--color-surface, var(--mj-white, var(--mj-white, #ffffff))) 96%, var(--mn-brand-soft, #e8f5f0));
   box-shadow:
     0 1px 2px color-mix(in srgb, var(--mj-ink, var(--mj-info)) 6%, transparent),
     0 8px 20px color-mix(in srgb, var(--mj-ink, var(--mj-info)) 4%, transparent);

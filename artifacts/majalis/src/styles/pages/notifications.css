@@ -11,7 +11,7 @@
   font-weight: 600 !important;
 }
 .notif-banner--err {
-  background: color-mix(in srgb, var(--mj-danger, var(--mj-danger)) 8%, var(--mj-surface, var(--mj-white, #ffffff))) !important;
+  background: color-mix(in srgb, var(--mj-danger, var(--mj-danger)) 8%, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))) !important;
   color: var(--mj-danger-deep) !important;
   border: 1px solid rgba(185,28,28,0.22) !important;
   border-radius: var(--radius-button, 18px) !important;
@@ -305,7 +305,7 @@ html.dark .notif-row__label {
 /* ══ تاريخ الإشعارات — بطاقات حديثة على أسطح عاجية (المرحلة 3، 2026-07-22) ══ */
 .nh-section {
   margin-top: 1.5rem;
-  background: var(--mj-surface, var(--mj-white, #ffffff));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   border: 1px solid color-mix(in srgb, var(--mj-emerald-950, var(--mj-brand-deep)) 10%, transparent);
   border-radius: 1rem;
   overflow: hidden;
@@ -558,7 +558,7 @@ html.dark .notif-row__label {
 .notif-banner--err  { background: color-mix(in srgb, var(--mj-danger) 10%, white); color: var(--mj-danger-deep); border: 1px solid color-mix(in srgb, var(--mj-danger) 35%, white); }
 
 .notif-card {
-  background: var(--majalis-panel, var(--mj-white, #ffffff));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
   border: 1px solid var(--ds-line-color);
   border-radius: var(--ds-radius-lg, 0.625rem);
   padding: 1.1rem 1.25rem;
@@ -623,7 +623,7 @@ html.dark .notif-row__label {
   font-size: 1rem;
   text-align: center;
   color: var(--majalis-ink);
-  background: var(--majalis-panel, var(--mj-white, #ffffff));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
 }
 .notif-time__input:disabled { opacity: 0.45; }
 .notif-time__sep { font-size: 1.2rem; font-weight: 700; color: var(--majalis-ink-soft); }

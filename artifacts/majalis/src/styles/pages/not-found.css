@@ -110,7 +110,7 @@
   font-weight: 600;
   color: var(--clr-ink, var(--mj-ink));
   text-decoration: none;
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
   transition: border-color .15s, background .15s;
 }
 .nf2-sug-item:hover { border-color: var(--mj-brand); background: rgba(23,61,53,.05); color: var(--mj-brand); }

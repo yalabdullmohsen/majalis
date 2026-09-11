@@ -3,7 +3,7 @@
    ══════════════════════════════════════════════════════════════════ */
 .gl-page {
   min-height: 100svh;
-  background: var(--color-bg, var(--surface-app, #f7f4ee));
+  background: var(--color-bg, var(--surface-app, var(--mj-bg)));
   color: var(--color-text, var(--mj-ink, #16241e));
   padding-bottom: calc(
     var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) +
@@ -70,7 +70,7 @@
   min-height: 44px;
   padding: 0 14px;
   border-radius: 999px;
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff)));
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff))));
   color: #0B3D2E;
   font-weight: 700;
   text-decoration: none;

@@ -1,7 +1,7 @@
 /* ══════════════════════════════════════════════════════════════════
    243 — AdabTalabIlmPage  (.atl-*)
    ══════════════════════════════════════════════════════════════════ */
-.atl-page { min-height: 100svh; background: var(--color-bg, var(--surface-app, #f7f4ee)); }
+.atl-page { min-height: 100svh; background: var(--color-bg, var(--surface-app, var(--mj-bg))); }
 
 /* Hero */
 .atl-hero {
@@ -83,7 +83,7 @@
   padding: .85rem 1rem; cursor: pointer; background: none; border: none;
   text-align: end;
 }
-.atl-acc-head:hover { background: var(--color-bg, var(--surface-app, #f7f4ee)); }
+.atl-acc-head:hover { background: var(--color-bg, var(--surface-app, var(--mj-bg))); }
 .atl-acc-num {
   font-size: .7rem; font-weight: 900; color: var(--mj-white, #ffffff);
   background: var(--mj-brand); border-radius: var(--ds-radius-full); width: 1.5rem; height: 1.5rem;

@@ -61,7 +61,7 @@
 
 /* بطاقات موحّدة */
 .ads-card {
-  background: var(--msk-canvas-1, var(--mj-white, #ffffff));
+  background: var(--msk-canvas-1, var(--mj-white, var(--mj-white, #ffffff)));
   border-radius: var(--ds-radius-xl, 1rem);
   border: 1px solid var(--msk-border);
   box-shadow: 0 1px 3px color-mix(in srgb, var(--msk-text, var(--mj-ink)) 4%, transparent);
@@ -357,7 +357,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   width: 27px;
   height: 27px;
   border-radius: 50%;
-  background: var(--mj-white, #ffffff);
+  background: var(--mj-white, var(--mj-white, #ffffff));
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
   transition: inset-inline-start 0.2s ease;
   pointer-events: none;
@@ -408,7 +408,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   min-height: 44px;
   border-radius: 0.5rem;
   border: 1px solid color-mix(in srgb, var(--clr-border, var(--mj-hairline)) 80%, transparent);
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
   color: inherit;
   max-width: 9rem;
 }
@@ -438,7 +438,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
 .ads-sheet {
   width: min(100vw, 540px);
   max-height: 70vh;
-  background: var(--msk-canvas-1, var(--mj-white, #ffffff));
+  background: var(--msk-canvas-1, var(--mj-white, var(--mj-white, #ffffff)));
   border-radius: 1.25rem 1.25rem 0 0;
   border: 1px solid var(--msk-border);
   border-bottom: none;
@@ -563,7 +563,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   min-height: 40px;
   border-radius: 0.55rem;
   border: 1px solid var(--msk-border);
-  background: var(--msk-canvas-1, var(--mj-white, #ffffff));
+  background: var(--msk-canvas-1, var(--mj-white, var(--mj-white, #ffffff)));
   color: var(--msk-text);
   font: inherit;
   font-size: 0.8rem;
@@ -605,7 +605,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   padding: 0.55rem 0.65rem;
   border-radius: 0.55rem;
   border: 1px solid var(--msk-border);
-  background: var(--msk-canvas-1, var(--mj-white, #ffffff));
+  background: var(--msk-canvas-1, var(--mj-white, var(--mj-white, #ffffff)));
 }
 
 

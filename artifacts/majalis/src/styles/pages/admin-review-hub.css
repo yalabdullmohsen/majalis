@@ -157,7 +157,7 @@
   align-items: center;
   gap: 1rem;
   padding: 0 1.5rem;
-  background: var(--mj-white, #ffffff);
+  background: var(--mj-white, var(--mj-white, #ffffff));
   border-bottom: 1px solid var(--rh-line);
 }
 
@@ -221,7 +221,7 @@
 .rh-mobile-toggle {
   display: none;
   border: 1px solid var(--rh-line);
-  background: var(--mj-white, #ffffff);
+  background: var(--mj-white, var(--mj-white, #ffffff));
   border-radius: 0.5rem;
   width: 2.4rem;
   height: 2.4rem;
@@ -260,7 +260,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 1rem;
-  background: var(--mj-white, #ffffff);
+  background: var(--mj-white, var(--mj-white, #ffffff));
   border: 1px solid var(--rh-line);
   border-radius: var(--rh-radius);
 }
@@ -317,7 +317,7 @@
 
 .rh-chip {
   border: 1px solid var(--mj-hairline);
-  background: var(--mj-white, #ffffff);
+  background: var(--mj-white, var(--mj-white, #ffffff));
   color: var(--rh-ink);
   font: inherit;
   font-size: 0.86rem;
@@ -359,7 +359,7 @@
 
 /* Flutter review cards */
 .rh-flutter-card {
-  background: var(--mj-white, #ffffff);
+  background: var(--mj-white, var(--mj-white, #ffffff));
   border: 1px solid var(--mj-hairline);
   border-radius: var(--rh-radius);
   padding: 1.25rem;
@@ -548,7 +548,7 @@
   width: 100%;
   border: 1px solid var(--rh-line);
   border-radius: 0.5rem;
-  background: var(--mj-white, #ffffff);
+  background: var(--mj-white, var(--mj-white, #ffffff));
   color: var(--rh-ink);
   font: inherit;
   padding: 0.55rem 0.7rem;

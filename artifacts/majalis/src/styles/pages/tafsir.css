@@ -55,7 +55,7 @@
   min-width: 4.75rem;
   padding: 0.7rem 1rem;
   border-radius: 0.85rem;
-  background: var(--surface-card, var(--mj-surface, var(--mj-white, #ffffff)));
+  background: var(--surface-card, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff))));
   border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #123F32) 14%, var(--majalis-line, var(--mj-hairline)));
   box-shadow: 0 1px 2px color-mix(in srgb, var(--mj-brand-deep, #123F32) 6%, transparent);
 }
@@ -481,7 +481,7 @@ html[data-theme="dark"] .tf-stat span {
   gap: 0.7rem;
 }
 .tf-spotlight-card {
-  background: linear-gradient(165deg, var(--mj-white, #ffffff) 0%, #F4FAF7 100%);
+  background: linear-gradient(165deg, var(--mj-white, var(--mj-white, #ffffff)) 0%, #F4FAF7 100%);
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--radius-card, 24px);
   padding: 1rem;
@@ -559,8 +559,8 @@ html[data-theme="dark"] .tf-stat span {
   gap: 0.75rem;
 }
 .tf-edition-card {
-  background: var(--majalis-panel, var(--mj-white, #ffffff));
-  border: 1px solid var(--majalis-line, #e5e0d5);
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
+  border: 1px solid var(--majalis-line, var(--mj-hairline));
   border-radius: var(--radius-card, 24px);
   padding: 1rem 1.05rem;
   display: flex;

@@ -58,7 +58,7 @@
   padding: 0.75rem 1rem;
   font-size: 0.9rem;
   line-height: 1.6;
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
   color: var(--clr-ink, var(--mj-ink));
   transition: border-color .15s;
   direction: rtl;
@@ -102,7 +102,7 @@
   width: 34px; height: 34px;
   border-radius: var(--ds-radius);
   border: 1.5px solid var(--clr-border, rgba(0,0,0,.12));
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
   color: var(--clr-ink, var(--mj-ink));
   cursor: pointer;
   transition: border-color .15s, background .15s;
@@ -184,7 +184,7 @@
   font-size: 0.72rem;
   font-weight: 600;
   border: 1.5px solid var(--clr-border, rgba(0,0,0,.12));
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
   color: var(--clr-ink-soft, var(--mj-muted));
   cursor: pointer;
   transition: all .15s;
@@ -199,7 +199,7 @@
   padding: 0.5rem 0.85rem;
   border-radius: 0.6rem;
   border: 1.5px solid var(--clr-border, rgba(0,0,0,.1));
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
   font-size: 0.82rem;
   color: var(--clr-ink, var(--mj-ink));
   cursor: pointer;
@@ -240,7 +240,7 @@
   padding: 1.1rem 1.2rem;
   border-radius: 0.85rem;
   border: 1.5px solid var(--clr-border, rgba(0,0,0,.1));
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
 }
 
 /* ── Library ── */
@@ -249,7 +249,7 @@
   padding: 1rem 1.1rem;
   border-radius: 0.85rem;
   border: 1.5px solid var(--clr-border, rgba(0,0,0,.1));
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
 }
 .srp-lib-item__head {
   display: flex;

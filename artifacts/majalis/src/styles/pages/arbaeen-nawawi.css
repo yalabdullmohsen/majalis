@@ -41,7 +41,7 @@
 
 /* Filters */
 .an-filters { max-width: 860px; margin: 0 auto 1.5rem; padding: 0 1rem; display: flex; flex-direction: column; gap: 0.8rem; }
-.an-search { width: 100%; padding: 0.65rem 1rem; border: 1.5px solid var(--mj-hairline); border-radius: 18px; font-size: 0.9rem; background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf8))); color: var(--mj-ink, #16241e); outline: none; transition: border-color 0.15s; }
+.an-search { width: 100%; padding: 0.65rem 1rem; border: 1.5px solid var(--mj-hairline); border-radius: 18px; font-size: 0.9rem; background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface)))); color: var(--mj-ink, #16241e); outline: none; transition: border-color 0.15s; }
 .an-search:focus { border-color: var(--majalis-emerald); }
 .an-cats { display: flex; flex-wrap: wrap; gap: var(--ds-space-2); }
 .an-cat { padding: 0.35rem 0.9rem; border-radius: var(--ds-radius-full); border: 1.5px solid var(--mj-hairline); background: transparent; font-size: 0.8rem; color: var(--mj-ink-2); cursor: pointer; transition: background 0.15s, border-color 0.15s, color 0.15s; }
@@ -56,7 +56,7 @@
 
 /* Card */
 .an-card {
-  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf8)));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface))));
   border-radius: var(--radius-card, 24px);
   padding: 1.1rem;
   border: 1.5px solid var(--mj-hairline, #e3e8e6);
@@ -102,7 +102,7 @@
   min-height: 44px;
   border-radius: var(--radius-card, 24px);
   border: 1px solid var(--mj-hairline, var(--mj-hairline));
-  background: var(--ss-card-bg, var(--mj-surface, #fffcf8));
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-surface)));
   color: var(--mj-ink, #16241e);
 }
 .an-cats {
@@ -142,7 +142,7 @@
 .an-row {
   border: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand-deep)) 14%, transparent);
   border-radius: var(--radius-card, 24px);
-  background: var(--ss-card-bg, var(--mj-surface, #fffcf8));
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-surface)));
   overflow: hidden;
 }
 .an-row--today {
@@ -283,7 +283,7 @@
 
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .an-row {
   background: var(--mj-surface, #1a211e);
-  border-color: color-mix(in srgb, var(--mj-white, #ffffff) 10%, transparent);
+  border-color: color-mix(in srgb, var(--mj-white, var(--mj-white, #ffffff)) 10%, transparent);
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .an-row__title,
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .an-row__text {
@@ -297,12 +297,12 @@
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .an-search {
   background: var(--mj-surface-2, var(--mj-surface));
   color: var(--mj-ink, #E9EFEC);
-  border-color: color-mix(in srgb, var(--mj-white, #ffffff) 12%, transparent);
+  border-color: color-mix(in srgb, var(--mj-white, var(--mj-white, #ffffff)) 12%, transparent);
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .an-cat {
   background: var(--mj-surface-2, var(--mj-surface));
   color: var(--mj-ink-2, var(--mj-hairline));
-  border-color: color-mix(in srgb, var(--mj-white, #ffffff) 12%, transparent);
+  border-color: color-mix(in srgb, var(--mj-white, var(--mj-white, #ffffff)) 12%, transparent);
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .an-today__card {
   color: var(--mj-on-brand, var(--mj-white, #ffffff));
