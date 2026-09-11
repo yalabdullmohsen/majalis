@@ -291,7 +291,7 @@ export default function NotificationSettingsPage() {
       />
 
       {!isNative && (
-        <section className="notif-card" aria-label="إشعارات الدفع عبر الويب">
+        <section className="soft-card soft-card--on-light notif-card" aria-label="إشعارات الدفع عبر الويب">
           <h2 className="notif-card__title">إشعارات الدفع (PWA)</h2>
           <p className="notif-row__sub" style={{ marginBottom: "0.75rem" }}>
             تُرسل عبر متصفحك عند تثبيت التطبيق أو السماح بالإشعارات.
@@ -301,7 +301,7 @@ export default function NotificationSettingsPage() {
       )}
 
       {isNative && (
-        <section className="notif-card" aria-label="إشعارات التطبيق">
+        <section className="soft-card soft-card--on-light notif-card" aria-label="إشعارات التطبيق">
           <h2 className="notif-card__title">إشعارات التطبيق</h2>
           <p className="notif-row__sub">
             على iOS تُستخدم الإشعارات المحلية لأوقات الصلاة وورد القرآن اليومي (٥ مساءً) وتذكير الذكر الصوتي.
@@ -332,7 +332,7 @@ export default function NotificationSettingsPage() {
       )}
 
       {/* ── تفعيل ── */}
-      <div className="notif-card">
+      <div className="soft-card soft-card--on-light notif-card">
         <ToggleRow
           label="تفعيل الإشعارات"
           sub={isGranted ? "مفعّلة" : isUnsupported ? "غير مدعوم" : isDenied ? "محجوبة" : "اضغط للسماح"}
@@ -343,7 +343,7 @@ export default function NotificationSettingsPage() {
       </div>
 
       {/* ── أنواع التذكّرات ── */}
-      <div className="notif-card">
+      <div className="soft-card soft-card--on-light notif-card">
         <h3 className="notif-card__title">أنواع التذكّرات</h3>
         <ToggleRow label="مراجعة البطاقات" sub="تذكير يومي عند وجود بطاقات مستحقة" checked={prefs.flashcardsReminder} onChange={v => update({ flashcardsReminder: v })} disabled={!canToggle} />
         <ToggleRow label="تابع من حيث توقفت" sub="تذكير بالدرس أو الكتاب الذي لم تُكمله" checked={prefs.resumeReminder} onChange={v => update({ resumeReminder: v })} disabled={!canToggle} />
@@ -393,7 +393,7 @@ export default function NotificationSettingsPage() {
       </div>
 
       {/* ── وقت التذكير ── */}
-      <div className="notif-card">
+      <div className="soft-card soft-card--on-light notif-card">
         <h3 className="notif-card__title">وقت التذكير اليومي</h3>
         <div className="notif-time">
           <label htmlFor="notif-hour" className="notif-time__label">الساعة</label>
@@ -407,7 +407,7 @@ export default function NotificationSettingsPage() {
 
       {/* ── اختبار ── */}
       {isGranted && (
-        <div className="notif-card">
+        <div className="soft-card soft-card--on-light notif-card">
           <button type="button" className="notif-test-btn" onClick={() => void handleTestTrigger()}>
             إرسال إشعار اختباري
           </button>
@@ -416,7 +416,7 @@ export default function NotificationSettingsPage() {
       )}
 
       {showDevTools && (
-        <div className="notif-card" aria-label="أدوات مطوّر الإشعارات">
+        <div className="soft-card soft-card--on-light notif-card" aria-label="أدوات مطوّر الإشعارات">
           <h3 className="notif-card__title">تشخيص الإشعارات (مطوّر)</h3>
           <p className="notif-row__sub" style={{ marginBottom: "0.75rem" }}>
             منصة: {isNative ? "Capacitor أصلي" : "ويب"} · الإذن: {permission}

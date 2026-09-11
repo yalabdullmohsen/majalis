@@ -216,7 +216,7 @@ function AndroidAdhanNativeCard({
   }
 
   return (
-    <section className="ads-card" aria-labelledby="ads-android-native-head">
+    <section className="soft-card soft-card--on-light ads-card" aria-labelledby="ads-android-native-head">
       <div className="ads-card__head" id="ads-android-native-head">
         <Bell size={15} strokeWidth={2} aria-hidden="true" />
         <span>حماية تشغيل الخلفية (أندroid)</span>
@@ -595,7 +595,7 @@ export default function AdhanSettingsPage() {
         </div>
       ) : null}
 
-      <section className="ads-card" aria-labelledby="ads-loc-head">
+      <section className="soft-card soft-card--on-light ads-card" aria-labelledby="ads-loc-head">
         <div className="ads-card__head" id="ads-loc-head">
           <MapPin size={15} strokeWidth={2} aria-hidden="true" />
           <span>الموقع</span>
@@ -617,7 +617,7 @@ export default function AdhanSettingsPage() {
         </div>
       </section>
 
-      <section className="ads-card" aria-labelledby="ads-sound-head">
+      <section className="soft-card soft-card--on-light ads-card" aria-labelledby="ads-sound-head">
         <div className="ads-card__head" id="ads-sound-head">
           <Music size={15} strokeWidth={2} aria-hidden="true" />
           <span>أصوات الصلاة</span>
@@ -656,7 +656,7 @@ export default function AdhanSettingsPage() {
 
       <PrayerAlertSettingsCard />
 
-      <section className="ads-card" aria-labelledby="ads-faith-head">
+      <section className="soft-card soft-card--on-light ads-card" aria-labelledby="ads-faith-head">
         <div className="ads-card__head" id="ads-faith-head">
           <Bell size={15} strokeWidth={2} aria-hidden="true" />
           <span>تذكيرات إيمانية</span>
@@ -713,7 +713,7 @@ export default function AdhanSettingsPage() {
         </div>
       </section>
 
-      <section className="ads-card" aria-labelledby="ads-prayers-head">
+      <section className="soft-card soft-card--on-light ads-card" aria-labelledby="ads-prayers-head">
         <div className="ads-card__head" id="ads-prayers-head">
           <Bell size={15} strokeWidth={2} aria-hidden="true" />
           <span>تنبيهات الصلاة</span>
@@ -765,7 +765,7 @@ export default function AdhanSettingsPage() {
 
       <AndroidAdhanNativeCard selectedMuezzinId={prefs.defaultMuezzinId} />
 
-      <section className="ads-card" aria-labelledby="ads-test-head">
+      <section className="soft-card soft-card--on-light ads-card" aria-labelledby="ads-test-head">
         <div className="ads-card__head" id="ads-test-head">
           <Bell size={15} strokeWidth={2} aria-hidden="true" />
           <span>اختبار الإشعارات</span>

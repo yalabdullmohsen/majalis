@@ -254,7 +254,7 @@ export default function SettingsPage() {
 
       {visible(sections[0]!) && (
         <LegalSection title={sections[0]!.title}>
-          <div className="settings-account-card">
+          <div className="soft-card soft-card--on-light settings-account-card">
             <div className="settings-avatar" aria-hidden="true">
               {(user?.profile?.full_name || user?.email || "م").slice(0, 1)}
             </div>
