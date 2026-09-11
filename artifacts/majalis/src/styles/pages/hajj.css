@@ -129,7 +129,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   box-shadow: 0 1px 3px rgba(0,0,0,.05);
 }
 .hj-fadl-card__icon { font-size: 1.4rem; }
-.hj-fadl-card__text { font-size: .84rem; line-height: 1.65; color: #1F2937; flex: 1; margin: 0; }
+.hj-fadl-card__text { font-size: .84rem; line-height: 1.65; color: var(--mj-ink); flex: 1; margin: 0; }
 .hj-fadl-card__ref { font-size: 0.8rem; color: var(--mj-ink-2); }
 
 .hj-types-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; }

@@ -30,7 +30,7 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
   }, [params.slug]);
 
   useEffect(() => {
-    if (loading) return;
+    if (loading && !item) return;
     if (!item) {
       applyPageSeo({
         path: `/updates/auto/${params.slug}`,
@@ -65,7 +65,7 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
     });
   }, [item, loading, params.slug]);
 
-  if (loading) return <SkeletonCardGrid />;
+  if (loading && !item) return <SkeletonCardGrid />;
   if (!item) return <Empty text="المادة غير موجودة أو لم تُعتمد بعد." />;
 
   const updateType = mapContentTypeToUpdateType(item.content_type);

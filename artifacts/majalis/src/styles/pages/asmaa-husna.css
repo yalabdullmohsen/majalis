@@ -76,7 +76,7 @@
 .ah-search {
   width: 100%;
   padding: 0.65rem 2.5rem 0.65rem 1rem;
-  border: 1.5px solid #C6D6CE;
+  border: 1.5px solid var(--mj-hairline);
   border-radius: var(--ds-radius-lg);
   font-size: 0.92rem;
   background: var(--mj-white, #ffffff);
@@ -97,7 +97,7 @@
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
-  border: 1.5px solid #C6D6CE;
+  border: 1.5px solid var(--mj-hairline);
   background: var(--mj-white, #ffffff);
   color: var(--mj-brand-deep);
   transition: all 0.15s;

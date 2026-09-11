@@ -117,7 +117,7 @@
 }
 .atl-stage__focus { font-size: .86rem; color: var(--color-text-muted, var(--mj-ink-2)); line-height: 1.6; margin: 0; }
 .atl-stage__sign {
-  background: var(--mj-brand-soft); border: 1px solid #D4E9DC; border-radius: .5rem; padding: .6rem .8rem;
+  background: var(--mj-brand-soft); border: 1px solid var(--mj-brand-soft); border-radius: .5rem; padding: .6rem .8rem;
 }
 .atl-stage__sign p { font-size: .82rem; color: var(--mj-brand-deep); margin: .25rem 0 0; line-height: 1.6; }
 .atl-label { font-size: .65rem; font-weight: 800; color: var(--mj-brand); letter-spacing: normal; }

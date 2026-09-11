@@ -168,7 +168,7 @@
 }
 .arkan-dalil__ref {
   font-size: 0.8rem;
-  color: #497061;
+  color: var(--mj-brand, #1e5f4b);
   font-weight: 600;
 }
 

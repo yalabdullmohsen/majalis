@@ -186,7 +186,7 @@
 }
 .hsh-step__desc {
   font-size: 0.78rem;
-  color: #555;
+  color: var(--mj-muted);
   line-height: 1.45;
   margin-bottom: 0.5rem;
 }

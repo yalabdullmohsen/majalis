@@ -101,7 +101,7 @@
   margin: 0.25rem 0 0;
   font-size: 0.75rem;
   font-weight: 800;
-  color: var(--msk-text-2, #555);
+  color: var(--msk-text-2, var(--mj-muted));
 }
 
 .qc-result-count {
@@ -201,7 +201,7 @@
   align-items: flex-start;
   gap: 0.35rem;
   font-size: 0.84rem;
-  color: var(--msk-text-2, #555);
+  color: var(--msk-text-2, var(--mj-muted));
   line-height: 1.5;
 }
 
@@ -285,7 +285,7 @@
 
 .qc-empty {
   text-align: center;
-  color: #555;
+  color: var(--mj-muted);
   padding: 2rem 1rem;
   font-weight: 600;
 }

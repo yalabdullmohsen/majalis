@@ -38,7 +38,7 @@ export default function FiqhCouncilStatsPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <SkeletonCardGrid />;
+  if (loading && !stats) return <SkeletonCardGrid />;
 
   const s = stats || {
     resolutions: 0,

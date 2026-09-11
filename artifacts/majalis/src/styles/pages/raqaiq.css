@@ -50,8 +50,8 @@
   border: 1.5px solid var(--clr-border); background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff)));
   font-size: .88rem; cursor: pointer; color: var(--clr-text-2); transition: all .18s;
 }
-.rq-tab:hover  { border-color: #1c2e3a; color: #1c2e3a; }
-.rq-tab--active { background: #1c2e3a; border-color: #1c2e3a; color: var(--mj-white, #ffffff); font-weight: 600; }
+.rq-tab:hover  { border-color: var(--mj-info); color: var(--mj-info); }
+.rq-tab--active { background: var(--mj-info); border-color: var(--mj-info); color: var(--mj-white, #ffffff); font-weight: 600; }
 
 /* Container */
 .rq-container { max-width: 900px; margin: 0 auto; padding: 1.75rem 1.25rem 3rem; }
@@ -80,7 +80,7 @@
 .rq-chevron { font-size: .7rem; color: var(--clr-text-2); flex-shrink: 0; }
 .rq-card__body { padding: 1rem 1.25rem 1.25rem; border-top: 1px solid var(--clr-divider); }
 .rq-card__text  { font-size: .92rem; line-height: 1.8; color: var(--clr-text-1); margin: 0 0 .5rem; }
-.rq-card__source { font-size: .8rem; color: #1c2e3a; font-weight: 600; margin: 0; }
+.rq-card__source { font-size: .8rem; color: var(--mj-info); font-weight: 600; margin: 0; }
 
 /* Aqwal grid */
 .rq-aqwal-grid {
@@ -91,7 +91,7 @@
   border-radius: .75rem; padding: 1.1rem 1.2rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
 }
-.rq-qawl-name { font-size: .82rem; font-weight: 700; color: #1c2e3a; margin-bottom: .5rem; }
+.rq-qawl-name { font-size: .82rem; font-weight: 700; color: var(--mj-info); margin-bottom: .5rem; }
 .rq-qawl-text {
   font-size: .9rem; line-height: 1.8; color: var(--clr-text-2);
   border-inline-end: 3px solid var(--mj-info); padding-inline-end: .75rem;
@@ -103,7 +103,7 @@
 .rq-muhasaba-item { display: flex; gap: .9rem; align-items: flex-start; }
 .rq-muhasaba-num {
   width: 1.9rem; height: 1.9rem; flex-shrink: 0; border-radius: 50%;
-  background: #1c2e3a; color: var(--mj-white, #ffffff); font-size: .8rem; font-weight: 700;
+  background: var(--mj-info); color: var(--mj-white, #ffffff); font-size: .8rem; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
 .rq-muhasaba-text { font-size: .93rem; line-height: 1.7; color: var(--clr-text-1); margin: 0; }
@@ -122,7 +122,7 @@
 }
 .rq-musab-title  { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .5rem; }
 .rq-musab-text   { font-size: .9rem; line-height: 1.75; color: var(--clr-text-2); margin: 0 0 .4rem; }
-.rq-musab-source { font-size: .8rem; color: #1c2e3a; font-weight: 500; margin: 0; }
+.rq-musab-source { font-size: .8rem; color: var(--mj-info); font-weight: 500; margin: 0; }
 
 /* Zuhd definition */
 .rq-zuhd-def { display: flex; flex-direction: column; gap: var(--ds-space-4); }
@@ -130,7 +130,7 @@
   background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1.2rem 1.3rem;
 }
-.rq-zuhd-def__item h3 { font-size: .97rem; font-weight: 700; color: #1c2e3a; margin: 0 0 .45rem; }
+.rq-zuhd-def__item h3 { font-size: .97rem; font-weight: 700; color: var(--mj-info); margin: 0 0 .45rem; }
 .rq-zuhd-def__item p  { font-size: .9rem; line-height: 1.75; color: var(--clr-text-2); margin: 0; }
 
 /* Responsive */

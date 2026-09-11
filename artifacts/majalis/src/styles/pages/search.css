@@ -454,7 +454,7 @@ a.search-suggestion-chip {
 .search-kind-badge--course,
 .search-kind-badge--courses     { background: color-mix(in srgb, var(--mj-brand) 10%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-brand-deep); border-color: color-mix(in srgb, var(--mj-brand) 22%, transparent); }
 .search-kind-badge--update,
-.search-kind-badge--updates     { background: var(--mj-surface-2, #F1F5F9); color: var(--mj-ink-2, #475569); border-color: color-mix(in srgb, var(--mj-ink) 14%, transparent); }
+.search-kind-badge--updates     { background: var(--mj-surface-2, var(--mj-surface-2)); color: var(--mj-ink-2, var(--mj-muted)); border-color: color-mix(in srgb, var(--mj-ink) 14%, transparent); }
 
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -485,7 +485,7 @@ a.search-suggestion-chip {
 }
 .srch-history-clear {
   font-size: 0.68rem;
-  color: #888;
+  color: var(--mj-muted);
   background: none;
   border: none;
   cursor: pointer;

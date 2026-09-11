@@ -75,7 +75,7 @@
   transition: all .15s;
   color: var(--mj-ink-2);
 }
-.tw-tab--active { border-bottom-color: #1a1a2e; color: #1a1a2e; font-weight: 700; }
+.tw-tab--active { border-bottom-color: var(--mj-ink); color: var(--mj-ink); font-weight: 700; }
 .tw-tab__icon  { font-size: .95rem; }
 .tw-tab__label { font-size: 0.8rem; }
 
@@ -83,7 +83,7 @@
 .tw-body    { padding: 1.25rem 1rem; }
 .tw-section { animation: tw-fade .25s ease; }
 @keyframes tw-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-.tw-section-lead { font-size: .88rem; color: var(--mj-ink-2); line-height: 1.7; margin: 0 0 1.2rem; border-inline-end: 3px solid #1a1a2e; padding-inline-end: .75rem; }
+.tw-section-lead { font-size: .88rem; color: var(--mj-ink-2); line-height: 1.7; margin: 0 0 1.2rem; border-inline-end: 3px solid var(--mj-ink); padding-inline-end: .75rem; }
 
 /* شروط */
 .tw-shurut-list { display: flex; flex-direction: column; gap: .9rem; margin-bottom: 1.5rem; }
@@ -149,7 +149,7 @@
 .tw-nawaa-title { display: block; font-weight: 700; font-size: .9rem; color: var(--mj-ink); margin-bottom: .2rem; }
 .tw-nawaa-hukm  { display: inline-block; padding: .15rem .5rem; border-radius: .35rem; font-size: .68rem; font-weight: 700; }
 .tw-nawaa-hukm--wajib    { background: var(--mj-danger-soft); color: var(--mj-danger-deep); }
-.tw-nawaa-hukm--mustahabb { background: #D4E9DC; color: var(--mj-brand-deep); }
+.tw-nawaa-hukm--mustahabb { background: var(--mj-brand-soft); color: var(--mj-brand-deep); }
 .tw-nawaa-desc  { font-size: .82rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0; }
 
 .tw-tawba-nasuh {
@@ -170,7 +170,7 @@
   border-radius: .8rem;
   overflow: hidden;
 }
-.tw-dhikr-card--open { border-color: #1a1a2e; }
+.tw-dhikr-card--open { border-color: var(--mj-ink); }
 .tw-dhikr-head {
   display: flex;
   align-items: center;
@@ -182,7 +182,7 @@
   cursor: pointer;
   font-family: inherit;
 }
-.tw-dhikr-num   { background: #1a1a2e; color: var(--mj-white, #ffffff); width: 1.5rem; height: 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800; flex-shrink: 0; }
+.tw-dhikr-num   { background: var(--mj-ink); color: var(--mj-white, #ffffff); width: 1.5rem; height: 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800; flex-shrink: 0; }
 .tw-dhikr-times { flex: 1; font-size: .75rem; color: var(--mj-ink-2); text-align: end; }
 .tw-dhikr-chevron { font-size: .8rem; color: var(--mj-muted); transition: transform .2s; margin-inline-end: auto; }
 .tw-dhikr-chevron--open { transform: rotate(180deg); }
@@ -206,7 +206,7 @@
   border-radius: .65rem;
   padding: .65rem .8rem;
 }
-.tw-awqat-item__waqt { display: block; font-weight: 700; font-size: .82rem; color: #1a1a2e; margin-bottom: .2rem; }
+.tw-awqat-item__waqt { display: block; font-weight: 700; font-size: .82rem; color: var(--mj-ink); margin-bottom: .2rem; }
 .tw-awqat-item__desc { font-size: .73rem; color: var(--mj-ink-2); line-height: 1.4; }
 
 /* موانع */

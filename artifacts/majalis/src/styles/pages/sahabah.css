@@ -43,7 +43,7 @@
 .sb-search {
   width: 100%;
   padding: .65rem 1rem;
-  border: 1.5px solid #D4E9DC;
+  border: 1.5px solid var(--mj-brand-soft);
   border-radius: .7rem;
   font-size: .9rem;
   outline: none;
@@ -63,7 +63,7 @@
 }
 .sb-cat-btn {
   padding: .35rem .85rem;
-  border: 1.5px solid #D4E9DC;
+  border: 1.5px solid var(--mj-brand-soft);
   border-radius: 2rem;
   background: var(--mj-surface);
   font-size: .78rem;

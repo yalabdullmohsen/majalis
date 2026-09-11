@@ -37,7 +37,7 @@
 .cal-nav-hijri {
   font-size: 0.72rem;
   font-weight: 600;
-  color: var(--msk-text-2, var(--mj-ink-2, #555));
+  color: var(--msk-text-2, var(--mj-ink-2, var(--mj-muted)));
 }
 
 .cal-nav-btn,
@@ -108,7 +108,7 @@
   margin-bottom: 0.5rem;
   font-size: var(--ds-text-xs, 0.75rem);
   font-weight: 700;
-  color: var(--msk-text-2, var(--mj-ink-2, #555));
+  color: var(--msk-text-2, var(--mj-ink-2, var(--mj-muted)));
   text-align: center;
 }
 

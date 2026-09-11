@@ -463,6 +463,6 @@ html[data-theme="dark"] .lcp2-event__date-box { background: rgba(23,61,53,.2); }
 
 .lqp-mc-btn.is-selected {
   border: 2px solid var(--emerald-deep);
-  background: var(--emerald-light, #d4e9dc);
+  background: var(--emerald-light, var(--mj-brand-soft));
 }
 

@@ -120,7 +120,7 @@
 .cit-type--scholar-quote { --cit-type-color: var(--brand, var(--mj-brand)); --cm-type-color: var(--brand, var(--mj-brand)); --cab-type-color: var(--brand, var(--mj-brand)); }
 .cit-type--fatwa,
 .cit-type--book          { --cit-type-color: var(--mj-brand); --cm-type-color: var(--mj-brand); --cab-type-color: var(--mj-brand); }
-.cit-type--article       { --cit-type-color: #0369a1; --cm-type-color: #0369a1; --cab-type-color: #0369a1; }
+.cit-type--article       { --cit-type-color: var(--mj-info); --cm-type-color: var(--mj-info); --cab-type-color: var(--mj-info); }
 .cit-type--research      { --cit-type-color: #0c4a6e; --cm-type-color: #0c4a6e; --cab-type-color: #0c4a6e; }
 .cit-type--lesson        { --cit-type-color: var(--mj-brand); --cm-type-color: var(--mj-brand); --cab-type-color: var(--mj-brand); }
 .cit-type--benefit       { --cit-type-color: var(--mj-brand); --cm-type-color: var(--mj-brand); --cab-type-color: var(--mj-brand); }

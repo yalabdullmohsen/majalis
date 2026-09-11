@@ -43,7 +43,7 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
   }, [params.slug]);
 
   useEffect(() => {
-    if (loading) return;
+    if (loading && !issue) return;
     if (!issue) {
       applyPageSeo({
         path: fiqhIssueHref(params.slug),
@@ -84,7 +84,7 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
     });
   }, [issue, loading, params.slug]);
 
-  if (loading) return <SkeletonCardGrid />;
+  if (loading && !issue) return <SkeletonCardGrid />;
   if (!issue) return <Empty text="المسألة غير موجودة أو غير منشورة." />;
 
   if (issue.publication_gate === "blocked") {

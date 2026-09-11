@@ -149,7 +149,7 @@
 }
 .sh-salat-box__head {
   display: flex; align-items: center; justify-content: center; gap: .5rem;
-  font-size: .8rem; font-weight: 700; color: #7ED6A8;
+  font-size: .8rem; font-weight: 700; color: var(--mj-brand, #5a9e88);
   text-transform: uppercase; letter-spacing: normal; margin-bottom: .9rem;
 }
 .sh-salat-box__text {

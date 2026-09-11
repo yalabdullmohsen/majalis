@@ -196,7 +196,7 @@
 .hadith-grade--daif        { background: color-mix(in srgb, var(--mj-warning, #c2410c) 10%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-warning, #9A3412); }
 .hadith-grade--mawdu       { background: color-mix(in srgb, var(--mj-danger, #b91c1c) 10%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-danger, #7F1D1D); }
 .hadith-grade--unknown     { background: var(--emerald-50, #EEF1F0); color: var(--msk-text-2, var(--mj-ink-2)); }
-.hadith-grade--pending     { background: var(--mj-surface-2, var(--mj-surface-2)); color: var(--mj-ink-2, #475569); border: 1px solid var(--mj-hairline, #CBD5E1); }
+.hadith-grade--pending     { background: var(--mj-surface-2, var(--mj-surface-2)); color: var(--mj-ink-2, var(--mj-muted)); border: 1px solid var(--mj-hairline, #CBD5E1); }
 
 .hadith-grade-filters {
   margin: 0.5rem 0 0.75rem;
@@ -301,7 +301,7 @@
   line-height: 1;
 }
 .hadith-action-btn:hover {
-  background: var(--majalis-surface-2, #f1f5f9);
+  background: var(--majalis-surface-2, var(--mj-surface-2));
   color: var(--majalis-ink);
 }
 .hadith-action-btn--active {

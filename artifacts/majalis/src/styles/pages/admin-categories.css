@@ -137,7 +137,7 @@
 
 .cat-admin__hint {
   font-size: 0.75rem !important;
-  color: #92400E !important;
+  color: var(--mj-warning) !important;
 }
 
 .cat-admin__pager {
@@ -229,7 +229,7 @@
 }
 
 .cat-node__warn {
-  color: #92400E;
+  color: var(--mj-warning);
   background: #FEF3C7;
   border: 1px solid #FCD34D;
   border-radius: 0.25rem;
@@ -309,7 +309,7 @@
 
 /* تمييز بصري بالحالة — لون + نمط حد + أيقونة نصية */
 .cat-node[data-status="published"] { border-inline-start: 3px solid #1E40AF; }
-.cat-node[data-status="pending_review"] { border-inline-start: 3px solid #0369A1; border-style: solid dashed solid solid; }
+.cat-node[data-status="pending_review"] { border-inline-start: 3px solid var(--mj-info); border-style: solid dashed solid solid; }
 .cat-node[data-status="draft"] { border-inline-start: 3px solid #9CA3AF; }
 .cat-node[data-status="hidden"] { border-inline-start: 3px dotted var(--mj-muted); opacity: 0.92; }
 .cat-node[data-status="rejected"] { border-inline-start: 3px solid var(--mj-danger-deep); }
