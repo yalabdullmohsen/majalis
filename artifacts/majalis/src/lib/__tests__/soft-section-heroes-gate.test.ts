@@ -11,7 +11,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const shell = read("src/styles/components/modern-section-shell.css");
-for (const hero of [".sw-hero", ".sb-hero", ".as-hero", ".atl-hero", ".sm-hero", ".gl-hero", ".sg-hero", ".hj-hero", ".duas-hero", ".ai-hero", ".arkan-hero"]) {
+for (const hero of [".sw-hero", ".sb-hero", ".as-hero", ".atl-hero", ".sm-hero", ".gl-hero", ".ldb-hero", ".myl2-hero", ".lpd2-hero", ".pmp-hero", ".mw-hero", ".srp-hero", ".sg-hero", ".hj-hero", ".duas-hero", ".ai-hero", ".arkan-hero"]) {
   assert.match(shell, new RegExp(hero.replace(".", "\\.")), `modern-section-shell يشمل ${hero}`);
 }
 assert.match(shell, /--mss-section-hero-bg/, "سطح soft-hero مفعّل");

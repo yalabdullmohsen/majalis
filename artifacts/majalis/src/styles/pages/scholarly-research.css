@@ -9,10 +9,10 @@
   align-items: center;
   text-align: center;
   padding: 2.25rem 1.25rem 1.5rem;
-  background: linear-gradient(160deg, var(--mj-brand-deep), var(--mj-brand-deep), var(--mj-brand-deep));
-  color: var(--on-dark-strong, var(--mj-white, #ffffff));
+  /* soft via modern-section-shell */
+  /* soft ink */
 }
-.srp-hero__icon { color: var(--on-dark-body, var(--mj-surface-2)); margin-bottom: 0.6rem; }
+.srp-hero__icon { /* soft ink */ margin-bottom: 0.6rem; }
 .srp-hero__title {
   font-size: 1.45rem;
   font-weight: 800;
@@ -20,7 +20,7 @@
 }
 .srp-hero__sub {
   font-size: 0.82rem;
-  color: var(--on-dark-body, var(--mj-surface-2));
+  /* soft ink */
   max-width: 36rem;
   line-height: 1.65;
 }

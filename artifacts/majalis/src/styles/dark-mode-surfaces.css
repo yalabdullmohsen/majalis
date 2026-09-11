@@ -427,11 +427,7 @@ html.dark {
 }
 
 html[data-theme="dark"] :where(
-  .lpd2-hero,
-  .myl2-hero,
   .sh-hero,
-  .pmp-hero,
-  .srp-hero,
   .isp-hero,
   .seerah-hero,
   .frb-wrap,
@@ -443,11 +439,7 @@ html[data-theme="dark"] :where(
   .th-hero
 ),
 html.dark :where(
-  .lpd2-hero,
-  .myl2-hero,
   .sh-hero,
-  .pmp-hero,
-  .srp-hero,
   .isp-hero,
   .seerah-hero,
   .frb-wrap,
@@ -462,11 +454,7 @@ html.dark :where(
 }
 
 html[data-theme="dark"] :where(
-  .lpd2-hero,
-  .myl2-hero,
   .sh-hero,
-  .pmp-hero,
-  .srp-hero,
   .isp-hero,
   .seerah-hero,
   .prophet-detail-lux,
@@ -482,11 +470,7 @@ html[data-theme="dark"] :where(
   [class$="__heading"]
 ),
 html.dark :where(
-  .lpd2-hero,
-  .myl2-hero,
   .sh-hero,
-  .pmp-hero,
-  .srp-hero,
   .isp-hero,
   .seerah-hero,
   .prophet-detail-lux,
@@ -507,11 +491,7 @@ html.dark :where(
 }
 
 html[data-theme="dark"] :where(
-  .lpd2-hero,
-  .myl2-hero,
   .sh-hero,
-  .pmp-hero,
-  .srp-hero,
   .isp-hero,
   .seerah-hero,
   .prophet-detail-lux,
@@ -532,11 +512,7 @@ html[data-theme="dark"] :where(
   [class*="breadcrumb"]
 ),
 html.dark :where(
-  .lpd2-hero,
-  .myl2-hero,
   .sh-hero,
-  .pmp-hero,
-  .srp-hero,
   .isp-hero,
   .seerah-hero,
   .prophet-detail-lux,

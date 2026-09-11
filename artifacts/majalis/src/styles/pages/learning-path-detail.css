@@ -4,11 +4,11 @@
 
 /* ── Hero ── */
 .lpd2-hero {
-  background: linear-gradient(160deg, var(--mj-brand-deep), var(--mj-brand-deep), var(--mj-brand-deep));
+  /* soft via modern-section-shell */
   border-radius: 1.1rem;
   padding: 1.4rem 1.4rem 1rem;
   margin-bottom: 1.25rem;
-  color: var(--on-dark-strong, var(--mj-white, #ffffff));
+  /* soft ink */
 }
 .lpd2-breadcrumb {
   display: flex;
@@ -54,13 +54,13 @@
 .lpd2-hero__title {
   font-size: 1.35rem;
   font-weight: 800;
-  color: var(--on-dark-strong, var(--mj-white, #ffffff));
+  /* soft ink */
   margin-bottom: 0.4rem;
   line-height: 1.35;
 }
 .lpd2-hero__desc {
   font-size: 0.83rem;
-  color: var(--on-dark-body, var(--mj-surface-2));
+  /* soft ink */
   opacity: 1;
   font-weight: 500;
   line-height: 1.55;

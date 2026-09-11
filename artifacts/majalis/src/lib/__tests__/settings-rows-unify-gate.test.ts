@@ -59,4 +59,17 @@ assert.doesNotMatch(surfaceBlock(settingsCss, ".settings-account-card"), /backgr
 for (const block of notifCss.match(/\.notif-card\s*\{[\s\S]*?\n\}/g) || []) {
   assert.doesNotMatch(block, /background\s*:/, "كل كتل .notif-card بلا background");
 }
+
+assert.match(notif, /SettingsToggleRow/, "إشعارات: SettingsToggleRow");
+assert.doesNotMatch(notif, /\bnotif-toggle\b/, "إشعارات: لا notif-toggle مخصّص");
+assert.doesNotMatch(notif, /function ToggleRow/, "إشعارات: لا ToggleRow محلي");
+
+assert.match(adhan, /SettingsToggleRow/, "أذان: SettingsToggleRow");
+assert.doesNotMatch(adhan, /\bads-toggle\b/, "أذان: لا ads-toggle مخصّص");
+assert.doesNotMatch(adhan, /function Toggle\(/, "أذان: لا Toggle محلي");
+
+assert.match(prayer, /SettingsToggleRow/, "تنبيه الصلاة: SettingsToggleRow");
+assert.doesNotMatch(prayer, /function MiniToggle/, "تنبيه الصلاة: لا MiniToggle");
+assert.doesNotMatch(prayer, /\bads-toggle\b/, "تنبيه الصلاة: لا ads-toggle");
+
 console.log("settings-rows-unify-gate.test.ts: ok");

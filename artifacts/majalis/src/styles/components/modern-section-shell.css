@@ -61,6 +61,11 @@
 .sm-hero,
 .gl-hero,
 .ldb-hero,
+.myl2-hero,
+.lpd2-hero,
+.pmp-hero,
+.mw-hero,
+.srp-hero,
 .sg-hero,
 .hj-hero,
 .duas-hero,
@@ -103,6 +108,16 @@
 .gl-hero::after,
 .ldb-hero::before,
 .ldb-hero::after,
+.myl2-hero::before,
+.myl2-hero::after,
+.lpd2-hero::before,
+.lpd2-hero::after,
+.pmp-hero::before,
+.pmp-hero::after,
+.mw-hero::before,
+.mw-hero::after,
+.srp-hero::before,
+.srp-hero::after,
 .sg-hero::before,
 .sg-hero::after,
 .hj-hero::before,
@@ -483,7 +498,11 @@ html[data-theme="dark"] .card {
 }
 
 
-/* عبادة شائعة: صلاة/حج/أدعية/أركان → soft ink على parchment */
+.myl2-hero .myl2-hero__badge,
+.lpd2-hero .lpd2-hero__badge,
+.pmp-hero .pmp-hero__badge,
+.mw-hero .mw-hero__badge,
+.srp-hero .srp-hero__badge,
 .sg-hero .sg-hero__badge,
 .hj-hero .hj-hero__badge,
 .duas-hero .duas-hero__bismillah,
@@ -494,6 +513,11 @@ html[data-theme="dark"] .card {
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
 }
 
+.myl2-hero .myl2-hero__title,
+.lpd2-hero .lpd2-hero__title,
+.pmp-hero .pmp-hero__title,
+.mw-hero .mw-hero__title,
+.srp-hero .srp-hero__title,
 .sg-hero .sg-hero__title,
 .hj-hero .hj-hero__title,
 .hj-hero .hj-hero__kaaba,
@@ -503,6 +527,11 @@ html[data-theme="dark"] .card {
   color: var(--mss-on-hero, #16241e) !important;
 }
 
+.myl2-hero .myl2-hero__sub,
+.lpd2-hero .lpd2-hero__sub,
+.pmp-hero .pmp-hero__sub,
+.mw-hero .mw-hero__sub,
+.srp-hero .srp-hero__sub,
 .sg-hero .sg-hero__sub,
 .hj-hero .hj-hero__sub,
 .hj-hero .hj-talbiya__label,
@@ -531,7 +560,6 @@ html[data-theme="dark"] .card {
 .arkan-hero .arkan-hero__icon-num {
   color: inherit !important;
 }
-
 /* asp-hero يبقى أخضر غامق — نص فاتح مستقل عن soft-hero ink */
 .asp-hero {
   --mss-on-hero: #ffffff;
