@@ -166,3 +166,17 @@
   .sh-tab { font-size: 0.8rem; padding: .45rem .5rem; }
   .sh-hadith__text { font-size: .95rem; }
 }
+
+/* sh Dark DS */
+
+:is(html[data-theme="dark"], html.dark) .sh-page { background: var(--surface-app, #131a18) !important; }
+:is(html[data-theme="dark"], html.dark) .sh-bab,
+:is(html[data-theme="dark"], html.dark) .prophet-fact-card {
+  background: var(--surface-elevated, #24302b) !important;
+  border: 1px solid var(--border-elevated, #3a4a44) !important;
+}
+:is(html[data-theme="dark"], html.dark) .sh-hero--compact,
+:is(html[data-theme="dark"], html.dark) .sh-hero {
+  background: var(--surface-hero, #1a2822) !important;
+  color: var(--surface-hero-ink, #f4fbf7) !important;
+}

@@ -200,9 +200,14 @@ body.app-sheet-open .app-sheet-overlay--elevated .app-sheet-overlay__scrim {
 html.dark .app-sheet,
 html.dark .app-sheet__head,
 html.dark .app-sheet__body,
-html.dark .app-sheet__footer {
-  background: #0f2f28;
-  color: #fafaf8;
+html.dark .app-sheet__footer,
+html[data-theme="dark"] .app-sheet,
+html[data-theme="dark"] .app-sheet__head,
+html[data-theme="dark"] .app-sheet__body,
+html[data-theme="dark"] .app-sheet__footer {
+  background: var(--surface-elevated, #24302b);
+  color: var(--text-primary, #f4f7f5);
+  border-color: var(--border-elevated, #3a4a44);
 }
 
 .app-sheet__close {

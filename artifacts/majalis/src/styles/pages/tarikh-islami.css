@@ -1013,3 +1013,12 @@ html.dark .tarikh-toc {
   outline: 2px solid color-mix(in srgb, var(--mj-brand) 55%, transparent);
   outline-offset: 2px;
 }
+
+/* tarikh Dark DS */
+
+:is(html[data-theme="dark"], html.dark) .tarikh-card {
+  background: var(--surface-elevated, #24302b) !important;
+  border-color: var(--border-elevated, #3a4a44) !important;
+}
+:is(html[data-theme="dark"], html.dark) .tarikh-card__title { color: var(--text-primary, #f4f7f5) !important; }
+:is(html[data-theme="dark"], html.dark) .tarikh-card__summary { color: var(--text-secondary, #d5ded9) !important; }

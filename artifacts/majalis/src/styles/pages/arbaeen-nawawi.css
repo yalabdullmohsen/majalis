@@ -307,3 +307,40 @@
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .an-today__card {
   color: var(--mj-on-brand, var(--mj-white, #ffffff));
 }
+
+
+/* Dark DS — بطاقات حديث واضحة */
+:is(html[data-theme="dark"], html.dark) .an-row {
+  background: var(--surface-elevated, #24302b);
+  border: 1px solid var(--border-elevated, #3a4a44);
+  border-radius: 14px;
+  margin-bottom: 0.55rem;
+  padding: 0.75rem 0.85rem;
+}
+:is(html[data-theme="dark"], html.dark) .an-row + .an-row {
+  margin-top: 0.15rem;
+}
+:is(html[data-theme="dark"], html.dark) .an-row__title {
+  color: var(--text-primary, #f4f7f5);
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+:is(html[data-theme="dark"], html.dark) .an-row__num {
+  background: color-mix(in srgb, var(--icon-primary, #8fd4b0) 20%, #1c2622);
+  color: var(--icon-primary, #8fd4b0);
+  border: 1px solid color-mix(in srgb, var(--icon-primary, #8fd4b0) 35%, transparent);
+  font-weight: 800;
+}
+:is(html[data-theme="dark"], html.dark) .an-row__preview,
+:is(html[data-theme="dark"], html.dark) .an-row__text {
+  color: var(--text-secondary, #d5ded9);
+}
+:is(html[data-theme="dark"], html.dark) .an-row--open {
+  background: var(--surface-interactive, #2b3933);
+  border-color: color-mix(in srgb, var(--icon-primary, #8fd4b0) 30%, #3a4a44);
+}
+:is(html[data-theme="dark"], html.dark) .an-hero {
+  background:
+    radial-gradient(90% 70% at 50% 0%, color-mix(in srgb, #8fd4b0 16%, transparent), transparent 60%),
+    var(--surface-hero, #1a2822) !important;
+}

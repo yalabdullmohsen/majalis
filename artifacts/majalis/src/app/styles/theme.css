@@ -324,6 +324,8 @@ html.dark,
   --mj-surface: #1B2421;
   --mj-surface-2: #222D29;
   --mj-surface-3: #2A3733;
+  --mj-surface-elevated: var(--surface-elevated, #24302B);
+  --mj-surface-interactive: var(--surface-interactive, #2B3933);
   --mj-hairline: #35443F;
   --mj-border-strong: #445651;
   /* نص ليلي واضح — بلا رمادي باهت؛ الأساسي شبه أبيض */
@@ -381,6 +383,23 @@ html.dark,
   --color-ink: #F8FAFC;
   --color-ink-2: #E2E8F0;
   --color-surface-elevated: #222D29;
+
+  /* ═══ Dark Design System — طبقات مستقلة (ليست Invert) ═══ */
+  --surface: #161E1B;
+  --surface-secondary: #1C2622;
+  --surface-elevated: #24302B;
+  --surface-interactive: #2B3933;
+  --surface-hero: #1A2822;
+  --surface-hero-ink: #F4FBF7;
+  --surface-hero-muted: #C5D8CE;
+  --text-primary: #F4F7F5;
+  --text-secondary: #D5DED9;
+  --text-muted: #A8B5AF;
+  --icon-primary: #8FD4B0;
+  --icon-secondary: #C5D8CE;
+  --border-elevated: color-mix(in srgb, #8FD4B0 22%, #35443F);
+  --card-separator: color-mix(in srgb, #8FD4B0 14%, #2A3733);
+
   --color-text: #F8FAFC;
   --color-text-muted: #C5D0CB;
   --color-border: #35443F;

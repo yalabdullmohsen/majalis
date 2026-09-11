@@ -1,0 +1,416 @@
+/**
+ * Dark Design System — سُنّة
+ * طبقات أسطح مستقلة (ليست Invert Colors).
+ * يُحمَّل مع dark-mode-surfaces بعد theme.css.
+ */
+
+:is(html[data-theme="dark"], html.dark) {
+  color-scheme: dark;
+
+  /* سلم الأسطح — قيم صريحة (تُكمّل theme.css ولا تعتمد على invert) */
+  --surface: #161e1b;
+  --surface-secondary: #1c2622;
+  --surface-elevated: #24302b;
+  --surface-interactive: #2b3933;
+  --surface-hero: #1a2822;
+  --surface-hero-ink: #f4fbf7;
+  --surface-hero-muted: #c5d8ce;
+  --text-primary: #f4f7f5;
+  --text-secondary: #d5ded9;
+  --text-muted: #a8b5af;
+  --icon-primary: #8fd4b0;
+  --icon-secondary: #c5d8ce;
+  --border-elevated: color-mix(in srgb, #8fd4b0 22%, #35443f);
+  --card-separator: color-mix(in srgb, #8fd4b0 14%, #2a3733);
+
+  /* جسر للمكوّنات القديمة */
+  --mj-bg: var(--surface-app, #131a18);
+  --mj-surface: var(--surface-secondary);
+  --mj-surface-2: var(--surface-elevated);
+  --mj-surface-3: var(--surface-interactive);
+  --mj-ink: var(--text-primary);
+  --mj-ink-2: var(--text-secondary);
+  --mj-muted: var(--text-muted);
+  --ss-card-bg: var(--surface-elevated);
+  --ss-card-border: var(--border-elevated);
+  --bg-elevated: var(--surface-elevated);
+  --color-surface-elevated: var(--surface-elevated);
+}
+
+/* —— خلفية التطبيق: سطح، ليست جدارًا أسود —— */
+:is(html[data-theme="dark"], html.dark) body,
+:is(html[data-theme="dark"], html.dark) #root,
+:is(html[data-theme="dark"], html.dark) .app-shell,
+:is(html[data-theme="dark"], html.dark) .app-main,
+:is(html[data-theme="dark"], html.dark) .screen-shell,
+:is(html[data-theme="dark"], html.dark) .list-screen,
+:is(html[data-theme="dark"], html.dark) .topic-page,
+:is(html[data-theme="dark"], html.dark) .topic-page__body {
+  background-color: var(--surface-app, #131a18);
+  color: var(--text-primary);
+}
+
+/* —— بطاقات: سطح مرتفع فوق الخلفية —— */
+:is(html[data-theme="dark"], html.dark) .soft-card,
+:is(html[data-theme="dark"], html.dark) .soft-card--on-light,
+:is(html[data-theme="dark"], html.dark) .hub-card,
+:is(html[data-theme="dark"], html.dark) .section-entry-card,
+:is(html[data-theme="dark"], html.dark) .ss-card,
+:is(html[data-theme="dark"], html.dark) .mj-card,
+:is(html[data-theme="dark"], html.dark) .content-card,
+:is(html[data-theme="dark"], html.dark) .feature-card,
+:is(html[data-theme="dark"], html.dark) .info-card,
+:is(html[data-theme="dark"], html.dark) .prophet-fact-card,
+:is(html[data-theme="dark"], html.dark) .hadith-card,
+:is(html[data-theme="dark"], html.dark) .reading-section-card,
+:is(html[data-theme="dark"], html.dark) .rsc,
+:is(html[data-theme="dark"], html.dark) [data-card="1"],
+:is(html[data-theme="dark"], html.dark) [class*="soft-card"] {
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--icon-primary) 6%, var(--surface-elevated)) 0%,
+      var(--surface-elevated) 42%,
+      var(--surface-elevated) 100%
+    ) !important;
+  border-color: var(--border-elevated) !important;
+  color: var(--text-primary);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--icon-primary) 8%, transparent),
+    0 8px 20px -14px rgba(0, 0, 0, 0.55);
+}
+
+:is(html[data-theme="dark"], html.dark) .soft-card:active,
+:is(html[data-theme="dark"], html.dark) .hub-card:active,
+:is(html[data-theme="dark"], html.dark) .section-entry-card:active,
+:is(html[data-theme="dark"], html.dark) a.soft-card:active {
+  background: var(--surface-interactive) !important;
+}
+
+/* عناوين/أوصاف داخل البطاقات */
+:is(html[data-theme="dark"], html.dark) .soft-card :is(h1, h2, h3, h4, .hub-card__title, .soft-card__title, .card-title),
+:is(html[data-theme="dark"], html.dark) .hub-card__title,
+:is(html[data-theme="dark"], html.dark) .section-entry-card .hub-card__title,
+:is(html[data-theme="dark"], html.dark) .rsc__title {
+  color: var(--text-primary) !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .soft-card :is(p, .hub-card__desc, .soft-card__desc, .supporting-text),
+:is(html[data-theme="dark"], html.dark) .hub-card__desc,
+:is(html[data-theme="dark"], html.dark) .rsc__body {
+  color: var(--text-secondary) !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .hub-card__meta,
+:is(html[data-theme="dark"], html.dark) .text-muted,
+:is(html[data-theme="dark"], html.dark) .caption {
+  color: var(--text-muted) !important;
+}
+
+/* أيقونات أوضح */
+:is(html[data-theme="dark"], html.dark) .hub-card__icon,
+:is(html[data-theme="dark"], html.dark) .soft-card__icon,
+:is(html[data-theme="dark"], html.dark) .section-icon,
+:is(html[data-theme="dark"], html.dark) .mk-topic-card .hub-card__icon,
+:is(html[data-theme="dark"], html.dark) .mk-lane-card .hub-card__icon {
+  color: var(--icon-primary) !important;
+  background: color-mix(in srgb, var(--icon-primary) 16%, var(--surface-secondary)) !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .hub-card__icon svg,
+:is(html[data-theme="dark"], html.dark) .section-icon svg,
+:is(html[data-theme="dark"], html.dark) [class*="__icon"] svg {
+  color: var(--icon-primary);
+  stroke: var(--icon-primary);
+}
+
+/* —— Dark Hero System: لا هيرو فاتح ليلاً —— */
+:is(html[data-theme="dark"], html.dark) .section-hero,
+:is(html[data-theme="dark"], html.dark) .topic-page__hero,
+:is(html[data-theme="dark"], html.dark) .mss-section-hero,
+:is(html[data-theme="dark"], html.dark) [class*="-hero"]:not(.mushaf-hero):not([data-mushaf-theme]),
+:is(html[data-theme="dark"], html.dark) .sh-hero,
+:is(html[data-theme="dark"], html.dark) .mk-hero,
+:is(html[data-theme="dark"], html.dark) .an-hero,
+:is(html[data-theme="dark"], html.dark) .seerah-hero,
+:is(html[data-theme="dark"], html.dark) .tarikh-hero,
+:is(html[data-theme="dark"], html.dark) .twh-hero {
+  background:
+    radial-gradient(120% 80% at 50% -10%, color-mix(in srgb, var(--icon-primary) 18%, transparent), transparent 55%),
+    linear-gradient(165deg, var(--surface-hero) 0%, color-mix(in srgb, var(--surface-app) 70%, #0d1512) 100%) !important;
+  color: var(--surface-hero-ink) !important;
+  border-color: var(--border-elevated) !important;
+  box-shadow: none !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .section-hero :is(h1, h2, .section-hero__title, .topic-page__title, .sh-hero__title, .an-hero__title),
+:is(html[data-theme="dark"], html.dark) [class*="-hero"] :is(h1, h2, [class*="__title"]) {
+  color: var(--surface-hero-ink) !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .section-hero :is(p, .section-hero__sub, .topic-page__sub, .sh-hero__sub, .an-hero__sub),
+:is(html[data-theme="dark"], html.dark) [class*="-hero"] :is(p, [class*="__sub"], [class*="__eyebrow"]) {
+  color: var(--surface-hero-muted) !important;
+}
+
+/* منع الجدران السوداء: أي بطاقة بنفس سواد الخلفية تُرفع */
+:is(html[data-theme="dark"], html.dark) .soft-card[style*="background: #000"],
+:is(html[data-theme="dark"], html.dark) .soft-card[style*="background:#000"],
+:is(html[data-theme="dark"], html.dark) .soft-card[style*="background: #0"],
+:is(html[data-theme="dark"], html.dark) .card--black {
+  background: var(--surface-elevated) !important;
+}
+
+/* —— الأربعون النووية —— */
+:is(html[data-theme="dark"], html.dark) .an-page {
+  background: var(--surface-app);
+}
+:is(html[data-theme="dark"], html.dark) .an-row,
+:is(html[data-theme="dark"], html.dark) .an-card {
+  background: var(--surface-elevated) !important;
+  border: 1px solid var(--border-elevated) !important;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--icon-primary) 7%, transparent);
+}
+:is(html[data-theme="dark"], html.dark) .an-row__title,
+:is(html[data-theme="dark"], html.dark) .an-card__title {
+  color: var(--text-primary) !important;
+  font-weight: 800;
+}
+:is(html[data-theme="dark"], html.dark) .an-row__num,
+:is(html[data-theme="dark"], html.dark) .an-card__num {
+  background: color-mix(in srgb, var(--icon-primary) 22%, var(--surface-secondary)) !important;
+  color: var(--icon-primary) !important;
+  border: 1px solid color-mix(in srgb, var(--icon-primary) 35%, transparent);
+  font-weight: 800;
+}
+:is(html[data-theme="dark"], html.dark) .an-row__preview,
+:is(html[data-theme="dark"], html.dark) .an-row__text,
+:is(html[data-theme="dark"], html.dark) .an-card__text {
+  color: var(--text-secondary) !important;
+}
+:is(html[data-theme="dark"], html.dark) .an-search {
+  background: var(--surface-secondary) !important;
+  border-color: var(--border-elevated) !important;
+  color: var(--text-primary) !important;
+}
+:is(html[data-theme="dark"], html.dark) .an-cat {
+  background: var(--surface-secondary) !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border-elevated) !important;
+}
+:is(html[data-theme="dark"], html.dark) .an-cat--active {
+  background: color-mix(in srgb, var(--icon-primary) 22%, var(--surface-elevated)) !important;
+  color: var(--icon-primary) !important;
+  border-color: color-mix(in srgb, var(--icon-primary) 40%, transparent) !important;
+}
+
+/* —— العقيدة / التوحيد —— */
+:is(html[data-theme="dark"], html.dark) .twh-hub-card,
+:is(html[data-theme="dark"], html.dark) .tawheed-type-card,
+:is(html[data-theme="dark"], html.dark) .aqidah-card,
+:is(html[data-theme="dark"], html.dark) [class*="tawhid"] .soft-card {
+  background: var(--surface-elevated) !important;
+  border-color: var(--border-elevated) !important;
+  padding-block: 0.75rem !important;
+  min-height: 0 !important;
+}
+:is(html[data-theme="dark"], html.dark) .twh-hub-card__desc,
+:is(html[data-theme="dark"], html.dark) .tawheed-type-card__desc {
+  color: var(--text-secondary) !important;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+:is(html[data-theme="dark"], html.dark) .twh-hub-grid,
+:is(html[data-theme="dark"], html.dark) .aqidah-grid {
+  gap: 0.55rem !important;
+}
+
+/* —— الإعجاز العلمي —— */
+:is(html[data-theme="dark"], html.dark) .mk-page,
+:is(html[data-theme="dark"], html.dark) .topic-page--miracles .topic-page__body {
+  background: var(--surface-app) !important;
+}
+:is(html[data-theme="dark"], html.dark) .mk-topic-card,
+:is(html[data-theme="dark"], html.dark) .mk-lane-card,
+:is(html[data-theme="dark"], html.dark) .mk-card {
+  background: var(--surface-elevated) !important;
+  border-color: var(--border-elevated) !important;
+}
+:is(html[data-theme="dark"], html.dark) .mk-topic-card .hub-card__title,
+:is(html[data-theme="dark"], html.dark) .mk-lane-card .hub-card__title,
+:is(html[data-theme="dark"], html.dark) .mk-card__title,
+:is(html[data-theme="dark"], html.dark) .mk-lane-card__title {
+  color: var(--text-primary) !important;
+}
+:is(html[data-theme="dark"], html.dark) .mk-hub-heading {
+  color: var(--text-primary) !important;
+}
+:is(html[data-theme="dark"], html.dark) .info-card,
+:is(html[data-theme="dark"], html.dark) .mk-info-card {
+  background: color-mix(in srgb, var(--icon-primary) 10%, var(--surface-elevated)) !important;
+  border-color: color-mix(in srgb, var(--icon-primary) 28%, transparent) !important;
+}
+:is(html[data-theme="dark"], html.dark) .info-card__title {
+  color: var(--text-primary) !important;
+}
+:is(html[data-theme="dark"], html.dark) .info-card__body {
+  color: var(--text-secondary) !important;
+}
+
+/* —— الشمائل —— */
+:is(html[data-theme="dark"], html.dark) .sh-page,
+:is(html[data-theme="dark"], html.dark) .sh-page--ds {
+  background: var(--surface-app) !important;
+}
+:is(html[data-theme="dark"], html.dark) .sh-bab,
+:is(html[data-theme="dark"], html.dark) .sh-mahabbah,
+:is(html[data-theme="dark"], html.dark) .prophet-fact-card,
+:is(html[data-theme="dark"], html.dark) .sh-hadith-block .hadith-card {
+  background: var(--surface-elevated) !important;
+  border: 1px solid var(--border-elevated) !important;
+}
+:is(html[data-theme="dark"], html.dark) .sh-bab__title,
+:is(html[data-theme="dark"], html.dark) .prophet-fact-card__value {
+  color: var(--text-primary) !important;
+}
+:is(html[data-theme="dark"], html.dark) .prophet-fact-card__label,
+:is(html[data-theme="dark"], html.dark) .sh-bab__count,
+:is(html[data-theme="dark"], html.dark) .sh-hadith-ref {
+  color: var(--text-muted) !important;
+}
+:is(html[data-theme="dark"], html.dark) .sh-hero--compact,
+:is(html[data-theme="dark"], html.dark) .sh-hero {
+  background:
+    radial-gradient(100% 70% at 70% 0%, color-mix(in srgb, var(--icon-primary) 16%, transparent), transparent 60%),
+    var(--surface-hero) !important;
+}
+:is(html[data-theme="dark"], html.dark) .mj-segmented-filter,
+:is(html[data-theme="dark"], html.dark) .sh-segmented {
+  background: var(--surface-secondary) !important;
+  border-color: var(--border-elevated);
+}
+:is(html[data-theme="dark"], html.dark) .mj-search,
+:is(html[data-theme="dark"], html.dark) .sh-search {
+  background: var(--surface-secondary) !important;
+  border-color: var(--border-elevated) !important;
+  color: var(--text-primary) !important;
+}
+
+/* —— السيرة —— */
+:is(html[data-theme="dark"], html.dark) .seerah-page,
+:is(html[data-theme="dark"], html.dark) .seerah-panel,
+:is(html[data-theme="dark"], html.dark) .seerah-timeline__item {
+  background: transparent;
+}
+:is(html[data-theme="dark"], html.dark) .seerah-panel,
+:is(html[data-theme="dark"], html.dark) .seerah-notice,
+:is(html[data-theme="dark"], html.dark) .seerah-prophets-banner,
+:is(html[data-theme="dark"], html.dark) .seerah-sources {
+  background: var(--surface-elevated) !important;
+  border: 1px solid var(--border-elevated) !important;
+  color: var(--text-primary);
+}
+:is(html[data-theme="dark"], html.dark) .seerah-panel__title,
+:is(html[data-theme="dark"], html.dark) .seerah-timeline__title {
+  color: var(--text-primary) !important;
+}
+:is(html[data-theme="dark"], html.dark) .seerah-panel__desc,
+:is(html[data-theme="dark"], html.dark) .seerah-timeline__year {
+  color: var(--text-secondary) !important;
+}
+:is(html[data-theme="dark"], html.dark) .seerah-timeline__item--active {
+  background: color-mix(in srgb, var(--icon-primary) 14%, var(--surface-elevated)) !important;
+  border-color: color-mix(in srgb, var(--icon-primary) 35%, transparent) !important;
+}
+:is(html[data-theme="dark"], html.dark) .seerah-timeline__dot {
+  background: var(--icon-primary) !important;
+  color: var(--on-accent, #06231a) !important;
+}
+
+/* —— التاريخ الإسلامي —— */
+:is(html[data-theme="dark"], html.dark) .tarikh-card,
+:is(html[data-theme="dark"], html.dark) .tarikh-era,
+:is(html[data-theme="dark"], html.dark) .tarikh-stage {
+  background: var(--surface-elevated) !important;
+  border-color: var(--border-elevated) !important;
+}
+:is(html[data-theme="dark"], html.dark) .tarikh-card__title,
+:is(html[data-theme="dark"], html.dark) .tarikh-era__title {
+  color: var(--text-primary) !important;
+}
+:is(html[data-theme="dark"], html.dark) .tarikh-card__summary,
+:is(html[data-theme="dark"], html.dark) .tarikh-card__meta {
+  color: var(--text-secondary) !important;
+}
+:is(html[data-theme="dark"], html.dark) .tarikh-card__cat,
+:is(html[data-theme="dark"], html.dark) .tarikh-card__badge {
+  background: color-mix(in srgb, var(--icon-primary) 16%, var(--surface-secondary)) !important;
+  color: var(--icon-primary) !important;
+}
+
+/* —— Hadith cards عامة —— */
+:is(html[data-theme="dark"], html.dark) .hadith-card {
+  background: var(--surface-elevated) !important;
+  border: 1px solid var(--border-elevated) !important;
+}
+:is(html[data-theme="dark"], html.dark) .hadith-card__title,
+:is(html[data-theme="dark"], html.dark) .hadith-card__matn {
+  color: var(--text-primary) !important;
+}
+:is(html[data-theme="dark"], html.dark) .hadith-badge {
+  border-color: color-mix(in srgb, var(--icon-primary) 30%, transparent);
+}
+
+/* —— Update Available Sheet —— */
+:is(html[data-theme="dark"], html.dark) .update-available-sheet,
+:is(html[data-theme="dark"], html.dark) .update-available-sheet.app-sheet--auto,
+:is(html[data-theme="dark"], html.dark) .app-sheet.update-available-sheet,
+:is(html[data-theme="dark"], html.dark) .app-sheet {
+  background: var(--surface-elevated) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-elevated) !important;
+}
+:is(html[data-theme="dark"], html.dark) .update-available-sheet .app-sheet__head,
+:is(html[data-theme="dark"], html.dark) .update-available-sheet .app-sheet__title {
+  color: var(--text-primary) !important;
+  background: transparent !important;
+}
+:is(html[data-theme="dark"], html.dark) .update-available-sheet__copy {
+  color: var(--text-secondary) !important;
+  line-height: 1.7;
+}
+:is(html[data-theme="dark"], html.dark) .update-available-sheet .app-sheet__footer,
+:is(html[data-theme="dark"], html.dark) .update-available-sheet .app-sheet__footer-slot {
+  background: var(--surface-secondary) !important;
+  border-top: 1px solid var(--border-elevated);
+}
+:is(html[data-theme="dark"], html.dark) .update-available-sheet__update-btn,
+:is(html[data-theme="dark"], html.dark) .update-available-sheet .app-sheet__close--primary {
+  background: var(--icon-primary) !important;
+  color: var(--on-accent, #06231a) !important;
+  border: none !important;
+  font-weight: 800;
+}
+:is(html[data-theme="dark"], html.dark) .update-available-sheet .app-sheet__close:not(.app-sheet__close--primary) {
+  background: var(--surface-interactive) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-elevated) !important;
+}
+
+/* —— OLED: خلفية أعمق مع الإبقاء على طبقات مرتفعة —— */
+@media (dynamic-range: high) {
+  :is(html[data-theme="dark"], html.dark) {
+    --surface-app: #0c1210;
+    --mj-bg: #0c1210;
+  }
+}
+
+/* Dynamic Type: لا تكسر التسلسل اللوني عند تكبير النص */
+:is(html[data-theme="dark"], html.dark) .hub-card__title,
+:is(html[data-theme="dark"], html.dark) .an-row__title,
+:is(html[data-theme="dark"], html.dark) .tarikh-card__title {
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}

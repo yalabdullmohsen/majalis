@@ -475,3 +475,37 @@ html[data-theme="dark"] .twh-book-level--mid { color: var(--mj-brand, #7ed4b5) !
   margin: 0;
 }
 
+
+
+/* —— كثافة + Dark DS —— */
+.twh-hub-grid,
+.tawheed-types-grid {
+  gap: 0.55rem;
+}
+.twh-hub-card,
+.tawheed-type-card {
+  padding: 0.75rem 0.85rem;
+  min-height: 0;
+}
+.twh-hub-card__desc,
+.tawheed-type-card__desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  line-height: 1.55;
+  font-size: 0.82rem;
+}
+:is(html[data-theme="dark"], html.dark) .twh-hub-card,
+:is(html[data-theme="dark"], html.dark) .tawheed-type-card {
+  background: var(--surface-elevated, #24302b);
+  border-color: var(--border-elevated, #3a4a44);
+}
+:is(html[data-theme="dark"], html.dark) .twh-hub-card__title,
+:is(html[data-theme="dark"], html.dark) .tawheed-type-card__title {
+  color: var(--text-primary, #f4f7f5);
+}
+:is(html[data-theme="dark"], html.dark) .twh-hub-card__desc,
+:is(html[data-theme="dark"], html.dark) .tawheed-type-card__desc {
+  color: var(--text-secondary, #d5ded9);
+}

@@ -576,3 +576,12 @@ html.dark .mk-pill--topic,
   font-size: 0.82rem;
   color: var(--mk-muted, var(--mj-ink-2));
 }
+
+/* mk Dark DS */
+
+:is(html[data-theme="dark"], html.dark) .mk-page { background: var(--surface-app, #131a18) !important; }
+:is(html[data-theme="dark"], html.dark) .mk-topic-card.hub-card,
+:is(html[data-theme="dark"], html.dark) .mk-lane-card.hub-card {
+  background: var(--surface-elevated, #24302b) !important;
+  border-color: var(--border-elevated) !important;
+}
