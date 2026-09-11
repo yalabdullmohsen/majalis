@@ -686,7 +686,7 @@ html.dark .lesson-detail-title,
 
 html.dark .lesson-detail-info-grid dd,
 [data-theme="dark"] .lesson-detail-info-grid dd {
-  color: #e8f2ed;
+  color: var(--mj-ink);
 }
 
 @media (max-width: 420px) {
@@ -1087,7 +1087,7 @@ html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__header {
 
 html.dark .lessons-page-v2 .lesson-unified-card__title,
 html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__title {
-  color: #d8ebe2;
+  color: var(--mj-ink);
 }
 
 html.dark .lessons-page-v2 .lesson-unified-card__category,
@@ -1109,7 +1109,7 @@ html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__status,
 html.dark .lessons-page-v3 .lesson-unified-card__status,
 html[data-theme="dark"] .lessons-page-v3 .lesson-unified-card__status {
   background: var(--mj-chip-bg, #222c28) !important;
-  color: var(--mj-chip-fg, #e8f2ed) !important;
+  color: var(--mj-chip-fg, var(--mj-ink)) !important;
   border-color: var(--mj-chip-border, #3a4641) !important;
 }
 
@@ -1158,7 +1158,7 @@ html.dark .lessons-page-v3 .lesson-unified-card__fact-value,
 html[data-theme="dark"] .lessons-page-v3 .lesson-unified-card__fact-value,
 html.dark .lesson-detail-page .lesson-unified-card__fact-value,
 html[data-theme="dark"] .lesson-detail-page .lesson-unified-card__fact-value {
-  color: #e8f2ed !important;
+  color: var(--mj-ink) !important;
 }
 
 html.dark .lessons-page-v2 .lesson-unified-card__meta-label,
@@ -1182,7 +1182,7 @@ html.dark .section-lobby.lessons-page-v3 .lesson-unified-card__title,
 html[data-theme="dark"] .section-lobby.lessons-page-v3 .lesson-unified-card__title,
 html.dark .lesson-detail-page .lesson-unified-card__title,
 html[data-theme="dark"] .lesson-detail-page .lesson-unified-card__title {
-  color: #e8f2ed !important;
+  color: var(--mj-ink) !important;
 }
 
 html.dark .lessons-page-v2 .lesson-unified-card__btn--secondary,
@@ -1190,7 +1190,7 @@ html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__btn--secondary,
 html.dark .lessons-page-v2 .lesson-unified-card__actions--compact .favorite-btn,
 html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__actions--compact .favorite-btn {
   background: color-mix(in srgb, var(--mj-brand) 16%, #15201c) !important;
-  color: #e8f2ed !important;
+  color: var(--mj-ink) !important;
   border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #5a9e88)) 35%, var(--mj-hairline)) !important;
 }
 
@@ -1371,7 +1371,7 @@ html[data-theme="dark"] .lesson-detail-page .lesson-detail-actions-panel {
 }
 
 .lesson-status-badge--archived {
-  background: color-mix(in srgb, #666 10%, transparent);
+  background: color-mix(in srgb, var(--mj-muted) 10%, transparent);
   color: var(--mj-muted);
 }
 
@@ -1681,7 +1681,7 @@ html.dark .lessons-page-v3 .filter-chips__chip.is-active,
 html.dark .section-lobby.lessons-page-v3 .lesson-unified-card__title,
 html[data-theme="dark"] .section-lobby.lessons-page-v3 .lesson-unified-card__title,
 .dark .section-lobby.lessons-page-v3 .lesson-unified-card__title {
-  color: #d8ebe2;
+  color: var(--mj-ink);
 }
 .section-lobby.lessons-page-v3 .lesson-unified-card--compact .lesson-unified-card__facts {
   gap: 0.25rem;

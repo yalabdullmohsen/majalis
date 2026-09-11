@@ -11,7 +11,7 @@
   font-weight: 600 !important;
 }
 .notif-banner--err {
-  background: color-mix(in srgb, var(--mj-danger, #b91c1c) 8%, var(--mj-surface, var(--mj-white, #ffffff))) !important;
+  background: color-mix(in srgb, var(--mj-danger, var(--mj-danger)) 8%, var(--mj-surface, var(--mj-white, #ffffff))) !important;
   color: var(--mj-danger-deep) !important;
   border: 1px solid rgba(185,28,28,0.22) !important;
   border-radius: var(--radius-button, 18px) !important;
@@ -592,7 +592,7 @@ html.dark .notif-row__label {
   flex-shrink: 0;
   width: 48px; height: 27px;
   border-radius: 999px;
-  background: var(--ds-line-color, #ddd);
+  background: var(--ds-line-color, var(--mj-hairline));
   position: relative;
   cursor: pointer;
   transition: background 0.2s;

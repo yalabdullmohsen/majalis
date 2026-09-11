@@ -203,7 +203,7 @@
 }
 .twh-hub-card--current .twh-hub-card__body { padding-top: 0.85rem; }
 html[data-theme="dark"] .twh-hub-card__current-tag {
-  color: #7ED4B5 !important;
+  color: var(--mj-brand, #7ed4b5) !important;
 }
 html[data-theme="dark"] .twh-hub-card__desc {
   color: #A8BDB6;
@@ -281,7 +281,7 @@ html[data-theme="dark"] .twh-hub-card__desc {
   display: inline-block;
   margin-bottom: 0.5rem;
 }
-.twh-book-level--beginner { background: #D1FAE5; color: var(--mj-brand); }
+.twh-book-level--beginner { background: var(--mj-success-soft, #d1fae5); color: var(--mj-brand); }
 .twh-book-level--mid      { background: rgba(23,61,53,.12); color: var(--mj-brand); }
 .twh-book-level--adv {
   background: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #1f6b56)) 14%, var(--ss-card-bg, var(--mj-surface)));
@@ -289,7 +289,7 @@ html[data-theme="dark"] .twh-hub-card__desc {
 }
 /* --mid وحدها خلفيتها شفافة (تتلوّن بلون البطاقة المحيطة) فتصبح داكنة في
    الوضع الليلي بينما نصها var(--mj-brand) يبقى داكنًا — نفس تصادم .sw-badge--wajib. */
-html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
+html[data-theme="dark"] .twh-book-level--mid { color: var(--mj-brand, #7ed4b5) !important; }
 
 
 /* ============================================================

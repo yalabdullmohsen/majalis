@@ -81,7 +81,7 @@
   padding: 0.65rem 0.75rem;
   border: 1px solid var(--majalis-line, #e8e4dc);
   border-radius: 12px;
-  background: color-mix(in srgb, var(--majalis-parchment, #fafaf8) 94%, var(--mj-white, #ffffff));
+  background: color-mix(in srgb, var(--majalis-parchment, var(--mj-surface)) 94%, var(--mj-white, #ffffff));
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 6px 18px rgba(15, 61, 48, 0.06);
@@ -220,7 +220,7 @@
   margin: 0;
   font-size: 0.86rem;
   line-height: 1.65;
-  color: #444;
+  color: var(--mj-muted);
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -296,7 +296,7 @@
   border-top: 1px solid var(--majalis-line, #e8e4dc);
   font-size: 0.82rem;
   line-height: 1.6;
-  color: #666;
+  color: var(--mj-muted);
 }
 
 .qc-footnote a {

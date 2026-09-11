@@ -217,7 +217,7 @@
 .sr-skel {
   height: 4.5rem;
   border-radius: 0.85rem;
-  background: linear-gradient(90deg, #eee, #f7f7f7, #eee);
+  background: linear-gradient(90deg, var(--mj-surface-2), #f7f7f7, var(--mj-surface-2));
   background-size: 200% 100%;
   animation: sr-shine 1.2s linear infinite;
 }

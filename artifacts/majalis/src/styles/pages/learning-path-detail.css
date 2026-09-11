@@ -47,7 +47,7 @@
   font-size: 0.69rem;
   font-weight: 600;
 }
-.lpd2-badge--level  { background: rgba(94,203,161,.18); color: #a8edca; border: 1px solid rgba(94,203,161,.3); }
+.lpd2-badge--level  { background: rgba(94,203,161,.18); color: var(--mj-ink); border: 1px solid rgba(94,203,161,.3); }
 .lpd2-badge--hours  { background: rgba(250,248,242,.1);  color: var(--on-dark-body, var(--mj-surface-2)); border: 1px solid rgba(250,248,242,.2); }
 .lpd2-badge--mods   { background: rgba(250,248,242,.1);  color: var(--on-dark-body, var(--mj-surface-2)); border: 1px solid rgba(250,248,242,.2); }
 
@@ -76,7 +76,7 @@
 }
 .lpd2-hero__bar-fill {
   height: 100%;
-  background: #5ecba1;
+  background: var(--mj-brand, #5ecba1);
   border-radius: var(--ds-radius-full);
   transition: width .5s ease;
 }
@@ -88,7 +88,7 @@
   flex-shrink: 0;
 }
 .lpd2-ring__track { stroke: rgba(255,255,255,.12); }
-.lpd2-ring__fill  { stroke: #5ecba1; }
+.lpd2-ring__fill  { stroke: var(--mj-brand, #5ecba1); }
 .lpd2-ring__pct {
   position: absolute;
   inset: 0;
@@ -97,7 +97,7 @@
   justify-content: center;
   font-size: 0.78rem;
   font-weight: 700;
-  color: #a8edca;
+  color: var(--mj-ink);
   pointer-events: none;
 }
 
@@ -309,8 +309,8 @@ html[data-theme="dark"] .lpd2-module {
   border-color: rgba(255,255,255,.1);
 }
 html[data-theme="dark"] .lpd2-module--done { background: rgba(23,61,53,.1); border-color: rgba(23,61,53,.25); }
-html[data-theme="dark"] .lpd2-module__title { color: var(--mj-brand-soft); }
-html[data-theme="dark"] .lpd2-module--done .lpd2-module__title { color: #5ecba1; }
+html[data-theme="dark"] .lpd2-module__title { color: var(--mj-ink); }
+html[data-theme="dark"] .lpd2-module--done .lpd2-module__title { color: var(--mj-brand, #5ecba1); }
 
 /* ══════════════════════════════════════════════════════
    62  Learning Path Detail Page  (lpd-*)

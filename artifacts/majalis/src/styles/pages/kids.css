@@ -93,7 +93,7 @@
 }
 .kids-hub-soon__btn--primary {
   background: var(--brand-deep, var(--mj-brand-deep));
-  color: #fafaf8;
+  color: var(--mj-surface);
   border-color: transparent;
 }
 .kids-hub-grid {

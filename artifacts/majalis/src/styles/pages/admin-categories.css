@@ -15,8 +15,8 @@
 .cat-admin__error {
   margin: 0.75rem 0;
   padding: 0.65rem 0.85rem;
-  border: 1px solid #FECACA;
-  background: #FEF2F2;
+  border: 1px solid var(--mj-danger-soft, #fecaca);
+  background: var(--mj-danger-soft, #fef2f2);
   color: var(--mj-danger-deep);
   border-radius: 0.5rem;
   font-size: 0.85rem;
@@ -230,7 +230,7 @@
 
 .cat-node__warn {
   color: var(--mj-warning);
-  background: #FEF3C7;
+  background: var(--mj-warning-soft, #fef3c7);
   border: 1px solid #FCD34D;
   border-radius: 0.25rem;
   padding: 0.05rem 0.35rem;
@@ -308,9 +308,9 @@
 }
 
 /* تمييز بصري بالحالة — لون + نمط حد + أيقونة نصية */
-.cat-node[data-status="published"] { border-inline-start: 3px solid #1E40AF; }
+.cat-node[data-status="published"] { border-inline-start: 3px solid var(--mj-info); }
 .cat-node[data-status="pending_review"] { border-inline-start: 3px solid var(--mj-info); border-style: solid dashed solid solid; }
-.cat-node[data-status="draft"] { border-inline-start: 3px solid #9CA3AF; }
+.cat-node[data-status="draft"] { border-inline-start: 3px solid var(--mj-muted); }
 .cat-node[data-status="hidden"] { border-inline-start: 3px dotted var(--mj-muted); opacity: 0.92; }
 .cat-node[data-status="rejected"] { border-inline-start: 3px solid var(--mj-danger-deep); }
 .cat-node[data-status="archived"] { border-inline-start: 3px double #78716C; }
@@ -318,7 +318,7 @@
 html[data-theme="dark"] .cat-node,
 html.dark .cat-node {
   background: var(--majalis-surface, #1c1c1a);
-  border-color: var(--majalis-line, #333);
+  border-color: var(--majalis-line, var(--mj-ink));
 }
 
 html[data-theme="dark"] .cat-admin__stats,

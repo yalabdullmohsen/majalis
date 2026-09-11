@@ -76,7 +76,7 @@
 
 html.dark .tf-stat,
 html[data-theme="dark"] .tf-stat {
-  background: color-mix(in srgb, var(--surface-brand-wash, #16261F) 90%, #0f1612);
+  background: color-mix(in srgb, var(--surface-brand-wash, #16261F) 90%, var(--mj-ink));
   border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #5a9e88)) 26%, var(--mj-hairline));
   box-shadow: none;
 }

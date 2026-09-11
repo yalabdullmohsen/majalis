@@ -17,7 +17,7 @@
 .tpc-related__chip {
   padding: 0.375rem 0.75rem;
   border-radius: var(--ds-radius-full);
-  background: var(--panel-soft, #f3f4f6);
+  background: var(--panel-soft, var(--mj-surface-2));
   text-decoration: none;
   font-size: var(--ds-text-sm);
 }

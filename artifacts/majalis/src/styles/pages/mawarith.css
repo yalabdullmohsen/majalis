@@ -122,7 +122,7 @@
 .mw-diptych       { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
 .mw-diptych__half { border-radius: .8rem; padding: .9rem 1rem; }
 .mw-diptych__half--green { background: var(--mj-brand-soft); border: 1px solid var(--mj-success-soft); }
-.mw-diptych__half--red   { background: color-mix(in srgb, var(--mj-danger) 8%, white); border: 1px solid #FECDD3; }
+.mw-diptych__half--red   { background: color-mix(in srgb, var(--mj-danger) 8%, white); border: 1px solid var(--mj-danger-soft, #fecdd3); }
 .mw-diptych__title { font-size: .85rem; font-weight: 700; color: var(--mj-ink); margin: 0 0 .65rem; }
 .mw-reason-item   { margin-bottom: .5rem; }
 .mw-reason-item__title { display: block; font-size: .8rem; font-weight: 700; color: var(--mj-ink); margin-bottom: .15rem; }
@@ -534,7 +534,7 @@
   background: rgba(217,164,6,0.10);
   border: 1px solid rgba(217,164,6,0.3);
   border-radius: var(--ds-radius, 0.5rem);
-  color: #7A5C00;
+  color: var(--mj-warning);
   font-size: 0.84rem;
   margin-bottom: 0.75rem;
   line-height: 1.6;
@@ -551,7 +551,7 @@
   font-weight: 800;
   color: var(--ds-emerald);
 }
-.mwc-estate-note { font-size: 0.78rem; color: #7A5C00; margin-top: 0.5rem; }
+.mwc-estate-note { font-size: 0.78rem; color: var(--mj-warning); margin-top: 0.5rem; }
 
 .mwc-shares-table { overflow-x: auto; }
 .mwc-shares-table__head, .mwc-shares-table__row {

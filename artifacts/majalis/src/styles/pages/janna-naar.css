@@ -79,7 +79,7 @@
 .jn-ref { font-size: .72rem; color: var(--mj-muted); margin: 0; }
 
 .jn-intro--naar { background: rgba(155,28,28,.05); border-right-color: var(--mj-danger); }
-.jn-intro--naar p { color: #7F1D1D; }
+.jn-intro--naar p { color: var(--mj-danger); }
 .jn-sabab-card--naar { border-color: rgba(155,28,28,.15); }
 .jn-sabab-num--naar { background: var(--mj-danger); }
 

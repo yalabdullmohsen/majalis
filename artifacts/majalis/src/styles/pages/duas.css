@@ -117,7 +117,7 @@
   overflow: hidden;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
-.dua-card:hover { border-color: #9BC5B3; }
+.dua-card:hover { border-color: var(--mj-brand-soft); }
 .dua-card--open { border-color: var(--mj-brand); box-shadow: 0 4px 18px rgba(31,77,58,0.1); }
 
 .dua-card__head {

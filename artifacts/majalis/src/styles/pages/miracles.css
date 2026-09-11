@@ -108,8 +108,8 @@
 }
 
 .mk-lane-card--sunnah .mk-lane-card__icon {
-  background: color-mix(in srgb, #c4a574 22%, var(--mk-surface));
-  color: #6b5428;
+  background: color-mix(in srgb, var(--mj-accent) 22%, var(--mk-surface));
+  color: var(--mj-warning);
 }
 
 .mk-lane-card__body {
@@ -138,7 +138,7 @@
 }
 
 .mk-lane-card--sunnah .mk-lane-card__meta {
-  color: #6b5428;
+  color: var(--mj-warning);
 }
 
 .mk-lane-card__cta {
@@ -156,7 +156,7 @@
 }
 
 .mk-lane-card--sunnah .mk-lane-card__cta {
-  background: #6b5428;
+  background: var(--mj-warning);
 }
 
 @media (max-width: 420px) {
@@ -190,7 +190,7 @@
 }
 
 .mk-card--sunnah {
-  border-color: color-mix(in srgb, #c4a574 28%, var(--mk-line));
+  border-color: color-mix(in srgb, var(--mj-accent) 28%, var(--mk-line));
 }
 
 .mk-card__head {
@@ -234,7 +234,7 @@
 }
 
 .mk-pill--method.mk-pill--caution {
-  background: color-mix(in srgb, #c4a574 20%, var(--mk-surface));
+  background: color-mix(in srgb, var(--mj-accent) 20%, var(--mk-surface));
   color: #5c4a28;
 }
 
@@ -321,7 +321,7 @@
 
 .mk-page--sunnah .mk-expand-btn,
 .mk-card--sunnah .mk-expand-btn {
-  background: #6b5428;
+  background: var(--mj-warning);
 }
 
 .mk-expand-btn:hover,

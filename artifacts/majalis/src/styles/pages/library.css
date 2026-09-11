@@ -387,7 +387,7 @@ html.dark .lib-view-btn {
 }
 html[data-theme="dark"] .lrn-hub-gateway,
 html.dark .lrn-hub-gateway {
-  color: var(--majalis-ink, #f5f5f5);
+  color: var(--majalis-ink, var(--mj-surface-2));
 }
 
 .lrn-hub-stats {

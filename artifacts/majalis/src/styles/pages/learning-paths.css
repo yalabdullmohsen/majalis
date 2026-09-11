@@ -13,7 +13,7 @@
 .lpp-path-card__title { font-weight: 700; margin-bottom: 0.5rem; color: var(--emerald-deep); }
 .lpp-path-card__desc  { font-size: var(--ds-text-sm); color: var(--ink-soft); margin-bottom: 0.75rem; line-height: 1.5; }
 .lpp-path-card__meta  { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; font-size: var(--ds-text-xs); }
-.lpp-path-card__badge { padding: 0.125rem 0.5rem; border-radius: var(--ds-radius-full); background: var(--panel-soft, #f3f4f6); }
+.lpp-path-card__badge { padding: 0.125rem 0.5rem; border-radius: var(--ds-radius-full); background: var(--panel-soft, var(--mj-surface-2)); }
 
 /* Extended lpp-* styles */
 .lpp-page { padding-bottom: 3rem; }

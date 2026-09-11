@@ -198,10 +198,10 @@
 html[data-theme="dark"] .hb-tab { background: var(--mj-brand-deep); border-color: rgba(92,196,154,.2); color: #C8D8D0; }
 html[data-theme="dark"] .hb-tab--active { background: var(--ds-emerald, var(--mj-brand)); color: var(--mj-white, #ffffff); }
 html[data-theme="dark"] .hb-sidebar { background: var(--mj-brand-deep); border-color: rgba(92,196,154,.15); }
-html[data-theme="dark"] .hb-hadith-row { background: var(--mj-brand-deep); border-color: rgba(92,196,154,.15); color: #E8DED4; }
+html[data-theme="dark"] .hb-hadith-row { background: var(--mj-brand-deep); border-color: rgba(92,196,154,.15); color: var(--mj-accent-soft, #e8ded4); }
 html[data-theme="dark"] .hb-hadith-row:hover, html[data-theme="dark"] .hb-hadith-row--expanded { border-color: rgba(23,61,53,.4); }
-html[data-theme="dark"] .hb-hadith-row__preview { color: #E8DED4; }
-html[data-theme="dark"] .hb-search-input { background: var(--mj-brand-deep); border-color: rgba(92,196,154,.2); color: #E8DED4; }
+html[data-theme="dark"] .hb-hadith-row__preview { color: var(--mj-accent-soft, #e8ded4); }
+html[data-theme="dark"] .hb-search-input { background: var(--mj-brand-deep); border-color: rgba(92,196,154,.2); color: var(--mj-accent-soft, #e8ded4); }
 html[data-theme="dark"] .hb-notice { background: rgba(23,61,53,.08); }
 
 /* بانر الكتب الحديثية الكاملة (في HadithPage) */

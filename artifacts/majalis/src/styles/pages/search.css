@@ -443,7 +443,7 @@ a.search-suggestion-chip {
 .search-kind-badge--fawaid      { background: color-mix(in srgb, var(--mj-brand) 10%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
 .search-kind-badge--adhkar      { background: var(--mj-brand-soft); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
 .search-kind-badge--library     { background: color-mix(in srgb, var(--mj-accent, #b08a3e) 12%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-accent, #B08A3E); border-color: color-mix(in srgb, var(--mj-accent) 22%, transparent); }
-.search-kind-badge--hadith      { background: color-mix(in srgb, var(--mj-danger, #b91c1c) 10%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-danger, #BE123C); border-color: color-mix(in srgb, var(--mj-danger) 22%, transparent); }
+.search-kind-badge--hadith      { background: color-mix(in srgb, var(--mj-danger, var(--mj-danger)) 10%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-danger, #BE123C); border-color: color-mix(in srgb, var(--mj-danger) 22%, transparent); }
 .search-kind-badge--quran       { background: var(--mj-brand-soft); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
 .search-kind-badge--story,
 .search-kind-badge--stories     { background: color-mix(in srgb, var(--mj-brand) 10%, transparent); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
@@ -564,12 +564,12 @@ html[data-theme="dark"] .srch-history-wrap {
 html[data-theme="dark"] .srch-history-chip {
   background: rgba(23,61,53,.15);
   border-color: rgba(23,61,53,.3);
-  color: var(--mj-brand-soft);
+  color: var(--mj-ink);
 }
 html[data-theme="dark"] .srch-quick-card {
   background: rgba(255,255,255,.04);
   border-color: rgba(23,61,53,.2);
-  color: var(--mj-brand-soft);
+  color: var(--mj-ink);
 }
 html[data-theme="dark"] .srch-quick-card:hover {
   background: rgba(23,61,53,.12);

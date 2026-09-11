@@ -82,7 +82,7 @@
   padding: 0.85rem 1rem;
   border-radius: 0.85rem;
   border: 1px solid var(--mj-hairline, rgba(24, 54, 42, 0.15));
-  background: var(--mj-surface, #fafaf8);
+  background: var(--mj-surface, var(--mj-surface));
   text-decoration: none;
   color: inherit;
   text-align: start;
@@ -92,7 +92,7 @@
 
 .quran-search-page__hit:hover {
   border-color: color-mix(in srgb, var(--mj-brand) 45%, transparent);
-  background: color-mix(in srgb, var(--mj-brand) 6%, var(--mj-surface, #fafaf8));
+  background: color-mix(in srgb, var(--mj-brand) 6%, var(--mj-surface, var(--mj-surface)));
 }
 
 .quran-search-page__hit header {

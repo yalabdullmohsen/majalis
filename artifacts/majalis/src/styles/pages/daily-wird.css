@@ -316,9 +316,9 @@
 html[data-theme="dark"] .khatma-celebration {
   background: linear-gradient(135deg, rgba(23,61,53,.2), rgba(23,61,53,.08));
   border-color: rgba(23,61,53,.3);
-  color: #6ab58e;
+  color: var(--mj-brand, #6ab58e);
 }
-html[data-theme="dark"] .khatma-celebration svg { color: #6ab58e; }
+html[data-theme="dark"] .khatma-celebration svg { color: var(--mj-brand, #6ab58e); }
 html[data-theme="dark"] .khatma-bar-fill {
   background: var(--mj-brand);
 }
