@@ -59,7 +59,8 @@
 .as-hero,
 .atl-hero,
 .sm-hero,
-.gl-hero {
+.gl-hero,
+.ldb-hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -94,9 +95,23 @@
 .sm-hero::before,
 .sm-hero::after,
 .gl-hero::before,
-.gl-hero::after {
+.gl-hero::after,
+.ldb-hero::before,
+.ldb-hero::after {
   content: none !important;
   display: none !important;
+}
+
+.ldb-hero a,
+.ldb-hero h1,
+.ldb-hero h2,
+.ldb-hero p {
+  color: inherit;
+}
+
+.ldb-hero a {
+  color: var(--mss-on-hero-accent, #123f2e) !important;
+  opacity: 1;
 }
 
 /* —— PageHero الداخلي (غير الرئيسية) —— */

@@ -2,7 +2,13 @@
    77 — LearningPathDashboardPage  (ldb-*)
    ============================================================ */
 
-.ldb-hero { background: linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald)); color: var(--mj-white, #ffffff); padding: 2.5rem 1rem; }
+/* soft-card عبر modern-section-shell — لا شريط أخضر ممتد */
+.ldb-hero {
+  padding: 1.5rem 1.15rem;
+  max-width: min(56rem, calc(100% - 2 * max(1rem, var(--page-gutter, 1rem))));
+  margin-inline: auto;
+  margin-block: 0.65rem 0.85rem;
+}
 
 .ldb-stat--completed  { --stat-bg: var(--mj-success-soft); --stat-color: var(--mj-brand); }
 .ldb-stat--inprogress { --stat-bg: #E6EDE9; --stat-color: var(--mj-brand-deep); }

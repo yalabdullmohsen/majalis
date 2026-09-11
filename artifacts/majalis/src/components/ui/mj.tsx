@@ -39,7 +39,7 @@ export function Card({
 }) {
   return (
     <div
-      className={cn("mj-card", link && "mj-card--link", raised && "mj-card--raised", className)}
+      className={cn("mj-card soft-card soft-card--on-light", link && "mj-card--link", raised && "mj-card--raised", className)}
       onClick={onClick}
       onKeyDown={onClick ? (e) => { if (e.key === "Enter" || e.key === " ") onClick(); } : undefined}
       role={onClick ? "button" : undefined}
