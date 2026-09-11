@@ -3,7 +3,7 @@ import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 
 type Common = {
-  variant?: "primary" | "secondary" | "ghost" | "gold";
+  variant?: "primary" | "secondary" | "ghost" | "destructive" | "gold";
   size?: "md" | "sm" | "lg";
   className?: string;
   children: ReactNode;
@@ -26,7 +26,9 @@ const VARIANT: Record<NonNullable<Common["variant"]>, string> = {
   primary: "ss-action-btn--primary",
   secondary: "ss-action-btn--secondary",
   ghost: "ss-action-btn--ghost",
-  gold: "ss-action-btn--gold",
+  destructive: "ss-action-btn--destructive",
+  /** @deprecated استخدم primary/secondary — يُبقى للتوافق */
+  gold: "ss-action-btn--secondary",
 };
 
 /** زر إجراء موحّد — feedback خفيف عبر mj-pressable. */

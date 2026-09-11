@@ -47,14 +47,10 @@
     color-mix(in srgb, var(--mj-surface, #fff) 96%, #eef4f1) 0%,
     color-mix(in srgb, var(--mj-brand, #1f6b56) 4%, #f9fbfa) 100%
   );
-  --soft-card-border: color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, var(--mj-hairline, #d5ddd9));
-  --soft-tile-border: color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, var(--mj-hairline, #d5ddd9));
-  --soft-card-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.7),
-    0 10px 24px -16px rgba(11, 32, 24, 0.18);
-  --soft-tile-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.65),
-    0 8px 18px -12px rgba(11, 32, 24, 0.14);
+  --soft-card-border: transparent;
+  --soft-tile-border: transparent;
+  --soft-card-shadow: 0 6px 20px -14px rgba(11, 32, 24, 0.14);
+  --soft-tile-shadow: 0 4px 14px -12px rgba(11, 32, 24, 0.12);
 }
 
 html.dark .soft-card--on-light,

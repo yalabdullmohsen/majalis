@@ -167,10 +167,15 @@ html.dark .ss-app-card.soft-card--accent {
   border-color: color-mix(in srgb, var(--ss-primary-green) 18%, var(--ss-border));
 }
 
-.ss-action-btn--gold {
-  background: color-mix(in srgb, var(--ss-soft-gold, #b08a3e) 88%, #fff);
-  color: #1a1510;
-  border-color: color-mix(in srgb, var(--ss-soft-gold) 40%, transparent);
+.ss-action-btn--destructive {
+  background: color-mix(in srgb, var(--mj-danger, #c0392b) 12%, transparent);
+  color: var(--mj-danger, #9b2c1f);
+  border-color: color-mix(in srgb, var(--mj-danger, #c0392b) 35%, transparent);
+}
+
+.ss-action-btn--destructive:hover,
+.ss-action-btn--destructive:focus-visible {
+  background: color-mix(in srgb, var(--mj-danger, #c0392b) 18%, transparent);
 }
 
 .ss-action-btn.is-disabled {
