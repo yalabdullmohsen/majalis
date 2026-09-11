@@ -32,6 +32,20 @@ function upsertThemeColor(hex: string) {
   });
 }
 
+/** iOS PWA / Safari: default = أيقونات داكنة · black-translucent ≈ أيقونات فاتحة فوق المحتوى */
+function upsertAppleStatusBarStyle(iconStyle: StatusBarIconStyle) {
+  if (typeof document === "undefined") return;
+  let meta = document.head.querySelector(
+    'meta[name="apple-mobile-web-app-status-bar-style"]',
+  ) as HTMLMetaElement | null;
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute("name", "apple-mobile-web-app-status-bar-style");
+    document.head.appendChild(meta);
+  }
+  meta.setAttribute("content", iconStyle === "dark" ? "default" : "black-translucent");
+}
+
 function upsertViewport() {
   if (typeof document === "undefined") return;
   let vp = document.head.querySelector('meta[name="viewport"]') as HTMLMetaElement | null;
@@ -58,6 +72,7 @@ export function applyPageChromeDom(chrome: PageChromeDef, key?: string) {
   }
   upsertViewport();
   upsertThemeColor(chrome.statusBarColorHex);
+  upsertAppleStatusBarStyle(chrome.statusBarStyle);
 }
 
 async function applyNativeStatusBar(chrome: PageChromeDef) {
