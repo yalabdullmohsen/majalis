@@ -296,8 +296,8 @@ export default function MyCitationsPage() {
 
         {/* قائمة الاقتباسات */}
         <main className="flex-1 min-w-0">
-          {loading ? (
-            <div className="flex items-center justify-center py-16">
+          {loading && saved.length === 0 ? (
+            <div className="flex items-center justify-center py-16" aria-busy="true">
               <Spinner className="size-8 icon-emerald" aria-label="تجهيز المحتوى" />
             </div>
           ) : displayed.length === 0 ? (
@@ -311,7 +311,7 @@ export default function MyCitationsPage() {
               )}
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-4" aria-busy={loading}>
               {displayed.map((item) => {
                 const cit = item.citation;
                 const src = cit?.source as { title_ar?: string; content_type?: string; author_name?: string; book_name?: string } | undefined;
