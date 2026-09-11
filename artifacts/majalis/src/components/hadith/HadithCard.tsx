@@ -120,7 +120,7 @@ export function HadithCard({ item: h, onExpand, detailHref }: Props) {
   return (
     <article
       id={h.id}
-      className="hadith-card ui-card hadith-card--pressable"
+      className="hadith-card soft-card soft-card--on-light hadith-card--pressable"
       data-testid="hadith-card"
     >
       {href ? (

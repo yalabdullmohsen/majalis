@@ -170,3 +170,8 @@
 2. بوابة \`home-cards-appcard-gate.test.ts\` ضمن \`test:soft-cards-system\`.
 3. لا مساس بنصوص شرعية؛ الإبقاء على أصناف الدومين للتخطيط.
 
+## دفعة P23 — 2026-09-11
+
+1. `HadithCard`: استبدال `ui-card` بـ `soft-card soft-card--on-light` مع الإبقاء على `hadith-card`.
+2. بوابة `hadith-card-soft-gate` ضمن `test:soft-cards-system`.
+3. لا تعديل على متن الحديث.
