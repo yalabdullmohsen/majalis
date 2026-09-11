@@ -48,7 +48,7 @@ export function DirectQaCard({ qaId, onDismiss }: { qaId: string; onDismiss: () 
   if (status === "loading") {
     return (
       <div className="qzg-direct-qa qzg-direct-qa--loading" role="status" aria-live="polite">
-        جارٍ فتح السؤال…
+        فتح السؤال…
       </div>
     );
   }

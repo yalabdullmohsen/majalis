@@ -38,7 +38,7 @@ function statusMessage(
   storedStatus: ReciterDownloadStatus | undefined,
 ): string {
   if (status === "downloading" && progress) {
-    return `جاري تنزيل سورة ${toArabicDigits(progress.currentSurah)} من ١١٤ · ${progress.downloadedMB}/${progress.totalMB} م.ب`;
+    return `تنزيل سورة ${toArabicDigits(progress.currentSurah)} من ١١٤ · ${progress.downloadedMB}/${progress.totalMB} م.ب`;
   }
   if (status === "completed") return "تم تنزيل المصحف كاملاً";
   if (status === "paused") {

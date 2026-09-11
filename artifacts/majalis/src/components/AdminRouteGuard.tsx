@@ -94,7 +94,7 @@ export function AdminRouteGuard({ children }: { children: React.ReactNode }) {
     return (
       <div className="login-page">
         <div className="login-card" role="status" aria-live="polite">
-          <p className="ds-empty">جارٍ التحقق من تسجيل الدخول وصلاحية الوصول…</p>
+          <p className="ds-empty" role="status" aria-busy="true" aria-label="تحديث الجلسة" />
         </div>
       </div>
     );
@@ -105,7 +105,7 @@ export function AdminRouteGuard({ children }: { children: React.ReactNode }) {
     return (
       <div className="login-page">
         <div className="login-card" role="status" aria-live="polite">
-          <p className="ds-empty">جارٍ التحقق من تسجيل الدخول وصلاحية الوصول…</p>
+          <p className="ds-empty" role="status" aria-busy="true" aria-label="تحديث الجلسة" />
         </div>
       </div>
     );
@@ -116,7 +116,7 @@ export function AdminRouteGuard({ children }: { children: React.ReactNode }) {
     return (
       <div className="login-page">
         <div className="login-card">
-          <p className="ds-empty">جاري التحويل إلى صفحة الدخول…</p>
+          <p className="ds-empty" role="status" aria-busy="true" aria-label="الانتقال لتسجيل الدخول" />
           <Link href="/login?next=/admin" className="login-back-link">
             الذهاب لتسجيل الدخول
           </Link>

@@ -148,9 +148,9 @@ export class ErrorBoundary extends Component<Props, State> {
             dir="rtl"
             data-nosnippet
           >
-            <p className="error-boundary-page__title">جاري تحديث العرض</p>
+            <p className="error-boundary-page__title">تحديث العرض</p>
             <p className="error-boundary-page__body">
-              تم تحديث المنصة، جاري تحسين العرض…
+              تم تحديث المنصة. يُحدَّث العرض…
             </p>
           </div>
         );
@@ -288,7 +288,7 @@ export class SectionErrorBoundary extends Component<SectionBoundaryProps, Sectio
       if (this.state.recovering || (chunkError && isChunkRecoveryInFlight())) {
         return (
           <div className="adv-error-state adv-error-state--section" role="status" aria-live="polite" dir="rtl">
-            <p className="adv-error-state__msg">تم تحديث المنصة، جاري تحسين العرض…</p>
+            <p className="adv-error-state__msg">تم تحديث المنصة. يُحدَّث العرض…</p>
           </div>
         );
       }

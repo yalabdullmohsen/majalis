@@ -80,7 +80,7 @@ export function FaidaImageCardModal({ text, source, category, onClose }: Props) 
             onClick={handleDownload}
             disabled={status === "generating"}
           >
-            {status === "generating" ? "جارٍ التحضير…" : "تنزيل PNG"}
+            {status === "generating" ? "تحضير…" : "تنزيل PNG"}
           </button>
         </div>
 

@@ -8,6 +8,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { toWesternDigits } from "@/shared/arabic-normalize";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/zakat.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 /* ─── بيانات الأصناف ─── */
 type ZakatKind = {
@@ -314,6 +315,7 @@ export default function ZakatPage() {
   }
 
   return (
+    <UtilityScreen compose="mark">
     <main className="zk-page" dir="rtl">
       {/* هيرو */}
       <section className="zk-hero">
@@ -449,5 +451,6 @@ export default function ZakatPage() {
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه" count={4} />
       </div>
     </main>
+    </UtilityScreen>
   );
 }

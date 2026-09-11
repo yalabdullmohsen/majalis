@@ -11,7 +11,7 @@ export function ChunkRecoveryToast() {
   useEffect(() => {
     const onRecover = (ev: Event) => {
       const detail = (ev as CustomEvent<{ message?: string }>).detail;
-      setMessage(detail?.message || "تم تحديث المنصة، جاري تحسين العرض…");
+      setMessage(detail?.message || "تم تحديث المنصة. يُحدَّث العرض…");
     };
     window.addEventListener(CHUNK_RECOVERING_EVENT, onRecover);
     return () => window.removeEventListener(CHUNK_RECOVERING_EVENT, onRecover);

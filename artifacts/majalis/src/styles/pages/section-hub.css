@@ -384,5 +384,5 @@ html.dark .section-hub__card,
 html.dark .section-hub__chip.is-active,
 [data-theme="dark"] .section-hub__chip.is-active {
   background: color-mix(in srgb, var(--sh-accent) 75%, #fff);
-  color: #0a1f18;
+  color: var(--mj-ink, #0a1f18);
 }

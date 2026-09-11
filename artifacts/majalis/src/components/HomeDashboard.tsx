@@ -105,7 +105,7 @@ export function HomeDashboard({ onContinue, onOpenViewer }: HomeDashboardProps) 
         <div className="qe-dash__hero-copy">
           <p className="qe-dash__eyebrow">محرك القرآن</p>
           <h1>لوحة القراءة</h1>
-          <p>{hydrating ? "جاري استعادة موضعك…" : "تابع من حيث توقفت."}</p>
+          <p>{hydrating ? "استعادة موضعك…" : "تابع من حيث توقفت."}</p>
         </div>
         <button
           type="button"

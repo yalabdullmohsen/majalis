@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/adhan-settings.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const SECTIONS: Array<{ id: string; title: string; body: string }> = [
   {
@@ -62,6 +63,7 @@ export default function AdhanHelpView() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="ads-page" dir="rtl">
       <h1 className="ads-title">مساعدة الأذان والتنبيهات</h1>
       <p className="ads-subtitle">
@@ -87,5 +89,6 @@ export default function AdhanHelpView() {
         <Link href="/contact">تواصل معنا</Link>
       </p>
     </div>
+    </UtilityScreen>
   );
 }

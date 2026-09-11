@@ -63,6 +63,7 @@ import { usePageView } from "@/hooks/usePageView";
 import { usePersistedState } from "@/hooks/usePersistedState";
 import { RequestManager } from "@/lib/request-manager";
 import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
+import { ListScreen } from "@/components/design-system/screens";
 
 
 const PAGE_SIZE = 24;
@@ -238,6 +239,7 @@ export default function RulingsPage() {
   );
 
   return (
+    <ListScreen compose="mark">
     <PageShell variant="narrow" className="content-hub-page rulings-encyclopedia-page">
       <PageHeader
         eyebrow="موسوعة الفقه"
@@ -347,5 +349,6 @@ export default function RulingsPage() {
       </FilterBottomSheet>
       <AdminQuickEdit section="rulings" />
     </PageShell>
+    </ListScreen>
   );
 }

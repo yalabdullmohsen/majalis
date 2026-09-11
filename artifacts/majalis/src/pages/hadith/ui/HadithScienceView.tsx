@@ -8,6 +8,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/hadith-mustalah.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 /* ─── أنواع البيانات ─── */
 type HadithTerm = {
@@ -1022,6 +1023,7 @@ export default function HadithSciencePage() {
   }
 
   return (
+    <UtilityScreen compose="mark">
     <main className="hs-page" dir="rtl">
       {/* هيرو */}
       <section className="hs-hero">
@@ -1176,5 +1178,6 @@ export default function HadithSciencePage() {
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في علوم الحديث" count={4} />
       </div>
     </main>
+    </UtilityScreen>
   );
 }

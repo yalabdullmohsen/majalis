@@ -27,6 +27,12 @@
 .myl2-card,
 .myl2-stat-card,
 .fq-card,
+.an-card,
+.zk-card,
+.hj-card,
+.hs-term-card,
+.prayer-rank-card,
+.qwh-card,
 .fq-faraa-card {
 
   border-radius: var(--radius-card, 24px);

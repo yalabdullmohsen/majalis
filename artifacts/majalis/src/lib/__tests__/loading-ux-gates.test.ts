@@ -43,6 +43,18 @@ const busyRoots = [
   "views/SubmitContentPage.tsx",
   "views/UploadPage.tsx",
   "views/ResearcherProfilePage.tsx",
+  "components/AdminRouteGuard.tsx",
+  "components/ErrorBoundary.tsx",
+  "components/ContentActions.tsx",
+  "components/HomeDashboard.tsx",
+  "components/ChunkRecoveryToast.tsx",
+  "components/fawaid/FaidaImageCardModal.tsx",
+  "components/quiz-game/DirectQaCard.tsx",
+  "components/quran/BulkDownloadCard.tsx",
+  "views/AcademicResearchPage.tsx",
+  "views/AuthCallbackPage.tsx",
+  "views/learning/CertificateVerifyPage.tsx",
+  "views/learning/LearningPathDetailPage.tsx",
 ];
 for (const f of files) {
   const rel = f.replace(srcRoot + "/", "");
