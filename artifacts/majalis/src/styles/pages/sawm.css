@@ -5,47 +5,34 @@
 /* page */
 .sw-page { min-height: 100svh; background: var(--mj-bg); padding-bottom: 4rem; }
 
-/* hero */
+/* hero — soft-card عبر modern-section-shell (.sw-hero) */
 .sw-hero {
-  /* ألوان حرفية لا متغيّرات (بخلاف بقية أخوات هذا القسم .hj-hero/.th-hero/
-     .jnz-hero التي استخدمت hex ثابتة أصلًا) — [class$="-hero"] في هذا
-     الملف ("② الحاويات الداكنة") يُعيد تعريف --majalis-emerald-deep إلى
-     var(--text-on-primary) (أبيض) عمدًا لتحييد ألوان العناوين الداخلية،
-     لكن هذا العنصر بالذات كان يستهلك نفس المتغيّر لبناء تدرّج خلفيته هو،
-     فينقلب أول لون في التدرّج إلى أبيض في الوضع الليلي (تحقّق حي: تدرّج
-     أبيض←أخضر بدل أخضر داكن←أخضر، يُخفي نص التبويبات الأبيض فوقه،
-     2026-07-22). */
-  background: linear-gradient(160deg, var(--mj-brand-deep) 0%, var(--mj-brand) 100%);
-  color: var(--mj-white, #ffffff);
   padding: 2.5rem 1.25rem 0;
   text-align: center;
 }
 .sw-hero__badge {
   display: inline-block;
-  background: rgba(255,255,255,.18);
-  color: var(--mj-white, #ffffff);
   border-radius: var(--ds-radius-full);
   padding: .25rem .9rem;
   font-size: .75rem;
   margin-bottom: .75rem;
   letter-spacing: normal;
 }
-.sw-hero__title { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; margin: 0 0 .5rem; color: var(--mj-white, #ffffff); }
-.sw-hero__sub { font-size: .95rem; opacity: .88; max-width: 480px; margin: 0 auto 1.5rem; line-height: 1.6; }
+.sw-hero__title { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; margin: 0 0 .5rem; }
+.sw-hero__sub { font-size: .95rem; max-width: 480px; margin: 0 auto 1.5rem; line-height: 1.6; }
 
 /* dua box */
 .sw-dua {
-  background: rgba(255,255,255,.12);
-  border: 1px solid rgba(255,255,255,.2);
   border-radius: .75rem;
   padding: 1rem 1.25rem;
   max-width: 520px;
   margin: 0 auto 1.5rem;
   text-align: center;
+  border: 1px solid transparent;
 }
-.sw-dua__label { display: block; font-size: 0.8rem; opacity: .75; margin-bottom: .5rem; letter-spacing: normal; }
-.sw-dua__text { font-size: 1.15rem; font-weight: 600; line-height: 1.8; margin: 0 0 .35rem; color: var(--mj-white, #ffffff); }
-.sw-dua__ref { font-size: 0.8rem; opacity: .7; }
+.sw-dua__label { display: block; font-size: 0.8rem; margin-bottom: .5rem; letter-spacing: normal; }
+.sw-dua__text { font-size: 1.15rem; font-weight: 600; line-height: 1.8; margin: 0 0 .35rem; }
+.sw-dua__ref { font-size: 0.8rem; }
 
 /* tabs */
 .sw-tabs {
@@ -60,18 +47,18 @@
   flex-direction: column;
   align-items: center;
   gap: .2rem;
-  background: rgba(255,255,255,.12);
-  border: 1px solid rgba(255,255,255,.2);
+  background: transparent;
+  border: 1px solid transparent;
   border-bottom: none;
   border-radius: .5rem .5rem 0 0;
   padding: .5rem .8rem .4rem;
   cursor: pointer;
-  color: rgba(255,255,255,.8);
+  color: inherit;
   font-size: .78rem;
   transition: background .18s, color .18s;
   min-width: 5.5rem;
 }
-.sw-tab:hover { background: rgba(255,255,255,.22); color: var(--mj-white, #ffffff); }
+.sw-tab:hover { background: transparent; /* soft-hero ink via modern-section-shell */ }
 .sw-tab--active { background: var(--mj-surface); color: var(--majalis-emerald, var(--mj-brand)); font-weight: 700; }
 .sw-tab__icon { font-size: 1.1rem; line-height: 1; }
 .sw-tab__label { white-space: nowrap; }

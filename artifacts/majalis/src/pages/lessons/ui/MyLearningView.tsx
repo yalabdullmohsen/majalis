@@ -278,8 +278,8 @@ export default function MyLearningPage() {
             </h2>
           </div>
 
-          {loading ? (
-            <div className="myl2-skeletons">
+          {loading && library.length === 0 ? (
+            <div className="myl2-skeletons" aria-busy="true">
               {[0, 1, 2].map((i) => (
                 <div key={i} className="myl2-skel myl2-skel--sm" aria-hidden="true" />
               ))}

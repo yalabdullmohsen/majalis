@@ -50,12 +50,12 @@ export default function ArbaeenLovePage() {
         أربعين حديثًا مراجَعًا.
       </div>
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <SkeletonCardGrid count={4} />
       ) : items.length === 0 ? (
         <Empty text="لا توجد أحاديث منشورة بعد في هذه المجموعة." />
       ) : (
-        <div className="fiqh-review-list">
+        <div className="fiqh-review-list" aria-busy={loading}>
           {items.map((item) => (
             <article key={item.id} className="fiqh-review-card soft-card soft-card--on-light">
               <div className="fiqh-review-card-head">
