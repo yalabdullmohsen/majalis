@@ -311,15 +311,18 @@ export default function UniversityDetailPage() {
   useEffect(() => {
     if (!slug) return;
     setLoading(true);
+    setNotFound(false);
     fetchUniversity(slug)
-      .then((u) => { setUniversity(u); if (!u) setNotFound(true); })
-      .catch(() => setNotFound(true))
+      .then((u) => { setUniversity(u); setNotFound(!u); })
+      .catch(() => { setUniversity(null); setNotFound(true); })
       .finally(() => setLoading(false));
   }, [slug]);
 
-  if (loading) {
+  const hasMatchingUniversity = Boolean(university && university.slug === slug);
+
+  if (loading && !hasMatchingUniversity) {
     return (
-      <div dir="rtl" className="flex items-center justify-center min-h-dvh">
+      <div dir="rtl" className="flex items-center justify-center min-h-dvh" role="status" aria-busy="true">
         <div className="text-center space-y-3">
           <Spinner className="size-10 icon-emerald" aria-label="تجهيز المحتوى" />
           <p className="udp-loading-text"></p>
@@ -328,7 +331,7 @@ export default function UniversityDetailPage() {
     );
   }
 
-  if (notFound || !university) {
+  if (!university || university.slug !== slug || notFound) {
     return (
       <div dir="rtl" className="flex items-center justify-center min-h-dvh text-center">
         <div>

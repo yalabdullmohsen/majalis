@@ -51,10 +51,10 @@
   gap: 0.75rem;
   min-height: 44px;
   padding: 0.75rem 1rem;
-  border-radius: 0.65rem;
+  border-radius: 0;
   text-decoration: none;
-  color: var(--mj-white, #ffffff);
-  background: var(--surface-brand-solid, #0f6b4c);
+  color: var(--mj-ink, #1a1a1a);
+  background: transparent;
 }
 
 .knowledge-badge {

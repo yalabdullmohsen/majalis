@@ -85,17 +85,17 @@ export default function TeachersIndexPage() {
         />
       </div>
 
-      {loading ? (
+      {loading && teachers.length === 0 ? (
         <SkeletonCardGrid count={8} />
       ) : filtered.length === 0 ? (
         <p className="tch-empty">لا يوجد مشايخ مطابقون للبحث.</p>
       ) : (
-        <div className="tch-grid" role="list">
+        <div className="tch-grid" role="list" aria-busy={loading}>
           {filtered.map((teacher) => (
             <Link
               key={teacher.slug}
               href={hrefTeachers(teacher.slug)}
-              className="tch-card"
+              className="tch-card soft-card soft-card--on-light"
               role="listitem"
             >
               <span className="tch-card__name">{teacher.name}</span>

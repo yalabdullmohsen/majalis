@@ -32,6 +32,7 @@ export default function KnowledgeSectionPage() {
   const id = params.id;
   const [items, setItems] = useState<KnowledgeItem[]>([]);
   const [item, setItem] = useState<KnowledgeItem | null>(null);
+  const [listSection, setListSection] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("");
   const [fontScale, setFontScale] = useState(1);
@@ -47,6 +48,7 @@ export default function KnowledgeSectionPage() {
         if (!cancelled) {
           setItem(one);
           setItems([]);
+          setListSection(null);
           if (one && section === "discover-islam") markDiscoverStation(one.id);
           if (one) {
             const path = `/knowledge/${section}/${id}`;
@@ -64,6 +66,7 @@ export default function KnowledgeSectionPage() {
         const list = await loadSectionItems(section);
         if (!cancelled) {
           setItems(list);
+          setListSection(section);
           setItem(null);
           const path = `/knowledge/${section}`;
           const faq = section === "discover-islam" ? knowledgeFaqJsonLd(list) : null;
@@ -82,6 +85,9 @@ export default function KnowledgeSectionPage() {
     };
   }, [section, id]);
 
+  const hasMatchingItem = Boolean(id && item && item.id === id);
+  const hasMatchingList = Boolean(!id && items.length > 0 && listSection === section);
+
   const visible = useMemo(() => {
     const q = filter.trim();
     if (!q) return items;
@@ -93,7 +99,7 @@ export default function KnowledgeSectionPage() {
     await navigator.clipboard.writeText(`${item.title}\n\n${item.body}`);
   }
 
-  if (loading) {
+  if (loading && !hasMatchingItem && !hasMatchingList) {
     return (
       <div className="page-shell narrow" dir="rtl" role="status" aria-busy="true" aria-label="تحديث المحتوى">
         <PageHeader eyebrow="معرفة" title="تحديث المحتوى" />
@@ -102,7 +108,7 @@ export default function KnowledgeSectionPage() {
     );
   }
 
-  if (item) {
+  if (hasMatchingItem && item) {
     return (
       <div className={`page-shell narrow ${focusMode ? "knowledge-focus" : ""}`} dir="rtl">
         <PageHeader eyebrow={SECTION_TITLE[section] || "معرفة"} title={item.title} />
@@ -184,7 +190,7 @@ export default function KnowledgeSectionPage() {
       <ul className="knowledge-index-list">
         {visible.slice(0, 200).map((it) => (
           <li key={it.id}>
-            <Link href={`/knowledge/${section}/${it.id}`} className="knowledge-index-link surface-brand">
+            <Link href={`/knowledge/${section}/${it.id}`} className="knowledge-index-link soft-card soft-card--on-light">
               <span>{it.title}</span>
             </Link>
           </li>

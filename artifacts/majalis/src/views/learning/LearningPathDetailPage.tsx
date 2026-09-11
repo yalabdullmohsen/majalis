@@ -300,7 +300,7 @@ export default function LearningPathDetailPage() {
     setEvents((prev) => [...prev, { learningItemId: itemId, eventType: "completed", evidenceValue: 100, occurredAt: new Date().toISOString() }]);
   };
 
-  if (loading && !path) return <SkeletonPage />;
+  if (loading && !(path && path.slug === slug)) return <SkeletonPage />;
   if (!path) return <div className="page-shell"><p>المسار غير موجود.</p></div>;
 
   return (

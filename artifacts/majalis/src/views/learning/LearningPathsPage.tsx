@@ -69,7 +69,6 @@ export default function LearningPathsPage() {
     fetchPathList()
       .then(setPaths)
       .catch(() => {
-        setPaths([]);
         setLoadError(true);
       })
       .finally(() => setLoading(false));
@@ -172,16 +171,16 @@ export default function LearningPathsPage() {
         })}
       </div>
 
-      {loading && <SkeletonCardGrid count={8} />}
-      {!loading && loadError && (
+      {loading && paths.length === 0 && <SkeletonCardGrid count={8} />}
+      {!loading && loadError && paths.length === 0 && (
         <ErrorState text="تعذّر تحميل المسارات العلمية. يرجى المحاولة مرة أخرى." onRetry={() => setRetryTick((n) => n + 1)} />
       )}
       {!loading && !loadError && paths.length === 0 && <Empty text="لا توجد مسارات متاحة حالياً." />}
 
-      {!loading && !loadError && Object.entries(displayed).map(([category, items]) => {
+      {paths.length > 0 && Object.entries(displayed).map(([category, items]) => {
         const meta = CATEGORY_META[category] ?? CATEGORY_META.other;
         return (
-          <section key={category} className="lpp-category">
+          <section key={category} className="lpp-category" aria-busy={loading}>
             <div className="lpp-category-header">
               <span className="lpp-cat-icon">{(() => { const I = meta.Icon; return <I size={18} strokeWidth={1.6} />; })()}</span>
               <h2 className="lpp-category-title">{meta.label}</h2>
@@ -194,7 +193,7 @@ export default function LearningPathsPage() {
                 const weeks = estimateWeeksRange(path.totalSessions, 4);
                 return (
                   <Link key={path.slug} href={`/learning/paths/${path.slug}`} className="lpp-path-link">
-                    <article className={`lpp-path-card${hasContent ? "" : " lpp-path-card--pending"}`}>
+                    <article className={`lpp-path-card soft-card soft-card--on-light${hasContent ? "" : " lpp-path-card--pending"}`}>
                       <div className="lpp-path-card__top">
                         <h3 className="lpp-path-card__title">{path.title}</h3>
                         <span className="lpp-path-level-icon">{(() => { const I = LEVEL_ICON[path.level] ?? Sprout; return <I size={14} />; })()}</span>

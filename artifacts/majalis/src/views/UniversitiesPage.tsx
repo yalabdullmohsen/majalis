@@ -240,8 +240,8 @@ function UniversitiesContent() {
           </div>
         )}
 
-        {loading && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {loading && universities.length === 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" role="status" aria-busy="true" aria-label="تحميل الجامعات">
             {[1,2,3,4,5,6].map((i) => (
               <div key={i} className="up-skeleton" />
             ))}
@@ -255,8 +255,8 @@ function UniversitiesContent() {
           </div>
         )}
 
-        {!loading && universities.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {universities.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" aria-busy={loading}>
             {universities.map((u) => (
               <UniversityCard key={u.id} university={u} />
             ))}

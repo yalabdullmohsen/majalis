@@ -183,13 +183,14 @@ export default function TopicsIndexPage() {
         />
       </div>
 
-      {loading && <SkeletonCardGrid />}
+      {loading && Object.keys(displayed).length === 0 && <SkeletonCardGrid />}
 
       {!loading && Object.entries(displayed).length === 0 && search.trim() && (
         <p className="tip-footer-note">لا توجد موضوعات مطابقة لـ «{search}».</p>
       )}
 
-      {!loading && Object.entries(displayed).map(([category, items]) => {
+      <div aria-busy={loading}>
+      {Object.entries(displayed).map(([category, items]) => {
         const meta = CATEGORY_META[category] ?? CATEGORY_META.other;
         return (
           <section key={category} className="tip-section">
@@ -200,7 +201,7 @@ export default function TopicsIndexPage() {
             </div>
             <div className="tip-grid">
               {items.map((t) => (
-                <Link key={t.slug} href={`/topics/${t.slug}`} className="tip-link">
+                <Link key={t.slug} href={`/topics/${t.slug}`} className="tip-link soft-card soft-card--on-light">
                   {t.title}
                 </Link>
               ))}
@@ -208,6 +209,7 @@ export default function TopicsIndexPage() {
           </section>
         );
       })}
+      </div>
 
       <div className="tip-footer-note">
         <p>المحتوى محدَّث باستمرار. لا يجد موضوعاً؟</p>
