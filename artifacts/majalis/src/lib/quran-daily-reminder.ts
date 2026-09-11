@@ -17,12 +17,22 @@ import {
   DEFAULT_ALERT_SOUND,
   ensureNotificationChannels,
 } from "@/lib/notifications/channels";
+import { pickLocalizedNotification } from "@/lib/notifications/localization";
 
 export const QURAN_DAILY_REMINDER_HOUR = 17;
 export const QURAN_DAILY_REMINDER_MINUTE = 0;
-export const QURAN_DAILY_REMINDER_TITLE = "وقت القراءة";
-export const QURAN_DAILY_REMINDER_BODY =
-  "هل تود قراءة وردك اليومي من القرآن الكريم؟";
+
+function quranDailyCopy() {
+  return pickLocalizedNotification("quranDaily");
+}
+
+/** تُحسب عند الاستدعاء لتجنّب تثبيت نسخة واحدة من التنويع. */
+export function getQuranDailyReminderCopy(): { title: string; body: string } {
+  return quranDailyCopy();
+}
+
+export const QURAN_DAILY_REMINDER_TITLE = "ورد القرآن";
+export const QURAN_DAILY_REMINDER_BODY = "وقت مناسب لوردك اليومي.";
 export const QURAN_DAILY_REMINDER_TAG = "majalis-quran-daily-wird";
 export const QURAN_DAILY_REMINDER_URL = "/daily-wird";
 /** Stable Capacitor notification id for the daily wird reminder. */
@@ -52,8 +62,8 @@ async function scheduleNativeDailyReminder(requestPerm: boolean): Promise<Schedu
     notifications: [
       {
         id: QURAN_DAILY_REMINDER_NATIVE_ID,
-        title: QURAN_DAILY_REMINDER_TITLE,
-        body: QURAN_DAILY_REMINDER_BODY,
+        title: getQuranDailyReminderCopy().title,
+        body: getQuranDailyReminderCopy().body,
         schedule: {
           on: {
             hour: QURAN_DAILY_REMINDER_HOUR,
@@ -159,8 +169,9 @@ export async function cancelDailyReminder(): Promise<void> {
 
 /** Fire one reminder immediately (settings / debug). */
 export function sendDailyReminderNow(): void {
-  sendLocalNotification(QURAN_DAILY_REMINDER_TITLE, {
-    body: QURAN_DAILY_REMINDER_BODY,
+  const copy = getQuranDailyReminderCopy();
+  sendLocalNotification(copy.title, {
+    body: copy.body,
     tag: QURAN_DAILY_REMINDER_TAG,
   });
 }
