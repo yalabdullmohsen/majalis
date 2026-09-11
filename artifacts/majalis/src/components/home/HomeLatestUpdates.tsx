@@ -47,7 +47,7 @@ export function HomeLatestUpdates() {
         }));
       })
       .catch(() => {
-        if (active) setItems([]);
+        /* keep-previous: لا تفرّغ المستجدات عند فشل إعادة الجلب */
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -57,7 +57,7 @@ export function HomeLatestUpdates() {
     };
   }, []);
 
-  if (loading || items.length === 0) return null;
+  if ((loading && items.length === 0) || (!loading && items.length === 0)) return null;
 
   return (
     <Widget
@@ -69,7 +69,7 @@ export function HomeLatestUpdates() {
       moreLabel="جميع المستجدات"
       state="ready"
     >
-      <div className="home-more-grid">
+      <div className="home-more-grid" aria-busy={loading}>
         {items.map((item) => (
           <Link
             key={item.id}

@@ -22,6 +22,7 @@ type Props = {
   className?: string;
   as?: "div" | "article" | "main" | "section";
   "aria-labelledby"?: string;
+  "aria-busy"?: boolean;
 };
 
 /**
@@ -38,6 +39,7 @@ export function PageShell({
   className = "",
   as: Tag = "div",
   "aria-labelledby": ariaLabelledBy,
+  "aria-busy": ariaBusy,
 }: Props) {
   useEffect(() => {
     ensureChromeMeta(undefined, { skipThemeColor: true });
@@ -60,6 +62,7 @@ export function PageShell({
         data-page-shell="1"
         data-density={density}
         aria-labelledby={ariaLabelledBy}
+        aria-busy={ariaBusy}
       >
         {children}
       </Tag>
@@ -72,6 +75,7 @@ export function PageShell({
       data-page-shell="1"
       data-density={density}
       aria-labelledby={ariaLabelledBy}
+      aria-busy={ariaBusy}
     >
       {intro ? <div className="page-shell__intro">{intro}</div> : null}
       {(content ?? children) ? (

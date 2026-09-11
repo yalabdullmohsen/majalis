@@ -68,7 +68,7 @@ export function HomeUpcomingLessons({
       })
       .catch((err) => {
         if (!mountedRef.current || (err as Error)?.name === "AbortError") return;
-        setAllLessons([]);
+        /* أبقِ الدروس السابقة عند فشل إعادة الجلب */
         setLoadError("تعذّر تحميل دروس اليوم. حاول مجددًا.");
       })
       .finally(() => {

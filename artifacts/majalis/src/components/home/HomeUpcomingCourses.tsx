@@ -37,7 +37,7 @@ export function HomeUpcomingCourses() {
       })
       .catch((err) => {
         if (cancelled || (err as Error)?.name === "AbortError") return;
-        setCourses([]);
+        /* أبقِ الدورات السابقة عند فشل إعادة الجلب */
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
