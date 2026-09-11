@@ -269,36 +269,35 @@ export default function SettingsPage() {
               </p>
             </div>
           </div>
-          <div className="settings-actions">
-            {authLoading ? (
-              <p className="settings-auth-pending" aria-busy="true" aria-label="تحديث الحساب">
-                …
-              </p>
-            ) : isLoggedIn ? (
-              <>
-                <button type="button" className="page-action-btn" onClick={() => logout()}>
-                  {t("settings_logout")}
-                </button>
-                <button
-                  type="button"
-                  className="page-action-btn page-action-btn--danger"
-                  data-testid="settings-delete-account"
-                  onClick={() => setDeleteDialogOpen(true)}
-                >
-                  {t("settings_delete_account")}
-                </button>
-              </>
-            ) : (
-              <>
-                <Link href="/login" className="page-action-btn">
-                  {t("settings_login")}
-                </Link>
-                <Link href="/register" className="page-action-btn page-action-btn--secondary">
-                  {t("settings_register")}
-                </Link>
-              </>
-            )}
-          </div>
+          {authLoading ? (
+            <p className="settings-auth-pending" aria-busy="true" aria-label="تحديث الحساب">
+              …
+            </p>
+          ) : (
+            <SettingsList
+              rows={
+                isLoggedIn
+                  ? [
+                      {
+                        id: "logout",
+                        title: t("settings_logout"),
+                        onClick: () => logout(),
+                      },
+                      {
+                        id: "delete-account",
+                        title: t("settings_delete_account"),
+                        onClick: () => setDeleteDialogOpen(true),
+                        danger: true,
+                        testId: "settings-delete-account",
+                      },
+                    ]
+                  : [
+                      { id: "login", title: t("settings_login"), href: "/login" },
+                      { id: "register", title: t("settings_register"), href: "/register" },
+                    ]
+              }
+            />
+          )}
           {deleteDialogOpen ? (
             <div
               className="settings-delete-dialog"
@@ -541,32 +540,43 @@ export default function SettingsPage() {
 
       {visible(sections[4]!) && (
         <LegalSection title={sections[4]!.title}>
-          <button
-            type="button"
-            className="page-action-btn page-action-btn--secondary"
-            disabled={cacheRefreshBusy}
-            onClick={() => {
-              setCacheRefreshBusy(true);
-              setCacheRefreshNote("يُحدَّث الآن…");
-              void refreshAppAndPurgeCaches()
-                .then((result) => {
-                  if (result.shortCommit) setDisplayedAppVersion(result.shortCommit);
-                  if (result.ok) {
-                    setCacheRefreshNote("تم تحديث النسخة — يُعاد التحميل…");
-                  } else {
-                    setCacheRefreshBusy(false);
-                    setCacheRefreshNote("النسخة محدّثة بالفعل.");
-                  }
-                })
-                .catch(() => {
-                  setCacheRefreshBusy(false);
-                  setCacheRefreshNote("تعذّر تحديث النسخة. حاول مرة أخرى.");
-                });
-            }}
-            data-testid="refresh-app-version"
-          >
-            {cacheRefreshBusy ? "يُحدَّث…" : "تحديث النسخة"}
-          </button>
+          <SettingsList
+            rows={[
+              {
+                id: "refresh-version",
+                title: cacheRefreshBusy ? "يُحدَّث…" : "تحديث النسخة",
+                description: "يمسح كاش الواجهة ويعيد تحميل آخر نسخة منشورة",
+                onClick: () => {
+                  if (cacheRefreshBusy) return;
+                  setCacheRefreshBusy(true);
+                  setCacheRefreshNote("يُحدَّث الآن…");
+                  void refreshAppAndPurgeCaches()
+                    .then((result) => {
+                      if (result.shortCommit) setDisplayedAppVersion(result.shortCommit);
+                      if (result.ok) {
+                        setCacheRefreshNote("تم تحديث النسخة — يُعاد التحميل…");
+                      } else {
+                        setCacheRefreshBusy(false);
+                        setCacheRefreshNote("النسخة محدّثة بالفعل.");
+                      }
+                    })
+                    .catch(() => {
+                      setCacheRefreshBusy(false);
+                      setCacheRefreshNote("تعذّر تحديث النسخة. حاول مرة أخرى.");
+                    });
+                },
+                disabled: cacheRefreshBusy,
+                testId: "refresh-app-version",
+              },
+              { id: "adhan-sounds", title: "أصوات الأذان المحمّلة", href: "/adhan-settings" },
+              { id: "vault", title: "مخزن المعرفة دون اتصال", href: "/vault" },
+              {
+                id: "clear-quran-cache",
+                title: t("settings_clear_quran_cache"),
+                onClick: () => clearQuranCache(),
+              },
+            ]}
+          />
           {displayedAppVersion ? (
             <p className="settings-note" dir="ltr" data-testid="app-version-commit">
               النسخة الحالية: {displayedAppVersion}
@@ -574,23 +584,11 @@ export default function SettingsPage() {
           ) : null}
           {cacheRefreshNote ? <p className="settings-note">{cacheRefreshNote}</p> : null}
           <p className="settings-note">
-            يمسح كاش الواجهة ويعيد تحميل آخر نسخة منشورة، ولا يمس الثيم أو المفضلة أو إعدادات الصلاة.
-          </p>
-          <p className="settings-note">
             تنزيل تلاوة السور كاملة للقرّاء المُحقَّقين QA — للاستماع دون اتصال.
           </p>
           <Suspense fallback={<p className="settings-note">تحديث إدارة التنزيلات…</p>}>
             <ReciterDownloadManager />
           </Suspense>
-          <SettingsList
-            rows={[
-              { id: "adhan-sounds", title: "أصوات الأذان المحمّلة", href: "/adhan-settings" },
-              { id: "vault", title: "مخزن المعرفة دون اتصال", href: "/vault" },
-            ]}
-          />
-          <button type="button" className="ui-card-btn" onClick={() => clearQuranCache()}>
-            {t("settings_clear_quran_cache")}
-          </button>
         </LegalSection>
       )}
 
@@ -611,74 +609,69 @@ export default function SettingsPage() {
                     },
                   ] as const)
                 : []),
+              {
+                id: "download-prefs",
+                title: t("settings_download_data"),
+                onClick: () => {
+                  const blob = new Blob(
+                    [JSON.stringify({ preferences, fontPreference }, null, 2)],
+                    { type: "application/json" },
+                  );
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = "majalis-settings.json";
+                  a.click();
+                  URL.revokeObjectURL(url);
+                },
+              },
+              ...(isLoggedIn
+                ? [
+                    {
+                      id: "export-server",
+                      title: "تصدير بيانات الحساب (خادم)",
+                      onClick: () => {
+                        void (async () => {
+                          const {
+                            data: { session },
+                          } = await supabase.auth.getSession();
+                          const token = session?.access_token;
+                          if (!token) return;
+                          const res = await fetch("/api/account/export", {
+                            method: "POST",
+                            headers: { Authorization: `Bearer ${token}` },
+                          });
+                          const body = await res.json().catch(() => ({}));
+                          if (!res.ok) return;
+                          const blob = new Blob([JSON.stringify(body, null, 2)], {
+                            type: "application/json",
+                          });
+                          const url = URL.createObjectURL(blob);
+                          const a = document.createElement("a");
+                          a.href = url;
+                          a.download = "ssunnah-data-export.json";
+                          a.click();
+                          URL.revokeObjectURL(url);
+                        })();
+                      },
+                    },
+                  ]
+                : []),
+              {
+                id: "clear-local",
+                title: t("settings_clear_local"),
+                danger: true,
+                onClick: () => {
+                  restoreDefaultAppSettings(updatePreferences);
+                  clearLocalBookmarks();
+                  void clearOfflineReading();
+                  void import("@/lib/clear-user-local-data").then(({ clearUserLocalDataAndMedia }) =>
+                    clearUserLocalDataAndMedia(),
+                  );
+                },
+              },
             ]}
           />
-          <div className="settings-actions">
-            <button
-              type="button"
-              className="ui-card-btn"
-              onClick={() => {
-                const blob = new Blob(
-                  [JSON.stringify({ preferences, fontPreference }, null, 2)],
-                  { type: "application/json" },
-                );
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = "majalis-settings.json";
-                a.click();
-                URL.revokeObjectURL(url);
-              }}
-            >
-              {t("settings_download_data")}
-            </button>
-            {isLoggedIn && (
-              <button
-                type="button"
-                className="ui-card-btn"
-                onClick={() => {
-                  void (async () => {
-                    const {
-                      data: { session },
-                    } = await supabase.auth.getSession();
-                    const token = session?.access_token;
-                    if (!token) return;
-                    const res = await fetch("/api/account/export", {
-                      method: "POST",
-                      headers: { Authorization: `Bearer ${token}` },
-                    });
-                    const body = await res.json().catch(() => ({}));
-                    if (!res.ok) return;
-                    const blob = new Blob([JSON.stringify(body, null, 2)], {
-                      type: "application/json",
-                    });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement("a");
-                    a.href = url;
-                    a.download = "ssunnah-data-export.json";
-                    a.click();
-                    URL.revokeObjectURL(url);
-                  })();
-                }}
-              >
-                تصدير بيانات الحساب (خادم)
-              </button>
-            )}
-            <button
-              type="button"
-              className="settings-danger-btn"
-              onClick={() => {
-                restoreDefaultAppSettings(updatePreferences);
-                clearLocalBookmarks();
-                void clearOfflineReading();
-                void import("@/lib/clear-user-local-data").then(({ clearUserLocalDataAndMedia }) =>
-                  clearUserLocalDataAndMedia(),
-                );
-              }}
-            >
-              {t("settings_clear_local")}
-            </button>
-          </div>
         </LegalSection>
       )}
 
@@ -687,13 +680,9 @@ export default function SettingsPage() {
           <p className="settings-note">
             أعد مشاهدة جولة المزايا لتتعرّف على المصحف والصلاة والأذكار والبحث والتنبيهات.
           </p>
-          <div className="settings-actions">
-            <Link href="/feature-tour" className="page-action-btn page-action-btn--secondary">
-              جولة المزايا
-            </Link>
-          </div>
           <SettingsList
             rows={[
+              { id: "feature-tour", title: "جولة المزايا", href: "/feature-tour" },
               { id: "about", title: "حول التطبيق", href: "/about" },
               { id: "licenses", title: "المصادر والتراخيص", href: "/data-licenses" },
               { id: "contact", title: "الدعم والتواصل", href: "/contact" },
