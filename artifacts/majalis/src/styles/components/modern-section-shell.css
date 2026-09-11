@@ -98,7 +98,8 @@
 .ilm-hero,
 .qmem-hero,
 .ve-hero,
-.wn-hero {
+.wn-hero,
+.snr-hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -211,7 +212,9 @@
 .ve-hero::before,
 .ve-hero::after,
 .wn-hero::before,
-.wn-hero::after {
+.wn-hero::after,
+.snr-hero::before,
+.snr-hero::after {
   content: none !important;
   display: none !important;
 }
@@ -811,4 +814,13 @@ html[data-theme="dark"] .card {
 .wn-hero .wn-hero__sub, .wn-hero .wn-hero__desc, .wn-hero p {
   color: var(--mss-on-hero-muted, #3d4f47) !important;
   opacity: 1 !important;
+}
+
+
+/* soft ink — snr-hero */
+.snr-hero .snr-hero__title, .snr-hero h1 {
+  color: var(--mss-on-hero, #16241e) !important;
+}
+.snr-hero .snr-hero__sub, .snr-hero p {
+  color: var(--mss-on-hero-muted, #3d4f47) !important;
 }
