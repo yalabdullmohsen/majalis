@@ -13,19 +13,22 @@
 .knowledge-article {
   font-size: calc(1rem * var(--knowledge-font-scale, 1));
   padding: 1rem 1.1rem;
-  border-radius: 0.75rem;
-  color: var(--mj-white, #ffffff);
-  background: var(--surface-brand-solid, #0f6b4c);
+  border-radius: var(--radius-card, 1.15rem);
+  color: var(--mj-ink, #16241e);
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 4.5%, var(--mj-surface, #fffef9));
+  border: 1px solid var(--mj-hairline, #e3e8e6);
+  border-inline-start: 4px solid var(--mj-brand, #1f6b56);
+  box-shadow: var(--shadow-soft, 0 10px 28px rgba(36, 31, 24, 0.08));
 }
 
 .knowledge-article a,
 .knowledge-article-body {
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-ink, #16241e);
 }
 
 .knowledge-article h2,
 .knowledge-article h3 {
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-brand-deep, #123f2e);
   margin-top: 1rem;
 }
 

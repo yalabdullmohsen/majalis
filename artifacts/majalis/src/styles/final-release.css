@@ -158,8 +158,7 @@ html.dark .app-shell {
   padding-inline: var(--gutter-inline-start) var(--gutter-inline-end);
 }
 
-/* صفحات ذات بطل ممتد — بلا هامش مزدوج من .app-main */
-.app-main:has(.page-hero-mj--bleed),
+/* صفحات ذات بطل داخلي — هامش موحّد (الهيرو بطاقة داخل المحتوى لا شريط ممتد) */
 .app-main:has(.prophets-lux-page),
 .app-main:has(.prophet-detail-lux),
 .app-main:has(.quran-hub-page),
@@ -167,16 +166,20 @@ html.dark .app-shell {
 .app-main:has(.seerah-page),
 .app-main:has(.quran-people-page),
 .app-main:has(.seerah-hero),
-.app-main:has(.twh-hub-hero),
-.app-main:has(.fqh-hub-hero),
 .app-main:has(.pts-screen){padding-inline:0}
 
-/* غلاف مع PageHero ممتد: عرض كامل · حشو للنسل غير البطل */
-.page-shell:has(.page-hero-mj--bleed){max-width:none;width:100%;padding-inline:0}
-.page-shell:has(.page-hero-mj--bleed)>:not(.page-hero-mj){
-  box-sizing:border-box;width:100%;max-width:min(56rem,100%);margin-inline:auto;padding-inline:var(--page-gutter)
+/* غلاف مع PageHero: بطاقة داخل العرض القياسي */
+.page-shell:has(.page-hero-mj--bleed:not(.home-page-hero)){
+  max-width:min(56rem,100%);
+  width:100%;
+  margin-inline:auto;
+  padding-inline:var(--page-gutter,1rem);
+  box-sizing:border-box;
 }
-.page-shell.narrow:has(.page-hero-mj--bleed)>:not(.page-hero-mj){max-width:min(48rem,100%)}
+.page-shell:has(.page-hero-mj--bleed:not(.home-page-hero))>:not(.page-hero-mj){
+  box-sizing:border-box;width:100%;max-width:100%;margin-inline:0;padding-inline:0
+}
+.page-shell.narrow:has(.page-hero-mj--bleed:not(.home-page-hero)){max-width:min(48rem,100%)}
 
 :where(h1, h2, h3, h4) {
   color: var(--color-text);

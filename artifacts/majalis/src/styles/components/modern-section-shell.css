@@ -1,9 +1,11 @@
 /**
  * modern-section-shell — لغة التصميم العصرية الموحّدة لكل أقسام سُنّة.
- * مصدر الهوية: هيرو المساعد العلمي (asp-hero) — زمردي غني + وهج ذهبي ناعم.
+ *
+ * هيرو الأقسام = بطاقة سطح (soft-card) بلكنة علامة، وليس شريطًا أخضر بعرض كامل.
+ * التدرّج الزمردي يبقى متاحًا للبطاقات المميزة/الاستكشاف فقط عبر --mss-hero-gradient.
  *
  * تُطبَّق على:
- * - PageHero الممتد (.page-hero-mj--bleed) لكل الصفحات الداخلية
+ * - PageHero الداخلي (.page-hero-mj--bleed) — بطاقة داخل الهامش
  * - SectionHero / TopicPage (.topic-page__hero)
  * - لوبي الأقسام (.section-lobby__head) ما لم يُخفَ بصريًا
  * - بطاقات المحتوى (.hub-card / .card)
@@ -15,18 +17,19 @@
   --mss-hero-to: #245f4d;
   --mss-hero-glow: rgba(210, 180, 93, 0.22);
   --mss-hero-glow-strong: rgba(210, 180, 93, 0.28);
-  /* نص فوق الهيرو الأخضر — صلب بلا شفافية ضعيفة (WCAG AA) */
-  --mss-on-hero: #ffffff;
-  --mss-on-hero-muted: #f3efe6;
-  --mss-on-hero-accent: #fff1c4;
+  /* نص فوق بطاقة الهيرو الفاتحة */
+  --mss-on-hero: var(--mj-ink, #16241e);
+  --mss-on-hero-muted: var(--mj-ink-2, #4a554f);
+  --mss-on-hero-accent: var(--mj-brand-deep, #123f2e);
   --mss-radius-hero: 1.35rem;
   --mss-radius-card: 1.15rem;
-  --mss-shadow-hero: 0 16px 40px rgba(15, 74, 58, 0.22);
+  --mss-shadow-hero: var(--shadow-soft, 0 10px 28px rgba(36, 31, 24, 0.08));
   --mss-shadow-card: 0 10px 28px rgba(36, 31, 24, 0.08);
-  --color-hero-bg: var(--mss-hero-from);
+  --color-hero-bg: var(--color-surface, var(--mj-surface, #fffef9));
   --color-hero-fg: var(--mss-on-hero);
   --color-hero-fg-muted: var(--mss-on-hero-muted);
   --color-hero-fg-accent: var(--mss-on-hero-accent);
+  /* محفوظ للبطاقات المميزة فقط — لا يُطبَّق على شريط القسم */
   --mss-hero-gradient: radial-gradient(
       circle at 100% 0%,
       var(--mss-hero-glow),
@@ -38,46 +41,52 @@
       var(--mss-hero-mid) 58%,
       var(--mss-hero-to) 100%
     );
+  --mss-section-hero-bg: color-mix(
+    in srgb,
+    var(--mj-brand, #1f6b56) 5.5%,
+    var(--color-surface, var(--mj-surface, #fffef9))
+  );
 }
 
-/* —— خلفية هيرو عصرية قابلة لإعادة الاستخدام —— */
+/* —— هيرو الأقسام = بطاقة (لا شريط أخضر ممتد) —— */
 .mss-hero-surface,
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero),
 .topic-page__hero,
-.section-lobby__head:not(.section-lobby__head--bare) {
+.section-lobby__head:not(.section-lobby__head--bare),
+.fqh-hub-hero,
+.fiqh-lux-book-hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   box-sizing: border-box;
-  background-color: var(--mss-hero-from);
-  background-image: var(--mss-hero-gradient);
-  color: var(--mss-on-hero);
-  border: 1px solid color-mix(in srgb, #1f6b56 28%, transparent);
-  box-shadow: var(--mss-shadow-hero);
+  background-color: var(--mss-section-hero-bg) !important;
+  background-image: none !important;
+  color: var(--mss-on-hero) !important;
+  border: 1px solid var(--color-border, var(--mj-hairline, #e3e8e6)) !important;
+  border-inline-start: 4px solid var(--mj-brand, #1f6b56) !important;
+  border-radius: var(--mss-radius-hero) !important;
+  box-shadow: var(--mss-shadow-card) !important;
+  min-height: 0 !important;
 }
 
 .mss-hero-surface::after,
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero)::after,
 .topic-page__hero::after,
-.section-lobby__head:not(.section-lobby__head--bare)::after {
-  content: "";
-  position: absolute;
-  inset: auto -18% -42% auto;
-  width: 14rem;
-  height: 14rem;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--mss-hero-glow-strong), transparent 65%);
-  pointer-events: none;
-  z-index: 0;
+.section-lobby__head:not(.section-lobby__head--bare)::after,
+.fqh-hub-hero::after,
+.fiqh-lux-book-hero::after {
+  content: none !important;
+  display: none !important;
 }
 
-/* —— PageHero الداخلي (غير الرئيسية) —— */
+/* —— PageHero الداخلي: بطاقة داخل هامش الصفحة —— */
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) {
-  border-radius: 0;
-  border-inline: 0;
-  border-block-start: 0;
-  /* الحافة السفلية تُظهر انحناء الهوية داخل الصفحة */
-  border-block-end: 1px solid color-mix(in srgb, #1f6b56 35%, transparent);
+  width: auto;
+  max-width: min(56rem, calc(100% - 2 * max(1rem, var(--page-gutter, 1rem))));
+  margin-inline: auto;
+  margin-block: 0.65rem 0.85rem;
+  padding-block: 1.05rem !important;
+  padding-inline: max(1rem, var(--page-gutter, 1rem)) !important;
 }
 
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__content {
@@ -90,29 +99,34 @@
   align-self: flex-start;
   padding: 0.22rem 0.65rem;
   border-radius: 999px;
-  background: color-mix(in srgb, #fff 18%, transparent);
-  border: 1px solid color-mix(in srgb, #fff 40%, transparent);
-  color: var(--mss-on-hero, #ffffff) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent);
+  color: var(--mj-brand-deep, #123f2e) !important;
   letter-spacing: 0.02em;
   font-weight: 800;
 }
 
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back {
-  /* خلفية صلبة قابلة للقياس (لا color-mix شفاف فوق تدرّج → NO_COLOR في بوابة التباين) */
-  color: #ffffff !important;
-  background: #0a3d2e !important;
-  background-color: #0a3d2e !important;
+  color: var(--mj-brand-deep, #123f2e) !important;
+  background: var(--color-surface, #fffef9) !important;
+  background-color: var(--color-surface, #fffef9) !important;
   background-image: none !important;
-  border-color: color-mix(in srgb, #faf5ea 40%, transparent) !important;
+  border: 1px solid var(--color-border, var(--mj-hairline)) !important;
+  box-shadow: none !important;
 }
 
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn.mj-btn--ghost,
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn--ghost {
-  color: #ffffff !important;
-  background: #0a3d2e !important;
-  background-color: #0a3d2e !important;
+  color: var(--mj-brand-deep, #123f2e) !important;
+  background: var(--color-surface, #fffef9) !important;
+  background-color: var(--color-surface, #fffef9) !important;
   background-image: none !important;
-  border-color: color-mix(in srgb, #faf5ea 40%, transparent) !important;
+  border: 1px solid var(--color-border, var(--mj-hairline)) !important;
+}
+
+.page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__title,
+.page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__heading {
+  color: var(--mss-on-hero) !important;
 }
 
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__desc {
@@ -120,13 +134,16 @@
 }
 
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .pattern-backdrop {
-  color: #fff;
-  opacity: 0.08;
+  color: var(--mj-brand, #1f6b56);
+  opacity: 0.06;
 }
 
 /* —— Topic / Section hero —— */
 .topic-page__hero {
   border-radius: var(--mss-radius-hero, 22px);
+  margin-inline: max(0.75rem, var(--page-gutter, 0.75rem));
+  margin-block: 0.5rem 0.85rem;
+  padding: 1.05rem 1.15rem;
 }
 
 .topic-page__hero-inner,
@@ -137,11 +154,21 @@
 
 .topic-page__eyebrow,
 .topic-page__hero .safe-hero__badge {
-  color: var(--mss-on-hero, #ffffff) !important;
-  background: color-mix(in srgb, #fff 18%, transparent) !important;
-  border: 1px solid color-mix(in srgb, #fff 40%, transparent);
+  color: var(--mj-brand-deep, #123f2e) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent);
   border-radius: 999px;
   font-weight: 800;
+}
+
+.topic-page__title,
+.topic-page__hero .safe-hero__title {
+  color: var(--mss-on-hero) !important;
+}
+
+.topic-page__sub,
+.topic-page__hero .safe-hero__sub {
+  color: var(--mss-on-hero-muted) !important;
 }
 
 .section-hero__icon {
@@ -150,13 +177,13 @@
   width: 3rem;
   height: 3rem;
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(250, 245, 234, 0.28);
-  color: var(--mss-on-hero-accent, #f2dfaa);
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent);
+  color: var(--mj-brand-deep, #123f2e);
   flex-shrink: 0;
 }
 
-/* —— لوبي الأقسام: هيرو عنوان عصري —— */
+/* —— لوبي الأقسام: بطاقة عنوان —— */
 .section-lobby__head:not(.section-lobby__head--bare) {
   gap: 0.55rem;
   padding: 1.05rem 1.15rem;
@@ -172,22 +199,49 @@
 
 .section-lobby__head:not(.section-lobby__head--bare) .section-lobby__title,
 .section-lobby__head:not(.section-lobby__head--bare) .quran-hub-page__title {
-  color: #fff;
+  color: var(--mss-on-hero) !important;
 }
 
 .section-lobby__head:not(.section-lobby__head--bare) .section-lobby__title::after,
 .section-lobby__head:not(.section-lobby__head--bare) .quran-hub-page__title::after {
-  background: var(--mss-on-hero-accent);
+  background: var(--mj-brand, #1f6b56);
 }
 
 .section-lobby__head:not(.section-lobby__head--bare) .section-lobby__back-inline {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(250, 245, 234, 0.28);
-  color: var(--mss-on-hero-accent);
+  background: var(--color-surface, #fffef9);
+  border-color: var(--color-border, var(--mj-hairline));
+  color: var(--mj-brand-deep, #123f2e);
 }
 
 .section-lobby__head:not(.section-lobby__head--bare) .section-lobby__head-row {
-  border-bottom-color: color-mix(in srgb, #faf5ea 22%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 16%, transparent);
+}
+
+/* فقه: بطاقة بدل شريط ممتد */
+.fqh-hub-hero,
+.fiqh-lux-book-hero {
+  width: auto !important;
+  max-width: min(56rem, calc(100% - 2 * max(1rem, var(--page-gutter, 1rem)))) !important;
+  margin-inline: auto !important;
+  margin-block: 0.65rem 1rem !important;
+  padding: 1.05rem max(1rem, var(--page-gutter, 1rem)) !important;
+}
+
+.fqh-hub-hero__eyebrow,
+.fqh-hub-hero__title,
+.fqh-hub-hero__sub,
+.fiqh-lux-book-hero__title,
+.fiqh-lux-book-hero__sub {
+  color: inherit !important;
+}
+
+.fqh-hub-hero__eyebrow {
+  color: var(--mj-brand-deep, #123f2e) !important;
+  opacity: 1 !important;
+}
+
+.fqh-hub-hero__sub {
+  color: var(--mss-on-hero-muted) !important;
 }
 
 /* اللوبيات التي تُخفي الرأس بصريًا تبقى كما هي (lessons / fiqh lux) */
@@ -323,52 +377,286 @@ html[data-theme="dark"] .card {
   text-decoration: none;
 }
 
-/* هيروهات مخصّصة قديمة → نفس لغة mss */
+/* هيروهات صفحات الأقسام → بطاقة سطح (لا شريط أخضر ممتد) */
 .twh-hub-hero,
 .fqh-hub-hero,
 .quran-hub-hero,
 .pts-hero,
-.pts-hero--compact {
-  background-color: var(--mss-hero-from, #0f4a3a) !important;
-  background-image: var(--mss-hero-gradient) !important;
-  color: var(--mss-on-hero, #faf5ea) !important;
-  border-color: color-mix(in srgb, #1f6b56 28%, transparent);
-  box-shadow: var(--mss-shadow-hero);
-}
-
-.twh-hub-hero,
-.fqh-hub-hero,
-.quran-hub-hero {
-  border-radius: var(--mss-radius-hero, 1.35rem);
+.pts-hero--compact,
+.th-hero,
+.tf-hero,
+.zk-hero,
+.sw-hero,
+.sy-hero,
+.hj-hero,
+.sg-hero,
+.uq-hero,
+.wn-hero,
+.atl-hero,
+.arkan-hero,
+.ai-hero,
+.ah-hero,
+.an-hero,
+.dq-hero,
+.duas-hero,
+.fa-hero,
+.fg-hero,
+.fq-hero,
+.gl-hero,
+.hs-hero,
+.hk-hero,
+.sb-hero,
+.sh-hero,
+.sm-hero,
+.sr-hero,
+.srp-hero,
+.as-hero,
+.cvp-hero,
+.myl2-hero,
+.pmp-hero,
+.sp-hero,
+.qc-hero,
+.seerah-hero,
+.tarikh-hero,
+.tw-hero,
+.wird-hero,
+.mw-hero,
+.mdb-hero,
+.mk-hero,
+.is-hero,
+.lpd2-hero,
+.ldb-hero,
+.fiqh-lux-lesson-hero {
+  width: auto !important;
+  max-width: min(56rem, calc(100% - 2 * max(1rem, var(--page-gutter, 1rem)))) !important;
+  margin-inline: auto !important;
+  margin-block: 0.65rem 0.85rem !important;
+  box-sizing: border-box !important;
+  background-color: var(--mss-section-hero-bg) !important;
+  background-image: none !important;
+  color: var(--mss-on-hero, var(--mj-ink, #16241e)) !important;
+  border: 1px solid var(--color-border, var(--mj-hairline, #e3e8e6)) !important;
+  border-inline-start: 4px solid var(--mj-brand, #1f6b56) !important;
+  box-shadow: var(--mss-shadow-card) !important;
+  border-radius: var(--mss-radius-hero, 1.35rem) !important;
   position: relative;
   overflow: hidden;
   isolation: isolate;
 }
 
-.twh-hub-hero__title,
-.fqh-hub-hero__title,
-.quran-hub-hero__title,
-.pts-hero__title,
-.twh-hub-hero__sub,
-.fqh-hub-hero__sub,
-.quran-hub-hero__sub {
-  color: inherit !important;
+.twh-hub-hero::before,
+.twh-hub-hero::after,
+.fqh-hub-hero::before,
+.fqh-hub-hero::after,
+.quran-hub-hero::before,
+.quran-hub-hero::after,
+.th-hero::before,
+.th-hero::after,
+.tf-hero::before,
+.tf-hero::after,
+.atl-hero::before,
+.atl-hero::after,
+.fa-hero::before,
+.fa-hero::after,
+.sg-hero::before,
+.sg-hero::after,
+.seerah-hero::before,
+.seerah-hero::after,
+.tw-hero::before,
+.tw-hero::after,
+.arkan-hero::before,
+.arkan-hero::after {
+  content: none !important;
+  display: none !important;
 }
 
-.fqh-hub-hero__eyebrow,
-.twh-hub-hero__eyebrow,
-.twh-hub-hero .home-eyebrow,
-.fqh-hub-hero .home-eyebrow,
-.quran-hub-hero .home-eyebrow,
+:is(
+  .twh-hub-hero,
+  .fqh-hub-hero,
+  .quran-hub-hero,
+  .pts-hero,
+  .th-hero,
+  .tf-hero,
+  .zk-hero,
+  .sw-hero,
+  .sy-hero,
+  .hj-hero,
+  .sg-hero,
+  .uq-hero,
+  .wn-hero,
+  .atl-hero,
+  .arkan-hero,
+  .ai-hero,
+  .ah-hero,
+  .dq-hero,
+  .duas-hero,
+  .fa-hero,
+  .fg-hero,
+  .fq-hero,
+  .gl-hero,
+  .hs-hero,
+  .hk-hero,
+  .sb-hero,
+  .sh-hero,
+  .sm-hero,
+  .sr-hero,
+  .srp-hero,
+  .as-hero,
+  .cvp-hero,
+  .myl2-hero,
+  .pmp-hero,
+  .sp-hero,
+  .qc-hero,
+  .seerah-hero,
+  .tarikh-hero,
+  .tw-hero,
+  .wird-hero,
+  .mw-hero,
+  .mdb-hero,
+  .mk-hero,
+  .is-hero,
+  .lpd2-hero,
+  .ldb-hero
+) :is(
+  [class*="__title"],
+  [class*="__name"],
+  [class*="__headline"],
+  [class*="__heading"]
+) {
+  color: var(--mss-on-hero, var(--mj-ink, #16241e)) !important;
+}
+
+:is(
+  .twh-hub-hero,
+  .fqh-hub-hero,
+  .quran-hub-hero,
+  .pts-hero,
+  .th-hero,
+  .tf-hero,
+  .zk-hero,
+  .sw-hero,
+  .sy-hero,
+  .hj-hero,
+  .sg-hero,
+  .uq-hero,
+  .wn-hero,
+  .atl-hero,
+  .arkan-hero,
+  .ai-hero,
+  .ah-hero,
+  .dq-hero,
+  .duas-hero,
+  .fa-hero,
+  .fg-hero,
+  .fq-hero,
+  .gl-hero,
+  .hs-hero,
+  .hk-hero,
+  .sb-hero,
+  .sh-hero,
+  .sm-hero,
+  .sr-hero,
+  .srp-hero,
+  .as-hero,
+  .cvp-hero,
+  .myl2-hero,
+  .pmp-hero,
+  .sp-hero,
+  .qc-hero,
+  .seerah-hero,
+  .tarikh-hero,
+  .tw-hero,
+  .wird-hero,
+  .mw-hero,
+  .is-hero,
+  .lpd2-hero
+) :is(
+  [class*="__sub"],
+  [class*="__lead"],
+  [class*="__desc"],
+  [class*="__subtitle"],
+  [class*="__hint"]
+) {
+  color: var(--mss-on-hero-muted, var(--mj-ink-2, #4a554f)) !important;
+}
+
+:is(
+  .twh-hub-hero,
+  .fqh-hub-hero,
+  .quran-hub-hero,
+  .th-hero,
+  .tf-hero,
+  .zk-hero,
+  .sw-hero,
+  .sy-hero,
+  .hj-hero,
+  .sg-hero,
+  .uq-hero,
+  .wn-hero,
+  .atl-hero,
+  .ai-hero,
+  .ah-hero,
+  .dq-hero,
+  .fa-hero,
+  .fg-hero,
+  .fq-hero,
+  .gl-hero,
+  .hs-hero,
+  .hk-hero,
+  .sb-hero,
+  .sh-hero,
+  .as-hero,
+  .tw-hero,
+  .pmp-hero,
+  .qc-hero,
+  .sp-hero,
+  .is-hero
+) :is(
+  [class*="__badge"],
+  [class*="__eyebrow"],
+  [class*="__chip"],
+  .home-eyebrow
+) {
+  color: var(--mj-brand-deep, #123f2e) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, transparent) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent) !important;
+  opacity: 1 !important;
+}
+
+/* رموز كانت بيضاء فوق الشريط الأخضر */
+.th-hero__emoji,
+.hj-hero__kaaba,
+.arkan-hero__icon-btn,
+.ah-hero__bismillah,
+.duas-hero__bismillah,
+.sh-hero__sallam,
+.dq-hero-ayah__text,
+.dq-hero-ayah__ref,
+.uq-hero .uq-stat__num,
+.uq-hero .uq-stat__label,
+.tf-hero .tf-stat strong,
+.tf-hero .tf-stat span {
+  color: var(--mj-brand-deep, #123f2e) !important;
+}
+
+.dq-hero-ayah,
+.th-ayah:not(.th-ayah--body),
+.uq-hero .uq-stat,
+.tf-hero .tf-stat {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, var(--mj-surface, #fffef9)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
+  color: var(--mss-on-hero, var(--mj-ink, #16241e)) !important;
+}
+
+/* المساعد العلمي يبقى بطاقة مميزة بسطح العلامة (ليس شريط صفحة) */
 .asp-hero .asp-hero__eyebrow,
-.asp-hero .assistant-title,
-.asp-hero .assistant-intro {
-  color: var(--mss-on-hero, #ffffff) !important;
+.asp-hero .assistant-title {
+  color: var(--mss-on-hero-accent, var(--mj-brand-deep, #123f2e)) !important;
   opacity: 1 !important;
 }
 
 .asp-hero .assistant-intro {
-  color: var(--mss-on-hero-muted, #f3efe6) !important;
+  color: var(--mss-on-hero-muted, var(--mj-ink-2, #4a554f)) !important;
 }
 
 /* —— قوالب صفحة عامة —— */

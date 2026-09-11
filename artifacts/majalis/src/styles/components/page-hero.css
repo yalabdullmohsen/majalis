@@ -39,40 +39,44 @@ html.dark .pattern-backdrop {
   overflow: visible;
 }
 
-/* Full-bleed: خلفية بعرض الشاشة · محتوى داخلي محاذاة — بلا هامش سالب */
-.page-hero-mj--bleed {
-  width: 100%;
-  max-width: none;
+/* هيرو الأقسام: بطاقة سطح داخل الهامش — لا شريط أخضر بعرض الشاشة */
+.page-hero-mj--bleed:not(.home-page-hero) {
+  width: auto;
+  max-width: min(56rem, calc(100% - 2 * max(1rem, var(--page-gutter, 1rem))));
   box-sizing: border-box;
-  margin-inline: 0;
-  margin-block-start: 0;
-  padding-block: 1.5rem 2rem;
+  margin-inline: auto;
+  margin-block: 0.65rem 0.85rem;
+  padding-block: 1.05rem;
   padding-inline: max(1rem, var(--page-gutter, 1rem));
-  border-radius: 0;
-  background-color: var(--mss-hero-from, var(--color-primary-dark, var(--mj-brand-deep, #123f2e)));
-  background-image: var(
-    --mss-hero-gradient,
-    linear-gradient(135deg, #0f4a3a 0%, #1f6b56 58%, #245f4d 100%)
+  border-radius: var(--mss-radius-hero, 1.35rem);
+  /* رموز mss (--mss-hero-from / --mss-hero-gradient) للبطاقات المميزة فقط */
+  background-color: var(
+    --mss-section-hero-bg,
+    color-mix(in srgb, var(--mj-brand, #1f6b56) 5.5%, var(--mj-surface, #fffef9))
   );
-  color: var(--mss-on-hero, #fff);
+  background-image: none;
+  color: var(--mj-ink, #16241e);
+  border: 1px solid var(--mj-hairline, #e3e8e6);
+  border-inline-start: 4px solid var(--mj-brand, #1f6b56);
+  box-shadow: var(--shadow-soft, 0 10px 28px rgba(36, 31, 24, 0.08));
 }
-.page-hero-mj--bleed .pattern-backdrop {
-  color: #fff;
-  opacity: 0.07;
+.page-hero-mj--bleed:not(.home-page-hero) .pattern-backdrop {
+  color: var(--mj-brand, #1f6b56);
+  opacity: 0.06;
 }
-.page-hero-mj--bleed .page-hero-mj__content {
+.page-hero-mj--bleed:not(.home-page-hero) .page-hero-mj__content {
   max-width: min(64rem, 100%);
   width: 100%;
   margin-inline: auto;
 }
-.page-hero-mj--bleed .page-hero-mj__eyebrow {
-  color: rgba(255, 255, 255, 0.78);
+.page-hero-mj--bleed:not(.home-page-hero) .page-hero-mj__eyebrow {
+  color: var(--mj-brand-deep, #123f2e);
 }
-.page-hero-mj--bleed :is(.page-hero-mj__title, .page-hero-mj__headline) {
-  color: #fff !important;
+.page-hero-mj--bleed:not(.home-page-hero) :is(.page-hero-mj__title, .page-hero-mj__headline) {
+  color: var(--mj-ink, #16241e) !important;
 }
-.page-hero-mj--bleed .page-hero-mj__desc {
-  color: #e8eeec !important;
+.page-hero-mj--bleed:not(.home-page-hero) .page-hero-mj__desc {
+  color: var(--mj-ink-2, #4a554f) !important;
 }
 
 .page-hero-mj__content {

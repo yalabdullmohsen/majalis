@@ -532,42 +532,69 @@ html.dark .sidebar-item.active {
   color: var(--mj-chip-active-fg, #ffffff) !important;
 }
 
-/* ── فقه ───────────────────────────────────────────────────────────── */
+/* ── فقه / هيرو الأقسام — بطاقة سطح لا شريط أخضر ممتد ─────────────── */
 .fqh-hub-hero,
 .fiqh-lux-book-hero,
-.page-hero-mj--bleed,
-.mss-hero-surface {
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--color-primary-dark) 88%, #000) 0%,
-    var(--color-primary) 100%
+.page-hero-mj--bleed:not(.home-page-hero),
+.mss-hero-surface,
+.topic-page__hero,
+.section-lobby__head:not(.section-lobby__head--bare),
+.twh-hub-hero,
+.quran-hub-hero,
+.th-hero,
+.tf-hero,
+.zk-hero,
+.sw-hero,
+.sy-hero,
+.hj-hero,
+.sg-hero,
+.uq-hero,
+.atl-hero,
+.arkan-hero,
+.ai-hero,
+.ah-hero,
+.fa-hero,
+.fg-hero,
+.fq-hero,
+.hs-hero,
+.sb-hero,
+.sh-hero,
+.seerah-hero,
+.tw-hero,
+.duas-hero,
+.wn-hero,
+.dq-hero {
+  background: color-mix(
+    in srgb,
+    var(--color-primary, var(--mj-brand, #1f6b56)) 5.5%,
+    var(--color-surface, var(--mj-surface, #fffef9))
   ) !important;
-  color: #fffef9 !important;
+  background-image: none !important;
+  color: var(--color-text, var(--mj-ink, #16241e)) !important;
+  border: 1px solid var(--color-border, var(--mj-hairline, #e3e8e6)) !important;
+  border-inline-start: 4px solid var(--color-primary, var(--mj-brand, #1f6b56)) !important;
+  border-radius: var(--radius-card, 1.25rem) !important;
   box-shadow: var(--shadow-soft) !important;
   min-height: 0 !important;
-  padding-block: 1.1rem !important;
+  padding-block: 1.05rem !important;
 }
 
-/*
- * زر الرجوع على الهيرو المتدرج يستخدم .mj-btn (أول مطابقة لبوابة التباين).
- * خلفية شفافة/color() + تدرّج الأب → NO_COLOR. ثبّت خلفية صلبة + نص عاجي.
- */
-.page-hero-mj--bleed .page-hero-mj__back,
-.page-hero-mj--bleed .mj-btn.mj-btn--ghost.app-back-btn,
-.page-hero-mj--bleed .mj-btn.mj-btn--ghost.app-back-btn--hero,
+.page-hero-mj--bleed:not(.home-page-hero) .page-hero-mj__back,
+.page-hero-mj--bleed:not(.home-page-hero) .mj-btn.mj-btn--ghost.app-back-btn,
+.page-hero-mj--bleed:not(.home-page-hero) .mj-btn.mj-btn--ghost.app-back-btn--hero,
 .mss-hero-surface .page-hero-mj__back,
 .fqh-hub-hero .page-hero-mj__back,
 .fiqh-lux-book-hero .page-hero-mj__back {
-  background: #0a3d2e !important;
-  background-color: #0a3d2e !important;
+  background: var(--color-surface, #fffef9) !important;
+  background-color: var(--color-surface, #fffef9) !important;
   background-image: none !important;
-  color: #ffffff !important;
-  border: 1px solid color-mix(in srgb, #ffffff 32%, transparent) !important;
+  color: var(--color-primary-dark, var(--mj-brand-deep, #123f2e)) !important;
+  border: 1px solid var(--color-border, var(--mj-hairline)) !important;
   box-shadow: none !important;
 }
 
-.page-hero-mj--bleed .page-hero-mj__back *,
-.page-hero-mj--bleed .mj-btn.mj-btn--ghost.app-back-btn *,
+.page-hero-mj--bleed:not(.home-page-hero) .page-hero-mj__back *,
+.page-hero-mj--bleed:not(.home-page-hero) .mj-btn.mj-btn--ghost.app-back-btn *,
 .mss-hero-surface .page-hero-mj__back *,
 .fqh-hub-hero .page-hero-mj__back *,
 .fiqh-lux-book-hero .page-hero-mj__back * {
@@ -575,8 +602,21 @@ html.dark .sidebar-item.active {
 }
 
 .fqh-hub-hero {
-  border-radius: 0 0 var(--radius-sheet) var(--radius-sheet);
+  width: auto;
+  max-width: min(56rem, calc(100% - 2 * max(1rem, var(--page-gutter, 1rem))));
+  margin-inline: auto;
   margin-bottom: 0.85rem;
+}
+
+/* لوبي الدروس/الفقه الفاخر: الرأس مخفي بصريًا — لا تفرض بطاقة */
+.section-lobby[data-lessons-hub="1"] .section-lobby__head,
+.fiqh-lux-page .section-lobby__head {
+  background: none !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  color: inherit !important;
 }
 
 .fqh-hub-card,
