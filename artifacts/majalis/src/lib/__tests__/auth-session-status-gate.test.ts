@@ -22,6 +22,11 @@ assert.match(auth, /clearAllLessonAudioResume/);
 assert.match(auth, /useQueryClient/);
 assert.match(auth, /setStatus\("authenticated"\)/);
 assert.match(auth, /setStatus\("unauthenticated"\)/);
+assert.match(
+  auth,
+  /isNativePlatform/,
+  "bootstrap فوري على الأصلي يمنع وميض الجلسة",
+);
 assert.doesNotMatch(
   auth,
   /setLoading\(false\)/,
