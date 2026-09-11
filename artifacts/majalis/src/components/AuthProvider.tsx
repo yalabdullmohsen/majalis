@@ -99,6 +99,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const shouldBootstrapSoon = (() => {
       try {
+        // أصلي: التوكن قد يكون في Preferences قبل اكتمال hydrate → localStorage
+        // فتح bootstrap فورًا يمنع وميض «زائر» ثم «مسجّل».
+        const cap = (
+          window as Window & {
+            Capacitor?: { isNativePlatform?: () => boolean };
+          }
+        ).Capacitor;
+        if (cap?.isNativePlatform?.()) return true;
+
         const path = window.location.pathname || "/";
         if (/^\/(login|register|admin|stats|profile|account)(\/|$)/.test(path)) return true;
         for (let i = 0; i < localStorage.length; i++) {
