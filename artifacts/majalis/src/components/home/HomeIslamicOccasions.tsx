@@ -55,7 +55,7 @@ export function HomeIslamicOccasions() {
       ) : (
         <div className="home-occasions-grid">
           {items.map((occasion) => (
-            <Link key={occasion.id} href="/occasions" className="home-occasion-card ui-card">
+            <Link key={occasion.id} href="/occasions" className="home-occasion-card soft-card soft-card--on-light">
               <strong>{occasion.name}</strong>
               <span className={`religious-kind-badge religious-kind-badge--${occasion.contentKind}`}>
                 {contentKindLabel(occasion.contentKind)}

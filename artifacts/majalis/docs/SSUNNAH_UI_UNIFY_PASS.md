@@ -158,3 +158,9 @@
 4. #1902 (وميض الجلسة) و#1903 (P18) منشوران على الإنتاج.
 5. بوابة lockdown تسمح بـ allowlist فارغ عند اكتمال الهجرة.
 
+## دفعة P20 — 2026-09-11
+
+1. ترحيل بطاقات \`src/components/home/**\` من \`ui-card\`/\`mj-card\` إلى \`AppCard\` أو \`soft-card soft-card--on-light\`.
+2. بوابة \`home-cards-appcard-gate.test.ts\` ضمن \`test:soft-cards-system\`.
+3. لا مساس بنصوص شرعية؛ الإبقاء على أصناف الدومين للتخطيط.
+

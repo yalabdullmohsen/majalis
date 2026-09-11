@@ -21,7 +21,7 @@ export function HomePrayerRanks() {
     >
       <div className="home-prayer-ranks-list">
         {RANKS.map((rank, index) => (
-          <div key={rank.title} className="home-prayer-rank-row ui-card">
+          <div key={rank.title} className="home-prayer-rank-row soft-card soft-card--on-light">
             <span className="home-prayer-rank-num">{index + 1}</span>
             <div className="home-prayer-rank-body">
               <p className="home-prayer-rank-label">{rank.label}</p>
