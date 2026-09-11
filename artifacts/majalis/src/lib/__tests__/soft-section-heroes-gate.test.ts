@@ -11,7 +11,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const shell = read("src/styles/components/modern-section-shell.css");
-for (const hero of [".sw-hero", ".sb-hero", ".as-hero", ".atl-hero", ".sm-hero", ".gl-hero"]) {
+for (const hero of [".sw-hero", ".sb-hero", ".as-hero", ".atl-hero", ".sm-hero", ".gl-hero", ".seerah-hero", ".th-hero", ".sh-hero", ".ldb-hero"]) {
   assert.match(shell, new RegExp(hero.replace(".", "\\.")), `modern-section-shell يشمل ${hero}`);
 }
 assert.match(shell, /--mss-section-hero-bg/, "سطح soft-hero مفعّل");
@@ -32,6 +32,15 @@ assert.doesNotMatch(
   /:where\([^)]*\.sw-hero[^)]*\)\s*\{[^}]*color:\s*var\(--on-dark/,
   "الوضع الداكن لا يفرض نصًا أبيض على .sw-hero soft",
 );
+for (const h of [".seerah-hero", ".th-hero", ".sh-hero"]) {
+  assert.doesNotMatch(
+    dark,
+    new RegExp(`:where\\([^)]*\\${h.slice(1)}[^)]*\\)\\s*\\{[^}]*color:\\s*var\\(--on-dark`),
+    `الوضع الداكن لا يفرض نصًا أبيض على ${h} soft`,
+  );
+}
+assert.doesNotMatch(dark, /html\.dark \.th-hero \{[^}]*color:\s*#FFFFFF/, "لا فرض أبيض مباشر على .th-hero");
+
 
 for (const [file, banned] of [
   ["src/styles/pages/sawm.css", /\.sw-hero\s*\{[^}]*linear-gradient/s],
@@ -39,6 +48,9 @@ for (const [file, banned] of [
   ["src/styles/pages/alamat-saah.css", /\.as-hero\s*\{[^}]*linear-gradient/s],
   ["src/styles/pages/adab-talab-ilm.css", /\.atl-hero\s*\{[^}]*linear-gradient/s],
   ["src/styles/pages/sitemap.css", /\.sm-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/seerah.css", /\.seerah-hero\s*\{[^}]*(?:linear-gradient|brand-deep)/s],
+  ["src/styles/pages/tahara.css", /\.th-hero\s*\{[^}]*(?:linear-gradient|brand-deep)/s],
+  ["src/styles/pages/shimael.css", /\.sh-hero\s*\{[^}]*linear-gradient/s],
 ] as const) {
   const css = read(file);
   assert.doesNotMatch(css, banned, `${file}: لا تدرّج أخضر على جذر الهيرو`);

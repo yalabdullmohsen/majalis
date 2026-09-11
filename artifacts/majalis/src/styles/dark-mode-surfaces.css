@@ -172,15 +172,10 @@ html.dark .th-tab--active {
   color: var(--accent, #5CC095) !important;
 }
 html[data-theme="dark"] .surface-brand,
-html.dark .surface-brand,
-html[data-theme="dark"] .th-hero,
-html.dark .th-hero {
+html.dark .surface-brand {
   color: #FFFFFF !important;
 }
-html[data-theme="dark"] .th-hero :where(.th-hero__title, .th-hero__sub, .th-tab:not(.th-tab--active), .th-ayah__text, .th-ayah__ref),
-html.dark .th-hero :where(.th-hero__title, .th-hero__sub, .th-tab:not(.th-tab--active), .th-ayah__text, .th-ayah__ref) {
-  color: #FFFFFF !important;
-}
+/* .th-hero / .sh-hero / .seerah-hero soft-card — لا تُفرض ألوان الهيرو الداكن */
 /* .sw-hero صار soft-card فاتحًا — لا تُفرض عليه ألوان الهيرو الداكن */
 html[data-theme="dark"] .mj-btn--primary,
 html.dark .mj-btn--primary,
@@ -429,34 +424,28 @@ html.dark {
 html[data-theme="dark"] :where(
   .lpd2-hero,
   .myl2-hero,
-  .sh-hero,
   .pmp-hero,
   .srp-hero,
   .isp-hero,
-  .seerah-hero,
   .frb-wrap,
   .prophet-detail-lux,
   .prophet-detail-lux__hero,
   .quran-hub-hero,
   .quran-hub-stats,
   .surface-brand,
-  .th-hero
 ),
 html.dark :where(
   .lpd2-hero,
   .myl2-hero,
-  .sh-hero,
   .pmp-hero,
   .srp-hero,
   .isp-hero,
-  .seerah-hero,
   .frb-wrap,
   .prophet-detail-lux,
   .prophet-detail-lux__hero,
   .quran-hub-hero,
   .quran-hub-stats,
   .surface-brand,
-  .th-hero
 ) {
   color: var(--on-dark-strong, #FFFFFF) !important;
 }
@@ -464,17 +453,14 @@ html.dark :where(
 html[data-theme="dark"] :where(
   .lpd2-hero,
   .myl2-hero,
-  .sh-hero,
   .pmp-hero,
   .srp-hero,
   .isp-hero,
-  .seerah-hero,
   .prophet-detail-lux,
   .prophet-detail-lux__hero,
   .quran-hub-hero,
   .quran-hub-stats,
   .surface-brand,
-  .th-hero
 ) :where(
   h1, h2, h3,
   [class$="__title"],
@@ -484,17 +470,14 @@ html[data-theme="dark"] :where(
 html.dark :where(
   .lpd2-hero,
   .myl2-hero,
-  .sh-hero,
   .pmp-hero,
   .srp-hero,
   .isp-hero,
-  .seerah-hero,
   .prophet-detail-lux,
   .prophet-detail-lux__hero,
   .quran-hub-hero,
   .quran-hub-stats,
   .surface-brand,
-  .th-hero
 ) :where(
   h1, h2, h3,
   [class$="__title"],
@@ -509,17 +492,14 @@ html.dark :where(
 html[data-theme="dark"] :where(
   .lpd2-hero,
   .myl2-hero,
-  .sh-hero,
   .pmp-hero,
   .srp-hero,
   .isp-hero,
-  .seerah-hero,
   .prophet-detail-lux,
   .prophet-section-lux,
   .quran-hub-hero,
   .quran-hub-stats,
   .surface-brand,
-  .th-hero
 ) :where(
   p,
   [class$="__sub"],
@@ -534,17 +514,14 @@ html[data-theme="dark"] :where(
 html.dark :where(
   .lpd2-hero,
   .myl2-hero,
-  .sh-hero,
   .pmp-hero,
   .srp-hero,
   .isp-hero,
-  .seerah-hero,
   .prophet-detail-lux,
   .prophet-section-lux,
   .quran-hub-hero,
   .quran-hub-stats,
   .surface-brand,
-  .th-hero
 ) :where(
   p,
   [class$="__sub"],

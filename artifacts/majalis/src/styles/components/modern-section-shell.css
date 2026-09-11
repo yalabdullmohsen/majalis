@@ -60,7 +60,10 @@
 .atl-hero,
 .sm-hero,
 .gl-hero,
-.ldb-hero {
+.ldb-hero,
+.seerah-hero,
+.th-hero,
+.sh-hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -97,8 +100,18 @@
 .gl-hero::before,
 .gl-hero::after,
 .ldb-hero::before,
-.ldb-hero::after {
+.ldb-hero::after,
+.seerah-hero::before,
+.seerah-hero::after,
+.th-hero::before,
+.th-hero::after,
+.sh-hero::before,
+.sh-hero::after {
   content: none !important;
+  display: none !important;
+}
+
+.sh-hero .sh-hero__glow {
   display: none !important;
 }
 
@@ -466,6 +479,40 @@ html[data-theme="dark"] .card {
   background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, transparent) !important;
   border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
 }
+
+.seerah-hero .seerah-hero__badge,
+.th-hero .th-hero__badge,
+.sh-hero .sh-hero__badge {
+  color: var(--mss-on-hero-accent, #123f2e) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
+}
+
+.seerah-hero .seerah-hero__title,
+.th-hero .th-hero__title,
+.th-hero .th-hero__emoji,
+.sh-hero .sh-hero__title,
+.sh-hero .sh-hero__sallam {
+  color: var(--mss-on-hero, #16241e) !important;
+}
+
+.seerah-hero .seerah-hero__sub,
+.th-hero .th-hero__sub,
+.th-hero .th-ayah__text,
+.th-hero .th-ayah__ref,
+.sh-hero .sh-hero__sub,
+.sh-hero .sh-stat,
+.sh-hero .sh-stat__val,
+.sh-hero .sh-stat__lbl {
+  color: var(--mss-on-hero-muted, #3d4f47) !important;
+  opacity: 1 !important;
+}
+
+.th-hero .th-ayah {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, transparent) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
+}
+
 
 /* asp-hero يبقى أخضر غامق — نص فاتح مستقل عن soft-hero ink */
 .asp-hero {
