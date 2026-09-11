@@ -54,7 +54,7 @@ export function HomeLiveNowBanner() {
         setItems(fallback.slice(0, 3));
       })
       .catch(() => {
-        if (mountedRef.current) setItems([]);
+        /* أبقِ البنر السابق عند فشل التحديث الدوري */
       })
       .finally(() => {
         if (mountedRef.current) setLoading(false);
