@@ -5,6 +5,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import "@/styles/pages/sahabah.css";
+import { ListScreen } from "@/components/design-system/screens";
 
 
 type SahabiCategory = "الكل" | "الخلفاء" | "العشرة" | "النساء" | "العلماء" | "الفاتحون";
@@ -1239,6 +1240,7 @@ export default function SahabahPage() {
   });
 
   return (
+    <ListScreen compose="mark">
     <main className="sb-page" dir="rtl">
       {/* hero */}
       <section className="sb-hero">
@@ -1384,5 +1386,6 @@ export default function SahabahPage() {
         </nav>
       </div>
     </main>
+    </ListScreen>
   );
 }

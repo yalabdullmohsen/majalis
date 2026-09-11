@@ -20,7 +20,7 @@
 .fcs-item-meta      { margin: 0.5rem 0; font-size: var(--ds-text-sm); color: var(--majalis-ink-soft); }
 .fcs-item-actions   { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; }
 .fcs-btn            { font-size: var(--ds-text-xs); cursor: pointer; background: none; border: none; font-family: inherit; padding: 0; }
-.fcs-btn--danger    { font-size: var(--ds-text-xs); cursor: pointer; color: #dc2626; background: none; border: none; font-family: inherit; padding: 0; }
+.fcs-btn--danger    { font-size: var(--ds-text-xs); cursor: pointer; color: var(--mj-danger); background: none; border: none; font-family: inherit; padding: 0; }
 .fcs-a              { font-size: var(--ds-text-xs); color: var(--majalis-emerald-deep); }
 .fcs-dup-reasons    { margin: 0.35rem 0; font-size: 0.8125rem; color: var(--majalis-ink-soft); }
 .fcs-dup-actions    { display: flex; gap: var(--ds-space-2); }

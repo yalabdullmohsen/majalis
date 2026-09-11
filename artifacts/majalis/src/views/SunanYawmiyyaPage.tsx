@@ -7,6 +7,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/sunan-yawmiyya.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { ListScreen } from "@/components/design-system/screens";
 
 /* ─── أنواع البيانات ─── */
 type Sunnah = {
@@ -902,6 +903,7 @@ export default function SunanYawmiyyaPage() {
   const doneCount = filtered.filter((s) => checked.has(s.id)).length;
 
   return (
+    <ListScreen compose="mark">
     <main className="sy-page" dir="rtl">
       {/* هيرو */}
       <section className="sy-hero">
@@ -1032,5 +1034,6 @@ export default function SunanYawmiyyaPage() {
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في السنن والفقه" count={4} />
       </div>
     </main>
+    </ListScreen>
   );
 }

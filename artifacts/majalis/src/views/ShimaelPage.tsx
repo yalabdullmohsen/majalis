@@ -7,6 +7,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import "@/styles/pages/shimael.css";
+import { ListScreen } from "@/components/design-system/screens";
 
 /* ══════════════════════════════════════════════════════════════════
    §240، الشمائل المحمدية  (.sh-*)
@@ -484,6 +485,7 @@ export default function ShimaelPage() {
   [search]);
 
   return (
+    <ListScreen compose="mark">
     <div className="sh-page" dir="rtl">
       {/* ══ Hero ══ */}
       <section className="sh-hero">
@@ -731,5 +733,6 @@ export default function ShimaelPage() {
       </div>
       </div>
     </div>
+    </ListScreen>
   );
 }

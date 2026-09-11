@@ -741,7 +741,7 @@
 .fiqh-issue-date {
   display: block;
   font-size: var(--ds-text-xs);
-  color: #9ca3af;
+  color: var(--mj-muted);
   margin-top: 0.5rem;
 }
 

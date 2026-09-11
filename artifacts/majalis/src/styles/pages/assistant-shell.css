@@ -381,7 +381,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 }
 
 .assistant-message-failure span {
-  color: #991b1b;
+  color: var(--mj-danger);
 }
 
 .assistant-message-failure p {
@@ -400,13 +400,13 @@ html[data-theme="dark"] .assistant-message-bubble {
   font-size: 0.85rem;
   font-weight: 600;
   color: #fff;
-  background: #b91c1c;
+  background: var(--mj-danger);
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background 140ms ease;
 }
-.assistant-retry-btn:hover:not(:disabled) { background: #991b1b; }
+.assistant-retry-btn:hover:not(:disabled) { background: var(--mj-danger); }
 .assistant-retry-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
 .assistant-message-assistant {

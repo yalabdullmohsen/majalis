@@ -6,6 +6,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/fadail-aamal.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { ListScreen } from "@/components/design-system/screens";
 
 interface Fadila {
   id: string;
@@ -1057,6 +1058,7 @@ export default function FadailAamalPage() {
   });
 
   return (
+    <ListScreen compose="mark">
     <main className="fa-page" dir="rtl">
       {/* hero */}
       <section className="fa-hero">
@@ -1169,5 +1171,6 @@ export default function FadailAamalPage() {
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في فضائل الأعمال" count={4} />
       </div>
     </main>
+    </ListScreen>
   );
 }

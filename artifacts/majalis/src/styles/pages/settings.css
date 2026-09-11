@@ -130,7 +130,7 @@
 
 .page-action-btn--danger:hover,
 .page-action-btn--danger:focus-visible {
-  background: color-mix(in srgb, #c0392b 20%, transparent) !important;
+  background: color-mix(in srgb, var(--mj-danger) 20%, transparent) !important;
 }
 
 .settings-delete-dialog {

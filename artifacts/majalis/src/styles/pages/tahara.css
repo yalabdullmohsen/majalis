@@ -243,7 +243,7 @@
   gap: var(--ds-space-4);
   align-items: flex-start;
   padding: .8rem 0;
-  border-bottom: 1px solid #F3F4F6;
+  border-bottom: 1px solid var(--mj-surface-2);
 }
 .th-timeline-step:last-child { border-bottom: none; }
 .th-timeline-step__num {

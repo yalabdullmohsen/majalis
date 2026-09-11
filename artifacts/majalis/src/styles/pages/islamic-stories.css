@@ -301,7 +301,7 @@ html.dark .isp-chip.is-active,
   background: rgba(220,38,38,0.08);
   border: 1px solid rgba(220,38,38,0.2);
   border-radius: var(--elite-r-lg, 16px);
-  color: #EF4444;
+  color: var(--mj-danger);
   font-size: 0.9rem;
 }
 

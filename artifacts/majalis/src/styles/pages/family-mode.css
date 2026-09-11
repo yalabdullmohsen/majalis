@@ -60,7 +60,7 @@
 .fm-btn--primary { background: var(--ds-emerald); color: #fff; border-color: var(--ds-emerald); }
 .fm-btn--primary:hover { background: var(--ds-emerald-deep); }
 .fm-btn--sm { padding: 0.35rem 0.75rem; font-size: 0.8rem; }
-.fm-btn--danger { border-color: #dc2626; color: #dc2626; }
+.fm-btn--danger { border-color: var(--mj-danger); color: var(--mj-danger); }
 .fm-btn--danger:hover { background: #fee2e2; }
 .fm-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
@@ -120,7 +120,7 @@
   background: var(--majalis-panel, #fff);
 }
 .fm-code-input:focus { outline: none; border-color: var(--ds-emerald); }
-.fm-child__error { color: #dc2626; font-size: 0.85rem; }
+.fm-child__error { color: var(--mj-danger); font-size: 0.85rem; }
 .fm-joined {
   display: flex;
   flex-direction: column;

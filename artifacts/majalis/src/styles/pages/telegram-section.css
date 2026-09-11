@@ -16,7 +16,7 @@
 .tgm-row-label      { color: var(--majalis-ink-soft); flex-shrink: 0; }
 .tgm-row-val        { word-break: break-all; }
 .tgm-row-val--mono  { font-family: monospace; text-align: start; }
-.tgm-row-val--err   { color: #dc2626; }
+.tgm-row-val--err   { color: var(--mj-danger); }
 .tgm-stat-card      { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: 0.625rem; padding: var(--ds-space-4); text-align: center; }
 .tgm-stat-val       { font-size: 1.6rem; font-weight: 800; color: var(--tgm-sv-color, var(--majalis-emerald)); }
 .tgm-stat-label     { font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); margin-top: 0.25rem; }
@@ -27,7 +27,7 @@
 .tgm-progress-fill  { height: 4px; width: var(--tgm-pf-w, 0%); background: var(--tgm-pf-color, var(--majalis-emerald)); border-radius: 2px; transition: width 0.4s; }
 .tgm-btn            { padding: 0.45rem 1rem; font-size: 0.85rem; font-weight: 600; background: var(--majalis-emerald-deep); color: #fff; border: none; border-radius: var(--ds-radius-sm); cursor: pointer; transition: opacity 0.15s; white-space: nowrap; font-family: inherit; }
 .tgm-btn:disabled   { cursor: not-allowed; background: var(--majalis-line); color: var(--majalis-ink-soft); }
-.tgm-btn--danger    { background: #dc2626; }
+.tgm-btn--danger    { background: var(--mj-danger); }
 .tgm-btn--secondary { background: var(--majalis-line); color: var(--majalis-ink); }
 .tgm-btn--small     { padding: 0.3rem 0.65rem; font-size: 0.78rem; }
 .tgm-badges-row     { display: flex; gap: var(--ds-space-3); flex-wrap: wrap; }
@@ -39,7 +39,7 @@
 .tgm-ch-input       { flex: 1; padding: 0.4rem 0.6rem; font-size: var(--ds-text-sm); border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-sm); background: var(--majalis-parchment); color: var(--majalis-ink); }
 .tgm-channels-list  { display: grid; gap: var(--ds-space-3); }
 .tgm-ch-card        { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: 0.625rem; padding: 0.875rem 1rem; display: flex; align-items: center; gap: var(--ds-space-4); flex-wrap: wrap; }
-.tgm-ch-dot         { width: 10px; height: 10px; border-radius: 50%; background: #9ca3af; flex-shrink: 0; }
+.tgm-ch-dot         { width: 10px; height: 10px; border-radius: 50%; background: var(--mj-muted); flex-shrink: 0; }
 .tgm-ch-dot--active { background: var(--mj-brand); }
 .tgm-ch-info        { flex: 1; min-width: 0; }
 .tgm-ch-name        { font-weight: 700; font-size: 0.9rem; }

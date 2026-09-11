@@ -79,7 +79,7 @@
   font-size: 0.8rem; color: var(--mj-brand); font-weight: 700;
   background: rgba(23,61,53,.1); padding: .2rem .65rem; border-radius: var(--ds-radius-full); flex-shrink: 0;
 }
-.sh-bab__chevron { color: #9CA3AF; flex-shrink: 0; display: flex; }
+.sh-bab__chevron { color: var(--mj-muted); flex-shrink: 0; display: flex; }
 
 .sh-bab__body {
   border-top: 1px solid rgba(23,61,53,.08); padding: 1rem 1.1rem;
@@ -102,7 +102,7 @@
   font-size: .75rem; color: var(--mj-brand); font-weight: 700;
   background: rgba(23,61,53,.08); padding: .15rem .6rem; border-radius: var(--ds-radius-full);
 }
-.sh-hadith__src { font-size: .72rem; color: #9CA3AF; font-style: normal; }
+.sh-hadith__src { font-size: .72rem; color: var(--mj-muted); font-style: normal; }
 
 /* محبة */
 .sh-mahabbah-intro {

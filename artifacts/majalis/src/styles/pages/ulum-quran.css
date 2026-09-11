@@ -165,9 +165,9 @@ html[data-theme="dark"] .uq-hero .uq-stat__label {
   font-size: .8rem; font-weight: 800; flex-shrink: 0;
 }
 .uq-jam-title { flex: 1; font-weight: 700; font-size: .9rem; color: var(--mj-ink); }
-.uq-jam-chevron { font-size: .8rem; color: #9CA3AF; transition: transform .2s; }
+.uq-jam-chevron { font-size: .8rem; color: var(--mj-muted); transition: transform .2s; }
 .uq-jam-chevron--open { transform: rotate(180deg); }
-.uq-jam-body { margin: 0; padding: .5rem 1rem .9rem 1rem; border-top: 1px solid #F3F4F6; list-style: none; display: flex; flex-direction: column; gap: .4rem; }
+.uq-jam-body { margin: 0; padding: .5rem 1rem .9rem 1rem; border-top: 1px solid var(--mj-surface-2); list-style: none; display: flex; flex-direction: column; gap: .4rem; }
 .uq-jam-item { display: flex; gap: .5rem; align-items: flex-start; font-size: .83rem; color: var(--mj-ink-2); line-height: 1.5; }
 .uq-jam-item::before { content: "●"; color: var(--majalis-emerald,var(--mj-brand)); font-size: .5rem; margin-top: .4rem; flex-shrink: 0; }
 
@@ -203,7 +203,7 @@ html[data-theme="dark"] .uq-hero .uq-stat__label {
 }
 .uq-mufassir-info { display: flex; flex-direction: column; min-width: 8rem; }
 .uq-mufassir-name { font-weight: 700; font-size: .85rem; color: var(--mj-ink); }
-.uq-mufassir-era  { font-size: .72rem; color: #9CA3AF; }
+.uq-mufassir-era  { font-size: .72rem; color: var(--mj-muted); }
 .uq-mufassir-kitab { display: block; font-size: .83rem; font-weight: 600; color: var(--majalis-emerald,var(--mj-brand)); }
 .uq-mufassir-note  { display: block; font-size: .72rem; color: var(--mj-ink-2); }
 
@@ -230,7 +230,7 @@ html[data-theme="dark"] .uq-hero .uq-stat__label {
 .uq-mm-title { font-size: .9rem; font-weight: 800; color: var(--majalis-emerald,var(--mj-brand)); margin: 0 0 .4rem; }
 .uq-mm-def   { font-size: .8rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0 0 .5rem; }
 .uq-mm-examples { display: flex; flex-direction: column; gap: .25rem; }
-.uq-mm-examples__label { font-size: .7rem; font-weight: 700; color: #9CA3AF; display: block; margin-bottom: .1rem; }
+.uq-mm-examples__label { font-size: .7rem; font-weight: 700; color: var(--mj-muted); display: block; margin-bottom: .1rem; }
 .uq-mm-examples__item  {
   font-size: .75rem; background: #F0F7F4; border-radius: .4rem;
   padding: .2rem .5rem; color: var(--mj-brand-deep); font-weight: 600; display: block;
@@ -316,7 +316,7 @@ html[data-theme="dark"] .uq-hero .uq-stat__label {
 }
 .uq-qiraat-card__imam {
   font-size: 0.78rem;
-  color: #4b5563;
+  color: var(--mj-ink-2);
   margin: 0;
 }
 .uq-qiraat-card__origin {
@@ -347,10 +347,10 @@ html[data-theme="dark"] .uq-hero .uq-stat__label {
   padding: 0.15rem 0.5rem;
   border-radius: var(--radius-card, 20px);
 }
-.uq-qiraat-card__sep { color: #9ca3af; font-size: var(--ds-text-xs); }
+.uq-qiraat-card__sep { color: var(--mj-muted); font-size: var(--ds-text-xs); }
 .uq-qiraat-card__note {
   font-size: 0.76rem;
-  color: #4b5563;
+  color: var(--mj-ink-2);
   line-height: 1.55;
   margin: 0;
   border-top: 1px solid rgba(23,61,53,.08);

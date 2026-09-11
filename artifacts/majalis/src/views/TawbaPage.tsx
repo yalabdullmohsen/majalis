@@ -5,6 +5,7 @@ import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 
 type TawbaTab = "shurut" | "anwaa" | "adhkar" | "mawani" | "athaar";
@@ -253,6 +254,7 @@ export default function TawbaPage() {
   [search]);
 
   return (
+    <UtilityScreen compose="mark">
     <main className="tw-page" dir="rtl">
       {/* hero */}
       <section className="tw-hero">
@@ -495,5 +497,6 @@ export default function TawbaPage() {
         <SectionQuiz sectionId="akhlaq" title="اختبر معلوماتك في التوبة والتزكية" count={4} />
       </div>
     </main>
+    </UtilityScreen>
   );
 }

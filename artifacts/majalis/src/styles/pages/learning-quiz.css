@@ -244,10 +244,10 @@
 .lqp2-done__verdict { flex: 1; }
 .lqp2-done__icon { flex-shrink: 0; margin-bottom: 0.25rem; }
 .lqp2-done__icon--pass { color: var(--mj-brand); }
-.lqp2-done__icon--fail { color: #dc2626; }
+.lqp2-done__icon--fail { color: var(--mj-danger); }
 .lqp2-done__title { font-size: 1.1rem; font-weight: 800; margin: 0.1rem 0 0.4rem; }
 .lqp2-done__title--pass { color: var(--mj-brand); }
-.lqp2-done__title--fail { color: #dc2626; }
+.lqp2-done__title--fail { color: var(--mj-danger); }
 .lqp2-done__sub { font-size: 0.85rem; color: var(--clr-ink-soft, var(--mj-muted)); margin: 0; line-height: 1.6; }
 .lqp2-done__actions {
   display: flex;
@@ -282,7 +282,7 @@
   height: 1.6rem;
   border-radius: 50%;
   background: rgba(220,38,38,.1);
-  color: #dc2626;
+  color: var(--mj-danger);
   font-size: 0.72rem;
   font-weight: 700;
   display: flex;
@@ -459,7 +459,7 @@ html[data-theme="dark"] .lcp2-event__date-box { background: rgba(23,61,53,.2); }
    ============================================================ */
 
 .lqp-score--pass { color: var(--emerald-deep); }
-.lqp-score--fail { color: #dc2626; }
+.lqp-score--fail { color: var(--mj-danger); }
 
 .lqp-mc-btn.is-selected {
   border: 2px solid var(--emerald-deep);

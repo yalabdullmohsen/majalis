@@ -1354,14 +1354,14 @@ html[data-theme="dark"] .hadith-stat strong {
   line-height: 1.35;
 }
 .hadith-grade--mawdu {
-  background: color-mix(in srgb, #b91c1c 10%, transparent);
+  background: color-mix(in srgb, var(--mj-danger) 10%, transparent);
   color: #7f1d1d;
-  border: 1px solid color-mix(in srgb, #b91c1c 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-danger) 22%, transparent);
 }
 .hadith-grade--daif {
-  background: color-mix(in srgb, #c2410c 10%, transparent);
+  background: color-mix(in srgb, var(--mj-warning) 10%, transparent);
   color: var(--mj-warning, #9a3412);
-  border: 1px solid color-mix(in srgb, #c2410c 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-warning) 22%, transparent);
 }
 .hadith-grade--sahih,
 .hadith-grade--hasan-sahih,
@@ -1507,7 +1507,7 @@ html[data-theme="dark"] .hadith-stat strong {
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) :is(.hadith-grade--sahih, .hadith-grade--hasan, .hadith-grade--hasan-sahih) {
   background: color-mix(in srgb, var(--mj-brand-soft, #6ee7b7) 12%, transparent);
-  color: #a7f3d0;
+  color: var(--mj-brand-soft);
   border-color: color-mix(in srgb, var(--mj-brand-soft, #6ee7b7) 24%, transparent);
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hadith-page .hadith-quick-cat,

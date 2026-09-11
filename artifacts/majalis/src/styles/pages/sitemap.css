@@ -80,7 +80,7 @@
 }
 .sm-card__desc {
   font-size: 0.8rem;
-  color: #9CA3AF;
+  color: var(--mj-muted);
   line-height: 1.3;
 }
 

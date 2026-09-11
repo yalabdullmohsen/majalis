@@ -9,6 +9,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import "@/styles/pages/seerah.css";
+import { DashboardScreen } from "@/components/design-system/screens";
 
 const PHASES: { id: string; num: number; title: string; year: string; Icon: LucideIcon; color: string; desc: string; topics: string[]; keyEvents: string[] }[] = [
   {
@@ -287,6 +288,7 @@ export default function SeerahPage() {
   };
 
   return (
+    <DashboardScreen compose="mark">
     <SectionTemplatePage
       route="/seerah"
       eyebrow="سيرة النبي ﷺ"
@@ -449,5 +451,6 @@ export default function SeerahPage() {
 
       <AdminQuickEdit section="prophet-stories" />
     </SectionTemplatePage>
+    </DashboardScreen>
   );
 }

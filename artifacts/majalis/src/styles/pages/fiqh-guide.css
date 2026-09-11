@@ -21,7 +21,7 @@
   display: inline-block;
   background: rgba(255, 255, 255, 0.14);
   border: 1px solid rgba(255, 255, 255, 0.22);
-  color: #ecfdf5;
+  color: var(--mj-brand-tint);
   font-size: 0.78rem;
   font-weight: 700;
   padding: 0.28rem 0.9rem;

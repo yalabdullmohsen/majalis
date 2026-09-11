@@ -168,13 +168,13 @@
 
 .myl2-resume-item__title {
   font-size: 0.83rem; font-weight: 700;
-  color: #1A1A18; margin: 0 0 0.15rem;
+  color: var(--mj-ink); margin: 0 0 0.15rem;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 
 .myl2-resume-item__pct { font-size: 0.7rem; color: var(--mj-muted); margin: 0; }
 
-.myl2-resume-item__arrow { color: #9ca3af; flex-shrink: 0; }
+.myl2-resume-item__arrow { color: var(--mj-muted); flex-shrink: 0; }
 
 /* ── Stats grid ───────────────────────────────────────────────────────── */
 .myl2-stats-grid {
@@ -219,7 +219,7 @@
   display: flex; justify-content: space-between; align-items: center;
   margin-bottom: 0.15rem;
 }
-.myl2-path-item__name { font-size: 0.84rem; font-weight: 700; color: #1A1A18; }
+.myl2-path-item__name { font-size: 0.84rem; font-weight: 700; color: var(--mj-ink); }
 .myl2-path-item__pct  { font-size: 0.78rem; font-weight: 700; color: var(--mj-brand); }
 
 /* ── Certificates ─────────────────────────────────────────────────────── */
@@ -241,7 +241,7 @@
 }
 
 .myl2-cert-item__title {
-  font-size: 0.87rem; font-weight: 700; color: #1A1A18; margin: 0 0 0.18rem;
+  font-size: 0.87rem; font-weight: 700; color: var(--mj-ink); margin: 0 0 0.18rem;
 }
 .myl2-cert-item__meta { font-size: 0.7rem; color: var(--mj-muted); margin: 0; }
 
@@ -274,7 +274,7 @@
 .myl2-lib-item__icon { color: var(--mj-brand); flex-shrink: 0; }
 
 .myl2-lib-item__title {
-  font-size: 0.76rem; font-weight: 600; color: #1A1A18;
+  font-size: 0.76rem; font-weight: 600; color: var(--mj-ink);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 
@@ -284,11 +284,11 @@
 .myl2-note-item {
   display: flex; align-items: flex-start; gap: 0.4rem;
   padding: 0.42rem 0;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--mj-surface-2);
   font-size: 0.8rem; color: var(--mj-ink-2); line-height: 1.55;
 }
 .myl2-note-item:last-child { border-bottom: none; }
-.myl2-note-item svg { color: #9ca3af; margin-top: 2px; flex-shrink: 0; }
+.myl2-note-item svg { color: var(--mj-muted); margin-top: 2px; flex-shrink: 0; }
 
 /* ── Quick Actions ────────────────────────────────────────────────────── */
 .myl2-actions { display: flex; flex-wrap: wrap; gap: var(--ds-space-2); padding: 0.75rem 1rem; }
@@ -315,7 +315,7 @@
   display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-2);
   padding: 1.4rem; text-align: center;
 }
-.myl2-empty svg  { color: #d1d5db; }
+.myl2-empty svg  { color: var(--mj-hairline); }
 .myl2-empty p    { font-size: 0.83rem; color: var(--mj-muted); margin: 0; }
 .myl2-empty__cta {
   font-size: 0.8rem; font-weight: 700;

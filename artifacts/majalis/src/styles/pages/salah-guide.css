@@ -133,11 +133,11 @@
   font-size: .7rem; font-weight: 800; flex-shrink: 0;
 }
 .sg-step-action { flex: 1; font-size: .85rem; color: var(--mj-ink); font-weight: 600; line-height: 1.4; text-align: end; }
-.sg-chevron { font-size: .8rem; color: #9CA3AF; transition: transform .2s; flex-shrink: 0; }
+.sg-chevron { font-size: .8rem; color: var(--mj-muted); transition: transform .2s; flex-shrink: 0; }
 .sg-chevron--open { transform: rotate(180deg); }
-.sg-step-body { padding: .6rem 1rem .85rem; border-top: 1px solid #F3F4F6; }
+.sg-step-body { padding: .6rem 1rem .85rem; border-top: 1px solid var(--mj-surface-2); }
 .sg-dhikr-box {
-  background: linear-gradient(135deg,var(--mj-brand-soft),#ECFDF5);
+  background: linear-gradient(135deg,var(--mj-brand-soft),var(--mj-brand-tint));
   border: 1px solid #BBF7D0; border-radius: .6rem;
   padding: .55rem .8rem; margin-bottom: .5rem;
   font-family: var(--font-body);
@@ -196,7 +196,7 @@
 /* فضائل */
 .sg-ayaat-list { display: flex; flex-direction: column; gap: .7rem; margin-bottom: 1.3rem; }
 .sg-ayah-card {
-  background: linear-gradient(135deg,var(--mj-brand-soft),#ECFDF5);
+  background: linear-gradient(135deg,var(--mj-brand-soft),var(--mj-brand-tint));
   border: 1px solid #BBF7D0; border-inline-end: 3px solid var(--majalis-emerald,var(--mj-brand-deep));
   border-radius: .75rem; padding: .85rem 1rem;
 }

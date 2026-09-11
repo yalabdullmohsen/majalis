@@ -43,7 +43,7 @@
 .fa-search-row { margin-bottom: 1rem; }
 .fa-search {
   width: 100%;
-  border: 1px solid #D1D5DB;
+  border: 1px solid var(--mj-hairline);
   border-radius: .6rem;
   padding: .7rem 1rem;
   font-size: .9rem;
@@ -63,7 +63,7 @@
 }
 .fa-cat-btn {
   background: var(--mj-surface);
-  border: 1px solid #D1D5DB;
+  border: 1px solid var(--mj-hairline);
   border-radius: var(--ds-radius-full);
   padding: .3rem .85rem;
   font-size: .8rem;
@@ -127,7 +127,7 @@
 .fa-empty {
   text-align: center;
   padding: 3rem 1rem;
-  color: #9CA3AF;
+  color: var(--mj-muted);
 }
 .fa-empty__icon { font-size: 2.5rem; display: block; margin-bottom: .5rem; }
 .fa-empty p { margin: 0; font-size: .9rem; }

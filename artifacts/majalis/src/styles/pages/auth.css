@@ -161,7 +161,7 @@ html[data-theme="dark"] .login-card__brand {
 
 .login-alert--success {
   color: #14532d;
-  background: #f0fdf4;
+  background: var(--mj-brand-tint);
   border: 1px solid #bbf7d0;
 }
 

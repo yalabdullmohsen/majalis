@@ -82,5 +82,5 @@
   cursor: pointer;
   font-family: inherit;
 }
-.scp-submit-btn.is-loading { background: #9ca3af; cursor: not-allowed; }
+.scp-submit-btn.is-loading { background: var(--mj-muted); cursor: not-allowed; }
 

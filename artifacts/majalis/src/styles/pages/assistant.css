@@ -24,7 +24,7 @@
   align-items: center;
   padding: 1.05rem 1.15rem;
   border-radius: var(--mss-radius-hero, 1.35rem);
-  border: 1px solid color-mix(in srgb, #1f6b56 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 22%, transparent);
   background-color: var(--mss-hero-from, #0f4a3a);
   background-image: var(--mss-hero-gradient);
   color: var(--mss-on-hero, #faf5ea);
@@ -108,8 +108,8 @@
   gap: 0.35rem;
   padding: 0.35rem 0.8rem;
   border-radius: 999px;
-  background: color-mix(in srgb, #1f6b56 8%, #fff);
-  border: 1px solid color-mix(in srgb, #1f6b56 22%, transparent);
+  background: color-mix(in srgb, var(--mj-brand) 8%, #fff);
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 22%, transparent);
   font-size: 0.78rem;
   color: var(--ds-emerald-deep, #064e3b);
   font-weight: 700;
@@ -118,7 +118,7 @@
 }
 
 .asp-researcher-link:hover {
-  background: color-mix(in srgb, #1f6b56 14%, #fff);
+  background: color-mix(in srgb, var(--mj-brand) 14%, #fff);
   text-decoration: none;
   transform: translateY(-1px);
 }

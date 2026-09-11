@@ -80,7 +80,7 @@
   border-radius: var(--ds-radius-lg);
   font-size: 0.92rem;
   background: #FFFFFF;
-  color: #1A1A18;
+  color: var(--mj-ink);
   outline: none;
   transition: border-color 0.2s;
   direction: rtl;
@@ -272,7 +272,7 @@
 }
 .ah-modal__text {
   font-size: 0.9rem;
-  color: #1A1A18;
+  color: var(--mj-ink);
   line-height: 1.75;
   margin: 0;
 }

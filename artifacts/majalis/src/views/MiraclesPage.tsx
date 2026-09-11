@@ -43,6 +43,7 @@ import {
   sortMiraclesMethodically,
 } from "@/lib/miracles-ui";
 import "@/styles/pages/miracles.css";
+import { ListScreen } from "@/components/design-system/screens";
 
 type HubLane = "quran" | "sunnah";
 
@@ -454,6 +455,7 @@ function MiracleDetailPage({ slug }: { slug: string }) {
   const badge = miracleMethodBadge(item);
 
   return (
+    <ListScreen compose="mark">
     <TopicPage
       className="topic-page--miracles"
       themeId="quran"
@@ -553,5 +555,6 @@ function MiracleDetailPage({ slug }: { slug: string }) {
         />
       </div>
     </TopicPage>
+    </ListScreen>
   );
 }
