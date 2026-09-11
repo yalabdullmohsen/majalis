@@ -113,7 +113,7 @@ export default function FiqhCouncilComparePage() {
 
       <FiqhCouncilSubnav />
 
-      <section className="fiqh-compare-picker ui-card">
+      <section className="fiqh-compare-picker soft-card soft-card--on-light">
         <h2 className="fiqh-council-section-title">اختر للمقارنة (حتى 4)</h2>
         <div className="fiqh-compare-picker-list">
           {catalog.map((item) => (
@@ -141,7 +141,7 @@ export default function FiqhCouncilComparePage() {
       ) : (
         <>
           {comparison && (comparison.agreementPoints.length > 0 || comparison.differencePoints.length > 0) && (
-            <section className="fiqh-compare-insights ui-card">
+            <section className="fiqh-compare-insights soft-card soft-card--on-light">
               {comparison.agreementPoints.length > 0 && (
                 <div>
                   <h3>نقاط الاتفاق</h3>

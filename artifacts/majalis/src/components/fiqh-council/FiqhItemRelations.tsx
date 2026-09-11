@@ -33,7 +33,7 @@ export function FiqhItemRelations({ relations }: Props) {
   if (!hasAny) return null;
 
   return (
-    <section className="content-detail-evidence ui-card fiqh-item-relations">
+    <section className="content-detail-evidence soft-card soft-card--on-light fiqh-item-relations">
       <h2>مواد ذات صلة</h2>
       <RelationGroup title="نفس التصنيف" items={relations.sameCategory} />
       <RelationGroup title="نفس المصدر" items={relations.sameSource} />

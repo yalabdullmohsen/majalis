@@ -93,7 +93,7 @@ export default function FiqhCouncilSessionDetailPage({ params }: { params: { slu
   const renderList = (title: string, list: typeof session.items) => {
     if (!list?.length) return null;
     return (
-      <section className="content-detail-evidence ui-card">
+      <section className="content-detail-evidence soft-card soft-card--on-light">
         <h2>{title}</h2>
         <ul className="fiqh-issue-linked-list">
           {list.map((item) => (
@@ -126,7 +126,7 @@ export default function FiqhCouncilSessionDetailPage({ params }: { params: { slu
         copyText={copyText}
         shareUrl={typeof window !== "undefined" ? window.location.href : undefined}
       >
-        <section className="content-detail-evidence ui-card fiqh-detail-info-table">
+        <section className="content-detail-evidence soft-card soft-card--on-light fiqh-detail-info-table">
           <h2>بيانات الجلسة</h2>
           <table className="fiqh-info-table">
             <tbody>
@@ -141,7 +141,7 @@ export default function FiqhCouncilSessionDetailPage({ params }: { params: { slu
         </section>
 
         {session.topics && session.topics.length > 0 && (
-          <section className="content-detail-evidence ui-card">
+          <section className="content-detail-evidence soft-card soft-card--on-light">
             <h2>الموضوعات المطروحة</h2>
             <ul>{session.topics.map((t) => <li key={t}>{t}</li>)}</ul>
           </section>

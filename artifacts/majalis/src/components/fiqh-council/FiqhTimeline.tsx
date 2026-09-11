@@ -21,7 +21,7 @@ export function FiqhTimeline({ events, className = "" }: Props) {
       {sorted.map((ev) => (
         <article key={ev.id} className="fiqh-timeline-event">
           <div className="fiqh-timeline-marker" aria-hidden />
-          <div className="fiqh-timeline-body ui-card">
+          <div className="fiqh-timeline-body soft-card soft-card--on-light">
             <div className="fiqh-timeline-meta">
               {ev.event_date && <time dateTime={ev.event_date}>{ev.event_date}</time>}
               <span className="fiqh-timeline-type">{FIQH_TIMELINE_EVENT_LABELS[ev.event_type]}</span>

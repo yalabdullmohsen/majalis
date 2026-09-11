@@ -90,7 +90,7 @@ export default function FiqhCouncilAdvancedSearchPage() {
 
       <FiqhCouncilSubnav />
 
-      <div className="fiqh-advanced-search-form ui-card">
+      <div className="fiqh-advanced-search-form soft-card soft-card--on-light">
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}

@@ -80,7 +80,7 @@ export default function FiqhCouncilStatsPage() {
       </div>
 
       {s.top_categories?.length > 0 && (
-        <section className="ui-card fiqh-stats-section">
+        <section className="soft-card soft-card--on-light fiqh-stats-section">
           <h2>أكثر التصنيفات</h2>
           <ul className="fiqh-stats-list">
             {s.top_categories.map((row) => (
@@ -91,7 +91,7 @@ export default function FiqhCouncilStatsPage() {
       )}
 
       {s.top_viewed?.length > 0 && (
-        <section className="ui-card fiqh-stats-section">
+        <section className="soft-card soft-card--on-light fiqh-stats-section">
           <h2>أكثر المواد قراءة</h2>
           <ul className="fiqh-stats-list">
             {s.top_viewed.map((row) => (
@@ -105,7 +105,7 @@ export default function FiqhCouncilStatsPage() {
       )}
 
       {s.latest?.length > 0 && (
-        <section className="ui-card fiqh-stats-section">
+        <section className="soft-card soft-card--on-light fiqh-stats-section">
           <h2>أحدث المواد</h2>
           <ul className="fiqh-stats-list">
             {s.latest.map((row) => (
@@ -119,7 +119,7 @@ export default function FiqhCouncilStatsPage() {
       )}
 
       {s.top_sources?.length > 0 && (
-        <section className="ui-card fiqh-stats-section">
+        <section className="soft-card soft-card--on-light fiqh-stats-section">
           <h2>أكثر المصادر</h2>
           <ul className="fiqh-stats-list">
             {s.top_sources.map((row) => (
