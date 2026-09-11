@@ -636,7 +636,7 @@ export default function LessonsPage({
       }
     >
       <div className="lessons-v2-layout lessons-v3-layout">
-        <main className="lessons-v2-main" id="lessons-list">
+        <main className="lessons-v2-main" id="lessons-list" aria-busy={loading}>
           {loadError && !loading ? (
             <ErrorState text={loadError} onRetry={() => safeLocationReload()} />
           ) : null}
