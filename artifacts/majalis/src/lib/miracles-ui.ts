@@ -236,5 +236,38 @@ export function cleanSummaryBoilerplate(text: string): string {
     .trim();
 }
 
+
+/** بطاقات موضوعات المركز — العنوان أولًا، والعدد ثانوي */
+export type MiracleTopicHubItem = {
+  topic: Exclude<MiracleTopicFilter, "الكل">;
+  title: string;
+  description: string;
+};
+
+export const MIRACLE_TOPIC_HUB: MiracleTopicHubItem[] = [
+  { topic: "كونيات", title: "الكون والفضاء", description: "آيات وإشارات متعلقة بالكون والخلق" },
+  { topic: "خلق الإنسان", title: "الإنسان", description: "تأملات علمية منضبطة في خلق الإنسان" },
+  { topic: "طب", title: "الطب", description: "إشارات طبية للتأمل المنضبط لا للجزم" },
+  { topic: "أرض", title: "الأرض والجبال", description: "آيات متعلقة بالأرض وثباتها" },
+  { topic: "نبات", title: "النبات", description: "إشارات في عالم النبات والزرع" },
+  { topic: "حيوان", title: "الحيوان", description: "آيات وإشارات في عالم الحيوان" },
+  { topic: "بحر", title: "البحار والمياه", description: "إشارات متعلقة بالبحار والمياه" },
+  { topic: "زمن", title: "الزمن والظواهر", description: "الليل والنهار والرياح والسحاب" },
+  { topic: "صحة ووقاية", title: "الصحة والوقاية", description: "تأملات منضبطة في الصحة والوقاية" },
+];
+
+export function countMiraclesByTopic(
+  items: Pick<MiracleSeedItem, "category" | "source_type">[],
+): Record<Exclude<MiracleTopicFilter, "الكل">, number> {
+  const out = Object.fromEntries(
+    MIRACLE_TOPIC_HUB.map((t) => [t.topic, 0]),
+  ) as Record<Exclude<MiracleTopicFilter, "الكل">, number>;
+  for (const item of items) {
+    const topic = miracleTopicLabel(item);
+    if (topic !== "الكل" && topic in out) out[topic] += 1;
+  }
+  return out;
+}
+
 export const MIRACLE_FIXED_CAUTION =
   "لا تُبنى عقيدة أو حكم شرعي على دعوى علمية معاصرة؛ النص الشرعي أصلٌ بنفسه، والنظر العلمي للتأمل ضمن حدوده.";

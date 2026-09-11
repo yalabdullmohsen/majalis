@@ -1,17 +1,23 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
-import { useEffect, useState, useMemo } from "react";
-import { ChevronDown, ChevronUp, Heart, Star } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { SegmentedFilter } from "@/components/filters/SegmentedFilter";
+import { SearchField } from "@/components/ui/mj";
+import { HadithCard } from "@/components/hadith/HadithCard";
+import {
+  ReadingProse,
+  ReadingSectionCard,
+} from "@/components/content/ReadingSectionCard";
+import { SourceBox } from "@/components/content/ContentReading";
+import type { HadithRecord } from "@/lib/hadith/hadithNormalize";
 import "@/styles/pages/shimael.css";
+import "@/styles/pages/prophet-stories.css";
 import { ListScreen } from "@/components/design-system/screens";
-
-/* ══════════════════════════════════════════════════════════════════
-   §240، الشمائل المحمدية  (.sh-*)
-   ══════════════════════════════════════════════════════════════════ */
 
 type TabId = "khalq" | "khuluq" | "sira" | "mahabbah";
 
@@ -23,10 +29,10 @@ interface ShamilBab {
 }
 
 const TABS: { id: TabId; label: string }[] = [
-  { id: "khalq",    label: "الخَلْق (الصفة الجسدية)" },
-  { id: "khuluq",   label: "الخُلُق (الصفة الأخلاقية)" },
-  { id: "sira",     label: "هَدْيه في حياته" },
-  { id: "mahabbah", label: "حب النبي ﷺ" },
+  { id: "khalq", label: "الخَلق" },
+  { id: "khuluq", label: "الخُلق" },
+  { id: "sira", label: "الهدي" },
+  { id: "mahabbah", label: "المحبة" },
 ];
 
 const ABWAB_KHALQ: ShamilBab[] = [
@@ -441,6 +447,70 @@ const MAWLID_STATS = [
 ];
 
 
+function toHadithRecord(
+  babTitle: string,
+  babId: number,
+  h: { text: string; rawi: string; source: string },
+  idx: number,
+): HadithRecord {
+  return {
+    id: `shimael-${babId}-${idx}`,
+    title: babTitle,
+    text: h.text,
+    narrator: h.rawi,
+    source_name: h.source,
+    grade: null,
+    collection: null,
+    chapter: babTitle,
+    explanation: null,
+    keywords: null,
+    hadith_number: null,
+  };
+}
+
+function BabBlock({
+  bab,
+  open,
+  onToggle,
+  idOffset = 0,
+}: {
+  bab: ShamilBab;
+  open: boolean;
+  onToggle: () => void;
+  idOffset?: number;
+}) {
+  const key = bab.id + idOffset;
+  return (
+    <div className="sh-bab">
+      <button type="button" className="sh-bab__head" onClick={onToggle} aria-expanded={open}>
+        <span className="sh-bab__icon" aria-hidden="true">
+          <SectionIcon name={bab.icon} size={22} />
+        </span>
+        <span className="sh-bab__title">{bab.title}</span>
+        <span className="sh-bab__count">{bab.hadiths.length} روايات</span>
+        <span className="sh-bab__chevron" aria-hidden="true">
+          {open ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+        </span>
+      </button>
+      {open ? (
+        <div className="sh-bab__body sh-bab__body--reader">
+          {bab.hadiths.map((h, j) => (
+            <div key={j} className="sh-hadith-block">
+              <HadithCard
+                item={toHadithRecord(bab.title, key, h, j)}
+                onExpand={() => undefined}
+              />
+              <SourceBox title="المصدر" sources={[h.source]} />
+              <p className="sh-hadith-ref">الراوي: {h.rawi}</p>
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+
 export default function ShimaelPage() {
   const [activeTab, setActiveTab] = useState<TabId>("khalq");
   const [openBab, setOpenBab] = useState<number | null>(null);
@@ -451,288 +521,172 @@ export default function ShimaelPage() {
     applyPageSeo({
       path: "/shamael",
       title: "الشمائل المحمدية | سُنّة",
-      description: "تعرّف على صفة النبي محمد ﷺ خَلقاً وخُلُقاً وهَديه في حياته من الروايات المشهورة المعزوة إلى مصادرها، مع عرض تربوي مختصر للقراءة والتدبر.",
+      description:
+        "تعرّف على صفة النبي محمد ﷺ خَلقًا وخُلقًا وهَديه من الروايات المشهورة المعزوة إلى مصادرها.",
       keywords: ["شمائل النبي", "صفة النبي", "الشمائل المحمدية", "سيرة نبوية", "حب النبي"],
-      jsonLd: [
-        {
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          name: "أبواب الشمائل المحمدية، الخَلق",
-          description: "صفة النبي ﷺ خَلقاً كما وردت في أبواب الشمائل والروايات المعزوة إلى مصادرها.",
-          numberOfItems: ABWAB_KHALQ.length,
-          itemListElement: ABWAB_KHALQ.map((b, i) => ({
-            "@type": "ListItem",
-            position: i + 1,
-            name: b.title,
-            url: `https://www.ssunnah.com/shamael#khalq-${b.id}`,
-          })),
-        },
-      ],
     });
   }, []);
 
-  const khalqBabs = useMemo(() =>
-    search.trim() ? ABWAB_KHALQ.filter(b => arabicMatchAny([b.title], search)) : ABWAB_KHALQ,
-  [search]);
-  const khuluqBabs = useMemo(() =>
-    search.trim() ? ABWAB_KHULUQ.filter(b => arabicMatchAny([b.title], search)) : ABWAB_KHULUQ,
-  [search]);
-  const siraBabs = useMemo(() =>
-    search.trim() ? ABWAB_SIRA.filter(b => arabicMatchAny([b.title], search)) : ABWAB_SIRA,
-  [search]);
-  const filteredMahabbah = useMemo(() =>
-    search.trim() ? MAHABBAH_ABWAB.filter(m => arabicMatchAny([m.title, m.text], search)) : MAHABBAH_ABWAB,
-  [search]);
+  const khalqBabs = useMemo(
+    () => (search.trim() ? ABWAB_KHALQ.filter((b) => arabicMatchAny([b.title], search)) : ABWAB_KHALQ),
+    [search],
+  );
+  const khuluqBabs = useMemo(
+    () => (search.trim() ? ABWAB_KHULUQ.filter((b) => arabicMatchAny([b.title], search)) : ABWAB_KHULUQ),
+    [search],
+  );
+  const siraBabs = useMemo(
+    () => (search.trim() ? ABWAB_SIRA.filter((b) => arabicMatchAny([b.title], search)) : ABWAB_SIRA),
+    [search],
+  );
+  const filteredMahabbah = useMemo(
+    () =>
+      search.trim()
+        ? MAHABBAH_ABWAB.filter((m) => arabicMatchAny([m.title, m.text], search))
+        : MAHABBAH_ABWAB,
+    [search],
+  );
 
   return (
     <ListScreen compose="mark">
-    <div className="sh-page" dir="rtl">
-      {/* ══ Hero ══ */}
-      <section className="sh-hero">
-        <div className="sh-hero__glow" aria-hidden="true" />
-        <div className="sh-hero__inner">
-          <div className="sh-hero__badge">الشمائل المحمدية</div>
+      <div className="sh-page sh-page--ds" dir="rtl">
+        <header className="sh-hero sh-hero--compact">
           <h1 className="sh-hero__title">
-            صفةُ سيِّد الخلقِ
-            <span className="sh-hero__sallam"> ﷺ </span>
+            الشمائل المحمدية
+            <span className="sh-hero__sallam"> ﷺ</span>
           </h1>
           <p className="sh-hero__sub">
-            خُلاصةُ ما رواه الصحابةُ الكرامُ في صفةِ النبيِّ ﷺ خَلقاً وخُلُقاً وهَدياً، مأخوذٌ من كُتُب الصِّحاح والشمائل
+            صفة النبي ﷺ خَلقًا وخُلقًا وهديًا من الروايات المشهورة المعزوة إلى مصادرها.
           </p>
-          <div className="sh-hero__stats">
-            {MAWLID_STATS.map((s, i) => (
-              <div key={i} className="sh-stat">
-                <span className="sh-stat__val">{s.value}</span>
-                <span className="sh-stat__lbl">{s.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+          <p className="sh-hero__stat">
+            <strong>{MAWLID_STATS.length}</strong>
+            <span>معلومة أساسية من سيرته الشريفة</span>
+          </p>
+        </header>
 
-
-      <div className="sh-container">
-        {/* ══ التبويبات ══ */}
-        <div className="sh-tabs" role="tablist" aria-label="تبويبات الشمائل المحمدية">
-          {TABS.map(t => (
-            <button
-              key={t.id}
-              id={`sh-tab-${t.id}`}
-              type="button"
-              role="tab"
-              className={`sh-tab${activeTab === t.id ? " sh-tab--active" : ""}`}
-              onClick={() => { setActiveTab(t.id); setOpenBab(null); }}
-              aria-selected={activeTab === t.id}
-              aria-controls={`sh-panel-${t.id}`}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
-
-        <div className="sh-search-wrap">
-          <input
-            type="search"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            placeholder="ابحث في الشمائل..."
-            className="page-search-input sh-search-input"
-            aria-label="بحث في الشمائل المحمدية"
-          />
-        </div>
-
-        {/* ── الخَلق ── */}
-        {activeTab === "khalq" && (
-          <div role="tabpanel" id="sh-panel-khalq" aria-labelledby="sh-tab-khalq" className="sh-section">
-            <div className="sh-intro-box">
-              <Star size={16} aria-hidden="true" />
-              <p>قال الإمام الترمذي رحمه الله: «باب ما جاء في خَلق رسول الله ﷺ»، ووهذه مختاراتٌ مما وردَ في وصفِ صورتِه الشريفة مع عزو مصادرها.</p>
-            </div>
-            {khalqBabs.map(bab => (
-              <div key={bab.id} className="sh-bab">
-                <div
-                  className="sh-bab__head"
-                  onClick={() => setOpenBab(openBab === bab.id ? null : bab.id)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenBab(openBab === bab.id ? null : bab.id)}
-                  aria-expanded={openBab === bab.id}
-                >
-                  <span className="sh-bab__icon" aria-hidden="true"><SectionIcon name={bab.icon} size={24} /></span>
-                  <span className="sh-bab__title">{bab.title}</span>
-                  <span className="sh-bab__count">{bab.hadiths.length} روايات</span>
-                  <span className="sh-bab__chevron" aria-hidden="true">
-                    {openBab === bab.id ? <ChevronUp size={17} /> : <ChevronDown size={17} />}
-                  </span>
-                </div>
-                {openBab === bab.id && (
-                  <div className="sh-bab__body">
-                    {bab.hadiths.map((h, j) => (
-                      <div key={j} className="sh-hadith">
-                        <p className="sh-hadith__text">«{h.text}»</p>
-                        <div className="sh-hadith__meta">
-                          <span className="sh-hadith__rawi">رواه: {h.rawi}</span>
-                          <span className="sh-hadith__src">{h.source}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* ── الخُلُق ── */}
-        {activeTab === "khuluq" && (
-          <div role="tabpanel" id="sh-panel-khuluq" aria-labelledby="sh-tab-khuluq" className="sh-section">
-            <div className="sh-intro-box">
-              <Heart size={16} aria-hidden="true" />
-              <p>قال اللهُ تعالى: ﴿وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ﴾ [القلم: ٤]، وهذه أبوابُ ما وُصِفَ به النبيُّ ﷺ في أخلاقِه.</p>
-            </div>
-            {khuluqBabs.map(bab => (
-              <div key={bab.id} className="sh-bab">
-                <div
-                  className="sh-bab__head"
-                  onClick={() => setOpenBab(openBab === bab.id + 100 ? null : bab.id + 100)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenBab(openBab === bab.id + 100 ? null : bab.id + 100)}
-                  aria-expanded={openBab === bab.id + 100}
-                >
-                  <span className="sh-bab__icon" aria-hidden="true"><SectionIcon name={bab.icon} size={24} /></span>
-                  <span className="sh-bab__title">{bab.title}</span>
-                  <span className="sh-bab__count">{bab.hadiths.length} روايات</span>
-                  <span className="sh-bab__chevron" aria-hidden="true">
-                    {openBab === bab.id + 100 ? <ChevronUp size={17} /> : <ChevronDown size={17} />}
-                  </span>
-                </div>
-                {openBab === bab.id + 100 && (
-                  <div className="sh-bab__body">
-                    {bab.hadiths.map((h, j) => (
-                      <div key={j} className="sh-hadith">
-                        <p className="sh-hadith__text">«{h.text}»</p>
-                        <div className="sh-hadith__meta">
-                          <span className="sh-hadith__rawi">رواه: {h.rawi}</span>
-                          <span className="sh-hadith__src">{h.source}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* ── السيرة والهَدي ── */}
-        {activeTab === "sira" && (
-          <div role="tabpanel" id="sh-panel-sira" aria-labelledby="sh-tab-sira" className="sh-section">
-            <div className="sh-intro-box">
-              <Star size={16} aria-hidden="true" />
-              <p>كانَ هَدْيُه ﷺ في حياتِه كلِّها عِبادةً، حتى في أكلِه وشُربِه ونَومِه ولِباسِه وتعامُلِه مع الناس.</p>
-            </div>
-            {siraBabs.map(bab => (
-              <div key={bab.id} className="sh-bab">
-                <div
-                  className="sh-bab__head"
-                  onClick={() => setOpenBab(openBab === bab.id + 200 ? null : bab.id + 200)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenBab(openBab === bab.id + 200 ? null : bab.id + 200)}
-                  aria-expanded={openBab === bab.id + 200}
-                >
-                  <span className="sh-bab__icon" aria-hidden="true"><SectionIcon name={bab.icon} size={24} /></span>
-                  <span className="sh-bab__title">{bab.title}</span>
-                  <span className="sh-bab__count">{bab.hadiths.length} روايات</span>
-                  <span className="sh-bab__chevron" aria-hidden="true">
-                    {openBab === bab.id + 200 ? <ChevronUp size={17} /> : <ChevronDown size={17} />}
-                  </span>
-                </div>
-                {openBab === bab.id + 200 && (
-                  <div className="sh-bab__body">
-                    {bab.hadiths.map((h, j) => (
-                      <div key={j} className="sh-hadith">
-                        <p className="sh-hadith__text">«{h.text}»</p>
-                        <div className="sh-hadith__meta">
-                          <span className="sh-hadith__rawi">رواه: {h.rawi}</span>
-                          <span className="sh-hadith__src">{h.source}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* ── المحبة ── */}
-        {activeTab === "mahabbah" && (
-          <div role="tabpanel" id="sh-panel-mahabbah" aria-labelledby="sh-tab-mahabbah" className="sh-section">
-            <div className="sh-mahabbah-intro">
-              <Heart size={40} className="sh-mahabbah-intro__icon" aria-hidden="true" />
-              <h2 className="sh-mahabbah-intro__title">حبُّ النبيِّ ﷺ</h2>
-              <p className="sh-mahabbah-intro__text">
-                محبةُ النبيِّ ﷺ أصلٌ من أصولِ الإيمان، لا تَكمُلُ العقيدةُ بدونِها،
-                وثَمرتُها صُحبتُه ﷺ في الجنَّةِ يومَ القيامة.
-              </p>
-            </div>
-            <div className="sh-mahabbah-list">
-              {filteredMahabbah.map((m, i) => (
-                <div key={i} className="sh-mahabbah-card">
-                  <div
-                    className="sh-mahabbah-card__head"
-                    onClick={() => setOpenMahabbah(openMahabbah === i ? null : i)}
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpenMahabbah(openMahabbah === i ? null : i)}
-                    aria-expanded={openMahabbah === i}
-                  >
-                    <span className="sh-mahabbah-card__num">{(i + 1).toLocaleString("ar-EG")}</span>
-                    <span className="sh-mahabbah-card__title">{m.title}</span>
-                    <span className="sh-bab__chevron" aria-hidden="true">
-                      {openMahabbah === i ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                    </span>
-                  </div>
-                  {openMahabbah === i && (
-                    <div className="sh-mahabbah-card__body">
-                      <p className="sh-mahabbah-card__text">«{m.text}»</p>
-                      <div className="sh-hadith__meta">
-                        {m.rawi && <span className="sh-hadith__rawi">رواه: {m.rawi}</span>}
-                        <span className="sh-hadith__src">{m.source}</span>
-                      </div>
-                    </div>
-                  )}
+        <div className="sh-container">
+          <section className="sh-facts" aria-label="معلومات أساسية">
+            <h2 className="sh-facts__title">حقائق مختصرة</h2>
+            <div className="prophet-facts-grid sh-facts-grid">
+              {MAWLID_STATS.map((s) => (
+                <div key={s.label} className="prophet-fact-card prophet-fact-card--interactive">
+                  <span className="prophet-fact-card__label">{s.label}</span>
+                  <span className="prophet-fact-card__value">{s.value}</span>
                 </div>
               ))}
             </div>
+          </section>
 
-            {/* الصلاة على النبي ﷺ */}
-            <div className="sh-salat-box">
-              <div className="sh-salat-box__head">
-                <Star size={18} aria-hidden="true" />
-                <span>صَلِّ على النبيِّ ﷺ الآن</span>
-              </div>
-              <p className="sh-salat-box__text">
-                اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ ﷺ
-              </p>
-              <p className="sh-salat-box__sub">
-                مَن صَلَّى عَلَيَّ صلاةً واحدةً صَلَّى اللهُ عليهِ بها عشراً، رواه مسلم
-              </p>
-            </div>
+          <SegmentedFilter
+            className="sh-segmented"
+            ariaLabel="أقسام الشمائل"
+            value={activeTab}
+            onChange={(id) => {
+              setActiveTab(id as TabId);
+              setOpenBab(null);
+            }}
+            items={TABS.map((t) => ({ id: t.id, label: t.label }))}
+          />
+
+          <div className="sh-search-wrap">
+            <SearchField
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="ابحث في الشمائل…"
+              aria-label="بحث في الشمائل المحمدية"
+              className="sh-search"
+            />
           </div>
-        )}
 
-      <div className="twh-share">
-        <ShareButtons title="الشمائل المحمدية، سُنّة" url="https://www.ssunnah.com/shimail" />
+          {activeTab === "khalq" && (
+            <section className="sh-section" aria-label="الخَلق">
+              <ReadingSectionCard title="مقدمة في الخَلق">
+                <ReadingProse text="مختارات مما ورد في وصف صورته الشريفة ﷺ مع عزو مصادرها." />
+              </ReadingSectionCard>
+              {khalqBabs.map((bab) => (
+                <BabBlock
+                  key={bab.id}
+                  bab={bab}
+                  open={openBab === bab.id}
+                  onToggle={() => setOpenBab(openBab === bab.id ? null : bab.id)}
+                />
+              ))}
+            </section>
+          )}
+
+          {activeTab === "khuluq" && (
+            <section className="sh-section" aria-label="الخُلق">
+              <ReadingSectionCard title="مقدمة في الخُلق">
+                <ReadingProse text="﴿وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ﴾ — أبواب أخلاقه ﷺ." />
+              </ReadingSectionCard>
+              {khuluqBabs.map((bab) => (
+                <BabBlock
+                  key={bab.id}
+                  bab={bab}
+                  idOffset={100}
+                  open={openBab === bab.id + 100}
+                  onToggle={() => setOpenBab(openBab === bab.id + 100 ? null : bab.id + 100)}
+                />
+              ))}
+            </section>
+          )}
+
+          {activeTab === "sira" && (
+            <section className="sh-section" aria-label="الهدي">
+              <ReadingSectionCard title="مقدمة في الهدي">
+                <ReadingProse text="هديه ﷺ في حياته عبادة حتى في أكله وشربه ونومه ولباسه." />
+              </ReadingSectionCard>
+              {siraBabs.map((bab) => (
+                <BabBlock
+                  key={bab.id}
+                  bab={bab}
+                  idOffset={200}
+                  open={openBab === bab.id + 200}
+                  onToggle={() => setOpenBab(openBab === bab.id + 200 ? null : bab.id + 200)}
+                />
+              ))}
+            </section>
+          )}
+
+          {activeTab === "mahabbah" && (
+            <section className="sh-section" aria-label="المحبة">
+              <ReadingSectionCard title="حب النبي ﷺ">
+                <ReadingProse text="محبة النبي ﷺ أصل من أصول الإيمان، وثمرتها صحبته في الجنة." />
+              </ReadingSectionCard>
+              {filteredMahabbah.map((m, i) => (
+                <div key={i} className="sh-mahabbah sh-bab">
+                  <button
+                    type="button"
+                    className="sh-bab__head"
+                    onClick={() => setOpenMahabbah(openMahabbah === i ? null : i)}
+                    aria-expanded={openMahabbah === i}
+                  >
+                    <span className="sh-bab__title">{m.title}</span>
+                    <span className="sh-bab__chevron" aria-hidden="true">
+                      {openMahabbah === i ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                    </span>
+                  </button>
+                  {openMahabbah === i ? (
+                    <div className="sh-bab__body sh-bab__body--reader">
+                      <ReadingSectionCard title={m.title}>
+                        <ReadingProse text={m.text} />
+                      </ReadingSectionCard>
+                      <SourceBox title="المصدر" sources={[m.source]} />
+                      {m.rawi ? <p className="sh-hadith-ref">الراوي: {m.rawi}</p> : null}
+                    </div>
+                  ) : null}
+                </div>
+              ))}
+            </section>
+          )}
+
+          <ShareButtons title="الشمائل المحمدية، سُنّة" url="https://www.ssunnah.com/shimail" />
+          <RelatedKnowledge kind="hadith" query="الشمائل المحمدية" title="أحاديث ومعارف ذات صلة" limit={6} />
+          <div className="sh-quiz-wrap">
+            <SectionQuiz sectionId="seerah" title="اختبر معلوماتك في الشمائل" count={4} />
+          </div>
+        </div>
       </div>
-      <RelatedKnowledge kind="hadith" query="الشمائل المحمدية" title="أحاديث ومعارف ذات صلة" limit={6} />
-      <div className="px-4 pb-6 mt-4">
-        <SectionQuiz sectionId="seerah" title="اختبر معلوماتك في السيرة النبوية" count={4} />
-      </div>
-      </div>
-    </div>
     </ListScreen>
   );
 }
