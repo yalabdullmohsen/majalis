@@ -247,12 +247,12 @@ export function FiqhCouncilListPage({
         showType={showTypeFilter && !typeFilter}
       />
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <SkeletonCardGrid count={6} />
       ) : items.length === 0 ? (
         <Empty text="لا توجد عناصر مطابقة." />
       ) : (
-        <div className="page-card-grid">
+        <div className="page-card-grid" aria-busy={loading}>
           {items.map((item) => (
             <PlatformContentCard
               key={item.slug}
@@ -405,7 +405,7 @@ export function FiqhCouncilHubPage() {
         </section>
       )}
 
-      {loading ? <SkeletonCardGrid count={6} /> : (
+      {loading && latest.length === 0 ? <SkeletonCardGrid count={6} /> : (
         <>
           {topIssues.length > 0 && <section className="fiqh-council-section">
             <div className="fiqh-council-section-header">

@@ -81,12 +81,12 @@ export default function FiqhCouncilNawazilPage() {
         </p>
       )}
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <SkeletonCardGrid count={6} />
       ) : items.length === 0 ? (
         <Empty text="لا توجد مواد موثّقة لهذا الموضوع حالياً." />
       ) : (
-        <div className="page-card-grid">
+        <div className="page-card-grid" aria-busy={loading}>
           {items.map((item) => (
             <PlatformContentCard
               key={item.slug}

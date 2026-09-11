@@ -68,7 +68,7 @@ export default function FiqhCouncilTopicIndexPage() {
 
       <FiqhCouncilSubnav />
 
-      {loading ? (
+      {loading && sections.length === 0 ? (
         <SkeletonCardGrid />
       ) : (
         <div className="fiqh-topic-index">

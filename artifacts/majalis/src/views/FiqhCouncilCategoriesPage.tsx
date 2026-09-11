@@ -103,12 +103,12 @@ export default function FiqhCouncilCategoriesPage() {
         ))}
       </div>
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <SkeletonCardGrid />
       ) : items.length === 0 ? (
         <Empty text="لا توجد عناصر في هذا التصنيف." />
       ) : (
-        <div className="page-card-grid">
+        <div className="page-card-grid" aria-busy={loading}>
           {items.map((item) => (
             <PlatformContentCard
               key={item.slug}

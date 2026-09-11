@@ -48,12 +48,12 @@ export default function FiqhCouncilArchivePage() {
 
       <FiqhCouncilSearchBox placeholder="ابحث في الأرشيف..." />
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <SkeletonCardGrid />
       ) : items.length === 0 ? (
         <Empty text="لا توجد عناصر مؤرشفة حالياً." />
       ) : (
-        <div className="page-card-grid">
+        <div className="page-card-grid" aria-busy={loading}>
           {items.map((item) => (
             <PlatformContentCard
               key={item.slug}
