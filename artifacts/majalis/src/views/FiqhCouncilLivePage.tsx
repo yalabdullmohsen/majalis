@@ -27,7 +27,7 @@ function SessionBlock({
 }) {
   if (!session) {
     return (
-      <section className="fiqh-live-block ui-card">
+      <section className="fiqh-live-block soft-card soft-card--on-light">
         <h2>{title}</h2>
         <p className="fiqh-live-unavailable">لم تُنشر بيانات موثقة بعد.</p>
       </section>
@@ -35,7 +35,7 @@ function SessionBlock({
   }
 
   return (
-    <section className="fiqh-live-block ui-card">
+    <section className="fiqh-live-block soft-card soft-card--on-light">
       <h2>{title}</h2>
       <dl className="fiqh-live-meta">
         <div><dt>العنوان</dt><dd>{session.session_title}</dd></div>

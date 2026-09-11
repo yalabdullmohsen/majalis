@@ -42,11 +42,11 @@ export default function FiqhCouncilResearchAssistantPage() {
 
       <FiqhCouncilSubnav />
 
-      <div className="fiqh-research-disclaimer ui-card">
+      <div className="fiqh-research-disclaimer soft-card soft-card--on-light">
         <strong>تنبيه:</strong> {FIQH_RESEARCH_DISCLAIMER}
       </div>
 
-      <div className="fiqh-research-filters ui-card">
+      <div className="fiqh-research-filters soft-card soft-card--on-light">
         <div className="fiqh-council-filter-row">
           <label className="fiqh-council-select-label">
             النوع

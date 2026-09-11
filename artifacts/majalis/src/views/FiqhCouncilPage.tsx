@@ -374,7 +374,7 @@ export function FiqhCouncilHubPage() {
       </section>
 
       {!loading && liveData && (
-        <section className="fiqh-hub-live-banner ui-card">
+        <section className="fiqh-hub-live-banner soft-card soft-card--on-light">
           <div className="fiqh-hub-live-col">
             <h2 className="fiqh-council-section-title">آخر جلسة</h2>
             {liveData.last_session ? (

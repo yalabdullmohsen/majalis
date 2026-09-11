@@ -35,7 +35,7 @@ import { UtilityScreen } from "@/components/design-system/screens";
 function DetailSection({ title, children }: { title: string; children: React.ReactNode }) {
   if (!children) return null;
   return (
-    <section className="content-detail-evidence ui-card">
+    <section className="content-detail-evidence soft-card soft-card--on-light">
       <h2>{title}</h2>
       {children}
     </section>
@@ -156,7 +156,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
 
       {isPublicDisplayableItem(item) && <FiqhTrustBox item={item} publicMode />}
 
-      <section className="content-detail-evidence ui-card fiqh-detail-info-table">
+      <section className="content-detail-evidence soft-card soft-card--on-light fiqh-detail-info-table">
         <h2>بيانات القرار</h2>
         <table className="fiqh-info-table">
           <tbody>

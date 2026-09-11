@@ -75,7 +75,7 @@ export default function FiqhCouncilTopicIndexPage() {
           {sections.map((sec) => {
             if (!sec.issues.length && !sec.items.length) return null;
             return (
-              <section key={sec.label} className="fiqh-topic-section ui-card" id={`topic-${sec.label}`}>
+              <section key={sec.label} className="fiqh-topic-section soft-card soft-card--on-light" id={`topic-${sec.label}`}>
                 <h2>{sec.label}</h2>
 
                 {sec.issues.length > 0 && (

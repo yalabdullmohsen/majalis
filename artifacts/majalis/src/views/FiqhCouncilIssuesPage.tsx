@@ -71,7 +71,7 @@ export default function FiqhCouncilIssuesPage() {
       ) : (
         <div className="fiqh-issues-grid">
           {issues.map((issue) => (
-            <Link key={issue.id} href={fiqhIssueHref(issue.slug)} className="fiqh-issue-card ui-card">
+            <Link key={issue.id} href={fiqhIssueHref(issue.slug)} className="fiqh-issue-card soft-card soft-card--on-light">
               <span className="fiqh-issue-category">{issue.category}</span>
               <h2>{issue.title}</h2>
               {issue.summary && <p>{issue.summary}</p>}

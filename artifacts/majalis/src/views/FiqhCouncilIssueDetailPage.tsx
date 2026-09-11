@@ -101,7 +101,7 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
   const renderItemList = (title: string, list: typeof issue.items) => {
     if (!list?.length) return null;
     return (
-      <section className="content-detail-evidence ui-card">
+      <section className="content-detail-evidence soft-card soft-card--on-light">
         <h2>{title}</h2>
         <ul className="fiqh-issue-linked-list">
           {list.map((item) => (
@@ -135,7 +135,7 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
         body={issue.description || ""}
         shareUrl={typeof window !== "undefined" ? window.location.href : undefined}
       >
-        <section className="content-detail-evidence ui-card fiqh-detail-info-table">
+        <section className="content-detail-evidence soft-card soft-card--on-light fiqh-detail-info-table">
           <h2>بيانات المسألة</h2>
           <table className="fiqh-info-table">
             <tbody>
@@ -163,14 +163,14 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
         </section>
 
         {issue.ruling_summary && (
-          <section className="content-detail-evidence ui-card">
+          <section className="content-detail-evidence soft-card soft-card--on-light">
             <h2>خلاصة الحكم</h2>
             <p>{issue.ruling_summary}</p>
           </section>
         )}
 
         {issue.evidence_summary && (
-          <section className="content-detail-evidence ui-card">
+          <section className="content-detail-evidence soft-card soft-card--on-light">
             <h2>الأدلة المختصرة</h2>
             <div className="ct-trust-row">
               {issue.trust_level && <SourceBadge trustLevel={issue.trust_level} />}
@@ -183,7 +183,7 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
             للمسائل الخلافية. لا تُملأ آليًا؛ فارغة حتى تُراجَع المسألة
             علميًا بهذا التفصيل، وتُعرض كذلك صراحة بدل الإخفاء. ── */}
         {(issue.area_of_agreement || issue.area_of_disagreement || (issue.opinions && issue.opinions.length > 0)) ? (
-          <section className="content-detail-evidence ui-card fiqh-comparative-section">
+          <section className="content-detail-evidence soft-card soft-card--on-light fiqh-comparative-section">
             <h2>محل الاتفاق والخلاف</h2>
             {issue.area_of_agreement && (
               <p><strong>محل الاتفاق:</strong> {issue.area_of_agreement}</p>

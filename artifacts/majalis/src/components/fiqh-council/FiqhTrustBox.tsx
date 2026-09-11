@@ -18,7 +18,7 @@ export function FiqhTrustBox({
   updatedAt,
   verificationStatus,
   item,
-  className = "fiqh-trust-box ui-card",
+  className = "fiqh-trust-box soft-card soft-card--on-light",
   publicMode = false,
 }: Props) {
   const verified = item

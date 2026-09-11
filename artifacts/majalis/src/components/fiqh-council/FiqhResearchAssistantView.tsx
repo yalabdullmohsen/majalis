@@ -26,7 +26,7 @@ export function FiqhResearchAssistantView({ filters = {} }: Props) {
   };
 
   return (
-    <div className="fiqh-research-assistant-view ui-card">
+    <div className="fiqh-research-assistant-view soft-card soft-card--on-light">
       {messages.length === 0 && (
         <div className="fiqh-research-prompts">
           <span className="fiqh-research-label">ابدأ بسؤال أو اختر موضوعاً:</span>
