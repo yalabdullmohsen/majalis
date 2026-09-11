@@ -113,21 +113,21 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
       }
     >
       {item.sheikh_names && item.sheikh_names.length > 0 && (
-        <section className="ui-card content-detail-section">
+        <section className="content-detail-section soft-card soft-card--on-light">
           <h2>المشايخ</h2>
           <ul>{item.sheikh_names.map((n: string) => <li key={n}>{n}</li>)}</ul>
         </section>
       )}
 
       {item.mutoon && item.mutoon.length > 0 && (
-        <section className="ui-card content-detail-section">
+        <section className="content-detail-section soft-card soft-card--on-light">
           <h2>المتون</h2>
           <ul>{item.mutoon.map((m: string) => <li key={m}>{m}</li>)}</ul>
         </section>
       )}
 
       {item.schedule && item.schedule.length > 0 && (
-        <section className="ui-card content-detail-section">
+        <section className="content-detail-section soft-card soft-card--on-light">
           <h2>الجدول</h2>
           <table className="content-detail-table">
             <thead>
@@ -148,7 +148,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
       )}
 
       {(item.venue_name || item.venue_city) && (
-        <section className="ui-card content-detail-section">
+        <section className="content-detail-section soft-card soft-card--on-light">
           <h2>مكان الإقامة</h2>
           <p>{[item.venue_name, item.venue_address, item.venue_city].filter(Boolean).join("، ")}</p>
           {mapEmbed && (
@@ -164,7 +164,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
       )}
 
       {item.registration_open && item.registration_url && (
-        <section className="ui-card content-detail-section">
+        <section className="content-detail-section soft-card soft-card--on-light">
           <Link
             href={item.registration_url}
             className="acd-register-link"

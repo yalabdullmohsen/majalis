@@ -695,7 +695,7 @@ export default function LessonsPage({
         </main>
 
         <aside className="lessons-v2-sidebar" aria-label="تصفية سطح المكتب">
-          <div className="lessons-v2-filters ui-card mj-card">
+          <div className="lessons-v2-filters soft-card soft-card--on-light">
             <div className="lessons-v2-filters__head">
               <h2>تصفية الدروس</h2>
             </div>
