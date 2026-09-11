@@ -12,7 +12,7 @@ const NODE_H  = 52;
 const H_GAP   = 50;   // الفجوة الأفقية بين الأعمدة
 const V_GAP   = 28;   // الفجوة الرأسية بين الإخوة
 const EMERALD = "var(--mj-brand)";
-const ANCESTOR_CLR = "#5C5C56";
+const ANCESTOR_CLR = "var(--mj-muted)";
 
 // ── حساب تخطيط الشجرة ─────────────────────────────────────────────────────
 
@@ -225,15 +225,15 @@ export default function ProphetsFamilyTreePage() {
       {/* Header */}
       <header style={{
         background: "linear-gradient(135deg,#0c2318,#1a3d2b)",
-        color: "#FAFAF8", padding: "1rem 1.25rem",
+        color: "var(--mj-on-brand)", padding: "1rem 1.25rem",
         display: "flex", alignItems: "center", gap: "1rem",
       }}>
-        <Link href="/prophets" style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none", fontSize: "0.9rem" }}>
+        <Link href="/prophets" style={{ color: "color-mix(in srgb, var(--mj-on-brand) 70%, transparent)", textDecoration: "none", fontSize: "var(--ss-type-supporting)" }}>
           ← الأنبياء
         </Link>
         <div style={{ flex: 1 }}>
-          <h1 className="pft-hero__title" style={{ margin: 0, fontSize: "1.2rem", fontWeight: 800, color: "#FAFAF8" }}>شجرة أنساب الأنبياء</h1>
-          <p style={{ margin: 0, fontSize: "0.75rem", color: "rgba(255,255,255,0.6)" }}>
+          <h1 className="pft-hero__title" style={{ margin: 0, fontSize: "var(--ss-type-section-title)", fontWeight: 800, color: "var(--mj-on-brand)" }}>شجرة أنساب الأنبياء</h1>
+          <p style={{ margin: 0, fontSize: "var(--ss-type-caption)", color: "color-mix(in srgb, var(--mj-on-brand) 60%, transparent)" }}>
             ٢٥ نبياً مذكورًا بالاسم في القرآن، من آدم إلى محمد ﷺ — اسحب للتنقل، اضغط على نبي للتفاصيل
           </p>
         </div>
@@ -245,8 +245,8 @@ export default function ProphetsFamilyTreePage() {
             { icon: <RotateCcw size={16}/>, fn: reset,         title: "إعادة تعيين" },
           ].map(({ icon, fn, title }) => (
             <button key={title} type="button" onClick={fn} aria-label={title} style={{
-              background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)",
-              color: "#FAFAF8", borderRadius: "0.5rem", padding: "0.4rem 0.6rem",
+              background: "color-mix(in srgb, var(--mj-on-brand) 15%, transparent)", border: "1px solid color-mix(in srgb, var(--mj-on-brand) 25%, transparent)",
+              color: "var(--mj-on-brand)", borderRadius: "0.5rem", padding: "0.4rem 0.6rem",
               cursor: "pointer", display: "flex", alignItems: "center",
             }}>{icon}</button>
           ))}
@@ -256,13 +256,13 @@ export default function ProphetsFamilyTreePage() {
       {/* أسطورة الألوان */}
       <div style={{
         display: "flex", gap: "1rem", flexWrap: "wrap",
-        padding: "0.6rem 1.25rem", background: "#fff",
-        borderBottom: "1px solid #E8E7E2", fontSize: "0.75rem",
+        padding: "0.6rem 1.25rem", background: "var(--mj-surface)",
+        borderBottom: "1px solid var(--mj-hairline)", fontSize: "var(--ss-type-caption)",
       }}>
         {[
           { color: EMERALD,       label: "خاتم الأنبياء ﷺ" },
           { color: "#D97706",     label: "أولو العزم", border: true },
-          { color: "#5C5C56",     label: "حلقة وصل" },
+          { color: "var(--mj-muted)",     label: "حلقة وصل" },
           { color: "#FFFFFF",     label: "سائر الأنبياء", border2: true },
         ].map(({ color, label, border, border2 }) => (
           <div key={label} style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
@@ -271,7 +271,7 @@ export default function ProphetsFamilyTreePage() {
               background: color,
               border: border ? "2px solid #D97706" : border2 ? "1.5px solid var(--mj-brand)" : "none",
             }}/>
-            <span style={{ color: "#5C5C56" }}>{label}</span>
+            <span style={{ color: "var(--mj-muted)" }}>{label}</span>
           </div>
         ))}
       </div>
@@ -370,35 +370,35 @@ export default function ProphetsFamilyTreePage() {
         <div style={{
           position: "fixed", bottom: "1rem", right: "1rem", left: "1rem",
           maxWidth: 420, margin: "0 auto",
-          background: "#fff", borderRadius: "1rem",
+          background: "var(--mj-surface)", borderRadius: "1rem",
           border: `2px solid ${EMERALD}`,
           padding: "1rem 1.25rem",
           boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
           zIndex: 100,
         }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.5rem" }}>
-            <h2 style={{ margin: 0, color: EMERALD, fontSize: "1.1rem", fontWeight: 800 }}>
+            <h2 style={{ margin: 0, color: EMERALD, fontSize: "var(--ss-type-section-title)", fontWeight: 800 }}>
               {selectedNode.name}
               {selectedNode.isUlulAzm && (
-                <span style={{ fontSize: "0.7rem", marginRight: "0.5rem", background: "#FEF3C7", color: "#92400E", padding: "0.1rem 0.4rem", borderRadius: 4 }}>
+                <span style={{ fontSize: "var(--ss-type-caption)", marginRight: "0.5rem", background: "var(--mj-warning-soft)", color: "var(--mj-warning-deep, var(--mj-warning))", padding: "0.1rem 0.4rem", borderRadius: 4 }}>
                   أولو العزم
                 </span>
               )}
             </h2>
-            <button type="button" onClick={() => setSelected(null)} aria-label="إغلاق" style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.2rem", color: "#5C5C56" }}>×</button>
+            <button type="button" onClick={() => setSelected(null)} aria-label="إغلاق" style={{ background: "none", border: "none", cursor: "pointer", fontSize: "var(--ss-type-section-title)", color: "var(--mj-muted)" }}>×</button>
           </div>
           {selectedNode.era && (
-            <p style={{ margin: "0.25rem 0", color: "#5C5C56", fontSize: "0.85rem" }}>
+            <p style={{ margin: "0.25rem 0", color: "var(--mj-muted)", fontSize: "var(--ss-type-supporting)" }}>
               <strong>الحقبة: </strong>{selectedNode.era}
             </p>
           )}
           {selectedNode.people && (
-            <p style={{ margin: "0.25rem 0", color: "#5C5C56", fontSize: "0.85rem" }}>
+            <p style={{ margin: "0.25rem 0", color: "var(--mj-muted)", fontSize: "var(--ss-type-supporting)" }}>
               <strong>القوم أو المكان: </strong>{selectedNode.people}
             </p>
           )}
           {selectedNode.linkNote && (
-            <p style={{ margin: "0.25rem 0", color: "#5C5C56", fontSize: "0.8rem", fontStyle: "normal" }}>
+            <p style={{ margin: "0.25rem 0", color: "var(--mj-muted)", fontSize: "var(--ss-type-label)", fontStyle: "normal" }}>
               {selectedNode.linkNote}
             </p>
           )}
@@ -407,9 +407,9 @@ export default function ProphetsFamilyTreePage() {
               href={`/prophets/${selectedNode.slug}`}
               style={{
                 display: "inline-block", marginTop: "0.6rem",
-                background: EMERALD, color: "#fff", textDecoration: "none",
+                background: EMERALD, color: "var(--mj-on-brand)", textDecoration: "none",
                 padding: "0.4rem 1rem", borderRadius: "0.5rem",
-                fontSize: "0.82rem", fontWeight: 700,
+                fontSize: "var(--ss-type-label)", fontWeight: 700,
               }}
             >
               تفاصيل {selectedNode.name}

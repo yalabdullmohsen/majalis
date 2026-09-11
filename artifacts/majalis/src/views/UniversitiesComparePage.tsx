@@ -84,9 +84,9 @@ function CompareContent() {
   return (
     <div dir="rtl" className="ucp-root">
       {/* Header */}
-      <div className="text-white px-4 py-6 ldb-hero">
+      <div className="px-4 py-6 ldb-hero">
         <div className="max-w-5xl mx-auto">
-          <Link href="/universities" className="text-white/70 text-sm hover:text-white mb-3 block w-fit">
+          <Link href="/universities" className="text-white/70 text-sm hover:opacity-100 opacity-90 mb-3 block w-fit">
             → دليل الجامعات
           </Link>
           <h2 className="text-xl font-bold">⇔ مقارنة الجامعات ({compareList.length})</h2>
@@ -130,7 +130,7 @@ function CompareContent() {
                   {compareList.map((u) => (
                     <td key={u.slug} className="ucp-td-val">
                       {row.label === "حالة الاعتماد" ? (
-                        <span className="px-2 py-0.5 rounded-full text-white text-xs font-medium ucp-acc-badge"
+                        <span className="px-2 py-0.5 rounded-full text-xs font-medium ucp-acc-badge"
                           style={{ "--acc-color": ACCREDITATION_COLOR[u.accreditation_status] } as React.CSSProperties}>
                           {row.fn(u)}
                         </span>

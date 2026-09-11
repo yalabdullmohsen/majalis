@@ -128,7 +128,7 @@ export default function SujoodSahwPage() {
           {(Object.entries(TIMING_COLORS) as [Ruling["timing"], string][]).map(([timing, color]) => (
             <span
               key={timing}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full text-white"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full text-[color:var(--mj-on-brand)]"
               style={{ background: color }}
             >
               {timing}
@@ -148,11 +148,11 @@ export default function SujoodSahwPage() {
             >
               <div className="p-5">
                 <div className="flex items-start justify-between gap-3 mb-2">
-                  <h3 className="font-bold text-gray-900 dark:text-white text-base leading-snug">
+                  <h3 className="font-bold text-gray-900 dark:text-[color:var(--mj-ink)] text-base leading-snug">
                     {r.title}
                   </h3>
                   <span
-                    className="flex-shrink-0 text-xs font-bold px-2.5 py-1 rounded-full text-white whitespace-nowrap"
+                    className="flex-shrink-0 text-xs font-bold px-2.5 py-1 rounded-full text-[color:var(--mj-on-brand)] whitespace-nowrap"
                     style={{ background: TIMING_COLORS[r.timing] }}
                   >
                     {r.timing}

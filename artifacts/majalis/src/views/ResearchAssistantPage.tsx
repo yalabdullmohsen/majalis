@@ -89,7 +89,7 @@ export default function ResearchAssistantPage() {
           {gaps.map((g) => (
             <div key={g.categoryId} className="sr-cat">
               {g.label}
-              <div style={{ fontWeight: 400, fontSize: "0.75rem", marginTop: "0.25rem" }}>
+              <div style={{ fontWeight: 400, fontSize: "var(--ss-type-caption)", marginTop: "0.25rem" }}>
                 {g.publishedCount} منشور — {g.hint}
               </div>
             </div>

@@ -103,7 +103,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
           return <span className={`snr-badge snr-badge--${cls}`}>{SIN_SEVERITY_LABELS[sev]}</span>;
         })()}
         {sinTypes.map((t) => (
-          <span key={t} className="snr-badge snr-badge--shared" style={{ fontSize: "0.72rem" }}>
+          <span key={t} className="snr-badge snr-badge--shared" style={{ fontSize: "var(--ss-type-caption)" }}>
             {SIN_TYPE_LABELS[t as SinType]}
           </span>
         ))}
@@ -127,7 +127,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
         <div className="snr-detail-section-title">
           <span><SectionIcon name="📘" size={18} /></span> الشرح
         </div>
-        <p style={{ fontSize: "0.95rem", color: "var(--elite-ink, var(--mj-brand-deep))", lineHeight: 1.75 }}>
+        <p style={{ fontSize: "var(--ss-type-body)", color: "var(--elite-ink, var(--mj-brand-deep))", lineHeight: 1.75 }}>
           {topic.explanation}
         </p>
       </section>
@@ -209,7 +209,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
                 {topic.repentanceConditions.restitutionDetails}
               </div>
               {topic.repentanceConditions.ifOwnerUnreachable && (
-                <div style={{ marginTop: "0.5rem", fontStyle: "normal", fontSize: "0.85rem" }}>
+                <div style={{ marginTop: "0.5rem", fontStyle: "normal", fontSize: "var(--ss-type-supporting)" }}>
                   <SectionIcon name="💡" size={16} /> عند تعذر الوصول: {topic.repentanceConditions.ifOwnerUnreachable}
                 </div>
               )}
@@ -224,7 +224,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
         )}
 
         {topic.repentanceConditions.hasExpiation && topic.repentanceConditions.expiationDetails && (
-          <div style={{ background: "rgba(26,74,122,0.06)", borderRadius: "var(--elite-r-sm, 8px)", padding: "0.75rem 1rem", marginTop: "0.75rem", fontSize: "0.875rem", color: "#1a4a7a" }}>
+          <div style={{ background: "color-mix(in srgb, var(--mj-info, #1a4a7a) 6%, transparent)", borderRadius: "var(--elite-r-sm, 8px)", padding: "0.75rem 1rem", marginTop: "0.75rem", fontSize: "var(--ss-type-label)", color: "var(--mj-info, var(--mj-brand-deep))" }}>
             <SectionIcon name="📋" size={16} /> <strong>الكفارة:</strong> {topic.repentanceConditions.expiationDetails}
           </div>
         )}

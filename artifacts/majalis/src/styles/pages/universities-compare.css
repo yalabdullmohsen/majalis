@@ -41,14 +41,14 @@
 .ucp-sep { color: var(--majalis-ink-soft); opacity: .5; }
 .ucp-danger-btn { font-size: .75rem; color: var(--majalis-danger, var(--mj-danger)); opacity: .7; background: none; border: none; cursor: pointer; transition: opacity .15s; }
 .ucp-danger-btn:hover { opacity: 1; }
-.ucp-acc-badge { background-color: var(--acc-color, var(--mj-muted)); }
+.ucp-acc-badge { background-color: var(--acc-color, var(--mj-muted)); color: var(--mj-on-brand, #fff); }
 .ucp-apply-grid { display: grid; gap: .75rem; grid-template-columns: repeat(var(--col-count, 1), 1fr); }
 
 
 /* ============================================================
    91 — UniversitiesComparePage  (ucp-*)
    ============================================================ */
-.ucp-acc-badge   { background: var(--acc-color, var(--mj-brand)); }
+.ucp-acc-badge   { background: var(--acc-color, var(--mj-brand)); color: var(--mj-on-brand, #fff); }
 .ucp-apply-grid  {
   display: grid;
   grid-template-columns: repeat(var(--col-count, 1), minmax(0, 1fr));

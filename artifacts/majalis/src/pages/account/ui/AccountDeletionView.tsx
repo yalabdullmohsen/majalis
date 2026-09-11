@@ -100,9 +100,9 @@ export default function AccountDeletionPage() {
 
   return (
     <div className="page-shell">
-      <header ref={heroRef} className="accd-hero" style={{ color: "#DC2626" }}>
+      <header ref={heroRef} className="accd-hero" style={{ color: "var(--mj-danger)" }}>
         <ShieldOff size={36} className="accd-hero__icon" aria-hidden="true" />
-        <h2 style={{ color: "#DC2626" }}>حذف الحساب نهائياً</h2>
+        <h2 style={{ color: "var(--mj-danger)" }}>حذف الحساب نهائياً</h2>
         <p>هذه العملية لا يمكن التراجع عنها.</p>
       </header>
 

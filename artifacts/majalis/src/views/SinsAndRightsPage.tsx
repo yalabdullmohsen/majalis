@@ -518,16 +518,16 @@ export default function SinsAndRightsPage() {
                 key={stat.label}
                 style={{
                   flex: "1 1 140px",
-                  background: "rgba(24,54,42,0.05)",
+                  background: "color-mix(in srgb, var(--mj-brand-deep, var(--mj-brand)) 5%, transparent)",
                   borderRadius: "var(--elite-r-md, 12px)",
                   padding: "1rem",
                   textAlign: "center",
                 }}
               >
-                <div style={{ fontSize: "1.75rem", fontWeight: 700, color: "var(--elite-green, var(--mj-brand-deep))" }}>
+                <div style={{ fontSize: "var(--ss-type-screen-title)", fontWeight: 700, color: "var(--elite-green, var(--mj-brand-deep))" }}>
                   {stat.value}
                 </div>
-                <div style={{ fontSize: "0.875rem", color: "var(--elite-ink-soft, #5D726A)" }}>{stat.label}</div>
+                <div style={{ fontSize: "var(--ss-type-label)", color: "var(--elite-ink-soft, #5D726A)" }}>{stat.label}</div>
               </div>
             ))}
           </div>

@@ -180,7 +180,7 @@ export default function MyCitationsPage() {
 
   return (
     <ListScreen compose="mark">
-    <div dir="rtl" className="mcp-root print:bg-white">
+    <div dir="rtl" className="mcp-root print:bg-[var(--mj-surface)]">
       {/* الرأس */}
       <div className="mcp-header print:hidden">
         <div className="max-w-4xl mx-auto">
@@ -328,7 +328,7 @@ export default function MyCitationsPage() {
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex items-center gap-2 min-w-0">
                           {typeLabel && (
-                            <span className="px-1.5 py-0.5 rounded text-xs text-white font-medium flex-shrink-0 cit-type-badge">
+                            <span className="px-1.5 py-0.5 rounded text-xs font-medium flex-shrink-0 cit-type-badge">
                               {typeLabel}
                             </span>
                           )}

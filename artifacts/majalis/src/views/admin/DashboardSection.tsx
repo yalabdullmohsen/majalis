@@ -466,7 +466,7 @@ export function DashboardSection() {
           padding: "0.9rem 1rem",
           borderRadius: "0.75rem",
           border: "1px solid var(--majalis-line)",
-          background: "rgba(95, 122, 102, 0.08)",
+          background: "color-mix(in srgb, var(--mj-brand) 8%, transparent)",
           display: "flex",
           flexWrap: "wrap",
           gap: "0.75rem",
@@ -476,7 +476,7 @@ export function DashboardSection() {
       >
         <div>
           <p style={{ margin: 0, fontWeight: 700 }}>خانة المراجعة — مركز القيادة</p>
-          <p style={{ margin: "0.25rem 0 0", fontSize: "0.85rem", opacity: 0.75 }}>
+          <p style={{ margin: "0.25rem 0 0", fontSize: "var(--ss-type-supporting)", opacity: 0.75 }}>
             مراجعة التلاوات والمحتوى والتفسير مع إجراءات جماعية سريعة.
           </p>
         </div>
@@ -488,11 +488,11 @@ export function DashboardSection() {
             minHeight: "2.4rem",
             padding: "0.35rem 0.9rem",
             borderRadius: "0.55rem",
-            background: "#5f7a66",
-            color: "#fff",
+            background: "var(--mj-brand)",
+            color: "var(--mj-on-brand)",
             textDecoration: "none",
             fontWeight: 600,
-            fontSize: "0.88rem",
+            fontSize: "var(--ss-type-label)",
           }}
         >
           فتح مركز المراجعة
