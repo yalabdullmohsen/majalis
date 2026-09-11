@@ -21,6 +21,8 @@ assert.match(card, /export const SectionEntryCard/, "SectionEntryCard مُصدّ
 assert.match(card, /export const HubCard = SectionEntryCard/, "HubCard توافق خلفي");
 assert.match(card, /variant\?: SectionEntryVariant/, "variants");
 assert.match(card, /"primary"\s*\|\s*"soft"\s*\|\s*"compact"/);
+assert.match(card, /"detailed"/, "كثافة detailed");
+assert.match(card, /"featured"/, "كثافة featured");
 assert.match(card, /prefetchRoute/, "تسخين المسار عند اللمس");
 assert.match(card, /data-section-entry/, "سمة بطاقة دخول");
 assert.match(card, /aria-hidden="true"/, "السهم زخرفي غير تفاعلي منفصلًا");

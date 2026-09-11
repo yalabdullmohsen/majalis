@@ -6,7 +6,7 @@ import { prefetchRoute } from "@/lib/prefetch-route";
 import { CardTitle, SupportingText, Caption, LabelText } from "@/components/design-system/text";
 import "@/styles/components/hub-card.css";
 
-export type SectionEntryVariant = "primary" | "soft" | "compact";
+export type SectionEntryVariant = "primary" | "soft" | "compact" | "detailed" | "featured";
 
 export type SectionEntryCardProps = {
   title: string;
@@ -83,7 +83,8 @@ export const SectionEntryCard = memo(function SectionEntryCard({
   const classNames = cn(
     "hub-card sec-entry soft-card soft-card--on-light ss-hub-card mj-pressable",
     `hub-card--${variant}`,
-    featured && "hub-card--featured",
+    (featured || variant === "featured") && "hub-card--featured",
+    variant === "detailed" && "hub-card--detailed",
     isCurrent && "hub-card--current",
     disabled && "hub-card--disabled",
     loading && "hub-card--loading",

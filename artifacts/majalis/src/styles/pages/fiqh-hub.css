@@ -487,7 +487,7 @@ html[data-theme="dark"] .fqh-hub-card__desc {
   grid-template-columns: none;
   align-items: stretch;
   gap: 0.65rem;
-  min-height: var(--sec-entry-min-h, 11rem);
+  min-height: var(--sec-entry-min-h, 0);
   padding: var(--sec-entry-pad, 1rem 1.05rem 0.95rem);
   background:
     linear-gradient(
@@ -1146,7 +1146,7 @@ html.dark .fiqh-lux-page.section-lobby {
   flex-direction: column;
   align-items: flex-start;
   gap: 0.65rem;
-  min-height: 10.5rem;
+  min-height: 0;
   padding: 1rem 1rem 2.85rem;
   padding-inline-end: 2.85rem;
   border-radius: 22px;
@@ -1162,9 +1162,9 @@ html.dark .fiqh-lux-page.section-lobby {
 /* يهزم ضغط section-lobby للفقه الذي كان يُضيّق الحشو ويُقرب العناصر */
 .fiqh-lux-page.section-lobby[data-section-lobby="fiqh"] .card,
 .section-lobby[data-section-lobby="fiqh"].fiqh-lux-page .card {
-  padding: 1rem 1rem 2.85rem;
-  padding-inline-end: 2.85rem;
-  min-height: 10.5rem;
+  padding: 0.75rem 0.85rem;
+  padding-inline-end: 0.85rem;
+  min-height: 0;
   gap: 0.65rem;
 }
 
@@ -2374,7 +2374,7 @@ html.dark .fiqh-report,html[data-theme="dark"] .fiqh-report{background:color-mix
 .fiqh-category-card.hub-card,
 .fiqh-category-card.sec-entry {
   border-radius: var(--radius-card, 24px) !important;
-  min-height: 10.5rem;
+  min-height: 0;
 }
 
 
