@@ -4,6 +4,7 @@ import { HubCard } from "@/components/ui/HubCard";
 import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
 import { applyPageSeo } from "@/lib/seo";
 import { getDawahCategories, getQuestionsByCategory, getQuestionsByReligion, searchDawahQuestions, RELIGIONS, type DawahCategory, type DawahQuestion, type ReligionCode } from "@/lib/dawah-service";
+import { STATIC_DAWAH_QUESTIONS } from "@/lib/dawah-static-fallback";
 import { UtilityScreen } from "@/components/design-system/screens";
 
 function useDebounced<T>(value: T, ms = 350): T {
@@ -27,7 +28,7 @@ export default function DiscoverIslamQuestionsPage() {
   });
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounced(search);
-  const [items, setItems] = useState<DawahQuestion[]>([]);
+  const [items, setItems] = useState<DawahQuestion[]>(() => STATIC_DAWAH_QUESTIONS.slice(0, 50));
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -40,13 +41,23 @@ export default function DiscoverIslamQuestionsPage() {
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
     setLoading(true);
     const task = debouncedSearch.trim()
       ? searchDawahQuestions(debouncedSearch)
       : religion
         ? getQuestionsByReligion(religion)
         : getQuestionsByCategory(categorySlug);
-    task.then(setItems).finally(() => setLoading(false));
+    task
+      .then((rows) => {
+        if (!cancelled) setItems(rows);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [categorySlug, religion, debouncedSearch]);
 
   const selectReligion = (code: ReligionCode | undefined) => {
@@ -91,12 +102,12 @@ export default function DiscoverIslamQuestionsPage() {
         </div>
       </div>
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <SkeletonCardGrid />
       ) : items.length === 0 ? (
         <Empty text="لا توجد أسئلة مطابقة بعد." />
       ) : (
-        <div className="hub-card-grid dii-list-grid dii-section">
+        <div className="hub-card-grid dii-list-grid dii-section" aria-busy={loading}>
           {items.map((q) => (
             <HubCard
               key={q.id}

@@ -11,7 +11,7 @@ import {
 } from "@/lib/surah-index";
 import { surahList, mushafPageHref } from "@/lib/quran-surah-list";
 import { displaySurahName } from "@/lib/quran-display";
-import { getSurahMeta } from "@/lib/quran-api";
+import { getSurahList, getSurahMeta } from "@/lib/quran-api";
 import { useNumerals } from "@/hooks/useNumerals";
 import { VirtualList, type VirtualListHandle } from "@/components/VirtualList";
 import { ListScreen } from "@/components/design-system/screens";
@@ -37,9 +37,21 @@ function revelationLabel(type: SurahIndexEntry["revelationType"]): string | null
   return null;
 }
 
+function seedSurahIndex(): SurahIndexEntry[] {
+  return getSurahList().map((s) => ({
+    number: s.number,
+    name: s.name,
+    englishName: "",
+    numberOfAyahs: s.ayahs,
+    revelationType: s.revelation === "مكية" ? "Meccan" : "Medinan",
+    revelationOrder: s.revelationOrder,
+    description: s.description,
+  }));
+}
+
 export default function SurahIndexPage() {
   const fmt = useNumerals();
-  const [surahs, setSurahs] = useState<SurahIndexEntry[]>([]);
+  const [surahs, setSurahs] = useState<SurahIndexEntry[]>(seedSurahIndex);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [revelationLoaded, setRevelationLoaded] = useState(false);
@@ -217,13 +229,13 @@ export default function SurahIndexPage() {
         </div>
       </div>
 
-      {loading ? (
+      {loading && surahs.length === 0 ? (
         <div className="surah-index-skeletons" aria-hidden="true">
           {Array.from({ length: 8 }).map((_, i) => (
             <div key={i} className="surah-index-skel" />
           ))}
         </div>
-      ) : loadError ? (
+      ) : loadError && surahs.length === 0 ? (
         <div className="surah-index-empty">
           <BookOpen size={32} strokeWidth={1} aria-hidden="true" />
           <p>تعذّر تحميل فهرس السور. تحقّق من اتصالك وأعد المحاولة.</p>
@@ -234,6 +246,7 @@ export default function SurahIndexPage() {
           <p>{filter === "favorites" ? "لا سور في مفضلتك بعد." : "لا نتائج مطابقة."}</p>
         </div>
       ) : (
+        <div aria-busy={loading}>
         <VirtualList
           ref={listRef}
           as="ol"
@@ -279,6 +292,7 @@ export default function SurahIndexPage() {
             );
           }}
         />
+        </div>
       )}
     </div>
     </ListScreen>
