@@ -879,8 +879,8 @@ html.dark .srch-result-card {
 }
 html[data-theme="dark"] .srch-home-submit,
 html.dark .srch-home-submit {
-  background: #247a5c;
-  color: #fff;
+  background: var(--mj-brand, #146b52);
+  color: var(--mj-on-brand, #ffffff);
 }
 html[data-theme="dark"] .srch-scope-card__icon,
 html.dark .srch-scope-card__icon,

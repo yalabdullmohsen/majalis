@@ -59,7 +59,7 @@ assert.match(css, /grid-template-columns:\s*1fr auto 1fr/);
 
 assert.match(search, /searchVersesInCorpus/);
 assert.match(search, /لا نتائج/);
-assert.match(search, /جاري البحث/);
+assert.match(search, /aria-label=["']تحديث النتائج["']|تحديث النتائج/, "بحث المصحف: حالة صامتة بلا «جاري البحث»");
 assert.match(search, /تعذّر البحث/);
 assert.match(search, /e\.preventDefault\(\)/);
 assert.match(search, /رقم الصفحة يجب أن يكون بين/);
