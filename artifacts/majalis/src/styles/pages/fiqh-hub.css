@@ -1739,7 +1739,7 @@ html.dark .fiqh-lux-page .card::after {
 
 html[data-theme="dark"] .fiqh-filters__chip,
 html.dark .fiqh-filters__chip {
-  border-color: color-mix(in srgb, var(--fq-emerald-bright, #5eead4) 28%, var(--fq-line, #334155));
+  border-color: color-mix(in srgb, var(--fq-emerald-bright, #5eead4) 28%, var(--fq-line, var(--mj-ink-2)));
   color: var(--text-primary, var(--mj-surface-2));
 }
 
@@ -1995,7 +1995,7 @@ html.dark .fiqh-issue-card__disclaimer {
 
 .fiqh-status-badge--review {
   background: color-mix(in srgb, var(--mj-muted) 18%, transparent);
-  color: var(--mj-ink-2, #334155);
+  color: var(--mj-ink-2, var(--mj-ink-2));
 }
 
 html[data-theme="dark"] .fiqh-status-badge--complete,
@@ -2079,7 +2079,7 @@ html.dark .fiqh-status-badge--review {
 html[data-theme="dark"] .fiqh-lesson-alert,
 html.dark .fiqh-lesson-alert {
   background: color-mix(in srgb, #f59e0b 14%, var(--mj-ink, var(--mj-info)));
-  border-color: color-mix(in srgb, #fbbf24 35%, var(--mj-ink-2, #334155));
+  border-color: color-mix(in srgb, #fbbf24 35%, var(--mj-ink-2, var(--mj-ink-2)));
   color: #fef3c7;
 }
 
