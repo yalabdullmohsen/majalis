@@ -82,24 +82,24 @@ export default function RevelationOrderPage() {
         </button>
       </div>
 
-      {loading ? (
-        <div className="revord-skeletons" aria-hidden="true">
+      {loading && surahs.length === 0 ? (
+        <div className="revord-skeletons" role="status" aria-busy="true" aria-label="تحديث ترتيب النزول">
           {Array.from({ length: 10 }).map((_, i) => <div key={i} className="revord-skel" />)}
         </div>
-      ) : loadError ? (
+      ) : loadError && surahs.length === 0 ? (
         <div className="revord-empty">
           <BookOpen size={32} strokeWidth={1} aria-hidden="true" />
           <p>تعذّر تحميل بيانات السور. تحقّق من اتصالك وأعد المحاولة.</p>
         </div>
       ) : (
-        <ol className="revord-timeline" aria-label="السور مرتبة حسب ترتيب النزول">
+        <ol className="revord-timeline" aria-label="السور مرتبة حسب ترتيب النزول" aria-busy={loading}>
           {ordered.map((s) => (
             <li key={s.number} className="revord-event">
               <span
                 className={`revord-marker${s.revelationType === "Medinan" ? " revord-marker--medinan" : ""}`}
                 aria-hidden="true"
               />
-              <Link href={`/mushaf/${s.number}`} className="revord-card">
+              <Link href={`/mushaf/${s.number}`} className="revord-card soft-card soft-card--on-light">
                 <span className="revord-card__order" aria-hidden="true">{s.revelationOrder}</span>
                 <span className="revord-card__body">
                   <span className="revord-card__name" style={{ fontFamily: "var(--font-quran)" }}>{s.name}</span>

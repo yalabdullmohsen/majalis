@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import {
   BookOpen,
@@ -160,25 +160,40 @@ export default function QuranCirclesPage() {
     });
   }, []);
 
+  const filterKey = `${level}|${track}|${mode}`;
+  const filterKeyRef = useRef(filterKey);
+  const [appliedKey, setAppliedKey] = useState("");
+
   const load = useCallback(async () => {
+    const requestKey = `${level}|${track}|${mode}`;
+    const keyChanged = filterKeyRef.current !== requestKey;
+    filterKeyRef.current = requestKey;
     setLoading(true);
+    // مفتاح فلتر جديد: لا نعرض نتائج السياق السابق
+    if (keyChanged) setCircles([]);
     const filters: CircleFilters = {};
     if (level !== "الكل") filters.level = level;
     if (track !== "الكل") filters.track = track;
     if (mode !== "الكل") filters.mode = mode;
     try {
       const rows = await getQuranCircles(filters);
+      if (filterKeyRef.current !== requestKey) return;
       setCircles(rows);
+      setAppliedKey(requestKey);
     } catch {
-      setCircles([]);
+      if (filterKeyRef.current !== requestKey) return;
+      // فشل جلب مفتاح جديد: قائمة فارغة؛ فشل إعادة جلب نفس المفتاح: أبقِ السابق
+      if (keyChanged) setCircles([]);
     } finally {
-      setLoading(false);
+      if (filterKeyRef.current === requestKey) setLoading(false);
     }
   }, [level, track, mode]);
 
   useEffect(() => {
     void load();
   }, [load]);
+
+  const awaitingFilterResults = loading && appliedKey !== filterKey;
 
   const governorateOptions = useMemo(() => {
     const set = new Set<string>();
@@ -332,10 +347,10 @@ export default function QuranCirclesPage() {
         <ActiveFilters
           items={activeFilterItems}
           onClearAll={activeFilterItems.length > 1 ? clearAllFilters : undefined}
-          resultCount={loading ? null : visible.length}
+          resultCount={awaitingFilterResults ? null : visible.length}
         />
 
-        {!loading ? (
+        {!awaitingFilterResults ? (
           <p className="qc-result-count" aria-live="polite">
             {visible.length === 0
               ? "لا نتائج"
@@ -398,12 +413,12 @@ export default function QuranCirclesPage() {
         </div>
       </FilterSheet>
 
-      {loading ? (
-        <p className="qc-empty">تحديث الدليل…</p>
+      {awaitingFilterResults || (loading && circles.length === 0) ? (
+        <p className="qc-empty" role="status" aria-busy="true">تحديث الدليل…</p>
       ) : visible.length === 0 ? (
         <p className="qc-empty">لا توجد حلقات مطابقة لهذا الفلتر حاليًا</p>
       ) : (
-        <div className="qc-results">
+        <div className="qc-results" aria-busy={loading}>
           {byGov.map(([gov, list]) => (
             <section key={gov} className="qc-group">
               <h2 className="qc-group__title">{gov}</h2>
