@@ -26,7 +26,7 @@ import {
   type HadithSearchScope,
   type HadithSortMode,
 } from "@/lib/hadith-access";
-import { PageHeader, SkeletonCardGrid, Empty, Chip } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { SectionEntryCard } from "@/components/ui/HubCard";
 import { GridScreen } from "@/components/design-system/screens";
