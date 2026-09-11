@@ -53,7 +53,8 @@
 .mss-hero-surface,
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero),
 .topic-page__hero,
-.section-lobby__head:not(.section-lobby__head--bare) {
+.section-lobby__head:not(.section-lobby__head--bare),
+.ldb-hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -71,9 +72,22 @@
 .mss-hero-surface::after,
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero)::after,
 .topic-page__hero::after,
-.section-lobby__head:not(.section-lobby__head--bare)::after {
+.section-lobby__head:not(.section-lobby__head--bare)::after,
+.ldb-hero::after {
   content: none !important;
   display: none !important;
+}
+
+.ldb-hero a,
+.ldb-hero h1,
+.ldb-hero h2,
+.ldb-hero p {
+  color: inherit;
+}
+
+.ldb-hero a {
+  color: var(--mss-on-hero-accent, #123f2e) !important;
+  opacity: 1;
 }
 
 /* —— PageHero الداخلي (غير الرئيسية) —— */

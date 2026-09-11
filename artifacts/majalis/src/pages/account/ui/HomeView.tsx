@@ -53,7 +53,7 @@ function HomeDailyWirdSkeleton() {
       </div>
       <div className="home-daily-wird__grid">
         {Array.from({ length: 4 }).map((_, idx) => (
-          <article key={idx} className="home-daily-wird__card mj-card mj-home-lcp-ph__daily-card">
+          <article key={idx} className="home-daily-wird__card soft-card soft-card--on-light mj-home-lcp-ph__daily-card">
             <header className="home-daily-wird__card-head">
               <span className="mj-home-lcp-ph__daily-icon" aria-hidden="true" />
               <span className="mj-home-lcp-ph__daily-label">&nbsp;</span>
