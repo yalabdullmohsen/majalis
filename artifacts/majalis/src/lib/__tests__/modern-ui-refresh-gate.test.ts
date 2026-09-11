@@ -24,7 +24,7 @@ assert.match(mur, /\.mj-segmented-filter/, "Segmented Control في الطبقة"
 assert.match(mur, /\.mur-settings-list/, "قائمة إعدادات حديثة");
 assert.match(mur, /\.reading-info-block/, "كتل قراءة");
 assert.match(mur, /prefers-reduced-motion/, "احترام تقليل الحركة");
-assert.match(mur, /Design System Migration/, "طبقة تبني عالمي");
+assert.match(mur, /Design System Adoption/, "طبقة تبني عالمي");
 assert.match(unify, /border:\s*1px solid transparent/, "بطاقات بلا حدود ثقيلة");
 assert.match(soft, /--soft-card-border:\s*transparent/, "soft-card فاتح بلا إطار");
 assert.match(index, /SettingsList/, "تصدير SettingsList");

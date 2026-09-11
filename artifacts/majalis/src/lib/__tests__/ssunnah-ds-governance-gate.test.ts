@@ -16,7 +16,7 @@ const canonical = read("src/styles/ssunnah-ds-canonical.css");
 const mur = read("src/styles/modern-ui-refresh.css");
 const index = read("src/components/design-system/index.ts");
 const pkg = read("package.json");
-const docs = read("docs/SSUNNAH_DS_MIGRATION.md");
+const docs = read("docs/SSUNNAH_DS_ADOPTION.md");
 const lockdownDoc = read("docs/SSUNNAH_DESIGN_SYSTEM.md");
 
 assert.match(main, /ssunnah-ds-canonical\.css/, "canonical tokens محمّلة (حرج أو مؤجّل)");
@@ -26,7 +26,7 @@ assert.match(canonical, /--ds-textPrimary:/, "token textPrimary");
 assert.match(canonical, /--ds-radiusLarge:/, "token radius");
 assert.match(canonical, /--ds-durationFast:/, "token motion");
 assert.ok(
-  /Design System Migration/.test(mur) || /Design System Migration/.test(canonical),
+  /Design System Adoption/.test(mur) || /Design System Adoption/.test(canonical),
   "طبقة التبني العالمي",
 );
 assert.match(index, /SettingsList/, "SettingsList مُصدَّر");
