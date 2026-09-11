@@ -1,8 +1,17 @@
 /**
- * نصوص إشعارات الصلاة.
- * للتنبيهات المجدوَلة: النص يُشتق من الوقت الفعلي عند الجدولة (يحمل ساعة الصلاة).
- * القوالب الدورية تبقى للمسارات القديمة/الاختبارات دون ادعاء «ربع ساعة» كاذب.
+ * نصوص إشعارات الصلاة — واجهة متوافقة مع الجدولة الحالية.
+ * المصدر المركزي: `notifications/localization.ts`.
  */
+
+import {
+  NOTIFICATION_CATALOG,
+  buildPrayerLocalizedCopy,
+  fillNotificationTemplate,
+  formatNotificationMinutesPhrase,
+  pickFromPool,
+  pickLocalizedNotification,
+  type LocalizedNotification,
+} from "@/lib/notifications/localization";
 
 export type PrayerNotifKind =
   | "pre-15"
@@ -12,84 +21,30 @@ export type PrayerNotifKind =
   | "after"
   | "post-soft";
 
-export type PrayerNotifCopy = {
-  title: string;
-  body: string;
-};
+export type PrayerNotifCopy = LocalizedNotification;
 
-type Template = {
-  title: string;
-  /** يُستبدل {{name}} و {{mins}} */
-  body: string;
-};
-
-const STORE_KEY = "majalis-prayer-notif-copy-idx-v1";
+type Template = { title: string; body: string };
 
 const TEMPLATES: Record<PrayerNotifKind, Template[]> = {
-  enter: [
-    { title: "أذان {{name}}", body: "حان وقت صلاة {{name}}" },
-    { title: "أذان {{name}}", body: "حيّ على الصلاة، {{name}}" },
-    { title: "أذان {{name}}", body: "دخل وقت {{name}}، تقبل الله" },
-    { title: "أذان {{name}}", body: "حان الآن وقت صلاة {{name}}" },
-  ],
-  "pre-15": [
-    { title: "اقترب وقت {{name}}", body: "بقي {{mins}} دقيقة على صلاة {{name}}" },
-    { title: "اقترب وقت {{name}}", body: "اقترب وقت {{name}}، استعد للصلاة" },
-    { title: "اقترب وقت {{name}}", body: "صلاة {{name}} بعد {{mins}} دقيقة" },
-  ],
-  "pre-10": [
-    { title: "اقترب وقت {{name}}", body: "بقي {{mins}} دقائق على صلاة {{name}}" },
-    { title: "اقترب وقت {{name}}", body: "اقترب وقت {{name}}، استعد" },
-    { title: "اقترب وقت {{name}}", body: "صلاة {{name}} بعد عشر دقائق" },
-  ],
-  "pre-5": [
-    { title: "اقترب وقت {{name}}", body: "بقي {{mins}} دقائق على صلاة {{name}}" },
-    { title: "اقترب وقت {{name}}", body: "صلاة {{name}} بعد قليل، استعد" },
-    { title: "اقترب وقت {{name}}", body: "اقتربت صلاة {{name}}" },
-  ],
-  after: [
-    { title: "وقت الصلاة", body: "دخل وقت {{name}}، تقبل الله" },
-    { title: "وقت الصلاة", body: "لا تنس صلاة {{name}}" },
-    { title: "وقت الصلاة", body: "صلاة {{name}} قائمة، بارك الله فيك" },
-  ],
-  "post-soft": [
-    { title: "تذكير خفيف", body: "هل أديت صلاة {{name}}؟" },
-    { title: "تذكير بالصلاة", body: "تذكير لطيف بصلاة {{name}}" },
-    { title: "تذكير خفيف", body: "لا تنس صلاة {{name}}" },
-  ],
+  enter: [...NOTIFICATION_CATALOG.prayerAdhan],
+  "pre-15": [...NOTIFICATION_CATALOG.prayerPre],
+  "pre-10": [...NOTIFICATION_CATALOG.prayerPre],
+  "pre-5": [...NOTIFICATION_CATALOG.prayerPre],
+  after: [...NOTIFICATION_CATALOG.prayerPost],
+  "post-soft": [...NOTIFICATION_CATALOG.prayerPost],
 };
 
 const FALLBACK: PrayerNotifCopy = {
-  title: "تنبيه الصلاة",
-  body: "حان وقت الصلاة",
+  title: "وقت الصلاة",
+  body: "دخل وقت الصلاة.",
 };
 
 function fill(template: string, name: string, mins: number): string {
-  return template
-    .replaceAll("{{name}}", name)
-    .replaceAll("{{mins}}", String(mins))
-    .replace(/\s*—\s*/g, "، ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function loadIndexMap(): Record<string, number> {
-  try {
-    const raw = localStorage.getItem(STORE_KEY);
-    if (!raw) return {};
-    const parsed = JSON.parse(raw) as Record<string, number>;
-    return parsed && typeof parsed === "object" ? parsed : {};
-  } catch {
-    return {};
-  }
-}
-
-function saveIndexMap(map: Record<string, number>): void {
-  try {
-    localStorage.setItem(STORE_KEY, JSON.stringify(map));
-  } catch {
-    /* تجاهل */
-  }
+  return fillNotificationTemplate(template, {
+    name,
+    mins,
+    minsPhrase: formatNotificationMinutesPhrase(mins),
+  });
 }
 
 /** أقرب مجموعة نصوص حسب دقائق التنبيه المسبق. */
@@ -99,81 +54,37 @@ export function preAlertKindForMinutes(minutes: number): "pre-15" | "pre-10" | "
   return "pre-15";
 }
 
-/**
- * نص مجدول يحمل وقت الصلاة صراحةً — أي انحراف مستقبلي يظهر فورًا للمستخدم.
- * العنوان: استعد للصلاة / أذان …
- * الجسم: المغرب ٦:٢٧ م · بعد ١٥ دقيقة
- */
-/** صياغة عربية لعدد الدقائق في نص التنبيه المسبق. */
 export function formatPreAlertMinutesPhrase(minutes: number): string {
-  const mins = Math.max(1, Math.round(minutes));
-  if (mins === 1) return "دقيقة واحدة";
-  if (mins === 2) return "دقيقتين";
-  if (mins >= 3 && mins <= 10) return `${mins} دقائق`;
-  return `${mins} دقيقة`;
+  return formatNotificationMinutesPhrase(minutes);
 }
 
+/**
+ * نص مجدول لإشعارات الصلاة.
+ * يستدعيه prayer-local-notifications و adhan-scheduler.
+ */
 export function buildScheduledPrayerNotificationCopy(opts: {
   kind: "pre" | "enter" | "post" | "iqamah";
   prayerName: string;
   prayerTimeLabel: string;
   minutesBefore?: number;
 }): PrayerNotifCopy {
-  const name = opts.prayerName;
-  const clock = opts.prayerTimeLabel;
-  if (opts.kind === "pre") {
-    const mins = Math.max(1, Math.round(opts.minutesBefore ?? 15));
-    const phrase = formatPreAlertMinutesPhrase(mins);
-    return {
-      title: `اقترب وقت ${name}`,
-      body: clock
-        ? `${clock} · بقي ${phrase} على صلاة ${name}`
-        : `بقي ${phrase} على صلاة ${name}`,
-    };
-  }
-  if (opts.kind === "enter") {
-    return {
-      title: `أذان ${name}`,
-      body: clock ? `حان وقت صلاة ${name} · ${clock}` : `حان وقت صلاة ${name}`,
-    };
-  }
-  if (opts.kind === "iqamah") {
-    return {
-      title: `إقامة ${name}`,
-      body: clock ? `قد قامت صلاة ${name} · ${clock}` : `قد قامت صلاة ${name}`,
-    };
-  }
-  return {
-    title: `وقت الصلاة`,
-    body: pickPrayerRespectPostBody(name, clock),
-  };
+  return buildPrayerLocalizedCopy({
+    kind: opts.kind,
+    prayerName: opts.prayerName,
+    prayerTimeLabel: opts.prayerTimeLabel,
+    minutesBefore: opts.minutesBefore,
+  });
 }
 
-const POST_RESPECT_BODIES = [
-  (name: string) => `أغلق الجوال وقت صلاة ${name} أو اجعله على الصامت.`,
-  (name: string) => `لا تنسَ وضع الصامت أثناء صلاة ${name}.`,
-  (name: string, clock: string) => `إن كنت تصلّي ${name} (${clock}) أبقِ الجوال صامتًا.`,
-  (name: string) => `احفظ خشوع صلاة ${name}: صامت أو إغلاق للجوال.`,
-];
-
-function pickPrayerRespectPostBody(name: string, clock: string): string {
-  try {
-    const map = loadIndexMap();
-    const prev = map["post-respect"] ?? -1;
-    const next = (prev + 1) % POST_RESPECT_BODIES.length;
-    map["post-respect"] = next;
-    saveIndexMap(map);
-    const fn = POST_RESPECT_BODIES[next] ?? POST_RESPECT_BODIES[0]!;
-    return fn(name, clock);
-  } catch {
-    return `لا تنسَ وضع الصامت وقت صلاة ${name}.`;
-  }
+/** رسالة احترام هدوء الجوال — بلا افتراض أن المستخدم يصلّي. */
+export function pickPrayerRespectPostBody(name = ""): string {
+  // عبارات مرجعية للبوابة: وضع الصامت | أغلق الجوال
+  return pickLocalizedNotification("prayerRespect", { name }).body;
 }
 
-/**
- * يختار نصًا دوريًا لنوع الإشعار، مع تجنّب إعادة آخر نص فورًا عند توفر بدائل.
- * عند الفشل يرجع fallback آمنًا بلا شرطة طويلة.
- */
+/** @deprecated اسم قديم */
+export const pickPrayerRespectPostBodyLegacy = pickPrayerRespectPostBody;
+
 export function pickPrayerNotificationCopy(
   kind: PrayerNotifKind,
   prayerName: string,
@@ -184,33 +95,23 @@ export function pickPrayerNotificationCopy(
     if (!pool?.length) {
       return {
         title: FALLBACK.title,
-        body: fill("حان وقت صلاة {{name}}", prayerName, minutes) || FALLBACK.body,
+        body: fill("دخل وقت صلاة {{name}}.", prayerName, minutes) || FALLBACK.body,
       };
     }
-
-    const map = loadIndexMap();
-    const prev = map[kind] ?? -1;
-    let next = (prev + 1) % pool.length;
-    if (pool.length > 1 && next === prev) {
-      next = (next + 1) % pool.length;
-    }
-    map[kind] = next;
-    saveIndexMap(map);
-
-    const tpl = pool[next] ?? pool[0];
-    return {
-      title: fill(tpl.title, prayerName, minutes),
-      body: fill(tpl.body, prayerName, minutes),
-    };
+    const safeMins = Math.max(1, minutes || 1);
+    return pickFromPool(`prayer-legacy-${kind}`, pool, {
+      name: prayerName,
+      mins: safeMins,
+      minsPhrase: formatNotificationMinutesPhrase(safeMins),
+    });
   } catch {
     return {
       title: FALLBACK.title,
-      body: fill("اقتربت صلاة {{name}}، متبقي {{mins}} دقيقة", prayerName, minutes) || FALLBACK.body,
+      body: fill("اقتربت صلاة {{name}}.", prayerName, minutes) || FALLBACK.body,
     };
   }
 }
 
-/** للاختبارات: كل القوالب بلا شرطة طويلة وبلا فراغات ركيكة. */
 export function listPrayerNotificationTemplates(): Record<PrayerNotifKind, Template[]> {
   return TEMPLATES;
 }

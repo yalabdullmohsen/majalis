@@ -30,6 +30,7 @@ import {
   notificationBodyWithoutBrand,
   notificationTitleWithoutBrand,
 } from "./notifications/copy";
+import { pickLocalizedNotification } from "./notifications/localization";
 
 export interface SmartNotifScheduleItem {
   id: string;
@@ -82,20 +83,22 @@ export function buildDailySmartSchedule(opts?: {
 
   // أذكار الصباح/المساء — تُفعَّل صراحة عبر adhkarReminder (لا طلب إذن تلقائي)
   if (prefs.adhkarReminder) {
+    const morning = pickLocalizedNotification("adhkarMorning");
     items.push({
       id: "adhkar-morning",
       kind: "adhkar",
-      title: "أذكار الصباح",
-      body: "حان وقت أذكار الصباح — لا تفوّت وردك.",
+      title: morning.title,
+      body: morning.body,
       minuteOfDay: 6 * 60 + 30,
       tag: "majalis-adhkar-morning",
       url: "/adhkar",
     });
+    const evening = pickLocalizedNotification("adhkarEvening");
     items.push({
       id: "adhkar-evening",
       kind: "adhkar",
-      title: "أذكار المساء",
-      body: "حان وقت أذكار المساء — اختم يومك بذكر الله.",
+      title: evening.title,
+      body: evening.body,
       minuteOfDay: 17 * 60 + 30,
       tag: "majalis-adhkar-evening",
       url: "/adhkar",
@@ -117,19 +120,20 @@ export function buildDailySmartSchedule(opts?: {
   }
 
   if (prefs.prayerReminder) {
-    const prayerSlots: Array<{ id: string; title: string; minute: number }> = [
-      { id: "fajr", title: "صلاة الفجر", minute: 5 * 60 },
-      { id: "dhuhr", title: "صلاة الظهر", minute: 12 * 60 + 15 },
-      { id: "asr", title: "صلاة العصر", minute: 15 * 60 + 30 },
-      { id: "maghrib", title: "صلاة المغرب", minute: 18 * 60 + 15 },
-      { id: "isha", title: "صلاة العشاء", minute: 19 * 60 + 45 },
+    const prayerSlots: Array<{ id: string; name: string; minute: number }> = [
+      { id: "fajr", name: "الفجر", minute: 5 * 60 },
+      { id: "dhuhr", name: "الظهر", minute: 12 * 60 + 15 },
+      { id: "asr", name: "العصر", minute: 15 * 60 + 30 },
+      { id: "maghrib", name: "المغرب", minute: 18 * 60 + 15 },
+      { id: "isha", name: "العشاء", minute: 19 * 60 + 45 },
     ];
     for (const p of prayerSlots) {
+      const copy = pickLocalizedNotification("prayerAdhan", { name: p.name });
       items.push({
         id: `prayer-${p.id}`,
         kind: "prayer",
-        title: p.title,
-        body: `تذكير: ${p.title} — حيّ على الصلاة.`,
+        title: copy.title,
+        body: copy.body,
         minuteOfDay: p.minute,
         tag: `majalis-prayer-${p.id}`,
         url: "/prayer-times",
@@ -138,11 +142,12 @@ export function buildDailySmartSchedule(opts?: {
   }
 
   if (prefs.flashcardsReminder) {
+    const cards = pickLocalizedNotification("flashcards", { count: "—" });
     items.push({
       id: "flashcards-daily",
       kind: "flashcards",
-      title: "مراجعة البطاقات",
-      body: "حان وقت مراجعة بطاقاتك المستحقة.",
+      title: cards.title,
+      body: "بطاقات بانتظار المراجعة.",
       minuteOfDay: reminderMinute,
       tag: "majalis-flashcards-daily",
       url: "/flashcards",
@@ -163,11 +168,12 @@ export function buildDailySmartSchedule(opts?: {
 
   if (opts?.includeStreakWarn !== false) {
     const warnMin = opts?.streakWarnMinute ?? 21 * 60;
+    const streak = pickLocalizedNotification("streak");
     items.push({
       id: "streak-risk",
       kind: "streak",
-      title: "سلسلتك في خطر",
-      body: "لم تُسجّل نشاطًا اليوم بعد — أكمل وردًا صغيرًا للحفاظ على سلسلتك.",
+      title: streak.title,
+      body: streak.body,
       minuteOfDay: warnMin,
       tag: "majalis-streak-risk",
       url: "/quran-hub",
@@ -175,11 +181,12 @@ export function buildDailySmartSchedule(opts?: {
   }
 
   if (opts?.khatmahBehind) {
+    const khatmah = pickLocalizedNotification("khatmah");
     items.push({
       id: "khatmah-behind",
       kind: "khatmah",
-      title: "ورد الختمة متأخر",
-      body: "تقدمك أقل من الهدف اليومي — خصّص دقائق الآن لتعويض الصفحات.",
+      title: khatmah.title,
+      body: khatmah.body,
       minuteOfDay: 20 * 60,
       tag: "majalis-khatmah-behind",
       url: "/daily-wird",
@@ -260,8 +267,9 @@ export function maybeWarnStreakLoss(): boolean {
     if (!isStreakAtRisk()) return false;
     const day = todayKey();
     if (localStorage.getItem(LAST_STREAK_WARN_KEY) === day) return false;
-    sendLocalNotification("سلسلتك في خطر", {
-      body: "أكمل أي نشاط سريع اليوم للحفاظ على سلسلتك.",
+    const streak = pickLocalizedNotification("streak");
+    sendLocalNotification(streak.title, {
+      body: streak.body,
       tag: "majalis-streak-risk",
     });
     localStorage.setItem(LAST_STREAK_WARN_KEY, day);

@@ -7,6 +7,11 @@ import {
   notificationBodyWithoutBrand,
   notificationTitleWithoutBrand,
 } from "@/lib/notifications/copy";
+import {
+  SEASONAL_NOTIFICATION_POOL,
+  formatNotificationMinutesPhrase,
+  pickLocalizedNotification,
+} from "@/lib/notifications/localization";
 
 const STORAGE_KEY = "majalis_notif_prefs_v1";
 
@@ -168,8 +173,9 @@ function markSentToday(tag: string): void {
 
 export function scheduleFlashcardsReminder(dueCount: number): void {
   if (dueCount === 0 || alreadySentToday("flashcards")) return;
-  sendLocalNotification("📇 لديك بطاقات مستحقة", {
-    body: `${dueCount} بطاقة تنتظر مراجعتك اليوم.`,
+  const copy = pickLocalizedNotification("flashcards", { count: dueCount });
+  sendLocalNotification(copy.title, {
+    body: copy.body,
     tag: "flashcards",
   });
   markSentToday("flashcards");
@@ -177,8 +183,9 @@ export function scheduleFlashcardsReminder(dueCount: number): void {
 
 export function scheduleResumeReminder(title: string): void {
   if (!title || alreadySentToday("resume")) return;
-  sendLocalNotification("📍 تابع من حيث توقفت", {
-    body: `لم تُكمل: "${title}" — استمر الآن.`,
+  const copy = pickLocalizedNotification("lessonFollowup", { item: title });
+  sendLocalNotification(copy.title, {
+    body: copy.body,
     tag: "resume",
   });
   markSentToday("resume");
@@ -187,8 +194,13 @@ export function scheduleResumeReminder(title: string): void {
 export function schedulePrayerReminder(prayerName: string, minutesLeft: number): void {
   if (minutesLeft > 12 || minutesLeft < 8) return;
   if (alreadySentToday(`prayer-${prayerName}`)) return;
-  sendLocalNotification("اقتربت الصلاة", {
-    body: `باقي ${minutesLeft} دقيقة على صلاة ${prayerName}`,
+  const copy = pickLocalizedNotification("prayerPre", {
+    name: prayerName,
+    mins: minutesLeft,
+    minsPhrase: formatNotificationMinutesPhrase(minutesLeft),
+  });
+  sendLocalNotification(copy.title, {
+    body: copy.body,
     tag: `prayer-${prayerName}`,
   });
   markSentToday(`prayer-${prayerName}`);
@@ -207,49 +219,20 @@ function getIslamicReminders(): IslamicRemindersPool {
     });
     const parts = formatter.formatToParts(new Date());
     const month = parseInt(parts.find((p) => p.type === "month")?.value ?? "0", 10);
-    const day   = parseInt(parts.find((p) => p.type === "day")?.value ?? "0", 10);
+    const day = parseInt(parts.find((p) => p.type === "day")?.value ?? "0", 10);
 
-    // رمضان
-    if (month === 9) {
-      if (day >= 21) return [
-        { icon: "✨", title: "ليلة القدر في انتظارك", body: "العشر الأواخر من رمضان — ابحث عن ليلة القدر بالقيام والدعاء." },
-        { icon: "🤲", title: "دعاء العشر الأواخر",   body: "اللهم إنك عفو تحب العفو فاعفُ عنّا." },
-      ];
-      return [
-        { icon: "🌙", title: "صُم يومك احتساباً",    body: "رمضان المبارك — الصيام والتلاوة والقيام والصدقة." },
-        { icon: "📖", title: "ورد القرآن اليومي",    body: "خصّص ساعة للتلاوة اليوم — رمضان شهر القرآن." },
-      ];
-    }
+    const map = (key: keyof typeof SEASONAL_NOTIFICATION_POOL) =>
+      SEASONAL_NOTIFICATION_POOL[key].map((x) => ({ icon: "", title: x.title, body: x.body }));
 
-    // عشر ذي الحجة
-    if (month === 12 && day <= 9) return [
-      { icon: "⭐", title: "أفضل أيام الدنيا",       body: `يوم ${day} من ذي الحجة — أكثر من التكبير والصيام والذكر.` },
-      { icon: "🌙", title: "صيام التسع",             body: "صيام الأيام التسع من أفضل الأعمال — لا تُفوّتها." },
-    ];
+    if (month === 9) return map(day >= 21 ? "ramadanLate" : "ramadan");
+    if (month === 12 && day <= 9) return map("dhulHijjah");
+    if (month === 1 && day <= 10) return map("ashura");
+    if (month === 10 && day <= 6) return map("shawwal");
 
-    // عاشوراء
-    if (month === 1 && day <= 10) return [
-      { icon: "🌙", title: "صيام عاشوراء",           body: day === 10 ? "اليوم عاشوراء — صيامه يُكفّر السنة الماضية." : `تبقّى ${10 - day} أيام على عاشوراء.` },
-    ];
-
-    // ست شوال
-    if (month === 10 && day <= 6) return [
-      { icon: "🌙", title: "الست من شوال لا تزال",   body: "من صام رمضان وأتبعه ستاً من شوال كصيام الدهر." },
-    ];
-
-    // تذكيرات يومية عامة
-    const general: IslamicRemindersPool = [
-      { icon: "🕌", title: "لا تُفوّت صلاة الجماعة",   body: "المحافظة على الصلوات في أوقاتها أعظم الأعمال." },
-      { icon: "📿", title: "أذكار الصباح والمساء",      body: "لا تبدأ يومك دون أذكار الصباح — هي حصنك اليومي." },
-      { icon: "📖", title: "ورد القرآن اليومي",          body: "اجعل لك حزباً يومياً من القرآن لا تُخلّ به." },
-      { icon: "🌙", title: "صيام الاثنين والخميس",       body: "سنّة النبي ﷺ — وفيهما تُعرض الأعمال على الله." },
-      { icon: "💝", title: "تصدّق اليوم",               body: "الصدقة تدفع البلاء وتُطفئ غضب الرب." },
-      { icon: "🤲", title: "الاستغفار",                  body: "أكثر من الاستغفار — فللمستغفرين من الله رزق وفرج." },
-    ];
-    const pick = general[new Date().getDay() % general.length];
-    return [pick];
+    const general = map("daily");
+    return [general[new Date().getDay() % general.length]!];
   } catch {
-    return [{ icon: "🕌", title: "تذكير", body: "حافظ على صلواتك وأذكارك اليومية." }];
+    return [{ icon: "", title: "تذكير", body: "حافظ على صلواتك وأذكارك." }];
   }
 }
 
@@ -258,7 +241,7 @@ export function scheduleIslamicReminder(): void {
   const pool = getIslamicReminders();
   if (!pool.length) return;
   const pick = pool[Math.floor(Math.random() * pool.length)];
-  sendLocalNotification(`${pick.icon} ${pick.title}`, {
+  sendLocalNotification(pick.title, {
     body: pick.body,
     tag: "islamic-reminder",
   });

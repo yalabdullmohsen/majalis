@@ -1,67 +1,59 @@
 /**
  * تذكير احترام وقت الصلاة: من الأذان حتى ١٠ دقائق بعده.
- * رسائل قصيرة متنوعة (صامت / إغلاق الجوال) بلا إزعاج متكرر لنفس الصلاة.
+ * رسائل قصيرة متنوعة (هدوء الجوال) بلا افتراض أن المستخدم يصلّي.
  */
+
+import {
+  NOTIFICATION_CATALOG,
+  fillNotificationTemplate,
+  type LocalizedNotification,
+} from "@/lib/notifications/localization";
 
 /** دقائق بقاء التذكير بعد دخول وقت الصلاة. */
 export const PRAYER_RESPECT_POST_MINUTES = 10;
+/** @deprecated استخدم PRAYER_RESPECT_POST_MINUTES */
+export const PRAYER_RESPECT_WINDOW_MINUTES = PRAYER_RESPECT_POST_MINUTES;
 
-export type PrayerRespectMessage = {
-  title: string;
-  body: string;
-};
+export type PrayerRespectMessage = LocalizedNotification;
 
-export const PRAYER_RESPECT_MESSAGES: readonly PrayerRespectMessage[] = [
-  {
-    title: "وقت الصلاة",
-    body: "أغلق الجوال وقت الصلاة حتى لا يشغلك أو يشغل غيرك.",
-  },
-  {
-    title: "وقت الصلاة",
-    body: "لا تنسَ وضع الصامت قبل الدخول في الصلاة.",
-  },
-  {
-    title: "وقت الصلاة",
-    body: "ضع هاتفك على الصامت وأغلقه أثناء الصلاة.",
-  },
-  {
-    title: "وقت الصلاة",
-    body: "احفظ خشوعك: صامت أو إغلاق للجوال حتى تنتهي الصلاة.",
-  },
-  {
-    title: "وقت الصلاة",
-    body: "إن كنت تصلّي أو في المسجد، أبقِ الجوال صامتًا.",
-  },
-] as const;
+/** رسائل الاحترام المعتمدة (للاختبارات والمستهلكين). */
+export const PRAYER_RESPECT_MESSAGES: readonly PrayerRespectMessage[] =
+  NOTIFICATION_CATALOG.prayerRespect.map((tpl) => ({
+    title: fillNotificationTemplate(tpl.title),
+    body: fillNotificationTemplate(tpl.body),
+  }));
 
 /** هل نحن داخل نافذة التذكير بعد الأذان (٠ … ١٠ دقائق)؟ */
-export function isWithinPrayerRespectWindow(sinceSeconds: number | null | undefined): boolean {
-  if (sinceSeconds == null || !Number.isFinite(sinceSeconds)) return false;
-  if (sinceSeconds < 0) return false;
-  return sinceSeconds <= PRAYER_RESPECT_POST_MINUTES * 60;
+export function isWithinPrayerRespectWindow(elapsedSeconds: number | null | undefined): boolean {
+  if (elapsedSeconds == null || !Number.isFinite(elapsedSeconds)) return false;
+  if (elapsedSeconds < 0) return false;
+  return elapsedSeconds <= PRAYER_RESPECT_POST_MINUTES * 60;
 }
 
 /**
- * اختيار رسالة مستقرة لنفس الصلاة في نفس اليوم، مع تدوير عند تغيّر الدقيقة
- * كل دقيقتين داخل النافذة لإحساس التنوّع دون قفز مستمر.
+ * اختيار رسالة مستقرة لنفس الصلاة في نفس اليوم، مع تدوير كل دقيقتين داخل النافذة.
  */
 export function pickPrayerRespectMessage(
   prayerKey: string,
-  sinceSeconds = 0,
+  elapsedSeconds = 0,
   dateKey = "",
 ): PrayerRespectMessage {
-  const pool = PRAYER_RESPECT_MESSAGES;
+  const pool = NOTIFICATION_CATALOG.prayerRespect;
   if (!pool.length) {
     return {
       title: "وقت الصلاة",
-      body: "لا تنسَ وضع الصامت وقت الصلاة.",
+      body: "يُستحسن وضع الجوال على الصامت.",
     };
   }
-  const slot = Math.max(0, Math.floor(sinceSeconds / 120));
+  const slot = Math.max(0, Math.floor(elapsedSeconds / 120));
   let hash = 0;
   const seed = `${dateKey}|${prayerKey}|${slot}`;
   for (let i = 0; i < seed.length; i++) {
     hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
   }
-  return pool[hash % pool.length]!;
+  const tpl = pool[hash % pool.length]!;
+  return {
+    title: fillNotificationTemplate(tpl.title, { name: prayerKey }),
+    body: fillNotificationTemplate(tpl.body, { name: prayerKey }),
+  };
 }
