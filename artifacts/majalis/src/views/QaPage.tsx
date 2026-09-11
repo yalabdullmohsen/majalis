@@ -356,6 +356,7 @@ export default function QaPage({
       )}
 
       <PageLoadingGuard
+            keepPrevious
         loading={loading}
         empty={!loading && sortedItems.length === 0}
         emptyText={emptyMessage}

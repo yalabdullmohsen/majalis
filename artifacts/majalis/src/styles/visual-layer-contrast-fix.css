@@ -85,11 +85,11 @@ body,
 header.fiqh-lux-book-hero {
   /* خلفية علامة داكنة ثابتة — لا تستخدم primary الفاتح الليلي */
   background-color: #0a3d2e !important;
-  background-image:
-    linear-gradient(145deg, color-mix(in srgb, #fff 10%, transparent), transparent 62%) !important;
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   border: 1px solid color-mix(in srgb, #fff 16%, transparent) !important;
   color: var(--text-on-brand) !important;
-  box-shadow: var(--shadow-soft) !important;
+  box-shadow: none;
   text-align: start !important;
 }
 

@@ -18,6 +18,7 @@ for (const hero of [
   ".sg-hero", ".hj-hero", ".duas-hero", ".ai-hero", ".arkan-hero",
   ".ah-hero", ".jnz-hero", ".hs-hero",
   ".zk-hero", ".tw-hero", ".sy-hero", ".mdb-hero", ".fa-hero", ".hk-hero", ".dq-hero", ".rq-hero", ".is-hero", ".sr-hero", ".mk-hero", ".uq-hero", ".tf-hero", ".fg-hero", ".an-hero",
+  ".fiqh-lux-book-hero", ".fq-hero", ".hdl-info-hero", ".ilm-hero", ".qmem-hero", ".ve-hero", ".wn-hero",
 ]) {
   assert.match(shell, new RegExp(hero.replace(".", "\\.")), `modern-section-shell يشمل ${hero}`);
 }
@@ -39,7 +40,7 @@ assert.doesNotMatch(
   /:where\([^)]*\.sw-hero[^)]*\)\s*\{[^}]*color:\s*var\(--on-dark/,
   "الوضع الداكن لا يفرض نصًا أبيض على .sw-hero soft",
 );
-for (const h of [".seerah-hero", ".th-hero", ".sh-hero", ".ah-hero", ".jnz-hero", ".hs-hero", ".zk-hero", ".tw-hero", ".sy-hero", ".mdb-hero", ".fa-hero", ".hk-hero", ".dq-hero", ".rq-hero", ".is-hero", ".sr-hero", ".mk-hero", ".uq-hero", ".tf-hero", ".fg-hero", ".an-hero"]) {
+for (const h of [".seerah-hero", ".th-hero", ".sh-hero", ".ah-hero", ".jnz-hero", ".hs-hero", ".zk-hero", ".tw-hero", ".sy-hero", ".mdb-hero", ".fa-hero", ".hk-hero", ".dq-hero", ".rq-hero", ".is-hero", ".sr-hero", ".mk-hero", ".uq-hero", ".tf-hero", ".fg-hero", ".an-hero", ".fiqh-lux-book-hero", ".fq-hero", ".hdl-info-hero", ".ilm-hero", ".qmem-hero", ".ve-hero", ".wn-hero"]) {
   assert.doesNotMatch(
     dark,
     new RegExp(`:where\\([^)]*\\${h.slice(1)}[^)]*\\)\\s*\\{[^}]*color:\\s*var\\(--on-dark`),
@@ -79,6 +80,13 @@ for (const [file, banned] of [
   ["src/styles/pages/tafsir.css", /\.tf-hero\s*\{[^}]*linear-gradient/s],
   ["src/styles/pages/fiqh-guide.css", /\.fg-hero\s*\{[^}]*linear-gradient/s],
   ["src/styles/pages/arbaeen-nawawi.css", /\.an-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/fiqh-qawaid.css", /\.fq-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/hadith-design-language.css", /\.hdl-info-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/islamic-landmarks.css", /\.ilm-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/quran-memorization.css", /\.qmem-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/visual-enrichment.css", /\.ve-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/section-makarim-pattern.css", /\.wn-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/visual-layer-contrast-fix.css", /\.fiqh-lux-book-hero\s*\{[^}]*linear-gradient/s],
 ] as const) {
   const css = read(file);
   assert.doesNotMatch(css, banned, `${file}: لا تدرّج أخضر على جذر الهيرو`);

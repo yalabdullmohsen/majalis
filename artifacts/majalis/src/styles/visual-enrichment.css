@@ -176,13 +176,9 @@
   padding: 1.15rem 1.1rem;
   border-radius: var(--radius-card, 24px);
   border: 1px solid var(--border-soft, var(--color-hairline, var(--mj-hairline)));
-  background:
-    linear-gradient(
-      160deg,
-      color-mix(in srgb, var(--primary-soft, var(--color-brand-soft, #E2EFE8)) 70%, var(--surface, var(--color-surface))) 0%,
-      var(--surface, var(--color-surface, #FFFCF7)) 70%
-    );
-  box-shadow: var(--shadow-soft, var(--shadow-mj, var(--mj-sh)));
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
+  box-shadow: none;
   color: var(--text-main, var(--color-ink, var(--mj-ink)));
 }
 
