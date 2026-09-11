@@ -29,6 +29,7 @@ import { PushPrompt } from "@/components/PushPrompt";
 import { fireTestLocalNotification } from "@/lib/notifications/test-trigger";
 import "@/styles/pages/notifications.css";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { SettingsToggleRow } from "@/components/design-system/SettingsList";
 
 type HistoryTab = "inbox" | "archived";
 
@@ -65,32 +66,6 @@ function groupByDay(records: NotifRecord[]): { label: string; items: NotifRecord
   return groups;
 }
 
-// ── مكوّن Toggle ────────────────────────────────────────────────────────────
-function ToggleRow({
-  label, sub, checked, onChange, disabled,
-}: {
-  label: string; sub?: string; checked: boolean;
-  onChange: (v: boolean) => void; disabled?: boolean;
-}) {
-  return (
-    <label className={`notif-row${disabled ? " notif-row--disabled" : ""}`}>
-      <div className="notif-row__text">
-        <span className="notif-row__label">{label}</span>
-        {sub && <span className="notif-row__sub">{sub}</span>}
-      </div>
-      <div
-        className={`notif-toggle${checked ? " notif-toggle--on" : ""}`}
-        onClick={() => !disabled && onChange(!checked)}
-        role="switch"
-        aria-checked={checked}
-        tabIndex={0}
-        onKeyDown={(e) => (e.key === " " || e.key === "Enter") && !disabled && onChange(!checked)}
-      >
-        <span className="notif-toggle__thumb" />
-      </div>
-    </label>
-  );
-}
 
 // ── صف إشعار ────────────────────────────────────────────────────────────────
 /** أقصى إزاحة سحب (px) لكشف زر الحذف خلف البطاقة — لمسة iOS القياسية. */
@@ -333,9 +308,10 @@ export default function NotificationSettingsPage() {
 
       {/* ── تفعيل ── */}
       <div className="soft-card soft-card--on-light notif-card">
-        <ToggleRow
-          label="تفعيل الإشعارات"
-          sub={isGranted ? "مفعّلة" : isUnsupported ? "غير مدعوم" : isDenied ? "محجوبة" : "اضغط للسماح"}
+                <SettingsToggleRow
+          id="notif-enabled"
+          title="تفعيل الإشعارات"
+          description={isGranted ? "مفعّلة" : isUnsupported ? "غير مدعوم" : isDenied ? "محجوبة" : "اضغط للسماح"}
           checked={prefs.enabled && isGranted}
           onChange={v => { if (v && !isGranted) handleEnable(); else update({ enabled: v }); }}
           disabled={isUnsupported || isDenied || requesting}
@@ -345,11 +321,26 @@ export default function NotificationSettingsPage() {
       {/* ── أنواع التذكّرات ── */}
       <div className="soft-card soft-card--on-light notif-card">
         <h3 className="notif-card__title">أنواع التذكّرات</h3>
-        <ToggleRow label="مراجعة البطاقات" sub="تذكير يومي عند وجود بطاقات مستحقة" checked={prefs.flashcardsReminder} onChange={v => update({ flashcardsReminder: v })} disabled={!canToggle} />
-        <ToggleRow label="تابع من حيث توقفت" sub="تذكير بالدرس أو الكتاب الذي لم تُكمله" checked={prefs.resumeReminder} onChange={v => update({ resumeReminder: v })} disabled={!canToggle} />
-        <ToggleRow
-          label="تنبيهات الصلاة"
-          sub={
+                <SettingsToggleRow
+          id="notif-flashcards"
+          title="مراجعة البطاقات"
+          description="تذكير يومي عند وجود بطاقات مستحقة"
+          checked={prefs.flashcardsReminder}
+          onChange={v => update({ flashcardsReminder: v })}
+          disabled={!canToggle}
+        />
+                <SettingsToggleRow
+          id="notif-resume"
+          title="تابع من حيث توقفت"
+          description="تذكير بالدرس أو الكتاب الذي لم تُكمله"
+          checked={prefs.resumeReminder}
+          onChange={v => update({ resumeReminder: v })}
+          disabled={!canToggle}
+        />
+                <SettingsToggleRow
+          id="notif-prayer"
+          title="تنبيهات الصلاة"
+          description={
             isNative
               ? "تذكير داخل الصفحة؛ التنبيه الأصلي من صفحة إعدادات الأذان (نصوص وصوت متنوعان)"
               : "إشعار تقريبي قبل الصلاة (الويب)؛ التنبيه الأصلي من إعدادات الأذان"
@@ -358,9 +349,10 @@ export default function NotificationSettingsPage() {
           onChange={v => update({ prayerReminder: v })}
           disabled={!canToggle}
         />
-        <ToggleRow
-          label="ورد اليوم"
-          sub="تذكير يومي الساعة 5 مساءً (17:00) لقراءة الورد — ليس 5 صباحاً"
+                <SettingsToggleRow
+          id="notif-wird"
+          title="ورد اليوم"
+          description="تذكير يومي الساعة 5 مساءً (17:00) لقراءة الورد — ليس 5 صباحاً"
           checked={prefs.quranDailyReminder}
           onChange={(v) => {
             void (async () => {
@@ -376,16 +368,18 @@ export default function NotificationSettingsPage() {
           }}
           disabled={!canToggle}
         />
-        <ToggleRow
-          label="تذكير الذكر"
-          sub="سبحان الله، الحمد لله، الله أكبر… إشعار صوتي كل ساعتين من 8 صباحًا حتى 8 مساءً"
+                <SettingsToggleRow
+          id="notif-dhikr-phrase"
+          title="تذكير الذكر"
+          description="سبحان الله، الحمد لله، الله أكبر… إشعار صوتي كل ساعتين من 8 صباحًا حتى 8 مساءً"
           checked={prefs.dhikrPhraseReminder}
           onChange={v => update({ dhikrPhraseReminder: v })}
           disabled={!canToggle}
         />
-        <ToggleRow
-          label="تذكير الأذكار"
-          sub="أذكار الصباح والمساء — يُفعَّل من هنا فقط، دون طلب إذن عند فتح التطبيق"
+                <SettingsToggleRow
+          id="notif-adhkar"
+          title="تذكير الأذكار"
+          description="أذكار الصباح والمساء — يُفعَّل من هنا فقط، دون طلب إذن عند فتح التطبيق"
           checked={prefs.adhkarReminder}
           onChange={v => update({ adhkarReminder: v })}
           disabled={!canToggle}
