@@ -1,3 +1,4 @@
+import { ListScreen } from "@/components/design-system/screens";
 import { useEffect, useMemo, useState } from "react";
 import { BookOpen, Pause, Play, Plus, X } from "lucide-react";
 import { PageHeader, Loading, Empty, Card } from "@/components/ui-common";
@@ -275,6 +276,7 @@ export default function ReadingPlansPage() {
   useEffect(reload, [user?.id]);
 
   return (
+    <ListScreen compose="mark">
     <div className="page-shell narrow">
       <PageHeader
         eyebrow="تعلّم منظَّم"
@@ -286,7 +288,7 @@ export default function ReadingPlansPage() {
         <Loading />
       ) : !isLoggedIn ? (
         <Empty text="سجّل الدخول لإنشاء خطط قراءة ومتابعة تقدّمك." />
-      ) : loading ? (
+      ) : loading && plans.length === 0 ? (
         <Loading />
       ) : (
         <>
@@ -315,5 +317,6 @@ export default function ReadingPlansPage() {
         </>
       )}
     </div>
+    </ListScreen>
   );
 }

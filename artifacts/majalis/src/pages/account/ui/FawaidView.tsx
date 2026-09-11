@@ -17,6 +17,7 @@ import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { TopicPage } from "@/components/topic/TopicPage";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { hasPublicSource } from "@/lib/content-provenance";
+import { ListScreen } from "@/components/design-system/screens";
 
 /** دفعات واجهة — تفادي رسم مئات البطاقات دفعة واحدة في DOM. */
 const FAWAID_PAGE_SIZE = 24;
@@ -229,6 +230,7 @@ export default function FawaidPage({
   );
 
   return (
+    <ListScreen compose="mark">
     <TopicPage
       themeId="hadith"
       sectionRoute="/fawaid"
@@ -305,7 +307,7 @@ export default function FawaidPage({
                   placeholder="اسم الكاتب (اختياري)"
                 />
                 <button type="submit" disabled={submitting || !text.trim()}>
-                  {submitting ? "جارٍ الإرسال..." : "إرسال الفائدة"}
+                  {submitting ? "يُرسل…" : "إرسال الفائدة"}
                 </button>
               </form>
             )}
@@ -331,5 +333,6 @@ export default function FawaidPage({
         </div>
       </div>
     </TopicPage>
+    </ListScreen>
   );
 }

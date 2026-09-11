@@ -140,7 +140,7 @@ export default function ArbaeenHadithDetailPage() {
         <div className="ahd-quiz-result">
           <p className="ahd-quiz-result__score">{quizScore.correct} / {quizScore.total} صحيحة</p>
           {authLoading ? (
-            <p className="ahd-quiz-result__login" role="status" aria-busy="true">تجهيز الحساب…</p>
+            <p className="ahd-quiz-result__login" role="status" aria-busy="true" aria-label="تحديث الحساب">…</p>
           ) : isLoggedIn ? (
             <>
               <p className="ahd-quiz-result__prompt">كيف كان مستوى تذكّرك لهذا الحديث؟</p>

@@ -141,7 +141,7 @@ export default function AccountDeletionPage() {
 
       {authLoading && (
         <div className="accd-login-prompt" aria-busy="true" aria-label="تحديث الحساب">
-          <p>تجهيز الحساب…</p>
+          <p aria-busy="true" aria-label="تحديث الحساب">…</p>
         </div>
       )}
 

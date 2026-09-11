@@ -24,6 +24,7 @@ import {
 } from "@/lib/spaced-repetition";
 import { recordUserActivity } from "@/lib/user-streak";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { ListScreen } from "@/components/design-system/screens";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import "@/styles/pages/flashcards.css";
 
@@ -435,8 +436,10 @@ function FlashCardsPageInner() {
 
 export default function FlashCardsPage() {
   return (
-    <SectionErrorBoundary name="FlashCardsEngine">
-      <FlashCardsPageInner />
-    </SectionErrorBoundary>
+    <ListScreen compose="mark">
+      <SectionErrorBoundary name="FlashCardsEngine">
+        <FlashCardsPageInner />
+      </SectionErrorBoundary>
+    </ListScreen>
   );
 }
