@@ -28,6 +28,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { PushPrompt } from "@/components/PushPrompt";
 import { fireTestLocalNotification } from "@/lib/notifications/test-trigger";
 import "@/styles/pages/notifications.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 type HistoryTab = "inbox" | "archived";
 
@@ -249,7 +250,7 @@ export default function NotificationSettingsPage() {
   };
 
   const handleTestTrigger = async () => {
-    setTestStatus("جاري الإرسال…");
+    setTestStatus("يُرسل…");
     const result = await fireTestLocalNotification();
     if (result.ok) {
       setTestStatus(result.platform === "native" ? "سيظهر خلال ثانية ونصف" : "تم الإرسال");
@@ -281,6 +282,7 @@ export default function NotificationSettingsPage() {
   const handleClearAll = () => { clearAll(); setHistory([]); setConfirmClear(false); };
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow" dir="rtl">
       <PageHeader
         eyebrow="الإعدادات"
@@ -521,5 +523,6 @@ export default function NotificationSettingsPage() {
         <Link href="/settings" className="profile-quick-link">الإعدادات</Link>
       </nav>
     </div>
+    </UtilityScreen>
   );
 }

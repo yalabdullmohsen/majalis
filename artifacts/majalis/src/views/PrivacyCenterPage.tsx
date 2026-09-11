@@ -27,7 +27,7 @@ export default function PrivacyCenterPage() {
 
   async function handleServerExport() {
     if (authLoading) {
-      setExportMsg("جاري تجهيز الحساب…");
+      setExportMsg("…");
       return;
     }
     if (!isLoggedIn) {
@@ -107,7 +107,7 @@ export default function PrivacyCenterPage() {
           aria-busy={authLoading || exporting}
         >
           <Download size={16} aria-hidden="true" />{" "}
-          {authLoading ? "تجهيز الحساب…" : exporting ? "جاري التصدير…" : "تصدير بيانات الحساب"}
+          {authLoading ? "…" : exporting ? "يُصدَّر…" : "تصدير بيانات الحساب"}
         </button>
         {exportMsg && <p className="settings-note">{exportMsg}</p>}
         <p className="settings-note">

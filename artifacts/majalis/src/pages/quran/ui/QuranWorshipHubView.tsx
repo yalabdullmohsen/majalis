@@ -95,7 +95,7 @@ export default function QuranWorshipHubView() {
           <div>
             <span className="qwh-prayer-strip__label">الصلاة القادمة</span>
             <h2 className="qwh-prayer-strip__name">
-              {next ? `${next.name} — ${next.time}` : "جارٍ تجهيز المواقيت…"}
+              {next ? `${next.name} — ${next.time}` : "—"}
             </h2>
             {countdown && next ? (
               <p className="qwh-prayer-strip__countdown" aria-live="polite">

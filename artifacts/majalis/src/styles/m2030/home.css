@@ -461,8 +461,8 @@
   padding: 0.9rem 0.85rem;
   text-decoration: none;
   /* ألوان صلبة قابلة للقياس — html يحمل تدرّجًا؛ بدون تحتية معتمة → NO_COLOR في البوابة */
-  color: #16241E;
-  background-color: #FFFFFF;
+  color: var(--mj-ink, #16241e);
+  background-color: var(--mj-surface, #fffcf8);
   background-image: none;
   border: 1px solid var(--border);
   clip-path: none;
@@ -471,8 +471,8 @@
 
 html[data-theme="dark"] .m2030-feature,
 html.dark .m2030-feature {
-  color: #E9EFEC;
-  background-color: #17201C;
+  color: var(--mj-ink, #f3f7f5);
+  background-color: var(--mj-surface, #1b2421);
 }
 
 .m2030-feature__title {

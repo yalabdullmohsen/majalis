@@ -100,7 +100,7 @@
 }
 .lib-sort-btn--active {
   background: var(--clr-primary, var(--mj-brand)) !important;
-  color: #FFFFFF !important;
+  color: var(--mj-on-brand, #ffffff) !important;
   border-color: var(--clr-primary, var(--mj-brand)) !important;
   font-weight: 600;
 }
@@ -128,7 +128,7 @@
 }
 .lib-view-btn--active {
   background: var(--clr-primary, var(--mj-brand)) !important;
-  color: #FFFFFF !important;
+  color: var(--mj-on-brand, #ffffff) !important;
   border-color: var(--clr-primary, var(--mj-brand)) !important;
 }
 
@@ -216,7 +216,7 @@
 .lib-card-cover__title {
   font-size: 0.82rem;
   font-weight: 700;
-  color: #FFFFFF;
+  color: var(--mj-on-brand, #ffffff);
   line-height: 1.4;
   text-align: center;
   display: -webkit-box;
@@ -235,7 +235,7 @@
   bottom: 6px;
   inset-inline-start: 6px;
   background: rgba(23,61,53,0.85);
-  color: #FFFFFF;
+  color: var(--mj-on-brand, #ffffff);
   font-size: 0.78rem;
   padding: 2px 6px;
   border-radius: 4px;

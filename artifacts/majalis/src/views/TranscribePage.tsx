@@ -101,7 +101,7 @@ export default function TranscribePage() {
     const safeTitle = sanitizeText(title, 200);
 
     if (authLoading) {
-      setErrorMessage("جاري تجهيز الحساب…");
+      setErrorMessage("يلزم تسجيل الدخول أولاً.");
       return;
     }
 
@@ -324,9 +324,9 @@ export default function TranscribePage() {
               <div className="trp-progress-row">
                 <span className="trp-progress-status">
                   {status === "uploading"
-                    ? "جاري الرفع..."
+                    ? "يُرفع..."
                     : status === "processing"
-                      ? "جاري التحليل..."
+                      ? "يُحلَّل..."
                         : status === "done"
                         ? "اكتملت المعالجة"
                         : "حدث خطأ"}
@@ -354,7 +354,7 @@ export default function TranscribePage() {
             disabled={authLoading || !isLoggedIn || status === "uploading" || status === "processing"}
             className="trp-submit-btn"
           >
-            {status === "uploading" || status === "processing" ? "جاري المعالجة..." : "ابدأ التحليل الذكي"}
+            {status === "uploading" || status === "processing" ? "يُعالَج..." : "ابدأ التحليل الذكي"}
           </button>
         </div>
 

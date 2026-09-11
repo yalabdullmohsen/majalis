@@ -8,6 +8,7 @@ import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { Card, Badge } from "@/components/ui-common";
 import { formatArabicNumber } from "@/lib/numerals";
 import "@/styles/pages/glossary.css";
+import { ListScreen } from "@/components/design-system/screens";
 
 /* ══════════════════════════════════════════════════════════════════
    §242، المصطلحات الإسلامية  (.gl-*)
@@ -1837,6 +1838,7 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
   const heroEyebrow = lockedCategory === "quran" ? "مركز القرآن الكريم" : "المعجم والمصطلحات";
 
   return (
+    <ListScreen compose="mark">
     <SectionTemplatePage
       route="/islamic-glossary"
       eyebrow={heroEyebrow}
@@ -1985,5 +1987,6 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
       </div>
     </div>
     </SectionTemplatePage>
+    </ListScreen>
   );
 }

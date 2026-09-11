@@ -150,7 +150,7 @@ export const SideNavDrawer = memo(function SideNavDrawer({
               ) : null}
 
               {authLoading ? (
-                <div className="sidebar-item sidebar-item--pending" aria-busy="true" aria-label="جاري تجهيز الحساب">
+                <div className="sidebar-item sidebar-item--pending" aria-busy="true" aria-label="تحديث الحساب">
                   <span className="sidebar-item-text">
                     <span className="sidebar-item-title">تجهيز الحساب…</span>
                   </span>

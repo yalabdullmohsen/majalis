@@ -346,7 +346,7 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
           </div>
         ) : (
           <>
-            {loading ? <p className="mm-search-sheet__status">جاري البحث…</p> : null}
+            {loading ? <p className="mm-search-sheet__status" role="status" aria-busy="true" aria-label="تحديث النتائج" /> : null}
             {error && !loading ? (
               <p className="mm-search-sheet__status" role="alert">
                 {error}

@@ -882,9 +882,9 @@ export function HadithSection({
         ))}
       </div>
 
-      {loading ? (
+      {loading && displayItems.length === 0 ? (
         <SkeletonCardGrid count={8} />
-      ) : displayItems.length === 0 ? (
+      ) : displayItems.length === 0 && !loading ? (
         <Empty
           text={
             debouncedSearch.trim()

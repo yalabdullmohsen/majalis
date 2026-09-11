@@ -19,6 +19,7 @@ import {
 } from "@/lib/qibla-location";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/pages/qibla.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 function QiblaCompass({
   bearing,
@@ -263,6 +264,7 @@ export default function QiblaPage() {
   const showCalib = needsCalibration && !calibDismissed;
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow qibla-page">
       <PageHeader
         eyebrow="الأدوات"
@@ -420,5 +422,6 @@ export default function QiblaPage() {
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في أحكام القبلة والصلاة" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

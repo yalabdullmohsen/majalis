@@ -20,8 +20,13 @@ assert.match(
 assert.match(css, /html\.pts-immersive\s+\.bottom-nav--m2030/, "يغطي صنف m2030");
 assert.match(
   css,
-  /html\.pts-immersive\s+\.top-section-bar[\s\S]*?background:\s*#06271f[\s\S]*?!important/,
-  "شريط الأقسام موحّد اللون",
+  /html\.pts-immersive\s+\.top-section-bar[\s\S]*?background:\s*(?:#06271f|var\(--mj-brand-deep)[\s\S]*?!important/,
+  "شريط الأقسام موحّد اللون عبر رمز الهوية",
+);
+assert.match(
+  css,
+  /html\.pts-immersive[\s\S]*?\.bottom-nav[\s\S]*?background:\s*(?:#06271f|var\(--mj-brand-deep)[\s\S]*?!important/,
+  "الشريط السفلي في الصلاة يطابق رمز الهوية",
 );
 assert.match(
   css,

@@ -317,7 +317,7 @@ export default function PrayerTimesPage() {
         {toolsBar}
         {locationPanel}
         {loading ? (
-          <p className="pts-hint" role="status">جاري تجهيز المواقيت…</p>
+          <div className="pts-hint pts-hint--skeleton" role="status" aria-busy="true" aria-label="تحديث المواقيت" />
         ) : (
           <p className="pts-error" role="alert">
             اختر مدينتك لعرض مواقيت الصلاة بدقة. لا نعرض أوقاتًا تقديرية.

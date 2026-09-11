@@ -66,7 +66,7 @@
   background: transparent !important;
   border: 1.5px solid rgba(192,57,43,0.3) !important;
   border-radius: var(--elite-r-md, 12px) !important;
-  color: #C0392B !important;
+  color: var(--mj-danger, #c0392b) !important;
   font-size: 0.825rem !important;
   font-weight: 600 !important;
   font-family: inherit !important;
@@ -115,7 +115,7 @@
 
 .settings-legal-link--danger {
   border-color: rgba(192,57,43,0.25) !important;
-  color: #C0392B !important;
+  color: var(--mj-danger, #c0392b) !important;
 }
 
 .settings-legal-link--danger:hover {
@@ -123,8 +123,8 @@
 }
 
 .page-action-btn--danger {
-  background: color-mix(in srgb, #c0392b 12%, transparent) !important;
-  color: #9b2c1f !important;
+  background: color-mix(in srgb, var(--mj-danger, #c0392b) 12%, transparent) !important;
+  color: var(--mj-danger, #9b2c1f) !important;
   border: 1.5px solid rgba(192, 57, 43, 0.35) !important;
 }
 
@@ -340,3 +340,16 @@
   border: 0 !important;
 }
 
+
+
+.settings-subhead {
+  margin: 1.25rem 0 0.5rem;
+  font-size: var(--type-sectionLabel, 0.8125rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--textSecondary, var(--mj-ink-2));
+}
+
+.settings-subhead:first-child {
+  margin-top: 0;
+}

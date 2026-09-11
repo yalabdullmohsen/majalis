@@ -48,6 +48,7 @@ import { getMuezzin } from "@/lib/adhan-audio";
 import { resolveAdhanClip } from "@/lib/adhan-playback-modes";
 import { loadNotifPrefs, saveNotifPrefs } from "@/lib/local-notifications";
 import "@/styles/pages/adhan-settings.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 30];
 
@@ -579,6 +580,7 @@ export default function AdhanSettingsPage() {
   const toneSounds = soundOptions.filter((o) => o.group === "tone");
 
   return (
+    <UtilityScreen compose="mark">
     <div className="ads-page">
       <h1 className="ads-title">تنبيهات الصلاة</h1>
       <p className="ads-subtitle">
@@ -792,7 +794,7 @@ export default function AdhanSettingsPage() {
               disabled={statusBusy}
               onClick={() => void runAdhanStatusCheck()}
             >
-              {statusBusy ? "جارٍ…" : "فحص حالة الأذان"}
+              {statusBusy ? "…" : "فحص حالة الأذان"}
             </button>
             <button
               type="button"
@@ -800,7 +802,7 @@ export default function AdhanSettingsPage() {
               disabled={rescheduleBusy}
               onClick={() => void runRescheduleAlerts()}
             >
-              {rescheduleBusy ? "جارٍ…" : "إعادة جدولة التنبيهات"}
+              {rescheduleBusy ? "…" : "إعادة جدولة التنبيهات"}
             </button>
             <button
               type="button"
@@ -825,5 +827,6 @@ export default function AdhanSettingsPage() {
         </div>
       </section>
     </div>
+    </UtilityScreen>
   );
 }

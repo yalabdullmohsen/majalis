@@ -407,7 +407,7 @@ export default function SearchPage() {
           )}
         </div>
       ) : loading ? (
-        <div className="srch-home-status" role="status" aria-busy="true" aria-label="جاري البحث">
+        <div className="srch-home-status" role="status" aria-busy="true" aria-label="تحديث النتائج">
           <SearchSkeleton />
         </div>
       ) : showEmpty ? (

@@ -11,7 +11,7 @@
   border-radius: 0 0 22px 22px;
   padding: 1.15rem max(1rem, var(--page-gutter, 1rem)) 1.2rem;
   margin-bottom: 1rem;
-  color: #FFFFFF;
+  color: var(--mj-on-brand, #ffffff);
   position: relative;
   overflow: hidden;
 }
@@ -1803,7 +1803,7 @@ html.dark .fiqh-filters__chip.is-active {
 }
 
 .fiqh-category-card--ibadat {
-  --fiqh-card-accent: #0f5c4c;
+  --fiqh-card-accent: var(--mj-brand-deep, #0f5c4c);
   background: var(--fq-surface, #fff);
 }
 .fiqh-category-card--muamalat {
@@ -1811,23 +1811,23 @@ html.dark .fiqh-filters__chip.is-active {
   background: var(--fq-surface, #fff);
 }
 .fiqh-category-card--usrah {
-  --fiqh-card-accent: #2f9e7b;
+  --fiqh-card-accent: color-mix(in srgb, var(--mj-brand, #146b52) 70%, #6ee7b7);
   background: var(--fq-surface, #fff);
 }
 .fiqh-category-card--qada_jinayat {
-  --fiqh-card-accent: #1a3d34;
+  --fiqh-card-accent: var(--mj-brand-deep, #1a3d34);
   background: var(--fq-surface, #fff);
 }
 
-.fiqh-category-card--tahara { --fiqh-card-accent: #0d6b4f; }
-.fiqh-category-card--salah { --fiqh-card-accent: #157a5c; }
+.fiqh-category-card--tahara { --fiqh-card-accent: var(--mj-brand, #0d6b4f); }
+.fiqh-category-card--salah { --fiqh-card-accent: var(--mj-brand, #157a5c); }
 .fiqh-category-card--janaza { --fiqh-card-accent: #3d5c54; }
-.fiqh-category-card--zakat { --fiqh-card-accent: #2f9e7b; }
+.fiqh-category-card--zakat { --fiqh-card-accent: color-mix(in srgb, var(--mj-brand, #146b52) 70%, #6ee7b7); }
 .fiqh-category-card--sawm { --fiqh-card-accent: #1f6b56; }
-.fiqh-category-card--hajj { --fiqh-card-accent: #0f5c4c; }
+.fiqh-category-card--hajj { --fiqh-card-accent: var(--mj-brand-deep, #0f5c4c); }
 .fiqh-category-card--buyu { --fiqh-card-accent: #6b7c3a; }
 .fiqh-category-card--nikah { --fiqh-card-accent: #2a8f6a; }
-.fiqh-category-card--jinayat { --fiqh-card-accent: #1a3d34; }
+.fiqh-category-card--jinayat { --fiqh-card-accent: var(--mj-brand-deep, #1a3d34); }
 .fiqh-category-card--qada { --fiqh-card-accent: #245c4a; }
 .fiqh-category-card--ayman { --fiqh-card-accent: #4a6b3a; }
 .fiqh-category-card--atima { --fiqh-card-accent: #3d7a4a; }

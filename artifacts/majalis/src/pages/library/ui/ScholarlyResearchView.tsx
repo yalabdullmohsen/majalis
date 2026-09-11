@@ -20,6 +20,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/scholarly-research.css";
+import { ListScreen } from "@/components/design-system/screens";
 
 type View = "search" | "library";
 
@@ -176,7 +177,7 @@ export default function ScholarlyResearchPage() {
       setSaveMsg(isLoggedIn ? "لا توجد نتائج بحث للحفظ. نفّذ بحثًا أولًا." : "يجب تسجيل الدخول أولاً");
       return;
     }
-    setSaveMsg("جارٍ الحفظ…");
+    setSaveMsg("يُحفظ…");
     try {
       const saved = await saveResearch({
         title:            query.slice(0, 120),
@@ -226,6 +227,7 @@ export default function ScholarlyResearchPage() {
   const nearLimit = query.length > MAX_CHAR * 0.85;
 
   return (
+    <ListScreen compose="mark">
     <div dir="rtl" className="srp-root">
 
       {/* ── Hero ── */}
@@ -410,7 +412,7 @@ export default function ScholarlyResearchPage() {
           <div role="tabpanel" id="srp-panel-library" aria-labelledby="srp-tab-library" className="srp-library">
             {authLoading ? (
               <div className="srp-login-notice" role="status" aria-live="polite" aria-busy="true">
-                تجهيز الحساب…
+                …
               </div>
             ) : !isLoggedIn ? (
               <div className="srp-login-notice">
@@ -500,5 +502,6 @@ export default function ScholarlyResearchPage() {
         <SectionQuiz route="/research" title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
+    </ListScreen>
   );
 }
