@@ -30,7 +30,19 @@ assert.match(
 );
 
 const polish = read("src/styles/sections-calm-polish.css");
-assert.match(polish, /body:has\(\.topic-page\)[\s\S]*?\.floating-back-btn/, "إخفاء العائم فوق TopicPage");
+/* الرجوع العائم مطلوب لبوابة section-back-button على /miracles — لا تُخفِه فوق TopicPage */
+assert.doesNotMatch(
+  polish,
+  /body:has\(\.topic-page\)[\s\S]{0,180}?display:\s*none/,
+  "لا إخفاء CSS للعائم فوق TopicPage",
+);
+
+const appBack = read("src/components/common/AppBackButton.tsx");
+assert.doesNotMatch(
+  appBack,
+  /startsWith\("\/miracles"\)/,
+  "AppBackButton لا يستثني /miracles من العائم",
+);
 
 const shell = read("src/styles/components/modern-section-shell.css");
 assert.match(shell, /--mss-section-hero-bg/, "هيرو بطاقة سطح");

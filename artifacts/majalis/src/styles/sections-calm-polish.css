@@ -782,16 +782,6 @@ html.dark .hlr__card {
   color: var(--text) !important;
 }
 
-/* صفحات TopicPage: الرجوع عبر مسار التنقّل/الفُتات — لا زر عائم يغطي النص */
-body:has(.topic-page) .floating-back-btn,
-body:has(.topic-page) .global-back-btn.floating-back-btn,
-body:has(.topic-page) .app-back-btn--floating,
-body:has(.mk-page) .floating-back-btn,
-body:has(.mk-page) .global-back-btn.floating-back-btn {
-  display: none !important;
-  pointer-events: none !important;
-}
-
 /* هامش سفلي آمن فوق الشريط السفلي */
 .topic-page__body,
 .mk-page {

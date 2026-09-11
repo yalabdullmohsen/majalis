@@ -70,13 +70,13 @@ html.dark .pattern-backdrop {
   margin-inline: auto;
 }
 .page-hero-mj--bleed:not(.home-page-hero) .page-hero-mj__eyebrow {
-  color: var(--mj-brand-deep, #123f2e);
+  color: var(--mss-on-hero-accent, var(--mj-brand-deep, #123f2e));
 }
 .page-hero-mj--bleed:not(.home-page-hero) :is(.page-hero-mj__title, .page-hero-mj__headline) {
-  color: var(--mj-ink, #16241e) !important;
+  color: var(--mss-on-hero, #16241e) !important;
 }
 .page-hero-mj--bleed:not(.home-page-hero) .page-hero-mj__desc {
-  color: var(--mj-ink-2, #4a554f) !important;
+  color: var(--mss-on-hero-muted, #4a554f) !important;
 }
 
 

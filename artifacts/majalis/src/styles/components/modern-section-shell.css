@@ -15,15 +15,19 @@
   --mss-hero-to: #245f4d;
   --mss-hero-glow: rgba(210, 180, 93, 0.22);
   --mss-hero-glow-strong: rgba(210, 180, 93, 0.28);
-  /* نص فوق بطاقة الهيرو الفاتحة */
-  --mss-on-hero: var(--mj-ink, #16241e);
-  --mss-on-hero-muted: var(--mj-ink-2, #4a554f);
-  --mss-on-hero-accent: var(--mj-brand-deep, #123f2e);
-  --mss-section-hero-bg: color-mix(
-    in srgb,
-    var(--mj-brand, #1f6b56) 5.5%,
-    var(--color-surface, var(--mj-surface, #fffef9))
-  );
+  /*
+   * نص soft-hero: حبر ثابت على سطح فاتح — لا نربط بـ --mj-ink لأنه يصبح فاتحًا ليلاً
+   * فيصير أبيض على بيج ≈ 1:1 (فشل Color contrast على .topic-page__title).
+   * السطح نفسه يبقى parchment فاتحًا في الوضعين (soft-card على ضوء).
+   */
+  --mss-on-hero: #16241e;
+  --mss-on-hero-muted: #3d4f47;
+  --mss-on-hero-accent: #123f2e;
+  --mss-section-hero-bg: color-mix(in srgb, #1f6b56 5.5%, #fffef9);
+  /* نص فوق هيرو أخضر غامق (asp-hero / بطاقات مميزة) */
+  --mss-on-dark-hero: #ffffff;
+  --mss-on-dark-hero-muted: #f3efe6;
+  --mss-on-dark-hero-accent: #fff1c4;
   --mss-radius-hero: 1.35rem;
   --mss-radius-card: 1.15rem;
   --mss-shadow-hero: 0 16px 40px rgba(15, 74, 58, 0.22);
@@ -92,29 +96,28 @@
   align-self: flex-start;
   padding: 0.22rem 0.65rem;
   border-radius: 999px;
-  background: color-mix(in srgb, #fff 18%, transparent);
-  border: 1px solid color-mix(in srgb, #fff 40%, transparent);
-  color: var(--mss-on-hero, #ffffff) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent);
+  color: var(--mss-on-hero-accent, #123f2e) !important;
   letter-spacing: 0.02em;
   font-weight: 800;
 }
 
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back {
-  /* خلفية صلبة قابلة للقياس (لا color-mix شفاف فوق تدرّج → NO_COLOR في بوابة التباين) */
-  color: #ffffff !important;
-  background: #0a3d2e !important;
-  background-color: #0a3d2e !important;
+  color: var(--mss-on-hero, #16241e) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, var(--mj-surface, #fff)) !important;
+  background-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, var(--mj-surface, #fff)) !important;
   background-image: none !important;
-  border-color: color-mix(in srgb, #faf5ea 40%, transparent) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent) !important;
 }
 
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn.mj-btn--ghost,
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn--ghost {
-  color: #ffffff !important;
-  background: #0a3d2e !important;
-  background-color: #0a3d2e !important;
+  color: var(--mss-on-hero, #16241e) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, var(--mj-surface, #fff)) !important;
+  background-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, var(--mj-surface, #fff)) !important;
   background-image: none !important;
-  border-color: color-mix(in srgb, #faf5ea 40%, transparent) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent) !important;
 }
 
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__desc {
@@ -139,11 +142,21 @@
 
 .topic-page__eyebrow,
 .topic-page__hero .safe-hero__badge {
-  color: var(--mss-on-hero, #ffffff) !important;
-  background: color-mix(in srgb, #fff 18%, transparent) !important;
-  border: 1px solid color-mix(in srgb, #fff 40%, transparent);
+  color: var(--mss-on-hero-accent, #123f2e) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent);
   border-radius: 999px;
   font-weight: 800;
+}
+
+.topic-page__title,
+.topic-page__hero .topic-page__title {
+  color: var(--mss-on-hero, #16241e) !important;
+}
+
+.topic-page__sub,
+.topic-page__hero .topic-page__sub {
+  color: var(--mss-on-hero-muted, #3d4f47) !important;
 }
 
 .section-hero__icon {
@@ -152,9 +165,9 @@
   width: 3rem;
   height: 3rem;
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(250, 245, 234, 0.28);
-  color: var(--mss-on-hero-accent, #f2dfaa);
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent);
+  color: var(--mss-on-hero-accent, #123f2e);
   flex-shrink: 0;
 }
 
@@ -174,22 +187,22 @@
 
 .section-lobby__head:not(.section-lobby__head--bare) .section-lobby__title,
 .section-lobby__head:not(.section-lobby__head--bare) .quran-hub-page__title {
-  color: #fff;
+  color: var(--mss-on-hero, #16241e) !important;
 }
 
 .section-lobby__head:not(.section-lobby__head--bare) .section-lobby__title::after,
 .section-lobby__head:not(.section-lobby__head--bare) .quran-hub-page__title::after {
-  background: var(--mss-on-hero-accent);
+  background: var(--mss-on-hero-accent, #123f2e);
 }
 
 .section-lobby__head:not(.section-lobby__head--bare) .section-lobby__back-inline {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(250, 245, 234, 0.28);
-  color: var(--mss-on-hero-accent);
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent);
+  color: var(--mss-on-hero-accent, #123f2e);
 }
 
 .section-lobby__head:not(.section-lobby__head--bare) .section-lobby__head-row {
-  border-bottom-color: color-mix(in srgb, #faf5ea 22%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, transparent);
 }
 
 /* اللوبيات التي تُخفي الرأس بصريًا تبقى كما هي (lessons / fiqh lux) */
@@ -361,16 +374,31 @@ html[data-theme="dark"] .card {
 .twh-hub-hero__eyebrow,
 .twh-hub-hero .home-eyebrow,
 .fqh-hub-hero .home-eyebrow,
-.quran-hub-hero .home-eyebrow,
+.quran-hub-hero .home-eyebrow {
+  color: var(--mss-on-dark-hero-accent, #fff1c4) !important;
+  opacity: 1 !important;
+}
+
+/* asp-hero يبقى أخضر غامق — نص فاتح مستقل عن soft-hero ink */
+.asp-hero {
+  --mss-on-hero: #ffffff;
+  --mss-on-hero-muted: #f3efe6;
+  --mss-on-hero-accent: #fff1c4;
+  --color-hero-fg: #ffffff;
+  --color-hero-fg-muted: #f3efe6;
+  --color-hero-fg-accent: #fff1c4;
+  color: #ffffff;
+}
+
 .asp-hero .asp-hero__eyebrow,
 .asp-hero .assistant-title,
 .asp-hero .assistant-intro {
-  color: var(--mss-on-hero, #ffffff) !important;
+  color: #ffffff !important;
   opacity: 1 !important;
 }
 
 .asp-hero .assistant-intro {
-  color: var(--mss-on-hero-muted, #f3efe6) !important;
+  color: #f3efe6 !important;
 }
 
 /* —— قوالب صفحة عامة —— */

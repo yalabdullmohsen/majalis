@@ -67,7 +67,7 @@
   margin: 0;
   font-size: 13px;
   font-weight: 600;
-  color: var(--mj-brand-deep, #123f2e);
+  color: var(--mss-on-hero-accent, var(--mj-brand-deep, #123f2e));
   display: inline-flex;
   align-self: flex-start;
   max-width: 100%;
@@ -84,7 +84,8 @@
   font-size: clamp(1.35rem, 5.5vw, 1.875rem);
   font-weight: 800;
   line-height: 1.35;
-  color: var(--mj-ink, var(--topic-on-hero, #16241e));
+  /* soft-hero: حبر ثابت لا يتبع --mj-ink الليلي الفاتح */
+  color: var(--mss-on-hero, var(--topic-on-hero, #16241e));
   overflow-wrap: anywhere;
 }
 
@@ -93,7 +94,7 @@
   font-size: 0.9375rem; /* 15px */
   font-weight: 400;
   line-height: 1.65;
-  color: var(--mj-ink-2, var(--topic-on-hero-muted, #4a554f));
+  color: var(--mss-on-hero-muted, var(--topic-on-hero-muted, #4a554f));
   display: block;
   overflow: visible;
 }
