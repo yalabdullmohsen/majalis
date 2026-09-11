@@ -811,3 +811,22 @@ html.dark .hlr__card {
   min-height: 2.4rem !important;
   padding-block: 0.4rem !important;
 }
+
+
+/* P0: إزالة السهم العائم — الرجوع من الهيدر */
+.global-back-btn.floating-back-btn,
+.floating-back-btn.app-back-btn--floating,
+button.floating-back-btn[data-floating-back="1"] {
+  display: none !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+
+.section-hero__back,
+.page-hero-mj__back,
+.app-back-btn--inline,
+.app-back-btn--hero,
+.app-back-btn--lobby {
+  display: inline-flex !important;
+  pointer-events: auto !important;
+}

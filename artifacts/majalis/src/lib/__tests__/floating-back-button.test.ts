@@ -34,7 +34,7 @@ assert.match(app, /FloatingBackButton|GlobalBackButton/);
 const polish = read("src/styles/sections-calm-polish.css");
 assert.match(polish, /right:\s*calc\(var\(--inset-right/);
 assert.match(polish, /--bottom-nav-height,\s*88px/);
-assert.match(polish, /display:\s*flex\s*!important/);
+assert.match(polish, /display:\s*none\s*!important/);
 assert.match(polish, /\.scroll-to-top[\s\S]*?inset-inline-end/);
 
 const hub = read("src/styles/components/hub-card.css");
@@ -43,11 +43,11 @@ assert.match(hub, /justify-content:\s*center/);
 assert.doesNotMatch(hub, /padding-inline-start:\s*3\.25rem/);
 
 const hero = read("src/components/topic/SectionHero.tsx");
-assert.doesNotMatch(hero, /AppBackButton/, "هيرو القسم بلا زر رجوع داخلي");
-assert.doesNotMatch(hero, /section-hero__back/);
+assert.match(hero, /AppBackButton/, "هيرو القسم يعرض رجوعًا مدمجًا");
+assert.match(hero, /section-hero__back/);
 
 const lobby = read("src/components/lobby/SectionLobby.tsx");
-assert.doesNotMatch(lobby, /AppBackButton/, "اللوبي بلا زر رجوع داخلي");
-assert.doesNotMatch(lobby, /data-section-back/);
+assert.match(lobby, /AppBackButton/, "اللوبي يعرض رجوعًا مدمجًا");
+assert.match(lobby, /section-lobby__back/);
 
 console.log("floating-back-button.test.ts: ok");

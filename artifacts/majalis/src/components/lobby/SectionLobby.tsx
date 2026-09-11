@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { AppBackButton } from "@/components/common/AppBackButton";
 import { FeaturedSectionCard } from "@/components/sections/FeaturedSectionCard";
 import { SectionCard } from "@/components/sections/SectionCard";
 import { QuickActionsQuad } from "@/components/lobby/QuickActionsQuad";
@@ -66,6 +67,7 @@ export function SectionLobby({
       data-more-hub={lobbyId === "sections" ? "1" : undefined}
       data-lessons-hub={lobbyId === "lessons" ? "1" : undefined}
     >
+      <div className="section-lobby__back-row"><AppBackButton variant="inline" className="section-lobby__back" aria-label="رجوع" /></div>
       <div className="section-lobby__shot" data-lobby-shot="1">
         <header className="section-lobby__head">
           <h1

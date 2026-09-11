@@ -900,3 +900,36 @@ html.dark .search-page .search-page-form {
   content-visibility: auto;
   contain-intrinsic-size: auto 120px;
 }
+
+
+/* P0: إزالة السهم العائم — الرجوع من الهيدر */
+.global-back-btn.floating-back-btn,
+.floating-back-btn.app-back-btn--floating,
+button.floating-back-btn[data-floating-back="1"] {
+  display: none !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+
+.section-hero__back-row,
+.section-lobby__back-row {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0 0 0.55rem;
+}
+
+.section-hero__back,
+.section-lobby__back {
+  display: inline-flex !important;
+  pointer-events: auto !important;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 40px;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #0f5c45) 22%, transparent);
+  background: color-mix(in srgb, var(--mj-surface, #fff) 92%, var(--mj-brand-soft, #e2efe8));
+  color: var(--mj-brand-deep, #0d4a39);
+  font-size: 0.85rem;
+  font-weight: 700;
+}

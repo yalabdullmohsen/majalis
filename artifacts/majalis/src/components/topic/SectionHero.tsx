@@ -3,6 +3,7 @@
  * تُستخدم داخل TopicPage/SectionTemplatePage، ويمكن استدعاؤها منفردة للصفحات المخصصة.
  */
 import type { CSSProperties, ReactNode } from "react";
+import { AppBackButton } from "@/components/common/AppBackButton";
 import { Link } from "wouter";
 import {
   getTopicTheme,
@@ -71,6 +72,9 @@ export function SectionHero({
       style={heroStyle}
       dir="rtl"
     >
+      <div className="section-hero__back-row">
+        <AppBackButton variant="inline" className="section-hero__back" aria-label="رجوع" />
+      </div>
       {breadcrumb && breadcrumb.length > 0 ? (
         <div className="section-hero__chrome">
           <nav className="topic-page__crumb" aria-label="مسار التنقل" data-section-crumb="1">

@@ -83,8 +83,8 @@ assert.match(lobbyCmp, /SectionCard/);
 assert.match(lobbyCmp, /chip-label/);
 assert.match(lobbyCmp, /data-lobby-shot/);
 assert.doesNotMatch(lobbyCmp, /page-hero-mj/);
-assert.doesNotMatch(lobbyCmp, /data-section-back/, "اللوبي بلا زر رجوع داخلي");
-assert.doesNotMatch(lobbyCmp, /AppBackButton/, "الرجوع عبر FloatingBackButton فقط");
+assert.match(lobbyCmp, /section-lobby__back/, "اللوبي يعرض رجوعًا مدمجًا");
+assert.match(lobbyCmp, /AppBackButton/, "الرجوع عبر AppBackButton داخل اللوبي");
 
 console.log("=== محتوى السجل ===");
 const quran = getLobby("quran");

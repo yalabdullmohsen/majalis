@@ -59,27 +59,37 @@ assert.match(
 );
 assert.match(
   polish,
-  /\.floating-back-btn[\s\S]{0,120}?bottom:\s*calc\(var\(--bottom-nav-height/,
-  "FloatingBackButton overlaps bottom nav: FAB bottom must clear --bottom-nav-height",
+  /P0: إزالة السهم العائم|display:\s*none\s*!important/,
+  "Floating back must be hidden (header back instead)",
 );
 assert.match(
-  finalCss,
-  /\.floating-back-btn[\s\S]{0,80}?min-(?:width|height):\s*48px/,
-  "Floating back touch target must be ≥48px",
+  polish,
+  /\.section-hero__back/,
+  "Header back control styles must exist after floating removal",
 );
 
 /* ── 2) Duplicate back buttons ── */
 assert.match(floating, /AppBackButton/, "FloatingBackButton must wrap AppBackButton");
 assert.match(appBack, /onPointerDown/, "Back must fire on pointer down (instant)");
+assert.match(
+  lobby,
+  /AppBackButton/,
+  "SectionLobby must render inline AppBackButton after floating removal",
+);
 assert.doesNotMatch(
   lobby,
-  /AppBackButton|FloatingBackButton/,
-  "Duplicate back buttons visible: SectionLobby must not render its own back",
+  /FloatingBackButton/,
+  "SectionLobby must not render FloatingBackButton",
+);
+assert.match(
+  sectionHero,
+  /AppBackButton/,
+  "SectionHero must render inline AppBackButton (header back)",
 );
 assert.doesNotMatch(
   sectionHero,
-  /AppBackButton|FloatingBackButton/,
-  "Duplicate back buttons visible: SectionHero must not render its own back",
+  /FloatingBackButton/,
+  "SectionHero must not render FloatingBackButton",
 );
 assert.doesNotMatch(
   pageHero,
@@ -144,7 +154,7 @@ for (const [name, src] of [
   assert.doesNotMatch(
     src,
     /AppBackButton|FloatingBackButton|showBack\s*=/,
-    `Duplicate back buttons visible: ${name} page must rely on global FAB only`,
+    `Duplicate back buttons visible: ${name} page must not render local back (SectionHero handles it)`,
   );
 }
 
@@ -169,7 +179,7 @@ assert.doesNotMatch(
 assert.doesNotMatch(
   tarikhDetail,
   /AppBackButton|FloatingBackButton|showBack\s*=/,
-  "Duplicate back buttons visible: tarikh detail must rely on global FAB only",
+  "Duplicate back buttons visible: tarikh detail must not render local back",
 );
 assert.match(readingCard, /rsc__title/, "ReadingSectionCard must render titled section cards");
 assert.match(relatedCard, /rcc__arrow/, "RelatedContentCard must show a clear enter arrow");

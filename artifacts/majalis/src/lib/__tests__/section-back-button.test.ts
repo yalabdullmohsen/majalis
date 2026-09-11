@@ -1,5 +1,5 @@
 /**
- * بوابة: الرجوع العائم العام فقط؛ اللوبي/الهيرو بلا أزرار رجوع داخلية.
+ * بوابة: رجوع مدمج في اللوبي/هيرو القسم (بدل السهم العائم فوق المحتوى).
  * تشغيل: node --import tsx src/lib/__tests__/section-back-button.test.ts
  */
 import assert from "node:assert/strict";
@@ -11,27 +11,27 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const lobby = read("src/components/lobby/SectionLobby.tsx");
-assert.doesNotMatch(lobby, /AppBackButton/, "لا زر رجوع داخل اللوبي");
-assert.doesNotMatch(lobby, /section-lobby__back-inline/, "لا رجوع هيدر");
-assert.doesNotMatch(lobby, /data-section-back/);
+assert.match(lobby, /AppBackButton/, "رجوع مدمج في اللوبي");
+assert.match(lobby, /section-lobby__back/, "صف رجوع اللوبي");
+assert.doesNotMatch(lobby, /FloatingBackButton/);
 
 const appBack = read("src/components/common/AppBackButton.tsx");
-assert.match(appBack, /DirectionalIcon/, "أيقونة الاتجاه في زر الرجوع الموحّد");
+assert.match(appBack, /DirectionalIcon|ArrowRight/, "أيقونة الاتجاه في زر الرجوع الموحّد");
 assert.match(appBack, /goBackOrFallback/);
 assert.match(appBack, /onPointerDown/);
 assert.match(appBack, /aria-label.*=.*"رجوع"|ariaLabel = "رجوع"/);
 
 const fab = read("src/components/FloatingBackButton.tsx");
-assert.match(fab, /variant="floating"/, "العائم العام مفعّل عبر AppBackButton");
-assert.doesNotMatch(fab, /return null/, "لا يُلغى العائم");
+assert.match(fab, /variant="floating"/, "المكوّن العائم ما زال موجودًا للتوافق");
+assert.doesNotMatch(fab, /return null/, "لا يُلغى تعريف العائم في المصدر");
 
 const hero = read("src/components/topic/SectionHero.tsx");
-assert.doesNotMatch(hero, /AppBackButton/);
-assert.doesNotMatch(hero, /data-section-back/);
+assert.match(hero, /AppBackButton/, "رجوع مدمج في هيرو القسم");
+assert.match(hero, /section-hero__back/);
+assert.doesNotMatch(hero, /FloatingBackButton/);
 
-const gate = read("scripts/section-back-button-gate.mjs");
-assert.match(gate, /\/fiqh/);
-assert.match(gate, /data-floating-back/);
+const polish = read("src/styles/sections-calm-polish.css");
+assert.match(polish, /P0: إزالة السهم العائم|floating-back-btn[\s\S]*display:\s*none/);
 
 const pages: Array<[string, string]> = [
   ["quran", "src/pages/quran/ui/QuranHubView.tsx"],
@@ -41,13 +41,13 @@ const pages: Array<[string, string]> = [
 
 for (const [id, rel] of pages) {
   const src = read(rel);
-  assert.match(src, /SectionLobby/, `${id}: يستهلك القالب — الرجوع من العائم العام`);
-  assert.doesNotMatch(src, /data-section-back/, `${id}: لا زر رجوع يدوي في الصفحة`);
+  assert.match(src, /SectionLobby/, `${id}: يستهلك القالب — الرجوع من هيدر اللوبي`);
+  assert.doesNotMatch(src, /FloatingBackButton/, `${id}: لا سهم عائم محلي في الصفحة`);
 }
 
 const fiqh = read("src/pages/fiqh/ui/FiqhView.tsx");
 assert.match(fiqh, /publishedBooks/, "الفقه: شبكة كتب منشورة");
 assert.match(fiqh, /SectionTemplatePage/, "الفقه: قالب القسم يوفر الكروم");
-assert.doesNotMatch(fiqh, /data-section-back/, "الفقه: لا زر رجوع يدوي");
+assert.doesNotMatch(fiqh, /FloatingBackButton/, "الفقه: لا سهم عائم محلي");
 
 console.log("section-back-button.test.ts: ok");
