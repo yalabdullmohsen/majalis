@@ -72,9 +72,6 @@
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent);
   color: var(--mss-on-hero, #16241e);
 }
-  /* soft-hero ink via modern-section-shell */
-  border: 1px solid transparent;
-}
 
 /* Search */
 .gl-search {
