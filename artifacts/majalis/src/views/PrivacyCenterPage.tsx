@@ -84,14 +84,14 @@ export default function PrivacyCenterPage() {
         <div className="settings-actions" style={{ marginTop: "0.75rem" }}>
           <button
             type="button"
-            className="ui-card-btn"
+            className="ss-action-btn ss-action-btn--secondary"
             onClick={() => setConsent(writeCookieConsent({ preferences: true, analytics: true }))}
           >
             <Cookie size={16} aria-hidden="true" /> تفعيل التحليلات الاختيارية
           </button>
           <button
             type="button"
-            className="ui-card-btn"
+            className="ss-action-btn ss-action-btn--secondary"
             onClick={() => setConsent(writeCookieConsent({ preferences: true, analytics: false }))}
           >
             إيقاف التحليلات
@@ -103,7 +103,7 @@ export default function PrivacyCenterPage() {
         <p>احصل على ملف JSON يتضمن بيانات حسابك المرتبطة في المنصة (أفضل جهد للجداول المتاحة).</p>
         <button
           type="button"
-          className="ui-card-btn"
+          className="ss-action-btn ss-action-btn--secondary"
           disabled={exporting || authLoading}
           onClick={() => void handleServerExport()}
           aria-busy={authLoading || exporting}

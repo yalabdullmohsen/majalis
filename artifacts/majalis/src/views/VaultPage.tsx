@@ -338,7 +338,7 @@ function GuestVault() {
       <div className="vault-login-prompt vault-login-prompt--inline">
         <Lock size={18} strokeWidth={1.5} aria-hidden="true" />
         <p className="vault-login-msg">للمزامنة السحابية والملاحظات المشتركة:</p>
-        <Link href="/login?next=/vault" className="ui-card-btn">تسجيل الدخول</Link>
+        <Link href="/login?next=/vault" className="ss-action-btn ss-action-btn--secondary">تسجيل الدخول</Link>
       </div>
 
       <div className="vault-search-wrap">

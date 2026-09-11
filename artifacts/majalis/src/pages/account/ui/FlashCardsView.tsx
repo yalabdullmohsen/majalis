@@ -371,7 +371,7 @@ function FlashCardsPageInner() {
       <PageStatusShell title="بطاقات المراجعة" className="page-shell narrow flc-login-prompt">
         <div className="flc-login-icon"><Lock size={40} strokeWidth={1.3} /></div>
         <p className="flc-login-msg">سجّل الدخول للوصول إلى بطاقات المراجعة.</p>
-        <Link href="/login?next=/flashcards" className="ui-card-btn">تسجيل الدخول</Link>
+        <Link href="/login?next=/flashcards" className="ss-action-btn ss-action-btn--secondary">تسجيل الدخول</Link>
       </PageStatusShell>
     );
   }

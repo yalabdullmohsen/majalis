@@ -286,7 +286,7 @@ export default function FawaidPage({
         <RelatedKnowledge kind="fawaid" title="فوائد ذات صلة" />
 
         {!authLoading && isLoggedIn && (
-          <div className="ui-card content-submit-panel">
+          <div className="soft-card soft-card--on-light content-submit-panel">
             <h2>أرسل فائدة</h2>
             {submitted ? (
               <p className="content-submit-success">شكرًا. سيتم مراجعة الفائدة قبل نشرها.</p>

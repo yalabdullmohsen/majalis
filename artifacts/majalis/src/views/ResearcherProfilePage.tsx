@@ -179,7 +179,7 @@ export default function ResearcherProfilePage() {
         <p className="rpr-login-msg">
           سجّل الدخول لإنشاء ملفك البحثي.
         </p>
-        <Link href="/login?next=/researcher" className="ui-card-btn">تسجيل الدخول</Link>
+        <Link href="/login?next=/researcher" className="ss-action-btn ss-action-btn--secondary">تسجيل الدخول</Link>
       </PageStatusShell>
     );
   }
