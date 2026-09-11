@@ -1,3 +1,4 @@
+import "@/styles/pages/hadith-design-language.css";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { FAQBox, RelatedLinksBox, SourceBox } from "@/components/content/ContentReading";
@@ -1026,7 +1027,7 @@ export default function HadithSciencePage() {
     <UtilityScreen compose="mark">
     <main className="hs-page" dir="rtl">
       {/* هيرو */}
-      <section className="hs-hero">
+      <section className="hs-hero hdl-info-hero">
         <div className="hs-hero__badge">علوم الحديث</div>
         <h1 className="hs-hero__title">مصطلح الحديث</h1>
         <p className="hs-hero__sub">
@@ -1087,7 +1088,7 @@ export default function HadithSciencePage() {
           {filtered.map((t) => {
             const isOpen = openId === t.id;
             return (
-              <article key={t.id} className={`hs-card${gradeClass(t.grade)}${isOpen ? " hs-card--open" : ""}`}>
+              <article key={t.id} className={`hs-card hdl-entry-card${gradeClass(t.grade)}${isOpen ? " hs-card--open" : ""}`}>
                 <button
                   type="button"
                   className="hs-card__header"

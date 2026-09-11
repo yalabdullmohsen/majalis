@@ -1,3 +1,4 @@
+import "@/styles/pages/hadith-design-language.css";
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { Link } from "wouter";
 import { ArrowRight, BookOpen, ChevronRight, Search, X, AlertTriangle } from "lucide-react";
@@ -56,7 +57,7 @@ function CollectionTab({
       aria-selected={active}
       aria-controls={`hb-panel-${meta.id}`}
       onClick={onClick}
-      className={`hb-tab${active ? " hb-tab--active" : ""}`}
+      className={`hb-tab hdl-chip${active ? " hb-tab--active" : ""}`}
     >
       <span className="hb-tab__name">{meta.name}</span>
       <span className="hb-tab__total">{meta.totalHadiths.toLocaleString("ar-EG")}</span>

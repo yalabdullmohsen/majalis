@@ -29,7 +29,7 @@ export default function HadithSahihPage() {
   return (
     <>
       <HadithClassGuide kind="sahih" />
-      <HadithSection authenticityClass="sahih" />
+      <HadithSection omitHeader authenticityClass="sahih" />
       <div className="twh-share">
         <ShareButtons title="الأحاديث الصحيحة — سُنّة" url="https://www.ssunnah.com/hadith/sahih" />
       </div>

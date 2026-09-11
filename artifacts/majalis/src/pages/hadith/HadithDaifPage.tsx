@@ -49,7 +49,7 @@ export default function HadithDaifPage() {
         <p className="hadith-weak-banner__text">{WEAK_HADITH_EDUCATIONAL_DISCLAIMER}</p>
       </div>
       <HadithClassGuide kind="daif" />
-      <HadithSection authenticityClass="daif" />
+      <HadithSection omitHeader authenticityClass="daif" />
       <div className="twh-share">
         <ShareButtons title="أحاديث ضعيفة للتنبيه والتمييز — سُنّة" url="https://www.ssunnah.com/hadith/daif" />
       </div>

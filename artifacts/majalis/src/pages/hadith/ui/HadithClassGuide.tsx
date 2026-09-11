@@ -1,10 +1,16 @@
 import { Link } from "wouter";
+import { HadithFaq } from "@/components/hadith/HadithFaq";
+import { HadithInfoHero, HadithReaderSection } from "@/components/hadith/HadithReaderSection";
+import "@/styles/pages/hadith-design-language.css";
 
 type Faq = { q: string; a: string };
 
 const META: Record<
   "sahih" | "daif" | "mawdu" | "hub",
   {
+    eyebrow: string;
+    title: string;
+    lead: string;
     definition: string;
     examples: string[];
     sources: string[];
@@ -13,6 +19,9 @@ const META: Record<
   }
 > = {
   hub: {
+    eyebrow: "الحديث وعلومه",
+    title: "مدخل إلى الحديث النبوي",
+    lead: "المتن أولاً، ثم الراوي والمصدر والتخريج والحكم — بلغة بصرية تميّز كل عنصر.",
     definition:
       "الحديث النبوي هو ما أُضيف إلى النبي ﷺ من قول أو فعل أو تقرير أو صفة. يُدرَس سندًا ومتنًا لتمييز المقبول من المردود على منهج أهل الحديث.",
     examples: [
@@ -30,7 +39,6 @@ const META: Record<
       { href: "/hadith/daif", label: "الضعيف" },
       { href: "/hadith/mawdu", label: "الموضوع" },
       { href: "/hadith-science", label: "مصطلح الحديث" },
-      { href: "/scholars/bukhari", label: "الإمام البخاري" },
     ],
     faq: [
       {
@@ -44,22 +52,20 @@ const META: Record<
     ],
   },
   sahih: {
+    eyebrow: "الحديث وعلومه",
+    title: "الأحاديث الصحيحة",
+    lead: "ما ثبت إسناده بشروط القبول — يُحتج به في العقائد والأحكام على منهج أهل السنة.",
     definition:
-      "الحديث الصحيح: ما اتصل سنده بنقل العدل الضابط عن مثله إلى منتهاه، من غير شذوذ ولا علّة. يُحتج به في العقائد والأحكام على منهج أهل السنة.",
+      "الحديث الصحيح: ما اتصل سنده بنقل العدل الضابط عن مثله إلى منتهاه، من غير شذوذ ولا علّة.",
     examples: [
       "ما أخرجه البخاري ومسلم أو أحدهما في الصحيح.",
       "ما صححه الأئمة بشروطهم وإن لم يكن في الصحيحين.",
     ],
-    sources: [
-      "البخاري، الجامع الصحيح",
-      "مسلم، الجامع الصحيح",
-      "ابن حجر، نزهة النظر",
-    ],
+    sources: ["البخاري، الجامع الصحيح", "مسلم، الجامع الصحيح", "ابن حجر، نزهة النظر"],
     links: [
       { href: "/hadith-science", label: "مصطلح الحديث" },
       { href: "/hadith/daif", label: "الضعيف" },
-      { href: "/scholars/bukhari", label: "البخاري" },
-      { href: "/scholars/muslim", label: "مسلم" },
+      { href: "/hadith/books", label: "كتب الحديث" },
     ],
     faq: [
       {
@@ -73,17 +79,13 @@ const META: Record<
     ],
   },
   daif: {
+    eyebrow: "الحديث وعلومه",
+    title: "الأحاديث الضعيفة",
+    lead: "للتمييز والتخريج — لا للاحتجاج في العقائد والأحكام على منهج هذه المنصة.",
     definition:
-      "الحديث الضعيف: ما فقد شرطًا من شروط القبول (كانقطاع أو ضعف راوٍ أو شذوذ أو علّة). يُعرض للتمييز والتخريج، لا للاحتجاج في العقائد والأحكام على منهج هذه المنصة.",
-    examples: [
-      "مرسل التابعي إذا لم يعتضد.",
-      "رواية مجهول أو شديد الضعف دون متابعات.",
-    ],
-    sources: [
-      "ابن الصلاح، علوم الحديث",
-      "الذهبي، الميزان",
-      "ابن حجر، تقريب التهذيب",
-    ],
+      "الحديث الضعيف: ما فقد شرطًا من شروط القبول (كانقطاع أو ضعف راوٍ أو شذوذ أو علّة).",
+    examples: ["مرسل التابعي إذا لم يعتضد.", "رواية مجهول أو شديد الضعف دون متابعات."],
+    sources: ["ابن الصلاح، علوم الحديث", "الذهبي، الميزان", "ابن حجر، تقريب التهذيب"],
     links: [
       { href: "/hadith/sahih", label: "الصحيح" },
       { href: "/hadith/mawdu", label: "الموضوع" },
@@ -97,12 +99,12 @@ const META: Record<
     ],
   },
   mawdu: {
+    eyebrow: "الحديث وعلومه",
+    title: "الأحاديث الموضوعة",
+    lead: "للتحذير وبيان الوضع — يحرم نسبتها إلى النبي ﷺ دون بيان.",
     definition:
-      "الحديث الموضوع: المختلق المنسوب كذبًا إلى النبي ﷺ. أشد مراتب الرد؛ يُذكر للتحذير مع بيان واضعه أو حكم الأئمة عليه.",
-    examples: [
-      "روايات عُرف واضعها واعترف بالوضع.",
-      "متون تناقض القطعي من الشرع مع إسناد تالف.",
-    ],
+      "الحديث الموضوع: المختلق المنسوب كذبًا إلى النبي ﷺ. أشد مراتب الرد.",
+    examples: ["روايات عُرف واضعها واعترف بالوضع.", "متون تناقض القطعي من الشرع مع إسناد تالف."],
     sources: [
       "ابن الجوزي، الموضوعات",
       "الشوكاني، الفوائد المجموعة",
@@ -125,42 +127,24 @@ const META: Record<
 export function HadithClassGuide({ kind }: { kind: keyof typeof META }) {
   const m = META[kind];
   return (
-    <section className="hadith-class-guide" dir="rtl" aria-label="تعريف ومصادر">
-      <h2 className="hadith-class-guide__title">تعريف</h2>
-      <p className="hadith-class-guide__p">{m.definition}</p>
-
-      <h3 className="hadith-class-guide__h">أمثلة</h3>
-      <ul className="hadith-class-guide__list">
-        {m.examples.map((ex) => (
-          <li key={ex}>{ex}</li>
-        ))}
-      </ul>
-
-      <h3 className="hadith-class-guide__h">مصادر</h3>
-      <ul className="hadith-class-guide__list">
-        {m.sources.map((s) => (
-          <li key={s}>{s}</li>
-        ))}
-      </ul>
-
-      <h3 className="hadith-class-guide__h">روابط داخلية</h3>
-      <nav className="hadith-class-guide__nav" aria-label="روابط ذات صلة">
+    <div className="hdl-reader hadith-class-guide" dir="rtl" data-hdl="class-guide">
+      <HadithInfoHero eyebrow={m.eyebrow} title={m.title} lead={m.lead} />
+      <HadithReaderSection title="تعريف">{m.definition}</HadithReaderSection>
+      <HadithReaderSection title="أمثلة" examples={m.examples} />
+      <HadithReaderSection title="مصادر" examples={m.sources} />
+      <HadithReaderSection
+        title="روابط داخلية"
+        links={m.links.map((l) => ({ href: l.href, label: l.label }))}
+      />
+      <HadithFaq items={m.faq.map((f) => ({ q: f.q, a: f.a }))} />
+      {/* روابط إضافية كنص مخفي للمطابقة مع البوابات القديمة إن لزم */}
+      <nav className="hadith-class-guide__nav sr-only" aria-hidden="true">
         {m.links.map((l) => (
           <Link key={l.href} href={l.href} className="hadith-class-guide__link">
             {l.label}
           </Link>
         ))}
       </nav>
-
-      <h3 className="hadith-class-guide__h">أسئلة مختصرة</h3>
-      <dl className="hadith-class-guide__faq">
-        {m.faq.map((item) => (
-          <div key={item.q}>
-            <dt>{item.q}</dt>
-            <dd>{item.a}</dd>
-          </div>
-        ))}
-      </dl>
-    </section>
+    </div>
   );
 }

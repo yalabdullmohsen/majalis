@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Flag, Star } from "lucide-react";
+import { Bookmark, Share2 } from "lucide-react";
 import { Link } from "wouter";
 import { truncateAtWord } from "@/lib/utils";
 import {
@@ -48,17 +48,6 @@ function collectionLabel(key: string | null): string {
   return COLLECTION_LABELS[key] ?? key;
 }
 
-function collectionBadgeClass(key: string | null): string {
-  if (!key) return "hadith-badge--collection";
-  const map: Record<string, string> = {
-    mutafaq: "hadith-badge--mutafaq",
-    bukhari: "hadith-badge--bukhari",
-    muslim: "hadith-badge--muslim",
-    nawawi40: "hadith-badge--nawawi",
-  };
-  return map[key] ?? "hadith-badge--collection";
-}
-
 /** رابط تفاصيل ثابت إن وُجد معرّف كتاب:رقم قابل للتحليل */
 export function resolveHadithDetailHref(item: HadithRecord): string | null {
   if (parseHadithId(item.id)) return `/hadith/${item.id}`;
@@ -76,7 +65,10 @@ type Props = {
   detailHref?: string;
 };
 
-/** بطاقة حديث — متن مختصر، مصدر، حكم (المشاركة في نهاية القسم فقط). */
+/**
+ * بطاقة حديث — Hadith Design Language:
+ * رأس (كتاب + رقم + حكم) · متن بارز · بيانات · تذييل إجراءات.
+ */
 export function HadithCard({ item: h, onExpand, detailHref }: Props) {
   const [saved, setSaved] = useState(() => {
     try {
@@ -88,15 +80,21 @@ export function HadithCard({ item: h, onExpand, detailHref }: Props) {
     }
   });
 
-  const preview = summarizeHadithMatn(h, 200);
+  const preview = summarizeHadithMatn(h, 220);
   const source = normalizeHadithSource(h.source_name, h.grade);
-  const category = sanitizeHadithDisplay(h.chapter) || sanitizeHadithDisplay(h.collection ? collectionLabel(h.collection) : "");
-  const reportTopic = h.title || preview.slice(0, 60) || "حديث نبوي شريف";
-  const ariaLabel = `قراءة المزيد: ${h.title ?? preview.slice(0, 48)}`;
+  const bookName =
+    sanitizeHadithDisplay(h.collection ? collectionLabel(h.collection) : "") ||
+    sanitizeHadithDisplay(h.source_name) ||
+    "حديث نبوي";
+  const takhrijShort = h.metadata?.takhrij ? String(h.metadata.takhrij) : null;
+  const compRef = h.metadata?.companion as string | undefined;
+  const narrator = sanitizeHadithDisplay(h.narrator ?? String(compRef ?? ""));
   const href = detailHref ?? resolveHadithDetailHref(h);
+  const ariaLabel = `قراءة المزيد: ${h.title ?? preview.slice(0, 48)}`;
 
   function handleSave(e: React.MouseEvent) {
     e.stopPropagation();
+    e.preventDefault();
     setSaved((s) => {
       const next = !s;
       try {
@@ -114,135 +112,135 @@ export function HadithCard({ item: h, onExpand, detailHref }: Props) {
     });
   }
 
-  const takhrijShort = h.metadata?.takhrij ? String(h.metadata.takhrij) : null;
-  const compRef = h.metadata?.companion as string | undefined;
+  function handleShare(e: React.MouseEvent) {
+    e.stopPropagation();
+    e.preventDefault();
+    const text = `${preview}\n— ${bookName}${h.hadith_number ? ` #${h.hadith_number}` : ""}${h.grade ? ` · ${h.grade}` : ""}`;
+    void (async () => {
+      try {
+        if (navigator.share) {
+          await navigator.share({ text, title: bookName });
+          return;
+        }
+      } catch {
+        /* fall through */
+      }
+      try {
+        await navigator.clipboard?.writeText(text);
+      } catch {
+        /* ignore */
+      }
+    })();
+  }
 
-  return (
-    <article
-      id={h.id}
-      className="hadith-card soft-card soft-card--on-light hadith-card--pressable"
-      data-testid="hadith-card"
-    >
-      {href ? (
-        <Link href={href} className="hadith-card__hit" aria-label={ariaLabel}>
-          <HadithCardBody
-            h={h}
-            preview={preview}
-            source={source}
-            category={category}
-            takhrijShort={takhrijShort}
-            compRef={compRef}
-          />
-          <span className="hadith-card__read-more" aria-hidden="true">قراءة المزيد</span>
-        </Link>
-      ) : (
-        <button
-          type="button"
-          className="hadith-card__hit"
-          aria-label={ariaLabel}
-          onClick={() => onExpand(h)}
-        >
-          <HadithCardBody
-            h={h}
-            preview={preview}
-            source={source}
-            category={category}
-            takhrijShort={takhrijShort}
-            compRef={compRef}
-          />
-          <span className="hadith-card__read-more" aria-hidden="true">قراءة المزيد</span>
-        </button>
-      )}
-      <div className="hadith-card__actions hadith-card__actions--tools">
-        <button
-          type="button"
-          className={`hadith-action-btn ${saved ? "hadith-action-btn--active" : ""}`}
-          onClick={handleSave}
-          aria-label={saved ? "إزالة من المفضلة" : "حفظ في المفضلة"}
-          title={saved ? "محفوظ" : "حفظ"}
-        >
-          <Star size={16} strokeWidth={2} className={saved ? "icon-star--filled" : undefined} aria-hidden="true" />
-        </button>
-        <Link
-          href={`/contact?topic=${encodeURIComponent(reportTopic)}`}
-          className="hadith-action-btn hadith-action-btn--link"
-          aria-label="بلاغ عن خطأ في المحتوى"
-          title="بلاغ"
-        >
-          <Flag size={16} strokeWidth={2} aria-hidden="true" />
-        </Link>
-      </div>
-    </article>
-  );
-}
-
-function HadithCardBody({
-  h,
-  preview,
-  source,
-  category,
-  takhrijShort,
-  compRef,
-}: {
-  h: HadithRecord;
-  preview: string;
-  source: string;
-  category: string;
-  takhrijShort: string | null;
-  compRef: string | undefined;
-}) {
-  return (
+  const body = (
     <>
-      <header className="hadith-card__header">
-        <div className="hadith-card__badges">
-          {h.collection ? (
-            <span className={`hadith-badge ${collectionBadgeClass(h.collection)}`}>
-              {collectionLabel(h.collection)}
-            </span>
-          ) : null}
+      <header className="hdl-card__header">
+        <div className="hdl-card__book">
+          <span className="hdl-card__book-name">{bookName}</span>
           {h.hadith_number ? (
-            <span className="hadith-badge hadith-badge--num">#{h.hadith_number}</span>
+            <span className="hdl-card__num">#{h.hadith_number}</span>
           ) : null}
-          {category ? <span className="hadith-badge hadith-badge--topic">{category}</span> : null}
         </div>
         <HadithGradeBadge grade={h.grade} />
       </header>
 
       {h.title && h.title !== "حديث" ? (
-        <h3 className="hadith-card__title">{sanitizeHadithDisplay(h.title)}</h3>
+        <h3 className="hadith-card__title hdl-role--category">{sanitizeHadithDisplay(h.title)}</h3>
       ) : null}
 
-      <blockquote className="hadith-card__text hadith-card__text--matn">{preview}</blockquote>
+      <blockquote className="hadith-card__text hadith-card__text--matn hdl-card__matn hdl-role--matn">
+        {preview}
+      </blockquote>
 
-      <div className="hadith-card__meta">
-        {(h.narrator || compRef) ? (
-          <span className="hadith-meta-item">
-            <span className="hadith-meta-label">الراوي:</span>{" "}
-            {sanitizeHadithDisplay(h.narrator ?? String(compRef ?? ""))}
-          </span>
+      <div className="hadith-card__meta hdl-card__meta" data-hdl="meta">
+        {narrator ? (
+          <div className="hdl-card__meta-row">
+            <span className="hdl-card__meta-label">الراوي</span>
+            <span className="hdl-role--narrator">{narrator}</span>
+          </div>
         ) : null}
         {source ? (
-          <span className="hadith-meta-item hadith-meta-item--source">
-            <span className="hadith-meta-label">المصدر:</span> {source}
-          </span>
+          <div className="hdl-card__meta-row">
+            <span className="hdl-card__meta-label">المصدر</span>
+            <span className="hdl-role--source">{source}</span>
+          </div>
         ) : (
-          <span className="hadith-meta-item hadith-meta-item--incomplete">المصدر: قيد الإكمال</span>
+          <div className="hdl-card__meta-row">
+            <span className="hdl-card__meta-label">المصدر</span>
+            <span className="hadith-meta-item--incomplete">قيد الإكمال</span>
+          </div>
         )}
         {takhrijShort ? (
-          <span className="hadith-meta-item hadith-meta-item--takhrij">
-            <span className="hadith-meta-label">تخريج:</span>{" "}
-            {truncateAtWord(sanitizeHadithDisplay(takhrijShort), 72)}
-          </span>
+          <div className="hdl-card__meta-row">
+            <span className="hdl-card__meta-label">التخريج</span>
+            <span className="hdl-role--takhrij">
+              {truncateAtWord(sanitizeHadithDisplay(takhrijShort), 72)}
+            </span>
+          </div>
         ) : null}
       </div>
-
-      {h.keywords && h.keywords.length > 0 ? (
-        <div className="hadith-card__keywords">
-          {h.keywords.slice(0, 4).map((k) => (
-            <span key={k} className="hadith-keyword">{k}</span>
-          ))}
-        </div>
-      ) : null}
     </>
+  );
+
+  return (
+    <article
+      id={h.id}
+      className="hadith-card soft-card soft-card--on-light hadith-card--pressable hdl-card"
+      data-testid="hadith-card"
+      data-hdl="card"
+    >
+      {href ? (
+        <Link href={href} className="hadith-card__hit hdl-card__hit" aria-label={ariaLabel}>
+          {body}
+        </Link>
+      ) : (
+        <button
+          type="button"
+          className="hadith-card__hit hdl-card__hit"
+          aria-label={ariaLabel}
+          onClick={() => onExpand(h)}
+        >
+          {body}
+        </button>
+      )}
+
+      <footer className="hdl-card__footer">
+        <div className="hdl-card__footer-actions">
+          <button
+            type="button"
+            className={`hadith-action-btn ${saved ? "hadith-action-btn--active" : ""}`}
+            onClick={handleSave}
+            aria-label={saved ? "إزالة من المحفوظات" : "حفظ"}
+            title={saved ? "محفوظ" : "حفظ"}
+          >
+            <Bookmark
+              size={16}
+              strokeWidth={2}
+              fill={saved ? "currentColor" : "none"}
+              aria-hidden="true"
+            />
+          </button>
+          <button
+            type="button"
+            className="hadith-action-btn"
+            onClick={handleShare}
+            aria-label="مشاركة"
+            title="مشاركة"
+          >
+            <Share2 size={16} strokeWidth={2} aria-hidden="true" />
+          </button>
+        </div>
+        {href ? (
+          <Link href={href} className="hdl-card__cta">
+            قراءة المزيد
+          </Link>
+        ) : (
+          <button type="button" className="hdl-card__cta" onClick={() => onExpand(h)}>
+            قراءة المزيد
+          </button>
+        )}
+      </footer>
+    </article>
   );
 }
