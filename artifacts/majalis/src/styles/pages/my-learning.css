@@ -106,7 +106,7 @@
 
 /* ── Card (section) ───────────────────────────────────────────────────── */
 .myl2-card {
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff)));
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff))));
   border-radius: var(--ds-radius-xl);
   padding: 1.1rem 1rem;
   border: 1px solid #e2ece7;

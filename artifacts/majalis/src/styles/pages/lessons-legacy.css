@@ -164,7 +164,7 @@
 .lesson-unified-card {
   border: 1px solid var(--mj-hairline, rgba(31,77,58,0.10));
   border-radius: var(--ds-radius-xl);
-  background: var(--mj-surface, var(--mj-white, #ffffff));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   overflow: hidden;
   box-shadow: none;
   display: flex;
@@ -524,7 +524,7 @@
 }
 
 .lesson-unified-card {
-  background: var(--majalis-panel, var(--mj-white, #ffffff));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
   border-color: var(--majalis-line, #E8E2D8);
   border-radius: 0.875rem;
   box-shadow: var(--majalis-shadow-sm, 0 1px 3px rgba(26,23,20,0.08));

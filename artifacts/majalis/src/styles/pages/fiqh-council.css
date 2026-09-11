@@ -787,7 +787,7 @@
   height: 0.75rem;
   border-radius: 50%;
   background: var(--emerald, var(--mj-brand));
-  border: 2px solid var(--mj-white, #ffffff);
+  border: 2px solid var(--mj-white, var(--mj-white, #ffffff));
 }
 
 .fiqh-timeline-body {

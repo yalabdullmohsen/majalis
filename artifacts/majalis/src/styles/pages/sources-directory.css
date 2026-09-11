@@ -26,7 +26,7 @@
   padding: 14px;
   border: 1px solid var(--mj-hairline, #e3e8e6);
   border-radius: 14px;
-  background: var(--mj-surface, var(--mj-white, #ffffff));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   text-decoration: none;
   color: inherit;
 }

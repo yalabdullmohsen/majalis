@@ -281,7 +281,7 @@ html[data-theme="dark"] .login-text-btn {
   padding: 0.55rem 0.75rem;
   border: 1px solid var(--auth-line);
   border-radius: 0.45rem;
-  background: var(--mj-white, #ffffff);
+  background: var(--mj-white, var(--mj-white, #ffffff));
   color: var(--mj-danger);
   font-size: 0.78rem;
   font-weight: 700;

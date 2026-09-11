@@ -108,7 +108,7 @@ html[data-theme="dark"] .rk-card {
   border-color: rgba(255,255,255,.1);
 }
 html[data-theme="dark"] .rk-card:hover { background: rgba(23,61,53,.1); border-color: var(--mj-brand); }
-html[data-theme="dark"] .rk-card__title { color: var(--mj-brand-soft); }
+html[data-theme="dark"] .rk-card__title { color: var(--mj-ink); }
 
 /* ═══════════════════════════════════════════════════════════════════
    67  KnowledgeRelatedItems — Knowledge graph card design
@@ -181,7 +181,7 @@ html[data-theme="dark"] .kri-card {
   border-color: rgba(255,255,255,.1);
 }
 html[data-theme="dark"] .kri-card:hover { background: rgba(23,61,53,.1); border-color: rgba(23,61,53,.35); }
-html[data-theme="dark"] .kri-card__name { color: var(--mj-brand-soft); }
+html[data-theme="dark"] .kri-card__name { color: var(--mj-ink); }
 html[data-theme="dark"] .kri-card__icon-wrap { background: rgba(23,61,53,.2); }
 
 

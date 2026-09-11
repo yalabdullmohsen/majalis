@@ -104,7 +104,7 @@ html[data-theme="dark"] .inst-page {
 }
 html.dark .inst-card,
 html[data-theme="dark"] .inst-card {
-  background: var(--mj-surface, #fffcf8) !important;
+  background: var(--mj-surface, var(--mj-surface)) !important;
   border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, var(--mj-hairline)) !important;
   color: var(--mj-ink, #f3f7f5) !important;
 }

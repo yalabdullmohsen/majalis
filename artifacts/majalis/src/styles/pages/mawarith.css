@@ -278,7 +278,7 @@
   padding: 1rem 0.75rem;
   border: 2px solid var(--ds-line-color);
   border-radius: var(--ds-radius-lg, 0.625rem);
-  background: var(--majalis-panel, var(--mj-white, #ffffff));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
   cursor: pointer;
   transition: border-color 0.15s, box-shadow 0.15s;
   text-align: center;
@@ -307,7 +307,7 @@
   padding: 0.5rem 1rem;
   border: 2px solid var(--ds-line-color);
   border-radius: 999px;
-  background: var(--majalis-panel, var(--mj-white, #ffffff));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 600;

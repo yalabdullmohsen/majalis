@@ -28,7 +28,7 @@
   min-height: 0;
   max-width: 100%;
   border-radius: 1rem;
-  background: var(--mj-surface, var(--mj-white, #ffffff));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   border: 1px solid color-mix(in srgb, var(--qom-accent) 16%, var(--mj-hairline, #e3e8e6));
   box-shadow: 0 6px 18px -14px rgba(11, 32, 24, 0.35);
   overflow: hidden;
@@ -431,7 +431,7 @@ html.dark .quran-open-mushaf__icon {
   display: flex;
   align-items: center;
   gap: var(--ds-space-3);
-  background: var(--mj-surface, var(--mj-white, #ffffff));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   border: 1px solid var(--mj-hairline, rgba(23,61,53,0.1));
   border-radius: var(--ds-radius-lg);
   padding: 1rem 1.25rem;

@@ -63,7 +63,7 @@
   border-radius: 12px;
   padding: 10px 12px;
   font: inherit;
-  background: var(--mj-surface, var(--mj-white, #ffffff));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   color: var(--mj-ink, #16241e);
 }
 
@@ -81,7 +81,7 @@
   padding: 8px 12px;
   border-radius: 999px;
   border: 1px solid var(--mj-hairline, #e3e8e6);
-  background: var(--mj-surface, var(--mj-white, #ffffff));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   color: var(--mj-ink, #16241e);
   font: inherit;
   font-size: 13px;
@@ -118,7 +118,7 @@
   appearance: none;
   border: 1px solid var(--mj-hairline, #e3e8e6);
   border-radius: 16px;
-  background: var(--mj-surface, var(--mj-white, #ffffff));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   color: var(--mj-ink, #16241e);
   font: inherit;
 }
@@ -214,7 +214,7 @@
 .quran-numbers-table th {
   position: sticky;
   top: 0;
-  background: var(--mj-surface, var(--mj-white, #ffffff));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   z-index: 1;
 }
 

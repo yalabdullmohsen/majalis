@@ -46,7 +46,7 @@
   font-family: inherit;
 }
 .mdb-hero__nav-btn:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.4); }
-.mdb-hero__nav-btn--active { background: rgba(255,255,255,0.3); border-color: var(--mj-white, #ffffff); box-shadow: 0 0 0 2px rgba(255,255,255,0.15); }
+.mdb-hero__nav-btn--active { background: rgba(255,255,255,0.3); border-color: var(--mj-white, var(--mj-white, #ffffff)); box-shadow: 0 0 0 2px rgba(255,255,255,0.15); }
 .mdb-hero__nav-icon { font-size: var(--ds-text-2xl); line-height: 1; }
 .mdb-hero__nav-name { font-size: 0.8rem; font-weight: 700; color: var(--mj-white, #ffffff); }
 
@@ -55,7 +55,7 @@
 
 /* البطاقة */
 .mdb-card {
-  background: var(--mj-white, #ffffff);
+  background: var(--mj-white, var(--mj-white, #ffffff));
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius-xl);
   overflow: hidden;
@@ -133,7 +133,7 @@
 /* العلماء */
 .mdb-scholars { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .mdb-scholar-chip {
-  background: var(--mj-white, #ffffff);
+  background: var(--mj-white, var(--mj-white, #ffffff));
   border: 1.5px solid var(--mj-brand-soft);
   color: var(--mj-brand-deep);
   font-size: 0.78rem;
@@ -178,7 +178,7 @@
   font-size: 0.83rem;
   font-weight: 600;
   color: var(--mj-brand-deep);
-  background: var(--mj-white, #ffffff);
+  background: var(--mj-white, var(--mj-white, #ffffff));
   transition: all 0.15s;
   text-align: center;
 }

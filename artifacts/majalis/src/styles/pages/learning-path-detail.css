@@ -160,7 +160,7 @@
 .lpd2-course-card {
   border: 1.5px solid var(--clr-border, rgba(0,0,0,.09));
   border-radius: 0.9rem;
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
   overflow: hidden;
 }
 .lpd2-course-card--locked { opacity: 0.6; }
@@ -224,7 +224,7 @@
   padding: 0.85rem 1rem;
   border-radius: var(--ds-radius-lg);
   border: 1.5px solid var(--clr-border, rgba(0,0,0,.09));
-  background: var(--clr-surface, var(--mj-white, #ffffff));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
   transition: border-color .15s;
 }
 .lpd2-module:hover { border-color: rgba(23,61,53,.3); }

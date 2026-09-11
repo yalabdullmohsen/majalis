@@ -10,7 +10,7 @@
 .ps-stat strong { color: var(--mj-info); }
 .ps-stat span { color: var(--mj-muted); margin-inline-end: 0.25rem; }
 .ps-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
-.ps-card { background: var(--mj-white, #ffffff); border: 1px solid var(--mj-info-soft); border-radius: var(--ds-radius-lg); overflow: hidden; }
+.ps-card { background: var(--mj-white, var(--mj-white, #ffffff)); border: 1px solid var(--mj-info-soft); border-radius: var(--ds-radius-lg); overflow: hidden; }
 .ps-card.approved { border-color: var(--mj-success-soft); }
 .ps-card.editing { border-color: var(--mj-info-soft); }
 .ps-card-head {
@@ -111,7 +111,7 @@
 .ps-edit-input {
   border: 1px solid var(--mj-hairline); border-radius: var(--ds-radius-sm);
   padding: 0.35rem 0.55rem; font-size: 0.8125rem;
-  font-family: inherit; color: var(--mj-info); background: var(--mj-white, #ffffff);
+  font-family: inherit; color: var(--mj-info); background: var(--mj-white, var(--mj-white, #ffffff));
   direction: rtl; width: 100%;
 }
 .ps-edit-input:focus { outline: none; border-color: var(--mj-info); }
@@ -132,7 +132,7 @@
 .ps-edit-textarea {
   border: 1px solid var(--mj-hairline); border-radius: var(--ds-radius);
   padding: 0.75rem 0.9rem; font-size: var(--ds-text-sm); line-height: 1.7;
-  font-family: inherit; color: var(--mj-info); background: var(--mj-white, #ffffff);
+  font-family: inherit; color: var(--mj-info); background: var(--mj-white, var(--mj-white, #ffffff));
   direction: rtl; resize: vertical; min-height: 320px; width: 100%;
 }
 .ps-edit-textarea:focus { outline: none; border-color: var(--mj-info); }

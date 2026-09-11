@@ -45,7 +45,7 @@
 .cal-view-tab,
 .cal-ics-btn {
   border: 1px solid var(--msk-border, var(--mj-hairline, var(--mj-hairline)));
-  background: var(--mj-surface, var(--mj-white, #ffffff));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   border-radius: var(--ds-radius, 8px);
   font-family: inherit;
   color: var(--mj-ink, #16241e);
@@ -143,7 +143,7 @@
   min-height: 4.75rem;
   border: 1px solid var(--msk-border, var(--mj-hairline, var(--mj-hairline)));
   border-radius: var(--ds-radius, 8px);
-  background: var(--mj-surface, var(--mj-white, #ffffff));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   overflow: hidden;
   text-align: start;
   font-family: inherit;
@@ -292,7 +292,7 @@
   width: 100%;
   text-align: start;
   border: 1px solid var(--msk-border, var(--mj-hairline, var(--mj-hairline)));
-  background: var(--mj-surface, var(--mj-white, #ffffff));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   border-radius: var(--ds-radius, 8px);
   padding: 0.25rem 0.35rem;
   cursor: pointer;
@@ -340,7 +340,7 @@
   width: 100%;
   text-align: start;
   border: 1px solid var(--msk-border, var(--mj-hairline, var(--mj-hairline)));
-  background: var(--mj-surface, var(--mj-white, #ffffff));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   border-radius: var(--ds-radius, 8px);
   padding: 0.65rem 0.75rem;
   cursor: pointer;

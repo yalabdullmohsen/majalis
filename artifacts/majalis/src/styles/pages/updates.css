@@ -29,7 +29,7 @@
   padding: .45rem 1rem;
   border-radius: var(--ds-radius-full);
   border: 1px solid var(--majalis-line, var(--mj-hairline));
-  background: var(--majalis-panel, var(--mj-white, #ffffff));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
   font-size: .84rem;
   font-weight: 600;
   color: var(--majalis-ink-soft);
@@ -67,7 +67,7 @@
   font-size: .88rem;
   font-weight: 600;
   color: var(--majalis-ink);
-  background: var(--majalis-panel, var(--mj-white, #ffffff));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
   transition: background .15s, border-color .15s, color .15s;
 }
 .tip-link:hover { background: var(--majalis-emerald-subtle, var(--mj-brand-soft)); border-color: var(--majalis-emerald, var(--mj-brand)); color: var(--majalis-emerald-deep, var(--mj-brand)); }
@@ -107,7 +107,7 @@
   border: 1.5px solid var(--majalis-line, var(--mj-hairline));
   border-radius: .75rem;
   padding: .35rem .35rem .35rem .85rem;
-  background: var(--majalis-panel, var(--mj-white, #ffffff));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
   transition: border-color .15s;
 }
 .cvp-input-wrap:focus-within { border-color: var(--majalis-emerald, var(--mj-brand)); }
@@ -181,7 +181,7 @@
   flex-direction: column;
   gap: .5rem;
   text-align: start;
-  background: var(--majalis-panel, var(--mj-white, #ffffff));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
   border-radius: .65rem;
   padding: 1rem 1.25rem;
   margin-bottom: 1rem;
@@ -195,7 +195,7 @@
 .cvp-result-msg { color: var(--mj-danger); font-size: .92rem; }
 
 .cvp-info-section {
-  background: var(--majalis-panel, var(--mj-white, #ffffff));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
   border: 1px solid var(--majalis-line, var(--mj-hairline));
   border-radius: var(--ds-radius-xl);
   padding: var(--ds-space-6);
@@ -231,7 +231,7 @@
   display: inline-block;
   padding: .5rem 1.1rem;
   border-radius: .55rem;
-  background: var(--majalis-panel, var(--mj-white, #ffffff));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
   border: 1px solid var(--majalis-line, var(--mj-hairline));
   font-size: .85rem;
   font-weight: 600;

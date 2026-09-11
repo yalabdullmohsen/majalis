@@ -1,7 +1,7 @@
 /* ══════════════════════════════════════════════════════════════════
    245 — JannaNaarPage  (.jn-*)
    ══════════════════════════════════════════════════════════════════ */
-.jn-page { min-height: 100svh; background: var(--color-bg, var(--surface-app, #f7f4ee)); }
+.jn-page { min-height: 100svh; background: var(--color-bg, var(--surface-app, var(--mj-bg))); }
 
 /* هيرو قديم ميت — الصفحة على TopicPage؛ إخفاء لمنع عودة الزرقاء إن أُعيد استعمال الصنف */
 .jn-hero { display: none; }

@@ -210,7 +210,7 @@
   margin-top: 0.15rem;
   border-radius: 999px;
   border: 2px solid var(--tarikh-accent);
-  background: color-mix(in srgb, var(--tarikh-accent) 18%, var(--mj-white, #ffffff));
+  background: color-mix(in srgb, var(--tarikh-accent) 18%, var(--mj-white, var(--mj-white, #ffffff)));
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--background) 88%, transparent);
   z-index: 1;
   display: grid;
@@ -548,7 +548,7 @@
   padding: 0.85rem 0.9rem;
   border-radius: 1.15rem;
   border: 1px solid color-mix(in srgb, var(--tarikh-accent) 22%, transparent);
-  background: color-mix(in srgb, var(--tarikh-accent) 6%, var(--ss-card-bg, var(--card, var(--mj-white, #ffffff))));
+  background: color-mix(in srgb, var(--tarikh-accent) 6%, var(--ss-card-bg, var(--card, var(--mj-white, var(--mj-white, #ffffff)))));
   margin-bottom: 0.15rem;
 }
 
@@ -593,7 +593,7 @@
   padding: 0.35rem 0.55rem;
   border-radius: var(--radius-card, 24px);
   border: 1px solid color-mix(in srgb, var(--tarikh-accent) 28%, transparent);
-  background: var(--ss-card-bg, var(--card, var(--mj-white, #ffffff)));
+  background: var(--ss-card-bg, var(--card, var(--mj-white, var(--mj-white, #ffffff))));
   color: var(--tarikh-accent);
   font: inherit;
   font-size: 0.78rem;
@@ -647,7 +647,7 @@
   padding: 0.2rem 0.7rem;
   border-radius: var(--radius-card, 24px);
   border: 1px solid color-mix(in srgb, var(--mj-brand) 22%, transparent);
-  background: var(--ss-card-bg, var(--card, var(--mj-white, #ffffff)));
+  background: var(--ss-card-bg, var(--card, var(--mj-white, var(--mj-white, #ffffff))));
   color: var(--mj-brand-deep, #12362c);
   font-size: 0.78rem;
   font-weight: 700;
@@ -669,7 +669,7 @@
   padding: 0.65rem 0.75rem;
   border-radius: 1rem;
   border: 1px solid color-mix(in srgb, var(--mj-brand) 18%, transparent);
-  background: var(--ss-card-bg, var(--card, var(--mj-white, #ffffff)));
+  background: var(--ss-card-bg, var(--card, var(--mj-white, var(--mj-white, #ffffff))));
   text-decoration: none;
   color: inherit;
 }
@@ -735,7 +735,7 @@
   font-size: 0.68rem;
   font-weight: 800;
   color: var(--primary);
-  background: color-mix(in srgb, var(--primary) 14%, var(--card, var(--mj-white, #ffffff)));
+  background: color-mix(in srgb, var(--primary) 14%, var(--card, var(--mj-white, var(--mj-white, #ffffff))));
   border: 1px solid color-mix(in srgb, var(--primary) 35%, transparent);
   pointer-events: none;
 }
