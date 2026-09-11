@@ -70,3 +70,17 @@ export function isAuthStandalonePath(pathname: string): boolean {
     p.startsWith("/auth/")
   );
 }
+
+
+/** صفحات بمكوّن رجوع داخلي (هيدر القسم) — يُخفى عنها السهم العائم حتى لا يغطي البطاقات */
+export function hasInPageBackChrome(pathname: string): boolean {
+  // اللوبيات تعتمد FloatingBackButton (بوابات section-lobby) — لا نخفيه هناك.
+  // الصفحات الغمرية/الصلاة تُستثنى عبر isImmersiveChromePath / isPrayerTimesPath.
+  const p = pathname.replace(/\/+$/, "") || "/";
+  return (
+    p === "/settings" ||
+    p.startsWith("/settings/") ||
+    p === "/profile" ||
+    p.startsWith("/profile/")
+  );
+}

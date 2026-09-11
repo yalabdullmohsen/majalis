@@ -398,18 +398,24 @@ export default function PrayerTimesPage() {
           <h2 className="pts-hero__name">
             {displayKey === "Sunrise" ? displayName : `صلاة ${displayName}`}
           </h2>
+          {displayItem ? (
+            <p className="pts-hero__clock" dir="ltr">
+              <span className="pts-hero__clock-label">وقت الأذان</span>
+              <span className="pts-hero__clock-value">{displayTime12(displayItem)}</span>
+            </p>
+          ) : null}
           <div
             className="pts-hero__countdown"
             dir="ltr"
             aria-live="polite"
             aria-atomic="true"
-            aria-label={`الوقت: ${displayHms}`}
+            aria-label={`${inGrace && !pinnedKey ? "مضى" : "متبقي"} ${displayHms}`}
           >
-            {displayHms}
+            <span className="pts-hero__countdown-label">
+              {inGrace && !pinnedKey ? "مضى" : "متبقي"}
+            </span>
+            <span className="pts-hero__countdown-value">{displayHms}</span>
           </div>
-          {displayItem && (
-            <p className="pts-hero__clock" dir="ltr">{displayTime12(displayItem)}</p>
-          )}
           {inGrace && !pinnedKey && (
             <p className="pts-hero__hint">حتى مرور ٣٥ دقيقة ثم الانتقال للصلاة التالية</p>
           )}

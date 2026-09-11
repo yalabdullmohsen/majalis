@@ -327,7 +327,7 @@
     "test:updates-seed-hrefs": "node --import tsx src/lib/__tests__/updates-seed-hrefs-gate.test.ts",
     "test:history-related-links": "node --import tsx src/lib/__tests__/islamic-history-related-links-gate.test.ts && node --import tsx src/lib/__tests__/islamic-history-ui-gate.test.ts",
     "test:stories-reflection-filler": "node --import tsx src/lib/__tests__/stories-reflection-filler-gate.test.ts",
-    "test:section-hub-visual": "node --import tsx src/lib/__tests__/section-entry-card-gate.test.ts && node --import tsx src/lib/__tests__/section-hub-visual-regression.test.ts && node --import tsx src/lib/__tests__/modern-section-shell-gate.test.ts",
+    "test:section-hub-visual": "node --import tsx src/lib/__tests__/section-entry-card-gate.test.ts && node --import tsx src/lib/__tests__/section-hub-visual-regression.test.ts && node --import tsx src/lib/__tests__/modern-section-shell-gate.test.ts && node --import tsx src/lib/__tests__/ui-density-layout-gate.test.ts",
     "audit:duplicate-descs": "node scripts/strip-enrichment-boilerplate.mjs --report",
     "test:safe-reload": "node scripts/test-safe-reload.mjs",
     "verify:seo-prerender": "node scripts/verify-seo-prerender-coverage.mjs",
@@ -525,9 +525,10 @@
     "test:boot-cold-start": "playwright test tests/boot-cold-start-smoke.spec.ts --project=mobile",
     "test:mushaf-p0-acceptance-audit": "playwright test tests/mushaf-p0-acceptance-audit.spec.ts --project=mobile",
     "test:mushaf-page-flip-stability": "playwright test tests/mushaf-page-flip-stability.spec.ts --project=mobile",
-    "test:section-entry-card": "node --import tsx src/lib/__tests__/section-entry-card-gate.test.ts",
+    "test:section-entry-card": "node --import tsx src/lib/__tests__/section-entry-card-gate.test.ts && node --import tsx src/lib/__tests__/ui-density-layout-gate.test.ts",
     "test:prayer-notification-scheduler": "node --import tsx src/lib/__tests__/prayer-notification-scheduler.test.ts",
-    "audit:prelaunch-readiness": "node scripts/audit-prelaunch-readiness.mjs"
+    "audit:prelaunch-readiness": "node scripts/audit-prelaunch-readiness.mjs",
+    "test:ui-density-layout": "node --import tsx src/lib/__tests__/ui-density-layout-gate.test.ts"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

@@ -71,7 +71,7 @@ assert.match(css, /gap:\s*24px/);
 assert.match(css, /white-space:\s*nowrap/);
 assert.match(css, /overflow-x:\s*auto/);
 assert.match(css, /scroll-snap-type:\s*x/);
-assert.match(css, /grid-auto-rows:\s*1fr/);
+assert.match(css, /grid-auto-rows:\s*auto/, "صفوف الشبكة حسب المحتوى (كثافة)");
 assert.match(css, /section-lobby__grid--solo/);
 assert.match(css, /assistant-fab-size/);
 assert.match(css, /section-lobby__shot/);

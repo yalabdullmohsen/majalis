@@ -2,7 +2,7 @@ import { useRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
 import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { useLocation } from "wouter";
-import { isAuthStandalonePath, isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
+import { hasInPageBackChrome, isAuthStandalonePath, isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import {
   getPreviousInternalRoute,
   goBackOrFallback,
@@ -58,6 +58,7 @@ export function AppBackButton({
     if (path === "/") return null;
     if (isImmersiveChromePath(location)) return null;
     if (isPrayerTimesPath(location)) return null;
+    if (hasInPageBackChrome(location)) return null;
     if (isAuthStandalonePath(location)) return null;
     if (path === "/support" || path === "/contact") return null;
     const prev = getPreviousInternalRoute(location);
