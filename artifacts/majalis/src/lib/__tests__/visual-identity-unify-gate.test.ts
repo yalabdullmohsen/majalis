@@ -137,6 +137,21 @@ const fiqhView = read("src/pages/fiqh/ui/FiqhView.tsx");
 assert.match(fiqhView, /SectionEntryCard/);
 assert.match(fiqhView, /hub-card-grid fiqh-book-grid/);
 
+
+const mainSrc = read("src/main.tsx");
+assert.match(mainSrc, /void import\("\.\/styles\/final-release\.css"\)/, "final-release مؤجّل");
+assert.match(mainSrc, /void import\("\.\/styles\/visual-identity-unify\.css"\)/, "إعادة هوية بعد final-release");
+assert.doesNotMatch(
+  mainSrc,
+  /final-release\.css"[\s\S]{0,400}section-cards-theme\.css/,
+  "لا إعادة تحميل ثيم البطاقات بعد final-release (وميض هوية)",
+);
+assert.doesNotMatch(
+  mainSrc,
+  /final-release\.css"[\s\S]{0,400}sections-calm-polish\.css/,
+  "لا إعادة تحميل تهدئة الأقسام بعد final-release",
+);
+
 console.log("visual-identity-unify-gate.test.ts: ok");
 
 console.log("=== بطاقات الدليل ===");

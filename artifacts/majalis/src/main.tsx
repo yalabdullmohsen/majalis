@@ -104,15 +104,9 @@ function loadNonCriticalCss() {
     void import("./styles/brand-v4-components.css");
     // بعد design-system حتمًا حتى لا يفوز blur(20px) على final-release
     void import("./styles/final-release.css").then(() => {
-      // إعادة طبقة التوحيد بعد final-release لتفوز قواعد الأزرار/البانر
-      // مع الإبقاء على الاستيراد المبكر للرموز الصلبة عند أول طلاء.
-      void import("./styles/visual-identity-unify.css").then(() => {
-        void import("./styles/sections-calm-polish.css").then(() => {
-          void import("./styles/section-makarim-pattern.css").then(() => {
-            void import("./styles/section-cards-theme.css");
-          });
-        });
-      });
+      // إعادة طبقة الهوية فقط بعد final-release (أزرار/بانر) —
+      // بلا إعادة تحميل ثيم البطاقات/التهدئة (كانت تسبب وميض هوية بعد أول طلاء).
+      void import("./styles/visual-identity-unify.css");
     });
   });
   void import("./styles/components/instant-interaction.css");
