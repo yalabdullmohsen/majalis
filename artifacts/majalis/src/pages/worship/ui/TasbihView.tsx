@@ -3,6 +3,7 @@ import { Flame } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { PageShell } from "@/components/layout/PageShell";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { ActionButton } from "@/components/design-system";
 import { useAuth } from "@/components/AuthProvider";
 import { TasbeehCounter } from "@/components/reading/TasbeehCounter";
 import { setTaskProgress } from "@/lib/daily-progress";
@@ -143,24 +144,24 @@ export default function TasbihPage() {
 
       {/* Stats grid */}
       <div className="tasbih-stats-grid tasbih-stats-grid--v2">
-        <div className="ui-card tasbih-stat">
+        <div className="soft-card soft-card--on-light tasbih-stat">
           <span>اليوم</span>
           <strong>{aggregateStats.today}</strong>
         </div>
-        <div className="ui-card tasbih-stat">
+        <div className="soft-card soft-card--on-light tasbih-stat">
           <span>الأسبوع</span>
           <strong>{aggregateStats.week}</strong>
         </div>
-        <div className="ui-card tasbih-stat">
+        <div className="soft-card soft-card--on-light tasbih-stat">
           <span>الشهر</span>
           <strong>{aggregateStats.month}</strong>
         </div>
-        <div className="ui-card tasbih-stat">
+        <div className="soft-card soft-card--on-light tasbih-stat">
           <span>الإجمالي</span>
           <strong>{aggregateStats.total}</strong>
         </div>
         {aggregateStats.streak > 0 && (
-          <div className="ui-card tasbih-stat tasbih-stat--streak">
+          <div className="soft-card soft-card--on-light tasbih-stat tasbih-stat--streak">
             <span>التتابع</span>
             <strong>{aggregateStats.streak} <Flame size={14} strokeWidth={2} aria-hidden="true" /></strong>
           </div>
@@ -193,7 +194,7 @@ export default function TasbihPage() {
 
       {/* Active wird counter */}
       {active && (
-        <section className="ui-card tasbih-page-card tasbih-pro-card tasbih-pro-card--v2">
+        <section className="soft-card soft-card--on-light tasbih-page-card tasbih-pro-card tasbih-pro-card--v2">
           <p className="tasbih-phrase">{active.phrase}</p>
           <TasbeehCounter
             storageId={`wird-${active.id}`}
@@ -208,20 +209,20 @@ export default function TasbihPage() {
             </p>
           )}
           <div className="tasbih-actions-grid">
-            <button
+            <ActionButton
               type="button"
-              className="ui-card-btn ui-card-btn--danger"
+              variant="destructive"
               onClick={deleteActive}
               disabled={items.length <= 1}
             >
               حذف الورد
-            </button>
+            </ActionButton>
           </div>
         </section>
       )}
 
       {/* Add wird form */}
-      <section className="ui-card tasbih-add-card">
+      <section className="soft-card soft-card--on-light tasbih-add-card">
         <h2>إضافة ورد جديد</h2>
         <div className="tasbih-add-row">
           <input
@@ -239,7 +240,9 @@ export default function TasbihPage() {
             onChange={(e) => setNewTarget(Number(e.target.value))}
             aria-label="الهدف اليومي"
           />
-          <button type="button" className="ui-card-btn" onClick={addWird}>إضافة</button>
+          <ActionButton type="button" variant="primary" onClick={addWird}>
+            إضافة
+          </ActionButton>
         </div>
       </section>
 
