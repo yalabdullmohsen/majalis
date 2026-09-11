@@ -59,7 +59,7 @@
 .quran-numbers-surah-controls select {
   width: 100%;
   min-height: 44px;
-  border: 1px solid var(--mj-hairline, #e3e8e6);
+  border: 1px solid var(--mj-hairline, var(--mj-hairline, #e3e8e6));
   border-radius: 12px;
   padding: 10px 12px;
   font: inherit;
@@ -80,7 +80,7 @@
   min-height: 44px;
   padding: 8px 12px;
   border-radius: 999px;
-  border: 1px solid var(--mj-hairline, #e3e8e6);
+  border: 1px solid var(--mj-hairline, var(--mj-hairline, #e3e8e6));
   background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   color: var(--mj-ink, #16241e);
   font: inherit;
@@ -116,7 +116,7 @@
   text-align: start;
   cursor: pointer;
   appearance: none;
-  border: 1px solid var(--mj-hairline, #e3e8e6);
+  border: 1px solid var(--mj-hairline, var(--mj-hairline, #e3e8e6));
   border-radius: 16px;
   background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   color: var(--mj-ink, #16241e);
@@ -192,7 +192,7 @@
 
 .quran-numbers-table-scroll {
   overflow: auto;
-  border: 1px solid var(--mj-hairline, #e3e8e6);
+  border: 1px solid var(--mj-hairline, var(--mj-hairline, #e3e8e6));
   border-radius: 12px;
   max-height: 420px;
 }

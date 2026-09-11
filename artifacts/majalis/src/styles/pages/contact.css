@@ -147,7 +147,7 @@
 
 .contact-btn--ghost {
   background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
-  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #1f6b56)) 18%, var(--mj-hairline, #e3e8e6));
+  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #1f6b56)) 18%, var(--mj-hairline, var(--mj-hairline, #e3e8e6)));
   color: var(--majalis-ink);
 }
 

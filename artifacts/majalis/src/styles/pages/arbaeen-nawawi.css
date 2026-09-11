@@ -59,7 +59,7 @@
   background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface))));
   border-radius: var(--radius-card, 24px);
   padding: 1.1rem;
-  border: 1.5px solid var(--mj-hairline, #e3e8e6);
+  border: 1.5px solid var(--mj-hairline, var(--mj-hairline, #e3e8e6));
   border-inline-start: 4px solid var(--majalis-emerald);
   transition: box-shadow 0.15s, border-color 0.15s;
 }
