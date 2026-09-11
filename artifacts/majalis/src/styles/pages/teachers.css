@@ -26,16 +26,16 @@
   align-items: center;
   gap: 0.5rem;
   padding: var(--ds-space-4, 1rem);
-  border-radius: var(--ds-radius, 0.5rem);
-  border: 1px solid var(--line, var(--mj-hairline));
-  background: var(--panel, var(--mj-white, var(--mj-white, #ffffff)));
+  border-radius: 0;
+  border: none;
+  background: transparent;
   text-decoration: none;
   text-align: center;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .tch-card:hover {
-  border-color: var(--accent, #0d9488);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-color: transparent;
+  box-shadow: none;
 }
 .tch-card__photo {
   width: 72px;

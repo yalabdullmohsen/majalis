@@ -64,7 +64,7 @@ export default function TeacherDetailPage() {
     });
   }, [teacher]);
 
-  if (loading) {
+  if (loading && lessons.length === 0) {
     return (
       <PageShell variant="narrow" className="tch-page">
         <PageHeader eyebrow="دروس الكويت" title="المشيخ" />
