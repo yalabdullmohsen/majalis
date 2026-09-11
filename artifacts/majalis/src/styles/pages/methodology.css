@@ -4,7 +4,7 @@
 .mtd-head__icon {
   width: 4rem; height: 4rem;
   background: linear-gradient(135deg, var(--mj-brand), var(--mj-brand-deep));
-  color: #fff; border-radius: var(--ds-radius-xl);
+  color: var(--mj-white, #ffffff); border-radius: var(--ds-radius-xl);
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 1rem;
 }
@@ -21,13 +21,13 @@
 .mtd-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.85rem; }
 .mtd-step {
   display: flex; align-items: flex-start; gap: var(--ds-space-3);
-  background: var(--majalis-panel, #fff);
+  background: var(--majalis-panel, var(--mj-white, #ffffff));
   border: 1px solid var(--majalis-line, #d4e6de);
   border-radius: 0.65rem; padding: 0.85rem 1rem;
 }
 .mtd-step__num {
   width: 1.6rem; height: 1.6rem; border-radius: 50%;
-  background: var(--mj-brand); color: #fff;
+  background: var(--mj-brand); color: var(--mj-white, #ffffff);
   font-weight: 900; font-size: 0.72rem;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
@@ -39,7 +39,7 @@
 .mtd-source {
   display: flex; align-items: center; gap: var(--ds-space-3);
   padding: 0.6rem 0.85rem;
-  background: var(--majalis-panel, #fff); border: 1px solid var(--majalis-line, #d4e6de);
+  background: var(--majalis-panel, var(--mj-white, #ffffff)); border: 1px solid var(--majalis-line, #d4e6de);
   border-radius: var(--ds-radius);
 }
 .mtd-source__name { font-weight: 700; font-size: 0.85rem; color: var(--mj-brand); min-width: 130px; }
@@ -58,7 +58,7 @@
   padding: 0.85rem 1rem;
   margin-bottom: 1rem;
   position: relative;
-  color: #fff;
+  color: var(--mj-white, #ffffff);
 }
 .tg-banner__icon {
   flex-shrink: 0;
@@ -75,7 +75,7 @@
   font-weight: 700;
   font-size: 0.9rem;
   margin: 0 0 0.15rem;
-  color: #fff;
+  color: var(--mj-white, #ffffff);
 }
 .tg-banner__sub {
   font-size: var(--ds-text-xs);
@@ -109,7 +109,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   padding: 0;
 }
 @media (max-width: 480px) {
@@ -131,7 +131,7 @@
 }
 .hsh-eyebrow {
   background: var(--clr-primary, var(--mj-brand-deep));
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   font-size: 0.8rem;
   font-weight: 700;
   padding: 0.25rem 0.7rem;
@@ -164,7 +164,7 @@
   width: 1.75rem;
   height: 1.75rem;
   background: var(--clr-primary, var(--mj-brand-deep));
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   border-radius: 50%;
   display: flex;
   align-items: center;

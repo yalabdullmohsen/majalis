@@ -14,7 +14,7 @@
   background: linear-gradient(135deg, var(--color-brand-deep, var(--mj-brand-deep)) 0%, var(--color-brand, var(--mj-brand)) 100%);
   border-radius: var(--ds-radius-2xl);
   padding: 2.5rem 1.5rem 2rem;
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
   text-align: center;
   margin-bottom: 1.75rem;
   box-shadow: 0 4px 24px rgba(31, 77, 58, 0.18);
@@ -23,14 +23,14 @@
   display: inline-block;
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.25);
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
   font-size: 0.78rem;
   font-weight: 700;
   padding: 0.25rem 0.85rem;
   border-radius: var(--ds-radius-full);
   margin-bottom: 0.75rem;
 }
-.tf-hero__title { font-size: 2rem; font-weight: 900; color: #FFFFFF; margin: 0 0 0.6rem; }
+.tf-hero__title { font-size: 2rem; font-weight: 900; color: var(--mj-white, #ffffff); margin: 0 0 0.6rem; }
 .tf-hero__sub {
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.87);
@@ -55,8 +55,8 @@
   min-width: 4.75rem;
   padding: 0.7rem 1rem;
   border-radius: 0.85rem;
-  background: var(--surface-card, var(--mj-surface, #ffffff));
-  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #123F32) 14%, var(--majalis-line, #d5ddd9));
+  background: var(--surface-card, var(--mj-surface, var(--mj-white, #ffffff)));
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep, #123F32) 14%, var(--majalis-line, var(--mj-hairline)));
   box-shadow: 0 1px 2px color-mix(in srgb, var(--mj-brand-deep, #123F32) 6%, transparent);
 }
 .tf-stat strong {
@@ -77,16 +77,16 @@
 html.dark .tf-stat,
 html[data-theme="dark"] .tf-stat {
   background: color-mix(in srgb, var(--surface-brand-wash, #16261F) 90%, #0f1612);
-  border-color: color-mix(in srgb, #5a9e88 26%, #2a3832);
+  border-color: color-mix(in srgb, #5a9e88 26%, var(--mj-hairline));
   box-shadow: none;
 }
 html.dark .tf-stat strong,
 html[data-theme="dark"] .tf-stat strong {
-  color: var(--on-brand-wash, #F8FAFC);
+  color: var(--on-brand-wash, var(--mj-surface-2));
 }
 html.dark .tf-stat span,
 html[data-theme="dark"] .tf-stat span {
-  color: var(--on-brand-wash-secondary, #E2E8F0);
+  color: var(--on-brand-wash-secondary, var(--mj-info-soft));
 }
 
 /* إن وُضعت البطاقات داخل بطل غامق — نص فاتح فوق الأخضر */
@@ -95,8 +95,8 @@ html[data-theme="dark"] .tf-stat span {
   border-color: rgba(255, 255, 255, 0.22);
   box-shadow: none;
 }
-.tf-hero .tf-stat strong { color: var(--on-brand, #ffffff); }
-.tf-hero .tf-stat span { color: var(--on-brand-secondary, #F8FAFC); }
+.tf-hero .tf-stat strong { color: var(--on-brand, var(--mj-white, #ffffff)); }
+.tf-hero .tf-stat span { color: var(--on-brand-secondary, var(--mj-surface-2)); }
 
 .tf-intro {
   background: var(--mj-brand-tint);
@@ -123,7 +123,7 @@ html[data-theme="dark"] .tf-stat span {
   padding: 0.85rem 1rem;
   border-radius: var(--ds-radius-lg);
   border: 1.5px solid var(--mj-brand-soft);
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
   text-decoration: none;
   color: var(--mj-brand-deep);
   transition: border-color 0.15s, box-shadow 0.15s;
@@ -142,7 +142,7 @@ html[data-theme="dark"] .tf-stat span {
   inset-inline-end: 0.85rem;
   top: 50%;
   transform: translateY(-50%);
-  color: #6B9E86;
+  color: var(--mj-brand);
   pointer-events: none;
 }
 .tf-search {
@@ -152,7 +152,7 @@ html[data-theme="dark"] .tf-stat span {
   border-radius: var(--ds-radius-lg);
   font-size: 0.9rem;
   color: var(--mj-brand-deep);
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
   outline: none;
   box-sizing: border-box;
   font-family: inherit;
@@ -167,7 +167,7 @@ html[data-theme="dark"] .tf-stat span {
   background: none;
   border: none;
   cursor: pointer;
-  color: #6B9E86;
+  color: var(--mj-brand);
   padding: 0.2rem;
   display: flex;
   align-items: center;
@@ -177,7 +177,7 @@ html[data-theme="dark"] .tf-stat span {
   padding: 0.35rem 0.9rem;
   border-radius: var(--ds-radius-full);
   border: 1.5px solid var(--mj-brand-soft);
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--mj-brand-deep);
@@ -185,7 +185,7 @@ html[data-theme="dark"] .tf-stat span {
   font-family: inherit;
 }
 .tf-cat-chip:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
-.tf-cat-chip--active { background: var(--mj-brand); border-color: var(--mj-brand); color: #FFFFFF; }
+.tf-cat-chip--active { background: var(--mj-brand); border-color: var(--mj-brand); color: var(--mj-white, #ffffff); }
 
 .tf-section { margin-bottom: 1.75rem; }
 .tf-section__title {
@@ -198,7 +198,7 @@ html[data-theme="dark"] .tf-stat span {
 .tf-grid { display: flex; flex-direction: column; gap: 0.6rem; }
 
 .tf-card {
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--radius-card, 24px);
   overflow: hidden;
@@ -265,7 +265,7 @@ html[data-theme="dark"] .tf-stat span {
   padding: 0.85rem 1rem;
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius-lg);
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
   text-decoration: none;
   color: inherit;
   transition: border-color 0.15s;
@@ -298,7 +298,7 @@ html[data-theme="dark"] .tf-stat span {
   padding: 0.45rem 0.9rem;
   border-radius: var(--ds-radius-full);
   border: 1.5px solid var(--mj-brand-soft);
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
   color: var(--mj-brand-deep);
   font-size: 0.82rem;
   font-weight: 600;
@@ -392,7 +392,7 @@ html[data-theme="dark"] .tf-stat span {
   display: grid;
   place-items: center;
   background: var(--mj-brand);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   font-weight: 800;
   font-size: 0.85rem;
   z-index: 1;
@@ -400,7 +400,7 @@ html[data-theme="dark"] .tf-stat span {
 }
 .tf-timeline__body {
   flex: 1;
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius-lg);
   padding: 0.85rem 1rem;
@@ -430,7 +430,7 @@ html[data-theme="dark"] .tf-stat span {
   gap: 0.7rem;
 }
 .tf-path-card {
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--radius-card, 24px);
   padding: 1rem;
@@ -444,7 +444,7 @@ html[data-theme="dark"] .tf-stat span {
   padding: 0 0.35rem;
   border-radius: 999px;
   background: var(--mj-brand-deep);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   font-size: 0.78rem;
   font-weight: 800;
   margin-bottom: 0.55rem;
@@ -481,7 +481,7 @@ html[data-theme="dark"] .tf-stat span {
   gap: 0.7rem;
 }
 .tf-spotlight-card {
-  background: linear-gradient(165deg, #FFFFFF 0%, #F4FAF7 100%);
+  background: linear-gradient(165deg, var(--mj-white, #ffffff) 0%, #F4FAF7 100%);
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--radius-card, 24px);
   padding: 1rem;
@@ -559,7 +559,7 @@ html[data-theme="dark"] .tf-stat span {
   gap: 0.75rem;
 }
 .tf-edition-card {
-  background: var(--majalis-panel, #fff);
+  background: var(--majalis-panel, var(--mj-white, #ffffff));
   border: 1px solid var(--majalis-line, #e5e0d5);
   border-radius: var(--radius-card, 24px);
   padding: 1rem 1.05rem;
@@ -570,7 +570,7 @@ html[data-theme="dark"] .tf-stat span {
 .tf-edition-card h3 {
   margin: 0;
   font-size: 1rem;
-  color: var(--majalis-ink, #1A1A18);
+  color: var(--majalis-ink, var(--mj-ink));
 }
 .tf-edition-card__level {
   align-self: flex-start;

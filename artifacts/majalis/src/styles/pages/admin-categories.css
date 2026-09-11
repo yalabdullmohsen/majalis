@@ -29,14 +29,14 @@
   margin: 0.75rem 0 1rem;
   padding: 0.65rem 0.85rem;
   background: var(--majalis-parchment-deep, #f3f1ea);
-  border: 1px solid var(--majalis-line, #e5e7eb);
+  border: 1px solid var(--majalis-line, var(--mj-hairline));
   border-radius: 0.5rem;
   font-size: 0.82rem;
   color: var(--majalis-ink-soft, var(--mj-ink-2));
 }
 
 .cat-admin__stats strong {
-  color: var(--majalis-ink, #1a1a18);
+  color: var(--majalis-ink, var(--mj-ink));
   font-weight: 700;
 }
 
@@ -74,7 +74,7 @@
   align-items: center;
   gap: 0.35rem;
   padding: 0.4rem 0.7rem;
-  border: 1px solid var(--majalis-line, #e5e7eb);
+  border: 1px solid var(--majalis-line, var(--mj-hairline));
   background: transparent;
   border-radius: 999px;
   font-size: 0.78rem;
@@ -86,7 +86,7 @@
 .cat-admin__tab.is-active {
   background: var(--majalis-emerald-deep, var(--mj-brand));
   border-color: var(--majalis-emerald-deep, var(--mj-brand));
-  color: #fff;
+  color: var(--mj-white, #ffffff);
 }
 
 .cat-admin__tab-count {
@@ -124,8 +124,8 @@
   justify-content: space-between;
   gap: 0.5rem;
   padding: 0.55rem 0.65rem;
-  background: #fff;
-  border: 1px solid var(--majalis-line, #e5e7eb);
+  background: var(--mj-white, #ffffff);
+  border: 1px solid var(--majalis-line, var(--mj-hairline));
   border-radius: 0.45rem;
 }
 
@@ -150,14 +150,14 @@
   padding: 0.65rem 0;
   font-size: 0.8rem;
   color: var(--majalis-ink-soft, var(--mj-ink-2));
-  border-top: 1px solid var(--majalis-line, #e5e7eb);
+  border-top: 1px solid var(--majalis-line, var(--mj-hairline));
 }
 
 /* شجرة العقد */
 .cat-node {
-  border: 1px solid var(--majalis-line, #e5e7eb);
+  border: 1px solid var(--majalis-line, var(--mj-hairline));
   border-radius: 0.5rem;
-  background: #fff;
+  background: var(--mj-white, #ffffff);
   margin-bottom: 0.45rem;
 }
 
@@ -269,8 +269,8 @@
   min-width: 11rem;
   max-width: min(18rem, 90vw);
   padding: 0.35rem;
-  background: #fff;
-  border: 1px solid var(--majalis-line, #e5e7eb);
+  background: var(--mj-white, #ffffff);
+  border: 1px solid var(--majalis-line, var(--mj-hairline));
   border-radius: 0.5rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   display: flex;
@@ -289,7 +289,7 @@
   background: transparent;
   border-radius: 0.35rem;
   font-size: 0.82rem;
-  color: var(--majalis-ink, #1a1a18);
+  color: var(--majalis-ink, var(--mj-ink));
   cursor: pointer;
 }
 
@@ -304,7 +304,7 @@
 
 .cat-node__children {
   padding: 0 0.45rem 0.45rem;
-  border-top: 1px dashed var(--majalis-line, #e5e7eb);
+  border-top: 1px dashed var(--majalis-line, var(--mj-hairline));
 }
 
 /* تمييز بصري بالحالة — لون + نمط حد + أيقونة نصية */

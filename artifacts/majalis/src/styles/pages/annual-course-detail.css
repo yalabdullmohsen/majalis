@@ -13,7 +13,7 @@
   padding: 0.75rem 1.5rem;
   border-radius: var(--ds-radius);
   background: var(--emerald, var(--mj-brand));
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   font-weight: 700;
   text-decoration: none;
 }

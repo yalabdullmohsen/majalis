@@ -37,7 +37,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 }
 
 .assistant-intro {
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-muted));
   font-size: 0.95rem;
   line-height: 1.85;
   max-width: 36rem;
@@ -82,7 +82,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 /* لا تطبق على نص الهيرو الأخضر (.asp-hero) — كانت تكسر التباين (ink على أخضر) */
 .assistant-header > p,
 .assistant-header p:not(.asp-hero__eyebrow):not(.assistant-intro) {
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-muted));
   font-size: 0.95rem;
   line-height: 1.85;
   max-width: 36rem;
@@ -120,7 +120,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 
 .assistant-page-minimal .assistant-message-assistant:not(.assistant-message-failure) {
   align-self: flex-end;
-  background: #fff;
+  background: var(--mj-white, #ffffff);
 }
 
 .assistant-message-failure {
@@ -140,7 +140,7 @@ html[data-theme="dark"] .assistant-message-bubble {
   margin: 0;
   padding: 0.5rem 0.75rem;
   font-size: 0.82rem;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-muted));
   text-align: center;
   border-top: 1px solid var(--majalis-line);
   background: transparent;
@@ -249,7 +249,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 
 .assistant-home-btn:hover {
   transform: translateY(-1px);
-  background: #fff;
+  background: var(--mj-white, #ffffff);
 }
 
 .assistant-service-warning {
@@ -272,7 +272,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 }
 
 .assistant-quick-prompts button {
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   border-radius: 999px;
   padding: 0.4rem 0.75rem;
   background: var(--majalis-parchment-deep);
@@ -297,7 +297,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 
 .assistant-retry-btn {
   border: 1px solid color-mix(in srgb, var(--mj-danger) 22%, white);
-  background: #fff;
+  background: var(--mj-white, #ffffff);
   color: var(--mj-danger);
   border-radius: var(--ds-radius);
   padding: 0.35rem 0.75rem;
@@ -308,7 +308,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 
 .assistant-chat {
   margin-top: 0;
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   border-radius: var(--ds-radius-xl);
   background: rgba(255, 255, 255, 0.84);
   box-shadow: 0 12px 36px rgba(36, 31, 24, 0.08);
@@ -322,7 +322,7 @@ html[data-theme="dark"] .assistant-message-bubble {
   padding: 0.9rem 1rem;
   border-bottom: 1px solid var(--majalis-line);
   background: var(--majalis-parchment-deep);
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-muted));
   font-size: 0.9rem;
 }
 
@@ -345,7 +345,7 @@ html[data-theme="dark"] .assistant-message-bubble {
   max-width: min(88%, 42rem);
   border-radius: 1.1rem;
   padding: 0.85rem 1rem;
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
 }
 
 .assistant-message span {
@@ -399,7 +399,7 @@ html[data-theme="dark"] .assistant-message-bubble {
   padding: 0.4rem 1rem;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   background: var(--mj-danger);
   border: none;
   border-radius: 8px;
@@ -411,7 +411,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 
 .assistant-message-assistant {
   align-self: flex-end;
-  background: #fff;
+  background: var(--mj-white, #ffffff);
   max-width: 42rem;
   width: 100%;
 }
@@ -437,7 +437,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 .assistant-loading {
   align-self: flex-end;
   margin: 0;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-muted));
   background: var(--majalis-parchment-deep);
 }
 
@@ -460,7 +460,7 @@ html[data-theme="dark"] .assistant-message-bubble {
   width: 100%;
   resize: vertical;
   min-height: 4.25rem;
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   border-radius: 0.95rem;
   padding: 0.85rem 1rem;
   color: var(--majalis-ink);

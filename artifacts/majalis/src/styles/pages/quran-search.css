@@ -25,7 +25,7 @@
   margin-block: auto;
   width: 18px;
   height: 18px;
-  color: var(--mj-ink-2, #5d726a);
+  color: var(--mj-ink-2, var(--mj-muted));
   pointer-events: none;
   z-index: 1;
 }
@@ -60,7 +60,7 @@
 .quran-search-page__meta {
   margin: 0 0 1rem;
   font-size: 0.9rem;
-  color: var(--mj-ink-2, #5d726a);
+  color: var(--mj-ink-2, var(--mj-muted));
   text-align: start;
 }
 
@@ -132,7 +132,7 @@
   font-family: "Amiri Quran", "Scheherazade New", "Traditional Arabic", serif;
   font-size: 1.15rem;
   line-height: 2;
-  color: var(--mj-ink, #1a1a18);
+  color: var(--mj-ink, var(--mj-ink));
   text-align: start;
   width: 100%;
 }
@@ -154,7 +154,7 @@
 .quran-search-page__footer {
   margin: 1.75rem 0 0;
   font-size: 0.88rem;
-  color: var(--mj-ink-2, #5d726a);
+  color: var(--mj-ink-2, var(--mj-muted));
 }
 
 .quran-search-page__footer a {

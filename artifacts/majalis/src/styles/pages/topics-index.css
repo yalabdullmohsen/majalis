@@ -17,10 +17,10 @@
   display: block;
   padding: var(--ds-space-4);
   border-radius: var(--ds-radius);
-  border: 1px solid var(--line, #e5e7eb);
+  border: 1px solid var(--line, var(--mj-hairline));
   text-decoration: none;
   text-align: center;
   font-weight: 600;
-  background: var(--panel, #fff);
+  background: var(--panel, var(--mj-white, #ffffff));
 }
 

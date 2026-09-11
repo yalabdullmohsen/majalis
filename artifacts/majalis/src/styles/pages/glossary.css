@@ -4,7 +4,7 @@
 .gl-page {
   min-height: 100svh;
   background: var(--color-bg, var(--surface-app, #f7f4ee));
-  color: var(--color-text, var(--mj-ink, #16241e));
+  color: var(--color-text, var(--mj-ink, var(--mj-ink)));
   padding-bottom: calc(
     var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) +
       max(4.5rem, var(--assistant-fab-size, 3.35rem) + 3.25rem)
@@ -21,7 +21,7 @@
 .gl-hero__badge {
   display: inline-block;
   background: rgba(255,255,255,.14);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   border: 1px solid rgba(255,255,255,.35);
   border-radius: var(--ds-radius-full);
   padding: .3rem .9rem;
@@ -32,12 +32,12 @@
 .gl-hero__title {
   font-size: 2rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   margin: 0 0 .6rem;
   line-height: 1.3;
 }
 .gl-hero__sub {
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   font-size: .95rem;
   margin: 0 0 1rem;
   line-height: 1.7;
@@ -47,7 +47,7 @@
   display: inline-flex;
   align-items: center;
   gap: .45rem;
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   font-size: .82rem;
   background: rgba(255,255,255,.14);
   border-radius: var(--ds-radius-full);
@@ -55,7 +55,7 @@
   margin-bottom: 1rem;
   max-width: calc(100% - 5.5rem);
 }
-.gl-hero__count svg { color: #fff; flex-shrink: 0; }
+.gl-hero__count svg { color: var(--mj-white, #ffffff); flex-shrink: 0; }
 .gl-hero__actions {
   display: flex;
   flex-wrap: wrap;
@@ -70,7 +70,7 @@
   min-height: 44px;
   padding: 0 14px;
   border-radius: 999px;
-  background: var(--ss-card-bg, var(--mj-surface, #fff));
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff)));
   color: #0B3D2E;
   font-weight: 700;
   text-decoration: none;
@@ -78,7 +78,7 @@
 }
 .gl-hero__btn--ghost {
   background: transparent;
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   border: 1px solid rgba(255,255,255,.55);
 }
 
@@ -92,7 +92,7 @@
 }
 .gl-search svg { color: rgba(255,255,255,.7); flex-shrink: 0; }
 .gl-search__input {
-  background: none; border: none; outline: none; color: #fff; font-size: .9rem;
+  background: none; border: none; outline: none; color: var(--mj-white, #ffffff); font-size: .9rem;
   width: 100%; direction: rtl;
 }
 .gl-search__input::placeholder { color: rgba(255,255,255,.6); }
@@ -110,9 +110,9 @@
   margin-bottom: 1.2rem; justify-content: center;
 }
 .gl-cat {
-  border: 1.5px solid color-mix(in srgb, var(--mj-brand) 28%, var(--ss-border, #d9d3c8));
-  background: var(--ss-card-bg, #fffcf7);
-  color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
+  border: 1.5px solid color-mix(in srgb, var(--mj-brand) 28%, var(--ss-border, var(--mj-hairline)));
+  background: var(--ss-card-bg, var(--mj-surface));
+  color: var(--brand-on-light, var(--mj-brand-deep, #12362c));
   border-radius: var(--ds-radius-full); padding: .35rem .9rem; font-size: .8rem; font-weight: 700;
   cursor: pointer; display: flex; align-items: center; gap: .35rem;
   transition: all .18s ease;
@@ -121,8 +121,8 @@
 .gl-cat:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
 .gl-cat--active {
   background: var(--mj-brand-deep, #12362c) !important;
-  color: var(--on-dark-strong, #fff) !important;
-  border-color: var(--mj-brand-deep, #0d4a39);
+  color: var(--on-dark-strong, var(--mj-white, #ffffff)) !important;
+  border-color: var(--mj-brand-deep, #12362c);
 }
 .gl-cat__count {
   background: rgba(255,255,255,.25); border-radius: var(--ds-radius-full);
@@ -139,8 +139,8 @@
 .gl-list { display: flex; flex-direction: column; gap: .6rem; }
 
 .gl-term {
-  background: var(--ss-card-bg, #fffcf7);
-  border: 1px solid color-mix(in srgb, var(--mj-brand) 16%, var(--ss-border, #e2e8f0));
+  background: var(--ss-card-bg, var(--mj-surface));
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 16%, var(--ss-border, var(--mj-info-soft)));
   border-radius: var(--radius-card, 24px);
   overflow: hidden;
   box-shadow: var(--ss-shadow-soft, 0 1px 4px rgba(0,0,0,.04));

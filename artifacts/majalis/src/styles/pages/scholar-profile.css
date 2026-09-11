@@ -3,7 +3,7 @@
   max-width: 720px;
   margin: 0 auto;
   padding: 1.5rem 1rem 4rem;
-  color: var(--foreground, #1a1a1a);
+  color: var(--foreground, var(--mj-ink));
 }
 .sp-hero {
   margin-bottom: 1.75rem;

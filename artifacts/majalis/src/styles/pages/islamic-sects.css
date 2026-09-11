@@ -20,9 +20,9 @@
   margin: 0;
   padding: 0.85rem 1rem;
   border-radius: var(--radius-card, 24px);
-  border: 1px solid color-mix(in srgb, var(--mj-accent, #c4a574) 45%, var(--ss-border, #e3e8e6));
-  background: color-mix(in srgb, var(--mj-accent, #c4a574) 12%, var(--ss-card-bg, #fffcf7));
-  color: var(--color-text, var(--mj-ink, #16241e));
+  border: 1px solid color-mix(in srgb, var(--mj-accent, #c4a574) 45%, var(--ss-border, var(--mj-hairline)));
+  background: color-mix(in srgb, var(--mj-accent, #c4a574) 12%, var(--ss-card-bg, var(--mj-surface)));
+  color: var(--color-text, var(--mj-ink, var(--mj-ink)));
   font-size: 0.88rem;
   line-height: 1.7;
 }
@@ -32,8 +32,8 @@
   min-height: 44px;
   padding: 0.65rem 1rem;
   border-radius: var(--radius-card, 24px);
-  border: 1px solid color-mix(in srgb, var(--ss-primary-green, var(--mj-brand)) 22%, var(--ss-border, #e3e8e6));
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  border: 1px solid color-mix(in srgb, var(--ss-primary-green, var(--mj-brand)) 22%, var(--ss-border, var(--mj-hairline)));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
   color: var(--color-text, var(--mj-ink));
   font: inherit;
   font-size: 0.92rem;
@@ -77,9 +77,9 @@
   min-height: 44px;
   padding: 0.35rem 0.9rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--mj-brand) 28%, var(--ss-border, #e3e8e6));
-  background: var(--ss-card-bg, #fffcf7);
-  color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 28%, var(--ss-border, var(--mj-hairline)));
+  background: var(--ss-card-bg, var(--mj-surface));
+  color: var(--brand-on-light, var(--mj-brand-deep, #12362c));
   font: inherit;
   font-size: 0.82rem;
   font-weight: 650;
@@ -89,8 +89,8 @@
 
 .sect-hub__chip.is-active {
   background: var(--mj-brand-deep, #12362c);
-  border-color: var(--mj-brand-deep, #0d4a39);
-  color: var(--on-dark-strong, #fff);
+  border-color: var(--mj-brand-deep, #12362c);
+  color: var(--on-dark-strong, var(--mj-white, #ffffff));
 }
 
 html.dark .sect-hub__chip.is-active,
@@ -146,8 +146,8 @@ html.dark .sect-hub__chip.is-active,
   width: 100%;
   padding: 1rem 1.05rem;
   border-radius: var(--radius-card, 24px);
-  border: 1px solid color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, #e3e8e6));
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, var(--mj-hairline)));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
   box-shadow: var(--ss-shadow-soft, 0 2px 10px -6px rgba(11, 32, 24, 0.14));
   text-align: start;
   cursor: pointer;
@@ -179,7 +179,7 @@ html.dark .sect-hub__chip.is-active,
   height: 2.5rem;
   border-radius: var(--radius-card, 24px);
   flex-shrink: 0;
-  background: color-mix(in srgb, var(--mj-brand) 12%, var(--ss-card-bg, #fffcf7));
+  background: color-mix(in srgb, var(--mj-brand) 12%, var(--ss-card-bg, var(--mj-surface)));
   color: var(--brand-on-light, var(--mj-brand-deep));
 }
 
@@ -225,7 +225,7 @@ html.dark .sect-hub__chip.is-active,
   margin: 0;
   font-size: 0.84rem;
   line-height: 1.65;
-  color: var(--color-text-muted, var(--mj-ink-2, #4a5a53));
+  color: var(--color-text-muted, var(--mj-ink-2, var(--mj-ink-2)));
 }
 
 .sect-card__cta {
@@ -277,7 +277,7 @@ html.dark .sect-hub__chip.is-active,
   border-radius: var(--radius-button, 18px);
   text-decoration: none;
   background: var(--mj-brand-deep);
-  color: var(--on-dark-strong, #fff);
+  color: var(--on-dark-strong, var(--mj-white, #ffffff));
 }
 
 .sect-card__link--ghost {
@@ -289,7 +289,7 @@ html.dark .sect-hub__chip.is-active,
 html.dark .sect-card,
 [data-theme="dark"] .sect-card {
   background: var(--ss-card-bg, var(--mj-surface));
-  border-color: color-mix(in srgb, var(--mj-brand) 28%, #2a3832);
+  border-color: color-mix(in srgb, var(--mj-brand) 28%, var(--mj-hairline));
 }
 
 html.dark .sect-card__title,
@@ -300,7 +300,7 @@ html.dark .sect-card__title,
 html.dark .sect-hub__chip,
 [data-theme="dark"] .sect-hub__chip {
   background: #15201c;
-  border-color: color-mix(in srgb, #5a9e88 28%, #2a3832);
+  border-color: color-mix(in srgb, #5a9e88 28%, var(--mj-hairline));
   color: #d8ebe2;
 }
 

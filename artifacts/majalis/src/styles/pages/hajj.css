@@ -14,21 +14,21 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 /* hero */
 .hj-hero {
   background: linear-gradient(160deg, var(--mj-brand-deep) 0%, var(--mj-brand-deep) 60%, #1A8A68 100%);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   padding: 2.5rem 1.25rem 0;
   text-align: center;
 }
 .hj-hero__badge {
   display: inline-block;
   background: rgba(255,255,255,.18);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   border-radius: var(--ds-radius-full);
   padding: .25rem .9rem;
   font-size: .75rem;
   margin-bottom: .6rem;
 }
 .hj-hero__kaaba { font-size: 3rem; line-height: 1; margin-bottom: .5rem; }
-.hj-hero__title { font-size: clamp(1.7rem, 4vw, 2.5rem); font-weight: 800; margin: 0 0 .5rem; color: #fff; }
+.hj-hero__title { font-size: clamp(1.7rem, 4vw, 2.5rem); font-weight: 800; margin: 0 0 .5rem; color: var(--mj-white, #ffffff); }
 .hj-hero__sub { font-size: .93rem; opacity: .88; max-width: 460px; margin: 0 auto 1.25rem; line-height: 1.6; }
 
 .hj-talbiya {
@@ -40,7 +40,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   margin: 0 auto 1.5rem;
 }
 .hj-talbiya__label { display: block; font-size: .7rem; opacity: .7; margin-bottom: .4rem; letter-spacing: normal; }
-.hj-talbiya__text { font-size: 1.05rem; font-weight: 600; line-height: 1.95; color: #fff; margin: 0; }
+.hj-talbiya__text { font-size: 1.05rem; font-weight: 600; line-height: 1.95; color: var(--mj-white, #ffffff); margin: 0; }
 
 /* tabs */
 .hj-tabs {
@@ -65,7 +65,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   transition: background .18s;
   min-width: 5.2rem;
 }
-.hj-tab:hover { background: rgba(255,255,255,.22); color: #fff; }
+.hj-tab:hover { background: rgba(255,255,255,.22); color: var(--mj-white, #ffffff); }
 .hj-tab--active { background: var(--mj-bg); color: var(--majalis-emerald, var(--mj-brand-deep)); font-weight: 700; }
 .hj-tab__icon { font-size: 1.1rem; line-height: 1; }
 .hj-tab__label { white-space: nowrap; font-size: .76rem; }
@@ -293,7 +293,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   width: 2rem;
   height: 2rem;
   background: var(--majalis-emerald, var(--mj-brand-deep));
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   border-radius: 50%;
   display: flex;
   align-items: center;

@@ -42,18 +42,18 @@
 .udp-step-num {
   flex-shrink: 0; width: 1.5rem; height: 1.5rem;
   border-radius: 9999px; background: var(--majalis-emerald);
-  color: #fff; font-size: .75rem; font-weight: 700;
+  color: var(--mj-white, #ffffff); font-size: .75rem; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
 .udp-deadline-label { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; display: block; }
 .udp-deadline-val { font-weight: 500; color: var(--majalis-emerald); display: flex; align-items: center; gap: .25rem; }
 .udp-website-btn {
   display: inline-flex; align-items: center; gap: .375rem;
-  padding: .5rem 1rem; background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
+  padding: .5rem 1rem; background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface))));
   color: var(--majalis-emerald); border-radius: .75rem;
   font-size: .875rem; font-weight: 600; transition: opacity .15s;
   text-decoration: none;
-  border: 1px solid var(--majalis-line, var(--ss-border, #d9d3c8));
+  border: 1px solid var(--majalis-line, var(--ss-border, var(--mj-hairline)));
 }
 .udp-website-btn:hover { opacity: .9; }
 .udp-section-title { font-size: var(--ds-text-lg); font-weight: 700; color: var(--majalis-ink); margin-bottom: .75rem; }
@@ -100,9 +100,9 @@
 .is-lesson-item { display: flex; gap: var(--ds-space-2); align-items: flex-start; font-size: 0.8125rem; color: var(--mj-ink-2); margin-bottom: 0.35rem; }
 .is-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
 .is-btn { padding: 0.45rem 1rem; border-radius: var(--ds-radius-sm); font-size: 0.8125rem; font-weight: 600; cursor: pointer; font-family: inherit; border: none; transition: all 0.15s; }
-.is-btn.approve { background: var(--mj-brand); color: #fff; }
+.is-btn.approve { background: var(--mj-brand); color: var(--mj-white, #ffffff); }
 .is-btn.approve:hover { background: var(--mj-brand); }
-.is-btn.revoke { background: #fff; color: var(--mj-danger); border: 1px solid #fca5a5; }
+.is-btn.revoke { background: var(--mj-white, #ffffff); color: var(--mj-danger); border: 1px solid #fca5a5; }
 .is-btn.revoke:hover { background: color-mix(in srgb, var(--mj-danger) 8%, white); }
 .is-btn.disabled { opacity: 0.45; cursor: not-allowed; }
 .is-verified-info { font-size: 0.7375rem; color: var(--mj-muted); padding: 0.3rem 0; }

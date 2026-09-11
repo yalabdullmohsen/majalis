@@ -27,18 +27,18 @@ html.pts-immersive .top-section-bar {
   background: var(--mj-brand-deep, #12362c) !important;
   border-block-end-color: rgba(255, 255, 255, 0.08) !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
-  color: var(--mj-on-brand, #ffffff) !important;
+  color: var(--mj-on-brand, var(--mj-white, #ffffff)) !important;
   backdrop-filter: none !important;
 }
 html.pts-immersive .top-section-bar__tab {
   color: rgba(250, 250, 248, 0.72) !important;
 }
 html.pts-immersive .top-section-bar__tab:hover {
-  color: var(--mj-on-brand, #ffffff) !important;
+  color: var(--mj-on-brand, var(--mj-white, #ffffff)) !important;
 }
 html.pts-immersive .top-section-bar__tab.is-active {
   color: #0E241E !important;
-  background: color-mix(in srgb, var(--gold-300, #E3CB8C) 88%, #fff) !important;
+  background: color-mix(in srgb, var(--gold-300, #E3CB8C) 88%, var(--mj-white, #ffffff)) !important;
   border-radius: 14px !important;
 }
 
@@ -1008,6 +1008,6 @@ html.pts-immersive .scroll-to-top {
 .pts-hint--skeleton {
   min-height: 4.5rem;
   border-radius: var(--radius-card, 24px);
-  background: color-mix(in srgb, var(--surface-muted, #f3efe6) 88%, var(--primary, #146b52));
+  background: color-mix(in srgb, var(--surface-muted, #f3efe6) 88%, var(--primary, var(--mj-brand)));
   opacity: 0.55;
 }

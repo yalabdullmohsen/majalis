@@ -9,7 +9,7 @@
   background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 58%, var(--mj-brand) 100%);
   border-radius: var(--ds-radius-2xl);
   padding: 2.5rem 1.5rem 2rem;
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
   text-align: center;
   margin-bottom: 1.75rem;
   box-shadow: 0 4px 24px rgba(31,77,58,0.18);
@@ -18,14 +18,14 @@
   display: inline-block;
   background: rgba(255,255,255,0.15);
   border: 1px solid rgba(255,255,255,0.25);
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
   font-size: 0.78rem;
   font-weight: 700;
   padding: 0.25rem 0.85rem;
   border-radius: var(--ds-radius-full);
   margin-bottom: 0.75rem;
 }
-.zk-hero__title { font-size: 2rem; font-weight: 900; color: #FFFFFF; margin: 0 0 0.65rem; }
+.zk-hero__title { font-size: 2rem; font-weight: 900; color: var(--mj-white, #ffffff); margin: 0 0 0.65rem; }
 .zk-hero__sub { font-size: 0.9rem; color: rgba(255,255,255,0.87); max-width: 520px; margin: 0 auto 1.5rem; line-height: 1.7; }
 .zk-hero__stats { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--ds-space-4); }
 .zk-hero__stat {
@@ -38,7 +38,7 @@
   padding: 0.65rem 1.25rem;
   min-width: 72px;
 }
-.zk-hero__stat strong { font-size: 1.6rem; font-weight: 900; color: #FFFFFF; line-height: 1.1; }
+.zk-hero__stat strong { font-size: 1.6rem; font-weight: 900; color: var(--mj-white, #ffffff); line-height: 1.1; }
 .zk-hero__stat span { font-size: 0.8rem; color: rgba(255,255,255,0.78); margin-top: 0.15rem; }
 
 /* المصارف الثمانية */
@@ -59,7 +59,7 @@
   display: flex;
   align-items: center;
   gap: var(--ds-space-2);
-  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface))));
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: 0.65rem;
   padding: 0.55rem 0.75rem;
@@ -71,7 +71,7 @@
   width: 20px;
   height: 20px;
   background: var(--mj-brand);
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -84,7 +84,7 @@
 /* حاسبة الزكاة */
 .zk-calc {
   background: var(--color-surface-soft, var(--mj-surface-2, #f7f4ee));
-  border: 1.5px solid color-mix(in srgb, var(--mj-brand) 22%, var(--ss-border, var(--color-border, #d9d3c8)));
+  border: 1.5px solid color-mix(in srgb, var(--mj-brand) 22%, var(--ss-border, var(--color-border, var(--mj-hairline))));
   border-radius: var(--ds-radius-xl);
   padding: var(--ds-space-5);
   margin-bottom: 1.75rem;
@@ -115,7 +115,7 @@
   border-radius: 0.6rem;
   font-size: 0.9rem;
   color: var(--color-text, var(--mj-brand-deep));
-  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface))));
   outline: none;
   width: 100%;
   box-sizing: border-box;
@@ -126,7 +126,7 @@
 .zk-calc__btn {
   padding: 0.65rem 1.5rem;
   background: var(--mj-brand);
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
   border: none;
   border-radius: 0.65rem;
   font-size: 0.88rem;
@@ -140,7 +140,7 @@
   margin-top: 0.85rem;
   padding: 0.75rem 1rem;
   background: var(--mj-brand);
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
   border-radius: 0.65rem;
   font-size: 0.9rem;
   font-weight: 700;
@@ -154,7 +154,7 @@
 
 /* بطاقة النوع */
 .zk-card {
-  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface))));
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--radius-card, 0.9rem);
   transition: border-color 0.15s, box-shadow 0.15s;
@@ -219,7 +219,7 @@
   font-size: 0.83rem;
   font-weight: 600;
   color: var(--color-text, var(--mj-brand-deep));
-  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf7)));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface))));
   transition: all 0.15s;
   text-align: center;
 }

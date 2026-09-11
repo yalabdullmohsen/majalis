@@ -13,7 +13,7 @@
   gap: var(--ds-space-5);
   padding: 0.5rem 1rem 2rem;
   --qibla-bg: var(--mj-brand-soft);
-  --qibla-face-hi: color-mix(in srgb, var(--mj-brand-soft) 70%, #fff);
+  --qibla-face-hi: color-mix(in srgb, var(--mj-brand-soft) 70%, var(--mj-white, #ffffff));
   --qibla-face-lo: var(--mj-brand-soft);
   min-height: 22rem; /* CLS: reserve dial + meta */
 }
@@ -75,7 +75,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.15rem;
-  background: var(--ss-card-bg, var(--mj-surface, #fff));
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff)));
   border: 1px solid rgba(22, 163, 74, 0.15);
   border-radius: var(--ds-radius-lg);
   padding: 0.6rem 1.1rem;
@@ -115,7 +115,7 @@
 
 .qibla-permit-btn {
   background: var(--elite-forest, var(--mj-brand-deep)) !important;
-  color: #fff !important;
+  color: var(--mj-white, #ffffff) !important;
   border: none;
   border-radius: 0.6rem;
   padding: 0.55rem 1.25rem;
@@ -164,7 +164,7 @@
   border: 1px solid rgba(22, 163, 74, 0.25);
   border-radius: 0.55rem;
   padding: 0.5rem 0.65rem;
-  background: var(--ss-card-bg, var(--mj-surface, #fff));
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff)));
   font: inherit;
 }
 
@@ -173,7 +173,7 @@
   border-radius: 0.55rem;
   padding: 0.5rem 0.85rem;
   background: var(--elite-forest, var(--mj-brand-deep));
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   font-weight: 700;
   font-size: 0.82rem;
   white-space: nowrap;
@@ -194,7 +194,7 @@
 
 .qibla-calib-modal {
   width: min(100%, 22rem);
-  background: var(--ss-card-bg, var(--mj-surface, #fff));
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff)));
   border-radius: 1rem;
   padding: 1.35rem 1.25rem 1.2rem;
   text-align: center;

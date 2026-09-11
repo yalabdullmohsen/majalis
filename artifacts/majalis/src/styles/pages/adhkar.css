@@ -137,12 +137,12 @@
 }
 .adhkar-focus-btn--next {
   background: var(--majalis-emerald, var(--mj-brand));
-  color: var(--on-brand, #ffffff);
+  color: var(--on-brand, var(--mj-white, #ffffff));
   border-color: transparent;
 }
 .adhkar-focus-btn--next:hover:not(:disabled) {
   background: var(--m26-green-800, var(--mj-brand-deep));
-  color: #fff;
+  color: var(--mj-white, #ffffff);
 }
 .adhkar-focus-btn--next:disabled {
   background: var(--mj-surface-2);
@@ -327,7 +327,7 @@
   width: 100%;
   padding: var(--ds-space-3-5);
   background: var(--majalis-emerald, var(--mj-brand));
-  color: var(--mj-on-brand, #fff);
+  color: var(--mj-on-brand, var(--mj-white, #ffffff));
   border: none;
   border-radius: 0.875rem;
   font-size: 0.95rem;
@@ -411,12 +411,12 @@ html.dark .adhkar-sheet-row dt {
 html[data-theme="dark"] .adhkar-grade--sahih,
 html.dark .adhkar-grade--sahih {
   background: var(--mj-brand-soft, var(--brand-deep, var(--mj-brand-deep)));
-  color: var(--on-brand, #ffffff);
+  color: var(--on-brand, var(--mj-white, #ffffff));
 }
 html[data-theme="dark"] .adhkar-grade--hasan,
 html.dark .adhkar-grade--hasan {
   background: var(--mj-brand-soft, var(--brand-deep, var(--mj-brand-deep)));
-  color: var(--on-brand, #ffffff);
+  color: var(--on-brand, var(--mj-white, #ffffff));
 }
 html[data-theme="dark"] .adhkar-grade--other,
 html.dark .adhkar-grade--other {

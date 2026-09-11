@@ -44,7 +44,7 @@
   padding: 0.65rem 1rem;
   border-radius: var(--ds-radius-lg, 0.75rem);
   background: var(--msk-gold, var(--mj-brand-deep, var(--mj-brand)));
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   font-size: 0.85rem;
   font-weight: 600;
   box-shadow: 0 6px 20px color-mix(in srgb, var(--msk-gold, var(--mj-brand)) 28%, transparent);
@@ -61,7 +61,7 @@
 
 /* بطاقات موحّدة */
 .ads-card {
-  background: var(--msk-canvas-1, #fff);
+  background: var(--msk-canvas-1, var(--mj-white, #ffffff));
   border-radius: var(--ds-radius-xl, 1rem);
   border: 1px solid var(--msk-border);
   box-shadow: 0 1px 3px color-mix(in srgb, var(--msk-text, var(--mj-ink)) 4%, transparent);
@@ -113,7 +113,7 @@
   padding: 0 1rem;
   cursor: pointer;
   font: inherit;
-  color: var(--majalis-ink, #1A1A18);
+  color: var(--majalis-ink, var(--mj-ink));
 }
 html[data-theme="dark"] .ads-diagnostics-toggle {
   color: var(--clr-text-1, var(--mj-brand-soft)) !important;
@@ -183,7 +183,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   white-space: nowrap;
 }
 .ads-perm--ok { background: color-mix(in srgb, var(--msk-gold, #1c5244) 14%, transparent); color: var(--msk-gold, var(--mj-brand-deep)); }
-.ads-perm--err { background: color-mix(in srgb, var(--msk-text, #1a1a18) 10%, transparent); color: var(--msk-text); }
+.ads-perm--err { background: color-mix(in srgb, var(--msk-text, var(--mj-ink)) 10%, transparent); color: var(--msk-text); }
 .ads-perm--warn { background: var(--msk-canvas-2); color: var(--msk-text-2); }
 .ads-perm--muted { background: var(--msk-canvas-2); color: var(--msk-text-3, var(--msk-text-2)); }
 .ads-field-gap { margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid var(--msk-border); }
@@ -253,7 +253,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
 .ads-chip.is-active {
   border-color: var(--msk-gold, var(--mj-brand-deep, #1c5244));
   background: var(--msk-gold, var(--mj-brand-deep, var(--mj-brand)));
-  color: #fff;
+  color: var(--mj-white, #ffffff);
 }
 @media (prefers-reduced-motion: reduce) {
   .ads-chip { transition: none; }
@@ -357,7 +357,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   width: 27px;
   height: 27px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--mj-white, #ffffff);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
   transition: inset-inline-start 0.2s ease;
   pointer-events: none;
@@ -408,7 +408,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   min-height: 44px;
   border-radius: 0.5rem;
   border: 1px solid color-mix(in srgb, var(--clr-border, #ccc) 80%, transparent);
-  background: var(--clr-surface, #fff);
+  background: var(--clr-surface, var(--mj-white, #ffffff));
   color: inherit;
   max-width: 9rem;
 }
@@ -438,7 +438,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
 .ads-sheet {
   width: min(100vw, 540px);
   max-height: 70vh;
-  background: var(--msk-canvas-1, #fff);
+  background: var(--msk-canvas-1, var(--mj-white, #ffffff));
   border-radius: 1.25rem 1.25rem 0 0;
   border: 1px solid var(--msk-border);
   border-bottom: none;
@@ -499,7 +499,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   margin-block-end: 0.75rem;
   color: var(--msk-gold, var(--mj-brand));
 }
-.pasc-explainer__title { font-weight: 700; font-size: 0.85rem; margin: 0 0 0.2rem; color: var(--msk-text, #1A1A18); }
+.pasc-explainer__title { font-weight: 700; font-size: 0.85rem; margin: 0 0 0.2rem; color: var(--msk-text, var(--mj-ink)); }
 .pasc-explainer__desc { font-size: 0.78rem; margin: 0 0 0.6rem; color: var(--msk-text-2, var(--mj-ink-2)); line-height: 1.6; }
 .pasc-explainer__actions { display: flex; gap: var(--ds-space-2, 0.5rem); }
 
@@ -563,7 +563,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   min-height: 40px;
   border-radius: 0.55rem;
   border: 1px solid var(--msk-border);
-  background: var(--msk-canvas-1, #fff);
+  background: var(--msk-canvas-1, var(--mj-white, #ffffff));
   color: var(--msk-text);
   font: inherit;
   font-size: 0.8rem;
@@ -605,7 +605,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   padding: 0.55rem 0.65rem;
   border-radius: 0.55rem;
   border: 1px solid var(--msk-border);
-  background: var(--msk-canvas-1, #fff);
+  background: var(--msk-canvas-1, var(--mj-white, #ffffff));
 }
 
 

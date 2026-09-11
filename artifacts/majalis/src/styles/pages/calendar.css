@@ -31,7 +31,7 @@
 
 .cal-nav-label strong {
   font-size: 0.95rem;
-  color: var(--mj-ink, var(--color-text, #1a1a1a));
+  color: var(--mj-ink, var(--color-text, var(--mj-ink)));
 }
 
 .cal-nav-hijri {
@@ -45,10 +45,10 @@
 .cal-view-tab,
 .cal-ics-btn {
   border: 1px solid var(--msk-border, var(--mj-hairline, #ddd));
-  background: var(--mj-surface, #fff);
+  background: var(--mj-surface, var(--mj-white, #ffffff));
   border-radius: var(--ds-radius, 8px);
   font-family: inherit;
-  color: var(--mj-ink, #1a1a1a);
+  color: var(--mj-ink, var(--mj-ink));
   cursor: pointer;
 }
 
@@ -79,7 +79,7 @@
 
 .cal-view-tab.is-active {
   background: var(--majalis-emerald-deep, var(--mj-brand-deep, #064e3b));
-  color: var(--majalis-parchment, #fff);
+  color: var(--majalis-parchment, var(--mj-white, #ffffff));
   border-color: var(--majalis-emerald-deep, var(--mj-brand-deep, #064e3b));
 }
 
@@ -143,11 +143,11 @@
   min-height: 4.75rem;
   border: 1px solid var(--msk-border, var(--mj-hairline, #ddd));
   border-radius: var(--ds-radius, 8px);
-  background: var(--mj-surface, #fff);
+  background: var(--mj-surface, var(--mj-white, #ffffff));
   overflow: hidden;
   text-align: start;
   font-family: inherit;
-  color: var(--mj-ink, #1a1a1a);
+  color: var(--mj-ink, var(--mj-ink));
 }
 
 .cal-cell--month {
@@ -196,7 +196,7 @@
 .cal-cell-num {
   font-size: 0.82rem;
   font-weight: 800;
-  color: var(--mj-ink, #1a1a1a);
+  color: var(--mj-ink, var(--mj-ink));
   line-height: 1.2;
 }
 
@@ -214,7 +214,7 @@
   padding: 0 0.25rem;
   border-radius: 999px;
   background: var(--majalis-emerald-deep, var(--mj-brand-deep, #064e3b));
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   font-size: 0.62rem;
   font-weight: 800;
   line-height: 1.1rem;
@@ -243,7 +243,7 @@
   padding: 0.1rem 0.2rem;
   border-radius: 4px;
   background: color-mix(in srgb, var(--majalis-emerald, #059669) 12%, transparent);
-  color: var(--mj-ink, #1a1a1a);
+  color: var(--mj-ink, var(--mj-ink));
   font-size: 0.62rem;
   font-weight: 600;
   line-height: 1.25;
@@ -270,7 +270,7 @@
   font-size: 0.62rem;
   cursor: pointer;
   font-family: inherit;
-  color: var(--mj-ink, #1a1a1a);
+  color: var(--mj-ink, var(--mj-ink));
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
@@ -279,7 +279,7 @@
 
 .cal-week-head.is-selected {
   background: var(--majalis-emerald-deep, var(--mj-brand-deep, #064e3b));
-  color: var(--majalis-parchment, #fff);
+  color: var(--majalis-parchment, var(--mj-white, #ffffff));
   border-color: var(--majalis-emerald-deep, var(--mj-brand-deep, #064e3b));
 }
 
@@ -292,13 +292,13 @@
   width: 100%;
   text-align: start;
   border: 1px solid var(--msk-border, var(--mj-hairline, #ddd));
-  background: var(--mj-surface, #fff);
+  background: var(--mj-surface, var(--mj-white, #ffffff));
   border-radius: var(--ds-radius, 8px);
   padding: 0.25rem 0.35rem;
   cursor: pointer;
   font-family: inherit;
   font-size: 0.68rem;
-  color: var(--mj-ink, #1a1a1a);
+  color: var(--mj-ink, var(--mj-ink));
 }
 
 .cal-event-chip__title {
@@ -320,7 +320,7 @@
 
 .cal-day-panel__head h3 {
   font-size: 1rem;
-  color: var(--mj-ink, #1a1a1a);
+  color: var(--mj-ink, var(--mj-ink));
 }
 
 .cal-day-panel__hijri {
@@ -340,19 +340,19 @@
   width: 100%;
   text-align: start;
   border: 1px solid var(--msk-border, var(--mj-hairline, #ddd));
-  background: var(--mj-surface, #fff);
+  background: var(--mj-surface, var(--mj-white, #ffffff));
   border-radius: var(--ds-radius, 8px);
   padding: 0.65rem 0.75rem;
   cursor: pointer;
   font-family: inherit;
   font-size: 0.82rem;
-  color: var(--mj-ink, #1a1a1a);
+  color: var(--mj-ink, var(--mj-ink));
 }
 
 .cal-day-item strong {
   display: block;
   margin-bottom: 0.2rem;
-  color: var(--mj-ink, #1a1a1a);
+  color: var(--mj-ink, var(--mj-ink));
 }
 
 .cal-day-item span {
@@ -408,13 +408,13 @@
 .cal-modal-meta dt {
   font-weight: 700;
   display: inline;
-  color: var(--mj-ink, #1a1a1a);
+  color: var(--mj-ink, var(--mj-ink));
 }
 
 .cal-modal-meta dd {
   display: inline;
   margin-inline-start: 0.35rem;
-  color: var(--mj-ink, #1a1a1a);
+  color: var(--mj-ink, var(--mj-ink));
 }
 
 .cal-modal-actions {

@@ -3,8 +3,8 @@
   margin: 0 0 1.25rem;
   padding: 0.85rem 1rem;
   border-radius: var(--ds-radius, 0.5rem);
-  border: 1px solid var(--line, #e5e7eb);
-  background: var(--panel, #fff);
+  border: 1px solid var(--line, var(--mj-hairline));
+  background: var(--panel, var(--mj-white, #ffffff));
   font-size: var(--ds-text-sm, 0.9rem);
   line-height: 1.6;
 }
@@ -27,8 +27,8 @@
   gap: 0.5rem;
   padding: var(--ds-space-4, 1rem);
   border-radius: var(--ds-radius, 0.5rem);
-  border: 1px solid var(--line, #e5e7eb);
-  background: var(--panel, #fff);
+  border: 1px solid var(--line, var(--mj-hairline));
+  background: var(--panel, var(--mj-white, #ffffff));
   text-decoration: none;
   text-align: center;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;

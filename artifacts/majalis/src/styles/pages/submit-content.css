@@ -74,7 +74,7 @@
   width: 100%;
   padding: var(--ds-space-3);
   background: var(--mj-brand);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   border: none;
   border-radius: var(--ds-radius);
   font-size: var(--ds-text-base);

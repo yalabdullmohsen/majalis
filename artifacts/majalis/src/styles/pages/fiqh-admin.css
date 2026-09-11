@@ -30,7 +30,7 @@
 
 .fiqh-admin-page-header p {
   margin: 0 0 1.25rem;
-  color: var(--ink-soft, #5c5348);
+  color: var(--ink-soft, var(--mj-muted));
   font-size: var(--ds-text-sm);
 }
 

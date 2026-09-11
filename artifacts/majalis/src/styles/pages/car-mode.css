@@ -27,7 +27,7 @@
   border: 1px solid rgba(255,255,255,0.15);
   border-radius: 0.5rem;
 }
-.car-mode__label { font-size: 1rem; font-weight: 700; color: #fff; margin: 0; }
+.car-mode__label { font-size: 1rem; font-weight: 700; color: var(--mj-white, #ffffff); margin: 0; }
 
 .car-mode__now-playing {
   flex: 1;
@@ -50,7 +50,7 @@
 .car-mode__title {
   font-size: clamp(1.25rem, 5vw, 2rem);
   font-weight: 800;
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   line-height: 1.4;
   max-width: 600px;
 }
@@ -74,7 +74,7 @@
   transition: background 0.15s, transform 0.1s;
   font-size: 1.75rem;
   background: rgba(255,255,255,0.08);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
 }
 .car-mode__btn:active { transform: scale(0.93); }
 .car-mode__btn:disabled { opacity: 0.3; cursor: not-allowed; }
@@ -110,13 +110,13 @@
   font-size: 0.88rem;
 }
 .car-mode__playlist-item:hover { background: rgba(255,255,255,0.06); }
-.car-mode__playlist-item--active { background: rgba(42,122,79,0.2); color: #fff; }
+.car-mode__playlist-item--active { background: rgba(42,122,79,0.2); color: var(--mj-white, #ffffff); }
 .car-mode__playlist-num { flex-shrink: 0; width: 24px; font-size: 0.75rem; color: rgba(255,255,255,0.3); }
 .car-mode__playlist-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .car-mode__playlist-speaker { flex-shrink: 0; font-size: 0.72rem; color: rgba(255,255,255,0.35); }
 
 .car-mode :is(.page-status-shell__title, .car-mode__label, .car-mode__title, h1, h2) {
-  color: #fff !important;
+  color: var(--mj-white, #ffffff) !important;
 }
 
 .car-mode__empty {
@@ -132,7 +132,7 @@
   padding: 0.65rem 1.5rem;
   border: 1px solid rgba(255,255,255,0.2);
   border-radius: 0.5rem;
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   text-decoration: none;
   font-size: 0.9rem;
 }

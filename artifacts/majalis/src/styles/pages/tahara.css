@@ -8,22 +8,22 @@
   /* لون صلب تحت التدرج — بوابة التباين تحتاج backgroundColor غير شفاف */
   background-color: var(--color-brand-deep, var(--mj-brand-deep));
   background-image: linear-gradient(155deg, var(--color-brand-deep, var(--mj-brand-deep)) 0%, var(--color-brand, var(--mj-brand)) 100%);
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
   padding: 2.5rem 1.25rem 0;
   text-align: center;
 }
 .th-hero__badge {
   display: inline-block;
   background: var(--on-brand-quiet-bg, rgba(255,255,255,.18));
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
   border-radius: var(--ds-radius-full);
   padding: .25rem .9rem;
   font-size: .75rem;
   margin-bottom: .6rem;
 }
-.th-hero__emoji { font-size: 2.8rem; margin-bottom: .4rem; color: #FFFFFF; }
-.th-hero__title { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; margin: 0 0 .5rem; color: #FFFFFF; }
-.th-hero__sub { font-size: .93rem; color: #FFFFFF; max-width: 480px; margin: 0 auto 1.25rem; line-height: 1.85; }
+.th-hero__emoji { font-size: 2.8rem; margin-bottom: .4rem; color: var(--mj-white, #ffffff); }
+.th-hero__title { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; margin: 0 0 .5rem; color: var(--mj-white, #ffffff); }
+.th-hero__sub { font-size: .93rem; color: var(--mj-white, #ffffff); max-width: 480px; margin: 0 auto 1.25rem; line-height: 1.85; }
 
 .th-ayah {
   background: rgba(255,255,255,.13);
@@ -37,8 +37,8 @@
 .th-ayah--body { background: var(--color-brand-soft, var(--mj-brand-soft)); border: 1px solid color-mix(in srgb, var(--color-brand, var(--mj-brand)) 28%, transparent); margin: 0 0 .85rem; text-align: end; }
 .th-ayah--body .th-ayah__text { color: var(--color-brand-deep, var(--mj-brand-deep)); }
 .th-ayah--body .th-ayah__ref { color: var(--color-brand, var(--mj-brand)); }
-.th-ayah__text { font-size: 1.05rem; font-weight: 600; line-height: 2; color: #FFFFFF; margin: 0 0 .35rem; }
-.th-ayah__ref { font-size: .72rem; color: #FFFFFF; font-style: normal; display: block; }
+.th-ayah__text { font-size: 1.05rem; font-weight: 600; line-height: 2; color: var(--mj-white, #ffffff); margin: 0 0 .35rem; }
+.th-ayah__ref { font-size: .72rem; color: var(--mj-white, #ffffff); font-style: normal; display: block; }
 
 .th-tabs {
   display: flex;
@@ -58,15 +58,15 @@
   border-radius: .5rem .5rem 0 0;
   padding: .5rem .9rem .4rem;
   cursor: pointer;
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
   font-size: .78rem;
   transition: background .18s;
   min-width: 5.5rem;
   min-height: 44px;
 }
-.th-tab:hover { background: var(--on-brand-hover-bg, rgba(255,255,255,.22)); color: #FFFFFF; }
+.th-tab:hover { background: var(--on-brand-hover-bg, rgba(255,255,255,.22)); color: var(--mj-white, #ffffff); }
 .th-tab--active {
-  background: var(--color-surface, var(--mj-surface, #FFFFFF));
+  background: var(--color-surface, var(--mj-surface, var(--mj-white, #ffffff)));
   color: var(--color-brand-deep, var(--mj-brand-deep));
   font-weight: 700;
 }
@@ -98,7 +98,7 @@
 /* fardh */
 .th-fardh-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; }
 .th-fardh-card {
-  background: var(--mj-surface, var(--surface-1, #fff));
+  background: var(--mj-surface, var(--surface-1, var(--mj-white, #ffffff)));
   border: 1px solid var(--mj-hairline, var(--border-subtle));
   border-radius: .7rem;
   padding: .85rem .9rem;
@@ -135,7 +135,7 @@
 /* nawaqidh */
 .th-nawaqidh-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; }
 .th-naqidh-card {
-  background: var(--mj-surface, var(--surface-1, #fff));
+  background: var(--mj-surface, var(--surface-1, var(--mj-white, #ffffff)));
   border: 1px solid var(--mj-hairline);
   border-radius: .65rem;
   padding: .8rem .9rem;
@@ -167,7 +167,7 @@
 /* ghusl */
 .th-mujibat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; }
 .th-mujib-card {
-  background: var(--mj-surface, var(--surface-1, #fff));
+  background: var(--mj-surface, var(--surface-1, var(--mj-white, #ffffff)));
   border: 1px solid var(--mj-hairline);
   border-radius: .65rem;
   padding: .8rem .9rem;
@@ -211,7 +211,7 @@
   min-width: 1.6rem;
   height: 1.6rem;
   background: var(--color-brand, var(--mj-brand));
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -338,7 +338,7 @@ html[data-theme="dark"] .th-hero,
 html.dark .th-hero {
   background-color: var(--color-brand-deep, var(--mj-brand-deep));
   background-image: linear-gradient(155deg, var(--color-brand-deep, var(--mj-brand-deep)) 0%, var(--color-brand, var(--mj-brand)) 100%);
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
 }
 html[data-theme="dark"] .th-hero__title,
 html[data-theme="dark"] .th-hero__sub,
@@ -348,7 +348,7 @@ html.dark .th-hero__title,
 html.dark .th-hero__sub,
 html.dark .th-hero__badge,
 html.dark .th-tab:not(.th-tab--active) {
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
 }
 html[data-theme="dark"] .th-tab--active,
 html.dark .th-tab--active {

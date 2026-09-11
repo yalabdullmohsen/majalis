@@ -5,7 +5,7 @@
   --auth-ink: var(--color-text, var(--mj-ink, var(--mj-ink)));
   --auth-muted: var(--color-muted, var(--mj-muted, #5e6e67));
   --auth-line: var(--color-border, var(--mj-hairline, #d9d2c6));
-  --auth-surface: var(--color-surface, var(--mj-surface, #fffcf7));
+  --auth-surface: var(--color-surface, var(--mj-surface, var(--mj-surface)));
   --auth-field: var(--color-surface-soft, var(--mj-surface-2, #f3eee4));
   --auth-placeholder: var(--color-muted, #6b7c72);
 
@@ -133,7 +133,7 @@ html[data-theme="dark"] .login-card__brand {
 
 .login-tab.is-active {
   background: var(--auth-green);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   box-shadow: 0 2px 8px rgba(31, 107, 79, 0.22);
 }
 
@@ -162,7 +162,7 @@ html[data-theme="dark"] .login-card__brand {
 .login-alert--success {
   color: #14532d;
   background: var(--mj-brand-tint);
-  border: 1px solid #bbf7d0;
+  border: 1px solid var(--mj-success-soft);
 }
 
 html.dark .login-alert--error,
@@ -174,7 +174,7 @@ html[data-theme="dark"] .login-alert--error {
 
 html.dark .login-alert--success,
 html[data-theme="dark"] .login-alert--success {
-  color: #bbf7d0;
+  color: var(--mj-success-soft);
   background: rgba(20, 83, 45, 0.35);
   border-color: rgba(74, 222, 128, 0.35);
 }
@@ -223,7 +223,7 @@ html[data-theme="dark"] .login-alert--success {
   border: none;
   border-radius: 12px;
   background: var(--auth-green);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   font: inherit;
   font-size: 0.95rem;
   font-weight: 700;
@@ -281,7 +281,7 @@ html[data-theme="dark"] .login-text-btn {
   padding: 0.55rem 0.75rem;
   border: 1px solid var(--auth-line);
   border-radius: 0.45rem;
-  background: #fff;
+  background: var(--mj-white, #ffffff);
   color: #8f1d1d;
   font-size: 0.78rem;
   font-weight: 700;

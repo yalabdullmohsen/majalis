@@ -10,9 +10,9 @@
   text-align: center;
   padding: 2.25rem 1.25rem 1.5rem;
   background: linear-gradient(160deg, var(--mj-brand-deep), var(--mj-brand-deep), var(--mj-brand-deep));
-  color: var(--on-dark-strong, #FFFFFF);
+  color: var(--on-dark-strong, var(--mj-white, #ffffff));
 }
-.srp-hero__icon { color: var(--on-dark-body, #F8FAFC); margin-bottom: 0.6rem; }
+.srp-hero__icon { color: var(--on-dark-body, var(--mj-surface-2)); margin-bottom: 0.6rem; }
 .srp-hero__title {
   font-size: 1.45rem;
   font-weight: 800;
@@ -20,7 +20,7 @@
 }
 .srp-hero__sub {
   font-size: 0.82rem;
-  color: var(--on-dark-body, #F8FAFC);
+  color: var(--on-dark-body, var(--mj-surface-2));
   max-width: 36rem;
   line-height: 1.65;
 }
@@ -58,8 +58,8 @@
   padding: 0.75rem 1rem;
   font-size: 0.9rem;
   line-height: 1.6;
-  background: var(--clr-surface, #fff);
-  color: var(--clr-ink, #1a1a1a);
+  background: var(--clr-surface, var(--mj-white, #ffffff));
+  color: var(--clr-ink, var(--mj-ink));
   transition: border-color .15s;
   direction: rtl;
 }
@@ -102,8 +102,8 @@
   width: 34px; height: 34px;
   border-radius: var(--ds-radius);
   border: 1.5px solid var(--clr-border, rgba(0,0,0,.12));
-  background: var(--clr-surface, #fff);
-  color: var(--clr-ink, #1a1a1a);
+  background: var(--clr-surface, var(--mj-white, #ffffff));
+  color: var(--clr-ink, var(--mj-ink));
   cursor: pointer;
   transition: border-color .15s, background .15s;
 }
@@ -157,7 +157,7 @@
   background: rgba(23,61,53,.08);
   border: 1px solid rgba(23,61,53,.18);
   border-radius: var(--ds-radius);
-  color: var(--clr-ink, #1a1a1a);
+  color: var(--clr-ink, var(--mj-ink));
   cursor: pointer;
   text-align: end;
   transition: background .15s;
@@ -184,7 +184,7 @@
   font-size: 0.72rem;
   font-weight: 600;
   border: 1.5px solid var(--clr-border, rgba(0,0,0,.12));
-  background: var(--clr-surface, #fff);
+  background: var(--clr-surface, var(--mj-white, #ffffff));
   color: var(--clr-ink-soft, var(--mj-muted));
   cursor: pointer;
   transition: all .15s;
@@ -192,16 +192,16 @@
 .srp-intent-chip--active {
   background: var(--mj-brand);
   border-color: var(--mj-brand);
-  color: var(--on-dark-strong, #FFFFFF);
+  color: var(--on-dark-strong, var(--mj-white, #ffffff));
 }
 .srp-prompts { display: flex; flex-direction: column; gap: 0.4rem; }
 .srp-prompt-btn {
   padding: 0.5rem 0.85rem;
   border-radius: 0.6rem;
   border: 1.5px solid var(--clr-border, rgba(0,0,0,.1));
-  background: var(--clr-surface, #fff);
+  background: var(--clr-surface, var(--mj-white, #ffffff));
   font-size: 0.82rem;
-  color: var(--clr-ink, #1a1a1a);
+  color: var(--clr-ink, var(--mj-ink));
   cursor: pointer;
   text-align: end;
   line-height: 1.45;
@@ -240,7 +240,7 @@
   padding: 1.1rem 1.2rem;
   border-radius: 0.85rem;
   border: 1.5px solid var(--clr-border, rgba(0,0,0,.1));
-  background: var(--clr-surface, #fff);
+  background: var(--clr-surface, var(--mj-white, #ffffff));
 }
 
 /* ── Library ── */
@@ -249,7 +249,7 @@
   padding: 1rem 1.1rem;
   border-radius: 0.85rem;
   border: 1.5px solid var(--clr-border, rgba(0,0,0,.1));
-  background: var(--clr-surface, #fff);
+  background: var(--clr-surface, var(--mj-white, #ffffff));
 }
 .srp-lib-item__head {
   display: flex;
@@ -261,7 +261,7 @@
 .srp-lib-title {
   font-size: 0.9rem;
   font-weight: 700;
-  color: var(--clr-ink, #1a1a1a);
+  color: var(--clr-ink, var(--mj-ink));
   line-height: 1.35;
 }
 .srp-lib-del {
@@ -353,7 +353,7 @@
   background: rgba(23,61,53,.06);
   border: 1.5px solid rgba(23,61,53,.15);
   font-size: 0.85rem;
-  color: var(--clr-ink, #1a1a1a);
+  color: var(--clr-ink, var(--mj-ink));
   text-align: center;
 }
 

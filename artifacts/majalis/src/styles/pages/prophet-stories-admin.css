@@ -10,14 +10,14 @@
 .ps-stat strong { color: #0f172a; }
 .ps-stat span { color: #64748b; margin-inline-end: 0.25rem; }
 .ps-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
-.ps-card { background: #fff; border: 1px solid #e2e8f0; border-radius: var(--ds-radius-lg); overflow: hidden; }
-.ps-card.approved { border-color: #bbf7d0; }
+.ps-card { background: var(--mj-white, #ffffff); border: 1px solid var(--mj-info-soft); border-radius: var(--ds-radius-lg); overflow: hidden; }
+.ps-card.approved { border-color: var(--mj-success-soft); }
 .ps-card.editing { border-color: #93c5fd; }
 .ps-card-head {
   display: flex; align-items: center; gap: var(--ds-space-3);
   padding: 0.875rem 1.1rem;
   cursor: pointer;
-  background: #f8fafc;
+  background: var(--mj-surface-2);
   border-bottom: 1px solid transparent;
   transition: background 0.15s;
 }
@@ -32,10 +32,10 @@
   border-radius: 9999px; letter-spacing: normal;
 }
 .ps-badge.pending { background: rgba(23,61,53,0.08); color: var(--mj-brand); border: 1px solid rgba(24,54,42,0.3); }
-.ps-badge.done { background: #dcfce7; color: var(--mj-brand); border: 1px solid #bbf7d0; }
+.ps-badge.done { background: #dcfce7; color: var(--mj-brand); border: 1px solid var(--mj-success-soft); }
 .ps-badge.edit-mode { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
 .ps-toggle { font-size: 0.8rem; color: #94a3b8; }
-.ps-body { padding: 1.1rem 1.25rem; border-top: 1px solid #e2e8f0; }
+.ps-body { padding: 1.1rem 1.25rem; border-top: 1px solid var(--mj-info-soft); }
 .ps-citations-label {
   font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: normal; color: #64748b; margin-bottom: 0.6rem;
@@ -43,7 +43,7 @@
 .ps-citations { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
 .ps-cit {
   display: flex; align-items: flex-start; gap: 0.6rem;
-  background: #f8fafc; border: 1px solid #e2e8f0;
+  background: var(--mj-surface-2); border: 1px solid var(--mj-info-soft);
   border-radius: var(--ds-radius-sm); padding: 0.45rem 0.65rem;
   font-size: 0.8125rem;
 }
@@ -57,14 +57,14 @@
 }
 .ps-full-toggle:hover { border-color: #94a3b8; color: #1e293b; }
 .ps-content {
-  background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--ds-radius);
+  background: var(--mj-surface-2); border: 1px solid var(--mj-info-soft); border-radius: var(--ds-radius);
   padding: 1rem 1.1rem; font-size: var(--ds-text-sm); line-height: 1.7;
   color: #334155; white-space: pre-wrap; margin-bottom: 0.9rem;
   max-height: 400px; overflow-y: auto;
 }
 .ps-actions { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; }
 .ps-approve-btn {
-  background: var(--mj-brand); color: #fff; border: none;
+  background: var(--mj-brand); color: var(--mj-white, #ffffff); border: none;
   border-radius: var(--ds-radius); padding: 0.5rem 1.1rem;
   font-size: var(--ds-text-sm); font-weight: 700; cursor: pointer;
   font-family: inherit; transition: background 0.15s;
@@ -111,7 +111,7 @@
 .ps-edit-input {
   border: 1px solid #cbd5e1; border-radius: var(--ds-radius-sm);
   padding: 0.35rem 0.55rem; font-size: 0.8125rem;
-  font-family: inherit; color: #0f172a; background: #fff;
+  font-family: inherit; color: #0f172a; background: var(--mj-white, #ffffff);
   direction: rtl; width: 100%;
 }
 .ps-edit-input:focus { outline: none; border-color: #3b82f6; }
@@ -132,13 +132,13 @@
 .ps-edit-textarea {
   border: 1px solid #cbd5e1; border-radius: var(--ds-radius);
   padding: 0.75rem 0.9rem; font-size: var(--ds-text-sm); line-height: 1.7;
-  font-family: inherit; color: #0f172a; background: #fff;
+  font-family: inherit; color: #0f172a; background: var(--mj-white, #ffffff);
   direction: rtl; resize: vertical; min-height: 320px; width: 100%;
 }
 .ps-edit-textarea:focus { outline: none; border-color: #3b82f6; }
 .ps-edit-actions { display: flex; gap: 0.6rem; align-items: center; }
 .ps-save-btn {
-  background: #2563eb; color: #fff; border: none;
+  background: #2563eb; color: var(--mj-white, #ffffff); border: none;
   border-radius: var(--ds-radius); padding: 0.5rem 1.2rem;
   font-size: var(--ds-text-sm); font-weight: 700; cursor: pointer;
   font-family: inherit; transition: background 0.15s;

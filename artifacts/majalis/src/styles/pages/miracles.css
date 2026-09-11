@@ -16,7 +16,7 @@
   --mk-green: var(--primary, #0f5c45);
   --mk-green-deep: var(--primary-strong, var(--mj-brand-deep));
   --mk-green-soft: var(--primary-soft, #e2efe8);
-  --mk-surface: var(--surface, #fffcf7);
+  --mk-surface: var(--surface, var(--mj-surface));
   --mk-line: var(--border-soft, #d9d2c6);
   --mk-ink: var(--mj-ink, var(--mj-ink));
   --mk-muted: var(--mj-muted, var(--mj-ink-2));
@@ -149,7 +149,7 @@
   border-radius: 999px;
   /* نهاري: أخضر عميق + نص فاتح (AA) */
   background: var(--mk-green-deep, var(--mj-brand-deep, #12362c));
-  color: var(--on-dark-strong, #fff);
+  color: var(--on-dark-strong, var(--mj-white, #ffffff));
   font-size: 0.8rem;
   font-weight: 700;
   white-space: nowrap;
@@ -312,7 +312,7 @@
   border: 0;
   text-decoration: none;
   background: var(--mk-green);
-  color: var(--on-brand, #fff);
+  color: var(--on-brand, var(--mj-white, #ffffff));
   font-size: 0.84rem;
   font-weight: 700;
   cursor: pointer;
@@ -573,5 +573,5 @@ html.dark .mk-pill--topic,
   margin: 0.75rem 0 0;
   text-align: center;
   font-size: 0.82rem;
-  color: var(--mk-muted, #4a5a53);
+  color: var(--mk-muted, var(--mj-ink-2));
 }

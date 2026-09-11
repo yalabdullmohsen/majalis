@@ -10,7 +10,7 @@
   margin-top: 2rem;
   padding: var(--ds-space-4);
   border-radius: var(--ds-radius);
-  border: 1px solid var(--line, #e5e7eb);
+  border: 1px solid var(--line, var(--mj-hairline));
 }
 .tpc-related__title { font-size: var(--ds-text-base); font-weight: 700; margin-bottom: 0.75rem; }
 .tpc-related__chips { display: flex; flex-wrap: wrap; gap: var(--ds-space-2); }

@@ -43,7 +43,7 @@
 
 .wird-count-btn:hover:not(:disabled) {
   background: var(--elite-forest, var(--mj-brand-deep)) !important;
-  color: #fff !important;
+  color: var(--mj-white, #ffffff) !important;
   border-color: transparent;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(24,54,42,0.2);
@@ -64,7 +64,7 @@
 .wird-remaining {
   margin: 0;
   font-size: 0.85rem;
-  color: var(--elite-ink-soft, #5D726A);
+  color: var(--elite-ink-soft, var(--mj-muted));
 }
 
 .wird-reset-btn {
@@ -136,7 +136,7 @@
   gap: 0.35rem;
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--elite-ink-soft, #5D726A);
+  color: var(--elite-ink-soft, var(--mj-muted));
 }
 
 .wird-field input,
@@ -212,7 +212,7 @@
 
 .wird-streak-label {
   font-size: 0.82rem;
-  color: var(--majalis-ink-soft, #5D726A);
+  color: var(--majalis-ink-soft, var(--mj-muted));
   font-weight: 600;
 }
 
@@ -221,7 +221,7 @@
   align-items: center;
   gap: 0.4rem;
   font-size: 0.82rem;
-  color: var(--majalis-ink-soft, #5D726A);
+  color: var(--majalis-ink-soft, var(--mj-muted));
   font-weight: 600;
 }
 

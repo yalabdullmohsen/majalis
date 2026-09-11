@@ -11,7 +11,7 @@
   font-weight: 600 !important;
 }
 .notif-banner--err {
-  background: color-mix(in srgb, var(--mj-danger, #b91c1c) 8%, var(--mj-surface, #fff)) !important;
+  background: color-mix(in srgb, var(--mj-danger, #b91c1c) 8%, var(--mj-surface, var(--mj-white, #ffffff))) !important;
   color: var(--mj-danger-deep) !important;
   border: 1px solid rgba(185,28,28,0.22) !important;
   border-radius: var(--radius-button, 18px) !important;
@@ -19,7 +19,7 @@
 
 /* بطاقة إعداد */
 .notif-card {
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface))) !important;
   border: 1px solid rgba(24,54,42,0.09) !important;
   border-radius: var(--radius-card, 24px) !important;
   box-shadow: 0 2px 16px rgba(24,54,42,0.05) !important;
@@ -42,7 +42,7 @@
   font-size: 0.9rem !important;
 }
 .notif-row__sub { color: var(--elite-ink-soft, #4A5568) !important; font-size: 0.78rem !important; }
-/* .notif-card خلفية بيضاء ثابتة (#fff !important) — elite Cards dark غير محمّل.
+/* .notif-card خلفية بيضاء ثابتة (var(--mj-white, #ffffff) !important) — elite Cards dark غير محمّل.
    نص فاتح هنا = تباين ~1.2:1. يبقى الحبر الغامق في الوضعين. */
 html[data-theme="dark"] .notif-row__label,
 html.dark .notif-row__label {
@@ -81,7 +81,7 @@ html.dark .notif-row__label {
 .notif-test-btn {
   width: 100% !important;
   background: var(--elite-forest, var(--mj-brand-deep)) !important;
-  color: #fff !important;
+  color: var(--mj-white, #ffffff) !important;
   border: none !important;
   border-radius: var(--radius-button, 18px) !important;
   font-weight: 700 !important;
@@ -97,7 +97,7 @@ html.dark .notif-row__label {
 /* تم الحفظ */
 .notif-saved {
   background: var(--elite-forest, var(--mj-brand-deep)) !important;
-  color: #fff !important;
+  color: var(--mj-white, #ffffff) !important;
   border: none !important;
   border-radius: var(--radius-button, 18px) !important;
   box-shadow: 0 4px 20px rgba(24,54,42,0.25) !important;
@@ -110,7 +110,7 @@ html.dark .notif-row__label {
 
 /* ── سجل الإشعارات (nh-*) ── */
 .nh-section {
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface))) !important;
   border: 1px solid rgba(24,54,42,0.09) !important;
   border-radius: var(--radius-card, 24px) !important;
   box-shadow: 0 2px 16px rgba(24,54,42,0.05) !important;
@@ -125,13 +125,13 @@ html.dark .notif-row__label {
   background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand-deep) 100%) !important;
 }
 .nh-header__title {
-  color: #fff !important;
+  color: var(--mj-white, #ffffff) !important;
   font-size: 1rem !important;
   font-weight: 700 !important;
 }
 .nh-header__badge {
   background: rgba(255,255,255,0.2) !important;
-  color: #fff !important;
+  color: var(--mj-white, #ffffff) !important;
   font-size: 0.68rem !important;
   font-weight: 800 !important;
   min-width: 20px !important;
@@ -162,7 +162,7 @@ html.dark .notif-row__label {
   transition: background 0.15s !important;
   font-family: inherit !important;
 }
-.nh-btn:hover { background: rgba(255,255,255,0.2) !important; color: #fff !important; }
+.nh-btn:hover { background: rgba(255,255,255,0.2) !important; color: var(--mj-white, #ffffff) !important; }
 .nh-btn--danger { color: #ffb3b3 !important; border-color: rgba(255,100,100,0.35) !important; background: rgba(255,80,80,0.08) !important; }
 .nh-btn--danger:hover { background: rgba(255,80,80,0.18) !important; color: #ff7070 !important; }
 
@@ -175,7 +175,7 @@ html.dark .notif-row__label {
 }
 .nh-search {
   width: 100% !important;
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important;
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface))) !important;
   border: 1.5px solid rgba(24,54,42,0.12) !important;
   border-radius: var(--radius-button, 18px) !important;
   color: var(--mj-brand-deep) !important;
@@ -230,7 +230,7 @@ html.dark .notif-row__label {
 }
 
 /* قائمة */
-.nh-list { background: var(--ss-card-bg, var(--color-surface, #fffcf7)) !important; }
+.nh-list { background: var(--ss-card-bg, var(--color-surface, var(--mj-surface))) !important; }
 
 .nh-row {
   display: flex !important;
@@ -305,7 +305,7 @@ html.dark .notif-row__label {
 /* ══ تاريخ الإشعارات — بطاقات حديثة على أسطح عاجية (المرحلة 3، 2026-07-22) ══ */
 .nh-section {
   margin-top: 1.5rem;
-  background: var(--mj-surface, #fff);
+  background: var(--mj-surface, var(--mj-white, #ffffff));
   border: 1px solid color-mix(in srgb, var(--mj-emerald-950, var(--mj-brand-deep)) 10%, transparent);
   border-radius: 1rem;
   overflow: hidden;
@@ -338,7 +338,7 @@ html.dark .notif-row__label {
   height: 18px;
   padding: 0 5px;
   background: var(--mj-emerald-950, var(--mj-brand-deep));
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   border-radius: 999px;
   font-size: 0.65rem;
   font-weight: 700;
@@ -352,7 +352,7 @@ html.dark .notif-row__label {
   padding: 0.3rem 0.7rem;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--mj-emerald-950, var(--mj-brand-deep)) 20%, transparent);
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
   color: var(--mj-emerald-text, var(--mj-brand-deep));
   font-size: 0.72rem;
   font-weight: 600;
@@ -384,7 +384,7 @@ html.dark .notif-row__label {
   box-sizing: border-box;
   min-height: 40px;
 }
-.nh-search:focus { outline: none; border-color: var(--mj-emerald-950, var(--mj-brand-deep)); background: var(--ss-card-bg, var(--color-surface, #fffcf7)); }
+.nh-search:focus { outline: none; border-color: var(--mj-emerald-950, var(--mj-brand-deep)); background: var(--ss-card-bg, var(--color-surface, var(--mj-surface))); }
 .nh-search::placeholder { color: var(--majalis-ink-soft, var(--mj-ink-2)); }
 .nh-search-clear {
   position: absolute;
@@ -443,7 +443,7 @@ html.dark .notif-row__label {
   width: 76px;
   border: none;
   background: var(--mj-danger, #B44A4A);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -455,7 +455,7 @@ html.dark .notif-row__label {
   display: flex;
   gap: var(--ds-space-3);
   padding: 0.875rem 1rem;
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
   border-bottom: 1px solid color-mix(in srgb, var(--mj-emerald-950, var(--mj-brand-deep)) 6%, transparent);
   cursor: pointer;
   transition: background 0.12s;
@@ -464,7 +464,7 @@ html.dark .notif-row__label {
 }
 .nh-row-wrap:last-child .nh-row { border-bottom: none; }
 .nh-row:hover { background: var(--mj-ivory-50, var(--mj-bg)); }
-.nh-row--read { background: var(--ss-card-bg, var(--color-surface, #fffcf7)); }
+.nh-row--read { background: var(--ss-card-bg, var(--color-surface, var(--mj-surface))); }
 
 .nh-row__icon {
   width: 30px;
@@ -558,7 +558,7 @@ html.dark .notif-row__label {
 .notif-banner--err  { background: color-mix(in srgb, var(--mj-danger) 10%, white); color: var(--mj-danger-deep); border: 1px solid color-mix(in srgb, var(--mj-danger) 35%, white); }
 
 .notif-card {
-  background: var(--majalis-panel, #fff);
+  background: var(--majalis-panel, var(--mj-white, #ffffff));
   border: 1px solid var(--ds-line-color);
   border-radius: var(--ds-radius-lg, 0.625rem);
   padding: 1.1rem 1.25rem;
@@ -603,7 +603,7 @@ html.dark .notif-row__label {
   top: 3px; inset-inline-end: 3px;
   width: 21px; height: 21px;
   border-radius: 50%;
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   transition: right 0.2s;
 }
@@ -623,7 +623,7 @@ html.dark .notif-row__label {
   font-size: 1rem;
   text-align: center;
   color: var(--majalis-ink);
-  background: var(--majalis-panel, #fff);
+  background: var(--majalis-panel, var(--mj-white, #ffffff));
 }
 .notif-time__input:disabled { opacity: 0.45; }
 .notif-time__sep { font-size: 1.2rem; font-weight: 700; color: var(--majalis-ink-soft); }
@@ -649,7 +649,7 @@ html.dark .notif-row__label {
   left: 50%;
   transform: translateX(-50%);
   background: var(--ds-emerald-deep);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   padding: 0.55rem 1.25rem;
   border-radius: 999px;
   font-size: 0.85rem;
