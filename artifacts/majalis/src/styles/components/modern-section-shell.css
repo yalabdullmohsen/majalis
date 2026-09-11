@@ -61,6 +61,11 @@
 .sm-hero,
 .gl-hero,
 .ldb-hero,
+.myl2-hero,
+.lpd2-hero,
+.pmp-hero,
+.mw-hero,
+.srp-hero,
 .seerah-hero,
 .th-hero,
 .sh-hero {
@@ -101,6 +106,16 @@
 .gl-hero::after,
 .ldb-hero::before,
 .ldb-hero::after,
+.myl2-hero::before,
+.myl2-hero::after,
+.lpd2-hero::before,
+.lpd2-hero::after,
+.pmp-hero::before,
+.pmp-hero::after,
+.mw-hero::before,
+.mw-hero::after,
+.srp-hero::before,
+.srp-hero::after,
 .seerah-hero::before,
 .seerah-hero::after,
 .th-hero::before,
@@ -480,6 +495,12 @@ html[data-theme="dark"] .card {
   border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
 }
 
+
+.myl2-hero .myl2-hero__badge,
+.lpd2-hero .lpd2-hero__badge,
+.pmp-hero .pmp-hero__badge,
+.mw-hero .mw-hero__badge,
+.srp-hero .srp-hero__badge,
 .seerah-hero .seerah-hero__badge,
 .th-hero .th-hero__badge,
 .sh-hero .sh-hero__badge {
@@ -488,6 +509,11 @@ html[data-theme="dark"] .card {
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
 }
 
+.myl2-hero .myl2-hero__title,
+.lpd2-hero .lpd2-hero__title,
+.pmp-hero .pmp-hero__title,
+.mw-hero .mw-hero__title,
+.srp-hero .srp-hero__title,
 .seerah-hero .seerah-hero__title,
 .th-hero .th-hero__title,
 .th-hero .th-hero__emoji,
@@ -496,6 +522,11 @@ html[data-theme="dark"] .card {
   color: var(--mss-on-hero, #16241e) !important;
 }
 
+.myl2-hero .myl2-hero__sub,
+.lpd2-hero .lpd2-hero__sub,
+.pmp-hero .pmp-hero__sub,
+.mw-hero .mw-hero__sub,
+.srp-hero .srp-hero__sub,
 .seerah-hero .seerah-hero__sub,
 .th-hero .th-hero__sub,
 .th-hero .th-ayah__text,
@@ -513,8 +544,6 @@ html[data-theme="dark"] .card {
   border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
 }
 
-
-/* asp-hero يبقى أخضر غامق — نص فاتح مستقل عن soft-hero ink */
 .asp-hero {
   --mss-on-hero: #ffffff;
   --mss-on-hero-muted: #f3efe6;

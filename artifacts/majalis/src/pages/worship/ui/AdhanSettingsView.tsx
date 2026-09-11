@@ -49,6 +49,7 @@ import { resolveAdhanClip } from "@/lib/adhan-playback-modes";
 import { loadNotifPrefs, saveNotifPrefs } from "@/lib/local-notifications";
 import "@/styles/pages/adhan-settings.css";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { SettingsToggleRow } from "@/components/design-system/SettingsList";
 
 const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 30];
 
@@ -66,35 +67,6 @@ function useAdhanDeveloperTools(): boolean {
 const PRAYER_ICON_MAP: Record<string, LucideIcon> = {
   Moon, Sun, CloudSun, Sunset, CloudMoon,
 };
-
-function Toggle({
-  checked,
-  onChange,
-  label,
-  disabled,
-}: {
-  checked: boolean;
-  onChange: (v: boolean) => void;
-  label: string;
-  disabled?: boolean;
-}) {
-  return (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={checked}
-      aria-label={label}
-      disabled={disabled}
-      onClick={(e) => {
-        e.stopPropagation();
-        if (!disabled) onChange(!checked);
-      }}
-      className={`ads-toggle rounded-full icon-only${checked ? " is-on" : ""}${disabled ? " is-disabled" : ""}`}
-    >
-      <span className="ads-toggle__thumb" />
-    </button>
-  );
-}
 
 type PermissionState = "granted" | "denied" | "default" | "prompt" | "unsupported";
 
@@ -662,14 +634,12 @@ export default function AdhanSettingsPage() {
           <span>تذكيرات إيمانية</span>
         </div>
         <div className="ads-card__body">
-          <div className="ads-row">
-            <span>تفعيل الإقامة</span>
-            <Toggle
+                      <SettingsToggleRow
+              id="adhan-iqamah"
+              title="تفعيل الإقامة"
               checked={prefs.iqamahEnabled}
               onChange={setGlobalIqamah}
-              label="تفعيل تنبيه الإقامة"
             />
-          </div>
           {prefs.iqamahEnabled ? (
             <div className="ads-chip-scroll" role="group" aria-label="دقائق بعد الأذان للإقامة">
               {([0, 5, 10, 15] as const).map((min) => (
@@ -684,9 +654,9 @@ export default function AdhanSettingsPage() {
               ))}
             </div>
           ) : null}
-          <div className="ads-row">
-            <span>تذكير الأذكار</span>
-            <Toggle
+                      <SettingsToggleRow
+              id="adhan-adhkar"
+              title="تذكير الأذكار"
               checked={notifPrefs.adhkarReminder}
               onChange={(v) => {
                 const next = { ...notifPrefs, adhkarReminder: v };
@@ -694,12 +664,10 @@ export default function AdhanSettingsPage() {
                 setNotifPrefs(next);
                 flashSaved();
               }}
-              label="تذكير الأذكار"
             />
-          </div>
-          <div className="ads-row">
-            <span>تذكير الذكر</span>
-            <Toggle
+                      <SettingsToggleRow
+              id="adhan-dhikr-phrase"
+              title="تذكير الذكر"
               checked={notifPrefs.dhikrPhraseReminder}
               onChange={(v) => {
                 const next = { ...notifPrefs, dhikrPhraseReminder: v };
@@ -707,9 +675,7 @@ export default function AdhanSettingsPage() {
                 setNotifPrefs(next);
                 flashSaved();
               }}
-              label="تذكير الذكر"
             />
-          </div>
         </div>
       </section>
 
@@ -724,26 +690,23 @@ export default function AdhanSettingsPage() {
             const p = prefs.prayers[key];
             return (
               <div key={key} className="ads-prayer-row">
-                <div className="ads-prayer-row__top">
-                  <span className="ads-prayer-row__name">
-                    <Icon size={16} strokeWidth={2} aria-hidden="true" />
-                    {PRAYER_ARABIC[key]}
-                  </span>
-                  <Toggle
-                    checked={p.enabled}
-                    onChange={(v) => togglePrayer(key, v)}
-                    label={`${PRAYER_ARABIC[key]} — تشغيل التنبيه`}
-                  />
+                <div className="ads-prayer-row__head">
+                  <Icon size={16} strokeWidth={2} aria-hidden="true" />
+                  <span className="ads-prayer-row__name">{PRAYER_ARABIC[key]}</span>
                 </div>
-                <div className="ads-prayer-row__top">
-                  <span className="ads-gov-label">الإقامة</span>
-                  <Toggle
-                    checked={Boolean(prefs.iqamahEnabled && p.iqamahEnabled)}
-                    onChange={(v) => togglePrayerIqamah(key, v)}
-                    label={`${PRAYER_ARABIC[key]} — تنبيه الإقامة`}
-                    disabled={!p.enabled || !prefs.iqamahEnabled}
-                  />
-                </div>
+                <SettingsToggleRow
+                  id={`adhan-prayer-${key}-enabled`}
+                  title="تشغيل التنبيه"
+                  checked={p.enabled}
+                  onChange={(v) => togglePrayer(key, v)}
+                />
+                <SettingsToggleRow
+                  id={`adhan-prayer-${key}-iqamah`}
+                  title="تنبيه الإقامة"
+                  checked={Boolean(prefs.iqamahEnabled && p.iqamahEnabled)}
+                  onChange={(v) => togglePrayerIqamah(key, v)}
+                  disabled={!p.enabled || !prefs.iqamahEnabled}
+                />
                 <div className="ads-chip-scroll" role="group" aria-label={`تنبيه قبل ${PRAYER_ARABIC[key]}`}>
                   {ADVANCE_OPTIONS.map((min) => (
                     <button

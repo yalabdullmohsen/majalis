@@ -8,8 +8,8 @@
   margin-bottom: 1.5rem;
   text-align: center;
   padding: 2rem 1.25rem 1.75rem;
-  background: linear-gradient(145deg, var(--mj-brand-deep, var(--brand-deep, var(--mj-brand-deep))) 0%, var(--mj-brand, var(--mj-brand-deep)) 100%);
-  color: var(--mj-white, #ffffff);
+  /* soft via modern-section-shell */
+  /* soft ink */
 }
 .pmp-hero__eyebrow {
   font-size: 0.8rem;
@@ -22,7 +22,7 @@
 .pmp-hero__title {
   font-size: clamp(1.6rem, 4vw, 2.25rem);
   font-weight: 800;
-  color: var(--mj-white, #ffffff);
+  /* soft ink */
   margin: 0 0 0.6rem;
 }
 .pmp-hero__subtitle {

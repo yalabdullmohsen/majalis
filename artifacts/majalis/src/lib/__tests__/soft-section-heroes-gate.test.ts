@@ -1,5 +1,5 @@
 /**
- * بوابة: هيروات أقسام المحتوى (صيام/صحابة/علامات/آداب/خريطة/معجم) = soft-card لا شريط أخضر ممتد.
+ * بوابة: هيروات أقسام المحتوى = soft-card لا شريط أخضر ممتد.
  * node --import tsx src/lib/__tests__/soft-section-heroes-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -11,7 +11,23 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const shell = read("src/styles/components/modern-section-shell.css");
-for (const hero of [".sw-hero", ".sb-hero", ".as-hero", ".atl-hero", ".sm-hero", ".gl-hero", ".seerah-hero", ".th-hero", ".sh-hero", ".ldb-hero"]) {
+for (const hero of [
+  ".sw-hero",
+  ".sb-hero",
+  ".as-hero",
+  ".atl-hero",
+  ".sm-hero",
+  ".gl-hero",
+  ".ldb-hero",
+  ".myl2-hero",
+  ".lpd2-hero",
+  ".pmp-hero",
+  ".mw-hero",
+  ".srp-hero",
+  ".seerah-hero",
+  ".th-hero",
+  ".sh-hero",
+]) {
   assert.match(shell, new RegExp(hero.replace(".", "\\.")), `modern-section-shell يشمل ${hero}`);
 }
 assert.match(shell, /--mss-section-hero-bg/, "سطح soft-hero مفعّل");
@@ -39,8 +55,6 @@ for (const h of [".seerah-hero", ".th-hero", ".sh-hero"]) {
     `الوضع الداكن لا يفرض نصًا أبيض على ${h} soft`,
   );
 }
-assert.doesNotMatch(dark, /html\.dark \.th-hero \{[^}]*color:\s*#FFFFFF/, "لا فرض أبيض مباشر على .th-hero");
-
 
 for (const [file, banned] of [
   ["src/styles/pages/sawm.css", /\.sw-hero\s*\{[^}]*linear-gradient/s],

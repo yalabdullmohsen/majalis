@@ -16,6 +16,7 @@ import {
 } from "@/lib/prayer-local-notifications";
 import { isNative } from "@/lib/capacitor-utils";
 import { haptics } from "@/lib/haptics";
+import { SettingsToggleRow } from "@/components/design-system/SettingsList";
 import {
   loadAdhanPrefs,
   patchAdhanPrefs,
@@ -23,35 +24,6 @@ import {
   PRAYER_KEYS,
   type AdvanceMinutes,
 } from "@/lib/adhan-preferences";
-
-function MiniToggle({
-  checked,
-  onChange,
-  label,
-  disabled,
-}: {
-  checked: boolean;
-  onChange: (v: boolean) => void;
-  label: string;
-  disabled?: boolean;
-}) {
-  return (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={checked}
-      aria-label={label}
-      disabled={disabled}
-      onClick={() => {
-        haptics.selection();
-        onChange(!checked);
-      }}
-      className={`ads-toggle rounded-full icon-only${checked ? " is-on" : ""}${disabled ? " is-disabled" : ""}`}
-    >
-      <span className="ads-toggle__thumb" />
-    </button>
-  );
-}
 
 /**
  * بطاقة إشعارات الصلاة: تفعيل، تنبيه قبل، مدة، دخول الوقت.
@@ -126,6 +98,14 @@ export function PrayerAlertSettingsCard() {
   };
 
   const alertsOn = prefs.alertsEnabled;
+  const permissionHint =
+    permission === "denied"
+      ? "محجوب من إعدادات النظام — يحتاج تفعيل"
+      : permission === "granted"
+        ? "الإذن مفعّل"
+        : permission === "prompt"
+          ? "يحتاج تفعيل الإذن"
+          : "جدولة تنبيهات المواقيت";
 
   return (
     <div className="soft-card soft-card--on-light ads-card">
@@ -168,38 +148,28 @@ export function PrayerAlertSettingsCard() {
           </div>
         )}
 
-        <div className="ads-row-sep">
-          <div>
-            <div className="ads-global-label">تفعيل تنبيهات الصلاة</div>
-            <div className="ads-global-desc">
-              {permission === "denied"
-                ? "محجوب من إعدادات النظام — يحتاج تفعيل"
-                : permission === "granted"
-                  ? "الإذن مفعّل"
-                  : permission === "prompt"
-                    ? "يحتاج تفعيل الإذن"
-                    : "جدولة تنبيهات المواقيت"}
-            </div>
-          </div>
-          <MiniToggle
-            checked={prefs.alertsEnabled}
-            onChange={handleEnableAlerts}
-            label="تفعيل تنبيهات الصلاة"
-          />
-        </div>
+        <SettingsToggleRow
+          id="prayer-alerts-enabled"
+          title="تفعيل تنبيهات الصلاة"
+          description={permissionHint}
+          checked={prefs.alertsEnabled}
+          onChange={(v) => {
+            haptics.selection();
+            handleEnableAlerts(v);
+          }}
+        />
 
-        <div className={`ads-row-sep${alertsOn ? "" : " is-disabled"}`}>
-          <div>
-            <div className="ads-global-label">تنبيه قبل الصلاة</div>
-            <div className="ads-global-desc">إشعار قبل الموعد</div>
-          </div>
-          <MiniToggle
-            checked={prefs.preAlertEnabled}
-            onChange={(v) => patch({ preAlertEnabled: v })}
-            label="تنبيه قبل الصلاة"
-            disabled={!alertsOn}
-          />
-        </div>
+        <SettingsToggleRow
+          id="prayer-pre-alert"
+          title="تنبيه قبل الصلاة"
+          description="إشعار قبل الموعد"
+          checked={prefs.preAlertEnabled}
+          onChange={(v) => {
+            haptics.selection();
+            patch({ preAlertEnabled: v });
+          }}
+          disabled={!alertsOn}
+        />
 
         {alertsOn && prefs.preAlertEnabled ? (
           <div className="ads-row-sep ads-row-sep--stack">
@@ -222,47 +192,42 @@ export function PrayerAlertSettingsCard() {
           </div>
         ) : null}
 
-        <div className={`ads-row-sep${alertsOn ? "" : " is-disabled"}`}>
-          <div>
-            <div className="ads-global-label">تفعيل الأذان عند دخول الوقت</div>
-            <div className="ads-global-desc">إشعار فور دخول وقت كل صلاة</div>
-          </div>
-          <MiniToggle
-            checked={prefs.enterAlertEnabled}
-            onChange={(v) => patch({ enterAlertEnabled: v })}
-            label="تفعيل الأذان عند دخول الوقت"
-            disabled={!alertsOn}
-          />
-        </div>
+        <SettingsToggleRow
+          id="prayer-enter-alert"
+          title="تفعيل الأذان عند دخول الوقت"
+          description="إشعار فور دخول وقت كل صلاة"
+          checked={prefs.enterAlertEnabled}
+          onChange={(v) => {
+            haptics.selection();
+            patch({ enterAlertEnabled: v });
+          }}
+          disabled={!alertsOn}
+        />
 
-        <div className={`ads-row-sep${alertsOn ? "" : " is-disabled"}`}>
-          <div>
-            <div className="ads-global-label">تذكير الصامت بعد الأذان</div>
-            <div className="ads-global-desc">تذكير بعد دخول الوقت</div>
-          </div>
-          <MiniToggle
-            checked={prefs.postReminderEnabled}
-            onChange={(v) => patch({ postReminderEnabled: v })}
-            label="تذكير الصامت بعد الأذان"
-            disabled={!alertsOn}
-          />
-        </div>
+        <SettingsToggleRow
+          id="prayer-post-reminder"
+          title="تذكير الصامت بعد الأذان"
+          description="تذكير بعد دخول الوقت"
+          checked={prefs.postReminderEnabled}
+          onChange={(v) => {
+            haptics.selection();
+            patch({ postReminderEnabled: v });
+          }}
+          disabled={!alertsOn}
+        />
 
-        <div className={`ads-row-sep${alertsOn ? "" : " is-disabled"}`}>
-          <div>
-            <div className="ads-global-label">اهتزاز مع التنبيه</div>
-            <div className="ads-global-desc">نبضة لمسية عند أذان الصلاة</div>
-          </div>
-          <MiniToggle
-            checked={vibrateEnabled}
-            onChange={(v) => {
-              setVibrateEnabled(v);
-              patchAdhanPrefs({ vibrateEnabled: v });
-            }}
-            label="اهتزاز مع التنبيه"
-            disabled={!alertsOn}
-          />
-        </div>
+        <SettingsToggleRow
+          id="prayer-vibrate"
+          title="اهتزاز مع التنبيه"
+          description="نبضة لمسية عند أذان الصلاة"
+          checked={vibrateEnabled}
+          onChange={(v) => {
+            haptics.selection();
+            setVibrateEnabled(v);
+            patchAdhanPrefs({ vibrateEnabled: v });
+          }}
+          disabled={!alertsOn}
+        />
       </div>
     </div>
   );
