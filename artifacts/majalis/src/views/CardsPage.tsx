@@ -161,7 +161,7 @@ export default function CardsPage() {
 
         <div className="cards-layout">
           <div className="cards-controls">
-            <div className="ui-card cards-panel">
+            <div className="soft-card soft-card--on-light cards-panel">
               <h2>المحتوى</h2>
               <textarea
                 value={quote}
@@ -178,7 +178,7 @@ export default function CardsPage() {
               />
             </div>
 
-            <div className="ui-card cards-panel">
+            <div className="soft-card soft-card--on-light cards-panel">
               <h2>القالب</h2>
               <div className="cards-template-grid">
                 {TEMPLATES.map((t) => (
@@ -195,7 +195,7 @@ export default function CardsPage() {
               </div>
             </div>
 
-            <div className="ui-card cards-panel">
+            <div className="soft-card soft-card--on-light cards-panel">
               <h2>الحجم</h2>
               <div className="cards-size-row">
                 {(Object.keys(SIZE_MAP) as SizeKey[]).map((s) => (
@@ -217,13 +217,13 @@ export default function CardsPage() {
             </label>
 
             <div className="template-action-row">
-              <button type="button" className="ui-card-btn template-btn template-btn--ghost" onClick={resetForm}>
+              <button type="button" className="ss-action-btn ss-action-btn--secondary template-btn template-btn--ghost" onClick={resetForm}>
                 إعادة ضبط
               </button>
-              <button type="button" onClick={() => void shareCard()} disabled={isGenerating} className="ui-card-btn template-btn template-btn--ghost">
+              <button type="button" onClick={() => void shareCard()} disabled={isGenerating} className="ss-action-btn ss-action-btn--secondary template-btn template-btn--ghost">
                 {isGenerating ? "مشاركة…" : "مشاركة"}
               </button>
-              <button type="button" onClick={() => void downloadCard()} disabled={isGenerating} className="ui-card-btn template-btn template-btn--primary">
+              <button type="button" onClick={() => void downloadCard()} disabled={isGenerating} className="ss-action-btn ss-action-btn--secondary template-btn template-btn--primary">
                 {isGenerating ? "تحميل…" : "تحميل الصورة"}
               </button>
             </div>

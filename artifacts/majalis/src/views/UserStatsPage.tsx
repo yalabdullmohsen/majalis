@@ -365,7 +365,7 @@ export default function UserStatsPage() {
       <div className="page-shell narrow usp-login-prompt" dir="rtl">
         <div className="usp-login-icon"><Lock size={36} strokeWidth={1.3} /></div>
         <p className="usp-login-msg">سجّل الدخول لعرض ملفك الشخصي وإنجازاتك.</p>
-        <Link href="/login?next=/profile" className="ui-card-btn">
+        <Link href="/login?next=/profile" className="ss-action-btn ss-action-btn--secondary">
           تسجيل الدخول
         </Link>
       </div>
@@ -388,7 +388,7 @@ export default function UserStatsPage() {
 
       {/* ── بطاقة الهوية ── */}
       {stats && (
-        <div className="profile-identity ui-card" style={{ "--level-color": stats.level.color } as React.CSSProperties}>
+        <div className="profile-identity soft-card soft-card--on-light" style={{ "--level-color": stats.level.color } as React.CSSProperties}>
           <div className="profile-identity__left">
             <div className="profile-identity__avatar">
               {displayName.slice(0, 1)}

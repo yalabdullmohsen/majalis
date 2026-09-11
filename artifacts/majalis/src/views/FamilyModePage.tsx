@@ -338,7 +338,7 @@ export default function FamilyModePage() {
         <p className="fm-login-msg">
           سجّل الدخول للوصول إلى الوضع العائلي.
         </p>
-        <Link href="/login?next=/family" className="ui-card-btn">تسجيل الدخول</Link>
+        <Link href="/login?next=/family" className="ss-action-btn ss-action-btn--secondary">تسجيل الدخول</Link>
       </PageStatusShell>
     );
   }

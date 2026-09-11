@@ -106,7 +106,7 @@ export default function AccountDeletionPage() {
         <p>هذه العملية لا يمكن التراجع عنها.</p>
       </header>
 
-      <section className="accd-info ui-card">
+      <section className="accd-info soft-card soft-card--on-light">
         <h2 className="accd-info__title">
           <AlertTriangle size={16} aria-hidden="true" /> ماذا سيُحذف؟
         </h2>
@@ -161,7 +161,7 @@ export default function AccountDeletionPage() {
 
       {!authLoading && isLoggedIn && (step === "confirm" || step === "typing") && (
         <div
-          className="accd-confirm ui-card"
+          className="accd-confirm soft-card soft-card--on-light"
           role="alertdialog"
           aria-labelledby="accd-confirm-title"
           aria-describedby="accd-confirm-desc"
