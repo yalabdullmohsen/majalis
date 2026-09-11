@@ -7,6 +7,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import "@/styles/pages/fiqh-qawaid.css";
+import { ListScreen } from "@/components/design-system/screens";
 
 /* ══════════════════════════════════════════════════════════════════
    §239، القواعد الفقهية الكبرى  (.fq-*)
@@ -422,6 +423,7 @@ export default function FiqhQawaidPage() {
   );
 
   return (
+    <ListScreen compose="mark">
     <div className="fq-page" dir="rtl">
       {/* ══ Hero ══ */}
       <section className="fq-hero">
@@ -693,5 +695,6 @@ export default function FiqhQawaidPage() {
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه والقواعد" count={4} />
       </div>
     </div>
+    </ListScreen>
   );
 }

@@ -20,6 +20,7 @@ import {
   type UserCertificateSummary,
   type RealUserLearningStats,
 } from "@/lib/learning-paths-service";
+import { DashboardScreen } from "@/components/design-system/screens";
 
 /* ── أيقونات المحتوى ────────────────────────────────────────────────────── */
 const CONTENT_ICONS: Record<string, React.ComponentType<{ size?: number }>> = {
@@ -116,6 +117,7 @@ export default function MyLearningPage() {
 
 
   return (
+    <DashboardScreen compose="mark">
     <div className="myl2-page" dir="rtl">
 
       {/* ══════════ Hero ══════════ */}
@@ -341,5 +343,6 @@ export default function MyLearningPage() {
 
       </div>
     </div>
+    </DashboardScreen>
   );
 }

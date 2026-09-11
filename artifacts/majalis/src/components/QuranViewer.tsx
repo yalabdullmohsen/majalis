@@ -442,7 +442,8 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
             <h1 className="qe-viewer__title">سورة {meta.name}</h1>
             <p className="qe-viewer__sub">
               {meta.revelation} · {toArabicDigits(meta.ayahs)} آية
-              {hydrating ? " · جاري المزامنة…" : ""}
+              {hydrating ? " · " : ""}
+              {hydrating ? <span className="qe-viewer__sync" role="status" aria-busy="true" aria-label="تحديث الصفحة" /> : null}
             </p>
           </div>
           <div className="qe-viewer__head-actions">

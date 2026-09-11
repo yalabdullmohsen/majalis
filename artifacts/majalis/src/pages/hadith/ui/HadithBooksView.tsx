@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { Link } from "wouter";
-import { ArrowRight, BookOpen, ChevronRight, Loader2, Search, X, AlertTriangle } from "lucide-react";
+import { ArrowRight, BookOpen, ChevronRight, Search, X, AlertTriangle } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import {
   HADITH_COLLECTIONS,
@@ -16,6 +16,7 @@ import { extractDisplayMatn, splitHadithNarration } from "@/lib/hadith-access";
 import { VirtualList } from "@/components/VirtualList";
 import "@/styles/pages/hadith-books.css";
 import "@/styles/pages/hadith.css";
+import { ListScreen } from "@/components/design-system/screens";
 
 // ─── Chapter index built from hadith data ─────────────────────────────────────
 
@@ -242,12 +243,12 @@ function CollectionBrowser({ meta }: { meta: CdnCollectionMeta }) {
   const [showAllChapters, setShowAllChapters] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
     setLoading(true);
     setError(false);
-    setHadiths([]);
-    setChapters([]);
     setActiveChapter(null);
     setSearch("");
+    // أبقِ القائمة السابقة ظاهرة أثناء التبديل (بلا وميض فراغ)
 
     const fetchFn = meta.id === "mutafaq"
       ? fetchMutafaqAlayhHadiths()
@@ -255,15 +256,25 @@ function CollectionBrowser({ meta }: { meta: CdnCollectionMeta }) {
 
     fetchFn
       .then((data) => {
+        if (cancelled) return;
         setHadiths(data);
         if (meta.id !== "mutafaq") {
           const chs = buildChapters(data);
           setChapters(chs);
           if (chs.length > 0) setActiveChapter(chs[0].no);
+        } else {
+          setChapters([]);
         }
       })
-      .catch(() => setError(true))
-      .finally(() => setLoading(false));
+      .catch(() => {
+        if (!cancelled) setError(true);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [meta.id]);
 
   const displayHadiths = useMemo(() => {
@@ -274,13 +285,14 @@ function CollectionBrowser({ meta }: { meta: CdnCollectionMeta }) {
 
   const visibleChapters = showAllChapters ? chapters : chapters.slice(0, 30);
 
-  if (loading) {
+  if (loading && hadiths.length === 0) {
     return (
-      <div className="hb-loading" aria-live="polite">
-        <Loader2 size={28} className="hb-loading__icon" aria-hidden="true" />
-        <p>تحديث {meta.name}…</p>
-        <p className="hb-loading__note">قد يستغرق التحميل لحظات للمجموعات الكبيرة.</p>
-      </div>
+      <div
+        className="hb-loading hb-loading--silent"
+        role="status"
+        aria-busy="true"
+        aria-label={`تحديث ${meta.name}`}
+      />
     );
   }
 
@@ -415,6 +427,7 @@ export default function HadithBooksPage() {
   }, []);
 
   return (
+    <ListScreen compose="mark">
     <div className="page-shell hb-page" dir="rtl">
       {/* التنقل */}
       <nav className="hb-breadcrumb" aria-label="مسار التنقل">
@@ -490,5 +503,6 @@ export default function HadithBooksPage() {
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث" count={4} />
       </div>
     </div>
+    </ListScreen>
   );
 }

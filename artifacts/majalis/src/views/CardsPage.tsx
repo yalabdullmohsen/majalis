@@ -219,10 +219,10 @@ export default function CardsPage() {
                 إعادة ضبط
               </button>
               <button type="button" onClick={() => void shareCard()} disabled={isGenerating} className="ui-card-btn template-btn template-btn--ghost">
-                {isGenerating ? "جاري الإنشاء..." : "مشاركة"}
+                {isGenerating ? "مشاركة…" : "مشاركة"}
               </button>
               <button type="button" onClick={() => void downloadCard()} disabled={isGenerating} className="ui-card-btn template-btn template-btn--primary">
-                {isGenerating ? "جاري الإنشاء..." : "تحميل الصورة"}
+                {isGenerating ? "تحميل…" : "تحميل الصورة"}
               </button>
             </div>
           </div>

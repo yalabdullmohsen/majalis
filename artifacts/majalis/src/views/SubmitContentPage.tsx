@@ -156,7 +156,7 @@ export default function SubmitContentPage() {
           disabled={status === "loading"}
           className={`scp-submit-btn${status === "loading" ? " is-loading" : ""}`}
         >
-          {status === "loading" ? "جارٍ الإرسال..." : "إرسال المقترح"}
+          {status === "loading" ? "إرسال…" : "إرسال المقترح"}
         </button>
       </form>
     </div>

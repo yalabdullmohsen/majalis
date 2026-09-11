@@ -130,7 +130,7 @@ export default function MyCitationsPage() {
   };
 
   const handleExport = async (format: "markdown" | "pdf") => {
-    setExportStatus("جاري التصدير...");
+    setExportStatus("تصدير…");
     if (format === "markdown") {
       const blob = await exportCitations("markdown");
       if (blob instanceof Blob) {

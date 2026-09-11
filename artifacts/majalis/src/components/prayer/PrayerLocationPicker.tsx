@@ -132,9 +132,16 @@ export function PrayerLocationPicker({ onChanged }: Props) {
       </p>
 
       <div className="pts-loc__modes">
-        <button type="button" className="pts-loc__gps" onClick={useGps} disabled={gpsBusy}>
+        <button
+          type="button"
+          className="pts-loc__gps"
+          onClick={useGps}
+          disabled={gpsBusy}
+          aria-busy={gpsBusy}
+          aria-label={gpsBusy ? "تحديث الموقع" : "استخدم موقعي"}
+        >
           <Crosshair size={14} aria-hidden />
-          {gpsBusy ? "جاري التحديد…" : "استخدم موقعي"}
+          استخدم موقعي
         </button>
         {gpsError && <p className="pts-loc__err" role="alert">{gpsError}</p>}
       </div>
