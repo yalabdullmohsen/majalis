@@ -131,3 +131,9 @@
 
 1. توسيع جسر البطاقات: hadith/lesson-unified/fiqh/prophet/home-daily/tarikh/lib/lpp…
 2. ترحيل هكس slate/info/success إضافية في styles/pages.
+
+## دفعة P16 — 2026-09-11
+
+1. توسيع رموز \`--mj-warning-soft\` / \`--mj-danger-soft\`.
+2. ترحيل هكس تحذير/خطر/معلومات/أسطح إضافية في \`styles/pages\`.
+3. دفعة إضافية ضمن P16: ترحيل رمادي/أخضر/تحذير شائع دون المساس بتدرج مواقيت الصلاة المقدّس.

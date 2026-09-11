@@ -24,7 +24,9 @@
   --mj-brand-deep: #0d4a39;
   --mj-accent: #b08a3e;
   --mj-accent-soft: #f3ecdf;
+  --mj-warning-soft: #fef3c7;
   --mj-warning: #b45309;
+  --mj-danger-soft: #fce8e6;
   --mj-danger: #b54a4a;
   --mj-info: #1a3a5c;
   --mj-info-soft: #e8eef5;
@@ -88,7 +90,9 @@ html.dark {
   --mj-brand-deep: #1e4d3c;
   --mj-accent: #d9b871;
   --mj-accent-soft: rgba(217, 184, 113, 0.16);
+  --mj-warning-soft: rgba(217,119,6,0.16);
   --mj-warning: #d97706;
+  --mj-danger-soft: rgba(240,113,120,0.18);
   --mj-danger: #f07178;
   --mj-info: #7dd3fc;
   --mj-info-soft: rgba(125,211,252,0.14);

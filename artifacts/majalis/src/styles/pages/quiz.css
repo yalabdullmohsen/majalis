@@ -11,7 +11,7 @@
   color: var(--majalis-ink-soft) !important;
 }
 .quiz-level-badge--hard {
-  background: var(--majalis-danger-muted, #fee2e2) !important;
+  background: var(--majalis-danger-muted, var(--mj-danger-soft, #fee2e2)) !important;
   color: var(--majalis-danger, var(--mj-danger-deep)) !important;
 }
 

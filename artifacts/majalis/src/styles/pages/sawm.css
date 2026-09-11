@@ -124,13 +124,13 @@
   white-space: nowrap;
   flex-shrink: 0;
 }
-.sw-badge--fard { background: var(--danger-bg, #FEF2F2); color: var(--danger-txt, #B91C1C); }
+.sw-badge--fard { background: var(--danger-bg, var(--mj-danger-soft, #fef2f2)); color: var(--danger-txt, var(--mj-danger)); }
 .sw-badge--wajib { background: rgba(23,61,53,.10); color: var(--mj-brand); }
 /* --fard/--nafl خلفياتهما لونان فاتحان صلبان (لا شفافية) فيبقيان واضحين
    بصرف النظر عن الوضع؛ --wajib وحدها خلفيتها شفافة (10% من لون البطاقة
    المحيطة نفسه) فتصبح داكنة تلقائيًا حين تصير البطاقة داكنة في الوضع
    الليلي، بينما نصها var(--mj-brand) يبقى داكنًا أيضًا — تصادم لون على لون. */
-html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
+html[data-theme="dark"] .sw-badge--wajib { color: var(--mj-brand, #7ed4b5) !important; }
 .sw-badge--nafl { background: var(--mj-brand-soft); color: var(--mj-brand); }
 
 /* dalil */

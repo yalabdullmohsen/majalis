@@ -184,20 +184,20 @@ html.dark .quran-open-mushaf__desc {
 
 html[data-theme="dark"] .quran-open-mushaf__resume,
 html.dark .quran-open-mushaf__resume {
-  color: #d4e8dc;
+  color: var(--mj-brand-soft);
   background: color-mix(in srgb, var(--qom-accent) 22%, transparent);
   border-color: color-mix(in srgb, var(--qom-accent) 30%, transparent);
 }
 
 html[data-theme="dark"] .quran-open-mushaf__cta-label,
 html.dark .quran-open-mushaf__cta-label {
-  color: #d4e8dc;
+  color: var(--mj-brand-soft);
 }
 
 html[data-theme="dark"] .quran-open-mushaf__icon,
 html.dark .quran-open-mushaf__icon {
   background: color-mix(in srgb, var(--qom-accent) 22%, transparent);
-  color: #d4e8dc;
+  color: var(--mj-brand-soft);
   border-color: color-mix(in srgb, var(--qom-accent) 28%, transparent);
 }
 

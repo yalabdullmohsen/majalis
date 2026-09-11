@@ -48,7 +48,7 @@
 .uap-uni-card { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-xl); padding: var(--ds-space-4); }
 .uap-uni-name { font-weight: 600; color: var(--majalis-ink); font-size: .875rem; }
 .uap-verified-badge { font-size: .75rem; background: var(--majalis-emerald-muted, rgba(31,77,58,.1)); color: var(--majalis-emerald); padding: .125rem .375rem; border-radius: .25rem; }
-.uap-unpublished-badge { font-size: .75rem; background: #fef2f2; color: var(--majalis-danger, #dc2626); padding: .125rem .375rem; border-radius: .25rem; }
+.uap-unpublished-badge { font-size: .75rem; background: var(--mj-danger-soft, #fef2f2); color: var(--majalis-danger, var(--mj-danger)); padding: .125rem .375rem; border-radius: .25rem; }
 .uap-uni-meta { font-size: .75rem; color: var(--majalis-ink-soft); margin-top: .125rem; }
 .uap-uni-date { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .4; margin-top: .125rem; }
 .uap-view-btn {
@@ -98,7 +98,7 @@
 .is-card { background: var(--mj-white, #ffffff); border: 1px solid var(--mj-info-soft); border-radius: var(--ds-radius-lg); overflow: hidden; }
 .is-card.approved { border-color: var(--mj-success-soft); }
 .is-card-head { display: flex; align-items: center; gap: var(--ds-space-3); padding: 0.875rem 1.1rem; cursor: pointer; background: var(--mj-surface-2); border-bottom: 1px solid transparent; transition: background 0.15s; }
-.is-card.approved .is-card-head { background: #f0fdf4; }
+.is-card.approved .is-card-head { background: var(--mj-success-soft, #f0fdf4); }
 .is-card-head:hover { background: var(--mj-surface-2); }
 .is-card.approved .is-card-head:hover { background: var(--mj-success-soft); }
 .is-icon { font-size: 1.4rem; }

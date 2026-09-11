@@ -6,7 +6,7 @@
 
 /* Hero */
 .rq-hero {
-  background: linear-gradient(135deg, #0d1117 0%, var(--mj-info) 55%, #0a1620 100%);
+  background: linear-gradient(135deg, var(--mj-ink) 0%, var(--mj-info) 55%, #0a1620 100%);
   padding: 3.5rem 1.25rem 2.5rem;
   text-align: center; color: var(--mj-white, #ffffff);
   position: relative; overflow: hidden;

@@ -42,7 +42,7 @@
   height: 72px;
   border-radius: 50%;
   object-fit: cover;
-  background: var(--muted, #f3f4f6);
+  background: var(--muted, var(--mj-surface-2));
 }
 .tch-card__name {
   font-weight: 700;
@@ -52,7 +52,7 @@
 }
 .tch-card__count {
   font-size: var(--ds-text-xs, 0.8rem);
-  color: var(--muted-fg, #6b7280);
+  color: var(--muted-fg, var(--mj-muted));
 }
 .tch-section { margin-top: 1.75rem; }
 .tch-section__title {
@@ -63,5 +63,5 @@
 .tch-empty {
   padding: 1.5rem;
   text-align: center;
-  color: var(--muted-fg, #6b7280);
+  color: var(--muted-fg, var(--mj-muted));
 }

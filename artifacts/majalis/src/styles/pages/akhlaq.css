@@ -207,8 +207,8 @@ html.dark .akl-cat--active,
 }
 
 .akl-block--scholar {
-  border-inline-start-color: var(--mj-accent, #c4a574);
-  background: color-mix(in srgb, var(--mj-accent, #c4a574) 10%, var(--ss-card-bg));
+  border-inline-start-color: var(--mj-accent, var(--mj-accent));
+  background: color-mix(in srgb, var(--mj-accent, var(--mj-accent)) 10%, var(--ss-card-bg));
 }
 
 .akl-block__label {
@@ -220,7 +220,7 @@ html.dark .akl-cat--active,
 }
 
 .akl-block--scholar .akl-block__label {
-  color: color-mix(in srgb, var(--mj-accent, #c4a574) 70%, var(--mj-ink));
+  color: color-mix(in srgb, var(--mj-accent, var(--mj-accent)) 70%, var(--mj-ink));
 }
 
 .akl-block__quran,

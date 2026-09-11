@@ -231,7 +231,7 @@ html.dark .isp-chip.is-active,
 }
 
 .isp-badge--cat  { background: color-mix(in srgb, var(--mj-brand) 12%, transparent); color: var(--brand-on-light, var(--mj-brand-deep)); border: 1px solid color-mix(in srgb, var(--mj-brand) 22%, transparent); }
-.isp-badge--era  { background: color-mix(in srgb, var(--mj-accent, #c4a574) 14%, transparent); color: color-mix(in srgb, var(--mj-accent, #c4a574) 55%, var(--mj-ink)); border: 1px solid color-mix(in srgb, var(--mj-accent) 28%, transparent); }
+.isp-badge--era  { background: color-mix(in srgb, var(--mj-accent, var(--mj-accent)) 14%, transparent); color: color-mix(in srgb, var(--mj-accent, var(--mj-accent)) 55%, var(--mj-ink)); border: 1px solid color-mix(in srgb, var(--mj-accent) 28%, transparent); }
 
 .isp-card__divider {
   height: 1px;

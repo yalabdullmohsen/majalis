@@ -123,7 +123,7 @@
   touch-action: manipulation;
 }
 .adhkar-focus-btn:hover:not(:disabled) {
-  background: var(--mj-brand-soft, #F0FDF4);
+  background: var(--mj-brand-soft, var(--mj-success-soft, #f0fdf4));
   border-color: var(--majalis-emerald, var(--mj-brand));
 }
 .adhkar-focus-btn:active:not(:disabled) {
@@ -277,7 +277,7 @@
   color: var(--majalis-ink, var(--mj-ink));
   text-align: center;
   padding: var(--ds-space-4);
-  background: var(--mj-brand-soft, #F0FDF4);
+  background: var(--mj-brand-soft, var(--mj-success-soft, #f0fdf4));
   border-radius: var(--ds-radius-lg);
   margin-bottom: 1.25rem;
   opacity: 1;
@@ -316,7 +316,7 @@
 }
 .adhkar-grade--sahih { background: var(--mj-brand-soft, var(--mj-success-soft)); color: var(--mj-brand-deep, #153025); }
 .adhkar-grade--hasan { background: var(--mj-brand-soft, #e8f5f0); color: var(--mj-brand-deep, #153025); }
-.adhkar-grade--other { background: var(--mj-surface-2, #F3F4F6); color: var(--mj-ink-2); }
+.adhkar-grade--other { background: var(--mj-surface-2, var(--mj-surface-2)); color: var(--mj-ink-2); }
 .adhkar-sheet-share {
   width: 100%;
   justify-content: center;

@@ -102,7 +102,7 @@
 .is-btn { padding: 0.45rem 1rem; border-radius: var(--ds-radius-sm); font-size: 0.8125rem; font-weight: 600; cursor: pointer; font-family: inherit; border: none; transition: all 0.15s; }
 .is-btn.approve { background: var(--mj-brand); color: var(--mj-white, #ffffff); }
 .is-btn.approve:hover { background: var(--mj-brand); }
-.is-btn.revoke { background: var(--mj-white, #ffffff); color: var(--mj-danger); border: 1px solid #fca5a5; }
+.is-btn.revoke { background: var(--mj-white, #ffffff); color: var(--mj-danger); border: 1px solid var(--mj-danger-soft, #fca5a5); }
 .is-btn.revoke:hover { background: color-mix(in srgb, var(--mj-danger) 8%, white); }
 .is-btn.disabled { opacity: 0.45; cursor: not-allowed; }
 .is-verified-info { font-size: 0.7375rem; color: var(--mj-muted); padding: 0.3rem 0; }

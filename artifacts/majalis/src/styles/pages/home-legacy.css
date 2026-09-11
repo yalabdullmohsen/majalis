@@ -30,7 +30,7 @@
 .home-page {
   background:
     radial-gradient(circle at top right, rgba(31,77,58,.06), transparent 32rem),
-    linear-gradient(180deg, #FAFAF7 0%, #FAF8F5 100%);
+    linear-gradient(180deg, #FAFAF7 0%, var(--mj-surface) 100%);
 }
 
 .home-hero {
@@ -238,7 +238,7 @@
 .home-qa-card,
 .home-empty-card {
   border: 1px solid rgba(31,77,58,0.09);
-  background: var(--msk-canvas, #FAFAF8);
+  background: var(--msk-canvas, var(--mj-surface));
   box-shadow: 0 2px 12px rgba(31,77,58,0.06), 0 1px 3px rgba(31,77,58,0.04);
 }
 
@@ -773,7 +773,7 @@
 
 .home-prayer-rank-ruling {
   font-size: 0.78rem;
-  color: var(--majalis-ink-soft, #6b7280);
+  color: var(--majalis-ink-soft, var(--mj-muted));
   margin: 0;
 }
 
@@ -910,7 +910,7 @@
 }
 
 .home-page--v4 nav[aria-label="وصول سريع"] a {
-  background: var(--msk-canvas, #FAFAF8) !important;
+  background: var(--msk-canvas, var(--mj-surface)) !important;
   border-color: rgba(31,77,58,0.09) !important;
   transition: background 0.18s, border-color 0.18s, transform 0.18s, box-shadow 0.18s !important;
 }

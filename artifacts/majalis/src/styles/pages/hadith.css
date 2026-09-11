@@ -194,7 +194,7 @@
 .hadith-grade--hasan-sahih { background: rgba(34,106,86,.12); color: var(--emerald-400, var(--mj-brand)); }
 .hadith-grade--hasan       { background: var(--emerald-50, #EEF1F0); color: var(--emerald-500, var(--mj-brand-deep)); }
 .hadith-grade--daif        { background: color-mix(in srgb, var(--mj-warning, #c2410c) 10%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-warning, #9A3412); }
-.hadith-grade--mawdu       { background: color-mix(in srgb, var(--mj-danger, #b91c1c) 10%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-danger, #7F1D1D); }
+.hadith-grade--mawdu       { background: color-mix(in srgb, var(--mj-danger, var(--mj-danger)) 10%, var(--mj-surface, var(--mj-white, #ffffff))); color: var(--mj-danger, var(--mj-danger)); }
 .hadith-grade--unknown     { background: var(--emerald-50, #EEF1F0); color: var(--msk-text-2, var(--mj-ink-2)); }
 .hadith-grade--pending     { background: var(--mj-surface-2, var(--mj-surface-2)); color: var(--mj-ink-2, var(--mj-muted)); border: 1px solid var(--mj-hairline, var(--mj-hairline)); }
 
@@ -1229,7 +1229,7 @@ html[data-theme="dark"] .hadith-stat strong {
 .hadith-hub-card__desc {
   font-size: 0.8rem;
   line-height: 1.45;
-  color: var(--mj-ink-2, #666);
+  color: var(--mj-ink-2, var(--mj-muted));
 }
 .hadith-hub-card--sahih { border-inline-start: 3px solid var(--mj-brand, #2f7a55); }
 .hadith-hub-card--daif { border-inline-start: 3px solid var(--mj-warning, #b67a32); }
@@ -1355,7 +1355,7 @@ html[data-theme="dark"] .hadith-stat strong {
 }
 .hadith-grade--mawdu {
   background: color-mix(in srgb, var(--mj-danger) 10%, transparent);
-  color: #7f1d1d;
+  color: var(--mj-danger);
   border: 1px solid color-mix(in srgb, var(--mj-danger) 22%, transparent);
 }
 .hadith-grade--daif {
@@ -1501,9 +1501,9 @@ html[data-theme="dark"] .hadith-stat strong {
   border-color: color-mix(in srgb, var(--mj-danger) 28%, transparent);
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hadith-grade--daif {
-  background: color-mix(in srgb, #fb923c 16%, transparent);
+  background: color-mix(in srgb, var(--mj-warning) 16%, transparent);
   color: #fdba74;
-  border-color: color-mix(in srgb, #fb923c 28%, transparent);
+  border-color: color-mix(in srgb, var(--mj-warning) 28%, transparent);
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) :is(.hadith-grade--sahih, .hadith-grade--hasan, .hadith-grade--hasan-sahih) {
   background: color-mix(in srgb, var(--mj-brand-soft, #6ee7b7) 12%, transparent);
@@ -1792,7 +1792,7 @@ html[data-theme="dark"] .hadith-detail-dl dd,
 html.dark .hadith-detail-dl dd,
 html[data-theme="dark"] .hadith-detail-grade__quote,
 html.dark .hadith-detail-grade__quote {
-  color: var(--mj-ink, #e8f2ed);
+  color: var(--mj-ink, var(--mj-brand-soft));
 }
 
 html[data-theme="dark"] .hadith-browse-cta,
@@ -1803,7 +1803,7 @@ html.dark .hadith-browse-cta {
 
 html[data-theme="dark"] .hadith-browse-cta__title,
 html.dark .hadith-browse-cta__title {
-  color: var(--mj-ink, #e8f2ed);
+  color: var(--mj-ink, var(--mj-brand-soft));
 }
 
 html[data-theme="dark"] .hadith-browse-cta__desc,

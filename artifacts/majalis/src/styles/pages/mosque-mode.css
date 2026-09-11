@@ -44,7 +44,7 @@
   color: #5c564c;
   text-decoration: none;
   padding: 0.35rem 0.75rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--mj-hairline);
   border-radius: 0.5rem;
 }
 .mosque-mode__label { font-size: 1rem; font-weight: 700; color: var(--mj-brand); }

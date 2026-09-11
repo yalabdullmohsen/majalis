@@ -13,21 +13,21 @@
 .rp-plan-card__title { font-size: var(--ds-text-base); font-weight: 700; margin: 0; }
 .rp-badge { font-size: .72rem; font-weight: 700; padding: .2rem .6rem; border-radius: 99px; white-space: nowrap; background: var(--bg-hover, #f0f0f0); color: var(--text-muted, var(--mj-muted)); }
 .rp-badge--ahead { background: rgba(23,61,53,.12); color: var(--mj-brand); }
-.rp-badge--behind { background: rgba(190,60,40,.12); color: #B33C28; }
+.rp-badge--behind { background: rgba(190,60,40,.12); color: var(--mj-danger); }
 .rp-badge--done { background: rgba(23,61,53,.18); color: var(--mj-brand); }
 .rp-badge--paused { background: rgba(120,120,120,.15); color: var(--mj-muted); }
 .rp-badge--active { background: rgba(31,77,58,.1); color: var(--mj-brand-deep); }
 .rp-badge--idle { background: rgba(120,120,120,.1); color: var(--mj-muted); }
-.rp-progress-bar { height: 8px; border-radius: 99px; background: var(--bg-hover, #eee); overflow: hidden; margin-bottom: .5rem; }
+.rp-progress-bar { height: 8px; border-radius: 99px; background: var(--bg-hover, var(--mj-surface-2)); overflow: hidden; margin-bottom: .5rem; }
 .rp-progress-bar__fill { height: 100%; background: var(--majalis-emerald, var(--mj-brand)); border-radius: 99px; transition: width .3s; }
 .rp-plan-card__meta { font-size: .82rem; color: var(--text-muted, var(--mj-muted)); margin: 0 0 .5rem; }
-.rp-plan-card__catchup { font-size: .82rem; color: #B33C28; background: rgba(190,60,40,.08); border-radius: .5rem; padding: .5rem .7rem; margin: 0 0 .6rem; }
+.rp-plan-card__catchup { font-size: .82rem; color: var(--mj-danger); background: rgba(190,60,40,.08); border-radius: .5rem; padding: .5rem .7rem; margin: 0 0 .6rem; }
 .rp-plan-card__log { display: flex; gap: .5rem; margin-bottom: .6rem; }
 .rp-log-input { flex: 1; padding: .5rem .7rem; border: 1px solid var(--border, var(--mj-hairline)); border-radius: .5rem; font-size: .85rem; }
 .rp-log-btn { background: var(--majalis-emerald, var(--mj-brand)); color: var(--mj-white, #ffffff); border: none; border-radius: .5rem; padding: .5rem 1rem; font-size: .85rem; font-weight: 600; cursor: pointer; }
 .rp-plan-card__actions { display: flex; gap: .5rem; }
 .rp-action-btn { display: inline-flex; align-items: center; gap: .3rem; background: none; border: 1px solid var(--border, var(--mj-hairline)); border-radius: .5rem; padding: .4rem .8rem; font-size: .8rem; cursor: pointer; color: var(--text-secondary, var(--mj-ink-2)); }
-.rp-action-btn--danger { color: #B33C28; border-color: rgba(190,60,40,.3); }
+.rp-action-btn--danger { color: var(--mj-danger); border-color: rgba(190,60,40,.3); }
 .rp-empty { text-align: center; padding: 2.5rem 1rem; color: var(--text-muted, var(--mj-muted)); display: flex; flex-direction: column; align-items: center; gap: .5rem; }
 
 .rp-new-plan { padding: 1.1rem; margin-bottom: 1.25rem; }
@@ -46,7 +46,7 @@
 .rp-day-chip.is-active { background: var(--majalis-emerald, var(--mj-brand)); color: var(--mj-white, #ffffff); border-color: var(--majalis-emerald, var(--mj-brand)); }
 .rp-checkbox-field { display: flex; align-items: center; gap: .5rem; font-size: .85rem; margin-bottom: .8rem; }
 .rp-feasibility { font-size: .82rem; padding: .6rem .8rem; border-radius: .5rem; background: rgba(23,61,53,.08); color: var(--mj-brand); margin-bottom: .8rem; }
-.rp-feasibility--warn { background: rgba(190,60,40,.08); color: #B33C28; }
+.rp-feasibility--warn { background: rgba(190,60,40,.08); color: var(--mj-danger); }
 .rp-submit-btn { width: 100%; background: var(--majalis-emerald, var(--mj-brand)); color: var(--mj-white, #ffffff); border: none; border-radius: .6rem; padding: .7rem; font-size: .92rem; font-weight: 700; cursor: pointer; }
 .rp-submit-btn:disabled { opacity: .5; cursor: not-allowed; }
 

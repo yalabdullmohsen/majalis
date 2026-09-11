@@ -20,8 +20,8 @@
   margin: 0;
   padding: 0.85rem 1rem;
   border-radius: var(--radius-card, 24px);
-  border: 1px solid color-mix(in srgb, var(--mj-accent, #c4a574) 45%, var(--ss-border, var(--mj-hairline)));
-  background: color-mix(in srgb, var(--mj-accent, #c4a574) 12%, var(--ss-card-bg, var(--mj-surface)));
+  border: 1px solid color-mix(in srgb, var(--mj-accent, var(--mj-accent)) 45%, var(--ss-border, var(--mj-hairline)));
+  background: color-mix(in srgb, var(--mj-accent, var(--mj-accent)) 12%, var(--ss-card-bg, var(--mj-surface)));
   color: var(--color-text, var(--mj-ink, #16241e));
   font-size: 0.88rem;
   line-height: 1.7;
@@ -299,9 +299,9 @@ html.dark .sect-card__title,
 
 html.dark .sect-hub__chip,
 [data-theme="dark"] .sect-hub__chip {
-  background: #15201c;
+  background: var(--mj-ink);
   border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #5a9e88)) 28%, var(--mj-hairline));
-  color: #d8ebe2;
+  color: var(--mj-brand-soft);
 }
 
 

@@ -82,7 +82,7 @@
   font-size: .88rem; cursor: pointer; color: var(--clr-text-2); transition: all .18s;
 }
 .wn-tab:hover  { border-color: var(--mj-accent); color: var(--mj-accent); }
-.wn-tab--active { background: #78610a; border-color: #78610a; color: var(--mj-white, #ffffff); font-weight: 600; }
+.wn-tab--active { background: var(--mj-warning); border-color: var(--mj-warning); color: var(--mj-white, #ffffff); font-weight: 600; }
 
 /* Container */
 .wn-container { max-width: 900px; margin: 0 auto; padding: 1.75rem 1.25rem 3rem; }
@@ -106,7 +106,7 @@
 .wn-card__left { display: flex; align-items: center; gap: .75rem; flex: 1; }
 .wn-card__num {
   width: 1.8rem; height: 1.8rem; flex-shrink: 0; border-radius: 50%;
-  background: #78610a; color: var(--mj-white, #ffffff); font-size: .8rem; font-weight: 700;
+  background: var(--mj-warning); color: var(--mj-white, #ffffff); font-size: .8rem; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
 .wn-card__title { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); }
@@ -129,8 +129,8 @@
 .wn-hadith--sm { font-size: .9rem; margin: .4rem 0 .5rem; }
 .wn-source { font-size: .8rem; color: var(--mj-accent); font-weight: 600; margin: 0 0 .6rem; }
 .wn-benefit {
-  background: #fef9ec; border: 1px solid #e8d676; border-radius: .5rem;
-  padding: .65rem .9rem; font-size: .87rem; line-height: 1.65; color: #5a490a;
+  background: var(--mj-accent-soft, #fef9ec); border: 1px solid var(--mj-accent-soft, #e8d676); border-radius: .5rem;
+  padding: .65rem .9rem; font-size: .87rem; line-height: 1.65; color: var(--mj-warning);
 }
 .wn-benefit__label { font-weight: 700; margin-inline-start: .4rem; }
 
@@ -148,7 +148,7 @@
 .wn-umma-card { display: flex; gap: var(--ds-space-4); align-items: flex-start; background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid var(--clr-border); border-radius: .75rem; padding: 1.1rem 1.2rem; }
 .wn-umma-num {
   width: 2rem; height: 2rem; flex-shrink: 0; border-radius: 50%;
-  background: #78610a; color: var(--mj-white, #ffffff); font-weight: 700; font-size: .85rem;
+  background: var(--mj-warning); color: var(--mj-white, #ffffff); font-weight: 700; font-size: .85rem;
   display: flex; align-items: center; justify-content: center;
 }
 .wn-umma-title { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .4rem; }
@@ -182,11 +182,11 @@
 }
 .wn-amal-text { font-size: .93rem; line-height: 1.7; color: var(--clr-text-1); margin: 0; }
 .wn-amal-cta {
-  background: #fef9ec; border: 1px solid #e8d676; border-radius: .75rem;
+  background: var(--mj-accent-soft, #fef9ec); border: 1px solid var(--mj-accent-soft, #e8d676); border-radius: .75rem;
   padding: 1.25rem 1.5rem; text-align: center;
 }
 .wn-amal-cta__icon { font-size: var(--ds-text-2xl); margin-bottom: .5rem; }
-.wn-amal-cta__text { font-size: .92rem; color: #5a490a; line-height: 1.7; font-style: normal; margin: 0; }
+.wn-amal-cta__text { font-size: .92rem; color: var(--mj-warning); line-height: 1.7; font-style: normal; margin: 0; }
 
 /* Responsive */
 @media (max-width: 640px) {

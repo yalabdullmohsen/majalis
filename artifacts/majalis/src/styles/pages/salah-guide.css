@@ -39,11 +39,11 @@
 .sg-hero__sub   { font-size: .9rem; opacity: .88; margin: 0 0 1.4rem; line-height: 1.6; color: var(--mj-white, #ffffff); }
 
 .sg-times-row { display: flex; justify-content: center; gap: .45rem; flex-wrap: wrap; }
-.sg-chip--fajr    { --sg-chip-color: #1e3a5f; }
+.sg-chip--fajr    { --sg-chip-color: var(--mj-info); }
 .sg-chip--dhuhr   { --sg-chip-color: var(--mj-brand); }
 .sg-chip--asr     { --sg-chip-color: var(--mj-brand-deep); }
 .sg-chip--maghrib { --sg-chip-color: var(--brand, var(--mj-brand)); }
-.sg-chip--isha    { --sg-chip-color: #1e3a5f; }
+.sg-chip--isha    { --sg-chip-color: var(--mj-info); }
 .sg-salah-chip {
   border-radius: .6rem; padding: .4rem .7rem; min-width: 3.5rem;
   display: flex; flex-direction: column; align-items: center; gap: .1rem;
@@ -153,7 +153,7 @@
 .sg-mubtilatat-list { display: flex; flex-direction: column; gap: .6rem; margin-bottom: 1.3rem; }
 .sg-mubtil-card {
   display: flex; gap: .7rem; align-items: flex-start;
-  background: color-mix(in srgb, var(--mj-danger) 8%, white); border: 1px solid #FECDD3; border-radius: .75rem; padding: .75rem .9rem;
+  background: color-mix(in srgb, var(--mj-danger) 8%, white); border: 1px solid var(--mj-danger-soft, #fecdd3); border-radius: .75rem; padding: .75rem .9rem;
 }
 .sg-mubtil-icon  { font-size: var(--ds-text-base); color: var(--mj-danger); font-weight: 800; flex-shrink: 0; margin-top: .1rem; }
 .sg-mubtil-title { display: block; font-weight: 700; font-size: .85rem; color: var(--mj-danger-deep); margin-bottom: .2rem; }
@@ -172,7 +172,7 @@
 
 .sg-info-box {
   display: flex; gap: .65rem; align-items: flex-start;
-  background: #EEF2FF; border: 1px solid #C7D2FE; border-radius: .7rem;
+  background: var(--mj-info-soft); border: 1px solid #C7D2FE; border-radius: .7rem;
   padding: .85rem 1rem; font-size: .83rem; color: var(--brand-deep, var(--mj-brand-deep)); line-height: 1.6;
 }
 .sg-info-box p { margin: 0; }
@@ -239,7 +239,7 @@
   padding: .15rem .55rem; border-radius: 20px;
 }
 .sg-rank-card__ruling--high { background: rgba(23,61,53,.2); }
-.sg-rank-card__text { font-size: .83rem; color: #444; line-height: 1.7; margin: 0 0 .4rem; }
+.sg-rank-card__text { font-size: .83rem; color: var(--mj-muted); line-height: 1.7; margin: 0 0 .4rem; }
 .sg-rank-card__benefit { font-size: .78rem; color: var(--mj-muted); font-style: normal; margin: 0; }
 
 /* ── سور الصلاة والنوافل ── */

@@ -883,8 +883,8 @@ html.dark .topic-page--tarikh-detail .tarikh-detail__meta {
 }
 
 .tarikh-badge--confirmed {
-  background: color-mix(in srgb, #2f7a52 12%, transparent);
-  border-color: color-mix(in srgb, #2f7a52 35%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #2f7a52) 12%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand, #2f7a52) 35%, transparent);
   color: #1a4d3e;
 }
 
@@ -903,14 +903,14 @@ html.dark .topic-page--tarikh-detail .tarikh-detail__meta {
 
 html[data-theme="dark"] .tarikh-badge--confirmed,
 html.dark .tarikh-badge--confirmed {
-  color: #8fd4b0;
+  color: var(--mj-brand, #8fd4b0);
 }
 
 html[data-theme="dark"] .tarikh-badge--disputed,
 html.dark .tarikh-badge--disputed,
 html[data-theme="dark"] .tarikh-badge--needs-review,
 html.dark .tarikh-badge--needs-review {
-  color: #fbbf24;
+  color: var(--mj-warning);
 }
 
 .tarikh-detail__section {
@@ -994,7 +994,7 @@ html.dark .tarikh-adjacent__title {
 
 html[data-theme="dark"] .tarikh-card__cta--secondary,
 html.dark .tarikh-card__cta--secondary {
-  color: #8fd4b0;
+  color: var(--mj-brand, #8fd4b0);
 }
 
 html[data-theme="dark"] .tarikh-toc,

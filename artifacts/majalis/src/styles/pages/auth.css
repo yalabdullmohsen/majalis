@@ -99,7 +99,7 @@ html[data-theme="dark"] .login-page {
 
 html.dark .login-card__brand,
 html[data-theme="dark"] .login-card__brand {
-  color: #9fd9b8;
+  color: var(--mj-brand-soft);
 }
 
 .login-card__title {
@@ -148,7 +148,7 @@ html[data-theme="dark"] .login-card__brand {
 }
 
 .login-alert--error {
-  color: #8f1d1d;
+  color: var(--mj-danger);
   background: color-mix(in srgb, var(--mj-danger) 8%, white);
   border: 1px solid color-mix(in srgb, var(--mj-danger) 22%, white);
 }
@@ -160,7 +160,7 @@ html[data-theme="dark"] .login-card__brand {
 }
 
 .login-alert--success {
-  color: #14532d;
+  color: var(--mj-brand-deep, #14532d);
   background: var(--mj-brand-tint);
   border: 1px solid var(--mj-success-soft);
 }
@@ -255,7 +255,7 @@ html[data-theme="dark"] .login-alert--success {
 
 html.dark .login-text-btn,
 html[data-theme="dark"] .login-text-btn {
-  color: #9fd9b8;
+  color: var(--mj-brand-soft);
 }
 
 .login-actions {
@@ -282,7 +282,7 @@ html[data-theme="dark"] .login-text-btn {
   border: 1px solid var(--auth-line);
   border-radius: 0.45rem;
   background: var(--mj-white, #ffffff);
-  color: #8f1d1d;
+  color: var(--mj-danger);
   font-size: 0.78rem;
   font-weight: 700;
   font-family: inherit;

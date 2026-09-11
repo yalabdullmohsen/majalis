@@ -407,7 +407,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   padding: 0.35rem 0.55rem;
   min-height: 44px;
   border-radius: 0.5rem;
-  border: 1px solid color-mix(in srgb, var(--clr-border, #ccc) 80%, transparent);
+  border: 1px solid color-mix(in srgb, var(--clr-border, var(--mj-hairline)) 80%, transparent);
   background: var(--clr-surface, var(--mj-white, #ffffff));
   color: inherit;
   max-width: 9rem;

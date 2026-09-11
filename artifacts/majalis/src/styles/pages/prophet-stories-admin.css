@@ -21,11 +21,11 @@
   border-bottom: 1px solid transparent;
   transition: background 0.15s;
 }
-.ps-card.approved .ps-card-head { background: #f0fdf4; }
-.ps-card.editing .ps-card-head { background: #eff6ff; cursor: default; }
+.ps-card.approved .ps-card-head { background: var(--mj-success-soft, #f0fdf4); }
+.ps-card.editing .ps-card-head { background: var(--mj-info-soft); cursor: default; }
 .ps-card-head:hover { background: var(--mj-surface-2); }
 .ps-card.approved .ps-card-head:hover { background: var(--mj-success-soft); }
-.ps-card.editing .ps-card-head:hover { background: #eff6ff; }
+.ps-card.editing .ps-card-head:hover { background: var(--mj-info-soft); }
 .ps-name { font-size: 1.05rem; font-weight: 700; color: var(--mj-ink); flex: 1; }
 .ps-badge {
   font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem;
@@ -33,7 +33,7 @@
 }
 .ps-badge.pending { background: rgba(23,61,53,0.08); color: var(--mj-brand); border: 1px solid rgba(24,54,42,0.3); }
 .ps-badge.done { background: var(--mj-success-soft); color: var(--mj-brand); border: 1px solid var(--mj-success-soft); }
-.ps-badge.edit-mode { background: #dbeafe; color: #1e40af; border: 1px solid var(--mj-info-soft); }
+.ps-badge.edit-mode { background: var(--mj-info-soft); color: var(--mj-info); border: 1px solid var(--mj-info-soft); }
 .ps-toggle { font-size: 0.8rem; color: var(--mj-muted); }
 .ps-body { padding: 1.1rem 1.25rem; border-top: 1px solid var(--mj-info-soft); }
 .ps-citations-label {
@@ -70,25 +70,25 @@
   font-family: inherit; transition: background 0.15s;
 }
 .ps-approve-btn:hover:not(:disabled) { background: var(--mj-brand); }
-.ps-approve-btn:disabled { background: #86efac; cursor: not-allowed; }
+.ps-approve-btn:disabled { background: var(--mj-brand-soft); cursor: not-allowed; }
 .ps-revoke-btn {
-  background: none; color: #dc2626; border: 1px solid #fca5a5;
+  background: none; color: var(--mj-danger); border: 1px solid var(--mj-danger-soft, #fca5a5);
   border-radius: var(--ds-radius); padding: 0.5rem 0.9rem;
   font-size: 0.8125rem; cursor: pointer; font-family: inherit;
   transition: background 0.15s;
 }
-.ps-revoke-btn:hover:not(:disabled) { background: #fee2e2; }
+.ps-revoke-btn:hover:not(:disabled) { background: var(--mj-danger-soft, #fee2e2); }
 .ps-revoke-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .ps-edit-btn {
-  background: none; color: #2563eb; border: 1px solid var(--mj-info-soft);
+  background: none; color: var(--mj-info); border: 1px solid var(--mj-info-soft);
   border-radius: var(--ds-radius); padding: 0.5rem 0.9rem;
   font-size: 0.8125rem; cursor: pointer; font-family: inherit;
   transition: background 0.15s;
 }
-.ps-edit-btn:hover:not(:disabled) { background: #dbeafe; }
+.ps-edit-btn:hover:not(:disabled) { background: var(--mj-info-soft); }
 .ps-edit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .ps-approved-info { font-size: 0.8rem; color: var(--mj-brand); }
-.ps-error { color: #dc2626; font-size: 0.8125rem; }
+.ps-error { color: var(--mj-danger); font-size: 0.8125rem; }
 .ps-loading { text-align: center; padding: var(--ds-space-12); color: var(--mj-muted); }
 .ps-empty { text-align: center; padding: var(--ds-space-12); color: var(--mj-muted); }
 .ps-warning {
@@ -114,36 +114,36 @@
   font-family: inherit; color: var(--mj-info); background: var(--mj-white, #ffffff);
   direction: rtl; width: 100%;
 }
-.ps-edit-input:focus { outline: none; border-color: #3b82f6; }
+.ps-edit-input:focus { outline: none; border-color: var(--mj-info); }
 .ps-edit-del-cit {
-  background: none; border: 1px solid #fca5a5; border-radius: var(--ds-radius-sm);
-  color: #dc2626; cursor: pointer; padding: 0.3rem 0.55rem;
+  background: none; border: 1px solid var(--mj-danger-soft, #fca5a5); border-radius: var(--ds-radius-sm);
+  color: var(--mj-danger); cursor: pointer; padding: 0.3rem 0.55rem;
   font-size: 0.8rem; font-family: inherit; white-space: nowrap;
   flex-shrink: 0;
 }
-.ps-edit-del-cit:hover { background: #fee2e2; }
+.ps-edit-del-cit:hover { background: var(--mj-danger-soft, #fee2e2); }
 .ps-add-cit-btn {
   background: none; border: 1px dashed var(--mj-info-soft); border-radius: var(--ds-radius-sm);
-  color: #2563eb; cursor: pointer; padding: 0.35rem 0.75rem;
+  color: var(--mj-info); cursor: pointer; padding: 0.35rem 0.75rem;
   font-size: 0.8125rem; font-family: inherit; width: 100%;
   transition: background 0.15s;
 }
-.ps-add-cit-btn:hover { background: #dbeafe; }
+.ps-add-cit-btn:hover { background: var(--mj-info-soft); }
 .ps-edit-textarea {
   border: 1px solid var(--mj-hairline); border-radius: var(--ds-radius);
   padding: 0.75rem 0.9rem; font-size: var(--ds-text-sm); line-height: 1.7;
   font-family: inherit; color: var(--mj-info); background: var(--mj-white, #ffffff);
   direction: rtl; resize: vertical; min-height: 320px; width: 100%;
 }
-.ps-edit-textarea:focus { outline: none; border-color: #3b82f6; }
+.ps-edit-textarea:focus { outline: none; border-color: var(--mj-info); }
 .ps-edit-actions { display: flex; gap: 0.6rem; align-items: center; }
 .ps-save-btn {
-  background: #2563eb; color: var(--mj-white, #ffffff); border: none;
+  background: var(--mj-info); color: var(--mj-white, #ffffff); border: none;
   border-radius: var(--ds-radius); padding: 0.5rem 1.2rem;
   font-size: var(--ds-text-sm); font-weight: 700; cursor: pointer;
   font-family: inherit; transition: background 0.15s;
 }
-.ps-save-btn:hover:not(:disabled) { background: #1d4ed8; }
+.ps-save-btn:hover:not(:disabled) { background: var(--mj-info); }
 .ps-save-btn:disabled { background: var(--mj-info-soft); cursor: not-allowed; }
 .ps-cancel-btn {
   background: none; color: var(--mj-muted); border: 1px solid var(--mj-hairline);
