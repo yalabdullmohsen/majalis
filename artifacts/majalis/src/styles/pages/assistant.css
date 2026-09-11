@@ -69,17 +69,17 @@
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.02em;
-  /* أبيض صلب فوق الأخضر — يتغلّب على .assistant-header p */
-  color: var(--color-hero-fg, var(--mss-on-hero, var(--mj-white, #ffffff))) !important;
-  background: color-mix(in srgb, var(--mj-white, var(--mj-white, #ffffff)) 18%, transparent);
-  border: 1px solid color-mix(in srgb, var(--mj-white, var(--mj-white, #ffffff)) 42%, transparent);
+  /* أبيض صلب فوق الأخضر — لا يرث --color-hero-fg soft-ink */
+  color: #ffffff !important;
+  background: color-mix(in srgb, #ffffff 18%, transparent);
+  border: 1px solid color-mix(in srgb, #ffffff 42%, transparent);
   opacity: 1 !important;
 }
 
 .assistant-page--modern .asp-hero .assistant-title,
 .assistant-page--modern .assistant-title {
   margin: 0;
-  color: var(--color-hero-fg, var(--mj-white, #ffffff)) !important;
+  color: #ffffff !important;
   font-size: clamp(1.35rem, 3.6vw, 1.75rem);
   line-height: 1.3;
 }
@@ -88,7 +88,7 @@
 .assistant-page--modern .assistant-intro {
   margin: 0.4rem 0 0;
   max-width: 40rem;
-  color: var(--color-hero-fg-muted, var(--mss-on-hero-muted, #f3efe6)) !important;
+  color: #f3efe6 !important;
   font-size: 0.9rem;
   line-height: 1.75;
   text-align: start;

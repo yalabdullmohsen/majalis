@@ -35,6 +35,9 @@ html[data-theme="dark"] .assistant-message-bubble {
   margin: 0;
   line-height: 1.35;
 }
+.asp-hero .assistant-title {
+  color: #ffffff;
+}
 
 .assistant-intro {
   color: var(--msk-text-2, var(--mj-muted));

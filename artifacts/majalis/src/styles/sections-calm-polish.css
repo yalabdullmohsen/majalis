@@ -782,6 +782,14 @@ html.dark .hlr__card {
   color: var(--text) !important;
 }
 
+/* هامش سفلي آمن فوق الشريط السفلي */
+.topic-page__body,
+.mk-page {
+  padding-bottom: max(
+    var(--content-pb, calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px)),
+    5.5rem
+  );
+}
 
 /* ui-density: lesson compact */
 .lesson-unified-card {

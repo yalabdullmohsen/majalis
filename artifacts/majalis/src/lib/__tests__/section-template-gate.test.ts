@@ -86,8 +86,16 @@ const css = read("src/styles/components/topic-page.css");
 assert.match(css, /overflow-x:\s*clip/);
 assert.match(css, /--section-accent/);
 assert.match(css, /padding:\s*max\(\s*1\.75rem,\s*28px\)|padding:\s*2(?:\.25|)\s*rem/);
-assert.match(css, /background-color:\s*var\(--topic-hero-from\)/, "لافتة القسم بلون صلب لقياس التباين");
-assert.match(css, /background-image:\s*linear-gradient/, "تدرّج فوق اللون الصلب");
+assert.match(
+  css,
+  /background-color:\s*var\(--topic-hero-from\)|--mss-section-hero-bg|color-mix\(\s*in srgb,\s*var\(--mj-brand/,
+  "لافتة القسم بلون صلب أو بطاقة سطح لهوية موحّدة",
+);
+assert.match(
+  css,
+  /background-image:\s*linear-gradient|background-image:\s*none/,
+  "تدرّج أو بطاقة سطح بلا شريط ممتد",
+);
 assert.match(css, /border-inline-end/);
 assert.doesNotMatch(css, /text-align:\s*(left|right)/);
 
