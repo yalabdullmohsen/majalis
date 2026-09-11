@@ -165,11 +165,15 @@ html.dark .sw-card__title {
 }
 
 html[data-theme="dark"] .sw-tab--active,
-html.dark .sw-tab--active,
-html[data-theme="dark"] .th-tab--active,
-html.dark .th-tab--active {
+html.dark .sw-tab--active {
   background: var(--surface-1, #1B2421) !important;
   color: var(--accent, #5CC095) !important;
+}
+/* .th-tab على soft-hero parchment — حبر داكن لا accent فاتح على سطح فاتح */
+html[data-theme="dark"] .th-tab--active,
+html.dark .th-tab--active {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, #fffef9) !important;
+  color: var(--mss-on-hero, #123f2e) !important;
 }
 html[data-theme="dark"] .surface-brand,
 html.dark .surface-brand {
