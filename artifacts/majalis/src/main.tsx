@@ -66,8 +66,6 @@ import "./styles/section-cards-theme.css";
 import "./styles/ssunnah-ux-polish.css";
 import "./styles/ssunnah-semantic-tokens.css";
 import "./styles/ssunnah-card-unify.css";
-/* تحديث واجهة حديث: بطاقات أخف / فلاتر segmented / إعدادات / قراءة / بحث */
-import "./styles/modern-ui-refresh.css";
 // dark-mode-surfaces (~24KB) — فوري فقط إن كان الثيم داكنًا عند الإقلاع؛ وإلا بعد load
 {
   const bootDark =
@@ -97,6 +95,9 @@ if (
 
 // طبقات مظهر غير حرجة — بعد load + idle حتى لا تنافس LCP (كانت void import فوريًا)
 function loadNonCriticalCss() {
+  /* طبقات تحديث الواجهة + رموز ds-* — مؤجّلة تحت ميزانية CSS الحرج (<60KiB gzip) */
+  void import("./styles/modern-ui-refresh.css");
+  void import("./styles/ssunnah-ds-canonical.css");
   void import("./styles/m2030/foundation.css");
   void import("./styles/m2030/navigation.css");
   void import("./styles/brand-v4-contrast-fixes.css");
