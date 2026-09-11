@@ -1,6 +1,6 @@
 /* التاريخ الإسلامي — داخل SectionTemplatePage */
 .topic-page--tarikh .topic-page__body {
-  background: var(--color-bg, var(--surface-app, #f7f3eb));
+  background: var(--color-bg, var(--surface-app, var(--mj-bg, #f7f3eb)));
 }
 
 .tarikh-hub {
@@ -635,7 +635,7 @@
   scrollbar-width: thin;
   padding: 0.45rem 0.15rem;
   margin: 0 0 0.75rem;
-  background: color-mix(in srgb, var(--background, #f7f3eb) 92%, transparent);
+  background: color-mix(in srgb, var(--background, var(--mj-bg, #f7f3eb)) 92%, transparent);
   border-radius: var(--radius-card, 24px);
 }
 

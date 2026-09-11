@@ -18,7 +18,7 @@
 .uap-save-btn:hover { background: var(--majalis-emerald-deep, var(--mj-brand)); }
 .uap-save-btn:disabled { opacity: .5; cursor: not-allowed; }
 .uap-cancel-btn {
-  padding: .5rem 1rem; background: var(--majalis-parchment-deep, #f0ece4);
+  padding: .5rem 1rem; background: var(--majalis-parchment-deep, var(--mj-bg, #f0ece4));
   color: var(--majalis-ink); font-size: .875rem; border-radius: .75rem;
   border: none; cursor: pointer; transition: background .15s;
 }
@@ -28,7 +28,7 @@
   background: none; border: none; cursor: pointer; transition: color .15s;
 }
 .uap-text-cancel:hover { color: var(--majalis-ink); }
-.uap-prog-form-box { background: var(--majalis-parchment-deep, #f0ece4); border-radius: .75rem; padding: var(--ds-space-4); }
+.uap-prog-form-box { background: var(--majalis-parchment-deep, var(--mj-bg, #f0ece4)); border-radius: .75rem; padding: var(--ds-space-4); }
 .uap-form-title { font-weight: 600; color: var(--majalis-ink); font-size: .875rem; }
 .uap-subnav { display: flex; gap: .25rem; border-bottom: 1px solid var(--majalis-line); }
 .uap-tab {
@@ -53,7 +53,7 @@
 .uap-uni-date { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .4; margin-top: .125rem; }
 .uap-view-btn {
   padding: .375rem .625rem; font-size: .75rem;
-  background: var(--majalis-parchment-deep, #f0ece4); color: var(--majalis-ink-soft);
+  background: var(--majalis-parchment-deep, var(--mj-bg, #f0ece4)); color: var(--majalis-ink-soft);
   border-radius: .5rem; border: none; cursor: pointer; text-decoration: none;
   transition: background .15s;
 }
@@ -68,7 +68,7 @@
 .uap-progs-list { padding-inline-end: .5rem; border-inline-end: 1px solid var(--majalis-line); }
 .uap-prog-item { display: flex; align-items: center; gap: .5rem; font-size: .75rem; color: var(--majalis-ink-soft); }
 .uap-prog-dot { color: var(--majalis-emerald); }
-.uap-deg-badge { background: var(--majalis-parchment-deep, #f0ece4); padding: .125rem .375rem; border-radius: .25rem; }
+.uap-deg-badge { background: var(--majalis-parchment-deep, var(--mj-bg, #f0ece4)); padding: .125rem .375rem; border-radius: .25rem; }
 .uap-add-prog-btn { font-size: .75rem; color: var(--majalis-emerald); background: none; border: none; cursor: pointer; }
 .uap-add-prog-btn:hover { text-decoration: underline; }
 .uap-note { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; }

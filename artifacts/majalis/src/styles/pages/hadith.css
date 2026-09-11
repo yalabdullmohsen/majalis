@@ -1526,7 +1526,7 @@ html[data-theme="dark"] .hadith-stat strong {
 /* ── بطاقة حديث — polish 2026-08 ── */
 .hadith-card.ui-card {
   border-radius: var(--radius-card, 24px);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #5fbf98) 16%, var(--mj-hairline, #e3e8e6));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #5fbf98) 16%, var(--mj-hairline, var(--mj-hairline, #e3e8e6)));
   background: color-mix(in srgb, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff))) 97%, var(--brand-soft, var(--mj-brand-soft)));
   box-shadow: 0 10px 26px -18px rgba(11, 32, 24, 0.18);
 }
@@ -1563,7 +1563,7 @@ html[data-theme="dark"] .hadith-stat strong {
   min-width: 40px;
   min-height: 40px;
   border-radius: 20px;
-  border: 1px solid var(--mj-hairline, #e3e8e6);
+  border: 1px solid var(--mj-hairline, var(--mj-hairline, #e3e8e6));
   background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
   transition: border-color 0.15s ease, background 0.15s ease, transform 0.12s ease;
 }

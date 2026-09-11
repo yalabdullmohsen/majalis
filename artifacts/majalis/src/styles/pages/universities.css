@@ -28,7 +28,7 @@
 .up-clear-btn:hover { text-decoration: underline; }
 .up-empty-state { text-align: center; padding: 2.5rem 0; color: var(--color-text-muted, var(--majalis-ink-soft, #4f5f58)); opacity: .6; }
 .up-empty-state--py12 { padding-top: 3rem; padding-bottom: 3rem; }
-.up-code { background: var(--majalis-parchment-deep, #f0ece4); padding: .125rem .25rem; border-radius: .25rem; }
+.up-code { background: var(--majalis-parchment-deep, var(--mj-bg, #f0ece4)); padding: .125rem .25rem; border-radius: .25rem; }
 .up-skeleton {
   background: var(--ss-card-bg, var(--majalis-panel, var(--mj-surface)));
   border-radius: var(--ds-radius-xl);
