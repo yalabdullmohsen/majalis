@@ -1,11 +1,9 @@
-/**
- * مركز القرآن الكريم — لوبي موحّد من سجل الأقسام.
- */
 import { useEffect, useMemo } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionLobby } from "@/components/lobby/SectionLobby";
 import { QuranOpenMushafCard } from "@/components/quran/QuranOpenMushafCard";
 import { getLobby } from "@/config/section-lobbies";
+import { DashboardScreen } from "@/components/design-system/screens";
 import "@/components/sections/section-cards.css";
 
 export default function QuranHubPage() {
@@ -22,11 +20,13 @@ export default function QuranHubPage() {
   }, []);
 
   return (
-    <SectionLobby
-      lobbyId="quran"
-      title={lobby.title}
-      primarySlot={<QuranOpenMushafCard />}
-      groups={lobby.groups}
-    />
+    <DashboardScreen compose="mark">
+      <SectionLobby
+        lobbyId="quran"
+        title={lobby.title}
+        primarySlot={<QuranOpenMushafCard />}
+        groups={lobby.groups}
+      />
+    </DashboardScreen>
   );
 }

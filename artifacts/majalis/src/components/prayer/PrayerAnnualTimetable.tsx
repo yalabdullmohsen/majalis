@@ -91,8 +91,15 @@ export function PrayerAnnualTimetable() {
             </select>
           </label>
         )}
-        <button type="button" className="pts-annual__gen" onClick={() => void generate()} disabled={busy}>
-          {busy ? "جاري الحساب…" : "توليد الجدول"}
+        <button
+          type="button"
+          className="pts-annual__gen"
+          onClick={() => void generate()}
+          disabled={busy}
+          aria-busy={busy}
+          aria-label={busy ? "تحديث الجدول" : "توليد الجدول"}
+        >
+          توليد الجدول
         </button>
         <button
           type="button"

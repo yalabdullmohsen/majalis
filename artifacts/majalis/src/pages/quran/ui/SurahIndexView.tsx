@@ -14,6 +14,7 @@ import { displaySurahName } from "@/lib/quran-display";
 import { getSurahMeta } from "@/lib/quran-api";
 import { useNumerals } from "@/hooks/useNumerals";
 import { VirtualList, type VirtualListHandle } from "@/components/VirtualList";
+import { ListScreen } from "@/components/design-system/screens";
 import "@/styles/pages/surah-index.css";
 
 type RevelationFilter = "all" | "meccan" | "medinan" | "favorites";
@@ -129,6 +130,7 @@ export default function SurahIndexPage() {
   }
 
   return (
+    <ListScreen compose="mark">
     <div className="surah-index-page" dir="rtl" data-testid="surah-index-page">
       <header className="surah-index-hero">
         <h1>فهرس السور</h1>
@@ -279,5 +281,6 @@ export default function SurahIndexPage() {
         />
       )}
     </div>
+    </ListScreen>
   );
 }

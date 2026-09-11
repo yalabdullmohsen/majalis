@@ -24,7 +24,26 @@ function walkTs(dir: string, out: string[] = []): string[] {
 const files = walkTs(srcRoot);
 const loadHits: string[] = [];
 const busyHits: string[] = [];
-const busyRoots = ["pages/", "components/NavBar.tsx", "components/SideNavDrawer.tsx", "components/UpdateAvailableBanner.tsx", "features/mushaf-madinah/MushafSearchSheet.tsx", "views/PrivacyCenterPage.tsx", "views/TranscribePage.tsx"];
+const busyRoots = [
+  "pages/",
+  "components/NavBar.tsx",
+  "components/SideNavDrawer.tsx",
+  "components/UpdateAvailableBanner.tsx",
+  "components/prayer/PrayerLocationPicker.tsx",
+  "components/fiqh-council/FiqhCouncilSearchBox.tsx",
+  "components/QuranViewer.tsx",
+  "components/quran/QuranPlayerView.tsx",
+  "features/mushaf-madinah/MushafSearchSheet.tsx",
+  "views/PrivacyCenterPage.tsx",
+  "views/TranscribePage.tsx",
+  "views/CardsPage.tsx",
+  "views/MyCitationsPage.tsx",
+  "views/UpdatePasswordPage.tsx",
+  "views/DiscoverIslamContactPage.tsx",
+  "views/SubmitContentPage.tsx",
+  "views/UploadPage.tsx",
+  "views/ResearcherProfilePage.tsx",
+];
 for (const f of files) {
   const rel = f.replace(srcRoot + "/", "");
   const text = readFileSync(f, "utf8");
@@ -32,7 +51,7 @@ for (const f of files) {
     loadHits.push(rel);
   }
   if (busyRoots.some((root) => rel === root || rel.startsWith(root))) {
-    if (/جاري\s*تجهيز|جارٍ\s*تجهيز|جاري\s*البحث|جاري\s*التحديث|جاري\s*الرفع|جاري\s*التحليل|جاري\s*المعالجة|جاري\s*التصدير/.test(text)) {
+    if (/جاري\s*تجهيز|جارٍ\s*تجهيز|جاري\s*البحث|جارٍ\s*البحث|جاري\s*التحديث|جاري\s*الرفع|جاري\s*التحليل|جاري\s*المعالجة|جاري\s*التصدير|جاري\s*التحديد|جاري\s*المزامنة|جاري\s*الإنشاء|جاري\s*التلاوة|جارٍ\s*الإرسال|جارٍ\s*الحفظ|جارٍ\s*التحويل/.test(text)) {
       busyHits.push(rel);
     }
   }

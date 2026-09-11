@@ -278,7 +278,7 @@ function Feedback({ state, message }: { state: UploadState; message: string }) {
 function SubmitBtn({ loading, label }: { loading: boolean; label: string }) {
   return (
     <button type="submit" className="ulp-submit" disabled={loading}>
-      {loading ? <><Loader2 size={16} className="animate-spin" /> جارٍ الإرسال...</> : label}
+      {loading ? <><Loader2 size={16} className="animate-spin" aria-hidden /> <span className="sr-only">إرسال</span></> : label}
     </button>
   );
 }

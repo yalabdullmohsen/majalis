@@ -152,7 +152,7 @@ export function QuranPlayerView({ reciterId: reciterProp, surahNumber }: QuranPl
 
   const statusLabel = useMemo(() => {
     if (playerState === "loading") return "تجهيز…";
-    if (isPlaying) return "جاري التلاوة";
+    if (isPlaying) return "يتلو…";
     if (playerState === "paused") return "متوقف مؤقتًا";
     if (playerState === "ended") return "انتهت السورة";
     return "متوقف";
