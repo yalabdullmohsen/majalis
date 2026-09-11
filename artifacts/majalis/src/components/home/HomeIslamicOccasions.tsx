@@ -27,7 +27,7 @@ export function HomeIslamicOccasions() {
         if (active) setItems(sortOccasionsByUpcoming(Array.isArray(rows) ? rows : []).slice(0, 4));
       })
       .catch(() => {
-        if (active) setItems([]);
+        /* keep-previous: لا تفرّغ القائمة عند فشل إعادة الجلب */
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -50,10 +50,10 @@ export function HomeIslamicOccasions() {
       moreLabel="كل المناسبات"
       state="ready"
     >
-      {loading ? (
+      {loading && items.length === 0 ? (
         <SkeletonCardGrid count={4} />
       ) : (
-        <div className="home-occasions-grid">
+        <div className="home-occasions-grid" aria-busy={loading}>
           {items.map((occasion) => (
             <Link key={occasion.id} href="/occasions" className="home-occasion-card soft-card soft-card--on-light">
               <strong>{occasion.name}</strong>
