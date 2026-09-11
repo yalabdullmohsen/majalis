@@ -85,7 +85,8 @@ export function PageLoadingGuard({
     }
   }
 
-  if (error && !(loading && keepPrevious && hasContent)) {
+  // keep-previous: عند وجود محتوى سابق لا نستبدله بشاشة خطأ بعد فشل إعادة الجلب
+  if (error && !(keepPrevious && hasContent)) {
     return (
       <ErrorState
         text={typeof error === "string" && error.trim() ? error : errorText}
@@ -94,7 +95,7 @@ export function PageLoadingGuard({
     );
   }
 
-  if (loading && keepPrevious && hasContent) {
+  if ((loading || Boolean(error)) && keepPrevious && hasContent) {
     return <>{children}</>;
   }
 

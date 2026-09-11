@@ -74,7 +74,7 @@ export default function LessonsArchivePage() {
       .catch((err) => {
         if (cancelled || (err as Error)?.name === "AbortError") return;
         setLoadError(String((err as Error)?.message || err));
-        setArchived([]);
+        /* keep-previous: لا تفرّغ الأرشيف عند فشل إعادة الجلب */
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -121,7 +121,12 @@ export default function LessonsArchivePage() {
         />
       </label>
 
-      <PageLoadingGuard loading={loading} error={loadError} onRetry={() => window.location.reload()}>
+      <PageLoadingGuard
+        loading={loading}
+        error={loadError}
+        onRetry={() => window.location.reload()}
+        keepPrevious
+      >
         {filtered.length === 0 ? (
           <div className="lessons-empty-state lessons-archive-empty" style={{ minHeight: 240 }}>
             <p>لا دروس مؤرشفة حالياً{filters.search.trim() ? " تطابق البحث" : ""}.</p>

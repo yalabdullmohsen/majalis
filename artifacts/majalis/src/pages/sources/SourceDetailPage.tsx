@@ -17,8 +17,7 @@ export default function SourceDetailPage() {
         setFeed(f);
       })
       .catch(() => {
-        setAccounts([]);
-        setFeed([]);
+        /* keep-previous: لا تفرّغ بيانات الجهة عند فشل إعادة الجلب */
       });
   }, []);
 
@@ -42,6 +41,13 @@ export default function SourceDetailPage() {
   }, [account]);
 
   if (!account) {
+    if (accounts.length === 0) {
+      return (
+        <div className="sources-detail" dir="rtl" aria-busy="true">
+          <span className="sr-only">تجهيز الصفحة</span>
+        </div>
+      );
+    }
     return (
       <div className="sources-detail" dir="rtl">
         <p>الجهة غير موجودة.</p>

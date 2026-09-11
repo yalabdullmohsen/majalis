@@ -8,6 +8,7 @@ import "@/styles/pages/sources-directory.css";
 export default function SourcesDirectoryPage() {
   const [accounts, setAccounts] = useState<Awaited<ReturnType<typeof loadHarvestAccounts>>>([]);
   const [feed, setFeed] = useState<Awaited<ReturnType<typeof loadHarvestFeed>>>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     applyPageSeo({
@@ -16,15 +17,23 @@ export default function SourcesDirectoryPage() {
       description: "دليل الحسابات والجهات الدعوية والتعليمية في الكويت — روابط مباشرة للمصدر دون إعادة استضافة المحتوى.",
       keywords: ["دليل جهات", "دروس الكويت", "حلقات قرآن", "مصادر"],
     });
+    let cancelled = false;
+    setLoading(true);
     Promise.all([loadHarvestAccounts(), loadHarvestFeed()])
       .then(([a, f]) => {
+        if (cancelled) return;
         setAccounts(a);
         setFeed(f);
       })
       .catch(() => {
-        setAccounts([]);
-        setFeed([]);
+        /* keep-previous: لا تفرّغ الدليل عند فشل إعادة الجلب */
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
       });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const enabled = useMemo(() => accounts.filter((a) => a.enabled), [accounts]);
@@ -46,7 +55,7 @@ export default function SourcesDirectoryPage() {
           سياسة المصادر
         </a>
       </p>
-      <div className="sources-directory-grid">
+      <div className="sources-directory-grid" aria-busy={loading}>
         {enabled.map((acc) => {
           const count = feedForAccount(feed, acc.id).length;
           return (
