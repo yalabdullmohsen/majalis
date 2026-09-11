@@ -152,8 +152,9 @@
 
 ## دفعة P19 — 2026-09-11
 
-1. تقليص \`eslint-ds-legacy-allowlist.json\` من 27 → 2 (متبقي: Mutashabihat + ProphetsFamilyTree).
-2. استبدال fontSize/ألوان حرفية و\`text-white\`/\`bg-white\` برموز \`--ss-type-*\` / \`--mj-*\` في ~25 شاشة.
-3. تغطية DS ≈ 99.5٪ (383/385) · دين allowlist = 2.
-4. #1902 (وميض الجلسة) منشور على الإنتاج (\`917b58e3\`).
+1. تقليص \`eslint-ds-legacy-allowlist.json\` من 27 → **0** (شامل Mutashabihat + ProphetsFamilyTree).
+2. استبدال fontSize/ألوان حرفية و\`text-white\`/\`bg-white\` برموز \`--ss-type-*\` / \`--mj-*\`.
+3. تغطية DS **100٪** (385/385) · دين allowlist = 0.
+4. #1902 (وميض الجلسة) و#1903 (P18) منشوران على الإنتاج.
+5. بوابة lockdown تسمح بـ allowlist فارغ عند اكتمال الهجرة.
 

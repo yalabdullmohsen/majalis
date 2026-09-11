@@ -20,7 +20,7 @@ const S = {
   },
   heroIcon: { fontSize: "2.5rem", display: "block", marginBottom: "0.6rem" },
   heroTitle: { fontSize: "clamp(1.4rem,4vw,2.1rem)", fontWeight: 700, color: "#fff", margin: "0 0 0.4rem" },
-  heroSub: { fontSize: "0.9rem", color: "rgba(255,255,255,0.65)", maxWidth: "500px", margin: "0 auto" },
+  heroSub: { fontSize: "var(--ss-type-supporting)", color: "rgba(255,255,255,0.65)", maxWidth: "500px", margin: "0 auto" },
   body: { maxWidth: "860px", margin: "0 auto", padding: "1.25rem 1rem" },
 };
 
@@ -45,11 +45,11 @@ function AyahText({ surah, ayah: ayahNum, surahName }: { surah: number; ayah: nu
     <div
       style={{
         fontFamily: '"Amiri Quran","Scheherazade New",serif',
-        fontSize: "1.15rem",
+        fontSize: "var(--ss-type-scripture)",
         lineHeight: 2.2,
         direction: "rtl",
         padding: "0.75rem 1rem",
-        background: "rgba(23,61,53,0.05)",
+        background: "color-mix(in srgb, var(--mj-brand) 5%, transparent)",
         borderInlineStart: "3px solid var(--mj-brand)",
         borderStartEndRadius: 8,
         borderEndEndRadius: 8,
@@ -58,11 +58,11 @@ function AyahText({ surah, ayah: ayahNum, surahName }: { surah: number; ayah: nu
       }}
     >
       {loading ? (
-        <span style={{ color: "#9ca3af", fontSize: "0.85rem" }}>تحديث الآية…</span>
+        <span style={{ color: "var(--mj-muted)", fontSize: "var(--ss-type-supporting)" }}>تحديث الآية…</span>
       ) : (
         <>
           ﴿{text}﴾
-          <span style={{ fontSize: "0.75rem", color: "#6b7280", marginInlineStart: "0.5rem", fontFamily: "inherit" }}>
+          <span style={{ fontSize: "var(--ss-type-caption)", color: "var(--mj-muted)", marginInlineStart: "0.5rem", fontFamily: "inherit" }}>
             — {surahName}: {ayahNum}
           </span>
         </>
@@ -113,26 +113,26 @@ function MutashabihatCard({ pair }: { pair: MutashabihatPair }) {
               style={{
                 padding: "0.15rem 0.5rem",
                 borderRadius: "6px",
-                background: "rgba(23,61,53,0.1)",
+                background: "color-mix(in srgb, var(--mj-brand) 10%, transparent)",
                 color: "var(--mj-brand)",
-                fontSize: "0.8rem",
+                fontSize: "var(--ss-type-label)",
                 fontWeight: 700,
               }}
             >
               {pair.category}
             </span>
-            <span style={{ fontSize: "0.72rem", color: "#9ca3af" }}>
+            <span style={{ fontSize: "var(--ss-type-caption)", color: "var(--mj-muted)" }}>
               {pair.refs.length} آية
             </span>
           </div>
-          <h3 style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--ds-text-1,#1a1a1a)", margin: 0 }}>
+          <h3 style={{ fontSize: "var(--ss-type-body)", fontWeight: 700, color: "var(--ds-text-1,#1a1a1a)", margin: 0 }}>
             {pair.title}
           </h3>
-          <p style={{ fontSize: "0.8rem", color: "#6b7280", margin: "0.2rem 0 0", lineHeight: 1.5 }}>
+          <p style={{ fontSize: "var(--ss-type-label)", color: "var(--mj-muted)", margin: "0.2rem 0 0", lineHeight: 1.5 }}>
             {pair.description}
           </p>
         </div>
-        <span style={{ color: "#6b7280", flexShrink: 0 }}>
+        <span style={{ color: "var(--mj-muted)", flexShrink: 0 }}>
           <ChevronDown size={18} style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform 0.2s" }} />
         </span>
       </button>
@@ -144,7 +144,7 @@ function MutashabihatCard({ pair }: { pair: MutashabihatPair }) {
           <div style={{ marginTop: "1rem" }}>
             {pair.refs.map((ref, i) => (
               <div key={i} style={{ marginBottom: "0.75rem" }}>
-                <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--mj-brand)", marginBottom: "0.3rem" }}>
+                <div style={{ fontSize: "var(--ss-type-caption)", fontWeight: 700, color: "var(--mj-brand)", marginBottom: "0.3rem" }}>
                   سورة {ref.surahName} — الآية {ref.ayah}
                 </div>
                 <AyahText surah={ref.surah} ayah={ref.ayah} surahName={ref.surahName} />
@@ -167,9 +167,9 @@ function MutashabihatCard({ pair }: { pair: MutashabihatPair }) {
                   border: "1.5px solid var(--ds-border,#e5e7eb)",
                   background: "none",
                   cursor: "pointer",
-                  fontSize: "0.8rem",
+                  fontSize: "var(--ss-type-label)",
                   fontWeight: 700,
-                  color: "#6b7280",
+                  color: "var(--mj-muted)",
                   fontFamily: "inherit",
                 }}
               >
@@ -182,10 +182,10 @@ function MutashabihatCard({ pair }: { pair: MutashabihatPair }) {
                     marginTop: "0.5rem",
                     padding: "0.75rem 1rem",
                     borderRadius: "8px",
-                    background: "rgba(91,33,182,0.06)",
+                    background: "color-mix(in srgb, var(--mj-info, var(--mj-brand)) 6%, transparent)",
                     border: "1px solid rgba(91,33,182,0.15)",
-                    fontSize: "0.85rem",
-                    color: "#5B21B6",
+                    fontSize: "var(--ss-type-supporting)",
+                    color: "var(--mj-info, var(--mj-brand-deep))",
                     lineHeight: 1.6,
                   }}
                 >
@@ -260,10 +260,10 @@ export default function MutashabihatPage() {
           style={{
             padding: "0.75rem 1rem",
             borderRadius: "10px",
-            background: "rgba(23,61,53,0.06)",
+            background: "color-mix(in srgb, var(--mj-brand) 6%, transparent)",
             border: "1px solid rgba(23,61,53,0.15)",
-            fontSize: "0.8rem",
-            color: "#0F5132",
+            fontSize: "var(--ss-type-label)",
+            color: "var(--mj-brand-deep)",
             marginBottom: "1.25rem",
             display: "flex",
             gap: "0.5rem",
@@ -301,7 +301,7 @@ export default function MutashabihatPage() {
                 borderColor: activeCategory === cat ? "var(--mj-brand)" : "var(--ds-border,#e5e7eb)",
                 background: activeCategory === cat ? "var(--mj-brand)" : "transparent",
                 color: activeCategory === cat ? "#fff" : "var(--ds-text-2,#6b7280)",
-                fontSize: "0.8rem",
+                fontSize: "var(--ss-type-label)",
                 fontWeight: 600,
                 cursor: "pointer",
                 fontFamily: "inherit",
@@ -326,7 +326,7 @@ export default function MutashabihatPage() {
             border: "1.5px solid var(--ds-border,#e5e7eb)",
             background: "var(--ds-surface,#fff)",
             color: "var(--ds-text-1,#1a1a1a)",
-            fontSize: "0.9rem",
+            fontSize: "var(--ss-type-supporting)",
             fontFamily: "inherit",
             marginBottom: "1.25rem",
             boxSizing: "border-box",
@@ -335,13 +335,13 @@ export default function MutashabihatPage() {
         />
 
         {/* عدد النتائج */}
-        <p style={{ fontSize: "0.8rem", color: "#6b7280", marginBottom: "0.75rem" }}>
+        <p style={{ fontSize: "var(--ss-type-label)", color: "var(--mj-muted)", marginBottom: "0.75rem" }}>
           {filtered.length} {filtered.length === 1 ? "مجموعة" : "مجموعات"} متشابهة
         </p>
 
         {/* القائمة */}
         {filtered.length === 0 ? (
-          <p style={{ textAlign: "center", padding: "2rem", color: "#9ca3af" }}>
+          <p style={{ textAlign: "center", padding: "2rem", color: "var(--mj-muted)" }}>
             لا توجد نتائج تطابق البحث
           </p>
         ) : (

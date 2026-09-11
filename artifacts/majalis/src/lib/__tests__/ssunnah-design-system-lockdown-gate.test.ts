@@ -20,7 +20,7 @@ assert.match(eslintCfg, /JSXOpeningElement\[name\.name=\/\^h\[1-3\]\$\//, "حظ�
 assert.match(eslintCfg, /text-black\|text-white/, "حظر ألوان Tailwind المباشرة");
 
 const allow = JSON.parse(read("eslint-ds-legacy-allowlist.json")) as string[];
-assert.ok(Array.isArray(allow) && allow.length > 0, "allowlist غير فارغ");
+assert.ok(Array.isArray(allow), "allowlist مصفوفة");
 assert.ok(allow.length <= 40, `allowlist كبير جدًا (${allow.length}) — قلّصه بهجرة الشاشات`);
 for (const rel of allow) {
   assert.ok(existsSync(resolve(root, rel)), `ملف allowlist مفقود: ${rel}`);

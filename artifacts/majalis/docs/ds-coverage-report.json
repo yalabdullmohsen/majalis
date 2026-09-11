@@ -2,14 +2,11 @@
   "scope": "src/pages + src/views (بدون Mushaf/ImmersiveQuran)",
   "metric": "خلو من قيم مباشرة في JSX style/className (مواءمة ESLint DS lock)",
   "total": 385,
-  "clean": 383,
-  "violators": 2,
-  "coveragePct": 99.5,
-  "allowlistSize": 2,
-  "allowlist": [
-    "src/views/MutashabihatPage.tsx",
-    "src/views/ProphetsFamilyTreePage.tsx"
-  ],
+  "clean": 385,
+  "violators": 0,
+  "coveragePct": 100,
+  "allowlistSize": 0,
+  "allowlist": [],
   "missingFromAllow": [],
   "staleInAllow": [],
   "migratedShared": [
