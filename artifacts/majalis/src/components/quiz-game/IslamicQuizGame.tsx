@@ -432,7 +432,7 @@ function SetupPhase({
         </p>
       </div>
 
-      <section className="qzg-section-card">
+      <section className="qzg-section-card soft-card soft-card--on-light soft-card soft-card--on-light">
         <h2 className="qzg-section-h2"><Users size={18} className="inline ms-1" />نمط اللعب</h2>
         <div className="qzg-mode-toggle">
           <button
@@ -453,7 +453,7 @@ function SetupPhase({
       </section>
 
       {mode === "team" ? (
-        <section className="qzg-section-card">
+        <section className="qzg-section-card soft-card soft-card--on-light soft-card soft-card--on-light">
           <h2 className="qzg-section-h2"><Trophy size={18} className="inline ms-1" />عدد الفرق وأسماؤها</h2>
           <div className="qzg-team-count-row">
             {([2, 3, 4] as const).map((n) => (
@@ -484,7 +484,7 @@ function SetupPhase({
           </div>
         </section>
       ) : (
-        <section className="qzg-section-card">
+        <section className="qzg-section-card soft-card soft-card--on-light soft-card soft-card--on-light">
           <h2 className="qzg-section-h2"><User size={18} className="inline ms-1" />اسمك (اختياري)</h2>
           <input
             value={soloName}
@@ -496,7 +496,7 @@ function SetupPhase({
         </section>
       )}
 
-      <section className="qzg-section-card">
+      <section className="qzg-section-card soft-card soft-card--on-light soft-card soft-card--on-light">
         <div className="qzg-cats-head">
           <h2 className="qzg-section-h2 qzg-section-h2--flush"><Library size={16} className="inline ms-1" />اختر الفئات</h2>
           <span className="qzg-cats-count">{selected.length}/6 ({minCategories} كحد أدنى)</span>
@@ -523,7 +523,7 @@ function SetupPhase({
         </div>
       </section>
 
-      <section className="qzg-section-card qzg-section-card--mb-lg">
+      <section className="qzg-section-card soft-card soft-card--on-light qzg-section-card--mb-lg">
         <h3 className="qzg-lifelines-h3">
           <Zap size={14} className="inline ms-1" />
           {mode === "solo" ? "مساعدة إضافية" : "وسائل المساعدة (لكل فريق 3 وسائل)"}
@@ -694,7 +694,7 @@ function QuestionPhase({
 
       <TimerBar seconds={timerSec} maxSeconds={maxTimerSec} />
 
-      <div className="qzg-section-card qzg-section-card--brass qzg-section-card--mb-sm">
+      <div className="qzg-section-card soft-card soft-card--on-light qzg-section-card--brass qzg-section-card--mb-sm">
         <div className="qzg-q-header">
           <span className="qzg-q-cat-label"><CategoryIcon name={cat?.icon ?? ""} size={14} /> {cat?.name}</span>
           <span className="qzg-q-points-badge">{activeCell.points} نقطة</span>
@@ -729,7 +729,7 @@ function QuestionPhase({
 
       {revealed && (
         <>
-          <div className="qzg-section-card qzg-section-card--mb-sm">
+          <div className="qzg-section-card soft-card soft-card--on-light qzg-section-card--mb-sm">
             <p className="qzg-answer-label">الإجابة الصحيحة:</p>
             <p className="qzg-answer-text">{activeQuestion?.a ?? "—"}</p>
             {showHint && (
@@ -753,7 +753,7 @@ function QuestionPhase({
         </>
       )}
 
-      <div className="qzg-section-card">
+      <div className="qzg-section-card soft-card soft-card--on-light soft-card soft-card--on-light">
         <p className="qzg-lifelines-label"><Zap size={14} className="inline ms-1" />وسائل المساعدة — {activeTeamObj.name}</p>
 
         {eliminateBanner && (
@@ -838,7 +838,7 @@ function WinnerPhase({ teams, mode, onReset }: { teams: Team[]; mode: GameMode; 
       <div className="qzg-winner-grid" data-team-count={sorted.length}>
         {sorted.map((team, i) => (
           <div key={team.id}
-            className={`qzg-section-card qzg-winner-card${i === 0 ? " qzg-winner-card--first" : ""}`}>
+            className={`qzg-section-card soft-card soft-card--on-light qzg-winner-card${i === 0 ? " qzg-winner-card--first" : ""}`}>
             <div className="qzg-winner-rank">{i === 0 ? (isDraw ? <Handshake size={24} /> : <Trophy size={24} />) : <Award size={24} />}</div>
             <p className="qzg-winner-name">{team.name}</p>
             <p className={`qzg-winner-score${i === 0 ? " qzg-winner-score--first" : ""}`}>

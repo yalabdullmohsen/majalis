@@ -147,3 +147,10 @@ button.ui-card:active {
     transform: none;
   }
 }
+
+
+/* اختبار إسلامي — لوحات القسم = soft-card */
+.qzg-section-card.soft-card,
+.qzg-section-card.soft-card--on-light {
+  border-radius: var(--radius-card, 1.5rem);
+}
