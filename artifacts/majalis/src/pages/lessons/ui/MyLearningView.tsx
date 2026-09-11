@@ -278,14 +278,14 @@ export default function MyLearningPage() {
             </h2>
           </div>
 
-          {loading ? (
-            <div className="myl2-skeletons">
+          {loading && library.length === 0 ? (
+            <div className="myl2-skeletons" role="status" aria-busy="true" aria-label="تحديث المكتبة">
               {[0, 1, 2].map((i) => (
                 <div key={i} className="myl2-skel myl2-skel--sm" aria-hidden="true" />
               ))}
             </div>
           ) : library.length > 0 ? (
-            <div className="myl2-lib-grid">
+            <div className="myl2-lib-grid" aria-busy={loading}>
               {library.slice(0, 6).map((item, i) => (
                 <Link
                   key={i}

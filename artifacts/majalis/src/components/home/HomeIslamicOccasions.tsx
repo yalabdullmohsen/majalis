@@ -50,10 +50,10 @@ export function HomeIslamicOccasions() {
       moreLabel="كل المناسبات"
       state="ready"
     >
-      {loading ? (
+      {loading && items.length === 0 ? (
         <SkeletonCardGrid count={4} />
       ) : (
-        <div className="home-occasions-grid">
+        <div className="home-occasions-grid" aria-busy={loading}>
           {items.map((occasion) => (
             <Link key={occasion.id} href="/occasions" className="home-occasion-card soft-card soft-card--on-light">
               <strong>{occasion.name}</strong>

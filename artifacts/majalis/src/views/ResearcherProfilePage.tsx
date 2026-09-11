@@ -106,6 +106,7 @@ export default function ResearcherProfilePage() {
     is_public: false,
   });
   const [loading, setLoading] = useState(true);
+  const [hydrated, setHydrated] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [pubInput, setPubInput] = useState<string[]>([""]);
@@ -135,7 +136,10 @@ export default function ResearcherProfilePage() {
         }
       })
       .catch(() => {})
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        setHydrated(true);
+      });
   }, [user?.id]);
 
   const toggleInterest = (tag: string) => {
@@ -184,10 +188,10 @@ export default function ResearcherProfilePage() {
     );
   }
 
-  if (loading) {
+  if (loading && !hydrated) {
     return (
       <PageStatusShell title="ملف الباحث">
-        <div className="profile-loading rpr-loading-center" aria-busy="true">
+        <div className="profile-loading rpr-loading-center" aria-busy="true" role="status" aria-label="تحديث الملف">
           <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
         </div>
       </PageStatusShell>
@@ -196,7 +200,7 @@ export default function ResearcherProfilePage() {
 
   return (
     <UtilityScreen compose="mark">
-    <div className="page-shell narrow rp-page" dir="rtl">
+    <div className="page-shell narrow rp-page" dir="rtl" aria-busy={loading}>
       <PageHeader
         eyebrow="البحث العلمي"
         title="ملف الباحث"

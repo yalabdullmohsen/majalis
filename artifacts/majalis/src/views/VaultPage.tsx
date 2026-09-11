@@ -622,11 +622,15 @@ export default function VaultPage() {
         ))}
       </div>
 
-      {loading ? (
-        <div className="profile-loading vault-loading-wrap">
+      {loading &&
+      vaultData.bookmarks.length === 0 &&
+      vaultData.resume.length === 0 &&
+      vaultData.notes.length === 0 ? (
+        <div className="profile-loading vault-loading-wrap" role="status" aria-busy="true" aria-label="تحديث الخزينة">
           <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
         </div>
       ) : (
+        <div aria-busy={loading}>
         <>
           {/* Bookmarks Tab */}
           {tab === "bookmarks" && (
@@ -702,6 +706,7 @@ export default function VaultPage() {
             </div>
           )}
         </>
+        </div>
       )}
 
       {showAddNote && (

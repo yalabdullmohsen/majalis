@@ -32,6 +32,7 @@ export type VirtualListProps<T> = {
   as?: "div" | "ol" | "ul";
   role?: string;
   "aria-label"?: string;
+  "aria-busy"?: boolean;
   /** عتبة التفعيل — دونها تُرسم القائمة كاملة (114 سورة صغيرة لا تحتاج نوافذ) */
   virtualizeAbove?: number;
 };
@@ -48,6 +49,7 @@ function VirtualListInner<T>(
     as = "div",
     role,
     "aria-label": ariaLabel,
+    "aria-busy": ariaBusy,
     virtualizeAbove = 24,
   }: VirtualListProps<T>,
   ref: React.ForwardedRef<VirtualListHandle>,
@@ -136,6 +138,7 @@ function VirtualListInner<T>(
         style={style}
         role={listRole}
         aria-label={ariaLabel}
+        aria-busy={ariaBusy}
       >
         {items.map((item, index) => (
           <RowTag
@@ -176,6 +179,7 @@ function VirtualListInner<T>(
       style={style}
       role={listRole}
       aria-label={ariaLabel}
+      aria-busy={ariaBusy}
     >
       <div className="vlist__spacer" style={{ height: totalHeight }} aria-hidden="true" />
       {slice}

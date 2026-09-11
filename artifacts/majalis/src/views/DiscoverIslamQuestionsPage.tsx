@@ -91,12 +91,12 @@ export default function DiscoverIslamQuestionsPage() {
         </div>
       </div>
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <SkeletonCardGrid />
       ) : items.length === 0 ? (
         <Empty text="لا توجد أسئلة مطابقة بعد." />
       ) : (
-        <div className="hub-card-grid dii-list-grid dii-section">
+        <div className="hub-card-grid dii-list-grid dii-section" aria-busy={loading}>
           {items.map((q) => (
             <HubCard
               key={q.id}

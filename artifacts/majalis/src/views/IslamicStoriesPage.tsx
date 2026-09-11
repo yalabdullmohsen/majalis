@@ -312,7 +312,7 @@ export default function IslamicStoriesPage() {
     >
       <div className="isp-page">
       {/* إحصائيات التصنيفات */}
-      {!loading && stories.length > 0 && (
+      {stories.length > 0 && (
         <div className="isp-stats-row">
           {(["صحابة", "فتوحات", "تاريخ"] as const).map((cat) => (
             <div key={cat} className={`isp-stat-chip isp-stat-chip--${cat === "صحابة" ? "companions" : cat === "فتوحات" ? "conquests" : "history"}`}>
@@ -323,7 +323,7 @@ export default function IslamicStoriesPage() {
       )}
 
       {/* البحث والفلاتر */}
-      {!loading && (
+      {(!loading || stories.length > 0) && (
         <div className="isp-controls">
           <input
             className="isp-search"
@@ -372,9 +372,9 @@ export default function IslamicStoriesPage() {
       )}
 
       {/* المحتوى */}
-      {loading ? (
+      {loading && stories.length === 0 ? (
         <SkeletonCardGrid count={6} />
-      ) : error ? (
+      ) : error && stories.length === 0 ? (
         <div className="isp-error">
           <span className="isp-error__icon"><AlertTriangle size={20} strokeWidth={1.5} /></span>
           <span>{error}</span>
@@ -384,7 +384,7 @@ export default function IslamicStoriesPage() {
       ) : filtered.length === 0 ? (
         <Empty text="لا توجد نتائج للبحث أو الفلتر المحدد." />
       ) : (
-        <div className="isp-grid">
+        <div className="isp-grid" aria-busy={loading}>
           {filtered.map((story) => (
             <StoryCard
               key={story.slug}
@@ -395,7 +395,7 @@ export default function IslamicStoriesPage() {
         </div>
       )}
 
-      {!loading && (
+      {(!loading || stories.length > 0) && (
         <>
           <RelatedKnowledge kind="story" title="قصص ومعارف ذات صلة" limit={6} />
           <ExploreAlsoNav

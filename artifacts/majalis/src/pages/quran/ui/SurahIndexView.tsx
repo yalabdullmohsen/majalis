@@ -217,13 +217,13 @@ export default function SurahIndexPage() {
         </div>
       </div>
 
-      {loading ? (
-        <div className="surah-index-skeletons" aria-hidden="true">
+      {loading && surahs.length === 0 ? (
+        <div className="surah-index-skeletons" aria-hidden="true" role="status" aria-busy="true">
           {Array.from({ length: 8 }).map((_, i) => (
             <div key={i} className="surah-index-skel" />
           ))}
         </div>
-      ) : loadError ? (
+      ) : loadError && surahs.length === 0 ? (
         <div className="surah-index-empty">
           <BookOpen size={32} strokeWidth={1} aria-hidden="true" />
           <p>تعذّر تحميل فهرس السور. تحقّق من اتصالك وأعد المحاولة.</p>
@@ -243,6 +243,7 @@ export default function SurahIndexPage() {
           virtualizeAbove={20}
           getItemKey={(s) => s.number}
           aria-label="فهرس السور"
+          aria-busy={loading}
           renderItem={(s) => {
             const startPage = pageById.get(s.number) ?? 1;
             const fav = favorites.has(s.number);

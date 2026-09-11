@@ -132,16 +132,16 @@ function ParentView({ userId }: { userId: string }) {
     copyTimerRef.current = setTimeout(() => setCopied(null), 2000);
   };
 
-  if (loading) {
+  if (loading && links.length === 0) {
     return (
-      <div className="profile-loading fm-loading-wrap">
+      <div className="profile-loading fm-loading-wrap" role="status" aria-busy="true" aria-label="تحديث وضع العائلة">
         <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
       </div>
     );
   }
 
   return (
-    <div className="fm-parent">
+    <div className="fm-parent" aria-busy={loading}>
       <div className="fm-section-head">
         <h2 className="fm-section-title">أبناؤك المرتبطون</h2>
         <button

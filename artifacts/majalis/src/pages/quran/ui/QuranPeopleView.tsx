@@ -111,11 +111,12 @@ export default function QuranPeopleView() {
           </div>
         </div>
 
-        {loading ? (
-          <p className="qp-people__status" role="status"></p>
+        {loading && people.length === 0 ? (
+          <p className="qp-people__status" role="status" aria-busy="true"></p>
         ) : filtered.length === 0 ? (
           <p className="qp-people__status">لا نتائج مطابقة.</p>
         ) : (
+          <div aria-busy={loading}>
           <>
             <p className="qp-people__meta-count">
               {toArabicDigits(filtered.length)} اسم
@@ -151,6 +152,7 @@ export default function QuranPeopleView() {
               ))}
             </ul>
           </>
+          </div>
         )}
       </div>
     </div>
