@@ -21,7 +21,7 @@
   border-radius: 9999px; font-weight: 500; display: inline-flex; align-items: center; gap: .25rem;
 }
 .udp-badge--neutral {
-  font-size: .75rem; background: var(--majalis-parchment-deep, #f0ece4);
+  font-size: .75rem; background: var(--majalis-parchment-deep, var(--mj-bg, #f0ece4));
   color: var(--majalis-ink-soft); padding: .125rem .5rem; border-radius: 9999px;
 }
 .udp-prog-name { font-weight: 600; color: var(--majalis-ink); font-size: .875rem; }
@@ -81,7 +81,7 @@
 }
 .udp-social-link:hover { border-color: var(--majalis-emerald); }
 .udp-disclaimer {
-  background: var(--majalis-parchment-deep, #f0ece4); border-radius: .75rem;
+  background: var(--majalis-parchment-deep, var(--mj-bg, #f0ece4)); border-radius: .75rem;
   padding: .75rem 1rem; font-size: .75rem; color: var(--majalis-ink-soft);
 }
 .udp-loading-text { font-size: .875rem; color: var(--majalis-ink-soft); opacity: .6; }

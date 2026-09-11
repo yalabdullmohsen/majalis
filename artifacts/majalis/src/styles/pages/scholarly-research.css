@@ -403,7 +403,7 @@ html[data-theme="dark"] .srp-action-btn { background: rgba(255,255,255,.06); bor
 .srp-textarea::placeholder { color: var(--majalis-ink-soft); opacity: .7; }
 .srp-action-btn {
   padding: .5rem .75rem; font-size: .875rem;
-  background: var(--majalis-parchment-deep, #f0ece4); color: var(--majalis-ink);
+  background: var(--majalis-parchment-deep, var(--mj-bg, #f0ece4)); color: var(--majalis-ink);
   border-radius: .75rem; border: none; cursor: pointer; transition: background .15s;
 }
 .srp-action-btn:hover { background: var(--mn-surface-hover, rgba(31,77,58,.06)); }

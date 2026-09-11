@@ -1,7 +1,7 @@
 /* مكارم الأخلاق — بطاقات/فلاتر حديثة (الهيرو من TopicPage) */
 
 .topic-page--akhlaq .topic-page__body {
-  background: var(--color-bg, var(--surface-app, #f7f3eb));
+  background: var(--color-bg, var(--surface-app, var(--mj-bg, #f7f3eb)));
 }
 
 .akl-page {

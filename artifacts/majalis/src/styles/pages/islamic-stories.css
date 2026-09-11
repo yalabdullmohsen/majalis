@@ -2,7 +2,7 @@
 
 .isp-page,
 .topic-page--islamic-stories .topic-page__body {
-  background: var(--color-bg, var(--surface-app, #F7F3EB));
+  background: var(--color-bg, var(--surface-app, var(--mj-bg, #f7f3eb)));
 }
 
 .isp-page {

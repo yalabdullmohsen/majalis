@@ -425,7 +425,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   font-family: var(--font-body);
   transition: border-color 0.15s, background 0.15s;
 }
-.seerah-panel__nav-btn:hover { border-color: color-mix(in srgb, var(--majalis-ink-soft) 50%, transparent); background: var(--majalis-parchment-deep, #f0ece4); }
+.seerah-panel__nav-btn:hover { border-color: color-mix(in srgb, var(--majalis-ink-soft) 50%, transparent); background: var(--majalis-parchment-deep, var(--mj-bg, #f0ece4)); }
 .seerah-panel__nav-btn--next { margin-inline-end: auto; }
 
 /* ── Sources ── */

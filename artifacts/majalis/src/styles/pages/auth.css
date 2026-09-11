@@ -26,7 +26,7 @@
   align-items: center;
   overflow: visible;
   overflow-x: clip;
-  background: var(--color-bg, var(--mj-bg, #f7f3eb));
+  background: var(--color-bg, var(--mj-bg, var(--mj-bg, #f7f3eb)));
   color: var(--auth-ink);
   direction: rtl;
 }
