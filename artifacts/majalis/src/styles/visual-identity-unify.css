@@ -89,7 +89,10 @@ html.dark {
   --mj-brand-tint: color-mix(in srgb, var(--mj-brand) 14%, var(--mj-surface));
   --mj-brand-deep: #1e4d3c;
   --mj-accent: #d9b871;
-  --mj-accent-soft: rgba(217, 184, 113, 0.16);
+  /* سطح ذهبي هادئ صلب (خلفيات/حاويات) — ليس طبقة شفافة للنص */
+  --mj-accent-soft: color-mix(in srgb, var(--mj-accent) 18%, var(--mj-surface));
+  /* غسلة شفافة اختيارية للـoverlay فقط — لا تُستخدم كلون نص */
+  --mj-accent-wash: color-mix(in srgb, var(--mj-accent) 16%, transparent);
   --mj-warning-soft: rgba(217,119,6,0.16);
   --mj-warning: #d97706;
   --mj-danger-soft: rgba(240,113,120,0.18);

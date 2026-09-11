@@ -118,7 +118,9 @@ html.pts-immersive .scroll-to-top {
   --pts-bg-2: #0f4a38;
   --pts-radius: var(--radius-card, 24px);
   --pts-radius-sm: var(--radius-tile, 24px);
-  --pts-gold: var(--mj-accent-soft, #e8d4a0);
+  /* نص/أيقونة ذهبية: استخدم --mj-accent الصلب — لا --mj-accent-soft
+     (في الوضع الداكن soft طبقة شفافة ~0.16 مخصّصة للخلفيات فقط). */
+  --pts-gold: var(--mj-accent, #d9b871);
   --pts-gold-soft: color-mix(in srgb, var(--mj-accent) 28%, transparent);
   --pts-gold-line: color-mix(in srgb, var(--mj-accent) 40%, transparent);
   --pts-white: #FAFAF8;

@@ -45,6 +45,20 @@ assert.match(cardTsx, /التقويم/);
 
 assert.match(prayerCss, /--pts-muted:\s*rgba\(250,\s*250,\s*248,\s*0\.9\)/);
 assert.match(prayerCss, /--pts-card-bg:/);
+/* ذهب النص صلب عبر --mj-accent — لا --mj-accent-soft الشفاف ليلاً (CI #6676) */
+assert.match(prayerCss, /--pts-gold:\s*var\(--mj-accent/);
+assert.doesNotMatch(
+  prayerCss,
+  /--pts-gold:\s*var\(--mj-accent-soft/,
+  "pts-gold لا يرث accent-soft الشفاف",
+);
+const unify = read("src/styles/visual-identity-unify.css");
+assert.doesNotMatch(
+  unify,
+  /--mj-accent-soft:\s*rgba\(\s*217\s*,\s*184\s*,\s*113\s*,\s*0\.16\s*\)/,
+  "accent-soft الليلي ليس طبقة 0.16 شفافة",
+);
+assert.match(unify, /--mj-accent-wash:/, "غسلة شفافة منفصلة للـoverlay");
 assert.match(
   prayerCss,
   /\.pts-screen(?:\.pts-screen)?--with-nav[\s\S]*?padding-bottom:\s*calc\(\s*var\(--bottom-nav-height/,
