@@ -192,10 +192,7 @@ export default function LessonDetailPage({
       })
       .catch(() => {
         if (cancelled) return;
-        setSimilar([]);
-        setSameSheikh([]);
-        setSeriesLessons([]);
-        setSheikhBio("");
+        // أبقِ الدرس والروابط السابقة عند فشل إعادة الجلب
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -277,7 +274,7 @@ export default function LessonDetailPage({
 
   return (
     <DetailScreen compose="mark">
-    <div className="page-shell narrow lesson-detail-page mj-page">
+    <div className="page-shell narrow lesson-detail-page mj-page" aria-busy={loading}>
       <ReadingProgressBar />
       <nav className="lesson-detail-breadcrumb" aria-label="مسار التصفح">
         <Link href="/">الرئيسية</Link>

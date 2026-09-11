@@ -972,7 +972,7 @@ export function HadithSection({
   }
 
   return (
-    <div className="page-shell content-hub-page ds-page hadith-page">
+    <div className="page-shell content-hub-page ds-page hadith-page" aria-busy={loading}>
       {inner}
     </div>
   );

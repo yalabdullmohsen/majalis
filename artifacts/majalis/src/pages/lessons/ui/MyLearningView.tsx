@@ -99,10 +99,7 @@ export default function MyLearningPage() {
         setNotes(n ?? []);
       })
       .catch(() => {
-        setStats(null);
-        setCertificates([]);
-        setLibrary([]);
-        setNotes([]);
+        // أبقِ البيانات السابقة عند فشل إعادة الجلب (بلا وميض فراغ)
       })
       .finally(() => setLoading(false));
   }, [user?.id]);
@@ -118,7 +115,7 @@ export default function MyLearningPage() {
 
   return (
     <DashboardScreen compose="mark">
-    <div className="myl2-page" dir="rtl">
+    <div className="myl2-page" dir="rtl" aria-busy={loading || resumeLoading}>
 
       {/* ══════════ Hero ══════════ */}
       <header className="myl2-hero">
@@ -176,8 +173,8 @@ export default function MyLearningPage() {
               </h2>
             </div>
 
-            {resumeLoading ? (
-              <div className="myl2-skeletons">
+            {resumeLoading && resumeItems.length === 0 ? (
+              <div className="myl2-skeletons" aria-busy="true">
                 <div className="myl2-skel" aria-hidden="true" />
                 <div className="myl2-skel" aria-hidden="true" />
               </div>
@@ -222,7 +219,7 @@ export default function MyLearningPage() {
         )}
 
         {/* الشهادات */}
-        {!loading && certificates.length > 0 && (
+        {certificates.length > 0 && (
           <section className="myl2-card" aria-labelledby="myl2-certs-hd">
             <div className="myl2-card__head">
               <h2 className="myl2-card__title" id="myl2-certs-hd">
@@ -306,7 +303,7 @@ export default function MyLearningPage() {
         </section>
 
         {/* الملاحظات */}
-        {!loading && notes.length > 0 && (
+        {notes.length > 0 && (
           <section className="myl2-card" aria-labelledby="myl2-notes-hd">
             <div className="myl2-card__head">
               <h2 className="myl2-card__title" id="myl2-notes-hd">
