@@ -1,0 +1,77 @@
+{
+  "institutions": {
+    "path": "artifacts/majalis/src/data/institutions-catalog.json",
+    "count": 45,
+    "types": {
+      "mosque": 12,
+      "university": 7,
+      "library": 10,
+      "center": 16
+    },
+    "missing_website": 0,
+    "missing_city": 0,
+    "missing_source_fields": 45,
+    "sample_keys": [
+      "city",
+      "country",
+      "description",
+      "id",
+      "mapQuery",
+      "name",
+      "type",
+      "website"
+    ]
+  },
+  "universities": {
+    "path": "artifacts/majalis/src/data/universities-catalog.json",
+    "count": 37,
+    "missing_website": 37,
+    "marked_verifiedish": 37,
+    "sample_keys": [
+      "about",
+      "accreditation_status",
+      "city",
+      "country",
+      "faqs",
+      "is_verified",
+      "last_updated_at",
+      "name_ar",
+      "name_en",
+      "programs",
+      "slug",
+      "website_url"
+    ]
+  },
+  "scholars": {
+    "path": "artifacts/majalis/src/data/scholars-profiles.ts",
+    "id_count": 0,
+    "unique_ids": 0
+  },
+  "landmarks": {
+    "path": "artifacts/majalis/src/lib/islamic-landmarks-data.ts",
+    "id_count": 34,
+    "unique_ids": 34
+  },
+  "placeholders": [
+    "src/components/mind-map/MindMapCanvas.tsx:44:// ضبط أوّلي: العقدة الجذر (x=0) على يمين الإطار تقريبًا، ووسطها رأسيًا",
+    "src/pages/quran/QuranMemorizationPlansPage.tsx:21:{ id: \"student\", title: \"خطة طالب العلم\", description: \"صفحتان تقريبًا في الجلسة مع اختبار أسبوعي وربط بالتسميع. محتوى م"
+  ],
+  "ui_card_public": [],
+  "content_counts": {
+    "$comment": "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
+    "books": 173,
+    "islamicHistory": 217,
+    "fawaid": 641,
+    "quizQuestions": 8573,
+    "mindMaps": 23,
+    "rulings": 0,
+    "courses": 63,
+    "miracles": 67,
+    "adhkar": 325,
+    "qa": 2295,
+    "nations": 21,
+    "landmarks": 34,
+    "institutions": 45,
+    "universities": 37
+  }
+}
