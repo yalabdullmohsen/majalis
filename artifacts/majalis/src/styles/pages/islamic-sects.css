@@ -22,7 +22,7 @@
   border-radius: var(--radius-card, 24px);
   border: 1px solid color-mix(in srgb, var(--mj-accent, #c4a574) 45%, var(--ss-border, var(--mj-hairline)));
   background: color-mix(in srgb, var(--mj-accent, #c4a574) 12%, var(--ss-card-bg, var(--mj-surface)));
-  color: var(--color-text, var(--mj-ink, var(--mj-ink)));
+  color: var(--color-text, var(--mj-ink, #16241e));
   font-size: 0.88rem;
   line-height: 1.7;
 }

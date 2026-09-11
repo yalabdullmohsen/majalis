@@ -349,7 +349,7 @@
 }
 .kuwait-tab:hover:not(.kuwait-tab--active) {
   border-color: color-mix(in srgb, var(--mj-brand) 35%, transparent) !important;
-  color: var(--mj-ink, var(--mj-ink)) !important;
+  color: var(--mj-ink, #16241e) !important;
   background: color-mix(in srgb, var(--mj-brand) 8%, transparent) !important;
 }
 .kuwait-tab--active {
@@ -1498,7 +1498,7 @@ html[data-theme="dark"] .lesson-filters__icon-btn,
 html.dark .lesson-filters__icon-btn,
 html[data-theme="dark"] .lesson-filters__search-field input,
 html.dark .lesson-filters__search-field input {
-  background: var(--color-surface, var(--mj-ink));
+  background: var(--color-surface, #1a221f);
   color: var(--text-primary, #ecf2ef);
   border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 32%, var(--mj-ink-2, #2a3531));
 }

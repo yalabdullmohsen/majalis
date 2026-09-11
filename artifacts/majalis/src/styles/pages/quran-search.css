@@ -132,7 +132,7 @@
   font-family: "Amiri Quran", "Scheherazade New", "Traditional Arabic", serif;
   font-size: 1.15rem;
   line-height: 2;
-  color: var(--mj-ink, var(--mj-ink));
+  color: var(--mj-ink, #16241e);
   text-align: start;
   width: 100%;
 }

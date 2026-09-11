@@ -263,7 +263,7 @@
 .lib-card-title {
   font-size: 0.9rem;
   font-weight: 700;
-  color: var(--clr-text, var(--mj-ink, var(--mj-ink)));
+  color: var(--clr-text, var(--mj-ink, #16241e));
   line-height: 1.4;
   margin: 0;
   display: -webkit-box;

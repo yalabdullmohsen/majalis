@@ -24,7 +24,7 @@
 .sources-directory-card {
   display: block;
   padding: 14px;
-  border: 1px solid var(--mj-hairline, var(--mj-hairline));
+  border: 1px solid var(--mj-hairline, #e3e8e6);
   border-radius: 14px;
   background: var(--mj-surface, var(--mj-white, #ffffff));
   text-decoration: none;
@@ -41,7 +41,7 @@
   margin: 6px 0 4px;
   font-size: 16px;
   font-weight: 800;
-  color: var(--mj-ink, var(--mj-ink));
+  color: var(--mj-ink, #16241e);
 }
 
 .sources-directory-card__meta {
@@ -85,7 +85,7 @@
 
 html[data-theme="dark"] .sources-directory-card,
 html.dark .sources-directory-card {
-  background: var(--mj-surface, var(--mj-ink));
+  background: var(--mj-surface, #1a221f);
   border-color: var(--mj-hairline, #2a3531);
 }
 

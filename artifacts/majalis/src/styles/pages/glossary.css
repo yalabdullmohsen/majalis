@@ -4,7 +4,7 @@
 .gl-page {
   min-height: 100svh;
   background: var(--color-bg, var(--surface-app, #f7f4ee));
-  color: var(--color-text, var(--mj-ink, var(--mj-ink)));
+  color: var(--color-text, var(--mj-ink, #16241e));
   padding-bottom: calc(
     var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) +
       max(4.5rem, var(--assistant-fab-size, 3.35rem) + 3.25rem)

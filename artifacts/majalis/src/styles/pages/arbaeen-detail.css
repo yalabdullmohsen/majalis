@@ -72,7 +72,7 @@
   margin-bottom: 1.25rem;
   padding: 1rem 1.05rem;
   border-radius: var(--radius-card, 24px);
-  border: 1px solid var(--majalis-line, var(--mj-hairline, var(--mj-hairline)));
+  border: 1px solid var(--majalis-line, var(--mj-hairline, #e3e8e6));
   background: var(--majalis-panel, var(--color-surface, var(--mj-surface)));
 }
 .ahd-section__title {

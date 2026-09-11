@@ -41,7 +41,7 @@
 
 /* Filters */
 .an-filters { max-width: 860px; margin: 0 auto 1.5rem; padding: 0 1rem; display: flex; flex-direction: column; gap: 0.8rem; }
-.an-search { width: 100%; padding: 0.65rem 1rem; border: 1.5px solid var(--mj-hairline); border-radius: 18px; font-size: 0.9rem; background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface)))); color: var(--mj-ink, var(--mj-ink)); outline: none; transition: border-color 0.15s; }
+.an-search { width: 100%; padding: 0.65rem 1rem; border: 1.5px solid var(--mj-hairline); border-radius: 18px; font-size: 0.9rem; background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf8))); color: var(--mj-ink, #16241e); outline: none; transition: border-color 0.15s; }
 .an-search:focus { border-color: var(--majalis-emerald); }
 .an-cats { display: flex; flex-wrap: wrap; gap: var(--ds-space-2); }
 .an-cat { padding: 0.35rem 0.9rem; border-radius: var(--ds-radius-full); border: 1.5px solid var(--mj-hairline); background: transparent; font-size: 0.8rem; color: var(--mj-ink-2); cursor: pointer; transition: background 0.15s, border-color 0.15s, color 0.15s; }
@@ -56,10 +56,10 @@
 
 /* Card */
 .an-card {
-  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface))));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf8)));
   border-radius: var(--radius-card, 24px);
   padding: 1.1rem;
-  border: 1.5px solid var(--mj-hairline, var(--mj-hairline));
+  border: 1.5px solid var(--mj-hairline, #e3e8e6);
   border-inline-start: 4px solid var(--majalis-emerald);
   transition: box-shadow 0.15s, border-color 0.15s;
 }
@@ -68,7 +68,7 @@
 .an-card--today { border-color: var(--majalis-emerald); box-shadow: 0 0 0 2px rgba(31,77,58,0.15); }
 .an-card__header { display: flex; align-items: center; gap: var(--ds-space-2); margin-bottom: 0.6rem; flex-wrap: wrap; }
 .an-card__num { font-size: 0.7rem; font-weight: 700; color: var(--mj-on-brand, var(--mj-white, #ffffff)); background: var(--majalis-emerald); border-radius: 50%; width: 1.6rem; height: 1.6rem; display: grid; place-items: center; flex-shrink: 0; }
-.an-card__title { font-size: 0.9rem; font-weight: 700; color: var(--mj-ink, var(--mj-ink)); flex: 1; }
+.an-card__title { font-size: 0.9rem; font-weight: 700; color: var(--mj-ink, #16241e); flex: 1; }
 .an-card__today-badge { font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: var(--ds-radius-full); background: var(--majalis-emerald); color: var(--mj-on-brand, var(--mj-white, #ffffff)); flex-shrink: 0; }
 .an-card__text { font-size: 0.85rem; line-height: 1.8; color: var(--mj-ink-2); font-family: var(--font-quran, serif); border: none; padding: 0; margin: 0 0 0.6rem; }
 .an-card__expl { font-size: 0.8rem; line-height: 1.7; color: var(--mj-ink-2, #4b5563); border-inline-start: 2px solid color-mix(in srgb, var(--mj-brand, #059669) 22%, transparent); padding-inline-start: 0.7rem; margin-bottom: 0.6rem; }
@@ -102,8 +102,8 @@
   min-height: 44px;
   border-radius: var(--radius-card, 24px);
   border: 1px solid var(--mj-hairline, #d1d5db);
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-surface)));
-  color: var(--mj-ink, var(--mj-ink));
+  background: var(--ss-card-bg, var(--mj-surface, #fffcf8));
+  color: var(--mj-ink, #16241e);
 }
 .an-cats {
   flex-wrap: nowrap;
@@ -142,7 +142,7 @@
 .an-row {
   border: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand-deep)) 14%, transparent);
   border-radius: var(--radius-card, 24px);
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-surface)));
+  background: var(--ss-card-bg, var(--mj-surface, #fffcf8));
   overflow: hidden;
 }
 .an-row--today {
@@ -187,7 +187,7 @@
 .an-row__title {
   font-size: 0.9rem;
   font-weight: 700;
-  color: var(--mj-ink, var(--mj-ink));
+  color: var(--mj-ink, #16241e);
   line-height: 1.35;
 }
 .an-row__preview {
@@ -217,7 +217,7 @@
   border: 0;
   font-size: 0.95rem;
   line-height: 1.8;
-  color: var(--mj-ink, var(--mj-ink));
+  color: var(--mj-ink, #16241e);
   font-family: var(--font-quran, var(--font-app, serif));
 }
 .an-row__expl {

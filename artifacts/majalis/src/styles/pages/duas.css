@@ -72,7 +72,7 @@
   border-radius: var(--ds-radius-lg);
   font-size: 0.9rem;
   background: var(--mj-surface, var(--mj-white, #ffffff));
-  color: var(--mj-ink, var(--mj-ink));
+  color: var(--mj-ink, #16241e);
   outline: none;
   direction: rtl;
   transition: border-color 0.2s;
@@ -90,7 +90,7 @@
   font-weight: 600;
   cursor: pointer;
   border: 1.5px solid #C6D6CE;
-  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface))));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf8)));
   color: var(--mj-brand-deep);
   transition: all 0.15s;
 }
@@ -111,7 +111,7 @@
 
 /* Card */
 .dua-card {
-  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface))));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf8)));
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius-xl);
   overflow: hidden;

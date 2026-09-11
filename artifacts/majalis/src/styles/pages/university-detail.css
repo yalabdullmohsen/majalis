@@ -49,7 +49,7 @@
 .udp-deadline-val { font-weight: 500; color: var(--majalis-emerald); display: flex; align-items: center; gap: .25rem; }
 .udp-website-btn {
   display: inline-flex; align-items: center; gap: .375rem;
-  padding: .5rem 1rem; background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface))));
+  padding: .5rem 1rem; background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf8)));
   color: var(--majalis-emerald); border-radius: .75rem;
   font-size: .875rem; font-weight: 600; transition: opacity .15s;
   text-decoration: none;

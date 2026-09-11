@@ -59,7 +59,7 @@
   display: flex;
   align-items: center;
   gap: var(--ds-space-2);
-  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface))));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf8)));
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: 0.65rem;
   padding: 0.55rem 0.75rem;
@@ -115,7 +115,7 @@
   border-radius: 0.6rem;
   font-size: 0.9rem;
   color: var(--color-text, var(--mj-brand-deep));
-  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface))));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf8)));
   outline: none;
   width: 100%;
   box-sizing: border-box;
@@ -154,7 +154,7 @@
 
 /* بطاقة النوع */
 .zk-card {
-  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface))));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf8)));
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--radius-card, 0.9rem);
   transition: border-color 0.15s, box-shadow 0.15s;
@@ -219,7 +219,7 @@
   font-size: 0.83rem;
   font-weight: 600;
   color: var(--color-text, var(--mj-brand-deep));
-  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface))));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf8)));
   transition: all 0.15s;
   text-align: center;
 }

@@ -18,7 +18,7 @@
   --mk-green-soft: var(--primary-soft, #e2efe8);
   --mk-surface: var(--surface, var(--mj-surface));
   --mk-line: var(--border-soft, #d9d2c6);
-  --mk-ink: var(--mj-ink, var(--mj-ink));
+  --mk-ink: var(--mj-ink, #16241e);
   --mk-muted: var(--mj-muted, var(--mj-ink-2));
   --mk-radius: var(--radius-card, 24px);
   --mk-fab-clearance: calc(

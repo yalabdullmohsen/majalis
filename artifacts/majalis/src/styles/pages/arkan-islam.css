@@ -234,7 +234,7 @@
   font-size: 0.83rem;
   font-weight: 600;
   color: var(--color-text, var(--mj-brand-deep));
-  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, var(--mj-surface))));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf8)));
   transition: all 0.15s;
   text-align: center;
 }

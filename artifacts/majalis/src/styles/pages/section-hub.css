@@ -18,7 +18,7 @@
   padding: 0.95rem 1.05rem;
   border-radius: var(--sh-radius);
   background: color-mix(in srgb, var(--sh-accent) 8%, var(--mj-surface, var(--mj-white, #ffffff)));
-  border: 1px solid color-mix(in srgb, var(--sh-accent) 16%, var(--mj-hairline, var(--mj-hairline)));
+  border: 1px solid color-mix(in srgb, var(--sh-accent) 16%, var(--mj-hairline, #e3e8e6));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.65),
     0 12px 28px -18px color-mix(in srgb, var(--sh-accent) 35%, transparent);
@@ -46,7 +46,7 @@
   padding: 0.7rem 0.4rem;
   border-radius: 18px;
   background: color-mix(in srgb, var(--mj-surface, var(--mj-white, #ffffff)) 88%, var(--sh-accent));
-  border: 1px solid color-mix(in srgb, var(--sh-accent) 14%, var(--mj-hairline, var(--mj-hairline)));
+  border: 1px solid color-mix(in srgb, var(--sh-accent) 14%, var(--mj-hairline, #e3e8e6));
 }
 
 .section-hub__stat-value {
@@ -89,7 +89,7 @@
   min-height: 44px;
   padding: 0.55rem 1rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--sh-accent) 18%, var(--mj-hairline, var(--mj-hairline)));
+  border: 1px solid color-mix(in srgb, var(--sh-accent) 18%, var(--mj-hairline, #e3e8e6));
   background: var(--mj-surface, var(--mj-white, #ffffff));
   color: var(--mj-ink, #12241d);
   font: inherit;
@@ -134,7 +134,7 @@
   min-height: 44px;
   padding: 0.4rem 0.95rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--sh-accent) 16%, var(--mj-hairline, var(--mj-hairline)));
+  border: 1px solid color-mix(in srgb, var(--sh-accent) 16%, var(--mj-hairline, #e3e8e6));
   background: var(--mj-surface, var(--mj-white, #ffffff));
   color: var(--mj-ink-2, #3d4f47);
   font: inherit;
@@ -171,7 +171,7 @@
   min-height: 100%;
   padding: 0.95rem 0.9rem;
   border-radius: var(--sh-radius);
-  border: 1px solid color-mix(in srgb, var(--card-accent, var(--sh-accent)) 18%, var(--mj-hairline, var(--mj-hairline)));
+  border: 1px solid color-mix(in srgb, var(--card-accent, var(--sh-accent)) 18%, var(--mj-hairline, #e3e8e6));
   background:
     linear-gradient(
       165deg,
@@ -186,7 +186,7 @@
 
 .section-hub__card.is-open {
   grid-column: 1 / -1;
-  border-color: color-mix(in srgb, var(--card-accent, var(--sh-accent)) 32%, var(--mj-hairline, var(--mj-hairline)));
+  border-color: color-mix(in srgb, var(--card-accent, var(--sh-accent)) 32%, var(--mj-hairline, #e3e8e6));
 }
 
 .section-hub__card-kicker {
@@ -252,7 +252,7 @@
   padding: 0.7rem 0.8rem;
   border-radius: 18px;
   background: color-mix(in srgb, var(--mj-bg, #f4f7f5) 70%, var(--mj-surface, var(--mj-white, #ffffff)));
-  border: 1px solid color-mix(in srgb, var(--card-accent, var(--sh-accent)) 10%, var(--mj-hairline, var(--mj-hairline)));
+  border: 1px solid color-mix(in srgb, var(--card-accent, var(--sh-accent)) 10%, var(--mj-hairline, #e3e8e6));
 }
 
 .section-hub__topic-title {
@@ -283,7 +283,7 @@
   text-align: center;
   border-radius: var(--sh-radius);
   background: var(--mj-surface, var(--mj-white, #ffffff));
-  border: 1px dashed color-mix(in srgb, var(--sh-accent) 22%, var(--mj-hairline, var(--mj-hairline)));
+  border: 1px dashed color-mix(in srgb, var(--sh-accent) 22%, var(--mj-hairline, #e3e8e6));
   color: var(--mj-ink-2, #3d4f47);
   font-size: 0.9rem;
   line-height: 1.6;
@@ -307,7 +307,7 @@
   background: linear-gradient(
     to left,
     transparent,
-    color-mix(in srgb, var(--sh-accent) 28%, var(--mj-hairline, var(--mj-hairline)))
+    color-mix(in srgb, var(--sh-accent) 28%, var(--mj-hairline, #e3e8e6))
   );
 }
 
@@ -315,7 +315,7 @@
   margin: 0.25rem 0 1.25rem;
   padding: 1rem 0.85rem 0.35rem;
   border-radius: var(--sh-radius, 16px);
-  border: 1px dashed color-mix(in srgb, var(--sh-accent, var(--mj-brand, var(--mj-brand, #1f6b56))) 28%, var(--mj-hairline, var(--mj-hairline)));
+  border: 1px dashed color-mix(in srgb, var(--sh-accent, var(--mj-brand, var(--mj-brand, #1f6b56))) 28%, var(--mj-hairline, #e3e8e6));
   background: color-mix(in srgb, var(--mj-surface-2, #f4f7f5) 88%, transparent);
 }
 

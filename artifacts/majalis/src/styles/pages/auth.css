@@ -2,10 +2,10 @@
 .login-page {
   --auth-green: var(--color-primary, var(--mj-brand, #0f5c45));
   --auth-green-deep: var(--color-primary-dark, var(--mj-brand-deep, #12362c));
-  --auth-ink: var(--color-text, var(--mj-ink, var(--mj-ink)));
+  --auth-ink: var(--color-text, var(--mj-ink, #16241e));
   --auth-muted: var(--color-muted, var(--mj-muted, #5e6e67));
   --auth-line: var(--color-border, var(--mj-hairline, #d9d2c6));
-  --auth-surface: var(--color-surface, var(--mj-surface, var(--mj-surface)));
+  --auth-surface: var(--color-surface, var(--mj-surface, #fffcf8));
   --auth-field: var(--color-surface-soft, var(--mj-surface-2, #f3eee4));
   --auth-placeholder: var(--color-muted, #6b7c72);
 

@@ -8,7 +8,7 @@
   font-size: clamp(1.75rem, 5vw, 2.15rem);
   font-weight: 800;
   line-height: 1.2;
-  color: var(--mj-ink, var(--mj-ink));
+  color: var(--mj-ink, #16241e);
   letter-spacing: -0.01em;
 }
 
@@ -38,13 +38,13 @@
   margin: 0;
   font-size: 14px;
   line-height: 1.65;
-  color: var(--mj-ink, var(--mj-ink));
+  color: var(--mj-ink, #16241e);
 }
 
 .quran-numbers-page__method-link {
   margin: 0 16px 16px;
   font-size: 13px;
-  color: var(--mj-muted, var(--mj-muted));
+  color: var(--mj-muted, #5d726a);
 }
 
 .quran-numbers-toolbar {
@@ -59,12 +59,12 @@
 .quran-numbers-surah-controls select {
   width: 100%;
   min-height: 44px;
-  border: 1px solid var(--mj-hairline, var(--mj-hairline));
+  border: 1px solid var(--mj-hairline, #e3e8e6);
   border-radius: 12px;
   padding: 10px 12px;
   font: inherit;
   background: var(--mj-surface, var(--mj-white, #ffffff));
-  color: var(--mj-ink, var(--mj-ink));
+  color: var(--mj-ink, #16241e);
 }
 
 .quran-numbers-tabs,
@@ -80,9 +80,9 @@
   min-height: 44px;
   padding: 8px 12px;
   border-radius: 999px;
-  border: 1px solid var(--mj-hairline, var(--mj-hairline));
+  border: 1px solid var(--mj-hairline, #e3e8e6);
   background: var(--mj-surface, var(--mj-white, #ffffff));
-  color: var(--mj-ink, var(--mj-ink));
+  color: var(--mj-ink, #16241e);
   font: inherit;
   font-size: 13px;
   font-weight: 600;
@@ -116,10 +116,10 @@
   text-align: start;
   cursor: pointer;
   appearance: none;
-  border: 1px solid var(--mj-hairline, var(--mj-hairline));
+  border: 1px solid var(--mj-hairline, #e3e8e6);
   border-radius: 16px;
   background: var(--mj-surface, var(--mj-white, #ffffff));
-  color: var(--mj-ink, var(--mj-ink));
+  color: var(--mj-ink, #16241e);
   font: inherit;
 }
 
@@ -150,7 +150,7 @@
 .quran-stat-card__note {
   font-size: 12px;
   line-height: 1.4;
-  color: var(--mj-muted, var(--mj-muted));
+  color: var(--mj-muted, #5d726a);
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -161,7 +161,7 @@
   margin-block-start: auto;
   font-size: 11px;
   line-height: 1.35;
-  color: var(--mj-muted, var(--mj-muted));
+  color: var(--mj-muted, #5d726a);
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -180,7 +180,7 @@
 .quran-numbers-table-note {
   margin: 8px 0 12px;
   font-size: 12px;
-  color: var(--mj-muted, var(--mj-muted));
+  color: var(--mj-muted, #5d726a);
 }
 
 .quran-numbers-surah-controls {
@@ -192,7 +192,7 @@
 
 .quran-numbers-table-scroll {
   overflow: auto;
-  border: 1px solid var(--mj-hairline, var(--mj-hairline));
+  border: 1px solid var(--mj-hairline, #e3e8e6);
   border-radius: 12px;
   max-height: 420px;
 }
@@ -207,7 +207,7 @@
 .quran-numbers-table td {
   padding: 10px 8px;
   text-align: start;
-  border-bottom: 1px solid var(--mj-hairline, var(--mj-hairline));
+  border-bottom: 1px solid var(--mj-hairline, #e3e8e6);
   min-height: 44px;
 }
 
@@ -248,12 +248,12 @@
   margin: 0;
   font-size: 14px;
   line-height: 1.55;
-  color: var(--mj-ink, var(--mj-ink));
+  color: var(--mj-ink, #16241e);
 }
 
 .quran-stat-sheet__src {
   font-size: 12px;
-  color: var(--mj-muted, var(--mj-muted));
+  color: var(--mj-muted, #5d726a);
 }
 
 .quran-stat-sheet__actions {
@@ -278,7 +278,7 @@ html[data-theme="dark"] .quran-numbers-search input,
 html.dark .quran-numbers-search input,
 html[data-theme="dark"] .quran-numbers-table th,
 html.dark .quran-numbers-table th {
-  background: var(--mj-surface, var(--mj-ink));
+  background: var(--mj-surface, #1a221f);
   color: var(--mj-ink, #e8eeeb);
   border-color: var(--mj-hairline, #2a3531);
 }

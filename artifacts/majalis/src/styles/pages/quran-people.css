@@ -2,9 +2,9 @@
 
 .qp-people {
   --qp-surface: var(--mj-surface, var(--mj-white, #ffffff));
-  --qp-ink: var(--mj-ink, var(--mj-ink));
+  --qp-ink: var(--mj-ink, #16241e);
   --qp-ink-2: var(--mj-ink-2, var(--mj-ink-2));
-  --qp-line: color-mix(in srgb, var(--mj-brand, #1e5f4b) 14%, var(--mj-hairline, var(--mj-hairline)));
+  --qp-line: color-mix(in srgb, var(--mj-brand, #1e5f4b) 14%, var(--mj-hairline, #e3e8e6));
   --qp-brand: var(--mj-brand, #1e5f4b);
   --qp-brand-deep: var(--mj-brand-deep, #12362a);
   --qp-canvas: color-mix(in srgb, var(--mj-brand, #1e5f4b) 4%, var(--mj-bg, #f7f8f6));

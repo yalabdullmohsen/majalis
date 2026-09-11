@@ -3,13 +3,13 @@
   padding: 16px 16px calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 72px);
   max-width: 900px;
   margin: 0 auto;
-  color: var(--mj-ink, var(--mj-ink));
+  color: var(--mj-ink, #16241e);
 }
 
 .qr-crumb {
   font-size: 13px;
   margin-bottom: 12px;
-  color: var(--mj-muted, var(--mj-muted));
+  color: var(--mj-muted, #5d726a);
 }
 
 .qr-crumb a {
@@ -51,7 +51,7 @@
 
 .qr-source {
   font-size: 13px;
-  color: var(--mj-muted, var(--mj-muted));
+  color: var(--mj-muted, #5d726a);
 }
 
 .qr-qari-grid {
@@ -61,7 +61,7 @@
 }
 
 .qr-qari-card {
-  border: 1px solid var(--mj-hairline, var(--mj-hairline));
+  border: 1px solid var(--mj-hairline, #e3e8e6);
   border-radius: 14px;
   padding: 14px;
   background: var(--mj-surface, var(--mj-white, #ffffff));
@@ -81,7 +81,7 @@
 .qr-qari-card__nisba,
 .qr-qari-card__meta {
   font-size: 13px;
-  color: var(--mj-muted, var(--mj-muted));
+  color: var(--mj-muted, #5d726a);
   margin: 0 0 6px;
 }
 
@@ -100,7 +100,7 @@
 }
 
 .qr-diff-list li {
-  border: 1px solid var(--mj-hairline, var(--mj-hairline));
+  border: 1px solid var(--mj-hairline, #e3e8e6);
   border-radius: 12px;
   padding: 12px;
 }
