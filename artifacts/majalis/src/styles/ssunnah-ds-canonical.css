@@ -1,0 +1,254 @@
+/**
+ * Ssunnah Design System — Canonical Semantic Tokens (v1)
+ * مصدر دلالي واحد فوق --mj-* / --ss-* دون كسر الجسور الحالية.
+ * لا يُستخدم لون مباشر في الشاشات؛ تُستهلك هذه الأسماء فقط.
+ */
+
+:root {
+  /* ── Color ── */
+  --ds-background: var(--mj-bg, #f7f4ee);
+  --ds-backgroundSubtle: color-mix(in srgb, var(--mj-brand, #146b52) 4%, var(--mj-bg, #f7f4ee));
+  --ds-surface: var(--mj-surface, #fffcf8);
+  --ds-surfaceSecondary: var(--mj-surface-2, #f4f1ea);
+  --ds-surfaceElevated: var(--mj-surface, #fffcf8);
+  --ds-surfaceInteractive: color-mix(in srgb, var(--mj-brand, #146b52) 6%, var(--mj-surface, #fffcf8));
+  --ds-surfaceSelected: color-mix(in srgb, var(--mj-brand, #146b52) 12%, var(--mj-surface, #fffcf8));
+  --ds-primary: var(--mj-brand, #146b52);
+  --ds-primaryHover: var(--mj-brand-deep, #0d4a39);
+  --ds-primaryPressed: color-mix(in srgb, var(--mj-brand-deep, #0d4a39) 88%, #000);
+  --ds-primaryContainer: var(--mj-brand-soft, #e7f3ee);
+  --ds-onPrimary: var(--mj-on-brand, #ffffff);
+  --ds-textPrimary: var(--mj-ink, #16241e);
+  --ds-textSecondary: var(--mj-ink-2, #3d4f47);
+  --ds-textMuted: var(--mj-muted, #5e6e67);
+  --ds-textOnColor: var(--mj-on-brand, #ffffff);
+  --ds-iconPrimary: var(--mj-ink, #16241e);
+  --ds-iconSecondary: var(--mj-ink-2, #3d4f47);
+  --ds-border: color-mix(in srgb, var(--mj-hairline, #d9d3c8) 55%, transparent);
+  --ds-borderStrong: var(--mj-hairline, #d9d3c8);
+  --ds-divider: color-mix(in srgb, var(--mj-hairline, #d9d3c8) 70%, transparent);
+  --ds-focus: color-mix(in srgb, var(--mj-brand, #146b52) 45%, transparent);
+  --ds-selected: var(--ds-surfaceSelected);
+  --ds-success: var(--mj-brand, #146b52);
+  --ds-successContainer: var(--mj-brand-soft, #e7f3ee);
+  --ds-warning: var(--mj-warn, #b0892c);
+  --ds-warningContainer: color-mix(in srgb, var(--mj-warn, #b0892c) 14%, var(--mj-surface, #fffcf8));
+  --ds-error: var(--mj-danger, #b54a4a);
+  --ds-errorContainer: color-mix(in srgb, var(--mj-danger, #b54a4a) 12%, var(--mj-surface, #fffcf8));
+  --ds-disabled: color-mix(in srgb, var(--mj-muted, #5e6e67) 45%, transparent);
+  --ds-skeletonBase: color-mix(in srgb, var(--mj-brand, #146b52) 8%, var(--mj-surface-2, #f4f1ea));
+  --ds-skeletonHighlight: color-mix(in srgb, var(--mj-surface, #fffcf8) 70%, transparent);
+  --ds-overlay: color-mix(in srgb, #0a1210 48%, transparent);
+
+  /* ── Typography roles ── */
+  --ds-type-display: clamp(1.65rem, 4.5vw, 2rem);
+  --ds-type-screenTitle: clamp(1.28rem, 3.6vw, 1.55rem);
+  --ds-type-sectionTitle: clamp(1.12rem, 3vw, 1.28rem);
+  --ds-type-subsectionTitle: 1.05rem;
+  --ds-type-cardTitle: 1.02rem;
+  --ds-type-bodyLarge: 1.05rem;
+  --ds-type-body: 0.98rem;
+  --ds-type-scripture: clamp(1.15rem, 3vw, 1.35rem);
+  --ds-type-explanation: 0.98rem;
+  --ds-type-supporting: 0.9rem;
+  --ds-type-label: 0.86rem;
+  --ds-type-buttonLabel: 0.95rem;
+  --ds-type-caption: 0.8rem;
+  --ds-type-badge: 0.72rem;
+  --ds-type-numeric: 1.1rem;
+  --ds-lh-tight: 1.28;
+  --ds-lh-body: 1.7;
+  --ds-lh-reading: 1.85;
+
+  /* ── Spacing ── */
+  --ds-space-none: 0;
+  --ds-space-xxs: 0.25rem;
+  --ds-space-xs: 0.4rem;
+  --ds-space-sm: 0.65rem;
+  --ds-space-md: 0.9rem;
+  --ds-space-lg: 1.15rem;
+  --ds-space-xl: 1.5rem;
+  --ds-space-xxl: 2rem;
+  --ds-space-section: clamp(1.25rem, 3.2vw, 1.85rem);
+  --ds-space-screen: clamp(1rem, 3vw, 1.35rem);
+
+  /* ── Radius ── */
+  --ds-radiusSmall: 12px;
+  --ds-radiusMedium: 16px;
+  --ds-radiusLarge: 20px;
+  --ds-radiusXL: 24px;
+  --ds-radiusPill: 999px;
+  --ds-radiusCircle: 50%;
+
+  /* ── Elevation / border ── */
+  --ds-borderSubtle: 1px solid transparent;
+  --ds-borderDefault: 1px solid var(--ds-border);
+  --ds-borderStrongWidth: 1px solid var(--ds-borderStrong);
+  --ds-elevationNone: none;
+  --ds-elevationLow: 0 4px 18px -14px rgba(10, 61, 46, 0.16);
+  --ds-elevationMedium: 0 8px 24px -16px rgba(10, 61, 46, 0.2);
+  --ds-elevationOverlay: 0 16px 40px -12px rgba(10, 61, 46, 0.28);
+
+  /* ── Icons / touch ── */
+  --ds-iconSmall: 1rem;
+  --ds-iconMedium: 1.25rem;
+  --ds-iconLarge: 1.5rem;
+  --ds-touchTargetMinimum: 44px;
+
+  /* ── Motion ── */
+  --ds-durationInstant: 80ms;
+  --ds-durationFast: 140ms;
+  --ds-durationNormal: 200ms;
+  --ds-durationEmphasized: 280ms;
+  --ds-easingStandard: cubic-bezier(0.2, 0, 0, 1);
+  --ds-easingDecelerate: cubic-bezier(0, 0, 0, 1);
+  --ds-easingAccelerate: cubic-bezier(0.3, 0, 1, 1);
+  --ds-easingEmphasized: cubic-bezier(0.2, 0, 0, 1);
+
+  /* جسر للتوافق مع MUR */
+  --mur-radius: var(--ds-radiusLarge);
+  --mur-radius-sm: var(--ds-radiusMedium);
+  --mur-radius-lg: var(--ds-radiusXL);
+  --mur-shadow: var(--ds-elevationLow);
+  --mur-gap: var(--ds-space-md);
+  --mur-section-gap: var(--ds-space-section);
+  --mur-title: var(--ds-type-sectionTitle);
+  --mur-subtitle: var(--ds-type-supporting);
+  --mur-body: var(--ds-type-body);
+  --mur-meta: var(--ds-type-caption);
+}
+
+html.dark,
+html[data-theme="dark"] {
+  --ds-background: var(--mj-bg, #121916);
+  --ds-backgroundSubtle: color-mix(in srgb, var(--mj-brand, #5fbf98) 8%, var(--mj-bg, #121916));
+  --ds-surface: var(--mj-surface, #1b2421);
+  --ds-surfaceSecondary: var(--mj-surface-2, #232e2a);
+  --ds-surfaceElevated: color-mix(in srgb, var(--mj-surface, #1b2421) 88%, #fff);
+  --ds-textPrimary: var(--mj-ink, #f3f7f5);
+  --ds-textSecondary: var(--mj-ink-2, #c5d0cb);
+  --ds-textMuted: var(--mj-muted, #c5d0cb);
+  --ds-border: color-mix(in srgb, var(--mj-hairline, #3a4641) 70%, transparent);
+  --ds-elevationLow: 0 6px 20px -14px rgba(0, 0, 0, 0.5);
+  --ds-elevationMedium: 0 10px 28px -14px rgba(0, 0, 0, 0.55);
+  --ds-overlay: color-mix(in srgb, #000 58%, transparent);
+}
+
+/* أنماط شاشات دلالية */
+.ds-screen,
+.ds-dashboard,
+.ds-grid,
+.ds-list,
+.ds-reader,
+.ds-detail,
+.ds-settings {
+  padding-inline: var(--ds-space-screen);
+  padding-block-end: calc(var(--ds-space-xxl) + var(--content-pb, 0px));
+  color: var(--ds-textPrimary);
+  background: var(--ds-background);
+}
+
+.ds-reader,
+.reading-shell,
+.content-reading {
+  max-width: 42rem;
+  margin-inline: auto;
+  line-height: var(--ds-lh-reading);
+  font-size: var(--ds-type-body);
+}
+
+.ds-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-sm);
+  margin-block: var(--ds-space-section);
+}
+
+.ds-section__title {
+  margin: 0;
+  font-size: var(--ds-type-sectionTitle);
+  font-weight: 750;
+  line-height: var(--ds-lh-tight);
+  color: var(--ds-textPrimary);
+}
+
+.ds-section__subtitle {
+  margin: 0;
+  font-size: var(--ds-type-supporting);
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--ds-textSecondary);
+}
+
+/* ═══ Design System Adoption — تبني عالمي آمن (مؤجّل مع هذه الطبقة) ═══ */
+
+.home-page,
+.sections-page,
+.hadith-page,
+.hadith-hub-page,
+.lessons-page,
+.lessons-page-v3,
+.search-page,
+.settings-page,
+.prayer-times-page,
+.about-page,
+.account-page {
+  background: var(--ds-background, var(--mj-bg));
+}
+
+.styles-pages :is(.card, .ui-card, .section-card):not([data-scripture]),
+[class*="-page"] :is(.ui-card, .mj-card, .list-card):not([data-scripture]):not(.ayah-card) {
+  border-color: transparent;
+}
+
+.floating-back-btn,
+.float-back,
+.app-float-back {
+  width: var(--ds-touchTargetMinimum, 44px) !important;
+  height: var(--ds-touchTargetMinimum, 44px) !important;
+  min-width: var(--ds-touchTargetMinimum, 44px) !important;
+  min-height: var(--ds-touchTargetMinimum, 44px) !important;
+  border-radius: var(--ds-radiusMedium, 16px) !important;
+  border: none !important;
+  box-shadow: var(--ds-elevationLow) !important;
+  background: var(--ds-surface) !important;
+  color: var(--ds-textPrimary) !important;
+}
+
+.text-muted:not([data-scripture]),
+.muted:not([data-scripture]),
+.help-text,
+.hint:not(.mushaf-hint) {
+  color: var(--ds-textMuted, var(--mj-muted)) !important;
+  opacity: 1 !important;
+}
+
+.page-hero-mj:not(.page-hero-mj--bleed):not([data-scripture]),
+.section-page-hero:not([data-scripture]) {
+  padding-block: var(--ds-space-md) var(--ds-space-sm) !important;
+  min-height: 0 !important;
+}
+
+.sections-grid,
+.hub-grid,
+.home-sections-grid {
+  gap: var(--ds-space-md) !important;
+}
+
+.settings-page .settings-toggle-row {
+  min-height: 56px;
+  padding-block: 0.75rem;
+}
+
+.mini-player,
+.app-mini-player {
+  border-radius: var(--ds-radiusLarge) var(--ds-radiusLarge) 0 0 !important;
+  border: none !important;
+  box-shadow: var(--ds-elevationMedium) !important;
+}
+
+.mushaf-page :is(.ui-card, .soft-card, .ayah-card),
+[data-scripture] :is(.ui-card, .soft-card) {
+  border-color: revert !important;
+  box-shadow: revert !important;
+}

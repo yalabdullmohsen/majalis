@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-09-11T11:22:19.342Z",
+  "totalScreens": 175,
+  "fullyCompliantMarkers": 4,
+  "baseCompliantViaGlobalCss": 171,
+  "legacyMarked": 0,
+  "coveragePercent": 100,
+  "globalDesignSystemLoaded": true,
+  "method": "Pages under src/pages. Global ssunnah-ds-canonical + modern-ui-refresh count as base compliance for non-blocked routes. Explicit DS markers → fullyCompliant. Scripture/mushaf listed as documented exceptions (chrome only).",
+  "documentedExceptions": [
+    {
+      "file": "src/pages/quran/MushafReaderPage.tsx",
+      "reason": "scripture/mushaf surface — visual DS on chrome only"
+    },
+    {
+      "file": "src/pages/quran/QuranEnginePage.tsx",
+      "reason": "scripture/mushaf surface — visual DS on chrome only"
+    },
+    {
+      "file": "src/pages/quran/QuranMemorizationPlansPage.tsx",
+      "reason": "scripture/mushaf surface — visual DS on chrome only"
+    },
+    {
+      "file": "src/pages/quran/ui/QuranHubView.tsx",
+      "reason": "scripture/mushaf surface — visual DS on chrome only"
+    },
+    {
+      "file": "src/pages/quran/ui/QuranMemorizationView.tsx",
+      "reason": "scripture/mushaf surface — visual DS on chrome only"
+    },
+    {
+      "file": "src/pages/quran/ui/QuranPersonDetailView.tsx",
+      "reason": "scripture/mushaf surface — visual DS on chrome only"
+    },
+    {
+      "file": "src/pages/quran/ui/QuranQiraatView.tsx",
+      "reason": "scripture/mushaf surface — visual DS on chrome only"
+    },
+    {
+      "file": "src/pages/quran/ui/SurahIndexView.tsx",
+      "reason": "scripture/mushaf surface — visual DS on chrome only"
+    }
+  ],
+  "documentedExceptionsCount": 8,
+  "remainingHardLegacy": [],
+  "remainingSoftLegacy": [
+    {
+      "file": "src/pages/account/ui/AccountDeletionView.tsx",
+      "severity": "medium",
+      "reason": "legacy markers remain; softened by global DS CSS"
+    }
+  ],
+  "remainingCount": 1
+}
