@@ -1068,7 +1068,7 @@ html[data-theme="dark"] .lessons-similar-section .lesson-unified-card {
   --lesson-green-soft: #15241e;
   background-color: #12201b !important;
   background-image: linear-gradient(165deg, #17241f 0%, #12201b 100%) !important;
-  border-color: color-mix(in srgb, var(--mj-brand, #5a9e88) 28%, var(--mj-hairline)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #5a9e88)) 28%, var(--mj-hairline)) !important;
   color: #e7f0eb;
 }
 
@@ -1076,13 +1076,13 @@ html.dark .lessons-page-v2 .lesson-unified-card--today,
 html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card--today {
   background-color: #15201c !important;
   background-image: linear-gradient(165deg, color-mix(in srgb, #2f6b57 28%, #121a16) 0%, #15201c 100%) !important;
-  border-color: color-mix(in srgb, var(--mj-brand, #5a9e88) 45%, var(--mj-hairline)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #5a9e88)) 45%, var(--mj-hairline)) !important;
 }
 
 html.dark .lessons-page-v2 .lesson-unified-card__header,
 html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__header {
   background: color-mix(in srgb, #2f6b57 18%, #121a16);
-  border-block-end-color: color-mix(in srgb, var(--mj-brand, #5a9e88) 22%, var(--mj-hairline));
+  border-block-end-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #5a9e88)) 22%, var(--mj-hairline));
 }
 
 html.dark .lessons-page-v2 .lesson-unified-card__title,
@@ -1191,7 +1191,7 @@ html.dark .lessons-page-v2 .lesson-unified-card__actions--compact .favorite-btn,
 html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card__actions--compact .favorite-btn {
   background: color-mix(in srgb, var(--mj-brand) 16%, #15201c) !important;
   color: #e8f2ed !important;
-  border-color: color-mix(in srgb, var(--mj-brand, #5a9e88) 35%, var(--mj-hairline)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #5a9e88)) 35%, var(--mj-hairline)) !important;
 }
 
 html.dark .lessons-page-v2 .lesson-unified-card__sheikh,

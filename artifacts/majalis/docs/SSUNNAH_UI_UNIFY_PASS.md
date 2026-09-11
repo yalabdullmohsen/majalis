@@ -126,3 +126,8 @@
 2. لا دفع حتى يخضر CI الحالي لـ #1894 (إصلاح تباين أرقام القرآن).
 3. إصلاح إرجاعات Skeleton في JSX (كانت تعديلات P14 الأولى تمسّ useEffect فقط).
 4. ترحيل هكس إضافية آمنة في styles/pages.
+
+## دفعة P15 — 2026-09-11
+
+1. توسيع جسر البطاقات: hadith/lesson-unified/fiqh/prophet/home-daily/tarikh/lib/lpp…
+2. ترحيل هكس slate/info/success إضافية في styles/pages.

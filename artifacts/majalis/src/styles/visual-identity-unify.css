@@ -696,3 +696,27 @@ html.dark .bottom-nav--v2 .bottom-nav__tab.is-active {
 .inst-card {
   border-radius: var(--radius-card, 24px);
 }
+
+/* P15: ضمان تباين .sq-header ليلاً — خلفية نعناع صلبة + حبر on-brand */
+html[data-theme="dark"] .sq-header,
+html.dark .sq-header {
+  background: #5fbf98 !important;
+  background-color: #5fbf98 !important;
+  background-image: none !important;
+  color: #06231a !important;
+  border-color: #1e4d3c !important;
+}
+html[data-theme="dark"] .sq-header .sq-title,
+html.dark .sq-header .sq-title,
+html[data-theme="dark"] .sq-header .sq-kicker,
+html.dark .sq-header .sq-kicker,
+html[data-theme="dark"] .sq-header .sq-meta,
+html.dark .sq-header .sq-meta,
+html[data-theme="dark"] .sq-header .sq-toggle,
+html.dark .sq-header .sq-toggle,
+html[data-theme="dark"] .sq-header svg,
+html.dark .sq-header svg,
+html[data-theme="dark"] .sq-header :where(*),
+html.dark .sq-header :where(*) {
+  color: #06231a !important;
+}

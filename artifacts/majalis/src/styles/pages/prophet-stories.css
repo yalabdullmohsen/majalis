@@ -1461,7 +1461,7 @@ html.dark .prophets-page-lead {
 }
 .nb-azm-miracle {
   font-size: 0.82rem;
-  color: var(--mj-ink-2, #334155);
+  color: var(--mj-ink-2, var(--mj-ink-2));
 }
 .nb-azm-mentions {
   font-size: 0.72rem;
@@ -1526,7 +1526,7 @@ html.dark .prophets-page-lead {
 .nb-table td {
   padding: 0.55rem 0.8rem;
   border-bottom: 1px solid var(--mj-surface-2);
-  color: var(--mj-ink-2, #334155);
+  color: var(--mj-ink-2, var(--mj-ink-2));
 }
 .nb-table tr:last-child td { border-bottom: none; }
 .nb-table tr:hover td { background: var(--mj-surface-2); }
