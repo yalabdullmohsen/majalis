@@ -43,7 +43,7 @@ export default function TeacherDetailPage() {
       })
       .catch((err) => {
         if (cancelled || (err as Error)?.name === "AbortError") return;
-        setLessons([]);
+        /* أبقِ دروس الشيخ السابقة عند فشل إعادة الجلب */
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -88,7 +88,7 @@ export default function TeacherDetailPage() {
   }
 
   return (
-    <PageShell variant="narrow" className="tch-page">
+    <PageShell variant="narrow" className="tch-page" aria-busy={loading}>
       <PageHeader
         eyebrow="مشايخ معاصرون من دروس الكويت"
         title={teacher.name}
