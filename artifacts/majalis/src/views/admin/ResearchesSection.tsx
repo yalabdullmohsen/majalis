@@ -26,7 +26,7 @@ export function ResearchesSection() {
   return (
     <div className="admin-section" dir="rtl">
       <h2 style={{ marginTop: 0 }}>إدارة الأبحاث الشرعية</h2>
-      <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem" }}>
+      <p style={{ color: "var(--color-text-muted)", fontSize: "var(--ss-type-supporting)" }}>
         المراجعة من هنا واجهة تشغيل. صلاحيات الكتابة النهائية على الخادم عبر Service Role بعد تطبيق researches_v1.sql.
         المنشور: {stats.published} — طلبات: {submissions.length}
       </p>
@@ -49,11 +49,11 @@ export function ResearchesSection() {
           {submissions.map((s) => (
             <div key={s.id} style={{ border: "1px solid var(--color-border)", borderRadius: 8, padding: 12, marginBottom: 8 }}>
               <strong>{s.title}</strong>
-              <div style={{ fontSize: "0.85rem", marginTop: 4 }}>
+              <div style={{ fontSize: "var(--ss-type-supporting)", marginTop: 4 }}>
                 {s.authorName} — {REVIEW_STATUS_LABELS[s.status]}
                 {s.isPersonal ? " — شخصي" : ""}
               </div>
-              {s.statusNote && <p style={{ fontSize: "0.85rem" }}>{s.statusNote}</p>}
+              {s.statusNote && <p style={{ fontSize: "var(--ss-type-supporting)" }}>{s.statusNote}</p>}
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
                 {(["needs_revision", "rejected", "accepted", "published", "rights_hold"] as ReviewStatus[]).map((st) => (
                   <button

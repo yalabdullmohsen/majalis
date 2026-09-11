@@ -112,7 +112,7 @@ export function ReligiousCalendarReviewSection() {
                 }}
               >
                 <strong>{record.eventName}</strong>
-                <div style={{ fontSize: "0.75rem", color: "#6B7280" }}>
+                <div style={{ fontSize: "var(--ss-type-caption)", color: "var(--mj-muted)" }}>
                   {record.reviewStatus} · {validation.publishable ? "قابل للنشر" : "محجوب"}
                 </div>
               </button>
@@ -144,7 +144,7 @@ export function ReligiousCalendarReviewSection() {
             ) : null}
 
             {!selected.validation.publishable && (
-              <div style={{ background: "#FEF2F2", padding: "0.75rem", borderRadius: "0.5rem" }}>
+              <div style={{ background: "var(--mj-danger-soft)", padding: "0.75rem", borderRadius: "0.5rem" }}>
                 <strong>أسباب الرفض من المتحقّق:</strong>
                 <ul>
                   {selected.validation.rejections.map((r) => (

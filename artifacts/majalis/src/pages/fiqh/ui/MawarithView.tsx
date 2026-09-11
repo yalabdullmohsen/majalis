@@ -293,7 +293,7 @@ export default function MawarithPage() {
           </p>
           <cite className="mw-ayah__ref">النساء: 11</cite>
         </div>
-        <p className="mw-hero__sub" style={{ marginTop: "0.75rem", fontSize: "0.9rem" }}>
+        <p className="mw-hero__sub" style={{ marginTop: "0.75rem", fontSize: "var(--ss-type-supporting)" }}>
           وحدّ الوصية الثلث؛ قال ﷺ لسعد: «الثلث، والثلث كثير» — متفق عليه. و«إن الله قد أعطى كل ذي حق حقه، فلا وصية لوارث» — الترمذي ٢١٢٠ وأبو داود ٢٨٧٠، حسّنه الألباني.
         </p>
       </section>

@@ -237,7 +237,7 @@ export default function MethodologyPage() {
           <li>في العقيدة يُقرَّر مذهب أهل السنة؛ وفي الفقه تُعرض الأقوال المعتبرة ثم يُبيَّن الراجح بدليله حيث يلزم العمل.</li>
           <li>النوازل المعاصرة تُحال إلى المجامع وهيئات الفتوى المعتمدة، ولا يُفتى فيها ابتداءً من المنصة.</li>
         </ul>
-        <h3 className="mtd-section__title" style={{ marginTop: "1.25rem", fontSize: "1.05rem" }}>محظورات مطلقة في النشر</h3>
+        <h3 className="mtd-section__title" style={{ marginTop: "1.25rem", fontSize: "var(--ss-type-card-title)" }}>محظورات مطلقة في النشر</h3>
         <ul className="mtd-guarantees">
           <li>الإعجاز العددي وحساب الجُمَّل.</li>
           <li>الإسرائيليات والقصص الشعبية والمنامات التي تُبنى عليها أحكام أو عقائد.</li>

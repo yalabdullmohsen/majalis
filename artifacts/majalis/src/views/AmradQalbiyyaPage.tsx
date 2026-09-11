@@ -186,7 +186,7 @@ export default function AmradQalbiyyaPage() {
                   <SectionIcon name={d.icon} size={22} />
                 </span>
                 <div>
-                  <h3 className="font-extrabold text-gray-900 dark:text-white text-base">
+                  <h3 className="font-extrabold text-gray-900 dark:text-[color:var(--mj-ink)] text-base">
                     {d.name}
                   </h3>
                   <span className="text-xs text-gray-400 font-light tracking-wide">{d.arabic}</span>

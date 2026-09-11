@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import { Link, useParams } from "wouter";
 import {
   getKnowledgeItem,
@@ -130,7 +130,7 @@ export default function KnowledgeSectionPage() {
             مشاركة
           </button>
         </div>
-        <article className="knowledge-article surface-brand" style={{ fontSize: `${fontScale}rem` }}>
+        <article className="knowledge-article surface-brand" style={{ ["--knowledge-font-scale" as string]: String(fontScale) } as CSSProperties}>
           <div className="knowledge-article-body">
             {item.body.split("\n").map((line, i) =>
               line.startsWith("## ") ? <h2 key={i}>{line.slice(3)}</h2> : line.startsWith("### ") ? <h3 key={i}>{line.slice(4)}</h3> : <p key={i}>{line}</p>,

@@ -111,7 +111,7 @@ export function ArbaeenLoveSection() {
                 </div>
               </div>
 
-              <p style={{ fontSize: ".85rem", margin: "0.35rem 0" }} dir="rtl">{item.hadith_text}</p>
+              <p style={{ fontSize: "var(--ss-type-supporting)", margin: "0.35rem 0" }} dir="rtl">{item.hadith_text}</p>
               {item.editor_notes && <p className="fiqh-review-meta">ملاحظات: {item.editor_notes}</p>}
 
               <div className="fiqh-review-actions">

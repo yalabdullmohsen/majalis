@@ -158,7 +158,7 @@ export default function AcademicResearchPage() {
           <h2 id="sr-results" className="sr-section__title">
             {q || categoryId || kind ? "نتائج البحث" : "تصفح الأبحاث"}
           </h2>
-          <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>
+          <span style={{ fontSize: "var(--ss-type-caption)", color: "var(--color-text-muted)" }}>
             {pending ? "تحديث النتائج…" : `${results.length} نتيجة`}
           </span>
         </div>

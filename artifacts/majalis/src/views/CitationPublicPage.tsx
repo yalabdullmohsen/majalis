@@ -141,7 +141,7 @@ export default function CitationPublicPage() {
 
               {src && (
                 <div className="cpp-type-header">
-                  <span className="px-2 py-0.5 rounded text-xs text-white font-medium cit-type-badge">
+                  <span className="px-2 py-0.5 rounded text-xs font-medium cit-type-badge">
                     {typeLabel}
                   </span>
                   <span className="cpp-source-title">{src.title_ar}</span>

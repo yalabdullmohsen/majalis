@@ -122,7 +122,7 @@ export function WeekDayFactsSection() {
                 </div>
               </div>
 
-              <p style={{ fontSize: ".85rem", margin: "0.35rem 0" }}>{item.body}</p>
+              <p style={{ fontSize: "var(--ss-type-supporting)", margin: "0.35rem 0" }}>{item.body}</p>
               {item.reference && <p className="fiqh-review-meta">المرجع: {item.reference}</p>}
               {item.editor_notes && <p className="fiqh-review-meta">ملاحظات: {item.editor_notes}</p>}
 

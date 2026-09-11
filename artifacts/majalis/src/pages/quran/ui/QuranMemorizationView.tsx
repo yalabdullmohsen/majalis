@@ -183,7 +183,7 @@ function QuestionCard({
       {isAutoReveal && (
         <div className="qmem-result qmem-result--correct" style={{ marginTop: "0.75rem" }}>
           <p className="qmem-result__label">الآية الكاملة للمراجعة:</p>
-          <p className="qmem-result__full" style={{ fontFamily: "Amiri Quran, serif", fontSize: "1rem" }}>
+          <p className="qmem-result__full" style={{ fontFamily: "Amiri Quran, serif", fontSize: "var(--ss-type-body)" }}>
             {question.fullAyah}
           </p>
         </div>
@@ -353,7 +353,7 @@ export default function QuranMemorizationPage() {
 
       <div className="qmem-body">
         {error && (
-          <div style={{ padding: "1rem", background: "#fee2e2", borderRadius: "10px", color: "#7f1d1d", marginBottom: "1rem" }}>
+          <div style={{ padding: "1rem", background: "var(--mj-danger-soft)", borderRadius: "10px", color: "var(--mj-danger-deep)", marginBottom: "1rem" }}>
             {error}
           </div>
         )}
@@ -394,7 +394,7 @@ export default function QuranMemorizationPage() {
                   ))}
                 </select>
               ) : (
-                <div style={{ color: "#6b7280", fontSize: "0.9rem" }}>تحديث السور…</div>
+                <div style={{ color: "var(--mj-muted)", fontSize: "var(--ss-type-supporting)" }}>تحديث السور…</div>
               )}
               <button
                 type="button"
@@ -426,7 +426,7 @@ export default function QuranMemorizationPage() {
                     </div>
                   ))}
                   {dueCards.length > 5 && (
-                    <p style={{ fontSize: "0.78rem", color: "#6b7280", textAlign: "center" }}>
+                    <p style={{ fontSize: "var(--ss-type-caption)", color: "var(--mj-muted)", textAlign: "center" }}>
                       +{dueCards.length - 5} آيات أخرى مستحقة
                     </p>
                   )}

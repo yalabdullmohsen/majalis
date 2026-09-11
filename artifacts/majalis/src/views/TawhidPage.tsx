@@ -598,7 +598,7 @@ export default function TawhidPage() {
       <RelatedKnowledge kind="lesson" query="عقيدة توحيد" title="دروس ومواد ذات صلة بالتوحيد" limit={6} />
 
       <nav className="twh-related" aria-label="صفحات ذات صلة" style={{ marginTop: "1.5rem" }}>
-        <h2 className="twh-section-title" style={{ fontSize: "1.1rem" }}>استكشف أيضاً</h2>
+        <h2 className="twh-section-title" style={{ fontSize: "var(--ss-type-section-title)" }}>استكشف أيضاً</h2>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
           {[
             { href: "/tazkiya", label: "التزكية والتوبة" },

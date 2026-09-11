@@ -144,15 +144,15 @@ function DetailContent({ university: u }: { university: University }) {
       </div>
 
       {/* Header */}
-      <div className="text-white px-4 py-8 ldb-hero">
+      <div className="px-4 py-8 ldb-hero">
         <div className="max-w-3xl mx-auto">
-          <Link href="/universities" className="text-white/70 text-sm hover:text-white mb-4 block w-fit">
+          <Link href="/universities" className="text-white/70 text-sm hover:opacity-100 opacity-90 mb-4 block w-fit">
             → دليل الجامعات
           </Link>
           <div className="flex items-start gap-4">
             {u.logo_url ? (
               <img src={u.logo_url} alt={u.name_ar}
-                className="w-16 h-16 rounded-2xl bg-white object-contain flex-shrink-0"
+                className="w-16 h-16 rounded-2xl bg-[var(--mj-surface)] object-contain flex-shrink-0"
                 loading="lazy" decoding="async" width="64" height="64" />
             ) : (
               <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-3xl font-bold flex-shrink-0">
@@ -166,7 +166,7 @@ function DetailContent({ university: u }: { university: University }) {
                 <span className="bg-white/20 px-2.5 py-0.5 rounded-full flex items-center gap-1">
                   <MapPin size={12} aria-hidden="true" /> {u.city ? `${u.city}، ` : ""}{u.country}
                 </span>
-                <span className={`px-2.5 py-0.5 rounded-full text-white text-xs font-medium udp-acc-badge univ-acc--${u.accreditation_status}`}>
+                <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium udp-acc-badge univ-acc--${u.accreditation_status}`}>
                   {ACCREDITATION_LABELS[u.accreditation_status]}
                 </span>
                 {u.is_verified && (
@@ -187,8 +187,8 @@ function DetailContent({ university: u }: { university: University }) {
               onClick={() => inCompare ? removeFromCompare(u.slug) : addToCompare(u)}
               disabled={!inCompare && !canAdd}
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
-                inCompare ? "bg-white udp-compare-active-btn" :
-                canAdd ? "bg-white/20 text-white hover:bg-white/30" :
+                inCompare ? "bg-[var(--mj-surface)] udp-compare-active-btn" :
+                canAdd ? "bg-white/20 text-[color:var(--mj-on-brand)] hover:bg-white/30" :
                 "bg-white/10 text-white/50 cursor-not-allowed"
               }`}>
               {inCompare ? "✓ في المقارنة" : "⇔ أضف للمقارنة"}

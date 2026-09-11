@@ -88,7 +88,7 @@
 .udp-not-found-title { font-size: var(--ds-text-lg); font-weight: 700; color: var(--majalis-ink-soft); margin-bottom: .5rem; }
 .udp-back-link { color: var(--majalis-emerald); font-size: .875rem; text-decoration: none; }
 .udp-back-link:hover { text-decoration: underline; }
-.udp-acc-badge { background-color: var(--acc-color, var(--mj-muted)); }
+.udp-acc-badge { background-color: var(--acc-color, var(--mj-muted)); color: var(--mj-on-brand, #fff); }
 .udp-compare-active-btn { color: var(--majalis-emerald); font-weight: 600; }
 
 /* ── نُقل إلى styles/pages/universities-admin.css ── */
@@ -114,5 +114,5 @@
    90 — UniversityDetailPage  (udp-*)
    ============================================================ */
 .udp-step-num  { background: var(--majalis-emerald); }
-.udp-acc-badge { background: var(--acc-color, var(--mj-brand)); }
+.udp-acc-badge { background: var(--acc-color, var(--mj-brand)); color: var(--mj-on-brand, #fff); }
 

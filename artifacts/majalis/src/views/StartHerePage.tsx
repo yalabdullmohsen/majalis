@@ -64,7 +64,7 @@ export default function StartHerePage() {
             <Link key={title} href={href} className="meth-card" style={{ textDecoration: "none", color: "inherit" }}>
               <Icon size={20} strokeWidth={1.8} aria-hidden="true" />
               <strong style={{ display: "block", marginBlock: "0.35rem" }}>{title}</strong>
-              <p style={{ margin: 0, fontSize: "0.9rem", opacity: 0.85 }}>{desc}</p>
+              <p style={{ margin: 0, fontSize: "var(--ss-type-supporting)", opacity: 0.85 }}>{desc}</p>
               <span style={{ display: "inline-block", marginBlockStart: "0.5rem", fontWeight: 700 }}>
                 ابدأ من هنا ←
               </span>
