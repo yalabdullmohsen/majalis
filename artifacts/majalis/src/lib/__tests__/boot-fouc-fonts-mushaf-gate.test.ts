@@ -35,6 +35,8 @@ const theme = read("src/lib/theme-preference.ts");
   assert.match(head, /classList\.add\("light"/);
   assert.match(head, /majalis-theme/);
   assert.match(head, /storedTheme === "auto"/);
+  assert.match(head, /mj-dark-elevated-boot/, "توكنات أسطح داكنة فورية عند الإقلاع");
+  assert.match(head, /--soft-card-bg:#24302b/, "بطاقة مرتفعة قبل تحميل dark CSS");
 }
 
 // 2) خطوط محلية + preload

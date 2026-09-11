@@ -164,8 +164,13 @@ export default function SettingsPage() {
     { id: "account", title: "الحساب والملف الشخصي", keywords: "حساب دخول تسجيل خروج حذف الحساب ملف" },
     {
       id: "appearance",
-      title: "المظهر والقراءة والمصحف",
-      keywords: "سمة ثيم مظهر تباين كثافة كبار السن خط واجهة قراءة قرآن مصحف تفسير",
+      title: "المظهر والواجهة",
+      keywords: "سمة ثيم مظهر تباين كثافة كبار السن خط واجهة لغة",
+    },
+    {
+      id: "reading",
+      title: "القراءة والمصحف",
+      keywords: "قراءة قرآن مصحف خط تفسير حجم تباعد",
     },
     {
       id: "sound",
@@ -336,7 +341,6 @@ export default function SettingsPage() {
             <LanguageSwitcher />
           </div>
           <p className="settings-note">{t("lang_overlay_note")}</p>
-          <p className="settings-subhead">المظهر والواجهة</p>
           <p className="settings-note">السمة والمظهر</p>
           <SettingsList
             rows={THEME_OPTIONS.map((option) => ({
@@ -375,7 +379,11 @@ export default function SettingsPage() {
               <option>كبير</option>
             </select>
           </label>
-          <p className="settings-subhead">القراءة والمصحف</p>
+        </LegalSection>
+      )}
+
+      {visible(sections[2]!) && (
+        <LegalSection title={sections[2]!.title}>
           <label className="settings-field">
             <span>{t("settings_reading_size")}</span>
             <input
@@ -428,8 +436,8 @@ export default function SettingsPage() {
         </LegalSection>
       )}
 
-      {visible(sections[2]!) && (
-        <LegalSection title={sections[2]!.title}>
+      {visible(sections[3]!) && (
+        <LegalSection title={sections[3]!.title}>
           <label className="settings-field">
             <span>القارئ المفضّل</span>
             <select
@@ -498,8 +506,8 @@ export default function SettingsPage() {
         </LegalSection>
       )}
 
-      {visible(sections[3]!) && (
-        <LegalSection title={sections[3]!.title}>
+      {visible(sections[4]!) && (
+        <LegalSection title={sections[4]!.title}>
           <p className="settings-note">
             تُحفظ التفضيلات محليًا. إذن الإشعارات يُطلب عند فتح إعدادات التذكيرات أو الأذان لأول مرة.
           </p>
@@ -530,8 +538,8 @@ export default function SettingsPage() {
         </LegalSection>
       )}
 
-      {visible(sections[4]!) && (
-        <LegalSection title={sections[4]!.title}>
+      {visible(sections[5]!) && (
+        <LegalSection title={sections[5]!.title}>
           <SettingsList
             rows={[
               {
@@ -584,8 +592,8 @@ export default function SettingsPage() {
         </LegalSection>
       )}
 
-      {visible(sections[5]!) && (
-        <LegalSection title={sections[5]!.title}>
+      {visible(sections[6]!) && (
+        <LegalSection title={sections[6]!.title}>
           <p>{t("settings_privacy_desc")}</p>
           <SettingsList
             rows={[
@@ -667,8 +675,8 @@ export default function SettingsPage() {
         </LegalSection>
       )}
 
-      {visible(sections[6]!) && (
-        <LegalSection title={sections[6]!.title}>
+      {visible(sections[7]!) && (
+        <LegalSection title={sections[7]!.title}>
           <p className="settings-note">
             أعد مشاهدة جولة المزايا لتتعرّف على المصحف والصلاة والأذكار والبحث والتنبيهات.
           </p>

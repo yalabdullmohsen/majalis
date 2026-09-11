@@ -47,6 +47,20 @@
           html.dataset.theme = resolved;
           if (resolved === "dark") {
             html.classList.add("dark", "theme-dark");
+            /* توكنات أسطح فورية قبل CSS الديناميكي — soft-cards يقرأ المتغيرات بلا !important */
+            if (!document.getElementById("mj-dark-elevated-boot")) {
+              var s = document.createElement("style");
+              s.id = "mj-dark-elevated-boot";
+              s.textContent =
+                'html[data-theme="dark"],html.dark{' +
+                "--surface:#161e1b;--surface-secondary:#1c2622;--surface-elevated:#24302b;" +
+                "--text-primary:#f4f7f5;--border-elevated:#3a4a44;" +
+                "--soft-card-bg:#24302b;--soft-tile-bg:#24302b;--soft-card-grad:none;--soft-tile-grad:none;" +
+                "--soft-card-border:#3a4a44;--soft-tile-border:#3a4a44;" +
+                "--mj-surface:#1c2622;--mj-surface-2:#24302b;--mj-ink:#f4f7f5" +
+                "}";
+              document.head.appendChild(s);
+            }
             html.classList.remove("light", "theme-light");
           } else {
             html.classList.add("light", "theme-light");
