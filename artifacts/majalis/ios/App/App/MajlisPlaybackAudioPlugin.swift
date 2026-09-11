@@ -4,7 +4,7 @@ import UIKit
 
 /// AVAudioSession bridge for Capacitor WebView media.
 /// - `.playback` only when Quran/lesson audio needs background continuation
-/// - `.playAndRecord` / `.record` for speech/recitation plugins
+/// - Recording is intentionally unsupported in App Store builds (no microphone feature)
 /// Does NOT activate the session at app launch.
 @objc(MajlisPlaybackAudioPlugin)
 public class MajlisPlaybackAudioPlugin: CAPPlugin, CAPBridgedPlugin {
@@ -65,25 +65,13 @@ public class MajlisPlaybackAudioPlugin: CAPPlugin, CAPBridgedPlugin {
         }
     }
 
-    /// Switch session for mic / speech recognition without fighting `.playback`.
+    /// Recording is disabled for App Store builds (no microphone feature / usage string).
     @objc func enableRecording(_ call: CAPPluginCall) {
-        do {
-            let session = AVAudioSession.sharedInstance()
-            try session.setCategory(
-                .playAndRecord,
-                mode: .measurement,
-                options: [.duckOthers, .defaultToSpeaker, .allowBluetooth]
-            )
-            try session.setActive(true, options: [])
-            mode = "recording"
-            call.resolve(["ok": true, "mode": mode])
-        } catch {
-            call.reject(
-                "تعذّر تفعيل جلسة التسجيل: \(error.localizedDescription)",
-                "AUDIO_SESSION_FAILED",
-                error
-            )
-        }
+        call.reject(
+            "تسجيل الصوت غير متاح في هذا الإصدار",
+            "RECORDING_UNSUPPORTED",
+            nil
+        )
     }
 
     @objc func deactivate(_ call: CAPPluginCall) {

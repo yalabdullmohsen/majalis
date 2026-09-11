@@ -36,8 +36,8 @@ type HistoryTab = "inbox" | "archived";
 function isDevToolsVisible(): boolean {
   try {
     if (typeof window === "undefined") return false;
-    if (import.meta.env.DEV) return true;
-    return new URLSearchParams(window.location.search).get("notifDebug") === "1";
+    // أدوات التشخيص في التطوير فقط — لا تُفتح عبر ?notifDebug=1 في الإنتاج
+    return import.meta.env.DEV === true;
   } catch {
     return false;
   }
@@ -414,7 +414,6 @@ export default function NotificationSettingsPage() {
           <h3 className="notif-card__title">تشخيص الإشعارات (مطوّر)</h3>
           <p className="notif-row__sub" style={{ marginBottom: "0.75rem" }}>
             منصة: {isNative ? "Capacitor أصلي" : "ويب"} · الإذن: {permission}
-            {!import.meta.env.DEV && " · ?notifDebug=1"}
           </p>
           <button
             type="button"

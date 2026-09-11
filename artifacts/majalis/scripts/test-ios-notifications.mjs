@@ -87,7 +87,8 @@ ok(prompt.includes("isNative"), "PushPrompt hides on native");
 const settings = read("src/pages/account/ui/NotificationSettingsView.tsx");
 ok(settings.includes("fireTestLocalNotification"), "test notification trigger in settings");
 ok(settings.includes("getNotificationPermissionStatus"), "Capacitor-aware permission status");
-ok(settings.includes("notifDebug"), "hidden developer debug flag");
+ok(settings.includes("import.meta.env.DEV"), "notification developer tools gated to DEV only");
+ok(!/notifDebug\s*===\s*["']1["']/.test(settings), "production cannot unlock notifDebug via query");
 
 const prayer = read("src/lib/prayer-local-notifications.ts");
 ok(prayer.includes("DEFAULT_ALERT_SOUND"), "prayer sound fallback import");

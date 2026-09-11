@@ -119,7 +119,7 @@ export function PrayerLocationPicker({ onChanged }: Props) {
         setGpsBusy(false);
         setGpsError("تعذّر الحصول على الموقع. فعّل الصلاحية أو اختر مدينة يدوياً.");
       },
-      { enableHighAccuracy: true, timeout: 12_000, maximumAge: 60_000 },
+      { enableHighAccuracy: false, timeout: 12_000, maximumAge: 60_000 },
     );
   }
 

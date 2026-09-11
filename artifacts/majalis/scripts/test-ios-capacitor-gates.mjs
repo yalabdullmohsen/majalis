@@ -60,7 +60,9 @@ const pluginSwift = readFileSync(join(iosApp, "App", "MajlisPlaybackAudioPlugin.
 ok(pluginSwift.includes("CAPBridgedPlugin"), "plugin conforms to CAPBridgedPlugin");
 ok(pluginSwift.includes('jsName = "MajlisPlaybackAudio"'), "plugin jsName MajlisPlaybackAudio");
 ok(pluginSwift.includes("enablePlayback"), "enablePlayback method");
-ok(pluginSwift.includes("enableRecording"), "enableRecording method");
+ok(pluginSwift.includes("enableRecording"), "enableRecording method retained as reject stub");
+ok(pluginSwift.includes("RECORDING_UNSUPPORTED"), "recording rejects without activating mic session");
+ok(!pluginSwift.includes(".playAndRecord"), "plugin does not activate playAndRecord");
 ok(pluginSwift.includes("deactivate"), "deactivate method");
 ok(pluginSwift.includes("interruptionNotification"), "handles audio interruptions");
 ok(pluginSwift.includes("routeChangeNotification"), "handles route changes");
@@ -148,7 +150,15 @@ ok(
 );
 
 const playbackTs = readFileSync(join(root, "src", "lib", "native-playback-audio.ts"), "utf8");
-ok(playbackTs.includes("ensureNativeRecordingAudioSession"), "JS bridge exposes recording mode");
+ok(playbackTs.includes("ensureNativeRecordingAudioSession"), "JS bridge keeps recording API as safe no-op");
+ok(
+  /ensureNativeRecordingAudioSession[\s\S]{0,220}return;\s*}/.test(playbackTs),
+  "ensureNativeRecordingAudioSession is a no-op (no mic activation)",
+);
+ok(!playbackTs.includes("plugin.enableRecording()"), "JS does not call native enableRecording");
+ok(privacy.includes("NSPrivacyCollectedDataTypeEmailAddress"), "PrivacyInfo declares email");
+ok(privacy.includes("NSPrivacyCollectedDataTypeCoarseLocation"), "PrivacyInfo declares coarse location");
+ok(!privacy.includes("NSPrivacyCollectedDataTypeAudioData"), "PrivacyInfo has no AudioData (mic removed)");
 ok(playbackTs.includes("deactivateNativeAudioSession"), "JS bridge exposes deactivate");
 
 const audioEngine = readFileSync(join(root, "src", "core", "audio", "AudioEngine.ts"), "utf8");
