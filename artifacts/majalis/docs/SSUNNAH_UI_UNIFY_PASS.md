@@ -149,3 +149,9 @@
 1. ترحيل حدود/أسطح خضراء شائعة في صفحات التعلم/الأدب/الطهارة/أركان الإسلام/المنهج/التقويم إلى \`--mj-hairline\` / \`--mj-brand-soft\` / color-mix.
 2. بدون مواقيت الصلاة وبدون نصوص soft كحبر ليلي.
 
+## دفعة P20 — 2026-09-11
+
+1. ترحيل بطاقات \`src/components/home/**\` من \`ui-card\`/\`mj-card\` إلى \`AppCard\` أو \`soft-card soft-card--on-light\`.
+2. بوابة \`home-cards-appcard-gate.test.ts\` ضمن \`test:soft-cards-system\`.
+3. لا مساس بنصوص شرعية؛ الإبقاء على أصناف الدومين للتخطيط.
+

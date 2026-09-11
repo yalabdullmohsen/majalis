@@ -61,7 +61,7 @@ export function HomeMostReadBand() {
         </div>
         <div className="home-most-read">
           {displayPopular.map((item) => (
-            <Link key={item.href} href={item.href} className="home-most-read__item mj-card mj-card--link">
+            <Link key={item.href} href={item.href} className="home-most-read__item soft-card soft-card--on-light">
               {item.title}
             </Link>
           ))}
@@ -75,7 +75,7 @@ export function HomeMostReadBand() {
         <div className="m2030-band__head">
           <h2 className="m2030-band__title">اقتراح اليوم</h2>
         </div>
-        <Link href={suggestion.href} className="home-today-suggest mj-card mj-card--link mj-card--raised">
+        <Link href={suggestion.href} className="home-today-suggest soft-card soft-card--on-light">
           <strong className="home-today-suggest__title">{suggestion.title}</strong>
           <span className="home-today-suggest__desc">{suggestion.desc}</span>
         </Link>

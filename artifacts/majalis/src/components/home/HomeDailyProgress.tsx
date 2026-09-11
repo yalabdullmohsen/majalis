@@ -41,7 +41,7 @@ export function HomeDailyProgress() {
         {PROGRESS_TASKS.map((task) => {
           const stats = getTaskStats(task, progress);
           return (
-            <Link key={task.id} href={task.href} className="home-progress-card ui-card">
+            <Link key={task.id} href={task.href} className="home-progress-card soft-card soft-card--on-light">
               <div className="home-progress-card__head">
                 <strong>{task.label}</strong>
                 <span>{stats.percent}%</span>

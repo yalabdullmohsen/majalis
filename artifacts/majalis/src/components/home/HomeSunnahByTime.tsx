@@ -17,14 +17,13 @@ const SunnahIcon = (
  *    "تحميل/فارغ" حقيقية هنا — بقي state="ready" دائمًا.
  * 2. نص وقت الفترة (period.title) **لم** يُمرَّر عبر خاصية description الافتراضية
  *    لأن <Widget> يعرضها بلا أي class قابل للاستهداف، بينما .home-sunnah-card__period
- *    له تجاوز لون مقصود ودائم الفعالية (لا نادر): `.home-main--v3 .ui-card
+ *    له تجاوز لون مقصود ودائم الفعالية (لا نادر): `.home-main--v3 .home-sunnah-card
  *    .home-sunnah-card__period { color: rgba(255,255,255,0.75) !important; }`
  *    في elite-2026.css — و`home-main--v3` مُطبَّقة دومًا على حاوية الرئيسية
  *    (HomePage.tsx، بلا شرط)، فهذا التجاوز نشط في كل تحميل حقيقي للصفحة، لا
  *    حالة نادرة. استخدام description العام كان سيُفقد هذا اللون فعليًا، فأُبقي
  *    كعنصر مستقل داخل children بنفس الـclass الأصلي.
- * className="ui-card" أُبقي كما هو (كان مطبَّقًا على القسم قبل الهجرة) بدل
- * افتراض تطابق بصري تلقائي مع نمط widget-shell الافتراضي.
+ * السطح عبر soft-card (هوية البطاقات الموحّدة) مع الإبقاء على home-sunnah-card للتخطيط.
  */
 export function HomeSunnahByTime() {
   const [period, setPeriod] = useState<SunnahPeriod>(getLocalSunnahPeriod());
@@ -39,7 +38,7 @@ export function HomeSunnahByTime() {
   return (
     <Widget
       id="sunnah-time"
-      className="ui-card home-sunnah-card"
+      className="soft-card soft-card--on-light home-sunnah-card"
       icon={SunnahIcon}
       eyebrow="حسب وقتك"
       title="سنن الوقت الحالي"

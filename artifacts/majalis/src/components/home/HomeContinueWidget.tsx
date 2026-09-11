@@ -63,7 +63,7 @@ export function HomeContinueWidget() {
           const Icon = ICONS[item.content_type] ?? BookOpen;
           const href = item.content_url ?? "#";
           return (
-            <Link key={item.id} href={href} className="hcw-card ui-card">
+            <Link key={item.id} href={href} className="hcw-card soft-card soft-card--on-light">
               <span className="hcw-card__icon" aria-hidden="true">
                 <Icon size={18} />
               </span>

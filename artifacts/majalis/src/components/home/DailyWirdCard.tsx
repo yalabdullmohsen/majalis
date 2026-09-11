@@ -4,6 +4,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "wouter";
 import { BookOpen, Check, Heart, MessageCircle, Sparkles } from "lucide-react";
+import { AppCard } from "@/components/design-system/AppCard";
 import {
   getDailyAyah,
   getDailyDhikr,
@@ -97,7 +98,7 @@ export function DailyWirdCard() {
       </div>
 
       <div className="home-daily-wird__grid">
-        <article className="home-daily-wird__card mj-card">
+        <AppCard padding="none" className="home-daily-wird__card">
           <header className="home-daily-wird__card-head">
             <BookOpen size={16} aria-hidden="true" />
             <span>آية</span>
@@ -109,9 +110,9 @@ export function DailyWirdCard() {
           <Link href="/mushaf" className="home-daily-wird__cta">
             افتح المصحف
           </Link>
-        </article>
+        </AppCard>
 
-        <article className="home-daily-wird__card mj-card">
+        <AppCard padding="none" className="home-daily-wird__card">
           <header className="home-daily-wird__card-head">
             <Heart size={16} aria-hidden="true" />
             <span>ذكر</span>
@@ -121,10 +122,10 @@ export function DailyWirdCard() {
           <Link href="/adhkar" className="home-daily-wird__cta">
             الأذكار
           </Link>
-        </article>
+        </AppCard>
 
         {hadithOk ? (
-          <article className="home-daily-wird__card mj-card">
+          <AppCard padding="none" className="home-daily-wird__card">
             <header className="home-daily-wird__card-head">
               <MessageCircle size={16} aria-hidden="true" />
               <span>حديث</span>
@@ -134,10 +135,10 @@ export function DailyWirdCard() {
             <Link href="/hadith" className="home-daily-wird__cta">
               المزيد من الأحاديث
             </Link>
-          </article>
+          </AppCard>
         ) : null}
 
-        <article className="home-daily-wird__card mj-card">
+        <AppCard padding="none" className="home-daily-wird__card">
           <header className="home-daily-wird__card-head">
             <Sparkles size={16} aria-hidden="true" />
             <span>فائدة</span>
@@ -149,7 +150,7 @@ export function DailyWirdCard() {
           <Link href="/fawaid" className="home-daily-wird__cta">
             الفوائد
           </Link>
-        </article>
+        </AppCard>
       </div>
     </section>
   );
