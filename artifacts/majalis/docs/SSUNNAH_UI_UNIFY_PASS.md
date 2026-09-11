@@ -175,3 +175,9 @@
 1. تنظيم إعدادات الحساب حول `SettingsList`: تسجيل/خروج، تنزيلات، خصوصية، دعم.
 2. إزالة `ui-card-btn` / أزرار متفرقة لصالح صفوف موحّدة (+ `testId` على SettingsList).
 3. بوابة `settings-rows-unify-gate` ضمن `test:loading-ux-gates`.
+
+## دفعة P24 — 2026-09-11
+
+1. بطاقات نتائج البحث (`SearchView`): `srch-result-card` + `soft-card soft-card--on-light`.
+2. إزالة سطح CSS المخصص لصالح نظام soft-card؛ الإبقاء على تخطيط الدومين.
+3. بوابة `search-result-card-soft-gate` ضمن `test:soft-cards-system`.
