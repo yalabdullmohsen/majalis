@@ -37,8 +37,14 @@ assert.equal((adhan.match(/className="ads-card"/g) || []).length, 0, "لا ads-c
 const prayer = readFileSync(resolve(root, "src/components/adhan/PrayerAlertSettingsCard.tsx"), "utf8");
 assert.match(prayer, /soft-card soft-card--on-light ads-card/, "تنبيه الصلاة: soft-card");
 
+assert.match(settings, /SettingsToggleRow|SettingsList/, "صفوف التبديل/القائمة من design-system");
+assert.match(settings, /id:\s*`theme-\$\{option\.id\}`|id:\s*"theme-/, "اختيار السمة عبر SettingsList");
+assert.doesNotMatch(settings, /settings-option-grid/, "لا شبكة اختيار سمة قديمة");
+assert.doesNotMatch(settings, /className="settings-toggle-row"/, "لا settings-toggle-row مباشر");
+
 const list = readFileSync(resolve(root, "src/components/design-system/SettingsList.tsx"), "utf8");
 assert.match(list, /testId/, "SettingsList يدعم testId");
+assert.match(list, /SettingsToggleRow/, "SettingsToggleRow مُصدَّر");
 
 const notifCss = readFileSync(resolve(root, "src/styles/pages/notifications.css"), "utf8");
 assert.doesNotMatch(surfaceBlock(notifCss, ".notif-card"), /background\s*:/, "notif-card بلا background خاص");

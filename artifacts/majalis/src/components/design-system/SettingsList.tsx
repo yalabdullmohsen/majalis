@@ -77,3 +77,44 @@ export function SettingsList({ title, rows, className }: SettingsListProps) {
     </section>
   );
 }
+
+type SettingsToggleRowProps = {
+  id: string;
+  title: string;
+  description?: string;
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  disabled?: boolean;
+};
+
+/** صف تبديل بنفس شبكة mur-settings-row. */
+export function SettingsToggleRow({
+  id,
+  title,
+  description,
+  checked,
+  onChange,
+  disabled,
+}: SettingsToggleRowProps) {
+  return (
+    <label
+      className={cn("mur-settings-row mur-settings-row--toggle", disabled && "is-disabled")}
+      htmlFor={id}
+    >
+      <span />
+      <span className="min-w-0">
+        <span className="mur-settings-row__title">{title}</span>
+        {description ? <span className="mur-settings-row__desc block">{description}</span> : null}
+      </span>
+      <input
+        id={id}
+        type="checkbox"
+        className="settings-toggle-input"
+        name={id}
+        checked={checked}
+        disabled={disabled}
+        onChange={(e) => onChange(e.target.checked)}
+      />
+    </label>
+  );
+}

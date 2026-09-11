@@ -174,17 +174,14 @@ html.dark .th-tab--active {
 html[data-theme="dark"] .surface-brand,
 html.dark .surface-brand,
 html[data-theme="dark"] .th-hero,
-html.dark .th-hero,
-html[data-theme="dark"] .sw-hero,
-html.dark .sw-hero {
+html.dark .th-hero {
   color: #FFFFFF !important;
 }
 html[data-theme="dark"] .th-hero :where(.th-hero__title, .th-hero__sub, .th-tab:not(.th-tab--active), .th-ayah__text, .th-ayah__ref),
-html.dark .th-hero :where(.th-hero__title, .th-hero__sub, .th-tab:not(.th-tab--active), .th-ayah__text, .th-ayah__ref),
-html[data-theme="dark"] .sw-hero :where(.sw-hero__title, .sw-hero__sub, .sw-tab:not(.sw-tab--active), .sw-dua__text),
-html.dark .sw-hero :where(.sw-hero__title, .sw-hero__sub, .sw-tab:not(.sw-tab--active), .sw-dua__text) {
+html.dark .th-hero :where(.th-hero__title, .th-hero__sub, .th-tab:not(.th-tab--active), .th-ayah__text, .th-ayah__ref) {
   color: #FFFFFF !important;
 }
+/* .sw-hero صار soft-card فاتحًا — لا تُفرض عليه ألوان الهيرو الداكن */
 html[data-theme="dark"] .mj-btn--primary,
 html.dark .mj-btn--primary,
 html[data-theme="dark"] .m2030-btn--primary,
@@ -443,8 +440,7 @@ html[data-theme="dark"] :where(
   .quran-hub-hero,
   .quran-hub-stats,
   .surface-brand,
-  .th-hero,
-  .sw-hero
+  .th-hero
 ),
 html.dark :where(
   .lpd2-hero,
@@ -460,8 +456,7 @@ html.dark :where(
   .quran-hub-hero,
   .quran-hub-stats,
   .surface-brand,
-  .th-hero,
-  .sw-hero
+  .th-hero
 ) {
   color: var(--on-dark-strong, #FFFFFF) !important;
 }
@@ -479,8 +474,7 @@ html[data-theme="dark"] :where(
   .quran-hub-hero,
   .quran-hub-stats,
   .surface-brand,
-  .th-hero,
-  .sw-hero
+  .th-hero
 ) :where(
   h1, h2, h3,
   [class$="__title"],
@@ -500,8 +494,7 @@ html.dark :where(
   .quran-hub-hero,
   .quran-hub-stats,
   .surface-brand,
-  .th-hero,
-  .sw-hero
+  .th-hero
 ) :where(
   h1, h2, h3,
   [class$="__title"],
@@ -526,8 +519,7 @@ html[data-theme="dark"] :where(
   .quran-hub-hero,
   .quran-hub-stats,
   .surface-brand,
-  .th-hero,
-  .sw-hero
+  .th-hero
 ) :where(
   p,
   [class$="__sub"],
@@ -552,8 +544,7 @@ html.dark :where(
   .quran-hub-hero,
   .quran-hub-stats,
   .surface-brand,
-  .th-hero,
-  .sw-hero
+  .th-hero
 ) :where(
   p,
   [class$="__sub"],

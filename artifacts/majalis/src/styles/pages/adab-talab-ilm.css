@@ -3,37 +3,23 @@
    ══════════════════════════════════════════════════════════════════ */
 .atl-page { min-height: 100svh; background: var(--color-bg, var(--surface-app, var(--mj-bg))); }
 
-/* Hero */
+/* Hero — soft-card عبر modern-section-shell */
 .atl-hero {
-  background: linear-gradient(145deg, #0A1628 0%, var(--mj-brand-deep) 45%, var(--mj-brand) 100%);
   padding: 3.5rem 1.5rem 2.5rem; text-align: center;
   position: relative; overflow: hidden;
 }
-.atl-hero::before {
-  content: "";
-  position: absolute; inset: 0;
-  background-image:
-    repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 0, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 22px);
-  pointer-events: none;
-}
-.atl-hero::after {
-  content: "✦";
-  position: absolute; top: 1rem; inset-inline-start: 1.5rem;
-  font-size: 4rem; color: rgba(255,255,255,0.04);
-  pointer-events: none; user-select: none;
-}
 .atl-hero__inner { max-width: 680px; margin: 0 auto; }
 .atl-hero__badge {
-  display: inline-block; background: rgba(255,255,255,.12); color: var(--mj-white, #ffffff);
-  border: 1px solid rgba(255,255,255,.25); border-radius: var(--ds-radius-full);
+  display: inline-block;
+  border-radius: var(--ds-radius-full);
   padding: .3rem .9rem; font-size: .75rem; font-weight: 700; letter-spacing: normal;
   margin-bottom: .9rem;
 }
-.atl-hero__title { font-size: 2rem; font-weight: 800; color: var(--mj-white, #ffffff); margin: 0 0 .5rem; }
-.atl-hero__sub { color: rgba(255,255,255,.8); font-size: .93rem; margin: 0 0 1.2rem; line-height: 1.7; }
+.atl-hero__title { font-size: 2rem; font-weight: 800; margin: 0 0 .5rem; }
+.atl-hero__sub { font-size: .93rem; margin: 0 0 1.2rem; line-height: 1.7; }
 .atl-hero__quote {
-  display: inline-block; background: rgba(255,255,255,.1); border-inline-end: 3px solid rgba(255,255,255,.5);
-  padding: .7rem 1rem; border-radius: .5rem; color: rgba(255,255,255,.9);
+  display: inline-block; border-inline-end: 3px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 45%, transparent);
+  padding: .7rem 1rem; border-radius: .5rem;
   font-size: .88rem; line-height: 1.6; max-width: 520px;
 }
 
@@ -52,7 +38,7 @@
   cursor: pointer; transition: all .18s ease; flex-shrink: 0;
 }
 .atl-tab:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
-.atl-tab--active { background: var(--mj-brand); border-color: var(--mj-brand); color: var(--mj-white, #ffffff); }
+.atl-tab--active { background: var(--mj-brand); border-color: var(--mj-brand); /* soft-hero ink via modern-section-shell */ }
 
 /* Container */
 .atl-container { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
@@ -85,7 +71,7 @@
 }
 .atl-acc-head:hover { background: var(--color-bg, var(--surface-app, var(--mj-bg))); }
 .atl-acc-num {
-  font-size: .7rem; font-weight: 900; color: var(--mj-white, #ffffff);
+  font-size: .7rem; font-weight: 900; /* soft-hero ink via modern-section-shell */
   background: var(--mj-brand); border-radius: var(--ds-radius-full); width: 1.5rem; height: 1.5rem;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }

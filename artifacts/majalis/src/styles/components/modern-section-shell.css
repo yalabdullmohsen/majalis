@@ -54,6 +54,12 @@
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero),
 .topic-page__hero,
 .section-lobby__head:not(.section-lobby__head--bare),
+.sw-hero,
+.sb-hero,
+.as-hero,
+.atl-hero,
+.sm-hero,
+.gl-hero,
 .ldb-hero {
   position: relative;
   isolation: isolate;
@@ -67,12 +73,30 @@
   border-radius: var(--mss-radius-hero) !important;
   box-shadow: var(--mss-shadow-card) !important;
   min-height: 0 !important;
+  width: auto;
+  max-width: min(56rem, calc(100% - 2 * max(1rem, var(--page-gutter, 1rem))));
+  margin-inline: auto;
+  margin-block: 0.65rem 0.85rem;
 }
 
+.mss-hero-surface::before,
 .mss-hero-surface::after,
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero)::after,
 .topic-page__hero::after,
 .section-lobby__head:not(.section-lobby__head--bare)::after,
+.sw-hero::before,
+.sw-hero::after,
+.sb-hero::before,
+.sb-hero::after,
+.as-hero::before,
+.as-hero::after,
+.atl-hero::before,
+.atl-hero::after,
+.sm-hero::before,
+.sm-hero::after,
+.gl-hero::before,
+.gl-hero::after,
+.ldb-hero::before,
 .ldb-hero::after {
   content: none !important;
   display: none !important;
@@ -391,6 +415,56 @@ html[data-theme="dark"] .card {
 .quran-hub-hero .home-eyebrow {
   color: var(--mss-on-dark-hero-accent, #fff1c4) !important;
   opacity: 1 !important;
+}
+
+/* هيروات محتوى كانت full-bleed خضراء → حبر soft-hero على سطح فاتح */
+.sw-hero .sw-hero__badge,
+.sb-hero .sb-hero__badge,
+.as-hero .as-hero__badge,
+.atl-hero .atl-hero__badge,
+.gl-hero .gl-hero__badge,
+.sm-hero .sm-hero__eye {
+  color: var(--mss-on-hero-accent, #123f2e) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
+}
+
+.sw-hero .sw-hero__title,
+.sb-hero .sb-hero__title,
+.as-hero .as-hero__title,
+.atl-hero .atl-hero__title,
+.gl-hero .gl-hero__title,
+.sm-hero .sm-hero__title {
+  color: var(--mss-on-hero, #16241e) !important;
+}
+
+.sw-hero .sw-hero__sub,
+.sb-hero .sb-hero__sub,
+.as-hero .as-hero__sub,
+.as-hero .as-hero__method,
+.as-hero .as-hero__ayah,
+.atl-hero .atl-hero__sub,
+.atl-hero .atl-hero__quote,
+.gl-hero .gl-hero__sub,
+.gl-hero .gl-hero__count,
+.sm-hero .sm-hero__sub,
+.sw-hero .sw-dua,
+.sw-hero .sw-dua__text,
+.sw-hero .sw-dua__label,
+.sw-hero .sw-dua__ref,
+.sb-hero .sb-ayah,
+.sb-hero .sb-ayah__text,
+.sb-hero .sb-ayah__ref {
+  color: var(--mss-on-hero-muted, #3d4f47) !important;
+  opacity: 1 !important;
+}
+
+.sw-hero .sw-dua,
+.sb-hero .sb-ayah,
+.as-hero .as-hero__method,
+.atl-hero .atl-hero__quote {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, transparent) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
 }
 
 /* asp-hero يبقى أخضر غامق — نص فاتح مستقل عن soft-hero ink */

@@ -404,8 +404,8 @@ export default function KnowledgeGraphPage() {
           </div>
 
           {/* SVG Graph */}
-          {loading ? (
-            <div className="kng-loading">تحديث الرسم…</div>
+          {loading && gNodes.length === 0 ? (
+            <div className="kng-loading" aria-busy="true">تحديث الرسم…</div>
           ) : gNodes.length === 0 ? (
             <div className="kng-empty">
               <p className="kng-empty__title">لا توجد بيانات بعد</p>
