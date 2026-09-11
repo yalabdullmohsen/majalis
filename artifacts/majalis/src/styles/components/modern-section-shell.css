@@ -60,7 +60,12 @@
 .atl-hero,
 .sm-hero,
 .gl-hero,
-.ldb-hero {
+.ldb-hero,
+.sg-hero,
+.hj-hero,
+.duas-hero,
+.ai-hero,
+.arkan-hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -97,7 +102,17 @@
 .gl-hero::before,
 .gl-hero::after,
 .ldb-hero::before,
-.ldb-hero::after {
+.ldb-hero::after,
+.sg-hero::before,
+.sg-hero::after,
+.hj-hero::before,
+.hj-hero::after,
+.duas-hero::before,
+.duas-hero::after,
+.ai-hero::before,
+.ai-hero::after,
+.arkan-hero::before,
+.arkan-hero::after {
   content: none !important;
   display: none !important;
 }
@@ -465,6 +480,56 @@ html[data-theme="dark"] .card {
 .atl-hero .atl-hero__quote {
   background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, transparent) !important;
   border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
+}
+
+
+/* عبادة شائعة: صلاة/حج/أدعية/أركان → soft ink على parchment */
+.sg-hero .sg-hero__badge,
+.hj-hero .hj-hero__badge,
+.duas-hero .duas-hero__bismillah,
+.ai-hero .ai-hero__badge,
+.arkan-hero .arkan-hero__hadith {
+  color: var(--mss-on-hero-accent, #123f2e) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
+}
+
+.sg-hero .sg-hero__title,
+.hj-hero .hj-hero__title,
+.hj-hero .hj-hero__kaaba,
+.duas-hero .duas-hero__title,
+.ai-hero .ai-hero__title,
+.arkan-hero .arkan-hero__title {
+  color: var(--mss-on-hero, #16241e) !important;
+}
+
+.sg-hero .sg-hero__sub,
+.hj-hero .hj-hero__sub,
+.hj-hero .hj-talbiya__label,
+.hj-hero .hj-talbiya__text,
+.duas-hero .duas-hero__ayah-ref,
+.duas-hero .duas-hero__sub,
+.duas-hero .duas-hero__stats,
+.ai-hero .ai-hero__sub,
+.arkan-hero .arkan-hero__sub {
+  color: var(--mss-on-hero-muted, #3d4f47) !important;
+  opacity: 1 !important;
+}
+
+.hj-hero .hj-talbiya {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, transparent) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
+}
+
+.ai-hero .ai-hero__nav-btn,
+.arkan-hero .arkan-hero__icon-btn {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent) !important;
+  color: var(--mss-on-hero, #16241e) !important;
+}
+.ai-hero .ai-hero__nav-label,
+.arkan-hero .arkan-hero__icon-num {
+  color: inherit !important;
 }
 
 /* asp-hero يبقى أخضر غامق — نص فاتح مستقل عن soft-hero ink */
