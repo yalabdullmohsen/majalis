@@ -128,7 +128,7 @@ export function PrayerAlertSettingsCard() {
   const alertsOn = prefs.alertsEnabled;
 
   return (
-    <div className="ads-card">
+    <div className="soft-card soft-card--on-light ads-card">
         <div className="ads-card__head">
         <BellRing size={15} strokeWidth={2} />
         <span>تنبيهات الصلاة</span>

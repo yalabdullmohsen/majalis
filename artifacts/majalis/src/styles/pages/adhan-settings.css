@@ -61,10 +61,6 @@
 
 /* بطاقات موحّدة */
 .ads-card {
-  background: var(--msk-canvas-1, var(--mj-white, var(--mj-white, #ffffff)));
-  border-radius: var(--ds-radius-xl, 1rem);
-  border: 1px solid var(--msk-border);
-  box-shadow: 0 1px 3px color-mix(in srgb, var(--msk-text, var(--mj-ink)) 4%, transparent);
   overflow: hidden;
   margin-bottom: 0.9rem;
 }
