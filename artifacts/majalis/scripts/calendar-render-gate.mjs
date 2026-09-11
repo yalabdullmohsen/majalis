@@ -67,7 +67,11 @@ async function measureView(page, viewLabel, clickTab) {
   }
   await page.waitForSelector(".cal-grid, .cal-week-grid, .cal-day-panel", { timeout: 15_000 });
 
-  const card = page.locator(".cal-month.ui-card, .cal-week.ui-card, .cal-day.ui-card").first();
+  const card = page
+    .locator(
+      ".cal-month.soft-card, .cal-week.soft-card, .cal-day.soft-card, .cal-month.ui-card, .cal-week.ui-card, .cal-day.ui-card",
+    )
+    .first();
   const cardBox = await card.boundingBox();
   if (!cardBox) throw new Error(`no card box ${viewLabel}`);
 
@@ -102,7 +106,10 @@ async function measureView(page, viewLabel, clickTab) {
       if (cs.color === "rgb(0, 0, 238)" && el.textContent?.trim()) linkBlue++;
     });
     return { horiz, linkBlue };
-  }, { cardSel: ".cal-month.ui-card, .cal-week.ui-card, .cal-day.ui-card" });
+  }, {
+    cardSel:
+      ".cal-month.soft-card, .cal-week.soft-card, .cal-day.soft-card, .cal-month.ui-card, .cal-week.ui-card, .cal-day.ui-card",
+  });
 
   await page.screenshot({ path: join(outDir, `calendar-${viewLabel}.png`), fullPage: false });
 
