@@ -30,6 +30,7 @@ assert.doesNotMatch(ds, /filter:\s*invert/);
 
 const main = read("src/main.tsx");
 assert.match(main, /dark-design-system\.css/);
+assert.match(main, /Promise\.all\(\[\s*import\("\.\/styles\/dark-mode-surfaces\.css"\)/);
 
 const sheet = read("src/styles/components/app-bottom-sheet.css");
 assert.doesNotMatch(sheet, /background:\s*#0f2f28/);
@@ -37,5 +38,15 @@ assert.match(sheet, /--surface-elevated/);
 
 const provider = read("src/components/ThemePreferenceProvider.tsx");
 assert.match(provider, /dark-design-system\.css/);
+assert.match(provider, /Promise\.all\(\[\s*import\("@\/styles\/dark-mode-surfaces\.css"\)/);
+
+assert.match(ds, /--soft-card-bg:\s*var\(--surface-elevated\)/);
+
+const soft = read("src/styles/soft-cards.css");
+assert.match(soft, /background-color:\s*var\(--soft-card-bg/);
+
+const html = read("index.html");
+assert.match(html, /mj-dark-elevated-boot/);
+assert.match(html, /--soft-card-bg:#24302b/);
 
 console.log("dark-design-system-gate.test.ts: ok");

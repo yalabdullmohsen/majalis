@@ -72,9 +72,11 @@ import "./styles/ssunnah-card-unify.css";
     document.documentElement.classList.contains("dark") ||
     document.documentElement.dataset.theme === "dark";
   if (bootDark) {
-    void import("./styles/dark-mode-surfaces.css").then(() =>
+    /* متوازٍ: لا تنتظر انتهاء surfaces قبل design-system — يقلّل وميض البطاقات */
+    void Promise.all([
+      import("./styles/dark-mode-surfaces.css"),
       import("./styles/dark-design-system.css"),
-    );
+    ]);
   }
 }
 
@@ -126,9 +128,10 @@ function loadNonCriticalCss() {
     document.documentElement.classList.contains("dark") ||
     document.documentElement.dataset.theme === "dark";
   if (isDark) {
-    void import("./styles/dark-mode-surfaces.css").then(() =>
+    void Promise.all([
+      import("./styles/dark-mode-surfaces.css"),
       import("./styles/dark-design-system.css"),
-    );
+    ]);
   } else {
     // تحميل مسبق لتمكين التبديل بدون وميض
     void import("./styles/dark-mode-surfaces.css");

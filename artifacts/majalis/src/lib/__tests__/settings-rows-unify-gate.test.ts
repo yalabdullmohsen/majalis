@@ -21,6 +21,11 @@ const settings = readFileSync(resolve(root, "src/pages/account/ui/SettingsView.t
 assert.doesNotMatch(settings, /\bui-card-btn\b/, "لا ui-card-btn في الإعدادات");
 assert.doesNotMatch(settings, /\bsettings-danger-btn\b/, "لا settings-danger-btn — صفوف SettingsList");
 assert.match(settings, /SettingsList/, "SettingsList مستخدم");
+assert.match(settings, /id:\s*"appearance"/, "قسم المظهر والواجهة");
+assert.match(settings, /id:\s*"reading"/, "قسم القراءة والمصحف منفصل");
+assert.match(settings, /title:\s*"المظهر والواجهة"/);
+assert.match(settings, /title:\s*"القراءة والمصحف"/);
+assert.doesNotMatch(settings, /المظهر والقراءة والمصحف/, "لا قسم مدمج قديم");
 assert.match(settings, /id:\s*"feature-tour"/, "جولة المزايا ضمن SettingsList");
 assert.match(settings, /id:\s*"clear-local"/, "مسح المحلي ضمن SettingsList");
 assert.match(settings, /id:\s*"refresh-version"/, "تحديث النسخة ضمن SettingsList");

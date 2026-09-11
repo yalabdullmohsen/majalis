@@ -35,6 +35,13 @@
   --ss-card-border: var(--border-elevated);
   --bg-elevated: var(--surface-elevated);
   --color-surface-elevated: var(--surface-elevated);
+  /* يطابق mj-theme-boot — بطاقات soft قبل اكتمال تحميل هذا الملف */
+  --soft-card-bg: var(--surface-elevated);
+  --soft-tile-bg: var(--surface-elevated);
+  --soft-card-grad: none;
+  --soft-tile-grad: none;
+  --soft-card-border: #3a4a44;
+  --soft-tile-border: #3a4a44;
 }
 
 /* —— خلفية التطبيق: سطح، ليست جدارًا أسود —— */

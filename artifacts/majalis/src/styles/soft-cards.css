@@ -75,7 +75,7 @@ html[data-theme="dark"] .soft-tile--on-light {
 
 .soft-card {
   border-radius: var(--radius-card);
-  background-color: rgba(12, 42, 34, 0.45);
+  background-color: var(--soft-card-bg, rgba(12, 42, 34, 0.45));
   background-image: var(--soft-card-grad);
   border: 1px solid var(--soft-card-border);
   box-shadow: var(--soft-card-shadow);
@@ -86,7 +86,7 @@ html[data-theme="dark"] .soft-tile--on-light {
 
 .soft-tile {
   border-radius: var(--radius-tile);
-  background-color: rgba(12, 42, 34, 0.4);
+  background-color: var(--soft-tile-bg, rgba(12, 42, 34, 0.4));
   background-image: var(--soft-tile-grad);
   border: 1px solid var(--soft-tile-border);
   box-shadow: var(--soft-tile-shadow);
