@@ -6,7 +6,7 @@ import { supabase } from "@/lib/supabase";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
-import { loadIslamicStoriesSeed } from "@/lib/islamic-stories-seed";
+import { getIslamicStoriesCached, loadIslamicStoriesSeed } from "@/lib/islamic-stories-seed";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -152,8 +152,10 @@ function StoryDetail({ story }: { story: IslamicStory }) {
 // ─────────────────── Main Page ───────────────────────────────────────────────
 export default function IslamicStoriesPage() {
   useReadingScrollMemory("stories");
-  const [stories, setStories] = useState<IslamicStory[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [stories, setStories] = useState<IslamicStory[]>(
+    () => getIslamicStoriesCached() as unknown as IslamicStory[],
+  );
+  const [loading, setLoading] = useState(() => getIslamicStoriesCached().length === 0);
   const [error, setError] = useState<string | null>(null);
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [category, setCategory] = useState<Category>("الكل");
@@ -312,7 +314,7 @@ export default function IslamicStoriesPage() {
     >
       <div className="isp-page">
       {/* إحصائيات التصنيفات */}
-      {!loading && stories.length > 0 && (
+      {stories.length > 0 && (
         <div className="isp-stats-row">
           {(["صحابة", "فتوحات", "تاريخ"] as const).map((cat) => (
             <div key={cat} className={`isp-stat-chip isp-stat-chip--${cat === "صحابة" ? "companions" : cat === "فتوحات" ? "conquests" : "history"}`}>
@@ -323,7 +325,7 @@ export default function IslamicStoriesPage() {
       )}
 
       {/* البحث والفلاتر */}
-      {!loading && (
+      {stories.length > 0 && (
         <div className="isp-controls">
           <input
             className="isp-search"
@@ -372,9 +374,9 @@ export default function IslamicStoriesPage() {
       )}
 
       {/* المحتوى */}
-      {loading ? (
+      {loading && stories.length === 0 ? (
         <SkeletonCardGrid count={6} />
-      ) : error ? (
+      ) : error && stories.length === 0 ? (
         <div className="isp-error">
           <span className="isp-error__icon"><AlertTriangle size={20} strokeWidth={1.5} /></span>
           <span>{error}</span>
@@ -384,7 +386,7 @@ export default function IslamicStoriesPage() {
       ) : filtered.length === 0 ? (
         <Empty text="لا توجد نتائج للبحث أو الفلتر المحدد." />
       ) : (
-        <div className="isp-grid">
+        <div className="isp-grid" aria-busy={loading}>
           {filtered.map((story) => (
             <StoryCard
               key={story.slug}
@@ -395,7 +397,7 @@ export default function IslamicStoriesPage() {
         </div>
       )}
 
-      {!loading && (
+      {stories.length > 0 && (
         <>
           <RelatedKnowledge kind="story" title="قصص ومعارف ذات صلة" limit={6} />
           <ExploreAlsoNav
