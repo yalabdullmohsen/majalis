@@ -224,7 +224,7 @@ export function DailyChallengeQuiz() {
       {!question ? (
         <p className="dcq__empty">لا توجد أسئلة في هذا المستوى حاليًا.</p>
       ) : (
-        <article className="dcq__card mj-card">
+        <article className="dcq__card soft-card soft-card--on-light">
           <p className="dcq__question">{question.q}</p>
           <ul className="dcq__choices">
             {choices.map((c) => {

@@ -146,7 +146,7 @@ function DetailContent({ university: u }: { university: University }) {
       {/* Header */}
       <div className="px-4 py-8 ldb-hero">
         <div className="max-w-3xl mx-auto">
-          <Link href="/universities" className="text-white/70 text-sm hover:opacity-100 opacity-90 mb-4 block w-fit">
+          <Link href="/universities" className="text-sm mb-4 block w-fit opacity-90 hover:opacity-100">
             → دليل الجامعات
           </Link>
           <div className="flex items-start gap-4">
@@ -155,22 +155,22 @@ function DetailContent({ university: u }: { university: University }) {
                 className="w-16 h-16 rounded-2xl bg-[var(--mj-surface)] object-contain flex-shrink-0"
                 loading="lazy" decoding="async" width="64" height="64" />
             ) : (
-              <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-3xl font-bold flex-shrink-0">
+              <div className="w-16 h-16 rounded-2xl bg-[color-mix(in_srgb,var(--mj-brand,#1f6b56)_12%,transparent)] flex items-center justify-center text-3xl font-bold flex-shrink-0">
                 {u.name_ar[0]}
               </div>
             )}
             <div className="min-w-0 flex-1">
               <h1 className="text-xl font-bold mb-1 leading-snug">{u.name_ar}</h1>
-              {u.name_en && <p className="text-white/75 text-sm mb-2">{u.name_en}</p>}
+              {u.name_en && <p className="text-sm mb-2 opacity-80">{u.name_en}</p>}
               <div className="flex flex-wrap gap-2 text-sm">
-                <span className="bg-white/20 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                <span className="bg-[color-mix(in_srgb,var(--mj-brand,#1f6b56)_10%,transparent)] px-2.5 py-0.5 rounded-full flex items-center gap-1">
                   <MapPin size={12} aria-hidden="true" /> {u.city ? `${u.city}، ` : ""}{u.country}
                 </span>
                 <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium udp-acc-badge univ-acc--${u.accreditation_status}`}>
                   {ACCREDITATION_LABELS[u.accreditation_status]}
                 </span>
                 {u.is_verified && (
-                  <span className="bg-white/20 px-2.5 py-0.5 rounded-full">✓ موثقة</span>
+                  <span className="bg-[color-mix(in_srgb,var(--mj-brand,#1f6b56)_10%,transparent)] px-2.5 py-0.5 rounded-full">✓ موثقة</span>
                 )}
               </div>
             </div>
@@ -188,8 +188,8 @@ function DetailContent({ university: u }: { university: University }) {
               disabled={!inCompare && !canAdd}
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
                 inCompare ? "bg-[var(--mj-surface)] udp-compare-active-btn" :
-                canAdd ? "bg-white/20 text-[color:var(--mj-on-brand)] hover:bg-white/30" :
-                "bg-white/10 text-white/50 cursor-not-allowed"
+                canAdd ? "bg-[color-mix(in_srgb,var(--mj-brand,#1f6b56)_12%,transparent)] hover:bg-[color-mix(in_srgb,var(--mj-brand,#1f6b56)_18%,transparent)]" :
+                "opacity-50 cursor-not-allowed"
               }`}>
               {inCompare ? "✓ في المقارنة" : "⇔ أضف للمقارنة"}
             </button>
