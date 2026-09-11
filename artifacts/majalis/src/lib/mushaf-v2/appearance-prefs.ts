@@ -5,6 +5,7 @@
 const KEY = "ssunnah-mushaf-appearance-v1";
 
 export type MushafAppearanceMode = "system" | "light" | "night";
+export type MushafAppearanceResolved = "light" | "night";
 
 export function loadMushafAppearanceMode(): MushafAppearanceMode {
   try {
@@ -22,19 +23,33 @@ export function saveMushafAppearanceMode(mode: MushafAppearanceMode): void {
   } catch {
     /* ignore */
   }
+  applyMushafAppearanceMode(mode);
 }
 
-/** يطبّق data-mushaf-appearance على الجذر دون لمس النص القرآني. */
+export function resolveMushafAppearance(mode: MushafAppearanceMode): MushafAppearanceResolved {
+  if (mode === "night") return "night";
+  if (mode === "light") return "light";
+  return typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "night"
+    : "light";
+}
+
+function syncStatusBarChrome(resolved: MushafAppearanceResolved): void {
+  if (typeof window === "undefined") return;
+  void import("@/lib/apply-page-chrome")
+    .then(({ applyMushafThemeChrome }) =>
+      applyMushafThemeChrome(resolved === "night" ? "night" : "paper"),
+    )
+    .catch(() => {
+      /* ignore */
+    });
+}
+
+/** يطبّق data-mushaf-appearance على الجذر دون لمس النص القرآني + يزامن Status Bar. */
 export function applyMushafAppearanceMode(mode: MushafAppearanceMode, root?: HTMLElement | null): void {
   const el = root ?? (typeof document !== "undefined" ? document.documentElement : null);
   if (!el) return;
-  const resolved =
-    mode === "system"
-      ? typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "night"
-        : "light"
-      : mode === "night"
-        ? "night"
-        : "light";
+  const resolved = resolveMushafAppearance(mode);
   el.setAttribute("data-mushaf-appearance", resolved);
+  syncStatusBarChrome(resolved);
 }

@@ -30,5 +30,7 @@ export {
   loadMushafAppearanceMode,
   saveMushafAppearanceMode,
   applyMushafAppearanceMode,
+  resolveMushafAppearance,
   type MushafAppearanceMode,
+  type MushafAppearanceResolved,
 } from "./appearance-prefs";

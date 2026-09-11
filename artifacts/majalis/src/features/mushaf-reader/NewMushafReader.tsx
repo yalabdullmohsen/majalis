@@ -185,15 +185,16 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     if (isMushafReaderV2Enabled()) migrateMushafUserData();
     const appearance = loadMushafAppearanceMode();
     applyMushafAppearanceMode(appearance);
-    void import("@/lib/apply-page-chrome").then(({ applyMushafThemeChrome }) => {
-      /* بعد applyMushafAppearanceMode: data-mushaf-appearance = light|night */
-      const resolved =
-        typeof document !== "undefined"
-          ? document.documentElement.getAttribute("data-mushaf-appearance")
-          : null;
-      void applyMushafThemeChrome(resolved === "night" ? "night" : "paper");
-    });
+
+    const mq =
+      appearance === "system" && typeof window !== "undefined"
+        ? window.matchMedia("(prefers-color-scheme: dark)")
+        : null;
+    const onScheme = () => applyMushafAppearanceMode("system");
+    mq?.addEventListener?.("change", onScheme);
+
     return () => {
+      mq?.removeEventListener?.("change", onScheme);
       endPowerSaverSession();
       readerControllerRef.current?.dispose();
       readerControllerRef.current = null;
