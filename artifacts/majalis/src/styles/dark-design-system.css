@@ -138,12 +138,11 @@
 :is(html[data-theme="dark"], html.dark) .seerah-hero,
 :is(html[data-theme="dark"], html.dark) .tarikh-hero,
 :is(html[data-theme="dark"], html.dark) .twh-hero {
-  background:
-    radial-gradient(120% 80% at 50% -10%, color-mix(in srgb, var(--icon-primary) 18%, transparent), transparent 55%),
-    linear-gradient(165deg, var(--surface-hero) 0%, color-mix(in srgb, var(--surface-app) 70%, #0d1512) 100%) !important;
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   color: var(--surface-hero-ink) !important;
   border-color: var(--border-elevated) !important;
-  box-shadow: none !important;
+  box-shadow: none;
 }
 
 :is(html[data-theme="dark"], html.dark) .section-hero :is(h1, h2, .section-hero__title, .topic-page__title, .sh-hero__title, .an-hero__title),

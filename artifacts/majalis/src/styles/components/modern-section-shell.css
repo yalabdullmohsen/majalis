@@ -99,7 +99,16 @@
 .qmem-hero,
 .ve-hero,
 .wn-hero,
-.snr-hero {
+.snr-hero,
+.adhkar-hero,
+.assistant-hero,
+.fqh-hub-hero,
+.hadith-hero,
+.home-hero,
+.mm-hero,
+.prophets-lux-hero,
+.twh-hero,
+.twh-hub-hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -214,7 +223,25 @@
 .wn-hero::before,
 .wn-hero::after,
 .snr-hero::before,
-.snr-hero::after {
+.snr-hero::after,
+.adhkar-hero::before,
+.adhkar-hero::after,
+.assistant-hero::before,
+.assistant-hero::after,
+.fqh-hub-hero::before,
+.fqh-hub-hero::after,
+.hadith-hero::before,
+.hadith-hero::after,
+.home-hero::before,
+.home-hero::after,
+.mm-hero::before,
+.mm-hero::after,
+.prophets-lux-hero::before,
+.prophets-lux-hero::after,
+.twh-hero::before,
+.twh-hero::after,
+.twh-hub-hero::before,
+.twh-hub-hero::after {
   content: none !important;
   display: none !important;
 }
@@ -823,4 +850,18 @@ html[data-theme="dark"] .card {
 }
 .snr-hero .snr-hero__sub, .snr-hero p {
   color: var(--mss-on-hero-muted, #3d4f47) !important;
+}
+
+
+/* soft ink — legacy unused heroes */
+.adhkar-hero .adhkar-hero__title, .adhkar-hero h1,
+.assistant-hero .assistant-hero__title, .assistant-hero h1,
+.fqh-hub-hero .fqh-hub-hero__title, .fqh-hub-hero h1,
+.hadith-hero .hadith-hero__title, .hadith-hero h1,
+.home-hero .home-hero__title, .home-hero h1,
+.mm-hero .mm-hero__title, .mm-hero h1,
+.prophets-lux-hero .prophets-lux-hero__title, .prophets-lux-hero h1,
+.twh-hero .twh-hero__title, .twh-hero h1,
+.twh-hub-hero .twh-hub-hero__title, .twh-hub-hero h1 {
+  color: var(--mss-on-hero, #16241e) !important;
 }

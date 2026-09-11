@@ -35,6 +35,8 @@
 
 .topic-page--tawhid .twh-hub-hero,
 .tawhid-hub .twh-hub-hero {
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   display: none !important;
 }
 
@@ -44,14 +46,10 @@
   max-width: min(64rem, calc(100% - 2 * max(1rem, var(--page-gutter, 1rem))));
   box-sizing: border-box;
   margin: 0.5rem auto 1.75rem;
-  background: linear-gradient(
-    135deg,
-    var(--topic-hero-from, var(--mj-brand)) 0%,
-    var(--topic-hero-to, var(--mj-brand-deep)) 100%
-  );
+  background: var(--surface-elevated, #24302b);
   border-radius: 22px;
   padding: 2rem max(1rem, var(--page-gutter, 1rem)) 1.85rem;
-  color: var(--topic-on-hero, var(--on-dark-strong, var(--mj-white, #ffffff)));
+  color: var(--topic-on-hero, var(--on-dark-strong, inherit));
   box-shadow: 0 8px 24px -14px rgba(11, 32, 24, 0.35);
 }
 .twh-hub-hero__inner {
@@ -66,7 +64,7 @@
 .twh-hub-hero__title {
   font-size: clamp(1.5rem, 5vw, 2rem);
   font-weight: 900;
-  color: var(--topic-on-hero, var(--on-dark-strong, var(--mj-white, #ffffff)));
+  color: var(--topic-on-hero, var(--on-dark-strong, inherit));
   margin: 0.35rem 0 0.5rem;
   font-family: var(--font-display, serif);
   line-height: 1.4;
@@ -82,7 +80,7 @@
 .twh-hub-hero__ayah {
   font-size: clamp(1rem, 3.4vw, 1.15rem);
   font-family: var(--font-quran, "Amiri Quran", serif);
-  color: var(--topic-on-hero, var(--on-dark-strong, var(--mj-white, #ffffff)));
+  color: var(--topic-on-hero, var(--on-dark-strong, inherit));
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-inline-end: 3px solid rgba(255, 255, 255, 0.42);
   border-radius: 16px;

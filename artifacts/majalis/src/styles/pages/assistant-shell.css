@@ -177,10 +177,9 @@ html[data-theme="dark"] .assistant-message-bubble {
   border-radius: 2rem;
   padding: clamp(1.5rem, 4vw, 2.5rem);
   color: var(--majalis-parchment);
-  background:
-    radial-gradient(circle at 12% 16%, rgba(31, 77, 58, 0.25), transparent 18rem),
-    linear-gradient(135deg, var(--mj-brand-deep), var(--majalis-emerald-deep));
-  box-shadow: var(--majalis-shadow);
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
+  box-shadow: none;
 }
 
 .assistant-eyebrow {

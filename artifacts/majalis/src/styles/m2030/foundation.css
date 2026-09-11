@@ -143,8 +143,8 @@ small, .meta, .text-muted, .text-secondary {
 .mzd-hero,
 .quran-hub-hero,
 .hadith-hero {
-  background:
-    linear-gradient(165deg, var(--em-900) 0%, var(--em-950) 55%, #0A1A16 100%) !important;
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   color: var(--text-on-dark) !important;
   border-radius: 0 !important;
   padding-block: 1.1rem !important;

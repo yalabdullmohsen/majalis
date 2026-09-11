@@ -18,7 +18,8 @@
   gap: 0.6rem;
   margin-bottom: 1.75rem;
   padding: 2rem 1rem 1.5rem;
-  background: linear-gradient(135deg, rgba(31,77,58,0.08) 0%, rgba(31,77,58,0.03) 100%);
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   border: 1px solid rgba(31,77,58,0.12);
   border-radius: 1.5rem;
 }
@@ -347,7 +348,7 @@ html[data-theme="dark"] .mm-card__head:hover { background: rgba(100,200,150,0.06
 html.dark .mm-card__title,
 html[data-theme="dark"] .mm-card__title { color: #E0F0E8; }
 html.dark .mm-hero,
-html[data-theme="dark"] .mm-hero { background: linear-gradient(135deg, rgba(100,200,150,0.08) 0%, rgba(100,200,150,0.03) 100%); border-color: rgba(100,200,150,0.12); }
+html[data-theme="dark"] .mm-hero { background: var(--surface-elevated, #24302b); border-color: rgba(100,200,150,0.12); }
 html.dark .mm-hero__title,
 html[data-theme="dark"] .mm-hero__title { color: #7ED6A8; }
 html.dark .mm-hero__icon,

@@ -18,7 +18,7 @@ for (const hero of [
   ".sg-hero", ".hj-hero", ".duas-hero", ".ai-hero", ".arkan-hero",
   ".ah-hero", ".jnz-hero", ".hs-hero",
   ".zk-hero", ".tw-hero", ".sy-hero", ".mdb-hero", ".fa-hero", ".hk-hero", ".dq-hero", ".rq-hero", ".is-hero", ".sr-hero", ".mk-hero", ".uq-hero", ".tf-hero", ".fg-hero", ".an-hero",
-  ".fiqh-lux-book-hero", ".fq-hero", ".hdl-info-hero", ".ilm-hero", ".qmem-hero", ".ve-hero", ".wn-hero", ".snr-hero",
+  ".fiqh-lux-book-hero", ".fq-hero", ".hdl-info-hero", ".ilm-hero", ".qmem-hero", ".ve-hero", ".wn-hero", ".snr-hero", ".adhkar-hero", ".assistant-hero", ".fqh-hub-hero", ".hadith-hero", ".home-hero", ".mm-hero", ".prophets-lux-hero", ".twh-hero", ".twh-hub-hero",
 ]) {
   assert.match(shell, new RegExp(hero.replace(".", "\\.")), `modern-section-shell يشمل ${hero}`);
 }
@@ -40,7 +40,7 @@ assert.doesNotMatch(
   /:where\([^)]*\.sw-hero[^)]*\)\s*\{[^}]*color:\s*var\(--on-dark/,
   "الوضع الداكن لا يفرض نصًا أبيض على .sw-hero soft",
 );
-for (const h of [".seerah-hero", ".th-hero", ".sh-hero", ".ah-hero", ".jnz-hero", ".hs-hero", ".zk-hero", ".tw-hero", ".sy-hero", ".mdb-hero", ".fa-hero", ".hk-hero", ".dq-hero", ".rq-hero", ".is-hero", ".sr-hero", ".mk-hero", ".uq-hero", ".tf-hero", ".fg-hero", ".an-hero", ".fiqh-lux-book-hero", ".fq-hero", ".hdl-info-hero", ".ilm-hero", ".qmem-hero", ".ve-hero", ".wn-hero", ".snr-hero"]) {
+for (const h of [".seerah-hero", ".th-hero", ".sh-hero", ".ah-hero", ".jnz-hero", ".hs-hero", ".zk-hero", ".tw-hero", ".sy-hero", ".mdb-hero", ".fa-hero", ".hk-hero", ".dq-hero", ".rq-hero", ".is-hero", ".sr-hero", ".mk-hero", ".uq-hero", ".tf-hero", ".fg-hero", ".an-hero", ".fiqh-lux-book-hero", ".fq-hero", ".hdl-info-hero", ".ilm-hero", ".qmem-hero", ".ve-hero", ".wn-hero", ".snr-hero", ".adhkar-hero", ".assistant-hero", ".fqh-hub-hero", ".hadith-hero", ".home-hero", ".mm-hero", ".prophets-lux-hero", ".twh-hero", ".twh-hub-hero"]) {
   assert.doesNotMatch(
     dark,
     new RegExp(`:where\\([^)]*\\${h.slice(1)}[^)]*\\)\\s*\\{[^}]*color:\\s*var\\(--on-dark`),
@@ -88,6 +88,15 @@ for (const [file, banned] of [
   ["src/styles/section-makarim-pattern.css", /\.wn-hero\s*\{[^}]*linear-gradient/s],
   ["src/styles/visual-layer-contrast-fix.css", /\.fiqh-lux-book-hero\s*\{[^}]*linear-gradient/s],
   ["src/styles/sins-rights.css", /\.snr-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/mind-map.css", /\.mm-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/visual-identity-unify.css", /\.fqh-hub-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/highlighted-content.css", /\.adhkar-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/dark-design-system.css", /\.twh-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/m2030/foundation.css", /\.hadith-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/assistant-shell.css", /\.assistant-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/tawhid.css", /\.twh-hub-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/home-legacy.css", /\.home-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/prophet-stories.css", /\.prophets-lux-hero\s*\{[^}]*linear-gradient/s],
 ] as const) {
   const css = read(file);
   assert.doesNotMatch(css, banned, `${file}: لا تدرّج أخضر على جذر الهيرو`);
