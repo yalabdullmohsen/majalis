@@ -91,7 +91,7 @@ export default function TopicPage() {
       .finally(() => setLoading(false));
   }, [slug]);
 
-  if (loading) return <SearchSkeleton />;
+  if (loading && !topic) return <SearchSkeleton />;
 
   if (!topic) {
     return (

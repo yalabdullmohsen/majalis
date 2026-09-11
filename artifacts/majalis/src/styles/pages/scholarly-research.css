@@ -138,7 +138,7 @@
 }
 .srp-history__clear {
   font-size: 0.67rem;
-  color: #888;
+  color: var(--mj-muted);
   background: none;
   border: none;
   cursor: pointer;
@@ -272,7 +272,7 @@
   border-radius: 50%;
   border: none;
   background: transparent;
-  color: #888;
+  color: var(--mj-muted);
   cursor: pointer;
   flex-shrink: 0;
   transition: background .15s, color .15s;

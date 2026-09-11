@@ -40,7 +40,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
   usePageView("annual-courses", params.id);
 
   useEffect(() => {
-    if (loading) return;
+    if (loading && !item) return;
     if (!item) {
       applyPageSeo({
         path: `/annual-courses/${params.id}`,
@@ -81,7 +81,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
     });
   }, [item, loading, params.id]);
 
-  if (loading) return <SkeletonPage />;
+  if (loading && !item) return <SkeletonPage />;
   if (!item) return <Empty text="الدورة غير موجودة." />;
 
   const mapEmbed = buildMapsEmbed(item.map_url, item.venue_name, item.venue_city);

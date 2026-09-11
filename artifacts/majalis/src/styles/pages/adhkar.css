@@ -314,7 +314,7 @@
   font-size: 0.8rem;
   font-weight: 600;
 }
-.adhkar-grade--sahih { background: var(--mj-brand-soft, #DCFCE7); color: var(--mj-brand-deep, #153025); }
+.adhkar-grade--sahih { background: var(--mj-brand-soft, var(--mj-success-soft)); color: var(--mj-brand-deep, #153025); }
 .adhkar-grade--hasan { background: var(--mj-brand-soft, #e8f5f0); color: var(--mj-brand-deep, #153025); }
 .adhkar-grade--other { background: var(--mj-surface-2, #F3F4F6); color: var(--mj-ink-2); }
 .adhkar-sheet-share {

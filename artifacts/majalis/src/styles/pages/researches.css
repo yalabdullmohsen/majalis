@@ -92,7 +92,7 @@
   padding: 0.85rem 1rem;
   border-radius: 0.75rem;
   border: 1px solid color-mix(in srgb, var(--emerald-500, var(--mj-brand-deep)) 22%, var(--color-border, var(--mj-hairline)));
-  background: var(--color-accent-soft-bg, #e6f2ec);
+  background: var(--color-accent-soft-bg, var(--mj-brand-soft));
   color: var(--color-text, var(--mj-ink));
   font-size: 0.88rem;
   line-height: 1.65;
@@ -140,7 +140,7 @@
 .sr-cat:hover,
 .sr-cat.is-active {
   border-color: color-mix(in srgb, var(--emerald-500, var(--mj-brand-deep)) 40%, var(--color-border));
-  background: var(--color-accent-soft-bg, #e6f2ec);
+  background: var(--color-accent-soft-bg, var(--mj-brand-soft));
 }
 
 .sr-filters {
@@ -203,7 +203,7 @@
   border-radius: 999px;
   font-size: 0.72rem;
   font-weight: 700;
-  background: var(--color-accent-soft-bg, #e6f2ec);
+  background: var(--color-accent-soft-bg, var(--mj-brand-soft));
   color: var(--emerald-500, var(--mj-brand-deep));
 }
 

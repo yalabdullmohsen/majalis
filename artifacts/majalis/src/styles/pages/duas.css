@@ -68,7 +68,7 @@
 .duas-search {
   width: 100%;
   padding: 0.65rem 2.5rem 0.65rem 1rem;
-  border: 1.5px solid var(--mj-hairline, #C6D6CE);
+  border: 1.5px solid var(--mj-hairline, var(--mj-hairline));
   border-radius: var(--ds-radius-lg);
   font-size: 0.9rem;
   background: var(--mj-surface, var(--mj-white, #ffffff));
@@ -89,7 +89,7 @@
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
-  border: 1.5px solid #C6D6CE;
+  border: 1.5px solid var(--mj-hairline);
   background: var(--ss-card-bg, var(--color-surface, var(--mj-surface, #fffcf8)));
   color: var(--mj-brand-deep);
   transition: all 0.15s;
@@ -105,7 +105,7 @@
 }
 .duas-empty {
   text-align: center;
-  color: #497061;
+  color: var(--mj-brand, #1e5f4b);
   padding: var(--ds-space-8);
 }
 
@@ -148,7 +148,7 @@
 }
 .dua-card__cat {
   font-size: 0.8rem;
-  color: #497061;
+  color: var(--mj-brand, #1e5f4b);
   background: rgba(31,77,58,0.08);
   padding: 0.15rem 0.5rem;
   border-radius: var(--ds-radius-xl);
@@ -156,11 +156,11 @@
 }
 .dua-card__copy {
   background: none;
-  border: 1px solid #C6D6CE;
+  border: 1px solid var(--mj-hairline);
   border-radius: var(--ds-radius);
   cursor: pointer;
   padding: 0.35rem;
-  color: #497061;
+  color: var(--mj-brand, #1e5f4b);
   transition: all 0.15s;
   flex-shrink: 0;
   display: flex;

@@ -83,7 +83,7 @@ export default function FiqhCouncilLivePage() {
     getFiqhLiveData().then(({ data }) => setLive(data)).finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <SkeletonCardGrid />;
+  if (loading && !live) return <SkeletonCardGrid />;
 
   const data = live || {
     last_session: null,

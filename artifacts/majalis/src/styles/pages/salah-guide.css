@@ -218,7 +218,7 @@
 
 /* intro note */
 .sg-intro-note {
-  font-size: .85rem; color: #555; background: rgba(23,61,53,.06);
+  font-size: .85rem; color: var(--mj-muted); background: rgba(23,61,53,.06);
   border-inline-end: 3px solid var(--clr-primary,var(--mj-brand)); border-radius: 0 .5rem .5rem 0;
   padding: .65rem .9rem; margin: 0 0 1rem; line-height: 1.7;
 }
@@ -240,7 +240,7 @@
 }
 .sg-rank-card__ruling--high { background: rgba(23,61,53,.2); }
 .sg-rank-card__text { font-size: .83rem; color: #444; line-height: 1.7; margin: 0 0 .4rem; }
-.sg-rank-card__benefit { font-size: .78rem; color: #555; font-style: normal; margin: 0; }
+.sg-rank-card__benefit { font-size: .78rem; color: var(--mj-muted); font-style: normal; margin: 0; }
 
 /* ── سور الصلاة والنوافل ── */
 .sg-suwar-grid { display: grid; grid-template-columns: 1fr; gap: .7rem; }
@@ -252,9 +252,9 @@
   font-size: .72rem; font-weight: 700; padding: .15rem .55rem; border-radius: 20px;
 }
 .sg-suwar-card__rec--jahr  { background: rgba(23,61,53,.12); color: var(--clr-primary,var(--mj-brand)); }
-.sg-suwar-card__rec--sirr  { background: rgba(100,116,139,.12); color: #475569; }
-.sg-suwar-card__rakat { font-size: .72rem; color: #888; margin-inline-end: auto; }
-.sg-suwar-card__note { font-size: .8rem; color: #555; line-height: 1.65; margin: 0; }
+.sg-suwar-card__rec--sirr  { background: rgba(100,116,139,.12); color: var(--mj-muted); }
+.sg-suwar-card__rakat { font-size: .72rem; color: var(--mj-muted); margin-inline-end: auto; }
+.sg-suwar-card__note { font-size: .8rem; color: var(--mj-muted); line-height: 1.65; margin: 0; }
 
 .sg-nawafil-list { display: flex; flex-direction: column; gap: .65rem; }
 .sg-nawfil-card { background: var(--mj-surface); border: 1px solid var(--mj-hairline); border-radius: .7rem; padding: .85rem 1rem; }
@@ -264,7 +264,7 @@
   font-size: .72rem; font-weight: 600; background: rgba(23,61,53,.1);
   color: var(--clr-primary,var(--mj-brand)); padding: .12rem .5rem; border-radius: 20px;
 }
-.sg-nawfil-card__note { font-size: .8rem; color: #555; line-height: 1.65; margin: 0; }
+.sg-nawfil-card__note { font-size: .8rem; color: var(--mj-muted); line-height: 1.65; margin: 0; }
 
 /* related */
 .sg-related { margin-top: 2.5rem; }

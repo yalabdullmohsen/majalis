@@ -76,7 +76,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
   }, [item]);
 
   useEffect(() => {
-    if (loading) return;
+    if (loading && !item) return;
     if (!item) {
       const gone = resolveStatus === "removed";
       applyPageSeo({
@@ -118,7 +118,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
     });
   }, [item, loading, params.id, resolveStatus]);
 
-  if (loading) return <SkeletonPage />;
+  if (loading && !item) return <SkeletonPage />;
   if (loadError) {
     return (
       <ErrorState

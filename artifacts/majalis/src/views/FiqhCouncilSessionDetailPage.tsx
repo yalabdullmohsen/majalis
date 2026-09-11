@@ -33,7 +33,7 @@ export default function FiqhCouncilSessionDetailPage({ params }: { params: { slu
   }, [params.slug]);
 
   useEffect(() => {
-    if (loading) return;
+    if (loading && !session) return;
     if (!session) {
       applyPageSeo({
         path: fiqhSessionHref(params.slug),
@@ -78,7 +78,7 @@ export default function FiqhCouncilSessionDetailPage({ params }: { params: { slu
     });
   }, [session, loading, params.slug]);
 
-  if (loading) return <SkeletonCardGrid />;
+  if (loading && !session) return <SkeletonCardGrid />;
   if (!session) return <Empty text="الجلسة غير موجودة أو غير منشورة." />;
 
   const grouped = groupSessionItems(session.items);

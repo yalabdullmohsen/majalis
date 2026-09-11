@@ -39,7 +39,7 @@
 
 .jn-section--janna       { --jn-section-color: var(--mj-brand); }
 .jn-section--naar        { --jn-section-color: var(--mj-danger); }
-.jn-section--asbab-janna { --jn-section-color: #1a3a5c; }
+.jn-section--asbab-janna { --jn-section-color: var(--mj-info); }
 .jn-section--duas        { --jn-section-color: var(--brand-deep, var(--mj-brand-deep)); }
 .jn-section__title { font-size: 1.1rem; font-weight: 800; margin: 0 0 .85rem; border-inline-end: 3px solid currentColor; padding-inline-end: .7rem; color: var(--jn-section-color, var(--mj-brand)); }
 

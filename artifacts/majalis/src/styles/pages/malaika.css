@@ -37,8 +37,8 @@
   background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); font-size: .88rem; cursor: pointer; color: var(--clr-text-2);
   transition: all .18s;
 }
-.mk-tab:hover  { border-color: #1a3a5c; color: #1a3a5c; }
-.mk-tab--active { background: #1a3a5c; border-color: #1a3a5c; color: var(--mj-white, #ffffff); font-weight: 600; }
+.mk-tab:hover  { border-color: var(--mj-info); color: var(--mj-info); }
+.mk-tab--active { background: var(--mj-info); border-color: var(--mj-info); color: var(--mj-white, #ffffff); font-weight: 600; }
 
 /* Container */
 .mk-container { max-width: 900px; margin: 0 auto; padding: 1.75rem 1.25rem 3rem; }
@@ -80,7 +80,7 @@
 .mk-malak-num {
   width: 2rem; height: 2rem; flex-shrink: 0;
   border-radius: 50%; border: 2px solid var(--mj-info);
-  color: #1a3a5c; font-weight: 800; font-size: .82rem;
+  color: var(--mj-info); font-weight: 800; font-size: .82rem;
   display: flex; align-items: center; justify-content: center;
 }
 .mk-malak-body { flex: 1; min-width: 0; }
@@ -88,9 +88,9 @@
 .mk-malak-name { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); margin: 0; }
 .mk-malak-badge {
   font-size: .75rem; padding: .15rem .55rem; border-radius: var(--ds-radius-full);
-  background: #e8f0f8; color: #1a3a5c; font-weight: 600; white-space: nowrap;
+  background: #e8f0f8; color: var(--mj-info); font-weight: 600; white-space: nowrap;
 }
-.mk-malak-role   { font-size: .78rem; color: #1a3a5c; font-weight: 600; margin: 0 0 .4rem; }
+.mk-malak-role   { font-size: .78rem; color: var(--mj-info); font-weight: 600; margin: 0 0 .4rem; }
 .mk-malak-detail { font-size: .86rem; line-height: 1.7; color: var(--clr-text-2); margin: 0 0 .4rem; }
 .mk-malak-ref    { font-size: .78rem; color: var(--clr-text-2); margin: 0; opacity: .75; }
 
@@ -101,10 +101,10 @@
   background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1rem 1.2rem;
 }
-.mk-wasf-icon  { color: #1a3a5c; font-size: 1.1rem; flex-shrink: 0; margin-top: .15rem; }
+.mk-wasf-icon  { color: var(--mj-info); font-size: 1.1rem; flex-shrink: 0; margin-top: .15rem; }
 .mk-wasf-title { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .35rem; }
 .mk-wasf-text  { font-size: .9rem; line-height: 1.75; color: var(--clr-text-2); margin: 0 0 .3rem; }
-.mk-wasf-ref   { font-size: .8rem; color: #1a3a5c; font-weight: 500; margin: 0; }
+.mk-wasf-ref   { font-size: .8rem; color: var(--mj-info); font-weight: 500; margin: 0; }
 
 /* Fadail */
 .mk-fadail-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
@@ -116,7 +116,7 @@
 }
 .mk-fadl-title { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .45rem; }
 .mk-fadl-text  { font-size: .9rem; line-height: 1.75; color: var(--clr-text-2); margin: 0 0 .4rem; }
-.mk-fadl-ref   { font-size: .8rem; color: #1a3a5c; font-weight: 500; margin: 0; }
+.mk-fadl-ref   { font-size: .8rem; color: var(--mj-info); font-weight: 500; margin: 0; }
 
 /* Amal grid */
 .mk-amal-grid {

@@ -264,7 +264,7 @@ export default function LessonDetailPage({
   useLessonSeo(seoLesson, `/lessons/${params.id}`, loading);
   usePageView("lesson", params.id);
 
-  if (loading) return <SkeletonPage />;
+  if (loading && !lesson) return <SkeletonPage />;
   if (!unified) return <LessonUnavailable lessonId={params.id} />;
 
   const sheikhName = unified.sheikhName;

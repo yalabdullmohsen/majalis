@@ -68,7 +68,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
   usePageView("fiqh-council", params.slug);
 
   useEffect(() => {
-    if (loading) return;
+    if (loading && !item) return;
     if (!item) {
       applyPageSeo({
         path: fiqhItemHref(params.slug),
@@ -113,7 +113,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
     });
   }, [item, loading, params.slug]);
 
-  if (loading) return <SkeletonPage />;
+  if (loading && !item) return <SkeletonPage />;
   if (!item) return <Empty text="المحتوى غير موجود." />;
 
   const bodyText = item.content || item.ruling_text || "";

@@ -329,7 +329,7 @@
 }
 
 .lesson-unified-card__btn--secondary {
-  background: var(--color-primary-soft, var(--mj-brand-soft, #e6f2ec));
+  background: var(--color-primary-soft, var(--mj-brand-soft, var(--mj-brand-soft)));
   color: var(--color-primary-dark, var(--mj-brand-deep, #12362c));
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1e5f4b) 28%, var(--mj-hairline, transparent));
 }

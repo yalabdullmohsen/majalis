@@ -67,7 +67,7 @@
 html.dark .uq-stat,
 html[data-theme="dark"] .uq-stat {
   background: color-mix(in srgb, var(--surface-brand-wash, #16261F) 90%, #0f1612);
-  border-color: color-mix(in srgb, #5a9e88 26%, var(--mj-hairline));
+  border-color: color-mix(in srgb, var(--mj-brand, #5a9e88) 26%, var(--mj-hairline));
   box-shadow: none;
 }
 html.dark .uq-stat__num,
@@ -243,7 +243,7 @@ html[data-theme="dark"] .uq-hero .uq-stat__label {
   background: var(--mj-surface); border: 1.5px solid var(--mj-hairline); border-radius: var(--radius-card, 24px); padding: .9rem 1rem;
 }
 .uq-naskh-num {
-  background: #1a1a2e; color: var(--mj-white, #ffffff);
+  background: var(--mj-ink); color: var(--mj-white, #ffffff);
   width: 1.7rem; height: 1.7rem; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: .8rem; font-weight: 800; flex-shrink: 0;

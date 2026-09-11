@@ -32,7 +32,7 @@
 .msp-stat--approved { background: var(--majalis-emerald-muted); }
 .msp-stat--rejected { background: var(--majalis-danger-muted, #fef2f2); }
 .msp-stat--total .msp-stat__val,   .msp-stat--total .msp-stat__label   { color: var(--majalis-ink-soft); }
-.msp-stat--pending .msp-stat__val, .msp-stat--pending .msp-stat__label  { color: #0369A1; }
+.msp-stat--pending .msp-stat__val, .msp-stat--pending .msp-stat__label  { color: var(--mj-info); }
 .msp-stat--approved .msp-stat__val,.msp-stat--approved .msp-stat__label { color: var(--majalis-emerald); }
 .msp-stat--rejected .msp-stat__val,.msp-stat--rejected .msp-stat__label { color: var(--msk-red, #C1595A); }
 
@@ -53,7 +53,7 @@
 .msp-cta__text { font-size: 0.82rem; color: var(--majalis-ink-muted, #9BA3B5); margin-bottom: 1rem; }
 
 /* ─ Submission row card (msr-*) ─ */
-.msr-status--pending  { --msr-bg: #F0F9FF; --msr-color: #0369A1; --msr-border: var(--mj-brand-soft); }
+.msr-status--pending  { --msr-bg: #F0F9FF; --msr-color: var(--mj-info); --msr-border: var(--mj-brand-soft); }
 .msr-status--approved { --msr-bg: var(--mj-brand-tint); --msr-color: var(--majalis-emerald); --msr-border: #86efac; }
 .msr-status--rejected { --msr-bg: color-mix(in srgb, var(--mj-danger) 8%, white); --msr-color: var(--msk-red, #C1595A); --msr-border: color-mix(in srgb, var(--mj-danger) 35%, white); }
 .msr-card { background: var(--majalis-panel, rgba(255,255,255,0.08)); border-radius: var(--ds-radius-xl); border: 1.5px solid var(--msr-border, #86efac); overflow: hidden; margin-bottom: 0.875rem; }

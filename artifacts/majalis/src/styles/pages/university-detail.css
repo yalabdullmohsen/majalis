@@ -88,13 +88,13 @@
 .udp-not-found-title { font-size: var(--ds-text-lg); font-weight: 700; color: var(--majalis-ink-soft); margin-bottom: .5rem; }
 .udp-back-link { color: var(--majalis-emerald); font-size: .875rem; text-decoration: none; }
 .udp-back-link:hover { text-decoration: underline; }
-.udp-acc-badge { background-color: var(--acc-color, #888); }
+.udp-acc-badge { background-color: var(--acc-color, var(--mj-muted)); }
 .udp-compare-active-btn { color: var(--majalis-emerald); font-weight: 600; }
 
 /* ── نُقل إلى styles/pages/universities-admin.css ── */
 .is-summary { background: var(--mj-surface-2); border: 1px solid var(--mj-surface-2); border-radius: var(--ds-radius); padding: 0.75rem 1rem; font-size: var(--ds-text-sm); line-height: 1.65; color: var(--mj-ink-2); margin-bottom: 0.9rem; }
-.is-full-toggle { background: none; border: 1px solid var(--mj-hairline); border-radius: var(--ds-radius-sm); padding: 0.35rem 0.75rem; font-size: 0.8rem; color: #475569; cursor: pointer; font-family: inherit; margin-bottom: 0.75rem; transition: border-color 0.15s; }
-.is-full-toggle:hover { border-color: var(--mj-muted); color: #1e293b; }
+.is-full-toggle { background: none; border: 1px solid var(--mj-hairline); border-radius: var(--ds-radius-sm); padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--mj-muted); cursor: pointer; font-family: inherit; margin-bottom: 0.75rem; transition: border-color 0.15s; }
+.is-full-toggle:hover { border-color: var(--mj-muted); color: var(--mj-ink); }
 .is-content { background: var(--mj-surface-2); border: 1px solid var(--mj-surface-2); border-radius: var(--ds-radius); padding: 1rem 1.1rem; font-size: var(--ds-text-sm); line-height: 1.7; color: var(--mj-ink-2); white-space: pre-wrap; margin-bottom: 0.9rem; max-height: 380px; overflow-y: auto; }
 .is-lessons { margin-bottom: 0.9rem; }
 .is-lesson-item { display: flex; gap: var(--ds-space-2); align-items: flex-start; font-size: 0.8125rem; color: var(--mj-ink-2); margin-bottom: 0.35rem; }
@@ -107,7 +107,7 @@
 .is-btn.disabled { opacity: 0.45; cursor: not-allowed; }
 .is-verified-info { font-size: 0.7375rem; color: var(--mj-muted); padding: 0.3rem 0; }
 .is-sources { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.9rem; }
-.is-source { font-size: 0.8rem; color: #475569; background: var(--mj-surface-2); border: 1px solid var(--mj-surface-2); border-radius: var(--ds-radius-sm); padding: 0.3rem 0.6rem; }
+.is-source { font-size: 0.8rem; color: var(--mj-muted); background: var(--mj-surface-2); border: 1px solid var(--mj-surface-2); border-radius: var(--ds-radius-sm); padding: 0.3rem 0.6rem; }
 
 
 /* ============================================================
