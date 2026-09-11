@@ -70,7 +70,10 @@
 .hj-hero,
 .duas-hero,
 .ai-hero,
-.arkan-hero {
+.arkan-hero,
+.ah-hero,
+.jnz-hero,
+.hs-hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -127,7 +130,13 @@
 .ai-hero::before,
 .ai-hero::after,
 .arkan-hero::before,
-.arkan-hero::after {
+.arkan-hero::after,
+.ah-hero::before,
+.ah-hero::after,
+.jnz-hero::before,
+.jnz-hero::after,
+.hs-hero::before,
+.hs-hero::after {
   content: none !important;
   display: none !important;
 }
@@ -561,6 +570,41 @@ html[data-theme="dark"] .card {
   color: inherit !important;
 }
 /* asp-hero يبقى أخضر غامق — نص فاتح مستقل عن soft-hero ink */
+
+.ah-hero .ah-hero__bismillah,
+.ah-hero .ah-hero__source,
+.jnz-hero .jnz-hero__badge,
+.hs-hero .hs-hero__badge {
+  color: var(--mss-on-hero-accent, #123f2e) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
+}
+
+.ah-hero .ah-hero__title,
+.jnz-hero .jnz-hero__title,
+.hs-hero .hs-hero__title {
+  color: var(--mss-on-hero, #16241e) !important;
+}
+
+.ah-hero .ah-hero__sub,
+.ah-hero .ah-hero__stats,
+.jnz-hero .jnz-hero__sub,
+.jnz-hero .jnz-ayah__text,
+.jnz-hero .jnz-ayah__ref,
+.hs-hero .hs-hero__sub {
+  color: var(--mss-on-hero-muted, #3d4f47) !important;
+  opacity: 1 !important;
+}
+
+.jnz-hero .jnz-ayah {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, transparent) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
+}
+
+.jnz-hero .jnz-ayah__text {
+  color: var(--mss-on-hero, #16241e) !important;
+}
+
 .asp-hero {
   --mss-on-hero: #ffffff;
   --mss-on-hero-muted: #f3efe6;

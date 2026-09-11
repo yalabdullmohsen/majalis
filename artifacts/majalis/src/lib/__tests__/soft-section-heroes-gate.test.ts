@@ -11,7 +11,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const shell = read("src/styles/components/modern-section-shell.css");
-for (const hero of [".sw-hero", ".sb-hero", ".as-hero", ".atl-hero", ".sm-hero", ".gl-hero", ".ldb-hero", ".myl2-hero", ".lpd2-hero", ".pmp-hero", ".mw-hero", ".srp-hero", ".sg-hero", ".hj-hero", ".duas-hero", ".ai-hero", ".arkan-hero"]) {
+for (const hero of [".sw-hero", ".sb-hero", ".as-hero", ".atl-hero", ".sm-hero", ".gl-hero", ".ldb-hero", ".myl2-hero", ".lpd2-hero", ".pmp-hero", ".mw-hero", ".srp-hero", ".sg-hero", ".hj-hero", ".duas-hero", ".ai-hero", ".arkan-hero", ".ah-hero", ".jnz-hero", ".hs-hero"]) {
   assert.match(shell, new RegExp(hero.replace(".", "\\.")), `modern-section-shell يشمل ${hero}`);
 }
 assert.match(shell, /--mss-section-hero-bg/, "سطح soft-hero مفعّل");
@@ -44,6 +44,9 @@ for (const [file, banned] of [
   ["src/styles/pages/duas.css", /\.duas-hero\s*\{[^}]*linear-gradient/s],
   ["src/styles/pages/arkan-iman.css", /\.ai-hero\s*\{[^}]*linear-gradient/s],
   ["src/styles/pages/arkan-islam.css", /\.arkan-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/asmaa-husna.css", /\.ah-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/janaza.css", /\.jnz-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/hadith-mustalah.css", /\.hs-hero\s*\{[^}]*linear-gradient/s],
 ] as const) {
   const css = read(file);
   assert.doesNotMatch(css, banned, `${file}: لا تدرّج أخضر على جذر الهيرو`);
