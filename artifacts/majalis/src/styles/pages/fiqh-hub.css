@@ -1811,7 +1811,7 @@ html.dark .fiqh-filters__chip.is-active {
   background: var(--fq-surface, #fff);
 }
 .fiqh-category-card--usrah {
-  --fiqh-card-accent: color-mix(in srgb, var(--mj-brand, #146b52) 70%, #6ee7b7);
+  --fiqh-card-accent: color-mix(in srgb, var(--mj-brand, #146b52) 70%, var(--mj-brand-soft, #6ee7b7));
   background: var(--fq-surface, #fff);
 }
 .fiqh-category-card--qada_jinayat {
@@ -1822,7 +1822,7 @@ html.dark .fiqh-filters__chip.is-active {
 .fiqh-category-card--tahara { --fiqh-card-accent: var(--mj-brand, #0d6b4f); }
 .fiqh-category-card--salah { --fiqh-card-accent: var(--mj-brand, #157a5c); }
 .fiqh-category-card--janaza { --fiqh-card-accent: #3d5c54; }
-.fiqh-category-card--zakat { --fiqh-card-accent: color-mix(in srgb, var(--mj-brand, #146b52) 70%, #6ee7b7); }
+.fiqh-category-card--zakat { --fiqh-card-accent: color-mix(in srgb, var(--mj-brand, #146b52) 70%, var(--mj-brand-soft, #6ee7b7)); }
 .fiqh-category-card--sawm { --fiqh-card-accent: var(--mj-brand, #1f6b56); }
 .fiqh-category-card--hajj { --fiqh-card-accent: var(--mj-brand-deep, #0f5c4c); }
 .fiqh-category-card--buyu { --fiqh-card-accent: #6b7c3a; }

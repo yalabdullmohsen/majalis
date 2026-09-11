@@ -37,7 +37,7 @@
 .an-read-btn--done { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.8); font-weight: 600; }
 .an-read-btn--sm { padding: 0.3rem 0.75rem; font-size: var(--ds-text-xs); border: 1px solid #d1d5db; background: transparent; color: var(--mj-ink-2); }
 .an-read-btn--sm:hover { background: var(--mj-surface-2, #f3f4f6); }
-.an-read-btn--sm.an-read-btn--done { background: #ecfdf5; border-color: #6ee7b7; color: var(--mj-brand); font-weight: 600; }
+.an-read-btn--sm.an-read-btn--done { background: #ecfdf5; border-color: var(--mj-brand-soft, #6ee7b7); color: var(--mj-brand); font-weight: 600; }
 
 /* Filters */
 .an-filters { max-width: 860px; margin: 0 auto 1.5rem; padding: 0 1rem; display: flex; flex-direction: column; gap: 0.8rem; }

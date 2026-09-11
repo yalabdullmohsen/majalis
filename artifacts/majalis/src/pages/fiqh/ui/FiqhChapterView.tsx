@@ -16,6 +16,7 @@ import {
 import { fiqhChapterEditorial } from "@/lib/fiqh-editorial";
 import { formatMasailCount } from "@/lib/arabic-count";
 import "@/styles/pages/fiqh-hub.css";
+import { DetailScreen } from "@/components/design-system/screens";
 
 type TocItem = { id: string; label: string };
 
@@ -102,6 +103,7 @@ export default function FiqhChapterPage() {
   const lessons = publishedLessonsInChapter(chapter);
 
   return (
+    <DetailScreen compose="mark">
     <div className="fiqh-lux-shell fiqh-lux-chapter-page page-shell ve-page" dir="rtl">
       <nav className="fiqh-lux-crumb" aria-label="مسار التنقل">
         <Link href="/fiqh">الفقه</Link>
@@ -266,5 +268,6 @@ export default function FiqhChapterPage() {
 
       <div className="fiqh-fab-clearance ve-bottom-clearance" />
     </div>
+    </DetailScreen>
   );
 }

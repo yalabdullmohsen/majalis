@@ -1461,7 +1461,7 @@ html.dark .prophets-page-lead {
 }
 .nb-azm-miracle {
   font-size: 0.82rem;
-  color: #334155;
+  color: var(--mj-ink-2, #334155);
 }
 .nb-azm-mentions {
   font-size: 0.72rem;
@@ -1526,7 +1526,7 @@ html.dark .prophets-page-lead {
 .nb-table td {
   padding: 0.55rem 0.8rem;
   border-bottom: 1px solid #F1F5F9;
-  color: #334155;
+  color: var(--mj-ink-2, #334155);
 }
 .nb-table tr:last-child td { border-bottom: none; }
 .nb-table tr:hover td { background: #F8FAFC; }
@@ -1548,7 +1548,7 @@ html.dark .prophets-page-lead {
   margin-top: 0.6rem;
   text-align: center;
 }
-.nb-table__row--azm td { background: #F0FDF4; }
+.nb-table__row--azm td { background: color-mix(in srgb, var(--mj-brand, #059669) 8%, var(--mj-surface, #fff)); }
 .nb-table__row--azm:hover td { background: #DCFCE7 !important; }
 .nb-table__row--clickable { cursor: pointer; }
 
@@ -2125,7 +2125,7 @@ html.dark .app-main:has(.lrf-wrap--prophet-detail) {
   .app-shell:has(.lrf-wrap--prophet-detail) .bottom-nav--v2 .bottom-nav__tab.is-active,
   .app-shell:has(.lrf-wrap--prophet-detail) .bottom-nav .bottom-nav__tab.is-active {
     color: #f2dfaa !important;
-    background: color-mix(in srgb, #1f6b56 28%, transparent) !important;
+    background: color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent) !important;
   }
 }
 

@@ -14,6 +14,7 @@ import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { GraphRelatedRail } from "@/widgets/RelatedRail";
 import NotFound from "@/views/not-found";
 import type { RulingResolveStatus } from "@/lib/rulings-resolver";
+import { DetailScreen } from "@/components/design-system/screens";
 
 export default function RulingDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<ShariaRulingExtended | null>(null);
@@ -158,6 +159,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
   };
 
   return (
+    <DetailScreen compose="mark">
     <ContentDetailLayout
       breadcrumbs={[
         { label: "الرئيسية", href: "/" },
@@ -197,5 +199,6 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
         titleAr="من الرسم البياني"
       />
     </ContentDetailLayout>
+    </DetailScreen>
   );
 }

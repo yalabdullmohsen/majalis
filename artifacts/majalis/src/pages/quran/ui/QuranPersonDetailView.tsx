@@ -15,6 +15,7 @@ import {
 } from "@/features/quran-people";
 import "@/styles/pages/quran-hub.css";
 import "@/styles/pages/quran-people.css";
+import { DetailScreen } from "@/components/design-system/screens";
 
 function splitReadableParagraphs(text: string): string[] {
   const raw = String(text || "").replace(/\s+/g, " ").trim();
@@ -119,6 +120,7 @@ export default function QuranPersonDetailView() {
   const whyParas = splitReadableParagraphs(person.whyMentioned);
 
   return (
+    <DetailScreen compose="mark">
     <SectionTemplatePage
       route="/quran/people"
       title={person.nameAr}
@@ -213,5 +215,6 @@ export default function QuranPersonDetailView() {
         </section>
       </div>
     </SectionTemplatePage>
+    </DetailScreen>
   );
 }

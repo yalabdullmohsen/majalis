@@ -19,6 +19,7 @@ import {
   type ShareBasis,
 } from "@/lib/inheritance/types";
 import "@/styles/pages/mawarith.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 type WizardStep = "heirs" | "estate" | "result";
 
@@ -180,6 +181,7 @@ export default function MawarithCalculatorPage() {
   const currentStepNum = STEP_NUMBERS[step];
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow mwc-page" dir="rtl">
       <PageHeader
         eyebrow="الفقه والأحكام"
@@ -471,5 +473,6 @@ export default function MawarithCalculatorPage() {
         </div>
       </nav>
     </div>
+    </UtilityScreen>
   );
 }

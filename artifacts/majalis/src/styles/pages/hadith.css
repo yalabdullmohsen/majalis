@@ -216,7 +216,7 @@
 }
 
 .hadith-meta-item--incomplete {
-  color: #9A3412;
+  color: var(--mj-warning, #9a3412);
   font-weight: 600;
 }
 
@@ -1360,7 +1360,7 @@ html[data-theme="dark"] .hadith-stat strong {
 }
 .hadith-grade--daif {
   background: color-mix(in srgb, #c2410c 10%, transparent);
-  color: #9a3412;
+  color: var(--mj-warning, #9a3412);
   border: 1px solid color-mix(in srgb, #c2410c 22%, transparent);
 }
 .hadith-grade--sahih,
@@ -1506,9 +1506,9 @@ html[data-theme="dark"] .hadith-stat strong {
   border-color: color-mix(in srgb, #fb923c 28%, transparent);
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) :is(.hadith-grade--sahih, .hadith-grade--hasan, .hadith-grade--hasan-sahih) {
-  background: color-mix(in srgb, #6ee7b7 12%, transparent);
+  background: color-mix(in srgb, var(--mj-brand-soft, #6ee7b7) 12%, transparent);
   color: #a7f3d0;
-  border-color: color-mix(in srgb, #6ee7b7 24%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand-soft, #6ee7b7) 24%, transparent);
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hadith-page .hadith-quick-cat,
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hadith-quick-cat {

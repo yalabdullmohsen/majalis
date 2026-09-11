@@ -257,7 +257,7 @@ export default function SearchPage() {
       setSuggestions(res.suggestions ?? []);
     } catch (err) {
       if ((err as Error)?.name === "AbortError") return;
-      setResults([]);
+      // أبقِ النتائج السابقة عند فشل إعادة الجلب (بلا وميض فراغ)
     } finally {
       if (!ctrl.signal.aborted) setLoading(false);
     }
