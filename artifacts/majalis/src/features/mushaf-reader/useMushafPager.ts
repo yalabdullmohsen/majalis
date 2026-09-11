@@ -39,7 +39,7 @@ type Opts = {
   disabled?: boolean;
   onTapEmpty?: () => void;
   onNavigateStart?: () => void;
-  /** سحب أُلغي دون التزام بصفحة — لإزالة تجميد الأسفل بلا setTimeout */
+  /** سحب أُلغي دون التزام بصفحة */
   onNavigateCancel?: () => void;
   ignoreSelector: string;
   shellRef: RefObject<HTMLElement | null>;
@@ -55,6 +55,10 @@ function prefersReducedMotion(): boolean {
 /**
  * تقليب مصحف RTL عبر translate3d فقط — ثلاث لوحات (تالية · حالية · سابقة).
  * سحب لليمين (dx > 0) = الصفحة التالية.
+ *
+ * قفل بكسل: `--nm-pager-w` + `data-pager-w` على الـscroller، وtransform بالبكسل فقط.
+ * ممنوع calc(% * -1) على المسار — النسبة في transform تُحسب من عرض المسار (300%) لا الشاشة.
+ * لا resetToCurrent قبل go — الالتزام عبر transitionend ثم go(commit).
  */
 export function useMushafPager({
   page,
@@ -72,7 +76,6 @@ export function useMushafPager({
     x: number;
     y: number;
     t: number;
-    /** بدأ اللمس على كلمة آية — لا نأسر المؤشر حتى يثبت السحب */
     onAyah: boolean;
   } | null>(null);
   const panning = useRef(false);
@@ -83,35 +86,70 @@ export function useMushafPager({
   const pageRef = useRef(page);
   pageRef.current = page;
 
-  /** عتبة أعلى فوق الآيات لتقليل تعارض التحديد مع السحب */
   const panSlopFor = (onAyah: boolean) => (onAyah ? 18 : 10);
 
-  const measureWidth = useCallback(() => {
-    const w = scrollerRef.current?.clientWidth || 0;
-    if (w > 0) widthRef.current = w;
-    return widthRef.current;
-  }, []);
-
-  const setTrackX = useCallback((x: number, animate: boolean) => {
+  const applyViewportWidth = useCallback((w: number) => {
+    if (!(w > 0)) return 0;
+    /* بكسل صحيح — يمنع peek بجزء من الصفحة المجاورة بسبب الكسور */
+    const width = Math.max(1, Math.round(w));
+    widthRef.current = width;
+    const scroller = scrollerRef.current;
     const track = trackRef.current;
-    if (!track) return;
-    const ms = prefersReducedMotion() ? 0 : SETTLE_MS;
-    /* حركة ناعمة: translate فقط (+ opacity عبر CSS أثناء السحب) — بلا scale */
-    track.style.transition =
-      animate && ms > 0
-        ? `transform ${ms}ms cubic-bezier(0.22, 1, 0.36, 1)`
-        : "none";
-    track.style.transform = `translate3d(${x}px, 0, 0)`;
+    if (scroller) {
+      scroller.style.setProperty("--nm-pager-w", `${width}px`);
+      scroller.setAttribute("data-pager-w", String(width));
+    }
+    if (track) {
+      track.style.width = `${width * 3}px`;
+    }
+    return width;
   }, []);
 
-  const baseX = useCallback(() => -measureWidth(), [measureWidth]);
+  const measureWidth = useCallback(() => {
+    const el = scrollerRef.current;
+    if (!el) return widthRef.current;
+    const rectW = el.getBoundingClientRect().width;
+    const w = rectW > 0 ? rectW : el.clientWidth || 0;
+    return applyViewportWidth(w);
+  }, [applyViewportWidth]);
+
+  const setTrackX = useCallback(
+    (x: number, animate: boolean) => {
+      const track = trackRef.current;
+      if (!track) return;
+      const w = widthRef.current || measureWidth();
+      if (!(w > 0)) return;
+      const ms = prefersReducedMotion() ? 0 : SETTLE_MS;
+      track.style.transition =
+        animate && ms > 0
+          ? `transform ${ms}ms cubic-bezier(0.22, 1, 0.36, 1)`
+          : "none";
+      track.style.transform = `translate3d(${x}px, 0, 0)`;
+      if (import.meta.env?.DEV && !animate && Math.abs(x + w) < 1) {
+        track.querySelectorAll<HTMLElement>(".nm-pager__sheet, .mm-pager__sheet").forEach((sheet) => {
+          const sw = sheet.getBoundingClientRect().width;
+          if (sw > 0 && Math.abs(sw - w) > 1.5) {
+            console.warn("[mushaf-pager] sheet width ≠ viewport", { sw, w });
+          }
+        });
+      }
+    },
+    [measureWidth],
+  );
+
+  const baseX = useCallback(() => {
+    const w = widthRef.current || measureWidth();
+    return w > 0 ? -w : 0;
+  }, [measureWidth]);
 
   const resetToCurrent = useCallback(
     (animate: boolean) => {
       dragDx.current = 0;
-      setTrackX(baseX(), animate);
+      const w = measureWidth();
+      if (!(w > 0)) return;
+      setTrackX(-w, animate);
     },
-    [baseX, setTrackX],
+    [measureWidth, setTrackX],
   );
 
   const go = useCallback(
@@ -132,13 +170,24 @@ export function useMushafPager({
     resetToCurrent(false);
   }, [page, measureWidth, resetToCurrent]);
 
-  useEffect(() => {
-    const onResize = () => {
+  useLayoutEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const sync = () => {
       measureWidth();
-      resetToCurrent(false);
+      if (!panning.current && !locking.current) resetToCurrent(false);
     };
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    sync();
+    const ro =
+      typeof ResizeObserver !== "undefined" ? new ResizeObserver(() => sync()) : null;
+    ro?.observe(scroller);
+    window.addEventListener("resize", sync);
+    window.addEventListener("orientationchange", sync);
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener("resize", sync);
+      window.removeEventListener("orientationchange", sync);
+    };
   }, [measureWidth, resetToCurrent]);
 
   useEffect(() => {
@@ -170,11 +219,6 @@ export function useMushafPager({
         return;
       }
       pendingCommit.current = null;
-      /*
-       * لا resetToCurrent قبل go — ذلك يُظهر اللوحة القديمة لحظةً (وميض/توسّع).
-       * نُبقي المسار على اللوحة المُلتزَم بها؛ useLayoutEffect على [page]
-       * يعيد translate بعد أن يصبح محتوى current هو الصفحة الجديدة.
-       */
       go(commit);
     };
     track.addEventListener("transitionend", onEnd);
@@ -196,10 +240,11 @@ export function useMushafPager({
     measureWidth();
     setTrackX(baseX(), false);
     const onAyah = Boolean(
-      t.closest(".nm-word, .nm-basmala, [data-testid='mushaf-ayah-hit'], [data-testid='mushaf-basmala']"),
+      t.closest(
+        ".nm-word, .nm-basmala, [data-testid='mushaf-ayah-hit'], [data-testid='mushaf-basmala']",
+      ),
     );
     touchRef.current = { x: e.clientX, y: e.clientY, t: Date.now(), onAyah };
-    /* فوق الآية: اترك أحداث الرفع للكلمة — الأسر فقط بعد ثبوت سحب أفقي */
     if (!onAyah) {
       try {
         (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
@@ -254,7 +299,8 @@ export function useMushafPager({
     const speed = Math.abs(dx) / dt;
     const horizontal = Math.abs(dx) > Math.abs(dy);
     const passSwipe = horizontal && Math.abs(dx) >= SWIPE_MIN_PX;
-    const passFlick = horizontal && speed >= FLICK_PX_PER_MS && Math.abs(dx) >= SWIPE_MIN_PX * 0.7;
+    const passFlick =
+      horizontal && speed >= FLICK_PX_PER_MS && Math.abs(dx) >= SWIPE_MIN_PX * 0.7;
     const w = widthRef.current || measureWidth();
     const pageNow = pageRef.current;
 

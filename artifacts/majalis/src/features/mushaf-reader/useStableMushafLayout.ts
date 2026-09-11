@@ -35,10 +35,8 @@ export function useStableMushafLayout(
 
     const applyGeometry = (w: number, h: number, size: number, bodyH: number) => {
       const bodyW = Math.max(120, Math.min(w - SIDE_PAD * 2, 28 * 16));
-      const bottomSafe =
-        root.style.getPropertyValue("--reader-bottom-stack").trim() ||
-        getComputedStyle(root).getPropertyValue("--reader-bottom-stack").trim() ||
-        "0px";
+      /* ثابت — المشغّل overlay؛ لا نقرأ --reader-bottom-stack حتى لا يتغيّر المقياس */
+      const bottomSafe = "0px";
       root.style.setProperty("--mushaf-page-width", `${w}px`);
       root.style.setProperty("--mushaf-page-height", `${h}px`);
       root.style.setProperty("--mushaf-header-height", `${HEADER_H}px`);
@@ -50,7 +48,7 @@ export function useStableMushafLayout(
       root.style.setProperty("--mushaf-line-height", LINE_HEIGHT);
       root.style.setProperty("--mushaf-letter-spacing", "0");
       root.style.setProperty("--mushaf-font-weight", FONT_WEIGHT);
-      root.style.setProperty("--mushaf-bottom-safe-space", bottomSafe || "0px");
+      root.style.setProperty("--mushaf-bottom-safe-space", bottomSafe);
       root.style.setProperty("--nm-qpc-size", `${size}px`);
       root.style.setProperty("--mm-qpc-size", `${size}px`);
       root.style.setProperty("--nm-line-height", LINE_HEIGHT);
