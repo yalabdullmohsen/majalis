@@ -288,7 +288,7 @@ export default function LessonDetailPage({
       </nav>
 
       <SectionErrorBoundary name="تفاصيل الدرس">
-      <article className="ui-card lesson-detail-card mj-card lesson-detail-card--compact">
+      <article className="lesson-detail-card soft-card soft-card--on-light lesson-detail-card--compact">
         <header className="lesson-detail-head">
           <h1 className="lesson-detail-title">{unified.title}</h1>
           {hasValue(sheikhName) && (

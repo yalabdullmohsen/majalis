@@ -42,7 +42,6 @@ html[data-theme="dark"] {
 .hub-tile:not([data-scripture]),
 .list-card:not([data-scripture]),
 .hadith-card:not([data-scripture]),
-.lesson-unified-card,
 .fiqh-issue-card,
 .fiqh-book-card,
 .home-daily-card,

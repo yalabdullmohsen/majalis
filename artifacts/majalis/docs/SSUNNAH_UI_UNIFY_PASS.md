@@ -187,3 +187,9 @@
 1. بطاقات نتائج البحث (`SearchView`): `srch-result-card` + `soft-card soft-card--on-light`.
 2. إزالة سطح CSS المخصص لصالح نظام soft-card؛ الإبقاء على تخطيط الدومين.
 3. بوابة `search-result-card-soft-gate` ضمن `test:soft-cards-system`.
+
+## دفعة P25 — 2026-09-11
+
+1. بطاقات الدروس: `UnifiedLessonCard` + تفاصيل/فلاتر/مسار سنوي على `soft-card soft-card--on-light`.
+2. إزالة سطوح CSS المتضاربة (بما فيها الوضع الداكن) لصالح نظام soft-card.
+3. بوابة `lesson-cards-soft-gate` ضمن `test:soft-cards-system`.

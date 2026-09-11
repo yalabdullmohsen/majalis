@@ -705,9 +705,10 @@ html.dark .lesson-detail-info-grid dd,
   width: 100%;
 }
 
-.lessons-page-v2 .lesson-unified-card,
-.lesson-detail-page .lesson-unified-card,
-.lessons-similar-section .lesson-unified-card {
+/* السطح من soft-card؛ هنا تخطيط الدومين فقط */
+.lessons-page-v2 .lesson-unified-card.soft-card,
+.lesson-detail-page .lesson-unified-card.soft-card,
+.lessons-similar-section .lesson-unified-card.soft-card {
   --lesson-green: var(--color-primary, var(--mj-brand, #5fbf98));
   --lesson-green-deep: var(--color-primary-dark, var(--mj-brand-deep, #12362c));
   --lesson-green-soft: var(--color-primary-soft, var(--mj-brand-soft, var(--mj-brand-soft)));
@@ -717,22 +718,16 @@ html.dark .lesson-detail-info-grid dd,
   margin: 0;
   padding: 0 !important;
   overflow: hidden;
-  background-color: var(--surface, var(--mj-surface)) !important;
-  background-image: none !important;
   color: var(--color-text, #14241c);
-  border: 1px solid color-mix(in srgb, var(--lesson-green) 16%, var(--border, #d6d0c4)) !important;
-  border-radius: var(--radius-card, 16px) !important;
-  box-shadow: none;
   min-width: 0;
 }
 
-.lessons-page-v2 .lesson-unified-card--today,
-.lesson-detail-page .lesson-unified-card--today,
-.lessons-similar-section .lesson-unified-card--today {
-  border-color: color-mix(in srgb, var(--lesson-green) 40%, var(--border, #d6d0c4)) !important;
-  box-shadow: none;
-  background-color: var(--surface, var(--mj-surface)) !important;
-  background-image: none !important;
+.lessons-page-v2 .lesson-unified-card--today.soft-card,
+.lesson-detail-page .lesson-unified-card--today.soft-card,
+.lessons-similar-section .lesson-unified-card--today.soft-card {
+  /* تمييز «اليوم» عبر أصناف الدومين دون سطح منافس */
+  outline: 1px solid color-mix(in srgb, var(--lesson-green) 40%, transparent);
+  outline-offset: 0;
 }
 
 .lessons-page-v2 .lesson-unified-card__header,
@@ -1059,12 +1054,12 @@ html.dark .lesson-detail-info-grid dd,
   text-decoration: none;
 }
 
-html.dark .lessons-page-v2 .lesson-unified-card,
-html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card,
-html.dark .lesson-detail-page .lesson-unified-card,
-html[data-theme="dark"] .lesson-detail-page .lesson-unified-card,
-html.dark .lessons-similar-section .lesson-unified-card,
-html[data-theme="dark"] .lessons-similar-section .lesson-unified-card {
+html.dark .lessons-page-v2 .lesson-unified-card:not(.soft-card),
+html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card:not(.soft-card),
+html.dark .lesson-detail-page .lesson-unified-card:not(.soft-card),
+html[data-theme="dark"] .lesson-detail-page .lesson-unified-card:not(.soft-card),
+html.dark .lessons-similar-section .lesson-unified-card:not(.soft-card),
+html[data-theme="dark"] .lessons-similar-section .lesson-unified-card:not(.soft-card) {
   --lesson-green-soft: #15241e;
   background-color: #12201b !important;
   background-image: linear-gradient(165deg, #17241f 0%, #12201b 100%) !important;
@@ -1072,8 +1067,8 @@ html[data-theme="dark"] .lessons-similar-section .lesson-unified-card {
   color: #e7f0eb;
 }
 
-html.dark .lessons-page-v2 .lesson-unified-card--today,
-html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card--today {
+html.dark .lessons-page-v2 .lesson-unified-card--today:not(.soft-card),
+html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card--today:not(.soft-card) {
   background-color: #15201c !important;
   background-image: linear-gradient(165deg, color-mix(in srgb, #2f6b57 28%, #121a16) 0%, #15201c 100%) !important;
   border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #5a9e88)) 45%, var(--mj-hairline)) !important;
@@ -1654,15 +1649,15 @@ html.dark .lessons-page-v3 .filter-chips__chip.is-active,
 .section-lobby.lessons-page-v3.lessons-compact-header .section-lobby__title::after {
   display: none;
 }
-.section-lobby.lessons-page-v3 .lesson-unified-card {
+.section-lobby.lessons-page-v3 .lesson-unified-card:not(.soft-card) {
   border: 1px solid color-mix(in srgb, var(--primary, var(--mj-brand)) 16%, var(--border, #d6d0c4));
   border-radius: var(--radius-card, 16px);
   background-color: var(--surface, var(--mj-surface));
   background-image: none;
   box-shadow: none;
 }
-:root[data-theme="dark"] .section-lobby.lessons-page-v3 .lesson-unified-card,
-.dark .section-lobby.lessons-page-v3 .lesson-unified-card {
+:root[data-theme="dark"] .section-lobby.lessons-page-v3 .lesson-unified-card:not(.soft-card),
+.dark .section-lobby.lessons-page-v3 .lesson-unified-card:not(.soft-card) {
   background-color: var(--surface, #1b2421);
   background-image: none;
   border-color: color-mix(in srgb, var(--primary, var(--mj-brand, #5fbf98)) 28%, var(--mj-hairline));
