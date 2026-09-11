@@ -59,14 +59,18 @@ html.dark .soft-tile--on-light,
 html[data-theme="dark"] .soft-tile--on-light {
   --soft-card-grad: linear-gradient(
     165deg,
-    color-mix(in srgb, var(--mj-surface, #1b2421) 92%, #0f3d2e) 0%,
-    color-mix(in srgb, var(--mj-brand, #5fbf98) 10%, var(--mj-surface, #1b2421)) 100%
+    color-mix(in srgb, var(--icon-primary, #8fd4b0) 8%, var(--surface-elevated, #24302b)) 0%,
+    var(--surface-elevated, #24302b) 55%,
+    var(--surface-elevated, #24302b) 100%
   );
   --soft-tile-grad: var(--soft-card-grad);
-  --soft-card-border: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, var(--mj-hairline, #3a4641));
+  --soft-card-border: var(--border-elevated, color-mix(in srgb, #8fd4b0 22%, #35443f));
   --soft-tile-border: var(--soft-card-border);
-  --soft-card-shadow: 0 6px 18px -12px rgba(0, 0, 0, 0.55);
+  --soft-card-shadow:
+    0 0 0 1px color-mix(in srgb, var(--icon-primary, #8fd4b0) 8%, transparent),
+    0 8px 20px -14px rgba(0, 0, 0, 0.55);
   --soft-tile-shadow: var(--soft-card-shadow);
+  color: var(--text-primary, #f4f7f5);
 }
 
 .soft-card {

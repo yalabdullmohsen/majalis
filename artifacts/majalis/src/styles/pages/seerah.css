@@ -817,3 +817,13 @@ html.dark .seerah-panel__events {
   border-color: color-mix(in srgb, var(--mj-white, var(--mj-white, #ffffff)) 12%, transparent);
 }
 
+
+/* seerah Dark DS */
+
+:is(html[data-theme="dark"], html.dark) .seerah-panel,
+:is(html[data-theme="dark"], html.dark) .seerah-notice {
+  background: var(--surface-elevated, #24302b) !important;
+  border: 1px solid var(--border-elevated, #3a4a44) !important;
+}
+:is(html[data-theme="dark"], html.dark) .seerah-panel__title { color: var(--text-primary, #f4f7f5) !important; }
+:is(html[data-theme="dark"], html.dark) .seerah-panel__desc { color: var(--text-secondary, #d5ded9) !important; }
