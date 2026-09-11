@@ -2007,7 +2007,7 @@ html.dark .fiqh-status-badge--complete {
 html[data-theme="dark"] .fiqh-status-badge--needs,
 html.dark .fiqh-status-badge--needs {
   background: color-mix(in srgb, var(--mj-warning) 20%, #0B1A2E);
-  color: var(--mj-accent-soft);
+  color: var(--mj-accent);
 }
 
 html[data-theme="dark"] .fiqh-status-badge--review,
