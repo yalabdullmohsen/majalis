@@ -25,6 +25,7 @@ import {
   CALENDAR_WEEKDAY_LABELS,
   hijriMonthYearLabel,
 } from "@/lib/calendar-dates";
+import { UtilityScreen } from "@/components/design-system/screens";
 import {
   eventsForDate,
   eventsFromLessons,
@@ -203,6 +204,7 @@ export default function CalendarPage() {
   }
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell calendar-page">
       <PageHeader
         eyebrow="المناسبات والدروس"
@@ -338,5 +340,6 @@ export default function CalendarPage() {
         <SectionQuiz sectionId="islamic-history" aria-label="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

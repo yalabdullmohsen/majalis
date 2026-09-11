@@ -574,7 +574,9 @@ export function HadithSection({
         }
         setItems([]);
       })
-      .catch(() => setItems([]))
+      .catch(() => {
+        /* أبقِ القائمة السابقة عند فشل إعادة الجلب */
+      })
       .finally(() => setLoading(false));
   }, [authenticityClass]);
 

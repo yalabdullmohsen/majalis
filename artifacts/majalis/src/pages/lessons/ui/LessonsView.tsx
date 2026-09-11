@@ -305,8 +305,7 @@ export default function LessonsPage({
       .catch((err) => {
         if (cancelled || (err as Error)?.name === "AbortError") return;
         setLoadError(String((err as Error)?.message || err));
-        setActiveLessons([]);
-        setArchivedLessons([]);
+        // أبقِ الدروس السابقة إن وُجدت (بلا وميض فراغ)
       })
       .finally(() => {
         if (!cancelled) setLoading(false);

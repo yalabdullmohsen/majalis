@@ -6,6 +6,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import type { FiqhGuideSection } from "@/lib/fiqh-guides/types";
 import "@/styles/pages/fiqh-guide.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 type Props = { section: FiqhGuideSection };
 
@@ -37,6 +38,7 @@ export function FiqhGuidePage({ section }: Props) {
   }, [activeTab, search]);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="fg-page" dir="rtl">
       <header className="fg-hero">
         <span className="fg-hero__badge">{section.badge}</span>
@@ -122,5 +124,6 @@ export function FiqhGuidePage({ section }: Props) {
         />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

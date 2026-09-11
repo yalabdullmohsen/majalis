@@ -49,6 +49,11 @@
 .sg-mubtil-card,
 .sg-nawfil-card,
 .sg-ayah-card:not([data-scripture]),
+.kids-hub-card,
+.sw-card,
+.cal-month.ui-card,
+.iman-topic-card,
+.about-card,
 .fq-faraa-card {
 
   border-radius: var(--radius-card, 24px);

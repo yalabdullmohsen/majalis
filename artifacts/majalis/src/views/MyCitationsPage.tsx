@@ -16,6 +16,7 @@ import {
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/my-citations.css";
+import { ListScreen } from "@/components/design-system/screens";
 
 const TABS = ["الكل", "المجلدات", "المفضلة", "الأكثر استخداماً"] as const;
 type Tab = (typeof TABS)[number];
@@ -178,6 +179,7 @@ export default function MyCitationsPage() {
   }
 
   return (
+    <ListScreen compose="mark">
     <div dir="rtl" className="mcp-root print:bg-white">
       {/* الرأس */}
       <div className="mcp-header print:hidden">
@@ -408,5 +410,6 @@ export default function MyCitationsPage() {
         <ShareButtons title="اقتباساتي — سُنّة" url="https://www.ssunnah.com/my-citations" />
       </div>
     </div>
+    </ListScreen>
   );
 }

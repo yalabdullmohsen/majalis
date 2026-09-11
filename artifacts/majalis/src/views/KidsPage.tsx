@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/kids.css";
+import { DashboardScreen } from "@/components/design-system/screens";
 
 const KIDS_ENTRIES = [
   {
@@ -62,6 +63,7 @@ export default function KidsPage() {
   }, []);
 
   return (
+    <DashboardScreen compose="mark">
     <div className="kids-hub-page" dir="rtl">
       <section className="kids-hub-intro soft-card soft-card--on-light mj-framed" aria-labelledby="kids-title">
         <Baby size={36} className="kids-hub-intro__icon" aria-hidden="true" />
@@ -89,5 +91,6 @@ export default function KidsPage() {
         ))}
       </nav>
     </div>
+    </DashboardScreen>
   );
 }

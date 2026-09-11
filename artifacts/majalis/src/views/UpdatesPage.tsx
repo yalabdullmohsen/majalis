@@ -10,6 +10,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/updates.css";
+import { ListScreen } from "@/components/design-system/screens";
 
 const TYPE_COLORS: Record<string, string> = {
   قرار: "#123F2E",
@@ -95,6 +96,7 @@ export default function UpdatesPage() {
   }, [items, filter, search]);
 
   return (
+    <ListScreen compose="mark">
     <div className="page-shell narrow content-hub-page">
       <PageHeader
         eyebrow="النشاط العلمي"
@@ -178,5 +180,6 @@ export default function UpdatesPage() {
         <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في التاريخ الإسلامي والفقه" count={4} />
       </div>
     </div>
+    </ListScreen>
   );
 }
