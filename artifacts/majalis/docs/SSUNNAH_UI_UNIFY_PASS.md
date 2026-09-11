@@ -176,6 +176,12 @@
 2. إزالة `ui-card-btn` / أزرار متفرقة لصالح صفوف موحّدة (+ `testId` على SettingsList).
 3. بوابة `settings-rows-unify-gate` ضمن `test:loading-ux-gates`.
 
+## دفعة P23 — 2026-09-11
+
+1. `HadithCard`: استبدال `ui-card` بـ `soft-card soft-card--on-light` مع الإبقاء على `hadith-card`.
+2. بوابة `hadith-card-soft-gate` ضمن `test:soft-cards-system`.
+3. لا تعديل على متن الحديث.
+
 ## دفعة P24 — 2026-09-11
 
 1. بطاقات نتائج البحث (`SearchView`): `srch-result-card` + `soft-card soft-card--on-light`.
