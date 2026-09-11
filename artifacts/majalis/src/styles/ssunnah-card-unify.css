@@ -71,10 +71,10 @@
 .about-card,
 .fq-faraa-card {
 
-  border-radius: var(--radius-card, 24px);
+  border-radius: var(--radius-card, var(--mur-radius, 20px));
   background: var(--surface, var(--mj-surface, #fffcf8));
-  border: 1px solid color-mix(in srgb, var(--primary, var(--mj-brand, #146b52)) 14%, var(--border, var(--mj-hairline, #d9d3c8)));
-  box-shadow: var(--ss-shadow-soft, var(--mj-sh, 0 3px 12px -10px rgba(10, 61, 46, 0.12)));
+  border: 1px solid transparent;
+  box-shadow: var(--mur-shadow, var(--ss-shadow-soft, var(--mj-sh, 0 4px 18px -14px rgba(10, 61, 46, 0.14))));
   color: var(--textPrimary, var(--mj-ink, #16241e));
 }
 

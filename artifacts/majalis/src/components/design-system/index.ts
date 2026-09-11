@@ -7,6 +7,7 @@ export { FeatureCard, type FeatureCardProps } from "./FeatureCard";
 export { ContentCard, type ContentCardProps } from "./ContentCard";
 export { ActionButton, type ActionButtonProps } from "./ActionButton";
 export { PrimaryButton, SecondaryButton, IconButton } from "./Buttons";
+export { SettingsList, type SettingsListRow } from "./SettingsList";
 
 export {
   SsText,

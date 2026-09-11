@@ -66,6 +66,8 @@ import "./styles/section-cards-theme.css";
 import "./styles/ssunnah-ux-polish.css";
 import "./styles/ssunnah-semantic-tokens.css";
 import "./styles/ssunnah-card-unify.css";
+/* تحديث واجهة حديث: بطاقات أخف / فلاتر segmented / إعدادات / قراءة / بحث */
+import "./styles/modern-ui-refresh.css";
 // dark-mode-surfaces (~24KB) — فوري فقط إن كان الثيم داكنًا عند الإقلاع؛ وإلا بعد load
 {
   const bootDark =

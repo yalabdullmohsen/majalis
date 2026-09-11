@@ -1,0 +1,576 @@
+/**
+ * modern-ui-refresh.css
+ * دفعة تحديث واجهة حديثة لسُنّة — أخف حدودًا، أوضح تراتبًا، أقرب لتطبيق أصلي.
+ * تُحمَّل بعد جسور البطاقات/الهوية. لا تمسّ المصحف ولا أسطح [data-scripture].
+ */
+
+:root {
+  --mur-radius: 20px;
+  --mur-radius-sm: 14px;
+  --mur-radius-lg: 24px;
+  --mur-hairline: color-mix(in srgb, var(--mj-brand, #146b52) 10%, var(--mj-hairline, #d9d3c8));
+  --mur-shadow: 0 4px 18px -14px rgba(10, 61, 46, 0.18);
+  --mur-shadow-press: 0 2px 10px -10px rgba(10, 61, 46, 0.16);
+  --mur-gap: clamp(0.85rem, 2.2vw, 1.15rem);
+  --mur-section-gap: clamp(1.25rem, 3.2vw, 1.85rem);
+  --mur-hero-pad-y: clamp(0.85rem, 2.4vw, 1.25rem);
+  --mur-title: clamp(1.2rem, 3.2vw, 1.55rem);
+  --mur-subtitle: clamp(0.92rem, 2.2vw, 1.05rem);
+  --mur-body: 0.98rem;
+  --mur-meta: 0.82rem;
+  --radius-button: 18px;
+}
+
+html.dark,
+html[data-theme="dark"] {
+  --mur-hairline: color-mix(in srgb, var(--mj-brand, #5fbf98) 22%, var(--mj-hairline, #3a4641));
+  --mur-shadow: 0 6px 20px -14px rgba(0, 0, 0, 0.5);
+  --mur-shadow-press: 0 3px 12px -10px rgba(0, 0, 0, 0.45);
+}
+
+/* ── بطاقات أخف: حدود شبه شفافة + ظل خفيف + تباعد أوضح ── */
+.soft-card--on-light,
+.soft-tile--on-light {
+  --soft-card-border: transparent;
+  --soft-tile-border: transparent;
+  --soft-card-shadow: var(--mur-shadow);
+  --soft-tile-shadow: var(--mur-shadow);
+}
+
+.ui-card:not([data-scripture]):not(.mushaf-page):not(.ayah-card),
+.mj-card:not([data-scripture]),
+.hub-tile:not([data-scripture]),
+.list-card:not([data-scripture]),
+.hadith-card:not([data-scripture]),
+.lesson-unified-card,
+.fiqh-issue-card,
+.fiqh-book-card,
+.home-daily-card,
+.lpp-path-card,
+.lib-card,
+.ss-card:not([data-scripture]),
+.section-card:not([data-scripture]),
+.content-card:not([data-scripture]),
+.hub-card:not([data-legacy-ok]),
+.topic-card:not([data-scripture]),
+.lesson-card:not(.lesson-card--legacy-ok),
+.settings-card,
+.srch-result-card,
+.section-hub__card:not([data-scripture]),
+.hadith-hub-card,
+.fiqh-category-card,
+.adhkar-card:not([data-scripture]),
+.kids-hub-card,
+.about-card {
+  border-color: transparent !important;
+  box-shadow: var(--mur-shadow) !important;
+  border-radius: var(--mur-radius) !important;
+}
+
+/* لا إطار حول كل عنصر فرعي داخل البطاقة */
+.soft-card :is(.soft-card, .ui-card, .mj-card, .list-card),
+.ui-card :is(.soft-card, .ui-card, .mj-card),
+.hub-card :is(.ui-card, .mj-card),
+.section-card :is(.ui-card, .mj-card) {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* ضغط تفاعلي خفيف */
+@media (hover: hover) {
+  .soft-card--on-light:hover,
+  .hub-card:not([data-legacy-ok]):hover,
+  .section-hub__card:not([data-scripture]):hover,
+  .hadith-hub-card:hover,
+  .topic-card:not([data-scripture]):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px -14px rgba(10, 61, 46, 0.22) !important;
+  }
+}
+
+.soft-card--on-light:active,
+.hub-card:not([data-legacy-ok]):active,
+.section-hub__card:not([data-scripture]):active {
+  transform: translateY(0);
+  box-shadow: var(--mur-shadow-press) !important;
+}
+
+/* ── أقسام: عنوان → فرعي → محتوى (بلا صندوق داخل صندوق) ── */
+.mss-section,
+.page-shell__section,
+.section-block,
+.home-section,
+.content-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mur-gap);
+  margin-block: var(--mur-section-gap);
+}
+
+.mss-section__title,
+.page-shell__title,
+.section-block__title,
+.home-section__title {
+  font-size: var(--mur-title);
+  font-weight: 750;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--mj-ink, #16241e);
+  margin: 0;
+}
+
+.mss-section__subtitle,
+.page-shell__lead,
+.section-block__subtitle,
+.home-section__subtitle {
+  font-size: var(--mur-subtitle);
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--mj-ink-2, #4f5f58);
+  margin: 0;
+  max-width: 42rem;
+}
+
+/* ── فلاتر حديثة: Segmented Control ── */
+.mj-segmented-filter {
+  gap: 0.2rem;
+  padding: 0.28rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--mj-brand, #146b52) 7%, var(--mj-surface-2, #f7f4ee));
+  border: none;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.mj-segmented-filter--scroll {
+  width: 100%;
+  padding-inline: 0.28rem;
+}
+
+.mj-filter-chip {
+  min-height: 40px;
+  border: none;
+  background: transparent;
+  color: var(--mj-ink-2, #4f5f58);
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    transform 120ms ease;
+}
+
+.mj-filter-chip.is-active,
+.mj-filter-chip[aria-pressed="true"],
+.mj-filter-chip[data-active="true"] {
+  background: var(--mj-surface, #fffcf8);
+  color: var(--mj-brand-deep, #0d4a39);
+  box-shadow: 0 2px 8px -4px rgba(10, 61, 46, 0.22);
+  font-weight: 700;
+}
+
+.mj-filter-chip:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Segmented حديث: بلا نقطة زخرفية */
+.mj-segmented-filter .mj-filter-chip__mark {
+  display: none;
+}
+
+html.dark .mj-segmented-filter,
+html[data-theme="dark"] .mj-segmented-filter {
+  background: color-mix(in srgb, var(--mj-brand, #5fbf98) 12%, var(--mj-surface, #1b2421));
+}
+
+html.dark .mj-filter-chip.is-active,
+html[data-theme="dark"] .mj-filter-chip.is-active,
+html.dark .mj-filter-chip[aria-pressed="true"],
+html[data-theme="dark"] .mj-filter-chip[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--mj-brand, #5fbf98) 22%, var(--mj-surface, #1b2421));
+  color: var(--mj-ink, #f3f7f5);
+}
+
+/* ── Hero أقصر وأكثر فائدة ── */
+.page-hero,
+.page-hero-mj,
+.mss-hero,
+.section-hero,
+.legal-page-hero,
+.home-hero,
+.topic-hero,
+.home-page-hero {
+  padding-block: var(--mur-hero-pad-y) !important;
+  min-height: 0 !important;
+}
+
+.page-hero__title,
+.page-hero-mj__title,
+.mss-hero__title,
+.section-hero__title,
+.home-hero__title,
+.legal-page-hero h1 {
+  font-size: clamp(1.35rem, 4vw, 1.75rem) !important;
+  line-height: 1.25 !important;
+  margin-block-end: 0.35rem !important;
+}
+
+.page-hero__lead,
+.page-hero-mj__lead,
+.mss-hero__lead,
+.section-hero__subtitle,
+.home-hero__subtitle,
+.legal-page-hero p {
+  font-size: var(--mur-subtitle) !important;
+  max-width: 36rem;
+  margin-block-end: 0.65rem !important;
+}
+
+/* ── تجربة قراءة: كتل معلومات حديثة بلا نص عائم ── */
+.content-reading,
+.reading-shell,
+.hadith-detail,
+.lesson-detail-body,
+.fiqh-ruling-body,
+.article-body:not([data-scripture]):not(.mushaf-page) {
+  max-width: 42rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 1.35rem);
+  padding-block: clamp(1rem, 2.5vw, 1.5rem);
+  line-height: 1.85;
+  font-size: var(--mur-body);
+  color: var(--mj-ink, #16241e);
+}
+
+.content-reading :is(h2, h3),
+.reading-shell :is(h2, h3),
+.hadith-detail :is(h2, h3),
+.lesson-detail-body :is(h2, h3) {
+  font-weight: 750;
+  line-height: 1.35;
+  margin-block: 1.35rem 0.55rem;
+  color: var(--mj-ink, #16241e);
+}
+
+.reading-info-block,
+.hadith-meta-block,
+.lesson-meta-panel,
+.content-callout:not([data-scripture]) {
+  margin-block: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: var(--mur-radius-sm);
+  background: color-mix(in srgb, var(--mj-brand, #146b52) 6%, var(--mj-surface, #fffcf8));
+  border: none;
+  box-shadow: none;
+}
+
+/* ── بحث حديث ── */
+.search-input,
+.global-search-input,
+.home-universal-search__input,
+.srch-input,
+input[type="search"].mj-search,
+.mj-search-field {
+  min-height: 48px;
+  border-radius: 999px !important;
+  border: 1px solid transparent !important;
+  background: color-mix(in srgb, var(--mj-brand, #146b52) 6%, var(--mj-surface, #fffcf8)) !important;
+  box-shadow: none !important;
+  padding-inline: 1.1rem 1rem !important;
+  font-size: 1rem;
+  transition: background 140ms ease, box-shadow 140ms ease;
+}
+
+.search-input:focus,
+.global-search-input:focus,
+.home-universal-search__input:focus,
+.srch-input:focus,
+input[type="search"].mj-search:focus,
+.mj-search-field:focus {
+  outline: none;
+  background: var(--mj-surface, #fffcf8) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--mj-brand, #146b52) 35%, transparent) !important;
+}
+
+.srch-result-card,
+.search-result-item,
+.global-search-result {
+  border: none !important;
+  border-radius: var(--mur-radius-sm) !important;
+  box-shadow: none !important;
+  background: color-mix(in srgb, var(--mj-brand, #146b52) 4%, var(--mj-surface, #fffcf8)) !important;
+  margin-block: 0.35rem;
+}
+
+/* ── أزرار موحّدة: Primary / Secondary / Ghost / Destructive ── */
+.btn,
+button.soft-pill,
+.ActionButton,
+[data-slot="button"] {
+  border-radius: var(--radius-button, 18px);
+  transition: transform 120ms ease, opacity 120ms ease, background 140ms ease;
+}
+
+.btn:active,
+button.soft-pill:active,
+[data-slot="button"]:active {
+  transform: scale(0.98);
+}
+
+/* تقليل الأزرار الدائرية الضخمة غير الضرورية */
+.fab,
+.floating-action,
+.round-fab,
+.home-fab {
+  width: 52px !important;
+  height: 52px !important;
+  min-width: 52px !important;
+  min-height: 52px !important;
+  border-radius: 16px !important;
+}
+
+/* ── إعدادات بنمط قائمة حديثة ── */
+.settings-list,
+.mur-settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-radius: var(--mur-radius);
+  background: var(--mj-surface, #fffcf8);
+  overflow: hidden;
+  box-shadow: var(--mur-shadow);
+  border: none;
+}
+
+.settings-list__row,
+.mur-settings-row,
+.settings-row,
+.settings-item,
+.settings-link-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 56px;
+  padding: 0.85rem 1rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--mj-hairline, #d9d3c8) 70%, transparent);
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  text-align: start;
+  transition: background 120ms ease;
+}
+
+.settings-list__row:last-child,
+.mur-settings-row:last-child,
+.settings-row:last-child,
+.settings-item:last-child,
+.settings-link-row:last-child {
+  border-bottom: none;
+}
+
+.settings-list__row:active,
+.mur-settings-row:active,
+.settings-row:active,
+.settings-item:active,
+.settings-link-row:active {
+  background: color-mix(in srgb, var(--mj-brand, #146b52) 6%, transparent);
+}
+
+.settings-list__icon,
+.mur-settings-row__icon,
+.settings-row__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--mj-brand, #146b52) 12%, transparent);
+  color: var(--mj-brand-deep, #0d4a39);
+  flex-shrink: 0;
+}
+
+.settings-list__title,
+.mur-settings-row__title,
+.settings-row__title {
+  font-size: 0.98rem;
+  font-weight: 650;
+  color: var(--mj-ink, #16241e);
+  line-height: 1.3;
+}
+
+.settings-list__desc,
+.mur-settings-row__desc,
+.settings-row__desc {
+  font-size: var(--mur-meta);
+  color: var(--mj-muted, #5e6e67);
+  line-height: 1.4;
+  margin-top: 0.15rem;
+}
+
+.settings-list__value,
+.mur-settings-row__value,
+.settings-row__value {
+  font-size: var(--mur-meta);
+  color: var(--mj-ink-2, #4f5f58);
+  font-weight: 550;
+}
+
+.settings-list__chevron,
+.mur-settings-row__chevron {
+  opacity: 0.45;
+  width: 1rem;
+  height: 1rem;
+}
+
+/* بطاقات الإعدادات القديمة → قائمة أنظف */
+.settings-card,
+.settings-account-card {
+  border: none !important;
+  box-shadow: var(--mur-shadow) !important;
+  border-radius: var(--mur-radius) !important;
+}
+
+.settings-section-title,
+.settings-group-title {
+  font-size: var(--mur-meta);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--mj-muted, #5e6e67);
+  text-transform: none;
+  margin: 1.1rem 0.35rem 0.45rem;
+}
+
+/* ── تراتب طباعي أوضح ── */
+.page-shell__title,
+.mss-section__title {
+  font-weight: 750;
+}
+
+.page-shell__lead,
+.mss-section__subtitle {
+  font-weight: 500;
+  opacity: 0.92;
+}
+
+.meta,
+.muted,
+.help-text,
+.hint,
+.form-hint {
+  font-size: var(--mur-meta);
+  font-weight: 500;
+  color: var(--mj-muted, #5e6e67);
+}
+
+/* ── شبكة أقسام أوضح ── */
+.hub-grid,
+.section-hub__grid,
+.home-grid,
+.topics-grid {
+  gap: clamp(0.75rem, 2vw, 1rem) !important;
+}
+
+/* ── شريط صلاة أخف ── */
+.prayer-strip,
+.pts-bar,
+.prayer-times-card:not([data-legacy-ok]) {
+  border: none !important;
+  box-shadow: var(--mur-shadow) !important;
+  border-radius: var(--mur-radius) !important;
+}
+
+/* ── حماية المصحف والقراءة الشرعية ── */
+.mushaf-page .soft-card,
+.mushaf-page .ui-card,
+[data-scripture].soft-card,
+[data-scripture].ui-card,
+.ayah-card,
+.mushaf-reader .soft-card {
+  border-color: revert !important;
+  box-shadow: revert !important;
+  transform: none !important;
+}
+
+/* بحث الإعدادات + تجميع التبديلات كقائمة */
+.settings-search-field input,
+.settings-search-wrap input[type="search"] {
+  min-height: 48px;
+  width: 100%;
+  border-radius: 999px !important;
+  border: 1px solid transparent !important;
+  background: color-mix(in srgb, var(--mj-brand, #146b52) 6%, var(--mj-surface, #fffcf8)) !important;
+  padding-inline: 1.1rem !important;
+  box-shadow: none !important;
+}
+
+.settings-toggle-row {
+  min-height: 56px !important;
+  padding: 0.85rem 0.15rem !important;
+  border-bottom-color: color-mix(in srgb, var(--mj-hairline, #d9d3c8) 70%, transparent) !important;
+}
+
+.settings-account-card {
+  border: none !important;
+  box-shadow: var(--mur-shadow) !important;
+  background: var(--mj-surface, #fffcf8) !important;
+}
+
+.settings-legal-links {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  border-radius: var(--mur-radius) !important;
+  overflow: hidden !important;
+  box-shadow: var(--mur-shadow) !important;
+  background: var(--mj-surface, #fffcf8) !important;
+  margin-block: 0.75rem !important;
+}
+
+.settings-legal-link {
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-height: 52px !important;
+  padding: 0.85rem 1rem !important;
+  border: none !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--mj-hairline, #d9d3c8) 70%, transparent) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--mj-ink, #16241e) !important;
+  font-size: 0.95rem !important;
+  font-weight: 650 !important;
+}
+
+.settings-legal-link:last-child {
+  border-bottom: none !important;
+}
+
+.settings-choice {
+  border: none !important;
+  box-shadow: var(--mur-shadow-press) !important;
+  border-radius: var(--mur-radius-sm) !important;
+}
+
+.mj-filter-bar__search input {
+  border: 1px solid transparent !important;
+  background: color-mix(in srgb, var(--mj-brand, #146b52) 6%, var(--mj-surface, #fffcf8)) !important;
+  box-shadow: none !important;
+}
+
+/* تقليل الحركة لمن يفضّل ذلك */
+@media (prefers-reduced-motion: reduce) {
+  .soft-card--on-light,
+  .hub-card,
+  .mj-filter-chip,
+  .btn,
+  [data-slot="button"] {
+    transition: none !important;
+    transform: none !important;
+  }
+}

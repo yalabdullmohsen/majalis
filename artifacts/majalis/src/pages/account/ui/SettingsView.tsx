@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { SettingsList } from "@/components/design-system/SettingsList";
 import { useAuth } from "@/components/AuthProvider";
 import { useFontPreference } from "@/components/FontPreferenceProvider";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
@@ -529,14 +530,12 @@ export default function SettingsPage() {
             checked={preferences.occasionNotifications}
             onChange={(value) => update("occasionNotifications", value)}
           />
-          <div className="settings-legal-links">
-            <Link href="/notification-settings" className="settings-legal-link">
-              إعدادات التذكيرات التفصيلية
-            </Link>
-            <Link href="/adhan-settings" className="settings-legal-link">
-              إعدادات الأذان
-            </Link>
-          </div>
+          <SettingsList
+            rows={[
+              { id: "notif-detail", title: "إعدادات التذكيرات التفصيلية", href: "/notification-settings" },
+              { id: "adhan", title: "إعدادات الأذان", href: "/adhan-settings" },
+            ]}
+          />
         </LegalSection>
       )}
 
@@ -583,14 +582,12 @@ export default function SettingsPage() {
           <Suspense fallback={<p className="settings-note">تحديث إدارة التنزيلات…</p>}>
             <ReciterDownloadManager />
           </Suspense>
-          <div className="settings-legal-links">
-            <Link href="/adhan-settings" className="settings-legal-link">
-              أصوات الأذان المحمّلة
-            </Link>
-            <Link href="/vault" className="settings-legal-link">
-              مخزن المعرفة دون اتصال
-            </Link>
-          </div>
+          <SettingsList
+            rows={[
+              { id: "adhan-sounds", title: "أصوات الأذان المحمّلة", href: "/adhan-settings" },
+              { id: "vault", title: "مخزن المعرفة دون اتصال", href: "/vault" },
+            ]}
+          />
           <button type="button" className="ui-card-btn" onClick={() => clearQuranCache()}>
             {t("settings_clear_quran_cache")}
           </button>
@@ -600,22 +597,22 @@ export default function SettingsPage() {
       {visible(sections[5]!) && (
         <LegalSection title={sections[5]!.title}>
           <p>{t("settings_privacy_desc")}</p>
-          <div className="settings-legal-links">
-            <Link href="/privacy-center" className="settings-legal-link">
-              مركز الخصوصية
-            </Link>
-            <Link href="/privacy" className="settings-legal-link">
-              سياسة الخصوصية
-            </Link>
-            {isLoggedIn && (
-              <Link
-                href="/account-deletion"
-                className="settings-legal-link settings-legal-link--danger"
-              >
-                حذف الحساب نهائياً
-              </Link>
-            )}
-          </div>
+          <SettingsList
+            rows={[
+              { id: "privacy-center", title: "مركز الخصوصية", href: "/privacy-center" },
+              { id: "privacy-policy", title: "سياسة الخصوصية", href: "/privacy" },
+              ...(isLoggedIn
+                ? ([
+                    {
+                      id: "account-deletion",
+                      title: "حذف الحساب نهائياً",
+                      href: "/account-deletion",
+                      danger: true,
+                    },
+                  ] as const)
+                : []),
+            ]}
+          />
           <div className="settings-actions">
             <button
               type="button"
@@ -695,23 +692,15 @@ export default function SettingsPage() {
               جولة المزايا
             </Link>
           </div>
-          <div className="settings-legal-links">
-            <Link href="/about" className="settings-legal-link">
-              حول التطبيق
-            </Link>
-            <Link href="/data-licenses" className="settings-legal-link">
-              المصادر والتراخيص
-            </Link>
-            <Link href="/contact" className="settings-legal-link">
-              الدعم والتواصل
-            </Link>
-            <Link href="/privacy" className="settings-legal-link">
-              سياسة الخصوصية
-            </Link>
-            <Link href="/terms" className="settings-legal-link">
-              شروط الاستخدام
-            </Link>
-          </div>
+          <SettingsList
+            rows={[
+              { id: "about", title: "حول التطبيق", href: "/about" },
+              { id: "licenses", title: "المصادر والتراخيص", href: "/data-licenses" },
+              { id: "contact", title: "الدعم والتواصل", href: "/contact" },
+              { id: "privacy", title: "سياسة الخصوصية", href: "/privacy" },
+              { id: "terms", title: "شروط الاستخدام", href: "/terms" },
+            ]}
+          />
         </LegalSection>
       )}
 </LegalPageLayout>
