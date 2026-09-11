@@ -1,0 +1,68 @@
+{
+  "generatedAt": "2026-09-11T16:57:01.499Z",
+  "verdict": "NOT READY FOR RELEASE",
+  "metrics": {
+    "contentCounts": {
+      "$comment": "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
+      "books": 173,
+      "islamicHistory": 217,
+      "fawaid": 641,
+      "quizQuestions": 8573,
+      "mindMaps": 23,
+      "rulings": 0,
+      "courses": 63,
+      "miracles": 67,
+      "adhkar": 325,
+      "qa": 2295,
+      "nations": 21,
+      "landmarks": 34,
+      "institutions": 45,
+      "universities": 37
+    },
+    "institutions": {
+      "total": 45,
+      "needs_review": 45,
+      "missing_sourceUrl": 0,
+      "missing_website": 0
+    },
+    "universities": {
+      "total": 37,
+      "missing_website_url": 0,
+      "last_updated_older_than_180d": 0,
+      "marked_is_verified": 37
+    },
+    "knowledge": {
+      "documented_needs_review_round2": 1218,
+      "documented_verified_round2": 2404,
+      "documented_total_round2": 3622,
+      "note": "من CONTENT_FILL_REPORT_ROUND2.md — لا يُعاد احتسابه هنا"
+    },
+    "quizQuestions": 8573,
+    "uiCardPublicTsx": 0
+  },
+  "blockers": [
+    {
+      "severity": "Critical",
+      "section": "institutions",
+      "reason": "كل المؤسسات (45) بحالة needs_review دون تحقق بشري مؤرّخ مع بقائها في الدليل العام",
+      "fix": "راجع بشريًا واضبط verified+verifiedAt أو أخفِ/أعلم المستخدم بوضوح قبل الإطلاق العام"
+    },
+    {
+      "severity": "Critical",
+      "section": "knowledge",
+      "reason": "1218 عنصر needs_review موثّق في جولة الملء",
+      "fix": "أبقِها محجوبة عن العامة حتى المراجعة؛ لا تنشرها كـverified"
+    }
+  ],
+  "warnings": [
+    {
+      "section": "quiz",
+      "reason": "بنك الأسئلة=8573 — وثّق تنقية demo/unreviewed قبل الإطلاق العام"
+    }
+  ],
+  "rules": {
+    "noInventedData": true,
+    "noUnverifiedPublish": true,
+    "shariaImmutable": true
+  }
+}

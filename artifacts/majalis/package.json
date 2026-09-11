@@ -526,7 +526,8 @@
     "test:mushaf-p0-acceptance-audit": "playwright test tests/mushaf-p0-acceptance-audit.spec.ts --project=mobile",
     "test:mushaf-page-flip-stability": "playwright test tests/mushaf-page-flip-stability.spec.ts --project=mobile",
     "test:section-entry-card": "node --import tsx src/lib/__tests__/section-entry-card-gate.test.ts",
-    "test:prayer-notification-scheduler": "node --import tsx src/lib/__tests__/prayer-notification-scheduler.test.ts"
+    "test:prayer-notification-scheduler": "node --import tsx src/lib/__tests__/prayer-notification-scheduler.test.ts",
+    "audit:prelaunch-readiness": "node scripts/audit-prelaunch-readiness.mjs"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

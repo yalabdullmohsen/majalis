@@ -7,7 +7,10 @@
     "country": "المملكة العربية السعودية",
     "description": "المسجد الحرام في مكة المكرمة قبلة المسلمين وأعظم المساجد حرمةً؛ فيه الكعبة المشرفة والطواف والسعي ومناسك الحج والعمرة. مقصد العبادة الأعظم في الإسلام، وتُراعى فيه الآداب الشرعية وأنظمة الحرمين. يُذكر في الدليل بإيجاز مع الإحالة إلى المصادر الموثوقة لأحكام الزيارة والمناسك دون اختصار مخلّ.",
     "website": "https://www.gph.gov.sa",
-    "mapQuery": "المسجد الحرام مكة"
+    "mapQuery": "المسجد الحرام مكة",
+    "sourceUrl": "https://www.gph.gov.sa",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "masjid-nabawi",
@@ -17,7 +20,10 @@
     "country": "المملكة العربية السعودية",
     "description": "المسجد النبوي في المدينة المنورة ثاني المساجد حرمةً؛ بناه النبي ﷺ ويضم الروضة الشريفة وقبره ﷺ. مقصد للصلاة والسلام المشروع مع احترام الحرم والآداب، وفيه فضل الصلاة الثابت في الصحيح. يُعرَّف في الدليل مع التمييز بين الزيارة الشرعية والغلوّ الممنوع.",
     "website": "https://www.gph.gov.sa",
-    "mapQuery": "المسجد النبوي المدينة المنورة"
+    "mapQuery": "المسجد النبوي المدينة المنورة",
+    "sourceUrl": "https://www.gph.gov.sa",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "masjid-aqsa",
@@ -27,7 +33,10 @@
     "country": "فلسطين",
     "description": "المسجد الأقصى في بيت المقدس أولى القبلتين وثالث المساجد التي تُشدّ إليها الرحال، له مكانة عظيمة في القرآن والسيرة. يُذكر في الدليل مع بيان حرمته وفضله والدعوة لحفظه، دون خلط السياسة بالعبادة، ومع الإحالة إلى النصوص الشرعية في فضله وآداب زيارته عند الإمكان.",
     "website": "https://www.awqaf.ps",
-    "mapQuery": "المسجد الأقصى القدس"
+    "mapQuery": "المسجد الأقصى القدس",
+    "sourceUrl": "https://www.awqaf.ps",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "masjid-quba",
@@ -37,7 +46,10 @@
     "country": "المملكة العربية السعودية",
     "description": "مسجد قباء أول مسجد بُني في الإسلام عند قدوم النبي ﷺ إلى المدينة، وفيه فضل الصلاة الثابت في السنة. مقصد للصلاة والزيارة الشرعية بلا بدع، ويُستحضر فيه معنى الهجرة وبناء الجماعة على التوحيد. موقعه جنوب المدينة ميسّر للزائرين مع الخدمات الحديثة.",
     "website": "https://www.gph.gov.sa",
-    "mapQuery": "مسجد قباء المدينة المنورة"
+    "mapQuery": "مسجد قباء المدينة المنورة",
+    "sourceUrl": "https://www.gph.gov.sa",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "ium",
@@ -47,7 +59,10 @@
     "country": "ماليزيا",
     "description": "الجامعة الإسلامية بالمدينة المنورة صرح علمي عالمي لعلوم الشريعة واللغة العربية، يستقبل طلابًا من أنحاء العالم ويركّز على الكتاب والسنة ومنهج السلف في التعليم. يُستفاد من برامجها ومنشوراتها مع التفريق بين المقررات الرسمية والاجتهادات الفردية للأساتذة.",
     "website": "https://www.iium.edu.my",
-    "mapQuery": "الجامعة الإسلامية ماليزيا"
+    "mapQuery": "الجامعة الإسلامية ماليزيا",
+    "sourceUrl": "https://www.iium.edu.my",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "medina-university",
@@ -57,7 +72,10 @@
     "country": "المملكة العربية السعودية",
     "description": "جامعة طيبة في المدينة المنورة جامعة سعودية حديثة تشمل كليات شرعية وعلمية وتطبيقية، وتخدم طلاب المدينة والزائرين ببرامج أكاديمية معتمدة. تُذكر في الدليل ضمن مؤسسات التعليم العالي المرتبطة بالمدينة مع الإحالة إلى موقعها الرسمي للتخصصات والقبول.",
     "website": "https://www.iu.edu.sa",
-    "mapQuery": "الجامعة الإسلامية المدينة"
+    "mapQuery": "الجامعة الإسلامية المدينة",
+    "sourceUrl": "https://www.iu.edu.sa",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "umm-alqura",
@@ -67,7 +85,10 @@
     "country": "المملكة العربية السعودية",
     "description": "جامعة أم القرى في مكة المكرمة من أعرق الجامعات السعودية؛ تجمع كليات شرعية ولغوية وعلمية وترتبط تاريخيًا بالحرمين والتعليم في الحجاز. مرجع للباحثين والطلاب في العلوم الشرعية والعربية مع برامج دراسات عليا، ويُرجع لموقعها الرسمي للتفاصيل الأكاديمية.",
     "website": "https://www.uqu.edu.sa",
-    "mapQuery": "جامعة أم القرى مكة"
+    "mapQuery": "جامعة أم القرى مكة",
+    "sourceUrl": "https://www.uqu.edu.sa",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "king-fahad-library",
@@ -77,7 +98,10 @@
     "country": "المملكة العربية السعودية",
     "description": "مكتبة الملك فهد الوطنية في الرياض صرح وطني لحفظ التراث والمعرفة العربية والإسلامية، توفر مصادر مطبوعة ورقمية للباحثين والجمهور. تُذكر في الدليل كمكتبة مرجعية مع خدمات البحث والإعارة الرقمية حيث تتاح، والإحالة إلى موقعها لأي خدمات حديثة.",
     "website": "https://www.kfnl.gov.sa",
-    "mapQuery": "مكتبة الملك فهد الرياض"
+    "mapQuery": "مكتبة الملك فهد الرياض",
+    "sourceUrl": "https://www.kfnl.gov.sa",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "dar-kutub",
@@ -87,7 +111,10 @@
     "country": "مصر",
     "description": "دار الكتب المصرية في القاهرة من أعرق دور الكتب في العالم العربي؛ تحفظ مخطوطات ومطبوعات نادرة وتخدم البحث في التراث الإسلامي والعربي. يُستفاد منها للتحقيق والفهرسة مع مراعاة أنظمة الاطلاع، دون الاعتماد على عنوان واحد دون تحقق من النسخ.",
     "website": "https://www.darelkotob.org",
-    "mapQuery": "دار الكتب المصرية القاهرة"
+    "mapQuery": "دار الكتب المصرية القاهرة",
+    "sourceUrl": "https://www.darelkotob.org",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "maktabah-shamila",
@@ -97,7 +124,10 @@
     "country": "عالمي",
     "description": "المكتبة الشاملة مشروع رقمي ضخم لكتب التراث الإسلامي يسهّل البحث النصي في آلاف المجلدات. أداة نافعة للباحث مع ضرورة التحقق من النسخ والعزو للمصادر الورقية عند النقل العلمي، والتمييز بين الطبعات المحققة وغيرها. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://shamela.ws",
-    "mapQuery": null
+    "mapQuery": null,
+    "sourceUrl": "https://shamela.ws",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "ifta-saudi",
@@ -107,7 +137,10 @@
     "country": "المملكة العربية السعودية",
     "description": "الرئاسة العامة للبحوث العلمية والإفتاء في المملكة العربية السعودية جهة رسمية تُصدر فتاوى وبحوثًا شرعية وتُشرف على نشر العلم المعتمد. يُرجع إليها في بيان المسائل الشرعية للعامة مع التفريق بين الفتوى الرسمية والاجتهاد الفردي، والاستفادة من موقعها ومنشوراتها مع مراعاة اختلاف المذاهب عند الحاجة.",
     "website": "https://www.ssa.gov.sa",
-    "mapQuery": "هيئة كبار العلماء الرياض"
+    "mapQuery": "هيئة كبار العلماء الرياض",
+    "sourceUrl": "https://www.ssa.gov.sa",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "fiqh-council-mecca",
@@ -117,7 +150,10 @@
     "country": "المملكة العربية السعودية",
     "description": "المجمع الفقهي الإسلامي برابطة العالم الإسلامي في مكة المكرمة منبر جماعي لبحث النوازل الفقهية والقضايا المعاصرة، ويصدر قرارات وبحوثًا يُستأنس بها مع مراعاة اختلاف المذاهب. يُرجع إلى منشوراته للمسائل العامة مع التفريق بين قرار المجمع والفتوى الخاصة بكل بلد.",
     "website": "https://www.iifa-aifi.org",
-    "mapQuery": "مجمع الفقه الإسلامي جدة"
+    "mapQuery": "مجمع الفقه الإسلامي جدة",
+    "sourceUrl": "https://www.iifa-aifi.org",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "masjid-kabir-kuwait",
@@ -127,7 +163,10 @@
     "country": "الكويت",
     "description": "المسجد الكبير في الكويت معلم حضري ومركز للصلاة والخطابة والمناسبات الدينية الرسمية، بطابع عمراني حديث وخدمات واسعة للمصلين والزوار. يُستفاد منه في الدليل كمرجع للتعريف بالمسجد الجامع في العاصمة مع احترام أنظمة الزيارة والصلاة، دون الخلط بين القيمة التعبّدية والعروض السياحية.",
     "website": "https://www.awqaf.gov.kw",
-    "mapQuery": "المسجد الكبير الكويت"
+    "mapQuery": "المسجد الكبير الكويت",
+    "sourceUrl": "https://www.awqaf.gov.kw",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "masjid-ali-kuwait",
@@ -137,7 +176,10 @@
     "country": "الكويت",
     "description": "مسجد السيد علي في الكويت من المساجد المعروفة محليًا للصلاة والخطابة وخدمة الحي، ضمن شبكة المساجد التي ترعاها الجهات الرسمية. يُذكر في الدليل تعريفًا مرجعيًا موجزًا للموقع والدور الاجتماعي، مع الإحالة إلى الخريطة والجهات المختصة لأي تفاصيل إدارية أو أوقات الصلاة الرسمية.",
     "website": "https://www.awqaf.gov.kw",
-    "mapQuery": "مسجد علي بن أبي طالب الروضة الكويت"
+    "mapQuery": "مسجد علي بن أبي طالب الروضة الكويت",
+    "sourceUrl": "https://www.awqaf.gov.kw",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "masjid-sultan-brunei",
@@ -147,7 +189,10 @@
     "country": "بروناي",
     "description": "مسجد السلطان عمر علي سيف الدين في بروناي من أشهر جوامع جنوب شرق آسيا، بطابع عمراني مميز على الماء وخدمات واسعة للصلاة والزيارة. يُعرض في الدليل تعريفًا حضاريًا وتعبّديًا مع احترام حرمة المسجد، والإحالة إلى الخريطة والمصادر الرسمية لأي تفاصيل إدارية أو سياحية.",
     "website": "https://www.gov.bn",
-    "mapQuery": "مسجد السلطان عمر بروناي"
+    "mapQuery": "مسجد السلطان عمر بروناي",
+    "sourceUrl": "https://www.gov.bn",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "masjid-hassan-2-morocco",
@@ -157,7 +202,10 @@
     "country": "المغرب",
     "description": "مسجد الحسن الثاني في الدار البيضاء من أكبر المساجد الحديثة في العالم الإسلامي؛ معلم عمراني على المحيط الأطلسي للصلاة والخطابة والزيارة المنظمة. يُعرض في الدليل تعريفًا حضاريًا وتعبّديًا مع احترام أنظمة الزيارة وحرمة المسجد، والإحالة إلى الخريطة للموقع.",
     "website": "https://www.habous.gov.ma",
-    "mapQuery": "مسجد الحسن الثاني الدار البيضاء"
+    "mapQuery": "مسجد الحسن الثاني الدار البيضاء",
+    "sourceUrl": "https://www.habous.gov.ma",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "kuwait-univ-sharia",
@@ -167,7 +215,10 @@
     "country": "الكويت",
     "description": "تُخرّج المتخصصين في الفقه وأصوله والشريعة والقرآن وعلوم الدين، وتُصدر أبحاثاً شرعية محكّمة. كلية جامعية بالكويت تُدرّس الفقه وأصوله وعلوم القرآن والحديث، وتُخرج متخصصين في الشريعة والدراسات الإسلامية. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.ku.edu.kw",
-    "mapQuery": "كلية الشريعة جامعة الكويت"
+    "mapQuery": "كلية الشريعة جامعة الكويت",
+    "sourceUrl": "https://www.ku.edu.kw",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "imam-univ",
@@ -177,7 +228,10 @@
     "country": "المملكة العربية السعودية",
     "description": "جامعة الإمام سعود الإسلامية في الرياض صرح سعودي كبير لعلوم الشريعة واللغة والدعوة والعلوم التطبيقية، بخريجين ومنشورات واسعة الأثر. مرجع أكاديمي للطلاب والباحثين مع برامج دراسات عليا؛ التفاصيل عبر موقعها الرسمي للقبول والكليات.",
     "website": "https://www.imamu.edu.sa",
-    "mapQuery": "جامعة الإمام محمد بن سعود الرياض"
+    "mapQuery": "جامعة الإمام محمد بن سعود الرياض",
+    "sourceUrl": "https://www.imamu.edu.sa",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "jordan-univ-sharia",
@@ -187,7 +241,10 @@
     "country": "الأردن",
     "description": "كلية الشريعة في الجامعة الأردنية من أعرق كليات الشريعة في بلاد الشام؛ تخرّج فقهاء ودعاة وباحثين في التفسير والحديث والفقه وأصوله. تُذكر في الدليل ضمن مؤسسات التعليم الشرعي الأكاديمي مع الإحالة لبرامجها الرسمية. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.ju.edu.jo",
-    "mapQuery": "الجامعة الأردنية عمان"
+    "mapQuery": "الجامعة الأردنية عمان",
+    "sourceUrl": "https://www.ju.edu.jo",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "darul-ifta-egypt",
@@ -197,7 +254,10 @@
     "country": "مصر",
     "description": "دار الإفتاء المصرية جهة رسمية عريقة تُصدر فتاوى وبيانات شرعية وتُعنى بقضايا المجتمع المعاصر. يُستأنس بإنتاجها مع التحرّي ومقارنة الآراء عند الخلاف، والتمييز بين الفتوى الإدارية والاجتهاد العلمي المنشور. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.dar-alifta.org",
-    "mapQuery": "دار الإفتاء المصرية القاهرة"
+    "mapQuery": "دار الإفتاء المصرية القاهرة",
+    "sourceUrl": "https://www.dar-alifta.org",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "kuwait-awqaf",
@@ -207,7 +267,10 @@
     "country": "الكويت",
     "description": "وزارة الأوقاف والشؤون الإسلامية في الكويت ترعى المساجد والتعليم الديني والأنشطة الدعوية والوقفية. مرجع إداري للمؤسسات المحلية في الدليل مع الإحالة إلى قنواتها الرسمية للخدمات والمشاريع. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.islam.gov.kw",
-    "mapQuery": "وزارة الأوقاف الكويت"
+    "mapQuery": "وزارة الأوقاف الكويت",
+    "sourceUrl": "https://www.islam.gov.kw",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "haj-library-mecca",
@@ -217,7 +280,10 @@
     "country": "المملكة العربية السعودية",
     "description": "مكتبة الحرم المكي الشريف تخدم الباحثين والمجاورين بمصادر في العلوم الشرعية والتاريخ واللغة، ضمن منظومة خدمة الحرمين. تُذكر كمكتبة مرجعية مرتبطة بمكة مع مراعاة أنظمة الاطلاع والزيارة. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.moia.gov.sa",
-    "mapQuery": "مكتبة الحج مكة"
+    "mapQuery": "مكتبة الحج مكة",
+    "sourceUrl": "https://www.moia.gov.sa",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "dorar",
@@ -227,7 +293,10 @@
     "country": "عالمي",
     "description": "موقع الدرر السنية مشروع معرفي رقمي واسع في العقيدة والفقه والحديث والتفسير، يوفّر مقالات وبحوثًا وفهارس. أداة نافعة مع التحقق من العزو والمصادر الأصلية عند النقل العلمي، والتمييز بين المواد المحرّرة والموسوعية. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://dorar.net",
-    "mapQuery": null
+    "mapQuery": null,
+    "sourceUrl": "https://dorar.net",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "rabitat-alam-islami",
@@ -237,7 +306,10 @@
     "country": "المملكة العربية السعودية",
     "description": "منظمة إسلامية دولية تأسست عام 1382هـ، تضطلع بنشر الإسلام وتوحيد الجهود الإسلامية ودعم المسلمين في العالم. منظمة إسلامية دولية مقرها مكة تعمل في الدعوة والإغاثة والتنسيق بين الهيئات الإسلامية حول العالم. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.themwl.org",
-    "mapQuery": "رابطة العالم الإسلامي مكة"
+    "mapQuery": "رابطة العالم الإسلامي مكة",
+    "sourceUrl": "https://www.themwl.org",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "oxford-islamic-studies",
@@ -247,7 +319,10 @@
     "country": "المملكة المتحدة",
     "description": "مركز أكاديمي رائد يتبع جامعة أكسفورد، يُجري أبحاثاً في الشريعة والحضارة الإسلامية ويعزز الحوار الثقافي. مركز أكاديمي في جامعة أكسفورد يبحث الحضارة والدراسات الإسلامية بمنهج جامعي ويُصدر أبحاثًا ومحاضرات علمية. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.oxfordislamicstudies.com",
-    "mapQuery": "Oxford Centre for Islamic Studies"
+    "mapQuery": "Oxford Centre for Islamic Studies",
+    "sourceUrl": "https://www.oxfordislamicstudies.com",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "irshad-turkey",
@@ -257,7 +332,10 @@
     "country": "تركيا",
     "description": "أكبر مؤسسة إسلامية رسمية في العالم من حيث الميزانية والانتشار، تشرف على أكثر من ثمانين ألف مسجد وتُصدر الفتاوى. مؤسسة رسمية تركية تُشرف على المساجد والشؤون الدينية والتعليم الديني، وتُصدر فتاوى ومواد إرشادية بالعربية والتركية.",
     "website": "https://www.diyanet.gov.tr",
-    "mapQuery": "Diyanet İşleri Başkanlığı Ankara"
+    "mapQuery": "Diyanet İşleri Başkanlığı Ankara",
+    "sourceUrl": "https://www.diyanet.gov.tr",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "qarawiyyin",
@@ -267,7 +345,10 @@
     "country": "المغرب",
     "description": "أقدم جامعة في العالم لا تزال تعمل بلا انقطاع؛ تأسست عام 859م (245هـ) على يد فاطمة الفهرية بفاس، وارتبطت عبر القرون بحلقات الفقه المالكي وعلوم العربية، وتُعد معلمًا تعليميًا وحضاريًا بارزًا في المغرب الإسلامي. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.uqa.ma",
-    "mapQuery": "جامعة القرويين فاس"
+    "mapQuery": "جامعة القرويين فاس",
+    "sourceUrl": "https://www.uqa.ma",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "maktaba-islamiya-istanbul",
@@ -277,7 +358,10 @@
     "country": "تركيا",
     "description": "أعظم مستودعات المخطوطات الإسلامية في العالم، تضم أكثر من مئة وثمانين ألف مخطوطة في مختلف علوم الشريعة واللغة والتاريخ. مجمع مخطوطات في إسطنبول يحفظ عشرات الآلاف من المخطوطات الشرعية واللغوية، ويُعد مرجعًا أساسيًا لمحققي التراث.",
     "website": "https://www.yek.gov.tr",
-    "mapQuery": "Süleymaniye Kütüphanesi Istanbul"
+    "mapQuery": "Süleymaniye Kütüphanesi Istanbul",
+    "sourceUrl": "https://www.yek.gov.tr",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "islamic-affairs-uae",
@@ -287,7 +371,10 @@
     "country": "الإمارات",
     "description": "الهيئة العامة للشؤون الإسلامية والأوقاف في الإمارات جهة رسمية ترعى المساجد والفتوى والتوعية الدينية. تُذكر في الدليل كمرجع مؤسسي محلي مع الإحالة إلى قنواتها لأي خدمات أو بيانات رسمية. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.awqaf.gov.ae",
-    "mapQuery": "الهيئة العامة للشؤون الإسلامية أبوظبي"
+    "mapQuery": "الهيئة العامة للشؤون الإسلامية أبوظبي",
+    "sourceUrl": "https://www.awqaf.gov.ae",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "mquran-king-fahd",
@@ -297,7 +384,10 @@
     "country": "المملكة العربية السعودية",
     "description": "من أبرز المؤسسات العالمية في طباعة المصحف الشريف وتوزيعه بمختلف الروايات والترجمات المعتمدة، ويقوم على ضبط النص القرآني ونشره حول العالم عبر طبعات موثوقة وخدمات رقمية؛ يُرجع لموقعه الرسمي لأحدث الإصدارات والإحصاءات. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://qurancomplex.gov.sa",
-    "mapQuery": "مجمع الملك فهد لطباعة المصحف المدينة"
+    "mapQuery": "مجمع الملك فهد لطباعة المصحف المدينة",
+    "sourceUrl": "https://qurancomplex.gov.sa",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "al-azhar-mosque-inst",
@@ -307,7 +397,10 @@
     "country": "مصر",
     "description": "الجامع الأزهر مؤسسة تاريخية للعلم الشرعي في القاهرة؛ ارتبط بجامعة الأزهر وعلوم الشريعة واللغة عبر القرون. يُعرض في الدليل كمسجد وجامع علمي مع التمييز بين القيمة التاريخية والتعليم المعاصر. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.azhar.eg",
-    "mapQuery": "الجامع الأزهر القاهرة"
+    "mapQuery": "الجامع الأزهر القاهرة",
+    "sourceUrl": "https://www.azhar.eg",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "bait-al-hikma-iraq",
@@ -317,7 +410,10 @@
     "country": "العراق",
     "description": "بيت الحكمة في بغداد رمز تاريخي لحركة الترجمة والعلوم في العصر العباسي، ويُستحضر اليوم في سياق إحياء التراث والبحث. يُذكر تعريفًا حضاريًا مع الحذر من المبالغات الأسطورية والاعتماد على الدراسات التاريخية الموثقة. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "mapQuery": "بيت الحكمة بغداد",
-    "website": "https://www.baytalhikma.iq"
+    "website": "https://www.baytalhikma.iq",
+    "sourceUrl": "https://www.baytalhikma.iq",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "iiit",
@@ -327,7 +423,10 @@
     "country": "الولايات المتحدة",
     "description": "المعهد العالمي للفكر الإسلامي مؤسسة بحثية تُعنى بمناهج المعرفة الإسلامية وقضايا الفكر المعاصر. يُستأنس بمنشوراته مع النقد العلمي والتمييز بين الاجتهاد المؤسسي والأصول الشرعية الثابتة. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://iiit.org",
-    "mapQuery": "International Institute of Islamic Thought"
+    "mapQuery": "International Institute of Islamic Thought",
+    "sourceUrl": "https://iiit.org",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "islamweb",
@@ -336,7 +435,10 @@
     "city": "عبر الإنترنت",
     "country": "عالمي",
     "description": "إسلام ويب بوابة رقمية واسعة للفتوى والمقالات والموسوعات الشرعية بخدمة متعددة اللغات. يُستفاد منها للتقريب مع ضرورة التحقق من الأدلة والعزو، وعدم الاكتفاء بمختصر الفتوى في مسائل الخلاف الدقيق. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
-    "website": "https://www.islamweb.net"
+    "website": "https://www.islamweb.net",
+    "sourceUrl": "https://www.islamweb.net",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "ifta-jordan",
@@ -346,7 +448,10 @@
     "country": "الأردن",
     "description": "دائرة الإفتاء العام في الأردن جهة رسمية تُصدر فتاوى وبيانات شرعية للمجتمع الأردني. مرجع محلي للمسائل العامة مع مراعاة اختلاف المذاهب والإحالة إلى منشوراتها الرسمية عند الحاجة. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.aliftaa.jo",
-    "mapQuery": "دائرة الإفتاء العام عمّان"
+    "mapQuery": "دائرة الإفتاء العام عمّان",
+    "sourceUrl": "https://www.aliftaa.jo",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "king-faisal-center",
@@ -356,7 +461,10 @@
     "country": "المملكة العربية السعودية",
     "description": "مركز الملك فيصل للبحوث والدراسات الإسلامية في الرياض صرح بحثي ومكتبة متخصصة في الدراسات الإسلامية والإنسانية. يخدم الباحثين بالمخطوطات والمنشورات والندوات؛ التفاصيل عبر قنواته الرسمية. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.kfcris.com",
-    "mapQuery": "مركز الملك فيصل للبحوث الرياض"
+    "mapQuery": "مركز الملك فيصل للبحوث الرياض",
+    "sourceUrl": "https://www.kfcris.com",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "azhar-islamic-research-academy",
@@ -366,7 +474,10 @@
     "country": "مصر",
     "description": "مجمع البحوث الإسلامية بالأزهر هيئة علمية تُصدر بحوثًا وبيانات في العلوم الشرعية والقضايا المعاصرة. يُستأنس بإنتاجه مع التفريق بين بيان المجمع والاجتهاد الفردي، والرجوع للمصادر الأصلية عند النقل. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.azhar.eg",
-    "mapQuery": "مجمع البحوث الإسلامية الأزهر القاهرة"
+    "mapQuery": "مجمع البحوث الإسلامية الأزهر القاهرة",
+    "sourceUrl": "https://www.azhar.eg",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "ecfr",
@@ -376,7 +487,10 @@
     "country": "أيرلندا",
     "description": "المجلس الأوروبي للإفتاء والبحوث هيئة علمية جماعية تُعنى بفتاوى مسلمي أوروبا وقضايا الفقه المعاصر للمقيمين في الغرب، وتنشر قرارات وبحوثًا جماعية بالتشاور بين فقهاء من بلدان متعددة. يُستأنس بإنتاجه مع التحرّي ومقابلة الفتاوى بأهل العلم الموثوقين في كل بلد، دون اتخاذ قراراته وحدها مرجعًا قطعيًا في مسائل الخلاف.",
     "website": "https://www.e-cfr.org",
-    "mapQuery": "European Council for Fatwa and Research Dublin"
+    "mapQuery": "European Council for Fatwa and Research Dublin",
+    "sourceUrl": "https://www.e-cfr.org",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "alfurqan-heritage",
@@ -386,7 +500,10 @@
     "country": "المملكة المتحدة",
     "description": "مؤسسة الفرقان للتراث الإسلامي تُعنى بحفظ المخطوطات وفهرستها ودعم التحقيق العلمي للتراث. شريك معرفي للمكتبات والباحثين؛ يُذكر في الدليل مع الإحالة لمشاريعها المنشورة. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://al-furqan.com",
-    "mapQuery": "Al-Furqan Islamic Heritage Foundation London"
+    "mapQuery": "Al-Furqan Islamic Heritage Foundation London",
+    "sourceUrl": "https://al-furqan.com",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "masjid-fatih-istanbul",
@@ -396,7 +513,10 @@
     "country": "تركيا",
     "description": "جامع الفاتح من كبرى جوامع إسطنبول العثمانية؛ بناه السلطان محمد الفاتح بعد فتح القسطنطينية ليكون مجمعًا للصلاة والتعليم والوقف والخدمة الاجتماعية. يمثّل تراث العمارة العثمانية الكلاسيكية وارتباط المسجد بالمدينة، ويُزار للصلاة والتعرّف على تاريخ الفتح مع احترام حرمة المسجد وآداب الزيارة بلا غلو.",
     "website": "https://www.diyanet.gov.tr",
-    "mapQuery": "Fatih Mosque Istanbul"
+    "mapQuery": "Fatih Mosque Istanbul",
+    "sourceUrl": "https://www.diyanet.gov.tr",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "masjid-istiqlal-jakarta",
@@ -406,7 +526,10 @@
     "country": "إندونيسيا",
     "description": "مسجد الاستقلال في جاكرتا من أكبر مساجد إندونيسيا؛ معلم وطني للصلاة والتجمعات الدينية بطابع عمراني حديث. يُعرض تعريفًا تعبّديًا وحضاريًا مع احترام أنظمة الزيارة وحرمة المسجد. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://istiqlal.or.id",
-    "mapQuery": "Masjid Istiqlal Jakarta"
+    "mapQuery": "Masjid Istiqlal Jakarta",
+    "sourceUrl": "https://istiqlal.or.id",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "king-abdulaziz-library-riyadh",
@@ -416,7 +539,10 @@
     "country": "المملكة العربية السعودية",
     "description": "مكتبة الملك عبد العزيز العامة في الرياض توفر مصادر مطبوعة ورقمية وخدمات ثقافية للجمهور والباحثين. تُذكر في الدليل كمكتبة عامة كبرى مع الإحالة لموقعها لأي فروع أو خدمات رقمية. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.darah.org.sa",
-    "mapQuery": "دارة الملك عبدالعزيز الرياض"
+    "mapQuery": "دارة الملك عبدالعزيز الرياض",
+    "sourceUrl": "https://www.darah.org.sa",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "irticaa-islamic-center-malaysia",
@@ -426,7 +552,10 @@
     "country": "ماليزيا",
     "description": "مركز إرتقاء الإسلامي في ماليزيا من المراكز التي تخدم الجاليات والتعليم والدعوة في بيئة جنوب شرق آسيا. يُذكر تعريفًا موجزًا للدور الاجتماعي والتعليمي مع الإحالة للخريطة والقنوات الرسمية. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.iium.edu.my",
-    "mapQuery": "IIUM Gombak Kuala Lumpur"
+    "mapQuery": "IIUM Gombak Kuala Lumpur",
+    "sourceUrl": "https://www.iium.edu.my",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "mosque-of-paris",
@@ -436,7 +565,10 @@
     "country": "فرنسا",
     "description": "المسجد الكبير في باريس معلم تاريخي لمسلمي فرنسا؛ للصلاة والثقافة والخدمة الاجتماعية منذ القرن العشرين. يُعرض في الدليل مع احترام حرمة المسجد والسياق الأوروبي، دون خلط العبادة بالجدل السياسي. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.mosqueedeparis.net",
-    "mapQuery": "Grande Mosquée de Paris"
+    "mapQuery": "Grande Mosquée de Paris",
+    "sourceUrl": "https://www.mosqueedeparis.net",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   },
   {
     "id": "kuwait-fatwa-house",
@@ -446,6 +578,9 @@
     "country": "الكويت",
     "description": "بيت الزكاة والجهات المرتبطة بالفتوى في الكويت تخدم المجتمع بالفتاوى الشرعية والأعمال الخيرية ضمن الإطار الرسمي. يُذكر في الدليل كمرجع محلي مع الإحالة للقنوات المعتمدة لأي فتوى أو خدمة. ويُنصح بمراجعة الموقع الرسمي أو الجهة المختصة لأي تفاصيل إدارية أو أوقات أو برامج محدّثة.",
     "website": "https://www.awqaf.gov.kw",
-    "mapQuery": "إدارة الإفتاء وزارة الأوقاف الكويت"
+    "mapQuery": "إدارة الإفتاء وزارة الأوقاف الكويت",
+    "sourceUrl": "https://www.awqaf.gov.kw",
+    "sourceType": "official_website",
+    "contentStatus": "needs_review"
   }
 ]
