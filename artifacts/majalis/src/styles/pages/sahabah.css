@@ -3,38 +3,32 @@
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .sb-page { max-width: 780px; margin: 0 auto; padding: 0 0 6rem; }
 
-/* hero */
+/* hero — soft-card عبر modern-section-shell */
 .sb-hero {
-  background: linear-gradient(135deg, var(--majalis-emerald-deep,var(--mj-brand-deep)) 0%, var(--majalis-emerald,var(--mj-brand)) 100%);
   padding: 2.5rem 1.5rem 2rem;
   text-align: center;
-  color: var(--mj-white, #ffffff);
 }
 .sb-hero__badge {
   display: inline-block;
-  background: rgba(255,255,255,.15);
-  border: 1px solid rgba(255,255,255,.3);
   border-radius: 2rem;
   padding: .3rem .9rem;
   font-size: .75rem;
   font-weight: 600;
   margin-bottom: .8rem;
-  color: var(--mj-white, #ffffff);
 }
-.sb-hero__title { font-size: 1.65rem; font-weight: 800; margin: 0 0 .5rem; color: var(--mj-white, #ffffff); }
-.sb-hero__sub { font-size: .9rem; opacity: .88; margin: 0 0 1.4rem; line-height: 1.6; color: var(--mj-white, #ffffff); }
+.sb-hero__title { font-size: 1.65rem; font-weight: 800; margin: 0 0 .5rem; }
+.sb-hero__sub { font-size: .9rem; margin: 0 0 1.4rem; line-height: 1.6; }
 
 /* ayah box */
 .sb-ayah {
-  background: rgba(255,255,255,.12);
-  border: 1px solid rgba(255,255,255,.25);
   border-radius: .8rem;
   padding: 1rem 1.2rem;
   max-width: 580px;
   margin: 0 auto;
+  border: 1px solid transparent;
 }
-.sb-ayah__text { font-family: var(--font-quran,"Scheherazade New",serif); font-size: 1.15rem; line-height: 2; color: var(--mj-white, #ffffff); margin: 0 0 .3rem; }
-.sb-ayah__ref  { font-size: .72rem; opacity: .75; color: var(--mj-white, #ffffff); font-style: normal; }
+.sb-ayah__text { font-family: var(--font-quran,"Scheherazade New",serif); font-size: 1.15rem; line-height: 2; margin: 0 0 .3rem; }
+.sb-ayah__ref  { font-size: .72rem; font-style: normal; }
 
 /* body */
 .sb-body { padding: 1.25rem 1rem; }
@@ -76,7 +70,7 @@
 .sb-cat-btn--active {
   background: var(--majalis-emerald,var(--mj-brand));
   border-color: var(--majalis-emerald,var(--mj-brand));
-  color: var(--mj-white, #ffffff);
+  /* soft-hero ink via modern-section-shell */
 }
 .sb-count { font-size: .8rem; color: var(--mj-ink-2); margin: 0 0 1rem; }
 
