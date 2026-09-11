@@ -2,7 +2,9 @@
 .an-page { padding-bottom: 3rem; }
 
 /* Hero */
-.an-hero { text-align: center; padding: 2.4rem 1.2rem 1.6rem; }
+.an-hero {
+  /* soft-card عبر modern-section-shell */
+  background: transparent; text-align: center; padding: 2.4rem 1.2rem 1.6rem; }
 /* .an-hero لا خلفية داكنة فعلية له (يطابق [class$="-hero"] عن طريق الخطأ)،
    فترث كل هذه العناصر لون أبيض عبر --clr-text-1/inherit غير مرئي على
    الخلفية الفاتحة. محدِّد مركّب (.an-hero .an-hero__x) أعلى تخصيصًا من

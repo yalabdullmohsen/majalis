@@ -5,22 +5,23 @@
 
 /* hero */
 .uq-hero {
-  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--majalis-emerald,var(--mj-brand)) 100%);
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   padding: 2.5rem 1.5rem 2rem;
   text-align: center;
-  color: var(--mj-white, #ffffff);
+  color: inherit;
 }
 .uq-hero__badge {
   display: inline-block;
-  background: rgba(255,255,255,.15);
-  border: 1px solid rgba(255,255,255,.3);
+  background: inherit;
+  border: 1px solid inherit;
   border-radius: 2rem;
   padding: .3rem .9rem;
   font-size: .75rem; font-weight: 600;
-  margin-bottom: .8rem; color: var(--mj-white, #ffffff);
+  margin-bottom: .8rem; color: inherit;
 }
-.uq-hero__title { font-size: 1.65rem; font-weight: 800; margin: 0 0 .5rem; color: var(--mj-white, #ffffff); }
-.uq-hero__sub   { font-size: .9rem; opacity: .88; margin: 0 0 1.4rem; line-height: 1.6; color: var(--mj-white, #ffffff); }
+.uq-hero__title { font-size: 1.65rem; font-weight: 800; margin: 0 0 .5rem; color: inherit; }
+.uq-hero__sub   { font-size: .9rem; opacity: .88; margin: 0 0 1.4rem; line-height: 1.6; color: inherit; }
 
 /* إحصاءات جسم الصفحة — تباين WCAG AA (داخل البطل تُستعاد أدناه) */
 .uq-stats-row {
@@ -61,7 +62,7 @@
   border-color: rgba(255, 255, 255, 0.22);
   box-shadow: none;
 }
-.uq-hero .uq-stat__num { color: var(--on-brand, var(--mj-white, #ffffff)); }
+.uq-hero .uq-stat__num { color: var(--on-brand, inherit); }
 .uq-hero .uq-stat__label { color: var(--on-brand-secondary, var(--mj-surface-2)); }
 
 html.dark .uq-stat,
@@ -86,7 +87,7 @@ html[data-theme="dark"] .uq-hero .uq-stat {
 }
 html.dark .uq-hero .uq-stat__num,
 html[data-theme="dark"] .uq-hero .uq-stat__num {
-  color: var(--on-brand, var(--mj-white, #ffffff));
+  color: var(--on-brand, inherit);
 }
 html.dark .uq-hero .uq-stat__label,
 html[data-theme="dark"] .uq-hero .uq-stat__label {

@@ -5,22 +5,23 @@
 
 /* hero */
 .dq-hero {
-  background: linear-gradient(160deg, #0c1a2e 0%, #1a2e4a 50%, #0e3a5f 100%);
-  padding: 2.5rem 1.5rem 2rem; text-align: center; color: var(--mj-white, #ffffff);
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
+  padding: 2.5rem 1.5rem 2rem; text-align: center; color: inherit;
 }
 .dq-hero__badge {
-  display: inline-block; background: rgba(255,255,255,.12);
-  border: 1px solid rgba(255,255,255,.25); border-radius: 2rem;
-  padding: .3rem .9rem; font-size: .75rem; font-weight: 600; margin-bottom: .8rem; color: var(--mj-white, #ffffff);
+  display: inline-block; background: inherit;
+  border: 1px solid inherit; border-radius: 2rem;
+  padding: .3rem .9rem; font-size: .75rem; font-weight: 600; margin-bottom: .8rem; color: inherit;
 }
-.dq-hero__title { font-size: 1.65rem; font-weight: 800; margin: 0 0 .5rem; color: var(--mj-white, #ffffff); }
-.dq-hero__sub   { font-size: .9rem; opacity: .88; margin: 0 0 1.4rem; line-height: 1.6; color: var(--mj-white, #ffffff); }
+.dq-hero__title { font-size: 1.65rem; font-weight: 800; margin: 0 0 .5rem; color: inherit; }
+.dq-hero__sub   { font-size: .9rem; opacity: .88; margin: 0 0 1.4rem; line-height: 1.6; color: inherit; }
 .dq-hero-ayah {
-  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+  background: inherit; border: 1px solid inherit;
   border-radius: .8rem; padding: 1rem 1.2rem; max-width: 540px; margin: 0 auto;
 }
-.dq-hero-ayah__text { font-family: var(--font-quran,"Scheherazade New",serif); font-size: 1.1rem; line-height: 2.1; color: var(--mj-white, #ffffff); margin: 0 0 .3rem; }
-.dq-hero-ayah__ref  { font-size: .72rem; opacity: .7; color: var(--mj-white, #ffffff); font-style: normal; }
+.dq-hero-ayah__text { font-family: var(--font-quran,"Scheherazade New",serif); font-size: 1.1rem; line-height: 2.1; color: inherit; margin: 0 0 .3rem; }
+.dq-hero-ayah__ref  { font-size: .72rem; opacity: .7; color: inherit; font-style: normal; }
 
 /* body */
 .dq-body { padding: 1.25rem 1rem; }
