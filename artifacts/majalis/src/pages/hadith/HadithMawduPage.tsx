@@ -29,7 +29,7 @@ export default function HadithMawduPage() {
   return (
     <>
       <HadithClassGuide kind="mawdu" />
-      <HadithSection authenticityClass="mawdu" />
+      <HadithSection omitHeader authenticityClass="mawdu" />
       <div className="twh-share">
         <ShareButtons title="الأحاديث الموضوعة — سُنّة" url="https://www.ssunnah.com/hadith/mawdu" />
       </div>

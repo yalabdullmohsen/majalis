@@ -26,7 +26,7 @@ import {
   type HadithSearchScope,
   type HadithSortMode,
 } from "@/lib/hadith-access";
-import { PageHeader, SkeletonCardGrid, Empty, Chip } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { SectionEntryCard } from "@/components/ui/HubCard";
 import { GridScreen } from "@/components/design-system/screens";
@@ -56,6 +56,7 @@ import { buildHadithSearchIndex } from "@/lib/hadith/hadithSearch";
 import type { HadithRecord } from "@/lib/hadith/hadithNormalize";
 import "@/styles/components/hadith-badge.css";
 import "@/styles/pages/hadith.css";
+import "@/styles/pages/hadith-design-language.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -447,11 +448,9 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
 
 const CATEGORIES = [
   { id: "الكل", label: "الكل" },
-  { id: "العقيدة والإيمان", label: "العقيدة والإيمان", keys: ["إيمان","توحيد","عقيدة","قدر","توكل"] },
-  { id: "العبادات", label: "العبادات", keys: ["صلاة","زكاة","صوم","حج","طهارة","تلاوة","قرآن"] },
-  { id: "الأخلاق", label: "الأخلاق", keys: ["أخلاق","خلق","حياء","غضب","صبر","رحمة","إحسان"] },
-  { id: "الزهد والرقائق", label: "الزهد والرقائق", keys: ["زهد","دنيا","آخرة","رقائق","توبة"] },
-  { id: "متفرقات", label: "متفرقات", keys: ["علم","طلب العلم","حلال","حرام","أخوة","مسلم"] },
+  { id: "العقيدة والإيمان", label: "العقيدة والإيمان", keys: ["إيمان","توحيد","عقيدة","قدر","توكل","شرك","سنة"] },
+  { id: "العبادات", label: "العبادات", keys: ["صلاة","زكاة","صوم","حج","طهارة","تلاوة","قرآن","وضوء"] },
+  { id: "الأخلاق", label: "الأخلاق", keys: ["أخلاق","خلق","حياء","غضب","صبر","رحمة","إحسان","زهد","دنيا","آخرة","توبة","علم"] },
 ];
 
 export const HADITH_CLASS_META: Record<HadithClass, {
@@ -491,10 +490,13 @@ export function HadithSection({
   authenticityClass = "sahih",
   embedded = false,
   showGradeFilters = true,
+  omitHeader = false,
 }: {
   authenticityClass?: HadithClass;
   embedded?: boolean;
   showGradeFilters?: boolean;
+  /** إخفاء PageHeader عند وجود Information Hero خارجي (HadithClassGuide) */
+  omitHeader?: boolean;
 }) {
   const meta = HADITH_CLASS_META[authenticityClass];
   const [items, setItems] = useState<HadithItem[]>([]);
@@ -680,13 +682,6 @@ export function HadithSection({
 
   const filtersPanel = (
     <div className="hadith-filters-panel">
-      <input
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="ابحث بالمتن أو التخريج أو الرقم…"
-        className="page-search-input full content-hub-search"
-        aria-label="بحث نصي في الأحاديث"
-      />
 
       <div className="hadith-filter-section">
         <p className="hadith-filter-label">نطاق البحث</p>
@@ -755,29 +750,16 @@ export function HadithSection({
         />
       </div>
 
-      <div className="hadith-filter-section">
-        <p className="hadith-filter-label">المجموعة / طريق التخريج بالمصدر</p>
-        <ExclusiveChoiceGroup
-          ariaLabel="تصفية مجموعة الحديث"
-          value={activeCollection}
-          onChange={setActiveCollection}
-          items={collections.map((c) => ({
-            id: c,
-            label: c === "الكل" ? "الكل" : collectionLabel(c),
-          }))}
-        />
-      </div>
 
-      <div className="hadith-filter-section">
-        <p className="hadith-filter-label">الموضوع</p>
-        <ExclusiveChoiceGroup
-          ariaLabel="تصفية موضوع الحديث"
-          value={activeCategory}
-          onChange={setActiveCategory}
-          items={CATEGORIES.map((cat) => ({ id: cat.id, label: cat.label }))}
-        />
-      </div>
-
+      {showGradeFilters ? (
+        <div className="hadith-filter-section">
+          <HadithFilters
+            value={gradeFilter}
+            onChange={setGradeFilter}
+            hideWeak={authenticityClass === "sahih" && embedded}
+          />
+        </div>
+      ) : null}
       <div className="hadith-filter-section">
         <button
           type="button"
@@ -801,7 +783,7 @@ export function HadithSection({
 
   const inner = (
     <>
-      {!embedded && (
+      {!embedded && !omitHeader && (
         <PageHeader eyebrow={meta.eyebrow} title={meta.title} subtitle={meta.subtitle} />
       )}
 
@@ -832,13 +814,7 @@ export function HadithSection({
         <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="تصفية" />
       </div>
 
-      {showGradeFilters ? (
-        <HadithFilters
-          value={gradeFilter}
-          onChange={setGradeFilter}
-          hideWeak={authenticityClass === "sahih" && embedded}
-        />
-      ) : null}
+      {/* الحكم يُضبط من صحيفة التصفية المتقدمة — لا تكديس في الشريط */ null}
 
       <div className="ds-section__head hadith-toolbar__meta">
         <div className="hadith-stats-row">
@@ -870,18 +846,35 @@ export function HadithSection({
         </div>
       </div>
 
-      <div className="hadith-quick-cats" role="radiogroup" aria-label="تصفية موضوع الحديث">
-        {CATEGORIES.map((cat) => (
-          <Chip
-            key={cat.id}
-            role="radio"
-            active={activeCategory === cat.id}
-            className="hadith-quick-cat"
-            onClick={() => setActiveCategory(cat.id)}
-          >
-            {cat.label}
-          </Chip>
-        ))}
+      <div className="hdl-discover" data-hdl="discover">
+        <div className="hdl-discover__books" role="radiogroup" aria-label="تصفية الكتب">
+          {collections.map((c) => (
+            <button
+              key={c}
+              type="button"
+              role="radio"
+              aria-checked={activeCollection === c}
+              className={`hdl-discover__book${activeCollection === c ? " is-active" : ""}`}
+              onClick={() => setActiveCollection(c)}
+            >
+              {c === "الكل" ? "كل الكتب" : collectionLabel(c)}
+            </button>
+          ))}
+        </div>
+        <div className="hdl-discover__cats" role="radiogroup" aria-label="تصفية التصنيف">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.id}
+              type="button"
+              role="radio"
+              aria-checked={activeCategory === cat.id}
+              className={`hdl-chip${activeCategory === cat.id ? " is-active" : ""}`}
+              onClick={() => setActiveCategory(cat.id)}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {loading && displayItems.length === 0 ? (
@@ -934,14 +927,7 @@ export function HadithSection({
         </>
       )}
 
-      {!embedded && (
-        <aside className="ds-filters-panel ds-filters-panel--desktop">
-          <div className="ds-filters-panel__head">
-            <h2>بحث وتصفية</h2>
-          </div>
-          {filtersPanel}
-        </aside>
-      )}
+
 
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}
@@ -972,7 +958,7 @@ export function HadithSection({
   }
 
   return (
-    <div className="page-shell content-hub-page ds-page hadith-page" aria-busy={loading}>
+    <div className="page-shell content-hub-page ds-page hadith-page hadith-page--hdl" aria-busy={loading}>
       {inner}
     </div>
   );

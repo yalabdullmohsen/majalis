@@ -7,6 +7,8 @@ import {
   type HadithRecord,
 } from "@/lib/hadith-corpus";
 import { HadithGradeBadge } from "@/components/hadith/HadithGradeBadge";
+import { HadithSourceBlock } from "@/components/hadith/HadithSourceBlock";
+import "@/styles/pages/hadith-design-language.css";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { ReaderScreen } from "@/components/design-system/screens";
 import "@/styles/pages/hadith.css";
@@ -139,40 +141,25 @@ export default function HadithByIdView() {
 
       <section className="hadith-detail-card hadith-detail-card--matn" aria-label="متن الحديث">
         <h2 className="hadith-detail-card__title">المتن</h2>
-        <blockquote className="hadith-detail-matn">{hadith.matn}</blockquote>
+        <blockquote className="hadith-detail-matn hdl-role--matn">{hadith.matn}</blockquote>
       </section>
 
-      <section className="hadith-detail-card" aria-label="الراوي والمصدر">
-        <h2 className="hadith-detail-card__title">الراوي والمصدر</h2>
-        <dl className="hadith-detail-dl">
-          {hadith.narrator ? (
-            <>
-              <dt>الراوي</dt>
-              <dd>{hadith.narrator}</dd>
-            </>
-          ) : null}
-          <dt>المصدر</dt>
-          <dd>{hadith.numberingSystem}</dd>
-        </dl>
-      </section>
-
-      <section className="hadith-detail-card" aria-label="الحكم والتخريج">
-        <h2 className="hadith-detail-card__title">الحكم والتخريج</h2>
-        {hadith.grade ? (
+      <HadithSourceBlock
+        narrator={hadith.narrator}
+        source={hadith.numberingSystem}
+        takhrij={hadith.takhrij}
+        grade={hadith.grade?.quote || hadith.grade?.verdict || null}
+      />
+      {hadith.grade ? (
+        <section className="hadith-detail-card hdl-role--sharh" aria-label="تفصيل الحكم">
+          <h2 className="hadith-detail-card__title">تفصيل الحكم</h2>
           <div className="hadith-detail-grade">
             <HadithGradeBadge grade={hadith.grade.quote || hadith.grade.verdict || null} />
             <p className="hadith-detail-grade__quote">{hadith.grade.quote}</p>
             <p className="hadith-by-id__grade-src">المصدر: {hadith.grade.source}</p>
           </div>
-        ) : (
-          <p className="hadith-by-id__ungraded">لم يُوثَّق حكمه في مصادرنا بعد</p>
-        )}
-        {hadith.takhrij ? (
-          <p className="hadith-detail-takhrij">
-            <span className="hadith-meta-label">التخريج:</span> {hadith.takhrij}
-          </p>
-        ) : null}
-      </section>
+        </section>
+      ) : null}
 
       <div className="hadith-detail-card hadith-detail-card--actions">
         <ShareBlock hadith={hadith} />

@@ -8,6 +8,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
 import "@/styles/pages/arbaeen-nawawi.css";
+import "@/styles/pages/hadith-design-language.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { ListScreen } from "@/components/design-system/screens";
@@ -226,7 +227,7 @@ export default function ArbaeenNawawiPage() {
                 key={h.id}
                 id={`hadith-${h.id}`}
                 role="listitem"
-                className={`an-row${isRead ? " an-row--read" : ""}${isToday ? " an-row--today" : ""}${isExp ? " an-row--open" : ""}`}
+                className={`an-row hdl-hadith-row${isRead ? " an-row--read" : ""}${isToday ? " an-row--today" : ""}${isExp ? " an-row--open" : ""}`}
               >
                 <button
                   type="button"
@@ -257,12 +258,12 @@ export default function ArbaeenNawawiPage() {
                     <footer className="an-row__footer">
                       <span className="an-row__source">المصدر: {h.source}</span>
                       <div className="an-row__actions">
-                        <Link href={`/arbaeen-nawawi/${h.id}`} className="an-row__action" aria-label={`صفحة تعلّم واختبار الحديث ${h.id}`}>
+                        <Link href={`/arbaeen-nawawi/${h.id}`} className="an-row__action an-row__cta hdl-entry-card__cta" aria-label={`قراءة وشرح الحديث ${h.id}`}>
                           <GraduationCap size={14} strokeWidth={1.8} aria-hidden="true" /> اختبر
                         </Link>
                         <button
                           type="button"
-                          className={`an-row__action${isRead ? " an-row__action--done" : ""}`}
+                          className={`an-row hdl-hadith-row__action${isRead ? " an-row__action--done" : ""}`}
                           onClick={() => toggleRead(h.id)}
                           aria-label={isRead ? "إلغاء تعليم كمقروء" : "تعليم كمقروء"}
                         >
