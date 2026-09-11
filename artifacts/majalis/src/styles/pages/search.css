@@ -426,35 +426,35 @@ a.search-suggestion-chip {
   flex-shrink: 0;
 }
 .search-status-badge--partial {
-  background: #FFF7ED;
-  color: #9A3412;
-  border: 1px solid rgba(154, 52, 18, 0.2);
+  background: color-mix(in srgb, var(--mj-warning, #c2410c) 12%, var(--mj-surface, #fff));
+  color: var(--mj-warning, #9A3412);
+  border: 1px solid color-mix(in srgb, var(--mj-warning, #c2410c) 22%, transparent);
 }
 .search-status-badge--review {
-  background: #EEF6F2;
-  color: #0A3D2E;
-  border: 1px solid rgba(29, 78, 216, 0.2);
+  background: color-mix(in srgb, var(--mj-brand, #146b52) 10%, var(--mj-surface, #fff));
+  color: var(--mj-brand-deep, #0A3D2E);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 22%, transparent);
 }
 
-.search-kind-badge--lesson      { background: #EEF6F2; color: #0A3D2E; border-color: rgba(29,78,216,0.2); }
-.search-kind-badge--fatwa       { background: rgba(23,61,53,.10); color: var(--mj-brand); border-color: rgba(23,61,53,.2); }
-.search-kind-badge--ruling      { background: rgba(23,61,53,.10); color: var(--mj-brand); border-color: rgba(23,61,53,.2); }
-.search-kind-badge--qa          { background: #F5F3FF; color: #0A3D2E; border-color: rgba(109,40,217,0.2); }
-.search-kind-badge--fawaid      { background: #e8f5f0; color: var(--mj-brand); border-color: rgba(31,77,58,0.2); }
-.search-kind-badge--adhkar      { background: var(--mj-brand-soft); color: var(--mj-brand); border-color: rgba(21,128,61,0.2); }
-.search-kind-badge--library     { background: #FDF4FF; color: #B08A3E; border-color: rgba(126,34,206,0.2); }
-.search-kind-badge--hadith      { background: #FFF1F2; color: #BE123C; border-color: rgba(190,18,60,0.2); }
-.search-kind-badge--quran       { background: var(--mj-brand-soft); color: var(--mj-brand); border-color: rgba(21,128,61,0.2); }
+.search-kind-badge--lesson      { background: color-mix(in srgb, var(--mj-brand) 10%, var(--mj-surface, #fff)); color: var(--mj-brand-deep); border-color: color-mix(in srgb, var(--mj-brand) 22%, transparent); }
+.search-kind-badge--fatwa       { background: color-mix(in srgb, var(--mj-brand) 10%, transparent); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
+.search-kind-badge--ruling      { background: color-mix(in srgb, var(--mj-brand) 10%, transparent); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
+.search-kind-badge--qa          { background: color-mix(in srgb, var(--mj-ink, #16241e) 6%, var(--mj-surface, #fff)); color: var(--mj-brand-deep); border-color: color-mix(in srgb, var(--mj-ink) 14%, transparent); }
+.search-kind-badge--fawaid      { background: color-mix(in srgb, var(--mj-brand) 10%, var(--mj-surface, #fff)); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
+.search-kind-badge--adhkar      { background: var(--mj-brand-soft); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
+.search-kind-badge--library     { background: color-mix(in srgb, var(--mj-accent, #b08a3e) 12%, var(--mj-surface, #fff)); color: var(--mj-accent, #B08A3E); border-color: color-mix(in srgb, var(--mj-accent) 22%, transparent); }
+.search-kind-badge--hadith      { background: color-mix(in srgb, var(--mj-danger, #b91c1c) 10%, var(--mj-surface, #fff)); color: var(--mj-danger, #BE123C); border-color: color-mix(in srgb, var(--mj-danger) 22%, transparent); }
+.search-kind-badge--quran       { background: var(--mj-brand-soft); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
 .search-kind-badge--story,
-.search-kind-badge--stories     { background: rgba(23,61,53,.10); color: var(--mj-brand); border-color: rgba(23,61,53,.2); }
+.search-kind-badge--stories     { background: color-mix(in srgb, var(--mj-brand) 10%, transparent); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 20%, transparent); }
 .search-kind-badge--fiqh-council,
-.search-kind-badge--fiqh-decision { background: #EEF6F2; color: #0A3D2E; border-color: rgba(29,78,216,0.2); }
+.search-kind-badge--fiqh-decision { background: color-mix(in srgb, var(--mj-brand) 10%, var(--mj-surface, #fff)); color: var(--mj-brand-deep); border-color: color-mix(in srgb, var(--mj-brand) 22%, transparent); }
 .search-kind-badge--miracle,
-.search-kind-badge--miracles    { background: #F0FDFA; color: var(--mj-brand); border-color: rgba(15,118,110,0.2); }
+.search-kind-badge--miracles    { background: color-mix(in srgb, var(--mj-brand) 8%, var(--mj-surface, #fff)); color: var(--mj-brand); border-color: color-mix(in srgb, var(--mj-brand) 18%, transparent); }
 .search-kind-badge--course,
-.search-kind-badge--courses     { background: #EEF6F2; color: #0A3D2E; border-color: rgba(29,78,216,0.2); }
+.search-kind-badge--courses     { background: color-mix(in srgb, var(--mj-brand) 10%, var(--mj-surface, #fff)); color: var(--mj-brand-deep); border-color: color-mix(in srgb, var(--mj-brand) 22%, transparent); }
 .search-kind-badge--update,
-.search-kind-badge--updates     { background: #F1F5F9; color: #475569; border-color: rgba(71,85,105,0.2); }
+.search-kind-badge--updates     { background: var(--mj-surface-2, #F1F5F9); color: var(--mj-ink-2, #475569); border-color: color-mix(in srgb, var(--mj-ink) 14%, transparent); }
 
 
 /* ═══════════════════════════════════════════════════════════════════

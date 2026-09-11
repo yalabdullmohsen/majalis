@@ -55,7 +55,9 @@ export function FiqhResearchAssistantView({ filters = {} }: Props) {
             )}
           </div>
         ))}
-        {loading && <p className="fiqh-research-hint">جارٍ البحث في المواد المنشورة...</p>}
+        {loading && (
+          <p className="fiqh-research-hint" role="status" aria-busy="true" aria-label="تحديث النتائج" />
+        )}
       </div>
 
       <form onSubmit={handleSubmit} className="fiqh-research-form" aria-label="البحث الفقهي">

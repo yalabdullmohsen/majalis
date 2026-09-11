@@ -319,7 +319,7 @@ export default function ResearcherProfilePage() {
             onClick={handleSave}
             disabled={saving}
           >
-            {saving ? "جارٍ الحفظ…" : "حفظ الملف"}
+            {saving ? "حفظ…" : "حفظ الملف"}
           </button>
         </div>
       </div>

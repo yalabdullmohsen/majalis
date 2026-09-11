@@ -111,7 +111,7 @@ export default function DiscoverIslamContactPage() {
 
         {result && !result.ok && <p className="dii-form-error">{result.error === "consent_required" ? "الموافقة على سياسة الخصوصية مطلوبة." : "تعذّر إرسال الطلب، حاول مجددًا."}</p>}
 
-        <button type="submit" disabled={busy} className="asp-run-btn">{busy ? "جارٍ الإرسال..." : "إرسال الطلب"}</button>
+        <button type="submit" disabled={busy} className="asp-run-btn" aria-busy={busy}>{busy ? "إرسال…" : "إرسال الطلب"}</button>
       </form>
     </DiscoverIslamShell>
   );

@@ -96,7 +96,7 @@ export default function UpdatePasswordPage() {
         ) : null}
         {ok ? (
           <p className="login-alert" role="status">
-            تم تحديث كلمة المرور. جارٍ التحويل…
+            تم تحديث كلمة المرور. سيتم التحويل…
           </p>
         ) : (
           <form onSubmit={handleSubmit} className="login-form">
@@ -127,7 +127,7 @@ export default function UpdatePasswordPage() {
               />
             </div>
             <button type="submit" className="login-submit" disabled={loading}>
-              {loading ? "جارٍ الحفظ…" : "حفظ كلمة المرور"}
+              {loading ? "حفظ…" : "حفظ كلمة المرور"}
             </button>
           </form>
         )}

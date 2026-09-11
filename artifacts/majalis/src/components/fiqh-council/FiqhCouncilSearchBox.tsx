@@ -73,7 +73,9 @@ export function FiqhCouncilSearchBox({
 
       {open && debounced.trim() && (
         <div id="fiqh-search-dropdown" className="fiqh-search-dropdown" role="listbox">
-          {loading && <p className="fiqh-search-hint">جارٍ البحث...</p>}
+          {loading && (
+            <p className="fiqh-search-hint" role="status" aria-busy="true" aria-label="تحديث النتائج" />
+          )}
 
           {!loading && suggestions.length > 0 && (
             <div className="fiqh-search-suggestions">
