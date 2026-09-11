@@ -18,6 +18,7 @@ import {
   type AyahCard,
 } from "@/lib/quran-memorization";
 import { BookOpen, ChevronLeft, RotateCcw } from "lucide-react";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const ALL_TEST_TYPES: TestType[] = [
   "complete-ayah",
@@ -325,6 +326,7 @@ export default function QuranMemorizationPage() {
   const currentQ = questions[currentIdx];
 
   return (
+    <UtilityScreen compose="mark">
     <div className="qmem-page">
       {/* Hero */}
       <div className="qmem-hero">
@@ -491,5 +493,6 @@ export default function QuranMemorizationPage() {
         )}
       </div>
     </div>
+    </UtilityScreen>
   );
 }

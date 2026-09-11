@@ -55,6 +55,9 @@ const busyRoots = [
   "views/AuthCallbackPage.tsx",
   "views/learning/CertificateVerifyPage.tsx",
   "views/learning/LearningPathDetailPage.tsx",
+  "components/learning/AssessmentModal.tsx",
+  "components/citation/CitationModal.tsx",
+  "components/assistant/AssistantChatView.tsx",
 ];
 for (const f of files) {
   const rel = f.replace(srcRoot + "/", "");

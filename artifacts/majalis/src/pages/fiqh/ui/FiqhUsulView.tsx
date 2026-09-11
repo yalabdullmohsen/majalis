@@ -8,6 +8,7 @@ import { HubCard } from "@/components/ui/HubCard";
 import { USUL_HUB_TOPICS } from "@/lib/fiqh/fiqh-usul-topics";
 import "@/styles/pages/fiqh-hub.css";
 import "@/styles/components/hub-card.css";
+import { DashboardScreen } from "@/components/design-system/screens";
 
 export default function FiqhUsulPage() {
   usePageView("fiqh-usul", null);
@@ -23,6 +24,7 @@ export default function FiqhUsulPage() {
   const detailTopics = USUL_HUB_TOPICS.filter((t) => t.details && t.details.length > 0);
 
   return (
+    <DashboardScreen compose="mark">
     <SectionTemplatePage
       route="/fiqh/usul"
       title="أصول الفقه"
@@ -133,5 +135,6 @@ export default function FiqhUsulPage() {
         <div className="fiqh-fab-clearance" />
       </div>
     </SectionTemplatePage>
+    </DashboardScreen>
   );
 }

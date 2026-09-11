@@ -124,7 +124,7 @@ export function AssessmentModal({
                 </div>
               ))}
               <button type="button" className="am-submit-btn" disabled={!allAnswered || submitting} onClick={handleSubmit}>
-                {submitting ? "جارٍ التصحيح…" : "إرسال الإجابات"}
+                {submitting ? "تصحيح…" : "إرسال الإجابات"}
               </button>
             </>
           )}

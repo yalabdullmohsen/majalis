@@ -14,6 +14,7 @@ import {
   type ReadingSectionVariant,
 } from "@/components/content/ContentReading";
 import "@/styles/pages/qiraat.css";
+import { DashboardScreen } from "@/components/design-system/screens";
 
 function sectionVariant(id: string): ReadingSectionVariant {
   if (id === "meaning") return "definition";
@@ -35,6 +36,7 @@ export default function QuranSevenAhrufView() {
   }, []);
 
   return (
+    <DashboardScreen compose="mark">
     <SectionTemplatePage
       route="/quran-hub/seven-ahruf"
       title="الأحرف السبعة"
@@ -91,5 +93,6 @@ export default function QuranSevenAhrufView() {
         />
       </ContentDetailReadingShell>
     </SectionTemplatePage>
+    </DashboardScreen>
   );
 }

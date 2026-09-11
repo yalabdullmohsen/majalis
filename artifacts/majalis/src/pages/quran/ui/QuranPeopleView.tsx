@@ -14,6 +14,7 @@ import {
 } from "@/features/quran-people";
 import "@/styles/pages/quran-hub.css";
 import "@/styles/pages/quran-people.css";
+import { DashboardScreen } from "@/components/design-system/screens";
 
 type SortMode = "alpha" | "mentions";
 
@@ -61,6 +62,7 @@ export default function QuranPeopleView() {
   }, [people, category, mention, sort]);
 
   return (
+    <DashboardScreen compose="mark">
     <SectionTemplatePage
       route="/quran/people"
       title={QURAN_PEOPLE_PAGE_TITLE}
@@ -153,5 +155,6 @@ export default function QuranPeopleView() {
       </div>
     </div>
     </SectionTemplatePage>
+    </DashboardScreen>
   );
 }

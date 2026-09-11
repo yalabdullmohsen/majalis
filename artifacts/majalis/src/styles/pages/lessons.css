@@ -1500,7 +1500,7 @@ html[data-theme="dark"] .lesson-filters__search-field input,
 html.dark .lesson-filters__search-field input {
   background: var(--color-surface, #1a221f);
   color: var(--text-primary, #ecf2ef);
-  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 32%, #2a3531);
+  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 32%, var(--mj-ink-2, #2a3531));
 }
 
 .lessons-page-v3 .lessons-v2-section--first {

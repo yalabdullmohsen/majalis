@@ -475,7 +475,7 @@ html[data-theme="dark"] .fqh-hub-card__desc {
       color-mix(in srgb, var(--mj-brand, #1f6b56) 4%, var(--majalis-panel, var(--surface, #fff))) 0%,
       var(--majalis-panel, var(--surface, #fff)) 100%
     );
-  box-shadow: 0 1px 2px color-mix(in srgb, #0f172a 5%, transparent);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--mj-ink, #0f172a) 5%, transparent);
   text-decoration: none;
   color: inherit;
   transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
@@ -585,7 +585,7 @@ html[data-theme="dark"] .fqh-hub-card__desc {
 html[data-theme="dark"] .fiqh-book-card,
 html.dark .fiqh-book-card {
   background: color-mix(in srgb, var(--mj-brand, #5cc095) 8%, var(--surface, #1a221f));
-  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 24%, #2a3531);
+  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 24%, var(--mj-ink-2, #2a3531));
 }
 html[data-theme="dark"] .fiqh-book-card__icon,
 html.dark .fiqh-book-card__icon,
@@ -978,7 +978,7 @@ html.dark .fiqh-lux-page.section-lobby {
   --fq-surface: var(--mj-surface, #1a221f);
   --fq-ink: var(--text-primary, #ecf2ef);
   --fq-ink-soft: var(--text-secondary, #c2cfca);
-  --fq-line: color-mix(in srgb, var(--fq-emerald-bright) 22%, #2a3531);
+  --fq-line: color-mix(in srgb, var(--fq-emerald-bright) 22%, var(--mj-ink-2, #2a3531));
 }
 
 .fiqh-lux-shell {
@@ -1785,7 +1785,7 @@ html.dark .fiqh-filters__chip.is-active {
   border-radius: var(--radius-card, 24px);
   border: 1px solid color-mix(in srgb, var(--mn-border-default, #d8e3de) 75%, transparent);
   background: var(--fq-surface, var(--cardBackground, #fff));
-  box-shadow: var(--ss-shadow-soft, 0 1px 2px color-mix(in srgb, #0f172a 4%, transparent));
+  box-shadow: var(--ss-shadow-soft, 0 1px 2px color-mix(in srgb, var(--mj-ink, #0f172a) 4%, transparent));
   min-height: 44px;
   max-height: 6.5rem;
   overflow: hidden;
@@ -1823,7 +1823,7 @@ html.dark .fiqh-filters__chip.is-active {
 .fiqh-category-card--salah { --fiqh-card-accent: var(--mj-brand, #157a5c); }
 .fiqh-category-card--janaza { --fiqh-card-accent: #3d5c54; }
 .fiqh-category-card--zakat { --fiqh-card-accent: color-mix(in srgb, var(--mj-brand, #146b52) 70%, #6ee7b7); }
-.fiqh-category-card--sawm { --fiqh-card-accent: #1f6b56; }
+.fiqh-category-card--sawm { --fiqh-card-accent: var(--mj-brand, #1f6b56); }
 .fiqh-category-card--hajj { --fiqh-card-accent: var(--mj-brand-deep, #0f5c4c); }
 .fiqh-category-card--buyu { --fiqh-card-accent: #6b7c3a; }
 .fiqh-category-card--nikah { --fiqh-card-accent: #2a8f6a; }
@@ -1837,7 +1837,7 @@ html.dark .fiqh-filters__chip.is-active {
 
 .fiqh-category-card--featured {
   box-shadow:
-    0 1px 2px color-mix(in srgb, #0f172a 6%, transparent),
+    0 1px 2px color-mix(in srgb, var(--mj-ink, #0f172a) 6%, transparent),
     0 8px 18px color-mix(in srgb, var(--fiqh-card-accent, #0f5c4c) 12%, transparent);
 }
 
@@ -1995,24 +1995,24 @@ html.dark .fiqh-issue-card__disclaimer {
 
 .fiqh-status-badge--review {
   background: color-mix(in srgb, #64748b 18%, transparent);
-  color: #334155;
+  color: var(--mj-ink-2, #334155);
 }
 
 html[data-theme="dark"] .fiqh-status-badge--complete,
 html.dark .fiqh-status-badge--complete {
-  background: color-mix(in srgb, #34d399 22%, #0f172a);
+  background: color-mix(in srgb, #34d399 22%, var(--mj-ink, #0f172a));
   color: #a7f3d0;
 }
 
 html[data-theme="dark"] .fiqh-status-badge--needs,
 html.dark .fiqh-status-badge--needs {
-  background: color-mix(in srgb, #fbbf24 20%, #0f172a);
+  background: color-mix(in srgb, #fbbf24 20%, var(--mj-ink, #0f172a));
   color: #fde68a;
 }
 
 html[data-theme="dark"] .fiqh-status-badge--review,
 html.dark .fiqh-status-badge--review {
-  background: color-mix(in srgb, #94a3b8 22%, #0f172a);
+  background: color-mix(in srgb, #94a3b8 22%, var(--mj-ink, #0f172a));
   color: #e2e8f0;
 }
 
@@ -2078,8 +2078,8 @@ html.dark .fiqh-status-badge--review {
 
 html[data-theme="dark"] .fiqh-lesson-alert,
 html.dark .fiqh-lesson-alert {
-  background: color-mix(in srgb, #f59e0b 14%, #0f172a);
-  border-color: color-mix(in srgb, #fbbf24 35%, #334155);
+  background: color-mix(in srgb, #f59e0b 14%, var(--mj-ink, #0f172a));
+  border-color: color-mix(in srgb, #fbbf24 35%, var(--mj-ink-2, #334155));
   color: #fef3c7;
 }
 
@@ -2196,7 +2196,7 @@ html[data-theme="dark"] .fiqh-hub-search--compact .fiqh-hub-search__field input,
 html.dark .fiqh-hub-search--compact .fiqh-hub-search__field input {
   background: var(--color-surface, #1a221f);
   color: var(--text-primary, #ecf2ef);
-  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 32%, #2a3531);
+  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 32%, var(--mj-ink-2, #2a3531));
 }
 .fiqh-lux-shell .sr-only,
 .fiqh-hub-layout .sr-only {
@@ -2260,7 +2260,7 @@ html.dark .fiqh-hub-search--compact .fiqh-hub-search__field input {
 .fiqh-lux-shell .fiqh-issue-card {
   border-radius: var(--radius-card, 24px);
   border: 1px solid color-mix(in srgb, var(--mn-border-default, #d8e3de) 75%, transparent);
-  box-shadow: 0 1px 2px color-mix(in srgb, #0f172a 6%, transparent);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--mj-ink, #0f172a) 6%, transparent);
   background: color-mix(in srgb, var(--color-surface, #fff) 96%, var(--mn-brand-soft, #e8f5f0));
   padding: 0.65rem 0.8rem;
 }
@@ -2271,26 +2271,26 @@ html.dark .fiqh-hub-search--compact .fiqh-hub-search__field input {
 html[data-theme="dark"] .fiqh-lux-shell .fiqh-category-card--ibadat,
 html.dark .fiqh-lux-shell .fiqh-category-card--ibadat {
   background:
-    linear-gradient(165deg, color-mix(in srgb, #5cc095 14%, transparent), transparent 58%),
-    color-mix(in srgb, var(--color-surface, #1c1917) 92%, #0f3d32);
+    linear-gradient(165deg, color-mix(in srgb, var(--mj-brand-soft, #5cc095) 14%, transparent), transparent 58%),
+    color-mix(in srgb, var(--color-surface, #1c1917) 92%, var(--mj-brand-deep, #0f3d32));
 }
 html[data-theme="dark"] .fiqh-lux-shell .fiqh-category-card--muamalat,
 html.dark .fiqh-lux-shell .fiqh-category-card--muamalat {
   background:
     linear-gradient(165deg, color-mix(in srgb, #a3b56a 14%, transparent), transparent 58%),
-    color-mix(in srgb, var(--color-surface, #1c1917) 92%, #0f3d32);
+    color-mix(in srgb, var(--color-surface, #1c1917) 92%, var(--mj-brand-deep, #0f3d32));
 }
 html[data-theme="dark"] .fiqh-lux-shell .fiqh-category-card--usrah,
 html.dark .fiqh-lux-shell .fiqh-category-card--usrah {
   background:
     linear-gradient(165deg, color-mix(in srgb, #5eead4 12%, transparent), transparent 58%),
-    color-mix(in srgb, var(--color-surface, #1c1917) 92%, #0f3d32);
+    color-mix(in srgb, var(--color-surface, #1c1917) 92%, var(--mj-brand-deep, #0f3d32));
 }
 html[data-theme="dark"] .fiqh-lux-shell .fiqh-category-card--qada_jinayat,
 html.dark .fiqh-lux-shell .fiqh-category-card--qada_jinayat {
   background:
     linear-gradient(165deg, color-mix(in srgb, #94a3b8 12%, transparent), transparent 58%),
-    color-mix(in srgb, var(--color-surface, #1c1917) 92%, #0f3d32);
+    color-mix(in srgb, var(--color-surface, #1c1917) 92%, var(--mj-brand-deep, #0f3d32));
 }
 html[data-theme="dark"] .fiqh-lux-shell .fiqh-category-card__title,
 html.dark .fiqh-lux-shell .fiqh-category-card__title,
@@ -2306,7 +2306,7 @@ html.dark .fiqh-lux-shell .fiqh-category-card__soon {
 }
 html[data-theme="dark"] .fiqh-lux-shell .fiqh-issue-card,
 html.dark .fiqh-lux-shell .fiqh-issue-card {
-  background: color-mix(in srgb, var(--color-surface, #1c1917) 92%, #0f3d32);
+  background: color-mix(in srgb, var(--color-surface, #1c1917) 92%, var(--mj-brand-deep, #0f3d32));
   box-shadow: 0 1px 2px color-mix(in srgb, #000 25%, transparent);
 }
 .fiqh-hub-stats {

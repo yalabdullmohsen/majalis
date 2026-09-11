@@ -322,7 +322,7 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
                 </>
               ) : (
                 <p className="cm-hint cm-hint--center">
-                  {loading ? "جاري الإنشاء..." : "انقر على تبويب «معاينة» أولًا للتحقق من النص"}
+                  {loading ? "إنشاء…" : "انقر على تبويب «معاينة» أولًا للتحقق من النص"}
                 </p>
               )}
             </div>
@@ -352,7 +352,7 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
                 disabled={loading}
                 className="citation-btn citation-btn--primary w-full disabled:opacity-50"
               >
-                {loading ? "جاري الحفظ..." : "حفظ في مكتبتي"}
+                {loading ? "حفظ…" : "حفظ في مكتبتي"}
               </button>
             </div>
           )}

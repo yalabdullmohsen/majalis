@@ -5,6 +5,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import "@/styles/pages/janaza.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 
 type JanazaTab = "ghusl" | "takfin" | "salah" | "dafn" | "aadab";
@@ -192,6 +193,7 @@ export default function JanazaPage() {
   [search]);
 
   return (
+    <UtilityScreen compose="mark">
     <main className="jnz-page" dir="rtl">
       {/* hero */}
       <section className="jnz-hero">
@@ -418,5 +420,6 @@ export default function JanazaPage() {
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه" count={4} />
       </div>
     </main>
+    </UtilityScreen>
   );
 }

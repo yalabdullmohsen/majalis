@@ -8,6 +8,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import "@/styles/pages/mawarith.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 
 type MawTab = "varasa" | "huquq" | "asab" | "hajb" | "masail";
@@ -277,6 +278,7 @@ export default function MawarithPage() {
   [search]);
 
   return (
+    <UtilityScreen compose="mark">
     <main className="mw-page" dir="rtl">
       {/* hero */}
       <section className="mw-hero">
@@ -561,5 +563,6 @@ export default function MawarithPage() {
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في المواريث" count={4} />
       </div>
     </main>
+    </UtilityScreen>
   );
 }
