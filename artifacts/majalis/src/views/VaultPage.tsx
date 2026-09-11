@@ -519,12 +519,25 @@ export default function VaultPage() {
 
   useEffect(() => {
     if (!user?.id) return;
+    let cancelled = false;
     setLoading(true);
     getVaultData(user.id)
-      .then((data) => setVaultData(data))
+      .then((data) => {
+        if (!cancelled) setVaultData(data);
+      })
       .catch(() => {})
-      .finally(() => setLoading(false));
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [user?.id]);
+
+  const hasVaultContent =
+    vaultData.bookmarks.length > 0 ||
+    vaultData.resume.length > 0 ||
+    vaultData.notes.length > 0;
 
   const handleAddNote = async (text: string) => {
     if (!user?.id) return;
@@ -622,12 +635,12 @@ export default function VaultPage() {
         ))}
       </div>
 
-      {loading ? (
-        <div className="profile-loading vault-loading-wrap">
+      {loading && !hasVaultContent ? (
+        <div className="profile-loading vault-loading-wrap" aria-busy="true">
           <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
         </div>
       ) : (
-        <>
+        <div aria-busy={loading}>
           {/* Bookmarks Tab */}
           {tab === "bookmarks" && (
           <div role="tabpanel" id="vault-panel-bookmarks" aria-labelledby="vault-tab-bookmarks" className="vault-list">
@@ -701,7 +714,7 @@ export default function VaultPage() {
               <HighlightsLibrary query={search} />
             </div>
           )}
-        </>
+        </div>
       )}
 
       {showAddNote && (
