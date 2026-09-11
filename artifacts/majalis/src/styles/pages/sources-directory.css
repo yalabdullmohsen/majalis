@@ -6,7 +6,7 @@
   margin: 0 0 16px;
   font-size: 13px;
   line-height: 1.7;
-  color: var(--mj-ink-2, #4a5a53);
+  color: var(--mj-ink-2, var(--mj-ink-2));
 }
 
 .sources-directory-grid {
@@ -24,9 +24,9 @@
 .sources-directory-card {
   display: block;
   padding: 14px;
-  border: 1px solid var(--mj-hairline, #d5ddd9);
+  border: 1px solid var(--mj-hairline, #e3e8e6);
   border-radius: 14px;
-  background: var(--mj-surface, #fff);
+  background: var(--mj-surface, var(--mj-white, #ffffff));
   text-decoration: none;
   color: inherit;
 }
@@ -34,7 +34,7 @@
 .sources-directory-card__kind {
   font-size: 12px;
   font-weight: 700;
-  color: var(--mj-brand-deep, #123f2e);
+  color: var(--mj-brand-deep, #12362c);
 }
 
 .sources-directory-card__title {
@@ -47,7 +47,7 @@
 .sources-directory-card__meta {
   margin: 0;
   font-size: 12px;
-  color: var(--mj-ink-2, #4a5a53);
+  color: var(--mj-ink-2, var(--mj-ink-2));
 }
 
 .sources-detail {
@@ -70,7 +70,7 @@
 .sources-detail__head p {
   margin: 0 0 16px;
   font-size: 14px;
-  color: var(--mj-ink-2, #4a5a53);
+  color: var(--mj-ink-2, var(--mj-ink-2));
 }
 
 .sources-detail__grid {
@@ -79,7 +79,7 @@
 }
 
 .sources-detail__empty {
-  color: var(--mj-ink-2, #4a5a53);
+  color: var(--mj-ink-2, var(--mj-ink-2));
   font-size: 14px;
 }
 

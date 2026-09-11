@@ -9,6 +9,7 @@ import { ACCREDITATION_LABELS, ACCREDITATION_COLOR } from "@/lib/universities-se
 import type { University, UniversityProgram } from "@/lib/universities-service";
 import "@/styles/pages/universities-compare.css";
 import "@/styles/pages/learning-path-dashboard.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 function lowestFee(programs: UniversityProgram[]): string {
   const fees = programs
@@ -186,8 +187,10 @@ export default function UniversitiesComparePage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <CompareProvider>
       <CompareContent />
     </CompareProvider>
+    </UtilityScreen>
   );
 }

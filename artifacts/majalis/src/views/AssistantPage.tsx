@@ -9,6 +9,7 @@ import "@/styles/pages/assistant.css";
 import "@/styles/pages/assistant-shell.css";
 
 import { SITE_URL } from "@/lib/site-config";
+import { UtilityScreen } from "@/components/design-system/screens";
 export { ASSISTANT_FAILURE_MESSAGE as FAILURE_MESSAGE } from "@/hooks/useAssistantChat";
 
 const RESEARCHER_LINKS = [
@@ -43,6 +44,7 @@ export default function AssistantPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="assistant-page assistant-page--modern">
       <header className="assistant-header assistant-header--modern">
         <div className="asp-hero">
@@ -93,5 +95,6 @@ export default function AssistantPage() {
         الإجابات مولَّدة آليًا وتحتمل الخطأ، راجع أهل العلم في المسائل الشخصية الدقيقة.
       </footer>
     </div>
+    </UtilityScreen>
   );
 }

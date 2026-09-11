@@ -7,16 +7,16 @@
 .prophets-lux-page,
 .prophet-detail-lux {
   /* فوق الزمرد الغامق — أبيض دائمًا (لا mj-bg الليلي الداكن) */
-  --ps-on-emerald: #FFFFFF;
+  --ps-on-emerald: var(--mj-white, #ffffff);
   --ps-on-emerald-muted: rgba(255, 255, 255, 0.88);
   --ps-on-emerald-soft: rgba(255, 255, 255, 0.7);
-  --ps-surface: var(--mj-surface, #FFFFFF);
+  --ps-surface: var(--mj-surface, var(--mj-white, #ffffff));
   --ps-canvas: var(--mj-bg, var(--msk-canvas, #FAF8F5));
-  --ps-ink: var(--mj-ink, var(--majalis-ink, #1A1A18));
+  --ps-ink: var(--mj-ink, var(--majalis-ink, var(--mj-ink)));
   --ps-ink-soft: var(--mj-ink-2, var(--majalis-ink-soft, #4A5560));
   --ps-line: var(--mj-hairline, var(--msk-border, #E5E0D5));
   --ps-emerald: var(--majalis-emerald, var(--mj-brand-deep));
-  --ps-emerald-bright: var(--mj-brand, #1F6B56);
+  --ps-emerald-bright: var(--mj-brand, #1e5f4b);
   --ps-brass: var(--majalis-brass, var(--mj-accent));
 }
 
@@ -24,16 +24,16 @@ html[data-theme="dark"] .prophets-lux-page,
 html[data-theme="dark"] .prophet-detail-lux,
 html.dark .prophets-lux-page,
 html.dark .prophet-detail-lux {
-  --ps-on-emerald: #FFFFFF;
+  --ps-on-emerald: var(--mj-white, #ffffff);
   --ps-on-emerald-muted: rgba(236, 242, 239, 0.9);
   --ps-on-emerald-soft: rgba(236, 242, 239, 0.72);
-  --ps-surface: var(--surface, #1B2421);
+  --ps-surface: var(--surface, var(--mj-surface));
   --ps-canvas: var(--bg, #131A18);
   --ps-ink: var(--text-primary, #ECF2EF);
-  --ps-ink-soft: var(--text-secondary, #C2CFCA);
+  --ps-ink-soft: var(--text-secondary, var(--mj-hairline));
   --ps-line: var(--border, #35443F);
   --ps-emerald: #1A4A3A;
-  --ps-emerald-bright: var(--accent, #5CC095);
+  --ps-emerald-bright: var(--accent, var(--mj-brand));
 }
 
 html[data-theme="dark"] .prophets-lux-tab--active,
@@ -56,11 +56,11 @@ html.dark .nb-table tr:hover td {
 }
 html[data-theme="dark"] .nb-table__row--azm td,
 html.dark .nb-table__row--azm td {
-  background: color-mix(in srgb, var(--accent, #5CC095) 12%, var(--ps-surface));
+  background: color-mix(in srgb, var(--accent, var(--mj-brand)) 12%, var(--ps-surface));
 }
 html[data-theme="dark"] .nb-table__row--clickable:hover td,
 html.dark .nb-table__row--clickable:hover td {
-  background: color-mix(in srgb, var(--accent, #5CC095) 14%, var(--ps-surface));
+  background: color-mix(in srgb, var(--accent, var(--mj-brand)) 14%, var(--ps-surface));
 }
 
 /* ── Page Shell ── */
@@ -88,12 +88,12 @@ html.dark .nb-table__row--clickable:hover td {
   max-width: min(48rem, 100%);
   font-size: 0.95rem;
   line-height: 1.8;
-  color: var(--text-secondary, #4a5a53);
+  color: var(--text-secondary, var(--mj-ink-2));
 }
 
 html[data-theme="dark"] .prophets-page-lead,
 html.dark .prophets-page-lead {
-  color: var(--text-secondary, #C2CFCA);
+  color: var(--text-secondary, var(--mj-hairline));
 }
 
 .prophets-light-section {
@@ -494,7 +494,7 @@ html.dark .prophets-page-lead {
   padding: 0.15rem 0.5rem;
   border-radius: var(--ds-radius-full);
   background: var(--ps-emerald);
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
   pointer-events: none;
 }
 
@@ -523,15 +523,15 @@ html.dark .prophets-page-lead {
   /* سطح صلب قابل لقياس التباين — التدرّج على ::before */
   background-color: #0B1A2E;
   background-image: none;
-  color: var(--text-on-dark, #FFFFFF);
+  color: var(--text-on-dark, var(--mj-white, #ffffff));
   direction: rtl;
   padding-bottom: calc(var(--bottom-nav-height, var(--nav-h, 64px)) + var(--inset-bottom, 0px) + 28px);
   /* لون التمييز على الداكن: يُفتَّح بقوة حتى يبقى مقروءاً مع أغمق قيم PROPHET_HUE */
-  --prophet-color-on-dark: color-mix(in srgb, var(--prophet-color, #1F6B56) 28%, #F4F7F5);
-  --prophet-accent-on-dark: color-mix(in srgb, var(--prophet-accent, var(--mj-accent)) 55%, #FFFFFF);
+  --prophet-color-on-dark: color-mix(in srgb, var(--prophet-color, var(--mj-brand, #1f6b56)) 28%, #F4F7F5);
+  --prophet-accent-on-dark: color-mix(in srgb, var(--prophet-accent, var(--mj-accent)) 55%, var(--mj-white, #ffffff));
   /* نص أساسي على الداكن — أبيض صلب (لا mj-bg الليلي الداكن، ولا rgba باهت) */
-  --ps-text-primary: var(--text-on-dark, var(--color-on-dark, #FFFFFF));
-  --ps-text-body: var(--text-on-dark, #FFFFFF);
+  --ps-text-primary: var(--text-on-dark, var(--color-on-dark, var(--mj-white, #ffffff)));
+  --ps-text-body: var(--text-on-dark, var(--mj-white, #ffffff));
   --ps-detail-soft: var(--ps-text-body);
   --ps-detail-muted: var(--text-on-dark-secondary, #F3F5F4);
   --ps-detail-border: rgba(243, 245, 244, 0.22);
@@ -547,9 +547,9 @@ html.dark .prophets-page-lead {
   pointer-events: none;
   background-image: linear-gradient(
     180deg,
-    #0B1A2E 0%,
-    color-mix(in srgb, #0B1A2E 70%, #0F2A24) 45%,
-    #0B1A2E 100%
+    var(--mj-info) 0%,
+    color-mix(in srgb, var(--mj-info) 70%, #0F2A24) 45%,
+    var(--mj-info) 100%
   );
 }
 .prophet-detail-lux > * {
@@ -602,7 +602,7 @@ html.dark .prophets-page-lead {
 }
 .prophet-action-btn:hover {
   border-color: var(--prophet-color-on-dark);
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
 }
 .prophet-font-controls {
   display: flex;
@@ -622,7 +622,7 @@ html.dark .prophets-page-lead {
 }
 .prophet-font-controls button:hover {
   background: rgba(255, 255, 255, 0.14);
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
 }
 
 /* ── Detail Hero ── */
@@ -637,9 +637,9 @@ html.dark .prophets-page-lead {
   background-color: #0B1A2E;
   background-image: linear-gradient(
     145deg,
-    color-mix(in srgb, var(--prophet-color, var(--mj-brand-deep)) 42%, #0B1A2E) 0%,
-    #0B1A2E 62%,
-    color-mix(in srgb, var(--prophet-color, var(--mj-brand-deep)) 18%, #0B1A2E) 100%
+    color-mix(in srgb, var(--prophet-color, var(--mj-brand-deep)) 42%, var(--mj-info)) 0%,
+    var(--mj-info) 62%,
+    color-mix(in srgb, var(--prophet-color, var(--mj-brand-deep)) 18%, var(--mj-info)) 100%
   );
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
@@ -666,7 +666,7 @@ html.dark .prophets-page-lead {
 .prophet-detail-lux__hero-star { margin-bottom: 0.5rem; }
 .prophet-detail-lux__num-badge {
   font-size: 0.8rem;
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
   background: rgba(255, 255, 255, 0.14);
   padding: 0.2rem 0.75rem;
   border-radius: 20px;
@@ -680,13 +680,13 @@ html.dark .prophets-page-lead {
   padding: 0.2rem 0.7rem;
   border-radius: var(--ds-radius-full);
   background: color-mix(in srgb, var(--ps-brass) 75%, var(--mj-brand-deep));
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
   border: 1px solid color-mix(in srgb, var(--ps-brass) 55%, transparent);
 }
 .prophet-detail-lux__name {
   font-family: var(--font-body);
   font-size: clamp(2rem, 6vw, 3.5rem);
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
   margin: 0;
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
 }
@@ -698,7 +698,7 @@ html.dark .prophets-page-lead {
 .prophet-detail-lux__quran-title {
   font-family: "Amiri Quran", "Amiri", serif;
   font-size: 1.15rem;
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
   font-weight: 600;
 }
 .prophet-detail-lux__hero-title {
@@ -746,7 +746,7 @@ html.dark .prophets-page-lead {
 .prophet-fact-card__value {
   display: block;
   font-size: 0.95rem;
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
   font-weight: 600;
   line-height: 1.4;
 }
@@ -759,7 +759,7 @@ html.dark .prophets-page-lead {
   line-height: 1.9;
   font-size: var(--pstory-fs, 16px);
   transition: font-size 0.2s;
-  color: var(--ps-text-body, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-body, var(--text-on-dark, var(--mj-white, #ffffff)));
   opacity: 1;
   font-weight: 500;
 }
@@ -778,14 +778,14 @@ html.dark .prophets-page-lead {
 .prophet-section-lux__title {
   font-family: var(--font-body);
   font-size: var(--ds-text-xl);
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
   opacity: 1;
   font-weight: 700;
   margin: 0;
 }
 .prophet-section-lux__text,
 .prophet-db-para {
-  color: var(--ps-text-body, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-body, var(--text-on-dark, var(--mj-white, #ffffff)));
   opacity: 1;
   font-weight: 500;
   line-height: 1.85;
@@ -819,7 +819,7 @@ html.dark .prophets-page-lead {
 }
 .prophet-miracle-box__text {
   font-size: 0.9rem;
-  color: var(--ps-text-body, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-body, var(--text-on-dark, var(--mj-white, #ffffff)));
   opacity: 1;
   font-weight: 500;
   line-height: 1.7;
@@ -854,7 +854,7 @@ html.dark .prophets-page-lead {
   display: flex;
   align-items: flex-start;
   gap: var(--ds-space-3);
-  color: var(--ps-text-body, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-body, var(--text-on-dark, var(--mj-white, #ffffff)));
   opacity: 1;
   font-weight: 500;
   line-height: 1.75;
@@ -868,7 +868,7 @@ html.dark .prophets-page-lead {
   align-items: center;
   justify-content: center;
   font-size: 0.65rem;
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   margin-top: 0.15rem;
   background: color-mix(in srgb, var(--prophet-color, var(--mj-brand-deep)) 55%, #2A8F6E);
 }
@@ -909,7 +909,7 @@ html.dark .prophets-page-lead {
   color: var(--prophet-color-on-dark);
 }
 .prophet-lesson-card__text {
-  color: #ffffff;
+  color: var(--mj-white, #ffffff);
   opacity: 1;
   font-weight: 500;
   font-size: 0.88rem;
@@ -957,7 +957,7 @@ html.dark .prophets-page-lead {
 .prophet-citation-card__surah {
   font-family: var(--font-body);
   font-size: var(--ds-text-base);
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
   font-weight: 600;
 }
 .prophet-citation-card__ayahs {
@@ -966,7 +966,7 @@ html.dark .prophets-page-lead {
 }
 .prophet-citation-card__note {
   font-size: 0.88rem;
-  color: var(--ps-text-body, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-body, var(--text-on-dark, var(--mj-white, #ffffff)));
   opacity: 1;
   font-weight: 500;
   line-height: 1.75;
@@ -1011,7 +1011,7 @@ html.dark .prophets-page-lead {
 }
 .prophet-nav-lux__pname {
   font-size: var(--ds-text-base);
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
   font-weight: 600;
   font-family: var(--font-body);
 }
@@ -1086,7 +1086,7 @@ html.dark .prophets-page-lead {
   background-image: linear-gradient(
     165deg,
     color-mix(in srgb, var(--ps-surface) 94%, #e8f0ec) 0%,
-    color-mix(in srgb, var(--ps-emerald-bright, #1f6b56) 5%, var(--ps-surface)) 100%
+    color-mix(in srgb, var(--ps-emerald-bright, var(--mj-brand)) 5%, var(--ps-surface)) 100%
   );
   border: 1px solid var(--ps-line);
   border-radius: var(--radius-tile, 24px);
@@ -1222,7 +1222,7 @@ html.dark .prophets-page-lead {
   color: var(--ps-emerald);
 }
 .prophet-quiz__opt--correct {
-  background: #DCFCE7 !important;
+  background: var(--mj-success-soft) !important;
   border-color: var(--mj-brand) !important;
   color: #14532D !important;
 }
@@ -1290,7 +1290,7 @@ html.dark .prophets-page-lead {
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   direction: rtl;
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
 }
 .prophets-seerah-bridge:hover {
   transform: translateY(-2px);
@@ -1322,14 +1322,14 @@ html.dark .prophets-page-lead {
 .prophets-seerah-bridge__title {
   font-size: 1.05rem;
   font-weight: 800;
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
   margin: 0 0 0.35rem;
   line-height: 1.3;
   font-family: var(--font-body);
 }
 .prophets-seerah-bridge__desc {
   font-size: 0.82rem;
-  color: var(--on-dark-body, var(--ps-text-body, #F8FAFC));
+  color: var(--on-dark-body, var(--ps-text-body, var(--mj-surface-2)));
   opacity: 1;
   line-height: 1.6;
   margin: 0;
@@ -1375,7 +1375,7 @@ html.dark .prophets-page-lead {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--ps-text-primary, var(--ps-ink, #1A1A18));
+  color: var(--ps-text-primary, var(--ps-ink, var(--mj-ink)));
 }
 .prophet-not-found__hint {
   margin: 0;
@@ -1518,7 +1518,7 @@ html.dark .prophets-page-lead {
 }
 .nb-table th {
   background: var(--ps-emerald);
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
   padding: 0.6rem 0.8rem;
   text-align: end;
   white-space: nowrap;
@@ -1548,8 +1548,8 @@ html.dark .prophets-page-lead {
   margin-top: 0.6rem;
   text-align: center;
 }
-.nb-table__row--azm td { background: color-mix(in srgb, var(--mj-brand, #059669) 8%, var(--mj-surface, #fff)); }
-.nb-table__row--azm:hover td { background: #DCFCE7 !important; }
+.nb-table__row--azm td { background: color-mix(in srgb, var(--mj-brand, #059669) 8%, var(--mj-surface, var(--mj-white, #ffffff))); }
+.nb-table__row--azm:hover td { background: var(--mj-success-soft) !important; }
 .nb-table__row--clickable { cursor: pointer; }
 
 @media (max-width: 640px) {
@@ -1722,7 +1722,7 @@ html.dark .prophets-page-lead {
 .prophet-detail-lux__azm-badge {
   background: color-mix(in srgb, var(--prophet-accent, var(--mj-accent)) 78%, var(--mj-brand-deep));
   border-color: color-mix(in srgb, var(--prophet-accent, var(--mj-accent)) 55%, transparent);
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
 }
 
 /* فهرس أقسام لاصق */
@@ -1735,7 +1735,7 @@ html.dark .prophets-page-lead {
   overflow-x: auto;
   scrollbar-width: none;
   padding: 0.65rem 1.25rem;
-  background: color-mix(in srgb, #0B1A2E 88%, transparent);
+  background: color-mix(in srgb, var(--mj-info) 88%, transparent);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--ps-detail-border, rgba(243, 245, 244, 0.14));
 }
@@ -1744,7 +1744,7 @@ html.dark .prophets-page-lead {
   flex-shrink: 0;
   border: 1px solid var(--ps-detail-border, rgba(243, 245, 244, 0.14));
   background: rgba(255, 255, 255, 0.05);
-  color: var(--ps-text-body, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-body, var(--text-on-dark, var(--mj-white, #ffffff)));
   border-radius: 999px;
   padding: 0.35rem 0.85rem;
   font-size: 0.78rem;
@@ -1754,14 +1754,14 @@ html.dark .prophets-page-lead {
 }
 .prophet-detail-toc__btn:hover {
   border-color: var(--prophet-color-on-dark);
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
   transform: translateY(-1px);
 }
 .prophet-detail-toc__btn--active {
-  /* خلفية داكنة صلبة (#0B1A2E) — أبيض واضح؛ بلا color-mix بـhex فاتح يُضلّل البوابة */
-  background: #0B1A2E;
+  /* خلفية داكنة صلبة (var(--mj-info)) — أبيض واضح؛ بلا color-mix بـhex فاتح يُضلّل البوابة */
+  background: var(--mj-info);
   border-color: var(--prophet-accent, var(--prophet-color-on-dark));
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
   font-weight: 700;
 }
 
@@ -2031,7 +2031,7 @@ html.dark .topic-page.topic-page--prophets {
   background: var(--mj-bg, #FAF8F5);
 }
 .lrf-wrap.lrf-wrap--prophet-detail {
-  background: #0B1A2E;
+  background: var(--mj-info);
 }
 html[data-theme="dark"] .lrf-wrap.lrf-wrap--prophets,
 html.dark .lrf-wrap.lrf-wrap--prophets {
@@ -2039,7 +2039,7 @@ html.dark .lrf-wrap.lrf-wrap--prophets {
 }
 html[data-theme="dark"] .lrf-wrap.lrf-wrap--prophet-detail,
 html.dark .lrf-wrap.lrf-wrap--prophet-detail {
-  background: #0B1A2E;
+  background: var(--mj-info);
 }
 .lrf-wrap--prophet-detail .lrf-skel__hero,
 .lrf-wrap--prophet-detail .lrf-skel__line,
@@ -2062,7 +2062,7 @@ html.dark .lrf-wrap.lrf-wrap--prophet-detail {
 #root:has(.lrf-wrap--prophet-detail),
 .app-main:has(.prophet-detail-lux),
 .app-main:has(.lrf-wrap--prophet-detail) {
-  background: #0B1A2E !important;
+  background: var(--mj-info) !important;
 }
 
 .app-shell:has(.topic-page--prophets),
@@ -2102,7 +2102,7 @@ html[data-theme="dark"] .app-main:has(.prophet-detail-lux),
 html.dark .app-main:has(.prophet-detail-lux),
 html[data-theme="dark"] .app-main:has(.lrf-wrap--prophet-detail),
 html.dark .app-main:has(.lrf-wrap--prophet-detail) {
-  background: #0B1A2E !important;
+  background: var(--mj-info) !important;
 }
 
 /* الشريط السفلي فوق خلفية القسم — بلا كشف أبيض مخالف */
@@ -2125,7 +2125,7 @@ html.dark .app-main:has(.lrf-wrap--prophet-detail) {
   .app-shell:has(.lrf-wrap--prophet-detail) .bottom-nav--v2 .bottom-nav__tab.is-active,
   .app-shell:has(.lrf-wrap--prophet-detail) .bottom-nav .bottom-nav__tab.is-active {
     color: #f2dfaa !important;
-    background: color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent) !important;
+    background: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, transparent) !important;
   }
 }
 
@@ -2301,8 +2301,8 @@ html.dark .app-main:has(.lrf-wrap--prophet-detail) {
   gap: 0.35rem;
   border-radius: 999px;
   border: 1px solid var(--ps-detail-border, rgba(243, 245, 244, 0.22));
-  background: color-mix(in srgb, var(--prophet-color-on-dark, #5CC095) 16%, transparent);
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  background: color-mix(in srgb, var(--prophet-color-on-dark, var(--mj-brand)) 16%, transparent);
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
   padding: 0.4rem 0.85rem;
   font-size: 0.82rem;
   font-weight: 700;
@@ -2321,11 +2321,11 @@ html.dark .app-main:has(.lrf-wrap--prophet-detail) {
 }
 
 .prophet-story-lux__footer {
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF)) !important;
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff))) !important;
   opacity: 1;
 }
 .prophet-story-lux__footer span {
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
   font-weight: 600;
 }
 
@@ -2338,14 +2338,14 @@ html.dark .app-main:has(.lrf-wrap--prophet-detail) {
   border-bottom-color: var(--ps-detail-border, rgba(243, 245, 244, 0.22));
 }
 .prophet-detail-lux .stb-verified {
-  color: var(--ps-text-primary, #FFFFFF);
-  background: color-mix(in srgb, var(--prophet-color-on-dark, #5CC095) 22%, transparent);
+  color: var(--ps-text-primary, var(--mj-white, #ffffff));
+  background: color-mix(in srgb, var(--prophet-color-on-dark, var(--mj-brand)) 22%, transparent);
 }
 .prophet-detail-lux .stb-row__label {
   color: var(--ps-detail-muted, var(--text-on-dark-secondary, #F3F5F4));
 }
 .prophet-detail-lux .stb-row__value {
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
 }
 .prophet-detail-lux .stb-row__icon {
   color: var(--prophet-color-on-dark, #5CC095);
@@ -2416,7 +2416,7 @@ html.dark .app-main:has(.lrf-wrap--prophet-detail) {
   color: var(--ps-detail-muted, var(--text-on-dark-secondary, #F3F5F4));
 }
 .prophet-fact-card__value {
-  color: var(--ps-text-primary, var(--text-on-dark, #FFFFFF));
+  color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
 }
 
 /* جسر السيرة: عنوان وسط ووصف من البداية */

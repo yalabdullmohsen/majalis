@@ -6,6 +6,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { useAuth } from "@/components/AuthProvider";
 import { supabase } from "@/lib/supabase";
 import { readCookieConsent, writeCookieConsent } from "@/lib/cookie-consent";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 /**
  * Interactive privacy hub — rights + consent + export/delete links.
@@ -64,6 +65,7 @@ export default function PrivacyCenterPage() {
   }
 
   return (
+    <UtilityScreen compose="mark">
     <LegalPageLayout eyebrow="الخصوصية" title="مركز الخصوصية" updatedAt="2026-08-07">
       <LegalSection title="حقوقك باختصار">
         <ul>
@@ -138,5 +140,6 @@ export default function PrivacyCenterPage() {
         </div>
       </LegalSection>
 </LegalPageLayout>
+    </UtilityScreen>
   );
 }

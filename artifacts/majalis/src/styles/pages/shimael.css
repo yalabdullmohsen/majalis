@@ -8,7 +8,7 @@
 .sh-hero {
   position: relative; overflow: hidden;
   background: linear-gradient(160deg, var(--mj-brand-deep) 0%, var(--mj-brand) 60%, var(--mj-brand) 100%);
-  padding: 3.5rem 1.25rem 3rem; text-align: center; color: #fff;
+  padding: 3.5rem 1.25rem 3rem; text-align: center; color: var(--mj-white, #ffffff);
 }
 .sh-hero__glow {
   position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
@@ -18,19 +18,19 @@
 }
 .sh-hero__inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
 .sh-hero__badge {
-  display: inline-block; background: rgba(250,248,242,.18); color: var(--on-dark-strong, #FFFFFF);
+  display: inline-block; background: rgba(250,248,242,.18); color: var(--on-dark-strong, var(--mj-white, #ffffff));
   border: 1px solid rgba(250,248,242,.30); border-radius: var(--ds-radius-full);
   padding: .25rem .9rem; font-size: .75rem; font-weight: 700; letter-spacing: normal;
   margin-bottom: .9rem;
 }
 .sh-hero__title { font-size: 2rem; font-weight: 900; margin: 0 0 .3rem; line-height: 1.2; }
-.sh-hero__sallam { color: var(--on-dark-strong, #FFFFFF); font-size: 1.6rem; }
-.sh-hero__sub { font-size: .9rem; color: var(--on-dark-body, #F8FAFC); margin: 0 0 1.75rem; line-height: 1.7; }
+.sh-hero__sallam { color: var(--on-dark-strong, var(--mj-white, #ffffff)); font-size: 1.6rem; }
+.sh-hero__sub { font-size: .9rem; color: var(--on-dark-body, var(--mj-surface-2)); margin: 0 0 1.75rem; line-height: 1.7; }
 .sh-hero__stats {
   display: flex; justify-content: center; gap: var(--ds-space-5); flex-wrap: wrap;
 }
 .sh-stat { display: flex; flex-direction: column; align-items: center; gap: .1rem; }
-.sh-stat__val { font-size: 1.2rem; font-weight: 900; color: var(--on-dark-strong, #FFFFFF); }
+.sh-stat__val { font-size: 1.2rem; font-weight: 900; color: var(--on-dark-strong, var(--mj-white, #ffffff)); }
 .sh-stat__lbl { font-size: 0.8rem; color: var(--on-dark-secondary, #E8EEEC); }
 
 /* container */
@@ -39,7 +39,7 @@
 /* tabs */
 .sh-tabs {
   display: flex; gap: .4rem; flex-wrap: nowrap; margin-bottom: 1.75rem;
-  background: var(--ss-card-bg, var(--mj-surface, #fff)); border: 1px solid rgba(23,61,53,.15); border-radius: var(--ds-radius-xl); padding: .35rem;
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid rgba(23,61,53,.15); border-radius: var(--ds-radius-xl); padding: .35rem;
   overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
 }
 .sh-tabs::-webkit-scrollbar { display: none; }
@@ -49,7 +49,7 @@
   color: var(--mj-ink-2); font-family: inherit; font-size: .8rem; font-weight: 600;
   cursor: pointer; transition: background .15s, color .15s; white-space: nowrap;
 }
-.sh-tab--active { background: var(--mj-brand); color: #fff; }
+.sh-tab--active { background: var(--mj-brand); color: var(--mj-white, #ffffff); }
 
 /* section */
 .sh-section { display: flex; flex-direction: column; gap: var(--ds-space-4); }
@@ -65,7 +65,7 @@
 
 /* باب */
 .sh-bab {
-  background: var(--ss-card-bg, var(--mj-surface, #fff)); border: 1px solid rgba(23,61,53,.15); border-radius: var(--ds-radius-xl); overflow: hidden;
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid rgba(23,61,53,.15); border-radius: var(--ds-radius-xl); overflow: hidden;
   transition: box-shadow .15s;
 }
 .sh-bab:hover { box-shadow: 0 2px 16px rgba(23,61,53,.1); }
@@ -108,19 +108,19 @@
 .sh-mahabbah-intro {
   display: flex; flex-direction: column; align-items: center; gap: .65rem;
   background: linear-gradient(135deg, var(--mj-brand-deep), var(--mj-brand));
-  border-radius: var(--ds-radius-2xl); padding: 2rem 1.5rem; color: #fff; text-align: center;
+  border-radius: var(--ds-radius-2xl); padding: 2rem 1.5rem; color: var(--mj-white, #ffffff); text-align: center;
   margin-bottom: .5rem;
 }
-.sh-mahabbah-intro__icon { color: var(--on-dark-strong, #FFFFFF); opacity: .9; }
+.sh-mahabbah-intro__icon { color: var(--on-dark-strong, var(--mj-white, #ffffff)); opacity: .9; }
 .sh-mahabbah-intro__title { font-size: var(--ds-text-2xl); font-weight: 900; margin: 0; }
 .sh-mahabbah-intro__text {
-  font-size: .88rem; color: var(--on-dark-body, #F8FAFC); margin: 0; line-height: 1.7;
+  font-size: .88rem; color: var(--on-dark-body, var(--mj-surface-2)); margin: 0; line-height: 1.7;
   max-width: 560px;
 }
 
 .sh-mahabbah-list { display: flex; flex-direction: column; gap: .75rem; }
 .sh-mahabbah-card {
-  background: var(--ss-card-bg, var(--mj-surface, #fff)); border: 1px solid rgba(23,61,53,.15); border-radius: var(--ds-radius-xl); overflow: hidden;
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid rgba(23,61,53,.15); border-radius: var(--ds-radius-xl); overflow: hidden;
 }
 .sh-mahabbah-card__head {
   display: flex; align-items: center; gap: .75rem; padding: .85rem 1.1rem;
@@ -145,7 +145,7 @@
 /* صلاة */
 .sh-salat-box {
   margin-top: 1.5rem; background: linear-gradient(135deg, var(--mj-brand-deep), var(--mj-brand));
-  border-radius: var(--ds-radius-2xl); padding: 1.75rem 1.5rem; color: #fff; text-align: center;
+  border-radius: var(--ds-radius-2xl); padding: 1.75rem 1.5rem; color: var(--mj-white, #ffffff); text-align: center;
 }
 .sh-salat-box__head {
   display: flex; align-items: center; justify-content: center; gap: .5rem;
@@ -154,7 +154,7 @@
 }
 .sh-salat-box__text {
   font-family: var(--font-body); font-size: var(--ds-text-2xl);
-  line-height: 2; margin: 0 0 .75rem; color: #fff;
+  line-height: 2; margin: 0 0 .75rem; color: var(--mj-white, #ffffff);
 }
 .sh-salat-box__sub { font-size: .78rem; color: rgba(200,240,220,.6); margin: 0; }
 

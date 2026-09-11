@@ -102,7 +102,7 @@
   flex: 0 0 auto;
   min-height: 44px;
   padding: 0.35rem 0.9rem;
-  background: var(--ss-card-bg, #fffcf7);
+  background: var(--ss-card-bg, var(--mj-surface));
   border: 1px solid color-mix(in srgb, var(--mj-brand) 28%, var(--ss-border));
   border-radius: 999px;
   color: var(--brand-on-light, var(--mj-brand-deep));
@@ -119,9 +119,9 @@
 }
 
 .isp-chip.is-active {
-  background: var(--mj-brand-deep, #0d4a39);
-  border-color: var(--mj-brand-deep, #0d4a39);
-  color: var(--on-dark-strong, #FFFFFF);
+  background: var(--mj-brand-deep, #12362c);
+  border-color: var(--mj-brand-deep, #12362c);
+  color: var(--on-dark-strong, var(--mj-white, #ffffff));
 }
 html.dark .isp-chip.is-active,
 [data-theme="dark"] .isp-chip.is-active {
@@ -171,8 +171,8 @@ html.dark .isp-chip.is-active,
   flex-direction: column;
   gap: 0.55rem;
   padding: 1.1rem 1.05rem;
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
-  border: 1px solid color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, #e3e8e6));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, var(--mj-hairline)));
   border-radius: var(--radius-card, 24px);
   box-shadow: var(--ss-shadow-soft, 0 2px 10px -6px rgba(11, 32, 24, 0.14));
   cursor: pointer;
@@ -314,7 +314,7 @@ html.dark .isp-chip.is-active,
   gap: var(--ds-space-2);
   padding: 3rem 1rem;
   text-align: center;
-  color: var(--elite-ink-soft, #5D726A);
+  color: var(--elite-ink-soft, var(--mj-muted));
 }
 
 .isp-empty__icon { font-size: 2.5rem; opacity: 0.4; }
@@ -332,7 +332,7 @@ html.dark .isp-chip.is-active,
   align-self: flex-start;
   background: transparent;
   border: 1px solid rgba(190,199,195,0.35);
-  color: var(--elite-ink-soft, #5D726A);
+  color: var(--elite-ink-soft, var(--mj-muted));
   border-radius: var(--elite-r-sm, 8px);
   padding: 0.5rem 1.1rem;
   font-size: var(--ds-text-sm);
@@ -349,7 +349,7 @@ html.dark .isp-chip.is-active,
 }
 
 .isp-detail__hero {
-  background: var(--ss-card-bg, #fffcf7);
+  background: var(--ss-card-bg, var(--mj-surface));
   border: 1px solid color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border));
   border-radius: var(--radius-card, 24px);
   padding: 1.35rem 1.2rem;
@@ -383,7 +383,7 @@ html.dark .isp-chip.is-active,
 }
 
 .isp-detail__section {
-  background: var(--color-surface, var(--elite-white, #FFFCF7));
+  background: var(--color-surface, var(--elite-white, var(--mj-surface)));
   border: 1px solid var(--color-hairline, var(--elite-border, rgba(0,0,0,0.07)));
   border-radius: var(--radius-card, 24px);
   padding: 1.25rem 1.5rem;
@@ -458,7 +458,7 @@ html.dark .isp-chip.is-active,
 
 .isp-detail__list-item {
   font-size: 0.84rem;
-  color: var(--elite-ink-soft, #5D726A);
+  color: var(--elite-ink-soft, var(--mj-muted));
   line-height: 1.5;
 }
 
@@ -501,7 +501,7 @@ html.dark .isp-chip.is-active,
   border-radius: inherit;
 }
 .isp-card__hit:focus-visible {
-  outline: 2px solid var(--mj-brand, #1f6b56);
+  outline: 2px solid var(--mj-brand, #1e5f4b);
   outline-offset: 3px;
 }
 .isp-card__admin {

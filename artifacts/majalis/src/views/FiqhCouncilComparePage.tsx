@@ -12,6 +12,7 @@ import {
   formatFiqhItemMeta,
   type FiqhCouncilItem,
 } from "@/lib/fiqh-council-types";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 function CompareColumn({ item }: { item: FiqhCouncilItem }) {
   return (
@@ -102,6 +103,7 @@ export default function FiqhCouncilComparePage() {
   };
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell wide content-hub-page fiqh-council-page fiqh-compare-page">
       <PageHeader
         eyebrow="أداة الباحث"
@@ -170,5 +172,6 @@ export default function FiqhCouncilComparePage() {
         <SectionQuiz route="/fiqh-council" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

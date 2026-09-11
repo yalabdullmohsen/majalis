@@ -13,6 +13,7 @@ import {
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/knowledge.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const SECTION_TITLE: Record<string, string> = {
   prophets: "قصص الأنبياء",
@@ -170,6 +171,7 @@ export default function KnowledgeSectionPage() {
   }
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow" dir="rtl">
       <PageHeader eyebrow="معرفة" title={SECTION_TITLE[section] || section} />
       <label className="knowledge-filter">
@@ -190,5 +192,6 @@ export default function KnowledgeSectionPage() {
       </ul>
       {visible.length > 200 && <p className="page-meta">يُعرض أول 200 نتيجة — ضيّق التصفية.</p>}
     </div>
+    </UtilityScreen>
   );
 }

@@ -22,6 +22,7 @@ import {
   type CategoryPerformance,
 } from "@/lib/quiz-performance-service";
 import "@/styles/pages/user-stats.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const BADGE_ICON_MAP: Record<string, LucideIcon> = {
   Flame, Moon, Star, BookOpen, Library, GraduationCap, BookMarked, Repeat2, Sparkles,
@@ -375,6 +376,7 @@ export default function UserStatsPage() {
     user?.profile?.full_name || user?.email?.split("@")[0] || "المستخدم";
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow profile-page" dir="rtl">
       <NewBadgesFlash keys={newBadges} />
 
@@ -467,5 +469,6 @@ export default function UserStatsPage() {
         <ShareButtons title="إحصاءات التعلم — سُنّة" url="https://www.ssunnah.com/my-stats" />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

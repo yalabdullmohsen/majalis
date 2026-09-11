@@ -24,21 +24,21 @@ html.pts-immersive .majlisilm-app {
 /* شريط الأقسام — يهزم theme-aliases (.top-section-bar { background: var(--mj-surface) !important }) */
 html.pts-immersive .top-section-bar.mj-nav-skin,
 html.pts-immersive .top-section-bar {
-  background: var(--mj-brand-deep, #0d4a39) !important;
+  background: var(--mj-brand-deep, #12362c) !important;
   border-block-end-color: rgba(255, 255, 255, 0.08) !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
-  color: var(--mj-on-brand, #ffffff) !important;
+  color: var(--mj-on-brand, var(--mj-white, #ffffff)) !important;
   backdrop-filter: none !important;
 }
 html.pts-immersive .top-section-bar__tab {
   color: rgba(250, 250, 248, 0.72) !important;
 }
 html.pts-immersive .top-section-bar__tab:hover {
-  color: var(--mj-on-brand, #ffffff) !important;
+  color: var(--mj-on-brand, var(--mj-white, #ffffff)) !important;
 }
 html.pts-immersive .top-section-bar__tab.is-active {
   color: #0E241E !important;
-  background: color-mix(in srgb, var(--gold-300, #E3CB8C) 88%, #fff) !important;
+  background: color-mix(in srgb, var(--gold-300, #E3CB8C) 88%, var(--mj-white, #ffffff)) !important;
   border-radius: 14px !important;
 }
 
@@ -51,7 +51,7 @@ html.pts-immersive .bottom-nav.bottom-nav--v2,
 html.pts-immersive .bottom-nav--m2030,
 html.pts-immersive .bottom-nav--v2,
 html.pts-immersive .bottom-nav {
-  background: var(--mj-brand-deep, #0d4a39) !important;
+  background: var(--mj-brand-deep, #12362c) !important;
   background-image: none !important;
   opacity: 1 !important;
   border-block-start-color: rgba(255, 255, 255, 0.12) !important;
@@ -73,7 +73,7 @@ html.pts-immersive .bottom-nav .bottom-nav__tab.is-active {
   color: var(--gold-300, var(--mj-accent, #b08a3e)) !important;
   background: color-mix(in srgb, var(--gold-400, #D2B063) 16%, transparent) !important;
   border-radius: var(--mj-r-md, 16px) !important;
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, #E3CB8C 22%, transparent) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mj-accent-soft) 22%, transparent) !important;
 }
 
 /* وضوح الشريط السفلي على شاشة الصلاة دون تكبير مبالغ */
@@ -508,7 +508,7 @@ html.pts-immersive .scroll-to-top {
   font-weight: 700;
 }
 .pts-badge--next {
-  background: color-mix(in srgb, #E3CB8C 22%, transparent);
+  background: color-mix(in srgb, var(--mj-accent-soft) 22%, transparent);
   color: var(--pts-gold);
 }
 .pts-badge--done {
@@ -569,7 +569,7 @@ html.pts-immersive .scroll-to-top {
 .pts-row--next {
   background: var(--pts-row-active);
   border-color: var(--pts-gold-line);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, #E3CB8C 18%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mj-accent-soft) 18%, transparent);
 }
 .pts-row--next:hover {
   background: color-mix(in srgb, #D2B063 20%, transparent);
@@ -614,7 +614,7 @@ html.pts-immersive .scroll-to-top {
   height: 0.45rem;
   border-radius: 999px;
   background: var(--pts-gold);
-  box-shadow: 0 0 0 3px color-mix(in srgb, #E3CB8C 22%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mj-accent-soft) 22%, transparent);
 }
 .pts-row__time {
   font-size: 0.95rem;
@@ -1008,6 +1008,6 @@ html.pts-immersive .scroll-to-top {
 .pts-hint--skeleton {
   min-height: 4.5rem;
   border-radius: var(--radius-card, 24px);
-  background: color-mix(in srgb, var(--surface-muted, #f3efe6) 88%, var(--primary, #146b52));
+  background: color-mix(in srgb, var(--surface-muted, #f3efe6) 88%, var(--primary, var(--mj-brand)));
   opacity: 0.55;
 }

@@ -20,6 +20,7 @@ import {
   stopSpeechReadAloud,
 } from "@/lib/speech-read-aloud";
 import "@/styles/pages/prophet-stories.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 function knowledgeBodyBlocks(body: string): { title?: string; paragraphs: string[] }[] {
   const chunks = body.split(/\n(?=##\s)/);
@@ -1179,6 +1180,7 @@ export default function ProphetStoriesPage({
   }
 
   return (
+    <UtilityScreen compose="mark">
     <SectionTemplatePage
       route="/prophets"
       className="topic-page--prophets"
@@ -1327,5 +1329,7 @@ export default function ProphetStoriesPage({
       </div>
     </div>
     </SectionTemplatePage>
+  
+    </UtilityScreen>
   );
 }

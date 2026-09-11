@@ -59,7 +59,7 @@
   margin: 0 0 0.4rem;
   font-variant-numeric: tabular-nums;
 }
-.nf2-title { font-size: 1.3rem; font-weight: 800; margin: 0 0 0.65rem; color: var(--clr-ink, #1a1a1a); }
+.nf2-title { font-size: 1.3rem; font-weight: 800; margin: 0 0 0.65rem; color: var(--clr-ink, var(--mj-ink)); }
 .nf2-desc { font-size: 0.87rem; color: var(--clr-ink-soft, var(--mj-muted)); line-height: 1.75; margin: 0 0 1.4rem; max-width: 420px; }
 
 /* أزرار الأكشن */
@@ -76,7 +76,7 @@
   border: 1.5px solid transparent;
   transition: background .15s, color .15s;
 }
-.nf2-btn--primary { background: var(--mj-brand); color: #fff; border-color: var(--mj-brand); }
+.nf2-btn--primary { background: var(--mj-brand); color: var(--mj-white, #ffffff); border-color: var(--mj-brand); }
 .nf2-btn--primary:hover { background: var(--mj-brand-deep); border-color: var(--mj-brand-deep); }
 .nf2-btn--outline { background: transparent; color: var(--mj-brand); border-color: var(--mj-brand); }
 .nf2-btn--outline:hover { background: rgba(23,61,53,.08); }
@@ -108,9 +108,9 @@
   border-radius: var(--ds-radius-lg);
   font-size: var(--ds-text-xs);
   font-weight: 600;
-  color: var(--clr-ink, #1a1a1a);
+  color: var(--clr-ink, var(--mj-ink));
   text-decoration: none;
-  background: var(--clr-surface, #fff);
+  background: var(--clr-surface, var(--mj-white, #ffffff));
   transition: border-color .15s, background .15s;
 }
 .nf2-sug-item:hover { border-color: var(--mj-brand); background: rgba(23,61,53,.05); color: var(--mj-brand); }

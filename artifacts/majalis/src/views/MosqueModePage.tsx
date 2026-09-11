@@ -5,6 +5,7 @@ import { Link } from "wouter";
 import { usePrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/mosque-mode.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 function pad(n: number) {
   return String(n).padStart(2, "0");
@@ -65,6 +66,7 @@ export default function MosqueModePage() {
   const graceNextHms = countdown?.graceNextHms ?? null;
 
   return (
+    <UtilityScreen compose="mark">
     <div className="mosque-mode" dir="rtl">
       {/* Silence alert */}
       {silenceAlerted && (
@@ -131,5 +133,6 @@ export default function MosqueModePage() {
         <Lightbulb size={14} strokeWidth={1.8} aria-hidden="true" /> أضف المنصة لشاشتك الرئيسية لوصول أسرع
       </p>
     </div>
+    </UtilityScreen>
   );
 }

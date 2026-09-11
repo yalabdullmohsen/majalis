@@ -7,6 +7,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/arkan-iman.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 /* ─── بيانات أركان الإيمان ─── */
 type RuknIman = {
@@ -202,6 +203,7 @@ export default function ArkanImanPage() {
   }
 
   return (
+    <UtilityScreen compose="mark">
     <main className="ai-page" dir="rtl">
       {/* هيرو */}
       <section className="ai-hero">
@@ -333,5 +335,6 @@ export default function ArkanImanPage() {
         <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة" count={4} />
       </div>
     </main>
+    </UtilityScreen>
   );
 }

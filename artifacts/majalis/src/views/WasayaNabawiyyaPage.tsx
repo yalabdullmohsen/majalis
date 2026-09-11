@@ -5,6 +5,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/wasaya.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 /* ══════════════════════════════════════════════════════════════════
    §248، الوصايا النبوية  (.wn-*)
@@ -612,6 +613,7 @@ export default function WasayaNabawiyyaPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="wn-page" dir="rtl">
       {/* Hero */}
       <section className="wn-hero">
@@ -798,5 +800,6 @@ export default function WasayaNabawiyyaPage() {
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث النبوي" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

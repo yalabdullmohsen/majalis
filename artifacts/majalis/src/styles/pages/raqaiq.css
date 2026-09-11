@@ -6,9 +6,9 @@
 
 /* Hero */
 .rq-hero {
-  background: linear-gradient(135deg, #0d1117 0%, #1c2e3a 55%, #0a1620 100%);
+  background: linear-gradient(135deg, #0d1117 0%, var(--mj-info) 55%, #0a1620 100%);
   padding: 3.5rem 1.25rem 2.5rem;
-  text-align: center; color: #fff;
+  text-align: center; color: var(--mj-white, #ffffff);
   position: relative; overflow: hidden;
 }
 .rq-hero::before {
@@ -47,25 +47,25 @@
 }
 .rq-tab {
   padding: .45rem 1.1rem; border-radius: var(--ds-radius-full);
-  border: 1.5px solid var(--clr-border); background: var(--ss-card-bg, var(--mj-surface, #fff));
+  border: 1.5px solid var(--clr-border); background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff)));
   font-size: .88rem; cursor: pointer; color: var(--clr-text-2); transition: all .18s;
 }
 .rq-tab:hover  { border-color: #1c2e3a; color: #1c2e3a; }
-.rq-tab--active { background: #1c2e3a; border-color: #1c2e3a; color: #fff; font-weight: 600; }
+.rq-tab--active { background: #1c2e3a; border-color: #1c2e3a; color: var(--mj-white, #ffffff); font-weight: 600; }
 
 /* Container */
 .rq-container { max-width: 900px; margin: 0 auto; padding: 1.75rem 1.25rem 3rem; }
 
 /* Intro */
 .rq-intro {
-  background: var(--clr-surface); border-inline-end: 4px solid #1c2e3a;
+  background: var(--clr-surface); border-inline-end: 4px solid var(--mj-info);
   border-radius: .6rem; padding: 1rem 1.2rem; margin-bottom: 1.75rem;
   font-size: .95rem; line-height: 1.8; color: var(--clr-text-1);
 }
 
 /* Accordion */
 .rq-list { display: flex; flex-direction: column; gap: .7rem; }
-.rq-card { background: var(--ss-card-bg, var(--mj-surface, #fff)); border: 1px solid var(--clr-border); border-radius: .75rem; overflow: hidden; }
+.rq-card { background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid var(--clr-border); border-radius: .75rem; overflow: hidden; }
 .rq-card__head {
   display: flex; align-items: center; gap: .75rem;
   padding: .9rem 1.2rem; cursor: pointer; width: 100%;
@@ -74,7 +74,7 @@
 .rq-card__head:hover { background: var(--clr-surface); }
 .rq-card__dot {
   width: 8px; height: 8px; flex-shrink: 0; border-radius: 50%;
-  background: #1c2e3a;
+  background: var(--mj-info);
 }
 .rq-card__title { font-size: .95rem; font-weight: 700; color: var(--clr-text-1); flex: 1; }
 .rq-chevron { font-size: .7rem; color: var(--clr-text-2); flex-shrink: 0; }
@@ -87,14 +87,14 @@
   display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--ds-space-4);
 }
 .rq-qawl-card {
-  background: var(--ss-card-bg, var(--mj-surface, #fff)); border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1.1rem 1.2rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
 }
 .rq-qawl-name { font-size: .82rem; font-weight: 700; color: #1c2e3a; margin-bottom: .5rem; }
 .rq-qawl-text {
   font-size: .9rem; line-height: 1.8; color: var(--clr-text-2);
-  border-inline-end: 3px solid #1c2e3a; padding-inline-end: .75rem;
+  border-inline-end: 3px solid var(--mj-info); padding-inline-end: .75rem;
   margin: 0; font-style: normal;
 }
 
@@ -103,7 +103,7 @@
 .rq-muhasaba-item { display: flex; gap: .9rem; align-items: flex-start; }
 .rq-muhasaba-num {
   width: 1.9rem; height: 1.9rem; flex-shrink: 0; border-radius: 50%;
-  background: #1c2e3a; color: #fff; font-size: .8rem; font-weight: 700;
+  background: #1c2e3a; color: var(--mj-white, #ffffff); font-size: .8rem; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
 .rq-muhasaba-text { font-size: .93rem; line-height: 1.7; color: var(--clr-text-1); margin: 0; }
@@ -116,8 +116,8 @@
 /* Musab */
 .rq-musab-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .rq-musab-card {
-  background: var(--ss-card-bg, var(--mj-surface, #fff)); border: 1px solid var(--clr-border);
-  border-inline-end: 4px solid #1c2e3a; border-radius: .75rem;
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid var(--clr-border);
+  border-inline-end: 4px solid var(--mj-info); border-radius: .75rem;
   padding: 1.1rem 1.25rem;
 }
 .rq-musab-title  { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .5rem; }
@@ -127,7 +127,7 @@
 /* Zuhd definition */
 .rq-zuhd-def { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .rq-zuhd-def__item {
-  background: var(--ss-card-bg, var(--mj-surface, #fff)); border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff))); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1.2rem 1.3rem;
 }
 .rq-zuhd-def__item h3 { font-size: .97rem; font-weight: 700; color: #1c2e3a; margin: 0 0 .45rem; }

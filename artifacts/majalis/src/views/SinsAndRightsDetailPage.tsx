@@ -14,6 +14,7 @@ import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { Empty } from "@/components/ui-common";
 import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
 import "@/styles/sins-rights.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function SinsAndRightsDetailPage({ params }: { params: { slug: string } }) {
   const topic = getTopicBySlug(params.slug);
@@ -73,6 +74,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
   const copyText = [topic.title, topic.shortDescription, topic.explanation].filter(Boolean).join("\n\n");
 
   return (
+    <UtilityScreen compose="mark">
     <ContentDetailLayout
       breadcrumbs={[
         { label: "الرئيسية", href: "/" },
@@ -266,5 +268,6 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
  يعرضها عبر RelatedLinks/PlatformContentCard، نفس مكوّن صفحات الأحكام
  والمجلس الفقهي، بدل تصميم مخصَّص لهذه الصفحة وحدها. */}
     </ContentDetailLayout>
+    </UtilityScreen>
   );
 }

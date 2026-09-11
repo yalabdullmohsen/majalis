@@ -1,8 +1,10 @@
 import { CalendarDays, Clock, Repeat, Zap } from "lucide-react";
 import MergedSectionHubPage from "@/views/MergedSectionHubPage";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function MemorizationHubPage() {
   return (
+    <UtilityScreen compose="mark">
     <MergedSectionHubPage
       path="/memorization"
       title="الحفظ والمراجعة"
@@ -34,5 +36,6 @@ export default function MemorizationHubPage() {
         },
       ]}
     />
+    </UtilityScreen>
   );
 }

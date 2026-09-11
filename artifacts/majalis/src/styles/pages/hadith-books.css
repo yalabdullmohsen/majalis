@@ -44,7 +44,7 @@
 .hb-tab__total { font-size: .72rem; color: var(--elite-ink-muted); }
 .hb-tab:hover { background: rgba(23,61,53,.06); border-color: rgba(23,61,53,.3); color: var(--ds-emerald, var(--mj-brand)); }
 .hb-tab--active { background: var(--ds-emerald, var(--mj-brand)); border-color: var(--ds-emerald, var(--mj-brand));
-  color: #fff; }
+  color: var(--mj-white, #ffffff); }
 .hb-tab--active .hb-tab__total { color: rgba(255,255,255,.7); }
 
 /* حالة التحميل */
@@ -55,7 +55,7 @@
 
 /* حالة الخطأ */
 .hb-error { background: rgba(185,28,28,.06); border: 1px solid rgba(185,28,28,.25);
-  border-radius: var(--radius-button, 18px); padding: var(--ds-space-4); color: #9B1C1C; font-size: .88rem; }
+  border-radius: var(--radius-button, 18px); padding: var(--ds-space-4); color: var(--mj-danger); font-size: .88rem; }
 
 /* رأس المتصفح */
 .hb-browser__head { display: flex; align-items: flex-start; justify-content: space-between;
@@ -179,7 +179,7 @@
 
 /* بطاقة الكتب في فهرس الحديث */
 .hadith-index-card--books { background: linear-gradient(135deg, var(--mj-brand) 0%, var(--mj-brand-deep) 100%); }
-.hadith-index-card--books .hadith-index-card__title { color: #fff; }
+.hadith-index-card--books .hadith-index-card__title { color: var(--mj-white, #ffffff); }
 .hadith-index-card--books .hadith-index-card__desc  { color: rgba(255,255,255,.82); }
 .hadith-index-card--books .hadith-index-card__count { color: rgba(255,255,255,.65); }
 .hadith-index-card--books .hadith-index-card__go    { color: rgba(255,255,255,.9); }
@@ -196,7 +196,7 @@
 
 /* وضع مظلم */
 html[data-theme="dark"] .hb-tab { background: var(--mj-brand-deep); border-color: rgba(92,196,154,.2); color: #C8D8D0; }
-html[data-theme="dark"] .hb-tab--active { background: var(--ds-emerald, var(--mj-brand)); color: #fff; }
+html[data-theme="dark"] .hb-tab--active { background: var(--ds-emerald, var(--mj-brand)); color: var(--mj-white, #ffffff); }
 html[data-theme="dark"] .hb-sidebar { background: var(--mj-brand-deep); border-color: rgba(92,196,154,.15); }
 html[data-theme="dark"] .hb-hadith-row { background: var(--mj-brand-deep); border-color: rgba(92,196,154,.15); color: #E8DED4; }
 html[data-theme="dark"] .hb-hadith-row:hover, html[data-theme="dark"] .hb-hadith-row--expanded { border-color: rgba(23,61,53,.4); }
@@ -215,7 +215,7 @@ html[data-theme="dark"] .hb-notice { background: rgba(23,61,53,.08); }
   color: var(--elite-ink); margin-bottom: .2rem; }
 .hadith-books-banner p { font-size: .8rem; color: var(--elite-ink-soft); line-height: 1.5; margin: 0; }
 .hadith-books-banner__btn { flex-shrink: 0; padding: .45rem .85rem;
-  background: var(--ds-emerald, var(--mj-brand)); color: #fff; border-radius: 7px;
+  background: var(--ds-emerald, var(--mj-brand)); color: var(--mj-white, #ffffff); border-radius: 7px;
   font-size: .82rem; font-weight: 600; text-decoration: none;
   white-space: nowrap; align-self: center; transition: opacity .15s; }
 .hadith-books-banner__btn:hover { opacity: .88; }

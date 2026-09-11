@@ -18,6 +18,7 @@ import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { SourceBadge } from "@/components/content-trust/SourceBadge";
 import { ReviewMeta } from "@/components/content-trust/ReviewMeta";
 import { PublicationGate } from "@/components/content-trust/PublicationGate";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 function groupItemsByType(issue: FiqhCouncilIssue) {
   const items = issue.items || [];
@@ -117,6 +118,7 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
   };
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow fiqh-council-page">
       <FiqhCouncilSubnav />
 
@@ -235,5 +237,6 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
         {renderItemList("مواد أخرى", grouped.other)}
       </ContentDetailLayout>
     </div>
+    </UtilityScreen>
   );
 }

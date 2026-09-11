@@ -18,7 +18,7 @@
 .up-filter-select {
   padding: .5rem .75rem; font-size: .875rem;
   border-radius: .75rem; border: 1px solid var(--majalis-line);
-  background: var(--mj-bg, var(--majalis-parchment, #f7f3ea)); color: var(--color-text, var(--majalis-ink, #16241e));
+  background: var(--mj-bg, var(--majalis-parchment, #f7f3ea)); color: var(--color-text, var(--majalis-ink, var(--mj-ink)));
   outline: none; width: 100%;
 }
 .up-filter-select:focus { box-shadow: 0 0 0 2px var(--majalis-emerald); }
@@ -30,13 +30,13 @@
 .up-empty-state--py12 { padding-top: 3rem; padding-bottom: 3rem; }
 .up-code { background: var(--majalis-parchment-deep, #f0ece4); padding: .125rem .25rem; border-radius: .25rem; }
 .up-skeleton {
-  background: var(--ss-card-bg, var(--majalis-panel, #fffcf7));
+  background: var(--ss-card-bg, var(--majalis-panel, var(--mj-surface)));
   border-radius: var(--ds-radius-xl);
   height: 16rem;
   animation: pulse 1.5s ease-in-out infinite;
   border: 1px solid var(--majalis-line);
 }
-.up-search-input { color: var(--color-text, var(--majalis-ink, #16241e)); }
+.up-search-input { color: var(--color-text, var(--majalis-ink, var(--mj-ink))); }
 
 
 
@@ -47,6 +47,6 @@ html[data-theme="dark"] .up-root {
 }
 html.dark .up-skeleton,
 html[data-theme="dark"] .up-skeleton {
-  background: var(--mj-surface, #1b2421);
-  border-color: color-mix(in srgb, var(--mj-brand) 28%, #2a3832);
+  background: var(--mj-surface, #fffcf8);
+  border-color: color-mix(in srgb, var(--mj-brand) 28%, var(--mj-hairline));
 }

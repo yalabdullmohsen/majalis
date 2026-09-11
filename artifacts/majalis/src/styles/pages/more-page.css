@@ -43,7 +43,7 @@
   text-align: start;
   text-decoration: none;
   color: inherit;
-  background: var(--mj-surface, var(--card, #fff));
+  background: var(--mj-surface, var(--card, var(--mj-white, #ffffff)));
   border: 1px solid color-mix(in srgb, var(--mj-brand, #0d5c4d) 18%, transparent);
   border-radius: 0.85rem;
   min-height: 7.25rem;

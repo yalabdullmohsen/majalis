@@ -20,6 +20,7 @@ import {
 import "@/styles/pages/universities.css";
 import "@/styles/pages/learning-path-dashboard.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const COUNTRIES = [
   "المملكة العربية السعودية",
@@ -305,8 +306,11 @@ function UniversitiesContent() {
 
 export default function UniversitiesPage() {
   return (
+    <UtilityScreen compose="mark">
     <CompareProvider>
       <UniversitiesContent />
     </CompareProvider>
+  
+    </UtilityScreen>
   );
 }

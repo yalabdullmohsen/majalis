@@ -7,6 +7,7 @@ import { useDropzone, type FileRejection } from "react-dropzone";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/components/AuthProvider";
 import "@/styles/pages/transcribe.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 type TabId = "upload" | "youtube" | "text";
 type Status = "idle" | "uploading" | "processing" | "done" | "error";
@@ -229,6 +230,7 @@ export default function TranscribePage() {
   };
 
   return (
+    <UtilityScreen compose="mark">
     <div className="trp-root">
       <div className="mx-auto max-w-4xl px-4">
         <Link href="/" className="trp-back-link">← سُنّة</Link>
@@ -406,5 +408,6 @@ export default function TranscribePage() {
         )}
       </div>
     </div>
+    </UtilityScreen>
   );
 }

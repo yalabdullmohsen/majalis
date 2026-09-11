@@ -9,12 +9,12 @@
 .tl-crumb {
   font-size: 13px;
   margin-bottom: 12px;
-  color: var(--mj-muted, #66766f);
+  color: var(--mj-muted, #5d726a);
 }
 
 .tl-crumb a,
 .tl-head a {
-  color: var(--mj-brand, var(--mj-brand));
+  color: var(--mj-brand, #1e5f4b);
   text-decoration: none;
 }
 
@@ -46,14 +46,14 @@
   padding: 12px 14px;
   border-radius: 12px;
   border: 1px solid var(--mj-hairline, #e3e8e6);
-  background: var(--mj-surface, #fff);
+  background: var(--mj-surface, var(--mj-white, #ffffff));
   color: inherit;
   text-decoration: none;
 }
 
 .tl-card__n {
   font-weight: 800;
-  color: var(--mj-brand, var(--mj-brand));
+  color: var(--mj-brand, #1e5f4b);
 }
 
 .tl-card__name {
@@ -63,5 +63,5 @@
 
 .tl-card__meta {
   font-size: 12px;
-  color: var(--mj-muted, #66766f);
+  color: var(--mj-muted, #5d726a);
 }

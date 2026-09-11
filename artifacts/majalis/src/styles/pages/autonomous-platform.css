@@ -4,7 +4,7 @@
 .aup-title          { margin: 0 0 0.3rem; color: var(--majalis-emerald-deep); font-size: 1.1rem; font-weight: 700; }
 .aup-subtitle       { margin: 0; font-size: 0.78rem; color: var(--majalis-ink-soft); }
 .aup-actions        { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; }
-.aup-run-btn        { padding: 0.35rem 0.65rem; background: var(--majalis-emerald-deep); color: #fff; border: none; border-radius: var(--ds-radius-sm); cursor: pointer; font-family: inherit; font-size: 0.8rem; font-weight: 600; }
+.aup-run-btn        { padding: 0.35rem 0.65rem; background: var(--majalis-emerald-deep); color: var(--mj-white, #ffffff); border: none; border-radius: var(--ds-radius-sm); cursor: pointer; font-family: inherit; font-size: 0.8rem; font-weight: 600; }
 .aup-run-btn:disabled { cursor: not-allowed; background: var(--majalis-line); }
 .aup-refresh-btn    { padding: 0.35rem 0.65rem; background: transparent; border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-sm); cursor: pointer; font-size: 0.8rem; font-family: inherit; }
 .aup-scores-row     { display: flex; gap: var(--ds-space-3); flex-wrap: wrap; margin-bottom: 1.25rem; }
@@ -24,7 +24,7 @@
 .aup-status-bar     { display: flex; gap: var(--ds-space-4); font-size: var(--ds-text-xs); margin-bottom: 1rem; padding: 0.5rem 0.75rem; background: var(--majalis-parchment-deep); border-radius: var(--ds-radius-sm); flex-wrap: wrap; }
 .aup-tabs           { display: flex; gap: var(--ds-space-1); border-bottom: 1px solid var(--majalis-line); margin-bottom: 1rem; }
 .aup-tab            { padding: 0.4rem 0.75rem; background: transparent; color: var(--majalis-ink-soft); border: none; border-radius: 0.375rem 0.375rem 0 0; cursor: pointer; font-family: inherit; font-size: 0.8125rem; font-weight: 400; }
-.aup-tab--active    { background: var(--majalis-emerald-deep); color: #fff; font-weight: 700; }
+.aup-tab--active    { background: var(--majalis-emerald-deep); color: var(--mj-white, #ffffff); font-weight: 700; }
 .aup-panel          { border: 1px solid var(--majalis-line); border-radius: var(--ds-radius); overflow: hidden; margin-bottom: 1rem; }
 .aup-panel-head     { background: var(--majalis-parchment-deep); padding: 0.5rem 0.875rem; display: flex; justify-content: space-between; align-items: center; }
 .aup-panel-title    { font-size: 0.8125rem; font-weight: 700; color: var(--majalis-emerald-deep); }
@@ -67,8 +67,8 @@
 .aup-review-head    { display: flex; gap: var(--ds-space-2); align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; }
 .aup-review-date    { font-size: 0.7rem; color: var(--majalis-ink-soft); margin-inline-end: auto; }
 .aup-review-text    { font-size: 0.8rem; margin-bottom: 0.5rem; color: var(--majalis-ink); }
-.aup-approve-btn    { padding: 0.25rem 0.6rem; background: var(--mj-brand-deep); color: #fff; border: none; border-radius: var(--ds-radius-xs); cursor: pointer; font-size: var(--ds-text-xs); font-family: inherit; }
-.aup-reject-btn     { padding: 0.25rem 0.6rem; background: var(--mj-danger-deep); color: #fff; border: none; border-radius: var(--ds-radius-xs); cursor: pointer; font-size: var(--ds-text-xs); font-family: inherit; }
+.aup-approve-btn    { padding: 0.25rem 0.6rem; background: var(--mj-brand-deep); color: var(--mj-white, #ffffff); border: none; border-radius: var(--ds-radius-xs); cursor: pointer; font-size: var(--ds-text-xs); font-family: inherit; }
+.aup-reject-btn     { padding: 0.25rem 0.6rem; background: var(--mj-danger-deep); color: var(--mj-white, #ffffff); border: none; border-radius: var(--ds-radius-xs); cursor: pointer; font-size: var(--ds-text-xs); font-family: inherit; }
 .aup-dup-btn        { padding: 0.25rem 0.6rem; background: var(--majalis-line); color: var(--majalis-ink); border: none; border-radius: var(--ds-radius-xs); cursor: pointer; font-size: var(--ds-text-xs); font-family: inherit; }
 .aup-alert-card              { padding: 0.6rem 0.75rem; border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-sm); background: var(--majalis-panel); }
 .aup-alert-card--critical    { border-color: #991B1B44; background: #991B1B08; }

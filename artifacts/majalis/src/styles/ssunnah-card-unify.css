@@ -5,6 +5,8 @@
 
 .ui-card:not([data-scripture]):not(.mushaf-page):not(.ayah-card),
 .mj-card:not([data-scripture]),
+.hub-tile:not([data-scripture]),
+.list-card:not([data-scripture]),
 .ss-card:not([data-scripture]),
 .section-card:not([data-scripture]),
 .content-card:not([data-scripture]),

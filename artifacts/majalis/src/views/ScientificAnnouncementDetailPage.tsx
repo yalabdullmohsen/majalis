@@ -10,6 +10,7 @@ import { MetaHead } from "@/components/seo/MetaHead";
 import { OptimizedImage } from "@/components/media/OptimizedImage";
 import { ContentDetailLayout } from "@/components/platform/ContentDetailLayout";
 import "@/styles/pages/scientific-announcements.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 function safeHref(url?: string): string | undefined {
   if (!url) return undefined;
@@ -84,6 +85,7 @@ export default function ScientificAnnouncementDetailPage({
     : undefined;
 
   return (
+    <UtilityScreen compose="mark">
     <>
     <MetaHead
       path={`/scientific-announcements/${params.id}`}
@@ -232,5 +234,6 @@ export default function ScientificAnnouncementDetailPage({
       </article>
     </ContentDetailLayout>
     </>
+    </UtilityScreen>
   );
 }

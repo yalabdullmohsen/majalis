@@ -45,7 +45,7 @@
   margin: 0 0 1.1rem;
   font-size: 0.98rem;
   line-height: 1.7;
-  color: var(--majalis-ink-soft, var(--msk-text-2, #5c5c56));
+  color: var(--majalis-ink-soft, var(--msk-text-2, var(--mj-muted)));
 }
 
 .contact-topic-banner {
@@ -138,7 +138,7 @@
 
 .contact-btn--primary {
   background: var(--majalis-emerald-deep, var(--mj-brand));
-  color: #fff;
+  color: var(--mj-white, #ffffff);
 }
 
 .contact-btn--primary:hover {
@@ -146,8 +146,8 @@
 }
 
 .contact-btn--ghost {
-  background: var(--mj-surface, #fff);
-  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, var(--mj-hairline, #d5ddd9));
+  background: var(--mj-surface, var(--mj-white, #ffffff));
+  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #1f6b56)) 18%, var(--mj-hairline, #e3e8e6));
   color: var(--majalis-ink);
 }
 

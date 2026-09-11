@@ -13,6 +13,7 @@ import { FiqhCouncilSearchBox } from "@/components/fiqh-council/FiqhCouncilSearc
 import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function FiqhCouncilArchivePage() {
   const [items, setItems] = useState<any[]>([]);
@@ -35,6 +36,7 @@ export default function FiqhCouncilArchivePage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow content-hub-page fiqh-council-page">
       <PageHeader
         eyebrow="الفقه المعاصر"
@@ -72,5 +74,6 @@ export default function FiqhCouncilArchivePage() {
         <SectionQuiz route="/fiqh-council" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

@@ -116,7 +116,7 @@
 .cit-folder-dot   { background: var(--folder-dot-bg); }
 /* Citation content-type color tokens — set all 3 vars used across citation components */
 .cit-type--quran-ayah    { --cit-type-color: var(--mj-brand); --cm-type-color: var(--mj-brand); --cab-type-color: var(--mj-brand); }
-.cit-type--hadith        { --cit-type-color: var(--ss-deep-green, #0A3D2E); --cm-type-color: var(--ss-deep-green, #0A3D2E); --cab-type-color: var(--ss-deep-green, #0A3D2E); }
+.cit-type--hadith        { --cit-type-color: var(--ss-deep-green, var(--mj-brand-deep)); --cm-type-color: var(--ss-deep-green, var(--mj-brand-deep)); --cab-type-color: var(--ss-deep-green, var(--mj-brand-deep)); }
 .cit-type--scholar-quote { --cit-type-color: var(--brand, var(--mj-brand)); --cm-type-color: var(--brand, var(--mj-brand)); --cab-type-color: var(--brand, var(--mj-brand)); }
 .cit-type--fatwa,
 .cit-type--book          { --cit-type-color: var(--mj-brand); --cm-type-color: var(--mj-brand); --cab-type-color: var(--mj-brand); }

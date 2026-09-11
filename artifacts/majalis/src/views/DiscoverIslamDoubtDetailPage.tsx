@@ -5,6 +5,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { getShubhaBySlug, type DawahShubha } from "@/lib/dawah-service";
 import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function DiscoverIslamDoubtDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -41,6 +42,7 @@ export default function DiscoverIslamDoubtDetailPage() {
   }
 
   return (
+    <UtilityScreen compose="mark">
     <DiscoverIslamShell detail>
       <PageHeader eyebrow="التعريف بالإسلام" title={item.title} />
 
@@ -132,5 +134,7 @@ export default function DiscoverIslamDoubtDetailPage() {
         <Link href="/discover-islam/contact" className="page-link-inline">لديك اعتراض آخر؟ تحدّث مع داعية ←</Link>
       </div>
     </DiscoverIslamShell>
+  
+    </UtilityScreen>
   );
 }

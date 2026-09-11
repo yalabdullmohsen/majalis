@@ -26,7 +26,7 @@
 }
 
 .inst-card {
-  background: var(--ss-card-bg, var(--color-surface, #fffcf7));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
   border: 1px solid var(--ds-line-color);
   border-radius: var(--radius-card, 24px);
   padding: 1.125rem;
@@ -90,7 +90,7 @@
 
 /* توحيد هوية بطاقات المؤسسات */
 .inst-card {
-  border-color: color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, var(--color-border, #d9d3c8)));
+  border-color: color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, var(--color-border, var(--mj-hairline))));
   box-shadow: var(--ss-shadow-soft, none);
 }
 .inst-card:hover {
@@ -104,8 +104,8 @@ html[data-theme="dark"] .inst-page {
 }
 html.dark .inst-card,
 html[data-theme="dark"] .inst-card {
-  background: var(--mj-surface, #1b2421) !important;
-  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832) !important;
+  background: var(--mj-surface, #fffcf8) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, var(--mj-hairline)) !important;
   color: var(--mj-ink, #f3f7f5) !important;
 }
 html.dark .inst-card__name,

@@ -1,7 +1,9 @@
 import { LazySectionAccordionPage } from "@/components/LazySectionAccordionPage";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function DurusMutanawwiaPage() {
   return (
+    <UtilityScreen compose="mark">
     <LazySectionAccordionPage
       eyebrow="المحتوى التعليمي"
       title="دروس متنوعة"
@@ -10,5 +12,6 @@ export default function DurusMutanawwiaPage() {
       relatedKey="durusMutanawwia"
       load={() => import("@/lib/durus-mutanawwia-data")}
     />
+    </UtilityScreen>
   );
 }

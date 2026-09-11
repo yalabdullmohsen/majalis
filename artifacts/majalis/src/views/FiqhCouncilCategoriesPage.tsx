@@ -17,6 +17,7 @@ import { FiqhCouncilSubnav } from "./FiqhCouncilPage";
 import { applyPageSeo } from "@/lib/seo";
 import { FIQH_CATEGORY_TREE } from "@/lib/fiqh-council-categories";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function FiqhCouncilCategoriesPage() {
   const search = useSearch();
@@ -54,6 +55,7 @@ export default function FiqhCouncilCategoriesPage() {
   }, [selectedCat]);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow content-hub-page fiqh-council-page">
       <PageHeader
         eyebrow="الفقه المعاصر"
@@ -127,5 +129,6 @@ export default function FiqhCouncilCategoriesPage() {
         <SectionQuiz route="/fiqh-council" title="اختبر معلوماتك في أبواب الفقه" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

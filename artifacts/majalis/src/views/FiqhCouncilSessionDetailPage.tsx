@@ -19,6 +19,7 @@ import {
 } from "@/lib/fiqh-council-types";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function FiqhCouncilSessionDetailPage({ params }: { params: { slug: string } }) {
   const [session, setSession] = useState<FiqhCouncilSession | null>(null);
@@ -107,6 +108,7 @@ export default function FiqhCouncilSessionDetailPage({ params }: { params: { slu
   };
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow fiqh-council-page">
       <FiqhCouncilSubnav />
 
@@ -166,5 +168,6 @@ export default function FiqhCouncilSessionDetailPage({ params }: { params: { slu
         )}
       </ContentDetailLayout>
     </div>
+    </UtilityScreen>
   );
 }

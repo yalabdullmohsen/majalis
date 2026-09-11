@@ -14,12 +14,12 @@
 
 .mk-page {
   --mk-green: var(--primary, #0f5c45);
-  --mk-green-deep: var(--primary-strong, #0a3d2e);
+  --mk-green-deep: var(--primary-strong, var(--mj-brand-deep));
   --mk-green-soft: var(--primary-soft, #e2efe8);
-  --mk-surface: var(--surface, #fffcf7);
+  --mk-surface: var(--surface, var(--mj-surface));
   --mk-line: var(--border-soft, #d9d2c6);
   --mk-ink: var(--mj-ink, #16241e);
-  --mk-muted: var(--mj-muted, #4a5a53);
+  --mk-muted: var(--mj-muted, var(--mj-ink-2));
   --mk-radius: var(--radius-card, 24px);
   --mk-fab-clearance: calc(
     var(--bottom-nav-total, var(--nav-h, 64px)) + var(--inset-bottom, 0px) + 4.5rem
@@ -148,8 +148,8 @@
   padding: 0.45rem 0.7rem;
   border-radius: 999px;
   /* نهاري: أخضر عميق + نص فاتح (AA) */
-  background: var(--mk-green-deep, var(--mj-brand-deep, #0d4a39));
-  color: var(--on-dark-strong, #fff);
+  background: var(--mk-green-deep, var(--mj-brand-deep, #12362c));
+  color: var(--on-dark-strong, var(--mj-white, #ffffff));
   font-size: 0.8rem;
   font-weight: 700;
   white-space: nowrap;
@@ -239,7 +239,7 @@
 }
 
 .mk-pill--method.mk-pill--warn {
-  background: color-mix(in srgb, #b45309 14%, var(--mk-surface));
+  background: color-mix(in srgb, var(--mj-warning) 14%, var(--mk-surface));
   color: #7c3a10;
 }
 
@@ -312,7 +312,7 @@
   border: 0;
   text-decoration: none;
   background: var(--mk-green);
-  color: var(--on-brand, #fff);
+  color: var(--on-brand, var(--mj-white, #ffffff));
   font-size: 0.84rem;
   font-weight: 700;
   cursor: pointer;
@@ -411,8 +411,8 @@
   align-items: flex-start;
   padding: 0.85rem 0.95rem;
   border-radius: 14px;
-  background: color-mix(in srgb, #b45309 10%, var(--mk-surface));
-  border: 1px solid color-mix(in srgb, #b45309 18%, transparent);
+  background: color-mix(in srgb, var(--mj-warning) 10%, var(--mk-surface));
+  border: 1px solid color-mix(in srgb, var(--mj-warning) 18%, transparent);
   color: var(--mk-ink);
   font-size: 0.84rem;
   line-height: 1.7;
@@ -421,7 +421,7 @@
 .mk-caution svg {
   flex-shrink: 0;
   margin-top: 0.15rem;
-  color: #b45309;
+  color: var(--mj-warning);
 }
 
 .mk-caution p {
@@ -534,7 +534,7 @@ html.dark .mk-pill--topic,
   border-radius: inherit;
 }
 .mk-card__hit:focus-visible {
-  outline: 2px solid var(--mj-brand, #1f6b56);
+  outline: 2px solid var(--mj-brand, #1e5f4b);
   outline-offset: 2px;
 }
 .mk-expand-btn {
@@ -573,5 +573,5 @@ html.dark .mk-pill--topic,
   margin: 0.75rem 0 0;
   text-align: center;
   font-size: 0.82rem;
-  color: var(--mk-muted, #4a5a53);
+  color: var(--mk-muted, var(--mj-ink-2));
 }

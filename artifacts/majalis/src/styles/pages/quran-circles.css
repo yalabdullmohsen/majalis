@@ -65,7 +65,7 @@
 .qc-hub-nav__chip.is-active {
   background: var(--mj-brand-deep, #135034);
   border-color: var(--mj-brand-deep, #0e3d27);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
 }
 
 .qc-hub-nav__mark {
@@ -81,7 +81,7 @@
   padding: 0.65rem 0.75rem;
   border: 1px solid var(--majalis-line, #e8e4dc);
   border-radius: 12px;
-  background: color-mix(in srgb, var(--majalis-parchment, #fafaf8) 94%, #fff);
+  background: color-mix(in srgb, var(--majalis-parchment, #fafaf8) 94%, var(--mj-white, #ffffff));
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 6px 18px rgba(15, 61, 48, 0.06);
@@ -122,7 +122,7 @@
 .qc-sheet-check input {
   width: 1.1rem;
   height: 1.1rem;
-  accent-color: var(--mj-brand, var(--mj-brand));
+  accent-color: var(--mj-brand, #1e5f4b);
 }
 
 .qc-results {
@@ -155,7 +155,7 @@
   border: 1px solid var(--majalis-line, #e8e4dc);
   border-radius: 12px;
   padding: 0.85rem 0.95rem 0.95rem;
-  background: var(--mj-surface, #fff);
+  background: var(--mj-surface, var(--mj-white, #ffffff));
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
@@ -274,7 +274,7 @@
 
 .qc-card__btn--primary {
   background: var(--mj-brand-deep, #0f3d30);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
 }
 
 .qc-card__btn--ghost {
@@ -310,14 +310,14 @@ html.dark .qc-page {
 
 html[data-theme="dark"] .qc-toolbar,
 html.dark .qc-toolbar {
-  background: color-mix(in srgb, var(--mj-surface, #12201b) 92%, #000);
-  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 22%, transparent);
+  background: color-mix(in srgb, var(--mj-surface, #12201b) 92%, var(--mj-ink));
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 22%, transparent);
 }
 
 html[data-theme="dark"] .qc-hub-nav__chip,
 html.dark .qc-hub-nav__chip {
-  background: color-mix(in srgb, var(--mj-surface, #12201b) 88%, #000);
-  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 28%, transparent);
+  background: color-mix(in srgb, var(--mj-surface, #12201b) 88%, var(--mj-ink));
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, transparent);
   color: #d7f0e4;
 }
 
@@ -325,13 +325,13 @@ html[data-theme="dark"] .qc-hub-nav__chip.is-active,
 html.dark .qc-hub-nav__chip.is-active {
   background: #135034;
   border-color: #0e3d27;
-  color: #fff;
+  color: var(--mj-white, #ffffff);
 }
 
 html[data-theme="dark"] .qc-card,
 html.dark .qc-card {
-  background: color-mix(in srgb, var(--mj-surface, #12201b) 95%, #000);
-  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 20%, transparent);
+  background: color-mix(in srgb, var(--mj-surface, #12201b) 95%, var(--mj-ink));
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 20%, transparent);
 }
 
 html[data-theme="dark"] .qc-card__desc,

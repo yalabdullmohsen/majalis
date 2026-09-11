@@ -5,6 +5,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { getTawhidTopic } from "@/lib/tawhid-topics";
 import { TopicPage } from "@/components/topic/TopicPage";
 import "@/styles/pages/tawhid.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 /**
  * صفحة موضوع فرعي تحت بوابة التوحيد — مسار مستقل /tawhid/:slug
@@ -29,6 +30,7 @@ export default function TawhidTopicPage() {
   }
 
   return (
+    <UtilityScreen compose="mark">
     <TopicPage
       themeId="aqeedah"
       sectionRoute="/tawhid"
@@ -86,5 +88,6 @@ export default function TawhidTopicPage() {
         </div>
       </div>
     </TopicPage>
+    </UtilityScreen>
   );
 }

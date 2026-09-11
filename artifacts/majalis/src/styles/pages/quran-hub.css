@@ -4,7 +4,7 @@
 .quran-hub-page {
   min-height: 100svh;
   background: var(--elite-white, var(--mj-bg));
-  color: var(--elite-ink, #1A1A18);
+  color: var(--elite-ink, var(--mj-ink));
   /* الحجز السفلي من #main-content (--content-pb) */
   padding-bottom: 0;
   /* بطل ممتد بلا حشو جانبي على الحاوية — المحتوى التالي يستعيد الحشو */
@@ -18,7 +18,7 @@
 
 /* بطاقة فتح المصحف — خفيفة، أعلى التلاوة والتفسير، بلا مستطيل أخضر ضخم */
 .quran-open-mushaf {
-  --qom-accent: var(--mj-brand-deep, #123f2e);
+  --qom-accent: var(--mj-brand-deep, #12362c);
   position: relative;
   display: flex;
   align-items: center;
@@ -28,7 +28,7 @@
   min-height: 0;
   max-width: 100%;
   border-radius: 1rem;
-  background: var(--mj-surface, #fff);
+  background: var(--mj-surface, var(--mj-white, #ffffff));
   border: 1px solid color-mix(in srgb, var(--qom-accent) 16%, var(--mj-hairline, #e3e8e6));
   box-shadow: 0 6px 18px -14px rgba(11, 32, 24, 0.35);
   overflow: hidden;
@@ -78,14 +78,14 @@
   font-size: 1rem;
   font-weight: 800;
   line-height: 1.3;
-  color: var(--majalis-ink, var(--mj-ink, #1a1a18));
+  color: var(--majalis-ink, var(--mj-ink, #16241e));
 }
 
 .quran-open-mushaf__desc {
   margin: 0;
   font-size: 0.8rem;
   line-height: 1.4;
-  color: var(--majalis-ink-soft, var(--mj-ink-2, #4a5a53));
+  color: var(--majalis-ink-soft, var(--mj-ink-2, var(--mj-ink-2)));
 }
 
 .quran-open-mushaf__resume {
@@ -129,7 +129,7 @@
   height: 3rem;
   border-radius: 999px;
   background: var(--qom-accent);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   box-shadow: 0 10px 22px -8px rgba(18, 63, 46, 0.65);
   transition: transform 0.15s ease, filter 0.15s ease;
 }
@@ -288,7 +288,7 @@ html.dark .quran-open-mushaf__icon {
 .quran-hub-stat__val {
   font-size: 1.6rem;
   font-weight: 800;
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
   line-height: 1;
 }
 .quran-hub-stat__lbl {
@@ -321,7 +321,7 @@ html.dark .quran-open-mushaf__icon {
   display: flex;
   flex-direction: column;
   background: var(--mj-surface);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, var(--mj-hairline, #d5ddd9));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand, #1f6b56)) 14%, var(--mj-hairline, #e3e8e6));
   border-radius: var(--radius-card, 24px);
   overflow: hidden;
   text-decoration: none;
@@ -391,19 +391,19 @@ html.dark .quran-open-mushaf__icon {
 /* بطاقة مميَّزة — تبرز بصريًا عن بقية الشبكة بدل الاندماج فيها (مثال: اختبار التسميع بالذكاء الاصطناعي) */
 .quran-hub-card--featured {
   grid-column: span 2;
-  border: 2px solid #C9A227;
+  border: 2px solid var(--mj-accent);
   box-shadow: 0 6px 24px rgba(201,162,39,.28);
 }
 .quran-hub-card--featured:hover {
   box-shadow: 0 10px 32px rgba(201,162,39,.4);
-  border-color: #C9A227;
+  border-color: var(--mj-accent);
 }
 .quran-hub-card--featured .quran-hub-card__header {
   display: none;
   background: transparent;
 }
 .quran-hub-card--featured .quran-hub-card__tag {
-  background: #C9A227;
+  background: var(--mj-accent);
   color: #1A1400;
 }
 @media (max-width: 640px) {
@@ -431,11 +431,11 @@ html.dark .quran-open-mushaf__icon {
   display: flex;
   align-items: center;
   gap: var(--ds-space-3);
-  background: var(--mj-surface, #FFFFFF);
+  background: var(--mj-surface, var(--mj-white, #ffffff));
   border: 1px solid var(--mj-hairline, rgba(23,61,53,0.1));
   border-radius: var(--ds-radius-lg);
   padding: 1rem 1.25rem;
-  color: var(--txt-primary, var(--elite-ink, #1A1A18));
+  color: var(--txt-primary, var(--elite-ink, var(--mj-ink)));
 }
 .quran-hub-feature-item__icon {
   color: var(--mj-brand);
@@ -457,13 +457,13 @@ html.dark .quran-open-mushaf__icon {
 .quran-hub-closing__ayah {
   font-family: "Amiri", "Scheherazade New", serif;
   font-size: clamp(1.1rem, 3vw, 1.4rem);
-  color: #FFFFFF;
+  color: var(--mj-white, #ffffff);
   margin: 0 0 0.5rem;
   line-height: 1.9;
 }
 .quran-hub-closing__ref {
   font-size: 0.85rem;
-  color: var(--on-dark-body, #F8FAFC);
+  color: var(--on-dark-body, var(--mj-surface-2));
 }
 
 .quran-hub-empty {
@@ -487,7 +487,7 @@ html.dark .quran-open-mushaf__icon {
   }
   .quran-hub-hero__title {
     font-size: clamp(1.45rem, 6vw, 2rem);
-    color: #FFFFFF;
+    color: var(--mj-white, #ffffff);
   }
   .quran-hub-hero__sub {
     margin-bottom: 1rem;

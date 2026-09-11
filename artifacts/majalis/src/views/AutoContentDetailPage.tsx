@@ -8,6 +8,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 import type { AutoImportedContent } from "@/lib/auto-content/auto-content-utils";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function AutoContentDetailPage({ params }: { params: { slug: string } }) {
   const [item, setItem] = useState<AutoImportedContent | null>(null);
@@ -70,6 +71,7 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
   const updateType = mapContentTypeToUpdateType(item.content_type);
 
   return (
+    <UtilityScreen compose="mark">
     <ContentDetailLayout
       breadcrumbs={[
         { label: "الرئيسية", href: "/" },
@@ -89,5 +91,6 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
         </p>
       }
     />
+    </UtilityScreen>
   );
 }

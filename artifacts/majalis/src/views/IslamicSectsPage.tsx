@@ -9,6 +9,7 @@ import { SectionIcon } from "@/components/ui/SectionIcon";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { SEARCH_INPUT_ATTRS, handleSearchEnterKey } from "@/lib/search-input";
 import "@/styles/pages/islamic-sects.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 type Sect = {
   id: string;
@@ -901,6 +902,7 @@ export default function IslamicSectsPage() {
   });
 
   return (
+    <UtilityScreen compose="mark">
     <SectionTemplatePage
       route="/islamic-sects"
       title="الفرق الإسلامية"
@@ -1038,5 +1040,7 @@ export default function IslamicSectsPage() {
         <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والفرق" count={4} />
       </div>
     </SectionTemplatePage>
+  
+    </UtilityScreen>
   );
 }

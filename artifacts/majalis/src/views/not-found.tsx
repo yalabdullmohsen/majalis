@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Compass, BookOpen, BookMarked, MessageCircle, Clock, Scroll, BookText, Scale } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/not-found.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const SUGGESTIONS = [
   { href: "/quran-hub",    label: "مركز القرآن الكريم",       Icon: BookOpen   },
@@ -27,6 +28,7 @@ export default function NotFound() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="nf2-page" dir="rtl" lang="ar">
       <section className="nf2-card">
         <div className="nf2-brand">
@@ -65,5 +67,7 @@ export default function NotFound() {
         </div>
       </section>
     </div>
+  
+    </UtilityScreen>
   );
 }

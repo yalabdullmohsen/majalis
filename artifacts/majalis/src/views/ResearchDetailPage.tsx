@@ -22,6 +22,7 @@ import {
   type CitationStyle,
 } from "@/lib/researches";
 import "@/styles/pages/researches.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function ResearchDetailPage() {
   const params = useParams<{ id?: string }>();
@@ -97,6 +98,7 @@ export default function ResearchDetailPage() {
   };
 
   return (
+    <UtilityScreen compose="mark">
     <div className="sr-page">
       <p style={{ marginBottom: "0.75rem" }}>
         <Link href="/academic-research" className="sr-section__link">← الأبحاث الشرعية</Link>
@@ -260,5 +262,6 @@ export default function ResearchDetailPage() {
 
       <ShareButtons title={research.title} url={`https://www.ssunnah.com/academic-research/${research.slug}`} />
     </div>
+    </UtilityScreen>
   );
 }

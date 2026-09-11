@@ -81,8 +81,8 @@
 }
 
 .src-card__btn--primary {
-  background: var(--mj-brand, var(--mj-brand));
-  border-color: var(--mj-brand, var(--mj-brand));
+  background: var(--mj-brand, #1e5f4b);
+  border-color: var(--mj-brand, #1e5f4b);
   color: #fff;
 }
 

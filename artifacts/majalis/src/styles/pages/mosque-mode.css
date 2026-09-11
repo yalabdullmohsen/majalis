@@ -13,7 +13,7 @@
   gap: 0.75rem;
   padding: 0.85rem 1.25rem;
   background: var(--mj-brand);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   font-size: 0.9rem;
   font-weight: 600;
 }
@@ -22,7 +22,7 @@
   margin-inline-end: auto;
   background: rgba(255,255,255,0.2);
   border: none;
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   width: 28px; height: 28px;
   border-radius: 50%;
   font-size: 0.8rem;
@@ -57,7 +57,7 @@
   padding: 2.5rem 1.5rem;
   text-align: center;
   background: linear-gradient(135deg, var(--mj-brand) 0%, var(--mj-brand) 100%);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   gap: 0.4rem;
 }
 .mosque-mode__prayer-label { font-size: 0.85rem; opacity: 0.75; }
@@ -108,22 +108,22 @@
 
 :is(html[data-theme="dark"], html.dark) .mosque-mode {
   background: var(--mj-bg, #131a18);
-  color: var(--mj-ink, #e9efec);
+  color: var(--mj-ink, #E9EFEC);
 }
 :is(html[data-theme="dark"], html.dark) .mosque-mode__header {
   border-bottom-color: rgba(255, 255, 255, 0.12);
 }
 :is(html[data-theme="dark"], html.dark) .mosque-mode__label {
-  color: #fff !important;
+  color: var(--mj-white, #ffffff) !important;
 }
 :is(html[data-theme="dark"], html.dark) .mosque-mode__exit {
-  color: var(--mj-ink-2, #c2cfca);
+  color: var(--mj-ink-2, var(--mj-hairline));
   border-color: rgba(255, 255, 255, 0.2);
 }
 :is(html[data-theme="dark"], html.dark) .mosque-mode__link {
-  background: var(--mj-surface, #1b2421);
+  background: var(--mj-surface, #fffcf8);
   border-color: rgba(255, 255, 255, 0.1);
-  color: var(--mj-ink, #e9efec);
+  color: var(--mj-ink, #E9EFEC);
   box-shadow: none;
 }
 :is(html[data-theme="dark"], html.dark) .mosque-mode__link-label {

@@ -13,24 +13,24 @@
 .knowledge-article {
   padding: 1rem 1.1rem;
   border-radius: 0.75rem;
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   background: var(--surface-brand-solid, #0f6b4c);
 }
 
 .knowledge-article a,
 .knowledge-article-body {
-  color: #fff;
+  color: var(--mj-white, #ffffff);
 }
 
 .knowledge-article h2,
 .knowledge-article h3 {
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   margin-top: 1rem;
 }
 
 .knowledge-review-banner {
-  background: color-mix(in srgb, #b45309 18%, transparent);
-  border: 1px solid #b45309;
+  background: color-mix(in srgb, var(--mj-warning) 18%, transparent);
+  border: 1px solid var(--mj-warning);
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
 }
@@ -52,7 +52,7 @@
   padding: 0.75rem 1rem;
   border-radius: 0.65rem;
   text-decoration: none;
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   background: var(--surface-brand-solid, #0f6b4c);
 }
 

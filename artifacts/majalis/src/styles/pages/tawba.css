@@ -12,7 +12,7 @@
   background: linear-gradient(135deg, #0a1628 0%, #132240 50%, var(--mj-brand-deep) 100%);
   padding: 2.5rem 1.5rem 2rem;
   text-align: center;
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   position: relative; overflow: hidden;
 }
 .tw-hero::before {
@@ -31,10 +31,10 @@
   font-size: .75rem;
   font-weight: 600;
   margin-bottom: .8rem;
-  color: #fff;
+  color: var(--mj-white, #ffffff);
 }
-.tw-hero__title { font-size: 1.65rem; font-weight: 800; margin: 0 0 .5rem; color: #fff; }
-.tw-hero__sub   { font-size: .9rem; opacity: .85; margin: 0 0 1.4rem; line-height: 1.6; color: #fff; }
+.tw-hero__title { font-size: 1.65rem; font-weight: 800; margin: 0 0 .5rem; color: var(--mj-white, #ffffff); }
+.tw-hero__sub   { font-size: .9rem; opacity: .85; margin: 0 0 1.4rem; line-height: 1.6; color: var(--mj-white, #ffffff); }
 
 .tw-ayah {
   background: rgba(255,255,255,.1);
@@ -44,8 +44,8 @@
   max-width: 580px;
   margin: 0 auto;
 }
-.tw-ayah__text { font-family: var(--font-quran,'Scheherazade New',serif); font-size: 1.1rem; line-height: 2.1; color: #fff; margin: 0 0 .3rem; }
-.tw-ayah__ref  { font-size: .72rem; opacity: .7; color: #fff; font-style: normal; }
+.tw-ayah__text { font-family: var(--font-quran,'Scheherazade New',serif); font-size: 1.1rem; line-height: 2.1; color: var(--mj-white, #ffffff); margin: 0 0 .3rem; }
+.tw-ayah__ref  { font-size: .72rem; opacity: .7; color: var(--mj-white, #ffffff); font-style: normal; }
 
 
 /* tabs */
@@ -97,8 +97,8 @@
   padding: .9rem 1rem;
 }
 .tw-shart-num {
-  background: #1a1a2e;
-  color: #fff;
+  background: var(--mj-info);
+  color: var(--mj-white, #ffffff);
   width: 2rem; height: 2rem;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
@@ -126,12 +126,12 @@
   display: flex;
   gap: .65rem;
   align-items: flex-start;
-  background: #FFFBEB;
-  border: 1px solid #FDE68A;
+  background: var(--mj-accent-soft);
+  border: 1px solid var(--mj-accent-soft);
   border-radius: .7rem;
   padding: .85rem 1rem;
   font-size: .83rem;
-  color: #78350F;
+  color: var(--mj-warning);
   line-height: 1.6;
 }
 .tw-note-box__icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .05rem; }
@@ -182,7 +182,7 @@
   cursor: pointer;
   font-family: inherit;
 }
-.tw-dhikr-num   { background: #1a1a2e; color: #fff; width: 1.5rem; height: 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800; flex-shrink: 0; }
+.tw-dhikr-num   { background: #1a1a2e; color: var(--mj-white, #ffffff); width: 1.5rem; height: 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800; flex-shrink: 0; }
 .tw-dhikr-times { flex: 1; font-size: .75rem; color: var(--mj-ink-2); text-align: end; }
 .tw-dhikr-chevron { font-size: .8rem; color: var(--mj-muted); transition: transform .2s; margin-inline-end: auto; }
 .tw-dhikr-chevron--open { transform: rotate(180deg); }
@@ -225,7 +225,7 @@
 .tw-mani-desc  { font-size: .82rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0; }
 .tw-hope-box {
   background: linear-gradient(135deg,var(--mj-brand-soft),var(--mj-brand-tint));
-  border: 1px solid #BBF7D0;
+  border: 1px solid var(--mj-success-soft);
   border-radius: .8rem;
   padding: 1.1rem 1.2rem;
 }
@@ -246,12 +246,12 @@
 .tw-athar-desc  { font-size: .74rem; color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
 
 .tw-hadith-box {
-  background: linear-gradient(135deg,#1a1a2e,#16213e);
+  background: linear-gradient(135deg,var(--mj-info),#16213e);
   border-radius: .8rem;
   padding: 1.1rem 1.3rem;
   margin: 1rem 0 0;
 }
-.tw-hadith-box__text { font-size: var(--ds-text-base); font-weight: 700; color: #fff; line-height: 1.8; margin: 0 0 .4rem; font-style: normal; }
+.tw-hadith-box__text { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-white, #ffffff); line-height: 1.8; margin: 0 0 .4rem; font-style: normal; }
 .tw-hadith-box__ref  { font-size: .72rem; color: rgba(255,255,255,.7); font-style: normal; }
 
 /* related */
@@ -279,7 +279,7 @@ html.dark .tw-related__title { color: var(--mj-ink, #F7F3EB); }
 html[data-theme="dark"] .tw-related__link,
 html.dark .tw-related__link {
   color: var(--accent, #5CC095);
-  background: var(--surface, #1B2421);
+  background: var(--surface, var(--mj-surface));
   border-color: var(--border, #35443F);
 }
 

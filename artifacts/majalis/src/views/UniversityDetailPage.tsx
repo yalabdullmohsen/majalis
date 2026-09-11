@@ -17,6 +17,7 @@ import { CompareBar } from "@/components/universities/CompareBar";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/university-detail.css";
 import "@/styles/pages/learning-path-dashboard.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 function ProgramCard({ program: p }: { program: UniversityProgram }) {
   const [open, setOpen] = useState(false);
@@ -340,8 +341,10 @@ export default function UniversityDetailPage() {
   }
 
   return (
+    <UtilityScreen compose="mark">
     <CompareProvider>
       <DetailContent university={university} />
     </CompareProvider>
+    </UtilityScreen>
   );
 }

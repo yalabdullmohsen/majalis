@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 type SourceRow = {
   name: string;
@@ -142,6 +143,7 @@ export default function SourcesLicensesPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <LegalPageLayout eyebrow="الشفافية" title="المصادر والتراخيص" updatedAt="2026-09-01">
       <LegalSection title="الغرض">
         <p>
@@ -216,5 +218,6 @@ export default function SourcesLicensesPage() {
         url="https://www.ssunnah.com/data-licenses"
       />
     </LegalPageLayout>
+    </UtilityScreen>
   );
 }

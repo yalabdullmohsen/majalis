@@ -30,6 +30,7 @@ import {
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 function DetailSection({ title, children }: { title: string; children: React.ReactNode }) {
   if (!children) return null;
@@ -122,6 +123,7 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
   const sourceUrls = item.source_url ? [item.source_url] : [];
 
   return (
+    <UtilityScreen compose="mark">
     <ContentDetailLayout
       breadcrumbs={[
         { label: "الرئيسية", href: "/" },
@@ -252,5 +254,6 @@ export default function FiqhCouncilItemDetailPage({ params }: { params: { slug: 
 
       {relations && <FiqhItemRelations relations={relations} />}
     </ContentDetailLayout>
+    </UtilityScreen>
   );
 }

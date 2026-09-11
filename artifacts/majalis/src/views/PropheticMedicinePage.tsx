@@ -13,6 +13,7 @@ import type {
 } from "@/lib/prophetic-medicine-seed";
 import "@/styles/pages/prophetic-medicine.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const PM_ICON_MAP: Record<string, LucideIcon> = {
   Leaf, Moon, BookOpen, CalendarDays, Utensils, Sunrise, FlaskConical, Stethoscope,
@@ -108,6 +109,7 @@ export default function PropheticMedicinePage() {
   );
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell ds-page">
       {/* رأس الصفحة */}
       <div className="majalis-star-hero pmp-hero">
@@ -215,5 +217,6 @@ export default function PropheticMedicinePage() {
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الطب النبوي" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

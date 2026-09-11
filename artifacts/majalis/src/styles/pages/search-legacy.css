@@ -24,13 +24,13 @@
 
 .search-page-hint {
   text-align: center;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-muted));
   padding: 2rem 0;
 }
 
 .search-page-summary {
   font-size: 0.8125rem;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-muted));
   margin: 0 0 1.5rem;
 }
 

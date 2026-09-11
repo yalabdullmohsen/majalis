@@ -12,6 +12,7 @@ import {
 import { MapPin, LayoutGrid, List, X, ExternalLink, Users, Maximize2 } from "lucide-react";
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { ShareButtons } from "@/components/ContentActions";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 // Leaflet — تحميل كسول لتجنب مشاكل SSR
 const MapSection = lazy(() => import("@/components/landmarks/LandmarksMap"));
@@ -254,6 +255,7 @@ export default function IslamicLandmarksPage() {
   }, [activeCountry, activeEra, activeType, search]);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="ilm-page">
       {/* Hero */}
       <div className="ilm-hero">
@@ -423,5 +425,6 @@ export default function IslamicLandmarksPage() {
         <ShareButtons title="المواقع الإسلامية التاريخية | سُنّة" url="https://www.ssunnah.com/islamic-landmarks" />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

@@ -1,8 +1,8 @@
 /* deferred from index.css */
 .kuwait-tab {
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   background: transparent;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-muted));
   border-radius: 999px;
   padding: 0.45rem 1rem;
   font-size: var(--ds-text-sm);
@@ -12,7 +12,7 @@
 
 .kuwait-tab--active {
   background: var(--msk-gold, var(--mj-brand-deep));
-  color: #fff;
+  color: var(--mj-white, #ffffff);
   border-color: transparent;
   font-weight: 700;
 }
@@ -30,7 +30,7 @@
 
 .kuwait-tab--active .kuwait-tab__soon {
   background: rgba(255, 255, 255, 0.22);
-  color: #fff;
+  color: var(--mj-white, #ffffff);
 }
 
 .sheikh-detail-hero {
@@ -195,7 +195,7 @@
 
 .content-detail-meta {
   font-size: var(--ds-text-sm);
-  color: var(--ink-soft, #5c5348);
+  color: var(--ink-soft, var(--mj-muted));
   margin-bottom: 0.5rem;
 }
 
@@ -207,7 +207,7 @@
 }
 
 .content-detail-subtitle {
-  color: var(--ink-soft, #5c5348);
+  color: var(--ink-soft, var(--mj-muted));
   line-height: 1.7;
   margin: 0 0 1rem;
 }
@@ -260,7 +260,7 @@
 
 .content-detail-action-btn:hover {
   background: var(--majalis-emerald, var(--mj-brand));
-  color: #fff;
+  color: var(--mj-white, #ffffff);
 }
 
 .content-detail-evidence ul,
@@ -356,7 +356,7 @@
 .fiqh-review-meta {
   margin: 0;
   font-size: 0.8125rem;
-  color: var(--ink-soft, #5c5348);
+  color: var(--ink-soft, var(--mj-muted));
 }
 
 .fiqh-review-tags {
@@ -378,7 +378,7 @@
   margin: 0.5rem 0 0.75rem;
   padding-inline-start: 1.1rem;
   font-size: 0.8125rem;
-  color: var(--ink-soft, #5c5348);
+  color: var(--ink-soft, var(--mj-muted));
 }
 
 .fiqh-review-issue--error {

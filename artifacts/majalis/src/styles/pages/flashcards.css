@@ -8,12 +8,12 @@
 .fc{
   /* الأسطح */
   --fc-bg:#F7F3EB;
-  --fc-surface:#FFFFFF;
+  --fc-surface:var(--mj-white, #ffffff);
   --fc-surface-2:#E9EDEB;
-  --fc-hairline:#E3E8E6;
+  --fc-hairline:var(--mj-hairline);
   /* النص */
   --fc-ink:var(--mj-ink);
-  --fc-ink-2:#4A5A53;
+  --fc-ink-2:var(--mj-ink-2);
   --fc-muted:#6B7B74;
   /* حالات التقييم — ثلاثة لا رابع لها */
   --fc-ok:var(--mj-brand);    --fc-ok-soft:var(--mj-brand-soft);
@@ -128,7 +128,7 @@
 .fc-rate button:focus-visible{outline:2px solid var(--fc-ok);outline-offset:2px}
 .fc-rate .is-hard{background:var(--fc-hard-soft);color:var(--fc-hard)}
 .fc-rate .is-later{background:var(--fc-later-soft);color:var(--fc-later)}
-.fc-rate .is-ok{background:var(--fc-ok);color:#fff}
+.fc-rate .is-ok{background:var(--fc-ok);color:var(--mj-white, #ffffff)}
 [data-theme="dark"] .fc-rate .is-ok{color:var(--mj-brand-deep)}
 
 /* ── النتيجة والحالة الفارغة ── */
@@ -139,7 +139,7 @@
   border-radius:var(--fc-r-sm);padding:13px 15px;margin-bottom:9px;font-size:13.5px}
 .fc-row i{font-style:normal;font-size:11.5px;color:var(--fc-muted)}
 .fc-row i.is-due{color:var(--fc-hard)}
-.fc-cta{border:0;width:100%;padding:15px;border-radius:var(--fc-r-md);background:var(--fc-ok);color:#fff;
+.fc-cta{border:0;width:100%;padding:15px;border-radius:var(--fc-r-md);background:var(--fc-ok);color:var(--mj-white, #ffffff);
   font-family:var(--fc-ui);font-size:13.5px;cursor:pointer;margin-top:auto}
 [data-theme="dark"] .fc-cta{color:var(--mj-brand-deep)}
 .fc-empty{text-align:center;padding:36px 20px;background:var(--fc-surface);border-radius:var(--fc-r-md);margin:auto 0}

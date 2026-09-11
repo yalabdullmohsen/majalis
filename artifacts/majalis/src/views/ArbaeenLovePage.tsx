@@ -5,6 +5,7 @@ import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { fetchPublishedArbaeenLove, type ArbaeenHadith } from "@/lib/arbaeen-love-service";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function ArbaeenLovePage() {
   const [items, setItems] = useState<ArbaeenHadith[]>([]);
@@ -28,6 +29,7 @@ export default function ArbaeenLovePage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell" dir="rtl">
       <nav className="hb-breadcrumb" aria-label="مسار التنقل">
         <Link href="/hadith" className="hb-breadcrumb__link">الأحاديث النبوية</Link>
@@ -74,5 +76,6 @@ export default function ArbaeenLovePage() {
         <ShareButtons title="الأربعون في محبة رب العالمين — سُنّة" url="https://www.ssunnah.com/hadith/arbaeen-love-of-allah" />
       </div>
     </div>
+    </UtilityScreen>
   );
 }
