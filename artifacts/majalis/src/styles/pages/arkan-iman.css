@@ -7,28 +7,23 @@
 
 /* الهيرو */
 .ai-hero {
+  /* soft-card عبر modern-section-shell */
   text-align: center;
   padding: 2.5rem 1.5rem 2rem;
-  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 60%, var(--mj-brand) 100%);
   border-radius: var(--ds-radius-2xl);
-  color: var(--mj-white, #ffffff);
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 24px rgba(31,77,58,0.18);
-}
+  margin-bottom: 2rem;}
 .ai-hero__badge {
   display: inline-block;
-  background: rgba(255,255,255,0.15);
-  color: var(--mj-white, #ffffff);
   font-size: 0.8rem;
   font-weight: 700;
   padding: 0.28rem 0.9rem;
   border-radius: var(--ds-radius-full);
-  border: 1px solid rgba(255,255,255,0.25);
   margin-bottom: 0.85rem;
   letter-spacing: normal;
+  /* soft via shell */
 }
-.ai-hero__title { font-size: 2rem; font-weight: 900; color: var(--mj-white, #ffffff); margin: 0 0 0.7rem; line-height: 1.25; }
-.ai-hero__sub { font-size: 0.92rem; color: rgba(255,255,255,0.88); max-width: 560px; margin: 0 auto 1.5rem; line-height: 1.7; }
+.ai-hero__title { font-size: 2rem; font-weight: 900; margin: 0 0 0.7rem; line-height: 1.25; /* soft ink */ }
+.ai-hero__sub { font-size: 0.92rem; max-width: 560px; margin: 0 auto 1.5rem; line-height: 1.7; /* soft ink */ }
 
 /* أزرار التنقل السريع */
 .ai-hero__nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; margin-top: 0.5rem; }
@@ -37,18 +32,24 @@
   flex-direction: column;
   align-items: center;
   gap: var(--ds-space-1);
-  background: rgba(255,255,255,0.12);
-  border: 1.5px solid rgba(255,255,255,0.2);
   border-radius: 0.85rem;
   padding: 0.55rem 0.85rem;
   cursor: pointer;
   transition: all 0.18s;
   min-width: 62px;
+  /* soft via shell */
 }
-.ai-hero__nav-btn:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.4); }
-.ai-hero__nav-btn--active { background: rgba(255,255,255,0.28); border-color: var(--mj-white, var(--mj-white, #ffffff)); box-shadow: 0 0 0 2px rgba(255,255,255,0.2); }
+.ai-hero__nav-btn:hover {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, transparent) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent) !important;
+}
+.ai-hero__nav-btn--active {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 16%, #fffef9) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 35%, transparent) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent);
+}
 .ai-hero__nav-icon { font-size: 1.4rem; line-height: 1; }
-.ai-hero__nav-label { font-size: 0.72rem; font-weight: 700; color: var(--mj-white, #ffffff); }
+.ai-hero__nav-label { font-size: 0.72rem; font-weight: 700; /* soft ink */ }
 
 /* قائمة الأركان */
 .ai-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }

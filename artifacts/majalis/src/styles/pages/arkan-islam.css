@@ -3,39 +3,30 @@
 /* ─────────────────────────────────────────────────────────── */
 
 .arkan-hero {
-  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand-deep) 45%, var(--mj-brand) 100%);
+  /* soft-card عبر modern-section-shell */
   border-radius: var(--ds-radius-2xl);
   padding: 2.5rem 1.5rem 2rem;
   text-align: center;
-  color: var(--mj-white, #ffffff);
   margin-bottom: 1.5rem;
-  position: relative; overflow: hidden;
-}
-.arkan-hero::before {
-  content: "";
-  position: absolute; inset: 0; border-radius: inherit;
-  background-image:
-    repeating-linear-gradient(60deg, rgba(255,255,255,0.03) 0, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 22px);
-  pointer-events: none;
-}
+  position: relative; overflow: hidden;}
 .arkan-hero__hadith {
   font-family: var(--font-quran, serif);
   font-size: 1.1rem;
-  color: rgba(255,255,255,0.82);
   margin-bottom: 0.65rem;
   letter-spacing: normal;
+  /* soft via shell */
 }
 .arkan-hero__title {
   font-size: 2.1rem;
   font-weight: 800;
-  color: var(--mj-white, #ffffff);
   margin: 0 0 0.5rem;
+  /* soft ink */
 }
 .arkan-hero__sub {
   font-size: 0.88rem;
-  color: rgba(255,255,255,0.8);
   margin: 0 auto 1.25rem;
   max-width: 500px;
+  /* soft ink */
 }
 .arkan-hero__icons {
   display: flex;
@@ -48,16 +39,19 @@
   flex-direction: column;
   align-items: center;
   gap: 0.2rem;
-  background: rgba(255,255,255,0.12);
-  border: 1.5px solid rgba(255,255,255,0.2);
   border-radius: var(--ds-radius-lg);
   padding: 0.6rem 0.85rem;
   cursor: pointer;
   transition: all 0.15s;
-  color: rgba(255,255,255,0.85);
+  /* soft via shell */
 }
-.arkan-hero__icon-btn:hover { background: rgba(255,255,255,0.2); }
-.arkan-hero__icon-btn.is-active { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.5); }
+.arkan-hero__icon-btn:hover {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, transparent) !important;
+}
+.arkan-hero__icon-btn.is-active {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 16%, #fffef9) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 35%, transparent) !important;
+}
 .arkan-hero__icon-emoji { font-size: var(--ds-text-2xl); line-height: 1; }
 .arkan-hero__icon-num { font-size: 0.68rem; font-weight: 700; }
 

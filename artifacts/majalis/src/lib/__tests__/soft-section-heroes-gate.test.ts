@@ -12,21 +12,10 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const shell = read("src/styles/components/modern-section-shell.css");
 for (const hero of [
-  ".sw-hero",
-  ".sb-hero",
-  ".as-hero",
-  ".atl-hero",
-  ".sm-hero",
-  ".gl-hero",
-  ".ldb-hero",
-  ".myl2-hero",
-  ".lpd2-hero",
-  ".pmp-hero",
-  ".mw-hero",
-  ".srp-hero",
-  ".seerah-hero",
-  ".th-hero",
-  ".sh-hero",
+  ".sw-hero", ".sb-hero", ".as-hero", ".atl-hero", ".sm-hero", ".gl-hero",
+  ".ldb-hero", ".myl2-hero", ".lpd2-hero", ".pmp-hero", ".mw-hero", ".srp-hero",
+  ".seerah-hero", ".th-hero", ".sh-hero",
+  ".sg-hero", ".hj-hero", ".duas-hero", ".ai-hero", ".arkan-hero",
 ]) {
   assert.match(shell, new RegExp(hero.replace(".", "\\.")), `modern-section-shell يشمل ${hero}`);
 }
@@ -65,6 +54,11 @@ for (const [file, banned] of [
   ["src/styles/pages/seerah.css", /\.seerah-hero\s*\{[^}]*(?:linear-gradient|brand-deep)/s],
   ["src/styles/pages/tahara.css", /\.th-hero\s*\{[^}]*(?:linear-gradient|brand-deep)/s],
   ["src/styles/pages/shimael.css", /\.sh-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/salah-guide.css", /\.sg-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/hajj.css", /\.hj-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/duas.css", /\.duas-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/arkan-iman.css", /\.ai-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/arkan-islam.css", /\.arkan-hero\s*\{[^}]*linear-gradient/s],
 ] as const) {
   const css = read(file);
   assert.doesNotMatch(css, banned, `${file}: لا تدرّج أخضر على جذر الهيرو`);

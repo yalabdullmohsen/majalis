@@ -66,6 +66,11 @@
 .pmp-hero,
 .mw-hero,
 .srp-hero,
+.sg-hero,
+.hj-hero,
+.duas-hero,
+.ai-hero,
+.arkan-hero,
 .seerah-hero,
 .th-hero,
 .sh-hero {
@@ -116,6 +121,16 @@
 .mw-hero::after,
 .srp-hero::before,
 .srp-hero::after,
+.sg-hero::before,
+.sg-hero::after,
+.hj-hero::before,
+.hj-hero::after,
+.duas-hero::before,
+.duas-hero::after,
+.ai-hero::before,
+.ai-hero::after,
+.arkan-hero::before,
+.arkan-hero::after,
 .seerah-hero::before,
 .seerah-hero::after,
 .th-hero::before,
@@ -496,6 +511,7 @@ html[data-theme="dark"] .card {
 }
 
 
+
 .myl2-hero .myl2-hero__badge,
 .lpd2-hero .lpd2-hero__badge,
 .pmp-hero .pmp-hero__badge,
@@ -503,7 +519,12 @@ html[data-theme="dark"] .card {
 .srp-hero .srp-hero__badge,
 .seerah-hero .seerah-hero__badge,
 .th-hero .th-hero__badge,
-.sh-hero .sh-hero__badge {
+.sh-hero .sh-hero__badge,
+.sg-hero .sg-hero__badge,
+.hj-hero .hj-hero__badge,
+.duas-hero .duas-hero__bismillah,
+.ai-hero .ai-hero__badge,
+.arkan-hero .arkan-hero__hadith {
   color: var(--mss-on-hero-accent, #123f2e) !important;
   background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, transparent) !important;
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
@@ -518,7 +539,13 @@ html[data-theme="dark"] .card {
 .th-hero .th-hero__title,
 .th-hero .th-hero__emoji,
 .sh-hero .sh-hero__title,
-.sh-hero .sh-hero__sallam {
+.sh-hero .sh-hero__sallam,
+.sg-hero .sg-hero__title,
+.hj-hero .hj-hero__title,
+.hj-hero .hj-hero__kaaba,
+.duas-hero .duas-hero__title,
+.ai-hero .ai-hero__title,
+.arkan-hero .arkan-hero__title {
   color: var(--mss-on-hero, #16241e) !important;
 }
 
@@ -534,14 +561,35 @@ html[data-theme="dark"] .card {
 .sh-hero .sh-hero__sub,
 .sh-hero .sh-stat,
 .sh-hero .sh-stat__val,
-.sh-hero .sh-stat__lbl {
+.sh-hero .sh-stat__lbl,
+.sg-hero .sg-hero__sub,
+.hj-hero .hj-hero__sub,
+.hj-hero .hj-talbiya__label,
+.hj-hero .hj-talbiya__text,
+.duas-hero .duas-hero__ayah-ref,
+.duas-hero .duas-hero__sub,
+.duas-hero .duas-hero__stats,
+.ai-hero .ai-hero__sub,
+.arkan-hero .arkan-hero__sub {
   color: var(--mss-on-hero-muted, #3d4f47) !important;
   opacity: 1 !important;
 }
 
-.th-hero .th-ayah {
+.th-hero .th-ayah,
+.hj-hero .hj-talbiya {
   background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, transparent) !important;
   border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
+}
+
+.ai-hero .ai-hero__nav-btn,
+.arkan-hero .arkan-hero__icon-btn {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent) !important;
+  color: var(--mss-on-hero, #16241e) !important;
+}
+.ai-hero .ai-hero__nav-label,
+.arkan-hero .arkan-hero__icon-num {
+  color: inherit !important;
 }
 
 .asp-hero {
