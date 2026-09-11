@@ -103,7 +103,6 @@ export const MushafPager = forwardRef<HTMLDivElement, PagerProps>(function Musha
           ref={trackRef}
           className="mm-pager-track nm-pager-track"
           data-testid="mushaf-pager-track"
-          style={{ transform: "translate3d(-33.333333%, 0, 0)" }}
         >
           <div className="mm-pager__sheet nm-pager__sheet" data-pane="next">
             {nextPage ?? <div className="nm-page-shell mm-page-shell" aria-hidden="true" />}

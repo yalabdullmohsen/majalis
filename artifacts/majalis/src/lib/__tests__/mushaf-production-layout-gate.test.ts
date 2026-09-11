@@ -37,14 +37,17 @@ assert.match(reader, /nm-root/);
 assert.match(reader, /ensureQpcPageFont/);
 assert.match(reader, /layoutMatchesPage|layout\.pageNumber === page/);
 assert.match(reader, /useLayoutEffect/);
-assert.match(css, /data-bottom-freeze="1"/);
-assert.match(css, /data-freeze-stack="ayah"/);
+/* المشغّل/التجميد overlay — بلا حشو صفحة يعتمد على freeze-stack */
+assert.match(css, /\.nm-root\s+\.mm-audio-dock\s*\{[^}]*position:\s*fixed/s);
+assert.doesNotMatch(css, /padding:[^;]*reader-bottom-stack/);
 assert.match(css, /align-items:\s*flex-start/);
 assert.match(css, /--mushaf-body-height/);
 assert.doesNotMatch(reader, /scrollIntoView/);
 assert.doesNotMatch(reader, /\.scrollTo\(/);
 
 assert.match(pager, /translate3d/);
+assert.match(pager, /data-pager-w/);
+assert.match(pager, /Math\.round/);
 assert.doesNotMatch(pager, /scrollIntoView/);
 assert.doesNotMatch(pager, /window\.scrollTo/);
 

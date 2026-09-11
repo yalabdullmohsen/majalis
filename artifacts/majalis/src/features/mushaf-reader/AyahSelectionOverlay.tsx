@@ -11,14 +11,19 @@ type Props = {
   enabled?: boolean;
 };
 
-const LINE_TOL_PX = 6;
-const BAND_PAD_X = 2;
-const BAND_PAD_Y = 1;
+const LINE_TOL_PX = 4;
+const BAND_PAD_X = 1;
+const BAND_PAD_Y = 0;
+/** سقف ارتفاع الشريط — يمنع مستطيلات سطرية ضخمة من line-box العثماني */
+const MAX_BAND_EM = 1.2;
 
 function collectBands(root: HTMLElement, verseKey: string): TextBand[] {
   const scrollLeft = root.scrollLeft;
   const scrollTop = root.scrollTop;
-  const cacheKey = `nm-sel|${verseKey}|${root.clientWidth}|${root.clientHeight}`;
+  const fontPx =
+    Number.parseFloat(getComputedStyle(root).fontSize || "24") || 24;
+  const maxH = Math.max(14, fontPx * MAX_BAND_EM);
+  const cacheKey = `nm-sel|${verseKey}|${root.clientWidth}|${root.clientHeight}|${Math.round(maxH)}`;
   return getCachedTextBands(cacheKey, scrollLeft, scrollTop, () => {
     const nodes = root.querySelectorAll<HTMLElement>(
       `[data-verse="${CSS.escape(verseKey)}"]`,
@@ -30,11 +35,13 @@ function collectBands(root: HTMLElement, verseKey: string): TextBand[] {
       for (let i = 0; i < rects.length; i++) {
         const r = rects[i]!;
         if (r.width < 1 || r.height < 1) continue;
+        const h = Math.min(r.height, maxH);
+        const yPad = Math.max(0, (r.height - h) / 2);
         raw.push({
           left: r.left - origin.left + scrollLeft - BAND_PAD_X,
-          top: r.top - origin.top + scrollTop - BAND_PAD_Y,
+          top: r.top - origin.top + scrollTop + yPad - BAND_PAD_Y,
           width: r.width + BAND_PAD_X * 2,
-          height: r.height + BAND_PAD_Y * 2,
+          height: h + BAND_PAD_Y * 2,
         });
       }
     });
@@ -51,7 +58,7 @@ function collectBands(root: HTMLElement, verseKey: string): TextBand[] {
       line.left = left;
       line.width = right - left;
       line.top = Math.min(line.top, box.top);
-      line.height = Math.max(line.height, box.height);
+      line.height = Math.min(maxH, Math.max(line.height, box.height));
     }
     return lines;
   });

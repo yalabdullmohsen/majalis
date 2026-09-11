@@ -183,9 +183,15 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   useEffect(() => {
     beginPowerSaverSession();
     if (isMushafReaderV2Enabled()) migrateMushafUserData();
-    applyMushafAppearanceMode(loadMushafAppearanceMode());
+    const appearance = loadMushafAppearanceMode();
+    applyMushafAppearanceMode(appearance);
     void import("@/lib/apply-page-chrome").then(({ applyMushafThemeChrome }) => {
-      void applyMushafThemeChrome("paper");
+      /* بعد applyMushafAppearanceMode: data-mushaf-appearance = light|night */
+      const resolved =
+        typeof document !== "undefined"
+          ? document.documentElement.getAttribute("data-mushaf-appearance")
+          : null;
+      void applyMushafThemeChrome(resolved === "night" ? "night" : "paper");
     });
     return () => {
       endPowerSaverSession();
