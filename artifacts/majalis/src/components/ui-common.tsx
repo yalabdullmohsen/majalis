@@ -332,7 +332,7 @@ export function IslamicDivider({
 /** بطاقة حكم شرعي — مصدر الحقيقة لقوائم الموسوعة */
 export function RulingCard({ ruling }: { ruling: ShariaRulingExtended }) {
   return (
-    <Link href={`/rulings/${ruling.id}`} className="ruling-card ui-card">
+    <Link href={`/rulings/${ruling.id}`} className="ruling-card soft-card soft-card--on-light">
       <div className="ruling-card__head">
         <span className="ruling-card__category">{ruling.category}</span>
         {ruling.subcategory && <span className="ruling-card__sub">{ruling.subcategory}</span>}

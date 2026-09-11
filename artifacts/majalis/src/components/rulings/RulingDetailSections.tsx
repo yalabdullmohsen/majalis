@@ -8,6 +8,7 @@ import { resolveQuranRefHref } from "@/lib/quran-ref-links";
 import { resolveAuthorScholarLink } from "@/lib/author-scholar-links";
 import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
 import { CompactSources, summarizeSourceLine } from "@/components/content/CompactSources";
+import { ActionButton } from "@/components/design-system";
 
 type Props = {
   ruling: ShariaRulingExtended;
@@ -24,19 +25,19 @@ export function RulingDetailSections({ ruling, relations }: Props) {
           contentType="ruling"
           contentId={ruling.id}
           initialData={{ title: ruling.title, category: ruling.category, subcategory: ruling.subcategory, content: ruling.body, evidence: ruling.evidence }}
-          className="ui-card-btn"
+          className="ss-action-btn ss-action-btn--secondary mj-pressable"
         />
-        <button type="button" className="ui-card-btn" onClick={copyLink}>
+        <ActionButton type="button" variant="secondary" onClick={copyLink}>
           نسخ الرابط
-        </button>
-        <button type="button" className="ui-card-btn" onClick={() => window.print()}>
+        </ActionButton>
+        <ActionButton type="button" variant="secondary" onClick={() => window.print()}>
           طباعة
-        </button>
+        </ActionButton>
         <FavoriteButton contentType="sharia_ruling" contentId={ruling.id} compact />
       </div>
 
       {(ruling.quran_evidence?.length ?? 0) > 0 && (
-        <section className="ruling-detail-block ui-card">
+        <section className="ruling-detail-block soft-card soft-card--on-light">
           <h2>الدليل من القرآن</h2>
           <ul>
             {ruling.quran_evidence!.map((ev, i) => {
@@ -58,7 +59,7 @@ export function RulingDetailSections({ ruling, relations }: Props) {
       )}
 
       {(ruling.sunnah_evidence?.length ?? 0) > 0 && (
-        <section className="ruling-detail-block ui-card">
+        <section className="ruling-detail-block soft-card soft-card--on-light">
           <h2>الدليل من السنة</h2>
           <ul>
             {ruling.sunnah_evidence!.map((ev, i) => {
@@ -81,7 +82,7 @@ export function RulingDetailSections({ ruling, relations }: Props) {
       )}
 
       {(ruling.scholar_opinions?.length ?? 0) > 0 && (
-        <section className="ruling-detail-block ui-card">
+        <section className="ruling-detail-block soft-card soft-card--on-light">
           <h2>أقوال العلماء</h2>
           <ul>
             {ruling.scholar_opinions!.map((op, i) => {
@@ -101,14 +102,14 @@ export function RulingDetailSections({ ruling, relations }: Props) {
       )}
 
       {ruling.prevailing_view && (
-        <section className="ruling-detail-block ui-card ruling-prevailing">
+        <section className="ruling-detail-block soft-card soft-card--on-light ruling-prevailing">
           <h2>الراجح</h2>
           <p>{ruling.prevailing_view}</p>
         </section>
       )}
 
       {(ruling.benefits?.length ?? 0) > 0 && (
-        <section className="ruling-detail-block ui-card">
+        <section className="ruling-detail-block soft-card soft-card--on-light">
           <h2>الفوائد</h2>
           <ul>
             {ruling.benefits!.map((b, i) => (
@@ -134,7 +135,7 @@ export function RulingDetailSections({ ruling, relations }: Props) {
       )}
 
       {relations.length > 0 && (
-        <section className="ruling-detail-block ui-card">
+        <section className="ruling-detail-block soft-card soft-card--on-light">
           <h2>الربط الذكي</h2>
           {Object.entries(
             relations.reduce<Record<string, RulingRelationLink[]>>((acc, link) => {

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "wouter";
 import { Download } from "lucide-react";
 import { ShareButtons } from "@/components/ContentActions";
 import "@/styles/pages/calendar.css";
@@ -26,6 +25,7 @@ import {
   hijriMonthYearLabel,
 } from "@/lib/calendar-dates";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { ActionButton } from "@/components/design-system";
 import {
   eventsForDate,
   eventsFromLessons,
@@ -54,7 +54,7 @@ function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => v
     <div className="cal-modal-backdrop" onClick={onClose} role="presentation">
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
       <div
-        className="cal-modal ui-card"
+        className="cal-modal soft-card soft-card--on-light"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -69,8 +69,8 @@ function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => v
         </dl>
         {event.description ? <p className="cal-modal-desc">{event.description}</p> : null}
         <div className="cal-modal-actions">
-          <Link href={event.href} className="ui-card-btn">التفاصيل</Link>
-          <button type="button" className="ui-card-btn ui-card-btn--ghost" onClick={onClose}>إغلاق</button>
+          <ActionButton href={event.href} variant="primary">التفاصيل</ActionButton>
+          <ActionButton type="button" variant="ghost" onClick={onClose}>إغلاق</ActionButton>
         </div>
       </div>
     </div>
@@ -128,7 +128,7 @@ function downloadIcs(content: string, filename: string) {
 
 function CalendarGridSkeleton() {
   return (
-    <div className="cal-month ui-card" aria-busy="true" aria-label="تحديث التقويم">
+    <div className="cal-month soft-card soft-card--on-light" aria-busy="true" aria-label="تحديث التقويم">
       <div className="cal-weekdays">
         {CALENDAR_WEEKDAY_LABELS.map((d) => (
           <span key={d}>{d}</span>
@@ -211,7 +211,7 @@ export default function CalendarPage() {
         subtitle="عرض شهري وأسبوعي ويومي للدروس والدورات."
       />
 
-      <div className="cal-toolbar ui-card">
+      <div className="cal-toolbar soft-card soft-card--on-light">
         <div className="cal-nav">
           <button type="button" className="cal-nav-btn" onClick={() => setCursor(subMonths(cursor, 1))} aria-label="الشهر السابق">‹</button>
           <div className="cal-nav-label">
@@ -255,7 +255,7 @@ export default function CalendarPage() {
       ) : (
         <div aria-busy={loading}>
           {view === "month" && (
-            <div className="cal-month ui-card">
+            <div className="cal-month soft-card soft-card--on-light">
               {!monthHasEvents ? (
                 <p className="cal-empty cal-empty--banner">لا دروس في هذا الشهر.</p>
               ) : null}
@@ -289,7 +289,7 @@ export default function CalendarPage() {
           )}
 
           {view === "week" && (
-            <div className="cal-week ui-card">
+            <div className="cal-week soft-card soft-card--on-light">
               <div className="cal-week-grid">
                 {weekDays.map((day) => (
                   <div key={day.toISOString()} className="cal-week-col">
@@ -316,7 +316,7 @@ export default function CalendarPage() {
           )}
 
           {view === "day" && (
-            <div className="cal-day ui-card">
+            <div className="cal-day soft-card soft-card--on-light">
               <CalendarDayCell
                 date={selected}
                 events={eventsForDate(selected, events)}
