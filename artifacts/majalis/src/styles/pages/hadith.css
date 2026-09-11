@@ -1507,7 +1507,7 @@ html[data-theme="dark"] .hadith-stat strong {
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) :is(.hadith-grade--sahih, .hadith-grade--hasan, .hadith-grade--hasan-sahih) {
   background: color-mix(in srgb, var(--mj-brand-soft, #6ee7b7) 12%, transparent);
-  color: var(--mj-brand-soft);
+  color: var(--mj-ink);
   border-color: color-mix(in srgb, var(--mj-brand-soft, #6ee7b7) 24%, transparent);
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hadith-page .hadith-quick-cat,
@@ -1792,7 +1792,7 @@ html[data-theme="dark"] .hadith-detail-dl dd,
 html.dark .hadith-detail-dl dd,
 html[data-theme="dark"] .hadith-detail-grade__quote,
 html.dark .hadith-detail-grade__quote {
-  color: var(--mj-ink, var(--mj-brand-soft));
+  color: var(--mj-ink);
 }
 
 html[data-theme="dark"] .hadith-browse-cta,
@@ -1803,7 +1803,7 @@ html.dark .hadith-browse-cta {
 
 html[data-theme="dark"] .hadith-browse-cta__title,
 html.dark .hadith-browse-cta__title {
-  color: var(--mj-ink, var(--mj-brand-soft));
+  color: var(--mj-ink);
 }
 
 html[data-theme="dark"] .hadith-browse-cta__desc,

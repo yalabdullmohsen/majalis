@@ -47,7 +47,7 @@
   font-size: 0.69rem;
   font-weight: 600;
 }
-.lpd2-badge--level  { background: rgba(94,203,161,.18); color: var(--mj-brand-soft); border: 1px solid rgba(94,203,161,.3); }
+.lpd2-badge--level  { background: rgba(94,203,161,.18); color: var(--mj-ink); border: 1px solid rgba(94,203,161,.3); }
 .lpd2-badge--hours  { background: rgba(250,248,242,.1);  color: var(--on-dark-body, var(--mj-surface-2)); border: 1px solid rgba(250,248,242,.2); }
 .lpd2-badge--mods   { background: rgba(250,248,242,.1);  color: var(--on-dark-body, var(--mj-surface-2)); border: 1px solid rgba(250,248,242,.2); }
 
@@ -97,7 +97,7 @@
   justify-content: center;
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--mj-brand-soft);
+  color: var(--mj-ink);
   pointer-events: none;
 }
 
@@ -309,7 +309,7 @@ html[data-theme="dark"] .lpd2-module {
   border-color: rgba(255,255,255,.1);
 }
 html[data-theme="dark"] .lpd2-module--done { background: rgba(23,61,53,.1); border-color: rgba(23,61,53,.25); }
-html[data-theme="dark"] .lpd2-module__title { color: var(--mj-brand-soft); }
+html[data-theme="dark"] .lpd2-module__title { color: var(--mj-ink); }
 html[data-theme="dark"] .lpd2-module--done .lpd2-module__title { color: var(--mj-brand, #5ecba1); }
 
 /* ══════════════════════════════════════════════════════

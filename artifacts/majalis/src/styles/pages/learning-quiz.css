@@ -321,11 +321,11 @@ html[data-theme="dark"] .lqp2-question-card {
   border-color: rgba(255,255,255,.1);
   border-top-color: var(--mj-brand);
 }
-html[data-theme="dark"] .lqp2-mc-option { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); color: var(--mj-brand-soft); }
+html[data-theme="dark"] .lqp2-mc-option { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); color: var(--mj-ink); }
 html[data-theme="dark"] .lqp2-mc-option--selected { background: rgba(23,61,53,.2); color: #5dd6a8; }
-html[data-theme="dark"] .lqp2-tf-btn { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); color: var(--mj-brand-soft); }
+html[data-theme="dark"] .lqp2-tf-btn { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); color: var(--mj-ink); }
 html[data-theme="dark"] .lqp2-tf-btn--selected { background: rgba(23,61,53,.2); color: #5dd6a8; }
-html[data-theme="dark"] .lqp2-text-inp { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); color: var(--mj-brand-soft); }
+html[data-theme="dark"] .lqp2-text-inp { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); color: var(--mj-ink); }
 html[data-theme="dark"] .lqp2-done__hero { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); }
 html[data-theme="dark"] .lqp2-error-card { background: rgba(255,255,255,.04); border-color: rgba(220,38,38,.2); }
 
@@ -446,7 +446,7 @@ html[data-theme="dark"] .lqp2-error-card { background: rgba(255,255,255,.04); bo
 /* Dark mode 71 */
 html[data-theme="dark"] .lcp2-event { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); }
 html[data-theme="dark"] .lcp2-event:hover { border-color: rgba(23,61,53,.4); }
-html[data-theme="dark"] .lcp2-event__title { color: var(--mj-brand-soft); }
+html[data-theme="dark"] .lcp2-event__title { color: var(--mj-ink); }
 html[data-theme="dark"] .lcp2-event__date-box { background: rgba(23,61,53,.2); }
 
 /* ============================================================

@@ -366,7 +366,7 @@
 html[data-theme="dark"] .ah-method-note {
   background: color-mix(in srgb, var(--mj-brand, #3bad8a) 12%, #0f1714);
   border-color: color-mix(in srgb, var(--mj-brand, #3bad8a) 35%, transparent);
-  color: var(--mj-brand-soft);
+  color: var(--mj-ink);
 }
 html[data-theme="dark"] .ah-method-note strong {
   color: #8fd6bc;

@@ -99,7 +99,7 @@ html[data-theme="dark"] .login-page {
 
 html.dark .login-card__brand,
 html[data-theme="dark"] .login-card__brand {
-  color: var(--mj-brand-soft);
+  color: var(--mj-ink);
 }
 
 .login-card__title {
@@ -255,7 +255,7 @@ html[data-theme="dark"] .login-alert--success {
 
 html.dark .login-text-btn,
 html[data-theme="dark"] .login-text-btn {
-  color: var(--mj-brand-soft);
+  color: var(--mj-ink);
 }
 
 .login-actions {

@@ -564,12 +564,12 @@ html[data-theme="dark"] .srch-history-wrap {
 html[data-theme="dark"] .srch-history-chip {
   background: rgba(23,61,53,.15);
   border-color: rgba(23,61,53,.3);
-  color: var(--mj-brand-soft);
+  color: var(--mj-ink);
 }
 html[data-theme="dark"] .srch-quick-card {
   background: rgba(255,255,255,.04);
   border-color: rgba(23,61,53,.2);
-  color: var(--mj-brand-soft);
+  color: var(--mj-ink);
 }
 html[data-theme="dark"] .srch-quick-card:hover {
   background: rgba(23,61,53,.12);

@@ -299,9 +299,9 @@ html.dark .sect-card__title,
 
 html.dark .sect-hub__chip,
 [data-theme="dark"] .sect-hub__chip {
-  background: var(--mj-ink);
+  background: #15201c;
   border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #5a9e88)) 28%, var(--mj-hairline));
-  color: var(--mj-brand-soft);
+  color: var(--mj-ink);
 }
 
 

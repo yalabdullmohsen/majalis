@@ -338,17 +338,17 @@
 /* ── Dark mode ────────────────────────────────────────────────────────── */
 html[data-theme="dark"] .myl2-page      { background: var(--mj-brand-deep); }
 html[data-theme="dark"] .myl2-card      { background: var(--mj-brand-deep); border-color: rgba(23,61,53,.22); }
-html[data-theme="dark"] .myl2-card__title { color: var(--mj-brand-soft); }
+html[data-theme="dark"] .myl2-card__title { color: var(--mj-ink); }
 html[data-theme="dark"] .myl2-stat-card { background: rgba(23,61,53,.1); border-color: rgba(23,61,53,.25); }
-html[data-theme="dark"] .myl2-stat-card__val   { color: var(--mj-brand-soft); }
+html[data-theme="dark"] .myl2-stat-card__val   { color: var(--mj-ink); }
 html[data-theme="dark"] .myl2-stat-card__label { color: #7aaa8a; }
 html[data-theme="dark"] .myl2-resume-item,
 html[data-theme="dark"] .myl2-path-item,
 html[data-theme="dark"] .myl2-lib-item  { background: rgba(23,61,53,.07); border-color: rgba(23,61,53,.2); }
 html[data-theme="dark"] .myl2-resume-item__title,
 html[data-theme="dark"] .myl2-path-item__name,
-html[data-theme="dark"] .myl2-lib-item__title   { color: var(--mj-brand-soft); }
-html[data-theme="dark"] .myl2-ach-badge { background: rgba(23,61,53,.18); border-color: rgba(23,61,53,.3); color: var(--mj-brand-soft); }
+html[data-theme="dark"] .myl2-lib-item__title   { color: var(--mj-ink); }
+html[data-theme="dark"] .myl2-ach-badge { background: rgba(23,61,53,.18); border-color: rgba(23,61,53,.3); color: var(--mj-ink); }
 html[data-theme="dark"] .myl2-note-item { border-color: rgba(255,255,255,.06); color: #aab7b2; }
 
 /* ── Responsive ───────────────────────────────────────────────────────── */

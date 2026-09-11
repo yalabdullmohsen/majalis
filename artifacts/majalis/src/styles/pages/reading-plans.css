@@ -52,6 +52,6 @@
 
 html[data-theme="dark"] .rp-badge { background: rgba(255,255,255,.08); color: #C7D2CD; }
 html[data-theme="dark"] .rp-text-input,
-html[data-theme="dark"] .rp-log-input { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.15); color: var(--mj-brand-soft); }
+html[data-theme="dark"] .rp-log-input { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.15); color: var(--mj-ink); }
 html[data-theme="dark"] .rp-day-chip { border-color: rgba(255,255,255,.15); color: #C7D2CD; }
 html[data-theme="dark"] .rp-suggestions { background: var(--mj-brand-deep); border-color: rgba(255,255,255,.12); }
