@@ -1013,3 +1013,52 @@ html.pts-immersive .scroll-to-top {
   background: color-mix(in srgb, var(--surface-muted, #f3efe6) 88%, var(--primary, var(--mj-brand)));
   opacity: 0.55;
 }
+
+/* فصل وقت الأذان عن المتبقي — كثافة أوضح */
+.pts-hero__clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.12rem;
+  margin: 0.1rem 0 0;
+}
+.pts-hero__clock-label,
+.pts-hero__countdown-label {
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--pts-muted, #d7e4de) 92%, transparent);
+}
+.pts-hero__clock-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--pts-white, #fff);
+  line-height: 1.2;
+}
+.pts-hero__countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  margin-top: 0.2rem;
+}
+.pts-hero__countdown-value {
+  font-size: clamp(1.45rem, 6vw, 1.95rem);
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.03em;
+  color: var(--pts-gold, #e6c57a);
+  line-height: 1.1;
+}
+.pts-screen .pts-hero__clock-value,
+.pts-screen .pts-hero__countdown-value {
+  color: inherit;
+}
+.pts-screen .pts-hero__countdown-value {
+  color: var(--pts-gold, #e6c57a) !important;
+}
+.pts-screen .pts-hero__clock-label,
+.pts-screen .pts-hero__countdown-label {
+  color: color-mix(in srgb, var(--pts-muted, #e2ebe6) 95%, #fff) !important;
+}

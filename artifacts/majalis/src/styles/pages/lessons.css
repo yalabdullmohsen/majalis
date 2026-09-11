@@ -1703,3 +1703,24 @@ html[data-theme="dark"] .section-lobby.lessons-page-v3 .lesson-unified-card__tit
   border-radius: 12px;
   background: color-mix(in srgb, var(--mj-brand, #0F5C45) 6%, transparent);
 }
+
+
+/* ui-density-lesson */
+.lesson-unified-card__header {
+  padding: 0.45rem 0.75rem;
+}
+.lesson-unified-card__body {
+  padding: 0.6rem 0.75rem 0.7rem;
+  gap: 0.35rem;
+}
+.lesson-unified-card__meta-cell {
+  padding: 0.4rem 0.5rem;
+  min-height: 0;
+}
+.lesson-unified-card__btn {
+  min-height: 2.4rem;
+  padding-block: 0.35rem;
+}
+.lesson-unified-card__actions--compact {
+  gap: 0.35rem;
+}
