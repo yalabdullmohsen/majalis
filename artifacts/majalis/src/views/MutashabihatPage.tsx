@@ -30,15 +30,24 @@ function AyahText({ surah, ayah: ayahNum, surahName }: { surah: number; ayah: nu
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let cancelled = false;
     setLoading(true);
-    setText(null);
+    setText(null); // مفتاح آية جديد — لا نبقي نصًا من سياق سابق
     fetchSurahDetail(surah)
       .then((detail) => {
+        if (cancelled) return;
         const a = detail.ayahs.find((a: Ayah) => a.numberInSurah === ayahNum);
         setText(a?.text ?? "تعذّر تحميل الآية");
       })
-      .catch(() => setText("تعذّر التحميل"))
-      .finally(() => setLoading(false));
+      .catch(() => {
+        if (!cancelled) setText("تعذّر التحميل");
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [surah, ayahNum]);
 
   return (
@@ -56,9 +65,12 @@ function AyahText({ surah, ayah: ayahNum, surahName }: { surah: number; ayah: nu
         color: "var(--ds-text-1,#1a1a1a)",
         marginBottom: "0.5rem",
       }}
+      aria-busy={loading}
     >
-      {loading ? (
-        <span style={{ color: "var(--mj-muted)", fontSize: "var(--ss-type-supporting)" }}>تحديث الآية…</span>
+      {loading && !text ? (
+        <span style={{ color: "var(--mj-muted)", fontSize: "var(--ss-type-supporting)" }} role="status">
+          تحديث الآية…
+        </span>
       ) : (
         <>
           ﴿{text}﴾
