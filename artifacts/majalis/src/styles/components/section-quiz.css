@@ -93,7 +93,12 @@
 
 /* dark mode */
 html[data-theme="dark"] .sq-section { background: var(--mj-brand-deep); border-color: rgba(92,196,154,.25); }
-html[data-theme="dark"] .sq-header { background: var(--mj-brand) !important; }
+html[data-theme="dark"] .sq-header,
+html.dark .sq-header {
+  background: #5fbf98 !important;
+  background-color: #5fbf98 !important;
+  color: #06231a !important;
+}
 html[data-theme="dark"] .sq-card { background: var(--mj-brand-deep); border-color: rgba(92,196,154,.15); color: #E8DED4; }
 html[data-theme="dark"] .sq-card--correct { background: var(--mj-brand-deep); border-color: var(--mj-brand); }
 html[data-theme="dark"] .sq-card--wrong   { background: #2e0d0d; border-color: #ef4444; }
