@@ -523,6 +523,7 @@
     "test:no-more-library": "node scripts/test-no-more-library-brand.mjs",
     "test:security-ui-hardening": "node --import tsx src/lib/__tests__/security-ui-hardening-gate.test.ts",
     "test:boot-cold-start": "playwright test tests/boot-cold-start-smoke.spec.ts --project=mobile",
+    "test:mushaf-p0-acceptance-audit": "playwright test tests/mushaf-p0-acceptance-audit.spec.ts --project=mobile",
     "test:mushaf-page-flip-stability": "playwright test tests/mushaf-page-flip-stability.spec.ts --project=mobile",
     "test:section-entry-card": "node --import tsx src/lib/__tests__/section-entry-card-gate.test.ts",
     "test:prayer-notification-scheduler": "node --import tsx src/lib/__tests__/prayer-notification-scheduler.test.ts"
