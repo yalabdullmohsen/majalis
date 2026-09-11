@@ -13,6 +13,13 @@ type AsyncDataViewProps = {
   emptyText?: string;
   errorText?: string;
   skeleton?: SkeletonVariant;
+  /**
+   * أبقِ المحتوى الظاهر أثناء التحميل (بذرة/نتائج سابقة) بدل هيكل كامل.
+   * يُفعَّل عادةً عندما status !== "loading" لأن الصفحة حسبت status بنفسها،
+   * أو مع contentBusy لتحديث خلفي صامت.
+   */
+  keepContentWhileLoading?: boolean;
+  contentBusy?: boolean;
   children: ReactNode;
 };
 
@@ -35,25 +42,29 @@ export function AsyncDataView({
   emptyText = EMPTY.search,
   errorText = STATUS.loadError,
   skeleton = "list",
+  keepContentWhileLoading = false,
+  contentBusy = false,
   children,
 }: AsyncDataViewProps) {
-  if (status === "loading" || status === "retrying") {
+  if ((status === "loading" || status === "retrying") && !keepContentWhileLoading) {
     return <Skeleton variant={skeleton} />;
   }
-  if (status === "offline") {
-    return (
-      <ErrorState
-        text={STATUS.networkError}
-        onRetry={onRetry}
-      />
-    );
+  if (status === "offline" && !keepContentWhileLoading) {
+    return <ErrorState text={STATUS.networkError} onRetry={onRetry} />;
   }
-  if (status === "error") {
+  if (status === "error" && !keepContentWhileLoading) {
     const text = typeof error === "string" && error.trim() ? error : errorText;
     return <ErrorState text={text} onRetry={onRetry} />;
   }
   if (status === "empty") {
     return <Empty text={emptyText} title={EMPTY.generic} />;
   }
-  return <>{children}</>;
+  return (
+    <div
+      className="async-data-view__content"
+      aria-busy={contentBusy || status === "loading" || status === "retrying" || undefined}
+    >
+      {children}
+    </div>
+  );
 }
