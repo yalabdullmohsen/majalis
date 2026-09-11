@@ -406,7 +406,7 @@ export default function SearchPage() {
             <p className="srch-home-idle__hint">ابدأ بالكتابة أو اختر قسمًا لاستعراض محتواه.</p>
           )}
         </div>
-      ) : loading ? (
+      ) : loading && results.length === 0 ? (
         <div className="srch-home-status" role="status" aria-busy="true" aria-label="تحديث النتائج">
           <SearchSkeleton />
         </div>
@@ -449,10 +449,11 @@ export default function SearchPage() {
           ) : null}
         </div>
       ) : (
-        <div className="srch-results" aria-live="polite">
+        <div className="srch-results" aria-live="polite" aria-busy={loading || undefined}>
           <p className="search-page-summary" role="status">
             <strong>{resultItems.length.toLocaleString("ar-EG")}</strong>
             {term.trim() ? ` نتيجة لـ «${term.trim()}»` : " موضوعًا في هذا القسم"}
+            {loading ? " · جارٍ التحديث…" : null}
           </p>
           <VirtualList
             className="srch-results-list"

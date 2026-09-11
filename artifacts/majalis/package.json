@@ -481,7 +481,7 @@
     "test:ui-regression-checklist": "node --import tsx src/lib/__tests__/ui-regression-checklist-gate.test.ts",
     "test:ui-regression-visual": "node scripts/ui-regression-visual.mjs",
     "test:discover-islam-ui": "node --import tsx src/lib/__tests__/discover-islam-ui-gate.test.ts",
-    "test:loading-ux-gates": "node --import tsx src/lib/__tests__/loading-ux-gates.test.ts",
+    "test:loading-ux-gates": "node --import tsx src/lib/__tests__/loading-ux-gates.test.ts && node --import tsx src/lib/__tests__/search-keep-previous-gate.test.ts",
     "test:ssunnah-polish-pass": "node --import tsx src/lib/__tests__/ssunnah-polish-pass-gate.test.ts",
     "test:soft-cards-system": "pnpm run test:discover-islam-ui && node --import tsx src/lib/__tests__/soft-cards-system-gate.test.ts && node --import tsx src/lib/__tests__/ssunnah-design-system-gate.test.ts && node --import tsx src/lib/__tests__/ssunnah-anti-legacy-ui-gate.test.ts && node --import tsx src/lib/__tests__/ssunnah-interaction-polish-gate.test.ts && node --import tsx src/lib/__tests__/ssunnah-quality-regression-gate.test.ts && node --import tsx src/lib/__tests__/legacy-sections-ui-gate.test.ts && node --import tsx src/lib/__tests__/visual-identity-unify-gate.test.ts && node --import tsx src/lib/__tests__/section-makarim-pattern-gate.test.ts && node --import tsx src/lib/__tests__/section-cards-theme-gate.test.ts && node --import tsx src/lib/__tests__/directory-catalogs-quality-gate.test.ts && node --import tsx src/lib/__tests__/content-reading-shell-gate.test.ts && pnpm run test:loading-ux-gates && pnpm run test:ssunnah-polish-pass",
     "test:directory-catalogs": "node --import tsx src/lib/__tests__/directory-catalogs-quality-gate.test.ts",
