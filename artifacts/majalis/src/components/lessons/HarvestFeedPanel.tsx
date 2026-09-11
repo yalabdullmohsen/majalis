@@ -58,7 +58,7 @@ export function HarvestFeedPanel() {
   const [openRegister, setOpenRegister] = useState(false);
 
   useEffect(() => {
-    loadHarvestFeed().then(setItems).catch(() => setItems([]));
+    loadHarvestFeed().then(setItems).catch(() => { /* أبقِ الخلاصة السابقة */ });
   }, []);
 
   const filtered = useMemo(() => {

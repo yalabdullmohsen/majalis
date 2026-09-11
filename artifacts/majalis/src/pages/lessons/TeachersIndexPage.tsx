@@ -42,7 +42,7 @@ export default function TeachersIndexPage() {
       })
       .catch((err) => {
         if (cancelled || (err as Error)?.name === "AbortError") return;
-        setTeachers([]);
+        /* أبقِ قائمة المشايخ السابقة عند فشل إعادة الجلب */
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
