@@ -139,7 +139,7 @@ export default function OccasionsPage() {
         </div>
       )}
 
-      {loading ? (
+      {loading && occasions.length === 0 ? (
         <SkeletonCardGrid count={6} />
       ) : filtered.length === 0 ? (
         <p className="occasions-filter__count occasions-filter__count--empty">

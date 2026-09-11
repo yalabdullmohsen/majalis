@@ -184,7 +184,6 @@ export default function CalendarPage() {
     getUnifiedActiveLessons()
       .then(({ lessons }) => setEvents(eventsFromLessons(lessons)))
       .catch(() => {
-        setEvents([]);
         setLoadError(true);
       })
       .finally(() => setLoading(false));
@@ -249,12 +248,12 @@ export default function CalendarPage() {
         </button>
       </div>
 
-      {loading ? (
+      {loading && events.length === 0 ? (
         <CalendarGridSkeleton />
-      ) : loadError ? (
+      ) : loadError && events.length === 0 ? (
         <ErrorState text="تعذّر تحميل مواعيد الدروس. يرجى المحاولة مرة أخرى." onRetry={() => setRetryTick((n) => n + 1)} />
       ) : (
-        <>
+        <div aria-busy={loading}>
           {view === "month" && (
             <div className="cal-month ui-card">
               {!monthHasEvents ? (
@@ -328,7 +327,7 @@ export default function CalendarPage() {
               />
             </div>
           )}
-        </>
+        </div>
       )}
 
       {modalEvent ? <EventModal event={modalEvent} onClose={() => setModalEvent(null)} /> : null}

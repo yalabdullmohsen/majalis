@@ -75,15 +75,13 @@ export default function UpdatesPage() {
             const parsed = JSON.parse(data) as unknown;
             setItems(Array.isArray(parsed) ? (parsed as MergedUpdateItem[]) : []);
           } catch {
-            setItems([]);
             setLoadError(true);
           }
           return;
         }
-        setItems([]);
+        setLoadError(true);
       })
       .catch(() => {
-        setItems([]);
         setLoadError(true);
       })
       .finally(() => setLoading(false));
@@ -119,7 +117,7 @@ export default function UpdatesPage() {
         ))}
       </div>
 
-      {!loading && (
+      {(!loading || items.length > 0) && (
         <div className="upd-search-wrap">
           <input
             type="search"
@@ -132,14 +130,14 @@ export default function UpdatesPage() {
         </div>
       )}
 
-      {loading ? (
+      {loading && items.length === 0 ? (
         <SkeletonCardGrid />
-      ) : loadError ? (
+      ) : loadError && items.length === 0 ? (
         <ErrorState text="تعذّر تحميل المستجدات. يرجى المحاولة مرة أخرى." onRetry={() => setRetryTick((n) => n + 1)} />
       ) : filtered.length === 0 ? (
         <Empty text="لا توجد مستجدات منشورة حاليًا." />
       ) : (
-        <div className="updates-timeline">
+        <div className="updates-timeline" aria-busy={loading}>
           {filtered.map((item) => (
             <article key={`${item.isAuto ? "auto" : "platform"}-${item.id}`} className="updates-timeline-item ui-card">
               <div className="updates-timeline-meta">
