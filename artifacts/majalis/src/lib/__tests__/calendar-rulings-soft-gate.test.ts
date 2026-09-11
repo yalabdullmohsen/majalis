@@ -32,4 +32,27 @@ for (const rel of files) {
   assert.match(src, /soft-card--on-light/, `${rel} على سطح فاتح موحّد`);
 }
 
+// بوابة العرض البصري يجب أن تتعرّف على soft-card بعد الترحيل (لا تنتظر ui-card وحده)
+const renderGate = readFileSync(resolve(root, "scripts/calendar-render-gate.mjs"), "utf8");
+assert.match(
+  renderGate,
+  /\.cal-month\.soft-card/,
+  "calendar-render-gate يبحث عن .cal-month.soft-card",
+);
+assert.match(
+  renderGate,
+  /\.cal-week\.soft-card/,
+  "calendar-render-gate يبحث عن .cal-week.soft-card",
+);
+assert.match(
+  renderGate,
+  /\.cal-day\.soft-card/,
+  "calendar-render-gate يبحث عن .cal-day.soft-card",
+);
+assert.match(
+  renderGate,
+  /soft-card[\s\S]{0,80}ui-card/,
+  "soft-card قبل ui-card في محدد البطاقة (احتياط توافقي)",
+);
+
 console.log("calendar-rulings-soft-gate.test.ts: ok");
