@@ -9,30 +9,31 @@
 
 /* Hero */
 .ah-hero {
-  background: linear-gradient(160deg, var(--mj-brand-deep) 0%, var(--mj-brand-deep) 60%, #0E5A45 100%);
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   border-radius: var(--ds-radius-2xl);
   padding: 2.5rem 1.5rem 2rem;
   text-align: center;
-  color: var(--mj-white, #ffffff);
+  color: inherit;
   margin-bottom: 1.5rem;
 }
 .ah-hero__bismillah {
   font-size: var(--ds-text-xl);
   font-family: var(--font-quran, serif);
-  color: rgba(255,255,255,0.85);
+  color: inherit;
   margin-bottom: 0.75rem;
   letter-spacing: normal;
 }
 .ah-hero__title {
   font-size: 2.2rem;
   font-weight: 800;
-  color: var(--mj-white, #ffffff);
+  color: inherit;
   margin: 0 0 0.75rem;
   line-height: 1.2;
 }
 .ah-hero__sub {
   font-size: 0.92rem;
-  color: rgba(255,255,255,0.9);
+  color: inherit;
   line-height: 1.8;
   max-width: 600px;
   margin: 0 auto 1rem;
@@ -41,7 +42,7 @@
   display: inline-block;
   margin-inline-end: 0.5rem;
   font-size: 0.78rem;
-  color: rgba(255,255,255,0.65);
+  color: inherit;
   font-style: normal;
 }
 .ah-hero__stats {
@@ -103,7 +104,7 @@
   transition: all 0.15s;
 }
 .ah-cat-chip:hover { border-color: var(--mj-brand-deep); background: rgba(23,61,53,0.06); }
-.ah-cat-chip--active { background: var(--mj-brand-deep); color: var(--mj-white, #ffffff); border-color: var(--mj-brand-deep); }
+.ah-cat-chip--active { background: var(--mj-brand-deep); color: inherit; border-color: var(--mj-brand-deep); }
 
 /* Grid */
 .ah-grid {
@@ -228,7 +229,7 @@
 }
 .ah-modal__num {
   font-size: var(--ds-text-xs);
-  color: var(--mj-white, #ffffff);
+  color: inherit;
   background: var(--mj-brand-deep);
   border-radius: 50%;
   width: 26px;
@@ -299,7 +300,7 @@
   width: 100%;
   padding: 0.7rem;
   background: var(--mj-brand-deep);
-  color: var(--mj-white, #ffffff);
+  color: inherit;
   border: none;
   border-radius: var(--ds-radius-lg);
   font-size: 0.9rem;
