@@ -57,7 +57,7 @@ export default function ArbaeenLovePage() {
       ) : (
         <div className="fiqh-review-list">
           {items.map((item) => (
-            <article key={item.id} className="fiqh-review-card ui-card">
+            <article key={item.id} className="fiqh-review-card soft-card soft-card--on-light">
               <div className="fiqh-review-card-head">
                 <h2>{item.order_number ? `${item.order_number}. ` : ""}{item.title}</h2>
               </div>

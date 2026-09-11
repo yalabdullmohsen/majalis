@@ -120,7 +120,7 @@ export function HighlightedContentCard({
     <article
       ref={ref}
       id={`content-${id}`}
-      className={`ui-card highlighted-content-card${open ? " highlighted-content-card--open" : ""}${readingActive ? " highlighted-content-card--reading" : ""} ${className}`.trim()}
+      className={`soft-card soft-card--on-light highlighted-content-card${open ? " highlighted-content-card--open" : ""}${readingActive ? " highlighted-content-card--reading" : ""} ${className}`.trim()}
       data-content-id={id}
     >
       {collapsible && headerAsButton ? (
