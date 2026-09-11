@@ -10,7 +10,7 @@
 
 /* ── Hero ─────────────────────────────────────────────────────────────── */
 .myl2-hero {
-  background: linear-gradient(165deg,var(--mj-brand-deep) 0%,var(--mj-brand-deep) 45%,var(--mj-brand-deep) 80%,var(--mj-brand-deep) 100%);
+  /* soft via modern-section-shell */
   position: relative;
 }
 
@@ -30,7 +30,7 @@
   border: 2px solid rgba(255,255,255,.32);
   display: flex; align-items: center; justify-content: center;
   font-size: 1.35rem; font-weight: 800;
-  color: var(--on-dark-strong, var(--mj-white, #ffffff)); flex-shrink: 0;
+  /* soft ink */ flex-shrink: 0;
   box-shadow: 0 0 0 4px rgba(255,255,255,.07);
 }
 
@@ -39,7 +39,7 @@
 .myl2-hero__name {
   margin: 0;
   font-size: 1.15rem; font-weight: 800;
-  color: var(--on-dark-strong, var(--mj-white, #ffffff)); line-height: 1.2;
+  /* soft ink */ line-height: 1.2;
 }
 
 .myl2-hero__email {
