@@ -14,6 +14,7 @@ export type SettingsListRow = {
   onClick?: () => void;
   danger?: boolean;
   disabled?: boolean;
+  testId?: string;
 };
 
 type SettingsListProps = {
@@ -53,7 +54,7 @@ export function SettingsList({ title, rows, className }: SettingsListProps) {
 
           if (row.href && !row.disabled) {
             return (
-              <Link key={row.id} href={row.href} className="mur-settings-row">
+              <Link key={row.id} href={row.href} className="mur-settings-row" data-testid={row.testId}>
                 {body}
               </Link>
             );
@@ -66,6 +67,7 @@ export function SettingsList({ title, rows, className }: SettingsListProps) {
               className="mur-settings-row"
               disabled={row.disabled}
               onClick={row.onClick}
+              data-testid={row.testId}
             >
               {body}
             </button>
