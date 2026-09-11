@@ -6,6 +6,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/madhahib.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 type Madhhab = {
   id: string;
@@ -184,6 +185,7 @@ export default function MadhahibPage() {
   }
 
   return (
+    <UtilityScreen compose="mark">
     <main className="mdb-page" dir="rtl">
       {/* هيرو */}
       <section className="mdb-hero">
@@ -341,5 +343,6 @@ export default function MadhahibPage() {
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في المذاهب الفقهية" count={4} />
       </div>
     </main>
+    </UtilityScreen>
   );
 }

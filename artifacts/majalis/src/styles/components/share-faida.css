@@ -2,7 +2,7 @@
   margin: 0.85rem 0 0.35rem;
   padding: 0.65rem 0.75rem;
   border-radius: 16px;
-  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 18%, var(--mj-hairline, #e3e8e6));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1e5f4b) 18%, var(--mj-hairline, #e3e8e6));
   background: color-mix(in srgb, var(--mj-brand-soft, var(--brand-soft, var(--mj-brand-soft))) 35%, var(--mj-surface, #fff));
 }
 
@@ -38,8 +38,8 @@
 }
 
 .share-faida__btn:hover {
-  border-color: var(--mj-brand, var(--mj-brand));
-  color: var(--mj-brand, var(--mj-brand));
+  border-color: var(--mj-brand, #1e5f4b);
+  color: var(--mj-brand, #1e5f4b);
 }
 
 .share-faida__btn:active {
@@ -47,13 +47,13 @@
 }
 
 .share-faida__btn:focus-visible {
-  outline: 2px solid var(--mj-brand, var(--mj-brand));
+  outline: 2px solid var(--mj-brand, #1e5f4b);
   outline-offset: 2px;
 }
 
 .share-faida__btn--primary {
-  background: var(--mj-brand, var(--mj-brand));
-  border-color: var(--mj-brand, var(--mj-brand));
+  background: var(--mj-brand, #1e5f4b);
+  border-color: var(--mj-brand, #1e5f4b);
   color: var(--mj-on-brand, #fff);
 }
 

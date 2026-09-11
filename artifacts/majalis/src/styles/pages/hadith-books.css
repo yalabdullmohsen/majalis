@@ -55,7 +55,7 @@
 
 /* حالة الخطأ */
 .hb-error { background: rgba(185,28,28,.06); border: 1px solid rgba(185,28,28,.25);
-  border-radius: var(--radius-button, 18px); padding: var(--ds-space-4); color: #9B1C1C; font-size: .88rem; }
+  border-radius: var(--radius-button, 18px); padding: var(--ds-space-4); color: var(--mj-danger); font-size: .88rem; }
 
 /* رأس المتصفح */
 .hb-browser__head { display: flex; align-items: flex-start; justify-content: space-between;

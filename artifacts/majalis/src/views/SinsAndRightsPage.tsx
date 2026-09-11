@@ -12,6 +12,7 @@ import {
 import type { RightsCategory } from "@/lib/sins-rights-types";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import "@/styles/sins-rights.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 type Tab = "overview" | "allah" | "ibad" | "shared" | "guide" | "what-if" | "muhasaba" | "mindmap";
 
@@ -443,6 +444,7 @@ export default function SinsAndRightsPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="snr-page">
       {/* Hero */}
       <div className="snr-hero">
@@ -564,5 +566,6 @@ export default function SinsAndRightsPage() {
       {activeTab === "muhasaba" && <MuhasabaSection />}
       {activeTab === "mindmap" && <MindMap />}
     </div>
+    </UtilityScreen>
   );
 }

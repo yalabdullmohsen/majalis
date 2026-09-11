@@ -7,6 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { applyPageSeo } from "@/lib/seo";
 import { CONTACT_EMAIL, mailtoWithSubject } from "@/lib/site-config";
 import "@/styles/pages/contact.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const FAQ = [
   {
@@ -85,6 +86,7 @@ export default function ContactPage() {
   };
 
   return (
+    <UtilityScreen compose="mark">
     <LegalPageLayout eyebrow="الدعم" title="تواصل معنا" density="medium" className="contact-page">
       <LegalSection title="قنوات التواصل">
         <div className="contact-channels">
@@ -187,5 +189,6 @@ export default function ContactPage() {
         </Accordion>
       </LegalSection>
     </LegalPageLayout>
+    </UtilityScreen>
   );
 }

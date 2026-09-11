@@ -83,7 +83,7 @@
 .dq-card__body { padding: .5rem 1rem .85rem; border-top: 1px solid var(--mj-surface-2); }
 .dq-context-box {
   background: #EEF6F2; border: 1px solid #D5E8DF;
-  border-inline-end: 3px solid #0A3D2E; border-radius: .65rem;
+  border-inline-end: 3px solid var(--mj-brand-deep); border-radius: .65rem;
   padding: .7rem .9rem; margin-bottom: .6rem;
 }
 .dq-context-box__label { display: block; font-size: .7rem; font-weight: 700; color: #0A3D2E; margin-bottom: .3rem; }

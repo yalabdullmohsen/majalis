@@ -9,6 +9,7 @@ import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import "@/styles/pages/institutions.css";
 
 import { INSTITUTIONS, type Institution } from "@/data/institutions-catalog";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const TYPE_LABELS: Record<Institution["type"], string> = {
   mosque: "المساجد",
@@ -109,6 +110,7 @@ export default function InstitutionsPage() {
   });
 
   return (
+    <UtilityScreen compose="mark">
     <SectionTemplatePage
       route="/institutions"
       title="دليل المؤسسات الإسلامية"
@@ -187,5 +189,7 @@ export default function InstitutionsPage() {
         </div>
       </div>
     </SectionTemplatePage>
+  
+    </UtilityScreen>
   );
 }

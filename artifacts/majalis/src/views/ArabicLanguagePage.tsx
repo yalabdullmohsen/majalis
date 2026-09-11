@@ -1,7 +1,9 @@
 import { LazySectionAccordionPage } from "@/components/LazySectionAccordionPage";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function ArabicLanguagePage() {
   return (
+    <UtilityScreen compose="mark">
     <LazySectionAccordionPage
       eyebrow="علوم العربية"
       title="النحو والصرف والبلاغة لطالب العلم"
@@ -12,5 +14,6 @@ export default function ArabicLanguagePage() {
       relatedKey="arabic"
       load={() => import("@/lib/arabic-language-data")}
     />
+    </UtilityScreen>
   );
 }

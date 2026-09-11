@@ -85,7 +85,7 @@
 
 html[data-theme="dark"] .sources-directory-card,
 html.dark .sources-directory-card {
-  background: var(--mj-surface, #1a221f);
+  background: var(--mj-surface, var(--mj-ink));
   border-color: var(--mj-hairline, #2a3531);
 }
 

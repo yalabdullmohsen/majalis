@@ -61,7 +61,7 @@
 .fm-btn--primary:hover { background: var(--ds-emerald-deep); }
 .fm-btn--sm { padding: 0.35rem 0.75rem; font-size: 0.8rem; }
 .fm-btn--danger { border-color: var(--mj-danger); color: var(--mj-danger); }
-.fm-btn--danger:hover { background: #fee2e2; }
+.fm-btn--danger:hover { background: color-mix(in srgb, var(--mj-danger) 10%, white); }
 .fm-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
 .fm-invite-card {

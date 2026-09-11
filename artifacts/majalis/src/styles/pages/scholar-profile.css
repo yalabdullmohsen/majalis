@@ -8,7 +8,7 @@
 .sp-hero {
   margin-bottom: 1.75rem;
   padding-bottom: 1.25rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 18%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand-deep)) 18%, transparent);
 }
 .sp-hero__eyebrow {
   margin: 0 0 0.35rem;
@@ -46,7 +46,7 @@
   font-weight: 600;
   padding: 0.2rem 0.65rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 12%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, var(--mj-brand-deep)) 12%, transparent);
   color: var(--mj-brand-deep, #163828);
 }
 .sp-section {
@@ -97,7 +97,7 @@
   font-weight: 600;
   padding: 0.4rem 0.75rem;
   border-radius: 0.5rem;
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 25%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand-deep)) 25%, transparent);
   color: var(--mj-brand-deep, #163828);
   text-decoration: none;
 }
@@ -117,7 +117,7 @@
   gap: 0.2rem;
   padding: 0.9rem 1rem;
   border-radius: 0.65rem;
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand-deep)) 16%, transparent);
   text-decoration: none;
   color: inherit;
 }

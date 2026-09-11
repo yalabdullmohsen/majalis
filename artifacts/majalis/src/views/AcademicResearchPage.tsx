@@ -19,6 +19,7 @@ import {
 } from "@/lib/researches";
 import { BookOpen, GraduationCap, Plus, Search, Sparkles, Shield } from "lucide-react";
 import "@/styles/pages/researches.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 function useQueryParams(): URLSearchParams {
   const [loc] = useLocation();
@@ -252,6 +253,7 @@ function Rail({
 }) {
   if (items.length === 0) return null;
   return (
+    <UtilityScreen compose="mark">
     <section className="sr-section">
       <div className="sr-section__head">
         <h2 className="sr-section__title">{icon} {title}</h2>
@@ -268,5 +270,7 @@ function Rail({
         ))}
       </div>
     </section>
+  
+    </UtilityScreen>
   );
 }

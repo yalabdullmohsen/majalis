@@ -20,6 +20,7 @@ import {
   type FiqhCouncilItem,
   type FiqhItemType,
 } from "@/lib/fiqh-council-types";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 
 export default function FiqhCouncilAdvancedSearchPage() {
@@ -79,6 +80,7 @@ export default function FiqhCouncilAdvancedSearchPage() {
   const years = fiqhYearFilterOptions();
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow content-hub-page fiqh-council-page fiqh-search-page">
       <PageHeader
         eyebrow="البحث الفقهي"
@@ -172,5 +174,6 @@ export default function FiqhCouncilAdvancedSearchPage() {
         <SectionQuiz route="/fiqh-council" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

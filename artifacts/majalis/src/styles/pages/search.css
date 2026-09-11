@@ -433,7 +433,7 @@ a.search-suggestion-chip {
 .search-status-badge--review {
   background: color-mix(in srgb, var(--mj-brand, #146b52) 10%, var(--mj-surface, #fff));
   color: var(--mj-brand-deep, #0A3D2E);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1e5f4b) 22%, transparent);
 }
 
 .search-kind-badge--lesson      { background: color-mix(in srgb, var(--mj-brand) 10%, var(--mj-surface, #fff)); color: var(--mj-brand-deep); border-color: color-mix(in srgb, var(--mj-brand) 22%, transparent); }
@@ -620,7 +620,7 @@ html[data-theme="dark"] .srch-quick-card:hover {
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, var(--mj-hairline, #e3e8e6));
   background: var(--mj-surface, var(--color-surface, #fff));
   color: var(--text-primary, var(--mj-ink, #12201a));
-  box-shadow: 0 1px 2px color-mix(in srgb, var(--mj-ink, #0f172a) 5%, transparent);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--mj-ink, var(--mj-info)) 5%, transparent);
 }
 .srch-home-field input {
   flex: 1;
@@ -641,7 +641,7 @@ html[data-theme="dark"] .srch-quick-card:hover {
 }
 .srch-home-field:focus-within {
   border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 45%, var(--mj-hairline, #e3e8e6));
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mj-brand, #1e5f4b) 14%, transparent);
 }
 .srch-home-clear {
   display: inline-flex;
@@ -653,7 +653,7 @@ html[data-theme="dark"] .srch-quick-card:hover {
   min-height: 44px;
   border: 0;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 10%, transparent);
   color: var(--mj-brand-deep, #123f2e);
   cursor: pointer;
 }
@@ -693,9 +693,9 @@ html[data-theme="dark"] .srch-quick-card:hover {
   border-radius: 16px;
   border: 1px solid color-mix(in srgb, var(--mn-border-default, #d8e3de) 80%, transparent);
   background:
-    linear-gradient(160deg, color-mix(in srgb, var(--mj-brand, #1f6b56) 7%, transparent), transparent 62%),
+    linear-gradient(160deg, color-mix(in srgb, var(--mj-brand, #1e5f4b) 7%, transparent), transparent 62%),
     var(--mj-surface, var(--color-surface, #fff));
-  box-shadow: 0 1px 2px color-mix(in srgb, var(--mj-ink, #0f172a) 5%, transparent);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--mj-ink, var(--mj-info)) 5%, transparent);
   color: var(--text-primary, var(--mj-ink, #12201a));
   cursor: pointer;
   font: inherit;
@@ -713,7 +713,7 @@ html[data-theme="dark"] .srch-quick-card:hover {
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 12%, transparent);
   color: var(--mj-brand-deep, #123f2e);
 }
 .srch-scope-card__text {
@@ -780,16 +780,16 @@ html[data-theme="dark"] .srch-quick-card:hover {
   border: 1px solid color-mix(in srgb, var(--mn-border-default, #d8e3de) 75%, transparent);
   background: color-mix(in srgb, var(--color-surface, #fff) 96%, var(--mn-brand-soft, #e8f5f0));
   box-shadow:
-    0 1px 2px color-mix(in srgb, var(--mj-ink, #0f172a) 6%, transparent),
-    0 8px 20px color-mix(in srgb, var(--mj-ink, #0f172a) 4%, transparent);
+    0 1px 2px color-mix(in srgb, var(--mj-ink, var(--mj-info)) 6%, transparent),
+    0 8px 20px color-mix(in srgb, var(--mj-ink, var(--mj-info)) 4%, transparent);
   transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 .srch-result-card:hover,
 .srch-result-card:focus-within {
   border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 35%, transparent);
   box-shadow:
-    0 2px 4px color-mix(in srgb, var(--mj-ink, #0f172a) 8%, transparent),
-    0 12px 28px color-mix(in srgb, var(--mj-ink, #0f172a) 7%, transparent);
+    0 2px 4px color-mix(in srgb, var(--mj-ink, var(--mj-info)) 8%, transparent),
+    0 12px 28px color-mix(in srgb, var(--mj-ink, var(--mj-info)) 7%, transparent);
 }
 .srch-result-card__link {
   display: flex;
@@ -801,7 +801,7 @@ html[data-theme="dark"] .srch-quick-card:hover {
   border-radius: inherit;
 }
 .srch-result-card__link:focus-visible {
-  outline: 2px solid var(--mj-brand, #1f6b56);
+  outline: 2px solid var(--mj-brand, #1e5f4b);
   outline-offset: 2px;
 }
 .srch-result-card__top {
@@ -816,7 +816,7 @@ html[data-theme="dark"] .srch-quick-card:hover {
   min-height: 1.4rem;
   padding: 0.1rem 0.5rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 12%, transparent);
   color: var(--mj-brand-deep, #123f2e);
   font-size: 0.72rem;
   font-weight: 800;
@@ -846,7 +846,7 @@ html[data-theme="dark"] .srch-quick-card:hover {
   color: var(--mj-brand, #1f6b56);
 }
 .srch-hl {
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 18%, transparent);
   color: inherit;
   border-radius: 0.2rem;
   padding: 0 0.08em;
@@ -875,7 +875,7 @@ html.dark .srch-result-card {
   background: color-mix(in srgb, var(--color-surface, #1c1917) 92%, var(--mj-brand-deep, #0f3d32));
   color: var(--text-primary, #ecf2ef);
   border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 28%, var(--mj-ink-2, #2a3531));
-  box-shadow: 0 1px 2px color-mix(in srgb, #000 25%, transparent);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--mj-ink) 25%, transparent);
 }
 html[data-theme="dark"] .srch-home-submit,
 html.dark .srch-home-submit {
@@ -888,7 +888,7 @@ html[data-theme="dark"] .srch-result-card__kind,
 html.dark .srch-result-card__kind,
 html[data-theme="dark"] .srch-home-clear,
 html.dark .srch-home-clear {
-  background: color-mix(in srgb, var(--mj-brand, #5cc095) 18%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #5fbf98) 18%, transparent);
   color: var(--mj-brand, #5cc095);
 }
 html[data-theme="dark"] .srch-result-card__title,

@@ -25,7 +25,11 @@ assert.doesNotMatch(
 );
 
 assert.match(lessons, /\.filter-chips__chip\.is-active/);
-assert.match(lessons, /color:\s*#fff\s*!important/);
+// نص فاتح على رقاقة/زر نشط — هكس أو رمز أبيض ثابت الثيم
+assert.match(
+  lessons,
+  /color:\s*(?:#fff(?:fff)?|var\(--mj-(?:white|on-brand)(?:,\s*#ffffff)?\))\s*!important/,
+);
 assert.match(lessons, /\.lesson-unified-card--today/);
 
 assert.match(gate, /route:\s*"\/miracles"/);

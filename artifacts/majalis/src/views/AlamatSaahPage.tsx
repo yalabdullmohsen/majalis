@@ -5,6 +5,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/alamat-saah.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 /* ══════════════════════════════════════════════════════════════════
    §246، علامات الساعة  (.as-*)
@@ -360,6 +361,7 @@ export default function AlamatSaahPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="as-page" dir="rtl">
       {/* Hero */}
       <section className="as-hero">
@@ -538,5 +540,6 @@ export default function AlamatSaahPage() {
         <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والتاريخ" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

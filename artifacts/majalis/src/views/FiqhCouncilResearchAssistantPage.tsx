@@ -11,6 +11,7 @@ import {
 } from "@/lib/fiqh-council-types";
 import { FIQH_RESEARCH_DISCLAIMER } from "@/lib/fiqh-citation";
 import { fiqhYearFilterOptions } from "@/lib/fiqh-year-options";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function FiqhCouncilResearchAssistantPage() {
   const [type, setType] = useState("الكل");
@@ -31,6 +32,7 @@ export default function FiqhCouncilResearchAssistantPage() {
   const years = fiqhYearFilterOptions();
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow content-hub-page fiqh-council-page fiqh-research-assistant-page">
       <PageHeader
         eyebrow="أداة الباحث"
@@ -82,5 +84,6 @@ export default function FiqhCouncilResearchAssistantPage() {
         }}
       />
     </div>
+    </UtilityScreen>
   );
 }

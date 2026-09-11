@@ -42,6 +42,7 @@ import {
 import "@/styles/pages/vault.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { ACTION, EMPTY } from "@/lib/ui-copy";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const SECTION_HREF: Record<ReadingSection, string> = {
   adhkar: "/adhkar",
@@ -579,6 +580,7 @@ export default function VaultPage() {
   ];
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow vault-page" dir="rtl">
       <PageHeader
         eyebrow="المعرفة"
@@ -714,5 +716,6 @@ export default function VaultPage() {
         <SectionQuiz route="/vault" title="اختبر معلوماتك أثناء مراجعة مخزنك" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

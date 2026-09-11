@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { FiqhCouncilListPage } from "./FiqhCouncilPage";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function FiqhCouncilFatwasPage() {
   useEffect(() => {
@@ -15,6 +16,7 @@ export default function FiqhCouncilFatwasPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <>
       <FiqhCouncilListPage
         typeFilter="fatwa"
@@ -26,5 +28,6 @@ export default function FiqhCouncilFatwasPage() {
         <SectionQuiz route="/fiqh-council/fatwas" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
       </div>
     </>
+    </UtilityScreen>
   );
 }

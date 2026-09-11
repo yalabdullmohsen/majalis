@@ -113,7 +113,7 @@ button.hub-card {
 }
 
 .hub-card:focus-visible {
-  outline: 2px solid var(--mj-brand, var(--mj-brand));
+  outline: 2px solid var(--mj-brand, #1e5f4b);
   outline-offset: 2px;
 }
 

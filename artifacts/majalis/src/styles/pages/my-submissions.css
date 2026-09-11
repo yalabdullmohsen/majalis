@@ -55,7 +55,7 @@
 /* ─ Submission row card (msr-*) ─ */
 .msr-status--pending  { --msr-bg: #F0F9FF; --msr-color: #0369A1; --msr-border: var(--mj-brand-soft); }
 .msr-status--approved { --msr-bg: var(--mj-brand-tint); --msr-color: var(--majalis-emerald); --msr-border: #86efac; }
-.msr-status--rejected { --msr-bg: #fef2f2; --msr-color: var(--msk-red, #C1595A); --msr-border: #fca5a5; }
+.msr-status--rejected { --msr-bg: color-mix(in srgb, var(--mj-danger) 8%, white); --msr-color: var(--msk-red, #C1595A); --msr-border: color-mix(in srgb, var(--mj-danger) 35%, white); }
 .msr-card { background: var(--majalis-panel, rgba(255,255,255,0.08)); border-radius: var(--ds-radius-xl); border: 1.5px solid var(--msr-border, #86efac); overflow: hidden; margin-bottom: 0.875rem; }
 .msr-card__status-bar { background: var(--msr-bg, var(--mj-brand-soft)); padding: 0.5rem 1rem; display: flex; align-items: center; gap: 0.4rem; border-bottom: 1px solid var(--msr-border, #86efac); }
 .msr-card__status-label { font-size: 0.78rem; font-weight: 700; color: var(--msr-color, var(--majalis-emerald)); }

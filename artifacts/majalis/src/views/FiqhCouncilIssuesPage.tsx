@@ -8,6 +8,7 @@ import { FIQH_COUNCIL_CATEGORIES, fiqhIssueHref, type FiqhCouncilIssue } from "@
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function FiqhCouncilIssuesPage() {
   const [issues, setIssues] = useState<FiqhCouncilIssue[]>([]);
@@ -38,6 +39,7 @@ export default function FiqhCouncilIssuesPage() {
   }, [category]);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow content-hub-page fiqh-council-page">
       <PageHeader
         eyebrow="موسوعة علمية"
@@ -93,5 +95,6 @@ export default function FiqhCouncilIssuesPage() {
         <SectionQuiz route="/fiqh-council/issues" title="اختبر معلوماتك في المسائل الفقهية" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

@@ -13,6 +13,7 @@ import {
   draftProposalOutline,
 } from "@/lib/researches";
 import "@/styles/pages/researches.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function ResearchAssistantPage() {
   const [interest, setInterest] = useState("");
@@ -39,6 +40,7 @@ export default function ResearchAssistantPage() {
   );
 
   return (
+    <UtilityScreen compose="mark">
     <div className="sr-page">
       <p><Link href="/academic-research" className="sr-section__link">← الأبحاث الشرعية</Link></p>
       <h1 className="sr-detail__h1">مساعدة الباحث</h1>
@@ -126,5 +128,6 @@ export default function ResearchAssistantPage() {
         <p className="sr-notice">{ANTI_CHEATING_NOTICE}</p>
       </section>
     </div>
+    </UtilityScreen>
   );
 }

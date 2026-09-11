@@ -7,6 +7,7 @@ import { Link } from "wouter";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/my-submissions.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const STATUS_META: Record<SubmissionStatus, { Icon: LucideIcon; label: string; mod: string }> = {
   pending:  { Icon: Clock,        label: "قيد التدقيق", mod: "msr-status--pending"  },
@@ -157,6 +158,7 @@ export default function MySubmissionsPage() {
     : null;
 
   return (
+    <UtilityScreen compose="mark">
     <div className="msp-page">
       {/* Header */}
       <div className="msp-header">
@@ -246,5 +248,6 @@ export default function MySubmissionsPage() {
         <ShareButtons title="مساهماتي — سُنّة" url="https://www.ssunnah.com/my-submissions" />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

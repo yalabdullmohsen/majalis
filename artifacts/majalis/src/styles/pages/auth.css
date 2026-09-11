@@ -1,8 +1,8 @@
 /* صفحة الدخول/التسجيل — هادئة، بلا تسويق، RTL */
 .login-page {
   --auth-green: var(--color-primary, var(--mj-brand, #0f5c45));
-  --auth-green-deep: var(--color-primary-dark, var(--mj-brand-deep, #0a3d2e));
-  --auth-ink: var(--color-text, var(--mj-ink, #16241e));
+  --auth-green-deep: var(--color-primary-dark, var(--mj-brand-deep, #12362c));
+  --auth-ink: var(--color-text, var(--mj-ink, var(--mj-ink)));
   --auth-muted: var(--color-muted, var(--mj-muted, #5e6e67));
   --auth-line: var(--color-border, var(--mj-hairline, #d9d2c6));
   --auth-surface: var(--color-surface, var(--mj-surface, #fffcf7));
@@ -45,7 +45,7 @@ html[data-theme="dark"] .login-page {
   --auth-ink: var(--color-text, #f3f7f5);
   --auth-muted: var(--color-muted, #a8b6af);
   --auth-line: var(--color-border, #3a4641);
-  --auth-surface: var(--color-surface, #1b2421);
+  --auth-surface: var(--color-surface, var(--mj-surface));
   --auth-field: var(--color-surface-soft, #222c28);
   --auth-placeholder: var(--color-muted, #a8b6af);
   background: var(--color-bg, #121816);
@@ -149,8 +149,8 @@ html[data-theme="dark"] .login-card__brand {
 
 .login-alert--error {
   color: #8f1d1d;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
+  background: color-mix(in srgb, var(--mj-danger) 8%, white);
+  border: 1px solid color-mix(in srgb, var(--mj-danger) 22%, white);
 }
 
 .login-alert--warn {
@@ -167,7 +167,7 @@ html[data-theme="dark"] .login-card__brand {
 
 html.dark .login-alert--error,
 html[data-theme="dark"] .login-alert--error {
-  color: #fecaca;
+  color: color-mix(in srgb, var(--mj-danger) 22%, white);
   background: rgba(127, 29, 29, 0.28);
   border-color: rgba(248, 113, 113, 0.35);
 }

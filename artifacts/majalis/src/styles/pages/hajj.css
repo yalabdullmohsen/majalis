@@ -348,7 +348,7 @@ html.dark .hj-related__title { color: var(--mj-ink, #F7F3EB); }
 html[data-theme="dark"] .hj-related__link,
 html.dark .hj-related__link {
   color: var(--accent, #5CC095);
-  background: var(--surface, #1B2421);
+  background: var(--surface, var(--mj-surface));
   border-color: var(--border, #35443F);
 }
 

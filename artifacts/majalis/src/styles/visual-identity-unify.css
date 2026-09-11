@@ -26,6 +26,10 @@
   --mj-accent-soft: #f3ecdf;
   --mj-warning: #b45309;
   --mj-danger: #b54a4a;
+  --mj-info: #1a3a5c;
+  --mj-info-soft: #e8eef5;
+  --mj-success-soft: #dcfce7;
+  --mj-white: #ffffff;
   --mj-on-brand: #ffffff;
   --mj-sh: 0 3px 12px -10px rgba(10, 61, 46, 0.12);
 
@@ -86,6 +90,10 @@ html.dark {
   --mj-accent-soft: rgba(217, 184, 113, 0.16);
   --mj-warning: #d97706;
   --mj-danger: #f07178;
+  --mj-info: #7dd3fc;
+  --mj-info-soft: rgba(125,211,252,0.14);
+  --mj-success-soft: rgba(126,214,168,0.16);
+  --mj-white: #ffffff;
   /* على أخضر فاتح ليلي: حبر داكن واضح (AA) */
   --mj-on-brand: #06231a;
   --mj-sh: 0 6px 18px -12px rgba(0, 0, 0, 0.55);

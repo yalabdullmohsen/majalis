@@ -4,6 +4,7 @@ import { HubCard } from "@/components/ui/HubCard";
 import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
 import { applyPageSeo } from "@/lib/seo";
 import { getShubuhatByCategory, type DawahShubha } from "@/lib/dawah-service";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const COMPLEXITY_LABEL: Record<string, string> = { basic: "أساسي", intermediate: "متوسط", advanced: "متقدّم" };
 
@@ -20,6 +21,7 @@ export default function DiscoverIslamDoubtsPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <DiscoverIslamShell>
       <PageHeader eyebrow="التعريف بالإسلام" title="الشبهات والتفنيدات" subtitle="نعرض الشبهة بصياغتها الحقيقية، ثم نجيب بالدليل والسياق — لا ردود سطحية." />
 
@@ -42,5 +44,7 @@ export default function DiscoverIslamDoubtsPage() {
         </div>
       )}
     </DiscoverIslamShell>
+  
+    </UtilityScreen>
   );
 }

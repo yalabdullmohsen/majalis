@@ -5,7 +5,7 @@
 
 /* هيرو قديم ميت — الصفحة على TopicPage؛ إخفاء لمنع عودة الزرقاء إن أُعيد استعمال الصنف */
 .jn-hero { display: none; }
-.jn-hero--naar { --jn-hero-bg: linear-gradient(145deg, #1A0000, #7B1010, #9B1C1C); }
+.jn-hero--naar { --jn-hero-bg: linear-gradient(145deg, #1A0000, #7B1010, var(--mj-danger)); }
 .jn-hero__inner { max-width: 680px; margin: 0 auto; }
 .jn-hero__badge {
   display: inline-block; background: rgba(255,255,255,.15); color: #fff;
@@ -29,8 +29,8 @@
 }
 .jn-tab:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
 .jn-tab--janna       { --jn-tab-active-bg: var(--mj-brand); }
-.jn-tab--naar        { --jn-tab-active-bg: #9B1C1C; }
-.jn-tab--asbab-janna { --jn-tab-active-bg: #1a3a5c; }
+.jn-tab--naar        { --jn-tab-active-bg: var(--mj-danger); }
+.jn-tab--asbab-janna { --jn-tab-active-bg: var(--mj-info); }
 .jn-tab--duas        { --jn-tab-active-bg: var(--brand-deep, var(--mj-brand-deep)); }
 .jn-tab--active { color: #fff; background: var(--jn-tab-active-bg, var(--mj-brand)); border-color: var(--jn-tab-active-bg, var(--mj-brand)); }
 
@@ -38,7 +38,7 @@
 .jn-sections { display: flex; flex-direction: column; gap: var(--ds-space-8); }
 
 .jn-section--janna       { --jn-section-color: var(--mj-brand); }
-.jn-section--naar        { --jn-section-color: #9B1C1C; }
+.jn-section--naar        { --jn-section-color: var(--mj-danger); }
 .jn-section--asbab-janna { --jn-section-color: #1a3a5c; }
 .jn-section--duas        { --jn-section-color: var(--brand-deep, var(--mj-brand-deep)); }
 .jn-section__title { font-size: 1.1rem; font-weight: 800; margin: 0 0 .85rem; border-inline-end: 3px solid currentColor; padding-inline-end: .7rem; color: var(--jn-section-color, var(--mj-brand)); }
@@ -56,8 +56,8 @@
 
 .jn-naar-warn {
   background: rgba(155,28,28,.07); border: 1px solid rgba(155,28,28,.2);
-  border-inline-end: 4px solid #9B1C1C; border-radius: .6rem;
-  padding: .8rem 1rem; font-size: .9rem; color: #9B1C1C;
+  border-inline-end: 4px solid var(--mj-danger); border-radius: .6rem;
+  padding: .8rem 1rem; font-size: .9rem; color: var(--mj-danger);
   font-weight: 700; line-height: 1.6;
 }
 
@@ -78,10 +78,10 @@
 .jn-sabab-text { font-size: .83rem; color: var(--color-text-muted, var(--mj-ink-2)); line-height: 1.7; margin: 0; }
 .jn-ref { font-size: .72rem; color: var(--mj-muted); margin: 0; }
 
-.jn-intro--naar { background: rgba(155,28,28,.05); border-right-color: #9B1C1C; }
+.jn-intro--naar { background: rgba(155,28,28,.05); border-right-color: var(--mj-danger); }
 .jn-intro--naar p { color: #7F1D1D; }
 .jn-sabab-card--naar { border-color: rgba(155,28,28,.15); }
-.jn-sabab-num--naar { background: #9B1C1C; }
+.jn-sabab-num--naar { background: var(--mj-danger); }
 
 .jn-duas-list { display: flex; flex-direction: column; gap: .8rem; }
 .jn-dua-card {

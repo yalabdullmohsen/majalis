@@ -6,7 +6,7 @@
 
 /* Hero */
 .rq-hero {
-  background: linear-gradient(135deg, #0d1117 0%, #1c2e3a 55%, #0a1620 100%);
+  background: linear-gradient(135deg, #0d1117 0%, var(--mj-info) 55%, #0a1620 100%);
   padding: 3.5rem 1.25rem 2.5rem;
   text-align: center; color: #fff;
   position: relative; overflow: hidden;
@@ -58,7 +58,7 @@
 
 /* Intro */
 .rq-intro {
-  background: var(--clr-surface); border-inline-end: 4px solid #1c2e3a;
+  background: var(--clr-surface); border-inline-end: 4px solid var(--mj-info);
   border-radius: .6rem; padding: 1rem 1.2rem; margin-bottom: 1.75rem;
   font-size: .95rem; line-height: 1.8; color: var(--clr-text-1);
 }
@@ -74,7 +74,7 @@
 .rq-card__head:hover { background: var(--clr-surface); }
 .rq-card__dot {
   width: 8px; height: 8px; flex-shrink: 0; border-radius: 50%;
-  background: #1c2e3a;
+  background: var(--mj-info);
 }
 .rq-card__title { font-size: .95rem; font-weight: 700; color: var(--clr-text-1); flex: 1; }
 .rq-chevron { font-size: .7rem; color: var(--clr-text-2); flex-shrink: 0; }
@@ -94,7 +94,7 @@
 .rq-qawl-name { font-size: .82rem; font-weight: 700; color: #1c2e3a; margin-bottom: .5rem; }
 .rq-qawl-text {
   font-size: .9rem; line-height: 1.8; color: var(--clr-text-2);
-  border-inline-end: 3px solid #1c2e3a; padding-inline-end: .75rem;
+  border-inline-end: 3px solid var(--mj-info); padding-inline-end: .75rem;
   margin: 0; font-style: normal;
 }
 
@@ -117,7 +117,7 @@
 .rq-musab-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .rq-musab-card {
   background: var(--ss-card-bg, var(--mj-surface, #fff)); border: 1px solid var(--clr-border);
-  border-inline-end: 4px solid #1c2e3a; border-radius: .75rem;
+  border-inline-end: 4px solid var(--mj-info); border-radius: .75rem;
   padding: 1.1rem 1.25rem;
 }
 .rq-musab-title  { font-size: .97rem; font-weight: 700; color: var(--clr-text-1); margin: 0 0 .5rem; }

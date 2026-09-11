@@ -2,12 +2,12 @@
 
 .qp-people {
   --qp-surface: var(--mj-surface, #fff);
-  --qp-ink: var(--mj-ink, #16241e);
-  --qp-ink-2: var(--mj-ink-2, #4a5a53);
-  --qp-line: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 14%, var(--mj-hairline, #e3e8e6));
-  --qp-brand: var(--mj-brand, var(--mj-brand));
+  --qp-ink: var(--mj-ink, var(--mj-ink));
+  --qp-ink-2: var(--mj-ink-2, var(--mj-ink-2));
+  --qp-line: color-mix(in srgb, var(--mj-brand, #1e5f4b) 14%, var(--mj-hairline, #e3e8e6));
+  --qp-brand: var(--mj-brand, #1e5f4b);
   --qp-brand-deep: var(--mj-brand-deep, #12362a);
-  --qp-canvas: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 4%, var(--mj-bg, #f7f8f6));
+  --qp-canvas: color-mix(in srgb, var(--mj-brand, #1e5f4b) 4%, var(--mj-bg, #f7f8f6));
 }
 
 .qp-people__body {
@@ -254,11 +254,11 @@
 }
 
 html[data-theme="dark"] .qp-people {
-  --qp-surface: var(--surface, #1B2421);
+  --qp-surface: var(--surface, var(--mj-surface));
   --qp-ink: var(--text-primary, #ECF2EF);
   --qp-ink-2: var(--text-secondary, #C2CFCA);
   --qp-line: var(--border, #35443F);
-  --qp-brand: var(--accent, #5CC095);
+  --qp-brand: var(--accent, var(--mj-brand));
   --qp-brand-deep: var(--accent-strong, #7BD6AE);
   --qp-canvas: var(--bg, #131A18);
 }

@@ -150,7 +150,7 @@
 /* Note box */
 .as-note {
   background: #fef9ec; border: 1px solid #e8d676; border-radius: .6rem;
-  padding: .9rem 1.1rem; font-size: .88rem; line-height: 1.7; color: #78610a;
+  padding: .9rem 1.1rem; font-size: .88rem; line-height: 1.7; color: var(--mj-accent);
 }
 .as-note strong { color: #5a490a; }
 

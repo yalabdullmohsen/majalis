@@ -149,13 +149,13 @@
 
 /* quote */
 .sb-quote {
-  background: #FFFBEB;
-  border: 1px solid #FDE68A;
+  background: var(--mj-accent-soft);
+  border: 1px solid var(--mj-accent-soft);
   border-radius: .6rem;
   padding: .7rem 1rem;
   margin: 0 0 .8rem;
 }
-.sb-quote__text { font-size: .88rem; color: #78350F; font-weight: 600; line-height: 1.7; margin: 0; }
+.sb-quote__text { font-size: .88rem; color: var(--mj-warning); font-weight: 600; line-height: 1.7; margin: 0; }
 
 /* legacy */
 .sb-legacy__label { display: block; font-size: .78rem; font-weight: 700; color: var(--mj-ink); margin-bottom: .5rem; }

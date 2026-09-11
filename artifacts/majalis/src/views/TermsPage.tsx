@@ -4,6 +4,7 @@ import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { CONTACT_EMAIL } from "@/lib/site-config";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function TermsPage() {
   useEffect(() => {
@@ -17,6 +18,7 @@ export default function TermsPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <LegalPageLayout eyebrow="الاستخدام" title="شروط الاستخدام" updatedAt="2026-08-05">
       <LegalSection title="قبول الشروط">
         <p>
@@ -117,5 +119,6 @@ export default function TermsPage() {
         <ShareButtons title="شروط الاستخدام — سُنّة" url="https://www.ssunnah.com/terms" />
       </div>
 </LegalPageLayout>
+    </UtilityScreen>
   );
 }

@@ -14,7 +14,7 @@
 
 .tl-crumb a,
 .tl-head a {
-  color: var(--mj-brand, var(--mj-brand));
+  color: var(--mj-brand, #1e5f4b);
   text-decoration: none;
 }
 
@@ -53,7 +53,7 @@
 
 .tl-card__n {
   font-weight: 800;
-  color: var(--mj-brand, var(--mj-brand));
+  color: var(--mj-brand, #1e5f4b);
 }
 
 .tl-card__name {

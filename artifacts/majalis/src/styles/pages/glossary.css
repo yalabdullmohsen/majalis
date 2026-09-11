@@ -120,7 +120,7 @@
 }
 .gl-cat:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
 .gl-cat--active {
-  background: var(--mj-brand-deep, #0d4a39) !important;
+  background: var(--mj-brand-deep, #12362c) !important;
   color: var(--on-dark-strong, #fff) !important;
   border-color: var(--mj-brand-deep, #0d4a39);
 }
@@ -178,7 +178,7 @@
 .gl-cat--fiqh    { --gl-cat-bg: rgba(23,61,53,.1);  --gl-cat-color: var(--mj-brand); }
 .gl-cat--hadith  { --gl-cat-bg: rgba(49,46,129,.1);  --gl-cat-color: var(--brand-deep, var(--mj-brand-deep)); }
 .gl-cat--quran   { --gl-cat-bg: rgba(6,95,70,.1);    --gl-cat-color: var(--mj-brand); }
-.gl-cat--seerah  { --gl-cat-bg: rgba(155,28,28,.1);  --gl-cat-color: #9B1C1C; }
+.gl-cat--seerah  { --gl-cat-bg: rgba(155,28,28,.1);  --gl-cat-color: var(--mj-danger); }
 .gl-cat--tazkiya { --gl-cat-bg: rgba(21,48,37,.1);   --gl-cat-color: var(--mj-brand-deep); }
 .gl-term__cat {
   font-size: 0.8rem; font-weight: 800; border-radius: var(--ds-radius-full);

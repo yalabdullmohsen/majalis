@@ -16,6 +16,7 @@ import {
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 function SessionBlock({
   title,
@@ -93,6 +94,7 @@ export default function FiqhCouncilLivePage() {
   };
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow content-hub-page fiqh-council-page fiqh-live-page">
       <PageHeader
         eyebrow="بيانات حية"
@@ -148,5 +150,6 @@ export default function FiqhCouncilLivePage() {
         <SectionQuiz route="/fiqh-council" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

@@ -4,6 +4,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { PROPHETS_LINEAGE, type LineageNode } from "@/lib/prophets-lineage";
 import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
 import { truncateAtWord } from "@/lib/utils";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 // ── ثوابت التخطيط ──────────────────────────────────────────────────────────
 const NODE_W  = 110;
@@ -219,6 +220,7 @@ export default function ProphetsFamilyTreePage() {
   const selectedNode = placed.find(p => p.node.id === selected)?.node;
 
   return (
+    <UtilityScreen compose="mark">
     <div dir="rtl" style={{ minHeight: "100svh", background: "var(--mj-brand-soft)", fontFamily: "var(--font-app)" }}>
       {/* Header */}
       <header style={{
@@ -416,5 +418,6 @@ export default function ProphetsFamilyTreePage() {
         </div>
       )}
     </div>
+    </UtilityScreen>
   );
 }

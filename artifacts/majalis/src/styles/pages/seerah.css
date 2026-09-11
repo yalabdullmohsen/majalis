@@ -287,7 +287,7 @@ html.dark .seerah-hero {
 .seerah-phase--farewell          { --phase-color: var(--mj-brand-deep); --panel-color: var(--mj-brand-deep); }
 .seerah-phase--secret-dawah,
 .seerah-phase--death             { --phase-color: var(--mj-brand-deep); --panel-color: var(--mj-brand-deep); }
-.seerah-phase--open-dawah        { --phase-color: #9B1C1C; --panel-color: #9B1C1C; }
+.seerah-phase--open-dawah        { --phase-color: var(--mj-danger); --panel-color: var(--mj-danger); }
 .seerah-phase--year-of-sorrow    { --phase-color: #2A3E50; --panel-color: #2A3E50; }
 .seerah-phase--ghazawat          { --phase-color: #5C1C2A; --panel-color: #5C1C2A; }
 /* --panel-color/--phase-color داكنة عمدًا لتُقرَأ على .seerah-panel الفاتح
@@ -302,7 +302,7 @@ html[data-theme="dark"] .seerah-phase--childhood,
 html[data-theme="dark"] .seerah-phase--farewell,
 html[data-theme="dark"] .seerah-phase--secret-dawah,
 html[data-theme="dark"] .seerah-phase--death { --phase-color: var(--mj-brand); --panel-color: var(--mj-brand); }
-html[data-theme="dark"] .seerah-phase--open-dawah { --phase-color: #F87171; --panel-color: #F87171; }
+html[data-theme="dark"] .seerah-phase--open-dawah { --phase-color: var(--mj-danger); --panel-color: var(--mj-danger); }
 html[data-theme="dark"] .seerah-phase--year-of-sorrow { --phase-color: #60A5FA; --panel-color: #60A5FA; }
 html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --panel-color: #FB7185; }
 .seerah-panel {
@@ -837,7 +837,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 
 html[data-theme="dark"] .seerah-panel__events,
 html.dark .seerah-panel__events {
-  background: color-mix(in srgb, var(--majalis-panel, #1c2420) 92%, #000);
+  background: color-mix(in srgb, var(--majalis-panel, #1c2420) 92%, var(--mj-ink));
   border-color: color-mix(in srgb, #fff 12%, transparent);
 }
 

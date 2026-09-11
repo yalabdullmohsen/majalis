@@ -4,7 +4,7 @@
  */
 
 .section-hub {
-  --sh-accent: var(--section-accent, var(--mj-brand, #1f6b56));
+  --sh-accent: var(--section-accent, var(--mj-brand, #1e5f4b));
   --sh-radius: var(--radius-card, 24px);
   --sh-pad-bottom: calc(var(--bottom-nav-total, 4.5rem) + 1rem);
   max-width: 42rem;
@@ -328,7 +328,7 @@
 
 html.dark .section-hub__related,
 [data-theme="dark"] .section-hub__related {
-  background: color-mix(in srgb, var(--sh-accent, #1f6b56) 10%, rgba(12, 28, 22, 0.72));
+  background: color-mix(in srgb, var(--sh-accent, var(--mj-brand)) 10%, rgba(12, 28, 22, 0.72));
   border-color: color-mix(in srgb, var(--sh-accent, #1f6b56) 32%, transparent);
 }
 

@@ -4,6 +4,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { useLanguage } from "@/components/LanguageProvider";
 import { submitDawahContactRequest, CONTACT_RELIGIONS, type ReligionCode } from "@/lib/dawah-service";
 import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function DiscoverIslamContactPage() {
   const { lang } = useLanguage();
@@ -66,6 +67,7 @@ export default function DiscoverIslamContactPage() {
   }
 
   return (
+    <UtilityScreen compose="mark">
     <DiscoverIslamShell detail>
       <PageHeader eyebrow="التعريف بالإسلام" title="تواصل سرّي مع داعية" subtitle="بياناتك تُستخدَم فقط للتواصل معك، ولا تُعرض لأي طرف آخر أبدًا." />
 
@@ -114,5 +116,7 @@ export default function DiscoverIslamContactPage() {
         <button type="submit" disabled={busy} className="asp-run-btn" aria-busy={busy}>{busy ? "إرسال…" : "إرسال الطلب"}</button>
       </form>
     </DiscoverIslamShell>
+  
+    </UtilityScreen>
   );
 }

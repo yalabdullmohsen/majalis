@@ -6,6 +6,7 @@ import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShe
 import { applyPageSeo } from "@/lib/seo";
 import { getQuestionBySlug, getQuestionTranslations, type DawahQuestion, type DawahTranslation } from "@/lib/dawah-service";
 import { supabase } from "@/lib/supabase";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const LANG_LABELS: Record<string, string> = { en: "English", fr: "Français", es: "Español" };
 
@@ -59,6 +60,7 @@ export default function DiscoverIslamQuestionDetailPage() {
   const displayShortAnswer = activeTranslation?.summary || item.short_answer;
 
   return (
+    <UtilityScreen compose="mark">
     <DiscoverIslamShell detail>
       <div dir={viewLang === "ar" ? "rtl" : "ltr"}>
         <PageHeader eyebrow="التعريف بالإسلام" title={displayTitle} />
@@ -134,5 +136,7 @@ export default function DiscoverIslamQuestionDetailPage() {
         <Link href="/discover-islam/contact" className="page-link-inline">لديك سؤال آخر؟ تحدّث مع داعية ←</Link>
       </div>
     </DiscoverIslamShell>
+  
+    </UtilityScreen>
   );
 }

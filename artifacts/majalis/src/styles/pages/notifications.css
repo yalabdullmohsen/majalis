@@ -555,7 +555,7 @@ html.dark .notif-row__label {
   font-weight: 600;
 }
 .notif-banner--warn { background: rgba(24,54,42,0.06); color: var(--mj-brand-deep); border: 1px solid rgba(24,54,42,0.25); }
-.notif-banner--err  { background: #fee2e2; color: var(--mj-danger-deep); border: 1px solid #fca5a5; }
+.notif-banner--err  { background: color-mix(in srgb, var(--mj-danger) 10%, white); color: var(--mj-danger-deep); border: 1px solid color-mix(in srgb, var(--mj-danger) 35%, white); }
 
 .notif-card {
   background: var(--majalis-panel, #fff);

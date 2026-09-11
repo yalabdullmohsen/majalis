@@ -25,6 +25,7 @@ import { useLanguage } from "@/components/LanguageProvider";
 import { LANG_META } from "@/lib/language-preference";
 import { getFeaturedQuestions, getFeaturedShubuhat, getDawahCategories, getArticlesByCategory, type DawahQuestion, type DawahShubha, type DawahCategory, type DawahArticle } from "@/lib/dawah-service";
 import "@/styles/discover-islam.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 /** Allowlist — avoids `import * as LucideIcons` pulling the entire icon set into this route. */
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
@@ -103,6 +104,7 @@ export default function DiscoverIslamPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <SectionTemplatePage
       route="/discover-islam"
       eyebrow="التعريف بالإسلام"
@@ -261,5 +263,7 @@ export default function DiscoverIslamPage() {
       </section>
     </div>
     </SectionTemplatePage>
+  
+    </UtilityScreen>
   );
 }

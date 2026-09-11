@@ -9,6 +9,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/fiqh-admin.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function FiqhCouncilStatsPage() {
   const [stats, setStats] = useState<FiqhPublicStats | null>(null);
@@ -53,6 +54,7 @@ export default function FiqhCouncilStatsPage() {
   };
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow content-hub-page fiqh-council-page">
       <PageHeader
         eyebrow="لوحة معلومات"
@@ -140,5 +142,6 @@ export default function FiqhCouncilStatsPage() {
         <SectionQuiz route="/fiqh-council/stats" title="اختبر معلوماتك في الفقه والتاريخ" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

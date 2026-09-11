@@ -360,7 +360,7 @@ html.dark .adhkar-focus-btn {
 html[data-theme="dark"] .adhkar-focus-btn:hover:not(:disabled),
 html.dark .adhkar-focus-btn:hover:not(:disabled) {
   background: var(--mj-brand-soft, var(--brand-deep, var(--mj-brand-deep)));
-  border-color: var(--mj-brand, var(--mj-brand));
+  border-color: var(--mj-brand, #5fbf98);
 }
 html[data-theme="dark"] .adhkar-focus-btn:disabled,
 html.dark .adhkar-focus-btn:disabled {
@@ -384,8 +384,8 @@ html.dark .adhkar-focus-btn--next:disabled {
 }
 html[data-theme="dark"] .adhkar-focus-btn--details,
 html.dark .adhkar-focus-btn--details {
-  color: var(--mj-brand, var(--mj-brand));
-  border-color: var(--mj-brand, var(--mj-brand));
+  color: var(--mj-brand, #5fbf98);
+  border-color: var(--mj-brand, #5fbf98);
   background: var(--mj-surface, #17201C);
 }
 html[data-theme="dark"] .adhkar-sheet,

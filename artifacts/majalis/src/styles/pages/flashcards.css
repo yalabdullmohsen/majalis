@@ -13,7 +13,7 @@
   --fc-hairline:#E3E8E6;
   /* النص */
   --fc-ink:var(--mj-ink);
-  --fc-ink-2:#4A5A53;
+  --fc-ink-2:var(--mj-ink-2);
   --fc-muted:#6B7B74;
   /* حالات التقييم — ثلاثة لا رابع لها */
   --fc-ok:var(--mj-brand);    --fc-ok-soft:var(--mj-brand-soft);

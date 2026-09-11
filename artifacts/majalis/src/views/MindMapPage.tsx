@@ -8,6 +8,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { MIND_MAPS, MIND_MAP_CATEGORIES, type MindMap, type MindMapNode } from "@/lib/mind-maps-data";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { MindMapCanvas } from "@/components/mind-map/MindMapCanvas";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 type ViewMode = "canvas" | "list";
 
@@ -178,6 +179,7 @@ export default function MindMapPage() {
   }, [activeCategory, search]);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="mm-page">
       {/* رأس */}
       <header className="sh-hero">
@@ -300,5 +302,6 @@ export default function MindMapPage() {
         <SectionQuiz route="/mind-map" title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

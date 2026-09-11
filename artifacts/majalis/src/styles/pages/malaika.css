@@ -6,7 +6,7 @@
 
 /* Hero */
 .mk-hero {
-  background: linear-gradient(135deg, #0e1a2e 0%, #1a3a5c 55%, #112235 100%);
+  background: linear-gradient(135deg, #0e1a2e 0%, var(--mj-info) 55%, #112235 100%);
   padding: 3.5rem 1.25rem 2.5rem;
   text-align: center; color: #fff;
 }
@@ -45,7 +45,7 @@
 
 /* Intro */
 .mk-intro {
-  background: var(--clr-surface); border-inline-end: 4px solid #1a3a5c;
+  background: var(--clr-surface); border-inline-end: 4px solid var(--mj-info);
   border-radius: .6rem; padding: 1rem 1.2rem; margin-bottom: 1.75rem;
   font-size: .95rem; line-height: 1.8; color: var(--clr-text-1);
 }
@@ -60,7 +60,7 @@
 }
 .mk-aqida-num {
   width: 2rem; height: 2rem; flex-shrink: 0;
-  border-radius: 50%; background: #1a3a5c;
+  border-radius: 50%; background: var(--mj-info);
   color: #fff; font-weight: 700; font-size: .85rem;
   display: flex; align-items: center; justify-content: center;
 }
@@ -79,7 +79,7 @@
 }
 .mk-malak-num {
   width: 2rem; height: 2rem; flex-shrink: 0;
-  border-radius: 50%; border: 2px solid #1a3a5c;
+  border-radius: 50%; border: 2px solid var(--mj-info);
   color: #1a3a5c; font-weight: 800; font-size: .82rem;
   display: flex; align-items: center; justify-content: center;
 }
@@ -110,7 +110,7 @@
 .mk-fadail-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .mk-fadl-card {
   background: var(--ss-card-bg, var(--mj-surface, #fff)); border: 1px solid var(--clr-border);
-  border-inline-end: 4px solid #1a3a5c;
+  border-inline-end: 4px solid var(--mj-info);
   border-radius: .75rem; padding: 1.1rem 1.25rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
 }

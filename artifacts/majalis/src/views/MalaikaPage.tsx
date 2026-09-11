@@ -6,6 +6,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { TopicPage } from "@/components/topic/TopicPage";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 /* ══════════════════════════════════════════════════════════════════
    §247، الملائكة في الإسلام  (.mk-*)
@@ -349,6 +350,7 @@ export default function MalaikaPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <TopicPage
       themeId="malaika"
       breadcrumb={[
@@ -492,5 +494,6 @@ export default function MalaikaPage() {
       </div>
     </div>
     </TopicPage>
+    </UtilityScreen>
   );
 }

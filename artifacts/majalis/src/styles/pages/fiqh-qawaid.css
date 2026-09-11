@@ -5,7 +5,7 @@
 /* hero */
 .fq-page { background: var(--mj-surface-2); min-height: 100svh; }
 .fq-hero {
-  background: linear-gradient(135deg, var(--mj-ink) 0%, #1E3A5F 60%, var(--mj-brand) 100%);
+  background: linear-gradient(135deg, var(--mj-ink) 0%, var(--mj-info) 60%, var(--mj-brand) 100%);
   padding: 3.5rem 1.25rem 2.5rem; text-align: center; color: #fff;
 }
 .fq-hero__inner { max-width: 700px; margin: 0 auto; }

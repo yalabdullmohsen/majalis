@@ -141,8 +141,8 @@
 }
 
 .atl-note-box {
-  background: #FFFBEB; border: 1px solid #FDE68A; border-radius: .7rem;
-  padding: .9rem 1.1rem; font-size: .86rem; color: #78350F; line-height: 1.7;
+  background: var(--mj-accent-soft); border: 1px solid var(--mj-accent-soft); border-radius: .7rem;
+  padding: .9rem 1.1rem; font-size: .86rem; color: var(--mj-warning); line-height: 1.7;
   margin-top: .5rem;
 }
 

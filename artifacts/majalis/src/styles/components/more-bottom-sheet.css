@@ -637,17 +637,17 @@ html.dark .more-hub-sheet .app-sheet__footer {
   border: 1px solid var(--mj-hairline, #e3e8e6);
   border-radius: 999px;
   background: var(--mj-surface, #fff);
-  color: var(--mj-brand, var(--mj-brand));
+  color: var(--mj-brand, #5fbf98);
   cursor: pointer;
 }
 
 .more-sheet-theme-btn[aria-pressed="true"] {
-  background: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 18%, var(--mj-surface, #1a221f));
-  color: var(--mj-brand, var(--mj-brand));
+  background: color-mix(in srgb, var(--mj-brand, #5fbf98) 18%, var(--mj-surface, #1a221f));
+  color: var(--mj-brand, #5fbf98);
 }
 
 .more-sheet-theme-btn:focus-visible {
-  outline: 2px solid var(--mj-brand, var(--mj-brand));
+  outline: 2px solid var(--mj-brand, #1e5f4b);
   outline-offset: 2px;
 }
 

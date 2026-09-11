@@ -31,6 +31,7 @@ import { Chip } from "@/components/ui-common";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { useAuth } from "@/components/AuthProvider";
 import "@/styles/pages/knowledge-graph.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -324,6 +325,7 @@ export default function KnowledgeGraphPage() {
   }
 
   return (
+    <UtilityScreen compose="mark">
     <div dir="rtl" className="kng-page">
 
       {/* Header */}
@@ -662,5 +664,6 @@ export default function KnowledgeGraphPage() {
         <SectionQuiz route="/knowledge-graph" title="اختبر معلوماتك في المعرفة الإسلامية" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

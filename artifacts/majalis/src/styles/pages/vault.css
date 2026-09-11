@@ -304,7 +304,7 @@ button.vault-item-card__title {
 }
 .vault-note-card__action:hover { background: var(--ds-emerald-soft); }
 .vault-note-card__action--danger { color: var(--mj-danger); }
-.vault-note-card__action--danger:hover { background: #fee2e2; }
+.vault-note-card__action--danger:hover { background: color-mix(in srgb, var(--mj-danger) 10%, white); }
 .vault-note-card__edit { display: flex; flex-direction: column; gap: 0.5rem; }
 .vault-note-card__textarea {
   width: 100%;

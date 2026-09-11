@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { FiqhCouncilListPage } from "./FiqhCouncilPage";
 import { applyPageSeo } from "@/lib/seo";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function FiqhCouncilResearchPage() {
   useEffect(() => {
@@ -14,11 +15,13 @@ export default function FiqhCouncilResearchPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <FiqhCouncilListPage
       typeFilter="research"
       title="بحوث المجمع الفقهي"
       subtitle="بحوث ودراسات فقهية في القضايا المعاصرة، منظمة وقابلة للبحث."
       showTypeFilter={false}
     />
+    </UtilityScreen>
   );
 }

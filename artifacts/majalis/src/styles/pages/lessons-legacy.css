@@ -331,7 +331,7 @@
 .lesson-unified-card__btn--secondary {
   background: var(--color-primary-soft, var(--mj-brand-soft, #e6f2ec));
   color: var(--color-primary-dark, var(--mj-brand-deep, #0d4a39));
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 28%, var(--mj-hairline, transparent));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1e5f4b) 28%, var(--mj-hairline, transparent));
 }
 
 .lesson-unified-card__btn--ghost {

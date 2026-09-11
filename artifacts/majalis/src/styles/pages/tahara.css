@@ -301,7 +301,7 @@
 }
 .th-water-card--green { background: var(--color-brand-soft, var(--mj-brand-soft)); border: 1px solid color-mix(in srgb, var(--color-brand, var(--mj-brand)) 35%, transparent); }
 .th-water-card--blue { background: #EFF6FF; border: 1px solid #93C5FD; }
-.th-water-card--red { background: #FFF1F2; border: 1px solid #FDA4AF; }
+.th-water-card--red { background: color-mix(in srgb, var(--mj-danger) 8%, white); border: 1px solid #FDA4AF; }
 .th-water-card__label { font-size: .85rem; font-weight: 700; color: var(--txt-primary, var(--mj-ink)); }
 .th-water-card__desc { font-size: .78rem; color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
 

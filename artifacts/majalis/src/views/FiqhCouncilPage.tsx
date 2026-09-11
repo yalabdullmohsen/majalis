@@ -27,6 +27,7 @@ import {
 import { applyPageSeo } from "@/lib/seo";
 import { fiqhYearFilterOptions } from "@/lib/fiqh-year-options";
 import "@/styles/pages/fiqh-council.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const SUBNAV_LINKS = [
   { href: "/fiqh-council", label: "الرئيسية" },
@@ -341,6 +342,7 @@ export function FiqhCouncilHubPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow content-hub-page fiqh-council-page fiqh-council-hub">
       <PageHeader
         eyebrow="الفقه المعاصر"
@@ -580,6 +582,8 @@ export function FiqhCouncilHubPage() {
         <SectionQuiz route="/fiqh-council" title="اختبر معلوماتك في الفقه الإسلامي" count={4} />
       </div>
     </div>
+  
+    </UtilityScreen>
   );
 }
 

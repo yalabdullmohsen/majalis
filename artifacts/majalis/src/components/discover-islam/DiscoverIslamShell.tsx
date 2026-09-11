@@ -2,6 +2,7 @@
  * غلاف موحّد لقسم التعريف بالإسلام — hub والقوائم والتفاصيل.
  */
 import type { ReactNode } from "react";
+import { UtilityScreen } from "@/components/design-system/screens";
 import "@/styles/discover-islam.css";
 
 type Props = {
@@ -23,5 +24,9 @@ export function DiscoverIslamShell({ children, detail = false, className }: Prop
     .filter(Boolean)
     .join(" ");
 
-  return <div className={classes}>{children}</div>;
+  return (
+    <UtilityScreen compose="mark">
+      <div className={classes}>{children}</div>
+    </UtilityScreen>
+  );
 }

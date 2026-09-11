@@ -125,12 +125,12 @@ html[data-theme="dark"] .assistant-message-bubble {
 
 .assistant-message-failure {
   align-self: stretch;
-  background: #fef2f2;
-  border-color: #fecaca;
+  background: color-mix(in srgb, var(--mj-danger) 8%, white);
+  border-color: color-mix(in srgb, var(--mj-danger) 22%, white);
 }
 
 .assistant-message-failure p {
-  color: #8a1f1f;
+  color: var(--mj-danger);
   font-size: 0.85rem;
   line-height: 1.5;
   text-align: center;
@@ -258,7 +258,7 @@ html[data-theme="dark"] .assistant-message-bubble {
   border-radius: var(--ds-radius-lg);
   background: rgba(254, 226, 226, 0.15);
   border: 1px solid rgba(254, 202, 202, 0.45);
-  color: #fecaca;
+  color: color-mix(in srgb, var(--mj-danger) 22%, white);
   font-size: var(--ds-text-sm);
 }
 
@@ -296,9 +296,9 @@ html[data-theme="dark"] .assistant-message-bubble {
 }
 
 .assistant-retry-btn {
-  border: 1px solid #fecaca;
+  border: 1px solid color-mix(in srgb, var(--mj-danger) 22%, white);
   background: #fff;
-  color: #8a1f1f;
+  color: var(--mj-danger);
   border-radius: var(--ds-radius);
   padding: 0.35rem 0.75rem;
   font-family: inherit;
@@ -375,8 +375,8 @@ html[data-theme="dark"] .assistant-message-bubble {
 
 .assistant-message-failure {
   align-self: stretch;
-  background: #fef2f2;
-  border-color: #fecaca;
+  background: color-mix(in srgb, var(--mj-danger) 8%, white);
+  border-color: color-mix(in srgb, var(--mj-danger) 22%, white);
   max-width: 100%;
 }
 
@@ -385,7 +385,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 }
 
 .assistant-message-failure p {
-  color: #8a1f1f;
+  color: var(--mj-danger);
   font-size: 0.88rem;
   line-height: 1.5;
   text-align: center;
@@ -442,9 +442,9 @@ html[data-theme="dark"] .assistant-message-bubble {
 }
 
 .assistant-error {
-  color: #8a1f1f;
-  background: #fee2e2;
-  border: 1px solid #fecaca;
+  color: var(--mj-danger);
+  background: color-mix(in srgb, var(--mj-danger) 10%, white);
+  border: 1px solid color-mix(in srgb, var(--mj-danger) 22%, white);
 }
 
 .assistant-form {

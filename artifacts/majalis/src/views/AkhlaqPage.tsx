@@ -8,6 +8,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import "@/styles/pages/akhlaq.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 /* ─── بيانات الأخلاق ─── */
 type AkhlaqEntry = {
@@ -1017,6 +1018,7 @@ export default function AkhlaqPage() {
   const toggle = (id: string) => setExpanded((p) => (p === id ? null : id));
 
   return (
+    <UtilityScreen compose="mark">
     <SectionTemplatePage
       route="/akhlaq"
       title="مكارم الأخلاق"
@@ -1153,5 +1155,7 @@ export default function AkhlaqPage() {
       </div>
       </div>
     </SectionTemplatePage>
+  
+    </UtilityScreen>
   );
 }

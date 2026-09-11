@@ -157,7 +157,7 @@
   text-align: center;
 }
 .cvp-result--valid { border: 2px solid var(--majalis-emerald-deep, var(--mj-brand)); background: var(--mj-brand-soft); }
-.cvp-result--invalid { border: 1.5px solid #fca5a5; background: #fff1f2; }
+.cvp-result--invalid { border: 1.5px solid color-mix(in srgb, var(--mj-danger) 35%, white); background: color-mix(in srgb, var(--mj-danger) 8%, white); }
 
 .cvp-result-badge {
   width: 64px; height: 64px;
@@ -249,7 +249,7 @@
 /* ============================================================
    82 — UpdatesPage  (upd-*)
    ============================================================ */
-.updates-type-badge { background: var(--badge-color, #64748B); }
+.updates-type-badge { background: var(--badge-color, var(--mj-muted)); }
 .upd-auto-badge     { background: var(--mj-brand); margin-inline-start: 0.35rem; }
 .upd-title-link     { text-decoration: none; }
 .upd-source-name    { font-size: 0.8125rem; opacity: 0.85; }

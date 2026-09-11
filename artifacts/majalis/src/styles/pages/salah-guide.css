@@ -153,7 +153,7 @@
 .sg-mubtilatat-list { display: flex; flex-direction: column; gap: .6rem; margin-bottom: 1.3rem; }
 .sg-mubtil-card {
   display: flex; gap: .7rem; align-items: flex-start;
-  background: #FFF1F2; border: 1px solid #FECDD3; border-radius: .75rem; padding: .75rem .9rem;
+  background: color-mix(in srgb, var(--mj-danger) 8%, white); border: 1px solid #FECDD3; border-radius: .75rem; padding: .75rem .9rem;
 }
 .sg-mubtil-icon  { font-size: var(--ds-text-base); color: var(--mj-danger); font-weight: 800; flex-shrink: 0; margin-top: .1rem; }
 .sg-mubtil-title { display: block; font-weight: 700; font-size: .85rem; color: var(--mj-danger-deep); margin-bottom: .2rem; }
@@ -166,7 +166,7 @@
 .sg-makruh-item {
   display: flex; gap: .5rem; align-items: flex-start;
   font-size: .83rem; color: var(--mj-ink-2); line-height: 1.5;
-  background: #FFFBEB; border: 1px solid #FDE68A; border-radius: .6rem; padding: .5rem .75rem;
+  background: var(--mj-accent-soft); border: 1px solid var(--mj-accent-soft); border-radius: .6rem; padding: .5rem .75rem;
 }
 .sg-makruh-item::before { content: "⚠️"; flex-shrink: 0; }
 

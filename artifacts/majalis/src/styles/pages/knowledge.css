@@ -29,8 +29,8 @@
 }
 
 .knowledge-review-banner {
-  background: color-mix(in srgb, #b45309 18%, transparent);
-  border: 1px solid #b45309;
+  background: color-mix(in srgb, var(--mj-warning) 18%, transparent);
+  border: 1px solid var(--mj-warning);
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
 }

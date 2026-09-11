@@ -20,6 +20,7 @@ import {
   type VerificationLevel,
 } from "@/data/islamic-history";
 import "@/styles/pages/tarikh-islami.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const VERIFICATION_LABEL: Record<VerificationLevel, string> = {
   confirmed: "مؤكد",
@@ -126,6 +127,7 @@ export default function TarikhIslamiDetailPage() {
   ].filter(Boolean) as string[];
 
   return (
+    <UtilityScreen compose="mark">
     <TopicPage
       themeId="history"
       sectionRoute="/tarikh-islami"
@@ -283,5 +285,6 @@ export default function TarikhIslamiDetailPage() {
         </div>
       </div>
     </TopicPage>
+    </UtilityScreen>
   );
 }

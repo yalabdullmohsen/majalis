@@ -5,6 +5,7 @@ import { mapAuthError } from "@/lib/auth-messages";
 import { Loading } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/auth.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 /**
  * تحديث كلمة المرور بعد رابط الاستعادة (جلسة PASSWORD_RECOVERY).
@@ -83,6 +84,7 @@ export default function UpdatePasswordPage() {
   }
 
   return (
+    <UtilityScreen compose="mark">
     <div className="login-page">
       <div className="login-card">
         <div className="login-card__header">
@@ -133,5 +135,6 @@ export default function UpdatePasswordPage() {
         )}
       </div>
     </div>
+    </UtilityScreen>
   );
 }

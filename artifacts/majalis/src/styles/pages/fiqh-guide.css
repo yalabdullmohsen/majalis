@@ -184,7 +184,7 @@
 }
 html[data-theme="dark"] .fg-related--footer,
 html.dark .fg-related--footer {
-  background: color-mix(in srgb, var(--mj-brand, var(--brand, #1f6b56)) 12%, rgba(12, 28, 22, 0.75));
+  background: color-mix(in srgb, var(--mj-brand, var(--brand, var(--mj-brand))) 12%, rgba(12, 28, 22, 0.75));
   border-color: color-mix(in srgb, var(--mj-brand, var(--brand, #1f6b56)) 34%, transparent);
 }
 html[data-theme="dark"] .fg-related__eyebrow,

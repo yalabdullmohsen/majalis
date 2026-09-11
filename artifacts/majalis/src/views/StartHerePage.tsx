@@ -4,6 +4,7 @@ import { BookOpen, GraduationCap, Route } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { PageShell } from "@/components/layout/PageShell";
 import "@/styles/pages/methodology.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 const LEVELS = [
   {
@@ -46,6 +47,7 @@ export default function StartHerePage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <PageShell density="airy" className="start-here-page">
       <header className="meth-hero" style={{ marginBlockStart: "1rem" }}>
         <p className="meth-eyebrow">للزائر الجديد</p>
@@ -88,5 +90,7 @@ export default function StartHerePage() {
         </Link>
       </p>
     </PageShell>
+  
+    </UtilityScreen>
   );
 }

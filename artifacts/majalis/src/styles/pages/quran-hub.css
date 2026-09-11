@@ -18,7 +18,7 @@
 
 /* بطاقة فتح المصحف — خفيفة، أعلى التلاوة والتفسير، بلا مستطيل أخضر ضخم */
 .quran-open-mushaf {
-  --qom-accent: var(--mj-brand-deep, #123f2e);
+  --qom-accent: var(--mj-brand-deep, #12362c);
   position: relative;
   display: flex;
   align-items: center;
@@ -167,7 +167,7 @@
 
 html[data-theme="dark"] .quran-open-mushaf,
 html.dark .quran-open-mushaf {
-  background: color-mix(in srgb, var(--mj-surface, #1a221f) 94%, var(--mj-brand-deep) 6%);
+  background: color-mix(in srgb, var(--mj-surface, var(--mj-ink)) 94%, var(--mj-brand-deep) 6%);
   border-color: color-mix(in srgb, var(--qom-accent) 28%, var(--mj-hairline, rgba(255, 255, 255, 0.08)));
   box-shadow: 0 8px 22px -16px rgba(0, 0, 0, 0.55);
 }
@@ -391,19 +391,19 @@ html.dark .quran-open-mushaf__icon {
 /* بطاقة مميَّزة — تبرز بصريًا عن بقية الشبكة بدل الاندماج فيها (مثال: اختبار التسميع بالذكاء الاصطناعي) */
 .quran-hub-card--featured {
   grid-column: span 2;
-  border: 2px solid #C9A227;
+  border: 2px solid var(--mj-accent);
   box-shadow: 0 6px 24px rgba(201,162,39,.28);
 }
 .quran-hub-card--featured:hover {
   box-shadow: 0 10px 32px rgba(201,162,39,.4);
-  border-color: #C9A227;
+  border-color: var(--mj-accent);
 }
 .quran-hub-card--featured .quran-hub-card__header {
   display: none;
   background: transparent;
 }
 .quran-hub-card--featured .quran-hub-card__tag {
-  background: #C9A227;
+  background: var(--mj-accent);
   color: #1A1400;
 }
 @media (max-width: 640px) {

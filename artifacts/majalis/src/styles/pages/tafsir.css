@@ -99,7 +99,7 @@ html[data-theme="dark"] .tf-stat span {
 .tf-hero .tf-stat span { color: var(--on-brand-secondary, #F8FAFC); }
 
 .tf-intro {
-  background: #F4FAF7;
+  background: var(--mj-brand-tint);
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--radius-card, 24px);
   padding: 1.1rem 1.2rem;
@@ -232,7 +232,7 @@ html[data-theme="dark"] .tf-stat span {
 .tf-card__example {
   font-size: 0.85rem;
   color: var(--mj-brand-deep);
-  background: #F4FAF7;
+  background: var(--mj-brand-tint);
   border-radius: var(--ds-radius-md);
   padding: 0.55rem 0.75rem;
   line-height: 1.55;
@@ -344,7 +344,7 @@ html[data-theme="dark"] .tf-stat span {
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--mj-brand);
-  background: #F4FAF7;
+  background: var(--mj-brand-tint);
   border: 1px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius-full);
   padding: 0.2rem 0.7rem;
@@ -396,7 +396,7 @@ html[data-theme="dark"] .tf-stat span {
   font-weight: 800;
   font-size: 0.85rem;
   z-index: 1;
-  box-shadow: 0 0 0 4px #F4FAF7;
+  box-shadow: 0 0 0 4px var(--mj-brand-tint);
 }
 .tf-timeline__body {
   flex: 1;

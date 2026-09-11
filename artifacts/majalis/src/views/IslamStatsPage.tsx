@@ -5,6 +5,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/islam-stats.css";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 /* ══════════════════════════════════════════════════════════════════
    §241، الإسلام في أرقام  (.is-*)
@@ -329,6 +330,7 @@ export default function IslamStatsPage() {
   }, []);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="is-page" dir="rtl">
       {/* ══ Hero ══ */}
       <section className="is-hero">
@@ -513,5 +515,6 @@ export default function IslamStatsPage() {
         <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في الإسلام والتاريخ" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }

@@ -248,7 +248,7 @@ html[data-theme="dark"] #main-content.mj-route-enter::before {
 .mj-smooth-image {
   position: relative;
   overflow: hidden;
-  background: color-mix(in srgb, var(--mj-brand, var(--mj-brand)) 8%, var(--mj-surface, #fff));
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 8%, var(--mj-surface, #fff));
   isolation: isolate;
 }
 

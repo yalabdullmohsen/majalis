@@ -15,6 +15,7 @@ import {
   type FiqhCouncilItem,
   type FiqhItemType,
 } from "@/lib/fiqh-council-types";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 export default function FiqhCouncilNawazilPage() {
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
@@ -40,6 +41,7 @@ export default function FiqhCouncilNawazilPage() {
   }, [activeTopic]);
 
   return (
+    <UtilityScreen compose="mark">
     <div className="page-shell narrow content-hub-page fiqh-council-page fiqh-nawazil-page">
       <PageHeader
         eyebrow="الفقه المعاصر"
@@ -127,5 +129,6 @@ export default function FiqhCouncilNawazilPage() {
         <SectionQuiz route="/fiqh-council" title="اختبر معلوماتك في النوازل الفقهية" count={4} />
       </div>
     </div>
+    </UtilityScreen>
   );
 }
