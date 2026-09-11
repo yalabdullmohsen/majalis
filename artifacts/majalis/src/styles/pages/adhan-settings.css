@@ -595,7 +595,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
 .ads-diag-status[data-state="ready"] { color: var(--msk-gold, var(--mj-brand-deep)); }
 .ads-diag-status[data-state="loading"] { color: var(--msk-text-muted, #5a6b63); }
 .ads-diag-status[data-state="playing"] { color: var(--msk-gold, var(--mj-brand-deep)); }
-.ads-diag-status[data-state="failed"] { color: #9a3412; }
+.ads-diag-status[data-state="failed"] { color: var(--mj-warning, #9a3412); }
 .ads-diag-mono {
   font-size: 0.72rem;
   line-height: 1.45;

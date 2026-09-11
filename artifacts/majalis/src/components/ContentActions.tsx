@@ -176,7 +176,7 @@ export default function ContentActions({ contentType, contentId }: Props) {
             disabled={!reportType || submitting}
             className="ca-report-submit"
           >
-            {submitting ? "جاري الإرسال..." : "إرسال البلاغ"}
+            {submitting ? "إرسال…" : "إرسال البلاغ"}
           </button>
         </div>
       )}

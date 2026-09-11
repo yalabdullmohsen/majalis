@@ -32,6 +32,7 @@ import {
 import { toArabicDigits } from "@/lib/utils";
 import { TextHighlightCapture } from "@/components/reading/TextHighlightCapture";
 import "@/styles/pages/tafsir.css";
+import { DashboardScreen } from "@/components/design-system/screens";
 
 type CardItem = {
   id: string;
@@ -154,6 +155,7 @@ export default function TafsirPage() {
   }, []);
 
   return (
+    <DashboardScreen compose="mark">
     <SectionTemplatePage
       route="/tafsir"
       eyebrow="القرآن الكريم · أشرف العلوم موضوعًا"
@@ -459,5 +461,6 @@ export default function TafsirPage() {
       </div>
     </main>
     </SectionTemplatePage>
+    </DashboardScreen>
   );
 }

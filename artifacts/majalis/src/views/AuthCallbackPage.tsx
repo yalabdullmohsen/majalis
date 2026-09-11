@@ -14,7 +14,7 @@ export default function AuthCallbackPage() {
     applyPageSeo({
       path: "/auth/callback",
       title: "تسجيل الدخول | سُنّة",
-      description: "جارٍ إتمام تسجيل الدخول…",
+      description: "إتمام تسجيل الدخول…",
       robots: "noindex, nofollow",
     });
   }, []);

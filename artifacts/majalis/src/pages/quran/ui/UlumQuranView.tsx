@@ -5,6 +5,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { InternalLinkCard } from "@/components/ui/InternalCards";
 import "@/styles/pages/ulum-quran.css";
+import { DashboardScreen } from "@/components/design-system/screens";
 
 
 type UQTab = "nuzul" | "jam" | "tafsir" | "ijaz" | "ahkam" | "qiraat" | "adawat";
@@ -236,6 +237,7 @@ export default function UlumQuranPage() {
   const filteredIjaz = IJAZ_TYPES;
 
   return (
+    <DashboardScreen compose="mark">
     <SectionTemplatePage
       route="/ulum-quran"
       eyebrow="علوم القرآن"
@@ -523,5 +525,6 @@ export default function UlumQuranPage() {
       </div>
     </main>
     </SectionTemplatePage>
+    </DashboardScreen>
   );
 }

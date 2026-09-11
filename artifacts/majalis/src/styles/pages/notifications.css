@@ -11,7 +11,7 @@
   font-weight: 600 !important;
 }
 .notif-banner--err {
-  background: #FEF2F2 !important;
+  background: color-mix(in srgb, var(--mj-danger, #b91c1c) 8%, var(--mj-surface, #fff)) !important;
   color: var(--mj-danger-deep) !important;
   border: 1px solid rgba(185,28,28,0.22) !important;
   border-radius: var(--radius-button, 18px) !important;
@@ -75,7 +75,7 @@ html.dark .notif-row__label {
   text-align: center !important;
 }
 .notif-time__input:focus { border-color: var(--elite-forest, var(--mj-brand-deep)) !important; outline: none !important; box-shadow: 0 0 0 3px rgba(24,54,42,0.08) !important; }
-.notif-time__hint { color: #8a9a8e !important; font-size: 0.78rem !important; }
+.notif-time__hint { color: var(--mj-muted, #8a9a8e) !important; font-size: 0.78rem !important; }
 
 /* زر الاختبار */
 .notif-test-btn {
@@ -265,7 +265,7 @@ html.dark .notif-row__label {
 }
 .nh-row--read .nh-row__title { color: var(--elite-ink-soft, #4A5568) !important; font-weight: 400 !important; }
 .nh-row__body-text { color: var(--elite-ink-soft, #4A5568) !important; font-size: 0.78rem !important; margin-top: 0.18rem !important; }
-.nh-row__meta { color: #8a9a8e !important; font-size: 0.7rem !important; margin-top: 0.22rem !important; }
+.nh-row__meta { color: var(--mj-muted, #8a9a8e) !important; font-size: 0.7rem !important; margin-top: 0.22rem !important; }
 
 .nh-row__actions { opacity: 0 !important; transition: opacity 0.15s !important; display: flex !important; gap: 0.3rem !important; align-items: center !important; }
 .nh-row:hover .nh-row__actions { opacity: 1 !important; }
@@ -284,7 +284,7 @@ html.dark .notif-row__label {
   transition: background 0.13s, color 0.13s !important;
 }
 .nh-action:hover { background: rgba(24,54,42,0.08) !important; color: var(--elite-forest, var(--mj-brand-deep)) !important; }
-.nh-action--del:hover { background: rgba(192,57,43,0.08) !important; color: #C0392B !important; border-color: rgba(192,57,43,0.2) !important; }
+.nh-action--del:hover { background: rgba(192,57,43,0.08) !important; color: var(--mj-danger, #C0392B) !important; border-color: rgba(192,57,43,0.2) !important; }
 
 .nh-empty {
   color: var(--elite-ink-soft, #4A5568) !important;
@@ -363,7 +363,7 @@ html.dark .notif-row__label {
 }
 .nh-btn:hover { border-color: var(--mj-emerald-950, var(--mj-brand-deep)); background: color-mix(in srgb, var(--mj-emerald-950, var(--mj-brand-deep)) 6%, transparent); }
 .nh-btn--mark-all { color: var(--mj-emerald-950, var(--mj-brand-deep)); }
-.nh-btn--danger { color: #B44A4A; border-color: rgba(180,74,74,0.30); }
+.nh-btn--danger { color: var(--mj-danger, #B44A4A); border-color: rgba(180,74,74,0.30); }
 .nh-btn--danger:hover { border-color: rgba(180,74,74,0.55); background: rgba(180,74,74,0.06); }
 
 .nh-search-wrap {
@@ -442,7 +442,7 @@ html.dark .notif-row__label {
   inset-inline-end: 0;
   width: 76px;
   border: none;
-  background: #B44A4A;
+  background: var(--mj-danger, #B44A4A);
   color: #fff;
   display: flex;
   align-items: center;
@@ -517,7 +517,7 @@ html.dark .notif-row__label {
   transition: color 0.15s, background 0.15s;
 }
 .nh-action:hover { color: var(--mj-emerald-950, var(--mj-brand-deep)); background: color-mix(in srgb, var(--mj-emerald-950, var(--mj-brand-deep)) 8%, transparent); }
-.nh-action--del:hover { color: #B44A4A; background: rgba(180,74,74,0.08); }
+.nh-action--del:hover { color: var(--mj-danger, #B44A4A); background: rgba(180,74,74,0.08); }
 
 /* ── حالة فارغة ── */
 .nh-empty {

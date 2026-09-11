@@ -5,6 +5,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionIcon } from "@/components/ui/SectionIcon";
+import { UtilityScreen } from "@/components/design-system/screens";
 
 
 /* ────── types ────── */
@@ -368,6 +369,7 @@ export default function HajjPage() {
   [search]);
 
   return (
+    <UtilityScreen compose="mark">
     <main className="hj-page" dir="rtl">
       {/* hero */}
       <section className="hj-hero">
@@ -641,5 +643,6 @@ export default function HajjPage() {
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه" count={4} />
       </div>
     </main>
+    </UtilityScreen>
   );
 }

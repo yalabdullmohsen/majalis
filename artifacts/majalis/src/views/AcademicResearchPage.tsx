@@ -158,7 +158,7 @@ export default function AcademicResearchPage() {
             {q || categoryId || kind ? "نتائج البحث" : "تصفح الأبحاث"}
           </h2>
           <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>
-            {pending ? "جارٍ البحث…" : `${results.length} نتيجة`}
+            {pending ? "تحديث النتائج…" : `${results.length} نتيجة`}
           </span>
         </div>
         <div className="sr-filters">

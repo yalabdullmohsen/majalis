@@ -11,6 +11,7 @@ import { fetchSurahList, getSurahMeta, type SurahSummary } from "@/lib/quran-api
 import { navigateTo } from "@/lib/navigation-intent";
 import { toArabicDigits } from "@/lib/utils";
 import { formatAdhanRemainingPhrase } from "@/lib/prayer-ticker-copy";
+import { DashboardScreen } from "@/components/design-system/screens";
 
 const OBLIGATORY_KEYS = new Set(["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"]);
 
@@ -80,6 +81,7 @@ export default function QuranWorshipHubView() {
   };
 
   return (
+    <DashboardScreen compose="mark">
     <div className="page-shell qwh-page" dir="rtl">
       <header className="qwh-hero surface-brand">
         <Clock size={28} className="qwh-hero__icon" aria-hidden="true" />
@@ -162,5 +164,6 @@ export default function QuranWorshipHubView() {
         </p>
       </section>
     </div>
+    </DashboardScreen>
   );
 }

@@ -351,7 +351,7 @@ export default function LearningPathDetailPage() {
       {!enrolled && user?.id && (
         <button type="button" onClick={handleEnroll} disabled={enrolling} className="lpd2-enroll-btn" aria-busy={enrolling}>
           <UserPlus size={16} aria-hidden="true" />
-          {enrolling ? "جارٍ التسجيل…" : "سجّل في المسار مجاناً"}
+          {enrolling ? "تسجيل…" : "سجّل في المسار مجاناً"}
         </button>
       )}
       {!user?.id && (
@@ -379,7 +379,7 @@ export default function LearningPathDetailPage() {
             if (result) setCertificateCode(result.certificateCode);
           }}
         >
-          <Award size={16} aria-hidden="true" /> {issuingCert ? "جارٍ الإصدار…" : "احصل على شهادتك"}
+          <Award size={16} aria-hidden="true" /> {issuingCert ? "إصدار…" : "احصل على شهادتك"}
         </button>
       )}
 

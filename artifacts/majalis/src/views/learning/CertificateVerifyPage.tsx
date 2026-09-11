@@ -110,7 +110,7 @@ export default function CertificateVerifyPage() {
           <span className="cvp-loading-dot" />
           <span className="cvp-loading-dot" />
           <span className="cvp-loading-dot" />
-          <p>جاري التحقق…</p>
+          <p role="status" aria-busy="true" aria-label="تحديث التحقق" />
         </div>
       )}
 

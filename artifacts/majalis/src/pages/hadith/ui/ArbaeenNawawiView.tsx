@@ -10,6 +10,7 @@ import { truncateAtWord } from "@/lib/utils";
 import "@/styles/pages/arbaeen-nawawi.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
+import { ListScreen } from "@/components/design-system/screens";
 
 /* ══════════════════════════════════════════════════════════════════
    §178b، الأربعون النووية (.an-*)
@@ -142,6 +143,7 @@ export default function ArbaeenNawawiPage() {
   const pct = ARBAEEN_NAWAWI.length ? Math.round((read.size / ARBAEEN_NAWAWI.length) * 100) : 0;
 
   return (
+    <ListScreen compose="mark">
     <div className="page-shell an-page">
 
       {/* ── Hero ── */}
@@ -291,5 +293,6 @@ export default function ArbaeenNawawiPage() {
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث النبوي" count={4} />
       </div>
     </div>
+    </ListScreen>
   );
 }
