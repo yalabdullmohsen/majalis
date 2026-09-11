@@ -18,7 +18,17 @@ const routes = read("src/AppRoutes.tsx");
 const registry = read("src/config/sections.registry.ts");
 
 assert.match(page, /mk-hub-lanes/);
+assert.match(page, /mk-topic-grid/);
+assert.match(page, /mk-topic-card/);
+assert.match(page, /InformationCard/);
+const miraclesUi = read("src/lib/miracles-ui.ts");
+assert.match(miraclesUi, /الكون والفضاء/);
+assert.match(miraclesUi, /title: "الإنسان"/);
+assert.match(page, /MIRACLE_TOPIC_HUB/);
+assert.match(page, /الإنسان/);
+assert.match(page, /countMiraclesByTopic|MIRACLE_TOPIC_HUB/);
 assert.match(page, /mk-lane-card/);
+assert.doesNotMatch(page, /mk-hero__note/);
 assert.match(page, /\/miracles\/quran/);
 assert.match(page, /\/miracles\/sunnah/);
 assert.match(page, /\/miracles\/topic\//);

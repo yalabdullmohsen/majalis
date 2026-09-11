@@ -1,0 +1,87 @@
+/* InformationCard — تنبيه/معلومة حديثة بكثافة وتباين واضح */
+
+.info-card {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0 0 1rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: var(--radius-card, 16px);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #0f5c45) 18%, var(--mj-line, #d9d2c6));
+  background: color-mix(in srgb, var(--mj-brand-soft, #e2efe8) 72%, var(--mj-surface, #fff));
+  color: var(--mj-ink, #16241e);
+}
+
+.info-card--caution {
+  border-color: color-mix(in srgb, #a16207 28%, var(--mj-line, #d9d2c6));
+  background: color-mix(in srgb, #fef3c7 55%, var(--mj-surface, #fff));
+}
+
+.info-card--neutral {
+  background: var(--mj-surface, #fff);
+}
+
+.info-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.info-card__icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--mj-brand, #0f5c45) 14%, transparent);
+  color: var(--mj-brand-deep, #123f2e);
+}
+
+.info-card--caution .info-card__icon {
+  background: color-mix(in srgb, #a16207 16%, transparent);
+  color: #7a4e08;
+}
+
+.info-card__title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--mj-ink, #16241e);
+}
+
+.info-card__body {
+  margin: 0;
+  padding-inline-start: 2.4rem;
+  font-size: 0.84rem;
+  line-height: 1.7;
+  color: var(--mj-ink-2, #3d4f47);
+}
+
+.info-card__body p {
+  margin: 0;
+}
+
+html[data-theme="dark"] .info-card,
+html.dark .info-card {
+  background: color-mix(in srgb, var(--mj-brand, #5cc095) 10%, var(--mj-surface, #1b2421));
+  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 28%, transparent);
+  color: var(--mj-ink, #e8f0ec);
+}
+
+html[data-theme="dark"] .info-card__title,
+html.dark .info-card__title {
+  color: var(--mj-ink, #e8f0ec);
+}
+
+html[data-theme="dark"] .info-card__body,
+html.dark .info-card__body {
+  color: color-mix(in srgb, var(--mj-ink, #e8f0ec) 82%, transparent);
+}
+
+html[data-theme="dark"] .info-card--caution,
+html.dark .info-card--caution {
+  background: color-mix(in srgb, #a16207 18%, var(--mj-surface, #1b2421));
+  border-color: color-mix(in srgb, #fbbf24 35%, transparent);
+}

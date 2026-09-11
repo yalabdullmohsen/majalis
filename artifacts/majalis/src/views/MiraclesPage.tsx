@@ -4,8 +4,19 @@ import {
   AlertTriangle,
   ArrowLeft,
   BookOpen,
+  Droplets,
+  HeartPulse,
+  Leaf,
+  Mountain,
+  Orbit,
+  PawPrint,
   ScrollText,
+  Stethoscope,
+  UserRound,
+  Wind,
+  type LucideIcon,
 } from "lucide-react";
+import { InformationCard } from "@/components/ui/InformationCard";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { useAuth } from "@/components/AuthProvider";
 import { getMiracles } from "@/lib/supabase";
@@ -30,20 +41,37 @@ import { RelatedContentStack } from "@/components/content/RelatedContentCard";
 import { prefetchRoute } from "@/lib/prefetch-route";
 import {
   MIRACLE_FIXED_CAUTION,
+  MIRACLE_TOPIC_HUB,
   cleanSummaryBoilerplate,
+  countMiraclesByTopic,
   extractIntro,
   extractLimitsNote,
   extractScientificNote,
   extractShariaMeaning,
+  filterByTopic,
   miracleCardSummary,
   miracleCategoryChip,
   miracleMethodBadge,
   miracleShortSource,
   relatedMiracles,
   sortMiraclesMethodically,
+  type MiracleTopicFilter,
 } from "@/lib/miracles-ui";
 import "@/styles/pages/miracles.css";
 import { ListScreen } from "@/components/design-system/screens";
+
+
+const TOPIC_ICONS: Record<Exclude<MiracleTopicFilter, "الكل">, LucideIcon> = {
+  كونيات: Orbit,
+  "خلق الإنسان": UserRound,
+  طب: Stethoscope,
+  أرض: Mountain,
+  نبات: Leaf,
+  حيوان: PawPrint,
+  بحر: Droplets,
+  زمن: Wind,
+  "صحة ووقاية": HeartPulse,
+};
 
 type HubLane = "quran" | "sunnah";
 
@@ -79,15 +107,17 @@ export default function MiraclesPage({
 }
 
 function MiraclesHub() {
-  const quranCount = filterMiraclesSeed({ sourceType: "قرآن" }).length;
-  const sunnahCount = filterMiraclesSeed({ sourceType: "سنة" }).length;
+  const allSeed = useMemo(() => filterMiraclesSeed(), []);
+  const quranCount = allSeed.filter((m) => m.source_type === "قرآن").length;
+  const sunnahCount = allSeed.filter((m) => m.source_type === "سنة").length;
+  const topicCounts = useMemo(() => countMiraclesByTopic(allSeed), [allSeed]);
 
   useEffect(() => {
     applyPageSeo({
       path: "/miracles",
       title: "الإعجاز العلمي | سُنّة",
       description:
-        "تأملات علمية منضبطة في إشارات الوحي — مساران: القرآن الكريم والسنة النبوية، بلا جزم قطعي بنظريات متغيّرة.",
+        "تأملات علمية منضبطة في إشارات الوحي — موضوعات ومساران: القرآن والسنة، بلا جزم قطعي بنظريات متغيّرة.",
       keywords: ["إعجاز علمي", "إعجاز القرآن", "إعجاز السنة", "إشارات كونية", "تفكر في الخلق"],
     });
   }, []);
@@ -104,7 +134,7 @@ function MiraclesHub() {
       ]}
       eyebrow="تأملات منضبطة"
       title="الإعجاز العلمي"
-      subtitle="مساران واضحان للتأمل في إشارات الوحي — بصياغة حذرة بلا مبالغة."
+      subtitle="موضوعات للتأمل في إشارات الوحي — بصياغة حذرة بلا مبالغة."
       quote={{
         text: "﴿سَنُرِيهِمْ آيَاتِنَا فِي الْآفَاقِ وَفِي أَنفُسِهِمْ حَتَّىٰ يَتَبَيَّنَ لَهُمْ أَنَّهُ الْحَقُّ﴾",
         ref: "فصّلت: ٥٣",
@@ -112,14 +142,36 @@ function MiraclesHub() {
       }}
     >
       <div className="mk-page mk-page--hub" dir="rtl">
-        <p className="mk-hero__note">
-          <AlertTriangle size={16} strokeWidth={1.8} aria-hidden="true" />
-          <span>
+        <InformationCard title="منهج العرض" tone="caution" className="mk-info-card">
+          <p>
             هذا القسم يعرض وجوه تأمل علمية منضبطة، ولا يجعل النظريات المتغيرة تفسيرًا قطعيًا للنص الشرعي.
             {` ${MIRACLE_FIXED_CAUTION}`}
-          </span>
-        </p>
+          </p>
+        </InformationCard>
 
+        <h2 className="mk-hub-heading">الموضوعات</h2>
+        <div className="mk-topic-grid" role="navigation" aria-label="موضوعات الإعجاز العلمي">
+          {MIRACLE_TOPIC_HUB.map((topic) => {
+            const count = topicCounts[topic.topic] || 0;
+            if (!count) return null;
+            const Icon = TOPIC_ICONS[topic.topic];
+            const countLabel = count === 1 ? "موضوع واحد" : `${count} مواضيع`;
+            return (
+              <SectionEntryCard
+                key={topic.topic}
+                href={`/miracles/quran?topic=${encodeURIComponent(topic.topic)}`}
+                title={topic.title}
+                description={topic.description}
+                meta={countLabel}
+                Icon={Icon}
+                variant="compact"
+                className="mk-topic-card"
+              />
+            );
+          })}
+        </div>
+
+        <h2 className="mk-hub-heading">المسارات</h2>
         <div className="mk-hub-lanes hub-card-grid" role="navigation" aria-label="مسارات الإعجاز العلمي">
           <SectionEntryCard
             href="/miracles/quran"
@@ -153,6 +205,7 @@ function MiraclesHub() {
   );
 }
 
+
 function MiraclesListPage({
   lane,
   initialItems,
@@ -160,8 +213,15 @@ function MiraclesListPage({
   lane: HubLane;
   initialItems?: MiracleSeedItem[];
 }) {
+  const [location] = useLocation();
   const { isAdmin } = useAuth();
   const sourceType = sourceLabel(lane);
+  const topicParam = useMemo((): MiracleTopicFilter => {
+    const q = location.includes("?") ? location.split("?")[1] : "";
+    const raw = new URLSearchParams(q).get("topic") || "";
+    if (!raw || raw === "الكل") return "الكل";
+    return raw as MiracleTopicFilter;
+  }, [location]);
   const title =
     lane === "quran"
       ? "الإعجاز العلمي في القرآن الكريم"
@@ -219,6 +279,11 @@ function MiraclesListPage({
   }, [sourceType, reloadKey]);
 
   /* هيكل فقط عند أول دخول بلا أي عناصر (بذرة أو شبكة) */
+    const visibleItems = useMemo(() => {
+    if (topicParam === "الكل") return items;
+    return filterByTopic(items, topicParam);
+  }, [items, topicParam]);
+
   const status =
     loading && items.length === 0
       ? "loading"
@@ -256,7 +321,7 @@ function MiraclesListPage({
           contentBusy={loading && items.length > 0}
         >
           <div className="mk-grid">
-            {items.map((item) => {
+            {visibleItems.map((item) => {
               const badge = miracleMethodBadge(item);
               const summary = miracleCardSummary(item);
               const shortSrc = miracleShortSource(item.scholarly_source);
