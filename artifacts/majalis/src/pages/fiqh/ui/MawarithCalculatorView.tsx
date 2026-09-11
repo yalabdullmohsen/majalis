@@ -20,6 +20,7 @@ import {
 } from "@/lib/inheritance/types";
 import "@/styles/pages/mawarith.css";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { ActionButton } from "@/components/design-system";
 
 type WizardStep = "heirs" | "estate" | "result";
 
@@ -439,7 +440,7 @@ export default function MawarithCalculatorPage() {
           )}
 
           <div className="mwc-result-actions no-print">
-            <button type="button" className="ui-card-btn" onClick={() => window.print()}>طباعة / PDF</button>
+            <ActionButton type="button" variant="secondary" onClick={() => window.print()}>طباعة / PDF</ActionButton>
             <button type="button" className="lp-wizard__back" onClick={() => setStep("estate")}>← تعديل البيانات</button>
             <button type="button" className="lp-wizard__back" onClick={resetAll}>مسألة جديدة</button>
           </div>

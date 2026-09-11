@@ -48,7 +48,7 @@ export default function SurahStoriesPage() {
     >
     <div className="page-shell surah-stories-page ds-page">
 
-      <aside className="ui-card quran-method-note" role="note" aria-label="تنبيه منهجي" style={{ maxWidth: 720, margin: "0 auto 1.25rem", padding: "0.9rem 1.1rem", lineHeight: 1.7 }}>
+      <aside className="soft-card soft-card--on-light quran-method-note" role="note" aria-label="تنبيه منهجي" style={{ maxWidth: 720, margin: "0 auto 1.25rem", padding: "0.9rem 1.1rem", lineHeight: 1.7 }}>
         <strong>منهج القسم:</strong> نقتصر على ما ثبت في القرآن والسنة الصحيحة في السياقات والفضائل.
         لا نسرد إسرائيليات ولا نعيّن أسماء/أعدادًا لم يرد بها نص، وأسباب النزول تُذكر عند ثبوتها لا بالتشهي.
         العبرة بعموم اللفظ لا بخصوص السبب.
@@ -63,7 +63,7 @@ export default function SurahStoriesPage() {
 
       <div className="surah-stories-grid">
         {stories.map((s) => (
-          <Link key={s.number} href={`/quran/surah-stories/${s.number}`} className="surah-story-card ui-card">
+          <Link key={s.number} href={`/quran/surah-stories/${s.number}`} className="surah-story-card soft-card soft-card--on-light">
             <span className="surah-story-num">{s.number}</span>
             <strong>{s.name}</strong>
             <p>{truncateAtWord(s.namingReason, 80)}</p>
@@ -133,7 +133,7 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
         )}
       </nav>
 
-      <article className="ui-card surah-story-article">
+      <article className="soft-card soft-card--on-light surah-story-article">
         <SectionErrorBoundary name="سبب التسمية">
           <section><h2>سبب التسمية</h2><p>{story.namingReason}</p></section>
         </SectionErrorBoundary>
