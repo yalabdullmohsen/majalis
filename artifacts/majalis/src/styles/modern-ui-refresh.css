@@ -55,7 +55,6 @@ html[data-theme="dark"] {
 .topic-card:not([data-scripture]),
 .lesson-card:not(.lesson-card--legacy-ok),
 .settings-card,
-.srch-result-card,
 .section-hub__card:not([data-scripture]),
 .hadith-hub-card,
 .fiqh-category-card,
@@ -294,13 +293,16 @@ input[type="search"].mj-search:focus,
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--mj-brand, #146b52) 35%, transparent) !important;
 }
 
-.srch-result-card,
-.search-result-item,
-.global-search-result {
+.search-result-item:not(.soft-card),
+.global-search-result:not(.soft-card) {
   border: none !important;
   border-radius: var(--mur-radius-sm) !important;
   box-shadow: none !important;
   background: color-mix(in srgb, var(--mj-brand, #146b52) 4%, var(--mj-surface, #fffcf8)) !important;
+  margin-block: 0.35rem;
+}
+
+.srch-result-card.soft-card {
   margin-block: 0.35rem;
 }
 

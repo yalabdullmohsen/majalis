@@ -133,7 +133,7 @@ const ResultCard = memo(function ResultCard({
   const partial = item.partial || item.verification_status === "partial" || item.verification_status === "draft";
   const verifiedLabel = statusMetaLabel(item.verification_status, Boolean(item.source_name));
   return (
-    <article className="srch-result-card">
+    <article className="srch-result-card soft-card soft-card--on-light">
       <Link href={href} className="srch-result-card__link">
         <div className="srch-result-card__top">
           <span className="srch-result-card__kind">{kindLabel}</span>

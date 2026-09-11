@@ -181,3 +181,9 @@
 1. `HadithCard`: استبدال `ui-card` بـ `soft-card soft-card--on-light` مع الإبقاء على `hadith-card`.
 2. بوابة `hadith-card-soft-gate` ضمن `test:soft-cards-system`.
 3. لا تعديل على متن الحديث.
+
+## دفعة P24 — 2026-09-11
+
+1. بطاقات نتائج البحث (`SearchView`): `srch-result-card` + `soft-card soft-card--on-light`.
+2. إزالة سطح CSS المخصص لصالح نظام soft-card؛ الإبقاء على تخطيط الدومين.
+3. بوابة `search-result-card-soft-gate` ضمن `test:soft-cards-system`.

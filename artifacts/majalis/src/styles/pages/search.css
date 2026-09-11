@@ -772,24 +772,11 @@ html[data-theme="dark"] .srch-quick-card:hover {
   flex-direction: column;
   gap: 0.55rem;
 }
-.srch-result-card {
+/* السطح من soft-card / soft-card--on-light؛ هنا التخطيط فقط */
+.srch-result-card.soft-card {
   display: flex;
   flex-direction: column;
   padding: 0;
-  border-radius: var(--radius-card, 24px);
-  border: 1px solid color-mix(in srgb, var(--mn-border-default, #d8e3de) 75%, transparent);
-  background: color-mix(in srgb, var(--color-surface, var(--mj-white, var(--mj-white, #ffffff))) 96%, var(--mn-brand-soft, #e8f5f0));
-  box-shadow:
-    0 1px 2px color-mix(in srgb, var(--mj-ink, var(--mj-info)) 6%, transparent),
-    0 8px 20px color-mix(in srgb, var(--mj-ink, var(--mj-info)) 4%, transparent);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
-}
-.srch-result-card:hover,
-.srch-result-card:focus-within {
-  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #1f6b56)) 35%, transparent);
-  box-shadow:
-    0 2px 4px color-mix(in srgb, var(--mj-ink, var(--mj-info)) 8%, transparent),
-    0 12px 28px color-mix(in srgb, var(--mj-ink, var(--mj-info)) 7%, transparent);
 }
 .srch-result-card__link {
   display: flex;
@@ -869,9 +856,7 @@ html.dark .srch-home-idle__hint {
 html[data-theme="dark"] .srch-home-field,
 html.dark .srch-home-field,
 html[data-theme="dark"] .srch-scope-card,
-html.dark .srch-scope-card,
-html[data-theme="dark"] .srch-result-card,
-html.dark .srch-result-card {
+html.dark .srch-scope-card {
   background: color-mix(in srgb, var(--color-surface, #1c1917) 92%, var(--mj-brand-deep, #0f3d32));
   color: var(--text-primary, #ecf2ef);
   border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 28%, var(--mj-ink-2, #2a3531));
