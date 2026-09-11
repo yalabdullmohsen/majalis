@@ -64,12 +64,12 @@ export default function FiqhCouncilIssuesPage() {
         ))}
       </div>
 
-      {loading ? (
+      {loading && issues.length === 0 ? (
         <SkeletonCardGrid />
       ) : issues.length === 0 ? (
         <Empty text="لا توجد مسائل فقهية منشورة في هذا التصنيف." />
       ) : (
-        <div className="fiqh-issues-grid">
+        <div className="fiqh-issues-grid" aria-busy={loading}>
           {issues.map((issue) => (
             <Link key={issue.id} href={fiqhIssueHref(issue.slug)} className="fiqh-issue-card soft-card soft-card--on-light">
               <span className="fiqh-issue-category">{issue.category}</span>

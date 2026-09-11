@@ -148,12 +148,12 @@ export default function FiqhCouncilAdvancedSearchPage() {
         <Link href="/fiqh-council/compare" className="fiqh-council-section-link">مقارنة القرارات</Link>
       </div>
 
-      {loading ? (
+      {loading && results.length === 0 ? (
         <SkeletonCardGrid />
       ) : results.length === 0 ? (
         <Empty text="لا توجد نتائج مطابقة." />
       ) : (
-        <div className="page-card-grid">
+        <div className="page-card-grid" aria-busy={loading}>
           {results.map((item) => (
             <PlatformContentCard
               key={item.slug}

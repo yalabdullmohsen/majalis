@@ -134,7 +134,7 @@ export default function FiqhCouncilComparePage() {
         )}
       </section>
 
-      {loading ? <SkeletonCardGrid /> : selectedSlugs.length < 2 ? (
+      {loading && items.length === 0 ? <SkeletonCardGrid /> : selectedSlugs.length < 2 ? (
         <Empty text="اختر قرارين على الأقل للمقارنة." />
       ) : items.length < 2 ? (
         <Empty text="تعذّر تحميل العناصر المحددة." />
