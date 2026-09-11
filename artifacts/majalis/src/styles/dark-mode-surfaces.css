@@ -169,11 +169,21 @@ html.dark .sw-tab--active {
   background: var(--surface-1, #1B2421) !important;
   color: var(--accent, #5CC095) !important;
 }
-/* .th-tab على soft-hero parchment — حبر داكن لا accent فاتح على سطح فاتح */
-html[data-theme="dark"] .th-tab--active,
-html.dark .th-tab--active {
+/*
+ * .th-tab على soft-hero parchment — حبر داكن لا accent فاتح على سطح فاتح.
+ * يجب أن تتفوق على m2030/interactions:
+ * html[data-theme=dark] [role=tab][aria-selected=true] { color: --text-brand-deep #A7E4C8 }
+ */
+html[data-theme="dark"] .th-tab.th-tab--active[role="tab"][aria-selected="true"],
+html.dark .th-tab.th-tab--active[role="tab"][aria-selected="true"] {
   background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, #fffef9) !important;
-  color: var(--mss-on-hero, #123f2e) !important;
+  color: #123f2e !important;
+}
+html[data-theme="dark"] .th-tab.th-tab--active[role="tab"][aria-selected="true"] .th-tab__label,
+html[data-theme="dark"] .th-tab.th-tab--active[role="tab"][aria-selected="true"] .th-tab__icon,
+html.dark .th-tab.th-tab--active[role="tab"][aria-selected="true"] .th-tab__label,
+html.dark .th-tab.th-tab--active[role="tab"][aria-selected="true"] .th-tab__icon {
+  color: inherit !important;
 }
 html[data-theme="dark"] .surface-brand,
 html.dark .surface-brand {
