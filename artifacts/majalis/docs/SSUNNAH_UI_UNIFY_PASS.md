@@ -146,21 +146,32 @@
 
 ## دفعة P18 — 2026-09-11
 
-1. ترحيل حدود/أسطح خضراء شائعة في صفحات التعلم/الأدب/الطهارة/أركان الإسلام/المنهج/التقويم إلى \`--mj-hairline\` / \`--mj-brand-soft\` / color-mix.
+1. ترحيل حدود/أسطح خضراء شائعة في صفحات التعلم/الأدب/الطهارة/أركان الإسلام/المنهج/التقويم إلى `--mj-hairline` / `--mj-brand-soft` / color-mix.
 2. بدون مواقيت الصلاة وبدون نصوص soft كحبر ليلي.
-
-## دفعة P22 — 2026-09-11
-
-1. تنظيم إعدادات الحساب حول \`SettingsList\`: تسجيل/خروج، تنزيلات، خصوصية، دعم.
-2. إزالة \`ui-card-btn\` / أزرار متفرقة لصالح صفوف موحّدة (+ \`testId\` على SettingsList).
-3. بوابة \`settings-rows-unify-gate\` ضمن \`test:loading-ux-gates\`.
-3. منشور على الإنتاج عبر #1903 (\`703e590c\`).
+3. منشور على الإنتاج عبر #1903 (`703e590c`).
 
 ## دفعة P19 — 2026-09-11
 
-1. تقليص \`eslint-ds-legacy-allowlist.json\` من 27 → **0** (شامل Mutashabihat + ProphetsFamilyTree).
-2. استبدال fontSize/ألوان حرفية و\`text-white\`/\`bg-white\` برموز \`--ss-type-*\` / \`--mj-*\`.
+1. تقليص `eslint-ds-legacy-allowlist.json` من 27 → **0** (شامل Mutashabihat + ProphetsFamilyTree).
+2. استبدال fontSize/ألوان حرفية و`text-white`/`bg-white` برموز `--ss-type-*` / `--mj-*`.
 3. تغطية DS **100٪** (385/385) · دين allowlist = 0.
 4. #1902 (وميض الجلسة) و#1903 (P18) منشوران على الإنتاج.
 5. بوابة lockdown تسمح بـ allowlist فارغ عند اكتمال الهجرة.
 
+## دفعة P20 — 2026-09-11
+
+1. ترحيل بطاقات `src/components/home/**` من `ui-card`/`mj-card` إلى `AppCard` أو `soft-card soft-card--on-light`.
+2. بوابة `home-cards-appcard-gate.test.ts` ضمن `test:soft-cards-system`.
+3. لا مساس بنصوص شرعية؛ الإبقاء على أصناف الدومين للتخطيط.
+
+## دفعة P21 — 2026-09-11
+
+1. صفحة البحث: إبقاء النتائج السابقة أثناء إعادة الجلب (`loading && results.length === 0` فقط للهياكل).
+2. إشارة `aria-busy` + «جارٍ التحديث…» دون مسح القائمة.
+3. بوابة `search-keep-previous-gate` ضمن `test:loading-ux-gates`.
+
+## دفعة P22 — 2026-09-11
+
+1. تنظيم إعدادات الحساب حول `SettingsList`: تسجيل/خروج، تنزيلات، خصوصية، دعم.
+2. إزالة `ui-card-btn` / أزرار متفرقة لصالح صفوف موحّدة (+ `testId` على SettingsList).
+3. بوابة `settings-rows-unify-gate` ضمن `test:loading-ux-gates`.

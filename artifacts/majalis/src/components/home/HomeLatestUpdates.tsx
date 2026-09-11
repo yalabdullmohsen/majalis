@@ -74,7 +74,7 @@ export function HomeLatestUpdates() {
           <Link
             key={item.id}
             href={item.source_url || `/updates/auto/${item.slug}`}
-            className="home-more-card ui-card"
+            className="home-more-card soft-card soft-card--on-light"
           >
             <span className="page-tag">{TYPE_LABELS[item.update_type] || "تحديث"}</span>
             <strong>{displayText(item.title)}</strong>
