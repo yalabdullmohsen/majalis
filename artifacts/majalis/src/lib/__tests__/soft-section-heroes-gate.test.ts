@@ -1,5 +1,5 @@
 /**
- * بوابة: هيروات أقسام المحتوى (صيام/صحابة/علامات/آداب/خريطة/معجم) = soft-card لا شريط أخضر ممتد.
+ * بوابة: هيروات أقسام المحتوى = soft-card لا شريط أخضر ممتد.
  * node --import tsx src/lib/__tests__/soft-section-heroes-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -11,7 +11,12 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const shell = read("src/styles/components/modern-section-shell.css");
-for (const hero of [".sw-hero", ".sb-hero", ".as-hero", ".atl-hero", ".sm-hero", ".gl-hero", ".ldb-hero", ".myl2-hero", ".lpd2-hero", ".pmp-hero", ".mw-hero", ".srp-hero", ".sg-hero", ".hj-hero", ".duas-hero", ".ai-hero", ".arkan-hero"]) {
+for (const hero of [
+  ".sw-hero", ".sb-hero", ".as-hero", ".atl-hero", ".sm-hero", ".gl-hero",
+  ".ldb-hero", ".myl2-hero", ".lpd2-hero", ".pmp-hero", ".mw-hero", ".srp-hero",
+  ".seerah-hero", ".th-hero", ".sh-hero",
+  ".sg-hero", ".hj-hero", ".duas-hero", ".ai-hero", ".arkan-hero",
+]) {
   assert.match(shell, new RegExp(hero.replace(".", "\\.")), `modern-section-shell يشمل ${hero}`);
 }
 assert.match(shell, /--mss-section-hero-bg/, "سطح soft-hero مفعّل");
@@ -32,6 +37,13 @@ assert.doesNotMatch(
   /:where\([^)]*\.sw-hero[^)]*\)\s*\{[^}]*color:\s*var\(--on-dark/,
   "الوضع الداكن لا يفرض نصًا أبيض على .sw-hero soft",
 );
+for (const h of [".seerah-hero", ".th-hero", ".sh-hero"]) {
+  assert.doesNotMatch(
+    dark,
+    new RegExp(`:where\\([^)]*\\${h.slice(1)}[^)]*\\)\\s*\\{[^}]*color:\\s*var\\(--on-dark`),
+    `الوضع الداكن لا يفرض نصًا أبيض على ${h} soft`,
+  );
+}
 
 for (const [file, banned] of [
   ["src/styles/pages/sawm.css", /\.sw-hero\s*\{[^}]*linear-gradient/s],
@@ -39,6 +51,9 @@ for (const [file, banned] of [
   ["src/styles/pages/alamat-saah.css", /\.as-hero\s*\{[^}]*linear-gradient/s],
   ["src/styles/pages/adab-talab-ilm.css", /\.atl-hero\s*\{[^}]*linear-gradient/s],
   ["src/styles/pages/sitemap.css", /\.sm-hero\s*\{[^}]*linear-gradient/s],
+  ["src/styles/pages/seerah.css", /\.seerah-hero\s*\{[^}]*(?:linear-gradient|brand-deep)/s],
+  ["src/styles/pages/tahara.css", /\.th-hero\s*\{[^}]*(?:linear-gradient|brand-deep)/s],
+  ["src/styles/pages/shimael.css", /\.sh-hero\s*\{[^}]*linear-gradient/s],
   ["src/styles/pages/salah-guide.css", /\.sg-hero\s*\{[^}]*linear-gradient/s],
   ["src/styles/pages/hajj.css", /\.hj-hero\s*\{[^}]*linear-gradient/s],
   ["src/styles/pages/duas.css", /\.duas-hero\s*\{[^}]*linear-gradient/s],

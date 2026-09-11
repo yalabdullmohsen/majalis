@@ -70,7 +70,10 @@
 .hj-hero,
 .duas-hero,
 .ai-hero,
-.arkan-hero {
+.arkan-hero,
+.seerah-hero,
+.th-hero,
+.sh-hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -127,8 +130,18 @@
 .ai-hero::before,
 .ai-hero::after,
 .arkan-hero::before,
-.arkan-hero::after {
+.arkan-hero::after,
+.seerah-hero::before,
+.seerah-hero::after,
+.th-hero::before,
+.th-hero::after,
+.sh-hero::before,
+.sh-hero::after {
   content: none !important;
+  display: none !important;
+}
+
+.sh-hero .sh-hero__glow {
   display: none !important;
 }
 
@@ -498,11 +511,15 @@ html[data-theme="dark"] .card {
 }
 
 
+
 .myl2-hero .myl2-hero__badge,
 .lpd2-hero .lpd2-hero__badge,
 .pmp-hero .pmp-hero__badge,
 .mw-hero .mw-hero__badge,
 .srp-hero .srp-hero__badge,
+.seerah-hero .seerah-hero__badge,
+.th-hero .th-hero__badge,
+.sh-hero .sh-hero__badge,
 .sg-hero .sg-hero__badge,
 .hj-hero .hj-hero__badge,
 .duas-hero .duas-hero__bismillah,
@@ -518,6 +535,11 @@ html[data-theme="dark"] .card {
 .pmp-hero .pmp-hero__title,
 .mw-hero .mw-hero__title,
 .srp-hero .srp-hero__title,
+.seerah-hero .seerah-hero__title,
+.th-hero .th-hero__title,
+.th-hero .th-hero__emoji,
+.sh-hero .sh-hero__title,
+.sh-hero .sh-hero__sallam,
 .sg-hero .sg-hero__title,
 .hj-hero .hj-hero__title,
 .hj-hero .hj-hero__kaaba,
@@ -532,6 +554,14 @@ html[data-theme="dark"] .card {
 .pmp-hero .pmp-hero__sub,
 .mw-hero .mw-hero__sub,
 .srp-hero .srp-hero__sub,
+.seerah-hero .seerah-hero__sub,
+.th-hero .th-hero__sub,
+.th-hero .th-ayah__text,
+.th-hero .th-ayah__ref,
+.sh-hero .sh-hero__sub,
+.sh-hero .sh-stat,
+.sh-hero .sh-stat__val,
+.sh-hero .sh-stat__lbl,
 .sg-hero .sg-hero__sub,
 .hj-hero .hj-hero__sub,
 .hj-hero .hj-talbiya__label,
@@ -545,6 +575,7 @@ html[data-theme="dark"] .card {
   opacity: 1 !important;
 }
 
+.th-hero .th-ayah,
 .hj-hero .hj-talbiya {
   background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, transparent) !important;
   border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
@@ -560,7 +591,7 @@ html[data-theme="dark"] .card {
 .arkan-hero .arkan-hero__icon-num {
   color: inherit !important;
 }
-/* asp-hero يبقى أخضر غامق — نص فاتح مستقل عن soft-hero ink */
+
 .asp-hero {
   --mss-on-hero: #ffffff;
   --mss-on-hero-muted: #f3efe6;
