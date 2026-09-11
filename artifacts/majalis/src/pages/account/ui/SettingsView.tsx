@@ -3,7 +3,7 @@ import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { UtilityScreen } from "@/components/design-system/screens";
-import { SettingsList } from "@/components/design-system/SettingsList";
+import { SettingsList, SettingsToggleRow } from "@/components/design-system/SettingsList";
 import { useAuth } from "@/components/AuthProvider";
 import { useFontPreference } from "@/components/FontPreferenceProvider";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
@@ -69,18 +69,13 @@ function ToggleRow({
   onChange: (checked: boolean) => void;
 }) {
   return (
-    <label className="settings-toggle-row">
-      <span>
-        <strong className="settings-toggle-label">{label}</strong>
-        {description ? <em className="settings-toggle-desc">{description}</em> : null}
-      </span>
-      <input
-        type="checkbox"
-        name={label.replace(/\s+/g, "-")}
-        checked={checked}
-        onChange={(e) => onChange(e.target.checked)}
-      />
-    </label>
+    <SettingsToggleRow
+      id={`settings-toggle-${label.replace(/\s+/g, "-")}`}
+      title={label}
+      description={description}
+      checked={checked}
+      onChange={onChange}
+    />
   );
 }
 
@@ -343,19 +338,16 @@ export default function SettingsPage() {
           <p className="settings-note">{t("lang_overlay_note")}</p>
           <p className="settings-subhead">المظهر والواجهة</p>
           <p className="settings-note">السمة والمظهر</p>
-          <div className="settings-option-grid" role="group" aria-label="اختيار الوضع">
-            {THEME_OPTIONS.map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                className={`settings-choice${themePreference === option.id ? " is-active" : ""}`}
-                onClick={() => setThemePreference(option.id as ThemePreference)}
-              >
-                <strong>{option.label}</strong>
-                <span>{option.description}</span>
-              </button>
-            ))}
-          </div>
+          <SettingsList
+            rows={THEME_OPTIONS.map((option) => ({
+              id: `theme-${option.id}`,
+              title: option.label,
+              description: option.description,
+              value: themePreference === option.id ? "✓" : undefined,
+              onClick: () => setThemePreference(option.id as ThemePreference),
+              testId: `settings-theme-${option.id}`,
+            }))}
+          />
           <p className="settings-note">
             الوضع الحالي: {resolvedTheme === "dark" ? "داكن" : "فاتح"}
           </p>
