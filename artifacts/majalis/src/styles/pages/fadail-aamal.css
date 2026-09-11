@@ -5,8 +5,9 @@
 .fa-page { min-height: 100svh; background: var(--mj-bg); padding-bottom: 4rem; }
 
 .fa-hero {
-  background: linear-gradient(155deg, var(--mj-brand-deep) 0%, var(--mj-brand) 70%, var(--mj-brand) 100%);
-  color: var(--mj-white, #ffffff);
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
+  color: inherit;
   padding: 2.5rem 1.25rem 1.75rem;
   text-align: center;
   position: relative; overflow: hidden;
@@ -14,19 +15,19 @@
 .fa-hero::before {
   content: "";
   position: absolute; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 5L36 20L51 15L46 30L60 30L46 36L51 45L36 40L30 55L24 40L9 45L14 36L0 30L14 24L9 15L24 20Z' fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='1'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 5L36 20L51 15L46 30L60 30L46 36L51 45L36 40L30 55L24 40L9 45L14 36L0 30L14 24L9 15L24 20Z' fill='none' stroke='inherit' stroke-width='1'/%3E%3C/svg%3E");
   background-size: 60px 60px;
   pointer-events: none;
 }
 .fa-hero__badge {
   display: inline-block;
-  background: rgba(255,255,255,.18);
+  background: inherit;
   border-radius: var(--ds-radius-full);
   padding: .25rem .9rem;
   font-size: .75rem;
   margin-bottom: .6rem;
 }
-.fa-hero__title { font-size: clamp(1.65rem, 4vw, 2.4rem); font-weight: 800; margin: 0 0 .5rem; color: var(--mj-white, #ffffff); }
+.fa-hero__title { font-size: clamp(1.65rem, 4vw, 2.4rem); font-weight: 800; margin: 0 0 .5rem; color: inherit; }
 .fa-hero__sub { font-size: .9rem; opacity: .88; max-width: 480px; margin: 0 auto 1.5rem; line-height: 1.65; }
 
 .fa-stats {

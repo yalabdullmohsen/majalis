@@ -148,7 +148,7 @@ export default function DiscoverIslamPage() {
               title={p.label}
               description={p.desc}
               badge="مسار"
-              className="dii-hub-card"
+              className="dii-hub-card soft-card soft-card--on-light"
             />
           ))}
         </div>
@@ -174,7 +174,7 @@ export default function DiscoverIslamPage() {
                 title={a.title_ar}
                 description={a.summary_ar || undefined}
                 badge="مقال"
-                className="dii-hub-card dii-list-card"
+                className="dii-hub-card dii-list-card soft-card soft-card--on-light"
               />
             ))}
           </div>
@@ -193,7 +193,7 @@ export default function DiscoverIslamPage() {
                 description={c.description_ar || undefined}
                 icon={<CategoryIcon name={c.icon} />}
                 badge="موضوع"
-                className="dii-hub-card"
+                className="dii-hub-card soft-card soft-card--on-light"
               />
             ))}
           </div>
@@ -214,7 +214,7 @@ export default function DiscoverIslamPage() {
                 title={q.title}
                 description={q.short_answer}
                 badge="سؤال"
-                className="dii-hub-card dii-list-card"
+                className="dii-hub-card dii-list-card soft-card soft-card--on-light"
               />
             ))}
           </div>
@@ -235,7 +235,7 @@ export default function DiscoverIslamPage() {
                 title={s.title}
                 description={s.short_answer}
                 badge="شبهة"
-                className="dii-hub-card dii-list-card"
+                className="dii-hub-card dii-list-card soft-card soft-card--on-light"
               />
             ))}
           </div>

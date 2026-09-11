@@ -432,7 +432,7 @@ function SetupPhase({
         </p>
       </div>
 
-      <section className="qzg-section-card soft-card soft-card--on-light soft-card soft-card--on-light">
+      <section className="qzg-section-card soft-card soft-card--on-light">
         <h2 className="qzg-section-h2"><Users size={18} className="inline ms-1" />نمط اللعب</h2>
         <div className="qzg-mode-toggle">
           <button
@@ -453,7 +453,7 @@ function SetupPhase({
       </section>
 
       {mode === "team" ? (
-        <section className="qzg-section-card soft-card soft-card--on-light soft-card soft-card--on-light">
+        <section className="qzg-section-card soft-card soft-card--on-light">
           <h2 className="qzg-section-h2"><Trophy size={18} className="inline ms-1" />عدد الفرق وأسماؤها</h2>
           <div className="qzg-team-count-row">
             {([2, 3, 4] as const).map((n) => (
@@ -484,7 +484,7 @@ function SetupPhase({
           </div>
         </section>
       ) : (
-        <section className="qzg-section-card soft-card soft-card--on-light soft-card soft-card--on-light">
+        <section className="qzg-section-card soft-card soft-card--on-light">
           <h2 className="qzg-section-h2"><User size={18} className="inline ms-1" />اسمك (اختياري)</h2>
           <input
             value={soloName}
@@ -496,7 +496,7 @@ function SetupPhase({
         </section>
       )}
 
-      <section className="qzg-section-card soft-card soft-card--on-light soft-card soft-card--on-light">
+      <section className="qzg-section-card soft-card soft-card--on-light">
         <div className="qzg-cats-head">
           <h2 className="qzg-section-h2 qzg-section-h2--flush"><Library size={16} className="inline ms-1" />اختر الفئات</h2>
           <span className="qzg-cats-count">{selected.length}/6 ({minCategories} كحد أدنى)</span>
@@ -753,7 +753,7 @@ function QuestionPhase({
         </>
       )}
 
-      <div className="qzg-section-card soft-card soft-card--on-light soft-card soft-card--on-light">
+      <div className="qzg-section-card soft-card soft-card--on-light">
         <p className="qzg-lifelines-label"><Zap size={14} className="inline ms-1" />وسائل المساعدة — {activeTeamObj.name}</p>
 
         {eliminateBanner && (

@@ -6,17 +6,18 @@
 }
 
 .sr-hero {
-  background: linear-gradient(135deg, var(--emerald-500, var(--mj-brand-deep)) 0%, var(--emerald-600, var(--mj-brand)) 55%, #1a5c4a 100%);
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   border-radius: var(--ds-radius-2xl, 1.25rem);
   padding: 2rem 1.25rem 1.5rem;
-  color: var(--mj-white, #ffffff);
+  color: inherit;
   margin-block-end: 1.5rem;
 }
 .sr-hero__title {
   margin: 0 0 0.5rem;
   font-size: clamp(1.6rem, 4vw, 2.2rem);
   font-weight: 900;
-  color: var(--mj-white, #ffffff);
+  color: inherit;
 }
 .sr-hero__sub {
   margin: 0 0 1.1rem;

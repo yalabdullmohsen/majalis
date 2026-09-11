@@ -6,8 +6,9 @@
 
 /* hero */
 .is-hero {
-  background: linear-gradient(135deg, var(--mj-ink) 0%, var(--mj-info) 55%, var(--mj-brand) 100%);
-  padding: 3.5rem 1.25rem 2.75rem; text-align: center; color: var(--mj-white, #ffffff);
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
+  padding: 3.5rem 1.25rem 2.75rem; text-align: center; color: inherit;
 }
 .is-hero__inner { max-width: 700px; margin: 0 auto; }
 .is-hero__badge {

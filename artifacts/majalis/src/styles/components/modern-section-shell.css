@@ -76,7 +76,22 @@
 .sh-hero,
 .ah-hero,
 .jnz-hero,
-.hs-hero {
+.hs-hero,
+.zk-hero,
+.tw-hero,
+.sy-hero,
+.mdb-hero,
+.fa-hero,
+.hk-hero,
+.dq-hero,
+.rq-hero,
+.is-hero,
+.sr-hero,
+.mk-hero,
+.uq-hero,
+.tf-hero,
+.fg-hero,
+.an-hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -145,7 +160,37 @@
 .jnz-hero::before,
 .jnz-hero::after,
 .hs-hero::before,
-.hs-hero::after {
+.hs-hero::after,
+.zk-hero::before,
+.zk-hero::after,
+.tw-hero::before,
+.tw-hero::after,
+.sy-hero::before,
+.sy-hero::after,
+.mdb-hero::before,
+.mdb-hero::after,
+.fa-hero::before,
+.fa-hero::after,
+.hk-hero::before,
+.hk-hero::after,
+.dq-hero::before,
+.dq-hero::after,
+.rq-hero::before,
+.rq-hero::after,
+.is-hero::before,
+.is-hero::after,
+.sr-hero::before,
+.sr-hero::after,
+.mk-hero::before,
+.mk-hero::after,
+.uq-hero::before,
+.uq-hero::after,
+.tf-hero::before,
+.tf-hero::after,
+.fg-hero::before,
+.fg-hero::after,
+.an-hero::before,
+.an-hero::after {
   content: none !important;
   display: none !important;
 }
@@ -555,6 +600,21 @@ html[data-theme="dark"] .card {
 .ah-hero .ah-hero__title,
 .jnz-hero .jnz-hero__title,
 .hs-hero .hs-hero__title,
+.zk-hero .zk-hero__title,
+.tw-hero .tw-hero__title,
+.sy-hero .sy-hero__title,
+.mdb-hero .mdb-hero__title,
+.fa-hero .fa-hero__title,
+.hk-hero .hk-hero__title,
+.dq-hero .dq-hero__title,
+.rq-hero .rq-hero__title,
+.is-hero .is-hero__title,
+.sr-hero .sr-hero__title,
+.mk-hero .mk-hero__title,
+.uq-hero .uq-hero__title,
+.tf-hero .tf-hero__title,
+.fg-hero .fg-hero__title,
+.an-hero .an-hero__title,
 .sh-hero .sh-hero__sallam,
 .sg-hero .sg-hero__title,
 .hj-hero .hj-hero__title,
@@ -649,3 +709,63 @@ html[data-theme="dark"] .card {
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, var(--mj-hairline, #e3e8e6));
 }
 
+
+
+/* soft ink — شارات/وصف دفعة الهيروات المتبقية */
+.zk-hero .zk-hero__badge,
+.tw-hero .tw-hero__badge,
+.sy-hero .sy-hero__badge,
+.mdb-hero .mdb-hero__badge,
+.fa-hero .fa-hero__badge,
+.hk-hero .hk-hero__badge,
+.dq-hero .dq-hero__badge,
+.rq-hero .rq-hero__badge,
+.is-hero .is-hero__badge,
+.sr-hero .sr-hero__badge,
+.mk-hero .mk-hero__badge,
+.uq-hero .uq-hero__badge,
+.tf-hero .tf-hero__badge,
+.fg-hero .fg-hero__badge,
+.an-hero .an-hero__badge {
+  color: var(--mss-on-hero-accent, #123f2e) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent) !important;
+}
+.zk-hero .zk-hero__sub,
+.tw-hero .tw-hero__sub,
+.sy-hero .sy-hero__sub,
+.mdb-hero .mdb-hero__sub,
+.fa-hero .fa-hero__sub,
+.hk-hero .hk-hero__sub,
+.dq-hero .dq-hero__sub,
+.rq-hero .rq-hero__sub,
+.is-hero .is-hero__sub,
+.sr-hero .sr-hero__sub,
+.mk-hero .mk-hero__sub,
+.uq-hero .uq-hero__sub,
+.tf-hero .tf-hero__sub,
+.fg-hero .fg-hero__sub,
+.an-hero .an-hero__sub {
+  color: var(--mss-on-hero-muted, #3d4f47) !important;
+  opacity: 1 !important;
+}
+
+
+/* soft ink — إحصائيات الهيروات */
+.zk-hero .zk-hero__stat, .zk-hero .zk-hero__stat strong, .zk-hero .zk-hero__stat span,
+.tw-hero .tw-hero__stat, .tw-hero .tw-hero__stat strong, .tw-hero .tw-hero__stat span,
+.sy-hero .sy-hero__stat, .sy-hero .sy-hero__stat strong, .sy-hero .sy-hero__stat span,
+.mdb-hero .mdb-hero__stat, .mdb-hero .mdb-hero__stat strong, .mdb-hero .mdb-hero__stat span,
+.fa-hero .fa-hero__stat, .fa-hero .fa-hero__stat strong, .fa-hero .fa-hero__stat span,
+.hk-hero .hk-hero__stat, .hk-hero .hk-hero__stat strong, .hk-hero .hk-hero__stat span,
+.dq-hero .dq-hero__stat, .dq-hero .dq-hero__stat strong, .dq-hero .dq-hero__stat span,
+.rq-hero .rq-hero__stat, .rq-hero .rq-hero__stat strong, .rq-hero .rq-hero__stat span,
+.is-hero .is-hero__stat, .is-hero .is-hero__stat strong, .is-hero .is-hero__stat span,
+.sr-hero .sr-hero__stat, .sr-hero .sr-hero__stat strong, .sr-hero .sr-hero__stat span,
+.mk-hero .mk-hero__stat, .mk-hero .mk-hero__stat strong, .mk-hero .mk-hero__stat span,
+.uq-hero .uq-hero__stat, .uq-hero .uq-hero__stat strong, .uq-hero .uq-hero__stat span,
+.tf-hero .tf-hero__stat, .tf-hero .tf-hero__stat strong, .tf-hero .tf-hero__stat span,
+.fg-hero .fg-hero__stat, .fg-hero .fg-hero__stat strong, .fg-hero .fg-hero__stat span,
+.an-hero .an-hero__stat, .an-hero .an-hero__stat strong, .an-hero .an-hero__stat span {
+  color: var(--mss-on-hero, #16241e) !important;
+}

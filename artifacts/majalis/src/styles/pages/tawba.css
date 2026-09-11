@@ -9,32 +9,33 @@
 
 /* hero */
 .tw-hero {
-  background: linear-gradient(135deg, #0a1628 0%, #132240 50%, var(--mj-brand-deep) 100%);
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   padding: 2.5rem 1.5rem 2rem;
   text-align: center;
-  color: var(--mj-white, #ffffff);
+  color: inherit;
   position: relative; overflow: hidden;
 }
 .tw-hero::before {
   content: "";
   position: absolute; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1'/%3E%3Ccircle cx='25' cy='25' r='8' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='inherit' stroke-width='1'/%3E%3Ccircle cx='25' cy='25' r='8' fill='none' stroke='inherit' stroke-width='1'/%3E%3C/svg%3E");
   background-size: 50px 50px;
   pointer-events: none;
 }
 .tw-hero__badge {
   display: inline-block;
-  background: rgba(255,255,255,.12);
-  border: 1px solid rgba(255,255,255,.25);
+  background: inherit;
+  border: 1px solid inherit;
   border-radius: 2rem;
   padding: .3rem .9rem;
   font-size: .75rem;
   font-weight: 600;
   margin-bottom: .8rem;
-  color: var(--mj-white, #ffffff);
+  color: inherit;
 }
-.tw-hero__title { font-size: 1.65rem; font-weight: 800; margin: 0 0 .5rem; color: var(--mj-white, #ffffff); }
-.tw-hero__sub   { font-size: .9rem; opacity: .85; margin: 0 0 1.4rem; line-height: 1.6; color: var(--mj-white, #ffffff); }
+.tw-hero__title { font-size: 1.65rem; font-weight: 800; margin: 0 0 .5rem; color: inherit; }
+.tw-hero__sub   { font-size: .9rem; opacity: .85; margin: 0 0 1.4rem; line-height: 1.6; color: inherit; }
 
 .tw-ayah {
   background: rgba(255,255,255,.1);

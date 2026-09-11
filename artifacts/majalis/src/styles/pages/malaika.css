@@ -6,21 +6,22 @@
 
 /* Hero */
 .mk-hero {
-  background: linear-gradient(135deg, #0e1a2e 0%, var(--mj-info) 55%, #112235 100%);
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   padding: 3.5rem 1.25rem 2.5rem;
-  text-align: center; color: var(--mj-white, #ffffff);
+  text-align: center; color: inherit;
 }
 .mk-hero__inner { max-width: 700px; margin: 0 auto; }
 .mk-hero__badge {
   display: inline-block; margin-bottom: .85rem;
   padding: .3rem .9rem; border-radius: var(--ds-radius-full);
-  background: rgba(255,255,255,.12); font-size: .8rem; letter-spacing: normal;
+  background: inherit; font-size: .8rem; letter-spacing: normal;
 }
 .mk-hero__title { font-size: 2.1rem; font-weight: 800; margin: 0 0 .6rem; }
 .mk-hero__sub   { font-size: var(--ds-text-base); opacity: .82; margin: 0 0 1.2rem; line-height: 1.7; }
 .mk-hero__ayah  {
   font-size: .95rem; opacity: .75;
-  border-top: 1px solid rgba(255,255,255,.15); padding-top: .9rem;
+  border-top: 1px solid inherit; padding-top: .9rem;
 }
 .mk-hero__ayah span { font-size: .82rem; opacity: .65; margin-inline-end: .4rem; }
 

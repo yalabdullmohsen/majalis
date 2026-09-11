@@ -34,7 +34,7 @@ export function ReadingSectionCard({
   const titleId = `rsc-title-${uid.replace(/:/g, "")}`;
   return (
     <Tag
-      className={`rsc rsc--${variant}${className ? ` ${className}` : ""}`}
+      className={`rsc soft-card soft-card--on-light rsc--${variant}${className ? ` ${className}` : ""}`}
       aria-labelledby={titleId}
     >
       <h2 id={titleId} className="rsc__title">
