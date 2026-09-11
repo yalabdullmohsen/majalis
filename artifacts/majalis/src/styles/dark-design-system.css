@@ -66,17 +66,13 @@
 :is(html[data-theme="dark"], html.dark) .rsc,
 :is(html[data-theme="dark"], html.dark) [data-card="1"],
 :is(html[data-theme="dark"], html.dark) [class*="soft-card"] {
-  background:
-    linear-gradient(
-      165deg,
-      color-mix(in srgb, var(--icon-primary) 6%, var(--surface-elevated)) 0%,
-      var(--surface-elevated) 42%,
-      var(--surface-elevated) 100%
-    ) !important;
-  border-color: var(--border-elevated) !important;
-  color: var(--text-primary);
+  background-color: #24302b !important;
+  background-image: none !important;
+  background: #24302b !important;
+  border-color: #3a4a44 !important;
+  color: #f4f7f5 !important;
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--icon-primary) 8%, transparent),
+    0 0 0 1px rgba(143, 212, 176, 0.10),
     0 8px 20px -14px rgba(0, 0, 0, 0.55);
 }
 
@@ -92,7 +88,7 @@
 :is(html[data-theme="dark"], html.dark) .hub-card__title,
 :is(html[data-theme="dark"], html.dark) .section-entry-card .hub-card__title,
 :is(html[data-theme="dark"], html.dark) .rsc__title {
-  color: var(--text-primary) !important;
+  color: #f4f7f5 !important;
 }
 
 :is(html[data-theme="dark"], html.dark) .soft-card :is(p, .hub-card__desc, .soft-card__desc, .supporting-text),
@@ -413,4 +409,52 @@
 :is(html[data-theme="dark"], html.dark) .tarikh-card__title {
   text-wrap: pretty;
   overflow-wrap: anywhere;
+}
+
+
+/* contrast-gate hotfixes — ألوان صلبة قابلة للقياس (لا تدرج / لا transparent) */
+:is(html[data-theme="dark"], html.dark) .hub-card,
+:is(html[data-theme="dark"], html.dark) .section-entry-card,
+:is(html[data-theme="dark"], html.dark) .soft-card,
+:is(html[data-theme="dark"], html.dark) .lesson-unified-card,
+:is(html[data-theme="dark"], html.dark) .notif-card,
+:is(html[data-theme="dark"], html.dark) .mur-settings-row,
+:is(html[data-theme="dark"], html.dark) .mur-settings-row {
+  background: #24302b !important;
+  background-image: none !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .hub-card__title,
+:is(html[data-theme="dark"], html.dark) .lesson-unified-card__title,
+:is(html[data-theme="dark"], html.dark) .mur-settings-row__title,
+:is(html[data-theme="dark"], html.dark) .mur-settings-row__title,
+:is(html[data-theme="dark"], html.dark) .notif-card__title,
+:is(html[data-theme="dark"], html.dark) .settings-list__title,
+:is(html[data-theme="dark"], html.dark) .settings-row__title {
+  color: #f4f7f5 !important;
+  -webkit-text-fill-color: #f4f7f5 !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .lesson-unified-card__btn--secondary {
+  color: #e8f2ec !important;
+  -webkit-text-fill-color: #e8f2ec !important;
+  background: #2b3933 !important;
+  background-image: none !important;
+  border: 1px solid #4a5e56 !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .th-tab:not(.th-tab--active),
+:is(html[data-theme="dark"], html.dark) .th-tab:not(.th-tab--active) .th-tab__label,
+:is(html[data-theme="dark"], html.dark) .th-tab:not(.th-tab--active) .th-tab__icon {
+  color: #c2cfca !important;
+  -webkit-text-fill-color: #c2cfca !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .th-tab.th-tab--active,
+:is(html[data-theme="dark"], html.dark) .th-tab.th-tab--active .th-tab__label {
+  color: #0e2f24 !important;
+  -webkit-text-fill-color: #0e2f24 !important;
+  background: #d7ebe1 !important;
 }
