@@ -248,7 +248,7 @@ function NewPlanForm({ userId, onCreated, onClose }: { userId: string; onCreated
         disabled={saving || !selectedBook || !Number(totalPages) || readingDays.length === 0}
         className="rp-submit-btn"
       >
-        {saving ? "جارٍ الحفظ..." : "إنشاء الخطة"}
+        {saving ? "يُحفظ…" : "إنشاء الخطة"}
       </button>
     </Card>
   );

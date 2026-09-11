@@ -19,6 +19,8 @@
 .ads-card,
 .srch-result-card,
 .section-hub__card:not([data-scripture]),
+.hadith-hub-card,
+.fiqh-category-card,
 .adhkar-focus-card,
 .adhkar-card:not([data-scripture]) {
   border-radius: var(--radius-card, 24px);

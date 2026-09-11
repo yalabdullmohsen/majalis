@@ -193,10 +193,10 @@
 .hadith-grade--sahih       { background: rgba(52,120,95,.12); color: var(--sys-success, #34785F); }
 .hadith-grade--hasan-sahih { background: rgba(34,106,86,.12); color: var(--emerald-400, var(--mj-brand)); }
 .hadith-grade--hasan       { background: var(--emerald-50, #EEF1F0); color: var(--emerald-500, var(--mj-brand-deep)); }
-.hadith-grade--daif        { background: #FFF7ED; color: #9A3412; }
-.hadith-grade--mawdu       { background: #FEF2F2; color: #7F1D1D; }
+.hadith-grade--daif        { background: color-mix(in srgb, var(--mj-warning, #c2410c) 10%, var(--mj-surface, #fff)); color: var(--mj-warning, #9A3412); }
+.hadith-grade--mawdu       { background: color-mix(in srgb, var(--mj-danger, #b91c1c) 10%, var(--mj-surface, #fff)); color: var(--mj-danger, #7F1D1D); }
 .hadith-grade--unknown     { background: var(--emerald-50, #EEF1F0); color: var(--msk-text-2, var(--mj-ink-2)); }
-.hadith-grade--pending     { background: #F8FAFC; color: #475569; border: 1px solid #CBD5E1; }
+.hadith-grade--pending     { background: var(--mj-surface-2, #F8FAFC); color: var(--mj-ink-2, #475569); border: 1px solid var(--mj-hairline, #CBD5E1); }
 
 .hadith-grade-filters {
   margin: 0.5rem 0 0.75rem;
@@ -755,7 +755,7 @@
   display: block !important;
   font-size: 1.25rem !important;
   margin-bottom: 0 !important;
-  color: #FFFFFF !important;
+  color: var(--mj-on-brand, #ffffff) !important;
 }
 .hadith-section-subtitle {
   color: rgba(255,255,255,0.80) !important;
@@ -1231,9 +1231,9 @@ html[data-theme="dark"] .hadith-stat strong {
   line-height: 1.45;
   color: var(--mj-ink-2, #666);
 }
-.hadith-hub-card--sahih { border-inline-start: 3px solid #2f7a55; }
-.hadith-hub-card--daif { border-inline-start: 3px solid #b67a32; }
-.hadith-hub-card--mawdu { border-inline-start: 3px solid #b44a4a; }
+.hadith-hub-card--sahih { border-inline-start: 3px solid var(--mj-brand, #2f7a55); }
+.hadith-hub-card--daif { border-inline-start: 3px solid var(--mj-warning, #b67a32); }
+.hadith-hub-card--mawdu { border-inline-start: 3px solid var(--mj-danger, #b44a4a); }
 .hadith-hub-card--books,
 .hadith-hub-card--science,
 .hadith-hub-card--arbaeen { border-inline-start: 3px solid var(--mj-brand, #0d5c4d); }

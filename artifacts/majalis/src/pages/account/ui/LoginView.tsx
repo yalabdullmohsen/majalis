@@ -381,10 +381,10 @@ export default function LoginPage() {
             <button type="submit" className="login-submit" disabled={loading || !authEnabled}>
               {loading
                 ? tab === "register"
-                  ? "جاري الإنشاء…"
+                  ? "يُنشأ…"
                   : tab === "forgot"
-                    ? "جارٍ الإرسال…"
-                    : "جارٍ التحقق…"
+                    ? "يُرسل…"
+                    : "يُتحقق…"
                 : tab === "register"
                   ? "إنشاء حساب"
                   : tab === "forgot"
