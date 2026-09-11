@@ -34,9 +34,8 @@
   position: relative;
   isolation: isolate;
   width: auto;
-  max-width: 42rem;
-  margin: 0.65rem max(0.75rem, var(--page-gutter, 1rem)) 0;
-  margin-inline: auto;
+  max-width: min(42rem, calc(100% - 2 * max(0.75rem, var(--page-gutter, 1rem))));
+  margin: 0.65rem auto 0.85rem;
   border-radius: var(--mss-radius-hero, 22px);
   overflow: hidden;
   /* لون صلب أولاً — بوابة التباين ترفض background-image بلا background-color */
@@ -48,7 +47,7 @@
     var(--topic-hero-to) 100%
   );
   color: var(--topic-on-hero);
-  padding: max(1.75rem, 28px) max(1.5rem, 24px) 1.35rem;
+  padding: max(1.75rem, 28px) max(1rem, var(--page-gutter, 1rem)) 1.35rem;
   border: 1px solid color-mix(in srgb, #fff 12%, transparent);
   box-shadow: var(--mss-shadow-hero, 0 8px 24px -14px rgba(11, 32, 24, 0.4));
 }
@@ -68,7 +67,7 @@
   margin: 0;
   font-size: 13px;
   font-weight: 600;
-  color: var(--topic-on-hero-accent);
+  color: var(--mj-brand-deep, #123f2e);
   display: inline-flex;
   align-self: flex-start;
   max-width: 100%;
@@ -85,7 +84,7 @@
   font-size: clamp(1.35rem, 5.5vw, 1.875rem);
   font-weight: 800;
   line-height: 1.35;
-  color: var(--topic-on-hero);
+  color: var(--mj-ink, var(--topic-on-hero, #16241e));
   overflow-wrap: anywhere;
 }
 
@@ -94,7 +93,7 @@
   font-size: 0.9375rem; /* 15px */
   font-weight: 400;
   line-height: 1.65;
-  color: var(--topic-on-hero-muted);
+  color: var(--mj-ink-2, var(--topic-on-hero-muted, #4a554f));
   display: block;
   overflow: visible;
 }

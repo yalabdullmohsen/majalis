@@ -60,6 +60,17 @@ export function AppBackButton({
     if (isPrayerTimesPath(location)) return null;
     if (isAuthStandalonePath(location)) return null;
     if (path === "/support" || path === "/contact") return null;
+    /* أقسام المحتوى ذات TopicPage/فتات: لا عائم يغطي النص */
+    if (
+      path.startsWith("/miracles") ||
+      path.startsWith("/fiqh") ||
+      path.startsWith("/hadith") ||
+      path.startsWith("/seerah") ||
+      path.startsWith("/aqidah") ||
+      path.startsWith("/tafsir")
+    ) {
+      return null;
+    }
     const prev = getPreviousInternalRoute(location);
     let fallback = normalizeNavPath(fallbackHref || sectionAwareFallback(location));
     if (fallback === path) fallback = normalizeNavPath(sectionRootEscape(path));

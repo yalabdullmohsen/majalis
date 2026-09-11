@@ -166,13 +166,17 @@ function MiraclesListPage({
     lane === "quran"
       ? "الإعجاز العلمي في القرآن الكريم"
       : "الإعجاز العلمي في السنة النبوية";
+  const seedForLane = useMemo(
+    () => sortMiraclesMethodically(filterMiraclesSeed({ sourceType })),
+    [sourceType],
+  );
   const [items, setItems] = useState<MiracleSeedItem[]>(() => {
     if (initialItems?.length) {
       return sortMiraclesMethodically(initialItems.filter((i) => i.source_type === sourceType));
     }
-    return [];
+    return seedForLane;
   });
-  const [loading, setLoading] = useState(!initialItems);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
   const [openSources, setOpenSources] = useState<Record<string, boolean>>({});
@@ -189,6 +193,12 @@ function MiraclesListPage({
     });
   }, [lane, title]);
 
+  /* عند تبديل المسار: اعرض البذرة فورًا ثم حدّث في الخلفية */
+  useEffect(() => {
+    setItems(seedForLane);
+    setError(null);
+  }, [seedForLane]);
+
   useEffect(() => {
     setError(null);
     return safeLoadEffect(
@@ -198,17 +208,25 @@ function MiraclesListPage({
         const rows = ((data as MiracleSeedItem[]) ?? []).filter(
           (m) => m.source_type === sourceType && m.verification_status !== "needs_review",
         );
-        setItems(sortMiraclesMethodically(rows));
+        if (rows.length) setItems(sortMiraclesMethodically(rows));
       },
       (msg) => {
+        /* لا تفرّغ القائمة عند فشل إعادة الجلب — أبقِ البذرة/البيانات السابقة */
         setError(msg);
-        setItems([]);
       },
       { label: `miracles-list:${sourceType}:${reloadKey}` },
     );
   }, [sourceType, reloadKey]);
 
-  const status = loading ? "loading" : error ? "error" : items.length === 0 ? "empty" : "success";
+  /* هيكل فقط عند أول دخول بلا أي عناصر (بذرة أو شبكة) */
+  const status =
+    loading && items.length === 0
+      ? "loading"
+      : error && items.length === 0
+        ? "error"
+        : items.length === 0
+          ? "empty"
+          : "success";
 
   return (
     <TopicPage
@@ -234,6 +252,8 @@ function MiraclesListPage({
           error={error}
           onRetry={() => setReloadKey((k) => k + 1)}
           emptyText="لا توجد موضوعات معتمدة في هذا المسار حاليًا."
+          keepContentWhileLoading
+          contentBusy={loading && items.length > 0}
         >
           <div className="mk-grid">
             {items.map((item) => {

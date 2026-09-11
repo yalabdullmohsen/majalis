@@ -781,3 +781,22 @@ html.dark .hlr__card {
   border-color: color-mix(in srgb, var(--border) 85%, transparent) !important;
   color: var(--text) !important;
 }
+
+/* صفحات TopicPage: الرجوع عبر مسار التنقّل/الفُتات — لا زر عائم يغطي النص */
+body:has(.topic-page) .floating-back-btn,
+body:has(.topic-page) .global-back-btn.floating-back-btn,
+body:has(.topic-page) .app-back-btn--floating,
+body:has(.mk-page) .floating-back-btn,
+body:has(.mk-page) .global-back-btn.floating-back-btn {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+/* هامش سفلي آمن فوق الشريط السفلي */
+.topic-page__body,
+.mk-page {
+  padding-bottom: max(
+    var(--content-pb, calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px)),
+    5.5rem
+  );
+}

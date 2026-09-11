@@ -15,10 +15,15 @@
   --mss-hero-to: #245f4d;
   --mss-hero-glow: rgba(210, 180, 93, 0.22);
   --mss-hero-glow-strong: rgba(210, 180, 93, 0.28);
-  /* نص فوق الهيرو الأخضر — صلب بلا شفافية ضعيفة (WCAG AA) */
-  --mss-on-hero: #ffffff;
-  --mss-on-hero-muted: #f3efe6;
-  --mss-on-hero-accent: #fff1c4;
+  /* نص فوق بطاقة الهيرو الفاتحة */
+  --mss-on-hero: var(--mj-ink, #16241e);
+  --mss-on-hero-muted: var(--mj-ink-2, #4a554f);
+  --mss-on-hero-accent: var(--mj-brand-deep, #123f2e);
+  --mss-section-hero-bg: color-mix(
+    in srgb,
+    var(--mj-brand, #1f6b56) 5.5%,
+    var(--color-surface, var(--mj-surface, #fffef9))
+  );
   --mss-radius-hero: 1.35rem;
   --mss-radius-card: 1.15rem;
   --mss-shadow-hero: 0 16px 40px rgba(15, 74, 58, 0.22);
@@ -40,7 +45,7 @@
     );
 }
 
-/* —— خلفية هيرو عصرية قابلة لإعادة الاستخدام —— */
+/* —— هيرو الأقسام = بطاقة سطح (لا شريط أخضر ممتد) —— */
 .mss-hero-surface,
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero),
 .topic-page__hero,
@@ -49,35 +54,32 @@
   isolation: isolate;
   overflow: hidden;
   box-sizing: border-box;
-  background-color: var(--mss-hero-from);
-  background-image: var(--mss-hero-gradient);
-  color: var(--mss-on-hero);
-  border: 1px solid color-mix(in srgb, #1f6b56 28%, transparent);
-  box-shadow: var(--mss-shadow-hero);
+  background-color: var(--mss-section-hero-bg) !important;
+  background-image: none !important;
+  color: var(--mss-on-hero) !important;
+  border: 1px solid var(--color-border, var(--mj-hairline, #e3e8e6)) !important;
+  border-inline-start: 4px solid var(--mj-brand, #1f6b56) !important;
+  border-radius: var(--mss-radius-hero) !important;
+  box-shadow: var(--mss-shadow-card) !important;
+  min-height: 0 !important;
 }
 
 .mss-hero-surface::after,
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero)::after,
 .topic-page__hero::after,
 .section-lobby__head:not(.section-lobby__head--bare)::after {
-  content: "";
-  position: absolute;
-  inset: auto -18% -42% auto;
-  width: 14rem;
-  height: 14rem;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--mss-hero-glow-strong), transparent 65%);
-  pointer-events: none;
-  z-index: 0;
+  content: none !important;
+  display: none !important;
 }
 
 /* —— PageHero الداخلي (غير الرئيسية) —— */
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) {
-  border-radius: 0;
-  border-inline: 0;
-  border-block-start: 0;
-  /* الحافة السفلية تُظهر انحناء الهوية داخل الصفحة */
-  border-block-end: 1px solid color-mix(in srgb, #1f6b56 35%, transparent);
+  width: auto;
+  max-width: min(56rem, calc(100% - 2 * max(1rem, var(--page-gutter, 1rem))));
+  margin-inline: auto;
+  margin-block: 0.65rem 0.85rem;
+  padding-block: 1.05rem !important;
+  padding-inline: max(1rem, var(--page-gutter, 1rem)) !important;
 }
 
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__content {
