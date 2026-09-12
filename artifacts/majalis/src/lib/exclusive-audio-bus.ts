@@ -66,7 +66,10 @@ async function stopKnownEngines(except: AudioBusOwner): Promise<void> {
 }
 
 /** يطلب ملكية التشغيل ويوقف كل المالكين الآخرين. */
-export async function claimAudio(owner: AudioBusOwner): Promise<void> {
+export async function claimAudio(
+  owner: AudioBusOwner,
+  opts?: { skipCoordinatorStop?: boolean },
+): Promise<void> {
   for (const [o, stop] of stoppers) {
     if (o === owner) continue;
     try {
@@ -76,6 +79,17 @@ export async function claimAudio(owner: AudioBusOwner): Promise<void> {
     }
   }
   await stopKnownEngines(owner);
+  if (!opts?.skipCoordinatorStop) {
+    try {
+      const { forceStopAppAudioSync } = await import("@/lib/audio/app-audio-coordinator");
+      // قطع المعاينات المركزية فورًا بلا طابور (تفادي deadlock مع playAppAudio)
+      if (owner !== "adhan") {
+        forceStopAppAudioSync();
+      }
+    } catch {
+      /* ignore */
+    }
+  }
   currentOwner = owner;
 }
 

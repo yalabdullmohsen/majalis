@@ -1062,3 +1062,21 @@ html.pts-immersive .scroll-to-top {
 .pts-screen .pts-hero__countdown-label {
   color: color-mix(in srgb, var(--pts-muted, #e2ebe6) 95%, #fff) !important;
 }
+
+/* مقاطع التنبيه والأذكار — إعدادات */
+.audio-prompts-settings { margin-block: 1rem; padding: 1rem 1.1rem; }
+.audio-prompts-settings__head { display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 0.85rem; }
+.audio-prompts-settings__head h2 { margin: 0; font-size: 1.05rem; }
+.audio-prompts-settings__head p { margin: 0.2rem 0 0; color: var(--mj-muted, #5c6b63); font-size: 0.9rem; }
+.audio-prompts-settings__block + .audio-prompts-settings__block { margin-top: 1.1rem; padding-top: 1rem; border-top: 1px solid color-mix(in srgb, var(--mj-border, #d5ddd8) 80%, transparent); }
+.audio-prompts-settings__block h3 { margin: 0 0 0.35rem; font-size: 0.98rem; }
+.audio-prompts-settings__hint { margin: 0 0 0.75rem; font-size: 0.86rem; color: var(--mj-muted, #5c6b63); }
+.audio-prompts-settings__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.65rem; }
+.audio-prompts-settings__row { display: grid; grid-template-columns: 1fr auto auto; gap: 0.5rem; align-items: center; }
+.audio-prompts-settings__row strong { display: block; }
+.audio-prompts-settings__row p { margin: 0.15rem 0 0; font-size: 0.85rem; color: var(--mj-muted, #5c6b63); }
+.audio-prompts-settings__toggle { display: flex; gap: 0.5rem; align-items: center; margin: 0.35rem 0; font-size: 0.92rem; }
+.audio-prompts-settings__msg { margin: 0.75rem 0 0; color: var(--mj-danger, #8b2e2e); font-size: 0.9rem; }
+@media (max-width: 640px) {
+  .audio-prompts-settings__row { grid-template-columns: 1fr; }
+}
