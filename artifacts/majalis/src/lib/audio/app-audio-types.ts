@@ -12,6 +12,7 @@ export type AppAudioKind =
   | "videoAudio"
   | "miniPlayer"
   | "tafsir"
+  | "audioReader"
   | "systemInterruption"
   | "other";
 
@@ -28,6 +29,7 @@ export const APP_AUDIO_PRIORITY: Record<AppAudioKind, number> = {
   systemInterruption: 100,
   quranRecitation: 80,
   lessonAudio: 80,
+  audioReader: 78,
   miniPlayer: 75,
   videoAudio: 70,
   tafsir: 65,
