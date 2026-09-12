@@ -7,6 +7,7 @@ type Common = {
   size?: "md" | "sm" | "lg";
   className?: string;
   children: ReactNode;
+  loading?: boolean;
 };
 
 type AsButton = Common &
@@ -33,12 +34,13 @@ const VARIANT: Record<NonNullable<Common["variant"]>, string> = {
 
 /** زر إجراء موحّد — feedback خفيف عبر mj-pressable. */
 export function ActionButton(props: ActionButtonProps) {
-  const { variant = "primary", size = "md", className, children } = props;
+  const { variant = "primary", size = "md", className, children, loading = false } = props;
   const classes = cn(
     "ss-action-btn mj-pressable",
     VARIANT[variant],
     size === "sm" && "ss-action-btn--sm",
     size === "lg" && "ss-action-btn--lg",
+    loading && "is-loading",
     className,
   );
 
@@ -58,9 +60,16 @@ export function ActionButton(props: ActionButtonProps) {
     );
   }
 
-  const { type = "button", ...rest } = props as AsButton;
+  const { type = "button", disabled, loading: _busy, ...rest } = props as AsButton;
   return (
-    <button type={type} className={classes} data-action-button="1" {...rest}>
+    <button
+      type={type}
+      className={classes}
+      data-action-button="1"
+      aria-busy={loading || undefined}
+      disabled={Boolean(loading || disabled)}
+      {...rest}
+    >
       {children}
     </button>
   );

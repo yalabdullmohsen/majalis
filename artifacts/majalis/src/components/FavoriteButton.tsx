@@ -109,7 +109,7 @@ export function FavoriteButton({
       type="button"
       onClick={toggle}
       disabled={busy}
-      className={`favorite-btn${bookmarked ? " favorite-btn--active" : ""}${compact ? " favorite-btn--compact" : ""} ${className}`.trim()}
+      className={`favorite-btn mj-pressable${bookmarked ? " favorite-btn--active" : ""}${compact ? " favorite-btn--compact" : ""} ${className}`.trim()}
       aria-pressed={bookmarked}
       aria-label={bookmarked ? "إزالة من المفضلة" : "إضافة للمفضلة"}
       title={mode === "local" ? "يُحفظ على هذا الجهاز" : "يُحفظ في حسابك"}

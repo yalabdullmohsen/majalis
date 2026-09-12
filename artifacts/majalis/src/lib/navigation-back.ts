@@ -1,4 +1,4 @@
-import { navigateBackTarget } from "@/lib/navigation-intent";
+import { navigateTo } from "@/lib/navigation-intent";
 import { abortScope } from "@/lib/route-abort";
 import { RequestManager } from "@/lib/request-manager";
 
@@ -217,6 +217,6 @@ export function goBackOrFallback(currentPath: string, fallbackHref?: string) {
     target = "/";
   }
   if (target !== current) {
-    navigateBackTarget(target);
+    navigateTo(target, { mode: "state" });
   }
 }
