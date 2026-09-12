@@ -53,3 +53,17 @@ export {
   type UniversalSearchResponse,
   type UniversalSectionId,
 } from "@/features/search/universal-home-search";
+
+export {
+  SEARCH_KIND_LABELS_AR, searchKindLabelAr, searchKindFamily, assertArabicKindLabel,
+  type SearchKindFamily,
+} from "@/features/search/search-kind-i18n";
+export {
+  resolveSearchMatchReason, compareSearchResultsByMatch,
+  type SearchMatchReason,
+  type SearchMatchField,
+} from "@/features/search/search-match-reason";
+export {
+  trackSearchUx, getSearchUxSnapshot,
+  type SearchUxPayload,
+} from "@/features/search/search-ux-analytics";

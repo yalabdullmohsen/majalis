@@ -14,6 +14,8 @@ import {
   getTopSearchQueries,
 } from "@/lib/search-history";
 import { highlightOriginalParts } from "@/features/search/tolerant-match";
+import { searchKindLabelAr } from "@/features/search/search-kind-i18n";
+import { resolveSearchMatchReason } from "@/features/search/search-match-reason";
 import { type AppSearchResult } from "@/features/search/app-search";
 import {
   SEARCH_SCOPE_DEFS,
@@ -141,7 +143,8 @@ function ResultCard({
   query: string;
   onSelect: (r: AppSearchResult) => void;
 }) {
-  const meta = KIND_META[result.kind] ?? { label: result.kind, Icon: FileText, color: "#1F5C48" };
+  const meta = KIND_META[result.kind] ?? { label: searchKindLabelAr(result.kind), Icon: FileText, color: "var(--mj-brand, #1e5f4b)" };
+  const reason = resolveSearchMatchReason(result, query);
   return (
     <button
       type="button"
@@ -153,6 +156,7 @@ function ResultCard({
         <p className="gsm-result-title">
           <Highlight text={result.title} query={query} />
         </p>
+        <p className="gsm-result-reason">{reason.label}</p>
         {result.summary && (
           <p className="gsm-result-summary">
             <Highlight text={result.summary.slice(0, 180)} query={query} />
@@ -568,7 +572,7 @@ export function GlobalSearchModal({ onClose }: Props) {
               {Object.keys(groupCounts).length > 1 && (
                 <p className="gsm-section__label" style={{ padding: "0 12px 6px" }}>
                   {Object.entries(groupCounts)
-                    .map(([k, n]) => `${KIND_META[k]?.label ?? k} (${n})`)
+                    .map(([k, n]) => `${KIND_META[k]?.label ?? searchKindLabelAr(k)} (${n})`)
                     .join(" · ")}
                 </p>
               )}
