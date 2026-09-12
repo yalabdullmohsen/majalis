@@ -452,6 +452,7 @@
   border: 1px solid #4a5e56 !important;
 }
 
+/* تبويبات غير النشطة على سطح داكن ليلاً — حبر فاتح (≥4.5:1 على #101614) */
 :is(html[data-theme="dark"], html.dark) .th-tab:not(.th-tab--active),
 :is(html[data-theme="dark"], html.dark) .th-tab:not(.th-tab--active) .th-tab__label,
 :is(html[data-theme="dark"], html.dark) .th-tab:not(.th-tab--active) .th-tab__icon {
