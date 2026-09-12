@@ -7,6 +7,7 @@ import { getMuezzin } from "./adhan-audio";
 import { getOfflineAdhanPack } from "./adhan-offline-assets";
 import type { PrayerSoundProfile } from "./prayer-notification-sounds";
 import type { AdhanPlaybackMode } from "./adhan-playback-modes";
+import { isCatalogIdAllowedInProductionUi } from "./prayer-audio-rights-registry";
 
 export type SettingsSoundGroup = "adhan" | "tone";
 
@@ -26,10 +27,10 @@ export type SettingsSoundOption = {
 };
 
 export const SETTINGS_MUEZZIN_LABELS: Record<string, string> = {
-  makkah: "أذان الحرم المكي",
-  alharam: "أذان الحرم المكي",
-  madinah: "أذان الحرم المدني",
-  qatami: "أذان ناصر القطامي",
+  makkah: "تنبيه أذان قصير متوافق مع iOS",
+  alharam: "تنبيه أذان قصير متوافق مع iOS",
+  madinah: "أذان بنمط مدني (معاينة)",
+  qatami: "تسجيل غير معتمد للإنتاج",
   kuwait: "أذان خليجي قصير",
   takbeerat: "رنة قصيرة",
   soft: "رنة هادئة",
@@ -40,7 +41,7 @@ const OPTIONS: SettingsSoundOption[] = [
   {
     id: "makkah",
     group: "adhan",
-    label: "أذان الحرم المكي",
+    label: "تنبيه أذان قصير متوافق مع iOS",
     muezzinId: "makkah",
     playbackMode: "short",
     soundProfile: "clear",
@@ -51,7 +52,7 @@ const OPTIONS: SettingsSoundOption[] = [
   {
     id: "madinah",
     group: "adhan",
-    label: "أذان الحرم المدني",
+    label: "أذان بنمط مدني (معاينة)",
     muezzinId: "makkah",
     playbackMode: "short",
     soundProfile: "clear",
@@ -62,7 +63,7 @@ const OPTIONS: SettingsSoundOption[] = [
   {
     id: "qatami",
     group: "adhan",
-    label: "أذان ناصر القطامي",
+    label: "تسجيل غير معتمد للإنتاج",
     muezzinId: "qatami",
     playbackMode: "short",
     soundProfile: "clear",
@@ -208,6 +209,8 @@ export function listAvailableSettingsSounds(): SettingsSoundOption[] {
   const seen = new Set<string>();
   const out: SettingsSoundOption[] = [];
   for (const opt of OPTIONS) {
+    if (opt.id === "qatami") continue;
+    if (opt.group === "adhan" && !isCatalogIdAllowedInProductionUi(opt.id)) continue;
     if (!hasUsableAudio(opt)) continue;
     const key = `${opt.group}:${opt.label}`;
     if (seen.has(key)) continue;

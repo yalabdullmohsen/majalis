@@ -635,3 +635,254 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
 .ads-wrap {
   padding-bottom: calc(5.5rem + var(--inset-bottom, 0px));
 }
+
+
+/* —— V3: إعدادات صلاة مختصرة + منتقي صوت —— */
+.ads-page--v3 {
+  /* لون صلب أولًا حتى تقيس بوابة التباين خلفية فعلية (التدرج = background-image). */
+  background-color: var(--msk-canvas, #f3efe7);
+  background-image:
+    radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--msk-gold, #c4a35a) 10%, transparent), transparent 55%),
+    linear-gradient(180deg, color-mix(in srgb, var(--msk-canvas-1, #f7f4ef) 92%, #ebe4d8), var(--msk-canvas, #f3efe7));
+  color: var(--msk-text);
+}
+html[data-theme="dark"] .ads-page--v3 {
+  background-color: var(--msk-canvas, #121a17);
+}
+.ads-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.35rem;
+  min-height: 2.5rem;
+}
+.ads-toolbar .ads-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  /* نص العنوان من توكن الحبر الكامل — مزج الذهبي يضعف التباين تحت بوابة 4.5:1 */
+  color: var(--msk-text);
+}
+.ads-sound-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 0.7rem;
+  border: 1px solid var(--msk-border, #e2ddd3);
+  background: var(--msk-canvas-1, #fff);
+}
+.ads-sound-summary__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1 1 12rem;
+}
+.ads-sound-summary__text strong {
+  font-size: 0.92rem;
+  color: var(--msk-text);
+}
+.ads-sound-summary__text span {
+  font-size: 0.78rem;
+  color: var(--msk-text-muted, #5a6b63);
+}
+.ads-sound-summary__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.ads-prayer-row {
+  border-block-end: 1px solid color-mix(in srgb, var(--msk-border) 70%, transparent);
+}
+.ads-prayer-row:last-child {
+  border-block-end: 0;
+}
+.ads-prayer-row__head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.7rem 0.15rem;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.ads-prayer-row__summary {
+  margin-inline-start: auto;
+  font-size: 0.75rem;
+  color: var(--msk-text-muted, #5a6b63);
+}
+.ads-prayer-row__body {
+  padding: 0 0.15rem 0.75rem;
+}
+.ads-prayer-row.is-open .ads-prayer-row__head {
+  color: var(--msk-gold, var(--mj-brand-deep));
+}
+.ads-page--v3 {
+  padding-bottom: calc(6.25rem + var(--inset-bottom, 0px) + 3.25rem);
+}
+
+.prayer-audio-picker {
+  position: fixed;
+  inset: 0;
+  z-index: 1400;
+  display: grid;
+  place-items: end stretch;
+}
+.prayer-audio-picker__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: color-mix(in srgb, #1a1a1a 45%, transparent);
+}
+.prayer-audio-picker__sheet {
+  position: relative;
+  max-height: min(88vh, 40rem);
+  overflow: auto;
+  padding: 1rem 1rem calc(1.25rem + var(--inset-bottom, 0px));
+  border-radius: 1rem 1rem 0 0;
+  background: var(--msk-canvas-1, #fff);
+  color: var(--msk-text);
+  box-shadow: 0 -8px 28px color-mix(in srgb, #000 16%, transparent);
+}
+.prayer-audio-picker__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.prayer-audio-picker__head h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+.prayer-audio-picker__close {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--msk-border);
+  background: transparent;
+  color: inherit;
+  display: grid;
+  place-items: center;
+}
+.prayer-audio-picker__search {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--msk-border);
+  border-radius: 0.65rem;
+  margin-bottom: 0.65rem;
+}
+.prayer-audio-picker__search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+}
+.prayer-audio-picker__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.65rem;
+}
+.prayer-audio-picker__chip {
+  min-height: 2rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--msk-border);
+  background: transparent;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: inherit;
+}
+.prayer-audio-picker__chip.is-active {
+  border-color: color-mix(in srgb, var(--brand, #0f766e) 45%, var(--msk-border));
+  background: color-mix(in srgb, var(--brand, #0f766e) 14%, transparent);
+  color: var(--brand, #0f766e);
+}
+.prayer-audio-picker__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.prayer-audio-picker__row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.55rem;
+  border-radius: 0.65rem;
+  border: 1px solid var(--msk-border);
+  background: var(--msk-canvas, #f7f4ef);
+}
+.prayer-audio-picker__row.is-selected {
+  border-color: color-mix(in srgb, var(--brand, #0f766e) 50%, var(--msk-border));
+  background: color-mix(in srgb, var(--brand, #0f766e) 8%, var(--msk-canvas-1, #fff));
+}
+.prayer-audio-picker__select {
+  border: 0;
+  background: transparent;
+  text-align: start;
+  font: inherit;
+  color: inherit;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  cursor: pointer;
+}
+.prayer-audio-picker__name {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.prayer-audio-picker__meta {
+  font-size: 0.75rem;
+  color: var(--msk-text-muted, #5a6b63);
+}
+.prayer-audio-picker__preview {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--msk-border);
+  background: var(--msk-canvas-1, #fff);
+  color: inherit;
+  display: grid;
+  place-items: center;
+}
+.prayer-audio-picker__preview.is-playing {
+  border-color: var(--brand, #0f766e);
+  color: var(--brand, #0f766e);
+}
+.prayer-audio-picker__check {
+  color: var(--brand, #0f766e);
+  display: grid;
+  place-items: center;
+}
+.prayer-audio-picker__empty,
+.prayer-audio-picker__note {
+  font-size: 0.8rem;
+  color: var(--msk-text-muted, #5a6b63);
+}
+.prayer-audio-picker__note {
+  margin-top: 0.85rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .prayer-audio-picker__sheet {
+    transition: none;
+  }
+}

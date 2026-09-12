@@ -1,0 +1,77 @@
+{
+  "updatedAt": "2026-09-13",
+  "productName": "سُنّة",
+  "sources": [
+    {
+      "id": "signature-sounds-call-to-prayer",
+      "platform": "cc0-pack",
+      "title": "Call to Prayer Recordings (Signature Sounds)",
+      "sourceUrl": "https://signaturesounds.org/store/p/call-to-prayer-recordings-free-download-cc0-wav-sample-pack",
+      "licenseClaim": "CC0",
+      "licensePageEvidence": "docs/audio-rights/evidence/signature-sounds-call-to-prayer-2026-09-13.html",
+      "status": "license_page_verified_pack_not_individually_imported",
+      "notes": "حزمة ~300MB. لا استيراد جماعي قبل فتح كل ملف WAV وفحص الجودة والازدواج. تسمية وصفية فقط (ميداني المغرب/ألبانيا/كوسوفو).",
+      "approvedForProduction": false
+    },
+    {
+      "id": "wikimedia-adhan-ogg",
+      "platform": "wikimedia",
+      "title": "File:Adhan.ogg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Adhan.ogg",
+      "licenseClaim": "CC0-1.0",
+      "licensePageEvidence": "docs/audio-rights/evidence/wikimedia-adhan-ogg-2026-09-13.html",
+      "originalPath": "docs/audio-rights/evidence/originals/Adhan.ogg",
+      "sha256": "faeb03e4338554fb8b54dba98ed4949648615b58e991bbd560a89f4837dde413",
+      "status": "license_verified_pending_audio_qa",
+      "approvedForProduction": false,
+      "notificationCompatible": false,
+      "notes": "مدة تقريبية 42ث — أطول من حد إشعار iOS 30ث دون قصّ موثّق."
+    },
+    {
+      "id": "wikimedia-beautiful-adhan",
+      "platform": "wikimedia",
+      "title": "File:Beautiful_adhan.ogg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg",
+      "licenseClaim": "CC0-1.0",
+      "licensePageEvidence": "docs/audio-rights/evidence/wikimedia-beautiful-adhan-2026-09-13.html",
+      "originalPath": "docs/audio-rights/evidence/originals/Beautiful_adhan.ogg",
+      "sha256": "35fe06b08fe80505c550c33fed8a783fa9901ddc81ac884958b4be048f5b2a79",
+      "status": "license_verified_pending_audio_qa",
+      "approvedForProduction": false,
+      "notificationCompatible": false,
+      "notes": "مدة ~154ث — مرشّح أذان داخل التطبيق بعد فحص الجودة، ليس إشعارًا."
+    },
+    {
+      "id": "wikimedia-azan-ogg",
+      "platform": "wikimedia",
+      "title": "File:Azan.ogg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Azan.ogg",
+      "licenseClaim": "CC0-or-check-page",
+      "licensePageEvidence": "docs/audio-rights/evidence/wikimedia-azan-ogg-2026-09-13.html",
+      "status": "discovered_not_downloaded",
+      "approvedForProduction": false,
+      "notes": "صفحة محفوظة؛ لم يُحمّل الأصل بعد اكتمال QA للملفات الأقصر أولًا."
+    },
+    {
+      "id": "pixabay-adhan-search",
+      "platform": "pixabay",
+      "title": "Pixabay adhan search",
+      "sourceUrl": "https://pixabay.com/sound-effects/search/adhan/",
+      "status": "blocked_http_403_no_individual_page_evidence",
+      "approvedForProduction": false,
+      "notes": "تعذّر جلب صفحة البحث (403). لا اعتماد لأي ملف Pixabay دون صفحة أصل فردية + لقطة ترخيص."
+    }
+  ],
+  "rejected": [
+    {
+      "id": "qatami-bundle",
+      "reason": "اسم مؤذن مشهور بلا إثبات حقوق تضمين.",
+      "status": "rejected"
+    },
+    {
+      "id": "madinah-cdn-preview",
+      "reason": "مصدر CDN خارجي دون دليل ترخيص فردي محفوظ.",
+      "status": "rights_uncertain"
+    }
+  ]
+}

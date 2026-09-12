@@ -195,6 +195,38 @@ export default function SourcesLicensesPage() {
         </p>
       </LegalSection>
 
+      <LegalSection title="أصوات الصلاة والتنبيهات">
+        <p>
+          أصوات الإشعار القصيرة داخل حزمة سُنّة موثّقة داخليًا. التسجيلات الخارجية لا تُعرض في الإنتاج
+          إلا بعد التحقق الفردي من صفحة الأصل والترخيص والجودة. السجل التشغيلي:
+          {" "}
+          <code dir="ltr">docs/audio-rights/approved-sources-registry.json</code>.
+        </p>
+        <SourceList
+          rows={[
+            {
+              name: "تنبيهات سُنّة القصيرة (الحزمة)",
+              desc: "نغمات إشعار قصيرة داخل التطبيق — بلا نسبة لمؤذن مشهور.",
+              status: "ممنوح",
+            },
+            {
+              name: "Wikimedia Commons · Adhan.ogg / Beautiful_adhan.ogg",
+              desc: "CC0 مع دليل صفحة محفوظ — قيد فحص الجودة؛ غير معتمد للإشعار بعد.",
+              status: "جزئي",
+            },
+            {
+              name: "Signature Sounds · Call to Prayer (CC0 pack)",
+              desc: "صفحة الحزمة موثّقة؛ الاستيراد الفردي للملفات لم يُعتمد للإنتاج بعد.",
+              status: "جزئي",
+            },
+          ]}
+        />
+        <p>
+          مسار الإسناد داخل الإعدادات: حول سُنّة ← المصادر والتراخيص. لا تُعاد نسبة تسجيل لمؤذن
+          أو مسجد مشهور دون إثبات حقوق صريح.
+        </p>
+      </LegalSection>
+
       <LegalSection title="التلاوة والأذان">
         <SourceList rows={AUDIO_SOURCES} />
         <p>لا تُعاد استضافة الملفات على خوادمنا — بث حي من المصدر.</p>
