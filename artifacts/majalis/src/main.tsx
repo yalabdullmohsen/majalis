@@ -34,7 +34,7 @@ import "./app/styles/theme.css";
 import "./styles/ssunnah-theme-api.css";
 import "./styles/ssunnah-screen-patterns.css";
 import "./styles/soft-cards.css";
-import "./styles/visual-enrichment.css";
+// visual-enrichment مؤجَّل — ليس حرجًا لأول طلاء (ميزانية CSS الحرج ≤60KiB gzip)
 // page-hero / filters / hub-card تُحمَّل مع مكوّناتها (خارج CSS الحرج)
 // طبقات الأساس m2030 — foundation/navigation مؤجّلة (ليست حرجة لأول شاشة)
 import "./styles/brand-v4.css";
@@ -58,8 +58,7 @@ import "./styles/visual-layer-contrast-fix.css";
 import "./styles/visual-identity-unify.css";
 /* تلميع الأقسام: بطاقات/فلاتر/قائمة/عائم — بعد طبقة التوحيد */
 import "./styles/sections-calm-polish.css";
-/* نمط مكارم الأخلاق — للأقسام الموضوعية المناسبة فقط */
-import "./styles/section-makarim-pattern.css";
+/* نمط مكارم الأخلاق — مؤجَّل (زينة أقسام، ليس أول طلاء) */
 /* تباين بطاقات الأقسام/المعجم/العقيدة — نهاري وليلي */
 import "./styles/section-cards-theme.css";
 /* صقل منتج سُنّة — توكنات/بطاقات/درج/بحث/ليلي */
@@ -109,6 +108,8 @@ function loadNonCriticalCss() {
   void import("./styles/brand-v4-contrast-fixes.css");
   void import("./styles/a11y-release-gate.css");
   void import("./styles/index-deferred-pages.css");
+  void import("./styles/visual-enrichment.css");
+  void import("./styles/section-makarim-pattern.css");
   void import("./styles/design-system.css").then(() => {
     void import("./styles/brand-v4-components.css");
     // بعد design-system حتمًا حتى لا يفوز blur(20px) على final-release
