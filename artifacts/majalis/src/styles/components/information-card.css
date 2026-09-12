@@ -5,19 +5,22 @@
   gap: 0.45rem;
   margin: 0 0 1rem;
   padding: 0.85rem 0.95rem;
-  border-radius: var(--radius-card, 16px);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #0f5c45) 18%, var(--mj-line, #d9d2c6));
-  background: color-mix(in srgb, var(--mj-brand-soft, #e2efe8) 72%, var(--mj-surface, #fff));
-  color: var(--mj-ink, #16241e);
+  border-radius: var(--surface-feature-radius, var(--radius-card, 24px));
+  border: 1px solid var(--surface-knowledge-border, color-mix(in srgb, var(--mj-brand, #0f5c45) 18%, var(--mj-line, #d9d2c6)));
+  border-inline-start: 3px solid var(--surface-knowledge-accent, var(--mj-brand, #0f5c45));
+  background: var(--surface-knowledge, color-mix(in srgb, var(--mj-brand-soft, #e2efe8) 72%, var(--mj-surface, #fff)));
+  color: var(--surface-feature-ink, var(--mj-ink, #16241e));
 }
 
 .info-card--caution {
-  border-color: color-mix(in srgb, #a16207 28%, var(--mj-line, #d9d2c6));
-  background: color-mix(in srgb, #fef3c7 55%, var(--mj-surface, #fff));
+  border-color: color-mix(in srgb, #a16207 28%, var(--surface-knowledge-border, var(--mj-line, #d9d2c6)));
+  border-inline-start-color: #a16207;
+  background: color-mix(in srgb, #fef3c7 35%, var(--surface-knowledge, var(--mj-surface, #fff)));
 }
 
 .info-card--neutral {
-  background: var(--mj-surface, #fff);
+  background: var(--surface-feature, var(--mj-surface, #f4faf7));
+  border-inline-start-color: var(--surface-feature-accent, var(--mj-brand, #0f5c45));
 }
 
 .info-card__head {

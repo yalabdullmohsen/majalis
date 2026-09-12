@@ -22,6 +22,16 @@
   --surface-2: var(--mj-surface-2);
   --surface-3: var(--mj-surface-3, var(--mj-surface-2));
 
+  /* Green Surface System — بطاقات المحتوى (مرجع السيرة) */
+  --surface-feature: color-mix(in srgb, var(--mj-brand, #146b52) 7%, #f4faf7);
+  --surface-knowledge: color-mix(in srgb, var(--mj-brand, #146b52) 5.5%, #f6fbf8);
+  --surface-islamic: color-mix(in srgb, var(--mj-brand, #146b52) 8.5%, #f2f8f5);
+  --surface-highlighted: color-mix(in srgb, var(--mj-brand, #146b52) 11%, #eef6f2);
+  --surfaceFeature: var(--surface-feature);
+  --surfaceKnowledge: var(--surface-knowledge);
+  --surfaceIslamic: var(--surface-islamic);
+  --surfaceHighlighted: var(--surface-highlighted);
+
   /* حدود */
   --border: var(--mj-hairline);
   --border-strong: var(--mj-border-strong, color-mix(in srgb, var(--mj-ink) 18%, var(--mj-hairline)));
@@ -207,6 +217,16 @@ html.dark,
   --ss-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.45);
   --ss-shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.28);
   --gold: var(--ss-soft-gold);
+
+  /* Dark Green Surface System — مرتفع عن الخلفية */
+  --surface-feature: color-mix(in srgb, #5fbf98 14%, #1a2622);
+  --surface-knowledge: color-mix(in srgb, #5fbf98 11%, #182420);
+  --surface-islamic: color-mix(in srgb, #5fbf98 16%, #1c2925);
+  --surface-highlighted: color-mix(in srgb, #5fbf98 20%, #1e2e29);
+  --surfaceFeature: var(--surface-feature);
+  --surfaceKnowledge: var(--surface-knowledge);
+  --surfaceIslamic: var(--surface-islamic);
+  --surfaceHighlighted: var(--surface-highlighted);
 }
 
 /* فوق الأسطح الخضراء الغامقة — أبيض دائمًا */
