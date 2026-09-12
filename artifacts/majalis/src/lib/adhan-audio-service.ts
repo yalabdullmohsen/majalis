@@ -134,7 +134,7 @@ function syncAdhanMediaSessionPlaying(): void {
     navigator.mediaSession.metadata = new MediaMetadata({
       title: "الأذان",
       artist: muezzin?.name ?? "سُنّة",
-      album: "Majlis — Adhan",
+      album: "سُنّة — أذان",
     });
     navigator.mediaSession.playbackState = "playing";
 

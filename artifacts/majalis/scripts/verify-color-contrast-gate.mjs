@@ -198,9 +198,7 @@ const ASSERTIONS = [
   { route: "/lessons", selector: ".filter-chips__chip.is-active", mode: "dark", min: 4.5 },
   { route: "/lessons", selector: ".lesson-unified-card__title", mode: "light", min: 4.5 },
   { route: "/lessons", selector: ".lesson-unified-card__title", mode: "dark", min: 4.5 },
-  // ── نص فوق هيرو أخضر (منع رجوع ذهب/شفافية باهتة) ──
-  { route: "/assistant", selector: ".asp-hero__eyebrow", mode: "light", min: 4.5 },
-  { route: "/assistant", selector: ".asp-hero__eyebrow", mode: "dark", min: 4.5 },
+  // ── مسار المساعد خلف علم المنتج: بوابة coming-soon (بدون eyebrow القديم) ──
   { route: "/assistant", selector: ".assistant-title", mode: "light", min: 4.5 },
   { route: "/assistant", selector: ".assistant-title", mode: "dark", min: 4.5 },
   { route: "/assistant", selector: ".assistant-intro", mode: "light", min: 4.5 },

@@ -299,6 +299,11 @@ function IslamicReminderBootstrap() {
   return null;
 }
 
+/**
+ * جدولة الصوت داخل التطبيق + إشعارات الويب فقط.
+ * الإشعارات الأصلية/LocalNotifications ملك PrayerAlertSchedulerBootstrap
+ * (NATIVE_ALERTS_OWN_AUDIO_V1 يمنع تكرار صوت الدخول على native).
+ */
 function AdhanSchedulerBootstrap() {
   const { data } = useSharedPrayerData();
   useEffect(() => {

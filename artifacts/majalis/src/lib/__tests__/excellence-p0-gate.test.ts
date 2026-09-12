@@ -60,6 +60,31 @@ assert.match(app, /assistant-feature-flag/);
 const registry = read("src/lib/feature-registry.ts");
 assert.match(registry, /id:\s*"assistant"[\s\S]*?status:\s*"coming-soon"/);
 
+// ── إغلاقات P0 إضافية (تباين/محلّل/API/هوية/صلاة) ──
+const contrast = read("scripts/verify-color-contrast-gate.mjs");
+assert.doesNotMatch(contrast, /\/assistant[^\n]*asp-hero__eyebrow/);
+assert.match(contrast, /\/assistant[^\n]*\.assistant-title/);
+
+const assistantApi = read("lib/api-handlers/assistant.js");
+assert.match(assistantApi, /isAssistantPublicApiEnabled/);
+assert.match(assistantApi, /ASSISTANT_ENABLED/);
+assert.match(assistantApi, /mode:\s*"disabled"/);
+
+const entity = read("src/lib/knowledge-platform/content-entity.ts");
+assert.match(entity, /book:\s*"app_route"/);
+assert.match(entity, /fatwa:\s*"app_route"/);
+
+const resolver = read("src/lib/knowledge-platform/content-resolver.ts");
+assert.match(resolver, /!mapped && hit\.href/);
+
+const adhanAudio = read("src/lib/adhan-audio-service.ts");
+assert.match(adhanAudio, /سُنّة — أذان/);
+assert.doesNotMatch(adhanAudio, /Majlis — Adhan/);
+
+assert.match(app, /NATIVE_ALERTS_OWN_AUDIO_V1|NATIVE_ALERTS_OWN_AUDIO|الإشعارات الأصلية/);
+assert.match(app, /AdhanSchedulerBootstrap/);
+assert.match(app, /PrayerAlertSchedulerBootstrap|PrayerAlert/);
+
 __resetSyncLocalStoreForTests();
 bootstrapSyncEngine(null);
 const note = enqueueSyncRecord({
