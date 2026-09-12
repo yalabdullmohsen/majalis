@@ -111,4 +111,43 @@ assert.match(auth, /bootstrapSyncEngine/);
 const clear = read("src/lib/clear-user-local-data.ts");
 assert.match(clear, /majalis-sync-schema-v|majalis-kp-activity-v1/);
 
+const scopeSrc = read("src/lib/sync-engine/account-scope.ts");
+assert.match(scopeSrc, /myBookmarks/);
+assert.match(scopeSrc, /userNotes/);
+assert.match(scopeSrc, /majalis:hadith-saved/);
+assert.match(scopeSrc, /KEEP_ON_LOGOUT/);
+
+// عزل حساب: مفاتيح شخصية تُمسح؛ السمة تبقى
+const mem = new Map<string, string>();
+const ls = {
+  getItem: (k: string) => (mem.has(k) ? mem.get(k)! : null),
+  setItem: (k: string, v: string) => {
+    mem.set(k, String(v));
+  },
+  removeItem: (k: string) => {
+    mem.delete(k);
+  },
+  clear: () => mem.clear(),
+  key: (i: number) => [...mem.keys()][i] ?? null,
+  get length() {
+    return mem.size;
+  },
+};
+(globalThis as { localStorage?: typeof ls }).localStorage = ls;
+mem.set("myBookmarks", "[]");
+mem.set("userNotes", "{}");
+mem.set("lastPage", "12");
+mem.set("majalis:hadith-saved", "1");
+mem.set("majalis-theme", "dark");
+mem.set("userFontSize", "18");
+const { isolateAccountOnLogout } = await import("@/lib/sync-engine/account-scope");
+const iso = isolateAccountOnLogout("user-test");
+assert.ok(iso.removedKeys >= 4);
+assert.equal(ls.getItem("myBookmarks"), null);
+assert.equal(ls.getItem("userNotes"), null);
+assert.equal(ls.getItem("lastPage"), null);
+assert.equal(ls.getItem("majalis:hadith-saved"), null);
+assert.equal(ls.getItem("majalis-theme"), "dark");
+assert.equal(ls.getItem("userFontSize"), "18");
+
 console.log("advanced-experience-p0-gate.test.ts: ok");
