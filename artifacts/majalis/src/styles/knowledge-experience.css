@@ -646,12 +646,85 @@ html[data-theme="dark"] .kx-library-card__meta {
   color: var(--mj-brand, #5cc095);
 }
 
-/* إلغاء السهم العائم — الرجوع عبر الهيدر فقط */
+/* إلغاء السهم العائم الدائري — الشريط الثابت الحديث بديلًا */
 .floating-back-btn,
 .floating-back-btn.app-back-btn--floating,
 button.floating-back-btn[data-floating-back="1"] {
   display: none !important;
   pointer-events: none !important;
+}
+
+/* شريط رجوع ثابت حديث — ظاهر دائمًا فوق الشريط السفلي */
+.app-back-btn--bar.fixed-back-bar,
+button.app-back-btn--bar[data-fixed-back-bar="1"] {
+  position: fixed;
+  z-index: var(--z-fab, 220);
+  inset-inline-start: max(0.75rem, var(--inset-left, 0px));
+  inset-inline-end: auto;
+  bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 0.75rem);
+  top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.55rem 1rem 0.55rem 0.85rem;
+  margin: 0;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 26%, transparent);
+  background: color-mix(in srgb, var(--mj-surface, #fff) 86%, transparent);
+  color: var(--mj-brand-deep, #0d4a39);
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow:
+    0 10px 28px -14px rgba(11, 32, 24, 0.45),
+    inset 0 1px 0 color-mix(in srgb, #fff 55%, transparent);
+  backdrop-filter: blur(14px) saturate(1.15);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transform: translateZ(0);
+  transition: opacity 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+.app-back-btn--bar.fixed-back-bar:hover {
+  background: color-mix(in srgb, var(--mj-surface, #fff) 94%, var(--mj-brand-soft, #e2efe8));
+  box-shadow:
+    0 12px 30px -12px rgba(11, 32, 24, 0.5),
+    inset 0 1px 0 color-mix(in srgb, #fff 60%, transparent);
+}
+
+.app-back-btn--bar.fixed-back-bar:active {
+  opacity: 0.92;
+}
+
+html[data-theme="dark"] .app-back-btn--bar.fixed-back-bar,
+html.dark .app-back-btn--bar.fixed-back-bar {
+  background: color-mix(in srgb, var(--mj-surface, #12241c) 88%, transparent);
+  color: var(--mj-brand, #5cc095);
+  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 28%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-back-btn--bar.fixed-back-bar {
+    transition: none;
+  }
+}
+
+body.filter-sheet-open .app-back-btn--bar.fixed-back-bar {
+  display: none;
+}
+
+html.audio-dock-open .app-back-btn--bar.fixed-back-bar,
+html[data-audio-dock="1"] .app-back-btn--bar.fixed-back-bar {
+  bottom: calc(
+    var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + var(--audio-dock-h, 72px) + 0.75rem
+  );
 }
 
 .fiqh-book-grid.kx-layout--library {

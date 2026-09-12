@@ -13,13 +13,13 @@ import {
 import { haptics } from "@/lib/haptics";
 import { cn } from "@/lib/utils";
 
-export type AppBackVariant = "floating" | "inline" | "hero" | "legal" | "lobby" | "plain";
+export type AppBackVariant = "floating" | "bar" | "inline" | "hero" | "legal" | "lobby" | "plain";
 
 type AppBackButtonProps = {
   /** مسار أب صريح عند غياب تاريخ داخلي حقيقي */
   fallbackHref?: string;
   variant?: AppBackVariant;
-  /** إخفاء تلقائي لنسخة floating على الرئيسية/المصحف/الدخول */
+  /** إخفاء تلقائي لنسخة floating/bar على الرئيسية/المصحف/الدخول */
   autoHideFloating?: boolean;
   label?: ReactNode;
   className?: string;
@@ -28,6 +28,8 @@ type AppBackButtonProps = {
 
 const VARIANT_CLASS: Record<AppBackVariant, string> = {
   floating: "floating-back-btn global-back-btn app-back-btn app-back-btn--floating mj-pressable",
+  /** شريط ثابت حديث — لا يستخدم classes العائم المخفاة عبر CSS */
+  bar: "app-back-btn app-back-btn--bar fixed-back-bar mj-pressable",
   inline: "app-back-btn app-back-btn--inline mj-pressable",
   hero: "page-hero-mj__back mj-btn mj-btn--ghost app-back-btn app-back-btn--hero mj-pressable",
   legal: "legal-back-btn app-back-btn app-back-btn--legal",
@@ -36,7 +38,7 @@ const VARIANT_CLASS: Record<AppBackVariant, string> = {
 };
 
 /**
- * زر الرجوع الموحّد — العائم العام هو المسار الرسمي؛ inline/hero/lobby للتوافق فقط.
+ * زر الرجوع الموحّد — الشريط الثابت العام هو المسار الرسمي؛ inline/hero/lobby للتوافق فقط.
  * الرجوع فوري عبر onPointerDown بلا debounce ولا تأخير قبل التنقّل.
  */
 export function AppBackButton({
@@ -53,7 +55,7 @@ export function AppBackButton({
   const lastBackAtRef = useRef(0);
   const BACK_LOCK_MS = 420;
 
-  if (variant === "floating" && autoHideFloating) {
+  if ((variant === "floating" || variant === "bar") && autoHideFloating) {
     const path = normalizeNavPath(location);
     if (path === "/") return null;
     if (isImmersiveChromePath(location)) return null;
@@ -75,13 +77,15 @@ export function AppBackButton({
     goBackOrFallback(location, fallbackHref);
   };
 
-  const showIcon = variant === "floating" || variant === "lobby" || variant === "inline";
+  const showIcon =
+    variant === "floating" || variant === "bar" || variant === "lobby" || variant === "inline";
   const showText =
     variant === "hero" ||
     variant === "legal" ||
     variant === "lobby" ||
     variant === "inline" ||
-    variant === "plain";
+    variant === "plain" ||
+    variant === "bar";
 
   return (
     <button
@@ -90,6 +94,7 @@ export function AppBackButton({
       data-app-back="1"
       data-back-variant={variant}
       data-floating-back={variant === "floating" ? "1" : undefined}
+      data-fixed-back-bar={variant === "bar" ? "1" : undefined}
       data-mode="back"
       data-section-back={variant === "lobby" ? "1" : undefined}
       onPointerDown={(e) => {

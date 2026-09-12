@@ -57,7 +57,8 @@ assert.match(
   /\.bottom-nav(?:--v2)?[\s\S]{0,400}?opacity:\s*1\s*!important/,
   "Bottom nav must stay opaque (opacity: 1 !important)",
 );
-assert.match(floating, /FLOATING_BACK_DISABLED|return null/, "FloatingBackButton disabled — no FAB overlap");
+assert.match(floating, /FLOATING_BACK_DISABLED/, "FAB الدائري ملغى");
+assert.match(floating, /FIXED_BACK_BAR_ENABLED|variant="bar"/, "شريط الرجوع الثابت بديلًا");
 const hideFab = polish + read("src/styles/knowledge-experience.css");
 assert.match(
   hideFab,
@@ -66,7 +67,8 @@ assert.match(
 );
 
 /* ── 2) Duplicate back buttons ── */
-assert.match(floating, /FLOATING_BACK_DISABLED|return null/, "FloatingBackButton disabled");
+assert.match(floating, /FLOATING_BACK_DISABLED/, "FloatingBackButton: FAB disabled");
+assert.match(floating, /FIXED_BACK_BAR_ENABLED/, "Fixed back bar enabled");
 assert.match(floating, /AppBackButton/, "FloatingBackButton still exports AppBackButton");
 assert.match(appBack, /onPointerDown/, "Back must fire on pointer down (instant)");
 assert.match(lobby, /AppBackButton|data-section-back/, "اللوبي يعرض رجوعًا هيدريًا");

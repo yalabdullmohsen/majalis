@@ -15,8 +15,8 @@ assert.doesNotMatch(appBack, /isTabRootPath/);
 assert.match(appBack, /رجوع/);
 
 const fab = read("src/components/FloatingBackButton.tsx");
-assert.match(fab, /return null/, "العائم ملغى");
-assert.match(fab, /FLOATING_BACK_DISABLED/);
+assert.match(fab, /FLOATING_BACK_DISABLED/, "العائم الدائري ملغى");
+assert.match(fab, /FIXED_BACK_BAR_ENABLED|variant="bar"/, "شريط ثابت");
 
 const lobby = read("src/components/lobby/SectionLobby.tsx");
 assert.match(lobby, /AppBackButton|data-section-back/, "رجوع هيدري في اللوبي");

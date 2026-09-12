@@ -1,5 +1,5 @@
 /**
- * بوابة: الرجوع عبر الهيدر/المضمّن؛ السهم العائم ملغى.
+ * بوابة: شريط رجوع ثابت حديث؛ السهم العائم الدائري ملغى.
  * تشغيل: node --import tsx src/lib/__tests__/floating-back-button.test.ts
  */
 import assert from "node:assert/strict";
@@ -12,7 +12,8 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const fab = read("src/components/FloatingBackButton.tsx");
 assert.match(fab, /FLOATING_BACK_DISABLED/);
-assert.match(fab, /return null/);
+assert.match(fab, /FIXED_BACK_BAR_ENABLED/);
+assert.match(fab, /variant="bar"/);
 assert.match(fab, /AppBackButton/);
 assert.doesNotMatch(fab, /ChevronUp/);
 
@@ -36,4 +37,4 @@ const lobby = read("src/components/lobby/SectionLobby.tsx");
 assert.match(lobby, /AppBackButton|data-section-back/, "اللوبي يعرض رجوعًا هيدريًا");
 assert.match(lobby, /data-section-back/);
 
-console.log("floating-back-button.test.ts: ok (header/inline navigation)");
+console.log("floating-back-button.test.ts: ok (fixed back bar)");
