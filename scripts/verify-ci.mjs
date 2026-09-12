@@ -225,6 +225,11 @@ const waves = [
         cmd: "pnpm",
         args: ["--filter", "@workspace/majalis", "run", "audio-reader:p0-gate"],
       },
+      {
+        name: "widgets P0 gate",
+        cmd: "pnpm",
+        args: ["--filter", "@workspace/majalis", "run", "widgets:p0-gate"],
+      },
     ],
   },
   {
