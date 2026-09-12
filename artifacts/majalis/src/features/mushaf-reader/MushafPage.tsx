@@ -128,7 +128,8 @@ export const MushafPage = memo(function MushafPage({
         <div
           ref={(node) => {
             bodyRef.current = node;
-            setBodyEl(node);
+            /* لا setState إن لم يتغيّر العنصر — يمنع render/measure ثانٍ بلا داعٍ */
+            setBodyEl((prev) => (prev === node ? prev : node));
           }}
           className="nm-page__body"
           data-layout="pageBody"

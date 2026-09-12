@@ -21,7 +21,10 @@ assert.match(prefs, /saveMushafAppearanceMode[\s\S]*applyMushafAppearanceMode/);
 assert.match(chrome, /apple-mobile-web-app-status-bar-style/);
 assert.match(chrome, /iconStyle === "dark" \? "default" : "black-translucent"/);
 assert.match(reader, /prefers-color-scheme/);
-assert.match(reader, /applyMushafAppearanceMode\(appearance\)/);
+assert.match(
+  reader,
+  /applyMushafAppearanceMode\(appearance\)|QuranSettingsRepository\.applyAppearance\(appearance\)/,
+);
 assert.match(pageChrome, /statusBarStyle:\s*"dark"/);
 assert.match(pageChrome, /resolveMushafThemeChrome[\s\S]*night[\s\S]*statusBarStyle:\s*"light"/);
 

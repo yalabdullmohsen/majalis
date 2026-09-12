@@ -72,6 +72,7 @@ import { useStableMushafLayout } from "./useStableMushafLayout";
 import {
   putPageRenderModel,
   setMushafGeometryKey,
+  getMushafGeometryKey,
 } from "./mushaf-page-render-cache";
 import {
   enableMushafTurnTelemetry,
@@ -142,7 +143,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const { fontFamily, ready: fontReady } = useQpcPageFont(page);
   /** لا نعرض صفحة برقم مختلف عن الهدف — يمنع خلط خط جديد مع بيانات قديمة */
   const layoutMatchesPage = Boolean(layout && layout.pageNumber === page);
-  const { canMountPage, allowOffscreenPrefetch } = useMushafResourceGate(
+  const { canMountPage, allowOffscreenPrefetch: _allowOffscreenPrefetch } = useMushafResourceGate(
     fontReady,
     layoutMatchesPage && !error,
     page,
@@ -185,11 +186,13 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   useLayoutEffect(() => {
     const root = metricsRootRef.current;
     if (!root) return;
+    /* لا يُربط برقم الصفحة — تغيير الصفحة لا يُعيد مفتاح الهندسة ولا يُفرّغ كاش الرسم */
+    if (root.getAttribute("data-pager-settled") === "0") return;
     const w = root.style.getPropertyValue("--mushaf-page-width").trim();
     const h = root.style.getPropertyValue("--mushaf-page-height").trim();
     const fs = root.style.getPropertyValue("--mushaf-font-size").trim();
     if (w && h && fs) setMushafGeometryKey(`${w}x${h}@${fs}`);
-  }, [page, fontReady]);
+  }, [fontReady]);
 
   const hideTimer = useRef<number | null>(null);
   const pageRef = useRef(page);
@@ -726,8 +729,36 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
 
   const mediaPlaying =
     playerState === "playing" || playerState === "buffering" || playerState === "loading";
+
+  /** لا يُسمح بالسحب قبل جاهزية خط±١ — يمنع ظهور placeholder ثم قفزة التفاف */
+  const [neighborEpoch, setNeighborEpoch] = useState(0);
+  useEffect(() => {
+    let cancelled = false;
+    const tasks: Promise<unknown>[] = [];
+    if (page < MUSHAF_PAGE_MAX) {
+      tasks.push(ensureQpcPageFont(page + 1));
+      tasks.push(loadMushafPage(page + 1).catch(() => null));
+    }
+    if (page > 1) {
+      tasks.push(ensureQpcPageFont(page - 1));
+      tasks.push(loadMushafPage(page - 1).catch(() => null));
+    }
+    void Promise.all(tasks).then(() => {
+      if (!cancelled) setNeighborEpoch((n) => n + 1);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [page]);
+  void neighborEpoch; /* يعيد تقييم الجيران عند اكتمال التحميل */
+  const neighborsReady =
+    (page >= MUSHAF_PAGE_MAX ||
+      (isQpcPageFontReady(page + 1) && Boolean(getCachedMushafPage(page + 1)))) &&
+    (page <= 1 ||
+      (isQpcPageFontReady(page - 1) && Boolean(getCachedMushafPage(page - 1))));
+
   /* شيت الآية لا يمنع قلب الصفحة من الحواف */
-  const edgesDisabled = tafsirOpen || searchOpen || indexOpen;
+  const edgesDisabled = tafsirOpen || searchOpen || indexOpen || !neighborsReady;
   /* إخفاء الرصيف عند فتح قائمة الآية لتفادي تعارض أزرار التشغيل */
   const audioDockVisible =
     !actionsOpen &&
@@ -775,44 +806,51 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       data-freeze-stack={freezeStackMode}
       data-testid="mushaf-viewport"
       dir="rtl"
-      nextPage={
-        allowOffscreenPrefetch && page < MUSHAF_PAGE_MAX ? (
-          <PrefetchPage pageNumber={page + 1} />
-        ) : undefined
-      }
-      prevPage={
-        allowOffscreenPrefetch && page > 1 ? <PrefetchPage pageNumber={page - 1} /> : undefined
-      }
-      pageSlot={
-        <div className="nm-shell mm-page-shell mushaf-page-frame" data-testid="mushaf-page-shell">
-          {error ? <div className="nm-status">{error}</div> : null}
-          {/* أبقِ آخر صفحة جاهزة حتى تكتمل التالية — بلا placeholder يغيّر الحجم */}
-          {!error && displayView ? (
-            <MushafPage
-              layout={displayView.layout}
-              fontFamily={displayView.fontFamily}
-              displayPageNumber={displayView.page}
-              onSelectVerse={onSelectVerse}
-              onLongPressVerse={onLongPressVerse}
-              selectionEnabled={pagerSettled && displayView.page === page}
-              onPageNumberPress={() => {
-                setGotoOpen(true);
-                setChromeOpen(false);
-                setActionsOpen(false);
-              }}
-            />
-          ) : !error ? (
-            <div
-              className="nm-page-placeholder nm-page-placeholder--frame"
-              role="status"
-              aria-label="سُنّة"
-              aria-busy="true"
-            />
-          ) : null}
-        </div>
-      }
+      renderPage={(pageNumber, role) => (
+        <PrefetchPage
+          pageNumber={pageNumber}
+          active={role === "current"}
+          selectionEnabled={pagerSettled && role === "current" && pageNumber === page}
+          onSelectVerse={role === "current" ? onSelectVerse : undefined}
+          onLongPressVerse={role === "current" ? onLongPressVerse : undefined}
+          onPageNumberPress={
+            role === "current"
+              ? () => {
+                  setGotoOpen(true);
+                  setChromeOpen(false);
+                  setActionsOpen(false);
+                }
+              : undefined
+          }
+          error={role === "current" ? error : null}
+        />
+      )}
     >
       <h1 className="sr-only">المصحف الشريف</h1>
+      {import.meta.env.DEV ? (
+        <div
+          aria-hidden
+          data-testid="mushaf-turn-debug"
+          style={{
+            position: "fixed",
+            insetInlineStart: 8,
+            insetBlockStart: 8,
+            zIndex: 9999,
+            pointerEvents: "none",
+            fontFamily: "ui-monospace, monospace",
+            fontSize: 10,
+            lineHeight: 1.35,
+            padding: "4px 6px",
+            borderRadius: 6,
+            background: "color-mix(in srgb, canvas 82%, transparent)",
+            color: "CanvasText",
+            maxWidth: "46vw",
+            whiteSpace: "pre-wrap",
+          }}
+        >
+          {`p=${page} settled=${pagerSettled ? 1 : 0} nbr=${neighborsReady ? 1 : 0}\ngeo=${getMushafGeometryKey()}`}
+        </div>
+      ) : null}
       <MediaBridge
         active={Boolean(playingVerseKey || playerState === "paused" || mediaPlaying)}
         title={verseLabel}
@@ -944,7 +982,23 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   );
 }
 
-const PrefetchPage = memo(function PrefetchPage({ pageNumber }: { pageNumber: number }) {
+const PrefetchPage = memo(function PrefetchPage({
+  pageNumber,
+  active = false,
+  selectionEnabled = false,
+  onSelectVerse,
+  onLongPressVerse,
+  onPageNumberPress,
+  error = null,
+}: {
+  pageNumber: number;
+  active?: boolean;
+  selectionEnabled?: boolean;
+  onSelectVerse?: (verseKey: string) => void;
+  onLongPressVerse?: (verseKey: string) => void;
+  onPageNumberPress?: () => void;
+  error?: string | null;
+}) {
   const [layout, setLayout] = useState<MushafPageLayout | null>(() =>
     getCachedMushafPage(pageNumber),
   );
@@ -960,22 +1014,40 @@ const PrefetchPage = memo(function PrefetchPage({ pageNumber }: { pageNumber: nu
     };
   }, [pageNumber]);
 
-  if (ready && layout) {
-    putPageRenderModel(pageNumber, layout, fontFamily);
-  }
-  if (!ready || !layout) {
-    /* skeleton بنفس شبكة الإطار — لا يغيّر عرض/ارتفاع الحاوية */
-    return <div className="nm-page-placeholder nm-page-placeholder--frame" aria-hidden="true" />;
-  }
+  useEffect(() => {
+    if (ready && layout) putPageRenderModel(pageNumber, layout, fontFamily);
+  }, [ready, layout, pageNumber, fontFamily]);
+
   return (
-    <MushafPage
-      layout={layout}
-      fontFamily={fontFamily}
-      displayPageNumber={pageNumber}
-      selectionEnabled={false}
-    />
+    <div
+      className="nm-shell mm-page-shell mushaf-page-frame"
+      data-testid={active ? "mushaf-page-shell" : undefined}
+      data-page-pane={active ? "active" : "prefetch"}
+    >
+      {active && error ? <div className="nm-status">{error}</div> : null}
+      {!ready || !layout ? (
+        <div
+          className="nm-page-placeholder nm-page-placeholder--frame"
+          aria-hidden={active ? undefined : true}
+          role={active ? "status" : undefined}
+          aria-label={active ? "سُنّة" : undefined}
+          aria-busy={active ? true : undefined}
+        />
+      ) : (
+        <MushafPage
+          layout={layout}
+          fontFamily={fontFamily}
+          displayPageNumber={pageNumber}
+          onSelectVerse={onSelectVerse}
+          onLongPressVerse={onLongPressVerse}
+          selectionEnabled={selectionEnabled}
+          onPageNumberPress={onPageNumberPress}
+        />
+      )}
+    </div>
   );
 });
+
 
 function MediaBridge({
   active,
