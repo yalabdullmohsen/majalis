@@ -14,7 +14,8 @@
 .snr-hero {
   text-align: center;
   padding: 3rem 1rem 2rem;
-  background: linear-gradient(180deg, rgba(24,54,42,0.04) 0%, transparent 100%);
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   border-radius: var(--elite-r-xl, 24px);
   margin-bottom: 2.5rem;
 }

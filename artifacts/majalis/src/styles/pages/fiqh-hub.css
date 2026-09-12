@@ -3,15 +3,12 @@
   width: 100%;
   max-width: none;
   box-sizing: border-box;
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--color-primary-dark, var(--mj-brand-deep)) 92%, var(--mj-ink)) 0%,
-    var(--color-primary, var(--mj-brand)) 100%
-  );
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   border-radius: 0 0 22px 22px;
   padding: 1.15rem max(1rem, var(--page-gutter, 1rem)) 1.2rem;
   margin-bottom: 1rem;
-  color: var(--mj-on-brand, var(--mj-white, #ffffff));
+  color: var(--mj-on-brand, inherit);
   position: relative;
   overflow: hidden;
 }
@@ -30,7 +27,7 @@
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+  background: var(--surface-elevated, #24302b);
   opacity: 0.9;
   pointer-events: none;
 }
@@ -39,13 +36,13 @@
   font-weight: 700;
   letter-spacing: normal;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.7);
+  color: inherit;
   margin: 0 0 0.4rem;
 }
 .fqh-hub-hero__title {
   font-size: var(--type-page-title, clamp(1.625rem, 5vw, 2rem));
   font-weight: 800;
-  color: var(--text-on-dark-primary, var(--mj-white, #ffffff));
+  color: var(--text-on-dark-primary, inherit);
   margin: 0 0 0.5rem;
   font-family: var(--font-heading, var(--font-display, serif));
   line-height: 1.35;
@@ -53,7 +50,7 @@
 }
 .fqh-hub-hero__sub {
   font-size: var(--type-card-desc, clamp(0.875rem, 3vw, 1rem));
-  color: var(--text-on-dark-secondary, rgba(255,255,255,0.9));
+  color: var(--text-on-dark-secondary, inherit);
   margin: 0;
   max-width: 55ch;
   line-height: var(--lh-type-prose, 1.75);

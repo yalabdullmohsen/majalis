@@ -333,14 +333,14 @@ export default function QiblaPage() {
             )}
 
             <div className="qibla-info-row">
-              <div className="qibla-info-card">
+              <div className="qibla-info-card soft-card soft-card--on-light">
                 <span className="qibla-info-label">الاتجاه من الشمال</span>
                 <strong className="qibla-info-value">
                   {toArabicDigits(String(Math.round(bearing)))}°
                 </strong>
               </div>
               {dist != null && (
-                <div className="qibla-info-card">
+                <div className="qibla-info-card soft-card soft-card--on-light">
                   <span className="qibla-info-label">المسافة إلى الكعبة</span>
                   <strong className="qibla-info-value">
                     {toArabicDigits(Math.round(dist).toLocaleString("en-US"))} كم
@@ -348,7 +348,7 @@ export default function QiblaPage() {
                 </div>
               )}
               {delta != null && (
-                <div className="qibla-info-card">
+                <div className="qibla-info-card soft-card soft-card--on-light">
                   <span className="qibla-info-label">الانحراف</span>
                   <strong className={`qibla-info-value${aligned ? " qibla-aligned" : ""}`}>
                     {toArabicDigits(delta.toFixed(1))}°

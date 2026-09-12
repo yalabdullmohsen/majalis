@@ -36,10 +36,8 @@
 .home-hero {
   position: relative;
   color: var(--msk-manuscript);
-  background:
-    radial-gradient(ellipse at 88% 8%, rgba(217,174,92,.15) 0%, transparent 48%),
-    radial-gradient(ellipse at 12% 88%, rgba(79,168,201,.07) 0%, transparent 38%),
-    #1B2240;
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   isolation: isolate;
 }
 
@@ -49,7 +47,7 @@
   inset-inline: 0;
   bottom: -1px;
   height: 90px;
-  background: linear-gradient(180deg, transparent, var(--msk-canvas));
+  background: var(--surface-elevated, #24302b);
   z-index: -1;
 }
 
@@ -178,9 +176,7 @@
   border: 1px solid var(--msk-gold-border);
   border-radius: 2rem;
   padding: clamp(1.35rem, 3vw, 2rem);
-  background:
-    linear-gradient(160deg, rgba(217,174,92,.10), rgba(217,174,92,.03)),
-    rgba(23,28,46,.75);
+  background: var(--surface-elevated, #24302b);
   box-shadow: 0 28px 80px rgba(0,0,0,.32), var(--msk-shadow-gold);
   backdrop-filter: blur(16px);
 }

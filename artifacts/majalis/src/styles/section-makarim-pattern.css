@@ -36,13 +36,10 @@
 /* ── هيرو: تدرّج العلامة (لا أسود/ذهبي غريب) ─────────────────────── */
 .rq-hero,
 .wn-hero {
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--mj-brand-deep, #0d4a39) 88%, #000) 0%,
-    var(--mj-brand, #146b52) 100%
-  ) !important;
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   color: #fffef9 !important;
-  box-shadow: var(--shadow-soft, 0 3px 12px -10px rgba(10, 61, 46, 0.12));
+  box-shadow: none;
 }
 
 .rq-hero::before,

@@ -132,7 +132,7 @@ export function RelatedLinksBox({
               title={l.title}
               description={l.description}
               variant="compact"
-              className="cr-related-link internal-link-card ss-internal-link-card"
+              className="cr-related-link internal-link-card ss-internal-link-card soft-card soft-card--on-light"
             />
           ))}
         </div>

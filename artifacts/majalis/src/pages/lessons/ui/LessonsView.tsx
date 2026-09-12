@@ -643,6 +643,7 @@ export default function LessonsPage({
 
           {!loadError ? (
           <PageLoadingGuard
+            keepPrevious
             loading={loading}
             error={null}
             empty={!loading && quickFiltered.length === 0}

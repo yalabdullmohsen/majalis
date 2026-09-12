@@ -314,21 +314,12 @@
   padding: 1.15rem 1.15rem 1.05rem;
   margin-bottom: 0.85rem;
   border-radius: var(--radius-card, 18px);
-  background:
-    linear-gradient(
-      160deg,
-      color-mix(in srgb, var(--mj-brand, #1f4d3a) 14%, var(--surface-secondary, #f4f7f5)),
-      var(--surface-elevated, #fff) 55%
-    );
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 16%, transparent);
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-info-hero {
-  background:
-    linear-gradient(
-      160deg,
-      color-mix(in srgb, var(--mj-brand, #1f4d3a) 28%, var(--surface, #121a17)),
-      var(--surface-elevated, #24302b) 60%
-    );
+  background: var(--surface-elevated, #24302b);
   border-color: color-mix(in srgb, var(--mj-brand-soft, #6faf8e) 24%, transparent);
 }
 .hdl-info-hero__eyebrow {

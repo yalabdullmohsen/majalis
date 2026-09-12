@@ -224,7 +224,8 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--majalis-emerald) 6%, var(--majalis-panel)), var(--majalis-panel));
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
 }
 
 .adhkar-hero__stats {

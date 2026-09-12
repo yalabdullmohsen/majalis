@@ -71,7 +71,7 @@ export default function QuranMemorizationPlansPage() {
           {PLANS.map((item) => <button key={item.id} type="button" className={`qmp-plan${item.id === plan.id ? " is-active" : ""}`} aria-pressed={item.id === plan.id} onClick={() => setSaved({ planId: item.id, completed: 0 })}><strong>{item.title}</strong><span>{item.description}</span></button>)}
         </div>
       </section>
-      <section className="ds-card qmp-today" aria-live="polite">
+      <section className="ds-card soft-card soft-card--on-light qmp-today" aria-live="polite">
         <div className="qmp-today__head"><div><span className="qmp-kicker">{plan.kind === "review" ? "مراجعة" : "حفظ جديد"}</span><h2>{finished ? "أتممت الخطة، بارك الله في جهدك" : `جلسة اليوم ${assignment.index + 1}`}</h2></div><strong>{percentage}٪</strong></div>
         <div className="qmp-progress" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={percentage}><span style={{ width: `${percentage}%` }} /></div>
         {!finished && <p className="qmp-assignment"><BookOpen size={20} aria-hidden="true" /> من صفحة <strong>{assignment.start}</strong> إلى صفحة <strong>{assignment.end}</strong></p>}
@@ -82,7 +82,7 @@ export default function QuranMemorizationPlansPage() {
           {saved.completed > 0 && <button type="button" className="ds-btn ds-btn--ghost" onClick={() => setSaved((state) => ({ ...state, completed: Math.max(0, state.completed - 1) }))}>تراجع عن آخر تسجيل</button>}
         </div>
       </section>
-      <section className="ds-card qmp-guidance"><h2>نظام أسبوعي مقترح</h2><ol><li>حفظ المقدار الجديد مع التكرار والاستماع لقارئ متقن.</li><li>مراجعة مقدار اليوم السابق قبل بدء الجديد.</li><li>مراجعة تراكمية في نهاية الأسبوع واختبار مواضع التردد.</li><li>اترك يومًا مرنًا للتعويض أو الراحة، ثم أكمل دون إعادة الخطة من الصفر.</li></ol><p>هذه أداة تنظيمية وليست بديلًا عن المعلّم المتقن، ولا تقيس جودة الحفظ وحدها.</p></section>
+      <section className="ds-card soft-card soft-card--on-light qmp-guidance"><h2>نظام أسبوعي مقترح</h2><ol><li>حفظ المقدار الجديد مع التكرار والاستماع لقارئ متقن.</li><li>مراجعة مقدار اليوم السابق قبل بدء الجديد.</li><li>مراجعة تراكمية في نهاية الأسبوع واختبار مواضع التردد.</li><li>اترك يومًا مرنًا للتعويض أو الراحة، ثم أكمل دون إعادة الخطة من الصفر.</li></ol><p>هذه أداة تنظيمية وليست بديلًا عن المعلّم المتقن، ولا تقيس جودة الحفظ وحدها.</p></section>
     </div>
   );
 }

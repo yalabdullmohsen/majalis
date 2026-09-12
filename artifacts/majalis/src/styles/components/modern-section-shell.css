@@ -91,7 +91,25 @@
 .uq-hero,
 .tf-hero,
 .fg-hero,
-.an-hero {
+.an-hero,
+.fiqh-lux-book-hero,
+.fq-hero,
+.hdl-info-hero,
+.ilm-hero,
+.qmem-hero,
+.ve-hero,
+.wn-hero,
+.snr-hero,
+.adhkar-hero,
+.assistant-hero,
+.fqh-hub-hero,
+.hadith-hero,
+.home-hero,
+.mm-hero,
+.prophets-lux-hero,
+.revord-hero,
+.twh-hero,
+.twh-hub-hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -190,7 +208,41 @@
 .fg-hero::before,
 .fg-hero::after,
 .an-hero::before,
-.an-hero::after {
+.an-hero::after,
+.fiqh-lux-book-hero::before,
+.fiqh-lux-book-hero::after,
+.fq-hero::before,
+.fq-hero::after,
+.hdl-info-hero::before,
+.hdl-info-hero::after,
+.ilm-hero::before,
+.ilm-hero::after,
+.qmem-hero::before,
+.qmem-hero::after,
+.ve-hero::before,
+.ve-hero::after,
+.wn-hero::before,
+.wn-hero::after,
+.snr-hero::before,
+.snr-hero::after,
+.adhkar-hero::before,
+.adhkar-hero::after,
+.assistant-hero::before,
+.assistant-hero::after,
+.fqh-hub-hero::before,
+.fqh-hub-hero::after,
+.hadith-hero::before,
+.hadith-hero::after,
+.home-hero::before,
+.home-hero::after,
+.mm-hero::before,
+.mm-hero::after,
+.prophets-lux-hero::before,
+.prophets-lux-hero::after,
+.twh-hero::before,
+.twh-hero::after,
+.twh-hub-hero::before,
+.twh-hub-hero::after {
   content: none !important;
   display: none !important;
 }
@@ -481,7 +533,7 @@ html[data-theme="dark"] .card {
 .pts-hero--compact {
   background-color: var(--mss-hero-from, #0f4a3a) !important;
   background-image: var(--mss-hero-gradient) !important;
-  color: var(--mss-on-hero, #faf5ea) !important;
+  color: var(--mss-on-dark-hero, #ffffff) !important;
   border-color: color-mix(in srgb, #1f6b56 28%, transparent);
   box-shadow: var(--mss-shadow-hero);
 }
@@ -499,6 +551,7 @@ html[data-theme="dark"] .card {
 .fqh-hub-hero__title,
 .quran-hub-hero__title,
 .pts-hero__title,
+.pts-hero__name,
 .twh-hub-hero__sub,
 .fqh-hub-hero__sub,
 .quran-hub-hero__sub {
@@ -767,5 +820,50 @@ html[data-theme="dark"] .card {
 .tf-hero .tf-hero__stat, .tf-hero .tf-hero__stat strong, .tf-hero .tf-hero__stat span,
 .fg-hero .fg-hero__stat, .fg-hero .fg-hero__stat strong, .fg-hero .fg-hero__stat span,
 .an-hero .an-hero__stat, .an-hero .an-hero__stat strong, .an-hero .an-hero__stat span {
+  color: var(--mss-on-hero, #16241e) !important;
+}
+
+
+/* soft ink — wave3 heroes */
+.fiqh-lux-book-hero .fiqh-lux-book-hero__title, .fiqh-lux-book-hero h1, .fiqh-lux-book-hero h2,
+.fq-hero .fq-hero__title, .fq-hero h1, .fq-hero h2,
+.hdl-info-hero .hdl-info-hero__title, .hdl-info-hero h1, .hdl-info-hero h2,
+.ilm-hero .ilm-hero__title, .ilm-hero h1, .ilm-hero h2,
+.qmem-hero .qmem-hero__title, .qmem-hero h1, .qmem-hero h2,
+.ve-hero .ve-hero__title, .ve-hero h1, .ve-hero h2,
+.wn-hero .wn-hero__title, .wn-hero h1, .wn-hero h2 {
+  color: var(--mss-on-hero, #16241e) !important;
+}
+.fiqh-lux-book-hero .fiqh-lux-book-hero__sub, .fiqh-lux-book-hero .fiqh-lux-book-hero__desc, .fiqh-lux-book-hero p,
+.fq-hero .fq-hero__sub, .fq-hero .fq-hero__desc, .fq-hero p,
+.hdl-info-hero .hdl-info-hero__sub, .hdl-info-hero .hdl-info-hero__desc, .hdl-info-hero p,
+.ilm-hero .ilm-hero__sub, .ilm-hero .ilm-hero__desc, .ilm-hero p,
+.qmem-hero .qmem-hero__sub, .qmem-hero .qmem-hero__desc, .qmem-hero p,
+.ve-hero .ve-hero__sub, .ve-hero .ve-hero__desc, .ve-hero p,
+.wn-hero .wn-hero__sub, .wn-hero .wn-hero__desc, .wn-hero p {
+  color: var(--mss-on-hero-muted, #3d4f47) !important;
+  opacity: 1 !important;
+}
+
+
+/* soft ink — snr-hero */
+.snr-hero .snr-hero__title, .snr-hero h1 {
+  color: var(--mss-on-hero, #16241e) !important;
+}
+.snr-hero .snr-hero__sub, .snr-hero p {
+  color: var(--mss-on-hero-muted, #3d4f47) !important;
+}
+
+
+/* soft ink — legacy unused heroes */
+.adhkar-hero .adhkar-hero__title, .adhkar-hero h1,
+.assistant-hero .assistant-hero__title, .assistant-hero h1,
+.fqh-hub-hero .fqh-hub-hero__title, .fqh-hub-hero h1,
+.hadith-hero .hadith-hero__title, .hadith-hero h1,
+.home-hero .home-hero__title, .home-hero h1,
+.mm-hero .mm-hero__title, .mm-hero h1,
+.prophets-lux-hero .prophets-lux-hero__title, .prophets-lux-hero h1,
+.twh-hero .twh-hero__title, .twh-hero h1,
+.twh-hub-hero .twh-hub-hero__title, .twh-hub-hero h1 {
   color: var(--mss-on-hero, #16241e) !important;
 }

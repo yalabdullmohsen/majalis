@@ -114,6 +114,7 @@ export function HomeUpcomingLessons({
       state="ready"
     >
       <PageLoadingGuard
+            keepPrevious
         loading={loading}
         error={loadError}
         empty={!loading && !loadError && todayLessons.length === 0}

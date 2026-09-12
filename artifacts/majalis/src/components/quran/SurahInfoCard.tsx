@@ -4,7 +4,7 @@ import { MakkiMadaniBadge } from "./MakkiMadaniBadge";
 
 export function SurahInfoCard({ surah }: { surah: StaticSurahMeta }) {
   return (
-    <article className="surah-info-card ds-card">
+    <article className="surah-info-card ds-card soft-card soft-card--on-light">
       <span className="surah-info-card__number" aria-label={`ترتيب السورة ${surah.number}`}>{surah.number}</span>
       <div className="surah-info-card__body">
         <h2>{surah.name}</h2>

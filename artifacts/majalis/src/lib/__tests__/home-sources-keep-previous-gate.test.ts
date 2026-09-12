@@ -38,4 +38,13 @@ assert.match(
   "PageLoadingGuard: خطأ كامل فقط بلا محتوى سابق",
 );
 
+const lessonsView = read("src/pages/lessons/ui/LessonsView.tsx");
+assert.match(lessonsView, /keepPrevious/, "LessonsView: keepPrevious");
+
+const homeUpcoming = read("src/components/home/HomeUpcomingLessons.tsx");
+assert.match(homeUpcoming, /keepPrevious/, "HomeUpcomingLessons: keepPrevious");
+
+const qa = read("src/views/QaPage.tsx");
+assert.match(qa, /keepPrevious/, "QaPage: keepPrevious");
+
 console.log("home-sources-keep-previous-gate.test.ts: ok");

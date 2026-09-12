@@ -425,7 +425,7 @@ export default function HajjPage() {
                 { icon: "🕋", label: "الموسم", value: "8–12 ذو الحجة كل عام" },
                 { icon: "📖", label: "الدليل", value: "وَلِلَّهِ عَلَى النَّاسِ حِجُّ الْبَيْتِ (آل عمران: 97)" },
               ].map((item) => (
-                <div key={item.label} className="hj-stat-card">
+                <div key={item.label} className="hj-stat-card soft-card soft-card--on-light">
                   <span className="hj-stat-card__icon"><SectionIcon name={item.icon} size={24} /></span>
                   <span className="hj-stat-card__label">{item.label}</span>
                   <span className="hj-stat-card__value">{item.value}</span>

@@ -8,7 +8,8 @@
 .qmem-hero {
   padding: 2.5rem 1.25rem 2rem;
   text-align: center;
-  background: linear-gradient(160deg, #0d2d22 0%, var(--mj-brand-deep) 60%, #1a4535 100%);
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   position: relative;
   overflow: hidden;
 }
@@ -19,7 +20,7 @@
   top: 50%; left: 50%;
   transform: translate(-50%,-50%);
   font-size: 4rem;
-  color: rgba(255,255,255,0.03);
+  color: inherit;
   white-space: nowrap;
   pointer-events: none;
 }
@@ -30,8 +31,8 @@
   justify-content: center;
   width: 56px; height: 56px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.9);
+  background: inherit;
+  color: inherit;
   margin-bottom: 0.75rem;
   font-size: 1.75rem;
 }
@@ -45,7 +46,7 @@
 
 .qmem-hero__sub {
   font-size: 0.9rem;
-  color: rgba(255,255,255,0.65);
+  color: inherit;
   max-width: 500px;
   margin: 0 auto 1.5rem;
 }

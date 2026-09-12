@@ -537,11 +537,7 @@ html.dark .sidebar-item.active {
 .fiqh-lux-book-hero,
 .page-hero-mj--bleed,
 .mss-hero-surface {
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--color-primary-dark) 88%, #000) 0%,
-    var(--color-primary) 100%
-  ) !important;
+  background: var(--surface-elevated, #24302b);
   color: #fffef9 !important;
   box-shadow: var(--shadow-soft) !important;
   min-height: 0 !important;
@@ -575,6 +571,8 @@ html.dark .sidebar-item.active {
 }
 
 .fqh-hub-hero {
+  /* soft-card عبر modern-section-shell */
+  background: transparent;
   border-radius: 0 0 var(--radius-sheet) var(--radius-sheet);
   margin-bottom: 0.85rem;
 }
