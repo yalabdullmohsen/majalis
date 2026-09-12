@@ -1870,6 +1870,6 @@ html.dark .hadith-browse-cta__desc {
 .hadith-class-page,
 .hb-page {
   padding-bottom: calc(
-    var(--bottom-nav-total, 5rem) + env(safe-area-inset-bottom, 0px) + 1.5rem
+    var(--bottom-nav-total, 5rem) + var(--inset-bottom, 0px) + 1.5rem
   );
 }

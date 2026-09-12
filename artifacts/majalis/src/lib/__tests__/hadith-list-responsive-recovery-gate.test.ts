@@ -68,7 +68,8 @@ assert.match(view, /حديث واحد من|progressLabel/);
 
 console.log("=== حافة سفلية + سلامة قوائم الحديث المشتركة ===");
 assert.match(pageCss, /--bottom-nav-total|bottom-nav-total/);
-assert.match(pageCss, /safe-area-inset-bottom|env\(safe-area-inset-bottom/);
+assert.match(pageCss, /--inset-bottom/);
+assert.doesNotMatch(pageCss, /env\(safe-area-inset-/);
 assert.match(hadithCss, /Shared hadith list safety/);
 assert.match(hadithCss, /white-space:\s*normal/);
 
