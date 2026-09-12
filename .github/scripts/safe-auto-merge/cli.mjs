@@ -259,29 +259,47 @@ function syncPrPolicyLabels(pr, result) {
 }
 
 function cmdEnsureLabels() {
+  /** ألوان عالية التباين (نص فاتح على خلفية داكنة في واجهة GitHub). */
   const colors = {
     [SAFE_AUTO_MERGE_LABEL]: "0E8A16",
-    "safe:content": "0075CA",
-    "safe:ui": "5319E7",
-    "safe:test": "1D76DB",
+    "safe:content": "1E3A8A",
+    "safe:ui": "5B21B6",
+    "safe:test": "1E3A8A",
     [RELEASE_TRAIN_LABEL]: "0E8A16",
-    [RISKY_MANUAL_REVIEW_LABEL]: "D93F0B",
-    [BLOCKED_DANGER_PATH_LABEL]: "B60205",
-    "content-safe": "0075CA",
-    "ui-safe": "5319E7",
+    [RISKY_MANUAL_REVIEW_LABEL]: "9A3412",
+    [BLOCKED_DANGER_PATH_LABEL]: "7F1D1D",
+    "content-safe": "1E3A8A",
+    "ui-safe": "5B21B6",
     "code-safe": "0E8A16",
-    "tests-safe": "1D76DB",
-    "maintenance-safe": "BFDADC",
-    "manual-review": "D93F0B",
-    "no-auto-merge": "B60205",
-    "content-safe": "0075CA",
-    "ui": "5319E7",
-    "perf": "FBCA04",
-    "ios": "A2EEEF",
-    "ci": "BFD4F2",
-    "docs": "D4C5F9",
-    "no-deploy": "B60205",
-    "hold": "E4E669",
+    "tests-safe": "1E3A8A",
+    "maintenance-safe": "1E3A8A",
+    "manual-review": "9A3412",
+    "no-auto-merge": "7F1D1D",
+    ui: "5B21B6",
+    perf: "9A3412",
+    ios: "1E3A8A",
+    ci: "1E3A8A",
+    docs: "1E3A8A",
+    "no-deploy": "7F1D1D",
+    hold: "9A3412",
+  };
+  /** أوصاف عربية للواجهات — الاسم التقني يبقى للمفاتيح الداخلية. */
+  const descriptions = {
+    [BLOCKED_DANGER_PATH_LABEL]: "يتطلب مراجعة — مسار خطر (داخلي: blocked:danger-path)",
+    [RISKY_MANUAL_REVIEW_LABEL]: "مراجعة مطلوبة — يحتاج مراجعة بشرية (داخلي: risky:manual-review)",
+    "manual-review": "مراجعة مطلوبة",
+    "no-auto-merge": "دمج يدوي",
+    "no-deploy": "إيقاف نشر",
+    hold: "معلّق",
+    ci: "تكامل مستمر",
+    docs: "توثيق",
+    ios: "تطبيق iOS",
+    ui: "واجهة",
+    perf: "أداء",
+    [SAFE_AUTO_MERGE_LABEL]: "دمج آمن",
+    "safe:ui": "واجهة آمنة",
+    "safe:content": "محتوى آمن",
+    "safe:test": "اختبارات آمنة",
   };
   const all = [
     ...SAFE_LABELS,
@@ -295,7 +313,9 @@ function cmdEnsureLabels() {
     "no-auto-merge",
   ];
   for (const name of [...new Set(all)]) {
-    const color = colors[name] || "CCCCCC";
+    const color = colors[name] || "1F2937";
+    const description =
+      descriptions[name] || `سياسة الدمج الآمن: ${name}`;
     const r = gh(
       [
         "label",
@@ -304,7 +324,7 @@ function cmdEnsureLabels() {
         "--color",
         color,
         "--description",
-        `Safe auto-merge policy: ${name}`,
+        description,
         "--force",
       ],
       { stdio: "inherit" },
