@@ -42,8 +42,7 @@ import {
   migrateMushafUserData,
   MushafReaderController,
   MushafPageRepository,
-  applyMushafAppearanceMode,
-  loadMushafAppearanceMode,
+  QuranSettingsRepository,
 } from "@/lib/mushaf-v2";
 import { useMediaSession } from "@/hooks/useMediaSession";
 import { MushafPager } from "./MushafPager";
@@ -207,14 +206,14 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   useEffect(() => {
     beginPowerSaverSession();
     if (isMushafReaderV2Enabled()) migrateMushafUserData();
-    const appearance = loadMushafAppearanceMode();
-    applyMushafAppearanceMode(appearance);
+    const appearance = QuranSettingsRepository.getAppearanceMode();
+    QuranSettingsRepository.applyAppearance(appearance);
 
     const mq =
       appearance === "system" && typeof window !== "undefined"
         ? window.matchMedia("(prefers-color-scheme: dark)")
         : null;
-    const onScheme = () => applyMushafAppearanceMode("system");
+    const onScheme = () => QuranSettingsRepository.applyAppearance("system");
     mq?.addEventListener?.("change", onScheme);
 
     return () => {

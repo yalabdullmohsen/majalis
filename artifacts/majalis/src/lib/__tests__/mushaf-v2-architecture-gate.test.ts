@@ -27,6 +27,10 @@ for (const p of required) {
   assert.ok(existsSync(resolve(root, p)), `missing ${p}`);
 }
 assert.ok(existsSync(resolve(root, "src/lib/mushaf-v2/appearance-prefs.ts")));
+assert.ok(existsSync(resolve(root, "src/lib/mushaf-v2/QuranSettingsRepository.ts")));
+assert.ok(existsSync(resolve(root, "src/lib/mushaf-v2/QuranKhatmaRepository.ts")));
+assert.ok(existsSync(resolve(root, "src/lib/quran-data/quran-data-fingerprint.ts")));
+assert.ok(existsSync(resolve(root, "docs/quran-data-reviews/APPROVED.json")));
 
 const provenance = read("src/lib/mushaf-v2/provenance.ts");
 assert.match(provenance, /mushafId:\s*1/);
@@ -38,6 +42,25 @@ const flags = read("src/lib/mushaf-v2/flags.ts");
 assert.match(flags, /settledLastPageSave:\s*true/);
 assert.match(flags, /navigationLock:\s*true/);
 assert.match(flags, /isMushafReaderV2Enabled/);
+assert.match(flags, /QURAN_EXPERIENCE_NEXT/);
+assert.match(flags, /settingsRepository:\s*true/);
+assert.match(flags, /dataFingerprintGate:\s*true/);
+assert.match(flags, /prefetchPlus2:\s*true/);
+assert.match(flags, /khatmaWird:\s*false/);
+
+const pageRepo = read("src/lib/mushaf-v2/MushafPageRepository.ts");
+assert.match(pageRepo, /prefetchPlus2/);
+assert.match(pageRepo, /radius/);
+
+const settings = read("src/lib/mushaf-v2/QuranSettingsRepository.ts");
+assert.match(settings, /QuranSettingsRepository/);
+assert.match(settings, /textReadingMode/);
+assert.doesNotMatch(settings, /FittedBox|scale-to-fit/i);
+
+const indexSrc = read("src/lib/mushaf-v2/index.ts");
+assert.match(indexSrc, /QuranSettingsRepository/);
+assert.match(indexSrc, /QuranKhatmaRepository/);
+assert.match(indexSrc, /QURAN_EXPERIENCE_NEXT/);
 
 const controller = read("src/lib/mushaf-v2/MushafReaderController.ts");
 assert.match(controller, /beginNavigation/);
@@ -59,6 +82,7 @@ const reader = read("src/features/mushaf-reader/NewMushafReader.tsx");
 assert.match(reader, /@\/lib\/mushaf-v2/);
 assert.match(reader, /MushafReaderController/);
 assert.match(reader, /migrateMushafUserData/);
+assert.match(reader, /QuranSettingsRepository/);
 assert.doesNotMatch(reader, /VerifiedMushafReader/);
 
 const page = read("src/pages/quran/MushafReaderPage.tsx");
