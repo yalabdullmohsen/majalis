@@ -59,7 +59,7 @@ assert.match(fab, /FLOATING_BACK_DISABLED/);
 
 assert.match(fiqh, /data-kx-kind/, "درس الفقه يميّز أنواع الأقسام");
 assert.match(fiqh, /AppBackButton/, "درس الفقه برجوع مضمّن");
-assert.match(fiqh, /kx-layout--fiqh/);
+assert.match(fiqh, /kx-layout--fiqh|KnowledgeLayout[\s\S]*kind="fiqh"/);
 
 const hadith = read("src/pages/hadith/ui/HadithView.tsx");
 assert.match(hadith, /UnifiedPrimaryFilters/, "فلاتر الحديث الموحّدة");
@@ -83,6 +83,7 @@ assert.match(miracles, /kind="reader"/);
 const ulum = read("src/pages/quran/ui/UlumQuranView.tsx");
 assert.match(ulum, /KnowledgeLayout/, "تخطيط علوم القرآن");
 assert.match(ulum, /kind="knowledge"/);
+assert.match(ulum, /data-kx-kind/, "علوم القرآن تميّز أنواع الكتل");
 
 const fiqhHub = read("src/pages/fiqh/ui/FiqhView.tsx");
 assert.match(fiqhHub, /KnowledgeLayout/, "تخطيط الفقه");
