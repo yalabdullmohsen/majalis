@@ -1,0 +1,303 @@
+/**
+ * Green Surface System — هوية البطاقة الخضراء الهادئة (مرجع السيرة).
+ * المصدر الوحيد لأسطح المحتوى الرئيسية: feature / knowledge / islamic / highlighted.
+ * لا تلوين محلي في الشاشات — كل شيء عبر هذه الرموز.
+ */
+
+:root {
+  /* —— أسطح —— */
+  --surface-feature: color-mix(in srgb, var(--mj-brand, #146b52) 7%, #f4faf7);
+  --surface-knowledge: color-mix(in srgb, var(--mj-brand, #146b52) 5.5%, #f6fbf8);
+  --surface-islamic: color-mix(in srgb, var(--mj-brand, #146b52) 8.5%, #f2f8f5);
+  --surface-highlighted: color-mix(in srgb, var(--mj-brand, #146b52) 11%, #eef6f2);
+
+  /* حدود / تمييز */
+  --surface-feature-border: color-mix(in srgb, var(--mj-brand, #146b52) 22%, var(--mj-hairline, #d9d3c8));
+  --surface-knowledge-border: color-mix(in srgb, var(--mj-brand, #146b52) 18%, var(--mj-hairline, #d9d3c8));
+  --surface-islamic-border: color-mix(in srgb, var(--mj-brand, #146b52) 24%, var(--mj-hairline, #d9d3c8));
+  --surface-highlighted-border: color-mix(in srgb, var(--mj-brand, #146b52) 30%, var(--mj-hairline, #d9d3c8));
+
+  --surface-feature-accent: var(--mj-brand-deep, var(--brand-on-light, #0d4a39));
+  --surface-knowledge-accent: var(--mj-brand, #146b52);
+  --surface-islamic-accent: var(--mj-brand-deep, #0d4a39);
+  --surface-highlighted-accent: var(--mj-brand-deep, #0d4a39);
+
+  /* حبر على الأسطح الخضراء الفاتحة */
+  --surface-feature-ink: var(--mj-ink, #16241e);
+  --surface-feature-ink-muted: var(--mj-ink-2, #4f5f58);
+
+  /* ظلال / نصف قطر موحّد */
+  --surface-feature-radius: var(--radius-card, 24px);
+  --surface-feature-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 8px 22px -16px rgba(10, 61, 46, 0.16);
+  --surface-feature-pad: clamp(0.9rem, 2.6vw, 1.2rem);
+
+  /* أسماء مطلوبة في المواصفات (camelCase aliases) */
+  --surfaceFeature: var(--surface-feature);
+  --surfaceKnowledge: var(--surface-knowledge);
+  --surfaceIslamic: var(--surface-islamic);
+  --surfaceHighlighted: var(--surface-highlighted);
+
+  /* ربط soft-card / MSS بالعائلة نفسها */
+  --soft-card-on-light-bg: var(--surface-feature);
+  --mss-section-hero-bg: var(--surface-islamic);
+}
+
+html[data-theme="dark"],
+html.dark,
+:root[data-theme="dark"] {
+  /* Dark Green System — سطح مرتفع عن الخلفية، لا أسود على أسود */
+  --surface-feature: color-mix(in srgb, #5fbf98 14%, #1a2622);
+  --surface-knowledge: color-mix(in srgb, #5fbf98 11%, #182420);
+  --surface-islamic: color-mix(in srgb, #5fbf98 16%, #1c2925);
+  --surface-highlighted: color-mix(in srgb, #5fbf98 20%, #1e2e29);
+
+  --surface-feature-border: color-mix(in srgb, #5fbf98 28%, #2f3d38);
+  --surface-knowledge-border: color-mix(in srgb, #5fbf98 24%, #2f3d38);
+  --surface-islamic-border: color-mix(in srgb, #5fbf98 32%, #2f3d38);
+  --surface-highlighted-border: color-mix(in srgb, #5fbf98 38%, #2f3d38);
+
+  --surface-feature-accent: #6fd0a8;
+  --surface-knowledge-accent: #5fbf98;
+  --surface-islamic-accent: #7ad4b0;
+  --surface-highlighted-accent: #8adbba;
+
+  --surface-feature-ink: #f3f7f5;
+  --surface-feature-ink-muted: #b7c4be;
+
+  --surface-feature-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 10px 24px -14px rgba(0, 0, 0, 0.55);
+
+  --mss-section-hero-bg: var(--surface-islamic);
+  --soft-card-on-light-bg: var(--surface-feature);
+}
+
+/* ── أداة تطبيق موحّدة ── */
+.gs-surface,
+.gs-surface--feature {
+  background: var(--surface-feature) !important;
+  background-image: none !important;
+  border: 1px solid var(--surface-feature-border) !important;
+  border-inline-start: 3px solid var(--surface-feature-accent) !important;
+  border-radius: var(--surface-feature-radius) !important;
+  box-shadow: var(--surface-feature-shadow) !important;
+  color: var(--surface-feature-ink) !important;
+}
+
+.gs-surface--knowledge {
+  background: var(--surface-knowledge) !important;
+  border-color: var(--surface-knowledge-border) !important;
+  border-inline-start-color: var(--surface-knowledge-accent) !important;
+}
+
+.gs-surface--islamic {
+  background: var(--surface-islamic) !important;
+  border-color: var(--surface-islamic-border) !important;
+  border-inline-start-color: var(--surface-islamic-accent) !important;
+}
+
+.gs-surface--highlighted {
+  background: var(--surface-highlighted) !important;
+  border-color: var(--surface-highlighted-border) !important;
+  border-inline-start-color: var(--surface-highlighted-accent) !important;
+}
+
+/* ── بطاقات المحتوى الرئيسية (Legacy → Green Surface) ──
+ * يستثنى المصحف/آيات/data-scripture صراحةً.
+ */
+.soft-card:not([data-scripture]):not(.mushaf-page):not(.ayah-card),
+.soft-card--on-light:not([data-scripture]),
+.soft-tile--on-light:not([data-scripture]),
+.hub-card:not([data-legacy-ok]):not([data-scripture]),
+.hub-tile:not([data-scripture]),
+.section-card:not([data-scripture]),
+.section-hub__card:not([data-scripture]),
+.ds-card:not([data-scripture]),
+.mj-card:not([data-scripture]),
+.ui-card:not([data-scripture]):not(.mushaf-page):not(.ayah-card),
+.list-card:not([data-scripture]),
+.page-card:not([data-scripture]),
+.content-card:not([data-scripture]),
+.topic-card:not([data-scripture]),
+.mk-topic-card,
+.mk-card,
+.mk-lane-card,
+.lesson-unified-card,
+.lesson-card:not(.lesson-card--legacy-ok):not([data-scripture]),
+.kuwait-lesson-card,
+.hadith-card:not([data-scripture]),
+.hadith-hub-card,
+.hdl-card,
+.fiqh-book-card,
+.fiqh-category-card,
+.fiqh-issue-card,
+.fqh-hub-card,
+.twh-hub-card,
+.quran-hub-card,
+.tarikh-card,
+.seerah-panel,
+.seerah-notice,
+.seerah-timeline,
+.seerah-phase,
+.prophet-lux-card,
+.prophet-fact-card,
+.prophet-lesson-card,
+.isp-card,
+.inst-card,
+.ilm-card,
+.univ-card,
+.nb-azm-card,
+.nb-miracle-card,
+.lib-card,
+.lpp-path-card,
+.settings-card,
+.nf2-card,
+.ads-card,
+.srch-result-card,
+.adhkar-focus-card,
+.adhkar-card:not([data-scripture]),
+.cmp-card,
+.myl2-card,
+.myl2-stat-card,
+.fq-card,
+.zk-card,
+.hj-card,
+.hs-card,
+.hs-term-card,
+.prayer-rank-card,
+.qwh-card,
+.qmem-card,
+.tl-card,
+.qc-card,
+.dq-card,
+.sg-card,
+.jnz-card,
+.mw-card,
+.sw-card,
+.iman-topic-card,
+.tawheed-type-card,
+.dii-hub-card,
+.dii-list-card,
+.dii-block,
+.dii-answer-card,
+.about-card,
+.home-daily-card,
+.section-lobby__featured,
+.card--featured:not([data-scripture]),
+.ss-state-card,
+.an-card,
+.tf-card,
+.tf-path-card,
+.tf-spotlight-card,
+.tf-edition-card,
+.tf-intro,
+.gl-term,
+.ai-detail,
+.uq-fact-item,
+.uq-dalil-box,
+.uq-info-box,
+.akl-card,
+.sect-card,
+.ve-book-card,
+.ve-chapter-card,
+.nation-card,
+.hb-hadith-row,
+.hlr__card,
+.info-card:not(.info-card--caution),
+.mj-framed:not([data-scripture]),
+.rsc {
+  background: var(--surface-feature) !important;
+  background-image: none !important;
+  border: 1px solid var(--surface-feature-border) !important;
+  border-inline-start: 3px solid var(--surface-feature-accent) !important;
+  border-radius: var(--surface-feature-radius) !important;
+  box-shadow: var(--surface-feature-shadow) !important;
+  color: var(--surface-feature-ink) !important;
+}
+
+/* بطاقات معرفة (تعريف / مصادر / منهجية) */
+.info-card,
+.uq-info-box,
+.uq-dalil-box,
+.seerah-notice,
+.tf-intro,
+.ai-detail {
+  background: var(--surface-knowledge) !important;
+  border-color: var(--surface-knowledge-border) !important;
+  border-inline-start-color: var(--surface-knowledge-accent) !important;
+}
+
+/* بطاقات إسلامية مميزة (سيرة / عقيدة / تاريخ / إعجاز) */
+.seerah-panel,
+.seerah-phase,
+.seerah-timeline,
+.tarikh-card,
+.prophet-lux-card,
+.nb-miracle-card,
+.tawheed-type-card,
+.iman-topic-card,
+.mk-lane-card,
+.section-lobby__featured,
+.card--featured:not([data-scripture]) {
+  background: var(--surface-islamic) !important;
+  border-color: var(--surface-islamic-border) !important;
+  border-inline-start-color: var(--surface-islamic-accent) !important;
+}
+
+/* تنبيه حذر — يبقى ضمن العائلة مع درجة دافئة خفيفة فوق الأخضر */
+.info-card--caution {
+  background: color-mix(in srgb, #fef3c7 35%, var(--surface-knowledge)) !important;
+  border-color: color-mix(in srgb, #a16207 28%, var(--surface-knowledge-border)) !important;
+  border-inline-start-color: #a16207 !important;
+  color: var(--surface-feature-ink) !important;
+}
+
+/* عناوين / أوصاف فوق السطح الأخضر */
+.hub-card__title,
+.section-card__title,
+.lesson-card__title,
+.topic-card__title,
+.ui-card__title,
+.mj-card__title,
+.hadith-hub-card .hub-card__title,
+.info-card__title {
+  color: var(--surface-feature-ink) !important;
+  font-weight: 800;
+}
+
+.hub-card__desc,
+.section-card__desc,
+.lesson-card__meta,
+.topic-card__meta,
+.ui-card__desc,
+.mj-card__desc,
+.info-card__body,
+.settings-toggle-desc {
+  color: var(--surface-feature-ink-muted) !important;
+}
+
+/* soft-card على سطح فاتح: استخدم رموز العائلة */
+.soft-card--on-light,
+.soft-tile--on-light {
+  --soft-card-grad: none;
+  --soft-tile-grad: none;
+  --soft-card-border: var(--surface-feature-border);
+  --soft-tile-border: var(--surface-feature-border);
+  --soft-card-shadow: var(--surface-feature-shadow);
+  --soft-tile-shadow: var(--surface-feature-shadow);
+  --soft-card-bg: var(--surface-feature);
+  --soft-tile-bg: var(--surface-knowledge);
+}
+
+html[data-theme="dark"] .soft-card--on-light,
+html.dark .soft-card--on-light,
+html[data-theme="dark"] .soft-tile--on-light,
+html.dark .soft-tile--on-light {
+  --soft-card-grad: none;
+  --soft-tile-grad: none;
+  --soft-card-border: var(--surface-feature-border);
+  --soft-tile-border: var(--surface-feature-border);
+  color: var(--surface-feature-ink);
+}

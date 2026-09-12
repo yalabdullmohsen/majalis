@@ -66,6 +66,8 @@ import "./styles/section-cards-theme.css";
 import "./styles/ssunnah-ux-polish.css";
 import "./styles/ssunnah-semantic-tokens.css";
 import "./styles/ssunnah-card-unify.css";
+/* Green Surface System — يفوز على تلميع الأقسام الأبيض القديم */
+import "./styles/green-surface-system.css";
 // dark-mode-surfaces (~24KB) — فوري فقط إن كان الثيم داكنًا عند الإقلاع؛ وإلا بعد load
 {
   const bootDark =

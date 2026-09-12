@@ -97,19 +97,13 @@
   gap: 0.45rem;
   min-height: var(--sec-entry-min-h);
   padding: var(--sec-entry-pad);
-  background:
-    linear-gradient(
-      165deg,
-      color-mix(in srgb, var(--mj-brand-soft, var(--brand-soft)) 42%, var(--ss-card-bg, var(--mj-surface, #fff))) 0%,
-      var(--ss-card-bg, var(--mj-surface, #fff)) 58%
-    );
-  border: 1px solid color-mix(in srgb, var(--ss-primary-green, var(--mj-brand)) 20%, var(--ss-border, var(--mj-hairline, #e3e8e6)));
-  border-radius: var(--radius-card, 24px);
-  box-shadow:
-    var(--ss-shadow-soft, 0 2px 10px -6px rgba(11, 32, 24, 0.12)),
-    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  background: var(--surface-feature, var(--ss-card-bg, var(--mj-surface, #f4faf7)));
+  border: 1px solid var(--surface-feature-border, color-mix(in srgb, var(--ss-primary-green, var(--mj-brand)) 20%, var(--ss-border, var(--mj-hairline, #e3e8e6))));
+  border-inline-start: 3px solid var(--surface-feature-accent, var(--ss-primary-green, var(--mj-brand)));
+  border-radius: var(--surface-feature-radius, var(--radius-card, 24px));
+  box-shadow: var(--surface-feature-shadow, var(--ss-shadow-soft, 0 2px 10px -6px rgba(11, 32, 24, 0.12)));
   text-decoration: none;
-  color: inherit;
+  color: var(--surface-feature-ink, inherit);
   min-width: 0;
   overflow: hidden;
   margin-inline: auto;
@@ -148,8 +142,9 @@ button.hub-card {
 }
 
 .hub-card--soft {
-  background: color-mix(in srgb, var(--ss-card-bg, var(--mj-surface, #fff)) 97%, var(--mj-brand-soft) 3%);
-  border-color: color-mix(in srgb, var(--mj-hairline, #e3e8e6) 88%, var(--mj-brand) 12%);
+  background: var(--surface-knowledge, color-mix(in srgb, var(--ss-card-bg, var(--mj-surface, #fff)) 97%, var(--mj-brand-soft) 3%));
+  border-color: var(--surface-knowledge-border, color-mix(in srgb, var(--mj-hairline, #e3e8e6) 88%, var(--mj-brand) 12%));
+  border-inline-start-color: var(--surface-knowledge-accent, var(--mj-brand));
   box-shadow: none;
 }
 

@@ -23,7 +23,9 @@
   --mss-on-hero: #16241e;
   --mss-on-hero-muted: #3d4f47;
   --mss-on-hero-accent: #123f2e;
-  --mss-section-hero-bg: color-mix(in srgb, #1f6b56 5.5%, #fffef9);
+  /* هيرو الأقسام = Green Surface (islamic) — مرجع السيرة */
+  --mss-section-hero-bg: var(--surface-islamic, color-mix(in srgb, #1f6b56 5.5%, #fffef9));
+  /* هيرو الأقسام = Green Surface (islamic) — مرجع السيرة */
   /* نص فوق هيرو أخضر غامق (asp-hero / بطاقات مميزة) */
   --mss-on-dark-hero: #ffffff;
   --mss-on-dark-hero-muted: #f3efe6;
