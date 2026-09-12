@@ -26,7 +26,15 @@ assert.doesNotMatch(lessonView, /يحتاج مراجعة/);
 assert.doesNotMatch(lessonView, /بحاجة إلى استكمال/);
 
 const EMOJI_RE = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u;
-const FORBIDDEN = [/TODO/i, /FIXME/i, /placeholder/i, /قريبًا/, /قيد الإضافة/, /يحتاج مراجعة/];
+const FORBIDDEN = [
+  /TODO/i,
+  /FIXME/i,
+  /placeholder/i,
+  /قريبًا/,
+  /قيد الإضافة/,
+  /يحتاج مراجعة/,
+  /اعمل في باب .+ بالمعتمد الحنبلي بعد تصور المسألة/,
+];
 
 const books = getAllFiqhBooks();
 assert.ok(books.some((b) => b.id === "adab"), "كتاب الآداب موجود");
