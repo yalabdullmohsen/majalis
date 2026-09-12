@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { GraduationCap, ChevronLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
 import { ContentReportLink } from "@/components/ContentReportLink";

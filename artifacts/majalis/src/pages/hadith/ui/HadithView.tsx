@@ -29,6 +29,7 @@ import {
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { HadithEntryCard } from "@/components/hadith/HadithEntryCard";
+import { SectionEntryCard } from "@/components/ui/HubCard";
 import { GridScreen } from "@/components/design-system/screens";
 import { ExclusiveChoiceGroup } from "@/components/ui/ExclusiveChoiceGroup";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
@@ -1055,15 +1056,15 @@ export default function HadithPage() {
         <div className="hadith-page hadith-page--hub">
           <div className="hub-card-grid" data-section-entry-grid="1">
             {hubCards.map((c) => (
-              <HadithEntryCard
+              <SectionEntryCard
                 key={c.href}
                 href={c.href}
                 title={c.title}
-                description={c.desc}
+                subtitle={c.desc}
                 Icon={c.Icon}
-                countLabel={c.badge}
-                cta="افتح القسم"
-                className={c.featured ? "hdl-entry-card--featured" : ""}
+                meta={c.badge}
+                featured={Boolean(c.featured)}
+                className={c.featured ? "hdl-entry-card--featured" : undefined}
               />
             ))}
           </div>
