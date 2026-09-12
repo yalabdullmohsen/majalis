@@ -661,7 +661,7 @@ button.app-back-btn--bar[data-fixed-back-bar="1"] {
   z-index: var(--z-fab, 220);
   inset-inline-start: max(0.75rem, var(--inset-left, 0px));
   inset-inline-end: auto;
-  bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 0.75rem);
+  bottom: var(--global-back-bottom, calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 0.75rem));
   top: auto;
   display: inline-flex;
   align-items: center;
@@ -717,7 +717,8 @@ html.dark .app-back-btn--bar.fixed-back-bar {
 }
 
 body.filter-sheet-open .app-back-btn--bar.fixed-back-bar {
-  display: none;
+  /* لا نخفي الرجوع — نرفعه فوق الورقة عبر --global-back-bottom */
+  z-index: calc(var(--z-fab, 220) + 40);
 }
 
 html.audio-dock-open .app-back-btn--bar.fixed-back-bar,
@@ -845,4 +846,18 @@ html[data-audio-dock="1"] .app-back-btn--bar.fixed-back-bar {
   border: none;
   border-block-start: 1px solid var(--rsc-border, color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, transparent));
   padding-inline: 0;
+}
+
+/* GlobalBackControlHost — طبقة مستقرة فوق المحتوى */
+.global-back-control-host {
+  position: contents;
+}
+.global-back-control-host .app-back-btn--bar.fixed-back-bar {
+  z-index: var(--z-fab, 220);
+}
+html.dark .app-back-btn--bar.fixed-back-bar,
+html[data-theme="dark"] .app-back-btn--bar.fixed-back-bar {
+  background: color-mix(in srgb, var(--mj-surface, #12241c) 92%, transparent);
+  color: var(--text-primary, #ECF2EF);
+  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 28%, transparent);
 }
