@@ -3,8 +3,8 @@
  * تُستخدم داخل TopicPage/SectionTemplatePage، ويمكن استدعاؤها منفردة للصفحات المخصصة.
  */
 import type { CSSProperties, ReactNode } from "react";
-import { Link, useLocation } from "wouter";
-import { goBackOrFallback } from "@/lib/navigation-back";
+import { Link } from "wouter";
+import { AppBackButton } from "@/components/common/AppBackButton";
 import {
   getTopicTheme,
   topicThemeCssVars,
@@ -62,7 +62,6 @@ export function SectionHero({
   showBack = true,
   backFallbackHref,
 }: SectionHeroProps) {
-  const [location] = useLocation();
   const theme = getTopicTheme(themeId);
   const sectionAccent = accent ?? theme.accent;
   const heroStyle = {
@@ -80,17 +79,12 @@ export function SectionHero({
     >
       {showBack ? (
         <div className="section-hero__back-row">
-          <button
-            type="button"
-            className="section-hero__back app-back-btn app-back-btn--hero"
+          <AppBackButton
+            variant="hero"
+            fallbackHref={backFallbackHref}
+            className="section-hero__back"
             aria-label="رجوع"
-            onPointerDown={(e) => {
-              e.preventDefault();
-              goBackOrFallback(location, backFallbackHref);
-            }}
-          >
-            رجوع
-          </button>
+          />
         </div>
       ) : null}
       {breadcrumb && breadcrumb.length > 0 ? (

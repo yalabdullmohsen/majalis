@@ -29,6 +29,7 @@ import {
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { SectionEntryCard } from "@/components/ui/HubCard";
+import { HadithEntryCard } from "@/components/hadith/HadithEntryCard";
 import { GridScreen } from "@/components/design-system/screens";
 import { ExclusiveChoiceGroup } from "@/components/ui/ExclusiveChoiceGroup";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
@@ -1091,12 +1092,12 @@ export default function HadithPage() {
               ابحث وفلتر حسب الحكم في قسم الأحاديث الصحيحة — الصحيح والحسن للاستفادة، والضعيف في قسمه المخصّص.
             </p>
             <div className="hub-card-grid hub-card-grid--solo">
-              <SectionEntryCard
+              <HadithEntryCard
                 href="/hadith/sahih"
                 title="الأحاديث الصحيحة"
-                subtitle="بحث وتصفية مع المصدر والتخريج"
+                description="بحث وتصفية مع المصدر والتخريج"
                 Icon={BookOpenCheck}
-                variant="soft"
+                cta="تصفّح الصحيح"
               />
             </div>
           </section>

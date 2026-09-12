@@ -626,6 +626,26 @@ html[data-theme="dark"] .kx-library-card {
   border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 28%, transparent);
 }
 
+/* عناوين/أوصاف بطاقة المكتبة في الداكن — لا تستخدم brand-deep الداكن فوق سطح داكن */
+html.dark .kx-library-card__title,
+html.dark .hub-card__title,
+html[data-theme="dark"] .kx-library-card__title,
+html[data-theme="dark"] .hub-card__title {
+  color: var(--mj-ink, #e8f2ec);
+}
+
+html.dark .kx-library-card__desc,
+html.dark .hub-card__desc,
+html[data-theme="dark"] .kx-library-card__desc,
+html[data-theme="dark"] .hub-card__desc {
+  color: var(--mj-ink-2, #b7c9c0);
+}
+
+html.dark .kx-library-card__meta,
+html[data-theme="dark"] .kx-library-card__meta {
+  color: var(--mj-brand, #5cc095);
+}
+
 /* إلغاء السهم العائم — الرجوع عبر الهيدر فقط */
 .floating-back-btn,
 .floating-back-btn.app-back-btn--floating,

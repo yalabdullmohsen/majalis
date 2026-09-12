@@ -1,11 +1,10 @@
 import type { ReactNode } from "react";
-import { useLocation } from "wouter";
 import { FeaturedSectionCard } from "@/components/sections/FeaturedSectionCard";
 import { SectionCard } from "@/components/sections/SectionCard";
 import { QuickActionsQuad } from "@/components/lobby/QuickActionsQuad";
+import { AppBackButton } from "@/components/common/AppBackButton";
 import type { LobbyChip, LobbyGroup, LobbyId, LobbyItem, LobbyPrimary, LobbyQuadItem } from "@/config/section-lobbies";
 import type { SectionDef } from "@/config/sections.registry";
-import { goBackOrFallback } from "@/lib/navigation-back";
 import { cn } from "@/lib/utils";
 import "./section-lobby.css";
 
@@ -58,7 +57,6 @@ export function SectionLobby({
   children,
   className,
 }: Props) {
-  const [location] = useLocation();
   return (
     <div
       className={cn("section-lobby", className)}
@@ -71,18 +69,13 @@ export function SectionLobby({
     >
       <div data-kx-layout="library" className="section-lobby__shot" data-lobby-shot="1">
         <header className="section-lobby__head">
-          <button
-            type="button"
+          <AppBackButton
+            variant="lobby"
+            fallbackHref="/"
             className="section-lobby__back"
-            data-section-back="1"
             aria-label="رجوع"
-            onPointerDown={(e) => {
-              e.preventDefault();
-              goBackOrFallback(location, "/");
-            }}
-          >
-            رجوع
-          </button>
+            data-section-back="1"
+          />
           <h1
             className={cn(
               "section-lobby__title",

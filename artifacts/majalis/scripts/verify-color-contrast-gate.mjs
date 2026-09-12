@@ -77,12 +77,12 @@ const ASSERTIONS = [
   // مرتبط بفحص Color contrast — لا تُخفّف ألوان العنوان في cards.css دون إعادة هذا التأكيد.
   { route: "/cards", selector: ".cards-page-title", mode: "light", min: 4.5 },
   { route: "/cards", selector: ".cards-page-title", mode: "dark", min: 4.5 },
-  // بطاقات بوابة التوحيد — لا تعتمد شارة «أنت هنا» بعد إصلاح التنقّل المستقل.
-  { route: "/tawhid", selector: ".hub-card__title", mode: "dark", min: 3 },
-  { route: "/tawhid", selector: ".hub-card__desc", mode: "dark", min: 4.5 },
-  { route: "/quran-knowledge", selector: ".hub-card__title", mode: "light", min: 3 },
-  { route: "/quran-knowledge", selector: ".hub-card__desc", mode: "light", min: 4.5 },
-  { route: "/quran-knowledge", selector: ".hub-card__title", mode: "dark", min: 3 },
+  // بطاقات بوابة التوحيد — KnowledgeLibraryCard (kx + hub-card توافق).
+  { route: "/tawhid", selector: ".kx-library-card__title || .hub-card__title", mode: "dark", min: 3 },
+  { route: "/tawhid", selector: ".kx-library-card__desc || .hub-card__desc", mode: "dark", min: 4.5 },
+  { route: "/quran-knowledge", selector: ".kx-library-card__title || .hub-card__title", mode: "light", min: 3 },
+  { route: "/quran-knowledge", selector: ".kx-library-card__desc || .hub-card__desc", mode: "light", min: 4.5 },
+  { route: "/quran-knowledge", selector: ".kx-library-card__title || .hub-card__title", mode: "dark", min: 3 },
   { route: "/fiqh", selector: ".topic-page__title", mode: "light", min: 3 },
   { route: "/quran/surah-stories/1", selector: ".mj-btn", mode: "light", min: 4.5 },
   { route: "/quran/surah-stories/1", selector: ".mj-btn", mode: "dark", min: 4.5 },

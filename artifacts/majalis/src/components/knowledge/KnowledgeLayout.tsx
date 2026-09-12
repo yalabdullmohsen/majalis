@@ -84,10 +84,13 @@ export function KnowledgeLibraryCard({
   className,
 }: KnowledgeLibraryCardProps) {
   return (
-    <Link href={href} className={cn("kx-library-card", className)}>
+    <Link href={href} className={cn("kx-library-card hub-card", className)}>
       <span>
-        <h3 className="kx-library-card__title">{title}</h3>
-        {description ? <p className="kx-library-card__desc">{description}</p> : null}
+        {/* hub-card__* للتوافق مع بوابة التباين/البحث؛ kx-* هو المسار البصري الجديد */}
+        <h3 className="kx-library-card__title hub-card__title">{title}</h3>
+        {description ? (
+          <p className="kx-library-card__desc hub-card__desc">{description}</p>
+        ) : null}
         {countLabel ? <p className="kx-library-card__meta">{countLabel}</p> : null}
       </span>
       <span className="kx-library-card__action">{actionLabel}</span>
