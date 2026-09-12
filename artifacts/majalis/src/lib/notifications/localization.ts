@@ -45,29 +45,25 @@ const STORE_KEY = "ssunnah-notif-locale-idx-v1";
  * {{clock}} وقت الساعة · {{count}} عدد · {{item}} عنصر متابعة
  */
 export const NOTIFICATION_CATALOG: Record<NotificationCatalogKey, readonly NotificationTemplate[]> = {
-  /** تنبيه قبل الصلاة */
+  /** تنبيه قبل الأذان — العنوان للحدث؛ المتن ساعة فقط (ص/م) بلا تكرار الوقت في جملة. */
   prayerPre: [
-    { title: "تنبيه {{name}}", body: "الصلاة بعد {{minsPhrase}}." },
-    { title: "اقترب الموعد", body: "صلاة {{name}} بعد {{minsPhrase}}." },
-    { title: "تنبيه الصلاة", body: "بقي {{minsPhrase}} على {{name}}." },
-    { title: "وقت قريب", body: "{{name}} بعد {{minsPhrase}}." },
+    { title: "اقترب أذان {{name}}", body: "{{clock}}" },
+    { title: "اقترب أذان {{name}}", body: "{{clock}}" },
+    { title: "اقترب أذان {{name}}", body: "{{clock}}" },
   ],
 
-  /** أذان الصلاة */
+  /** إشعار الأذان */
   prayerAdhan: [
-    { title: "أذان {{name}}", body: "دخل الوقت." },
-    { title: "أذان {{name}}", body: "حان الأذان." },
-    { title: "وقت الصلاة", body: "دخل وقت صلاة {{name}}." },
-    { title: "أذان {{name}}", body: "تقبل الله طاعتكم." },
-    { title: "أذان {{name}}", body: "نسأل الله لكم القبول." },
+    { title: "أذان {{name}}", body: "{{clock}}" },
+    { title: "أذان {{name}}", body: "{{clock}}" },
+    { title: "أذان {{name}}", body: "{{clock}}" },
   ],
 
-  /** التذكير بعد الأذان */
+  /** تنبيه بعد الأذان */
   prayerPost: [
-    { title: "وقت الصلاة", body: "تذكير بصلاة {{name}}." },
-    { title: "وقت الصلاة", body: "تقبل الله طاعتكم في صلاة {{name}}." },
-    { title: "تذكير هادئ", body: "صلاة {{name}} ما زالت في وقتها." },
-    { title: "وقت الصلاة", body: "نسأل الله لكم القبول في صلاة {{name}}." },
+    { title: "تذكير بصلاة {{name}}", body: "{{clock}}" },
+    { title: "تذكير بصلاة {{name}}", body: "{{clock}}" },
+    { title: "تذكير بصلاة {{name}}", body: "{{clock}}" },
   ],
 
   /** إقامة */
@@ -130,9 +126,10 @@ export const NOTIFICATION_CATALOG: Record<NotificationCatalogKey, readonly Notif
 
   /** ورد القرآن اليومي */
   quranDaily: [
-    { title: "ورد القرآن", body: "وقت مناسب لوردك اليومي." },
-    { title: "وقت القراءة", body: "ورد القرآن بانتظارك." },
-    { title: "ورد يومي", body: "آيات تُتلى متى تيسّر." },
+    { title: "ورد القرآن", body: "خصص وقتاً لوردك اليومي." },
+    { title: "متابعة التلاوة", body: "تابع من آخر موضع وصلت إليه." },
+    { title: "ورد القرآن", body: "افتح المصحف ولو لآيات قليلة." },
+    { title: "متابعة التلاوة", body: "أكمل صفحتك من المصحف." },
   ],
 
   /** البطاقات التعليمية */
@@ -277,6 +274,16 @@ export function formatNotificationMinutesPhrase(minutes: number): string {
   return `${mins} دقيقة`;
 }
 
+/** صيغة ساعة الإشعار: «ص ٤:١١» من تسمية مثل «٤:١١ ص» أو «ص ٤:١١». */
+export function formatPrayerNotificationClock(label?: string): string {
+  const raw = (label || "").trim();
+  if (!raw) return "";
+  if (/^[صم]\s/.test(raw)) return raw;
+  const m = raw.match(/^(.+?)\s*([صم])$/);
+  if (m) return `${m[2]} ${m[1].trim()}`;
+  return raw;
+}
+
 /**
  * يلحق الساعة بالمتن مرة واحدة إن وُجدت، دون تكرارها في العنوان.
  * لا يضيف الساعة إن كان المتن يذكرها أصلًا.
@@ -296,22 +303,16 @@ export function buildPrayerLocalizedCopy(opts: {
   minutesBefore?: number;
 }): LocalizedNotification {
   const name = opts.prayerName;
-  const clock = (opts.prayerTimeLabel || "").trim();
+  const clock = formatPrayerNotificationClock(opts.prayerTimeLabel);
 
   if (opts.kind === "pre") {
-    const mins = Math.max(1, Math.round(opts.minutesBefore ?? 15));
-    const minsPhrase = formatNotificationMinutesPhrase(mins);
-    const copy = pickLocalizedNotification("prayerPre", {
-      name,
-      mins,
-      minsPhrase,
-    });
-    return { title: copy.title, body: withOptionalClock(copy.body, clock) };
+    const copy = pickLocalizedNotification("prayerPre", { name, clock });
+    return { title: copy.title, body: clock || copy.body || "اقترب الأذان." };
   }
 
   if (opts.kind === "enter") {
-    const copy = pickLocalizedNotification("prayerAdhan", { name });
-    return { title: copy.title, body: withOptionalClock(copy.body, clock) };
+    const copy = pickLocalizedNotification("prayerAdhan", { name, clock });
+    return { title: copy.title, body: clock || copy.body || "دخل الوقت." };
   }
 
   if (opts.kind === "iqamah") {
@@ -319,6 +320,6 @@ export function buildPrayerLocalizedCopy(opts: {
     return { title: copy.title, body: withOptionalClock(copy.body, clock) };
   }
 
-  const copy = pickLocalizedNotification("prayerPost", { name });
-  return { title: copy.title, body: withOptionalClock(copy.body, clock) };
+  const copy = pickLocalizedNotification("prayerPost", { name, clock });
+  return { title: copy.title, body: clock || copy.body || "تذكير بالصلاة." };
 }
