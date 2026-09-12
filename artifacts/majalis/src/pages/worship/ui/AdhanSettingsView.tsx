@@ -18,8 +18,11 @@ import {
   type AdvanceMinutes,
 } from "@/lib/adhan-preferences";
 import { playAdhanPreview, stopAdhanPreview } from "@/lib/adhan-audio-service";
+import { previewAdhanUrl, previewNotificationTone, stopAppAudio } from "@/lib/audio/preview-helpers";
+import { subscribeAppAudio } from "@/lib/audio/app-audio-coordinator";
 import { invalidatePrayerNativeSchedule } from "@/lib/prayer-alert-scheduler";
 import { PrayerAlertSettingsCard } from "@/components/adhan/PrayerAlertSettingsCard";
+import { AudioPromptsSettingsCard } from "@/components/adhan/AudioPromptsSettingsCard";
 import {
   listAvailableSettingsSounds,
   getSettingsSoundOption,
@@ -341,9 +344,18 @@ export default function AdhanSettingsPage() {
     () => () => {
       if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
       stopAdhanPreview();
+      void stopAppAudio("leave");
     },
     [],
   );
+
+  useEffect(() => {
+    return subscribeAppAudio((snap) => {
+      if (snap.phase === "idle" || snap.phase === "failed" || snap.phase === "interrupted") {
+        setPlayingId(null);
+      }
+    });
+  }, []);
 
   function flashSaved() {
     if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
@@ -426,16 +438,34 @@ export default function AdhanSettingsPage() {
       return;
     }
     stopAdhanPreview();
+    await stopAppAudio("user");
     setPlayingId(opt.id);
     setSoundMsg(null);
     try {
       if (opt.previewUrl) {
-        const audio = new Audio(opt.previewUrl);
-        audio.volume = Math.max(0.35, Math.min(1, prefs.volume ?? 1));
-        (window as unknown as { __ssunnahPreviewAudio?: HTMLAudioElement }).__ssunnahPreviewAudio = audio;
-        audio.onended = () => setPlayingId((id) => (id === opt.id ? null : id));
-        await audio.play();
-        setSoundMsg(opt.group === "tone" ? "معاينة صوت الإشعار داخل التطبيق." : "معاينة الأذان داخل التطبيق.");
+        const res =
+          opt.group === "tone"
+            ? await previewNotificationTone(
+                `settings-tone-${opt.id}`,
+                opt.previewUrl,
+                "adhan-settings",
+              )
+            : await previewAdhanUrl(
+                `settings-adhan-${opt.id}`,
+                opt.previewUrl,
+                "adhan-settings",
+                15_000,
+              );
+        if (!res.ok) {
+          setPlayingId(null);
+          setSoundMsg(res.error ?? "تعذّر تشغيل المعاينة.");
+          return;
+        }
+        setSoundMsg(
+          opt.group === "tone"
+            ? "معاينة صوت الإشعار داخل التطبيق."
+            : "معاينة الأذان داخل التطبيق.",
+        );
         return;
       }
       const result = await playAdhanPreview(opt.muezzinId, "short", prefs.volume ?? 1);
@@ -627,6 +657,8 @@ export default function AdhanSettingsPage() {
       </section>
 
       <PrayerAlertSettingsCard />
+
+      <AudioPromptsSettingsCard />
 
       <section className="soft-card soft-card--on-light ads-card" aria-labelledby="ads-faith-head">
         <div className="ads-card__head" id="ads-faith-head">
