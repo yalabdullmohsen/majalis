@@ -36,7 +36,9 @@ const pre = buildPrayerLocalizedCopy({
   prayerTimeLabel: "٣:٣٠ م",
   minutesBefore: 15,
 });
-assert.match(pre.body, /١٥|15|دقائق|دقيقة/);
+assert.match(pre.title, /اقترب أذان العصر/);
+assert.match(pre.body, /^م\s*٣:٣٠$|^٣:٣٠/);
+assert.doesNotMatch(pre.body, /دقائق|دقيقة|١٥/);
 
 const morning = pickLocalizedNotification("adhkarMorning");
 assert.match(morning.title, /أذكار|ورد/);

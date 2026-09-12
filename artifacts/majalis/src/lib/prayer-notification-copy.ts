@@ -99,11 +99,22 @@ export function pickPrayerNotificationCopy(
       };
     }
     const safeMins = Math.max(1, minutes || 1);
-    return pickFromPool(`prayer-legacy-${kind}`, pool, {
+    const copy = pickFromPool(`prayer-legacy-${kind}`, pool, {
       name: prayerName,
       mins: safeMins,
       minsPhrase: formatNotificationMinutesPhrase(safeMins),
     });
+    // قوالب الأذان الحديثة تعتمد {{clock}}؛ عند غياب الساعة نضمن متنًا قصيرًا غير فارغ.
+    if (!copy.body.trim()) {
+      const fallbackBody =
+        kind === "enter"
+          ? "دخل الوقت."
+          : kind.startsWith("pre")
+            ? "اقترب الأذان."
+            : "تذكير بالصلاة.";
+      return { title: copy.title, body: fallbackBody };
+    }
+    return copy;
   } catch {
     return {
       title: FALLBACK.title,

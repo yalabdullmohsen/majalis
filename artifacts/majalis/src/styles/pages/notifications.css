@@ -650,3 +650,66 @@ html.dark .notif-row__label {
   z-index: 200;
 }
 
+
+
+/* ── أقسام الإشعارات (Settings List) ── */
+.nsp-detail__head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+.nsp-field { margin-top: 1rem; }
+.nsp-field__label {
+  margin: 0 0 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--mj-emerald-text, var(--mj-brand-deep));
+}
+.nsp-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.nsp-custom-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+}
+.nsp-custom-count input {
+  width: 3.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep) 18%, transparent);
+  padding: 0.25rem 0.4rem;
+  font: inherit;
+}
+.nsp-preview { margin-top: 1.25rem; }
+.nsp-preview__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, var(--mj-brand-deep) 5%, var(--mj-surface, #fff));
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep) 10%, transparent);
+}
+.nsp-preview__card strong { font-size: 0.95rem; }
+.nsp-preview__card span { font-size: 0.85rem; color: var(--elite-ink-soft, #4A5568); }
+.nsp-row-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: var(--elite-ink-soft, #4A5568);
+  white-space: nowrap;
+}
+.nsp-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--mj-brand-deep) 25%, transparent);
+}
+.nsp-dot.is-on { background: var(--mj-brand, #1F6B4A); }
+.nsp-inline-link { display: inline-block; margin-top: 0.5rem; }
+.nsp-prayer-modes { margin-top: 0.5rem; }

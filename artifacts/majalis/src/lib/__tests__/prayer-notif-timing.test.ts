@@ -238,9 +238,9 @@ const { hashPrayerNotificationId } = await import("../prayer-notification-ids");
     minutesBefore: 15,
   });
   assert.ok(pre.title.length > 0);
-  assert.match(`${pre.title} ${pre.body}`, /المغرب|الصلاة|تنبيه|اقترب|موعد/);
-  assert.match(pre.body, /١٥|15|دقائق|دقيقة/);
-  assert.match(pre.body, /٦:٢٧|6:27/);
+  assert.match(pre.title, /اقترب أذان المغرب/);
+  assert.match(pre.body, /م\s*٦:٢٧|م\s*6:27|٦:٢٧|6:27/);
+  assert.doesNotMatch(pre.body, /دقائق|دقيقة|١٥|15/);
   const pre10 = buildScheduledPrayerNotificationCopy({
     kind: "pre",
     prayerName: "المغرب",
@@ -248,16 +248,18 @@ const { hashPrayerNotificationId } = await import("../prayer-notification-ids");
     minutesBefore: 10,
   });
   assert.ok(pre10.title.length > 0);
-  assert.match(pre10.body, /10|١٠|دقائق/);
-  assert.match(pre10.body, /٦:٢٧|6:27/);
+  assert.match(pre10.title, /اقترب أذان المغرب/);
+  assert.match(pre10.body, /م\s*٦:٢٧|م\s*6:27|٦:٢٧|6:27/);
+  assert.doesNotMatch(pre10.body, /دقائق|دقيقة/);
   const enter = buildScheduledPrayerNotificationCopy({
     kind: "enter",
     prayerName: "المغرب",
     prayerTimeLabel: formatTime12("18:27"),
   });
-  assert.match(enter.title, /أذان|وقت|المغرب/);
-  assert.match(enter.body, /٦:٢٧|6:27|دخل|حان|تقبل|نسأل/);
-  console.log("  ✓ scheduled copy includes clock time");
+  assert.match(enter.title, /أذان المغرب/);
+  assert.match(enter.body, /م\s*٦:٢٧|م\s*6:27|٦:٢٧|6:27/);
+  assert.doesNotMatch(enter.body, /دخل الوقت|حان الأذان|تقبل|نسأل/);
+  console.log("  ✓ scheduled copy uses title + clock body");
 }
 
 // ── 7) معرّفات قابلة للتنبؤ + لا تضاعف ──

@@ -531,7 +531,7 @@ export default function SettingsPage() {
           />
           <SettingsList
             rows={[
-              { id: "notif-detail", title: "إعدادات التذكيرات التفصيلية", href: "/notification-settings" },
+              { id: "notif-detail", title: "الإشعارات", href: "/notification-settings" },
               { id: "adhan", title: "إعدادات الأذان", href: "/adhan-settings" },
             ]}
           />

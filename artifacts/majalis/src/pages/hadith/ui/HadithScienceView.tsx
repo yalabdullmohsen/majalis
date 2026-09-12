@@ -1105,17 +1105,23 @@ export default function HadithSciencePage() {
                   )}
                 </button>
                 {isOpen && (
-                  <div className="hs-card__body">
-                    <p className="hs-card__def">{t.definition}</p>
-                    {t.example && (
-                      <div className="hs-card__example">
-                        <span className="hs-card__example-label">مثال:</span>
+                  <div className="hs-card__body" data-knowledge-reader="term">
+                    <p className="hs-card__def" data-hdl="definition">
+                      <span className="hs-card__example-label">تعريف — </span>
+                      {t.definition}
+                    </p>
+                    {t.note ? (
+                      <div className="hs-card__note" data-hdl="warning" role="note">
+                        <span className="hs-card__example-label">تنبيه علمي — </span>
+                        {t.note}
+                      </div>
+                    ) : null}
+                    {t.example ? (
+                      <div className="hs-card__example" data-hdl="example">
+                        <span className="hs-card__example-label">مثال — </span>
                         {t.example}
                       </div>
-                    )}
-                    {t.note && (
-                      <div className="hs-card__note">{t.note}</div>
-                    )}
+                    ) : null}
                   </div>
                 )}
               </article>

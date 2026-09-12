@@ -12,8 +12,22 @@ import {
   formatNotificationMinutesPhrase,
   pickLocalizedNotification,
 } from "@/lib/notifications/localization";
+import {
+  defaultSectionsPrefs,
+  type NotifSectionId,
+  type NotifSectionPrefs,
+} from "@/lib/notifications/sections-config";
 
 const STORAGE_KEY = "majalis_notif_prefs_v1";
+
+export type PrayerNotifModes = {
+  /** تنبيه قبل الأذان */
+  preEnabled: boolean;
+  /** إشعار الأذان */
+  adhanEnabled: boolean;
+  /** تنبيه بعد الأذان */
+  postEnabled: boolean;
+};
 
 export type NotifPrefs = {
   enabled: boolean;
@@ -28,6 +42,16 @@ export type NotifPrefs = {
   dhikrPhraseReminder: boolean;
   reminderHour: number;          // الساعة المفضلة للتذكير (0-23)
   reminderMinute: number;
+  /** أقسام الإشعارات الموحّدة (الصلاة، القرآن، …) */
+  sections: Record<NotifSectionId, NotifSectionPrefs>;
+  /** أنماط تنبيه الصلاة داخل قسم الصلاة */
+  prayerModes: PrayerNotifModes;
+};
+
+const DEFAULT_PRAYER_MODES: PrayerNotifModes = {
+  preEnabled: true,
+  adhanEnabled: true,
+  postEnabled: true,
 };
 
 const DEFAULTS: NotifPrefs = {
@@ -40,22 +64,133 @@ const DEFAULTS: NotifPrefs = {
   dhikrPhraseReminder: true,
   reminderHour: 8,
   reminderMinute: 0,
+  sections: defaultSectionsPrefs(),
+  prayerModes: { ...DEFAULT_PRAYER_MODES },
 };
+
+function mergeSectionPrefs(
+  incoming: Partial<Record<NotifSectionId, Partial<NotifSectionPrefs>>> | undefined,
+  legacy: Pick<
+    NotifPrefs,
+    | "prayerReminder"
+    | "quranDailyReminder"
+    | "adhkarReminder"
+    | "flashcardsReminder"
+    | "resumeReminder"
+  >,
+): Record<NotifSectionId, NotifSectionPrefs> {
+  const base = defaultSectionsPrefs();
+  if (incoming) {
+    for (const id of Object.keys(base) as NotifSectionId[]) {
+      const patch = incoming[id];
+      if (!patch) continue;
+      base[id] = {
+        ...base[id],
+        ...patch,
+        weekdays: Array.isArray(patch.weekdays) ? [...patch.weekdays] : [...base[id].weekdays],
+      };
+    }
+    return base;
+  }
+  // ترحيل من الأعلام القديمة عند غياب sections
+  base.prayer.enabled = legacy.prayerReminder;
+  base.quran.enabled = legacy.quranDailyReminder;
+  base.adhkar.enabled = legacy.adhkarReminder;
+  base.seekingKnowledge.enabled = legacy.flashcardsReminder;
+  base.lessons.enabled = legacy.resumeReminder;
+  return base;
+}
+
+/** مزامنة الأعلام القديمة مع أقسام الواجهة الجديدة (للتوافق مع الجدولة الحالية). */
+export function syncLegacyFlagsFromSections(prefs: NotifPrefs): NotifPrefs {
+  const s = prefs.sections;
+  return {
+    ...prefs,
+    prayerReminder: s.prayer?.enabled ?? prefs.prayerReminder,
+    quranDailyReminder: s.quran?.enabled ?? prefs.quranDailyReminder,
+    adhkarReminder: s.adhkar?.enabled ?? prefs.adhkarReminder,
+    flashcardsReminder: s.seekingKnowledge?.enabled ?? prefs.flashcardsReminder,
+    resumeReminder: s.lessons?.enabled ?? prefs.resumeReminder,
+  };
+}
 
 export function loadNotifPrefs(): NotifPrefs {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? { ...DEFAULTS, ...JSON.parse(raw) } : { ...DEFAULTS };
+    if (!raw) return { ...DEFAULTS, sections: defaultSectionsPrefs(), prayerModes: { ...DEFAULT_PRAYER_MODES } };
+    const parsed = JSON.parse(raw) as Partial<NotifPrefs>;
+    const merged: NotifPrefs = {
+      ...DEFAULTS,
+      ...parsed,
+      sections: mergeSectionPrefs(parsed.sections, {
+        prayerReminder: parsed.prayerReminder ?? DEFAULTS.prayerReminder,
+        quranDailyReminder: parsed.quranDailyReminder ?? DEFAULTS.quranDailyReminder,
+        adhkarReminder: parsed.adhkarReminder ?? DEFAULTS.adhkarReminder,
+        flashcardsReminder: parsed.flashcardsReminder ?? DEFAULTS.flashcardsReminder,
+        resumeReminder: parsed.resumeReminder ?? DEFAULTS.resumeReminder,
+      }),
+      prayerModes: { ...DEFAULT_PRAYER_MODES, ...(parsed.prayerModes ?? {}) },
+    };
+    return syncLegacyFlagsFromSections(merged);
   } catch {
-    return { ...DEFAULTS };
+    return { ...DEFAULTS, sections: defaultSectionsPrefs(), prayerModes: { ...DEFAULT_PRAYER_MODES } };
   }
 }
 
 export function saveNotifPrefs(prefs: NotifPrefs): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
-  void import("@/lib/native-storage").then(({ storageSetSync }) => {
-    storageSetSync(STORAGE_KEY, JSON.stringify(prefs));
+  // ادفع الأعلام القديمة → الأقسام (مسارات Adhan/Quran التي تعدّل العلم فقط)
+  // ثم أعد مزامنة الأعلام من الأقسام لضمان اتساق واحد عند القراءة.
+  const baseSections = prefs.sections ?? defaultSectionsPrefs();
+  const sections: Record<NotifSectionId, NotifSectionPrefs> = {
+    ...baseSections,
+    prayer: { ...baseSections.prayer, enabled: prefs.prayerReminder },
+    quran: { ...baseSections.quran, enabled: prefs.quranDailyReminder },
+    adhkar: { ...baseSections.adhkar, enabled: prefs.adhkarReminder },
+    seekingKnowledge: {
+      ...baseSections.seekingKnowledge,
+      enabled: prefs.flashcardsReminder,
+    },
+    lessons: { ...baseSections.lessons, enabled: prefs.resumeReminder },
+  };
+  const next = syncLegacyFlagsFromSections({
+    ...prefs,
+    sections,
+    prayerModes: prefs.prayerModes ?? { ...DEFAULT_PRAYER_MODES },
   });
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  void import("@/lib/native-storage").then(({ storageSetSync }) => {
+    storageSetSync(STORAGE_KEY, JSON.stringify(next));
+  });
+}
+
+export function updateNotifSection(
+  sectionId: NotifSectionId,
+  patch: Partial<NotifSectionPrefs>,
+): NotifPrefs {
+  const current = loadNotifPrefs();
+  const prev = current.sections[sectionId] ?? defaultSectionsPrefs()[sectionId];
+  const section: NotifSectionPrefs = {
+    ...prev,
+    ...patch,
+    weekdays: patch.weekdays ? [...patch.weekdays] : [...prev.weekdays],
+  };
+  const next: NotifPrefs = {
+    ...current,
+    sections: {
+      ...current.sections,
+      [sectionId]: section,
+    },
+  };
+  // احفظ التفعيل في الأعلام القديمة قبل save (وإلا سيُعاد من العلم القديم)
+  if (patch.enabled !== undefined) {
+    if (sectionId === "prayer") next.prayerReminder = section.enabled;
+    if (sectionId === "quran") next.quranDailyReminder = section.enabled;
+    if (sectionId === "adhkar") next.adhkarReminder = section.enabled;
+    if (sectionId === "seekingKnowledge") next.flashcardsReminder = section.enabled;
+    if (sectionId === "lessons") next.resumeReminder = section.enabled;
+  }
+  saveNotifPrefs(next);
+  return loadNotifPrefs();
 }
 
 export async function requestPermission(): Promise<NotificationPermission> {
