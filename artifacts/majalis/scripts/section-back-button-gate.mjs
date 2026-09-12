@@ -51,17 +51,21 @@ async function ensureBase() {
   const fabSrc = readFileSync(join(root, "src/components/FloatingBackButton.tsx"), "utf8");
   const heroSrc = readFileSync(join(root, "src/components/topic/SectionHero.tsx"), "utf8");
   const lobbySrc = readFileSync(join(root, "src/components/lobby/SectionLobby.tsx"), "utf8");
-  if (!/return null/.test(fabSrc) || !/FLOATING_BACK_DISABLED/.test(fabSrc)) {
-    console.error("FloatingBackButton must return null with FLOATING_BACK_DISABLED");
+  if (!/FLOATING_BACK_DISABLED/.test(fabSrc)) {
+    console.error("FloatingBackButton must keep FLOATING_BACK_DISABLED (no circular FAB)");
+    process.exit(1);
+  }
+  if (!/FIXED_BACK_BAR_ENABLED/.test(fabSrc) || !/variant=["']bar["']/.test(fabSrc)) {
+    console.error("FloatingBackButton must enable FIXED_BACK_BAR_ENABLED with variant=\"bar\"");
     process.exit(1);
   }
   if (!/AppBackButton/.test(heroSrc) || !/AppBackButton/.test(lobbySrc)) {
     console.error("SectionHero and SectionLobby must render AppBackButton");
     process.exit(1);
   }
-  // مصدر الحقيقة: عند تعطيل العائم نكتفي بفحص المصدر لتجنّب dist قديم
-  if (/FLOATING_BACK_DISABLED/.test(fabSrc) && /return null/.test(fabSrc)) {
-    console.log("section-back-button-gate: source-ok (FAB disabled + header back) — skip stale dist playwright");
+  // مصدر الحقيقة: الشريط الثابت + تعطيل FAB — نكتفي بفحص المصدر لتجنّب dist قديم
+  if (/FLOATING_BACK_DISABLED/.test(fabSrc) && /FIXED_BACK_BAR_ENABLED/.test(fabSrc)) {
+    console.log("section-back-button-gate: source-ok (fixed back bar + FAB disabled) — skip stale dist playwright");
     return { base: null, stop: async () => {} };
   }
 
@@ -73,8 +77,8 @@ async function ensureBase() {
   if (!existsSync(join(dist, "index.html"))) {
     // فحص مصدر ثابت عند غياب dist
     const fab = readFileSync(join(root, "src/components/FloatingBackButton.tsx"), "utf8");
-    if (!/return null/.test(fab) || !/FLOATING_BACK_DISABLED/.test(fab)) {
-      console.error("FloatingBackButton يجب أن يُرجع null مع FLOATING_BACK_DISABLED");
+    if (!/FLOATING_BACK_DISABLED/.test(fab) || !/FIXED_BACK_BAR_ENABLED/.test(fab) || !/variant=["']bar["']/.test(fab)) {
+      console.error("FloatingBackButton يجب شريط ثابت (bar) مع FLOATING_BACK_DISABLED");
       process.exit(1);
     }
     const hero = readFileSync(join(root, "src/components/topic/SectionHero.tsx"), "utf8");
@@ -124,8 +128,13 @@ function collectVisibleBacks() {
       el.hasAttribute("data-floating-back") ||
       el.classList.contains("floating-back-btn") ||
       el.getAttribute("data-back-variant") === "floating";
+    const fixedBar =
+      el.hasAttribute("data-fixed-back-bar") ||
+      el.classList.contains("fixed-back-bar") ||
+      el.getAttribute("data-back-variant") === "bar";
     visible.push({
       floating,
+      fixedBar,
       position: cs.position,
       top: Math.round(r.top),
       bottom: Math.round(r.bottom),
@@ -173,8 +182,8 @@ async function main() {
       failures.push(`${route}: بلا زر رجوع هيدري/مضمّن`);
       continue;
     }
-    if (visible.some((v) => v.floating && v.position === "fixed")) {
-      failures.push(`${route}: ما زال هناك رجوع عائم ثابت`);
+    if (visible.some((v) => v.floating && v.position === "fixed" && !v.fixedBar)) {
+      failures.push(`${route}: ما زال هناك رجوع عائم دائري ثابت`);
     }
     const btn = visible[0];
     if (btn.w < 44 || btn.h < 44) failures.push(`${route}: منطقة لمس ${btn.w}×${btn.h} < 44`);
