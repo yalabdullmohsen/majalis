@@ -1,0 +1,123 @@
+{
+  "$schemaNote": "Protected Content Registry — automation must never modify these. Brand: سُنّة.",
+  "version": 1,
+  "updatedAt": "2026-09-12",
+  "protectionLevel": "C",
+  "defaultActionOnTouch": "reject_and_log_needs_specialist_review",
+  "entities": [
+    {
+      "entityId": "quran-uthmani-text",
+      "label": "نص القرآن (الرسم العثماني / التشكيل)",
+      "categories": ["quran", "uthmani", "tashkeel", "ayah_numbers", "surah_order"],
+      "pathGlobs": [
+        "public/data/quran/**",
+        "src/lib/quran*/**",
+        "src/data/quran*/**"
+      ],
+      "fieldPatterns": [
+        "ayah_text",
+        "uthmani",
+        "quran_text",
+        "verse_text",
+        "tashkeel"
+      ],
+      "contentTypes": ["quran", "mushaf", "ayah", "surah"]
+    },
+    {
+      "entityId": "mushaf-page-mapping",
+      "label": "توزيع صفحات المصحف",
+      "categories": ["mushaf", "page_mapping"],
+      "pathGlobs": [
+        "public/data/quran/pages-manifest.json",
+        "public/data/quran/quran-position-index.json",
+        "public/data/quran/manifest.json"
+      ],
+      "fieldPatterns": ["page_map", "pages_manifest", "mushaf_page"],
+      "contentTypes": ["mushaf_pages"]
+    },
+    {
+      "entityId": "hadith-matn",
+      "label": "متن الحديث والراوي والتخريج والحكم",
+      "categories": ["hadith", "narrator", "takhrij", "grade"],
+      "pathGlobs": [
+        "public/data/hadith/**",
+        "src/lib/*hadith*",
+        "src/data/*hadith*"
+      ],
+      "fieldPatterns": [
+        "hadith_text",
+        "matn",
+        "narrator",
+        "takhrij",
+        "grade",
+        "isnad"
+      ],
+      "contentTypes": ["hadith", "verified_hadith"],
+      "tables": ["verified_hadith_items"]
+    },
+    {
+      "entityId": "adhkar-reference",
+      "label": "الأذكار والأدعية المرجعية",
+      "categories": ["adhkar", "dua"],
+      "pathGlobs": [
+        "src/lib/adhkar*",
+        "public/data/adhkar/**"
+      ],
+      "fieldPatterns": ["dhikr_text", "dua_text", "adhkar_body"],
+      "contentTypes": ["adhkar", "dua"]
+    },
+    {
+      "entityId": "fiqh-rulings",
+      "label": "الأحكام الفقهية والفتاوى والعقيدة",
+      "categories": ["fiqh", "fatwa", "aqeedah", "rulings"],
+      "pathGlobs": [
+        "src/lib/rulings*",
+        "src/lib/fiqh*",
+        "public/data/rulings/**"
+      ],
+      "fieldPatterns": [
+        "ruling_body",
+        "fatwa_text",
+        "hukm",
+        "aqeedah"
+      ],
+      "contentTypes": ["rulings", "fiqh", "fatwa", "aqeedah"],
+      "tables": ["sharia_rulings"]
+    },
+    {
+      "entityId": "scholar-attributions",
+      "label": "نسبة الأقوال إلى العلماء والاقتباسات المرجعية",
+      "categories": ["attribution", "quotation"],
+      "pathGlobs": [],
+      "fieldPatterns": [
+        "scholar_quote",
+        "attributed_saying",
+        "quotation"
+      ],
+      "contentTypes": ["scholar_quote"]
+    },
+    {
+      "entityId": "historical-disputed",
+      "label": "الروايات التاريخية الخلافية والفضائل التعبدية",
+      "categories": ["history_disputed", "fadaail"],
+      "pathGlobs": [],
+      "fieldPatterns": [
+        "fadaail",
+        "reward_count",
+        "disputed_history"
+      ],
+      "contentTypes": ["history_disputed", "fadaail"]
+    },
+    {
+      "entityId": "tafsir-reference",
+      "label": "تفسير الآيات المرجعي",
+      "categories": ["tafsir"],
+      "pathGlobs": [
+        "public/data/knowledge/**/tafsir*",
+        "src/lib/*tafsir*"
+      ],
+      "fieldPatterns": ["tafsir_text", "ayah_tafsir"],
+      "contentTypes": ["tafsir"]
+    }
+  ]
+}
