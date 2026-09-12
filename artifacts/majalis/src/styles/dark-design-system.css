@@ -452,11 +452,12 @@
   border: 1px solid #4a5e56 !important;
 }
 
+/* تبويبات الطهارة على سطح parchment — حبر داكن (لا نص ليلي فاتح على خلفية فاتحة) */
 :is(html[data-theme="dark"], html.dark) .th-tab:not(.th-tab--active),
 :is(html[data-theme="dark"], html.dark) .th-tab:not(.th-tab--active) .th-tab__label,
 :is(html[data-theme="dark"], html.dark) .th-tab:not(.th-tab--active) .th-tab__icon {
-  color: #c2cfca !important;
-  -webkit-text-fill-color: #c2cfca !important;
+  color: var(--mss-on-hero-muted, #3d4f47) !important;
+  -webkit-text-fill-color: var(--mss-on-hero-muted, #3d4f47) !important;
 }
 
 :is(html[data-theme="dark"], html.dark) .th-tab.th-tab--active,
@@ -464,4 +465,20 @@
   color: #0e2f24 !important;
   -webkit-text-fill-color: #0e2f24 !important;
   background: #d7ebe1 !important;
+}
+
+/*
+ * Soft parchment heroes (modern-section-shell) تبقي حبرًا داكنًا ليلاً.
+ * يُستثنى هيروات العلامة الداكنة حتى لا يُفرض حبر داكن على سطح أخضر/ليلي.
+ */
+:is(html[data-theme="dark"], html.dark) .mss-hero-surface:not(.home-page-hero):not(.pts-hero):not(.asp-hero),
+:is(html[data-theme="dark"], html.dark) .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) {
+  color: var(--mss-on-hero, #16241e) !important;
+}
+:is(html[data-theme="dark"], html.dark) .mss-hero-surface:not(.home-page-hero) :is(h1, h2, [class*="__title"]),
+:is(html[data-theme="dark"], html.dark) .page-hero-mj--bleed:not(.home-page-hero) :is(h1, h2, .page-hero-mj__title, .page-hero-mj__headline) {
+  color: var(--mss-on-hero, #16241e) !important;
+}
+:is(html[data-theme="dark"], html.dark) :is(.pts-hero, .pts-hero--compact, .home-page-hero) :is(h1, h2, [class*="__title"], [class*="__name"]) {
+  color: var(--mss-on-dark-hero, #ffffff) !important;
 }

@@ -258,9 +258,7 @@ export default function ArbaeenNawawiPage() {
                     <footer className="an-row__footer">
                       <span className="an-row__source">المصدر: {h.source}</span>
                       <div className="an-row__actions">
-                        <Link href={`/arbaeen-nawawi/${h.id}`} className="an-row__action an-row__cta hdl-entry-card__cta" aria-label={`قراءة وشرح الحديث ${h.id}`}>
-                          <GraduationCap size={14} strokeWidth={1.8} aria-hidden="true" /> اختبر
-                        </Link>
+                        <Link href={`/arbaeen-nawawi/${h.id}`} className="an-row__action an-row__cta hdl-entry-card__cta" aria-label={`قراءة وشرح الحديث ${h.id}`}>قراءة وشرح</Link>
                         <button
                           type="button"
                           className={`an-row hdl-hadith-row__action${isRead ? " an-row__action--done" : ""}`}

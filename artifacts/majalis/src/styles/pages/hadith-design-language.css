@@ -541,3 +541,136 @@
   color: var(--mj-brand-deep, #163828);
   border-color: color-mix(in srgb, var(--mj-brand, #1f4d3a) 36%, transparent);
 }
+
+/* —— Knowledge Reader blocks —— */
+.hdl-kr { margin-block: 0.65rem; }
+.hdl-kr__body { margin: 0; line-height: 1.75; font-size: 0.95rem; }
+.hdl-kr__list {
+  margin: 0;
+  padding-inline-start: 1.15rem;
+  line-height: 1.7;
+  font-size: 0.92rem;
+}
+.hdl-kr__links-title {
+  margin: 0 0 0.45rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-primary, #14241c);
+}
+.hdl-kr__links-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.hdl-chip--link {
+  text-decoration: none;
+  color: var(--mj-brand-deep, #163828);
+  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 28%, transparent);
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+}
+:is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-chip--link {
+  color: var(--mj-brand-soft, #8fcdb0);
+  background: color-mix(in srgb, var(--mj-brand-soft, #6faf8e) 14%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand-soft, #6faf8e) 32%, transparent);
+}
+
+/* متن أوضح — أكبر عنصر بصري */
+.hdl-role--matn,
+.hdl-card__matn {
+  font-size: clamp(1.12rem, 1rem + 0.55vw, 1.32rem) !important;
+  line-height: 1.9 !important;
+  font-weight: 600;
+  padding: 1.05rem 1.15rem !important;
+  border-inline-start-width: 4px !important;
+}
+
+/* كتل الراوي/المصدر/التخريج منفصلة بصريًا */
+.hdl-card__meta {
+  gap: 0.55rem !important;
+}
+.hdl-card__meta-row {
+  padding: 0.45rem 0.65rem;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 5%, transparent);
+}
+.hdl-card__meta-label {
+  color: var(--text-secondary, #3d5348) !important;
+  font-weight: 800 !important;
+}
+:is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-card__meta-label {
+  color: var(--text-secondary, #b7c7be) !important;
+}
+:is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-card__meta-row {
+  background: color-mix(in srgb, var(--mj-brand-soft, #6faf8e) 8%, transparent);
+}
+
+/* Chips تباين أعلى */
+.hdl-chip,
+.hdl-discover__book {
+  color: var(--text-primary, #14241c) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #1f4d3a) 22%, transparent) !important;
+  min-height: 2.25rem;
+}
+.hdl-chip.is-active,
+.hdl-discover__book.is-active {
+  color: var(--mj-brand-deep, #0f2f22) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 18%, #fff) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #1f4d3a) 42%, transparent) !important;
+}
+:is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-chip,
+:is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-discover__book {
+  color: var(--text-primary, #e8f0eb) !important;
+  background: var(--surface-elevated, #24302b) !important;
+}
+:is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-chip.is-active,
+:is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-discover__book.is-active {
+  color: #0e2f24 !important;
+  background: #d7ebe1 !important;
+  border-color: color-mix(in srgb, #8fcdb0 40%, transparent) !important;
+}
+
+/* بطاقة دخول مميزة */
+.hdl-entry-card--featured {
+  border-color: color-mix(in srgb, var(--mj-brand, #1f4d3a) 28%, transparent);
+  box-shadow: 0 10px 28px -18px color-mix(in srgb, var(--mj-brand, #1f4d3a) 45%, transparent);
+}
+.hdl-entry-card__cta {
+  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 12%, transparent);
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+}
+
+/* مصطلح الحديث — Knowledge body */
+.hs-card__body {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.85rem 1rem 1rem;
+}
+.hs-card__def {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  background: var(--hdl-matn-bg);
+  border-inline-start: 3px solid var(--hdl-matn-border);
+  color: var(--hdl-matn);
+  line-height: 1.75;
+  font-size: 0.95rem;
+}
+.hs-card__note {
+  color: var(--hdl-notice);
+  background: var(--hdl-notice-bg);
+  border-radius: 12px;
+  padding: 0.7rem 0.85rem;
+  line-height: 1.65;
+}
+.hs-card__example {
+  color: var(--hdl-sharh);
+  background: var(--hdl-sharh-bg);
+  border-radius: 12px;
+  padding: 0.7rem 0.85rem;
+  line-height: 1.65;
+}

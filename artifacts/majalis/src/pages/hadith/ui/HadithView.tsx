@@ -28,7 +28,7 @@ import {
 } from "@/lib/hadith-access";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
-import { SectionEntryCard } from "@/components/ui/HubCard";
+import { HadithEntryCard } from "@/components/hadith/HadithEntryCard";
 import { GridScreen } from "@/components/design-system/screens";
 import { ExclusiveChoiceGroup } from "@/components/ui/ExclusiveChoiceGroup";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
@@ -804,48 +804,7 @@ export function HadithSection({
         </nav>
       )}
 
-      <div className="hadith-toolbar">
-        <HadithSearch
-          id={`hadith-q-${authenticityClass}`}
-          value={search}
-          onChange={setSearch}
-          placeholder="ابحث في متن الحديث أو المصدر أو التصنيف…"
-        />
-        <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="تصفية" />
-      </div>
-
-      {/* الحكم يُضبط من صحيفة التصفية المتقدمة — لا تكديس في الشريط */ null}
-
-      <div className="ds-section__head hadith-toolbar__meta">
-        <div className="hadith-stats-row">
-          <span className="hadith-stat">
-            <strong>{displayItems.length.toLocaleString("ar-EG")}</strong> {meta.countUnit}
-          </span>
-          {collections.length > 1 && (
-            <span className="hadith-stat">
-              <strong>{collections.length - 1}</strong> مجموعة
-            </span>
-          )}
-          {(debouncedSearch || debouncedNumber || debouncedBook || debouncedInBook || activeCategory !== "الكل") && (
-            <button
-              type="button"
-              className="hadith-clear-search"
-              onClick={() => {
-                setSearch("");
-                setNumberQuery("");
-                setBookQuery("");
-                setInBookQuery("");
-                setSearchScope("matn");
-                setActiveCategory("الكل");
-                setActiveCollection("الكل");
-              }}
-            >
-              مسح التصفية
-            </button>
-          )}
-        </div>
-      </div>
-
+      {/* الترتيب: النوع (أعلاه) → الكتب → التصنيفات → البحث؛ المتقدم في Bottom Sheet */}
       <div className="hdl-discover" data-hdl="discover">
         <div className="hdl-discover__books" role="radiogroup" aria-label="تصفية الكتب">
           {collections.map((c) => (
@@ -874,6 +833,46 @@ export function HadithSection({
               {cat.label}
             </button>
           ))}
+        </div>
+      </div>
+
+      <div className="hadith-toolbar">
+        <HadithSearch
+          id={`hadith-q-${authenticityClass}`}
+          value={search}
+          onChange={setSearch}
+          placeholder="ابحث في متن الحديث أو المصدر أو التصنيف…"
+        />
+        <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="تصفية متقدمة" />
+      </div>
+
+      <div className="ds-section__head hadith-toolbar__meta">
+        <div className="hadith-stats-row">
+          <span className="hadith-stat">
+            <strong>{displayItems.length.toLocaleString("ar-EG")}</strong> {meta.countUnit}
+          </span>
+          {collections.length > 1 && (
+            <span className="hadith-stat">
+              <strong>{collections.length - 1}</strong> مجموعة
+            </span>
+          )}
+          {(debouncedSearch || debouncedNumber || debouncedBook || debouncedInBook || activeCategory !== "الكل") && (
+            <button
+              type="button"
+              className="hadith-clear-search"
+              onClick={() => {
+                setSearch("");
+                setNumberQuery("");
+                setBookQuery("");
+                setInBookQuery("");
+                setSearchScope("matn");
+                setActiveCategory("الكل");
+                setActiveCollection("الكل");
+              }}
+            >
+              مسح التصفية
+            </button>
+          )}
         </div>
       </div>
 
@@ -1005,39 +1004,42 @@ export default function HadithPage() {
       desc: "متون الصحيحين مع المصدر والتخريج",
       Icon: BookOpenCheck,
       featured: true,
-      badge: "أساس",
+      badge: "مرجع الصحيحين",
     },
     {
       href: "/hadith/books",
       title: "كتب الحديث",
       desc: "البخاري ومسلم مرتّبان بالأبواب",
       Icon: Library,
+      badge: "كتب الأصول",
     },
     {
       href: "/arbaeen-nawawi",
       title: "الأربعون النووية",
       desc: "أربعون حديثاً جامعاً مع الشرح",
       Icon: BookMarked,
+      badge: "٤٠ حديثًا",
     },
     {
       href: "/hadith-science",
       title: "مصطلح الحديث",
       desc: "درجات الحديث ومباحث المصطلح",
       Icon: ScrollText,
+      badge: "قاموس المصطلح",
     },
     {
       href: "/hadith/daif",
       title: "الأحاديث الضعيفة",
       desc: "للتمييز والتخريج لا للاحتجاج",
       Icon: AlertTriangle,
-      badge: "تنبيه",
+      badge: "للتمييز لا للاحتجاج",
     },
     {
       href: "/hadith/mawdu",
       title: "الأحاديث الموضوعة",
       desc: "للتحذير والبيان دون الاحتجاج",
       Icon: Ban,
-      badge: "تحذير",
+      badge: "تحذير من النسبة",
     },
   ];
 
@@ -1053,15 +1055,15 @@ export default function HadithPage() {
         <div className="hadith-page hadith-page--hub">
           <div className="hub-card-grid" data-section-entry-grid="1">
             {hubCards.map((c) => (
-              <SectionEntryCard
+              <HadithEntryCard
                 key={c.href}
                 href={c.href}
                 title={c.title}
-                subtitle={c.desc}
+                description={c.desc}
                 Icon={c.Icon}
-                badge={c.badge}
-                featured={c.featured}
-                variant="primary"
+                countLabel={c.badge}
+                cta="افتح القسم"
+                className={c.featured ? "hdl-entry-card--featured" : ""}
               />
             ))}
           </div>
@@ -1077,12 +1079,12 @@ export default function HadithPage() {
               ابحث وفلتر حسب الحكم في قسم الأحاديث الصحيحة — الصحيح والحسن للاستفادة، والضعيف في قسمه المخصّص.
             </p>
             <div className="hub-card-grid hub-card-grid--solo">
-              <SectionEntryCard
+              <HadithEntryCard
                 href="/hadith/sahih"
                 title="الأحاديث الصحيحة"
-                subtitle="بحث وتصفية مع المصدر والتخريج"
+                description="بحث وتصفية مع المصدر والتخريج"
                 Icon={BookOpenCheck}
-                variant="soft"
+                cta="تصفّح الصحيح"
               />
             </div>
           </section>

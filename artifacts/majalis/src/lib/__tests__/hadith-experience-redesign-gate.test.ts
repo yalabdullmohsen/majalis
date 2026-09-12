@@ -57,4 +57,13 @@ console.log("=== CSS wired ===");
 assert.match(view, /hadith-design-language\.css/);
 assert.match(guide, /hadith-design-language\.css/);
 
+
+console.log("=== Knowledge Reader + Hub Entry ===");
+assert.match(guide, /HadithDefinitionCard|data-knowledge-reader/);
+assert.match(guide, /HadithWarningCard|تنبيه/);
+assert.match(view, /HadithEntryCard/);
+assert.match(view, /تصفية متقدمة|FilterBottomSheet/);
+assert.match(css, /hdl-kr|Knowledge Reader/);
+assert.match(card, /hdl-role--matn|hdl-card__matn/);
+
 console.log("hadith-experience-redesign-gate.test.ts: ok");
