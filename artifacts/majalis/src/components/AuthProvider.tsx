@@ -39,6 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const activeRef = useRef(true);
   const signedOutGeneration = useRef(0);
   const bootstrapDone = useRef(false);
+  const lastUserIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -76,6 +77,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setUser(next);
             setStatus("authenticated");
             if (next?.id) {
+              lastUserIdRef.current = next.id;
+              void import("@/lib/sync-engine").then((m) => m.bootstrapSyncEngine(next.id));
               void import("@/lib/guest-cloud-merge").then((m) =>
                 m.scheduleGuestCloudMerge(next.id),
               );
@@ -132,6 +135,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             // لا عمل ثقيل داخل callback — جدولة دقيقة فقط
             if (event === "SIGNED_OUT") {
               signedOutGeneration.current += 1;
+              const prevId = lastUserIdRef.current;
+              lastUserIdRef.current = null;
               if (activeRef.current) {
                 setUser(null);
                 setStatus("unauthenticated");
@@ -139,6 +144,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               }
               void import("@/lib/quran-audio-resume").then((m) => m.clearAudioResumeState());
               void import("@/lib/lesson-audio-resume").then((m) => m.clearAllLessonAudioResume());
+              void import("@/lib/sync-engine").then((m) => {
+                m.isolateAccountOnLogout(prevId);
+                m.stopSyncAndClearScope(m.activeSyncScope(prevId));
+                m.bootstrapSyncEngine(null);
+              });
               return;
             }
 
@@ -158,6 +168,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                     setUser(next);
                     setStatus("authenticated");
                     if (event === "SIGNED_IN" && next.id) {
+                      lastUserIdRef.current = next.id;
+                      void import("@/lib/sync-engine").then((m) => m.bootstrapSyncEngine(next.id));
                       void import("@/lib/guest-cloud-merge").then((m) =>
                         m.scheduleGuestCloudMerge(next.id),
                       );
@@ -216,17 +228,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = useCallback(async () => {
     if (!authApi) return { error: null };
     signedOutGeneration.current += 1;
+    const prevId = lastUserIdRef.current ?? user?.id ?? null;
+    lastUserIdRef.current = null;
     setUser(null);
     setStatus("unauthenticated");
     queryClient.clear();
     void import("@/lib/quran-audio-resume").then((m) => m.clearAudioResumeState());
     void import("@/lib/lesson-audio-resume").then((m) => m.clearAllLessonAudioResume());
+    void import("@/lib/sync-engine").then((m) => {
+      m.isolateAccountOnLogout(prevId);
+      m.stopSyncAndClearScope(m.activeSyncScope(prevId));
+      m.bootstrapSyncEngine(null);
+    });
     try {
       return await authApi.signOut();
     } catch (error) {
       return { error };
     }
-  }, [authApi, queryClient]);
+  }, [authApi, queryClient, user?.id]);
 
   const value = useMemo<AuthContextValue>(() => {
     const governanceRole =

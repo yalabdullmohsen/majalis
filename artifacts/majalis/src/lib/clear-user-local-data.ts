@@ -31,6 +31,10 @@ const EXACT_KEYS = [
   "majalis-kp-personalization-v1",
   "majalis-kp-search-history-v1",
   "majalis-kp-activity-v1",
+  "majalis-guest-merge-done-v1",
+  "majalis-guest-merge-pending-v1",
+  "majalis-sync-last-flush",
+  "majalis-sync-schema-v",
 ] as const;
 
 const PREFIXES = [
@@ -38,6 +42,8 @@ const PREFIXES = [
   "mj-quran-",
   "mj-",
   "sb-", // بعض مفاتيح supabase المحلية القديمة إن وُجدت
+  "majalis-sync-queue:",
+  "majalis-sync-clock:",
 ] as const;
 
 const KEEP_EXACT = new Set([
