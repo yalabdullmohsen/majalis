@@ -28,6 +28,9 @@ const EXACT_KEYS = [
   "majalis-mushaf-tafsir-font-scale-v1",
   "majalis-mushaf-translation-on-v1",
   "majalis-mushaf-translation-edition-v1",
+  "majalis-kp-personalization-v1",
+  "majalis-kp-search-history-v1",
+  "majalis-kp-activity-v1",
 ] as const;
 
 const PREFIXES = [

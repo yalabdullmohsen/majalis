@@ -243,6 +243,8 @@ const NotificationSettingsPage = lazy(() => import("@/pages/account/Notification
 const StudyRoomPage = lazy(() => import("@/views/StudyRoomPage"));
 const FamilyModePage = lazy(() => import("@/views/FamilyModePage"));
 const VaultPage = lazy(() => import("@/views/VaultPage"));
+const ProgressCenterPage = lazy(() => import("@/pages/account/ProgressCenterPage"));
+const OfflineCenterPage = lazy(() => import("@/pages/account/OfflineCenterPage"));
 const ResearcherProfilePage = lazy(() => import("@/views/ResearcherProfilePage"));
 const InstitutionsPage = lazy(() => import("@/views/InstitutionsPage"));
 const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
@@ -464,6 +466,8 @@ export default function AppRoutes() {
       <Route path="/family"><SafeLazyRoute component={FamilyModePage} /></Route>
       <Route path="/family-mode"><Redirect to="/family" /></Route>
       <Route path="/vault"><SafeLazyRoute component={VaultPage} /></Route>
+      <Route path="/progress"><SafeLazyRoute component={ProgressCenterPage} /></Route>
+      <Route path="/offline"><SafeLazyRoute component={OfflineCenterPage} /></Route>
       <Route path="/researcher"><SafeLazyRoute component={ResearcherProfilePage} /></Route>
       <Route path="/researcher-profile"><SafeLazyRoute component={ResearcherProfilePage} /></Route>
       <Route path="/institutions"><SafeLazyRoute component={InstitutionsPage} /></Route>

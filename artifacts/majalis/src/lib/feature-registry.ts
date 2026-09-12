@@ -64,6 +64,8 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "calendar",     label: "التقويم",           path: "/calendar",     group: "أدوات",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "occasions",    label: "المناسبات",         path: "/occasions",    group: "أدوات",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "search",       label: "البحث",             path: "/search",       group: "أدوات",         status: "active",       inSideNav: true,  inBottomNav: true  },
+  { id: "progress-center", label: "مركز التقدّم",   path: "/progress",    group: "حساب",          status: "active",       inSideNav: false, inBottomNav: false },
+  { id: "offline-center",  label: "مركز دون اتصال", path: "/offline",     group: "حساب",          status: "active",       inSideNav: false, inBottomNav: false },
   { id: "assistant",    label: "المساعد الذكي",     path: "/assistant",    group: "أدوات",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "flashcards",   label: "بطاقات المراجعة",  path: "/flashcards",   group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "knowledge-graph",label:"خارطة المعرفة",   path: "/knowledge-graph",group:"أدوات",        status: "disabled",       inSideNav: false,  inBottomNav: false },

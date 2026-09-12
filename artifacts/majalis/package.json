@@ -414,7 +414,7 @@
     "native:strip-qpc-fonts": "node scripts/native-strip-qpc-fonts.mjs",
     "test:qpc-font-pack": "node -e \"const fs=require('fs'); const p='public/fonts/qpc-v2/p1.woff2'; if(!fs.existsSync(p)) {console.error('missing',p); process.exit(1)}; console.log('✓ QPC fonts present', p);\"",
     "test:licenses": "node scripts/verify-licenses-gate.mjs",
-    "test:native-feel": "node --import tsx src/lib/__tests__/native-feel-motion.test.ts && node --import tsx src/lib/__tests__/spatial-nav.test.ts && node --import tsx src/lib/__tests__/premium-interaction-p0-gate.test.ts",
+    "test:native-feel": "node --import tsx src/lib/__tests__/native-feel-motion.test.ts && node --import tsx src/lib/__tests__/spatial-nav.test.ts && node --import tsx src/lib/__tests__/premium-interaction-p0-gate.test.ts && node --import tsx src/lib/__tests__/knowledge-platform-p0-gate.test.ts",
     "test:mushaf-density-gate": "node -e \"console.log('mushaf UI gates disabled — skipped')\"",
     "test:mushaf-aya-parity": "node -e \"console.log('mushaf UI gates disabled — skipped')\"",
     "test:rulings-publication-gate": "node scripts/audit-rulings-publication-gate.mjs",

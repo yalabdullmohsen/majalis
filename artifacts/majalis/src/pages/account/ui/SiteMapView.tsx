@@ -151,6 +151,8 @@ const SECTIONS = [
       { href: "/researcher-profile", label: "ملف الباحث",          desc: "ملفك الشخصي البحثي" },
       { href: "/transcribe",         label: "نسخ المحاضرات",       desc: "تحويل المحاضرات إلى نص" },
       { href: "/stats",              label: "إحصائياتي",           desc: "إحصائيات نشاطك" },
+      { href: "/progress",           label: "مركز التقدّم",         desc: "آخر قراءة ودروس وتقدّم محلي" },
+      { href: "/offline",            label: "مركز دون اتصال",      desc: "التنزيلات والمخزون المحلي" },
       { href: "/settings",           label: "الإعدادات",           desc: "إعدادات الحساب والتطبيق" },
     ],
   },
