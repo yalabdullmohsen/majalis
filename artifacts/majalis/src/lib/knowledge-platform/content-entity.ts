@@ -34,6 +34,8 @@ export type ContentEntityKind = (typeof CONTENT_ENTITY_KINDS)[number];
 
 export const VERIFICATION_STATUSES = [
   "draft",
+  "needs_source",
+  "needs_review",
   "proposed",
   "pending_review",
   "verified",
