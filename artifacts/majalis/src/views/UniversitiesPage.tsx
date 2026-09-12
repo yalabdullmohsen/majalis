@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { AlertTriangle, Landmark, Search } from "lucide-react";
+import { Landmark, Search } from "lucide-react";
 import { CompareProvider } from "@/components/universities/CompareContext";
 import { CompareBar } from "@/components/universities/CompareBar";
 import { UniversityCard } from "@/components/universities/UniversityCard";
@@ -95,6 +95,9 @@ function UniversitiesContent() {
   const [searchInput, setSearchInput]   = usePersistedState("filters:/universities:searchInput", "");
   const [filters, setFilters]           = usePersistedState<UniversityFilters>("filters:/universities:filters", {});
   const [filtersOpen, setFiltersOpen]   = useState(false);
+  const [noticeOpen, setNoticeOpen] = useState(() => {
+    try { return localStorage.getItem("univ-notice-dismissed") !== "1"; } catch { return true; }
+  });
   const activeFilterCount = Object.values(filters).filter(Boolean).length;
 
   const load = useCallback(async () => {
@@ -182,11 +185,20 @@ function UniversitiesContent() {
 
       <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
         {/* تنبيه موثوقية البيانات */}
-        <div className="up-alert" role="note">
-          <AlertTriangle size={14} aria-hidden="true" className="inline ms-1" />
-          <strong>تنبيه:</strong> راجع دائمًا الموقع الرسمي للجامعة قبل التقديم. الرسوم ومواعيد القبول
-          تتغيّر، ولا نثبت أرقامًا غير مؤكدة في هذا الدليل.
-        </div>
+        <details
+          className="up-alert up-alert--notice"
+          open={noticeOpen}
+          onToggle={(e) => {
+            const open = (e.currentTarget as HTMLDetailsElement).open;
+            setNoticeOpen(open);
+            try { localStorage.setItem("univ-notice-dismissed", open ? "0" : "1"); } catch { /* ignore */ }
+          }}
+        >
+          <summary>تحقق من الموقع الرسمي قبل التقديم</summary>
+          <p>
+            البرامج والمواعيد والرسوم قد تتغيّر. راجع الموقع الرسمي للجامعة قبل التقديم، ولا تعتمد على أرقام غير مؤكدة في هذا الدليل.
+          </p>
+        </details>
 
         {seedNeeded && universities.length > 0 && (
           <div className="up-alert" role="status">

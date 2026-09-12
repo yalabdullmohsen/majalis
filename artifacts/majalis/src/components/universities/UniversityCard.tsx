@@ -33,7 +33,7 @@ export const UniversityCard = memo(function UniversityCard({ university: u, comp
           <div className="univ-card__head-avatar">{u.name_ar[0]}</div>
         )}
         <div className="min-w-0 flex-1">
-          <p className="text-white font-bold text-sm leading-snug line-clamp-2">{u.name_ar}</p>
+          <p className="univ-card__name font-bold text-sm leading-snug line-clamp-2">{u.name_ar}</p>
           {u.name_en && <p className="univ-card__head-en">{u.name_en}</p>}
         </div>
       </div>
@@ -58,7 +58,7 @@ export const UniversityCard = memo(function UniversityCard({ university: u, comp
         </div>
 
         {!compact && u.about && (
-          <p className="text-xs leading-relaxed line-clamp-3 univ-card__meta">
+          <p className="text-xs leading-relaxed line-clamp-2 univ-card__meta">
             {u.about}
           </p>
         )}
@@ -66,7 +66,7 @@ export const UniversityCard = memo(function UniversityCard({ university: u, comp
         {/* الدرجات */}
         {degrees.length > 0 && (
           <div className="flex flex-wrap gap-1">
-            {degrees.map((d) => (
+            {degrees.slice(0, 3).map((d) => (
               <span key={d} className="univ-badge univ-badge--degree">{d}</span>
             ))}
           </div>
@@ -74,7 +74,7 @@ export const UniversityCard = memo(function UniversityCard({ university: u, comp
 
         {/* أنماط الدراسة */}
         <div className="flex flex-wrap gap-1">
-          {modes.map((m) => (
+          {modes.slice(0, 3).map((m) => (
             <span key={m} className="univ-badge univ-badge--mode">{m}</span>
           ))}
           {hasScholarship && (
