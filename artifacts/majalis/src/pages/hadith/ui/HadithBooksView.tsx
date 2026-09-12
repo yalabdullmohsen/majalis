@@ -18,6 +18,7 @@ import { VirtualList } from "@/components/VirtualList";
 import "@/styles/pages/hadith-books.css";
 import "@/styles/pages/hadith.css";
 import { ListScreen } from "@/components/design-system/screens";
+import { KnowledgeLayout } from "@/components/knowledge";
 
 // ─── Chapter index built from hadith data ─────────────────────────────────────
 
@@ -429,7 +430,7 @@ export default function HadithBooksPage() {
 
   return (
     <ListScreen compose="mark">
-    <div className="page-shell hb-page" dir="rtl">
+    <KnowledgeLayout kind="library" className="page-shell hb-page" data-kx="1">
       {/* التنقل */}
       <nav className="hb-breadcrumb" aria-label="مسار التنقل">
         <Link href="/hadith" className="hb-breadcrumb__link">
@@ -503,7 +504,7 @@ export default function HadithBooksPage() {
       <div className="px-4 pb-6 mt-8">
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث" count={4} />
       </div>
-    </div>
+    </KnowledgeLayout>
     </ListScreen>
   );
 }

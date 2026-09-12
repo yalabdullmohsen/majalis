@@ -8,6 +8,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import "@/styles/pages/fiqh-qawaid.css";
 import { ListScreen } from "@/components/design-system/screens";
+import { KnowledgeLayout } from "@/components/knowledge";
 
 /* ══════════════════════════════════════════════════════════════════
    §239، القواعد الفقهية الكبرى  (.fq-*)
@@ -424,7 +425,7 @@ export default function FiqhQawaidPage() {
 
   return (
     <ListScreen compose="mark">
-    <div className="fq-page" dir="rtl">
+    <KnowledgeLayout kind="knowledge" className="fq-page" data-kx="1">
       {/* ══ Hero ══ */}
       <section className="fq-hero">
         <div className="fq-hero__inner">
@@ -469,7 +470,7 @@ export default function FiqhQawaidPage() {
               وقد أُودعت في كتب «الأشباه والنظائر» للسيوطي وابن نجيم وابن الوكيل وغيرهم.
             </p>
             {QAWAID_KUBRA.map((q, i) => (
-              <div key={q.id} className="fq-card">
+              <div key={q.id} className="fq-card" data-kx-kind="ruling">
                 <div
                   className="fq-card__head"
                   onClick={() => setOpenKubra(openKubra === q.id ? null : q.id)}
@@ -517,7 +518,7 @@ export default function FiqhQawaidPage() {
                       <span className="fq-label">أمثلة تطبيقية</span>
                       <div className="fq-examples">
                         {q.examples.map((ex, j) => (
-                          <div key={j} className="fq-example">
+                          <div key={j} className="fq-example" data-kx-kind="notes">
                             <span className="fq-example__sit">{ex.situation}</span>
                             <span className="fq-example__arrow" aria-hidden="true">←</span>
                             <span className="fq-example__hukm">{ex.hukm}</span>
@@ -587,7 +588,7 @@ export default function FiqhQawaidPage() {
               الضوابط الفقهية أخص من القواعد، تنحصر في فن بعينه كالعبادات أو المعاملات، وتجمع أحكاماً متشابهة في باب واحد.
             </p>
             {DHAWAABIT.map(d => (
-              <div key={d.id} className="fq-daabit">
+              <div key={d.id} className="fq-daabit" data-kx-kind="definition">
                 <div
                   className="fq-daabit__head"
                   onClick={() => setOpenDhaabit(openDhaabit === d.id ? null : d.id)}
@@ -694,7 +695,7 @@ export default function FiqhQawaidPage() {
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه والقواعد" count={4} />
       </div>
-    </div>
+    </KnowledgeLayout>
     </ListScreen>
   );
 }

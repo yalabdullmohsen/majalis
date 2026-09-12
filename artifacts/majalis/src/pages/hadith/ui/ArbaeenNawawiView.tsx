@@ -12,6 +12,7 @@ import "@/styles/pages/hadith-design-language.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { ListScreen } from "@/components/design-system/screens";
+import { KnowledgeLayout } from "@/components/knowledge";
 
 /* ══════════════════════════════════════════════════════════════════
    §178b، الأربعون النووية (.an-*)
@@ -145,7 +146,7 @@ export default function ArbaeenNawawiPage() {
 
   return (
     <ListScreen compose="mark">
-    <div className="page-shell an-page">
+    <KnowledgeLayout kind="hadith" className="page-shell an-page" data-kx="1">
 
       {/* ── Hero ── */}
       <header className="an-hero">
@@ -291,7 +292,7 @@ export default function ArbaeenNawawiPage() {
       <div className="an-quiz-wrap">
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث النبوي" count={4} />
       </div>
-    </div>
+    </KnowledgeLayout>
     </ListScreen>
   );
 }

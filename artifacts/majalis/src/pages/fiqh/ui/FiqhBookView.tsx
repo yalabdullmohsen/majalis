@@ -17,6 +17,7 @@ import { chapterPreviewText, fiqhBookEditorial } from "@/lib/fiqh-editorial";
 import { formatAbwabCount, formatMasailCount } from "@/lib/arabic-count";
 import "@/styles/pages/fiqh-hub.css";
 import { DetailScreen } from "@/components/design-system/screens";
+import { KnowledgeLayout } from "@/components/knowledge";
 
 export default function FiqhBookPage() {
   const params = useParams<{ bookId: string }>();
@@ -57,12 +58,12 @@ export default function FiqhBookPage() {
 
   if (!book) {
     return (
-      <div className="fiqh-lux-shell fiqh-lux-book page-shell ve-page" dir="rtl">
+      <KnowledgeLayout kind="library" className="fiqh-lux-shell fiqh-lux-book page-shell ve-page" data-kx="1">
         <Empty title="كتاب غير منشور" text="هذا الكتاب غير مدرج في الكتب الظاهرة، أو لا أبواب منشورة فيه." />
         <p className="fiqh-lux-empty">
           <Link href="/fiqh">العودة إلى الفقه</Link>
         </p>
-      </div>
+      </KnowledgeLayout>
     );
   }
 
@@ -72,7 +73,7 @@ export default function FiqhBookPage() {
 
   return (
     <DetailScreen compose="mark">
-    <div className="fiqh-lux-shell fiqh-lux-book page-shell ve-page" dir="rtl">
+    <KnowledgeLayout kind="library" className="fiqh-lux-shell fiqh-lux-book page-shell ve-page" data-kx="1">
       <nav className="fiqh-lux-crumb" aria-label="مسار التنقل">
         <Link href="/fiqh">الفقه</Link>
         <span aria-hidden="true"> ← </span>
@@ -145,7 +146,7 @@ export default function FiqhBookPage() {
         })}
       </ol>
       <div className="fiqh-fab-clearance ve-bottom-clearance" />
-    </div>
+    </KnowledgeLayout>
     </DetailScreen>
   );
 }
