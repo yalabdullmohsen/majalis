@@ -25,12 +25,28 @@ export function isPinnedChromePath(pathname: string): boolean {
   );
 }
 
+/** مسارات قوائم/قارئ الحديث — بحث داخلي + هيدر داخلي؛ بلا صف بحث عام مكرر. */
+export function isHadithReaderPath(pathname: string): boolean {
+  const p = pathname.replace(/\/+$/, "") || "/";
+  return (
+    p === "/arbaeen-nawawi" ||
+    p.startsWith("/arbaeen-nawawi/") ||
+    p === "/hadith" ||
+    p.startsWith("/hadith/") ||
+    p === "/hadith-science" ||
+    p.startsWith("/hadith-science/") ||
+    p === "/hadith-books" ||
+    p.startsWith("/hadith-books/")
+  );
+}
+
 /** صفحات وظيفية — تُخفى فيها الشريط المتحرك الطويل؛ الوظيفة أولًا.
  * صفحة الدخول/التسجيل ليست ضمنها — الشريط المتحرك يظهر هناك. */
 export function isCompactHeaderPath(pathname: string): boolean {
   const p = pathname.replace(/\/+$/, "") || "/";
   if (isImmersiveChromePath(p)) return true;
   if (isPinnedChromePath(p)) return true;
+  if (isHadithReaderPath(p)) return true;
   return (
     p === "/search" ||
     p.startsWith("/search/") ||
@@ -77,6 +93,7 @@ export function hasInPageBackChrome(pathname: string): boolean {
   // اللوبيات تعتمد FloatingBackButton (بوابات section-lobby) — لا نخفيه هناك.
   // الصفحات الغمرية/الصلاة تُستثنى عبر isImmersiveChromePath / isPrayerTimesPath.
   const p = pathname.replace(/\/+$/, "") || "/";
+  if (isHadithReaderPath(p)) return true;
   return (
     p === "/settings" ||
     p.startsWith("/settings/") ||

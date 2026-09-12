@@ -30,12 +30,11 @@ const ASSERTIONS = [
   { route: "/quran/revelation-order", selector: ".revord-hero p", mode: "light", min: 4.5 },
   { route: "/quran/revelation-order", selector: ".revord-note", mode: "light", min: 4.5 },
   { route: "/quran/revelation-order", selector: ".revord-hero h1", mode: "dark", min: 4.5 },
-  // نفس نمط الخلل بالضبط على صفحات "-hero" أخرى ذات خلفية فاتحة فعليًا
-  // (.an-hero) — مُصلَحة بنفس الآلية (استثناء بالمصدر لا ترقيع لاحق).
+  // الأربعون النووية: البنية الحالية شريط عنوان + ملخص مضغوط (لا hero قديم).
   // ملاحظة: /developers (.dvp-*) حُذفت بالكامل في commit 33d87461
   // ("simplify public navigation") — أُزيلت تأكيداتها هنا معه.
-  { route: "/arbaeen-nawawi", selector: ".an-hero__title", mode: "light", min: 3 },
-  { route: "/arbaeen-nawawi", selector: ".an-hero__eyebrow", mode: "light", min: 4.5 },
+  { route: "/arbaeen-nawawi", selector: ".an-toolbar__title", mode: "light", min: 3 },
+  { route: "/arbaeen-nawawi", selector: ".an-summary__eyebrow", mode: "light", min: 4.5 },
   // .fiqh-council-subnav-link — خلفية #fff ثابتة غير مشروطة بالسمة، بقيت
   // بيضاء في الوضع الليلي بينما تحوّل النص لفاتح = نص شبه أبيض على أبيض.
   { route: "/fiqh-council", selector: ".fiqh-council-subnav-link", mode: "dark", min: 4.5 },

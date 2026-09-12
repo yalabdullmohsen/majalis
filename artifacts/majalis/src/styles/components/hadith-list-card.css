@@ -1,0 +1,93 @@
+/* بطاقة قائمة حديث مشتركة — بلا تجاوز أفقي، متن متعدد الأسطر */
+.hlc {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #173d35) 12%, transparent);
+  border-radius: var(--radius-card, 16px);
+  background: var(--ss-card-bg, var(--mj-surface, #fffef9));
+  color: inherit;
+  text-align: start;
+  text-decoration: none;
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hlc--read {
+  background: color-mix(in srgb, var(--mj-brand, #173d35) 4%, var(--mj-surface, #fff));
+}
+
+.hlc--active {
+  border-color: var(--mj-brand, var(--majalis-emerald, #1f6b56));
+}
+
+.hlc__num {
+  flex: 0 0 1.75rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-block-start: 0.1rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--mj-on-brand, #fff);
+  background: var(--mj-brand, var(--majalis-emerald, #1f6b56));
+}
+
+.hlc__body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.hlc__title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--mj-brand-deep, var(--mj-ink, #16241e));
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.hlc__preview {
+  font-size: 0.8rem;
+  line-height: 1.65;
+  color: var(--mj-ink-2, #5a6b64);
+  font-family: var(--font-quran, var(--font-app, serif));
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hlc__meta {
+  font-size: 0.72rem;
+  color: var(--mj-muted, #6b7c74);
+}
+
+:is(html[data-theme="dark"], html.dark, html.theme-dark) .hlc {
+  background: var(--surface-elevated, #24302b);
+  border-color: color-mix(in srgb, #fff 10%, transparent);
+}
+
+:is(html[data-theme="dark"], html.dark, html.theme-dark) .hlc__title {
+  color: var(--mj-ink, #e9efec);
+}
+
+:is(html[data-theme="dark"], html.dark, html.theme-dark) .hlc__preview {
+  color: var(--mj-ink-2, #b7c4be);
+}
