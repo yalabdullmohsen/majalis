@@ -57,6 +57,16 @@ const routes = read("src/AppRoutes.tsx");
 assert.match(routes, /path="\/progress"/);
 assert.match(routes, /path="\/offline"/);
 
+// التكامل الفعلي: واجهات البحث تستخدم runKnowledgeSearch
+const searchView = read("src/pages/account/ui/SearchView.tsx");
+assert.match(searchView, /runKnowledgeSearch/);
+assert.match(searchView, /isKnowledgePlatformP0Enabled/);
+const globalSearch = read("src/components/GlobalSearchModal.tsx");
+assert.match(globalSearch, /runKnowledgeSearch/);
+const universal = read("src/lib/knowledge-platform/universal-search.ts");
+assert.match(universal, /limit\?:/);
+assert.match(universal, /href:\s*entity\?\.href/);
+
 const clear = read("src/lib/clear-user-local-data.ts");
 assert.match(clear, /majalis-kp-activity-v1/);
 

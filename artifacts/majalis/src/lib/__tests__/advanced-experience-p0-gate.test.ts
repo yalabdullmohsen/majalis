@@ -108,6 +108,20 @@ const auth = read("src/components/AuthProvider.tsx");
 assert.match(auth, /isolateAccountOnLogout/);
 assert.match(auth, /bootstrapSyncEngine/);
 
+// التكامل الفعلي: deep-link + mushaf sync + recovery في مسارات المنتج
+const mainSrc = read("src/main.tsx");
+assert.match(mainSrc, /mapShareOrDeepLink/);
+assert.doesNotMatch(
+  mainSrc,
+  /appUrlOpen[\s\S]{0,400}resolveNativeDeepLinkPath\(url\)/,
+);
+const lastPage = read("src/lib/quran-last-page.ts");
+assert.match(lastPage, /enqueueSyncRecord/);
+assert.match(lastPage, /mushaf_position/);
+assert.doesNotMatch(lastPage, /enqueueOutbox/);
+const outbox = read("src/lib/sync-outbox.ts");
+assert.match(outbox, /planRecovery/);
+
 const clear = read("src/lib/clear-user-local-data.ts");
 assert.match(clear, /majalis-sync-schema-v|majalis-kp-activity-v1/);
 

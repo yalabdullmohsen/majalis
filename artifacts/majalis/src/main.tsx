@@ -345,8 +345,13 @@ if (isNative) {
 if (isNative) {
   import("@capacitor/app").then(({ App: CapApp }) => {
     CapApp.addListener("appUrlOpen", ({ url }) => {
-      void import("@/lib/native-deep-link").then(({ resolveNativeDeepLinkPath, shouldNavigateNativeDeepLink }) => {
-        const path = resolveNativeDeepLinkPath(url);
+      void Promise.all([
+        import("@/lib/sync-engine"),
+        import("@/lib/native-deep-link"),
+      ]).then(([{ mapShareOrDeepLink }, { shouldNavigateNativeDeepLink }]) => {
+        // خريطة الروابط العميقة: تمنع staging/open-redirect وتوحّد content://
+        const mapped = mapShareOrDeepLink(url);
+        const path = mapped.ok ? mapped.path : null;
         const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
         if (shouldNavigateNativeDeepLink(current, path) && path) {
           // path is always same-origin relative — never pushState a www absolute URL

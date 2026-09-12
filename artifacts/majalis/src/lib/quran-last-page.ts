@@ -39,6 +39,17 @@ export async function saveLastPage(pageNumber: number): Promise<void> {
     memLastPage = page;
     const { storageSetSync } = await import("@/lib/native-storage");
     storageSetSync(LAST_PAGE_KEY, page.toString());
+    // محرك المزامنة المحلي (ضيف أو مسجّل) — الجسر للسحابة فقط عند scope مستخدم
+    try {
+      const { enqueueSyncRecord } = await import("@/lib/sync-engine");
+      enqueueSyncRecord({
+        kind: "mushaf_position",
+        entityId: "last",
+        payload: { page },
+      });
+    } catch {
+      /* sync engine unavailable */
+    }
     // Background cloud resume for signed-in users (hybrid local→cloud)
     void (async () => {
       try {
@@ -56,12 +67,6 @@ export async function saveLastPage(pageNumber: number): Promise<void> {
           content_url: `/mushaf?page=${page}`,
           thumbnail_icon: "BookOpen",
           position: { item_index: page },
-        });
-        const { enqueueOutbox } = await import("@/lib/sync-outbox");
-        await enqueueOutbox("reading_progress", `mushaf:${user.id}`, {
-          userId: user.id,
-          page,
-          updatedAt: new Date().toISOString(),
         });
       } catch {
         /* offline / unsigned */

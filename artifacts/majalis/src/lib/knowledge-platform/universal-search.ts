@@ -23,7 +23,12 @@ export type KnowledgeSearchResponse = Omit<AppSearchResponse, "results" | "group
 
 export async function runKnowledgeSearch(
   query: string,
-  opts: { scope?: string; signal?: AbortSignal } = {},
+  opts: {
+    limit?: number;
+    kind?: string;
+    scope?: string;
+    signal?: AbortSignal;
+  } = {},
 ): Promise<KnowledgeSearchResponse> {
   const q = query.trim();
   if (q.length >= 2) {
@@ -38,16 +43,21 @@ export async function runKnowledgeSearch(
   }
 
   const base = await runAppSearch(q, opts);
-  const enrich = (item: AppSearchResult): KnowledgeSearchHit => ({
-    ...item,
-    entity: resolveSearchHit({
+  const enrich = (item: AppSearchResult): KnowledgeSearchHit => {
+    const entity = resolveSearchHit({
       id: item.id,
       kind: item.kind,
       title: item.title,
       href: item.href,
       summary: item.summary,
-    }),
-  });
+    });
+    return {
+      ...item,
+      // Content Resolver هو مصدر الحقيقة للمسار عند توفره
+      href: entity?.href || item.href,
+      entity,
+    };
+  };
 
   const results = base.results.map(enrich);
   const groups: Record<string, KnowledgeSearchHit[]> = {};
