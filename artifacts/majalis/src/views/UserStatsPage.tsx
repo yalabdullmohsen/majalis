@@ -48,7 +48,7 @@ function StatCard({
   Icon: LucideIcon;
 }) {
   return (
-    <div className="profile-stat-card">
+    <div className="profile-stat-card soft-card soft-card--on-light">
       <span className="profile-stat-card__icon" aria-hidden="true"><Icon size={20} strokeWidth={1.6} /></span>
       <strong className="profile-stat-card__value">{value}</strong>
       <span className="profile-stat-card__label">{label}</span>

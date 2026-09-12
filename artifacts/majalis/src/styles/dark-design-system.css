@@ -127,32 +127,31 @@
   stroke: var(--icon-primary);
 }
 
-/* —— Dark Hero System: لا هيرو فاتح ليلاً —— */
-:is(html[data-theme="dark"], html.dark) .section-hero,
+/* —— Soft heroes ليلاً: سطح parchment من modern-section-shell + حبر داكن —— */
+:is(html[data-theme="dark"], html.dark) .section-hero:not(.asp-hero),
 :is(html[data-theme="dark"], html.dark) .topic-page__hero,
 :is(html[data-theme="dark"], html.dark) .mss-section-hero,
-:is(html[data-theme="dark"], html.dark) [class*="-hero"]:not(.mushaf-hero):not([data-mushaf-theme]),
+:is(html[data-theme="dark"], html.dark) [class*="-hero"]:not(.asp-hero):not(.mushaf-hero):not([data-mushaf-theme]),
 :is(html[data-theme="dark"], html.dark) .sh-hero,
 :is(html[data-theme="dark"], html.dark) .mk-hero,
 :is(html[data-theme="dark"], html.dark) .an-hero,
 :is(html[data-theme="dark"], html.dark) .seerah-hero,
 :is(html[data-theme="dark"], html.dark) .tarikh-hero,
 :is(html[data-theme="dark"], html.dark) .twh-hero {
-  /* soft-card عبر modern-section-shell */
   background: transparent;
-  color: var(--surface-hero-ink) !important;
+  color: var(--mss-on-hero, #16241e) !important;
   border-color: var(--border-elevated) !important;
   box-shadow: none;
 }
 
-:is(html[data-theme="dark"], html.dark) .section-hero :is(h1, h2, .section-hero__title, .topic-page__title, .sh-hero__title, .an-hero__title),
-:is(html[data-theme="dark"], html.dark) [class*="-hero"] :is(h1, h2, [class*="__title"]) {
-  color: var(--surface-hero-ink) !important;
+:is(html[data-theme="dark"], html.dark) .section-hero:not(.asp-hero) :is(h1, h2, .section-hero__title, .topic-page__title, .sh-hero__title, .an-hero__title),
+:is(html[data-theme="dark"], html.dark) [class*="-hero"]:not(.asp-hero) :is(h1, h2, [class*="__title"]) {
+  color: var(--mss-on-hero, #16241e) !important;
 }
 
-:is(html[data-theme="dark"], html.dark) .section-hero :is(p, .section-hero__sub, .topic-page__sub, .sh-hero__sub, .an-hero__sub),
-:is(html[data-theme="dark"], html.dark) [class*="-hero"] :is(p, [class*="__sub"], [class*="__eyebrow"]) {
-  color: var(--surface-hero-muted) !important;
+:is(html[data-theme="dark"], html.dark) .section-hero:not(.asp-hero) :is(p, .section-hero__sub, .topic-page__sub, .sh-hero__sub, .an-hero__sub),
+:is(html[data-theme="dark"], html.dark) [class*="-hero"]:not(.asp-hero) :is(p, [class*="__sub"], [class*="__eyebrow"]) {
+  color: var(--mss-on-hero-muted, #3d4f47) !important;
 }
 
 /* منع الجدران السوداء: أي بطاقة بنفس سواد الخلفية تُرفع */

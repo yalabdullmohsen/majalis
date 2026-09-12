@@ -340,7 +340,8 @@ html.dark .th-tab.th-tab--active[role="tab"][aria-selected="true"] {
 }
 html[data-theme="dark"] .th-tab,
 html.dark .th-tab {
-  color: var(--text-secondary, #c2cfca);
+  /* تبويبات على soft-hero فاتح — حبر داكن لا --text-secondary الليلي */
+  color: var(--mss-on-hero-muted, #3d4f47);
 }
 
 /* ── نهاية 230 ─────────────────────────────────────────── */

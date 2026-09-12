@@ -175,7 +175,7 @@ export default function QuranNumbersPage() {
           <button
             key={s.id}
             type="button"
-            className="quran-stat-card"
+            className="quran-stat-card soft-card soft-card--on-light"
             data-section-card="stat"
             data-stat-kind={s.kind}
             data-stat-group={s.group}

@@ -102,4 +102,17 @@ for (const [file, banned] of [
   assert.doesNotMatch(css, banned, `${file}: لا تدرّج أخضر على جذر الهيرو`);
 }
 
+
+const darkDs = read("src/styles/dark-design-system.css");
+assert.match(
+  darkDs,
+  /\[class\*="-hero"\]:not\(\.asp-hero\)[\s\S]{0,200}?--mss-on-hero/,
+  "الوضع الداكن: حبر soft-hero (--mss-on-hero) لا --surface-hero-ink على العناوين",
+);
+assert.doesNotMatch(
+  darkDs,
+  /\[class\*="-hero"\][\s\S]{0,120}?color:\s*var\(--surface-hero-ink\)/,
+  "لا تُفرض --surface-hero-ink على كل *-hero في الوضع الداكن",
+);
+
 console.log("soft-section-heroes-gate.test.ts: ok");

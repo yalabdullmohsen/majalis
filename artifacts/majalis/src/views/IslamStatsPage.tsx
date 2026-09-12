@@ -376,7 +376,7 @@ export default function IslamStatsPage() {
           <div className="is-section" role="tabpanel" id="is-panel-global" aria-labelledby="is-tab-global">
             <div className="is-stats-grid">
               {GLOBAL_STATS.map((s, i) => (
-                <div key={i} className="is-stat-card" style={{ "--is-card-color": s.color } as { [k: string]: string }}>
+                <div key={i} className="is-stat-card soft-card soft-card--on-light" style={{ "--is-card-color": s.color } as { [k: string]: string }}>
                   <span className="is-stat-card__val">{s.value}</span>
                   <span className="is-stat-card__lbl">{s.label}</span>
                   {s.sub && <span className="is-stat-card__sub">{s.sub}</span>}
@@ -411,7 +411,7 @@ export default function IslamStatsPage() {
             </div>
             <div className="is-stats-grid">
               {QURAN_STATS.map((s, i) => (
-                <div key={i} className="is-stat-card" style={{ "--is-card-color": s.color } as { [k: string]: string }}>
+                <div key={i} className="is-stat-card soft-card soft-card--on-light" style={{ "--is-card-color": s.color } as { [k: string]: string }}>
                   <span className="is-stat-card__val">{s.value}</span>
                   <span className="is-stat-card__lbl">{s.label}</span>
                   {s.sub && <span className="is-stat-card__sub">{s.sub}</span>}
@@ -439,7 +439,7 @@ export default function IslamStatsPage() {
             </div>
             <div className="is-stats-grid">
               {filteredAchievements.map((s, i) => (
-                <div key={i} className="is-stat-card" style={{ "--is-card-color": s.color } as { [k: string]: string }}>
+                <div key={i} className="is-stat-card soft-card soft-card--on-light" style={{ "--is-card-color": s.color } as { [k: string]: string }}>
                   <span className="is-stat-card__val">{s.value}</span>
                   <span className="is-stat-card__lbl">{s.label}</span>
                   {s.sub && <span className="is-stat-card__sub">{s.sub}</span>}

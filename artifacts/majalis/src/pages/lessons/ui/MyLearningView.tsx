@@ -53,7 +53,7 @@ function StatCard({
   suffix?: string;
 }) {
   return (
-    <div className="myl2-stat-card">
+    <div className="myl2-stat-card soft-card soft-card--on-light">
       <span className="myl2-stat-card__icon" aria-hidden="true">
         <Icon size={18} strokeWidth={1.8} />
       </span>
