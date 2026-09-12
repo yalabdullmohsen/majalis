@@ -28,6 +28,14 @@ assert.match(page, /MIRACLE_TOPIC_HUB/);
 assert.match(page, /الإنسان/);
 assert.match(page, /countMiraclesByTopic|MIRACLE_TOPIC_HUB/);
 assert.match(page, /mk-lane-card/);
+assert.match(page, /الإعجاز العلمي في القرآن الكريم/);
+assert.match(page, /الإعجاز العلمي في السنة النبوية/);
+{
+  const lanesAt = page.indexOf("mk-hub-lanes");
+  const topicsAt = page.indexOf("mk-topic-grid");
+  assert.ok(lanesAt >= 0 && topicsAt >= 0, "مسارات وموضوعات موجودان");
+  assert.ok(lanesAt < topicsAt, "المسارات تظهر قبل الموضوعات");
+}
 assert.doesNotMatch(page, /mk-hero__note/);
 assert.match(page, /\/miracles\/quran/);
 assert.match(page, /\/miracles\/sunnah/);
@@ -68,6 +76,7 @@ assert.doesNotMatch(
 
 const css = read("src/styles/pages/miracles.css");
 assert.match(css, /\.mk-lane-card/);
+assert.match(css, /-webkit-line-clamp:\s*unset/);
 assert.match(css, /\.miracle-ayah__text/);
 assert.match(css, /\.miracle-explain__label/);
 assert.match(css, /\.mk-sources-quiet/);

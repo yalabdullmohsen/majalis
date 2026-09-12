@@ -149,6 +149,28 @@ function MiraclesHub() {
           </p>
         </InformationCard>
 
+        <h2 className="mk-hub-heading">المسارات</h2>
+        <div className="mk-hub-lanes hub-card-grid" role="navigation" aria-label="مسارات الإعجاز العلمي">
+          <SectionEntryCard
+            href="/miracles/quran"
+            title="الإعجاز العلمي في القرآن الكريم"
+            description="تأملات في آيات الخلق والكون — يُستأنس بها ولا تُجعل تفسيرًا قطعيًا."
+            meta={`${quranCount} موضوعًا`}
+            Icon={BookOpen}
+            variant="detailed"
+            className="mk-lane-card mk-lane-card--quran"
+          />
+          <SectionEntryCard
+            href="/miracles/sunnah"
+            title="الإعجاز العلمي في السنة النبوية"
+            description="إشارات عند ثبوت الحديث — بصياغة: يذكر بعض الباحثين / وجه تأمل."
+            meta={`${sunnahCount} موضوعًا`}
+            Icon={ScrollText}
+            variant="detailed"
+            className="mk-lane-card mk-lane-card--sunnah"
+          />
+        </div>
+
         <h2 className="mk-hub-heading">الموضوعات</h2>
         <div className="mk-topic-grid" role="navigation" aria-label="موضوعات الإعجاز العلمي">
           {MIRACLE_TOPIC_HUB.map((topic) => {
@@ -169,26 +191,6 @@ function MiraclesHub() {
               />
             );
           })}
-        </div>
-
-        <h2 className="mk-hub-heading">المسارات</h2>
-        <div className="mk-hub-lanes hub-card-grid" role="navigation" aria-label="مسارات الإعجاز العلمي">
-          <SectionEntryCard
-            href="/miracles/quran"
-            title="الإعجاز العلمي في القرآن الكريم"
-            description="تأملات في آيات الخلق والكون — يُستأنس بها ولا تُجعل تفسيرًا قطعيًا."
-            meta={`${quranCount} موضوعًا`}
-            Icon={BookOpen}
-            className="mk-lane-card mk-lane-card--quran"
-          />
-          <SectionEntryCard
-            href="/miracles/sunnah"
-            title="الإعجاز العلمي في السنة النبوية"
-            description="إشارات عند ثبوت الحديث — بصياغة: يذكر بعض الباحثين / وجه تأمل."
-            meta={`${sunnahCount} موضوعًا`}
-            Icon={ScrollText}
-            className="mk-lane-card mk-lane-card--sunnah"
-          />
         </div>
 
         <ExploreAlsoNav
