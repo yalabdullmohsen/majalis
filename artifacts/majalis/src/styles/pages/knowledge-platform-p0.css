@@ -1,0 +1,116 @@
+/* P0 — مراكز التقدّم ودون الاتصال */
+.kp-page {
+  max-width: 42rem;
+  margin-inline: auto;
+  padding: 1.25rem 1rem calc(var(--bottom-nav-height, 4.25rem) + 1.5rem);
+  color: var(--mj-ink, #1a2e26);
+}
+
+.kp-page__title {
+  font-family: var(--font-display, "Amiri", serif);
+  font-size: 1.65rem;
+  margin: 0 0 0.35rem;
+}
+
+.kp-page__lead {
+  margin: 0 0 1rem;
+  color: var(--mj-ink-2, #4a5a53);
+  line-height: 1.6;
+}
+
+.kp-section {
+  margin-block: 1.25rem;
+  padding-block: 0.75rem;
+  border-block-start: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.kp-section__title {
+  font-size: 1.05rem;
+  margin: 0 0 0.65rem;
+}
+
+.kp-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.kp-list a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.kp-list--packs li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+}
+
+.kp-empty,
+.kp-note,
+.kp-meta {
+  color: var(--mj-ink-2, #4a5a53);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.kp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  background: color-mix(in srgb, currentColor 6%, transparent);
+  color: inherit;
+  cursor: pointer;
+}
+
+.kp-btn--primary {
+  background: color-mix(in srgb, var(--mj-green, #1f6b4a) 88%, black);
+  color: #fff;
+  border-color: transparent;
+}
+
+.kp-btn--danger {
+  border-color: color-mix(in srgb, #a33 35%, transparent);
+}
+
+.kp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block: 0.75rem;
+}
+
+.kp-toggle {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  line-height: 1.45;
+}
+
+.kp-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--mj-green, #1f6b4a);
+}
+
+.kp-continue {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kp-btn {
+    transition: none;
+  }
+}

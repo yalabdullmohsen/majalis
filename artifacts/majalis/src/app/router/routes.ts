@@ -386,6 +386,8 @@ const PATHS = [
   "/upload",
   "/usra-mujtama",
   "/vault",
+  "/progress",
+  "/offline",
   "/waqf",
   "/wasaya-nabawiyya",
   "/whats-new",
