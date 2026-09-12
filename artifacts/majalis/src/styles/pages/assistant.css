@@ -208,16 +208,26 @@ html[data-theme="dark"] .asp-footer {
   color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
   font-size: 1.15rem;
 }
+/* عنوان/مقدمة بوابة التباين: حبر أساسي ≥4.5:1 — لا mj-ink-2 / muted */
+.assistant-soon .assistant-title,
 .assistant-soon__title {
   margin: 0.35rem 0 0.5rem;
   font-size: clamp(1.45rem, 4vw, 1.85rem);
   color: var(--mj-ink, #16241e);
 }
+.assistant-soon .assistant-intro,
 .assistant-soon__lede {
   margin: 0;
-  color: var(--mj-ink-2, #4f5f58);
+  color: var(--mj-ink, #16241e);
   line-height: 1.7;
   max-width: 36rem;
+  opacity: 1;
+}
+html[data-theme="dark"] .assistant-soon .assistant-title,
+html[data-theme="dark"] .assistant-soon__title,
+html[data-theme="dark"] .assistant-soon .assistant-intro,
+html[data-theme="dark"] .assistant-soon__lede {
+  color: var(--mj-ink, #f3f7f5);
 }
 .assistant-soon__actions {
   display: flex;

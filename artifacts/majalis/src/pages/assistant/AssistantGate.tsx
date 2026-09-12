@@ -19,8 +19,9 @@ export default function AssistantGate() {
     <main className="assistant-soon page-shell narrow" dir="rtl">
       <header className="assistant-soon__head">
         <p className="assistant-soon__brand">سُنّة</p>
-        <h1 className="assistant-soon__title">المساعد العلمي</h1>
-        <p className="assistant-soon__lede">
+        {/* بوابة التباين تثبّت .assistant-title / .assistant-intro على /assistant */}
+        <h1 className="assistant-soon__title assistant-title">المساعد العلمي</h1>
+        <p className="assistant-soon__lede assistant-intro">
           المساعد قيد المراجعة الداخلية لضمان دقة المصادر الشرعية قبل الإطلاق العام.
           يمكنك الآن استخدام البحث الموثّق والأقسام العلمية.
         </p>
