@@ -406,3 +406,57 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
     min-height: 108px;
   }
 }
+
+
+/* هدف مخصص — صف مستقل تحت الأزرار الجاهزة */
+.tasbeeh-counter__custom-target--row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  width: 100%;
+  margin: 0.35rem 0 0.85rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+.tasbeeh-counter__custom-target--row input {
+  width: min(8rem, 40vw);
+  min-height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--majalis-line, var(--mj-hairline));
+  text-align: center;
+  font: inherit;
+  background: var(--mj-surface, #fffcf7);
+  color: var(--mj-ink);
+}
+.tasbeeh-stats-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.85rem;
+  border-radius: 14px;
+  background: var(--surface-content, var(--mj-surface, #fffcf7));
+  border: 1px solid var(--surface-content-border, color-mix(in srgb, var(--mj-ink) 10%, transparent));
+}
+.tasbeeh-stats-strip__item {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 4.5rem;
+}
+.tasbeeh-stats-strip__item span {
+  font-size: 0.75rem;
+  color: var(--mj-ink-2, #4f5f58);
+}
+.tasbeeh-stats-strip__item strong {
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
+}
+
+.tasbeeh-stats-strip__empty {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--mj-ink-2, #4f5f58);
+}

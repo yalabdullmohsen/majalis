@@ -140,10 +140,14 @@ export function TasbeehCounter({
   }
 
   // ── Pro mode ──────────────────────────────────────────────────────────────
+  const isCustomTarget = !TASBEEH_PRESETS.some(
+    (p) => p.value !== "custom" && Number(p.value) === activeTarget,
+  );
+
   return (
     <div className={`tasbeeh-counter tasbeeh-counter--pro${pulse ? " tasbeeh-counter--pulse" : ""}`}>
-      {/* Presets */}
-      <div className="tasbeeh-counter__presets" role="group" aria-label="اختيار الهدف">
+      {/* أهداف جاهزة — صف مستقل */}
+      <div className="tasbeeh-counter__presets" role="group" aria-label="هدف جاهز">
         {TASBEEH_PRESETS.filter((p) => p.value !== "custom").map((p) => (
           <button
             key={String(p.value)}
@@ -154,17 +158,37 @@ export function TasbeehCounter({
             {p.label}
           </button>
         ))}
-        <label className="tasbeeh-counter__custom-target">
-          <span>مخصص</span>
+        <button
+          type="button"
+          className={`tasbeeh-counter__preset${isCustomTarget ? " is-active" : ""}`}
+          onClick={() => {
+            if (!isCustomTarget) setTarget(Math.max(1, activeTarget || 33));
+          }}
+          aria-pressed={isCustomTarget}
+        >
+          مخصص
+        </button>
+      </div>
+
+      {/* حقل المخصص يظهر فقط عند اختياره — لا يتراكب مع الأزرار */}
+      {isCustomTarget && (
+        <label className="tasbeeh-counter__custom-target tasbeeh-counter__custom-target--row">
+          <span>الهدف المخصص</span>
           <input
             type="number"
             min={1}
-            value={activeTarget}
-            onChange={(e) => setTarget(Number(e.target.value))}
+            max={99999}
+            inputMode="numeric"
+            value={activeTarget || ""}
+            onChange={(e) => {
+              const n = Number(e.target.value);
+              if (!Number.isFinite(n) || n < 1) return;
+              setTarget(Math.min(99999, Math.floor(n)));
+            }}
             aria-label="هدف مخصص"
           />
         </label>
-      </div>
+      )}
 
       {/* Progress ring — main tap area */}
       <ProgressRing
@@ -178,14 +202,19 @@ export function TasbeehCounter({
       {/* Actions */}
       <div className="tasbeeh-counter__actions">
         <button type="button" className="tasbeeh-counter__btn" disabled={!canUndo} onClick={undo}>
-          ↩ تراجع
+          تراجع
         </button>
-        <button type="button" className="tasbeeh-counter__btn tasbeeh-counter__btn--ghost" onClick={reset}>
-          ✕ تصفير
+        <button
+          type="button"
+          className="tasbeeh-counter__btn tasbeeh-counter__btn--ghost"
+          onClick={() => {
+            if (window.confirm("هل تريد تصفير العداد لهذا الورد؟")) reset();
+          }}
+        >
+          تصفير
         </button>
       </div>
 
-      {/* Keyboard hint */}
       <p className="tc-keyboard-hint" aria-hidden="true">
         مفتاح المسافة أو Enter للتسبيح · Backspace للتراجع
       </p>

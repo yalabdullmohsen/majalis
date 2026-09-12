@@ -194,3 +194,78 @@ html[data-theme="dark"] .asp-researcher-link {
 html[data-theme="dark"] .asp-footer {
   color: var(--mj-ink-2, var(--mj-hairline));
 }
+
+
+/* Coming Soon — المساعد العلمي */
+.assistant-soon {
+  padding: 1.25rem 1rem calc(var(--bottom-nav-height, 64px) + var(--inset-bottom) + 2rem);
+  display: grid;
+  gap: 1.25rem;
+}
+.assistant-soon__brand {
+  margin: 0;
+  font-weight: 800;
+  color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
+  font-size: 1.15rem;
+}
+.assistant-soon__title {
+  margin: 0.35rem 0 0.5rem;
+  font-size: clamp(1.45rem, 4vw, 1.85rem);
+  color: var(--mj-ink, #16241e);
+}
+.assistant-soon__lede {
+  margin: 0;
+  color: var(--mj-ink-2, #4f5f58);
+  line-height: 1.7;
+  max-width: 36rem;
+}
+.assistant-soon__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+.assistant-soon__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid var(--mj-hairline, #d9d3c8);
+  background: var(--mj-surface, #fffcf7);
+  color: var(--mj-ink, #16241e);
+  font-weight: 700;
+  text-decoration: none;
+}
+.assistant-soon__cta--primary {
+  background: var(--mj-brand-deep, #0d4a39);
+  border-color: var(--mj-brand-deep, #0d4a39);
+  color: #f7fbf9;
+}
+.assistant-soon__examples h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+.assistant-soon__examples ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+.assistant-soon__examples a {
+  display: block;
+  padding: 0.7rem 0.9rem;
+  border-radius: 14px;
+  background: var(--surface-content, #fffcf7);
+  border: 1px solid var(--surface-content-border, #e5e1d8);
+  color: var(--brand-on-light, #0d4a39);
+  text-decoration: none;
+  font-weight: 600;
+}
+.assistant-soon__note {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--mj-ink-2, #4f5f58);
+  line-height: 1.65;
+}

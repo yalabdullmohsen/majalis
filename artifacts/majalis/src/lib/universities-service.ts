@@ -97,8 +97,8 @@ export const STUDY_MODES:   StudyMode[]   = ["حضوري", "عن_بعد", "هج�
 export const LANGUAGES = ["العربية", "الإنجليزية", "الفرنسية", "الماليزية", "الأردية", "التركية", "الإندونيسية"];
 
 export const ACCREDITATION_LABELS: Record<AccreditationStatus, string> = {
-  accredited:   "معتمدة رسمياً",
-  provisional:  "اعتماد مبدئي",
+  accredited:   "موثّقة في الدليل",
+  provisional:  "قيد التحقق",
   unverified:   "غير متحقق",
   unknown:      "غير محدد",
 };

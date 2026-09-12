@@ -126,6 +126,7 @@ export default function TasbihPage() {
 
   const deleteActive = () => {
     if (!active || items.length <= 1) return;
+    if (!window.confirm("هل تريد حذف هذا الورد نهائيًا؟")) return;
     const next = items.filter((item) => item.id !== active.id);
     updateItems(next);
     setActiveId(next[0].id);
@@ -143,23 +144,17 @@ export default function TasbihPage() {
       />
 
       {/* Stats grid */}
-      <div className="tasbih-stats-grid tasbih-stats-grid--v2">
-        <div className="soft-card soft-card--on-light tasbih-stat">
-          <span>اليوم</span>
-          <strong>{aggregateStats.today}</strong>
-        </div>
-        <div className="soft-card soft-card--on-light tasbih-stat">
-          <span>الأسبوع</span>
-          <strong>{aggregateStats.week}</strong>
-        </div>
-        <div className="soft-card soft-card--on-light tasbih-stat">
-          <span>الشهر</span>
-          <strong>{aggregateStats.month}</strong>
-        </div>
-        <div className="soft-card soft-card--on-light tasbih-stat">
-          <span>الإجمالي</span>
-          <strong>{aggregateStats.total}</strong>
-        </div>
+      <div className="tasbeeh-stats-strip" aria-label="ملخص التسبيح">
+        {aggregateStats.total === 0 ? (
+          <p className="tasbeeh-stats-strip__empty">ابدأ وردك الأول — لم يُسجَّل تسبيح بعد.</p>
+        ) : (
+          <>
+        <div className="tasbeeh-stats-strip__item"><span>اليوم</span><strong>{aggregateStats.today}</strong></div>
+        <div className="tasbeeh-stats-strip__item"><span>الأسبوع</span><strong>{aggregateStats.week}</strong></div>
+        <div className="tasbeeh-stats-strip__item"><span>الشهر</span><strong>{aggregateStats.month}</strong></div>
+        <div className="tasbeeh-stats-strip__item"><span>الإجمالي</span><strong>{aggregateStats.total}</strong></div>
+          </>
+        )}
         {aggregateStats.streak > 0 && (
           <div className="soft-card soft-card--on-light tasbih-stat tasbih-stat--streak">
             <span>التتابع</span>

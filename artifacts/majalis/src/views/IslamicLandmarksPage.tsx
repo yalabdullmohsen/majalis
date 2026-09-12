@@ -9,10 +9,12 @@ import {
   LANDMARK_TYPES,
   type IslamicLandmark,
 } from "@/lib/islamic-landmarks-data";
-import { MapPin, LayoutGrid, List, X, ExternalLink, Users, Maximize2 } from "lucide-react";
-import { SectionIcon } from "@/components/ui/SectionIcon";
+import { MapPin, LayoutGrid, List, X, ExternalLink, Maximize2 } from "lucide-react";
 import { ShareButtons } from "@/components/ContentActions";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { DirectoryMedia } from "@/components/directory/DirectoryMedia";
+import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
+import "@/styles/components/directory-media.css";
 
 // Leaflet — تحميل كسول لتجنب مشاكل SSR
 const MapSection = lazy(() => import("@/components/landmarks/LandmarksMap"));
@@ -37,8 +39,12 @@ function LandmarkCard({
       aria-label={`فتح تفاصيل ${landmark.name}`}
     >
       <div className="ilm-card__img">
-        <MapPin size={40} className="ilm-card__img-icon" />
-        <span className="ilm-card__img-name">{landmark.city}</span>
+        <DirectoryMedia
+          src={landmark.imageUrl}
+          alt=""
+          fallbackLabel={landmark.city}
+          ratio="16 / 10"
+        />
       </div>
 
       <div className="ilm-card__body">
@@ -58,26 +64,9 @@ function LandmarkCard({
 
         <p className="ilm-card__desc">{landmark.description}</p>
 
-        {(landmark.capacity || landmark.builtYear) && (
-          <div className="ilm-card__footer">
-            {landmark.builtYear && (
-              <span className="ilm-card__info">
-                <SectionIcon name="🕌" size={11} /> {landmark.builtYear}
-              </span>
-            )}
-            {landmark.capacity && (
-              <span className="ilm-card__info">
-                <Users size={11} /> {landmark.capacity}
-              </span>
-            )}
-          </div>
-        )}
-
-        <div className="ilm-card__tags">
-          {landmark.tags.slice(0, 3).map((tag) => (
-            <span key={tag} className="ilm-tag">{tag}</span>
-          ))}
-        </div>
+        {landmark.builtYear ? (
+          <p className="ilm-card__meta">تأسيس / بناء: {landmark.builtYear}</p>
+        ) : null}
       </div>
     </button>
   );
@@ -206,6 +195,7 @@ export default function IslamicLandmarksPage() {
   const [listView, setListView] = useState(false);
   const [selected, setSelected] = useState<IslamicLandmark | null>(null);
   const [showMap, setShowMap] = useState(true);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   useEffect(() => {
     applyPageSeo({
@@ -258,7 +248,7 @@ export default function IslamicLandmarksPage() {
     <UtilityScreen compose="mark">
     <div className="ilm-page">
       {/* Hero */}
-      <div className="ilm-hero">
+      <div className="ilm-hero ilm-hero--compact">
         <div className="ilm-hero__icon" aria-hidden>
           <MapPin size={28} />
         </div>
@@ -288,58 +278,35 @@ export default function IslamicLandmarksPage() {
       </div>
 
       {/* Controls */}
-      <div className="ilm-controls">
-        {/* Country tabs */}
-        <div className="ilm-tabs" role="tablist" aria-label="فلترة حسب الدولة">
-          {LANDMARK_COUNTRIES.map((country) => (
-            <button
-              key={country}
-              type="button"
-              role="tab"
-              aria-selected={activeCountry === country}
-              className={`ilm-tab${activeCountry === country ? " ilm-tab--active" : ""}`}
-              onClick={() => setActiveCountry(country)}
-            >
-              {country}
-            </button>
-          ))}
-        </div>
+      <div className="ilm-controls ilm-controls--compact">
+        <p className="ilm-count" aria-live="polite">
+          {filtered.length === ISLAMIC_LANDMARKS.length
+            ? `${filtered.length} موقعًا`
+            : `${filtered.length} من أصل ${ISLAMIC_LANDMARKS.length}`}
+        </p>
 
-        {/* Era / Type / Search / View toggle */}
-        <div className="ilm-filter-row">
-          <select
-            className="ilm-select"
-            value={activeEra}
-            onChange={(e) => setActiveEra(e.target.value)}
-            aria-label="فلترة حسب الحقبة"
-          >
-            <option value="الكل">كل الحقب</option>
-            {LANDMARK_ERAS.map((era) => (
-              <option key={era} value={era}>{era}</option>
-            ))}
-          </select>
+        <input
+          type="search"
+          className="ilm-search"
+          placeholder="ابحث عن مسجد أو مدينة..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          aria-label="البحث في المشاهد الإسلامية"
+        />
 
-          <select
-            className="ilm-select"
-            value={activeType}
-            onChange={(e) => setActiveType(e.target.value)}
-            aria-label="فلترة حسب النوع"
-          >
-            <option value="الكل">كل الأنواع</option>
-            {LANDMARK_TYPES.map((type) => (
-              <option key={type} value={type}>{type}</option>
-            ))}
-          </select>
-
-          <input
-            type="search"
-            className="ilm-search"
-            placeholder="ابحث عن مسجد أو مدينة..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            aria-label="البحث في المشاهد الإسلامية"
+        <div className="ilm-toolbar">
+          <FilterToggle
+            expanded={filtersOpen}
+            onClick={() => setFiltersOpen(true)}
+            label={
+              activeCountry !== "الكل" || activeEra !== "الكل" || activeType !== "الكل"
+                ? `تصفية (${[activeCountry !== "الكل", activeEra !== "الكل", activeType !== "الكل"].filter(Boolean).length})`
+                : "تصفية"
+            }
           />
-
+          {activeCountry !== "الكل" && (
+            <span className="ilm-active-chip">{activeCountry}</span>
+          )}
           <div className="ilm-view-toggle">
             <button
               type="button"
@@ -359,19 +326,89 @@ export default function IslamicLandmarksPage() {
             >
               <List size={16} />
             </button>
+            <button
+              type="button"
+              className={`ilm-view-btn${showMap ? " ilm-view-btn--active" : ""}`}
+              onClick={() => setShowMap((s) => !s)}
+              aria-label="تبديل الخريطة"
+              title="إظهار/إخفاء الخريطة"
+            >
+              <MapPin size={16} />
+            </button>
           </div>
+        </div>
 
-          <button
-            type="button"
-            className={`ilm-view-btn${showMap ? " ilm-view-btn--active" : ""}`}
-            onClick={() => setShowMap((s) => !s)}
-            aria-label="تبديل الخريطة"
-            title="إظهار/إخفاء الخريطة"
-          >
-            <MapPin size={16} />
+        {(activeCountry !== "الكل" || activeEra !== "الكل" || activeType !== "الكل") && (
+          <div className="ilm-filter-summary">
+            <span>
+              {[
+                activeCountry !== "الكل" ? activeCountry : null,
+                activeEra !== "الكل" ? activeEra : null,
+                activeType !== "الكل" ? activeType : null,
+              ].filter(Boolean).join(" · ")}
+            </span>
+            <button
+              type="button"
+              className="ilm-clear-filters"
+              onClick={() => {
+                setActiveCountry("الكل");
+                setActiveEra("الكل");
+                setActiveType("الكل");
+              }}
+            >
+              مسح التصفية
+            </button>
+          </div>
+        )}
+      </div>
+
+      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="تصفية المشاهد">
+        <div className="ilm-sheet-filters">
+          <label className="ilm-sheet-field">
+            <span>الدولة</span>
+            <select
+              className="ilm-select"
+              value={activeCountry}
+              onChange={(e) => setActiveCountry(e.target.value)}
+            >
+              {LANDMARK_COUNTRIES.map((country) => (
+                <option key={country} value={country}>{country}</option>
+              ))}
+            </select>
+          </label>
+          <label className="ilm-sheet-field">
+            <span>الحقبة</span>
+            <select
+              className="ilm-select"
+              value={activeEra}
+              onChange={(e) => setActiveEra(e.target.value)}
+              aria-label="فلترة حسب الحقبة"
+            >
+              <option value="الكل">كل الحقب</option>
+              {LANDMARK_ERAS.map((era) => (
+                <option key={era} value={era}>{era}</option>
+              ))}
+            </select>
+          </label>
+          <label className="ilm-sheet-field">
+            <span>النوع</span>
+            <select
+              className="ilm-select"
+              value={activeType}
+              onChange={(e) => setActiveType(e.target.value)}
+              aria-label="فلترة حسب النوع"
+            >
+              <option value="الكل">كل الأنواع</option>
+              {LANDMARK_TYPES.map((type) => (
+                <option key={type} value={type}>{type}</option>
+              ))}
+            </select>
+          </label>
+          <button type="button" className="ilm-sheet-apply" onClick={() => setFiltersOpen(false)}>
+            عرض النتائج ({filtered.length})
           </button>
         </div>
-      </div>
+      </FilterBottomSheet>
 
       {/* Interactive Map */}
       {showMap && (

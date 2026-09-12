@@ -1,7 +1,7 @@
 /* ══════════════════════════════════════════════
    UP. UniversitiesPage
    ══════════════════════════════════════════════ */
-.up-root { min-height: 100svh; background: var(--mj-bg, var(--majalis-parchment, #f7f3ea)); padding-bottom: 1.25rem; direction: rtl; }
+.up-root { min-height: 100svh; background: var(--mj-bg, var(--majalis-parchment, #f7f3ea)); padding-bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom) + 1.5rem); direction: rtl; }
 .up-alert {
   background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
   border: 1px solid var(--majalis-emerald);
@@ -49,4 +49,16 @@ html.dark .up-skeleton,
 html[data-theme="dark"] .up-skeleton {
   background: var(--mj-surface, var(--mj-surface));
   border-color: color-mix(in srgb, var(--mj-brand) 28%, var(--mj-hairline));
+}
+
+.up-alert--notice summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
+}
+.up-alert--notice p {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--mj-ink-2, #4f5f58);
 }
