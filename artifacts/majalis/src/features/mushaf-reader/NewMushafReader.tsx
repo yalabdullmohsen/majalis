@@ -70,6 +70,16 @@ import { MUSHAF_CHROME_HIDE_MS } from "@/features/mushaf-madinah/layout-bands";
 import { MushafPage } from "./MushafPage";
 import { MushafControlsLayer, MushafVerseMenu } from "./MushafControlsLayer";
 import { useStableMushafLayout } from "./useStableMushafLayout";
+import {
+  putPageRenderModel,
+  setMushafGeometryKey,
+} from "./mushaf-page-render-cache";
+import {
+  enableMushafTurnTelemetry,
+  mushafTurnInc,
+  mushafTurnMark,
+  mushafTurnFlush,
+} from "./mushaf-turn-telemetry";
 import "./mushaf-reader.css";
 /* شيتات التلاوة/البحث/التفسير — فئات مشتركة */
 import "@/features/mushaf-madinah/mushaf-madinah.css";
@@ -103,6 +113,9 @@ type Props = {
  */
 export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _onIndex }: Props) {
   const page = clampMushafPage(pageNumber);
+  useEffect(() => {
+    enableMushafTurnTelemetry(true);
+  }, []);
   const v2Enabled = isMushafReaderV2Enabled();
   const readerControllerRef = useRef<MushafReaderController | null>(null);
   if (v2Enabled && readerControllerRef.current == null) {
@@ -160,6 +173,9 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       ) {
         return prev;
       }
+      putPageRenderModel(page, layout, fontFamily);
+      mushafTurnInc("cacheMiss");
+      mushafTurnMark("layoutComplete", page);
       return { layout, fontFamily, page };
     });
   }, [error, canMountPage, layout, page, fontReady, fontFamily]);
@@ -167,6 +183,14 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const metricsRootRef = useRef<HTMLDivElement | null>(null);
   /** مصدر القياس الوحيد — لا يُعاد حساب الخط أثناء قلب الصفحة */
   useStableMushafLayout(metricsRootRef, true);
+  useLayoutEffect(() => {
+    const root = metricsRootRef.current;
+    if (!root) return;
+    const w = root.style.getPropertyValue("--mushaf-page-width").trim();
+    const h = root.style.getPropertyValue("--mushaf-page-height").trim();
+    const fs = root.style.getPropertyValue("--mushaf-font-size").trim();
+    if (w && h && fs) setMushafGeometryKey(`${w}x${h}@${fs}`);
+  }, [page, fontReady]);
 
   const hideTimer = useRef<number | null>(null);
   const pageRef = useRef(page);
@@ -380,6 +404,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   }, []);
 
   const beginPageTurn = useCallback(() => {
+    mushafTurnMark("transitionStart", pageRef.current);
     if (pageTurnLockRef.current) return;
     pageTurnLockRef.current = true;
     if (v2Enabled) readerControllerRef.current?.beginNavigation();
@@ -395,6 +420,9 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   }, [audioDockOpen, clearPageChrome, playerState]);
 
   const finishPageTurn = useCallback(() => {
+    mushafTurnMark("activePageCommit", pageRef.current);
+    mushafTurnMark("transitionSettled", pageRef.current);
+    mushafTurnFlush();
     setPagerSettled(true);
     setBottomStackFrozen(false);
     setFreezeStackMode("none");
@@ -718,7 +746,11 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       onPageChange={go}
       disabled={edgesDisabled}
       onNavigateStart={() => {
+        mushafTurnMark("touchStart", page);
+        mushafTurnMark("firstPageMovement", page);
         beginPageTurn();
+        void ensureQpcPageFont(page + 1);
+        void ensureQpcPageFont(page - 1);
       }}
       onNavigateCancel={cancelPageTurnFreeze}
       ignoreSelector=".nm-controls, .nm-verse-menu, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, input, textarea, select, button"
@@ -929,6 +961,9 @@ const PrefetchPage = memo(function PrefetchPage({ pageNumber }: { pageNumber: nu
     };
   }, [pageNumber]);
 
+  if (ready && layout) {
+    putPageRenderModel(pageNumber, layout, fontFamily);
+  }
   if (!ready || !layout) {
     /* skeleton بنفس شبكة الإطار — لا يغيّر عرض/ارتفاع الحاوية */
     return <div className="nm-page-placeholder nm-page-placeholder--frame" aria-hidden="true" />;

@@ -166,7 +166,8 @@ export function useMushafPager({
   useLayoutEffect(() => {
     locking.current = false;
     pendingCommit.current = null;
-    measureWidth();
+    /* لا تعد قياس العرض عند كل صفحة — يثبّت geometry ويمنع قفزة الخط */
+    if (!(widthRef.current > 0)) measureWidth();
     resetToCurrent(false);
   }, [page, measureWidth, resetToCurrent]);
 

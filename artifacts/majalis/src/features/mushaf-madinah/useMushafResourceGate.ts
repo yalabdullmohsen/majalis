@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type MushafResourceGate = {
   isFontLoaded: boolean;
   isPageDataReady: boolean;
   canMountPage: boolean;
-  /** بعد جاهزية الخط+البيانات فورًا — بلا انتظار ملاءمة لاحقة */
+  /**
+   * Prefetch المجاور يبقى مفعّلاً بعد أول جاهزية في الجلسة —
+   * لا يُطفأ عند وميض canMountPage أثناء التقليب (يمنع تفكيك الصفحات المجاورة).
+   */
   allowOffscreenPrefetch: boolean;
 };
 
 /**
  * بوابة موارد: لا نص حتى الخط + البيانات.
- * Prefetch المجاور فور canMountPage (المقاس ثابت مسبقًا).
+ * Prefetch المجاور يثبت بعد أول canMountPage ولا يُلغى عند التقليب.
  */
 export function useMushafResourceGate(
   fontReady: boolean,
@@ -20,24 +23,26 @@ export function useMushafResourceGate(
   const isFontLoaded = fontReady;
   const isPageDataReady = layoutReady;
   const canMountPage = isFontLoaded && isPageDataReady;
+  const stickyPrefetchRef = useRef(false);
   const [allowOffscreenPrefetch, setAllowOffscreenPrefetch] = useState(false);
 
   useEffect(() => {
-    if (!canMountPage) {
-      setAllowOffscreenPrefetch(false);
+    if (!canMountPage) return;
+    if (stickyPrefetchRef.current) {
+      if (!allowOffscreenPrefetch) setAllowOffscreenPrefetch(true);
       return;
     }
-    /* إطار واحد بعد التركيب ثم اسمح بالمجاور — بلا setTimeout تجميلي */
     const raf = requestAnimationFrame(() => {
+      stickyPrefetchRef.current = true;
       setAllowOffscreenPrefetch(true);
     });
     return () => cancelAnimationFrame(raf);
-  }, [canMountPage]);
+  }, [canMountPage, allowOffscreenPrefetch]);
 
   return {
     isFontLoaded,
     isPageDataReady,
     canMountPage,
-    allowOffscreenPrefetch,
+    allowOffscreenPrefetch: allowOffscreenPrefetch || stickyPrefetchRef.current,
   };
 }

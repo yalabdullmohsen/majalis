@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams, useSearch } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
 import { NewMushafReader as MushafViewport } from "@/features/mushaf-reader";
@@ -15,7 +15,8 @@ import { ScriptureScreen } from "@/components/design-system/screens";
 import { migrateMushafUserData, isMushafReaderV2Enabled } from "@/lib/mushaf-v2";
 
 /**
- * مسار المصحف الحقيقي `/mushaf` — NewMushafReader (واجهة جديدة عبر alias MushafViewport)، بلا PDF.
+ * مسار المصحف الحقيقي `/mushaf` — قارئ واحد ثابت؛ رقم الصفحة حالة داخلية.
+ * تحديث URL عبر replaceState فقط بعد الالتزام، بلا إعادة تركيب القارئ.
  */
 export default function MushafReaderPage() {
   const params = useParams<{ page?: string; surah?: string }>();
@@ -24,7 +25,15 @@ export default function MushafReaderPage() {
   /** لا تفكّ تركيب القارئ عند كل ?page= — وإلا ينكسر القلب المتتالي والتلاوة */
   const [readerMounted, setReaderMounted] = useState(false);
 
-  const pageNumber = useMemo(() => resolvePage(params, search), [params, search]);
+  /** مصدر الحقيقة للصفحة داخل الجلسة — يُحسب مرة عند الإقلاع فقط */
+  const bootPageRef = useRef<number | null>(null);
+  if (bootPageRef.current == null) {
+    bootPageRef.current = resolvePage(params, search);
+  }
+  const [pageNumber, setPageNumber] = useState(() => bootPageRef.current ?? 1);
+  const pageRef = useRef(pageNumber);
+  pageRef.current = pageNumber;
+  const urlSyncTimer = useRef<number | null>(null);
 
   useEffect(() => {
     if (paintReady) setReaderMounted(true);
@@ -40,6 +49,12 @@ export default function MushafReaderPage() {
     });
   }, []);
 
+  /** مزامنة من URL فقط عند رجوع المتصفح / روابط خارجية — لا أثناء تقليب داخلي */
+  useEffect(() => {
+    const fromUrl = resolvePage(params, search);
+    if (fromUrl !== pageRef.current) setPageNumber(fromUrl);
+  }, [params, search]);
+
   useEffect(() => {
     applyPageSeo({
       path: `/mushaf?page=${pageNumber}`,
@@ -49,13 +64,34 @@ export default function MushafReaderPage() {
     });
   }, [pageNumber]);
 
-  useEffect(() => {
-    const desired = `/mushaf?page=${pageNumber}`;
+  const syncUrlQuietly = useCallback((n: number) => {
+    if (typeof window === "undefined") return;
+    const desired = `/mushaf?page=${n}`;
     const current = `${window.location.pathname}${window.location.search}`;
-    if (!params.page && !params.surah && current !== desired) {
-      window.history.replaceState(null, "", desired);
-    }
-  }, [pageNumber, params.page, params.surah]);
+    if (current === desired) return;
+    /* replaceState بلا popstate — لا يعيد تركيب المسار ولا يمر عبر wouter */
+    window.history.replaceState(window.history.state, "", desired);
+  }, []);
+
+  const onPageChange = useCallback(
+    (n: number) => {
+      const next = clampMushafPage(n);
+      setPageNumber(next);
+      if (urlSyncTimer.current != null) window.clearTimeout(urlSyncTimer.current);
+      /* بعد استقرار التقليب — لا تزامن URL في كل إطار سحب */
+      urlSyncTimer.current = window.setTimeout(() => {
+        urlSyncTimer.current = null;
+        syncUrlQuietly(next);
+      }, 180);
+    },
+    [syncUrlQuietly],
+  );
+
+  useEffect(() => {
+    return () => {
+      if (urlSyncTimer.current != null) window.clearTimeout(urlSyncTimer.current);
+    };
+  }, []);
 
   if (!readerMounted) {
     return (
@@ -65,6 +101,7 @@ export default function MushafReaderPage() {
         aria-busy="true"
         aria-label="تجهيز المصحف"
         style={{ minHeight: "70dvh" }}
+        data-mushaf-boot="1"
       />
     );
   }
@@ -73,7 +110,7 @@ export default function MushafReaderPage() {
     <ScriptureScreen compose="mark">
       <MushafViewport
         pageNumber={pageNumber}
-        onPageChange={(n) => navigateTo(`/mushaf?page=${clampMushafPage(n)}`, { mode: "state" })}
+        onPageChange={onPageChange}
         onExit={() => navigateTo("/quran-hub", { mode: "screen" })}
         onIndex={() => navigateTo("/quran-hub", { mode: "screen" })}
       />
