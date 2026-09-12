@@ -35,6 +35,11 @@ const CHUNK: Record<string, () => Promise<unknown>> = {
   "/islamic-stories": () => import("@/views/IslamicStoriesPage"),
   "/stories": () => import("@/views/IslamicStoriesPage"),
   "/quiz": () => import("@/pages/account/QuizPage"),
+  "/fawaid": () =>
+    import("@/pages/account/FawaidPage").then((m) => {
+      void import("@/lib/demo-content").then((d) => void d.ensureFawaidLoaded());
+      return m;
+    }),
   "/qibla": () => import("@/pages/worship/QiblaPage"),
   "/duas": () => import("@/pages/worship/DuasPage"),
   "/adhan-settings": () => import("@/pages/worship/AdhanSettingsPage"),
@@ -82,6 +87,7 @@ export const HOME_WARM_ROUTES = [
   "/adhkar",
   "/hadith-science",
   "/islamic-glossary",
+  "/fawaid",
 ] as const;
 
 export function prefetchHomeWarmRoutes(): void {
