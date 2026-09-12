@@ -148,4 +148,13 @@ const card = read("src/components/adhan/AudioPromptsSettingsCard.tsx");
 assert.match(card, /previewPrayerPrompt|previewDhikrClip/);
 assert.match(card, /subscribeAppAudio/);
 
+const picker = read("src/components/adhan/MuezzinPicker.tsx");
+assert.doesNotMatch(picker, /previewAdhanAsync|new Audio\(/);
+assert.match(picker, /previewAdhanUrl/);
+assert.match(picker, /stopAppAudio/);
+
+const adhanService = read("src/lib/adhan-audio-service.ts");
+assert.match(adhanService, /playAppAudio/);
+assert.match(adhanService, /kind:\s*"adhanPreview"/);
+
 console.log("app-audio-coordinator-gate.test.ts: ok");

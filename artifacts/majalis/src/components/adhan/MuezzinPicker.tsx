@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   listSelectableMuezzins,
-  previewAdhanAsync,
-  stopAdhan,
   type Muezzin,
 } from "@/lib/adhan-audio";
 import { ADHAN_PATTERNS, type AdhanPatternId } from "@/lib/adhan-patterns";
@@ -11,7 +9,17 @@ import {
   isOfflineFeaturedMuezzin,
 } from "@/lib/adhan-offline-assets";
 import { FEATURED_ADHAN_STYLE_IDS } from "@/lib/adhan-featured-styles";
+import {
+  isAppAudioSourcePlaying,
+  previewAdhanUrl,
+  stopAppAudio,
+  subscribeAppAudio,
+} from "@/lib/audio";
 import "@/styles/components/muezzin-picker.css";
+
+function previewSourceId(muezzinId: string): string {
+  return `muezzin-picker-${muezzinId}`;
+}
 
 type Props = {
   selected: string;
@@ -28,7 +36,7 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
   const [previewError, setPreviewError] = useState<string | null>(null);
   const previewTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const progressTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const activeMuezzinRef = useRef<string | null>(null);
 
   const selectable = useMemo(
     () => listSelectableMuezzins({ requireFajr }),
@@ -76,9 +84,35 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
     progressTimerRef.current = null;
   }
 
-  useEffect(() => () => {
-    stopAdhan();
-    clearPreviewTimers();
+  useEffect(() => {
+    const unsub = subscribeAppAudio((snap) => {
+      const mid = activeMuezzinRef.current;
+      if (!mid) return;
+      const sourceId = previewSourceId(mid);
+      if (snap.phase === "playing" && snap.activeSourceId === sourceId) {
+        setPreviewing(mid);
+        return;
+      }
+      if (
+        snap.activeSourceId !== sourceId ||
+        snap.phase === "idle" ||
+        snap.phase === "failed" ||
+        snap.phase === "interrupted"
+      ) {
+        clearPreviewTimers();
+        setPreviewing(null);
+        setProgress(0);
+        if (snap.phase === "failed" && snap.lastError) {
+          setPreviewError(snap.lastError);
+        }
+        activeMuezzinRef.current = null;
+      }
+    });
+    return () => {
+      unsub();
+      clearPreviewTimers();
+      void stopAppAudio("leave");
+    };
   }, []);
 
   useEffect(() => {
@@ -90,44 +124,43 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
   }, [onClose]);
 
   function handlePreview(m: Muezzin) {
-    if (previewing === m.id) {
-      stopAdhan();
+    if (previewing === m.id || isAppAudioSourcePlaying(previewSourceId(m.id))) {
+      void stopAppAudio("user");
       clearPreviewTimers();
       setPreviewing(null);
       setProgress(0);
       setPreviewError(null);
-      audioRef.current = null;
+      activeMuezzinRef.current = null;
+      return;
+    }
+    if (!m.audioUrl) {
+      setPreviewError("لا ملف معاينة لهذا التسجيل.");
       return;
     }
     clearPreviewTimers();
     setPreviewError(null);
     setPreviewing(m.id);
     setProgress(0);
+    activeMuezzinRef.current = m.id;
     const started = Date.now();
     const durationMs = 15_000;
     progressTimerRef.current = setInterval(() => {
       const pct = Math.min(100, ((Date.now() - started) / durationMs) * 100);
       setProgress(pct);
     }, 120);
-    void previewAdhanAsync(m).then((result) => {
+    void previewAdhanUrl(
+      previewSourceId(m.id),
+      m.audioUrl,
+      "muezzin-picker",
+      durationMs,
+    ).then((result) => {
       if (!result.ok) {
         clearPreviewTimers();
         setPreviewing(null);
         setProgress(0);
-        setPreviewError(result.message);
-        audioRef.current = null;
-        return;
+        setPreviewError(result.error ?? "تعذّر تشغيل المعاينة");
+        activeMuezzinRef.current = null;
       }
-      audioRef.current = result.audio;
-      result.audio.addEventListener(
-        "ended",
-        () => {
-          clearPreviewTimers();
-          setPreviewing(null);
-          setProgress(0);
-        },
-        { once: true },
-      );
     });
     previewTimerRef.current = setTimeout(() => {
       setPreviewing((p) => (p === m.id ? null : p));
@@ -137,10 +170,11 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
   }
 
   function handleSelect(id: string) {
-    stopAdhan();
+    void stopAppAudio("user");
     clearPreviewTimers();
     setPreviewing(null);
     setProgress(0);
+    activeMuezzinRef.current = null;
     onSelect(id);
     onClose();
   }

@@ -296,19 +296,35 @@ export async function playAdhanPreview(
       ? null
       : clip.maxMs ?? (playbackMode === "takbir" ? 12_000 : 28_000);
 
-  // بلا سلسلة احتياطي لأنواع أخرى — إن فشل الملف المختار يظهر الخطأ ولا يُشغَّل أذان مختلف.
-  const played = await playAdhanFull(clip.url, {
-    volume: Math.max(0.35, Math.min(1, volume || 0.9)),
-    maxMs,
-    fadeIn: false,
+  // المعاينة عبر AppAudioCoordinator فقط — مصدر صوت واحد في التطبيق.
+  const { playAppAudio, getAppAudioElement } = await import("@/lib/audio/app-audio-coordinator");
+  const vol = Math.max(0.35, Math.min(1, volume || 0.9));
+  const snap = await playAppAudio({
+    sourceId: `adhan-preview-${resolvedId}-${playbackMode}`,
+    kind: "adhanPreview",
+    url: clip.url,
+    shortLived: true,
+    userInitiated: true,
+    screenId: "adhan-preview-service",
+    volume: vol,
+    maxMs: maxMs ?? undefined,
   });
-  if (!played.ok) {
-    return {
-      ...played,
-      message: "تعذر تشغيل الصوت، جرّب نوعًا آخر.",
-    };
+  if (snap.phase !== "playing") {
+    const message = snap.lastError ?? "تعذر تشغيل الصوت، جرّب نوعًا آخر.";
+    lastError = message;
+    lastFailureAt = new Date().toISOString();
+    pushAttempt(message);
+    return { ok: false, code: "unknown", message };
   }
-  return played;
+  const audio = getAppAudioElement();
+  if (!audio) {
+    const message = "تعذر تشغيل الصوت، جرّب نوعًا آخر.";
+    lastError = message;
+    return { ok: false, code: "unknown", message };
+  }
+  lastSuccessAt = new Date().toISOString();
+  pushAttempt(`ok coordinator ${clip.url}`);
+  return { ok: true, audio };
 }
 
 /** توافق الاسم القديم */
@@ -324,6 +340,21 @@ export function stopAdhanPreview(): void {
   stopCatalogAdhan();
   pushAttempt("stop");
   clearAdhanMediaSession();
+  // قطع معاينة المنسّق إن كانت هي المصدر النشط (بدون انتظار طابور)
+  void import("@/lib/audio/app-audio-coordinator")
+    .then((m) => {
+      const s = m.getAppAudioSnapshot();
+      if (
+        s.activeKind === "adhanPreview" ||
+        s.activeKind === "notificationPreview" ||
+        s.activeKind === "prayerPrompt"
+      ) {
+        m.forceStopAppAudioSync();
+      }
+    })
+    .catch(() => {
+      /* ignore */
+    });
 }
 
 export function stopAdhanAudio(): void {

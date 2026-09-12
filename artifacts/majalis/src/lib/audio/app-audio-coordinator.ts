@@ -132,6 +132,11 @@ export function getAppAudioSnapshot(): AppAudioSnapshot {
   return { ...snap };
 }
 
+/** عنصر التشغيل النشط (إن وُجد) — للتوافق مع واجهات تحتاج مرجع HTMLAudioElement. */
+export function getAppAudioElement(): HTMLAudioElement | null {
+  return el;
+}
+
 export function subscribeAppAudio(listener: Listener): () => void {
   listeners.add(listener);
   listener({ ...snap });
