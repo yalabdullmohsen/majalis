@@ -2,6 +2,10 @@ import { clearQueue, clearClocksForScope } from "./local-store";
 
 export const GUEST_SCOPE = "guest";
 
+/**
+ * مفاتيح شخصية تُمسح عند الخروج (لا تُعرض لحساب لاحق / ضيف).
+ * إعدادات الجهاز (سمة/خط/موافقة) تبقى في KEEP_ON_LOGOUT.
+ */
 const ACCOUNT_SCOPED_EXACT = [
   "majalis-kp-personalization-v1",
   "majalis-kp-search-history-v1",
@@ -9,6 +13,23 @@ const ACCOUNT_SCOPED_EXACT = [
   "majalis-guest-merge-done-v1",
   "majalis-guest-merge-pending-v1",
   "majalis-sync-last-flush",
+  "majalis-user-settings-v1",
+  "majalis-reading-progress-v1",
+  "majalis-daily-progress-v1",
+  "majalis-user-streak-v1",
+  "majalis-search-analytics",
+  "majalis-search-history",
+  "majalis-governorate-v1",
+  "majalis_apns_device_token_v1",
+  "myBookmarks",
+  "lastPage",
+  "userNotes",
+  "prophet-bookmarks",
+  "ah-favs",
+  "hikam_fav",
+  "majalis:hadith-saved",
+  "sunan_checked",
+  "an_read",
 ] as const;
 
 const ACCOUNT_SCOPED_PREFIXES = [
@@ -18,6 +39,8 @@ const ACCOUNT_SCOPED_PREFIXES = [
   "majalis-reading-progress",
   "majalis-daily-progress",
   "majalis-user-streak",
+  "mj-quran-",
+  "majalis:hadith-",
 ] as const;
 
 const KEEP_ON_LOGOUT = new Set([
@@ -25,6 +48,12 @@ const KEEP_ON_LOGOUT = new Set([
   "majalis-theme",
   "userFontSize",
   "majalis-sync-schema-v",
+  "quranReaderShowTranslation",
+  "quranReaderTranslationEdition",
+  "majalis-mushaf-tafsir-edition-v1",
+  "majalis-mushaf-tafsir-font-scale-v1",
+  "majalis-mushaf-translation-on-v1",
+  "majalis-mushaf-translation-edition-v1",
 ]);
 
 export function activeSyncScope(userId: string | null | undefined): string {
