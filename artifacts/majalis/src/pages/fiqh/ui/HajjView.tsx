@@ -6,6 +6,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { KnowledgeLayout } from "@/components/knowledge";
 
 
 /* ────── types ────── */
@@ -370,7 +371,7 @@ export default function HajjPage() {
 
   return (
     <UtilityScreen compose="mark">
-    <main className="hj-page" dir="rtl">
+    <KnowledgeLayout kind="fiqh" className="hj-page" data-kx="1">
       {/* hero */}
       <section className="hj-hero">
         <div className="hj-hero__badge">أركان الإسلام</div>
@@ -642,7 +643,7 @@ export default function HajjPage() {
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه" count={4} />
       </div>
-    </main>
+    </KnowledgeLayout>
     </UtilityScreen>
   );
 }

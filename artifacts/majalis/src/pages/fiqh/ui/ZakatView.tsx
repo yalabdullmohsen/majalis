@@ -9,6 +9,7 @@ import { toWesternDigits } from "@/shared/arabic-normalize";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/zakat.css";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { KnowledgeLayout } from "@/components/knowledge";
 
 /* ─── بيانات الأصناف ─── */
 type ZakatKind = {
@@ -316,7 +317,7 @@ export default function ZakatPage() {
 
   return (
     <UtilityScreen compose="mark">
-    <main className="zk-page" dir="rtl">
+    <KnowledgeLayout kind="fiqh" className="zk-page" data-kx="1">
       {/* هيرو */}
       <section className="zk-hero">
         <div className="zk-hero__badge">الركن الثالث</div>
@@ -450,7 +451,7 @@ export default function ZakatPage() {
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه" count={4} />
       </div>
-    </main>
+    </KnowledgeLayout>
     </UtilityScreen>
   );
 }
