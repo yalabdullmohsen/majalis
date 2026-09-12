@@ -255,7 +255,7 @@
 
 .lesson-unified-card__meta {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr));
   gap: 0.55rem;
   padding: 0.65rem 0.75rem;
   border-radius: 0.55rem;
@@ -490,7 +490,7 @@
 .lesson-unified-card,
 .ui-card {
   max-width: 100%;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   word-break: normal;
 }
 

@@ -117,7 +117,7 @@
 
 .mk-topic-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr));
   gap: 0.55rem;
   margin: 0 0 1.25rem;
 }

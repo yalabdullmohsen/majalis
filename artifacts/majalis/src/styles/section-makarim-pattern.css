@@ -172,7 +172,7 @@ html.dark .as-tab--active,
   .arkan-list,
   .hk-grid,
   .amr-levels {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr));
   }
 
   .mdb-list > :last-child:nth-child(odd),
@@ -184,8 +184,8 @@ html.dark .as-tab--active,
   .hk-grid > :last-child:nth-child(odd),
   .amr-levels > :last-child:nth-child(odd) {
     grid-column: 1 / -1;
-    max-width: calc(50% - 0.425rem);
-    justify-self: center;
+    max-width: none;
+    justify-self: stretch;
     width: 100%;
   }
 }

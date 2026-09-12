@@ -119,7 +119,7 @@
   font-weight: 600;
   margin: 0 0 0.2rem;
   font-family: var(--font-quran, "Amiri Quran", serif);
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 .ai-dalil__ref { font-size: 0.78rem; color: var(--mj-brand); font-style: normal; }
 

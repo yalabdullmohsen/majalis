@@ -32,6 +32,15 @@
   --surfaceIslamic: var(--surface-islamic);
   --surfaceHighlighted: var(--surface-highlighted);
 
+  /* شبكة البطاقات المتجاوبة — حد أدنى يمنع النص العربي العمودي */
+  --card-min-width: min(100%, 16.25rem);
+  --card-grid-gap: clamp(0.55rem, 2.2vw, 0.85rem);
+  --card-title-lines: 3;
+  --card-desc-lines: 3;
+  --content-bottom-inset: calc(
+    var(--bottom-nav-height, var(--nav-h, 64px)) + var(--inset-bottom, 0px) + 1.25rem
+  );
+
   /* حدود */
   --border: var(--mj-hairline);
   --border-strong: var(--mj-border-strong, color-mix(in srgb, var(--mj-ink) 18%, var(--mj-hairline)));

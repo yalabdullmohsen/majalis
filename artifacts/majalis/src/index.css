@@ -598,8 +598,8 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  word-break: break-word;
-  overflow-wrap: anywhere;
+  word-break: normal;
+  overflow-wrap: break-word;
   overflow-x: hidden;
   max-width: 100%;
   font-feature-settings: "kern" 1;
@@ -3542,7 +3542,9 @@ body.assistant-panel-open {
   font-size: clamp(1rem, 2.6vw, 1.12rem);
   line-height: 1.75;
   color: var(--majalis-emerald-deep);
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
+  writing-mode: horizontal-tb;
 }
 
 .home-qa-card__footer {

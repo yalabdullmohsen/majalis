@@ -88,7 +88,7 @@
 
 @media (min-width: 480px) {
   .ss-screen-grid--2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr));
   }
 }
 

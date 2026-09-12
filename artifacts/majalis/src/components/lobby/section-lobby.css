@@ -251,18 +251,19 @@ html.dark .section-lobby__group-title {
 }
 
 .section-lobby__grid {
-  --lobby-grid-gap: 12px;
+  --lobby-grid-gap: var(--card-grid-gap, 12px);
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr));
   /* كثافة: ارتفاع الصف من المحتوى لا من stretch */
   grid-auto-rows: auto;
   gap: var(--lobby-grid-gap);
   width: 100%;
-  max-width: min(40rem, 100%);
+  max-width: min(48rem, 100%);
   margin-inline: auto;
   justify-content: center;
   align-items: stretch;
   box-sizing: border-box;
+  padding-bottom: var(--content-bottom-inset, 1.25rem);
 }
 
 .section-lobby__grid > :last-child:nth-child(odd) {
@@ -291,20 +292,16 @@ html.dark .section-lobby__group-title {
 
 @media (min-width: 720px) {
   .section-lobby__grid:not(.section-lobby__grid--solo) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(var(--card-min-width, min(100%, 15.5rem)), 1fr)
+    );
     max-width: min(56rem, 100%);
     gap: 16px;
     --lobby-grid-gap: 16px;
   }
 
   .section-lobby__grid:not(.section-lobby__grid--solo) > :last-child:nth-child(odd) {
-    grid-column: auto;
-    max-width: none;
-    justify-self: stretch;
-  }
-
-  .section-lobby__grid:not(.section-lobby__grid--solo)
-    > :last-child:nth-child(3n + 1):not(:only-child) {
     grid-column: 1 / -1;
     max-width: none;
     justify-self: stretch;

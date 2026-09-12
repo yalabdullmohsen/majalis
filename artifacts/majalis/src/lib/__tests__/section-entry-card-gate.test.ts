@@ -35,8 +35,12 @@ assert.match(css, /\.hub-card__foot/, "تذييل مع سهم مدمج");
 assert.doesNotMatch(css, /\.hub-card__go\s*\{[^}]*position:\s*absolute/, "السهم ليس منفصلًا مطلقًا");
 assert.match(css, /-webkit-line-clamp:\s*2/, "وصف بحد سطرين");
 assert.match(css, /\.hub-card-grid\s*>\s*:last-child:nth-child\(odd\)/, "بطاقة يتيمة في الوسط");
-assert.match(css, /padding-bottom:\s*calc\(var\(--nav-h/, "خلوص الشريط السفلي");
-assert.match(css, /html\[data-theme="dark"\]\s*\.hub-card/, "وضع ليلي");
+assert.match(
+  css,
+  /padding-bottom:\s*(?:var\(--content-bottom-inset|calc\(var\(--nav-h)/,
+  "خلوص الشريط السفلي",
+);
+assert.match(css, /html\[data-theme="dark"\]\s*\.hub-card|html\.dark\s*\.hub-card/, "وضع ليلي");
 
 console.log("=== التطبيق ===");
 assert.match(hadith, /SectionEntryCard/, "الحديث");

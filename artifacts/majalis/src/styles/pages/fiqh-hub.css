@@ -79,7 +79,7 @@
 }
 @media (min-width: 400px) {
   .fqh-hub-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr));
     gap: 1rem;
   }
 }
@@ -439,7 +439,7 @@ html[data-theme="dark"] .fqh-hub-card__desc {
 }
 @media (min-width: 720px) {
   .fiqh-book-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr));
   }
 }
 @media (min-width: 1080px) {
@@ -499,7 +499,7 @@ html[data-theme="dark"] .fqh-hub-card__desc {
 }
 /* شبكة كتب الفقه مع بطاقات الدخول = نفس شبكة الأقسام الخارجية */
 .hub-card-grid.fiqh-book-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr));
   gap: var(--hub-grid-gap, 0.75rem);
   max-width: min(40rem, 100%);
   margin-inline: auto;
@@ -807,7 +807,7 @@ ol.fiqh-lesson-list {
 }
 @media (min-width: 640px) {
   .fiqh-usul-detail-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr));
   }
 }
 .fiqh-usul-card--rich,
@@ -1039,7 +1039,7 @@ html.dark .fiqh-lux-page.section-lobby {
   font-weight: 700;
   line-height: 1.5;
   white-space: normal;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .fiqh-lux-hero__title {
@@ -1196,7 +1196,7 @@ html.dark .fiqh-lux-page.section-lobby {
   font-size: 0.95rem;
   font-weight: 800;
   line-height: 1.35;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   max-width: 100%;
 }
 
@@ -1207,7 +1207,7 @@ html.dark .fiqh-lux-page.section-lobby {
   font-weight: 500;
   line-height: 1.5;
   color: var(--fq-ink-soft);
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   max-width: 100%;
 }
 
@@ -1761,7 +1761,7 @@ html.dark .fiqh-filters__chip.is-active {
 .fiqh-issue-grid {
   display: grid;
   gap: 0.55rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr));
 }
 
 @media (min-width: 640px) {

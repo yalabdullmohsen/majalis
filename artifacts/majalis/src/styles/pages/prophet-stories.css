@@ -276,7 +276,7 @@ html.dark .prophets-page-lead {
 /* ── Grid ── */
 .prophets-lux-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr));
   gap: var(--ds-space-4);
   width: 100%;
   max-width: min(40rem, 100%);

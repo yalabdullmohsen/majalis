@@ -609,7 +609,7 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 
 .lesson-detail-info-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr));
   gap: 0.45rem 0.65rem;
   margin: 0;
   padding: 0.55rem 0.05rem;
@@ -825,7 +825,7 @@ html.dark .lesson-detail-info-grid dd,
   font-weight: 800;
   line-height: 1.45;
   color: var(--lesson-green-deep);
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   word-break: break-word;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -840,7 +840,7 @@ html.dark .lesson-detail-info-grid dd,
   font-size: 0.86rem;
   font-weight: 650;
   color: color-mix(in srgb, var(--lesson-green-deep) 82%, #3d4f47);
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .lessons-page-v2 .lesson-unified-card__desc,
@@ -896,7 +896,7 @@ html.dark .lesson-detail-info-grid dd,
 .lessons-similar-section .lesson-unified-card__fact-value {
   min-width: 0;
   font-weight: 650;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .lessons-page-v2 .lesson-unified-card__actions,
@@ -1303,7 +1303,7 @@ html[data-theme="dark"] .lesson-detail-page .lesson-detail-actions-panel {
 
 .lesson-course-card__facts {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr));
   gap: 0.35rem 0.75rem;
   margin: 0.65rem 0 0;
 }

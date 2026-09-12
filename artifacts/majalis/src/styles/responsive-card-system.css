@@ -1,0 +1,247 @@
+/**
+ * Responsive Card System — شبكة بطاقات + سلامة النص العربي.
+ * يُحمَّل بعد typography / hub-card / polish / final-release حتى يصحّح anywhere وعمودين إجباريين.
+ *
+ * السبب الجذري للنص العمودي: لفّ الكلمات بأي موضع + شبكة عمودين ثابتة
+ * على عرض يضيق عمود العنوان إلى حرف/حرفين (ليس writing-mode عموديًا).
+ */
+
+:root {
+  /* حد أدنى يسمح بعنوان عربي مقروء؛ يتبع --ui-font-scale عبر rem */
+  --card-min-width: min(100%, 16.25rem);
+  --card-grid-gap: clamp(0.55rem, 2.2vw, 0.85rem);
+  --card-pad-inline: clamp(0.85rem, 2.6vw, 1.15rem);
+  --card-pad-block: clamp(0.75rem, 2vw, 1rem);
+  --card-title-lines: 3;
+  --card-desc-lines: 3;
+  --content-bottom-inset: calc(
+    var(--bottom-nav-height, var(--nav-h, 64px)) + var(--inset-bottom, 0px) + 1.25rem
+  );
+}
+
+/* —— سلامة النص العربي داخل البطاقات —— */
+:is(
+  .hub-card__title,
+  .hub-card__desc,
+  .fqh-hub-card__title,
+  .fqh-hub-card__desc,
+  .twh-hub-card__title,
+  .twh-hub-card__desc,
+  .fiqh-book-card__title,
+  .fqp-card__title,
+  .fqp-card__desc,
+  .fq-card__arabic,
+  .card__label,
+  .card__subtitle,
+  .mk-lane-card .hub-card__title,
+  .mk-topic-card .hub-card__title,
+  .lesson-unified-card__title,
+  .ss-text--card-title,
+  .soft-card__title,
+  .home-qa-card__question
+) {
+  direction: rtl;
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
+}
+
+:is(
+  .hub-card__title,
+  .fqh-hub-card__title,
+  .twh-hub-card__title,
+  .fiqh-book-card__title,
+  .fqp-card__title,
+  .card__label,
+  .mk-lane-card .hub-card__title,
+  .ss-text--card-title
+) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--card-title-lines, 3);
+  line-clamp: var(--card-title-lines, 3);
+  overflow: hidden;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* —— شبكة متجاوبة مركزية (auto-fit + حد أدنى) —— */
+.responsive-card-grid,
+.hub-card-grid,
+.section-lobby__grid,
+.card-grid,
+.card-grid--featured,
+.page-card-grid,
+.mk-topic-grid,
+.mk-hub-lanes,
+.twh-hub-grid,
+.fqh-hub-grid,
+.fqh-books-grid,
+.fiqh-books-grid,
+.fiqh-book-grid,
+.fiqh-usul-grid,
+.section-hub__grid,
+.hadith-hub-grid,
+.hadith-index-grid,
+.seerah-grid,
+.tarikh-grid,
+.miracles-topic-grid,
+.dii-hub-grid,
+.dii-list-grid {
+  display: grid !important;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr)
+  ) !important;
+  gap: var(--card-grid-gap, 0.75rem);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  align-items: stretch;
+  justify-items: stretch;
+}
+
+/* بطاقة يتيمة: تمتد بعرض الصف بدل عمود ضيق */
+.responsive-card-grid > :last-child:nth-child(odd),
+.hub-card-grid > :last-child:nth-child(odd),
+.section-lobby__grid > :last-child:nth-child(odd),
+.card-grid > :last-child:nth-child(odd),
+.fiqh-book-grid > :last-child:nth-child(odd),
+.twh-hub-grid > :last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.responsive-card-grid > :only-child,
+.hub-card-grid > :only-child,
+.section-lobby__grid > :only-child {
+  grid-column: 1 / -1;
+  max-width: none;
+  justify-self: stretch;
+}
+
+/* كثافات — حسب طبيعة البيانات لا اسم الشاشة */
+.responsive-card-grid--compact,
+.card-grid--compact {
+  --card-min-width: min(100%, 12.5rem);
+  --card-title-lines: 2;
+  --card-desc-lines: 2;
+}
+.responsive-card-grid--standard {
+  --card-min-width: min(100%, 16.25rem);
+}
+.responsive-card-grid--wide,
+.responsive-card-grid--featured,
+.card-grid--featured {
+  --card-min-width: min(100%, 20rem);
+  --card-title-lines: 4;
+  --card-desc-lines: 4;
+}
+
+/* بطاقة أساسية: عرض مرن، ارتفاع بالمحتوى */
+.hub-card,
+.fqh-hub-card,
+.twh-hub-card,
+.fiqh-book-card,
+.fqp-card,
+.soft-card--on-light,
+.mk-lane-card {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: auto;
+  box-sizing: border-box;
+}
+
+.hub-card__body,
+.fqh-hub-card__body,
+.twh-hub-card__body,
+.card__body {
+  min-width: 0;
+  flex: 1 1 auto;
+  max-width: 100%;
+}
+
+.hub-card__icon,
+.fqh-hub-card__icon,
+.twh-hub-card__icon,
+.card__icon {
+  flex: 0 0 auto;
+}
+
+/* هامش سفلي فوق Bottom Nav — على غلاف الصفحة لا على كل شبكة داخلية */
+.section-lobby,
+.topic-page__body,
+.mk-page,
+.page-shell--section,
+.hub-page,
+[data-section-hub="1"],
+.fiqh-hub,
+.twh-page {
+  padding-bottom: max(
+    var(--content-bottom-inset),
+    calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 1.25rem)
+  );
+}
+
+/* مساحة أفقية حتى لا يغطي زر الرجوع العائم عناوين البطاقات */
+.hub-card-grid,
+.section-lobby__grid,
+.responsive-card-grid,
+.fiqh-book-grid,
+.twh-hub-grid {
+  padding-inline-end: max(
+    var(--gutter-inline-end, 16px),
+    calc(3.5rem + var(--inset-inline-end, var(--inset-right, 0px)))
+  );
+}
+
+@media (min-width: 720px) {
+  :root {
+    --card-min-width: min(100%, 15.5rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --card-min-width: min(100%, 14.5rem);
+  }
+}
+
+/* Dynamic Type كبير: عمود أوضح عبر نمو rem في --card-min-width */
+html[style*="--ui-font-scale: 1.2"],
+html[style*="--ui-font-scale:1.2"],
+html[data-font-scale="large"],
+html[data-font-scale="xlarge"] {
+  --card-min-width: min(100%, 18rem);
+  --card-title-lines: 4;
+}
+
+/* الوضع الليلي: سطح أخضر داكن واضح دون انهيار تخطيط */
+html[data-theme="dark"] .hub-card,
+html.dark .hub-card,
+html[data-theme="dark"] .fqh-hub-card,
+html.dark .fqh-hub-card,
+html[data-theme="dark"] .twh-hub-card,
+html.dark .twh-hub-card {
+  background: color-mix(in srgb, #0f3d2e 22%, var(--mj-surface, #1a221f));
+  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 32%, var(--mj-hairline, #2a3531));
+}
+
+html[data-theme="dark"] .hub-card__title,
+html.dark .hub-card__title,
+html[data-theme="dark"] .fqh-hub-card__title,
+html.dark .fqh-hub-card__title {
+  color: var(--text-primary, #ecf2ef);
+}
+
+html[data-theme="dark"] .hub-card__desc,
+html.dark .hub-card__desc {
+  color: var(--text-secondary, #b7c4be);
+}

@@ -103,7 +103,7 @@ html.dark .sect-hub__chip.is-active,
 .sect-hub__grid {
   --sect-gap: 0.85rem;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr));
   gap: var(--sect-gap);
   width: 100%;
   justify-items: stretch;

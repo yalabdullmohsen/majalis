@@ -76,7 +76,7 @@
   background: color-mix(in srgb, var(--topic-on-hero) 12%, transparent);
   white-space: normal;
   line-height: 1.5;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .topic-page__title {
@@ -86,7 +86,7 @@
   line-height: 1.35;
   /* soft-hero: حبر ثابت لا يتبع --mj-ink الليلي الفاتح */
   color: var(--mss-on-hero, var(--topic-on-hero, #16241e));
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .topic-page__sub {

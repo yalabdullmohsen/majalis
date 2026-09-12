@@ -56,7 +56,7 @@
   font-weight: var(--fw-bold, 700);
 }
 
-/* قصّ الأسطر الطويلة في البطاقات */
+/* قصّ الأسطر الطويلة في البطاقات — بلا anywhere (يمنع حرفًا تحت حرف بالعربية) */
 .mj-line-clamp-2,
 .hub-card__title,
 .fqh-hub-card__title,
@@ -66,10 +66,12 @@
 .fq-card__arabic {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: var(--card-title-lines, 3);
+  line-clamp: var(--card-title-lines, 3);
   overflow: hidden;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
+  writing-mode: horizontal-tb;
 }
 
 .mj-line-clamp-3,
@@ -80,10 +82,11 @@
 .fqp-card__desc {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+  -webkit-line-clamp: var(--card-desc-lines, 3);
+  line-clamp: var(--card-desc-lines, 3);
   overflow: hidden;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .hub-card__title,

@@ -84,4 +84,15 @@ assert.ok(
   `hex مباشر في design-system يجب أن يقل — وُجد ${hexHits.length}:\n${hexHits.slice(0, 15).join("\n")}`,
 );
 
+/** منع عودة انهيار النص العربي في شبكات البطاقات */
+const responsiveCard = read("src/styles/responsive-card-system.css");
+assert.match(main, /responsive-card-system\.css/, "نظام البطاقات المتجاوب محمّل");
+assert.match(responsiveCard, /repeat\(\s*auto-fit/, "auto-fit إلزامي");
+assert.doesNotMatch(
+  responsiveCard.replace(/\/\*[\s\S]*?\*\//g, ""),
+  /overflow-wrap:\s*anywhere|word-break:\s*break-all/,
+  "لا anywhere/break-all في نظام البطاقات",
+);
+assert.match(pkg, /responsive-card-grid-gate/, "بوابة الشبكة مربوطة في package.json");
+
 console.log("ssunnah-ds-governance-gate.test.ts: ok");

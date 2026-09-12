@@ -68,6 +68,8 @@ import "./styles/ssunnah-semantic-tokens.css";
 import "./styles/ssunnah-card-unify.css";
 /* Green Surface System — يفوز على تلميع الأقسام الأبيض القديم */
 import "./styles/green-surface-system.css";
+/* شبكة بطاقات متجاوبة + سلامة النص العربي — بعد green-surface/hub */
+import "./styles/responsive-card-system.css";
 // dark-mode-surfaces (~24KB) — فوري فقط إن كان الثيم داكنًا عند الإقلاع؛ وإلا بعد load
 {
   const bootDark =
@@ -116,6 +118,8 @@ function loadNonCriticalCss() {
       // إعادة طبقة الهوية فقط بعد final-release (أزرار/بانر) —
       // بلا إعادة تحميل ثيم البطاقات/التهدئة (كانت تسبب وميض هوية بعد أول طلاء).
       void import("./styles/visual-identity-unify.css");
+      // بعد الطبقات المؤجّلة حتى لا يُعاد فرض عمودين ثابتين
+      void import("./styles/responsive-card-system.css");
     });
   });
   void import("./styles/components/instant-interaction.css");

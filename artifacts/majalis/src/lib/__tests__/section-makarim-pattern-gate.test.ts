@@ -36,7 +36,11 @@ for (const cls of [
 
 assert.match(pattern, /\.rq-hero[\s\S]*?mj-brand-deep/, "رقائق: هيرو العلامة لا الأسود");
 assert.match(pattern, /\.wn-hero[\s\S]*?mj-brand/, "وصايا: هيرو العلامة لا الذهبي");
-assert.match(pattern, /grid-template-columns:\s*repeat\(2/, "شبكة عمودين كمكارم");
+assert.match(
+  pattern,
+  /grid-template-columns:\s*repeat\(auto-fit,\s*minmax\(var\(--card-min-width/,
+  "شبكة متجاوبة بحد أدنى للبطاقة (بدل عمودين ثابتين)",
+);
 assert.match(pattern, /--radius-card,\s*24px/);
 assert.doesNotMatch(pattern, /#7c3aed|#6D28D9/i, "لا بنفسجي");
 

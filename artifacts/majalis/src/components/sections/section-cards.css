@@ -86,13 +86,15 @@
   width: 100%;
   font-size: 13px;
   font-weight: 500;
-  line-height: 1.35;
+  line-height: 1.45;
   color: var(--on-surface-muted, var(--mj-ink-2, #4a5a53));
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow-wrap: anywhere;
+  -webkit-line-clamp: var(--card-desc-lines, 3);
+  line-clamp: var(--card-desc-lines, 3);
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 /* —— بطاقة مميّزة: خلفية + نص أبيض في نفس الـvariant فقط —— */
@@ -216,27 +218,19 @@ a.card--featured,
 /* —— شبكات —— */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr));
+  gap: var(--card-grid-gap, 12px);
   grid-auto-rows: auto;
 }
 
 .card-grid--featured {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width, min(100%, 16.25rem)), 1fr));
 }
 
 .card-grid--compact {
-  grid-template-columns: 1fr;
+  --card-min-width: min(100%, 12.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width), 1fr));
   grid-auto-rows: auto;
-}
-
-@media (min-width: 420px) {
-  .card-grid--featured {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .card-grid--compact {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 /* —— هيكل صفحة الأقسام —— */

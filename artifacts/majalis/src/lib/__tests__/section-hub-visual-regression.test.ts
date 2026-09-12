@@ -29,7 +29,15 @@ console.log("\n=== قواعد CSS الحرجة لصفحات الأقسام ===")
 
   assert(indexCss.includes("overflow-x: clip") || indexCss.includes("overflow-x: hidden"), "html/body يمنع التمرير الأفقي");
   assert(hubCard.includes(".hub-card-grid"), "شبكة HubCard موحّدة");
-  assert(hubCard.includes("repeat(2, minmax(0, 1fr))"), "عمودان على الجوال");
+  assert(
+    hubCard.includes("auto-fit") && hubCard.includes("--card-min-width"),
+    "شبكة متجاوبة auto-fit بحد أدنى للبطاقة",
+  );
+  assert(!hubCard.includes("repeat(2, minmax(0, 1fr))"), "لا عمودين إجباريين على الجوال");
+  const responsive = readFileSync(resolve(root, "src/styles/responsive-card-system.css"), "utf8");
+  assert(responsive.includes("overflow-wrap: break-word"), "سلامة نص عربي: break-word لا anywhere");
+  assert(responsive.includes("writing-mode: horizontal-tb"), "عناوين أفقية");
+  assert(responsive.includes("--content-bottom-inset"), "هامش سفلي فوق Bottom Nav");
   assert(
     hubCard.includes("var(--ss-card-bg") || hubCard.includes("var(--mj-surface)"),
     "بطاقة بسطح فاتح",
