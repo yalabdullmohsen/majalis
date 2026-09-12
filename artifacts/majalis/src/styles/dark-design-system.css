@@ -127,31 +127,40 @@
   stroke: var(--icon-primary);
 }
 
-/* —— Soft heroes ليلاً: سطح parchment من modern-section-shell + حبر داكن —— */
+/*
+ * Soft heroes ليلاً: parchment + حبر داكن.
+ * يُستثنى هيروات العلامة الداكنة (رئيسية / أوقات صلاة / لوبيات خضراء)
+ * حتى لا يُفرض --mss-on-hero الداكن على سطح أخضر/ليلي.
+ */
 :is(html[data-theme="dark"], html.dark) .section-hero:not(.asp-hero),
 :is(html[data-theme="dark"], html.dark) .topic-page__hero,
 :is(html[data-theme="dark"], html.dark) .mss-section-hero,
-:is(html[data-theme="dark"], html.dark) [class*="-hero"]:not(.asp-hero):not(.mushaf-hero):not([data-mushaf-theme]),
+:is(html[data-theme="dark"], html.dark) [class*="-hero"]:not(.asp-hero):not(.mushaf-hero):not([data-mushaf-theme]):not(.home-page-hero):not(.page-hero-mj):not(.m2030-hero):not(.pts-hero):not(.pts-hero--compact):not(.twh-hub-hero):not(.fqh-hub-hero):not(.quran-hub-hero),
 :is(html[data-theme="dark"], html.dark) .sh-hero,
 :is(html[data-theme="dark"], html.dark) .mk-hero,
 :is(html[data-theme="dark"], html.dark) .an-hero,
 :is(html[data-theme="dark"], html.dark) .seerah-hero,
 :is(html[data-theme="dark"], html.dark) .tarikh-hero,
 :is(html[data-theme="dark"], html.dark) .twh-hero {
-  background: transparent;
   color: var(--mss-on-hero, #16241e) !important;
   border-color: var(--border-elevated) !important;
   box-shadow: none;
 }
 
 :is(html[data-theme="dark"], html.dark) .section-hero:not(.asp-hero) :is(h1, h2, .section-hero__title, .topic-page__title, .sh-hero__title, .an-hero__title),
-:is(html[data-theme="dark"], html.dark) [class*="-hero"]:not(.asp-hero) :is(h1, h2, [class*="__title"]) {
+:is(html[data-theme="dark"], html.dark) [class*="-hero"]:not(.asp-hero):not(.home-page-hero):not(.page-hero-mj):not(.m2030-hero):not(.pts-hero):not(.pts-hero--compact):not(.twh-hub-hero):not(.fqh-hub-hero):not(.quran-hub-hero) :is(h1, h2, [class*="__title"]) {
   color: var(--mss-on-hero, #16241e) !important;
 }
 
 :is(html[data-theme="dark"], html.dark) .section-hero:not(.asp-hero) :is(p, .section-hero__sub, .topic-page__sub, .sh-hero__sub, .an-hero__sub),
-:is(html[data-theme="dark"], html.dark) [class*="-hero"]:not(.asp-hero) :is(p, [class*="__sub"], [class*="__eyebrow"]) {
+:is(html[data-theme="dark"], html.dark) [class*="-hero"]:not(.asp-hero):not(.home-page-hero):not(.page-hero-mj):not(.m2030-hero):not(.pts-hero):not(.pts-hero--compact):not(.twh-hub-hero):not(.fqh-hub-hero):not(.quran-hub-hero) :is(p, [class*="__sub"], [class*="__eyebrow"]) {
   color: var(--mss-on-hero-muted, #3d4f47) !important;
+}
+
+/* هيروات خضراء داكنة ليلاً — حبر فاتح صريح */
+:is(html[data-theme="dark"], html.dark) :is(.pts-hero, .pts-hero--compact, .twh-hub-hero, .fqh-hub-hero, .quran-hub-hero),
+:is(html[data-theme="dark"], html.dark) :is(.pts-hero, .pts-hero--compact, .twh-hub-hero, .fqh-hub-hero, .quran-hub-hero) :is(h1, h2, [class*="__title"], [class*="__name"], [class*="__sub"], [class*="__countdown"], [class*="__clock"], [class*="__label"], [class*="__hint"]) {
+  color: var(--mss-on-dark-hero, #ffffff) !important;
 }
 
 /* منع الجدران السوداء: أي بطاقة بنفس سواد الخلفية تُرفع */
@@ -450,11 +459,12 @@
   border: 1px solid #4a5e56 !important;
 }
 
+/* تبويبات الطهارة على soft-hero parchment — حبر داكن لا نص ليلي فاتح */
 :is(html[data-theme="dark"], html.dark) .th-tab:not(.th-tab--active),
 :is(html[data-theme="dark"], html.dark) .th-tab:not(.th-tab--active) .th-tab__label,
 :is(html[data-theme="dark"], html.dark) .th-tab:not(.th-tab--active) .th-tab__icon {
-  color: #c2cfca !important;
-  -webkit-text-fill-color: #c2cfca !important;
+  color: var(--mss-on-hero-muted, #3d4f47) !important;
+  -webkit-text-fill-color: var(--mss-on-hero-muted, #3d4f47) !important;
 }
 
 :is(html[data-theme="dark"], html.dark) .th-tab.th-tab--active,

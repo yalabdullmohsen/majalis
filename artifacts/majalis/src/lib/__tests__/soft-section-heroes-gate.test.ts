@@ -106,7 +106,7 @@ for (const [file, banned] of [
 const darkDs = read("src/styles/dark-design-system.css");
 assert.match(
   darkDs,
-  /\[class\*="-hero"\]:not\(\.asp-hero\)[\s\S]{0,200}?--mss-on-hero/,
+  /\[class\*="-hero"\]:not\(\.asp-hero\)[\s\S]{0,500}?--mss-on-hero/,
   "الوضع الداكن: حبر soft-hero (--mss-on-hero) لا --surface-hero-ink على العناوين",
 );
 assert.doesNotMatch(

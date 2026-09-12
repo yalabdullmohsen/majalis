@@ -107,6 +107,7 @@
 .home-hero,
 .mm-hero,
 .prophets-lux-hero,
+.revord-hero,
 .twh-hero,
 .twh-hub-hero {
   position: relative;
@@ -532,7 +533,7 @@ html[data-theme="dark"] .card {
 .pts-hero--compact {
   background-color: var(--mss-hero-from, #0f4a3a) !important;
   background-image: var(--mss-hero-gradient) !important;
-  color: var(--mss-on-hero, #faf5ea) !important;
+  color: var(--mss-on-dark-hero, #ffffff) !important;
   border-color: color-mix(in srgb, #1f6b56 28%, transparent);
   box-shadow: var(--mss-shadow-hero);
 }
@@ -550,6 +551,7 @@ html[data-theme="dark"] .card {
 .fqh-hub-hero__title,
 .quran-hub-hero__title,
 .pts-hero__title,
+.pts-hero__name,
 .twh-hub-hero__sub,
 .fqh-hub-hero__sub,
 .quran-hub-hero__sub {
