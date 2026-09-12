@@ -31,6 +31,7 @@ import {
   notificationTitleWithoutBrand,
 } from "./notifications/copy";
 import { pickLocalizedNotification } from "./notifications/localization";
+import { pickSectionMessage } from "./notifications/sections-config";
 
 export interface SmartNotifScheduleItem {
   id: string;
@@ -82,8 +83,9 @@ export function buildDailySmartSchedule(opts?: {
   const reminderMinute = prefs.reminderHour * 60 + prefs.reminderMinute;
 
   // أذكار الصباح/المساء — تُفعَّل صراحة عبر adhkarReminder (لا طلب إذن تلقائي)
-  if (prefs.adhkarReminder) {
-    const morning = pickLocalizedNotification("adhkarMorning");
+  const adhkarOn = prefs.sections?.adhkar?.enabled ?? prefs.adhkarReminder;
+  if (adhkarOn) {
+    const morning = pickSectionMessage("adhkar");
     items.push({
       id: "adhkar-morning",
       kind: "adhkar",
@@ -93,7 +95,7 @@ export function buildDailySmartSchedule(opts?: {
       tag: "majalis-adhkar-morning",
       url: "/adhkar",
     });
-    const evening = pickLocalizedNotification("adhkarEvening");
+    const evening = pickSectionMessage("adhkar");
     items.push({
       id: "adhkar-evening",
       kind: "adhkar",
@@ -119,7 +121,8 @@ export function buildDailySmartSchedule(opts?: {
     }
   }
 
-  if (prefs.prayerReminder) {
+  const prayerOn = prefs.sections?.prayer?.enabled ?? prefs.prayerReminder;
+  if (prayerOn) {
     const prayerSlots: Array<{ id: string; name: string; minute: number }> = [
       { id: "fajr", name: "الفجر", minute: 5 * 60 },
       { id: "dhuhr", name: "الظهر", minute: 12 * 60 + 15 },
@@ -128,7 +131,7 @@ export function buildDailySmartSchedule(opts?: {
       { id: "isha", name: "العشاء", minute: 19 * 60 + 45 },
     ];
     for (const p of prayerSlots) {
-      const copy = pickLocalizedNotification("prayerAdhan", { name: p.name });
+      const copy = pickLocalizedNotification("prayerAdhan", { name: p.name, clock: "" });
       items.push({
         id: `prayer-${p.id}`,
         kind: "prayer",
@@ -154,12 +157,14 @@ export function buildDailySmartSchedule(opts?: {
     });
   }
 
-  if (prefs.quranDailyReminder) {
+  const quranOn = prefs.sections?.quran?.enabled ?? prefs.quranDailyReminder;
+  if (quranOn) {
+    const quranCopy = pickSectionMessage("quran");
     items.push({
       id: "quran-daily-wird",
       kind: "quran",
-      title: QURAN_DAILY_REMINDER_TITLE,
-      body: QURAN_DAILY_REMINDER_BODY,
+      title: quranCopy.title || QURAN_DAILY_REMINDER_TITLE,
+      body: quranCopy.body || QURAN_DAILY_REMINDER_BODY,
       minuteOfDay: QURAN_DAILY_REMINDER_HOUR * 60 + QURAN_DAILY_REMINDER_MINUTE,
       tag: QURAN_DAILY_REMINDER_TAG,
       url: QURAN_DAILY_REMINDER_URL,
