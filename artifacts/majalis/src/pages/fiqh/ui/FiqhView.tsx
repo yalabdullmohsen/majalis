@@ -23,7 +23,8 @@ import {
 } from "@/lib/fiqh-books";
 import { fiqhBookEditorial } from "@/lib/fiqh-editorial";
 import { SectionEntryCard } from "@/components/ui/HubCard";
-import { KnowledgeLibraryCard } from "@/components/knowledge";
+import { KnowledgeLayout, KnowledgeLibraryCard } from "@/components/knowledge";
+import { UnifiedPrimaryFilters } from "@/components/filters/UnifiedPrimaryFilters";
 import { GridScreen } from "@/components/design-system/screens";
 import { isHiddenFromNav } from "@/lib/nav-visibility";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -114,11 +115,11 @@ function SearchHitList({
           <h3 id="fiqh-search-books" className="fiqh-hub-section__title">
             كتب
           </h3>
-          <div className="kx-layout kx-layout--library fiqh-book-grid">
+          <KnowledgeLayout kind="library" className="fiqh-book-grid">
             {books.map((book) => (
               <BookCard key={book.id} book={book} />
             ))}
-          </div>
+          </KnowledgeLayout>
         </section>
       ) : null}
 
@@ -184,28 +185,26 @@ function FiqhBooksBody() {
   );
 
   return (
-    <div className="fiqh-lux-page fiqh-hub-layout">
+    <KnowledgeLayout kind="fiqh" className="fiqh-lux-page fiqh-hub-layout" data-kx="1">
       <div className="fiqh-hub-controls">
-        <div className="fiqh-hub-filters" role="group" aria-label="تصنيف الكتب">
-          <button
-            type="button"
-            className={category === "all" ? "is-active" : undefined}
-            onClick={() => setCategory("all")}
-          >
-            الكل
-          </button>
-          {FIQH_CATEGORY_ORDER.map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              className={category === cat ? "is-active" : undefined}
-              onClick={() => setCategory(cat)}
-            >
-              {FIQH_CATEGORY_LABELS[cat]}
-            </button>
-          ))}
-        </div>
-        <FiqhHubSearch query={query} onQueryChange={setQuery} />
+        <UnifiedPrimaryFilters
+          className="fiqh-hub-filters"
+          primary={[
+            {
+              id: "all",
+              label: "الكل",
+              active: category === "all",
+              onSelect: () => setCategory("all"),
+            },
+            ...FIQH_CATEGORY_ORDER.map((cat) => ({
+              id: cat,
+              label: FIQH_CATEGORY_LABELS[cat],
+              active: category === cat,
+              onSelect: () => setCategory(cat),
+            })),
+          ]}
+          trailing={<FiqhHubSearch query={query} onQueryChange={setQuery} />}
+        />
       </div>
 
       {searchResults ? (
@@ -228,11 +227,11 @@ function FiqhBooksBody() {
               كتب الفقه
             </h2>
           </header>
-          <div className="kx-layout kx-layout--library fiqh-book-grid">
+          <KnowledgeLayout kind="library" className="fiqh-book-grid">
             {books.map((book) => (
               <BookCard key={book.id} book={book} />
             ))}
-          </div>
+          </KnowledgeLayout>
           {books.length === 0 ? <p className="fiqh-lux-empty">لا كتب في هذا التصنيف.</p> : null}
         </section>
       )}
@@ -274,7 +273,7 @@ function FiqhBooksBody() {
           { href: "/methodology", label: "منهجية التوثيق" },
         ]}
       />
-    </div>
+    </KnowledgeLayout>
   );
 }
 

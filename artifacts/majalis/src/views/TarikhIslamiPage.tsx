@@ -24,6 +24,7 @@ import {
 } from "@/data/islamic-history";
 import "@/styles/pages/tarikh-islami.css";
 import { DashboardScreen } from "@/components/design-system/screens";
+import { KnowledgeLayout } from "@/components/knowledge";
 
 type FilterId = HistoryCategory | "all";
 
@@ -278,7 +279,7 @@ export default function TarikhIslamiPage() {
       className="topic-page--tarikh"
       eyebrow="خط زمني بالمراحل"
     >
-      <div className="tarikh-hub">
+      <KnowledgeLayout kind="timeline" className="tarikh-hub" data-kx="1">
         <nav className="tarikh-rail" aria-label="مسار العصور الإسلامية">
           <button
             type="button"
@@ -450,7 +451,7 @@ export default function TarikhIslamiPage() {
         </div>
 
         <SectionQuiz sectionId="islamic-history" />
-      </div>
+      </KnowledgeLayout>
     </SectionTemplatePage>
     </DashboardScreen>
   );

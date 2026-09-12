@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Bird, BookOpen, Gem, Heart, Landmark, Lightbulb, Library, MapPin, Megaphone, Moon, ScrollText, Sparkles, Sprout, Swords } from "lucide-react";
+import { Bird, BookOpen, Gem, Heart, Landmark, MapPin, Megaphone, Moon, ScrollText, Sparkles, Sprout, Swords } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link } from "wouter";
@@ -10,6 +10,12 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import "@/styles/pages/seerah.css";
 import { DashboardScreen } from "@/components/design-system/screens";
+import {
+  KnowledgeLayout,
+  WarningNoticeBlock,
+  SourceReferencesBlock,
+  RelatedTopicsBlock,
+} from "@/components/knowledge";
 import "@/styles/knowledge-experience.css";
 
 const PHASES: { id: string; num: number; title: string; year: string; Icon: LucideIcon; color: string; desc: string; topics: string[]; keyEvents: string[] }[] = [
@@ -297,7 +303,7 @@ export default function SeerahPage() {
       subtitle="امتداداً لرسالة الأنبياء، حياة خاتمهم محمد ﷺ من المولد إلى الوفاة في 12 مرحلة"
       groupTitle="مراحل السيرة النبوية"
     >
-      <div className="seerah-page kx-layout kx-layout--biography" dir="rtl" data-kx="1">
+      <KnowledgeLayout kind="biography" className="seerah-page" data-kx="1">
         <div className="seerah-back-wrap">
           <Link href="/prophets" className="seerah-back-link">قصص الأنبياء</Link>
         </div>
@@ -315,9 +321,11 @@ export default function SeerahPage() {
         </div>
 
         {/* Notice */}
-        <div className="seerah-notice">
-          <strong><Lightbulb size={14} className="inline ms-1" /> منهج القسم:</strong> نعتمد المصادر المحرَّرة (ابن هشام بعد التمحيص، وابن سعد، وزاد المعاد، وما وافق الصحيحين والسنن). نميّز بين الثابت والمشهور والمراسيل، ونتجنّب الإسرائيليات والجزم بما لم يثبت، ولا نُشرع احتفالاً بالمولد أو عبادةً بلا دليل.
-        </div>
+        <WarningNoticeBlock title="منهج القسم" className="seerah-notice">
+          <p>
+            نعتمد المصادر المحرَّرة (ابن هشام بعد التمحيص، وابن سعد، وزاد المعاد، وما وافق الصحيحين والسنن). نميّز بين الثابت والمشهور والمراسيل، ونتجنّب الإسرائيليات والجزم بما لم يثبت، ولا نُشرع احتفالاً بالمولد أو عبادةً بلا دليل.
+          </p>
+        </WarningNoticeBlock>
 
         {/* Timeline Layout */}
         <div className="seerah-layout">
@@ -364,7 +372,7 @@ export default function SeerahPage() {
               </div>
             </div>
 
-            <p className="seerah-panel__desc">{active.desc}</p>
+            <p className="seerah-panel__desc" data-kx-kind="definition">{active.desc}</p>
 
             <div className="seerah-panel__topics">
               {active.topics.map(t => (
@@ -373,7 +381,7 @@ export default function SeerahPage() {
             </div>
 
             {active.keyEvents.length > 0 && (
-              <div className="seerah-panel__events">
+              <div className="seerah-panel__events" data-kx-kind="timeline">
                 <h3 className="seerah-panel__events-title">أبرز الأحداث</h3>
                 <ul className="seerah-panel__events-list">
                   {active.keyEvents.map((ev, i) => (
@@ -412,39 +420,27 @@ export default function SeerahPage() {
 
         <ShareButtons title="السيرة النبوية — سُنّة" url="https://www.ssunnah.com/seerah" />
 
-        <nav className="seerah-related" aria-label="موضوعات ذات صلة">
-          <h2 className="seerah-related__title">موضوعات ذات صلة</h2>
-          <div className="seerah-related__grid">
-            {[
-              { href: "/prophets/muhammad", label: "خاتم الأنبياء محمد ﷺ" },
-              { href: "/prophets", label: "قصص الأنبياء" },
-              { href: "/shamael", label: "الشمائل المحمدية" },
-              { href: "/wasaya-nabawiyya", label: "الوصايا النبوية" },
-              { href: "/tawhid", label: "التوحيد" },
-              { href: "/hadith", label: "الأحاديث الصحيحة" },
-            ].map((l) => (
-              <Link key={l.href} href={l.href} className="seerah-related__link">{l.label}</Link>
-            ))}
-          </div>
-        </nav>
+        <RelatedTopicsBlock
+          className="seerah-related"
+          items={[
+            { href: "/prophets/muhammad", label: "خاتم الأنبياء محمد ﷺ" },
+            { href: "/prophets", label: "قصص الأنبياء" },
+            { href: "/shamael", label: "الشمائل المحمدية" },
+            { href: "/wasaya-nabawiyya", label: "الوصايا النبوية" },
+            { href: "/tawhid", label: "التوحيد" },
+            { href: "/hadith", label: "الأحاديث الصحيحة" },
+          ]}
+        />
 
         {/* المصادر */}
-        <div className="seerah-sources">
-          <h2 className="seerah-sources__title"><Library size={18} className="inline ms-2" /> مصادر السيرة المعتمدة</h2>
-          <ul className="seerah-sources__list">
-            {SOURCES.map(src => (
-              <li key={src} className="seerah-sources__item">
-                <span className="seerah-sources__bullet">•</span>
-                {src}
-              </li>
-            ))}
-          </ul>
-          <p className="seerah-sources__note">
-            تنبيه منهجي: ما نُسب للصحيحين أو السنن يُقدَّم؛ وما كان من مراسيل المغازي أو الأخبار التاريخية يُذكر بتحفّظ، ولا يُبنى عليه حكمٌ تعبّدي بلا دليل.
+        <SourceReferencesBlock title="مصادر السيرة المعتمدة" className="seerah-sources" items={SOURCES} />
+        <WarningNoticeBlock title="تنبيه منهجي" className="seerah-sources__note">
+          <p>
+            ما نُسب للصحيحين أو السنن يُقدَّم؛ وما كان من مراسيل المغازي أو الأخبار التاريخية يُذكر بتحفّظ، ولا يُبنى عليه حكمٌ تعبّدي بلا دليل.
           </p>
-        </div>
+        </WarningNoticeBlock>
 
-      </div>
+      </KnowledgeLayout>
 
       <div className="page-shell narrow">
         <SectionQuiz sectionId="seerah" title="اختبر معلوماتك في السيرة النبوية" count={4} />

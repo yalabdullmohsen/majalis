@@ -6,6 +6,7 @@ import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { InternalLinkCard } from "@/components/ui/InternalCards";
 import "@/styles/pages/ulum-quran.css";
 import { DashboardScreen } from "@/components/design-system/screens";
+import { KnowledgeLayout } from "@/components/knowledge";
 import "@/styles/knowledge-experience.css";
 
 
@@ -246,7 +247,7 @@ export default function UlumQuranPage() {
       subtitle="مقدمة شاملة في علوم القرآن: من النزول والجمع إلى الإعجاز والتفسير والأحكام"
       groupTitle="أبواب علوم القرآن"
     >
-    <main className="uq-page kx-layout kx-layout--knowledge" dir="rtl" data-kx="1">
+    <KnowledgeLayout kind="knowledge" className="uq-page" data-kx="1" role="main">
       <div className="uq-tabs-bar" role="tablist" aria-label="أقسام علوم القرآن">
         {TABS.map((t) => (
           <button
@@ -524,7 +525,7 @@ export default function UlumQuranPage() {
       </div>
       <div className="px-4 pb-6 mt-4">
       </div>
-    </main>
+    </KnowledgeLayout>
     </SectionTemplatePage>
     </DashboardScreen>
   );
