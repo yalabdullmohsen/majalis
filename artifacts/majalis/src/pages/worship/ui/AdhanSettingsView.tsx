@@ -22,6 +22,8 @@ import { previewAdhanUrl, previewNotificationTone, stopAppAudio } from "@/lib/au
 import { subscribeAppAudio } from "@/lib/audio/app-audio-coordinator";
 import { invalidatePrayerNativeSchedule } from "@/lib/prayer-alert-scheduler";
 import { PrayerAlertSettingsCard } from "@/components/adhan/PrayerAlertSettingsCard";
+import { PrayerAudioPicker } from "@/components/adhan/PrayerAudioPicker";
+import { AppBackButton } from "@/components/common/AppBackButton";
 import { AudioPromptsSettingsCard } from "@/components/adhan/AudioPromptsSettingsCard";
 import {
   listAvailableSettingsSounds,
@@ -399,8 +401,14 @@ export default function AdhanSettingsPage() {
   const [notifTestMsg, setNotifTestMsg] = useState<string | null>(null);
   const [statusBusy, setStatusBusy] = useState(false);
   const [statusLines, setStatusLines] = useState<string[] | null>(null);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [pickerGroup, setPickerGroup] = useState<"adhan" | "tone">("tone");
+  const [openPrayer, setOpenPrayer] = useState<PrayerKey | null>(null);
 
-  const soundOptions = useMemo(() => listAvailableSettingsSounds(), []);
+  const soundOptions = useMemo(
+    () => listAvailableSettingsSounds().filter((o) => o.id !== "qatami"),
+    [],
+  );
   const selectedAdhanSoundId = resolveSelectedAdhanSoundId(prefs.defaultMuezzinId);
   const selectedToneSoundId = resolveSelectedToneSoundId(alertPrefs.soundProfile);
 
@@ -668,8 +676,11 @@ export default function AdhanSettingsPage() {
 
   return (
     <UtilityScreen compose="mark">
-    <div className="ads-page">
-      <h1 className="ads-title">تنبيهات الصلاة</h1>
+    <div className="ads-page ads-page--v3" data-back-avoidance="1">
+      <div className="ads-toolbar" data-app-back-chrome="1">
+        <AppBackButton variant="inline" fallbackHref="/settings" label="رجوع" />
+        <h1 className="ads-title">تنبيهات الصلاة</h1>
+      </div>
       <p className="ads-subtitle">
         تنبيه أذان قصير متوافق مع iOS.
         {" "}
@@ -710,8 +721,68 @@ export default function AdhanSettingsPage() {
           <span>أصوات الصلاة</span>
         </div>
         <div className="ads-card__body">
-          <p className="ads-gov-label">الأذان داخل التطبيق</p>
-          <div className="ads-style-grid" role="radiogroup" aria-label="الأذان داخل التطبيق">
+          <p className="ads-gov-label">صوت إشعار الصلاة</p>
+          <div className="ads-sound-summary">
+            <div className="ads-sound-summary__text">
+              <strong>{getSettingsSoundOption(selectedToneSoundId)?.label ?? "صوت النظام"}</strong>
+              <span>صوت إشعار · معاينة قصيرة</span>
+            </div>
+            <div className="ads-sound-summary__actions">
+              <button
+                type="button"
+                className="ads-pill-btn"
+                onClick={() => {
+                  const opt = getSettingsSoundOption(selectedToneSoundId);
+                  if (opt) void listenToSound(opt);
+                }}
+              >
+                {playingId === selectedToneSoundId ? "إيقاف" : "معاينة الصوت"}
+              </button>
+              <button
+                type="button"
+                className="ads-pill-btn"
+                onClick={() => {
+                  setPickerGroup("tone");
+                  setPickerOpen(true);
+                }}
+              >
+                تغيير الصوت
+              </button>
+            </div>
+          </div>
+
+          <p className="ads-gov-label" style={{ marginTop: "0.85rem" }}>الأذان داخل التطبيق</p>
+          <div className="ads-sound-summary">
+            <div className="ads-sound-summary__text">
+              <strong>{getSettingsSoundOption(selectedAdhanSoundId)?.label ?? "تنبيه أذان قصير متوافق مع iOS"}</strong>
+              <span>الأذان داخل التطبيق · ليس إشعار نظام طويل</span>
+            </div>
+            <div className="ads-sound-summary__actions">
+              <button
+                type="button"
+                className="ads-pill-btn"
+                onClick={() => {
+                  const opt = getSettingsSoundOption(selectedAdhanSoundId);
+                  if (opt) void listenToSound(opt);
+                }}
+              >
+                {playingId === selectedAdhanSoundId ? "إيقاف" : "معاينة"}
+              </button>
+              <button
+                type="button"
+                className="ads-pill-btn"
+                onClick={() => {
+                  setPickerGroup("adhan");
+                  setPickerOpen(true);
+                }}
+              >
+                تغيير
+              </button>
+            </div>
+          </div>
+          {soundMsg ? <p className="ads-adhan-desc" role="status">{soundMsg}</p> : null}
+          {/* إبقاء شبكة مخفية للأدوات/البوابة عند الحاجة */}
+          <div className="ads-style-grid" hidden aria-hidden="true">
             {adhanSounds.map((opt) => (
               <SoundOptionCard
                 key={opt.id}
@@ -722,13 +793,9 @@ export default function AdhanSettingsPage() {
                 onListen={() => void listenToSound(opt)}
               />
             ))}
-          </div>
-
-          <p className="ads-gov-label" style={{ marginTop: "0.85rem" }}>صوت إشعار الصلاة</p>
-          <div className="ads-style-grid" role="radiogroup" aria-label="صوت إشعار الصلاة">
             {toneSounds.map((opt) => (
               <SoundOptionCard
-                key={opt.id}
+                key={`t-${opt.id}`}
                 opt={opt}
                 selected={selectedToneSoundId === opt.id}
                 playing={playingId === opt.id}
@@ -737,7 +804,6 @@ export default function AdhanSettingsPage() {
               />
             ))}
           </div>
-          {soundMsg ? <p className="ads-adhan-desc" role="status">{soundMsg}</p> : null}
         </div>
       </section>
 
@@ -805,38 +871,51 @@ export default function AdhanSettingsPage() {
           {PRAYER_KEYS.map((key) => {
             const Icon = PRAYER_ICON_MAP[PRAYER_ICON[key]] ?? Bell;
             const p = prefs.prayers[key];
+            const expanded = openPrayer === key;
             return (
-              <div key={key} className="ads-prayer-row">
-                <div className="ads-prayer-row__head">
+              <div key={key} className={`ads-prayer-row${expanded ? " is-open" : ""}`}>
+                <button
+                  type="button"
+                  className="ads-prayer-row__head ads-prayer-row__top"
+                  aria-expanded={expanded}
+                  onClick={() => setOpenPrayer((cur) => (cur === key ? null : key))}
+                >
                   <Icon size={16} strokeWidth={2} aria-hidden="true" />
                   <span className="ads-prayer-row__name">{PRAYER_ARABIC[key]}</span>
-                </div>
-                <SettingsToggleRow
-                  id={`adhan-prayer-${key}-enabled`}
-                  title="تشغيل التنبيه"
-                  checked={p.enabled}
-                  onChange={(v) => togglePrayer(key, v)}
-                />
-                <SettingsToggleRow
-                  id={`adhan-prayer-${key}-iqamah`}
-                  title="تنبيه الإقامة"
-                  checked={Boolean(prefs.iqamahEnabled && p.iqamahEnabled)}
-                  onChange={(v) => togglePrayerIqamah(key, v)}
-                  disabled={!p.enabled || !prefs.iqamahEnabled}
-                />
-                <div className="ads-chip-scroll" role="group" aria-label={`تنبيه قبل ${PRAYER_ARABIC[key]}`}>
-                  {ADVANCE_OPTIONS.map((min) => (
-                    <button
-                      key={min}
-                      type="button"
-                      disabled={!p.enabled}
-                      onClick={() => setPrayerAdvance(key, min)}
-                      className={`ads-chip${p.advanceMinutes === min ? " is-active" : ""}`}
-                    >
-                      {min === 0 ? "بدون" : `${min} د`}
-                    </button>
-                  ))}
-                </div>
+                  <span className="ads-prayer-row__summary">
+                    {p.enabled ? (p.advanceMinutes ? `قبل ${p.advanceMinutes} د` : "عند الأذان") : "متوقف"}
+                  </span>
+                </button>
+                {expanded ? (
+                  <div className="ads-prayer-row__body">
+                    <SettingsToggleRow
+                      id={`adhan-prayer-${key}-enabled`}
+                      title="تشغيل التنبيه"
+                      checked={p.enabled}
+                      onChange={(v) => togglePrayer(key, v)}
+                    />
+                    <SettingsToggleRow
+                      id={`adhan-prayer-${key}-iqamah`}
+                      title="تنبيه الإقامة"
+                      checked={Boolean(prefs.iqamahEnabled && p.iqamahEnabled)}
+                      onChange={(v) => togglePrayerIqamah(key, v)}
+                      disabled={!p.enabled || !prefs.iqamahEnabled}
+                    />
+                    <div className="ads-chip-scroll" role="group" aria-label={`تنبيه قبل ${PRAYER_ARABIC[key]}`}>
+                      {ADVANCE_OPTIONS.map((min) => (
+                        <button
+                          key={min}
+                          type="button"
+                          disabled={!p.enabled}
+                          onClick={() => setPrayerAdvance(key, min)}
+                          className={`ads-chip${p.advanceMinutes === min ? " is-active" : ""}`}
+                        >
+                          {min === 0 ? "بدون" : `${min} د`}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
               </div>
             );
           })}
@@ -908,6 +987,19 @@ export default function AdhanSettingsPage() {
           {rescheduleMsg ? <p className="ads-adhan-desc" role="status">{rescheduleMsg}</p> : null}
         </div>
       </section>
+      <PrayerAudioPicker
+        open={pickerOpen}
+        options={soundOptions.filter((o) => o.group === pickerGroup)}
+        selectedId={pickerGroup === "adhan" ? selectedAdhanSoundId : selectedToneSoundId}
+        playingId={playingId}
+        onClose={() => setPickerOpen(false)}
+        onSelect={(opt) => {
+          selectSound(opt);
+          setPickerOpen(false);
+        }}
+        onPreview={(opt) => void listenToSound(opt)}
+        title={pickerGroup === "adhan" ? "الأذان داخل التطبيق" : "صوت إشعار الصلاة"}
+      />
     </div>
     </UtilityScreen>
   );

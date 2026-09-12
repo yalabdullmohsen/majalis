@@ -42,6 +42,10 @@ export function isCompactHeaderPath(pathname: string): boolean {
     p.startsWith("/profile/") ||
     p === "/settings" ||
     p.startsWith("/settings/") ||
+    p === "/adhan-settings" ||
+    p.startsWith("/adhan-settings/") ||
+    p === "/notification-settings" ||
+    p.startsWith("/notification-settings/") ||
     p === "/prayer-times" ||
     p.startsWith("/prayer-times/") ||
     p === "/mushaf" ||
@@ -80,6 +84,12 @@ export function hasInPageBackChrome(pathname: string): boolean {
   return (
     p === "/settings" ||
     p.startsWith("/settings/") ||
+    p === "/adhan-settings" ||
+    p.startsWith("/adhan-settings/") ||
+    p === "/notification-settings" ||
+    p.startsWith("/notification-settings/") ||
+    p === "/adhan-help" ||
+    p.startsWith("/adhan-help/") ||
     p === "/profile" ||
     p.startsWith("/profile/")
   );

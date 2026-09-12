@@ -9,6 +9,7 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  hasInPageBackChrome,
   isAuthStandalonePath,
   isCompactHeaderPath,
   isImmersiveChromePath,
@@ -136,3 +137,6 @@ import "./clean-lesson-display-title.test.ts";
 import "./teachers-routes.test.ts";
 import "./lessons-archive-route.test.ts";
 import "./format-lesson-appointment.test.ts";
+
+assert.equal(hasInPageBackChrome("/adhan-settings"), true, "إعدادات الأذان تستخدم رجوعًا داخليًا");
+assert.equal(hasInPageBackChrome("/notification-settings"), true);
