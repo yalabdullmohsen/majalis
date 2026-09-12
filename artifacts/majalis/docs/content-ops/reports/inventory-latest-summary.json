@@ -1,0 +1,43 @@
+{
+  "brand": "سُنّة",
+  "inventoryId": "inv_e47151a0adea8e7f",
+  "generatedAt": "2026-09-12T16:40:05.006Z",
+  "sectionCount": 45,
+  "sectionsAudited": 20,
+  "sectionsMissing": [
+    "home",
+    "recitations",
+    "tajweed",
+    "arbaeen",
+    "aqeedah",
+    "shamaail",
+    "scientific_miracles",
+    "adhkar",
+    "duas",
+    "lectures",
+    "series",
+    "paths",
+    "scholars",
+    "speakers",
+    "institutions",
+    "mosques",
+    "landmarks",
+    "universities",
+    "events",
+    "news",
+    "fawaid",
+    "library",
+    "help",
+    "settings",
+    "admin"
+  ],
+  "totalRecords": 19636,
+  "protectedRecords": 4253,
+  "incompleteRecords": 13548,
+  "issueCounts": {
+    "missing_title": 13155,
+    "missing_description": 13412,
+    "missing_source": 7527,
+    "file_too_large": 1
+  }
+}
