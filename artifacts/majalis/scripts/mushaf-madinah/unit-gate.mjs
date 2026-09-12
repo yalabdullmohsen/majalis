@@ -101,7 +101,7 @@ const pager = read("src/features/mushaf-reader/useMushafPager.ts") + read("src/f
 assert.match(pager, /dx > 0/);
 assert.match(pager, /go\(page \+ 1\)/);
 assert.match(pager, /SWIPE_MIN_PX\s*=\s*40/);
-assert.match(pager, /SETTLE_MS\s*=\s*160/);
+assert.match(pager, /SETTLE_MS\s*=\s*220/);
 assert.match(pager, /prefers-reduced-motion/);
 assert.match(pager, /scroll-snap|data-snap/);
 assert.doesNotMatch(pager, /rotateY/);
