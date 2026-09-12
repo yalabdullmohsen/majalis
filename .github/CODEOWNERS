@@ -18,3 +18,9 @@
 PrivacyInfo.xcprivacy @yalabdullmohsen
 /artifacts/majalis/src/components/AuthProvider.tsx @yalabdullmohsen
 /artifacts/majalis/src/lib/supabase.ts @yalabdullmohsen
+
+# Quran reference data — human review required before merge (QuranDataReviewRequired)
+/artifacts/majalis/public/data/quran-v2/ @yalabdullmohsen
+/artifacts/majalis/public/data/quran/ @yalabdullmohsen
+/artifacts/majalis/public/fonts/qpc-v2/ @yalabdullmohsen
+/artifacts/majalis/docs/quran-data-reviews/ @yalabdullmohsen

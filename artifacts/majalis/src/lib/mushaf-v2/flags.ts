@@ -18,6 +18,30 @@ export const MUSHAF_V2_FEATURES = {
   ayahTajweedTab: QURAN_DATA_FEATURES.ayahTajweedTab,
 } as const;
 
+/**
+ * Quran Experience Next Generation — مراحل خلف أعلام داخلية.
+ * P0 مفعّل في الإنتاج؛ P1/P2 يُفعَّلان بعد اجتياز البوابات والجهاز الحقيقي.
+ */
+export const QURAN_EXPERIENCE_NEXT = {
+  /** طبقات الإعدادات + سلامة البصمة + prefetch ±2 */
+  settingsRepository: true,
+  dataFingerprintGate: true,
+  prefetchPlus2: true,
+  /** وضع قراءة نصية مرنة (منفصل عن صفحة المصحف الثابتة) */
+  textReadingMode: false,
+  /** فهرس/تفسير/تلاوة محسّنة — P1 */
+  unifiedIndex: true,
+  tafsirPanel: true,
+  audioCoordinator: true,
+  verseHighlight: true,
+  nightTheme: true,
+  offlineBasics: true,
+  /** ختمة/ورد/حفظ/مشاركة متقدمة — P2 */
+  khatmaWird: false,
+  hifzMode: false,
+  advancedShare: false,
+} as const;
+
 /** تراجع داخلي مؤقت: localStorage[key]="0" يعطّل طبقات v2 دون حذف القارئ القديم. */
 export function isMushafReaderV2Enabled(): boolean {
   if (!MUSHAF_V2_FEATURES.architectureLayers) return false;

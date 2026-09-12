@@ -1,0 +1,7 @@
+{
+  "status": "template",
+  "reviewer": "",
+  "reason": "",
+  "ticket": "",
+  "policyAr": "لا تضع status=QuranDataReviewApproved إلا بعد مراجعة بشرية موثقة لتغيير بيانات القرآن المرجعية. أي تعارض يوقف النشر ويُسجَّل كـ QuranDataReviewRequired."
+}

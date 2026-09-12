@@ -9,12 +9,15 @@ import {
   type MushafPageLayout,
 } from "@/lib/quran-data/qpc-page-data";
 import { clampMushafPage, MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN } from "@/lib/quran-last-page";
+import { QURAN_EXPERIENCE_NEXT } from "./flags";
 
-function neighbors(page: number): number[] {
+function neighbors(page: number, radius = 1): number[] {
   const p = clampMushafPage(page);
   const out: number[] = [];
-  if (p > MUSHAF_PAGE_MIN) out.push(p - 1);
-  if (p < MUSHAF_PAGE_MAX) out.push(p + 1);
+  for (let d = 1; d <= radius; d++) {
+    if (p - d >= MUSHAF_PAGE_MIN) out.push(p - d);
+    if (p + d <= MUSHAF_PAGE_MAX) out.push(p + d);
+  }
   return out;
 }
 
@@ -30,8 +33,10 @@ export const MushafPageRepository = {
     return loadMushafPage(n);
   },
 
+  /** ±1 إلزامي؛ ±2 عند تفعيل prefetchPlus2 */
   prefetchAdjacent(page: number): void {
-    for (const n of neighbors(page)) prefetchMushafPage(n);
+    const radius = QURAN_EXPERIENCE_NEXT.prefetchPlus2 ? 2 : 1;
+    for (const n of neighbors(page, radius)) prefetchMushafPage(n);
   },
 
   assertPageIntegrity(layout: MushafPageLayout): boolean {
