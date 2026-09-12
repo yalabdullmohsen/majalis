@@ -14,12 +14,16 @@ import {
   getTopSearchQueries,
 } from "@/lib/search-history";
 import { highlightOriginalParts } from "@/features/search/tolerant-match";
-import { runAppSearch, type AppSearchResult } from "@/features/search/app-search";
+import { type AppSearchResult } from "@/features/search/app-search";
 import {
   SEARCH_SCOPE_DEFS,
   isSearchScopeId,
   type SearchScopeId,
 } from "@/features/search/search-scopes";
+import {
+  isKnowledgePlatformP0Enabled,
+  runKnowledgeSearch,
+} from "@/lib/knowledge-platform";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { TEXT_API_ORIGINS, useResourcePrewarm } from "@/lib/resource-prewarm";
 import "@/styles/components/global-search-modal.css";
@@ -253,11 +257,16 @@ export function GlobalSearchModal({ onClose }: Props) {
         await afterNextPaint();
         await yieldToMain();
         if (ctrl.signal.aborted || seq !== requestSeqRef.current) return;
-        const res = await runAppSearch(trimmed, {
+        const searchOpts = {
           limit: filter !== "all" ? 20 : 28,
           scope: filter,
           signal: ctrl.signal,
-        });
+        };
+        const res = isKnowledgePlatformP0Enabled()
+          ? await runKnowledgeSearch(trimmed, searchOpts)
+          : await (
+              await import("@/features/search/app-search")
+            ).runAppSearch(trimmed, searchOpts);
         if (ctrl.signal.aborted || seq !== requestSeqRef.current) return;
         await yieldToMain();
         if (ctrl.signal.aborted || seq !== requestSeqRef.current) return;

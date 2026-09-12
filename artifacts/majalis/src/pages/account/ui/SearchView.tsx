@@ -23,13 +23,16 @@ import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { addSearchHistory, getSearchHistory, clearSearchHistory } from "@/lib/search-history";
 import {
   highlightOriginalParts,
-  runAppSearch,
   SEARCH_SCOPE_DEFS,
   SEARCH_SCOPE_LABELS,
   isSearchScopeId,
   type AppSearchResult,
   type SearchScopeId,
 } from "@/features/search";
+import {
+  isKnowledgePlatformP0Enabled,
+  runKnowledgeSearch,
+} from "@/lib/knowledge-platform";
 import "@/styles/pages/search.css";
 import "@/styles/pages/search-legacy.css";
 import { ACTION, EMPTY, SEARCH } from "@/lib/ui-copy";
@@ -251,7 +254,12 @@ export default function SearchPage() {
     }
     setLoading(true);
     try {
-      const res = await runAppSearch(q, { scope: nextScope, limit: 48, signal: ctrl.signal });
+      // P0: مسار المعرفة الموحّد (Resolver + نشاط محلي) — مع kill switch
+      const res = isKnowledgePlatformP0Enabled()
+        ? await runKnowledgeSearch(q, { scope: nextScope, limit: 48, signal: ctrl.signal })
+        : await (
+            await import("@/features/search/app-search")
+          ).runAppSearch(q, { scope: nextScope, limit: 48, signal: ctrl.signal });
       if (ctrl.signal.aborted) return;
       setResults(res.results.filter((item) => !isBlockedOrAdminHref(resultHref(item))));
       setSuggestions(res.suggestions ?? []);

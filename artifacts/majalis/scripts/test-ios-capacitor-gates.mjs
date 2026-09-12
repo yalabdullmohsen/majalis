@@ -141,7 +141,10 @@ ok(deepLink.includes("majlisilm"), "native-deep-link handles custom scheme");
 ok(deepLink.includes("TRUSTED_HTTPS_HOSTS"), "native-deep-link trusts only majlisilm hosts");
 
 const mainTsx = readFileSync(join(root, "src", "main.tsx"), "utf8");
-ok(mainTsx.includes("resolveNativeDeepLinkPath"), "main.tsx wires deep-link resolver");
+ok(mainTsx.includes("mapShareOrDeepLink"), "main.tsx wires deep-link map (blocks staging/open-redirect)");
+ok(mainTsx.includes("shouldNavigateNativeDeepLink"), "main.tsx guards deep-link navigation");
+const deepLinkMap = readFileSync(join(root, "src", "lib", "sync-engine", "deep-link-map.ts"), "utf8");
+ok(deepLinkMap.includes("resolveNativeDeepLinkPath"), "deep-link-map delegates HTTPS/custom scheme to native resolver");
 ok(
   !/ensureNativePlaybackAudioSession\(\)/.test(mainTsx),
   "main.tsx does not activate AVAudioSession at launch",

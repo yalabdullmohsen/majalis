@@ -71,6 +71,7 @@ export async function flushOutbox(): Promise<{ flushed: number; remaining: numbe
   let flushed = 0;
   const now = Date.now();
   const OUTBOX_BACKOFF = { maxRetries: 8, baseDelayMs: 800, maxDelayMs: 120_000 };
+  const { planRecovery } = await import("@/lib/sync-engine/recovery");
 
   for (const item of items) {
     if (item.nextRetryAt != null && item.nextRetryAt > now) continue;
@@ -84,13 +85,23 @@ export async function flushOutbox(): Promise<{ flushed: number; remaining: numbe
       } else {
         item.attempts += 1;
         item.lastError = "handler_rejected";
-        item.nextRetryAt = now + computeBackoffDelayMs(item.attempts, OUTBOX_BACKOFF);
+        const plan = planRecovery("sync", item.attempts);
+        item.nextRetryAt =
+          now +
+          (plan.retry
+            ? Math.max(plan.retryDelayMs, computeBackoffDelayMs(item.attempts, OUTBOX_BACKOFF))
+            : computeBackoffDelayMs(item.attempts, OUTBOX_BACKOFF));
         await idbPut(OFFLINE_STORES.meta, `${OUTBOX_PREFIX}${item.type}:${item.id}`, item, item.updatedAt);
       }
     } catch (e) {
       item.attempts += 1;
       item.lastError = e instanceof Error ? e.message : "flush_error";
-      item.nextRetryAt = now + computeBackoffDelayMs(item.attempts, OUTBOX_BACKOFF);
+      const plan = planRecovery("sync", item.attempts);
+      item.nextRetryAt =
+        now +
+        (plan.retry
+          ? Math.max(plan.retryDelayMs, computeBackoffDelayMs(item.attempts, OUTBOX_BACKOFF))
+          : computeBackoffDelayMs(item.attempts, OUTBOX_BACKOFF));
       await idbPut(OFFLINE_STORES.meta, `${OUTBOX_PREFIX}${item.type}:${item.id}`, item, item.updatedAt);
     }
   }
