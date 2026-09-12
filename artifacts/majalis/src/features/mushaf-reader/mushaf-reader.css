@@ -1016,6 +1016,8 @@ html.dark .nm-root .mm-audio-dock__reciter-btn {
   will-change: transform;
   transform: translate3d(-33.333333%, 0, 0);
   backface-visibility: hidden;
+  isolation: isolate;
+  contain: layout style;
 }
 
 .nm-pager__sheet,
@@ -1027,9 +1029,12 @@ html.dark .nm-root .mm-audio-dock__reciter-btn {
   height: 100%;
   position: relative;
   box-sizing: border-box;
-  contain: layout paint;
+  contain: layout paint style;
   opacity: 1;
   overflow: hidden;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  isolation: isolate;
 }
 
 /* قفل بكسل بعد measure — data-pager-w من useMushafPager */
@@ -1053,6 +1058,33 @@ html.dark .nm-root .mm-audio-dock__reciter-btn {
 .nm-root .mm-pager-scroller.is-panning .nm-pager__sheet[data-pane="current"],
 .nm-root[data-pager-settled="0"] .nm-pager__sheet[data-pane="current"] {
   opacity: 1;
+}
+
+/* Ultra Smooth: أثناء السحب — حركة transform فقط؛ تجميد تفاعل الكروم والنص */
+.nm-root[data-ultra-smooth="1"] .nm-pager-track,
+.nm-root[data-ultra-smooth="1"] .mm-pager-track {
+  will-change: transform;
+}
+
+.nm-root[data-mushaf-panning="1"] .nm-pager__sheet .nm-page,
+.nm-root[data-mushaf-panning="1"] .nm-pager__sheet .mm-page,
+.nm-pager-scroller.is-panning .nm-pager__sheet {
+  pointer-events: none;
+}
+
+.nm-root[data-mushaf-panning="1"] .nm-controls,
+.nm-root[data-mushaf-panning="1"] .nm-controls__bar,
+.nm-root[data-mushaf-panning="1"] .mm-audio-dock,
+.nm-root[data-mushaf-panning="1"] .quran-audio-player {
+  pointer-events: none;
+}
+
+/* لا shimmer / skeleton أثناء السحب */
+.nm-root[data-mushaf-panning="1"] .nm-page-placeholder,
+.nm-root[data-mushaf-panning="1"] [data-loading],
+.nm-root[data-mushaf-panning="1"] .skeleton,
+.nm-root[data-mushaf-panning="1"] .shimmer {
+  visibility: hidden;
 }
 
 /* طبقات: نص المصحف تحت الكروم؛ الشيتات/التلاوة فوق النص دون قصّه بـ overlay دائم */

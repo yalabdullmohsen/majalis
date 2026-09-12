@@ -23,6 +23,10 @@ type PagerProps = {
   onTapEmpty?: () => void;
   onNavigateStart?: () => void;
   onNavigateCancel?: () => void;
+  /** بداية سحب بصرية فقط — بلا setState ثقيل */
+  onPanVisualStart?: () => void;
+  /** pointerdown مقبول — telemetry فقط */
+  onGestureArm?: () => void;
   ignoreSelector?: string;
   /**
    * رسم صفحة برقم ثابت — يُستدعى لكل من (page+1, page, page-1).
@@ -63,6 +67,8 @@ export const MushafPager = forwardRef<HTMLDivElement, PagerProps>(function Musha
     onTapEmpty,
     onNavigateStart,
     onNavigateCancel,
+    onPanVisualStart,
+    onGestureArm,
     ignoreSelector = DEFAULT_IGNORE,
     renderPage,
     pageSlot,
@@ -92,6 +98,8 @@ export const MushafPager = forwardRef<HTMLDivElement, PagerProps>(function Musha
     onTapEmpty,
     onNavigateStart,
     onNavigateCancel,
+    onPanVisualStart,
+    onGestureArm,
     ignoreSelector,
     shellRef,
   });

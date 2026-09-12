@@ -16,12 +16,15 @@ import { MUSHAF_SETTLE_MS } from "@/features/mushaf-madinah/layout-bands";
 
 /** عتبة السحب الأفقي — من أي مكان في الصفحة */
 export const SWIPE_MIN_PX = 40;
-export const SETTLE_MS = 160;
+export const SETTLE_MS = 220;
 if (SETTLE_MS !== MUSHAF_SETTLE_MS) {
   throw new Error("SETTLE_MS must match layout-bands");
 }
 
 const FLICK_PX_PER_MS = 0.55;
+
+/** منحنى ورقة تنزلق — بلا overshoot أو ارتداد */
+export const MUSHAF_PAPER_EASE = "cubic-bezier(0.25, 0.1, 0.25, 1)";
 
 export type MushafPagerApi = {
   trackRef: RefObject<HTMLDivElement | null>;
@@ -41,6 +44,13 @@ type Opts = {
   onNavigateStart?: () => void;
   /** سحب أُلغي دون التزام بصفحة */
   onNavigateCancel?: () => void;
+  /**
+   * بداية حركة بصرية فقط — ممنوع setState ثقيل هنا.
+   * DOM class / telemetry فقط.
+   */
+  onPanVisualStart?: () => void;
+  /** pointerdown مقبول — telemetry فقط (قبل أول حركة) */
+  onGestureArm?: () => void;
   ignoreSelector: string;
   shellRef: RefObject<HTMLElement | null>;
 };
@@ -50,6 +60,14 @@ function prefersReducedMotion(): boolean {
     typeof window !== "undefined" &&
     window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true
   );
+}
+
+function snapPx(x: number): number {
+  const dpr =
+    typeof window !== "undefined" && window.devicePixelRatio > 0
+      ? window.devicePixelRatio
+      : 1;
+  return Math.round(x * dpr) / dpr;
 }
 
 /**
@@ -67,6 +85,8 @@ export function useMushafPager({
   onTapEmpty,
   onNavigateStart,
   onNavigateCancel,
+  onPanVisualStart,
+  onGestureArm,
   ignoreSelector,
   shellRef,
 }: Opts): MushafPagerApi {
@@ -85,8 +105,10 @@ export function useMushafPager({
   const pendingCommit = useRef<number | null>(null);
   const pageRef = useRef(page);
   pageRef.current = page;
+  const rafMoveRef = useRef<number | null>(null);
+  const pendingXRef = useRef<number | null>(null);
 
-  const panSlopFor = (onAyah: boolean) => (onAyah ? 18 : 10);
+  const panSlopFor = (onAyah: boolean) => (onAyah ? 14 : 8);
 
   const applyViewportWidth = useCallback((w: number) => {
     if (!(w > 0)) return 0;
@@ -120,12 +142,13 @@ export function useMushafPager({
       const w = widthRef.current || measureWidth();
       if (!(w > 0)) return;
       const ms = prefersReducedMotion() ? 0 : SETTLE_MS;
+      const px = snapPx(x);
       track.style.transition =
         animate && ms > 0
-          ? `transform ${ms}ms cubic-bezier(0.22, 1, 0.36, 1)`
+          ? `transform ${ms}ms ${MUSHAF_PAPER_EASE}`
           : "none";
-      track.style.transform = `translate3d(${x}px, 0, 0)`;
-      if (import.meta.env?.DEV && !animate && Math.abs(x + w) < 1) {
+      track.style.transform = `translate3d(${px}px, 0, 0)`;
+      if (import.meta.env?.DEV && !animate && Math.abs(px + w) < 1) {
         track.querySelectorAll<HTMLElement>(".nm-pager__sheet, .mm-pager__sheet").forEach((sheet) => {
           const sw = sheet.getBoundingClientRect().width;
           if (sw > 0 && Math.abs(sw - w) > 1.5) {
@@ -137,6 +160,32 @@ export function useMushafPager({
     [measureWidth],
   );
 
+
+  const flushPendingMove = useCallback(() => {
+    rafMoveRef.current = null;
+    const x = pendingXRef.current;
+    if (x == null) return;
+    pendingXRef.current = null;
+    setTrackX(x, false);
+  }, [setTrackX]);
+
+  const scheduleTrackX = useCallback(
+    (x: number) => {
+      pendingXRef.current = x;
+      if (rafMoveRef.current != null) return;
+      rafMoveRef.current = requestAnimationFrame(flushPendingMove);
+    },
+    [flushPendingMove],
+  );
+
+  const cancelPendingMove = useCallback(() => {
+    if (rafMoveRef.current != null) {
+      cancelAnimationFrame(rafMoveRef.current);
+      rafMoveRef.current = null;
+    }
+    pendingXRef.current = null;
+  }, []);
+
   const baseX = useCallback(() => {
     const w = widthRef.current || measureWidth();
     return w > 0 ? -w : 0;
@@ -144,12 +193,13 @@ export function useMushafPager({
 
   const resetToCurrent = useCallback(
     (animate: boolean) => {
+      cancelPendingMove();
       dragDx.current = 0;
-      const w = measureWidth();
+      const w = widthRef.current > 0 ? widthRef.current : measureWidth();
       if (!(w > 0)) return;
       setTrackX(-w, animate);
     },
-    [measureWidth, setTrackX],
+    [cancelPendingMove, measureWidth, setTrackX],
   );
 
   const go = useCallback(
@@ -198,15 +248,21 @@ export function useMushafPager({
       if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
       if (e.key === "ArrowRight" || e.key === "PageDown") {
         e.preventDefault();
-        go(pageRef.current + 1);
+        const page = pageRef.current;
+        go(page + 1);
       } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
         e.preventDefault();
-        go(pageRef.current - 1);
+        const page = pageRef.current;
+        go(page - 1);
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [disabled, go]);
+
+  useEffect(() => {
+    return () => cancelPendingMove();
+  }, [cancelPendingMove]);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -238,7 +294,9 @@ export function useMushafPager({
     }
     panning.current = false;
     dragDx.current = 0;
-    measureWidth();
+    cancelPendingMove();
+    /* لا تعد القياس إن كان العرض معروفاً — أسرع touch→move */
+    if (!(widthRef.current > 0)) measureWidth();
     setTrackX(baseX(), false);
     const onAyah = Boolean(
       t.closest(
@@ -246,6 +304,7 @@ export function useMushafPager({
       ),
     );
     touchRef.current = { x: e.clientX, y: e.clientY, t: Date.now(), onAyah };
+    onGestureArm?.();
     if (!onAyah) {
       try {
         (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
@@ -265,6 +324,7 @@ export function useMushafPager({
       if (Math.abs(dx) > slop && Math.abs(dx) > Math.abs(dy)) {
         panning.current = true;
         scrollerRef.current?.classList.add("is-panning");
+        shellRef.current?.setAttribute("data-mushaf-panning", "1");
         if (start.onAyah) {
           try {
             (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
@@ -272,24 +332,28 @@ export function useMushafPager({
             /* ignore */
           }
         }
-        onNavigateStart?.();
+        /* بصري فقط — لا React setState هنا */
+        onPanVisualStart?.();
       } else {
         return;
       }
     }
+    e.preventDefault();
     const w = widthRef.current || measureWidth();
     const pageNow = pageRef.current;
     let clamped = dx;
     if (pageNow >= MUSHAF_PAGE_MAX && dx > 0) clamped = dx * 0.25;
     if (pageNow <= MUSHAF_PAGE_MIN && dx < 0) clamped = dx * 0.25;
     dragDx.current = clamped;
-    setTrackX(-w + clamped, false);
+    scheduleTrackX(-w + clamped);
   };
 
   const finishGesture = (e?: ReactPointerEvent) => {
     const start = touchRef.current;
     touchRef.current = null;
     scrollerRef.current?.classList.remove("is-panning");
+    shellRef.current?.removeAttribute("data-mushaf-panning");
+    cancelPendingMove();
     if (!start || disabled) return;
 
     const clientX = e?.clientX ?? start.x;
@@ -369,6 +433,7 @@ export function useMushafPager({
     ) {
       touchRef.current = null;
       scrollerRef.current?.classList.remove("is-panning");
+      shellRef.current?.removeAttribute("data-mushaf-panning");
       return;
     }
     finishGesture(e);
@@ -377,6 +442,8 @@ export function useMushafPager({
   const onPointerCancel = () => {
     touchRef.current = null;
     scrollerRef.current?.classList.remove("is-panning");
+    shellRef.current?.removeAttribute("data-mushaf-panning");
+    cancelPendingMove();
     if (panning.current) {
       locking.current = true;
       pendingCommit.current = null;

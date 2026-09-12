@@ -107,7 +107,7 @@ assert.match(fitHook, /data-mushaf-font-locked/);
 assert.match(fitHook, /stable-inherit/);
 
 const pager = readFileSync(resolve(root, "src/features/mushaf-reader/useMushafPager.ts"), "utf8");
-assert.match(pager, /SETTLE_MS = 160/);
+assert.match(pager, /SETTLE_MS = 220/);
 assert.match(pager, /prefers-reduced-motion|prefersReducedMotion/);
 assert.doesNotMatch(pager, /bounce|spring/i);
 

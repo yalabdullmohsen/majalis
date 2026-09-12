@@ -28,7 +28,7 @@ assert.doesNotMatch(page, /VerifiedMushafReader/);
 assert.match(pagerHook, /data-pager-w/);
 assert.match(pagerHook, /--nm-pager-w/);
 assert.match(pagerHook, /Math\.round/);
-assert.match(pagerHook, /translate3d\(\$\{x\}px/);
+assert.match(pagerHook, /translate3d\(\$\{(?:x|px)\}px/);
 assert.match(pagerHook, /لا resetToCurrent قبل go/);
 assert.doesNotMatch(pagerHook, /translate3d\([^)]*%/);
 assert.doesNotMatch(
