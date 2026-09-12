@@ -42,10 +42,40 @@ export function isBookmarked(surahNum: number, ayahNum: number): boolean {
 export function addBookmark(bk: Omit<QuranBookmark, "addedAt" | "list">, list = "المفضلة") {
   const all = readBookmarks().filter((b) => !(b.surahNum === bk.surahNum && b.ayahNum === bk.ayahNum));
   writeBookmarks([{ ...bk, list, addedAt: Date.now() }, ...all]);
+  void import("@/lib/sync-engine")
+    .then(({ enqueueSyncRecord }) => {
+      enqueueSyncRecord({
+        kind: "bookmark",
+        entityId: `quran:${bk.surahNum}:${bk.ayahNum}`,
+        payload: {
+          contentType: "quran_ayah",
+          contentId: `${bk.surahNum}:${bk.ayahNum}`,
+          title: bk.surahName,
+          list,
+          on: true,
+        },
+      });
+    })
+    .catch(() => undefined);
 }
 
 export function removeBookmark(surahNum: number, ayahNum: number) {
   writeBookmarks(readBookmarks().filter((b) => !(b.surahNum === surahNum && b.ayahNum === ayahNum)));
+  void import("@/lib/sync-engine")
+    .then(({ enqueueSyncRecord }) => {
+      enqueueSyncRecord({
+        kind: "bookmark",
+        entityId: `quran:${surahNum}:${ayahNum}`,
+        op: "delete",
+        payload: {
+          contentType: "quran_ayah",
+          contentId: `${surahNum}:${ayahNum}`,
+          on: false,
+          deleted: true,
+        },
+      });
+    })
+    .catch(() => undefined);
 }
 
 // ── Notes ─────────────────────────────────────────────────────────────────────
@@ -83,6 +113,25 @@ export function saveNote(surahNum: number, ayahNum: number, text: string) {
   } else {
     void deleteUserNote(verseId);
   }
+
+  // محرك المزامنة — تعارض الملاحظات = keep_both (لا يُفقد أي نص)
+  void import("@/lib/sync-engine")
+    .then(({ enqueueSyncRecord }) => {
+      enqueueSyncRecord({
+        kind: "note",
+        entityId: `quran:${verseId}`,
+        op: trimmed ? "upsert" : "delete",
+        payload: {
+          contentType: "quran_ayah",
+          contentId: verseId,
+          surahNum,
+          ayahNum,
+          text: trimmed,
+          deleted: !trimmed,
+        },
+      });
+    })
+    .catch(() => undefined);
 }
 
 export function getAllNotes(): QuranNote[] {

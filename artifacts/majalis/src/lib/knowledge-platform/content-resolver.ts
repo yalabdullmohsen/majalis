@@ -130,14 +130,21 @@ export function resolveSearchHit(hit: {
   href: string;
   summary?: string;
 }): ContentEntityCard | null {
-  const kind = SEARCH_KIND_TO_ENTITY[hit.kind] ?? "app_route";
+  const mapped = SEARCH_KIND_TO_ENTITY[hit.kind];
+  const kind = mapped ?? "app_route";
+  // لـ app_route: استخدم مسار الفهرس إن وُجد — يمنع فتح كيان خاطئ عبر id خام.
+  const id =
+    kind === "app_route" && typeof hit.href === "string" && hit.href.startsWith("/")
+      ? hit.href
+      : hit.id;
   const resolved =
-    resolveContentRef({ kind, id: hit.id }, hit.title) ??
+    resolveContentRef({ kind, id }, hit.title) ??
     card("app_route", hit.href || hit.id, hit.title, hit.href || "/search", {
       shortDescription: hit.summary,
     });
+  // لا تستبدل رابط المحلّل برابط الفهرس للأنواع المعروفة (غير app_route).
   const withHref =
-    hit.href && resolved.href !== hit.href
+    !mapped && hit.href && resolved.href !== hit.href
       ? { ...resolved, href: hit.href, shortDescription: hit.summary ?? resolved.shortDescription }
       : { ...resolved, shortDescription: hit.summary ?? resolved.shortDescription };
   return isPubliclyVisible(withHref) ? withHref : null;

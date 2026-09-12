@@ -91,7 +91,7 @@ const SubmitContentPage = lazy(() => import("@/views/SubmitContentPage"));
 const LoginPage = lazyWithRetry(() => import("@/pages/account/LoginPage"), "LoginPage");
 const RegisterPage = lazyWithRetry(() => import("@/pages/account/RegisterPage"), "RegisterPage");
 const TranscribePage = lazy(() => import("@/views/TranscribePage"));
-const AssistantPage = lazy(() => import("@/views/AssistantPage"));
+const AssistantGate = lazy(() => import("@/pages/assistant/AssistantGate"));
 const KuwaitLessonsPage = lazy(() => import("@/pages/lessons/KuwaitLessonsPage"));
 const CardsPage = lazy(() => import("@/views/CardsPage"));
 const PrayerTimesPage = lazy(() => import("@/pages/worship/PrayerTimesPage"));
@@ -497,11 +497,16 @@ export default function AppRoutes() {
       <Route path="/courses/paths"><Redirect to="/lessons" /></Route>
 
       <Route path="/assistant">
-        <ErrorBoundary>
-          <Suspense fallback={<LazyRouteFallback />}>
-            <AssistantPage />
-          </Suspense>
-        </ErrorBoundary>
+        {(params) => {
+          void params;
+          return (
+            <ErrorBoundary>
+              <Suspense fallback={<LazyRouteFallback />}>
+                <AssistantGate />
+              </Suspense>
+            </ErrorBoundary>
+          );
+        }}
       </Route>
       {/* عُطِّلت 2026-07-23: توجيه دائم إلى الأسئلة والأجوبة، وvercel.json يوجّه
           الطلبات المباشرة على مستوى الخادم بنفس الوجهة. */}
@@ -530,11 +535,21 @@ export default function AppRoutes() {
         </ErrorBoundary>
       </Route>
       <Route path="/quran"><Redirect to="/quran-hub" /></Route>
-      {/* مصحف المدينة الجديد — بيانات QPC فقط، بلا PDF ولا واجهة قديمة */}
-      <Route path="/mushaf/page/:page"><SafeLazyRoute component={MushafReaderPage} /></Route>
-      <Route path="/mushaf/page"><SafeLazyRoute component={MushafReaderPage} /></Route>
+      {/* مصحف المدينة — قارئ واحد عبر /mushaf?page=؛ المسارات القديمة تُحوَّل بلا إعادة تركيب */}
+      <Route path="/mushaf/page/:page">
+        {(params) => <Redirect to={`/mushaf?page=${encodeURIComponent(params.page || "1")}`} />}
+      </Route>
+      <Route path="/mushaf/page"><Redirect to="/mushaf" /></Route>
       <Route path="/mushaf/about-edition"><Redirect to="/mushaf?page=1" /></Route>
-      <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafReaderPage} /></Route>
+      <Route path="/mushaf/:surah">
+        {(params) => {
+          const raw = String(params.surah || "").trim();
+          if (/^\d+$/.test(raw)) {
+            return <Redirect to={`/mushaf?page=${raw}`} />;
+          }
+          return <Redirect to="/mushaf" />;
+        }}
+      </Route>
       <Route path="/mushaf"><SafeLazyRoute component={MushafReaderPage} /></Route>
       <Route path="/quran/mushaf"><Redirect to="/mushaf" /></Route>
       <Route path="/mushaf-v2-preview"><Redirect to="/mushaf" /></Route>

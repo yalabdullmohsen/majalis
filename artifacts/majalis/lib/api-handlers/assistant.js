@@ -965,11 +965,53 @@ function buildNoSourceAnswer() {
 
 // ─── معالج الطلب الرئيسي ──────────────────────────────────────────────────────
 
+/** يطابق علم الواجهة: معطّل للعامة حتى ASSISTANT_ENABLED=1 (أو VITE_ASSISTANT_ENABLED=1). */
+function isAssistantPublicApiEnabled() {
+  const raw = String(
+    process.env.ASSISTANT_ENABLED || process.env.VITE_ASSISTANT_ENABLED || "",
+  )
+    .trim()
+    .toLowerCase();
+  return raw === "1" || raw === "true" || raw === "yes";
+}
+
+const ASSISTANT_PUBLICLY_DISABLED_REPLY =
+  "المساعد العلمي قيد المراجعة الداخلية حاليًا لضمان دقة المصادر. استخدم البحث الموثّق داخل سُنّة.";
+
 async function handleAssistantRequest(req, res) {
   if (req.method === "OPTIONS") { endEmpty(res, 204); return; }
 
+  if (!isAssistantPublicApiEnabled()) {
+    if (req.method === "GET") {
+      sendJson(res, 200, {
+        ok: true,
+        available: false,
+        ai: false,
+        mode: "disabled",
+      });
+      return;
+    }
+    if (req.method === "POST") {
+      // 200 متوافق مع بوابات الصحة؛ بلا استدعاء نموذج وبلا إفتاء.
+      sendJson(
+        res,
+        200,
+        successPayload(ASSISTANT_PUBLICLY_DISABLED_REPLY, {
+          safety_classification: "general_guidance",
+          citations: [],
+          confidence: 0,
+          grounded: false,
+          disclaimer: ISLAMIC_DISCLAIMER,
+        }),
+      );
+      return;
+    }
+    sendJson(res, 405, { ok: false, message: "الطريقة غير مدعومة." });
+    return;
+  }
+
   if (req.method === "GET") {
-    // المساعد متاح دائمًا (مصادر محلية + احتياطي)، و«ai» يُشير لوجود مفتاح Anthropic.
+    // المساعد متاح عند تفعيل العلم (مصادر محلية + احتياطي)، و«ai» = مفتاح Anthropic.
     sendJson(res, 200, {
       ok: true,
       available: true,

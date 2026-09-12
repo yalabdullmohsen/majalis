@@ -152,6 +152,15 @@ async function bridgeToLegacyOutbox(record: SyncRecord): Promise<void> {
     });
     return;
   }
+  if (record.kind === "note") {
+    await enqueueOutbox("preference_patch", `note:${record.entityId}`, {
+      userId,
+      ...record.payload,
+      updatedAt: record.updatedAt,
+      opId: record.opId,
+    });
+    return;
+  }
   if (
     record.kind === "notification_pref" ||
     record.kind === "reading_pref" ||
@@ -175,6 +184,7 @@ function isBridgeable(kind: SyncEntityKind): boolean {
     kind === "listen_position" ||
     kind === "bookmark" ||
     kind === "favorite" ||
+    kind === "note" ||
     kind === "notification_pref" ||
     kind === "reading_pref" ||
     kind === "home_pref" ||

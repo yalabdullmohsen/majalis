@@ -85,7 +85,6 @@ export const SEARCH_KIND_TO_ENTITY: Record<string, ContentEntityKind> = {
   tafsir: "tafsir",
   hadith: "hadith",
   fiqh: "fiqh_topic",
-  fatwa: "fiqh_topic",
   aqeedah: "aqeedah_topic",
   tawhid: "aqeedah_topic",
   seerah: "seerah_event",
@@ -104,6 +103,9 @@ export const SEARCH_KIND_TO_ENTITY: Record<string, ContentEntityKind> = {
   dhikr: "dhikr",
   dua: "dua",
   fawaid: "fawaid",
-  book: "article",
+  /** كتب الفهرس تُفتح عبر رابط النتيجة (app_route) — لا تُحوَّل لمقالة وهمية. */
+  book: "app_route",
+  /** فتوى بلا slug فقه → الاعتماد على href الفهرس عبر app_route. */
+  fatwa: "app_route",
   app: "app_route",
 };
