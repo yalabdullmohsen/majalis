@@ -9,6 +9,7 @@ export type AudioBusOwner =
   | "majlis"
   | "recitation"
   | "lesson"
+  | "audioReader"
   | "other";
 
 type Stopper = () => void | Promise<void>;
@@ -59,6 +60,22 @@ async function stopKnownEngines(except: AudioBusOwner): Promise<void> {
     try {
       const { stopAdhan } = await import("@/lib/adhan-playback");
       stopAdhan();
+    } catch {
+      /* ignore */
+    }
+  }
+  if (except !== "audioReader") {
+    try {
+      const { forceStopAudioReaderFromBus } = await import(
+        "@/lib/audio-reader/audio-reader-service"
+      );
+      forceStopAudioReaderFromBus();
+    } catch {
+      /* ignore */
+    }
+    try {
+      const { stopSpeechReadAloud } = await import("@/lib/speech-read-aloud");
+      stopSpeechReadAloud();
     } catch {
       /* ignore */
     }

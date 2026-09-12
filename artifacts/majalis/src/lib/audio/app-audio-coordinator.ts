@@ -87,6 +87,7 @@ async function stopForeignEngines(except: AppAudioKind | null): Promise<void> {
     except === "quranRecitation" || except === "miniPlayer" || except === "tafsir";
   const keepAdhan = except === "adhanPreview";
   const keepLesson = except === "lessonAudio";
+  const keepAudioReader = except === "audioReader";
 
   if (!keepTilawa) {
     try {
@@ -114,17 +115,30 @@ async function stopForeignEngines(except: AppAudioKind | null): Promise<void> {
       await getMajlisAudioService().stop();
     } catch { /* ignore */ }
   }
+  if (!keepAudioReader) {
+    try {
+      const { forceStopAudioReaderFromBus } = await import(
+        "@/lib/audio-reader/audio-reader-service"
+      );
+      forceStopAudioReaderFromBus();
+    } catch { /* ignore */ }
+    try {
+      const { stopSpeechReadAloud } = await import("@/lib/speech-read-aloud");
+      stopSpeechReadAloud();
+    } catch { /* ignore */ }
+  }
 }
 
 function busOwnerForKind(
   kind: AppAudioKind,
-): "tilawa" | "tafsir" | "adhan" | "majlis" | "recitation" | "lesson" | "other" {
+): "tilawa" | "tafsir" | "adhan" | "majlis" | "recitation" | "lesson" | "audioReader" | "other" {
   if (kind === "adhanPreview" || kind === "prayerPrompt" || kind === "notificationPreview") {
     return "adhan";
   }
   if (kind === "lessonAudio") return "lesson";
   if (kind === "tafsir") return "tafsir";
   if (kind === "quranRecitation" || kind === "miniPlayer") return "tilawa";
+  if (kind === "audioReader") return "audioReader";
   return "other";
 }
 
@@ -294,7 +308,8 @@ type LongFormKind =
   | "lessonAudio"
   | "miniPlayer"
   | "tafsir"
-  | "videoAudio";
+  | "videoAudio"
+  | "audioReader";
 
 export function beginLongFormAudio(
   kind: LongFormKind,
@@ -329,7 +344,8 @@ export function endLongFormAudio(sourceId?: string): void {
     kind === "lessonAudio" ||
     kind === "miniPlayer" ||
     kind === "tafsir" ||
-    kind === "videoAudio"
+    kind === "videoAudio" ||
+    kind === "audioReader"
   ) {
     setSnap({ ...IDLE_AUDIO_SNAPSHOT, requestToken: snap.requestToken });
   }
