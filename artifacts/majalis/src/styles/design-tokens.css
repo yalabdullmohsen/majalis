@@ -258,12 +258,12 @@ html.dark,
   --badge-warning-soft-bg: #ffedd5;
   --badge-warning-soft-fg: #9a3412;
 
-  /* Info — ci / docs / ios */
-  --badge-info-bg: #1e3a8a;
-  --badge-info-fg: #eff6ff;
-  --badge-info-border: #1e40af;
-  --badge-info-soft-bg: #dbeafe;
-  --badge-info-soft-fg: #1e3a8a;
+  /* Info — ci / docs / ios (أخضر الهوية — بلا أزرق legacy محظور) */
+  --badge-info-bg: var(--ss-deep-green, #0a3d2e);
+  --badge-info-fg: #f0fdf4;
+  --badge-info-border: var(--ss-primary-green, #0f5c45);
+  --badge-info-soft-bg: #dcfce7;
+  --badge-info-soft-fg: var(--ss-deep-green, #0a3d2e);
 
   /* UI — ui */
   --badge-ui-bg: #5b21b6;
@@ -305,10 +305,10 @@ html[data-theme="dark"] {
   --badge-warning-soft-bg: color-mix(in srgb, #fed7aa 16%, #1a2120);
   --badge-warning-soft-fg: #fdba74;
 
-  --badge-info-bg: #1d4ed8;
-  --badge-info-fg: #eff6ff;
-  --badge-info-soft-bg: color-mix(in srgb, #bfdbfe 14%, #1a2120);
-  --badge-info-soft-fg: #bfdbfe;
+  --badge-info-bg: var(--ss-primary-green, #0f5c45);
+  --badge-info-fg: #f0fdf4;
+  --badge-info-soft-bg: color-mix(in srgb, #86efac 14%, #1a2120);
+  --badge-info-soft-fg: #bbf7d0;
 
   --badge-ui-bg: #6d28d9;
   --badge-ui-fg: #f5f3ff;
