@@ -115,7 +115,7 @@ export default function HadithByIdView() {
         </div>
       ) : null}
 
-      <header className="hadith-detail-card hadith-detail-card--head">
+      <header className="hadith-detail-card hadith-detail-card--head" data-kx-kind="summary">
         <p className="hadith-detail-card__eyebrow">{hadith.numberingSystem}</p>
         <h1 className="hadith-by-id__id">
           <button

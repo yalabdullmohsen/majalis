@@ -23,6 +23,7 @@ import { relatedFiqhIssues, fiqhDoorBackHref } from "@/lib/fiqh/fiqhRelated";
 import "@/styles/pages/fiqh-hub.css";
 import { DetailScreen } from "@/components/design-system/screens";
 import { AppBackButton } from "@/components/common/AppBackButton";
+import { KnowledgeLayout } from "@/components/knowledge";
 import "@/styles/knowledge-experience.css";
 
 function firstSentence(text: string): { intro: string; rest: string } {
@@ -184,12 +185,11 @@ export default function FiqhLessonPage() {
 
   return (
     <DetailScreen compose="mark">
-    <article
-      className="fiqh-lux-shell fiqh-lux-lesson page-shell fiqh-lesson-page kx-layout kx-layout--fiqh"
-      dir="rtl"
+    <KnowledgeLayout
+      kind="fiqh"
+      className="fiqh-lux-shell fiqh-lux-lesson page-shell fiqh-lesson-page"
       data-focus-root="1"
       data-kx="1"
-      data-kx-layout="fiqh"
     >
       <div className="fiqh-lesson-back-row">
         <AppBackButton variant="inline" fallbackHref={fiqhDoorBackHref(hit)} aria-label="رجوع" />
@@ -375,7 +375,7 @@ export default function FiqhLessonPage() {
         <Link href="/fiqh">بوابة الفقه</Link>
       </p>
       <div className="fiqh-fab-clearance" />
-    </article>
+    </KnowledgeLayout>
     </DetailScreen>
   );
 }

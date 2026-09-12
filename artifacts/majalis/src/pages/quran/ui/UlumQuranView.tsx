@@ -6,7 +6,7 @@ import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { InternalLinkCard } from "@/components/ui/InternalCards";
 import "@/styles/pages/ulum-quran.css";
 import { DashboardScreen } from "@/components/design-system/screens";
-import { KnowledgeLayout } from "@/components/knowledge";
+import { KnowledgeLayout, DefinitionBlock } from "@/components/knowledge";
 import "@/styles/knowledge-experience.css";
 
 
@@ -271,6 +271,9 @@ export default function UlumQuranPage() {
         {/* ── النزول ── */}
         {tab === "nuzul" && (
           <div role="tabpanel" id="ulq-panel-nuzul" aria-labelledby="ulq-tab-nuzul" className="uq-section">
+            <DefinitionBlock title="النزول والتنجيم">
+              <p>بيان كيف نزل القرآن مفرّقًا، وأنواع النزول، مع ربط ذلك بفهم الخطاب الشرعي دون اختراع معانٍ.</p>
+            </DefinitionBlock>
             <div className="uq-facts-grid">
               {filteredNuzulFacts.map((f) => (
                 <div key={f.label} className="uq-fact-item">
@@ -283,11 +286,11 @@ export default function UlumQuranPage() {
             <h2 className="uq-subhead">أنواع النزول</h2>
             <div className="uq-types-list">
               {filteredNuzulTypes.map((n) => (
-                <div key={n.title} className="uq-type-card">
+                <div key={n.title} className="uq-type-card" data-kx-kind="definition">
                   <h3 className="uq-type-card__title">{n.title}</h3>
                   <p className="uq-type-card__desc">{n.desc}</p>
                   {n.dalil && (
-                    <div className="uq-dalil-box">
+                    <div className="uq-dalil-box" data-kx-kind="evidence">
                       <span className="uq-dalil-box__icon"><SectionIcon name="📜" size={18} /></span>
                       <span>{n.dalil}</span>
                     </div>
@@ -330,7 +333,7 @@ export default function UlumQuranPage() {
               })}
             </div>
 
-            <div className="uq-info-box">
+            <div className="uq-info-box" data-kx-kind="notes">
               <span className="uq-info-box__icon"><SectionIcon name="ℹ️" size={18} /></span>
               <p>الفرق بين جمع أبي بكر وجمع عثمان: الأول جمع المتفرق في مكان واحد، والثاني وحّد القراءة على حرف واحد وأرسل نسخاً موحّدة للأمصار.</p>
             </div>
@@ -342,7 +345,7 @@ export default function UlumQuranPage() {
           <div role="tabpanel" id="ulq-panel-tafsir" aria-labelledby="ulq-tab-tafsir" className="uq-section">
             <div className="uq-tafsir-types">
               {filteredTafsirTypes.map((t) => (
-                <div key={t.title} className="uq-tafsir-card">
+                <div key={t.title} className="uq-tafsir-card" data-kx-kind="concepts">
                   <span className="uq-tafsir-icon"><SectionIcon name={t.icon} size={22} /></span>
                   <div>
                     <h3 className="uq-tafsir-title">{t.title}</h3>
@@ -376,7 +379,7 @@ export default function UlumQuranPage() {
           <div role="tabpanel" id="ulq-panel-ijaz" aria-labelledby="ulq-tab-ijaz" className="uq-section">
             <div className="uq-ijaz-grid">
               {filteredIjaz.map((j) => (
-                <div key={j.title} className="uq-ijaz-card">
+                <div key={j.title} className="uq-ijaz-card" data-kx-kind="summary">
                   <span className="uq-ijaz-icon"><SectionIcon name={j.icon} size={22} /></span>
                   <h3 className="uq-ijaz-title">{j.title}</h3>
                   <p className="uq-ijaz-desc">{j.desc}</p>
@@ -400,7 +403,7 @@ export default function UlumQuranPage() {
             <h2 className="uq-subhead">المحكم والمتشابه</h2>
             <div className="uq-mm-grid">
               {[MUHKAM_MUTASHABIH.muhkam, MUHKAM_MUTASHABIH.mutashabih].map((m) => (
-                <div key={m.title} className="uq-mm-card">
+                <div key={m.title} className="uq-mm-card" data-kx-kind="definition">
                   <h3 className="uq-mm-title">{m.title}</h3>
                   <p className="uq-mm-def">{m.def}</p>
                   <div className="uq-mm-examples">
@@ -417,7 +420,7 @@ export default function UlumQuranPage() {
             <p className="uq-lead">النسخ لغةً: الإزالة. اصطلاحاً: رفع حكم شرعي متقدم بحكم متأخر، وللنسخ ثلاثة أنواع:</p>
             <div className="uq-naskh-list">
               {NASKH_TYPES.map((n, i) => (
-                <div key={i} className="uq-naskh-card">
+                <div key={i} className="uq-naskh-card" data-kx-kind="ruling">
                   <div className="uq-naskh-num">{i + 1}</div>
                   <div>
                     <h3 className="uq-naskh-title">{n.title}</h3>
@@ -428,7 +431,7 @@ export default function UlumQuranPage() {
               ))}
             </div>
 
-            <div className="uq-info-box uq-info-box--mt">
+            <div className="uq-info-box uq-info-box--mt" data-kx-kind="notes">
               <span className="uq-info-box__icon"><SectionIcon name="📌" size={18} /></span>
               <p>آيات الأحكام في القرآن تُقدَّر بـ 500 آية، بعض العلماء يقدّرها بـ 200 آية آية صريحة الحكم.</p>
             </div>
@@ -444,7 +447,7 @@ export default function UlumQuranPage() {
 
             <div className="uq-qiraat-grid">
               {QIRAAT_SABA.map((q, i) => (
-                <div key={i} className="uq-qiraat-card">
+                <div key={i} className="uq-qiraat-card" data-kx-kind="concepts">
                   <div className="uq-qiraat-card__head">
                     <span className="uq-qiraat-card__num">{(i + 1).toLocaleString("ar-EG")}</span>
                     <div>
@@ -467,14 +470,14 @@ export default function UlumQuranPage() {
             <h2 className="uq-subhead uq-subhead--mt">أصول علم القراءات</h2>
             <div className="uq-qiraat-usul">
               {QIRAAT_USUL.map((u, i) => (
-                <div key={i} className="uq-usul-card">
+                <div key={i} className="uq-usul-card" data-kx-kind="definition">
                   <h3 className="uq-usul-card__title">{u.title}</h3>
                   <p className="uq-usul-card__desc">{u.desc}</p>
                 </div>
               ))}
             </div>
 
-            <div className="uq-info-box uq-info-box--mt">
+            <div className="uq-info-box uq-info-box--mt" data-kx-kind="notes">
               <span className="uq-info-box__icon"><SectionIcon name="📌" size={18} /></span>
               <p>أشهر المراجع في القراءات: النشر في القراءات العشر لابن الجزري، والسبعة لابن مجاهد، وحرز الأماني الشاطبية للشاطبي.</p>
             </div>
@@ -495,7 +498,7 @@ export default function UlumQuranPage() {
                   title={c.title}
                   description={c.desc}
                   meta={c.linkLabel}
-                  className="uq-usul-card"
+                  className="uq-usul-card" data-kx-kind="definition"
                 />
               ))}
             </div>
@@ -507,7 +510,7 @@ export default function UlumQuranPage() {
         </div>
 
         {/* related */}
-        <nav className="uq-related" aria-label="صفحات ذات صلة">
+        <nav className="uq-related" data-kx-kind="related" aria-label="صفحات ذات صلة">
           <h2 className="uq-related__title">استكشف أيضاً</h2>
           <div className="uq-related__grid hub-card-grid">
             {[
