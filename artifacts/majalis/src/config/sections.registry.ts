@@ -35,6 +35,7 @@ import {
   FolderOpen,
   Gavel,
   GitBranch,
+  GitFork,
   GraduationCap,
   HandHeart,
   HandHelping,
@@ -596,7 +597,8 @@ const SECTION_SEEDS: SectionSeed[] = [
     label: "الفرق الإسلامية",
     subtitle: "نشأة الفرق وعقائدها — عرض تاريخي",
     route: "/islamic-sects",
-    icon: Users,
+    // أيقونة فريدة — Users محجوزة لـ quran-figures (بوابة verify-sections-registry)
+    icon: GitFork,
     group: "sciences",
     order: 12,
     surfaces: NAV,
