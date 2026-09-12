@@ -18,8 +18,6 @@ import {
 } from "./lib/boot-sequence";
 import { hydrateNativeStorage } from "./lib/native-storage";
 import { installInAppNavigationGuard } from "./lib/in-app-navigation";
-import { initFinalPolish } from "./lib/init-final-polish";
-import { prewarmTextApis, prewarmSupabaseOrigin } from "./lib/resource-prewarm";
 import { armNativeSplashController } from "./lib/splash-screen";
 import { awaitBootReadiness, registerBootStorageGate } from "./lib/boot-readiness";
 import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
@@ -197,7 +195,9 @@ if (typeof requestIdleCallback === "function") {
   setTimeout(bootReporting, 0);
 }
 
-const bootFinalPolish = () => initFinalPolish();
+const bootFinalPolish = () => {
+  void import("./lib/init-final-polish").then((m) => m.initFinalPolish());
+};
 if (typeof requestIdleCallback === "function") {
   requestIdleCallback(bootFinalPolish, { timeout: 4_000 });
 } else {
@@ -207,8 +207,10 @@ if (typeof requestIdleCallback === "function") {
 function scheduleNetworkWarm() {
   const run = () => {
     // لا تسخين أصوات قرآن/تفسير عند أول فتح — فقط أصول نصّية خفيفة
-    prewarmTextApis();
-    prewarmSupabaseOrigin();
+    void import("./lib/resource-prewarm").then((m) => {
+      m.prewarmTextApis();
+      m.prewarmSupabaseOrigin();
+    });
   };
   const start = () => window.setTimeout(() => scheduleOnIdle(run), 20_000);
   if (document.readyState === "complete") start();
