@@ -1,5 +1,5 @@
 /**
- * بوابة Green Surface System — رموز جذرية + لا بطاقات بيضاء قديمة في طبقات التوحيد.
+ * بوابة Neutral Surface System — البطاقة العادية محايدة؛ الأخضر للـHero فقط.
  * تشغيل: node --import tsx src/lib/__tests__/green-surface-system-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -15,37 +15,33 @@ const green = read("src/styles/green-surface-system.css");
 const main = read("src/main.tsx");
 const calm = read("src/styles/sections-calm-polish.css");
 const unify = read("src/styles/ssunnah-card-unify.css");
-const hub = read("src/styles/components/hub-card.css");
-const info = read("src/styles/components/information-card.css");
-const mss = read("src/styles/components/modern-section-shell.css");
 
-assert.match(tokens, /--surface-feature:/, "token surface-feature");
-assert.match(tokens, /--surface-knowledge:/, "token surface-knowledge");
-assert.match(tokens, /--surface-islamic:/, "token surface-islamic");
-assert.match(tokens, /--surface-highlighted:/, "token surface-highlighted");
-assert.match(tokens, /--surfaceFeature:/, "alias surfaceFeature");
-assert.match(tokens, /Dark Green Surface System/, "dark green tokens");
+assert.match(tokens, /--surface-content:/, "token surface-content");
+assert.match(tokens, /--surface-feature:\s*var\(--surface-content\)/, "feature = content محايد");
+assert.match(tokens, /--surface-feature-hero:/, "hero أخضر غامق منفصل");
+assert.match(tokens, /Neutral Surface System/, "تعليق النظام المحايد");
 
-assert.match(green, /--surface-feature-accent:/, "accent token");
-assert.match(green, /--surface-feature-border:/, "border token");
-assert.match(green, /border-inline-start:\s*3px\s+solid/, "accent side border");
-assert.match(green, /\.seerah-panel/, "seerah panels on green surface");
-assert.match(green, /\.hub-card/, "hub cards on green surface");
-assert.match(green, /html\.dark|data-theme="dark"/, "dark green system");
+assert.match(green, /Neutral Surface System/, "ملف الأسطح المحايدة");
+assert.match(green, /--surface-content:/, "رمز سطح محايد");
+assert.match(green, /\.gs-surface--feature/, "variant مميز اختياري");
+assert.match(green, /border-inline-start:\s*1px\s+solid\s+var\(--surface-content-border\)/, "لا حافة خضراء سميكة افتراضيًا");
+assert.match(green, /html\.dark|data-theme="dark"/, "وضع ليلي للأسطح");
+assert.match(green, /prophet-lux-card::before/, "إزالة لمعات بطاقات الأنبياء");
 
-assert.match(main, /green-surface-system\.css/, "main imports green surface");
+assert.match(main, /green-surface-system\.css/, "main يستورد نظام الأسطح");
 
-assert.match(calm, /--surface-feature/, "calm polish uses green surface");
-
-assert.match(unify, /--surface-feature/, "card unify uses green surface");
-assert.match(hub, /--surface-feature/, "hub-card uses green surface tokens");
+assert.match(unify, /--surface-content/, "توحيد البطاقات على سطح محايد");
 assert.doesNotMatch(
-  hub,
-  /\.hub-card\s*\{[^}]*linear-gradient\([\s\S]*?--mj-surface,\s*#fff/,
-  "لا تدرج أبيض قديم في hub-card",
+  unify,
+  /border-inline-start:\s*3px\s+solid/,
+  "unify بلا شريط أخضر سميك",
 );
 
-assert.match(info, /--surface-knowledge/, "InformationCard على عائلة خضراء");
-assert.match(mss, /--mss-section-hero-bg:\s*var\(--surface-islamic/, "هيرو الأقسام من surface-islamic");
+assert.doesNotMatch(
+  calm,
+  /border-inline-start:\s*3px\s+solid\s+var\(--surface-feature-accent/,
+  "calm polish لا يعيد الشريط الأخضر السميك",
+);
+assert.match(calm, /--surface-content/, "calm polish يستخدم السطح المحايد");
 
 console.log("green-surface-system-gate.test.ts: ok");

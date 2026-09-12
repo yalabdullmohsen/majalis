@@ -164,13 +164,13 @@ html.dark {
 .hlr__card,
 .page-card,
 .ss-state-card {
-  /* Green Surface System — لا بطاقات بيضاء/بيج قديمة */
-  background: var(--surface-feature, var(--surface)) !important;
-  border: 1px solid var(--surface-feature-border, color-mix(in srgb, var(--border) 80%, transparent)) !important;
-  border-inline-start: 3px solid var(--surface-feature-accent, var(--primary)) !important;
+  /* Neutral Surface — بطاقة محتوى محايدة بلا شريط أخضر */
+  background: var(--surface-content, var(--surface-feature, var(--surface))) !important;
+  border: 1px solid var(--surface-content-border, var(--surface-feature-border, color-mix(in srgb, var(--border) 80%, transparent))) !important;
+  border-inline-start: 1px solid var(--surface-content-border, var(--surface-feature-border, color-mix(in srgb, var(--border) 80%, transparent))) !important;
   border-radius: var(--radius-card) !important;
-  box-shadow: var(--surface-feature-shadow, none) !important;
-  color: var(--surface-feature-ink, var(--text)) !important;
+  box-shadow: var(--surface-content-shadow, var(--surface-feature-shadow, none)) !important;
+  color: var(--surface-content-ink, var(--surface-feature-ink, var(--text))) !important;
 }
 
 /* الأربعين/إشعارات: نصف قطر فقط (تحتفظ بألوانها الدلالية) */
@@ -362,12 +362,12 @@ html.dark .lessons-page-v2 .filter-chips__chip.is-active {
 .lessons-page .lesson-unified-card {
   padding: 0.8rem 0.85rem !important;
   gap: 0.45rem !important;
-  background: var(--surface-feature, var(--surface)) !important;
-  border: 1px solid var(--surface-feature-border, color-mix(in srgb, var(--border) 85%, transparent)) !important;
-  border-inline-start: 3px solid var(--surface-feature-accent, var(--primary)) !important;
+  background: var(--surface-content, var(--surface-feature, var(--surface))) !important;
+  border: 1px solid var(--surface-content-border, var(--surface-feature-border, color-mix(in srgb, var(--border) 85%, transparent))) !important;
+  border-inline-start: 1px solid var(--surface-content-border, var(--surface-feature-border, color-mix(in srgb, var(--border) 85%, transparent))) !important;
   border-radius: var(--radius-card) !important;
-  box-shadow: var(--surface-feature-shadow, none) !important;
-  color: var(--surface-feature-ink, var(--text)) !important;
+  box-shadow: var(--surface-content-shadow, var(--surface-feature-shadow, none)) !important;
+  color: var(--surface-content-ink, var(--surface-feature-ink, var(--text))) !important;
 }
 
 .lesson-unified-card__facts,
@@ -713,10 +713,10 @@ html[data-theme="dark"] .an-card,
 html.dark .an-card,
 html[data-theme="dark"] .hlr__card,
 html.dark .hlr__card {
-  background: var(--surface-feature, var(--surface)) !important;
-  border-color: var(--surface-feature-border, color-mix(in srgb, var(--border) 85%, transparent)) !important;
-  border-inline-start-color: var(--surface-feature-accent, var(--primary)) !important;
-  color: var(--surface-feature-ink, var(--text)) !important;
+  background: var(--surface-content, var(--surface-feature, var(--surface))) !important;
+  border-color: var(--surface-content-border, var(--surface-feature-border, color-mix(in srgb, var(--border) 85%, transparent))) !important;
+  border-inline-start-color: var(--surface-content-border, var(--border)) !important;
+  color: var(--surface-content-ink, var(--surface-feature-ink, var(--text))) !important;
 }
 
 /* هامش سفلي آمن فوق الشريط السفلي */

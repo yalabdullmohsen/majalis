@@ -319,15 +319,11 @@ html.dark .prophets-page-lead {
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  background: color-mix(in srgb, var(--ps-surface) 97%, var(--ps-emerald-bright) 3%);
-  background-image: linear-gradient(
-    165deg,
-    color-mix(in srgb, var(--ps-surface) 96%, #e8f0ec) 0%,
-    color-mix(in srgb, var(--ps-emerald-bright) 4%, var(--ps-surface)) 100%
-  );
-  border: 1px solid color-mix(in srgb, var(--prophet-color, var(--ps-emerald)) 18%, var(--ps-line));
-  border-radius: var(--radius-card, 24px);
-  padding-block: 1.05rem 2.85rem;
+  background: var(--surface-content, var(--ps-surface, #fffcf7));
+  background-image: none;
+  border: 1px solid var(--surface-content-border, var(--ps-line, #d9d3c8));
+  border-radius: var(--radius-card, 20px);
+  padding-block: 1.05rem 1.25rem;
   padding-inline: 1.05rem;
   min-height: 0;
   width: 100%;
@@ -339,15 +335,14 @@ html.dark .prophets-page-lead {
   overflow: hidden;
   text-align: start;
   direction: rtl;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.55),
-    0 12px 28px -14px rgba(11, 32, 24, 0.2);
+  box-shadow: var(--surface-content-shadow, 0 1px 2px rgba(22, 36, 30, 0.04));
+  color: var(--surface-content-ink, var(--ps-ink, #16241e));
 }
 .prophet-lux-card:hover,
 .prophet-lux-card:focus-visible {
   transform: translateY(-1px);
-  border-color: color-mix(in srgb, var(--prophet-color, var(--ps-emerald)) 55%, transparent);
-  box-shadow: 0 6px 18px -8px rgba(20, 63, 53, 0.16);
+  border-color: color-mix(in srgb, var(--mj-brand, #146b52) 28%, var(--surface-content-border, #d9d3c8));
+  box-shadow: 0 4px 14px -10px rgba(22, 36, 30, 0.14);
   outline: none;
 }
 .prophet-lux-card:focus-visible {
@@ -370,11 +365,7 @@ html.dark .prophets-page-lead {
   font-weight: 700;
 }
 .prophet-lux-card__star {
-  margin-bottom: 0.45rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  display: none !important;
 }
 .prophet-lux-card__body {
   flex: 1;

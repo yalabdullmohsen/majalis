@@ -22,15 +22,21 @@
   --surface-2: var(--mj-surface-2);
   --surface-3: var(--mj-surface-3, var(--mj-surface-2));
 
-  /* Green Surface System — بطاقات المحتوى (مرجع السيرة) */
-  --surface-feature: color-mix(in srgb, var(--mj-brand, #146b52) 7%, #f4faf7);
-  --surface-knowledge: color-mix(in srgb, var(--mj-brand, #146b52) 5.5%, #f6fbf8);
-  --surface-islamic: color-mix(in srgb, var(--mj-brand, #146b52) 8.5%, #f2f8f5);
-  --surface-highlighted: color-mix(in srgb, var(--mj-brand, #146b52) 11%, #eef6f2);
+  /*
+   * Neutral Surface System (P0) — البطاقة العادية محايدة.
+   * الأخضر الغامق محصور في --surface-feature-hero (Hero/Feature فقط).
+   */
+  --surface-content: var(--mj-surface, #fffcf7);
+  --surface-feature: var(--surface-content);
+  --surface-knowledge: var(--surface-content);
+  --surface-islamic: var(--surface-content);
+  --surface-highlighted: color-mix(in srgb, var(--mj-brand, #146b52) 4%, var(--surface-content));
+  --surface-feature-hero: var(--mj-brand-deep, #0d4a39);
   --surfaceFeature: var(--surface-feature);
   --surfaceKnowledge: var(--surface-knowledge);
   --surfaceIslamic: var(--surface-islamic);
   --surfaceHighlighted: var(--surface-highlighted);
+  --surfaceFeatureHero: var(--surface-feature-hero);
 
   /* حدود */
   --border: var(--mj-hairline);
@@ -218,15 +224,18 @@ html.dark,
   --ss-shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.28);
   --gold: var(--ss-soft-gold);
 
-  /* Dark Green Surface System — مرتفع عن الخلفية */
-  --surface-feature: color-mix(in srgb, #5fbf98 14%, #1a2622);
-  --surface-knowledge: color-mix(in srgb, #5fbf98 11%, #182420);
-  --surface-islamic: color-mix(in srgb, #5fbf98 16%, #1c2925);
-  --surface-highlighted: color-mix(in srgb, #5fbf98 20%, #1e2e29);
+  /* Dark Neutral Surface — مرتفع عن الخلفية، بلا غسيل أخضر فاتح */
+  --surface-content: var(--mj-surface, #1b2421);
+  --surface-feature: var(--surface-content);
+  --surface-knowledge: var(--surface-content);
+  --surface-islamic: var(--surface-content);
+  --surface-highlighted: color-mix(in srgb, #5fbf98 8%, #1e2a26);
+  --surface-feature-hero: #14352c;
   --surfaceFeature: var(--surface-feature);
   --surfaceKnowledge: var(--surface-knowledge);
   --surfaceIslamic: var(--surface-islamic);
   --surfaceHighlighted: var(--surface-highlighted);
+  --surfaceFeatureHero: var(--surface-feature-hero);
 }
 
 /* فوق الأسطح الخضراء الغامقة — أبيض دائمًا */

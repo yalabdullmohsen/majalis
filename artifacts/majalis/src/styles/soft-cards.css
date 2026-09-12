@@ -34,23 +34,17 @@
     0 8px 20px -12px rgba(0, 0, 0, 0.18);
 }
 
-/* أسطح فاتحة — تدرّج هادئ بلا سطوع زائد */
+/* أسطح فاتحة — محايدة بلا غسيل أخضر */
 .soft-card--on-light,
 .soft-tile--on-light {
-  --soft-card-grad: linear-gradient(
-    165deg,
-    color-mix(in srgb, var(--mj-surface, #fff) 94%, #e8f0ec) 0%,
-    color-mix(in srgb, var(--mj-brand, #1f6b56) 6%, #f7faf8) 100%
-  );
-  --soft-tile-grad: linear-gradient(
-    165deg,
-    color-mix(in srgb, var(--mj-surface, #fff) 96%, #eef4f1) 0%,
-    color-mix(in srgb, var(--mj-brand, #1f6b56) 4%, #f9fbfa) 100%
-  );
+  --soft-card-grad: none;
+  --soft-tile-grad: none;
   --soft-card-border: transparent;
   --soft-tile-border: transparent;
-  --soft-card-shadow: 0 6px 20px -14px rgba(11, 32, 24, 0.14);
-  --soft-tile-shadow: 0 4px 14px -12px rgba(11, 32, 24, 0.12);
+  --soft-card-shadow: 0 0 0 1px var(--surface-content-border, color-mix(in srgb, var(--mj-ink, #16241e) 10%, var(--mj-hairline, #d9d3c8))), var(--surface-content-shadow, 0 1px 2px rgba(22, 36, 30, 0.04));
+  --soft-tile-shadow: var(--soft-card-shadow);
+  --soft-card-bg: var(--surface-content, var(--mj-surface, #fffcf7));
+  --soft-tile-bg: var(--soft-card-bg);
 }
 
 html.dark .soft-card--on-light,

@@ -6,7 +6,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { DEMO_FAWAID, FAWAID_CATEGORIES, ensureDemoContentLoaded } from "@/lib/demo-content";
+import { DEMO_FAWAID, FAWAID_CATEGORIES, ensureFawaidLoaded, getFawaidSeedCached } from "@/lib/demo-content";
 import { canSubmitForm } from "@/lib/form-rate-limit";
 import { SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
@@ -21,6 +21,28 @@ import { ListScreen } from "@/components/design-system/screens";
 
 /** دفعات واجهة — تفادي رسم مئات البطاقات دفعة واحدة في DOM. */
 const FAWAID_PAGE_SIZE = 24;
+const FAWAID_SESSION_KEY = "sunnah.fawaid.list.v1";
+
+function readFawaidSessionCache(): any[] | null {
+  if (typeof sessionStorage === "undefined") return null;
+  try {
+    const raw = sessionStorage.getItem(FAWAID_SESSION_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as unknown;
+    return Array.isArray(parsed) && parsed.length > 0 ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeFawaidSessionCache(items: any[]): void {
+  if (typeof sessionStorage === "undefined" || !items.length) return;
+  try {
+    sessionStorage.setItem(FAWAID_SESSION_KEY, JSON.stringify(items.slice(0, 800)));
+  } catch {
+    /* quota */
+  }
+}
 
 const LEGACY_CATEGORIES = [
   "فوائد قرآنية",
@@ -55,8 +77,12 @@ export default function FawaidPage({
   initialFawaid?: any[];
 } = {}) {
   useReadingScrollMemory("fawaid");
-  const [fawaid, setFawaid] = useState<any[]>(initialFawaid ?? []);
-  const [loading, setLoading] = useState(!initialFawaid);
+  const sessionCached = useMemo(
+    () => (initialFawaid ? null : readFawaidSessionCache()),
+    [initialFawaid],
+  );
+  const [fawaid, setFawaid] = useState<any[]>(() => initialFawaid ?? sessionCached ?? []);
+  const [loading, setLoading] = useState(() => !(initialFawaid?.length || sessionCached?.length));
   const [category, setCategory] = useState("الكل");
   const [search, setSearch] = useState("");
   const [text, setText] = useState("");
@@ -67,6 +93,13 @@ export default function FawaidPage({
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [visibleCount, setVisibleCount] = useState(FAWAID_PAGE_SIZE);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  /** خلط ثابت لليوم — لا يُعاد عند hydrate الشبكة. */
+  const shuffleSeedRef = useRef(
+    (() => {
+      const d = new Date();
+      return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+    })(),
+  );
   const { user, isLoggedIn, isAdmin, loading: authLoading } = useAuth();
 
   // رابط `?cat=...` في JSON-LD أسفل هذه الصفحة نفسها كان يُتجاهَل كليًا:
@@ -109,23 +142,44 @@ export default function FawaidPage({
 
   useEffect(() => {
     if (initialFawaid) return;
-    setLoading(true);
+    let cancelled = false;
+
+    // رسم فوري من البذرة — بلا انتظار شبكة أو محمّل البذور الكامل
+    void ensureFawaidLoaded().then(() => {
+      if (cancelled) return;
+      const seed = getFawaidSeedCached();
+      if (!seed.length) return;
+      setFawaid((prev) => (prev.length > 0 ? prev : seed));
+      setLoading(false);
+    });
+
     RequestManager.run("fawaid:list", () => getApprovedFawaid())
       .then(({ data }) => {
+        if (cancelled) return;
         setFawaid(data);
+        writeFawaidSessionCache(data);
       })
       .catch(async () => {
-        await ensureDemoContentLoaded();
-        setFawaid([...DEMO_FAWAID]);
+        await ensureFawaidLoaded();
+        if (cancelled) return;
+        const seed = getFawaidSeedCached();
+        setFawaid(seed.length ? seed : [...DEMO_FAWAID]);
+        writeFawaidSessionCache(seed.length ? seed : [...DEMO_FAWAID]);
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [initialFawaid]);
 
   const normalized = useMemo(() => {
     const arr = [...fawaid];
-    const seed = Date.now();
+    const seed = shuffleSeedRef.current;
     for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(((seed * (i + 1)) % 2147483647) / 2147483647 * (i + 1));
+      const j = Math.floor((((seed * (i + 1)) % 2147483647) / 2147483647) * (i + 1));
       [arr[i], arr[j]] = [arr[j], arr[i]];
     }
     return arr;
