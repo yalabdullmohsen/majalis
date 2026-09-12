@@ -62,7 +62,76 @@
   --ss-radius-card: var(--radius-card, var(--radius-mj-lg));
   --ss-radius-pill: var(--radius-mj-pill);
   --ss-border-width: 1px;
+
+  /* ── Surfaces / states (عقد الهوية الموحّد) ── */
+  --ss-color-bg-subtle: var(--mj-surface-2, var(--ss-color-surface-2));
+  --ss-color-surface-elevated: var(--surface-elevated, var(--ss-color-surface));
+  --ss-color-surface-interactive: var(--surfaceInteractive, color-mix(in srgb, var(--ss-color-brand) 6%, var(--ss-color-surface)));
+  --ss-color-surface-selected: var(--color-selected, color-mix(in srgb, var(--ss-color-brand) 12%, var(--ss-color-surface)));
+  --ss-color-surface-feature: var(--surface-feature);
+  --ss-color-surface-knowledge: var(--surface-knowledge);
+  --ss-color-primary-container: var(--mj-brand-soft);
+  --ss-color-primary-pressed: var(--mj-brand-deep);
+  --ss-color-text-disabled: color-mix(in srgb, var(--ss-color-text-muted) 55%, transparent);
+  --ss-color-text-on-color: var(--ss-color-on-brand);
+  --ss-color-icon: var(--ss-color-text);
+  --ss-color-icon-secondary: var(--ss-color-text-secondary);
+  --ss-color-border-subtle: var(--ss-color-border);
+  --ss-color-border-strong: var(--border-strong, color-mix(in srgb, var(--ss-color-text) 18%, var(--ss-color-border)));
+  --ss-color-divider: var(--ss-color-border);
+  --ss-color-focus: var(--focus, color-mix(in srgb, var(--ss-color-brand) 55%, transparent));
+  --ss-color-selected: var(--ss-color-surface-selected);
+  --ss-color-success: var(--success, var(--ss-color-brand));
+  --ss-color-success-container: color-mix(in srgb, var(--ss-color-success) 14%, var(--ss-color-surface));
+  --ss-color-warning: var(--warning, var(--mj-accent));
+  --ss-color-warning-container: color-mix(in srgb, var(--ss-color-warning) 14%, var(--ss-color-surface));
+  --ss-color-error: var(--ss-color-danger);
+  --ss-color-error-container: color-mix(in srgb, var(--ss-color-error) 14%, var(--ss-color-surface));
+  --ss-color-info: var(--ss-color-brand-deep);
+  --ss-color-info-container: color-mix(in srgb, var(--ss-color-info) 12%, var(--ss-color-surface));
+  --ss-color-overlay: var(--overlay, color-mix(in srgb, var(--ss-color-text) 42%, transparent));
+  --ss-color-skeleton: var(--skeletonBase, color-mix(in srgb, var(--ss-color-text) 8%, transparent));
+  --ss-color-skeleton-highlight: var(--skeletonHighlight, color-mix(in srgb, var(--ss-color-text) 14%, transparent));
+
+  /* ── Typography extras ── */
+  --ss-type-display: var(--type-display, clamp(1.75rem, 4vw, 2.25rem));
+  --ss-type-hero: var(--type-screenTitle, var(--ss-type-screen-title));
+  --ss-type-subsection: var(--ss-type-section-title);
+  --ss-type-body-lg: var(--type-bodyLarge, 1.0625rem);
+  --ss-type-reader: var(--ss-type-body);
+  --ss-type-hadith: var(--ss-type-scripture);
+  --ss-type-meta: var(--ss-type-caption);
+  --ss-type-button: var(--type-buttonLabel, 0.9375rem);
+  --ss-type-badge: var(--type-badge, 0.75rem);
+
+  /* ── Spacing extras ── */
+  --ss-space-0: 0;
+  --ss-space-xxs: 0.125rem;
+  --ss-space-xs: var(--ss-space-1);
+  --ss-space-sm: var(--ss-space-2);
+  --ss-space-md: var(--ss-space-3);
+  --ss-space-lg: var(--ss-space-4);
+  --ss-space-xl: var(--ss-space-6);
+  --ss-space-xxl: var(--ss-space-8);
+  --ss-space-section: var(--ss-space-12);
+  --ss-space-screen: var(--ss-space-4);
+
+  /* ── Radius extras ── */
+  --ss-radius-xl: var(--radius-sheet, 28px);
+  --ss-radius-circle: 9999px;
+
+  /* ── Elevation / motion ── */
+  --ss-elev-none: none;
+  --ss-elev-low: var(--shadow-soft, var(--mj-sh));
+  --ss-elev-mid: var(--mj-sh);
+  --ss-elev-overlay: 0 16px 40px -20px color-mix(in srgb, var(--ss-color-text) 35%, transparent);
+  --ss-motion-instant: 0ms;
+  --ss-motion-fast: var(--durationFast, 120ms);
+  --ss-motion-standard: var(--durationNormal, 220ms);
+  --ss-motion-emphasized: var(--durationEmphasized, 350ms);
+  --ss-ease: var(--easingStandard, cubic-bezier(0.2, 0, 0, 1));
 }
+
 
 /* ── مكوّنات نص سُنّة — تعتمد على الأدوار أعلاه فقط ── */
 .ss-text {

@@ -44,7 +44,7 @@
   padding: 0.65rem 1rem;
   border-radius: var(--ds-radius-lg, 0.75rem);
   background: var(--msk-gold, var(--mj-brand-deep, var(--mj-brand)));
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   font-size: 0.85rem;
   font-weight: 600;
   box-shadow: 0 6px 20px color-mix(in srgb, var(--msk-gold, var(--mj-brand)) 28%, transparent);
@@ -249,7 +249,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
 .ads-chip.is-active {
   border-color: var(--msk-gold, var(--mj-brand-deep, #1c5244));
   background: var(--msk-gold, var(--mj-brand-deep, var(--mj-brand)));
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
 }
 @media (prefers-reduced-motion: reduce) {
   .ads-chip { transition: none; }
@@ -353,7 +353,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   width: 27px;
   height: 27px;
   border-radius: 50%;
-  background: var(--mj-white, var(--mj-white, #ffffff));
+  background: var(--mj-white, var(--mj-white, var(--ss-color-surface)));
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
   transition: inset-inline-start 0.2s ease;
   pointer-events: none;
@@ -404,7 +404,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   min-height: 44px;
   border-radius: 0.5rem;
   border: 1px solid color-mix(in srgb, var(--clr-border, var(--mj-hairline)) 80%, transparent);
-  background: var(--clr-surface, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--clr-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   color: inherit;
   max-width: 9rem;
 }
@@ -434,7 +434,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
 .ads-sheet {
   width: min(100vw, 540px);
   max-height: 70vh;
-  background: var(--msk-canvas-1, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--msk-canvas-1, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   border-radius: 1.25rem 1.25rem 0 0;
   border: 1px solid var(--msk-border);
   border-bottom: none;
@@ -559,7 +559,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   min-height: 40px;
   border-radius: 0.55rem;
   border: 1px solid var(--msk-border);
-  background: var(--msk-canvas-1, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--msk-canvas-1, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   color: var(--msk-text);
   font: inherit;
   font-size: 0.8rem;
@@ -589,7 +589,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   font-weight: 700;
 }
 .ads-diag-status[data-state="ready"] { color: var(--msk-gold, var(--mj-brand-deep)); }
-.ads-diag-status[data-state="loading"] { color: var(--msk-text-muted, #5a6b63); }
+.ads-diag-status[data-state="loading"] { color: var(--msk-text-muted, var(--ss-color-text-muted)); }
 .ads-diag-status[data-state="playing"] { color: var(--msk-gold, var(--mj-brand-deep)); }
 .ads-diag-status[data-state="failed"] { color: var(--mj-warning, #9a3412); }
 .ads-diag-mono {
@@ -601,7 +601,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   padding: 0.55rem 0.65rem;
   border-radius: 0.55rem;
   border: 1px solid var(--msk-border);
-  background: var(--msk-canvas-1, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--msk-canvas-1, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
 }
 
 

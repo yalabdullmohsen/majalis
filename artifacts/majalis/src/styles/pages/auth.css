@@ -26,7 +26,7 @@
   align-items: center;
   overflow: visible;
   overflow-x: clip;
-  background: var(--color-bg, var(--mj-bg, var(--mj-bg, #f7f3eb)));
+  background: var(--color-bg, var(--mj-bg, var(--mj-bg, var(--ss-color-bg))));
   color: var(--auth-ink);
   direction: rtl;
 }
@@ -133,7 +133,7 @@ html[data-theme="dark"] .login-card__brand {
 
 .login-tab.is-active {
   background: var(--auth-green);
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   box-shadow: 0 2px 8px rgba(31, 107, 79, 0.22);
 }
 
@@ -223,7 +223,7 @@ html[data-theme="dark"] .login-alert--success {
   border: none;
   border-radius: 12px;
   background: var(--auth-green);
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   font: inherit;
   font-size: 0.95rem;
   font-weight: 700;
@@ -281,7 +281,7 @@ html[data-theme="dark"] .login-text-btn {
   padding: 0.55rem 0.75rem;
   border: 1px solid var(--auth-line);
   border-radius: 0.45rem;
-  background: var(--mj-white, var(--mj-white, #ffffff));
+  background: var(--mj-white, var(--mj-white, var(--ss-color-surface)));
   color: var(--mj-danger);
   font-size: 0.78rem;
   font-weight: 700;

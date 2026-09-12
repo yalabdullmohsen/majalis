@@ -50,23 +50,23 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   flex-direction: column;
   align-items: center;
   gap: .2rem;
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 8%, transparent);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1e5f4b) 18%, transparent);
   border-bottom: none;
   border-radius: .5rem .5rem 0 0;
   padding: .45rem .8rem .4rem;
   cursor: pointer;
-  color: var(--mss-on-hero-muted, #3d4f47);
+  color: var(--mss-on-hero-muted, var(--ss-color-text-secondary));
   font-size: .78rem;
   transition: background .18s;
   min-width: 5.2rem;
 }
 .hj-tab:hover {
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, transparent);
-  color: var(--mss-on-hero, #16241e);
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 14%, transparent);
+  color: var(--mss-on-hero, var(--ss-color-text));
 }
 .hj-tab--active {
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, #fffef9);
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 10%, #fffef9);
   color: #123f2e;
   font-weight: 700;
 }
@@ -296,7 +296,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   width: 2rem;
   height: 2rem;
   background: var(--majalis-emerald, var(--mj-brand-deep));
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -350,7 +350,7 @@ html.dark .hj-related__title { color: var(--mj-ink, #F7F3EB); }
 /* سطح ليلي — رابط بلون accent مقروء لا brand-deep */
 html[data-theme="dark"] .hj-related__link,
 html.dark .hj-related__link {
-  color: var(--accent, #5CC095);
+  color: var(--accent, var(--ss-color-brand));
   background: var(--surface, var(--mj-surface));
   border-color: var(--border, #35443F);
 }
@@ -371,6 +371,6 @@ html.dark .hj-related__link {
 /* تبويب نشط على soft-hero — يتفوق على m2030 [role=tab] accent فاتح */
 html[data-theme="dark"] .hj-tab.hj-tab--active[role="tab"][aria-selected="true"],
 html.dark .hj-tab.hj-tab--active[role="tab"][aria-selected="true"] {
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, #fffef9) !important;
+  background: color-mix(in srgb, var(--mj-brand, #5fbf98) 10%, #fffef9) !important;
   color: #123f2e !important;
 }

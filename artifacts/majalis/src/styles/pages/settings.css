@@ -145,8 +145,8 @@
   width: min(100%, 26rem);
   padding: 1.25rem 1.1rem;
   border-radius: 14px;
-  background: var(--mj-surface, var(--elite-white, var(--mj-white, var(--mj-white, #ffffff))));
-  color: var(--mj-ink, var(--elite-ink, #14241c));
+  background: var(--mj-surface, var(--elite-white, var(--mj-white, var(--mj-white, var(--ss-color-surface)))));
+  color: var(--mj-ink, var(--elite-ink, var(--ss-color-text)));
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
 }
 
@@ -276,7 +276,7 @@
   position: absolute !important;
   width: 1.15rem !important;
   height: 1.15rem !important;
-  background: var(--mj-white, var(--mj-white, #ffffff)) !important;
+  background: var(--mj-white, var(--mj-white, var(--ss-color-surface))) !important;
   border-radius: 50% !important;
   top: 0.2rem !important;
   inset-inline-end: 0.2rem !important;
@@ -306,7 +306,7 @@
   border: 1.5px solid rgba(23, 61, 53, 0.18) !important;
   border-radius: var(--elite-r-md, 12px) !important;
   font: inherit !important;
-  background: var(--mj-bg, var(--mj-white, var(--mj-white, #ffffff))) !important;
+  background: var(--mj-bg, var(--mj-white, var(--mj-white, var(--ss-color-surface)))) !important;
   color: inherit !important;
 }
 

@@ -36,7 +36,7 @@ html[data-theme="dark"] .assistant-message-bubble {
   line-height: 1.35;
 }
 .asp-hero .assistant-title {
-  color: #ffffff;
+  color: var(--ss-color-on-brand, #ffffff);
 }
 
 .assistant-intro {
@@ -123,7 +123,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 
 .assistant-page-minimal .assistant-message-assistant:not(.assistant-message-failure) {
   align-self: flex-end;
-  background: var(--mj-white, var(--mj-white, #ffffff));
+  background: var(--mj-white, var(--mj-white, var(--ss-color-surface)));
 }
 
 .assistant-message-failure {
@@ -177,8 +177,7 @@ html[data-theme="dark"] .assistant-message-bubble {
   border-radius: 2rem;
   padding: clamp(1.5rem, 4vw, 2.5rem);
   color: var(--majalis-parchment);
-  background:
-    radial-gradient(circle at 12% 16%, rgba(31, 77, 58, 0.25), transparent 18rem),
+  background: radial-gradient(circle at 12% 16%, rgba(31, 77, 58, 0.25), transparent 18rem),
     linear-gradient(135deg, var(--mj-brand-deep), var(--majalis-emerald-deep));
   box-shadow: var(--majalis-shadow);
 }
@@ -252,7 +251,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 
 .assistant-home-btn:hover {
   transform: translateY(-1px);
-  background: var(--mj-white, var(--mj-white, #ffffff));
+  background: var(--mj-white, var(--mj-white, var(--ss-color-surface)));
 }
 
 .assistant-service-warning {
@@ -300,7 +299,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 
 .assistant-retry-btn {
   border: 1px solid color-mix(in srgb, var(--mj-danger) 22%, white);
-  background: var(--mj-white, var(--mj-white, #ffffff));
+  background: var(--mj-white, var(--mj-white, var(--ss-color-surface)));
   color: var(--mj-danger);
   border-radius: var(--ds-radius);
   padding: 0.35rem 0.75rem;
@@ -402,7 +401,7 @@ html[data-theme="dark"] .assistant-message-bubble {
   padding: 0.4rem 1rem;
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   background: var(--mj-danger);
   border: none;
   border-radius: 8px;
@@ -414,7 +413,7 @@ html[data-theme="dark"] .assistant-message-bubble {
 
 .assistant-message-assistant {
   align-self: flex-end;
-  background: var(--mj-white, var(--mj-white, #ffffff));
+  background: var(--mj-white, var(--mj-white, var(--ss-color-surface)));
   max-width: 42rem;
   width: 100%;
 }

@@ -43,7 +43,7 @@
 
 .wird-count-btn:hover:not(:disabled) {
   background: var(--elite-forest, var(--mj-brand-deep)) !important;
-  color: var(--mj-white, #ffffff) !important;
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff)) !important;
   border-color: transparent;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(24,54,42,0.2);

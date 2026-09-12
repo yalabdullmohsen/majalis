@@ -53,7 +53,7 @@
 .pmp-card__head { background: var(--pm-bg, var(--mj-brand-deep)); background-image: url("/star-pattern.svg"); background-size: 100px 100px; padding: 1rem 1rem 0.875rem; display: flex; align-items: center; gap: var(--ds-space-3); }
 .pmp-card__icon { font-size: 1.75rem; line-height: 1; flex-shrink: 0; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.35)); }
 .pmp-card__head-info { flex: 1; }
-.pmp-card__name { font-weight: 800; font-size: var(--ds-text-base); color: var(--on-dark-strong, var(--mj-white, #ffffff)); margin: 0 0 0.2rem; }
+.pmp-card__name { font-weight: 800; font-size: var(--ds-text-base); color: var(--on-dark-strong, var(--mj-white, var(--ss-color-on-brand, #ffffff))); margin: 0 0 0.2rem; }
 .pmp-card__badges { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 
 /* ─ Category badge (uses CSS vars from article) ─ */

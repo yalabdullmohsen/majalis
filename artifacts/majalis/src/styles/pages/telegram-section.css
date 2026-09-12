@@ -25,7 +25,7 @@
 .tgm-progress-sub   { color: var(--majalis-ink-soft); }
 .tgm-progress-bar   { height: 4px; background: var(--majalis-line); border-radius: 2px; }
 .tgm-progress-fill  { height: 4px; width: var(--tgm-pf-w, 0%); background: var(--tgm-pf-color, var(--majalis-emerald)); border-radius: 2px; transition: width 0.4s; }
-.tgm-btn            { padding: 0.45rem 1rem; font-size: 0.85rem; font-weight: 600; background: var(--majalis-emerald-deep); color: var(--mj-white, #ffffff); border: none; border-radius: var(--ds-radius-sm); cursor: pointer; transition: opacity 0.15s; white-space: nowrap; font-family: inherit; }
+.tgm-btn            { padding: 0.45rem 1rem; font-size: 0.85rem; font-weight: 600; background: var(--majalis-emerald-deep); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); border: none; border-radius: var(--ds-radius-sm); cursor: pointer; transition: opacity 0.15s; white-space: nowrap; font-family: inherit; }
 .tgm-btn:disabled   { cursor: not-allowed; background: var(--majalis-line); color: var(--majalis-ink-soft); }
 .tgm-btn--danger    { background: var(--mj-danger); }
 .tgm-btn--secondary { background: var(--majalis-line); color: var(--majalis-ink); }
@@ -48,7 +48,7 @@
 .tgm-ch-actions     { display: flex; gap: var(--ds-space-2); }
 .tgm-filters-row    { display: flex; gap: var(--ds-space-3); align-items: center; flex-wrap: wrap; }
 .tgm-filter-btn          { padding: 0.3rem 0.75rem; border-radius: var(--ds-radius-full); border: none; cursor: pointer; font-size: 0.8rem; font-weight: 600; background: var(--majalis-line); color: var(--majalis-ink); font-family: inherit; }
-.tgm-filter-btn--active  { background: var(--majalis-emerald-deep); color: var(--mj-white, #ffffff); }
+.tgm-filter-btn--active  { background: var(--majalis-emerald-deep); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); }
 .tgm-lessons-list   { display: grid; gap: var(--ds-space-3); }
 .tgm-lesson-card             { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: 0.625rem; padding: 0.875rem 1rem; display: grid; gap: var(--ds-space-2); }
 .tgm-lesson-card--selected   { border-color: var(--majalis-emerald) !important; }

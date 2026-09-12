@@ -3,13 +3,13 @@
   padding: 16px 16px calc(var(--nav-h, 64px) + var(--inset-bottom, 0px) + 72px);
   max-width: 720px;
   margin: 0 auto;
-  color: var(--mj-ink, #16241e);
+  color: var(--mj-ink, var(--ss-color-text));
 }
 
 .tl-crumb {
   font-size: 13px;
   margin-bottom: 12px;
-  color: var(--mj-muted, #5d726a);
+  color: var(--mj-muted, var(--ss-color-text-muted));
 }
 
 .tl-crumb a,
@@ -45,8 +45,8 @@
   min-height: 48px;
   padding: 12px 14px;
   border-radius: 12px;
-  border: 1px solid var(--mj-hairline, var(--mj-hairline, #e3e8e6));
-  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
+  border: 1px solid var(--mj-hairline, var(--mj-hairline, var(--ss-color-border)));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   color: inherit;
   text-decoration: none;
 }
@@ -63,5 +63,5 @@
 
 .tl-card__meta {
   font-size: 12px;
-  color: var(--mj-muted, #5d726a);
+  color: var(--mj-muted, var(--ss-color-text-muted));
 }

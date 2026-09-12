@@ -34,7 +34,7 @@
   display: flex; flex-direction: column; align-items: center; gap: .1rem;
   background: var(--sg-chip-color, var(--mj-brand-deep));
 }
-.sg-salah-chip__name  { font-size: .75rem; font-weight: 700; color: var(--mj-white, #ffffff); }
+.sg-salah-chip__name  { font-size: .75rem; font-weight: 700; color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); }
 .sg-salah-chip__rakat { font-size: .62rem; color: rgba(255,255,255,.8); }
 
 
@@ -77,7 +77,7 @@
   background: var(--mj-brand-soft); border: 1px solid var(--mj-success-soft); border-radius: .65rem; padding: .65rem .8rem;
 }
 .sg-shart-num {
-  background: var(--majalis-emerald,var(--mj-brand-deep)); color: var(--mj-white, #ffffff);
+  background: var(--majalis-emerald,var(--mj-brand-deep)); color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   width: 1.4rem; height: 1.4rem; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: .68rem; font-weight: 800; flex-shrink: 0;
@@ -92,7 +92,7 @@
   background: var(--mj-surface); border: 1px solid var(--mj-hairline); border-radius: .65rem; padding: .6rem .85rem;
 }
 .sg-rukn-num {
-  background: var(--mj-brand-deep); color: var(--mj-white, #ffffff);
+  background: var(--mj-brand-deep); color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   width: 1.5rem; height: 1.5rem; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: .7rem; font-weight: 800; flex-shrink: 0;
@@ -112,7 +112,7 @@
   background: transparent; border: none; cursor: pointer; font-family: inherit; text-align: end;
 }
 .sg-step-num {
-  background: var(--majalis-emerald,var(--mj-brand-deep)); color: var(--mj-white, #ffffff);
+  background: var(--majalis-emerald,var(--mj-brand-deep)); color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   width: 1.6rem; height: 1.6rem; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: .7rem; font-weight: 800; flex-shrink: 0;
@@ -175,7 +175,7 @@
   background: linear-gradient(135deg, var(--majalis-emerald-deep,var(--mj-brand-deep)), var(--majalis-emerald,var(--mj-brand-deep)));
   border-radius: .8rem; padding: 1.1rem 1.3rem;
 }
-.sg-khushuu-hadith__text { font-size: .95rem; font-weight: 700; color: var(--mj-white, #ffffff); line-height: 1.8; margin: 0 0 .4rem; font-style: normal; }
+.sg-khushuu-hadith__text { font-size: .95rem; font-weight: 700; color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); line-height: 1.8; margin: 0 0 .4rem; font-style: normal; }
 .sg-khushuu-hadith__ref  { font-size: .72rem; color: rgba(255,255,255,.75); font-style: normal; }
 
 /* فضائل */
@@ -198,7 +198,7 @@
   background: linear-gradient(135deg,var(--mj-brand-deep),var(--majalis-emerald,var(--mj-brand-deep)));
   border-radius: .8rem; padding: 1.1rem 1.2rem;
 }
-.sg-reminder-box__title { font-size: .9rem; font-weight: 800; color: var(--mj-white, #ffffff); margin: 0 0 .4rem; }
+.sg-reminder-box__title { font-size: .9rem; font-weight: 800; color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); margin: 0 0 .4rem; }
 .sg-reminder-box__text  { font-size: .83rem; color: rgba(255,255,255,.9); line-height: 1.7; margin: 0; }
 
 /* intro note */
@@ -213,7 +213,7 @@
 .sg-rank-card { background: var(--mj-surface); border: 1px solid var(--mj-hairline); border-radius: .75rem; padding: var(--ds-space-4); }
 .sg-rank-card__header { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: .6rem; }
 .sg-rank-card__num {
-  width: 28px; height: 28px; background: var(--clr-primary,var(--mj-brand)); color: var(--mj-white, #ffffff);
+  width: 28px; height: 28px; background: var(--clr-primary,var(--mj-brand)); color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
   font-size: .8rem; font-weight: 800; flex-shrink: 0;
 }

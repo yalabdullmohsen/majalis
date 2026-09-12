@@ -167,8 +167,8 @@
   margin-top: 1.75rem;
   padding: 1rem 0.9rem 0.85rem;
   border-radius: 16px;
-  border: 1px dashed color-mix(in srgb, var(--mj-brand, var(--brand, var(--mj-brand, #1f6b56))) 30%, var(--border, var(--mj-hairline)));
-  background: color-mix(in srgb, var(--surface-2, #f4f7f5) 92%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--mj-brand, var(--brand, var(--mj-brand, #1e5f4b))) 30%, var(--border, var(--mj-hairline)));
+  background: color-mix(in srgb, var(--surface-2, var(--ss-color-bg-subtle)) 92%, transparent);
   border-top: 1px dashed color-mix(in srgb, var(--mj-brand, var(--brand, var(--mj-brand, #1f6b56))) 30%, var(--border, var(--mj-hairline)));
 }
 .fg-related__eyebrow {
@@ -176,7 +176,7 @@
   font-size: 0.78rem;
   font-weight: 650;
   line-height: 1.55;
-  color: var(--textMuted, var(--mj-ink-3, #5a6b63));
+  color: var(--textMuted, var(--mj-ink-3, var(--ss-color-text-muted)));
 }
 .fg-related__nav {
   display: block;
@@ -184,7 +184,7 @@
 html[data-theme="dark"] .fg-related--footer,
 html.dark .fg-related--footer {
   background: color-mix(in srgb, var(--mj-brand, var(--brand, var(--mj-brand))) 12%, rgba(12, 28, 22, 0.75));
-  border-color: color-mix(in srgb, var(--mj-brand, var(--brand, var(--mj-brand, #1f6b56))) 34%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand, var(--brand, var(--mj-brand, #5fbf98))) 34%, transparent);
 }
 html[data-theme="dark"] .fg-related__eyebrow,
 html.dark .fg-related__eyebrow {

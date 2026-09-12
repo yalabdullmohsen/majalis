@@ -191,7 +191,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   font-weight: 700;
   font-size: var(--ds-text-base);
 }

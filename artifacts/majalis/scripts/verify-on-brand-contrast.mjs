@@ -350,10 +350,9 @@ for (const file of files) {
           selector: rule.selector,
           detail: `سطح علامة غامق بلا color صريح — background: ${bg.slice(0, 70)}`,
         });
-      } else if (color) {
-        // حكم أساسي: نسبة التباين الحقيقية بين اللونين المحلولين.
-        // ‎color-mix(..., transparent)‎ لا يُحسم ساكنًا: السطح الفعلي هو ما
-        // تحته في الصفحة. تلك الحالات تُترك لبوابة Playwright المتراكمة.
+      } else if (color && !isStateOrThemeVariant) {
+        // تباين ثابت يفترض لوحة النهار (VAR_HEX). قواعد html.dark / data-theme
+        // تستخدم نعناعًا فاتحًا + نصًا داكنًا — لا تُحاكَم بنفس جدول النهار.
         const bgUnresolvable = /transparent/i.test(bg);
         const bgRgb = bgUnresolvable ? null : resolveColor(bg);
         let fgRgb = resolveColor(color);
@@ -470,7 +469,7 @@ if (JSON_OUT) {
    ويحتاج مراجعة فردية. قفله يمنع أي سطح أخضر *جديد* بلا لون نص، ويُنقَص
    الرقم تدريجيًا. لا سقف صامت: الرقم مطبوع دائمًا.                     */
 const HARD_FAIL_KINDS = new Set(["dark-on-brand", "opacity-fade-on-brand"]);
-const SURFACE_WITHOUT_COLOR_BASELINE = 50;
+const SURFACE_WITHOUT_COLOR_BASELINE = 48;
 
 const hardFails = violations.filter((v) => HARD_FAIL_KINDS.has(v.kind));
 const advisory = violations.filter((v) => !HARD_FAIL_KINDS.has(v.kind));

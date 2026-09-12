@@ -45,8 +45,8 @@
   max-width: 580px;
   margin: 0 auto;
 }
-.tw-ayah__text { font-family: var(--font-quran,'Scheherazade New',serif); font-size: 1.1rem; line-height: 2.1; color: var(--mj-white, #ffffff); margin: 0 0 .3rem; }
-.tw-ayah__ref  { font-size: .72rem; opacity: .7; color: var(--mj-white, #ffffff); font-style: normal; }
+.tw-ayah__text { font-family: var(--font-quran,'Scheherazade New',serif); font-size: 1.1rem; line-height: 2.1; color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); margin: 0 0 .3rem; }
+.tw-ayah__ref  { font-size: .72rem; opacity: .7; color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); font-style: normal; }
 
 
 /* tabs */
@@ -99,7 +99,7 @@
 }
 .tw-shart-num {
   background: var(--mj-info);
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   width: 2rem; height: 2rem;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
@@ -183,7 +183,7 @@
   cursor: pointer;
   font-family: inherit;
 }
-.tw-dhikr-num   { background: var(--mj-brand-deep, #0d4a39); color: var(--mj-white, #ffffff); width: 1.5rem; height: 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800; flex-shrink: 0; }
+.tw-dhikr-num   { background: var(--mj-brand-deep, var(--ss-color-primary-pressed)); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); width: 1.5rem; height: 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800; flex-shrink: 0; }
 .tw-dhikr-times { flex: 1; font-size: .75rem; color: var(--mj-ink-2); text-align: end; }
 .tw-dhikr-chevron { font-size: .8rem; color: var(--mj-muted); transition: transform .2s; margin-inline-end: auto; }
 .tw-dhikr-chevron--open { transform: rotate(180deg); }
@@ -252,7 +252,7 @@
   padding: 1.1rem 1.3rem;
   margin: 1rem 0 0;
 }
-.tw-hadith-box__text { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-white, #ffffff); line-height: 1.8; margin: 0 0 .4rem; font-style: normal; }
+.tw-hadith-box__text { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); line-height: 1.8; margin: 0 0 .4rem; font-style: normal; }
 .tw-hadith-box__ref  { font-size: .72rem; color: rgba(255,255,255,.7); font-style: normal; }
 
 /* related */
@@ -279,7 +279,7 @@ html.dark .tw-related__title { color: var(--mj-ink, #F7F3EB); }
 /* سطح ليلي — رابط بلون accent مقروء لا brand-deep */
 html[data-theme="dark"] .tw-related__link,
 html.dark .tw-related__link {
-  color: var(--accent, #5CC095);
+  color: var(--accent, var(--ss-color-brand));
   background: var(--surface, var(--mj-surface));
   border-color: var(--border, #35443F);
 }

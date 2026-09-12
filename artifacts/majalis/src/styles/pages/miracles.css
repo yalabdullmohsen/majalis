@@ -9,7 +9,7 @@
 }
 
 .topic-page--miracles .topic-page__body {
-  background: var(--color-bg, var(--surface-app, var(--mj-bg, #f7f3eb)));
+  background: var(--color-bg, var(--surface-app, var(--mj-bg, var(--ss-color-bg))));
 }
 
 .mk-page {
@@ -89,7 +89,7 @@
   font-size: clamp(1.08rem, 1rem + 0.4vw, 1.26rem);
   font-weight: 800;
   line-height: 1.45;
-  color: var(--mk-ink, var(--mj-ink, #16241e));
+  color: var(--mk-ink, var(--mj-ink, var(--ss-color-text)));
   display: block;
   overflow: visible;
   white-space: normal;
@@ -102,7 +102,7 @@
   font-size: 0.88rem;
   line-height: 1.6;
   -webkit-line-clamp: 3;
-  color: var(--mk-muted, var(--mj-ink-2, #3d4f47));
+  color: var(--mk-muted, var(--mj-ink-2, var(--ss-color-text-secondary)));
 }
 .mk-lane-card .hub-card__meta,
 .mk-lane-card__meta {
@@ -310,7 +310,7 @@
   border: 0;
   text-decoration: none;
   background: var(--mk-green);
-  color: var(--on-brand, var(--mj-white, #ffffff));
+  color: var(--on-brand, var(--mj-white, var(--ss-color-on-brand, #ffffff)));
   font-size: 0.84rem;
   font-weight: 700;
   cursor: pointer;

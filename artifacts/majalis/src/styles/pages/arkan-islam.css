@@ -46,11 +46,11 @@
   /* soft via shell */
 }
 .arkan-hero__icon-btn:hover {
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, transparent) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 14%, transparent) !important;
 }
 .arkan-hero__icon-btn.is-active {
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 16%, #fffef9) !important;
-  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 35%, transparent) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 16%, #fffef9) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #1e5f4b) 35%, transparent) !important;
 }
 .arkan-hero__icon-emoji { font-size: var(--ds-text-2xl); line-height: 1; }
 .arkan-hero__icon-num { font-size: 0.68rem; font-weight: 700; }

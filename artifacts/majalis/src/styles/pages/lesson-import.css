@@ -24,7 +24,7 @@
 .lip-ocr-pre       { white-space: pre-wrap; font-size: var(--ds-text-xs); max-height: 12rem; overflow: auto; background: var(--majalis-parchment-deep); padding: var(--ds-space-2); border-radius: var(--ds-radius-sm); margin: 0; direction: rtl; }
 .lip-warnings      { margin: 0.75rem 0 0; padding-inline-start: 1rem; font-size: var(--ds-text-xs); color: var(--mj-brand); }
 .lip-actions       { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; }
-.lip-approve-btn   { padding: 0.5rem 1rem; background: var(--majalis-emerald-deep); color: var(--mj-white, #ffffff); border: none; border-radius: var(--ds-radius-sm); cursor: pointer; font-family: inherit; font-weight: 600; }
+.lip-approve-btn   { padding: 0.5rem 1rem; background: var(--majalis-emerald-deep); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); border: none; border-radius: var(--ds-radius-sm); cursor: pointer; font-family: inherit; font-weight: 600; }
 .lip-approve-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 .lip-draft-btn     { padding: 0.5rem 1rem; background: var(--majalis-panel); color: var(--majalis-emerald-deep); border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-sm); cursor: pointer; font-family: inherit; }
 .lip-draft-btn:disabled { opacity: 0.6; cursor: not-allowed; }

@@ -3,7 +3,7 @@
    ============================================================ */
 .lpp-nav-links { display: flex; gap: var(--ds-space-4); margin-bottom: 1.5rem; flex-wrap: wrap; }
 .lpp-nav-link { padding: 0.5rem 1rem; border-radius: var(--ds-radius-sm); text-decoration: none; font-size: var(--ds-text-sm); font-weight: 500; }
-.lpp-nav-link--primary { background: var(--emerald-deep, var(--mj-brand)); color: var(--mj-white, #ffffff); }
+.lpp-nav-link--primary { background: var(--emerald-deep, var(--mj-brand)); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); }
 .lpp-nav-link--outline { border: 1px solid var(--line); color: var(--ink); }
 .lpp-category { margin-bottom: 2.5rem; }
 .lpp-category-title { font-size: var(--ds-text-lg); font-weight: 700; margin-bottom: 1rem; }
@@ -24,7 +24,7 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: var(--ds-space-4);
-  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   border: 1px solid var(--majalis-line, var(--mj-hairline));
   border-radius: var(--ds-radius-xl);
   padding: 1rem 1.5rem;
@@ -58,7 +58,7 @@
   padding: .4rem .9rem;
   border-radius: var(--ds-radius-full);
   border: 1px solid var(--majalis-line, var(--mj-hairline));
-  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   font-size: .82rem;
   font-weight: 600;
   color: var(--majalis-ink-soft);
@@ -67,7 +67,7 @@
   transition: background .15s, color .15s, border-color .15s;
 }
 .lpp-cat-btn:hover { background: var(--majalis-emerald-subtle, var(--mj-brand-soft)); color: var(--majalis-emerald-deep, var(--mj-brand)); border-color: var(--majalis-emerald, var(--mj-brand)); }
-.lpp-cat-btn--active { background: var(--majalis-emerald-deep, var(--mj-brand)); color: var(--mj-white, #ffffff); border-color: var(--majalis-emerald-deep, var(--mj-brand)); }
+.lpp-cat-btn--active { background: var(--majalis-emerald-deep, var(--mj-brand)); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); border-color: var(--majalis-emerald-deep, var(--mj-brand)); }
 
 .lpp-category-header {
   display: flex;
@@ -97,7 +97,7 @@
 .lpp-how-section {
   margin-top: 3rem;
   padding: var(--ds-space-8);
-  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   border: 1px solid var(--majalis-line, var(--mj-hairline));
   border-radius: var(--ds-radius-xl);
 }

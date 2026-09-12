@@ -146,7 +146,7 @@
   display: flex;
   align-items: flex-start;
   gap: 0.65rem;
-  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   border: 1px solid var(--majalis-line, #d4e6de);
   border-radius: 0.65rem;
   padding: 0.75rem 1rem;
@@ -157,7 +157,7 @@
   height: 1.6rem;
   border-radius: 50%;
   background: var(--majalis-emerald, var(--mj-brand-deep));
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   font-weight: 900;
   font-size: var(--ds-text-xs);
   display: flex;

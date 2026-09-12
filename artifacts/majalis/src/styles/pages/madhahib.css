@@ -56,7 +56,7 @@
 
 /* البطاقة */
 .mdb-card {
-  background: var(--mj-white, var(--mj-white, #ffffff));
+  background: var(--mj-white, var(--mj-white, var(--ss-color-surface)));
   border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius-xl);
   overflow: hidden;
@@ -134,7 +134,7 @@
 /* العلماء */
 .mdb-scholars { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .mdb-scholar-chip {
-  background: var(--mj-white, var(--mj-white, #ffffff));
+  background: var(--mj-white, var(--mj-white, var(--ss-color-surface)));
   border: 1.5px solid var(--mj-brand-soft);
   color: var(--mj-brand-deep);
   font-size: 0.78rem;
@@ -150,10 +150,10 @@
   background: linear-gradient(135deg, var(--mj-brand), var(--mj-brand-deep));
   border-radius: 0.85rem;
   padding: 1rem 1.1rem;
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
 }
 .mdb-quote blockquote { margin: 0; padding: 0; border: none; }
-.mdb-quote blockquote p { font-size: 0.9rem; color: var(--mj-white, #ffffff); font-style: normal; line-height: 1.65; margin: 0 0 0.3rem; }
+.mdb-quote blockquote p { font-size: 0.9rem; color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); font-style: normal; line-height: 1.65; margin: 0 0 0.3rem; }
 .mdb-quote blockquote footer { font-size: 0.78rem; color: rgba(255,255,255,0.75); font-weight: 700; }
 
 /* تنبيه */
@@ -179,7 +179,7 @@
   font-size: 0.83rem;
   font-weight: 600;
   color: var(--mj-brand-deep);
-  background: var(--mj-white, var(--mj-white, #ffffff));
+  background: var(--mj-white, var(--mj-white, var(--ss-color-surface)));
   transition: all 0.15s;
   text-align: center;
 }

@@ -74,7 +74,7 @@
 
 .kp-btn--primary {
   background: color-mix(in srgb, var(--mj-green, #1f6b4a) 88%, black);
-  color: #fff;
+  color: var(--ss-color-on-brand, #ffffff);
   border-color: transparent;
 }
 

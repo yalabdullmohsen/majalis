@@ -69,8 +69,8 @@
   border: 1.5px solid var(--mj-hairline, var(--mj-hairline));
   border-radius: var(--ds-radius-lg);
   font-size: 0.9rem;
-  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
-  color: var(--mj-ink, #16241e);
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
+  color: var(--mj-ink, var(--ss-color-text));
   outline: none;
   direction: rtl;
   transition: border-color 0.2s;
@@ -93,7 +93,7 @@
   transition: all 0.15s;
 }
 .duas-cat:hover { border-color: var(--mj-brand); }
-.duas-cat--active { background: var(--mj-brand); color: var(--mj-white, #ffffff); border-color: var(--mj-brand); }
+.duas-cat--active { background: var(--mj-brand); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); border-color: var(--mj-brand); }
 
 /* List */
 .duas-list {

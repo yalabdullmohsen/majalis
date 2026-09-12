@@ -58,7 +58,7 @@
 }
 .myl2-badge--level {
   background: rgba(255,255,255,.14);
-  color: var(--on-dark-strong, var(--mj-white, #ffffff));
+  color: var(--on-dark-strong, var(--mj-white, var(--ss-color-on-brand, #ffffff)));
   border: 1px solid rgba(255,255,255,.22);
 }
 .myl2-badge--fire {
@@ -89,7 +89,7 @@
   display: flex; flex-direction: column; align-items: center; flex: 1;
   position: relative;
 }
-.myl2-qstat__n { font-size: 1.2rem; font-weight: 800; color: var(--on-dark-strong, var(--mj-white, #ffffff)); line-height: 1; }
+.myl2-qstat__n { font-size: 1.2rem; font-weight: 800; color: var(--on-dark-strong, var(--mj-white, var(--ss-color-on-brand, #ffffff))); line-height: 1; }
 .myl2-qstat__l { font-size: 0.64rem; color: rgba(255,255,255,.45); margin-top: 0.12rem; }
 .myl2-qstat__sep {
   position: absolute; inset-inline-start: 0; top: 50%; transform: translateY(-50%);
@@ -106,7 +106,7 @@
 
 /* ── Card (section) ───────────────────────────────────────────────────── */
 .myl2-card {
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff))));
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface)))));
   border-radius: var(--ds-radius-xl);
   padding: 1.1rem 1rem;
   border: 1px solid var(--mj-hairline, var(--mj-hairline, #e2ece7));
@@ -185,7 +185,7 @@
 
 .myl2-stat-card {
   background: linear-gradient(135deg,#f0f8f4,var(--mj-brand-soft));
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 22%, var(--mj-hairline, #d9d3c8));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1e5f4b) 22%, var(--mj-hairline, #d9d3c8));
   border-radius: var(--ds-radius-lg);
   padding: 0.8rem 0.55rem;
   display: flex; flex-direction: column; align-items: center;
@@ -252,7 +252,7 @@
   display: inline-flex; align-items: center; gap: 0.3rem;
   padding: 0.32rem 0.75rem;
   background: linear-gradient(135deg,#edf6f1,var(--mj-brand-soft));
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 28%, var(--mj-hairline, #d9d3c8));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1e5f4b) 28%, var(--mj-hairline, #d9d3c8));
   border-radius: var(--ds-radius-full);
   font-size: 0.76rem; font-weight: 700; color: var(--mj-brand-deep);
 }
@@ -300,7 +300,7 @@
   font-size: 0.8rem; font-weight: 700;
   text-decoration: none;
   background: var(--mj-brand-soft); color: var(--mj-brand-deep);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 22%, var(--mj-hairline, #d9d3c8));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1e5f4b) 22%, var(--mj-hairline, #d9d3c8));
   transition: background .14s;
 }
 .myl2-btn:hover { background: var(--mj-brand-soft, var(--mj-brand-soft, #e3efe8)); }

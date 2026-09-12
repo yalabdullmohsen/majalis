@@ -47,7 +47,7 @@
 }
 
 .rp-section {
-  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   border: 1px solid var(--ds-line-color);
   border-radius: var(--ds-radius-lg, 0.625rem);
   padding: 1.25rem;
@@ -77,7 +77,7 @@
   box-sizing: border-box;
   font-family: inherit;
 }
-.rp-input:focus { outline: none; border-color: var(--ds-emerald); background: var(--mj-white, var(--mj-white, #ffffff)); }
+.rp-input:focus { outline: none; border-color: var(--ds-emerald); background: var(--mj-white, var(--mj-white, var(--ss-color-surface))); }
 .rp-textarea { resize: vertical; min-height: 100px; }
 .rp-select { appearance: auto; cursor: pointer; }
 
@@ -87,7 +87,7 @@
   padding: 0.35rem 0.8rem;
   border: 1.5px solid var(--ds-line-color);
   border-radius: 999px;
-  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   color: var(--majalis-ink-soft);
   font-size: 0.8rem;
   cursor: pointer;
@@ -97,7 +97,7 @@
 .rp-tag--active {
   border-color: var(--ds-emerald);
   background: var(--ds-emerald);
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
 }
 
 /* Publications */

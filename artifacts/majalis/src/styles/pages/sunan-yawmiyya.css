@@ -43,7 +43,7 @@
   font-weight: 600;
 }
 .sy-progress__bar-wrap { height: 6px; background: rgba(255,255,255,0.2); border-radius: var(--ds-radius-full); overflow: hidden; }
-.sy-progress__bar { height: 100%; background: var(--mj-white, var(--mj-white, #ffffff)); border-radius: var(--ds-radius-full); transition: width 0.3s ease; min-width: 2px; width: var(--sy-prog-w, 0%); }
+.sy-progress__bar { height: 100%; background: var(--mj-white, var(--mj-white, var(--ss-color-surface))); border-radius: var(--ds-radius-full); transition: width 0.3s ease; min-width: 2px; width: var(--sy-prog-w, 0%); }
 .sy-reset-btn {
   margin-inline-start: 0.4rem;
   padding: 0.15rem 0.6rem;
@@ -51,7 +51,7 @@
   background: rgba(255,255,255,0.15);
   border: 1px solid rgba(255,255,255,0.4);
   border-radius: var(--ds-radius-full);
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   cursor: pointer;
   transition: background 0.15s;
 }
@@ -102,7 +102,7 @@
   font-family: inherit;
 }
 .sy-cat-chip:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
-.sy-cat-chip--active { background: var(--mj-brand); border-color: var(--mj-brand); color: var(--mj-white, #ffffff); }
+.sy-cat-chip--active { background: var(--mj-brand); border-color: var(--mj-brand); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); }
 
 /* قائمة السنن */
 .sy-list { display: flex; flex-direction: column; gap: 0.7rem; }
@@ -131,7 +131,7 @@
   justify-content: center;
   margin-top: 0.15rem;
   transition: all 0.15s;
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
 }
 .sy-card--done .sy-card__check { background: var(--mj-brand); border-color: var(--mj-brand); }
 .sy-card__check:hover { border-color: var(--mj-brand); }

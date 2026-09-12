@@ -25,10 +25,10 @@ assert.doesNotMatch(
 );
 
 assert.match(lessons, /\.filter-chips__chip\.is-active/);
-// نص فاتح على رقاقة/زر نشط — هكس أو رمز أبيض ثابت الثيم
+// نص فاتح على رقاقة/زر نشط — هكس أو رمز أبيض/on-brand (بما فيه mj-chip-active-fg)
 assert.match(
   lessons,
-  /color:\s*(?:#fff(?:fff)?|var\(--mj-(?:white|on-brand)(?:,\s*#ffffff)?\))\s*!important/,
+  /color:\s*(?:#fff(?:fff)?|var\(--(?:mj-chip-active-fg|mj-(?:white|on-brand)|ss-color-on-brand)(?:,[^)]*)?\))\s*!important/,
 );
 assert.match(lessons, /\.lesson-unified-card--today/);
 

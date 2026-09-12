@@ -138,7 +138,7 @@
 
 .contact-btn--primary {
   background: var(--majalis-emerald-deep, var(--mj-brand));
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
 }
 
 .contact-btn--primary:hover {
@@ -146,8 +146,8 @@
 }
 
 .contact-btn--ghost {
-  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
-  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #1f6b56)) 18%, var(--mj-hairline, var(--mj-hairline, #e3e8e6)));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
+  border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #1e5f4b)) 18%, var(--mj-hairline, var(--mj-hairline, var(--ss-color-border))));
   color: var(--majalis-ink);
 }
 

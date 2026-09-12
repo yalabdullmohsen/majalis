@@ -1,30 +1,21 @@
 
 
 :root {
-  /* Tokens موحّدة — خلفية + سطح فقط للبيج */
-  --background: var(--mj-bg, #f7f4ee);
-  --surface: var(--mj-surface, #fffcf8);
-  --surface-muted: var(--mj-surface-2, #f7f4ee);
+  /*
+   * جسر دلالي فقط — لا إعادة تعريف --mj-* بهكس.
+   * المصدر: app/styles/theme.css + design-tokens.css
+   */
+  --background: var(--mj-bg);
+  --surface: var(--mj-surface);
+  --surface-muted: var(--mj-surface-2);
   --surface-soft: var(--surface-muted);
-  --primary: var(--mj-brand, #146b52);
-  --primary-soft: var(--mj-brand-soft, #e6f2ec);
-  --border: var(--mj-hairline, #d9d3c8);
-  --text: var(--mj-ink, #16241e);
-  --text-muted: var(--mj-ink-2, #4f5f58);
-  --accent-gold: var(--mj-accent, #b08a3e);
-  --shadow: 0 3px 12px -10px rgba(10, 61, 46, 0.12);
-
-  /* تهدئة الهوية — درجتان بيج فقط */
-  --mj-bg: #f7f4ee;
-  --mj-surface: #fffcf8;
-  --mj-surface-2: #f7f4ee;
-  --mj-surface-3: #f7f4ee;
-  --mj-hairline: #d9d3c8;
-  --mj-brand: #146b52;
-  --mj-brand-soft: #e6f2ec;
-  --mj-brand-deep: #0d4a39;
-  --mj-on-brand: #ffffff;
-  --mj-sh: var(--shadow);
+  --primary: var(--mj-brand);
+  --primary-soft: var(--mj-brand-soft);
+  --border: var(--mj-hairline);
+  --text: var(--mj-ink);
+  --text-muted: var(--mj-ink-2);
+  --accent-gold: var(--mj-accent);
+  --shadow: var(--mj-sh, 0 3px 12px -10px color-mix(in srgb, var(--mj-brand) 18%, transparent));
 
   --color-bg: var(--background);
   --color-surface: var(--surface);
@@ -38,17 +29,15 @@
   --color-text-muted: var(--text-muted);
   --color-muted: var(--text-muted);
   --color-accent-gold: var(--accent-gold);
-  --color-selected: #e8f3ee;
+  --color-selected: var(--surface-highlighted, color-mix(in srgb, var(--mj-brand) 12%, var(--surface)));
   --shadow-soft: var(--shadow);
 
-  /* شارات/فلاتر موحّدة — تباين صريح نهار/ليل */
   --mj-chip-bg: var(--surface);
   --mj-chip-fg: var(--text);
   --mj-chip-border: var(--border);
-  --mj-chip-active-bg: var(--mj-brand-deep, #0d4a39);
-  --mj-chip-active-fg: #ffffff;
+  --mj-chip-active-bg: var(--mj-brand-deep);
+  --mj-chip-active-fg: var(--mj-on-brand);
 
-  /* مطابقة soft-cards / visual-identity-unify — لا 18px القديمة */
   --radius-card: 24px;
   --radius-tile: 24px;
   --radius-button: 18px;
@@ -61,31 +50,18 @@
 
 html[data-theme="dark"],
 html.dark {
-  --background: #121816;
-  --surface: #1b2421;
-  --surface-muted: #121816;
-  --surface-soft: #121816;
-  --primary: #5fbf98;
-  --primary-soft: rgba(95, 191, 152, 0.16);
-  --border: #3a4641;
-  --text: #f3f7f5;
-  --text-muted: #b7c4be;
-  --accent-gold: #d9b871;
-  --shadow: 0 6px 18px -12px rgba(0, 0, 0, 0.55);
-
-  --mj-bg: var(--background);
-  --mj-surface: var(--surface);
-  --mj-surface-2: var(--surface-muted);
-  --mj-surface-3: var(--surface-muted);
-  --mj-hairline: var(--border);
-  --mj-ink: var(--text);
-  --mj-ink-2: var(--text-muted);
-  --mj-muted: var(--text-muted);
-  --mj-brand: var(--primary);
-  --mj-brand-soft: var(--primary-soft);
-  --mj-brand-deep: #1e4d3c;
-  --mj-on-brand: #06231a;
-  --mj-sh: var(--shadow);
+  /* اعتمد theme.css الليلي — لا تعكس --mj-* بهكس محلي */
+  --background: var(--mj-bg);
+  --surface: var(--mj-surface);
+  --surface-muted: var(--mj-surface-2);
+  --surface-soft: var(--surface-muted);
+  --primary: var(--mj-brand);
+  --primary-soft: var(--mj-brand-soft);
+  --border: var(--mj-hairline);
+  --text: var(--mj-ink);
+  --text-muted: var(--mj-ink-2);
+  --accent-gold: var(--mj-accent);
+  --shadow: var(--mj-sh, 0 6px 18px -12px rgba(0, 0, 0, 0.55));
 
   --color-bg: var(--background);
   --color-surface: var(--surface);
@@ -97,14 +73,14 @@ html.dark {
   --color-border: var(--border);
   --color-text: var(--text);
   --color-muted: var(--text-muted);
-  --color-selected: color-mix(in srgb, #5fbf98 28%, #1b2421);
+  --color-selected: color-mix(in srgb, var(--mj-brand) 28%, var(--mj-surface));
   --shadow-soft: var(--shadow);
 
-  --mj-chip-bg: #222c28;
-  --mj-chip-fg: #f3f7f5;
-  --mj-chip-border: #3a4641;
-  --mj-chip-active-bg: #5fbf98;
-  --mj-chip-active-fg: #06231a;
+  --mj-chip-bg: var(--mj-surface-2);
+  --mj-chip-fg: var(--mj-ink);
+  --mj-chip-border: var(--mj-hairline);
+  --mj-chip-active-bg: var(--mj-brand);
+  --mj-chip-active-fg: var(--mj-on-brand);
 }
 
 /* ── بطاقات موحّدة (أقسام المحتوى + الهيكل) ─────────────────────────── */

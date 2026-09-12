@@ -36,7 +36,7 @@
   gap: var(--ds-space-8);
 }
 .fa-stat { display: flex; flex-direction: column; align-items: center; gap: .1rem; }
-.fa-stat__num { font-size: 1.8rem; font-weight: 800; color: var(--mj-white, #ffffff); line-height: 1; }
+.fa-stat__num { font-size: 1.8rem; font-weight: 800; color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); line-height: 1; }
 .fa-stat__label { font-size: .75rem; opacity: .8; }
 
 .fa-body { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem; }
@@ -73,7 +73,7 @@
   transition: all .15s;
 }
 .fa-cat-btn:hover { border-color: var(--majalis-emerald, var(--mj-brand)); color: var(--majalis-emerald, var(--mj-brand)); }
-.fa-cat-btn--active { background: var(--majalis-emerald, var(--mj-brand)); border-color: var(--majalis-emerald, var(--mj-brand)); color: var(--mj-white, #ffffff); }
+.fa-cat-btn--active { background: var(--majalis-emerald, var(--mj-brand)); border-color: var(--majalis-emerald, var(--mj-brand)); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); }
 
 .fa-count { font-size: .78rem; color: var(--mj-ink-2); margin: 0 0 1rem; }
 

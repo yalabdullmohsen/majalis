@@ -2,7 +2,7 @@
 
 .isp-page,
 .topic-page--islamic-stories .topic-page__body {
-  background: var(--color-bg, var(--surface-app, var(--mj-bg, #f7f3eb)));
+  background: var(--color-bg, var(--surface-app, var(--mj-bg, var(--ss-color-bg))));
 }
 
 .isp-page {
@@ -119,9 +119,9 @@
 }
 
 .isp-chip.is-active {
-  background: var(--mj-brand-deep, #12362c);
-  border-color: var(--mj-brand-deep, #12362c);
-  color: var(--on-dark-strong, var(--mj-white, #ffffff));
+  background: var(--mj-brand-deep, var(--ss-color-brand-deep));
+  border-color: var(--mj-brand-deep, var(--ss-color-brand-deep));
+  color: var(--on-dark-strong, var(--mj-white, var(--ss-color-on-brand, #ffffff)));
 }
 html.dark .isp-chip.is-active,
 [data-theme="dark"] .isp-chip.is-active {

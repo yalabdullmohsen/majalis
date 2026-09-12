@@ -42,7 +42,7 @@
 .udp-step-num {
   flex-shrink: 0; width: 1.5rem; height: 1.5rem;
   border-radius: 9999px; background: var(--majalis-emerald);
-  color: var(--mj-white, #ffffff); font-size: .75rem; font-weight: 700;
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); font-size: .75rem; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
 .udp-deadline-label { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .6; display: block; }
@@ -88,7 +88,7 @@
 .udp-not-found-title { font-size: var(--ds-text-lg); font-weight: 700; color: var(--majalis-ink-soft); margin-bottom: .5rem; }
 .udp-back-link { color: var(--majalis-emerald); font-size: .875rem; text-decoration: none; }
 .udp-back-link:hover { text-decoration: underline; }
-.udp-acc-badge { background-color: var(--acc-color, var(--mj-muted)); color: var(--mj-on-brand, #fff); }
+.udp-acc-badge { background-color: var(--acc-color, var(--mj-muted)); color: var(--mj-on-brand, var(--ss-color-on-brand, #ffffff)); }
 .udp-compare-active-btn { color: var(--majalis-emerald); font-weight: 600; }
 
 /* ── نُقل إلى styles/pages/universities-admin.css ── */
@@ -100,9 +100,9 @@
 .is-lesson-item { display: flex; gap: var(--ds-space-2); align-items: flex-start; font-size: 0.8125rem; color: var(--mj-ink-2); margin-bottom: 0.35rem; }
 .is-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
 .is-btn { padding: 0.45rem 1rem; border-radius: var(--ds-radius-sm); font-size: 0.8125rem; font-weight: 600; cursor: pointer; font-family: inherit; border: none; transition: all 0.15s; }
-.is-btn.approve { background: var(--mj-brand); color: var(--mj-white, #ffffff); }
+.is-btn.approve { background: var(--mj-brand); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); }
 .is-btn.approve:hover { background: var(--mj-brand); }
-.is-btn.revoke { background: var(--mj-white, var(--mj-white, #ffffff)); color: var(--mj-danger); border: 1px solid var(--mj-danger-soft, #fca5a5); }
+.is-btn.revoke { background: var(--mj-white, var(--mj-white, var(--ss-color-surface))); color: var(--mj-danger); border: 1px solid var(--mj-danger-soft, #fca5a5); }
 .is-btn.revoke:hover { background: color-mix(in srgb, var(--mj-danger) 8%, white); }
 .is-btn.disabled { opacity: 0.45; cursor: not-allowed; }
 .is-verified-info { font-size: 0.7375rem; color: var(--mj-muted); padding: 0.3rem 0; }
@@ -114,5 +114,5 @@
    90 — UniversityDetailPage  (udp-*)
    ============================================================ */
 .udp-step-num  { background: var(--majalis-emerald); }
-.udp-acc-badge { background: var(--acc-color, var(--mj-brand)); color: var(--mj-on-brand, #fff); }
+.udp-acc-badge { background: var(--acc-color, var(--mj-brand)); color: var(--mj-on-brand, var(--ss-color-on-brand, #ffffff)); }
 
