@@ -279,6 +279,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       } else {
         prefetchMushafPage(page - 1);
         prefetchMushafPage(page + 1);
+        prefetchMushafPage(page - 2);
+        prefetchMushafPage(page + 2);
         scheduleNonCriticalWork(() => {
           if (!cancelled) void prefetchAdjacentPageAudio(page, loadReciterId());
         });
@@ -739,9 +741,17 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       tasks.push(ensureQpcPageFont(page + 1));
       tasks.push(loadMushafPage(page + 1).catch(() => null));
     }
+    if (page < MUSHAF_PAGE_MAX - 1) {
+      tasks.push(ensureQpcPageFont(page + 2));
+      tasks.push(loadMushafPage(page + 2).catch(() => null));
+    }
     if (page > 1) {
       tasks.push(ensureQpcPageFont(page - 1));
       tasks.push(loadMushafPage(page - 1).catch(() => null));
+    }
+    if (page > 2) {
+      tasks.push(ensureQpcPageFont(page - 2));
+      tasks.push(loadMushafPage(page - 2).catch(() => null));
     }
     void Promise.all(tasks).then(() => {
       if (!cancelled) setNeighborEpoch((n) => n + 1);
@@ -776,11 +786,16 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       onPageChange={go}
       disabled={edgesDisabled}
       onNavigateStart={() => {
-        mushafTurnMark("touchStart", page);
-        mushafTurnMark("firstPageMovement", page);
+        /* يُستدعى عند الالتزام فقط (go) — ليس عند أول بكسل سحب */
+        mushafTurnMark("transitionStart", page);
         beginPageTurn();
-        void ensureQpcPageFont(page + 1);
-        void ensureQpcPageFont(page - 1);
+      }}
+      onPanVisualStart={() => {
+        /* DOM/telemetry فقط — ممنوع setState هنا (Ultra Smooth) */
+        mushafTurnMark("firstPageMovement", page);
+      }}
+      onGestureArm={() => {
+        mushafTurnMark("touchStart", page);
       }}
       onNavigateCancel={cancelPageTurnFreeze}
       ignoreSelector=".nm-controls, .nm-verse-menu, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, input, textarea, select, button"
@@ -802,6 +817,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       data-audio-dock={audioDockVisible ? "1" : "0"}
       data-audio-mini={audioDockVisible && audioDockMini ? "1" : "0"}
       data-pager-settled={pagerSettled ? "1" : "0"}
+      data-ultra-smooth="1"
       data-bottom-freeze={bottomStackFrozen ? "1" : "0"}
       data-freeze-stack={freezeStackMode}
       data-testid="mushaf-viewport"
