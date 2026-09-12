@@ -201,6 +201,7 @@ export default function SearchPage() {
   const [recent, setRecent] = useState<string[]>([]);
   const debouncedTerm = useDebouncedValue(term, 250);
   const abortRef = useRef<AbortController | null>(null);
+  const requestSeqRef = useRef(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const primaryScopes = SEARCH_SCOPE_DEFS.slice(0, 6);
@@ -245,6 +246,7 @@ export default function SearchPage() {
     abortRef.current?.abort();
     const ctrl = new AbortController();
     abortRef.current = ctrl;
+    const seq = ++requestSeqRef.current;
     const q = raw.replace(/\s+/g, " ").trim();
     if (!q && nextScope === "all") {
       setResults([]);
@@ -260,14 +262,15 @@ export default function SearchPage() {
         : await (
             await import("@/features/search/app-search")
           ).runAppSearch(q, { scope: nextScope, limit: 48, signal: ctrl.signal });
-      if (ctrl.signal.aborted) return;
+      if (ctrl.signal.aborted || seq !== requestSeqRef.current) return;
       setResults(res.results.filter((item) => !isBlockedOrAdminHref(resultHref(item))));
       setSuggestions(res.suggestions ?? []);
     } catch (err) {
+      if (seq !== requestSeqRef.current) return;
       if ((err as Error)?.name === "AbortError") return;
       // أبقِ النتائج السابقة عند فشل إعادة الجلب (بلا وميض فراغ)
     } finally {
-      if (!ctrl.signal.aborted) setLoading(false);
+      if (!ctrl.signal.aborted && seq === requestSeqRef.current) setLoading(false);
     }
   }, []);
 

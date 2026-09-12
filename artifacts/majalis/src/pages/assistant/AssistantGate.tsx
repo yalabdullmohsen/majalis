@@ -9,12 +9,14 @@ export default function AssistantGate() {
   }
   return (
     <main className="page-shell narrow" dir="rtl">
+      <p className="assistant-intro">سُنّة</p>
       <h1 className="assistant-title">المساعد العلمي</h1>
       <p className="assistant-intro">
         المساعد قيد المراجعة الداخلية حاليًا لضمان دقة المصادر. يمكنك استخدام البحث الموثّق بدلًا منه.
       </p>
-      <p className="asp-hero__eyebrow">سُنّة</p>
-      <Link href="/search">الانتقال إلى البحث</Link>
+      <Link href="/search" className="assistant-intro">
+        الانتقال إلى البحث
+      </Link>
     </main>
   );
 }

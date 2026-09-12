@@ -80,9 +80,72 @@ export function ensureHybridSyncOutboxHandlers(): void {
   });
 
   registerOutboxHandler("preference_patch", async (item: OutboxItem) => {
-    // Preference patches are mirrored locally; accept flush as success
-    // until a dedicated user_prefs table is available.
-    void item;
-    return true;
+    try {
+      const userId = String(item.payload.userId || "");
+      if (!userId) return true;
+
+      const contentType = String(item.payload.contentType || "");
+      const contentId = String(item.payload.contentId || "");
+      const isNote =
+        contentType === "quran_ayah" ||
+        String(item.id).startsWith("note:") ||
+        item.payload.text != null;
+
+      if (!isNote || !contentId) {
+        // تفضيلات أخرى تُعكس محليًا؛ نقبل flush حتى يتوفر جدول prefs مخصّص
+        return true;
+      }
+
+      const rawText = String(item.payload.text ?? "");
+      // منع HTML غير الآمن في الملاحظات — نص عادي فقط
+      const text = rawText.replace(/<[^>]*>/g, "").trim();
+      const deleted = item.payload.deleted === true || !text;
+
+      const { getSupabaseClient } = await import("@/lib/supabase-bootstrap");
+      const supabase = getSupabaseClient();
+      const ctype = contentType || "quran_ayah";
+
+      if (deleted) {
+        await supabase
+          .from("user_notes")
+          .delete()
+          .eq("user_id", userId)
+          .eq("content_type", ctype)
+          .eq("content_id", contentId);
+        return true;
+      }
+
+      const { data: existing } = await supabase
+        .from("user_notes")
+        .select("id")
+        .eq("user_id", userId)
+        .eq("content_type", ctype)
+        .eq("content_id", contentId)
+        .maybeSingle();
+
+      if (existing?.id) {
+        const { error } = await supabase
+          .from("user_notes")
+          .update({ note_text: text, updated_at: new Date().toISOString() })
+          .eq("id", existing.id)
+          .eq("user_id", userId);
+        return !error;
+      }
+
+      const { error } = await supabase.from("user_notes").insert({
+        user_id: userId,
+        note_text: text,
+        content_type: ctype,
+        content_id: contentId,
+        content_title:
+          item.payload.surahNum != null && item.payload.ayahNum != null
+            ? `سورة ${item.payload.surahNum} آية ${item.payload.ayahNum}`
+            : `آية ${contentId}`,
+        tags: [],
+      });
+      return !error;
+    } catch {
+      return false;
+    }
   });
 }

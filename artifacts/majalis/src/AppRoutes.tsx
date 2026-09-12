@@ -535,11 +535,21 @@ export default function AppRoutes() {
         </ErrorBoundary>
       </Route>
       <Route path="/quran"><Redirect to="/quran-hub" /></Route>
-      {/* مصحف المدينة الجديد — بيانات QPC فقط، بلا PDF ولا واجهة قديمة */}
-      <Route path="/mushaf/page/:page"><SafeLazyRoute component={MushafReaderPage} /></Route>
-      <Route path="/mushaf/page"><SafeLazyRoute component={MushafReaderPage} /></Route>
+      {/* مصحف المدينة — قارئ واحد عبر /mushaf?page=؛ المسارات القديمة تُحوَّل بلا إعادة تركيب */}
+      <Route path="/mushaf/page/:page">
+        {(params) => <Redirect to={`/mushaf?page=${encodeURIComponent(params.page || "1")}`} />}
+      </Route>
+      <Route path="/mushaf/page"><Redirect to="/mushaf" /></Route>
       <Route path="/mushaf/about-edition"><Redirect to="/mushaf?page=1" /></Route>
-      <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafReaderPage} /></Route>
+      <Route path="/mushaf/:surah">
+        {(params) => {
+          const raw = String(params.surah || "").trim();
+          if (/^\d+$/.test(raw)) {
+            return <Redirect to={`/mushaf?page=${raw}`} />;
+          }
+          return <Redirect to="/mushaf" />;
+        }}
+      </Route>
       <Route path="/mushaf"><SafeLazyRoute component={MushafReaderPage} /></Route>
       <Route path="/quran/mushaf"><Redirect to="/mushaf" /></Route>
       <Route path="/mushaf-v2-preview"><Redirect to="/mushaf" /></Route>

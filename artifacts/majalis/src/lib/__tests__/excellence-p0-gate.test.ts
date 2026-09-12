@@ -31,12 +31,28 @@ assert.match(personal, /kind:\s*"bookmark"/);
 const engine = read("src/lib/sync-engine/engine.ts");
 assert.match(engine, /kind === "note"/);
 
+const gate = read("src/pages/assistant/AssistantGate.tsx");
+assert.match(gate, /isAssistantFeatureEnabled/);
+assert.doesNotMatch(gate, /asp-hero__eyebrow/);
+
 const adhan = read("src/pages/worship/ui/AdhanSettingsView.tsx");
 assert.match(adhan, /PrayerScheduleHealthCard/);
 assert.match(adhan, /classifyPrayerScheduleHealth/);
 
 const routes = read("src/AppRoutes.tsx");
 assert.match(routes, /AssistantGate/);
+assert.match(routes, /mushaf\/page\/:page[\s\S]*Redirect to=\{`\/mushaf\?page=/);
+
+const hybrid = read("src/lib/hybrid-sync-handlers.ts");
+assert.match(hybrid, /user_notes/);
+assert.match(hybrid, /preference_patch/);
+
+const search = read("src/pages/account/ui/SearchView.tsx");
+assert.match(search, /requestSeqRef/);
+
+const surah = read("src/pages/quran/ui/SurahIndexView.tsx");
+assert.match(surah, /منهج سُنّة/);
+assert.doesNotMatch(surah, /منهج مجالس/);
 
 const app = read("src/App.tsx");
 assert.match(app, /assistant-feature-flag/);
