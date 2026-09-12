@@ -21,6 +21,7 @@ import {
 import "@/styles/pages/mawarith.css";
 import { UtilityScreen } from "@/components/design-system/screens";
 import { ActionButton } from "@/components/design-system";
+import { KnowledgeLayout } from "@/components/knowledge";
 
 type WizardStep = "heirs" | "estate" | "result";
 
@@ -183,7 +184,7 @@ export default function MawarithCalculatorPage() {
 
   return (
     <UtilityScreen compose="mark">
-    <div className="page-shell narrow mwc-page" dir="rtl">
+    <KnowledgeLayout kind="fiqh" className="page-shell narrow mwc-page" data-kx="1">
       <PageHeader
         eyebrow="الفقه والأحكام"
         title="حاسبة المواريث الإسلامية"
@@ -473,7 +474,7 @@ export default function MawarithCalculatorPage() {
           <Link href="/mawarith" className="mw-related__link">دليل المواريث والفرائض</Link>
         </div>
       </nav>
-    </div>
+    </KnowledgeLayout>
     </UtilityScreen>
   );
 }

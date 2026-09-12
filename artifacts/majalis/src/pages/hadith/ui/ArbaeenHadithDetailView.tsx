@@ -13,6 +13,7 @@ import { QUALITY_OPTIONS, type ReviewQuality } from "@/lib/spaced-repetition";
 import { useAuth } from "@/components/AuthProvider";
 import "@/styles/pages/arbaeen-detail.css";
 import { DetailScreen } from "@/components/design-system/screens";
+import { KnowledgeLayout } from "@/components/knowledge";
 
 /**
  * صفحة تعلّم كاملة لحديث واحد من الأربعين النووية (المرحلة 11) — نص/شرح/فائدة/
@@ -110,7 +111,7 @@ export default function ArbaeenHadithDetailPage() {
 
   return (
     <DetailScreen compose="mark">
-    <div className="ahd-page" dir="rtl">
+    <KnowledgeLayout kind="hadith" className="ahd-page" data-kx="1">
       <Link href="/arbaeen-nawawi" className="ahd-back">
         <ChevronRight size={16} aria-hidden="true" /> فهرس الأربعين النووية
       </Link>
@@ -200,7 +201,7 @@ export default function ArbaeenHadithDetailPage() {
         {prevId && <Link href={`/arbaeen-nawawi/${prevId}`} className="ahd-nav__link">الحديث السابق <ChevronRight size={14} aria-hidden="true" /></Link>}
         {nextId && <Link href={`/arbaeen-nawawi/${nextId}`} className="ahd-nav__link">الحديث التالي <ChevronLeft size={14} aria-hidden="true" /></Link>}
       </nav>
-    </div>
+    </KnowledgeLayout>
     </DetailScreen>
   );
 }

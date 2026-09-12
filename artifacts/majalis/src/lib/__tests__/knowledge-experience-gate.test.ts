@@ -139,4 +139,26 @@ const fiqhQawaid = read("src/pages/fiqh/ui/FiqhQawaidView.tsx");
 assert.match(fiqhQawaid, /KnowledgeLayout/, "القواعد الفقهية");
 assert.match(fiqhQawaid, /data-kx-kind/, "القواعد بأنواع كتل");
 
+for (const [label, rel, kind] of [
+  ["دليل الصلاة", "src/pages/fiqh/ui/SalahGuideView.tsx", "fiqh"],
+  ["الزكاة", "src/pages/fiqh/ui/ZakatView.tsx", "fiqh"],
+  ["الحج", "src/pages/fiqh/ui/HajjView.tsx", "fiqh"],
+  ["الجنائز", "src/pages/fiqh/ui/JanazaView.tsx", "fiqh"],
+  ["المواريث", "src/pages/fiqh/ui/MawarithView.tsx", "fiqh"],
+  ["حاسبة المواريث", "src/pages/fiqh/ui/MawarithCalculatorView.tsx", "fiqh"],
+  ["موسوعة الأحكام", "src/pages/fiqh/ui/RulingsView.tsx", "fiqh"],
+] as const) {
+  const src = read(rel);
+  assert.match(src, /KnowledgeLayout/, `${label} بتخطيط معرفة`);
+  assert.match(src, new RegExp(`kind="${kind}"`), `${label} بنوع ${kind}`);
+}
+
+const rulingDetail = read("src/pages/fiqh/ui/RulingDetailView.tsx");
+assert.match(rulingDetail, /KnowledgeLayout/, "تفصيل الحكم بتخطيط معرفة");
+assert.match(rulingDetail, /kind="reader"/, "تفصيل الحكم بقراءة");
+
+const arbaeenDetail = read("src/pages/hadith/ui/ArbaeenHadithDetailView.tsx");
+assert.match(arbaeenDetail, /KnowledgeLayout/, "تفصيل الأربعين بتخطيط معرفة");
+assert.match(arbaeenDetail, /kind="hadith"/, "تفصيل الأربعين بنوع حديث");
+
 console.log("knowledge-experience-gate.test.ts: ok");

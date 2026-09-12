@@ -9,6 +9,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import "@/styles/pages/mawarith.css";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { KnowledgeLayout } from "@/components/knowledge";
 
 
 type MawTab = "varasa" | "huquq" | "asab" | "hajb" | "masail";
@@ -279,7 +280,7 @@ export default function MawarithPage() {
 
   return (
     <UtilityScreen compose="mark">
-    <main className="mw-page" dir="rtl">
+    <KnowledgeLayout kind="fiqh" className="mw-page" data-kx="1">
       {/* hero */}
       <section className="mw-hero">
         <div className="mw-hero__badge">الفقه والأحكام</div>
@@ -562,7 +563,7 @@ export default function MawarithPage() {
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في المواريث" count={4} />
       </div>
-    </main>
+    </KnowledgeLayout>
     </UtilityScreen>
   );
 }

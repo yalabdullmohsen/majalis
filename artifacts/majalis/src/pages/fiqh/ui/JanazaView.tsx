@@ -6,6 +6,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import "@/styles/pages/janaza.css";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { KnowledgeLayout } from "@/components/knowledge";
 
 
 type JanazaTab = "ghusl" | "takfin" | "salah" | "dafn" | "aadab";
@@ -194,7 +195,7 @@ export default function JanazaPage() {
 
   return (
     <UtilityScreen compose="mark">
-    <main className="jnz-page" dir="rtl">
+    <KnowledgeLayout kind="fiqh" className="jnz-page" data-kx="1">
       {/* hero */}
       <section className="jnz-hero">
         <div className="jnz-hero__badge">الفقه الإسلامي</div>
@@ -419,7 +420,7 @@ export default function JanazaPage() {
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الفقه" count={4} />
       </div>
-    </main>
+    </KnowledgeLayout>
     </UtilityScreen>
   );
 }
