@@ -66,7 +66,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "search",       label: "البحث",             path: "/search",       group: "أدوات",         status: "active",       inSideNav: true,  inBottomNav: true  },
   { id: "progress-center", label: "مركز التقدّم",   path: "/progress",    group: "حساب",          status: "active",       inSideNav: false, inBottomNav: false },
   { id: "offline-center",  label: "مركز دون اتصال", path: "/offline",     group: "حساب",          status: "active",       inSideNav: false, inBottomNav: false },
-  { id: "assistant",    label: "المساعد الذكي",     path: "/assistant",    group: "أدوات",         status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "assistant",    label: "المساعد الذكي",     path: "/assistant",    group: "أدوات",         status: "coming-soon",  inSideNav: false, inBottomNav: false },
   { id: "flashcards",   label: "بطاقات المراجعة",  path: "/flashcards",   group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "knowledge-graph",label:"خارطة المعرفة",   path: "/knowledge-graph",group:"أدوات",        status: "disabled",       inSideNav: false,  inBottomNav: false },
   /* عُطِّلت 2026-07-23: أُزيلت من كل نقاط الدخول (رئيسية/قوائم/خرائط ذهنية/

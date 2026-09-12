@@ -60,7 +60,10 @@ export function hrefFawaid(id?: string | null): string {
 
 export function hrefHadith(id?: string | null): string {
   const t = idOrEmpty(id);
-  return t ? `/hadith#${encodeURIComponent(t)}` : "/hadith";
+  if (!t) return "/hadith";
+  // مسار التفاصيل `/hadith/:id` يقبل فقط معرفات book:number (بدون ترميز النقطتين)
+  if (/^[a-z0-9_-]+:\d+$/i.test(t)) return `/hadith/${t}`;
+  return `/hadith#${encodeURIComponent(t)}`;
 }
 
 export function hrefStories(slug?: string | null): string {

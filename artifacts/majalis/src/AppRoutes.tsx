@@ -91,7 +91,7 @@ const SubmitContentPage = lazy(() => import("@/views/SubmitContentPage"));
 const LoginPage = lazyWithRetry(() => import("@/pages/account/LoginPage"), "LoginPage");
 const RegisterPage = lazyWithRetry(() => import("@/pages/account/RegisterPage"), "RegisterPage");
 const TranscribePage = lazy(() => import("@/views/TranscribePage"));
-const AssistantPage = lazy(() => import("@/views/AssistantPage"));
+const AssistantGate = lazy(() => import("@/pages/assistant/AssistantGate"));
 const KuwaitLessonsPage = lazy(() => import("@/pages/lessons/KuwaitLessonsPage"));
 const CardsPage = lazy(() => import("@/views/CardsPage"));
 const PrayerTimesPage = lazy(() => import("@/pages/worship/PrayerTimesPage"));
@@ -497,11 +497,16 @@ export default function AppRoutes() {
       <Route path="/courses/paths"><Redirect to="/lessons" /></Route>
 
       <Route path="/assistant">
-        <ErrorBoundary>
-          <Suspense fallback={<LazyRouteFallback />}>
-            <AssistantPage />
-          </Suspense>
-        </ErrorBoundary>
+        {(params) => {
+          void params;
+          return (
+            <ErrorBoundary>
+              <Suspense fallback={<LazyRouteFallback />}>
+                <AssistantGate />
+              </Suspense>
+            </ErrorBoundary>
+          );
+        }}
       </Route>
       {/* عُطِّلت 2026-07-23: توجيه دائم إلى الأسئلة والأجوبة، وvercel.json يوجّه
           الطلبات المباشرة على مستوى الخادم بنفس الوجهة. */}

@@ -1,7 +1,7 @@
 /**
  * إعدادات تنبيهات الصلاة — تنبيه أذان قصير متوافق مع iOS.
  */
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   CloudMoon, CloudSun, MapPin, Moon, Music, Bell, Sun, Sunset, Volume2,
 } from "lucide-react";
@@ -129,6 +129,91 @@ function NotificationPermBadge() {
     };
   }, []);
   return <PermissionBadge value={state} />;
+}
+
+/** بطاقة صحة الجدولة — ظاهرة للمستخدم دائمًا (ليست أدوات مطوّر). */
+function PrayerScheduleHealthCard({ onRepair }: { onRepair: () => void }) {
+  const [label, setLabel] = useState("جاري فحص الجدولة…");
+  const [needsRepair, setNeedsRepair] = useState(false);
+
+  const refresh = useCallback(async () => {
+    try {
+      const [
+        { getNotificationPermissionStatus, listPendingPrayerNotifications },
+        { classifyPrayerScheduleHealth },
+      ] = await Promise.all([
+        import("@/lib/prayer-local-notifications"),
+        import("@/lib/prayer-notification-scheduler"),
+      ]);
+      const permission = await getNotificationPermissionStatus();
+      const pending = await listPendingPrayerNotifications();
+      const mapped =
+        permission === "granted" || permission === "denied" || permission === "prompt"
+          ? permission
+          : "unsupported";
+      const nextAtMs = pending.items
+        .map((it) => (it.at ? Date.parse(it.at) : NaN))
+        .filter((n) => Number.isFinite(n))
+        .sort((a, b) => a - b)[0];
+      const health = classifyPrayerScheduleHealth({
+        permission: mapped,
+        hasLocation: Boolean(getSelectedGovernorate().id),
+        // على الويب لا توجد معلّقات أصلية — لا تُظهر incompleteSchedule زائفًا
+        desiredCount: pending.count > 0 ? pending.count : 0,
+        verifiedCount: pending.count,
+        nextAtMs: nextAtMs ?? (mapped === "granted" && pending.count === 0 ? Date.now() + 60_000 : null),
+      });
+      const LABELS: Record<string, string> = {
+        healthy: "الجدولة سليمة — التنبيهات جاهزة",
+        permissionRequired: "يلزم تفعيل إذن الإشعارات",
+        permissionDenied: "إذن الإشعارات مرفوض من إعدادات النظام",
+        locationUnavailable: "حدد المدينة لضبط المواقيت",
+        timezoneChanged: "تغيّر التوقيت — أعد الجدولة",
+        schedulingFailed: "فشل آخر جدولة — أعد المحاولة",
+        verificationFailed: "تعذّر التحقق من التنبيهات المجدولة",
+        incompleteSchedule: "الجدولة غير مكتملة",
+        noUpcomingPrayer: "لا يوجد تنبيه قادم — أعد الجدولة",
+        staleSchedule: "الجدولة قديمة — أعد التحديث",
+      };
+      setLabel(LABELS[health.code] ?? "تعذّر تحديد حالة الجدولة");
+      setNeedsRepair(health.repairAction !== "none");
+    } catch {
+      setLabel("تعذّر فحص حالة الجدولة");
+      setNeedsRepair(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    void refresh();
+  }, [refresh]);
+
+  return (
+    <section className="soft-card soft-card--on-light ads-card" aria-labelledby="ads-health-head">
+      <div className="ads-card__head" id="ads-health-head">
+        <Bell size={15} strokeWidth={2} aria-hidden="true" />
+        <span>صحة تنبيهات الصلاة</span>
+      </div>
+      <div className="ads-card__body">
+        <p className="ads-adhan-desc" role="status">
+          {label}
+        </p>
+        {needsRepair ? (
+          <div className="ads-prayer-muezzin-btns ads-sound-test-row">
+            <button
+              type="button"
+              className="ads-pill-btn"
+              onClick={() => {
+                onRepair();
+                window.setTimeout(() => void refresh(), 800);
+              }}
+            >
+              إصلاح وإعادة الجدولة
+            </button>
+          </div>
+        ) : null}
+      </div>
+    </section>
+  );
 }
 
 function AndroidAdhanNativeCard({
@@ -757,6 +842,8 @@ export default function AdhanSettingsPage() {
           })}
         </div>
       </section>
+
+      <PrayerScheduleHealthCard onRepair={() => void runRescheduleAlerts()} />
 
       <AndroidAdhanNativeCard selectedMuezzinId={prefs.defaultMuezzinId} />
 

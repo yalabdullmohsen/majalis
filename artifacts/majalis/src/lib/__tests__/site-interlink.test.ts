@@ -53,7 +53,8 @@ console.log("\n=== روابط التوصيات تحتفظ بالمعرّف (إع
   assert(CONTENT_TYPE_HREF.scholar("") === "/scholars", "scholar بلا id → فهرس العلماء");
   assert(CONTENT_TYPE_HREF.story("omar") === "/stories?slug=omar", "story → /stories?slug=");
   assert(CONTENT_TYPE_HREF.miracle("m1") === "/miracles#m1", "miracle → /miracles#id");
-  assert(CONTENT_TYPE_HREF.hadith("h1") === "/hadith#h1", "hadith → /hadith#id");
+  assert(CONTENT_TYPE_HREF.hadith("bukhari:1") === "/hadith/bukhari:1", "hadith book:num → /hadith/id");
+assert(CONTENT_TYPE_HREF.hadith("h1") === "/hadith#h1", "hadith legacy → /hadith#id");
   assert(CONTENT_TYPE_HREF.dhikr("adh-morning") === "/adhkar/morning", "dhikr → /adhkar/:slug");
 }
 

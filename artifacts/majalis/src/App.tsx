@@ -977,20 +977,30 @@ function DeferredAssistantWidget() {
   const [ready, setReady] = useState(false);
   useEffect(() => {
     let done = false;
+    let timeoutHandle = 0;
     const arm = () => {
       if (done) return;
       done = true;
       setReady(true);
     };
-    // setTimeout فقط (لا requestIdleCallback) — Lighthouse يطلق الخمول مبكرًا فيُحمَّل المساعد ويحرّك التخطيط
-    const timeoutHandle = window.setTimeout(arm, 20_000);
-    const onInteract = () => arm();
-    window.addEventListener("pointerdown", onInteract, { once: true, passive: true });
-    window.addEventListener("keydown", onInteract, { once: true });
+    void import("@/lib/assistant-feature-flag").then(({ isAssistantFeatureEnabled }) => {
+      if (!isAssistantFeatureEnabled()) return;
+      // setTimeout فقط (لا requestIdleCallback) — Lighthouse يطلق الخمول مبكرًا فيُحمَّل المساعد ويحرّك التخطيط
+      timeoutHandle = window.setTimeout(arm, 20_000);
+      const onInteract = () => arm();
+      window.addEventListener("pointerdown", onInteract, { once: true, passive: true });
+      window.addEventListener("keydown", onInteract, { once: true });
+      // cleanup via outer return — store removers on window listeners only when armed
+      (DeferredAssistantWidget as unknown as { _cleanup?: () => void })._cleanup = () => {
+        window.clearTimeout(timeoutHandle);
+        window.removeEventListener("pointerdown", onInteract);
+        window.removeEventListener("keydown", onInteract);
+      };
+    });
     return () => {
+      done = true;
       window.clearTimeout(timeoutHandle);
-      window.removeEventListener("pointerdown", onInteract);
-      window.removeEventListener("keydown", onInteract);
+      (DeferredAssistantWidget as unknown as { _cleanup?: () => void })._cleanup?.();
     };
   }, []);
   if (!ready) return null;
