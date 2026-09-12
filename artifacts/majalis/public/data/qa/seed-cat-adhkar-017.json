@@ -111,16 +111,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.392Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-257",
@@ -134,16 +134,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.392Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-258",
@@ -157,16 +157,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.392Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-259",
@@ -180,16 +180,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.392Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-260",
@@ -203,16 +203,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.392Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-266",
@@ -226,16 +226,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.392Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-267",
@@ -249,16 +249,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.392Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-268",
@@ -272,16 +272,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.392Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-269",
@@ -295,16 +295,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.392Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-270",
@@ -318,16 +318,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأذكار",
       "slug": "adhkar"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.392Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-294",

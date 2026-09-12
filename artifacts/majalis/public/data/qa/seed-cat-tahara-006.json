@@ -11,16 +11,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-03T00:00:00.000Z",
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.413Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-41",
@@ -34,16 +34,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-03T01:00:00.000Z",
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.413Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-42",
@@ -157,16 +157,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.413Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-207",
@@ -180,16 +180,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.413Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-208",
@@ -203,16 +203,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.413Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-209",
@@ -226,16 +226,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.413Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-210",
@@ -249,16 +249,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الطهارة",
       "slug": "tahara"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.413Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-284",

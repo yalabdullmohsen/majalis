@@ -11,16 +11,16 @@
       "كتب التفسير المعتمدة"
     ],
     "reference": "القرآن والتفسير المعتمد عند أهل السنة",
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-01T22:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:16:50.833Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-15",
@@ -34,16 +34,16 @@
       "كتب التفسير المعتمدة"
     ],
     "reference": "القرآن والتفسير المعتمد عند أهل السنة",
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-01T23:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:16:50.833Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-16",
@@ -57,16 +57,16 @@
       "كتب التفسير المعتمدة"
     ],
     "reference": "القرآن والتفسير المعتمد عند أهل السنة",
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-02T00:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:16:50.833Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-17",
@@ -80,16 +80,16 @@
       "كتب التفسير المعتمدة"
     ],
     "reference": "القرآن والتفسير المعتمد عند أهل السنة",
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-02T01:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:16:50.833Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-18",
@@ -103,16 +103,16 @@
       "كتب التفسير المعتمدة"
     ],
     "reference": "القرآن والتفسير المعتمد عند أهل السنة",
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-02T02:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:16:50.833Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-19",
@@ -126,16 +126,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-02T03:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.394Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-20",
@@ -149,16 +149,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-02T04:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.394Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-21",
@@ -172,16 +172,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-02T05:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.394Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-22",
@@ -195,16 +195,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-02T06:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.394Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-23",
@@ -218,16 +218,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-02T07:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.394Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-186",
@@ -241,16 +241,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.394Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-187",
@@ -264,16 +264,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.394Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-188",
@@ -287,16 +287,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.394Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-189",
@@ -310,16 +310,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.394Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-190",
@@ -333,16 +333,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.394Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-191",
@@ -356,16 +356,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.394Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-192",
@@ -379,16 +379,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.394Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-193",
@@ -402,16 +402,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.394Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-194",
@@ -425,16 +425,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.394Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-195",
@@ -445,16 +445,16 @@
     "ruling_type": null,
     "evidence": null,
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الأنبياء",
       "slug": "anbiya"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-07-26T00:00:00.000Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-296",

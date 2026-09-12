@@ -11,16 +11,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-04T02:00:00.000Z",
     "qa_categories": {
       "name": "الزكاة",
       "slug": "zakat"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.415Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-229",
@@ -34,16 +34,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الزكاة",
       "slug": "zakat"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.415Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-230",
@@ -57,16 +57,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الزكاة",
       "slug": "zakat"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.415Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-231",
@@ -80,16 +80,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الزكاة",
       "slug": "zakat"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.415Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-236",
@@ -103,16 +103,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الزكاة",
       "slug": "zakat"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.415Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-238",
@@ -126,16 +126,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الزكاة",
       "slug": "zakat"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.415Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-289",
