@@ -4,7 +4,7 @@ import SwiftUI
 
 /// ألوان هوية سُنّة — أخضر زمردي داكن، تُطابق التدرّج المستخدم في
 /// شريط تنبيه الصلاة داخل التطبيق (index.css / elite-2026.css §193b).
-private enum MajalisColor {
+private enum SunnahColor {
     static let emeraldDeep = Color(red: 0x0B / 255, green: 0x4D / 255, blue: 0x35 / 255)
     static let emerald = Color(red: 0x0E / 255, green: 0x6E / 255, blue: 0x52 / 255)
     static let emeraldDark = Color(red: 0x13 / 255, green: 0x3D / 255, blue: 0x2A / 255)
@@ -27,14 +27,14 @@ struct PrayerLiveActivityWidget: Widget {
         ActivityConfiguration(for: PrayerActivityAttributes.self) { context in
             // ── شاشة القفل ──
             LockScreenPrayerView(attributes: context.attributes, state: context.state)
-                .activityBackgroundTint(MajalisColor.emeraldDark)
+                .activityBackgroundTint(SunnahColor.emeraldDark)
                 .activitySystemActionForegroundColor(.white)
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
                     Image(systemName: prayerSymbol(for: context.attributes.prayerKey))
                         .font(.title3)
-                        .foregroundStyle(MajalisColor.gold)
+                        .foregroundStyle(SunnahColor.gold)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     if context.state.hasStarted {
@@ -70,7 +70,7 @@ struct PrayerLiveActivityWidget: Widget {
                 }
             } compactLeading: {
                 Image(systemName: prayerSymbol(for: context.attributes.prayerKey))
-                    .foregroundStyle(MajalisColor.gold)
+                    .foregroundStyle(SunnahColor.gold)
             } compactTrailing: {
                 if context.state.hasStarted {
                     Text("الآن")
@@ -84,12 +84,12 @@ struct PrayerLiveActivityWidget: Widget {
                 }
             } minimal: {
                 Image(systemName: prayerSymbol(for: context.attributes.prayerKey))
-                    .foregroundStyle(MajalisColor.gold)
+                    .foregroundStyle(SunnahColor.gold)
             }
             // Universal Link — opens app via associated domains (applinks:www.ssunnah.com).
             // Prefer https over custom scheme so CapApp appUrlOpen always gets a pathname.
             .widgetURL(URL(string: "https://www.ssunnah.com/prayer-times"))
-            .keylineTint(MajalisColor.emerald)
+            .keylineTint(SunnahColor.emerald)
         }
     }
 }
@@ -104,11 +104,11 @@ private struct LockScreenPrayerView: View {
         HStack(spacing: 14) {
             ZStack {
                 Circle()
-                    .fill(MajalisColor.emerald.opacity(0.35))
+                    .fill(SunnahColor.emerald.opacity(0.35))
                     .frame(width: 44, height: 44)
                 Image(systemName: prayerSymbol(for: attributes.prayerKey))
                     .font(.title3)
-                    .foregroundStyle(MajalisColor.gold)
+                    .foregroundStyle(SunnahColor.gold)
             }
 
             VStack(alignment: .leading, spacing: 3) {

@@ -39,6 +39,7 @@ const EXACT_KEYS = [
 
 const PREFIXES = [
   "majalis-",
+  "sunnah-widget-",
   "mj-quran-",
   "mj-",
   "sb-", // بعض مفاتيح supabase المحلية القديمة إن وُجدت
@@ -81,6 +82,12 @@ export function clearUserLocalData(): { removed: number } {
  */
 export async function clearUserLocalDataAndMedia(): Promise<{ removed: number }> {
   const { removed } = clearUserLocalData();
+  try {
+    const { invalidateWidgetsForAccountChange } = await import("@/lib/widgets");
+    invalidateWidgetsForAccountChange();
+  } catch {
+    /* أفضل جهد */
+  }
   try {
     const { clearAllOfflineAudioDownloads } = await import("@/lib/quran-audio-downloads");
     await clearAllOfflineAudioDownloads();
