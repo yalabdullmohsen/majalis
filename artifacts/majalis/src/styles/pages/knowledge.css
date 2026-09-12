@@ -14,18 +14,18 @@
   font-size: calc(1rem * var(--knowledge-font-scale, 1));
   padding: 1rem 1.1rem;
   border-radius: 0.75rem;
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   background: var(--surface-brand-solid, #0f6b4c);
 }
 
 .knowledge-article a,
 .knowledge-article-body {
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
 }
 
 .knowledge-article h2,
 .knowledge-article h3 {
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   margin-top: 1rem;
 }
 

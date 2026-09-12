@@ -118,8 +118,7 @@
   border-radius: 18px;
   text-decoration: none;
   color: inherit;
-  background:
-    linear-gradient(
+  background: linear-gradient(
       155deg,
       color-mix(in srgb, var(--qp-accent) 10%, var(--qp-surface)) 0%,
       var(--qp-surface) 42%,
@@ -264,8 +263,7 @@ html[data-theme="dark"] .qp-people {
 }
 
 html[data-theme="dark"] .qp-person-card {
-  background:
-    linear-gradient(
+  background: linear-gradient(
       155deg,
       color-mix(in srgb, var(--qp-accent) 16%, var(--qp-surface)) 0%,
       var(--qp-surface) 50%
@@ -300,7 +298,7 @@ html.dark .qp-person-card__cta {
   margin: 0;
   padding: 1.05rem 1.1rem 1.15rem;
   border-radius: 1rem;
-  background: var(--qp-surface, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--qp-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   border: 1px solid var(--qp-line, var(--mj-hairline));
   box-shadow: 0 8px 20px -16px rgba(11, 32, 24, 0.35);
 }
@@ -390,7 +388,7 @@ html.dark .qp-person-card__cta {
   border-radius: 0.9rem;
   text-decoration: none;
   color: inherit;
-  background: var(--qp-surface, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--qp-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   transition: border-color 140ms ease, background-color 140ms ease;
 }
 

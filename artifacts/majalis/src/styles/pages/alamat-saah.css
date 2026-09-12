@@ -40,13 +40,13 @@
 }
 .as-tab {
   padding: .45rem 1.1rem; border-radius: var(--ds-radius-full); border: 1.5px solid var(--clr-border);
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); font-size: .88rem; cursor: pointer; color: var(--clr-text-2);
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))))); font-size: .88rem; cursor: pointer; color: var(--clr-text-2);
   transition: all .18s;
 }
 .as-tab:hover { border-color: var(--clr-primary); color: var(--clr-primary); }
 .as-tab--active {
   background: var(--clr-primary); border-color: var(--clr-primary);
-  color: var(--text-on-primary, var(--mj-white, #ffffff)); font-weight: 600;
+  color: var(--text-on-primary, var(--mj-white, var(--ss-color-on-brand, #ffffff))); font-weight: 600;
 }
 
 /* Container */
@@ -76,7 +76,7 @@
 .as-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 
 .as-alama-card {
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))))); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1.1rem 1.25rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
 }
@@ -98,7 +98,7 @@
 .as-alama-card__num {
   width: 2rem; height: 2rem; flex-shrink: 0;
   border-radius: 50%; background: var(--clr-primary);
-  color: var(--text-on-primary, var(--mj-white, #ffffff)); font-weight: 700; font-size: .85rem;
+  color: var(--text-on-primary, var(--mj-white, var(--ss-color-on-brand, #ffffff))); font-weight: 700; font-size: .85rem;
   display: flex; align-items: center; justify-content: center;
   margin-top: .1rem;
 }
@@ -108,7 +108,7 @@
   display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.1rem;
 }
 .as-kubra-card {
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))))); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1.2rem 1.2rem 1rem;
   position: relative; overflow: hidden;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
@@ -119,7 +119,7 @@
 }
 .as-kubra-num {
   width: 2.2rem; height: 2.2rem; border-radius: 50%;
-  background: var(--clr-primary); color: var(--text-on-primary, var(--mj-white, #ffffff));
+  background: var(--clr-primary); color: var(--text-on-primary, var(--mj-white, var(--ss-color-on-brand, #ffffff)));
   display: flex; align-items: center; justify-content: center;
   font-size: var(--ds-text-base); font-weight: 800; margin-bottom: .75rem;
 }

@@ -4,7 +4,7 @@
 .gl-page {
   min-height: 100svh;
   background: var(--color-bg, var(--surface-app, var(--mj-bg)));
-  color: var(--color-text, var(--mj-ink, #16241e));
+  color: var(--color-text, var(--mj-ink, var(--ss-color-text)));
   padding-bottom: calc(
     var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) +
       max(4.5rem, var(--assistant-fab-size, 3.35rem) + 3.25rem)
@@ -61,7 +61,7 @@
   min-height: 44px;
   padding: 0 14px;
   border-radius: 999px;
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, #ffffff)));
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--ss-color-surface))));
   color: var(--mss-on-hero-accent, #0B3D2E);
   font-weight: 700;
   text-decoration: none;
@@ -69,8 +69,8 @@
 }
 .gl-hero__btn--ghost {
   background: transparent;
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent);
-  color: var(--mss-on-hero, #16241e);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1e5f4b) 28%, transparent);
+  color: var(--mss-on-hero, var(--ss-color-text));
 }
 
 /* Search */
@@ -103,7 +103,7 @@
 .gl-cat {
   border: 1.5px solid color-mix(in srgb, var(--mj-brand) 28%, var(--ss-border, var(--mj-hairline)));
   background: var(--ss-card-bg, var(--mj-surface));
-  color: var(--brand-on-light, var(--mj-brand-deep, #12362c));
+  color: var(--brand-on-light, var(--mj-brand-deep, var(--ss-color-brand-deep)));
   border-radius: var(--ds-radius-full); padding: .35rem .9rem; font-size: .8rem; font-weight: 700;
   cursor: pointer; display: flex; align-items: center; gap: .35rem;
   transition: all .18s ease;
@@ -111,9 +111,9 @@
 }
 .gl-cat:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
 .gl-cat--active {
-  background: var(--mj-brand-deep, #12362c) !important;
-  color: var(--on-dark-strong, var(--mj-white, #ffffff)) !important;
-  border-color: var(--mj-brand-deep, #12362c);
+  background: var(--mj-brand-deep, var(--ss-color-brand-deep)) !important;
+  color: var(--on-dark-strong, var(--mj-white, var(--ss-color-on-brand, #ffffff))) !important;
+  border-color: var(--mj-brand-deep, var(--ss-color-brand-deep));
 }
 .gl-cat__count {
   background: transparent; border-radius: var(--ds-radius-full);

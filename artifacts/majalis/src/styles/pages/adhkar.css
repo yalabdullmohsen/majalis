@@ -137,12 +137,12 @@
 }
 .adhkar-focus-btn--next {
   background: var(--majalis-emerald, var(--mj-brand));
-  color: var(--on-brand, var(--mj-white, #ffffff));
+  color: var(--on-brand, var(--mj-white, var(--ss-color-on-brand, #ffffff)));
   border-color: transparent;
 }
 .adhkar-focus-btn--next:hover:not(:disabled) {
   background: var(--m26-green-800, var(--mj-brand-deep));
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
 }
 .adhkar-focus-btn--next:disabled {
   background: var(--mj-surface-2);
@@ -327,7 +327,7 @@
   width: 100%;
   padding: var(--ds-space-3-5);
   background: var(--majalis-emerald, var(--mj-brand));
-  color: var(--mj-on-brand, var(--mj-white, #ffffff));
+  color: var(--mj-on-brand, var(--mj-white, var(--ss-color-on-brand, #ffffff)));
   border: none;
   border-radius: 0.875rem;
   font-size: 0.95rem;
@@ -411,12 +411,12 @@ html.dark .adhkar-sheet-row dt {
 html[data-theme="dark"] .adhkar-grade--sahih,
 html.dark .adhkar-grade--sahih {
   background: var(--mj-brand-soft, var(--brand-deep, var(--mj-brand-deep)));
-  color: var(--on-brand, var(--mj-white, #ffffff));
+  color: var(--on-brand, var(--mj-white, var(--ss-color-on-brand, #ffffff)));
 }
 html[data-theme="dark"] .adhkar-grade--hasan,
 html.dark .adhkar-grade--hasan {
   background: var(--mj-brand-soft, var(--brand-deep, var(--mj-brand-deep)));
-  color: var(--on-brand, var(--mj-white, #ffffff));
+  color: var(--on-brand, var(--mj-white, var(--ss-color-on-brand, #ffffff)));
 }
 html[data-theme="dark"] .adhkar-grade--other,
 html.dark .adhkar-grade--other {
@@ -456,6 +456,6 @@ html.dark .adhkar-grade--other {
   min-width: 11rem;
   background: transparent;
   border: 1px dashed color-mix(in srgb, var(--mj-brand, #0f3d2e) 35%, transparent);
-  color: var(--mj-ink-muted, #5a6b63);
+  color: var(--mj-ink-muted, var(--ss-color-text-muted));
   font-size: 0.85rem;
 }

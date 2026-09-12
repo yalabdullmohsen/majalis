@@ -41,7 +41,7 @@
   background: var(--mj-surface); font-size: .75rem; font-weight: 600; color: var(--mj-ink-2);
   cursor: pointer; font-family: inherit; transition: all .15s;
 }
-.dq-cat-btn--active { background: var(--mj-brand-deep); border-color: var(--mj-brand-deep); color: var(--mj-white, #ffffff); }
+.dq-cat-btn--active { background: var(--mj-brand-deep); border-color: var(--mj-brand-deep); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); }
 .dq-count { font-size: .8rem; color: var(--mj-ink-2); margin: 0 0 1rem; }
 
 /* list */

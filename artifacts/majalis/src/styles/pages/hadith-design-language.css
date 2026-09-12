@@ -3,7 +3,7 @@
 :root {
   --hdl-matn: var(--mj-ink, #14241c);
   --hdl-matn-bg: color-mix(in srgb, var(--mj-brand, #1f4d3a) 6%, var(--surface-elevated, #fff));
-  --hdl-matn-border: color-mix(in srgb, var(--mj-brand, #1f4d3a) 28%, transparent);
+  --hdl-matn-border: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 28%, transparent);
   --hdl-narrator: color-mix(in srgb, var(--mj-brand, #1f4d3a) 72%, #0a1a12);
   --hdl-source: var(--text-secondary, #3d5348);
   --hdl-takhrij: color-mix(in srgb, #6b5a1e 80%, #1a1a1a);
@@ -94,12 +94,12 @@
   flex-direction: column;
   gap: var(--hdl-card-gap);
   padding: 1rem 1.05rem 0.85rem;
-  background: var(--surface-elevated, #fff);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 14%, transparent);
+  background: var(--surface-elevated, var(--ss-color-surface));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 14%, transparent);
   box-shadow: none;
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hadith-card.hdl-card {
-  background: var(--surface-elevated, #24302b);
+  background: var(--surface-elevated, var(--ss-color-text-secondary));
   border-color: color-mix(in srgb, var(--mj-brand-soft, #6faf8e) 22%, transparent);
 }
 .hdl-card__header {
@@ -119,14 +119,14 @@
 .hdl-card__book-name {
   font-weight: 700;
   font-size: 0.88rem;
-  color: var(--text-primary, #14241c);
+  color: var(--text-primary, var(--ss-color-text));
 }
 .hdl-card__num {
   font-variant-numeric: tabular-nums;
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--hdl-narrator);
-  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 10%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 10%, transparent);
   border-radius: 999px;
   padding: 0.15rem 0.55rem;
 }
@@ -169,11 +169,11 @@
 .hdl-card__cta {
   font-size: 0.86rem;
   font-weight: 700;
-  color: var(--mj-brand-deep, #163828);
+  color: var(--mj-brand-deep, var(--ss-color-brand-deep));
   text-decoration: none;
   padding: 0.4rem 0.75rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 12%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 12%, transparent);
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-card__cta {
   color: var(--mj-brand-soft, #8fcdb0);
@@ -197,17 +197,17 @@
   gap: 0.55rem;
   padding: 0.9rem 1rem;
   border-radius: var(--radius-card, 16px);
-  background: var(--surface-elevated, #fff);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 14%, transparent);
+  background: var(--surface-elevated, var(--ss-color-surface));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 14%, transparent);
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-source-block {
-  background: var(--surface-elevated, #24302b);
+  background: var(--surface-elevated, var(--ss-color-text-secondary));
 }
 .hdl-source-block__title {
   margin: 0;
   font-size: 0.92rem;
   font-weight: 800;
-  color: var(--text-primary, #14241c);
+  color: var(--text-primary, var(--ss-color-text));
 }
 .hdl-source-block__row {
   display: grid;
@@ -232,17 +232,17 @@
 .hdl-reader-section {
   padding: 1rem 1.05rem;
   border-radius: var(--radius-card, 16px);
-  background: var(--surface-elevated, #fff);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 12%, transparent);
+  background: var(--surface-elevated, var(--ss-color-surface));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 12%, transparent);
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-reader-section {
-  background: var(--surface-elevated, #24302b);
+  background: var(--surface-elevated, var(--ss-color-text-secondary));
 }
 .hdl-reader-section__title {
   margin: 0 0 0.55rem;
   font-size: 1rem;
   font-weight: 800;
-  color: var(--text-primary, #14241c);
+  color: var(--text-primary, var(--ss-color-text));
 }
 .hdl-reader-section__body {
   margin: 0;
@@ -267,9 +267,9 @@
   font-weight: 700;
   padding: 0.35rem 0.7rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 22%, transparent);
   text-decoration: none;
-  color: var(--mj-brand-deep, #163828);
+  color: var(--mj-brand-deep, var(--ss-color-brand-deep));
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-reader-section__link {
   color: var(--mj-brand-soft, #8fcdb0);
@@ -278,12 +278,12 @@
 /* FAQ accordion */
 .hdl-faq {
   border-radius: var(--radius-card, 16px);
-  background: var(--surface-elevated, #fff);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 12%, transparent);
+  background: var(--surface-elevated, var(--ss-color-surface));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 12%, transparent);
   padding: 0.35rem 0.85rem 0.55rem;
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-faq {
-  background: var(--surface-elevated, #24302b);
+  background: var(--surface-elevated, var(--ss-color-text-secondary));
 }
 .hdl-faq__title {
   margin: 0.55rem 0 0.25rem;
@@ -291,13 +291,13 @@
   font-weight: 800;
 }
 .hdl-faq .hdl-faq__item {
-  border-color: color-mix(in srgb, var(--mj-brand, #1f4d3a) 12%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 12%, transparent);
 }
 .hdl-faq .hdl-faq__trigger {
   text-align: start;
   font-weight: 700;
   font-size: 0.92rem;
-  color: var(--text-primary, #14241c);
+  color: var(--text-primary, var(--ss-color-text));
   padding-block: 0.85rem;
 }
 .hdl-faq .hdl-faq__content {
@@ -314,20 +314,18 @@
   padding: 1.15rem 1.15rem 1.05rem;
   margin-bottom: 0.85rem;
   border-radius: var(--radius-card, 18px);
-  background:
-    linear-gradient(
+  background: linear-gradient(
       160deg,
-      color-mix(in srgb, var(--mj-brand, #1f4d3a) 14%, var(--surface-secondary, #f4f7f5)),
-      var(--surface-elevated, #fff) 55%
+      color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 14%, var(--surface-secondary, var(--ss-color-bg-subtle))),
+      var(--surface-elevated, var(--ss-color-surface)) 55%
     );
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 16%, transparent);
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-info-hero {
-  background:
-    linear-gradient(
+  background: linear-gradient(
       160deg,
-      color-mix(in srgb, var(--mj-brand, #1f4d3a) 28%, var(--surface, #121a17)),
-      var(--surface-elevated, #24302b) 60%
+      color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 28%, var(--surface, #121a17)),
+      var(--surface-elevated, var(--ss-color-text-secondary)) 60%
     );
   border-color: color-mix(in srgb, var(--mj-brand-soft, #6faf8e) 24%, transparent);
 }
@@ -342,7 +340,7 @@
   margin: 0;
   font-size: clamp(1.35rem, 1.15rem + 0.8vw, 1.75rem);
   font-weight: 850;
-  color: var(--text-primary, #14241c);
+  color: var(--text-primary, var(--ss-color-text));
   line-height: 1.35;
 }
 .hdl-info-hero__lead {
@@ -379,15 +377,15 @@
   font-weight: 700;
   padding: 0.4rem 0.75rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 18%, transparent);
-  background: var(--surface-interactive, var(--surface-elevated, #fff));
-  color: var(--text-primary, #14241c);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 18%, transparent);
+  background: var(--surface-interactive, var(--surface-elevated, var(--ss-color-surface)));
+  color: var(--text-primary, var(--ss-color-text));
   cursor: pointer;
 }
 .hdl-discover__book.is-active {
-  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 16%, transparent);
-  border-color: color-mix(in srgb, var(--mj-brand, #1f4d3a) 40%, transparent);
-  color: var(--mj-brand-deep, #163828);
+  background: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 16%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 40%, transparent);
+  color: var(--mj-brand-deep, var(--ss-color-brand-deep));
 }
 .hdl-discover__cats {
   display: flex;
@@ -399,18 +397,18 @@
   font-weight: 700;
   padding: 0.4rem 0.75rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 16%, transparent);
-  background: var(--surface-elevated, #fff);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 16%, transparent);
+  background: var(--surface-elevated, var(--ss-color-surface));
   color: var(--text-secondary, #3d5348);
   cursor: pointer;
 }
 .hdl-chip.is-active {
-  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 14%, transparent);
-  color: var(--mj-brand-deep, #163828);
-  border-color: color-mix(in srgb, var(--mj-brand, #1f4d3a) 36%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 14%, transparent);
+  color: var(--mj-brand-deep, var(--ss-color-brand-deep));
+  border-color: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 36%, transparent);
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-chip {
-  background: var(--surface-elevated, #24302b);
+  background: var(--surface-elevated, var(--ss-color-text-secondary));
   color: var(--text-secondary, #b7c7be);
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-chip.is-active {
@@ -432,8 +430,8 @@
   align-items: center;
   padding: 1rem 1.05rem;
   border-radius: var(--radius-card, 16px);
-  background: var(--surface-elevated, #fff);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 12%, transparent);
+  background: var(--surface-elevated, var(--ss-color-surface));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 12%, transparent);
   text-decoration: none;
   color: inherit;
 }
@@ -443,14 +441,14 @@
   display: grid;
   place-items: center;
   border-radius: 12px;
-  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 12%, transparent);
-  color: var(--mj-brand-deep, #163828);
+  background: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 12%, transparent);
+  color: var(--mj-brand-deep, var(--ss-color-brand-deep));
 }
 .hdl-entry-card__title {
   margin: 0;
   font-size: 1rem;
   font-weight: 800;
-  color: var(--text-primary, #14241c);
+  color: var(--text-primary, var(--ss-color-text));
 }
 .hdl-entry-card__desc {
   margin: 0.2rem 0 0;
@@ -467,11 +465,11 @@
 .hdl-entry-card__cta {
   font-size: 0.8rem;
   font-weight: 800;
-  color: var(--mj-brand-deep, #163828);
+  color: var(--mj-brand-deep, var(--ss-color-brand-deep));
   white-space: nowrap;
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-entry-card {
-  background: var(--surface-elevated, #24302b);
+  background: var(--surface-elevated, var(--ss-color-text-secondary));
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-entry-card__cta,
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-entry-card__icon {
@@ -480,14 +478,14 @@
 
 /* Arbaeen HDL row as card */
 .an-row.hdl-hadith-row {
-  background: var(--surface-elevated, #fff);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 12%, transparent);
+  background: var(--surface-elevated, var(--ss-color-surface));
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 12%, transparent);
   border-radius: var(--radius-card, 16px);
   margin-bottom: 0.65rem;
   overflow: hidden;
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .an-row.hdl-hadith-row {
-  background: var(--surface-elevated, #24302b);
+  background: var(--surface-elevated, var(--ss-color-text-secondary));
 }
 .an-row.hdl-hadith-row .an-row__title {
   font-weight: 800;
@@ -518,11 +516,11 @@
 .an-row.hdl-hadith-row .an-row__cta {
   font-size: 0.84rem;
   font-weight: 800;
-  color: var(--mj-brand-deep, #163828);
+  color: var(--mj-brand-deep, var(--ss-color-brand-deep));
   text-decoration: none;
   padding: 0.35rem 0.7rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 12%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 12%, transparent);
 }
 
 @media (min-width: 64rem) {
@@ -532,14 +530,14 @@
 }
 
 .hdl-discover__book.is-active {
-  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 16%, transparent);
-  border-color: color-mix(in srgb, var(--mj-brand, #1f4d3a) 40%, transparent);
-  color: var(--mj-brand-deep, #163828);
+  background: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 16%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 40%, transparent);
+  color: var(--mj-brand-deep, var(--ss-color-brand-deep));
 }
 .hdl-chip.is-active {
-  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 14%, transparent);
-  color: var(--mj-brand-deep, #163828);
-  border-color: color-mix(in srgb, var(--mj-brand, #1f4d3a) 36%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 14%, transparent);
+  color: var(--mj-brand-deep, var(--ss-color-brand-deep));
+  border-color: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 36%, transparent);
 }
 
 /* —— Knowledge Reader blocks —— */
@@ -555,7 +553,7 @@
   margin: 0 0 0.45rem;
   font-size: 0.95rem;
   font-weight: 800;
-  color: var(--text-primary, #14241c);
+  color: var(--text-primary, var(--ss-color-text));
 }
 .hdl-kr__links-row {
   display: flex;
@@ -564,9 +562,9 @@
 }
 .hdl-chip--link {
   text-decoration: none;
-  color: var(--mj-brand-deep, #163828);
-  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f4d3a) 28%, transparent);
+  color: var(--mj-brand-deep, var(--ss-color-brand-deep));
+  background: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 28%, transparent);
   font-weight: 700;
   font-size: 0.82rem;
   padding: 0.4rem 0.75rem;
@@ -595,7 +593,7 @@
 .hdl-card__meta-row {
   padding: 0.45rem 0.65rem;
   border-radius: 12px;
-  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 5%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 5%, transparent);
 }
 .hdl-card__meta-label {
   color: var(--text-secondary, #3d5348) !important;
@@ -611,20 +609,20 @@
 /* Chips تباين أعلى */
 .hdl-chip,
 .hdl-discover__book {
-  color: var(--text-primary, #14241c) !important;
-  border-color: color-mix(in srgb, var(--mj-brand, #1f4d3a) 22%, transparent) !important;
+  color: var(--text-primary, var(--ss-color-text)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 22%, transparent) !important;
   min-height: 2.25rem;
 }
 .hdl-chip.is-active,
 .hdl-discover__book.is-active {
   color: var(--mj-brand-deep, #0f2f22) !important;
-  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 18%, #fff) !important;
-  border-color: color-mix(in srgb, var(--mj-brand, #1f4d3a) 42%, transparent) !important;
+  background: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 18%, var(--ss-color-surface)) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 42%, transparent) !important;
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-chip,
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-discover__book {
   color: var(--text-primary, #e8f0eb) !important;
-  background: var(--surface-elevated, #24302b) !important;
+  background: var(--surface-elevated, var(--ss-color-text-secondary)) !important;
 }
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-chip.is-active,
 :is(html[data-theme="dark"], html.dark, html.theme-dark) .hdl-discover__book.is-active {
@@ -635,11 +633,11 @@
 
 /* بطاقة دخول مميزة */
 .hdl-entry-card--featured {
-  border-color: color-mix(in srgb, var(--mj-brand, #1f4d3a) 28%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 28%, transparent);
   box-shadow: 0 10px 28px -18px color-mix(in srgb, var(--mj-brand, #1f4d3a) 45%, transparent);
 }
 .hdl-entry-card__cta {
-  background: color-mix(in srgb, var(--mj-brand, #1f4d3a) 12%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, var(--ss-color-brand-deep)) 12%, transparent);
   padding: 0.4rem 0.7rem;
   border-radius: 999px;
 }

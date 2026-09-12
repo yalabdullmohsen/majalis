@@ -24,21 +24,21 @@ html.pts-immersive .majlisilm-app {
 /* شريط الأقسام — يهزم theme-aliases (.top-section-bar { background: var(--mj-surface) !important }) */
 html.pts-immersive .top-section-bar.mj-nav-skin,
 html.pts-immersive .top-section-bar {
-  background: var(--mj-brand-deep, #12362c) !important;
+  background: var(--mj-brand-deep, var(--ss-color-brand-deep)) !important;
   border-block-end-color: rgba(255, 255, 255, 0.08) !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
-  color: var(--mj-on-brand, var(--mj-white, #ffffff)) !important;
+  color: var(--mj-on-brand, var(--mj-white, var(--ss-color-on-brand, #ffffff))) !important;
   backdrop-filter: none !important;
 }
 html.pts-immersive .top-section-bar__tab {
   color: rgba(250, 250, 248, 0.72) !important;
 }
 html.pts-immersive .top-section-bar__tab:hover {
-  color: var(--mj-on-brand, var(--mj-white, #ffffff)) !important;
+  color: var(--mj-on-brand, var(--mj-white, var(--ss-color-on-brand, #ffffff))) !important;
 }
 html.pts-immersive .top-section-bar__tab.is-active {
   color: #0E241E !important;
-  background: color-mix(in srgb, var(--gold-300, #E3CB8C) 88%, var(--mj-white, #ffffff)) !important;
+  background: color-mix(in srgb, var(--gold-300, #E3CB8C) 88%, var(--mj-white, var(--ss-color-surface))) !important;
   border-radius: 14px !important;
 }
 
@@ -51,7 +51,7 @@ html.pts-immersive .bottom-nav.bottom-nav--v2,
 html.pts-immersive .bottom-nav--m2030,
 html.pts-immersive .bottom-nav--v2,
 html.pts-immersive .bottom-nav {
-  background: var(--mj-brand-deep, #12362c) !important;
+  background: var(--mj-brand-deep, var(--ss-color-brand-deep)) !important;
   background-image: none !important;
   opacity: 1 !important;
   border-block-start-color: rgba(255, 255, 255, 0.12) !important;
@@ -1003,7 +1003,7 @@ html.pts-immersive .scroll-to-top {
 .pts-timetable-skel {
   min-height: 3rem;
   border-radius: 12px;
-  background: color-mix(in srgb, var(--mj-brand, #0F5C45) 6%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 6%, transparent);
 }
 
 
@@ -1033,7 +1033,7 @@ html.pts-immersive .scroll-to-top {
   font-size: 1.05rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  color: var(--pts-white, #fff);
+  color: var(--pts-white, var(--ss-color-on-brand, #ffffff));
   line-height: 1.2;
 }
 .pts-hero__countdown {
@@ -1060,7 +1060,7 @@ html.pts-immersive .scroll-to-top {
 }
 .pts-screen .pts-hero__clock-label,
 .pts-screen .pts-hero__countdown-label {
-  color: color-mix(in srgb, var(--pts-muted, #e2ebe6) 95%, #fff) !important;
+  color: color-mix(in srgb, var(--pts-muted, #e2ebe6) 95%, var(--ss-color-on-brand, #ffffff)) !important;
 }
 
 /* مقاطع التنبيه والأذكار — إعدادات */

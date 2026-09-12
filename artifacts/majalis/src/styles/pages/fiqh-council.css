@@ -341,7 +341,7 @@
   display: inline-block;
   padding: 0.5rem 1rem;
   background: var(--fiqh-accent, var(--mj-brand-deep));
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   border-radius: var(--ds-radius);
   text-decoration: none;
   font-size: 0.8125rem;
@@ -562,7 +562,7 @@
 .fiqh-research-submit {
   padding: 0.5rem 1.25rem;
   background: var(--fiqh-accent, var(--mj-brand-deep));
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   border: none;
   border-radius: var(--ds-radius);
   font-family: inherit;
@@ -677,7 +677,7 @@
 }
 
 .updates-type-badge {
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   padding: 0.15rem 0.6rem;
   border-radius: 999px;
   font-size: var(--ds-text-xs);
@@ -787,7 +787,7 @@
   height: 0.75rem;
   border-radius: 50%;
   background: var(--emerald, var(--mj-brand));
-  border: 2px solid var(--mj-white, var(--mj-white, #ffffff));
+  border: 2px solid var(--mj-white, var(--mj-white, var(--ss-color-surface)));
 }
 
 .fiqh-timeline-body {

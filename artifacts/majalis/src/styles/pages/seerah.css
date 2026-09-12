@@ -55,8 +55,8 @@
   margin-top: 1.35rem;
   padding: 0.7rem 1.25rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1e5f4b) 28%, transparent);
   color: var(--mss-on-hero-accent, #123f2e);
   font-size: 0.95rem;
   font-weight: 700;
@@ -65,8 +65,8 @@
 }
 .seerah-full-cta:hover,
 .seerah-full-cta:focus-visible {
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent);
-  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 40%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 18%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand, #1e5f4b) 40%, transparent);
   outline: none;
 }
 .seerah-full-cta:active {
@@ -79,7 +79,7 @@
   width: 1.6rem;
   height: 1.6rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 14%, transparent);
   font-size: 1rem;
   line-height: 1;
 }
@@ -513,7 +513,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 .seerah-timeline__item--active .seerah-timeline__dot {
   background: var(--phase-color, var(--majalis-emerald));
   border-color: var(--phase-color, var(--majalis-emerald));
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
 }
 .seerah-panel__header-body { flex: 1; }
 .seerah-panel__num  { color: var(--panel-color, var(--majalis-emerald)); }
@@ -732,7 +732,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   margin-bottom: 1rem;
   padding: 0.75rem 0.85rem;
   border-radius: var(--radius-control, 14px);
-  background: color-mix(in srgb, var(--majalis-parchment, #f7f3ea) 88%, var(--mj-white, #ffffff));
+  background: color-mix(in srgb, var(--majalis-parchment, #f7f3ea) 88%, var(--mj-white, var(--ss-color-surface)));
   border: 1px solid var(--majalis-line, #e6e0d4);
 }
 
@@ -814,7 +814,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 html[data-theme="dark"] .seerah-panel__events,
 html.dark .seerah-panel__events {
   background: color-mix(in srgb, var(--majalis-panel, #1c2420) 92%, var(--mj-ink));
-  border-color: color-mix(in srgb, var(--mj-white, var(--mj-white, #ffffff)) 12%, transparent);
+  border-color: color-mix(in srgb, var(--mj-white, var(--mj-white, var(--ss-color-surface))) 12%, transparent);
 }
 
 
@@ -822,7 +822,7 @@ html.dark .seerah-panel__events {
 
 :is(html[data-theme="dark"], html.dark) .seerah-panel,
 :is(html[data-theme="dark"], html.dark) .seerah-notice {
-  background: var(--surface-elevated, #24302b) !important;
+  background: var(--surface-elevated, var(--ss-color-text-secondary)) !important;
   border: 1px solid var(--border-elevated, #3a4a44) !important;
 }
 :is(html[data-theme="dark"], html.dark) .seerah-panel__title { color: var(--text-primary, #f4f7f5) !important; }

@@ -12,7 +12,7 @@
 
 .kuwait-tab--active {
   background: var(--msk-gold, var(--mj-brand-deep));
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   border-color: transparent;
   font-weight: 700;
 }
@@ -30,7 +30,7 @@
 
 .kuwait-tab--active .kuwait-tab__soon {
   background: rgba(255, 255, 255, 0.22);
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
 }
 
 .sheikh-detail-hero {
@@ -260,7 +260,7 @@
 
 .content-detail-action-btn:hover {
   background: var(--majalis-emerald, var(--mj-brand));
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
 }
 
 .content-detail-evidence ul,

@@ -40,12 +40,12 @@
   /* soft via shell */
 }
 .ai-hero__nav-btn:hover {
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, transparent) !important;
-  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 14%, transparent) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #1e5f4b) 28%, transparent) !important;
 }
 .ai-hero__nav-btn--active {
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 16%, #fffef9) !important;
-  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 35%, transparent) !important;
+  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 16%, #fffef9) !important;
+  border-color: color-mix(in srgb, var(--mj-brand, #1e5f4b) 35%, transparent) !important;
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent);
 }
 .ai-hero__nav-icon { font-size: 1.4rem; line-height: 1; }
@@ -139,14 +139,14 @@
   background: linear-gradient(135deg, var(--mj-brand), var(--mj-brand-deep));
   border-radius: 0.85rem;
   padding: 1rem 1.1rem;
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   display: flex;
   gap: 0.6rem;
   align-items: flex-start;
 }
 .ai-scholar__star { flex-shrink: 0; margin-top: 0.2rem; color: rgba(255,255,255,0.7); }
 .ai-scholar blockquote { margin: 0; padding: 0; border: none; }
-.ai-scholar blockquote p { font-size: 0.88rem; color: var(--mj-white, #ffffff); font-style: normal; line-height: 1.65; margin: 0 0 0.3rem; }
+.ai-scholar blockquote p { font-size: 0.88rem; color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); font-style: normal; line-height: 1.65; margin: 0 0 0.3rem; }
 .ai-scholar blockquote footer { font-size: 0.78rem; color: rgba(255,255,255,0.75); font-weight: 700; }
 
 /* صفحات ذات صلة */

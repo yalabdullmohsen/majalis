@@ -39,7 +39,7 @@
   border-radius: var(--ds-radius, 0.5rem);
   font-size: 0.9rem;
   color: var(--majalis-ink);
-  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   margin-bottom: 1.5rem;
   box-sizing: border-box;
 }
@@ -109,9 +109,9 @@
   color: var(--majalis-ink);
   transition: background 0.15s;
 }
-.sr-btn--start { background: var(--ds-emerald); color: var(--mj-white, #ffffff); border-color: var(--ds-emerald); }
+.sr-btn--start { background: var(--ds-emerald); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); border-color: var(--ds-emerald); }
 .sr-btn--start:hover { background: var(--ds-emerald-deep); }
-.sr-btn--pause { background: var(--ds-emerald-deep, var(--mj-brand-deep)); color: var(--mj-white, #ffffff); border-color: var(--ds-emerald-deep, var(--mj-brand-deep)); }
+.sr-btn--pause { background: var(--ds-emerald-deep, var(--mj-brand-deep)); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); border-color: var(--ds-emerald-deep, var(--mj-brand-deep)); }
 .sr-btn--reset:hover { border-color: var(--ds-emerald); }
 
 .sr-stats {
@@ -126,7 +126,7 @@
   flex-direction: column;
   align-items: center;
   padding: 0.75rem;
-  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   border: 1px solid var(--ds-line-color);
   border-radius: var(--ds-radius, 0.5rem);
 }
@@ -147,7 +147,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.6rem 0.9rem;
-  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   border: 1px solid var(--ds-line-color);
   border-radius: var(--ds-radius, 0.5rem);
   font-size: 0.85rem;

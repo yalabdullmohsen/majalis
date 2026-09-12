@@ -127,5 +127,5 @@
 .cit-type--prophet-story { --cit-type-color: var(--mj-danger); --cm-type-color: var(--mj-danger); --cab-type-color: var(--mj-danger); }
 .cit-type--qa            { --cit-type-color: var(--mj-muted); --cm-type-color: var(--mj-muted); --cab-type-color: var(--mj-muted); }
 .cit-type-bar     { background: var(--cit-type-color, var(--mj-brand)); }
-.cit-type-badge   { background: var(--cit-type-color, var(--mj-brand)); color: var(--mj-on-brand, #fff); }
+.cit-type-badge   { background: var(--cit-type-color, var(--mj-brand)); color: var(--mj-on-brand, var(--ss-color-on-brand, #ffffff)); }
 

@@ -65,7 +65,7 @@
 .qc-hub-nav__chip.is-active {
   background: var(--mj-brand-deep, #135034);
   border-color: var(--mj-brand-deep, #0e3d27);
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
 }
 
 .qc-hub-nav__mark {
@@ -81,7 +81,7 @@
   padding: 0.65rem 0.75rem;
   border: 1px solid var(--majalis-line, #e8e4dc);
   border-radius: 12px;
-  background: color-mix(in srgb, var(--majalis-parchment, var(--mj-surface)) 94%, var(--mj-white, var(--mj-white, #ffffff)));
+  background: color-mix(in srgb, var(--majalis-parchment, var(--mj-surface)) 94%, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 6px 18px rgba(15, 61, 48, 0.06);
@@ -155,7 +155,7 @@
   border: 1px solid var(--majalis-line, #e8e4dc);
   border-radius: 12px;
   padding: 0.85rem 0.95rem 0.95rem;
-  background: var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
@@ -274,7 +274,7 @@
 
 .qc-card__btn--primary {
   background: var(--mj-brand-deep, #0f3d30);
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
 }
 
 .qc-card__btn--ghost {
@@ -325,7 +325,7 @@ html[data-theme="dark"] .qc-hub-nav__chip.is-active,
 html.dark .qc-hub-nav__chip.is-active {
   background: #135034;
   border-color: #0e3d27;
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
 }
 
 html[data-theme="dark"] .qc-card,

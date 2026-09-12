@@ -1,6 +1,6 @@
 /* العقيدة والتوحيد — داخل SectionTemplatePage (بلا هيرو محلي مكرر) */
 .topic-page--tawhid .topic-page__body {
-  background: var(--color-bg, var(--surface-app, var(--mj-bg, #f7f3eb)));
+  background: var(--color-bg, var(--surface-app, var(--mj-bg, var(--ss-color-bg))));
 }
 
 .tawhid-hub {
@@ -51,7 +51,7 @@
   );
   border-radius: 22px;
   padding: 2rem max(1rem, var(--page-gutter, 1rem)) 1.85rem;
-  color: var(--topic-on-hero, var(--on-dark-strong, var(--mj-white, #ffffff)));
+  color: var(--topic-on-hero, var(--on-dark-strong, var(--mj-white, var(--ss-color-on-brand, #ffffff))));
   box-shadow: 0 8px 24px -14px rgba(11, 32, 24, 0.35);
 }
 .twh-hub-hero__inner {
@@ -66,7 +66,7 @@
 .twh-hub-hero__title {
   font-size: clamp(1.5rem, 5vw, 2rem);
   font-weight: 900;
-  color: var(--topic-on-hero, var(--on-dark-strong, var(--mj-white, #ffffff)));
+  color: var(--topic-on-hero, var(--on-dark-strong, var(--mj-white, var(--ss-color-on-brand, #ffffff))));
   margin: 0.35rem 0 0.5rem;
   font-family: var(--font-display, serif);
   line-height: 1.4;
@@ -82,7 +82,7 @@
 .twh-hub-hero__ayah {
   font-size: clamp(1rem, 3.4vw, 1.15rem);
   font-family: var(--font-quran, "Amiri Quran", serif);
-  color: var(--topic-on-hero, var(--on-dark-strong, var(--mj-white, #ffffff)));
+  color: var(--topic-on-hero, var(--on-dark-strong, var(--mj-white, var(--ss-color-on-brand, #ffffff))));
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-inline-end: 3px solid rgba(255, 255, 255, 0.42);
   border-radius: 16px;
@@ -183,7 +183,7 @@
 .twh-hub-card__badge {
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   background: var(--twh-hub-clr, var(--mj-brand));
   padding: 0.2rem 0.55rem;
   border-radius: var(--ds-radius-full);
@@ -235,7 +235,7 @@ html[data-theme="dark"] .twh-hub-card__desc {
   transition: all 0.15s;
   touch-action: manipulation;
 }
-.twh-jumpnav__btn:hover { background: var(--majalis-emerald, var(--mj-brand)); color: var(--mj-white, #ffffff); }
+.twh-jumpnav__btn:hover { background: var(--majalis-emerald, var(--mj-brand)); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); }
 
 /* Section label */
 .twh-section-label {
@@ -270,7 +270,7 @@ html[data-theme="dark"] .twh-hub-card__desc {
   text-decoration: none;
   transition: all 0.17s;
 }
-.twh-goto-btn:hover { background: var(--majalis-emerald, var(--mj-brand)); color: var(--mj-white, #ffffff); }
+.twh-goto-btn:hover { background: var(--majalis-emerald, var(--mj-brand)); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); }
 
 /* Book level badges */
 .twh-book-level {
@@ -284,8 +284,8 @@ html[data-theme="dark"] .twh-hub-card__desc {
 .twh-book-level--beginner { background: var(--mj-success-soft, #d1fae5); color: var(--mj-brand); }
 .twh-book-level--mid      { background: rgba(23,61,53,.12); color: var(--mj-brand); }
 .twh-book-level--adv {
-  background: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #1f6b56)) 14%, var(--ss-card-bg, var(--mj-surface)));
-  color: var(--brand-on-light, var(--mj-brand-deep, #12362c));
+  background: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #1e5f4b)) 14%, var(--ss-card-bg, var(--mj-surface)));
+  color: var(--brand-on-light, var(--mj-brand-deep, var(--ss-color-brand-deep)));
 }
 /* --mid وحدها خلفيتها شفافة (تتلوّن بلون البطاقة المحيطة) فتصبح داكنة في
    الوضع الليلي بينما نصها var(--mj-brand) يبقى داكنًا — نفس تصادم .sw-badge--wajib. */
@@ -377,7 +377,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: var(--mj-brand, #7ed4b5) !
   height: 2rem;
   border-radius: 50%;
   background: var(--majalis-emerald, var(--mj-brand));
-  color: var(--mj-white, #ffffff);
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   font-weight: 900;
   font-size: 0.85rem;
   display: flex;
@@ -410,7 +410,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: var(--mj-brand, #7ed4b5) !
 }
 
 .twh-asma-card {
-  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   border: 1px solid var(--majalis-line, #d4e6de);
   border-radius: var(--ds-radius-lg);
   padding: 0.875rem 1rem;
@@ -447,7 +447,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: var(--mj-brand, #7ed4b5) !
 }
 
 .twh-book-card {
-  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   border: 1px solid var(--majalis-line, #d4e6de);
   border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: var(--ds-radius-lg);
@@ -498,7 +498,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: var(--mj-brand, #7ed4b5) !
 }
 :is(html[data-theme="dark"], html.dark) .twh-hub-card,
 :is(html[data-theme="dark"], html.dark) .tawheed-type-card {
-  background: var(--surface-elevated, #24302b);
+  background: var(--surface-elevated, var(--ss-color-text-secondary));
   border-color: var(--border-elevated, #3a4a44);
 }
 :is(html[data-theme="dark"], html.dark) .twh-hub-card__title,

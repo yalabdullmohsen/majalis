@@ -35,11 +35,11 @@
 .mk-tab {
   padding: .45rem 1.1rem; border-radius: var(--ds-radius-full);
   border: 1.5px solid var(--clr-border);
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); font-size: .88rem; cursor: pointer; color: var(--clr-text-2);
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))))); font-size: .88rem; cursor: pointer; color: var(--clr-text-2);
   transition: all .18s;
 }
 .mk-tab:hover  { border-color: var(--mj-info); color: var(--mj-info); }
-.mk-tab--active { background: var(--mj-info); border-color: var(--mj-info); color: var(--mj-white, #ffffff); font-weight: 600; }
+.mk-tab--active { background: var(--mj-info); border-color: var(--mj-info); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); font-weight: 600; }
 
 /* Container */
 .mk-container { max-width: 900px; margin: 0 auto; padding: 1.75rem 1.25rem 3rem; }
@@ -55,14 +55,14 @@
 .mk-aqida-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .mk-aqida-card {
   display: flex; gap: var(--ds-space-4); align-items: flex-start;
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))))); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1.1rem 1.25rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
 }
 .mk-aqida-num {
   width: 2rem; height: 2rem; flex-shrink: 0;
   border-radius: 50%; background: var(--mj-info);
-  color: var(--mj-white, #ffffff); font-weight: 700; font-size: .85rem;
+  color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); font-weight: 700; font-size: .85rem;
   display: flex; align-items: center; justify-content: center;
 }
 .mk-aqida-title { font-size: var(--ds-text-base); font-weight: 700; color: var(--clr-text-1); margin: 0 0 .35rem; }
@@ -74,7 +74,7 @@
 }
 .mk-malak-card {
   display: flex; gap: .85rem; align-items: flex-start;
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))))); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1.1rem 1.1rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
 }
@@ -99,7 +99,7 @@
 .mk-awsaf-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .mk-wasf-card {
   display: flex; gap: var(--ds-space-4); align-items: flex-start;
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))))); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1rem 1.2rem;
 }
 .mk-wasf-icon  { color: var(--mj-info); font-size: 1.1rem; flex-shrink: 0; margin-top: .15rem; }
@@ -110,7 +110,7 @@
 /* Fadail */
 .mk-fadail-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .mk-fadl-card {
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))))); border: 1px solid var(--clr-border);
   border-inline-end: 4px solid var(--mj-info);
   border-radius: .75rem; padding: 1.1rem 1.25rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
@@ -124,7 +124,7 @@
   display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.1rem;
 }
 .mk-amal-card {
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))))); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1.2rem 1.2rem 1rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
 }

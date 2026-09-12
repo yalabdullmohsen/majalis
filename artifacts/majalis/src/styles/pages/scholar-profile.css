@@ -14,7 +14,7 @@
   margin: 0 0 0.35rem;
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--mj-brand, #1f4d3a);
+  color: var(--mj-brand, var(--ss-color-brand-deep));
 }
 .sp-hero__title {
   margin: 0 0 0.4rem;
@@ -47,7 +47,7 @@
   padding: 0.2rem 0.65rem;
   border-radius: 999px;
   background: color-mix(in srgb, var(--mj-brand, var(--mj-brand-deep)) 12%, transparent);
-  color: var(--mj-brand-deep, #163828);
+  color: var(--mj-brand-deep, var(--ss-color-brand-deep));
 }
 .sp-section {
   margin-bottom: 1.5rem;
@@ -98,7 +98,7 @@
   padding: 0.4rem 0.75rem;
   border-radius: 0.5rem;
   border: 1px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand-deep)) 25%, transparent);
-  color: var(--mj-brand-deep, #163828);
+  color: var(--mj-brand-deep, var(--ss-color-brand-deep));
   text-decoration: none;
 }
 .sp-share {

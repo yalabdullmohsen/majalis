@@ -8,12 +8,12 @@
 .jn-hero--naar { --jn-hero-bg: linear-gradient(145deg, #1A0000, #7B1010, var(--mj-danger)); }
 .jn-hero__inner { max-width: 680px; margin: 0 auto; }
 .jn-hero__badge {
-  display: inline-block; background: rgba(255,255,255,.15); color: var(--mj-white, #ffffff);
+  display: inline-block; background: rgba(255,255,255,.15); color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   border: 1px solid rgba(255,255,255,.3); border-radius: var(--ds-radius-full);
   padding: .3rem .9rem; font-size: .75rem; font-weight: 700; letter-spacing: normal;
   margin-bottom: .9rem;
 }
-.jn-hero__title { font-size: 2rem; font-weight: 800; color: var(--mj-white, #ffffff); margin: 0 0 .5rem; }
+.jn-hero__title { font-size: 2rem; font-weight: 800; color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); margin: 0 0 .5rem; }
 .jn-hero__sub { color: rgba(255,255,255,.8); font-size: .92rem; margin: 0; line-height: 1.75; max-width: 520px; margin: 0 auto; }
 
 .jn-tabs {
@@ -32,7 +32,7 @@
 .jn-tab--naar        { --jn-tab-active-bg: var(--mj-danger); }
 .jn-tab--asbab-janna { --jn-tab-active-bg: var(--mj-info); }
 .jn-tab--duas        { --jn-tab-active-bg: var(--brand-deep, var(--mj-brand-deep)); }
-.jn-tab--active { color: var(--mj-white, #ffffff); background: var(--jn-tab-active-bg, var(--mj-brand)); border-color: var(--jn-tab-active-bg, var(--mj-brand)); }
+.jn-tab--active { color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); background: var(--jn-tab-active-bg, var(--mj-brand)); border-color: var(--jn-tab-active-bg, var(--mj-brand)); }
 
 .jn-container { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
 .jn-sections { display: flex; flex-direction: column; gap: var(--ds-space-8); }
@@ -70,7 +70,7 @@
   padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .45rem;
 }
 .jn-sabab-num {
-  font-size: .7rem; font-weight: 900; color: var(--mj-white, #ffffff);
+  font-size: .7rem; font-weight: 900; color: var(--mj-white, var(--ss-color-on-brand, #ffffff));
   background: var(--mj-brand); border-radius: var(--ds-radius-full); width: 1.5rem; height: 1.5rem;
   display: flex; align-items: center; justify-content: center;
 }

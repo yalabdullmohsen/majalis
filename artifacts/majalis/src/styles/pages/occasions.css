@@ -33,7 +33,7 @@
   align-items: center;
   gap: 0.25rem;
   font-size: 0.8125rem;
-  color: var(--mj-brand-deep, #12362c);
+  color: var(--mj-brand-deep, var(--ss-color-brand-deep));
   font-weight: 600;
 }
 
@@ -72,14 +72,14 @@
   margin: 0;
   font-size: var(--type-card-title, clamp(1.05rem, 2.8vw, 1.2rem));
   font-weight: 700;
-  color: var(--text-primary, var(--mj-brand-deep, #12362c));
+  color: var(--text-primary, var(--mj-brand-deep, var(--ss-color-brand-deep)));
   line-height: var(--lh-type-card, 1.45);
 }
 
 .occasion-detail__month-badge {
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--mj-brand-deep, #12362c);
+  color: var(--mj-brand-deep, var(--ss-color-brand-deep));
   background: var(--mj-brand-soft, #e8f5f0);
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1e5f4b) 18%, transparent);
   border-radius: 999px;
@@ -105,7 +105,7 @@
 
 .occasion-detail__countdown--soon {
   color: #9b2c2c;
-  background: color-mix(in srgb, var(--mj-danger) 10%, var(--mj-white, var(--mj-white, #ffffff)));
+  background: color-mix(in srgb, var(--mj-danger) 10%, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
 }
 
 .occasion-detail__date {
@@ -116,7 +116,7 @@
 
 .occasion-detail__summary {
   font-size: var(--type-card-body, 0.9375rem);
-  color: var(--text-primary, var(--mj-ink, #12201a));
+  color: var(--text-primary, var(--mj-ink, var(--ss-color-text)));
   line-height: var(--lh-type-prose, 1.75);
   margin: 0;
 }
@@ -134,7 +134,7 @@
 .occasion-detail h3 {
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--mj-brand-deep, #12362c);
+  color: var(--mj-brand-deep, var(--ss-color-brand-deep));
   margin: 0.15rem 0 0;
   letter-spacing: normal;
 }
@@ -149,7 +149,7 @@
 
 .occasion-detail ul li {
   font-size: 0.9rem;
-  color: var(--text-primary, var(--mj-ink, #12201a));
+  color: var(--text-primary, var(--mj-ink, var(--ss-color-text)));
   line-height: var(--lh-type-prose, 1.75);
 }
 

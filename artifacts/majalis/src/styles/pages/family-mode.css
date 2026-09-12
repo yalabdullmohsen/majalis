@@ -26,7 +26,7 @@
   padding: 1.5rem 1rem;
   border: 2px solid var(--ds-line-color);
   border-radius: var(--ds-radius-lg, 0.625rem);
-  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   cursor: pointer;
   transition: border-color 0.15s;
   text-align: center;
@@ -57,7 +57,7 @@
   transition: background 0.15s;
 }
 .fm-btn:hover { border-color: var(--ds-emerald); }
-.fm-btn--primary { background: var(--ds-emerald); color: var(--mj-white, #ffffff); border-color: var(--ds-emerald); }
+.fm-btn--primary { background: var(--ds-emerald); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); border-color: var(--ds-emerald); }
 .fm-btn--primary:hover { background: var(--ds-emerald-deep); }
 .fm-btn--sm { padding: 0.35rem 0.75rem; font-size: 0.8rem; }
 .fm-btn--danger { border-color: var(--mj-danger); color: var(--mj-danger); }
@@ -70,7 +70,7 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1rem 1.25rem;
-  background: color-mix(in srgb, var(--ds-emerald) 5%, var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff))));
+  background: color-mix(in srgb, var(--ds-emerald) 5%, var(--majalis-panel, var(--mj-white, var(--mj-white, var(--ss-color-surface)))));
   border: 1.5px dashed var(--ds-emerald);
   border-radius: var(--ds-radius-lg, 0.625rem);
   margin-bottom: 0.75rem;
@@ -92,7 +92,7 @@
   align-items: center;
   gap: 1rem;
   padding: 1rem 1.25rem;
-  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
   border: 1px solid var(--ds-line-color);
   border-radius: var(--ds-radius-lg, 0.625rem);
   margin-bottom: 0.75rem;
@@ -117,7 +117,7 @@
   text-align: center;
   text-transform: uppercase;
   color: var(--majalis-ink);
-  background: var(--majalis-panel, var(--mj-white, var(--mj-white, #ffffff)));
+  background: var(--majalis-panel, var(--mj-white, var(--mj-white, var(--ss-color-surface))));
 }
 .fm-code-input:focus { outline: none; border-color: var(--ds-emerald); }
 .fm-child__error { color: var(--mj-danger); font-size: 0.85rem; }

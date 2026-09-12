@@ -27,8 +27,8 @@ assert.match(polish, /--mj-chip-bg:/);
 assert.match(polish, /--mj-chip-fg:/);
 assert.match(polish, /--mj-chip-active-bg:/);
 assert.match(polish, /--mj-chip-active-fg:/);
-assert.match(polish, /html\.dark[\s\S]*?--mj-chip-active-fg:\s*#06231a/);
-assert.match(polish, /html\.dark[\s\S]*?--mj-chip-fg:\s*#f3f7f5/);
+assert.match(polish, /html\.dark[\s\S]*?--mj-chip-active-fg:\s*var\(--mj-on-brand\)/);
+assert.match(polish, /html\.dark[\s\S]*?--mj-chip-fg:\s*var\(--mj-ink\)/);
 assert.match(polish, /\.floating-back-btn[\s\S]*?display:\s*none/);
 
 const lessonsCss = read("src/styles/pages/lessons.css");

@@ -48,11 +48,11 @@
 }
 .rq-tab {
   padding: .45rem 1.1rem; border-radius: var(--ds-radius-full);
-  border: 1.5px solid var(--clr-border); background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff))));
+  border: 1.5px solid var(--clr-border); background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface)))));
   font-size: .88rem; cursor: pointer; color: var(--clr-text-2); transition: all .18s;
 }
 .rq-tab:hover  { border-color: var(--mj-info); color: var(--mj-info); }
-.rq-tab--active { background: var(--mj-info); border-color: var(--mj-info); color: var(--mj-white, #ffffff); font-weight: 600; }
+.rq-tab--active { background: var(--mj-info); border-color: var(--mj-info); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); font-weight: 600; }
 
 /* Container */
 .rq-container { max-width: 900px; margin: 0 auto; padding: 1.75rem 1.25rem 3rem; }
@@ -66,7 +66,7 @@
 
 /* Accordion */
 .rq-list { display: flex; flex-direction: column; gap: .7rem; }
-.rq-card { background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid var(--clr-border); border-radius: .75rem; overflow: hidden; }
+.rq-card { background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))))); border: 1px solid var(--clr-border); border-radius: .75rem; overflow: hidden; }
 .rq-card__head {
   display: flex; align-items: center; gap: .75rem;
   padding: .9rem 1.2rem; cursor: pointer; width: 100%;
@@ -88,7 +88,7 @@
   display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--ds-space-4);
 }
 .rq-qawl-card {
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))))); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1.1rem 1.2rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
 }
@@ -104,7 +104,7 @@
 .rq-muhasaba-item { display: flex; gap: .9rem; align-items: flex-start; }
 .rq-muhasaba-num {
   width: 1.9rem; height: 1.9rem; flex-shrink: 0; border-radius: 50%;
-  background: var(--mj-info); color: var(--mj-white, #ffffff); font-size: .8rem; font-weight: 700;
+  background: var(--mj-info); color: var(--mj-white, var(--ss-color-on-brand, #ffffff)); font-size: .8rem; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
 .rq-muhasaba-text { font-size: .93rem; line-height: 1.7; color: var(--clr-text-1); margin: 0; }
@@ -117,7 +117,7 @@
 /* Musab */
 .rq-musab-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .rq-musab-card {
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))))); border: 1px solid var(--clr-border);
   border-inline-end: 4px solid var(--mj-info); border-radius: .75rem;
   padding: 1.1rem 1.25rem;
 }
@@ -128,7 +128,7 @@
 /* Zuhd definition */
 .rq-zuhd-def { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .rq-zuhd-def__item {
-  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, #ffffff)))); border: 1px solid var(--clr-border);
+  background: var(--ss-card-bg, var(--mj-surface, var(--mj-white, var(--mj-white, var(--ss-color-surface))))); border: 1px solid var(--clr-border);
   border-radius: .75rem; padding: 1.2rem 1.3rem;
 }
 .rq-zuhd-def__item h3 { font-size: .97rem; font-weight: 700; color: var(--mj-info); margin: 0 0 .45rem; }
