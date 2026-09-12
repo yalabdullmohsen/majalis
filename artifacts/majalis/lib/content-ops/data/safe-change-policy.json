@@ -1,0 +1,104 @@
+{
+  "$schemaNote": "Safe Change Policy — P0. Auto-publish is DISABLED until P0 gates + rollback tests pass.",
+  "version": 1,
+  "brand": "سُنّة",
+  "autoPublishEnabled": false,
+  "autoPublishRequires": {
+    "p0Complete": true,
+    "rollbackTestPassed": true,
+    "explicitEnableFlag": "CONTENT_OPS_AUTO_PUBLISH=1"
+  },
+  "levels": {
+    "A": {
+      "name": "auto_publish_allowed_when_enabled",
+      "mayAutoPublish": true,
+      "requiresHighConfidence": true,
+      "requiresReversible": true,
+      "requiresSchemaValidation": true,
+      "requiresContentTests": true,
+      "requiresTypecheckLintTestsBuild": true,
+      "forbidsProtectedPaths": true,
+      "forbidsSourceConflicts": true,
+      "examples": [
+        "trim_whitespace",
+        "unify_punctuation_editorial",
+        "clear_spelling_non_sacred",
+        "unify_dates_numbers",
+        "remove_empty_display_fields",
+        "fix_internal_link_deterministic",
+        "http_to_https_same_host",
+        "exact_duplicate_merge_after_relations",
+        "rebuild_search_index_delta",
+        "cache_temp_cleanup",
+        "mark_dead_link_status",
+        "tech_metadata_fix",
+        "ui_label_non_semantic",
+        "time_data_from_official_api_exact",
+        "archive_event_with_clear_end_date"
+      ]
+    },
+    "B": {
+      "name": "isolated_apply_no_public_publish",
+      "mayAutoPublish": false,
+      "destinations": ["staging", "draft", "proposed_changes"],
+      "examples": [
+        "broad_editorial_rewrite",
+        "long_description_rewrite",
+        "fuzzy_record_merge",
+        "content_reclassification",
+        "institution_blurb_update",
+        "historical_date_change",
+        "alternate_source_suggestion",
+        "inferred_relation",
+        "non_exact_factual_correction"
+      ]
+    },
+    "C": {
+      "name": "forbidden_auto_edit_and_publish",
+      "mayAutoPublish": false,
+      "mayAutoEdit": false,
+      "onDetect": [
+        "do_not_modify",
+        "do_not_hide",
+        "block_publish_if_severe",
+        "log_diff_source_field",
+        "set_needs_specialist_review",
+        "continue_pipeline"
+      ]
+    }
+  },
+  "safetyLimits": {
+    "maxRecordsModifiedPerCycle": 50,
+    "maxArchiveOrDeletePerCycle": 10,
+    "forbidBulkDelete": true,
+    "maxSectionChangeRatio": 0.15,
+    "maxSlugChangesPerCycle": 20,
+    "stopOnAnomalyVsBaseline": true,
+    "stopOnUnexpectedDbSizeChange": true,
+    "stopOnSourceFailureCount": 3
+  },
+  "pipelineStages": [
+    "Discover",
+    "Collect",
+    "Normalize",
+    "Deduplicate",
+    "Validate",
+    "ClassifyRisk",
+    "Correct",
+    "Test",
+    "PublishSafeChanges",
+    "VerifyProduction",
+    "RollbackOnFailure",
+    "Report"
+  ],
+  "p0Scope": [
+    "SourceRegistry",
+    "ProtectedContentRegistry",
+    "RiskClassification",
+    "SafeChangePolicy",
+    "Versioning",
+    "Rollback",
+    "SecurityControls",
+    "Tests"
+  ]
+}

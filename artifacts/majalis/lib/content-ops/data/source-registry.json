@@ -1,0 +1,102 @@
+{
+  "$schemaNote": "Sunnah Autonomous Content Operations — Source Registry (P0). Brand: سُنّة. No scraping of disallowed sources.",
+  "version": 1,
+  "updatedAt": "2026-09-12",
+  "rankingPriority": [
+    "official_direct",
+    "government_or_education",
+    "owning_institution",
+    "trusted_academic",
+    "trusted_secondary"
+  ],
+  "forbiddenSourceClasses": [
+    "anonymous_accounts",
+    "content_mirrors",
+    "forums",
+    "user_comments",
+    "search_engine_as_final",
+    "undated_pages",
+    "terms_disallowed",
+    "undocumented_ai_pages",
+    "unofficial_social"
+  ],
+  "sources": [
+    {
+      "sourceId": "sunnah-official-site",
+      "sourceName": "سُنّة — الموقع الرسمي",
+      "sourceType": "official_direct",
+      "baseUrl": "https://sunnah.app",
+      "officialStatus": "official",
+      "trustLevel": 100,
+      "supportedContentTypes": ["app_updates", "editorial", "metadata", "events"],
+      "updateFrequency": "daily",
+      "termsStatus": "owned",
+      "lastSuccessfulFetch": null,
+      "lastFailure": null,
+      "enabled": true,
+      "parserVersion": "1.0.0"
+    },
+    {
+      "sourceId": "kuwait-awqaf",
+      "sourceName": "وزارة الأوقاف والشؤون الإسلامية — الكويت",
+      "sourceType": "government_or_education",
+      "baseUrl": "https://www.awqaf.gov.kw",
+      "officialStatus": "official",
+      "trustLevel": 95,
+      "supportedContentTypes": ["events", "institutions", "schedules"],
+      "updateFrequency": "daily",
+      "termsStatus": "public_official",
+      "lastSuccessfulFetch": null,
+      "lastFailure": null,
+      "enabled": true,
+      "parserVersion": "1.0.0"
+    },
+    {
+      "sourceId": "kuwait-university",
+      "sourceName": "جامعة الكويت",
+      "sourceType": "government_or_education",
+      "baseUrl": "https://www.ku.edu.kw",
+      "officialStatus": "official",
+      "trustLevel": 92,
+      "supportedContentTypes": ["admissions", "schedules", "institutions"],
+      "updateFrequency": "weekly",
+      "termsStatus": "public_official",
+      "lastSuccessfulFetch": null,
+      "lastFailure": null,
+      "enabled": true,
+      "parserVersion": "1.0.0"
+    },
+    {
+      "sourceId": "alquran-cloud",
+      "sourceName": "AlQuran.cloud API",
+      "sourceType": "trusted_academic",
+      "baseUrl": "https://alquran.cloud/api",
+      "officialStatus": "reference_feed",
+      "trustLevel": 90,
+      "supportedContentTypes": ["quran_reference_readonly"],
+      "updateFrequency": "manual",
+      "termsStatus": "api_terms_review_required",
+      "lastSuccessfulFetch": null,
+      "lastFailure": null,
+      "enabled": false,
+      "parserVersion": "1.0.0",
+      "notes": "مرجع قراءة فقط — أي تعديل على نص قرآني محظور (مستوى C)."
+    },
+    {
+      "sourceId": "sunnah-com",
+      "sourceName": "Sunnah.com",
+      "sourceType": "trusted_secondary",
+      "baseUrl": "https://sunnah.com",
+      "officialStatus": "secondary_reference",
+      "trustLevel": 80,
+      "supportedContentTypes": ["hadith_reference_readonly"],
+      "updateFrequency": "manual",
+      "termsStatus": "terms_review_required",
+      "lastSuccessfulFetch": null,
+      "lastFailure": null,
+      "enabled": false,
+      "parserVersion": "1.0.0",
+      "notes": "مرجع قراءة فقط — متن الحديث والتخريج محظوران على الأتمتة (مستوى C)."
+    }
+  ]
+}

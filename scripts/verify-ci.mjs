@@ -215,6 +215,11 @@ const waves = [
         cmd: "pnpm",
         args: ["--filter", "@workspace/majalis", "run", "test:ci-unit"],
       },
+      {
+        name: "content-ops P0 gate",
+        cmd: "pnpm",
+        args: ["--filter", "@workspace/majalis", "run", "content-ops:p0-gate"],
+      },
     ],
   },
   {
