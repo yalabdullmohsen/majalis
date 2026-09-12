@@ -1,3 +1,4 @@
+import { KnowledgeLayout } from "@/components/knowledge";
 import {
   HadithDefinitionCard,
   HadithWarningCard,
@@ -144,7 +145,7 @@ const META: Record<
 export function HadithClassGuide({ kind }: { kind: keyof typeof META }) {
   const m = META[kind];
   return (
-    <div className="hdl-reader hadith-class-guide" dir="rtl" data-hdl="class-guide" data-knowledge-reader="1">
+    <KnowledgeLayout kind="reader" className="hdl-reader hadith-class-guide" data-hdl="class-guide" data-knowledge-reader="1" data-kx="1">
       <HadithInfoHero eyebrow={m.eyebrow} title={m.title} lead={m.lead} />
       <HadithDefinitionCard>{m.definition}</HadithDefinitionCard>
       <HadithWarningCard>{m.notice}</HadithWarningCard>
@@ -152,6 +153,6 @@ export function HadithClassGuide({ kind }: { kind: keyof typeof META }) {
       <HadithSourcesCard sources={m.sources} />
       <HadithInternalLinks links={m.links} />
       <HadithFaq items={m.faq} />
-    </div>
+    </KnowledgeLayout>
   );
 }

@@ -10,6 +10,8 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/hadith-mustalah.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { KnowledgeLayout } from "@/components/knowledge";
+import { UnifiedPrimaryFilters } from "@/components/filters/UnifiedPrimaryFilters";
 import "@/styles/knowledge-experience.css";
 
 /* ─── أنواع البيانات ─── */
@@ -1026,7 +1028,7 @@ export default function HadithSciencePage() {
 
   return (
     <UtilityScreen compose="mark">
-    <main className="hs-page kx-layout kx-layout--hadith" dir="rtl" data-kx="1">
+    <KnowledgeLayout kind="hadith" className="hs-page" data-kx="1">
       {/* هيرو */}
       <section className="hs-hero hdl-info-hero">
         <div className="hs-hero__badge">علوم الحديث</div>
@@ -1062,20 +1064,15 @@ export default function HadithSciencePage() {
             </button>
           )}
         </div>
-        <div className="hs-cats" role="tablist" aria-label="تصفية حسب الباب">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              role="tab"
-              type="button"
-              className={`hs-cat-chip${category === cat ? " hs-cat-chip--active" : ""}`}
-              onClick={() => setCategory(cat)}
-              aria-selected={category === cat}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+        <UnifiedPrimaryFilters
+          className="hs-cats"
+          primary={CATEGORIES.map((cat) => ({
+            id: cat,
+            label: cat,
+            active: category === cat,
+            onSelect: () => setCategory(cat),
+          }))}
+        />
       </div>
 
       {/* النتائج */}
@@ -1105,19 +1102,19 @@ export default function HadithSciencePage() {
                   )}
                 </button>
                 {isOpen && (
-                  <div className="hs-card__body" data-knowledge-reader="term">
-                    <p className="hs-card__def" data-hdl="definition">
+                  <div className="hs-card__body" data-knowledge-reader="term" data-kx-kind="definition">
+                    <p className="hs-card__def" data-hdl="definition" data-kx-kind="definition">
                       <span className="hs-card__example-label">تعريف — </span>
                       {t.definition}
                     </p>
                     {t.note ? (
-                      <div className="hs-card__note" data-hdl="warning" role="note">
+                      <div className="hs-card__note" data-hdl="warning" data-kx-kind="warning" role="note">
                         <span className="hs-card__example-label">تنبيه علمي — </span>
                         {t.note}
                       </div>
                     ) : null}
                     {t.example ? (
-                      <div className="hs-card__example" data-hdl="example">
+                      <div className="hs-card__example" data-hdl="example" data-kx-kind="notes">
                         <span className="hs-card__example-label">مثال — </span>
                         {t.example}
                       </div>
@@ -1185,7 +1182,7 @@ export default function HadithSciencePage() {
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في علوم الحديث" count={4} />
       </div>
-    </main>
+    </KnowledgeLayout>
     </UtilityScreen>
   );
 }

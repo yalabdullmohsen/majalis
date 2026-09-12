@@ -110,4 +110,33 @@ assert.match(rsc, /data-kx-block/);
 const polish = read("src/styles/sections-calm-polish.css");
 assert.match(polish, /display:\s*none\s*!important/, "إخفاء السهم العائم في CSS الحرج");
 
+
+const hadithScience = read("src/pages/hadith/ui/HadithScienceView.tsx");
+assert.match(hadithScience, /KnowledgeLayout/, "علوم الحديث بتخطيط معرفة");
+assert.match(hadithScience, /UnifiedPrimaryFilters/, "فلاتر مصطلح الحديث الموحّدة");
+assert.match(hadithScience, /kind="hadith"/);
+
+const hadithClassGuide = read("src/pages/hadith/ui/HadithClassGuide.tsx");
+assert.match(hadithClassGuide, /KnowledgeLayout/, "دليل أصناف الحديث");
+
+const hadithBooks = read("src/pages/hadith/ui/HadithBooksView.tsx");
+assert.match(hadithBooks, /KnowledgeLayout/, "كتب الحديث");
+
+const arbaeen = read("src/pages/hadith/ui/ArbaeenNawawiView.tsx");
+assert.match(arbaeen, /KnowledgeLayout/, "الأربعون النووية");
+
+const fiqhBook = read("src/pages/fiqh/ui/FiqhBookView.tsx");
+assert.match(fiqhBook, /KnowledgeLayout/, "كتاب الفقه");
+
+const fiqhChapter = read("src/pages/fiqh/ui/FiqhChapterView.tsx");
+assert.match(fiqhChapter, /KnowledgeLayout/, "باب الفقه");
+
+const fiqhUsul = read("src/pages/fiqh/ui/FiqhUsulView.tsx");
+assert.match(fiqhUsul, /KnowledgeLayout/, "أصول الفقه");
+assert.match(fiqhUsul, /data-kx-kind/, "أصول الفقه بأنواع كتل");
+
+const fiqhQawaid = read("src/pages/fiqh/ui/FiqhQawaidView.tsx");
+assert.match(fiqhQawaid, /KnowledgeLayout/, "القواعد الفقهية");
+assert.match(fiqhQawaid, /data-kx-kind/, "القواعد بأنواع كتل");
+
 console.log("knowledge-experience-gate.test.ts: ok");

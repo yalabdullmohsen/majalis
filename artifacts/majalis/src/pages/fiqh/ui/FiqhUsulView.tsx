@@ -9,6 +9,7 @@ import { USUL_HUB_TOPICS } from "@/lib/fiqh/fiqh-usul-topics";
 import "@/styles/pages/fiqh-hub.css";
 import "@/styles/components/hub-card.css";
 import { DashboardScreen } from "@/components/design-system/screens";
+import { KnowledgeLayout } from "@/components/knowledge";
 
 export default function FiqhUsulPage() {
   usePageView("fiqh-usul", null);
@@ -37,8 +38,8 @@ export default function FiqhUsulPage() {
       ]}
       groupTitle="أبواب أصول الفقه"
     >
-      <div className="fiqh-usul-page" dir="rtl">
-        <article className="fiqh-usul-define">
+      <KnowledgeLayout kind="knowledge" className="fiqh-usul-page" data-kx="1">
+        <article className="fiqh-usul-define" data-kx-kind="definition">
           <p className="fiqh-usul-define__eyebrow">تعريف</p>
           <h2 className="fiqh-usul-define__title">ما أصول الفقه؟</h2>
           <p className="fiqh-usul-define__body">
@@ -80,11 +81,11 @@ export default function FiqhUsulPage() {
             </header>
             <div className="fiqh-usul-detail-grid">
               {topic.details!.map((block) => (
-                <article key={block.title} className="fiqh-usul-card fiqh-usul-card--rich">
+                <article key={block.title} className="fiqh-usul-card fiqh-usul-card--rich" data-kx-kind="concepts">
                   <h3 className="fiqh-usul-card__title">{block.title}</h3>
                   <p className="fiqh-usul-card__body">{block.summary}</p>
                   {block.evidence ? (
-                    <p className="fiqh-usul-card__evidence">
+                    <p className="fiqh-usul-card__evidence" data-kx-kind="evidence">
                       <strong>الدليل: </strong>
                       {block.evidence}
                     </p>
@@ -133,7 +134,7 @@ export default function FiqhUsulPage() {
           <Link href="/fiqh/books/salah">كتاب الصلاة</Link>
         </p>
         <div className="fiqh-fab-clearance" />
-      </div>
+      </KnowledgeLayout>
     </SectionTemplatePage>
     </DashboardScreen>
   );

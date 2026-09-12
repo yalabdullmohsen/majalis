@@ -17,6 +17,7 @@ import { fiqhChapterEditorial } from "@/lib/fiqh-editorial";
 import { formatMasailCount } from "@/lib/arabic-count";
 import "@/styles/pages/fiqh-hub.css";
 import { DetailScreen } from "@/components/design-system/screens";
+import { KnowledgeLayout } from "@/components/knowledge";
 
 type TocItem = { id: string; label: string };
 
@@ -90,12 +91,12 @@ export default function FiqhChapterPage() {
 
   if (!hit || !editorial) {
     return (
-      <div className="fiqh-lux-shell fiqh-lux-chapter-page page-shell ve-page" dir="rtl">
+      <KnowledgeLayout kind="fiqh" className="fiqh-lux-shell fiqh-lux-chapter-page page-shell ve-page" data-kx="1">
         <Empty title="باب غير منشور" text="هذا الباب غير مدرج، أو ينقصه توثيق منشور." />
         <p className="fiqh-lux-empty">
           <Link href={bookId ? `/fiqh/books/${bookId}` : "/fiqh"}>العودة</Link>
         </p>
-      </div>
+      </KnowledgeLayout>
     );
   }
 
@@ -104,7 +105,7 @@ export default function FiqhChapterPage() {
 
   return (
     <DetailScreen compose="mark">
-    <div className="fiqh-lux-shell fiqh-lux-chapter-page page-shell ve-page" dir="rtl">
+    <KnowledgeLayout kind="fiqh" className="fiqh-lux-shell fiqh-lux-chapter-page page-shell ve-page" data-kx="1">
       <nav className="fiqh-lux-crumb" aria-label="مسار التنقل">
         <Link href="/fiqh">الفقه</Link>
         <span aria-hidden="true"> ← </span>
@@ -267,7 +268,7 @@ export default function FiqhChapterPage() {
       )}
 
       <div className="fiqh-fab-clearance ve-bottom-clearance" />
-    </div>
+    </KnowledgeLayout>
     </DetailScreen>
   );
 }
