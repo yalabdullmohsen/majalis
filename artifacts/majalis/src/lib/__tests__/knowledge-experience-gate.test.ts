@@ -68,6 +68,30 @@ assert.match(hadith, /kind="hadith"/);
 
 const tawhid = read("src/views/TawhidPage.tsx");
 assert.match(tawhid, /KnowledgeLibraryCard/, "بطاقات مكتبة العقيدة");
+assert.match(tawhid, /KnowledgeLayout/, "تخطيط العقيدة");
+
+const seerah = read("src/views/SeerahPage.tsx");
+assert.match(seerah, /KnowledgeLayout/, "تخطيط السيرة");
+assert.match(seerah, /kind="biography"/);
+assert.match(seerah, /WarningNoticeBlock|SourceReferencesBlock|RelatedTopicsBlock/, "كتل معرفة في السيرة");
+
+const miracles = read("src/views/MiraclesPage.tsx");
+assert.match(miracles, /KnowledgeLayout/, "تخطيط الإعجاز");
+assert.match(miracles, /kind="library"/);
+assert.match(miracles, /kind="reader"/);
+
+const ulum = read("src/pages/quran/ui/UlumQuranView.tsx");
+assert.match(ulum, /KnowledgeLayout/, "تخطيط علوم القرآن");
+assert.match(ulum, /kind="knowledge"/);
+
+const fiqhHub = read("src/pages/fiqh/ui/FiqhView.tsx");
+assert.match(fiqhHub, /KnowledgeLayout/, "تخطيط الفقه");
+assert.match(fiqhHub, /kind="fiqh"/);
+assert.match(fiqhHub, /UnifiedPrimaryFilters/, "فلاتر الفقه الموحّدة");
+
+const tarikhHub = read("src/views/TarikhIslamiPage.tsx");
+assert.match(tarikhHub, /KnowledgeLayout/, "تخطيط التاريخ");
+assert.match(tarikhHub, /kind="timeline"/);
 
 const tarikh = read("src/views/TarikhIslamiDetailPage.tsx");
 assert.match(tarikh, /kind="timeline"/);

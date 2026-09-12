@@ -33,6 +33,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { SectionEntryCard } from "@/components/ui/InternalCards";
 import { TopicPage } from "@/components/topic/TopicPage";
+import { KnowledgeLayout } from "@/components/knowledge";
 import {
   ReadingProse,
   ReadingSectionCard,
@@ -142,7 +143,7 @@ function MiraclesHub() {
         type: "ayah",
       }}
     >
-      <div className="mk-page mk-page--hub kx-layout kx-layout--library" dir="rtl" data-kx="1">
+      <KnowledgeLayout kind="library" className="mk-page mk-page--hub" data-kx="1">
         <InformationCard title="منهج العرض" tone="caution" className="mk-info-card">
           <p>
             هذا القسم يعرض وجوه تأمل علمية منضبطة، ولا يجعل النظريات المتغيرة تفسيرًا قطعيًا للنص الشرعي.
@@ -203,7 +204,7 @@ function MiraclesHub() {
             { href: "/methodology", label: "منهج الموقع" },
           ]}
         />
-      </div>
+      </KnowledgeLayout>
     </TopicPage>
   );
 }
@@ -561,7 +562,7 @@ function MiracleDetailPage({ slug }: { slug: string }) {
       title={item.title}
       subtitle={`${miracleCategoryChip(item)} · ${badge}`}
     >
-      <div className={`mk-page mk-page--detail mk-page--${item.source_type === "سنة" ? "sunnah" : "quran"}`} dir="rtl">
+      <KnowledgeLayout kind="reader" className={`mk-page mk-page--detail mk-page--${item.source_type === "سنة" ? "sunnah" : "quran"}`} data-kx="1">
         <article className="mk-detail">
           {(item.verse || item.reference) && (
             <figure className="miracle-ayah">
@@ -641,7 +642,7 @@ function MiracleDetailPage({ slug }: { slug: string }) {
           title={item.title}
           url={`https://www.ssunnah.com/miracles/topic/${encodeURIComponent(item.slug)}`}
         />
-      </div>
+      </KnowledgeLayout>
     </TopicPage>
     </ListScreen>
   );
