@@ -11,16 +11,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-04T15:00:00.000Z",
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.408Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-80",
@@ -54,16 +54,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.408Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-222",
@@ -77,16 +77,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.408Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-223",
@@ -100,16 +100,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.408Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-224",
@@ -123,16 +123,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.408Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-225",
@@ -166,16 +166,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.408Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-228",
@@ -189,16 +189,16 @@
       "مصادر أهل السنة المعتمدة"
     ],
     "reference": null,
-    "status": "published",
-    "review_status": "approved",
+    "status": "draft",
+    "review_status": "needs_source",
     "created_at": "2024-01-09T09:00:00.000Z",
     "qa_categories": {
       "name": "الصيام",
       "slug": "sawm"
     },
     "trust_level": "unsourced",
-    "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-09-09T12:17:14.408Z"
+    "editorial_review_status": "needs_source",
+    "last_updated_at": "2026-09-12T08:04:49Z"
   },
   {
     "id": "seed-qa-310",
