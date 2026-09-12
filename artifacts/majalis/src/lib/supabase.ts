@@ -542,16 +542,37 @@ export async function getMyRegistrations(userId: string) {
 }
 
 export async function getApprovedFawaid() {
-  const { DEMO_FAWAID } = await loadSeedData();
-  const result = await safeSupabaseQuery(
+  // بذرة الفوائد فقط بالتوازي مع الشبكة — لا تنتظر محمّل البذور الكامل
+  // (quiz/adhkar/…) قبل أي رسم؛ ذلك كان يؤخّر `/fawaid` ثواني على الدخول.
+  const seedPromise = (async () => {
+    const { ensureFawaidLoaded, getFawaidSeedCached } = await import("./demo-content");
+    await ensureFawaidLoaded();
+    return getFawaidSeedCached() as any[];
+  })();
+
+  const resultPromise = safeSupabaseQuery(
     "getApprovedFawaid",
     // FawaidPage تُصفّي بالفئة وتبحث محليًا في القائمة كاملة، لذا حدّ ١٠٠ كان
     // ليُخفي ~٨٠٪ من الفوائد (البذرة وحدها ٥١٠). الحدّ هنا حارس ضد الجموح فقط.
     // الإصلاح الجذري = ترقيم صفحات من الخادم داخل FawaidPage.
-    () => supabase.from("fawaid").select("id, text, category, source, source_name, author_name, status, created_at, verification_status").eq("status", "approved").order("created_at", { ascending: false }).limit(1000),
-    DEMO_FAWAID,
+    () =>
+      supabase
+        .from("fawaid")
+        .select(
+          "id, text, category, source, source_name, author_name, status, created_at, verification_status",
+        )
+        .eq("status", "approved")
+        .order("created_at", { ascending: false })
+        .limit(1000),
+    [] as any[],
   );
-  if (result.usingSeed) return result;
+
+  const [seed, result] = await Promise.all([seedPromise, resultPromise]);
+
+  if (result.usingSeed || !(result.data as any[])?.length) {
+    return { data: seed, error: null, usingSeed: true as const };
+  }
+
   // FaidahCard وFawaidPage يقرآن الحقل `source` (اسم حقل البذرة)، والجدول
   // الحيّ يسمّيه `source_name` — فكل تخريج مخزَّن في الجدول كان لا يُعرَض
   // إطلاقًا على البطاقة (تُقدَّم الفائدة بلا مصدر). التطبيع هنا لا في
@@ -563,7 +584,7 @@ export async function getApprovedFawaid() {
   // معتمدة فقط، وبدون الدمج تُحجب ٤٩٦ فائدة في البذرة.
   const merged = mergeRowsWithSeed<any>(
     rows,
-    DEMO_FAWAID as any[],
+    seed,
     (f) => String(f?.text ?? "").trim().slice(0, 120),
   );
   return { ...result, data: merged };

@@ -45,6 +45,16 @@ async function loadMergedFawaid(): Promise<any[]> {
   return fawaidLoading;
 }
 
+/** بذرة الفوائد فقط — لا يسحب QA/دروس/مسارات seed-loader الثقيلة. */
+export async function ensureFawaidLoaded(): Promise<any[]> {
+  return loadMergedFawaid();
+}
+
+/** نسخة متزامنة بعد ensureFawaidLoaded (أو فارغة قبلها). */
+export function getFawaidSeedCached(): any[] {
+  return fawaidCache ?? [];
+}
+
 /** يحمّل qa + lessons + fawaid الكسولة قبل استخدام الخصائص المتزامنة. */
 export async function ensureDemoContentLoaded(): Promise<void> {
   await Promise.all([loadSeedQa(), loadLessonsSeed(), loadMergedFawaid()]);

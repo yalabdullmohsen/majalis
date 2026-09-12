@@ -34,5 +34,19 @@ assert.match(supabase, /getLessonById[\s\S]*LESSON_DETAIL_COLUMNS/, "getLessonBy
 const fawaid = read("src/pages/account/ui/FawaidView.tsx");
 assert.match(fawaid, /FAWAID_PAGE_SIZE/, "ترقيم واجهة الفوائد");
 assert.match(fawaid, /IntersectionObserver/, "تمرير لانهائي للفوائد");
+assert.match(fawaid, /ensureFawaidLoaded/, "رسم فوري من بذرة الفوائد");
+assert.match(fawaid, /sunnah\.fawaid\.list\.v1|FAWAID_SESSION_CACHE_KEY/, "كاش جلسة للفوائد");
+assert.doesNotMatch(fawaid, /setLoading\(true\)/, "لا إعادة هيكل عند الدخول");
+assert.doesNotMatch(fawaid, /Date\.now\(\)/, "خلط ثابت بلا Date.now على كل hydrate");
+
+const getFawaid = supabase.match(/export async function getApprovedFawaid\(\) \{[\s\S]*?\nexport async function/);
+assert.ok(getFawaid, "دالة getApprovedFawaid موجودة");
+assert.match(getFawaid![0], /Promise\.all\(\[seedPromise,\s*resultPromise\]\)/, "بذرة وشبكة بالتوازي");
+assert.doesNotMatch(getFawaid![0], /await loadSeedData\(/, "بلا انتظار seed-loader الكامل");
+assert.match(getFawaid![0], /ensureFawaidLoaded/, "بذرة فوائد فقط");
+
+const prefetch = read("src/lib/prefetch-route.ts");
+assert.match(prefetch, /"\/fawaid"/, "تسخين مسار الفوائد");
+assert.match(prefetch, /ensureFawaidLoaded/, "تسخين بذرة الفوائد مع الصفحة");
 
 console.log("fetch-parallel-select-gate.test.ts: ok");
