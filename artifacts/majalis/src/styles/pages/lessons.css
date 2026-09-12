@@ -1350,29 +1350,30 @@ html[data-theme="dark"] .lesson-detail-page .lesson-detail-actions-panel {
 }
 
 .lesson-status-badge--live {
-  background: color-mix(in srgb, #c62828 12%, transparent);
-  color: #b71c1c;
+  background: var(--badge-critical-soft-bg, #fee2e2);
+  color: var(--badge-critical-soft-fg, #7f1d1d);
+  font-size: var(--badge-font-size-lg, 0.9375rem);
 }
 
 .lesson-status-badge--soon {
-  background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 12%, transparent);
-  color: var(--mj-brand, var(--mj-brand, #1f6b56));
+  background: var(--badge-info-soft-bg, #dbeafe);
+  color: var(--badge-info-soft-fg, #1e3a8a);
 }
 
 .lesson-status-badge--pending,
 .lesson-status-badge--neutral {
-  background: var(--surface-2, #eef3f1);
-  color: var(--mn-text-muted, #5c6b66);
+  background: var(--badge-neutral-bg, var(--surface-2, #eef3f1));
+  color: var(--badge-neutral-fg, var(--mj-ink, #16241e));
 }
 
 .lesson-status-badge--archived {
-  background: color-mix(in srgb, var(--mj-muted) 10%, transparent);
-  color: var(--mj-muted);
+  background: var(--badge-neutral-bg, var(--surface-2, #eef3f1));
+  color: var(--badge-neutral-fg, var(--mj-ink, #3d4a46));
 }
 
 .lesson-status-badge--women {
-  background: color-mix(in srgb, #6a1b9a 10%, transparent);
-  color: #6a1b9a;
+  background: var(--badge-ui-soft-bg, #ede9fe);
+  color: var(--badge-ui-soft-fg, #5b21b6);
 }
 
 .lesson-status-badge-row {

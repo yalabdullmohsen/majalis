@@ -237,3 +237,92 @@ html.dark,
   --text-on-brand-secondary: #ECF2EF;
   color: #FFFFFF;
 }
+
+/*
+ * Badge System — نغمات دلالية موحّدة (WCAG AA ≥ 4.5:1 للنص العادي).
+ * Critical/Warning/Info/UI: خلفية داكنة + نص فاتح (نمط filled).
+ * Soft: خلفية فاتحة + نص داكن للفلاتر/الوسوم الثانوية.
+ */
+:root {
+  /* Critical — بدل blocked:danger-path */
+  --badge-critical-bg: #7f1d1d;
+  --badge-critical-fg: #fff5f5;
+  --badge-critical-border: #991b1b;
+  --badge-critical-soft-bg: #fee2e2;
+  --badge-critical-soft-fg: #7f1d1d;
+
+  /* Warning — بدل risky:manual-review */
+  --badge-warning-bg: #9a3412;
+  --badge-warning-fg: #fff7ed;
+  --badge-warning-border: #c2410c;
+  --badge-warning-soft-bg: #ffedd5;
+  --badge-warning-soft-fg: #9a3412;
+
+  /* Info — ci / docs / ios (أخضر الهوية — بلا أزرق legacy محظور) */
+  --badge-info-bg: var(--ss-deep-green, #0a3d2e);
+  --badge-info-fg: #f0fdf4;
+  --badge-info-border: var(--ss-primary-green, #0f5c45);
+  --badge-info-soft-bg: #dcfce7;
+  --badge-info-soft-fg: var(--ss-deep-green, #0a3d2e);
+
+  /* UI — ui */
+  --badge-ui-bg: #5b21b6;
+  --badge-ui-fg: #f5f3ff;
+  --badge-ui-border: #6d28d9;
+  --badge-ui-soft-bg: #ede9fe;
+  --badge-ui-soft-fg: #5b21b6;
+
+  /* Neutral / filter chips */
+  --badge-neutral-bg: var(--mj-surface-2, #eef3f1);
+  --badge-neutral-fg: var(--mj-ink, #16241e);
+  --badge-neutral-border: var(--mj-hairline, #d5ddd9);
+  --badge-filter-bg: var(--mj-surface, #ffffff);
+  --badge-filter-fg: var(--mj-ink, #16241e);
+  --badge-filter-active-bg: var(--mj-brand-deep, #0d4a39);
+  --badge-filter-active-fg: #ffffff;
+
+  /* مكتبة/ذهب: نص أعمق بدل #B08A3E على أبيض (كان ~3.1:1) */
+  --badge-accent-fg: #7a5a1e;
+  --badge-accent-bg: #fff8eb;
+
+  --badge-font-size: max(0.8125rem, 0.75rem);
+  --badge-font-size-lg: max(0.9375rem, 0.875rem);
+  --badge-pad-y: 0.28rem;
+  --badge-pad-x: 0.65rem;
+  --badge-radius: 999px;
+  --badge-weight: 700;
+}
+
+html.dark,
+html[data-theme="dark"] {
+  --badge-critical-bg: #991b1b;
+  --badge-critical-fg: #fff5f5;
+  --badge-critical-soft-bg: color-mix(in srgb, #fecaca 18%, #1a2120);
+  --badge-critical-soft-fg: #fecaca;
+
+  --badge-warning-bg: #c2410c;
+  --badge-warning-fg: #fff7ed;
+  --badge-warning-soft-bg: color-mix(in srgb, #fed7aa 16%, #1a2120);
+  --badge-warning-soft-fg: #fdba74;
+
+  --badge-info-bg: var(--ss-primary-green, #0f5c45);
+  --badge-info-fg: #f0fdf4;
+  --badge-info-soft-bg: color-mix(in srgb, #86efac 14%, #1a2120);
+  --badge-info-soft-fg: #bbf7d0;
+
+  --badge-ui-bg: #6d28d9;
+  --badge-ui-fg: #f5f3ff;
+  --badge-ui-soft-bg: color-mix(in srgb, #ddd6fe 14%, #1a2120);
+  --badge-ui-soft-fg: #ddd6fe;
+
+  --badge-neutral-bg: #222c28;
+  --badge-neutral-fg: #f3f7f5;
+  --badge-neutral-border: #3a4641;
+  --badge-filter-bg: #222c28;
+  --badge-filter-fg: #f3f7f5;
+  --badge-filter-active-bg: #5fbf98;
+  --badge-filter-active-fg: #06231a;
+
+  --badge-accent-fg: #f0d9a0;
+  --badge-accent-bg: color-mix(in srgb, #b08a3e 18%, #1a2120);
+}

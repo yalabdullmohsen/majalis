@@ -293,11 +293,11 @@ html.dark .sidebar-item-icon {
   padding: 0.35rem 0.75rem !important;
   border-radius: 999px !important;
   border: 1px solid var(--mj-chip-border, var(--border)) !important;
-  background: var(--mj-chip-bg, var(--surface)) !important;
-  color: var(--mj-chip-fg, var(--text)) !important;
+  background: var(--badge-filter-bg, var(--mj-chip-bg, var(--surface))) !important;
+  color: var(--badge-filter-fg, var(--mj-chip-fg, var(--text))) !important;
   box-shadow: none !important;
-  font-size: 0.78rem !important;
-  font-weight: 700 !important;
+  font-size: var(--badge-font-size, 0.8125rem) !important;
+  font-weight: var(--badge-weight, 700) !important;
   white-space: nowrap !important;
   line-height: 1.2 !important;
 }
@@ -318,9 +318,9 @@ html.dark .sidebar-item-icon {
 .lessons-page-v3 .filter-chips__chip.is-active,
 .lessons-page-v3 .lesson-filters__chips .filter-chips__chip.is-active,
 .lessons-page-v2 .filter-chips__chip.is-active {
-  background: var(--mj-chip-active-bg, var(--primary)) !important;
-  border-color: var(--mj-chip-active-bg, var(--mj-brand-deep, var(--primary))) !important;
-  color: var(--mj-chip-active-fg, var(--mj-on-brand, #ffffff)) !important;
+  background: var(--badge-filter-active-bg, var(--mj-chip-active-bg, var(--primary))) !important;
+  border-color: var(--badge-filter-active-bg, var(--mj-chip-active-bg, var(--mj-brand-deep, var(--primary)))) !important;
+  color: var(--badge-filter-active-fg, var(--mj-chip-active-fg, var(--mj-on-brand, #ffffff))) !important;
   box-shadow: none !important;
 }
 
@@ -334,9 +334,9 @@ html[data-theme="dark"] .lessons-page-v3 .lesson-filters__chips .filter-chips__c
 html.dark .lessons-page-v3 .lesson-filters__chips .filter-chips__chip,
 html[data-theme="dark"] .lessons-page-v2 .filter-chips__chip,
 html.dark .lessons-page-v2 .filter-chips__chip {
-  background: var(--mj-chip-bg, #222c28) !important;
-  border-color: var(--mj-chip-border, #3a4641) !important;
-  color: var(--mj-chip-fg, #f3f7f5) !important;
+  background: var(--badge-filter-bg, #222c28) !important;
+  border-color: var(--badge-neutral-border, #3a4641) !important;
+  color: var(--badge-filter-fg, #f3f7f5) !important;
 }
 
 html[data-theme="dark"] .filter-chips__chip.is-active,
@@ -351,9 +351,9 @@ html[data-theme="dark"] .lessons-page-v3 .lesson-filters__chips .filter-chips__c
 html.dark .lessons-page-v3 .lesson-filters__chips .filter-chips__chip.is-active,
 html[data-theme="dark"] .lessons-page-v2 .filter-chips__chip.is-active,
 html.dark .lessons-page-v2 .filter-chips__chip.is-active {
-  background: var(--mj-chip-active-bg, #5fbf98) !important;
-  border-color: color-mix(in srgb, var(--mj-chip-active-bg, #5fbf98) 70%, #2a3832) !important;
-  color: var(--mj-chip-active-fg, #06231a) !important;
+  background: var(--badge-filter-active-bg, #5fbf98) !important;
+  border-color: color-mix(in srgb, var(--badge-filter-active-bg, #5fbf98) 70%, #2a3832) !important;
+  color: var(--badge-filter-active-fg, #06231a) !important;
 }
 
 /* بطاقات الدروس: إزالة الصندوق الداخلي الثقيل */

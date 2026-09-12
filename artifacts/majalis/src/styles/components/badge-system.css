@@ -1,0 +1,222 @@
+/**
+ * Badge System موحّد — Labels / Badges / Tags / Status Pills / Filter Chips.
+ * يعتمد رموز --badge-* من design-tokens.css (لا عتبات مخفّضة، لا allowlist).
+ */
+
+.mj-badge,
+.mj-chip,
+.mj-label,
+.mj-filter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  box-sizing: border-box;
+  margin: 0;
+  border-radius: var(--badge-radius);
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: var(--badge-font-size);
+  font-weight: var(--badge-weight);
+  line-height: 1.35;
+  letter-spacing: 0;
+  padding: var(--badge-pad-y) var(--badge-pad-x);
+  max-width: 100%;
+  white-space: nowrap;
+  text-decoration: none;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mj-badge--lg,
+.mj-badge--critical {
+  font-size: var(--badge-font-size-lg);
+  padding: 0.32rem 0.75rem;
+}
+
+/* Critical */
+.mj-badge--critical,
+.mj-label--critical,
+.mj-chip--critical {
+  background: var(--badge-critical-bg);
+  color: var(--badge-critical-fg);
+  border-color: var(--badge-critical-border);
+}
+
+.mj-badge--critical-soft,
+.mj-label--critical-soft {
+  background: var(--badge-critical-soft-bg);
+  color: var(--badge-critical-soft-fg);
+  border-color: color-mix(in srgb, var(--badge-critical-soft-fg) 28%, transparent);
+}
+
+/* Warning */
+.mj-badge--warning,
+.mj-label--warning,
+.mj-chip--warning {
+  background: var(--badge-warning-bg);
+  color: var(--badge-warning-fg);
+  border-color: var(--badge-warning-border);
+}
+
+.mj-badge--warning-soft,
+.mj-label--warning-soft {
+  background: var(--badge-warning-soft-bg);
+  color: var(--badge-warning-soft-fg);
+  border-color: color-mix(in srgb, var(--badge-warning-soft-fg) 28%, transparent);
+}
+
+/* Info */
+.mj-badge--info,
+.mj-label--info,
+.mj-chip--info {
+  background: var(--badge-info-bg);
+  color: var(--badge-info-fg);
+  border-color: var(--badge-info-border);
+}
+
+.mj-badge--info-soft,
+.mj-label--info-soft {
+  background: var(--badge-info-soft-bg);
+  color: var(--badge-info-soft-fg);
+  border-color: color-mix(in srgb, var(--badge-info-soft-fg) 28%, transparent);
+}
+
+/* UI */
+.mj-badge--ui,
+.mj-label--ui,
+.mj-chip--ui {
+  background: var(--badge-ui-bg);
+  color: var(--badge-ui-fg);
+  border-color: var(--badge-ui-border);
+}
+
+.mj-badge--ui-soft,
+.mj-label--ui-soft {
+  background: var(--badge-ui-soft-bg);
+  color: var(--badge-ui-soft-fg);
+  border-color: color-mix(in srgb, var(--badge-ui-soft-fg) 28%, transparent);
+}
+
+/* Neutral / accent */
+.mj-badge--neutral,
+.mj-label--neutral {
+  background: var(--badge-neutral-bg);
+  color: var(--badge-neutral-fg);
+  border-color: var(--badge-neutral-border);
+}
+
+.mj-badge--accent {
+  background: var(--badge-accent-bg);
+  color: var(--badge-accent-fg);
+  border-color: color-mix(in srgb, var(--badge-accent-fg) 30%, transparent);
+}
+
+/* Filter chips — تفاعل */
+.mj-filter,
+.filter-chips__chip,
+.mj-filter-chip,
+.content-hub-chip,
+.ds-chip {
+  min-height: 44px;
+  background: var(--badge-filter-bg) !important;
+  color: var(--badge-filter-fg) !important;
+  border-color: var(--badge-neutral-border) !important;
+  font-size: var(--badge-font-size) !important;
+  font-weight: var(--badge-weight) !important;
+}
+
+.mj-filter.is-active,
+.mj-filter.is-active,
+.mj-filter[aria-pressed="true"],
+.mj-filter[aria-selected="true"],
+.filter-chips__chip.is-active,
+.filter-chips__chip.is-active,
+.filter-chips__chip[aria-pressed="true"],
+.mj-filter-chip.is-active,
+.mj-filter-chip.is-active,
+.content-hub-chip--active,
+.content-hub-chip.is-active,
+.ds-chip.is-active {
+  background: var(--badge-filter-active-bg) !important;
+  color: var(--badge-filter-active-fg) !important;
+  border-color: var(--badge-filter-active-bg) !important;
+}
+
+/* شارات الدروس → نغمات النظام */
+.lesson-status-badge--live {
+  background: var(--badge-critical-soft-bg) !important;
+  color: var(--badge-critical-soft-fg) !important;
+  border: 1px solid color-mix(in srgb, var(--badge-critical-soft-fg) 28%, transparent);
+  font-size: var(--badge-font-size-lg);
+}
+
+.lesson-status-badge--soon {
+  background: var(--badge-info-soft-bg) !important;
+  color: var(--badge-info-soft-fg) !important;
+  border: 1px solid color-mix(in srgb, var(--badge-info-soft-fg) 28%, transparent);
+}
+
+.lesson-status-badge--pending,
+.lesson-status-badge--neutral {
+  background: var(--badge-neutral-bg) !important;
+  color: var(--badge-neutral-fg) !important;
+  border: 1px solid var(--badge-neutral-border);
+}
+
+.lesson-status-badge--archived {
+  background: var(--badge-neutral-bg) !important;
+  color: var(--badge-neutral-fg) !important;
+  opacity: 0.92;
+}
+
+.lesson-status-badge--women {
+  background: var(--badge-ui-soft-bg) !important;
+  color: var(--badge-ui-soft-fg) !important;
+  border: 1px solid color-mix(in srgb, var(--badge-ui-soft-fg) 28%, transparent);
+}
+
+/* بحث: مكتبة/تحديثات كانت ضعيفة التباين */
+.search-kind-badge--library {
+  background: var(--badge-accent-bg) !important;
+  color: var(--badge-accent-fg) !important;
+  border-color: color-mix(in srgb, var(--badge-accent-fg) 28%, transparent) !important;
+}
+
+.search-kind-badge--update,
+.search-kind-badge--updates {
+  background: var(--badge-neutral-bg) !important;
+  color: var(--badge-neutral-fg) !important;
+  border-color: var(--badge-neutral-border) !important;
+}
+
+.search-status-badge--partial {
+  background: var(--badge-warning-soft-bg) !important;
+  color: var(--badge-warning-soft-fg) !important;
+  border-color: color-mix(in srgb, var(--badge-warning-soft-fg) 28%, transparent) !important;
+}
+
+.search-status-badge--review {
+  background: var(--badge-info-soft-bg) !important;
+  color: var(--badge-info-soft-fg) !important;
+  border-color: color-mix(in srgb, var(--badge-info-soft-fg) 28%, transparent) !important;
+}
+
+/* Dynamic Type / شاشات ضيقة */
+@media (max-width: 380px) {
+  .mj-badge,
+  .mj-chip,
+  .mj-label,
+  .mj-filter {
+    max-width: min(100%, 12rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mj-badge--lg,
+  .mj-badge--critical {
+    font-size: 1rem;
+  }
+}
