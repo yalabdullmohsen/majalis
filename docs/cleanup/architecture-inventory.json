@@ -1,0 +1,87 @@
+{
+  "brand": "سُنّة",
+  "phase": "cleanup-p0",
+  "note": "Logical inventory only. Classifications are survey-grade; deletion requires separate evidence.",
+  "apps": [
+    {
+      "id": "majalis-web",
+      "path": "artifacts/majalis",
+      "classification": "production_required",
+      "entry": [
+        "src/main.tsx",
+        "src/App.tsx"
+      ]
+    },
+    {
+      "id": "api-server",
+      "path": "artifacts/api-server",
+      "classification": "production_required"
+    },
+    {
+      "id": "majalis-mobile-expo",
+      "path": "artifacts/majalis-mobile",
+      "classification": "legacy_in_use"
+    },
+    {
+      "id": "majlisilm-flutter",
+      "path": "artifacts/majlisilm-flutter",
+      "classification": "legacy_unused"
+    },
+    {
+      "id": "mushafi",
+      "path": "artifacts/mushafi",
+      "classification": "production_required",
+      "note": "Tasmee3 reference — do not delete"
+    }
+  ],
+  "libs": [
+    {
+      "id": "db",
+      "path": "lib/db",
+      "classification": "production_required"
+    },
+    {
+      "id": "api-client-react",
+      "path": "lib/api-client-react",
+      "classification": "production_required"
+    },
+    {
+      "id": "api-zod",
+      "path": "lib/api-zod",
+      "classification": "production_required"
+    },
+    {
+      "id": "api-spec",
+      "path": "lib/api-spec",
+      "classification": "production_required"
+    },
+    {
+      "id": "api-handlers",
+      "path": "lib/api-handlers",
+      "classification": "production_required"
+    }
+  ],
+  "subsystems": [
+    {
+      "id": "audio",
+      "classification": "duplicated",
+      "sourceOfTruthCandidate": "artifacts/majalis/src/lib/audio/app-audio-coordinator.ts",
+      "also": [
+        "artifacts/majalis/src/lib/exclusive-audio-bus.ts",
+        "artifacts/majalis/src/core/audio/AudioEngine.ts",
+        "artifacts/majalis/src/lib/speech-read-aloud.ts"
+      ]
+    },
+    {
+      "id": "content-resolver",
+      "classification": "active",
+      "sourceOfTruthCandidate": "artifacts/majalis/src/lib/knowledge-platform/content-resolver.ts"
+    },
+    {
+      "id": "protected-content",
+      "classification": "protected_content",
+      "registry": "artifacts/majalis/lib/content-ops/data/protected-content-registry.json"
+    }
+  ],
+  "removalCandidates": []
+}

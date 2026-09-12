@@ -1,0 +1,8 @@
+{
+  "brand": "سُنّة",
+  "phase": "cleanup-p0",
+  "approvedForDeletion": false,
+  "evidenceComplete": false,
+  "policy": "No deletions in P0. P1 entries require static+dynamic+route+CI+test evidence.",
+  "candidates": []
+}

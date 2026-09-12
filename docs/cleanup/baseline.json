@@ -1,0 +1,64 @@
+{
+  "brand": "سُنّة",
+  "phase": "cleanup-p0",
+  "collectedAt": "2026-09-12T17:19:23.320Z",
+  "git": {
+    "commit": "72ed84d8dbc53dbee735af9ce16180cd3a9d7c04",
+    "branch": "cursor/sunnah-cleanup-p0",
+    "baseCommitNote": "baseline taken on cleanup P0 branch tip / main parent"
+  },
+  "scale": {
+    "filesRepoApprox": 18001,
+    "filesMajalisApprox": 15021,
+    "majalisSrcTsFiles": 2112,
+    "majalisScriptsCount": 531
+  },
+  "dependencies": {
+    "rootDevDependencies": 3,
+    "majalisDependencies": 31,
+    "majalisDevDependencies": 62,
+    "lockfileNote": "pnpm-lock.yaml — use pnpm why / audit for transitive depth"
+  },
+  "qualityBaseline": {
+    "typecheckPass": true,
+    "typecheckMs": 3972,
+    "lintPass": true,
+    "lintMs": 13351,
+    "typescriptErrorsKnown": 0,
+    "lintWarningsPolicy": "eslint --max-warnings 0 on majalis src+lib"
+  },
+  "workspaces": {
+    "artifacts": [
+      "api-server",
+      "content-audit",
+      "data",
+      "majalis",
+      "majalis-mobile",
+      "majalis-pitch",
+      "majalis-promo",
+      "majlisilm-flutter",
+      "mockup-sandbox",
+      "mushafi",
+      "release-train",
+      "screenshots",
+      "supabase"
+    ],
+    "libs": [
+      "api-client-react",
+      "api-handlers",
+      "api-spec",
+      "api-zod",
+      "db"
+    ]
+  },
+  "protectedContentRegistry": {
+    "path": "artifacts/majalis/lib/content-ops/data/protected-content-registry.json",
+    "present": true
+  },
+  "measurementsNotTaken": [
+    "full production bundle size (requires build artifact analysis — deferred to P4)",
+    "cold/warm start on device",
+    "TestFlight",
+    "E2E full suite duration"
+  ]
+}

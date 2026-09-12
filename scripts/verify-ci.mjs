@@ -220,6 +220,11 @@ const waves = [
         cmd: "pnpm",
         args: ["--filter", "@workspace/majalis", "run", "content-ops:p0-gate"],
       },
+      {
+        name: "cleanup P0 gate",
+        cmd: "node",
+        args: ["scripts/cleanup/p0-gate.mjs"],
+      },
     ],
   },
   {
