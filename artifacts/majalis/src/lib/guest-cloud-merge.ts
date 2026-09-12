@@ -161,10 +161,15 @@ export async function mergeGuestStateToAccount(userId: string): Promise<GuestMer
   return result;
 }
 
-/** Fire-and-forget from AuthProvider when a session appears. */
+/** Fire-and-forget من AuthProvider عند ظهور جلسة — لا يستبدل بيانات الضيف بصمت. */
 export function scheduleGuestCloudMerge(userId: string): void {
   if (!userId || typeof window === "undefined") return;
+  void import("@/lib/sync-engine").then((m) => {
+    m.markGuestMergePending(userId);
+    m.bootstrapSyncEngine(userId);
+  });
   const run = () => {
+    // اتحاد آمن (upsert) — لا حذف سحابي؛ التعارضات تُحفظ عبر سياسة keep_both للملاحظات
     void mergeGuestStateToAccount(userId).catch(() => undefined);
   };
   if (typeof window.requestIdleCallback === "function") {
