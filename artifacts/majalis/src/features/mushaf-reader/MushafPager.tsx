@@ -14,6 +14,8 @@ export { SWIPE_MIN_PX, SETTLE_MS };
 const DEFAULT_IGNORE =
   ".nm-controls, .nm-verse-menu, .mm-controls, .mm-audio-dock, .mm-ayah-bar, .mm-page-edge, .mm-reciter-sheet, .mm-search-sheet, .ayah-action-sheet, input, textarea, select, button";
 
+type PaneRole = "next" | "current" | "prev";
+
 type PagerProps = {
   page: number;
   onPageChange: (page: number) => void;
@@ -22,9 +24,17 @@ type PagerProps = {
   onNavigateStart?: () => void;
   onNavigateCancel?: () => void;
   ignoreSelector?: string;
-  pageSlot: ReactNode;
-  prevPage?: ReactNode;
+  /**
+   * رسم صفحة برقم ثابت — يُستدعى لكل من (page+1, page, page-1).
+   * مفتاح اللوحة = رقم الصفحة حتى تنتقل شجرة React مع اللوحة بلا remount عند القلب.
+   */
+  renderPage?: (pageNumber: number, role: PaneRole) => ReactNode;
+  /** @deprecated استخدم renderPage — توافق مع القارئ الأرشيفي */
+  pageSlot?: ReactNode;
+  /** @deprecated استخدم renderPage */
   nextPage?: ReactNode;
+  /** @deprecated استخدم renderPage */
+  prevPage?: ReactNode;
   children?: ReactNode;
   "data-testid"?: string;
 } & Omit<
@@ -39,8 +49,11 @@ function assignRef<T>(ref: Ref<T> | undefined, value: T | null) {
 }
 
 /**
- * MushafPager — تقليب ثلاث لوحات بـ translate3d فقط (بلا scroll-snap / scale / fade).
- * ترتيب اللوحات LTR: next | current | prev — سحب يمين (dx > 0) يكشف التالية.
+ * MushafPager — تقليب ثلاث لوحات بـ translate3d فقط.
+ * ترتيب LTR: next | current | prev — سحب يمين (dx > 0) يكشف التالية.
+ *
+ * ثبات القفزة: مع `renderPage` يُستخدم `key={pageNumber}` على كل لوحة
+ * حتى تُعاد استخدام شجرة الصفحة الظاهرة عند الالتزام بدل إعادة mount.
  */
 export const MushafPager = forwardRef<HTMLDivElement, PagerProps>(function MushafPager(
   {
@@ -51,9 +64,10 @@ export const MushafPager = forwardRef<HTMLDivElement, PagerProps>(function Musha
     onNavigateStart,
     onNavigateCancel,
     ignoreSelector = DEFAULT_IGNORE,
+    renderPage,
     pageSlot,
-    prevPage,
     nextPage,
+    prevPage,
     children,
     className,
     "data-testid": testId = "mushaf-pager",
@@ -82,6 +96,14 @@ export const MushafPager = forwardRef<HTMLDivElement, PagerProps>(function Musha
     shellRef,
   });
 
+  const panes: Array<{ role: PaneRole; pageNumber: number }> = [
+    { role: "next", pageNumber: page + 1 },
+    { role: "current", pageNumber: page },
+    { role: "prev", pageNumber: page - 1 },
+  ];
+
+  const useRecycle = typeof renderPage === "function";
+
   return (
     <div
       ref={(node) => {
@@ -91,6 +113,7 @@ export const MushafPager = forwardRef<HTMLDivElement, PagerProps>(function Musha
       className={className}
       data-testid={testId}
       data-total-pages={MUSHAF_PAGE_MAX}
+      data-pager-recycle={useRecycle ? "1" : "0"}
       dir="rtl"
       onPointerDown={onPointerDown as (e: ReactPointerEvent<HTMLDivElement>) => void}
       onPointerMove={onPointerMove as (e: ReactPointerEvent<HTMLDivElement>) => void}
@@ -104,15 +127,42 @@ export const MushafPager = forwardRef<HTMLDivElement, PagerProps>(function Musha
           className="mm-pager-track nm-pager-track"
           data-testid="mushaf-pager-track"
         >
-          <div className="mm-pager__sheet nm-pager__sheet" data-pane="next">
-            {nextPage ?? <div className="nm-page-shell mm-page-shell" aria-hidden="true" />}
-          </div>
-          <div className="mm-pager__sheet nm-pager__sheet" data-pane="current">
-            {pageSlot}
-          </div>
-          <div className="mm-pager__sheet nm-pager__sheet" data-pane="prev">
-            {prevPage ?? <div className="nm-page-shell mm-page-shell" aria-hidden="true" />}
-          </div>
+          {useRecycle
+            ? panes.map(({ role, pageNumber }) => {
+                const inRange =
+                  pageNumber >= MUSHAF_PAGE_MIN && pageNumber <= MUSHAF_PAGE_MAX;
+                return (
+                  <div
+                    key={pageNumber}
+                    className="mm-pager__sheet nm-pager__sheet"
+                    data-pane={role}
+                    data-page={pageNumber}
+                  >
+                    {inRange ? (
+                      renderPage!(pageNumber, role)
+                    ) : (
+                      <div className="nm-page-shell mm-page-shell" aria-hidden="true" />
+                    )}
+                  </div>
+                );
+              })
+            : (
+              <>
+                <div className="mm-pager__sheet nm-pager__sheet" data-pane="next">
+                  {nextPage ?? (
+                    <div className="nm-page-shell mm-page-shell" aria-hidden="true" />
+                  )}
+                </div>
+                <div className="mm-pager__sheet nm-pager__sheet" data-pane="current">
+                  {pageSlot}
+                </div>
+                <div className="mm-pager__sheet nm-pager__sheet" data-pane="prev">
+                  {prevPage ?? (
+                    <div className="nm-page-shell mm-page-shell" aria-hidden="true" />
+                  )}
+                </div>
+              </>
+            )}
         </div>
       </div>
       <button
