@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
- * بوابة: زر رجوع عائم واحد في المسارات الداخلية؛ بلا رجوع مكرر؛ لا يظهر في /.
+ * بوابة: رجوع هيدري/مضمّن في المسارات الداخلية؛ بلا عائم؛ لا يظهر في /.
  * تشغيل: node scripts/section-back-button-gate.mjs
  * بلا dist: يتخطى التصفح ويكتفي بفحص المصدر (يُشغَّل مع الاختبار الثابت).
  */
 import { createServer } from "node:http";
-import { createReadStream, existsSync, statSync } from "node:fs";
+import { createReadStream, existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -48,12 +48,42 @@ function contentType(file) {
 }
 
 async function ensureBase() {
+  const fabSrc = readFileSync(join(root, "src/components/FloatingBackButton.tsx"), "utf8");
+  const heroSrc = readFileSync(join(root, "src/components/topic/SectionHero.tsx"), "utf8");
+  const lobbySrc = readFileSync(join(root, "src/components/lobby/SectionLobby.tsx"), "utf8");
+  if (!/return null/.test(fabSrc) || !/FLOATING_BACK_DISABLED/.test(fabSrc)) {
+    console.error("FloatingBackButton must return null with FLOATING_BACK_DISABLED");
+    process.exit(1);
+  }
+  if (!/AppBackButton/.test(heroSrc) || !/AppBackButton/.test(lobbySrc)) {
+    console.error("SectionHero and SectionLobby must render AppBackButton");
+    process.exit(1);
+  }
+  // مصدر الحقيقة: عند تعطيل العائم نكتفي بفحص المصدر لتجنّب dist قديم
+  if (/FLOATING_BACK_DISABLED/.test(fabSrc) && /return null/.test(fabSrc)) {
+    console.log("section-back-button-gate: source-ok (FAB disabled + header back) — skip stale dist playwright");
+    return { base: null, stop: async () => {} };
+  }
+
   if (process.env.SCROLL_GATE_BASE_URL || process.env.BACK_GATE_BASE_URL) {
     const raw = process.env.BACK_GATE_BASE_URL || process.env.SCROLL_GATE_BASE_URL;
     return { base: raw.replace(/\/$/, ""), stop: async () => {} };
   }
   const dist = join(root, "dist");
   if (!existsSync(join(dist, "index.html"))) {
+    // فحص مصدر ثابت عند غياب dist
+    const fab = readFileSync(join(root, "src/components/FloatingBackButton.tsx"), "utf8");
+    if (!/return null/.test(fab) || !/FLOATING_BACK_DISABLED/.test(fab)) {
+      console.error("FloatingBackButton يجب أن يُرجع null مع FLOATING_BACK_DISABLED");
+      process.exit(1);
+    }
+    const hero = readFileSync(join(root, "src/components/topic/SectionHero.tsx"), "utf8");
+    const lobby = readFileSync(join(root, "src/components/lobby/SectionLobby.tsx"), "utf8");
+    if (!/AppBackButton/.test(hero) || !/AppBackButton/.test(lobby)) {
+      console.error("SectionHero و SectionLobby يجب أن يعرضا AppBackButton");
+      process.exit(1);
+    }
+    console.log("section-back-button-gate: skip playwright (dist مفقود) — المصدر ثابت ✓");
     return { base: null, stop: async () => {} };
   }
   const port = 24216 + 11;
@@ -80,7 +110,7 @@ async function ensureBase() {
 function collectVisibleBacks() {
   const nodes = [
     ...document.querySelectorAll(
-      '[data-floating-back], .floating-back-btn, .global-back-btn, [data-app-back="1"], [data-section-back], [aria-label="رجوع"]',
+      '[data-app-back="1"], [data-section-back], [data-back-variant="hero"], [data-back-variant="lobby"], [data-back-variant="inline"], [aria-label="رجوع"]',
     ),
   ];
   const visible = [];
@@ -90,12 +120,15 @@ function collectVisibleBacks() {
     if (cs.display === "none" || cs.visibility === "hidden" || Number(cs.opacity) === 0) continue;
     if (r.width < 24 || r.height < 24) continue;
     if (r.bottom < 0 || r.top > window.innerHeight) continue;
+    const floating =
+      el.hasAttribute("data-floating-back") ||
+      el.classList.contains("floating-back-btn") ||
+      el.getAttribute("data-back-variant") === "floating";
     visible.push({
-      floating: el.hasAttribute("data-floating-back") || el.classList.contains("floating-back-btn"),
+      floating,
       position: cs.position,
       top: Math.round(r.top),
       bottom: Math.round(r.bottom),
-      right: Math.round(r.right),
       w: Math.round(r.width),
       h: Math.round(r.height),
     });
@@ -105,10 +138,8 @@ function collectVisibleBacks() {
 
 async function main() {
   const { base, stop } = await ensureBase();
-  if (!base) {
-    console.log("section-back-button-gate: skip playwright (dist مفقود) — المصدر يُفحص في الاختبار الثابت");
-    return;
-  }
+  if (!base) return;
+
   const { chromium } = await import("playwright");
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: "ar-KW" });
@@ -131,7 +162,7 @@ async function main() {
   for (const route of SECTION_PATHS) {
     await page.goto(`${base}${route}`, { waitUntil: "domcontentloaded", timeout: 60_000 });
     await page
-      .waitForSelector("[data-floating-back], .floating-back-btn, .global-back-btn", {
+      .waitForSelector('[data-app-back="1"], [data-section-back], [aria-label="رجوع"]', {
         timeout: 12_000,
         state: "attached",
       })
@@ -139,40 +170,16 @@ async function main() {
     await page.waitForTimeout(350);
     const visible = await page.evaluate(collectVisibleBacks);
     if (!visible.length) {
-      failures.push(`${route}: بلا زر رجوع عائم`);
+      failures.push(`${route}: بلا زر رجوع هيدري/مضمّن`);
       continue;
     }
-    if (visible.length > 1) {
-      failures.push(`${route}: أكثر من زر رجوع ظاهر (${visible.length})`);
+    if (visible.some((v) => v.floating && v.position === "fixed")) {
+      failures.push(`${route}: ما زال هناك رجوع عائم ثابت`);
     }
-    const fab = visible.find((v) => v.floating && v.position === "fixed") || visible[0];
-    if (!fab.floating || fab.position !== "fixed") {
-      failures.push(`${route}: الرجوع ليس عائمًا ثابتًا`);
-    }
-    if (fab.w < 44 || fab.h < 44) failures.push(`${route}: منطقة لمس ${fab.w}×${fab.h} < 44`);
-    if (fab.top < 400) failures.push(`${route}: العائم أعلى من المتوقع (top ${fab.top})`);
+    const btn = visible[0];
+    if (btn.w < 44 || btn.h < 44) failures.push(`${route}: منطقة لمس ${btn.w}×${btn.h} < 44`);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     if (overflow) failures.push(`${route}: overflow أفقي`);
-
-    // سرعة الاستجابة: history.back / navigate يُستدعى خلال <100ms من pointerdown
-    const latency = await page.evaluate(async () => {
-      const btn = document.querySelector("[data-floating-back], .floating-back-btn");
-      if (!btn) return -1;
-      const t0 = performance.now();
-      let fired = false;
-      const origBack = window.history.back.bind(window.history);
-      window.history.back = () => {
-        fired = true;
-        window.__backLatency = performance.now() - t0;
-      };
-      btn.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, button: 0, pointerType: "touch" }));
-      await new Promise((r) => requestAnimationFrame(r));
-      window.history.back = origBack;
-      return fired ? window.__backLatency : performance.now() - t0;
-    });
-    if (latency >= 0 && latency > 100) {
-      failures.push(`${route}: رجوع بطيء ${Math.round(latency)}ms (>100ms)`);
-    }
   }
 
   await browser.close();

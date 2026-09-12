@@ -22,6 +22,8 @@ import { isSeverelyIncompleteLesson } from "@/lib/fiqh/fiqhNormalize";
 import { relatedFiqhIssues, fiqhDoorBackHref } from "@/lib/fiqh/fiqhRelated";
 import "@/styles/pages/fiqh-hub.css";
 import { DetailScreen } from "@/components/design-system/screens";
+import { AppBackButton } from "@/components/common/AppBackButton";
+import "@/styles/knowledge-experience.css";
 
 function firstSentence(text: string): { intro: string; rest: string } {
   const trimmed = text.trim();
@@ -183,10 +185,15 @@ export default function FiqhLessonPage() {
   return (
     <DetailScreen compose="mark">
     <article
-      className="fiqh-lux-shell fiqh-lux-lesson page-shell fiqh-lesson-page"
+      className="fiqh-lux-shell fiqh-lux-lesson page-shell fiqh-lesson-page kx-layout kx-layout--fiqh"
       dir="rtl"
       data-focus-root="1"
+      data-kx="1"
+      data-kx-layout="fiqh"
     >
+      <div className="fiqh-lesson-back-row">
+        <AppBackButton variant="inline" fallbackHref={fiqhDoorBackHref(hit)} aria-label="رجوع" />
+      </div>
       <div
         className="fiqh-read-progress"
         role="progressbar"
@@ -208,7 +215,7 @@ export default function FiqhLessonPage() {
         <span aria-current="page">{lesson.title}</span>
       </nav>
 
-      <header className="fiqh-lux-lesson-hero">
+      <header className="fiqh-lux-lesson-hero kx-hero kx-hero--knowledge">
         <p className="fiqh-lux-lesson-hero__meta">
           {book.title} · {chapter.title}
         </p>
@@ -248,27 +255,27 @@ export default function FiqhLessonPage() {
           ))}
       </nav>
 
-      <div className="fiqh-lux-sections">
+      <div className="fiqh-lux-sections kx-flow">
         {intro ? (
-          <section id="fiqh-sec-summary" className="fiqh-lux-section">
+          <section id="fiqh-sec-summary" className="fiqh-lux-section" data-kx-kind="summary">
             <h2>ملخص مختصر</h2>
             <p>{intro}</p>
           </section>
         ) : null}
         {definition ? (
-          <section id="fiqh-sec-definition" className="fiqh-lux-section">
+          <section id="fiqh-sec-definition" className="fiqh-lux-section" data-kx-kind="definition">
             <h2>تعريف المسألة</h2>
             <p>{definition}</p>
           </section>
         ) : null}
         {ruling ? (
-          <section id="fiqh-sec-ruling" className="fiqh-lux-section">
+          <section id="fiqh-sec-ruling" className="fiqh-lux-section" data-kx-kind="ruling">
             <h2>الحكم المختصر</h2>
             <p>{ruling}</p>
           </section>
         ) : null}
         {detail ? (
-          <section id="fiqh-sec-detail" className="fiqh-lux-section">
+          <section id="fiqh-sec-detail" className="fiqh-lux-section" data-kx-kind="detail">
             <h2>التفصيل التعليمي</h2>
             {detail.split(/\n+/).map((para, i) => (
               <p key={i}>{para}</p>
@@ -276,43 +283,43 @@ export default function FiqhLessonPage() {
           </section>
         ) : null}
         {lesson.evidence?.trim() ? (
-          <section id="fiqh-sec-evidence" className="fiqh-lux-section">
+          <section id="fiqh-sec-evidence" className="fiqh-lux-section" data-kx-kind="evidence">
             <h2>الأدلة</h2>
             <p>{lesson.evidence}</p>
           </section>
         ) : null}
         {scholarly ? (
-          <section id="fiqh-sec-scholarly" className="fiqh-lux-section">
+          <section id="fiqh-sec-scholarly" className="fiqh-lux-section" data-kx-kind="notes">
             <h2>أقوال أهل العلم</h2>
             <p>{scholarly}</p>
           </section>
         ) : null}
         {practical ? (
-          <section id="fiqh-sec-practical" className="fiqh-lux-section">
+          <section id="fiqh-sec-practical" className="fiqh-lux-section" data-kx-kind="summary">
             <h2>الخلاصة</h2>
             <p>{practical}</p>
           </section>
         ) : null}
         {notes ? (
-          <section id="fiqh-sec-notes" className="fiqh-lux-section">
+          <section id="fiqh-sec-notes" className="fiqh-lux-section" data-kx-kind="warning">
             <h2>تنبيهات مهمة</h2>
             <p>{notes}</p>
           </section>
         ) : null}
         {mistakes.length ? (
-          <section id="fiqh-sec-mistakes" className="fiqh-lux-section">
+          <section id="fiqh-sec-mistakes" className="fiqh-lux-section" data-kx-kind="warning">
             <h2>أخطاء شائعة</h2>
             <ListBlock items={mistakes} />
           </section>
         ) : null}
         {examples.length ? (
-          <section id="fiqh-sec-examples" className="fiqh-lux-section">
+          <section id="fiqh-sec-examples" className="fiqh-lux-section" data-kx-kind="concepts">
             <h2>أمثلة تطبيقية</h2>
             <ListBlock items={examples} />
           </section>
         ) : null}
         {reviewQs.length ? (
-          <section id="fiqh-sec-review" className="fiqh-lux-section">
+          <section id="fiqh-sec-review" className="fiqh-lux-section" data-kx-kind="faq">
             <h2>أسئلة مراجعة</h2>
             <ListBlock items={reviewQs} />
           </section>

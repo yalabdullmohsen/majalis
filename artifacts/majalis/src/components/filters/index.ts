@@ -4,3 +4,8 @@ export { FilterBar } from "./FilterBar";
 export { FilterSheet, FilterToggle } from "./FilterSheet";
 export { ActiveFilters, type ActiveFilterItem } from "./ActiveFilters";
 export { FilterResetButton } from "./FilterResetButton";
+export { UnifiedFilterBar } from "./UnifiedFilterBar";
+export {
+  UnifiedPrimaryFilters,
+  type UnifiedFilterOption,
+} from "./UnifiedPrimaryFilters";

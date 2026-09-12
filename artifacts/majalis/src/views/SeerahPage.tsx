@@ -10,6 +10,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import "@/styles/pages/seerah.css";
 import { DashboardScreen } from "@/components/design-system/screens";
+import "@/styles/knowledge-experience.css";
 
 const PHASES: { id: string; num: number; title: string; year: string; Icon: LucideIcon; color: string; desc: string; topics: string[]; keyEvents: string[] }[] = [
   {
@@ -296,7 +297,7 @@ export default function SeerahPage() {
       subtitle="امتداداً لرسالة الأنبياء، حياة خاتمهم محمد ﷺ من المولد إلى الوفاة في 12 مرحلة"
       groupTitle="مراحل السيرة النبوية"
     >
-      <div className="seerah-page" dir="rtl">
+      <div className="seerah-page kx-layout kx-layout--biography" dir="rtl" data-kx="1">
         <div className="seerah-back-wrap">
           <Link href="/prophets" className="seerah-back-link">قصص الأنبياء</Link>
         </div>

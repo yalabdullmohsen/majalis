@@ -135,7 +135,7 @@ assert.match(hubCard, /\.quran-hub-card[\s\S]*?border-radius:\s*var\(--radius-ca
 
 const fiqhView = read("src/pages/fiqh/ui/FiqhView.tsx");
 assert.match(fiqhView, /SectionEntryCard/);
-assert.match(fiqhView, /hub-card-grid fiqh-book-grid/);
+assert.match(fiqhView, /kx-layout--library fiqh-book-grid|hub-card-grid fiqh-book-grid/);
 
 
 const mainSrc = read("src/main.tsx");

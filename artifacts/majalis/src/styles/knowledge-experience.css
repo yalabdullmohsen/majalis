@@ -1,0 +1,775 @@
+/**
+ * Knowledge Experience — Structured Knowledge بدل Card-Based الرتابة.
+ * يُحمَّل بعد soft-cards / reading-section / topic-page.
+ */
+
+:root {
+  --kx-gap: 0.65rem;
+  --kx-pad: 0.85rem 1rem;
+  --kx-radius: var(--radius-card, 18px);
+  --kx-ink: var(--mj-ink, #12241d);
+  --kx-muted: var(--mj-ink-2, #3d5349);
+  --kx-brand: var(--mj-brand, #1f6b56);
+  --kx-brand-deep: var(--mj-brand-deep, #0d4a39);
+  --kx-surface: var(--ss-card-bg, #fffcf7);
+  --kx-muted: var(--mj-ink-2, #3d5349);
+  --kx-line: color-mix(in srgb, var(--kx-brand) 14%, transparent);
+  --kx-radius: var(--radius-card, 18px);
+}
+
+/* —— أغلفة التخطيط —— */
+.kx-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--kx-gap);
+  width: 100%;
+  max-width: 42rem;
+  margin-inline: auto;
+  padding-block: 0.35rem 1.25rem;
+  box-sizing: border-box;
+}
+
+.kx-layout--reader {
+  max-width: 40rem;
+  gap: 0.55rem;
+}
+
+.kx-layout--knowledge {
+  max-width: 42rem;
+}
+
+.kx-layout--library {
+  max-width: 48rem;
+}
+
+.kx-layout--timeline,
+.kx-layout--biography {
+  max-width: 44rem;
+}
+
+.kx-layout--hadith {
+  max-width: 40rem;
+}
+
+.kx-layout--fiqh {
+  max-width: 42rem;
+}
+
+.kx-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+/* —— كتل المحتوى (أشكال مختلفة) —— */
+.kx-block {
+  margin: 0;
+  padding: var(--kx-pad);
+  border-radius: var(--kx-radius);
+  box-sizing: border-box;
+  color: var(--kx-ink);
+}
+
+.kx-block__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--kx-brand-deep);
+}
+
+.kx-block__title {
+  margin: 0 0 0.55rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--kx-brand-deep);
+}
+
+.kx-block__body {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--kx-ink);
+}
+
+.kx-block__body p {
+  margin: 0 0 0.65rem;
+}
+
+.kx-block__body p:last-child {
+  margin-bottom: 0;
+}
+
+/* تعريف: شريط جانبي بدون صندوق ثقيل */
+.kx-block--definition {
+  background: transparent;
+  border: none;
+  border-inline-start: 3px solid var(--kx-brand);
+  border-radius: 0;
+  padding-inline: 0.95rem 0.15rem;
+  padding-block: 0.15rem 0.35rem;
+}
+
+.kx-block--definition .kx-block__title {
+  font-size: 0.95rem;
+}
+
+/* مخرجات التعلم: قائمة مرقّمة خفيفة */
+.kx-block--outcomes {
+  background: color-mix(in srgb, var(--kx-brand) 7%, var(--kx-surface));
+  border: 1px solid color-mix(in srgb, var(--kx-brand) 16%, transparent);
+}
+
+.kx-outcomes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: kx-out;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.kx-outcomes__item {
+  counter-increment: kx-out;
+  position: relative;
+  padding-inline-start: 1.85rem;
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.kx-outcomes__item::before {
+  content: counter(kx-out);
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.1rem;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  background: color-mix(in srgb, var(--kx-brand) 16%, transparent);
+  color: var(--kx-brand-deep);
+}
+
+/* أدلة: اقتباس بهوية ذهبية خفيفة */
+.kx-block--evidence {
+  background: color-mix(in srgb, var(--mj-accent, #b8963f) 8%, var(--kx-surface));
+  border: 1px solid color-mix(in srgb, var(--mj-accent, #b8963f) 22%, transparent);
+  border-inline-start-width: 3px;
+  border-inline-start-color: var(--mj-accent, #b8963f);
+}
+
+.kx-block--evidence .kx-block__body {
+  font-size: 1rem;
+  line-height: 1.95;
+}
+
+/* مصادر: صفوف مضغوطة بلا ظل */
+.kx-block--sources {
+  background: transparent;
+  border: none;
+  border-block-start: 1px solid var(--kx-line);
+  border-radius: 0;
+  padding-inline: 0;
+  padding-block: 0.75rem 0.25rem;
+}
+
+.kx-sources {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.kx-sources__item {
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--kx-muted);
+  padding-block: 0.25rem;
+  border-block-end: 1px dashed color-mix(in srgb, var(--kx-brand) 12%, transparent);
+}
+
+.kx-sources__item:last-child {
+  border-block-end: none;
+}
+
+/* تنبيه */
+.kx-block--warning {
+  background: color-mix(in srgb, #b45309 8%, var(--kx-surface));
+  border: 1px solid color-mix(in srgb, #b45309 28%, transparent);
+  border-inline-start-width: 3px;
+  border-inline-start-color: #b45309;
+}
+
+.kx-block--warning .kx-block__label,
+.kx-block--warning .kx-block__title {
+  color: #92400e;
+}
+
+/* ملاحظات معرفية */
+.kx-block--notes {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 7%, var(--kx-surface));
+  border: 1px dashed color-mix(in srgb, var(--mj-brand, #1f6b56) 24%, transparent);
+}
+
+/* مفاهيم مفتاحية: شرائح */
+.kx-block--concepts {
+  background: transparent;
+  border: none;
+  padding-inline: 0;
+}
+
+.kx-concepts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.kx-concepts__item {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--kx-brand) 10%, var(--kx-surface));
+  color: var(--kx-brand-deep);
+  border: 1px solid color-mix(in srgb, var(--kx-brand) 18%, transparent);
+}
+
+/* FAQ: accordion */
+.kx-block--faq {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.kx-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.kx-faq__item {
+  border: 1px solid var(--kx-line);
+  border-radius: 14px;
+  background: var(--kx-surface);
+  overflow: hidden;
+}
+
+.kx-faq__q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 750;
+  color: var(--kx-brand-deep);
+  text-align: start;
+  cursor: pointer;
+}
+
+.kx-faq__a {
+  margin: 0;
+  padding: 0 0.9rem 0.85rem;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--kx-muted);
+}
+
+.kx-faq__item[open] .kx-faq__q {
+  padding-bottom: 0.35rem;
+}
+
+/* خط زمني */
+.kx-block--timeline {
+  background: transparent;
+  border: none;
+  padding-inline: 0.15rem;
+}
+
+.kx-timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-inline-start: 2px solid color-mix(in srgb, var(--kx-brand) 28%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.kx-timeline__item {
+  position: relative;
+  padding-inline-start: 1rem;
+}
+
+.kx-timeline__item::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: -0.35rem;
+  top: 0.35rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: var(--kx-brand);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--kx-brand) 18%, transparent);
+}
+
+.kx-timeline__when {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--kx-brand-deep);
+  margin-bottom: 0.15rem;
+}
+
+.kx-timeline__what {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--kx-ink);
+}
+
+/* مواضيع مرتبطة: قائمة روابط بلا بطاقات */
+.kx-block--related {
+  background: transparent;
+  border: none;
+  border-block-start: 1px solid var(--kx-line);
+  border-radius: 0;
+  padding-inline: 0;
+}
+
+.kx-related {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.kx-related__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 2.75rem;
+  padding: 0.45rem 0.15rem;
+  text-decoration: none;
+  color: var(--kx-brand-deep);
+  font-weight: 700;
+  font-size: 0.92rem;
+  border-block-end: 1px solid color-mix(in srgb, var(--kx-brand) 8%, transparent);
+}
+
+.kx-related__meta {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--kx-muted);
+}
+
+/* ملخص الباب */
+.kx-block--summary {
+  background: color-mix(in srgb, var(--kx-brand) 5%, var(--kx-surface));
+  border: 1px solid color-mix(in srgb, var(--kx-brand) 14%, transparent);
+}
+
+.kx-block--summary .kx-block__body {
+  font-size: 1.02rem;
+  line-height: 1.9;
+}
+
+/* حكم / نتيجة بارزة */
+.kx-block--ruling {
+  background: color-mix(in srgb, var(--kx-brand-deep) 8%, var(--kx-surface));
+  border: 1px solid color-mix(in srgb, var(--kx-brand-deep) 22%, transparent);
+}
+
+.kx-block--ruling .kx-block__title {
+  font-size: 0.88rem;
+}
+
+.kx-block--ruling .kx-block__body {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.75;
+}
+
+/* —— بطاقة مكتبة أعرض —— */
+.kx-library-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.55rem 0.85rem;
+  align-items: start;
+  width: 100%;
+  min-height: 0;
+  padding: 0.95rem 1.05rem;
+  border-radius: var(--kx-radius);
+  background: var(--kx-surface);
+  border: 1px solid var(--kx-line);
+  text-decoration: none;
+  color: inherit;
+  box-sizing: border-box;
+}
+
+.kx-library-card__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--kx-brand-deep);
+}
+
+.kx-library-card__desc {
+  margin: 0.25rem 0 0;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--kx-muted);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.kx-library-card__meta {
+  margin: 0.35rem 0 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--kx-brand);
+}
+
+.kx-library-card__action {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.25rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 750;
+  background: color-mix(in srgb, var(--kx-brand) 12%, transparent);
+  color: var(--kx-brand-deep);
+  white-space: nowrap;
+}
+
+/* —— هيرو متنوع —— */
+.kx-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.85rem 0.15rem 0.55rem;
+  margin-bottom: 0.25rem;
+}
+
+.kx-hero__eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 750;
+  color: var(--kx-brand);
+}
+
+.kx-hero__title {
+  margin: 0;
+  font-size: clamp(1.25rem, 4.2vw, 1.55rem);
+  font-weight: 850;
+  line-height: 1.35;
+  color: var(--kx-brand-deep);
+}
+
+.kx-hero__lead {
+  margin: 0.15rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--kx-muted);
+  max-width: 36rem;
+}
+
+.kx-hero--hadith .kx-hero__lead {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--kx-ink);
+}
+
+.kx-hero--biography {
+  padding-block-end: 0.75rem;
+  border-block-end: 1px solid var(--kx-line);
+}
+
+.kx-hero--library .kx-hero__title {
+  font-size: clamp(1.15rem, 3.8vw, 1.4rem);
+}
+
+/* —— كسر رتابة soft-card داخل مسارات المعرفة —— */
+.kx-layout .soft-card,
+.kx-layout .rsc.soft-card,
+.fiqh-lux-lesson .fiqh-lux-section,
+.topic-page__body .topic-card,
+.mk-detail .soft-card,
+.tarikh-detail .soft-card {
+  box-shadow: none;
+  min-height: 0;
+}
+
+.fiqh-lux-lesson .fiqh-lux-section {
+  padding: 0.75rem 0.15rem;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  border-block-end: 1px solid color-mix(in srgb, var(--kx-brand) 10%, transparent);
+}
+
+.fiqh-lux-lesson .fiqh-lux-section:last-of-type {
+  border-block-end: none;
+}
+
+.fiqh-lux-lesson .fiqh-lux-section h2 {
+  font-size: 0.92rem;
+  margin-bottom: 0.4rem;
+}
+
+.fiqh-lux-lesson[data-kx="1"] .fiqh-lux-section[data-kx-kind="definition"] {
+  border-inline-start: 3px solid var(--kx-brand);
+  padding-inline-start: 0.85rem;
+  border-block-end: none;
+}
+
+.fiqh-lux-lesson[data-kx="1"] .fiqh-lux-section[data-kx-kind="evidence"] {
+  background: color-mix(in srgb, var(--mj-accent, #b8963f) 7%, transparent);
+  border-radius: 14px;
+  padding: 0.75rem 0.9rem;
+  border-block-end: none;
+}
+
+.fiqh-lux-lesson[data-kx="1"] .fiqh-lux-section[data-kx-kind="warning"],
+.fiqh-lux-lesson[data-kx="1"] .fiqh-lux-section[data-kx-kind="notes"] {
+  background: color-mix(in srgb, #b45309 7%, transparent);
+  border-radius: 14px;
+  padding: 0.75rem 0.9rem;
+  border-block-end: none;
+  border-inline-start: 3px solid #b45309;
+}
+
+.fiqh-lux-lesson[data-kx="1"] .fiqh-lux-section[data-kx-kind="ruling"] {
+  background: color-mix(in srgb, var(--kx-brand) 8%, transparent);
+  border-radius: 14px;
+  padding: 0.75rem 0.9rem;
+  border-block-end: none;
+}
+
+.fiqh-lux-lesson[data-kx="1"] .fiqh-lux-section[data-kx-kind="sources"],
+.fiqh-lux-lesson[data-kx="1"] .fiqh-lux-section[data-kx-kind="related"] {
+  background: transparent;
+  padding-inline: 0;
+}
+
+/* تقليل فراغات شبكات البطاقات المتكررة */
+.hub-card-grid,
+.section-lobby__grid,
+.topic-page__grid,
+.fiqh-hub-grid {
+  gap: clamp(0.45rem, 1.8vw, 0.7rem);
+}
+
+.hub-card,
+.section-card,
+.topic-card {
+  min-height: 0;
+}
+
+/* فلاتر موحّدة: أساسيات ظاهرة + المزيد */
+.kx-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-block: 0.35rem 0.55rem;
+}
+
+.kx-filter-row__more {
+  min-height: 2.25rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--kx-brand) 22%, transparent);
+  background: var(--kx-surface);
+  color: var(--kx-brand-deep);
+  font-size: 0.82rem;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+html.dark .kx-block--definition,
+html[data-theme="dark"] .kx-block--definition {
+  border-inline-start-color: var(--mj-brand, #5cc095);
+}
+
+html.dark .kx-library-card,
+html[data-theme="dark"] .kx-library-card {
+  background: color-mix(in srgb, #0f3d2e 18%, var(--mj-surface, #1a221f));
+  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 28%, transparent);
+}
+
+/* عناوين/أوصاف بطاقة المكتبة في الداكن — لا تستخدم brand-deep الداكن فوق سطح داكن */
+html.dark .kx-library-card__title,
+html.dark .hub-card__title,
+html[data-theme="dark"] .kx-library-card__title,
+html[data-theme="dark"] .hub-card__title {
+  color: var(--mj-ink, #e8f2ec);
+}
+
+html.dark .kx-library-card__desc,
+html.dark .hub-card__desc,
+html[data-theme="dark"] .kx-library-card__desc,
+html[data-theme="dark"] .hub-card__desc {
+  color: var(--mj-ink-2, #b7c9c0);
+}
+
+html.dark .kx-library-card__meta,
+html[data-theme="dark"] .kx-library-card__meta {
+  color: var(--mj-brand, #5cc095);
+}
+
+/* إلغاء السهم العائم — الرجوع عبر الهيدر فقط */
+.floating-back-btn,
+.floating-back-btn.app-back-btn--floating,
+button.floating-back-btn[data-floating-back="1"] {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+.fiqh-book-grid.kx-layout--library {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  max-width: 48rem;
+}
+
+
+/* —— تنويع كتل data-kx-kind خارج الفقه —— */
+[data-kx-kind="definition"],
+.kx-block--definition {
+  border-inline-start: 3px solid var(--kx-brand, #1f6b56);
+  padding-inline-start: 0.75rem;
+}
+
+[data-kx-kind="evidence"],
+[data-kx-kind="ruling"],
+.kx-block--ruling {
+  background: color-mix(in srgb, var(--mj-accent, #b8963f) 8%, transparent);
+  border-radius: 14px;
+  padding: 0.7rem 0.85rem;
+}
+
+[data-kx-kind="sources"],
+.kx-block--sources {
+  background: transparent;
+  border-block-start: 1px dashed color-mix(in srgb, var(--kx-brand, #1f6b56) 18%, transparent);
+  padding-block-start: 0.65rem;
+}
+
+[data-kx-kind="warning"] {
+  background: color-mix(in srgb, #b45309 8%, transparent);
+  border-inline-start: 3px solid #b45309;
+  border-radius: 14px;
+  padding: 0.7rem 0.85rem;
+}
+
+/* كثافة أقسام المعرفة — تقليل فراغات البطاقات المتكررة */
+.uq-page .uq-type-card,
+.uq-page .uq-fact-item,
+.uq-page .uq-jam-card,
+.hs-page .hs-card,
+.seerah-page .soft-card,
+.miracles-page .soft-card,
+.topic-page--tawhid .tawheed-type-card,
+.topic-page--tawhid .twh-pillar-card,
+.tarikh-page .soft-card {
+  min-height: 0;
+  box-shadow: none;
+}
+
+.uq-page .uq-types-list,
+.uq-page .uq-facts-grid,
+.hs-page .hs-grid,
+.twh-hub-grid--kx {
+  gap: clamp(0.45rem, 1.6vw, 0.7rem);
+}
+
+.twh-hub-grid--kx {
+  display: flex;
+  flex-direction: column;
+  max-width: 48rem;
+}
+
+.hadith-page--hdl .kx-filter-row {
+  margin-block: 0.25rem 0.5rem;
+}
+
+.hadith-by-id[data-kx="1"] .hadith-detail-card,
+.hadith-by-id .hadith-detail-card {
+  box-shadow: none;
+  min-height: 0;
+}
+
+/* ReadingSectionCard variants — مع المعرفة (خارج CSS الحرج) */
+.rsc--warning,
+.rsc--notes {
+  background: color-mix(in srgb, #b45309 8%, var(--rsc-bg, #fffcf7));
+  border-color: color-mix(in srgb, #b45309 26%, transparent);
+  border-inline-start-width: 3px;
+  border-inline-start-color: #b45309;
+  box-shadow: none;
+}
+.rsc--outcomes,
+.rsc--concepts {
+  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 7%, var(--rsc-bg, #fffcf7));
+  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent);
+  box-shadow: none;
+}
+.rsc--ruling {
+  background: color-mix(in srgb, var(--mj-brand-deep, #0d4a39) 8%, var(--rsc-bg, #fffcf7));
+  border-color: color-mix(in srgb, var(--mj-brand-deep, #0d4a39) 22%, transparent);
+  box-shadow: none;
+}
+.rsc--timeline {
+  background: transparent;
+  border: none;
+  border-inline-start: 2px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 30%, transparent);
+  border-radius: 0;
+  box-shadow: none;
+  padding-inline-start: 1rem;
+}
+.rsc--definition {
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  border-inline-start: 3px solid var(--mj-brand, #1f6b56);
+  background: transparent;
+  padding-inline: 0.95rem 0.15rem;
+}
+.rsc--sources,
+.rsc--related {
+  box-shadow: none;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  border-block-start: 1px solid var(--rsc-border, color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, transparent));
+  padding-inline: 0;
+}

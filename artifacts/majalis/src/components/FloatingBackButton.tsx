@@ -1,15 +1,8 @@
-/**
- * زر الرجوع العائم العام — أسفل يمين الشاشة فوق الشريط السفلي.
- * السلوك عبر AppBackButton + goBackOrFallback.
- */
-import { AppBackButton } from "@/components/common/AppBackButton";
-
+/** الرجوع العائم معطّل — الهيدر/المضمّن فقط. */
 export function FloatingBackButton() {
-  return <AppBackButton variant="floating" autoHideFloating />;
+  return null;
 }
 
-/** توافق مع الاستيرادات القديمة */
 export { FloatingBackButton as GlobalBackButton };
-
-/** المكوّن الموحّد للرجوع في الصفحات */
 export { AppBackButton } from "@/components/common/AppBackButton";
+export const FLOATING_BACK_DISABLED = true as const;

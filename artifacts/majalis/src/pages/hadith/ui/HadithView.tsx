@@ -28,13 +28,15 @@ import {
 } from "@/lib/hadith-access";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
-import { HadithEntryCard } from "@/components/hadith/HadithEntryCard";
 import { SectionEntryCard } from "@/components/ui/HubCard";
+import { HadithEntryCard } from "@/components/hadith/HadithEntryCard";
 import { GridScreen } from "@/components/design-system/screens";
 import { ExclusiveChoiceGroup } from "@/components/ui/ExclusiveChoiceGroup";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { ShareButtons } from "@/components/ContentActions";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
+import { UnifiedPrimaryFilters } from "@/components/filters/UnifiedPrimaryFilters";
+import { KnowledgeLayout } from "@/components/knowledge";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { CitationActionBar } from "@/components/citation/CitationActionBar";
 import { IsnadAttributionBar } from "@/components/IsnadAttributionBar";
@@ -681,8 +683,23 @@ export function HadithSection({
     [displayItems, safePage, PAGE_SIZE],
   );
 
+  const moreFiltersActive =
+    (activeCategory !== "الكل" ? 1 : 0) +
+    (showGradeFilters && gradeFilter !== "all" ? 1 : 0) +
+    (searchScope !== "matn" ? 1 : 0) +
+    (debouncedNumber || debouncedBook || debouncedInBook ? 1 : 0);
+
   const filtersPanel = (
     <div className="hadith-filters-panel">
+      <div className="hadith-filter-section">
+        <p className="hadith-filter-label">التصنيف الموضوعي</p>
+        <ExclusiveChoiceGroup
+          ariaLabel="تصفية التصنيف"
+          value={activeCategory}
+          onChange={(id) => setActiveCategory(id)}
+          items={CATEGORIES.map((cat) => ({ id: cat.id, label: cat.label }))}
+        />
+      </div>
 
       <div className="hadith-filter-section">
         <p className="hadith-filter-label">نطاق البحث</p>
@@ -805,38 +822,6 @@ export function HadithSection({
         </nav>
       )}
 
-      {/* الترتيب: النوع (أعلاه) → الكتب → التصنيفات → البحث؛ المتقدم في Bottom Sheet */}
-      <div className="hdl-discover" data-hdl="discover">
-        <div className="hdl-discover__books" role="radiogroup" aria-label="تصفية الكتب">
-          {collections.map((c) => (
-            <button
-              key={c}
-              type="button"
-              role="radio"
-              aria-checked={activeCollection === c}
-              className={`hdl-discover__book${activeCollection === c ? " is-active" : ""}`}
-              onClick={() => setActiveCollection(c)}
-            >
-              {c === "الكل" ? "كل الكتب" : collectionLabel(c)}
-            </button>
-          ))}
-        </div>
-        <div className="hdl-discover__cats" role="radiogroup" aria-label="تصفية التصنيف">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.id}
-              type="button"
-              role="radio"
-              aria-checked={activeCategory === cat.id}
-              className={`hdl-chip${activeCategory === cat.id ? " is-active" : ""}`}
-              onClick={() => setActiveCategory(cat.id)}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
       <div className="hadith-toolbar">
         <HadithSearch
           id={`hadith-q-${authenticityClass}`}
@@ -844,8 +829,10 @@ export function HadithSection({
           onChange={setSearch}
           placeholder="ابحث في متن الحديث أو المصدر أو التصنيف…"
         />
-        <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="تصفية متقدمة" />
+        <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="تصفية" />
       </div>
+
+      {/* الحكم يُضبط من صحيفة التصفية المتقدمة — لا تكديس في الشريط */ null}
 
       <div className="ds-section__head hadith-toolbar__meta">
         <div className="hadith-stats-row">
@@ -876,6 +863,34 @@ export function HadithSection({
           )}
         </div>
       </div>
+
+      <UnifiedPrimaryFilters
+        primary={collections.slice(0, 4).map((c) => ({
+          id: c,
+          label: c === "الكل" ? "كل الكتب" : collectionLabel(c),
+          active: activeCollection === c,
+          onSelect: () => setActiveCollection(c),
+        }))}
+        moreActiveCount={moreFiltersActive}
+        onOpenMore={() => setFiltersOpen(true)}
+        moreLabel="المزيد"
+      />
+      {collections.length > 4 ? (
+        <div className="hdl-discover__books hdl-discover__books--secondary" role="radiogroup" aria-label="بقية الكتب">
+          {collections.slice(4).map((c) => (
+            <button
+              key={c}
+              type="button"
+              role="radio"
+              aria-checked={activeCollection === c}
+              className={`hdl-discover__book${activeCollection === c ? " is-active" : ""}`}
+              onClick={() => setActiveCollection(c)}
+            >
+              {collectionLabel(c)}
+            </button>
+          ))}
+        </div>
+      ) : null}
 
       {loading && displayItems.length === 0 ? (
         <SkeletonCardGrid count={8} />
@@ -958,9 +973,9 @@ export function HadithSection({
   }
 
   return (
-    <div className="page-shell content-hub-page ds-page hadith-page hadith-page--hdl" aria-busy={loading}>
+    <KnowledgeLayout kind="hadith" className="page-shell content-hub-page ds-page hadith-page hadith-page--hdl" aria-busy={loading}>
       {inner}
-    </div>
+    </KnowledgeLayout>
   );
 }
 
@@ -1005,42 +1020,39 @@ export default function HadithPage() {
       desc: "متون الصحيحين مع المصدر والتخريج",
       Icon: BookOpenCheck,
       featured: true,
-      badge: "مرجع الصحيحين",
+      badge: "أساس",
     },
     {
       href: "/hadith/books",
       title: "كتب الحديث",
       desc: "البخاري ومسلم مرتّبان بالأبواب",
       Icon: Library,
-      badge: "كتب الأصول",
     },
     {
       href: "/arbaeen-nawawi",
       title: "الأربعون النووية",
       desc: "أربعون حديثاً جامعاً مع الشرح",
       Icon: BookMarked,
-      badge: "٤٠ حديثًا",
     },
     {
       href: "/hadith-science",
       title: "مصطلح الحديث",
       desc: "درجات الحديث ومباحث المصطلح",
       Icon: ScrollText,
-      badge: "قاموس المصطلح",
     },
     {
       href: "/hadith/daif",
       title: "الأحاديث الضعيفة",
       desc: "للتمييز والتخريج لا للاحتجاج",
       Icon: AlertTriangle,
-      badge: "للتمييز لا للاحتجاج",
+      badge: "تنبيه",
     },
     {
       href: "/hadith/mawdu",
       title: "الأحاديث الموضوعة",
       desc: "للتحذير والبيان دون الاحتجاج",
       Icon: Ban,
-      badge: "تحذير من النسبة",
+      badge: "تحذير",
     },
   ];
 
@@ -1062,9 +1074,9 @@ export default function HadithPage() {
                 title={c.title}
                 subtitle={c.desc}
                 Icon={c.Icon}
-                meta={c.badge}
-                featured={Boolean(c.featured)}
-                className={c.featured ? "hdl-entry-card--featured" : undefined}
+                badge={c.badge}
+                featured={c.featured}
+                variant="primary"
               />
             ))}
           </div>

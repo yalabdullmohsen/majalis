@@ -1,5 +1,5 @@
 /**
- * بوابة: رجوع داخل هيدر الأقسام + تباين chips الدروس ليلاً (بلا عائم ثابت).
+ * بوابة: رجوع هيدري + تباين chips الدروس ليلاً (بلا عائم).
  * تشغيل: node --import tsx src/lib/__tests__/mobile-back-lesson-chips-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -12,14 +12,15 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const appBack = read("src/components/common/AppBackButton.tsx");
 assert.doesNotMatch(appBack, /isTabRootPath/);
-assert.match(appBack, /ariaLabel = "رجوع"/);
+assert.match(appBack, /رجوع/);
 
 const fab = read("src/components/FloatingBackButton.tsx");
-assert.match(fab, /variant="floating"/);
+assert.match(fab, /return null/, "العائم ملغى");
+assert.match(fab, /FLOATING_BACK_DISABLED/);
 
 const lobby = read("src/components/lobby/SectionLobby.tsx");
-assert.doesNotMatch(lobby, /AppBackButton/);
-assert.doesNotMatch(lobby, /data-section-back/);
+assert.match(lobby, /AppBackButton|data-section-back/, "رجوع هيدري في اللوبي");
+assert.match(lobby, /data-section-back/);
 
 const polish = read("src/styles/sections-calm-polish.css");
 assert.match(polish, /--mj-chip-bg:/);
@@ -36,7 +37,10 @@ assert.match(lessonsCss, /html\.dark[\s\S]*?\.filter-chips__chip\.is-active[\s\S
 assert.match(lessonsCss, /\.lessons-page-v3\s*\{[\s\S]*?padding-bottom:\s*calc\(\s*var\(--bottom-nav-height/);
 assert.match(lessonsCss, /\.lesson-filters__chips\s*\{[\s\S]*?overflow-x:\s*auto/);
 assert.doesNotMatch(
-  lessonsCss.slice(lessonsCss.indexOf(".lessons-page-v2 .filter-chips {"), lessonsCss.indexOf(".lessons-page-v2 .filter-chips__chip {") + 80),
+  lessonsCss.slice(
+    lessonsCss.indexOf(".lessons-page-v2 .filter-chips {"),
+    lessonsCss.indexOf(".lessons-page-v2 .filter-chips__chip {") + 80,
+  ),
   /background:\s*var\(--surface-muted/,
   "فلاتر الدروس بلا صندوق muted ثقيل",
 );

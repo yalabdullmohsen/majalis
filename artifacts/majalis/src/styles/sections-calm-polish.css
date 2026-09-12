@@ -1,8 +1,4 @@
-/**
- * sections-calm-polish.css
- * تلميع ضيّق للأقسام (رئيسية/قرآن/دروس/إعجاز/قائمة/فلاتر) —
- * بعد visual-identity-unify. بلا لمس لمقاييس المصحف أو الصوت/الأذان.
- */
+
 
 :root {
   /* Tokens موحّدة — خلفية + سطح فقط للبيج */
@@ -517,57 +513,7 @@ html.dark .sidebar-item.active {
   pointer-events: none !important;
 }
 
-.global-back-btn.floating-back-btn,
-.floating-back-btn.app-back-btn--floating,
-button.floating-back-btn[data-floating-back="1"] {
-  display: flex !important;
-  pointer-events: auto !important;
-  position: fixed !important;
-  right: calc(var(--inset-right, 0px) + 16px) !important;
-  left: auto !important;
-  inset-inline-start: auto !important;
-  inset-inline-end: auto !important;
-  bottom: calc(
-    var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 16px +
-      var(--quran-mini-player-offset, 0px)
-  ) !important;
-  z-index: var(--z-fab, 220) !important;
-  width: 48px !important;
-  height: 48px !important;
-  min-width: 48px !important;
-  min-height: 48px !important;
-  border-radius: 999px !important;
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 28%, transparent) !important;
-  background: color-mix(in srgb, var(--mj-surface, #fff) 92%, var(--mj-brand-soft, #e2efe8)) !important;
-  color: var(--mj-brand-deep, #0d4a39) !important;
-  box-shadow: 0 8px 22px -12px color-mix(in srgb, var(--mj-brand-deep, #0d4a39) 45%, transparent) !important;
-  opacity: 1 !important;
-  transform: none !important;
-  transition: opacity 120ms ease !important;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.global-back-btn.floating-back-btn:active,
-.floating-back-btn.app-back-btn--floating:active,
-button.floating-back-btn[data-floating-back="1"]:active {
-  transform: none !important;
-  opacity: 0.9 !important;
-}
-
-html[data-theme="dark"] .global-back-btn.floating-back-btn,
-html.dark .global-back-btn.floating-back-btn,
-html[data-theme="dark"] .floating-back-btn.app-back-btn--floating,
-html.dark .floating-back-btn.app-back-btn--floating {
-  background: color-mix(in srgb, var(--mj-surface, #1b2421) 88%, var(--mj-brand, #5cc095) 12%) !important;
-  color: var(--mj-brand, #5cc095) !important;
-  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 35%, transparent) !important;
-}
-
-html.chrome-immersive .floating-back-btn,
-html.chrome-immersive .global-back-btn.floating-back-btn {
-  display: none !important;
-}
+.floating-back-btn,.global-back-btn.floating-back-btn,button.floating-back-btn[data-floating-back="1"]{display:none!important;pointer-events:none!important}
 
 .scroll-to-top {
   bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 14px) !important;
@@ -599,20 +545,6 @@ html.chrome-immersive .global-back-btn.floating-back-btn {
     var(--content-pb, 88px),
     calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 20px)
   );
-}
-
-/* شبكة بطاقات متساوية الارتفاع قدر الإمكان */
-.section-hub__grid,
-.section-lobby__grid,
-.quran-hub [class*="grid"],
-.fqh-hub-grid {
-  align-items: stretch;
-}
-
-.section-hub__grid > *,
-.section-lobby__grid > *,
-.fqh-hub-grid > * {
-  height: 100%;
 }
 
 /* إعجاز / مواضيع */

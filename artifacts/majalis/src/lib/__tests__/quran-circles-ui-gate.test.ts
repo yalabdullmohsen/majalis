@@ -28,7 +28,8 @@ assert.match(css, /var\(--inset-bottom/);
 assert.match(css, /padding:[\s\S]*96px/);
 assert.match(css, /\.qc-hub-nav__chip\.is-active/);
 
-assert.match(fab, /variant="floating"/);
+assert.match(fab, /return null/);
+assert.match(fab, /FLOATING_BACK_DISABLED/);
 assert.doesNotMatch(fab, /deepScroll/);
 
 assert.match(chip, /aria-pressed=\{active\}/);

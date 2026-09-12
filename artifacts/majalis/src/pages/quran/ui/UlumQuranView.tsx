@@ -6,6 +6,7 @@ import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { InternalLinkCard } from "@/components/ui/InternalCards";
 import "@/styles/pages/ulum-quran.css";
 import { DashboardScreen } from "@/components/design-system/screens";
+import "@/styles/knowledge-experience.css";
 
 
 type UQTab = "nuzul" | "jam" | "tafsir" | "ijaz" | "ahkam" | "qiraat" | "adawat";
@@ -245,7 +246,7 @@ export default function UlumQuranPage() {
       subtitle="مقدمة شاملة في علوم القرآن: من النزول والجمع إلى الإعجاز والتفسير والأحكام"
       groupTitle="أبواب علوم القرآن"
     >
-    <main className="uq-page" dir="rtl">
+    <main className="uq-page kx-layout kx-layout--knowledge" dir="rtl" data-kx="1">
       <div className="uq-tabs-bar" role="tablist" aria-label="أقسام علوم القرآن">
         {TABS.map((t) => (
           <button

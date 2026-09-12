@@ -6,7 +6,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
-import { HubCard } from "@/components/ui/HubCard";
+import { KnowledgeLibraryCard, KnowledgeLayout } from "@/components/knowledge";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { SEARCH_INPUT_ATTRS, handleSearchEnterKey } from "@/lib/search-input";
 import "@/styles/pages/tawhid.css";
@@ -414,23 +414,22 @@ export default function TawhidPage() {
       className="topic-page--tawhid"
       eyebrow="عقيدة أهل السنة والجماعة"
     >
-      <div className="tawhid-hub">
+      <div className="tawhid-hub" data-kx="1">
       {/* ══ شبكة أقسام العقيدة ══ */}
       <section aria-labelledby="hub-sections-heading" className="twh-section">
         <h2 id="hub-sections-heading" className="sr-only">أقسام العقيدة والتوحيد</h2>
-        <div className="hub-card-grid twh-hub-grid">
+        <KnowledgeLayout kind="library" className="hub-card-grid twh-hub-grid twh-hub-grid--kx">
           {AQEEDA_SECTIONS.map((s) => (
-            <HubCard
+            <KnowledgeLibraryCard
               key={s.id}
               href={s.href}
               title={s.title}
               description={s.desc}
-              badge={s.badge}
-              icon={<SectionIcon name={s.emoji} size={22} />}
-              featured={s.featured}
+              countLabel={s.badge}
+              actionLabel="فتح القسم"
             />
           ))}
-        </div>
+        </KnowledgeLayout>
       </section>
 
 

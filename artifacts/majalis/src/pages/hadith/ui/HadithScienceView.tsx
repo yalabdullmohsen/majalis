@@ -10,6 +10,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/hadith-mustalah.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { UtilityScreen } from "@/components/design-system/screens";
+import "@/styles/knowledge-experience.css";
 
 /* ─── أنواع البيانات ─── */
 type HadithTerm = {
@@ -1025,7 +1026,7 @@ export default function HadithSciencePage() {
 
   return (
     <UtilityScreen compose="mark">
-    <main className="hs-page" dir="rtl">
+    <main className="hs-page kx-layout kx-layout--hadith" dir="rtl" data-kx="1">
       {/* هيرو */}
       <section className="hs-hero hdl-info-hero">
         <div className="hs-hero__badge">علوم الحديث</div>

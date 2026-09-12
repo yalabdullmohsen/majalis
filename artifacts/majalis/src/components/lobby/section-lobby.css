@@ -379,3 +379,12 @@ html.dark .section-lobby__chip.is-active {
     gap: 8px;
   }
 }
+
+.section-lobby__back-row {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0.35rem 0 0.15rem;
+}
+.section-lobby__back {
+  min-height: 2.5rem;
+}
