@@ -891,3 +891,213 @@ html.dark .search-no-results__hint {
   color: var(--text-secondary, var(--mj-hairline));
 }
 
+
+
+/* ===== Search Experience V2 ===== */
+.srch-page--v2 {
+  gap: 0.75rem;
+}
+.srch-page--v2 .srch-home-form,
+.srch-page--v2 .srch-scope-wrap {
+  margin-bottom: 0.55rem;
+}
+.srch-result-card__kind {
+  gap: 0.28rem;
+  background: color-mix(in srgb, var(--mj-ink, #12201a) 6%, transparent);
+  color: var(--text-secondary, var(--mj-ink-2, #3d4f47));
+  border-radius: 0.35rem;
+}
+.srch-result-card__reason {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--mj-brand, #1e5f4b);
+  line-height: 1.4;
+}
+.srch-result-card__source {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--text-secondary, var(--mj-ink-2));
+}
+.srch-result-card__status {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-secondary, var(--mj-ink-2));
+}
+.srch-result-card__actions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem 0.85rem;
+}
+.srch-result-card__action {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--mj-brand, #1e5f4b);
+  text-decoration: none;
+}
+.srch-result-card__action--ghost {
+  color: var(--text-secondary, var(--mj-ink-2));
+}
+.srch-result-card--blocked {
+  padding: 0.75rem 1rem;
+}
+.srch-result-card--quran .srch-result-card__kind,
+.srch-result-card--hadith .srch-result-card__kind,
+.srch-result-card--lesson .srch-result-card__kind,
+.srch-result-card--history .srch-result-card__kind,
+.srch-result-card--seerah .srch-result-card__kind,
+.srch-result-card--scholar .srch-result-card__kind,
+.srch-result-card--university .srch-result-card__kind,
+.srch-result-card--mosque .srch-result-card__kind,
+.srch-result-card--landmark .srch-result-card__kind,
+.srch-result-card--institution .srch-result-card__kind {
+  background: color-mix(in srgb, var(--mj-ink, #12201a) 7%, transparent);
+  color: var(--text-primary, var(--mj-ink, #12201a));
+}
+.srch-idle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 0.35rem;
+}
+.srch-idle__block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.srch-idle__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.srch-idle__title {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: var(--text-primary, var(--mj-ink));
+}
+.srch-idle__clear {
+  border: 0;
+  background: transparent;
+  color: var(--mj-brand, #1e5f4b);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.srch-idle__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.srch-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.2rem 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--mj-ink, #12201a) 12%, transparent);
+  border-radius: 999px;
+  background: var(--mj-surface, #fff);
+  color: var(--text-primary, var(--mj-ink));
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+.srch-chip--link:hover,
+.srch-chip:hover {
+  border-color: color-mix(in srgb, var(--mj-brand, #1e5f4b) 35%, transparent);
+}
+.srch-error-inline {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  margin: 0.35rem 0 0.55rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--mj-danger, #b42318) 28%, transparent);
+  border-radius: 0.65rem;
+  background: color-mix(in srgb, var(--mj-danger, #b42318) 6%, transparent);
+  color: var(--text-primary, var(--mj-ink));
+}
+.srch-error-inline__title {
+  margin: 0;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+.srch-error-inline__reason {
+  margin: 0.15rem 0 0;
+  font-size: 0.78rem;
+  color: var(--text-secondary, var(--mj-ink-2));
+}
+.srch-error-inline__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.4rem;
+}
+.srch-error-inline__retry {
+  border: 0;
+  background: var(--mj-brand, #1e5f4b);
+  color: var(--mj-on-brand, #fff);
+  border-radius: 0.45rem;
+  padding: 0.28rem 0.7rem;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.srch-error-inline__alt {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--mj-brand, #1e5f4b);
+  text-decoration: none;
+}
+.srch-empty-v2__sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.65rem;
+}
+.srch-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.65rem;
+}
+.srch-more__btn {
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #1e5f4b) 30%, transparent);
+  background: transparent;
+  color: var(--mj-brand, #1e5f4b);
+  border-radius: 0.55rem;
+  padding: 0.45rem 1rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.gsm-result-reason {
+  margin: 0.15rem 0 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--mj-brand, #1e5f4b);
+}
+html[data-theme="dark"] .srch-chip,
+html.dark .srch-chip {
+  background: color-mix(in srgb, var(--color-surface, #1c1917) 92%, var(--mj-brand-deep, #0f3d32));
+  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 22%, transparent);
+  color: var(--text-primary, #ecf2ef);
+}
+html[data-theme="dark"] .srch-result-card__reason,
+html.dark .srch-result-card__reason,
+html[data-theme="dark"] .gsm-result-reason,
+html.dark .gsm-result-reason {
+  color: var(--mj-brand, #5cc095);
+}
+html[data-theme="dark"] .srch-result-card__kind,
+html.dark .srch-result-card__kind {
+  background: color-mix(in srgb, #fff 8%, transparent);
+  color: var(--text-secondary, var(--mj-hairline));
+}
