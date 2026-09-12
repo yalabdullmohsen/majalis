@@ -36,3 +36,16 @@ export {
   getDefaultAllowlist,
 } from "./security-controls.mjs";
 export { PIPELINE_STAGES, runP0Cycle } from "./pipeline.mjs";
+export {
+  loadSectionCatalog,
+  runFullInventory,
+  summarizeInventory,
+} from "./inventory.mjs";
+export {
+  detectTechnicalIssues,
+  stripLeadingSpaceDuplicates,
+  findLeadingSpaceDuplicateLines,
+  classifyEnrichmentAction,
+  contentHash,
+} from "./enrichment-audit.mjs";
+export { runEnrichmentCycle } from "./enrichment-pipeline.mjs";

@@ -1,0 +1,256 @@
+{
+  "brand": "سُنّة",
+  "system": "Sunnah Autonomous Content Operations System",
+  "verdict": "COMPLETED_WITH_BLOCKED_RECORDS",
+  "startedAt": "2026-09-12T16:40:03.973Z",
+  "finishedAt": "2026-09-12T16:40:05.021Z",
+  "coverage": {
+    "totalSections": 45,
+    "sectionsAudited": 20,
+    "sectionsMissingRoots": [
+      "home",
+      "recitations",
+      "tajweed",
+      "arbaeen",
+      "aqeedah",
+      "shamaail",
+      "scientific_miracles",
+      "adhkar",
+      "duas",
+      "lectures",
+      "series",
+      "paths",
+      "scholars",
+      "speakers",
+      "institutions",
+      "mosques",
+      "landmarks",
+      "universities",
+      "events",
+      "news",
+      "fawaid",
+      "library",
+      "help",
+      "settings",
+      "admin"
+    ],
+    "totalRecords": 19636,
+    "completedRecords": 6088,
+    "correctedRecords": 0,
+    "blockedRecords": 13547,
+    "archivedRecords": 0,
+    "exactDuplicatesMerged": 0
+  },
+  "religiousContentIntegrity": {
+    "quranFilesTouched": false,
+    "hadithFilesTouched": false,
+    "protectedRecords": 4253,
+    "rejectedProtectedEditAttempts": 0,
+    "blockedForMissingProof": 13547,
+    "note": "لا إثراء ديني توليدي. المحتوى المحمي لم يُمس."
+  },
+  "language": {
+    "spellingAutoFixed": 0,
+    "punctuationAutoFixed": 0,
+    "duplicateSentencesRemoved": 0,
+    "brandTermsUnified": 0
+  },
+  "informationQuality": {
+    "factsUpdated": 0,
+    "confirmedErrorsFixed": 0,
+    "sourceConflicts": 0,
+    "expiredTemporalFields": 0,
+    "note": "القيم غير المثبتة حُجبت تلقائيًا دون تخمين."
+  },
+  "dataQuality": {
+    "issueCounts": {
+      "missing_title": 13155,
+      "missing_description": 13412,
+      "missing_source": 7527,
+      "file_too_large": 1
+    },
+    "pathCApplied": [],
+    "pathCBlocked": []
+  },
+  "deployment": {
+    "changeSetId": "cs_b682ce4f5a2c40d3",
+    "previousVersion": "content-ops-baseline",
+    "newVersion": "v_16366aa10322",
+    "publishability": {
+      "ok": false,
+      "errors": [
+        "empty_contentDiff"
+      ]
+    },
+    "autoPublishEnabled": false,
+    "publishedToProduction": false,
+    "dryRun": true,
+    "rollbackProof": {
+      "ok": true,
+      "idempotent": false,
+      "userDataUntouched": true,
+      "reason": "search_broken"
+    },
+    "contentHash": "4f53cda18c2baa0c"
+  },
+  "remainingBlockedRecords": {
+    "count": 13547,
+    "byReason": {
+      "missing_title": 13155,
+      "missing_description": 263,
+      "missing_source": 129
+    },
+    "sample": [
+      {
+        "contentId": "public/data/quran/manifest.json",
+        "path": "public/data/quran/manifest.json",
+        "reason": "missing_title",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/mutashabihat-index.json",
+        "path": "public/data/quran/mutashabihat-index.json",
+        "reason": "missing_title",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/page-juz-index.json",
+        "path": "public/data/quran/page-juz-index.json",
+        "reason": "missing_title",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/pages-manifest.json",
+        "path": "public/data/quran/pages-manifest.json",
+        "reason": "missing_title",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/quran-position-index.json",
+        "path": "public/data/quran/quran-position-index.json",
+        "reason": "missing_title",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-001.json",
+        "path": "public/data/quran/surah-001.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-002.json",
+        "path": "public/data/quran/surah-002.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-003.json",
+        "path": "public/data/quran/surah-003.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-004.json",
+        "path": "public/data/quran/surah-004.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-005.json",
+        "path": "public/data/quran/surah-005.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-006.json",
+        "path": "public/data/quran/surah-006.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-007.json",
+        "path": "public/data/quran/surah-007.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-008.json",
+        "path": "public/data/quran/surah-008.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-009.json",
+        "path": "public/data/quran/surah-009.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-010.json",
+        "path": "public/data/quran/surah-010.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-011.json",
+        "path": "public/data/quran/surah-011.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-012.json",
+        "path": "public/data/quran/surah-012.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-013.json",
+        "path": "public/data/quran/surah-013.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-014.json",
+        "path": "public/data/quran/surah-014.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-015.json",
+        "path": "public/data/quran/surah-015.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-016.json",
+        "path": "public/data/quran/surah-016.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-017.json",
+        "path": "public/data/quran/surah-017.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-018.json",
+        "path": "public/data/quran/surah-018.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-019.json",
+        "path": "public/data/quran/surah-019.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      },
+      {
+        "contentId": "public/data/quran/surah-020.json",
+        "path": "public/data/quran/surah-020.json",
+        "reason": "missing_description",
+        "status": "automatically_blocked"
+      }
+    ]
+  }
+}
