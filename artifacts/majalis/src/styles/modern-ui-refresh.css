@@ -58,7 +58,6 @@ html[data-theme="dark"] {
 .hadith-hub-card,
 .fiqh-category-card,
 .adhkar-card:not([data-scripture]),
-.kids-hub-card,
 .about-card {
   border-color: transparent !important;
   box-shadow: var(--mur-shadow) !important;
