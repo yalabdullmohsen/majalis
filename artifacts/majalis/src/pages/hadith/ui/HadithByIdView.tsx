@@ -11,6 +11,7 @@ import { HadithSourceBlock } from "@/components/hadith/HadithSourceBlock";
 import "@/styles/pages/hadith-design-language.css";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { ReaderScreen } from "@/components/design-system/screens";
+import { KnowledgeLayout } from "@/components/knowledge";
 import "@/styles/pages/hadith.css";
 
 function ShareBlock({ hadith }: { hadith: HadithRecord }) {
@@ -101,10 +102,8 @@ export default function HadithByIdView() {
 
   return (
     <ReaderScreen compose="mark">
-    <article
-      className={`page-shell hadith-by-id${hadith.isMawdu ? " hadith-by-id--mawdu" : ""}`}
-      dir="rtl"
-    >
+    <KnowledgeLayout kind="hadith" className={`page-shell hadith-by-id${hadith.isMawdu ? " hadith-by-id--mawdu" : ""}`} data-kx="1">
+    <article dir="rtl">
       {hadith.isMawdu ? (
         <div className="hadith-mawdu-banner" role="alert">
           <strong>{hadith.mawduWarning || "حديث موضوع لا يصحّ"}</strong>
@@ -139,7 +138,7 @@ export default function HadithByIdView() {
         ) : null}
       </header>
 
-      <section className="hadith-detail-card hadith-detail-card--matn" aria-label="متن الحديث">
+      <section className="hadith-detail-card hadith-detail-card--matn" aria-label="متن الحديث" data-kx-kind="definition">
         <h2 className="hadith-detail-card__title">المتن</h2>
         <blockquote className="hadith-detail-matn hdl-role--matn">{hadith.matn}</blockquote>
       </section>
@@ -151,7 +150,7 @@ export default function HadithByIdView() {
         grade={hadith.grade?.quote || hadith.grade?.verdict || null}
       />
       {hadith.grade ? (
-        <section className="hadith-detail-card hdl-role--sharh" aria-label="تفصيل الحكم">
+        <section className="hadith-detail-card hdl-role--sharh" aria-label="تفصيل الحكم" data-kx-kind="ruling">
           <h2 className="hadith-detail-card__title">تفصيل الحكم</h2>
           <div className="hadith-detail-grade">
             <HadithGradeBadge grade={hadith.grade.quote || hadith.grade.verdict || null} />
@@ -174,6 +173,7 @@ export default function HadithByIdView() {
         ]}
       />
     </article>
+    </KnowledgeLayout>
     </ReaderScreen>
   );
 }

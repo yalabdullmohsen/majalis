@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { BookOpen, Search, X } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { InternalLinkCard } from "@/components/ui/InternalCards";
 import { usePageView } from "@/hooks/usePageView";
 import { applyPageSeo } from "@/lib/seo";
@@ -23,6 +23,7 @@ import {
 } from "@/lib/fiqh-books";
 import { fiqhBookEditorial } from "@/lib/fiqh-editorial";
 import { SectionEntryCard } from "@/components/ui/HubCard";
+import { KnowledgeLibraryCard } from "@/components/knowledge";
 import { GridScreen } from "@/components/design-system/screens";
 import { isHiddenFromNav } from "@/lib/nav-visibility";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -82,13 +83,12 @@ function FiqhHubSearch({
 function BookCard({ book }: { book: FiqhBook }) {
   const editorial = fiqhBookEditorial(book);
   return (
-    <SectionEntryCard
+    <KnowledgeLibraryCard
       href={`/fiqh/books/${book.id}`}
       title={editorial.title}
-      subtitle={editorial.description || undefined}
-      badge={editorial.categoryLabel}
-      meta={`${editorial.madhhabBadge} · ${formatAbwabCount(editorial.chaptersCount)} · ${formatMasailCount(editorial.lessonsCount)}`}
-      Icon={BookOpen}
+      description={editorial.description || editorial.categoryLabel}
+      countLabel={`${editorial.madhhabBadge} · ${formatAbwabCount(editorial.chaptersCount)} · ${formatMasailCount(editorial.lessonsCount)}`}
+      actionLabel="فتح الكتاب"
       className="fiqh-book-card"
     />
   );
@@ -114,7 +114,7 @@ function SearchHitList({
           <h3 id="fiqh-search-books" className="fiqh-hub-section__title">
             كتب
           </h3>
-          <div className="hub-card-grid fiqh-book-grid">
+          <div className="kx-layout kx-layout--library fiqh-book-grid">
             {books.map((book) => (
               <BookCard key={book.id} book={book} />
             ))}
@@ -228,7 +228,7 @@ function FiqhBooksBody() {
               كتب الفقه
             </h2>
           </header>
-          <div className="hub-card-grid fiqh-book-grid">
+          <div className="kx-layout kx-layout--library fiqh-book-grid">
             {books.map((book) => (
               <BookCard key={book.id} book={book} />
             ))}

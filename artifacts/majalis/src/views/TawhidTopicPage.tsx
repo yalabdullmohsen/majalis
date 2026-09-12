@@ -4,6 +4,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { getTawhidTopic } from "@/lib/tawhid-topics";
 import { TopicPage } from "@/components/topic/TopicPage";
+import { KnowledgeLayout } from "@/components/knowledge";
 import "@/styles/pages/tawhid.css";
 import { UtilityScreen } from "@/components/design-system/screens";
 
@@ -44,14 +45,14 @@ export default function TawhidTopicPage() {
       subtitle={topic.description}
       className="topic-page--tawhid-topic"
     >
-      <div className="tawhid-hub">
+      <KnowledgeLayout kind="knowledge" className="tawhid-hub" data-kx="1">
         <section className="twh-section" aria-labelledby="topic-blocks-heading">
           <h2 id="topic-blocks-heading" className="sr-only">
             {topic.title}
           </h2>
           <div className="tawheed-principles-grid">
             {topic.blocks.map((b) => (
-              <article key={b.title} className="tawheed-principle-card">
+              <article key={b.title} className="tawheed-principle-card" data-kx-kind={b.ayah || b.hadith ? "evidence" : "definition"}>
                 <p className="tawheed-principle-card__title">{b.title}</p>
                 <p className="tawheed-principle-card__body">{b.body}</p>
                 {b.ayah ? (
@@ -86,7 +87,7 @@ export default function TawhidTopicPage() {
             url={`https://www.ssunnah.com/tawhid/${topic.slug}`}
           />
         </div>
-      </div>
+      </KnowledgeLayout>
     </TopicPage>
     </UtilityScreen>
   );

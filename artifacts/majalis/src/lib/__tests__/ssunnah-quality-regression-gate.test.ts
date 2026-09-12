@@ -57,30 +57,25 @@ assert.match(
   /\.bottom-nav(?:--v2)?[\s\S]{0,400}?opacity:\s*1\s*!important/,
   "Bottom nav must stay opaque (opacity: 1 !important)",
 );
+assert.match(floating, /FLOATING_BACK_DISABLED|return null/, "FloatingBackButton disabled — no FAB overlap");
+const hideFab = polish + read("src/styles/knowledge-experience.css");
 assert.match(
-  polish,
-  /\.floating-back-btn[\s\S]{0,120}?bottom:\s*calc\(var\(--bottom-nav-height/,
-  "FloatingBackButton overlaps bottom nav: FAB bottom must clear --bottom-nav-height",
-);
-assert.match(
-  finalCss,
-  /\.floating-back-btn[\s\S]{0,80}?min-(?:width|height):\s*48px/,
-  "Floating back touch target must be ≥48px",
+  hideFab,
+  /\.floating-back-btn[\s\S]{0,200}?display:\s*none/,
+  "Floating back CSS remains hidden as safety net",
 );
 
 /* ── 2) Duplicate back buttons ── */
-assert.match(floating, /AppBackButton/, "FloatingBackButton must wrap AppBackButton");
+assert.match(floating, /FLOATING_BACK_DISABLED|return null/, "FloatingBackButton disabled");
+assert.match(floating, /AppBackButton/, "FloatingBackButton still exports AppBackButton");
 assert.match(appBack, /onPointerDown/, "Back must fire on pointer down (instant)");
-assert.doesNotMatch(
-  lobby,
-  /AppBackButton|FloatingBackButton/,
-  "Duplicate back buttons visible: SectionLobby must not render its own back",
-);
-assert.doesNotMatch(
+assert.match(lobby, /AppBackButton|data-section-back/, "اللوبي يعرض رجوعًا هيدريًا");
+assert.match(
   sectionHero,
-  /AppBackButton|FloatingBackButton/,
-  "Duplicate back buttons visible: SectionHero must not render its own back",
+  /AppBackButton|section-hero__back|goBackOrFallback/,
+  "SectionHero renders header back (FAB disabled)",
 );
+assert.doesNotMatch(sectionHero, /variant=["']floating["']/, "SectionHero must not use floating variant");
 assert.doesNotMatch(
   pageHero,
   /AppBackButton|showBack|page-hero-mj__back/,
@@ -143,8 +138,8 @@ for (const [name, src] of [
   );
   assert.doesNotMatch(
     src,
-    /AppBackButton|FloatingBackButton|showBack\s*=/,
-    `Duplicate back buttons visible: ${name} page must rely on global FAB only`,
+    /FloatingBackButton/,
+    `Pages must not mount FloatingBackButton locally: ${name}`,
   );
 }
 
@@ -168,7 +163,7 @@ assert.doesNotMatch(
 );
 assert.doesNotMatch(
   tarikhDetail,
-  /AppBackButton|FloatingBackButton|showBack\s*=/,
+  /FloatingBackButton/,
   "Duplicate back buttons visible: tarikh detail must rely on global FAB only",
 );
 assert.match(readingCard, /rsc__title/, "ReadingSectionCard must render titled section cards");

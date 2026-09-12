@@ -1,5 +1,6 @@
 import { useId, type ReactNode } from "react";
 import "@/styles/components/reading-section-card.css";
+import "@/styles/knowledge-experience.css";
 
 export type ReadingSectionVariant =
   | "default"
@@ -10,7 +11,13 @@ export type ReadingSectionVariant =
   | "faq"
   | "lessons"
   | "sources"
-  | "related";
+  | "related"
+  | "warning"
+  | "outcomes"
+  | "notes"
+  | "timeline"
+  | "concepts"
+  | "ruling";
 
 type ReadingSectionCardProps = {
   title: string;
@@ -35,6 +42,7 @@ export function ReadingSectionCard({
   return (
     <Tag
       className={`rsc soft-card soft-card--on-light rsc--${variant}${className ? ` ${className}` : ""}`}
+      data-kx-block={variant}
       aria-labelledby={titleId}
     >
       <h2 id={titleId} className="rsc__title">

@@ -9,6 +9,7 @@ import {
   ReadingSectionCard,
 } from "@/components/content/ReadingSectionCard";
 import { RelatedContentStack } from "@/components/content/RelatedContentCard";
+import { KnowledgeLayout } from "@/components/knowledge";
 import {
   getAdjacentHistoryItems,
   getEraStageInfo,
@@ -144,7 +145,7 @@ export default function TarikhIslamiDetailPage() {
       subtitle={item.summary}
       className="topic-page--tarikh-detail"
     >
-      <div className="tarikh-detail-reading">
+      <KnowledgeLayout kind="timeline" className="tarikh-detail-reading" data-kx="1">
         <div className="tarikh-detail__meta" aria-label="بيانات الحدث">
           {item.hijriDate ? <span>هـ: {item.hijriDate}</span> : null}
           {item.gregorianDate ? <span>م: {item.gregorianDate}</span> : null}
@@ -201,21 +202,21 @@ export default function TarikhIslamiDetailPage() {
         </div>
 
         <div id="tarikh-sec-context">
-          <ReadingSectionCard title="السياق التاريخي" variant="default">
+          <ReadingSectionCard title="السياق التاريخي" variant="notes">
             <ReadingBulletList items={contextLines} />
             <p className="tarikh-context-blurb">{eraMeta.blurb}</p>
           </ReadingSectionCard>
         </div>
 
         <div id="tarikh-sec-detail">
-          <ReadingSectionCard title="الشرح" variant="default">
+          <ReadingSectionCard title="الشرح" variant="definition">
             <ReadingProse text={item.detail} />
           </ReadingSectionCard>
         </div>
 
         {item.causes ? (
           <div id="tarikh-sec-causes">
-            <ReadingSectionCard title="الأسباب" variant="default">
+            <ReadingSectionCard title="الأسباب" variant="timeline">
               <ReadingProse text={item.causes} />
             </ReadingSectionCard>
           </div>
@@ -223,7 +224,7 @@ export default function TarikhIslamiDetailPage() {
 
         {item.outcomes ? (
           <div id="tarikh-sec-outcomes">
-            <ReadingSectionCard title="النتائج" variant="default">
+            <ReadingSectionCard title="النتائج" variant="outcomes">
               <ReadingProse text={item.outcomes} />
             </ReadingSectionCard>
           </div>
@@ -239,7 +240,7 @@ export default function TarikhIslamiDetailPage() {
 
         {item.relatedPersons?.length ? (
           <div id="tarikh-sec-persons">
-            <ReadingSectionCard title="شخصيات مرتبطة" variant="default">
+            <ReadingSectionCard title="شخصيات مرتبطة" variant="concepts">
               <ReadingBulletList items={item.relatedPersons} />
             </ReadingSectionCard>
           </div>
@@ -283,7 +284,7 @@ export default function TarikhIslamiDetailPage() {
             url={`https://www.ssunnah.com/tarikh-islami/${item.id}`}
           />
         </div>
-      </div>
+      </KnowledgeLayout>
     </TopicPage>
     </UtilityScreen>
   );

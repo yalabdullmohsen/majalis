@@ -247,7 +247,7 @@
     "test:fiqh-books-gates": "node --import tsx src/lib/__tests__/fiqh-books-gates.test.ts && node --import tsx src/lib/__tests__/fiqh-lesson-pedagogy-gate.test.ts",
     "test:section-lobby-gates": "node --import tsx src/lib/__tests__/section-lobby-gates.test.ts && node --import tsx src/lib/__tests__/section-back-button.test.ts && node --import tsx src/lib/__tests__/format-count-bucket.test.ts && node --import tsx src/lib/__tests__/quick-actions-quad.test.ts && pnpm run test:competitions-announcements",
     "test:adhkar-stable-nav": "node --import tsx src/lib/__tests__/adhkar-stable-nav-gate.test.ts && node scripts/adhkar-stable-next-nav.mjs",
-    "test:section-back-button": "node --import tsx src/lib/__tests__/section-back-button.test.ts && node --import tsx src/lib/__tests__/floating-back-button.test.ts && node --import tsx src/lib/__tests__/mobile-back-lesson-chips-gate.test.ts && node --import tsx src/lib/__tests__/quran-circles-ui-gate.test.ts && node scripts/section-back-button-gate.mjs",
+    "test:section-back-button": "node --import tsx src/lib/__tests__/section-back-button.test.ts && node --import tsx src/lib/__tests__/floating-back-button.test.ts && node --import tsx src/lib/__tests__/knowledge-experience-gate.test.ts && node --import tsx src/lib/__tests__/mobile-back-lesson-chips-gate.test.ts && node --import tsx src/lib/__tests__/quran-circles-ui-gate.test.ts && node scripts/section-back-button-gate.mjs",
     "test:calendar-dates": "node --import tsx src/lib/__tests__/calendar-dates-gate.test.ts",
     "test:calendar-render": "node scripts/calendar-render-gate.mjs",
     "test:calendar-gates": "pnpm run test:calendar-dates && pnpm run test:calendar-render",

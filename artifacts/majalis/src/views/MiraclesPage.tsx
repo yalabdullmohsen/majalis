@@ -59,6 +59,7 @@ import {
 } from "@/lib/miracles-ui";
 import "@/styles/pages/miracles.css";
 import { ListScreen } from "@/components/design-system/screens";
+import "@/styles/knowledge-experience.css";
 
 
 const TOPIC_ICONS: Record<Exclude<MiracleTopicFilter, "الكل">, LucideIcon> = {
@@ -141,7 +142,7 @@ function MiraclesHub() {
         type: "ayah",
       }}
     >
-      <div className="mk-page mk-page--hub" dir="rtl">
+      <div className="mk-page mk-page--hub kx-layout kx-layout--library" dir="rtl" data-kx="1">
         <InformationCard title="منهج العرض" tone="caution" className="mk-info-card">
           <p>
             هذا القسم يعرض وجوه تأمل علمية منضبطة، ولا يجعل النظريات المتغيرة تفسيرًا قطعيًا للنص الشرعي.

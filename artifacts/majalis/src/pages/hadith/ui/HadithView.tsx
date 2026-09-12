@@ -34,6 +34,8 @@ import { ExclusiveChoiceGroup } from "@/components/ui/ExclusiveChoiceGroup";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { ShareButtons } from "@/components/ContentActions";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
+import { UnifiedPrimaryFilters } from "@/components/filters/UnifiedPrimaryFilters";
+import { KnowledgeLayout } from "@/components/knowledge";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { CitationActionBar } from "@/components/citation/CitationActionBar";
 import { IsnadAttributionBar } from "@/components/IsnadAttributionBar";
@@ -680,8 +682,23 @@ export function HadithSection({
     [displayItems, safePage, PAGE_SIZE],
   );
 
+  const moreFiltersActive =
+    (activeCategory !== "الكل" ? 1 : 0) +
+    (showGradeFilters && gradeFilter !== "all" ? 1 : 0) +
+    (searchScope !== "matn" ? 1 : 0) +
+    (debouncedNumber || debouncedBook || debouncedInBook ? 1 : 0);
+
   const filtersPanel = (
     <div className="hadith-filters-panel">
+      <div className="hadith-filter-section">
+        <p className="hadith-filter-label">التصنيف الموضوعي</p>
+        <ExclusiveChoiceGroup
+          ariaLabel="تصفية التصنيف"
+          value={activeCategory}
+          onChange={(id) => setActiveCategory(id)}
+          items={CATEGORIES.map((cat) => ({ id: cat.id, label: cat.label }))}
+        />
+      </div>
 
       <div className="hadith-filter-section">
         <p className="hadith-filter-label">نطاق البحث</p>
@@ -846,9 +863,20 @@ export function HadithSection({
         </div>
       </div>
 
-      <div className="hdl-discover" data-hdl="discover">
-        <div className="hdl-discover__books" role="radiogroup" aria-label="تصفية الكتب">
-          {collections.map((c) => (
+      <UnifiedPrimaryFilters
+        primary={collections.slice(0, 4).map((c) => ({
+          id: c,
+          label: c === "الكل" ? "كل الكتب" : collectionLabel(c),
+          active: activeCollection === c,
+          onSelect: () => setActiveCollection(c),
+        }))}
+        moreActiveCount={moreFiltersActive}
+        onOpenMore={() => setFiltersOpen(true)}
+        moreLabel="المزيد"
+      />
+      {collections.length > 4 ? (
+        <div className="hdl-discover__books hdl-discover__books--secondary" role="radiogroup" aria-label="بقية الكتب">
+          {collections.slice(4).map((c) => (
             <button
               key={c}
               type="button"
@@ -857,25 +885,11 @@ export function HadithSection({
               className={`hdl-discover__book${activeCollection === c ? " is-active" : ""}`}
               onClick={() => setActiveCollection(c)}
             >
-              {c === "الكل" ? "كل الكتب" : collectionLabel(c)}
+              {collectionLabel(c)}
             </button>
           ))}
         </div>
-        <div className="hdl-discover__cats" role="radiogroup" aria-label="تصفية التصنيف">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.id}
-              type="button"
-              role="radio"
-              aria-checked={activeCategory === cat.id}
-              className={`hdl-chip${activeCategory === cat.id ? " is-active" : ""}`}
-              onClick={() => setActiveCategory(cat.id)}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-      </div>
+      ) : null}
 
       {loading && displayItems.length === 0 ? (
         <SkeletonCardGrid count={8} />
@@ -958,9 +972,9 @@ export function HadithSection({
   }
 
   return (
-    <div className="page-shell content-hub-page ds-page hadith-page hadith-page--hdl" aria-busy={loading}>
+    <KnowledgeLayout kind="hadith" className="page-shell content-hub-page ds-page hadith-page hadith-page--hdl" aria-busy={loading}>
       {inner}
-    </div>
+    </KnowledgeLayout>
   );
 }
 
