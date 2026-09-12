@@ -1,298 +1,333 @@
-import { useEffect, useMemo, useState } from "react";
-import { Link } from "wouter";
-import { ChevronLeft } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
+import { MoreHorizontal } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
 import { ContentReportLink } from "@/components/ContentReportLink";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
-import "@/styles/pages/arbaeen-nawawi.css";
-import "@/styles/pages/hadith-design-language.css";
+import { AppBackButton } from "@/components/common/AppBackButton";
+import { HadithListCard } from "@/components/hadith/HadithListCard";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { ListScreen } from "@/components/design-system/screens";
 import { KnowledgeLayout } from "@/components/knowledge";
-
-/* ══════════════════════════════════════════════════════════════════
-   §178b، الأربعون النووية (.an-*)
-   ══════════════════════════════════════════════════════════════════ */
+import "@/styles/pages/arbaeen-nawawi.css";
+import "@/styles/pages/hadith-design-language.css";
+import "@/styles/components/hadith-list-card.css";
 
 type Category = "الكل" | "العقيدة والأصول" | "الأخلاق والمعاملات" | "الزهد والآخرة";
 
 const CATEGORY_MAP: Record<number, Category> = {
-  1: "العقيدة والأصول", 2: "العقيدة والأصول", 3: "العقيدة والأصول",
-  4: "العقيدة والأصول", 5: "العقيدة والأصول", 6: "الأخلاق والمعاملات",
-  7: "الأخلاق والمعاملات", 8: "العقيدة والأصول", 9: "العقيدة والأصول",
-  10: "الزهد والآخرة", 11: "الأخلاق والمعاملات", 12: "الزهد والآخرة",
-  13: "الأخلاق والمعاملات", 14: "الزهد والآخرة", 15: "الأخلاق والمعاملات",
-  16: "الأخلاق والمعاملات", 17: "الأخلاق والمعاملات", 18: "الزهد والآخرة",
-  19: "الأخلاق والمعاملات", 20: "الزهد والآخرة", 21: "الزهد والآخرة",
-  22: "الزهد والآخرة", 23: "الزهد والآخرة", 24: "الأخلاق والمعاملات",
-  25: "الأخلاق والمعاملات", 26: "الأخلاق والمعاملات", 27: "الأخلاق والمعاملات",
-  28: "الأخلاق والمعاملات", 29: "الأخلاق والمعاملات", 30: "الأخلاق والمعاملات",
-  31: "الزهد والآخرة", 32: "الزهد والآخرة", 33: "الأخلاق والمعاملات",
-  34: "الأخلاق والمعاملات", 35: "الأخلاق والمعاملات", 36: "الزهد والآخرة",
-  37: "الزهد والآخرة", 38: "الزهد والآخرة", 39: "الأخلاق والمعاملات",
-  40: "الزهد والآخرة", 41: "الزهد والآخرة", 42: "الزهد والآخرة",
+  1: "العقيدة والأصول",
+  2: "العقيدة والأصول",
+  3: "العقيدة والأصول",
+  4: "العقيدة والأصول",
+  5: "العقيدة والأصول",
+  6: "الأخلاق والمعاملات",
+  7: "الأخلاق والمعاملات",
+  8: "العقيدة والأصول",
+  9: "العقيدة والأصول",
+  10: "الزهد والآخرة",
+  11: "الأخلاق والمعاملات",
+  12: "الزهد والآخرة",
+  13: "الأخلاق والمعاملات",
+  14: "الزهد والآخرة",
+  15: "الأخلاق والمعاملات",
+  16: "الأخلاق والمعاملات",
+  17: "الأخلاق والمعاملات",
+  18: "الزهد والآخرة",
+  19: "الأخلاق والمعاملات",
+  20: "الزهد والآخرة",
+  21: "الزهد والآخرة",
+  22: "الزهد والآخرة",
+  23: "الزهد والآخرة",
+  24: "الأخلاق والمعاملات",
+  25: "الأخلاق والمعاملات",
+  26: "الأخلاق والمعاملات",
+  27: "الأخلاق والمعاملات",
+  28: "الأخلاق والمعاملات",
+  29: "الأخلاق والمعاملات",
+  30: "الأخلاق والمعاملات",
+  31: "الزهد والآخرة",
+  32: "الزهد والآخرة",
+  33: "الأخلاق والمعاملات",
+  34: "الأخلاق والمعاملات",
+  35: "الأخلاق والمعاملات",
+  36: "الزهد والآخرة",
+  37: "الزهد والآخرة",
+  38: "الزهد والآخرة",
+  39: "الأخلاق والمعاملات",
+  40: "الزهد والآخرة",
+  41: "الزهد والآخرة",
+  42: "الزهد والآخرة",
 };
 
-const CATS: Category[] = ["الكل", "العقيدة والأصول", "الأخلاق والمعاملات", "الزهد والآخرة"];
+const PRIMARY_CATS: Category[] = ["الكل", "العقيدة والأصول", "الأخلاق والمعاملات"];
+const MORE_CATS: Category[] = ["الزهد والآخرة"];
 
-function getDayOfYear() {
-  const start = new Date(new Date().getFullYear(), 0, 0);
-  return Math.floor((Date.now() - start.getTime()) / 86400000);
-}
+const QUERY_KEY = "an_query_v2";
+const CAT_KEY = "an_cat_v2";
 
 function loadRead(): Set<number> {
   try {
     const raw = localStorage.getItem("an_read");
-    return raw ? new Set<number>(JSON.parse(raw)) : new Set();
-  } catch { return new Set(); }
+    return raw ? new Set<number>(JSON.parse(raw) as number[]) : new Set();
+  } catch {
+    return new Set();
+  }
 }
 
 function saveRead(s: Set<number>) {
-  try { localStorage.setItem("an_read", JSON.stringify([...s])); } catch { /* storage unavailable */ }
+  try {
+    localStorage.setItem("an_read", JSON.stringify([...s]));
+  } catch {
+    /* ignore */
+  }
+}
+
+function loadSession<T>(key: string, fallback: T): T {
+  try {
+    const raw = sessionStorage.getItem(key);
+    return raw != null ? (JSON.parse(raw) as T) : fallback;
+  } catch {
+    return fallback;
+  }
 }
 
 export default function ArbaeenNawawiPage() {
-  const todayIdx = useMemo(() => getDayOfYear() % ARBAEEN_NAWAWI.length, []);
-  const todayHadith = ARBAEEN_NAWAWI[todayIdx];
-
   const [read, setRead] = useState<Set<number>>(loadRead);
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState<Category>("الكل");
-  const [expanded, setExpanded] = useState<Set<number>>(new Set());
-  const [showReadOnly, setShowReadOnly] = useState(false);
+  const [query, setQuery] = useState(() => loadSession(QUERY_KEY, ""));
+  const [category, setCategory] = useState<Category>(() =>
+    loadSession<Category>(CAT_KEY, "الكل"),
+  );
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [moreFiltersOpen, setMoreFiltersOpen] = useState(false);
 
   useEffect(() => {
     applyPageSeo({
       path: "/arbaeen-nawawi",
       title: "الأربعون النووية، أحاديث نووية مشروحة | سُنّة",
-      description: "الأربعون حديثاً النووية مع شرح موجز وفوائد ومصدر لكل حديث، مرجع حديثي مختصر لطالب العلم. محتوى معتمد في منهج سُنّة",
+      description:
+        "الأربعون حديثاً النووية مع شرح موجز وفوائد ومصدر لكل حديث، مرجع حديثي مختصر لطالب العلم.",
       keywords: ["الأربعون النووية", "أحاديث نووية", "شرح الأحاديث", "الحديث النبوي", "نووي"],
-      jsonLd: [
-        {
-          "@context": "https://schema.org",
-          "@type": "Book",
-          name: "الأربعون النووية",
-          author: { "@type": "Person", name: "الإمام النووي" },
-          description: "الأربعون حديثاً النووية الجامعة لأحكام الإسلام؛ محتوى معتمد في منهج سُنّة",
-          url: "https://www.ssunnah.com/arbaeen-nawawi",
-          inLanguage: "ar",
-        },
-        {
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          name: "أحاديث الأربعون النووية",
-          numberOfItems: ARBAEEN_NAWAWI.length,
-          itemListElement: ARBAEEN_NAWAWI.slice(0, 40).map((h, i) => ({
-            "@type": "ListItem",
-            position: i + 1,
-            name: `الحديث ${h.id}: ${h.title}`,
-            url: `https://www.ssunnah.com/arbaeen-nawawi#hadith-${h.id}`,
-          })),
-        },
-      ],
     });
   }, []);
 
-  // رابط وارد بـ`?h=<id>` (من اقتراحات البحث في search-suggestions.ts)
-  // ورابط `#hadith-<id>` (من JSON-LD أعلى) كانا معطوبَين معًا: لا شيء
-  // يقرأ `?h=` هنا، ولا عنصر DOM يحمل `id="hadith-<id>"` لتفعيل تمرير
-  // المتصفح الطبيعي للـhash — فكان كلا الرابطين يهبط على الصفحة بحالتها
-  // الافتراضية بلا أي أثر ظاهر. عطل صامت من نفس عائلة TYPE_HREF.scholar،
-  // اكتُشف بالفحص المباشر 2026-07-18. صُحِّح بإضافة id مطابق لكل بطاقة
-  // (يُفعِّل الـhash تلقائيًا) + قراءة `?h=` صراحةً مع توسيع وتمرير للحديث.
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const hParam = params.get("h");
-    const hId = hParam ? Number(hParam) : NaN;
-    if (!Number.isFinite(hId)) return;
-    setExpanded((prev) => new Set(prev).add(hId));
-    const t = window.setTimeout(() => {
-      document.getElementById(`hadith-${hId}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 150);
-    return () => window.clearTimeout(t);
+    try {
+      sessionStorage.setItem(QUERY_KEY, JSON.stringify(query));
+      sessionStorage.setItem(CAT_KEY, JSON.stringify(category));
+    } catch {
+      /* ignore */
+    }
+  }, [query, category]);
+
+  const onQueryChange = useCallback((value: string) => {
+    setQuery(value);
   }, []);
-
-  function toggleRead(id: number) {
-    setRead((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id); else next.add(id);
-      saveRead(next);
-      return next;
-    });
-  }
-
-  function toggleExpand(id: number) {
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id); else next.add(id);
-      return next;
-    });
-  }
 
   const filtered = useMemo(() => {
     return ARBAEEN_NAWAWI.filter((h) => {
       const matchCat = category === "الكل" || CATEGORY_MAP[h.id] === category;
-      const matchQ = arabicMatchAny([h.title, h.text, h.explanation], query);
-      const matchRead = !showReadOnly || read.has(h.id);
-      return matchCat && matchQ && matchRead;
+      const matchQ = arabicMatchAny([h.title, h.text, h.explanation, h.source], query);
+      return matchCat && matchQ;
     });
-  }, [query, category, showReadOnly, read]);
+  }, [query, category]);
 
-  const pct = ARBAEEN_NAWAWI.length ? Math.round((read.size / ARBAEEN_NAWAWI.length) * 100) : 0;
+  const pct = ARBAEEN_NAWAWI.length
+    ? Math.round((read.size / ARBAEEN_NAWAWI.length) * 100)
+    : 0;
+
+  const progressLabel =
+    read.size === 1
+      ? `حديث واحد من ${ARBAEEN_NAWAWI.length}`
+      : `${read.size} من ${ARBAEEN_NAWAWI.length} • ${pct}٪`;
+
+  const resetProgress = () => {
+    if (!window.confirm("هل تريد إعادة تعيين تقدم القراءة؟")) return;
+    setRead(new Set());
+    saveRead(new Set());
+    setMenuOpen(false);
+  };
 
   return (
     <ListScreen compose="mark">
-    <KnowledgeLayout kind="hadith" className="page-shell an-page" data-kx="1">
+      <KnowledgeLayout
+        kind="hadith"
+        className="page-shell an-page an-page--safe"
+        data-kx="1"
+        data-hadith-collection="arbaeen"
+      >
+        <div className="an-content">
+          <div className="an-toolbar" data-an-toolbar="1">
+            <AppBackButton variant="inline" fallbackHref="/hadith" label="رجوع" />
+            <h1 className="an-toolbar__title">الأربعون النووية</h1>
+            <div className="an-toolbar__menu">
+              <button
+                type="button"
+                className="an-toolbar__more"
+                aria-label="المزيد"
+                aria-expanded={menuOpen}
+                onClick={() => setMenuOpen((v) => !v)}
+              >
+                <MoreHorizontal size={18} strokeWidth={2} aria-hidden />
+              </button>
+              {menuOpen ? (
+                <div className="an-toolbar__dropdown" role="menu">
+                  <button type="button" role="menuitem" onClick={resetProgress}>
+                    إعادة تعيين التقدم
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          </div>
 
-      {/* ── Hero ── */}
-      <header className="an-hero">
-        <p className="an-hero__eyebrow">السنة النبوية</p>
-        <h1 className="an-hero__title">الأربعون النووية</h1>
-        <p className="an-hero__sub">أربعون حديثاً جامعاً مع شرح وفوائد، متجدد يومياً</p>
+          <header className="an-summary" data-an-summary="1">
+            <p className="an-summary__eyebrow">السنة النبوية</p>
+            <p className="an-summary__lead">
+              أربعون حديثاً جامعاً مع شرح موجز وفوائد، مرجع مختصر لطالب العلم.
+            </p>
+            <div className="an-summary__progress" aria-label={progressLabel}>
+              <div className="an-prog" aria-hidden="true">
+                <div
+                  className="an-prog__bar"
+                  style={{ "--an-pct": `${pct}%` } as CSSProperties}
+                />
+              </div>
+              <span className="an-prog__label">{progressLabel}</span>
+            </div>
+          </header>
 
-        {/* تقدم القراءة */}
-        <div className="an-hero__progress">
-          <div className="an-prog">
+          <div className="an-filters">
+            <label className="an-search-wrap">
+              <span className="sr-only">ابحث في أحاديث الأربعين النووية</span>
+              <input
+                type="search"
+                className="an-search"
+                placeholder="ابحث في أحاديث الأربعين النووية"
+                value={query}
+                onChange={(e) => onQueryChange(e.target.value)}
+                enterKeyHint="search"
+                autoComplete="off"
+              />
+            </label>
+            {query.trim() ? (
+              <p className="an-results-count" aria-live="polite">
+                {filtered.length === 0 ? "لا نتائج مطابقة" : `${filtered.length} نتيجة`}
+              </p>
+            ) : null}
+
+            <div className="an-cats" role="tablist" aria-label="تصفية الأربعين النووية">
+              {PRIMARY_CATS.map((c) => (
+                <button
+                  key={c}
+                  role="tab"
+                  type="button"
+                  className={`an-cat${category === c ? " an-cat--active" : ""}`}
+                  onClick={() => setCategory(c)}
+                  aria-selected={category === c}
+                >
+                  {c}
+                </button>
+              ))}
+              <button
+                type="button"
+                className={`an-cat an-cat--more${MORE_CATS.includes(category) ? " an-cat--active" : ""}`}
+                onClick={() => setMoreFiltersOpen(true)}
+                aria-haspopup="dialog"
+              >
+                المزيد
+                {MORE_CATS.includes(category) ? " · 1" : ""}
+              </button>
+            </div>
+          </div>
+
+          {moreFiltersOpen ? (
             <div
-              className="an-prog__bar"
-              style={{ "--an-pct": `${pct}%` } as React.CSSProperties}
+              className="an-filter-sheet"
+              role="dialog"
+              aria-modal="true"
+              aria-label="تصنيفات إضافية"
+            >
+              <button
+                type="button"
+                className="an-filter-sheet__backdrop"
+                aria-label="إغلاق"
+                onClick={() => setMoreFiltersOpen(false)}
+              />
+              <div className="an-filter-sheet__panel">
+                <header className="an-filter-sheet__head">
+                  <h2>التصنيفات</h2>
+                  <button type="button" onClick={() => setMoreFiltersOpen(false)}>
+                    إغلاق
+                  </button>
+                </header>
+                <div className="an-filter-sheet__list">
+                  {[...PRIMARY_CATS, ...MORE_CATS].map((c) => (
+                    <button
+                      key={c}
+                      type="button"
+                      className={`an-cat${category === c ? " an-cat--active" : ""}`}
+                      onClick={() => {
+                        setCategory(c);
+                        setMoreFiltersOpen(false);
+                      }}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : null}
+
+          {filtered.length === 0 ? (
+            <p className="an-empty" role="status">
+              لا توجد نتائج لهذا البحث أو التصنيف. جرّب عبارة أقصر أو اختر «الكل».
+            </p>
+          ) : (
+            <div className="an-list" role="list">
+              {filtered.map((h) => (
+                <div key={h.id} id={`hadith-${h.id}`} role="listitem" className="an-list__item">
+                  <HadithListCard
+                    number={h.id}
+                    title={h.title}
+                    preview={truncateAtWord(h.text, 140)}
+                    href={`/arbaeen-nawawi/${h.id}`}
+                    read={read.has(h.id)}
+                    meta={CATEGORY_MAP[h.id]}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+
+          <ContentReportLink context="الأربعون النووية — سُنّة" />
+          <RelatedKnowledge
+            kind="hadith"
+            query="الأربعون النووية"
+            title="أحاديث ذات صلة"
+            limit={6}
+          />
+          <ExploreAlsoNav
+            title="استكشف أيضًا"
+            links={[
+              { href: "/hadith", label: "الحديث وعلومه" },
+              { href: "/hadith/sahih", label: "الأحاديث الصحيحة" },
+              { href: "/hadith-science", label: "مصطلح الحديث" },
+              { href: "/fawaid", label: "الفوائد" },
+            ]}
+          />
+          <div className="an-quiz-wrap">
+            <SectionQuiz
+              sectionId="hadith"
+              title="اختبر معلوماتك في الحديث النبوي"
+              count={4}
             />
           </div>
-          <span className="an-prog__label">
-            {read.size} / {ARBAEEN_NAWAWI.length} مقروء ({pct}%)
-          </span>
-          {read.size > 0 && (
-            <button
-              type="button"
-              className="an-reset-btn"
-              onClick={() => { setRead(new Set()); saveRead(new Set()); }}
-            >
-              إعادة تعيين
-            </button>
-          )}
         </div>
-      </header>
-
-      {/* ── فلاتر ── */}
-      <div className="an-filters">
-        <input
-          type="search"
-          className="an-search"
-          placeholder="ابحث في الأحاديث..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          aria-label="البحث في الأربعين النووية"
-        />
-        <div className="an-cats" role="tablist" aria-label="تصفية الأربعين النووية">
-          {CATS.map((c) => (
-            <button
-              key={c}
-              role="tab"
-              type="button"
-              className={`an-cat${category === c ? " an-cat--active" : ""}`}
-              onClick={() => setCategory(c)}
-              aria-selected={category === c}
-            >
-              {c}
-            </button>
-          ))}
-          {read.size > 0 && (
-            <button
-              type="button"
-              className={`an-cat an-cat--read${showReadOnly ? " an-cat--active" : ""}`}
-              onClick={() => setShowReadOnly((v) => !v)}
-              aria-pressed={showReadOnly}
-            >
-              ✓ المقروءة ({read.size})
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* ── قائمة الأحاديث ── */}
-      {filtered.length === 0 ? (
-        <p className="an-empty">لا توجد نتائج، جرب بحثاً مختلفاً</p>
-      ) : (
-        <div className="an-list" role="list">
-          {filtered.map((h) => {
-            const isRead = read.has(h.id);
-            const isExp = expanded.has(h.id);
-            const isToday = h.id === todayHadith.id;
-            const preview = truncateAtWord(h.text, 90);
-            return (
-              <article
-                key={h.id}
-                id={`hadith-${h.id}`}
-                role="listitem"
-                className={`an-row hdl-hadith-row${isRead ? " an-row--read" : ""}${isToday ? " an-row--today" : ""}${isExp ? " an-row--open" : ""}`}
-              >
-                <button
-                  type="button"
-                  className="an-row__main"
-                  onClick={() => toggleExpand(h.id)}
-                  aria-expanded={isExp}
-                  aria-controls={`hadith-body-${h.id}`}
-                >
-                  <span className="an-row__num" aria-hidden="true">{h.id}</span>
-                  <span className="an-row__body">
-                    <span className="an-row__title">{h.title}</span>
-                    {!isExp && (
-                      <span className="an-row__preview">«{preview}»</span>
-                    )}
-                  </span>
-                  <ChevronLeft className="an-row__chevron" size={18} strokeWidth={2} aria-hidden="true" />
-                </button>
-                {isExp && (
-                  <div className="an-row__detail" id={`hadith-body-${h.id}`}>
-                    <blockquote className="an-row__text">«{h.text}»</blockquote>
-                    <p className="an-row__expl">{h.explanation}</p>
-                    {h.benefits && (
-                      <div className="an-row__benefit">
-                        <span className="an-row__benefit-label">الفائدة</span>
-                        <span>{h.benefits}</span>
-                      </div>
-                    )}
-                    <footer className="an-row__footer">
-                      <span className="an-row__source">المصدر: {h.source}</span>
-                      <div className="an-row__actions">
-                        <Link href={`/arbaeen-nawawi/${h.id}`} className="an-row__action an-row__cta hdl-entry-card__cta" aria-label={`قراءة وشرح الحديث ${h.id}`}>قراءة وشرح</Link>
-                        <button
-                          type="button"
-                          className={`an-row hdl-hadith-row__action${isRead ? " an-row__action--done" : ""}`}
-                          onClick={() => toggleRead(h.id)}
-                          aria-label={isRead ? "إلغاء تعليم كمقروء" : "تعليم كمقروء"}
-                        >
-                          {isRead ? "مقروء" : "قرأت"}
-                        </button>
-                      </div>
-                    </footer>
-                  </div>
-                )}
-              </article>
-            );
-          })}
-        </div>
-      )}
-
-      <ContentReportLink context="الأربعون النووية — سُنّة" />
-      <RelatedKnowledge kind="hadith" query="الأربعون النووية" title="أحاديث ذات صلة" limit={6} />
-      <ExploreAlsoNav
-        title="استكشف أيضًا"
-        links={[
-          { href: "/hadith", label: "الحديث وعلومه" },
-          { href: "/hadith/sahih", label: "الأحاديث الصحيحة" },
-          { href: "/hadith-science", label: "مصطلح الحديث" },
-          { href: "/fawaid", label: "الفوائد" },
-        ]}
-      />
-      <div className="an-quiz-wrap">
-        <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث النبوي" count={4} />
-      </div>
-    </KnowledgeLayout>
+      </KnowledgeLayout>
     </ListScreen>
   );
 }

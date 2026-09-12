@@ -11,6 +11,8 @@ import { fileURLToPath } from "node:url";
 import {
   isAuthStandalonePath,
   isCompactHeaderPath,
+  isHadithReaderPath,
+  hasInPageBackChrome,
   isImmersiveChromePath,
   isPinnedChromePath,
   isPrayerTimesPath,
@@ -62,7 +64,11 @@ assert.equal(isPinnedChromePath("/prophets/musa"), true);
 assert.equal(isCompactHeaderPath("/login"), false, "الدخول يُظهر الشريط المتحرك");
 assert.equal(isCompactHeaderPath("/register"), false, "التسجيل يُظهر الشريط المتحرك");
 assert.equal(isCompactHeaderPath("/"), false);
-assert.equal(isCompactHeaderPath("/hadith"), false);
+assert.equal(isCompactHeaderPath("/hadith"), true, "قوائم الحديث بلا صف بحث عام مكرر");
+assert.equal(isCompactHeaderPath("/arbaeen-nawawi"), true);
+assert.equal(isHadithReaderPath("/arbaeen-nawawi"), true);
+assert.equal(hasInPageBackChrome("/arbaeen-nawawi"), true);
+assert.equal(hasInPageBackChrome("/hadith/sahih"), true);
 
 const prayerSrc = readFileSync(resolve(appRoot, "src/pages/worship/ui/PrayerTimesView.tsx"), "utf8");
 assert.equal(prayerSrc.includes("SectionQuiz"), false, "صفحة الصلاة بلا SectionQuiz");

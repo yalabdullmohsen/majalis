@@ -1846,3 +1846,30 @@ html.dark .hadith-browse-cta__desc {
   gap: 0.4rem;
   justify-content: flex-end;
 }
+
+
+/* Shared hadith list safety — لا تجاوز أفقي ولا nowrap على المتن */
+.hadith-card,
+.hdl-card,
+.hb-hadith-row {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+.hadith-card__text,
+.hadith-card__text--matn,
+.hdl-card__matn,
+.hb-hadith-row__preview {
+  min-width: 0;
+  white-space: normal !important;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+.hadith-page,
+.hadith-class-page,
+.hb-page {
+  padding-bottom: calc(
+    var(--bottom-nav-total, 5rem) + env(safe-area-inset-bottom, 0px) + 1.5rem
+  );
+}
