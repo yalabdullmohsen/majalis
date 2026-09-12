@@ -639,10 +639,15 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
 
 /* —— V3: إعدادات صلاة مختصرة + منتقي صوت —— */
 .ads-page--v3 {
-  background:
+  /* لون صلب أولًا حتى تقيس بوابة التباين خلفية فعلية (التدرج = background-image). */
+  background-color: var(--msk-canvas, #f3efe7);
+  background-image:
     radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--msk-gold, #c4a35a) 10%, transparent), transparent 55%),
     linear-gradient(180deg, color-mix(in srgb, var(--msk-canvas-1, #f7f4ef) 92%, #ebe4d8), var(--msk-canvas, #f3efe7));
   color: var(--msk-text);
+}
+html[data-theme="dark"] .ads-page--v3 {
+  background-color: var(--msk-canvas, #121a17);
 }
 .ads-toolbar {
   display: flex;
@@ -655,7 +660,8 @@ html[data-theme="dark"] .ads-diagnostics-toggle {
   margin: 0;
   font-size: 1.15rem;
   font-weight: 800;
-  color: color-mix(in srgb, var(--msk-gold, #8a6a2f) 35%, var(--msk-text));
+  /* نص العنوان من توكن الحبر الكامل — مزج الذهبي يضعف التباين تحت بوابة 4.5:1 */
+  color: var(--msk-text);
 }
 .ads-sound-summary {
   display: flex;
