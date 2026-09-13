@@ -52,6 +52,13 @@
         line-height: 1.65;
         color: #4a6b5f;
       }
+      .diag {
+        margin: 0 0 1rem;
+        font-size: 0.75rem;
+        line-height: 1.5;
+        color: #6a857a;
+        word-break: break-all;
+      }
       .actions {
         display: grid;
         gap: 0.55rem;
@@ -72,6 +79,10 @@
         color: #1f7a5a;
         border: 1px solid color-mix(in srgb, #1f7a5a 35%, transparent);
       }
+      button:disabled {
+        opacity: 0.6;
+        cursor: default;
+      }
       button:active {
         opacity: 0.92;
       }
@@ -88,7 +99,8 @@
           background: #101614;
           color: #e8efea;
         }
-        p {
+        p,
+        .diag {
           color: #9bb5a8;
         }
         button.secondary {
@@ -103,6 +115,7 @@
       <div class="spin" aria-hidden="true"></div>
       <h1 id="title">جاري تجهيز الصفحة…</h1>
       <p id="msg">نحمّل المحتوى. لا تغلق التطبيق.</p>
+      <p id="diag" class="diag" hidden></p>
       <div class="actions">
         <button type="button" id="retry">إعادة المحاولة</button>
         <button type="button" id="home" class="secondary">الصفحة الرئيسية</button>
@@ -111,11 +124,18 @@
     <script>
       (function () {
         var LIVE = "https://www.ssunnah.com/";
+        var HEALTH = "https://www.ssunnah.com/version.json";
         var RETRY_KEY = "mj.native-load-retry";
+        var CRASH_KEY = "mj.startup-fail-count";
+        var LAST_PATH_KEY = "mj.last-path";
         var root = document.getElementById("root");
         var title = document.getElementById("title");
         var msg = document.getElementById("msg");
+        var diag = document.getElementById("diag");
+        var retryBtn = document.getElementById("retry");
+        var homeBtn = document.getElementById("home");
         var online = typeof navigator !== "undefined" ? navigator.onLine !== false : true;
+        var navigating = false;
 
         function paintLoading(text, detail) {
           root.className = "is-loading";
@@ -124,7 +144,7 @@
           document.title = "جاري التجهيز — سُنّة";
         }
 
-        function paintFinal() {
+        function paintFinal(code) {
           root.className = "is-final";
           if (!online) {
             title.textContent = "أنت غير متصل بالإنترنت";
@@ -134,33 +154,9 @@
             msg.textContent = "أعد المحاولة. إن استمر الأمر افتح الصفحة الرئيسية.";
           }
           document.title = "تعذّر التحميل — سُنّة";
-        }
-
-        function resolveTarget(forceHome) {
-          if (forceHome) return LIVE;
-          var path = "/";
-          try {
-            path = sessionStorage.getItem("mj.last-path") || "/";
-          } catch (e0) {}
-          if (!path || path.charAt(0) !== "/") path = "/";
-          if (path.indexOf("native-load-error") !== -1) path = "/";
-          var ref = "";
-          try {
-            ref = document.referrer || "";
-          } catch (e1) {}
-          if (ref && ref.indexOf("ssunnah.com") !== -1 && ref.indexOf("native-load-error") === -1) {
-            return ref.split("#")[0];
-          }
-          return LIVE.replace(/\/$/, "") + path;
-        }
-
-        function go(forceHome) {
-          var target = resolveTarget(!!forceHome);
-          var sep = target.indexOf("?") >= 0 ? "&" : "?";
-          try {
-            location.replace(target + sep + "_r=" + Date.now());
-          } catch (e2) {
-            location.href = target;
+          if (diag && code) {
+            diag.hidden = false;
+            diag.textContent = "رمز الدعم: " + code;
           }
         }
 
@@ -178,24 +174,116 @@
           } catch (e4) {}
         }
 
-        document.getElementById("retry").addEventListener("click", function () {
+        function bumpCrashCount() {
+          try {
+            var n = parseInt(sessionStorage.getItem(CRASH_KEY) || "0", 10) || 0;
+            sessionStorage.setItem(CRASH_KEY, String(n + 1));
+            return n + 1;
+          } catch (e6) {
+            return 1;
+          }
+        }
+
+        function clearLastPath() {
+          try {
+            sessionStorage.removeItem(LAST_PATH_KEY);
+          } catch (e7) {}
+        }
+
+        function sanitizePath(path) {
+          if (!path || path.charAt(0) !== "/") return "/";
+          if (path.indexOf("native-load-error") !== -1) return "/";
+          if (path.indexOf("//") === 0) return "/";
+          if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(path)) return "/";
+          return path.split("#")[0].split("?")[0] || "/";
+        }
+
+        function resolveTarget(forceHome) {
+          if (forceHome) return LIVE;
+          var path = "/";
+          try {
+            path = sanitizePath(sessionStorage.getItem(LAST_PATH_KEY) || "/");
+          } catch (e0) {
+            path = "/";
+          }
+          // بعد أول فشل: لا تُعد مسارًا قديمًا قد يكون سبب الدائرة
+          if (readAttempts() >= 1) path = "/";
+          return LIVE.replace(/\/$/, "") + path;
+        }
+
+        function go(forceHome) {
+          if (navigating) return;
+          navigating = true;
+          retryBtn.disabled = true;
+          homeBtn.disabled = true;
+          var target = resolveTarget(!!forceHome);
+          var sep = target.indexOf("?") >= 0 ? "&" : "?";
+          try {
+            location.replace(target + sep + "_r=" + Date.now() + "&src=native-load-error");
+          } catch (e2) {
+            location.href = target;
+          }
+        }
+
+        function probeThenGo(forceHome) {
+          paintLoading(
+            forceHome ? "فتح الصفحة الرئيسية…" : "جاري إعادة التحميل…",
+            "نتحقق من الاتصال ثم نفتح سُنّة.",
+          );
+          var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+          var timer =
+            ctrl &&
+            setTimeout(function () {
+              try {
+                ctrl.abort();
+              } catch (e8) {}
+            }, 4000);
+          var done = function (ok) {
+            if (timer) clearTimeout(timer);
+            if (!ok) {
+              online = typeof navigator !== "undefined" ? navigator.onLine !== false : online;
+              navigating = false;
+              retryBtn.disabled = false;
+              homeBtn.disabled = false;
+              paintFinal("NL-" + readAttempts() + (online ? "-NET" : "-OFF"));
+              return;
+            }
+            go(!!forceHome);
+          };
+          try {
+            fetch(HEALTH + "?t=" + Date.now(), {
+              cache: "no-store",
+              signal: ctrl ? ctrl.signal : undefined,
+            })
+              .then(function (r) {
+                done(!!r && r.ok);
+              })
+              .catch(function () {
+                done(false);
+              });
+          } catch (e9) {
+            done(true);
+          }
+        }
+
+        retryBtn.addEventListener("click", function () {
+          if (navigating) return;
           writeAttempts(0);
-          paintLoading("جاري إعادة التحميل…", "نحاول فتح الصفحة من جديد.");
-          setTimeout(function () {
-            go(false);
-          }, 400);
+          clearLastPath();
+          probeThenGo(true);
         });
-        document.getElementById("home").addEventListener("click", function () {
+        homeBtn.addEventListener("click", function () {
+          if (navigating) return;
           writeAttempts(0);
-          paintLoading("فتح الصفحة الرئيسية…", "ننقلك إلى سُنّة.");
-          setTimeout(function () {
-            go(true);
-          }, 300);
+          clearLastPath();
+          probeThenGo(true);
         });
 
         // مسار صامت: لا خطأ فوري — محاولتان قبل عرض السبب
+        // المحاولة الأولى: آخر مسار آمن. الثانية: الرئيسية فقط (تفادي حلقة المسار التالف).
         if (!online) {
-          paintFinal();
+          bumpCrashCount();
+          paintFinal("NL-OFF");
         } else {
           var attempts = readAttempts();
           if (attempts < 1) {
@@ -206,12 +294,15 @@
             }, 900);
           } else if (attempts < 2) {
             writeAttempts(2);
-            paintLoading("ما زلنا نجهّز الصفحة…", "محاولة إضافية بهدوء قبل أي رسالة خطأ.");
+            clearLastPath();
+            paintLoading("ما زلنا نجهّز الصفحة…", "محاولة إضافية على الصفحة الرئيسية.");
             setTimeout(function () {
               go(true);
             }, 1600);
           } else {
-            paintFinal();
+            bumpCrashCount();
+            clearLastPath();
+            paintFinal("NL-" + attempts);
           }
         }
 
@@ -219,9 +310,10 @@
           window.addEventListener("online", function () {
             online = true;
             writeAttempts(0);
-            paintLoading("عادت الشبكة…", "نعيد فتح الصفحة.");
+            clearLastPath();
+            paintLoading("عادت الشبكة…", "نعيد فتح الصفحة الرئيسية.");
             setTimeout(function () {
-              go(false);
+              probeThenGo(true);
             }, 500);
           });
         } catch (e5) {}

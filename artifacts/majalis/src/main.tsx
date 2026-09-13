@@ -16,6 +16,17 @@ import {
   runBootSequenceBeforeMount,
   scheduleMushafLastPagePrewarm,
 } from "./lib/boot-sequence";
+import {
+  beginBootstrapStage,
+  completeBootstrapStage,
+  failBootstrapStage,
+  publishBootstrapDebug,
+} from "./lib/app-bootstrap-pipeline";
+import {
+  clearStartupFailures,
+  isStartupSafeMode,
+  recordStartupFailure,
+} from "./lib/startup-safe-mode";
 import { hydrateNativeStorage } from "./lib/native-storage";
 import { installInAppNavigationGuard } from "./lib/in-app-navigation";
 import { armNativeSplashController } from "./lib/splash-screen";
@@ -177,8 +188,30 @@ const queryClient = createAppQueryClient();
 
 resetMobileNavBodyLock();
 installMajalisClearCacheDebug();
+beginBootstrapStage("loadRuntimeConfiguration", true);
+beginBootstrapStage("loadLocalPreferences", true);
+beginBootstrapStage("applyTheme", true);
 // تسلسل إقلاع موحّد (مسح قديم + ترطيب ثيم/صفحة + قفل مقاييس) — بلا await قبل createRoot
-runBootSequenceBeforeMount();
+try {
+  runBootSequenceBeforeMount();
+  completeBootstrapStage("loadRuntimeConfiguration");
+  completeBootstrapStage("loadLocalPreferences");
+  completeBootstrapStage("applyTheme");
+} catch (bootErr) {
+  const code = bootErr instanceof Error ? bootErr.message : "boot_sequence_failed";
+  failBootstrapStage("loadRuntimeConfiguration", code);
+  recordStartupFailure(code);
+}
+publishBootstrapDebug(isStartupSafeMode());
+// الميزات الثانوية لا تُجدول في Safe Mode حتى تستقر الرئيسية
+if (isStartupSafeMode()) {
+  beginBootstrapStage("initializeAudioServices", false);
+  failBootstrapStage("initializeAudioServices", "safe_mode", true);
+  beginBootstrapStage("scheduleBackgroundServices", false);
+  failBootstrapStage("scheduleBackgroundServices", "safe_mode", true);
+  beginBootstrapStage("refreshRemoteDataInBackground", false);
+  failBootstrapStage("refreshRemoteDataInBackground", "safe_mode", true);
+}
 
 const bootReporting = () => {
   initClientErrorReporting();
@@ -239,6 +272,8 @@ async function mount() {
     return;
   }
 
+  beginBootstrapStage("initializeRouteRegistry", true);
+  beginBootstrapStage("showFirstUsefulScreen", true);
   try {
     createRoot(rootEl).render(
       <>
@@ -250,8 +285,16 @@ async function mount() {
         </ErrorBoundary>
       </>,
     );
+    completeBootstrapStage("initializeRouteRegistry");
+    completeBootstrapStage("showFirstUsefulScreen");
+    clearStartupFailures();
+    publishBootstrapDebug(false);
   } catch (err) {
     console.error("[boot] createRoot failed", err);
+    const code = err instanceof Error ? err.message : "create_root_failed";
+    failBootstrapStage("showFirstUsefulScreen", code);
+    recordStartupFailure(code);
+    publishBootstrapDebug(true);
     return;
   }
 
@@ -301,6 +344,7 @@ async function mount() {
     try {
       // نجاح الإقلاع — اسمح بمحاولة native-load-error ناعمة في الجلسة التالية
       sessionStorage.removeItem("mj.native-load-retry");
+      clearStartupFailures();
     } catch { /* تجاهل */ }
     void import("@/lib/lazy-with-retry").then(({ clearChunkReloadGuard }) => {
       clearChunkReloadGuard();
