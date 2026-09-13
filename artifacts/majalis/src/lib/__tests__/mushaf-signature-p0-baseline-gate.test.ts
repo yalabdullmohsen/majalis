@@ -92,6 +92,8 @@ assert.doesNotMatch(searchEngine, /fetch\(/);
 const exitCtrl = read("src/features/mushaf-reader/MushafExitControl.tsx");
 assert.match(exitCtrl, /الخروج من المصحف/);
 assert.match(exitCtrl, /nm-exit-control/);
+assert.match(exitCtrl, /visible/);
+assert.match(reader, /visible=\{chromeOpen/);
 
 assert.match(reader, /setMushafAyahSearchHighlight/);
 assert.match(reader, /migrateToSunnahMushafSignature/);
