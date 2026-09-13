@@ -50,7 +50,16 @@ import {
   setMushafAudioClock,
   useMushafAudioClock,
 } from "@/features/mushaf-madinah/mushaf-audio-clock-store";
-import { setMushafAyahSyncKeys } from "@/features/mushaf-madinah/mushaf-ayah-sync-store";
+import {
+  setMushafAyahSyncKeys,
+  setNavigationHighlightedAyahId,
+} from "@/features/mushaf-madinah/mushaf-ayah-sync-store";
+import {
+  QURAN_NAV_HIGHLIGHT_FADE_MS,
+  QURAN_NAV_HIGHLIGHT_HOLD_MS,
+  consumePendingNavigationHighlight,
+  peekPendingNavigationHighlight,
+} from "@/lib/quran-navigation";
 import {
   findMushafPageForAyah,
   parseVerseKey,
@@ -345,6 +354,46 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   useEffect(() => {
     setMushafAyahSyncKeys(selectedVerseKey, playingVerseKey);
   }, [selectedVerseKey, playingVerseKey]);
+
+  /** تمييز تنقّل سياقي — بلا تفسير/أدوات/صوت */
+  useEffect(() => {
+    const applyPendingNav = () => {
+      const pending = peekPendingNavigationHighlight();
+      if (!pending) {
+        setNavigationHighlightedAyahId(null);
+        return null;
+      }
+      if (pending.pageNumber !== pageRef.current) return null;
+      consumePendingNavigationHighlight();
+      setTafsirOpen(false);
+      setTafsirVerseKey(null);
+      tafsirIntentRef.current = null;
+      setActionsOpen(false);
+      setChromeOpen(false);
+      setAudioDockOpen(false);
+      setNavigationHighlightedAyahId(pending.verseKey);
+      return window.setTimeout(() => {
+        setNavigationHighlightedAyahId(null);
+      }, QURAN_NAV_HIGHLIGHT_HOLD_MS + QURAN_NAV_HIGHLIGHT_FADE_MS);
+    };
+
+    let clearId = applyPendingNav();
+    const onNavEvent = () => {
+      if (clearId != null) window.clearTimeout(clearId);
+      clearId = applyPendingNav();
+    };
+    window.addEventListener("ssunnah:quran-nav-pending", onNavEvent);
+    return () => {
+      window.removeEventListener("ssunnah:quran-nav-pending", onNavEvent);
+      if (clearId != null) window.clearTimeout(clearId);
+      /* تقليب الصفحة يُنظّف تمييز التنقّل */
+      setNavigationHighlightedAyahId(null);
+    };
+  }, [page]);
+
+  useEffect(() => {
+    return () => setNavigationHighlightedAyahId(null);
+  }, []);
 
   useEffect(() => {
     audio.setReciter(loadReciterId());

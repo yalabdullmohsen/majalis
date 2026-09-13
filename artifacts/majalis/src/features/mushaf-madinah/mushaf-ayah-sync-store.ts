@@ -2,8 +2,13 @@ import { useSyncExternalStore } from "react";
 
 type SyncListener = () => void;
 
-let selectedVerseKey: string | null = null;
-let playingVerseKey: string | null = null;
+/** تحديد يدوي (فتح أدوات الآية) */
+let manuallySelectedVerseKey: string | null = null;
+/** تمييز تلاوة */
+let audioHighlightedVerseKey: string | null = null;
+/** تمييز تنقّل سياقي من أقسام أخرى — لا يفتح تفسيرًا ولا أدواتًا */
+let navigationHighlightedVerseKey: string | null = null;
+
 const listeners = new Set<SyncListener>();
 
 function emit(): void {
@@ -12,15 +17,34 @@ function emit(): void {
   }
 }
 
+/** توافق خلفي: selected = يدوي، playing = صوت */
 export function setMushafAyahSyncKeys(selected: string | null, playing: string | null): void {
-  if (selectedVerseKey === selected && playingVerseKey === playing) return;
-  selectedVerseKey = selected;
-  playingVerseKey = playing;
+  if (manuallySelectedVerseKey === selected && audioHighlightedVerseKey === playing) return;
+  manuallySelectedVerseKey = selected;
+  audioHighlightedVerseKey = playing;
   emit();
 }
 
-export function getMushafAyahSyncKeys(): { selected: string | null; playing: string | null } {
-  return { selected: selectedVerseKey, playing: playingVerseKey };
+export function setNavigationHighlightedAyahId(verseKey: string | null): void {
+  if (navigationHighlightedVerseKey === verseKey) return;
+  navigationHighlightedVerseKey = verseKey;
+  emit();
+}
+
+export function getNavigationHighlightedAyahId(): string | null {
+  return navigationHighlightedVerseKey;
+}
+
+export function getMushafAyahSyncKeys(): {
+  selected: string | null;
+  playing: string | null;
+  navigation: string | null;
+} {
+  return {
+    selected: manuallySelectedVerseKey,
+    playing: audioHighlightedVerseKey,
+    navigation: navigationHighlightedVerseKey,
+  };
 }
 
 function subscribe(listener: SyncListener): () => void {
@@ -28,11 +52,11 @@ function subscribe(listener: SyncListener): () => void {
   return () => listeners.delete(listener);
 }
 
-/** اشتراك محلي — يُعيد رسم الكلمة فقط عند تغيّر حالتها */
+/** اشتراك محلي — تحديد يدوي فقط (التنقّل عبر overlay بلا تغيير لون الحبر) */
 export function useMushafAyahWordSelected(verseKey: string): boolean {
   return useSyncExternalStore(
     subscribe,
-    () => selectedVerseKey === verseKey,
+    () => manuallySelectedVerseKey === verseKey,
     () => false,
   );
 }
@@ -40,23 +64,37 @@ export function useMushafAyahWordSelected(verseKey: string): boolean {
 export function useMushafAyahWordPlaying(verseKey: string): boolean {
   return useSyncExternalStore(
     subscribe,
-    () => playingVerseKey === verseKey,
+    () => audioHighlightedVerseKey === verseKey,
+    () => false,
+  );
+}
+
+export function useMushafAyahWordNavigation(verseKey: string): boolean {
+  return useSyncExternalStore(
+    subscribe,
+    () => navigationHighlightedVerseKey === verseKey,
     () => false,
   );
 }
 
 /** مفتاح الآية الجارية فقط — لطبقة التظليل دون props من الصفحة. */
 export function useMushafAyahPlayingKey(): string | null {
-  return useSyncExternalStore(subscribe, () => playingVerseKey, () => null);
+  return useSyncExternalStore(subscribe, () => audioHighlightedVerseKey, () => null);
 }
 
-/** مفتاح الآية المحددة — لطبقة التحديد السطري. */
+/** مفتاح الآية المحددة يدويًا — لطبقة التحديد السطري. */
 export function useMushafAyahSelectedKey(): string | null {
-  return useSyncExternalStore(subscribe, () => selectedVerseKey, () => null);
+  return useSyncExternalStore(subscribe, () => manuallySelectedVerseKey, () => null);
+}
+
+/** مفتاح تمييز التنقّل السياقي */
+export function useMushafAyahNavigationKey(): string | null {
+  return useSyncExternalStore(subscribe, () => navigationHighlightedVerseKey, () => null);
 }
 
 export function resetMushafAyahSyncStoreForTests(): void {
-  selectedVerseKey = null;
-  playingVerseKey = null;
+  manuallySelectedVerseKey = null;
+  audioHighlightedVerseKey = null;
+  navigationHighlightedVerseKey = null;
   listeners.clear();
 }

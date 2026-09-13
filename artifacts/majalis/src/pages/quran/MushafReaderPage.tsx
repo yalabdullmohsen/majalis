@@ -13,6 +13,31 @@ import { ayahKeyToPage } from "@/lib/quran-my-bookmarks";
 import { useNavigationPaintGate } from "@/hooks/useNavigationPaintGate";
 import { ScriptureScreen } from "@/components/design-system/screens";
 import { migrateMushafUserData, isMushafReaderV2Enabled } from "@/lib/mushaf-v2";
+import {
+  QuranNavigationService,
+  buildQuranAyahReference,
+  parseMushafNavQuery,
+  stashPendingNavigationHighlight,
+  type QuranNavigationSource,
+} from "@/lib/quran-navigation";
+
+const NAV_SOURCES = new Set<QuranNavigationSource>([
+  "prophets-stories",
+  "asbab-nuzul",
+  "tafsir",
+  "search",
+  "bookmarks",
+  "deep-link",
+  "quran-people",
+  "other",
+]);
+
+function resolveNavSource(raw?: string): QuranNavigationSource {
+  if (raw && NAV_SOURCES.has(raw as QuranNavigationSource)) {
+    return raw as QuranNavigationSource;
+  }
+  return "deep-link";
+}
 
 /**
  * مسار المصحف الحقيقي `/mushaf` — قارئ واحد ثابت؛ رقم الصفحة حالة داخلية.
@@ -38,6 +63,31 @@ export default function MushafReaderPage() {
   useEffect(() => {
     if (paintReady) setReaderMounted(true);
   }, [paintReady]);
+
+  /** deep-link خارجي يحمل surah+ayah+highlight — خزّن طلب التحديد */
+  useEffect(() => {
+    const nav = parseMushafNavQuery(search);
+    if (nav.surahId == null || nav.ayahId == null || !nav.highlight) return;
+    const built = buildQuranAyahReference({
+      surahId: nav.surahId,
+      ayahId: nav.ayahId,
+      navigationSource: resolveNavSource(nav.source),
+      highlightMode: "navigation",
+    });
+    if (!built.ok) return;
+    stashPendingNavigationHighlight({
+      verseKey: `${built.ref.surahId}:${built.ref.ayahId}`,
+      pageNumber: built.ref.pageNumber,
+      source: built.ref.navigationSource,
+      requestedAt: built.ref.requestedAt,
+      suppressTafsir: true,
+      suppressAudio: true,
+      suppressAyahActions: true,
+    });
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("ssunnah:quran-nav-pending"));
+    }
+  }, [search]);
 
   useEffect(() => {
     if (isMushafReaderV2Enabled()) migrateMushafUserData();
@@ -69,7 +119,6 @@ export default function MushafReaderPage() {
     const desired = `/mushaf?page=${n}`;
     const current = `${window.location.pathname}${window.location.search}`;
     if (current === desired) return;
-    /* replaceState بلا popstate — لا يعيد تركيب المسار ولا يمر عبر wouter */
     window.history.replaceState(window.history.state, "", desired);
   }, []);
 
@@ -78,7 +127,6 @@ export default function MushafReaderPage() {
       const next = clampMushafPage(n);
       setPageNumber(next);
       if (urlSyncTimer.current != null) window.clearTimeout(urlSyncTimer.current);
-      /* بعد استقرار التقليب — لا تزامن URL في كل إطار سحب */
       urlSyncTimer.current = window.setTimeout(() => {
         urlSyncTimer.current = null;
         syncUrlQuietly(next);
@@ -111,7 +159,7 @@ export default function MushafReaderPage() {
       <MushafViewport
         pageNumber={pageNumber}
         onPageChange={onPageChange}
-        onExit={() => navigateTo("/quran-hub", { mode: "screen" })}
+        onExit={() => QuranNavigationService.exitToReturnContext("/quran-hub")}
         onIndex={() => navigateTo("/quran-hub", { mode: "screen" })}
       />
     </ScriptureScreen>
@@ -122,6 +170,17 @@ function resolvePage(
   params: { page?: string; surah?: string },
   search: string,
 ): number {
+  const nav = parseMushafNavQuery(search);
+  if (nav.surahId != null && nav.ayahId != null) {
+    const built = buildQuranAyahReference({
+      surahId: nav.surahId,
+      ayahId: nav.ayahId,
+      navigationSource: "deep-link",
+    });
+    if (built.ok) return clampMushafPage(built.ref.pageNumber);
+  }
+  if (nav.page != null) return clampMushafPage(nav.page);
+
   const qs = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
   const fromQuery = Number.parseInt(qs.get("page") ?? "", 10);
   if (Number.isFinite(fromQuery)) return clampMushafPage(fromQuery);
