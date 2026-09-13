@@ -10,9 +10,10 @@
   --mushaf-body-width: min(100%, 28rem);
   --mushaf-line-height: 1.85;
   --mushaf-font-weight: 400;
-  --mushaf-page-bg: #fdf9f3;
+  /* ورقة أدفأ قليلًا مع بقاء تباين الحبر */
+  --mushaf-page-bg: #fbf4e8;
   --mushaf-text-color: #1a1510;
-  --mushaf-meta-color: #785e38;
+  --mushaf-meta-color: #5a4224;
   --mushaf-top-safe: var(--mushaf-safe-top);
   --mushaf-font-size: 24px;
   --mushaf-header-height: 36px;
@@ -20,6 +21,7 @@
   --mushaf-body-top: var(--mushaf-header-height);
   --mushaf-body-height: auto;
   --mushaf-side-pad: max(0.7rem, var(--inset-inline-start, var(--inset-left, 0px)), var(--inset-inline-end, var(--inset-right, 0px)));
+  /* حجم العلامة ثابت (geometry) — الوضوح عبر الحدود/الوزن فقط */
   --mushaf-ayah-mark-size: 0.92em;
 
   /* طبقات سفلية داخل القارئ */
@@ -30,11 +32,11 @@
   --reader-bottom-stack: 0px;
 
   --nm-paper: var(--mushaf-page-bg);
-  --nm-paper-deep: #faf6ee;
+  --nm-paper-deep: #f5edd9;
   --nm-ink: var(--mushaf-text-color);
   --nm-meta: var(--mushaf-meta-color);
-  --nm-gold: #a68b67;
-  --nm-gold-deep: #785e38;
+  --nm-gold: #a07d4a;
+  --nm-gold-deep: #5a4224;
   --nm-select: rgba(147, 121, 82, 0.14);
   --nm-play: rgba(147, 121, 82, 0.1);
   --nm-qpc-size: var(--mushaf-font-size);
@@ -167,18 +169,21 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 0.2rem 0.25rem 0.45rem;
-  font-size: 0.78rem;
-  font-weight: 600;
+  /* فراغ علوي أقل بين الرأس وأول سطر — دون تغيير ارتفاع الـgeometry */
+  padding: 0.08rem 0.25rem 0.18rem;
+  font-size: 0.8rem;
+  font-weight: 700;
   color: var(--mushaf-meta-color, var(--nm-meta));
   letter-spacing: 0;
-  line-height: 1.25;
+  line-height: 1.2;
   user-select: none;
 }
 
 .nm-page__header-surah,
 .nm-page__header-juz {
   white-space: nowrap;
+  color: var(--mushaf-meta-color, var(--nm-meta));
+  opacity: 1;
 }
 
 /* منطقة النص — بلا إطار */
@@ -193,7 +198,7 @@
   flex-direction: column;
   margin: 0;
   /* بلا حشو أفقي إضافي — inset الجانبي من Signature فقط (--nm-side-pad) */
-  padding: 0.1rem 0 0.25rem;
+  padding: 0 0 0.2rem;
   border: 0;
   box-shadow: none;
   background: transparent;
@@ -270,69 +275,77 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  padding-block: 0.15em;
+  padding-block: 0.06em;
 }
 
-/* إطار سورة — هوية سُنّة Signature (أبعاد ثابتة، بلا Glow) */
+/* إطار سورة مطبعي — هوية سُنّة (أبعاد ثابتة، بلا Glow، بلا ×) */
 .nm-root {
-  --mushaf-surah-frame-bg: #f4ebda;
+  --mushaf-surah-frame-bg: #f3e8d2;
   --mushaf-surah-frame-border: #1a4a38;
-  --mushaf-surah-frame-accent: #b08d57;
-  --mushaf-surah-frame-text: #16382c;
-  --mushaf-surah-frame-ornament: #8a6b2e;
+  --mushaf-surah-frame-accent: #9a7a3e;
+  --mushaf-surah-frame-text: #10281f;
+  --mushaf-surah-frame-ornament: #7a5c28;
 }
 html.dark .nm-root,
 html[data-theme="dark"] .nm-root {
   --mushaf-surah-frame-bg: #152018;
   --mushaf-surah-frame-border: #2f6b52;
   --mushaf-surah-frame-accent: #c4a574;
-  --mushaf-surah-frame-text: #e8dcc0;
-  --mushaf-surah-frame-ornament: #a8894a;
+  --mushaf-surah-frame-text: #f0e6ce;
+  --mushaf-surah-frame-ornament: #c4a574;
 }
 
 .nm-surah-banner {
   --mushaf-surah-frame-height: 2.55rem;
+  position: relative;
   box-sizing: border-box;
   width: 100%;
   height: var(--mushaf-surah-frame-height);
   min-height: var(--mushaf-surah-frame-height);
   max-height: var(--mushaf-surah-frame-height);
   display: grid;
-  grid-template-columns: 1.6rem 1fr 1.6rem;
+  grid-template-columns: 1.35rem 1fr 1.35rem;
   align-items: center;
   justify-items: center;
-  padding: 0 0.35rem;
+  padding: 0 0.4rem;
   text-align: center;
   color: var(--mushaf-surah-frame-text);
   font-family: "Amiri", "Traditional Arabic", serif;
-  font-size: clamp(0.95rem, 3.3vw, 1.08rem);
-  font-weight: 700;
-  letter-spacing: 0;
+  font-size: clamp(1.02rem, 3.5vw, 1.18rem);
+  font-weight: 800;
+  letter-spacing: 0.01em;
   line-height: 1;
-  border-radius: 0.55rem;
+  /* مستطيل مطبعي — ليس بطاقة تطبيق مستديرة */
+  border-radius: 0.2rem;
   border: 1px solid var(--mushaf-surah-frame-accent);
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--mushaf-surah-frame-bg) 88%, #1f5c45 12%) 0%,
-      var(--mushaf-surah-frame-bg) 42%,
-      var(--mushaf-surah-frame-bg) 100%
-    );
+  background: var(--mushaf-surah-frame-bg);
+  /* إطار مزدوج رفيع كأطر المصاحف */
   box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-surah-frame-border) 55%, transparent),
-    inset 0 0 0 3px color-mix(in srgb, var(--mushaf-surah-frame-accent) 28%, transparent);
+    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-surah-frame-border) 70%, transparent),
+    inset 0 0 0 2px color-mix(in srgb, var(--mushaf-surah-frame-bg) 100%, transparent),
+    inset 0 0 0 3px color-mix(in srgb, var(--mushaf-surah-frame-accent) 45%, transparent);
   user-select: none;
   overflow: hidden;
 }
 
+/* نجمة ثمانية هندسية بسيطة — ليست علامة × */
 .nm-surah-banner__ornament {
-  width: 1.05rem;
-  height: 1.05rem;
-  background:
-    linear-gradient(45deg, transparent 42%, var(--mushaf-surah-frame-ornament) 42%, var(--mushaf-surah-frame-ornament) 58%, transparent 58%),
-    linear-gradient(-45deg, transparent 42%, var(--mushaf-surah-frame-ornament) 42%, var(--mushaf-surah-frame-ornament) 58%, transparent 58%),
-    radial-gradient(circle at center, color-mix(in srgb, var(--mushaf-surah-frame-accent) 55%, transparent) 0 28%, transparent 30%);
-  opacity: 0.9;
+  width: 0.78rem;
+  height: 0.78rem;
+  background: var(--mushaf-surah-frame-ornament);
+  clip-path: polygon(
+    50% 0%,
+    62% 28%,
+    100% 30%,
+    70% 52%,
+    82% 100%,
+    50% 72%,
+    18% 100%,
+    30% 52%,
+    0% 30%,
+    38% 28%
+  );
+  opacity: 0.88;
 }
 
 .nm-surah-banner__label {
@@ -341,6 +354,8 @@ html[data-theme="dark"] .nm-root {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-weight: 800;
+  color: var(--mushaf-surah-frame-text);
 }
 
 /* بسملة */
@@ -490,7 +505,7 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   box-shadow: none;
 }
 
-/* رقم آية — دائرة نصية بسيطة ثابتة الحجم بلا رفع للسطر */
+/* رقم آية — دائرة نصية أوضح قليلًا بلا رفع للسطر */
 .nm-ayah-mark {
   position: relative;
   z-index: 2;
@@ -505,12 +520,12 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   padding: 0;
   vertical-align: -0.08em;
   border-radius: 50%;
-  border: 1px solid color-mix(in srgb, var(--nm-gold-deep) 45%, transparent);
-  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--nm-gold-deep) 78%, transparent);
+  background: color-mix(in srgb, var(--nm-gold) 8%, transparent);
   color: var(--nm-gold-deep);
   font-family: inherit;
-  font-size: 0.58em;
-  font-weight: 600;
+  font-size: 0.6em;
+  font-weight: 700;
   line-height: 1;
   overflow: hidden;
   transform: none;
