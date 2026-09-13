@@ -3,10 +3,8 @@
  * لا يعيد parsing أثناء السحب؛ يبطل فقط عند تغيّر geometry أو إصدار البيانات أو الـpreset.
  */
 import type { MushafPageLayout } from "@/lib/quran-data/qpc-page-data";
-import {
-  buildMushafRenderCacheKey,
-  resolveSunnahMushafClassicPreset,
-} from "./sunnah-mushaf-classic-preset";
+import { buildMushafRenderCacheKey } from "./sunnah-mushaf-classic-preset";
+import { resolveSunnahMushafSignaturePreset } from "./sunnah-mushaf-signature-preset";
 
 export type MushafPageRenderModel = {
   pageNumber: number;
@@ -21,10 +19,10 @@ export type MushafPageRenderModel = {
 const MAX_ENTRIES = 12;
 const cache = new Map<number, MushafPageRenderModel>();
 
-const classic = resolveSunnahMushafClassicPreset();
+const signature = resolveSunnahMushafSignaturePreset();
 let geometryKey = "boot";
-/** يتضمن cacheVersion للـpreset حتى تُبطَل الصفحات القديمة بعد توحيد التصميم. */
-let dataVersion = `qpc-v2|${classic.cacheVersion}|${classic.presetId}`;
+/** يتضمن renderCacheVersion للـSignature حتى تُبطَل الصفحات القديمة بعد توحيد التصميم. */
+let dataVersion = `qpc-v2|${signature.renderCacheVersion}|${signature.presetId}`;
 
 export function setMushafGeometryKey(key: string): void {
   if (!key || key === geometryKey) return;

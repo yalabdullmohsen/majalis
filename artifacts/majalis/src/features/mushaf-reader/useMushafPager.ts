@@ -11,7 +11,6 @@ import {
   MUSHAF_PAGE_MAX,
   MUSHAF_PAGE_MIN,
 } from "@/lib/quran-last-page";
-import { haptics } from "@/lib/haptics";
 import { MUSHAF_SETTLE_MS } from "@/features/mushaf-madinah/layout-bands";
 
 /** عتبة السحب الأفقي — من أي مكان في الصفحة */
@@ -207,7 +206,7 @@ export function useMushafPager({
       const clamped = clampMushafPage(next);
       if (clamped === pageRef.current) return;
       onNavigateStart?.();
-      haptics.selection();
+      /* ممنوع Haptic أثناء تقليب الصفحة — الاهتزاز اللمسي يفسد السلاسة */
       onPageChange(clamped);
     },
     [onNavigateStart, onPageChange],

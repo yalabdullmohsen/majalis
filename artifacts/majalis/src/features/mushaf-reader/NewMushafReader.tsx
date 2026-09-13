@@ -51,6 +51,7 @@ import {
   useMushafAudioClock,
 } from "@/features/mushaf-madinah/mushaf-audio-clock-store";
 import {
+  setMushafAyahSearchHighlight,
   setMushafAyahSyncKeys,
   setNavigationHighlightedAyahId,
 } from "@/features/mushaf-madinah/mushaf-ayah-sync-store";
@@ -76,6 +77,7 @@ import { useMushafResourceGate } from "@/features/mushaf-madinah/useMushafResour
 import { prefetchAdjacentPageAudio } from "@/features/mushaf-madinah/prefetch-adjacent-audio";
 import { MUSHAF_CHROME_HIDE_MS } from "@/features/mushaf-madinah/layout-bands";
 import { MushafPage } from "./MushafPage";
+import { MushafExitControl } from "./MushafExitControl";
 import { MushafControlsLayer, MushafVerseMenu } from "./MushafControlsLayer";
 import { useStableMushafLayout } from "./useStableMushafLayout";
 import {
@@ -96,6 +98,7 @@ import {
   type TafsirOpenIntent,
 } from "./tafsir-open-intent";
 import { migrateLegacyMushafReaderPrefs } from "./sunnah-mushaf-classic-preset";
+import { migrateToSunnahMushafSignature } from "./sunnah-mushaf-signature-preset";
 import "./mushaf-reader.css";
 /* شيتات التلاوة/البحث/التفسير — فئات مشتركة */
 import "@/features/mushaf-madinah/mushaf-madinah.css";
@@ -134,6 +137,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   }, []);
   useEffect(() => {
     migrateLegacyMushafReaderPrefs();
+    migrateToSunnahMushafSignature();
   }, []);
   const v2Enabled = isMushafReaderV2Enabled();
   const readerControllerRef = useRef<MushafReaderController | null>(null);
@@ -326,16 +330,23 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   useEffect(() => {
     const pending = pendingSelectRef.current;
     pendingSelectRef.current = null;
+    let clearTimer: number | undefined;
     if (pending) {
-      setSelectedVerseKey(pending);
-      setActionsOpen(true);
+      /* تمييز بحث — بلا قائمة آية / بلا تفسير / بلا صوت */
+      setMushafAyahSearchHighlight(pending);
+      setSelectedVerseKey(null);
+      setActionsOpen(false);
       setTafsirOpen(false);
       setStatus(null);
       setChromeOpen(false);
-      return;
+      clearTimer = window.setTimeout(() => setMushafAyahSearchHighlight(null), 4000);
+    } else {
+      /* المسح يتم في onNavigateStart/go قبل القلب — لا نغيّر الحجز هنا لتجنّب قفزة الارتفاع */
+      suppressPageSyncRef.current = false;
     }
-    /* المسح يتم في onNavigateStart/go قبل القلب — لا نغيّر الحجز هنا لتجنّب قفزة الارتفاع */
-    suppressPageSyncRef.current = false;
+    return () => {
+      if (clearTimer != null) window.clearTimeout(clearTimer);
+    };
   }, [page]);
 
   const bumpChrome = useCallback(() => {
@@ -1024,8 +1035,34 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           }}
         />
       </Suspense>
+      <MushafExitControl
+        onExit={() => {
+          if (searchOpen || indexOpen) {
+            setSearchOpen(false);
+            setIndexOpen(false);
+            return;
+          }
+          if (tafsirOpen) {
+            setTafsirOpen(false);
+            setTafsirVerseKey(null);
+            return;
+          }
+          if (audioDockOpen && !audioDockMini) {
+            setAudioDockMini(true);
+            return;
+          }
+          if (actionsOpen) {
+            setActionsOpen(false);
+            setSelectedVerseKey(null);
+            return;
+          }
+          setMushafAyahSearchHighlight(null);
+          recitation.stop();
+          onExit();
+        }}
+      />
 
-      <MushafControlsLayer
+<MushafControlsLayer
         chromeOpen={chromeOpen && !actionsOpen && !gotoOpen}
         pageNumber={page}
         gotoOpen={gotoOpen}
@@ -1035,6 +1072,22 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           setGotoOpen(false);
         }}
         onExit={() => {
+          if (searchOpen || indexOpen) {
+            setSearchOpen(false);
+            setIndexOpen(false);
+            return;
+          }
+          if (tafsirOpen) {
+            setTafsirOpen(false);
+            setTafsirVerseKey(null);
+            return;
+          }
+          if (actionsOpen) {
+            setActionsOpen(false);
+            setSelectedVerseKey(null);
+            return;
+          }
+          setMushafAyahSearchHighlight(null);
           recitation.stop();
           onExit();
         }}
@@ -1090,9 +1143,12 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
               go(n);
               if (verseKey && n === page) {
                 pendingSelectRef.current = null;
-                setSelectedVerseKey(verseKey);
-                setActionsOpen(true);
+                setMushafAyahSearchHighlight(verseKey);
+                setSelectedVerseKey(null);
+                setActionsOpen(false);
+                setTafsirOpen(false);
                 setChromeOpen(false);
+                window.setTimeout(() => setMushafAyahSearchHighlight(null), 4000);
               }
             }}
           />

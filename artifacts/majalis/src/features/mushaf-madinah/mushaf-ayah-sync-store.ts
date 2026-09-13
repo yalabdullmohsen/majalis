@@ -8,6 +8,8 @@ let manuallySelectedVerseKey: string | null = null;
 let audioHighlightedVerseKey: string | null = null;
 /** تمييز تنقّل سياقي من أقسام أخرى — لا يفتح تفسيرًا ولا أدواتًا */
 let navigationHighlightedVerseKey: string | null = null;
+/** تمييز نتيجة بحث داخل المصحف — طبقة مستقلة */
+let searchHighlightVerseKey: string | null = null;
 
 const listeners = new Set<SyncListener>();
 
@@ -47,6 +49,16 @@ export function getMushafAyahSyncKeys(): {
   };
 }
 
+export function setMushafAyahSearchHighlight(verseKey: string | null): void {
+  if (searchHighlightVerseKey === verseKey) return;
+  searchHighlightVerseKey = verseKey;
+  emit();
+}
+
+export function getMushafAyahSearchHighlight(): string | null {
+  return searchHighlightVerseKey;
+}
+
 function subscribe(listener: SyncListener): () => void {
   listeners.add(listener);
   return () => listeners.delete(listener);
@@ -77,6 +89,14 @@ export function useMushafAyahWordNavigation(verseKey: string): boolean {
   );
 }
 
+export function useMushafAyahWordSearchHighlight(verseKey: string): boolean {
+  return useSyncExternalStore(
+    subscribe,
+    () => searchHighlightVerseKey === verseKey,
+    () => false,
+  );
+}
+
 /** مفتاح الآية الجارية فقط — لطبقة التظليل دون props من الصفحة. */
 export function useMushafAyahPlayingKey(): string | null {
   return useSyncExternalStore(subscribe, () => audioHighlightedVerseKey, () => null);
@@ -96,5 +116,6 @@ export function resetMushafAyahSyncStoreForTests(): void {
   manuallySelectedVerseKey = null;
   audioHighlightedVerseKey = null;
   navigationHighlightedVerseKey = null;
+  searchHighlightVerseKey = null;
   listeners.clear();
 }
