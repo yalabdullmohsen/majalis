@@ -7,7 +7,7 @@ import { MUSHAF_PROVENANCE } from "@/lib/mushaf-v2/provenance";
 
 export const SUNNAH_MUSHAF_SIGNATURE_PRESET_ID = "sunnah-mushaf-signature-v1" as const;
 export const SUNNAH_MUSHAF_SIGNATURE_VERSION = "1.0.0" as const;
-export const SUNNAH_MUSHAF_SIGNATURE_CACHE_VERSION = "sms-2026-09-13-p0-immersive";
+export const SUNNAH_MUSHAF_SIGNATURE_CACHE_VERSION = "sms-2026-09-13-p0-immersive-wcap";
 
 export type SunnahMushafSignaturePreset = {
   presetId: typeof SUNNAH_MUSHAF_SIGNATURE_PRESET_ID;
@@ -108,6 +108,10 @@ export const SIGNATURE_FONT_SIZE_BANDS = [
   { maxContentWidth: Number.POSITIVE_INFINITY, fontSize: 31 },
 ] as const;
 
+/**
+ * حجم Signature من فئة الشاشة + سقف هندسي موحّد (عرض/ارتفاع).
+ * ليس auto-fit لكل صفحة — قاسم العرض 17 يطابق سعة سطر QPC دون فيض.
+ */
 export function resolveSignatureFontSizePx(
   contentWidthPx: number,
   bodyHeightPx: number,
@@ -117,5 +121,7 @@ export function resolveSignatureFontSizePx(
     SIGNATURE_FONT_SIZE_BANDS[SIGNATURE_FONT_SIZE_BANDS.length - 1]!;
   const byHeight =
     bodyHeightPx > 0 ? Math.floor(bodyHeightPx / 15 / 1.85) : band.fontSize;
-  return Math.max(18, Math.min(band.fontSize, byHeight, 34));
+  const byWidth =
+    contentWidthPx > 0 ? Math.floor(contentWidthPx / 17) : band.fontSize;
+  return Math.max(18, Math.min(band.fontSize, byHeight, byWidth, 34));
 }
