@@ -250,11 +250,11 @@ function ProphetCard({
           {prophet.arabicName}
           <span className="prophet-lux-card__pbuh"> عليه السلام</span>
         </h3>
+        <p className="prophet-lux-card__title">{prophet.title}</p>
+        <p className="prophet-lux-card__place">{prophet.peopleOrPlace}</p>
         {prophet.quranTitle && (
           <div className="prophet-lux-card__quran">﴿ {prophet.quranTitle} ﴾</div>
         )}
-        <p className="prophet-lux-card__title">{prophet.title}</p>
-        <p className="prophet-lux-card__place">{prophet.peopleOrPlace}</p>
         <p className="prophet-lux-card__bio">{truncateAtWord(prophet.briefBio, 100)}</p>
 
         {sup && (

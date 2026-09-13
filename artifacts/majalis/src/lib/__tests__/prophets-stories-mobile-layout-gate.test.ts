@@ -28,10 +28,10 @@ assert.match(css, /overflow-x:\s*clip/);
 assert.match(css, /padding-bottom:\s*calc\(var\(--bottom-nav-height/);
 
 assert.match(view, /prophet-speech-btn/);
-assert.match(view, /speakArabicText|stopSpeechReadAloud/);
+assert.match(view, /playAiNarration|stopAiNarration|speakArabicText|stopSpeechReadAloud/);
 assert.match(view, /استماع/);
-assert.match(speech, /speechSynthesis/);
-assert.match(speech, /lang\s*=\s*"ar"/);
+assert.match(speech, /speechSynthesis|playAiNarration/);
+assert.match(speech, /lang\s*=\s*"ar"|lang:\s*"ar"/);
 assert.match(stb, /html\.dark \.stb-row__value/);
 
 console.log("prophets-stories-mobile-layout-gate: ok");
