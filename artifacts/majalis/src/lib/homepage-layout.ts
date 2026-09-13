@@ -9,10 +9,7 @@
 import { supabase } from "@/lib/supabase";
 
 export type HomeWidgetId =
-  | "lessons" | "prayer" | "continue" | "daily-progress" | "week-streak"
-  | "sunnah-time" | "explore" | "learning-seasons"
-  | "occasions" | "quiz"
-  | "prayer-ranks" | "interesting-topics" | "mind-map" | "daily-benefits" | "upcoming-events";
+  "lessons" | "continue" | "daily-progress" | "daily-benefits" | "upcoming-events" | "quiz" | "sunnah-time" | "week-streak" | "mind-map" | "prayer-ranks" | "occasions" | "interesting-topics" | "prayer" | "explore";
 
 /* ترتيب افتراضي — تحديث 2026-07-19 (تكليف ثانٍ، بند 4): "التقدم اليومي" كان
    ثاني ودجت (مباشرة بعد "استمر من حيث توقفت")؛ نُقل إلى آخر القائمة فعليًا
@@ -22,9 +19,9 @@ export type HomeWidgetId =
    سابقاً (محلياً أو عبر user_homepage_prefs) يبقى ترتيبه كما هو. لا حذف لأي
    ودجت — "التقدم اليومي" ما زال ظاهرًا، فقط آخر القائمة. */
 export const HOME_WIDGET_DEFS: { id: HomeWidgetId; label: string }[] = [
-  { id: "continue", label: "استمر من حيث توقفت" },
   { id: "lessons", label: "الدروس والدورات" },
-  { id: "learning-seasons", label: "مواسم التعلم" },
+  { id: "continue", label: "متابعة من حيث توقفت" },
+  { id: "daily-progress", label: "التقدم اليومي" },
   { id: "daily-benefits", label: "فوائد منتقاة" },
   { id: "upcoming-events", label: "فعاليات وإعلانات علمية" },
   { id: "quiz", label: "المسابقة" },
@@ -36,7 +33,6 @@ export const HOME_WIDGET_DEFS: { id: HomeWidgetId; label: string }[] = [
   { id: "interesting-topics", label: "مواضيع مشوقة" },
   { id: "prayer", label: "مواقيت الصلاة" },
   { id: "explore", label: "استكشف المنصة" },
-  { id: "daily-progress", label: "التقدم اليومي" },
 ];
 
 const DEFAULT_ORDER: HomeWidgetId[] = HOME_WIDGET_DEFS.map((w) => w.id);
@@ -68,7 +64,7 @@ const DEFAULT_HIDDEN: HomeWidgetId[] = [
   "daily-benefits", "upcoming-events", "quiz",
 ];
 const DEFAULT_PREFS: HomepagePrefs = { order: DEFAULT_ORDER, hidden: DEFAULT_HIDDEN };
-const STORAGE_KEY = "majalis-homepage-prefs-v1";
+const STORAGE_KEY = "sunnah-homepage-prefs-v2-home-simplify";
 
 export function sanitizePrefs(raw: unknown): HomepagePrefs {
   const obj = (raw ?? {}) as Partial<HomepagePrefs>;

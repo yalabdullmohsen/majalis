@@ -67,6 +67,8 @@ import "./styles/ssunnah-semantic-tokens.css";
 import "./styles/ssunnah-card-unify.css";
 /* Green Surface System — يفوز على تلميع الأقسام الأبيض القديم */
 import "./styles/green-surface-system.css";
+/* استرداد ليلي P0 — متزامن؛ القواعد مقيّدة بـ html.dark لتقليل theme flash */
+import "./styles/dark-mode-recovery.css";
 // dark-mode-surfaces (~24KB) — فوري فقط إن كان الثيم داكنًا عند الإقلاع؛ وإلا بعد load
 {
   const bootDark =
@@ -117,6 +119,8 @@ function loadNonCriticalCss() {
       // إعادة طبقة الهوية فقط بعد final-release (أزرار/بانر) —
       // بلا إعادة تحميل ثيم البطاقات/التهدئة (كانت تسبب وميض هوية بعد أول طلاء).
       void import("./styles/visual-identity-unify.css");
+      // إعادة طبقة الاسترداد الليلي آخرًا حتى تفوز على final-release
+      void import("./styles/dark-mode-recovery.css");
     });
   });
   void import("./styles/components/instant-interaction.css");
