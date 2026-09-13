@@ -192,10 +192,16 @@
   display: flex;
   flex-direction: column;
   margin: 0;
-  padding: 0.1rem 0.15rem 0.25rem;
+  /* بلا حشو أفقي إضافي — inset الجانبي من Signature فقط (--nm-side-pad) */
+  padding: 0.1rem 0 0.25rem;
   border: 0;
   box-shadow: none;
   background: transparent;
+}
+
+/* مع metrics المقفلة: لا تُخصم حشوات CSS فوق bodyW المحسوب */
+.nm-root[data-mushaf-metrics="1"] .nm-page__stage {
+  padding-inline: 0;
 }
 
 .nm-page__body {

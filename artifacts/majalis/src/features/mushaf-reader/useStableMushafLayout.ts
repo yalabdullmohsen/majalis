@@ -45,6 +45,17 @@ export function useStableMushafLayout(
       root.style.setProperty("--mushaf-body-top", `${HEADER_H}px`);
       root.style.setProperty("--mushaf-body-height", `${bodyH}px`);
       root.style.setProperty("--mushaf-body-width", `${bodyW}px`);
+      /*
+       * الحشو الجانبي يجب أن يطابق Signature (sidePx) لا افتراض CSS (0.7rem).
+       * وإلا يُحسب الخط على bodyW ثم يُخصم حشو أكبر داخل max-width=bodyW → lineOverflow.
+       */
+      root.style.setProperty("--mushaf-side-pad", `${SIDE_PAD}px`);
+      root.style.setProperty("--nm-side-pad", `${SIDE_PAD}px`);
+      /* غلاف الصفحة = عرض الشاشة؛ الحشو داخل الغلاف يعطي متنًا = bodyW */
+      root.style.setProperty("--nm-page-max-w", `${w}px`);
+      root.style.setProperty("--mm-page-max-w", `${w}px`);
+      /* QPC يحمل تباعده؛ أي word-gap إضافي يفيض الأسطر الكثيفة (مثل ص598) */
+      root.style.setProperty("--nm-word-gap", "0");
       root.style.setProperty("--mushaf-font-size", `${size}px`);
       root.style.setProperty("--mushaf-line-height", LINE_HEIGHT);
       root.style.setProperty("--mushaf-letter-spacing", "0");
