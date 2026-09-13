@@ -341,7 +341,6 @@ export class AudioEngine {
     surah: number,
     ayah: number,
     gen: number,
-    seamless = false,
   ): Promise<boolean> {
     const key = this.preloadKeyFor(surah, ayah, this.reciterId);
     if (this.preloadKey !== key || !this.slotB) return false;
@@ -766,7 +765,7 @@ export class AudioEngine {
       /* slotB may be unused */
     }
 
-    if (await this.tryPlayFromPreload(surah, ayah, gen, seamless)) {
+    if (await this.tryPlayFromPreload(surah, ayah, gen)) {
       if (seamless) this.emitAyahChange();
       void import("@/lib/quran-mini-player").then((m) => m.showMiniPlayer()).catch(() => undefined);
       return;
