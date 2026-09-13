@@ -2682,100 +2682,126 @@ html[data-theme="dark"] .prophets-lux-page [class*="card"] {
 }
 
 .prophet-lux-card {
-  padding-block: 1.25rem 3.1rem;
-  padding-inline: 1.2rem;
-  min-height: 13.5rem;
-  gap: 0.15rem;
+  /* ~+20% مساحة مقروءة عن الجيل السابق */
+  padding-block: 1.45rem 3.35rem;
+  padding-inline: 1.35rem;
+  min-height: 16.2rem;
+  gap: 0.35rem;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.5),
     0 14px 32px -16px rgba(11, 32, 24, 0.22);
 }
 .prophet-lux-card__name {
-  font-size: clamp(1.2rem, 3.6vw, 1.4rem);
+  font-size: clamp(1.32rem, 4vw, 1.55rem);
   font-weight: 800;
-  line-height: 1.4;
+  line-height: 1.35;
   letter-spacing: 0.01em;
   color: var(--ps-ink);
+  margin: 0 0 0.2rem;
 }
 .prophet-lux-card__pbuh {
-  font-size: 0.78em;
+  font-size: 0.72em;
   font-weight: 650;
-  color: color-mix(in srgb, var(--ps-ink) 88%, var(--ps-ink-soft));
+  color: color-mix(in srgb, var(--ps-ink) 90%, var(--ps-ink-soft));
 }
 .prophet-lux-card__title {
-  font-size: 0.95rem;
-  font-weight: 700;
-  line-height: 1.45;
+  font-size: 1.05rem;
+  font-weight: 750;
+  line-height: 1.4;
   color: var(--prophet-color, var(--ps-emerald-bright, var(--ps-emerald)));
-  margin: 0.1rem 0 0.2rem;
-}
-.prophet-lux-card__place {
-  font-size: 0.9rem;
-  font-weight: 600;
-  line-height: 1.5;
-  color: var(--ps-ink-soft);
-  margin: 0 0 0.35rem;
-}
-.prophet-lux-card__quran {
-  font-size: 0.86rem;
-  font-weight: 600;
-  line-height: 1.55;
-  color: color-mix(in srgb, var(--ps-emerald-bright, var(--ps-emerald)) 82%, var(--ps-ink));
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.45rem;
 }
 .prophet-lux-card__bio {
-  font-size: 0.9rem;
+  font-size: 0.94rem;
   font-weight: 500;
-  line-height: 1.75;
+  line-height: 1.8;
   color: var(--ps-ink-soft);
-  -webkit-line-clamp: 4;
-  line-clamp: 4;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  margin: 0 0 0.65rem;
 }
-.prophet-lux-card__surahs,
-.prophet-lux-card__meter-label {
+.prophet-lux-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  width: 100%;
+  margin: 0 0 0.55rem;
+}
+.prophet-lux-card__chip {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--ps-emerald, #1e5f4b) 22%, var(--ps-line, #d7e0dc));
+  background: color-mix(in srgb, var(--ps-emerald, #1e5f4b) 10%, var(--ps-surface, #fff));
+  color: var(--ps-ink);
   font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--ps-ink-soft);
+  font-weight: 650;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 1;
+}
+.prophet-lux-card__chip--quran {
+  font-family: "Amiri Quran", "Amiri", var(--font-body, serif);
+  white-space: normal;
+  text-align: start;
+  line-height: 1.5;
+}
+.prophet-lux-card__chip--stat {
+  background: color-mix(in srgb, var(--ps-emerald-bright, #1e5f4b) 16%, var(--ps-surface, #fff));
+  border-color: color-mix(in srgb, var(--ps-emerald-bright, #1e5f4b) 35%, var(--ps-line));
+  font-weight: 700;
+}
+.prophet-lux-card__chip--book {
+  border-style: dashed;
+}
+.prophet-lux-card__chip--azm {
+  background: var(--ps-emerald, #1A4A3A);
+  border-color: var(--ps-emerald, #1A4A3A);
+  color: #fff;
 }
 .prophet-lux-card__read {
-  font-size: 0.86rem;
+  font-size: 0.9rem;
   font-weight: 750;
 }
 
 /* بطل القائمة */
 .prophets-lux-hero {
-  padding: 2.35rem max(1rem, var(--page-gutter, 1rem)) 2rem;
+  padding: 2.5rem max(1rem, var(--page-gutter, 1rem)) 2.1rem;
   margin-bottom: 1.15rem;
 }
 .prophets-lux-hero__title {
-  font-size: clamp(2.05rem, 5.2vw, 3.35rem);
+  font-size: clamp(2.15rem, 5.4vw, 3.45rem);
   font-weight: 800;
-  line-height: 1.28;
+  line-height: 1.25;
 }
 .prophets-lux-hero__subtitle {
-  font-size: clamp(0.98rem, 2.6vw, 1.15rem);
-  font-weight: 550;
+  font-size: clamp(1.02rem, 2.7vw, 1.18rem);
+  font-weight: 600;
   line-height: 1.75;
   color: var(--ps-on-emerald-muted);
   max-width: 34rem;
 }
 .prophets-lux-hero__note {
-  font-size: 0.86rem;
+  font-size: 0.9rem;
   line-height: 1.8;
   color: var(--ps-on-emerald-soft);
   max-width: 36rem;
 }
 .prophets-lux-hero__stats {
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
   color: var(--ps-on-emerald-muted);
 }
 
 /* بطاقات معلومات صفحة النبي */
 .prophet-facts-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.85rem;
-  padding: 1.15rem max(1rem, 1.25rem);
+  gap: 0.95rem;
+  padding: 1.2rem max(1rem, 1.25rem);
 }
 @media (max-width: 360px) {
   .prophet-facts-grid {
@@ -2783,21 +2809,21 @@ html[data-theme="dark"] .prophets-lux-page [class*="card"] {
   }
 }
 .prophet-fact-card {
-  padding: 1.15rem 1.15rem !important;
-  min-height: 5.75rem;
-  gap: 0.45rem;
+  padding: 1.25rem 1.2rem !important;
+  min-height: 6.5rem;
+  gap: 0.5rem;
   background: color-mix(in srgb, var(--ps-detail-card, rgba(255, 255, 255, 0.1)) 100%, transparent);
   border-radius: var(--radius-card, 24px) !important;
 }
 .prophet-fact-card__label {
-  font-size: 0.82rem !important;
+  font-size: 0.86rem !important;
   font-weight: 650;
   line-height: 1.45;
   color: var(--ps-detail-muted, #E8EEEC) !important;
   opacity: 1 !important;
 }
 .prophet-fact-card__value {
-  font-size: 1.05rem !important;
+  font-size: 1.12rem !important;
   font-weight: 750;
   line-height: 1.5;
   color: var(--ps-text-primary, #ffffff) !important;
@@ -2820,7 +2846,7 @@ html[data-theme="dark"] .prophets-lux-page [class*="card"] {
   opacity: 1;
 }
 
-/* ليلي: لا سطح فاتح + ثانوي واضح */
+/* ليلي: لا سطح فاتح + ثانوي واضح + chips */
 html.dark .prophets-lux-page,
 html[data-theme="dark"] .prophets-lux-page {
   --ps-ink-soft: #C8D5CF;
@@ -2838,22 +2864,32 @@ html[data-theme="dark"] .prophet-lux-card__name {
 }
 html.dark .prophet-lux-card__title,
 html[data-theme="dark"] .prophet-lux-card__title {
-  color: #7DCFB0 !important;
+  color: #8AD9B8 !important;
 }
-html.dark .prophet-lux-card__place,
 html.dark .prophet-lux-card__bio,
 html.dark .prophet-lux-card__pbuh,
-html.dark .prophet-lux-card__surahs,
-html.dark .prophet-lux-card__meter-label,
-html.dark .prophet-lux-card__quran,
-html[data-theme="dark"] .prophet-lux-card__place,
 html[data-theme="dark"] .prophet-lux-card__bio,
-html[data-theme="dark"] .prophet-lux-card__pbuh,
-html[data-theme="dark"] .prophet-lux-card__surahs,
-html[data-theme="dark"] .prophet-lux-card__meter-label,
-html[data-theme="dark"] .prophet-lux-card__quran {
+html[data-theme="dark"] .prophet-lux-card__pbuh {
   color: #C8D5CF !important;
   opacity: 1 !important;
+}
+html.dark .prophet-lux-card__chip,
+html[data-theme="dark"] .prophet-lux-card__chip {
+  color: #E8F0EC;
+  background: #24312c;
+  border-color: #4A5C55;
+}
+html.dark .prophet-lux-card__chip--stat,
+html[data-theme="dark"] .prophet-lux-card__chip--stat {
+  background: color-mix(in srgb, #5CC095 22%, #1A2421);
+  border-color: #5CC095;
+  color: #E8F8F1;
+}
+html.dark .prophet-lux-card__chip--azm,
+html[data-theme="dark"] .prophet-lux-card__chip--azm {
+  background: #2F6B55;
+  border-color: #2F6B55;
+  color: #fff;
 }
 html.dark .prophet-fact-card,
 html[data-theme="dark"] .prophet-fact-card {
@@ -2880,13 +2916,23 @@ html[data-theme="dark"] .prophet-detail-lux {
 
 @media (max-width: 390px) {
   .prophet-lux-card {
-    min-height: 12.75rem;
-    padding-block: 1.15rem 2.9rem;
+    min-height: 15.2rem;
+    padding-block: 1.3rem 3.1rem;
   }
   .prophet-lux-card__name {
-    font-size: 1.18rem;
+    font-size: 1.28rem;
   }
   .prophet-fact-card {
-    padding: 1.05rem 1rem !important;
+    padding: 1.1rem 1rem !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .prophets-lux-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .prophet-lux-card__chip {
+    font-size: 0.76rem;
+    padding: 0.24rem 0.55rem;
   }
 }
