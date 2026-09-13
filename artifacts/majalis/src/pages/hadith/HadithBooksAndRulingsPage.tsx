@@ -22,8 +22,8 @@ export default function HadithBooksAndRulingsPage() {
     applyPageSeo({
       path: "/hadith/books-and-rulings",
       title: "المتون الحديثية وأحاديث الأحكام | سُنّة",
-      description: "المتون الحديثية وأحاديث الأحكام: الأربعون النووية، وعمدة الأحكام، وبلوغ المرام، والمنتقى من أخبار المصطفى. محتوى معتمد في منهج سُنّة",
-      keywords: ["المتون الحديثية", "أحاديث الأحكام", "الأربعون النووية", "عمدة الأحكام", "بلوغ المرام", "المنتقى من أخبار المصطفى"],
+      description: "المتون الحديثية وأحاديث الأحكام: الأربعون النووية متاحة الآن؛ وكتب عمدة الأحكام وبلوغ المرام والمنتقى تُدرج بعد اعتماد مصدر موثوق.",
+      keywords: ["المتون الحديثية", "أحاديث الأحكام", "الأربعون النووية"],
     });
   }, []);
 
@@ -47,7 +47,7 @@ export default function HadithBooksAndRulingsPage() {
         <SectionEntryCard
           title="عمدة الأحكام"
           description="جمع الإمام عبد الغني المقدسي للأحاديث المتفق عليها بين البخاري ومسلم في الأحكام الفقهية."
-          meta="بانتظار مصدر معتمد"
+          meta="غير متاح بعد — بانتظار مصدر موثوق ومراجعة"
           Icon={Scale}
           disabled
           className="hadith-index-card hadith-index-card--soon"
@@ -55,7 +55,7 @@ export default function HadithBooksAndRulingsPage() {
         <SectionEntryCard
           title="بلوغ المرام"
           description="جمع الحافظ ابن حجر العسقلاني لأحاديث الأحكام مع بيان درجتها، من أشهر مراجع فقه الحديث."
-          meta="بانتظار مصدر معتمد"
+          meta="غير متاح بعد — بانتظار مصدر موثوق ومراجعة"
           Icon={Gavel}
           disabled
           className="hadith-index-card hadith-index-card--soon"
@@ -63,7 +63,7 @@ export default function HadithBooksAndRulingsPage() {
         <SectionEntryCard
           title="المنتقى من أخبار المصطفى ﷺ"
           description="جمع مجد الدين ابن تيمية (جدّ شيخ الإسلام) لأحاديث الأحكام مرتّبة على أبواب الفقه."
-          meta="بانتظار مصدر معتمد"
+          meta="غير متاح بعد — بانتظار مصدر موثوق ومراجعة"
           Icon={Landmark}
           disabled
           className="hadith-index-card hadith-index-card--soon"

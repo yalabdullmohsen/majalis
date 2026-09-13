@@ -123,14 +123,14 @@ export default function FawaidPage({
     applyPageSeo({
       path: "/fawaid",
       title: "الفوائد الشرعية | سُنّة",
-      description: "منصة لنشر ومشاركة الفوائد الشرعية، فوائد قرآنية وحديثية وعقدية وفقهية وتربوية. محتوى معتمد في منهج سُنّة",
+      description: "منصة لنشر ومشاركة الفوائد الشرعية، فوائد قرآنية وحديثية وعقدية وفقهية وتربوية. عرض موثّق ضمن منهج سُنّة",
       keywords: ["فوائد شرعية", "فوائد علمية", "فوائد قرآنية", "فوائد حديثية", "الفوائد الإسلامية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "أقسام الفوائد الشرعية",
-          description: "أقسام الفوائد الشرعية على المنصة؛ محتوى معتمد في منهج سُنّة",
+          description: "أقسام الفوائد الشرعية على المنصة؛ عرض موثّق ضمن منهج سُنّة",
           itemListElement: FAWAID_CATEGORIES.map((cat, i) => ({
             "@type": "ListItem",
             position: i + 1,

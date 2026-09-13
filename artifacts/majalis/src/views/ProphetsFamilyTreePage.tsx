@@ -133,13 +133,13 @@ export default function ProphetsFamilyTreePage() {
     applyPageSeo({
       path: "/prophets/tree",
       title: "شجرة أنساب الأنبياء | سُنّة",
-      description: "رسم بياني تفاعلي لنسب الأنبياء الـ25 المذكورين في القرآن الكريم من آدم إلى محمد ﷺ؛ محتوى معتمد في منهج سُنّة",
+      description: "رسم بياني تفاعلي لنسب الأنبياء الـ25 المذكورين في القرآن الكريم من آدم إلى محمد ﷺ؛ عرض موثّق ضمن منهج سُنّة",
       keywords: ["أنبياء", "شجرة نسب", "سيرة", "تاريخ إسلامي"],
       jsonLd: [{
         "@context": "https://schema.org",
         "@type": "WebPage",
         name: "شجرة أنساب الأنبياء",
-        description: "رسم بياني تفاعلي لنسب الأنبياء الـ25 المذكورين في القرآن الكريم. محتوى معتمد في منهج سُنّة",
+        description: "رسم بياني تفاعلي لنسب الأنبياء الـ25 المذكورين في القرآن الكريم. عرض موثّق ضمن منهج سُنّة",
         url: "https://www.ssunnah.com/prophets/tree",
         inLanguage: "ar",
         publisher: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },

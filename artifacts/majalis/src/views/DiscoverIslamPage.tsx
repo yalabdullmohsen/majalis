@@ -59,14 +59,14 @@ type VisitorPath = {
 };
 
 const VISITOR_PATHS: VisitorPath[] = [
-  { id: "first-time", label: "أتعرّف لأول مرة", desc: "مدخل عام مبسّط للإسلام من مصادره", href: "/discover-islam/articles/what-is-islam" },
-  { id: "believe-questions", label: "أؤمن بالله ولديّ أسئلة", desc: "أسئلة حول النبوة والعبادة والقرآن", href: "/discover-islam/questions?category=prophethood" },
-  { id: "atheist", label: "لا أؤمن بوجود الله", desc: "أدلة عقلية على وجود الخالق", href: "/discover-islam/questions?category=god-existence" },
-  { id: "other-religion", label: "أنتمي إلى ديانة أخرى", desc: "تصوّر الإسلام لله والنبوة والوحي", href: "/discover-islam/questions?category=prophethood" },
-  { id: "doubts", label: "لديّ شبهات", desc: "ردود موثّقة على أشهر الشبهات", href: "/discover-islam/doubts" },
-  { id: "considering", label: "أفكّر في الدخول", desc: "خطوات عملية واضحة للدخول في الإسلام", href: "/discover-islam/how-to-convert" },
-  { id: "new-muslim", label: "دخلت الإسلام حديثًا", desc: "مسار الثلاثين يومًا الأول", href: "/discover-islam/new-muslim" },
-  { id: "contact", label: "أريد التحدث مع مختص", desc: "تواصل سري مع داعٍ أو داعية", href: "/discover-islam/contact" },
+  { id: "first-time", label: "أتعرّف لأول مرة", desc: "مدخل عام مبسّط: من هو الله، وما الإسلام، ولماذا القرآن", href: "/discover-islam/articles/what-is-islam" },
+  { id: "believe-questions", label: "أؤمن بالله ولديّ أسئلة", desc: "أسئلة هادئة حول النبوة والعبادة ومعنى الوحي", href: "/discover-islam/questions?category=prophethood" },
+  { id: "atheist", label: "لا أؤمن بوجود الله", desc: "أدلة عقلية وكونية على وجود الخالق بلا جدال حاد", href: "/discover-islam/questions?category=god-existence" },
+  { id: "other-religion", label: "أنتمي إلى ديانة أخرى", desc: "تصوّر الإسلام لله والنبوة والكتب السابقة باحترام", href: "/discover-islam/questions?category=prophethood" },
+  { id: "doubts", label: "لديّ شبهات", desc: "ردود موثّقة على أشهر الشبهات بأسلوب هادئ", href: "/discover-islam/doubts" },
+  { id: "considering", label: "أفكّر في الدخول", desc: "خطوات عملية واضحة لمن أراد الدخول في الإسلام", href: "/discover-islam/how-to-convert" },
+  { id: "new-muslim", label: "دخلت الإسلام حديثًا", desc: "مسار الثلاثين يومًا الأولى: صلاة وطهارة وآداب", href: "/discover-islam/new-muslim" },
+  { id: "contact", label: "أريد التحدث مع مختص", desc: "تواصل سرّي مع داعٍ أو داعية للإجابة والاستشارة", href: "/discover-islam/contact" },
 ];
 
 const JOURNEY_STEPS = [

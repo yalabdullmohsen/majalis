@@ -20,11 +20,20 @@
 
 .knowledge-article a,
 .knowledge-article-body {
+  text-wrap: pretty;
+  word-spacing: 0.01em;
+  letter-spacing: 0;
+  max-width: 42rem;
+  margin-inline: auto;
+
   color: var(--mj-white, #ffffff);
 }
 
 .knowledge-article h2,
 .knowledge-article h3 {
+  scroll-margin-top: 5rem;
+  line-height: 1.45;
+  text-wrap: balance;
   color: var(--mj-white, #ffffff);
   margin-top: 1rem;
 }

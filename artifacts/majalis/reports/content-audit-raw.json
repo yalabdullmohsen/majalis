@@ -1,36 +1,15 @@
 {
   "summary": {
-    "generatedAt": "2026-09-06T06:22:39.057Z",
-    "scannedFiles": 3982,
-    "issueCount": 2,
+    "generatedAt": "2026-09-13T20:47:35.156Z",
+    "scannedFiles": 4437,
+    "issueCount": 0,
     "bySeverity": {
       "critical": 0,
       "high": 0,
-      "medium": 2,
+      "medium": 0,
       "low": 0
     },
-    "autoFixable": 2
+    "autoFixable": 0
   },
-  "issues": [
-    {
-      "file": "src/lib/quran-text-normalize.ts",
-      "text": "الصلاه",
-      "problem": "مصطلح/إملاء غير موحّد — يُفضّل «الصلاة»",
-      "suggested": "الصلاة",
-      "severity": "medium",
-      "type": "term",
-      "reason": "قابل للإصلاح الآمن",
-      "autoFixable": true
-    },
-    {
-      "file": "src/lib/quran-text-normalize.ts",
-      "text": "الزكاه",
-      "problem": "مصطلح/إملاء غير موحّد — يُفضّل «الزكاة»",
-      "suggested": "الزكاة",
-      "severity": "medium",
-      "type": "term",
-      "reason": "قابل للإصلاح الآمن",
-      "autoFixable": true
-    }
-  ]
+  "issues": []
 }

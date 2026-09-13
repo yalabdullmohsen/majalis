@@ -119,7 +119,7 @@ export default function DailyWirdPage() {
     applyPageSeo({
       path: "/daily-wird",
       title: "الورد اليومي من القرآن | سُنّة",
-      description: "تتبّع وردك اليومي من القرآن الكريم، حدّد هدفك اليومي من الصفحات وتابع تقدمك نحو ختم القرآن. محتوى معتمد في منهج سُنّة",
+      description: "تتبّع وردك اليومي من القرآن الكريم، حدّد هدفك اليومي من الصفحات وتابع تقدمك نحو ختم القرآن. عرض موثّق ضمن منهج سُنّة",
       keywords: ["ورد يومي", "ختم القرآن", "قراءة قرآن", "حفظ قرآن", "مصحف يومي"],
       jsonLd: [
         {
@@ -127,7 +127,7 @@ export default function DailyWirdPage() {
           "@type": "WebApplication",
           name: "الورد اليومي من القرآن الكريم",
           url: "https://www.ssunnah.com/daily-wird",
-          description: "تتبّع وردك اليومي من القرآن الكريم وتابع تقدمك نحو ختم القرآن؛ محتوى معتمد في منهج سُنّة",
+          description: "تتبّع وردك اليومي من القرآن الكريم وتابع تقدمك نحو ختم القرآن؛ عرض موثّق ضمن منهج سُنّة",
           applicationCategory: "EducationalApplication",
           inLanguage: "ar",
           offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },

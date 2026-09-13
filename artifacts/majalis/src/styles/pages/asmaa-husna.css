@@ -164,9 +164,11 @@
   line-height: 1.3;
 }
 .ah-card__meaning {
-  font-size: 0.8rem;
-  color: #3A5A4A;
-  line-height: 1.5;
+  font-size: 0.875rem;
+  color: #2f4f40;
+  line-height: 1.65;
+  text-wrap: pretty;
+  margin-top: 0.35rem;
 }
 .ah-card__fav {
   position: absolute;

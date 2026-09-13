@@ -216,8 +216,8 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
           </section>
         ) : issue.documentation_level === "official_verified" ? (
           <p className="fiqh-comparative-pending">
-            لم تُراجَع هذه المسألة بعد بتفصيل محل الاتفاق والخلاف وتعدد الأقوال —
-            الخلاصة أعلاه هي الحد الأدنى الموثَّق حاليًا.
+            لم تُراجع هذه المسألة بعد بتفصيل محل الاتفاق والخلاف وتعدد الأقوال —
+            الخلاصة أعلاه هي الحد الأدنى الموثَّق حاليًا، بانتظار مراجعة علمية.
           </p>
         ) : null}
 

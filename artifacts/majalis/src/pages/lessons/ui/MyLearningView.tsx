@@ -78,7 +78,7 @@ export default function MyLearningPage() {
     applyPageSeo({
       path: "/my-learning",
       title: "حسابي | سُنّة",
-      description: "لوحتي التعليمية الشخصية — تقدمي في طلب العلم وإنجازاتي ومكتبتي الشخصية؛ محتوى معتمد في منهج سُنّة",
+      description: "لوحتي التعليمية الشخصية — تقدمي في طلب العلم وإنجازاتي ومكتبتي الشخصية؛ عرض موثّق ضمن منهج سُنّة",
       keywords: ["حسابي", "تقدم التعلم", "شهادات إسلامية"],
       robots: "noindex, follow",
     });

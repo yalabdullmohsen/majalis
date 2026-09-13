@@ -84,7 +84,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/tawhid",             Icon: BookMarked,   title: seoNavLabel("/tawhid", "التوحيد"),            desc: "مسائل أنواع التوحيد الثلاثة بأدلتها على منهج أهل السنة" },
       { href: "/arkan",              Icon: Landmark,     title: seoNavLabel("/arkan", "أركان الإسلام الخمسة"),     desc: "الشهادة والصلاة والزكاة والصيام والحج بالأدلة" },
       { href: "/arkan-iman",         Icon: Star,         title: seoNavLabel("/arkan-iman", "أركان الإيمان الستة"),     desc: "بيان الأركان الستة من القرآن والسنة بأسلوب ميسّر" },
-      { href: "/asma-husna",         Icon: Star,         title: seoNavLabel("/asma-husna", "الأسماء الحسنى"),    desc: "٩٩ اسماً لله بمعانيها ومنافعها من مصادر موثّقة" },
+      { href: "/asma-husna",         Icon: Star,         title: seoNavLabel("/asma-husna", "الأسماء الحسنى"),    desc: "٩٩ اسمًا لله بمعانيها وشواهدها؛ مع تمييز الثابت عن المشهور" },
       { href: "/akhlaq",             Icon: Heart,        title: seoNavLabel("/akhlaq", "مكارم الأخلاق"), desc: "أخلاق الإسلام من القرآن والسنة مع مواضع التطبيق" },
       { href: "/discover-islam",     Icon: HandHeart,    title: seoNavLabel("/discover-islam", "تعرّف إلى الإسلام"), desc: "مدخل تعريفي لغير المسلمين والمهتمين بأسئلة هادئة" },
       { href: "/zakat",               Icon: Scale,        title: seoNavLabel("/zakat", "الزكاة وأحكامها"),    desc: "دليل الزكاة مع حاسبة وأحكام الأنواع السبعة" },

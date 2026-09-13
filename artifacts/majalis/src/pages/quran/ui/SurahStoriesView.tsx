@@ -24,7 +24,7 @@ export default function SurahStoriesPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "أسباب النزول — سور القرآن الكريم",
-          description: "سياقات نزول وأسباب تسمية ١١٤ سورة؛ محتوى معتمد في منهج سُنّة؛ يُعرض للتذكّر والاعتبار بما ثبت من القرآن والسنة الصحيحة",
+          description: "سياقات نزول وأسباب تسمية ١١٤ سورة؛ عرض موثّق ضمن منهج سُنّة؛ يُعرض للتذكّر والاعتبار بما ثبت من القرآن والسنة الصحيحة",
           numberOfItems: 114,
           itemListElement: allStories.slice(0, 20).map((s, i) => ({
             "@type": "ListItem",

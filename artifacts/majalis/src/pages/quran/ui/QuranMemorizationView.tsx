@@ -249,7 +249,7 @@ export default function QuranMemorizationPage() {
         "@context": "https://schema.org",
         "@type": "LearningResource",
         name: "اختبارات الحفظ القرآني",
-        description: "12 نوعًا من اختبارات حفظ القرآن الكريم مع نظام المراجعة المتباعدة. محتوى معتمد في منهج سُنّة",
+        description: "12 نوعًا من اختبارات حفظ القرآن الكريم مع نظام المراجعة المتباعدة. عرض موثّق ضمن منهج سُنّة",
         url: "https://www.ssunnah.com/quran-memorization",
         inLanguage: "ar",
         educationalLevel: "Beginner",

@@ -113,7 +113,7 @@ export default function AdhkarPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "أقسام الأذكار الإسلامية",
-          description: "أذكار الصباح والمساء والصلاة والسفر والنوم وسائر المناسبات؛ محتوى معتمد في منهج سُنّة",
+          description: "أذكار الصباح والمساء والصلاة والسفر والنوم وسائر المناسبات؛ عرض موثّق ضمن منهج سُنّة",
           numberOfItems: ADHKAR_CATEGORIES.length,
           itemListElement: ADHKAR_CATEGORIES.map((c, i) => ({
             "@type": "ListItem",

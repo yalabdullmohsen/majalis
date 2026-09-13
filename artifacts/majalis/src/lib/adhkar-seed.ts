@@ -29,32 +29,32 @@ export const FEATURED_ADHKAR_SLUGS = new Set([
 ]);
 
 export const ADHKAR_CATEGORIES: AdhkarCategory[] = [
-  { id: "adh-morning", name: "أذكار الصباح", slug: "morning", description: "أذكار ما بعد صلاة الفجر إلى طلوع الشمس، مما ثبت في السنة الصحيحة." },
-  { id: "adh-evening", name: "أذكار المساء", slug: "evening", description: "أذكار ما بعد صلاة العصر إلى المغرب، مما ثبت في السنة الصحيحة." },
-  { id: "adh-sleep", name: "أذكار النوم", slug: "sleep", description: "ما يُقال عند النوم من آيات وأذكار واردة في السنة." },
-  { id: "adh-wakeup", name: "أذكار الاستيقاظ", slug: "wakeup", description: "ما يُقال عند الاستيقاظ من النوم وشكر الله على الحياة." },
-  { id: "adh-home-in", name: "دخول المنزل", slug: "home-in", description: "دعاء دخول البيت وذكر اسم الله عند العبور." },
-  { id: "adh-home-out", name: "الخروج من المنزل", slug: "home-out", description: "دعاء الخروج والتوكل على الله عند مغادرة البيت." },
-  { id: "adh-mosque", name: "المسجد", slug: "mosque", description: "أدعية دخول المسجد والخروج منه والصلاة على النبي ﷺ." },
-  { id: "adh-food", name: "الطعام", slug: "food", description: "ما يُقال قبل الطعام وبعده من تسمية وحمد." },
-  { id: "adh-travel", name: "السفر", slug: "travel", description: "أدعية الركوب والسفر ودعاء المسافر." },
-  { id: "adh-wudu", name: "الوضوء", slug: "wudu", description: "ما يُقال عند بدء الوضوء وعند انتهائه." },
-  { id: "adh-salah", name: "الصلاة", slug: "salah", description: "أذكار قبل الصلاة وبعدها وبين الأذان والإقامة." },
-  { id: "adh-after-salah", name: "بعد الصلاة", slug: "after-salah", description: "أذكار ما بعد الصلوات المفروضة من تسبيح واستغفار." },
-  { id: "adh-distress", name: "الكرب", slug: "distress", description: "أدعية الكرب والهم والغم الواردة في السنة." },
-  { id: "adh-istikharah", name: "الاستخارة", slug: "istikharah", description: "دعاء الاستخارة عند الحيرة في الأمر." },
-  { id: "adh-istighfar", name: "الاستغفار", slug: "istighfar", description: "أذكار الاستغفار والتوبة وصيغ السيد الاستغفار." },
+  { id: "adh-morning", name: "أذكار الصباح", slug: "morning", description: "أذكار ما بعد صلاة الفجر إلى طلوع الشمس مما ثبت في السنة؛ حرز يومي وافتتاح بركة." },
+  { id: "adh-evening", name: "أذكار المساء", slug: "evening", description: "أذكار ما بعد صلاة العصر إلى غروب الشمس مما ثبت في السنة؛ ختم لليوم وتحصين." },
+  { id: "adh-sleep", name: "أذكار النوم", slug: "sleep", description: "آيات وأذكار ثابتة عند النوم للحفظ والطمأنينة قبل الرقاد." },
+  { id: "adh-wakeup", name: "أذكار الاستيقاظ", slug: "wakeup", description: "ما يُقال عند الاستيقاظ: حمد لله على الحياة وردّ الروح مما ثبت في السنة." },
+  { id: "adh-home-in", name: "دخول المنزل", slug: "home-in", description: "دعاء دخول البيت وذكر اسم الله؛ أدب الاستئذان والتوكل عند العودة." },
+  { id: "adh-home-out", name: "الخروج من المنزل", slug: "home-out", description: "دعاء الخروج والتوكل على الله عند مغادرة البيت وطلب الحفظ." },
+  { id: "adh-mosque", name: "المسجد", slug: "mosque", description: "أدعية دخول المسجد والخروج منه، مع الصلاة على النبي ﷺ عند القدوم." },
+  { id: "adh-food", name: "الطعام", slug: "food", description: "ما يُقال قبل الطعام وبعده من تسمية وحمد لله على الرزق." },
+  { id: "adh-travel", name: "السفر", slug: "travel", description: "أدعية الركوب والسفر ودعاء المسافر عند المغادرة والعودة." },
+  { id: "adh-wudu", name: "الوضوء", slug: "wudu", description: "ما يُقال عند بدء الوضوء وعند انتهائه من تسمية وشهادتين." },
+  { id: "adh-salah", name: "الصلاة", slug: "salah", description: "أذكار قبل الصلاة وبعدها، وما بين الأذان والإقامة من دعاء." },
+  { id: "adh-after-salah", name: "بعد الصلاة", slug: "after-salah", description: "أذكار ما بعد الصلوات المفروضة: تسبيح وتحميد وتكبير واستغفار." },
+  { id: "adh-distress", name: "الكرب", slug: "distress", description: "أدعية الكرب والهمّ والغمّ مما ورد ثابتاً في السنة النبوية." },
+  { id: "adh-istikharah", name: "الاستخارة", slug: "istikharah", description: "دعاء الاستخارة عند الحيرة في أمر مباح يحتاج اختياراً." },
+  { id: "adh-istighfar", name: "الاستغفار", slug: "istighfar", description: "أذكار الاستغفار والتوبة، ومنها سيد الاستغفار بصيغه الثابتة." },
   // اكتُشف بالفحص المباشر 2026-07-18: 5 أذكار كانت تحمل categoryId
   // "adh-salawat" غير موجود إطلاقاً في هذه القائمة، فكانت تختفي صامتاً من
   // أي فلترة بفئة محدَّدة (لا تظهر إلا ضمن "الكل") — نفس عطل "أخلاق
   // إسلامية". أُضيفت هذه الفئة الأصيلة بدل إعادة التسمية لفئة قائمة، لأن
   // الصلاة على النبي ﷺ جنس ذكر مستقل بذاته (كالاستغفار أعلاه بالضبط).
-  { id: "adh-salawat", name: "الصلاة على النبي ﷺ", slug: "salawat", description: "صيغ الصلاة والسلام على النبي ﷺ الواردة في السنة." },
-  { id: "adh-rain", name: "المطر", slug: "rain", description: "ما يُقال عند نزول المطر ورؤيته." },
-  { id: "adh-wind", name: "الرياح", slug: "wind", description: "ما يُقال عند هبوب الريح الشديدة من استعاذة ودعاء." },
+  { id: "adh-salawat", name: "الصلاة على النبي ﷺ", slug: "salawat", description: "صيغ الصلاة والسلام على النبي ﷺ الواردة في الأحاديث الصحيحة." },
+  { id: "adh-rain", name: "المطر", slug: "rain", description: "ما يُقال عند نزول المطر ورؤيته من دعاء واستبشار بالرحمة." },
+  { id: "adh-wind", name: "الرياح", slug: "wind", description: "ما يُقال عند هبوب الريح الشديدة من استعاذة ودعاء ثابت." },
   { id: "adh-market", name: "دخول السوق", slug: "market", description: "ما نُسب لدخول السوق؛ كثيره ضعيف فلا يُبنى عليه حكمٌ جازم." },
-  { id: "adh-clothing", name: "اللباس", slug: "clothing", description: "ما يُقال عند لبس الثوب الجديد وعند خلعه." },
-  { id: "adh-vehicle", name: "ركوب السيارة", slug: "vehicle", description: "دعاء الركوب وما يُقال عند الصعود والهبوط." },
+  { id: "adh-clothing", name: "اللباس", slug: "clothing", description: "ما يُقال عند لبس الثوب الجديد وعند خلعه من حمد ودعاء." },
+  { id: "adh-vehicle", name: "ركوب السيارة", slug: "vehicle", description: "دعاء الركوب وما يُقال عند الصعود والهبوط في السفر." },
   { id: "adh-misc", name: "أذكار متنوعة", slug: "misc", description: "أذكار نافعة متفرقة لم تندرج تحت فئة محددة." },
   {
     id: "adh-unverified",

@@ -63,9 +63,8 @@ export function isTestOrGateFile(rel) {
 
 /** فهارس بحث/تطبيع: الأشكال بلا همزة مقصودة للمطابقة الضبابية — لا تُوحَّد. */
 export function isSearchNormIndex(rel) {
-  return /(^|\/)(search\/index\.json|search-synonyms|search-tolerance|normalize|aliases?|spell(ing)?-map|uthmani|mind-maps-data|supabase\.ts|arabicSearchPatterns|arabic-search)/i.test(
-    rel,
-  );
+  return /(^|\/)(search\/index\.json|search-synonyms|search-tolerance|normalize|aliases?|spell(ing)?-map|uthmani|mind-maps-data|supabase\.ts|arabicSearchPatterns|arabic-search)/i.test(rel)
+    || /quran-text-normalize\.ts$/i.test(rel);
 }
 
 export function isUiSoonAllowed(rel, snippet = "") {

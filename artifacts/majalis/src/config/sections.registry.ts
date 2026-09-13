@@ -283,7 +283,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "prayer",
     label: "الصلاة",
-    subtitle: "مواقيت الصلاة والقبلة وتنبيهات الأذان",
+    subtitle: "مواقيت الصلوات الخمس واتجاه القبلة وتنبيهات الأذان حسب موقعك",
     route: "/prayer-times",
     icon: MoonStar,
     group: "worship",
@@ -337,7 +337,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "tafsir",
     label: "التفسير",
-    subtitle: "مداخل في التفسير مع آيات وشروح مختارة للفهم",
+    subtitle: "مداخل تفسيرية مع آيات وشروح مختارة تعين على فهم معاني القرآن",
     route: "/tafsir",
     icon: BookOpenCheck,
     group: "sciences",
@@ -350,7 +350,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "quran-tilawa",
     label: "التلاوة والقرّاء",
-    subtitle: "استماع القرّاء عبر المصحف",
+    subtitle: "استماع تلاوات القرّاء المعتمدة داخل المصحف مع ضبط الموضع",
     route: "/quran-hub/tilawa",
     icon: Headphones,
     group: "sciences",
@@ -486,7 +486,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "flashcards",
     label: "بطاقات حفظ القرآن",
-    subtitle: "بطاقات لحفظ آيات القرآن ومراجعتها بانتظام",
+    subtitle: "بطاقات حفظ ومراجعة لآيات القرآن بخطط منتظمة",
     route: "/flashcards",
     icon: Bookmark,
     group: "learning",
@@ -500,7 +500,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "quran-ulum-terms",
     label: "مصطلحات علوم القرآن",
-    subtitle: "٢٧ مصطلحًا في علوم القرآن",
+    subtitle: "مصطلحات علوم القرآن بتعريفات موجزة لفهم مباحث الرسم والنزول والقراءات",
     route: "/quran-hub/terms",
     icon: Languages,
     group: "sciences",
@@ -513,7 +513,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "quran-circles",
     label: "حلقات القرآن",
-    subtitle: "حلقات تحفيظ ودورات تجويد منظمة",
+    subtitle: "حلقات تحفيظ ودورات تجويد منظّمة للمتابعة والتدرج",
     route: "/quran-circles",
     icon: School,
     group: "learning",
@@ -582,7 +582,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "aqidah",
     label: "العقيدة",
-    subtitle: "أصول الإيمان والتوحيد على منهج أهل السنة",
+    subtitle: "مداخل التوحيد وأصول الإيمان على منهج أهل السنة والجماعة",
     route: "/tawhid",
     icon: Shield,
     group: "sciences",
@@ -623,7 +623,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "hadith",
     label: "الحديث وعلومه",
-    subtitle: "أحاديث مختارة مع شروح ومصطلح الحديث",
+    subtitle: "متون وأحاديث مختارة مع شروح موجزة ومدخل لمصطلح الحديث",
     route: "/hadith",
     icon: ScrollText,
     group: "sciences",
@@ -652,7 +652,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     id: "fawaid",
     label: "الفوائد الشرعية",
     navLabel: "الفوائد",
-    subtitle: "فوائد قرآنية وحديثية منتقاة وموثّقة",
+    subtitle: "فوائد مختارة من القرآن والسنة مع توثيق المصدر ودرجة الثقة",
     route: "/fawaid",
     icon: Lightbulb,
     group: "sciences",
@@ -682,7 +682,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     id: "fiqh",
     label: "الفقه والأحكام",
     navLabel: "الفقه",
-    subtitle: "أحكام العبادات والمعاملات بأدلتها",
+    subtitle: "مسائل فقهية في العبادات والمعاملات مع أدلتها من الكتاب والسنة",
     route: "/fiqh",
     icon: Scale,
     group: "sciences",
@@ -735,7 +735,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "akhlaq",
     label: "مكارم الأخلاق",
-    subtitle: "أخلاق المسلم من القرآن والسنة",
+    subtitle: "آداب وأخلاق مستمدّة من القرآن والسنة للتعامل والعمل والسلوك",
     route: "/akhlaq",
     icon: Leaf,
     group: "sciences",
@@ -760,7 +760,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "seerah",
     label: "السيرة النبوية",
-    subtitle: "سيرة النبي ﷺ من المولد إلى الوفاة",
+    subtitle: "أحداث السيرة النبوية مرتّبة من المولد إلى الوفاة بتمحيص النقل",
     route: "/seerah",
     icon: Mountain,
     group: "sciences",
@@ -773,7 +773,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "islamic-history",
     label: "التاريخ الإسلامي",
-    subtitle: "خط زمني بالأحداث من قبل البعثة إلى يومنا",
+    subtitle: "خط زمني للأحداث الإسلامية من قبل البعثة إلى العصر الحديث",
     route: "/tarikh-islami",
     icon: History,
     group: "sciences",
@@ -867,7 +867,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "discover-islam",
     label: "اكتشف الإسلام",
-    subtitle: "مدخل تعريفي لغير المسلمين",
+    subtitle: "تعريف ميسّر بالإسلام لغير المسلمين: أركان الإيمان والعبادة والآداب",
     route: "/discover-islam",
     icon: HandHeart,
     group: "dawah",
@@ -907,7 +907,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "library",
     label: "المراجع (بحث)",
-    subtitle: "يُفتح عبر البحث العلمي الموحد",
+    subtitle: "فهرس كتب ومراجع؛ يُفتح عبر البحث العلمي الموحّد في المنصة",
     route: "/search",
     icon: Library,
     group: "library",

@@ -257,12 +257,12 @@ export default function QaPage({
 
   const emptyMessage = useMemo(() => {
     if (debouncedSearch.trim()) {
-      return `لا توجد أسئلة مطابقة لـ «${debouncedSearch.trim()}».`;
+      return `لا توجد أسئلة مطابقة لـ «${debouncedSearch.trim()}»؛ جرّب كلمة أقرب أو امسح البحث.`;
     }
     if (categorySlug !== "all") {
-      return "لا توجد أسئلة في هذا التصنيف.";
+      return "لا أسئلة في هذا التصنيف بعد؛ جرّب تصنيفًا آخر أو الاختبارات التفاعلية.";
     }
-    return "لا توجد أسئلة منشورة.";
+    return "لا أسئلة منشورة هنا الآن؛ تصفّح الاختبارات أو أقسام الفقه والحديث القريبة.";
   }, [categorySlug, debouncedSearch]);
 
   const filtersPanel = (
