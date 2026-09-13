@@ -1,0 +1,190 @@
+# تشخيص انحدار كامل — يجمع كل الإخفاقات دفعة واحدة (fail-fast: false على المصفوفات فقط).
+# لا يضعف ci.yml الرسمي. النتيجة النهائية Failed إن فشل أي job مطلوب.
+name: Full Regression Diagnostic
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "سبب التشخيص"
+        required: false
+        default: "sunnah-stable-1.0-rc"
+  # يعمل من رأس PR على فروع release/* قبل الدمج (ملف الـworkflow من رأس الـPR)
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: full-regression-diagnostic-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      run_diag: ${{ steps.g.outputs.run_diag }}
+    steps:
+      - id: g
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "run_diag=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          case "${{ github.head_ref }}" in
+            release/*) echo "run_diag=true" >> "$GITHUB_OUTPUT" ;;
+            *) echo "run_diag=false" >> "$GITHUB_OUTPUT" ;;
+          esac
+
+  build:
+    needs: [guard]
+    if: needs.guard.outputs.run_diag == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-workspace
+      - name: Production build (majalis)
+        env:
+          PORT: "24216"
+          BASE_PATH: "/"
+        run: pnpm --filter @workspace/majalis run build
+      - name: Bundle budget
+        run: pnpm --filter @workspace/majalis run test:bundle-budget
+      - name: Tree must stay clean after build
+        run: git diff --exit-code
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: majalis-dist-diagnostic
+          path: artifacts/majalis/dist
+          retention-days: 3
+
+  static-and-repo-gates:
+    needs: [guard]
+    if: needs.guard.outputs.run_diag == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-workspace
+      - name: CI security gates
+        run: pnpm --filter @workspace/majalis run test:ci-security-gates
+      - name: Release stability regression gate
+        run: node scripts/release-stability-regression-gate.mjs
+
+  mushaf-measure:
+    name: mushaf-measure-diagnostic (${{ matrix.shard }}/8)
+    needs: [guard, build]
+    if: always() && !cancelled() && needs.guard.outputs.run_diag == 'true' && needs.build.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6, 7, 8]
+    env:
+      MUSHAF_GATE_FULL: "1"
+      MUSHAF_GATE_SHARD: ${{ matrix.shard }}
+      MUSHAF_GATE_SHARDS: "8"
+      MUSHAF_GATE_USE_PREVIEW: "1"
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-workspace
+        with:
+          playwright: "true"
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: majalis-dist-diagnostic
+          path: artifacts/majalis/dist
+      - name: Single-pass measure
+        working-directory: artifacts/majalis
+        env:
+          MUSHAF_SINGLE_PASS_OUT: artifacts/mushaf-single-pass/measurements-shard-${{ matrix.shard }}.json
+        run: pnpm run test:mushaf-single-pass:measure
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: mushaf-measurements-diag-${{ matrix.shard }}
+          path: |
+            artifacts/majalis/artifacts/mushaf-single-pass/measurements-shard-${{ matrix.shard }}.json
+            artifacts/majalis/artifacts/mushaf-single-pass/screenshots/
+          if-no-files-found: warn
+          retention-days: 5
+
+  mushaf-gates:
+    needs: [guard, build, mushaf-measure]
+    if: always() && !cancelled() && needs.guard.outputs.run_diag == 'true' && needs.build.result == 'success' && needs.mushaf-measure.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-workspace
+        with:
+          playwright: "true"
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          pattern: mushaf-measurements-diag-*
+          path: /tmp/mushaf-measurements
+          merge-multiple: true
+      - name: Assert mushaf gates
+        working-directory: artifacts/majalis
+        env:
+          MUSHAF_SINGLE_PASS_IN_DIR: /tmp/mushaf-measurements
+        run: pnpm run test:mushaf-single-pass:assert
+
+  visual-contrast-lhci:
+    needs: [guard, build]
+    if: always() && !cancelled() && needs.guard.outputs.run_diag == 'true' && needs.build.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        gate: [visual-snapshot, color-contrast, lhci-home]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup-workspace
+        with:
+          playwright: "true"
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: majalis-dist-diagnostic
+          path: artifacts/majalis/dist
+      - name: Run gate ${{ matrix.gate }}
+        working-directory: artifacts/majalis
+        run: |
+          set -euo pipefail
+          case "${{ matrix.gate }}" in
+            visual-snapshot) pnpm run test:ui-regression-visual ;;
+            color-contrast) pnpm run test:on-brand-contrast ;;
+            lhci-home) pnpm run test:lhci-budget ;;
+            *) echo "unknown gate"; exit 1 ;;
+          esac
+
+  aggregate:
+    needs: [guard, build, static-and-repo-gates, mushaf-measure, mushaf-gates, visual-contrast-lhci]
+    if: always() && needs.guard.outputs.run_diag == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if any required diagnostic job failed
+        env:
+          BUILD: ${{ needs.build.result }}
+          GATES: ${{ needs.static-and-repo-gates.result }}
+          MEASURE: ${{ needs.mushaf-measure.result }}
+          MUSHAF: ${{ needs.mushaf-gates.result }}
+          VISUAL: ${{ needs.visual-contrast-lhci.result }}
+        run: |
+          set -euo pipefail
+          echo "build=$BUILD gates=$GATES measure=$MEASURE mushaf=$MUSHAF visual=$VISUAL"
+          FAIL=0
+          for r in "$BUILD" "$GATES" "$MEASURE" "$MUSHAF" "$VISUAL"; do
+            if [ "$r" != "success" ]; then FAIL=1; fi
+          done
+          if [ "$FAIL" -ne 0 ]; then
+            echo "::error::Full Regression Diagnostic FAILED — inspect matrix jobs for every failure"
+            exit 1
+          fi
+          echo "Full Regression Diagnostic PASS"

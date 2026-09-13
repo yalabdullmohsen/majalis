@@ -72,12 +72,23 @@ jobs:
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF_NAME: ${{ github.ref_name }}
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+          GITHUB_BASE_REF: ${{ github.base_ref }}
         run: |
           set -euo pipefail
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             BASE="${{ github.event.pull_request.base.sha }}"
             HEAD="${{ github.event.pull_request.head.sha }}"
-            node .github/scripts/ci/emit-path-lane.mjs --base "$BASE" --head "$HEAD"
+            # RC / release/*: مسار كامل إلزاميًا (لا تخطّي mushaf على PRs التجميد)
+            case "${{ github.head_ref }}" in
+              release/*)
+                export CI_FORCE_FULL=1
+                node .github/scripts/ci/emit-path-lane.mjs --full --base "$BASE" --head "$HEAD"
+                ;;
+              *)
+                node .github/scripts/ci/emit-path-lane.mjs --base "$BASE" --head "$HEAD"
+                ;;
+            esac
             node scripts/ci/changed-scope.mjs --base "$BASE" --head "$HEAD"
           else
             # push to main / merge_group → full suite (no dangerous skip)
@@ -304,13 +315,14 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        shard: ${{ github.event_name == 'pull_request' && fromJSON('[1,2,3,4]') || fromJSON('[1,2,3,4,5,6,7,8]') }}
+        # release/* PRs تأخذ المسار الكامل (8 shards) مثل main — لا تخطّي قياس المصحف في RC
+        shard: ${{ (github.event_name != 'pull_request' || startsWith(github.head_ref, 'release/')) && fromJSON('[1,2,3,4,5,6,7,8]') || fromJSON('[1,2,3,4]') }}
     env:
-      MUSHAF_GATE_FULL: ${{ github.event_name == 'pull_request' && '0' || '1' }}
-      MUSHAF_GATE_PAGES: ${{ github.event_name == 'pull_request' && '1,2,3,4,283,600' || '' }}
-      MUSHAF_GATE_VIEWPORT: ${{ github.event_name == 'pull_request' && '390x844' || '' }}
+      MUSHAF_GATE_FULL: ${{ (github.event_name != 'pull_request' || startsWith(github.head_ref, 'release/')) && '1' || '0' }}
+      MUSHAF_GATE_PAGES: ${{ (github.event_name == 'pull_request' && !startsWith(github.head_ref, 'release/')) && '1,2,3,4,283,600' || '' }}
+      MUSHAF_GATE_VIEWPORT: ${{ (github.event_name == 'pull_request' && !startsWith(github.head_ref, 'release/')) && '390x844' || '' }}
       MUSHAF_GATE_SHARD: ${{ matrix.shard }}
-      MUSHAF_GATE_SHARDS: ${{ github.event_name == 'pull_request' && '4' || '8' }}
+      MUSHAF_GATE_SHARDS: ${{ (github.event_name != 'pull_request' || startsWith(github.head_ref, 'release/')) && '8' || '4' }}
       MUSHAF_GATE_USE_PREVIEW: "1"
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
