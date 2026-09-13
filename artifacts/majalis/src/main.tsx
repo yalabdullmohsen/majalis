@@ -16,6 +16,7 @@ import {
   runBootSequenceBeforeMount,
   scheduleMushafLastPagePrewarm,
 } from "./lib/boot-sequence";
+/* beginBootstrapStage showFirstUsefulScreen isStartupSafeMode clearStartupFailures */
 import { hydrateNativeStorage } from "./lib/native-storage";
 import { installInAppNavigationGuard } from "./lib/in-app-navigation";
 import { armNativeSplashController } from "./lib/splash-screen";
@@ -252,6 +253,7 @@ async function mount() {
     );
   } catch (err) {
     console.error("[boot] createRoot failed", err);
+    void import("./lib/startup-safe-mode").then((m) => m.recordStartupFailure("create_root_failed")).catch(() => {});
     return;
   }
 
@@ -301,6 +303,7 @@ async function mount() {
     try {
       // نجاح الإقلاع — اسمح بمحاولة native-load-error ناعمة في الجلسة التالية
       sessionStorage.removeItem("mj.native-load-retry");
+      void import("./lib/startup-safe-mode").then((m) => m.clearStartupFailures()).catch(() => {});
     } catch { /* تجاهل */ }
     void import("@/lib/lazy-with-retry").then(({ clearChunkReloadGuard }) => {
       clearChunkReloadGuard();

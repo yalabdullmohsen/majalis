@@ -76,6 +76,12 @@ export class ErrorBoundary extends Component<Props, State> {
     this.setState({ componentStack: info.componentStack ?? null, errorId });
     applyErrorBoundaryRobots(true);
 
+    void import("@/lib/startup-safe-mode")
+      .then(({ recordStartupFailure }) => {
+        recordStartupFailure(error.message || error.name || "root_boundary");
+      })
+      .catch(() => {});
+
     void logClientError(
       buildErrorReport(error, {
         errorId,
