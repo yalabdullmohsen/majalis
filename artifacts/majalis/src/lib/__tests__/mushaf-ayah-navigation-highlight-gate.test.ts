@@ -1,5 +1,5 @@
 /**
- * بوابة P0 — تنقّل آية سياقي لقصة آدم (4 آيات) بلا تفسير/صوت تلقائي.
+ * بوابة P0 — تنقّل آية سياقي (آدم + تعميم الأنبياء) بلا تفسير/صوت تلقائي.
  * node --import tsx src/lib/__tests__/mushaf-ayah-navigation-highlight-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -68,6 +68,31 @@ assert.match(cards, /returnContext/);
 const stories = read("src/views/ProphetStoriesPage.tsx");
 assert.match(stories, /ProphetMushafMentions/);
 assert.match(stories, /PROPHET_MUSHAF_MENTIONS/);
+
+console.log("=== تعميم: كل مواضع الأنبياء عبر الخدمة ===");
+const prophetSlugs = Object.keys(PROPHET_MUSHAF_MENTIONS);
+assert.ok(prophetSlugs.length >= 16, `expected generalized prophets, got ${prophetSlugs.length}`);
+assert.ok(prophetSlugs.includes("adam"));
+for (const slug of prophetSlugs) {
+  const mentions = PROPHET_MUSHAF_MENTIONS[slug];
+  assert.ok(mentions?.length, slug);
+  for (const m of mentions) {
+    const mapped = findMushafPageForAyah(m.surahId, m.ayahId);
+    assert.ok(typeof mapped === "number" && mapped > 0, `${slug} ${m.surahId}:${m.ayahId}`);
+    const built = buildQuranAyahReference({
+      surahId: m.surahId,
+      ayahId: m.ayahId,
+      navigationSource: "prophets-stories",
+    });
+    assert.equal(built.ok, true, `${slug} ${m.surahId}:${m.ayahId}`);
+    if (!built.ok) throw new Error(built.error);
+    assert.equal(built.ref.pageNumber, mapped);
+    const href = buildMushafAyahHref(built.ref);
+    assert.match(href, new RegExp(`page=${mapped}`));
+    assert.match(href, /highlight=1/);
+    assert.doesNotMatch(href, /tafsir=1|autoplay=1|actions=1/);
+  }
+}
 
 console.log("=== رفض تخمين الصفحة ===");
 const bad = buildQuranAyahReference({
