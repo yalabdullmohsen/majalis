@@ -53,7 +53,6 @@ export const ACCORDION_EXPLORE_LINKS = {
   ],
   durusImaniyya: [
     { href: "/tawhid", label: "التوحيد" },
-    { href: "/kids", label: "قسم الأطفال" },
     { href: "/lessons", label: "الدروس العلمية" },
     { href: "/arkan", label: "أركان الإسلام والإيمان" },
   ],

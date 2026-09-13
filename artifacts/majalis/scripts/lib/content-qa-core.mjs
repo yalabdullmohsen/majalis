@@ -70,7 +70,7 @@ export function isSearchNormIndex(rel) {
 
 export function isUiSoonAllowed(rel, snippet = "") {
   return (
-    /comingSoon|isComingSoon|nav-soon|soon-badge|\/kids|ركن الأطفال|FORBIDDEN|assert\.doesNotMatch/i.test(
+    /comingSoon|isComingSoon|nav-soon|soon-badge|FORBIDDEN|assert\.doesNotMatch/i.test(
       `${rel}\n${snippet}`,
     ) || isTestOrGateFile(rel)
   );

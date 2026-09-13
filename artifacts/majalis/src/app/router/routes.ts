@@ -42,7 +42,8 @@ function titleFromPath(path: string): string {
   "/tawba": "التوبة والاستغفار",
   "/sins-and-rights": "الذنوب والحقوق",
   "/settings": "الإعدادات",
-  "/internal/status": "حالة المنصة"
+  "/internal/status": "حالة المنصة",
+  "/kids": "ركن الأطفال (محوّل)",
 };
   if (known[path]) return known[path];
   const leaf = path.split("/").filter(Boolean).pop() ?? path;
@@ -451,7 +452,7 @@ function inferSection(path: string): AppRouteSection {
 }
 
 const SITEMAP_EXCLUDED =
-  /^\/(admin|dashboard|login|register|api|search|settings|account|auth|internal)(\/|$)/;
+  /^\/(admin|dashboard|login|register|api|search|settings|account|auth|internal|kids)(\/|$)/;
 
 export const ROUTE_REGISTRY: readonly AppRoute[] = PATHS.map((path) => ({
   path,
