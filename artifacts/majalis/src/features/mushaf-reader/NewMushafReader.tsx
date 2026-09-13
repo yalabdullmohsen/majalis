@@ -387,13 +387,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       if (snap.surah != null && snap.ayah != null) {
         const key = `${snap.surah}:${snap.ayah}`;
         setPlayingVerseKey(key);
-        if (
-          snap.playerState === "playing" ||
-          snap.playerState === "loading" ||
-          snap.playerState === "buffering"
-        ) {
-          setAudioDockOpen(true);
-        }
+        /* لا تُفتح رصيف التلاوة من اللقطة — فقط من تشغيل صريح للمستخدم.
+           فتحها هنا كان يُظهر الشريط تلقائيًا عند التقليب/تقدّم الآية. */
       }
     });
     const unAyah = audio.onAyahChange(({ surah, ayah }) => {
@@ -435,14 +430,24 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     if (v2Enabled) readerControllerRef.current?.beginNavigation();
     /* جمّد ارتفاع شريط الآية إن كان مفتوحًا — يمنع قفزة الشبكة عند المسح أثناء القلب */
     const ayahWasOpen = actionsOpenRef.current;
-    const dockRemainsAfterClear =
+    const dockWasVisible =
+      !ayahWasOpen &&
       audioDockOpen &&
-      (playerState === "playing" || playerState === "buffering" || playerState === "error");
+      (chromeOpen ||
+        playerState === "playing" ||
+        playerState === "buffering" ||
+        playerState === "loading" ||
+        playerState === "error");
+    /* إن كان الرصيف مخفيًا خلف قائمة الآية، لا تكشفه بعد clearPageChrome */
+    const dockRemainsAfterClear = dockWasVisible;
+    if (!dockWasVisible && audioDockOpen) {
+      setAudioDockOpen(false);
+    }
     setFreezeStackMode(dockRemainsAfterClear ? "audio" : ayahWasOpen ? "ayah" : "none");
     setBottomStackFrozen(true);
     setPagerSettled(false);
     clearPageChrome();
-  }, [audioDockOpen, clearPageChrome, playerState]);
+  }, [audioDockOpen, chromeOpen, clearPageChrome, playerState]);
 
   const finishPageTurn = useCallback(() => {
     mushafTurnMark("activePageCommit", pageRef.current);
