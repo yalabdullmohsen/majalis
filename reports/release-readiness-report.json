@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-13T21:48:00.000Z",
+  "project": "سُنّة",
+  "verdict": "NOT READY",
+  "verdictReason": "Release Candidate branch created from fully-green main tip; automated main CI is green once, but triple Full Release Lane + TestFlight + device soak are not yet completed on the RC commit.",
+  "sourceOfTruth": {
+    "latestMainCommit": "b0efc979d4ac08c5d16ca6432d709301c8069494",
+    "latestGreenCommit": "b0efc979d4ac08c5d16ca6432d709301c8069494",
+    "latestMainCiRun": "34783252522",
+    "latestFullyGreenCiRun": "34783252522",
+    "supersededHistoricalGreen": {
+      "commit": "42f43aff227b2bcdf776843cc4f5509bc4be9b02",
+      "note": "Older green referenced in prior report; superseded by tip main"
+    },
+    "latestTestFlightCommit": null,
+    "appVersion": "1.0.0",
+    "buildNumber": "46",
+    "releaseBranch": "release/sunnah-stable-1.0",
+    "releaseTag": null
+  },
+  "freeze": {
+    "active": true,
+    "autoMergeBlockedViaDraft": true,
+    "labelsApplied": [
+      "hold",
+      "no-deploy"
+    ],
+    "policyDoc": "docs/release/RELEASE_FREEZE.md"
+  },
+  "openPullRequests": [
+    {
+      "number": 2013,
+      "classification": "POST_RELEASE",
+      "decision": "draft+hold",
+      "mergeable": "MERGEABLE",
+      "notes": "content polish; visual-snapshot fail"
+    },
+    {
+      "number": 1992,
+      "classification": "POST_RELEASE",
+      "decision": "draft+hold",
+      "mergeable": "MERGEABLE"
+    },
+    {
+      "number": 1982,
+      "classification": "CONFLICTING",
+      "decision": "draft+hold",
+      "mergeable": "CONFLICTING"
+    },
+    {
+      "number": 1980,
+      "classification": "CONFLICTING",
+      "decision": "draft+hold",
+      "mergeable": "CONFLICTING"
+    },
+    {
+      "number": 1979,
+      "classification": "CONFLICTING",
+      "decision": "draft+hold",
+      "mergeable": "CONFLICTING"
+    },
+    {
+      "number": 1977,
+      "classification": "CONFLICTING",
+      "decision": "draft+hold",
+      "mergeable": "CONFLICTING"
+    },
+    {
+      "number": 1975,
+      "classification": "CONFLICTING",
+      "decision": "draft+hold",
+      "mergeable": "CONFLICTING"
+    },
+    {
+      "number": 1950,
+      "classification": "CONFLICTING",
+      "decision": "draft+hold",
+      "mergeable": "CONFLICTING"
+    },
+    {
+      "number": 1879,
+      "classification": "CONFLICTING",
+      "decision": "draft+hold",
+      "mergeable": "CONFLICTING"
+    },
+    {
+      "number": 1878,
+      "classification": "CONFLICTING",
+      "decision": "draft+hold-review-for-cherry-pick",
+      "mergeable": "CONFLICTING",
+      "notes": "App Store privacy candidate; not merged until reviewed as tiny fix"
+    },
+    {
+      "number": 1868,
+      "classification": "CLOSE",
+      "decision": "draft+hold",
+      "mergeable": "CONFLICTING"
+    },
+    {
+      "number": 1824,
+      "classification": "POST_RELEASE",
+      "decision": "draft+hold",
+      "mergeable": "MERGEABLE"
+    },
+    {
+      "number": 1791,
+      "classification": "POST_RELEASE",
+      "decision": "remain-draft",
+      "mergeable": "MERGEABLE"
+    }
+  ],
+  "unmergedRequiredFixes": [],
+  "automatedGates": {
+    "mainTipCi": {
+      "runId": "34783252522",
+      "conclusion": "success",
+      "required": true,
+      "evidence": "https://github.com/yalabdullmohsen/majalis/actions/runs/34783252522",
+      "jobsGreen": [
+        "build",
+        "static-checks",
+        "repo-gates",
+        "mushaf-measure(1-8)",
+        "mushaf-gates",
+        "layout-bands",
+        "visual-snapshot",
+        "Color contrast (Playwright)",
+        "LHCI home (mobile)",
+        "ci-required",
+        "Verify build",
+        "deploy"
+      ]
+    },
+    "tripleFullReleaseLane": {
+      "run1": "NOT VERIFIED",
+      "run2": "NOT VERIFIED",
+      "run3": "NOT VERIFIED"
+    },
+    "fullRegressionDiagnostic": {
+      "status": "PENDING",
+      "workflow": ".github/workflows/full-regression-diagnostic.yml",
+      "failFastDisabled": true,
+      "note": "workflow_dispatch only; does not weaken official ci.yml fail-fast"
+    }
+  },
+  "deviceTests": {
+    "upgrade": "NOT VERIFIED",
+    "cleanInstall": "NOT VERIFIED",
+    "wifi": "NOT VERIFIED",
+    "cellular5g": "NOT VERIFIED",
+    "offline": "NOT VERIFIED",
+    "forceQuit": "NOT VERIFIED",
+    "reboot": "NOT VERIFIED",
+    "soakTest30m": "NOT VERIFIED"
+  },
+  "quranIntegrity": {
+    "quranData": "PASS",
+    "pageMapping": "PASS",
+    "lineMapping": "PASS",
+    "page598": "PASS",
+    "allShardsOnMainTip": "PASS",
+    "mushafGatesOnMainTip": "PASS",
+    "evidenceRun": "34783252522"
+  },
+  "criticalJourneys": {
+    "home": "PASS_CI",
+    "mushaf": "PASS_CI",
+    "search": "NOT VERIFIED",
+    "tafsir": "NOT VERIFIED",
+    "tilawa": "NOT VERIFIED",
+    "prayer": "NOT VERIFIED",
+    "settings": "NOT VERIFIED",
+    "account": "NOT VERIFIED",
+    "offline": "NOT VERIFIED"
+  },
+  "failures": [],
+  "remainingManualSteps": [
+    "رفع RC إلى Internal TestFlight من commit المثبت فقط",
+    "Upgrade فوق النسخة الحالية دون حذف",
+    "Clean Install على جهاز ثانٍ",
+    "Soak Test ≥ 30 دقيقة",
+    "مراجعة Screenshots / App Privacy / Age Rating / Content Rights / Export Compliance",
+    "اختيار Manual Release ثم Submit for Review يدويًا"
+  ],
+  "remainingBlockers": [
+    {
+      "id": "B1",
+      "severity": "P0",
+      "releaseBlocking": true,
+      "title": "Triple Full Release Lane not yet run on RC commit",
+      "owner": "agent",
+      "action": "Push RC branch, run Full Regression Diagnostic once, then 3× official CI/full-release on same SHA"
+    },
+    {
+      "id": "B2",
+      "severity": "P0",
+      "releaseBlocking": true,
+      "title": "TestFlight + device matrix not verified",
+      "owner": "owner+agent",
+      "action": "Trigger ios-testflight-deploy on RC tag; complete upgrade/clean/offline/soak checklist"
+    },
+    {
+      "id": "B3",
+      "severity": "P1",
+      "releaseBlocking": false,
+      "title": "Open feature PRs frozen but not closed",
+      "owner": "agent",
+      "action": "Keep draft+hold until freeze lifts; close #1868 after owner ack"
+    }
+  ],
+  "finalRecommendation": {
+    "submitNow": false,
+    "firstBlocker": "B1",
+    "evidenceNeeded": "Three consecutive green Full Release Lane runs on the RC SHA plus TestFlight build matching that SHA"
+  }
+}
