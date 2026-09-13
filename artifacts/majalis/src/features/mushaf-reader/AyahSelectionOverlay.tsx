@@ -1,9 +1,11 @@
 import { memo, useLayoutEffect, useRef, useState } from "react";
 import { clearTextMeasureCache, getCachedTextBands, type TextBand } from "@/lib/text-layout-geometry";
 import {
+  useMushafAyahNavigationKey,
   useMushafAyahPlayingKey,
   useMushafAyahSelectedKey,
 } from "@/features/mushaf-madinah/mushaf-ayah-sync-store";
+import { QURAN_NAV_HIGHLIGHT_HOLD_MS } from "@/lib/quran-navigation";
 
 type Props = {
   container: HTMLElement | null;
@@ -73,15 +75,20 @@ export const AyahSelectionOverlay = memo(function AyahSelectionOverlay({
 }: Props) {
   const selectedKey = useMushafAyahSelectedKey();
   const playingKey = useMushafAyahPlayingKey();
+  const navigationKey = useMushafAyahNavigationKey();
   const [selected, setSelected] = useState<TextBand[]>([]);
   const [playing, setPlaying] = useState<TextBand[]>([]);
+  const [navigation, setNavigation] = useState<TextBand[]>([]);
+  const [navFading, setNavFading] = useState(false);
   const rafRef = useRef<number | null>(null);
+  const navFadeTimer = useRef<number | null>(null);
 
   useLayoutEffect(() => {
     if (!container || !enabled) {
       clearTextMeasureCache();
       setSelected([]);
       setPlaying([]);
+      setNavigation([]);
       return;
     }
 
@@ -89,9 +96,16 @@ export const AyahSelectionOverlay = memo(function AyahSelectionOverlay({
       rafRef.current = null;
       setSelected(selectedKey ? collectBands(container, selectedKey) : []);
       setPlaying(
-        playingKey && playingKey !== selectedKey
+        playingKey && playingKey !== selectedKey && playingKey !== navigationKey
           ? collectBands(container, playingKey)
           : [],
+      );
+      setNavigation(
+        navigationKey && navigationKey !== selectedKey
+          ? collectBands(container, navigationKey)
+          : navigationKey && !selectedKey
+            ? collectBands(container, navigationKey)
+            : [],
       );
     };
 
@@ -113,7 +127,18 @@ export const AyahSelectionOverlay = memo(function AyahSelectionOverlay({
       ro?.disconnect();
       window.removeEventListener("resize", schedule);
     };
-  }, [container, enabled, playingKey, selectedKey]);
+  }, [container, enabled, playingKey, selectedKey, navigationKey]);
+
+  useLayoutEffect(() => {
+    setNavFading(false);
+    if (navFadeTimer.current != null) window.clearTimeout(navFadeTimer.current);
+    if (!navigationKey) return;
+    /* ابدأ التلاشي قبل المسح النهائي من المضيف */
+    navFadeTimer.current = window.setTimeout(() => setNavFading(true), QURAN_NAV_HIGHLIGHT_HOLD_MS);
+    return () => {
+      if (navFadeTimer.current != null) window.clearTimeout(navFadeTimer.current);
+    };
+  }, [navigationKey]);
 
   useLayoutEffect(() => {
     return () => {
@@ -121,7 +146,7 @@ export const AyahSelectionOverlay = memo(function AyahSelectionOverlay({
     };
   }, [container]);
 
-  if (!selected.length && !playing.length) return null;
+  if (!selected.length && !playing.length && !navigation.length) return null;
 
   return (
     <div className="nm-ayah-sel" data-testid="ayah-selection-overlay" aria-hidden="true">
@@ -129,6 +154,13 @@ export const AyahSelectionOverlay = memo(function AyahSelectionOverlay({
         <span
           key={`play-${playingKey}-${i}-${Math.round(b.left)}-${Math.round(b.top)}`}
           className="nm-ayah-sel__band nm-ayah-sel__band--playing"
+          style={{ left: b.left, top: b.top, width: b.width, height: b.height }}
+        />
+      ))}
+      {navigation.map((b, i) => (
+        <span
+          key={`nav-${navigationKey}-${i}-${Math.round(b.left)}-${Math.round(b.top)}`}
+          className={`nm-ayah-sel__band nm-ayah-sel__band--navigation${navFading ? " is-fading" : ""}`}
           style={{ left: b.left, top: b.top, width: b.width, height: b.height }}
         />
       ))}

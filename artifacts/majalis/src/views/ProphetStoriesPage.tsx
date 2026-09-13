@@ -22,6 +22,8 @@ import {
 } from "@/lib/ai-narration";
 import "@/styles/pages/prophet-stories.css";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { ProphetMushafMentions } from "@/components/prophets/ProphetMushafMentions";
+import { PROPHET_MUSHAF_MENTIONS, PROPHET_MUSHAF_NAV_SOURCE } from "@/lib/prophet-mushaf-mentions";
 
 function knowledgeBodyBlocks(body: string): { title?: string; paragraphs: string[] }[] {
   const chunks = body.split(/\n(?=##\s)/);
@@ -835,6 +837,14 @@ function ProphetDetailView({
             </div>
           </section>
         )}
+
+        {PROPHET_MUSHAF_MENTIONS[canonicalSlug]?.length ? (
+          <ProphetMushafMentions
+            prophetSlug={canonicalSlug}
+            mentions={PROPHET_MUSHAF_MENTIONS[canonicalSlug]}
+            navigationSource={PROPHET_MUSHAF_NAV_SOURCE}
+          />
+        ) : null}
 
         {!dbLoading && dbStory?.citations && dbStory.citations.length > 0 && (
           <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="citations">

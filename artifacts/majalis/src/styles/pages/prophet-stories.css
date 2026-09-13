@@ -2936,3 +2936,68 @@ html[data-theme="dark"] .prophet-detail-lux {
     padding: 0.24rem 0.55rem;
   }
 }
+
+
+/* ── مواضع الذكر في المصحف (تنقّل سياقي) ── */
+.prophet-mushaf-mentions__lead {
+  margin-block: 0.35rem 0.85rem;
+  opacity: 0.92;
+}
+.prophet-mushaf-mentions {
+  display: grid;
+  gap: 0.65rem;
+}
+.prophet-mushaf-mention-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  text-align: start;
+  padding: 0.85rem 1rem;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--prophet-accent, #c4a35a) 35%, transparent);
+  background: color-mix(in srgb, var(--prophet-surface, #1a2e24) 88%, #c4a35a 12%);
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.15s ease, background 0.2s ease;
+}
+.prophet-mushaf-mention-card:hover,
+.prophet-mushaf-mention-card:focus-visible {
+  border-color: color-mix(in srgb, var(--prophet-accent, #c4a35a) 70%, transparent);
+  transform: translateX(-2px);
+  outline: none;
+}
+.prophet-mushaf-mention-card:active {
+  transform: scale(0.99);
+}
+.prophet-mushaf-mention-card__main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+.prophet-mushaf-mention-card__title {
+  font-weight: 700;
+  font-size: 1.02rem;
+  line-height: 1.45;
+}
+.prophet-mushaf-mention-card__note {
+  font-size: 0.88rem;
+  opacity: 0.85;
+  line-height: 1.4;
+}
+.prophet-mushaf-mention-card__cta {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--prophet-accent, #c4a35a) 85%, white);
+}
+.prophet-mushaf-mention-card__icon {
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+html.dark .prophet-mushaf-mention-card,
+html[data-theme="dark"] .prophet-mushaf-mention-card {
+  background: color-mix(in srgb, #142019 92%, #8a6b2e 8%);
+  border-color: color-mix(in srgb, #8a6b2e 40%, transparent);
+}

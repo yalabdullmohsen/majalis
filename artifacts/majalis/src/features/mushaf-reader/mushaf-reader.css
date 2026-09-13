@@ -470,6 +470,18 @@ html[data-theme="dark"] .nm-basmala.is-search-hit {
   background: rgba(147, 121, 82, 0.12);
 }
 
+.nm-ayah-sel__band--navigation {
+  background: color-mix(in srgb, #c4a35a 22%, transparent);
+  transition: opacity 600ms ease;
+}
+.nm-ayah-sel__band--navigation.is-fading {
+  opacity: 0;
+}
+html.dark .nm-ayah-sel__band--navigation,
+html[data-theme="dark"] .nm-ayah-sel__band--navigation {
+  background: color-mix(in srgb, #8a6b2e 38%, transparent);
+}
+
 .nm-ayah-sel__band--selected {
   background: rgba(120, 88, 42, 0.16);
   box-shadow: none;
