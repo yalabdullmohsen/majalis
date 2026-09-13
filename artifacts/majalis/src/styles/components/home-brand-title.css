@@ -146,19 +146,14 @@ html.dark .home-page-hero.page-hero-mj {
 }
 
 html[data-theme="dark"] .home-page-hero.page-hero-mj::before,
-html.dark .home-page-hero.page-hero-mj::before {
-  background-image:
-    radial-gradient(
-      120% 90% at 50% -10%,
-      color-mix(in srgb, var(--mj-brand, #5cc095) 22%, transparent),
-      transparent 58%
-    ),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--mj-brand-deep, #123f2e) 55%, var(--mj-bg, #131a18)) 0%,
-      color-mix(in srgb, var(--mj-surface, #1b2421) 70%, var(--mj-bg, #131a18)) 55%,
-      color-mix(in srgb, var(--mj-bg, #131a18) 94%, transparent) 100%
-    );
+html[data-theme="dark"] .home-page-hero.page-hero-mj::after,
+html.dark .home-page-hero.page-hero-mj::before,
+html.dark .home-page-hero.page-hero-mj::after {
+  /* شرائط/طبقات متدرجة كانت تظهر كخطوط سوداء داخل بطاقة الترحيب */
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  opacity: 0 !important;
 }
 
 html[data-theme="dark"] .home-page-hero .m2030-btn--ghost,

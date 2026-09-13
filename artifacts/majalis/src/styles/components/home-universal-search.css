@@ -38,13 +38,10 @@
 
 html[data-theme="dark"] .hus-field,
 html.dark .hus-field {
-  border-radius: 22px;
-  border-color: color-mix(in srgb, #fff 10%, transparent);
-  background: color-mix(in srgb, var(--mj-surface, #1b2421) 92%, #0f3d2e);
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, #fff 6%, transparent),
-    0 2px 12px rgba(0, 0, 0, 0.22);
-  color: var(--mj-ink, #ecf2ef);
+  background: var(--dm-input, #1a2421);
+  border-color: var(--dm-border-default, #445651);
+  /* بلا inset أبيض — كان يظهر كفاصل نهاري تحت البحث */
+  box-shadow: none;
 }
 
 html[data-theme="dark"] .hus-field.is-focused,

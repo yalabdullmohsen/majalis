@@ -65,9 +65,9 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "../..");
 const homeSrc = readFileSync(join(root, "pages/account/ui/HomeView.tsx"), "utf8")
   + readFileSync(join(root, "pages/account/ui/HomeBelowFold.tsx"), "utf8");
 assert.match(homeSrc, /import\("@\/components\/home\/HomeUpcomingLessons"\)/);
-assert.match(homeSrc, /import\("@\/components\/home\/HomeUpcomingCourses"\)/);
 assert.match(homeSrc, /HomeUpcomingLessons\s*=\s*lazyWithRetry/);
 assert.match(homeSrc, /lazyWithRetry/);
+// HomeUpcomingCourses أُزيل من سطح الرئيسية (تبسيط) — Lessons يبقى مسار lazyWithRetry
 
 const boundary = readFileSync(join(root, "components/ErrorBoundary.tsx"), "utf8");
 assert.match(boundary, /SectionErrorBoundary/);

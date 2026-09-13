@@ -20,6 +20,12 @@ const HomeBelowFold = lazyWithRetry(
   "HomeBelowFold",
 );
 
+const HomePrimaryDiscovery = lazyWithRetry(
+  () =>
+    import("./HomeBelowFold").then((m) => ({ default: m.HomePrimaryDiscovery })),
+  "HomePrimaryDiscovery",
+);
+
 const HomeDailyWirdBand = lazyWithRetry(
   () => import("@/components/home/DailyWirdCard").then((m) => ({ default: m.HomeDailyWirdBand })),
   "HomeDailyWirdBand",
@@ -117,13 +123,13 @@ function HomeLiveNowGate() {
   );
 }
 
-/** هيكل يحجز ارتفاع بطاقة آية/حديث اليوم — يمنع قفزة الإدراج بعد الإقلاع */
+/** هيكل يحجز ارتفاع بطاقة آية/آية اليوم — يمنع قفزة الإدراج بعد الإقلاع */
 function HomeSacredOfDaySkeleton() {
   return (
     <div
       className="home-sacred-day home-sacred-day--ph"
       aria-busy="true"
-      aria-label="آية أو حديث اليوم"
+      aria-label="آية من القرآن"
       data-testid="home-sacred-of-day"
     />
   );
@@ -176,6 +182,48 @@ function HomeDailyWirdGate() {
         <HomeDailyWirdBand />
       </Suspense>
     </SectionErrorBoundary>
+  );
+}
+
+
+/** بوابات + محتوى أساسي — مبكّر نسبياً لتسريع الوصول للمحتوى */
+function HomePrimaryDiscoveryGate() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const cancel = deferAfterPaint(() => {
+      if (!cancelled) setShow(true);
+    }, 320);
+    return () => {
+      cancelled = true;
+      cancel();
+    };
+  }, []);
+
+  if (!show) {
+    return (
+      <div
+        className="mj-home-primary-discovery-ph"
+        id="mj-home-primary-discovery"
+        aria-hidden="true"
+        style={{ minHeight: "12rem" }}
+      />
+    );
+  }
+
+  return (
+    <div id="mj-home-primary-discovery">
+      <SectionErrorBoundary name="HomePrimaryDiscovery">
+        <Suspense
+          fallback={
+            <div className="mj-home-primary-discovery-ph" style={{ minHeight: "12rem" }} aria-hidden="true" />
+          }
+        >
+          <HomePrimaryDiscovery />
+        </Suspense>
+      </SectionErrorBoundary>
+    </div>
   );
 }
 
@@ -299,12 +347,10 @@ export default function HomePage() {
       <HomeSearchGate />
 
       {/* «ابدأ من هنا» يُرسم في App خارج Suspense — لا تكرار هنا */}
-
       <HomeSacredOfDayGate />
-
-      <HomeLiveNowGate />
-
+      <HomePrimaryDiscoveryGate />
       <HomeDailyWirdGate />
+      <HomeLiveNowGate />
       <HomeBelowFoldGate />
 
       {showIntro ? (

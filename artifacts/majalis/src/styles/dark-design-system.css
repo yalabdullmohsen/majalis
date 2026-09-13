@@ -127,20 +127,22 @@
   stroke: var(--icon-primary);
 }
 
-/* —— Dark Hero System: لا هيرو فاتح ليلاً —— */
+/* —— Dark Hero System: لا هيرو فاتح ليلاً ——
+ * خلفية صلبة قابلة للقياس (بوابة Color contrast).
+ * لا تستخدم shorthand `background:` وحده — يصفّر background-color فيصير NO_COLOR.
+ * استثناء [class*="__"]: يمنع تطبيق خلفية الهيرو على .page-hero-mj__title ونحوه. */
 :is(html[data-theme="dark"], html.dark) .section-hero,
 :is(html[data-theme="dark"], html.dark) .topic-page__hero,
 :is(html[data-theme="dark"], html.dark) .mss-section-hero,
-:is(html[data-theme="dark"], html.dark) [class*="-hero"]:not(.mushaf-hero):not([data-mushaf-theme]),
+:is(html[data-theme="dark"], html.dark) [class*="-hero"]:not([class*="__"]):not(.mushaf-hero):not([data-mushaf-theme]),
 :is(html[data-theme="dark"], html.dark) .sh-hero,
 :is(html[data-theme="dark"], html.dark) .mk-hero,
 :is(html[data-theme="dark"], html.dark) .an-hero,
 :is(html[data-theme="dark"], html.dark) .seerah-hero,
 :is(html[data-theme="dark"], html.dark) .tarikh-hero,
 :is(html[data-theme="dark"], html.dark) .twh-hero {
-  background:
-    radial-gradient(120% 80% at 50% -10%, color-mix(in srgb, var(--icon-primary) 18%, transparent), transparent 55%),
-    linear-gradient(165deg, var(--surface-hero) 0%, color-mix(in srgb, var(--surface-app) 70%, #0d1512) 100%) !important;
+  background-color: var(--surface-hero, #1a2822) !important;
+  background-image: none !important;
   color: var(--surface-hero-ink) !important;
   border-color: var(--border-elevated) !important;
   box-shadow: none !important;
