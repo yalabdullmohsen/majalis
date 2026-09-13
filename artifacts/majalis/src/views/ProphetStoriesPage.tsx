@@ -222,7 +222,6 @@ function ProphetCard({
   const accent = prophetAccent(prophet.slug);
   const sup = SUPPLEMENT[prophet.slug];
   const isUlulAzm = ULUL_AZM_SLUGS.includes(prophet.slug);
-  const mentionPct = Math.min(100, Math.round(((sup?.mentioned ?? 0) / MAX_MENTIONS) * 100));
 
   return (
     <div
@@ -250,34 +249,36 @@ function ProphetCard({
           {prophet.arabicName}
           <span className="prophet-lux-card__pbuh"> عليه السلام</span>
         </h3>
-        {prophet.quranTitle && (
-          <div className="prophet-lux-card__quran">﴿ {prophet.quranTitle} ﴾</div>
-        )}
         <p className="prophet-lux-card__title">{prophet.title}</p>
-        <p className="prophet-lux-card__place">{prophet.peopleOrPlace}</p>
-        <p className="prophet-lux-card__bio">{truncateAtWord(prophet.briefBio, 100)}</p>
+        <p className="prophet-lux-card__bio">{truncateAtWord(prophet.briefBio, 90)}</p>
 
-        {sup && (
-          <div className="prophet-lux-card__meter" aria-hidden="true">
-            <div className="prophet-lux-card__meter-track">
-              <div className="prophet-lux-card__meter-fill" style={{ width: `${mentionPct}%` }} />
-            </div>
-            <span className="prophet-lux-card__meter-label">ذِكر قرآني</span>
-          </div>
-        )}
+        <div className="prophet-lux-card__chips" aria-label="بيانات ثانوية">
+          {prophet.peopleOrPlace ? (
+            <span className="prophet-lux-card__chip">{prophet.peopleOrPlace}</span>
+          ) : null}
+          {prophet.quranTitle ? (
+            <span className="prophet-lux-card__chip prophet-lux-card__chip--quran">
+              ﴿ {prophet.quranTitle} ﴾
+            </span>
+          ) : null}
+          {sup ? (
+            <span className="prophet-lux-card__chip prophet-lux-card__chip--stat">
+              ذُكر {sup.mentioned} مرة
+            </span>
+          ) : null}
+          {sup?.book ? (
+            <span className="prophet-lux-card__chip prophet-lux-card__chip--book">{sup.book}</span>
+          ) : null}
+          {isUlulAzm ? (
+            <span className="prophet-lux-card__chip prophet-lux-card__chip--azm">أولو العزم</span>
+          ) : null}
+        </div>
 
         <div className="prophet-lux-card__footer">
-          {sup && (
-            <span className="prophet-lux-card__surahs">
-              ذُكر {sup.mentioned} مرة
-              {sup.book && ` · ${sup.book}`}
-            </span>
-          )}
           <span className="prophet-lux-card__read">اقرأ القصة</span>
         </div>
       </div>
 
-      {isUlulAzm && <div className="prophet-lux-card__azm-tag">أولو العزم</div>}
       <span className="prophet-lux-card__go" aria-hidden="true">
         <ChevronLeft size={16} strokeWidth={2.5} />
       </span>
