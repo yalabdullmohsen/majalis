@@ -517,7 +517,7 @@
     "test:badge-system-a11y": "node --import tsx src/lib/__tests__/badge-system-a11y.test.ts",
     "test:design-token-contrast-aa": "node --import tsx src/lib/__tests__/design-token-contrast-aa.test.ts",
     "test:miracles-ui": "node --import tsx src/lib/__tests__/miracles-ui-gate.test.ts",
-    "test:boot-load-failure": "node --import tsx src/lib/__tests__/boot-load-failure-gate.test.ts",
+    "test:boot-load-failure": "node --import tsx src/lib/__tests__/boot-load-failure-gate.test.ts && node --import tsx src/lib/__tests__/startup-surface-unify-gate.test.ts",
     "validate:kuwait-lessons": "node scripts/validate-kuwait-lessons.mjs",
     "verify:no-legacy-brand-html": "node scripts/verify-no-legacy-brand-html.mjs",
     "smoke:launch-readiness": "node scripts/smoke-launch-readiness.mjs",

@@ -112,8 +112,18 @@ assert.match(
 );
 assert.match(
   sectsCss,
-  /\.sect-hub__grid\s*>\s*:last-child:nth-child\(odd\)[\s\S]{0,80}?justify-self:\s*center/,
-  "Section card is not centered: odd last grid child must justify-self:center",
+  /grid-template-columns:\s*minmax\(0,\s*1fr\)/,
+  "Islamic sects: mobile cards use full content width (1 column)",
+);
+assert.doesNotMatch(
+  sectsCss,
+  /\.sect-hub__grid\s*>\s*:last-child:nth-child\(odd\)[\s\S]{0,120}?justify-self:\s*center/,
+  "narrow-detail-card: forbid half-width centered odd last sect card",
+);
+assert.match(
+  sectsCss,
+  /\.sect-card\.is-open|\.sect-hub__grid\s*>\s*\.sect-card\.is-open/,
+  "Open sect detail spans readable width",
 );
 assert.match(
   storiesCss,

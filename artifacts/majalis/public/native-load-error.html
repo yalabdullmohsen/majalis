@@ -4,64 +4,114 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#F7F3EB" />
     <meta name="robots" content="noindex, nofollow" />
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
-    <title>جاري التجهيز — سُنّة</title>
+    <title>سُنّة</title>
     <style>
+      :root {
+        --mj-splash-bg-light: #f7f3eb;
+        --mj-splash-bg-dark: #101614;
+        --mj-splash-bg: var(--mj-splash-bg-light);
+        --mj-splash-ink: #123f2e;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --mj-splash-bg: var(--mj-splash-bg-dark);
+          --mj-splash-ink: #a8d5c0;
+        }
+      }
       html,
       body {
         margin: 0;
         min-height: 100dvh;
-        background: #f2f4f3;
-        color: #14241c;
-        font-family: "Noto Naskh Arabic", system-ui, sans-serif;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        background: var(--mj-splash-bg);
+        color: var(--mj-splash-ink);
+        font-family: "Amiri", "Noto Naskh Arabic", system-ui, sans-serif;
+        display: grid;
+        place-items: center;
         padding: max(1.5rem, env(safe-area-inset-top)) 1.5rem
           max(1.5rem, env(safe-area-inset-bottom));
         box-sizing: border-box;
       }
       main {
-        max-width: 22rem;
+        display: grid;
+        justify-items: center;
+        gap: 0.55rem;
+        max-width: 18rem;
         text-align: center;
       }
-      .spin {
-        width: 2.25rem;
-        height: 2.25rem;
-        margin: 0 auto 1rem;
-        border-radius: 50%;
-        border: 3px solid color-mix(in srgb, #1f7a5a 25%, transparent);
-        border-top-color: #1f7a5a;
-        animation: spin 0.85s linear infinite;
+      .mark {
+        padding: 0.4rem 0.9rem;
+        border-radius: 0.9rem;
+        border: 1px solid color-mix(in srgb, var(--mj-splash-ink) 22%, transparent);
+        background: color-mix(in srgb, var(--mj-splash-ink) 10%, transparent);
       }
-      @keyframes spin {
+      .brand {
+        margin: 0;
+        font-size: clamp(1.4rem, 5.5vw, 1.7rem);
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: 0.01em;
+        color: var(--mj-splash-ink);
+      }
+      .tagline {
+        margin: 0;
+        font-size: 0.92rem;
+        font-weight: 500;
+        line-height: 1.45;
+        color: color-mix(in srgb, var(--mj-splash-ink) 78%, transparent);
+        max-width: 16rem;
+      }
+      .pulse {
+        width: 2.4rem;
+        height: 0.18rem;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--mj-splash-ink) 22%, transparent);
+        overflow: hidden;
+        position: relative;
+        margin-block-start: 0.15rem;
+      }
+      .pulse::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        width: 40%;
+        border-radius: inherit;
+        background: var(--mj-splash-ink);
+        animation: mj-sp 0.9s ease-in-out infinite;
+      }
+      @keyframes mj-sp {
+        from {
+          transform: translateX(150%);
+        }
         to {
-          transform: rotate(360deg);
+          transform: translateX(-250%);
         }
       }
-      h1 {
-        margin: 0 0 0.75rem;
-        font-size: 1.35rem;
-        font-weight: 600;
-        line-height: 1.4;
+      .soft-status {
+        margin: 0.35rem 0 0;
+        font-size: 0.78rem;
+        line-height: 1.5;
+        color: color-mix(in srgb, var(--mj-splash-ink) 62%, transparent);
+        max-width: 16rem;
       }
-      p {
-        margin: 0 0 1.25rem;
-        font-size: 0.95rem;
-        line-height: 1.65;
-        color: #4a6b5f;
+      .soft-status[hidden],
+      .diag[hidden] {
+        display: none !important;
       }
       .diag {
-        margin: 0 0 1rem;
-        font-size: 0.75rem;
-        line-height: 1.5;
-        color: #6a857a;
-        word-break: break-all;
+        margin: 0.35rem 0 0;
+        font-size: 0.72rem;
+        line-height: 1.45;
+        color: color-mix(in srgb, var(--mj-splash-ink) 55%, transparent);
+        word-break: break-word;
       }
       .actions {
         display: grid;
         gap: 0.55rem;
+        width: 100%;
+        margin-top: 0.75rem;
       }
       button {
         appearance: none;
@@ -76,8 +126,8 @@
       }
       button.secondary {
         background: transparent;
-        color: #1f7a5a;
-        border: 1px solid color-mix(in srgb, #1f7a5a 35%, transparent);
+        color: var(--mj-splash-ink);
+        border: 1px solid color-mix(in srgb, var(--mj-splash-ink) 35%, transparent);
       }
       button:disabled {
         opacity: 0.6;
@@ -86,35 +136,54 @@
       button:active {
         opacity: 0.92;
       }
+      /* مسار الاستعادة الناعم: نفس سطح الدخولية — بلا شاشة رمادية ثانية */
       .is-loading .actions {
         display: none;
       }
-      .is-final .spin {
+      .is-loading .fail-title {
+        display: none;
+      }
+      .is-final .pulse {
         display: none;
         animation: none;
       }
-      @media (prefers-color-scheme: dark) {
-        html,
-        body {
-          background: #101614;
-          color: #e8efea;
-        }
-        p,
-        .diag {
-          color: #9bb5a8;
-        }
-        button.secondary {
-          color: #9fcabb;
-          border-color: color-mix(in srgb, #5a9e88 40%, transparent);
+      .is-final .soft-status {
+        display: none;
+      }
+      .fail-title {
+        margin: 0.35rem 0 0;
+        font-size: 1.15rem;
+        font-weight: 650;
+        line-height: 1.4;
+      }
+      .fail-msg {
+        margin: 0;
+        font-size: 0.92rem;
+        line-height: 1.6;
+        color: color-mix(in srgb, var(--mj-splash-ink) 78%, transparent);
+      }
+      .is-loading .fail-msg {
+        display: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .pulse::after {
+          animation: none;
+          width: 100%;
+          opacity: 0.45;
         }
       }
     </style>
   </head>
   <body>
-    <main id="root" class="is-loading">
-      <div class="spin" aria-hidden="true"></div>
-      <h1 id="title">جاري تجهيز الصفحة…</h1>
-      <p id="msg">نحمّل المحتوى. لا تغلق التطبيق.</p>
+    <main id="root" class="is-loading" data-startup-surface="sunnah">
+      <div class="mark" aria-hidden="true">
+        <p class="brand">سُنّة</p>
+      </div>
+      <p class="tagline">معك في العلم والعمل</p>
+      <div class="pulse" aria-hidden="true"></div>
+      <p id="title" class="soft-status">جاري تجهيز الصفحة…</p>
+      <p id="msg" class="fail-msg">نحمّل المحتوى. لا تغلق التطبيق.</p>
+      <h1 id="fail-title" class="fail-title" hidden>تعذّر التحميل</h1>
       <p id="diag" class="diag" hidden></p>
       <div class="actions">
         <button type="button" id="retry">إعادة المحاولة</button>
@@ -131,6 +200,7 @@
         var root = document.getElementById("root");
         var title = document.getElementById("title");
         var msg = document.getElementById("msg");
+        var failTitle = document.getElementById("fail-title");
         var diag = document.getElementById("diag");
         var retryBtn = document.getElementById("retry");
         var homeBtn = document.getElementById("home");
@@ -143,20 +213,44 @@
           }
         } catch (eBoot) {}
 
+        function setThemeColor(hex) {
+          try {
+            document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+              m.setAttribute("content", hex);
+            });
+          } catch (eTheme) {}
+        }
+
         function paintLoading(text, detail) {
           root.className = "is-loading";
+          title.hidden = false;
           title.textContent = text || "جاري تجهيز الصفحة…";
           msg.textContent = detail || "نحمّل المحتوى. لا تغلق التطبيق.";
-          document.title = "جاري التجهيز — سُنّة";
+          if (failTitle) {
+            failTitle.hidden = true;
+            failTitle.textContent = "";
+          }
+          if (diag) {
+            diag.hidden = true;
+            diag.textContent = "";
+          }
+          document.title = "سُنّة";
+          setThemeColor(
+            window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "#101614"
+              : "#F7F3EB",
+          );
         }
 
         function paintFinal(code) {
           root.className = "is-final";
+          title.hidden = true;
+          if (failTitle) failTitle.hidden = false;
           if (!online) {
-            title.textContent = "أنت غير متصل بالإنترنت";
+            if (failTitle) failTitle.textContent = "أنت غير متصل بالإنترنت";
             msg.textContent = "تحقق من الاتصال ثم اضغط إعادة المحاولة.";
           } else {
-            title.textContent = "تعذّر تحميل المحتوى مؤقتًا";
+            if (failTitle) failTitle.textContent = "تعذّر تحميل المحتوى مؤقتًا";
             msg.textContent = "أعد المحاولة. إن استمر الأمر افتح الصفحة الرئيسية.";
           }
           document.title = "تعذّر التحميل — سُنّة";
