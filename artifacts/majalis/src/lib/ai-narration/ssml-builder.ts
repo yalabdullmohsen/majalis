@@ -91,8 +91,8 @@ export function segmentEditorialText(text: string): SsmlSegment[] {
       continue;
     }
     for (const line of lines) {
-      if (/^[-•*]\s+/.test(line) || /^\d+[\.)]\s+/.test(line)) {
-        out.push({ kind: "list", text: line.replace(/^[-•*]\s+/, "").replace(/^\d+[\.)]\s+/, "") });
+      if (/^[-•*]\s+/.test(line) || /^\d+[.)]\s+/.test(line)) {
+        out.push({ kind: "list", text: line.replace(/^[-•*]\s+/, "").replace(/^\d+[.)]\s+/, "") });
       } else if (/^[«"'].*[»"']$/.test(line) || line.startsWith("قال")) {
         out.push({ kind: "quote", text: line });
       } else {

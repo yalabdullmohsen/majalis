@@ -102,7 +102,7 @@ console.log("=== Prophets page uses AI orchestrator + honest labels ===");
 {
   const page = read("src/views/ProphetStoriesPage.tsx");
   assert.match(page, /playAiNarration/);
-  assert.match(page, /from \"@\/lib\/ai-narration\"/);
+  assert.match(page, /from "@\/lib\/ai-narration"/);
   assert.match(page, /صوت الجهاز|device-speech/);
   assert.match(page, /سرد عصبي|azure-neural/);
   assert.doesNotMatch(page, /قارئ بالذكاء الاصطناعي/);
