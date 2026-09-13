@@ -6,8 +6,8 @@ type Props = {
 };
 
 /**
- * MushafSurahFrame — إطار سورة خاص بالمصحف (ليس Card عامة).
- * مرتبط بـLayout Data؛ أبعاد ثابتة بعد الرسم.
+ * MushafSurahFrame — إطار سورة مطبعي (هوية سُنّة)، ليس Card تطبيق.
+ * زخرفة هندسية بسيطة بلا علامات ×. الأبعاد ثابتة بعد الرسم.
  */
 export const MushafSurahFrame = memo(function MushafSurahFrame({ nameArabic }: Props) {
   const label = displaySurahNameFromLabel(nameArabic);
