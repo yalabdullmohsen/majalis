@@ -133,7 +133,7 @@ export function TasbeehCounter({
             +1
           </button>
           <button type="button" className="tasbeeh-counter__btn" disabled={!canUndo} onClick={undo}>تراجع</button>
-          <button type="button" className="tasbeeh-counter__btn tasbeeh-counter__btn--ghost" onClick={reset}>تصفير</button>
+          <button type="button" className="tasbeeh-counter__btn tasbeeh-counter__btn--ghost" onClick={() => { if (window.confirm("هل تريد تصفير العداد لهذا الورد؟")) reset(); }}>تصفير</button>
         </div>
       </div>
     );

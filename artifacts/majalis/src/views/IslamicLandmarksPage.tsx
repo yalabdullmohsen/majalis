@@ -41,7 +41,7 @@ function LandmarkCard({
       <div className="ilm-card__img">
         <DirectoryMedia
           src={landmark.imageUrl}
-          alt=""
+          alt={landmark.name}
           fallbackLabel={landmark.city}
           ratio="16 / 10"
         />

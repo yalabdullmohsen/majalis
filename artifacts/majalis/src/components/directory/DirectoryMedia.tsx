@@ -28,6 +28,7 @@ export function DirectoryMedia({
   const [failed, setFailed] = useState(false);
   const url = (src || "").trim();
   const showImg = Boolean(url) && !failed;
+  const resolvedAlt = (alt || "").trim() || (fallbackLabel || "").trim() || "صورة من الدليل";
 
   return (
     <div
@@ -39,8 +40,10 @@ export function DirectoryMedia({
         <img
           {...imgRest}
           src={url}
-          alt={alt}
+          alt={resolvedAlt}
           className={cn("dir-media__img", imgClassName)}
+          width={imgRest.width ?? 640}
+          height={imgRest.height ?? 400}
           loading={imgRest.loading ?? "lazy"}
           decoding={imgRest.decoding ?? "async"}
           onError={() => setFailed(true)}
@@ -52,7 +55,7 @@ export function DirectoryMedia({
         </div>
       )}
       {/* النص الوصفي لقارئ الشاشة فقط — لا يُعرض كشريط عمودي */}
-      <span className="sr-only">{alt}</span>
+      <span className="sr-only">{resolvedAlt}</span>
     </div>
   );
 }

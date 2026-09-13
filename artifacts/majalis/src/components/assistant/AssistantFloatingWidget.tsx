@@ -5,6 +5,7 @@ import { Sparkles, X } from "lucide-react";
 import { useAssistantChat } from "@/hooks/useAssistantChat";
 import { AssistantChatView } from "./AssistantChatView";
 import { isAssistantFabHiddenPath } from "@/lib/assistant-fab-paths";
+import { isAssistantFeatureEnabled } from "@/lib/assistant-feature-flag";
 
 export function AssistantFloatingWidget() {
   const [location] = useLocation();
@@ -12,7 +13,9 @@ export function AssistantFloatingWidget() {
   const chat = useAssistantChat();
   const closeRef = useRef<HTMLButtonElement>(null);
 
+  const featureOff = !isAssistantFeatureEnabled();
   const hiddenOnPage =
+    featureOff ||
     location === "/assistant" ||
     location.startsWith("/admin") ||
     isAssistantFabHiddenPath(location);

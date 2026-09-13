@@ -3287,7 +3287,7 @@ body.assistant-panel-open {
   position: fixed;
   z-index: 45;
   inset-inline-end: calc(1rem + var(--inset-right));
-  bottom: calc(1rem + var(--inset-bottom));
+  bottom: calc(1rem + var(--inset-bottom) + var(--bottom-nav-height, 64px));
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;

@@ -5,7 +5,7 @@
 .assistant-page--modern {
   width: min(100%, 820px);
   margin: 0 auto;
-  padding: clamp(0.85rem, 2.5vw, 1.75rem) 1rem calc(2rem + var(--inset-bottom, 0px));
+  padding: clamp(0.85rem, 2.5vw, 1.75rem) 1rem calc(2rem + var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px));
   display: grid;
   gap: 0.9rem;
 }

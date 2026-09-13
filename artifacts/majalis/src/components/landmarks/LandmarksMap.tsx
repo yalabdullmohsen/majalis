@@ -35,6 +35,7 @@ export default function LandmarksMap({ landmarks, onSelect }: Props) {
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
   const [status, setStatus] = useState<MapStatus>("loading");
+  const mapReadyRef = useRef(false);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -73,6 +74,7 @@ export default function LandmarksMap({ landmarks, onSelect }: Props) {
         const layer = Leaflet.layerGroup().addTo(map);
         mapRef.current = map;
         layerRef.current = layer;
+        mapReadyRef.current = true;
         setStatus("ready");
 
         requestAnimationFrame(() => {
@@ -104,23 +106,23 @@ export default function LandmarksMap({ landmarks, onSelect }: Props) {
         mapRef.current.remove();
         mapRef.current = null;
         layerRef.current = null;
+        mapReadyRef.current = false;
       }
     };
   }, []);
 
   useEffect(() => {
-    if (!mapRef.current || !layerRef.current) return;
-    if (status === "error") return;
+    if (!mapReadyRef.current || !mapRef.current || !layerRef.current) return;
 
     void getLeaflet().then((Leaflet) => {
-      if (!layerRef.current || !mapRef.current) return;
+      if (!layerRef.current || !mapRef.current || !mapReadyRef.current) return;
       layerRef.current.clearLayers();
 
       if (!landmarks.length) {
-        setStatus("empty");
+        setStatus((s) => (s === "error" ? s : "empty"));
         return;
       }
-      setStatus("ready");
+      setStatus((s) => (s === "error" ? s : "ready"));
 
       const bounds: import("leaflet").LatLngExpression[] = [];
       for (const lm of landmarks) {
@@ -150,7 +152,7 @@ export default function LandmarksMap({ landmarks, onSelect }: Props) {
       }
       mapRef.current.invalidateSize({ animate: false });
     });
-  }, [landmarks, status]);
+  }, [landmarks]);
 
   return (
     <div className="ilm-map-root" data-map-status={status}>
