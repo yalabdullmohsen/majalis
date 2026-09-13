@@ -9,6 +9,7 @@ import {
   resolveProphetSlug,
   type ProphetRecord,
 } from "../prophets-data.ts";
+import { PROPHET_MUSHAF_MENTIONS } from "../prophet-mushaf-mentions.ts";
 
 const EXPECTED_ORDER = [
   "آدم",
@@ -157,5 +158,19 @@ assert.ok(!muhammad.briefBio.includes("إسرائيليات"));
 
 const isa = getProphet("isa")!;
 assert.ok(isa.title.includes("عبد الله") || isa.quranTitle?.includes("كلمة الله"));
+
+
+// نبذات فريدة — لا قالب منهجي مكرر
+const TEMPLATE_MARK = "يُقتصر في النسب والأخبار الزائدة";
+for (const p of PROPHETS) {
+  assert.ok(!p.briefBio.includes(TEMPLATE_MARK), `${p.slug}: نبذة قالب منهجي مكررة`);
+}
+const openings = PROPHETS.map((p) => p.briefBio.slice(0, 48));
+assert.equal(new Set(openings).size, openings.length, "بدايات النبذات يجب أن تكون فريدة");
+
+assert.equal(Object.keys(PROPHET_MUSHAF_MENTIONS).length, 25);
+for (const p of PROPHETS) {
+  assert.ok((PROPHET_MUSHAF_MENTIONS[p.slug]?.length ?? 0) >= 1, `لا مواضع مصحف لـ ${p.slug}`);
+}
 
 console.log(`prophets-content-quality: OK — ${PROPHETS.length} نبيًا بلا حشو محظور`);
