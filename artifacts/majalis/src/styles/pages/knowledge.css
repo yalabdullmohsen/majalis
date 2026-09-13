@@ -25,7 +25,7 @@
   letter-spacing: 0;
   max-width: 42rem;
   margin-inline: auto;
-
+  line-height: 1.85;
   color: var(--mj-white, #ffffff);
 }
 

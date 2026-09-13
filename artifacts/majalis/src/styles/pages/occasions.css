@@ -3,7 +3,8 @@
    عرض محسّن: رأس مضغوط + بطاقات soft-card مقروءة
    ============================================================ */
 .ocp-month-filter                   { max-width: 16rem; }
-.occasions-filter__count--empty     { padding: 1rem 0; }
+.occasions-filter__count--empty     { padding: 1rem 0; color: var(--text-secondary, var(--mj-ink-2)); line-height: 1.7; }
+.occasions-filter__empty-hint       { margin: 0.35rem 0 0; font-size: 0.875rem; color: var(--text-secondary, var(--mj-ink-2)); opacity: 0.92; }
 
 .occasions-page .compact-section-header {
   margin-bottom: 1rem;

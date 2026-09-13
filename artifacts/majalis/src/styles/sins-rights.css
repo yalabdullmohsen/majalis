@@ -1050,6 +1050,12 @@ html[data-theme="dark"] .snr-related-link-label { color: var(--mj-hairline) !imp
   color: var(--elite-ink-muted, var(--mj-ink-2));
   font-size: 0.9375rem;
 }
+.snr-empty-hint {
+  margin: 0.4rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--text-secondary, var(--mj-ink-2));
+}
 
 /* ── Animation ── */
 @keyframes snrFadeIn {
