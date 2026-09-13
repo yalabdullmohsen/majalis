@@ -16,7 +16,13 @@ assert.match(fab, /GlobalBackControlHost/);
 assert.match(fab, /FIXED_BACK_BAR_ENABLED/);
 assert.match(fab, /variant="bar"/);
 assert.match(fab, /AppBackButton/);
+assert.match(fab, /autoHideFloating=\{false\}/, "الشريط لا يُخفى على /profile والإعدادات");
+assert.match(fab, /path === "\/"|hideOnHome/, "إخفاء على الرئيسية فقط");
 assert.doesNotMatch(fab, /ChevronUp/);
+
+const backCss = read("src/styles/knowledge-experience.css");
+assert.match(backCss, /\.app-back-btn--bar\.fixed-back-bar/, "شريط ثابت");
+assert.match(backCss, /right:\s*max\(0\.75rem,\s*var\(--inset-right/, "أسفل يمين فعليًا");
 
 const appBack = read("src/components/common/AppBackButton.tsx");
 assert.match(appBack, /goBackOrFallback|goBackOrFallback/);
