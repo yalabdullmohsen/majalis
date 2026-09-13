@@ -269,10 +269,10 @@
 
 /* إطار سورة — هوية سُنّة Signature (أبعاد ثابتة، بلا Glow) */
 .nm-root {
-  --mushaf-surah-frame-bg: #f3ead7;
-  --mushaf-surah-frame-border: #1f5c45;
+  --mushaf-surah-frame-bg: #f4ebda;
+  --mushaf-surah-frame-border: #1a4a38;
   --mushaf-surah-frame-accent: #b08d57;
-  --mushaf-surah-frame-text: #1a3d30;
+  --mushaf-surah-frame-text: #16382c;
   --mushaf-surah-frame-ornament: #8a6b2e;
 }
 html.dark .nm-root,
@@ -285,51 +285,48 @@ html[data-theme="dark"] .nm-root {
 }
 
 .nm-surah-banner {
-  --mushaf-surah-frame-height: 2.35rem;
+  --mushaf-surah-frame-height: 2.55rem;
   box-sizing: border-box;
   width: 100%;
   height: var(--mushaf-surah-frame-height);
   min-height: var(--mushaf-surah-frame-height);
   max-height: var(--mushaf-surah-frame-height);
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.6rem 1fr 1.6rem;
   align-items: center;
-  justify-content: center;
-  gap: 0.45rem;
-  padding: 0 0.55rem;
+  justify-items: center;
+  padding: 0 0.35rem;
   text-align: center;
   color: var(--mushaf-surah-frame-text);
   font-family: "Amiri", "Traditional Arabic", serif;
-  font-size: clamp(0.92rem, 3.2vw, 1.05rem);
+  font-size: clamp(0.95rem, 3.3vw, 1.08rem);
   font-weight: 700;
   letter-spacing: 0;
   line-height: 1;
-  border: 1px solid var(--mushaf-surah-frame-border);
-  border-radius: 0.35rem;
+  border-radius: 0.55rem;
+  border: 1px solid var(--mushaf-surah-frame-accent);
   background:
     linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--mushaf-surah-frame-accent) 35%, transparent) 0,
-      color-mix(in srgb, var(--mushaf-surah-frame-accent) 35%, transparent) 0.35rem,
-      transparent 0.35rem,
-      transparent calc(100% - 0.35rem),
-      color-mix(in srgb, var(--mushaf-surah-frame-accent) 35%, transparent) calc(100% - 0.35rem),
-      color-mix(in srgb, var(--mushaf-surah-frame-accent) 35%, transparent) 100%
-    ),
-    var(--mushaf-surah-frame-bg);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mushaf-surah-frame-accent) 45%, transparent);
+      180deg,
+      color-mix(in srgb, var(--mushaf-surah-frame-bg) 88%, #1f5c45 12%) 0%,
+      var(--mushaf-surah-frame-bg) 42%,
+      var(--mushaf-surah-frame-bg) 100%
+    );
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-surah-frame-border) 55%, transparent),
+    inset 0 0 0 3px color-mix(in srgb, var(--mushaf-surah-frame-accent) 28%, transparent);
   user-select: none;
   overflow: hidden;
 }
 
-.nm-surah-banner::before,
-.nm-surah-banner::after {
-  content: "";
-  width: 0.55rem;
-  height: 0.55rem;
-  flex: 0 0 auto;
-  border: 1px solid var(--mushaf-surah-frame-ornament);
-  transform: rotate(45deg);
-  opacity: 0.85;
+.nm-surah-banner__ornament {
+  width: 1.05rem;
+  height: 1.05rem;
+  background:
+    linear-gradient(45deg, transparent 42%, var(--mushaf-surah-frame-ornament) 42%, var(--mushaf-surah-frame-ornament) 58%, transparent 58%),
+    linear-gradient(-45deg, transparent 42%, var(--mushaf-surah-frame-ornament) 42%, var(--mushaf-surah-frame-ornament) 58%, transparent 58%),
+    radial-gradient(circle at center, color-mix(in srgb, var(--mushaf-surah-frame-accent) 55%, transparent) 0 28%, transparent 30%);
+  opacity: 0.9;
 }
 
 .nm-surah-banner__label {
@@ -460,8 +457,8 @@ html[data-theme="dark"] .nm-basmala.is-search-hit {
 .nm-ayah-sel__band {
   position: absolute;
   pointer-events: none;
-  border-radius: 2px;
-  background: rgba(120, 92, 48, 0.14);
+  border-radius: 0.35em;
+  background: color-mix(in srgb, #c4a574 18%, transparent);
   box-shadow: none;
   border: none;
 }
@@ -483,7 +480,7 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
 }
 
 .nm-ayah-sel__band--selected {
-  background: rgba(120, 88, 42, 0.16);
+  background: color-mix(in srgb, #d4b483 22%, transparent);
   box-shadow: none;
 }
 
@@ -1220,10 +1217,21 @@ html.dark .nm-root .mm-audio-dock__reciter-btn {
 
 /* لا نغيّر حشو الصفحة عند فتح المشغّل أو شريط الآية */
 
-/* زر خروج ثابت — مستقل عن Chrome / دورة الصفحة */
+/* ReaderControlsOverlay — خارج Geometry المصحف؛ لا يحجز مساحة في Text Flow */
+.nm-reader-controls-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+}
+.nm-reader-controls-overlay[data-visible="0"] {
+  visibility: hidden;
+}
+
+/* زر الخروج — ظاهر فقط مع Reader Chrome؛ opacity فقط بلا Geometry */
 .nm-exit-control {
   position: absolute;
-  z-index: 40;
+  z-index: 41;
   inset-inline-start: max(0.55rem, var(--inset-left, 0px));
   top: max(0.45rem, var(--inset-top, 0px));
   display: inline-flex;
@@ -1238,9 +1246,17 @@ html.dark .nm-root .mm-audio-dock__reciter-btn {
   font-family: inherit;
   font-size: 0.88rem;
   font-weight: 600;
-  pointer-events: auto;
   cursor: pointer;
   box-shadow: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+.nm-exit-control[data-visible="1"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 .nm-exit-control:active {
   opacity: 0.88;
@@ -1254,7 +1270,8 @@ html.dark .nm-root .mm-audio-dock__reciter-btn {
 }
 .nm-root[data-mushaf-panning="1"] .nm-exit-control {
   pointer-events: none;
-  opacity: 0.35;
+  opacity: 0;
+  visibility: hidden;
 }
 html.dark .nm-exit-control,
 html[data-theme="dark"] .nm-exit-control {

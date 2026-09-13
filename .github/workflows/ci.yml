@@ -331,12 +331,15 @@ jobs:
         run: pnpm run test:mushaf-single-pass:measure
 
       - name: Upload measurements shard
+        if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: mushaf-measurements-${{ matrix.shard }}
-          path: artifacts/majalis/artifacts/mushaf-single-pass/measurements-shard-${{ matrix.shard }}.json
+          path: |
+            artifacts/majalis/artifacts/mushaf-single-pass/measurements-shard-${{ matrix.shard }}.json
+            artifacts/majalis/artifacts/mushaf-single-pass/screenshots/
           retention-days: 1
-          if-no-files-found: error
+          if-no-files-found: warn
 
 
   mushaf-gates:

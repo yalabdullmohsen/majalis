@@ -185,11 +185,9 @@ export function MushafAudioDock({
         )}
 
         <div className="mm-audio-dock__controls">
-          {mini ? null : (
-            <button type="button" onClick={onPrev} aria-label="الآية السابقة">
-              <SkipBack size={16} aria-hidden="true" />
-            </button>
-          )}
+          <button type="button" onClick={onPrev} aria-label="الآية السابقة">
+            <SkipBack size={16} aria-hidden="true" />
+          </button>
           <button
             type="button"
             className="mm-audio-dock__play"
@@ -199,15 +197,15 @@ export function MushafAudioDock({
           >
             {playing ? <Pause size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" />}
           </button>
-          {mini ? null : (
-            <button type="button" onClick={onNext} aria-label="الآية التالية">
-              <SkipForward size={16} aria-hidden="true" />
-            </button>
-          )}
+          <button type="button" onClick={onNext} aria-label="الآية التالية">
+            <SkipForward size={16} aria-hidden="true" />
+          </button>
         </div>
 
         {mini ? null : (
           <>
+            <details className="mm-audio-dock__advanced" data-testid="mushaf-dock-advanced">
+              <summary>خيارات التلاوة</summary>
             {onSpeed ? (
               <div className="mm-audio-dock__rates" role="group" aria-label="سرعة التلاوة">
                 {([0.75, 1, 1.25] as const).map((rate) => (
@@ -286,6 +284,7 @@ export function MushafAudioDock({
                 الحفظ: يكرّر النطاق المختار مع فاصل قصير بين التكرارات.
               </p>
             ) : null}
+            </details>
           </>
         )}
 

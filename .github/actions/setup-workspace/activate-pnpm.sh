@@ -37,7 +37,16 @@ done
 if [[ "$ok" -ne 1 ]]; then
   echo "[setup-workspace] corepack failed after retries — falling back to npm install -g pnpm@$PNPM_VER"
   npm install -g "pnpm@$PNPM_VER"
+  # npm -g قد يضع الثنائي خارج PATH الحالي في بعض الـrunners
+  NPM_BIN="$(npm prefix -g 2>/dev/null)/bin"
+  if [[ -n "${NPM_BIN}" && -d "${NPM_BIN}" ]]; then
+    export PATH="${NPM_BIN}:${PATH}"
+  fi
+  hash -r 2>/dev/null || true
 fi
+
+# أعد تحميل أوامر الشِل بعد corepack أيضًا
+hash -r 2>/dev/null || true
 
 if ! command -v pnpm >/dev/null 2>&1; then
   echo "[setup-workspace] pnpm missing from PATH after activation"

@@ -7,7 +7,7 @@ import { MUSHAF_PROVENANCE } from "@/lib/mushaf-v2/provenance";
 
 export const SUNNAH_MUSHAF_SIGNATURE_PRESET_ID = "sunnah-mushaf-signature-v1" as const;
 export const SUNNAH_MUSHAF_SIGNATURE_VERSION = "1.0.0" as const;
-export const SUNNAH_MUSHAF_SIGNATURE_CACHE_VERSION = "sms-2026-09-13-p0";
+export const SUNNAH_MUSHAF_SIGNATURE_CACHE_VERSION = "sms-2026-09-13-p0-immersive-wcap";
 
 export type SunnahMushafSignaturePreset = {
   presetId: typeof SUNNAH_MUSHAF_SIGNATURE_PRESET_ID;
@@ -53,7 +53,7 @@ export function resolveSunnahMushafSignaturePreset(): SunnahMushafSignaturePrese
     linesPerPage: 15,
     lineHeight: 1.85,
     pageScale: 1,
-    contentInsets: { headerPx: 36, footerPx: 40, sidePx: 8 },
+    contentInsets: { headerPx: 36, footerPx: 40, sidePx: 5 },
     headerStyle: "nm-header",
     surahFrameStyle: "sunnah-surah-frame-v1",
     basmalaStyle: "qpc-basmala",
@@ -84,7 +84,6 @@ export function buildSignatureRenderCacheKey(pageNumber: number): string {
   ].join("|");
 }
 
-
 const SIGNATURE_MIGRATION_FLAG = "sunnah-mushaf-signature-migrated-v1";
 
 /** ترحيل كل المسارات إلى Signature — Idempotent. لا يمس نص القرآن. */
@@ -97,4 +96,32 @@ export function migrateToSunnahMushafSignature(storage: Storage = localStorage):
   } catch {
     return false;
   }
+}
+
+/** أحجام خط ثابتة حسب فئة عرض المحتوى — بلا auto-fit لكل صفحة */
+export const SIGNATURE_FONT_SIZE_BANDS = [
+  { maxContentWidth: 300, fontSize: 21 },
+  { maxContentWidth: 340, fontSize: 23 },
+  { maxContentWidth: 370, fontSize: 25 },
+  { maxContentWidth: 400, fontSize: 27 },
+  { maxContentWidth: 440, fontSize: 29 },
+  { maxContentWidth: Number.POSITIVE_INFINITY, fontSize: 31 },
+] as const;
+
+/**
+ * حجم Signature من فئة الشاشة + سقف هندسي موحّد (عرض/ارتفاع).
+ * ليس auto-fit لكل صفحة — قاسم العرض 17 يطابق سعة سطر QPC دون فيض.
+ */
+export function resolveSignatureFontSizePx(
+  contentWidthPx: number,
+  bodyHeightPx: number,
+): number {
+  const band =
+    SIGNATURE_FONT_SIZE_BANDS.find((b) => contentWidthPx < b.maxContentWidth) ??
+    SIGNATURE_FONT_SIZE_BANDS[SIGNATURE_FONT_SIZE_BANDS.length - 1]!;
+  const byHeight =
+    bodyHeightPx > 0 ? Math.floor(bodyHeightPx / 15 / 1.85) : band.fontSize;
+  const byWidth =
+    contentWidthPx > 0 ? Math.floor(contentWidthPx / 17) : band.fontSize;
+  return Math.max(18, Math.min(band.fontSize, byHeight, byWidth, 34));
 }

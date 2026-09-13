@@ -87,7 +87,10 @@ assert.doesNotMatch(css, /env\(safe-area/);
 assert.ok(!existsSync(resolve(root, "src/features/mushaf-reader/MushafDecorFrame.tsx")));
 
 const fitHook = read("src/features/mushaf-reader/useStableMushafLayout.ts");
-assert.match(fitHook, /resolveUniformMushafFontSize/);
+// مسار الإنتاج: Signature bands (بلا auto-fit لكل صفحة) — راجع mushaf-immersive-reader-chrome-gate
+assert.match(fitHook, /resolveSignatureFontSizePx/);
+assert.match(fitHook, /sunnah-mushaf-signature-preset/);
+assert.doesNotMatch(fitHook, /resolveUniformMushafFontSize/);
 assert.match(fitHook, /--mushaf-font-size/);
 assert.match(fitHook, /useLayoutEffect/);
 assert.doesNotMatch(fitHook, /fitPageFontSize\(/);
