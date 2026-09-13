@@ -136,6 +136,12 @@
         var homeBtn = document.getElementById("home");
         var online = typeof navigator !== "undefined" ? navigator.onLine !== false : true;
         var navigating = false;
+        // إن وصلنا من إعادة محاولة سابقة لصفحة الخطأ — امسخ المسار فورًا لمنع الحلقة
+        try {
+          if (/[?&]src=native-load-error(?:&|$)/.test(location.search || "")) {
+            sessionStorage.removeItem(LAST_PATH_KEY);
+          }
+        } catch (eBoot) {}
 
         function paintLoading(text, detail) {
           root.className = "is-loading";
