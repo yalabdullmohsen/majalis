@@ -955,14 +955,21 @@ export default function IslamicSectsPage() {
           </div>
         </div>
 
+        <p className="sect-hub__results" aria-live="polite">
+          {filtered.length} نتيجة
+        </p>
+
         <div className="sect-hub__grid">
           {filtered.map((sect) => {
             const open = selected?.id === sect.id;
+            const needsReview = /\d+\s*[-–—]\s*\d+\s*%|\d+\s*%/.test(sect.spread || "");
             return (
               <article
                 key={sect.id}
                 id={sect.id}
                 className={`sect-card${open ? " is-open" : ""}`}
+                data-content-type="directory-summary"
+                data-verification-state={needsReview ? "needs_specialist_review" : "catalog"}
               >
                 <button
                   type="button"
@@ -975,7 +982,7 @@ export default function IslamicSectsPage() {
                     <span className="sect-card__icon" aria-hidden="true">
                       <SectionIcon name={sect.icon} size={22} />
                     </span>
-                    <div>
+                    <div className="sect-card__head-text">
                       <h3 className="sect-card__title">{sect.name}</h3>
                       <p className="sect-card__era">{sect.era}</p>
                     </div>
@@ -985,42 +992,85 @@ export default function IslamicSectsPage() {
                     <span className={`sect-card__pill${sect.status === "تاريخية" ? " sect-card__pill--muted" : ""}`}>
                       {sect.status}
                     </span>
+                    {needsReview ? (
+                      <span className="sect-card__pill sect-card__pill--review">يحتاج تحققًا</span>
+                    ) : null}
                   </div>
                   <p className="sect-card__desc">{sect.foundingCause}</p>
                   <span className="sect-card__cta">
-                    {open ? "إغلاق" : "التفاصيل"}
+                    {open ? "إغلاق التفاصيل" : "عرض التفاصيل"}
                     <ChevronLeft size={16} aria-hidden="true" />
                   </span>
                 </button>
 
                 {open ? (
-                  <div className="sect-card__detail" id={`${sect.id}-detail`}>
-                    <p><strong>الاسم الكامل:</strong> {sect.fullName}</p>
-                    <p><strong>المؤسس:</strong> {sect.founder}</p>
-                    <p><strong>المنشأ:</strong> {sect.origin}</p>
-                    {sect.spread ? <p><strong>الانتشار:</strong> {sect.spread}</p> : null}
-                    <div>
-                      <strong>أبرز المعتقدات:</strong>
-                      <ul>
+                  <div
+                    className="sect-card__detail"
+                    id={`${sect.id}-detail`}
+                    data-content-type="directory-detail"
+                  >
+                    <section className="sect-card__section">
+                      <h4 className="sect-card__section-title">التعريف</h4>
+                      <p><strong>الاسم الكامل:</strong> {sect.fullName}</p>
+                    </section>
+                    <section className="sect-card__section">
+                      <h4 className="sect-card__section-title">المؤسس أو أبرز الرموز</h4>
+                      <p>{sect.founder}</p>
+                    </section>
+                    <section className="sect-card__section">
+                      <h4 className="sect-card__section-title">المنشأ</h4>
+                      <p>{sect.origin}</p>
+                    </section>
+                    {sect.spread ? (
+                      <section className="sect-card__section">
+                        <h4 className="sect-card__section-title">الانتشار</h4>
+                        <p>{sect.spread}</p>
+                        {/\d+\s*[-–—]\s*\d+\s*%|\d+\s*%/.test(sect.spread) ? (
+                          <p className="sect-card__verify">
+                            ملاحظة تحقق: النسبة المذكورة تحتاج مصدرًا وتاريخ تحقق — وُسمت needs_specialist_review.
+                          </p>
+                        ) : null}
+                      </section>
+                    ) : null}
+                    <section className="sect-card__section">
+                      <h4 className="sect-card__section-title">أبرز الأفكار أو المعتقدات</h4>
+                      <ul className="sect-card__list">
                         {sect.keyBeliefs.map((b, i) => (
                           <li key={i}>{b}</li>
                         ))}
                       </ul>
-                    </div>
+                    </section>
+                    {sect.keyScholars.length > 0 ? (
+                      <section className="sect-card__section">
+                        <h4 className="sect-card__section-title">أبرز الأسماء</h4>
+                        <ul className="sect-card__list">
+                          {sect.keyScholars.map((name, i) => (
+                            <li key={i}>{name}</li>
+                          ))}
+                        </ul>
+                      </section>
+                    ) : null}
                     {sect.keyBooks.length > 0 ? (
-                      <div>
-                        <strong>أبرز الكتب:</strong>
-                        <ul>
+                      <section className="sect-card__section">
+                        <h4 className="sect-card__section-title">المصادر والكتب</h4>
+                        <ul className="sect-card__list">
                           {sect.keyBooks.map((b, i) => (
                             <li key={i}>{b}</li>
                           ))}
                         </ul>
-                      </div>
+                      </section>
                     ) : null}
-                    {sect.keyScholars.length > 0 ? (
-                      <p><strong>أبرز العلماء:</strong> {sect.keyScholars.join("، ")}</p>
+                    {sect.quote ? (
+                      <section className="sect-card__section">
+                        <h4 className="sect-card__section-title">نص منقول</h4>
+                        <blockquote className="sect-card__quote">{sect.quote}</blockquote>
+                      </section>
                     ) : null}
-                    {sect.quote ? <blockquote className="sect-card__quote">{sect.quote}</blockquote> : null}
+                    {needsReview ? (
+                      <p className="sect-card__verify">
+                        حالة المحتوى: needs_specialist_review — العرض للتنظيم فقط دون حكم جديد.
+                      </p>
+                    ) : null}
                     {sect.id === "ahl-al-sunna" ? (
                       <div className="sect-card__links hub-card-grid">
                         <InternalLinkCard href="/tawhid" title="دروس عقيدة أهل السنة والجماعة" variant="compact" className="sect-card__link" />
@@ -1035,7 +1085,11 @@ export default function IslamicSectsPage() {
         </div>
 
         <div className="sect-hub__share">
-          <ShareButtons title="الفرق الإسلامية — سُنّة" />
+          <p className="sect-hub__share-title">شارك الفائدة</p>
+          <ShareButtons
+            title="الفرق الإسلامية — سُنّة"
+            url="https://www.ssunnah.com/islamic-sects"
+          />
         </div>
         <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والفرق" count={4} />
       </div>

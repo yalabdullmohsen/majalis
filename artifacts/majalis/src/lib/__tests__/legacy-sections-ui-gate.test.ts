@@ -39,10 +39,24 @@ assert.doesNotMatch(
   "الفرق بلا هيرو أخضر حاد مضمّن",
 );
 assert.match(sectsCss, /\.sect-hub__grid/);
-assert.match(sectsCss, /justify-self:\s*center/, "Section card is not centered");
+assert.match(
+  sectsCss,
+  /grid-template-columns:\s*minmax\(0,\s*1fr\)/,
+  "Islamic sects mobile grid must be single full-width column",
+);
+assert.doesNotMatch(
+  sectsCss,
+  /\.sect-hub__grid\s*>\s*:last-child:nth-child\(odd\)[\s\S]{0,120}?max-width:\s*calc/,
+  "narrow-detail-card: odd last child must not shrink to half width",
+);
+assert.doesNotMatch(
+  sectsCss,
+  /\.sect-hub__grid\s*>\s*:only-child[\s\S]{0,120}?max-width:\s*min\(22rem/,
+  "card-less-than-mobile-content-width: only-child must not cap at 22rem",
+);
 assert.match(sectsCss, /padding-bottom:\s*calc\(var\(--(?:nav-h|bottom-nav-height)/);
 assert.match(sectsCss, /\.sect-hub__chip[\s\S]{0,80}?min-height:\s*44px/, "Filter chips touch target < 44px");
-assert.match(sectsCss, /\.sect-hub__chips[\s\S]{0,220}?padding-inline/, "Filter chips clipped at edge: need padding-inline");
+assert.match(sectsCss, /\.sect-hub__chips[\s\S]{0,280}?flex-wrap:\s*wrap/, "Filter chips wrap instead of clipped strip");
 
 assert.match(akhlaqCss, /topic-page--akhlaq \.akl-hero/);
 assert.match(akhlaqCss, /display:\s*none/);
