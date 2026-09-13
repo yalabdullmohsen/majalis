@@ -2536,3 +2536,110 @@ html.dark .app-main:has(.lrf-wrap--prophet-detail) {
     padding-block: 2rem 2.5rem;
   }
 }
+
+
+/* == SUNNAH_DARK_PROPHETS_P0 ==
+   إصلاح جذري: لا أسطح فاتحة ولا تدرج #e8f0ec داخل الوضع الليلي.
+   Brand: سُنّة
+*/
+html.dark .prophets-lux-page,
+html[data-theme="dark"] .prophets-lux-page {
+  --ps-surface: var(--surface, #1A2421);
+  --ps-canvas: var(--bg, #131A18);
+  --ps-ink: var(--text-primary, #ECF2EF);
+  --ps-ink-soft: var(--text-secondary, #B7C4BF);
+  --ps-line: var(--border, #35443F);
+  --ps-emerald: #1A4A3A;
+  --ps-emerald-bright: var(--accent, #5CC095);
+  background: var(--ps-canvas);
+  color: var(--ps-ink);
+}
+
+html.dark .prophet-lux-card,
+html[data-theme="dark"] .prophet-lux-card,
+html.dark .prophet-timeline__card,
+html[data-theme="dark"] .prophet-timeline__card {
+  background: var(--ps-surface) !important;
+  background-image: none !important;
+  color: var(--ps-ink);
+  border-color: var(--ps-line);
+  box-shadow: 0 8px 20px -16px rgba(0, 0, 0, 0.55);
+}
+
+html.dark .prophet-lux-card__glow,
+html[data-theme="dark"] .prophet-lux-card__glow,
+html.dark .prophet-lux-card:hover .prophet-lux-card__glow,
+html[data-theme="dark"] .prophet-lux-card:hover .prophet-lux-card__glow,
+html.dark .prophet-lux-card:focus-visible .prophet-lux-card__glow,
+html[data-theme="dark"] .prophet-lux-card:focus-visible .prophet-lux-card__glow {
+  opacity: 0 !important;
+  display: none !important;
+}
+
+html.dark .prophet-lux-card__star,
+html[data-theme="dark"] .prophet-lux-card__star {
+  opacity: 0.35;
+  transform: scale(0.72);
+  margin-bottom: 0.2rem;
+}
+
+html.dark .prophet-lux-card__name,
+html[data-theme="dark"] .prophet-lux-card__name,
+html.dark .prophet-timeline__name,
+html[data-theme="dark"] .prophet-timeline__name {
+  color: var(--ps-ink);
+}
+
+html.dark .prophet-lux-card__title,
+html[data-theme="dark"] .prophet-lux-card__title {
+  color: var(--ps-emerald-bright);
+}
+
+html.dark .prophet-lux-card__bio,
+html.dark .prophet-lux-card__place,
+html.dark .prophet-lux-card__pbuh,
+html.dark .prophet-lux-card__surahs,
+html.dark .prophet-timeline__title,
+html.dark .prophet-timeline__era,
+html[data-theme="dark"] .prophet-lux-card__bio,
+html[data-theme="dark"] .prophet-lux-card__place,
+html[data-theme="dark"] .prophet-lux-card__pbuh,
+html[data-theme="dark"] .prophet-lux-card__surahs,
+html[data-theme="dark"] .prophet-timeline__title,
+html[data-theme="dark"] .prophet-timeline__era {
+  color: var(--ps-ink-soft);
+}
+
+html.dark .prophet-lux-card__read,
+html[data-theme="dark"] .prophet-lux-card__read,
+html.dark .prophet-lux-card__go,
+html[data-theme="dark"] .prophet-lux-card__go {
+  color: var(--ps-emerald-bright);
+}
+
+html.dark .prophet-detail-lux__hero-star,
+html[data-theme="dark"] .prophet-detail-lux__hero-star,
+html.dark .prophet-detail-lux__hero-pattern,
+html[data-theme="dark"] .prophet-detail-lux__hero-pattern {
+  opacity: 0.18;
+}
+
+html.dark .prophet-fact-card,
+html[data-theme="dark"] .prophet-fact-card {
+  background: color-mix(in srgb, var(--ps-surface, #1A2421) 92%, #0B1A2E);
+  background-image: none;
+  border-color: var(--ps-line, #35443F);
+  box-shadow: none;
+}
+
+html.dark .prophet-lux-card__border,
+html[data-theme="dark"] .prophet-lux-card__border {
+  box-shadow: none;
+  opacity: 0.35;
+}
+
+/* منع تدرج mint الفاتح في أي خلفية بطاقة داخل الداكن */
+html.dark .prophets-lux-page [class*="card"],
+html[data-theme="dark"] .prophets-lux-page [class*="card"] {
+  --ps-mint-forbidden: #e8f0ec;
+}

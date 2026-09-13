@@ -225,6 +225,12 @@ const waves = [
         cmd: "pnpm",
         args: ["--filter", "@workspace/majalis", "run", "audio-reader:p0-gate"],
       },
+        {
+          name: "sunnah AI narration + back + dark P0 gate",
+          cmd: "pnpm",
+          args: ["--filter", "@workspace/majalis", "run", "sunnah-ai-narration-p0-gate"],
+        },
+
     ],
   },
   {

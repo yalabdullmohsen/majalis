@@ -24,6 +24,12 @@ const transcribeRateLimit = createRateLimiter({
   keyPrefix: "transcribe",
 });
 
+const narrationTtsRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 20,
+  keyPrefix: "narration-tts",
+});
+
 const fiqhResearchRateLimit = createRateLimiter({
   windowMs: 60_000,
   max: 20,
@@ -250,6 +256,13 @@ export const API_ROUTES = [
   { prefix: "/api/push/subscribe", module: "./api-handlers/push-subscribe.js", allowGet: true, exact: true, rateLimit: pushSubscribeRateLimit },
   { prefix: "/api/test-anthropic", module: "./api-handlers/test-anthropic.js", allowGet: true },
   { prefix: "/api/transcribe", module: "./api-handlers/transcribe.js", rateLimit: transcribeRateLimit },
+  {
+    prefix: "/api/narration/tts",
+    module: "./api-handlers/narration-tts.js",
+    allowGet: true,
+    exact: true,
+    rateLimit: narrationTtsRateLimit,
+  },
   { prefix: "/api/submissions", module: "./api-handlers/submissions.js", exact: true, rateLimit: submissionsRateLimit },
   { prefix: "/api/researches/submit", module: "./api-handlers/researches-submit.js", exact: true, rateLimit: submissionsRateLimit },
   { prefix: "/api/cron/researches-daily-import", module: "./api-handlers/cron/researches-daily-import.js", allowGet: true, exact: true },
