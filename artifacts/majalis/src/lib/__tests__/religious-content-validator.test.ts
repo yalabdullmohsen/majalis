@@ -2,7 +2,7 @@
  * اختبارات regression لمنع ربط الهجرة بمحرّم واختراع المناسبات بلا توثيق.
  * التشغيل: npx tsx src/lib/__tests__/religious-content-validator.test.ts
  */
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -83,7 +83,7 @@ console.log("\n=== فصل بداية التقويم عن وقت الهجرة ===
   assert(/ربيع الأول/.test(newYear.caveat ?? ""), "التحفظ يفصل التقويم عن قدوم المدينة");
 }
 
-console.log("\n=== مواسم التعلّم — محرّم مصحّح ===");
+console.log("\n=== مواسم التعلّم — بيانات موثّقة بلا واجهة رئيسية ===");
 {
   const seasons = getPublishableLearningSeasons();
   const muharramSeason = seasons.find((s) => s.hijriMonth === 1)!;
@@ -92,12 +92,20 @@ console.log("\n=== مواسم التعلّم — محرّم مصحّح ===");
     "موسم محرّم لا يذكر الهجرة كواقعة/نعمة مربوطة بالشهر");
   assert(/عاشوراء|الصيام/.test(muharramSeason.suggestion), "اقتراح محرّم عن الصيام/عاشوراء");
 
-  const seasonsSrc = readFileSync(
-    resolve(appRoot, "src/components/home/HomeLearningSeasonsWidget.tsx"),
-    "utf-8",
+  assert(
+    !existsSync(resolve(appRoot, "src/components/home/HomeLearningSeasonsWidget.tsx")),
+    "ويدجت مواسم التعلم محذوف من الواجهة",
   );
-  assert(!seasonsSrc.includes("استحضار نعمة الهجرة"), "أُزيل النص الخاطئ من المكوّن");
-  assert(seasonsSrc.includes("getPublishableLearningSeasons"), "الموسم يُشتق من السجلات الموثّقة");
+  assert(
+    !readFileSync(resolve(appRoot, "src/lib/homepage-layout.ts"), "utf8").includes("learning-seasons"),
+    "لا معرّف learning-seasons في تخطيط الرئيسية",
+  );
+  assert(
+    !readFileSync(resolve(appRoot, "src/pages/account/ui/HomeBelowFold.tsx"), "utf8").includes(
+      "HomeLearningSeasonsWidget",
+    ),
+    "لا استيراد لودجت المواسم في الرئيسية",
+  );
 }
 
 console.log("\n=== لا مناسبة مخترعة ولا معلومة بلا مصدر ===");

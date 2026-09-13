@@ -1,0 +1,662 @@
+/**
+ * Dark Mode Recovery P0 — سُنّة
+ * طبقة أخيرة فوق m2030/final-release لإصلاح التسريبات النهارية وضعف التباين.
+ * قواعد دلالية فقط عبر توكنات --dm-* / --mj-* / --surface-* — بلا Invert.
+ */
+
+html[data-theme="dark"],
+html.dark {
+  /* ── Semantic Dark Tokens (جسر موحّد) ── */
+  --dm-bg: #131a18;
+  --dm-bg-subtle: #161e1b;
+  --dm-surface: #1b2421;
+  --dm-surface-2: #222d29;
+  --dm-surface-elevated: #24302b;
+  --dm-surface-interactive: #2b3933;
+  --dm-surface-selected: color-mix(in srgb, #4fb48b 16%, #1b2421);
+  --dm-surface-feature: #16352c;
+  --dm-surface-overlay: color-mix(in srgb, #0a1210 72%, transparent);
+  --dm-surface-scrim: color-mix(in srgb, #050a08 58%, transparent);
+
+  --dm-text-primary: #f8fafc;
+  --dm-text-secondary: #e2e8f0;
+  --dm-text-muted: #c5d0cb;
+  --dm-text-disabled: #8a9a93;
+  --dm-text-on-primary: #06231a;
+  --dm-text-on-feature: #f4fbf7;
+  --dm-text-link: #8fd4b0;
+  --dm-text-inverse: #0c1612;
+
+  --dm-border-subtle: #35443f;
+  --dm-border-default: #445651;
+  --dm-divider: color-mix(in srgb, #8fd4b0 14%, #2a3733);
+  --dm-focus-ring: color-mix(in srgb, #d9b871 42%, transparent);
+
+  --dm-primary: #4fb48b;
+  --dm-primary-hover: #5cc095;
+  --dm-primary-pressed: #3d9a74;
+  --dm-primary-container: #16261f;
+  --dm-accent-gold: #d9b871;
+  --dm-accent-gold-subtle: color-mix(in srgb, #d9b871 18%, #1b2421);
+  --dm-success: #6bcf9a;
+  --dm-warning: #e2c07a;
+  --dm-error: #f2b8c0;
+  --dm-info: #9ec5e8;
+
+  --dm-card: var(--dm-surface-elevated);
+  --dm-hero: var(--dm-surface-feature);
+  --dm-text-on-feature: #f4fbf7;
+  --dm-text-on-primary: #06231a;
+  --dm-input: #1a2421;
+  --dm-input-placeholder: #a8b5af;
+  --dm-bottom-nav: #1a2220;
+  --dm-drawer: #1c2622;
+  --dm-drawer-item: transparent;
+  --dm-drawer-item-selected: var(--dm-surface-selected);
+  --dm-progress-track: #2a3733;
+  --dm-progress-value: var(--dm-primary);
+  --dm-skeleton-base: #2a3733;
+  --dm-skeleton-highlight: #35443f;
+
+  /* إعادة ربط الرموز الشائعة حتى لا تفوز fallbacks نهارية */
+  --surface-app: var(--dm-bg);
+  --mj-bg: var(--dm-bg);
+  --bg: var(--dm-bg);
+  --app-bg: var(--dm-bg);
+  --surface: var(--dm-surface);
+  --surface-2: var(--dm-surface-2);
+  --surface-1: var(--dm-surface);
+  --mj-surface: var(--dm-surface);
+  --mj-surface-2: var(--dm-surface-2);
+  --mj-ink: var(--dm-text-primary);
+  --mj-ink-2: var(--dm-text-secondary);
+  --mj-muted: var(--dm-text-muted);
+  --text: var(--dm-text-primary);
+  --text-2: var(--dm-text-secondary);
+  --text-meta: var(--dm-text-muted);
+  --text-title: var(--dm-text-primary);
+  --border: var(--dm-border-subtle);
+  --mj-hairline: var(--dm-border-subtle);
+  --brand-on-light: var(--dm-primary);
+  --brand-on-surface: var(--dm-primary);
+  --brand-on-white: var(--dm-primary);
+  --color-primary-dark: var(--dm-text-link, #8fd4b0);
+  --soft-card-bg: var(--dm-card);
+  --soft-tile-bg: var(--dm-card);
+}
+
+/* ═══ App chrome ═══ */
+html[data-theme="dark"] body,
+html.dark body,
+html[data-theme="dark"] #root,
+html.dark #root,
+html[data-theme="dark"] .app-shell,
+html.dark .app-shell,
+html[data-theme="dark"] .app-main,
+html.dark .app-main {
+  background-color: var(--dm-bg) !important;
+  color: var(--dm-text-primary) !important;
+}
+
+/* منع أسطح نهارية شائعة */
+html[data-theme="dark"] .soft-card--on-light,
+html.dark .soft-card--on-light,
+html[data-theme="dark"] .soft-card,
+html.dark .soft-card,
+html[data-theme="dark"] .mj-card,
+html.dark .mj-card,
+html[data-theme="dark"] .ss-card,
+html.dark .ss-card,
+html[data-theme="dark"] [data-card="1"],
+html.dark [data-card="1"] {
+  background: var(--dm-card) !important;
+  background-image: none !important;
+  color: var(--dm-text-primary) !important;
+  border-color: var(--dm-border-subtle) !important;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--dm-primary) 10%, transparent) !important;
+}
+
+/* ═══ Bottom Navigation — كان يستخدم brand-on-light (أخضر داكن) ═══ */
+html[data-theme="dark"] .bottom-nav,
+html[data-theme="dark"] .bottom-nav--v2,
+html[data-theme="dark"] .bottom-nav--m2030,
+html.dark .bottom-nav,
+html.dark .bottom-nav--v2,
+html.dark .bottom-nav--m2030 {
+  background-color: var(--dm-bottom-nav) !important;
+  background-image: none !important;
+  border-top: 1px solid var(--dm-border-subtle) !important;
+  box-shadow: 0 -1px 0 var(--dm-divider) !important;
+  color: var(--dm-text-secondary) !important;
+}
+
+html[data-theme="dark"] .bottom-nav__tab,
+html[data-theme="dark"] .bottom-nav__tab-label,
+html[data-theme="dark"] .bottom-nav__tab-icon,
+html.dark .bottom-nav__tab,
+html.dark .bottom-nav__tab-label,
+html.dark .bottom-nav__tab-icon {
+  color: var(--dm-text-muted) !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .bottom-nav__tab.is-active,
+html[data-theme="dark"] .bottom-nav__tab.is-active .bottom-nav__tab-label,
+html[data-theme="dark"] .bottom-nav__tab.is-active .bottom-nav__tab-icon,
+html.dark .bottom-nav__tab.is-active,
+html.dark .bottom-nav__tab.is-active .bottom-nav__tab-label,
+html.dark .bottom-nav__tab.is-active .bottom-nav__tab-icon {
+  color: var(--dm-accent-gold) !important;
+  background: color-mix(in srgb, var(--dm-primary) 14%, transparent) !important;
+}
+
+html[data-theme="dark"] .bottom-nav__tab.is-active::before,
+html.dark .bottom-nav__tab.is-active::before {
+  background: var(--dm-accent-gold) !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+}
+
+/* ═══ Side Drawer ═══ */
+html[data-theme="dark"] .drawer-scrim,
+html.dark .drawer-scrim {
+  background: var(--dm-surface-scrim) !important;
+}
+
+html[data-theme="dark"] .sidebar-panel,
+html[data-theme="dark"] .side-nav-drawer--v2,
+html.dark .sidebar-panel,
+html.dark .side-nav-drawer--v2 {
+  background: var(--dm-drawer) !important;
+  border-inline-start: 1px solid var(--dm-border-subtle) !important;
+  box-shadow: -8px 0 28px rgba(0, 0, 0, 0.28) !important;
+  color: var(--dm-text-primary) !important;
+}
+
+html[data-theme="dark"] .sidebar-header,
+html.dark .sidebar-header {
+  background: var(--dm-surface-2) !important;
+  border-bottom: 1px solid var(--dm-divider) !important;
+  color: var(--dm-text-primary) !important;
+}
+
+html[data-theme="dark"] .sidebar-title,
+html.dark .sidebar-title {
+  color: var(--dm-text-primary) !important;
+}
+
+html[data-theme="dark"] .sidebar-close,
+html.dark .sidebar-close {
+  background: var(--dm-surface-interactive) !important;
+  color: var(--dm-text-primary) !important;
+  border: 1px solid var(--dm-border-default) !important;
+}
+
+html[data-theme="dark"] .sidebar-section-title,
+html.dark .sidebar-section-title {
+  color: var(--dm-text-secondary) !important;
+  opacity: 1 !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="dark"] .sidebar-item,
+html.dark .sidebar-item {
+  background: var(--dm-drawer-item) !important;
+  color: var(--dm-text-primary) !important;
+}
+
+html[data-theme="dark"] .sidebar-item:active,
+html[data-theme="dark"] .sidebar-item:hover,
+html.dark .sidebar-item:active,
+html.dark .sidebar-item:hover {
+  background: var(--dm-surface-interactive) !important;
+}
+
+html[data-theme="dark"] .sidebar-item.active,
+html.dark .sidebar-item.active {
+  background: var(--dm-drawer-item-selected) !important;
+  color: var(--dm-text-link, #8fd4b0) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dm-primary) 28%, transparent) !important;
+}
+
+html[data-theme="dark"] .sidebar-item-title,
+html.dark .sidebar-item-title {
+  color: inherit !important;
+}
+
+html[data-theme="dark"] .sidebar-item-desc,
+html[data-theme="dark"] .sidebar-item-text span:not(.sidebar-item-title),
+html.dark .sidebar-item-desc,
+html.dark .sidebar-item-text span:not(.sidebar-item-title) {
+  color: var(--dm-text-muted) !important;
+  opacity: 1 !important;
+}
+
+/* ═══ Header / chrome buttons ═══ */
+html[data-theme="dark"] .navbar-v3,
+html[data-theme="dark"] header.navbar-v3,
+html.dark .navbar-v3,
+html.dark header.navbar-v3 {
+  background: var(--dm-bg) !important;
+  border-bottom-color: var(--dm-border-subtle) !important;
+  color: var(--dm-text-primary) !important;
+}
+
+html[data-theme="dark"] .navbar-menu-btn,
+html[data-theme="dark"] .navbar-menu-btn--drawer,
+html[data-theme="dark"] .theme-toggle,
+html[data-theme="dark"] .account-chip,
+html.dark .navbar-menu-btn,
+html.dark .navbar-menu-btn--drawer,
+html.dark .theme-toggle,
+html.dark .account-chip {
+  background: var(--dm-surface-2) !important;
+  color: var(--dm-text-primary) !important;
+  border: 1px solid var(--dm-border-subtle) !important;
+  box-shadow: none !important;
+}
+
+/* ═══ Home search — إزالة لمعان أبيض / فاصل نهاري ═══ */
+html[data-theme="dark"] .hus,
+html.dark .hus {
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .hus::after,
+html[data-theme="dark"] .hus::before,
+html[data-theme="dark"] .hus-field::after,
+html[data-theme="dark"] .home-universal-search::after,
+html.dark .hus::after,
+html.dark .hus::before,
+html.dark .hus-field::after,
+html.dark .home-universal-search::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  border: none !important;
+}
+
+html[data-theme="dark"] .hus-field,
+html.dark .hus-field {
+  background: var(--dm-input) !important;
+  border: 1px solid var(--dm-border-default) !important;
+  box-shadow: none !important;
+  color: var(--dm-text-primary) !important;
+}
+
+html[data-theme="dark"] .hus-input,
+html.dark .hus-input {
+  color: var(--dm-text-primary) !important;
+  caret-color: var(--dm-accent-gold);
+}
+
+html[data-theme="dark"] .hus-input::placeholder,
+html.dark .hus-input::placeholder {
+  color: var(--dm-input-placeholder) !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .hus-icon,
+html.dark .hus-icon {
+  color: var(--dm-accent-gold) !important;
+  opacity: 1 !important;
+}
+
+/* ═══ Daily content banner ═══ */
+html[data-theme="dark"] .home-daily-strip,
+html[data-theme="dark"] .daily-content-banner,
+html[data-theme="dark"] .home-sacred-day,
+html[data-theme="dark"] .m2030-daily,
+html.dark .home-daily-strip,
+html.dark .daily-content-banner,
+html.dark .home-sacred-day,
+html.dark .m2030-daily {
+  background: var(--dm-surface-2) !important;
+  border: 1px solid var(--dm-border-subtle) !important;
+  color: var(--dm-text-primary) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .home-daily-strip::before,
+html[data-theme="dark"] .home-daily-strip::after,
+html[data-theme="dark"] .daily-content-banner::before,
+html[data-theme="dark"] .daily-content-banner::after,
+html.dark .home-daily-strip::before,
+html.dark .home-daily-strip::after,
+html.dark .daily-content-banner::before,
+html.dark .daily-content-banner::after {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* ═══ Hero / Welcome — إزالة الشرائط السوداء ═══ */
+html[data-theme="dark"] .page-hero-mj,
+html[data-theme="dark"] .home-page-hero,
+html[data-theme="dark"] .m2030-hero,
+html[data-theme="dark"] .home-welcome-card,
+html[data-theme="dark"] .hpv4-hero,
+html.dark .page-hero-mj,
+html.dark .home-page-hero,
+html.dark .m2030-hero,
+html.dark .home-welcome-card,
+html.dark .hpv4-hero {
+  background: var(--dm-hero) !important;
+  background-image: none !important;
+  color: var(--dm-text-on-feature) !important;
+  border: 1px solid color-mix(in srgb, var(--dm-primary) 22%, transparent) !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+
+html[data-theme="dark"] .m2030-hero__pattern,
+html[data-theme="dark"] .m2030-hero__glow,
+html[data-theme="dark"] .page-hero-mj__glow,
+html[data-theme="dark"] .page-hero-mj__pattern,
+html[data-theme="dark"] .home-page-hero::before,
+html[data-theme="dark"] .home-page-hero::after,
+html[data-theme="dark"] .page-hero-mj::before,
+html[data-theme="dark"] .page-hero-mj::after,
+html.dark .m2030-hero__pattern,
+html.dark .m2030-hero__glow,
+html.dark .page-hero-mj__glow,
+html.dark .page-hero-mj__pattern,
+html.dark .home-page-hero::before,
+html.dark .home-page-hero::after,
+html.dark .page-hero-mj::before,
+html.dark .page-hero-mj::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  opacity: 0 !important;
+}
+
+html[data-theme="dark"] .page-hero-mj__title,
+html[data-theme="dark"] .page-hero-mj__headline,
+html[data-theme="dark"] .m2030-hero__brand,
+html[data-theme="dark"] .m2030-hero__headline,
+html.dark .page-hero-mj__title,
+html.dark .page-hero-mj__headline,
+html.dark .m2030-hero__brand,
+html.dark .m2030-hero__headline {
+  color: var(--dm-text-on-feature) !important;
+}
+
+html[data-theme="dark"] .page-hero-mj__desc,
+html[data-theme="dark"] .m2030-hero__lead,
+html.dark .page-hero-mj__desc,
+html.dark .m2030-hero__lead {
+  color: color-mix(in srgb, var(--dm-text-on-feature) 88%, transparent) !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .page-hero-mj__actions .mj-btn,
+html[data-theme="dark"] .m2030-hero__cta .m2030-btn,
+html[data-theme="dark"] .m2030-btn--primary,
+html.dark .page-hero-mj__actions .mj-btn,
+html.dark .m2030-hero__cta .m2030-btn,
+html.dark .m2030-btn--primary {
+  background: var(--dm-primary) !important;
+  color: var(--dm-text-on-primary) !important;
+  border-color: transparent !important;
+}
+
+html[data-theme="dark"] .m2030-btn--ghost,
+html[data-theme="dark"] .page-hero-mj__actions .mj-btn--ghost,
+html.dark .m2030-btn--ghost,
+html.dark .page-hero-mj__actions .mj-btn--ghost {
+  background: color-mix(in srgb, #fff 8%, transparent) !important;
+  color: var(--dm-text-on-feature) !important;
+  border: 1px solid color-mix(in srgb, #fff 22%, transparent) !important;
+}
+
+/* ═══ Start-here / New visitor card ═══ */
+html[data-theme="dark"] .home-start-here,
+html.dark .home-start-here {
+  background: var(--dm-card) !important;
+  border: 1px solid var(--dm-border-subtle) !important;
+  color: var(--dm-text-primary) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .home-start-here::before,
+html[data-theme="dark"] .home-start-here::after,
+html.dark .home-start-here::before,
+html.dark .home-start-here::after {
+  display: none !important;
+  content: none !important;
+}
+
+html[data-theme="dark"] .hsh-eyebrow,
+html.dark .hsh-eyebrow {
+  background: var(--dm-accent-gold-subtle) !important;
+  color: var(--dm-accent-gold) !important;
+  border: 1px solid color-mix(in srgb, var(--dm-accent-gold) 28%, transparent) !important;
+}
+
+html[data-theme="dark"] .hsh-title,
+html[data-theme="dark"] .hsh-step__title,
+html.dark .hsh-title,
+html.dark .hsh-step__title {
+  color: var(--dm-text-primary) !important;
+}
+
+html[data-theme="dark"] .hsh-lead,
+html[data-theme="dark"] .hsh-step__desc,
+html.dark .hsh-lead,
+html.dark .hsh-step__desc {
+  color: var(--dm-text-secondary) !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .hsh-actions__primary,
+html.dark .hsh-actions__primary {
+  background: var(--dm-primary) !important;
+  color: var(--dm-text-on-primary) !important;
+  border: none !important;
+}
+
+html[data-theme="dark"] .hsh-actions__secondary,
+html.dark .hsh-actions__secondary {
+  background: var(--dm-surface-interactive) !important;
+  color: var(--dm-text-primary) !important;
+  border: 1px solid var(--dm-border-default) !important;
+}
+
+html[data-theme="dark"] .hsh-steps,
+html.dark .hsh-steps {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .hsh-step,
+html.dark .hsh-step {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid var(--dm-divider) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: var(--dm-text-primary) !important;
+}
+
+html[data-theme="dark"] .hsh-step:last-child,
+html.dark .hsh-step:last-child {
+  border-bottom: none !important;
+}
+
+html[data-theme="dark"] .hsh-step__num,
+html.dark .hsh-step__num {
+  background: var(--dm-primary-container) !important;
+  color: var(--dm-text-link, #8fd4b0) !important;
+  border: 1px solid color-mix(in srgb, var(--dm-primary) 35%, transparent) !important;
+}
+
+html[data-theme="dark"] .hsh-step__cta,
+html.dark .hsh-step__cta {
+  color: var(--dm-text-link, #8fd4b0) !important;
+}
+
+/* هيكل التحميل — لا شرائط سوداء */
+html[data-theme="dark"] .skeleton-base,
+html[data-theme="dark"] [class*="skeleton"],
+html.dark .skeleton-base,
+html.dark [class*="skeleton"] {
+  background: var(--dm-skeleton-base) !important;
+  background-image: linear-gradient(
+    90deg,
+    var(--dm-skeleton-base) 0%,
+    var(--dm-skeleton-highlight) 50%,
+    var(--dm-skeleton-base) 100%
+  ) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* ═══ Feature / gateway cards on home ═══ */
+html[data-theme="dark"] .ss-feature-card,
+html[data-theme="dark"] .ss-feature-card__inner,
+html[data-theme="dark"] .m2030-feature,
+html[data-theme="dark"] .home-primary-portals .ss-feature-card,
+html.dark .ss-feature-card,
+html.dark .ss-feature-card__inner,
+html.dark .m2030-feature,
+html.dark .home-primary-portals .ss-feature-card {
+  background: var(--dm-card) !important;
+  color: var(--dm-text-primary) !important;
+  border-color: var(--dm-border-subtle) !important;
+}
+
+html[data-theme="dark"] .ss-feature-card__title,
+html[data-theme="dark"] .m2030-feature__title,
+html.dark .ss-feature-card__title,
+html.dark .m2030-feature__title {
+  color: var(--dm-text-primary) !important;
+}
+
+html[data-theme="dark"] .ss-feature-card__desc,
+html[data-theme="dark"] .m2030-feature__desc,
+html.dark .ss-feature-card__desc,
+html.dark .m2030-feature__desc {
+  color: var(--dm-text-secondary) !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] .ss-feature-card__icon,
+html.dark .ss-feature-card__icon {
+  background: var(--dm-primary-container) !important;
+  color: var(--dm-text-link, #8fd4b0) !important;
+}
+
+/* منع opacity على حاويات نصية */
+html[data-theme="dark"] .home-start-here,
+html[data-theme="dark"] .sidebar-panel,
+html[data-theme="dark"] .bottom-nav,
+html[data-theme="dark"] .page-hero-mj,
+html.dark .home-start-here,
+html.dark .sidebar-panel,
+html.dark .bottom-nav,
+html.dark .page-hero-mj {
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+
+
+/* ═══ أسطح نهارية تسرّبت من تبسيط الرئيسية ═══ */
+html[data-theme="dark"] .hp-recent-bar,
+html.dark .hp-recent-bar {
+  background: var(--dm-surface-2) !important;
+  color: var(--dm-text-primary) !important;
+  border: 1px solid var(--dm-border-subtle) !important;
+}
+html[data-theme="dark"] .hp-recent-bar__head,
+html[data-theme="dark"] .hp-recent-bar__title,
+html.dark .hp-recent-bar__head,
+html.dark .hp-recent-bar__title {
+  color: var(--dm-text-primary) !important;
+}
+html[data-theme="dark"] .hp-recent-chip,
+html.dark .hp-recent-chip {
+  background: var(--dm-surface-interactive) !important;
+  border-color: var(--dm-border-subtle) !important;
+  color: var(--dm-text-primary) !important;
+}
+html[data-theme="dark"] .home-progress-compact,
+html.dark .home-progress-compact {
+  background: var(--dm-card) !important;
+  color: var(--dm-text-primary) !important;
+}
+html[data-theme="dark"] .home-progress-compact__pct,
+html.dark .home-progress-compact__pct {
+  color: var(--dm-text-link, #8fd4b0) !important;
+}
+html[data-theme="dark"] .home-progress-compact__bar,
+html.dark .home-progress-compact__bar {
+  background: var(--dm-progress-track) !important;
+}
+html[data-theme="dark"] .home-progress-compact__bar > span,
+html.dark .home-progress-compact__bar > span {
+  background: var(--dm-progress-value) !important;
+}
+html[data-theme="dark"] .home-progress-compact__meta,
+html.dark .home-progress-compact__meta {
+  color: var(--dm-text-muted) !important;
+  opacity: 1 !important;
+}
+
+/* ═══ تخطيط بطاقة الزائر — صفوف بلا تداخل ═══ */
+.home-start-here--compact {
+  padding: 1rem 1rem 0.75rem;
+  border-radius: 16px;
+}
+.home-start-here--compact .hsh-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block: 0.75rem 0.25rem;
+}
+.home-start-here--compact .hsh-actions__primary,
+.home-start-here--compact .hsh-actions__secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.home-start-here--compact .hsh-steps--rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+}
+.home-start-here--compact .hsh-step {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.65rem;
+  align-items: center;
+  padding: 0.7rem 0.15rem;
+  min-width: 0;
+}
+.home-start-here--compact .hsh-step__body {
+  min-width: 0;
+}
+.home-start-here--compact .hsh-step__desc {
+  margin: 0.15rem 0 0;
+}
+.home-start-here--compact .hsh-step__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  text-decoration: none;
+  font-size: 1.1rem;
+}

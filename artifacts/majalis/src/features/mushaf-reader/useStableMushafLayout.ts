@@ -1,13 +1,15 @@
 import { useLayoutEffect, useRef, type RefObject } from "react";
 import {
-  MUSHAF_FIT_MAX_PX,
-  MUSHAF_FIT_MIN_PX,
-  resolveUniformMushafFontSize,
-} from "@/features/mushaf-madinah/fitPageFontSize";
+  resolveSunnahMushafSignaturePreset,
+  resolveSignatureFontSizePx,
+  SUNNAH_MUSHAF_SIGNATURE_PRESET_ID,
+} from "./sunnah-mushaf-signature-preset";
 
+const SIGNATURE = resolveSunnahMushafSignaturePreset();
+/** ثوابت Geometry — أسماء ثابتة للبوابات؛ القيم من Signature */
 const HEADER_H = 36;
 const FOOTER_H = 40;
-const SIDE_PAD = 8;
+const SIDE_PAD = SIGNATURE.contentInsets.sidePx;
 const LINE_HEIGHT = "1.85";
 /** QPC لا يدعم أوزانًا حقيقية — أي وزن >400 يفعّل faux-bold ويوسّع الحروف فيفيض السطر */
 const FONT_WEIGHT = "400";
@@ -16,9 +18,8 @@ const WIDTH_LOCK_PX = 4;
 
 /**
  * مصدر القياس الوحيد لمصحف الإنتاج (`NewMushafReader`).
- * يضبط مرة واحدة: عرض الصفحة، حجم الخط، ارتفاع السطر، المساحة السفلية، safe-area.
- * لا يتغيّر أثناء قلب الصفحة؛ يُعاد الحساب فقط عند تغيّر عرض الحاوية.
- * ارتفاع المتن (--mushaf-body-height) يُقفل مع العرض حتى لا يمدّد شريط الأسفل شبكة الآيات.
+ * Preset ثابت حسب فئة الشاشة — بلا auto-fit لكل صفحة وبلا measure-and-resize.
+ * لا يتغيّر أثناء قلب الصفحة أو ظهور Reader Chrome.
  */
 export function useStableMushafLayout(
   rootRef: RefObject<HTMLElement | null>,
@@ -34,7 +35,7 @@ export function useStableMushafLayout(
     if (!root) return;
 
     const applyGeometry = (w: number, h: number, size: number, bodyH: number) => {
-      const bodyW = Math.max(120, Math.min(w - SIDE_PAD * 2, 28 * 16));
+      const bodyW = Math.max(120, Math.min(w - SIDE_PAD * 2, 30 * 16));
       /* ثابت — المشغّل overlay؛ لا نقرأ --reader-bottom-stack حتى لا يتغيّر المقياس */
       const bottomSafe = "0px";
       root.style.setProperty("--mushaf-page-width", `${w}px`);
@@ -54,7 +55,23 @@ export function useStableMushafLayout(
       root.style.setProperty("--nm-line-height", LINE_HEIGHT);
       root.setAttribute("data-mushaf-metrics", "1");
       root.setAttribute("data-mushaf-font-locked", "1");
-      root.setAttribute("data-mushaf-layout-source", "stable");
+      root.setAttribute("data-mushaf-layout-source", "signature-bands");
+      root.setAttribute("data-active-preset-id", SIGNATURE.presetId);
+      root.setAttribute("data-active-preset-version", SIGNATURE.presetVersion);
+      root.setAttribute("data-renderer-id", SIGNATURE.rendererId);
+      root.setAttribute("data-font-id", SIGNATURE.fontId);
+      root.setAttribute("data-font-version", SIGNATURE.fontVersion);
+      root.setAttribute("data-font-size", String(size));
+      root.setAttribute("data-line-height", LINE_HEIGHT);
+      root.setAttribute("data-page-scale", String(SIGNATURE.pageScale));
+      root.setAttribute("data-page-width", String(w));
+      root.setAttribute("data-content-width", String(bodyW));
+      root.setAttribute("data-horizontal-inset", String(SIDE_PAD));
+      root.setAttribute("data-number-of-lines", String(SIGNATURE.linesPerPage));
+      root.setAttribute("data-render-cache-version", SIGNATURE.renderCacheVersion);
+      if (import.meta.env.DEV) {
+        root.setAttribute("data-debug-signature", "1");
+      }
     };
 
     const apply = () => {
@@ -80,7 +97,6 @@ export function useStableMushafLayout(
         Math.abs(w - lockedWidthRef.current) >= WIDTH_LOCK_PX;
 
       if (!widthChanged && lockedSizeRef.current > 0) {
-        /* ثبات العرض: حدّث المساحة السفلية فقط — بلا تمديد شبكة الآيات */
         applyGeometry(
           w,
           h,
@@ -90,13 +106,9 @@ export function useStableMushafLayout(
         return;
       }
 
-      const bodyW = Math.max(120, Math.min(w - SIDE_PAD * 2, 28 * 16));
+      const bodyW = Math.max(120, Math.min(w - SIDE_PAD * 2, 30 * 16));
       const bodyH = measuredBodyH;
-      const base = resolveUniformMushafFontSize(bodyW, bodyH);
-      const size = Math.max(
-        MUSHAF_FIT_MIN_PX,
-        Math.min(MUSHAF_FIT_MAX_PX, Math.round(base * 1.05)),
-      );
+      const size = resolveSignatureFontSizePx(bodyW, bodyH);
 
       lockedWidthRef.current = w;
       lockedSizeRef.current = size;
@@ -117,3 +129,5 @@ export function useStableMushafLayout(
 
 /** توافق مع الاسم السابق — نفس المصدر الوحيد. */
 export const useMushafFixedMetrics = useStableMushafLayout;
+
+void SUNNAH_MUSHAF_SIGNATURE_PRESET_ID;

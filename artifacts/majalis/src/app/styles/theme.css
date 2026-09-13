@@ -372,7 +372,9 @@ html.dark,
   --accent: #5CC095;
   --accent-strong: #7BD6AE;
   --on-accent: #06231A;
-  --gold: #D9B871;
+    --gold: #D9B871;
+  --brand-on-surface: #8FD4B0;
+  --brand-on-light: #8FD4B0;
   --danger-bg: #3A2226;
   --danger-txt: #F2B8C0;
 

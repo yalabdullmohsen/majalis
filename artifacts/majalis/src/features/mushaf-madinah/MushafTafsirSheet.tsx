@@ -145,11 +145,9 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
       <div className="mm-tafsir quran-sheet__body">
         {parsed ? (
           <header className="mm-tafsir__meta">
-            <p className="mm-tafsir__meta-label">
-              سورة {surahName}، الآية {parsed.ayah}
-            </p>
+            {/* العنوان العربي يُعرض مرة واحدة في رأس الشيت — هنا المرجع الثانوي فقط */}
             {technicalRef ? (
-              <p className="mm-tafsir__meta-ref" aria-hidden="true">
+              <p className="mm-tafsir__meta-ref" data-testid="mushaf-tafsir-ref">
                 {technicalRef}
               </p>
             ) : null}

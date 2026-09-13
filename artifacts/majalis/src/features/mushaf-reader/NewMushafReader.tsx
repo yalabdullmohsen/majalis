@@ -146,7 +146,10 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   }
   const [layout, setLayout] = useState<MushafPageLayout | null>(() => getCachedMushafPage(page));
   const [error, setError] = useState<string | null>(null);
-  const [chromeOpen, setChromeOpen] = useState(false);
+  /** حالة مركزية وحيدة لـ Reader Chrome — لا تُكرَّر لكل صفحة */
+  const [readerChromeVisible, setReaderChromeVisible] = useState(false);
+  const chromeOpen = readerChromeVisible;
+  const setChromeOpen = setReaderChromeVisible;
   const [gotoOpen, setGotoOpen] = useState(false);
   const [selectedVerseKey, setSelectedVerseKey] = useState<string | null>(null);
   const [actionsOpen, setActionsOpen] = useState(false);
@@ -349,18 +352,35 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     };
   }, [page]);
 
+  const chromeHoldRef = useRef(false);
   const bumpChrome = useCallback(() => {
     setChromeOpen(true);
     if (hideTimer.current) window.clearTimeout(hideTimer.current);
-    if (searchOpen || indexOpen) return;
-    hideTimer.current = window.setTimeout(() => setChromeOpen(false), MUSHAF_CHROME_HIDE_MS);
-  }, [indexOpen, searchOpen]);
+  }, []);
+
 
   useEffect(() => {
     return () => {
       if (hideTimer.current) window.clearTimeout(hideTimer.current);
     };
   }, []);
+
+  useEffect(() => {
+    chromeHoldRef.current = Boolean(
+      searchOpen || indexOpen || tafsirOpen || gotoOpen || (audioDockOpen && !audioDockMini),
+    );
+    if (chromeHoldRef.current) {
+      if (hideTimer.current) window.clearTimeout(hideTimer.current);
+      return;
+    }
+    if (!chromeOpen) return;
+    if (hideTimer.current) window.clearTimeout(hideTimer.current);
+    hideTimer.current = window.setTimeout(() => setChromeOpen(false), MUSHAF_CHROME_HIDE_MS);
+    return () => {
+      if (hideTimer.current) window.clearTimeout(hideTimer.current);
+    };
+  }, [audioDockMini, audioDockOpen, chromeOpen, gotoOpen, indexOpen, searchOpen, tafsirOpen]);
+
 
   useEffect(() => {
     setMushafAyahSyncKeys(selectedVerseKey, playingVerseKey);
@@ -936,6 +956,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       data-bottom-freeze={bottomStackFrozen ? "1" : "0"}
       data-freeze-stack={freezeStackMode}
       data-testid="mushaf-viewport"
+      data-reader-chrome={chromeOpen ? "1" : "0"}
+      data-signature-preset={import.meta.env.DEV ? "sunnah-mushaf-signature-v1" : undefined}
       dir="rtl"
       renderPage={(pageNumber, role) => (
         <PrefetchPage
@@ -1036,6 +1058,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         />
       </Suspense>
       <MushafExitControl
+        visible={chromeOpen && !actionsOpen && !gotoOpen}
         onExit={() => {
           if (searchOpen || indexOpen) {
             setSearchOpen(false);

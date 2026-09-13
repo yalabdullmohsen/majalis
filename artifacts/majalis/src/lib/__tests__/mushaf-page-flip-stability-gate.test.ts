@@ -78,10 +78,11 @@ assert.doesNotMatch(
 );
 assert.match(miniBar, /if \(immersive\) return null/);
 
-assert.match(metrics, /1\.05/);
+assert.match(metrics, /resolveSignatureFontSizePx|signature-bands/);
+assert.doesNotMatch(metrics, /resolveUniformMushafFontSize/);
 assert.match(metrics, /--mushaf-letter-spacing/);
 assert.match(metrics, /data-mushaf-font-locked|WIDTH_LOCK|lockedWidth/);
-assert.match(metrics, /lockedBodyHRef/);
+assert.match(metrics, /lockedBodyHRef|lockedSizeRef/);
 assert.match(metrics, /عرض الشاشة|عرض الحاوية|lockedWidth/);
 
 assert.match(css, /\.nm-slot\s*\{[^}]*align-items:\s*flex-start/s);

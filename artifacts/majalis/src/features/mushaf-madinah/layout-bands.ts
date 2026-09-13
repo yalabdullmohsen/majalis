@@ -40,7 +40,7 @@ export const MUSHAF_INK_COVERAGE_TARGET = 0.8;
 export const MUSHAF_LINES_NORMAL = 15;
 /** استقرار تقليب ورقي هادئ (Ultra Smooth) — يطابق useMushafPager.SETTLE_MS */
 export const MUSHAF_SETTLE_MS = 220;
-export const MUSHAF_CHROME_HIDE_MS = 3200;
+export const MUSHAF_CHROME_HIDE_MS = 4000;
 export const MUSHAF_HIZB_START_PAGES = 60;
 export const MUSHAF_BASMALA_SIZE_PX = 22;
 
