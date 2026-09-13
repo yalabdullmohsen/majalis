@@ -41,6 +41,18 @@ assert.match(reader, /dockRemainsAfterClear/);
 assert.match(reader, /ayahWasOpen/);
 assert.match(reader, /onLongPressVerse/);
 assert.match(reader, /openTafsir/);
+/* عزل التفسير عن التقليب — نية صريحة فقط */
+assert.match(reader, /createTafsirOpenIntent/);
+assert.match(reader, /isValidTafsirOpenIntent/);
+assert.match(reader, /bumpTafsirGeneration/);
+assert.match(reader, /onPanVisualStart/);
+assert.match(reader, /tafsirOpenRef\.current/);
+assert.doesNotMatch(
+  reader.slice(reader.indexOf("onLongPressVerse"), reader.indexOf("openTafsir")),
+  /setTafsirOpen\(\s*true\s*\)/,
+  "Long-press must not open tafsir without explicit intent",
+);
+
 assert.match(pager, /onAyah/);
 assert.match(pager, /panSlopFor/);
 assert.match(read("src/features/mushaf-reader/MushafVerseLayer.tsx"), /LONG_PRESS_MS/);
@@ -91,7 +103,8 @@ assert.match(dock, /اختر القارئ/);
 assert.match(dock, /getReciter/);
 assert.match(dock, /onPlayRange/);
 assert.match(dock, /وضع الحفظ/);
-assert.match(tafsir, /تفسير \$\{surahName\} · آية/);
+/* عقد عنوان Preset الكلاسيكي — لا صيغة «تفسير ${surahName} · آية» القديمة */
+assert.match(tafsir, /سورة \$\{surahName\}، الآية \$\{parsed\.ayah\}/);
 assert.match(tafsir, /setSnap/);
 assert.match(sheetCss, /68dvh/);
 assert.match(sheetCss, /mushaf-bottom-safe-space/);
