@@ -26,16 +26,20 @@ outputs:
 runs:
   using: composite
   steps:
+    - name: Preflight (paths + lockfile)
+      shell: bash
+      run: bash "${{ github.action_path }}/preflight.sh"
+
     - name: Setup Node.js
       uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
       with:
         node-version: ${{ inputs.node-version }}
 
-    - name: Enable Corepack (pnpm)
+    # Corepack على Node 24 يفشل أحيانًا عند جلب pnpm من registry.npmjs.org
+    # (AssertionError undici أو فشل الشبكة). نعيد المحاولة ثم npm fallback.
+    - name: Enable pnpm (corepack retry + npm fallback)
       shell: bash
-      run: |
-        corepack enable
-        corepack prepare --activate
+      run: bash "${{ github.action_path }}/activate-pnpm.sh"
 
     - name: Cache pnpm store
       uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
