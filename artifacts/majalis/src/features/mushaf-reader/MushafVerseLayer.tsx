@@ -11,6 +11,7 @@ import { displaySurahName } from "@/lib/quran-display";
 import { toArabicDigits } from "@/lib/utils";
 import {
   useMushafAyahWordPlaying,
+  useMushafAyahWordSearchHighlight,
   useMushafAyahWordSelected,
 } from "@/features/mushaf-madinah/mushaf-ayah-sync-store";
 
@@ -65,8 +66,13 @@ const VerseWord = memo(function VerseWord({
 }) {
   const selected = useMushafAyahWordSelected(word.verseKey);
   const playing = useMushafAyahWordPlaying(word.verseKey);
+  const searchHit = useMushafAyahWordSearchHighlight(word.verseKey);
   const isEnd = word.charType === "end";
-  const state = [selected ? "is-selected" : "", playing ? "is-playing" : ""]
+  const state = [
+    selected ? "is-selected" : "",
+    playing ? "is-playing" : "",
+    searchHit ? "is-search-hit" : "",
+  ]
     .filter(Boolean)
     .join(" ");
 
@@ -214,7 +220,8 @@ export const MushafBasmalaView = memo(function MushafBasmalaView({
   const end = numbered ? qpc.find((w) => w.charType === "end") : null;
   const selected = useMushafAyahWordSelected("1:1");
   const playing = useMushafAyahWordPlaying("1:1");
-  const state = [selected ? "is-selected" : "", playing ? "is-playing" : ""].filter(Boolean).join(" ");
+  const searchHit = useMushafAyahWordSearchHighlight("1:1");
+  const state = [selected ? "is-selected" : "", playing ? "is-playing" : "", searchHit ? "is-search-hit" : ""].filter(Boolean).join(" ");
   const pressRef = useRef<{ x: number; y: number; longTimer: number; longFired: boolean } | null>(
     null,
   );

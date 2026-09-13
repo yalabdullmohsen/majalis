@@ -1,3 +1,4 @@
+import { buildSignatureRenderCacheKey, SUNNAH_MUSHAF_SIGNATURE_PRESET_ID } from "./sunnah-mushaf-signature-preset";
 /**
  * مصدر وحيد لتصميم المصحف في سُنّة — لا مسارات Legacy متفرقة.
  * أي فتح للمصحف يجب أن يمر عبر resolveSunnahMushafClassicPreset().
@@ -20,16 +21,19 @@ export type SunnahMushafClassicPreset = {
   cacheVersion: string;
 };
 
-/** ارفع cacheVersion عند أي كسر بصري مقصود لتصميم المصحف. */
-export const SUNNAH_MUSHAF_CACHE_VERSION = "smc-2026-09-13-a11y-iso";
+/**
+ * ارفع cacheVersion عند أي كسر بصري مقصود.
+ * fontId يجب أن يطابق أصول الإنتاج public/fonts/qpc-v2 (لا qpc-v1).
+ */
+export const SUNNAH_MUSHAF_CACHE_VERSION = "smc-2026-09-13-signature-align";
 
 export function resolveSunnahMushafClassicPreset(): SunnahMushafClassicPreset {
   return {
     presetId: SUNNAH_MUSHAF_CLASSIC_PRESET_ID,
     rendererId: "new-mushaf-reader",
     geometryVersion: "geo-v3",
-    fontId: "qpc-v1",
-    fontVersion: "qpc-v1.1",
+    fontId: "qpc-v2",
+    fontVersion: "qpc-v2-woff2-604",
     layoutDataVersion: "qpc-layout-v2",
     pageMappingVersion: "madinah-604-v1",
     markerStyle: "qpc-end",
@@ -42,19 +46,8 @@ export function resolveSunnahMushafClassicPreset(): SunnahMushafClassicPreset {
 
 /** مفتاح كاش الرسم — يجب أن يتضمّن كل حقول الثبات البصري. */
 export function buildMushafRenderCacheKey(pageNumber: number): string {
-  const p = resolveSunnahMushafClassicPreset();
-  return [
-    `p${pageNumber}`,
-    p.presetId,
-    p.rendererId,
-    p.layoutDataVersion,
-    p.pageMappingVersion,
-    p.fontId,
-    p.fontVersion,
-    p.geometryVersion,
-    p.markerStyle,
-    p.cacheVersion,
-  ].join("|");
+  /* الإنتاج = Signature فقط — المفتاح موحّد لكل مسارات الفتح */
+  return buildSignatureRenderCacheKey(pageNumber);
 }
 
 const LEGACY_PRESET_KEYS = [
@@ -79,7 +72,7 @@ export function migrateLegacyMushafReaderPrefs(storage: Storage = localStorage):
         storage.removeItem(key);
       }
     }
-    storage.setItem("selectedMushafPreset", SUNNAH_MUSHAF_CLASSIC_PRESET_ID);
+    storage.setItem("selectedMushafPreset", SUNNAH_MUSHAF_SIGNATURE_PRESET_ID);
     storage.setItem(MIGRATION_FLAG, "1");
     return true;
   } catch {

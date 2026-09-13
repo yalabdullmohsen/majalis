@@ -4,6 +4,7 @@ type SyncListener = () => void;
 
 let selectedVerseKey: string | null = null;
 let playingVerseKey: string | null = null;
+let searchHighlightVerseKey: string | null = null;
 const listeners = new Set<SyncListener>();
 
 function emit(): void {
@@ -21,6 +22,16 @@ export function setMushafAyahSyncKeys(selected: string | null, playing: string |
 
 export function getMushafAyahSyncKeys(): { selected: string | null; playing: string | null } {
   return { selected: selectedVerseKey, playing: playingVerseKey };
+}
+
+export function setMushafAyahSearchHighlight(verseKey: string | null): void {
+  if (searchHighlightVerseKey === verseKey) return;
+  searchHighlightVerseKey = verseKey;
+  emit();
+}
+
+export function getMushafAyahSearchHighlight(): string | null {
+  return searchHighlightVerseKey;
 }
 
 function subscribe(listener: SyncListener): () => void {
@@ -45,6 +56,14 @@ export function useMushafAyahWordPlaying(verseKey: string): boolean {
   );
 }
 
+export function useMushafAyahWordSearchHighlight(verseKey: string): boolean {
+  return useSyncExternalStore(
+    subscribe,
+    () => searchHighlightVerseKey === verseKey,
+    () => false,
+  );
+}
+
 /** مفتاح الآية الجارية فقط — لطبقة التظليل دون props من الصفحة. */
 export function useMushafAyahPlayingKey(): string | null {
   return useSyncExternalStore(subscribe, () => playingVerseKey, () => null);
@@ -58,5 +77,6 @@ export function useMushafAyahSelectedKey(): string | null {
 export function resetMushafAyahSyncStoreForTests(): void {
   selectedVerseKey = null;
   playingVerseKey = null;
+  searchHighlightVerseKey = null;
   listeners.clear();
 }

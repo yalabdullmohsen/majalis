@@ -17,6 +17,10 @@ import {
   buildMushafRenderCacheKey,
   resolveSunnahMushafClassicPreset,
 } from "../../features/mushaf-reader/sunnah-mushaf-classic-preset";
+import {
+  SUNNAH_MUSHAF_SIGNATURE_PRESET_ID,
+  SUNNAH_MUSHAF_SIGNATURE_CACHE_VERSION,
+} from "../../features/mushaf-reader/sunnah-mushaf-signature-preset";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
@@ -83,12 +87,12 @@ assert.match(tafsirSheet, /technicalRef/);
 const preset = resolveSunnahMushafClassicPreset();
 assert.equal(preset.presetId, SUNNAH_MUSHAF_CLASSIC_PRESET_ID);
 assert.equal(preset.cacheVersion, SUNNAH_MUSHAF_CACHE_VERSION);
-assert.match(buildMushafRenderCacheKey(365), new RegExp(SUNNAH_MUSHAF_CLASSIC_PRESET_ID));
-assert.match(buildMushafRenderCacheKey(600), new RegExp(SUNNAH_MUSHAF_CACHE_VERSION));
+assert.match(buildMushafRenderCacheKey(365), new RegExp(SUNNAH_MUSHAF_SIGNATURE_PRESET_ID));
+assert.match(buildMushafRenderCacheKey(600), new RegExp(SUNNAH_MUSHAF_SIGNATURE_CACHE_VERSION));
 assert.match(cache, /buildMushafRenderCacheKey/);
 assert.match(cache, /presetCacheKey/);
 assert.match(presetMod, /smc-/);
-assert.match(cache, /cacheVersion/);
+assert.match(cache, /renderCacheVersion|cacheVersion/);
 
 assert.match(reader, /onPanVisualStart/);
 assert.match(reader, /tafsirOpenRef\.current/);

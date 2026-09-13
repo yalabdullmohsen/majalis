@@ -267,31 +267,77 @@
   padding-block: 0.15em;
 }
 
-/* عنوان سورة — نص عادي فقط */
+/* إطار سورة — هوية سُنّة Signature (أبعاد ثابتة، بلا Glow) */
+.nm-root {
+  --mushaf-surah-frame-bg: #f3ead7;
+  --mushaf-surah-frame-border: #1f5c45;
+  --mushaf-surah-frame-accent: #b08d57;
+  --mushaf-surah-frame-text: #1a3d30;
+  --mushaf-surah-frame-ornament: #8a6b2e;
+}
+html.dark .nm-root,
+html[data-theme="dark"] .nm-root {
+  --mushaf-surah-frame-bg: #152018;
+  --mushaf-surah-frame-border: #2f6b52;
+  --mushaf-surah-frame-accent: #c4a574;
+  --mushaf-surah-frame-text: #e8dcc0;
+  --mushaf-surah-frame-ornament: #a8894a;
+}
+
 .nm-surah-banner {
+  --mushaf-surah-frame-height: 2.35rem;
+  box-sizing: border-box;
   width: 100%;
+  height: var(--mushaf-surah-frame-height);
+  min-height: var(--mushaf-surah-frame-height);
+  max-height: var(--mushaf-surah-frame-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0 0.55rem;
   text-align: center;
-  color: var(--nm-meta);
+  color: var(--mushaf-surah-frame-text);
   font-family: "Amiri", "Traditional Arabic", serif;
-  font-size: clamp(0.95rem, 3.4vw, 1.12rem);
+  font-size: clamp(0.92rem, 3.2vw, 1.05rem);
   font-weight: 700;
   letter-spacing: 0;
-  line-height: 1.3;
-  padding: 0.15em 0;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
+  line-height: 1;
+  border: 1px solid var(--mushaf-surah-frame-border);
+  border-radius: 0.35rem;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--mushaf-surah-frame-accent) 35%, transparent) 0,
+      color-mix(in srgb, var(--mushaf-surah-frame-accent) 35%, transparent) 0.35rem,
+      transparent 0.35rem,
+      transparent calc(100% - 0.35rem),
+      color-mix(in srgb, var(--mushaf-surah-frame-accent) 35%, transparent) calc(100% - 0.35rem),
+      color-mix(in srgb, var(--mushaf-surah-frame-accent) 35%, transparent) 100%
+    ),
+    var(--mushaf-surah-frame-bg);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mushaf-surah-frame-accent) 45%, transparent);
   user-select: none;
+  overflow: hidden;
 }
 
 .nm-surah-banner::before,
 .nm-surah-banner::after {
-  content: none;
-  display: none;
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  flex: 0 0 auto;
+  border: 1px solid var(--mushaf-surah-frame-ornament);
+  transform: rotate(45deg);
+  opacity: 0.85;
 }
 
 .nm-surah-banner__label {
-  display: inline;
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* بسملة */
@@ -376,6 +422,20 @@
 .nm-word.is-selected,
 .nm-basmala.is-selected {
   color: color-mix(in srgb, var(--nm-ink) 58%, #140e08);
+}
+
+.nm-word.is-search-hit,
+.nm-basmala.is-search-hit {
+  background: color-mix(in srgb, var(--nm-gold, #b08d57) 22%, transparent);
+  border-radius: 0.15em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+html.dark .nm-word.is-search-hit,
+html[data-theme="dark"] .nm-word.is-search-hit,
+html.dark .nm-basmala.is-search-hit,
+html[data-theme="dark"] .nm-basmala.is-search-hit {
+  background: color-mix(in srgb, #8a6b2e 38%, transparent);
 }
 
 .nm-word.is-playing,
@@ -673,15 +733,8 @@
 }
 
 .nm-controls__exit {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 140ms ease;
-}
-
-.nm-root[data-chrome="1"] .nm-controls__exit,
-.nm-root[data-ayah-bar="1"] .nm-controls__exit {
-  opacity: 1;
-  pointer-events: auto;
+  /* الخروج الثابت: MushafExitControl — تجنّب التكرار */
+  display: none !important;
 }
 
 .nm-verse-menu {
@@ -1154,3 +1207,46 @@ html.dark .nm-root .mm-audio-dock__reciter-btn {
 }
 
 /* لا نغيّر حشو الصفحة عند فتح المشغّل أو شريط الآية */
+
+/* زر خروج ثابت — مستقل عن Chrome / دورة الصفحة */
+.nm-exit-control {
+  position: absolute;
+  z-index: 40;
+  inset-inline-start: max(0.55rem, var(--inset-left, 0px));
+  top: max(0.45rem, var(--inset-top, 0px));
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  min-height: 2.35rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 35%, transparent);
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 92%, var(--nm-gold, #b08d57) 8%);
+  color: var(--nm-meta, #5c4a32);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  pointer-events: auto;
+  cursor: pointer;
+  box-shadow: none;
+}
+.nm-exit-control:active {
+  opacity: 0.88;
+}
+.nm-exit-control__chevron {
+  display: inline-block;
+  transform: scaleX(-1);
+  font-size: 1.15rem;
+  line-height: 1;
+  opacity: 0.85;
+}
+.nm-root[data-mushaf-panning="1"] .nm-exit-control {
+  pointer-events: none;
+  opacity: 0.35;
+}
+html.dark .nm-exit-control,
+html[data-theme="dark"] .nm-exit-control {
+  background: color-mix(in srgb, #1a241c 90%, #8a6b2e 10%);
+  border-color: color-mix(in srgb, #8a6b2e 45%, transparent);
+  color: #e8dcc0;
+}

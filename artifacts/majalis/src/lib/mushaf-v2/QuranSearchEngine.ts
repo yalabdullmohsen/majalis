@@ -1,9 +1,10 @@
+import { findMushafPageForAyah } from "@/features/mushaf-madinah/mushaf-page-for-ayah";
 /**
  * QuranSearchEngine — بحث محلّي؛ التطبيع للمطابقة فقط دون تغيير النص الأصلي المعروض.
  */
 
 import { normalizeArabic } from "@/lib/arabic-search";
-import { getSurahMeta, JUZ_START_PAGES, SURAH_START_PAGES } from "@/lib/quran-api";
+import { getSurahMeta, JUZ_START_PAGES } from "@/lib/quran-api";
 import {
   clampMushafPage,
   MUSHAF_PAGE_MAX,
@@ -113,7 +114,7 @@ export const QuranSearchEngine = {
         kind: "verse",
         surahId: parsed.surah,
         ayahNumber: parsed.ayah,
-        page: SURAH_START_PAGES[parsed.surah - 1] ?? 1,
+        page: findMushafPageForAyah(parsed.surah, parsed.ayah),
         label: `${getSurahMeta(parsed.surah).name} ${parsed.ayah}`,
       });
       return { seq, hits };
