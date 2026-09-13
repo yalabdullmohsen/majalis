@@ -63,7 +63,7 @@ assert.match(css, /--mushaf-font-weight:/);
 assert.match(css, /--mushaf-header-height:/);
 assert.match(css, /--reader-action-height:/);
 assert.match(css, /--audio-player-height:/);
-assert.match(css, /#fbf4e8|--nm-paper:\s*#fbf4e8|--mushaf-page-bg:\s*#fbf4e8/i);
+assert.match(css, /#faf0e0|#fbf4e8|--nm-paper:\s*#faf0e0|--mushaf-page-bg:\s*#faf0e0/i);
 assert.match(css, /--mushaf-page-bg:/);
 assert.match(css, /--mushaf-text-color:/);
 assert.match(css, /--mushaf-meta-color:/);
