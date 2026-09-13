@@ -12,6 +12,7 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const fab = read("src/components/FloatingBackButton.tsx");
 assert.match(fab, /FLOATING_BACK_DISABLED/);
+assert.match(fab, /GlobalBackControlHost/);
 assert.match(fab, /FIXED_BACK_BAR_ENABLED/);
 assert.match(fab, /variant="bar"/);
 assert.match(fab, /AppBackButton/);
