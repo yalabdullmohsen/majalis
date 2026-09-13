@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-13T21:48:00.000Z",
+  "generatedAt": "2026-09-13T21:53:05Z",
   "project": "سُنّة",
   "verdict": "NOT READY",
-  "verdictReason": "Release Candidate branch created from fully-green main tip; automated main CI is green once, but triple Full Release Lane + TestFlight + device soak are not yet completed on the RC commit.",
+  "verdictReason": "RC freeze tooling PR #2015 open; triple Full Release Lane and TestFlight/device matrix still outstanding on RC SHA.",
   "sourceOfTruth": {
     "latestMainCommit": "b0efc979d4ac08c5d16ca6432d709301c8069494",
     "latestGreenCommit": "b0efc979d4ac08c5d16ca6432d709301c8069494",
@@ -17,7 +17,9 @@
     "appVersion": "1.0.0",
     "buildNumber": "46",
     "releaseBranch": "release/sunnah-stable-1.0",
-    "releaseTag": null
+    "releaseTag": null,
+    "rcCommit": "e5a32888c38a502b7dfb53bd1886e4d2f063ed83",
+    "freezePr": "https://github.com/yalabdullmohsen/majalis/pull/2015"
   },
   "freeze": {
     "active": true,
@@ -29,6 +31,13 @@
     "policyDoc": "docs/release/RELEASE_FREEZE.md"
   },
   "openPullRequests": [
+    {
+      "number": 2015,
+      "classification": "REQUIRED_FOR_RELEASE",
+      "decision": "merge-when-green",
+      "mergeable": "MERGEABLE",
+      "notes": "Freeze docs + Full Regression Diagnostic workflow only"
+    },
     {
       "number": 2013,
       "classification": "POST_RELEASE",
@@ -142,6 +151,17 @@
       "workflow": ".github/workflows/full-regression-diagnostic.yml",
       "failFastDisabled": true,
       "note": "workflow_dispatch only; does not weaken official ci.yml fail-fast"
+    },
+    "localDiagnostic": {
+      "releaseStabilityGate": "PASS",
+      "typecheck": "PASS",
+      "lint": "PASS",
+      "bundleBudget": "PASS",
+      "mushafGates": "PASS",
+      "sectionsRegistry": "PASS",
+      "contentAudit": "PASS",
+      "mushafLayoutBands": "NOT VERIFIED",
+      "mushafLayoutBandsNote": "Local assert.mjs needs mushaf-single-pass artifacts from CI measure job; line-overflow unit gate PASS (604 pages). Main tip CI layout-bands already PASS on b0efc979d."
     }
   },
   "deviceTests": {
