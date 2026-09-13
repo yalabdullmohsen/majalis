@@ -1,8 +1,12 @@
 /**
- * كاش نموذج رسم الصفحة — بيانات + مفتاح هندسة + جاهزية خط.
- * لا يعيد parsing أثناء السحب؛ يبطل فقط عند تغيّر geometry أو إصدار البيانات.
+ * كاش نموذج رسم الصفحة — بيانات + مفتاح هندسة + جاهزية خط + إصدار Preset.
+ * لا يعيد parsing أثناء السحب؛ يبطل فقط عند تغيّر geometry أو إصدار البيانات أو الـpreset.
  */
 import type { MushafPageLayout } from "@/lib/quran-data/qpc-page-data";
+import {
+  buildMushafRenderCacheKey,
+  resolveSunnahMushafClassicPreset,
+} from "./sunnah-mushaf-classic-preset";
 
 export type MushafPageRenderModel = {
   pageNumber: number;
@@ -10,14 +14,17 @@ export type MushafPageRenderModel = {
   fontFamily: string;
   geometryKey: string;
   dataVersion: string;
+  presetCacheKey: string;
   preparedAt: number;
 };
 
 const MAX_ENTRIES = 12;
 const cache = new Map<number, MushafPageRenderModel>();
 
+const classic = resolveSunnahMushafClassicPreset();
 let geometryKey = "boot";
-let dataVersion = "qpc-v2";
+/** يتضمن cacheVersion للـpreset حتى تُبطَل الصفحات القديمة بعد توحيد التصميم. */
+let dataVersion = `qpc-v2|${classic.cacheVersion}|${classic.presetId}`;
 
 export function setMushafGeometryKey(key: string): void {
   if (!key || key === geometryKey) return;
@@ -38,7 +45,12 @@ export function setMushafDataVersion(version: string): void {
 export function getCachedPageRenderModel(pageNumber: number): MushafPageRenderModel | null {
   const hit = cache.get(pageNumber);
   if (!hit) return null;
-  if (hit.geometryKey !== geometryKey || hit.dataVersion !== dataVersion) {
+  const expectedPresetKey = buildMushafRenderCacheKey(pageNumber);
+  if (
+    hit.geometryKey !== geometryKey ||
+    hit.dataVersion !== dataVersion ||
+    hit.presetCacheKey !== expectedPresetKey
+  ) {
     cache.delete(pageNumber);
     return null;
   }
@@ -59,6 +71,7 @@ export function putPageRenderModel(
     fontFamily,
     geometryKey,
     dataVersion,
+    presetCacheKey: buildMushafRenderCacheKey(pageNumber),
     preparedAt: Date.now(),
   };
   if (cache.has(pageNumber)) cache.delete(pageNumber);

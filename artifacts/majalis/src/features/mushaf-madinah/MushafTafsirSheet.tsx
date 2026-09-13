@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { getSurahMeta } from "@/lib/quran-api";
 import { fetchMushafAyahTafsir } from "@/lib/quran-data/fetch-ayah-content";
 import {
@@ -59,7 +59,11 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
 
   const parsed = verseKey ? parseVerseKey(verseKey) : null;
   const surahName = parsed ? getSurahMeta(parsed.surah).name : "";
-  const title = parsed ? `تفسير ${surahName} · آية ${parsed.ayah}` : "التفسير";
+  const title = parsed
+    ? `سورة ${surahName}، الآية ${parsed.ayah}`
+    : "التفسير";
+  const technicalRef = parsed ? `${parsed.surah}:${parsed.ayah}` : "";
+  const fetchGenRef = useRef(0);
 
   useEffect(() => {
     if (!open) {
@@ -74,13 +78,14 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
       setError(null);
       return;
     }
+    const gen = ++fetchGenRef.current;
     const ac = new AbortController();
     setLoading(true);
     setError(null);
     setText(null);
     fetchMushafAyahTafsir(parsed.surah, parsed.ayah, editionId, ac.signal)
       .then((res) => {
-        if (ac.signal.aborted) return;
+        if (ac.signal.aborted || gen !== fetchGenRef.current) return;
         if (!res?.text) {
           setError("لم يتوفر تفسير لهذه الآية حاليًا");
           setText(null);
@@ -89,14 +94,18 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
         }
       })
       .catch(() => {
-        if (!ac.signal.aborted) {
+        if (!ac.signal.aborted && gen === fetchGenRef.current) {
           setError("لم يتوفر تفسير لهذه الآية حاليًا");
         }
       })
       .finally(() => {
-        if (!ac.signal.aborted) setLoading(false);
+        if (!ac.signal.aborted && gen === fetchGenRef.current) setLoading(false);
       });
-    return () => ac.abort();
+    return () => {
+      ac.abort();
+      /* إبطال أي استجابة متأخرة بعد الإغلاق/تغيير الآية */
+      fetchGenRef.current += 1;
+    };
   }, [open, parsed?.surah, parsed?.ayah, editionId]);
 
   const selectEdition = (id: string) => {
@@ -137,8 +146,13 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
         {parsed ? (
           <header className="mm-tafsir__meta">
             <p className="mm-tafsir__meta-label">
-              {surahName} · آية {parsed.ayah}
+              سورة {surahName}، الآية {parsed.ayah}
             </p>
+            {technicalRef ? (
+              <p className="mm-tafsir__meta-ref" aria-hidden="true">
+                {technicalRef}
+              </p>
+            ) : null}
             {ayahText ? (
               <p className="mm-tafsir__ayah" dir="rtl" lang="ar">
                 {ayahText}

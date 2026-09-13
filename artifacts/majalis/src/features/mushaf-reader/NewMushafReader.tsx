@@ -80,6 +80,13 @@ import {
   mushafTurnMark,
   mushafTurnFlush,
 } from "./mushaf-turn-telemetry";
+import {
+  bumpTafsirGeneration,
+  createTafsirOpenIntent,
+  isValidTafsirOpenIntent,
+  type TafsirOpenIntent,
+} from "./tafsir-open-intent";
+import { migrateLegacyMushafReaderPrefs } from "./sunnah-mushaf-classic-preset";
 import "./mushaf-reader.css";
 /* شيتات التلاوة/البحث/التفسير — فئات مشتركة */
 import "@/features/mushaf-madinah/mushaf-madinah.css";
@@ -116,6 +123,9 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   useEffect(() => {
     enableMushafTurnTelemetry(true);
   }, []);
+  useEffect(() => {
+    migrateLegacyMushafReaderPrefs();
+  }, []);
   const v2Enabled = isMushafReaderV2Enabled();
   const readerControllerRef = useRef<MushafReaderController | null>(null);
   if (v2Enabled && readerControllerRef.current == null) {
@@ -128,6 +138,13 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const [selectedVerseKey, setSelectedVerseKey] = useState<string | null>(null);
   const [actionsOpen, setActionsOpen] = useState(false);
   const [tafsirOpen, setTafsirOpen] = useState(false);
+  /** آية التفسير معزولة عن التحديد وعن آية الصوت */
+  const [tafsirVerseKey, setTafsirVerseKey] = useState<string | null>(null);
+  const tafsirIntentRef = useRef<TafsirOpenIntent | null>(null);
+  const tafsirOpenRef = useRef(false);
+  useEffect(() => {
+    tafsirOpenRef.current = tafsirOpen;
+  }, [tafsirOpen]);
   const [searchOpen, setSearchOpen] = useState(false);
   const [indexOpen, setIndexOpen] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
@@ -381,8 +398,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     });
     const unAyah = audio.onAyahChange(({ surah, ayah }) => {
       const key = `${surah}:${ayah}`;
+      /* الصوت يحدّث playing فقط — لا يمس selected ولا يفتح/يغيّر التفسير */
       setPlayingVerseKey(key);
-      setSelectedVerseKey(key);
       if (!suppressPageSyncRef.current) syncPageIfAllowed(surah, ayah);
     });
     return () => {
@@ -400,9 +417,13 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const pendingPageRef = useRef<number | null>(null);
 
   const clearPageChrome = useCallback(() => {
+    bumpTafsirGeneration();
+    tafsirIntentRef.current = null;
+    tafsirOpenRef.current = false;
     setActionsOpen(false);
     setSelectedVerseKey(null);
     setTafsirOpen(false);
+    setTafsirVerseKey(null);
     setStatus(null);
     setChromeOpen(false);
   }, []);
@@ -519,17 +540,38 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   );
 
   const onLongPressVerse = useCallback((verseKey: string) => {
+    /* Long press = تحديد + قائمة فقط — ممنوع فتح التفسير بدون Intent صريح */
+    if (typeof document !== "undefined" && document.querySelector('[data-mushaf-panning="1"]')) {
+      return;
+    }
     haptics.selection();
     setSelectedVerseKey(verseKey);
-    setActionsOpen(false);
+    setActionsOpen(true);
     setChromeOpen(false);
     setStatus(null);
-    setTafsirOpen(true);
   }, []);
 
   const openTafsir = useCallback(() => {
+    if (!selectedVerseKey) return;
+    const intent = createTafsirOpenIntent({
+      source: "userTappedTafsirAction",
+      verseKey: selectedVerseKey,
+      pageNumber: pageRef.current,
+    });
+    if (!isValidTafsirOpenIntent(intent)) return;
+    tafsirIntentRef.current = intent;
+    tafsirOpenRef.current = true;
+    setTafsirVerseKey(intent.verseKey);
     setActionsOpen(false);
     setTafsirOpen(true);
+  }, [selectedVerseKey]);
+
+  const closeTafsir = useCallback(() => {
+    bumpTafsirGeneration();
+    tafsirIntentRef.current = null;
+    tafsirOpenRef.current = false;
+    setTafsirOpen(false);
+    setTafsirVerseKey(null);
   }, []);
 
   const closeActions = useCallback(() => setActionsOpen(false), []);
@@ -791,8 +833,16 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         beginPageTurn();
       }}
       onPanVisualStart={() => {
-        /* DOM/telemetry فقط — ممنوع setState هنا (Ultra Smooth) */
+        /* telemetry أولاً؛ إغلاق التفسير فقط إن كان مفتوحًا (لا يغيّر geometry) */
         mushafTurnMark("firstPageMovement", page);
+        if (tafsirOpenRef.current) {
+          bumpTafsirGeneration();
+          tafsirIntentRef.current = null;
+          tafsirOpenRef.current = false;
+          setTafsirOpen(false);
+          setTafsirVerseKey(null);
+          setActionsOpen(false);
+        }
       }}
       onGestureArm={() => {
         mushafTurnMark("touchStart", page);
@@ -827,8 +877,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           pageNumber={pageNumber}
           active={role === "current"}
           selectionEnabled={pagerSettled && role === "current" && pageNumber === page}
-          onSelectVerse={role === "current" ? onSelectVerse : undefined}
-          onLongPressVerse={role === "current" ? onLongPressVerse : undefined}
+          onSelectVerse={role === "current" && pagerSettled ? onSelectVerse : undefined}
+          onLongPressVerse={role === "current" && pagerSettled ? onLongPressVerse : undefined}
           onPageNumberPress={
             role === "current"
               ? () => {
@@ -961,13 +1011,13 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         />
       ) : null}
 
-      {tafsirOpen && selectedVerseKey ? (
+      {tafsirOpen && tafsirVerseKey ? (
         <Suspense fallback={null}>
           <MushafTafsirSheet
             open={tafsirOpen}
-            verseKey={selectedVerseKey}
-            ayahText={versePreview(selectedVerseKey)}
-            onClose={() => setTafsirOpen(false)}
+            verseKey={tafsirVerseKey}
+            ayahText={versePreview(tafsirVerseKey)}
+            onClose={closeTafsir}
           />
         </Suspense>
       ) : null}

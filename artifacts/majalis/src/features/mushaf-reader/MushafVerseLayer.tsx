@@ -18,12 +18,19 @@ type LineProps = {
   words: QpcWord[];
   centered?: boolean;
   onSelectVerse?: (verseKey: string) => void;
-  /** ضغط مطوّل → تفسير مباشرة */
+  /** ضغط مطوّل → قائمة الآية (ليس فتح التفسير مباشرة) */
   onLongPressVerse?: (verseKey: string) => void;
 };
 
-const TAP_SLOP_PX = 28;
-const LONG_PRESS_MS = 480;
+/** أفقياً أضيق من عتبة Pan على الآية حتى لا يُسجَّل Long Press أثناء السحب */
+const TAP_SLOP_X_PX = 10;
+const TAP_SLOP_Y_PX = 28;
+const LONG_PRESS_MS = 520;
+
+function mushafPageIsPanning(): boolean {
+  if (typeof document === "undefined") return false;
+  return Boolean(document.querySelector('[data-mushaf-panning="1"]'));
+}
 
 type PressState = {
   verseKey: string;
@@ -118,10 +125,15 @@ export const MushafVerseLayer = memo(function MushafVerseLayer({
 
   const startPress = (verseKey: string, e: ReactPointerEvent<HTMLElement>) => {
     if (!onSelectVerse && !onLongPressVerse) return;
+    if (mushafPageIsPanning()) return;
     clearPress();
     const longTimer = window.setTimeout(() => {
       const cur = pressRef.current;
       if (!cur || cur.longFired) return;
+      if (mushafPageIsPanning()) {
+        clearPress();
+        return;
+      }
       cur.longFired = true;
       if (onLongPressVerse) {
         onLongPressVerse(verseKey);
@@ -141,13 +153,21 @@ export const MushafVerseLayer = memo(function MushafVerseLayer({
   const movePress = (e: ReactPointerEvent<HTMLElement>) => {
     const cur = pressRef.current;
     if (!cur) return;
-    if (Math.abs(e.clientX - cur.x) > TAP_SLOP_PX || Math.abs(e.clientY - cur.y) > TAP_SLOP_PX) {
+    if (
+      Math.abs(e.clientX - cur.x) > TAP_SLOP_X_PX ||
+      Math.abs(e.clientY - cur.y) > TAP_SLOP_Y_PX ||
+      mushafPageIsPanning()
+    ) {
       clearPress();
     }
   };
 
   const endPress = (verseKey: string) => {
     const cur = pressRef.current;
+    if (mushafPageIsPanning()) {
+      clearPress();
+      return;
+    }
     if (cur && cur.verseKey === verseKey && !cur.longFired && onSelectVerse) {
       onSelectVerse(verseKey);
     }
@@ -218,10 +238,15 @@ export const MushafBasmalaView = memo(function MushafBasmalaView({
       tabIndex={onSelect || onLongPress ? 0 : undefined}
       onPointerDown={(e) => {
         if (!onLongPress && !onSelect) return;
+        if (mushafPageIsPanning()) return;
         clear();
         const longTimer = window.setTimeout(() => {
           const cur = pressRef.current;
           if (!cur || cur.longFired) return;
+          if (mushafPageIsPanning()) {
+            clear();
+            return;
+          }
           cur.longFired = true;
           (onLongPress ?? onSelect)?.();
         }, LONG_PRESS_MS);
@@ -230,12 +255,20 @@ export const MushafBasmalaView = memo(function MushafBasmalaView({
       onPointerMove={(e) => {
         const cur = pressRef.current;
         if (!cur) return;
-        if (Math.abs(e.clientX - cur.x) > TAP_SLOP_PX || Math.abs(e.clientY - cur.y) > TAP_SLOP_PX) {
+        if (
+          Math.abs(e.clientX - cur.x) > TAP_SLOP_X_PX ||
+          Math.abs(e.clientY - cur.y) > TAP_SLOP_Y_PX ||
+          mushafPageIsPanning()
+        ) {
           clear();
         }
       }}
       onPointerUp={() => {
         const cur = pressRef.current;
+        if (mushafPageIsPanning()) {
+          clear();
+          return;
+        }
         if (cur && !cur.longFired) onSelect?.();
         clear();
       }}
