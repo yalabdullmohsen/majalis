@@ -376,9 +376,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       if (snap.surah != null && snap.ayah != null) {
         const key = `${snap.surah}:${snap.ayah}`;
         setPlayingVerseKey(key);
-        if (snap.playerState === "playing" || snap.playerState === "loading" || snap.playerState === "buffering") {
-          setAudioDockOpen(true);
-        }
+        /* لا setAudioDockOpen من اللقطة — التشغيل الصريح فقط */
       }
     });
     const unAyah = audio.onAyahChange(({ surah, ayah }) => {

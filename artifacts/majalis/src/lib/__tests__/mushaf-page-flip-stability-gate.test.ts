@@ -39,6 +39,18 @@ assert.match(reader, /shell\.scrollTop = 0/);
 assert.match(reader, /ارتفاع الحاوية ثابت/);
 assert.match(reader, /dockRemainsAfterClear/);
 assert.match(reader, /ayahWasOpen/);
+assert.match(reader, /dockWasVisible/);
+/* التقليب لا يفتح رصيف التلاوة من لقطة الصوت */
+{
+  const snapIdx = reader.indexOf("audio.onSnapshot");
+  const snapEnd = reader.indexOf("audio.onAyahChange", snapIdx);
+  assert.ok(snapIdx >= 0 && snapEnd > snapIdx, "onSnapshot block present");
+  assert.doesNotMatch(
+    reader.slice(snapIdx, snapEnd),
+    /setAudioDockOpen\(\s*true\s*\)/,
+    "snapshot must not force-open tilawah dock",
+  );
+}
 assert.match(reader, /onLongPressVerse/);
 assert.match(reader, /openTafsir/);
 /* عزل التفسير عن التقليب — نية صريحة فقط */

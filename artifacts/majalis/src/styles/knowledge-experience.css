@@ -654,13 +654,16 @@ button.floating-back-btn[data-floating-back="1"] {
   pointer-events: none !important;
 }
 
-/* شريط رجوع ثابت حديث — ظاهر دائمًا فوق الشريط السفلي */
+/* شريط رجوع ثابت حديث — أسفل يمين الشاشة فوق الشريط السفلي */
 .app-back-btn--bar.fixed-back-bar,
 button.app-back-btn--bar[data-fixed-back-bar="1"] {
   position: fixed;
   z-index: var(--z-fab, 220);
-  inset-inline-start: max(0.75rem, var(--inset-left, 0px));
-  inset-inline-end: auto;
+  /* يمين الشاشة فعليًا (شاشة المستخدم والأقسام) — لا يعتمد على اتجاه السطر فقط */
+  right: max(0.75rem, var(--inset-right, 0px));
+  left: auto;
+  inset-inline-start: auto;
+  inset-inline-end: max(0.75rem, var(--inset-right, 0px));
   bottom: var(--global-back-bottom, calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 0.75rem));
   top: auto;
   display: inline-flex;

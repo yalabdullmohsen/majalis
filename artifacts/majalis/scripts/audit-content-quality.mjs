@@ -16,7 +16,16 @@ const warn = (m) => warnings.push(m);
 function walk(dir, pred, out = []) {
   if (!fs.existsSync(dir)) return out;
   for (const name of fs.readdirSync(dir)) {
-    if (name === "node_modules" || name === "dist" || name === ".backup") continue;
+    // android/ios public = مخرجات Cap sync محلية (gitignore) وليست مصدرًا منشورًا
+    if (
+      name === "node_modules" ||
+      name === "dist" ||
+      name === ".backup" ||
+      name === "android" ||
+      name === "ios"
+    ) {
+      continue;
+    }
     const p = path.join(dir, name);
     const st = fs.statSync(p);
     if (st.isDirectory()) walk(p, pred, out);

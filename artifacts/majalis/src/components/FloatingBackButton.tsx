@@ -1,14 +1,17 @@
 /**
  * GlobalBackControlHost — مصدر حقيقة واحد لزر الرجوع العام في سُنّة.
  * يُركَّب مرة واحدة في جذر التطبيق. FLOATING_BACK_DISABLED = لا FAB دائري.
+ * الشريط ثابت على كل الشاشات/الأقسام (ما عدا الرئيسية) — أسفل يمين بما فيها /profile.
  */
 import { useLayoutEffect, useRef } from "react";
+import { useLocation } from "wouter";
 import { AppBackButton } from "@/components/common/AppBackButton";
 import {
   computeBackControlBottomOffset,
   computeContentBottomInsetForBack,
   BACK_CONTROL_SIZE_PX,
 } from "@/lib/global-back-layout";
+import { normalizeNavPath } from "@/lib/navigation-back";
 
 function readCssPx(varName: string, fallback: number): number {
   if (typeof window === "undefined") return fallback;
@@ -49,8 +52,13 @@ function syncBackLayoutVars(host: HTMLElement | null) {
 /** المضيف الوحيد لزر الرجوع العام */
 export function GlobalBackControlHost() {
   const hostRef = useRef<HTMLDivElement>(null);
+  const [location] = useLocation();
+  const path = normalizeNavPath(location);
+  /** الرئيسية فقط — لا نخفي على /profile أو الإعدادات أو أقسام اللوبي */
+  const hideOnHome = path === "/";
 
   useLayoutEffect(() => {
+    if (hideOnHome) return;
     const sync = () => syncBackLayoutVars(hostRef.current);
     sync();
     window.addEventListener("resize", sync);
@@ -66,7 +74,9 @@ export function GlobalBackControlHost() {
       window.visualViewport?.removeEventListener("resize", sync);
       mo.disconnect();
     };
-  }, []);
+  }, [hideOnHome]);
+
+  if (hideOnHome) return null;
 
   return (
     <div
@@ -77,7 +87,7 @@ export function GlobalBackControlHost() {
     >
       <AppBackButton
         variant="bar"
-        autoHideFloating
+        autoHideFloating={false}
         label="رجوع"
         aria-label="رجوع"
         className="global-back-control-host__btn"

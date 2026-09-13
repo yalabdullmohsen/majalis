@@ -118,47 +118,32 @@
   border-radius: 18px;
   text-decoration: none;
   color: inherit;
-  background:
-    linear-gradient(
-      155deg,
-      color-mix(in srgb, var(--qp-accent) 10%, var(--qp-surface)) 0%,
-      var(--qp-surface) 42%,
-      var(--qp-surface) 100%
-    );
-  border: 1px solid color-mix(in srgb, var(--qp-accent) 18%, var(--qp-line));
-  box-shadow: 0 8px 24px color-mix(in srgb, var(--qp-brand-deep) 5%, transparent);
+  background: var(--qp-surface);
+  border: 1px solid var(--qp-line);
+  box-shadow: none;
   overflow: hidden;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   transition:
-    transform 160ms cubic-bezier(0.22, 0.8, 0.28, 1),
     border-color 160ms ease,
-    box-shadow 160ms ease;
-  will-change: transform;
+    background-color 160ms ease;
 }
 
 .qp-person-card::before {
-  content: "";
-  position: absolute;
-  inset-block: 0;
-  inset-inline-start: 0;
-  width: 3px;
-  background: linear-gradient(
-    180deg,
-    var(--qp-accent),
-    color-mix(in srgb, var(--qp-accent) 35%, transparent)
-  );
+  content: none;
 }
 
 .qp-person-card:hover {
-  transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--qp-accent) 42%, var(--qp-line));
-  box-shadow: 0 14px 32px color-mix(in srgb, var(--qp-brand-deep) 10%, transparent);
+  border-color: color-mix(in srgb, var(--qp-accent) 28%, var(--qp-line));
+  background: color-mix(in srgb, var(--qp-accent) 4%, var(--qp-surface));
   text-decoration: none;
+  transform: none;
+  box-shadow: none;
 }
 
 .qp-person-card:active {
-  transform: scale(0.985);
+  transform: none;
+  opacity: 0.96;
 }
 
 .qp-person-card[data-category="prophet"] { --qp-accent: #1a6b4a; }
@@ -264,12 +249,7 @@ html[data-theme="dark"] .qp-people {
 }
 
 html[data-theme="dark"] .qp-person-card {
-  background:
-    linear-gradient(
-      155deg,
-      color-mix(in srgb, var(--qp-accent) 16%, var(--qp-surface)) 0%,
-      var(--qp-surface) 50%
-    );
+  background: var(--qp-surface);
   border-color: var(--border, #35443F);
   box-shadow: none;
 }
