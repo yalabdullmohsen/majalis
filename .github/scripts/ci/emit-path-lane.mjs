@@ -14,9 +14,20 @@ function arg(name, fallback = "") {
   return fallback;
 }
 
+const headRef =
+  process.env.GITHUB_HEAD_REF ||
+  process.env.GITHUB_REF_NAME ||
+  "";
+const isReleaseBranch =
+  headRef === "release/sunnah-stable-1.0" ||
+  headRef.startsWith("release/") ||
+  process.env.GITHUB_REF === "refs/heads/release/sunnah-stable-1.0";
+
+/** مسارات الإصدار/RC تفرض المسار الكامل — لا يُتخطّى mushaf-measure على PR التجميد */
 const forceFull =
   process.argv.includes("--full") ||
   process.env.CI_FORCE_FULL === "1" ||
+  isReleaseBranch ||
   (process.env.GITHUB_EVENT_NAME === "push" &&
     (process.env.GITHUB_REF === "refs/heads/main" || process.env.GITHUB_REF_NAME === "main"));
 

@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-13T21:53:05Z",
+  "generatedAt": "2026-09-13T22:06:45Z",
   "project": "سُنّة",
   "verdict": "NOT READY",
-  "verdictReason": "RC freeze tooling PR #2015 open; triple Full Release Lane and TestFlight/device matrix still outstanding on RC SHA.",
+  "verdictReason": "P0: previous CI on #2015 skipped mushaf-measure/gates/layout-bands via path-lane; forcing full lane for release/* and Full Regression Diagnostic (fail-fast:false) on this push. Triple Full Release Lane + TestFlight/device matrix still outstanding. Do not merge #2015 yet.",
   "sourceOfTruth": {
     "latestMainCommit": "b0efc979d4ac08c5d16ca6432d709301c8069494",
     "latestGreenCommit": "b0efc979d4ac08c5d16ca6432d709301c8069494",
@@ -121,25 +121,21 @@
   ],
   "unmergedRequiredFixes": [],
   "automatedGates": {
-    "mainTipCi": {
-      "runId": "34783252522",
-      "conclusion": "success",
-      "required": true,
-      "evidence": "https://github.com/yalabdullmohsen/majalis/actions/runs/34783252522",
-      "jobsGreen": [
-        "build",
-        "static-checks",
-        "repo-gates",
-        "mushaf-measure(1-8)",
-        "mushaf-gates",
-        "layout-bands",
-        "visual-snapshot",
-        "Color contrast (Playwright)",
-        "LHCI home (mobile)",
-        "ci-required",
-        "Verify build",
-        "deploy"
-      ]
+    "ciRun_f2acbb2f8": {
+      "runId": "34785171959",
+      "conclusion": "success_with_skipped_mushaf",
+      "build": "PASS",
+      "staticChecks": "PASS",
+      "repoGates": "PASS",
+      "visualSnapshot": "PASS",
+      "colorContrast": "PASS",
+      "lhciHome": "PASS",
+      "ciRequired": "PASS",
+      "verifyBuild": "PENDING_OR_LATE",
+      "mushafMeasure": "SKIPPED",
+      "mushafGates": "SKIPPED",
+      "layoutBands": "SKIPPED",
+      "severityIfSkipped": "P0"
     },
     "tripleFullReleaseLane": {
       "run1": "NOT VERIFIED",
@@ -147,21 +143,8 @@
       "run3": "NOT VERIFIED"
     },
     "fullRegressionDiagnostic": {
-      "status": "PENDING",
-      "workflow": ".github/workflows/full-regression-diagnostic.yml",
-      "failFastDisabled": true,
-      "note": "workflow_dispatch only; does not weaken official ci.yml fail-fast"
-    },
-    "localDiagnostic": {
-      "releaseStabilityGate": "PASS",
-      "typecheck": "PASS",
-      "lint": "PASS",
-      "bundleBudget": "PASS",
-      "mushafGates": "PASS",
-      "sectionsRegistry": "PASS",
-      "contentAudit": "PASS",
-      "mushafLayoutBands": "NOT VERIFIED",
-      "mushafLayoutBandsNote": "Local assert.mjs needs mushaf-single-pass artifacts from CI measure job; line-overflow unit gate PASS (604 pages). Main tip CI layout-bands already PASS on b0efc979d."
+      "status": "PENDING_THIS_PUSH",
+      "failFastDisabled": true
     }
   },
   "deviceTests": {
@@ -194,7 +177,66 @@
     "account": "NOT VERIFIED",
     "offline": "NOT VERIFIED"
   },
-  "failures": [],
+  "failures": [
+    {
+      "id": "F-SKIP-MUSHAF",
+      "gateName": "mushaf-measure / mushaf-gates / layout-bands",
+      "jobName": "CI path-lane",
+      "testName": null,
+      "branch": "release/sunnah-stable-1.0",
+      "commit": "f2acbb2f8",
+      "file": ".github/scripts/ci/emit-path-lane.mjs",
+      "line": null,
+      "route": null,
+      "device": null,
+      "viewport": null,
+      "theme": null,
+      "expected": "need_mushaf=true and all shards executed",
+      "actual": "jobs skipped on docs/ci-only path-lane",
+      "errorCode": "PATH_LANE_SKIP",
+      "rootCause": "Release PR classified as docs/ci without force-full; mushaf jobs optional-skipped",
+      "severity": "P0",
+      "releaseBlocking": true,
+      "owner": "agent",
+      "fixStatus": "IN_PROGRESS",
+      "evidencePath": "https://github.com/yalabdullmohsen/majalis/actions/runs/34785171959"
+    },
+    {
+      "id": "F-DIAG-PENDING",
+      "gateName": "Full Regression Diagnostic",
+      "jobName": "full-regression-diagnostic",
+      "severity": "P0",
+      "releaseBlocking": true,
+      "owner": "agent",
+      "fixStatus": "IN_PROGRESS",
+      "rootCause": "Workflow was not triggerable until PR head includes pull_request trigger; pushing hardened workflow now",
+      "expected": "fail-fast:false matrix completes; aggregate fails if any shard/gate fails",
+      "actual": "not yet run on current head",
+      "evidencePath": ".github/workflows/full-regression-diagnostic.yml"
+    },
+    {
+      "id": "F-TRIPLE-LANE",
+      "gateName": "Full Release Lane ×3",
+      "severity": "P0",
+      "releaseBlocking": true,
+      "owner": "agent",
+      "fixStatus": "OPEN",
+      "rootCause": "Not started; requires three consecutive greens on same RC SHA after full mushaf lane",
+      "expected": "Run1=PASS Run2=PASS Run3=PASS",
+      "actual": "0/3"
+    },
+    {
+      "id": "F-TESTFLIGHT",
+      "gateName": "TestFlight + device matrix",
+      "severity": "P0",
+      "releaseBlocking": true,
+      "owner": "owner+agent",
+      "fixStatus": "OPEN",
+      "rootCause": "Blocked until CI triple-green on RC SHA",
+      "expected": "TF build from same commit; Upgrade/Clean/Offline/ForceQuit/Reboot/Soak PASS",
+      "actual": "NOT VERIFIED"
+    }
+  ],
   "remainingManualSteps": [
     "رفع RC إلى Internal TestFlight من commit المثبت فقط",
     "Upgrade فوق النسخة الحالية دون حذف",
@@ -207,26 +249,20 @@
     {
       "id": "B1",
       "severity": "P0",
-      "releaseBlocking": true,
-      "title": "Triple Full Release Lane not yet run on RC commit",
-      "owner": "agent",
-      "action": "Push RC branch, run Full Regression Diagnostic once, then 3× official CI/full-release on same SHA"
+      "title": "Force-full mushaf lane + diagnostic must go green on #2015",
+      "status": "IN_PROGRESS"
     },
     {
       "id": "B2",
       "severity": "P0",
-      "releaseBlocking": true,
-      "title": "TestFlight + device matrix not verified",
-      "owner": "owner+agent",
-      "action": "Trigger ios-testflight-deploy on RC tag; complete upgrade/clean/offline/soak checklist"
+      "title": "Three consecutive Full Release Lane greens on RC SHA",
+      "status": "OPEN"
     },
     {
       "id": "B3",
-      "severity": "P1",
-      "releaseBlocking": false,
-      "title": "Open feature PRs frozen but not closed",
-      "owner": "agent",
-      "action": "Keep draft+hold until freeze lifts; close #1868 after owner ack"
+      "severity": "P0",
+      "title": "TestFlight + device soak from same SHA",
+      "status": "OPEN"
     }
   ],
   "finalRecommendation": {
