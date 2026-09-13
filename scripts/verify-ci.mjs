@@ -225,6 +225,12 @@ const waves = [
         cmd: "pnpm",
         args: ["--filter", "@workspace/majalis", "run", "audio-reader:p0-gate"],
       },
+        {
+          name: "ayah gapless playback gate",
+          cmd: "pnpm",
+          args: ["--filter", "@workspace/majalis", "run", "test:ayah-gap-gate"],
+        },
+
     ],
   },
   {

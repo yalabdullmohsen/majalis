@@ -70,3 +70,12 @@ pnpm run generate:adhan-bundle
 pnpm run verify:adhan-caf-durations
 npx cap open ios
 ```
+
+
+## 4. Gapless ayah handoff (2026-09)
+
+**Root cause (pre-fix):** `onEnded` → `playAyah` always set `loading`, and even preload hits ran `crossfadeAudio` from volume 0 (~48ms) plus cold `src`/`load` when idle slot was not ready.
+
+**Fix:** seamless handoff keeps dual HTMLAudio slots; near-end prime + CDN warm; preload hit plays at volume 1 without crossfade; UI ayah emit deferred until after audio start.
+
+**Probe:** `summarizeAyahTransitions()` / `window` metrics — target technical gap ≤ 120ms (excludes natural reciter pause inside the file).

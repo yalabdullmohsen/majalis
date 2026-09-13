@@ -10,7 +10,13 @@
  */
 import { claimAudio, registerAudioStopper } from "@/lib/exclusive-audio-bus";
 import { listAyahAudioUrls, loadPlaybackRate, normalizePlaybackRate, savePlaybackRate } from "@/lib/quran-audio";
-import { crossfadeAudio } from "@/lib/sovereign/audio-crossfade";
+import {
+  markAyahAudioEnded,
+  markAyahAudioStarted,
+  markAyahTransitionRequested,
+  notePreloadReady,
+  noteAudioSlotCreated,
+} from "@/lib/audio/ayah-transition-metrics";
 import { recordCdnFailure, recordCdnSuccess } from "@/lib/sovereign/cdn-failover-router";
 import { recordReadingActivity } from "@/lib/sovereign/predictive-analytics";
 import { getSurahMeta } from "@/lib/quran-api";
@@ -28,7 +34,7 @@ import {
 
 export type RepeatMode = "off" | "ayah" | "surah";
 export type TeachPhase = "idle" | "teacher" | "student" | "waiting";
-export type PlayerState = "idle" | "loading" | "playing" | "paused" | "buffering" | "ended" | "error";
+export type PlayerState = "idle" | "loading" | "playing" | "transitioning" | "paused" | "buffering" | "ended" | "error";
 
 export type AudioEngineSnapshot = {
   playerState: PlayerState;
@@ -91,6 +97,11 @@ export class AudioEngine {
   /** مرادف للعنصر النشط — للتوافق مع getSound(). */
   private audio: HTMLAudioElement | null = null;
   private preloadKey: string | null = null;
+  /** قياس فجوة الآية — وقت ended للأية السابقة */
+  private lastEndedAtMs = 0;
+  /** عناوين دُفئت عبر fetch لتسريع CDN */
+  private warmedUrls = new Set<string>();
+  private nearEndPrimedFor: string | null = null;
   private reciterId = "alafasy";
   private playbackRate = 1;
   private rateHydrated = false;
@@ -180,6 +191,7 @@ export class AudioEngine {
   }
 
   private createAudioSlot(): HTMLAudioElement {
+    noteAudioSlotCreated();
     const el = new Audio();
     el.preload = "auto";
     el.playbackRate = this.playbackRate;
@@ -195,7 +207,7 @@ export class AudioEngine {
     });
     el.addEventListener("pause", () => {
       if (el !== this.getActiveElRef()) return;
-      if (this.playerState !== "loading") this.setPlayerState("paused");
+      if (this.playerState !== "loading" && this.playerState !== "transitioning") this.setPlayerState("paused");
     });
     el.addEventListener("waiting", () => {
       if (el !== this.getActiveElRef()) return;
@@ -218,9 +230,11 @@ export class AudioEngine {
     el.addEventListener("timeupdate", () => {
       if (el !== this.getActiveElRef()) return;
       const now = typeof performance !== "undefined" ? performance.now() : Date.now();
-      if (now - this.lastTimeEmitMs < 200) return;
-      this.lastTimeEmitMs = now;
-      this.emitSnapshot();
+      if (now - this.lastTimeEmitMs >= 200) {
+        this.lastTimeEmitMs = now;
+        this.emitSnapshot();
+      }
+      this.primeNearEndIfNeeded(el);
     });
     el.addEventListener("ended", () => {
       if (el !== this.getActiveElRef()) return;
@@ -250,7 +264,7 @@ export class AudioEngine {
     return el;
   }
 
-  /** يحمّل الآية التالية مسبقاً في العنصر الخامل لتقليل الفجوة. */
+  /** يحمّل الآية التالية مسبقاً في العنصر الخامل + تدفئة CDN للتي بعدها. */
   private preloadNextAyah(surah: number, ayah: number, gen: number): void {
     const next = nextAyah(surah, ayah);
     if (!next || !this.slotB) {
@@ -264,23 +278,70 @@ export class AudioEngine {
     }
     const key = this.preloadKeyFor(next.surah, next.ayah, this.reciterId);
     const idle = this.getIdleElRef();
-    this.preloadKey = key;
-    try {
-      idle.pause();
-      idle.src = urls[0]!;
-      idle.playbackRate = this.playbackRate;
-      idle.load();
-    } catch {
-      this.preloadKey = null;
+    const already =
+      this.preloadKey === key && idle.readyState >= 2 && idle.src.includes(String(next.ayah));
+    if (!already) {
+      this.preloadKey = key;
+      try {
+        if (!idle.paused) idle.pause();
+        idle.src = urls[0]!;
+        idle.playbackRate = this.playbackRate;
+        idle.volume = 1;
+        idle.load();
+        notePreloadReady(`${next.surah}:${next.ayah}`);
+      } catch {
+        this.preloadKey = null;
+      }
+    } else {
+      notePreloadReady(`${next.surah}:${next.ayah}`);
+    }
+    this.warmUrl(urls[0]!);
+    const next2 = nextAyah(next.surah, next.ayah);
+    if (next2) {
+      const urls2 = listAyahAudioUrls(next2.surah, next2.ayah, this.reciterId);
+      if (urls2[0]) this.warmUrl(urls2[0]);
     }
     void gen;
   }
 
-  /** تشغيل من العنصر المُحمَّل مسبقاً إن وُجد — يُعيد true عند النجاح. */
+  /** تدفئة كاش HTTP دون التنافس مع عنصر التشغيل النشط. */
+  private warmUrl(url: string): void {
+    if (!url || this.warmedUrls.has(url)) return;
+    this.warmedUrls.add(url);
+    if (this.warmedUrls.size > 64) {
+      const first = this.warmedUrls.values().next().value;
+      if (first) this.warmedUrls.delete(first);
+    }
+    try {
+      void fetch(url, { method: "GET", mode: "cors", credentials: "omit", cache: "force-cache" }).catch(
+        () => undefined,
+      );
+    } catch {
+      /* ignore */
+    }
+  }
+
+  /** قبل نهاية الآية بـ ~2ث أعد تأكيد جاهزية الآية التالية. */
+  private primeNearEndIfNeeded(el: HTMLAudioElement): void {
+    if (this.surah == null || this.ayah == null) return;
+    if (!Number.isFinite(el.duration) || el.duration <= 0) return;
+    const remaining = el.duration - el.currentTime;
+    if (remaining > 2.2 || remaining < 0.05) return;
+    const mark = `${this.reciterId}:${this.surah}:${this.ayah}:${Math.floor(el.duration)}`;
+    if (this.nearEndPrimedFor === mark) return;
+    this.nearEndPrimedFor = mark;
+    this.preloadNextAyah(this.surah, this.ayah, this.playGeneration);
+  }
+
+  /**
+   * تشغيل فوري من العنصر المُحمَّل مسبقاً — بلا loading وبلا crossfade من صفر.
+   * يُعيد true عند النجاح.
+   */
   private async tryPlayFromPreload(
     surah: number,
     ayah: number,
     gen: number,
+    seamless = false,
   ): Promise<boolean> {
     const key = this.preloadKeyFor(surah, ayah, this.reciterId);
     if (this.preloadKey !== key || !this.slotB) return false;
@@ -289,19 +350,31 @@ export class AudioEngine {
     if (gen !== this.playGeneration) return false;
     try {
       const outgoing = this.getActiveElRef();
-      outgoing.pause();
+      try {
+        outgoing.pause();
+      } catch {
+        /* ignore */
+      }
       this.swapActiveSlot();
       this.preloadKey = null;
       const el = this.getActiveElRef();
       el.playbackRate = this.playbackRate;
+      el.volume = 1;
+      // لا نبدأ من volume=0 (سبب فجوة ~48ms) — الانتقال التقني يجب أن يكون فورياً
       const playWait = el.play();
       void this.activatePlaybackSession();
       await playWait;
       if (gen !== this.playGeneration) return false;
-      void crossfadeAudio(outgoing, el);
+      try {
+        outgoing.volume = 1;
+      } catch {
+        /* ignore */
+      }
       this.setPlayerState("playing");
       recordCdnSuccess(el.src);
       recordReadingActivity({ surah, ayah, reciterId: this.reciterId });
+      markAyahAudioStarted({ ayahId: `${surah}:${ayah}`, cacheHit: true, path: "preload-hit", playerRecreation: false });
+      this.nearEndPrimedFor = null;
       this.preloadNextAyah(surah, ayah, gen);
       return true;
     } catch {
@@ -639,7 +712,7 @@ export class AudioEngine {
    * Load and play a specific ayah for the active (or provided) reciter.
    * On media failure sets `playerState` to `"error"` and resolves (does not throw).
    */
-  async playAyah(surah: number, ayah: number, reciterId?: string): Promise<void> {
+  async playAyah(surah: number, ayah: number, reciterId?: string, opts?: { seamless?: boolean }): Promise<void> {
     /* عنصر الصوت يُنشأ قبل أي await حتى تبقى play() داخل إيماءة iOS. */
     let el: HTMLAudioElement;
     try {
@@ -650,13 +723,14 @@ export class AudioEngine {
       return;
     }
 
+    const seamless = opts?.seamless === true;
     if (reciterId) this.reciterId = reciterId;
     this.surah = surah;
     this.ayah = ayah;
     if (this.repeatMode === "surah" && !this.surahRepeatStart) {
       this.surahRepeatStart = { surah, ayah: 1 };
     }
-    this.emitAyahChange();
+    if (!seamless) this.emitAyahChange();
 
     const urls = listAyahAudioUrls(surah, ayah, this.reciterId);
     if (!urls.length) {
@@ -674,7 +748,15 @@ export class AudioEngine {
     }
 
     const gen = ++this.playGeneration;
-    this.setPlayerState("loading");
+    if (seamless) {
+      this.setPlayerState(
+        this.playerState === "playing" || this.playerState === "transitioning"
+          ? "transitioning"
+          : "loading",
+      );
+    } else {
+      this.setPlayerState("loading");
+    }
     if (this.teachEnabled) this.teachPhase = "teacher";
 
     void this.activatePlaybackSession();
@@ -684,7 +766,8 @@ export class AudioEngine {
       /* slotB may be unused */
     }
 
-    if (await this.tryPlayFromPreload(surah, ayah, gen)) {
+    if (await this.tryPlayFromPreload(surah, ayah, gen, seamless)) {
+      if (seamless) this.emitAyahChange();
       void import("@/lib/quran-mini-player").then((m) => m.showMiniPlayer()).catch(() => undefined);
       return;
     }
@@ -711,6 +794,13 @@ export class AudioEngine {
         recordCdnSuccess(url);
         recordReadingActivity({ surah, ayah, reciterId: this.reciterId });
         this.setPlayerState("playing");
+        if (seamless) this.emitAyahChange();
+        markAyahAudioStarted({
+          ayahId: `${surah}:${ayah}`,
+          cacheHit: false,
+          path: "cold-load",
+          playerRecreation: false,
+        });
         this.preloadNextAyah(surah, ayah, gen);
         void import("@/lib/quran-mini-player").then((m) => m.showMiniPlayer()).catch(() => undefined);
         return;
@@ -885,6 +975,12 @@ export class AudioEngine {
    * Failures in nested `playAyah` already surface as `playerState: "error"`.
    */
   private async onEnded(): Promise<void> {
+      if (this.surah != null && this.ayah != null) {
+        markAyahAudioEnded(`${this.surah}:${this.ayah}`);
+        this.lastEndedAtMs = typeof performance !== "undefined" ? performance.now() : Date.now();
+        markAyahTransitionRequested(`${this.surah}:${this.ayah}`);
+      }
+
     try {
       if (
         this.loopRuntime?.active &&
@@ -903,7 +999,7 @@ export class AudioEngine {
         const delay = next.delayMs;
         const playNext = () => {
           this.loopDelayTimer = null;
-          void this.playAyah(this.loopSurah!, next.ayah, this.reciterId);
+          void this.playAyah(this.loopSurah!, next.ayah, this.reciterId, { seamless: true });
         };
         if (delay > 0) {
           this.setPlayerState("paused");
@@ -922,25 +1018,25 @@ export class AudioEngine {
       }
 
       if (this.repeatMode === "ayah" && this.surah != null && this.ayah != null) {
-        await this.playAyah(this.surah, this.ayah, this.reciterId);
+        await this.playAyah(this.surah, this.ayah, this.reciterId, { seamless: true });
         return;
       }
 
       if (this.repeatMode === "surah" && this.surah != null && this.ayah != null) {
         const next = nextAyah(this.surah, this.ayah);
         if (next && next.surah === this.surah) {
-          await this.playAyah(next.surah, next.ayah, this.reciterId);
+          await this.playAyah(next.surah, next.ayah, this.reciterId, { seamless: true });
           return;
         }
         const start = this.surahRepeatStart ?? { surah: this.surah, ayah: 1 };
-        await this.playAyah(start.surah, start.ayah, this.reciterId);
+        await this.playAyah(start.surah, start.ayah, this.reciterId, { seamless: true });
         return;
       }
 
       if (this.surah != null && this.ayah != null) {
         const next = nextAyah(this.surah, this.ayah);
         if (next) {
-          await this.playAyah(next.surah, next.ayah, this.reciterId);
+          await this.playAyah(next.surah, next.ayah, this.reciterId, { seamless: true });
           return;
         }
       }
