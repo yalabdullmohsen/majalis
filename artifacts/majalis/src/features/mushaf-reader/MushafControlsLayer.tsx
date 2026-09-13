@@ -92,8 +92,8 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
   return (
     <div className="nm-controls" data-open={chromeOpen ? "1" : "0"} aria-hidden={!chromeOpen && !gotoOpen}>
       <div className="nm-controls__bar" data-testid="nm-controls-bar">
-        <button type="button" className="nm-controls__btn nm-controls__exit" onClick={onExit}>
-          خروج
+        <button type="button" className="nm-controls__btn nm-controls__exit" aria-label="الخروج من المصحف" onClick={onExit}>
+          الخروج من المصحف
         </button>
         <button
           type="button"
@@ -113,8 +113,8 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
           <button type="button" className="nm-controls__btn" onClick={onIndex}>
             فهرس
           </button>
-          <button type="button" className="nm-controls__btn" onClick={onSearch}>
-            بحث
+          <button type="button" className="nm-controls__btn" aria-label="بحث في القرآن" onClick={onSearch}>
+            بحث في القرآن
           </button>
         </div>
       </div>

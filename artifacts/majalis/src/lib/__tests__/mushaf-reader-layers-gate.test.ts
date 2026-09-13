@@ -79,7 +79,8 @@ assert.match(css, /\.mm-page-footer__badge\s*\{[^}]*left:\s*50%/);
 assert.match(pager, /dx > 0/);
 assert.match(pager, /locking\.current = true/);
 assert.match(pager, /SWIPE_MIN_PX\s*=\s*40/);
-assert.match(pager, /haptics\.selection/);
+/* تقليب الصفحة بلا Haptic — الاهتزاز مسموح فقط لأفعال صريحة (تحديد آية / علامة) */
+assert.doesNotMatch(pager, /haptics\.(selection|impact|success)/);
 assert.match(reader, /savePagePosition/);
 assert.match(reader, /onTapEmpty/);
 assert.match(reader, /haptics\.success/);
