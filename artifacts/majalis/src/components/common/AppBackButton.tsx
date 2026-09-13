@@ -55,10 +55,14 @@ export function AppBackButton({
   const lastBackAtRef = useRef(0);
   const BACK_LOCK_MS = 420;
 
+  /* المصحف: لا يظهر زر الرجوع العام أبدًا — حتى مع autoHideFloating=false */
+  if (variant === "floating" || variant === "bar") {
+    if (isImmersiveChromePath(location)) return null;
+  }
+
   if ((variant === "floating" || variant === "bar") && autoHideFloating) {
     const path = normalizeNavPath(location);
     if (path === "/") return null;
-    if (isImmersiveChromePath(location)) return null;
     if (isPrayerTimesPath(location)) return null;
     if (hasInPageBackChrome(location)) return null;
     if (isAuthStandalonePath(location)) return null;
