@@ -14,11 +14,12 @@ import { ScholarlyTrustBadge } from "@/components/ScholarlyTrustBadge";
 import { GraphRelatedRail } from "@/widgets/RelatedRail";
 import { navigateTo } from "@/lib/navigation-intent";
 import { goBackOrFallback } from "@/lib/navigation-back";
+import { isSpeechReadAloudSupported } from "@/lib/speech-read-aloud";
 import {
-  isSpeechReadAloudSupported,
-  speakArabicText,
-  stopSpeechReadAloud,
-} from "@/lib/speech-read-aloud";
+  playAiNarration,
+  stopAiNarration,
+  type NarrationEngine,
+} from "@/lib/ai-narration";
 import "@/styles/pages/prophet-stories.css";
 import { UtilityScreen } from "@/components/design-system/screens";
 
@@ -237,11 +238,11 @@ function ProphetCard({
       role="button"
       aria-label={`عرض قصة ${prophet.arabicName} عليه السلام`}
     >
-      <div className="prophet-lux-card__glow" aria-hidden="true" />
+      <div className="prophet-lux-card__glow prophet-lux-card__glow--off" aria-hidden="true" hidden />
       <div className="prophet-lux-card__num">{prophet.id}</div>
 
       <div className="prophet-lux-card__star">
-        <IslamicStar size={36} color={color} opacity={0.85} />
+        <IslamicStar size={18} color={color} opacity={0.45} />
       </div>
 
       <div className="prophet-lux-card__body">
@@ -309,6 +310,7 @@ function ProphetDetailView({
   const [readPct, setReadPct] = useState(0);
   const [activeSection, setActiveSection] = useState("bio");
   const [speechPlaying, setSpeechPlaying] = useState(false);
+  const [speechEngine, setSpeechEngine] = useState<NarrationEngine>("none");
   const [speechUnsupported, setSpeechUnsupported] = useState(false);
   const articleRef = useRef<HTMLElement>(null);
   const prevProphet = p && p.id > 1 ? PROPHETS[p.id - 2] : null;
@@ -336,35 +338,50 @@ function ProphetDetailView({
   }, [p, knowledgeBlocks, dbStory, sup]);
 
   useEffect(() => {
-    stopSpeechReadAloud();
+    stopAiNarration();
     setSpeechPlaying(false);
+    setSpeechEngine("none");
     setSpeechUnsupported(false);
     return () => {
-      stopSpeechReadAloud();
+      stopAiNarration();
     };
   }, [slug]);
 
   const toggleSpeech = useCallback(() => {
     if (speechPlaying) {
-      stopSpeechReadAloud();
+      stopAiNarration();
       setSpeechPlaying(false);
+      setSpeechEngine("none");
       return;
     }
     if (!isSpeechReadAloudSupported()) {
       setSpeechUnsupported(true);
       return;
     }
-    const state = speakArabicText(speakableText, {
-      rate: 0.92,
-      onEnd: () => setSpeechPlaying(false),
-      onError: () => {
-        setSpeechPlaying(false);
+    void (async () => {
+      const result = await playAiNarration({
+        contentId: `prophet:${slug}`,
+        title: p?.arabicName,
+        body: speakableText,
+        rate: 0.95,
+        onEnd: () => {
+          setSpeechPlaying(false);
+          setSpeechEngine("none");
+        },
+        onError: () => {
+          setSpeechPlaying(false);
+          setSpeechEngine("none");
+          setSpeechUnsupported(true);
+        },
+      });
+      if (result.ok) {
+        setSpeechPlaying(true);
+        setSpeechEngine(result.engine);
+      } else if (result.reason === "device_unsupported") {
         setSpeechUnsupported(true);
-      },
-    });
-    if (state === "speaking") setSpeechPlaying(true);
-    else if (state === "unsupported") setSpeechUnsupported(true);
-  }, [speechPlaying, speakableText]);
+      }
+    })();
+  }, [speechPlaying, speakableText, slug, p?.arabicName]);
 
   const sections: DetailSection[] = [
     { id: "bio", label: "نبذة" },
@@ -577,6 +594,12 @@ function ProphetDetailView({
           >
             {speechPlaying ? <Square size={14} strokeWidth={2} aria-hidden="true" /> : <Volume2 size={14} strokeWidth={2} aria-hidden="true" />}
             <span>{speechPlaying ? "إيقاف" : "استماع"}</span>
+            {speechPlaying && speechEngine === "device-speech" ? (
+              <span className="prophet-speech-btn__engine" data-engine="device">صوت الجهاز</span>
+            ) : null}
+            {speechPlaying && speechEngine === "azure-neural" ? (
+              <span className="prophet-speech-btn__engine" data-engine="neural">سرد عصبي</span>
+            ) : null}
           </button>
           <div className="prophet-font-controls">
             <button type="button" onClick={() => setFontSize(s => Math.max(13, s - 1))} aria-label="تصغير الخط">أ−</button>
@@ -598,7 +621,7 @@ function ProphetDetailView({
         </div>
         <div className="prophet-detail-lux__hero-content">
           <div className="prophet-detail-lux__hero-star prophet-detail-lux__hero-star--pulse">
-            <IslamicStar size={60} color="var(--prophet-color-on-dark)" />
+            <IslamicStar size={28} color="var(--prophet-color-on-dark)" opacity={0.5} />
           </div>
           <span className="prophet-detail-lux__num-badge">النبي {p.id} من {PROPHETS.length}</span>
           {isUlulAzm && <span className="prophet-detail-lux__azm-badge">أولو العزم</span>}
@@ -1067,7 +1090,7 @@ function QuizView({ onClose }: { onClose: () => void }) {
     return (
       <div className="prophet-quiz">
         <div className="prophet-quiz__done">
-          <IslamicStar size={64} color={IVORY} />
+          <IslamicStar size={28} color={IVORY} opacity={0.45} />
           <h2>انتهى الاختبار!</h2>
           <p className="prophet-quiz__score">{score} / {QUIZ_QUESTIONS.length} ({pct}%)</p>
           <p className="prophet-quiz__remark">
@@ -1267,7 +1290,7 @@ export default function ProphetStoriesPage({
 
             {results.length === 0 ? (
               <div className="prophets-lux-empty">
-                <IslamicStar size={48} color={IVORY} opacity={0.3} />
+                <IslamicStar size={24} color={IVORY} opacity={0.3} />
                 <p>لا توجد نتائج لـ «{search}»</p>
               </div>
             ) : (

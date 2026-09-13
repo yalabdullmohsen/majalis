@@ -280,16 +280,14 @@ export class QuranRecitationService {
   }
 
   private preloadAyah(surah: number, ayah: number, reciterId: string): void {
-    const urls = listAyahAudioUrls(surah, ayah, reciterId);
-    const url = urls[0];
-    if (!url || typeof Audio === "undefined") return;
+    // تدفئة HTTP فقط — عنصر التشغيل المزدوج في AudioEngine هو مصدر الحقيقة
     try {
-      const el = new Audio();
-      el.preload = "auto";
-      el.src = url;
-      el.load();
+      const urls = listAyahAudioUrls(surah, ayah, reciterId);
+      const url = urls[0];
+      if (!url) return;
+      void fetch(url, { method: "GET", mode: "cors", credentials: "omit", cache: "force-cache" }).catch(() => undefined);
     } catch {
-      /* تجاهل */
+      /* ignore */
     }
   }
 
