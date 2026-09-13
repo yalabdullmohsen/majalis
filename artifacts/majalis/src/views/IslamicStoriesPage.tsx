@@ -199,7 +199,7 @@ export default function IslamicStoriesPage() {
     applyPageSeo({
       path: "/stories",
       title: "قصص الصحابة والفتوحات الإسلامية | سُنّة",
-      description: "قصص الصحابة الكرام والفتوحات الإسلامية والأحداث التاريخية، من الهجرة النبوية إلى فتح مكة وما بعدها من عصور الإسلام.",
+      description: "قصص موثّقة من سِيَر الصحابة والفتوحات والتاريخ الإسلامي، مع دروس مستفادة ومصادر، من العهد النبوي إلى العصور اللاحقة.",
       keywords: ["قصص إسلامية", "الصحابة", "الفتوحات الإسلامية", "التاريخ الإسلامي", "السيرة"],
       jsonLd: [
         {
@@ -307,7 +307,7 @@ export default function IslamicStoriesPage() {
     <SectionTemplatePage
       route="/stories"
       title="القصص الإسلامية"
-      subtitle="صحابة · فتوحات · تاريخ — قصص موثّقة بعِبَر واضحة"
+      subtitle="سِيَر صحابة وفتوحات وأحداث — بعِبَر واضحة ومصادر يُحال إليها"
       groupTitle="القصص"
       className="topic-page--islamic-stories"
       eyebrow="التاريخ الإسلامي"
@@ -382,9 +382,15 @@ export default function IslamicStoriesPage() {
           <span>{error}</span>
         </div>
       ) : stories.length === 0 ? (
-        <Empty title="لا توجد قصص معتمدة بعد" text="يمكن اعتماد القصص من لوحة التحكم." />
+        <Empty
+          title="لا توجد قصص معتمدة للعرض حالياً"
+          text="عند توفر قصص معتمدة ستظهر هنا حسب التصنيف والحقبة. يمكنك العودة لاحقاً أو استكشاف السيرة وقصص السور."
+        />
       ) : filtered.length === 0 ? (
-        <Empty text="لا توجد نتائج للبحث أو الفلتر المحدد." />
+        <Empty
+          title="لا نتائج مطابقة"
+          text="جرّب تصنيفاً أو حقبة أخرى، أو ابحث باسم صحابي أو حدث مثل «بدر» أو «الهجرة»."
+        />
       ) : (
         <div className="isp-grid" aria-busy={loading}>
           {filtered.map((story) => (

@@ -39,7 +39,7 @@ export default function OccasionsPage() {
     applyPageSeo({
       path: "/occasions",
       title: "المناسبات الإسلامية والمواسم | سُنّة",
-      description: "تقويم المناسبات الإسلامية والأعياد والمواسم الدينية، رمضان وعيد الفطر وعيد الأضحى والمواسم الهجرية. عرض موثّق ضمن منهج سُنّة",
+      description: "تقويم مناسبات هجرية موثّقة: رمضان والعيدان وعاشوراء وعرفة والعشر، مع أعمال مستحبة بدليل وتنبيه عند غياب تخصيص شرعي.",
       keywords: ["مناسبات إسلامية", "أعياد إسلامية", "رمضان", "عيد الأضحى", "المواسم الدينية"],
       jsonLd: [
         {
@@ -99,7 +99,7 @@ export default function OccasionsPage() {
       <CompactSectionHeader
         eyebrow="المناسبات والدروس"
         title="المناسبات الإسلامية"
-        description="مناسبات معتمدة مع الأعمال المستحبة والأدلة الصحيحة — بتحفّظ علمي واضح."
+        description="عرض مناسبات ثابتة في السنة مع أعمالها المستحبة وأدلتها — وما لا تخصيص له يُبيَّن بلا ابتداع."
         icon={CalendarDays}
         stats={
           !loading
@@ -142,9 +142,12 @@ export default function OccasionsPage() {
       {loading && occasions.length === 0 ? (
         <SkeletonCardGrid count={6} />
       ) : filtered.length === 0 ? (
-        <p className="occasions-filter__count occasions-filter__count--empty">
-          لا توجد مناسبات في هذا الشهر.
-        </p>
+        <div className="occasions-filter__count occasions-filter__count--empty" role="status">
+          <p>لا توجد مناسبات مطابقة لهذا الشهر أو لعبارة البحث.</p>
+          <p className="occasions-filter__empty-hint">
+            جرّب «الكل» في فلتر الشهر، أو ابحث باسم المناسبة أو بعمل مستحب مثل «صيام» أو «دعاء».
+          </p>
+        </div>
       ) : (
         <div className="occasions-list">
           {filtered.map((occasion) => (

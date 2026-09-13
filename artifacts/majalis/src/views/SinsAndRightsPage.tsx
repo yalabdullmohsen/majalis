@@ -225,7 +225,14 @@ function sinSeverityBadge(sev: string) {
 
 function TopicsGrid({ category }: { category: RightsCategory }) {
   const topics = SINS_TOPICS.filter((t) => t.rightsCategory === category);
-  if (!topics.length) return <div className="snr-empty">لا توجد موضوعات في هذا التصنيف حالياً.</div>;
+  if (!topics.length) {
+    return (
+      <div className="snr-empty" role="status">
+        <p>لا توجد موضوعات في هذا التصنيف حالياً.</p>
+        <p className="snr-empty-hint">انتقل إلى تبويب آخر أو راجع «دليل التوبة» لمعرفة المسار العام حسب نوع الحق.</p>
+      </div>
+    );
+  }
   return (
     <div className="snr-topics-grid">
       {topics.map((topic) => (
@@ -423,14 +430,14 @@ export default function SinsAndRightsPage() {
     applyPageSeo({
       path: "/sins-and-rights",
       title: "الذنوب والحقوق | سُنّة",
-      description: "منظومة معرفية شرعية مترابطة تشرح أنواع الذنوب والتمييز بين حقوق الله وحقوق العباد وشروط التوبة الصحيحة لكل نوع، مع الأدلة من القرآن والسنة.",
+      description: "دليل تعليمي يميّز حقوق الله وحقوق العباد، ويبيّن مسار التوبة وردّ المظالم بشروطها — من القرآن والسنة، دون فتوى شخصية.",
       keywords: ["الذنوب والحقوق", "التوبة الصحيحة", "رد المظالم", "حقوق العباد", "حقوق الله", "الكبائر والصغائر", "سُنّة"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "Article",
-          headline: "الذنوب والحقوق — منظومة معرفية شرعية",
-          description: "شرح أنواع الذنوب والتمييز بين حقوق الله وحقوق العباد وشروط التوبة الصحيحة. عرض موثّق ضمن منهج سُنّة",
+          headline: "الذنوب والحقوق — حقوق الله والعباد والتوبة",
+          description: "تمييز حقوق الله وحقوق العباد ومسار التوبة وردّ المظالم بأدلة القرآن والسنة. عرض تعليمي ضمن منهج سُنّة",
           url: "https://www.ssunnah.com/sins-and-rights",
           inLanguage: "ar",
           publisher: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
@@ -451,8 +458,8 @@ export default function SinsAndRightsPage() {
         <div className="snr-hero-eyebrow">سُنّة</div>
         <h1 className="snr-hero-title">الذنوب والحقوق</h1>
         <p className="snr-hero-desc">
-          منظومة معرفية شرعية مترابطة تساعدك على فهم أنواع الذنوب، والتمييز بين الحقوق،
-          ومعرفة طريق التوبة الصحيح لكل نوع — بمنهج أهل السنة والجماعة والاعتماد على القرآن والسنة الصحيحة.
+          تعلّم الفرق بين حق الله وحق العبد، وما يُكفّر بالاستغفار وما يحتاج ردّاً أو عفواً،
+          ومسار التوبة العام لكل نوع — من القرآن والسنة الصحيحة، وللمسائل الفردية يُسأل أهل العلم.
         </p>
       </div>
 
