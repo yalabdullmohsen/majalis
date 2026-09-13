@@ -294,7 +294,7 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
 }
 
 .tasbeeh-counter__preset {
-  min-height: 34px;
+  min-height: 44px;
   padding: 0.25rem 0.65rem;
   border-radius: var(--ds-radius-full);
   border: 1px solid var(--majalis-line);

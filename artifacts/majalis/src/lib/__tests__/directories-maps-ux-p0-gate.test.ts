@@ -100,4 +100,18 @@ assert.match(asstCss, /bottom-nav-height|inset-bottom/, "inset المساعد");
 const fab = read("src/components/FloatingBackButton.tsx");
 assert.match(fab, /FLOATING_BACK_DISABLED/, "FAB معطّل");
 
+
+// ── Shared root hardening (P0+) ───────────────────────────────────
+assert.match(map, /mapReadyRef/, "جاهزية الخريطة بمرجع لا عبر status فقط");
+assert.doesNotMatch(map, /\}, \[landmarks, status\]\)/, "لا إعادة علامات بسبب status");
+assert.match(media, /width=\{[^}]*640/, "أبعاد جوهرية للصورة");
+assert.match(media, /resolvedAlt/, "Alt مُحلّ من الاسم/الاحتياطي");
+assert.match(univCard, /موثّقة في الدليل/, "شارة الجامعات بلغة الدليل");
+assert.match(read("src/styles/components/university-card.css"), /\.compare-bar\s*\{/, "أنماط شريط المقارنة");
+const fabWidget = read("src/components/assistant/AssistantFloatingWidget.tsx");
+assert.match(fabWidget, /isAssistantFeatureEnabled/, "FAB المساعد يحترم علم المنتج");
+assert.match(read("src/index.css"), /assistant-fab[\s\S]{0,220}bottom-nav-height/, "FAB فوق الشريط السفلي");
+assert.match(read("src/styles/pages/tasbih.css"), /bottom-nav-height/, "inset التسبيح");
+assert.match(tasbeeh, /window\.confirm\([\s\S]*تصفير/, "تصفير (كل الأوضاع) يحتاج تأكيدًا");
+
 console.log("directories-maps-ux-p0-gate.test.ts: ok");

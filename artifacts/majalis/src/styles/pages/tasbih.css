@@ -1,3 +1,10 @@
+/* inset أسفل الشريط — مشترك لصفحة التسبيح */
+.tasbih-page,
+.tasbih-pro-page,
+.utility-screen:has(.tasbeeh-counter) {
+  padding-bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 1.5rem);
+}
+
 /* Tasbih page — deferred from index.css */
 .tasbih-pro-page {
   max-width: 66rem;

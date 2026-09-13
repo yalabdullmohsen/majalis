@@ -1,3 +1,4 @@
+import "@/styles/components/university-card.css";
 import { Link } from "wouter";
 import { useCompare } from "./CompareContext";
 

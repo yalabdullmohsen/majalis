@@ -45,7 +45,7 @@ export const UniversityCard = memo(function UniversityCard({ university: u, comp
           <MapPin size={13} />
           <span>{u.city ? `${u.city}، ` : ""}{u.country}</span>
           {u.is_verified && (
-            <span className="me-auto univ-badge univ-badge--verified">✓ موثقة</span>
+            <span className="me-auto univ-badge univ-badge--verified">موثّقة في الدليل</span>
           )}
         </div>
 
