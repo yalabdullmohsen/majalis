@@ -11,6 +11,7 @@ import {
   computeContentBottomInsetForBack,
   BACK_CONTROL_SIZE_PX,
 } from "@/lib/global-back-layout";
+import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { normalizeNavPath } from "@/lib/navigation-back";
 
 function readCssPx(varName: string, fallback: number): number {
@@ -54,11 +55,13 @@ export function GlobalBackControlHost() {
   const hostRef = useRef<HTMLDivElement>(null);
   const [location] = useLocation();
   const path = normalizeNavPath(location);
-  /** الرئيسية فقط — لا نخفي على /profile أو الإعدادات أو أقسام اللوبي */
+  /** الرئيسية + المصحف فقط — لا نخفي على /profile أو الإعدادات أو أقسام اللوبي */
   const hideOnHome = path === "/";
+  const hideOnMushaf = isImmersiveChromePath(path);
+  const hideBack = hideOnHome || hideOnMushaf;
 
   useLayoutEffect(() => {
-    if (hideOnHome) return;
+    if (hideBack) return;
     const sync = () => syncBackLayoutVars(hostRef.current);
     sync();
     window.addEventListener("resize", sync);
@@ -74,9 +77,9 @@ export function GlobalBackControlHost() {
       window.visualViewport?.removeEventListener("resize", sync);
       mo.disconnect();
     };
-  }, [hideOnHome]);
+  }, [hideBack]);
 
-  if (hideOnHome) return null;
+  if (hideBack) return null;
 
   return (
     <div

@@ -659,11 +659,11 @@ button.floating-back-btn[data-floating-back="1"] {
 button.app-back-btn--bar[data-fixed-back-bar="1"] {
   position: fixed;
   z-index: var(--z-fab, 220);
-  /* يمين الشاشة فعليًا (شاشة المستخدم والأقسام) — لا يعتمد على اتجاه السطر فقط */
+  /* يمين الشاشة فعليًا دائمًا — خصائص فيزيائية فقط (لا inset-inline في RTL) */
   right: max(0.75rem, var(--inset-right, 0px));
   left: auto;
-  inset-inline-start: auto;
-  inset-inline-end: max(0.75rem, var(--inset-right, 0px));
+  inset-inline-start: unset;
+  inset-inline-end: unset;
   bottom: var(--global-back-bottom, calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 0.75rem));
   top: auto;
   display: inline-flex;
@@ -730,6 +730,17 @@ html[data-audio-dock="1"] .app-back-btn--bar.fixed-back-bar {
     var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + var(--audio-dock-h, 72px) + 0.75rem
   );
 }
+
+/* المصحف الغمري: لا زر رجوع عام إطلاقًا */
+html.chrome-immersive .app-back-btn--bar.fixed-back-bar,
+html.chrome-immersive button.app-back-btn--bar[data-fixed-back-bar="1"],
+html.chrome-immersive .global-back-control-host,
+html.chrome-immersive [data-global-back-control-host] {
+  display: none !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
 
 .fiqh-book-grid.kx-layout--library {
   display: flex;

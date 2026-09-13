@@ -17,14 +17,25 @@ assert.match(fab, /FIXED_BACK_BAR_ENABLED/);
 assert.match(fab, /variant="bar"/);
 assert.match(fab, /AppBackButton/);
 assert.match(fab, /autoHideFloating=\{false\}/, "الشريط لا يُخفى على /profile والإعدادات");
-assert.match(fab, /path === "\/"|hideOnHome/, "إخفاء على الرئيسية فقط");
+assert.match(fab, /path === "\/"|hideOnHome/, "إخفاء على الرئيسية");
+assert.match(fab, /isImmersiveChromePath|hideOnMushaf/, "إخفاء على المصحف");
+assert.match(fab, /hideBack/, "إخفاء موحّد للرئيسية والمصحف");
 assert.doesNotMatch(fab, /ChevronUp/);
 
 const backCss = read("src/styles/knowledge-experience.css");
 assert.match(backCss, /\.app-back-btn--bar\.fixed-back-bar/, "شريط ثابت");
 assert.match(backCss, /right:\s*max\(0\.75rem,\s*var\(--inset-right/, "أسفل يمين فعليًا");
+assert.match(backCss, /inset-inline-end:\s*unset/, "لا منطق RTL يقلب الزر لليسار");
+assert.match(backCss, /html\.chrome-immersive[\s\S]{0,220}?display:\s*none/, "إخفاء CSS في المصحف");
 
 const appBack = read("src/components/common/AppBackButton.tsx");
+assert.match(appBack, /isImmersiveChromePath/, "إخفاء المصحف في AppBackButton");
+assert.match(
+  appBack,
+  /variant === "floating" \|\| variant === "bar"[\s\S]{0,120}?isImmersiveChromePath/,
+  "إخفاء المصحف بلا شرط autoHideFloating",
+);
+
 assert.match(appBack, /goBackOrFallback|goBackOrFallback/);
 assert.match(appBack, /fallbackHref/);
 assert.match(appBack, /onPointerDown/);
