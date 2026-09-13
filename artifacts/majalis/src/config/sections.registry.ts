@@ -258,7 +258,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     id: "quran",
     label: "مركز القرآن الكريم",
     navLabel: "القرآن",
-    subtitle: "المصحف والتلاوة والتفسير",
+    subtitle: "المصحف والتلاوة والتفسير وعلوم القرآن في باب واحد",
     route: "/quran-hub",
     icon: BookOpen,
     group: "sciences",
@@ -324,7 +324,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "quran-surahs",
     label: "فهرس السور",
-    subtitle: "تصفّح سور القرآن الكريم",
+    subtitle: "تصفّح السور بمواضعها وعدد آياتها وترتيبها في المصحف",
     route: "/quran/surahs",
     icon: FileStack,
     group: "sciences",
@@ -337,7 +337,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "tafsir",
     label: "التفسير",
-    subtitle: "تفاسير وآيات مختارة",
+    subtitle: "مداخل في التفسير مع آيات وشروح مختارة للفهم",
     route: "/tafsir",
     icon: BookOpenCheck,
     group: "sciences",
@@ -430,7 +430,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "quran-figures",
     label: "الذين ذُكروا في القرآن",
-    subtitle: "أعلام ومواضع ذكر — بلا أنبياء (قسمهم مستقل)",
+    subtitle: "أعلام ذُكروا في القرآن — دون الأنبياء (قسمهم مستقل)",
     route: "/quran/people",
     icon: Users,
     group: "stories",
@@ -486,7 +486,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "flashcards",
     label: "بطاقات حفظ القرآن",
-    subtitle: "حفظ ومراجعة آيات القرآن",
+    subtitle: "بطاقات لحفظ آيات القرآن ومراجعتها بانتظام",
     route: "/flashcards",
     icon: Bookmark,
     group: "learning",
@@ -541,7 +541,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "lessons-archive",
     label: "الأرشيف",
-    subtitle: "الدروس السابقة المسجّلة",
+    subtitle: "أرشيف الدروس المسجّلة للعودة إليها والمراجعة",
     route: "/lessons/archive",
     icon: Clock,
     group: "learning",
@@ -554,7 +554,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "quran-search",
     label: "البحث في القرآن",
-    subtitle: "ابحث في آيات المصحف",
+    subtitle: "ابحث في نص المصحف بالكلمة أو المقطع",
     route: "/quran/search",
     icon: Search,
     group: "sciences",
@@ -582,7 +582,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "aqidah",
     label: "العقيدة",
-    subtitle: "أصول الإيمان والتوحيد",
+    subtitle: "أصول الإيمان والتوحيد على منهج أهل السنة",
     route: "/tawhid",
     icon: Shield,
     group: "sciences",
@@ -610,7 +610,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "quran-sciences",
     label: "القرآن وعلومه",
-    subtitle: "علوم القرآن والتجويد",
+    subtitle: "بوابة قديمة لعلوم القرآن والتجويد (مُدمَجة في مركز القرآن)",
     route: "/quran-sciences-legacy",
     icon: BookMarked,
     group: "sciences",
@@ -623,7 +623,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "hadith",
     label: "الحديث وعلومه",
-    subtitle: "أحاديث وشروح ومصطلح",
+    subtitle: "أحاديث مختارة مع شروح ومصطلح الحديث",
     route: "/hadith",
     icon: ScrollText,
     group: "sciences",
@@ -748,7 +748,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "usul-fiqh",
     label: "أصول الفقه",
-    subtitle: "قواعد الاستنباط والأدلة",
+    subtitle: "قواعد الاستنباط ومصادر الأحكام الشرعية",
     route: "/fiqh/usul",
     icon: Network,
     group: "sciences",
@@ -827,7 +827,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "prophets",
     label: "قصص الأنبياء",
-    subtitle: "قصص الأنبياء في القرآن للعبرة",
+    subtitle: "قصص الأنبياء المذكورين في القرآن للعبرة والاقتداء",
     route: "/prophets",
     icon: BookHeart,
     group: "stories",
@@ -853,7 +853,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "nations",
     label: "الأمم السابقة",
-    subtitle: "أمم سابقة ورد ذكرها في القرآن",
+    subtitle: "أمم وأقوام ورد ذكرها في القرآن للعبرة",
     route: "/nations",
     icon: Church,
     group: "stories",
@@ -919,7 +919,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "research",
     label: "الأبحاث الشرعية",
-    subtitle: "رسائل جامعية وأبحاث وصفية",
+    subtitle: "فهرس رسائل جامعية وأبحاث شرعية وصفية",
     route: "/academic-research",
     icon: FlaskConical,
     group: "library",
@@ -946,7 +946,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "universities",
     label: "دليل الجامعات الشرعية",
-    subtitle: "جامعات وكليات شرعية",
+    subtitle: "دليل جامعات وكليات الدراسات الشرعية",
     route: "/universities",
     icon: Building2,
     group: "library",
@@ -1012,7 +1012,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "wasaya-nabawiyya",
     label: "الوصايا النبوية",
-    subtitle: "وصايا جامعة من هديه ﷺ",
+    subtitle: "وصايا نبوية جامعة للتذكير والعمل",
     route: "/wasaya-nabawiyya",
     icon: Scroll,
     group: "worship",
@@ -1048,7 +1048,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "wird",
     label: "الورد اليومي",
-    subtitle: "ورد قرآن وذكر يومي",
+    subtitle: "ورد يومي من القرآن والذكر مع تتبّع الالتزام",
     route: "/daily-wird",
     icon: Sun,
     group: "worship",
@@ -1060,7 +1060,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "qibla",
     label: "القبلة",
-    subtitle: "اتجاه القبلة والموقع",
+    subtitle: "حدد اتجاه القبلة من موقعك الحالي",
     route: "/qibla",
     icon: MapPin,
     group: "worship",
@@ -1072,7 +1072,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "hijri-calendar",
     label: "تقويم الدروس",
-    subtitle: "جدول الدروس والمواعيد",
+    subtitle: "جدول مواعيد الدروس والفعاليات العلمية",
     route: "/calendar",
     icon: Calendar,
     group: "worship",
@@ -1100,7 +1100,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "progress",
     label: "متابعة التقدّم",
-    subtitle: "تتبع إنجازك العلمي",
+    subtitle: "تتبع إنجازك في الدروس والمراجعة",
     route: "/stats",
     icon: Award,
     group: "learning",
@@ -1112,7 +1112,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "assistant",
     label: "المساعد العلمي",
-    subtitle: "مساعدة تفاعلية في العلم",
+    subtitle: "مساعد تفاعلي للأسئلة في العلوم الشرعية",
     route: "/assistant",
     icon: Wand2,
     group: "learning",
@@ -1140,7 +1140,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "account",
     label: "حسابي",
-    subtitle: "الملف الشخصي والجلسة",
+    subtitle: "ملفك الشخصي وجلستك ومتابعة تعلّمك",
     route: "/my-learning",
     icon: User,
     group: "account",
@@ -1152,7 +1152,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "settings",
     label: "الإعدادات",
-    subtitle: "تفضيلات التطبيق العامة",
+    subtitle: "تفضيلات المظهر والإشعارات واللغة",
     route: "/settings",
     icon: Settings,
     group: "account",
@@ -1165,7 +1165,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "athan-settings",
     label: "إعدادات الأذان",
-    subtitle: "تنبيهات الصلاة والأذان",
+    subtitle: "صوت الأذان وتنبيهات مواقيت الصلاة",
     route: "/adhan-settings",
     icon: Volume2,
     group: "account",
@@ -1177,7 +1177,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "notifications",
     label: "التنبيهات",
-    subtitle: "إشعارات المحتوى والورد",
+    subtitle: "إشعارات الورد والدروس والمحتوى الجديد",
     route: "/notification-settings",
     icon: Bell,
     group: "account",
@@ -1189,7 +1189,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "support",
     label: "الدعم والتواصل",
-    subtitle: "تواصل ومساعدة المستخدم",
+    subtitle: "تواصل معنا للمساعدة والاقتراحات",
     route: "/support",
     icon: HelpCircle,
     group: "account",
@@ -1202,7 +1202,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "about",
     label: "عن سُنّة",
-    subtitle: "رؤية المنصة ورسالتها",
+    subtitle: "رؤية سُنّة ورسالتها ومنهج العرض",
     route: "/about",
     icon: Info,
     group: "account",
@@ -1215,7 +1215,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "methodology",
     label: "منهجية التوثيق",
-    subtitle: "منهج العرض والتوثيق",
+    subtitle: "كيف نعرض المحتوى ونوثّق مصادره",
     route: "/methodology",
     icon: FileText,
     group: "account",
@@ -1227,7 +1227,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "sources",
     label: "المصادر والتراخيص",
-    subtitle: "مراجع ومصادر المحتوى",
+    subtitle: "مراجع المحتوى وتراخيص البيانات",
     route: "/data-licenses",
     icon: FolderOpen,
     group: "account",
@@ -1239,7 +1239,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "lesson-sources",
     label: "دليل الجهات",
-    subtitle: "حسابات الدروس والحلقات",
+    subtitle: "حسابات الجهات المنظمة للدروس والحلقات",
     route: "/sources",
     icon: Radio,
     group: "learning",
@@ -1264,7 +1264,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "privacy",
     label: "الخصوصية",
-    subtitle: "سياسة ومركز الخصوصية",
+    subtitle: "سياسة الخصوصية ومركز إدارة بياناتك",
     route: "/privacy",
     icon: Lock,
     group: "account",
@@ -1277,7 +1277,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "terms",
     label: "شروط الاستخدام",
-    subtitle: "شروط وأحكام الاستخدام",
+    subtitle: "شروط استخدام منصة سُنّة وأحكامها",
     route: "/terms",
     icon: Landmark,
     group: "account",
@@ -1289,7 +1289,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "delete-account",
     label: "حذف الحساب",
-    subtitle: "طلب حذف الحساب نهائياً",
+    subtitle: "طلب حذف حسابك وبياناتك نهائياً",
     route: "/delete-account",
     icon: Trash2,
     group: "account",
