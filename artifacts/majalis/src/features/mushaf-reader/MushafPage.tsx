@@ -132,23 +132,28 @@ export const MushafPage = memo(function MushafPage({
           ["--mm-qpc-family"]: fontFamily,
         } as CSSProperties
       }
-      aria-label={`صفحة المصحف ${footerPage}`}
+      aria-label={`صفحة المصحف ${toArabicDigits(footerPage)}، الجزء ${toArabicDigits(layout.juzNumber)}، الحزب ${toArabicDigits(layout.hizbNumber)}`}
     >
+      {/*
+        MushafPageMetadataHeader — رأس مصحف أصيل:
+        الجزء بطرف البداية (يمين RTL) · الحزب بطرف النهاية (يسار RTL).
+        اسم السورة غير موجود هنا — يظهر فقط داخل MushafSurahFrame عند بداية سورة.
+      */}
       <header
         className="nm-page__header"
         data-layout="pageHeader"
+        data-component="MushafPageMetadataHeader"
+        data-testid="mushaf-page-metadata-header"
         style={{ height: "var(--mushaf-header-height, 36px)", minHeight: "var(--mushaf-header-height, 36px)" }}
+        role="group"
+        aria-label={`الجزء ${toArabicDigits(layout.juzNumber)}، الحزب ${toArabicDigits(layout.hizbNumber)}`}
       >
-        <div className="nm-page__header-stack">
-          <span className="nm-page__header-surah">
-            {layout.headerSurahName.startsWith("سورة")
-              ? layout.headerSurahName
-              : `سورة ${layout.headerSurahName}`}
-          </span>
-          <span className="nm-page__header-meta">
-            {`الجزء ${toArabicDigits(layout.juzNumber)} • الحزب ${toArabicDigits(layout.hizbNumber)}`}
-          </span>
-        </div>
+        <span className="nm-page__header-juz" data-testid="mushaf-header-juz">
+          {`الجزء ${toArabicDigits(layout.juzNumber)}`}
+        </span>
+        <span className="nm-page__header-hizb" data-testid="mushaf-header-hizb">
+          {`الحزب ${toArabicDigits(layout.hizbNumber)}`}
+        </span>
       </header>
 
       <div className="nm-page__stage" data-testid="mushaf-page-frame">

@@ -185,37 +185,23 @@
   visibility: visible;
 }
 
+/*
+ * MushafPageMetadataHeader — رأس مصحف أصيل (جزء | حزب) على طرفين.
+ * ارتفاع geometry ثابت 36px — بلا اسم سورة، بلا نقطة وسطية، بلا وسط الصفحة.
+ */
 .nm-page__header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: flex-end;
-  justify-content: center;
-  /* رأس ملتصق بمتن الصفحة — ارتفاع geometry ثابت 36px؛ المحتوى أسفل الخانة يقرّب من الإطار */
+  column-gap: 0.5rem;
   padding: 0 0.15rem 0.12rem;
   color: var(--mushaf-meta-color, var(--nm-meta));
   letter-spacing: 0;
   user-select: none;
   overflow: visible;
   min-width: 0;
-}
-
-/* سطر أساسي (سورة) + سطر ثانوي (جزء•حزب) — بلا ازدحام يسار */
-.nm-page__header-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.08rem;
-  min-width: 0;
-  max-width: 100%;
-  text-align: center;
-}
-
-.nm-page__header-surah,
-.nm-page__header-meta,
-.nm-page__header-juz {
-  white-space: nowrap;
-  color: var(--mushaf-meta-color, var(--nm-meta));
-  opacity: 1;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* علامة حزب/ربع — absolute خفيفة بلا إزاحة شبكة */
@@ -223,35 +209,44 @@
 .nm-page__section-mark{position:absolute;inset-block-start:.12rem;inset-inline-start:0;width:2px;height:.7rem;border-radius:1px;background:color-mix(in srgb,var(--nm-gold,#b8a06a) 52%,transparent);opacity:.5;pointer-events:none;z-index:1}
 .nm-page__section-mark[data-mark="rub"]{height:.4rem;opacity:.38;background:color-mix(in srgb,var(--nm-meta,#6b6358) 48%,transparent)}
 
-
-/* اسم السورة — سطر أساسي أوضح، بلا قصّ */
-.nm-page__header-surah {
+/* الجزء: طرف البداية (يمين في RTL) · الحزب: طرف النهاية (يسار في RTL) */
+.nm-page__header-juz,
+.nm-page__header-hizb {
   display: block;
   min-width: 0;
   max-width: 100%;
   overflow: visible;
   text-overflow: clip;
   white-space: nowrap;
-  font-size: 0.84rem;
-  font-weight: 800;
-  line-height: 1.1;
-  color: color-mix(in srgb, var(--mushaf-meta-color, var(--nm-meta)) 88%, var(--nm-ink));
+  font-size: 0.72rem;
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  color: color-mix(in srgb, var(--mushaf-meta-color, var(--nm-meta)) 90%, var(--nm-ink));
+  opacity: 0.9;
+  pointer-events: none;
 }
 
-/* الجزء • الحزب — سطر ثانوي أصغر، غير ملاصق */
-.nm-page__header-meta,
 .nm-page__header-juz {
-  display: block;
-  min-width: 0;
-  max-width: 100%;
-  overflow: visible;
-  text-overflow: clip;
-  white-space: nowrap;
-  font-size: 0.68rem;
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: 0.01em;
-  opacity: 0.82;
+  justify-self: start;
+  text-align: start;
+}
+
+.nm-page__header-hizb {
+  justify-self: end;
+  text-align: end;
+}
+
+html.dark .nm-page__header-juz,
+html.dark .nm-page__header-hizb,
+html[data-theme="dark"] .nm-page__header-juz,
+html[data-theme="dark"] .nm-page__header-hizb,
+.nm-root[data-mushaf-theme="night"] .nm-page__header-juz,
+.nm-root[data-mushaf-theme="night"] .nm-page__header-hizb,
+.nm-root[data-mushaf-theme="oled"] .nm-page__header-juz,
+.nm-root[data-mushaf-theme="oled"] .nm-page__header-hizb {
+  color: color-mix(in srgb, var(--mushaf-meta-color, var(--nm-meta)) 82%, #f0e6ce);
+  opacity: 0.92;
 }
 
 /* منطقة النص — بلا إطار */
