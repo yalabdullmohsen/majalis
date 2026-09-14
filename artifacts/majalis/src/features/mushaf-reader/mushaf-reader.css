@@ -14,11 +14,11 @@
    * Sunnah Warm Yellow Ivory — ورق عاجي أصفر هادئ + ذهب مطبعي مطفأ.
    * مرجع بصري فقط؛ بلا مساس بالنص/الـmapping/أبعاد العلامات.
    */
-  --mushaf-paper-warm-yellow: #fbf4d7;
+  --mushaf-paper-warm-yellow: #fcf6e3;
   --mushaf-paper-warm-yellow-dark: #2a2418;
-  --mushaf-paper-edge: #d7b73c;
-  --mushaf-paper-inner-glow: #fff9e5;
-  --mushaf-paper-reading-surface: #fcf5db;
+  --mushaf-paper-edge: #c9b06a;
+  --mushaf-paper-inner-glow: #fffef6;
+  --mushaf-paper-reading-surface: #fffbef;
   --mushaf-paper-light: var(--mushaf-paper-warm-yellow);
   --mushaf-paper-dark: var(--mushaf-paper-warm-yellow-dark);
   --mushaf-ink: #1c160e;
@@ -57,8 +57,8 @@
   --mushaf-body-top: var(--mushaf-header-height);
   --mushaf-body-height: auto;
   --mushaf-side-pad: max(0.7rem, var(--inset-inline-start, var(--inset-left, 0px)), var(--inset-inline-end, var(--inset-right, 0px)));
-  /* حجم العلامة ثابت (geometry) — الوضوح عبر الحدود/الوزن فقط */
-  --mushaf-ayah-mark-size: 0.98em;
+  /* وردة الآية أوضح بصريًا (+~17%) — بلا تغيير fontSize/lineHeight للنص القرآني */
+  --mushaf-ayah-mark-size: 1.15em;
 
   /* طبقات سفلية داخل القارئ */
   --bottom-nav-height: 64px;
@@ -332,40 +332,24 @@ html[data-theme="dark"] .nm-page__header-hizb,
   background: transparent;
 }
 
-/* AuthenticWarmMushafPageFrame — إطار ذهبي رفيع هادئ (أخف من علامات الآيات) */
+/*
+ * AuthenticWarmMushafPageFrame — Comfort Pass:
+ * الإطار الذهبي الخارجي كان يسرق الانتباه من النص → مخفي بالكامل بصريًا.
+ * يبقى العنصر في الـDOM للتوافق مع البوابات؛ الكارتوش/الفاتحة/علامات الآيات دون مساس.
+ */
 .nm-page__ornament-frame {
   position: absolute;
-  inset: 0.2rem;
+  inset: 0;
   z-index: 0;
   pointer-events: none;
-  border-radius: 0;
-  border: 0.7px solid color-mix(in srgb, var(--mushaf-printed-gold) 48%, var(--mushaf-paper-edge));
-  box-shadow:
-    inset 0 0 0 0.7px color-mix(in srgb, var(--mushaf-paper-warm-yellow) 82%, var(--mushaf-printed-gold) 18%),
-    inset 0 0 0 1.55px color-mix(in srgb, var(--mushaf-printed-gold-border) 22%, transparent);
-  opacity: 0.55;
+  border: 0;
+  box-shadow: none;
+  opacity: 0;
+  visibility: hidden;
 }
 .nm-page__ornament-frame::before,
 .nm-page__ornament-frame::after {
-  content: "";
-  position: absolute;
-  width: 0.38rem;
-  height: 0.38rem;
-  border: 0.7px solid color-mix(in srgb, var(--mushaf-printed-gold) 40%, transparent);
-  pointer-events: none;
-  opacity: 0.55;
-}
-.nm-page__ornament-frame::before {
-  inset-block-start: -0.05rem;
-  inset-inline-start: -0.05rem;
-  border-inline-end: 0;
-  border-block-end: 0;
-}
-.nm-page__ornament-frame::after {
-  inset-block-end: -0.05rem;
-  inset-inline-end: -0.05rem;
-  border-inline-start: 0;
-  border-block-start: 0;
+  content: none;
 }
 
 /*
@@ -407,8 +391,10 @@ html[data-theme="dark"] .nm-page__header-hizb,
 
 html.dark .nm-page__ornament-frame,
 html[data-theme="dark"] .nm-page__ornament-frame {
-  opacity: 0.55;
-  border-color: color-mix(in srgb, var(--mushaf-gold-secondary) 50%, #2a3328);
+  opacity: 0;
+  visibility: hidden;
+  border: 0;
+  box-shadow: none;
 }
 
 html.dark .nm-page__fatiha-medallion,
@@ -810,7 +796,7 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
 
 /*
  * SunnahVerseRosette — زهرة مصحفية ناعمة (8 فصوص قصيرة مدمجة).
- * نفس الصندوق 0.98em — بلا نجمة حادة / أشعة / ظل / توهج / scale.
+ * Comfort Pass: 1.15em (~+17%) لوضوح الرقم — بلا نجمة/أشعة/ظل/توهج، بلا overflow.
  */
 .nm-ayah-mark {
   position: relative;
@@ -822,15 +808,15 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   height: var(--mushaf-ayah-mark-size);
   min-width: var(--mushaf-ayah-mark-size);
   min-height: var(--mushaf-ayah-mark-size);
-  margin-inline: 0.05em;
+  margin-inline: 0.04em;
   padding: 0;
-  vertical-align: -0.08em;
+  vertical-align: -0.1em;
   border-radius: 0;
   border: 1px solid var(--mushaf-verse-marker-border);
   background: var(--mushaf-verse-marker-fill);
   color: var(--mushaf-verse-marker-number);
   font-family: inherit;
-  font-size: 0.58em;
+  font-size: 0.62em;
   font-weight: 700;
   line-height: 1;
   overflow: hidden;

@@ -63,8 +63,7 @@ import "./styles/sections-calm-polish.css";
 import "./styles/section-cards-theme.css";
 /* صقل منتج سُنّة — توكنات/بطاقات/درج/بحث/ليلي */
 import "./styles/ssunnah-ux-polish.css";
-import "./styles/ssunnah-semantic-tokens.css";
-import "./styles/ssunnah-card-unify.css";
+/* semantic-tokens + card-unify مؤجّلان — ميزانية CSS الحرج ≤60KiB gzip */
 /* Green Surface System — يفوز على تلميع الأقسام الأبيض القديم */
 import "./styles/green-surface-system.css";
 /* استرداد ليلي P0 — متزامن؛ القواعد مقيّدة بـ html.dark لتقليل theme flash */
@@ -103,6 +102,8 @@ if (
 // طبقات مظهر غير حرجة — بعد load + idle حتى لا تنافس LCP (كانت void import فوريًا)
 function loadNonCriticalCss() {
   /* طبقات تحديث الواجهة + رموز ds-* — مؤجّلة تحت ميزانية CSS الحرج (<60KiB gzip) */
+  void import("./styles/ssunnah-semantic-tokens.css");
+  void import("./styles/ssunnah-card-unify.css");
   void import("./styles/modern-ui-refresh.css");
   void import("./styles/ssunnah-ds-canonical.css");
   void import("./styles/m2030/foundation.css");

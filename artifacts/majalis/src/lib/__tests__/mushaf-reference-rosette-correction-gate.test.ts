@@ -22,7 +22,7 @@ assert.match(css, new RegExp(`--mushaf-paper-warm-yellow:\\s*${mushafPaperWarmYe
 assert.match(css, new RegExp(`--mushaf-verse-marker-fill:\\s*${mushafVerseMarkerFill}`, "i"));
 assert.match(css, new RegExp(`--mushaf-verse-marker-border:\\s*${mushafVerseMarkerBorder}`, "i"));
 assert.match(css, new RegExp(`--mushaf-verse-marker-number:\\s*${mushafVerseMarkerNumber}`, "i"));
-assert.match(css, /--mushaf-ayah-mark-size:\s*0\.98em/);
+assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
 
 assert.match(css, /SunnahVerseRosette/);
 assert.match(css, /\.nm-ayah-mark[\s\S]*?clip-path:\s*polygon/);
