@@ -544,7 +544,7 @@
     "sunnah-ai-narration-p0-gate": "node --import tsx src/lib/__tests__/sunnah-ai-narration-back-dark-p0-gate.test.ts",
     "verify:sunnah-ai-narration-p0": "node --import tsx src/lib/__tests__/sunnah-ai-narration-back-dark-p0-gate.test.ts",
     "test:mushaf-ayah-nav-highlight": "node --import tsx src/lib/__tests__/mushaf-ayah-navigation-highlight-gate.test.ts",
-    "test:mushaf-signature-p0-baseline": "node --import tsx src/lib/__tests__/mushaf-signature-p0-baseline-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-immersive-reader-chrome-gate.test.ts"
+    "test:mushaf-signature-p0-baseline": "node --import tsx src/lib/__tests__/mushaf-signature-p0-baseline-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-immersive-reader-chrome-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-authentic-p0-baseline-gate.test.ts"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
