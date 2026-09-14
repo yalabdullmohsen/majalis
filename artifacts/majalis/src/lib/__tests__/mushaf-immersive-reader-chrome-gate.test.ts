@@ -61,7 +61,7 @@ assert.match(css, /nm-surah-banner__ornament/);
 assert.match(css, /clip-path:\s*polygon/);
 assert.doesNotMatch(css, /\.nm-surah-banner__ornament\s*\{[^}]*linear-gradient\(\s*45deg/);
 assert.doesNotMatch(css, /\.nm-surah-banner__ornament\s*\{[^}]*linear-gradient\(\s*-45deg/);
-assert.match(css, /\.nm-surah-banner\s*\{[^}]*border-radius:\s*0\.2rem/);
+assert.match(css, /\.nm-surah-banner\s*\{[^}]*border-radius:\s*0(?:px|rem)?/);
 const tafsir = read("src/features/mushaf-madinah/MushafTafsirSheet.tsx");
 assert.match(tafsir, /mushaf-tafsir-ref/);
 const metaStart = tafsir.indexOf("mm-tafsir__meta");

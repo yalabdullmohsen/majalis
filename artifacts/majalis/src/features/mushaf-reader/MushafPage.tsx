@@ -160,7 +160,7 @@ export const MushafPage = memo(function MushafPage({
         {/* زخارف أصلية لسُنّة — طبقات absolute بلا تأثير على شبكة ١٥ أو قياس الخط */}
         <div
           className="nm-page__ornament-frame"
-          data-component="AuthenticMushafPageFrame"
+          data-component="AuthenticWarmMushafPageFrame"
           data-testid="authentic-mushaf-page-frame"
           aria-hidden="true"
         />
@@ -169,6 +169,14 @@ export const MushafPage = memo(function MushafPage({
             className="nm-page__fatiha-medallion"
             data-component="SunnahFatihaMedallion"
             data-testid="sunnah-fatiha-medallion"
+            aria-hidden="true"
+          />
+        ) : null}
+        {isLeadP2 ? (
+          <div
+            className="nm-page__fatiha-medallion nm-page__baqarah-medallion"
+            data-component="SunnahBaqarahMedallion"
+            data-testid="sunnah-baqarah-medallion"
             aria-hidden="true"
           />
         ) : null}

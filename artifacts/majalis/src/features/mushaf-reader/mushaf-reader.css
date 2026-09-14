@@ -10,26 +10,45 @@
   --mushaf-body-width: min(100%, 28rem);
   --mushaf-line-height: 1.85;
   --mushaf-font-weight: 400;
-  /* Warm Printed Ivory — أفتح قليلًا، غير أبيض خالص، مريح للقراءة الطويلة */
-  --mushaf-paper-light: #fcf7ec;
-  --mushaf-paper-dark: #1a1c18;
-  --mushaf-ink-light: #1a1510;
-  --mushaf-ink-dark: #f0e6ce;
   /*
-   * Printed Mushaf Gold — ذهب ورقي هادئ عسلي مائل للبني، غير معدني/مشبع.
-   * Tokens: mushafVerseMarkerGold / Border / Text
+   * Sunnah Warm Yellow Printed Mushaf — ورق أصفر عاجي + ذهب خردلي مطبعي.
+   * مرجع بصري فقط؛ بلا مساس بالنص/الـmapping/أبعاد العلامات.
    */
-  --mushaf-verse-marker-gold: #a3864d;
-  --mushaf-verse-marker-border: #8a7042;
-  --mushaf-verse-marker-text: #6b5530;
-  --mushaf-gold-primary: var(--mushaf-verse-marker-gold);
-  --mushaf-gold-secondary: #b59a63;
+  --mushaf-paper-warm-yellow: #f8f1d4;
+  --mushaf-paper-warm-yellow-dark: #2a2418;
+  --mushaf-paper-edge: #e0cc7a;
+  --mushaf-paper-inner-glow: #fffbe8;
+  --mushaf-paper-light: var(--mushaf-paper-warm-yellow);
+  --mushaf-paper-dark: var(--mushaf-paper-warm-yellow-dark);
+  --mushaf-ink: #1c160e;
+  --mushaf-ink-primary: var(--mushaf-ink);
+  --mushaf-ink-secondary: #3a2e1a;
+  --mushaf-waqf-ink: #2a2014;
+  --mushaf-metadata-ink: #5f4814;
+  --mushaf-ink-light: var(--mushaf-ink-primary);
+  --mushaf-ink-dark: #f5eed8;
+  --mushaf-printed-gold: #d4b12a;
+  --mushaf-printed-gold-dark: #a88618;
+  --mushaf-printed-gold-border: #b89218;
+  --mushaf-printed-gold-text: #5f4814;
+  --mushaf-verse-marker-fill: #ddba28;
+  --mushaf-verse-marker-border: #c49918;
+  --mushaf-verse-marker-number: #5f4814;
+  --mushaf-verse-marker-highlight: #e8c94a;
+  --mushaf-verse-marker-dark-fill: #c4a030;
+  --mushaf-verse-marker-dark-border: #a88618;
+  --mushaf-verse-marker-dark-number: #f0e2b8;
+  /* aliases توافقية */
+  --mushaf-verse-marker-gold: var(--mushaf-verse-marker-fill);
+  --mushaf-verse-marker-text: var(--mushaf-verse-marker-number);
+  --mushaf-gold-primary: var(--mushaf-printed-gold);
+  --mushaf-gold-secondary: var(--mushaf-verse-marker-highlight);
   --mushaf-green-accent: #1f4f3c;
-  --mushaf-page-border: color-mix(in srgb, var(--mushaf-verse-marker-border) 70%, #6b5340);
-  --mushaf-ornament-muted: color-mix(in srgb, var(--mushaf-verse-marker-gold) 38%, transparent);
-  --mushaf-page-bg: var(--mushaf-paper-light);
-  --mushaf-text-color: var(--mushaf-ink-light);
-  --mushaf-meta-color: #4a351c;
+  --mushaf-page-border: color-mix(in srgb, var(--mushaf-printed-gold-border) 78%, var(--mushaf-paper-edge));
+  --mushaf-ornament-muted: color-mix(in srgb, var(--mushaf-printed-gold) 34%, transparent);
+  --mushaf-page-bg: var(--mushaf-paper-warm-yellow);
+  --mushaf-text-color: var(--mushaf-ink-primary);
+  --mushaf-meta-color: var(--mushaf-metadata-ink);
   --mushaf-top-safe: var(--mushaf-safe-top);
   --mushaf-font-size: 24px;
   --mushaf-header-height: 36px;
@@ -48,13 +67,13 @@
   --reader-bottom-stack: 0px;
 
   --nm-paper: var(--mushaf-page-bg);
-  --nm-paper-deep: #f6ead8;
+  --nm-paper-deep: color-mix(in srgb, var(--mushaf-paper-warm-yellow) 82%, var(--mushaf-paper-edge));
   --nm-ink: var(--mushaf-text-color);
   --nm-meta: var(--mushaf-meta-color);
-  --nm-gold: var(--mushaf-verse-marker-gold);
-  --nm-gold-deep: var(--mushaf-verse-marker-border);
-  --nm-select: rgba(147, 121, 82, 0.14);
-  --nm-play: rgba(147, 121, 82, 0.1);
+  --nm-gold: var(--mushaf-printed-gold);
+  --nm-gold-deep: var(--mushaf-printed-gold-border);
+  --nm-select: color-mix(in srgb, var(--mushaf-printed-gold) 16%, transparent);
+  --nm-play: color-mix(in srgb, var(--mushaf-printed-gold) 12%, transparent);
   --nm-qpc-size: var(--mushaf-font-size);
   --nm-qpc-family: qpc-v2;
   --nm-line-height: var(--mushaf-line-height);
@@ -73,7 +92,9 @@
   inset: 0;
   z-index: 40;
   direction: rtl;
-  background: var(--nm-paper);
+  background:
+    radial-gradient(ellipse 120% 80% at 50% 0%, color-mix(in srgb, var(--mushaf-paper-inner-glow) 55%, transparent) 0%, transparent 55%),
+    linear-gradient(180deg, color-mix(in srgb, var(--mushaf-paper-edge) 10%, var(--mushaf-paper-warm-yellow)) 0%, var(--mushaf-paper-warm-yellow) 42%, color-mix(in srgb, var(--mushaf-paper-edge) 8%, var(--mushaf-paper-warm-yellow)) 100%);
   color: var(--nm-ink);
   overflow: hidden;
   overscroll-behavior: none;
@@ -230,11 +251,11 @@
   width:0.72rem;
   height:0.72rem;
   border-radius:50%;
-  border:1px solid color-mix(in srgb,var(--mushaf-gold-primary,#a07d4a) 70%,var(--mushaf-green-accent,#1f4f3c));
+  border:1px solid color-mix(in srgb,var(--mushaf-printed-gold-border) 70%,var(--mushaf-printed-gold));
   background:
-    radial-gradient(circle at center,color-mix(in srgb,var(--mushaf-gold-secondary,#c4a574) 35%,transparent) 0 40%,transparent 55%),
-    color-mix(in srgb,var(--nm-paper) 70%,var(--mushaf-gold-primary,#a07d4a));
-  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--mushaf-green-accent,#1f4f3c) 28%,transparent);
+    radial-gradient(circle at center,color-mix(in srgb,var(--mushaf-printed-gold) 35%,transparent) 0 40%,transparent 55%),
+    color-mix(in srgb,var(--nm-paper) 70%,var(--mushaf-printed-gold));
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--mushaf-printed-gold-border) 28%,transparent);
   opacity:.72;
   pointer-events:none;
   z-index:2;
@@ -259,7 +280,7 @@
   font-weight: 650;
   line-height: 1.15;
   letter-spacing: 0.01em;
-  color: color-mix(in srgb, var(--mushaf-meta-color, var(--nm-meta)) 90%, var(--nm-ink));
+  color: color-mix(in srgb, var(--mushaf-metadata-ink, var(--mushaf-meta-color)) 88%, var(--mushaf-ink-primary));
   opacity: 0.9;
   pointer-events: none;
 }
@@ -304,39 +325,75 @@ html[data-theme="dark"] .nm-page__header-hizb,
   background: transparent;
 }
 
-/* AuthenticMushafPageFrame — حدود ذهبية رفيعة مزدوجة، أصلية لسُنّة */
+/* AuthenticWarmMushafPageFrame — إطار ذهبي أصفر رفيع مزدوج + زوايا خفيفة، أصلي لسُنّة */
 .nm-page__ornament-frame {
   position: absolute;
-  inset: 0.2rem;
+  inset: 0.18rem;
   z-index: 0;
   pointer-events: none;
-  border-radius: 0.12rem;
-  border: 1px solid var(--mushaf-page-border);
+  border-radius: 0;
+  border: 1px solid color-mix(in srgb, var(--mushaf-printed-gold) 72%, var(--mushaf-printed-gold-border));
   box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-gold-secondary) 35%, transparent),
-    inset 0 0 0 2.5px color-mix(in srgb, var(--nm-paper) 88%, var(--mushaf-gold-primary));
-  opacity: 0.72;
+    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-paper-warm-yellow) 70%, var(--mushaf-printed-gold) 30%),
+    inset 0 0 0 2.25px color-mix(in srgb, var(--mushaf-printed-gold-border) 38%, transparent);
+  opacity: 0.78;
+}
+.nm-page__ornament-frame::before,
+.nm-page__ornament-frame::after {
+  content: "";
+  position: absolute;
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--mushaf-printed-gold) 55%, transparent);
+  pointer-events: none;
+  opacity: 0.85;
+}
+.nm-page__ornament-frame::before {
+  inset-block-start: -0.08rem;
+  inset-inline-start: -0.08rem;
+  border-inline-end: 0;
+  border-block-end: 0;
+}
+.nm-page__ornament-frame::after {
+  inset-block-end: -0.08rem;
+  inset-inline-end: -0.08rem;
+  border-inline-start: 0;
+  border-block-start: 0;
 }
 
-/* SunnahFatihaMedallion — ميدالية بيضاوية أصلية لصفحة الفاتحة فقط */
+/* Sunnah Fatiha Golden Medallion — ضفيرة هندسية أصلية (ليست نسخة بكسل من المرجع) */
 .nm-page__fatiha-medallion {
   position: absolute;
-  inset: 4% 7% 6%;
+  inset: 3.5% 6.5% 5.5%;
   z-index: 0;
   pointer-events: none;
   border-radius: 50%;
-  border: 1.5px solid color-mix(in srgb, var(--mushaf-gold-primary) 62%, var(--mushaf-green-accent));
+  border: 1.35px solid var(--mushaf-printed-gold-border);
   box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-gold-secondary) 40%, transparent),
-    0 0 0 3px color-mix(in srgb, var(--mushaf-gold-primary) 12%, transparent);
+    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-printed-gold) 45%, transparent),
+    inset 0 0 0 0.55rem color-mix(in srgb, var(--mushaf-printed-gold) 16%, transparent),
+    inset 0 0 0 0.62rem color-mix(in srgb, var(--mushaf-paper-warm-yellow) 88%, transparent);
   background:
+    repeating-conic-gradient(
+      from 12deg,
+      color-mix(in srgb, var(--mushaf-printed-gold) 42%, transparent) 0deg 6deg,
+      transparent 6deg 14deg
+    ),
     radial-gradient(
       ellipse at center,
-      transparent 62%,
-      color-mix(in srgb, var(--mushaf-gold-primary) 6%, transparent) 78%,
+      transparent 58%,
+      color-mix(in srgb, var(--mushaf-printed-gold) 8%, transparent) 76%,
       transparent 100%
     );
-  opacity: 0.55;
+  -webkit-mask: radial-gradient(ellipse at center, transparent 57%, #000 58% 78%, transparent 79%);
+  mask: radial-gradient(ellipse at center, transparent 57%, #000 58% 78%, transparent 79%);
+  opacity: 0.72;
+}
+/* بداية البقرة — نفس عائلة الميدالية بقطر أوضح قليلًا */
+.nm-page--lead .nm-page__fatiha-medallion,
+.nm-page[data-page-type="surah-start"] .nm-page__fatiha-medallion {
+  inset: 4% 8% 7%;
+  opacity: 0.62;
 }
 
 html.dark .nm-page__ornament-frame,
@@ -464,19 +521,19 @@ html[data-theme="dark"] .nm-page__fatiha-medallion {
 
 /* إطار سورة مطبعي ممتاز — هوية سُنّة (أبعاد ثابتة، بلا Glow/Shadow خارجي، بلا ×) */
 .nm-root {
-  --mushaf-surah-frame-bg: #f6ecda;
-  --mushaf-surah-frame-border: #1f4f3c;
-  --mushaf-surah-frame-accent: var(--mushaf-verse-marker-gold);
-  --mushaf-surah-frame-text: #0e241c;
-  --mushaf-surah-frame-ornament: var(--mushaf-verse-marker-border);
+  --mushaf-surah-frame-bg: var(--mushaf-paper-warm-yellow);
+  --mushaf-surah-frame-border: var(--mushaf-printed-gold-border);
+  --mushaf-surah-frame-accent: var(--mushaf-printed-gold);
+  --mushaf-surah-frame-text: var(--mushaf-ink-primary);
+  --mushaf-surah-frame-ornament: var(--mushaf-printed-gold-border);
 }
 html.dark .nm-root,
 html[data-theme="dark"] .nm-root {
-  --mushaf-surah-frame-bg: #152018;
-  --mushaf-surah-frame-border: #2f6b52;
-  --mushaf-surah-frame-accent: var(--mushaf-verse-marker-gold);
-  --mushaf-surah-frame-text: #f0e6ce;
-  --mushaf-surah-frame-ornament: var(--mushaf-verse-marker-border);
+  --mushaf-surah-frame-bg: var(--mushaf-paper-warm-yellow-dark);
+  --mushaf-surah-frame-border: var(--mushaf-verse-marker-dark-border);
+  --mushaf-surah-frame-accent: var(--mushaf-verse-marker-dark-fill);
+  --mushaf-surah-frame-text: var(--mushaf-ink-dark);
+  --mushaf-surah-frame-ornament: var(--mushaf-verse-marker-dark-border);
 }
 
 /* Premium Sunnah Mushaf Frame — هندسة متناظرة ذهبية رفيعة، بلا سياج/شبكة */
@@ -501,19 +558,12 @@ html[data-theme="dark"] .nm-root {
   font-weight: 700;
   letter-spacing: 0.01em;
   line-height: 1;
-  border-radius: 0.2rem;
-  border: 1px solid color-mix(in srgb, var(--mushaf-surah-frame-accent) 72%, var(--mushaf-surah-frame-border));
-  background:
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--mushaf-surah-frame-accent) 28%, transparent) 0 1px,
-      transparent 1px calc(100% - 1px),
-      color-mix(in srgb, var(--mushaf-surah-frame-accent) 28%, transparent) calc(100% - 1px)
-    ),
-    color-mix(in srgb, var(--nm-paper) 70%, var(--mushaf-surah-frame-bg) 30%);
+  border-radius: 0;
+  clip-path: polygon(0.55rem 0, calc(100% - 0.55rem) 0, 100% 50%, calc(100% - 0.55rem) 100%, 0.55rem 100%, 0 50%);
+  border: 1px solid color-mix(in srgb, var(--mushaf-surah-frame-accent) 78%, var(--mushaf-surah-frame-border));
+  background: var(--mushaf-surah-frame-bg);
   box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-surah-frame-border) 55%, transparent),
-    inset 0 0 0 2.5px color-mix(in srgb, var(--mushaf-surah-frame-accent) 42%, transparent);
+    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-surah-frame-border) 42%, transparent);
   user-select: none;
   overflow: hidden;
 }
@@ -758,7 +808,7 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   box-shadow: none;
 }
 
-/* رقم آية — زخرفة أنظف وتمركز أدق بلا تكبير يمسّ القياسات */
+/* رقم آية — شكل زهري مطبعي أصفر خردلي، نفس الصندوق 0.98em (بلا تغيير geometry) */
 .nm-ayah-mark {
   position: relative;
   z-index: 2;
@@ -772,23 +822,22 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   margin-inline: 0.05em;
   padding: 0;
   vertical-align: -0.08em;
-  border-radius: 50%;
-  border: 1.15px solid var(--mushaf-verse-marker-border);
-  background:
-    radial-gradient(
-      circle at 50% 45%,
-      color-mix(in srgb, var(--mushaf-verse-marker-gold) 14%, transparent) 0 42%,
-      color-mix(in srgb, var(--mushaf-verse-marker-gold) 5%, transparent) 70%,
-      transparent 100%
-    );
-  color: var(--mushaf-verse-marker-text);
+  border-radius: 0;
+  border: 1.05px solid var(--mushaf-verse-marker-border);
+  background: var(--mushaf-verse-marker-fill);
+  color: var(--mushaf-verse-marker-number);
   font-family: inherit;
   font-size: 0.6em;
   font-weight: 700;
   line-height: 1;
   overflow: hidden;
   transform: none;
-  box-shadow: inset 0 0 0 0.5px color-mix(in srgb, var(--mushaf-verse-marker-gold) 28%, transparent);
+  box-shadow: none;
+  /* نجمة زهرية 8 رؤوس داخل نفس الـbounding box */
+  clip-path: polygon(
+    50% 2%, 61% 18%, 82% 12%, 76% 34%, 98% 42%, 78% 54%, 88% 78%, 64% 72%,
+    50% 98%, 36% 72%, 12% 78%, 22% 54%, 2% 42%, 24% 34%, 18% 12%, 39% 18%
+  );
 }
 
 .nm-ayah-mark__glyph {
@@ -809,7 +858,7 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
 .nm-word--end.is-selected .nm-ayah-mark,
 .nm-word--end.is-playing .nm-ayah-mark {
   border-color: var(--mushaf-verse-marker-border);
-  background: transparent;
+  background: var(--mushaf-verse-marker-highlight);
 }
 
 /* ذيل — رقم الصفحة قابل للنقر لفتح الانتقال */
@@ -1187,39 +1236,28 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
 
 /* مظهر ليلي للمصحف — خلفية داكنة غير سوداء حادة، بلا قلب ألوان عشوائي */
 html[data-mushaf-appearance="night"] .nm-root,
-.nm-root[data-mushaf-appearance="night"] {
-  --mushaf-page-bg: #152018;
-  --mushaf-text-color: #f3efe6;
-  --mushaf-meta-color: #d4c29a;
-  --nm-paper: #152018;
-  --nm-paper-deep: #101810;
-  --nm-ink: #f3efe6;
-  --nm-meta: #d4c29a;
-  --mushaf-verse-marker-gold: #b59a63;
-  --mushaf-verse-marker-border: #a3864d;
-  --mushaf-verse-marker-text: #d2be8e;
-  --mushaf-gold-primary: var(--mushaf-verse-marker-gold);
-  --mushaf-gold-secondary: #c4b07a;
-  --nm-gold: var(--mushaf-verse-marker-gold);
-  --nm-gold-deep: var(--mushaf-verse-marker-border);
-}
-
+.nm-root[data-mushaf-appearance="night"],
 html[data-theme="dark"] .nm-root,
 html.dark .nm-root {
-  --mushaf-page-bg: #152018;
-  --mushaf-text-color: #f3efe6;
+  --mushaf-paper-warm-yellow: var(--mushaf-paper-warm-yellow-dark);
+  --mushaf-page-bg: var(--mushaf-paper-warm-yellow-dark);
+  --mushaf-text-color: var(--mushaf-ink-dark);
   --mushaf-meta-color: #d4c29a;
-  --nm-paper: #152018;
-  --nm-paper-deep: #101810;
-  --nm-ink: #f3efe6;
+  --nm-paper: var(--mushaf-paper-warm-yellow-dark);
+  --nm-paper-deep: #1a1610;
+  --nm-ink: var(--mushaf-ink-dark);
   --nm-meta: #d4c29a;
-  --mushaf-verse-marker-gold: #b59a63;
-  --mushaf-verse-marker-border: #a3864d;
-  --mushaf-verse-marker-text: #d2be8e;
-  --mushaf-gold-primary: var(--mushaf-verse-marker-gold);
-  --mushaf-gold-secondary: #c4b07a;
-  --nm-gold: var(--mushaf-verse-marker-gold);
-  --nm-gold-deep: var(--mushaf-verse-marker-border);
+  --mushaf-verse-marker-fill: var(--mushaf-verse-marker-dark-fill);
+  --mushaf-verse-marker-border: var(--mushaf-verse-marker-dark-border);
+  --mushaf-verse-marker-number: var(--mushaf-verse-marker-dark-number);
+  --mushaf-verse-marker-gold: var(--mushaf-verse-marker-dark-fill);
+  --mushaf-verse-marker-text: var(--mushaf-verse-marker-dark-number);
+  --mushaf-printed-gold: var(--mushaf-verse-marker-dark-fill);
+  --mushaf-printed-gold-border: var(--mushaf-verse-marker-dark-border);
+  --mushaf-gold-primary: var(--mushaf-verse-marker-dark-fill);
+  --mushaf-gold-secondary: var(--mushaf-verse-marker-highlight);
+  --nm-gold: var(--mushaf-verse-marker-dark-fill);
+  --nm-gold-deep: var(--mushaf-verse-marker-dark-border);
 }
 
 html[data-theme="dark"] .nm-root .mm-audio-dock,
