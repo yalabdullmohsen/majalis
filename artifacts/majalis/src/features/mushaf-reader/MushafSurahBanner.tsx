@@ -18,9 +18,9 @@ export const MushafSurahFramePremium = memo(function MushafSurahFramePremium({
     <div
       className="nm-surah-banner"
       data-testid="nm-surah-banner"
-      data-surah-frame="premium-uthmani-v2"
+      data-surah-frame="sunnah-cartouche-v1"
       data-sunnah-frame="sunnah-v1"
-      data-component="MushafSurahFramePremium"
+      data-component="SunnahSurahTitleCartouche"
       role="heading"
       aria-level={2}
     >

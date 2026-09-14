@@ -10,9 +10,18 @@
   --mushaf-body-width: min(100%, 28rem);
   --mushaf-line-height: 1.85;
   --mushaf-font-weight: 400;
-  /* ورق عاجي دافئ أفتح قليلًا (Warm Ivory) — أقرب للمصحف الورقي بلا أبيض خالص */
-  --mushaf-page-bg: #fbf4e8;
-  --mushaf-text-color: #1a1510;
+  /* Warm Printed Ivory — أفتح قليلًا، غير أبيض خالص، مريح للقراءة الطويلة */
+  --mushaf-paper-light: #fcf7ec;
+  --mushaf-paper-dark: #1a1c18;
+  --mushaf-ink-light: #1a1510;
+  --mushaf-ink-dark: #f0e6ce;
+  --mushaf-gold-primary: #a07d4a;
+  --mushaf-gold-secondary: #c4a574;
+  --mushaf-green-accent: #1f4f3c;
+  --mushaf-page-border: color-mix(in srgb, var(--mushaf-gold-primary) 55%, #6b5340);
+  --mushaf-ornament-muted: color-mix(in srgb, var(--mushaf-gold-primary) 38%, transparent);
+  --mushaf-page-bg: var(--mushaf-paper-light);
+  --mushaf-text-color: var(--mushaf-ink-light);
   --mushaf-meta-color: #4a351c;
   --mushaf-top-safe: var(--mushaf-safe-top);
   --mushaf-font-size: 24px;
@@ -35,7 +44,7 @@
   --nm-paper-deep: #f6ead8;
   --nm-ink: var(--mushaf-text-color);
   --nm-meta: var(--mushaf-meta-color);
-  --nm-gold: #a07d4a;
+  --nm-gold: var(--mushaf-gold-primary);
   --nm-gold-deep: #5a4224;
   --nm-select: rgba(147, 121, 82, 0.14);
   --nm-play: rgba(147, 121, 82, 0.1);
@@ -206,8 +215,29 @@
 
 /* علامة حزب/ربع — absolute خفيفة بلا إزاحة شبكة */
 .nm-page__stage{position:relative}
-.nm-page__section-mark{position:absolute;inset-block-start:.12rem;inset-inline-start:0;width:2px;height:.7rem;border-radius:1px;background:color-mix(in srgb,var(--nm-gold,#b8a06a) 52%,transparent);opacity:.5;pointer-events:none;z-index:1}
-.nm-page__section-mark[data-mark="rub"]{height:.4rem;opacity:.38;background:color-mix(in srgb,var(--nm-meta,#6b6358) 48%,transparent)}
+/* علامة حزب/ربع في الهامش — من البيانات المعتمدة، خارج Text Flow */
+.nm-page__section-mark{
+  position:absolute;
+  inset-block-start:.35rem;
+  inset-inline-start:0.08rem;
+  width:0.72rem;
+  height:0.72rem;
+  border-radius:50%;
+  border:1px solid color-mix(in srgb,var(--mushaf-gold-primary,#a07d4a) 70%,var(--mushaf-green-accent,#1f4f3c));
+  background:
+    radial-gradient(circle at center,color-mix(in srgb,var(--mushaf-gold-secondary,#c4a574) 35%,transparent) 0 40%,transparent 55%),
+    color-mix(in srgb,var(--nm-paper) 70%,var(--mushaf-gold-primary,#a07d4a));
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--mushaf-green-accent,#1f4f3c) 28%,transparent);
+  opacity:.72;
+  pointer-events:none;
+  z-index:2;
+}
+.nm-page__section-mark[data-mark="rub"]{
+  width:.48rem;
+  height:.48rem;
+  opacity:.55;
+  border-color:color-mix(in srgb,var(--nm-meta,#6b6358) 55%,var(--mushaf-gold-primary,#a07d4a));
+}
 
 /* الجزء: طرف البداية (يمين في RTL) · الحزب: طرف النهاية (يسار في RTL) */
 .nm-page__header-juz,
@@ -249,7 +279,7 @@ html[data-theme="dark"] .nm-page__header-hizb,
   opacity: 0.92;
 }
 
-/* منطقة النص — بلا إطار */
+/* منطقة النص — إطار زخرفي absolute لا يغيّر عرض/ارتفاع شبكة الأسطر */
 .nm-page__stage {
   position: relative;
   min-height: 0;
@@ -265,6 +295,52 @@ html[data-theme="dark"] .nm-page__header-hizb,
   border: 0;
   box-shadow: none;
   background: transparent;
+}
+
+/* AuthenticMushafPageFrame — حدود ذهبية رفيعة مزدوجة، أصلية لسُنّة */
+.nm-page__ornament-frame {
+  position: absolute;
+  inset: 0.2rem;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 0.12rem;
+  border: 1px solid var(--mushaf-page-border);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-gold-secondary) 35%, transparent),
+    inset 0 0 0 2.5px color-mix(in srgb, var(--nm-paper) 88%, var(--mushaf-gold-primary));
+  opacity: 0.72;
+}
+
+/* SunnahFatihaMedallion — ميدالية بيضاوية أصلية لصفحة الفاتحة فقط */
+.nm-page__fatiha-medallion {
+  position: absolute;
+  inset: 4% 7% 6%;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--mushaf-gold-primary) 62%, var(--mushaf-green-accent));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-gold-secondary) 40%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--mushaf-gold-primary) 12%, transparent);
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 62%,
+      color-mix(in srgb, var(--mushaf-gold-primary) 6%, transparent) 78%,
+      transparent 100%
+    );
+  opacity: 0.55;
+}
+
+html.dark .nm-page__ornament-frame,
+html[data-theme="dark"] .nm-page__ornament-frame {
+  opacity: 0.55;
+  border-color: color-mix(in srgb, var(--mushaf-gold-secondary) 50%, #2a3328);
+}
+
+html.dark .nm-page__fatiha-medallion,
+html[data-theme="dark"] .nm-page__fatiha-medallion {
+  opacity: 0.42;
 }
 
 /* صفحات بداية السورة (افتتاح/بقرة/أي سورة): رأس/إطار/بسملة متقاربة داخل الشبكة الثابتة */
