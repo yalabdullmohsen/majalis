@@ -144,18 +144,24 @@ export async function fetchMushafAyahTafsir(
     return { text, editionId: edition.id, fromCache: false };
   } catch (err) {
     if (err instanceof DOMException && err.name === "AbortError") throw err;
-    /* بديل محلي (IndexedDB / ذاكرة TafseerService) عند فشل الشبكة */
-    try {
-      const { TafseerService } = await import("@/core/tafseer/TafseerService");
-      const local = await TafseerService.getInstance().getAyahTafsir(surah, ayah, "ar.muyassar");
-      if (local?.text?.trim()) {
-        const text = stripTags(local.text);
-        tafsirMemory.set(key, text);
-        writeTafsirSession(key, text);
-        return { text, editionId: edition.id, fromCache: true };
+    /* بديل محلي للميسّر فقط — لا نُرجع نص ميسّر تحت اسم سعدي/ابن كثير */
+    const wantsMuyassar =
+      edition.id === "ar-tafsir-muyassar" ||
+      edition.quranComSlug.includes("muyassar") ||
+      edition.id.includes("muyassar");
+    if (wantsMuyassar) {
+      try {
+        const { TafseerService } = await import("@/core/tafseer/TafseerService");
+        const local = await TafseerService.getInstance().getAyahTafsir(surah, ayah, "ar.muyassar");
+        if (local?.text?.trim()) {
+          const text = stripTags(local.text);
+          tafsirMemory.set(key, text);
+          writeTafsirSession(key, text);
+          return { text, editionId: edition.id, fromCache: true };
+        }
+      } catch {
+        /* تجاهل — نُعيد رمي خطأ الجلب الأصلي */
       }
-    } catch {
-      /* تجاهل — نُعيد رمي خطأ الجلب الأصلي */
     }
     throw err;
   }

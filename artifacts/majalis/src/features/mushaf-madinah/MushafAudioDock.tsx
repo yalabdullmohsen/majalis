@@ -357,7 +357,13 @@ export function MushafAudioDock({
                             <Check size={16} aria-hidden="true" className="mm-reciter-sheet__check" />
                           ) : null}
                           <span className="mm-reciter-sheet__name">{r.nameAr}</span>
-                          <span className="mm-reciter-sheet__meta">{r.qualityLabel}</span>
+                          <span className="mm-reciter-sheet__meta">
+                            <span className="mm-reciter-sheet__style" data-recitation-style="murattal">
+                              مرتل
+                            </span>
+                            {" · "}
+                            {r.qualityLabel}
+                          </span>
                         </button>
                         <button
                           type="button"

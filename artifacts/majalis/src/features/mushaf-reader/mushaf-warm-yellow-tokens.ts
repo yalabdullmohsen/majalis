@@ -25,6 +25,7 @@ export const mushafPrintedGold = "#C9A82E" as const;
 export const mushafPrintedGoldDark = "#A8881A" as const;
 export const mushafPrintedGoldBorder = "#B89620" as const;
 export const mushafPrintedGoldText = "#5F4814" as const;
+export const mushafOrnamentMuted = "#C4A84A" as const;
 
 /** علامات الآيات — أصفر ذهبي مطفأ (SunnahVerseRosette) */
 export const mushafVerseMarkerFill = "#DCB424" as const;
