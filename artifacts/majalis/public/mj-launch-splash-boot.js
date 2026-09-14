@@ -110,3 +110,4 @@
         window.setTimeout(tryDismiss, MIN_MS);
         void SOFT_MAX_MS;
       })();
+try{if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){try{performance.mark("mj:fonts-ready")}catch(e){}})}}catch(e){}

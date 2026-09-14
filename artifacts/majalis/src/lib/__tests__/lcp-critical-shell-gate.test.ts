@@ -58,7 +58,9 @@ assert.doesNotMatch(prewarm, /link\.rel = "preconnect"/, "prewarm لا يضيف 
 assert.doesNotMatch(mainSrc, /styles\/pages\/calendar\.css/, "تقويم خارج حزمة الإقلاع");
 assert.doesNotMatch(mainSrc, /homePageBoot|await homePageBoot/, "لا انتظار Home قبل createRoot");
 assert.doesNotMatch(mainSrc, /mj-app-mount/, "createRoot على #root");
-assert.match(home, /mj-home-lcp-ph/, "حجز ارتفاع في الرئيسية");
+const heroShell = readFileSync(resolve(root, "src/components/home/HomeHeroLcp.tsx"), "utf8");
+assert.match(heroShell, /mj-home-lcp-ph/, "حجز ارتفاع في هيكل الرئيسية");
+assert.match(home, /HomeSacredOfDaySkeleton|HomeDailyWirdSkeleton|HomeRestShell|HomePrimaryDiscoveryPlaceholder/, "الرئيسية تستخدم هياكل الحجز المشتركة");
 assert.match(app, /HomeHeroLcp/, "هيرو LCP ثابت خارج Suspense");
 assert.match(app, /HomeStartHereSection/, "ابدأ من هنا خارج Suspense مع الهيرو");
 assert.match(app, /HomeRestShell/, "fallback بقية الرئيسية بلا استبدال h1");

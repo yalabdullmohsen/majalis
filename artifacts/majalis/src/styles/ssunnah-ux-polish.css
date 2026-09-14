@@ -206,6 +206,12 @@ html.dark .ss-action-btn--ghost {
 }
 
 /* حجز ارتفاع أثناء التأجيل/Suspense — يطابق بطاقة المحتوى التقريبية */
+
+.home-sacred-day-slot {
+  min-height: 9.75rem;
+  box-sizing: border-box;
+}
+
 .home-sacred-day--ph {
   min-height: 9.75rem;
   box-sizing: border-box;

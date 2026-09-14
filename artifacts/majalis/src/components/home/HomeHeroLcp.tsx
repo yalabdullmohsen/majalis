@@ -114,46 +114,105 @@ export function HomeHeroLcp() {
   );
 }
 
-/** هيكل ما تحت الهيرو أثناء تحميل HomePage — بلا تكرار «ابدأ من هنا» (صار خارج Suspense) */
+/** هيكل بحث موحّد — يطابق ارتفاع HomeUniversalSearch */
+export function HomeSearchShell() {
+  return (
+    <div className="hus mj-home-lcp-ph__search" role="search" aria-label="بحث موحّد" aria-busy="true">
+      <div className="hus-field">
+        <span className="hus-input mj-home-lcp-ph__search-ph" aria-hidden="true">
+          &nbsp;
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/** هيكل يحجز ارتفاع بطاقة آية/حديث اليوم */
+export function HomeSacredOfDaySkeleton() {
+  return (
+    <div
+      className="home-sacred-day home-sacred-day--ph"
+      aria-busy="true"
+      aria-label="آية من القرآن"
+      data-testid="home-sacred-of-day"
+    />
+  );
+}
+
+/** حجز اكتشاف رئيسي فوق الطية */
+export function HomePrimaryDiscoveryPlaceholder({ id = false }: { id?: boolean } = {}) {
+  return (
+    <div
+      className="mj-home-primary-discovery-ph"
+      id={id ? "mj-home-primary-discovery" : undefined}
+      aria-hidden="true"
+    />
+  );
+}
+
+/** هيكل ورد اليوم — نفس الأبعاد النهائية */
+export function HomeDailyWirdSkeleton() {
+  return (
+    <section
+      className="m2030-band m2030-band--sage home-daily-wird daily-wird-card mj-home-lcp-ph__daily-band"
+      aria-label="ورد اليوم"
+      aria-busy="true"
+      data-testid="daily-wird-card"
+    >
+      <div className="m2030-band__head">
+        <h2 className="m2030-band__title">ورد اليوم</h2>
+        <div className="daily-wird-card__actions" aria-hidden="true">
+          <span className="daily-wird-card__done-btn mj-home-lcp-ph__daily-done">تم</span>
+          <span className="m2030-band__link mj-home-lcp-ph__daily-link">الورد الكامل</span>
+        </div>
+      </div>
+      <div className="home-daily-wird__grid" aria-hidden="true">
+        {Array.from({ length: 4 }).map((_, idx) => (
+          <article key={idx} className="home-daily-wird__card soft-card soft-card--on-light mj-home-lcp-ph__daily-card">
+            <header className="home-daily-wird__card-head">
+              <span className="mj-home-lcp-ph__daily-icon" aria-hidden="true" />
+              <span className="mj-home-lcp-ph__daily-label">&nbsp;</span>
+            </header>
+            <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
+            <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
+            <div className="home-daily-wird__meta mj-home-lcp-ph__daily-meta skeleton-base" />
+            <div className="home-daily-wird__cta mj-home-lcp-ph__daily-cta skeleton-base" />
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/** حجز شريط البث المباشر */
+export function HomeLiveNowPlaceholder() {
+  return <div className="home-live-now-ph" aria-hidden="true" />;
+}
+
+/** حجز تحت الطية */
+export function HomeBelowFoldPlaceholder({ withId = false }: { withId?: boolean } = {}) {
+  return (
+    <div
+      className="mj-home-below-fold-ph"
+      id={withId ? "mj-home-below-fold" : undefined}
+      aria-hidden="true"
+    />
+  );
+}
+
+/**
+ * هيكل ما تحت الهيرو أثناء تحميل HomePage.
+ * الترتيب يطابق HomePage حرفيًا لمنع قفزة الإدراج عند انتهاء Suspense.
+ */
 export function HomeRestShell() {
   return (
     <>
-      <div className="hus mj-home-lcp-ph__search" role="search" aria-label="بحث موحّد" aria-busy="true">
-        <div className="hus-field">
-          <span className="hus-input mj-home-lcp-ph__search-ph" aria-hidden="true">
-            &nbsp;
-          </span>
-        </div>
-      </div>
-
-      <section
-        className="m2030-band m2030-band--sage home-daily-wird daily-wird-card mj-home-lcp-ph__daily-band"
-        aria-label="ورد اليوم"
-        aria-busy="true"
-        data-testid="daily-wird-card"
-      >
-        <div className="m2030-band__head">
-          <h2 className="m2030-band__title">ورد اليوم</h2>
-          <div className="daily-wird-card__actions" aria-hidden="true">
-            <span className="daily-wird-card__done-btn mj-home-lcp-ph__daily-done">تم</span>
-            <span className="m2030-band__link mj-home-lcp-ph__daily-link">الورد الكامل</span>
-          </div>
-        </div>
-        <div className="home-daily-wird__grid" aria-hidden="true">
-          {Array.from({ length: 4 }).map((_, idx) => (
-            <article key={idx} className="home-daily-wird__card soft-card soft-card--on-light mj-home-lcp-ph__daily-card">
-              <header className="home-daily-wird__card-head">
-                <span className="mj-home-lcp-ph__daily-icon" aria-hidden="true" />
-                <span className="mj-home-lcp-ph__daily-label">&nbsp;</span>
-              </header>
-              <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
-              <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
-              <div className="home-daily-wird__meta mj-home-lcp-ph__daily-meta skeleton-base" />
-              <div className="home-daily-wird__cta mj-home-lcp-ph__daily-cta skeleton-base" />
-            </article>
-          ))}
-        </div>
-      </section>
+      <HomeSearchShell />
+      <HomeSacredOfDaySkeleton />
+      <HomePrimaryDiscoveryPlaceholder id />
+      <HomeDailyWirdSkeleton />
+      <HomeLiveNowPlaceholder />
+      <HomeBelowFoldPlaceholder withId />
     </>
   );
 }

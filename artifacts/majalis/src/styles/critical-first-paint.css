@@ -275,6 +275,23 @@ html.app-booting .hus-field {
   border-radius: 1rem;
 }
 
+/* CLS: حجز أقسام الرئيسية قبل swap من HomeRestShell */
+.home-sacred-day-slot,
+.home-sacred-day--ph {
+  min-height: 9.75rem;
+  box-sizing: border-box;
+}
+
+.mj-home-primary-discovery-ph {
+  min-height: 12rem;
+  box-sizing: border-box;
+}
+
+.home-live-now-ph {
+  min-height: 3.25rem;
+  box-sizing: border-box;
+}
+
 .mj-home-below-fold-ph {
   min-height: 8rem;
   border-radius: 1rem;
