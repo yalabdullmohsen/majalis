@@ -139,8 +139,16 @@ export const MushafPage = memo(function MushafPage({
         data-layout="pageHeader"
         style={{ height: "var(--mushaf-header-height, 36px)", minHeight: "var(--mushaf-header-height, 36px)" }}
       >
-        <span className="nm-page__header-surah">{layout.headerSurahName}</span>
-        <span className="nm-page__header-juz">{`الجزء ${toArabicDigits(layout.juzNumber)} • الحزب ${toArabicDigits(layout.hizbNumber)}`}</span>
+        <div className="nm-page__header-stack">
+          <span className="nm-page__header-surah">
+            {layout.headerSurahName.startsWith("سورة")
+              ? layout.headerSurahName
+              : `سورة ${layout.headerSurahName}`}
+          </span>
+          <span className="nm-page__header-meta">
+            {`الجزء ${toArabicDigits(layout.juzNumber)} • الحزب ${toArabicDigits(layout.hizbNumber)}`}
+          </span>
+        </div>
       </header>
 
       <div className="nm-page__stage" data-testid="mushaf-page-frame">

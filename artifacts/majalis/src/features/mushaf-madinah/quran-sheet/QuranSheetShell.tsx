@@ -101,7 +101,7 @@ export function QuranSheetShell({
               <span id={titleId} />
             )}
             <button type="button" className="quran-sheet__close" onClick={onClose} aria-label="إغلاق" tabIndex={open ? 0 : -1}>
-              <X size={18} aria-hidden="true" />
+              <X size={14} strokeWidth={2.25} aria-hidden="true" />
             </button>
           </header>
         ) : null}

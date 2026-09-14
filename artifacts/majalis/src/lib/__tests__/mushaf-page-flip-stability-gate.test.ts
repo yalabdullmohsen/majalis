@@ -119,7 +119,7 @@ assert.match(dock, /وضع الحفظ/);
 /* عقد عنوان Preset الكلاسيكي — لا صيغة «تفسير ${surahName} · آية» القديمة */
 assert.match(tafsir, /سورة \$\{surahName\}، الآية \$\{parsed\.ayah\}/);
 assert.match(tafsir, /setSnap/);
-assert.match(sheetCss, /68dvh/);
+assert.match(sheetCss, /74dvh/);
 assert.match(sheetCss, /mushaf-bottom-safe-space/);
 
 assert.match(reader, /audioDockMini|onMiniChange/);

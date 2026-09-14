@@ -21,16 +21,21 @@ assert.match(data, /hizbNumber:\s*number/);
 assert.match(data, /hizbStartingOnPage/);
 assert.match(data, /rubElHizbStartingOnPage/);
 
+assert.match(page, /nm-page__header-stack/);
 assert.match(
   page,
   /الجزء \$\{toArabicDigits\(layout\.juzNumber\)\} • الحزب \$\{toArabicDigits\(layout\.hizbNumber\)\}/,
 );
+assert.match(page, /nm-page__header-meta/);
 assert.match(page, /layout\.hizbStartingOnPage/);
 assert.match(page, /layout\.rubElHizbStartingOnPage/);
 assert.match(page, /nm-page__section-mark/);
 assert.match(page, /rubQuarterLabel/);
 assert.doesNotMatch(page, /Math\.ceil\(\s*layout\.pageNumber/);
 
+assert.match(css, /\.nm-page__header-stack/);
+assert.match(css, /\.nm-page__header-surah/);
+assert.match(css, /\.nm-page__header-meta/);
 assert.match(css, /\.nm-page__section-mark/);
 assert.match(css, /pointer-events:\s*none/);
 
