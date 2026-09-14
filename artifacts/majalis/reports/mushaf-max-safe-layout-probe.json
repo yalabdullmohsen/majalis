@@ -1,0 +1,26 @@
+{
+  "viewport": {
+    "w": 390,
+    "h": 844
+  },
+  "fontSize": 24,
+  "measuredFontSizeAttr": null,
+  "sidePadCss": "2px",
+  "headerH": "36px",
+  "footerH": "40px",
+  "contentWidth": 386,
+  "frameWidth": 386,
+  "horizontalInsetStart": 2,
+  "horizontalInsetEnd": 2,
+  "firstLineY": 36,
+  "lastLineY": 797.2,
+  "textBBox": {
+    "w": 386,
+    "h": 761.2,
+    "left": 2,
+    "top": 36
+  },
+  "visibleTextCoverageRatio": 0.893,
+  "contentWidthPct": 0.99,
+  "lineCount": 15
+}

@@ -7,7 +7,7 @@ import { MUSHAF_PROVENANCE } from "@/lib/mushaf-v2/provenance";
 
 export const SUNNAH_MUSHAF_SIGNATURE_PRESET_ID = "sunnah-mushaf-signature-v1" as const;
 export const SUNNAH_MUSHAF_SIGNATURE_VERSION = "1.0.0" as const;
-export const SUNNAH_MUSHAF_SIGNATURE_CACHE_VERSION = "sms-2026-09-14-ref-typography-safe24";
+export const SUNNAH_MUSHAF_SIGNATURE_CACHE_VERSION = "sms-2026-09-14-max-safe-layout-24";
 
 export type SunnahMushafSignaturePreset = {
   presetId: typeof SUNNAH_MUSHAF_SIGNATURE_PRESET_ID;
@@ -53,7 +53,8 @@ export function resolveSunnahMushafSignaturePreset(): SunnahMushafSignaturePrese
     linesPerPage: 15,
     lineHeight: 1.85,
     pageScale: 1,
-    contentInsets: { headerPx: 36, footerPx: 40, sidePx: 5 },
+    /* sidePx=2 يوسّع contentWidth على 390 دون رفع fontSize فوق 24 */
+    contentInsets: { headerPx: 36, footerPx: 40, sidePx: 2 },
     headerStyle: "nm-header",
     surahFrameStyle: "sunnah-surah-frame-v1",
     basmalaStyle: "qpc-basmala",
@@ -100,26 +101,25 @@ export function migrateToSunnahMushafSignature(storage: Storage = localStorage):
 
 /**
  * أحجام خط ثابتة حسب فئة عرض المحتوى — بلا auto-fit لكل صفحة.
- * معايرة 2026-09-14 لتقارب المرجع البصري مع بقاء سقف عدم الفيض.
+ * سقف صريح 24px: 25 يسبب lineOverflow على القياسات الحالية.
  */
+export const SIGNATURE_FONT_SIZE_MAX_PX = 24;
+
 export const SIGNATURE_FONT_SIZE_BANDS = [
   { maxContentWidth: 300, fontSize: 22 },
-  { maxContentWidth: 340, fontSize: 24 },
-  { maxContentWidth: 370, fontSize: 26 },
-  { maxContentWidth: 400, fontSize: 28 },
-  { maxContentWidth: 440, fontSize: 30 },
-  { maxContentWidth: Number.POSITIVE_INFINITY, fontSize: 32 },
+  { maxContentWidth: 340, fontSize: 23 },
+  { maxContentWidth: Number.POSITIVE_INFINITY, fontSize: 24 },
 ] as const;
 
 /**
- * قاسم عرض آمن لسعة سطر QPC (كان 17 → خط ~22px على 390؛ المرجع يتطلّب حضورًا أكبر).
- * 15.8 يُعطي ~24px (أقصى آمن؛ 25 يفيض) على 390 مع الإبقاء على سقف الارتفاع 1.85.
+ * قاسم عرض يثبّت 24px على 390 مع contentWidth الأوسع (sidePx=2 → body≈386).
+ * لا يُستخدم لرفع الخط فوق SIGNATURE_FONT_SIZE_MAX_PX.
  */
 export const SIGNATURE_WIDTH_CAPACITY_EM = 15.8;
 
 /**
  * حجم Signature من فئة الشاشة + سقف هندسي موحّد (عرض/ارتفاع).
- * ليس auto-fit لكل صفحة — قاسم العرض يطابق سعة سطر QPC دون فيض.
+ * مقفول عند 24 — التقارب من المرجع عبر توسيع العرض/الهوامش لا عبر تكبير إضافي.
  */
 export function resolveSignatureFontSizePx(
   contentWidthPx: number,
@@ -134,5 +134,8 @@ export function resolveSignatureFontSizePx(
     contentWidthPx > 0
       ? Math.floor(contentWidthPx / SIGNATURE_WIDTH_CAPACITY_EM)
       : band.fontSize;
-  return Math.max(18, Math.min(band.fontSize, byHeight, byWidth, 34));
+  return Math.max(
+    18,
+    Math.min(band.fontSize, byHeight, byWidth, SIGNATURE_FONT_SIZE_MAX_PX),
+  );
 }

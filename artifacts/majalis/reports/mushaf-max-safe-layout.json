@@ -1,0 +1,97 @@
+{
+  "phase": "Maximum Safe Mushaf Layout",
+  "project": "سُنّة",
+  "date": "2026-09-14",
+  "constraints": {
+    "fontSize": 24,
+    "fontSizeForbidden": [25, ">=25"],
+    "lineHeight": 1.85,
+    "quranText": "unchanged",
+    "pageMapping": "unchanged",
+    "lineMapping": "unchanged",
+    "geometryBaselines": "unchanged",
+    "mushafMeasureThresholds": "unchanged",
+    "forbidden": ["auto-fit", "scale", "transform", "overflow-tricks"]
+  },
+  "changes": {
+    "sidePx": { "from": 5, "to": 2 },
+    "SIGNATURE_FONT_SIZE_MAX_PX": 24,
+    "SIGNATURE_WIDTH_CAPACITY_EM": 15.8,
+    "cacheVersion": "sms-2026-09-14-max-safe-layout-24",
+    "vertical": "metrics-lock: safe-area only (no stacked top/bottom pad)",
+    "footerPadding": "tightened inside fixed 40px footer slot"
+  },
+  "viewport": { "width": 390, "height": 844 },
+  "pageProbed": 3,
+  "comparison_logical390": {
+    "contentWidth": {
+      "ref": 368.7,
+      "before_p0": 349.6,
+      "after": 386.0,
+      "delta_vs_ref": 17.3,
+      "delta_vs_before": 36.4
+    },
+    "horizontalInsetStart": {
+      "ref": 10.7,
+      "before_p0": 19.4,
+      "after": 2.0,
+      "delta_vs_ref": -8.7,
+      "delta_vs_before": -17.4
+    },
+    "horizontalInsetEnd": {
+      "ref": 10.7,
+      "before_p0": 21.0,
+      "after": 2.0,
+      "delta_vs_ref": -8.7,
+      "delta_vs_before": -19.0
+    },
+    "firstLineY": {
+      "ref": 70.2,
+      "before_p0": 95.1,
+      "after": 36.0,
+      "note": "includes header band start; text fills earlier under metrics-lock"
+    },
+    "lastLineY": {
+      "ref": 809.4,
+      "before_p0": 752.8,
+      "after": 797.2,
+      "delta_vs_ref": -12.2,
+      "delta_vs_before": 44.4
+    },
+    "visibleTextCoverageRatio_bbox": {
+      "ref": 0.9057,
+      "before_p0": 0.7642,
+      "after": 0.893,
+      "approachToReference_pct": 98.6,
+      "delta_vs_before": 0.1288
+    },
+    "contentWidthPct": {
+      "ref": 94.53,
+      "before_p0": 89.64,
+      "after": 99.0
+    },
+    "fontSize": {
+      "ref_est": null,
+      "before_p0_runtime": 22,
+      "after": 24,
+      "cap": 24
+    }
+  },
+  "gates_local": {
+    "mushaf-measure": {
+      "pages": [3, 4, 5, 7, 48, 283, 598, 600, 603],
+      "fontSize": 24,
+      "frameWidth": 386,
+      "lineOverflow": false,
+      "result": "PASS"
+    },
+    "visual-snapshot": {
+      "pages": [1, 2, 3, 4, 5, 7, 48, 283, 600, 603],
+      "result": "PASS"
+    },
+    "mushaf-gates:unit": {
+      "result": "PASS"
+    }
+  },
+  "verdict": "PASS — أكبر تغطية آمنة عند fontSize=24 عبر sidePx=2 دون overflow"
+}
