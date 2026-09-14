@@ -7,7 +7,7 @@ import { MUSHAF_PROVENANCE } from "@/lib/mushaf-v2/provenance";
 
 export const SUNNAH_MUSHAF_SIGNATURE_PRESET_ID = "sunnah-mushaf-signature-v1" as const;
 export const SUNNAH_MUSHAF_SIGNATURE_VERSION = "1.0.0" as const;
-export const SUNNAH_MUSHAF_SIGNATURE_CACHE_VERSION = "sms-2026-09-14-ref-typography";
+export const SUNNAH_MUSHAF_SIGNATURE_CACHE_VERSION = "sms-2026-09-14-ref-typography-safe24";
 
 export type SunnahMushafSignaturePreset = {
   presetId: typeof SUNNAH_MUSHAF_SIGNATURE_PRESET_ID;
@@ -103,19 +103,19 @@ export function migrateToSunnahMushafSignature(storage: Storage = localStorage):
  * معايرة 2026-09-14 لتقارب المرجع البصري مع بقاء سقف عدم الفيض.
  */
 export const SIGNATURE_FONT_SIZE_BANDS = [
-  { maxContentWidth: 300, fontSize: 23 },
-  { maxContentWidth: 340, fontSize: 25 },
-  { maxContentWidth: 370, fontSize: 27 },
-  { maxContentWidth: 400, fontSize: 29 },
-  { maxContentWidth: 440, fontSize: 31 },
-  { maxContentWidth: Number.POSITIVE_INFINITY, fontSize: 33 },
+  { maxContentWidth: 300, fontSize: 22 },
+  { maxContentWidth: 340, fontSize: 24 },
+  { maxContentWidth: 370, fontSize: 26 },
+  { maxContentWidth: 400, fontSize: 28 },
+  { maxContentWidth: 440, fontSize: 30 },
+  { maxContentWidth: Number.POSITIVE_INFINITY, fontSize: 32 },
 ] as const;
 
 /**
  * قاسم عرض آمن لسعة سطر QPC (كان 17 → خط ~22px على 390؛ المرجع يتطلّب حضورًا أكبر).
- * 15 يُعطي ~25px على 390 مع الإبقاء على سقف الارتفاع 1.85.
+ * 15.8 يُعطي ~24px (أقصى آمن؛ 25 يفيض) على 390 مع الإبقاء على سقف الارتفاع 1.85.
  */
-export const SIGNATURE_WIDTH_CAPACITY_EM = 15;
+export const SIGNATURE_WIDTH_CAPACITY_EM = 15.8;
 
 /**
  * حجم Signature من فئة الشاشة + سقف هندسي موحّد (عرض/ارتفاع).

@@ -1,0 +1,36 @@
+{
+  "ci": "34811187246",
+  "rootCause": {
+    "primaryDelta": "fontSize 22→25 (SIGNATURE_WIDTH_CAPACITY_EM 17→15)",
+    "secondaryDeltasKept": ["topInset tighten under metrics", "bottomPad drop +16px", "ayahMark 0.92→0.98em"],
+    "notCausingLineOverflow": ["lineHeight unchanged 1.85", "sidePx unchanged 5"]
+  },
+  "mushafMeasure4": {
+    "pageNumber": 4,
+    "metricName": "lineOverflow",
+    "expected": false,
+    "actual": true,
+    "delta": 1,
+    "tolerance": 0,
+    "fontSizeAtFailure": 25,
+    "frameWidth": 380
+  },
+  "visualSnapshot": {
+    "failedPages": [3,4,5,7,48,283,600,603],
+    "metric": "lineOverflow",
+    "fontSize": 25,
+    "note": "gate fails on geometry lineOverflow; not pixel-diff percentage"
+  },
+  "binarySearch": {
+    "22": "PASS (pre-change baseline on main)",
+    "23": "PASS local measure critical pages",
+    "24": "PASS local measure + visual-snapshot",
+    "25": "FAIL CI mushaf-measure(4) + visual-snapshot"
+  },
+  "safeMax": {
+    "fontSizeOn390": 24,
+    "widthCapacityEm": 15.8,
+    "largestPassing": 24,
+    "smallestFailing": 25
+  }
+}
