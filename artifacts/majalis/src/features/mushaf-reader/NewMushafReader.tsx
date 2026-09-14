@@ -1141,7 +1141,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         />
       ) : null}
 
-      {tafsirOpen && tafsirVerseKey ? (
+      {tafsirVerseKey ? (
         <Suspense fallback={null}>
           <MushafTafsirSheet
             open={tafsirOpen}

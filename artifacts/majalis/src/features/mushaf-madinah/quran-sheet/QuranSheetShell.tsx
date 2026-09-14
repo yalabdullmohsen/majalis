@@ -44,26 +44,36 @@ export function QuranSheetShell({
   onDragEnd,
   testId,
 }: Props) {
-  if (!open) return null;
-
+  /* يبقى في الشجرة — إخفاء عبر CSS يمنع وميض Mount عند فتح التفسير/القوائم */
   let dragY: number | null = null;
 
   return createPortal(
     <div
       className={`quran-sheet ${SNAP_CLASS[snap]} ${className}`.trim()}
       role="dialog"
-      aria-modal="true"
+      aria-modal={open ? "true" : undefined}
+      aria-hidden={open ? undefined : true}
       aria-label={ariaLabel}
       aria-labelledby={titleId}
       data-testid={testId}
-      style={{ position: "fixed", inset: 0, zIndex, display: "grid", alignItems: "end", pointerEvents: "none" }}
+      data-open={open ? "1" : "0"}
+      inert={open ? undefined : true}
+      style={{ position: "fixed", inset: 0, zIndex, display: "grid", alignItems: "end", pointerEvents: open ? "none" : "none" }}
     >
-      <button type="button" className="quran-sheet__scrim" aria-label="إغلاق" onClick={onClose} style={{ pointerEvents: "auto" }} />
+      <button
+        type="button"
+        className="quran-sheet__scrim"
+        aria-label="إغلاق"
+        onClick={onClose}
+        tabIndex={open ? 0 : -1}
+        style={{ pointerEvents: open ? "auto" : "none" }}
+      />
       <div
         ref={panelRef}
         className={`quran-sheet__panel ${panelClassName}`.trim()}
-        style={{ pointerEvents: "auto", width: "100%" }}
+        style={{ pointerEvents: open ? "auto" : "none", width: "100%" }}
         onPointerDown={(e) => {
+          if (!open) return;
           if ((e.target as HTMLElement).closest("button, input, select, a, textarea")) {
             dragY = null;
             return;
@@ -73,7 +83,7 @@ export function QuranSheetShell({
         onPointerUp={(e) => {
           const start = dragY;
           dragY = null;
-          if (start == null || !onDragEnd) return;
+          if (!open || start == null || !onDragEnd) return;
           onDragEnd(e.clientY - start);
         }}
         onPointerCancel={() => {
@@ -90,7 +100,7 @@ export function QuranSheetShell({
             ) : (
               <span id={titleId} />
             )}
-            <button type="button" className="quran-sheet__close" onClick={onClose} aria-label="إغلاق">
+            <button type="button" className="quran-sheet__close" onClick={onClose} aria-label="إغلاق" tabIndex={open ? 0 : -1}>
               <X size={18} aria-hidden="true" />
             </button>
           </header>
