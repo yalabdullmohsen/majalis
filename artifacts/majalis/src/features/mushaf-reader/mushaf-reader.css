@@ -188,21 +188,30 @@
 .nm-page__header {
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
-  gap: 0.5rem;
-  /* رأس ملتصق بمتن الصفحة/إطار السورة — دون تغيير ارتفاع الـgeometry */
-  padding: 0 0.15rem;
-  font-size: 0.82rem;
-  font-weight: 700;
+  justify-content: center;
+  /* رأس ملتصق بمتن الصفحة — ارتفاع geometry ثابت 36px؛ المحتوى أسفل الخانة يقرّب من الإطار */
+  padding: 0 0.15rem 0.12rem;
   color: var(--mushaf-meta-color, var(--nm-meta));
   letter-spacing: 0;
-  line-height: 1.15;
   user-select: none;
   overflow: visible;
   min-width: 0;
 }
 
+/* سطر أساسي (سورة) + سطر ثانوي (جزء•حزب) — بلا ازدحام يسار */
+.nm-page__header-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.08rem;
+  min-width: 0;
+  max-width: 100%;
+  text-align: center;
+}
+
 .nm-page__header-surah,
+.nm-page__header-meta,
 .nm-page__header-juz {
   white-space: nowrap;
   color: var(--mushaf-meta-color, var(--nm-meta));
@@ -215,26 +224,34 @@
 .nm-page__section-mark[data-mark="rub"]{height:.4rem;opacity:.38;background:color-mix(in srgb,var(--nm-meta,#6b6358) 48%,transparent)}
 
 
-/* اسم السورة كامل دائمًا — بلا ellipsis ولا قصّ حروف */
+/* اسم السورة — سطر أساسي أوضح، بلا قصّ */
 .nm-page__header-surah {
-  flex: 0 0 auto;
-  min-width: max-content;
-  max-width: none;
+  display: block;
+  min-width: 0;
+  max-width: 100%;
   overflow: visible;
   text-overflow: clip;
   white-space: nowrap;
+  font-size: 0.84rem;
   font-weight: 800;
-  color: color-mix(in srgb, var(--mushaf-meta-color, var(--nm-meta)) 92%, var(--nm-ink));
+  line-height: 1.1;
+  color: color-mix(in srgb, var(--mushaf-meta-color, var(--nm-meta)) 88%, var(--nm-ink));
 }
 
+/* الجزء • الحزب — سطر ثانوي أصغر، غير ملاصق */
+.nm-page__header-meta,
 .nm-page__header-juz {
-  flex: 1 1 auto;
+  display: block;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: start;
-  font-weight: 650;
-  opacity: 0.95;
+  max-width: 100%;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: nowrap;
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  opacity: 0.82;
 }
 
 /* منطقة النص — بلا إطار */
@@ -320,13 +337,14 @@
 
 /*
  * بداية السورة (بما فيها surah-start مثل قريش/الماعون/الكوثر):
- * تكتل بصري عبر محاذاة أعلى الخانة + إطار أقصر —
+ * تكتل بصري: الإطار/البسملة أسفل خاناتهما لتقليل الفراغ تجاه الآية التالية —
  * ممنوع margin/transform على الـslot (يكسران baselineDev / overlap).
+ * محاذاة flex فقط داخل الخانة — لا تغيّر ارتفاع المسارات ولا مواقع أسطر الآيات.
  */
 .nm-page--opening .nm-slot[data-kind="banner"],
 .nm-page--lead .nm-slot[data-kind="banner"],
 .nm-page[data-page-type="surah-start"] .nm-slot[data-kind="banner"] {
-  align-items: flex-start;
+  align-items: flex-end;
   padding-block-start: 0;
   padding-block-end: 0;
 }
@@ -334,7 +352,8 @@
 .nm-page--opening .nm-slot[data-kind="basmala"],
 .nm-page--lead .nm-slot[data-kind="basmala"],
 .nm-page[data-page-type="surah-start"] .nm-slot[data-kind="basmala"] {
-  align-items: flex-start;
+  align-items: flex-end;
+  padding-block-end: 0;
 }
 
 /* بعد البسملة: أول سطر يلتصق بأعلى خانة الشبكة (بلا إزاحة تغيّر ارتفاع الـslot) */
@@ -382,9 +401,8 @@ html[data-theme="dark"] .nm-root {
   --mushaf-surah-frame-ornament: #c4a574;
 }
 
-/* خرطوش عثماني أفقي — أقرب للمصحف الورقي، بلا إحساس بطاقة/بانر تطبيق */
+/* Premium Sunnah Mushaf Frame — هندسة متناظرة ذهبية رفيعة، بلا سياج/شبكة */
 .nm-surah-banner {
-  /* ~10% أقصر من 2.12rem (بعد تهذيب سابق) — امتلاء أوضح دون المساس بـfontSize الآيات */
   --mushaf-surah-frame-height: 1.91rem;
   position: relative;
   box-sizing: border-box;
@@ -394,7 +412,7 @@ html[data-theme="dark"] .nm-root {
   min-height: 0;
   max-height: var(--mushaf-surah-frame-height);
   display: grid;
-  grid-template-columns: minmax(2.2rem, 17%) minmax(0, 1fr) minmax(2.2rem, 17%);
+  grid-template-columns: minmax(1.6rem, 14%) minmax(0, 1fr) minmax(1.6rem, 14%);
   align-items: stretch;
   justify-items: stretch;
   padding: 0;
@@ -406,75 +424,64 @@ html[data-theme="dark"] .nm-root {
   letter-spacing: 0.01em;
   line-height: 1;
   border-radius: 0.2rem;
-  border: 1px solid color-mix(in srgb, var(--mushaf-surah-frame-accent) 88%, var(--mushaf-surah-frame-border));
-  /* خلفية ورقية شفافة نسبيًا — ليست كتلة UI معتمة */
+  border: 1px solid color-mix(in srgb, var(--mushaf-surah-frame-accent) 72%, var(--mushaf-surah-frame-border));
   background:
     linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--mushaf-surah-frame-accent) 22%, transparent) 0 1px,
+      color-mix(in srgb, var(--mushaf-surah-frame-accent) 28%, transparent) 0 1px,
       transparent 1px calc(100% - 1px),
-      color-mix(in srgb, var(--mushaf-surah-frame-accent) 22%, transparent) calc(100% - 1px)
+      color-mix(in srgb, var(--mushaf-surah-frame-accent) 28%, transparent) calc(100% - 1px)
     ),
-    color-mix(in srgb, var(--nm-paper) 62%, var(--mushaf-surah-frame-bg) 38%);
+    color-mix(in srgb, var(--nm-paper) 70%, var(--mushaf-surah-frame-bg) 30%);
   box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-surah-frame-border) 78%, transparent),
-    inset 0 0 0 2px color-mix(in srgb, var(--nm-paper) 88%, var(--mushaf-surah-frame-bg)),
-    inset 0 0 0 3px color-mix(in srgb, var(--mushaf-surah-frame-accent) 62%, transparent);
+    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-surah-frame-border) 55%, transparent),
+    inset 0 0 0 2.5px color-mix(in srgb, var(--mushaf-surah-frame-accent) 42%, transparent);
   user-select: none;
   overflow: hidden;
 }
 
+/* أطراف متناظرة — خط ذهبي رفيع + معيّن، بلا ticks سياج */
 .nm-surah-banner__rail {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.2rem;
+  gap: 0.28rem;
   width: 100%;
   min-width: 0;
-  padding-inline: 0.2rem;
-  /* شريط زخرفة هندسية أفقية ممتدة */
+  padding-inline: 0.18rem;
   background:
-    repeating-linear-gradient(
-      90deg,
-      transparent 0 0.2rem,
-      color-mix(in srgb, var(--mushaf-surah-frame-accent) 38%, transparent) 0.2rem 0.28rem
-    ),
     linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--mushaf-surah-frame-accent) 50%, transparent) 0 1px,
-      transparent 1px calc(100% - 1px),
-      color-mix(in srgb, var(--mushaf-surah-frame-accent) 50%, transparent) calc(100% - 1px)
-    ),
-    color-mix(in srgb, var(--mushaf-surah-frame-accent) 8%, transparent);
-  border-inline-end: 1px solid color-mix(in srgb, var(--mushaf-surah-frame-accent) 42%, transparent);
+      transparent 0 22%,
+      color-mix(in srgb, var(--mushaf-surah-frame-accent) 55%, transparent) 22% 23.5%,
+      transparent 23.5% 76.5%,
+      color-mix(in srgb, var(--mushaf-surah-frame-accent) 55%, transparent) 76.5% 78%,
+      transparent 78% 100%
+    );
+  border-inline-end: 1px solid color-mix(in srgb, var(--mushaf-surah-frame-accent) 36%, transparent);
 }
 
 .nm-surah-banner__rail--end {
   border-inline-end: 0;
-  border-inline-start: 1px solid color-mix(in srgb, var(--mushaf-surah-frame-accent) 42%, transparent);
+  border-inline-start: 1px solid color-mix(in srgb, var(--mushaf-surah-frame-accent) 36%, transparent);
 }
 
+/* شريط رفيع صامت بدل repeating fence */
 .nm-surah-banner__band {
   flex: 1 1 auto;
-  height: 0.34rem;
-  min-width: 0.5rem;
-  border-block: 1px solid color-mix(in srgb, var(--mushaf-surah-frame-ornament) 70%, transparent);
-  background:
-    repeating-linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--mushaf-surah-frame-ornament) 75%, transparent) 0 0.14rem,
-      transparent 0.14rem 0.28rem
-    );
-  opacity: 0.9;
+  height: 1px;
+  min-width: 0.4rem;
+  border: 0;
+  background: color-mix(in srgb, var(--mushaf-surah-frame-ornament) 58%, transparent);
+  opacity: 0.75;
 }
 
-/* معيّن هندسي متماثل — زخرفة إطار لا نجمة UI منفصلة */
 .nm-surah-banner__ornament {
-  width: 0.52rem;
-  height: 0.52rem;
+  width: 0.46rem;
+  height: 0.46rem;
   background: var(--mushaf-surah-frame-ornament);
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  opacity: 0.92;
+  opacity: 0.9;
   flex-shrink: 0;
 }
 
@@ -482,34 +489,29 @@ html[data-theme="dark"] .nm-root {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
   min-width: 0;
   width: 100%;
-  padding-inline: 0.2rem;
+  padding-inline: 0.25rem;
   overflow: visible;
 }
 
-/* زخرفة أفقية ممتدة حول اسم السورة */
+/* زخرفة أفقية متناظرة رفيعة حول الاسم — خط مزدوج بلا شبكة */
 .nm-surah-banner__flourish {
-  flex: 1 1 1.2rem;
-  max-width: 3.4rem;
-  min-width: 0.6rem;
-  height: 0.4rem;
+  flex: 1 1 1rem;
+  max-width: 3.2rem;
+  min-width: 0.5rem;
+  height: 0.36rem;
   background:
     linear-gradient(
       to bottom,
-      transparent 0 38%,
-      color-mix(in srgb, var(--mushaf-surah-frame-ornament) 65%, transparent) 38% 42%,
-      transparent 42% 58%,
-      color-mix(in srgb, var(--mushaf-surah-frame-ornament) 65%, transparent) 58% 62%,
-      transparent 62% 100%
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent 0 0.16rem,
-      color-mix(in srgb, var(--mushaf-surah-frame-accent) 55%, transparent) 0.16rem 0.22rem
+      transparent 0 42%,
+      color-mix(in srgb, var(--mushaf-surah-frame-ornament) 70%, transparent) 42% 46%,
+      transparent 46% 54%,
+      color-mix(in srgb, var(--mushaf-surah-frame-ornament) 70%, transparent) 54% 58%,
+      transparent 58% 100%
     );
-  opacity: 0.85;
+  opacity: 0.8;
 }
 
 .nm-surah-banner__label {

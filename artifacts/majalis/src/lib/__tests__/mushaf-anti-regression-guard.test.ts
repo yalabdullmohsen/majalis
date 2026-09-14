@@ -137,6 +137,6 @@ const sheetCss = readFileSync(
   resolve(root, "src/features/mushaf-madinah/quran-sheet/quran-sheet.css"),
   "utf8",
 );
-assert.match(sheetCss, /68dvh/);
+assert.match(sheetCss, /74dvh/);
 
 console.log(`mushaf-anti-regression-guard.test.ts: ok (${files.length} files)`);

@@ -1888,11 +1888,11 @@ html.dark .mm-ayah-bar__dismiss {
 
 .mm-ayah-bar__handle {
   grid-row: 1;
-  width: 2.5rem;
-  height: 0.28rem;
-  margin: 0.1rem auto 0.05rem;
+  width: 1.85rem;
+  height: 0.18rem;
+  margin: 0.06rem auto 0.04rem;
   border-radius: 999px;
-  background: color-mix(in srgb, #111 22%, transparent);
+  background: color-mix(in srgb, #111 20%, transparent);
 }
 
 .mm-ayah-bar__panel:has(.mm-ayah-bar__readers),
@@ -2439,43 +2439,58 @@ html.dark .mm-tafsir__status:not(.mm-tafsir__status--err) {
   min-height: 40px;
 }
 
-/* كثافة شيت التفسير */
+/* كثافة شيت التفسير — رأس أنحف، آية أوضح، نص أوفر */
 .mm-tafsir {
-  gap: 0.45rem;
+  gap: 0.32rem;
 }
 .mm-tafsir__meta {
-  gap: 0.12rem;
+  display: grid;
+  gap: 0.06rem;
 }
 .mm-tafsir__meta-ref {
   margin: 0;
-  font-size: 0.68rem;
-  opacity: 0.7;
+  font-size: 0.64rem;
+  line-height: 1.25;
+  opacity: 0.68;
 }
 .mm-tafsir__ayah {
-  margin: 0.1rem 0 0;
-  font-size: 1.05rem;
-  line-height: 1.65;
+  margin: 0.04rem 0 0.08rem;
+  font-size: 1.12rem;
+  line-height: 1.55;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--mm-ink, #111) 92%, var(--mm-gold, #a68b67));
 }
 .mm-tafsir__toolbar {
-  gap: 0.3rem;
+  gap: 0.22rem;
 }
 .mm-tafsir__depth-btn,
 .mm-tafsir__ed-btn {
-  min-height: 34px;
-  font-size: 0.74rem;
-  border-radius: 0.55rem;
-  padding: 0.2rem 0.35rem;
+  min-height: 32px;
+  font-size: 0.72rem;
+  border-radius: 0.5rem;
+  padding: 0.14rem 0.3rem;
 }
 .mm-tafsir__editions .quran-tab {
-  min-height: 36px;
-  font-size: 0.78rem;
+  min-height: 34px;
+  font-size: 0.74rem;
 }
 .mm-tafsir__body {
   font-size: 0.98rem;
-  line-height: 1.75;
+  line-height: 1.72;
+  padding-block-start: 0.1rem;
 }
 .mm-tafsir-sheet__panel .quran-sheet__handle {
-  margin-block: 0.08rem;
+  margin-block: 0.04rem;
+}
+.mm-tafsir-sheet__panel .quran-sheet__head {
+  padding-block: 0.1rem 0.06rem;
+}
+.mm-tafsir-sheet__panel .quran-sheet__title {
+  font-size: 0.9rem;
+}
+.mm-tafsir-sheet__panel .quran-sheet__body {
+  gap: 0.32rem;
+  padding-inline: 0.85rem;
 }
 
 
