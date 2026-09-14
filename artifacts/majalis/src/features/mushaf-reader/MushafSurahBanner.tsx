@@ -6,9 +6,9 @@ type Props = {
 };
 
 /**
- * MushafSurahFramePremium — خرطوش عثماني مطبعي (هوية سُنّة).
- * زخرفة أفقية ممتدة بلا بطاقة ظل/بانر تطبيق، بلا ×، بلا نجوم UI.
- * الأبعاد داخل خانة الشبكة — لا FittedBox ولا قصّ لاسم السورة.
+ * SunnahSurahCartoucheCompact — لوحة اسم سورة مستقلة صغيرة (هوية سُنّة).
+ * عرض يعتمد على الاسم ضمن حد أدنى/أقصى؛ بلا شريط بعرض الصفحة، بلا ظل/زر UI.
+ * الارتفاع داخل خانة الشبكة ثابت — لا FittedBox ولا قصّ للاسم.
  */
 export const MushafSurahFramePremium = memo(function MushafSurahFramePremium({
   nameArabic,
@@ -18,9 +18,9 @@ export const MushafSurahFramePremium = memo(function MushafSurahFramePremium({
     <div
       className="nm-surah-banner"
       data-testid="nm-surah-banner"
-      data-surah-frame="sunnah-cartouche-v1"
+      data-surah-frame="sunnah-cartouche-compact-v1"
       data-sunnah-frame="sunnah-v1"
-      data-component="SunnahSurahTitleCartouche"
+      data-component="SunnahSurahCartoucheCompact"
       role="heading"
       aria-level={2}
     >

@@ -167,7 +167,7 @@ export const MushafPage = memo(function MushafPage({
         {isOpeningP1 ? (
           <div
             className="nm-page__fatiha-medallion"
-            data-component="SunnahFatihaMedallion"
+            data-component="SunnahFatihaBraidedMedallion"
             data-testid="sunnah-fatiha-medallion"
             aria-hidden="true"
           />
