@@ -2,7 +2,7 @@
  * هيرو الرئيسية خارج Suspense — يبقى h1 «سُنّة» في DOM من أول رسم App
  * حتى لا يُعاد قياس LCP عند استبدال HomePage الكسول.
  */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "wouter";
 import { PageHero } from "@/components/ui/PageHero";
 import { resolveDailyContext } from "@/lib/daily-context";
@@ -11,16 +11,8 @@ import { getRecentPages } from "@/lib/recent-pages";
 import "@/styles/components/home-brand-title.css";
 import "@/styles/m2030/home.css";
 
-function deferAfterPaint(cb: () => void, ms: number): () => void {
-  const id = window.setTimeout(cb, ms);
-  return () => window.clearTimeout(id);
-}
-
 export function HomeHeroLcp() {
   const greeting = resolveDailyContext().greeting;
-  // أظهر التحية والأزرار فورًا — تأخير 4ث كان يترك شعارًا فقط ومربعات فارغة.
-  const [showEyebrow, setShowEyebrow] = useState(true);
-  const [showActions, setShowActions] = useState(true);
   const [isFirstVisit] = useState(() => {
     try {
       return !hasSeenFirstVisitIntroSync() && localStorage.getItem("majlis-home-welcomed-v1") !== "1";
@@ -36,32 +28,9 @@ export function HomeHeroLcp() {
     }
   });
 
-  useEffect(() => {
-    let cancelled = false;
-    let clearDefer: (() => void) | undefined;
-    const reveal = () => {
-      if (cancelled) return;
-      setShowEyebrow(true);
-      setShowActions(true);
-    };
-    const onPainted = () => {
-      clearDefer?.();
-      clearDefer = deferAfterPaint(reveal, 80);
-    };
-    window.addEventListener("mj:app-painted", onPainted, { once: true });
-    window.addEventListener("app:first-paint", onPainted, { once: true });
-    clearDefer = deferAfterPaint(reveal, 320);
-    return () => {
-      cancelled = true;
-      clearDefer?.();
-      window.removeEventListener("mj:app-painted", onPainted);
-      window.removeEventListener("app:first-paint", onPainted);
-    };
-  }, []);
-
   return (
     <PageHero
-      className={`m2030-hero home-page-hero${showEyebrow ? " home-page-hero--eyebrow-ready" : ""}${showActions ? " home-page-hero--actions-ready" : ""}`}
+      className="m2030-hero home-page-hero home-page-hero--eyebrow-ready home-page-hero--actions-ready"
       fullBleed={false}
       withPattern={false}
       eyebrow={greeting}
