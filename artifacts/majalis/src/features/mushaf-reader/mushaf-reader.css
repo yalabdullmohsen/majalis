@@ -190,13 +190,13 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 0.5rem;
-  /* رأس أقرب لمتن الصفحة/إطار السورة — دون تغيير ارتفاع الـgeometry */
-  padding: 0.02rem 0.15rem 0;
+  /* رأس ملتصق بمتن الصفحة/إطار السورة — دون تغيير ارتفاع الـgeometry */
+  padding: 0 0.15rem;
   font-size: 0.82rem;
   font-weight: 700;
   color: var(--mushaf-meta-color, var(--nm-meta));
   letter-spacing: 0;
-  line-height: 1.25;
+  line-height: 1.15;
   user-select: none;
   overflow: visible;
   min-width: 0;
@@ -311,15 +311,21 @@
   padding-block: 0;
 }
 
-/* الإطار يقترب من البسملة؛ البسملة تقترب من الإطار — بلا تحريك لهندسة الأسطر */
+/*
+ * افتتاح السورة: الإطار أقرب للرأس، والبسملة أقرب للإطار —
+ * بلا تغيير شبكة الـ15 أو مقاسات الأسطر/الخط.
+ */
 .nm-page--opening .nm-slot[data-kind="banner"],
 .nm-page--lead .nm-slot[data-kind="banner"] {
-  align-items: flex-end;
+  align-items: flex-start;
+  padding-block-start: 0;
 }
 
 .nm-page--opening .nm-slot[data-kind="basmala"],
 .nm-page--lead .nm-slot[data-kind="basmala"] {
   align-items: flex-start;
+  /* سحب بصري طفيف نحو الإطار دون إعادة تدفق شبكة الأسطر */
+  margin-block-start: -0.28rem;
 }
 
 .nm-slot[data-kind="empty"] {
@@ -361,7 +367,8 @@ html[data-theme="dark"] .nm-root {
 
 /* خرطوش عثماني أفقي — أقرب للمصحف الورقي، بلا إحساس بطاقة/بانر تطبيق */
 .nm-surah-banner {
-  --mushaf-surah-frame-height: 2.45rem;
+  /* ~13% أقصر من 2.45rem — امتلاء رأسي أوضح دون المساس بـfontSize الآيات */
+  --mushaf-surah-frame-height: 2.12rem;
   position: relative;
   box-sizing: border-box;
   width: 100%;
@@ -370,16 +377,16 @@ html[data-theme="dark"] .nm-root {
   min-height: 0;
   max-height: var(--mushaf-surah-frame-height);
   display: grid;
-  grid-template-columns: minmax(2.6rem, 20%) minmax(0, 1fr) minmax(2.6rem, 20%);
+  grid-template-columns: minmax(2.35rem, 18%) minmax(0, 1fr) minmax(2.35rem, 18%);
   align-items: stretch;
   justify-items: stretch;
   padding: 0;
   text-align: center;
   color: var(--mushaf-surah-frame-text);
   font-family: "Amiri Quran", "Amiri", "Traditional Arabic", serif;
-  font-size: clamp(1.06rem, 3.6vw, 1.24rem);
+  font-size: clamp(0.98rem, 3.35vw, 1.14rem);
   font-weight: 700;
-  letter-spacing: 0.012em;
+  letter-spacing: 0.01em;
   line-height: 1;
   border-radius: 0.2rem;
   border: 1px solid color-mix(in srgb, var(--mushaf-surah-frame-accent) 88%, var(--mushaf-surah-frame-border));
@@ -432,8 +439,8 @@ html[data-theme="dark"] .nm-root {
 
 .nm-surah-banner__band {
   flex: 1 1 auto;
-  height: 0.42rem;
-  min-width: 0.55rem;
+  height: 0.34rem;
+  min-width: 0.5rem;
   border-block: 1px solid color-mix(in srgb, var(--mushaf-surah-frame-ornament) 70%, transparent);
   background:
     repeating-linear-gradient(
@@ -446,8 +453,8 @@ html[data-theme="dark"] .nm-root {
 
 /* معيّن هندسي متماثل — زخرفة إطار لا نجمة UI منفصلة */
 .nm-surah-banner__ornament {
-  width: 0.62rem;
-  height: 0.62rem;
+  width: 0.52rem;
+  height: 0.52rem;
   background: var(--mushaf-surah-frame-ornament);
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
   opacity: 0.92;
@@ -467,10 +474,10 @@ html[data-theme="dark"] .nm-root {
 
 /* زخرفة أفقية ممتدة حول اسم السورة */
 .nm-surah-banner__flourish {
-  flex: 1 1 1.4rem;
-  max-width: 3.8rem;
-  min-width: 0.7rem;
-  height: 0.5rem;
+  flex: 1 1 1.2rem;
+  max-width: 3.4rem;
+  min-width: 0.6rem;
+  height: 0.4rem;
   background:
     linear-gradient(
       to bottom,
@@ -498,9 +505,9 @@ html[data-theme="dark"] .nm-root {
   text-overflow: clip;
   white-space: nowrap;
   font-weight: 700;
-  font-size: 1.05em;
-  line-height: 1.05;
-  padding-block: 0.08em;
+  font-size: 1.02em;
+  line-height: 1;
+  padding-block: 0.02em;
   color: var(--mushaf-surah-frame-text);
 }
 
@@ -712,10 +719,10 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
 .nm-page__footer {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 0.25rem;
-  /* فراغ سفلي أقل داخل خانة الـfooter الثابتة 40px — بلا تغيير ارتفاع الـgeometry */
-  padding: 0.04rem 0.15rem 0.02rem;
+  /* أقرب لمتن الصفحة داخل خانة الـ40px الثابتة — بلا تغيير geometry */
+  align-items: start;
+  gap: 0.2rem;
+  padding: 0.02rem 0.15rem 0;
   box-sizing: border-box;
   overflow: visible;
   font-size: 0.78rem;
