@@ -6,9 +6,9 @@ type Props = {
 };
 
 /**
- * MushafSurahFramePremium — إطار سورة مطبعي عثماني (هوية سُنّة).
- * زخرفة هندسية متماثلة بلا بطاقة ظل، بلا علامات ×، بلا نجوم منفصلة كـ UI.
- * الأبعاد ثابتة بعد الرسم — لا FittedBox ولا قصّ لاسم السورة.
+ * MushafSurahFramePremium — خرطوش عثماني مطبعي (هوية سُنّة).
+ * زخرفة أفقية ممتدة بلا بطاقة ظل/بانر تطبيق، بلا ×، بلا نجوم UI.
+ * الأبعاد داخل خانة الشبكة — لا FittedBox ولا قصّ لاسم السورة.
  */
 export const MushafSurahFramePremium = memo(function MushafSurahFramePremium({
   nameArabic,
@@ -18,19 +18,24 @@ export const MushafSurahFramePremium = memo(function MushafSurahFramePremium({
     <div
       className="nm-surah-banner"
       data-testid="nm-surah-banner"
-      data-surah-frame="premium-uthmanic-v1"
+      data-surah-frame="premium-uthmani-v2"
+      data-sunnah-frame="sunnah-v1"
       data-component="MushafSurahFramePremium"
       role="heading"
       aria-level={2}
     >
       <span className="nm-surah-banner__rail nm-surah-banner__rail--start" aria-hidden="true">
+        <span className="nm-surah-banner__band" />
         <span className="nm-surah-banner__ornament" />
       </span>
       <span className="nm-surah-banner__center">
+        <span className="nm-surah-banner__flourish" />
         <span className="nm-surah-banner__label">{`سورة ${label}`}</span>
+        <span className="nm-surah-banner__flourish" />
       </span>
       <span className="nm-surah-banner__rail nm-surah-banner__rail--end" aria-hidden="true">
         <span className="nm-surah-banner__ornament" />
+        <span className="nm-surah-banner__band" />
       </span>
     </div>
   );
