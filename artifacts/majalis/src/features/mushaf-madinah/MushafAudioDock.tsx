@@ -322,7 +322,7 @@ export function MushafAudioDock({
                     onClick={closeReaders}
                     aria-label="إغلاق"
                   >
-                    <X size={18} aria-hidden="true" />
+                    <X size={14} aria-hidden="true" />
                   </button>
                 </div>
                 <label className="mm-reciter-sheet__search">

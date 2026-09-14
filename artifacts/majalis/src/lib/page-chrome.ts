@@ -33,7 +33,7 @@ const SURFACE_DARK_APP = "#131A18";
 /** زمرد مواقيت الصلاة — يطابق --em-950 */
 export const PRAYER_STATUS_HEX = "#091814";
 /** ورق المصحف */
-export const MUSHAF_PAPER_HEX = "#FBF7EF";
+export const MUSHAF_PAPER_HEX = "#FBF4E8";
 export const MUSHAF_NIGHT_HEX = "#101820";
 export const MUSHAF_OLED_HEX = "#000000";
 export const MUSHAF_SEPIA_HEX = "#f0e8d8";

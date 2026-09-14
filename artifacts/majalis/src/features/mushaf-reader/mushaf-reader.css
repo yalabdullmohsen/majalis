@@ -10,9 +10,8 @@
   --mushaf-body-width: min(100%, 28rem);
   --mushaf-line-height: 1.85;
   --mushaf-font-weight: 400;
-  /* ورقة أدفأ قليلًا مع بقاء تباين الحبر */
-  /* ورق عاجي دافئ أقرب لمصحف مطبوع */
-  --mushaf-page-bg: #faf0e0;
+  /* ورق عاجي دافئ أفتح قليلًا (Warm Ivory) — أقرب للمصحف الورقي بلا أبيض خالص */
+  --mushaf-page-bg: #fbf4e8;
   --mushaf-text-color: #1a1510;
   --mushaf-meta-color: #4a351c;
   --mushaf-top-safe: var(--mushaf-safe-top);
@@ -33,7 +32,7 @@
   --reader-bottom-stack: 0px;
 
   --nm-paper: var(--mushaf-page-bg);
-  --nm-paper-deep: #f3e6d0;
+  --nm-paper-deep: #f6ead8;
   --nm-ink: var(--mushaf-text-color);
   --nm-meta: var(--mushaf-meta-color);
   --nm-gold: #a07d4a;
@@ -1197,6 +1196,25 @@ html.dark .nm-root .mm-audio-dock__reciter-btn {
 
 .nm-page-placeholder--frame::before {
   content: none;
+}
+
+/* هيكل مصحف أثناء التحميل — أسطر وهمية بلا شاشة فارغة */
+.nm-page-placeholder--frame::after {
+  content: "";
+  grid-row: 2;
+  align-self: stretch;
+  justify-self: stretch;
+  margin: 0.55rem 0.85rem;
+  border-radius: 0.35rem;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 0.42rem,
+      color-mix(in srgb, var(--nm-meta, #4a351c) 11%, transparent) 0.42rem 0.92rem,
+      transparent 0.92rem 1.55rem
+    );
+  opacity: 0.9;
+  pointer-events: none;
 }
 
 .nm-page-placeholder:not(.nm-page-placeholder--frame) {

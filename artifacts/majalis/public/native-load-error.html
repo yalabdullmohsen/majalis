@@ -89,11 +89,36 @@
           transform: translateX(-250%);
         }
       }
+
+      .mushaf-skel {
+        width: min(100%, 17rem);
+        margin: 0.35rem 0 0.15rem;
+        padding: 0.7rem 0.75rem;
+        border-radius: 0.85rem;
+        background: #fbf4e8;
+        border: 1px solid color-mix(in srgb, var(--mj-splash-ink) 12%, transparent);
+        display: grid;
+        gap: 0.55rem;
+        box-sizing: border-box;
+      }
+      @media (prefers-color-scheme: dark) {
+        .mushaf-skel { background: #1a221c; }
+      }
+      .mushaf-skel__bar {
+        height: 0.42rem;
+        border-radius: 6px;
+        background: color-mix(in srgb, var(--mj-splash-ink) 14%, transparent);
+      }
+      .mushaf-skel__bar:nth-child(1) { width: 38%; margin-inline: auto; }
+      .mushaf-skel__bar:nth-child(3n) { width: 90%; }
+      .mushaf-skel__bar:nth-child(3n+1) { width: 100%; }
+      .mushaf-skel__bar:nth-child(3n+2) { width: 84%; }
+      .is-final .mushaf-skel { display: none; }
       .soft-status {
-        margin: 0.35rem 0 0;
-        font-size: 0.78rem;
-        line-height: 1.5;
-        color: color-mix(in srgb, var(--mj-splash-ink) 62%, transparent);
+        margin: 0.2rem 0 0;
+        font-size: 0.72rem;
+        line-height: 1.45;
+        color: color-mix(in srgb, var(--mj-splash-ink) 52%, transparent);
         max-width: 16rem;
       }
       .soft-status[hidden],
@@ -181,6 +206,16 @@
       </div>
       <p class="tagline">معك في العلم والعمل</p>
       <div class="pulse" aria-hidden="true"></div>
+      <div class="mushaf-skel" aria-hidden="true">
+        <div class="mushaf-skel__bar"></div>
+        <div class="mushaf-skel__bar"></div>
+        <div class="mushaf-skel__bar"></div>
+        <div class="mushaf-skel__bar"></div>
+        <div class="mushaf-skel__bar"></div>
+        <div class="mushaf-skel__bar"></div>
+        <div class="mushaf-skel__bar"></div>
+        <div class="mushaf-skel__bar"></div>
+      </div>
       <p id="title" class="soft-status">جاري تجهيز الصفحة…</p>
       <p id="msg" class="fail-msg">نحمّل المحتوى. لا تغلق التطبيق.</p>
       <h1 id="fail-title" class="fail-title" hidden>تعذّر التحميل</h1>

@@ -388,3 +388,12 @@ html.dark .section-lobby__chip.is-active {
 .section-lobby__back {
   min-height: 2.5rem;
 }
+
+
+.section-lobby[data-quran-hub="1"] {
+  gap: 14px;
+}
+.section-lobby[data-quran-hub="1"] .section-lobby__grid {
+  gap: 8px;
+  --lobby-grid-gap: 8px;
+}

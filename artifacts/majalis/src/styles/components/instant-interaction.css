@@ -133,6 +133,7 @@ button,
   text-align: center;
 }
 
+
 /* لا زر رجوع عائم فوق هيكل التحميل */
 .app-shell:has([data-route-fallback="1"]) .floating-back-btn,
 .app-shell:has([data-route-fallback="1"]) [data-floating-back="1"],
