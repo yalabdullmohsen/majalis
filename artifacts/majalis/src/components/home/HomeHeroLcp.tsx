@@ -16,40 +16,6 @@ function deferAfterPaint(cb: () => void, ms: number): () => void {
   return () => window.clearTimeout(id);
 }
 
-/** هيكل ناعم لـ «ابدأ من هنا» — بدون مربع أبيض فارغ */
-export function HomeStartHereSoftSkeleton() {
-  return (
-    <section
-      aria-label="ابدأ من هنا"
-      aria-busy="true"
-      className="home-start-here mj-home-lcp-ph__start-here mj-home-lcp-ph__start-here--soft"
-    >
-      <div className="hsh-header" aria-hidden="true">
-        <span className="hsh-eyebrow mj-home-lcp-ph__kicker skeleton-base">&nbsp;</span>
-        <span className="hsh-title mj-home-lcp-ph__section-title skeleton-base">&nbsp;</span>
-        <p className="hsh-lead mj-home-lcp-ph__lead skeleton-base">&nbsp;</p>
-        <div className="hsh-actions">
-          <span className="mj-home-lcp-ph__action skeleton-base" />
-          <span className="mj-home-lcp-ph__action skeleton-base" />
-        </div>
-      </div>
-      <ol className="hsh-steps" aria-hidden="true">
-        {Array.from({ length: 3 }).map((_, idx) => (
-          <li key={idx} className="hsh-step">
-            <span className="hsh-step__num" aria-hidden="true">
-              {idx + 1}
-            </span>
-            <div className="hsh-step__body">
-              <span className="mj-home-lcp-ph__step-title skeleton-base" />
-              <span className="mj-home-lcp-ph__step-desc skeleton-base" />
-            </div>
-          </li>
-        ))}
-      </ol>
-    </section>
-  );
-}
-
 export function HomeHeroLcp() {
   const greeting = resolveDailyContext().greeting;
   // أظهر التحية والأزرار فورًا — تأخير 4ث كان يترك شعارًا فقط ومربعات فارغة.
@@ -139,7 +105,6 @@ export function HomeSacredOfDaySkeleton() {
   );
 }
 
-/** حجز اكتشاف رئيسي فوق الطية */
 export function HomePrimaryDiscoveryPlaceholder({ id = false }: { id?: boolean } = {}) {
   return (
     <div
@@ -150,7 +115,6 @@ export function HomePrimaryDiscoveryPlaceholder({ id = false }: { id?: boolean }
   );
 }
 
-/** هيكل ورد اليوم — نفس الأبعاد النهائية */
 export function HomeDailyWirdSkeleton() {
   return (
     <section
@@ -158,38 +122,14 @@ export function HomeDailyWirdSkeleton() {
       aria-label="ورد اليوم"
       aria-busy="true"
       data-testid="daily-wird-card"
-    >
-      <div className="m2030-band__head">
-        <h2 className="m2030-band__title">ورد اليوم</h2>
-        <div className="daily-wird-card__actions" aria-hidden="true">
-          <span className="daily-wird-card__done-btn mj-home-lcp-ph__daily-done">تم</span>
-          <span className="m2030-band__link mj-home-lcp-ph__daily-link">الورد الكامل</span>
-        </div>
-      </div>
-      <div className="home-daily-wird__grid" aria-hidden="true">
-        {Array.from({ length: 4 }).map((_, idx) => (
-          <article key={idx} className="home-daily-wird__card soft-card soft-card--on-light mj-home-lcp-ph__daily-card">
-            <header className="home-daily-wird__card-head">
-              <span className="mj-home-lcp-ph__daily-icon" aria-hidden="true" />
-              <span className="mj-home-lcp-ph__daily-label">&nbsp;</span>
-            </header>
-            <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
-            <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
-            <div className="home-daily-wird__meta mj-home-lcp-ph__daily-meta skeleton-base" />
-            <div className="home-daily-wird__cta mj-home-lcp-ph__daily-cta skeleton-base" />
-          </article>
-        ))}
-      </div>
-    </section>
+    />
   );
 }
 
-/** حجز شريط البث المباشر */
 export function HomeLiveNowPlaceholder() {
   return <div className="home-live-now-ph" aria-hidden="true" />;
 }
 
-/** حجز تحت الطية */
 export function HomeBelowFoldPlaceholder({ withId = false }: { withId?: boolean } = {}) {
   return (
     <div
