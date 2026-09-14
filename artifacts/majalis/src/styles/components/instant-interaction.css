@@ -133,62 +133,6 @@ button,
   text-align: center;
 }
 
-/* هيكل مصحف — صفحة وهمية بدل شاشة فارغة */
-.lrf-wrap--mushaf {
-  background: var(--color-mushaf-paper, #fbf4e8);
-  color: #4a351c;
-  min-height: 100%;
-  padding: 0.75rem 0.85rem;
-  box-sizing: border-box;
-}
-
-.lrf-skel--mushaf {
-  display: grid;
-  grid-template-rows: 2rem minmax(0, 1fr) 2rem;
-  gap: 0.55rem;
-  width: min(100%, 28rem);
-  margin-inline: auto;
-  min-height: min(72dvh, 36rem);
-}
-
-.lrf-skel__mushaf-head,
-.lrf-skel__mushaf-foot {
-  height: 0.7rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, currentColor 12%, transparent);
-  width: 42%;
-  margin-inline: auto;
-}
-
-.lrf-skel__mushaf-foot {
-  width: 28%;
-}
-
-.lrf-skel__mushaf-lines {
-  display: grid;
-  gap: 0.72rem;
-  align-content: start;
-  padding-block: 0.35rem;
-}
-
-.lrf-skel__mushaf-lines > span {
-  display: block;
-  height: 0.55rem;
-  border-radius: 6px;
-  background: color-mix(in srgb, currentColor 10%, transparent);
-}
-
-.lrf-skel__mushaf-lines > span:nth-child(3n) {
-  width: 92%;
-}
-
-.lrf-skel__mushaf-lines > span:nth-child(3n + 1) {
-  width: 100%;
-}
-
-.lrf-skel__mushaf-lines > span:nth-child(3n + 2) {
-  width: 86%;
-}
 
 /* لا زر رجوع عائم فوق هيكل التحميل */
 .app-shell:has([data-route-fallback="1"]) .floating-back-btn,
