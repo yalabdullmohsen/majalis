@@ -314,8 +314,8 @@
 
 /*
  * بداية السورة (بما فيها surah-start مثل قريش/الماعون/الكوثر):
- * تكتل بصري للرأس→الإطار→البسملة→أول آية داخل خانات 1fr الثابتة —
- * بلا Auto-fit/Scale ولا تغيير عدد الأسطر أو Geometry.
+ * تكتل بصري عبر محاذاة أعلى الخانة + إطار أقصر —
+ * ممنوع margin/transform على الـslot (يكسران baselineDev / overlap).
  */
 .nm-page--opening .nm-slot[data-kind="banner"],
 .nm-page--lead .nm-slot[data-kind="banner"],
@@ -329,15 +329,12 @@
 .nm-page--lead .nm-slot[data-kind="basmala"],
 .nm-page[data-page-type="surah-start"] .nm-slot[data-kind="basmala"] {
   align-items: flex-start;
-  /* سحب نحو الإطار لملء فراغ خانة البانر دون تحريك شبكة الأسطر */
-  margin-block-start: -0.52rem;
 }
 
-/* أول سطر بعد البسملة يقترب منها بصريًا */
+/* بعد البسملة: أول سطر يلتصق بأعلى خانة الشبكة (بلا إزاحة تغيّر ارتفاع الـslot) */
 .nm-page--opening .nm-slot[data-kind="basmala"] + .nm-slot,
 .nm-page--lead .nm-slot[data-kind="basmala"] + .nm-slot,
 .nm-page[data-page-type="surah-start"] .nm-slot[data-kind="basmala"] + .nm-slot {
-  margin-block-start: -0.42rem;
   align-items: flex-start;
 }
 
