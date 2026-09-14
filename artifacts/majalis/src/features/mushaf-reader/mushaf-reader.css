@@ -249,9 +249,10 @@
   background: transparent;
 }
 
-/* صفحات بداية السورة: رأس/إطار/بسملة متقاربة بصريًا داخل خانات الشبكة الثابتة */
+/* صفحات بداية السورة (افتتاح/بقرة/أي سورة): رأس/إطار/بسملة متقاربة داخل الشبكة الثابتة */
 .nm-page--opening .nm-page__stage,
-.nm-page--lead .nm-page__stage {
+.nm-page--lead .nm-page__stage,
+.nm-page[data-page-type="surah-start"] .nm-page__stage {
   padding-block: 0;
 }
 
@@ -312,20 +313,32 @@
 }
 
 /*
- * افتتاح السورة: الإطار أقرب للرأس، والبسملة أقرب للإطار —
- * بلا تغيير شبكة الـ15 أو مقاسات الأسطر/الخط.
+ * بداية السورة (بما فيها surah-start مثل قريش/الماعون/الكوثر):
+ * تكتل بصري للرأس→الإطار→البسملة→أول آية داخل خانات 1fr الثابتة —
+ * بلا Auto-fit/Scale ولا تغيير عدد الأسطر أو Geometry.
  */
 .nm-page--opening .nm-slot[data-kind="banner"],
-.nm-page--lead .nm-slot[data-kind="banner"] {
+.nm-page--lead .nm-slot[data-kind="banner"],
+.nm-page[data-page-type="surah-start"] .nm-slot[data-kind="banner"] {
   align-items: flex-start;
   padding-block-start: 0;
+  padding-block-end: 0;
 }
 
 .nm-page--opening .nm-slot[data-kind="basmala"],
-.nm-page--lead .nm-slot[data-kind="basmala"] {
+.nm-page--lead .nm-slot[data-kind="basmala"],
+.nm-page[data-page-type="surah-start"] .nm-slot[data-kind="basmala"] {
   align-items: flex-start;
-  /* سحب بصري طفيف نحو الإطار دون إعادة تدفق شبكة الأسطر */
-  margin-block-start: -0.28rem;
+  /* سحب نحو الإطار لملء فراغ خانة البانر دون تحريك شبكة الأسطر */
+  margin-block-start: -0.52rem;
+}
+
+/* أول سطر بعد البسملة يقترب منها بصريًا */
+.nm-page--opening .nm-slot[data-kind="basmala"] + .nm-slot,
+.nm-page--lead .nm-slot[data-kind="basmala"] + .nm-slot,
+.nm-page[data-page-type="surah-start"] .nm-slot[data-kind="basmala"] + .nm-slot {
+  margin-block-start: -0.42rem;
+  align-items: flex-start;
 }
 
 .nm-slot[data-kind="empty"] {
@@ -334,6 +347,7 @@
 
 .nm-page--opening .nm-slot[data-kind="empty"],
 .nm-page--lead .nm-slot[data-kind="empty"],
+.nm-page[data-page-type="surah-start"] .nm-slot[data-kind="empty"],
 .nm-page--flex .nm-slot[data-kind="empty"] {
   visibility: hidden;
   display: flex;
@@ -367,8 +381,8 @@ html[data-theme="dark"] .nm-root {
 
 /* خرطوش عثماني أفقي — أقرب للمصحف الورقي، بلا إحساس بطاقة/بانر تطبيق */
 .nm-surah-banner {
-  /* ~13% أقصر من 2.45rem — امتلاء رأسي أوضح دون المساس بـfontSize الآيات */
-  --mushaf-surah-frame-height: 2.12rem;
+  /* ~10% أقصر من 2.12rem (بعد تهذيب سابق) — امتلاء أوضح دون المساس بـfontSize الآيات */
+  --mushaf-surah-frame-height: 1.91rem;
   position: relative;
   box-sizing: border-box;
   width: 100%;
@@ -377,14 +391,14 @@ html[data-theme="dark"] .nm-root {
   min-height: 0;
   max-height: var(--mushaf-surah-frame-height);
   display: grid;
-  grid-template-columns: minmax(2.35rem, 18%) minmax(0, 1fr) minmax(2.35rem, 18%);
+  grid-template-columns: minmax(2.2rem, 17%) minmax(0, 1fr) minmax(2.2rem, 17%);
   align-items: stretch;
   justify-items: stretch;
   padding: 0;
   text-align: center;
   color: var(--mushaf-surah-frame-text);
   font-family: "Amiri Quran", "Amiri", "Traditional Arabic", serif;
-  font-size: clamp(0.98rem, 3.35vw, 1.14rem);
+  font-size: clamp(0.92rem, 3.15vw, 1.08rem);
   font-weight: 700;
   letter-spacing: 0.01em;
   line-height: 1;
