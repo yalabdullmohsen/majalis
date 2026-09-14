@@ -131,7 +131,22 @@
   display: flex;
   flex-direction: column;
   background: var(--nm-paper);
-  contain: layout style;
+  contain: layout style paint;
+}
+
+/* منع اهتزاز الصفحة عند فتح الرصيف/شريط الآية — لا overflow ولا هامش سفلي */
+.nm-root.mm-viewport[data-audio-dock="1"] .mm-pager__sheet[data-pane="current"] .mm-page-shell,
+.nm-root.mm-viewport[data-audio-dock="mini"] .mm-pager__sheet[data-pane="current"] .mm-page-shell,
+.nm-root.mm-viewport[data-ayah-bar="1"] .mm-pager__sheet[data-pane="current"] .mm-page-shell {
+  overflow-y: hidden !important;
+  touch-action: none;
+  scroll-padding-bottom: 0;
+}
+
+.nm-root.mm-viewport[data-audio-dock="1"] .mm-pager__sheet[data-pane="current"] .mm-page,
+.nm-root.mm-viewport[data-audio-dock="mini"] .mm-pager__sheet[data-pane="current"] .mm-page,
+.nm-root.mm-viewport[data-ayah-bar="1"] .mm-pager__sheet[data-pane="current"] .mm-page {
+  margin-bottom: 0 !important;
 }
 
 /* ارتفاعات المشغّل للـoverlay فقط — لا تغيّر --reader-bottom-stack ولا حشو الصفحة */

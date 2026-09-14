@@ -115,6 +115,25 @@ html.dark .quran-sheet__scrim {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--quran-action-primary) 35%, transparent);
 }
 
+/* إبقاء الشيت مركّبًا — إخفاء بلا Unmount لتجنّب وميض الفتح */
+.quran-sheet[data-open="0"] {
+  visibility: hidden;
+  pointer-events: none !important;
+  opacity: 0;
+}
+
+.quran-sheet[data-open="1"] {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 120ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quran-sheet[data-open="1"] {
+    transition: none;
+  }
+}
+
 /* ─── Snap heights (QuranSheetShell) ─── */
 .quran-sheet--peek .quran-sheet__panel {
   max-height: 140px;

@@ -1,0 +1,66 @@
+{
+  "ci_run": 34818577659,
+  "pr": 2019,
+  "branch": "cursor/mushaf-visual-polish",
+  "commit_failed": "33d63fa9a",
+  "path_lane": {
+    "lane": "mushaf",
+    "need_build": true,
+    "need_fast_lane": false,
+    "need_mushaf": true,
+    "need_postgres": false,
+    "need_visual": true,
+    "need_color_contrast": true,
+    "need_preview_smoke": false,
+    "need_policy_tests": false,
+    "manual_review": false,
+    "required_jobs": [
+      "build",
+      "mushaf-measure",
+      "mushaf-gates",
+      "layout-bands",
+      "visual-snapshot",
+      "Color contrast (Playwright)",
+      "LHCI home (mobile)"
+    ]
+  },
+  "path_lane_gate_failures": [
+    {
+      "job": "visual-snapshot",
+      "step": "Path-lane gate",
+      "reason": "NEED=true but BUILD≠success",
+      "expected": "BUILD=success (then run visual-snapshot)",
+      "actual": "BUILD=failure → exit 1: visual-snapshot required but build=failure"
+    },
+    {
+      "job": "Color contrast (Playwright)",
+      "step": "Path-lane gate",
+      "reason": "NEED=true but BUILD≠success",
+      "expected": "BUILD=success",
+      "actual": "BUILD=failure → Color contrast required but build=failure"
+    },
+    {
+      "job": "LHCI home (mobile)",
+      "step": "Path-lane gate",
+      "reason": "NEED=true but BUILD≠success",
+      "expected": "BUILD=success",
+      "actual": "BUILD=failure → LHCI required but build=failure"
+    }
+  ],
+  "root_cause": {
+    "job": "build",
+    "metric": "test:bundle-budget",
+    "message": "Initial JS gzip 120.4 KiB exceeds 120 KiB",
+    "note": "Path-lane / Verify build / ci-required were cascading failures after build budget miss"
+  },
+  "fix": "Revert LazyRouteFallback mushaf DOM growth; keep Warm Ivory + sheet densify + page/native skeletons; entry budget PASS on 71bb8a958",
+  "followup_ci_run": 34819959069,
+  "followup_status_observed": {
+    "build": "success",
+    "visual-snapshot": "success",
+    "LHCI home (mobile)": "success",
+    "mushaf-measure": "success",
+    "mushaf-gates": "success",
+    "Color contrast": "in_progress"
+  }
+}
