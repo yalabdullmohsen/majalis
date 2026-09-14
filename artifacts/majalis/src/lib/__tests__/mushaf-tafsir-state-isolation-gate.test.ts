@@ -51,8 +51,11 @@ const ayahBlock = reader.slice(ayah, ayah + 420);
 assert.doesNotMatch(ayahBlock, /setSelectedVerseKey\(/);
 assert.match(ayahBlock, /setPlayingVerseKey\(/);
 
-assert.match(reader, /tafsirOpen\s*&&\s*tafsirVerseKey/);
+/* إبقاء الورقة مركّبة عند وجود verseKey؛ التحكم عبر open يمنع وميض Mount */
+assert.match(reader, /tafsirVerseKey\s*\?\s*\(/);
+assert.match(reader, /open=\{tafsirOpen\}/);
 assert.match(reader, /verseKey=\{tafsirVerseKey\}/);
+assert.doesNotMatch(reader, /tafsirOpen\s*&&\s*tafsirVerseKey/);
 assert.doesNotMatch(reader, /tafsirOpen\s*&&\s*selectedVerseKey/);
 
 assert.match(verseLayer, /TAP_SLOP_X_PX\s*=\s*10/);
