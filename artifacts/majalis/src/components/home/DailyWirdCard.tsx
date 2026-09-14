@@ -98,7 +98,7 @@ export function DailyWirdCard() {
       </div>
 
       <div className="home-daily-wird__grid">
-        <AppCard padding="none" className="home-daily-wird__card">
+        <AppCard padding="none" className="home-daily-wird__card soft-card soft-card--on-light">
           <header className="home-daily-wird__card-head">
             <BookOpen size={16} aria-hidden="true" />
             <span>آية</span>
@@ -112,7 +112,7 @@ export function DailyWirdCard() {
           </Link>
         </AppCard>
 
-        <AppCard padding="none" className="home-daily-wird__card">
+        <AppCard padding="none" className="home-daily-wird__card soft-card soft-card--on-light">
           <header className="home-daily-wird__card-head">
             <Heart size={16} aria-hidden="true" />
             <span>ذكر</span>
@@ -125,7 +125,7 @@ export function DailyWirdCard() {
         </AppCard>
 
         {hadithOk ? (
-          <AppCard padding="none" className="home-daily-wird__card">
+          <AppCard padding="none" className="home-daily-wird__card soft-card soft-card--on-light">
             <header className="home-daily-wird__card-head">
               <MessageCircle size={16} aria-hidden="true" />
               <span>حديث</span>
@@ -138,7 +138,7 @@ export function DailyWirdCard() {
           </AppCard>
         ) : null}
 
-        <AppCard padding="none" className="home-daily-wird__card">
+        <AppCard padding="none" className="home-daily-wird__card soft-card soft-card--on-light">
           <header className="home-daily-wird__card-head">
             <Sparkles size={16} aria-hidden="true" />
             <span>فائدة</span>

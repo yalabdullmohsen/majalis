@@ -27,9 +27,9 @@ const quiz = readFileSync(resolve(root, "src/components/quiz-game/DailyChallenge
 assert.match(quiz, /soft-card soft-card--on-light/, "DailyChallengeQuiz soft-card");
 assert.doesNotMatch(quiz, /\bmj-card\b/, "DailyChallengeQuiz بلا mj-card عاري");
 
-const home = readFileSync(resolve(root, "src/pages/account/ui/HomeView.tsx"), "utf8");
+const dailyWird = readFileSync(resolve(root, "src/components/home/DailyWirdCard.tsx"), "utf8");
 assert.match(
-  home,
+  dailyWird,
   /home-daily-wird__card soft-card soft-card--on-light/,
   "هيكل الورود اليومي soft-card",
 );

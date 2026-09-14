@@ -41,6 +41,11 @@ export function applyThemePreference(preference: ThemePreference) {
   // لا تعِد الكتابة إن طابق سكربت الإقلاع — يمنع إعادة طلاء بلا قيمة
   if (root.dataset.theme !== resolved) {
     root.dataset.theme = resolved;
+  try {
+    performance.mark("mj:theme-applied");
+  } catch {
+    /* ignore */
+  }
   }
   if (resolved === "dark") {
     root.classList.add("dark", "theme-dark");

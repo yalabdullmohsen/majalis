@@ -2,7 +2,7 @@
  * هيرو الرئيسية خارج Suspense — يبقى h1 «سُنّة» في DOM من أول رسم App
  * حتى لا يُعاد قياس LCP عند استبدال HomePage الكسول.
  */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "wouter";
 import { PageHero } from "@/components/ui/PageHero";
 import { resolveDailyContext } from "@/lib/daily-context";
@@ -11,50 +11,8 @@ import { getRecentPages } from "@/lib/recent-pages";
 import "@/styles/components/home-brand-title.css";
 import "@/styles/m2030/home.css";
 
-function deferAfterPaint(cb: () => void, ms: number): () => void {
-  const id = window.setTimeout(cb, ms);
-  return () => window.clearTimeout(id);
-}
-
-/** هيكل ناعم لـ «ابدأ من هنا» — بدون مربع أبيض فارغ */
-export function HomeStartHereSoftSkeleton() {
-  return (
-    <section
-      aria-label="ابدأ من هنا"
-      aria-busy="true"
-      className="home-start-here mj-home-lcp-ph__start-here mj-home-lcp-ph__start-here--soft"
-    >
-      <div className="hsh-header" aria-hidden="true">
-        <span className="hsh-eyebrow mj-home-lcp-ph__kicker skeleton-base">&nbsp;</span>
-        <span className="hsh-title mj-home-lcp-ph__section-title skeleton-base">&nbsp;</span>
-        <p className="hsh-lead mj-home-lcp-ph__lead skeleton-base">&nbsp;</p>
-        <div className="hsh-actions">
-          <span className="mj-home-lcp-ph__action skeleton-base" />
-          <span className="mj-home-lcp-ph__action skeleton-base" />
-        </div>
-      </div>
-      <ol className="hsh-steps" aria-hidden="true">
-        {Array.from({ length: 3 }).map((_, idx) => (
-          <li key={idx} className="hsh-step">
-            <span className="hsh-step__num" aria-hidden="true">
-              {idx + 1}
-            </span>
-            <div className="hsh-step__body">
-              <span className="mj-home-lcp-ph__step-title skeleton-base" />
-              <span className="mj-home-lcp-ph__step-desc skeleton-base" />
-            </div>
-          </li>
-        ))}
-      </ol>
-    </section>
-  );
-}
-
 export function HomeHeroLcp() {
   const greeting = resolveDailyContext().greeting;
-  // أظهر التحية والأزرار فورًا — تأخير 4ث كان يترك شعارًا فقط ومربعات فارغة.
-  const [showEyebrow, setShowEyebrow] = useState(true);
-  const [showActions, setShowActions] = useState(true);
   const [isFirstVisit] = useState(() => {
     try {
       return !hasSeenFirstVisitIntroSync() && localStorage.getItem("majlis-home-welcomed-v1") !== "1";
@@ -70,32 +28,9 @@ export function HomeHeroLcp() {
     }
   });
 
-  useEffect(() => {
-    let cancelled = false;
-    let clearDefer: (() => void) | undefined;
-    const reveal = () => {
-      if (cancelled) return;
-      setShowEyebrow(true);
-      setShowActions(true);
-    };
-    const onPainted = () => {
-      clearDefer?.();
-      clearDefer = deferAfterPaint(reveal, 80);
-    };
-    window.addEventListener("mj:app-painted", onPainted, { once: true });
-    window.addEventListener("app:first-paint", onPainted, { once: true });
-    clearDefer = deferAfterPaint(reveal, 320);
-    return () => {
-      cancelled = true;
-      clearDefer?.();
-      window.removeEventListener("mj:app-painted", onPainted);
-      window.removeEventListener("app:first-paint", onPainted);
-    };
-  }, []);
-
   return (
     <PageHero
-      className={`m2030-hero home-page-hero${showEyebrow ? " home-page-hero--eyebrow-ready" : ""}${showActions ? " home-page-hero--actions-ready" : ""}`}
+      className="m2030-hero home-page-hero home-page-hero--eyebrow-ready home-page-hero--actions-ready"
       fullBleed={false}
       withPattern={false}
       eyebrow={greeting}
@@ -114,46 +49,79 @@ export function HomeHeroLcp() {
   );
 }
 
-/** هيكل ما تحت الهيرو أثناء تحميل HomePage — بلا تكرار «ابدأ من هنا» (صار خارج Suspense) */
+/** هيكل بحث موحّد — يطابق ارتفاع HomeUniversalSearch */
+export function HomeSearchShell() {
+  return (
+    <div className="hus mj-home-lcp-ph__search" role="search" aria-label="بحث موحّد" aria-busy="true">
+      <div className="hus-field">
+        <span className="hus-input mj-home-lcp-ph__search-ph" aria-hidden="true">
+          &nbsp;
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/** هيكل يحجز ارتفاع بطاقة آية/حديث اليوم */
+export function HomeSacredOfDaySkeleton() {
+  return (
+    <div
+      className="home-sacred-day home-sacred-day--ph"
+      aria-busy="true"
+      aria-label="آية من القرآن"
+      data-testid="home-sacred-of-day"
+    />
+  );
+}
+
+export function HomePrimaryDiscoveryPlaceholder({ id = false }: { id?: boolean } = {}) {
+  return (
+    <div
+      className="mj-home-primary-discovery-ph"
+      id={id ? "mj-home-primary-discovery" : undefined}
+      aria-hidden="true"
+    />
+  );
+}
+
+export function HomeDailyWirdSkeleton() {
+  return (
+    <section
+      className="m2030-band m2030-band--sage home-daily-wird daily-wird-card mj-home-lcp-ph__daily-band"
+      aria-label="ورد اليوم"
+      aria-busy="true"
+      data-testid="daily-wird-card"
+    />
+  );
+}
+
+export function HomeLiveNowPlaceholder() {
+  return <div className="home-live-now-ph" aria-hidden="true" />;
+}
+
+export function HomeBelowFoldPlaceholder({ withId = false }: { withId?: boolean } = {}) {
+  return (
+    <div
+      className="mj-home-below-fold-ph"
+      id={withId ? "mj-home-below-fold" : undefined}
+      aria-hidden="true"
+    />
+  );
+}
+
+/**
+ * هيكل ما تحت الهيرو أثناء تحميل HomePage.
+ * الترتيب يطابق HomePage حرفيًا لمنع قفزة الإدراج عند انتهاء Suspense.
+ */
 export function HomeRestShell() {
   return (
     <>
-      <div className="hus mj-home-lcp-ph__search" role="search" aria-label="بحث موحّد" aria-busy="true">
-        <div className="hus-field">
-          <span className="hus-input mj-home-lcp-ph__search-ph" aria-hidden="true">
-            &nbsp;
-          </span>
-        </div>
-      </div>
-
-      <section
-        className="m2030-band m2030-band--sage home-daily-wird daily-wird-card mj-home-lcp-ph__daily-band"
-        aria-label="ورد اليوم"
-        aria-busy="true"
-        data-testid="daily-wird-card"
-      >
-        <div className="m2030-band__head">
-          <h2 className="m2030-band__title">ورد اليوم</h2>
-          <div className="daily-wird-card__actions" aria-hidden="true">
-            <span className="daily-wird-card__done-btn mj-home-lcp-ph__daily-done">تم</span>
-            <span className="m2030-band__link mj-home-lcp-ph__daily-link">الورد الكامل</span>
-          </div>
-        </div>
-        <div className="home-daily-wird__grid" aria-hidden="true">
-          {Array.from({ length: 4 }).map((_, idx) => (
-            <article key={idx} className="home-daily-wird__card soft-card soft-card--on-light mj-home-lcp-ph__daily-card">
-              <header className="home-daily-wird__card-head">
-                <span className="mj-home-lcp-ph__daily-icon" aria-hidden="true" />
-                <span className="mj-home-lcp-ph__daily-label">&nbsp;</span>
-              </header>
-              <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
-              <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
-              <div className="home-daily-wird__meta mj-home-lcp-ph__daily-meta skeleton-base" />
-              <div className="home-daily-wird__cta mj-home-lcp-ph__daily-cta skeleton-base" />
-            </article>
-          ))}
-        </div>
-      </section>
+      <HomeSearchShell />
+      <HomeSacredOfDaySkeleton />
+      <HomePrimaryDiscoveryPlaceholder id />
+      <HomeDailyWirdSkeleton />
+      <HomeLiveNowPlaceholder />
+      <HomeBelowFoldPlaceholder withId />
     </>
   );
 }

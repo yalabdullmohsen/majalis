@@ -34,6 +34,11 @@ export function isAppShellStable(): boolean {
 }
 
 export function markAppShellStable(): void {
+  try {
+    performance.mark("mj:safe-area-ready");
+  } catch {
+    /* ignore */
+  }
   if (typeof document === "undefined") return;
   if (!shellStableAt) shellStableAt = Date.now();
   try {

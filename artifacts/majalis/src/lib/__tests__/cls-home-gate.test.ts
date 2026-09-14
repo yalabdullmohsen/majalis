@@ -36,7 +36,9 @@ assert.match(critical, /\.daily-wird-card[\s\S]*min-height:\s*28rem/, "حجز و
 assert.match(critical, /\.navbar-v3__tagline-mark[\s\S]*aspect-ratio/, "حجز وردمارك الهيدر");
 {
   const home = readFileSync(resolve(root, "src/pages/account/ui/HomeView.tsx"), "utf8");
-  assert.match(home, /home-sacred-day--ph/, "هيكل آية/حديث اليوم يحجز الارتفاع");
+  const hero = readFileSync(resolve(root, "src/components/home/HomeHeroLcp.tsx"), "utf8");
+  assert.match(hero, /home-sacred-day--ph/, "هيكل آية/حديث اليوم يحجز الارتفاع");
+  assert.match(home, /HomeSacredOfDaySkeleton/, "بوابة آية اليوم تستخدم الهيكل الحاجز");
   assert.doesNotMatch(
     home,
     /HomeSacredOfDayGate[\s\S]*if \(!show\) return null/,
@@ -79,5 +81,19 @@ assert.equal(
   preview.cls,
   `LHCI CLS ≤${preview.cls} (main+10%)`,
 );
+
+
+{
+  const hero = readFileSync(resolve(root, "src/components/home/HomeHeroLcp.tsx"), "utf8");
+  assert.match(hero, /export function HomeRestShell/, "HomeRestShell موجود");
+  assert.match(
+    hero,
+    /HomeRestShell[\s\S]*HomeSacredOfDaySkeleton[\s\S]*HomePrimaryDiscoveryPlaceholder[\s\S]*HomeDailyWirdSkeleton[\s\S]*HomeLiveNowPlaceholder[\s\S]*HomeBelowFoldPlaceholder/,
+    "HomeRestShell يطابق ترتيب الصفحة (بحث→آية→اكتشاف→ورد→بث→تحت الطية)",
+  );
+  assert.match(critical, /\.home-sacred-day--ph[\s\S]*min-height:\s*9\.75rem/, "حجز آية اليوم في CSS الحرج");
+  assert.match(critical, /\.mj-home-primary-discovery-ph[\s\S]*min-height:\s*12rem/, "حجز الاكتشاف في CSS الحرج");
+  assert.match(critical, /\.home-live-now-ph[\s\S]*min-height:\s*3\.25rem/, "حجز البث في CSS الحرج");
+}
 
 console.log("cls-home-gate.test.ts: ok");

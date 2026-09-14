@@ -189,7 +189,10 @@ const bootReporting = () => {
   initClientErrorReporting();
   logLcpCandidateHint();
   // لقطة CLS/LCP/FCP/TBT بعد استقرار الهيكل — للمقارنة قبل/بعد
-  void import("./lib/boot-vitals-snapshot").then((m) => m.scheduleBootVitalsSnapshot());
+  void import("./lib/boot-vitals-snapshot").then((m) => {
+    m.scheduleBootVitalsSnapshot();
+    m.scheduleHomeStartupLayoutDiag();
+  });
   // RUM بعد idle — لا ينافس LCP؛ يُفعَّل فقط مع موافقة التحليلات
   scheduleOnIdle(() => {
     void import("./lib/rum-telemetry").then((m) => m.initRumTelemetry());

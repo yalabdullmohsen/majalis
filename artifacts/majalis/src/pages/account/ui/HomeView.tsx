@@ -3,6 +3,13 @@ import { applyPageSeo } from "@/lib/seo";
 import { defaultSiteJsonLd } from "@/lib/seo-structured-data";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeUniversalSearch } from "@/components/home/HomeUniversalSearch";
+import {
+  HomeSacredOfDaySkeleton,
+  HomeDailyWirdSkeleton,
+  HomePrimaryDiscoveryPlaceholder,
+  HomeLiveNowPlaceholder,
+  HomeBelowFoldPlaceholder,
+} from "@/components/home/HomeHeroLcp";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import "@/styles/components/home-brand-title.css";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
@@ -42,38 +49,6 @@ const HomeLiveNowBanner = lazyWithRetry(
   "HomeLiveNowBanner",
 );
 
-function HomeDailyWirdSkeleton() {
-  return (
-    <section
-      className="m2030-band m2030-band--sage home-daily-wird daily-wird-card mj-home-lcp-ph__daily-band"
-      aria-label="ورد اليوم"
-      aria-busy="true"
-      data-testid="daily-wird-card"
-    >
-      <div className="m2030-band__head">
-        <h2 className="m2030-band__title">ورد اليوم</h2>
-        <div className="daily-wird-card__actions" aria-hidden="true">
-          <span className="daily-wird-card__done-btn mj-home-lcp-ph__daily-done">تم</span>
-          <span className="m2030-band__link mj-home-lcp-ph__daily-link">الورد الكامل</span>
-        </div>
-      </div>
-      <div className="home-daily-wird__grid">
-        {Array.from({ length: 4 }).map((_, idx) => (
-          <article key={idx} className="home-daily-wird__card soft-card soft-card--on-light mj-home-lcp-ph__daily-card">
-            <header className="home-daily-wird__card-head">
-              <span className="mj-home-lcp-ph__daily-icon" aria-hidden="true" />
-              <span className="mj-home-lcp-ph__daily-label">&nbsp;</span>
-            </header>
-            <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
-            <div className="home-daily-wird__text mj-home-lcp-ph__daily-line skeleton-base" />
-            <div className="home-daily-wird__meta mj-home-lcp-ph__daily-meta skeleton-base" />
-            <div className="home-daily-wird__cta mj-home-lcp-ph__daily-cta skeleton-base" />
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 /** تأجيل بـ setTimeout فقط — لا rIC حتى لا يسحب Lighthouse العمل أثناء نافذة TBT */
 function deferAfterPaint(cb: () => void, ms: number): () => void {
@@ -106,32 +81,16 @@ function HomeLiveNowGate() {
 
   if (!show) {
     return (
-      <div
-        className="home-live-now-ph"
-        aria-hidden="true"
-        style={{ minHeight: "3.25rem" }}
-      />
+      <HomeLiveNowPlaceholder />
     );
   }
 
   return (
     <SectionErrorBoundary name="HomeLiveNow">
-      <Suspense fallback={<div className="home-live-now-ph" style={{ minHeight: "3.25rem" }} aria-hidden="true" />}>
+      <Suspense fallback={<HomeLiveNowPlaceholder />}>
         <HomeLiveNowBanner />
       </Suspense>
     </SectionErrorBoundary>
-  );
-}
-
-/** هيكل يحجز ارتفاع بطاقة آية/آية اليوم — يمنع قفزة الإدراج بعد الإقلاع */
-function HomeSacredOfDaySkeleton() {
-  return (
-    <div
-      className="home-sacred-day home-sacred-day--ph"
-      aria-busy="true"
-      aria-label="آية من القرآن"
-      data-testid="home-sacred-of-day"
-    />
   );
 }
 
@@ -154,7 +113,9 @@ function HomeSacredOfDayGate() {
   return (
     <SectionErrorBoundary name="HomeSacredOfDay">
       <Suspense fallback={<HomeSacredOfDaySkeleton />}>
-        <HomeSacredOfDay />
+        <div className="home-sacred-day-slot">
+          <HomeSacredOfDay />
+        </div>
       </Suspense>
     </SectionErrorBoundary>
   );
@@ -203,12 +164,7 @@ function HomePrimaryDiscoveryGate() {
 
   if (!show) {
     return (
-      <div
-        className="mj-home-primary-discovery-ph"
-        id="mj-home-primary-discovery"
-        aria-hidden="true"
-        style={{ minHeight: "12rem" }}
-      />
+      <HomePrimaryDiscoveryPlaceholder id />
     );
   }
 
@@ -217,7 +173,7 @@ function HomePrimaryDiscoveryGate() {
       <SectionErrorBoundary name="HomePrimaryDiscovery">
         <Suspense
           fallback={
-            <div className="mj-home-primary-discovery-ph" style={{ minHeight: "12rem" }} aria-hidden="true" />
+            <HomePrimaryDiscoveryPlaceholder />
           }
         >
           <HomePrimaryDiscovery />
@@ -269,13 +225,13 @@ function HomeBelowFoldGate() {
   }, []);
 
   if (!show) {
-    return <div className="mj-home-below-fold-ph" id="mj-home-below-fold" aria-hidden="true" />;
+    return <HomeBelowFoldPlaceholder withId />;
   }
 
   return (
     <div id="mj-home-below-fold">
       <SectionErrorBoundary name="HomeBelowFold">
-        <Suspense fallback={<div className="mj-home-below-fold-ph" aria-hidden="true" />}>
+        <Suspense fallback={<HomeBelowFoldPlaceholder />}>
           <HomeBelowFold />
         </Suspense>
       </SectionErrorBoundary>
@@ -327,7 +283,14 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    const paint = () => window.dispatchEvent(new Event("mj:home-painted"));
+    const paint = () => {
+      try {
+        performance.mark("mj:home-painted");
+      } catch {
+        /* ignore */
+      }
+      window.dispatchEvent(new Event("mj:home-painted"));
+    };
     const id = window.requestAnimationFrame(() => {
       window.requestAnimationFrame(paint);
     });
