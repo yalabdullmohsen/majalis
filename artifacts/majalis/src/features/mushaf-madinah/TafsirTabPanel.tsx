@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { Bookmark, Copy, Share2 } from "lucide-react";
 import { fetchMushafAyahTafsir } from "@/lib/quran-data/fetch-ayah-content";
 import {
@@ -26,35 +26,13 @@ type Props = {
   onAvailabilityChange: (available: boolean) => void;
 };
 
-type Depth = "brief" | "extended";
-
-const BRIEF_IDS = ["saadi", "muyassar", "baghawi"] as const;
-const EXTENDED_IDS = ["ibn-kathir", "tabari"] as const;
-
-function editionDepth(ed: TafsirRegistryEntry): Depth {
-  if ((EXTENDED_IDS as readonly string[]).includes(ed.id) || ed.level === "متقدم") return "extended";
-  if ((BRIEF_IDS as readonly string[]).includes(ed.id) || ed.level === "مبتدئ") return "brief";
-  if (ed.id === "ibn-kathir") return "extended";
-  return ed.level === "متوسط" ? "brief" : "extended";
-}
-
-function depthLabel(depth: Depth): string {
-  return depth === "brief" ? "مختصر" : "مطول";
-}
-
-function pickEdition(editions: TafsirRegistryEntry[], depth: Depth, preferredId?: string): TafsirRegistryEntry | undefined {
-  const pool = editions.filter((e) => editionDepth(e) === depth);
-  if (preferredId) {
-    const hit = pool.find((e) => e.id === preferredId);
-    if (hit) return hit;
-  }
-  const order = depth === "brief" ? BRIEF_IDS : EXTENDED_IDS;
-  for (const id of order) {
-    const hit = pool.find((e) => e.id === id);
-    if (hit) return hit;
-  }
-  return pool[0];
-}
+/** مصادر حقيقية فقط — الطول يتبع المصدر لا قصّ UI. */
+const PRIMARY_SOURCE_IDS = ["muyassar", "saadi", "ibn-kathir"] as const;
+const SOURCE_LABELS: Record<(typeof PRIMARY_SOURCE_IDS)[number], string> = {
+  muyassar: "الميسر",
+  saadi: "السعدي",
+  "ibn-kathir": "ابن كثير",
+};
 
 function fontLabel(scale: TafsirFontScale): string {
   if (scale === 0.9) return "صغير";
@@ -81,14 +59,19 @@ export const TafsirTabPanel = memo(function TafsirTabPanel({
   onAvailabilityChange,
 }: Props) {
   const [editions, setEditions] = useState<TafsirRegistryEntry[]>([]);
-  const [depth, setDepth] = useState<Depth>("brief");
   const [editionId, setEditionId] = useState(() => readStoredTafsirEdition());
   const [fontScale, setFontScale] = useState<TafsirFontScale>(() => readStoredTafsirFontScale());
   const [text, setText] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const fetchGenRef = useRef(0);
 
-  const briefEdition = useMemo(() => pickEdition(editions, "brief"), [editions]);
-  const extendedEdition = useMemo(() => pickEdition(editions, "extended"), [editions]);
+  const primaryEditions = useMemo(
+    () =>
+      PRIMARY_SOURCE_IDS.map((id) => editions.find((e) => e.id === id)).filter(
+        (e): e is TafsirRegistryEntry => Boolean(e),
+      ),
+    [editions],
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -101,16 +84,16 @@ export const TafsirTabPanel = memo(function TafsirTabPanel({
   }, []);
 
   useEffect(() => {
-    setDepth("brief");
     setText(null);
   }, [surah, ayah]);
 
   useEffect(() => {
-    if (!editions.length) {
+    if (!primaryEditions.length) {
       onAvailabilityChange(false);
       return;
     }
-    const active = pickEdition(editions, depth, editionId);
+    const active =
+      primaryEditions.find((e) => e.id === editionId) ?? primaryEditions[0];
     if (!active) {
       setText(null);
       onAvailabilityChange(false);
@@ -120,68 +103,65 @@ export const TafsirTabPanel = memo(function TafsirTabPanel({
       setEditionId(active.id);
       persistTafsirEdition(active.id);
     }
+    const gen = ++fetchGenRef.current;
     const ac = new AbortController();
     setLoading(true);
     void fetchMushafAyahTafsir(surah, ayah, active.id, ac.signal)
       .then((res) => {
-        if (ac.signal.aborted) return;
+        if (ac.signal.aborted || gen !== fetchGenRef.current) return;
         const t = res?.text?.trim() || null;
         setText(t);
         onAvailabilityChange(Boolean(t));
       })
       .catch(() => {
-        if (!ac.signal.aborted) {
+        if (!ac.signal.aborted && gen === fetchGenRef.current) {
           setText(null);
           onAvailabilityChange(false);
         }
       })
       .finally(() => {
-        if (!ac.signal.aborted) setLoading(false);
+        if (!ac.signal.aborted && gen === fetchGenRef.current) setLoading(false);
       });
     return () => ac.abort();
-  }, [surah, ayah, depth, editionId, editions, onAvailabilityChange]);
+  }, [surah, ayah, editionId, primaryEditions, onAvailabilityChange]);
 
-  const switchDepth = (next: Depth) => {
-    const nextEd = pickEdition(editions, next);
-    if (!nextEd) return;
-    setDepth(next);
-    setEditionId(nextEd.id);
-    persistTafsirEdition(nextEd.id);
-    setText(null);
+  const selectEdition = (id: string) => {
+    if (id === editionId) return;
+    setEditionId(id);
+    persistTafsirEdition(id);
   };
 
-  if (!editions.length) {
-    return (
-      <p className="mm-ayah-bar__status">لا يوجد تفسير متاح لهذه الآية حاليًا</p>
-    );
+  if (!primaryEditions.length) {
+    return <p className="mm-ayah-bar__status">لا يوجد تفسير متاح لهذه الآية حاليًا</p>;
   }
 
-  const active = pickEdition(editions, depth, editionId) ?? briefEdition ?? extendedEdition;
+  const active = primaryEditions.find((e) => e.id === editionId) ?? primaryEditions[0];
 
   return (
     <div className="ayah-action-sheet__tafsir" data-testid="tafsir-tab-panel">
       <div className="ayah-action-sheet__tafsir-toolbar">
-        <div className="mm-search-sheet__tafsir-depth quran-tabbar" role="tablist" aria-label="عمق التفسير">
-          <button
-            type="button"
-            role="tab"
-            className={`quran-tab quran-btn--segment${depth === "brief" ? " is-active" : ""}`}
-            aria-selected={depth === "brief"}
-            disabled={!briefEdition}
-            onClick={() => switchDepth("brief")}
-          >
-            مختصر
-          </button>
-          <button
-            type="button"
-            role="tab"
-            className={`quran-tab quran-btn--segment${depth === "extended" ? " is-active" : ""}`}
-            aria-selected={depth === "extended"}
-            disabled={!extendedEdition}
-            onClick={() => switchDepth("extended")}
-          >
-            مطول
-          </button>
+        <div
+          className="mm-search-sheet__tafsir-sources quran-tabbar"
+          role="tablist"
+          aria-label="مصدر التفسير"
+        >
+          {primaryEditions.map((ed) => {
+            const selected = ed.id === active?.id;
+            const label =
+              SOURCE_LABELS[ed.id as (typeof PRIMARY_SOURCE_IDS)[number]] ?? ed.name;
+            return (
+              <button
+                key={ed.id}
+                type="button"
+                role="tab"
+                className={`quran-tab quran-btn--segment${selected ? " is-active" : ""}`}
+                aria-selected={selected}
+                onClick={() => selectEdition(ed.id)}
+              >
+                {label}
+              </button>
+            );
+          })}
         </div>
         <div className="ayah-action-sheet__tafsir-font quran-font-stepper" role="group" aria-label="حجم خط التفسير">
           <button
@@ -216,10 +196,7 @@ export const TafsirTabPanel = memo(function TafsirTabPanel({
         </div>
       </div>
       {active ? (
-        <p className="ayah-action-sheet__tafsir-chip-label">
-          {active.name}
-          <span className="ayah-action-sheet__tafsir-chip-level">{depthLabel(depth)}</span>
-        </p>
+        <p className="ayah-action-sheet__tafsir-chip-label">{active.name}</p>
       ) : null}
       <div className="ayah-action-sheet__tafsir-scroll">
         {loading ? (
@@ -236,7 +213,7 @@ export const TafsirTabPanel = memo(function TafsirTabPanel({
             {text}
           </p>
         ) : (
-          <p className="mm-ayah-bar__status">لا يوجد تفسير متاح لهذه الآية حاليًا</p>
+          <p className="mm-ayah-bar__status">تعذّر جلب التفسير</p>
         )}
       </div>
       {expanded && text ? (

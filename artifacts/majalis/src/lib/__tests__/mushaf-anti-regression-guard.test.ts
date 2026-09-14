@@ -128,10 +128,16 @@ assert.doesNotMatch(
 );
 
 const tafsir = readFileSync(resolve(root, "src/features/mushaf-madinah/MushafTafsirSheet.tsx"), "utf8");
-assert.match(tafsir, /brief|مختصر/);
-assert.match(tafsir, /full|مطول/);
+/* مصادر حقيقية فقط — بلا قصّ UI باسم مختصر/مطول */
+assert.match(tafsir, /الميسر/);
+assert.match(tafsir, /السعدي/);
+assert.match(tafsir, /ابن كثير/);
+assert.doesNotMatch(tafsir, /BRIEF_CHARS|DEPTH_PREF_KEY|selectDepth/);
+assert.doesNotMatch(tafsir, />\s*مختصر\s*</);
+assert.doesNotMatch(tafsir, />\s*مطول\s*</);
 assert.match(tafsir, /لم يتوفر تفسير لهذه الآية حاليًا/);
-assert.match(tafsir, /saveMushafTafsirEdition|DEPTH_PREF_KEY/);
+assert.match(tafsir, /saveMushafTafsirEdition/);
+assert.match(tafsir, /fetchGenRef/);
 
 const sheetCss = readFileSync(
   resolve(root, "src/features/mushaf-madinah/quran-sheet/quran-sheet.css"),

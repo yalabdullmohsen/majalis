@@ -2377,6 +2377,21 @@ html.dark .mm-tafsir__status--err {
   line-height: 1.85;
   color: var(--mm-ink);
   white-space: pre-wrap;
+  text-align: start;
+  padding-bottom: max(0.75rem, var(--inset-bottom, 0px));
+}
+.mm-tafsir__retry {
+  margin-top: 0.35rem;
+  min-height: 36px;
+  padding: 0.25rem 0.65rem;
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--mm-ui-accent, #135034) 35%, transparent);
+  background: color-mix(in srgb, var(--mm-ui-accent, #135034) 10%, var(--mm-paper, #fdf9f3));
+  color: var(--mm-ui-accent, #135034);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 html[data-theme="dark"] .mm-tafsir__body,
