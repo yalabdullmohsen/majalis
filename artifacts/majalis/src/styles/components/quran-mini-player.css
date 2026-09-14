@@ -1,6 +1,6 @@
 /* مشغّل تلاوة مصغّر ثابت — 56px مطوي، توسعة spring فوق شريط التنقّل */
 .quran-mini-player {
-  --qmp-h: 56px;
+  --qmp-h: 48px;
   --qmp-ink: var(--mj-on-brand, #f7faf8);
   --qmp-ink-muted: color-mix(in srgb, var(--qmp-ink) 78%, transparent);
   position: fixed;
@@ -18,8 +18,8 @@
     );
   color: var(--qmp-ink);
   border-block-start: 1px solid color-mix(in srgb, #fff 22%, transparent);
-  border-radius: 1.25rem 1.25rem 0 0;
-  box-shadow: 0 -10px 32px -16px rgb(0 0 0 / 0.35);
+  border-radius: 1rem 1rem 0 0;
+  box-shadow: 0 -6px 20px -14px rgb(0 0 0 / 0.28);
   transition:
     max-height 360ms var(--mj-ease-spring, cubic-bezier(0.22, 1.15, 0.36, 1)),
     transform 360ms var(--mj-ease-spring, cubic-bezier(0.22, 1.15, 0.36, 1));
@@ -36,7 +36,7 @@
   flex: 0 0 auto;
   width: 2.25rem;
   height: 3px;
-  margin: 0.35rem auto 0;
+  margin: 0.22rem auto 0;
   border-radius: 999px;
   background: color-mix(in srgb, var(--mj-on-brand, #fff) 35%, transparent);
 }

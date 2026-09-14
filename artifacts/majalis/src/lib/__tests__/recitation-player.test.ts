@@ -91,7 +91,7 @@ const mem = new Map<string, string>();
   assert.match(mini, /stopMiniPlayer/);
 
   const css = read("styles/components/quran-mini-player.css");
-  assert.match(css, /--qmp-h:\s*56px/);
+  assert.match(css, /--qmp-h:\s*48px/);
   assert.match(css, /mj-ease-spring/);
   assert.match(css, /quran-mini-player--immersive/);
 

@@ -14,6 +14,7 @@ export function LazyRouteFallback() {
   const settingsShell = /^\/(settings|more|adhan-settings|notification-settings)(\/|$)/.test(path);
   const searchShell = /^\/search(\/|$)/.test(path);
   const adhkarShell = /^\/(adhkar|tasbih|duas)(\/|$)/.test(path);
+  const mushafShell = /^\/(mushaf|quran\/mushaf|quran\/read|quran\/reader)(\/|$)/.test(path);
 
   return (
     <div
@@ -29,6 +30,7 @@ export function LazyRouteFallback() {
         settingsShell ? "lrf-wrap--settings" : "",
         searchShell ? "lrf-wrap--search" : "",
         adhkarShell ? "lrf-wrap--adhkar" : "",
+        mushafShell ? "lrf-wrap--mushaf" : "",
       ]
         .filter(Boolean)
         .join(" ")}
@@ -38,25 +40,51 @@ export function LazyRouteFallback() {
       data-prophets-shell={prophetsShell ? "1" : undefined}
       data-route-fallback="1"
       data-route-shell={
-        prayerShell
-          ? "prayer"
-          : settingsShell
-            ? "settings"
-            : searchShell
-              ? "search"
-              : adhkarShell
-                ? "adhkar"
-                : undefined
+        mushafShell
+          ? "mushaf"
+          : prayerShell
+            ? "prayer"
+            : settingsShell
+              ? "settings"
+              : searchShell
+                ? "search"
+                : adhkarShell
+                  ? "adhkar"
+                  : undefined
       }
     >
-      <div className="lrf-skel lrf-skel--page" aria-hidden="true">
-        <div className="lrf-skel__eyebrow" />
-        <div className="lrf-skel__title" />
-        <div className="lrf-skel__line" />
-        <div className="lrf-skel__line lrf-skel__line--short" />
-        <div className="lrf-skel__block" />
-        <div className="lrf-skel__block lrf-skel__block--short" />
-      </div>
+      {mushafShell ? (
+        <div className="lrf-skel lrf-skel--mushaf" aria-hidden="true">
+          <div className="lrf-skel__mushaf-head" />
+          <div className="lrf-skel__mushaf-lines">
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
+          <div className="lrf-skel__mushaf-foot" />
+        </div>
+      ) : (
+        <div className="lrf-skel lrf-skel--page" aria-hidden="true">
+          <div className="lrf-skel__eyebrow" />
+          <div className="lrf-skel__title" />
+          <div className="lrf-skel__line" />
+          <div className="lrf-skel__line lrf-skel__line--short" />
+          <div className="lrf-skel__block" />
+          <div className="lrf-skel__block lrf-skel__block--short" />
+        </div>
+      )}
     </div>
   );
 }
