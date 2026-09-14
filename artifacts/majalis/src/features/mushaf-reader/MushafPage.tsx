@@ -157,11 +157,31 @@ export const MushafPage = memo(function MushafPage({
       </header>
 
       <div className="nm-page__stage" data-testid="mushaf-page-frame">
+        {/* زخارف أصلية لسُنّة — طبقات absolute بلا تأثير على شبكة ١٥ أو قياس الخط */}
+        <div
+          className="nm-page__ornament-frame"
+          data-component="AuthenticMushafPageFrame"
+          data-testid="authentic-mushaf-page-frame"
+          aria-hidden="true"
+        />
+        {isOpeningP1 ? (
+          <div
+            className="nm-page__fatiha-medallion"
+            data-component="SunnahFatihaMedallion"
+            data-testid="sunnah-fatiha-medallion"
+            aria-hidden="true"
+          />
+        ) : null}
         {sectionMark ? (
           <span
             className="nm-page__section-mark"
             data-mark={sectionMark}
-            aria-hidden="true"
+            role="img"
+            aria-label={
+              sectionMark === "hizb"
+                ? `بداية الحزب ${toArabicDigits(layout.hizbStartingOnPage ?? layout.hizbNumber)}`
+                : "علامة ربع الحزب"
+            }
           />
         ) : null}
         <div
