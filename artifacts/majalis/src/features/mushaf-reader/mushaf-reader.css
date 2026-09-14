@@ -209,6 +209,12 @@
   opacity: 1;
 }
 
+/* علامة حزب/ربع — absolute خفيفة بلا إزاحة شبكة */
+.nm-page__stage{position:relative}
+.nm-page__section-mark{position:absolute;inset-block-start:.12rem;inset-inline-start:0;width:2px;height:.7rem;border-radius:1px;background:color-mix(in srgb,var(--nm-gold,#b8a06a) 52%,transparent);opacity:.5;pointer-events:none;z-index:1}
+.nm-page__section-mark[data-mark="rub"]{height:.4rem;opacity:.38;background:color-mix(in srgb,var(--nm-meta,#6b6358) 48%,transparent)}
+
+
 /* اسم السورة كامل دائمًا — بلا ellipsis ولا قصّ حروف */
 .nm-page__header-surah {
   flex: 0 0 auto;

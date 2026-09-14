@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, type RefObject } from "react";
+import { mushafPerfInc } from "./mushaf-turn-telemetry";
 import {
   resolveSunnahMushafSignaturePreset,
   resolveSignatureFontSizePx,
@@ -124,6 +125,7 @@ export function useStableMushafLayout(
       lockedWidthRef.current = w;
       lockedSizeRef.current = size;
       lockedBodyHRef.current = bodyH;
+      mushafPerfInc("geometryChange");
       applyGeometry(w, h, size, bodyH);
     };
 
