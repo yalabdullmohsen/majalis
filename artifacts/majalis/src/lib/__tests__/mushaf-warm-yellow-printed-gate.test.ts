@@ -27,7 +27,7 @@ assert.match(css, new RegExp(`--mushaf-verse-marker-number:\\s*${mushafVerseMark
 assert.match(css, new RegExp(`--mushaf-printed-gold:\\s*${mushafPrintedGold}`, "i"));
 assert.match(css, new RegExp(`--mushaf-ink:\\s*${mushafInkPrimary}`, "i"));
 
-assert.match(css, /--mushaf-ayah-mark-size:\s*0\.98em/);
+assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
 assert.match(css, /\.nm-ayah-mark[\s\S]*?clip-path:\s*polygon/);
 assert.match(css, /\.nm-ayah-mark[\s\S]*?background:\s*var\(--mushaf-verse-marker-fill\)/);
 assert.match(css, /\.nm-page__ornament-frame/);

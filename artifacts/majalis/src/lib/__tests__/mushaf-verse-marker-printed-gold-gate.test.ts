@@ -33,6 +33,6 @@ assert.match(css, /--mushaf-surah-frame-ornament:\s*var\(--mushaf-printed-gold-b
 assert.doesNotMatch(css, /--mushaf-verse-marker-fill:\s*#(c9a227|ffd700|a3864d)/i);
 assert.match(css, /--mushaf-text-color:\s*var\(--mushaf-ink-primary\)/);
 assert.match(css, /--nm-ink:\s*var\(--mushaf-text-color\)/);
-assert.match(css, /--mushaf-ayah-mark-size:\s*0\.98em/);
+assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
 
 console.log("mushaf-verse-marker-printed-gold-gate.test.ts: ok");
