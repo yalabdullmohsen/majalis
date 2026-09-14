@@ -90,6 +90,8 @@ import {
   mushafTurnInc,
   mushafTurnMark,
   mushafTurnFlush,
+  mushafPerfInc,
+  mushafPerfSnapshot,
 } from "./mushaf-turn-telemetry";
 import {
   bumpTafsirGeneration,
@@ -134,6 +136,10 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const page = clampMushafPage(pageNumber);
   useEffect(() => {
     enableMushafTurnTelemetry(true);
+  }, []);
+
+  useEffect(() => {
+    mushafPerfInc("readerMount");
   }, []);
   useEffect(() => {
     migrateLegacyMushafReaderPrefs();
@@ -897,6 +903,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   /* شيت الآية لا يمنع قلب الصفحة من الحواف */
   const edgesDisabled = tafsirOpen || searchOpen || indexOpen || !neighborsReady;
   /* إخفاء الرصيف عند فتح قائمة الآية لتفادي تعارض أزرار التشغيل */
+  
   const audioDockVisible =
     !actionsOpen &&
     audioDockOpen &&
@@ -1001,7 +1008,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
             whiteSpace: "pre-wrap",
           }}
         >
-          {`p=${page} settled=${pagerSettled ? 1 : 0} nbr=${neighborsReady ? 1 : 0}\ngeo=${getMushafGeometryKey()}`}
+          {(() => { const L = mushafPerfSnapshot(); return `p=${page} settled=${pagerSettled ? 1 : 0} nbr=${neighborsReady ? 1 : 0}\ngeo=${getMushafGeometryKey()}\nrM=${L.readerMountCount} pM=${L.pagerMountCount} fL=${L.fontLoadCount} gC=${L.geometryChangeCount}`; })()}
         </div>
       ) : null}
       <MediaBridge
@@ -1201,7 +1208,7 @@ const PrefetchPage = memo(function PrefetchPage({
   const [layout, setLayout] = useState<MushafPageLayout | null>(() =>
     getCachedMushafPage(pageNumber),
   );
-  const { fontFamily, ready } = useQpcPageFont(pageNumber);
+  const { fontFamily, ready } = useQpcPageFont(pageNumber, { prefetchAdjacent: false });
 
   useEffect(() => {
     let cancelled = false;

@@ -1,5 +1,6 @@
 import {
   forwardRef,
+  useEffect,
   useRef,
   type HTMLAttributes,
   type PointerEvent as ReactPointerEvent,
@@ -8,6 +9,7 @@ import {
 } from "react";
 import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN } from "@/lib/quran-last-page";
 import { useMushafPager, SWIPE_MIN_PX, SETTLE_MS } from "./useMushafPager";
+import { mushafPerfInc } from "./mushaf-turn-telemetry";
 
 export { SWIPE_MIN_PX, SETTLE_MS };
 
@@ -81,6 +83,10 @@ export const MushafPager = forwardRef<HTMLDivElement, PagerProps>(function Musha
   },
   forwardedRef,
 ) {
+    useEffect(() => {
+    mushafPerfInc("pagerMount");
+  }, []);
+
   const shellRef = useRef<HTMLDivElement | null>(null);
 
   const {

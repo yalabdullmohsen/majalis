@@ -3,6 +3,7 @@
  * لا تأثير على مسار الإنتاج عند التعطيل.
  *
  * مقاييس الجلسة: touch→move، أزمنة الإطارات (worst/p95/p99)، dropped، hitch.
+ * عدّادات العمر (lifetime): mounts/renders/fonts/geometry عبر الجلسة.
  */
 type MushafTurnMark =
   | "touchStart"
@@ -27,6 +28,14 @@ export type MushafFrameStats = {
   touchToMoveMs: number | null;
 };
 
+export type MushafPerfLifetime = {
+  readerMountCount: number;
+  pagerMountCount: number;
+  pageRenderCount: number;
+  fontLoadCount: number;
+  geometryChangeCount: number;
+};
+
 type Session = {
   page: number;
   t0: number;
@@ -44,6 +53,14 @@ type Session = {
 
 let session: Session | null = null;
 let enabled = false;
+
+const lifetime: MushafPerfLifetime = {
+  readerMountCount: 0,
+  pagerMountCount: 0,
+  pageRenderCount: 0,
+  fontLoadCount: 0,
+  geometryChangeCount: 0,
+};
 
 const TARGET_FRAME_MS = 1000 / 60;
 const HITCH_MS = 32;
@@ -177,6 +194,28 @@ export function mushafTurnInc(
   else session.cacheMisses += 1;
 }
 
+/** عدّادات عمر القارئ — تُحدَّث حتى خارج جلسة القلب (للتحقق من mounts=1). */
+export function mushafPerfInc(
+  kind:
+    | "readerMount"
+    | "pagerMount"
+    | "pageRender"
+    | "fontLoad"
+    | "geometryChange",
+): void {
+  if (kind === "readerMount") lifetime.readerMountCount += 1;
+  else if (kind === "pagerMount") lifetime.pagerMountCount += 1;
+  else if (kind === "pageRender") lifetime.pageRenderCount += 1;
+  else if (kind === "fontLoad") {
+    lifetime.fontLoadCount += 1;
+    if (enabled && session) session.fontLoadCount += 1;
+  } else lifetime.geometryChangeCount += 1;
+}
+
+export function mushafPerfSnapshot(): MushafPerfLifetime {
+  return { ...lifetime };
+}
+
 export function mushafTurnFlush(label = "mushaf-turn"): MushafFrameStats | null {
   if (!enabled || !session) return null;
   mushafTurnStopFrameSample();
@@ -193,6 +232,7 @@ export function mushafTurnFlush(label = "mushaf-turn"): MushafFrameStats | null 
         cacheHits: session.cacheHits,
         cacheMisses: session.cacheMisses,
       },
+      lifetime: mushafPerfSnapshot(),
     });
   }
   session = null;

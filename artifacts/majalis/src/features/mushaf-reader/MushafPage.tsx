@@ -4,6 +4,16 @@ import { toArabicIndicDigits as toArabicDigits, toArabicPageDigits } from "@/lib
 import { MushafSurahBanner } from "./MushafSurahBanner";
 import { MushafBasmalaView, MushafVerseLayer } from "./MushafVerseLayer";
 import { AyahSelectionOverlay } from "./AyahSelectionOverlay";
+import { mushafPerfInc } from "./mushaf-turn-telemetry";
+
+/** تسمية ربع الحزب من rub_el_hizb المعتمد — بلا تخمين خارج البيانات. */
+function rubQuarterLabel(rub: number): string {
+  const mod = rub % 4;
+  if (mod === 2) return "ربع الحزب";
+  if (mod === 3) return "نصف الحزب";
+  if (mod === 0) return "ثلاثة الأرباع";
+  return ""; /* mod===1 → بداية حزب — تُغطّى بشارة الحزب */
+}
 
 type Props = {
   layout: MushafPageLayout;
@@ -84,10 +94,19 @@ export const MushafPage = memo(function MushafPage({
   const slotOrder = useMemo(() => Array.from({ length: 15 }, (_, i) => i + 1), []);
 
   const footerPage = displayPageNumber ?? layout.pageNumber;
+  mushafPerfInc("pageRender");
   const hizbLabel =
     layout.hizbStartingOnPage != null
       ? `الحزب ${toArabicDigits(layout.hizbStartingOnPage)}`
-      : "";
+      : layout.rubElHizbStartingOnPage != null
+        ? rubQuarterLabel(layout.rubElHizbStartingOnPage)
+        : "";
+  const sectionMark =
+    layout.hizbStartingOnPage != null
+      ? "hizb"
+      : layout.rubElHizbStartingOnPage != null
+        ? "rub"
+        : null;
 
   const onSelectFatiha = useMemo(
     () => (onSelectVerse ? () => onSelectVerse("1:1") : undefined),
@@ -121,10 +140,17 @@ export const MushafPage = memo(function MushafPage({
         style={{ height: "var(--mushaf-header-height, 36px)", minHeight: "var(--mushaf-header-height, 36px)" }}
       >
         <span className="nm-page__header-surah">{layout.headerSurahName}</span>
-        <span className="nm-page__header-juz">{`الجزء ${toArabicDigits(layout.juzNumber)}`}</span>
+        <span className="nm-page__header-juz">{`الجزء ${toArabicDigits(layout.juzNumber)} • الحزب ${toArabicDigits(layout.hizbNumber)}`}</span>
       </header>
 
       <div className="nm-page__stage" data-testid="mushaf-page-frame">
+        {sectionMark ? (
+          <span
+            className="nm-page__section-mark"
+            data-mark={sectionMark}
+            aria-hidden="true"
+          />
+        ) : null}
         <div
           ref={(node) => {
             bodyRef.current = node;
