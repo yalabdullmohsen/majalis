@@ -16,7 +16,7 @@ const registry = read("docs/mushaf/SUNNAH_MUSHAF_ASSET_REGISTRY.md");
 const preset = read("src/features/mushaf-reader/sunnah-mushaf-signature-preset.ts");
 
 assert.match(page, /AuthenticWarmMushafPageFrame|AuthenticMushafPageFrame/);
-assert.match(page, /SunnahFatihaMedallion/);
+assert.match(page, /SunnahFatihaBraidedMedallion|SunnahFatihaMedallion/);
 assert.match(page, /nm-page__ornament-frame/);
 assert.match(page, /nm-page__fatiha-medallion/);
 assert.match(page, /isOpeningP1/);
@@ -24,7 +24,7 @@ assert.match(page, /sunnah-baqarah-medallion|isLeadP2/);
 assert.doesNotMatch(page, /headerSurahName/);
 assert.doesNotMatch(page, /nm-page__header-surah/);
 
-assert.match(banner, /SunnahSurahTitleCartouche/);
+assert.match(banner, /SunnahSurahCartoucheCompact|SunnahSurahTitleCartouche/);
 assert.match(banner, /nm-surah-banner__label/);
 assert.match(banner, /سورة \$\{label\}/);
 

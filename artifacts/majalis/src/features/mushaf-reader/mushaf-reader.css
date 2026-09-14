@@ -11,13 +11,14 @@
   --mushaf-line-height: 1.85;
   --mushaf-font-weight: 400;
   /*
-   * Sunnah Warm Yellow Printed Mushaf — ورق أصفر عاجي + ذهب خردلي مطبعي.
+   * Sunnah Warm Yellow Ivory — ورق عاجي أصفر هادئ + ذهب مطبعي مطفأ.
    * مرجع بصري فقط؛ بلا مساس بالنص/الـmapping/أبعاد العلامات.
    */
-  --mushaf-paper-warm-yellow: #f8f1d4;
+  --mushaf-paper-warm-yellow: #fbf4d7;
   --mushaf-paper-warm-yellow-dark: #2a2418;
-  --mushaf-paper-edge: #e0cc7a;
-  --mushaf-paper-inner-glow: #fffbe8;
+  --mushaf-paper-edge: #d7b73c;
+  --mushaf-paper-inner-glow: #fff9e5;
+  --mushaf-paper-reading-surface: #fcf5db;
   --mushaf-paper-light: var(--mushaf-paper-warm-yellow);
   --mushaf-paper-dark: var(--mushaf-paper-warm-yellow-dark);
   --mushaf-ink: #1c160e;
@@ -27,14 +28,14 @@
   --mushaf-metadata-ink: #5f4814;
   --mushaf-ink-light: var(--mushaf-ink-primary);
   --mushaf-ink-dark: #f5eed8;
-  --mushaf-printed-gold: #d4b12a;
-  --mushaf-printed-gold-dark: #a88618;
-  --mushaf-printed-gold-border: #b89218;
+  --mushaf-printed-gold: #c9a82e;
+  --mushaf-printed-gold-dark: #a8881a;
+  --mushaf-printed-gold-border: #b89620;
   --mushaf-printed-gold-text: #5f4814;
-  --mushaf-verse-marker-fill: #ddba28;
-  --mushaf-verse-marker-border: #c49918;
-  --mushaf-verse-marker-number: #5f4814;
-  --mushaf-verse-marker-highlight: #e8c94a;
+  --mushaf-verse-marker-fill: #dcb424;
+  --mushaf-verse-marker-border: #b58f16;
+  --mushaf-verse-marker-number: #5f4812;
+  --mushaf-verse-marker-highlight: #e4c038;
   --mushaf-verse-marker-dark-fill: #c4a030;
   --mushaf-verse-marker-dark-border: #a88618;
   --mushaf-verse-marker-dark-number: #f0e2b8;
@@ -93,8 +94,14 @@
   z-index: 40;
   direction: rtl;
   background:
-    radial-gradient(ellipse 120% 80% at 50% 0%, color-mix(in srgb, var(--mushaf-paper-inner-glow) 55%, transparent) 0%, transparent 55%),
-    linear-gradient(180deg, color-mix(in srgb, var(--mushaf-paper-edge) 10%, var(--mushaf-paper-warm-yellow)) 0%, var(--mushaf-paper-warm-yellow) 42%, color-mix(in srgb, var(--mushaf-paper-edge) 8%, var(--mushaf-paper-warm-yellow)) 100%);
+    radial-gradient(ellipse 115% 75% at 50% 8%, color-mix(in srgb, var(--mushaf-paper-inner-glow) 48%, transparent) 0%, transparent 58%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--mushaf-paper-edge) 6%, var(--mushaf-paper-warm-yellow)) 0%,
+      var(--mushaf-paper-reading-surface) 28%,
+      var(--mushaf-paper-warm-yellow) 58%,
+      color-mix(in srgb, var(--mushaf-paper-edge) 5%, var(--mushaf-paper-warm-yellow)) 100%
+    );
   color: var(--nm-ink);
   overflow: hidden;
   overscroll-behavior: none;
@@ -325,75 +332,77 @@ html[data-theme="dark"] .nm-page__header-hizb,
   background: transparent;
 }
 
-/* AuthenticWarmMushafPageFrame — إطار ذهبي أصفر رفيع مزدوج + زوايا خفيفة، أصلي لسُنّة */
+/* AuthenticWarmMushafPageFrame — إطار ذهبي رفيع هادئ (أخف من علامات الآيات) */
 .nm-page__ornament-frame {
   position: absolute;
-  inset: 0.18rem;
+  inset: 0.2rem;
   z-index: 0;
   pointer-events: none;
   border-radius: 0;
-  border: 1px solid color-mix(in srgb, var(--mushaf-printed-gold) 72%, var(--mushaf-printed-gold-border));
+  border: 0.7px solid color-mix(in srgb, var(--mushaf-printed-gold) 48%, var(--mushaf-paper-edge));
   box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-paper-warm-yellow) 70%, var(--mushaf-printed-gold) 30%),
-    inset 0 0 0 2.25px color-mix(in srgb, var(--mushaf-printed-gold-border) 38%, transparent);
-  opacity: 0.78;
+    inset 0 0 0 0.7px color-mix(in srgb, var(--mushaf-paper-warm-yellow) 82%, var(--mushaf-printed-gold) 18%),
+    inset 0 0 0 1.55px color-mix(in srgb, var(--mushaf-printed-gold-border) 22%, transparent);
+  opacity: 0.55;
 }
 .nm-page__ornament-frame::before,
 .nm-page__ornament-frame::after {
   content: "";
   position: absolute;
-  width: 0.55rem;
-  height: 0.55rem;
-  border: 1px solid color-mix(in srgb, var(--mushaf-printed-gold) 55%, transparent);
+  width: 0.38rem;
+  height: 0.38rem;
+  border: 0.7px solid color-mix(in srgb, var(--mushaf-printed-gold) 40%, transparent);
   pointer-events: none;
-  opacity: 0.85;
+  opacity: 0.55;
 }
 .nm-page__ornament-frame::before {
-  inset-block-start: -0.08rem;
-  inset-inline-start: -0.08rem;
+  inset-block-start: -0.05rem;
+  inset-inline-start: -0.05rem;
   border-inline-end: 0;
   border-block-end: 0;
 }
 .nm-page__ornament-frame::after {
-  inset-block-end: -0.08rem;
-  inset-inline-end: -0.08rem;
+  inset-block-end: -0.05rem;
+  inset-inline-end: -0.05rem;
   border-inline-start: 0;
   border-block-start: 0;
 }
 
-/* Sunnah Fatiha Golden Medallion — ضفيرة هندسية أصلية (ليست نسخة بكسل من المرجع) */
+/*
+ * SunnahFatihaBraidedMedallion — ضفيرة هندسية إسلامية أصلية لسُنّة.
+ * بلا أشعة / conic / شمس؛ حلقة رفيعة حول المحتوى (لا تمديد مبالغ لأسفل).
+ */
 .nm-page__fatiha-medallion {
   position: absolute;
-  inset: 3.5% 6.5% 5.5%;
+  /* يحيط بالنص العلوي/الأوسط — يقلّص الفراغ البصري السفلي دون تحريك النص */
+  inset: 2.2% 10% 18%;
   z-index: 0;
   pointer-events: none;
   border-radius: 50%;
-  border: 1.35px solid var(--mushaf-printed-gold-border);
+  border: 1px solid color-mix(in srgb, var(--mushaf-printed-gold-border) 70%, var(--mushaf-paper-edge));
   box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-printed-gold) 45%, transparent),
-    inset 0 0 0 0.55rem color-mix(in srgb, var(--mushaf-printed-gold) 16%, transparent),
-    inset 0 0 0 0.62rem color-mix(in srgb, var(--mushaf-paper-warm-yellow) 88%, transparent);
+    inset 0 0 0 0.85px color-mix(in srgb, var(--mushaf-printed-gold) 40%, transparent),
+    inset 0 0 0 0.4rem color-mix(in srgb, var(--mushaf-paper-reading-surface) 92%, transparent);
   background:
-    repeating-conic-gradient(
-      from 12deg,
-      color-mix(in srgb, var(--mushaf-printed-gold) 42%, transparent) 0deg 6deg,
-      transparent 6deg 14deg
+    repeating-linear-gradient(
+      38deg,
+      color-mix(in srgb, var(--mushaf-printed-gold) 52%, transparent) 0 1.05px,
+      transparent 1.05px 3.1px
     ),
-    radial-gradient(
-      ellipse at center,
-      transparent 58%,
-      color-mix(in srgb, var(--mushaf-printed-gold) 8%, transparent) 76%,
-      transparent 100%
+    repeating-linear-gradient(
+      -38deg,
+      color-mix(in srgb, var(--mushaf-printed-gold-border) 42%, transparent) 0 1.05px,
+      transparent 1.05px 3.1px
     );
-  -webkit-mask: radial-gradient(ellipse at center, transparent 57%, #000 58% 78%, transparent 79%);
-  mask: radial-gradient(ellipse at center, transparent 57%, #000 58% 78%, transparent 79%);
-  opacity: 0.72;
+  -webkit-mask: radial-gradient(ellipse at center, transparent 63%, #000 64.2% 72.5%, transparent 73.5%);
+  mask: radial-gradient(ellipse at center, transparent 63%, #000 64.2% 72.5%, transparent 73.5%);
+  opacity: 0.62;
 }
-/* بداية البقرة — نفس عائلة الميدالية بقطر أوضح قليلًا */
+/* بداية البقرة — ميدالية أصغر قليلًا حول الكتلة الفعلية */
 .nm-page--lead .nm-page__fatiha-medallion,
 .nm-page[data-page-type="surah-start"] .nm-page__fatiha-medallion {
-  inset: 4% 8% 7%;
-  opacity: 0.62;
+  inset: 3% 11% 22%;
+  opacity: 0.52;
 }
 
 html.dark .nm-page__ornament-frame,
@@ -519,7 +528,8 @@ html[data-theme="dark"] .nm-page__fatiha-medallion {
   padding-block: 0;
 }
 
-/* إطار سورة مطبعي ممتاز — هوية سُنّة (أبعاد ثابتة، بلا Glow/Shadow خارجي، بلا ×) */
+
+/* إطار سورة مطبعي — هوية سُنّة (أبعاد ثابتة، بلا ظل خارجي) */
 .nm-root {
   --mushaf-surah-frame-bg: var(--mushaf-paper-warm-yellow);
   --mushaf-surah-frame-border: var(--mushaf-printed-gold-border);
@@ -536,21 +546,26 @@ html[data-theme="dark"] .nm-root {
   --mushaf-surah-frame-ornament: var(--mushaf-verse-marker-dark-border);
 }
 
-/* Premium Sunnah Mushaf Frame — هندسة متناظرة ذهبية رفيعة، بلا سياج/شبكة */
+/*
+ * SunnahSurahCartoucheCompact — لوحة مستقلة صغيرة (عرض الاسم)، بلا شريط بعرض الصفحة.
+ * الارتفاع ثابت داخل خانة الشبكة — بلا ضغط نص / قص الاسم.
+ */
 .nm-surah-banner {
   --mushaf-surah-frame-height: 1.91rem;
   position: relative;
   box-sizing: border-box;
-  width: 100%;
-  max-width: 100%;
+  width: fit-content;
+  min-width: min(100%, 7.75rem);
+  max-width: min(88%, 15.5rem);
   height: var(--mushaf-surah-frame-height);
   min-height: 0;
   max-height: var(--mushaf-surah-frame-height);
+  margin-inline: auto;
   display: grid;
-  grid-template-columns: minmax(1.6rem, 14%) minmax(0, 1fr) minmax(1.6rem, 14%);
+  grid-template-columns: 0.95rem max-content 0.95rem;
   align-items: stretch;
-  justify-items: stretch;
-  padding: 0;
+  justify-items: center;
+  padding: 0 0.35rem;
   text-align: center;
   color: var(--mushaf-surah-frame-text);
   font-family: "Amiri Quran", "Amiri", "Traditional Arabic", serif;
@@ -559,57 +574,41 @@ html[data-theme="dark"] .nm-root {
   letter-spacing: 0.01em;
   line-height: 1;
   border-radius: 0;
-  clip-path: polygon(0.55rem 0, calc(100% - 0.55rem) 0, 100% 50%, calc(100% - 0.55rem) 100%, 0.55rem 100%, 0 50%);
-  border: 1px solid color-mix(in srgb, var(--mushaf-surah-frame-accent) 78%, var(--mushaf-surah-frame-border));
+  clip-path: polygon(0.42rem 0, calc(100% - 0.42rem) 0, 100% 50%, calc(100% - 0.42rem) 100%, 0.42rem 100%, 0 50%);
+  border: 1px solid color-mix(in srgb, var(--mushaf-surah-frame-accent) 72%, var(--mushaf-surah-frame-border));
   background: var(--mushaf-surah-frame-bg);
   box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-surah-frame-border) 42%, transparent);
+    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-surah-frame-border) 36%, transparent);
   user-select: none;
-  overflow: hidden;
+  overflow: visible;
 }
 
-/* أطراف متناظرة — خط ذهبي رفيع + معيّن، بلا ticks سياج */
 .nm-surah-banner__rail {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.28rem;
+  gap: 0;
   width: 100%;
   min-width: 0;
-  padding-inline: 0.18rem;
-  background:
-    linear-gradient(
-      to bottom,
-      transparent 0 22%,
-      color-mix(in srgb, var(--mushaf-surah-frame-accent) 55%, transparent) 22% 23.5%,
-      transparent 23.5% 76.5%,
-      color-mix(in srgb, var(--mushaf-surah-frame-accent) 55%, transparent) 76.5% 78%,
-      transparent 78% 100%
-    );
-  border-inline-end: 1px solid color-mix(in srgb, var(--mushaf-surah-frame-accent) 36%, transparent);
+  padding-inline: 0;
+  background: none;
+  border: 0;
 }
 
 .nm-surah-banner__rail--end {
-  border-inline-end: 0;
-  border-inline-start: 1px solid color-mix(in srgb, var(--mushaf-surah-frame-accent) 36%, transparent);
+  border: 0;
 }
 
-/* شريط رفيع صامت بدل repeating fence */
 .nm-surah-banner__band {
-  flex: 1 1 auto;
-  height: 1px;
-  min-width: 0.4rem;
-  border: 0;
-  background: color-mix(in srgb, var(--mushaf-surah-frame-ornament) 58%, transparent);
-  opacity: 0.75;
+  display: none;
 }
 
 .nm-surah-banner__ornament {
-  width: 0.46rem;
-  height: 0.46rem;
+  width: 0.34rem;
+  height: 0.34rem;
   background: var(--mushaf-surah-frame-ornament);
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  opacity: 0.9;
+  opacity: 0.85;
   flex-shrink: 0;
 }
 
@@ -617,30 +616,31 @@ html[data-theme="dark"] .nm-root {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.28rem;
   min-width: 0;
-  width: 100%;
-  padding-inline: 0.25rem;
+  width: max-content;
+  max-width: 100%;
+  padding-inline: 0.12rem;
   overflow: visible;
 }
 
-/* زخرفة أفقية متناظرة رفيعة حول الاسم — خط مزدوج بلا شبكة */
 .nm-surah-banner__flourish {
-  flex: 1 1 1rem;
-  max-width: 3.2rem;
-  min-width: 0.5rem;
-  height: 0.36rem;
+  flex: 0 0 0.55rem;
+  max-width: 0.7rem;
+  min-width: 0.4rem;
+  height: 0.28rem;
   background:
     linear-gradient(
       to bottom,
-      transparent 0 42%,
-      color-mix(in srgb, var(--mushaf-surah-frame-ornament) 70%, transparent) 42% 46%,
+      transparent 0 40%,
+      color-mix(in srgb, var(--mushaf-surah-frame-ornament) 65%, transparent) 40% 46%,
       transparent 46% 54%,
-      color-mix(in srgb, var(--mushaf-surah-frame-ornament) 70%, transparent) 54% 58%,
-      transparent 58% 100%
+      color-mix(in srgb, var(--mushaf-surah-frame-ornament) 65%, transparent) 54% 60%,
+      transparent 60% 100%
     );
-  opacity: 0.8;
+  opacity: 0.75;
 }
+
 
 .nm-surah-banner__label {
   display: block;
@@ -808,7 +808,10 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   box-shadow: none;
 }
 
-/* رقم آية — شكل زهري مطبعي أصفر خردلي، نفس الصندوق 0.98em (بلا تغيير geometry) */
+/*
+ * SunnahVerseRosette — زهرة مصحفية ناعمة (8 فصوص قصيرة مدمجة).
+ * نفس الصندوق 0.98em — بلا نجمة حادة / أشعة / ظل / توهج / scale.
+ */
 .nm-ayah-mark {
   position: relative;
   z-index: 2;
@@ -823,22 +826,25 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   padding: 0;
   vertical-align: -0.08em;
   border-radius: 0;
-  border: 1.05px solid var(--mushaf-verse-marker-border);
+  border: 1px solid var(--mushaf-verse-marker-border);
   background: var(--mushaf-verse-marker-fill);
   color: var(--mushaf-verse-marker-number);
   font-family: inherit;
-  font-size: 0.6em;
+  font-size: 0.58em;
   font-weight: 700;
   line-height: 1;
   overflow: hidden;
   transform: none;
   box-shadow: none;
-  /* نجمة زهرية 8 رؤوس داخل نفس الـbounding box */
+  /* فصوص ناعمة شبه دائرية — أطراف قصيرة داخل نفس الـbounding box */
   clip-path: polygon(
-    50% 2%, 61% 18%, 82% 12%, 76% 34%, 98% 42%, 78% 54%, 88% 78%, 64% 72%,
-    50% 98%, 36% 72%, 12% 78%, 22% 54%, 2% 42%, 24% 34%, 18% 12%, 39% 18%
+    50% 6%, 58% 14%, 68% 10%, 70% 22%, 82% 24%, 78% 34%, 90% 40%, 82% 50%,
+    90% 60%, 78% 66%, 82% 76%, 70% 78%, 68% 90%, 58% 86%, 50% 94%, 42% 86%,
+    32% 90%, 30% 78%, 18% 76%, 22% 66%, 10% 60%, 18% 50%, 10% 40%, 22% 34%,
+    18% 24%, 30% 22%, 32% 10%, 42% 14%
   );
 }
+
 
 .nm-ayah-mark__glyph {
   display: block;

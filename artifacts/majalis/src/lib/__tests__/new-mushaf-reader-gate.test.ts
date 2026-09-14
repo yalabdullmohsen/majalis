@@ -65,7 +65,7 @@ assert.match(css, /--reader-action-height:/);
 assert.match(css, /--audio-player-height:/);
 assert.match(
   css,
-  /#f8f1d4|#fbf5da|#f7edc8|#fcf7ec|--mushaf-paper-warm-yellow:\s*#f8f1d4|--mushaf-paper-light:\s*var\(--mushaf-paper-warm-yellow\)|--mushaf-page-bg:\s*var\(--mushaf-paper-warm-yellow\)/i,
+  /#fbf4d7|#fcf5db|#fff9e5|#f8f1d4|#fcf7ec|--mushaf-paper-warm-yellow:\s*#fbf4d7|--mushaf-paper-light:\s*var\(--mushaf-paper-warm-yellow\)|--mushaf-page-bg:\s*var\(--mushaf-paper-warm-yellow\)/i,
   "لون ورق المصحف (عاجي أصفر دافئ سُنّة)",
 );
 assert.match(css, /--mushaf-page-bg:/);
