@@ -1,0 +1,148 @@
+{
+  "phase": "P0",
+  "project": "سُنّة",
+  "task": "Sunnah Mushaf Reference-Accurate Typography & Full-Screen Reading Layout",
+  "images": {
+    "reference": "01a09e71-566d-7a6a-88d6-073604c7c71e.jpg",
+    "current": "01a09e71-567f-7a64-b453-ec173b55119a.jpg",
+    "viewportPx": {
+      "width": 1206,
+      "height": 2622
+    },
+    "logicalWidth": 390
+  },
+  "fontRuntime": {
+    "fontId": "qpc-v2",
+    "fontVersion": "qpc-v2-woff2-604",
+    "fontLicenseId": "kfgqpc-qpc-v2-pending-store-signoff",
+    "renderedFontFamily": "qpc-v2 / per-page woff2",
+    "fallbackPolicy": "blocked-when-metrics-locked",
+    "decision": "keep-qpc-v2-adjust-size-and-insets-only"
+  },
+  "beforeVsReference_logical390": {
+    "contentWidth": {
+      "ref": 368.7,
+      "cur": 349.6,
+      "delta": -19.1
+    },
+    "contentHeight": {
+      "ref": 739.6,
+      "cur": 658.1,
+      "delta": -81.5
+    },
+    "horizontalInsetStart": {
+      "ref": 10.7,
+      "cur": 19.4,
+      "delta": 8.7
+    },
+    "horizontalInsetEnd": {
+      "ref": 10.7,
+      "cur": 21.0,
+      "delta": 10.3
+    },
+    "topInset": {
+      "ref": 70.2,
+      "cur": 95.1,
+      "delta": 24.9
+    },
+    "bottomInset": {
+      "ref": 38.2,
+      "cur": 94.8,
+      "delta": 56.6
+    },
+    "firstLineY": {
+      "ref": 70.2,
+      "cur": 95.1,
+      "delta": 24.9
+    },
+    "lastLineY": {
+      "ref": 809.4,
+      "cur": 752.8,
+      "delta": -56.6
+    },
+    "averageLineHeight": {
+      "ref": 45.7,
+      "cur": 43.5,
+      "delta": -2.2
+    },
+    "averageGlyphHeight": {
+      "ref": 2.3,
+      "cur": 1.9,
+      "delta": -0.4
+    },
+    "averageLineWidth": {
+      "ref": 365.8,
+      "cur": 343.2,
+      "delta": -22.6
+    },
+    "maximumLineWidth": {
+      "ref": 368.0,
+      "cur": 347.3,
+      "delta": -20.7
+    },
+    "inkPixelRatio": {
+      "ref": 0.0982,
+      "cur": 0.0828,
+      "delta": -0.0154
+    },
+    "visibleTextCoverageRatio_bbox": {
+      "ref": 0.9057,
+      "cur": 0.7642,
+      "delta": -0.1415
+    },
+    "contentWidthPct": {
+      "ref": 94.53,
+      "cur": 89.64
+    },
+    "contentHeightPctOfReading": {
+      "ref": 95.81,
+      "cur": 85.25
+    }
+  },
+  "runtimeFontOn390x844": {
+    "bodyW": 380,
+    "bodyH": 768,
+    "bandAllows": 27,
+    "byHeight": 27,
+    "byWidth_divisor17": 22,
+    "resolvedFontSizePx": 22,
+    "bottleneck": "contentWidth/17"
+  },
+  "safePlan": {
+    "keepFontId": "qpc-v2",
+    "keepLineHeight": 1.85,
+    "keepHeaderFooterPx": [
+      36,
+      40
+    ],
+    "keepSidePxMax": 5,
+    "targetFontOn390": 25,
+    "widthDivisor": 15,
+    "tightenTopPad": "use inset-top only under metrics lock (drop stacked 0.85rem+1.1rem)",
+    "tightenBottomPad": "drop +16px shell padding under metrics lock",
+    "noMappingChanges": true,
+    "noQuranTextChanges": true
+  },
+  "after_estimated_logical390": {
+    "fontSizePx": 25,
+    "widthDivisor": 15,
+    "horizontalInsetTarget_logical": 10.7,
+    "topInsetDeltaReclaimed_px_est": 25,
+    "bottomInsetDeltaReclaimed_px_est": 16,
+    "visibleTextCoverageRatio_bbox_est": 0.86,
+    "approachToReference_coverage_pct_est": 95.0,
+    "constraints": [
+      "QPC line mapping forbids larger than ~25-26px on 390 without overflow risk",
+      "lineHeight locked at 1.85 by signature gates",
+      "header/footer heights locked 36/40",
+      "font remains qpc-v2 (licensed path); no OCR/font extraction from reference image"
+    ]
+  },
+  "integrity": {
+    "quranText": "unchanged",
+    "pageMapping": "unchanged",
+    "lineMapping": "unchanged",
+    "fontId": "qpc-v2",
+    "fontLicenseId": "kfgqpc-qpc-v2-pending-store-signoff"
+  }
+}

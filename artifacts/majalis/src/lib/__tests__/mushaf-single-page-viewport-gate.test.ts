@@ -57,7 +57,7 @@ assert.doesNotMatch(
 
 /* المشغّل overlay — لا يعيد قياس الصفحة */
 assert.match(css, /\.nm-root\s+\.mm-audio-dock\s*\{[^}]*position:\s*fixed/s);
-assert.match(css, /padding:\s*var\(--nm-top-pad\)\s+var\(--nm-side-pad\)\s+calc\(var\(--nm-bottom-pad\)\s*\+\s*16px\)/);
+assert.match(css, /padding:\s*var\(--nm-top-pad\)\s+var\(--nm-side-pad\)\s+var\(--nm-bottom-pad\)/);
 assert.doesNotMatch(
   cssNoComments,
   /padding:[^;{]*reader-bottom-stack/,

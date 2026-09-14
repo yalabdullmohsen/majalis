@@ -23,7 +23,7 @@
   --mushaf-body-height: auto;
   --mushaf-side-pad: max(0.7rem, var(--inset-inline-start, var(--inset-left, 0px)), var(--inset-inline-end, var(--inset-right, 0px)));
   /* حجم العلامة ثابت (geometry) — الوضوح عبر الحدود/الوزن فقط */
-  --mushaf-ayah-mark-size: 0.92em;
+  --mushaf-ayah-mark-size: 0.98em;
 
   /* طبقات سفلية داخل القارئ */
   --bottom-nav-height: 64px;
@@ -44,7 +44,7 @@
   --nm-qpc-family: qpc-v2;
   --nm-line-height: var(--mushaf-line-height);
   /* فجوة خفيفة — QPC يحمل تباعده؛ الزيادة تسبب lineOverflow على الأسطر الكثيفة */
-  --nm-word-gap: 0.04em;
+  --nm-word-gap: 0;
   --nm-side-pad: var(--mushaf-side-pad);
   --nm-top-pad: max(1.1rem, var(--mushaf-safe-top));
   --nm-bottom-pad: var(--mushaf-safe-bottom);
@@ -85,6 +85,12 @@
   --nm-qpc-size: var(--mushaf-font-size);
   --mm-basmala-size: var(--mushaf-font-size);
   --mushaf-line-height: var(--nm-line-height, 1.85);
+  /* قراءة ممتلئة: Safe Area فقط — بلا تكديس 0.85rem+1.1rem فوق الرأس */
+  --mushaf-safe-top: var(--inset-top, 0px);
+  --mushaf-safe-bottom: var(--inset-bottom, 0px);
+  --nm-top-pad: var(--mushaf-safe-top);
+  --nm-bottom-pad: var(--mushaf-safe-bottom);
+  --nm-word-gap: 0;
 }
 
 .nm-root .nm-page__body,
@@ -118,7 +124,7 @@
   max-width: var(--nm-page-max-w);
   margin-inline: auto;
   /* ارتفاع الصفحة ثابت — المشغّل/شريط الآية overlay فوق الصفحة بلا إعادة قياس */
-  padding: var(--nm-top-pad) var(--nm-side-pad) calc(var(--nm-bottom-pad) + 16px);
+  padding: var(--nm-top-pad) var(--nm-side-pad) var(--nm-bottom-pad);
   /* يهزم حشو mm-page-shell المزدوج من mushaf-madinah.css */
   padding-inline: var(--nm-side-pad) !important;
   overflow-x: hidden;
