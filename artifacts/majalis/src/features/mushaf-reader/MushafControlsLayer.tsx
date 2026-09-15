@@ -25,9 +25,12 @@ type ControlsProps = {
   onSearch: () => void;
   onIndex: () => void;
   onPlayPage?: () => void;
+  /** وضع القراءة الكامل — يخفي كل الـchrome عدا المصحف */
+  focusReadingMode?: boolean;
+  onToggleFocusReadingMode?: () => void;
 };
 
-/** طبقة أدوات القراءة — تظهر عند الحاجة فقط */
+/** طبقة أدوات القراءة — شريط مضغوط فوق المصحف (خارج Geometry) */
 export const MushafControlsLayer = memo(function MushafControlsLayer({
   chromeOpen,
   pageNumber,
@@ -38,6 +41,8 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
   onSearch,
   onIndex,
   onPlayPage,
+  focusReadingMode = false,
+  onToggleFocusReadingMode,
 }: ControlsProps) {
   const [draft, setDraft] = useState(String(pageNumber));
   const [gotoError, setGotoError] = useState<string | null>(null);
@@ -90,11 +95,36 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
   };
 
   return (
-    <div className="nm-controls" data-open={chromeOpen ? "1" : "0"} aria-hidden={!chromeOpen && !gotoOpen}>
-      <div className="nm-controls__bar" data-testid="nm-controls-bar">
-        <button type="button" className="nm-controls__btn nm-controls__exit" aria-label="الخروج من المصحف" onClick={onExit}>
-          الخروج من المصحف
+    <div
+      className="nm-controls nm-controls--compact"
+      data-open={chromeOpen ? "1" : "0"}
+      data-focus-reading={focusReadingMode ? "1" : "0"}
+      aria-hidden={!chromeOpen && !gotoOpen}
+    >
+      <div className="nm-controls__bar" data-testid="nm-controls-bar" role="toolbar" aria-label="أدوات المصحف">
+        <button
+          type="button"
+          className="nm-controls__btn nm-controls__exit"
+          aria-label="الخروج من المصحف"
+          onClick={onExit}
+        >
+          خروج
         </button>
+        {onToggleFocusReadingMode ? (
+          <button
+            type="button"
+            className="nm-controls__btn nm-controls__focus"
+            data-testid="mushaf-focus-reading-toggle"
+            aria-label={focusReadingMode ? "إظهار أدوات المصحف" : "إخفاء أدوات المصحف"}
+            aria-pressed={focusReadingMode}
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleFocusReadingMode();
+            }}
+          >
+            {focusReadingMode ? "إظهار" : "قراءة"}
+          </button>
+        ) : null}
         <button
           type="button"
           className="nm-controls__page"
@@ -104,18 +134,18 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
         >
           {toArabicDigits(pageNumber)}
         </button>
-        <div style={{ display: "flex", gap: "0.4rem" }}>
-          {onPlayPage ? (
-            <button type="button" className="nm-controls__btn" onClick={onPlayPage}>
-              تشغيل الصفحة
-            </button>
-          ) : null}
-          <button type="button" className="nm-controls__btn" onClick={onIndex}>
+        <div className="nm-controls__actions">
+          <button type="button" className="nm-controls__btn" aria-label="بحث في القرآن" onClick={onSearch}>
+            بحث
+          </button>
+          <button type="button" className="nm-controls__btn" aria-label="فهرس السور" onClick={onIndex}>
             فهرس
           </button>
-          <button type="button" className="nm-controls__btn" aria-label="بحث في القرآن" onClick={onSearch}>
-            بحث في القرآن
-          </button>
+          {onPlayPage ? (
+            <button type="button" className="nm-controls__btn" aria-label="تشغيل الصفحة" onClick={onPlayPage}>
+              تشغيل
+            </button>
+          ) : null}
         </div>
       </div>
 

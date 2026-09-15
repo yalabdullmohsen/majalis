@@ -79,6 +79,11 @@ import { MUSHAF_CHROME_HIDE_MS } from "@/features/mushaf-madinah/layout-bands";
 import { MushafPage } from "./MushafPage";
 import { MushafExitControl } from "./MushafExitControl";
 import { MushafControlsLayer, MushafVerseMenu } from "./MushafControlsLayer";
+import { MushafPageArrows } from "./MushafPageArrows";
+import {
+  loadPageArrowsEnabled,
+  saveFocusReadingModePreference,
+} from "./mushaf-page-arrows-prefs";
 import { useStableMushafLayout } from "./useStableMushafLayout";
 import {
   putPageRenderModel,
@@ -156,6 +161,11 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const [readerChromeVisible, setReaderChromeVisible] = useState(false);
   const chromeOpen = readerChromeVisible;
   const setChromeOpen = setReaderChromeVisible;
+  /** وضع قراءة كامل — لا يُفرض عند أول فتح؛ يُحفظ بعد اختيار صريح فقط */
+  const [focusReadingMode, setFocusReadingMode] = useState(false);
+  const [pageArrowsEnabled] = useState(() => loadPageArrowsEnabled());
+  const focusReadingModeRef = useRef(false);
+  focusReadingModeRef.current = focusReadingMode;
   const [gotoOpen, setGotoOpen] = useState(false);
   const [selectedVerseKey, setSelectedVerseKey] = useState<string | null>(null);
   const [actionsOpen, setActionsOpen] = useState(false);
@@ -509,7 +519,22 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     setChromeOpen(false);
   }, []);
 
+  const toggleFocusReadingMode = useCallback(() => {
+    setFocusReadingMode((prev) => {
+      const next = !prev;
+      saveFocusReadingModePreference(next);
+      if (next) {
+        setChromeOpen(false);
+      } else {
+        setChromeOpen(true);
+        bumpChrome();
+      }
+      return next;
+    });
+  }, [bumpChrome]);
+
   const beginPageTurn = useCallback(() => {
+
     mushafTurnMark("transitionStart", pageRef.current);
     if (pageTurnLockRef.current) return;
     pageTurnLockRef.current = true;
@@ -550,6 +575,9 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const go = useCallback(
     (next: number) => {
       const clamped = clampMushafPage(next);
+      /* منع قفزة صفحتين عند الضغط المتكرر أثناء الانتقال */
+      if (pageTurnLockRef.current) return;
+      if (clamped === pageRef.current) return;
       /* قلب يدوي: لا نوقف التلاوة — نمنع مزامنة الصفحة من الصوت حتى لا تُرجع المستخدم */
       suppressPageSyncRef.current = true;
       beginPageTurn();
@@ -940,7 +968,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         mushafTurnMark("touchStart", page);
       }}
       onNavigateCancel={cancelPageTurnFreeze}
-      ignoreSelector=".nm-controls, .nm-verse-menu, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, input, textarea, select, button"
+      ignoreSelector=".nm-controls, .nm-verse-menu, .nm-page-arrows, .nm-page-arrow, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, input, textarea, select, button"
       onTapEmpty={() => {
         if (actionsOpen) {
           closeActions();
@@ -948,6 +976,12 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         }
         if (selectedVerseKey) {
           clearSelection();
+          return;
+        }
+        /* السحب لا يصل هنا — فقط ضغطة خلفية صريحة */
+        if (focusReadingModeRef.current) {
+          setChromeOpen(true);
+          bumpChrome();
           return;
         }
         setChromeOpen((v) => !v);
@@ -964,6 +998,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       data-freeze-stack={freezeStackMode}
       data-testid="mushaf-viewport"
       data-reader-chrome={chromeOpen ? "1" : "0"}
+      data-focus-reading={focusReadingMode ? "1" : "0"}
+      data-page-arrows={pageArrowsEnabled ? "1" : "0"}
       data-signature-preset={import.meta.env.DEV ? "sunnah-mushaf-signature-v1" : undefined}
       dir="rtl"
       renderPage={(pageNumber, role) => (
@@ -987,6 +1023,9 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       )}
     >
       <h1 className="sr-only">المصحف الشريف</h1>
+      <div className="sr-only" aria-live="polite" data-testid="mushaf-page-live">
+        {`الصفحة ${page}`}
+      </div>
       {import.meta.env.DEV ? (
         <div
           aria-hidden
@@ -1064,6 +1103,22 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           }}
         />
       </Suspense>
+      <MushafPageArrows
+
+        page={page}
+
+        visible={chromeOpen && !actionsOpen && !gotoOpen && !tafsirOpen && !searchOpen && !indexOpen}
+
+        enabled={pageArrowsEnabled}
+
+        disabled={edgesDisabled || !pagerSettled}
+
+        onNext={() => go(page + 1)}
+
+        onPrev={() => go(page - 1)}
+
+      />
+
       <MushafExitControl
         visible={chromeOpen && !actionsOpen && !gotoOpen}
         onExit={() => {
@@ -1095,6 +1150,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
 <MushafControlsLayer
         chromeOpen={chromeOpen && !actionsOpen && !gotoOpen}
         pageNumber={page}
+        focusReadingMode={focusReadingMode}
+        onToggleFocusReadingMode={toggleFocusReadingMode}
         gotoOpen={gotoOpen}
         onGotoOpenChange={setGotoOpen}
         onGoto={(n) => {
