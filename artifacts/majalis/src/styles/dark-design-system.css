@@ -13,18 +13,18 @@
   --surface-elevated: #24302b;
   --surface-interactive: #2b3933;
   --surface-hero: #1a2822;
-  --surface-hero-ink: #f4fbf7;
+  --surface-hero-ink: #f3efe6;
   --surface-hero-muted: #c5d8ce;
-  --text-primary: #f4f7f5;
-  --text-secondary: #d5ded9;
-  --text-muted: #a8b5af;
+  --text-primary: #ede8df;
+  --text-secondary: #d8d0c4;
+  --text-muted: #b5ada0;
   --icon-primary: #8fd4b0;
   --icon-secondary: #c5d8ce;
-  --border-elevated: color-mix(in srgb, #8fd4b0 22%, #35443f);
-  --card-separator: color-mix(in srgb, #8fd4b0 14%, #2a3733);
+  --border-elevated: color-mix(in srgb, #c9a86c 10%, #35443f);
+  --card-separator: color-mix(in srgb, #8fd4b0 12%, #2a3733);
 
   /* جسر للمكوّنات القديمة */
-  --mj-bg: var(--surface-app, #131a18);
+  --mj-bg: var(--surface-app, #0f1613);
   --mj-surface: var(--surface-secondary);
   --mj-surface-2: var(--surface-elevated);
   --mj-surface-3: var(--surface-interactive);
@@ -53,7 +53,7 @@
 :is(html[data-theme="dark"], html.dark) .list-screen,
 :is(html[data-theme="dark"], html.dark) .topic-page,
 :is(html[data-theme="dark"], html.dark) .topic-page__body {
-  background-color: var(--surface-app, #131a18);
+  background-color: var(--surface-app, #0f1613);
   color: var(--text-primary);
 }
 
@@ -76,11 +76,9 @@
   background-color: #24302b !important;
   background-image: none !important;
   background: #24302b !important;
-  border-color: #3a4a44 !important;
-  color: #f4f7f5 !important;
-  box-shadow:
-    0 0 0 1px rgba(143, 212, 176, 0.10),
-    0 8px 20px -14px rgba(0, 0, 0, 0.55);
+  border-color: color-mix(in srgb, #c9a86c 10%, #35443f) !important;
+  color: #ede8df !important;
+  box-shadow: 0 6px 18px -14px rgba(0, 0, 0, 0.42);
 }
 
 :is(html[data-theme="dark"], html.dark) .soft-card:active,
@@ -95,7 +93,7 @@
 :is(html[data-theme="dark"], html.dark) .hub-card__title,
 :is(html[data-theme="dark"], html.dark) .section-entry-card .hub-card__title,
 :is(html[data-theme="dark"], html.dark) .rsc__title {
-  color: #f4f7f5 !important;
+  color: #ede8df !important;
 }
 
 :is(html[data-theme="dark"], html.dark) .soft-card :is(p, .hub-card__desc, .soft-card__desc, .supporting-text),
@@ -174,7 +172,7 @@
 :is(html[data-theme="dark"], html.dark) .an-card {
   background: var(--surface-elevated) !important;
   border: 1px solid var(--border-elevated) !important;
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--icon-primary) 7%, transparent);
+  box-shadow: 0 6px 18px -14px rgba(0, 0, 0, 0.42);
 }
 :is(html[data-theme="dark"], html.dark) .an-row__title,
 :is(html[data-theme="dark"], html.dark) .an-card__title {
@@ -287,9 +285,9 @@
 }
 :is(html[data-theme="dark"], html.dark) .sh-hero--compact,
 :is(html[data-theme="dark"], html.dark) .sh-hero {
-  background:
-    radial-gradient(100% 70% at 70% 0%, color-mix(in srgb, var(--icon-primary) 16%, transparent), transparent 60%),
-    var(--surface-hero) !important;
+  background: var(--surface-hero) !important;
+  background-image: none !important;
+  box-shadow: none !important;
 }
 :is(html[data-theme="dark"], html.dark) .mj-segmented-filter,
 :is(html[data-theme="dark"], html.dark) .sh-segmented {

@@ -30,7 +30,11 @@ export function ThemePreferenceProvider({ children }: { children: ReactNode }) {
   // طبقات الوضع الداكن — تُحمَّل عند الحاجة حتى لا تُضخَّم CSS الحرج للوضع الفاتح
   useEffect(() => {
     if (resolvedTheme === "dark") {
-      void Promise.all([import("@/styles/dark-mode-surfaces.css"), import("@/styles/dark-design-system.css")]);
+      void Promise.all([
+        import("@/styles/dark-mode-surfaces.css"),
+        import("@/styles/dark-design-system.css"),
+        import("@/styles/premium-dark-refine.css"),
+      ]);
     }
   }, [resolvedTheme]);
 

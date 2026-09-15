@@ -63,11 +63,11 @@ html[data-theme="dark"] .qe-abar,
 html.dark .qe-viewer,
 html.dark .qe-dash,
 html.dark .qe-abar {
-  --qe-ink: #e8efe9;
-  --qe-muted: #9aada4;
-  --qe-emerald: #7dba9a;
-  --qe-panel: #15241e;
-  --qe-line: #2a3d35;
+  --qe-ink: #ebe4d8;
+  --qe-muted: #b0a898;
+  --qe-emerald: #6fbf9a;
+  --qe-panel: #15201c;
+  --qe-line: color-mix(in srgb, #c9a86c 14%, #2a3d35);
   --qe-skel-a: #1c2c26;
   --qe-skel-b: #243832;
   --qe-danger: #f0a0a0;
