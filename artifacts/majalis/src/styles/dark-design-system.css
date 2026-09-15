@@ -78,7 +78,7 @@
   background: #24302b !important;
   border-color: color-mix(in srgb, #c9a86c 10%, #35443f) !important;
   color: #ede8df !important;
-  box-shadow: 0 6px 18px -14px rgba(0, 0, 0, 0.42);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16), 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 
 :is(html[data-theme="dark"], html.dark) .soft-card:active,
@@ -172,7 +172,7 @@
 :is(html[data-theme="dark"], html.dark) .an-card {
   background: var(--surface-elevated) !important;
   border: 1px solid var(--border-elevated) !important;
-  box-shadow: 0 6px 18px -14px rgba(0, 0, 0, 0.42);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16), 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 :is(html[data-theme="dark"], html.dark) .an-row__title,
 :is(html[data-theme="dark"], html.dark) .an-card__title {

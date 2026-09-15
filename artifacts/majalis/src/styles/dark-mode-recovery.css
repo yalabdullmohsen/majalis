@@ -113,7 +113,7 @@ html.dark [data-card="1"] {
   background-image: none !important;
   color: var(--dm-text-primary) !important;
   border-color: var(--dm-border-subtle) !important;
-  box-shadow: 0 6px 18px -14px rgba(0, 0, 0, 0.42) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16), 0 4px 14px rgba(0, 0, 0, 0.18) !important;
 }
 
 /* ═══ Bottom Navigation — كان يستخدم brand-on-light (أخضر داكن) ═══ */
