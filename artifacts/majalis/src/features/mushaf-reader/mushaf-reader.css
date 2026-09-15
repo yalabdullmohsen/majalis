@@ -1625,3 +1625,220 @@ html[data-theme="dark"] .nm-exit-control {
   border-color: color-mix(in srgb, #8a6b2e 45%, transparent);
   color: #e8dcc0;
 }
+
+/* —— Compact Reader Toolbar + Page Arrows + Focus Mode (خارج Geometry) —— */
+.nm-root {
+  --nm-chrome-h: 2.35rem;
+}
+
+.nm-controls--compact .nm-controls__bar {
+  min-height: calc(var(--nm-chrome-h) + var(--inset-top, 0px));
+  padding: calc(0.22rem + var(--inset-top, 0px)) 0.55rem 0.22rem;
+  gap: 0.35rem;
+  background: color-mix(in srgb, var(--nm-paper) 88%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--nm-gold) 14%, transparent);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.nm-controls--compact .nm-controls__btn {
+  min-height: 2rem;
+  padding: 0.25rem 0.55rem;
+  font-size: 0.78rem;
+  border-radius: 0.45rem;
+}
+
+.nm-controls--compact .nm-controls__page {
+  min-height: 2rem;
+  font-size: 0.88rem;
+  padding: 0.2rem 0.45rem;
+}
+
+.nm-controls__actions {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  margin-inline-start: auto;
+}
+
+.nm-controls__focus[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--nm-gold) 22%, var(--nm-paper));
+}
+
+.nm-controls-more {
+  position: absolute;
+  inset-inline: 0.55rem auto;
+  top: calc(var(--nm-chrome-h) + var(--inset-top, 0px) + 0.35rem);
+  z-index: 36;
+  min-width: min(16.5rem, calc(100% - 1.1rem));
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--nm-gold) 22%, transparent);
+  background: color-mix(in srgb, var(--nm-paper) 94%, transparent);
+  box-shadow: none;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.nm-controls-more__title {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--nm-meta, #5c4a32);
+}
+
+.nm-controls-more__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--nm-ink, #2a2118);
+  min-height: 2.5rem;
+}
+
+.nm-controls-more__row input {
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: var(--nm-gold, #b08d57);
+}
+
+.nm-controls-more__close {
+  min-height: 2.25rem;
+  border: 0;
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--nm-gold) 14%, var(--nm-paper));
+  color: var(--nm-meta, #5c4a32);
+  font-size: 0.78rem;
+}
+
+/* وضع التركيز: أخفِ الطبقات العائمة دون display:none على صفحة المصحف */
+.nm-root[data-focus-reading="1"][data-chrome="0"] .nm-controls,
+.nm-root[data-focus-reading="1"][data-chrome="0"] .nm-exit-control,
+.nm-root[data-focus-reading="1"][data-chrome="0"] .nm-page-arrows,
+.nm-root[data-focus-reading="1"][data-chrome="0"] .mm-audio-dock {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.nm-page-arrows {
+  position: absolute;
+  inset: 0;
+  z-index: 28;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 160ms ease, visibility 160ms ease;
+}
+
+.nm-page-arrows[data-visible="1"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nm-page-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 29;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 55%, transparent);
+  color: color-mix(in srgb, var(--nm-gold, #b08d57) 75%, var(--nm-meta, #5c4a32));
+  box-shadow: none;
+  opacity: 0.42;
+  pointer-events: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 140ms ease, background-color 140ms ease;
+}
+
+.nm-page-arrows[data-visible="1"] .nm-page-arrow:not(:disabled) {
+  pointer-events: auto;
+}
+
+.nm-page-arrow:not(:disabled):active,
+.nm-page-arrows[data-visible="1"] .nm-page-arrow:not(:disabled):hover {
+  opacity: 0.92;
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 78%, var(--nm-gold, #b08d57) 12%);
+}
+
+.nm-page-arrow:disabled {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* RTL: التالية = يمين الشاشة (inline-start) — يطابق mm-page-edge--next */
+.nm-page-arrow--next {
+  inset-inline-start: max(0.35rem, var(--inset-left, 0px));
+}
+
+.nm-page-arrow--prev {
+  inset-inline-end: max(0.35rem, var(--inset-right, 0px));
+}
+
+.nm-page-arrow__hit {
+  position: absolute;
+  inset: -0.35rem;
+}
+
+.nm-page-arrow__icon {
+  font-size: 1.55rem;
+  line-height: 1;
+  font-weight: 600;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.nm-root[data-mushaf-panning="1"] .nm-page-arrows {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+html.dark .nm-page-arrow,
+html[data-theme="dark"] .nm-page-arrow {
+  background: color-mix(in srgb, #2a2418 55%, transparent);
+  color: color-mix(in srgb, #d4b483 70%, #f0e6d2);
+}
+
+/* قائمة الآية — أكثر انخفاضاً */
+.nm-verse-menu {
+  gap: 0.3rem;
+  min-height: 0;
+  max-height: min(36%, 13.5rem);
+  padding: 0.5rem 0.7rem calc(0.55rem + var(--safe-bottom, 0px));
+}
+
+.nm-verse-menu__head {
+  min-height: 2.1rem;
+}
+
+.nm-verse-menu__close {
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  padding: 0 0.5rem;
+  font-size: 0.75rem;
+}
+
+.nm-verse-menu__action {
+  min-height: 2.35rem;
+  padding: 0.35rem 0.45rem;
+  font-size: 0.82rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nm-page-arrows,
+  .nm-page-arrow,
+  .nm-controls--compact .nm-controls__bar {
+    transition: none;
+  }
+}
