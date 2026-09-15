@@ -102,8 +102,7 @@ export function sectionAwareFallback(currentPath: string): string {
   if (p.startsWith("/prayer") || p.startsWith("/qibla") || p.startsWith("/adhan") || p.startsWith("/tasbih")) {
     return "/prayer-times";
   }
-  if (p.startsWith("/fiqh-council")) return "/fiqh-council";
-  if (p.startsWith("/fiqh")) return "/fiqh";
+  if (p.startsWith("/fiqh-council") || p.startsWith("/fiqh")) return "/fiqh";
   if (p.startsWith("/hadith")) return "/hadith";
   if (p.startsWith("/lessons") || p.startsWith("/kuwait-lessons")) return "/lessons";
   if (p.startsWith("/adhkar") || p.startsWith("/daily-wird")) return "/adhkar";

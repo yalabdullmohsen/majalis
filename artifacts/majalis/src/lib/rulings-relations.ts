@@ -1,6 +1,5 @@
 import type { RulingRelationLink, ShariaRulingExtended } from "./rulings-types";
 import { loadSeedQa } from "./qa-seed";
-import { FIQH_COUNCIL_SEED } from "./fiqh-council-service";
 
 export async function buildRulingRelations(ruling: ShariaRulingExtended): Promise<RulingRelationLink[]> {
   const links: RulingRelationLink[] = [];
@@ -19,18 +18,6 @@ export async function buildRulingRelations(ruling: ShariaRulingExtended): Promis
     }
   }
 
-  for (const fiqhId of ruling.linked_fiqh_ids ?? []) {
-    const item = FIQH_COUNCIL_SEED.find((x) => x.id === fiqhId);
-    if (item) {
-      links.push({
-        type: "fiqh",
-        id: item.id,
-        title: item.title,
-        href: `/fiqh-council/${item.slug || item.id}`,
-        meta: item.category,
-      });
-    }
-  }
 
   for (const relatedId of ruling.related_ids ?? []) {
     links.push({
@@ -74,7 +61,7 @@ export function groupRelations(links: RulingRelationLink[]) {
 export const RELATION_TYPE_LABELS: Record<string, string> = {
   qa: "أسئلة وأجوبة",
   fatwa: "فتاوى",
-  fiqh: "المجمع الفقهي",
+  fiqh: "الفقه",
   ruling: "أحكام مرتبطة",
   lesson: "دروس",
   fawaid: "فوائد",

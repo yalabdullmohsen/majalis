@@ -212,7 +212,7 @@ export const CONTENT_REGISTRY: Record<CmsContentKind, ContentTableConfig> = {
       archived: "archived",
       rejected: "rejected",
     },
-    publicRoute: (id: string) => `/fiqh-council/${id}`,
+    publicRoute: (_id: string) => `/fiqh`,
   },
   sharia_ruling: {
     table: "sharia_rulings",

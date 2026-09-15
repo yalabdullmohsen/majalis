@@ -62,10 +62,6 @@ const ClientErrorLogsSection = lazyWithRetry(
   () => import("@/views/admin/ClientErrorLogsSection").then((m) => ({ default: m.ClientErrorLogsSection })),
   "ClientErrorLogsSection",
 );
-const FiqhCouncilSection = lazyWithRetry(
-  () => import("@/views/admin/FiqhCouncilSection").then((m) => ({ default: m.FiqhCouncilSection })),
-  "FiqhCouncilSection",
-);
 const RulingsSection = lazyWithRetry(
   () => import("@/views/admin/RulingsSection").then((m) => ({ default: m.RulingsSection })),
   "RulingsSection",
@@ -258,7 +254,6 @@ export default function AdminPage() {
       {section === "settings" && <SettingsSection />}
       {section === "reports" && <ReportsSection />}
       {section === "error-logs" && <ClientErrorLogsSection />}
-      {section === "fiqh-council" && <FiqhCouncilSection />}
       {section === "rulings" && <RulingsSection />}
       {section === "annual-courses" && <AnnualCoursesSection />}
       {section === "dawah" && <DawahSection />}

@@ -275,7 +275,7 @@ export const SECTION_LABELS: Record<keyof TopicSection, string> = {
   articles: "المقالات",
   qa: "الأسئلة والأجوبة",
   fawaid: "الفوائد",
-  fiqh: "المجمع الفقهي",
+  fiqh: "الفقه",
   courses: "الدورات",
   miracles: "الإعجاز العلمي",
   knowledge: "محرك المعرفة",

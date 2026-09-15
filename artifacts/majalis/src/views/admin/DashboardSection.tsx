@@ -4,7 +4,7 @@ import {
   BarChart2, BookOpen, Bot, Brain, Building2, CheckCircle2, Clock, Dna,
   Eye, Flag, FlaskConical, Globe, GraduationCap, HelpCircle, Image,
   Landmark, Library, Lightbulb, MessageCircle, MessageSquare, Network,
-  PlayCircle, Radio, RefreshCw, Scale, School, Search, Send,
+  PlayCircle, Radio, RefreshCw, School, Search, Send,
   Settings, Settings2, ShieldCheck, Sparkles, Target, Unlock,
   User, Users, Flame,
 } from "lucide-react";
@@ -101,14 +101,6 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: true,
   },
   // ── الشريعة ──────────────────────────────────────────────────────────
-  {
-    key: "fiqh-council", Icon: Scale, label: "المجمع الفقهي", group: "الشريعة",
-    description: "إدارة قرارات ووثائق المجمع الفقهي الكويتي والخليجي",
-    whatItDoes: "تتيح استعراض وإضافة قرارات المجامع الفقهية وتصنيفها وربطها بموضوعاتها.",
-    whenToUse: "لإدخال قرارات جديدة من دورات المجمع أو تحديث بيانات قرار قديم.",
-    dataManaged: "القرارات، الفتاوى، التوصيات، الأبحاث، جلسات المجمع، المجالات الفقهية",
-    affectsPublic: true,
-  },
   {
     key: "rulings", Icon: Landmark, label: "الأحكام الشرعية", group: "الشريعة",
     description: "إدارة موسوعة الأحكام الشرعية المُصنَّفة",

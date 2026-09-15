@@ -13,8 +13,8 @@ import { UtilityScreen } from "@/components/design-system/screens";
 export { ASSISTANT_FAILURE_MESSAGE as FAILURE_MESSAGE } from "@/hooks/useAssistantChat";
 
 const RESEARCHER_LINKS = [
-  { href: "/fiqh-council/research-assistant", label: "الباحث الفقهي", Icon: Scale },
   { href: "/fiqh", label: "الفقه والأحكام", Icon: BookOpen },
+  { href: "/search", label: "البحث في المنصة", Icon: Scale },
 ];
 
 export default function AssistantPage() {

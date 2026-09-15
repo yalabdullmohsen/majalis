@@ -47,7 +47,7 @@ export const FEATURED: { href: string; Icon: LucideIcon; title: string; desc: st
   { href: "/quran-hub", Icon: BookMarked, title: seoNavLabel("/quran-hub", "مركز القرآن"), desc: "المصحف والتجويد والحفظ وعلوم القرآن في باب واحد", cta: "افتح" },
   { href: "/lessons", Icon: GraduationCap, title: seoNavLabel("/lessons", "الدروس والدورات"), desc: "دروس ودورات مرتّبة بحسب الموضوع والمستوى", cta: "افتح" },
   { href: "/prayer-times", Icon: Clock, title: seoNavLabel("/prayer-times", "مواقيت الصلاة"), desc: "مواقيت دقيقة مع اتجاه القبلة وتنبيهات الأذان", cta: "افتح" },
-  { href: "/fiqh", Icon: Scale, title: seoNavLabel("/fiqh", "الفقه والأحكام"), desc: "الأحكام والقواعد والمجامع تحت باب واحد", cta: "افتح" },
+  { href: "/fiqh", Icon: Scale, title: seoNavLabel("/fiqh", "الفقه والأحكام"), desc: "الأحكام والقواعد الشرعية تحت باب واحد", cta: "افتح" },
   { href: "/adhkar", Icon: RotateCw, title: seoNavLabel("/adhkar", "الأذكار اليومية"), desc: "أذكار الصباح والمساء والنوم وما بينهما مرتّبة للورد", cta: "افتح" },
   { href: "/sections", Icon: Layers, title: seoNavLabel("/sections", "جميع الأقسام"), desc: "فهرس يجمع الفقه والحديث والأعلام والعبادات", cta: "افتح" },
 ];
@@ -79,7 +79,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     Icon: Scale,
     label: "الفقه والأحكام",
     items: [
-      { href: "/fiqh",               Icon: Scale,        title: seoNavLabel("/fiqh", "الفقه الإسلامي"),  desc: "مدخل للأحكام والأسئلة والمجمع الفقهي" },
+      { href: "/fiqh",               Icon: Scale,        title: seoNavLabel("/fiqh", "الفقه الإسلامي"),  desc: "مدخل للأحكام والأسئلة الشرعية" },
       { href: "/tazkiya",             Icon: Heart,        title: seoNavLabel("/tazkiya", "التزكية والتوبة"), desc: "الذنوب والحقوق، والتوبة والاستغفار في باب واحد" },
       { href: "/tawhid",             Icon: BookMarked,   title: seoNavLabel("/tawhid", "التوحيد"),            desc: "مسائل أنواع التوحيد الثلاثة بأدلتها على منهج أهل السنة" },
       { href: "/arkan",              Icon: Landmark,     title: seoNavLabel("/arkan", "أركان الإسلام الخمسة"),     desc: "الشهادة والصلاة والزكاة والصيام والحج بالأدلة" },

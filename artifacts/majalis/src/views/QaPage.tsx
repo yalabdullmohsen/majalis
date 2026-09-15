@@ -12,7 +12,6 @@ import "@/styles/pages/fiqh-hub.css";
 const FIQH_HUB_TABS = [
   { key: "rulings", label: "الأحكام الشرعية", href: "/fiqh" },
   { key: "qa",      label: "الأسئلة والأجوبة", href: "/quiz" },
-  { key: "council", label: "المجمع الفقهي",   href: "/fiqh-council" },
 ] as const;
 type FiqhTab = (typeof FIQH_HUB_TABS)[number]["key"];
 
@@ -390,7 +389,6 @@ export default function QaPage({
         links={[
           { href: "/fiqh", label: "موسوعة الأحكام" },
           { href: "/salah-guide", label: "دليل الصلاة" },
-          { href: "/fiqh-council", label: "المجمع الفقهي" },
           { href: "/lessons", label: "الدروس العلمية" },
         ]}
       />

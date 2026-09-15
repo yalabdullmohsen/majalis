@@ -2,17 +2,17 @@ import type { PlatformUpdate } from "./platform-types";
 
 export const UPDATES_SEED: PlatformUpdate[] = [
   // ملاحظة تدقيق (٢٠٢٦-٠٧-٣١): حُذف من هنا الصفُّ `update-fiqh-crypto` («قرار
-  // جديد: حكم التعامل بالعملات الرقمية»، source_url = /fiqh-council/fiqh-crypto-2024).
+  // جديد: حكم التعامل بالعملات الرقمية»، source_url = /fiqh).
   // موجبُ الحذف من المصدر نفسه لا من اجتهاد: (١) وجهتُه ميتةٌ — البندُ
-  // `fiqh-crypto-2024` غيرُ موجودٍ في `fiqh-council-seed.ts` فتردُّ
+  // `fiqh-crypto-2024` غيرُ موجودٍ في `fiqh-seed` (أُزيل) فتردُّ
   // `findFiqhCouncilItemBySlug` قيمةَ null وتُعرَضُ صفحةُ «المحتوى غير موجود».
   // (٢) وسببُ موتِها موثَّقٌ: حُذف البندُ في الـcommit 70a689a19 ضمن ثلاثين قرارًا
-  // تنسبُ إلى مجامعَ حقيقيةٍ دوراتٍ لم تنعقد، ونسخته محفوظةٌ في
-  // `data/fiqh-council-deleted-2026-07-26-backup.json`. (٣) ومتنُ الصفِّ يحملُ
+  // تنسبُ إلى هيئاتٍ علميةٍ دوراتٍ لم تنعقد، ونسخته محفوظةٌ في
+  // نسخة احتياطية محلية. (٣) ومتنُ الصفِّ يحملُ
   // الخبرَ الباطلَ عينَه — يُثبِتُ صدورَ قرارٍ ويؤرِّخُه بـ2024-03-15، بينما البندُ
   // القائمُ `items-encrypted-digital-currencies` ينصُّ على أنَّ القرار 237 (24/8)
   // صدر في دورة دبي (4-6 نوفمبر 2019م) وأنَّه «لم يصدر حكم قاطع» بل أوصى
-  // المجمعُ بمزيدٍ من البحث. فلم يكن التوجيهُ إلى البند القائم علاجًا — إذ
+  // الموضوعُ بمزيدٍ من البحث. فلم يكن التوجيهُ إلى البند القائم علاجًا — إذ
   // يناقضُ عنوانُ الصفِّ وجهتَه — والعلاجُ إزالةُ الخبرِ لا صياغتُه من جديد.
   {
     id: "update-course-ijazah",
@@ -61,10 +61,10 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-decision-zakat-crypto",
     title: "مسألة معروضة: زكاة العملات الرقمية",
-    summary: "مسألة فقهية معروضة في المجمع حول زكاة العملات الرقمية وكيفية النظر فيها.",
+    summary: "مسألة فقهية حول زكاة العملات الرقمية وكيفية النظر فيها.",
     update_type: "قرار",
     source_type: "fiqh_decision",
-    source_url: "/fiqh-council/issues/zakat-crypto",
+    source_url: "/fiqh",
     published_at: "2026-05-20T09:00:00Z",
     status: "approved",
   },
@@ -86,7 +86,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     summary: "بيان جواز التخدير الكلي عند الضرورة الطبية.",
     update_type: "فتوى",
     source_type: "fatwa",
-    source_url: "/fiqh-council/issues/general-anesthesia",
+    source_url: "/fiqh",
     published_at: "2026-03-01T09:00:00Z",
     status: "approved",
   },
@@ -96,7 +96,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     summary: "قرار فقهي بتحريم الاستنساخ البشري التكاثري وبيان ضوابط الاستنساخ العلاجي.",
     update_type: "قرار",
     source_type: "fiqh_decision",
-    source_url: "/fiqh-council/issues/human-cloning",
+    source_url: "/fiqh",
     published_at: "2026-02-10T08:00:00Z",
     status: "approved",
   },
@@ -118,7 +118,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     summary: "بيان أحكام وضوابط زواج المسيار وأثره على الحقوق الزوجية.",
     update_type: "فتوى",
     source_type: "fatwa",
-    source_url: "/fiqh-council/issues/misyar-marriage",
+    source_url: "/fiqh",
     published_at: "2025-11-25T08:00:00Z",
     status: "approved",
   },
@@ -128,7 +128,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     summary: "بيان وقوع الطلاق عبر الرسائل الإلكترونية ووسائل التواصل.",
     update_type: "فتوى",
     source_type: "fatwa",
-    source_url: "/fiqh-council/issues/electronic-divorce",
+    source_url: "/fiqh",
     published_at: "2025-10-15T09:00:00Z",
     status: "approved",
   },
@@ -150,7 +150,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     summary: "قرار فقهي في جواز التأمين الصحي التعاوني وضوابط التأمين التجاري.",
     update_type: "قرار",
     source_type: "fiqh_decision",
-    source_url: "/fiqh-council/issues/health-insurance-ruling",
+    source_url: "/fiqh",
     published_at: "2025-09-20T08:00:00Z",
     status: "approved",
   },
@@ -171,7 +171,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     summary: "بيان أوقات الصلاة واتجاه القبلة لرواد الفضاء في المدار الأرضي.",
     update_type: "فتوى",
     source_type: "fatwa",
-    source_url: "/fiqh-council/issues/astronaut-prayer",
+    source_url: "/fiqh",
     published_at: "2025-07-20T08:00:00Z",
     status: "approved",
   },
@@ -202,7 +202,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     summary: "قرار فقهي بإقرار الوقف الرقمي كنوع مستجد من أنواع الوقف المشروع.",
     update_type: "قرار",
     source_type: "fiqh_decision",
-    source_url: "/fiqh-council/issues/digital-waqf",
+    source_url: "/fiqh",
     published_at: "2026-07-03T08:00:00Z",
     status: "approved",
   },
@@ -319,7 +319,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     title: "تحديث: 5 مسائل فقهية معاصرة جديدة",
     summary: "إضافة 5 مسائل فقهية: زراعة الشعر والتجميل، التمويل الجماعي، الصيام في البلاد القطبية، فسخ النكاح بسبب التدليس، وحكم CBD الطبي.",
     update_type: "إعلان",
-    source_url: "/fiqh-council/issues",
+    source_url: "/fiqh",
     published_at: "2026-07-08T19:00:00Z",
     status: "approved",
   },
@@ -526,7 +526,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     title: "تحديث: المسائل الفقهية — 53 مسألة",
     summary: "إضافة 5 مسائل معاصرة: NFT والوقف الرقمي والجمعة للعامل عن بُعد وDNA وحكم منصات الترفيه.",
     update_type: "إعلان",
-    source_url: "/fiqh-council/issues",
+    source_url: "/fiqh",
     published_at: "2026-07-11T14:00:00Z",
     status: "approved",
   },
@@ -625,7 +625,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     title: "تحديث: مجمع الفقه — 56 مسألة معاصرة",
     summary: "إضافة 3 مسائل: حكم الاستفتاء من الذكاء الاصطناعي، عقد النكاح عبر الإنترنت، زكاة أسهم التقنية والسيارات الكهربائية.",
     update_type: "فتوى",
-    source_url: "/fiqh-council/issues",
+    source_url: "/fiqh",
     published_at: "2026-07-12T01:00:00Z",
     status: "approved",
   },
@@ -731,9 +731,9 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-islamic-orgs-expanded",
     title: "توسعة: الهيئات والمنظمات الإسلامية",
-    summary: "تحوّل قسم المجمع الفقهي ليشمل: هيئة كبار العلماء، اللجنة الدائمة، رابطة العالم الإسلامي، إدارة الإفتاء الكويتية، المجلس الأوروبي للإفتاء.",
+    summary: "تحديثات في أبواب الفقه والفتاوى المعتمدة ضمن بوابة الفقه.",
     update_type: "إعلان",
-    source_url: "/fiqh-council",
+    source_url: "/fiqh",
     published_at: "2026-07-11T10:00:00Z",
     status: "approved",
   },

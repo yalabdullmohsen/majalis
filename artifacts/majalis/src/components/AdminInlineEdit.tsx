@@ -20,7 +20,6 @@ export type InlineEditContentType =
   | "qa"
   | "miracle"
   | "annual-course"
-  | "fiqh-council"
   | "adhkar"
   | "story";
 
@@ -76,11 +75,6 @@ const FIELDS: Record<InlineEditContentType, FieldDef[]> = {
     { key: "start_date", label: "تاريخ البداية", type: "text" },
     { key: "description", label: "الوصف", type: "textarea", rows: 5 },
   ],
-  "fiqh-council": [
-    { key: "title", label: "العنوان", type: "text" },
-    { key: "category", label: "التصنيف", type: "text" },
-    { key: "summary", label: "الملخص", type: "textarea", rows: 5 },
-  ],
   adhkar: [
     { key: "text", label: "نص الذكر", type: "textarea", rows: 5 },
     { key: "times", label: "عدد المرات", type: "text" },
@@ -102,7 +96,6 @@ const LABELS: Record<InlineEditContentType, string> = {
   qa: "السؤال والجواب",
   miracle: "المقالة",
   "annual-course": "الدورة",
-  "fiqh-council": "قرار المجلس",
   adhkar: "الذكر",
   story: "القصة",
 };
@@ -150,11 +143,6 @@ async function saveContent(
       case "annual-course": {
         const m = await import("@/lib/platform-supabase");
         result = await m.adminUpsertAnnualCourse(payload);
-        break;
-      }
-      case "fiqh-council": {
-        const m = await import("@/lib/fiqh-council-supabase");
-        result = await m.adminUpsertFiqhCouncilItem(payload);
         break;
       }
       case "adhkar": {

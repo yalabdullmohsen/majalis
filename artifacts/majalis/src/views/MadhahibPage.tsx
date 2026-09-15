@@ -328,7 +328,7 @@ export default function MadhahibPage() {
         <div className="mdb-related__grid">
           {[
             { href: "/fiqh",           label: "الفقه الإسلامي" },
-            { href: "/fiqh-council",   label: "المجمع الفقهي" },
+            { href: "/fiqh-qawaid",    label: "القواعد الفقهية" },
             { href: "/hadith-science", label: "مصطلح الحديث" },
             { href: "/tawhid",         label: "التوحيد والعقيدة" },
             { href: "/arkan",          label: "أركان الإسلام" },

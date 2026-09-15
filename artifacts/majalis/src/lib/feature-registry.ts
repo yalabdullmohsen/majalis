@@ -50,7 +50,6 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
 
   // ── الأحكام والفقه ───────────────────────────────────────────
   { id: "rulings",      label: "الأحكام الشرعية",  path: "/rulings",      group: "فقه",           status: "disabled",     inSideNav: false, inBottomNav: false },
-  { id: "fiqh-council", label: "المجمع الفقهي",    path: "/fiqh-council", group: "فقه",           status: "active",       inSideNav: true,  inBottomNav: false },
 
   // ── القرآن والأذكار ──────────────────────────────────────────
   { id: "mushaf",        label: "المصحف الشريف",   path: "/mushaf",       group: "قرآن",          status: "active",  inSideNav: true,  inBottomNav: true  },

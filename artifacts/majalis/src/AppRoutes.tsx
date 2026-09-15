@@ -120,24 +120,6 @@ const SettingsPage = lazy(() => import("@/pages/account/SettingsPage"));
 const FeatureTourPage = lazy(() => import("@/pages/account/FeatureTourPage"));
 const AccountDeletionPage = lazy(() => import("@/pages/account/AccountDeletionPage"));
 const AnnualCourseDetailPage = lazy(() => import("@/pages/lessons/AnnualCourseDetailPage"));
-const FiqhCouncilResolutionsPage = lazy(() => import("@/views/FiqhCouncilResolutionsPage"));
-const FiqhCouncilFatwasPage = lazy(() => import("@/views/FiqhCouncilFatwasPage"));
-const FiqhCouncilRecommendationsPage = lazy(() => import("@/views/FiqhCouncilRecommendationsPage"));
-const FiqhCouncilResearchPage = lazy(() => import("@/views/FiqhCouncilResearchPage"));
-const FiqhCouncilCategoriesPage = lazy(() => import("@/views/FiqhCouncilCategoriesPage"));
-const FiqhCouncilArchivePage = lazy(() => import("@/views/FiqhCouncilArchivePage"));
-const FiqhCouncilNawazilPage = lazy(() => import("@/views/FiqhCouncilNawazilPage"));
-const FiqhCouncilComparePage = lazy(() => import("@/views/FiqhCouncilComparePage"));
-const FiqhCouncilAdvancedSearchPage = lazy(() => import("@/views/FiqhCouncilAdvancedSearchPage"));
-const FiqhCouncilResearchAssistantPage = lazy(() => import("@/views/FiqhCouncilResearchAssistantPage"));
-const FiqhCouncilLivePage = lazy(() => import("@/views/FiqhCouncilLivePage"));
-const FiqhCouncilSessionDetailPage = lazy(() => import("@/views/FiqhCouncilSessionDetailPage"));
-const FiqhCouncilIssuesPage = lazy(() => import("@/views/FiqhCouncilIssuesPage"));
-const FiqhCouncilIssueDetailPage = lazy(() => import("@/views/FiqhCouncilIssueDetailPage"));
-const FiqhCouncilTopicIndexPage = lazy(() => import("@/views/FiqhCouncilTopicIndexPage"));
-const FiqhCouncilStatsPage = lazy(() => import("@/views/FiqhCouncilStatsPage"));
-const FiqhCouncilPage = lazy(() => import("@/views/FiqhCouncilPage"));
-const FiqhCouncilItemDetailPage = lazy(() => import("@/views/FiqhCouncilItemDetailPage"));
 const FiqhPage = lazy(() => import("@/pages/fiqh/FiqhPage"));
 const FiqhBookPage = lazy(() => import("@/pages/fiqh/FiqhBookPage"));
 const FiqhChapterPage = lazy(() => import("@/pages/fiqh/FiqhChapterPage"));
@@ -221,8 +203,6 @@ const InstagramIntegrationPage = lazyWithRetry(() => import("@/views/admin/Insta
 const MajlisKnowledgeEnginePage = lazyWithRetry(() => import("@/views/admin/MajlisKnowledgeEnginePage"), "MajlisKnowledgeEnginePage");
 const AdminDashboardPage = lazyWithRetry(() => import("@/views/admin/AdminDashboardPage"), "AdminDashboardPage");
 const AutoContentPage = lazyWithRetry(() => import("@/views/admin/AutoContentPage"), "AutoContentPage");
-const FiqhReviewPage = lazyWithRetry(() => import("@/views/admin/FiqhReviewPage"), "FiqhReviewPage");
-const FiqhQualityPage = lazyWithRetry(() => import("@/views/admin/FiqhQualityPage"), "FiqhQualityPage");
 const ContentProductionDashboardPage = lazyWithRetry(
   () => import("@/views/admin/ContentProductionDashboardPage"),
   "ContentProductionDashboardPage",
@@ -663,24 +643,8 @@ export default function AppRoutes() {
       <Route path="/cards"><SafeLazyRoute component={CardsPage} /></Route>
       <Route path="/annual-courses/:id"><SafeLazyRoute component={AnnualCourseDetailPage} /></Route>
       <Route path="/annual-courses"><Redirect to="/lessons" /></Route>
-      <Route path="/fiqh-council/sessions/:slug"><SafeLazyRoute component={FiqhCouncilSessionDetailPage} /></Route>
-      <Route path="/fiqh-council/live"><SafeLazyRoute component={FiqhCouncilLivePage} /></Route>
-      <Route path="/fiqh-council/issues/:slug"><SafeLazyRoute component={FiqhCouncilIssueDetailPage} /></Route>
-      <Route path="/fiqh-council/issues"><SafeLazyRoute component={FiqhCouncilIssuesPage} /></Route>
-      <Route path="/fiqh-council/index"><SafeLazyRoute component={FiqhCouncilTopicIndexPage} /></Route>
-      <Route path="/fiqh-council/stats"><SafeLazyRoute component={FiqhCouncilStatsPage} /></Route>
-      <Route path="/fiqh-council/resolutions"><SafeLazyRoute component={FiqhCouncilResolutionsPage} /></Route>
-      <Route path="/fiqh-council/fatwas"><SafeLazyRoute component={FiqhCouncilFatwasPage} /></Route>
-      <Route path="/fiqh-council/recommendations"><SafeLazyRoute component={FiqhCouncilRecommendationsPage} /></Route>
-      <Route path="/fiqh-council/nawazil"><SafeLazyRoute component={FiqhCouncilNawazilPage} /></Route>
-      <Route path="/fiqh-council/research"><SafeLazyRoute component={FiqhCouncilResearchPage} /></Route>
-      <Route path="/fiqh-council/categories"><SafeLazyRoute component={FiqhCouncilCategoriesPage} /></Route>
-      <Route path="/fiqh-council/search"><SafeLazyRoute component={FiqhCouncilAdvancedSearchPage} /></Route>
-      <Route path="/fiqh-council/research-assistant"><SafeLazyRoute component={FiqhCouncilResearchAssistantPage} /></Route>
-      <Route path="/fiqh-council/compare"><SafeLazyRoute component={FiqhCouncilComparePage} /></Route>
-      <Route path="/fiqh-council/archive"><SafeLazyRoute component={FiqhCouncilArchivePage} /></Route>
-      <Route path="/fiqh-council/:slug"><SafeLazyRoute component={FiqhCouncilItemDetailPage} /></Route>
-      <Route path="/fiqh-council"><SafeLazyRoute component={FiqhCouncilPage} /></Route>
+      <Route path="/fiqh-council/:rest*"><Redirect to="/fiqh" /></Route>
+      <Route path="/fiqh-council"><Redirect to="/fiqh" /></Route>
       <Route path="/fatwa/:id"><Redirect to="/fiqh" /></Route>
       <Route path="/fatwa"><Redirect to="/fiqh" /></Route>
       <Route path="/rulings/:id"><Redirect to="/fiqh" /></Route>
@@ -710,8 +674,8 @@ export default function AppRoutes() {
       <Route path="/admin/import"><Redirect to="/admin/content-import/url" /></Route>
       <Route path="/admin/content"><Redirect to="/admin/auto-content" /></Route>
       <Route path="/admin/auto-content"><AdminLazyRoute component={AutoContentPage} /></Route>
-      <Route path="/admin/fiqh-review"><AdminLazyRoute component={FiqhReviewPage} /></Route>
-      <Route path="/admin/fiqh-quality"><AdminLazyRoute component={FiqhQualityPage} /></Route>
+      <Route path="/admin/fiqh-review"><Redirect to="/admin" /></Route>
+      <Route path="/admin/fiqh-quality"><Redirect to="/admin" /></Route>
       <Route path="/admin/content-production"><AdminLazyRoute component={ContentProductionDashboardPage} /></Route>
       <Route path="/admin/automation/content-production"><AdminLazyRoute component={ContentProductionDashboardPage} /></Route>
       <Route path="/admin/feature-status"><AdminLazyRoute component={FeatureStatusPage} /></Route>
