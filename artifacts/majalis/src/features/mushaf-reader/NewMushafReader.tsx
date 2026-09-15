@@ -79,7 +79,7 @@ import { MUSHAF_CHROME_HIDE_MS } from "@/features/mushaf-madinah/layout-bands";
 import { MushafPage } from "./MushafPage";
 import { MushafExitControl } from "./MushafExitControl";
 import { MushafControlsLayer, MushafVerseMenu } from "./MushafControlsLayer";
-import { MushafPageArrows } from "./MushafPageArrows";
+import { MushafPageNavigation } from "./MushafPageNavigation";
 import {
   loadPageArrowsEnabled,
   savePageArrowsEnabled,
@@ -89,7 +89,6 @@ import { useStableMushafLayout } from "./useStableMushafLayout";
 import {
   putPageRenderModel,
   setMushafGeometryKey,
-  getMushafGeometryKey,
 } from "./mushaf-page-render-cache";
 import {
   enableMushafTurnTelemetry,
@@ -97,7 +96,6 @@ import {
   mushafTurnMark,
   mushafTurnFlush,
   mushafPerfInc,
-  mushafPerfSnapshot,
 } from "./mushaf-turn-telemetry";
 import {
   bumpTafsirGeneration,
@@ -1015,7 +1013,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         mushafTurnMark("touchStart", page);
       }}
       onNavigateCancel={cancelPageTurnFreeze}
-      ignoreSelector=".nm-controls, .nm-verse-menu, .nm-page-arrows, .nm-page-arrow, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, input, textarea, select, button"
+      ignoreSelector=".nm-controls, .nm-verse-menu, .nm-page-arrows, .nm-page-arrow, .nm-page-navigation, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, input, textarea, select, button"
       onTapEmpty={() => {
         if (actionsOpen) {
           closeActions();
@@ -1073,30 +1071,6 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       <div className="sr-only" aria-live="polite" data-testid="mushaf-page-live">
         {`الصفحة ${page}`}
       </div>
-      {import.meta.env.DEV ? (
-        <div
-          aria-hidden
-          data-testid="mushaf-turn-debug"
-          style={{
-            position: "fixed",
-            insetInlineStart: 8,
-            insetBlockStart: 8,
-            zIndex: 9999,
-            pointerEvents: "none",
-            fontFamily: "ui-monospace, monospace",
-            fontSize: 10,
-            lineHeight: 1.35,
-            padding: "4px 6px",
-            borderRadius: 6,
-            background: "color-mix(in srgb, canvas 82%, transparent)",
-            color: "CanvasText",
-            maxWidth: "46vw",
-            whiteSpace: "pre-wrap",
-          }}
-        >
-          {(() => { const L = mushafPerfSnapshot(); return `p=${page} settled=${pagerSettled ? 1 : 0} nbr=${neighborsReady ? 1 : 0}\ngeo=${getMushafGeometryKey()}\nrM=${L.readerMountCount} pM=${L.pagerMountCount} fL=${L.fontLoadCount} gC=${L.geometryChangeCount}`; })()}
-        </div>
-      ) : null}
       <MediaBridge
         active={Boolean(playingVerseKey || playerState === "paused" || mediaPlaying)}
         title={verseLabel}
@@ -1150,7 +1124,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           }}
         />
       </Suspense>
-      <MushafPageArrows
+      <MushafPageNavigation
         page={page}
         visible={chromeOpen && !actionsOpen && !gotoOpen && !tafsirOpen && !searchOpen && !indexOpen}
         enabled={pageArrowsEnabled}

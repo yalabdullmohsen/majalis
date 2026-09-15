@@ -69,12 +69,24 @@ async function dockTop(page: Page) {
   });
 }
 
+async function revealChrome(page: Page) {
+  const nav = page.locator('[data-testid="mushaf-page-navigation"]');
+  if ((await nav.getAttribute("data-visible")) === "1") return;
+  await page.locator('[data-testid="mushaf-viewport"]').click({
+    position: { x: 180, y: 420 },
+    force: true,
+  });
+  await expect(nav).toHaveAttribute("data-visible", "1", { timeout: 4000 });
+}
+
 async function flipNext(page: Page) {
-  await page.locator(".mm-page-edge--next").click({ force: true });
+  await revealChrome(page);
+  await page.locator('[data-testid="mushaf-page-arrow-next"]').click({ force: true });
 }
 
 async function flipPrev(page: Page) {
-  await page.locator(".mm-page-edge--prev").click({ force: true });
+  await revealChrome(page);
+  await page.locator('[data-testid="mushaf-page-arrow-prev"]').click({ force: true });
 }
 
 async function assertStableFirstLine(page: Page, label: string) {

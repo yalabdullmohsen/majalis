@@ -11,7 +11,7 @@
 | sunnah-fatiha-medallion-v1 | authored in-repo (CSS ellipse, page 1 only) | سُنّة | proprietary Sunnah original | **true** | yes (app) | yes (Sunnah) | css-v1 | n/a | **implemented** |
 | sunnah-baqarah-medallion-v1 | authored in-repo (CSS ellipse, page 2 lead) | سُنّة | proprietary Sunnah original | **true** | yes (app) | yes (Sunnah) | css-v1 | n/a | **implemented** |
 | sunnah-verse-marker-v1 | existing QPC end-glyph + CSS chrome | سُنّة | proprietary Sunnah styling | **true** | yes (app) | yes (Sunnah) | css-v1 | n/a | **partial — chrome only** |
-| sunnah-hizb-margin-marker-v1 | authored in-repo (`.nm-page__section-mark`) | سُنّة | proprietary Sunnah original | **true** | yes (app) | yes (Sunnah) | css-v1 | n/a | **implemented** |
+| sunnah-hizb-margin-marker-v1 | authored in-repo (`.nm-page__section-mark`) | سُنّة | proprietary Sunnah original | **true** | yes (app) | yes (Sunnah) | css-v1 | n/a | **removed — orphan UI cleanup** |
 | sunnah-paper-texture-v1 | token `--mushaf-paper-light` only (no photo) | سُنّة | proprietary Sunnah original | **true** | yes (app) | yes (Sunnah) | token-v1 | n/a | **implemented** |
 | sunnah-warm-yellow-tokens-v1 | authored in-repo (`mushaf-warm-yellow-tokens.ts` + CSS vars) | سُنّة | proprietary Sunnah original | **true** | yes (app) | yes (Sunnah) | token-v1 | n/a | **implemented** |
 | sunnah-verse-marker-floral-v1 | authored in-repo (CSS clip-path floral, same 0.98em box) | سُنّة | proprietary Sunnah original | **true** | yes (app) | yes (Sunnah) | css-v1 | n/a | **implemented** |

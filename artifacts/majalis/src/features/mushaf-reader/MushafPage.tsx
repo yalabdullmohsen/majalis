@@ -101,12 +101,6 @@ export const MushafPage = memo(function MushafPage({
       : layout.rubElHizbStartingOnPage != null
         ? rubQuarterLabel(layout.rubElHizbStartingOnPage)
         : "";
-  const sectionMark =
-    layout.hizbStartingOnPage != null
-      ? "hizb"
-      : layout.rubElHizbStartingOnPage != null
-        ? "rub"
-        : null;
 
   const onSelectFatiha = useMemo(
     () => (onSelectVerse ? () => onSelectVerse("1:1") : undefined),
@@ -178,18 +172,6 @@ export const MushafPage = memo(function MushafPage({
             data-component="SunnahBaqarahMedallion"
             data-testid="sunnah-baqarah-medallion"
             aria-hidden="true"
-          />
-        ) : null}
-        {sectionMark ? (
-          <span
-            className="nm-page__section-mark"
-            data-mark={sectionMark}
-            role="img"
-            aria-label={
-              sectionMark === "hizb"
-                ? `بداية الحزب ${toArabicDigits(layout.hizbStartingOnPage ?? layout.hizbNumber)}`
-                : "علامة ربع الحزب"
-            }
           />
         ) : null}
         <div

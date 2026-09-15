@@ -402,23 +402,10 @@ export function useMushafPager({
       return;
     }
 
+    /* النقر الفارغ يُظهر/يخفي Chrome فقط — التقليب عبر Swipe أو أسهم MushafPageNavigation */
     if (Math.abs(dx) < 12 && Math.abs(dy) < 12) {
       const target = (e?.target as HTMLElement | undefined) ?? null;
       if (target?.closest(".nm-word, .nm-basmala, .mm-ayah-hit, .mm-basmala--qpc")) return;
-      const rect = (shellRef.current ?? scrollerRef.current)?.getBoundingClientRect();
-      if (!rect) {
-        onTapEmpty?.();
-        return;
-      }
-      const relX = (clientX - rect.left) / Math.max(1, rect.width);
-      if (relX >= 0.85) {
-        go(pageNow + 1);
-        return;
-      }
-      if (relX <= 0.15) {
-        go(pageNow - 1);
-        return;
-      }
       onTapEmpty?.();
     }
   };
@@ -427,7 +414,7 @@ export function useMushafPager({
     const t = e.target as HTMLElement;
     if (
       t.closest(
-        ".nm-controls, .nm-verse-menu, .mm-controls, .mm-audio-dock, .mm-ayah-bar, .mm-page-edge, .mm-reciter-sheet, .mm-search-sheet, .ayah-action-sheet",
+        ".nm-controls, .nm-verse-menu, .nm-page-arrows, .nm-page-arrow, .nm-page-navigation, .mm-controls, .mm-audio-dock, .mm-ayah-bar, .mm-reciter-sheet, .mm-search-sheet, .ayah-action-sheet",
       )
     ) {
       touchRef.current = null;

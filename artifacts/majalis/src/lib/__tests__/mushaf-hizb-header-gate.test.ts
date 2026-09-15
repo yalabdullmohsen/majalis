@@ -41,7 +41,7 @@ assert.match(banner, /MushafSurahFramePremium|nm-surah-banner__label/);
 
 assert.match(page, /layout\.hizbStartingOnPage/);
 assert.match(page, /layout\.rubElHizbStartingOnPage/);
-assert.match(page, /nm-page__section-mark/);
+assert.doesNotMatch(page, /nm-page__section-mark/);
 assert.match(page, /rubQuarterLabel/);
 assert.doesNotMatch(page, /Math\.ceil\(\s*layout\.pageNumber/);
 
@@ -53,6 +53,7 @@ assert.match(css, /justify-self:\s*end/);
 assert.match(css, /--mushaf-header-height:\s*36px/);
 assert.doesNotMatch(css, /\.nm-page__header-surah\b/);
 assert.doesNotMatch(css, /\.nm-page__header-stack\b/);
+assert.doesNotMatch(css, /\.nm-page__section-mark\b/);
 assert.match(css, /pointer-events:\s*none/);
 
 assert.match(font, /prefetchAdjacent/);

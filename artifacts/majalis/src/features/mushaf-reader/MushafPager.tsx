@@ -14,7 +14,7 @@ import { mushafPerfInc } from "./mushaf-turn-telemetry";
 export { SWIPE_MIN_PX, SETTLE_MS };
 
 const DEFAULT_IGNORE =
-  ".nm-controls, .nm-verse-menu, .nm-page-arrows, .nm-page-arrow, .mm-controls, .mm-audio-dock, .mm-ayah-bar, .mm-page-edge, .mm-reciter-sheet, .mm-search-sheet, .ayah-action-sheet, input, textarea, select, button";
+  ".nm-controls, .nm-verse-menu, .nm-page-arrows, .nm-page-arrow, .nm-page-navigation, .mm-controls, .mm-audio-dock, .mm-ayah-bar, .mm-reciter-sheet, .mm-search-sheet, .ayah-action-sheet, input, textarea, select, button";
 
 type PaneRole = "next" | "current" | "prev";
 
@@ -96,7 +96,6 @@ export const MushafPager = forwardRef<HTMLDivElement, PagerProps>(function Musha
     onPointerMove,
     onPointerUp,
     onPointerCancel,
-    go,
   } = useMushafPager({
     page,
     onPageChange,
@@ -179,26 +178,7 @@ export const MushafPager = forwardRef<HTMLDivElement, PagerProps>(function Musha
             )}
         </div>
       </div>
-      <button
-        type="button"
-        className="mm-page-edge mm-page-edge--next"
-        aria-label="الصفحة التالية"
-        disabled={disabled || page >= MUSHAF_PAGE_MAX}
-        onClick={(e) => {
-          e.stopPropagation();
-          go(page + 1);
-        }}
-      />
-      <button
-        type="button"
-        className="mm-page-edge mm-page-edge--prev"
-        aria-label="الصفحة السابقة"
-        disabled={disabled || page <= MUSHAF_PAGE_MIN}
-        onClick={(e) => {
-          e.stopPropagation();
-          go(page - 1);
-        }}
-      />
+      {/* تقليب النقر عبر MushafPageNavigation فقط — لا حواف شفافة مزدوجة */}
       {children}
     </div>
   );

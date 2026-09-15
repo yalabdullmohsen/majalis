@@ -1,46 +1,57 @@
 import { memo, useCallback, useRef } from "react";
 import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN } from "@/lib/quran-last-page";
 
-type Props = {
+export type MushafPageNavigationProps = {
   page: number;
-  /** يظهر مع Reader Chrome فقط */
+  /** يظهر مع Reader Chrome فقط (Tap → إظهار · مؤقت → إخفاء) */
   visible: boolean;
   /** تفضيل المستخدم لإظهار الأسهم */
   enabled: boolean;
   disabled?: boolean;
   /**
-   * RTL: next = page+1 (حافة inline-start / يمين الشاشة).
-   * prev = page-1 (حافة inline-end / يسار الشاشة).
+   * RTL ورقي — لا تعتمد الاتجاه بصريًا فقط:
+   * - التالية = page+1 → حافة inline-start (يمين الشاشة في RTL)
+   * - السابقة = page-1 → حافة inline-end (يسار الشاشة في RTL)
    */
   onNext: () => void;
   onPrev: () => void;
 };
 
 /**
- * أسهم تقليب المصحف — طبقة فوق الصفحة خارج Text Flow / Geometry.
- * لا Haptic · لا Loading · خطوة واحدة مع قفل ضغط مزدوج محلي إضافي.
+ * MushafPageNavigation — بنية تقليب واحدة فقط.
+ *
+ * طرق الانتقال:
+ * 1) Swipe — عبر MushafPager / useMushafPager (طبقة الإيماءة)
+ * 2) سهم الصفحة السابقة
+ * 3) سهم الصفحة التالية
+ *
+ * سهم واحد يمين + سهم واحد يسار: نفس الحجم واللون والشفافية والحركة.
+ * خطوة واحدة · بلا Haptic · بلا remount · بلا قفز مزدوج.
  */
-export const MushafPageArrows = memo(function MushafPageArrows({
+export const MushafPageNavigation = memo(function MushafPageNavigation({
   page,
   visible,
   enabled,
   disabled = false,
   onNext,
   onPrev,
-}: Props) {
+}: MushafPageNavigationProps) {
   const guardRef = useRef(false);
 
-  const runOnce = useCallback((fn: () => void) => {
-    if (guardRef.current || disabled) return;
-    guardRef.current = true;
-    try {
-      fn();
-    } finally {
-      window.setTimeout(() => {
-        guardRef.current = false;
-      }, 320);
-    }
-  }, [disabled]);
+  const runOnce = useCallback(
+    (fn: () => void) => {
+      if (guardRef.current || disabled) return;
+      guardRef.current = true;
+      try {
+        fn();
+      } finally {
+        window.setTimeout(() => {
+          guardRef.current = false;
+        }, 320);
+      }
+    },
+    [disabled],
+  );
 
   if (!enabled) return null;
 
@@ -50,8 +61,9 @@ export const MushafPageArrows = memo(function MushafPageArrows({
 
   return (
     <div
-      className="nm-page-arrows"
-      data-testid="mushaf-page-arrows"
+      className="nm-page-arrows nm-page-navigation"
+      data-component="MushafPageNavigation"
+      data-testid="mushaf-page-navigation"
       data-visible={show ? "1" : "0"}
       data-page={page}
       aria-hidden={!show}
