@@ -57,7 +57,7 @@
   --mushaf-body-top: var(--mushaf-header-height);
   --mushaf-body-height: auto;
   --mushaf-side-pad: max(0.7rem, var(--inset-inline-start, var(--inset-left, 0px)), var(--inset-inline-end, var(--inset-right, 0px)));
-  /* وردة الآية أوضح بصريًا (+~17%) — بلا تغيير fontSize/lineHeight للنص القرآني */
+  /* Visual Baseline: وردة الآية من Comfort Pass (1.15em) — لا زيادة إضافية حتى لا يحدث lineOverflow */
   --mushaf-ayah-mark-size: 1.15em;
 
   /* طبقات سفلية داخل القارئ */
@@ -353,13 +353,15 @@ html[data-theme="dark"] .nm-page__header-hizb,
 }
 
 /*
- * SunnahFatihaBraidedMedallion — ضفيرة هندسية إسلامية أصلية لسُنّة.
- * بلا أشعة / conic / شمس؛ حلقة رفيعة حول المحتوى (لا تمديد مبالغ لأسفل).
+ * SunnahFatihaBraidedMedallion — Visual Baseline (مقفل).
+ * قبل القفل: inset 2.2% 10% 18% → صندوق ~80%×79.8%.
+ * بعد القفل (~+12–13%): inset 1.2% 5% 11% → صندوق ~90%×87.8%.
+ * absolute فقط — لا يحرّك النص / لا يمسّ Geometry أو Mapping.
  */
 .nm-page__fatiha-medallion {
   position: absolute;
-  /* يحيط بالنص العلوي/الأوسط — يقلّص الفراغ البصري السفلي دون تحريك النص */
-  inset: 2.2% 10% 18%;
+  /* يستغل الفراغ حول النص دون تحريك شبكة الأسطر */
+  inset: 1.2% 5% 11%;
   z-index: 0;
   pointer-events: none;
   border-radius: 50%;
@@ -382,10 +384,10 @@ html[data-theme="dark"] .nm-page__header-hizb,
   mask: radial-gradient(ellipse at center, transparent 63%, #000 64.2% 72.5%, transparent 73.5%);
   opacity: 0.62;
 }
-/* بداية البقرة — ميدالية أصغر قليلًا حول الكتلة الفعلية */
+/* بداية البقرة — ميدالية أكبر قليلًا حول الكتلة (قبل: 3% 11% 22% ≈78%×75% → بعد ≈87%×83%) */
 .nm-page--lead .nm-page__fatiha-medallion,
 .nm-page[data-page-type="surah-start"] .nm-page__fatiha-medallion {
-  inset: 3% 11% 22%;
+  inset: 1.8% 6.5% 15%;
   opacity: 0.52;
 }
 
@@ -795,8 +797,8 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
 }
 
 /*
- * SunnahVerseRosette — زهرة مصحفية ناعمة (8 فصوص قصيرة مدمجة).
- * Comfort Pass: 1.15em (~+17%) لوضوح الرقم — بلا نجمة/أشعة/ظل/توهج، بلا overflow.
+ * SunnahVerseRosette — Visual Baseline: 1.15em (~+17% من 0.98) — مقفل مع Comfort Pass.
+ * بلا نجمة/أشعة/ظل/توهج، بلا overflow، بلا تغيير fontSize للنص.
  */
 .nm-ayah-mark {
   position: relative;
