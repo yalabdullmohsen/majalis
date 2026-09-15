@@ -165,6 +165,7 @@ const SECTIONS = [
       { href: "/sources", label: "دليل الجهات", desc: "الجهات والمراجع المعتمدة في المنصة" },
       { href: "/universities", label: "الجامعات الشرعية", desc: "دليل الجامعات والمقارنة" },
       { href: "/universities/compare", label: "مقارنة الجامعات", desc: "مقارنة البرامج الشرعية" },
+      { href: "/notifications-and-sound", label: "الإشعارات والصوت", desc: "مركز الإشعارات ومنصة الصوت" },
       { href: "/adhan-settings", label: "إعدادات الأذان", desc: "تنبيهات الصلاة والمؤذن" },
       { href: "/contact", label: "التواصل والدعم", desc: "للملاحظات والاقتراحات" },
       { href: "/privacy", label: "سياسة الخصوصية", desc: "كيف نحمي بياناتك" },
