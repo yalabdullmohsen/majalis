@@ -522,6 +522,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const [bottomStackFrozen, setBottomStackFrozen] = useState(false);
   const [freezeStackMode, setFreezeStackMode] = useState<"none" | "ayah" | "audio">("none");
   const pageTurnLockRef = useRef(false);
+  const pageTurnSafetyTimerRef = useRef<number | null>(null);
   /** الصفحة المستهدفة بعد beginPageTurn — لا تُزلّ التجميد قبل وصولها */
   const pendingPageRef = useRef<number | null>(null);
 
@@ -559,7 +560,6 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   }, []);
 
   const beginPageTurn = useCallback(() => {
-
     mushafTurnMark("transitionStart", pageRef.current);
     if (pageTurnLockRef.current) return;
     pageTurnLockRef.current = true;
@@ -583,12 +583,30 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     setBottomStackFrozen(true);
     setPagerSettled(false);
     clearPageChrome();
-  }, [audioDockOpen, chromeOpen, clearPageChrome, playerState]);
+    /* صمام أمان: إن تعذّر finishPageTurn لا يبقى المصحف مقفولًا إلى الأبد */
+    if (pageTurnSafetyTimerRef.current != null) {
+      window.clearTimeout(pageTurnSafetyTimerRef.current);
+    }
+    pageTurnSafetyTimerRef.current = window.setTimeout(() => {
+      pageTurnSafetyTimerRef.current = null;
+      if (!pageTurnLockRef.current) return;
+      if (pendingPageRef.current != null && pendingPageRef.current !== pageRef.current) return;
+      pageTurnLockRef.current = false;
+      pendingPageRef.current = null;
+      setPagerSettled(true);
+      setBottomStackFrozen(false);
+      setFreezeStackMode("none");
+    }, 2800);
+  }, [audioDockOpen, chromeOpen, clearPageChrome, playerState, v2Enabled]);
 
   const finishPageTurn = useCallback(() => {
     mushafTurnMark("activePageCommit", pageRef.current);
     mushafTurnMark("transitionSettled", pageRef.current);
     mushafTurnFlush();
+    if (pageTurnSafetyTimerRef.current != null) {
+      window.clearTimeout(pageTurnSafetyTimerRef.current);
+      pageTurnSafetyTimerRef.current = null;
+    }
     setPagerSettled(true);
     setBottomStackFrozen(false);
     setFreezeStackMode("none");
@@ -600,12 +618,16 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const go = useCallback(
     (next: number) => {
       const clamped = clampMushafPage(next);
-      /* منع قفزة صفحتين عند الضغط المتكرر أثناء الانتقال */
-      if (pageTurnLockRef.current) return;
       if (clamped === pageRef.current) return;
+      /*
+       * قفل القفزة المزدوجة فقط بعد تعيين هدف معلّق.
+       * لا تُرجع مبكرًا عند pageTurnLock وحده: onNavigateStart يستدعي beginPageTurn
+       * ثم onPageChange→go؛ إرجاع مبكر هنا كان يجمّد التقليب نهائيًا.
+       */
+      if (pageTurnLockRef.current && pendingPageRef.current != null) return;
       /* قلب يدوي: لا نوقف التلاوة — نمنع مزامنة الصفحة من الصوت حتى لا تُرجع المستخدم */
       suppressPageSyncRef.current = true;
-      beginPageTurn();
+      if (!pageTurnLockRef.current) beginPageTurn();
       pendingPageRef.current = clamped;
       const commitNav = () => onPageChange(clamped);
       /* إن كان الخط جاهزًا (prefetch) — حدّث الصفحة في نفس الإطار بلا انتظار */
@@ -1129,21 +1151,20 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         />
       </Suspense>
       <MushafPageArrows
-
         page={page}
-
         visible={chromeOpen && !actionsOpen && !gotoOpen && !tafsirOpen && !searchOpen && !indexOpen}
-
         enabled={pageArrowsEnabled}
-
-        disabled={edgesDisabled || !pagerSettled}
-
-        onNext={() => go(page + 1)}
-
-        onPrev={() => go(page - 1)}
-
+        /* لا تُخفَ الأسهم بـ disabled أثناء التسوية — ذلك كان يُظهرها كمفقودة */
+        disabled={edgesDisabled}
+        onNext={() => {
+          if (!pagerSettled) return;
+          go(page + 1);
+        }}
+        onPrev={() => {
+          if (!pagerSettled) return;
+          go(page - 1);
+        }}
       />
-
       <MushafExitControl
         visible={chromeOpen && !actionsOpen && !gotoOpen}
         onExit={() => {
