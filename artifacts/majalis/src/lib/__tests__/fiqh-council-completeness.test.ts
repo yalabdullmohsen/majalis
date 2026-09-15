@@ -51,4 +51,15 @@ if (existsSync(resolve(root, "public/sitemap.xml"))) {
   assert.doesNotMatch(read("public/sitemap.xml"), /\/fiqh-council/);
 }
 
+/* بقايا قرار فقهي / CMS / بحث / اقتراحات */
+assert.doesNotMatch(read("src/lib/updates-seed.ts"), /fiqh_decision|قرار فقهي/);
+assert.doesNotMatch(read("src/features/search/search-kind-i18n.ts"), /fiqh_decision|قرار فقهي/);
+assert.doesNotMatch(read("src/features/search/kind-priority.ts"), /fiqh_decision/);
+assert.doesNotMatch(read("src/lib/cms/content-types.ts"), /fiqh_decision|قرار فقهي/);
+assert.doesNotMatch(read("src/lib/cms/content-registry.ts"), /fiqh_decision/);
+assert.doesNotMatch(read("src/lib/rag-service.ts"), /fiqh_decision|قرار مجمع/);
+assert.doesNotMatch(read("lib/scholarly-intelligence/url-resolver.mjs"), /قرار فقهي|المجمع الفقهي/);
+assert.match(read("src/lib/scholarly-intelligence-service.ts"), /isBannedPublicRelationClient|fiqh_decision/);
+assert.match(read("lib/scholarly-intelligence/recommendations.mjs"), /isBannedPublicRelation/);
+
 console.log("fiqh-council-completeness (removal gate): OK");

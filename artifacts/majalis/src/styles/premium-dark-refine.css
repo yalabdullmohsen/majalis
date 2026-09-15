@@ -22,6 +22,10 @@
   --pd-ink: #ede8df;
   --pd-ink-2: #d8d0c4;
   --pd-ink-muted: #b5ada0;
+  /* حبر مقروء بدل الأخضر الداكن (#0E1C17) على البطاقات */
+  --mj-brand-deep-ink: var(--pd-ink);
+  --mj-brand-deep-surface: #0e1c17;
+  --mj-brand-deep: var(--elite-forest, #8fd4b0);
   /* حدود زمردية خفيفة — تدعم المحتوى بلا منافسة */
   --pd-border: color-mix(in srgb, var(--pd-emerald) 11%, #35443f);
   --pd-border-subtle: color-mix(in srgb, var(--pd-emerald) 8%, #35443f);
@@ -321,6 +325,22 @@
 :is(html[data-theme="dark"], html.dark) :is(h1, h2, h3, .page-title, .section-title) {
   color: var(--pd-ink);
   letter-spacing: 0;
+}
+
+/* إعادة توجيه نص brand-deep غير المقروء → حبر دافئ / غابة */
+:is(html[data-theme="dark"], html.dark) .text-brand-deep,
+:is(html[data-theme="dark"], html.dark) [data-ink="brand-deep"] {
+  color: var(--mj-brand-deep-ink) !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .ah-name,
+:is(html[data-theme="dark"], html.dark) .ah-meaning,
+:is(html[data-theme="dark"], html.dark) .ah-cat-chip,
+:is(html[data-theme="dark"], html.dark) .zk-mustahiq__title,
+:is(html[data-theme="dark"], html.dark) .zk-calc__field span,
+:is(html[data-theme="dark"], html.dark) .snr-badge--allah,
+:is(html[data-theme="dark"], html.dark) .snr-badge--reviewed {
+  color: var(--mj-brand-deep-ink, var(--pd-ink)) !important;
 }
 
 /* خطوط زمنية / نقاط نشطة فقط تحتفظ بإشارة خفيفة */

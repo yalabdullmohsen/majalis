@@ -87,7 +87,6 @@ export const WEBHOOK_EVENTS = [
   "content.deleted",
   "course.completed",
   "fatwa.published",
-  "fiqh_decision.published",
   "lesson.published",
   "source.updated",
 ];

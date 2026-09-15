@@ -62,14 +62,15 @@ assert.equal(classic.rendererId, "new-mushaf-reader");
 console.log("=== لا اسم قديم في القارئ الجديد ===");
 const reader = read("src/features/mushaf-reader/NewMushafReader.tsx");
 assert.doesNotMatch(reader, /مجالس العلم|MajlisIlm|majlisilm\.brand/i);
-assert.match(reader, /MushafExitControl/);
+assert.doesNotMatch(reader, /MushafExitControl/);
+assert.match(reader, /MushafControlsLayer/);
 
 const controls = read("src/features/mushaf-reader/MushafControlsLayer.tsx");
 assert.match(controls, /بحث في القرآن/);
 assert.match(controls, /الخروج من المصحف/);
 
 console.log("=== بلا Haptic في تقليب الصفحة ===");
-assert.ok(existsSync(resolve(root, "src/features/mushaf-reader/MushafExitControl.tsx")));
+assert.ok(existsSync(resolve(root, "src/features/mushaf-reader/MushafControlsLayer.tsx")));
 const pager = read("src/features/mushaf-reader/useMushafPager.ts");
 const goIdx = pager.indexOf("const go = useCallback");
 assert.ok(goIdx >= 0);
@@ -89,11 +90,9 @@ assert.match(searchEngine, /findMushafPageForAyah/);
 assert.match(searchEngine, /normalizeForSearch|normalizeArabic|normalizeForQuery/);
 assert.doesNotMatch(searchEngine, /fetch\(/);
 
-const exitCtrl = read("src/features/mushaf-reader/MushafExitControl.tsx");
-assert.match(exitCtrl, /الخروج من المصحف/);
-assert.match(exitCtrl, /nm-exit-control/);
-assert.match(exitCtrl, /visible/);
-assert.match(reader, /visible=\{chromeOpen/);
+assert.match(controls, /الخروج من المصحف/);
+assert.match(controls, /nm-controls__exit/);
+assert.match(reader, /chromeOpen && !actionsOpen && !gotoOpen/);
 
 assert.match(reader, /setMushafAyahSearchHighlight/);
 assert.match(reader, /migrateToSunnahMushafSignature/);

@@ -12,7 +12,6 @@ export type CmsContentKind =
   | "fawaid"
   | "qa"
   | "miracle"
-  | "fiqh_decision"
   | "sharia_ruling"
   | "annual_course";
 
@@ -102,7 +101,7 @@ export type AggregatorPipelineResult = {
 export const CMS_CONTENT_KINDS: CmsContentKind[] = [
   "lesson", "lecture", "course", "sheikh", "book", "fatwa", "article",
   "news", "announcement", "fawaid", "qa", "miracle",
-  "fiqh_decision", "sharia_ruling", "annual_course",
+  "sharia_ruling", "annual_course",
 ];
 
 export const CMS_KIND_LABELS: Record<CmsContentKind, string> = {
@@ -118,7 +117,6 @@ export const CMS_KIND_LABELS: Record<CmsContentKind, string> = {
   fawaid: "فائدة",
   qa: "سؤال وجواب",
   miracle: "إشارة كونية",
-  fiqh_decision: "قرار فقهي",
   sharia_ruling: "حكم شرعي",
   annual_course: "دورة علمية",
 };

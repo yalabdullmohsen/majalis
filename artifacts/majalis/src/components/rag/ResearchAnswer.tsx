@@ -14,7 +14,7 @@ type Tab = "answer" | "hadith" | "fiqh" | "lessons" | "books" | "opinions" | "al
 const TAB_CONFIG: { key: Tab; label: string; types: ContentType[] | null }[] = [
   { key: "answer",  label: "الجواب",      types: null },
   { key: "hadith",  label: "أحاديث",      types: ["hadith"] },
-  { key: "fiqh",    label: "فتاوى وقرارات", types: ["fiqh_decision", "fatwa", "ruling"] },
+  { key: "fiqh",    label: "فتاوى وأحكام", types: ["fatwa", "ruling"] },
   { key: "lessons", label: "دروس",        types: ["lesson"] },
   { key: "books",   label: "كتب",         types: ["book"] },
   { key: "opinions",label: "آراء متعددة", types: null },

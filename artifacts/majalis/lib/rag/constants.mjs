@@ -46,7 +46,6 @@ export const CONTENT_TYPE_LABEL = {
   hadith:        "حديث نبوي",
   tafsir:        "تفسير",
   fatwa:         "فتوى",
-  fiqh_decision: "قرار مجمع فقهي",
   book:          "كتاب",
   lesson:        "درس",
   benefit:       "فائدة",

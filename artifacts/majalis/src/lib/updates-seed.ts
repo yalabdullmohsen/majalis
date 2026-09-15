@@ -58,16 +58,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2025-11-15T07:00:00Z",
     status: "approved",
   },
-  {
-    id: "update-decision-zakat-crypto",
-    title: "مسألة معروضة: زكاة العملات الرقمية",
-    summary: "مسألة فقهية حول زكاة العملات الرقمية وكيفية النظر فيها.",
-    update_type: "قرار",
-    source_type: "fiqh_decision",
-    source_url: "/fiqh",
-    published_at: "2026-05-20T09:00:00Z",
-    status: "approved",
-  },
+
   {
     id: "update-lesson-usul-fiqh",
     title: "درس جديد: أصول الفقه المقارن",
@@ -90,16 +81,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-03-01T09:00:00Z",
     status: "approved",
   },
-  {
-    id: "update-decision-human-cloning",
-    title: "قرار جديد: تحريم الاستنساخ البشري التكاثري",
-    summary: "قرار فقهي بتحريم الاستنساخ البشري التكاثري وبيان ضوابط الاستنساخ العلاجي.",
-    update_type: "قرار",
-    source_type: "fiqh_decision",
-    source_url: "/fiqh",
-    published_at: "2026-02-10T08:00:00Z",
-    status: "approved",
-  },
+
   {
     id: "update-lesson-bulugh-maram",
     title: "درس جديد: شرح زوائد بلوغ المرام (روضة الأفهام)",
@@ -144,16 +126,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2025-10-01T06:00:00Z",
     status: "approved",
   },
-  {
-    id: "update-decision-health-insurance",
-    title: "قرار جديد: حكم التأمين الصحي",
-    summary: "قرار فقهي في جواز التأمين الصحي التعاوني وضوابط التأمين التجاري.",
-    update_type: "قرار",
-    source_type: "fiqh_decision",
-    source_url: "/fiqh",
-    published_at: "2025-09-20T08:00:00Z",
-    status: "approved",
-  },
+
   {
     id: "update-book-arbaeen-nawawi",
     title: "كتاب جديد: شرح الأربعين النووية",
@@ -196,16 +169,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     published_at: "2026-07-08T10:00:00Z",
     status: "approved",
   },
-  {
-    id: "update-decision-waqf-digital",
-    title: "قرار جديد: الوقف الرقمي",
-    summary: "قرار فقهي بإقرار الوقف الرقمي كنوع مستجد من أنواع الوقف المشروع.",
-    update_type: "قرار",
-    source_type: "fiqh_decision",
-    source_url: "/fiqh",
-    published_at: "2026-07-03T08:00:00Z",
-    status: "approved",
-  },
+
   {
     id: "update-announcement-quran-memorize",
     title: "إعلان: برنامج حفظ القرآن الصيفي 1448هـ",

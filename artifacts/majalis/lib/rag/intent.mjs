@@ -44,9 +44,9 @@ export function analyzeIntent(query) {
   const contentTypes = {
     quran:   ["quran_verse", "tafsir"],
     hadith:  ["hadith"],
-    fiqh:    ["fiqh_decision", "fatwa", "ruling"],
+    fiqh:    ["fatwa", "ruling"],
     scholar: ["lesson", "article"],
-    compare: ["fiqh_decision", "fatwa", "lesson"],
+    compare: ["fatwa", "ruling", "lesson"],
     summary: null, // كل الأنواع
     source:  null,
     general: null,
