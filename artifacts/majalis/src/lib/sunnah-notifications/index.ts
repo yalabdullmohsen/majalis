@@ -16,6 +16,8 @@ export * from "./permission";
 export * from "./learning";
 export * from "./new-content";
 export * from "./kill-switch";
+export * from "./digest";
+export * from "./inbox";
 
 import { migrateLegacyNotificationConsent } from "./preferences";
 

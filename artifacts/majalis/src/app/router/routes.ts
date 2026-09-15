@@ -268,6 +268,7 @@ const PATHS = [
   "/news",
   "/nikah",
   "/notification-settings",
+  "/notifications-and-sound",
   "/occasions",
   "/occasions-lessons",
   "/prayer-countdown",

@@ -17,6 +17,14 @@ function enabledMask(prefs: PrayerNotificationPreferences): string {
   return PRAYER_NOTIFICATION_KEYS.map((k) => (isPrayerAlertEnabled(prefs, k) ? "1" : "0")).join("");
 }
 
+function alertStyleMask(prefs: PrayerNotificationPreferences): string {
+  return PRAYER_NOTIFICATION_KEYS.map((k) => prefs.alertStyleByPrayer[k] ?? "system").join(",");
+}
+
+function voiceMask(prefs: PrayerNotificationPreferences): string {
+  return PRAYER_NOTIFICATION_KEYS.map((k) => prefs.voiceIdByPrayer[k] || "-").join(",");
+}
+
 /** بصمة مستقرة: تاريخ + منطقة + طريقة + مذهب + صلوات مفعّلة + أوقات مطبّعة. */
 export function buildScheduleFingerprint(
   day: PrayerDayTimes,
@@ -24,12 +32,14 @@ export function buildScheduleFingerprint(
   extra?: { preMinutes?: number; enterEnabled?: boolean; postEnabled?: boolean },
 ): string {
   return [
-    "v1",
+    "v2",
     day.dateISO,
     day.timeZone,
     day.methodId,
     day.madhabId,
     enabledMask(prefs),
+    alertStyleMask(prefs),
+    voiceMask(prefs),
     stableMinutes(day),
     `pre:${extra?.preMinutes ?? 0}`,
     `enter:${extra?.enterEnabled === false ? 0 : 1}`,

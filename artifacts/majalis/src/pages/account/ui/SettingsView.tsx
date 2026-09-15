@@ -531,6 +531,7 @@ export default function SettingsPage() {
           />
           <SettingsList
             rows={[
+              { id: "notif-sound", title: "الإشعارات والصوت", href: "/notifications-and-sound" },
               { id: "notif-detail", title: "الإشعارات", href: "/notification-settings" },
               { id: "adhan", title: "إعدادات الأذان", href: "/adhan-settings" },
             ]}

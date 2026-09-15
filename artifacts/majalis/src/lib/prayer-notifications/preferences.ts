@@ -4,8 +4,10 @@
 import { loadAdhanPrefs, saveAdhanPrefs } from "@/lib/adhan-preferences";
 import { loadPrayerAlertPrefs, savePrayerAlertPrefs } from "@/lib/prayer-alert-preferences";
 import {
+  PRAYER_ALERT_STYLES,
   PRAYER_NOTIFICATION_KEYS,
   PRAYER_NOTIFICATION_SCHEMA_VERSION,
+  type PrayerAlertStyle,
   type PrayerNotificationKey,
   type PrayerNotificationPreferences,
 } from "./types";
@@ -26,6 +28,33 @@ function emptyPrayers(on: boolean): Record<PrayerNotificationKey, boolean> {
   };
 }
 
+
+const ALERT_STYLE_SET = new Set<string>(PRAYER_ALERT_STYLES);
+
+function emptyAlertStyles(style: PrayerAlertStyle = "system"): Record<PrayerNotificationKey, PrayerAlertStyle> {
+  return { fajr: style, dhuhr: style, asr: style, maghrib: style, isha: style };
+}
+
+function emptyVoices(voice = ""): Record<PrayerNotificationKey, string> {
+  return { fajr: voice, dhuhr: voice, asr: voice, maghrib: voice, isha: voice };
+}
+
+function mapDeliveryToAlertStyle(mode: string | undefined | null): PrayerAlertStyle {
+  if (mode === "full") return "full_adhan";
+  if (mode === "short") return "short_adhan";
+  if (mode === "takbir") return "takbirat";
+  return "system";
+}
+
+function mapAlertStyleToDelivery(style: PrayerAlertStyle): "full" | "short" | "takbir" | "silent" | "" {
+  if (style === "full_adhan") return "full";
+  if (style === "short_adhan") return "short";
+  if (style === "takbirat") return "takbir";
+  if (style === "system") return "silent";
+  return "";
+}
+
+
 /** افتراضي محافظ للتثبيت الجديد: معطّل حتى يفعّل المستخدم. */
 export function defaultPrayerNotificationPreferences(): PrayerNotificationPreferences {
   return {
@@ -33,6 +62,8 @@ export function defaultPrayerNotificationPreferences(): PrayerNotificationPrefer
     featureEnabled: true,
     masterEnabled: false,
     prayers: emptyPrayers(false),
+    alertStyleByPrayer: emptyAlertStyles("system"),
+    voiceIdByPrayer: emptyVoices(""),
     soundKind: "system",
     lastTimeZone: null,
     lastFingerprint: null,
@@ -57,19 +88,56 @@ export function migrateFromLegacyPreferences(): PrayerNotificationPreferences {
     const adhan = loadAdhanPrefs();
     const alerts = loadPrayerAlertPrefs();
     const prayers = emptyPrayers(false);
+    const alertStyleByPrayer = emptyAlertStyles("system");
+    const voiceIdByPrayer = emptyVoices("");
     for (const key of PRAYER_NOTIFICATION_KEYS) {
       prayers[key] = Boolean(adhan.prayers[key]?.enabled);
+      const delivery = adhan.prayers[key]?.deliveryMode || adhan.playbackMode;
+      alertStyleByPrayer[key] = mapDeliveryToAlertStyle(delivery);
+      const voice = adhan.prayers[key]?.muezzinId || adhan.defaultMuezzinId || "";
+      voiceIdByPrayer[key] = typeof voice === "string" ? voice : "";
     }
     return {
       ...base,
       featureEnabled: true,
       masterEnabled: Boolean(adhan.globalEnabled && alerts.alertsEnabled),
       prayers,
+      alertStyleByPrayer,
+      voiceIdByPrayer,
       soundKind: "system",
     };
   } catch {
     return base;
   }
+}
+
+function normalizeAlertStyles(
+  raw: Partial<PrayerNotificationPreferences> | null | undefined,
+  fallback: PrayerAlertStyle,
+): Record<PrayerNotificationKey, PrayerAlertStyle> {
+  const out = emptyAlertStyles(fallback);
+  const src = raw?.alertStyleByPrayer;
+  if (!src || typeof src !== "object") return out;
+  for (const key of PRAYER_NOTIFICATION_KEYS) {
+    const value = src[key];
+    if (typeof value === "string" && ALERT_STYLE_SET.has(value)) {
+      out[key] = value as PrayerAlertStyle;
+    }
+  }
+  return out;
+}
+
+function normalizeVoices(
+  raw: Partial<PrayerNotificationPreferences> | null | undefined,
+): Record<PrayerNotificationKey, string> {
+  const out = emptyVoices("");
+  const src = raw?.voiceIdByPrayer;
+  if (!src || typeof src !== "object") return out;
+  for (const key of PRAYER_NOTIFICATION_KEYS) {
+    const value = src[key];
+    out[key] = typeof value === "string" && value.trim() ? value.trim() : "";
+  }
+  return out;
 }
 
 function normalize(
@@ -86,6 +154,8 @@ function normalize(
     featureEnabled: raw.featureEnabled !== false,
     masterEnabled: Boolean(raw.masterEnabled),
     prayers,
+    alertStyleByPrayer: normalizeAlertStyles(raw, "system"),
+    voiceIdByPrayer: normalizeVoices(raw),
     soundKind: "system",
     lastTimeZone: typeof raw.lastTimeZone === "string" ? raw.lastTimeZone : null,
     lastFingerprint: typeof raw.lastFingerprint === "string" ? raw.lastFingerprint : null,
@@ -142,7 +212,18 @@ export function savePrayerNotificationPreferences(
 export function patchPrayerNotificationPreferences(
   patch: Partial<PrayerNotificationPreferences>,
 ): PrayerNotificationPreferences {
-  const next = normalize({ ...loadPrayerNotificationPreferences(), ...patch });
+  const current = loadPrayerNotificationPreferences();
+  const next = normalize({
+    ...current,
+    ...patch,
+    prayers: patch.prayers ? { ...current.prayers, ...patch.prayers } : current.prayers,
+    alertStyleByPrayer: patch.alertStyleByPrayer
+      ? { ...current.alertStyleByPrayer, ...patch.alertStyleByPrayer }
+      : current.alertStyleByPrayer,
+    voiceIdByPrayer: patch.voiceIdByPrayer
+      ? { ...current.voiceIdByPrayer, ...patch.voiceIdByPrayer }
+      : current.voiceIdByPrayer,
+  });
   savePrayerNotificationPreferences(next);
   return next;
 }
@@ -166,13 +247,34 @@ export function isPrayerAlertEnabled(
   return prefs.featureEnabled && prefs.masterEnabled && Boolean(prefs.prayers[key]);
 }
 
+export function getPrayerAlertStyle(
+  prefs: PrayerNotificationPreferences,
+  key: PrayerNotificationKey,
+): PrayerAlertStyle {
+  return prefs.alertStyleByPrayer[key] ?? "system";
+}
+
+export function getPrayerVoiceId(
+  prefs: PrayerNotificationPreferences,
+  key: PrayerNotificationKey,
+): string {
+  return prefs.voiceIdByPrayer[key] ?? "";
+}
+
 /** مزامنة محافظة مع التفضيلات القديمة عند تغيير الواجهة الموحّدة. */
 export function syncLegacyTogglesFromUnified(prefs: PrayerNotificationPreferences): void {
   try {
     const adhan = loadAdhanPrefs();
     adhan.globalEnabled = prefs.masterEnabled;
     for (const key of PRAYER_NOTIFICATION_KEYS) {
-      adhan.prayers[key] = { ...adhan.prayers[key], enabled: prefs.prayers[key] };
+      const delivery = mapAlertStyleToDelivery(prefs.alertStyleByPrayer[key]);
+      const voice = prefs.voiceIdByPrayer[key];
+      adhan.prayers[key] = {
+        ...adhan.prayers[key],
+        enabled: prefs.prayers[key],
+        deliveryMode: delivery || adhan.prayers[key].deliveryMode || "",
+        muezzinId: voice || adhan.prayers[key].muezzinId || adhan.defaultMuezzinId,
+      };
     }
     saveAdhanPrefs(adhan);
   } catch {
