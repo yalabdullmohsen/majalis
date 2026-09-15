@@ -4,7 +4,7 @@
 
 import { recommendRelated } from "../knowledge-engine/recommendations.mjs";
 import { matchTopicsToContent, getTopicBySlug } from "./topics.mjs";
-import { enrichResult, resolveContentUrl } from "./url-resolver.mjs";
+import { enrichResult, resolveContentUrl, isBannedPublicRelation } from "./url-resolver.mjs";
 import { rankResults } from "./ranker.mjs";
 import { processQuery } from "./query-processor.mjs";
 
@@ -115,14 +115,16 @@ export async function getRelatedContent(admin, { kind, recordId, topicSlug, quer
   }
 
   return {
-    items: items.map((i) =>
-      enrichResult({
-        ...i,
-        title: i.ai_title || i.title,
-        kind: i.content_kind || i.kind,
-        href: resolveContentUrl(i),
-      }),
-    ),
+    items: items
+      .map((i) =>
+        enrichResult({
+          ...i,
+          title: i.ai_title || i.title,
+          kind: i.content_kind || i.kind,
+          href: resolveContentUrl(i),
+        }),
+      )
+      .filter((i) => !isBannedPublicRelation(i)),
     algorithm: source ? "content-similarity" : topicSlug ? "topic-match" : query ? "query-rank" : "kind-filter",
     preferredKinds: prefs.preferredKinds,
   };

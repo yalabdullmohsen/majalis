@@ -24,7 +24,10 @@ import { getSupabaseAdmin } from "../supabase-admin.mjs";
  * بناء هيكل المصادر للعرض في الواجهة
  */
 function buildSourcesList(docs) {
-  return docs.slice(0, 12).map((d, i) => ({
+  return docs
+    .filter((d) => d.content_type !== "fiqh_decision" && d.content_type !== "fiqh_council")
+    .slice(0, 12)
+    .map((d, i) => ({
     index:       i + 1,
     content_type: d.content_type,
     type_label:  CONTENT_TYPE_LABEL[d.content_type] || d.content_type,
@@ -39,9 +42,8 @@ function buildSourcesList(docs) {
 }
 
 function buildHref(doc) {
-  const meta = doc.metadata || {};
   switch (doc.content_type) {
-    case "fiqh_decision": return meta.slug ? `/fiqh-council/${meta.slug}` : "";
+    case "fiqh_decision": return "/fiqh";
     case "lesson":        return doc.content_id ? `/lessons/${doc.content_id}` : "";
     case "hadith":        return "/hadith";
     case "book":          return doc.content_id ? `/library/${doc.content_id}` : "";

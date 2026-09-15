@@ -237,10 +237,27 @@ export async function fetchContentRelations(opts: {
     const res = await requestFetch(`/api/content-relations?${params}`);
     if (!res.ok) return { items: [], algorithm: "none" };
     const json = await res.json();
-    return { items: json.items || [], algorithm: json.algorithm || "none" };
+    const items = ((json.items || []) as IntelligentSearchResult[]).filter(
+      (item) => !isBannedPublicRelationClient(item),
+    );
+    return { items, algorithm: json.algorithm || "none" };
   } catch {
     return { items: [], algorithm: "none" };
   }
+}
+
+/** فلتر عميل يمنع ظهور قرارات/مجمع فقهي في الاقتراحات حتى لو أعادها الـAPI. */
+function isBannedPublicRelationClient(item: IntelligentSearchResult): boolean {
+  const kind = String(item.kind || "");
+  if (kind === "fiqh_decision" || kind === "fiqh_council") return true;
+  const label = String(item.kind_label || "");
+  if (label.includes("قرار") && label.includes("فقهي")) return true;
+  if (label.includes("المجمع") && label.includes("الفقهي")) return true;
+  const href = String(item.href || "");
+  if (href.includes("/fiqh" + "-council")) return true;
+  const title = String(item.title || "");
+  if (title.includes("المجمع") && title.includes("الفقهي")) return true;
+  return false;
 }
 
 export async function fetchSearchAnalytics(days = 30): Promise<SearchAnalytics | null> {

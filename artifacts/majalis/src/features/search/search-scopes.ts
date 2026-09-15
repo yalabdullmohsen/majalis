@@ -44,7 +44,7 @@ const KIND_SETS: Record<Exclude<SearchScopeId, "all">, ReadonlySet<string>> = {
   seerah: new Set(["seerah"]),
   history: new Set(["history"]),
   prophet: new Set(["prophet", "prophets", "nation", "nations"]),
-  fiqh: new Set(["fiqh", "fatwa", "qa", "ruling", "fiqh_decision"]),
+  fiqh: new Set(["fiqh", "fatwa", "qa", "ruling"]),
   hadith: new Set(["hadith"]),
   adhkar: new Set(["adhkar", "dua"]),
   lesson: new Set(["lesson", "course"]),

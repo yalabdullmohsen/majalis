@@ -70,7 +70,7 @@ export function rankDocuments(docs) {
 export function detectOpinionDiversity(docs) {
   if (docs.length < 2) return false;
   const fiqhDocs = docs.filter((d) =>
-    ["fiqh_decision", "fatwa", "benefit", "lesson"].includes(d.content_type)
+    ["fatwa", "ruling", "benefit", "lesson"].includes(d.content_type)
   );
   return fiqhDocs.length >= 2;
 }
@@ -80,7 +80,7 @@ export function detectOpinionDiversity(docs) {
  */
 export function extractOpinions(docs) {
   return docs
-    .filter((d) => ["fiqh_decision", "fatwa"].includes(d.content_type))
+    .filter((d) => ["fatwa", "ruling"].includes(d.content_type))
     .slice(0, 6)
     .map((d) => ({
       title:      d.title,

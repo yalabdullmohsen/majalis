@@ -19,7 +19,6 @@ export const KIND_PRIORITY: Record<string, number> = {
   qa: 7,
   ruling: 8,
   fiqh: 8,
-  fiqh_decision: 8,
   scholar: 9,
   sheikh: 9,
   adhkar: 10,

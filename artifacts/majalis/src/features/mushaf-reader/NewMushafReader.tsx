@@ -77,9 +77,9 @@ import { useMushafResourceGate } from "@/features/mushaf-madinah/useMushafResour
 import { prefetchAdjacentPageAudio } from "@/features/mushaf-madinah/prefetch-adjacent-audio";
 import { MUSHAF_CHROME_HIDE_MS } from "@/features/mushaf-madinah/layout-bands";
 import { MushafPage } from "./MushafPage";
-import { MushafExitControl } from "./MushafExitControl";
 import { MushafControlsLayer, MushafVerseMenu } from "./MushafControlsLayer";
 import { MushafPageArrows } from "./MushafPageArrows";
+import "@/styles/reader-page-chrome.css";
 import {
   loadPageArrowsEnabled,
   savePageArrowsEnabled,
@@ -1154,46 +1154,19 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         page={page}
         visible={chromeOpen && !actionsOpen && !gotoOpen && !tafsirOpen && !searchOpen && !indexOpen}
         enabled={pageArrowsEnabled}
-        /* لا تُخفَ الأسهم بـ disabled أثناء التسوية — ذلك كان يُظهرها كمفقودة */
-        disabled={edgesDisabled}
+        /* busy يخفّف التفاعل دون إخفاء السهم (كان :disabled يصفّر opacity) */
+        busy={edgesDisabled || !pagerSettled}
         onNext={() => {
-          if (!pagerSettled) return;
+          if (edgesDisabled || !pagerSettled) return;
           go(page + 1);
         }}
         onPrev={() => {
-          if (!pagerSettled) return;
+          if (edgesDisabled || !pagerSettled) return;
           go(page - 1);
         }}
       />
-      <MushafExitControl
-        visible={chromeOpen && !actionsOpen && !gotoOpen}
-        onExit={() => {
-          if (searchOpen || indexOpen) {
-            setSearchOpen(false);
-            setIndexOpen(false);
-            return;
-          }
-          if (tafsirOpen) {
-            setTafsirOpen(false);
-            setTafsirVerseKey(null);
-            return;
-          }
-          if (audioDockOpen && !audioDockMini) {
-            setAudioDockMini(true);
-            return;
-          }
-          if (actionsOpen) {
-            setActionsOpen(false);
-            setSelectedVerseKey(null);
-            return;
-          }
-          setMushafAyahSearchHighlight(null);
-          recitation.stop();
-          onExit();
-        }}
-      />
 
-<MushafControlsLayer
+      <MushafControlsLayer
         chromeOpen={chromeOpen && !actionsOpen && !gotoOpen}
         pageNumber={page}
         focusReadingMode={focusReadingMode}
@@ -1227,6 +1200,10 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           if (tafsirOpen) {
             setTafsirOpen(false);
             setTafsirVerseKey(null);
+            return;
+          }
+          if (audioDockOpen && !audioDockMini) {
+            setAudioDockMini(true);
             return;
           }
           if (actionsOpen) {
