@@ -21,21 +21,24 @@ console.log("=== Immersive default ===");
 const reader = read("src/features/mushaf-reader/NewMushafReader.tsx");
 assert.match(reader, /readerChromeVisible/);
 assert.match(reader, /useState\(false\)/);
-assert.match(reader, /visible=\{chromeOpen && !actionsOpen && !gotoOpen\}/);
-assert.match(reader, /MushafExitControl/);
 assert.match(reader, /onTapEmpty/);
 assert.equal(MUSHAF_CHROME_HIDE_MS, 4000);
+/** خروج واحد داخل Toolbar — بلا طبقة خروج عائمة متداخلة */
+assert.doesNotMatch(reader, /MushafExitControl/);
+assert.match(reader, /MushafControlsLayer/);
+assert.match(reader, /busy=\{edgesDisabled/);
 
-console.log("=== Exit overlay only ===");
-const exitCtrl = read("src/features/mushaf-reader/MushafExitControl.tsx");
-assert.match(exitCtrl, /nm-reader-controls-overlay|reader-controls-overlay/);
-assert.match(exitCtrl, /visible/);
-assert.match(exitCtrl, /nm-exit-control/);
+console.log("=== Compact toolbar exit (لا تراكب) ===");
+const controls = read("src/features/mushaf-reader/MushafControlsLayer.tsx");
+assert.match(controls, /nm-controls__exit/);
+assert.match(controls, /الخروج من المصحف/);
+assert.match(controls, /nm-controls--compact/);
 assert.doesNotMatch(read("src/features/mushaf-reader/MushafPage.tsx"), /MushafExitControl/);
 
 const css = read("src/features/mushaf-reader/mushaf-reader.css");
-assert.match(css, /\.nm-exit-control\[data-visible="1"\]/);
-assert.match(css, /\.nm-reader-controls-overlay\[data-visible="0"\]/);
+assert.match(css, /\.nm-controls--compact/);
+assert.match(css, /var\(--inset-top/);
+assert.match(css, /data-focus-reading/);
 assert.match(css, /opacity:\s*0/);
 
 console.log("=== Signature active ===");

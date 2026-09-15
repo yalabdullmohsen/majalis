@@ -7,7 +7,11 @@ type Props = {
   visible: boolean;
   /** تفضيل المستخدم لإظهار الأسهم */
   enabled: boolean;
-  disabled?: boolean;
+  /**
+   * انشغال مؤقت (تسوية/جوار) — لا يخفي السهم؛ يمنع الضغط فقط.
+   * كان ربط ذلك بـ disabled + CSS opacity:0 يجعل الأسهم «غير موجودة».
+   */
+  busy?: boolean;
   /**
    * RTL: next = page+1 (حافة inline-start / يمين الشاشة).
    * prev = page-1 (حافة inline-end / يسار الشاشة).
@@ -24,14 +28,14 @@ export const MushafPageArrows = memo(function MushafPageArrows({
   page,
   visible,
   enabled,
-  disabled = false,
+  busy = false,
   onNext,
   onPrev,
 }: Props) {
   const guardRef = useRef(false);
 
   const runOnce = useCallback((fn: () => void) => {
-    if (guardRef.current || disabled) return;
+    if (guardRef.current || busy) return;
     guardRef.current = true;
     try {
       fn();
@@ -40,19 +44,20 @@ export const MushafPageArrows = memo(function MushafPageArrows({
         guardRef.current = false;
       }, 320);
     }
-  }, [disabled]);
+  }, [busy]);
 
   if (!enabled) return null;
 
   const atFirst = page <= MUSHAF_PAGE_MIN;
   const atLast = page >= MUSHAF_PAGE_MAX;
-  const show = visible && !disabled;
+  const show = visible;
 
   return (
     <div
       className="nm-page-arrows"
       data-testid="mushaf-page-arrows"
       data-visible={show ? "1" : "0"}
+      data-busy={busy ? "1" : "0"}
       data-page={page}
       aria-hidden={!show}
     >
@@ -63,11 +68,12 @@ export const MushafPageArrows = memo(function MushafPageArrows({
         data-testid="mushaf-page-arrow-next"
         aria-label="الصفحة التالية"
         tabIndex={show && !atLast ? 0 : -1}
-        disabled={disabled || atLast || !show}
+        disabled={atLast}
+        aria-disabled={busy || !show || atLast ? true : undefined}
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          if (atLast || !show) return;
+          if (atLast || !show || busy) return;
           runOnce(onNext);
         }}
         onPointerDown={(e) => e.stopPropagation()}
@@ -84,11 +90,12 @@ export const MushafPageArrows = memo(function MushafPageArrows({
         data-testid="mushaf-page-arrow-prev"
         aria-label="الصفحة السابقة"
         tabIndex={show && !atFirst ? 0 : -1}
-        disabled={disabled || atFirst || !show}
+        disabled={atFirst}
+        aria-disabled={busy || !show || atFirst ? true : undefined}
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          if (atFirst || !show) return;
+          if (atFirst || !show || busy) return;
           runOnce(onPrev);
         }}
         onPointerDown={(e) => e.stopPropagation()}
