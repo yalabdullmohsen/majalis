@@ -48,14 +48,48 @@
 
 ## جانب الوكيل (لا يضعف CI)
 
-بروتوكول التنفيذ: `docs/AGENT_THROUGHPUT.md`.
+بروتوكول التنفيذ: `docs/AGENT_THROUGHPUT.md` (يشمل **Finalization Freeze** / `IMPLEMENTATION_FROZEN`).
 
 | سلوك بطيء شائع | البديل الإلزامي |
 |---|---|
-| `verify:ci` بعد كل تعديل صغير | Focused Test أولًا ثم `verify:ci` مرة واحدة |
+| `verify:ci` بعد كل تعديل صغير | Focused Test + `verify:preflight` ثم `verify:ci` مرة واحدة |
 | إعادة تشغيل كل jobs عند فشل تابع | أصلح أول job أصلي على نفس الفرع/PR |
 | تخفيف gate/baseline لإخفاء فشل | أصلح المنتج؛ تعديل البوابة فقط بدليل عقد + جودة ≥ |
 | Lighthouse/visual/native في كل مهمة | فقط Path-lane أو نطاق المهمة |
 | استكشاف شامل بعد معرفة المسار | `REPO_INDEX` + قراءة الملفات المرشحة فقط |
+| انتظار workflows اختيارية بعد ci-required | راقب required فقط ثم Delivery |
 
 حوكمة نصية: `node --test scripts/__tests__/agent-throughput-policy.test.mjs` (ضمن `test:safe-auto-merge`).
+
+---
+
+## Baseline المقاس (2026-09-15) — قبل `cursor/ci-throughput-hardening`
+
+عيّنة تشغيلات ناجحة على GitHub Actions (queue=0s في الكل):
+
+| Scenario (PR/event) | Required jobs (فعلي) | Critical path ≈ | Duplicate / خطأ تصنيف | Bottleneck |
+|---|---|---:|---|---|
+| docs/agent policy (#34994087127) | build+static+repo+visual+color+LHCI+postgres | **8.2m** (repo-gates 418s) | `.cursor`/scripts صُنّفت frontend/risky بدل docs/ci-config | repo-gates + contrast |
+| freeze docs (#35000926684) | نفس المسار الثقيل | **8.0m** | package.json → risky → postgres | repo-gates 365s |
+| visual CSS (#35017033541) | build+static+repo+visual+color+LHCI | **8.8m** | صحيح نسبيًا | repo-gates 412s |
+| mushaf (#35019375800) | +mushaf shards | **9.3m** | صحيح | build 258s + repo 314s |
+| main full (#34996467151) | full incl. mushaf×8 | **10.2m** | `--full` متعمّد | repo-gates + mushaf |
+
+### عمل مكرر مكتشف (قبل الإصلاح)
+
+1. PRs وثائق/CI تُشغّل build+Playwright+postgres بلا حاجة (تصنيف خاطئ).
+2. pre-commit + pre-push + `verify:ci` = typecheck/build حتى 3× محليًا.
+3. visual/color/LHCI تبدأ دائمًا ثم تخرج حياديًا (حجز runner) بدل `if:` skip.
+4. لا بصمة محلية لإعادة استخدام `verify:ci`.
+
+### بعد الإصلاح (عقد مثبت بالاختبارات + path-lane)
+
+| Scenario | Required jobs | Critical path المتوقع | Saved work |
+|---|---|---|---|
+| docs-only / `.cursor` | fast-lane فقط | classify+fast-lane+aggregators ≪ 2m | لا build/Playwright/postgres |
+| ci-config (`package.json` scripts, actions) | fast-lane + policy tests | ≪ 2m | لا visual/LHCI/postgres |
+| web-logic (`.ts` فقط) | build+static+repo | ≈ max(repo,build) بلا visual trio | تخطّي contrast/visual/LHCI |
+| visual (CSS/TSX) | +visual+color+LHCI على نفس dist | ≈ كما قبل للمسار البصري | build once + artifact stamp |
+| mushaf / native / mixed / full | كما يلزم Path-lane | بلا تكرار build | shard/native بدون postgres إلا risky |
+
+محليًا: `verify:preflight` + fingerprint reuse لـ`verify:ci`؛ hooks سريعة بلا Vite في pre-commit.

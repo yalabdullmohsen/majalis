@@ -4,8 +4,8 @@
  */
 import { DANGER_PATH_PATTERNS, AUTH_SECURITY_PATH_PATTERNS } from "./constants.mjs";
 
-/** @typedef {'docs'|'policy'|'content'|'frontend'|'mushaf'|'risky'|'other'} PathKind */
-/** @typedef {'docs-only'|'policy-only'|'content-only'|'frontend'|'mushaf'|'risky'|'full'|'mixed'} LaneName */
+/** @typedef {'docs'|'policy'|'content'|'frontend'|'mushaf'|'native'|'risky'|'other'} PathKind */
+/** @typedef {'docs-only'|'ci-config'|'policy-only'|'content-only'|'web-logic'|'visual'|'frontend'|'mushaf'|'native'|'risky'|'full'|'mixed'} LaneName */
 
 /**
  * @param {string} p
@@ -13,7 +13,15 @@ import { DANGER_PATH_PATTERNS, AUTH_SECURITY_PATH_PATTERNS } from "./constants.m
  */
 export function isDocsPath(p) {
   const s = String(p || "");
-  return /^docs\//i.test(s) || /^\.github\/docs\//i.test(s) || /\.md$/i.test(s);
+  return (
+    /^docs\//i.test(s) ||
+    /^\.github\/docs\//i.test(s) ||
+    /^\.cursor\//i.test(s) ||
+    /^cursor\//i.test(s) ||
+    /^AGENTS\.md$/i.test(s) ||
+    /\.md$/i.test(s) ||
+    /\.mdc$/i.test(s)
+  );
 }
 
 /**
@@ -24,7 +32,21 @@ export function isPolicyPath(p) {
   const s = String(p || "");
   return (
     /^\.github\/scripts\/safe-auto-merge\//i.test(s) ||
+    /^\.github\/scripts\/ci\//i.test(s) ||
+    /^\.github\/actions\//i.test(s) ||
     /^scripts\/verify-no-unsafe-auto-merge\.mjs$/i.test(s) ||
+    /^scripts\/verify-ci\.mjs$/i.test(s) ||
+    /^scripts\/verify-preflight\.mjs$/i.test(s) ||
+    /^scripts\/verify-fingerprint\.mjs$/i.test(s) ||
+    /^scripts\/verify-changed-scope\.mjs$/i.test(s) ||
+    /^scripts\/ci\//i.test(s) ||
+    /^scripts\/git-hooks\//i.test(s) ||
+    /^scripts\/__tests__\/(agent-throughput|verify-ci|verify-preflight|aggregator|path-lane)/i.test(
+      s,
+    ) ||
+    /^reports\/changed-scope/i.test(s) ||
+    /^\.gitignore$/i.test(s) ||
+    /^package\.json$/i.test(s) ||
     /^\.github\/workflows\/ci\.yml$/i.test(s) ||
     /^\.github\/workflows\/auto-merge-to-main\.yml$/i.test(s) ||
     /^\.github\/workflows\/pr-safe-merge-report\.yml$/i.test(s) ||
@@ -40,6 +62,23 @@ export function isPolicyPath(p) {
     /^\.github\/workflows\/auto-maintenance\.yml$/i.test(s) ||
     /^scripts\/auto-maintenance\//i.test(s) ||
     /^artifacts\/majalis\/vercel\.json$/i.test(s)
+  );
+}
+
+/**
+ * Capacitor / iOS / Android surfaces — native lane (لا Postgres افتراضيًا).
+ * @param {string} p
+ * @returns {boolean}
+ */
+export function isNativePath(p) {
+  const s = String(p || "");
+  return (
+    /^ios\//i.test(s) ||
+    /^android\//i.test(s) ||
+    /^artifacts\/majalis\/ios\//i.test(s) ||
+    /^artifacts\/majalis\/android\//i.test(s) ||
+    /capacitor/i.test(s) ||
+    /^\.github\/workflows\/ios-/i.test(s)
   );
 }
 
@@ -82,7 +121,8 @@ export function isFrontendPath(p) {
 }
 
 /**
- * UI / CSS surfaces that warrant color-contrast.
+ * UI / CSS surfaces that warrant color-contrast + visual/LHCI.
+ * منطق TS فقط (web-logic) لا يدخل هنا.
  * @param {string} p
  * @returns {boolean}
  */
@@ -90,9 +130,12 @@ export function isUiCssPath(p) {
   const s = String(p || "");
   return (
     /\.css$/i.test(s) ||
+    /\.tsx$/i.test(s) ||
     /\/components\//i.test(s) ||
     /\/pages\//i.test(s) ||
     /\/views\//i.test(s) ||
+    /\/styles\//i.test(s) ||
+    /index\.html$/i.test(s) ||
     /index\.css$/i.test(s) ||
     /quran\.css$/i.test(s)
   );
@@ -128,9 +171,11 @@ function isPolicyWorkflowAllowlist(p) {
 export function isRiskyPath(p) {
   const s = String(p || "");
   // Allowlisted policy workflows / throughput paths are not risky.
-  if (isPolicyWorkflowAllowlist(s)) return false;
+  if (isPolicyPath(s) || isPolicyWorkflowAllowlist(s)) return false;
   if (/^artifacts\/majalis\/vercel\.json$/i.test(s)) return false;
   if (/^scripts\/auto-maintenance\//i.test(s)) return false;
+  // Native handled separately (lane=native) — not DB/postgres risky by default.
+  if (isNativePath(s)) return false;
   for (const re of DANGER_PATH_PATTERNS) {
     if (re.test(s)) return true;
   }
@@ -141,11 +186,9 @@ export function isRiskyPath(p) {
   if (/^artifacts\/majalis\/supabase\//i.test(s)) return true;
   if (/^api\//i.test(s)) return true;
   if (/^artifacts\/majalis\/api\//i.test(s)) return true;
-  if (/^ios\//i.test(s)) return true;
-  if (/^artifacts\/majalis\/ios\//i.test(s)) return true;
-  if (/capacitor/i.test(s)) return true;
   if (/^\.github\/workflows\//i.test(s)) return true;
-  if (/^package\.json$/i.test(s) || /^pnpm-lock\.yaml$/i.test(s)) return true;
+  // lockfile = تبعية جديدة → risky؛ package.json وحده = policy (scripts/meta)
+  if (/^pnpm-lock\.yaml$/i.test(s)) return true;
   if (/\.sql$/i.test(s) || /migration/i.test(s)) return true;
   if (/\brls\b|row.?level.?security|security.?definer/i.test(s)) return true;
   return false;
@@ -158,6 +201,7 @@ export function isRiskyPath(p) {
  */
 export function classifyOnePath(p) {
   if (isRiskyPath(p)) return "risky";
+  if (isNativePath(p)) return "native";
   if (isMushafPath(p)) return "mushaf";
   if (isContentPath(p)) return "content";
   if (isFrontendPath(p)) return "frontend";
@@ -178,17 +222,30 @@ export function classifyChangedPaths(paths = [], opts = {}) {
     content: false,
     frontend: false,
     mushaf: false,
+    native: false,
     risky: false,
     other: false,
   };
   /** @type {Record<string, PathKind>} */
   const byPath = {};
+  /** @type {Record<string, string[]>} */
+  const filesByKind = {
+    docs: [],
+    policy: [],
+    content: [],
+    frontend: [],
+    mushaf: [],
+    native: [],
+    risky: [],
+    other: [],
+  };
   let hasUiCss = false;
 
   for (const p of list) {
     const kind = classifyOnePath(p);
     byPath[p] = kind;
     kinds[kind] = true;
+    filesByKind[kind].push(p);
     if (isUiCssPath(p)) hasUiCss = true;
   }
 
@@ -200,42 +257,59 @@ export function classifyChangedPaths(paths = [], opts = {}) {
         content: false,
         frontend: true,
         mushaf: true,
+        native: true,
         risky: true,
         other: true,
       },
       byPath,
+      filesByKind,
       hasUiCss: true,
       forceFull: true,
       paths: list,
     });
   }
 
-  return finalizeClassification({ kinds, byPath, hasUiCss, forceFull: false, paths: list });
+  return finalizeClassification({
+    kinds,
+    byPath,
+    filesByKind,
+    hasUiCss,
+    forceFull: false,
+    paths: list,
+  });
 }
 
 /**
  * @param {{
  *   kinds: Record<string, boolean>,
  *   byPath: Record<string, PathKind>,
+ *   filesByKind: Record<string, string[]>,
  *   hasUiCss: boolean,
  *   forceFull: boolean,
  *   paths: string[],
  * }} input
  */
 function finalizeClassification(input) {
-  const { kinds, byPath, hasUiCss, forceFull, paths } = input;
+  const { kinds, byPath, filesByKind, hasUiCss, forceFull, paths } = input;
 
   const needPostgres = Boolean(kinds.risky || forceFull);
-  // بوابات المصحف عند لمس مسارات واجهة/بيانات المصحف أو QPC
+  const needNative = Boolean(kinds.native || forceFull);
   const needMushaf = Boolean(kinds.mushaf || forceFull);
   const needFrontendBuild = Boolean(
-    kinds.frontend || kinds.mushaf || kinds.risky || kinds.content || kinds.other || forceFull,
+    kinds.frontend ||
+      kinds.mushaf ||
+      kinds.risky ||
+      kinds.native ||
+      kinds.content ||
+      kinds.other ||
+      forceFull,
   );
-  // Docs / policy only → Fast Lane (no Vite build / mushaf / postgres).
+  // Docs / policy / ci-config only → Fast Lane (no Vite build / mushaf / postgres).
   const needFastLane =
     !needFrontendBuild &&
     !needMushaf &&
     !needPostgres &&
+    !needNative &&
     (kinds.docs || kinds.policy) &&
     !kinds.content &&
     !kinds.frontend &&
@@ -243,34 +317,76 @@ function finalizeClassification(input) {
 
   const needBuild = needFrontendBuild;
   const needPolicyTests = Boolean(kinds.policy);
-  // لقطات/تباين/LHCI: واجهة أو مصحف أو risky/full — ليست إلزامية لمحتوى/حصاد فقط.
+
+  // visual/LHCI: أسطح UI فعلية أو مصحف أو risky/full — ليس لكل ملف TS منطقي أو other.
   const needVisual =
     Boolean(forceFull) ||
-    Boolean(kinds.frontend) ||
     Boolean(kinds.mushaf) ||
     Boolean(kinds.risky) ||
-    Boolean(kinds.other);
-  // التباين يتطلّب بناءًا فعليًا دائمًا — وإلا يُتخطّى Playwright ويُحسب skipped كفشل
-  // في required gates. محتوى JSON / docs / policy → needColor=false.
+    Boolean(hasUiCss);
+
+  // التباين يتطلّب بناءًا + سطح UI/CSS (أو visual مطلوب).
   const needColorContrast =
     Boolean(needBuild) && (needVisual || Boolean(hasUiCss));
+
   const needPreviewSmoke = false;
   const needVercelCheck = false;
 
+  const activeKinds = Object.entries(kinds)
+    .filter(([, v]) => v)
+    .map(([k]) => k);
+  const multiKind = activeKinds.length > 1;
+
   /** @type {LaneName} */
   let lane = "docs-only";
-  if (forceFull) lane = "full";
-  else if (kinds.risky) lane = "risky";
-  else if (kinds.mushaf) lane = "mushaf";
-  else if (kinds.frontend || kinds.other) lane = "frontend";
-  else if (kinds.content) lane = "content-only";
-  else if (kinds.policy && !kinds.docs) lane = "policy-only";
-  else if (kinds.docs && kinds.policy) lane = "policy-only";
-  else if (kinds.docs) lane = "docs-only";
-  else if (paths.length === 0) lane = "full";
-  else lane = "frontend";
+  let laneReason = "no matching paths";
+  if (forceFull) {
+    lane = "full";
+    laneReason = "forceFull / main / empty-diff / release";
+  } else if (multiKind && (kinds.risky || kinds.mushaf || kinds.native || kinds.frontend)) {
+    lane = "mixed";
+    laneReason = `multiple kinds: ${activeKinds.join("+")}`;
+  } else if (kinds.risky) {
+    lane = "risky";
+    laneReason = "danger/supabase/api/lockfile/workflow";
+  } else if (kinds.native) {
+    lane = "native";
+    laneReason = "capacitor/ios/android paths";
+  } else if (kinds.mushaf) {
+    lane = "mushaf";
+    laneReason = "quran/mushaf/qpc paths";
+  } else if (kinds.frontend || kinds.other) {
+    if (hasUiCss) {
+      lane = "visual";
+      laneReason = "UI/CSS/TSX surfaces";
+    } else {
+      lane = "web-logic";
+      laneReason = "frontend logic without UI surface";
+    }
+  } else if (kinds.content) {
+    lane = "content-only";
+    laneReason = "public/data or harvest content";
+  } else if (kinds.policy && !kinds.docs) {
+    lane = "ci-config";
+    laneReason = "CI/scripts/actions/package.json policy";
+  } else if (kinds.docs && kinds.policy) {
+    lane = "ci-config";
+    laneReason = "docs + CI/policy";
+  } else if (kinds.docs) {
+    lane = "docs-only";
+    laneReason = "documentation / .cursor / markdown";
+  } else if (paths.length === 0) {
+    lane = "full";
+    laneReason = "empty path list";
+  } else {
+    lane = "web-logic";
+    laneReason = "fallback";
+  }
 
-  const manualReview = Boolean(kinds.risky);
+  // توافق خلفي: policy-only اسم مستعار لـ ci-config في المخرجات النصية القديمة
+  const laneCompat = lane === "ci-config" ? "ci-config" : lane;
+
+  const manualReview = Boolean(kinds.risky || kinds.native);
 
   const requiredChecks = {
     verifyBuild: true,
@@ -284,12 +400,15 @@ function finalizeClassification(input) {
     colorContrast: needColorContrast,
     previewSmoke: needPreviewSmoke,
     vercelCheck: needVercelCheck,
+    native: needNative,
   };
 
   return {
-    lane,
+    lane: laneCompat,
+    laneReason,
     kinds,
     byPath,
+    filesByKind,
     paths,
     hasUiCss,
     forceFull: Boolean(forceFull),
@@ -298,6 +417,7 @@ function finalizeClassification(input) {
     needFastLane,
     needMushaf,
     needPostgres,
+    needNative,
     needVisual,
     needColorContrast,
     needPreviewSmoke,
@@ -306,11 +426,13 @@ function finalizeClassification(input) {
     requiredChecks,
     /** GitHub Actions outputs (string booleans). */
     outputs: {
-      lane,
+      lane: laneCompat,
+      lane_reason: laneReason.replace(/\n/g, " ").slice(0, 200),
       need_build: needBuild ? "true" : "false",
       need_fast_lane: needFastLane ? "true" : "false",
       need_mushaf: needMushaf ? "true" : "false",
       need_postgres: needPostgres ? "true" : "false",
+      need_native: needNative ? "true" : "false",
       need_visual: needVisual ? "true" : "false",
       need_color_contrast: needColorContrast ? "true" : "false",
       need_preview_smoke: needPreviewSmoke ? "true" : "false",

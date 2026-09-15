@@ -21,6 +21,11 @@ import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { cpus } from "node:os";
+import {
+  computeVerifyFingerprint,
+  readVerifyCache,
+  writeVerifyCache,
+} from "./verify-fingerprint.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const MAJALIS = resolve(ROOT, "artifacts/majalis");
@@ -35,6 +40,8 @@ const NO_MUSHAF = has("--no-mushaf");
 const FROM_DIFF = has("--changed");
 const WITH_UI = has("--ui");
 const WITH_NATIVE = has("--native");
+const FORCE = has("--force");
+const NO_REUSE = has("--no-reuse");
 
 const PR_MUSHAF_PAGES = "1,2,3,4,283,600";
 const PR_MUSHAF_VIEWPORT = "390x844";
@@ -407,8 +414,26 @@ try {
 const t0 = Date.now();
 const failures = [];
 
+if (!LIST_ONLY && !FORCE && !NO_REUSE) {
+  const cached = readVerifyCache("verify-ci");
+  if (cached.hit) {
+    console.log(
+      c.green(
+        `\n✓ verify:ci — إعادة استخدام نتيجة ناجحة (fingerprint ${cached.fingerprint.slice(0, 12)}…)`,
+      ),
+    );
+    console.log(
+      c.dim(
+        "  المدخلات (HEAD/diff/lock/config) لم تتغير منذ آخر نجاح. --force لإعادة التشغيل.",
+      ),
+    );
+    process.exit(0);
+  }
+}
+
 console.log(c.bold("\nverify:ci — بوابة محلية ≈ GitHub CI (قبل الدفع)"));
 console.log(c.dim(`جذر: ${ROOT}`));
+console.log(c.dim(`fingerprint: ${computeVerifyFingerprint().slice(0, 12)}…`));
 console.log(
   c.dim(
     `أنوية: ${cpus().length} · mushaf=${runMushaf ? "نعم" : "لا"} · ui=${runUi ? "نعم" : "لا"} · native=${runNative ? "نعم" : "لا"}`,
@@ -491,3 +516,5 @@ console.log(
     `✓ verify:ci نجحت في ${total}s — جاهز للدفع ثم مراقبة: gh pr checks --watch --fail-fast`,
   ),
 );
+writeVerifyCache("verify-ci", { seconds: Number(total), note: "verify:ci" });
+writeVerifyCache("build", { seconds: Number(total), note: "includes vite build wave" });

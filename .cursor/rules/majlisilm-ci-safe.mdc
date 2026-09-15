@@ -9,7 +9,9 @@ alwaysApply: true
 1. ابدأ من جذر git الحقيقي فقط:
    `cd "$(git rev-parse --show-toplevel)"` ثم `git status --short`
 2. اتبع مسار التسريع: `Targeted Read → Plan → Patch → Focused Test → Full Verify`
-   (التفاصيل: `docs/AGENT_THROUGHPUT.md` و`.cursor/rules/majlisilm-agent-throughput.mdc`).
+   مع **Finalization Freeze** (`IMPLEMENTATION_FROZEN` قبل التحقق؛ التفاصيل: `docs/AGENT_THROUGHPUT.md`
+   و`.cursor/rules/majlisilm-agent-throughput.mdc`). بعد التجميد: لا بحث عام ولا توسيع نطاق
+   ولا إصلاح غير مرتبط ولا بدء Queued أثناء Focused Test / verify:ci / PR.
 3. لا تخمّن المسارات — تحقق بوجود الملفات المرشحة فقط قبل التعامل معها:
    ```bash
    test -f package.json
@@ -38,16 +40,21 @@ alwaysApply: true
 - الأصوات/الموارد يجب أن تكون في Copy Bundle Resources فعلياً.
 
 ## قبل الدفع (إلزامي)
-بعد نجاح الاختبارات المستهدفة فقط:
+بعد `IMPLEMENTATION_FROZEN` ونجاح الاختبارات المستهدفة فقط:
 ```bash
 corepack enable
 pnpm install --frozen-lockfile
+pnpm run verify:preflight   # إلزامي قبل verify:ci
 pnpm run verify:ci
-# أو مع تضييق: pnpm run verify:ci -- --changed
+# أو مع تضييق بعد preflight: pnpm run verify:ci -- --changed
 # UI: --ui · native: --native · بلا مصحف: --no-mushaf
+# مسار سريع موحّد: pnpm run verify:ci-fast  (= preflight + verify:ci --changed)
 ```
-شغّل `verify:ci` **مرة واحدة** لكل جولة جاهزة للدفع. أعده فقط إذا تغيّرت ملفات بعد فشل.
-عند فشل أي أمر: **لا commit ولا push** — اقرأ أول خطأ أصلي، أصلح، أعد المستهدف ثم `verify:ci` مرة.
+لا يُشغَّل `verify:ci` إلا بعد نجاح `verify:preflight`.
+خلال `verify:ci`: لا بحث ولا تعديل بالتوازي؛ انتظر النتيجة الفعلية؛ لا تفسّر غياب stdout على أنه تعليق؛ لا تقتل بمدة ثابتة ما دامت العملية تعمل.
+شغّل `verify:ci` **مرة واحدة** لكل جولة جاهزة للدفع إن لم يتغير diff. أعده فقط بعد patch مرتبط بفشل مثبت من الـdiff الحالي (صنف A).
+فشل سابق/غير مرتبط (صنف B) → follow-up بلا إصلاح داخل المهمة. مؤقت/بنية (صنف C) → إعادة تشغيل واحدة بدليل فقط.
+عند فشل أي أمر: **لا commit ولا push** — صنّف الفشل، أصلح صنف A فقط، أعد المستهدف ثم `verify:preflight` ثم `verify:ci` مرة.
 
 ## بعد الدفع
 ```bash
@@ -63,4 +70,5 @@ gh run view --log-failed
 - Color contrast إذا كان التعديل UI
 - بوابات iOS/Android إذا كان التعديل native
 
-`verify:pr` مسار أسرع جزئي؛ **`verify:ci` هو البوابة الإلزامية قبل الدفع**.
+`verify:pr` مسار أسرع جزئي؛ **`verify:preflight` ثم `verify:ci` هما المسار الإلزامي قبل الدفع**.
+بعد نجاح `verify:ci` انتقل فورًا إلى Delivery/PR بلا تحليل أو تحسينات إضافية.

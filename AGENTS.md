@@ -5,13 +5,16 @@
 المسار الإلزامي لكل مهمة:
 `Targeted Read → Plan → Patch → Focused Test → Full Verify`
 
+مع **Finalization Freeze Protocol** (إلزامي): Discovery → Implementation → Focused Verification → Final Verification → Delivery.
+قبل التحقق النهائي أعلن داخليًا `IMPLEMENTATION_FROZEN`؛ بعده ممنوع البحث العام وتوسيع النطاق وإصلاح غير مرتبط وبدء Queued. التفاصيل: `docs/AGENT_THROUGHPUT.md`.
+
 التفاصيل: `docs/AGENT_THROUGHPUT.md` · قاعدة Cursor: `.cursor/rules/majlisilm-agent-throughput.mdc` · سلامة CI: `.cursor/rules/majlisilm-ci-safe.mdc`.
 فهرس المسارات: `docs/REPO_INDEX.md`. قياس CI: `docs/CI_THROUGHPUT.md`.
 
-قواعد مختصرة: لا استكشاف شامل بعد تحديد النطاق · لا patch تخميني قبل قراءة الملف كاملًا · اختبارات مستهدفة قبل `verify:ci` · `verify:ci` مرة واحدة بعد نجاح المستهدف · لا تخفيف بوابات جودة · PR واحد لكل مهمة · توقف بعد فشل patch مرتين أو تعارض تعليمات.
+قواعد مختصرة: لا استكشاف شامل بعد تحديد النطاق · لا patch تخميني قبل قراءة الملف كاملًا · Scope Manifest قبل أول تعديل · بعد `IMPLEMENTATION_FROZEN` لا بحث عام ولا توسيع نطاق · اختبارات مستهدفة ثم `pnpm run verify:preflight` قبل `verify:ci` · `verify:ci` مرة واحدة بعد نجاح preflight إن لم يتغير diff · فشل غير مرتبط = follow-up · لا تخفيف بوابات جودة · PR واحد لكل مهمة · لا تبدأ Queued قبل إغلاق الحالية · توقف بعد فشل patch مرتين أو تعارض تعليمات.
 
 **قبل الدفع:** من جذر git (`cd "$(git rev-parse --show-toplevel)"`) شغّل:
-`corepack enable && pnpm install --frozen-lockfile && pnpm run verify:ci`
+`corepack enable && pnpm install --frozen-lockfile && pnpm run verify:preflight && pnpm run verify:ci`
 لا commit/push عند الفشل. لا تضعف الفحوصات.
 
 **بعد الدفع:** راقب الحرجة بـ `gh pr checks --watch --fail-fast`. الدمج بعد نجاح Verify build + repo-gates + build + static-checks (وContrast/UI أو native حسب نطاق الـPR).

@@ -51,6 +51,9 @@ reports/verify-pr-ready-latest.json
 reports/changed-scope.json
 reports/auto-maintenance/
 
+# Local verify fingerprint reuse (never commit)
+.cache/majalis-verify/
+
 # ECC tools generated agent bundles (regenerable — do not track)
 # Keep patterns in sync with scripts/verify-no-tracked-ecc-bundles.mjs
 .claude/ecc-tools.json
