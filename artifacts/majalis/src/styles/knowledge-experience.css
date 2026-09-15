@@ -875,3 +875,110 @@ html[data-theme="dark"] .app-back-btn--bar.fixed-back-bar {
   color: var(--text-primary, #ECF2EF);
   border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 28%, transparent);
 }
+
+/* —— Content Experience Audit Closure —— */
+/* زر رجوع ثابت أخف وأهدأ — يبقى ثابتًا في مكانه */
+.app-back-btn--bar.fixed-back-bar,
+button.app-back-btn--bar[data-fixed-back-bar="1"] {
+  min-height: 42px;
+  min-width: 42px;
+  padding: 0.45rem 0.9rem 0.45rem 0.75rem;
+  gap: 0.35rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 18%, transparent);
+  background: color-mix(in srgb, var(--mj-surface, #fff) 92%, transparent);
+  box-shadow:
+    0 4px 14px -10px rgba(11, 32, 24, 0.28),
+    inset 0 1px 0 color-mix(in srgb, #fff 40%, transparent);
+  backdrop-filter: blur(10px) saturate(1.08);
+  -webkit-backdrop-filter: blur(10px) saturate(1.08);
+}
+.app-back-btn--bar.fixed-back-bar:hover {
+  box-shadow:
+    0 6px 16px -10px rgba(11, 32, 24, 0.32),
+    inset 0 1px 0 color-mix(in srgb, #fff 45%, transparent);
+}
+
+/* بطاقات معرفة أخف + هرمية أوضح */
+.kx-layout--reader,
+.kx-layout--hadith,
+.kx-layout--knowledge {
+  gap: 0.45rem;
+}
+.kx-block {
+  padding: 0.7rem 0.85rem;
+}
+.kx-block__label {
+  margin-bottom: 0.28rem;
+  font-size: 0.68rem;
+  opacity: 0.92;
+}
+.kx-block__title {
+  margin-bottom: 0.4rem;
+  font-size: 1.02rem;
+}
+.kx-block--definition {
+  padding-block: 0.1rem 0.25rem;
+}
+.kx-block--warning {
+  background: color-mix(in srgb, #b45309 7%, var(--kx-surface));
+  border: 1px solid color-mix(in srgb, #b45309 22%, transparent);
+}
+.kx-block--sources {
+  padding-block: 0.55rem 0.35rem;
+  opacity: 0.98;
+}
+.kx-block--related .kx-block__body,
+.kx-block--sources .kx-block__body {
+  font-size: 0.9rem;
+  color: var(--kx-muted);
+}
+
+/* Accordion أسئلة مختصرة — أنظف */
+.kx-faq {
+  gap: 0.35rem;
+}
+.kx-faq__item {
+  border-radius: 12px;
+  border-color: color-mix(in srgb, var(--kx-brand) 14%, transparent);
+  background: color-mix(in srgb, var(--kx-surface) 96%, var(--kx-brand) 4%);
+  transition: border-color 160ms ease, background 160ms ease;
+}
+.kx-faq__item[open] {
+  border-color: color-mix(in srgb, var(--kx-brand) 28%, transparent);
+  background: var(--kx-surface);
+}
+.kx-faq__q {
+  padding: 0.7rem 0.85rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  list-style: none;
+}
+.kx-faq__q::-webkit-details-marker { display: none; }
+.kx-faq__q::after {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-inline-end: 2px solid color-mix(in srgb, var(--kx-brand) 55%, transparent);
+  border-block-end: 2px solid color-mix(in srgb, var(--kx-brand) 55%, transparent);
+  transform: rotate(45deg);
+  transition: transform 180ms ease;
+  flex-shrink: 0;
+  margin-inline-start: auto;
+}
+.kx-faq__item[open] .kx-faq__q::after {
+  transform: rotate(-135deg);
+}
+.kx-faq__a {
+  padding: 0 0.85rem 0.75rem;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--kx-muted);
+}
+@media (prefers-reduced-motion: reduce) {
+  .kx-faq__item,
+  .kx-faq__q::after {
+    transition: none;
+  }
+}

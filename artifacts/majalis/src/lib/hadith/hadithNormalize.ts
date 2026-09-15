@@ -44,7 +44,10 @@ export function classifyHadithGrade(grade: string | null | undefined): HadithGra
   return "unknown";
 }
 
-/** صيغة موحّدة: «الحكم: صحيح» */
+/**
+ * صيغة موحّدة للواجهة العامة: «الحكم: صحيح».
+ * حالات التحرير الداخلية (قيد التدقيق / غير معروف بلا نص) لا تُعرض للمستخدم.
+ */
 export function formatHadithGradeLabel(grade: string | null | undefined): string {
   const kind = classifyHadithGrade(grade);
   switch (kind) {
@@ -57,10 +60,20 @@ export function formatHadithGradeLabel(grade: string | null | undefined): string
     case "mawdu":
       return "الحكم: موضوع";
     case "pending":
-      return "الحكم: قيد التدقيق";
-    default:
-      return "الحكم: قيد التدقيق";
+      /* حالة تحريرية داخلية — لا تُعرض في الواجهة العامة */
+      return "";
+    default: {
+      const raw = String(grade || "").trim();
+      if (!raw) return "";
+      /* حكم نصّي غير مصنَّف — نعرضه كما هو بلا وسم workflow */
+      return `الحكم: ${raw}`;
+    }
   }
+}
+
+/** هل للحكم شارة عامة آمنة للعرض؟ */
+export function hasPublicHadithGrade(grade: string | null | undefined): boolean {
+  return formatHadithGradeLabel(grade).length > 0;
 }
 
 export function hadithGradeCssClass(grade: string | null | undefined): string {
@@ -113,7 +126,9 @@ export function buildHadithShareText(
 ): string {
   const excerpt = summarizeHadithMatn(item, 100);
   const grade = formatHadithGradeLabel(item.grade);
-  return `من موقع سُنّة: ${excerpt} - ${grade} ${url}`;
+  return grade
+    ? `من موقع سُنّة: ${excerpt} - ${grade} ${url}`
+    : `من موقع سُنّة: ${excerpt} ${url}`;
 }
 
 export function sanitizeHadithDisplay(value: string | null | undefined): string {

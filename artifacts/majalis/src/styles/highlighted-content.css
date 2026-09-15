@@ -460,3 +460,25 @@ html[data-reading-mode="quiet"] .highlighted-card__highlight {
   font-size: 0.9rem;
   color: var(--mj-ink-2, #4f5f58);
 }
+
+/* —— Content Experience Audit Closure —— */
+.highlighted-content-card {
+  padding: 0.9rem 1rem;
+  gap: 0.65rem;
+}
+.highlighted-card__body {
+  gap: 0.65rem;
+}
+.highlighted-card__highlight {
+  padding: 0.8rem 0.9rem;
+  border-radius: 0.75rem;
+}
+.highlighted-card__tags {
+  gap: 0.3rem;
+}
+.highlighted-card__repeat,
+.highlighted-card__grade {
+  font-size: 0.75rem;
+  padding: 0.12rem 0.42rem;
+  font-weight: 650;
+}

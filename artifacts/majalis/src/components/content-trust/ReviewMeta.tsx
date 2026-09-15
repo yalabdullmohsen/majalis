@@ -40,9 +40,8 @@ export function ReviewMeta({
   if (reviewedBy && reviewedBy.trim()) {
     parts.push(`المراجع: ${reviewedBy.trim()}`);
     if (reviewedAt) parts.push(`تاريخ المراجعة: ${formatIsoDate(reviewedAt)}`);
-  } else if (editorialReviewStatus === "unreviewed") {
-    parts.push("لم يُراجع تحريرياً بعد");
   }
+  /* لا نعرض حالات تحريرية داخلية (لم يُراجع / قيد التدقيق) في الواجهة العامة */
 
   if (parts.length === 0) return null;
 

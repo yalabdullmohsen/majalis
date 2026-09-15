@@ -10,9 +10,10 @@ type Props = {
   title?: string;
 };
 
-/** شارة حكم الحديث — صيغة موحّدة. */
+/** شارة حكم الحديث — صيغة موحّدة. تُخفى عند غياب حكم عام (لا تعرض حالات تحريرية). */
 export function HadithGradeBadge({ grade, className = "", title }: Props) {
   const label = formatHadithGradeLabel(grade);
+  if (!label) return null;
   const cls = hadithGradeCssClass(grade);
   return (
     <span
