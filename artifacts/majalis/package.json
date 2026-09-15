@@ -530,7 +530,7 @@
     "verify:fiqh-content": "node scripts/verify-fiqh-content.mjs",
     "test:islamic-history-redirect": "node --import tsx src/lib/__tests__/islamic-history-redirect-gate.test.ts",
     "test:content-catalog-blurbs": "node --import tsx src/lib/__tests__/content-catalog-blurbs-gate.test.ts",
-    "test:kuwait-lessons-quality": "node --import tsx src/lib/__tests__/kuwait-lessons-quality-gate.test.ts",
+    "test:kuwait-lessons-quality": "node --import tsx src/lib/__tests__/kuwait-lessons-quality-gate.test.ts && node --import tsx src/lib/__tests__/lesson-deduper.test.ts",
     "test:no-more-library": "node scripts/test-no-more-library-brand.mjs",
     "test:security-ui-hardening": "node --import tsx src/lib/__tests__/security-ui-hardening-gate.test.ts",
     "test:boot-cold-start": "playwright test tests/boot-cold-start-smoke.spec.ts --project=mobile",

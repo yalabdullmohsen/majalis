@@ -1,28 +1,5 @@
 [
   {
-    "external_key": "sci-tawheed-saltaweel",
-    "title": "شرح كتاب التوحيد من صحيح البخاري",
-    "speaker_name": "سالم بن سعد الطويل",
-    "category": "عقيدة",
-    "city": "",
-    "region": "جنوب عبدالله المبارك",
-    "mosque": "ديوان: أحمد غربي الرمالي الشمري (أبو عبدالعزيز)",
-    "day_of_week": "الأحد",
-    "lesson_time": "9:15 مساءً",
-    "schedule": "الأحد — 9:15 مساءً",
-    "description": "الدرس كل أحد. توجد نسخ للحضور. جميع الدروس تنقل عن طريق البث المباشر.",
-    "audience": "الكل",
-    "delivery": "كلاهما",
-    "status": "approved",
-    "activity_type": "درس",
-    "is_course": false,
-    "keywords": ["عقيدة", "حديث", "أسبوعي", "بث مباشر", "سالم الطويل", "التوحيد"],
-    "live_url": "https://www.saltaweel.com",
-    "book_url": "https://www.saltaweel.com",
-    "organizer": "مجلس الشيخ سالم بن سعد الطويل",
-    "contact_phone": "0096555199147"
-  },
-  {
     "external_key": "course-ijazati-taah-2026-0",
     "title": "ملتقى إجازتي طاعة — ليس في العمر إجازة",
     "speaker_name": "نصار خالد نصار العجمي",
@@ -44,7 +21,14 @@
     "start_date": "2026-06-21",
     "organizer": "وزارة الشؤون الإسلامية — إدارة مساجد محافظة الفروانية — جمعية الهداية الخيرية",
     "contact_phone": "60789104",
-    "keywords": ["دورة", "محاضرة", "ملتقى", "حضوري", "بث", "إجازتي طاعة"]
+    "keywords": [
+      "دورة",
+      "محاضرة",
+      "ملتقى",
+      "حضوري",
+      "بث",
+      "إجازتي طاعة"
+    ]
   },
   {
     "external_key": "course-ijazati-taah-2026-1",
@@ -66,7 +50,11 @@
     "course_id": "course-ijazati-taah-2026",
     "session_count": 5,
     "start_date": "2026-06-23",
-    "keywords": ["دورة", "محاضرة", "ملتقى"]
+    "keywords": [
+      "دورة",
+      "محاضرة",
+      "ملتقى"
+    ]
   },
   {
     "external_key": "course-ijazati-taah-2026-2",
@@ -88,7 +76,11 @@
     "course_id": "course-ijazati-taah-2026",
     "session_count": 5,
     "start_date": "2026-06-28",
-    "keywords": ["دورة", "محاضرة", "ملتقى"]
+    "keywords": [
+      "دورة",
+      "محاضرة",
+      "ملتقى"
+    ]
   },
   {
     "external_key": "course-ijazati-taah-2026-3",
@@ -110,7 +102,11 @@
     "course_id": "course-ijazati-taah-2026",
     "session_count": 5,
     "start_date": "2026-06-29",
-    "keywords": ["دورة", "محاضرة", "ملتقى"]
+    "keywords": [
+      "دورة",
+      "محاضرة",
+      "ملتقى"
+    ]
   },
   {
     "external_key": "course-ijazati-taah-2026-4",
@@ -132,6 +128,10 @@
     "course_id": "course-ijazati-taah-2026",
     "session_count": 5,
     "start_date": "2026-06-30",
-    "keywords": ["دورة", "محاضرة", "ملتقى"]
+    "keywords": [
+      "دورة",
+      "محاضرة",
+      "ملتقى"
+    ]
   }
 ]

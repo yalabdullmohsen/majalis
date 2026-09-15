@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- يطابق SPLASH_BG_DARK / index.html dark splash — يمنع وميض فاتح→داكن على Android 12+ -->
+    <color name="splash_background">#101614</color>
+</resources>

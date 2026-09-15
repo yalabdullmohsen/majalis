@@ -1381,41 +1381,6 @@
     "session_count": null
   },
   {
-    "id": "sci-tawheed-saltaweel",
-    "external_key": "sci-tawheed-saltaweel",
-    "title": "شرح كتاب التوحيد من صحيح البخاري",
-    "speaker_name": "سالم بن سعد الطويل",
-    "sheikh_image_url": "/sheikhs/salem-altaweel.jpg",
-    "category": "عقيدة",
-    "city": "الفروانية",
-    "region": "عبدالله المبارك",
-    "mosque": "ديوان: أحمد غربي الرمالي الشمري (أبو عبدالعزيز)",
-    "day_of_week": "الأحد",
-    "lesson_time": "9:15 مساءً",
-    "schedule": "الأحد — 9:15 مساءً",
-    "description": "الدرس كل أحد. · توجد نسخ للحضور. · جميع الدروس تنقل عن طريق البث المباشر في حسابات الشيخ حفظه الله. · المتن: شرح كتاب التوحيد من صحيح البخاري",
-    "audience": "الكل",
-    "delivery": "كلاهما",
-    "status": "approved",
-    "keywords": [
-      "عقيدة",
-      "حديث",
-      "أسبوعي",
-      "بث مباشر"
-    ],
-    "live_url": "https://www.saltaweel.com",
-    "book_url": "https://www.saltaweel.com",
-    "end_date": null,
-    "is_recurring": true,
-    "activity_type": "درس",
-    "is_course": false,
-    "sheikhs": {
-      "name": "سالم بن سعد الطويل"
-    },
-    "course_id": null,
-    "session_count": null
-  },
-  {
     "id": "sci-rawdat-alafham-muwaiziri",
     "external_key": "sci-rawdat-alafham-muwaiziri",
     "title": "شرح روضة الأفهام في شرح زوائد المحرر على بلوغ المرام",

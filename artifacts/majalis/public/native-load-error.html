@@ -161,6 +161,23 @@
       button:active {
         opacity: 0.92;
       }
+
+      /* مسار الاستعادة الصامت: نفس سطح الدخولية بلا نسخة تحميل ثانية ظاهرة */
+      .is-loading .soft-status {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+      }
+      .is-loading .mushaf-skel {
+        display: none !important;
+      }
+
       /* مسار الاستعادة الناعم: نفس سطح الدخولية — بلا شاشة رمادية ثانية */
       .is-loading .actions {
         display: none;

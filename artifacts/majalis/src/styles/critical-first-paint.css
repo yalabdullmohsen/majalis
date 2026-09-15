@@ -97,7 +97,7 @@ html.app-booting .app-top-chrome {
 }
 html.app-booting .bottom-nav,
 html.app-booting .bottom-nav--v2 {
-  min-height: var(--bottom-nav-height, 64px);
+  min-height: var(--nav-h, var(--bottom-nav-height, 64px));
 }
 html.app-booting .hus-field {
   min-height: 52px;
