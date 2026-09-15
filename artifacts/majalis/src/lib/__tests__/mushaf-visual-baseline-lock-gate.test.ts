@@ -31,29 +31,29 @@ assert.match(page, /nm-page__ornament-frame/);
 
 /**
  * ميدالية الفاتحة (ص1) — قبل: 2.2% 10% 18% (~80%×79.8%)
- * بعد القفل: 1.2% 5% 11% (~90%×87.8%) ≈ +12–13%
+ * بعد القفل: 0.5% 1.5% 4% (~97%×95.5%) ≈ +12–13%
  */
 const fatihaBlock = css.slice(
   css.indexOf(".nm-page__fatiha-medallion {"),
   css.indexOf(".nm-page__fatiha-medallion {") + 520,
 );
-assert.match(fatihaBlock, /inset:\s*1\.2%\s+5%\s+11%/);
-assert.doesNotMatch(fatihaBlock, /inset:\s*2\.2%\s+10%\s+18%/);
+assert.match(fatihaBlock, /inset:\s*0\.5%\s+1\.5%\s+4%/);
+assert.doesNotMatch(fatihaBlock, /inset:\s*1\.2%\s+5%\s+11%/);
 
 /**
  * ميدالية البقرة (ص2) — قبل: 3% 11% 22% (~78%×75%)
- * بعد القفل: 1.8% 6.5% 15% (~87%×83.2%) ≈ +11–12%
+ * بعد القفل: 0.9% 1.5% 6% (~97%×93.1%) ≈ +11–12%
  */
 const baqarahBlock = css.slice(
   css.indexOf(".nm-page--lead .nm-page__fatiha-medallion"),
   css.indexOf(".nm-page--lead .nm-page__fatiha-medallion") + 280,
 );
-assert.match(baqarahBlock, /inset:\s*1\.8%\s+6\.5%\s+15%/);
-assert.doesNotMatch(baqarahBlock, /inset:\s*3%\s+11%\s+22%/);
+assert.match(baqarahBlock, /inset:\s*0\.9%\s+1\.5%\s+6%/);
+assert.doesNotMatch(baqarahBlock, /inset:\s*1\.8%\s+6\.5%\s+15%/);
 assert.match(page, /sunnah-fatiha-medallion|SunnahFatihaBraidedMedallion/);
 assert.match(page, /sunnah-baqarah-medallion|SunnahBaqarahMedallion/);
 
-/** وردة الآية — Visual Baseline (Comfort Pass مقفل؛ بلا زيادة تسبب lineOverflow) */
+/** وردة الآية — Visual Baseline مقفل عند 1.15em (زيادة إضافية تكسر ص600) */
 assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
 assert.doesNotMatch(css, /--mushaf-ayah-mark-size:\s*0\.98em/);
 
