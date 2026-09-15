@@ -6,38 +6,38 @@
 
 html[data-theme="dark"],
 html.dark {
-  /* ── Semantic Dark Tokens (جسر موحّد) ── */
-  --dm-bg: #131a18;
-  --dm-bg-subtle: #161e1b;
+  /* ── Semantic Dark Tokens (جسر موحّد) — Premium Islamic calm ── */
+  --dm-bg: #0f1613;
+  --dm-bg-subtle: #141c19;
   --dm-surface: #1b2421;
   --dm-surface-2: #222d29;
   --dm-surface-elevated: #24302b;
   --dm-surface-interactive: #2b3933;
-  --dm-surface-selected: color-mix(in srgb, #4fb48b 16%, #1b2421);
+  --dm-surface-selected: color-mix(in srgb, #4fb48b 14%, #1b2421);
   --dm-surface-feature: #16352c;
   --dm-surface-overlay: color-mix(in srgb, #0a1210 72%, transparent);
   --dm-surface-scrim: color-mix(in srgb, #050a08 58%, transparent);
 
-  --dm-text-primary: #f8fafc;
-  --dm-text-secondary: #e2e8f0;
-  --dm-text-muted: #c5d0cb;
+  --dm-text-primary: #ede8df;
+  --dm-text-secondary: #d8d0c4;
+  --dm-text-muted: #b5ada0;
   --dm-text-disabled: #8a9a93;
   --dm-text-on-primary: #06231a;
-  --dm-text-on-feature: #f4fbf7;
+  --dm-text-on-feature: #f3efe6;
   --dm-text-link: #8fd4b0;
   --dm-text-inverse: #0c1612;
 
-  --dm-border-subtle: #35443f;
+  --dm-border-subtle: color-mix(in srgb, #8fd4b0 12%, #35443f);
   --dm-border-default: #445651;
-  --dm-divider: color-mix(in srgb, #8fd4b0 14%, #2a3733);
-  --dm-focus-ring: color-mix(in srgb, #d9b871 42%, transparent);
+  --dm-divider: color-mix(in srgb, #8fd4b0 12%, #2a3733);
+  --dm-focus-ring: color-mix(in srgb, #c9a86c 38%, transparent);
 
   --dm-primary: #4fb48b;
   --dm-primary-hover: #5cc095;
   --dm-primary-pressed: #3d9a74;
   --dm-primary-container: #16261f;
-  --dm-accent-gold: #d9b871;
-  --dm-accent-gold-subtle: color-mix(in srgb, #d9b871 18%, #1b2421);
+  --dm-accent-gold: #c9a86c;
+  --dm-accent-gold-subtle: color-mix(in srgb, #c9a86c 16%, #1b2421);
   --dm-success: #6bcf9a;
   --dm-warning: #e2c07a;
   --dm-error: #f2b8c0;
@@ -45,11 +45,11 @@ html.dark {
 
   --dm-card: var(--dm-surface-elevated);
   --dm-hero: var(--dm-surface-feature);
-  --dm-text-on-feature: #f4fbf7;
+  --dm-text-on-feature: #f3efe6;
   --dm-text-on-primary: #06231a;
   --dm-input: #1a2421;
-  --dm-input-placeholder: #a8b5af;
-  --dm-bottom-nav: #1a2220;
+  --dm-input-placeholder: #b5ada0;
+  --dm-bottom-nav: #121916;
   --dm-drawer: #1c2622;
   --dm-drawer-item: transparent;
   --dm-drawer-item-selected: var(--dm-surface-selected);
@@ -113,7 +113,7 @@ html.dark [data-card="1"] {
   background-image: none !important;
   color: var(--dm-text-primary) !important;
   border-color: var(--dm-border-subtle) !important;
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--dm-primary) 10%, transparent) !important;
+  box-shadow: 0 6px 18px -14px rgba(0, 0, 0, 0.42) !important;
 }
 
 /* ═══ Bottom Navigation — كان يستخدم brand-on-light (أخضر داكن) ═══ */
@@ -147,7 +147,9 @@ html.dark .bottom-nav__tab.is-active,
 html.dark .bottom-nav__tab.is-active .bottom-nav__tab-label,
 html.dark .bottom-nav__tab.is-active .bottom-nav__tab-icon {
   color: var(--dm-accent-gold) !important;
-  background: color-mix(in srgb, var(--dm-primary) 14%, transparent) !important;
+  background: color-mix(in srgb, var(--dm-primary) 12%, transparent) !important;
+  filter: none !important;
+  text-shadow: none !important;
 }
 
 html[data-theme="dark"] .bottom-nav__tab.is-active::before,
@@ -155,6 +157,7 @@ html.dark .bottom-nav__tab.is-active::before {
   background: var(--dm-accent-gold) !important;
   opacity: 1 !important;
   box-shadow: none !important;
+  filter: none !important;
 }
 
 /* ═══ Side Drawer ═══ */

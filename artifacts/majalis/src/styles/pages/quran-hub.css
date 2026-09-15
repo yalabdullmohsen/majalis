@@ -182,19 +182,37 @@
 
 html[data-theme="dark"] .quran-open-mushaf,
 html.dark .quran-open-mushaf {
-  background: color-mix(in srgb, var(--mj-surface, #1a221f) 94%, var(--mj-brand-deep) 6%);
-  border-color: color-mix(in srgb, var(--qom-accent) 28%, var(--mj-hairline, rgba(255, 255, 255, 0.08)));
-  box-shadow: 0 8px 22px -16px rgba(0, 0, 0, 0.55);
+  background: var(--surface-elevated, #24302b);
+  border-color: color-mix(in srgb, var(--qom-accent, #c9a86c) 22%, var(--mj-hairline, #35443f));
+  box-shadow: 0 6px 18px -14px rgba(0, 0, 0, 0.42);
+}
+
+html[data-theme="dark"] .quran-hub-hero,
+html.dark .quran-hub-hero {
+  background: var(--surface-app, #0f1613);
+  background-image: none;
+}
+
+html[data-theme="dark"] .quran-hub-hero::before,
+html.dark .quran-hub-hero::before {
+  opacity: 0.22;
+}
+
+html[data-theme="dark"] .quran-hub-hero__ornament,
+html.dark .quran-hub-hero__ornament {
+  opacity: 0.35;
+  color: color-mix(in srgb, #c9a86c 55%, #8fd4b0);
 }
 
 html[data-theme="dark"] .quran-open-mushaf__title,
 html.dark .quran-open-mushaf__title {
-  color: var(--msk-text-1, #f2f5f3);
+  color: var(--pd-ink, #ede8df);
 }
 
 html[data-theme="dark"] .quran-open-mushaf__desc,
 html.dark .quran-open-mushaf__desc {
-  color: color-mix(in srgb, var(--msk-text-1, #e8eeec) 78%, transparent);
+  color: var(--pd-ink-2, #d8d0c4);
+  opacity: 1;
 }
 
 html[data-theme="dark"] .quran-open-mushaf__resume,

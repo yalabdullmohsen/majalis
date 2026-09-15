@@ -1,0 +1,259 @@
+/**
+ * Premium Dark Refine — سُنّة
+ * صقل ليلي هادئ دون إعادة تصميم المنتج أو تغيير التخطيط/التنقّل/الهوية.
+ * يُحمَّل مع dark-design-system (غير حرج لأول طلاء).
+ *
+ * سلم الأسطح (--pd-*):
+ *   bg-1 → خلفية التطبيق (غابة عميقة)
+ *   bg-2 → سطح ثانوي
+ *   card → بطاقة
+ *   elevated → تفاعلي/مرتفع
+ */
+
+:is(html[data-theme="dark"], html.dark) {
+  /* ═══ Premium Islamic dark tokens ═══ */
+  --pd-bg-1: #0f1613;
+  --pd-bg-2: #1b2421;
+  --pd-card: #24302b;
+  --pd-elevated: #2b3933;
+  --pd-emerald: #4fb48b;
+  --pd-emerald-soft: #5cc095;
+  --pd-gold: #c9a86c;
+  --pd-gold-soft: color-mix(in srgb, #c9a86c 16%, #1b2421);
+  --pd-ink: #ede8df;
+  --pd-ink-2: #d8d0c4;
+  --pd-ink-muted: #b5ada0;
+  --pd-border: color-mix(in srgb, #c9a86c 10%, #35443f);
+  --pd-border-subtle: color-mix(in srgb, #8fd4b0 12%, #35443f);
+  --pd-shadow-card: 0 6px 18px -14px rgba(0, 0, 0, 0.42);
+  --pd-shadow-elevated: 0 10px 28px -18px rgba(0, 0, 0, 0.5);
+  --pd-glow-active: 0 0 0 1px color-mix(in srgb, var(--pd-emerald) 22%, transparent);
+  --pd-glow-none: none;
+
+  /* ربط السلم بالرموز الحية (لا يكسر --surface-elevated المقفل) */
+  --surface-app: var(--pd-bg-1);
+  --dm-bg: var(--pd-bg-1);
+  --mj-bg: var(--pd-bg-1);
+  --bg: var(--pd-bg-1);
+  --app-bg: var(--pd-bg-1);
+  --bg-base: var(--pd-bg-1);
+  --mj-splash: var(--pd-bg-1);
+
+  --dm-bg-subtle: #141c19;
+  --dm-surface: var(--pd-bg-2);
+  --surface-1: var(--pd-bg-2);
+  --mj-surface: var(--pd-bg-2);
+
+  --dm-card: var(--pd-card);
+  --dm-surface-elevated: var(--pd-card);
+  --surface-elevated: var(--pd-card);
+
+  --dm-surface-interactive: var(--pd-elevated);
+  --surface-interactive: var(--pd-elevated);
+  --mj-surface-3: var(--pd-elevated);
+
+  /* طباعة دافئة — أقل بياضًا قاسيًا */
+  --dm-text-primary: var(--pd-ink);
+  --dm-text-secondary: var(--pd-ink-2);
+  --dm-text-muted: var(--pd-ink-muted);
+  --mj-ink: var(--pd-ink);
+  --mj-ink-2: var(--pd-ink-2);
+  --mj-muted: var(--pd-ink-muted);
+  --text: var(--pd-ink);
+  --text-2: var(--pd-ink-2);
+  --text-meta: var(--pd-ink-muted);
+  --text-title: var(--pd-ink);
+  --text-primary: var(--pd-ink);
+  --text-secondary: var(--pd-ink-2);
+  --text-muted: var(--pd-ink-muted);
+  --foreground: var(--pd-ink);
+  --color-ink: var(--pd-ink);
+  --color-ink-2: var(--pd-ink-2);
+  --color-text: var(--pd-ink);
+  --txt-primary: var(--pd-ink);
+  --txt-secondary: var(--pd-ink-2);
+  --txt-muted: var(--pd-ink-muted);
+  --on-dark-strong: #f3efe6;
+  --on-dark-body: var(--pd-ink);
+  --on-dark-secondary: var(--pd-ink-2);
+
+  /* زمرد + ذهب ناعم */
+  --dm-primary: var(--pd-emerald);
+  --dm-primary-hover: var(--pd-emerald-soft);
+  --dm-accent-gold: var(--pd-gold);
+  --dm-accent-gold-subtle: var(--pd-gold-soft);
+  --mj-accent: var(--pd-gold);
+  --gold: var(--pd-gold);
+  --color-accent: var(--pd-gold);
+
+  --dm-border-subtle: var(--pd-border-subtle);
+  --border: var(--pd-border-subtle);
+  --mj-hairline: var(--pd-border-subtle);
+  --border-elevated: var(--pd-border);
+
+  --dm-bottom-nav: #121916;
+  --dm-focus-ring: color-mix(in srgb, var(--pd-gold) 38%, transparent);
+
+  /* ظلال موحّدة هادئة */
+  --shadow-mj: var(--pd-shadow-card);
+  --mj-elev-1: var(--pd-shadow-card);
+  --mj-elev-2: var(--pd-shadow-elevated);
+  --mj-elev-3: var(--pd-shadow-elevated);
+  --mss-shadow-card: var(--pd-shadow-card);
+  --mss-hero-glow: transparent;
+  --mss-hero-glow-strong: transparent;
+}
+
+/* ═══ بطاقات: حدود خفيفة + ظل ناعم بلا نيون ═══ */
+:is(html[data-theme="dark"], html.dark) .soft-card,
+:is(html[data-theme="dark"], html.dark) .soft-card--on-light,
+:is(html[data-theme="dark"], html.dark) .hub-card,
+:is(html[data-theme="dark"], html.dark) .section-entry-card,
+:is(html[data-theme="dark"], html.dark) .ss-card,
+:is(html[data-theme="dark"], html.dark) .mj-card,
+:is(html[data-theme="dark"], html.dark) .content-card,
+:is(html[data-theme="dark"], html.dark) .feature-card,
+:is(html[data-theme="dark"], html.dark) .info-card,
+:is(html[data-theme="dark"], html.dark) .hadith-card,
+:is(html[data-theme="dark"], html.dark) .reading-section-card,
+:is(html[data-theme="dark"], html.dark) .rsc,
+:is(html[data-theme="dark"], html.dark) [data-card="1"],
+:is(html[data-theme="dark"], html.dark) .home-start-here,
+:is(html[data-theme="dark"], html.dark) .ss-feature-card,
+:is(html[data-theme="dark"], html.dark) .m2030-feature {
+  border-color: var(--pd-border-subtle) !important;
+  box-shadow: var(--pd-shadow-card) !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .soft-card:is(:focus-visible, .is-active, [aria-selected="true"]),
+:is(html[data-theme="dark"], html.dark) .hub-card:is(:focus-visible, .is-active, [aria-current="page"]),
+:is(html[data-theme="dark"], html.dark) .bottom-nav__tab.is-active,
+:is(html[data-theme="dark"], html.dark) .top-section-bar__tab.is-active,
+:is(html[data-theme="dark"], html.dark) .mj-segmented-filter [aria-pressed="true"],
+:is(html[data-theme="dark"], html.dark) .an-cat--active {
+  box-shadow: var(--pd-glow-active) !important;
+}
+
+/* ═══ إزالة الوهج الأخضر الزخرفي — الإبقاء على النشط فقط ═══ */
+:is(html[data-theme="dark"], html.dark) .m2030-hero__glow,
+:is(html[data-theme="dark"], html.dark) .page-hero-mj__glow,
+:is(html[data-theme="dark"], html.dark) .asp-hero__glow,
+:is(html[data-theme="dark"], html.dark) .sh-hero__glow,
+:is(html[data-theme="dark"], html.dark) .prophet-lux-card__glow,
+:is(html[data-theme="dark"], html.dark) [class$="__glow"]:not(.is-active):not([data-active="true"]) {
+  display: none !important;
+  opacity: 0 !important;
+  background: none !important;
+  filter: none !important;
+  animation: none !important;
+  box-shadow: none !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .sh-hero--compact,
+:is(html[data-theme="dark"], html.dark) .sh-hero {
+  background-image: none !important;
+  background-color: var(--surface-hero, #1a2822) !important;
+  box-shadow: none !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .section-hero,
+:is(html[data-theme="dark"], html.dark) .page-hero-mj,
+:is(html[data-theme="dark"], html.dark) .m2030-hero,
+:is(html[data-theme="dark"], html.dark) .mss-section-hero {
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* ═══ شريط سفلي: قاعدة أغمق + نشط ذهب/زمرد بلا وهج ═══ */
+:is(html[data-theme="dark"], html.dark) .bottom-nav,
+:is(html[data-theme="dark"], html.dark) .bottom-nav--v2,
+:is(html[data-theme="dark"], html.dark) .bottom-nav--m2030 {
+  background-color: var(--dm-bottom-nav, #121916) !important;
+  background-image: none !important;
+  border-top: 1px solid color-mix(in srgb, var(--pd-border-subtle) 80%, transparent) !important;
+  box-shadow: 0 -1px 0 color-mix(in srgb, var(--pd-gold) 8%, transparent) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .bottom-nav__tab.is-active,
+:is(html[data-theme="dark"], html.dark) .bottom-nav__tab.is-active .bottom-nav__tab-label,
+:is(html[data-theme="dark"], html.dark) .bottom-nav__tab.is-active .bottom-nav__tab-icon {
+  color: var(--pd-gold) !important;
+  background: color-mix(in srgb, var(--pd-emerald) 12%, transparent) !important;
+  filter: none !important;
+  text-shadow: none !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .bottom-nav__tab.is-active::before {
+  background: var(--pd-gold) !important;
+  box-shadow: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* ═══ قرآن: هدوء وتركيز على المحتوى ═══ */
+:is(html[data-theme="dark"], html.dark) .quran-hub-hero::before,
+:is(html[data-theme="dark"], html.dark) .quran-hub-hero__ornament {
+  opacity: 0.28 !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .quran-hub-hero {
+  background: var(--pd-bg-1) !important;
+  background-image: none !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .quran-open-mushaf {
+  background: var(--pd-card) !important;
+  border-color: var(--pd-border) !important;
+  box-shadow: var(--pd-shadow-card) !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .quran-open-mushaf__title {
+  color: var(--pd-ink) !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .quran-open-mushaf__desc {
+  color: var(--pd-ink-2) !important;
+  opacity: 1 !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .qe-viewer,
+:is(html[data-theme="dark"], html.dark) .qe-dash,
+:is(html[data-theme="dark"], html.dark) .qe-abar {
+  --qe-ink: #ebe4d8;
+  --qe-muted: #b0a898;
+  --qe-emerald: #6fbf9a;
+  --qe-panel: #15201c;
+  --qe-line: color-mix(in srgb, #c9a86c 14%, #2a3d35);
+}
+
+:is(html[data-theme="dark"], html.dark) .qe-page__nav button.is-on {
+  box-shadow: none !important;
+}
+
+/* راحة قراءة عربية عامة */
+:is(html[data-theme="dark"], html.dark) body,
+:is(html[data-theme="dark"], html.dark) #root,
+:is(html[data-theme="dark"], html.dark) .app-main {
+  background-color: var(--pd-bg-1) !important;
+  color: var(--pd-ink) !important;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:is(html[data-theme="dark"], html.dark) :is(h1, h2, h3, .page-title, .section-title) {
+  color: var(--pd-ink);
+  letter-spacing: 0;
+}
+
+/* خطوط زمنية / نقاط نشطة فقط تحتفظ بوهج خفيف */
+:is(html[data-theme="dark"], html.dark) .prophet-timeline__dot:not(.is-active):not([aria-current="true"]) {
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .prophet-timeline__dot.is-active,
+:is(html[data-theme="dark"], html.dark) .prophet-timeline__dot[aria-current="true"] {
+  box-shadow: var(--pd-glow-active) !important;
+}

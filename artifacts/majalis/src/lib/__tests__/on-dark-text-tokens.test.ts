@@ -28,11 +28,14 @@ assert(/--mj-bg:\s*var\(--surface-app\)/.test(theme), "theme: --mj-bg ← --surf
 assert(/\[data-on-dark\]/.test(theme), "theme: سياق [data-on-dark]");
 assert(/\.on-dark\s*\{/.test(theme), "theme: صنف .on-dark يعيد رموز النص");
 assert(/--on-green:/.test(theme), "theme: --on-green");
-assert(/--on-dark-strong:\s*#FFFFFF/.test(theme), "theme: --on-dark-strong أبيض صلب");
-assert(/--on-dark-body:\s*#F8FAFC/.test(theme), "theme: --on-dark-body واضح");
-assert(/--on-dark-secondary:\s*#E8EEEC/.test(theme), "theme: --on-dark-secondary مقروء");
-assert(/--mj-ink:\s*#F8FAFC/.test(theme), "theme ليلي: --mj-ink فاتح");
-assert(/--mj-muted:\s*#C5D0CB/.test(theme), "theme ليلي: --mj-muted ليس باهتًا");
+assert(/--on-dark-strong:\s*#FFFFFF/.test(theme), "theme: --on-dark-strong أبيض صلب (نهاري/on-dark)");
+assert(/--on-dark-body:\s*#F8FAFC/.test(theme), "theme: --on-dark-body واضح (أساس)");
+assert(/--on-dark-secondary:\s*#E8EEEC/.test(theme), "theme: --on-dark-secondary مقروء (أساس)");
+/* ليلي فاخر: حبر دافئ بدل الأبيض القاسي — مع بقاء AA (بوابة premium-dark) */
+assert(/--mj-ink:\s*#EDE8DF/.test(theme), "theme ليلي: --mj-ink دافئ");
+assert(/--mj-muted:\s*#B5ADA0/.test(theme), "theme ليلي: --mj-muted دافئ مقروء");
+assert(/--on-dark-strong:\s*#F3EFE6/.test(theme), "theme ليلي: --on-dark-strong دافئ");
+assert(/--on-dark-body:\s*#EDE8DF/.test(theme), "theme ليلي: --on-dark-body دافئ");
 assert(aliases.includes("--on-dark-strong"), "aliases: --on-dark-strong");
 assert(aliases.includes("--text-on-dark: var(--on-dark-strong)"), "aliases: text-on-dark → on-dark-strong");
 assert(/--on-brand-secondary:\s*#F8FAFC/.test(tokens), "tokens: on-brand-secondary صلب بلا alpha");

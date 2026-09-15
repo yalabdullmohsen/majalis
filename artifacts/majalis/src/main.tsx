@@ -78,6 +78,7 @@ import "./styles/dark-mode-recovery.css";
     void Promise.all([
       import("./styles/dark-mode-surfaces.css"),
       import("./styles/dark-design-system.css"),
+      import("./styles/premium-dark-refine.css"),
     ]);
   }
 }
@@ -139,11 +140,13 @@ function loadNonCriticalCss() {
     void Promise.all([
       import("./styles/dark-mode-surfaces.css"),
       import("./styles/dark-design-system.css"),
+      import("./styles/premium-dark-refine.css"),
     ]);
   } else {
     // تحميل مسبق لتمكين التبديل بدون وميض
     void import("./styles/dark-mode-surfaces.css");
     void import("./styles/dark-design-system.css");
+    void import("./styles/premium-dark-refine.css");
   }
 }
 function scheduleNonCriticalCss() {
