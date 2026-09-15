@@ -67,9 +67,10 @@
 
 | ملف | دور |
 |---|---|
-| `docs/AGENT_THROUGHPUT.md` | مسار Targeted Read → Plan → Patch → Focused Test → Full Verify |
-| `.cursor/rules/majlisilm-agent-throughput.mdc` | قاعدة Cursor الدائمة للمسار |
-| `.cursor/rules/majlisilm-ci-safe.mdc` | منع إضعاف CI قبل الدفع |
-| `scripts/__tests__/agent-throughput-policy.test.mjs` | بوابة نصية لمنع الدوران/تخفيف البوابات |
+| `docs/AGENT_THROUGHPUT.md` | مسار Targeted Read → … → Full Verify + **Finalization Freeze Protocol** |
+| `.cursor/rules/majlisilm-agent-throughput.mdc` | قاعدة Cursor الدائمة للمسار والتجميد |
+| `.cursor/rules/majlisilm-ci-safe.mdc` | منع إضعاف CI؛ `verify:preflight` قبل `verify:ci` |
+| `scripts/verify-preflight.mjs` | فحوص سريعة إلزامية قبل `verify:ci` (`pnpm run verify:preflight`) |
+| `scripts/__tests__/agent-throughput-policy.test.mjs` | بوابة نصية لمنع الدوران/التوسع/تخفيف البوابات |
 
-بروتوكول الوكيل: `docs/AGENT_THROUGHPUT.md`.
+بروتوكول الوكيل: `docs/AGENT_THROUGHPUT.md` (يشمل `IMPLEMENTATION_FROZEN` وميزانيات البحث/التصحيح).

@@ -1,5 +1,5 @@
 ---
-description: مسار تنفيذ الوكيل الإلزامي — Targeted Read → Plan → Patch → Focused Test → Full Verify
+description: مسار تنفيذ الوكيل + Finalization Freeze — Targeted Read → Plan → Patch → Focused Test → Full Verify
 alwaysApply: true
 ---
 
@@ -10,11 +10,25 @@ alwaysApply: true
 ## مسار إلزامي
 `Targeted Read → Plan → Patch → Focused Test → Full Verify`
 
+مراحل: Discovery → Implementation → Focused Verification → Final Verification → Delivery.
+لا رجوع لمرحلة سابقة إلا عند فشل مثبت مرتبط مباشرة بـdiff المهمة.
+
 1. **Targeted Read:** ابدأ من `docs/REPO_INDEX.md`؛ اقرأ الملف كاملًا قبل تعديله؛ لا تُعِد استكشاف ملف قُرئ بلا دليل جديد؛ ممنوع بحث عام إذا عُرف المسار.
-2. **Plan:** قبل أول تعديل اطبع خطة قصيرة (سبب · ملفات · فحص · توقف) بلا تحليل مطوّل.
-3. **Patch:** أصغر تغيير مكتمل؛ إن فشل لأجل اختلاف المحتوى أعد المحاولة مرة واحدة فقط بعد قراءة المقطع؛ بعد فشلين توقّف؛ ممنوع rewrite كامل لتغيير محدود.
-4. **Focused Test:** أصغر اختبار مرتبط أولًا؛ أصلح أول خطأ أصلي؛ ممنوع `verify:ci` بعد كل تعديل صغير؛ Lighthouse/visual/native فقط عند Path-lane أو النطاق.
-5. **Full Verify:** بعد نجاح المستهدف شغّل فحوص الحزمة ثم `pnpm run verify:ci` مرة واحدة؛ أعده فقط إذا تغيّرت ملفات بعد فشل.
+2. **Plan + Scope Manifest:** قبل أول تعديل اطبع خطة قصيرة (سبب · ملفات · فحص · توقف) وأنشئ Scope Manifest داخلي (هدف · ملفات · اختبارات · مستثنى · قبول).
+3. **Patch:** أصغر تغيير مكتمل داخل الـManifest؛ إن فشل لأجل اختلاف المحتوى أعد المحاولة مرة واحدة فقط بعد قراءة المقطع؛ بعد فشلين توقّف؛ ممنوع rewrite كامل لتغيير محدود.
+4. **IMPLEMENTATION_FROZEN:** قبل Focused Test راجع diff وأغلق تغييرات المهمة وأعلن التجميد. بعده ممنوع: بحث عام · متطلبات جديدة · ملفات خارج الـManifest · تنظيف قديم · إصلاح غير ناتج عن diff · تحويل follow-up · بدء Queued / تعديل PR آخر.
+5. **Focused Test + preflight:** أصغر اختبار مرتبط ثم `pnpm run verify:preflight`؛ أصلح أول خطأ أصلي من الـdiff فقط؛ ممنوع `verify:ci` بعد كل تعديل صغير؛ Lighthouse/visual/native فقط عند Path-lane أو النطاق.
+6. **Full Verify:** بعد نجاح preflight شغّل `pnpm run verify:ci` مرة واحدة؛ لا بحث/تعديل بالتوازي؛ لا تفسّر غياب stdout على أنه تعليق؛ أعده فقط إذا تغيّر diff بعد فشل صنف A.
+7. **Delivery:** بعد نجاح `verify:ci` انتقل فورًا إلى PR؛ لا تحليل مشروع ولا تحسينات إضافية.
+
+## Search / Patch Budget (بعد التجميد)
+- استعلام موجَّه واحد كحد أقصى لكل فشل مثبت؛ إن لم يكفِ → `BLOCKED_WITH_EVIDENCE`.
+- patch تصحيحي واحد لكل سبب جذري؛ دورة تصحيح نهائية واحدة؛ فشل مستقل ثانٍ → follow-up.
+
+## Failure Ownership
+- **A** ناتج عن diff: أصلح أول جذر فقط ثم المستهدف ثم `verify:ci` مرة أخيرة.
+- **B** سابق/غير مرتبط: لا تصلحه؛ أثبته على origin/main أو خارج diff؛ follow-up.
+- **C** بنية/مؤقت: لا تعدّل كودًا؛ دليل + إعادة تشغيل واحدة فقط.
 
 ## بوابات الجودة
 - أصلح المنتج ليمر من البوابة.
@@ -22,13 +36,14 @@ alwaysApply: true
 - تعديل بوابة فقط بدليل عقد + جودة ≥ السابقة + اختبار قبل/بعد + إفصاح صريح.
 - ممنوع `continue-on-error` / `|| true` / skip لإخفاء فشل.
 
-## نطاق وPR
+## نطاق وPR وQueue
 - هدف واحد · PR واحد لكل مهمة.
 - لا تجمع ميزات مستقلة في تنفيذ واحد.
-- مطلب مستقل → follow-up فقط.
+- مطلب مستقل / اكتشاف بعد التجميد → follow-up فقط (ما لم يمنع معيار قبول حاليًا وسببه diff الحالي).
+- لا تبدأ Queued قبل `SUCCESS` أو `BLOCKED_WITH_EVIDENCE` للمهمة الحالية.
 
 ## توقف فورًا
 تعارض تعليمات · قرار مالك · schema/secrets/هوية غير مصرّح · اتساع نطاق · فشل patch مرتين · الحاجة لتخفيف بوابة.
 
 ## مخرجات المهمة
-Root cause · Changed files · Focused tests · Full verification · Remaining risks · `git diff --stat`
+Result · Root cause · Changed files · Focused tests · verify:ci result · PR/checks · Follow-ups · `git diff --stat`

@@ -48,14 +48,19 @@
 
 ## جانب الوكيل (لا يضعف CI)
 
-بروتوكول التنفيذ: `docs/AGENT_THROUGHPUT.md`.
+بروتوكول التنفيذ: `docs/AGENT_THROUGHPUT.md` (**Finalization Freeze Protocol** إلزامي).
 
 | سلوك بطيء شائع | البديل الإلزامي |
 |---|---|
-| `verify:ci` بعد كل تعديل صغير | Focused Test أولًا ثم `verify:ci` مرة واحدة |
+| `verify:ci` بعد كل تعديل صغير | Focused Test + `verify:preflight` ثم `verify:ci` مرة واحدة |
+| بحث/تعديل أثناء Focused Test أو verify:ci | `IMPLEMENTATION_FROZEN` ثم تحقق فقط؛ اكتشاف جديد = follow-up |
+| إعادة `verify:ci` بلا تغيير diff | مرة واحدة فقط؛ إعادة بعد patch صنف A فقط |
+| تفسير غياب stdout كتعليق | انتظر النتيجة الفعلية؛ لا تقتل بمدة ثابتة |
+| إصلاح فشل سابق/غير مرتبط أثناء الإنهاء | صنف B → follow-up؛ لا توسّع المهمة |
+| بدء Queued قبل إغلاق الحالية | أنهِ بـ SUCCESS أو BLOCKED_WITH_EVIDENCE أولًا |
 | إعادة تشغيل كل jobs عند فشل تابع | أصلح أول job أصلي على نفس الفرع/PR |
 | تخفيف gate/baseline لإخفاء فشل | أصلح المنتج؛ تعديل البوابة فقط بدليل عقد + جودة ≥ |
 | Lighthouse/visual/native في كل مهمة | فقط Path-lane أو نطاق المهمة |
 | استكشاف شامل بعد معرفة المسار | `REPO_INDEX` + قراءة الملفات المرشحة فقط |
 
-حوكمة نصية: `node --test scripts/__tests__/agent-throughput-policy.test.mjs` (ضمن `test:safe-auto-merge`).
+حوكمة نصية: `node --test scripts/__tests__/agent-throughput-policy.test.mjs` (ضمن `test:safe-auto-merge` و`verify:preflight`).
