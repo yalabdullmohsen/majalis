@@ -57,7 +57,7 @@
   --mushaf-body-top: var(--mushaf-header-height);
   --mushaf-body-height: auto;
   --mushaf-side-pad: max(0.7rem, var(--inset-inline-start, var(--inset-left, 0px)), var(--inset-inline-end, var(--inset-right, 0px)));
-  /* Visual Baseline: وردة الآية من Comfort Pass (1.15em) — لا زيادة إضافية حتى لا يحدث lineOverflow */
+  /* Visual Baseline: وردة الآية 1.15em — أي زيادة إضافية تفشل mushaf-measure (ص600) */
   --mushaf-ayah-mark-size: 1.15em;
 
   /* طبقات سفلية داخل القارئ */
@@ -353,15 +353,15 @@ html[data-theme="dark"] .nm-page__header-hizb,
 }
 
 /*
- * SunnahFatihaBraidedMedallion — Visual Baseline (مقفل).
- * قبل القفل: inset 2.2% 10% 18% → صندوق ~80%×79.8%.
- * بعد القفل (~+12–13%): inset 1.2% 5% 11% → صندوق ~90%×87.8%.
+ * SunnahFatihaBraidedMedallion — Visual Baseline Final Expansion.
+ * مرحلة سابقة: 1.2% 5% 11% → ~90%×87.8%.
+ * الآن (~+8–10% إضافي): 0.5% 1.5% 4% → ~97%×95.5%.
  * absolute فقط — لا يحرّك النص / لا يمسّ Geometry أو Mapping.
  */
 .nm-page__fatiha-medallion {
   position: absolute;
   /* يستغل الفراغ حول النص دون تحريك شبكة الأسطر */
-  inset: 1.2% 5% 11%;
+  inset: 0.5% 1.5% 4%;
   z-index: 0;
   pointer-events: none;
   border-radius: 50%;
@@ -384,10 +384,10 @@ html[data-theme="dark"] .nm-page__header-hizb,
   mask: radial-gradient(ellipse at center, transparent 63%, #000 64.2% 72.5%, transparent 73.5%);
   opacity: 0.62;
 }
-/* بداية البقرة — ميدالية أكبر قليلًا حول الكتلة (قبل: 3% 11% 22% ≈78%×75% → بعد ≈87%×83%) */
+/* بداية البقرة — توسعة نهائية (~+11% من المرحلة السابقة ≈87%×83% → ≈97%×93%) */
 .nm-page--lead .nm-page__fatiha-medallion,
 .nm-page[data-page-type="surah-start"] .nm-page__fatiha-medallion {
-  inset: 1.8% 6.5% 15%;
+  inset: 0.9% 1.5% 6%;
   opacity: 0.52;
 }
 
@@ -797,7 +797,7 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
 }
 
 /*
- * SunnahVerseRosette — Visual Baseline: 1.15em (~+17% من 0.98) — مقفل مع Comfort Pass.
+ * SunnahVerseRosette — Visual Baseline: وردة 1.15em مقفلة — الزيادة الإضافية تسبب lineOverflow على ص600.
  * بلا نجمة/أشعة/ظل/توهج، بلا overflow، بلا تغيير fontSize للنص.
  */
 .nm-ayah-mark {
