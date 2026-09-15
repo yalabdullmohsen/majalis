@@ -35,12 +35,14 @@ assert.match(reader, /MushafPageArrows/);
 assert.match(reader, /focusReadingMode/);
 assert.match(reader, /pageArrowsEnabled/);
 assert.match(reader, /if \(pageTurnLockRef\.current\) return/);
+assert.match(reader, /pageTurnLockRef\.current && pendingPageRef\.current != null/);
 assert.match(reader, /data-focus-reading=\{focusReadingMode/);
 assert.match(reader, /focusReadingModeRef\.current/);
-assert.match(reader, /onNext=\{\(\) => go\(page \+ 1\)\}/);
-assert.match(reader, /onPrev=\{\(\) => go\(page - 1\)\}/);
+assert.match(reader, /onNext=\{\(\) => \{[\s\S]*go\(page \+ 1\)/);
+assert.match(reader, /onPrev=\{\(\) => \{[\s\S]*go\(page - 1\)/);
+assert.match(reader, /disabled=\{edgesDisabled\}/);
 assert.doesNotMatch(reader, /navigator\.vibrate/);
-
+assert.doesNotMatch(reader, /disabled=\{edgesDisabled \|\| !pagerSettled\}/);
 assert.match(controls, /mushaf-focus-reading-toggle/);
 assert.match(controls, /nm-controls--compact/);
 assert.match(controls, /إخفاء أدوات المصحف|وضع القراءة|قراءة/);

@@ -1753,7 +1753,7 @@ html[data-theme="dark"] .nm-exit-control {
   background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 55%, transparent);
   color: color-mix(in srgb, var(--nm-gold, #b08d57) 75%, var(--nm-meta, #5c4a32));
   box-shadow: none;
-  opacity: 0.42;
+  opacity: 0.55;
   pointer-events: none;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -1762,6 +1762,7 @@ html[data-theme="dark"] .nm-exit-control {
 
 .nm-page-arrows[data-visible="1"] .nm-page-arrow:not(:disabled) {
   pointer-events: auto;
+  opacity: 0.72;
 }
 
 .nm-page-arrow:not(:disabled):active,
