@@ -56,12 +56,12 @@ const DEFAULT_PRAYER_MODES: PrayerNotifModes = {
 
 const DEFAULTS: NotifPrefs = {
   enabled: false,
-  flashcardsReminder: true,
-  resumeReminder: true,
+  flashcardsReminder: false,
+  resumeReminder: false,
   prayerReminder: false,
-  quranDailyReminder: true,
+  quranDailyReminder: false,
   adhkarReminder: false,
-  dhikrPhraseReminder: true,
+  dhikrPhraseReminder: false,
   reminderHour: 8,
   reminderMinute: 0,
   sections: defaultSectionsPrefs(),

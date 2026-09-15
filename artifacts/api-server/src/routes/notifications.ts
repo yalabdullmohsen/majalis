@@ -76,20 +76,111 @@ async function saveTokens(store: TokenStore): Promise<void> {
 // Internal push dispatch (reused by both /trigger and /send)
 // ---------------------------------------------------------------------------
 
-async function dispatchPushNotifications(payload: {
+const PRESSURE_COPY =
+  /فاتك|ارجع الآن|آخر فرصة|لماذا توقفت|لدينا شيء|لا تفوّت|عاجل|!!!|FOMO|last chance/i;
+
+const ALLOWED_DEEP_LINK_PREFIXES = [
+  "/lesson/",
+  "/lessons/",
+  "/series/",
+  "/path/",
+  "/paths/",
+  "/course/",
+  "/courses/",
+  "/world/",
+  "/worlds/",
+  "/category/",
+  "/categories/",
+  "/mushaf",
+  "/quran",
+  "/adhkar",
+  "/adhan",
+  "/prayer",
+  "/settings",
+  "/notification-settings",
+  "/account",
+  "/updates",
+  "/home",
+] as const;
+
+const ALLOWED_PUSH_CHANNELS = new Set([
+  "new_content",
+  "product_updates",
+  "operational",
+]);
+
+function sanitizeDeepLink(input: unknown): string | null {
+  if (typeof input !== "string") return null;
+  const raw = input.trim();
+  if (!raw || raw.length > 512) return null;
+  if (/^[a-z][a-z0-9+.-]*:/i.test(raw)) return null;
+  if (!raw.startsWith("/") || raw.includes("..") || raw.includes("//")) return null;
+  if (/[\s<>"']/.test(raw)) return null;
+  return ALLOWED_DEEP_LINK_PREFIXES.some((p) => raw === p || raw.startsWith(p))
+    ? raw
+    : null;
+}
+
+function sanitizePushData(
+  data: Record<string, unknown> | undefined,
+): { ok: true; data?: Record<string, unknown> } | { ok: false; error: string } {
+  if (!data) return { ok: true };
+  const next: Record<string, unknown> = { ...data };
+  if ("channel" in next) {
+    const ch = String(next.channel || "");
+    if (!ALLOWED_PUSH_CHANNELS.has(ch)) {
+      return { ok: false, error: "Unsupported or disallowed push channel" };
+    }
+  }
+  for (const key of ["url", "deepLink", "path"] as const) {
+    if (key in next) {
+      const safe = sanitizeDeepLink(next[key]);
+      if (!safe) return { ok: false, error: `Invalid deep link in data.${key}` };
+      next[key] = safe;
+    }
+  }
+  return { ok: true, data: next };
+}
+
+function validateSendPayload(input: {
   title: string;
   body: string;
   data?: Record<string, unknown>;
   userIds?: string[];
-}): Promise<{ sent: number; errors: number }> {
-  const { title, body, data, userIds } = payload;
+  confirmBroadcast?: boolean;
+}): { ok: true; data?: Record<string, unknown>; userIds: string[] } | { ok: false; error: string } {
+  if (PRESSURE_COPY.test(input.title) || PRESSURE_COPY.test(input.body)) {
+    return { ok: false, error: "Pressure / manipulative copy is not allowed" };
+  }
+  const userIds = (input.userIds ?? []).map((id) => String(id).trim()).filter(Boolean);
+  const broadcast = input.confirmBroadcast === true;
+  if (userIds.length === 0 && !broadcast) {
+    return {
+      ok: false,
+      error: "userIds required; set confirmBroadcast=true only for intentional broadcast",
+    };
+  }
+  const dataResult = sanitizePushData(input.data);
+  if (!dataResult.ok) return dataResult;
+  return { ok: true, data: dataResult.data, userIds };
+}
+
+async function dispatchPushNotifications(payload: {
+  title: string;
+  body: string;
+  data?: Record<string, unknown>;
+  userIds: string[];
+  broadcast?: boolean;
+}): Promise<{ sent: number; errors: number; pruned: number }> {
+  const { title, body, data, userIds, broadcast } = payload;
   const store = await loadTokens();
 
-  const targets: TokenEntry[] = Object.values(store).filter(
-    (entry) => !userIds || userIds.length === 0 || userIds.includes(entry.userId ?? ""),
-  );
+  const targets: TokenEntry[] = Object.values(store).filter((entry) => {
+    if (broadcast && userIds.length === 0) return true;
+    return userIds.includes(entry.userId ?? "");
+  });
 
-  if (targets.length === 0) return { sent: 0, errors: 0 };
+  if (targets.length === 0) return { sent: 0, errors: 0, pruned: 0 };
 
   const messages: ExpoPushMessage[] = targets.map((entry) => ({
     to: entry.token,
@@ -102,20 +193,45 @@ async function dispatchPushNotifications(payload: {
   const chunks = expo.chunkPushNotifications(messages);
   let sent = 0;
   let errors = 0;
+  const invalidTokens = new Set<string>();
 
   for (const chunk of chunks) {
     try {
       const tickets = await expo.sendPushNotificationsAsync(chunk);
-      for (const ticket of tickets) {
-        if (ticket.status === "ok") sent++;
-        else errors++;
+      for (let i = 0; i < tickets.length; i++) {
+        const ticket = tickets[i]!;
+        if (ticket.status === "ok") {
+          sent++;
+          continue;
+        }
+        errors++;
+        const errDetails = (ticket as { details?: { error?: string } }).details?.error;
+        if (
+          errDetails === "DeviceNotRegistered" ||
+          errDetails === "InvalidCredentials" ||
+          errDetails === "MismatchSenderId"
+        ) {
+          const token = chunk[i]?.to;
+          if (typeof token === "string") invalidTokens.add(token);
+        }
       }
     } catch {
       errors += chunk.length;
     }
   }
 
-  return { sent, errors };
+  let pruned = 0;
+  if (invalidTokens.size > 0) {
+    for (const token of invalidTokens) {
+      if (store[token]) {
+        delete store[token];
+        pruned++;
+      }
+    }
+    if (pruned > 0) await saveTokens(store);
+  }
+
+  return { sent, errors, pruned };
 }
 
 // ---------------------------------------------------------------------------
@@ -193,11 +309,24 @@ router.post("/notifications/trigger", async (req, res) => {
   }
 
   const { title, body, data, userIds } = parsed.data;
-  const result = await dispatchPushNotifications({
+  const validated = validateSendPayload({
     title,
     body,
     data: data as Record<string, unknown> | undefined,
     userIds,
+    confirmBroadcast: Boolean((req.body as { confirmBroadcast?: unknown })?.confirmBroadcast),
+  });
+  if (!validated.ok) {
+    res.status(400).json({ error: validated.error });
+    return;
+  }
+
+  const result = await dispatchPushNotifications({
+    title,
+    body,
+    data: validated.data,
+    userIds: validated.userIds,
+    broadcast: validated.userIds.length === 0,
   });
 
   res.json({ success: true, ...result });
@@ -228,14 +357,42 @@ router.post("/notifications/send", async (req, res) => {
   }
 
   const { title, body, data, userIds } = parsed.data;
-  const result = await dispatchPushNotifications({
+  const validated = validateSendPayload({
     title,
     body,
     data: data as Record<string, unknown> | undefined,
     userIds,
+    confirmBroadcast: Boolean((req.body as { confirmBroadcast?: unknown })?.confirmBroadcast),
+  });
+  if (!validated.ok) {
+    res.status(400).json({ error: validated.error });
+    return;
+  }
+
+  const result = await dispatchPushNotifications({
+    title,
+    body,
+    data: validated.data,
+    userIds: validated.userIds,
+    broadcast: validated.userIds.length === 0,
   });
 
   res.json({ success: true, ...result });
+});
+
+/** Unlink a device token on logout / privacy preference. */
+router.post("/notifications/unregister", async (req, res) => {
+  const token = typeof req.body?.token === "string" ? req.body.token.trim() : "";
+  if (!token || !Expo.isExpoPushToken(token)) {
+    res.status(400).json({ error: "Invalid Expo push token" });
+    return;
+  }
+  const store = await loadTokens();
+  if (store[token]) {
+    delete store[token];
+    await saveTokens(store);
+  }
+  res.json({ success: true });
 });
 
 export default router;

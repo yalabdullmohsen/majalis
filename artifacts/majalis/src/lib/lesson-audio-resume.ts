@@ -60,6 +60,12 @@ export function clearLessonAudioResume(lessonId: string): void {
     /* ignore */
   }
   writeIndex(readIndex().filter((id) => id !== lessonId));
+  // إلغاء تذكير المتابعة إن وُجد — دون طلب إذن أو إرسال جديد
+  void import("@/lib/sunnah-notifications")
+    .then((m) => m.cancelLearningReminder?.(lessonId))
+    .catch(() => {
+      /* optional wiring */
+    });
 }
 
 export function clearAllLessonAudioResume(): void {
