@@ -182,8 +182,6 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
           role="dialog"
           aria-modal="true"
           aria-labelledby={moreTitleId}
-          onPointerDown={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
         >
           <h2 id={moreTitleId} className="nm-controls-more__title">
             إعدادات المصحف
