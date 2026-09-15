@@ -249,7 +249,12 @@
 }
 
 /* علامة حزب/ربع — absolute خفيفة بلا إزاحة شبكة */
-.nm-page__stage{position:relative}
+.nm-page__stage {
+  position: relative;
+  /* مقاسات الحاوية لحساب دائرة ميدالية الافتتاح (cqmin) */
+  container-type: size;
+  container-name: mushaf-page-stage;
+}
 /* علامة حزب/ربع في الهامش — من البيانات المعتمدة، خارج Text Flow */
 .nm-page__section-mark{
   position:absolute;
@@ -272,6 +277,14 @@
   height:.48rem;
   opacity:.55;
   border-color:color-mix(in srgb,var(--nm-meta,#6b6358) 55%,var(--mushaf-gold-primary,#a07d4a));
+}
+/*
+ * صفحات الافتتاح (ص1/ص2): الميدالية هي الزخرفة الأساسية؛ نقطة الحزب الذهبية
+ * عند الزاوية تبدو كعنصر شارد وتتداخل بصريًا — الرأس النصي (جزء/حزب) يكفي.
+ */
+.nm-page--opening .nm-page__section-mark,
+.nm-page--lead .nm-page__section-mark {
+  display: none !important;
 }
 
 /* الجزء: طرف البداية (يمين في RTL) · الحزب: طرف النهاية (يسار في RTL) */
@@ -353,18 +366,28 @@ html[data-theme="dark"] .nm-page__header-hizb,
 }
 
 /*
- * SunnahFatihaBraidedMedallion — Final Medallion Circular Correction.
- * قبل: inset 0.5% 1.5% 4% → ~97%×95.5% (عرض/ارتفاع ≈ 0.52 على جوال 390×844).
- * بعد: inset 10% -7.5% 14% -7.5% → ~115%×76%
- *      عرض ≈ +18% · ارتفاع ≈ −20% من الصندوق السابق (تعديل بصري نحو الدائرة).
- *      نسبة العرض/الارتفاع ≈ 0.76 (أقرب للدائرة من 0.52) مع بقاء النص داخل الإطار.
- * الزخرفة/القناع/الألوان كما هي — absolute فقط؛ لا نص ولا Geometry ولا Mapping.
+ * SunnahFatihaBraidedMedallion — دائرة هندسية حقيقية (aspect 1:1).
+ * السبب الجذري السابق: inset نسبي على مستطيل عمودي + border-radius:50% + mask ellipse
+ * → بيضاوي يختلف حسب نسبة عرض/ارتفاع الجهاز.
+ * الحل: عرض=ارتفاع=min(cqw,cqh) ممركز؛ mask بدائرة (circle) لا ellipse.
+ * الزخرفة/الألوان كما هي — absolute فقط؛ لا نص ولا Geometry ولا Mapping.
  */
 .nm-page__fatiha-medallion {
   position: absolute;
-  inset: 10% -7.5% 14% -7.5%;
+  inset: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 0;
   pointer-events: none;
+  /* أصغر بُعد للصفحة → دائرة مستقلة عن نسبة الجهاز */
+  --nm-medallion-size: min(92cqw, 86cqh);
+  width: var(--nm-medallion-size);
+  height: var(--nm-medallion-size);
+  aspect-ratio: 1 / 1;
+  max-width: 100%;
+  max-height: 100%;
+  box-sizing: border-box;
   border-radius: 50%;
   border: 1px solid color-mix(in srgb, var(--mushaf-printed-gold-border) 70%, var(--mushaf-paper-edge));
   box-shadow:
@@ -381,15 +404,28 @@ html[data-theme="dark"] .nm-page__header-hizb,
       color-mix(in srgb, var(--mushaf-printed-gold-border) 42%, transparent) 0 1.05px,
       transparent 1.05px 3.1px
     );
-  -webkit-mask: radial-gradient(ellipse at center, transparent 63%, #000 64.2% 72.5%, transparent 73.5%);
-  mask: radial-gradient(ellipse at center, transparent 63%, #000 64.2% 72.5%, transparent 73.5%);
+  -webkit-mask: radial-gradient(circle at center, transparent 63%, #000 64.2% 72.5%, transparent 73.5%);
+  mask: radial-gradient(circle at center, transparent 63%, #000 64.2% 72.5%, transparent 73.5%);
   opacity: 0.62;
 }
-/* بداية البقرة — نفس التصحيح الدائري؛ هامش سفلي أوضح قليلًا */
+/* بداية البقرة — نفس الدائرة الهندسية؛ شفافية أخف قليلًا */
 .nm-page--lead .nm-page__fatiha-medallion,
 .nm-page[data-page-type="surah-start"] .nm-page__fatiha-medallion {
-  inset: 11% -7.5% 15% -7.5%;
+  --nm-medallion-size: min(90cqw, 84cqh);
   opacity: 0.52;
+}
+
+/* fallback إن لم تُدعم container size (نادر) — ما زال مربعًا عبر aspect-ratio */
+@supports not (width: 1cqmin) {
+  .nm-page__fatiha-medallion {
+    width: min(92%, 72vw);
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+  .nm-page--lead .nm-page__fatiha-medallion,
+  .nm-page[data-page-type="surah-start"] .nm-page__fatiha-medallion {
+    width: min(90%, 70vw);
+  }
 }
 
 html.dark .nm-page__ornament-frame,

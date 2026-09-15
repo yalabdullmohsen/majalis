@@ -30,30 +30,35 @@ assert.match(frameBlock, /border:\s*0/);
 assert.match(page, /nm-page__ornament-frame/);
 
 /**
- * ميدالية الفاتحة (ص1) — Final Medallion Circular Correction.
- * قبل: inset 0.5% 1.5% 4% (~97%×95.5%، عرض/ارتفاع ≈ 0.52)
- * بعد: inset 10% -7.5% 14% -7.5% (~115%×76%، عرض/ارتفاع ≈ 0.76)
+ * ميدالية الفاتحة (ص1) — دائرة هندسية حقيقية (عرض = ارتفاع عبر cqmin).
+ * قبل: inset نسبي على مستطيل → بيضاوي يختلف حسب الجهاز.
  */
 const fatihaBlock = css.slice(
   css.indexOf(".nm-page__fatiha-medallion {"),
-  css.indexOf(".nm-page__fatiha-medallion {") + 720,
+  css.indexOf(".nm-page__fatiha-medallion {") + 1600,
 );
-assert.match(fatihaBlock, /inset:\s*10%\s+-7\.5%\s+14%\s+-7\.5%/);
-assert.doesNotMatch(fatihaBlock, /inset:\s*0\.5%\s+1\.5%\s+4%/);
-assert.doesNotMatch(fatihaBlock, /aspect-ratio:\s*1/);
+assert.match(fatihaBlock, /aspect-ratio:\s*1\s*\/\s*1/);
+assert.match(fatihaBlock, /min\(\s*92cqw\s*,\s*86cqh\s*\)/);
+assert.match(fatihaBlock, /radial-gradient\(\s*circle at center/);
+assert.doesNotMatch(fatihaBlock, /inset:\s*10%\s+-7\.5%\s+14%\s+-7\.5%/);
+assert.doesNotMatch(fatihaBlock, /radial-gradient\(\s*ellipse at center/);
 
 /**
- * ميدالية البقرة (ص2) — نفس التصحيح؛ لا inset بيضاوي قديم
+ * ميدالية البقرة (ص2) — نفس الدائرة الهندسية
  */
 const baqarahBlock = css.slice(
   css.indexOf(".nm-page--lead .nm-page__fatiha-medallion"),
   css.indexOf(".nm-page--lead .nm-page__fatiha-medallion") + 280,
 );
-assert.match(baqarahBlock, /inset:\s*11%\s+-7\.5%\s+15%\s+-7\.5%/);
-assert.doesNotMatch(baqarahBlock, /inset:\s*0\.9%\s+1\.5%\s+6%/);
+assert.match(baqarahBlock, /min\(\s*90cqw\s*,\s*84cqh\s*\)/);
+assert.doesNotMatch(baqarahBlock, /inset:\s*11%\s+-7\.5%\s+15%\s+-7\.5%/);
 assert.match(baqarahBlock, /opacity:\s*0\.52/);
 assert.match(page, /sunnah-fatiha-medallion|SunnahFatihaBraidedMedallion/);
 assert.match(page, /sunnah-baqarah-medallion|SunnahBaqarahMedallion/);
+
+/** نقطة الحزب الذهبية تُخفى على صفحات الميدالية (افتتاح/بقرة) */
+assert.match(css, /\.nm-page--opening \.nm-page__section-mark/);
+assert.match(css, /\.nm-page--lead \.nm-page__section-mark/);
 
 /** وردة الآية — Visual Baseline مقفل عند 1.15em (زيادة إضافية تكسر ص600) */
 assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
