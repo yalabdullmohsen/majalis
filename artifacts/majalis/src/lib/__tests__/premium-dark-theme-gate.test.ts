@@ -55,6 +55,8 @@ assert.match(refine, /--pd-elevated:/, "توكن سطح مرتفع تفاعلي"
 assert.match(refine, /--pd-emerald:/, "زمرد أساسي");
 assert.match(refine, /--pd-gold:/, "ذهب ناعم");
 assert.match(refine, /--pd-ink:/, "حبر دافئ");
+assert.match(refine, /--mj-brand-deep-ink:/, "حبر brand-deep مقروء");
+assert.match(refine, /--mj-brand-deep:\s*var\(--elite-forest/, "brand-deep ليلي = غابة مقروءة لا #0E1C17");
 assert.match(refine, /\[class\$="__glow"\]/, "قمع الوهج الزخرفي");
 assert.match(refine, /--pd-elev-1:/, "ارتفاع سطح L1");
 assert.match(refine, /--pd-elev-2:/, "ارتفاع مميز L2");
@@ -111,5 +113,7 @@ assertAA("ذهب على شريط سفلي", "#C9A86C", "#121916");
 assertAA("زمرد رابط على سطح", "#8FD4B0", "#1B2421");
 assertAA("حبر على زمرد", "#06231A", "#4FB48B");
 assertAA("قرآن حبر على لوحة", "#EBE4D8", "#15201C");
+assertAA("غابة على بطاقة", "#8FD4B0", "#24302B");
+assertAA("حبر brand-deep على بطاقة", "#EDE8DF", "#24302B");
 
 console.log("premium-dark-theme-gate.test.ts: ok");
