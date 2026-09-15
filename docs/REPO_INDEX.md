@@ -2,7 +2,7 @@
 
 حدّث بسطر عند تغيير بنيوي. لا تُعِد بناء الفهرس من الصفر كل جلسة.
 
-جذر Git: `/Users/alabdullmohsen/majlis-app` · GitHub: `yalabdullmohsen/majalis` · منتج الويب: `artifacts/majalis`.
+جذر Git: `/Users/alabdullmohsen/majalis-correct` · GitHub: `yalabdullmohsen/majalis` · منتج الويب: `artifacts/majalis`.
 
 ## حزم artifacts
 
@@ -62,5 +62,14 @@
 | `preview-smoke.yml` | يدوي فقط (بعد throughput) |
 | `ios-*.yml` | paths على ios/capacitor |
 | `mushaf-gates-nightly.yml` | ليلي كامل |
+
+## حوكمة الوكيل
+
+| ملف | دور |
+|---|---|
+| `docs/AGENT_THROUGHPUT.md` | مسار Targeted Read → Plan → Patch → Focused Test → Full Verify |
+| `.cursor/rules/majlisilm-agent-throughput.mdc` | قاعدة Cursor الدائمة للمسار |
+| `.cursor/rules/majlisilm-ci-safe.mdc` | منع إضعاف CI قبل الدفع |
+| `scripts/__tests__/agent-throughput-policy.test.mjs` | بوابة نصية لمنع الدوران/تخفيف البوابات |
 
 بروتوكول الوكيل: `docs/AGENT_THROUGHPUT.md`.

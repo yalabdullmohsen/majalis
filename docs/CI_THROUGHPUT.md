@@ -45,3 +45,17 @@
 - المجمّع `ci-required` يفشل إن تُخطّيت بوابة إلزامية.
 - بوابات المصحف داخل CI تُفعَّل بـ path-lane عند تغيير مسارات المصحف فقط؛ الكامل ليلاً.
 - كاش التبعيات موجود في `.github/actions/setup-workspace` (pnpm store + node_modules + vite + tsbuildinfo + Playwright).
+
+## جانب الوكيل (لا يضعف CI)
+
+بروتوكول التنفيذ: `docs/AGENT_THROUGHPUT.md`.
+
+| سلوك بطيء شائع | البديل الإلزامي |
+|---|---|
+| `verify:ci` بعد كل تعديل صغير | Focused Test أولًا ثم `verify:ci` مرة واحدة |
+| إعادة تشغيل كل jobs عند فشل تابع | أصلح أول job أصلي على نفس الفرع/PR |
+| تخفيف gate/baseline لإخفاء فشل | أصلح المنتج؛ تعديل البوابة فقط بدليل عقد + جودة ≥ |
+| Lighthouse/visual/native في كل مهمة | فقط Path-lane أو نطاق المهمة |
+| استكشاف شامل بعد معرفة المسار | `REPO_INDEX` + قراءة الملفات المرشحة فقط |
+
+حوكمة نصية: `node --test scripts/__tests__/agent-throughput-policy.test.mjs` (ضمن `test:safe-auto-merge`).

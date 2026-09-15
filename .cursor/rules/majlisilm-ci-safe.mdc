@@ -8,18 +8,21 @@ alwaysApply: true
 ## قبل أي تعديل
 1. ابدأ من جذر git الحقيقي فقط:
    `cd "$(git rev-parse --show-toplevel)"` ثم `git status --short`
-2. لا تخمّن المسارات — تحقق بوجود الملفات قبل التعامل معها:
+2. اتبع مسار التسريع: `Targeted Read → Plan → Patch → Focused Test → Full Verify`
+   (التفاصيل: `docs/AGENT_THROUGHPUT.md` و`.cursor/rules/majlisilm-agent-throughput.mdc`).
+3. لا تخمّن المسارات — تحقق بوجود الملفات المرشحة فقط قبل التعامل معها:
    ```bash
    test -f package.json
    test -f pnpm-workspace.yaml
-   # تطبيق الويب/Capacitor داخل monorepo:
+   # عند تعديل native فقط:
    test -d artifacts/majalis/ios/App || true
    test -f artifacts/majalis/ios/App/App.xcodeproj/project.pbxproj || true
    test -f artifacts/majalis/ios/App/App.xcworkspace/contents.xcworkspacedata || true
    ```
-3. اقرأ ملفات التحكم ذات الصلة أولاً: `package.json`، `pnpm-workspace.yaml`، `.github/workflows/*`، سكربتات gates/`verify:ci`، وملفات Capacitor/iOS/Android عند التعديل الأصلي.
-4. لا تضعف الاختبارات ولا تحذف checks ولا تجعل الفحص optional لإخفاء خطأ — أصلح السبب الجذري.
-5. PR واحد بهدف واحد (UI / مصحف / أذان / SEO / iOS / بيانات) — لا خلط نطاقات.
+4. اقرأ ملفات التحكم **ذات الصلة بالنطاق فقط** (لا مسح شامل لـ workflows إن لم تتغير CI).
+5. لا تضعف الاختبارات ولا تحذف checks ولا تجعل الفحص optional لإخفاء خطأ — أصلح السبب الجذري.
+6. لا تعدّل gate/threshold/baseline/snapshot لتلائم تنفيذًا فاشلًا؛ أي تعديل بوابة يحتاج دليل عقد + جودة ≥ + اختبار قبل/بعد + إفصاح.
+7. PR واحد بهدف واحد (UI / مصحف / أذان / SEO / iOS / بيانات) — لا خلط نطاقات.
 
 ## zsh / glob
 لا تستخدم:
@@ -35,6 +38,7 @@ alwaysApply: true
 - الأصوات/الموارد يجب أن تكون في Copy Bundle Resources فعلياً.
 
 ## قبل الدفع (إلزامي)
+بعد نجاح الاختبارات المستهدفة فقط:
 ```bash
 corepack enable
 pnpm install --frozen-lockfile
@@ -42,7 +46,8 @@ pnpm run verify:ci
 # أو مع تضييق: pnpm run verify:ci -- --changed
 # UI: --ui · native: --native · بلا مصحف: --no-mushaf
 ```
-عند فشل أي أمر: **لا commit ولا push** — اقرأ الخطأ، أصلح، أعد نفس الأمر حتى ينجح.
+شغّل `verify:ci` **مرة واحدة** لكل جولة جاهزة للدفع. أعده فقط إذا تغيّرت ملفات بعد فشل.
+عند فشل أي أمر: **لا commit ولا push** — اقرأ أول خطأ أصلي، أصلح، أعد المستهدف ثم `verify:ci` مرة.
 
 ## بعد الدفع
 ```bash
