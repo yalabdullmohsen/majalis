@@ -240,6 +240,7 @@ const FlashCardsPage = lazy(() => import("@/pages/account/FlashCardsPage"));
 const CarModePage = lazy(() => import("@/views/CarModePage"));
 const MosqueModePage = lazy(() => import("@/views/MosqueModePage"));
 const NotificationSettingsPage = lazy(() => import("@/pages/account/NotificationSettingsPage"));
+const NotificationsAndSoundPage = lazy(() => import("@/pages/account/NotificationsAndSoundPage"));
 const StudyRoomPage = lazy(() => import("@/views/StudyRoomPage"));
 const FamilyModePage = lazy(() => import("@/views/FamilyModePage"));
 const VaultPage = lazy(() => import("@/views/VaultPage"));
@@ -462,6 +463,7 @@ export default function AppRoutes() {
       <Route path="/car-mode"><SafeLazyRoute component={CarModePage} /></Route>
       <Route path="/mosque-mode"><SafeLazyRoute component={MosqueModePage} /></Route>
       <Route path="/notification-settings"><SafeLazyRoute component={NotificationSettingsPage} /></Route>
+      <Route path="/notifications-and-sound"><SafeLazyRoute component={NotificationsAndSoundPage} /></Route>
       <Route path="/study-room"><SafeLazyRoute component={StudyRoomPage} /></Route>
       <Route path="/family"><SafeLazyRoute component={FamilyModePage} /></Route>
       <Route path="/family-mode"><Redirect to="/family" /></Route>

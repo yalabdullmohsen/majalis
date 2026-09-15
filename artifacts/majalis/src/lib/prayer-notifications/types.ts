@@ -2,7 +2,7 @@
  * أنواع طبقة تنبيهات الصلاة الموحّدة.
  */
 
-export const PRAYER_NOTIFICATION_SCHEMA_VERSION = 1 as const;
+export const PRAYER_NOTIFICATION_SCHEMA_VERSION = 2 as const;
 
 export type PrayerNotificationKey = "fajr" | "dhuhr" | "asr" | "maghrib" | "isha";
 
@@ -22,6 +22,29 @@ export const PRAYER_NOTIFICATION_AR: Record<PrayerNotificationKey, string> = {
   isha: "العشاء",
 };
 
+/**
+ * نوع التنبيه لكل صلاة:
+ * - system: إشعار عادي
+ * - takbirat: تكبيرات
+ * - short_adhan: أذان مختصر
+ * - full_adhan: أذان كامل (بث/تحميل عند الطلب — لا يُضمَّن في الحزمة)
+ */
+export type PrayerAlertStyle = "system" | "takbirat" | "short_adhan" | "full_adhan";
+
+export const PRAYER_ALERT_STYLES: readonly PrayerAlertStyle[] = [
+  "system",
+  "takbirat",
+  "short_adhan",
+  "full_adhan",
+] as const;
+
+export const PRAYER_ALERT_STYLE_AR: Record<PrayerAlertStyle, string> = {
+  system: "إشعار عادي",
+  takbirat: "تكبيرات",
+  short_adhan: "أذان مختصر",
+  full_adhan: "أذان كامل",
+};
+
 /** صوت آمن حتى يُوثَّق ملف أذان مخصص وحقوقه. */
 export type PrayerNotificationSoundKind = "system";
 
@@ -31,6 +54,10 @@ export type PrayerNotificationPreferences = {
   featureEnabled: boolean;
   masterEnabled: boolean;
   prayers: Record<PrayerNotificationKey, boolean>;
+  /** أسلوب التنبيه لكل صلاة. */
+  alertStyleByPrayer: Record<PrayerNotificationKey, PrayerAlertStyle>;
+  /** معرّف صوت/مؤذن من كتالوج الأذان (بث أو أصل معتمد). */
+  voiceIdByPrayer: Record<PrayerNotificationKey, string>;
   soundKind: PrayerNotificationSoundKind;
   lastTimeZone: string | null;
   lastFingerprint: string | null;
