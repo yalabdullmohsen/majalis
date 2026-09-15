@@ -175,7 +175,7 @@ export function FaqSectionBlock({
   if (!items.length) return null;
   return (
     <BlockShell kind="faq" label="أسئلة" title={title} className={className} id={id}>
-      <div className="kx-faq">
+      <div className="kx-faq" data-kx-faq="1">
         {items.map((item) => (
           <details key={item.q} className="kx-faq__item">
             <summary className="kx-faq__q">{item.q}</summary>

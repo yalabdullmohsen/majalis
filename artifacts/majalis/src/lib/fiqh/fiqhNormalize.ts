@@ -667,9 +667,10 @@ export function listAllLessonHits(): FiqhLessonHit[] {
 }
 
 export function listVisibleLessonHits(): FiqhLessonHit[] {
+  /* العامة: لا نُظهر مواد قيد التدقيق أو غير الجاهزة للنشر */
   return listAllLessonHits().filter((hit) => {
     const status = getLessonContentStatus(hit.lesson);
-    return status !== "under_review" || hit.lesson.title?.trim();
+    return status === "complete";
   });
 }
 
