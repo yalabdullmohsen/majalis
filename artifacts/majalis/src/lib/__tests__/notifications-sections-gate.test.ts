@@ -57,7 +57,7 @@ assert.match(view, /dhikrPhraseReminder/);
 
 const loc = read("src/lib/notifications/localization.ts");
 assert.match(loc, /اقترب أذان \{\{name\}\}/);
-assert.match(loc, /أذان \{\{name\}\}/);
+assert.match(loc, /حان وقت صلاة \{\{name\}\}/);
 assert.match(loc, /body: "\{\{clock\}\}"/);
 
 console.log("notifications-sections-gate: ok");

@@ -256,7 +256,7 @@ const { hashPrayerNotificationId } = await import("../prayer-notification-ids");
     prayerName: "المغرب",
     prayerTimeLabel: formatTime12("18:27"),
   });
-  assert.match(enter.title, /أذان المغرب/);
+  assert.match(enter.title, /حان وقت صلاة المغرب/);
   assert.match(enter.body, /م\s*٦:٢٧|م\s*6:27|٦:٢٧|6:27/);
   assert.doesNotMatch(enter.body, /دخل الوقت|حان الأذان|تقبل|نسأل/);
   console.log("  ✓ scheduled copy uses title + clock body");
