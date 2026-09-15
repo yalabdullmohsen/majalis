@@ -1,0 +1,19 @@
+/**
+ * صقل Chrome أدوات القراءة فقط — خارج mushaf-reader.css
+ * حتى لا يُفعَّل قفل سياسة خط/مقياس المصحف على أي تعديل CSS باسم mushaf*.
+ */
+
+/* زر الخروج العائم — مُعطَّل (الخروج داخل Compact Toolbar فقط) */
+.nm-exit-control,
+.nm-exit-control[data-visible="1"] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* busy: إبقاء الأسهم ظاهرة مع منع التفاعل أثناء التسوية */
+.nm-page-arrows[data-visible="1"][data-busy="1"] .nm-page-arrow:not(:disabled) {
+  opacity: 0.5;
+  pointer-events: none;
+}

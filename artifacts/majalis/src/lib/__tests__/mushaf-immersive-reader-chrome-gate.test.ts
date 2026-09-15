@@ -40,6 +40,10 @@ assert.match(css, /\.nm-controls--compact/);
 assert.match(css, /var\(--inset-top/);
 assert.match(css, /data-focus-reading/);
 assert.match(css, /opacity:\s*0/);
+const chromeCss = read("src/styles/reader-page-chrome.css");
+assert.match(chromeCss, /\.nm-exit-control/);
+assert.match(chromeCss, /data-busy/);
+assert.match(reader, /reader-page-chrome\.css/);
 
 console.log("=== Signature active ===");
 const sig = resolveSunnahMushafSignaturePreset();

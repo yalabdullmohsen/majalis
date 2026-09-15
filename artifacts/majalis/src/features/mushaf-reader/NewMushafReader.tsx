@@ -79,6 +79,7 @@ import { MUSHAF_CHROME_HIDE_MS } from "@/features/mushaf-madinah/layout-bands";
 import { MushafPage } from "./MushafPage";
 import { MushafControlsLayer, MushafVerseMenu } from "./MushafControlsLayer";
 import { MushafPageArrows } from "./MushafPageArrows";
+import "@/styles/reader-page-chrome.css";
 import {
   loadPageArrowsEnabled,
   savePageArrowsEnabled,

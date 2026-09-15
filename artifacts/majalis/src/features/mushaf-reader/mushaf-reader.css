@@ -1611,13 +1611,13 @@ html.dark .nm-root .mm-audio-dock__reciter-btn {
   visibility: hidden;
 }
 
-/* زر الخروج العائم — مُعطَّل نهائيًا (الخروج داخل Compact Toolbar فقط؛ يمنع التراكب أعلى اليمين) */
+/* زر الخروج — ظاهر فقط مع Reader Chrome؛ opacity فقط بلا Geometry */
 .nm-exit-control {
   position: absolute;
   z-index: 41;
   inset-inline-start: max(0.55rem, var(--inset-left, 0px));
   top: max(0.45rem, var(--inset-top, 0px));
-  display: none;
+  display: inline-flex;
   align-items: center;
   gap: 0.2rem;
   min-height: 2.35rem;
@@ -1637,10 +1637,9 @@ html.dark .nm-root .mm-audio-dock__reciter-btn {
   transition: opacity 160ms ease;
 }
 .nm-exit-control[data-visible="1"] {
-  display: none;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 .nm-exit-control:active {
   opacity: 0.88;
@@ -1803,12 +1802,6 @@ html[data-theme="dark"] .nm-exit-control {
   opacity: 0.72;
 }
 
-.nm-page-arrows[data-visible="1"][data-busy="1"] .nm-page-arrow:not(:disabled) {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-/* طرف المصحف فقط — لا تُخفَ الأسهم كلها عند busy */
 .nm-page-arrow:not(:disabled):active,
 .nm-page-arrows[data-visible="1"] .nm-page-arrow:not(:disabled):hover {
   opacity: 0.92;
