@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# مجالس — Pre-Commit (سريع على الملفات المتغيّرة)
+# لا Vite build هنا — البناء في verify:ci / pre-push عند الحاجة فقط.
+set -euo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+APP_DIR="$ROOT/artifacts/majalis"
+PNPM_BIN="${PNPM_BIN:-$(command -v pnpm || true)}"
+if [[ -z "${PNPM_BIN}" && -x "$HOME/.local/bin/pnpm" ]]; then
+  PNPM_BIN="$HOME/.local/bin/pnpm"
+fi
+if [[ -z "${PNPM_BIN}" ]]; then
+  echo "pnpm غير موجود في PATH" >&2
+  exit 1
+fi
+
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; NC='\033[0m'
+fail() { echo -e "${RED}✗ Pre-Commit: $1${NC}"; exit 1; }
+pass() { echo -e "${GREEN}✓ $1${NC}"; }
+
+echo -e "${YELLOW}══ مجالس Pre-Commit (سريع) ══${NC}"
+
+STAGED="$(git diff --cached --name-only --diff-filter=ACMR || true)"
+if [[ -z "${STAGED}" ]]; then
+  echo "لا ملفات staged — تخطّي الفحوص السريعة"
+  exit 0
+fi
+
+ESLINT_FILES=()
+NEED_FONT=0
+NEED_POLICY=0
+while IFS= read -r f; do
+  [[ -z "$f" ]] && continue
+  if [[ "$f" == artifacts/majalis/src/* || "$f" == artifacts/majalis/lib/* ]]; then
+    case "$f" in
+      *.ts|*.tsx|*.js|*.jsx) ESLINT_FILES+=("${f#artifacts/majalis/}") ;;
+    esac
+  fi
+  if [[ "$f" == artifacts/majalis/* ]]; then
+    case "$f" in
+      *.css|*.html|*.tsx) NEED_FONT=1 ;;
+    esac
+  fi
+  if [[ "$f" == .github/* || "$f" == scripts/verify-* || "$f" == package.json ]]; then
+    NEED_POLICY=1
+  fi
+done <<< "$STAGED"
+
+if [[ ${#ESLINT_FILES[@]} -gt 0 ]]; then
+  echo "⏳ ESLint (${#ESLINT_FILES[@]} ملف)…"
+  (
+    cd "$APP_DIR"
+    "$PNPM_BIN" exec eslint "${ESLINT_FILES[@]}" --max-warnings=0
+  ) || fail "ESLint"
+  pass "ESLint (staged)"
+else
+  pass "ESLint (لا ملفات مصدرية staged)"
+fi
+
+if [[ "$NEED_FONT" -eq 1 ]]; then
+  echo "⏳ فحص اتساق الخط…"
+  (cd "$APP_DIR" && node scripts/verify-font-consistency.mjs) || fail "اتساق الخط"
+  pass "اتساق الخط"
+fi
+
+if [[ "$NEED_POLICY" -eq 1 ]]; then
+  echo "⏳ path-lane unit…"
+  (cd "$ROOT" && node --test .github/scripts/safe-auto-merge/__tests__/path-classifier.test.mjs) || fail "path-lane"
+  pass "path-lane"
+fi
+
+echo -e "${GREEN}══ Pre-Commit OK — استخدم verify:preflight ثم verify:ci قبل الدفع ══${NC}"

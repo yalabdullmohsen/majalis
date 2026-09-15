@@ -9,7 +9,139 @@
 Targeted Read → Plan → Patch → Focused Test → Full Verify
 ```
 
+مراحل التنفيذ (لا رجوع بلا فشل مثبت مرتبط بالـdiff):
+
+| مرحلة | يقابل | مسموح |
+|---|---|---|
+| Discovery | Targeted Read + Plan | بحث موجَّه + Scope Manifest |
+| Implementation | Patch | تعديل داخل النطاق فقط |
+| Focused Verification | Focused Test + `verify:preflight` | بعد `IMPLEMENTATION_FROZEN` فقط |
+| Final Verification | `verify:ci` | مرة واحدة بعد نجاح preflight |
+| Delivery | PR / مراقبة checks | بلا بحث أو patch جديد |
+
 لا تتخطَّ مرحلة. لا تُعِد مرحلة بلا دليل جديد.
+
+---
+
+## Finalization Freeze Protocol (إلزامي)
+
+يغلق مرحلة التعديل قبل التحقق النهائي ويمنع تحويل «Focused Test + verify:ci + PR»
+إلى جولة تنفيذ جديدة غير محدودة.
+
+### Scope Manifest (قبل أول تعديل)
+
+أنشئ قائمة داخلية (لا يلزم ملف في المستودع) تحتوي:
+- الهدف الواحد
+- الملفات المتوقع تعديلها
+- الاختبارات المستهدفة
+- الملفات المستثناة
+- معايير القبول
+
+بعد أول Patch ناجح داخل النطاق: **يُجمَّد** الـManifest. أي اكتشاف جديد بعده = follow-up إلا إذا منع معيار قبول حاليًا وسببه الـdiff الحالي.
+
+### IMPLEMENTATION_FROZEN
+
+قبل تشغيل الاختبارات النهائية:
+1. راجع `git diff`
+2. أغلق كل تغييرات المهمة
+3. أعلن داخليًا: **`IMPLEMENTATION_FROZEN`**
+
+بعد الإعلان يُمنع:
+- البحث العام في المستودع
+- إضافة متطلبات جديدة
+- تعديل ملفات خارج Scope Manifest
+- تنظيف أكواد قديمة / إصلاح أخطاء سابقة غير ناتجة عن الـdiff الحالي
+- تحويل follow-up إلى جزء من المهمة الحالية
+- بدء عمل من قائمة Queued أو تعديل PR آخر أو سحب تغييرات من فروع أخرى
+
+### Search Budget (بعد أول Patch)
+- ممنوع البحث الشامل.
+- مسموح استعلام موجَّه واحد فقط لكل فشل مثبت، داخل ملف/رمز مرتبط بالفشل.
+- إن لم يكفِ: توقّف وسجّل مانعًا واضحًا (`BLOCKED_WITH_EVIDENCE`) بدل الدوران.
+
+### Patch Budget (بعد IMPLEMENTATION_FROZEN)
+- patch تصحيحي واحد لكل سبب جذري مرتبط بالـdiff.
+- دورة تصحيح نهائية واحدة فقط قبل إعادة `verify:ci`.
+- فشل مستقل ثانٍ → follow-up (لا يبدأ تلقائيًا).
+- يُستثنى فقط فشل ناتج مباشرة عن الـpatch التصحيحي نفسه.
+
+### Focused Verification
+بعد `IMPLEMENTATION_FROZEN` شغّل فقط:
+- الاختبارات المرتبطة بالملفات المتغيرة
+- lint/typecheck للحزمة المتأثرة حسب عقد المستودع
+- `pnpm run verify:preflight` (فحوص سريعة قبل `verify:ci`)
+
+يمكن إصلاح فشل واحد فقط إذا كان: قابلًا لإعادة الإنتاج · ناتجًا عن الـdiff الحالي · داخل النطاق.
+بعد الإصلاح: أعد الفحص الفاشل فقط — لا تعِد كل الفحوص من الصفر.
+
+### Preflight قبل Full Verify
+```bash
+pnpm run verify:preflight   # إلزامي قبل verify:ci
+pnpm run verify:ci          # مرة واحدة فقط إذا لم يتغير diff
+```
+- `verify:preflight` يوحّد `verify:changed` + حوكمة الوكيل؛ ولا يُضعف البوابات.
+- `verify:ci-fast` يستدعي preflight ثم `verify:ci -- --changed`.
+- لا يُشغَّل `verify:ci` إلا بعد نجاح preflight.
+
+### Final Verification (`verify:ci`)
+خلال التشغيل:
+- لا بحث ولا تعديل بالتوازي
+- انتظر النتيجة الفعلية؛ لا تفسّر غياب stdout على أنه تعليق أو فشل
+- لا تقتل العملية بمدة ثابتة ما دامت تعمل
+- احفظ stdout/stderr في log عند الحاجة؛ لا تُعِد التشغيل لمجرد قلة المخرجات
+- مرة واحدة فقط إذا لم يتغير الـdiff
+- أعده فقط بعد patch مرتبط بفشل مثبت من الصنف A أدناه
+
+### Failure Ownership
+عند فشل `verify:ci` صنّف:
+
+**A. Caused by current diff**
+- أصلح أول فشل جذري فقط، داخل الملفات المتغيرة أو الملف المرتبط مباشرة
+- أعد الاختبار المستهدف ثم `verify:ci` مرة أخيرة
+
+**B. Pre-existing / unrelated**
+- لا تصلحه
+- أثبِت ظهوره على `origin/main` أو أنه خارج نطاق الـdiff
+- سجّله follow-up مستقل
+- لا توسّع المهمة بسببه
+
+**C. Infrastructure / transient**
+- لا تعدّل الكود
+- سجّل الدليل
+- أعد التشغيل مرة واحدة فقط عند دليل واضح على فشل مؤقت
+
+### منع توسيع النطاق
+أي اكتشاف بعد `IMPLEMENTATION_FROZEN` هو **follow-up فقط**، ما لم يمنع معيار قبول حاليًا ويكون سببه الـdiff الحالي.
+
+مثال: مهمة إزالة ميزة من الواجهة لا تتحول تلقائيًا إلى إصلاح رابط قديم في صفحة إدارة مستقلة، إلا إذا كان الرابط ضمن معيار القبول أو يفشل فحصًا مرتبطًا مباشرة بالمهمة.
+
+### Queue Discipline
+- لا تبدأ مهمة Queued أثناء إنهاء الحالية
+- لا تعدّل PR آخر ولا تجمع فروعًا أخرى
+- انهِ الحالية بـ `SUCCESS` أو `BLOCKED_WITH_EVIDENCE`
+
+### Delivery (بعد نجاح verify:ci)
+- لا تعاود تحليل المشروع ولا تضف تحسينات
+- راجع `git diff --stat`؛ تأكد من عدم secrets / generated غير مطلوبة
+- PR واحد وفق سياسة المستودع
+- راقب required checks فقط؛ skipped حسب Path-lane ليس فشلًا
+- لا تشغّل Full Regression يدويًا إن لم يطلبه Path-lane أو branch protection
+
+### مخرجات قصيرة عند الانتهاء
+1. Result  
+2. Root cause (إن وُجد)  
+3. Changed files  
+4. Focused tests  
+5. verify:ci result  
+6. PR/checks result  
+7. Follow-ups  
+8. `git diff --stat`  
+
+لا تسرد كل عمليات البحث أو خطوات الانتظار.
+
+---
+
+## تفاصيل المراحل السابقة للتجميد
 
 ### 1) Targeted Read
 - ابدأ من `docs/REPO_INDEX.md`.
@@ -47,24 +179,24 @@ Targeted Read → Plan → Patch → Focused Test → Full Verify
 - ممنوع `continue-on-error` / `|| true` / skip / رفع حدود لإخفاء فشل.
 
 ### 5) Focused Test أولًا
-- بعد Patch: أصغر اختبار مرتبط بالملف/الميزة.
-- عند الفشل: أصلح أول خطأ أصلي فقط.
+- بعد Patch وقبل Full Verify: أصغر اختبار مرتبط + `verify:preflight`.
+- عند الفشل: أصلح أول خطأ أصلي فقط (ضمن ميزانية Patch بعد التجميد).
 - ممنوع `verify:ci` بعد كل تعديل صغير.
 - Lighthouse / visual / native فقط عند Path-lane أو نطاق المهمة.
 - lint/typecheck على الحزمة المتأثرة قبل الشامل.
 
 ### 6) Full Verify مرة واحدة
-بعد نجاح المستهدف:
-1. فحوص الحزمة المتأثرة
+بعد نجاح المستهدف و`verify:preflight`:
+1. فحوص الحزمة المتأثرة إن لزم
 2. `pnpm run verify:ci` **مرة واحدة**
-- أعد `verify:ci` فقط إذا تغيّرت ملفات بعد فشل سابق.
+- أعد `verify:ci` فقط إذا تغيّرت ملفات بعد فشل سابق من الصنف A.
 - ممنوع تكرار التشغيل بلا تغيير.
 
 ### 7) فرز فشل CI
 - Log لأول job أصلي فاشل.
-- صنّف الباقي: أصلي vs تابع.
+- صنّف: A / B / C حسب Failure Ownership أعلاه.
 - لا تعالج aggregator / Path-lane قبل السبب الأصلي.
-- Re-run فقط عند دليل عطل بنية تحتية مؤقت.
+- Re-run فقط عند دليل عطل بنية تحتية مؤقت (صنف C).
 - أصلح على نفس الفرع ونفس الـPR.
 
 ### 8) حدود النطاق
@@ -90,19 +222,13 @@ Targeted Read → Plan → Patch → Focused Test → Full Verify
 - اجمع القراءات/الاختبارات المستقلة بأمان عند الإمكان.
 
 ### 11) مخرجات المهمة المطلوبة
-1. Root cause  
-2. Changed files  
-3. Focused tests  
-4. Full verification  
-5. Remaining risks  
-6. `git diff --stat`  
-بدون سرد كل عمليات البحث أو الرسائل المرحلية.
+استخدم مخرجات Finalization Freeze القصيرة أعلاه (Result … `git diff --stat`).
 
 ## دفع ودمج (بعد Full Verify)
-1. من جذر git: `pnpm run verify:ci` ناجح قبل commit/push.
+1. من جذر git: `pnpm run verify:preflight` ثم `pnpm run verify:ci` ناجحان قبل commit/push.
 2. ادفع → PR Ready واحد → auto-merge squash.
 3. راقب الحرجة فقط: `gh pr checks --watch --fail-fast` (Verify build + repo-gates + build + static-checks).
-4. عند فشل CI: أصلح محليًا → Focused Test → `verify:ci` مرة → ادفع — **لا تعطّل الفحص**.
+4. عند فشل CI: أصلح محليًا (صنف A فقط) → Focused Test → `verify:preflight` → `verify:ci` مرة → ادفع — **لا تعطّل الفحص**.
 
 ## قواعد تشغيلية مختصرة
 - دفعة متجانسة ضمن ≤٤٠ ملفًا و≤٤٠٠ سطر حذف عند المهام الكبيرة؛ PR بهدف واحد.

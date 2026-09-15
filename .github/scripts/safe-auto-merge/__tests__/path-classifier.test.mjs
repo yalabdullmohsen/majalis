@@ -31,12 +31,12 @@ describe("path-classifier", () => {
     assert.equal(isCheckSatisfied("visualSnapshot", "skip", r), true);
   });
 
-  it("policy-only stays on fast lane with policy tests", () => {
+  it("policy-only / ci-config stays on fast lane with policy tests", () => {
     const r = classifyChangedPaths([
       ".github/scripts/safe-auto-merge/eligibility.mjs",
       "scripts/verify-no-unsafe-auto-merge.mjs",
     ]);
-    assert.equal(r.lane, "policy-only");
+    assert.equal(r.lane, "ci-config");
     assert.equal(r.needBuild, false);
     assert.equal(r.needMushaf, false);
     assert.equal(r.needPostgres, false);
@@ -116,14 +116,18 @@ describe("path-classifier", () => {
     assert.equal(classifyOnePath("supabase/schema.sql"), "risky");
   });
 
-  it("ios/capacitor remains manual review", () => {
+  it("ios/capacitor is native lane (manual review, no postgres by default)", () => {
     const r = classifyChangedPaths([
       "artifacts/majalis/ios/App/App/Info.plist",
       "artifacts/majalis/capacitor.config.ts",
     ]);
-    assert.equal(r.lane, "risky");
+    assert.equal(r.lane, "native");
     assert.equal(r.manualReview, true);
+    assert.equal(r.needNative, true);
+    assert.equal(r.needPostgres, false);
     assert.equal(r.needFastLane, false);
+    assert.equal(r.needBuild, true);
+    assert.equal(r.needVisual, false);
   });
 
   it(".github/workflows (non-policy) remains manual review", () => {
@@ -134,12 +138,13 @@ describe("path-classifier", () => {
     assert.equal(r.needFastLane, false);
   });
 
-  it("ci.yml concurrency/policy is Fast Lane policy-only", () => {
+  it("ci.yml concurrency/policy is Fast Lane ci-config", () => {
     const r = classifyChangedPaths([".github/workflows/ci.yml"]);
-    assert.equal(r.lane, "policy-only");
+    assert.equal(r.lane, "ci-config");
     assert.equal(r.manualReview, false);
     assert.equal(r.needFastLane, true);
   });
+
   it("auto-maintenance workflow/scripts are policy paths", () => {
     assert.equal(classifyOnePath(".github/workflows/auto-maintenance.yml"), "policy");
     assert.equal(classifyOnePath("scripts/auto-maintenance/policy.mjs"), "policy");
@@ -148,30 +153,85 @@ describe("path-classifier", () => {
       "scripts/auto-maintenance/run.mjs",
       "docs/AUTO_MAINTENANCE.md",
     ]);
-    assert.equal(r.lane, "policy-only");
+    assert.equal(r.lane, "ci-config");
     assert.equal(r.manualReview, false);
     assert.equal(r.needPolicyTests, true);
   });
 
-  it("frontend requires build and color contrast on every UI lane", () => {
+  it("web-logic TS does not force visual/color; visual surfaces do", () => {
     const tsOnly = classifyChangedPaths([
       "artifacts/majalis/src/lib/format-date.ts",
     ]);
-    assert.equal(tsOnly.lane, "frontend");
+    assert.equal(tsOnly.lane, "web-logic");
     assert.equal(tsOnly.needBuild, true);
     assert.equal(tsOnly.needMushaf, false);
-    assert.equal(tsOnly.needColorContrast, true);
-    assert.equal(tsOnly.requiredChecks.colorContrast, true);
-    assert.equal(tsOnly.requiredChecks.visualSnapshot, true);
+    assert.equal(tsOnly.needVisual, false);
+    assert.equal(tsOnly.needColorContrast, false);
+    assert.equal(tsOnly.requiredChecks.colorContrast, false);
+    assert.equal(tsOnly.requiredChecks.visualSnapshot, false);
     assert.equal(tsOnly.needPreviewSmoke, false);
 
     const css = classifyChangedPaths([
       "artifacts/majalis/src/index.css",
       "artifacts/majalis/src/components/NavBar.tsx",
     ]);
+    assert.equal(css.lane, "visual");
     assert.equal(css.needColorContrast, true);
+    assert.equal(css.needVisual, true);
     assert.equal(css.requiredChecks.colorContrast, true);
     assert.equal(css.needVercelCheck, false);
+  });
+
+  it("docs and .cursor stay docs-only (no build/visual/postgres)", () => {
+    const r = classifyChangedPaths([
+      "docs/AGENT_THROUGHPUT.md",
+      ".cursor/rules/majlisilm-ci-safe.mdc",
+      "AGENTS.md",
+    ]);
+    assert.equal(r.lane, "docs-only");
+    assert.equal(r.needBuild, false);
+    assert.equal(r.needVisual, false);
+    assert.equal(r.needPostgres, false);
+    assert.equal(r.needFastLane, true);
+  });
+
+  it("package.json scripts are ci-config; lockfile remains risky", () => {
+    const pkg = classifyChangedPaths(["package.json"]);
+    assert.equal(pkg.lane, "ci-config");
+    assert.equal(pkg.needFastLane, true);
+    assert.equal(pkg.needPostgres, false);
+    assert.equal(pkg.needBuild, false);
+
+    const lock = classifyChangedPaths(["pnpm-lock.yaml"]);
+    assert.equal(lock.lane, "risky");
+    assert.equal(lock.needPostgres, true);
+  });
+
+  it("ci actions + verify scripts are ci-config fast-lane", () => {
+    const r = classifyChangedPaths([
+      ".github/actions/setup-workspace/action.yml",
+      ".github/scripts/ci/emit-path-lane.mjs",
+      "scripts/verify-preflight.mjs",
+      "scripts/verify-fingerprint.mjs",
+    ]);
+    assert.equal(r.lane, "ci-config");
+    assert.equal(r.needFastLane, true);
+    assert.equal(r.needBuild, false);
+    assert.equal(r.needVisual, false);
+    assert.equal(r.outputs.need_build, "false");
+    assert.ok(r.laneReason);
+    assert.ok(r.filesByKind.policy.length >= 1);
+  });
+
+  it("mixed mushaf+docs reports mixed and keeps mushaf required", () => {
+    const r = classifyChangedPaths([
+      "docs/README.md",
+      "artifacts/majalis/src/features/mushaf-reader/mushaf-reader.css",
+    ]);
+    assert.equal(r.lane, "mixed");
+    assert.equal(r.needMushaf, true);
+    assert.equal(r.needBuild, true);
+    assert.equal(r.needVisual, true);
   });
 
   it("auto-merge / pr-safe-merge-report workflows are policy not risky", () => {
@@ -179,7 +239,7 @@ describe("path-classifier", () => {
       ".github/workflows/auto-merge-to-main.yml",
       ".github/workflows/pr-safe-merge-report.yml",
     ]);
-    assert.equal(r.lane, "policy-only");
+    assert.equal(r.lane, "ci-config");
     assert.equal(r.manualReview, false);
     assert.equal(r.needFastLane, true);
   });
@@ -196,5 +256,6 @@ describe("path-classifier", () => {
     assert.equal(r.manualReview, false);
     assert.equal(r.needPreviewSmoke, false);
     assert.equal(r.needVercelCheck, false);
+    assert.equal(r.needFastLane, true);
   });
 });

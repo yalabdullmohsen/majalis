@@ -80,7 +80,7 @@ test("يفرض Focused Test قبل Full Verify ويمنع تكرار verify:ci �
     /أعد `verify:ci` فقط إذا تغيّرت ملفات|أعده فقط إذا تغيّرت ملفات/,
   );
   assert.match(rule, /ممنوع `verify:ci` بعد كل تعديل صغير/);
-  assert.match(agents, /اختبارات مستهدفة قبل `verify:ci`/);
+  assert.match(agents, /اختبارات مستهدفة.*قبل `verify:ci`|verify:preflight` قبل `verify:ci`/);
 });
 
 test("يمنع PR متسلسل للمهمة نفسها", () => {
@@ -108,8 +108,10 @@ test("REPO_INDEX وCI_THROUGHPUT يشيران لسياسة التسريع دون
   const ci = read("docs/CI_THROUGHPUT.md");
   assert.match(index, /AGENT_THROUGHPUT/);
   assert.match(index, /majlisilm-agent-throughput\.mdc/);
-  assert.match(ci, /Focused Test أولًا ثم `verify:ci` مرة واحدة/);
+  assert.match(index, /Finalization Freeze|IMPLEMENTATION_FROZEN|verify:preflight/);
+  assert.match(ci, /Focused Test.*verify:ci` مرة واحدة|verify:preflight.*verify:ci/);
   assert.match(ci, /AGENT_THROUGHPUT/);
+  assert.match(ci, /Finalization Freeze|IMPLEMENTATION_FROZEN/);
   assert.doesNotMatch(ci, /تخفيف بوابة.*مسموح بلا دليل/);
 });
 
@@ -117,5 +119,119 @@ test("الحوكمة مربوطة بـ test:safe-auto-merge وverify:ci", () => 
   const pkg = JSON.parse(read("package.json"));
   assert.match(pkg.scripts["test:safe-auto-merge"], /agent-throughput-policy\.test\.mjs/);
   assert.equal(pkg.scripts["verify:ci"], "node scripts/verify-ci.mjs");
+  assert.equal(pkg.scripts["verify:preflight"], "node scripts/verify-preflight.mjs");
+  assert.match(pkg.scripts["verify:ci-fast"], /verify:preflight/);
   assert.match(read("scripts/verify-ci.mjs"), /test:safe-auto-merge/);
+  assert.equal(existsSync(resolve(root, "scripts/verify-preflight.mjs")), true);
+});
+
+test("Finalization Freeze: مراحل ومصدر إلزامي + IMPLEMENTATION_FROZEN", () => {
+  const throughput = read("docs/AGENT_THROUGHPUT.md");
+  const rule = read(".cursor/rules/majlisilm-agent-throughput.mdc");
+  const agents = read("AGENTS.md");
+  const ciSafe = read(".cursor/rules/majlisilm-ci-safe.mdc");
+  assert.match(throughput, /Finalization Freeze Protocol/);
+  assert.match(throughput, /IMPLEMENTATION_FROZEN/);
+  assert.match(throughput, /Discovery/);
+  assert.match(throughput, /Implementation/);
+  assert.match(throughput, /Focused Verification/);
+  assert.match(throughput, /Final Verification/);
+  assert.match(throughput, /Delivery/);
+  assert.match(rule, /IMPLEMENTATION_FROZEN/);
+  assert.match(rule, /Finalization Freeze|Discovery/);
+  assert.match(agents, /Finalization Freeze Protocol|IMPLEMENTATION_FROZEN/);
+  assert.match(ciSafe, /IMPLEMENTATION_FROZEN|Finalization Freeze/);
+});
+
+test("يمنع البحث العام بعد IMPLEMENTATION_FROZEN", () => {
+  const throughput = read("docs/AGENT_THROUGHPUT.md");
+  const rule = read(".cursor/rules/majlisilm-agent-throughput.mdc");
+  assert.match(throughput, /بعد الإعلان يُمنع[\s\S]{0,200}البحث العام|ممنوع[\s\S]{0,80}البحث العام/);
+  assert.match(throughput, /Search Budget/);
+  assert.match(throughput, /ممنوع البحث الشامل/);
+  assert.match(rule, /ممنوع:[\s\S]{0,80}بحث عام|بحث عام/);
+  assert.match(rule, /استعلام موجَّه واحد/);
+});
+
+test("يمنع توسيع Scope Manifest خلال التحقق", () => {
+  const throughput = read("docs/AGENT_THROUGHPUT.md");
+  const rule = read(".cursor/rules/majlisilm-agent-throughput.mdc");
+  assert.match(throughput, /Scope Manifest/);
+  assert.match(throughput, /يُجمَّد.*Manifest|بعد أول Patch[\s\S]{0,80}يُجمَّد/);
+  assert.match(throughput, /تعديل ملفات خارج Scope Manifest/);
+  assert.match(throughput, /منع توسيع النطاق/);
+  assert.match(rule, /Scope Manifest/);
+  assert.match(rule, /ملفات خارج الـManifest|خارج الـManifest/);
+});
+
+test("يمنع إصلاح الفشل السابق أو غير المرتبط (Failure Ownership B)", () => {
+  const throughput = read("docs/AGENT_THROUGHPUT.md");
+  const rule = read(".cursor/rules/majlisilm-agent-throughput.mdc");
+  const ciSafe = read(".cursor/rules/majlisilm-ci-safe.mdc");
+  assert.match(throughput, /Failure Ownership/);
+  assert.match(throughput, /Pre-existing|سابق\/غير مرتبط|B\. Pre-existing/);
+  assert.match(throughput, /لا تصلحه/);
+  assert.match(throughput, /origin\/main/);
+  assert.match(throughput, /follow-up مستقل|سجّله follow-up/);
+  assert.match(rule, /سابق\/غير مرتبط|Pre-existing|صنف B/);
+  assert.match(ciSafe, /صنف B|سابق\/غير مرتبط/);
+});
+
+test("verify:ci لا يتكرر دون تغيير diff وpreflight يسبقه", () => {
+  const throughput = read("docs/AGENT_THROUGHPUT.md");
+  const rule = read(".cursor/rules/majlisilm-agent-throughput.mdc");
+  const agents = read("AGENTS.md");
+  const ciSafe = read(".cursor/rules/majlisilm-ci-safe.mdc");
+  assert.match(throughput, /verify:preflight/);
+  assert.match(throughput, /لا يُشغَّل `verify:ci` إلا بعد نجاح preflight/);
+  assert.match(throughput, /مرة واحدة فقط إذا لم يتغير/);
+  assert.match(rule, /verify:preflight/);
+  assert.match(rule, /أعده فقط إذا تغيّر diff/);
+  assert.match(agents, /verify:preflight.*verify:ci|verify:preflight/);
+  assert.match(ciSafe, /verify:preflight/);
+  assert.match(ciSafe, /لا يُشغَّل `verify:ci` إلا بعد نجاح/);
+});
+
+test("الفشل المستقل الثاني يتحول إلى follow-up وPatch Budget محدودة", () => {
+  const throughput = read("docs/AGENT_THROUGHPUT.md");
+  const rule = read(".cursor/rules/majlisilm-agent-throughput.mdc");
+  assert.match(throughput, /Patch Budget/);
+  assert.match(throughput, /فشل مستقل ثانٍ/);
+  assert.match(throughput, /follow-up/);
+  assert.match(throughput, /دورة تصحيح نهائية واحدة/);
+  assert.match(rule, /فشل مستقل ثانٍ/);
+  assert.match(rule, /دورة تصحيح نهائية واحدة/);
+});
+
+test("يمنع بدء Queued قبل إغلاق المهمة الحالية", () => {
+  const throughput = read("docs/AGENT_THROUGHPUT.md");
+  const rule = read(".cursor/rules/majlisilm-agent-throughput.mdc");
+  const agents = read("AGENTS.md");
+  assert.match(throughput, /Queue Discipline/);
+  assert.match(throughput, /لا تبدأ مهمة Queued|بدء عمل من قائمة Queued/);
+  assert.match(throughput, /SUCCESS|BLOCKED_WITH_EVIDENCE/);
+  assert.match(rule, /Queued/);
+  assert.match(rule, /SUCCESS|BLOCKED_WITH_EVIDENCE/);
+  assert.match(agents, /Queued/);
+});
+
+test("لا يعتبر العملية الطويلة معلقة لمجرد غياب stdout", () => {
+  const throughput = read("docs/AGENT_THROUGHPUT.md");
+  const rule = read(".cursor/rules/majlisilm-agent-throughput.mdc");
+  const ciSafe = read(".cursor/rules/majlisilm-ci-safe.mdc");
+  assert.match(throughput, /غياب stdout/);
+  assert.match(throughput, /لا تقتل العملية بمدة ثابتة|لا تقتل بمدة ثابتة/);
+  assert.match(rule, /غياب stdout/);
+  assert.match(ciSafe, /غياب stdout/);
+});
+
+test("بعد نجاح verify:ci ينتقل مباشرة إلى Delivery بلا تحليل إضافي", () => {
+  const throughput = read("docs/AGENT_THROUGHPUT.md");
+  const rule = read(".cursor/rules/majlisilm-agent-throughput.mdc");
+  const ciSafe = read(".cursor/rules/majlisilm-ci-safe.mdc");
+  assert.match(throughput, /Delivery \(بعد نجاح verify:ci\)|Delivery/);
+  assert.match(throughput, /لا تعاود تحليل المشروع/);
+  assert.match(rule, /انتقل فورًا إلى PR|Delivery/);
+  assert.match(rule, /لا تحليل مشروع|لا.*تحسينات إضافية/);
+  assert.match(ciSafe, /انتقل فورًا إلى Delivery/);
 });

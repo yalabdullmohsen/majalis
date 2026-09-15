@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+# مجالس — Pre-Push
+# سياسة: preflight (+ إعادة استخدام بصمة البناء إن وُجدت) — لا build مزدوج.
+set -euo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+APP_DIR="$ROOT/artifacts/majalis"
+PNPM_BIN="${PNPM_BIN:-$(command -v pnpm || true)}"
+if [[ -z "${PNPM_BIN}" && -x "$HOME/.local/bin/pnpm" ]]; then
+  PNPM_BIN="$HOME/.local/bin/pnpm"
+fi
+if [[ -z "${PNPM_BIN}" ]]; then
+  echo "pnpm غير موجود في PATH" >&2
+  exit 1
+fi
+
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; NC='\033[0m'
+fail() { echo -e "${RED}✗ Pre-Push: $1${NC}"; exit 1; }
+pass() { echo -e "${GREEN}✓ $1${NC}"; }
+
+echo -e "${YELLOW}══ مجالس Pre-Push Gate ══${NC}"
+cd "$ROOT"
+
+# 1) CSS integrity (سريع)
+echo "⏳ فحص CSS integrity…"
+(
+  cd "$APP_DIR"
+  python3 << 'PYEOF'
+import re, sys, glob
+css_files = glob.glob('src/**/*.css', recursive=True) + ['src/index.css']
+errors = []
+for fpath in css_files:
+    try:
+        with open(fpath) as f:
+            lines = f.readlines()
+        for i, line in enumerate(lines, 1):
+            if 'url(' in line and 'data:image/svg' in line:
+                m = re.search(r"url\(([\"'])", line)
+                if m:
+                    open_q = m.group(1)
+                    close_q = "'" if open_q == '"' else '"'
+                    end = line.rstrip()
+                    if f"{close_q})" in end or f"{close_q} )" in end:
+                        errors.append(f'{fpath}:{i} — اقتباسات متعارضة في data-URI')
+    except Exception:
+        pass
+if errors:
+    print('\n'.join(errors))
+    sys.exit(1)
+print('CSS integrity OK')
+PYEOF
+) || fail "CSS integrity"
+pass "CSS integrity"
+
+# 2) preflight (مع إعادة استخدام البصمة)
+echo "⏳ verify:preflight…"
+node scripts/verify-preflight.mjs || fail "verify:preflight"
+pass "verify:preflight"
+
+# 3) إن وُجدت بصمة verify:ci ناجحة لنفس المدخلات — لا تعِد البناء
+if node scripts/verify-fingerprint.mjs check verify-ci >/dev/null 2>&1; then
+  echo -e "${GREEN}✓ verify:ci fingerprint HIT — تخطّي typecheck/build المكرر في pre-push${NC}"
+  echo -e "${GREEN}══ Pre-Push OK ══${NC}"
+  exit 0
+fi
+
+# 4) وإلا: typecheck + build مرة واحدة (ستُغطّى لاحقًا بـ verify:ci إن شغّله الوكيل)
+echo "⏳ TypeScript typecheck…"
+(cd "$APP_DIR" && "$PNPM_BIN" run typecheck) || fail "TypeScript"
+pass "TypeScript"
+
+echo "⏳ فحص اتساق الخط…"
+(cd "$APP_DIR" && node scripts/verify-font-consistency.mjs) || fail "اتساق الخط"
+pass "اتساق الخط"
+
+echo "⏳ Vite build…"
+(cd "$APP_DIR" && npx vite build --config vite.config.ts --logLevel=warn) || fail "Vite Build"
+pass "Vite Build"
+node scripts/verify-fingerprint.mjs write build >/dev/null || true
+
+echo -e "${GREEN}══ Pre-Push OK — شغّل verify:ci إن لم تُعَد بعد ══${NC}"

@@ -73,7 +73,19 @@ const result =
 const lines = Object.entries(result.outputs).map(([k, v]) => `${k}=${v}`);
 const block = lines.join("\n");
 console.log("path-lane classification:");
-console.log(JSON.stringify({ lane: result.lane, paths: paths.slice(0, 40), outputs: result.outputs }, null, 2));
+console.log(
+  JSON.stringify(
+    {
+      lane: result.lane,
+      laneReason: result.laneReason,
+      paths: paths.slice(0, 40),
+      filesByKind: result.filesByKind,
+      outputs: result.outputs,
+    },
+    null,
+    2,
+  ),
+);
 
 const out = process.env.GITHUB_OUTPUT;
 if (out) {

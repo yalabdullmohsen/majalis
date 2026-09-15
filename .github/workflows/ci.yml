@@ -44,16 +44,19 @@ jobs:
     timeout-minutes: 20
     outputs:
       lane: ${{ steps.lane.outputs.lane }}
+      lane_reason: ${{ steps.lane.outputs.lane_reason }}
       need_build: ${{ steps.lane.outputs.need_build }}
       need_fast_lane: ${{ steps.lane.outputs.need_fast_lane }}
       need_mushaf: ${{ steps.lane.outputs.need_mushaf }}
       need_postgres: ${{ steps.lane.outputs.need_postgres }}
+      need_native: ${{ steps.lane.outputs.need_native }}
       need_visual: ${{ steps.lane.outputs.need_visual }}
       need_color_contrast: ${{ steps.lane.outputs.need_color_contrast }}
       need_preview_smoke: ${{ steps.lane.outputs.need_preview_smoke }}
       need_policy_tests: ${{ steps.lane.outputs.need_policy_tests }}
       manual_review: ${{ steps.lane.outputs.manual_review }}
       src_fingerprint: ${{ steps.fp.outputs.fingerprint }}
+      head_sha: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -201,6 +204,17 @@ jobs:
       - name: Re-stamp version.json for this commit
         working-directory: artifacts/majalis
         run: node scripts/generate-version.mjs
+
+      - name: Stamp dist artifact fingerprint (commit-bound)
+        run: |
+          set -euo pipefail
+          SHA="${{ needs.classify.outputs.head_sha }}"
+          FP="${{ needs.classify.outputs.src_fingerprint }}"
+          test -n "$SHA"
+          test -n "$FP"
+          printf '%s\n' "{\"sha\":\"$SHA\",\"src_fingerprint\":\"$FP\",\"producer\":\"build\"}" \
+            > artifacts/majalis/dist/.ci-artifact.json
+          echo "artifact stamp sha=$SHA fp=$FP"
 
       - name: Upload majalis dist (المصدر الوحيد لكل البوابات)
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -447,53 +461,52 @@ jobs:
 
 
   # لقطات بصرية — واجهة/مصحف/risky فقط.
-  # Path-lane: الوظيفة تعمل دائمًا بعد classify وتنجح حياديًا إن لم تُطلب
-  # (تجنب skipped=fail عند حماية الفرع / Verify build / ci-required).
+  # Path-lane: تُتخطّى بالكامل عند need_visual=false (المجمّع يقبل skipped).
   visual-snapshot:
     name: visual-snapshot
     needs: [classify, build]
-    if: always() && !cancelled() && needs.classify.result == 'success'
+    if: >-
+      always() && !cancelled() &&
+      needs.classify.result == 'success' &&
+      needs.classify.outputs.need_visual == 'true' &&
+      needs.build.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Path-lane gate
-        id: lane
-        env:
-          NEED: ${{ needs.classify.outputs.need_visual }}
-          BUILD: ${{ needs.build.result }}
-        run: |
-          set -euo pipefail
-          if [ "$NEED" != "true" ]; then
-            echo "run=false" >> "$GITHUB_OUTPUT"
-            echo "Path-lane: visual-snapshot not required — neutral success"
-            exit 0
-          fi
-          if [ "$BUILD" != "success" ]; then
-            echo "visual-snapshot required but build=$BUILD"
-            exit 1
-          fi
-          echo "run=true" >> "$GITHUB_OUTPUT"
-
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        if: steps.lane.outputs.run == 'true'
       - uses: ./.github/actions/setup-workspace
-        if: steps.lane.outputs.run == 'true'
         with:
           playwright: "true"
 
       - name: Download majalis dist (بلا إعادة بناء)
-        if: steps.lane.outputs.run == 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: majalis-dist
           path: artifacts/majalis/dist
 
+      - name: Assert dist artifact matches this commit
+        env:
+          EXPECT_SHA: ${{ needs.classify.outputs.head_sha }}
+          EXPECT_FP: ${{ needs.classify.outputs.src_fingerprint }}
+        run: |
+          set -euo pipefail
+          test -f artifacts/majalis/dist/.ci-artifact.json || {
+            echo "missing majalis-dist artifact stamp from producer=build sha=$EXPECT_SHA"
+            exit 1
+          }
+          node -e '
+            const fs=require("fs");
+            const j=JSON.parse(fs.readFileSync("artifacts/majalis/dist/.ci-artifact.json","utf8"));
+            const sha=process.env.EXPECT_SHA, fp=process.env.EXPECT_FP;
+            if(j.sha!==sha){console.error(`artifact sha mismatch: got ${j.sha} want ${sha}`); process.exit(1)}
+            if(j.src_fingerprint!==fp){console.error(`artifact fp mismatch: got ${j.src_fingerprint} want ${fp}`); process.exit(1)}
+            console.log("artifact stamp ok", j);
+          '
+
       - name: UI layout gates (calendar + lessons above-fold)
-        if: steps.lane.outputs.run == 'true'
         run: pnpm --filter @workspace/majalis run test:ui-layout-gates
 
       - name: Start preview
-        if: steps.lane.outputs.run == 'true'
         working-directory: artifacts/majalis
         run: |
           set -euo pipefail
@@ -510,13 +523,12 @@ jobs:
 
       - name: Visual snapshot gates (عيّنة قابلة لإعادة الإنتاج)
         id: snapshot
-        if: steps.lane.outputs.run == 'true'
         env:
           MUSHAF_GATE_BASE_URL: http://127.0.0.1:24216
         run: pnpm --filter @workspace/majalis run test:visual
 
       - name: visual-snapshot must not skip when required
-        if: always() && !cancelled() && steps.lane.outputs.run == 'true'
+        if: always() && !cancelled()
         env:
           SNAPSHOT_OUTCOME: ${{ steps.snapshot.outcome }}
         run: |
@@ -527,64 +539,65 @@ jobs:
           fi
 
       - name: Stop preview
-        if: always() && steps.lane.outputs.run == 'true'
+        if: always()
         run: kill "$(cat /tmp/mushaf-vite.pid)" 2>/dev/null || true
 
   # ---------------------------------------------------------------------------
-  # ٧) تباين الألوان — ينزّل dist ولا يبني (كان يعيد البناء كاملًا)
-  # Path-lane: نجاح حيادي عندما need_color=false (لا skipped على البوابة المطلوبة).
+  # ٧) تباين الألوان — ينزّل dist ولا يبني
+  # Path-lane: تُتخطّى عند need_color=false (المجمّع يقبل skipped).
   # ---------------------------------------------------------------------------
   color-contrast:
     name: Color contrast (Playwright)
     needs: [classify, build]
-    if: always() && !cancelled() && needs.classify.result == 'success'
+    if: >-
+      always() && !cancelled() &&
+      needs.classify.result == 'success' &&
+      needs.classify.outputs.need_color_contrast == 'true' &&
+      needs.build.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Path-lane gate
-        id: lane
-        env:
-          NEED: ${{ needs.classify.outputs.need_color_contrast }}
-          BUILD: ${{ needs.build.result }}
-        run: |
-          set -euo pipefail
-          if [ "$NEED" != "true" ]; then
-            echo "run=false" >> "$GITHUB_OUTPUT"
-            echo "Path-lane: color contrast not required — neutral success"
-            exit 0
-          fi
-          if [ "$BUILD" != "success" ]; then
-            echo "Color contrast required but build=$BUILD"
-            exit 1
-          fi
-          echo "run=true" >> "$GITHUB_OUTPUT"
-
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        if: steps.lane.outputs.run == 'true'
       - uses: ./.github/actions/setup-workspace
-        if: steps.lane.outputs.run == 'true'
         with:
           playwright: "true"
 
       - name: Download majalis dist (بلا إعادة بناء)
-        if: steps.lane.outputs.run == 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: majalis-dist
           path: artifacts/majalis/dist
 
+      - name: Assert dist artifact matches this commit
+        env:
+          EXPECT_SHA: ${{ needs.classify.outputs.head_sha }}
+          EXPECT_FP: ${{ needs.classify.outputs.src_fingerprint }}
+        run: |
+          set -euo pipefail
+          test -f artifacts/majalis/dist/.ci-artifact.json || {
+            echo "missing majalis-dist artifact stamp from producer=build sha=$EXPECT_SHA"
+            exit 1
+          }
+          node -e '
+            const fs=require("fs");
+            const j=JSON.parse(fs.readFileSync("artifacts/majalis/dist/.ci-artifact.json","utf8"));
+            const sha=process.env.EXPECT_SHA, fp=process.env.EXPECT_FP;
+            if(j.sha!==sha){console.error(`artifact sha mismatch: got ${j.sha} want ${sha}`); process.exit(1)}
+            if(j.src_fingerprint!==fp){console.error(`artifact fp mismatch`); process.exit(1)}
+            console.log("artifact stamp ok", j);
+          '
+
       - name: Color contrast gate
         id: contrast
-        if: steps.lane.outputs.run == 'true'
         run: pnpm --filter @workspace/majalis run test:color-contrast-gate
 
       - name: On-brand contrast gate (لا أسود على الأخضر)
         id: onbrand
-        if: always() && !cancelled() && steps.lane.outputs.run == 'true'
+        if: always() && !cancelled()
         run: pnpm --filter @workspace/majalis run test:on-brand-contrast
 
       - name: Contrast gates must not skip when required
-        if: always() && !cancelled() && steps.lane.outputs.run == 'true'
+        if: always() && !cancelled()
         env:
           CONTRAST_OUTCOME: ${{ steps.contrast.outcome }}
           ONBRAND_OUTCOME: ${{ steps.onbrand.outcome }}
@@ -600,7 +613,7 @@ jobs:
           fi
 
       - name: Upload contrast failure screenshots
-        if: failure() && steps.lane.outputs.run == 'true'
+        if: failure()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: color-contrast-failures
@@ -608,49 +621,49 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
-  # بوابة انحدار Lighthouse على بناء الإنتاج (dist) — عتبات واقعية لا حلم 100.
-  # Path-lane: حيادي عند need_visual=false؛ إلزامي مع نجاح البناء عند الحاجة.
+  # بوابة انحدار Lighthouse على بناء الإنتاج (dist).
+  # Path-lane: تُتخطّى عند need_visual=false.
   lhci-home:
     name: LHCI home (mobile)
     needs: [classify, build]
-    if: always() && !cancelled() && needs.classify.result == 'success'
+    if: >-
+      always() && !cancelled() &&
+      needs.classify.result == 'success' &&
+      needs.classify.outputs.need_visual == 'true' &&
+      needs.build.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Path-lane gate
-        id: lane
-        env:
-          NEED: ${{ needs.classify.outputs.need_visual }}
-          BUILD: ${{ needs.build.result }}
-        run: |
-          set -euo pipefail
-          if [ "$NEED" != "true" ]; then
-            echo "run=false" >> "$GITHUB_OUTPUT"
-            echo "Path-lane: LHCI home not required — neutral success"
-            exit 0
-          fi
-          if [ "$BUILD" != "success" ]; then
-            echo "LHCI required but build=$BUILD"
-            exit 1
-          fi
-          echo "run=true" >> "$GITHUB_OUTPUT"
-
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        if: steps.lane.outputs.run == 'true'
       - uses: ./.github/actions/setup-workspace
-        if: steps.lane.outputs.run == 'true'
         with:
           playwright: "true"
 
       - name: Download majalis dist (بلا إعادة بناء)
-        if: steps.lane.outputs.run == 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: majalis-dist
           path: artifacts/majalis/dist
 
+      - name: Assert dist artifact matches this commit
+        env:
+          EXPECT_SHA: ${{ needs.classify.outputs.head_sha }}
+          EXPECT_FP: ${{ needs.classify.outputs.src_fingerprint }}
+        run: |
+          set -euo pipefail
+          test -f artifacts/majalis/dist/.ci-artifact.json || {
+            echo "missing majalis-dist artifact stamp from producer=build sha=$EXPECT_SHA"
+            exit 1
+          }
+          node -e '
+            const fs=require("fs");
+            const j=JSON.parse(fs.readFileSync("artifacts/majalis/dist/.ci-artifact.json","utf8"));
+            if(j.sha!==process.env.EXPECT_SHA){console.error("artifact sha mismatch"); process.exit(1)}
+            if(j.src_fingerprint!==process.env.EXPECT_FP){console.error("artifact fp mismatch"); process.exit(1)}
+            console.log("artifact stamp ok", j);
+          '
+
       - name: Start preview
-        if: steps.lane.outputs.run == 'true'
         working-directory: artifacts/majalis
         run: |
           set -euo pipefail
@@ -659,7 +672,6 @@ jobs:
           for i in $(seq 1 90); do
             if curl -sf -o /dev/null "http://127.0.0.1:24216/" \
               && curl -sf -o /dev/null "http://127.0.0.1:24216/version.json"; then
-              # انتظر استقرار HTML (SPA shell) قبل LHCI — يقلّل فشل التحميل الكاذب
               body="$(curl -sf "http://127.0.0.1:24216/" | head -c 800 || true)"
               if printf '%s' "$body" | grep -Eqi '<div id="root"|<div id="app"|ssunnah|سُنّة|majalis'; then
                 echo "preview جاهز ومستقر (محاولة $i)"
@@ -672,7 +684,6 @@ jobs:
 
       - name: LHCI home mobile (3 runs, regression thresholds)
         id: lhci
-        if: steps.lane.outputs.run == 'true'
         working-directory: artifacts/majalis
         env:
           LHCI_URL: http://127.0.0.1:24216/
@@ -681,7 +692,6 @@ jobs:
           export CHROME_PATH
           CHROME_PATH="$(node --input-type=module -e "import { chromium } from 'playwright'; console.log(chromium.executablePath())")"
           test -x "$CHROME_PATH"
-          # إعادة محاولة واحدة فقط عند فشل تحميل الصفحة (لا عند فشل العتبات)
           set +e
           out="$(pnpm run lighthouse:ci 2>&1)"
           code=$?
@@ -702,7 +712,7 @@ jobs:
           exit "$code"
 
       - name: Upload LHCI reports
-        if: always() && steps.lane.outputs.run == 'true'
+        if: always()
         continue-on-error: true
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
@@ -712,19 +722,18 @@ jobs:
           if-no-files-found: warn
 
       - name: LHCI must not skip when required
-        if: always() && !cancelled() && steps.lane.outputs.run == 'true'
+        if: always() && !cancelled()
         env:
           LHCI_OUTCOME: ${{ steps.lhci.outcome }}
         run: |
           set -euo pipefail
-          # النتيجة تُقاس بخطوة lighthouse فقط — فشل رفع الـartifact (403 Infra) لا يُسقط البوابة
           if [ "$LHCI_OUTCOME" != "success" ]; then
             echo "LHCI home outcome=$LHCI_OUTCOME (failure = fail)"
             exit 1
           fi
 
       - name: Stop preview
-        if: always() && steps.lane.outputs.run == 'true'
+        if: always()
         run: kill "$(cat /tmp/lhci-vite.pid)" 2>/dev/null || true
 
   postgres-integration:
@@ -810,20 +819,20 @@ jobs:
           set -euo pipefail
           {
             echo "## CI path-lane / results"
-            echo "| Job | Result |"
-            echo "|-----|--------|"
-            echo "| lane | \`$LANE\` |"
-            echo "| classify | $CLASSIFY_RESULT |"
-            echo "| fast-lane | $FAST_RESULT |"
-            echo "| static-checks | $STATIC_RESULT |"
-            echo "| build | $BUILD_RESULT |"
-            echo "| repo-gates | $REPO_GATES_RESULT |"
-            echo "| mushaf-measure | $MEASURE_RESULT |"
-            echo "| mushaf-gates | $GATES_RESULT |"
-            echo "| layout-bands | $BANDS_RESULT |"
-            echo "| visual-snapshot | $VISUAL_RESULT (need=$NEED_VISUAL) |"
-            echo "| color-contrast | $COLOR_RESULT (need=$NEED_COLOR) |"
-            echo "| lhci-home | $LHCI_RESULT (need=$NEED_VISUAL) |"
+            echo "| Job | Required | Result | Reason |"
+            echo "|-----|----------|--------|--------|"
+            echo "| lane | — | \`$LANE\` | path-lane |"
+            echo "| classify | true | $CLASSIFY_RESULT | always |"
+            echo "| fast-lane | $NEED_FAST | $FAST_RESULT | need_fast_lane |"
+            echo "| static-checks | $NEED_BUILD | $STATIC_RESULT | need_build |"
+            echo "| build | $NEED_BUILD | $BUILD_RESULT | need_build |"
+            echo "| repo-gates | $NEED_BUILD | $REPO_GATES_RESULT | need_build |"
+            echo "| mushaf-measure | $NEED_MUSHAF | $MEASURE_RESULT | need_mushaf |"
+            echo "| mushaf-gates | $NEED_MUSHAF | $GATES_RESULT | need_mushaf |"
+            echo "| layout-bands | $NEED_MUSHAF | $BANDS_RESULT | need_mushaf |"
+            echo "| visual-snapshot | $NEED_VISUAL | $VISUAL_RESULT | need_visual |"
+            echo "| color-contrast | $NEED_COLOR | $COLOR_RESULT | need_color |"
+            echo "| lhci-home | $NEED_VISUAL | $LHCI_RESULT | need_visual |"
             echo ""
             echo "بناء واحد فقط (وظيفة \`build\`) — كل البوابات تنزّل dist."
             echo "مسار PR: ٦ صفحات مرجعية × 390×844 على ٤ shards. الكامل ليلاً."
