@@ -56,7 +56,9 @@ jobs:
       need_policy_tests: ${{ steps.lane.outputs.need_policy_tests }}
       manual_review: ${{ steps.lane.outputs.manual_review }}
       src_fingerprint: ${{ steps.fp.outputs.fingerprint }}
-      head_sha: ${{ github.event.pull_request.head.sha || github.sha }}
+      # Canonical source identity = SHA of the tree actually checked out (never mix PR head + merge).
+      source_sha: ${{ steps.identity.outputs.source_sha }}
+      head_sha: ${{ steps.identity.outputs.source_sha }}
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -64,6 +66,15 @@ jobs:
           fetch-depth: 0
           # تسريع الجلب: بدون blobs غير مستخدمة في تصنيف المسارات
           filter: blob:none
+
+      - name: Canonical source identity (checkout HEAD)
+        id: identity
+        run: |
+          set -euo pipefail
+          SOURCE_SHA="$(git rev-parse HEAD)"
+          test -n "$SOURCE_SHA"
+          echo "source_sha=$SOURCE_SHA" >> "$GITHUB_OUTPUT"
+          echo "canonical source_sha=$SOURCE_SHA event=${{ github.event_name }} github.sha=${{ github.sha }} pr.head=${{ github.event.pull_request.head.sha || '' }}"
 
       - name: Setup Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -102,7 +113,7 @@ jobs:
 
       # مفتاح الكاش المركّب: hash(lockfile) + hash(src) + hash(public/data) +
       # hash(scripts/config). إن لم يتغيّر المصدر تُعاد نتيجة البناء من الكاش
-      # بلا تشغيل أي بوابة من جديد.
+      # بلا تشغيل أي بوابة من جديد. لا يشمل dist/cache/logs.
       - name: Compute source fingerprint
         id: fp
         run: |
@@ -205,23 +216,24 @@ jobs:
         working-directory: artifacts/majalis
         run: node scripts/generate-version.mjs
 
-      - name: Stamp dist artifact fingerprint (commit-bound)
+      - name: Stamp dist artifact identity (build-once contract)
         run: |
           set -euo pipefail
-          SHA="${{ needs.classify.outputs.head_sha }}"
-          FP="${{ needs.classify.outputs.src_fingerprint }}"
-          test -n "$SHA"
-          test -n "$FP"
-          printf '%s\n' "{\"sha\":\"$SHA\",\"src_fingerprint\":\"$FP\",\"producer\":\"build\"}" \
-            > artifacts/majalis/dist/.ci-artifact.json
-          echo "artifact stamp sha=$SHA fp=$FP"
+          node .github/scripts/ci/dist-artifact-identity.mjs write \
+            --dist artifacts/majalis/dist \
+            --source-sha "${{ needs.classify.outputs.source_sha }}" \
+            --source-fingerprint "${{ needs.classify.outputs.src_fingerprint }}" \
+            --repository "${{ github.repository }}" \
+            --run-id "${{ github.run_id }}" \
+            --run-attempt "${{ github.run_attempt }}" \
+            --producer-job build
 
       - name: Upload majalis dist (المصدر الوحيد لكل البوابات)
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: majalis-dist
           path: artifacts/majalis/dist
-          # بدونها يُستبعد .ci-artifact.json (ملف مخفي) فيفشل Assert عند Contrast/LHCI/visual
+          # ci-artifact.json غير مخفي؛ الإبقاء على true دفاعًا لأي ختم legacy مخفي.
           include-hidden-files: true
           retention-days: 1
           if-no-files-found: error
@@ -486,24 +498,17 @@ jobs:
           name: majalis-dist
           path: artifacts/majalis/dist
 
-      - name: Assert dist artifact matches this commit
-        env:
-          EXPECT_SHA: ${{ needs.classify.outputs.head_sha }}
-          EXPECT_FP: ${{ needs.classify.outputs.src_fingerprint }}
+      - name: Assert dist artifact matches this source
         run: |
           set -euo pipefail
-          test -f artifacts/majalis/dist/.ci-artifact.json || {
-            echo "missing majalis-dist artifact stamp from producer=build sha=$EXPECT_SHA"
-            exit 1
-          }
-          node -e '
-            const fs=require("fs");
-            const j=JSON.parse(fs.readFileSync("artifacts/majalis/dist/.ci-artifact.json","utf8"));
-            const sha=process.env.EXPECT_SHA, fp=process.env.EXPECT_FP;
-            if(j.sha!==sha){console.error(`artifact sha mismatch: got ${j.sha} want ${sha}`); process.exit(1)}
-            if(j.src_fingerprint!==fp){console.error(`artifact fp mismatch: got ${j.src_fingerprint} want ${fp}`); process.exit(1)}
-            console.log("artifact stamp ok", j);
-          '
+          node .github/scripts/ci/dist-artifact-identity.mjs assert \
+            --dist artifacts/majalis/dist \
+            --source-sha "${{ needs.classify.outputs.source_sha }}" \
+            --source-fingerprint "${{ needs.classify.outputs.src_fingerprint }}" \
+            --repository "${{ github.repository }}" \
+            --run-id "${{ github.run_id }}" \
+            --run-attempt "${{ github.run_attempt }}" \
+            --producer-job build
 
       - name: UI layout gates (calendar + lessons above-fold)
         run: pnpm --filter @workspace/majalis run test:ui-layout-gates
@@ -570,24 +575,17 @@ jobs:
           name: majalis-dist
           path: artifacts/majalis/dist
 
-      - name: Assert dist artifact matches this commit
-        env:
-          EXPECT_SHA: ${{ needs.classify.outputs.head_sha }}
-          EXPECT_FP: ${{ needs.classify.outputs.src_fingerprint }}
+      - name: Assert dist artifact matches this source
         run: |
           set -euo pipefail
-          test -f artifacts/majalis/dist/.ci-artifact.json || {
-            echo "missing majalis-dist artifact stamp from producer=build sha=$EXPECT_SHA"
-            exit 1
-          }
-          node -e '
-            const fs=require("fs");
-            const j=JSON.parse(fs.readFileSync("artifacts/majalis/dist/.ci-artifact.json","utf8"));
-            const sha=process.env.EXPECT_SHA, fp=process.env.EXPECT_FP;
-            if(j.sha!==sha){console.error(`artifact sha mismatch: got ${j.sha} want ${sha}`); process.exit(1)}
-            if(j.src_fingerprint!==fp){console.error(`artifact fp mismatch`); process.exit(1)}
-            console.log("artifact stamp ok", j);
-          '
+          node .github/scripts/ci/dist-artifact-identity.mjs assert \
+            --dist artifacts/majalis/dist \
+            --source-sha "${{ needs.classify.outputs.source_sha }}" \
+            --source-fingerprint "${{ needs.classify.outputs.src_fingerprint }}" \
+            --repository "${{ github.repository }}" \
+            --run-id "${{ github.run_id }}" \
+            --run-attempt "${{ github.run_attempt }}" \
+            --producer-job build
 
       - name: Color contrast gate
         id: contrast
@@ -647,23 +645,17 @@ jobs:
           name: majalis-dist
           path: artifacts/majalis/dist
 
-      - name: Assert dist artifact matches this commit
-        env:
-          EXPECT_SHA: ${{ needs.classify.outputs.head_sha }}
-          EXPECT_FP: ${{ needs.classify.outputs.src_fingerprint }}
+      - name: Assert dist artifact matches this source
         run: |
           set -euo pipefail
-          test -f artifacts/majalis/dist/.ci-artifact.json || {
-            echo "missing majalis-dist artifact stamp from producer=build sha=$EXPECT_SHA"
-            exit 1
-          }
-          node -e '
-            const fs=require("fs");
-            const j=JSON.parse(fs.readFileSync("artifacts/majalis/dist/.ci-artifact.json","utf8"));
-            if(j.sha!==process.env.EXPECT_SHA){console.error("artifact sha mismatch"); process.exit(1)}
-            if(j.src_fingerprint!==process.env.EXPECT_FP){console.error("artifact fp mismatch"); process.exit(1)}
-            console.log("artifact stamp ok", j);
-          '
+          node .github/scripts/ci/dist-artifact-identity.mjs assert \
+            --dist artifacts/majalis/dist \
+            --source-sha "${{ needs.classify.outputs.source_sha }}" \
+            --source-fingerprint "${{ needs.classify.outputs.src_fingerprint }}" \
+            --repository "${{ github.repository }}" \
+            --run-id "${{ github.run_id }}" \
+            --run-attempt "${{ github.run_attempt }}" \
+            --producer-job build
 
       - name: Start preview
         working-directory: artifacts/majalis
