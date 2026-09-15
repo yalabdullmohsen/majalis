@@ -128,33 +128,35 @@
           html.dataset.seniorMode = senior ? "1" : "0";
 
           function clearBooting() {
-            if (html.dataset.appBooting === "0") return;
             html.classList.remove("app-booting");
             html.dataset.appBooting = "0";
+            /* مصدر واحد: حتى مع إزالة مبكرة لـ app-booting (webdriver) أطلق shell-stable مرة */
+            if (window.__mjShellStableFired) return;
+            window.__mjShellStableFired = true;
             try {
               window.dispatchEvent(new Event("mj:shell-stable"));
             } catch (_) {}
           }
-          window.addEventListener(
-            "mj:boot-ready",
-            function () {
-              /* إطاران مستقران بعد جاهزية الخطوط/الثيم — بلا تأخير ثابت اصطناعي */
+          /* عقد جاهزية مختصر: أول commit لـ #root = React mounted + App Shell —
+             بلا انتظار Auth/Home وبلا جسر أحداث من الحزمة. */
+          var rootEl = document.getElementById("root");
+          if (rootEl) {
+            var mo = new MutationObserver(function () {
+              if (!rootEl.childNodes.length) return;
+              mo.disconnect();
               requestAnimationFrame(function () {
                 requestAnimationFrame(clearBooting);
               });
-            },
-            { once: true },
-          );
-          window.addEventListener(
-            "mj:app-painted",
-            function () {
+            });
+            mo.observe(rootEl, { childList: true });
+            if (rootEl.childNodes.length) {
+              mo.disconnect();
               requestAnimationFrame(function () {
                 requestAnimationFrame(clearBooting);
               });
-            },
-            { once: true },
-          );
-          /* سقف أمان = MAX_MS للدخولية — لا 900ms يُزيل app-booting قبل الطلاء */
+            }
+          }
+          /* سقف أمان = SPLASH_MAX_VISIBLE_MS — فشل تهيئة فقط */
           window.setTimeout(clearBooting, 1400);
         } catch (e) {}
       })();
