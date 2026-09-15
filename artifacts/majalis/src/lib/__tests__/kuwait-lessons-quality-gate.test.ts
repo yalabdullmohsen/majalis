@@ -1,6 +1,7 @@
 /**
  * بوابة جودة دروس الكويت — تفشل عند متحدث غير شخص، عنوان مكرر، أو درس غير كويتي
- * تحت وصف الكويت دون تصنيف دورة/أرشيف، أو ظهور placeholder في بطاقة ظاهرة.
+ * تحت وصف الكويت دون تصنيف دورة/أرشيف، أو ظهور placeholder في بطاقة ظاهرة،
+ * أو بطاقتين ظاهرتين لنفس الشيخ+العنوان+اليوم.
  * Run: node --import tsx src/lib/__tests__/kuwait-lessons-quality-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -8,10 +9,12 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { looksLikePersonSpeaker, dedupeLessonTitleSegments } from "../lesson-speaker-guard.ts";
+import { filterKuwaitOnlyForDisplay } from "../lesson-kuwait-scope.ts";
 import {
-  filterKuwaitOnlyForDisplay,
-  type KuwaitLessonRecord,
-} from "../lesson-kuwait-scope.ts";
+  mapLessonRow,
+  dedupeKuwaitLessons,
+  splitKuwaitLessons,
+} from "../kuwait-lessons.ts";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const chunk = JSON.parse(
@@ -44,14 +47,23 @@ function hasKuwaitLocation(row: Record<string, unknown>): boolean {
   return KUWAIT_HINT.test(blob);
 }
 
+function speakerTitleKey(speaker: string, title: string, day = ""): string {
+  const s = speaker.replace(/^الشيخ(?:ة)?[:：]?\s*/u, "").replace(/\s+/g, " ").trim();
+  const t = title.replace(/\s+/g, " ").trim();
+  const d = day.replace(/\s+/g, " ").trim();
+  return `${s}|${t}|${d}`;
+}
+
 const ids = new Set<string>();
 const titleKeys = new Map<string, string>();
+const speakerTitleDayRaw = new Map<string, string>();
 
 for (const row of chunk) {
   const id = String(row.id || "");
   const speaker = String(row.speaker_name || "").trim();
   const title = String(row.title || "").trim();
   const mosque = String(row.mosque || "").trim();
+  const day = String(row.day_of_week || row.day || "").trim();
   assert.ok(id, "درس بلا id");
   assert.ok(!ids.has(id), `تكرار id: ${id}`);
   ids.add(id);
@@ -62,9 +74,22 @@ for (const row of chunk) {
   if (!isElectronicOrArchive(row)) {
     const prev = titleKeys.get(titleKey);
     if (prev && prev !== id) {
-      assert.fail(`عنوان مكرر بين دروس حضورية: ${prev} و ${id} — ${title}`);
+      // نفس العنوان لشيخين مختلفين مسموح (كتاب واحد يُشرَح في أكثر من مجلس)
+      const prevRow = chunk.find((r) => String(r.id) === prev);
+      const prevSpeaker = String(prevRow?.speaker_name || "").trim();
+      if (speakerTitleKey(prevSpeaker, title) === speakerTitleKey(speaker, title)) {
+        assert.fail(`عنوان+شيخ مكرر بين دروس حضورية: ${prev} و ${id} — ${title}`);
+      }
     }
     titleKeys.set(titleKey, id);
+
+    const std = speakerTitleKey(speaker, title, day);
+    const prevStd = speakerTitleDayRaw.get(std);
+    assert.ok(
+      !prevStd || prevStd === id,
+      `تكرار خام لنفس الشيخ+العنوان+اليوم في البذرة: ${prevStd} و ${id} — ${title}`,
+    );
+    speakerTitleDayRaw.set(std, id);
   }
 
   assert.ok(speaker, `متحدث فارغ: ${id} / ${title}`);
@@ -88,25 +113,10 @@ for (const row of chunk) {
   }
 }
 
-/** البطاقات الظاهرة في /lessons لا تعرض placeholder أو شيخًا غير شخص */
-const asKuwaitRecords = chunk.map((row) => ({
-  id: String(row.id || ""),
-  title: String(row.title || ""),
-  sheikhName: String(row.speaker_name || ""),
-  mosque: String(row.mosque || ""),
-  region: String(row.region || ""),
-  governorate: String(row.city || row.governorate || ""),
-  note: "",
-  description: String(row.description || ""),
-  day: "",
-  time: "",
-  category: "",
-  sortKey: 0,
-  nextOccurrenceMs: 0,
-  activityType: "درس" as const,
-}));
+const mapped = dedupeKuwaitLessons(chunk.map((row) => mapLessonRow({ ...row, source: "seed" })));
+const visible = filterKuwaitOnlyForDisplay(mapped);
+const { active } = splitKuwaitLessons(visible);
 
-const visible = filterKuwaitOnlyForDisplay(asKuwaitRecords as KuwaitLessonRecord[]);
 for (const lesson of visible) {
   assert.ok(
     looksLikePersonSpeaker(lesson.sheikhName || ""),
@@ -116,6 +126,17 @@ for (const lesson of visible) {
     !PLACEHOLDER_SPEAKER.test(String(lesson.sheikhName || "").trim()),
     `بطاقة ظاهرة فيها placeholder: ${lesson.id}`,
   );
+}
+
+const speakerTitleDay = new Map<string, string>();
+for (const lesson of active) {
+  const key = speakerTitleKey(lesson.sheikhName || "", lesson.title || "", lesson.day || "");
+  const prev = speakerTitleDay.get(key);
+  assert.ok(
+    !prev || prev === lesson.id,
+    `تكرار بطاقة نشطة لنفس الشيخ+العنوان+اليوم: ${prev} و ${lesson.id} — ${lesson.title}`,
+  );
+  speakerTitleDay.set(key, lesson.id);
 }
 
 const searchIdxPath = resolve(root, "public/data/search/index.json");
@@ -131,4 +152,5 @@ try {
 console.log("kuwait-lessons-quality-gate: ok", {
   lessons: chunk.length,
   visible: visible.length,
+  active: active.length,
 });

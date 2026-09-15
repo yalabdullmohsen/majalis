@@ -147,6 +147,24 @@ export async function buildLessonsSeed(): Promise<LessonSeedRow[]> {
 
   // بطاقة واحدة لكل إعلان/دورة — الجلسات تُلخَّص في session_count وlinked_titles
   const fromAds = lessonAds.map((ad) => rowFromAdSession(ad, 0));
-  const fromCatalog = buildCatalogLessonRows();
+  const adKeys = new Set(
+    fromAds.map((row) => {
+      const speaker = String(row.speaker_name || "")
+        .replace(/^الشيخ(?:ة)?[:：]?\s*/u, "")
+        .replace(/\s+/g, " ")
+        .trim();
+      const title = String(row.title || "").replace(/\s+/g, " ").trim();
+      return `${speaker}|${title}`;
+    }),
+  );
+  // لا تُحقن إعلانات علمية بنفس الشيخ+العنوان — كانت تُظهر الدرس مرتين في /lessons
+  const fromCatalog = buildCatalogLessonRows().filter((row) => {
+    const speaker = String(row.speaker_name || "")
+      .replace(/^الشيخ(?:ة)?[:：]?\s*/u, "")
+      .replace(/\s+/g, " ")
+      .trim();
+    const title = String(row.title || "").replace(/\s+/g, " ").trim();
+    return !adKeys.has(`${speaker}|${title}`);
+  });
   return [...fromAds, ...fromCatalog];
 }

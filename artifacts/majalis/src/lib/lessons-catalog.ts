@@ -105,7 +105,9 @@ export function buildCatalogLessonRows(): LessonSeedRow[] {
   const standalone = SCIENTIFIC_ANNOUNCEMENTS.filter(
     (item) =>
       !item.id.startsWith("sci-ijazati-taah") &&
-      item.id !== "sci-talae-alilm-murtaqaa",
+      item.id !== "sci-talae-alilm-murtaqaa" &&
+      // مغطّى ببطاقة lesson-ads / kw-* — حقنه يضاعف البطاقة في /lessons
+      item.id !== "sci-tawheed-saltaweel",
   ).map((item) => rowFromAnnouncement(item));
 
   const ijazati = ijazatiTaahCourseRows();

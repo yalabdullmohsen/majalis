@@ -9,8 +9,8 @@ import {
 /**
  * مفتاح التكرار الثابت للمنتج:
  * - دورة لها courseId → بطاقة واحدة لكل دورة
- * - وإلا: عنوان + شيخ + تاريخ + مكان
- * (الوقت لا يدخل المفتاح حتى لا تتضاعف نفس الجلسة بصيغ وقت مختلفة)
+ * - وإلا: عنوان + شيخ + يوم/تاريخ
+ * (الوقت والمكان لا يدخلان المفتاح — اختلاف صياغة الديوان/الوقت كان يضاعف نفس الجلسة)
  */
 export function buildLessonDedupeKey(lesson: KuwaitLessonRecord): string {
   const courseId = String(lesson.courseId || "").trim();
@@ -26,7 +26,7 @@ export function buildLessonDedupeKey(lesson: KuwaitLessonRecord): string {
   }
 
   const date = normalizeLessonDay(lesson.gregorianDate || lesson.day || "");
-  return [title, sheikh, date, place].join("|");
+  return [title, sheikh, date].join("|");
 }
 
 function lessonQualityScore(lesson: KuwaitLessonRecord): number {
@@ -39,6 +39,8 @@ function lessonQualityScore(lesson: KuwaitLessonRecord): number {
   // تفضيل معرّف kw المستقر / الجلسة الأولى عند التساوي
   if (String(lesson.id || "").startsWith("kw-")) score += 0.0005;
   if (/-0$/.test(String(lesson.id || ""))) score += 0.0004;
+  // كتالوج الإعلانات العلمية (sci-*) ثانوي أمام سجل الدرس الحي
+  if (String(lesson.id || "").startsWith("sci-")) score -= 0.0006;
   return score;
 }
 
