@@ -70,6 +70,38 @@ const result =
     ? classifyChangedPaths(paths, { forceFull: true })
     : classifyChangedPaths(paths);
 
+
+const REQUIRED_OUTPUTS = [
+  "lane",
+  "need_build",
+  "need_fast_lane",
+  "need_mushaf",
+  "need_postgres",
+  "need_visual",
+  "need_color_contrast",
+  "need_preview_smoke",
+  "need_policy_tests",
+  "manual_review",
+];
+for (const key of REQUIRED_OUTPUTS) {
+  if (!(key in result.outputs)) {
+    console.error(`emit-path-lane: missing output '${key}'`);
+    process.exit(1);
+  }
+  const v = result.outputs[key];
+  if (key === "lane") {
+    if (typeof v !== "string" || !v) {
+      console.error(`emit-path-lane: invalid lane '${v}'`);
+      process.exit(1);
+    }
+    continue;
+  }
+  if (v !== "true" && v !== "false") {
+    console.error(`emit-path-lane: output '${key}' must be string true|false, got '${v}'`);
+    process.exit(1);
+  }
+}
+
 const lines = Object.entries(result.outputs).map(([k, v]) => `${k}=${v}`);
 const block = lines.join("\n");
 console.log("path-lane classification:");

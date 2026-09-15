@@ -37,7 +37,7 @@ assert.doesNotMatch(read("src/features/mushaf-reader/MushafPage.tsx"), /MushafEx
 
 const css = read("src/features/mushaf-reader/mushaf-reader.css");
 assert.match(css, /\.nm-controls--compact/);
-assert.match(css, /safe-area-inset-top/);
+assert.match(css, /var\(--inset-top/);
 assert.match(css, /data-focus-reading/);
 assert.match(css, /opacity:\s*0/);
 

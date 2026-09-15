@@ -1633,12 +1633,12 @@ html[data-theme="dark"] .nm-exit-control {
 }
 
 .nm-controls--compact .nm-controls__bar {
-  min-height: calc(var(--nm-chrome-h) + var(--inset-top, env(safe-area-inset-top, 0px)));
+  min-height: calc(var(--nm-chrome-h) + var(--inset-top, 0px));
   padding:
-    calc(0.18rem + var(--inset-top, env(safe-area-inset-top, 0px)))
-    max(0.45rem, var(--inset-right, env(safe-area-inset-right, 0px)))
+    calc(0.18rem + var(--inset-top, 0px))
+    max(0.45rem, var(--inset-right, 0px))
     0.18rem
-    max(0.45rem, var(--inset-left, env(safe-area-inset-left, 0px)));
+    max(0.45rem, var(--inset-left, 0px));
   gap: 0.28rem;
   flex-wrap: nowrap;
   overflow: hidden;
@@ -1685,7 +1685,7 @@ html[data-theme="dark"] .nm-exit-control {
 .nm-controls-more {
   position: absolute;
   inset-inline: 0.55rem auto;
-  top: calc(var(--nm-chrome-h) + var(--inset-top, env(safe-area-inset-top, 0px)) + 0.35rem);
+  top: calc(var(--nm-chrome-h) + var(--inset-top, 0px) + 0.35rem);
   z-index: 36;
   min-width: min(16.5rem, calc(100% - 1.1rem));
   padding: 0.65rem 0.75rem;
@@ -1803,11 +1803,11 @@ html[data-theme="dark"] .nm-exit-control {
 
 /* RTL: التالية = يمين الشاشة (inline-start) — يطابق mm-page-edge--next */
 .nm-page-arrow--next {
-  inset-inline-start: max(0.28rem, var(--inset-left, env(safe-area-inset-left, 0px)));
+  inset-inline-start: max(0.28rem, var(--inset-left, 0px));
 }
 
 .nm-page-arrow--prev {
-  inset-inline-end: max(0.28rem, var(--inset-right, env(safe-area-inset-right, 0px)));
+  inset-inline-end: max(0.28rem, var(--inset-right, 0px));
 }
 
 .nm-page-arrow__hit {
