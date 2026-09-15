@@ -35,9 +35,9 @@ const ASSERTIONS = [
   // ("simplify public navigation") — أُزيلت تأكيداتها هنا معه.
   { route: "/arbaeen-nawawi", selector: ".an-toolbar__title", mode: "light", min: 3 },
   { route: "/arbaeen-nawawi", selector: ".an-summary__eyebrow", mode: "light", min: 4.5 },
-  // .fiqh-council-subnav-link — خلفية #fff ثابتة غير مشروطة بالسمة، بقيت
-  // بيضاء في الوضع الليلي بينما تحوّل النص لفاتح = نص شبه أبيض على أبيض.
-  { route: "/fiqh-council", selector: ".fiqh-council-subnav-link", mode: "dark", min: 4.5 },
+  // .fiqh-council-subnav-link — حُذف مع إزالة المجمع الفقهي من المنتج
+  // (مسار /fiqh-council → Redirect إلى /fiqh). أُزيل التأكيد معه — نفس نمط
+  // /developers أعلاه. لا تُخفَّف عتبات WCAG؛ الهدف لم يعد في DOM.
   // زر CTA أخضر (.btn-primary وما شابه) كان يفقد لونه الصحيح (أبيض/داكن)
   // أمام قاعدة "كل <a> أخضر في الوضع الليلي" العامة (تخصيص أعلى).
   { route: "/account-deletion", selector: ".btn-primary", mode: "dark", min: 3 },
