@@ -127,15 +127,6 @@ html[data-theme="dark"] .soft-tile--on-light {
 .ds-empty,
 .lessons-empty-state,
 .search-empty-state,
-.kids-hub-intro {
-  border-radius: var(--radius-card, 24px);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 16%, var(--mj-hairline, #d5ddd9));
-  background: color-mix(in srgb, var(--mj-surface, #fff) 92%, #eef4f1);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.7),
-    0 10px 22px -14px rgba(11, 32, 24, 0.18);
-  box-sizing: border-box;
-}
 
 html[data-theme="dark"] .mj-framed,
 html.dark .mj-framed,
@@ -147,14 +138,6 @@ html[data-theme="dark"] .lessons-empty-state,
 html.dark .lessons-empty-state,
 html[data-theme="dark"] .search-empty-state,
 html.dark .search-empty-state,
-html[data-theme="dark"] .kids-hub-intro,
-html.dark .kids-hub-intro {
-  background: color-mix(in srgb, var(--mj-surface, #15201c) 88%, #0d1412);
-  border-color: color-mix(in srgb, var(--mj-brand, #1e5f4b) 22%, rgba(255, 255, 255, 0.1));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 12px 28px rgba(0, 0, 0, 0.28);
-}
 
 /* أزرار عائمة — إطار صلب دائمًا (لا border:none بلا بديل) */
 .global-back-btn,

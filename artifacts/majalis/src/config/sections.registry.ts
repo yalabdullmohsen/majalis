@@ -8,7 +8,6 @@ import type { LucideIcon } from "lucide-react";
 import {
   AudioLines,
   Award,
-  Baby,
   BadgeCheck,
   Bell,
   BookMarked,
@@ -836,19 +835,6 @@ const SECTION_SEEDS: SectionSeed[] = [
     surfaces: NAV,
     status: "live",
     keywords: ["أنبياء", "رسل"],
-  },
-  {
-    id: "kids",
-    label: "ركن الأطفال",
-    subtitle: "قصص وأذكار وتعليم ميسّر للأطفال",
-    route: "/kids",
-    icon: Baby,
-    group: "stories",
-    order: 12,
-    surfaces: NAV,
-    status: "live",
-    keywords: ["أطفال", "قصص", "تعليم", "أسرة"],
-    aliases: ["ركن الطفل", "للأطفال"],
   },
   {
     id: "nations",

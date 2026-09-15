@@ -129,7 +129,6 @@ console.log("\n=== nav-visibility تنظيف ===");
   assert(resolveMergedPath("/researches") === "/academic-research", "researches → academic-research");
   assert(resolveMergedPath("/start-here") === "/lessons", "start-here → lessons");
   assert(Object.keys(MERGED_PATH_REDIRECTS).length >= 10, "جدول التوجيه غير فارغ");
-  assert(!isComingSoonPath("/kids"), "ركن الأطفال مفتوح");
   assert(!isComingSoonPath("/mushaf"), "المصحف لم يعد قريبًا");
   assert(!isComingSoonPath("/mushaf/1"), "مسارات المصحف الفرعية مفتوحة");
 
