@@ -944,11 +944,11 @@ export default function AdhanSettingsPage() {
             <button type="button" className="ads-pill-btn" onClick={() => void runSoundTest()}>
               {playingId ? "إيقاف الصوت" : "معاينة الصوت"}
             </button>
+            {showDeveloperTools ? (
+            <>
             <button type="button" className="ads-pill-btn" onClick={() => void runNotifSoundTest()}>
               اختبار الإشعار بعد ١٠ ثوانٍ
             </button>
-            {showDeveloperTools ? (
-            <>
             <button
               type="button"
               className="ads-pill-btn"

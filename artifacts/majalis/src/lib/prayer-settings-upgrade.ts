@@ -4,8 +4,9 @@
  */
 import { loadAdhanPrefs, saveAdhanPrefs } from "./adhan-preferences";
 import { loadPrayerAlertPrefs, savePrayerAlertPrefs } from "./prayer-alert-preferences";
+import { loadPrayerNotificationPreferences } from "./prayer-notifications/preferences";
 
-export const PRAYER_SETTINGS_MIGRATION_VERSION = 2;
+export const PRAYER_SETTINGS_MIGRATION_VERSION = 3;
 const STORE_KEY = "majalis-prayer-settings-migration-v";
 
 function readMigrationVersion(): number {
@@ -43,6 +44,9 @@ export function migratePrayerSettingsIfNeeded(): {
   saveAdhanPrefs(adhan);
   const alerts = loadPrayerAlertPrefs();
   savePrayerAlertPrefs(alerts);
+
+  // v2→v3: ترحيل محافظ إلى تفضيلات تنبيهات الصلاة الموحّدة
+  loadPrayerNotificationPreferences();
 
   writeMigrationVersion(to);
   if (import.meta.env.DEV) {

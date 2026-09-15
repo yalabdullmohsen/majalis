@@ -1,34 +1,16 @@
 /**
- * PrayerNotificationService — واجهة موحّدة لإشعارات الصلاة (منفصلة عن In-App Audio).
+ * PrayerNotificationService — واجهة رقيقة فوق المسار الموحّد فقط.
+ * لا يُلغي كل الإشعارات ثم يعيد الجدولة (مسار قديم مزدوج).
  */
 import {
   getNotificationPermissionStatus,
   requestNotificationPermission,
-  schedulePrayerNativeNotifications,
-  cancelAllPrayerNativeNotifications,
+  listPendingPrayerNotifications,
   type PermissionStatus,
 } from "@/lib/prayer-local-notifications";
-import { dateISOInZone } from "@/lib/prayer-notification-ids";
-import type { AdhanPreferences } from "@/lib/adhan-preferences";
-import { loadAdhanPrefs } from "@/lib/adhan-preferences";
+import { cancelLegacyPrayerNotificationsOnly } from "@/lib/prayer-notifications/legacy-cleanup";
 import { isNative } from "@/lib/capacitor-utils";
-
-export type PrayerTimesInput = {
-  fajr: Date;
-  dhuhr: Date;
-  asr: Date;
-  maghrib: Date;
-  isha: Date;
-  date?: Date;
-};
-
-const PRAYER_AR: Record<keyof Omit<PrayerTimesInput, "date">, string> = {
-  fajr: "الفجر",
-  dhuhr: "الظهر",
-  asr: "العصر",
-  maghrib: "المغرب",
-  isha: "العشاء",
-};
+import type { PrayerTimesPayload } from "@/lib/prayer-times";
 
 let lastError: string | null = null;
 
@@ -38,32 +20,19 @@ export async function checkNotificationPermissionStatus(): Promise<PermissionSta
 
 export { requestNotificationPermission };
 
+/** يعيد جدولة تنبيهات الصلاة عبر المنسّق الموحّد فقط. */
 export async function schedulePrayerNotifications(
-  prayerTimes: PrayerTimesInput,
-  userSettings?: AdhanPreferences,
+  payload: PrayerTimesPayload,
+  opts?: { force?: boolean },
 ): Promise<{ scheduled: number; error?: string }> {
-  const prefs = userSettings ?? loadAdhanPrefs();
   try {
-    await cancelAllPrayerNativeNotifications();
-    let scheduled = 0;
-    for (const key of ["fajr", "dhuhr", "asr", "maghrib", "isha"] as const) {
-      const prayerPrefs = prefs.prayers[key];
-      if (!prayerPrefs?.enabled) continue;
-      const at = prayerTimes[key];
-      const dateISO = dateISOInZone("Asia/Kuwait", prayerTimes.date ?? at);
-      await schedulePrayerNativeNotifications({
-        prayerKey: key,
-        prayerName: PRAYER_AR[key],
-        prayerTimeEpochMs: at.getTime(),
-        dateISO,
-        preAlertEnabled: (prayerPrefs.advanceMinutes ?? 0) > 0,
-        enterAlertEnabled: true,
-        preAlertMinutes: prayerPrefs.advanceMinutes ?? 0,
-      });
-      scheduled += 1;
-    }
+    const { startPrayerAlertScheduler } = await import("@/lib/prayer-alert-scheduler");
+    await startPrayerAlertScheduler(payload, {
+      forceNativeReschedule: opts?.force !== false,
+    });
     lastError = null;
-    return { scheduled };
+    const pending = await listPendingPrayerNotifications();
+    return { scheduled: pending.count };
   } catch (e) {
     const message = e instanceof Error ? e.message : String(e);
     lastError = message;
@@ -72,9 +41,10 @@ export async function schedulePrayerNotifications(
   }
 }
 
+/** إلغاء إشعارات الأذان فقط — دون المساس بإشعارات المحتوى الأخرى. */
 export async function cancelPrayerNotifications(): Promise<void> {
   try {
-    await cancelAllPrayerNativeNotifications();
+    await cancelLegacyPrayerNotificationsOnly();
     lastError = null;
   } catch (e) {
     lastError = e instanceof Error ? e.message : String(e);
@@ -87,13 +57,10 @@ export async function listScheduledPrayerNotifications(): Promise<
 > {
   if (!isNative) return [];
   try {
-    const { LocalNotifications } = await import("@capacitor/local-notifications");
-    const pending = await LocalNotifications.getPending();
-    return (pending.notifications ?? []).map((n) => ({
-      id: Number(n.id),
-      title: n.title,
-      body: n.body,
-      at: n.schedule?.at ? new Date(n.schedule.at).toISOString() : undefined,
+    const pending = await listPendingPrayerNotifications();
+    return pending.items.map((n) => ({
+      id: n.id,
+      at: n.at ?? undefined,
     }));
   } catch (e) {
     lastError = e instanceof Error ? e.message : String(e);

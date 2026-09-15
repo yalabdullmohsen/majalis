@@ -54,9 +54,9 @@ export const NOTIFICATION_CATALOG: Record<NotificationCatalogKey, readonly Notif
 
   /** إشعار الأذان */
   prayerAdhan: [
-    { title: "أذان {{name}}", body: "{{clock}}" },
-    { title: "أذان {{name}}", body: "{{clock}}" },
-    { title: "أذان {{name}}", body: "{{clock}}" },
+    { title: "حان وقت صلاة {{name}}", body: "{{clock}}" },
+    { title: "حان وقت صلاة {{name}}", body: "{{clock}}" },
+    { title: "حان وقت صلاة {{name}}", body: "{{clock}}" },
   ],
 
   /** تنبيه بعد الأذان */
