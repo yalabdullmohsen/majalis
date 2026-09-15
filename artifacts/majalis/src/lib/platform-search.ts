@@ -1,4 +1,3 @@
-import { searchFiqhCouncilSeed } from "./fiqh-council-service";
 import {
   RULINGS_SEED,
   ANNUAL_COURSES_SEED,
@@ -24,7 +23,8 @@ export function searchPlatformSeed(query: string): PlatformSearchResults {
   const q = query.trim();
   if (!q) return EMPTY;
 
-  const fiqh_decisions = searchFiqhCouncilSeed(q);
+  // قسم قرارات المجامع أُلغي من المنتج — لا تُعرض في البحث أو الاقتراحات.
+  const fiqh_decisions: PlatformSearchResults["fiqh_decisions"] = [];
 
   const rulings = RULINGS_SEED.filter((r) =>
     arabicMatchAny([r.title, r.summary, r.body, r.category, ...(r.keywords || [])], q),

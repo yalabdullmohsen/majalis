@@ -123,7 +123,7 @@ function QualityContent() {
 
 export default function FiqhQualityPage() {
   return (
-    <AdminShell section="fiqh-council" onSectionChange={() => {}}>
+    <AdminShell section="dashboard" onSectionChange={() => {}}>
       <QualityContent />
     </AdminShell>
   );

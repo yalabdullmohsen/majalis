@@ -8,7 +8,6 @@ const byPath = navData.labels as Record<string, string>;
 
 /** استثناءات صريحة: عنوان SEO أطول من 25 حرفاً — اسم التنقّل المعتمد */
 export const SEO_NAV_EXCEPTIONS: Record<string, string> = {
-  "/fiqh-council": "المجمع الفقهي",
   "/knowledge-graph": "استكشف المعرفة",
 };
 

@@ -171,11 +171,12 @@ function routeForPath(routes: SeoRoute[], path: string) {
     };
   }
 
-  if (normalized.startsWith("/fiqh-council/")) {
+  if (normalized.startsWith("/fiqh-council/") || normalized === "/fiqh-council") {
     return {
-      ...requiredRoute(routes, "/fiqh-council"),
-      title: "قرار المجمع الفقهي | سُنّة",
-      description: "تفاصيل قرار أو بحث أو توصية من المجمع الفقهي الإسلامي.",
+      ...requiredRoute(routes, "/fiqh"),
+      title: "الفقه الإسلامي | سُنّة",
+      description: "بوابة الفقه: أحكام العبادات والمعاملات والنوازل المعاصرة.",
+      robots: "noindex, follow",
     };
   }
 
@@ -183,7 +184,7 @@ function routeForPath(routes: SeoRoute[], path: string) {
     return {
       ...requiredRoute(routes, "/fiqh"),
       title: "الفقه الإسلامي | سُنّة",
-      description: "بوابة الفقه: قواعد فقهية، مذاهب، نوازل، قرارات المجامع، وأحكام العبادات.",
+      description: "بوابة الفقه: قواعد فقهية، مذاهب، نوازل، وأحكام العبادات.",
     };
   }
 
@@ -247,7 +248,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
 
   if (normalized.startsWith("/c/")) {
     return {
-      ...requiredRoute(routes, "/fiqh-council"),
+      ...requiredRoute(routes, "/fiqh"),
       title: "مقالة علمية | سُنّة",
       description: "مقالة شرعية من سُنّة — يُراجع المصدر في صفحة المقال عند توافره.",
       ogType: "article",

@@ -68,7 +68,6 @@ const SECTIONS = [
       { href: "/fiqh?tab=qawaid", label: "القواعد الفقهية", desc: "ضمن بوابة الفقه" },
       { href: "/fiqh?tab=madhahib", label: "المذاهب الأربعة", desc: "ضمن بوابة الفقه" },
       { href: "/fiqh?tab=nawazil", label: "النوازل المعاصرة", desc: "ضمن بوابة الفقه" },
-      { href: "/fiqh?tab=council", label: "قرارات المجامع", desc: "ضمن بوابة الفقه" },
       { href: "/fiqh?tab=ibadat", label: "العبادات", desc: "طهارة وصلاة وزكاة وصيام وحج" },
       { href: "/tahara",      label: "الطهارة",              desc: "الوضوء والغسل والتيمم" },
       { href: "/salah-guide", label: "الصلاة",               desc: "دليل الصلاة كاملاً" },

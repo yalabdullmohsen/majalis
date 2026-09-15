@@ -192,12 +192,12 @@ if (QURAN_SURAHS.length !== 114) {
 }
 
 const SURAH_STORIES = getAllSurahStories();
-const PUBLIC_FIQH_ISSUES = FIQH_ISSUES_PUBLISHED_SEED.filter(isPublicIssue);
+const PUBLIC_FIQH_ISSUES = []; // المجمع أُلغي من المنتج — لا فهرسة عامة
 /** مسائل منشورة في البذرة لكن غير مؤهّلة للعرض العام — قشرة noindex لمنع soft-404 بقشرة الرئيسية */
 const NONPUBLIC_FIQH_ISSUES = FIQH_ISSUES_PUBLISHED_SEED.filter(
   (i) => i.status === "published" && !isPublicIssue(i),
 );
-const PUBLIC_FIQH_ITEMS = FIQH_COUNCIL_PUBLISHED_SEED.filter(isVerifiedPublicItem);
+const PUBLIC_FIQH_ITEMS = []; // المجمع أُلغي من المنتج — لا فهرسة عامة
 const PUBLISHED_FIQH_BOOKS = publishedBooks();
 const FIQH_BOOK_STATS = (() => {
   let chapters = 0;
@@ -832,6 +832,12 @@ function addPage(route, { extraJsonLd = "", richBody = "", parents = [], sitemap
     rawDesc.length >= META_DESC_MIN
       ? clamp(rawDesc, META_DESC_MAX)
       : padDesc(rawDesc, route.title ? `${route.title} — ${SITE_NAME}` : SITE_NAME);
+  const path = String(route.path || "");
+  // قسم المجمع الفقهي أُلغي — لا فهرسة ولا صفحات prerender عامة.
+  if (path === "/fiqh-council" || path.startsWith("/fiqh-council/")) {
+    sitemap = false;
+    route = { ...route, robots: "noindex, follow" };
+  }
   pages.push({
     route: {
       ...route,
@@ -2584,7 +2590,7 @@ ${linkList("روابط ذات صلة", [
 // ─────────────────────────────────────────────────────────────────────────────
 // ٣) محتوى المنصّة (قرارات، فتاوى، أحكام، دورات، كتب، جلسات)
 // ─────────────────────────────────────────────────────────────────────────────
-for (const row of PUBLIC_FIQH_ITEMS) {
+for (const row of /* removed */ []) {
   const kind = fiqhItemKind(row);
   const desc = clamp(
     padDesc(row.summary || row.ruling_text || row.title, `${kind} من ${row.source_name || "مجمع الفقه الإسلامي الدولي"}`),
@@ -2612,7 +2618,7 @@ for (const row of PUBLIC_FIQH_ITEMS) {
 // لا تُولَّد صفحات ثابتة لهذا المسار كي لا تبقى صفحات SEO يتيمة تُفهرَس ثم تُحيل فوراً.
 // الفتاوى المؤسسية الموثقة بقيت عمداً تحت /fiqh-council/fatwas ولها توليد منفصل أعلاه.
 
-for (const row of verifiedFiqhSessions) {
+for (const row of /* removed fiqh-council sessions */ []) {
   addPage(
     {
       path: `/fiqh-council/sessions/${row.slug}`,
@@ -2876,7 +2882,7 @@ ${t.repentanceConditions?.general?.length ? `<h2>شروط التوبة</h2>\n<ul
 }
 
 // مسائل المجمع الفقهي — من fiqh-issues-seed.ts (المنشورة العامة فقط)
-for (const issue of PUBLIC_FIQH_ISSUES) {
+for (const issue of /* removed */ []) {
   addPage(
     {
       path: `/fiqh-council/issues/${issue.slug}`,
@@ -2902,7 +2908,7 @@ ${issue.category ? `<p>التصنيف: ${escapeHtml(issue.category)}</p>` : ""}`
 }
 
 // مسائل غير مؤهّلة للفهرسة العامة — قشرة noindex بعنوان/وصف/H1 صحيحين (لا قشرة الرئيسية)
-for (const issue of NONPUBLIC_FIQH_ISSUES) {
+for (const issue of /* removed */ []) {
   const levelLabel =
     issue.documentation_level === "general_reasoning"
       ? "استدلال عام — بلا مصدر رسمي مسمّى"
@@ -2997,6 +3003,11 @@ for (const page of pages) {
   }
   seenPaths.add(route.path);
 
+  // المجمع الفقهي أُلغي — لا تُكتب قشور prerender لمساراته (التحويل في AppRoutes).
+  if (route.path === "/fiqh-council" || String(route.path).startsWith("/fiqh-council/")) {
+    continue;
+  }
+
   const dir = route.path === "/" ? seoPrerenderDir : resolve(seoPrerenderDir, route.path.slice(1));
   await mkdir(dir, { recursive: true });
   await writeFile(
@@ -3027,7 +3038,9 @@ const sitemapPages = pages.filter(
     !IA_REDIRECTS[p.route.path] &&
     p.route.path !== "/library" &&
     !String(p.route.path).startsWith("/library/") &&
-    p.route.path !== "/more",
+    p.route.path !== "/more" &&
+    p.route.path !== "/fiqh-council" &&
+    !String(p.route.path).startsWith("/fiqh-council/"),
 );
 const LASTMOD_TODAY = "2026-08-26";
 const LASTMOD_PATHS = new Set([
@@ -3080,6 +3093,8 @@ Disallow: /assistant
 Disallow: /assistant/
 Disallow: /academic-research
 Disallow: /academic-research/
+Disallow: /fiqh-council
+Disallow: /fiqh-council/
 Disallow: /fiqh-council/research-assistant
 Disallow: /fiqh-council/research
 Disallow: /fiqh-council/issues/genetic-testing-ancestry-ruling

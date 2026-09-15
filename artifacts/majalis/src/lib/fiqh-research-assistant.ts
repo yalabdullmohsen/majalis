@@ -43,7 +43,7 @@ export function buildResearchSummary(items: FiqhCouncilItem[], query: string): s
     return FIQH_NO_VERIFIED_MATERIAL_MSG;
   }
 
-  const intro = `وفق المواد المنشورة والموثقة في المجمع الفقهي، إليك ما يرتبط بسؤالك «${query}»:`;
+  const intro = `وفق المواد الفقهية المنشورة والموثقة على المنصة، إليك ما يرتبط بسؤالك «${query}»:`;
   const bullets = items.slice(0, 5).map((item, i) => {
     const snippet = item.summary || item.ruling_text || item.title;
     return `${i + 1}. ${item.title}: ${snippet?.slice(0, 160)}${snippet && snippet.length > 160 ? "…" : ""}`;

@@ -21,6 +21,8 @@ Disallow: /assistant
 Disallow: /assistant/
 Disallow: /academic-research
 Disallow: /academic-research/
+Disallow: /fiqh-council
+Disallow: /fiqh-council/
 Disallow: /fiqh-council/research-assistant
 Disallow: /fiqh-council/research
 Disallow: /fiqh-council/issues/genetic-testing-ancestry-ruling

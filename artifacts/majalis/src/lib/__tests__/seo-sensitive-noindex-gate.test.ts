@@ -1,5 +1,6 @@
 /**
- * بوابة: مسارات حسّاسة/ناقصة خارج sitemap + noindex.
+ * بوابة: مسارات حسّاسة/محذوفة خارج sitemap + noindex حيث يلزم.
+ * المجمع الفقهي أُلغي — مساراته لا تُفهرس ولا تبقى في seo-routes كصفحات حيّة.
  * node --import tsx src/lib/__tests__/seo-sensitive-noindex-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -17,6 +18,14 @@ const routes = JSON.parse(read("src/lib/seo-routes.json")) as {
 };
 const vercel = read("vercel.json");
 const trust = read("src/lib/fiqh-council-trust.ts");
+const appRoutes = read("src/AppRoutes.tsx");
+
+const REMOVED_FIQH_COUNCIL = [
+  "/fiqh-council",
+  "/fiqh-council/research",
+  "/fiqh-council/research-assistant",
+  "/fiqh-council/issues/genetic-testing-ancestry-ruling",
+];
 
 const MUST_NOT_SITEMAP = [
   "/admin",
@@ -24,10 +33,8 @@ const MUST_NOT_SITEMAP = [
   "/login",
   "/register",
   "/search",
-    "/fiqh-council/research-assistant",
   "/academic-research",
-  "/fiqh-council/research",
-  "/fiqh-council/issues/genetic-testing-ancestry-ruling",
+  ...REMOVED_FIQH_COUNCIL,
 ];
 
 for (const path of MUST_NOT_SITEMAP) {
@@ -38,21 +45,27 @@ for (const path of MUST_NOT_SITEMAP) {
   );
 }
 
-for (const path of [
-  "/academic-research",
-  "/fiqh-council/research",
-    "/fiqh-council/research-assistant",
-  "/fiqh-council/issues/genetic-testing-ancestry-ruling",
-]) {
+for (const path of ["/academic-research", ...REMOVED_FIQH_COUNCIL]) {
   assert.match(robots, new RegExp(`Disallow:\\s*${path.replace(/\//g, "\\/")}`));
 }
 
-for (const path of ["/academic-research", "/fiqh-council/research", "/register",  "/search", "/login", "/dashboard"]) {
+for (const path of ["/academic-research", "/register", "/search", "/login", "/dashboard"]) {
   const row = routes.routes.find((r) => r.path === path);
   assert.ok(row, `seo-routes: ${path}`);
   assert.equal(row!.sitemap, false, `${path} خارج sitemap`);
   assert.match(String(row!.robots || ""), /noindex/i, `${path} noindex`);
 }
+
+for (const path of REMOVED_FIQH_COUNCIL) {
+  assert.equal(
+    routes.routes.find((r) => r.path === path),
+    undefined,
+    `${path} محذوف من seo-routes (أُلغي المجمع)`,
+  );
+}
+
+assert.match(appRoutes, /path="\/fiqh-council"/);
+assert.match(appRoutes, /Redirect to="\/fiqh"/);
 
 for (const path of ["/search", "/login", "/register", "/dashboard"]) {
   const row = routes.routes.find((r) => r.path === path)!;

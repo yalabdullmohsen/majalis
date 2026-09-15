@@ -16,7 +16,7 @@ export const IA_HOME_PRIMARY = [
   { href: "/quran-hub", title: "القرآن", desc: "المصحف والتجويد والحفظ وعلوم القرآن" },
   { href: "/lessons", title: "الدروس والدورات", desc: "دروس ودورات علمية منظمة" },
   { href: "/prayer-times", title: "مواقيت الصلاة", desc: "المواقيت والقبلة والأذان" },
-  { href: "/fiqh", title: "الفقه والأحكام", desc: "الأحكام والقواعد والمجامع تحت باب واحد" },
+  { href: "/fiqh", title: "الفقه والأحكام", desc: "الأحكام والقواعد الفقهية تحت باب واحد" },
   { href: "/adhkar", title: "الأذكار اليومية", desc: "أذكار الصباح والمساء وما بينهما" },
   { href: "/sections", title: "جميع الأقسام", desc: "حديث وأعلام وسين جيم ومسارات العلم" },
 ] as const;
@@ -38,6 +38,7 @@ export const IA_REDIRECTS: Record<string, string> = {
   "/man-nahnu": "/about",
   "/rulings": "/fiqh",
   "/fatwa": "/fiqh",
+  "/fiqh-council": "/fiqh",
   "/topics": "/sections",
   "/tajweed": "/quran-hub/tajweed",
   "/quran/tajweed": "/quran-hub/tajweed",
@@ -53,6 +54,7 @@ export const IA_FORBIDDEN_PUBLIC_LABELS = [
   "الموضوعات العلمية",
   "قصص السور", // الاسم القديم → أسباب النزول
   "مفاهيم شرعية", // الاسم القديم → المعجم الشرعي
+  "المجمع الفقهي",
 ] as const;
 
 /**
@@ -72,10 +74,6 @@ export const IA_NESTED_ONLY_PATHS = [
   "/hadith/books",
   "/hadith-science",
   "/hadith/arbaeen",
-  "/fiqh-council",
-  "/fiqh-council/issues",
-  "/fiqh-council/nawazil",
-  "/fiqh-council/fatwas",
   "/fiqh-qawaid",
   "/madhahib",
   "/flashcards",
@@ -102,9 +100,6 @@ export const IA_BREADCRUMB_PARENTS: Record<string, { name: string; path: string 
   "/quran/surahs": [{ name: "القرآن", path: "/quran-hub" }],
   "/quran-hub/numbers": [{ name: "القرآن", path: "/quran-hub" }],
   "/fiqh": [{ name: "الفقه", path: "/fiqh" }],
-  "/fiqh-council": [{ name: "الفقه", path: "/fiqh" }],
-  "/fiqh-council/issues": [{ name: "الفقه", path: "/fiqh" }],
-  "/fiqh-council/nawazil": [{ name: "الفقه", path: "/fiqh" }],
   "/fiqh-qawaid": [{ name: "الفقه", path: "/fiqh" }],
   "/madhahib": [{ name: "الفقه", path: "/fiqh" }],
   "/islamic-glossary": [{ name: "المصطلحات", path: "/islamic-glossary" }],

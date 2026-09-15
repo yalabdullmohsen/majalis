@@ -75,7 +75,7 @@ const fiqh = read("src/pages/fiqh/ui/FiqhView.tsx") + read("src/lib/fiqh-books.t
 assert.match(fiqh, /القواعد الفقهية/);
 assert.match(fiqh, /المذاهب الأربعة/);
 assert.match(fiqh, /النوازل المعاصرة/);
-assert.match(fiqh, /قرارات المجامع/);
+assert.doesNotMatch(fiqh, /قرارات المجامع|المجمع الفقهي|\/fiqh-council/);
 assert.match(fiqh, /العبادات/);
 assert.doesNotMatch(fiqh, /الأسئلة والأجوبة الشرعية/);
 assert.doesNotMatch(fiqh, /فتاوى.*\/quiz|\/quiz.*فتاوى/);

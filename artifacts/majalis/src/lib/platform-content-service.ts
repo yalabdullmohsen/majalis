@@ -1,11 +1,4 @@
 import { arabicMatchAny } from "./arabic-search";
-import {
-  getFiqhDecisions,
-  getFiqhDecisionById,
-  getRelatedFiqhDecisions,
-  searchFiqhCouncilSeed,
-  FIQH_COUNCIL_SEED,
-} from "./fiqh-council-service";
 import { RULINGS_SEED } from "./rulings-seed";
 import { ANNUAL_COURSES_SEED, findAnnualCourseById } from "./annual-courses-seed";
 import { UPDATES_SEED, getSortedUpdates } from "./updates-seed";
@@ -28,13 +21,6 @@ function filterBySearch<T>(items: T[], fields: (keyof T | string)[], query?: str
     ),
   );
 }
-
-export {
-  getFiqhDecisions,
-  getFiqhDecisionById,
-  getRelatedFiqhDecisions,
-  FIQH_COUNCIL_SEED,
-};
 
 // ─── Sharia Rulings ──────────────────────────────────────────────────────────
 
@@ -150,5 +136,4 @@ export {
   RULINGS_SEED,
   ANNUAL_COURSES_SEED,
   UPDATES_SEED,
-  searchFiqhCouncilSeed,
 };

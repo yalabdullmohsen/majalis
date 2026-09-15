@@ -369,8 +369,8 @@ export const FIQH_DOOR_META: Record<FiqhCanonicalDoor, FiqhDoorMeta> = {
   nawazil: {
     id: "nawazil",
     label: "النوازل المعاصرة",
-    desc: "نوازل العصر عبر قرارات المجامع.",
-    href: "/fiqh-council/nawazil",
+    desc: "نوازل العصر وأحكامها المعاصرة.",
+    href: "/fiqh",
     sortOrder: 240,
     group: "muamalat",
   },

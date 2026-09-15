@@ -136,7 +136,8 @@ for (const path of IA_NESTED_ONLY_PATHS) {
 
 assert.ok(IA_BREADCRUMB_PARENTS["/hadith/daif"]?.[0]?.path === "/hadith");
 assert.ok(IA_BREADCRUMB_PARENTS["/ulum-quran"]?.[0]?.path === "/quran-hub");
-assert.ok(IA_BREADCRUMB_PARENTS["/fiqh-council/nawazil"]?.[0]?.path === "/fiqh");
+assert.equal(IA_BREADCRUMB_PARENTS["/fiqh-council/nawazil"], undefined);
+assert.ok(IA_FORBIDDEN_PUBLIC_LABELS.includes("المجمع الفقهي" as never));
 
 const seo = read("src/lib/seo.ts");
 assert.match(seo, /IA_BREADCRUMB_PARENTS/);

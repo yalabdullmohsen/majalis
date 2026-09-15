@@ -4,13 +4,13 @@ import { Redirect, useParams } from "wouter";
 const TOPIC_REDIRECTS: Record<string, string> = {
   muamalat: "/fiqh#fiqh-muamalat",
   atima: "/fiqh/books/atima",
-  medical: "/fiqh-council",
+  medical: "/fiqh",
   "islamic-finance": "/riba",
   "usul-fiqh": "/fiqh/usul",
-  nawazil: "/fiqh-council/nawazil",
+  nawazil: "/fiqh",
   hudud: "/fiqh/books/hudud",
-  minorities: "/fiqh-council",
-  "tech-fiqh": "/fiqh-council",
+  minorities: "/fiqh",
+  "tech-fiqh": "/fiqh",
   patients: "/fiqh/books/taharah",
   financing: "/riba",
 };

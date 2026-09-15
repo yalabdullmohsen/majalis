@@ -204,7 +204,7 @@ function ReviewContent() {
 
 export default function FiqhReviewPage() {
   return (
-    <AdminShell section="fiqh-council" onSectionChange={() => {}}>
+    <AdminShell section="dashboard" onSectionChange={() => {}}>
       <ReviewContent />
     </AdminShell>
   );

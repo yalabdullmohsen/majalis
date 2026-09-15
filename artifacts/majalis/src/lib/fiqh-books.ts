@@ -138,22 +138,15 @@ export const FIQH_SUPPORTING_TOPICS: FiqhSupportingTopic[] = [
   {
     id: "nawazil",
     title: "النوازل المعاصرة",
-    href: "/fiqh-council/nawazil",
-    desc: "نوازل العصر عبر قرارات المجامع المعتمدة.",
+    href: "/fiqh",
+    desc: "مدخل للنوازل ضمن أبواب الفقه المعتمدة على المنصة.",
     icon: "compass",
   },
   {
-    id: "majami",
-    title: "قرارات المجامع الفقهية",
-    href: "/fiqh-council",
-    desc: "مدخل واحد لقرارات المجامع وفتاواها الموثَّقة.",
-    icon: "landmark",
-  },
-  {
     id: "fatawa",
-    title: "الفتاوى",
-    href: "/fiqh-council/fatwas",
-    desc: "فتاوى المجمع بهيئاته، لا إفتاء فردي من المنصة.",
+    title: "الأحكام والفتاوى",
+    href: "/fiqh",
+    desc: "الأحكام الشرعية الموثَّقة ضمن بوابة الفقه، بلا إفتاء فردي من المنصة.",
     icon: "scroll",
   },
 ];

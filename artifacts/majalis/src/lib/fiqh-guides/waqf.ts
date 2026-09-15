@@ -18,7 +18,7 @@ export const WAQF_GUIDE: FiqhGuideSection = {
     { href: "/sadaqa", label: "الصدقة" },
     { href: "/zakat", label: "الزكاة" },
     { href: "/fiqh", label: "الفقه" },
-    { href: "/fiqh-council/nawazil", label: "النوازل" },
+    { href: "/fiqh", label: "النوازل" },
   ],
   tabs: [
     {
