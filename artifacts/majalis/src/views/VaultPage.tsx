@@ -672,7 +672,7 @@ export default function VaultPage() {
               {filteredResume.length === 0 && (
                 <div className="vault-empty">
                   <div className="vault-empty__icon" aria-hidden="true"><BookOpen size={40} strokeWidth={1.3} /></div>
-                  <p>{search ? "لا نتائج للبحث." : "لا يوجد محتوى قيد القراءة. سيُسجَّل هنا كل ما تفتحه."}</p>
+                  <p>{search ? "لا نتائج للبحث." : "لم تفتح مواد بعد. سيظهر هنا ما تتابعه للقراءة لاحقًا."}</p>
                 </div>
               )}
               {filteredResume.map((r) => (

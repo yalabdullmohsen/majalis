@@ -584,7 +584,7 @@ export default function LessonsPage({
                     inputMode="search"
                     value={searchDraft}
                     onChange={(e) => setSearchDraft(e.target.value)}
-                    placeholder="بحث…"
+                    placeholder="ابحث في الدروس…"
                     dir="rtl"
                     enterKeyHint="search"
                   />

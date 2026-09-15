@@ -500,7 +500,7 @@ function MiracleDetailPage({ slug }: { slug: string }) {
         title="…"
         eyebrow="الإعجاز العلمي"
       >
-        <div className="mk-page" dir="rtl" role="status" aria-busy="true" aria-label="تحديث المحتوى">
+        <div className="mk-page" dir="rtl" role="status" aria-busy="true" aria-label="تجهيز المحتوى">
           <div className="mk-detail-skel" aria-hidden="true">
             <div className="mk-detail-skel__hero" />
             <div className="mk-detail-skel__line" />

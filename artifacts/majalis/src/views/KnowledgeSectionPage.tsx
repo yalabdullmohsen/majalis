@@ -101,8 +101,8 @@ export default function KnowledgeSectionPage() {
 
   if (loading && !hasMatchingItem && !hasMatchingList) {
     return (
-      <div className="page-shell narrow" dir="rtl" role="status" aria-busy="true" aria-label="تحديث المحتوى">
-        <PageHeader eyebrow="معرفة" title="تحديث المحتوى" />
+      <div className="page-shell narrow" dir="rtl" role="status" aria-busy="true" aria-label="تجهيز المحتوى">
+        <PageHeader eyebrow="معرفة" title="تجهيز المحتوى…" />
         <div className="skeleton-base hp-skel" aria-hidden="true" style={{ minHeight: "8rem" }} />
       </div>
     );

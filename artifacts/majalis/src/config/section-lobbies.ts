@@ -157,7 +157,7 @@ export function getLobby(id: LobbyId): LobbySpec {
       primary: item({
         id: "next-prayer",
         label: "الصلاة القادمة",
-        subtitle: "المواقيت والأذان حسب موقعك",
+        subtitle: "المواقيت والقبلة وتنبيهات الأذان",
         route: "/prayer-times#mawaqeet",
         icon: CircleDot,
       }),

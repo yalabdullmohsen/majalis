@@ -212,7 +212,7 @@ export default function DailyWirdPage() {
       <PageHeader
         eyebrow="القرآن"
         title="الورد اليومي"
-        subtitle="تابع قراءتك اليومية وموضع الوقوف."
+        subtitle="تابع وردك اليومي وموضع وقوفك في المصحف."
       />
 
       {/* البطاقة الرئيسية، الحلقة والأزرار */}

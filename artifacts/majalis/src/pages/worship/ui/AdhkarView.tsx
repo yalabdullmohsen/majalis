@@ -255,7 +255,7 @@ export default function AdhkarPage() {
     <SectionTemplatePage
       route="/adhkar"
       title="الأذكار"
-      subtitle="أذكار الصباح والمساء والنوم وبعد الصلاة من القرآن والسنة — مع العدّ والحفظ والمشاركة."
+      subtitle="أذكار الصباح والمساء والنوم وبعد الصلاة من القرآن والسنة — مع العدّ والحفظ والمشاركة بسهولة."
       eyebrow="العبادة اليومية"
       groupTitle="ورد الأذكار"
     >

@@ -117,7 +117,7 @@ function CourseCard({
           {course.description && <p className="lpd2-course-card__desc">{course.description}</p>}
 
           {course.items.length === 0 ? (
-            <p className="lpd2-course-card__empty">لا محتوى منشور بعد لهذا المقرر.</p>
+            <p className="lpd2-course-card__empty">لم يُنشر محتوى لهذا المقرر بعد. تصفّح الدروس المتاحة.</p>
           ) : (
             <div className="lpd2-modules">
               {course.items.map((item, i) => {

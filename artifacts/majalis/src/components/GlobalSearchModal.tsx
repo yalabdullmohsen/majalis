@@ -378,7 +378,7 @@ export function GlobalSearchModal({ onClose }: Props) {
             }}
             placeholder="ابحث في المحتوى…"
             dir="rtl"
-            aria-label="ابحث في المحتوى"
+            aria-label="ابحث في الدروس والحديث والفقه والمصحف"
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"

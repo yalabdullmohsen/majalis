@@ -449,10 +449,11 @@ html[data-theme="dark"] .fqh-hub-card__desc {
 }
 .fiqh-hub-edu-note {
   margin: 0 0 0.85rem;
-  padding: 0.55rem 0.75rem;
+  padding: 0.65rem 0.85rem;
   border-radius: var(--radius-card, 24px);
-  font-size: 0.8125rem;
-  line-height: 1.55;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  text-wrap: pretty;
   color: var(--text-secondary, var(--majalis-ink-soft, #5b6570));
   background: color-mix(in srgb, var(--mj-brand, #1e5f4b) 8%, transparent);
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1e5f4b) 18%, transparent);
@@ -1637,8 +1638,16 @@ html.dark .fiqh-lux-page .card::after {
 }
 
 .fiqh-lux-empty {
-  padding: 0 1rem 2rem;
-  font-size: 0.9rem;
+  margin: 0.5rem 0 0;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-card, 16px);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  text-align: center;
+  text-wrap: pretty;
+  color: var(--text-secondary, var(--majalis-ink-soft, #5b6570));
+  background: color-mix(in srgb, var(--surface-elevated, #fff) 88%, var(--mj-brand, #1e5f4b) 6%);
+  border: 1px dashed color-mix(in srgb, var(--mj-brand, #1e5f4b) 22%, transparent);
 }
 
 .fiqh-lux-empty a {

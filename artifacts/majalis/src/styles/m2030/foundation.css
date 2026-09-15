@@ -166,6 +166,8 @@ small, .meta, .text-muted, .text-secondary {
   gap: var(--s-2);
   padding: var(--s-8) var(--s-4);
   text-align: center;
+  text-wrap: pretty;
+  line-height: 1.7;
   color: var(--text-2);
   background:
     radial-gradient(circle at 50% 18%, color-mix(in srgb, var(--em-500) 8%, transparent), transparent 55%),

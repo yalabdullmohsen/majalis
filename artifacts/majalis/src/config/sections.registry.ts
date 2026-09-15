@@ -258,7 +258,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     id: "quran",
     label: "مركز القرآن الكريم",
     navLabel: "القرآن",
-    subtitle: "المصحف والتلاوة والتفسير",
+    subtitle: "المصحف والتلاوة والتجويد والتفسير",
     route: "/quran-hub",
     icon: BookOpen,
     group: "sciences",
@@ -283,7 +283,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "prayer",
     label: "الصلاة",
-    subtitle: "مواقيت الصلاة والقبلة وتنبيهات الأذان",
+    subtitle: "المواقيت والقبلة وتنبيهات الأذان",
     route: "/prayer-times",
     icon: MoonStar,
     group: "worship",
@@ -623,7 +623,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "hadith",
     label: "الحديث وعلومه",
-    subtitle: "أحاديث وشروح ومصطلح",
+    subtitle: "أحاديث وشروح ومصطلح الحديث",
     route: "/hadith",
     icon: ScrollText,
     group: "sciences",
