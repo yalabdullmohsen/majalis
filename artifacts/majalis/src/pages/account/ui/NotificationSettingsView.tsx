@@ -47,6 +47,7 @@ import {
 } from "@/lib/notification-history";
 import { applyPageSeo } from "@/lib/seo";
 import { PushPrompt } from "@/components/PushPrompt";
+import { SunnahChannelsPanel } from "@/components/notifications/SunnahChannelsPanel";
 import { fireTestLocalNotification } from "@/lib/notifications/test-trigger";
 import "@/styles/pages/notifications.css";
 import { UtilityScreen } from "@/components/design-system/screens";
@@ -572,6 +573,8 @@ export default function NotificationSettingsPage() {
           title="الإشعارات"
           subtitle="تذكيرات منظمة للصلاة والقرآن والأذكار وطلب العلم."
         />
+
+        <SunnahChannelsPanel />
 
         {!isNative && (
           <section className="soft-card soft-card--on-light notif-card" aria-label="إشعارات الدفع عبر الويب">

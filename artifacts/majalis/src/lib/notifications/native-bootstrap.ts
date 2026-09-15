@@ -91,6 +91,9 @@ export async function bootstrapNativeNotifications(): Promise<void> {
     await ensureQuranDailyReminderScheduled();
     const { ensureDhikrPhraseRemindersScheduled } = await import("@/lib/dhikr-phrase-reminders");
     await ensureDhikrPhraseRemindersScheduled();
+    // ترحيل سياسات سُنّة فقط — بلا طلب إذن نظام عند الإقلاع
+    const { bootstrapSunnahNotifications } = await import("@/lib/sunnah-notifications");
+    bootstrapSunnahNotifications();
   } catch (e) {
     console.warn("[notifications] bootstrap failed", e);
   }

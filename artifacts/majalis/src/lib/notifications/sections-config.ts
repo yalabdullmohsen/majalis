@@ -111,7 +111,7 @@ export const NOTIF_SECTIONS: readonly NotifSectionMeta[] = [
     id: "quran",
     title: "القرآن",
     description: "ورد يومي ومتابعة التلاوة",
-    defaults: baseDay({ enabled: true, dailyCount: 2, windowStartHour: 9, windowEndHour: 21 }),
+    defaults: baseDay({ enabled: false, dailyCount: 2, windowStartHour: 9, windowEndHour: 21 }),
     countMin: 1,
     countMax: 6,
     messages: [
@@ -136,7 +136,7 @@ export const NOTIF_SECTIONS: readonly NotifSectionMeta[] = [
     id: "adhkar",
     title: "الأذكار",
     description: "الصباح والمساء والنوم",
-    defaults: baseDay({ enabled: true, dailyCount: 3, windowStartHour: 6, windowEndHour: 22 }),
+    defaults: baseDay({ enabled: false, dailyCount: 3, windowStartHour: 6, windowEndHour: 22 }),
     countMin: 1,
     countMax: 6,
     messages: [
@@ -161,7 +161,7 @@ export const NOTIF_SECTIONS: readonly NotifSectionMeta[] = [
     id: "salawat",
     title: "الصلاة على النبي ﷺ",
     description: "تذكير بعدد مرات يوميًا",
-    defaults: baseDay({ enabled: true, dailyCount: 3, windowStartHour: 8, windowEndHour: 21 }),
+    defaults: baseDay({ enabled: false, dailyCount: 3, windowStartHour: 8, windowEndHour: 21 }),
     countMin: 1,
     countMax: 20,
     countPresets: [1, 2, 3, 5, 10],
@@ -187,7 +187,7 @@ export const NOTIF_SECTIONS: readonly NotifSectionMeta[] = [
     id: "istighfar",
     title: "الاستغفار",
     description: "تذكير بعدد مرات يوميًا",
-    defaults: baseDay({ enabled: true, dailyCount: 3, windowStartHour: 8, windowEndHour: 21 }),
+    defaults: baseDay({ enabled: false, dailyCount: 3, windowStartHour: 8, windowEndHour: 21 }),
     countMin: 1,
     countMax: 20,
     countPresets: [1, 2, 3, 5, 10],
@@ -213,7 +213,7 @@ export const NOTIF_SECTIONS: readonly NotifSectionMeta[] = [
     id: "lessons",
     title: "الدروس",
     description: "درس اليوم والغد والأسبوع",
-    defaults: baseDay({ enabled: true, dailyCount: 2, windowStartHour: 9, windowEndHour: 21 }),
+    defaults: baseDay({ enabled: false, dailyCount: 2, windowStartHour: 9, windowEndHour: 21 }),
     countMin: 1,
     countMax: 8,
     messages: [
@@ -264,7 +264,7 @@ export const NOTIF_SECTIONS: readonly NotifSectionMeta[] = [
     title: "الجمعة والمناسبات",
     description: "الجمعة والكهف والمواسم",
     defaults: baseDay({
-      enabled: true,
+      enabled: false,
       dailyCount: 2,
       windowStartHour: 7,
       windowEndHour: 18,
