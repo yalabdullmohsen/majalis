@@ -56,8 +56,14 @@ assert.match(refine, /--pd-emerald:/, "زمرد أساسي");
 assert.match(refine, /--pd-gold:/, "ذهب ناعم");
 assert.match(refine, /--pd-ink:/, "حبر دافئ");
 assert.match(refine, /\[class\$="__glow"\]/, "قمع الوهج الزخرفي");
+assert.match(refine, /--pd-elev-1:/, "ارتفاع سطح L1");
+assert.match(refine, /--pd-elev-2:/, "ارتفاع مميز L2");
+assert.match(refine, /--pd-elev-3:/, "ارتفاع مودال L3");
+assert.doesNotMatch(refine, /-1[4-9]px/, "بلا انتشار سالب يقطع ظلًا مستطيلًا");
+assert.match(refine, /\.app-back-btn--bar/, "صقل زر الرجوع");
 assert.match(refine, /\.bottom-nav__tab\.is-active/, "حالة نشطة للشريط السفلي");
 assert.match(refine, /\.quran-hub-hero/, "صقل قرآن");
+assert.match(refine, /\.lesson-card/, "صقل بطاقات الدروس");
 assert.doesNotMatch(refine, /filter:\s*invert/, "بلا invert");
 
 const theme = read("src/app/styles/theme.css");
@@ -71,11 +77,18 @@ assert.match(recovery, /--dm-bg:\s*#0f1613/, "خلفية استرداد عميق
 assert.match(recovery, /--dm-text-primary:\s*#ede8df/, "نص استرداد دافئ");
 assert.match(recovery, /--dm-accent-gold:\s*#c9a86c/, "ذهب استرداد");
 assert.match(recovery, /--dm-bottom-nav:\s*#121916/, "شريط سفلي أغمق");
-assert.match(recovery, /0 6px 18px -14px/, "ظل بطاقة ناعم");
+assert.match(
+  recovery,
+  /0 1px 2px rgba\(0, 0, 0, 0\.16\),\s*0 4px 14px rgba\(0, 0, 0, 0\.18\)/,
+  "ظل بطاقة سفلي ناعم",
+);
 
 const ds = read("src/styles/dark-design-system.css");
 assert.match(ds, /--text-primary:\s*#ede8df/);
-assert.match(ds, /box-shadow:\s*0 6px 18px -14px/);
+assert.match(
+  ds,
+  /box-shadow:\s*0 1px 2px rgba\(0, 0, 0, 0\.16\),\s*0 4px 14px rgba\(0, 0, 0, 0\.18\)/,
+);
 assert.match(ds, /background-image:\s*none\s*!important/, "هيرو بلا وهج شعاعي");
 
 const main = read("src/main.tsx");
