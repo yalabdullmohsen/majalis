@@ -36,7 +36,7 @@
     "test:postgres-integration": "node scripts/test-postgres-queue-integration.mjs",
     "verify:platform-hardening-sql": "node scripts/verify-platform-hardening-sql.mjs",
     "test:release-train": "node --test .github/scripts/release-train/__tests__/*.test.mjs",
-    "test:safe-auto-merge": "node --test .github/scripts/safe-auto-merge/__tests__/*.test.mjs && node --test scripts/__tests__/verify-ci-script.test.mjs && node --test scripts/ci/__tests__/changed-scope.test.mjs && node --test scripts/auto-maintenance/__tests__/policy.test.mjs",
+    "test:safe-auto-merge": "node --test .github/scripts/safe-auto-merge/__tests__/*.test.mjs && node --test scripts/__tests__/verify-ci-script.test.mjs && node --test scripts/__tests__/agent-throughput-policy.test.mjs && node --test scripts/ci/__tests__/changed-scope.test.mjs && node --test scripts/auto-maintenance/__tests__/policy.test.mjs",
     "ops:backlog-report": "node scripts/ops-backlog-report.mjs",
     "auto:maintenance": "node scripts/auto-maintenance/run.mjs",
     "auto:maintenance:offline": "AUTO_MAINTENANCE_SKIP_NETWORK=1 node scripts/auto-maintenance/run.mjs --no-network",

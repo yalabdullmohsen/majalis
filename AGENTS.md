@@ -2,8 +2,13 @@
 
 ## Throughput + CI-safe (إلزامي)
 
-قبل أي مهمة: اتبع `docs/AGENT_THROUGHPUT.md` وقاعدة `.cursor/rules/majlisilm-ci-safe.mdc`.
+المسار الإلزامي لكل مهمة:
+`Targeted Read → Plan → Patch → Focused Test → Full Verify`
+
+التفاصيل: `docs/AGENT_THROUGHPUT.md` · قاعدة Cursor: `.cursor/rules/majlisilm-agent-throughput.mdc` · سلامة CI: `.cursor/rules/majlisilm-ci-safe.mdc`.
 فهرس المسارات: `docs/REPO_INDEX.md`. قياس CI: `docs/CI_THROUGHPUT.md`.
+
+قواعد مختصرة: لا استكشاف شامل بعد تحديد النطاق · لا patch تخميني قبل قراءة الملف كاملًا · اختبارات مستهدفة قبل `verify:ci` · `verify:ci` مرة واحدة بعد نجاح المستهدف · لا تخفيف بوابات جودة · PR واحد لكل مهمة · توقف بعد فشل patch مرتين أو تعارض تعليمات.
 
 **قبل الدفع:** من جذر git (`cd "$(git rev-parse --show-toplevel)"`) شغّل:
 `corepack enable && pnpm install --frozen-lockfile && pnpm run verify:ci`

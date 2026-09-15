@@ -1,0 +1,34 @@
+---
+description: مسار تنفيذ الوكيل الإلزامي — Targeted Read → Plan → Patch → Focused Test → Full Verify
+alwaysApply: true
+---
+
+# سُنّة — تسريع الوكيل (Throughput)
+
+التفاصيل: `docs/AGENT_THROUGHPUT.md` · الفهرس: `docs/REPO_INDEX.md` · سلامة CI: `majlisilm-ci-safe.mdc`.
+
+## مسار إلزامي
+`Targeted Read → Plan → Patch → Focused Test → Full Verify`
+
+1. **Targeted Read:** ابدأ من `docs/REPO_INDEX.md`؛ اقرأ الملف كاملًا قبل تعديله؛ لا تُعِد استكشاف ملف قُرئ بلا دليل جديد؛ ممنوع بحث عام إذا عُرف المسار.
+2. **Plan:** قبل أول تعديل اطبع خطة قصيرة (سبب · ملفات · فحص · توقف) بلا تحليل مطوّل.
+3. **Patch:** أصغر تغيير مكتمل؛ إن فشل لأجل اختلاف المحتوى أعد المحاولة مرة واحدة فقط بعد قراءة المقطع؛ بعد فشلين توقّف؛ ممنوع rewrite كامل لتغيير محدود.
+4. **Focused Test:** أصغر اختبار مرتبط أولًا؛ أصلح أول خطأ أصلي؛ ممنوع `verify:ci` بعد كل تعديل صغير؛ Lighthouse/visual/native فقط عند Path-lane أو النطاق.
+5. **Full Verify:** بعد نجاح المستهدف شغّل فحوص الحزمة ثم `pnpm run verify:ci` مرة واحدة؛ أعده فقط إذا تغيّرت ملفات بعد فشل.
+
+## بوابات الجودة
+- أصلح المنتج ليمر من البوابة.
+- ممنوع تعديل gate/threshold/baseline/snapshot لتلائم feature فاشلة.
+- تعديل بوابة فقط بدليل عقد + جودة ≥ السابقة + اختبار قبل/بعد + إفصاح صريح.
+- ممنوع `continue-on-error` / `|| true` / skip لإخفاء فشل.
+
+## نطاق وPR
+- هدف واحد · PR واحد لكل مهمة.
+- لا تجمع ميزات مستقلة في تنفيذ واحد.
+- مطلب مستقل → follow-up فقط.
+
+## توقف فورًا
+تعارض تعليمات · قرار مالك · schema/secrets/هوية غير مصرّح · اتساع نطاق · فشل patch مرتين · الحاجة لتخفيف بوابة.
+
+## مخرجات المهمة
+Root cause · Changed files · Focused tests · Full verification · Remaining risks · `git diff --stat`
