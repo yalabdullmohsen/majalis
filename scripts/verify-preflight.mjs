@@ -67,6 +67,11 @@ run(
   process.execPath,
   ["--test", ".github/scripts/ci/__tests__/aggregate-required.test.mjs"],
 );
+run(
+  "dist artifact identity",
+  process.execPath,
+  ["--test", ".github/scripts/ci/__tests__/dist-artifact-identity.test.mjs"],
+);
 
 const seconds = Number(((Date.now() - t0) / 1000).toFixed(1));
 writeVerifyCache("preflight", { seconds, note: "verify:preflight" });
