@@ -28,6 +28,11 @@ type ControlsProps = {
   /** وضع القراءة الكامل — يخفي كل الـchrome عدا المصحف */
   focusReadingMode?: boolean;
   onToggleFocusReadingMode?: () => void;
+  /** تفضيل أسهم تقليب الصفحات */
+  pageArrowsEnabled?: boolean;
+  onPageArrowsEnabledChange?: (enabled: boolean) => void;
+  moreOpen?: boolean;
+  onMoreOpenChange?: (open: boolean) => void;
 };
 
 /** طبقة أدوات القراءة — شريط مضغوط فوق المصحف (خارج Geometry) */
@@ -43,10 +48,15 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
   onPlayPage,
   focusReadingMode = false,
   onToggleFocusReadingMode,
+  pageArrowsEnabled = true,
+  onPageArrowsEnabledChange,
+  moreOpen = false,
+  onMoreOpenChange,
 }: ControlsProps) {
   const [draft, setDraft] = useState(String(pageNumber));
   const [gotoError, setGotoError] = useState<string | null>(null);
   const titleId = useId();
+  const moreTitleId = useId();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -146,8 +156,57 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
               تشغيل
             </button>
           ) : null}
+          {onPageArrowsEnabledChange && onMoreOpenChange ? (
+            <button
+              type="button"
+              className="nm-controls__btn nm-controls__more"
+              data-testid="mushaf-controls-more"
+              aria-label="المزيد من إعدادات المصحف"
+              aria-expanded={moreOpen}
+              aria-controls={moreOpen ? moreTitleId : undefined}
+              onClick={(e) => {
+                e.stopPropagation();
+                onMoreOpenChange(!moreOpen);
+              }}
+            >
+              المزيد
+            </button>
+          ) : null}
         </div>
       </div>
+
+      {moreOpen && onPageArrowsEnabledChange ? (
+        <div
+          className="nm-controls-more"
+          data-testid="mushaf-controls-more-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={moreTitleId}
+          onPointerDown={(e) => e.stopPropagation()}
+          onKeyDown={(e) => e.stopPropagation()}
+        >
+          <h2 id={moreTitleId} className="nm-controls-more__title">
+            إعدادات المصحف
+          </h2>
+          <label className="nm-controls-more__row">
+            <span>إظهار أسهم تقليب الصفحات</span>
+            <input
+              type="checkbox"
+              data-testid="mushaf-page-arrows-toggle"
+              checked={pageArrowsEnabled}
+              aria-label="إظهار أسهم تقليب الصفحات"
+              onChange={(e) => onPageArrowsEnabledChange(e.target.checked)}
+            />
+          </label>
+          <button
+            type="button"
+            className="nm-controls-more__close"
+            onClick={() => onMoreOpenChange?.(false)}
+          >
+            إغلاق
+          </button>
+        </div>
+      ) : null}
 
       {gotoOpen ? (
         <form

@@ -44,11 +44,15 @@ assert.doesNotMatch(reader, /navigator\.vibrate/);
 assert.match(controls, /mushaf-focus-reading-toggle/);
 assert.match(controls, /nm-controls--compact/);
 assert.match(controls, /إخفاء أدوات المصحف|وضع القراءة|قراءة/);
+assert.match(controls, /إظهار أسهم تقليب الصفحات/);
+assert.match(controls, /mushaf-page-arrows-toggle/);
 
 assert.match(prefs, /sunnah\.mushaf\.pageArrowsEnabled/);
 assert.match(prefs, /loadPageArrowsEnabled/);
+assert.match(prefs, /savePageArrowsEnabled/);
 assert.match(prefs, /saveFocusReadingModePreference/);
 
+assert.match(reader, /onPageArrowsEnabledChange|savePageArrowsEnabled/);
 assert.match(pager, /nm-page-arrows/);
 
 assert.doesNotMatch(arrows, /MushafPage\.tsx|nm-line|fontSize|lineHeight/);

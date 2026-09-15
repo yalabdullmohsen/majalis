@@ -1665,6 +1665,53 @@ html[data-theme="dark"] .nm-exit-control {
   background: color-mix(in srgb, var(--nm-gold) 22%, var(--nm-paper));
 }
 
+.nm-controls-more {
+  position: absolute;
+  inset-inline: 0.55rem auto;
+  top: calc(var(--nm-chrome-h) + var(--inset-top, 0px) + 0.35rem);
+  z-index: 36;
+  min-width: min(16.5rem, calc(100% - 1.1rem));
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--nm-gold) 22%, transparent);
+  background: color-mix(in srgb, var(--nm-paper) 94%, transparent);
+  box-shadow: none;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.nm-controls-more__title {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--nm-meta, #5c4a32);
+}
+
+.nm-controls-more__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--nm-ink, #2a2118);
+  min-height: 2.5rem;
+}
+
+.nm-controls-more__row input {
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: var(--nm-gold, #b08d57);
+}
+
+.nm-controls-more__close {
+  min-height: 2.25rem;
+  border: 0;
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--nm-gold) 14%, var(--nm-paper));
+  color: var(--nm-meta, #5c4a32);
+  font-size: 0.78rem;
+}
+
 /* وضع التركيز: أخفِ الطبقات العائمة دون display:none على صفحة المصحف */
 .nm-root[data-focus-reading="1"][data-chrome="0"] .nm-controls,
 .nm-root[data-focus-reading="1"][data-chrome="0"] .nm-exit-control,

@@ -82,6 +82,7 @@ import { MushafControlsLayer, MushafVerseMenu } from "./MushafControlsLayer";
 import { MushafPageArrows } from "./MushafPageArrows";
 import {
   loadPageArrowsEnabled,
+  savePageArrowsEnabled,
   saveFocusReadingModePreference,
 } from "./mushaf-page-arrows-prefs";
 import { useStableMushafLayout } from "./useStableMushafLayout";
@@ -163,7 +164,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const setChromeOpen = setReaderChromeVisible;
   /** وضع قراءة كامل — لا يُفرض عند أول فتح؛ يُحفظ بعد اختيار صريح فقط */
   const [focusReadingMode, setFocusReadingMode] = useState(false);
-  const [pageArrowsEnabled] = useState(() => loadPageArrowsEnabled());
+  const [pageArrowsEnabled, setPageArrowsEnabled] = useState(() => loadPageArrowsEnabled());
+  const [controlsMoreOpen, setControlsMoreOpen] = useState(false);
   const focusReadingModeRef = useRef(false);
   focusReadingModeRef.current = focusReadingMode;
   const [gotoOpen, setGotoOpen] = useState(false);
@@ -383,7 +385,13 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
 
   useEffect(() => {
     chromeHoldRef.current = Boolean(
-      searchOpen || indexOpen || tafsirOpen || gotoOpen || (audioDockOpen && !audioDockMini),
+      searchOpen ||
+        indexOpen ||
+        tafsirOpen ||
+        gotoOpen ||
+        controlsMoreOpen ||
+        actionsOpen ||
+        (audioDockOpen && !audioDockMini),
     );
     if (chromeHoldRef.current) {
       if (hideTimer.current) window.clearTimeout(hideTimer.current);
@@ -395,7 +403,17 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     return () => {
       if (hideTimer.current) window.clearTimeout(hideTimer.current);
     };
-  }, [audioDockMini, audioDockOpen, chromeOpen, gotoOpen, indexOpen, searchOpen, tafsirOpen]);
+  }, [
+    actionsOpen,
+    audioDockMini,
+    audioDockOpen,
+    chromeOpen,
+    controlsMoreOpen,
+    gotoOpen,
+    indexOpen,
+    searchOpen,
+    tafsirOpen,
+  ]);
 
 
   useEffect(() => {
@@ -516,6 +534,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     setTafsirOpen(false);
     setTafsirVerseKey(null);
     setStatus(null);
+    setControlsMoreOpen(false);
     setChromeOpen(false);
   }, []);
 
@@ -524,6 +543,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       const next = !prev;
       saveFocusReadingModePreference(next);
       if (next) {
+        setControlsMoreOpen(false);
         setChromeOpen(false);
       } else {
         setChromeOpen(true);
@@ -532,6 +552,11 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       return next;
     });
   }, [bumpChrome]);
+
+  const onPageArrowsEnabledChange = useCallback((enabled: boolean) => {
+    setPageArrowsEnabled(enabled);
+    savePageArrowsEnabled(enabled);
+  }, []);
 
   const beginPageTurn = useCallback(() => {
 
@@ -1152,11 +1177,25 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         pageNumber={page}
         focusReadingMode={focusReadingMode}
         onToggleFocusReadingMode={toggleFocusReadingMode}
+        pageArrowsEnabled={pageArrowsEnabled}
+        onPageArrowsEnabledChange={onPageArrowsEnabledChange}
+        moreOpen={controlsMoreOpen}
+        onMoreOpenChange={(open) => {
+          setControlsMoreOpen(open);
+          if (open) {
+            setGotoOpen(false);
+            bumpChrome();
+          }
+        }}
         gotoOpen={gotoOpen}
-        onGotoOpenChange={setGotoOpen}
+        onGotoOpenChange={(open) => {
+          setGotoOpen(open);
+          if (open) setControlsMoreOpen(false);
+        }}
         onGoto={(n) => {
           go(n);
           setGotoOpen(false);
+          setControlsMoreOpen(false);
         }}
         onExit={() => {
           if (searchOpen || indexOpen) {
@@ -1174,6 +1213,10 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
             setSelectedVerseKey(null);
             return;
           }
+          if (controlsMoreOpen) {
+            setControlsMoreOpen(false);
+            return;
+          }
           setMushafAyahSearchHighlight(null);
           recitation.stop();
           onExit();
@@ -1183,12 +1226,14 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           setIndexOpen(true);
           setSearchOpen(false);
           setGotoOpen(false);
+          setControlsMoreOpen(false);
           bumpChrome();
         }}
         onSearch={() => {
           setSearchOpen(true);
           setIndexOpen(false);
           setGotoOpen(false);
+          setControlsMoreOpen(false);
           bumpChrome();
         }}
       />
