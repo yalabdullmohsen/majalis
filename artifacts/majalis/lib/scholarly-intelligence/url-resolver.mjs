@@ -21,8 +21,6 @@ const KIND_LABELS = {
   courses: "دورة",
   update: "مستجد",
   updates: "مستجد",
-  fiqh_decision: "قرار فقهي",
-  fiqh_council: "المجمع الفقهي",
   sheikh: "شيخ",
   sheikhs: "شيخ",
   quran: "قرآن",
@@ -74,7 +72,8 @@ export function resolveContentUrl(item) {
       return item.slug ? `/updates/auto/${item.slug}` : "/updates";
     case "fiqh_decision":
     case "fiqh_council":
-      return id ? `/fiqh-council/${item.slug || id}` : "/fiqh-council";
+      /* المجمع أُلغي من المنتج — حوّل أي سجل قديم إلى باب الفقه */
+      return "/fiqh";
     case "sheikh":
     case "sheikhs":
       return id ? `/tarikh-islami/${id}` : "/tarikh-islami";
@@ -93,6 +92,21 @@ export function resolveContentUrl(item) {
       if (item.slug) return `/updates/auto/${item.slug}`;
       return id ? `/search/${encodeURIComponent(item.title || "")}` : "/search";
   }
+}
+
+const BANNED_RELATION_KINDS = new Set(["fiqh_decision", "fiqh_council", "fiqh_decisions"]);
+
+export function isBannedPublicRelation(item) {
+  if (!item) return true;
+  const kind = String(item.content_kind || item.kind || item.content_type || item.type || "");
+  if (BANNED_RELATION_KINDS.has(kind)) return true;
+  const label = String(item.kind_label || "");
+  if (/قرار\s*فقهي|المجمع\s*الفقهي/.test(label)) return true;
+  const href = String(item.href || item.source_url || item.url || "");
+  if (href.includes("/fiqh-council")) return true;
+  const title = String(item.title || item.ai_title || "");
+  if (/المجمع\s*الفقهي/.test(title)) return true;
+  return false;
 }
 
 export function enrichResult(item) {

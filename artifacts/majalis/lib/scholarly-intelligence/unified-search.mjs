@@ -7,7 +7,7 @@ import { searchEverything } from "../knowledge-search-bridge.mjs";
 import { searchScholarlyContent } from "../scholarly-verification/orchestrator.mjs";
 import { processQuery } from "./query-processor.mjs";
 import { searchKnowledgeAll } from "./semantic-search.mjs";
-import { enrichResult } from "./url-resolver.mjs";
+import { enrichResult, isBannedPublicRelation } from "./url-resolver.mjs";
 import { rankResults, dedupeResults, groupByKind } from "./ranker.mjs";
 import { cacheGet, cacheSet, cacheKey } from "./cache.mjs";
 import { getUserPreferences } from "./recommendations.mjs";
@@ -98,7 +98,7 @@ function applyFilters(results, filters) {
     });
   }
 
-  return filtered;
+  return filtered.filter((r) => !isBannedPublicRelation(r));
 }
 
 export async function unifiedSearch(opts = {}) {
@@ -217,7 +217,7 @@ export async function getTopicContent(slug, opts = {}) {
     articles: [...(groups.update || []), ...(groups.updates || []), ...(groups.article || [])],
     qa: groups.qa || [],
     fawaid: groups.fawaid || [],
-    fiqh: [...(groups.fiqh_decision || []), ...(groups.fiqh_council || [])],
+    fiqh: [...(groups.ruling || []), ...(groups.rulings || [])],
     courses: groups.course || groups.courses || [],
     miracles: groups.miracle || groups.miracles || [],
     knowledge: groups.knowledge || [],

@@ -6,7 +6,7 @@ const BASE = "/api/rag";
 
 export type ContentType =
   | "quran_verse" | "hadith" | "tafsir" | "fatwa"
-  | "fiqh_decision" | "book" | "lesson" | "benefit"
+  | "book" | "lesson" | "benefit"
   | "article" | "ruling" | "story" | "quote" | "dhikr";
 
 export type AnswerQuality = "full" | "partial" | "no_sources" | "blocked";
@@ -79,7 +79,6 @@ export const CONTENT_TYPE_LABEL: Record<ContentType, string> = {
   hadith:        "حديث نبوي",
   tafsir:        "تفسير",
   fatwa:         "فتوى",
-  fiqh_decision: "قرار مجمع فقهي",
   book:          "كتاب",
   lesson:        "درس",
   benefit:       "فائدة",
@@ -95,7 +94,6 @@ export const CONTENT_TYPE_COLOR: Record<ContentType, string> = {
   hadith:        "#856404",
   tafsir:        "#155724",
   fatwa:         "#721c24",
-  fiqh_decision: "#004085",
   book:          "#383d41",
   lesson:        "#0c5460",
   benefit:       "#533f03",

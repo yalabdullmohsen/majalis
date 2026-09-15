@@ -18,7 +18,7 @@ export const SEARCH_TIERS = [
   { tier: 4, label: "الأذكار", kinds: ["adhkar", "verified_adhkar"] },
   { tier: 5, label: "شروح العلماء", kinds: ["scholar", "sheikh", "tafseer", "explains"] },
   { tier: 6, label: "الكتب", kinds: ["book", "library"] },
-  { tier: 7, label: "الفتاوى", kinds: ["fatwa", "fiqh_decision", "fiqh_council", "ruling"] },
+  { tier: 7, label: "الفتاوى", kinds: ["fatwa", "ruling"] },
   { tier: 8, label: "الدروس", kinds: ["lesson", "lecture", "course"] },
   { tier: 9, label: "المقالات والفوائد", kinds: ["article", "update", "fawaid", "qa", "miracle"] },
 ];

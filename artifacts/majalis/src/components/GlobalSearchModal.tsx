@@ -45,7 +45,6 @@ const KIND_META: Record<string, { label: string; Icon: LucideIcon; color: string
   library:       { label: "كتاب",      Icon: BookOpen,      color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   fatwa:         { label: "فتوى",      Icon: Scale,         color: "#1F5C48" },
   fiqh:          { label: "فقه",       Icon: Scale,         color: "var(--majalis-emerald, var(--mj-brand-deep))" },
-  fiqh_decision: { label: "قرار فقهي", Icon: Scale,         color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   ruling:        { label: "حكم",       Icon: FileText,      color: "#0A3D2E" },
   fawaid:        { label: "فائدة",     Icon: Lightbulb,     color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   qa:            { label: "سؤال",      Icon: HelpCircle,    color: "#1F5C48" },

@@ -108,35 +108,10 @@ async function searchHadithDirect(admin, query, limit = 6) {
 }
 
 /**
- * بحث احتياطي في fiqh_council_items
+ * بحث احتياطي في fiqh_council_items — مُعطَّل: المجمع أُلغي من المنتج.
  */
-async function searchFiqhDirect(admin, query, limit = 5) {
-  if (!admin) return [];
-  const term = normalizeQuery(query).slice(0, 80);
-  if (!term) return [];
-
-  const { data } = await admin
-    .from("fiqh_council_items")
-    // لا عمود decision_number ولا confidence_level في الجدول — طلبهما كان يُفشل
-    // الاستعلام كاملاً (42703) فيعود بحث الفقه في RAG فارغاً دائماً.
-    .select("id, title, slug, ruling_text, summary, source_name, source_url, category, type, session_number, session_date")
-    .eq("status", "published")
-    .or(`title.ilike.%${term}%,ruling_text.ilike.%${term}%,summary.ilike.%${term}%`)
-    .limit(limit);
-
-  return (data || []).map((f) => ({
-    id:              f.id,
-    content_id:      String(f.id),
-    content_type:    "fiqh_decision",
-    title:           f.title,
-    excerpt:         excerpt(f.ruling_text || f.summary),
-    source_ref:      f.source_name || "مجمع فقهي",
-    source_url:      f.source_url || `/fiqh-council/${f.slug}`,
-    authority_score: f.source_url?.startsWith("http") ? 88 : 72,
-    metadata:        { category: f.category, type: f.type, slug: f.slug,
-                       session_date: f.session_date, session_number: f.session_number },
-    relevance_score: 0.6,
-  }));
+async function searchFiqhDirect(_admin, _query, _limit = 5) {
+  return [];
 }
 
 /**
