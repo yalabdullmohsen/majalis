@@ -36,7 +36,6 @@ import {
   hashPrayerNotificationId,
   type PrayerNotifIdKind,
 } from "./prayer-notification-ids";
-import { withPrayerScheduleLock } from "./prayer-notification-scheduler";
 import { startPrayerLiveActivity, markPrayerLiveActivityEntered, endPrayerLiveActivity } from "./plugins/prayer-live-activity";
 import type { PrayerSoundProfile } from "./prayer-notification-sounds";
 import { PRAYER_ALERT_EVENT_NAME, type PrayerAlertEvent } from "./prayer-alert-events";
@@ -352,17 +351,27 @@ export async function startPrayerAlertScheduler(
   if (opts?.forceNativeReschedule || batchSig !== _lastScheduleSig) {
     _lastScheduleSig = batchSig;
     try {
-      await withPrayerScheduleLock(async () => {
-        await rescheduleAllNativePrayers(slots, prefs);
+      // مسار أصلي واحد عبر المنسّق — القفل داخل coordinatePrayerNotifications
+      const { coordinatePrayerNotifications } = await import("./prayer-notifications");
+      const coord = await coordinatePrayerNotifications(payload, {
+        reason: opts?.forceNativeReschedule ? "force" : "app_open_new_day",
+        force: true,
+        applyNative: async () => {
+          await rescheduleAllNativePrayers(slots, prefs);
+          return { scheduled: slots.length };
+        },
       });
       const { savePrayerScheduleStatus } = await import("./prayer-schedule-status");
       savePrayerScheduleStatus({
-        ok: true,
+        ok: coord.ok,
         atIso: new Date().toISOString(),
         prayerCount: slots.length,
         soundProfile: prefs.soundProfile,
-        note: `${tz}|${todayISO}|${payload.method}`,
+        note: `${tz}|${todayISO}|${payload.method}|${coord.fingerprint}`,
       });
+      if (!coord.ok && coord.error && coord.error !== "feature_disabled") {
+        throw new Error(coord.error);
+      }
     } catch (e) {
       const { savePrayerScheduleStatus } = await import("./prayer-schedule-status");
       savePrayerScheduleStatus({

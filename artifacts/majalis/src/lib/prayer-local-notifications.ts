@@ -467,10 +467,11 @@ export async function cancelAllPrayerNativeNotifications(): Promise<void> {
     const today = dateISOInZone(tz);
     const tomorrow = dateISOInZone(tz, new Date(Date.now() + 24 * 3600_000));
     const ids = allPrayerNotificationIdsForWindow([today, tomorrow]);
-    // نطاقات قديمة (9100/9200/9400) — تنظيف ترحيلي
+    // نطاقات قديمة (9100/9200) — تنظيف ترحيلي.
+    // لا تُلغَ 9400+idx: يتصادم مع تذكير الذكر (9401+).
     for (const key of PRAYER_ORDER) {
       const idx = PRAYER_ORDER.indexOf(key);
-      ids.push({ id: 9100 + idx }, { id: 9200 + idx }, { id: 9400 + idx });
+      ids.push({ id: 9100 + idx }, { id: 9200 + idx });
     }
 
     try {
