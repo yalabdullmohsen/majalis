@@ -62,7 +62,7 @@ export function MushafSettingsSheet({
               ["paper", "ورق"],
               ["sepia", "بيج دافئ"],
               ["night", "داكن"],
-              ["oled", "أسود OLED"],
+              ["oled", "أسود كامل"],
             ] as const
           ).map(([id, label]) => (
             <button

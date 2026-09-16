@@ -42,10 +42,18 @@ export function displayText(text: string | null | undefined): string {
   return stripMarkdown(text);
 }
 
-/** Strip markdown, extraction phrases, and decorative dashes. */
+/** ذيل آلي مكرر في أوصاف الدروس: — درس «…» — في … — موعد: … */
+const LESSON_AUTO_TAIL_RE =
+  /\s*[—–-]\s*درس\s*[«"'][^»"']+[»"']\s*[—–-]\s*في\s+.+$/u;
+const LESSON_AUTO_TAIL_LOOSE_RE =
+  /\s*درس\s*[«"'][^»"']+[»"']\s*(?:في|—|–|-)\s+.+(?:موعد|يوم).*$/u;
+
+/** Strip markdown, extraction phrases, lesson auto-tails, and decorative dashes. */
 export function cleanDisplayText(text: string | null | undefined): string {
   if (!text) return "";
   let value = displayText(text)
+    .replace(LESSON_AUTO_TAIL_RE, "")
+    .replace(LESSON_AUTO_TAIL_LOOSE_RE, "")
     .replace(/\s*[—–\-_]{1,}\s*/g, " ")
     .replace(/\s+/g, " ")
     .trim();

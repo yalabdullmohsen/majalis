@@ -160,7 +160,7 @@ function CompareContent() {
         <ShareButtons title="مقارنة الجامعات الإسلامية — سُنّة" url="https://www.ssunnah.com/universities/compare" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz route="/universities" title="اختبر معلوماتك في الفقه والتاريخ" count={4} />
+        <SectionQuiz route="/universities" title="اختبر معلوماتك في الجامعات الشرعية" count={4} />
       </div>
     </div>
   );

@@ -279,7 +279,7 @@ function UniversitiesContent() {
       </div>
       <RelatedKnowledge kind="book" query="جامعات إسلامية" title="مواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
+        <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في الجامعات الشرعية" count={4} />
       </div>
 
       <CompareBar />

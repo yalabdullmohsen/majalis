@@ -427,7 +427,7 @@ export default function AdhkarPage() {
             { href: "/mushaf", label: "المصحف" },
           ]}
         />
-        <SectionQuiz sectionId="akhlaq" title="اختبر معلوماتك في الأذكار" count={4} />
+        <SectionQuiz route="/adhkar" title="اختبر معلوماتك في الأذكار" count={4} />
       </div>
     </PageShell>
     </SectionTemplatePage>

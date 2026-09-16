@@ -105,7 +105,7 @@ export default function FiqhUsulPage() {
               أبواب بهيكل فقط
             </h2>
             <p className="fiqh-usul-section__sub">
-              تُعرض كإطار مع مصدر المتن؛ المحتوى التفصيلي يُستكمل لاحقًا من مصادر معتمدة.
+              تُعرض كإطار تعليمي مع مصدر المتن المشار إليه؛ للتفاصيل راجع المتون المعتمدة أدناه.
             </p>
           </header>
           <div className="fiqh-usul-detail-grid">

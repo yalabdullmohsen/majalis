@@ -937,7 +937,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         }
         themeLabel={
           theme === "oled"
-            ? "أسود OLED"
+            ? "أسود كامل"
             : theme === "night"
               ? "ليلي هادئ"
               : theme === "sepia"

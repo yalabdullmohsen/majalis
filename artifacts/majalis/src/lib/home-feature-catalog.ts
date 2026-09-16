@@ -120,9 +120,9 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     Icon: Wrench,
     label: "أدوات التعلم",
     items: [
-      { href: "/my-learning",     Icon: Layers,      title: seoNavLabel("/my-learning", "حسابي"),   desc: "متابعة تقدمك في الدروس والبطاقات للمراجعة السريعة" },
+      { href: "/my-learning",     Icon: Layers,      title: seoNavLabel("/my-learning", "لوحتي التعليمية"),   desc: "متابعة تقدمك في الدروس والبطاقات للمراجعة السريعة" },
       { href: "/quiz",            Icon: Target,      title: seoNavLabel("/quiz", "لعبة سين جيم"),   desc: "أسئلة شرعية ومعرفية متدرجة للمراجعة والاختبار" },
-      { href: "/assistant",       Icon: Bot,         title: seoNavLabel("/assistant", "المساعد العلمي"),    desc: "محادثة فورية بالذكاء الاصطناعي في العلوم الشرعية" },
+      { href: "/assistant",       Icon: Bot,         title: seoNavLabel("/assistant", "المساعد العلمي"),    desc: "بحث موثّق الآن — المساعد قيد المراجعة الداخلية قبل الإطلاق العام" },
       { href: "/occasions", Icon: CalendarDays, title: seoNavLabel("/occasions", "المناسبات الإسلامية"), desc: "التواريخ الهجرية والمناسبات الشرعية مع التذكير" },
       { href: "/islamic-directory", Icon: Landmark, title: seoNavLabel("/islamic-directory", "دليل المؤسسات والمساجد"), desc: "مؤسسات ومساجد ومعالم مرتّبة للبحث المحلي" },
       { href: "/universities", Icon: GraduationCap, title: seoNavLabel("/universities", "دليل الجامعات الشرعية"), desc: "جامعات وكليات الدراسات الشرعية حول العالم" },
@@ -147,7 +147,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     label: "الأدوات الرقمية",
     items: [
       { href: "/qibla",        Icon: Compass,     title: seoNavLabel("/qibla", "اتجاه القبلة"),    desc: "حدد اتجاه القبلة من موقعك للصلاة والسفر" },
-      { href: "/prayer-times", Icon: Clock,       title: seoNavLabel("/prayer-times", "مواقيت الصلاة والقبلة"),   desc: "مواقيت دقيقة مع اتجاه القبلة وتنبيهات الأذان" },
+      { href: "/prayer-times", Icon: Clock,       title: seoNavLabel("/prayer-times", "مواقيت الصلاة"),   desc: "مواقيت دقيقة مع اتجاه القبلة وتنبيهات الأذان" },
       { href: "/submit",       Icon: Upload,      title: seoNavLabel("/submit", "أضف محتوى"),       desc: "أرسل درسًا أو فائدة أو تصويبًا لمراجعة المحررين" },
     ],
   },

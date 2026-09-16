@@ -191,9 +191,9 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
           )}
 
         <div className="lesson-unified-card__facts" aria-label="معلومات الدرس">
-          <FactRow label="الموعد" value={scheduleValue || "الموعد غير محدد"} />
-          <FactRow label="المكان" value={displayPlace || "المكان غير محدد"} />
-          <FactRow label="الحضور" value={delivery || "غير محدد"} />
+          <FactRow label="الموعد" value={scheduleValue || undefined} />
+          <FactRow label="المكان" value={displayPlace || undefined} />
+          <FactRow label="الحضور" value={delivery || undefined} />
           {!compact && lesson.womenAttendance === "متاح" ? (
             <FactRow label="حضور النساء" value={lesson.womenAttendanceNote || "متاح"} />
           ) : null}
