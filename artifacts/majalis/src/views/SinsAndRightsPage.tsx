@@ -225,7 +225,7 @@ function sinSeverityBadge(sev: string) {
 
 function TopicsGrid({ category }: { category: RightsCategory }) {
   const topics = SINS_TOPICS.filter((t) => t.rightsCategory === category);
-  if (!topics.length) return <div className="snr-empty">لا توجد موضوعات في هذا التصنيف حالياً.</div>;
+  if (!topics.length) return <div className="snr-empty">لا توجد موضوعات في هذا التصنيف حالياً. تصفّح تصنيفًا آخر من القائمة.</div>;
   return (
     <div className="snr-topics-grid">
       {topics.map((topic) => (
