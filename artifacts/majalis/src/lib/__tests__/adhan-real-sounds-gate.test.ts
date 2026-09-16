@@ -17,27 +17,30 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const view = read("src/pages/worship/ui/AdhanSettingsView.tsx");
 const catalog = read("src/lib/adhan-settings-sound-catalog.ts");
+const prompts = read("src/components/adhan/AudioPromptsSettingsCard.tsx");
 
 assert.match(view, /معاينة/);
 assert.doesNotMatch(view, />استماع</);
 assert.match(view, /الأذان داخل التطبيق/);
 assert.match(view, /صوت إشعار الصلاة/);
-assert.match(view, /اختبار الإشعار بعد ١٠ ثوانٍ/);
+assert.match(view, /اختبار إشعار خلال ١٠ ثوانٍ|اختبار الإشعار بعد ١٠ ثوانٍ/);
 assert.match(view, /fireTestLocalNotification\(10_000\)/);
 assert.doesNotMatch(view, /أذان مصري|أذان تركي|أذان حجازي|أذان سعودي رسمي|تسجيل ثان/);
 assert.doesNotMatch(view, /\bcaf\b|\bm4a\b|إشعارات متتابعة|أذان كامل كإشعار/i);
+assert.doesNotMatch(view, /بانتظار تسجيل مرخّص/);
+assert.doesNotMatch(prompts, /بانتظار تسجيل مرخّص/);
 
 assert.match(catalog, /adhan-makkah\.mp3/);
-assert.match(catalog, /adhan-madinah\.mp3/);
-assert.match(catalog, /adhan-qatami\.mp3/);
 assert.match(catalog, /adhan-gulf-short\.mp3/);
 assert.match(catalog, /prayer-alert\.mp3/);
 assert.match(catalog, /alarm-clear\.mp3/);
+assert.doesNotMatch(catalog, /adhan-madinah\.mp3|adhan-qatami\.mp3/);
 
 const options = listAvailableSettingsSounds();
 assert.ok(options.some((o) => o.group === "adhan" && o.id === "makkah"));
-assert.ok(options.some((o) => o.group === "adhan" && o.id === "madinah"));
-assert.ok(options.some((o) => o.group === "adhan" && o.id === "qatami"));
+assert.ok(options.some((o) => o.group === "adhan" && o.id === "kuwait"));
+assert.ok(!options.some((o) => o.id === "madinah"), "madinah غير معتمد للإنتاج");
+assert.ok(!options.some((o) => o.id === "qatami"), "qatami محظور");
 assert.ok(options.some((o) => o.group === "tone" && o.id === "tone-prayer"));
 assert.ok(options.some((o) => o.id === "silent"));
 

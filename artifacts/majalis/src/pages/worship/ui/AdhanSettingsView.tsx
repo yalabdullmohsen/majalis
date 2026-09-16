@@ -133,9 +133,10 @@ function NotificationPermBadge() {
   return <PermissionBadge value={state} />;
 }
 
-/** بطاقة صحة الجدولة — ظاهرة للمستخدم دائمًا (ليست أدوات مطوّر). */
+/** بطاقة صحة الجدولة — ظاهرة للمستخدم دائمًا مع دليل تشغيلي. */
 function PrayerScheduleHealthCard({ onRepair }: { onRepair: () => void }) {
   const [label, setLabel] = useState("جاري فحص الجدولة…");
+  const [detail, setDetail] = useState<string | null>(null);
   const [needsRepair, setNeedsRepair] = useState(false);
 
   const refresh = useCallback(async () => {
@@ -160,7 +161,6 @@ function PrayerScheduleHealthCard({ onRepair }: { onRepair: () => void }) {
       const health = classifyPrayerScheduleHealth({
         permission: mapped,
         hasLocation: Boolean(getSelectedGovernorate().id),
-        // على الويب لا توجد معلّقات أصلية — لا تُظهر incompleteSchedule زائفًا
         desiredCount: pending.count > 0 ? pending.count : 0,
         verifiedCount: pending.count,
         nextAtMs: nextAtMs ?? (mapped === "granted" && pending.count === 0 ? Date.now() + 60_000 : null),
@@ -178,9 +178,21 @@ function PrayerScheduleHealthCard({ onRepair }: { onRepair: () => void }) {
         staleSchedule: "الجدولة قديمة — أعد التحديث",
       };
       setLabel(LABELS[health.code] ?? "تعذّر تحديد حالة الجدولة");
+      const nextLabel = Number.isFinite(nextAtMs)
+        ? new Date(nextAtMs as number).toLocaleString("ar", {
+            weekday: "short",
+            hour: "2-digit",
+            minute: "2-digit",
+          })
+        : "—";
+      const platformNote = isNative
+        ? "التطبيق الأصلي يجدول إشعارات النظام في الخلفية."
+        : "على الويب تعمل الجدولة أثناء فتح الصفحة أو عبر إشعار المتصفح عند توفره.";
+      setDetail(`مجدولة الآن: ${pending.count} · القادم: ${nextLabel} · ${platformNote}`);
       setNeedsRepair(health.repairAction !== "none");
     } catch {
       setLabel("تعذّر فحص حالة الجدولة");
+      setDetail(null);
       setNeedsRepair(true);
     }
   }, []);
@@ -193,12 +205,17 @@ function PrayerScheduleHealthCard({ onRepair }: { onRepair: () => void }) {
     <section className="soft-card soft-card--on-light ads-card" aria-labelledby="ads-health-head">
       <div className="ads-card__head" id="ads-health-head">
         <Bell size={15} strokeWidth={2} aria-hidden="true" />
-        <span>صحة تنبيهات الصلاة</span>
+        <span>حالة الجدولة</span>
       </div>
       <div className="ads-card__body">
         <p className="ads-adhan-desc" role="status">
           {label}
         </p>
+        {detail ? (
+          <p className="ads-adhan-desc ads-adhan-desc--meta" role="status">
+            {detail}
+          </p>
+        ) : null}
         {needsRepair ? (
           <div className="ads-prayer-muezzin-btns ads-sound-test-row">
             <button
@@ -682,7 +699,7 @@ export default function AdhanSettingsPage() {
         <h1 className="ads-title">تنبيهات الصلاة</h1>
       </div>
       <p className="ads-subtitle">
-        تنبيه أذان قصير متوافق مع iOS.
+        فعّل التنبيهات واختر صوتًا جاهزًا.
         {" "}
         <a href="/adhan-help" className="ads-help-link">مساعدة</a>
       </p>
@@ -692,6 +709,11 @@ export default function AdhanSettingsPage() {
           <span aria-hidden="true">✓</span> تم الحفظ
         </div>
       ) : null}
+
+      <p className="ads-section-label" id="ads-sec-notify">الإشعارات</p>
+      <PrayerScheduleHealthCard onRepair={() => void runRescheduleAlerts()} />
+
+      <PrayerAlertSettingsCard />
 
       <section className="soft-card soft-card--on-light ads-card" aria-labelledby="ads-loc-head">
         <div className="ads-card__head" id="ads-loc-head">
@@ -715,6 +737,7 @@ export default function AdhanSettingsPage() {
         </div>
       </section>
 
+      <p className="ads-section-label" id="ads-sec-sounds">الأصوات</p>
       <section className="soft-card soft-card--on-light ads-card" aria-labelledby="ads-sound-head">
         <div className="ads-card__head" id="ads-sound-head">
           <Music size={15} strokeWidth={2} aria-hidden="true" />
@@ -725,7 +748,7 @@ export default function AdhanSettingsPage() {
           <div className="ads-sound-summary">
             <div className="ads-sound-summary__text">
               <strong>{getSettingsSoundOption(selectedToneSoundId)?.label ?? "صوت النظام"}</strong>
-              <span>صوت إشعار · معاينة قصيرة</span>
+              <span>إشعار قصير</span>
             </div>
             <div className="ads-sound-summary__actions">
               <button
@@ -736,7 +759,7 @@ export default function AdhanSettingsPage() {
                   if (opt) void listenToSound(opt);
                 }}
               >
-                {playingId === selectedToneSoundId ? "إيقاف" : "معاينة الصوت"}
+                {playingId === selectedToneSoundId ? "إيقاف" : "معاينة"}
               </button>
               <button
                 type="button"
@@ -746,7 +769,7 @@ export default function AdhanSettingsPage() {
                   setPickerOpen(true);
                 }}
               >
-                تغيير الصوت
+                تغيير
               </button>
             </div>
           </div>
@@ -755,7 +778,7 @@ export default function AdhanSettingsPage() {
           <div className="ads-sound-summary">
             <div className="ads-sound-summary__text">
               <strong>{getSettingsSoundOption(selectedAdhanSoundId)?.label ?? "تنبيه أذان قصير متوافق مع iOS"}</strong>
-              <span>الأذان داخل التطبيق · ليس إشعار نظام طويل</span>
+              <span>معاينة داخل التطبيق</span>
             </div>
             <div className="ads-sound-summary__actions">
               <button
@@ -781,7 +804,6 @@ export default function AdhanSettingsPage() {
             </div>
           </div>
           {soundMsg ? <p className="ads-adhan-desc" role="status">{soundMsg}</p> : null}
-          {/* إبقاء شبكة مخفية للأدوات/البوابة عند الحاجة */}
           <div className="ads-style-grid" hidden aria-hidden="true">
             {adhanSounds.map((opt) => (
               <SoundOptionCard
@@ -807,22 +829,22 @@ export default function AdhanSettingsPage() {
         </div>
       </section>
 
-      <PrayerAlertSettingsCard />
-
+      <p className="ads-section-label" id="ads-sec-early">التنبيهات المبكرة</p>
       <AudioPromptsSettingsCard />
 
+      <p className="ads-section-label" id="ads-sec-adhkar">الأذكار والصلوات</p>
       <section className="soft-card soft-card--on-light ads-card" aria-labelledby="ads-faith-head">
         <div className="ads-card__head" id="ads-faith-head">
           <Bell size={15} strokeWidth={2} aria-hidden="true" />
-          <span>تذكيرات إيمانية</span>
+          <span>تذكيرات إضافية</span>
         </div>
         <div className="ads-card__body">
-                      <SettingsToggleRow
-              id="adhan-iqamah"
-              title="تفعيل الإقامة"
-              checked={prefs.iqamahEnabled}
-              onChange={setGlobalIqamah}
-            />
+          <SettingsToggleRow
+            id="adhan-iqamah"
+            title="تفعيل الإقامة"
+            checked={prefs.iqamahEnabled}
+            onChange={setGlobalIqamah}
+          />
           {prefs.iqamahEnabled ? (
             <div className="ads-chip-scroll" role="group" aria-label="دقائق بعد الأذان للإقامة">
               {([0, 5, 10, 15] as const).map((min) => (
@@ -837,35 +859,35 @@ export default function AdhanSettingsPage() {
               ))}
             </div>
           ) : null}
-                      <SettingsToggleRow
-              id="adhan-adhkar"
-              title="تذكير الأذكار"
-              checked={notifPrefs.adhkarReminder}
-              onChange={(v) => {
-                const next = { ...notifPrefs, adhkarReminder: v };
-                saveNotifPrefs(next);
-                setNotifPrefs(next);
-                flashSaved();
-              }}
-            />
-                      <SettingsToggleRow
-              id="adhan-dhikr-phrase"
-              title="تذكير الذكر"
-              checked={notifPrefs.dhikrPhraseReminder}
-              onChange={(v) => {
-                const next = { ...notifPrefs, dhikrPhraseReminder: v };
-                saveNotifPrefs(next);
-                setNotifPrefs(next);
-                flashSaved();
-              }}
-            />
+          <SettingsToggleRow
+            id="adhan-adhkar"
+            title="تذكير الأذكار"
+            checked={notifPrefs.adhkarReminder}
+            onChange={(v) => {
+              const next = { ...notifPrefs, adhkarReminder: v };
+              saveNotifPrefs(next);
+              setNotifPrefs(next);
+              flashSaved();
+            }}
+          />
+          <SettingsToggleRow
+            id="adhan-dhikr-phrase"
+            title="تذكير الذكر"
+            checked={notifPrefs.dhikrPhraseReminder}
+            onChange={(v) => {
+              const next = { ...notifPrefs, dhikrPhraseReminder: v };
+              saveNotifPrefs(next);
+              setNotifPrefs(next);
+              flashSaved();
+            }}
+          />
         </div>
       </section>
 
       <section className="soft-card soft-card--on-light ads-card" aria-labelledby="ads-prayers-head">
         <div className="ads-card__head" id="ads-prayers-head">
           <Bell size={15} strokeWidth={2} aria-hidden="true" />
-          <span>تنبيهات الصلاة</span>
+          <span>صلوات اليوم</span>
         </div>
         <div className="ads-card__body ads-prayer-list">
           {PRAYER_KEYS.map((key) => {
@@ -922,14 +944,12 @@ export default function AdhanSettingsPage() {
         </div>
       </section>
 
-      <PrayerScheduleHealthCard onRepair={() => void runRescheduleAlerts()} />
-
       <AndroidAdhanNativeCard selectedMuezzinId={prefs.defaultMuezzinId} />
 
       <section className="soft-card soft-card--on-light ads-card" aria-labelledby="ads-test-head">
         <div className="ads-card__head" id="ads-test-head">
           <Bell size={15} strokeWidth={2} aria-hidden="true" />
-          <span>اختبار الإشعارات</span>
+          <span>اختبار التنبيهات</span>
         </div>
         <div className="ads-card__body">
           <div className="ads-row">
@@ -944,18 +964,8 @@ export default function AdhanSettingsPage() {
             <button type="button" className="ads-pill-btn" onClick={() => void runSoundTest()}>
               {playingId ? "إيقاف الصوت" : "معاينة الصوت"}
             </button>
-            {showDeveloperTools ? (
-            <>
             <button type="button" className="ads-pill-btn" onClick={() => void runNotifSoundTest()}>
-              اختبار الإشعار بعد ١٠ ثوانٍ
-            </button>
-            <button
-              type="button"
-              className="ads-pill-btn"
-              disabled={statusBusy}
-              onClick={() => void runAdhanStatusCheck()}
-            >
-              {statusBusy ? "…" : "فحص حالة الأذان"}
+              اختبار إشعار خلال ١٠ ثوانٍ
             </button>
             <button
               type="button"
@@ -965,17 +975,27 @@ export default function AdhanSettingsPage() {
             >
               {rescheduleBusy ? "…" : "إعادة جدولة التنبيهات"}
             </button>
-            <button
-              type="button"
-              className="ads-pill-btn"
-              disabled={rescheduleBusy}
-              onClick={() => void runPurgeAndReschedule()}
-            >
-              حذف القديمة وإعادة الضبط
-            </button>
-            </>
-          ) : null}
-            </div>
+            {showDeveloperTools ? (
+              <>
+                <button
+                  type="button"
+                  className="ads-pill-btn"
+                  disabled={statusBusy}
+                  onClick={() => void runAdhanStatusCheck()}
+                >
+                  {statusBusy ? "…" : "فحص حالة الأذان"}
+                </button>
+                <button
+                  type="button"
+                  className="ads-pill-btn"
+                  disabled={rescheduleBusy}
+                  onClick={() => void runPurgeAndReschedule()}
+                >
+                  حذف القديمة وإعادة الضبط
+                </button>
+              </>
+            ) : null}
+          </div>
           {notifTestMsg ? <p className="ads-adhan-desc" role="status">{notifTestMsg}</p> : null}
           {statusLines ? (
             <ul className="ads-adhan-desc" role="status">

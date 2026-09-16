@@ -24,6 +24,21 @@
   margin-bottom: 1rem;
 }
 
+.ads-section-label {
+  margin: 0.35rem 0 0.45rem;
+  padding-inline: 0.15rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--msk-gold, var(--mj-brand-deep, #1c5244));
+  text-transform: none;
+}
+
+.ads-adhan-desc--meta {
+  opacity: 0.88;
+  font-size: 0.78rem;
+}
+
 .ads-help-link {
   color: var(--msk-gold, var(--mj-brand-deep, #1c5244));
   font-weight: 700;

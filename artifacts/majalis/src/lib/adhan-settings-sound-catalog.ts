@@ -29,15 +29,13 @@ export type SettingsSoundOption = {
 export const SETTINGS_MUEZZIN_LABELS: Record<string, string> = {
   makkah: "تنبيه أذان قصير متوافق مع iOS",
   alharam: "تنبيه أذان قصير متوافق مع iOS",
-  madinah: "أذان بنمط مدني (معاينة)",
-  qatami: "تسجيل غير معتمد للإنتاج",
   kuwait: "أذان خليجي قصير",
   takbeerat: "رنة قصيرة",
   soft: "رنة هادئة",
 };
 
 const OPTIONS: SettingsSoundOption[] = [
-  // —— الأذان داخل التطبيق ——
+  // —— الأذان داخل التطبيق (معتمد للإنتاج فقط) ——
   {
     id: "makkah",
     group: "adhan",
@@ -47,28 +45,6 @@ const OPTIONS: SettingsSoundOption[] = [
     soundProfile: "clear",
     requireLocal: true,
     previewUrl: "/audio/adhan/adhan-makkah.mp3",
-    iosNotificationSound: "prayer-alert.caf",
-  },
-  {
-    id: "madinah",
-    group: "adhan",
-    label: "أذان بنمط مدني (معاينة)",
-    muezzinId: "makkah",
-    playbackMode: "short",
-    soundProfile: "clear",
-    requireLocal: true,
-    previewUrl: "/audio/adhan/adhan-madinah.mp3",
-    iosNotificationSound: "prayer-alert.caf",
-  },
-  {
-    id: "qatami",
-    group: "adhan",
-    label: "تسجيل غير معتمد للإنتاج",
-    muezzinId: "qatami",
-    playbackMode: "short",
-    soundProfile: "clear",
-    requireLocal: true,
-    previewUrl: "/audio/adhan/adhan-qatami.mp3",
     iosNotificationSound: "prayer-alert.caf",
   },
   {

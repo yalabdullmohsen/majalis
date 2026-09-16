@@ -105,10 +105,12 @@ assert.doesNotMatch(settingsView, /تجاوز الصامت|Critical Alerts|تج�
 assert.match(prefsSrc, /bypassSilentMode:\s*false/);
 assert.match(settingsView, /fireTestLocalNotification\(10_000\)/);
 assert.match(settingsView, /فشل التشغيل/);
-assert.match(settingsView, /اختبار الإشعار بعد ١٠ ثوانٍ/);
+assert.match(settingsView, /اختبار إشعار خلال ١٠ ثوانٍ|اختبار الإشعار بعد ١٠ ثوانٍ/);
 assert.match(settingsView, /فحص حالة الأذان/);
 assert.match(settingsView, /useAdhanDeveloperTools/);
 assert.match(settingsView, /showDeveloperTools \?/);
+assert.match(settingsView, /حالة الجدولة|مجدولة الآن/);
+assert.doesNotMatch(settingsView, /بانتظار تسجيل مرخّص/);
 assert.doesNotMatch(settingsView, /adhan-makkah-short\.caf|adhan-madinah-short\.caf/);
 assert.doesNotMatch(localNotif, /adhan-makkah-short\.caf|adhan-madinah-short\.caf/);
 
