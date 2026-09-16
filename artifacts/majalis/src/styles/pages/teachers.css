@@ -61,7 +61,16 @@
   margin: 0 0 0.75rem;
 }
 .tch-empty {
-  padding: 1.5rem;
+  display: block;
+  width: min(100%, 28rem);
+  max-width: 100%;
+  margin-inline: auto;
+  padding: 1.35rem 1.1rem;
   text-align: center;
   color: var(--muted-fg, var(--mj-muted));
+  font-size: 0.95rem;
+  line-height: 1.65;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+  box-sizing: border-box;
 }

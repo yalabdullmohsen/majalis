@@ -115,9 +115,17 @@
   color: var(--text-muted, var(--muted));
 }
 .dcq__empty {
-  margin: 0;
-  padding: 1rem;
+  margin: 0.75rem auto 0;
+  width: min(100%, 28rem);
+  max-width: 100%;
+  padding: 1rem 1.1rem;
   color: var(--text-muted, var(--muted));
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+  box-sizing: border-box;
 }
 @media (prefers-reduced-motion: reduce) {
   .dcq__choice, .dcq__chip, .dcq__next { transition: none; }

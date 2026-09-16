@@ -102,9 +102,18 @@
   gap: 0.65rem;
 }
 .duas-empty {
+  display: block;
+  width: min(100%, 28rem);
+  max-width: 100%;
+  margin-inline: auto;
   text-align: center;
   color: var(--mj-brand, #1e5f4b);
   padding: var(--ds-space-8);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+  box-sizing: border-box;
 }
 
 /* Card */
