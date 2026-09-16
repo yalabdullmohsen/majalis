@@ -24,7 +24,8 @@ assert.doesNotMatch(fab, /ChevronUp/);
 
 const backCss = read("src/styles/knowledge-experience.css");
 assert.match(backCss, /\.app-back-btn--bar\.fixed-back-bar/, "شريط ثابت");
-assert.match(backCss, /right:\s*max\(0\.75rem,\s*var\(--inset-right/, "أسفل يمين فعليًا");
+assert.match(backCss, /right:\s*max\(0\.75rem,\s*var\(--inset-right/, "يمين فعليًا");
+assert.match(backCss, /top:\s*var\(--global-back-top/, "أعلى الشاشة — لا يغطي المحتوى السفلي");
 assert.match(backCss, /inset-inline-end:\s*unset/, "لا منطق RTL يقلب الزر لليسار");
 assert.match(backCss, /html\.chrome-immersive[\s\S]{0,220}?display:\s*none/, "إخفاء CSS في المصحف");
 

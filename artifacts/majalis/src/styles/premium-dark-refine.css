@@ -107,8 +107,18 @@
   --mj-hairline: var(--pd-border-subtle);
   --border-elevated: var(--pd-border);
 
-  --dm-bottom-nav: #121916;
+  --dm-bottom-nav: #0c1210;
   --dm-focus-ring: color-mix(in srgb, var(--pd-gold) 32%, transparent);
+
+  /* Semantic aliases المطلوبة للواجهة */
+  --pd-bg: var(--pd-bg-1);
+  --pd-surface: var(--pd-bg-2);
+  --pd-surface-elevated: var(--pd-card);
+  --pd-surface-interactive: var(--pd-elevated);
+  --pd-success: #6bcf9a;
+  --pd-warning: #e2c07a;
+  --pd-accent: var(--pd-gold);
+  --pd-border-token: var(--pd-border-subtle);
 
   --shadow-mj: var(--pd-elev-1);
   --mj-elev-1: var(--pd-elev-1);
@@ -222,22 +232,30 @@
   filter: none !important;
 }
 
-/* ═══ شريط سفلي: نشط هادئ بلا وهج ═══ */
+/* ═══ شريط سفلي: أغمق · نشط أوضح · خامل أخفت · بلا mint ═══ */
 :is(html[data-theme="dark"], html.dark) .bottom-nav,
 :is(html[data-theme="dark"], html.dark) .bottom-nav--v2,
 :is(html[data-theme="dark"], html.dark) .bottom-nav--m2030 {
-  background-color: var(--dm-bottom-nav, #121916) !important;
+  background-color: var(--dm-bottom-nav, #0c1210) !important;
   background-image: none !important;
-  border-top: 1px solid color-mix(in srgb, var(--pd-border-subtle) 70%, transparent) !important;
-  box-shadow: 0 -1px 0 color-mix(in srgb, var(--pd-gold) 6%, transparent) !important;
+  border-top: 1px solid color-mix(in srgb, var(--pd-border-subtle) 55%, transparent) !important;
+  box-shadow: 0 -1px 0 color-mix(in srgb, var(--pd-gold) 4%, transparent) !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
 
-:is(html[data-theme="dark"], html.dark) .bottom-nav__tab.is-active {
-  background: color-mix(in srgb, var(--pd-emerald) 9%, transparent) !important;
+:is(html[data-theme="dark"], html.dark) .bottom-nav__tab:not(.is-active) {
+  background: transparent !important;
   box-shadow: none !important;
   filter: none !important;
+  opacity: 0.72;
+}
+
+:is(html[data-theme="dark"], html.dark) .bottom-nav__tab.is-active {
+  background: color-mix(in srgb, var(--pd-emerald) 7%, transparent) !important;
+  box-shadow: none !important;
+  filter: none !important;
+  opacity: 1;
 }
 
 :is(html[data-theme="dark"], html.dark) .bottom-nav__tab.is-active .bottom-nav__tab-label,
@@ -252,24 +270,26 @@
   background: var(--pd-gold) !important;
   box-shadow: none !important;
   filter: none !important;
-  opacity: 0.92 !important;
+  opacity: 0.9 !important;
   height: 2px !important;
 }
 
-/* ═══ زر الرجوع: ظل أصغر وحد أخف ═══ */
+/* ═══ زر الرجوع: ظل أصغر وحد أخف (موضع علوي) ═══ */
 :is(html[data-theme="dark"], html.dark) .app-back-btn--bar.fixed-back-bar,
 :is(html[data-theme="dark"], html.dark) button.app-back-btn--bar[data-fixed-back-bar="1"],
 :is(html[data-theme="dark"], html.dark) .floating-back-btn,
 :is(html[data-theme="dark"], html.dark) .global-back-btn {
-  border-color: color-mix(in srgb, var(--pd-emerald) 14%, transparent) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22) !important;
+  border-color: color-mix(in srgb, var(--pd-emerald) 12%, transparent) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
   filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 :is(html[data-theme="dark"], html.dark) .app-back-btn--bar.fixed-back-bar:hover,
 :is(html[data-theme="dark"], html.dark) button.app-back-btn--bar[data-fixed-back-bar="1"]:hover {
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.26) !important;
-  border-color: color-mix(in srgb, var(--pd-emerald) 18%, transparent) !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.24) !important;
+  border-color: color-mix(in srgb, var(--pd-emerald) 16%, transparent) !important;
 }
 
 /* ═══ قرآن: هدوء وتركيز على المحتوى ═══ */
@@ -352,4 +372,132 @@
 :is(html[data-theme="dark"], html.dark) .prophet-timeline__dot.is-active,
 :is(html[data-theme="dark"], html.dark) .prophet-timeline__dot[aria-current="true"] {
   box-shadow: var(--pd-glow-active) !important;
+}
+
+/* ═══ بطاقات: زوايا أنعم · حدود أخف · بلا تدرج ═══ */
+:is(html[data-theme="dark"], html.dark) .soft-card,
+:is(html[data-theme="dark"], html.dark) .hub-card,
+:is(html[data-theme="dark"], html.dark) .category-card,
+:is(html[data-theme="dark"], html.dark) .quran-hub-card,
+:is(html[data-theme="dark"], html.dark) .quran-open-mushaf,
+:is(html[data-theme="dark"], html.dark) .lesson-card,
+:is(html[data-theme="dark"], html.dark) .search-result-card,
+:is(html[data-theme="dark"], html.dark) .srch-card,
+:is(html[data-theme="dark"], html.dark) .pts-card,
+:is(html[data-theme="dark"], html.dark) .pts-countdown,
+:is(html[data-theme="dark"], html.dark) .pts-next {
+  border-radius: 0.95rem !important;
+  background-image: none !important;
+  filter: none !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .hub-card__desc,
+:is(html[data-theme="dark"], html.dark) .soft-card__desc,
+:is(html[data-theme="dark"], html.dark) .supporting-text,
+:is(html[data-theme="dark"], html.dark) .text-meta,
+:is(html[data-theme="dark"], html.dark) .caption,
+:is(html[data-theme="dark"], html.dark) .helper-text,
+:is(html[data-theme="dark"], html.dark) .subtitle,
+:is(html[data-theme="dark"], html.dark) .section-subtitle {
+  color: color-mix(in srgb, var(--pd-ink-2) 82%, #9aaba2) !important;
+  opacity: 1 !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .hub-card__meta,
+:is(html[data-theme="dark"], html.dark) .text-muted,
+:is(html[data-theme="dark"], html.dark) .meta,
+:is(html[data-theme="dark"], html.dark) [data-meta="1"] {
+  color: color-mix(in srgb, var(--pd-ink-muted) 88%, #8a9a93) !important;
+}
+
+/* ═══ بحث: خلفية أغمق · تركيز أوضح · حدود أخف ═══ */
+:is(html[data-theme="dark"], html.dark) .hus-field,
+:is(html[data-theme="dark"], html.dark) .srch-home-field,
+:is(html[data-theme="dark"], html.dark) .search-field,
+:is(html[data-theme="dark"], html.dark) .mj-search-field,
+:is(html[data-theme="dark"], html.dark) input[type="search"] {
+  background: #141c19 !important;
+  border-color: color-mix(in srgb, var(--pd-border-subtle) 65%, transparent) !important;
+  box-shadow: none !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .hus-field:focus-within,
+:is(html[data-theme="dark"], html.dark) .srch-home-field:focus-within,
+:is(html[data-theme="dark"], html.dark) .search-field:focus-within {
+  border-color: color-mix(in srgb, var(--pd-gold) 38%, transparent) !important;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--pd-gold) 18%, transparent) !important;
+}
+
+/* ═══ هرمية الأقسام: الهيدر فوق البطاقات فوق المحتوى ═══ */
+:is(html[data-theme="dark"], html.dark) .section-hero,
+:is(html[data-theme="dark"], html.dark) .page-hero-mj,
+:is(html[data-theme="dark"], html.dark) .mss-section-hero,
+:is(html[data-theme="dark"], html.dark) .sh-hero {
+  background-color: #15201c !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border-color: color-mix(in srgb, var(--pd-border-subtle) 50%, transparent) !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .section-hero :is(h1, h2, .section-hero__title),
+:is(html[data-theme="dark"], html.dark) .page-title,
+:is(html[data-theme="dark"], html.dark) .section-title {
+  color: var(--pd-ink) !important;
+  font-weight: 700;
+}
+
+/* ═══ قرآن: أناقة وهدوء ═══ */
+:is(html[data-theme="dark"], html.dark) .quran-hub-hero::after,
+:is(html[data-theme="dark"], html.dark) .quran-hub-hero [class*="glow"] {
+  opacity: 0 !important;
+  display: none !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .quran-open-mushaf__cta,
+:is(html[data-theme="dark"], html.dark) .quran-hub-card__cta {
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* ═══ صلاة: تقليل شدة الأخضر · عدّاد أوضح ═══ */
+:is(html[data-theme="dark"], html.dark).pts-immersive .bottom-nav,
+:is(html[data-theme="dark"], html.dark).pts-immersive .bottom-nav--v2,
+:is(html[data-theme="dark"], html.dark).pts-immersive .bottom-nav--m2030,
+html.pts-immersive:is([data-theme="dark"], .dark) .bottom-nav,
+html.pts-immersive:is([data-theme="dark"], .dark) .bottom-nav--v2,
+html.pts-immersive:is([data-theme="dark"], .dark) .bottom-nav--m2030 {
+  background: #0c1210 !important;
+  background-image: none !important;
+  border-top-color: color-mix(in srgb, var(--pd-gold, #c9a86c) 10%, transparent) !important;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.35) !important;
+}
+
+html.pts-immersive:is([data-theme="dark"], .dark),
+html.pts-immersive:is([data-theme="dark"], .dark) body,
+html.pts-immersive:is([data-theme="dark"], .dark) #root,
+html.pts-immersive:is([data-theme="dark"], .dark) .app-main {
+  --pts-page-gradient: linear-gradient(180deg, #12352c 0%, #0c1f1a 55%, #0a1613 100%);
+  background-color: #0a1613 !important;
+  background-image: var(--pts-page-gradient) !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .pts-countdown,
+:is(html[data-theme="dark"], html.dark) .pts-next,
+:is(html[data-theme="dark"], html.dark) .pts-card--countdown {
+  background: color-mix(in srgb, #1a2822 92%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--pd-gold) 14%, transparent) !important;
+  box-shadow: var(--pd-elev-1) !important;
+  filter: none !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .pts-countdown__label,
+:is(html[data-theme="dark"], html.dark) .pts-meta,
+:is(html[data-theme="dark"], html.dark) .pts-hint {
+  color: color-mix(in srgb, #e8e0d4 70%, #9aaba2) !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .pts-countdown__value,
+:is(html[data-theme="dark"], html.dark) .pts-countdown__time {
+  color: var(--pd-ink) !important;
+  text-shadow: none !important;
 }
