@@ -88,7 +88,7 @@ export default function TeachersIndexPage() {
       {loading && teachers.length === 0 ? (
         <SkeletonCardGrid count={8} />
       ) : filtered.length === 0 ? (
-        <p className="tch-empty">لا يوجد مشايخ مطابقون للبحث.</p>
+        <p className="tch-empty">لا يوجد مشايخ مطابقون. جرّب كلمة أخرى أو امسح البحث.</p>
       ) : (
         <div className="tch-grid" role="list" aria-busy={loading}>
           {filtered.map((teacher) => (

@@ -61,7 +61,7 @@ function buildChoices(q: QuizQuestion, pool: QuizQuestion[], seed: number): stri
 function sourceLabel(q: QuizQuestion): string {
   const src = (q as QuizQuestion & { source?: string }).source?.trim();
   if (src) return src;
-  return "قيد إضافة المصدر";
+  return "مصدر مختصر غير مُرفق بعد";
 }
 
 const SCORE_KEY = "majalis-daily-challenge-score-v1";
@@ -222,7 +222,7 @@ export function DailyChallengeQuiz() {
       </div>
 
       {!question ? (
-        <p className="dcq__empty">لا توجد أسئلة في هذا المستوى حاليًا.</p>
+        <p className="dcq__empty">لا توجد أسئلة في هذا المستوى حاليًا. جرّب مستوى آخر.</p>
       ) : (
         <article className="dcq__card soft-card soft-card--on-light">
           <p className="dcq__question">{question.q}</p>

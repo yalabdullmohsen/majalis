@@ -174,7 +174,7 @@ export default function AsmaaHusnaPage() {
 
       {/* ═══ شبكة الأسماء ═══ */}
       {filtered.length === 0 ? (
-        <p className="ah-empty">لا يوجد اسم مطابق للبحث.</p>
+        <p className="ah-empty">لا يوجد اسم مطابق. جرّب كلمة أخرى أو امسح البحث.</p>
       ) : (
         <div className="ah-grid">
           {filtered.map((a) => (

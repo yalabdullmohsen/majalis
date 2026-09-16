@@ -416,7 +416,7 @@ export default function QuranCirclesPage() {
       {awaitingFilterResults || (loading && circles.length === 0) ? (
         <p className="qc-empty" role="status" aria-busy="true">تحديث الدليل…</p>
       ) : visible.length === 0 ? (
-        <p className="qc-empty">لا توجد حلقات مطابقة لهذا الفلتر حاليًا</p>
+        <p className="qc-empty">لا توجد حلقات مطابقة لهذا الفلتر. جرّب منطقة أخرى أو امسح التصفية.</p>
       ) : (
         <div className="qc-results" aria-busy={loading}>
           {byGov.map(([gov, list]) => (

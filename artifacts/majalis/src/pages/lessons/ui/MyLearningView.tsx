@@ -297,7 +297,7 @@ export default function MyLearningPage() {
           ) : (
             <div className="myl2-empty">
               <BookOpen size={32} strokeWidth={1} aria-hidden="true" />
-              <p>مكتبتك فارغة حتى الآن</p>
+              <p>مكتبتك فارغة حتى الآن. أضف دروسًا من قسم الدروس لتظهر هنا.</p>
             </div>
           )}
         </section>
