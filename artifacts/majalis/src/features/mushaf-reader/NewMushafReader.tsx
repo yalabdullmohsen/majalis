@@ -79,6 +79,8 @@ import { MUSHAF_CHROME_HIDE_MS } from "@/features/mushaf-madinah/layout-bands";
 import { MushafPage } from "./MushafPage";
 import { MushafControlsLayer, MushafVerseMenu } from "./MushafControlsLayer";
 import { MushafPageArrows } from "./MushafPageArrows";
+import { MushafPageScrubber } from "./MushafPageScrubber";
+import { isMushafNavCapabilityEnabled } from "./mushaf-reader-nav-contract";
 import {
   loadPageArrowsEnabled,
   savePageArrowsEnabled,
@@ -1016,7 +1018,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         mushafTurnMark("touchStart", page);
       }}
       onNavigateCancel={cancelPageTurnFreeze}
-      ignoreSelector=".nm-controls, .nm-verse-menu, .nm-page-arrows, .nm-page-arrow, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, input, textarea, select, button"
+      ignoreSelector=".nm-controls, .nm-verse-menu, .nm-page-arrows, .nm-page-arrow, .nm-page-scrubber, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, input, textarea, select, button"
       onTapEmpty={() => {
         if (actionsOpen) {
           closeActions();
@@ -1167,6 +1169,32 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           go(page - 1);
         }}
       />
+
+      {isMushafNavCapabilityEnabled("pageScrubber") ? (
+        <MushafPageScrubber
+          page={page}
+          juzNumber={
+            displayView?.layout.juzNumber ??
+            getCachedMushafPage(page)?.juzNumber ??
+            1
+          }
+          visible={
+            chromeOpen &&
+            !actionsOpen &&
+            !gotoOpen &&
+            !tafsirOpen &&
+            !searchOpen &&
+            !indexOpen &&
+            !controlsMoreOpen
+          }
+          busy={edgesDisabled || !pagerSettled}
+          onGoto={(n) => {
+            if (edgesDisabled || !pagerSettled) return;
+            go(n);
+            bumpChrome();
+          }}
+        />
+      ) : null}
 
       <MushafControlsLayer
         chromeOpen={chromeOpen && !actionsOpen && !gotoOpen}
