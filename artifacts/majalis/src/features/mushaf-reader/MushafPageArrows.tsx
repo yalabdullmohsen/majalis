@@ -42,7 +42,7 @@ export const MushafPageArrows = memo(function MushafPageArrows({
     } finally {
       window.setTimeout(() => {
         guardRef.current = false;
-      }, 320);
+      }, 240);
     }
   }, [busy]);
 
@@ -61,7 +61,7 @@ export const MushafPageArrows = memo(function MushafPageArrows({
       data-page={page}
       aria-hidden={!show}
     >
-      {/* RTL: التالية على يمين الشاشة (inline-start) */}
+      {/* RTL: التالية أسفل يمين الشاشة (inline-start) */}
       <button
         type="button"
         className="nm-page-arrow nm-page-arrow--next"
@@ -83,7 +83,7 @@ export const MushafPageArrows = memo(function MushafPageArrows({
           ‹
         </span>
       </button>
-      {/* RTL: السابقة على يسار الشاشة (inline-end) */}
+      {/* RTL: السابقة أسفل يسار الشاشة (inline-end) */}
       <button
         type="button"
         className="nm-page-arrow nm-page-arrow--prev"

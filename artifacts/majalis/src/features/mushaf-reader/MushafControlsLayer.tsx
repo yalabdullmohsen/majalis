@@ -115,10 +115,17 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
         <button
           type="button"
           className="nm-controls__btn nm-controls__exit"
+          data-testid="mushaf-toolbar-exit"
           aria-label="الخروج من المصحف"
-          onClick={onExit}
+          title="الخروج من المصحف"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onExit();
+          }}
+          onPointerDown={(e) => e.stopPropagation()}
         >
-          خروج
+          <span className="sr-only">خروج</span>
         </button>
         {onToggleFocusReadingMode ? (
           <button

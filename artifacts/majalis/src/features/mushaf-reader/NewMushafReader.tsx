@@ -79,7 +79,6 @@ import { MUSHAF_CHROME_HIDE_MS } from "@/features/mushaf-madinah/layout-bands";
 import { MushafPage } from "./MushafPage";
 import { MushafControlsLayer, MushafVerseMenu } from "./MushafControlsLayer";
 import { MushafPageArrows } from "./MushafPageArrows";
-import "@/styles/reader-page-chrome.css";
 import {
   loadPageArrowsEnabled,
   savePageArrowsEnabled,
@@ -110,6 +109,8 @@ import { migrateToSunnahMushafSignature } from "./sunnah-mushaf-signature-preset
 import "./mushaf-reader.css";
 /* شيتات التلاوة/البحث/التفسير — فئات مشتركة */
 import "@/features/mushaf-madinah/mushaf-madinah.css";
+/* صقل Chrome الخروج/الأسهم — بعد mushaf-reader حتى يفوز بدون لمس Geometry */
+import "@/styles/reader-page-chrome.css";
 
 const MushafTafsirSheet = lazy(() =>
   import("@/features/mushaf-madinah/MushafTafsirSheet").then((m) => ({
@@ -1025,14 +1026,15 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           clearSelection();
           return;
         }
-        /* السحب لا يصل هنا — فقط ضغطة خلفية صريحة */
-        if (focusReadingModeRef.current) {
-          setChromeOpen(true);
-          bumpChrome();
-          return;
-        }
-        setChromeOpen((v) => !v);
-        if (!chromeOpen) bumpChrome();
+        /* Kindle / Apple Books: نقرة تُظهر/تخفي الأدوات (وضع التركيز أيضًا عبر focusReadingModeRef) */
+        const _focus = focusReadingModeRef.current;
+        setChromeOpen((v) => {
+          const next = !v;
+          if (next || _focus) {
+            if (hideTimer.current) window.clearTimeout(hideTimer.current);
+          }
+          return next;
+        });
       }}
       className="nm-root mm-viewport mushaf-shell"
       data-chrome={chromeOpen ? "1" : "0"}
