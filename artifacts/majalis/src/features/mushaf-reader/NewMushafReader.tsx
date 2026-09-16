@@ -88,6 +88,7 @@ import {
 } from "./mushaf-page-arrows-prefs";
 import { useStableMushafLayout } from "./useStableMushafLayout";
 import {
+  getCachedPageRenderModel,
   putPageRenderModel,
   setMushafGeometryKey,
   getMushafGeometryKey,
@@ -229,8 +230,9 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       ) {
         return prev;
       }
+      const hadModel = Boolean(getCachedPageRenderModel(page));
       putPageRenderModel(page, layout, fontFamily);
-      mushafTurnInc("cacheMiss");
+      mushafTurnInc(hadModel ? "cacheHit" : "cacheMiss");
       mushafTurnMark("layoutComplete", page);
       return { layout, fontFamily, page };
     });
@@ -587,7 +589,14 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     setFreezeStackMode(dockRemainsAfterClear ? "audio" : ayahWasOpen ? "ayah" : "none");
     setBottomStackFrozen(true);
     setPagerSettled(false);
-    clearPageChrome();
+    /*
+     * أخّر مسح الـChrome إلى الإطار التالي حتى يُرسَم التزام الصفحة أولًا
+     * (يقلّل عاصفة setState على نفس الإطار مع go).
+     */
+    window.requestAnimationFrame(() => {
+      if (!pageTurnLockRef.current) return;
+      clearPageChrome();
+    });
     /* صمام أمان: إن تعذّر finishPageTurn لا يبقى المصحف مقفولًا إلى الأبد */
     if (pageTurnSafetyTimerRef.current != null) {
       window.clearTimeout(pageTurnSafetyTimerRef.current);
@@ -983,10 +992,110 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     (page <= 1 ||
       (isQpcPageFontReady(page - 1) && Boolean(getCachedMushafPage(page - 1))));
 
-  /* شيت الآية لا يمنع قلب الصفحة من الحواف */
-  const edgesDisabled = tafsirOpen || searchOpen || indexOpen || !neighborsReady;
+  /* شيتات فقط تعطّل السحب — الجيران يُجهَّزان في الخلفية بلا قطع اللمس */
+  const edgesDisabled = tafsirOpen || searchOpen || indexOpen;
   /* إخفاء الرصيف عند فتح قائمة الآية لتفادي تعارض أزرار التشغيل */
+
+  const onPageNumberPressCurrent = useCallback(() => {
+    setGotoOpen(true);
+    setChromeOpen(false);
+    setActionsOpen(false);
+  }, []);
+
+  /*
+   * لا يعتمد على `page` — role==="current" يكفي؛ يقلّل هوية renderPage
+   * أثناء التزام الصفحة (settled=false) فيُعاد استخدام ألواح ±1 بلا إعادة رسم زائدة.
+   */
+  const renderPage = useCallback(
+    (pageNumber: number, role: "next" | "current" | "prev") => (
+      <PrefetchPage
+        pageNumber={pageNumber}
+        active={role === "current"}
+        selectionEnabled={pagerSettled && role === "current"}
+        onSelectVerse={role === "current" && pagerSettled ? onSelectVerse : undefined}
+        onLongPressVerse={role === "current" && pagerSettled ? onLongPressVerse : undefined}
+        onPageNumberPress={role === "current" ? onPageNumberPressCurrent : undefined}
+        error={role === "current" ? error : null}
+      />
+    ),
+    [
+      pagerSettled,
+      onSelectVerse,
+      onLongPressVerse,
+      onPageNumberPressCurrent,
+      error,
+    ],
+  );
+
+  const onScrubberGoto = useCallback(
+    (n: number) => {
+      if (edgesDisabled || !pagerSettled || !neighborsReady) return;
+      go(n);
+      bumpChrome();
+    },
+    [edgesDisabled, pagerSettled, neighborsReady, go, bumpChrome],
+  );
+
+  const onControlsMoreOpenChange = useCallback(
+    (open: boolean) => {
+      setControlsMoreOpen(open);
+      if (open) {
+        setGotoOpen(false);
+        bumpChrome();
+      }
+    },
+    [bumpChrome],
+  );
+
+  const onControlsGotoOpenChange = useCallback((open: boolean) => {
+    setGotoOpen(open);
+    if (open) setControlsMoreOpen(false);
+  }, []);
+
+  const onControlsGoto = useCallback(
+    (n: number) => {
+      go(n);
+      setGotoOpen(false);
+      setControlsMoreOpen(false);
+    },
+    [go],
+  );
+
+  const onControlsExit = useCallback(() => {
+    setMushafAyahSearchHighlight(null);
+    setSearchOpen(false);
+    setIndexOpen(false);
+    setTafsirOpen(false);
+    setTafsirVerseKey(null);
+    setActionsOpen(false);
+    setSelectedVerseKey(null);
+    setControlsMoreOpen(false);
+    setGotoOpen(false);
+    setAudioDockOpen(false);
+    recitation.stop();
+    onExit();
+  }, [onExit, recitation]);
+
+  const onControlsIndex = useCallback(() => {
+    setIndexOpen(true);
+    setSearchOpen(false);
+    setGotoOpen(false);
+    setControlsMoreOpen(false);
+    bumpChrome();
+  }, [bumpChrome]);
+
+  const onControlsSearch = useCallback(() => {
+    setSearchOpen(true);
+    setIndexOpen(false);
+    setGotoOpen(false);
+    setControlsMoreOpen(false);
+    bumpChrome();
+  }, [bumpChrome]);
   
+  const onControlsPlayPage = useCallback(() => {
+    void playPage();
+  }, [playPage]);
+
   const audioDockVisible =
     !actionsOpen &&
     audioDockOpen &&
@@ -1055,25 +1164,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       data-page-arrows={pageArrowsEnabled ? "1" : "0"}
       data-signature-preset={import.meta.env.DEV ? "sunnah-mushaf-signature-v1" : undefined}
       dir="rtl"
-      renderPage={(pageNumber, role) => (
-        <PrefetchPage
-          pageNumber={pageNumber}
-          active={role === "current"}
-          selectionEnabled={pagerSettled && role === "current" && pageNumber === page}
-          onSelectVerse={role === "current" && pagerSettled ? onSelectVerse : undefined}
-          onLongPressVerse={role === "current" && pagerSettled ? onLongPressVerse : undefined}
-          onPageNumberPress={
-            role === "current"
-              ? () => {
-                  setGotoOpen(true);
-                  setChromeOpen(false);
-                  setActionsOpen(false);
-                }
-              : undefined
-          }
-          error={role === "current" ? error : null}
-        />
-      )}
+      renderPage={renderPage}
     >
       <h1 className="sr-only">المصحف الشريف</h1>
       <div className="sr-only" aria-live="polite" data-testid="mushaf-page-live">
@@ -1163,11 +1254,11 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         /* busy يخفّف التفاعل دون إخفاء السهم (كان :disabled يصفّر opacity) */
         busy={edgesDisabled || !pagerSettled}
         onNext={() => {
-          if (edgesDisabled || !pagerSettled) return;
+          if (edgesDisabled || !pagerSettled || !neighborsReady) return;
           go(page + 1);
         }}
         onPrev={() => {
-          if (edgesDisabled || !pagerSettled) return;
+          if (edgesDisabled || !pagerSettled || !neighborsReady) return;
           go(page - 1);
         }}
       />
@@ -1190,11 +1281,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
             !controlsMoreOpen
           }
           busy={edgesDisabled || !pagerSettled}
-          onGoto={(n) => {
-            if (edgesDisabled || !pagerSettled) return;
-            go(n);
-            bumpChrome();
-          }}
+          onGoto={onScrubberGoto}
         />
       ) : null}
 
@@ -1206,53 +1293,14 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         pageArrowsEnabled={pageArrowsEnabled}
         onPageArrowsEnabledChange={onPageArrowsEnabledChange}
         moreOpen={controlsMoreOpen}
-        onMoreOpenChange={(open) => {
-          setControlsMoreOpen(open);
-          if (open) {
-            setGotoOpen(false);
-            bumpChrome();
-          }
-        }}
+        onMoreOpenChange={onControlsMoreOpenChange}
         gotoOpen={gotoOpen}
-        onGotoOpenChange={(open) => {
-          setGotoOpen(open);
-          if (open) setControlsMoreOpen(false);
-        }}
-        onGoto={(n) => {
-          go(n);
-          setGotoOpen(false);
-          setControlsMoreOpen(false);
-        }}
-        onExit={() => {
-          /* خروج دائم = مغادرة المصحف فورًا (لا طبقات إغلاق متداخلة) */
-          setMushafAyahSearchHighlight(null);
-          setSearchOpen(false);
-          setIndexOpen(false);
-          setTafsirOpen(false);
-          setTafsirVerseKey(null);
-          setActionsOpen(false);
-          setSelectedVerseKey(null);
-          setControlsMoreOpen(false);
-          setGotoOpen(false);
-          setAudioDockOpen(false);
-          recitation.stop();
-          onExit();
-        }}
-        onPlayPage={() => void playPage()}
-        onIndex={() => {
-          setIndexOpen(true);
-          setSearchOpen(false);
-          setGotoOpen(false);
-          setControlsMoreOpen(false);
-          bumpChrome();
-        }}
-        onSearch={() => {
-          setSearchOpen(true);
-          setIndexOpen(false);
-          setGotoOpen(false);
-          setControlsMoreOpen(false);
-          bumpChrome();
-        }}
+        onGotoOpenChange={onControlsGotoOpenChange}
+        onGoto={onControlsGoto}
+        onExit={onControlsExit}
+        onPlayPage={onControlsPlayPage}
+        onIndex={onControlsIndex}
+        onSearch={onControlsSearch}
       />
 
       {actionsOpen && selectedVerseKey ? (
@@ -1324,14 +1372,17 @@ const PrefetchPage = memo(function PrefetchPage({
   onPageNumberPress?: () => void;
   error?: string | null;
 }) {
-  const [layout, setLayout] = useState<MushafPageLayout | null>(() =>
-    getCachedMushafPage(pageNumber),
-  );
+  const [layout, setLayout] = useState<MushafPageLayout | null>(() => {
+    const model = getCachedPageRenderModel(pageNumber);
+    if (model?.layout) return model.layout;
+    return getCachedMushafPage(pageNumber);
+  });
   const { fontFamily, ready } = useQpcPageFont(pageNumber, { prefetchAdjacent: false });
 
   useEffect(() => {
     let cancelled = false;
-    const cached = getCachedMushafPage(pageNumber);
+    const model = getCachedPageRenderModel(pageNumber);
+    const cached = model?.layout ?? getCachedMushafPage(pageNumber);
     if (cached) {
       setLayout((prev) => (prev === cached ? prev : cached));
     }
@@ -1346,8 +1397,14 @@ const PrefetchPage = memo(function PrefetchPage({
   }, [pageNumber]);
 
   useEffect(() => {
-    if (ready && layout) putPageRenderModel(pageNumber, layout, fontFamily);
+    if (ready && layout) {
+      const had = Boolean(getCachedPageRenderModel(pageNumber));
+      putPageRenderModel(pageNumber, layout, fontFamily);
+      mushafTurnInc(had ? "cacheHit" : "cacheMiss");
+    }
   }, [ready, layout, pageNumber, fontFamily]);
+
+  const canPaint = Boolean(layout) && (ready || isQpcPageFontReady(pageNumber));
 
   return (
     <div
@@ -1356,7 +1413,7 @@ const PrefetchPage = memo(function PrefetchPage({
       data-page-pane={active ? "active" : "prefetch"}
     >
       {active && error ? <div className="nm-status">{error}</div> : null}
-      {!ready || !layout ? (
+      {!canPaint || !layout ? (
         <div
           className="nm-page-placeholder nm-page-placeholder--frame"
           aria-hidden={active ? undefined : true}
@@ -1367,10 +1424,10 @@ const PrefetchPage = memo(function PrefetchPage({
       ) : (
         <MushafPage
           layout={layout}
-          fontFamily={fontFamily}
+          fontFamily={fontFamily || `"qpc-v2-p${pageNumber}"`}
           displayPageNumber={pageNumber}
-          onSelectVerse={onSelectVerse}
-          onLongPressVerse={onLongPressVerse}
+          onSelectVerse={selectionEnabled ? onSelectVerse : undefined}
+          onLongPressVerse={selectionEnabled ? onLongPressVerse : undefined}
           selectionEnabled={selectionEnabled}
           onPageNumberPress={onPageNumberPress}
         />

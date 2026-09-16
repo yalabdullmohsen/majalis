@@ -67,6 +67,18 @@ function isLastSurahLine(words: QpcWord[], layout: MushafPageLayout): boolean {
  * شبكة ١٥ سطرًا لكل الصفحات (نفس bodyTop) — بلا توسيط flex يقفز النص.
  * ارتفاع الحاوية/المتن ثابت عبر --mushaf-* لمنع layout shift عند قلب الصفحة.
  */
+function mushafPagePropsEqual(prev: Props, next: Props): boolean {
+  return (
+    prev.layout === next.layout &&
+    prev.fontFamily === next.fontFamily &&
+    prev.displayPageNumber === next.displayPageNumber &&
+    prev.selectionEnabled === next.selectionEnabled &&
+    prev.onSelectVerse === next.onSelectVerse &&
+    prev.onLongPressVerse === next.onLongPressVerse &&
+    prev.onPageNumberPress === next.onPageNumberPress
+  );
+}
+
 export const MushafPage = memo(function MushafPage({
   layout,
   fontFamily,
@@ -269,7 +281,7 @@ export const MushafPage = memo(function MushafPage({
       </footer>
     </article>
   );
-});
+}, mushafPagePropsEqual);
 
 /** توافق مع الاسم السابق */
 export const MushafPageView = MushafPage;

@@ -16,7 +16,7 @@ export type MushafPageRenderModel = {
   preparedAt: number;
 };
 
-const MAX_ENTRIES = 12;
+const MAX_ENTRIES = 16;
 const cache = new Map<number, MushafPageRenderModel>();
 
 const signature = resolveSunnahMushafSignaturePreset();
