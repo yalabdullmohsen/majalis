@@ -62,4 +62,24 @@ assert.doesNotMatch(read("lib/scholarly-intelligence/url-resolver.mjs"), /قرا
 assert.match(read("src/lib/scholarly-intelligence-service.ts"), /isBannedPublicRelationClient|fiqh_decision/);
 assert.match(read("lib/scholarly-intelligence/recommendations.mjs"), /isBannedPublicRelation/);
 
+/* Surfaces that must not advertise the removed product */
+assert.doesNotMatch(read("index.html"), /\/fiqh-council|المجمع الفقهي/);
+const generateSeo = read("scripts/generate-seo.mjs");
+assert.doesNotMatch(
+  generateSeo,
+  /url:\s*["'`]\/fiqh-council|href=["'`][^"'`]*\/fiqh-council|name:\s*["'`]المجمع الفقهي["'`]/,
+  "generate-seo: لا روابط منتج للمجمع",
+);
+for (const rel of [
+  "seo-prerender/fiqh/index.html",
+  "seo-prerender/rulings/index.html",
+  "seo-prerender/zakat/index.html",
+  "seo-prerender/fiqh-qawaid/index.html",
+  "seo-prerender/maqasid-sharia/index.html",
+  "seo-prerender/fikr-waqia/index.html",
+]) {
+  if (!existsSync(resolve(root, rel))) continue;
+  assert.doesNotMatch(read(rel), /\/fiqh-council/, `${rel}: بلا روابط مجمع`);
+}
+
 console.log("fiqh-council-completeness (removal gate): OK");
