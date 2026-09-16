@@ -1049,7 +1049,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       data-freeze-stack={freezeStackMode}
       data-testid="mushaf-viewport"
       data-reader-chrome={chromeOpen ? "1" : "0"}
-      data-focus-reading={focusReadingMode ? "1" : "0"}
+      /* True Focus: إخفاء الأدوات = وضع قراءة غامر (خروج طارئ فقط) */
+      data-focus-reading={!chromeOpen || focusReadingMode ? "1" : "0"}
       data-page-arrows={pageArrowsEnabled ? "1" : "0"}
       data-signature-preset={import.meta.env.DEV ? "sunnah-mushaf-signature-v1" : undefined}
       dir="rtl"
