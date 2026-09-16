@@ -158,10 +158,6 @@ const { PROPHETS } = await importSrc("src/lib/prophets-data.ts");
 const { NATIONS } = await importSrc("src/lib/nations-seed.ts");
 const { SINS_TOPICS } = await importSrc("src/lib/sins-rights-data.ts");
 const { getAllSurahStories } = await importSrc("src/lib/surah-stories.ts");
-const { FIQH_ISSUES_PUBLISHED_SEED } = await importSrc("src/lib/fiqh-issues-seed.ts");
-const { isPublicIssue, isVerifiedPublicItem } = await importSrc("src/lib/fiqh-council-trust.ts");
-const { FIQH_COUNCIL_PUBLISHED_SEED } = await importSrc("src/lib/fiqh-council-seed.ts");
-const { FIQH_ITEM_TYPE_LABELS } = await importSrc("src/lib/fiqh-council-types.ts");
 const { SCHOLAR_PROFILES } = await importSrc("src/data/scholars-profiles.ts");
 const { ANNUAL_COURSES_SEED } = await importSrc("src/lib/annual-courses-seed.ts");
 /** دورات SEO من المصدر الحي — لا platform-seed.snapshot.json المجمَّد (b005). */
@@ -192,12 +188,7 @@ if (QURAN_SURAHS.length !== 114) {
 }
 
 const SURAH_STORIES = getAllSurahStories();
-const PUBLIC_FIQH_ISSUES = []; // المجمع أُلغي من المنتج — لا فهرسة عامة
-/** مسائل منشورة في البذرة لكن غير مؤهّلة للعرض العام — قشرة noindex لمنع soft-404 بقشرة الرئيسية */
-const NONPUBLIC_FIQH_ISSUES = FIQH_ISSUES_PUBLISHED_SEED.filter(
-  (i) => i.status === "published" && !isPublicIssue(i),
-);
-const PUBLIC_FIQH_ITEMS = []; // المجمع أُلغي من المنتج — لا فهرسة عامة
+// المجمع الفقهي أُلغي من المنتج — لا PUBLIC_FIQH_* ولا فهرسة عامة لمساراته.
 const PUBLISHED_FIQH_BOOKS = publishedBooks();
 const FIQH_BOOK_STATS = (() => {
   let chapters = 0;
@@ -219,39 +210,6 @@ if (!QURAN_PEOPLE.some((p) => p.slug === "azar" || p.nameAr === "آزر")) {
   throw new Error("قائمة الذين ذكروا في القرآن تفتقد آزر (الأنعام 6:74)");
 }
 
-function fiqhItemRichBody(row) {
-  const kind = fiqhItemKind(row);
-  const blocks = [];
-  if (row.summary) blocks.push(`<h2>الملخّص</h2>\n<p>${escapeHtml(row.summary)}</p>`);
-  if (row.ruling_text) blocks.push(`<h2>${kind === "بحث" ? "موقف المجمع" : "نص القرار"}</h2>\n<p>${escapeHtml(row.ruling_text)}</p>`);
-  if (row.content) {
-    const paras = String(row.content)
-      .split(/\n{2,}/)
-      .map((p) => p.trim())
-      .filter(Boolean)
-      .map((p) => `<p>${escapeHtml(p.replace(/\*\*/g, ""))}</p>`)
-      .join("\n");
-    if (paras) blocks.push(`<h2>التفاصيل</h2>\n${paras}`);
-  }
-  const meta = [
-    row.decision_number ? `رقم القرار: ${escapeHtml(row.decision_number)}` : "",
-    row.session_number ? `الدورة: ${escapeHtml(row.session_number)}` : "",
-    row.session_date ? `التاريخ: ${escapeHtml(row.session_date)}` : "",
-    row.council_name || row.source_name ? `المصدر: ${escapeHtml(row.council_name || row.source_name)}` : "",
-  ].filter(Boolean);
-  if (meta.length) blocks.push(`<h2>المرجع</h2>\n<ul>\n${meta.map((m) => `  <li>${m}</li>`).join("\n")}\n</ul>`);
-  if (row.source_url) {
-    blocks.push(`<p><a href="${escapeHtml(row.source_url)}" rel="noopener noreferrer">المصدر الرسمي</a></p>`);
-  }
-  return blocks.join("\n") || `<p>${escapeHtml(row.title)} — ${escapeHtml(kind)} موثّق من المجمع.</p>`;
-}
-
-// وسمُ مادّة المجمع يُشتقّ من حقل `type` في السجلّ نفسه لا يُثبَّت على «قرار»:
-// من الأربعة القائمة في fiqh-council-seed.ts اثنان type: "research" نصَّ المجمع
-// فيهما على أنه لم يبتّ (237 (24/8) أوصى بمزيد من البحث، و230 (24/1) أجّل البتّ)،
-// فوسمُهما «قرار» إثباتُ ما نفاه المصدر. والمعجم FIQH_ITEM_TYPE_LABELS هو معجم
-// المنصّة نفسه المستعمَل في العرض والتصدير والاستشهاد.
-const fiqhItemKind = (row) => FIQH_ITEM_TYPE_LABELS[row?.type] || "مادة";
 
 /**
  * قوائم ثابتة محقونة داخل مكوّنات React (لا تُستورَد هنا لأن استيراد .tsx يتطلب JSX).
@@ -948,10 +906,6 @@ const LIST_JSON_LD = {
     ],
     "مركز القرآن الكريم",
   ),
-  "/fiqh-council": itemListJsonLdScript(
-    PUBLIC_FIQH_ITEMS.map((r) => ({ name: r.title, url: `/fiqh-council/${r.slug || r.id}` })),
-    "قرارات المجمع الفقهي",
-  ),
   "/quiz": itemListJsonLdScript(
     QUIZ_SEO_TOPICS.slice(0, 24),
     "أسئلة لعبة سين جيم",
@@ -990,10 +944,6 @@ const LIST_JSON_LD = {
   "/sins-and-rights": itemListJsonLdScript(
     SINS_TOPICS.map((t) => ({ name: t.title, url: `/sins-and-rights/${t.slug}` })),
     "الذنوب والحقوق",
-  ),
-  "/fiqh-council/issues": itemListJsonLdScript(
-    PUBLIC_FIQH_ISSUES.map((i) => ({ name: i.title, url: `/fiqh-council/issues/${i.slug}` })),
-    "المسائل الفقهية",
   ),
   "/asma-husna": itemListJsonLdScript(
     ASMAA_HUSNA.map((a) => ({ name: `${a.arabic} — ${a.meaning}`, url: `/asma-husna#name-${a.num}` })),
@@ -1132,11 +1082,7 @@ ${linkList("روابط ذات صلة", [
     })),
   ),
   "/sins-and-rights": linkList("موضوعات الذنوب والحقوق", SINS_TOPICS.map((t) => ({ name: t.title, url: `/sins-and-rights/${t.slug}` }))),
-  "/fiqh-council/issues": linkList(
-    "المسائل الفقهية المعاصرة",
-    PUBLIC_FIQH_ISSUES.map((i) => ({ name: i.title, url: `/fiqh-council/issues/${i.slug}` })),
-  ),
-  "/fiqh": `<p>بوابة الفقه الإسلامي في سُنّة: كتب وأبواب ومسائل مرتّبة للعبادات والمعاملات والأسرة والجنايات، مع إحالة إلى المجامع والقواعد والمذاهب — دون إفتاء فردي من المنصة.</p>
+  "/fiqh": `<p>بوابة الفقه الإسلامي في سُنّة: كتب وأبواب ومسائل مرتّبة للعبادات والمعاملات والأسرة والجنايات، مع إحالة إلى القواعد والمذاهب — دون إفتاء فردي من المنصة.</p>
 <h2>إحصاءات البوابة</h2>
 <ul>
   <li>${FIQH_BOOK_STATS.books} كتابًا فقهيًا منشورًا</li>
@@ -1156,20 +1102,15 @@ ${linkList(
   })),
 )}
 ${linkList("أقسام علمية", [
-  { name: "المجمع الفقهي", url: "/fiqh-council", note: "قرارات وفتاوى مؤسسية" },
-  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
-  { name: "النوازل المعاصرة", url: "/fiqh-council/nawazil" },
   ...FIQH_SUPPORTING_TOPICS.slice(0, 6).map((t) => ({ name: t.title, url: t.href })),
   { name: "الطهارة", url: "/tahara" },
   { name: "دليل الصلاة", url: "/salah-guide" },
   { name: "الزكاة", url: "/zakat" },
   { name: "الصيام", url: "/sawm" },
   { name: "الحج والعمرة", url: "/hajj" },
-])}
-${linkList(
-  "من المسائل المعاصرة",
-  PUBLIC_FIQH_ISSUES.slice(0, 12).map((i) => ({ name: i.title, url: `/fiqh-council/issues/${i.slug}` })),
-)}`,
+  { name: "منهج الموقع", url: "/methodology" },
+  { name: "المصادر", url: "/sources" },
+])}`,
   "/fiqh/usul": `<p>أصول الفقه: قواعد الاستنباط والأدلة — تعريف العلم، أبواب مرتبة (الأدلة، الحكم الشرعي، دلالات الألفاظ، الإجماع والقياس والقواعد)، دون اختراع أحكام.</p>
 ${linkList("روابط ذات صلة", [
   { name: "بوابة الفقه", url: "/fiqh" },
@@ -1247,8 +1188,6 @@ ${linkList("روابط ذات صلة", [
 <meta http-equiv="refresh" content="0;url=${escapeHtml(absoluteUrl("/fiqh"))}" />
 ${linkList("أقسام ذات صلة", [
   { name: "بوابة الفقه", url: "/fiqh" },
-  { name: "المجمع الفقهي", url: "/fiqh-council" },
-  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
   { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
   { name: "المذاهب الأربعة", url: "/madhahib" },
   { name: "الأسئلة والأجوبة", url: "/quiz" },
@@ -1356,7 +1295,7 @@ ${linkList("روابط ذات صلة", [
   { name: "الصيام", url: "/sawm" },
   { name: "الحج والعمرة", url: "/hajj" },
   { name: "بوابة الفقه", url: "/fiqh" },
-  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "منهج الموقع", url: "/methodology" },
 ])}`,
   "/sawm": `<p>الصيام وأحكامه: رمضان والقضاء والكفارات والنوافل، مع إحالات إلى الأذكار والعبادات المرتبطة.</p>
 ${linkList("روابط ذات صلة", [
@@ -1527,26 +1466,10 @@ ${linkList("روابط ذات صلة", [
 ${linkList("روابط ذات صلة", [
   { name: "المذاهب الأربعة", url: "/madhahib" },
   { name: "بوابة الفقه", url: "/fiqh" },
-  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "المصادر", url: "/sources" },
   { name: "المعجم الشرعي", url: "/islamic-glossary" },
 ])}`,
-  "/fiqh-council": `<p>المجمع الفقهي الإسلامي: قرارات وفتاوى ومسائل معاصرة ونوازل، مع أدوات بحث ومقارنة وأرشيف.</p>
-${linkList(
-  "مواد المجمع المنشورة",
-  PUBLIC_FIQH_ITEMS.map((r) => ({
-    name: `${r.title} (${fiqhItemKind(r)})`,
-    url: `/fiqh-council/${r.slug || r.id}`,
-  })),
-)}
-${linkList("أقسام المجمع", [
-  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
-  { name: "النوازل المعاصرة", url: "/fiqh-council/nawazil" },
-  { name: "الفتاوى", url: "/fiqh-council/fatwas" },
-  { name: "القرارات/التوصيات", url: "/fiqh-council/resolutions" },
-  { name: "التصنيفات", url: "/fiqh-council/categories" },
-  { name: "الأرشيف", url: "/fiqh-council/archive" },
-  { name: "بوابة الفقه", url: "/fiqh" },
-])}`,
+  // "/fiqh-council" وفرعه أُلغيا من المنتج — لا قشرة RICH_BODY عامة.
   "/sunan-yawmiyya": `<p>السنن اليومية الثابتة عن النبي ﷺ في الطعام واللباس والنوم والدخول والخروج، مع ربط بالأذكار والأدعية.</p>
 ${linkList("روابط ذات صلة", [
   { name: "الأذكار", url: "/adhkar" },
@@ -2212,102 +2135,7 @@ ${linkList("روابط ذات صلة", [
   { name: "البطاقات التعليمية", url: "/flashcards" },
   { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
 ])}`,
-  "/fiqh-council/fatwas": `<p>فتاوى جماعية صادرة عن المجمع الفقهي — للاطلاع المؤسسي مع ربط بالمسائل والقرارات.</p>
-${linkList("أقسام المجمع", [
-  { name: "المجمع الفقهي", url: "/fiqh-council" },
-  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
-  { name: "القرارات", url: "/fiqh-council/resolutions" },
-  { name: "النوازل", url: "/fiqh-council/nawazil" },
-  { name: "التوصيات", url: "/fiqh-council/recommendations" },
-  { name: "الأرشيف", url: "/fiqh-council/archive" },
-])}`,
-  "/fiqh-council/research": `<p>بحوث المجمع الفقهي والدراسات المصاحبة للقرارات — مدخل للباحث قبل المقارنة والأرشيف.</p>
-${linkList("أقسام المجمع", [
-  { name: "المجمع الفقهي", url: "/fiqh-council" },
-  { name: "مساعد الباحث", url: "/fiqh-council/research-assistant" },
-  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
-  { name: "مقارنة القرارات", url: "/fiqh-council/compare" },
-  { name: "الأرشيف", url: "/fiqh-council/archive" },
-])}`,
-  "/fiqh-council/archive": `<p>أرشيف مواد المجمع الفقهي للرجوع إلى القرارات والفتاوى والبحوث السابقة.</p>
-${linkList("أقسام المجمع", [
-  { name: "المجمع الفقهي", url: "/fiqh-council" },
-  { name: "الفتاوى", url: "/fiqh-council/fatwas" },
-  { name: "القرارات", url: "/fiqh-council/resolutions" },
-  { name: "البحوث", url: "/fiqh-council/research" },
-  { name: "التصنيفات", url: "/fiqh-council/categories" },
-])}`,
-  "/fiqh-council/categories": `<p>تصنيفات فقهية لتنظيم قرارات المجمع ومسائله حسب الأبواب والموضوعات.</p>
-${linkList("أقسام المجمع", [
-  { name: "المجمع الفقهي", url: "/fiqh-council" },
-  { name: "الفهرس الموضوعي", url: "/fiqh-council/index" },
-  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
-  { name: "النوازل", url: "/fiqh-council/nawazil" },
-  { name: "الأرشيف", url: "/fiqh-council/archive" },
-])}`,
-  "/fiqh-council/resolutions": `<p>قرارات المجمع الفقهي المعتمدة، مع مداخل إلى التوصيات والفتاوى والمقارنة.</p>
-${linkList("أقسام المجمع", [
-  { name: "المجمع الفقهي", url: "/fiqh-council" },
-  { name: "التوصيات", url: "/fiqh-council/recommendations" },
-  { name: "الفتاوى", url: "/fiqh-council/fatwas" },
-  { name: "مقارنة القرارات", url: "/fiqh-council/compare" },
-  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
-])}`,
-  "/fiqh-council/recommendations": `<p>توصيات المجمع الفقهي المصاحبة للقرارات والنوازل — للاطلاع المؤسسي المنهجي.</p>
-${linkList("أقسام المجمع", [
-  { name: "المجمع الفقهي", url: "/fiqh-council" },
-  { name: "القرارات", url: "/fiqh-council/resolutions" },
-  { name: "النوازل", url: "/fiqh-council/nawazil" },
-  { name: "الفتاوى", url: "/fiqh-council/fatwas" },
-  { name: "الأرشيف", url: "/fiqh-council/archive" },
-])}`,
-  "/fiqh-council/nawazil": `<p>فقه النوازل المعاصرة كما تُعالَج في إطار المجمع: مسائل مستجدة مع إحالة إلى القرارات والبحوث.</p>
-${linkList("أقسام المجمع", [
-  { name: "المجمع الفقهي", url: "/fiqh-council" },
-  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
-  { name: "القرارات", url: "/fiqh-council/resolutions" },
-  { name: "البحوث", url: "/fiqh-council/research" },
-  { name: "بوابة الفقه", url: "/fiqh" },
-])}`,
-  "/fiqh-council/index": `<p>فهرس موضوعي لمواد المجمع الفقهي يسهّل الوصول عبر التصنيفات والمسائل.</p>
-${linkList("أقسام المجمع", [
-  { name: "المجمع الفقهي", url: "/fiqh-council" },
-  { name: "التصنيفات", url: "/fiqh-council/categories" },
-  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
-  { name: "البحث المتقدم", url: "/fiqh-council/search" },
-  { name: "الإحصائيات", url: "/fiqh-council/stats" },
-])}`,
-  "/fiqh-council/stats": `<p>إحصائيات المجمع الفقهي: أعداد القرارات والفتاوى والبحوث وأكثر المواد تداولًا.</p>
-${linkList("أقسام المجمع", [
-  { name: "المجمع الفقهي", url: "/fiqh-council" },
-  { name: "البيانات الحية", url: "/fiqh-council/live" },
-  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
-  { name: "الأرشيف", url: "/fiqh-council/archive" },
-  { name: "الفهرس الموضوعي", url: "/fiqh-council/index" },
-])}`,
-  "/fiqh-council/compare": `<p>أداة لمقارنة قرارات فقهية متقاربة الموضوع — للبحث لا للإفتاء الفردي.</p>
-${linkList("أقسام المجمع", [
-  { name: "المجمع الفقهي", url: "/fiqh-council" },
-  { name: "القرارات", url: "/fiqh-council/resolutions" },
-  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
-  { name: "البحوث", url: "/fiqh-council/research" },
-  { name: "مساعد الباحث", url: "/fiqh-council/research-assistant" },
-])}`,
-  "/fiqh-council/research-assistant": `<p>مساعد للباحث الفقهي داخل مواد المجمع: توجيه إلى المسائل والقرارات والبحوث ذات الصلة.</p>
-${linkList("أقسام المجمع", [
-  { name: "المجمع الفقهي", url: "/fiqh-council" },
-  { name: "البحوث", url: "/fiqh-council/research" },
-  { name: "البحث المتقدم", url: "/fiqh-council/search" },
-  { name: "مقارنة القرارات", url: "/fiqh-council/compare" },
-  { name: "المساعد العلمي", url: "/assistant" },
-])}`,
-  "/fiqh-council/live": `<p>لوحة بيانات حية لنشاط المجمع الفقهي (إحصاءات وتحديثات) — للاطلاع لا للفتوى الفورية.</p>
-${linkList("أقسام المجمع", [
-  { name: "المجمع الفقهي", url: "/fiqh-council" },
-  { name: "الإحصائيات", url: "/fiqh-council/stats" },
-  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
-  { name: "آخر المستجدات", url: "/updates" },
-])}`,
+  // قشور /fiqh-council/* أُزيلت — المنتج ملغى.
   "/knowledge-graph": `<h2>ما خريطة المعرفة؟</h2>
 <p>عرض بصري تفاعلي يربط بين مفاهيم العلوم الشرعية (كالفقه والعقيدة والحديث والتفسير) ويُظهر علاقاتها ببعضها، ليساعد طالب العلم على فهم كيف يتصل كل علم بغيره بدل دراسته منعزلاً.</p>
 ${linkList("روابط ذات صلة", [
@@ -2434,7 +2262,7 @@ ${linkList("روابط ذات صلة", [
     [
       { name: "الأسرة والمجتمع", url: "/usra-mujtama" },
       { name: "دروس متنوعة", url: "/durus-mutanawwia" },
-      { name: "المجمع الفقهي", url: "/fiqh-council" },
+      { name: "بوابة الفقه", url: "/fiqh" },
       { name: "منهجيتنا", url: "/methodology" },
       { name: "الفوائد", url: "/fawaid" },
     ],
@@ -2470,9 +2298,9 @@ ${linkList("روابط ذات صلة", [
     [
       { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
       { name: "بوابة الفقه", url: "/fiqh" },
-      { name: "المجمع الفقهي", url: "/fiqh-council" },
+      { name: "منهج الموقع", url: "/methodology" },
       { name: "المذاهب الأربعة", url: "/madhahib" },
-      { name: "بوابة الفقه", url: "/fiqh" },
+      { name: "المصادر", url: "/sources" },
     ],
   ),
   "/dalail-nubuwwah": darsHubBody(
@@ -2590,46 +2418,12 @@ ${linkList("روابط ذات صلة", [
 // ─────────────────────────────────────────────────────────────────────────────
 // ٣) محتوى المنصّة (قرارات، فتاوى، أحكام، دورات، كتب، جلسات)
 // ─────────────────────────────────────────────────────────────────────────────
-for (const row of /* removed */ []) {
-  const kind = fiqhItemKind(row);
-  const desc = clamp(
-    padDesc(row.summary || row.ruling_text || row.title, `${kind} من ${row.source_name || "مجمع الفقه الإسلامي الدولي"}`),
-    META_DESC_MAX,
-  );
-  addPage(
-    {
-      path: `/fiqh-council/${row.slug || row.id}`,
-      title: row.title,
-      description: desc,
-      ogType: "article",
-      robots: "index, follow",
-      keywords: [row.title, kind, row.category, row.council_name || row.source_name, "المجمع الفقهي"].filter(Boolean),
-    },
-    {
-      parents: [{ name: "المجمع الفقهي الإسلامي", path: "/fiqh-council" }],
-      priority: 0.7,
-      richBody: fiqhItemRichBody(row),
-    },
-  );
-}
+// توليد صفحات /fiqh-council/* أُلغي مع المنتج — لا حلقات قرارات/مسائل.
 
 // ملاحظة: قسم "/fatwa" المستقل أُلغي بالكامل من التطبيق (راجع commit 3a995462)؛
 // المسارات /fatwa و/fatwa/:id و/rulings تُحوَّل إلى /fiqh.
 // لا تُولَّد صفحات ثابتة لهذا المسار كي لا تبقى صفحات SEO يتيمة تُفهرَس ثم تُحيل فوراً.
-// الفتاوى المؤسسية الموثقة بقيت عمداً تحت /fiqh-council/fatwas ولها توليد منفصل أعلاه.
-
-for (const row of /* removed fiqh-council sessions */ []) {
-  addPage(
-    {
-      path: `/fiqh-council/sessions/${row.slug}`,
-      title: row.title,
-      description: padDesc(row.title, "جلسة فقهية في المجمع الفقهي الإسلامي الدولي"),
-      ogType: "article",
-      robots: "index, follow",
-    },
-    { parents: [{ name: "المجمع الفقهي الإسلامي", path: "/fiqh-council" }], priority: 0.69 },
-  );
-}
+// قسم المجمع الفقهي أُلغي بالكامل — لا توليد SEO لـ /fiqh-council/*.
 
 // موسوعة الأحكام مؤرشفة — لا تُولَّد صفحات /rulings/:id في sitemap.
 
@@ -2881,77 +2675,7 @@ ${t.repentanceConditions?.general?.length ? `<h2>شروط التوبة</h2>\n<ul
   );
 }
 
-// مسائل المجمع الفقهي — من fiqh-issues-seed.ts (المنشورة العامة فقط)
-for (const issue of /* removed */ []) {
-  addPage(
-    {
-      path: `/fiqh-council/issues/${issue.slug}`,
-      title: `${issue.title} — المسائل الفقهية`,
-      description: clamp(padDesc(issue.summary || issue.title, "مسألة فقهية معاصرة في المجمع الفقهي الإسلامي"), META_DESC_MAX),
-      keywords: [issue.title, issue.category, "المسائل الفقهية", "المجمع الفقهي", "فقه النوازل"].filter(Boolean),
-      ogType: "article",
-    },
-    {
-      parents: [
-        { name: "المجمع الفقهي الإسلامي", path: "/fiqh-council" },
-        { name: "المسائل الفقهية — المجمع الفقهي", path: "/fiqh-council/issues" },
-      ],
-      richBody: `<h2>ملخّص المسألة</h2>
-<p>${escapeHtml(issue.summary || issue.title)}</p>
-${issue.ruling_summary ? `<h2>الخلاصة</h2>\n<p>${escapeHtml(issue.ruling_summary)}</p>` : ""}
-${issue.evidence_summary ? `<h2>المستند</h2>\n<p>${escapeHtml(issue.evidence_summary)}</p>` : ""}
-${issue.category ? `<p>التصنيف: ${escapeHtml(issue.category)}</p>` : ""}`,
-      priority: 0.69,
-      changefreq: "monthly",
-    },
-  );
-}
-
-// مسائل غير مؤهّلة للفهرسة العامة — قشرة noindex بعنوان/وصف/H1 صحيحين (لا قشرة الرئيسية)
-for (const issue of /* removed */ []) {
-  const levelLabel =
-    issue.documentation_level === "general_reasoning"
-      ? "استدلال عام — بلا مصدر رسمي مسمّى"
-      : issue.documentation_level === "imported_needs_review"
-        ? "مستورد — يحتاج توثيقًا إضافيًا"
-        : "غير معتمدة للعرض العام بعد";
-  addPage(
-    {
-      path: `/fiqh-council/issues/${issue.slug}`,
-      title: issue.title,
-      description: clamp(
-        padDesc(
-          `${issue.title}: هذه المسألة غير معتمدة للفهرسة العامة بعد؛ ${levelLabel}. راجع المسائل الموثّقة في المجمع الفقهي.`,
-          "مسألة فقهية غير معتمدة للعرض العام في سُنّة",
-        ),
-        META_DESC_MAX,
-      ),
-      keywords: [issue.title, "المجمع الفقهي", "غير معتمدة"].filter(Boolean),
-      ogType: "article",
-      robots: "noindex, nofollow",
-      sitemap: false,
-    },
-    {
-      parents: [
-        { name: "المجمع الفقهي الإسلامي", path: "/fiqh-council" },
-        { name: "المسائل الفقهية — المجمع الفقهي", path: "/fiqh-council/issues" },
-      ],
-      richBody: `<h2>تنبيه منهجي</h2>
-<p>هذه الصفحة محفوظة لمسألة «${escapeHtml(issue.title)}» وهي <strong>غير معتمدة للعرض العام</strong> حتى تُستكمل المراجعة والتوثيق من مصدر رسمي.</p>
-<p>التصنيف الحالي: ${escapeHtml(levelLabel)}. لا تُعامل الملخّصات أدناه — إن وُجدت — كتزكية مطلقة أو فتوى نهائية.</p>
-${issue.summary ? `<h2>ملخّص أولي (غير معتمد)</h2>\n<p>${escapeHtml(issue.summary)}</p>` : ""}
-${linkList("بدائل موثّقة", [
-  { name: "المسائل الفقهية المعتمدة", url: "/fiqh-council/issues" },
-  { name: "المجمع الفقهي", url: "/fiqh-council" },
-  { name: "منهجيتنا في التوثيق", url: "/methodology" },
-  { name: "بوابة الفقه", url: "/fiqh" },
-])}`,
-      sitemap: false,
-      priority: 0.2,
-      changefreq: "monthly",
-    },
-  );
-}
+// مسائل /fiqh-council/issues أُلغيت مع المنتج — لا قشور SEO.
 
 
 // المواضيع — محوّلة إلى /sections؛ تبقى قشرة noindex بلا sitemap حتى لا تُفهرَس كيتيمة
@@ -3109,12 +2833,6 @@ Sitemap: ${SITE_URL}/sitemap.xml
 // حين تُضاف تواريخ حقيقية للسجلات يُشتق pubDate منها لكل عنصر.
 const FEED_DATE = new Date("2026-07-25T00:00:00Z").toUTCString();
 const rssItems = [
-  ...(PUBLIC_FIQH_ITEMS || []).slice(0, 6).map((row) => ({
-    title: `[${fiqhItemKind(row)} — مجمع فقهي] ${row.title}`,
-    link: absoluteUrl(`/fiqh-council/${row.slug || row.id}`),
-    description: `مادة من مجمع فقهي (${fiqhItemKind(row)}): ${row.title} — ${row.category || "المجمع الفقهي الإسلامي"}`,
-    category: "مواد المجامع الفقهية",
-  })),
   ...PUBLIC_ANNUAL_COURSES.slice(0, 3).map((row) => ({
     title: `[دورة علمية] ${row.title || row.name || "دورة شرعية"}`,
     link: absoluteUrl(`/annual-courses/${row.id}`),
@@ -3128,7 +2846,7 @@ const feed = `<?xml version="1.0" encoding="UTF-8"?>
   <channel>
     <title>${escapeXml(SITE_NAME)}</title>
     <link>${escapeXml(SITE_URL)}</link>
-    <description>آخر المستجدات العلمية — قرارات وفتاوى وأحكام ودورات</description>
+    <description>آخر المستجدات العلمية — دورات ودروس ومسارات شرعية</description>
     <language>ar</language>
     <lastBuildDate>${FEED_DATE}</lastBuildDate>
     <managingEditor>${escapeXml(SITE.contactEmail)} (${escapeXml(SITE_NAME)})</managingEditor>
@@ -3164,7 +2882,7 @@ console.log(
     `✓ ${SITE_URL}`,
     `  صفحات مُصيَّرة: ${pages.length}  (منها في sitemap: ${sitemapPages.length})`,
     `  تاريخ إسلامي: ${ISLAMIC_HISTORY_ITEMS.length} · أنبياء: ${PROPHETS.length} · قصص سور: ${SURAH_STORIES.length} · ذنوب وحقوق: ${SINS_TOPICS.length}`,
-    `  مسائل فقهية: ${PUBLIC_FIQH_ISSUES.length} · مواضيع: ${TOPICS.length} · مؤذنون: ${MUEZZINS.length}`,
+    `  مواضيع: ${TOPICS.length} · مؤذنون: ${MUEZZINS.length}`,
     `  دروس: ${lessonRows.length} · فهرس المراجع الداخلي (غير مفهرس علنًا): ${LIBRARY_CATALOG.length}`,
   ].join("\n"),
 );
