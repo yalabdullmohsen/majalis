@@ -1,72 +1,40 @@
-# CONTENT_INVENTORY — سُنّة (جولة 3)
+# CONTENT_INVENTORY — سُنّة (جولة 4)
 
 تاريخ الجرد: 2026-09-16  
-الفرع: `cursor/content-quality-completeness-r3`  
+الفرع: `cursor/content-quality-completeness-r4`  
 النطاق: `artifacts/majalis` فقط  
-الأساس: `origin/main` @ d1bfec484 (بعد #2067)
+الأساس: `origin/main` @ 968863cb8 (بعد #2070 و#2068 و#2069)
 
 ## مبدأ
 
 لا يُختَرَع محتوى شرعي. الجودة والتوثيق مقدَّمان على ملء الفراغ.  
 `IMPLEMENTATION_FROZEN` بعد اكتمال P0/P1 هذه الجولة.
 
-## خريطة الأقسام (جرد r3)
+## خريطة الأقسام (جرد r4)
 
-| القسم | Route | مصدر البيانات | عناصر فعلية | الحالة | جودة النص | العرض | المصدر الشرعي | الإجراء | أولوية |
-|---|---|---|---|---|---|---|---|---|---|
-| الرئيسية | `/` | catalog/home | ديناميكي | مكتمل | جيد | جيد | — | صيانة | — |
-| مركز القرآن | `/quran-hub` | hub | ثابت | مكتمل | جيد | جيد | QPC | لا | — |
-| المصحف | `/mushaf` | QPC | صفحات معتمدة | مقفول | — | جيد | QPC | **لا تعديل نص** | — |
-| التلاوة/القراء | `/tilawa` إلخ | seeds | موجود | مكتمل | جيد | جيد | معتمد | لا | — |
-| التفسير | `/tafsir` | editions | موجود | مكتمل | جيد | جيد | معتمد | لا | — |
-| فهرس السور | `/surahs` | QPC meta | 114 | مكتمل | جيد | جيد | QPC | لا | — |
-| الدروس | `/lessons` | seed+Supabase | جزئي محلي | جزئي | حسّن r2 | جيد | مختلط | Empty عند غياب API | P1 |
-| تفاصيل درس | `/lessons/:id` | seed+API | مرتبط | جزئي | جيد | جيد | مرتبط | لا اختراع | P1 |
-| السلاسل/دورات | `/annual-courses` | API | عند توفر | جزئي | جيد | جيد | مرتبط | Empty | P1 |
-| العلماء | `/teachers` | seed | موجود | جزئي | جيد | جيد | تراجم بذور | لا توسيع بلا مصدر | P1 |
-| الأقسام/موضوعات | `/topics` | static | موجود | مكتمل | جيد | جيد | — | لا | — |
-| العقيدة/توحيد | `/tawhid` | knowledge | verified | مكتمل | جيد | جيد | Verified | لا | — |
-| الحديث | `/hadith/*` | public/data/hadith | كتب معتمدة | مكتمل | جيد | جيد | مصادر مثبتة | لا megaseed | — |
-| الأربعون | `/arbaeen-nawawi` | seed | 40 | مكتمل | جيد | جيد | نووي | لا | — |
-| الفرق | `/islamic-sects` | static | موجود | مكتمل | جيد | جيد | ثابت موثّق | لا | — |
-| الفوائد | `/fawaid` | seed | موجود | مكتمل | جيد | جيد | بذور | لا | — |
-| الإعجاز | `/miracles` | seed | موجود | مكتمل | جيد | جيد | بذور | لا | — |
-| التاريخ | `/tarikh-islami` | knowledge JSON | 3578 verified | مكتمل | جيد | جيد | Verified | لا | — |
-| السيرة | `/seerah` | knowledge | موجود | مكتمل | جيد | جيد | Verified | لا | — |
-| قصص الأنبياء | `/prophets` | knowledge | موجود | مكتمل | جيد | جيد | Verified | لا | — |
-| الأذكار | `/adhkar` | seed | موجود | مكتمل | جيد | جيد | معتمد | لا | — |
-| الصلاة/مواقيت | `/prayer` | calc | حي | مكتمل | جيد | جيد | حساب | لا | — |
-| القبلة | `/qibla` | calc | حي | مكتمل | جيد | جيد | حساب | لا | — |
-| التسبيح | `/tasbih` | UI | حي | مكتمل | جيد | جيد | — | لا | — |
-| البحث | `/search` | index+API | فهرس | مكتمل | حسّن r3 | جيد | بلا قرارات | stub `searchFiqh` | P0✓ |
-| دليل طالب العلم | `/learning/*` | paths | جزئي | جزئي | جيد | جيد | مرتبط | Empty | P1 |
-| المحتوى اليومي | home widgets | sync | عند توفر | جزئي | جيد | جيد | — | لا | P1 |
-| حساب/مفضلة/تقدم | `/account/*` | local+API | محلي | مكتمل | جيد | جيد | — | لا | — |
-| الإعدادات | `/settings` | local | — | مكتمل | جيد | جيد | — | لا | — |
-| الإشعارات | `/notifications` | API/local | — | مكتمل | جيد | جيد | — | لا | — |
-| الإدارة | `/admin/*` | CMS | — | مكتمل | جيد | جيد | مصدر مطلوب | منع council | P0✓ |
-| خطأ/فارغ | مضمّن | UI | — | مكتمل | حسّن | جيد | — | لا | P2 |
-| SEO/Sitemap | generate-seo + builder | حي+ثابت | — | منظّف r3 | — | — | — | بلا council | P0✓ |
-| المؤسسات | `/institutions` | catalog | مصفّى | منظّف | جيد | جيد | catalog | حذف mecca | P0✓ |
-| المشاهد | `/islamic-landmarks` | landmarks-data | 34 | حسّن r3 | حسّن | جيد | ثابت | إزالة جملة وهمية | P0✓ |
-| الفقه العام | `/fiqh` | hub | مواضيع | مكتمل | جيد | جيد | عام | ليس مجمعًا | — |
-| ~~المجمع الفقهي~~ | `/fiqh-council*` | — | 0 | Redirect→`/fiqh` | — | — | محذوف | يبقى redirect | P0✓ |
-| ~~قرارات فقهية~~ | API/search | — | 0 حي | محظور | — | — | Unsupported | stub | P0✓ |
+| القسم | Route | مصدر | قبل r4 | بعد r4 | إجراء |
+|---|---|---|---|---|---|
+| العلماء/معلمون | `/teachers` | seed | **404 إنتاج** | SPA rewrite → index | P0✓ |
+| شيوخ قديم | `/sheikhs` | redirect | → `/lessons` | → `/teachers` | P0✓ |
+| دليل الصلاة | `/salah-guide` | SalahGuideView | نصوص مقطوعة | مكتملة من نفس الملف | P0✓ |
+| الأخلاق | `/akhlaq` | AkhlaqPage | ملخصات مقطوعة | مكتملة | P0✓ |
+| دورات | seeds | annual-courses | رحبية مقطوعة | مكتملة من body | P0✓ |
+| أصول الفقه | usul topics | fiqh-usul-topics | «هيكل…» | ملخصات مرتبطة بمتون مذكورة | P1✓ |
+| الرئيسية | `/` | catalog | «٨٠ سنة» | «٨٠ سُنّة» | P1✓ |
+| المساعد | `/assistant` | AssistantGate | صياغة ضعيفة | أوضح | P1✓ |
+| تراجم مشايخ | sheikhs-seed | seed | بقايا «والتربوي» | منظّفة | P1✓ |
+| Open Platform | API | config | مورد قرارات | محذوف | P1✓ |
+| إشعارات تعلم | notifications | | «قرار فقهي» | محذوف | P1✓ |
+| نشر معرفة | knowledge-engine | | ينشر council | متوقف | P1✓ |
+| البحث الموحّد | scholarly | | خريطة fiqh_decisions | محظور | P1✓ |
+| فقه عام / مجمع | `/fiqh` / redirect | | منظّف r3 | يبقى | — |
+| القرآن/مصحف | QPC | | مقفول | مقفول | لا تعديل |
+| بقية الأقسام | انظر r3 | | مكتمل/جزئي موثّق | كما r3 | فجوات في GAPS |
 
-## ما أُصلح في r3 (كود حي)
+## Routes عامة (عيّنة من 364 نمطًا في AppRoutes)
 
-- `searchFiqh` → `[]` (لا `fiqh_council_items` / `fiqh_decision`)
-- إيقاف `runFiqhCouncilSync` واستبدالها بـ no-op معلَّم
-- حذف `fiqh-council-mecca` من catalog + فلتر مؤسسات عامة
-- تفريغ `fiqh_decisions` في snapshot
-- إزالة استعلامات `fiqh_council_*` من sitemap/RSS
-- stub محرك البحث الفقهي عن جداول council
-- وسم SEO «الفقه» بدل «المجمع الفقهي»
-- تنظيف وصف معلَمَين من جملة «ويُعرض تعريفًا خاصًا…»
-- microcopy بحث/مسابقات/مساعد بحث
-- migration مالك: `supabase/fiqh_council_product_purge_v1.sql`
+الرئيسية، قرآن، مصحف، تفسير، دروس، معلمون، بحث، حديث، أذكار، صلاة، قبلة، فوائد، إعجاز، تاريخ، سيرة، أنبياء، فرق، إدارة، خطأ، SEO…
 
 ## بوابات
 
-- `test:fiqh-council-completeness` (موسّع r3)
-- `test:content-gates` · `test:religious-content`
+- `test:fiqh-council-completeness` (موسّع r4: vercel teachers + open-platform + notifications)

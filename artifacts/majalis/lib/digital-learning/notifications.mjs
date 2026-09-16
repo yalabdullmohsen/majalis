@@ -9,7 +9,6 @@ const NOTIFICATION_TEMPLATES = {
   new_lesson: { title: "درس جديد", type: "lesson" },
   new_book: { title: "كتاب جديد", type: "info" },
   new_fatwa: { title: "فتوى جديدة", type: "qa" },
-  new_fiqh_decision: { title: "قرار فقهي", type: "alert" },
   daily_hadith: { title: "حديث اليوم", type: "info" },
   daily_ayah: { title: "آية اليوم", type: "info" },
   daily_dhikr: { title: "ذكر اليوم", type: "info" },

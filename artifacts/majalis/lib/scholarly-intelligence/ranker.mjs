@@ -9,8 +9,6 @@ const KIND_BOOST = {
   hadith: 7,
   fatwa: 6,
   fatwas: 6,
-  fiqh_decision: 6,
-  fiqh_council: 6,
   lesson: 5,
   lessons: 5,
   knowledge: 5,

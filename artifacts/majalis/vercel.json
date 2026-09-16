@@ -16,7 +16,9 @@
       "/dashboard",
       "/dashboard/:path*",
       "/scholars",
-      "/scholars/:path*"
+      "/scholars/:path*",
+      "/teachers",
+      "/teachers/:path*"
     ]
   },
   "git": {
@@ -685,6 +687,14 @@
     },
     {
       "source": "/scholars/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/teachers",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/teachers/:path*",
       "destination": "/index.html"
     },
     {

@@ -319,8 +319,8 @@ export default function AppRoutes() {
       <Route path="/kuwait-lessons"><SafeLazyRoute component={KuwaitLessonsPage} /></Route>
       <Route path="/announcements"><Redirect to="/lessons" /></Route>
       <Route path="/courses"><Redirect to="/lessons" /></Route>
-      <Route path="/sheikhs/:id"><Redirect to="/lessons" /></Route>
-      <Route path="/sheikhs"><Redirect to="/lessons" /></Route>
+      <Route path="/sheikhs/:id"><Redirect to="/teachers" /></Route>
+      <Route path="/sheikhs"><Redirect to="/teachers" /></Route>
       {/* المكتبة العلمية أُزيلت من الواجهة العامة — الروابط القديمة → البحث */}
       <Route path="/library/:id"><Redirect to="/search" /></Route>
       <Route path="/library"><Redirect to="/search" /></Route>

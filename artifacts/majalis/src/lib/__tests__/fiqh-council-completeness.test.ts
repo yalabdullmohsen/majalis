@@ -144,4 +144,30 @@ for (const rel of [
   assert.doesNotMatch(landmarks, /ويُعرض تعريفًا خاصًا/);
 }
 
+/* r4: لا مورد/تنبيه/نشر حي لقرارات المجمع + مسار المعلمين SPA */
+{
+  const openCfg = read("lib/open-platform/config.mjs");
+  assert.doesNotMatch(openCfg, /fiqh_decision:\s*\{/);
+  assert.doesNotMatch(openCfg, /fiqh_decision\.published/);
+  assert.doesNotMatch(openCfg, /قرارات المجامع الفقهية/);
+}
+{
+  const notif = read("lib/digital-learning/notifications.mjs");
+  assert.doesNotMatch(notif, /new_fiqh_decision|قرار فقهي/);
+}
+{
+  const pub = read("lib/knowledge-engine/publisher.mjs");
+  assert.doesNotMatch(pub, /fiqh_decision:\s*["']fiqh_council_items["']/);
+}
+{
+  const vercel = read("vercel.json");
+  assert.match(vercel, /"\/teachers"/);
+  assert.match(vercel, /"\/teachers\/:path\*"/);
+  assert.match(vercel, /"destination":\s*"\/index\.html"/);
+}
+{
+  const routes = read("src/AppRoutes.tsx");
+  assert.match(routes, /path="\/sheikhs"[^>]*>[\s\S]{0,80}Redirect to="\/teachers"/);
+}
+
 console.log("fiqh-council-completeness (removal gate): OK");

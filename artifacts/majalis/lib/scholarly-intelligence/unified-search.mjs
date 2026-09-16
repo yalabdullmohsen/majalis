@@ -31,23 +31,26 @@ const CONTENT_TYPE_MAP = {
   course: "course",
   updates: "update",
   update: "update",
-  fiqh_decisions: "fiqh_decision",
   sheikhs: "sheikh",
   quran: "quran",
   hadith: "hadith",
 };
+
+const BANNED_SEARCH_KINDS = new Set(["fiqh_decision", "fiqh_council", "fiqh_decisions"]);
 
 function flattenPlatformResults(data, perKindLimit = 15) {
   if (!data) return [];
   const results = [];
 
   if (Array.isArray(data)) {
-    return data.map((item) => enrichResult(item));
+    return data.map((item) => enrichResult(item)).filter((r) => !BANNED_SEARCH_KINDS.has(r.kind) && !BANNED_SEARCH_KINDS.has(r.content_kind));
   }
 
   for (const [kind, items] of Object.entries(data)) {
     if (!Array.isArray(items)) continue;
+    if (BANNED_SEARCH_KINDS.has(kind) || BANNED_SEARCH_KINDS.has(CONTENT_TYPE_MAP[kind])) continue;
     const mappedKind = CONTENT_TYPE_MAP[kind] || kind;
+    if (BANNED_SEARCH_KINDS.has(mappedKind)) continue;
     for (const item of items.slice(0, perKindLimit)) {
       results.push(
         enrichResult({

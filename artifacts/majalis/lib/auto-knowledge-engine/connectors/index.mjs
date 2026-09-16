@@ -32,7 +32,8 @@ export class RssConnector extends BaseConnector {
   detectKind(title, body) {
     const text = `${title} ${body}`;
     if (text.includes("فتوى") || text.includes("سؤال")) return "fatwa";
-    if (text.includes("قرار") || text.includes("توصية")) return "fiqh_decision";
+    /* قرار/توصية لا تُصنَّف كمنتج قرارات مجمع — تُعامل مقالة/خبرًا عامًا */
+    if (text.includes("قرار") || text.includes("توصية")) return "article";
     if (text.includes("درس") || text.includes("محاضرة")) return "lesson";
     if (text.includes("فائدة")) return "fawaid";
     if (text.includes("إعجاز")) return "miracle";
@@ -71,7 +72,9 @@ export class ManifestConnector extends BaseConnector {
       raw_title: entry.title || entry.name,
       raw_body: entry.summary || entry.body || entry.description || "",
       raw_payload: entry,
-      content_kind: entry.kind || entry.type || "fiqh_decision",
+      content_kind: entry.kind === "fiqh_decision" || entry.type === "fiqh_decision" || entry.type === "resolution"
+        ? "article"
+        : (entry.kind || entry.type || "article"),
       published_at: entry.date || entry.published_at || null,
     }));
   }

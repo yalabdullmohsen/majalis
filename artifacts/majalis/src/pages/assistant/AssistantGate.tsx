@@ -22,8 +22,8 @@ export default function AssistantGate() {
         {/* بوابة التباين تثبّت .assistant-title / .assistant-intro على /assistant */}
         <h1 className="assistant-soon__title assistant-title">المساعد العلمي</h1>
         <p className="assistant-soon__lede assistant-intro">
-          المساعد قيد المراجعة الداخلية لضمان دقة المصادر الشرعية قبل الإطلاق العام.
-          يمكنك الآن استخدام البحث الموثّق والأقسام العلمية.
+          البحث الموثّق متاح الآن؛ المساعد التحاوري يُفعَّل بعد اكتمال مراجعة المصادر الشرعية.
+          يمكنك استخدام البحث الموثّق والأقسام العلمية.
         </p>
       </header>
 

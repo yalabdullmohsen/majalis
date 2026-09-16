@@ -24,7 +24,7 @@ export const OPEN_RESOURCES = {
   lecture: { table: "lessons", kind: "lecture", label: "المحاضرات", label_en: "Lectures", titleField: "title", filter: { activity_type: "محاضرة" } },
   course: { table: "lessons", kind: "course", label: "الدورات", label_en: "Courses", titleField: "title", filter: { is_course: true } },
   fatwa: { table: "fatwas", kind: "fatwa", label: "الفتاوى", label_en: "Fatwas", titleField: "question", bodyField: "answer" },
-  fiqh_decision: { table: "fiqh_council_items", kind: "fiqh_decision", label: "قرارات المجامع الفقهية", label_en: "Fiqh Council Decisions", titleField: "title", bodyField: "content" },
+  /* fiqh_decision أُزيل كمنتج — لا مورد Open Platform */
   article: { table: "library_items", kind: "article", label: "المقالات", label_en: "Articles", filter: { category: "article" }, titleField: "title" },
   miracle: { table: "scientific_miracles", kind: "miracle", label: "الإعجاز العلمي", label_en: "Scientific Miracles", titleField: "title", bodyField: "body" },
   occasion: { table: "islamic_occasions_cache", kind: "occasion", label: "المناسبات الإسلامية", label_en: "Islamic Occasions", titleField: "title" },
@@ -52,7 +52,6 @@ export const WEBHOOK_EVENTS = [
   "content.deleted",
   "course.completed",
   "fatwa.published",
-  "fiqh_decision.published",
   "lesson.published",
   "source.updated",
 ];
