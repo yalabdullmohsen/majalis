@@ -45,10 +45,12 @@ export function GlobalBackControlHost() {
   const hostRef = useRef<HTMLDivElement>(null);
   const [location] = useLocation();
   const path = normalizeNavPath(location);
-  /** الرئيسية + المصحف فقط — لا نخفي على /profile أو الإعدادات أو أقسام اللوبي */
+  /** الرئيسية + المصحف + إعدادات الأذان (هيدر داخلي) — لا زر يغطي المحتوى */
   const hideOnHome = path === "/";
   const hideOnMushaf = isImmersiveChromePath(path);
-  const hideBack = hideOnHome || hideOnMushaf;
+  const hideOnAdhanSettings =
+    path === "/adhan-settings" || path.startsWith("/adhan-settings/");
+  const hideBack = hideOnHome || hideOnMushaf || hideOnAdhanSettings;
 
   useLayoutEffect(() => {
     if (hideBack) return;

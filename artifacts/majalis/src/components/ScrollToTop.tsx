@@ -1,60 +1,33 @@
 import { useEffect, useState } from "react";
-import { ChevronUp } from "lucide-react";
-import { useReadingProgress } from "@/hooks/useReadingProgress";
+import { ArrowUp } from "lucide-react";
 
-/** زر صعود مضغوط 44×44 مع حلقة تقدّم — يظهر بعد النزول فقط. */
+/**
+ * زر صعود واضح المعنى — سهم للأعلى فقط.
+ * يظهر بعد التمرير، فوق الشريط السفلي، بلا تغطية للمحتوى الأساسي.
+ */
 export function ScrollToTop() {
   const [visible, setVisible] = useState(false);
-  const progress = useReadingProgress();
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 320);
+    const onScroll = () => setVisible(window.scrollY > 280);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   if (!visible) return null;
 
-  const SIZE = 44;
-  const STROKE = 2.25;
-  const PAD = 2.5;
-  const R = SIZE / 2 - PAD - STROKE / 2;
-  const C = 2 * Math.PI * R;
-  const offset = C - (progress / 100) * C;
-  const CX = SIZE / 2;
-
   return (
     <button
       type="button"
       className="scroll-to-top"
-      aria-label={`العودة إلى الأعلى — ${progress}%`}
+      data-scroll-to-top="1"
+      aria-label="إلى الأعلى"
+      title="إلى الأعلى"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
     >
-      {progress > 3 ? (
-        <svg className="stt-ring" viewBox={`0 0 ${SIZE} ${SIZE}`} aria-hidden="true">
-          <circle
-            cx={CX}
-            cy={CX}
-            r={R}
-            fill="none"
-            stroke="rgba(255,255,255,0.28)"
-            strokeWidth={STROKE}
-          />
-          <circle
-            cx={CX}
-            cy={CX}
-            r={R}
-            fill="none"
-            stroke="rgba(255,255,255,0.92)"
-            strokeWidth={STROKE}
-            strokeLinecap="round"
-            strokeDasharray={C}
-            strokeDashoffset={offset}
-            transform={`rotate(-90 ${CX} ${CX})`}
-          />
-        </svg>
-      ) : null}
-      <ChevronUp size={20} strokeWidth={2.4} aria-hidden="true" className="stt-icon" />
+      <ArrowUp size={22} strokeWidth={2.6} aria-hidden="true" className="stt-icon" />
+      <span className="stt-label">أعلى</span>
     </button>
   );
 }

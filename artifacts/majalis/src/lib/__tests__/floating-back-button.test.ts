@@ -16,11 +16,21 @@ assert.match(fab, /GlobalBackControlHost/);
 assert.match(fab, /FIXED_BACK_BAR_ENABLED/);
 assert.match(fab, /variant="bar"/);
 assert.match(fab, /AppBackButton/);
-assert.match(fab, /autoHideFloating=\{false\}/, "الشريط لا يُخفى على /profile والإعدادات");
+assert.match(fab, /autoHideFloating=\{false\}/, "الشريط لا يُخفى على /profile والإعدادات العامة");
 assert.match(fab, /path === "\/"|hideOnHome/, "إخفاء على الرئيسية");
 assert.match(fab, /isImmersiveChromePath|hideOnMushaf/, "إخفاء على المصحف");
-assert.match(fab, /hideBack/, "إخفاء موحّد للرئيسية والمصحف");
+assert.match(fab, /adhan-settings|hideOnAdhanSettings/, "إخفاء على إعدادات الأذان — هيدر داخلي");
+assert.match(fab, /hideBack/, "إخفاء موحّد");
 assert.doesNotMatch(fab, /ChevronUp/);
+
+const calm = read("src/styles/sections-calm-polish.css");
+assert.match(calm, /\.ads-toolbar[\s\S]{0,80}?app-back-btn--inline/, "رجوع هيدر إعدادات الأذان ظاهر");
+assert.match(calm, /\.scroll-to-top[\s\S]{0,200}?stt-label|\.stt-label/, "زر الصعود يحمل تسمية واضحة");
+
+const scroll = read("src/components/ScrollToTop.tsx");
+assert.match(scroll, /ArrowUp|إلى الأعلى/);
+assert.match(scroll, /scrollY\s*>\s*\d+/);
+assert.doesNotMatch(scroll, /useReadingProgress|stt-ring/);
 
 const backCss = read("src/styles/knowledge-experience.css");
 assert.match(backCss, /\.app-back-btn--bar\.fixed-back-bar/, "شريط ثابت");

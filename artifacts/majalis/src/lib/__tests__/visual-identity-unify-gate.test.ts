@@ -66,7 +66,7 @@ assert.match(unify, /\.notif-card/);
 assert.match(unify, /\.an-card/);
 assert.match(unify, /\.hlr__card/);
 assert.match(calm, /--section-stack-gap/);
-assert.match(calm, /\.scroll-to-top[\s\S]*?border-radius:\s*var\(--radius-pill/);
+assert.match(calm, /\.scroll-to-top[\s\S]*?border-radius:\s*var\(--radius-(?:pill|button)/);
 assert.match(calm, /\.ss-action-btn--sm/);
 
 const notif = read("src/styles/pages/notifications.css");
