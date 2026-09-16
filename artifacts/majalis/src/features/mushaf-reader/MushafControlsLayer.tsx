@@ -125,6 +125,9 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
           }}
           onPointerDown={(e) => e.stopPropagation()}
         >
+          <span className="nm-controls__exit-icon" aria-hidden="true">
+            ×
+          </span>
           <span className="sr-only">خروج</span>
         </button>
         {onToggleFocusReadingMode ? (
