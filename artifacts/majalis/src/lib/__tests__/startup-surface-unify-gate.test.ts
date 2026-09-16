@@ -48,7 +48,7 @@ assert.doesNotMatch(
   "narrow-detail-card",
 );
 assert.doesNotMatch(sectsCss, /word-break:\s*break-all/);
-assert.match(sectsPage, /sect-card__list/);
+assert.match(sectsPage, /sect-list/);
 assert.match(sectsPage, /عرض التفاصيل|إغلاق التفاصيل/);
 assert.match(sectsPage, /needs_specialist_review/);
 assert.doesNotMatch(sectsPage, /keyScholars\.join\([`'"]،[`'"]\)/);
