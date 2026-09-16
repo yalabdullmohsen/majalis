@@ -1,9 +1,12 @@
 /**
  * صقل Chrome أدوات القراءة فقط — خارج mushaf-reader.css
  * حتى لا يُفعَّل قفل سياسة خط/مقياس المصحف على أي تعديل CSS باسم mushaf*.
+ *
+ * هدف التجربة: Kindle / Apple Books / Quran.com
+ * — خروج دائم · أسهم سفلية · ظهور/اختفاء سلس بلا قفز Geometry
  */
 
-/* زر الخروج العائم — مُعطَّل (الخروج داخل Compact Toolbar فقط) */
+/* زر الخروج العائم القديم — مُعطَّل (الخروج عبر Compact Toolbar فقط) */
 .nm-exit-control,
 .nm-exit-control[data-visible="1"] {
   display: none !important;
@@ -14,6 +17,177 @@
 
 /* busy: إبقاء الأسهم ظاهرة مع منع التفاعل أثناء التسوية */
 .nm-page-arrows[data-visible="1"][data-busy="1"] .nm-page-arrow:not(:disabled) {
-  opacity: 0.5;
+  opacity: 0.45;
   pointer-events: none;
+}
+
+/* ─── PHASE 1: خروج دائم — أعلى اليسار الفيزيائي · دائري · شبه شفاف ─── */
+.nm-controls--compact .nm-controls__exit {
+  /* يلغي display:none القديم في mushaf-reader.css */
+  display: inline-flex !important;
+  position: absolute;
+  z-index: 45;
+  /* top-left فيزيائيًا (لا يعتمد على اتجاه flex RTL) */
+  left: max(0.5rem, env(safe-area-inset-left, 0px), var(--inset-left, 0px));
+  top: max(0.4rem, env(safe-area-inset-top, 0px), var(--inset-top, 0px));
+  width: 2.5rem;
+  height: 2.5rem;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 28%, transparent);
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 62%, transparent);
+  color: color-mix(in srgb, var(--nm-meta, #5c4a32) 88%, var(--nm-gold, #b08d57));
+  box-shadow: none;
+  font-size: 0;
+  line-height: 0;
+  letter-spacing: 0;
+  opacity: 0.88;
+  visibility: visible;
+  pointer-events: auto !important;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+.nm-controls--compact .nm-controls__exit::before {
+  content: "‹";
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.nm-controls--compact .nm-controls__exit:active {
+  opacity: 1;
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 82%, var(--nm-gold, #b08d57) 10%);
+}
+
+/* الشريط يبهت مع القراءة — الخروج يبقى ظاهرًا دائمًا */
+.nm-root[data-chrome="0"] .nm-controls--compact .nm-controls__bar {
+  opacity: 1 !important;
+  transform: none !important;
+  background: transparent !important;
+  border-bottom-color: transparent !important;
+  pointer-events: none !important;
+}
+
+.nm-root[data-chrome="0"] .nm-controls--compact .nm-controls__bar > *:not(.nm-controls__exit) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: opacity 180ms ease, visibility 180ms ease;
+}
+
+.nm-root[data-chrome="0"] .nm-controls--compact .nm-controls__exit,
+.nm-root[data-chrome="1"] .nm-controls--compact .nm-controls__exit {
+  opacity: 0.88 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.nm-root[data-chrome="1"] .nm-controls--compact .nm-controls__bar {
+  /* مساحة للزر الدائري على اليسار الفيزيائي دون تغطية أزرار الشريط */
+  padding-left: calc(2.5rem + 0.75rem + max(0.5rem, env(safe-area-inset-left, 0px), var(--inset-left, 0px)));
+  transition: opacity 180ms ease, transform 180ms ease, background-color 180ms ease;
+}
+
+/* يغلب إخفاء .nm-controls بالكامل من mushaf-reader.css في وضع التركيز */
+.nm-root[data-focus-reading="1"][data-chrome="0"] .nm-controls.nm-controls--compact {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: none !important;
+}
+
+.nm-root[data-focus-reading="1"][data-chrome="0"] .nm-controls--compact .nm-controls__bar > *:not(.nm-controls__exit),
+.nm-root[data-focus-reading="1"][data-chrome="0"] .nm-page-arrows,
+.nm-root[data-focus-reading="1"][data-chrome="0"] .mm-audio-dock {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.nm-root[data-focus-reading="1"][data-chrome="0"] .nm-controls--compact .nm-controls__exit {
+  opacity: 0.88 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.nm-root[data-focus-reading="1"][data-chrome="0"] .nm-exit-control {
+  display: none !important;
+}
+
+/* ─── PHASE 2: أسهم سفلية هادئة (يمين=تالية · يسار=سابقة في RTL) ─── */
+.nm-page-arrow {
+  top: auto !important;
+  bottom: max(
+    0.85rem,
+    env(safe-area-inset-bottom, 0px),
+    var(--inset-bottom, 0px),
+    var(--safe-bottom, 0px)
+  ) !important;
+  transform: none !important;
+  width: 2.85rem;
+  height: 2.85rem;
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 48%, transparent);
+  border: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 22%, transparent);
+  box-shadow: none;
+  opacity: 0.5;
+  transition: opacity 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+.nm-page-arrows {
+  transition: opacity 180ms ease, visibility 180ms ease;
+}
+
+.nm-page-arrows[data-visible="1"] .nm-page-arrow:not(:disabled) {
+  opacity: 0.7;
+}
+
+.nm-page-arrow:not(:disabled):active,
+.nm-page-arrows[data-visible="1"] .nm-page-arrow:not(:disabled):hover {
+  opacity: 0.92;
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 72%, var(--nm-gold, #b08d57) 10%);
+}
+
+.nm-page-arrow__hit {
+  inset: -0.55rem;
+}
+
+.nm-page-arrow__icon {
+  font-size: 1.4rem;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+/* أثناء السحب: لا تتداخل الأسهم مع الإيماءة */
+.nm-root[data-mushaf-panning="1"] .nm-controls--compact .nm-controls__exit {
+  pointer-events: none !important;
+  opacity: 0.35;
+}
+
+html.dark .nm-controls--compact .nm-controls__exit,
+html[data-theme="dark"] .nm-controls--compact .nm-controls__exit {
+  background: color-mix(in srgb, #1a241c 58%, transparent);
+  border-color: color-mix(in srgb, #8a6b2e 32%, transparent);
+  color: color-mix(in srgb, #e8dcc8 80%, #d4b483);
+}
+
+html.dark .nm-page-arrow,
+html[data-theme="dark"] .nm-page-arrow {
+  background: color-mix(in srgb, #2a2418 48%, transparent);
+  border-color: color-mix(in srgb, #8a6b2e 28%, transparent);
+  color: color-mix(in srgb, #d4b483 70%, #f0e6d2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nm-controls--compact .nm-controls__exit,
+  .nm-controls--compact .nm-controls__bar,
+  .nm-page-arrows,
+  .nm-page-arrow {
+    transition: none !important;
+  }
 }
