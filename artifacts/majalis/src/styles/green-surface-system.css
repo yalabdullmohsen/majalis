@@ -47,28 +47,28 @@
 html[data-theme="dark"],
 html.dark,
 :root[data-theme="dark"] {
-  /* Dark Green System — سطح مرتفع عن الخلفية، لا أسود على أسود */
-  --surface-feature: color-mix(in srgb, #5fbf98 14%, #1a2622);
-  --surface-knowledge: color-mix(in srgb, #5fbf98 11%, #182420);
-  --surface-islamic: color-mix(in srgb, #5fbf98 16%, #1c2925);
-  --surface-highlighted: color-mix(in srgb, #5fbf98 20%, #1e2e29);
+  /* Dark Forest System — أسطح عميقة؛ النعناع للّمسة فقط لا للخلفية */
+  --surface-feature: color-mix(in srgb, #1a4a3a 18%, #121a17);
+  --surface-knowledge: color-mix(in srgb, #163d31 14%, #111816);
+  --surface-islamic: color-mix(in srgb, #1c5240 16%, #131c19);
+  --surface-highlighted: color-mix(in srgb, #1f5a46 20%, #15211d);
 
-  --surface-feature-border: color-mix(in srgb, #5fbf98 28%, #2f3d38);
-  --surface-knowledge-border: color-mix(in srgb, #5fbf98 24%, #2f3d38);
-  --surface-islamic-border: color-mix(in srgb, #5fbf98 32%, #2f3d38);
-  --surface-highlighted-border: color-mix(in srgb, #5fbf98 38%, #2f3d38);
+  --surface-feature-border: color-mix(in srgb, #3d5c50 22%, #24302c);
+  --surface-knowledge-border: color-mix(in srgb, #3d5c50 18%, #24302c);
+  --surface-islamic-border: color-mix(in srgb, #3d5c50 24%, #24302c);
+  --surface-highlighted-border: color-mix(in srgb, #4a6d5e 28%, #24302c);
 
-  --surface-feature-accent: #6fd0a8;
+  --surface-feature-accent: #5fbf98;
   --surface-knowledge-accent: #5fbf98;
-  --surface-islamic-accent: #7ad4b0;
-  --surface-highlighted-accent: #8adbba;
+  --surface-islamic-accent: #6fd0a8;
+  --surface-highlighted-accent: #6fd0a8;
 
   --surface-feature-ink: #f3f7f5;
-  --surface-feature-ink-muted: #b7c4be;
+  --surface-feature-ink-muted: #c5d0cb;
 
   --surface-feature-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 10px 24px -14px rgba(0, 0, 0, 0.55);
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 6px 18px -16px rgba(0, 0, 0, 0.5);
 
   --mss-section-hero-bg: var(--surface-islamic);
   --soft-card-on-light-bg: var(--surface-feature);
