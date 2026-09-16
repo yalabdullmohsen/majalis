@@ -58,10 +58,10 @@ function buildChoices(q: QuizQuestion, pool: QuizQuestion[], seed: number): stri
   return seededShuffle([q.a, ...picked], seed + 11);
 }
 
-function sourceLabel(q: QuizQuestion): string {
+function sourceLabel(q: QuizQuestion): string | null {
   const src = (q as QuizQuestion & { source?: string }).source?.trim();
   if (src) return src;
-  return "مصدر مختصر غير مُرفق بعد";
+  return null;
 }
 
 const SCORE_KEY = "majalis-daily-challenge-score-v1";
@@ -254,7 +254,10 @@ export function DailyChallengeQuiz() {
                 {correct ? "إجابة صحيحة" : "إجابة غير صحيحة"}
               </p>
               <p className="dcq__explain">{explainFor(question, correct)}</p>
-              <p className="dcq__source">{sourceLabel(question)}</p>
+              {(() => {
+                const src = sourceLabel(question);
+                return src ? <p className="dcq__source">{src}</p> : null;
+              })()}
               <p className="dcq__done-note">سؤال اليوم اكتمل — عُد غدًا لسؤال جديد.</p>
             </div>
           )}

@@ -122,7 +122,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     items: [
       { href: "/my-learning",     Icon: Layers,      title: seoNavLabel("/my-learning", "لوحتي التعليمية"),   desc: "متابعة تقدمك في الدروس والبطاقات للمراجعة السريعة" },
       { href: "/quiz",            Icon: Target,      title: seoNavLabel("/quiz", "لعبة سين جيم"),   desc: "أسئلة شرعية ومعرفية متدرجة للمراجعة والاختبار" },
-      { href: "/assistant",       Icon: Bot,         title: seoNavLabel("/assistant", "المساعد العلمي"),    desc: "البحث الموثّق متاح الآن؛ المساعد التحاوري يُفعَّل بعد اكتمال مراجعة المصادر" },
+      { href: "/assistant",       Icon: Bot,         title: seoNavLabel("/assistant", "المساعد العلمي"),    desc: "البحث الموثّق متاح الآن من هذه البطاقة؛ المساعد التحاوري يُفتح عند تفعيل الميزة" },
       { href: "/occasions", Icon: CalendarDays, title: seoNavLabel("/occasions", "المناسبات الإسلامية"), desc: "التواريخ الهجرية والمناسبات الشرعية مع التذكير" },
       { href: "/islamic-directory", Icon: Landmark, title: seoNavLabel("/islamic-directory", "دليل المؤسسات والمساجد"), desc: "مؤسسات ومساجد ومعالم مرتّبة للبحث المحلي" },
       { href: "/universities", Icon: GraduationCap, title: seoNavLabel("/universities", "دليل الجامعات الشرعية"), desc: "جامعات وكليات الدراسات الشرعية حول العالم" },

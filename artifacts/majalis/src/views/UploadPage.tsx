@@ -126,7 +126,7 @@ function LessonForm() {
 
     if (res.ok) {
       setUpload("success");
-      setMessage("تم إرسال الدرس بنجاح! سيراجعه الفريق قريباً.");
+      setMessage("تم إرسال الدرس بنجاح. سيراجعه الفريق قبل النشر.");
       setFile(null); setName(""); setEmail(""); setTitle(""); setDesc("");
       setSheikh(""); setDuration(""); setSourceUrl("");
     } else {

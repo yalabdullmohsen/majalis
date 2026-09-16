@@ -7,7 +7,7 @@ export type SiteSettings = {
 
 const DEFAULTS: SiteSettings = {
   maintenanceMode: false,
-  maintenanceMessage: "المنصة تحت الصيانة. سنعود قريبًا.",
+  maintenanceMessage: "المنصة تحت الصيانة. نعمل على استعادة الخدمة.",
 };
 
 function load(): SiteSettings {

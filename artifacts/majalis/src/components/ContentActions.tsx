@@ -111,7 +111,7 @@ export default function ContentActions({ contentType, contentId }: Props) {
     setReportType("");
     setReportDesc("");
     setSubmitting(false);
-    alert("شكراً، تم إرسال البلاغ وسيُراجع قريباً");
+    alert("شكراً، تم استلام البلاغ وسيراجعه الفريق.");
   };
 
   return (

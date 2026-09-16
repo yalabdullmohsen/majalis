@@ -10,6 +10,7 @@ import {
   formatCompetitionDate,
   getCompetitionById,
   registrationIsOpen,
+  registrationStatusLabel,
 } from "@/lib/competitions";
 import "./competitions.css";
 import { DetailScreen } from "@/components/design-system/screens";
@@ -85,7 +86,7 @@ export default function CompetitionDetailView({ params }: { params: { id: string
       <div className="cmp-card__badges">
         <span className="cmp-badge">{COMPETITION_TYPE_LABELS[item.competitionType]}</span>
         <span className={`cmp-badge ${open ? "cmp-badge--open" : "cmp-badge--closed"}`}>
-          {item.registrationStatus}
+          {registrationStatusLabel(item.registrationStatus)}
         </span>
         {item.prizeText ? <span className="cmp-badge cmp-badge--prize">جوائز</span> : null}
       </div>

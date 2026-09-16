@@ -197,7 +197,7 @@ const LABEL_MAP: Record<string, string> = {
   "/about":                         "عن المنصة",
   "/methodology":                   "منهجيتنا",
   "/sitemap":                       "خريطة الموقع",
-  "/features-in-progress":          "الميزات قيد التطوير",
+  "/features-in-progress":          "مسار غير متاح",
   "/c":                             "محتوى",
   "/islamic-landmarks":             "المشاهد الإسلامية والمساجد التاريخية",
   "/quran-memorization":            "اختبارات الحفظ القرآني",
