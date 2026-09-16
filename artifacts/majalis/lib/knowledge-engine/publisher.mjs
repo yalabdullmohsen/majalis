@@ -13,7 +13,7 @@ const TABLE_MAP = {
   qa: "qa_questions",
   news: "platform_updates",
   announcement: "platform_updates",
-  fiqh_decision: "fiqh_council_items",
+  /* fiqh_decision أُزيل — لا نشر إلى fiqh_council_items */
   fatwa: "fatwas",
   sharia_ruling: "sharia_rulings",
   annual_course: "annual_courses",

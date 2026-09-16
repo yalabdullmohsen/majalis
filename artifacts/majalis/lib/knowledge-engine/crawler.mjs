@@ -157,7 +157,8 @@ export async function crawlSource(source, existingHashes = new Set()) {
       if (!raw.source_url || !raw.title) continue;
       results.push({
         external_id: raw.external_id,
-        content_kind: raw.type === "resolution" ? "fiqh_decision" : "fiqh_decision",
+        /* منتج القرارات المجمعية أُزيل — لا تُستورد كـ fiqh_decision */
+        content_kind: "article",
         raw_title: raw.title,
         raw_body: stripHtml(raw.summary || raw.content || ""),
         raw_url: raw.source_url,

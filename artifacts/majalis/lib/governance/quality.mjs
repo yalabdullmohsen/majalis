@@ -14,7 +14,6 @@ const CONTENT_TABLES = [
   { kind: "fatwa", table: "fatwas" },
   { kind: "library", table: "library_items" },
   { kind: "qa", table: "qa_questions" },
-  { kind: "fiqh_decision", table: "fiqh_council_items" },
 ];
 
 export async function getQualityMetrics(admin, opts = {}) {
