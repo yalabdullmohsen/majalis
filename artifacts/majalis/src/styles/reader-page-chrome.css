@@ -28,8 +28,8 @@
   position: absolute;
   z-index: 45;
   /* top-left فيزيائيًا (لا يعتمد على اتجاه flex RTL) */
-  left: max(0.5rem, env(safe-area-inset-left, 0px), var(--inset-left, 0px));
-  top: max(0.4rem, env(safe-area-inset-top, 0px), var(--inset-top, 0px));
+  left: max(0.5rem, var(--inset-left, 0px));
+  top: max(0.4rem, var(--inset-top, 0px));
   width: 2.5rem;
   height: 2.5rem;
   min-width: 2.5rem;
@@ -91,7 +91,7 @@
 
 .nm-root[data-chrome="1"] .nm-controls--compact .nm-controls__bar {
   /* مساحة للزر الدائري على اليسار الفيزيائي دون تغطية أزرار الشريط */
-  padding-left: calc(2.5rem + 0.75rem + max(0.5rem, env(safe-area-inset-left, 0px), var(--inset-left, 0px)));
+  padding-left: calc(2.5rem + 0.75rem + max(0.5rem, var(--inset-left, 0px)));
   transition: opacity 180ms ease, transform 180ms ease, background-color 180ms ease;
 }
 
@@ -125,7 +125,6 @@
   top: auto !important;
   bottom: max(
     0.85rem,
-    env(safe-area-inset-bottom, 0px),
     var(--inset-bottom, 0px),
     var(--safe-bottom, 0px)
   ) !important;
