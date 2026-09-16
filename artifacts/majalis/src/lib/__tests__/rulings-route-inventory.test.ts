@@ -22,7 +22,8 @@ const reportPath = resolve(root, "../../reports/rulings-route-inventory.json");
 assert.ok(existsSync(reportPath), "تقرير الجرد موجود");
 const report = JSON.parse(readFileSync(reportPath, "utf8"));
 
-assert.ok(report.summary.total >= 147, "جرد الأحكام لا ينكمش دون قصد");
+// 119 بعد إزالة بذور المجمع الفقهي/المسائل المرتبطة (منتج محذوف) — لا إعادة رفع بلا مصدر.
+assert.ok(report.summary.total >= 119, "جرد الأحكام لا ينكمش دون قصد");
 assert.equal(report.summary.publicEligible, 0);
 assert.equal(report.summary.pending_review, report.summary.total, "كل السجلات ما زالت pending_review");
 assert.equal(report.summary.inSitemap, 0);

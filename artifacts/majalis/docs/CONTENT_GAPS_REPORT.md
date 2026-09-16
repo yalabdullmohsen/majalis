@@ -18,8 +18,9 @@
 
 1. روابط مصادر كتب المكتبة حتى توثيقها من مراجع معتمدة خارج المستودع.
 2. `content/fiqh/deferred-nawazil.json` — مراجعة داخلية فقط.
-3. موسوعة أحكام مؤرشفة (`/rulings` → `/fiqh`).
-4. إدخال المؤسسات `fiqh-council-mecca` في catalog إن بقي `needs_review`.
+3. موسوعة أحكام مؤرشفة (`/rulings` → `/fiqh`) — 119 سجلًا كلها `pending_review` (بعد إزالة بذور المجمع).
+4. إشارات نصية تاريخية إلى قرارات مجامع فقهية داخل `rulings-seed.ts` المؤرشف — ليست منتجًا حيًا ولا في البحث/sitemap؛ تبقى مؤرشفة حتى مراجعة مصدرية.
+5. إدخال المؤسسات `fiqh-council-mecca` في catalog إن بقي `needs_review`.
 
 ## Unsupported (لا تُنشر)
 
