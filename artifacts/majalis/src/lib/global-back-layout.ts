@@ -1,5 +1,6 @@
 /**
- * منسّق تخطيط زر الرجوع العام — أعلى الشاشة (لا يغطي المحتوى السفلي).
+ * منسّق تخطيط زر الرجوع العام — أسفل يمين فوق الشريط السفلي.
+ * لا يغطي أعلى الصفحة؛ يظهر بعد التمرير فقط.
  */
 export type BackAvoidanceInsets = {
   safeAreaBottom: number;
@@ -14,9 +15,10 @@ export type BackTopInsets = {
 };
 
 export const BACK_CONTROL_SIZE_PX = 44;
-export const BACK_CONTROL_GAP_PX = 8;
+export const BACK_CONTROL_GAP_PX = 12;
+/** عتبة ظهور زر الرجوع بعد التمرير (px) */
+export const BACK_FAB_SCROLL_SHOW_PX = 120;
 
-/** @deprecated الشريط أصبح علويًا — يُبقى للتوافق مع الاختبارات القديمة */
 export function computeBackControlBottomOffset(insets: BackAvoidanceInsets): number {
   const stack =
     Math.max(0, insets.safeAreaBottom) +
@@ -27,17 +29,19 @@ export function computeBackControlBottomOffset(insets: BackAvoidanceInsets): num
   return stack + BACK_CONTROL_GAP_PX;
 }
 
-/** @deprecated لا حاجة لحجز سفلي بعد نقل الشريط لأعلى */
+/** حجز سفلي للمحتوى حتى لا يغطي الزر آخر العناصر عند الظهور */
 export function computeContentBottomInsetForBack(insets: BackAvoidanceInsets): number {
   return computeBackControlBottomOffset(insets) + BACK_CONTROL_SIZE_PX + BACK_CONTROL_GAP_PX;
 }
 
+/** @deprecated الشريط أصبح سفليًا — يُبقى للتوافق */
 export function computeBackControlTopOffset(insets: BackTopInsets): number {
   return Math.max(0, insets.safeAreaTop) + BACK_CONTROL_GAP_PX;
 }
 
-export function computeContentTopInsetForBack(insets: BackTopInsets): number {
-  return computeBackControlTopOffset(insets) + BACK_CONTROL_SIZE_PX + BACK_CONTROL_GAP_PX;
+/** @deprecated لا حجز علوي بعد نقل الشريط لأسفل */
+export function computeContentTopInsetForBack(_insets: BackTopInsets): number {
+  return 0;
 }
 
 export type Rect = { left: number; top: number; right: number; bottom: number };

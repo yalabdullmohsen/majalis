@@ -274,7 +274,7 @@
   height: 2px !important;
 }
 
-/* ═══ زر الرجوع: ظل أصغر وحد أخف (موضع علوي) ═══ */
+/* ═══ زر الرجوع: ظل أصغر وحد أخف (Back FAB سفلي) ═══ */
 :is(html[data-theme="dark"], html.dark) .app-back-btn--bar.fixed-back-bar,
 :is(html[data-theme="dark"], html.dark) button.app-back-btn--bar[data-fixed-back-bar="1"],
 :is(html[data-theme="dark"], html.dark) .floating-back-btn,
