@@ -47,8 +47,8 @@ function InstitutionCard({ inst }: { inst: Institution }) {
           </span>
         </div>
         <span className="inst-card__type-badge">{TYPE_LABELS[inst.type]}</span>
-        {inst.contentStatus === "needs_review" && !(inst.website && inst.description.length >= 200) ? (
-          <span className="inst-card__review-badge" title="التعريف قيد المراجعة البشرية">قيد المراجعة</span>
+        {inst.contentStatus === "needs_review" && !inst.website ? (
+          <span className="inst-card__review-badge" title="التعريف قيد المراجعة البشرية">تعريف موجز</span>
         ) : null}
       </div>
       <p className="inst-card__desc">{inst.description}</p>

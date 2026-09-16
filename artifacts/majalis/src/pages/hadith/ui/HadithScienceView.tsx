@@ -1079,7 +1079,7 @@ export default function HadithSciencePage() {
       {filtered.length === 0 ? (
         <div className="hs-empty">
           <BookOpen size={36} aria-hidden="true" />
-          <p>لا توجد نتائج للبحث</p>
+          <p>لا توجد نتائج للبحث. جرّب كلمة أخرى أو امسح التصفية.</p>
         </div>
       ) : (
         <div className="hs-grid">

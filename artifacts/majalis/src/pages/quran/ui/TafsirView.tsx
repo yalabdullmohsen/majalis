@@ -312,7 +312,7 @@ export default function TafsirPage() {
       {filtered.length === 0 ? (
         <div className="tf-empty">
           <BookOpen size={36} aria-hidden="true" />
-          <p>لا توجد نتائج للبحث</p>
+          <p>لا توجد نتائج للبحث. جرّب كلمة أخرى أو امسح التصفية.</p>
         </div>
       ) : (
         <section className="tf-section" aria-label="مواد علم التفسير">

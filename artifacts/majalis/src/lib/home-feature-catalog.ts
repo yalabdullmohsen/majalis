@@ -102,7 +102,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     label: "العبادة والأذكار",
     items: [
       { href: "/adhkar",          Icon: Star,        title: seoNavLabel("/adhkar", "الأذكار والأدعية"),     desc: "أذكار الصباح والمساء والأدعية المأثورة" },
-      { href: "/sunan-yawmiyya",  Icon: Check,       title: seoNavLabel("/sunan-yawmiyya", "السنن النبوية"),        desc: "أكثر من ٨٠ سنة يومية مع تتبّع التطبيق للالتزام" },
+      { href: "/sunan-yawmiyya",  Icon: Check,       title: seoNavLabel("/sunan-yawmiyya", "السنن النبوية"),        desc: "أكثر من ٨٠ سُنّة يومية مع تتبّع التطبيق للالتزام" },
       { href: "/duas-quran",  Icon: BookOpen,    title: seoNavLabel("/duas-quran", "أدعية القرآن"),        desc: "أدعية قرآنية مأثورة للأنبياء والمؤمنين مع مواضعها" },
       { href: "/fawaid",       Icon: Lightbulb,   title: seoNavLabel("/fawaid", "الفوائد الشرعية"),      desc: "فوائد مختصرة من كتب أهل العلم، مرتّبة للقراءة السريعة" },
       { href: "/miracles",     Icon: Sparkles,    title: seoNavLabel("/miracles", "الإعجاز العلمي"),      desc: "إشارات كونية في الوحي معروضة بضوابط علمية حذرة" },
@@ -122,7 +122,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     items: [
       { href: "/my-learning",     Icon: Layers,      title: seoNavLabel("/my-learning", "لوحتي التعليمية"),   desc: "متابعة تقدمك في الدروس والبطاقات للمراجعة السريعة" },
       { href: "/quiz",            Icon: Target,      title: seoNavLabel("/quiz", "لعبة سين جيم"),   desc: "أسئلة شرعية ومعرفية متدرجة للمراجعة والاختبار" },
-      { href: "/assistant",       Icon: Bot,         title: seoNavLabel("/assistant", "المساعد العلمي"),    desc: "بحث موثّق الآن — المساعد قيد المراجعة الداخلية قبل الإطلاق العام" },
+      { href: "/assistant",       Icon: Bot,         title: seoNavLabel("/assistant", "المساعد العلمي"),    desc: "البحث الموثّق متاح الآن؛ المساعد التحاوري يُفعَّل بعد اكتمال مراجعة المصادر" },
       { href: "/occasions", Icon: CalendarDays, title: seoNavLabel("/occasions", "المناسبات الإسلامية"), desc: "التواريخ الهجرية والمناسبات الشرعية مع التذكير" },
       { href: "/islamic-directory", Icon: Landmark, title: seoNavLabel("/islamic-directory", "دليل المؤسسات والمساجد"), desc: "مؤسسات ومساجد ومعالم مرتّبة للبحث المحلي" },
       { href: "/universities", Icon: GraduationCap, title: seoNavLabel("/universities", "دليل الجامعات الشرعية"), desc: "جامعات وكليات الدراسات الشرعية حول العالم" },

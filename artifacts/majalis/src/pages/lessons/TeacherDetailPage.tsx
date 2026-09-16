@@ -128,7 +128,7 @@ export default function TeacherDetailPage() {
       )}
 
       {active.length === 0 && archived.length === 0 && (
-        <p className="tch-empty">لا توجد دروس مرتبطة بهذا المشيخ حاليًا.</p>
+        <p className="tch-empty">لا توجد دروس مرتبطة بهذا الشيخ حاليًا. تصفّح قسم الدروس لعرض المزيد.</p>
       )}
     </PageShell>
   );

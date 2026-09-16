@@ -436,7 +436,7 @@ export default function IslamicLandmarksPage() {
 
         <div className={`ilm-grid${listView ? " ilm-grid--list" : ""}`}>
           {filtered.length === 0 ? (
-            <p className="ilm-empty">لا توجد مواقع تطابق معايير البحث</p>
+            <p className="ilm-empty">لا توجد مواقع تطابق معايير البحث. جرّب دولة أخرى أو امسح التصفية.</p>
           ) : (
             filtered.map((lm) => (
               <LandmarkCard
