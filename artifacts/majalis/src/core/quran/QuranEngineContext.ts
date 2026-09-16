@@ -23,7 +23,7 @@ import {
 } from "./DatabaseManager";
 import { getReciter, saveReciterId } from "@/lib/quran-audio";
 import { getAudioEngine } from "@/core/audio/AudioEngine";
-import { normalizeSurahAyah } from "@/lib/quran-api";
+import { normalizeSurahAyah } from "@/lib/ayah-ref-normalize";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 

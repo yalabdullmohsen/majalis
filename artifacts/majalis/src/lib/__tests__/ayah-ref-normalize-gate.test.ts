@@ -7,7 +7,7 @@ import {
   globalAyahToSurahAyah,
   normalizeAyahKey,
   normalizeSurahAyah,
-} from "@/lib/quran-api";
+} from "@/lib/ayah-ref-normalize";
 
 console.log("=== normalizeSurahAyah clamps within surah ===");
 {

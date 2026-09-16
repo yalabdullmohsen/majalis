@@ -21,6 +21,13 @@ import {
   legacyPageToAyahKey,
   legacyPageToCurrentPage,
 } from "@/lib/quran-my-bookmarks";
+import {
+  globalAyahToSurahAyah,
+  normalizeAyahKey,
+  normalizeSurahAyah,
+} from "@/lib/ayah-ref-normalize";
+
+export { globalAyahToSurahAyah, normalizeAyahKey, normalizeSurahAyah } from "@/lib/ayah-ref-normalize";
 
 const BASE = "https://api.alquran.cloud/v1";
 const LOCAL_QURAN_DATA_BASE = "/data/quran";
@@ -480,54 +487,6 @@ export function getSurahMeta(number: number): StaticSurahMeta {
     revelationOrder: REVELATION_ORDER[idx],
     description: SURAH_DESCRIPTIONS[idx],
   };
-}
-
-const QURAN_GLOBAL_AYAH_MAX = 6236;
-
-/** رقم آية عالمي (١…٦٢٣٦) → سورة + رقم داخل السورة — لا يُعرض الرقم العالمي للمستخدم. */
-export function globalAyahToSurahAyah(global: number): { surah: number; ayah: number } {
-  let remaining = Math.floor(global);
-  if (!Number.isFinite(remaining) || remaining < 1) return { surah: 1, ayah: 1 };
-  if (remaining > QURAN_GLOBAL_AYAH_MAX) remaining = QURAN_GLOBAL_AYAH_MAX;
-  for (let s = 1; s <= 114; s++) {
-    const count = SURAH_AYAH_COUNTS[s - 1] ?? 1;
-    if (remaining <= count) return { surah: s, ayah: remaining };
-    remaining -= count;
-  }
-  return { surah: 114, ayah: SURAH_AYAH_COUNTS[113] ?? 6 };
-}
-
-/**
- * يطبيع مرجع الآية للعرض/الحفظ: numberInSurah فقط.
- * إن تجاوز العدد آيات السورة واحتمل رقمًا عالميًا — يُحوَّل ولا يُعرض كمعرّف داخلي.
- */
-export function normalizeSurahAyah(
-  surah: number,
-  ayah: number,
-): { surah: number; ayah: number } {
-  const s = Math.min(114, Math.max(1, Math.floor(surah) || 1));
-  const raw = Math.floor(ayah);
-  const max = SURAH_AYAH_COUNTS[s - 1] ?? 1;
-  if (Number.isFinite(raw) && raw >= 1 && raw <= max) {
-    return { surah: s, ayah: raw };
-  }
-  if (Number.isFinite(raw) && raw > max && raw <= QURAN_GLOBAL_AYAH_MAX) {
-    return globalAyahToSurahAyah(raw);
-  }
-  return { surah: s, ayah: Math.min(max, Math.max(1, Number.isFinite(raw) ? raw : 1)) };
-}
-
-/** يطبيع مفتاح `سورة:آية` أو يعيد null إن كان غير صالح. */
-export function normalizeAyahKey(ayahKey: string): string | null {
-  if (typeof ayahKey !== "string") return null;
-  const m = ayahKey.trim().match(/^(\d{1,3}):(\d{1,4})$/);
-  if (!m) return null;
-  const surah = Number(m[1]);
-  const ayah = Number(m[2]);
-  if (!Number.isFinite(surah) || !Number.isFinite(ayah)) return null;
-  if (surah < 1 || surah > 114 || ayah < 1) return null;
-  const n = normalizeSurahAyah(surah, ayah);
-  return `${n.surah}:${n.ayah}`;
 }
 
 // ─── Surah start pages — Mushaf al-Madinah KFGQPC, Hafs ʿan ʿĀṣim ─────────

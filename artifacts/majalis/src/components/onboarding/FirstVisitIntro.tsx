@@ -48,13 +48,24 @@ const SURAH_SHORT: readonly string[] = [
   "المسد", "الإخلاص", "الفلق", "الناس",
 ];
 
+/** بلا سحب quran-api إلى حزمة الإقلاع — أطول سورة 286 آية. */
+function sanitizeIntroAyahKey(key: string): string | null {
+  const m = key.trim().match(/^(\d{1,3}):(\d{1,3})$/);
+  if (!m) return null;
+  const s = Number(m[1]);
+  const a = Number(m[2]);
+  if (!Number.isFinite(s) || !Number.isFinite(a)) return null;
+  if (s < 1 || s > 114 || a < 1 || a > 286) return null;
+  return `${s}:${a}`;
+}
+
 function readStoredAyahKey(): string | null {
   try {
     const raw = localStorage.getItem("mj-quran-page-pos-v1");
     if (!raw) return null;
     const parsed = JSON.parse(raw) as { ayahKey?: string };
     if (typeof parsed?.ayahKey !== "string") return null;
-    return normalizeAyahKey(parsed.ayahKey);
+    return sanitizeIntroAyahKey(parsed.ayahKey);
   } catch {
     /* ignore */
   }

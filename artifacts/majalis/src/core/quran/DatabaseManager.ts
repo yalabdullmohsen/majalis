@@ -10,7 +10,7 @@
  * Singleton · async-only · additive schema versioning · never throws into UI.
  */
 import Dexie, { type EntityTable, type Table } from "dexie";
-import { normalizeSurahAyah } from "@/lib/quran-api";
+import { normalizeSurahAyah } from "@/lib/ayah-ref-normalize";
 
 // ─── Record types ────────────────────────────────────────────────────────────
 

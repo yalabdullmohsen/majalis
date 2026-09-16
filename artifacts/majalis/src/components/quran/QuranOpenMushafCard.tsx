@@ -9,9 +9,8 @@ import {
   getSurahMeta,
   loadPagePosition,
   loadReadingAyahKey,
-  normalizeAyahKey,
-  normalizeSurahAyah,
 } from "@/lib/quran-api";
+import { normalizeAyahKey, normalizeSurahAyah } from "@/lib/ayah-ref-normalize";
 import { navigateTo } from "@/lib/navigation-intent";
 import { prefetchRoute } from "@/lib/prefetch-route";
 import { toArabicDigits } from "@/lib/utils";
