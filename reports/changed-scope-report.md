@@ -1,7 +1,7 @@
 # تقرير نطاق التغييرات
 
-**التاريخ:** 2026-09-16T00:29:42.336Z
-**عدد الملفات:** 60
+**التاريخ:** 2026-09-16T00:39:41.090Z
+**عدد الملفات:** 90
 **النطاقات:** content/data، other، ui/layout، quran/mushaf، docs
 **docs-only:** لا
 
@@ -28,45 +28,45 @@
 - `artifacts/majalis/public/data/lessons/chunk-000.json` → content_data
 - `artifacts/majalis/public/data/search/index.json` → content_data
 - `artifacts/majalis/scripts/lessons-seed.snapshot.json` → other
+- `artifacts/majalis/scripts/validate-kuwait-lessons.mjs` → other
+- `artifacts/majalis/seo-prerender/lessons/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-abdulaziz-alfawzan-fiqh-weekly-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-ahmadi-umdat-ahkam-sabah-abu-khashaba-2026-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-ahmadi-zad-muslim-ulum-quran-2026-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-ahmadi-zad-muslim-usool-athlatha-2026-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-ajraa-murtaqa-course-3-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-arabic-nahw-beginner-course-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-asima-umdat-ahkam-sarra-2026-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-fiqh-ibadaat-course-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-fiqh-maliki-risala-program-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-fiqh-purification-program-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-jahraa-muhimmat-aqeeda-women-2026-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-jury-aldahi-sharia-program-4-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-khalid-almushlih-usool-program-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-mahboula-dosari-umdat-tawhid-2026-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-murtaqa-madarij-altalab-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-mutlaq-aljasr-talaeea-elm-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-osama-shatti-prayer-book-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-othman-talkhis-mukhtasar-almuqni-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/kw-rashed-fundamental-course-0/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/sci-fiqh-ibadat-weekly/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/sci-fiqh-inheritance-course/index.html` → other
 - `artifacts/majalis/seo-prerender/lessons/sci-online-fiqh-course-shafii/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/sci-rawdat-alafham-muwaiziri/index.html` → other
 - `artifacts/majalis/seo-prerender/lessons/sci-talae-alilm-murtaqaa/index.html` → other
+- `artifacts/majalis/seo-prerender/lessons/sci-umdat-ahkam-daham/index.html` → other
 - `artifacts/majalis/src/components/ComingSoonDialog.tsx` → ui_layout
 - `artifacts/majalis/src/components/GlobalSearchModal.tsx` → ui_layout
 - `artifacts/majalis/src/components/home/home-start-here-data.ts` → ui_layout
-- `artifacts/majalis/src/config/section-lobbies.ts` → ui_layout
-- `artifacts/majalis/src/config/sections.registry.ts` → ui_layout
-- `artifacts/majalis/src/features/mushaf-madinah/TafsirTabPanel.tsx` → quran_mushaf
-- `artifacts/majalis/src/lib/__tests__/fiqh-door-chapter-fill-gate.test.ts` → ui_layout
-- `artifacts/majalis/src/lib/fiqh/fiqhNormalize.ts` → ui_layout
-- `artifacts/majalis/src/lib/ia-final-structure.ts` → ui_layout
-- `artifacts/majalis/src/lib/scientific-announcements-seed.ts` → ui_layout
-- `artifacts/majalis/src/lib/ui-copy.ts` → ui_layout
-- `artifacts/majalis/src/pages/fiqh/ui/FiqhView.tsx` → ui_layout
-- `artifacts/majalis/src/pages/lessons/ui/LessonsView.tsx` → ui_layout
-- `artifacts/majalis/src/pages/quran/ui/QuranPersonDetailView.tsx` → quran_mushaf
-- `artifacts/majalis/src/pages/worship/ui/AdhkarView.tsx` → content_data
-- `artifacts/majalis/src/pages/worship/ui/DailyWirdView.tsx` → ui_layout
-- `artifacts/majalis/src/styles/m2030/foundation.css` → ui_layout
-- `artifacts/majalis/src/styles/pages/fiqh-hub.css` → ui_layout
-- `artifacts/majalis/src/views/KnowledgeSectionPage.tsx` → ui_layout
-- `artifacts/majalis/src/views/MiraclesPage.tsx` → ui_layout
-- `artifacts/majalis/src/views/VaultPage.tsx` → ui_layout
-- `artifacts/majalis/src/views/learning/LearningPathDetailPage.tsx` → ui_layout
-- `reports/fiqh-section-audit.json` → other
-- `reports/fiqh-section-audit.md` → docs
-- `artifacts/majalis/scripts/validate-kuwait-lessons.mjs` → other
 - `artifacts/majalis/src/components/lessons/UnifiedLessonCard.tsx` → ui_layout
 - `artifacts/majalis/src/components/ui/TopicQuiz.tsx` → ui_layout
+- `artifacts/majalis/src/config/section-lobbies.ts` → ui_layout
+- `artifacts/majalis/src/config/sections.registry.ts` → ui_layout
 - `artifacts/majalis/src/data/institutions-catalog.json` → ui_layout
 - `artifacts/majalis/src/data/library-catalog.json` → ui_layout
 - `artifacts/majalis/src/data/universities-catalog.json` → ui_layout
-- `artifacts/majalis/src/lib/library-catalog.ts` → ui_layout
-- `artifacts/majalis/src/lib/recent-pages.ts` → ui_layout
-- `artifacts/majalis/src/pages/account/ui/FlashCardsView.tsx` → ui_layout
-- `artifacts/majalis/src/pages/account/ui/IslamicGlossaryView.tsx` → ui_layout
-- `artifacts/majalis/src/pages/account/ui/LoginView.tsx` → ui_layout
 
-… +20 ملفًا
+… +50 ملفًا
 
 ## سياسات
 
