@@ -177,32 +177,7 @@ export const HADITH_FILL_SAHIH_B2: LocalVerifiedHadith[] = [
     },
     "created_at": "2026-07-27T23:00:00.000Z"
   },
-  {
-    "id": "sahih-fill-107",
-    "collection": "bukhari",
-    "hadith_number": "379",
-    "title": "حَدَّثَنَا مُسَدَّدٌ",
-    "text": "حَدَّثَنَا مُسَدَّدٌ، عَنْ خَالِدٍ، قَالَ حَدَّثَنَا سُلَيْمَانُ الشَّيْبَانِيُّ، عَنْ عَبْدِ اللَّهِ بْنِ شَدَّادٍ، عَنْ مَيْمُونَةَ، قَالَتْ كَانَ رَسُولُ اللَّهِ صلى الله عليه و.",
-    "narrator": null,
-    "source_name": "البخاري 379",
-    "grade": "صحيح",
-    "chapter": "الصحيح",
-    "keywords": [
-      "صحيح",
-      "بخاري",
-      "حَدَّثَنَا",
-      "مُسَدَّدٌ،"
-    ],
-    "explanation": "من البخاري رقم 379؛ الصحة بعضوية الصحيحين. بطاقة فهرسة للوصول بالرقم.",
-    "authenticity_class": "sahih",
-    "metadata": {
-      "batch": "fill-2026-07-b2",
-      "muhaddith": "البخاري",
-      "collection": "bukhari"
-    },
-    "created_at": "2026-07-27T23:00:00.000Z"
-  },
-  {
+    {
     "id": "sahih-fill-108",
     "collection": "bukhari",
     "hadith_number": "420",

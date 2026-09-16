@@ -880,7 +880,11 @@ export async function adminGetDashboardStats() {
       .in("id", topViewedIds.map((v) => v.id));
     topViewedLessons = topViewedIds.map((item) => {
       const match = (titles || []).find((t: any) => t.id === item.id);
-      return { id: match?.external_key || item.id, title: match?.title || item.id, views: item.views };
+      return {
+        id: match?.external_key || item.id,
+        title: (match?.title && String(match.title).trim()) || "درس بلا عنوان",
+        views: item.views,
+      };
     });
   }
 

@@ -94,11 +94,17 @@ export function GraphRelatedRail({
           doc.nodes.map((n) => [`${n.kind}:${n.slug}`, n.titleAr ?? n.slug]),
         );
         setItems(
-          links.map((L) => ({
-            titleAr: titleByKey.get(`${L.to.kind}:${L.to.slug}`) ?? L.to.slug,
-            href: hrefFor(L.to.kind, L.to.slug),
-            groupAr: L.labelAr,
-          })),
+          links
+            .map((L) => {
+              const titleAr = titleByKey.get(`${L.to.kind}:${L.to.slug}`);
+              if (!titleAr || titleAr === L.to.slug) return null;
+              return {
+                titleAr,
+                href: hrefFor(L.to.kind, L.to.slug),
+                groupAr: L.labelAr,
+              };
+            })
+            .filter((x): x is RelatedRailItem => Boolean(x)),
         );
       })
       .catch(() => {

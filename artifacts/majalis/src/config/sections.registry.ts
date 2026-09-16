@@ -611,7 +611,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     id: "quran-sciences",
     label: "القرآن وعلومه",
     subtitle: "علوم القرآن والتجويد",
-    route: "/quran-sciences-legacy",
+    route: "/quran-sciences",
     icon: BookMarked,
     group: "sciences",
     order: 20,

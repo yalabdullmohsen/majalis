@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { firstVisitIntroConfig } from "@/config/first-visit-intro";
 import { markFirstVisitIntroSeen } from "@/lib/first-visit-intro-state";
 import { loadLastPageSync } from "@/lib/quran-last-page";
+import { normalizeAyahKey } from "@/lib/quran-api";
 import { navigateTo } from "@/lib/navigation-intent";
 import "@/styles/components/first-visit-intro.css";
 
@@ -53,9 +54,8 @@ function readStoredAyahKey(): string | null {
     const raw = localStorage.getItem("mj-quran-page-pos-v1");
     if (!raw) return null;
     const parsed = JSON.parse(raw) as { ayahKey?: string };
-    if (typeof parsed?.ayahKey === "string" && /^\d{1,3}:\d{1,3}$/.test(parsed.ayahKey)) {
-      return parsed.ayahKey;
-    }
+    if (typeof parsed?.ayahKey !== "string") return null;
+    return normalizeAyahKey(parsed.ayahKey);
   } catch {
     /* ignore */
   }
@@ -85,7 +85,7 @@ function readMushafResume(): ResumeItem | null {
     let title = `المصحف · صفحة ${page}`;
     if (ayahKey) {
       const [s, a] = ayahKey.split(":").map(Number);
-      if (s >= 1 && s <= 114 && Number.isFinite(a)) {
+      if (s >= 1 && s <= 114 && Number.isFinite(a) && a >= 1) {
         title = `${SURAH_SHORT[s - 1]} · آية ${a} · ص ${page}`;
       }
     }

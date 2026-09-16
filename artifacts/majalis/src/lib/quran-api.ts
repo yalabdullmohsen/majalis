@@ -482,6 +482,54 @@ export function getSurahMeta(number: number): StaticSurahMeta {
   };
 }
 
+const QURAN_GLOBAL_AYAH_MAX = 6236;
+
+/** رقم آية عالمي (١…٦٢٣٦) → سورة + رقم داخل السورة — لا يُعرض الرقم العالمي للمستخدم. */
+export function globalAyahToSurahAyah(global: number): { surah: number; ayah: number } {
+  let remaining = Math.floor(global);
+  if (!Number.isFinite(remaining) || remaining < 1) return { surah: 1, ayah: 1 };
+  if (remaining > QURAN_GLOBAL_AYAH_MAX) remaining = QURAN_GLOBAL_AYAH_MAX;
+  for (let s = 1; s <= 114; s++) {
+    const count = SURAH_AYAH_COUNTS[s - 1] ?? 1;
+    if (remaining <= count) return { surah: s, ayah: remaining };
+    remaining -= count;
+  }
+  return { surah: 114, ayah: SURAH_AYAH_COUNTS[113] ?? 6 };
+}
+
+/**
+ * يطبيع مرجع الآية للعرض/الحفظ: numberInSurah فقط.
+ * إن تجاوز العدد آيات السورة واحتمل رقمًا عالميًا — يُحوَّل ولا يُعرض كمعرّف داخلي.
+ */
+export function normalizeSurahAyah(
+  surah: number,
+  ayah: number,
+): { surah: number; ayah: number } {
+  const s = Math.min(114, Math.max(1, Math.floor(surah) || 1));
+  const raw = Math.floor(ayah);
+  const max = SURAH_AYAH_COUNTS[s - 1] ?? 1;
+  if (Number.isFinite(raw) && raw >= 1 && raw <= max) {
+    return { surah: s, ayah: raw };
+  }
+  if (Number.isFinite(raw) && raw > max && raw <= QURAN_GLOBAL_AYAH_MAX) {
+    return globalAyahToSurahAyah(raw);
+  }
+  return { surah: s, ayah: Math.min(max, Math.max(1, Number.isFinite(raw) ? raw : 1)) };
+}
+
+/** يطبيع مفتاح `سورة:آية` أو يعيد null إن كان غير صالح. */
+export function normalizeAyahKey(ayahKey: string): string | null {
+  if (typeof ayahKey !== "string") return null;
+  const m = ayahKey.trim().match(/^(\d{1,3}):(\d{1,4})$/);
+  if (!m) return null;
+  const surah = Number(m[1]);
+  const ayah = Number(m[2]);
+  if (!Number.isFinite(surah) || !Number.isFinite(ayah)) return null;
+  if (surah < 1 || surah > 114 || ayah < 1) return null;
+  const n = normalizeSurahAyah(surah, ayah);
+  return `${n.surah}:${n.ayah}`;
+}
+
 // ─── Surah start pages — Mushaf al-Madinah KFGQPC, Hafs ʿan ʿĀṣim ─────────
 // Index 0 = Surah 1 (Al-Fatiha, page 1). 114 entries total.
 export const SURAH_START_PAGES: readonly number[] = [
@@ -752,10 +800,9 @@ const PAGE_POS_KEY = "mj-quran-page-pos-v1";
 export function savePagePosition(page: number, ayahKeyOverride?: string) {
   try {
     const clamped = Math.min(604, Math.max(1, Math.floor(page)));
-    const ayahKey =
-      typeof ayahKeyOverride === "string" && /^\d{1,3}:\d{1,3}$/.test(ayahKeyOverride)
-        ? ayahKeyOverride
-        : currentPageFirstAyah(clamped);
+    const normalizedOverride =
+      typeof ayahKeyOverride === "string" ? normalizeAyahKey(ayahKeyOverride) : null;
+    const ayahKey = normalizedOverride ?? currentPageFirstAyah(clamped);
     localStorage.setItem(
       PAGE_POS_KEY,
       JSON.stringify({ page: clamped, ayahKey, at: Date.now() }),
@@ -772,10 +819,25 @@ export function loadReadingAyahKey(): string | null {
   try {
     const raw = localStorage.getItem(PAGE_POS_KEY);
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as { ayahKey?: string };
-    if (typeof parsed?.ayahKey === "string" && /^\d{1,3}:\d{1,3}$/.test(parsed.ayahKey)) {
-      return parsed.ayahKey;
+    const parsed = JSON.parse(raw) as { ayahKey?: string; page?: number };
+    if (typeof parsed?.ayahKey !== "string") return null;
+    const normalized = normalizeAyahKey(parsed.ayahKey);
+    if (!normalized) return null;
+    if (normalized !== parsed.ayahKey) {
+      try {
+        const page =
+          typeof parsed.page === "number" && Number.isFinite(parsed.page)
+            ? Math.min(604, Math.max(1, Math.floor(parsed.page)))
+            : ayahKeyToPage(normalized);
+        localStorage.setItem(
+          PAGE_POS_KEY,
+          JSON.stringify({ page, ayahKey: normalized, at: Date.now() }),
+        );
+      } catch {
+        /* ignore rewrite */
+      }
     }
+    return normalized;
   } catch {
     /* ignore */
   }
@@ -787,12 +849,15 @@ export function loadPagePosition(): number | null {
     const raw = localStorage.getItem(PAGE_POS_KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as { page?: number; ayahKey?: string };
-      if (typeof parsed?.ayahKey === "string" && /^\d{1,3}:\d{1,3}$/.test(parsed.ayahKey)) {
-        const fallback =
-          typeof parsed.page === "number" ? legacyPageToCurrentPage(parsed.page) : undefined;
-        const page = ayahKeyToPage(parsed.ayahKey, fallback);
-        if (loadLastPageSync() == null) void saveLastPage(page);
-        return page;
+      if (typeof parsed?.ayahKey === "string") {
+        const key = normalizeAyahKey(parsed.ayahKey);
+        if (key) {
+          const fallback =
+            typeof parsed.page === "number" ? legacyPageToCurrentPage(parsed.page) : undefined;
+          const page = ayahKeyToPage(key, fallback);
+          if (loadLastPageSync() == null) void saveLastPage(page);
+          return page;
+        }
       }
       const page = Number(parsed?.page);
       if (Number.isFinite(page) && page >= 1 && page <= 604) {

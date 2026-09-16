@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { BookOpen, Bookmark, Flame, Mic2, Moon, Play, Sun } from "lucide-react";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
-import { getSurahMeta } from "@/lib/quran-api";
+import { getSurahMeta, normalizeSurahAyah } from "@/lib/quran-api";
 import { getReciter, saveReciterId } from "@/lib/quran-audio";
 import { getVerifiedReciters, getVerifiedRecitersSyncFallback } from "@/lib/audio-registry";
 import { toArabicDigits } from "@/lib/utils";
@@ -78,9 +78,10 @@ export function HomeDashboard({ onContinue, onOpenViewer }: HomeDashboardProps) 
     };
   }, []);
 
-  const surah = progress?.lastSurah ?? currentSurah;
-  const ayah = progress?.lastAyah ?? currentAyah;
+  const rawSurah = progress?.lastSurah ?? currentSurah;
+  const rawAyah = progress?.lastAyah ?? currentAyah;
   const page = progress?.lastPage ?? currentPage;
+  const { surah, ayah } = normalizeSurahAyah(rawSurah, rawAyah);
   const surahName = getSurahMeta(surah).name;
   const target = 5;
   const pct = Math.min(100, Math.round((pagesToday / target) * 100));
@@ -205,21 +206,24 @@ export function HomeDashboard({ onContinue, onOpenViewer }: HomeDashboardProps) 
           <p className="qe-dash__empty">لا إشارات بعد — أضف واحدة من شريط الآية.</p>
         ) : (
           <ul className="qe-dash__notes">
-            {bookmarks.map((b) => (
+            {bookmarks.map((b) => {
+              const ref = normalizeSurahAyah(b.surahId, b.ayahId);
+              return (
               <li key={b.verseKey}>
                 <button
                   type="button"
                   className="qe-dash__note"
-                  onClick={() => onOpenViewer?.(b.surahId, b.ayahId)}
+                  onClick={() => onOpenViewer?.(ref.surah, ref.ayah)}
                 >
                   <Bookmark size={14} aria-hidden="true" />
                   <span>
-                    {getSurahMeta(b.surahId).name} · {toArabicDigits(b.ayahId)}
+                    {getSurahMeta(ref.surah).name} · {toArabicDigits(ref.ayah)}
                   </span>
                   <em>{(b.note || "إشارة بلا ملاحظة").slice(0, 80)}</em>
                 </button>
               </li>
-            ))}
+              );
+            })}
           </ul>
         )}
       </section>
