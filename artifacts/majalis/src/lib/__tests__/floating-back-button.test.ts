@@ -1,5 +1,5 @@
 /**
- * بوابة: شريط رجوع ثابت حديث؛ السهم العائم الدائري ملغى.
+ * بوابة: Back FAB موحّد أسفل يمين؛ السهم العائم الدائري العلوي ملغى.
  * تشغيل: node --import tsx src/lib/__tests__/floating-back-button.test.ts
  */
 import assert from "node:assert/strict";
@@ -14,6 +14,7 @@ const fab = read("src/components/FloatingBackButton.tsx");
 assert.match(fab, /FLOATING_BACK_DISABLED/);
 assert.match(fab, /GlobalBackControlHost/);
 assert.match(fab, /FIXED_BACK_BAR_ENABLED/);
+assert.match(fab, /UNIFIED_BACK_FAB_ENABLED/);
 assert.match(fab, /variant="bar"/);
 assert.match(fab, /AppBackButton/);
 assert.match(fab, /autoHideFloating=\{false\}/, "الشريط لا يُخفى على /profile والإعدادات العامة");
@@ -22,6 +23,8 @@ assert.match(fab, /isImmersiveChromePath|hideOnMushaf/, "إخفاء على ال�
 assert.match(fab, /adhan-settings|hideOnAdhanSettings/, "إخفاء على إعدادات الأذان — هيدر داخلي");
 assert.match(fab, /hideBack/, "إخفاء موحّد");
 assert.doesNotMatch(fab, /ChevronUp/);
+assert.match(fab, /BACK_FAB_SCROLL_SHOW_PX|data-visible/, "يظهر بعد التمرير");
+assert.match(fab, /data-edge="bottom"|data-global-back-edge/, "أسفل يمين");
 
 const calm = read("src/styles/sections-calm-polish.css");
 assert.match(calm, /\.ads-toolbar[\s\S]{0,80}?app-back-btn--inline/, "رجوع هيدر إعدادات الأذان ظاهر");
@@ -35,9 +38,15 @@ assert.doesNotMatch(scroll, /useReadingProgress|stt-ring/);
 const backCss = read("src/styles/knowledge-experience.css");
 assert.match(backCss, /\.app-back-btn--bar\.fixed-back-bar/, "شريط ثابت");
 assert.match(backCss, /right:\s*max\(0\.75rem,\s*var\(--inset-right/, "يمين فعليًا");
-assert.match(backCss, /top:\s*var\(--global-back-top/, "أعلى الشاشة — لا يغطي المحتوى السفلي");
+assert.match(backCss, /bottom:\s*var\(\s*--global-back-bottom/, "أسفل فوق الشريط السفلي");
+assert.doesNotMatch(
+  backCss,
+  /\.app-back-btn--bar\.fixed-back-bar[\s\S]{0,500}?top:\s*var\(--global-back-top/,
+  "لا تثبيت أعلى يمين",
+);
 assert.match(backCss, /inset-inline-end:\s*unset/, "لا منطق RTL يقلب الزر لليسار");
 assert.match(backCss, /html\.chrome-immersive[\s\S]{0,220}?display:\s*none/, "إخفاء CSS في المصحف");
+assert.match(backCss, /data-visible="1"|data-global-back-visible/, "ظهور بعد التمرير");
 
 const appBack = read("src/components/common/AppBackButton.tsx");
 assert.match(appBack, /isImmersiveChromePath/, "إخفاء المصحف في AppBackButton");
@@ -66,4 +75,4 @@ const lobby = read("src/components/lobby/SectionLobby.tsx");
 assert.match(lobby, /AppBackButton|data-section-back/, "اللوبي يعرض رجوعًا هيدريًا");
 assert.match(lobby, /data-section-back/);
 
-console.log("floating-back-button.test.ts: ok (fixed back bar)");
+console.log("floating-back-button.test.ts: ok (unified bottom back fab)");

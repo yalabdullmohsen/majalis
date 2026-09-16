@@ -1,15 +1,17 @@
 /**
  * GlobalBackControlHost — مصدر حقيقة واحد لزر الرجوع العام في سُنّة.
- * يُركَّب مرة واحدة في جذر التطبيق. FLOATING_BACK_DISABLED = لا FAB دائري.
- * شريط مضغوط أعلى يمين (لا يغطي البطاقات/المحتوى السفلي).
+ * يُركَّب مرة واحدة في جذر التطبيق.
+ * FLOATING_BACK_DISABLED = لا FAB دائري علوي قديم.
+ * UNIFIED_BACK_FAB = زر رجوع موحّد أسفل يمين (فوق Bottom Nav) يظهر بعد التمرير.
  */
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { AppBackButton } from "@/components/common/AppBackButton";
 import {
-  computeBackControlTopOffset,
-  computeContentTopInsetForBack,
   BACK_CONTROL_SIZE_PX,
+  BACK_FAB_SCROLL_SHOW_PX,
+  computeBackControlBottomOffset,
+  computeContentBottomInsetForBack,
 } from "@/lib/global-back-layout";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { normalizeNavPath } from "@/lib/navigation-back";
@@ -21,39 +23,71 @@ function readCssPx(varName: string, fallback: number): number {
   return Number.isFinite(n) ? n : fallback;
 }
 
+function readScrollY(): number {
+  const root = document.querySelector<HTMLElement>('[data-scroll-root="1"]');
+  const rootY = root ? root.scrollTop : 0;
+  return Math.max(
+    window.scrollY || 0,
+    document.documentElement.scrollTop || 0,
+    document.body.scrollTop || 0,
+    rootY,
+  );
+}
+
 function syncBackLayoutVars(host: HTMLElement | null) {
   if (typeof window === "undefined") return;
-  const safeTop = readCssPx("--inset-top", 0) || readCssPx("--safe-area-inset-top", 0);
-  const top = computeBackControlTopOffset({ safeAreaTop: safeTop });
-  const contentPad = computeContentTopInsetForBack({ safeAreaTop: safeTop });
-  document.documentElement.style.setProperty("--global-back-top", `${top}px`);
-  /* إبقاء المتغيرات السفلية عند صفر — لا حجز مساحة سفلية لزر لم يعد سفليًا */
-  document.documentElement.style.setProperty("--global-back-bottom", `0px`);
-  document.documentElement.style.setProperty("--global-back-clearance", `0px`);
-  document.documentElement.style.setProperty("--global-back-top-clearance", `${contentPad}px`);
+  const safeBottom =
+    readCssPx("--inset-bottom", 0) || readCssPx("--safe-area-inset-bottom", 0);
+  const bottomNav =
+    readCssPx("--bottom-nav-height", 64) ||
+    readCssPx("--bottom-nav-h", 64) ||
+    64;
+  const miniPlayer = document.documentElement.classList.contains("audio-dock-open") ||
+    document.documentElement.getAttribute("data-audio-dock") === "1"
+    ? readCssPx("--audio-dock-h", 72) ||
+      readCssPx("--quran-mini-player-offset", 0) ||
+      72
+    : readCssPx("--quran-mini-player-offset", 0);
+  const insets = {
+    safeAreaBottom: safeBottom,
+    bottomNavigationHeight: bottomNav,
+    miniPlayerHeight: Math.max(0, miniPlayer),
+    keyboardHeight: 0,
+    activeSheetHeight: document.body.classList.contains("filter-sheet-open") ? 120 : 0,
+  };
+  const bottom = computeBackControlBottomOffset(insets);
+  const clearance = computeContentBottomInsetForBack(insets);
+  document.documentElement.style.setProperty("--global-back-bottom", `${bottom}px`);
+  document.documentElement.style.setProperty("--global-back-clearance", `${clearance}px`);
+  document.documentElement.style.setProperty("--global-back-top", `0px`);
+  document.documentElement.style.setProperty("--global-back-top-clearance", `0px`);
   document.documentElement.style.setProperty("--global-back-size", `${BACK_CONTROL_SIZE_PX}px`);
   document.documentElement.setAttribute("data-global-back-host", "1");
-  document.documentElement.setAttribute("data-global-back-edge", "top");
+  document.documentElement.setAttribute("data-global-back-edge", "bottom");
   if (host) {
-    host.style.top = `${top}px`;
-    host.style.bottom = "auto";
+    host.style.bottom = `${bottom}px`;
+    host.style.top = "auto";
   }
 }
 
-/** المضيف الوحيد لزر الرجوع العام */
+/** المضيف الوحيد لزر الرجوع العام — أسفل يمين بعد التمرير */
 export function GlobalBackControlHost() {
   const hostRef = useRef<HTMLDivElement>(null);
   const [location] = useLocation();
   const path = normalizeNavPath(location);
-  /** الرئيسية + المصحف + إعدادات الأذان (هيدر داخلي) — لا زر يغطي المحتوى */
   const hideOnHome = path === "/";
   const hideOnMushaf = isImmersiveChromePath(path);
   const hideOnAdhanSettings =
     path === "/adhan-settings" || path.startsWith("/adhan-settings/");
   const hideBack = hideOnHome || hideOnMushaf || hideOnAdhanSettings;
+  const [scrolled, setScrolled] = useState(false);
 
   useLayoutEffect(() => {
-    if (hideBack) return;
+    if (hideBack) {
+      document.documentElement.style.setProperty("--global-back-clearance", `0px`);
+      document.documentElement.removeAttribute("data-global-back-visible");
+      return;
+    }
     const sync = () => syncBackLayoutVars(hostRef.current);
     sync();
     window.addEventListener("resize", sync);
@@ -71,6 +105,38 @@ export function GlobalBackControlHost() {
     };
   }, [hideBack]);
 
+  useEffect(() => {
+    if (hideBack) {
+      setScrolled(false);
+      return;
+    }
+    const onScroll = () => {
+      const next = readScrollY() > BACK_FAB_SCROLL_SHOW_PX;
+      setScrolled((prev) => (prev === next ? prev : next));
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    document.addEventListener("scroll", onScroll, { passive: true, capture: true });
+    const root = document.querySelector<HTMLElement>('[data-scroll-root="1"]');
+    root?.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("scroll", onScroll, true);
+      root?.removeEventListener("scroll", onScroll);
+    };
+  }, [hideBack, path]);
+
+  useEffect(() => {
+    if (hideBack) {
+      document.documentElement.removeAttribute("data-global-back-visible");
+      return;
+    }
+    document.documentElement.setAttribute(
+      "data-global-back-visible",
+      scrolled ? "1" : "0",
+    );
+  }, [hideBack, scrolled]);
+
   if (hideBack) return null;
 
   return (
@@ -79,7 +145,9 @@ export function GlobalBackControlHost() {
       className="global-back-control-host"
       data-global-back-control-host="1"
       data-testid="global-back-control-host"
-      data-edge="top"
+      data-edge="bottom"
+      data-visible={scrolled ? "1" : "0"}
+      aria-hidden={!scrolled}
     >
       <AppBackButton
         variant="bar"
@@ -87,6 +155,7 @@ export function GlobalBackControlHost() {
         label="رجوع"
         aria-label="رجوع"
         className="global-back-control-host__btn"
+        tabIndex={scrolled ? 0 : -1}
       />
     </div>
   );
@@ -100,6 +169,8 @@ export function FloatingBackButton() {
 export { FloatingBackButton as GlobalBackButton };
 export { AppBackButton } from "@/components/common/AppBackButton";
 
+/** الدائري العلوي القديم معطّل — البديل: Back FAB سفلي موحّد */
 export const FLOATING_BACK_DISABLED = true as const;
 export const FIXED_BACK_BAR_ENABLED = true as const;
+export const UNIFIED_BACK_FAB_ENABLED = true as const;
 export const GLOBAL_BACK_CONTROL_HOST = true as const;

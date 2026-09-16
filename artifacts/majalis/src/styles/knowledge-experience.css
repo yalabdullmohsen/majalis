@@ -654,7 +654,7 @@ button.floating-back-btn[data-floating-back="1"] {
   pointer-events: none !important;
 }
 
-/* شريط رجوع مضغوط — أعلى يمين (لا يغطي المحتوى السفلي/البطاقات) */
+/* Back FAB موحّد — أسفل يمين فوق Bottom Nav · يظهر بعد التمرير فقط */
 .app-back-btn--bar.fixed-back-bar,
 button.app-back-btn--bar[data-fixed-back-bar="1"] {
   position: fixed;
@@ -664,8 +664,11 @@ button.app-back-btn--bar[data-fixed-back-bar="1"] {
   left: auto;
   inset-inline-start: unset;
   inset-inline-end: unset;
-  top: var(--global-back-top, max(0.45rem, var(--inset-top, 0px)));
-  bottom: auto;
+  top: auto;
+  bottom: var(
+    --global-back-bottom,
+    calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 0.75rem)
+  );
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -675,22 +678,35 @@ button.app-back-btn--bar[data-fixed-back-bar="1"] {
   padding: 0.4rem 0.85rem 0.4rem 0.7rem;
   margin: 0;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 18%, transparent);
-  background: color-mix(in srgb, var(--mj-surface, #fff) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 22%, transparent);
+  background: color-mix(in srgb, var(--mj-surface, #fff) 94%, transparent);
   color: var(--mj-brand-deep, #0d4a39);
   font: inherit;
-  font-size: 0.88rem;
-  font-weight: 600;
+  font-size: 0.86rem;
+  font-weight: 650;
   letter-spacing: 0;
   line-height: 1;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(11, 32, 24, 0.12);
+  box-shadow: 0 4px 14px rgba(11, 32, 24, 0.16);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   transform: translateZ(0);
-  transition: opacity 140ms ease, box-shadow 140ms ease, background 140ms ease;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 180ms ease, visibility 180ms ease, box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+/* ظاهر بعد التمرير فقط — fade بلا Layout Shift */
+.global-back-control-host[data-visible="1"] .app-back-btn--bar.fixed-back-bar,
+html[data-global-back-visible="1"] .app-back-btn--bar.fixed-back-bar,
+html[data-global-back-visible="1"] button.app-back-btn--bar[data-fixed-back-bar="1"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .app-back-btn--bar.fixed-back-bar:hover {
@@ -716,6 +732,11 @@ html.dark .app-back-btn--bar.fixed-back-bar {
   }
 }
 
+/* لا زر رجوع علوي عائم — أي بقايا top-edge تُلغى */
+html[data-global-back-edge="bottom"] .app-back-btn--bar.fixed-back-bar {
+  top: auto !important;
+}
+
 body.filter-sheet-open .app-back-btn--bar.fixed-back-bar {
   /* لا نخفي الرجوع — نبقيه فوق الورقة */
   z-index: calc(var(--z-fab, 220) + 40);
@@ -723,9 +744,15 @@ body.filter-sheet-open .app-back-btn--bar.fixed-back-bar {
 
 html.audio-dock-open .app-back-btn--bar.fixed-back-bar,
 html[data-audio-dock="1"] .app-back-btn--bar.fixed-back-bar {
-  /* علوي — لا يتأثر بارتفاع الدوك السفلي */
-  top: var(--global-back-top, max(0.45rem, var(--inset-top, 0px)));
-  bottom: auto;
+  /* ارفع فوق المشغّل السفلي */
+  bottom: var(
+    --global-back-bottom,
+    calc(
+      var(--bottom-nav-height, 64px) + var(--audio-dock-h, 72px) + var(--inset-bottom, 0px) +
+        0.75rem
+    )
+  );
+  top: auto;
 }
 
 /* المصحف الغمري: لا زر رجوع عام إطلاقًا */
@@ -867,7 +894,7 @@ html.chrome-immersive [data-global-back-control-host] {
   z-index: var(--z-fab, 220);
 }
 /* —— Content Experience Audit Closure —— */
-/* زر رجوع علوي مضغوط — أخف بلا blur/glow */
+/* زر رجوع سفلي مضغوط — أخف بلا blur/glow */
 .app-back-btn--bar.fixed-back-bar,
 button.app-back-btn--bar[data-fixed-back-bar="1"] {
   min-height: 42px;
