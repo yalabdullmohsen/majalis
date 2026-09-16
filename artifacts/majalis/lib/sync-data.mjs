@@ -10,7 +10,6 @@ import {
 import { getSupabaseAdmin, isMissingTableError } from "./supabase-admin.mjs";
 import { OCCASION_SYNC_META } from "./islamic-occasions-sync-meta.mjs";
 import { runDailyPlatformSync } from "./daily-platform-sync.mjs";
-import { runFiqhCouncilSync } from "./fiqh-council-sync.mjs";
 import { runKnowledgeSync } from "./knowledge-sync.mjs";
 import { runAutoContentSync } from "./auto-content/auto-content-sync.mjs";
 
@@ -178,14 +177,18 @@ export async function syncIslamicOccasions(admin = getSupabaseAdmin()) {
 /** Daily sync — prayer times, occasions, lessons maintenance, daily content marker. */
 export async function runDailyDataSync() {
   const admin = getSupabaseAdmin();
-  const [prayerR, occasionsR, platformR, fiqhR, knowledgeR, autoContentR] = await Promise.allSettled([
+  const [prayerR, occasionsR, platformR, knowledgeR, autoContentR] = await Promise.allSettled([
     syncPrayerTimes(admin),
     syncIslamicOccasions(admin),
     runDailyPlatformSync(),
-    runFiqhCouncilSync({ triggerType: "cron" }),
     runKnowledgeSync({ triggerType: "cron", maxItems: 10 }),
     runAutoContentSync({ skipSchemaCheck: true }),
   ]);
+  /* منتج المجمع الفقهي أُزيل — لا مزامنة دورية */
+  const fiqhR = {
+    status: "fulfilled",
+    value: { ok: true, removed: true, skipped: true, reason: "fiqh_council_product_removed" },
+  };
 
   const unwrap = (r, fallback = { ok: false, error: "failed" }) =>
     r.status === "fulfilled" ? r.value : { ok: false, error: r.reason?.message || "failed" };

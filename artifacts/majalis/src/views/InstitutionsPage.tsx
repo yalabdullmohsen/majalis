@@ -11,6 +11,13 @@ import "@/styles/pages/institutions.css";
 import { INSTITUTIONS, type Institution } from "@/data/institutions-catalog";
 import { UtilityScreen } from "@/components/design-system/screens";
 
+/** استبعاد أي إدخال مرتبط بمنتج المجمع/القرارات المحذوف */
+const PUBLIC_INSTITUTIONS = INSTITUTIONS.filter(
+  (i) =>
+    !/fiqh-council|fiqh_council|fiqh-decision/i.test(i.id) &&
+    !/مجمع الفقه|المجمع الفقهي|قرارات فقهية/.test(`${i.name} ${i.description}`),
+);
+
 const TYPE_LABELS: Record<Institution["type"], string> = {
   mosque: "المساجد",
   center: "المراكز الإسلامية",
@@ -93,8 +100,8 @@ export default function InstitutionsPage() {
           "@type": "ItemList",
           name: "المؤسسات الإسلامية الكبرى",
           description: "دليل المساجد والمعاهد والجامعات والهيئات الإسلامية حول العالم.",
-          numberOfItems: INSTITUTIONS.length,
-          itemListElement: INSTITUTIONS.slice(0, 20).map((inst, i) => ({
+          numberOfItems: PUBLIC_INSTITUTIONS.length,
+          itemListElement: PUBLIC_INSTITUTIONS.slice(0, 20).map((inst, i) => ({
             "@type": "ListItem",
             position: i + 1,
             name: `${inst.name} — ${inst.city}`,
@@ -106,7 +113,7 @@ export default function InstitutionsPage() {
   }, []);
   const [search, setSearch] = useState("");
 
-  const filtered = INSTITUTIONS.filter((inst) => {
+  const filtered = PUBLIC_INSTITUTIONS.filter((inst) => {
     const matchType = filter === "all" || inst.type === filter;
     const matchSearch = arabicMatchAny([inst.name, inst.city, inst.country, inst.description], search);
     return matchType && matchSearch;
@@ -156,8 +163,8 @@ export default function InstitutionsPage() {
               {f.label}
               <span className="vault-tab__count">
                 {f.key === "all"
-                  ? INSTITUTIONS.length
-                  : INSTITUTIONS.filter((i) => i.type === f.key).length}
+                  ? PUBLIC_INSTITUTIONS.length
+                  : PUBLIC_INSTITUTIONS.filter((i) => i.type === f.key).length}
               </span>
             </button>
           ))}

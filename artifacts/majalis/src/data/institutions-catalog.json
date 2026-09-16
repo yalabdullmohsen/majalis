@@ -143,19 +143,6 @@
     "contentStatus": "needs_review"
   },
   {
-    "id": "fiqh-council-mecca",
-    "name": "مجمع الفقه الإسلامي الدولي",
-    "type": "center",
-    "city": "جدة",
-    "country": "المملكة العربية السعودية",
-    "description": "مجمع الفقه الإسلامي الدولي هيئة علمية جماعية تبحث النوازل والقضايا المعاصرة، وتصدر قرارات وبحوثًا يُستأنس بها مع مراعاة اختلاف المذاهب. يُرجع إلى منشوراته وقراراته للمسائل العامة مع مراعاة اختلاف المذاهب والسياق المحلي لكل بلد.",
-    "website": "https://www.iifa-aifi.org",
-    "mapQuery": "مجمع الفقه الإسلامي جدة",
-    "sourceUrl": "https://www.iifa-aifi.org",
-    "sourceType": "official_website",
-    "contentStatus": "needs_review"
-  },
-  {
     "id": "masjid-kabir-kuwait",
     "name": "المسجد الكبير",
     "type": "mosque",

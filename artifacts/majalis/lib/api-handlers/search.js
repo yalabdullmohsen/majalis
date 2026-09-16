@@ -169,23 +169,9 @@ async function searchStories(supabase, normQuery, limit) {
   }));
 }
 
-async function searchFiqh(supabase, normQuery, limit) {
-  const { data } = await supabase
-    .from("fiqh_council_items")
-    .select("slug, title, summary, category, type")
-    .eq("status", "published")
-    // الجدول لا يحوي عمود search_text — الفلترة عليه كانت تُفشل الاستعلام كاملاً
-    // (42703) فتعود النتيجة فارغة دائماً وكأن لا قرارات مطابقة.
-    .or(`title.ilike.%${normQuery}%,summary.ilike.%${normQuery}%,ruling_text.ilike.%${normQuery}%`)
-    .limit(limit);
-  return (data || []).map((r) => ({
-    id: r.slug,
-    type: "fiqh_decision",
-    title: r.title,
-    summary: r.summary || "",
-    meta: [r.type, r.category].filter(Boolean).join(" · "),
-    href: `/fiqh-council/${r.slug}`,
-  }));
+async function searchFiqh(_supabase, _normQuery, _limit) {
+  /* منتج المجمع/القرارات الفقهية أُزيل — لا نتائج قرارات */
+  return [];
 }
 
 /**

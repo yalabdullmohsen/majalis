@@ -43,7 +43,7 @@ export function formatCitation(item, baseUrl = "https://majlisilm.com") {
     item.session_date ? `التاريخ: ${String(item.session_date).slice(0, 10)}` : "",
     item.category ? `التصنيف: ${item.category}` : "",
     item.source_url ? `الرابط الأصلي: ${item.source_url}` : "",
-    `رابط المنصة: ${baseUrl}/fiqh-council/${item.slug}`,
+    `رابط المنصة: ${baseUrl}/fiqh`,
   ].filter(Boolean);
   return parts.join(" | ");
 }
@@ -54,7 +54,7 @@ export function toCitation(item, excerpt) {
     slug: item.slug,
     title: item.title,
     excerpt: String(text).slice(0, 280),
-    href: `/fiqh-council/${item.slug}`,
+    href: `/fiqh#${item.slug}`,
     type: item.type,
     category: item.category,
     source_name: item.source_name,
@@ -69,7 +69,7 @@ export function buildSummary(items, query) {
   if (!items.length) {
     return "لا توجد مادة موثقة كافية في قاعدة بيانات المنصة للإجابة عن هذا السؤال.";
   }
-  const intro = `وفق المواد المنشورة في المجمع الفقهي، إليك ما يرتبط بسؤالك «${query}»:`;
+  const intro = `وفق المواد الفقهية المنشورة في المنصة، إليك ما يرتبط بسؤالك «${query}»:`;
   const bullets = items.slice(0, 5).map((item, i) => {
     const snippet = item.summary || item.ruling_text || item.title;
     return `${i + 1}. ${item.title}: ${String(snippet).slice(0, 160)}${snippet && snippet.length > 160 ? "…" : ""}`;
@@ -89,35 +89,11 @@ export function isVerifiedPublishedItem(item) {
   ) || item.documentation_level === "official_verified";
 }
 
-export async function searchPublishedItems(admin, query, filters = {}) {
+export async function searchPublishedItems(_admin, query, _filters = {}) {
   const q = String(query || "").trim();
   if (!q) return [];
-
-  const { data, error } = await admin.rpc("search_fiqh_council_advanced", {
-    query: q,
-    p_type: filters.type && filters.type !== "الكل" ? filters.type : null,
-    p_category: filters.category && filters.category !== "الكل" ? filters.category : null,
-    p_subcategory: filters.subcategory || null,
-    p_source: filters.source || null,
-    p_year: filters.year && filters.year !== "الكل" ? Number(filters.year) : null,
-    p_tags: null,
-    p_nawazil_topic: null,
-    p_decision_number: null,
-    result_limit: filters.limit || 10,
-  });
-
-  if (error) {
-    const { data: fallback } = await admin
-      .from("fiqh_council_items")
-      .select("*")
-      .eq("status", "published")
-      .is("archived_at", null)
-      .ilike("title", `%${q}%`)
-      .limit(10);
-    return fallback || [];
-  }
-
-  return data || [];
+  /* منتج المجمع/القرارات الفقهية أُزيل — لا استعلام جداول council */
+  return [];
 }
 
 export async function logResearchSearch(admin, payload) {
@@ -160,7 +136,7 @@ export async function synthesizeFromContext(query, items) {
     `المصدر: ${item.source_name || "—"}\n` +
     `التصنيف: ${item.category || "—"}\n` +
     `الملخص: ${item.summary || item.ruling_text || ""}\n` +
-    `الرابط: /fiqh-council/${item.slug}`,
+    `الرابط: /fiqh`,
   ).join("\n\n");
 
   const system =

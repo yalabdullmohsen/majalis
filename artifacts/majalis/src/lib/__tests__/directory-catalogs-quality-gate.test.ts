@@ -25,7 +25,12 @@ const BOILERPLATE_RE =
 
 console.log("=== أحجام الكتالوج ===");
 assert.ok(ISLAMIC_LANDMARKS.length >= 34, `معالم متوقعة ≥34 وجدنا ${ISLAMIC_LANDMARKS.length}`);
-assert.ok(INSTITUTIONS.length >= 45, `مؤسسات متوقعة ≥45 وجدنا ${INSTITUTIONS.length}`);
+assert.ok(INSTITUTIONS.length >= 44, `مؤسسات متوقعة ≥44 (بعد إزالة مجمع محظور) وجدنا ${INSTITUTIONS.length}`);
+assert.doesNotMatch(
+  JSON.stringify(INSTITUTIONS),
+  /fiqh-council|المجمع الفقهي|مجمع الفقه الإسلامي الدولي/,
+  "لا مؤسسات مجمع فقهي في الكتالوج العام",
+);
 assert.ok(universities.length >= 35, `جامعات متوقعة ≥35 وجدنا ${universities.length}`);
 
 console.log("=== جودة المعالم ===");

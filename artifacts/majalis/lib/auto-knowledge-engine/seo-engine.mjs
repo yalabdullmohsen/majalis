@@ -7,7 +7,6 @@ const SITE_URL = "https://www.ssunnah.com";
 
 const SCHEMA_MAP = {
   fatwa: "FAQPage",
-  fiqh_decision: "Article",
   resolution: "Article",
   article: "Article",
   news: "NewsArticle",
@@ -93,8 +92,8 @@ export function buildSeoPackage(item, analysis, routePath) {
 
 function buildBreadcrumb(path, title) {
   const crumbs = [{ name: "الرئيسية", path: "/" }];
-  if (path?.includes("/fatwa")) crumbs.push({ name: "الفتاوى", path: "/fiqh-council/fatwas" });
-  else if (path?.includes("/fiqh")) crumbs.push({ name: "المجمع الفقهي", path: "/fiqh-council" });
+  if (path?.includes("/fatwa")) crumbs.push({ name: "الفتاوى", path: "/fiqh/fatwas" });
+  else if (path?.includes("/fiqh")) crumbs.push({ name: "الفقه", path: "/fiqh" });
   else if (path?.includes("/fawaid")) crumbs.push({ name: "الفوائد", path: "/fawaid" });
   else if (path?.includes("/library")) crumbs.push({ name: "البحث", path: "/search" });
   else if (path?.includes("/lessons")) crumbs.push({ name: "الدروس", path: "/lessons" });
@@ -107,8 +106,7 @@ function buildBreadcrumb(path, title) {
 export function routeForKind(kind, recordId) {
   const routes = {
     fatwa: `/rulings`,
-    fiqh_decision: `/fiqh-council/${recordId}`,
-    resolution: `/fiqh-council/${recordId}`,
+    resolution: `/fiqh`,
     fawaid: `/fawaid`,
     book: `/search`,
     article: `/search`,
@@ -120,6 +118,8 @@ export function routeForKind(kind, recordId) {
     news: `/updates`,
     announcement: `/updates`,
   };
+  /* fiqh_decision أُزيل كمنتج — لا مسار منتجي */
+  if (kind === "fiqh_decision" || kind === "fiqh_council") return "/fiqh";
   return routes[kind] || `/search`;
 }
 
