@@ -1009,73 +1009,116 @@ export default function IslamicSectsPage() {
                     id={`${sect.id}-detail`}
                     data-content-type="directory-detail"
                   >
-                    <section className="sect-card__section">
-                      <h4 className="sect-card__section-title">التعريف</h4>
-                      <p><strong>الاسم الكامل:</strong> {sect.fullName}</p>
+                    <section className="sect-block sect-block--overview" aria-labelledby={`${sect.id}-overview`}>
+                      <h4 id={`${sect.id}-overview`} className="sect-block__title">
+                        نظرة عامة
+                      </h4>
+                      <p className="sect-block__prose">{sect.foundingCause}</p>
                     </section>
-                    <section className="sect-card__section">
-                      <h4 className="sect-card__section-title">المؤسس أو أبرز الرموز</h4>
-                      <p>{sect.founder}</p>
-                    </section>
-                    <section className="sect-card__section">
-                      <h4 className="sect-card__section-title">المنشأ</h4>
-                      <p>{sect.origin}</p>
-                    </section>
-                    {sect.spread ? (
-                      <section className="sect-card__section">
-                        <h4 className="sect-card__section-title">الانتشار</h4>
-                        <p>{sect.spread}</p>
-                        {/\d+\s*[-–—]\s*\d+\s*%|\d+\s*%/.test(sect.spread) ? (
-                          <p className="sect-card__verify">
-                            ملاحظة تحقق: النسبة المذكورة تحتاج مصدرًا وتاريخ تحقق — وُسمت needs_specialist_review.
-                          </p>
-                        ) : null}
-                      </section>
-                    ) : null}
-                    <section className="sect-card__section">
-                      <h4 className="sect-card__section-title">أبرز الأفكار أو المعتقدات</h4>
-                      <ul className="sect-card__list">
+
+                    <dl className="sect-meta" aria-label="بيانات أساسية">
+                      <div className="sect-meta__row">
+                        <dt>الاسم الكامل</dt>
+                        <dd>{sect.fullName}</dd>
+                      </div>
+                      <div className="sect-meta__row">
+                        <dt>المؤسس أو أبرز الرموز</dt>
+                        <dd>{sect.founder}</dd>
+                      </div>
+                      <div className="sect-meta__row">
+                        <dt>المنشأ</dt>
+                        <dd>{sect.origin}</dd>
+                      </div>
+                      {sect.spread ? (
+                        <div className="sect-meta__row">
+                          <dt>الانتشار</dt>
+                          <dd>
+                            {sect.spread}
+                            {/\d+\s*[-–—]\s*\d+\s*%|\d+\s*%/.test(sect.spread) ? (
+                              <span className="sect-card__verify">
+                                {" "}
+                                ملاحظة تحقق: النسبة المذكورة تحتاج مصدرًا وتاريخ تحقق — وُسمت needs_specialist_review.
+                              </span>
+                            ) : null}
+                          </dd>
+                        </div>
+                      ) : null}
+                      <div className="sect-meta__row">
+                        <dt>العصر</dt>
+                        <dd>{sect.era}</dd>
+                      </div>
+                    </dl>
+
+                    <section className="sect-block" aria-labelledby={`${sect.id}-beliefs`}>
+                      <h4 id={`${sect.id}-beliefs`} className="sect-block__title">
+                        أبرز الأفكار أو المعتقدات
+                      </h4>
+                      <ul className="sect-list">
                         {sect.keyBeliefs.map((b, i) => (
                           <li key={i}>{b}</li>
                         ))}
                       </ul>
                     </section>
+
                     {sect.keyScholars.length > 0 ? (
-                      <section className="sect-card__section">
-                        <h4 className="sect-card__section-title">أبرز الأسماء</h4>
-                        <ul className="sect-card__list">
+                      <section className="sect-block" aria-labelledby={`${sect.id}-scholars`}>
+                        <h4 id={`${sect.id}-scholars`} className="sect-block__title">
+                          أبرز الأسماء
+                        </h4>
+                        <ul className="sect-list sect-list--compact">
                           {sect.keyScholars.map((name, i) => (
                             <li key={i}>{name}</li>
                           ))}
                         </ul>
                       </section>
                     ) : null}
+
                     {sect.keyBooks.length > 0 ? (
-                      <section className="sect-card__section">
-                        <h4 className="sect-card__section-title">المصادر والكتب</h4>
-                        <ul className="sect-card__list">
+                      <section className="sect-block" aria-labelledby={`${sect.id}-refs`}>
+                        <h4 id={`${sect.id}-refs`} className="sect-block__title">
+                          المصادر والكتب
+                        </h4>
+                        <ul className="sect-list sect-list--compact">
                           {sect.keyBooks.map((b, i) => (
                             <li key={i}>{b}</li>
                           ))}
                         </ul>
                       </section>
                     ) : null}
+
                     {sect.quote ? (
-                      <section className="sect-card__section">
-                        <h4 className="sect-card__section-title">نص منقول</h4>
-                        <blockquote className="sect-card__quote">{sect.quote}</blockquote>
+                      <section className="sect-block sect-block--quote" aria-labelledby={`${sect.id}-quote`}>
+                        <h4 id={`${sect.id}-quote`} className="sect-block__title">
+                          نص منقول
+                        </h4>
+                        <blockquote className="sect-quote">{sect.quote}</blockquote>
                       </section>
                     ) : null}
+
                     {needsReview ? (
                       <p className="sect-card__verify">
                         حالة المحتوى: needs_specialist_review — العرض للتنظيم فقط دون حكم جديد.
                       </p>
                     ) : null}
+
                     {sect.id === "ahl-al-sunna" ? (
-                      <div className="sect-card__links hub-card-grid">
-                        <InternalLinkCard href="/tawhid" title="دروس عقيدة أهل السنة والجماعة" variant="compact" className="sect-card__link" />
-                        <InternalLinkCard href="/tawhid" title="بوابة العقيدة والتوحيد" variant="compact" className="sect-card__link sect-card__link--ghost" />
-                      </div>
+                      <section className="sect-block sect-block--related" aria-label="تعلّم ذو صلة">
+                        <h4 className="sect-block__title">تعلّم ذو صلة</h4>
+                        <div className="sect-related">
+                          <InternalLinkCard
+                            href="/tawhid"
+                            title="دروس عقيدة أهل السنة والجماعة"
+                            variant="compact"
+                            className="sect-related__link"
+                          />
+                          <InternalLinkCard
+                            href="/tawhid"
+                            title="بوابة العقيدة والتوحيد"
+                            variant="compact"
+                            className="sect-related__link sect-related__link--ghost"
+                          />
+                        </div>
+                      </section>
                     ) : null}
                   </div>
                 ) : null}

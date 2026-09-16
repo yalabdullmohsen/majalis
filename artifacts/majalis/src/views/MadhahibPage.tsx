@@ -239,70 +239,83 @@ export default function MadhahibPage() {
               {/* تفاصيل */}
               {isOpen && (
                 <div className="mdb-card__body">
-                  <p className="mdb-card__summary">{m.summary}</p>
+                  <section className="mdb-block mdb-block--overview">
+                    <h3 className="mdb-block__title">نظرة عامة</h3>
+                    <p className="mdb-card__summary">{m.summary}</p>
+                  </section>
 
-                  {/* الانتشار */}
-                  <div className="mdb-section">
-                    <div className="mdb-section__title"><SectionIcon name="🌍" size={18} /> الانتشار الجغرافي</div>
-                    <p className="mdb-section__body">{m.spread}</p>
-                  </div>
-
-                  {/* المنهج */}
-                  <div className="mdb-section">
-                    <div className="mdb-section__title"><SectionIcon name="🔎" size={18} /> المنهج الأصولي</div>
-                    <p className="mdb-section__body">{m.methodology}</p>
-                  </div>
-
-                  {/* المصادر */}
-                  <div className="mdb-section">
-                    <div className="mdb-section__title"><SectionIcon name="📌" size={18} /> مصادر التشريع</div>
-                    <div className="mdb-sources">
-                      {m.sources.map((s, i) => (
-                        <span key={i} className="mdb-source-chip">{s}</span>
-                      ))}
+                  <dl className="mdb-meta" aria-label="بيانات المذهب">
+                    <div className="mdb-meta__row">
+                      <dt>الاسم الكامل</dt>
+                      <dd>{m.fullName}</dd>
                     </div>
-                  </div>
+                    <div className="mdb-meta__row">
+                      <dt>المؤسس</dt>
+                      <dd>
+                        الإمام {m.founder} ({m.born}–{m.died})
+                      </dd>
+                    </div>
+                    <div className="mdb-meta__row">
+                      <dt>المنشأ</dt>
+                      <dd>{m.origin}</dd>
+                    </div>
+                    <div className="mdb-meta__row">
+                      <dt>الانتشار</dt>
+                      <dd>{m.spread}</dd>
+                    </div>
+                  </dl>
 
-                  {/* مميزات */}
-                  <div className="mdb-section">
-                    <div className="mdb-section__title"><SectionIcon name="✨" size={18} /> أبرز المميزات</div>
-                    <ul className="mdb-features">
-                      {m.features.map((f, i) => (
-                        <li key={i} className="mdb-feature">{f}</li>
+                  <section className="mdb-block">
+                    <h3 className="mdb-block__title">المنهج الأصولي</h3>
+                    <p className="mdb-section__body">{m.methodology}</p>
+                  </section>
+
+                  <section className="mdb-block">
+                    <h3 className="mdb-block__title">مصادر التشريع</h3>
+                    <ul className="mdb-list-compact">
+                      {m.sources.map((s, i) => (
+                        <li key={i}>{s}</li>
                       ))}
                     </ul>
-                  </div>
+                  </section>
 
-                  {/* أهم الكتب */}
-                  <div className="mdb-section">
-                    <div className="mdb-section__title"><SectionIcon name="📚" size={18} /> أهم المصنَّفات</div>
-                    <div className="mdb-books">
+                  <section className="mdb-block">
+                    <h3 className="mdb-block__title">أبرز المميزات</h3>
+                    <ul className="mdb-list-compact">
+                      {m.features.map((f, i) => (
+                        <li key={i}>{f}</li>
+                      ))}
+                    </ul>
+                  </section>
+
+                  <section className="mdb-block">
+                    <h3 className="mdb-block__title">أهم المصنَّفات</h3>
+                    <ul className="mdb-list-compact mdb-list-compact--books">
                       {m.books.map((b, i) => (
-                        <div key={i} className="mdb-book">
+                        <li key={i}>
                           <span className="mdb-book__title">{b.title}</span>
                           <span className="mdb-book__author">{b.author}</span>
-                        </div>
+                        </li>
                       ))}
-                    </div>
-                  </div>
+                    </ul>
+                  </section>
 
-                  {/* العلماء */}
-                  <div className="mdb-section">
-                    <div className="mdb-section__title"><SectionIcon name="🎓" size={18} /> كبار علماء المذهب</div>
-                    <div className="mdb-scholars">
+                  <section className="mdb-block">
+                    <h3 className="mdb-block__title">كبار علماء المذهب</h3>
+                    <ul className="mdb-list-compact">
                       {m.scholars.map((s, i) => (
-                        <span key={i} className="mdb-scholar-chip">{s}</span>
+                        <li key={i}>{s}</li>
                       ))}
-                    </div>
-                  </div>
+                    </ul>
+                  </section>
 
-                  {/* قول الإمام */}
-                  <div className="mdb-quote">
-                    <blockquote>
+                  <section className="mdb-block mdb-block--quote">
+                    <h3 className="mdb-block__title">نص منقول</h3>
+                    <blockquote className="mdb-quote">
                       <p>«{m.quote.text}»</p>
                       <footer>— {m.quote.source}</footer>
                     </blockquote>
-                  </div>
+                  </section>
                 </div>
               )}
             </article>
