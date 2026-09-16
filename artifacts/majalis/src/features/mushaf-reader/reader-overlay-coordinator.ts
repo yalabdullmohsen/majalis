@@ -12,7 +12,10 @@ export type ReaderOverlayKind =
   | "search"
   | "index"
   | "bookmark"
-  | "settings";
+  | "settings"
+  /** محجوز — طبقة قفز سريع مستقبلية فوق scrubber */
+  | "quickJump";
+
 
 const EXCLUSIVE: ReadonlySet<ReaderOverlayKind> = new Set([
   "tafsir",
@@ -22,6 +25,7 @@ const EXCLUSIVE: ReadonlySet<ReaderOverlayKind> = new Set([
   "index",
   "bookmark",
   "settings",
+  "quickJump",
 ]);
 
 export function nextExclusiveOverlay(

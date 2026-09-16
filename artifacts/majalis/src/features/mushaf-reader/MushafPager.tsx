@@ -14,7 +14,7 @@ import { mushafPerfInc } from "./mushaf-turn-telemetry";
 export { SWIPE_MIN_PX, SETTLE_MS };
 
 const DEFAULT_IGNORE =
-  ".nm-controls, .nm-verse-menu, .nm-page-arrows, .nm-page-arrow, .mm-controls, .mm-audio-dock, .mm-ayah-bar, .mm-page-edge, .mm-reciter-sheet, .mm-search-sheet, .ayah-action-sheet, input, textarea, select, button";
+  ".nm-controls, .nm-verse-menu, .nm-page-arrows, .nm-page-arrow, .nm-page-scrubber, .mm-controls, .mm-audio-dock, .mm-ayah-bar, .mm-page-edge, .mm-reciter-sheet, .mm-search-sheet, .ayah-action-sheet, input, textarea, select, button";
 
 type PaneRole = "next" | "current" | "prev";
 
