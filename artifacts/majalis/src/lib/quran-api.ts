@@ -21,9 +21,6 @@ import {
   legacyPageToAyahKey,
   legacyPageToCurrentPage,
 } from "@/lib/quran-my-bookmarks";
-import { normalizeAyahKey } from "@/lib/ayah-ref-normalize";
-
-export { globalAyahToSurahAyah, normalizeAyahKey, normalizeSurahAyah } from "@/lib/ayah-ref-normalize";
 
 const BASE = "https://api.alquran.cloud/v1";
 const LOCAL_QURAN_DATA_BASE = "/data/quran";
@@ -755,9 +752,10 @@ const PAGE_POS_KEY = "mj-quran-page-pos-v1";
 export function savePagePosition(page: number, ayahKeyOverride?: string) {
   try {
     const clamped = Math.min(604, Math.max(1, Math.floor(page)));
-    const normalizedOverride =
-      typeof ayahKeyOverride === "string" ? normalizeAyahKey(ayahKeyOverride) : null;
-    const ayahKey = normalizedOverride ?? currentPageFirstAyah(clamped);
+    const ayahKey =
+      typeof ayahKeyOverride === "string" && /^\d{1,3}:\d{1,3}$/.test(ayahKeyOverride)
+        ? ayahKeyOverride
+        : currentPageFirstAyah(clamped);
     localStorage.setItem(
       PAGE_POS_KEY,
       JSON.stringify({ page: clamped, ayahKey, at: Date.now() }),
@@ -774,25 +772,10 @@ export function loadReadingAyahKey(): string | null {
   try {
     const raw = localStorage.getItem(PAGE_POS_KEY);
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as { ayahKey?: string; page?: number };
-    if (typeof parsed?.ayahKey !== "string") return null;
-    const normalized = normalizeAyahKey(parsed.ayahKey);
-    if (!normalized) return null;
-    if (normalized !== parsed.ayahKey) {
-      try {
-        const page =
-          typeof parsed.page === "number" && Number.isFinite(parsed.page)
-            ? Math.min(604, Math.max(1, Math.floor(parsed.page)))
-            : ayahKeyToPage(normalized);
-        localStorage.setItem(
-          PAGE_POS_KEY,
-          JSON.stringify({ page, ayahKey: normalized, at: Date.now() }),
-        );
-      } catch {
-        /* ignore rewrite */
-      }
+    const parsed = JSON.parse(raw) as { ayahKey?: string };
+    if (typeof parsed?.ayahKey === "string" && /^\d{1,3}:\d{1,3}$/.test(parsed.ayahKey)) {
+      return parsed.ayahKey;
     }
-    return normalized;
   } catch {
     /* ignore */
   }
@@ -804,15 +787,12 @@ export function loadPagePosition(): number | null {
     const raw = localStorage.getItem(PAGE_POS_KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as { page?: number; ayahKey?: string };
-      if (typeof parsed?.ayahKey === "string") {
-        const key = normalizeAyahKey(parsed.ayahKey);
-        if (key) {
-          const fallback =
-            typeof parsed.page === "number" ? legacyPageToCurrentPage(parsed.page) : undefined;
-          const page = ayahKeyToPage(key, fallback);
-          if (loadLastPageSync() == null) void saveLastPage(page);
-          return page;
-        }
+      if (typeof parsed?.ayahKey === "string" && /^\d{1,3}:\d{1,3}$/.test(parsed.ayahKey)) {
+        const fallback =
+          typeof parsed.page === "number" ? legacyPageToCurrentPage(parsed.page) : undefined;
+        const page = ayahKeyToPage(parsed.ayahKey, fallback);
+        if (loadLastPageSync() == null) void saveLastPage(page);
+        return page;
       }
       const page = Number(parsed?.page);
       if (Number.isFinite(page) && page >= 1 && page <= 604) {

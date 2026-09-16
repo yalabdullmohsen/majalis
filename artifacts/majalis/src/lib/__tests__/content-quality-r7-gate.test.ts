@@ -62,7 +62,7 @@ console.log("=== لوحة الإدارة لا تعرض id كعنوان درس ==
 
 console.log("=== تطبيع مرجع الآية موجود ===");
 {
-  assert.match(read("src/lib/quran-api.ts"), /normalizeAyahKey|normalizeSurahAyah/);
+  assert.match(read("src/lib/ayah-ref-normalize.ts"), /normalizeAyahKey|normalizeSurahAyah/);
   assert.ok(existsSync(resolve(root, "src/lib/__tests__/ayah-ref-normalize-gate.test.ts")));
 }
 

@@ -36,9 +36,12 @@ console.log("=== Open mushaf card uses normalize ===");
   assert.match(card, /normalizeAyahKey|normalizeSurahAyah/);
   const dash = readFileSync(resolve(root, "src/components/HomeDashboard.tsx"), "utf8");
   assert.match(dash, /normalizeSurahAyah/);
+  // وحدة خفيفة منفصلة — لا تُسحب عبر quran-api حتى لا تتجاوز ميزانية الحزمة
+  const norm = readFileSync(resolve(root, "src/lib/ayah-ref-normalize.ts"), "utf8");
+  assert.match(norm, /export function normalizeAyahKey/);
+  assert.match(norm, /export function globalAyahToSurahAyah/);
   const api = readFileSync(resolve(root, "src/lib/quran-api.ts"), "utf8");
-  assert.match(api, /normalizeAyahKey/);
-  assert.match(api, /globalAyahToSurahAyah/);
+  assert.doesNotMatch(api, /from ["']\.\/ayah-ref-normalize["']/);
 }
 
 console.log("ayah-ref-normalize-gate.test.ts: ok");
