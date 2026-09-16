@@ -1,8 +1,8 @@
 # تقرير نطاق التغييرات
 
-**التاريخ:** 2026-09-16T00:39:41.090Z
-**عدد الملفات:** 90
-**النطاقات:** content/data، other، ui/layout، quran/mushaf، docs
+**التاريخ:** 2026-09-16T06:47:13.802Z
+**عدد الملفات:** 129
+**النطاقات:** docs، other، content/data، ui/layout، quran/mushaf
 **docs-only:** لا
 
 ## البوابات المقترحة
@@ -25,8 +25,12 @@
 
 ## الملفات المتغيرة (أول 40)
 
+- `artifacts/majalis/docs/CONTENT_AFFINITY_REPORT.md` → docs
+- `artifacts/majalis/docs/ds-coverage-report.json` → other
 - `artifacts/majalis/public/data/lessons/chunk-000.json` → content_data
 - `artifacts/majalis/public/data/search/index.json` → content_data
+- `artifacts/majalis/public/data/sources/instagram-quota.json` → content_data
+- `artifacts/majalis/scripts/audit-feature-readiness.ts` → other
 - `artifacts/majalis/scripts/lessons-seed.snapshot.json` → other
 - `artifacts/majalis/scripts/validate-kuwait-lessons.mjs` → other
 - `artifacts/majalis/seo-prerender/lessons/index.html` → other
@@ -59,14 +63,10 @@
 - `artifacts/majalis/src/components/GlobalSearchModal.tsx` → ui_layout
 - `artifacts/majalis/src/components/home/home-start-here-data.ts` → ui_layout
 - `artifacts/majalis/src/components/lessons/UnifiedLessonCard.tsx` → ui_layout
+- `artifacts/majalis/src/components/quiz-game/DailyChallengeQuiz.tsx` → ui_layout
 - `artifacts/majalis/src/components/ui/TopicQuiz.tsx` → ui_layout
-- `artifacts/majalis/src/config/section-lobbies.ts` → ui_layout
-- `artifacts/majalis/src/config/sections.registry.ts` → ui_layout
-- `artifacts/majalis/src/data/institutions-catalog.json` → ui_layout
-- `artifacts/majalis/src/data/library-catalog.json` → ui_layout
-- `artifacts/majalis/src/data/universities-catalog.json` → ui_layout
 
-… +50 ملفًا
+… +89 ملفًا
 
 ## سياسات
 
