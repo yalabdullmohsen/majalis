@@ -46,7 +46,10 @@ assert.match(searchView, /highlightText/);
 
 // 3) qa لا يدعي التوثيق بلا مصدر
 const dailyQuiz = read("src/components/quiz-game/DailyChallengeQuiz.tsx");
-assert.match(dailyQuiz, /مصدر مختصر غير مُرفق بعد/);
+assert.doesNotMatch(dailyQuiz, /قيد إضافة المصدر|مصدر مختصر غير مُرفق بعد/);
+assert.match(dailyQuiz, /return null;/);
+assert.match(dailyQuiz, /dcq__source/);
+assert.match(dailyQuiz, /const src = sourceLabel\(question\);/);
 assert.doesNotMatch(dailyQuiz, /موثق بالأدلة/);
 
 // 4) adhkar غير المراجعة لها badge (في شيت التفاصيل الكسول)

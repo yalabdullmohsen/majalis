@@ -29,7 +29,7 @@ export const COMPETITION_TYPE_LABELS: Record<CompetitionType, string> = {
 export const GENDER_TARGETS = ["الكل", "رجال", "نساء", "ناشئة", "أطفال"] as const;
 export type GenderTarget = (typeof GENDER_TARGETS)[number];
 
-export const REGISTRATION_STATUSES = ["مفتوح", "قريبًا", "مغلق", "منتهية"] as const;
+export const REGISTRATION_STATUSES = ["مفتوح", "لم يبدأ التسجيل", "مغلق", "منتهية"] as const;
 export type RegistrationStatus = (typeof REGISTRATION_STATUSES)[number];
 
 export type CompetitionCategory =

@@ -12,6 +12,7 @@ import {
   formatCompetitionDate,
   listPublishedCompetitions,
   registrationIsOpen,
+  registrationStatusLabel,
   type CompetitionFilterId,
   type ExternalCompetition,
 } from "@/lib/competitions";
@@ -38,7 +39,7 @@ function CompetitionCard({ item }: { item: ExternalCompetition }) {
         <div className="cmp-card__badges">
           <span className="cmp-badge">{typeLabel}</span>
           <span className={`cmp-badge ${open ? "cmp-badge--open" : "cmp-badge--closed"}`}>
-            {item.registrationStatus}
+            {registrationStatusLabel(item.registrationStatus)}
           </span>
           {item.prizeText ? <span className="cmp-badge cmp-badge--prize">جوائز</span> : null}
         </div>

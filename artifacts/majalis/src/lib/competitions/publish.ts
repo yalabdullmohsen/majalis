@@ -17,3 +17,9 @@ export function canPublishCompetition(draft: Partial<ExternalCompetition> | null
 export function registrationIsOpen(status: ExternalCompetition["registrationStatus"]): boolean {
   return status === "مفتوح";
 }
+
+/** تطبيع حالات قديمة مخزّنة كـ«قريبًا» قبل عرضها للمستخدم. */
+export function registrationStatusLabel(status: string): string {
+  if (status === "قريبًا" || status === "قريبا") return "لم يبدأ التسجيل";
+  return status;
+}
