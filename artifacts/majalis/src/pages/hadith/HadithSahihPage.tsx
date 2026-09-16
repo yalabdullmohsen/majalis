@@ -34,7 +34,7 @@ export default function HadithSahihPage() {
         <ShareButtons title="الأحاديث الصحيحة — سُنّة" url="https://www.ssunnah.com/hadith/sahih" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في علوم الحديث" count={4} />
+        <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث الصحيح" count={4} />
       </div>
     </>
   );

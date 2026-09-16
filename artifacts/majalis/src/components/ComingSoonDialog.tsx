@@ -44,7 +44,7 @@ export function ComingSoonDialog({ open, title, onClose }: Props) {
       >
         <div className="bottom-sheet__handle" />
         <div className="bottom-sheet__head">
-          <span>قسم غير ظاهر</span>
+          <span>قسم غير متاح</span>
           <button
             ref={closeRef}
             type="button"
@@ -59,7 +59,7 @@ export function ComingSoonDialog({ open, title, onClose }: Props) {
           <div className="coming-soon-dialog__body">
             <h2 className="coming-soon-dialog__title">{title}</h2>
             <p className="coming-soon-dialog__text">
-              هذا المسار غير ظاهر في الواجهة العامة حاليًا. تابع التصفح من الأقسام المتاحة في الشريط أو فهرس الأقسام.
+              هذا القسم غير متاح الآن. تصفّح الأقسام من الشريط أو دليل الأقسام.
             </p>
           </div>
         </div>

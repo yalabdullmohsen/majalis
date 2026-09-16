@@ -451,7 +451,7 @@ export default function DuasQuranPage() {
         {filtered.length === 0 && (
           <div className="dq-empty">
             <span><SectionIcon name="🔍" size={18} /></span>
-            <p>لا توجد نتائج مطابقة</p>
+            <p>لا توجد نتائج مطابقة. جرّب كلمة أخرى أو امسح التصفية.</p>
           </div>
         )}
 

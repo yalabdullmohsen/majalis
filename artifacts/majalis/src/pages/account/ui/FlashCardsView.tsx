@@ -417,7 +417,7 @@ function FlashCardsPageInner() {
       ) : (
         <div className="fc-empty">
           <div className="flc-empty-icon"><CheckCircle2 size={48} strokeWidth={1.4} aria-hidden="true" /></div>
-          <p>لا توجد بطاقات مستحقة الآن. تفقّد لاحقاً!</p>
+          <p>لا بطاقات مستحقة الآن. عد لاحقًا للمراجعة.</p>
           <Link href="/lessons" className="lp-plan__action-btn lp-plan__action-btn--primary flc-empty-link">
             خطتي العلمية
           </Link>

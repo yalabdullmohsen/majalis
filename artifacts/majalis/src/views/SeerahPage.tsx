@@ -300,7 +300,7 @@ export default function SeerahPage() {
       route="/seerah"
       eyebrow="سيرة النبي ﷺ"
       title="السيرة النبوية الشريفة"
-      subtitle="امتداداً لرسالة الأنبياء، حياة خاتمهم محمد ﷺ من المولد إلى الوفاة في 12 مرحلة"
+      subtitle="امتداداً لرسالة الأنبياء، حياة خاتمهم محمد ﷺ من المولد إلى الوفاة في ١٢ مرحلة"
       groupTitle="مراحل السيرة النبوية"
     >
       <KnowledgeLayout kind="biography" className="seerah-page" data-kx="1">

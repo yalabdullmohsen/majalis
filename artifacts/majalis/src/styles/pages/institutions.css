@@ -61,6 +61,21 @@
   color: var(--ds-emerald-deep);
   white-space: nowrap;
 }
+.inst-card__review-badge {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, #c9a227 18%, transparent);
+  color: #8a6d1a;
+  white-space: nowrap;
+}
+html.dark .inst-card__review-badge,
+html[data-theme="dark"] .inst-card__review-badge {
+  background: color-mix(in srgb, #e8c547 22%, transparent);
+  color: #f0df9a;
+}
 .inst-card__desc {
   margin: 0;
   font-size: 0.825rem;

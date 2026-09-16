@@ -70,7 +70,7 @@ function CompareContent() {
       <div dir="rtl" className="flex items-center justify-center min-h-[60vh] text-center px-4">
         <div>
           <h1 className="page-status-shell__title">مقارنة الجامعات</h1>
-          <p className="ucp-empty-title">لا توجد جامعات للمقارنة</p>
+          <p className="ucp-empty-title">اختر جامعتين أو أكثر من الدليل للمقارنة.</p>
           <p className="ucp-empty-desc">اختر جامعتين على الأقل من الدليل لتبدأ المقارنة.</p>
           <Link href="/universities"
             className="px-5 py-2 citation-btn citation-btn--primary rounded-xl text-sm font-medium transition-colors">

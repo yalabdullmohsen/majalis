@@ -336,7 +336,7 @@ export default function LoginPage() {
                 type="email"
                 inputMode="email"
                 autoComplete="email"
-                placeholder="name@example.com"
+                placeholder="أدخل بريدك الإلكتروني"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required

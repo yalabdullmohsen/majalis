@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-04T16:35:23.642Z",
+  "generatedAt": "2026-09-16T00:29:28.704Z",
   "counts": {
-    "total": 173,
-    "source_verified": 11,
-    "source_missing": 162,
+    "total": 190,
+    "source_verified": 18,
+    "source_missing": 172,
     "source_broken": 0,
     "needs_review": 0
   },
@@ -19,14 +19,6 @@
     {
       "id": "book-madarij",
       "title": "مدارج السالكين بين منازل إياك نعبد وإياك نستعين"
-    },
-    {
-      "id": "book-tafsir-ibnkathir",
-      "title": "تفسير ابن كثير"
-    },
-    {
-      "id": "book-tafsir-tabari",
-      "title": "تفسير الطبري"
     },
     {
       "id": "book-wasitiyyah",
@@ -117,10 +109,6 @@
       "title": "سنن الدارمي"
     },
     {
-      "id": "book-bulugh-maram",
-      "title": "بلوغ المرام من أدلة الأحكام"
-    },
-    {
       "id": "book-majmoo",
       "title": "المجموع شرح المهذب"
     },
@@ -167,6 +155,18 @@
     {
       "id": "book-sarf-mutah",
       "title": "متن مراح الأرواح في علم الصرف"
+    },
+    {
+      "id": "book-dara-at-taarus",
+      "title": "درء تعارض العقل والنقل"
+    },
+    {
+      "id": "book-isaghoji",
+      "title": "إيساغوجي في المنطق"
+    },
+    {
+      "id": "book-adab-al-mufrad",
+      "title": "الأدب المفرد"
     }
   ],
   "sample_broken": [],

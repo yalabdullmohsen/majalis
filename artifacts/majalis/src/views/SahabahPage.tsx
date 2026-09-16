@@ -1358,7 +1358,7 @@ export default function SahabahPage() {
         {filtered.length === 0 && (
           <div className="sb-empty">
             <span><SectionIcon name="🔍" size={18} /></span>
-            <p>لا توجد نتائج مطابقة</p>
+            <p>لا توجد نتائج مطابقة. جرّب كلمة أخرى أو امسح التصفية.</p>
           </div>
         )}
 

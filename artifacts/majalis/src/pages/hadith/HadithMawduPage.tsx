@@ -34,7 +34,7 @@ export default function HadithMawduPage() {
         <ShareButtons title="الأحاديث الموضوعة — سُنّة" url="https://www.ssunnah.com/hadith/mawdu" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في علوم الحديث" count={4} />
+        <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث الموضوع" count={4} />
       </div>
     </>
   );

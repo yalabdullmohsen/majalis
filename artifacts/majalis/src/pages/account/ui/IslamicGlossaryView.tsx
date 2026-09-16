@@ -1935,7 +1935,7 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
         </div>
       </div>
 
-      <SectionQuiz route="/islamic-glossary" count={4} />
+      <SectionQuiz route="/islamic-glossary" count={4} title="اختبر معلوماتك في المصطلحات الشرعية" />
 
       <section className="gl-container" aria-labelledby="gl-faq-title">
         <h2 id="gl-faq-title" className="gl-results-count">أسئلة مختصرة عن المعجم</h2>

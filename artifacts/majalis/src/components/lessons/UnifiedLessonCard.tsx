@@ -178,7 +178,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
             ? lesson.sheikhName.replace(/^الشيخ(?:ة)?:\s*/u, "")
             : lesson.mosque
               ? `محاضرو ${lesson.mosque}`
-              : "المحاضر يُذكر عند التسجيل"}
+              : "المحاضر غير مذكور"}
         </p>
         {!compact && shortDescription ? (
           <p className="lesson-unified-card__desc">{shortDescription}</p>

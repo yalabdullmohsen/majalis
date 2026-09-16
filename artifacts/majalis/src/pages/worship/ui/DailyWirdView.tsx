@@ -390,7 +390,7 @@ export default function DailyWirdPage() {
         <ShareButtons title="الورد اليومي — سُنّة" url="https://www.ssunnah.com/daily-wird" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz route="/daily-wird" title="اختبر معلوماتك في القرآن والأخلاق" count={4} />
+        <SectionQuiz route="/daily-wird" title="اختبر معلوماتك في الورد القرآني" count={4} />
       </div>
     </div>
     </UtilityScreen>

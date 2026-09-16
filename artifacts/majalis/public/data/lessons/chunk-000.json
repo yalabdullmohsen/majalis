@@ -461,7 +461,7 @@
     "id": "kw-murtaqa-madarij-altalab-0",
     "external_key": "kw-murtaqa-madarij-altalab-0",
     "title": "دورة مدارج الطلب — المسار الانتقائي — متاح 24 ساعة",
-    "speaker_name": "يُذكر عند التسجيل",
+    "speaker_name": "مطلق الجاسر وآخرون",
     "sheikh_image_url": "",
     "category": "تأصيل",
     "city": "",
@@ -490,7 +490,10 @@
     "is_recurring": true,
     "activity_type": "دورة",
     "is_course": true,
-    "course_id": "murtaqa-madarij-altalab"
+    "course_id": "murtaqa-madarij-altalab",
+    "sheikhs": {
+      "name": "مطلق الجاسر وآخرون"
+    }
   },
   {
     "id": "kw-nabil-alawadhi-seerah-weekly-0",
@@ -687,7 +690,7 @@
     "id": "kw-fiqh-ibadaat-course-0",
     "external_key": "kw-fiqh-ibadaat-course-0",
     "title": "دورة الفقه العملي للعبادات — الدرس الأول — الطهارة",
-    "speaker_name": "يُذكر عند التسجيل",
+    "speaker_name": "يوسف بن أحمد القاسم",
     "sheikh_image_url": "",
     "category": "فقه",
     "city": "العاصمة",
@@ -717,7 +720,10 @@
     "linked_titles": [
       "الدرس الأول — الطهارة",
       "الدرس الثاني — الصلاة"
-    ]
+    ],
+    "sheikhs": {
+      "name": "يوسف بن أحمد القاسم"
+    }
   },
   {
     "id": "kw-seerah-ghazawaat-weekly-0",
@@ -1038,7 +1044,7 @@
     "id": "kw-jahraa-muhimmat-aqeeda-women-2026-0",
     "external_key": "kw-jahraa-muhimmat-aqeeda-women-2026-0",
     "title": "دورة مهمات في العقيدة — ثلاثة الأصول — القواعد الأربع — نواقض الإسلام",
-    "speaker_name": "يُذكر عند التسجيل",
+    "speaker_name": "أ. جميلة الهاجري",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "تأصيل",
     "city": "العاصمة",
@@ -1062,13 +1068,16 @@
     "is_recurring": true,
     "activity_type": "دورة",
     "is_course": true,
-    "course_id": "jahraa-muhimmat-aqeeda-women-2026"
+    "course_id": "jahraa-muhimmat-aqeeda-women-2026",
+    "sheikhs": {
+      "name": "أ. جميلة الهاجري"
+    }
   },
   {
     "id": "kw-asima-umdat-ahkam-sarra-2026-0",
     "external_key": "kw-asima-umdat-ahkam-sarra-2026-0",
     "title": "دورة عمدة الأحكام — للإمام عبدالغني المقدسي — عمدة الأحكام — 18 مجلساً",
-    "speaker_name": "يُذكر عند التسجيل",
+    "speaker_name": "محمد هشام طاهري",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "تأصيل",
     "city": "",
@@ -1092,7 +1101,10 @@
     "is_recurring": true,
     "activity_type": "دورة",
     "is_course": true,
-    "course_id": "asima-umdat-ahkam-sarra-2026"
+    "course_id": "asima-umdat-ahkam-sarra-2026",
+    "sheikhs": {
+      "name": "محمد هشام طاهري"
+    }
   },
   {
     "id": "kw-mahboula-dosari-umdat-tawhid-2026-0",
@@ -1136,7 +1148,7 @@
     "id": "kw-ahmadi-zad-muslim-ulum-quran-2026-0",
     "external_key": "kw-ahmadi-zad-muslim-ulum-quran-2026-0",
     "title": "الميسر في علوم القرآن",
-    "speaker_name": "يُذكر عند التسجيل",
+    "speaker_name": "لافي عايض العازمي",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "تأصيل",
     "city": "",
@@ -1167,7 +1179,10 @@
     "linked_titles": [
       "المجلس الأول — علوم القرآن",
       "المجلس الثاني — علوم القرآن"
-    ]
+    ],
+    "sheikhs": {
+      "name": "لافي عايض العازمي"
+    }
   },
   {
     "id": "kw-jahraa-alkalam-altayib-weekly-2026-0",

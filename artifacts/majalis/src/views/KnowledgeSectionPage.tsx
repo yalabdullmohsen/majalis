@@ -73,7 +73,7 @@ export default function KnowledgeSectionPage() {
           applyPageSeo({
             path,
             title: `${SECTION_TITLE[section] || section} | معرفة`,
-            description: `فهرس قسم ${SECTION_TITLE[section] || section} — محتوى موثّق وفق منهج أهل السنة.`,
+            description: `فهرس قسم ${SECTION_TITLE[section] || "معرفة"} في سُنّة.`,
             jsonLd: faq ? [faq] : undefined,
           });
         }
@@ -179,7 +179,7 @@ export default function KnowledgeSectionPage() {
   return (
     <UtilityScreen compose="mark">
     <div className="page-shell narrow" dir="rtl">
-      <PageHeader eyebrow="معرفة" title={SECTION_TITLE[section] || section} />
+      <PageHeader eyebrow="معرفة" title={SECTION_TITLE[section] || "معرفة"} />
       <label className="knowledge-filter">
         تصفية
         <input value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="ابحث في العناوين…" />
@@ -187,15 +187,19 @@ export default function KnowledgeSectionPage() {
       {section === "discover-islam" && (
         <p className="page-meta">محطات منجزة محلياً: {progress.discoverStations.length}</p>
       )}
-      <ul className="knowledge-index-list">
-        {visible.slice(0, 200).map((it) => (
-          <li key={it.id}>
-            <Link href={`/knowledge/${section}/${it.id}`} className="knowledge-index-link soft-card soft-card--on-light">
-              <span>{it.title}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {visible.length === 0 ? (
+        <p className="page-meta">لا موضوعات في هذا القسم حاليًا، أو لا نتائج لهذا البحث.</p>
+      ) : (
+        <ul className="knowledge-index-list">
+          {visible.slice(0, 200).map((it) => (
+            <li key={it.id}>
+              <Link href={`/knowledge/${section}/${it.id}`} className="knowledge-index-link soft-card soft-card--on-light">
+                <span>{it.title}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
       {visible.length > 200 && <p className="page-meta">يُعرض أول 200 نتيجة — ضيّق التصفية.</p>}
     </div>
     </UtilityScreen>

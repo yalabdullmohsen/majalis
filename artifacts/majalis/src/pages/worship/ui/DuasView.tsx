@@ -1152,7 +1152,7 @@ export default function DuasPage() {
         </div>
       )}
 
-      <SectionQuiz route="/duas" title="اختبر معلوماتك في الحديث الشريف" count={4} />
+      <SectionQuiz route="/duas" title="اختبر معلوماتك في الأدعية والآداب" count={4} />
 
       <div className="twh-share">
         <ShareButtons title="الأدعية الشرعية — سُنّة" url="https://www.ssunnah.com/duas" />
