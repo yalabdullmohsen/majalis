@@ -28,7 +28,7 @@ export default function DiscoverIslamDoubtsPage() {
       {items === null ? (
         <SkeletonCardGrid />
       ) : items.length === 0 ? (
-        <Empty text="لا توجد شبهات منشورة بعد." />
+        <Empty text="لا توجد شبهات منشورة بعد. تصفّح بقية أبواب اكتشف الإسلام." />
       ) : (
         <div className="hub-card-grid dii-list-grid dii-section">
           {items.map((s) => (

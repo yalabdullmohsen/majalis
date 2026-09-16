@@ -186,7 +186,7 @@ export default function TopicsIndexPage() {
       {loading && Object.keys(displayed).length === 0 && <SkeletonCardGrid />}
 
       {!loading && Object.entries(displayed).length === 0 && search.trim() && (
-        <p className="tip-footer-note">لا توجد موضوعات مطابقة لـ «{search}».</p>
+        <p className="tip-footer-note">لا توجد موضوعات مطابقة لـ «{search}». جرّب كلمة أخرى أو امسح البحث.</p>
       )}
 
       <div aria-busy={loading}>

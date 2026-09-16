@@ -4,7 +4,7 @@ export interface QuizQuestion {
   a: string;
   hint: string;
   pending?: boolean;
-  /** مصدر مختصر إن وُجد — وإلا تُعرض «قيد إضافة المصدر» في الواجهة */
+  /** مصدر مختصر إن وُجد — وإلا تُعرض «مصدر مختصر غير مُرفق بعد» في الواجهة */
   source?: string;
 }
 

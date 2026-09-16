@@ -1096,7 +1096,7 @@ export default function DuasPage() {
 
       {/* ═══ شبكة الأدعية ═══ */}
       {filtered.length === 0 ? (
-        <p className="duas-empty">لا توجد أدعية مطابقة.</p>
+        <p className="duas-empty">لا توجد أدعية مطابقة. جرّب كلمة أخرى أو امسح التصفية، أو تصفّح أدعية القرآن.</p>
       ) : (
         <div className="duas-list">
           {filtered.map((dua) => {

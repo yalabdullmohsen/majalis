@@ -61,7 +61,7 @@ function buildChoices(q: QuizQuestion, pool: QuizQuestion[], seed: number): stri
 function sourceLabel(q: QuizQuestion): string {
   const src = (q as QuizQuestion & { source?: string }).source?.trim();
   if (src) return src;
-  return "قيد إضافة المصدر";
+  return "مصدر مختصر غير مُرفق بعد";
 }
 
 const SCORE_KEY = "majalis-daily-challenge-score-v1";

@@ -1322,7 +1322,7 @@ export default function ProphetStoriesPage({
             {results.length === 0 ? (
               <div className="prophets-lux-empty">
                 <IslamicStar size={24} color={IVORY} opacity={0.3} />
-                <p>لا توجد نتائج لـ «{search}»</p>
+                <p>لا توجد نتائج لـ «{search}». جرّب كلمة أخرى أو امسح البحث.</p>
               </div>
             ) : (
               <>
