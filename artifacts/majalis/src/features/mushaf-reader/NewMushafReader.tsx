@@ -1194,30 +1194,17 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           setControlsMoreOpen(false);
         }}
         onExit={() => {
-          if (searchOpen || indexOpen) {
-            setSearchOpen(false);
-            setIndexOpen(false);
-            return;
-          }
-          if (tafsirOpen) {
-            setTafsirOpen(false);
-            setTafsirVerseKey(null);
-            return;
-          }
-          if (audioDockOpen && !audioDockMini) {
-            setAudioDockMini(true);
-            return;
-          }
-          if (actionsOpen) {
-            setActionsOpen(false);
-            setSelectedVerseKey(null);
-            return;
-          }
-          if (controlsMoreOpen) {
-            setControlsMoreOpen(false);
-            return;
-          }
+          /* خروج دائم = مغادرة المصحف فورًا (لا طبقات إغلاق متداخلة) */
           setMushafAyahSearchHighlight(null);
+          setSearchOpen(false);
+          setIndexOpen(false);
+          setTafsirOpen(false);
+          setTafsirVerseKey(null);
+          setActionsOpen(false);
+          setSelectedVerseKey(null);
+          setControlsMoreOpen(false);
+          setGotoOpen(false);
+          setAudioDockOpen(false);
           recitation.stop();
           onExit();
         }}
@@ -1314,8 +1301,14 @@ const PrefetchPage = memo(function PrefetchPage({
 
   useEffect(() => {
     let cancelled = false;
+    const cached = getCachedMushafPage(pageNumber);
+    if (cached) {
+      setLayout((prev) => (prev === cached ? prev : cached));
+    }
     void loadMushafPage(pageNumber).then((data) => {
-      if (!cancelled) setLayout(data);
+      if (cancelled) return;
+      /* لا تُعد الرسم إن كانت نفس بيانات الكاش */
+      setLayout((prev) => (prev === data ? prev : data));
     });
     return () => {
       cancelled = true;
