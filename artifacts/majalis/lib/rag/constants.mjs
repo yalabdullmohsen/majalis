@@ -27,7 +27,6 @@ export const CACHE_MAX_SIZE = 200;
 export const AUTHORITY_SCORES = {
   quran_verse:   100,
   hadith:         90,  // صحيح/حسن يُضبط في الـ retrieval
-  fiqh_decision:  85,
   fatwa:          80,
   tafsir:         75,
   book:           70,

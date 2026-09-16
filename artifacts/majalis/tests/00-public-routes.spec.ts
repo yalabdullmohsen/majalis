@@ -25,7 +25,6 @@ const PUBLIC_ROUTES: Array<{ href: string; label: string }> = [
   { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
   { href: "/updates",        label: "المستجدات" },
   { href: "/fiqh",           label: "الفقه الإسلامي" },
-  { href: "/fiqh-council",   label: "المجمع الفقهي" },
   { href: "/seerah",         label: "السيرة النبوية" },
   { href: "/tarikh-islami",       label: "التاريخ الإسلامي" },
   { href: "/knowledge-graph",label: "استكشف المعرفة" },
@@ -48,8 +47,10 @@ const PUBLIC_ROUTES: Array<{ href: string; label: string }> = [
 
 // مسارات الاختصار التي يجب أن تُعيد التوجيه بدلاً من الفشل
 const REDIRECT_ROUTES: Array<{ href: string; redirectsTo: string }> = [
+  { href: "/fiqh-council",         redirectsTo: "/fiqh" },
+  { href: "/rulings",              redirectsTo: "/fiqh" },
   { href: "/quran",                 redirectsTo: "/quran-hub" },
-  { href: "/research",              redirectsTo: "/fiqh-council/research" },
+  { href: "/research",              redirectsTo: "/academic-research" },
   { href: "/scholarly-research",    redirectsTo: "/quiz" },
   { href: "/qa",                    redirectsTo: "/quiz" },
   { href: "/learning-path",         redirectsTo: "/lessons" },

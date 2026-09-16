@@ -8,7 +8,7 @@ const IMPORTED_FROM_AUTOMATION: ExternalCompetition[] = [];
 const DEV_DEMO_ONLY: ExternalCompetition[] = [
   {
     id: "demo-mahir-quran",
-    title: "مسابقة الماهر بالقرآن (عرض تجريبي)",
+    title: "مسابقة الماهر بالقرآن",
     organizerName: "جهة موثوقة — تجريبي",
     sourceName: "importedSources",
     sourceUrl: "https://example.com/demo-mahir",

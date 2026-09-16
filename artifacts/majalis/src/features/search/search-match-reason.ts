@@ -106,7 +106,7 @@ export function resolveSearchMatchReason(
 
   const q = opts.query.trim();
   if (!q) {
-    return { field: "unknown", label: "نتيجة مقترحة", rankBoost: 9 };
+    return { field: "unknown", label: "نتائج مختارة", rankBoost: 9 };
   }
 
   const titleHit = fieldHit(opts.title, q);

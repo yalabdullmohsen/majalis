@@ -90,4 +90,58 @@ for (const rel of [
   assert.doesNotMatch(read(rel), /\/fiqh-council/, `${rel}: بلا روابط مجمع`);
 }
 
+
+/* r3: API + sync + catalog — لا سطح حيّ للمجمع */
+{
+  const apiSearch = read("lib/api-handlers/search.js");
+  assert.doesNotMatch(apiSearch, /\.from\(\s*["']fiqh_council_items["']\s*\)/);
+  assert.doesNotMatch(apiSearch, /type:\s*"fiqh_decision"/);
+  assert.doesNotMatch(apiSearch, /href:\s*`\/fiqh-council\//);
+  assert.match(apiSearch, /async function searchFiqh/, "searchFiqh يبقى stub فارغًا");
+  const fiqhFn = apiSearch.slice(apiSearch.indexOf("async function searchFiqh"));
+  assert.match(fiqhFn.slice(0, 280), /return \[\]/);
+}
+{
+  const sync = read("lib/sync-data.mjs");
+  assert.doesNotMatch(sync, /runFiqhCouncilSync\(/);
+  assert.doesNotMatch(sync, /from "\.\/fiqh-council-sync/);
+  assert.match(sync, /fiqh_council_product_removed|removed:\s*true/);
+}
+{
+  const inst = read("src/data/institutions-catalog.json");
+  assert.doesNotMatch(inst, /"fiqh-council-mecca"/);
+  assert.doesNotMatch(inst, /مجمع الفقه الإسلامي الدولي/);
+}
+{
+  const snap = read("scripts/platform-seed.snapshot.json");
+  assert.match(snap, /"fiqh_decisions"\s*:\s*\[\s*\]/);
+}
+
+/* r3: sitemap / SEO / research — لا استعلامات ولا عناوين منتج للمجمع */
+{
+  const sitemap = read("lib/cms/sitemap-builder.mjs");
+  assert.doesNotMatch(sitemap, /\.from\(\s*["']fiqh_council_items["']\s*\)/);
+  assert.doesNotMatch(sitemap, /\.from\(\s*["']fiqh_council_issues["']\s*\)/);
+  assert.doesNotMatch(sitemap, /قرار مجمعي/);
+  assert.doesNotMatch(sitemap, /\/fiqh-council/);
+}
+{
+  const seo = read("lib/auto-knowledge-engine/seo-engine.mjs");
+  assert.doesNotMatch(seo, /المجمع الفقهي/);
+  assert.doesNotMatch(seo, /\/fiqh-council/);
+  assert.doesNotMatch(seo, /fiqh_decision:\s*[`'"]/);
+}
+{
+  const research = read("lib/fiqh-research-engine.mjs");
+  assert.doesNotMatch(research, /\.from\(\s*["']fiqh_council_items["']\s*\)/);
+  assert.doesNotMatch(research, /search_fiqh_council_advanced/);
+  assert.doesNotMatch(research, /المجمع الفقهي/);
+  const searchFn = research.slice(research.indexOf("export async function searchPublishedItems"));
+  assert.match(searchFn.slice(0, 400), /return \[\]/);
+}
+{
+  const landmarks = read("src/lib/islamic-landmarks-data.ts");
+  assert.doesNotMatch(landmarks, /ويُعرض تعريفًا خاصًا/);
+}
+
 console.log("fiqh-council-completeness (removal gate): OK");

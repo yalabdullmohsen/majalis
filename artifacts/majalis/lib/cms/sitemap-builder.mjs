@@ -26,14 +26,6 @@ function escapeXml(s) {
     .replace(/"/g, "&quot;");
 }
 
-function loadStaticCatalog(filename) {
-  try {
-    return JSON.parse(readFileSync(join(APP_ROOT, `src/data/${filename}`), "utf8"));
-  } catch {
-    return [];
-  }
-}
-
 export async function fetchDynamicUrls() {
   const admin = getSupabaseAdmin();
   const urls = [];
@@ -56,23 +48,16 @@ export async function fetchDynamicUrls() {
   // (المسارات القديمة تُحوَّل إلى /search عبر vercel + AppRoutes).
 
   // اكتُشف 2026-07-18: جدول fiqh_council_sessions غير موجود في القاعدة الحية.
-  // البذرة أُفرِغت (2026-07-26) من جلسات غير موثّقة؛ المرآة تُولَّد من
-  // fiqh-sessions-seed.ts عبر regen-fiqh-sessions-json.mjs — فارغة = بلا روابط ميتة.
-  const fiqhSessions = loadStaticCatalog("fiqh-sessions-list.json");
-  for (const s of fiqhSessions) {
-    if (!s?.slug) continue;
-    urls.push({ loc: `/fiqh-council/sessions/${s.slug}`, lastmod: s.updated_at, priority: 0.6, changefreq: "yearly" });
-  }
+  // منتج المجمع/القرارات أُزيل — لا تُدرَج جلسات أو قرارات من كاتالوج أو جداول council.
+  // مرآة fiqh-sessions-list.json فارغة عمدًا؛ لا روابط ميتة في الخريطة.
 
   if (!admin) return urls;
 
   const [
-    lessons, sheikhs, qa, updates, learningPaths,
-    rulings, universities, fiqhIssues, fiqhItems, annualCourses,
+    lessons, updates, learningPaths,
+    rulings, universities, annualCourses,
   ] = await Promise.all([
     admin.from("lessons").select("id, updated_at, slug").eq("status", "approved").limit(2000),
-    admin.from("sheikhs").select("id, updated_at").eq("is_verified", true).limit(500),
-    admin.from("qa_questions").select("id, updated_at").eq("status", "published").limit(500),
     // ملاحظة (2026-07-26، تدقيق جدول fawaid): استعلام fawaid أُزيل من هنا
     // لسببين معًا — (١) لا مسار `/fawaid/:id` في src/App.tsx إطلاقًا (المسار
     // الوحيد هو `/fawaid` صفحة القائمة)، فكل رابط كان سيُولَّد هنا هو 404
@@ -97,15 +82,12 @@ export async function fetchDynamicUrls() {
     admin.from("learning_paths").select("id, slug, updated_at").eq("status", "published").limit(200),
     // اكتُشف 2026-07-18 (بمتابعة نفس التدقيق): محتوى حي آخر له صفحات
     // تفصيل فعلية (*DetailPage.tsx حقيقية في src/views) لكن لم يكن أيٌّ
-    // منها مُستعلَماً هنا — أكبرها موسوعة الأحكام (690 صفاً). شروط الفلترة
+    // منها مُستعلَماً هنا — أكبرها موسوعة الأحكام. شروط الفلترة
     // مطابقة حرفياً لسياسات RLS/الخدمات الحية المستهلِكة لكل جدول.
-    // fiqh_council_sessions اسْتُبعِد عمداً — الجدول غير موجود أصلاً في
-    // القاعدة الحية حالياً (تحقَّقتُ مباشرة، سيُسقِط Promise.all بالكامل
-    // لو أُضيف).
+    // جداول fiqh_council_* أُزيلت من الخريطة والتغذية — المنتج ملغى.
+    // /sheikhs و /qa لا تُدرَج في الخريطة — لا استعلام بلا استخدام.
     admin.from("sharia_rulings").select("id, updated_at").eq("status", "approved").limit(1000),
     admin.from("universities").select("id, slug, updated_at").eq("is_published", true).limit(100),
-    admin.from("fiqh_council_issues").select("id, slug, updated_at").eq("status", "published").eq("documentation_level", "official_verified").limit(200),
-    admin.from("fiqh_council_items").select("id, slug, updated_at").eq("status", "published").limit(200),
     admin.from("annual_courses").select("id, external_key, updated_at").eq("status", "approved").limit(100),
   ]);
 
@@ -127,12 +109,6 @@ export async function fetchDynamicUrls() {
   }
   for (const row of universities.data || []) {
     urls.push({ loc: `/universities/${row.slug || row.id}`, lastmod: row.updated_at, priority: 0.65 });
-  }
-  for (const row of fiqhIssues.data || []) {
-    urls.push({ loc: `/fiqh-council/issues/${row.slug || row.id}`, lastmod: row.updated_at, priority: 0.68 });
-  }
-  for (const row of fiqhItems.data || []) {
-    urls.push({ loc: `/fiqh-council/${row.slug || row.id}`, lastmod: row.updated_at, priority: 0.65 });
   }
   for (const row of annualCourses.data || []) {
     urls.push({ loc: `/annual-courses/${row.external_key || row.id}`, lastmod: row.updated_at, priority: 0.65 });
@@ -194,30 +170,16 @@ export async function buildFeedXml() {
   const base = config.siteUrl.replace(/\/+$/, "");
   const admin = getSupabaseAdmin();
 
-  // اكتُشف 2026-07-18: وصف القناة أدناه يَعِد بـ"دروس وفتاوى وقرارات" لكن
-  // التنفيذ كان يجلب الدروس فقط — انحراف حي بين القناة ومحتواها لا علاقة
-  // له بأي لقطة JSON مجمَّدة (buildFeedXml لم يقرأ قط ملفاً ثابتاً)، لكنه
-  // نفس فئة العطل الأعمق: مصدر محتوى حي (fiqh_council_issues) موعود به
-  // في الواجهة لكنه غير مُستعلَم إطلاقاً. أُضيف هنا مطابقاً لنفس شروط
-  // الفلترة الحية المُستخدَمة في fiqh-council-issues-service.ts
-  // (status='published' + documentation_level='official_verified') وفي
-  // platform-content-service.ts للدورات (status='approved').
+  // منتج المجمع/القرارات أُزيل — التغذية تعرض دروسًا ودورات فقط (بلا قرارات مجمعيّة).
   let entries = [];
   if (admin) {
-    const [lessons, fiqhIssues, courses] = await Promise.all([
+    const [lessons, courses] = await Promise.all([
       admin
         .from("lessons")
         .select("id, title, description, updated_at, slug")
         .eq("status", "approved")
         .order("updated_at", { ascending: false })
         .limit(30),
-      admin
-        .from("fiqh_council_issues")
-        .select("id, title, summary, published_at, updated_at, slug")
-        .eq("status", "published")
-        .eq("documentation_level", "official_verified")
-        .order("published_at", { ascending: false })
-        .limit(10),
       admin
         .from("annual_courses")
         .select("id, title, summary, updated_at, created_at, external_key")
@@ -232,12 +194,6 @@ export async function buildFeedXml() {
         link: `${base}/lessons/${row.slug || row.id}`,
         description: row.description || "",
         date: row.updated_at,
-      })),
-      ...(fiqhIssues.data || []).map((row) => ({
-        title: `[قرار مجمعي] ${row.title}`,
-        link: `${base}/fiqh-council/issues/${row.slug || row.id}`,
-        description: row.summary || "",
-        date: row.published_at || row.updated_at,
       })),
       ...(courses.data || []).map((row) => ({
         title: `[دورة علمية] ${row.title}`,
@@ -265,7 +221,7 @@ export async function buildFeedXml() {
   <channel>
     <title>${escapeXml(config.siteName || "سُنّة")}</title>
     <link>${escapeXml(base)}</link>
-    <description>آخر الإضافات العلمية — دروس وفتاوى وقرارات</description>
+    <description>آخر الإضافات العلمية — دروس ودورات موثّقة</description>
     <language>ar</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${escapeXml(`${base}/feed.xml`)}" rel="self" type="application/rss+xml"/>

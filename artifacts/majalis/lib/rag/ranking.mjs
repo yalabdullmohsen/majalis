@@ -2,8 +2,9 @@
  * ترتيب وتسجيل نقاط المصادر
  *
  * مبدأ الترتيب:
- * القرآن (100) > حديث صحيح (95) > حديث حسن (80) > قرار مجمع فقهي (85)
+ * القرآن (100) > حديث صحيح (95) > حديث حسن (80)
  * > فتوى موثقة (80) > تفسير (75) > كتاب (70) > درس (65) > فائدة (60)
+ * (قرار مجمع فقهي أُزيل كمنتج — لا يُرتَّب ولا يُعاد)
  */
 
 import { AUTHORITY_SCORES } from "./constants.mjs";
@@ -17,24 +18,12 @@ function hadithGradeBonus(metadata) {
   return 0;
 }
 
-/** نقاط إضافية حسب درجة موثوقية الفتوى */
-function fiqhConfidenceBonus(metadata) {
-  const level = metadata?.confidence_level || "";
-  if (level === "source_verified") return 8;
-  if (level === "high")            return 4;
-  return 0;
-}
-
 /**
  * احسب النقاط النهائية لوثيقة
  */
 function scoreDocument(doc) {
   const baseAuthority = AUTHORITY_SCORES[doc.content_type] || 50;
-  const typeBonus = doc.content_type === "hadith"
-    ? hadithGradeBonus(doc.metadata)
-    : doc.content_type === "fiqh_decision"
-    ? fiqhConfidenceBonus(doc.metadata)
-    : 0;
+  const typeBonus = doc.content_type === "hadith" ? hadithGradeBonus(doc.metadata) : 0;
 
   const authorityFinal = Math.min(100, baseAuthority + typeBonus);
 

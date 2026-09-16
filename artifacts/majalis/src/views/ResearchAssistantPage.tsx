@@ -117,7 +117,7 @@ export default function ResearchAssistantPage() {
           <input
             value={draftTopic}
             onChange={(e) => setDraftTopic(e.target.value)}
-            placeholder="عنوان مقترح"
+            placeholder="أدخل عنوانًا"
             style={{ flex: 1, minHeight: 40, padding: "0.4rem 0.6rem" }}
           />
           <select value={catId} onChange={(e) => setCatId(e.target.value)} aria-label="تصنيف">
