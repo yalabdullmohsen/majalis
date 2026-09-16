@@ -21,11 +21,7 @@ import {
   legacyPageToAyahKey,
   legacyPageToCurrentPage,
 } from "@/lib/quran-my-bookmarks";
-import {
-  globalAyahToSurahAyah,
-  normalizeAyahKey,
-  normalizeSurahAyah,
-} from "@/lib/ayah-ref-normalize";
+import { normalizeAyahKey } from "@/lib/ayah-ref-normalize";
 
 export { globalAyahToSurahAyah, normalizeAyahKey, normalizeSurahAyah } from "@/lib/ayah-ref-normalize";
 
