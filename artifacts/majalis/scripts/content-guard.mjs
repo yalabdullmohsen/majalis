@@ -51,17 +51,11 @@ for (const rel of [
   }
 }
 
-/** 2ب) ذيول حشو خاصة ببذرة المجمع الفقهي (نُظِّفت في تدقيق ٢٠٢٦-٠٧-٢٧) */
-const FIQH_COUNCIL_BANNED_TAILS = [
-  "ويُراجع النص الكامل عند الحاجة إلى التفصيل",
-  "وتُعرض للتوثيق التعليمي مع الإحالة إلى المصدر الرسمي",
-  "مع بيان حدود الاعتماد دون اختزال مخلّ",
-];
+/** 2ب) بذرة المجمع الفقهي يجب أن تبقى محذوفة من الإنتاج */
 {
   const rel = "src/lib/fiqh-council-seed.ts";
-  const text = read(rel);
-  for (const phrase of FIQH_COUNCIL_BANNED_TAILS) {
-    if (text.includes(phrase)) fail(`${rel}: ذيل قالبي محظور: «${phrase}»`);
+  if (fs.existsSync(path.join(ROOT, rel))) {
+    fail(`${rel}: يجب أن يبقى محذوفًا بعد إزالة منتج المجمع`);
   }
 }
 

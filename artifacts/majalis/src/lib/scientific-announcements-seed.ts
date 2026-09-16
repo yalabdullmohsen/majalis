@@ -894,7 +894,7 @@ export const SCIENTIFIC_ANNOUNCEMENTS: ScientificAnnouncement[] = [
     sheikh: "لجنة علمية من علماء وزارة الأوقاف",
     date: "2026-09-01",
     time: "5:00 مساءً",
-    venue: "قاعة المجمع الفقهي — وزارة الأوقاف",
+    venue: "قاعة وزارة الأوقاف",
     region: "الصوابر",
     governorate: "العاصمة",
     notes: [
@@ -903,7 +903,7 @@ export const SCIENTIFIC_ANNOUNCEMENTS: ScientificAnnouncement[] = [
       "تتضمن جلسة مفتوحة لطرح الأسئلة على العلماء الحاضرين.",
       "ستُنشر الأوراق البحثية بعد الندوة.",
     ],
-    tags: ["نوازل", "فتاوى", "معاصرة", "مجمع فقهي", "علماء"],
+    tags: ["نوازل", "فتاوى", "معاصرة", "وزارة الأوقاف", "علماء"],
     kind: "one_time",
   },
   {

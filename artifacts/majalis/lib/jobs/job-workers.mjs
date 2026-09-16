@@ -264,10 +264,12 @@ export const JOB_WORKERS = {
 
   "sync-fiqh-council": async ({ signal, cursor }) => {
     throwIfAborted(signal);
-    const { runFiqhCouncilSync } = await import("../fiqh-council-sync.mjs");
-    const result = await runFiqhCouncilSync({ triggerType: "job-worker" });
-    throwIfAborted(signal);
-    return { done: true, continue: false, cursor: { ...cursor, ok: result?.ok !== false } };
+    /* المنتج أُزيل — لا مزامنة ولا استيراد لمحرّك المجمع */
+    return {
+      done: true,
+      continue: false,
+      cursor: { ...cursor, ok: true, removed: true },
+    };
   },
 
   "import-phase2-trial": async ({ signal, cursor, metadata }) => {

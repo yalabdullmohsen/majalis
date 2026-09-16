@@ -30,7 +30,6 @@ const busyRoots = [
   "components/SideNavDrawer.tsx",
   "components/UpdateAvailableBanner.tsx",
   "components/prayer/PrayerLocationPicker.tsx",
-  "components/fiqh-council/FiqhCouncilSearchBox.tsx",
   "components/QuranViewer.tsx",
   "components/quran/QuranPlayerView.tsx",
   "features/mushaf-madinah/MushafSearchSheet.tsx",

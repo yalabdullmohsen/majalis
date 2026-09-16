@@ -1,13 +1,13 @@
 /**
- * Official-source verification predicates for Fiqh Council items.
- * Extracted to break the fiqh-council-trust ↔ fiqh-verification-service cycle.
+ * Official-source verification predicates (legacy council helpers).
+ * Kept as a pure predicate for phase1 quality gate — no council product surface.
  */
 
-import type { FiqhCouncilItem } from "./fiqh-council-types";
-
-export function isOfficialSourceVerified(
-  item: Pick<FiqhCouncilItem, "source_name" | "source_url" | "confidence_level">,
-): boolean {
+export function isOfficialSourceVerified(item: {
+  source_name?: string | null;
+  source_url?: string | null;
+  confidence_level?: string | null;
+}): boolean {
   return Boolean(
     item.source_name &&
       item.source_url &&

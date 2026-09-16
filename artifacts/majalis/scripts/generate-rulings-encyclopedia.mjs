@@ -113,7 +113,7 @@ function splitEvidence(text, reference) {
  * مصادر «ذاتية» — المنصة نفسها ليست مصدرًا خارجيًا يُعتمد عليه في التوثيق.
  * أي مرجع يطابق هذه الأنماط لا يُحتسب مصدرًا خارجيًا.
  */
-const SELF_SOURCE_RE = /سُنّة|المجمع الفقهي — مسائل فقهية|qa-seed|fawaid-seed|rulings-seed|fatwa-seed|fiqh-issues-seed|quiz_questions/i;
+const SELF_SOURCE_RE = /سُنّة|qa-seed|fawaid-seed|rulings-seed|fatwa-seed|quiz_questions/i;
 
 function hasExternalSource(partial) {
   const refs = [...(partial.references || []), ...(partial.evidence || [])];
@@ -304,29 +304,9 @@ function fromQaSeed() {
     .filter(Boolean);
 }
 
+/** أُزيل منتج المجمع/مسائله من الإنتاج — لا تُعاد بذور أحكام منه. */
 function fromFiqhIssuesSeed() {
-  try {
-    const items = parseSeedArray(path.resolve(ROOT, "src/lib/fiqh-issues-seed.ts"), "FIQH_ISSUES_PUBLISHED_SEED");
-    return items
-      .map((issue) =>
-        makeRuling({
-          external_key: `issue-ruling-${issue.slug || issue.id}`,
-          title: issue.title,
-          summary: issue.ruling_summary || issue.summary,
-          body: `${issue.description || issue.summary}\n\n**الحكم:** ${issue.ruling_summary || ""}\n\n**الأدلة:** ${issue.evidence_summary || ""}`,
-          category: "النوازل المعاصرة",
-          subcategory: issue.subcategory || "التقنية",
-          references: [{ text: "المجمع الفقهي — مسائل فقهية", source: issue.category }],
-          keywords: [issue.category, issue.subcategory].filter(Boolean),
-          source_origin: "fiqh-issues-seed",
-          linked_fiqh_ids: [issue.id],
-          importance_score: 78,
-        }),
-      )
-      .filter(Boolean);
-  } catch {
-    return [];
-  }
+  return [];
 }
 
 function fromFawaidSeed() {
@@ -374,36 +354,9 @@ function fromRulingsSeed() {
   return out.filter(Boolean);
 }
 
+/** أُزيل منتج المجمع الفقهي — لا توليد أحكام من بذرته المحذوفة. */
 function fromFiqhCouncilSeed() {
-  const src = fs.readFileSync(path.resolve(ROOT, "src/lib/fiqh-council-seed.ts"), "utf8");
-  const re = /id:\s*"([^"]+)"[\s\S]*?title:\s*"((?:\\.|[^"\\])*)"[\s\S]*?ruling_text:\s*`([\s\S]*?)`[\s\S]*?category:\s*"([^"]+)"[\s\S]*?source_name:\s*"([^"]*)"/g;
-  const out = [];
-  let m;
-  while ((m = re.exec(src))) {
-    const [, id, title, rulingText, category, sourceName] = m;
-    const catMap = {
-      "الاقتصاد الإسلامي": { category: "النوازل المعاصرة", subcategory: "الاقتصاد" },
-      "الطب والنوازل": { category: "النوازل المعاصرة", subcategory: "الطب" },
-      "الزكاة والوقف": { category: "الزكاة", subcategory: "زكاة المال" },
-      "الحج والعمرة": { category: "الحج والعمرة", subcategory: "أحكام الحج" },
-    };
-    const cat = catMap[category] || { category: "النوازل المعاصرة", subcategory: "التقنية" };
-    out.push(
-      makeRuling({
-        external_key: `fiqh-ruling-${id}`,
-        title,
-        summary: summarizeText(rulingText, 160),
-        body: rulingText,
-        category: cat.category,
-        subcategory: cat.subcategory,
-        references: [{ text: sourceName, source: "المجمع الفقهي" }],
-        source_origin: "fiqh-council-seed",
-        linked_fiqh_ids: [id],
-        importance_score: 80,
-      }),
-    );
-  }
-  return out.filter(Boolean);
+  return [];
 }
 
 // ملاحظة حوكمة: أُزيلت fromQuizCsv() — أسئلة المسابقة (data/quiz_questions.csv)
