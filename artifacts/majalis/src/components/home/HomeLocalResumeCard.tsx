@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { BookOpen, Headphones } from "lucide-react";
 import { getSurahMeta, loadPagePosition, loadReadingAyahKey } from "@/lib/quran-api";
+import { normalizeAyahKey, normalizeSurahAyah } from "@/lib/ayah-ref-normalize";
 import { AUDIO_RESUME_CHANGED_EVENT, loadAudioResumeState } from "@/lib/quran-audio-resume";
 import { getContinueReadingEntries, type ContinueSection } from "@/lib/continue-reading";
 import { ayahKeyToPage } from "@/lib/quran-my-bookmarks";
@@ -38,13 +39,14 @@ function buildItems(): ResumeItem[] {
   const audio = loadAudioResumeState();
 
   if (page != null && page >= 1) {
+    const safeKey = ayahKey ? normalizeAyahKey(ayahKey) : null;
     const surahHint = (() => {
-      if (!ayahKey) return "";
-      const [s] = ayahKey.split(":").map(Number);
+      if (!safeKey) return "";
+      const [s] = safeKey.split(":").map(Number);
       if (!s || s < 1 || s > 114) return "";
       return getSurahMeta(s).name.replace(/^سُورَةُ\s*/u, "");
     })();
-    const href = ayahKey ? `/mushaf/page/${page}?ayah=${ayahKey}` : `/mushaf/page/${page}`;
+    const href = safeKey ? `/mushaf/page/${page}?ayah=${safeKey}` : `/mushaf/page/${page}`;
     items.push({
       id: "mushaf-pos",
       kind: "mushaf",
@@ -58,14 +60,15 @@ function buildItems(): ResumeItem[] {
   }
 
   if (audio && audio.surah >= 1 && audio.ayah >= 1) {
-    const name = getSurahMeta(audio.surah).name.replace(/^سُورَةُ\s*/u, "");
-    const p = ayahKeyToPage(`${audio.surah}:${audio.ayah}`);
+    const n = normalizeSurahAyah(audio.surah, audio.ayah);
+    const name = getSurahMeta(n.surah).name.replace(/^سُورَةُ\s*/u, "");
+    const p = ayahKeyToPage(`${n.surah}:${n.ayah}`);
     items.push({
       id: "listen",
       kind: "listen",
-      href: `/mushaf/page/${p}?ayah=${audio.surah}:${audio.ayah}`,
+      href: `/mushaf/page/${p}?ayah=${n.surah}:${n.ayah}`,
       sectionLabel: SECTION_LABEL.listen,
-      title: `${name} · آية ${toArabicDigits(audio.ayah)}`,
+      title: `${name} · آية ${toArabicDigits(n.ayah)}`,
     });
   }
 

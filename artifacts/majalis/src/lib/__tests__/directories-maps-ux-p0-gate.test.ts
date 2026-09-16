@@ -86,7 +86,7 @@ assert.match(uniCss, /bottom-nav-height|inset-bottom/, "inset الجامعات")
 
 // ── Assistant ─────────────────────────────────────────────────────
 const assistant = read("src/pages/assistant/AssistantGate.tsx");
-assert.match(assistant, /assistant-soon/, "حالة Coming Soon");
+assert.match(assistant, /assistant-gate/, "بوابة المساعد — صنف محايد بلا soon");
 assert.match(assistant, /assistant-title/, "محدد بوابة التباين .assistant-title");
 assert.match(assistant, /assistant-intro/, "محدد بوابة التباين .assistant-intro");
 assert.match(assistant, /\/search/, "CTA بحث");

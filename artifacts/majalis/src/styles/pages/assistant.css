@@ -197,44 +197,44 @@ html[data-theme="dark"] .asp-footer {
 
 
 /* Coming Soon — المساعد العلمي */
-.assistant-soon {
+.assistant-gate {
   padding: 1.25rem 1rem calc(var(--bottom-nav-height, 64px) + var(--inset-bottom) + 2rem);
   display: grid;
   gap: 1.25rem;
 }
-.assistant-soon__brand {
+.assistant-gate__brand {
   margin: 0;
   font-weight: 800;
   color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
   font-size: 1.15rem;
 }
 /* عنوان/مقدمة بوابة التباين: حبر أساسي ≥4.5:1 — لا mj-ink-2 / muted */
-.assistant-soon .assistant-title,
-.assistant-soon__title {
+.assistant-gate .assistant-title,
+.assistant-gate__title {
   margin: 0.35rem 0 0.5rem;
   font-size: clamp(1.45rem, 4vw, 1.85rem);
   color: var(--mj-ink, #16241e);
 }
-.assistant-soon .assistant-intro,
-.assistant-soon__lede {
+.assistant-gate .assistant-intro,
+.assistant-gate__lede {
   margin: 0;
   color: var(--mj-ink, #16241e);
   line-height: 1.7;
   max-width: 36rem;
   opacity: 1;
 }
-html[data-theme="dark"] .assistant-soon .assistant-title,
-html[data-theme="dark"] .assistant-soon__title,
-html[data-theme="dark"] .assistant-soon .assistant-intro,
-html[data-theme="dark"] .assistant-soon__lede {
+html[data-theme="dark"] .assistant-gate .assistant-title,
+html[data-theme="dark"] .assistant-gate__title,
+html[data-theme="dark"] .assistant-gate .assistant-intro,
+html[data-theme="dark"] .assistant-gate__lede {
   color: var(--mj-ink, #f3f7f5);
 }
-.assistant-soon__actions {
+.assistant-gate__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.65rem;
 }
-.assistant-soon__cta {
+.assistant-gate__cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -247,23 +247,23 @@ html[data-theme="dark"] .assistant-soon__lede {
   font-weight: 700;
   text-decoration: none;
 }
-.assistant-soon__cta--primary {
+.assistant-gate__cta--primary {
   background: var(--mj-brand-deep, #0d4a39);
   border-color: var(--mj-brand-deep, #0d4a39);
   color: #f7fbf9;
 }
-.assistant-soon__examples h2 {
+.assistant-gate__examples h2 {
   margin: 0 0 0.5rem;
   font-size: 1rem;
 }
-.assistant-soon__examples ul {
+.assistant-gate__examples ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   gap: 0.45rem;
 }
-.assistant-soon__examples a {
+.assistant-gate__examples a {
   display: block;
   padding: 0.7rem 0.9rem;
   border-radius: 14px;
@@ -273,7 +273,7 @@ html[data-theme="dark"] .assistant-soon__lede {
   text-decoration: none;
   font-weight: 600;
 }
-.assistant-soon__note {
+.assistant-gate__note {
   margin: 0;
   font-size: 0.85rem;
   color: var(--mj-ink-2, #4f5f58);

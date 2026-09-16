@@ -23,6 +23,7 @@ import {
 } from "./DatabaseManager";
 import { getReciter, saveReciterId } from "@/lib/quran-audio";
 import { getAudioEngine } from "@/core/audio/AudioEngine";
+import { normalizeSurahAyah } from "@/lib/ayah-ref-normalize";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -74,12 +75,6 @@ const DEFAULT_STATE: QuranEngineState = {
   selectedAyah: null,
 };
 
-function clampSurah(n: number): number {
-  return Math.min(114, Math.max(1, Math.floor(n) || 1));
-}
-function clampAyah(n: number): number {
-  return Math.max(1, Math.floor(n) || 1);
-}
 function clampPage(n: number): number {
   return Math.min(604, Math.max(1, Math.floor(n) || 1));
 }
@@ -120,8 +115,9 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
   }
 
   setActiveVerse(verse: ActiveVerse, opts?: { persist?: boolean }): void {
-    const surah = clampSurah(verse.surah);
-    const ayah = clampAyah(verse.ayah);
+    const normalized = normalizeSurahAyah(verse.surah, verse.ayah);
+    const surah = normalized.surah;
+    const ayah = normalized.ayah;
     const page = verse.page != null ? clampPage(verse.page) : this.state.currentPage;
     this.patch({
       currentSurah: surah,
@@ -212,8 +208,9 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
 
   async updateReadingProgress(progress: ReadingProgressInput): Promise<ReadingProgress | null> {
     try {
-      const surah = clampSurah(progress.surah);
-      const ayah = clampAyah(progress.ayah);
+      const normalized = normalizeSurahAyah(progress.surah, progress.ayah);
+      const surah = normalized.surah;
+      const ayah = normalized.ayah;
       const page = progress.page != null ? clampPage(progress.page) : this.state.currentPage;
       this.patch({ currentSurah: surah, currentAyah: ayah, currentPage: page });
       return await this.db.saveProgress({

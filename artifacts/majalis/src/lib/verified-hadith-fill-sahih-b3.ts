@@ -2502,32 +2502,7 @@ export const HADITH_FILL_SAHIH_B3: LocalVerifiedHadith[] = [
     },
     "created_at": "2026-07-27T23:50:00.000Z"
   },
-  {
-    "id": "sahih-b3-600",
-    "collection": "bukhari",
-    "hadith_number": "3064",
-    "title": "حَدَّثَنَا مُحَمَّدُ بْنُ بَشَّارٍ",
-    "text": "حَدَّثَنَا مُحَمَّدُ بْنُ بَشَّارٍ، حَدَّثَنَا ابْنُ أَبِي عَدِيٍّ، وَسَهْلُ بْنُ يُوسُفَ، عَنْ سَعِيدٍ، عَنْ قَتَادَةَ، عَنْ أَنَسٍ ـ رضى الله عنه أَنَّ النَّبِيَّ صلى الله عليه و.",
-    "narrator": null,
-    "source_name": "البخاري 3064",
-    "grade": "صحيح",
-    "chapter": "الصحيح",
-    "keywords": [
-      "صحيح",
-      "بخاري",
-      "حَدَّثَنَا",
-      "مُحَمَّدُ"
-    ],
-    "explanation": "من البخاري رقم 3064؛ الصحة بعضوية الصحيحين. بطاقة فهرسة للوصول بالرقم.",
-    "authenticity_class": "sahih",
-    "metadata": {
-      "batch": "fill-2026-07-b3",
-      "muhaddith": "البخاري",
-      "collection": "bukhari"
-    },
-    "created_at": "2026-07-27T23:50:00.000Z"
-  },
-  {
+    {
     "id": "sahih-b3-601",
     "collection": "bukhari",
     "hadith_number": "3094",
@@ -5902,32 +5877,7 @@ export const HADITH_FILL_SAHIH_B3: LocalVerifiedHadith[] = [
     },
     "created_at": "2026-07-27T23:50:00.000Z"
   },
-  {
-    "id": "sahih-b3-736",
-    "collection": "bukhari",
-    "hadith_number": "7379",
-    "title": "حَدَّثَنَا خَالِدُ بْنُ مَخْلَدٍ",
-    "text": "حَدَّثَنَا خَالِدُ بْنُ مَخْلَدٍ، حَدَّثَنَا سُلَيْمَانُ بْنُ بِلاَلٍ، حَدَّثَنِي عَبْدُ اللَّهِ بْنُ دِينَارٍ، عَنِ ابْنِ عُمَرَ ـ رضى الله عنهما ـ عَنِ النَّبِيِّ صلى الله عليه و.",
-    "narrator": null,
-    "source_name": "البخاري 7379",
-    "grade": "صحيح",
-    "chapter": "الصحيح",
-    "keywords": [
-      "صحيح",
-      "بخاري",
-      "حَدَّثَنَا",
-      "خَالِدُ"
-    ],
-    "explanation": "من البخاري رقم 7379؛ الصحة بعضوية الصحيحين. بطاقة فهرسة للوصول بالرقم.",
-    "authenticity_class": "sahih",
-    "metadata": {
-      "batch": "fill-2026-07-b3",
-      "muhaddith": "البخاري",
-      "collection": "bukhari"
-    },
-    "created_at": "2026-07-27T23:50:00.000Z"
-  },
-  {
+    {
     "id": "sahih-b3-737",
     "collection": "bukhari",
     "hadith_number": "7409",

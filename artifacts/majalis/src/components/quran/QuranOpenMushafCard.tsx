@@ -5,7 +5,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { BookOpen, ChevronLeft } from "lucide-react";
 import { DirectionalIcon } from "@/components/DirectionalIcon";
-import { getSurahMeta, loadPagePosition, loadReadingAyahKey } from "@/lib/quran-api";
+import {
+  getSurahMeta,
+  loadPagePosition,
+  loadReadingAyahKey,
+} from "@/lib/quran-api";
+import { normalizeAyahKey, normalizeSurahAyah } from "@/lib/ayah-ref-normalize";
 import { navigateTo } from "@/lib/navigation-intent";
 import { prefetchRoute } from "@/lib/prefetch-route";
 import { toArabicDigits } from "@/lib/utils";
@@ -45,16 +50,16 @@ export function resolveMushafResumeInfo(): MushafResumeInfo {
 
     let surahName = "";
     let ayahNum: number | null = null;
-    if (ayahKey && /^\d{1,3}:\d{1,3}$/.test(ayahKey)) {
-      const [s, a] = ayahKey.split(":").map(Number);
-      if (s >= 1 && s <= 114) {
-        surahName = stripSurahPrefix(getSurahMeta(s).name);
-      }
-      if (Number.isFinite(a) && a >= 1) ayahNum = a;
+    const safeKey = ayahKey ? normalizeAyahKey(ayahKey) : null;
+    if (safeKey) {
+      const [s, a] = safeKey.split(":").map(Number);
+      const n = normalizeSurahAyah(s, a);
+      surahName = stripSurahPrefix(getSurahMeta(n.surah).name);
+      ayahNum = n.ayah;
     }
 
-    const href = ayahKey
-      ? `/mushaf/page/${page}?ayah=${encodeURIComponent(ayahKey)}`
+    const href = safeKey
+      ? `/mushaf/page/${page}?ayah=${encodeURIComponent(safeKey)}`
       : `/mushaf/page/${page}`;
 
     if (!hasMeaningfulResume) {

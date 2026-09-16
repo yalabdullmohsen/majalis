@@ -10,6 +10,7 @@
  * Singleton · async-only · additive schema versioning · never throws into UI.
  */
 import Dexie, { type EntityTable, type Table } from "dexie";
+import { normalizeSurahAyah } from "@/lib/ayah-ref-normalize";
 
 // ─── Record types ────────────────────────────────────────────────────────────
 
@@ -212,10 +213,11 @@ export class DatabaseManager {
     try {
       const db = await this.ensureDb();
       if (!db) return null;
+      const normalized = normalizeSurahAyah(data.lastSurah, data.lastAyah);
       const row: ReadingProgress = {
         id: ACTIVE_PROGRESS_ID,
-        lastSurah: clampSurah(data.lastSurah),
-        lastAyah: clampAyah(data.lastAyah),
+        lastSurah: normalized.surah,
+        lastAyah: normalized.ayah,
         lastPage: clampPage(data.lastPage),
         updatedAt: Date.now(),
       };
@@ -232,7 +234,18 @@ export class DatabaseManager {
     try {
       const db = await this.ensureDb();
       if (!db) return null;
-      return (await db.progress.get(ACTIVE_PROGRESS_ID)) ?? null;
+      const row = (await db.progress.get(ACTIVE_PROGRESS_ID)) ?? null;
+      if (!row) return null;
+      const n = normalizeSurahAyah(row.lastSurah, row.lastAyah);
+      if (n.surah === row.lastSurah && n.ayah === row.lastAyah) return row;
+      const fixed: ReadingProgress = {
+        ...row,
+        lastSurah: n.surah,
+        lastAyah: n.ayah,
+        updatedAt: Date.now(),
+      };
+      await db.progress.put(fixed);
+      return fixed;
     } catch (err) {
       console.warn("[DatabaseManager] getReadingProgress:", err);
       return null;
@@ -246,8 +259,9 @@ export class DatabaseManager {
     try {
       const db = await this.ensureDb();
       if (!db) return null;
-      const surahId = clampSurah(ayahData.surahId);
-      const ayahId = clampAyah(ayahData.ayahId);
+      const n = normalizeSurahAyah(ayahData.surahId, ayahData.ayahId);
+      const surahId = n.surah;
+      const ayahId = n.ayah;
       const key = verseKey(surahId, ayahId);
 
       const existing = await db.bookmarks.where("verseKey").equals(key).first();

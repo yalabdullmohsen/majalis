@@ -1034,7 +1034,7 @@ export default function AkhlaqPage() {
           className="akl-search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="ابحث في الأخلاق."
+          placeholder="ابحث في الأخلاق"
           aria-label="بحث"
         />
         <div className="akl-cats" role="tablist" aria-label="تصفية الأخلاق">
