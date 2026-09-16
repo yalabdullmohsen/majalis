@@ -23,9 +23,9 @@
 
 html.dark,
 html[data-theme="dark"] {
-  --mur-hairline: color-mix(in srgb, var(--mj-brand, #5fbf98) 22%, var(--mj-hairline, #3a4641));
-  --mur-shadow: 0 6px 20px -14px rgba(0, 0, 0, 0.5);
-  --mur-shadow-press: 0 3px 12px -10px rgba(0, 0, 0, 0.45);
+  --mur-hairline: color-mix(in srgb, #3d5c50 35%, #2a3832);
+  --mur-shadow: 0 4px 14px -14px rgba(0, 0, 0, 0.48);
+  --mur-shadow-press: 0 2px 10px -10px rgba(0, 0, 0, 0.4);
 }
 
 /* ── بطاقات أخف: حدود شبه شفافة + ظل خفيف + تباعد أوضح ── */

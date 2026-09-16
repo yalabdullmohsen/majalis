@@ -218,11 +218,11 @@ html.dark,
   --ss-shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.28);
   --gold: var(--ss-soft-gold);
 
-  /* Dark Green Surface System — مرتفع عن الخلفية */
-  --surface-feature: color-mix(in srgb, #5fbf98 14%, #1a2622);
-  --surface-knowledge: color-mix(in srgb, #5fbf98 11%, #182420);
-  --surface-islamic: color-mix(in srgb, #5fbf98 16%, #1c2925);
-  --surface-highlighted: color-mix(in srgb, #5fbf98 20%, #1e2e29);
+  /* Dark Green Surface System — غابة عميقة؛ النعناع للتمييز الصغير فقط */
+  --surface-feature: color-mix(in srgb, #1a4a3a 18%, #121a17);
+  --surface-knowledge: color-mix(in srgb, #163d31 14%, #111816);
+  --surface-islamic: color-mix(in srgb, #1c5240 16%, #131c19);
+  --surface-highlighted: color-mix(in srgb, #1f5a46 20%, #15211d);
   --surfaceFeature: var(--surface-feature);
   --surfaceKnowledge: var(--surface-knowledge);
   --surfaceIslamic: var(--surface-islamic);

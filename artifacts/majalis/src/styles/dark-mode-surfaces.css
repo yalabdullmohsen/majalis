@@ -754,3 +754,163 @@ html.dark :where(
   color: var(--txt-primary, #F8FAFC) !important;
   border-color: var(--border-strong, #445651);
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   DARK_MODE_CRITICAL_FIX — P0/P1 visual correction (no redesign)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Quran landing — عناوين أوضح بلا glow زائد */
+html[data-theme="dark"] .quran-hub-card__title,
+html.dark .quran-hub-card__title,
+html[data-theme="dark"] .hub-card__title,
+html.dark .hub-card__title,
+html[data-theme="dark"] .quran-hub-sections__title,
+html.dark .quran-hub-sections__title,
+html[data-theme="dark"] .quran-hub-features__title,
+html.dark .quran-hub-features__title,
+html[data-theme="dark"] .quran-hub-card__link,
+html.dark .quran-hub-card__link,
+html[data-theme="dark"] .quran-hub-feature-item__text,
+html.dark .quran-hub-feature-item__text {
+  color: var(--txt-primary, #f3f7f5) !important;
+}
+html[data-theme="dark"] .quran-hub-card__desc,
+html.dark .quran-hub-card__desc,
+html[data-theme="dark"] .hub-card__desc,
+html.dark .hub-card__desc {
+  color: var(--txt-secondary, #d2ddd8) !important;
+  opacity: 1 !important;
+}
+html[data-theme="dark"] .quran-open-mushaf__title,
+html.dark .quran-open-mushaf__title {
+  color: var(--txt-primary, #f3f7f5) !important;
+}
+html[data-theme="dark"] .quran-open-mushaf__desc,
+html.dark .quran-open-mushaf__desc {
+  color: var(--txt-secondary, #d2ddd8) !important;
+}
+html[data-theme="dark"] .quran-open-mushaf__resume,
+html.dark .quran-open-mushaf__resume {
+  color: var(--txt-primary, #ecf2ef) !important;
+  background: color-mix(in srgb, #1a4a3a 28%, transparent) !important;
+  border-color: color-mix(in srgb, #3d5c50 40%, transparent) !important;
+}
+html[data-theme="dark"] .quran-hub-card,
+html.dark .quran-hub-card,
+html[data-theme="dark"] .hub-card,
+html.dark .hub-card {
+  background: var(--surface-feature, #151e1b) !important;
+  border-color: var(--surface-feature-border, #2a3832) !important;
+  box-shadow: 0 4px 14px -12px rgba(0, 0, 0, 0.45) !important;
+}
+html[data-theme="dark"] .quran-hub-card__body,
+html.dark .quran-hub-card__body {
+  background: transparent !important;
+}
+
+/* Cards normalize — أقل حدودًا/توهجًا */
+html[data-theme="dark"] .soft-card:not([data-scripture]),
+html.dark .soft-card:not([data-scripture]),
+html[data-theme="dark"] .lesson-unified-card,
+html.dark .lesson-unified-card,
+html[data-theme="dark"] .section-lobby__featured,
+html.dark .section-lobby__featured,
+html[data-theme="dark"] .lib-card,
+html.dark .lib-card,
+html[data-theme="dark"] .hlr__card,
+html.dark .hlr__card,
+html[data-theme="dark"] .srch-result-card,
+html.dark .srch-result-card {
+  border-color: color-mix(in srgb, #3d5c50 28%, #24302c) !important;
+  border-inline-start-width: 2px !important;
+  box-shadow: 0 4px 14px -14px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Bottom nav — قاعدة داكنة موحّدة بلا وعاء نعناعي */
+html[data-theme="dark"] .bottom-nav,
+html[data-theme="dark"] .bottom-nav--v2,
+html.dark .bottom-nav,
+html.dark .bottom-nav--v2 {
+  background: #131a18 !important;
+  background-image: none !important;
+  border-block-start: 1px solid #2a3832 !important;
+  box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+html[data-theme="dark"] .bottom-nav__tab,
+html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab,
+html.dark .bottom-nav__tab,
+html.dark .bottom-nav--v2 .bottom-nav__tab {
+  color: #aebbb5 !important;
+  background: transparent !important;
+}
+html[data-theme="dark"] .bottom-nav__tab.is-active,
+html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active,
+html.dark .bottom-nav__tab.is-active,
+html.dark .bottom-nav--v2 .bottom-nav__tab.is-active {
+  color: #e8f0ec !important;
+  background: color-mix(in srgb, #1a4a3a 55%, transparent) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #5fbf98 22%, transparent) !important;
+}
+
+/* Typography — metadata / secondary / helpers */
+html[data-theme="dark"] .txt-muted,
+html.dark .txt-muted,
+html[data-theme="dark"] .meta,
+html.dark .meta,
+html[data-theme="dark"] .helper-text,
+html.dark .helper-text,
+html[data-theme="dark"] .section-lobby__desc,
+html.dark .section-lobby__desc,
+html[data-theme="dark"] .compact-section-header__desc,
+html.dark .compact-section-header__desc,
+html[data-theme="dark"] .lesson-unified-card__meta,
+html.dark .lesson-unified-card__meta,
+html[data-theme="dark"] .lesson-unified-card__desc,
+html.dark .lesson-unified-card__desc,
+html[data-theme="dark"] .hlr__section,
+html.dark .hlr__section,
+html[data-theme="dark"] .srch-history-label,
+html.dark .srch-history-label {
+  color: #c9d5cf !important;
+  opacity: 1 !important;
+}
+
+/* Search — حدود أخف + تركيز أوضح */
+html[data-theme="dark"] .srch-home-field,
+html.dark .srch-home-field,
+html[data-theme="dark"] .search-input,
+html.dark .search-input,
+html[data-theme="dark"] .global-search-input,
+html.dark .global-search-input,
+html[data-theme="dark"] .home-universal-search__input,
+html.dark .home-universal-search__input,
+html[data-theme="dark"] .srch-input,
+html.dark .srch-input {
+  border-color: color-mix(in srgb, #3d5c50 35%, transparent) !important;
+  background: color-mix(in srgb, #1a4a3a 12%, #151e1b) !important;
+  box-shadow: none !important;
+}
+html[data-theme="dark"] .srch-home-field:focus-within,
+html.dark .srch-home-field:focus-within,
+html[data-theme="dark"] .search-input:focus,
+html.dark .search-input:focus,
+html[data-theme="dark"] .global-search-input:focus,
+html.dark .global-search-input:focus,
+html[data-theme="dark"] .home-universal-search__input:focus,
+html.dark .home-universal-search__input:focus,
+html[data-theme="dark"] .srch-input:focus,
+html.dark .srch-input:focus {
+  border-color: color-mix(in srgb, #5fbf98 45%, transparent) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, #5fbf98 28%, transparent) !important;
+  outline: none !important;
+}
+
+/* Section polish — فراغ أوضح */
+html[data-theme="dark"] .section-lobby__grid,
+html.dark .section-lobby__grid,
+html[data-theme="dark"] .hub-grid,
+html.dark .hub-grid,
+html[data-theme="dark"] .quran-hub-grid,
+html.dark .quran-hub-grid {
+  gap: clamp(0.75rem, 2.2vw, 1.1rem) !important;
+}

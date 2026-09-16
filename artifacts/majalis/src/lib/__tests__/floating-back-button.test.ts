@@ -47,6 +47,12 @@ assert.doesNotMatch(
 assert.match(backCss, /inset-inline-end:\s*unset/, "لا منطق RTL يقلب الزر لليسار");
 assert.match(backCss, /html\.chrome-immersive[\s\S]{0,220}?display:\s*none/, "إخفاء CSS في المصحف");
 assert.match(backCss, /data-visible="1"|data-global-back-visible/, "ظهور بعد التمرير");
+assert.match(
+  backCss,
+  /data-section-back[\s\S]{0,280}?display:\s*none|app-back-btn--lobby[\s\S]{0,200}?display:\s*none/,
+  "إخفاء FAB عند الرجوع المدمج",
+);
+assert.match(backCss, /\.app-back-btn--bar\.fixed-back-bar\s*>\s*span[\s\S]{0,80}?display:\s*none/, "FAB أيقونة فقط");
 
 const appBack = read("src/components/common/AppBackButton.tsx");
 assert.match(appBack, /isImmersiveChromePath/, "إخفاء المصحف في AppBackButton");

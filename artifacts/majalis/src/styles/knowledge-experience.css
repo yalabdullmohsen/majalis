@@ -893,21 +893,26 @@ html.chrome-immersive [data-global-back-control-host] {
 .global-back-control-host .app-back-btn--bar.fixed-back-bar {
   z-index: var(--z-fab, 220);
 }
-/* —— Content Experience Audit Closure —— */
-/* زر رجوع سفلي مضغوط — أخف بلا blur/glow */
+/* —— Dark Mode Critical Fix: compact bottom-right FAB —— */
+/* أيقونة فقط؛ لا شريط عريض يغطي المحتوى */
 .app-back-btn--bar.fixed-back-bar,
 button.app-back-btn--bar[data-fixed-back-bar="1"] {
-  min-height: 42px;
-  min-width: 42px;
-  padding: 0.38rem 0.8rem 0.38rem 0.68rem;
-  gap: 0.3rem;
-  font-size: 0.84rem;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0;
+  gap: 0;
+  font-size: 0;
   font-weight: 600;
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 14%, transparent);
-  background: color-mix(in srgb, var(--mj-surface, #fff) 94%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 14%, var(--mj-hairline, #d9d3c8));
+  background: color-mix(in srgb, var(--mj-surface, #fff) 96%, transparent);
   box-shadow: 0 2px 8px rgba(11, 32, 24, 0.1);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
+}
+.app-back-btn--bar.fixed-back-bar > span {
+  display: none !important;
 }
 .app-back-btn--bar.fixed-back-bar:hover {
   box-shadow: 0 3px 10px rgba(11, 32, 24, 0.12);
@@ -915,10 +920,32 @@ button.app-back-btn--bar[data-fixed-back-bar="1"] {
 
 html.dark .app-back-btn--bar.fixed-back-bar,
 html[data-theme="dark"] .app-back-btn--bar.fixed-back-bar {
-  background: color-mix(in srgb, var(--pd-card, #24302b) 82%, transparent);
-  color: var(--pd-ink, #ede8df);
-  border-color: color-mix(in srgb, var(--pd-emerald, #4fb48b) 12%, transparent);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  background: color-mix(in srgb, var(--surface-1, #1b2421) 94%, transparent);
+  color: var(--txt-primary, #ecf2ef);
+  border-color: color-mix(in srgb, #3d5c50 40%, #24302c);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+}
+
+/* الرجوع المدمج في الهيدر/اللوبي يغني عن FAB — لا تراكب */
+body:has([data-section-back="1"]) .app-back-btn--bar.fixed-back-bar,
+body:has([data-section-back="1"]) .global-back-control-host,
+body:has(.app-back-btn--lobby) .app-back-btn--bar.fixed-back-bar,
+body:has(.app-back-btn--hero) .app-back-btn--bar.fixed-back-bar,
+body:has(.section-hero__back) .app-back-btn--bar.fixed-back-bar {
+  display: none !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+/* حجز أسفل المحتوى فقط عند ظهور FAB */
+@media (max-width: 879px) {
+  html[data-global-back-visible="1"] .app-main,
+  html[data-global-back-visible="1"] #main-content.app-main {
+    padding-bottom: max(
+      var(--content-pb, calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px)),
+      var(--global-back-clearance, 0px)
+    ) !important;
+  }
 }
 
 /* بطاقات معرفة أخف + هرمية أوضح */
