@@ -1,14 +1,14 @@
 /**
  * GlobalBackControlHost — مصدر حقيقة واحد لزر الرجوع العام في سُنّة.
  * يُركَّب مرة واحدة في جذر التطبيق. FLOATING_BACK_DISABLED = لا FAB دائري.
- * الشريط ثابت على كل الشاشات/الأقسام (ما عدا الرئيسية) — أسفل يمين بما فيها /profile.
+ * شريط مضغوط أعلى يمين (لا يغطي البطاقات/المحتوى السفلي).
  */
 import { useLayoutEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import { AppBackButton } from "@/components/common/AppBackButton";
 import {
-  computeBackControlBottomOffset,
-  computeContentBottomInsetForBack,
+  computeBackControlTopOffset,
+  computeContentTopInsetForBack,
   BACK_CONTROL_SIZE_PX,
 } from "@/lib/global-back-layout";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
@@ -23,31 +23,21 @@ function readCssPx(varName: string, fallback: number): number {
 
 function syncBackLayoutVars(host: HTMLElement | null) {
   if (typeof window === "undefined") return;
-  const safeBottom = readCssPx("--inset-bottom", 0) || readCssPx("--safe-area-inset-bottom", 0);
-  const bottomNav = readCssPx("--bottom-nav-height", 64);
-  const miniPlayer =
-    document.documentElement.classList.contains("audio-dock-open") ||
-    document.documentElement.getAttribute("data-audio-dock") === "1"
-      ? readCssPx("--audio-dock-h", 72)
-      : 0;
-  const keyboard = readCssPx("--keyboard-inset", 0);
-  const sheet = document.body.classList.contains("filter-sheet-open")
-    ? Math.min(window.innerHeight * 0.45, 360)
-    : 0;
-  const insets = {
-    safeAreaBottom: safeBottom,
-    bottomNavigationHeight: bottomNav,
-    miniPlayerHeight: miniPlayer,
-    keyboardHeight: keyboard,
-    activeSheetHeight: sheet,
-  };
-  const bottom = computeBackControlBottomOffset(insets);
-  const contentPad = computeContentBottomInsetForBack(insets);
-  document.documentElement.style.setProperty("--global-back-bottom", `${bottom}px`);
-  document.documentElement.style.setProperty("--global-back-clearance", `${contentPad}px`);
+  const safeTop = readCssPx("--inset-top", 0) || readCssPx("--safe-area-inset-top", 0);
+  const top = computeBackControlTopOffset({ safeAreaTop: safeTop });
+  const contentPad = computeContentTopInsetForBack({ safeAreaTop: safeTop });
+  document.documentElement.style.setProperty("--global-back-top", `${top}px`);
+  /* إبقاء المتغيرات السفلية عند صفر — لا حجز مساحة سفلية لزر لم يعد سفليًا */
+  document.documentElement.style.setProperty("--global-back-bottom", `0px`);
+  document.documentElement.style.setProperty("--global-back-clearance", `0px`);
+  document.documentElement.style.setProperty("--global-back-top-clearance", `${contentPad}px`);
   document.documentElement.style.setProperty("--global-back-size", `${BACK_CONTROL_SIZE_PX}px`);
   document.documentElement.setAttribute("data-global-back-host", "1");
-  if (host) host.style.bottom = `${bottom}px`;
+  document.documentElement.setAttribute("data-global-back-edge", "top");
+  if (host) {
+    host.style.top = `${top}px`;
+    host.style.bottom = "auto";
+  }
 }
 
 /** المضيف الوحيد لزر الرجوع العام */
@@ -87,6 +77,7 @@ export function GlobalBackControlHost() {
       className="global-back-control-host"
       data-global-back-control-host="1"
       data-testid="global-back-control-host"
+      data-edge="top"
     >
       <AppBackButton
         variant="bar"
@@ -110,4 +101,3 @@ export { AppBackButton } from "@/components/common/AppBackButton";
 export const FLOATING_BACK_DISABLED = true as const;
 export const FIXED_BACK_BAR_ENABLED = true as const;
 export const GLOBAL_BACK_CONTROL_HOST = true as const;
-

@@ -654,7 +654,7 @@ button.floating-back-btn[data-floating-back="1"] {
   pointer-events: none !important;
 }
 
-/* شريط رجوع ثابت حديث — أسفل يمين الشاشة فوق الشريط السفلي */
+/* شريط رجوع مضغوط — أعلى يمين (لا يغطي المحتوى السفلي/البطاقات) */
 .app-back-btn--bar.fixed-back-bar,
 button.app-back-btn--bar[data-fixed-back-bar="1"] {
   position: fixed;
@@ -664,31 +664,29 @@ button.app-back-btn--bar[data-fixed-back-bar="1"] {
   left: auto;
   inset-inline-start: unset;
   inset-inline-end: unset;
-  bottom: var(--global-back-bottom, calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 0.75rem));
-  top: auto;
+  top: var(--global-back-top, max(0.45rem, var(--inset-top, 0px)));
+  bottom: auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.32rem;
   min-height: 44px;
   min-width: 44px;
-  padding: 0.55rem 1rem 0.55rem 0.85rem;
+  padding: 0.4rem 0.85rem 0.4rem 0.7rem;
   margin: 0;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 26%, transparent);
-  background: color-mix(in srgb, var(--mj-surface, #fff) 86%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 18%, transparent);
+  background: color-mix(in srgb, var(--mj-surface, #fff) 92%, transparent);
   color: var(--mj-brand-deep, #0d4a39);
   font: inherit;
-  font-size: 0.95rem;
-  font-weight: 650;
+  font-size: 0.88rem;
+  font-weight: 600;
   letter-spacing: 0;
   line-height: 1;
   cursor: pointer;
-  box-shadow:
-    0 10px 28px -14px rgba(11, 32, 24, 0.45),
-    inset 0 1px 0 color-mix(in srgb, #fff 55%, transparent);
-  backdrop-filter: blur(14px) saturate(1.15);
-  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  box-shadow: 0 2px 8px rgba(11, 32, 24, 0.12);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   transform: translateZ(0);
@@ -696,10 +694,8 @@ button.app-back-btn--bar[data-fixed-back-bar="1"] {
 }
 
 .app-back-btn--bar.fixed-back-bar:hover {
-  background: color-mix(in srgb, var(--mj-surface, #fff) 94%, var(--mj-brand-soft, #e2efe8));
-  box-shadow:
-    0 12px 30px -12px rgba(11, 32, 24, 0.5),
-    inset 0 1px 0 color-mix(in srgb, #fff 60%, transparent);
+  background: color-mix(in srgb, var(--mj-surface, #fff) 96%, var(--mj-brand-soft, #e2efe8));
+  box-shadow: 0 3px 10px rgba(11, 32, 24, 0.14);
 }
 
 .app-back-btn--bar.fixed-back-bar:active {
@@ -708,9 +704,10 @@ button.app-back-btn--bar[data-fixed-back-bar="1"] {
 
 html[data-theme="dark"] .app-back-btn--bar.fixed-back-bar,
 html.dark .app-back-btn--bar.fixed-back-bar {
-  background: color-mix(in srgb, var(--mj-surface, #12241c) 88%, transparent);
-  color: var(--mj-brand, #5cc095);
-  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 28%, transparent);
+  background: color-mix(in srgb, var(--pd-card, #24302b) 78%, transparent);
+  color: var(--pd-ink, #ede8df);
+  border-color: color-mix(in srgb, var(--pd-emerald, #4fb48b) 14%, transparent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -720,15 +717,15 @@ html.dark .app-back-btn--bar.fixed-back-bar {
 }
 
 body.filter-sheet-open .app-back-btn--bar.fixed-back-bar {
-  /* لا نخفي الرجوع — نرفعه فوق الورقة عبر --global-back-bottom */
+  /* لا نخفي الرجوع — نبقيه فوق الورقة */
   z-index: calc(var(--z-fab, 220) + 40);
 }
 
 html.audio-dock-open .app-back-btn--bar.fixed-back-bar,
 html[data-audio-dock="1"] .app-back-btn--bar.fixed-back-bar {
-  bottom: calc(
-    var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + var(--audio-dock-h, 72px) + 0.75rem
-  );
+  /* علوي — لا يتأثر بارتفاع الدوك السفلي */
+  top: var(--global-back-top, max(0.45rem, var(--inset-top, 0px)));
+  bottom: auto;
 }
 
 /* المصحف الغمري: لا زر رجوع عام إطلاقًا */
@@ -869,35 +866,32 @@ html.chrome-immersive [data-global-back-control-host] {
 .global-back-control-host .app-back-btn--bar.fixed-back-bar {
   z-index: var(--z-fab, 220);
 }
-html.dark .app-back-btn--bar.fixed-back-bar,
-html[data-theme="dark"] .app-back-btn--bar.fixed-back-bar {
-  background: color-mix(in srgb, var(--mj-surface, #12241c) 92%, transparent);
-  color: var(--text-primary, #ECF2EF);
-  border-color: color-mix(in srgb, var(--mj-brand, #5cc095) 28%, transparent);
-}
-
 /* —— Content Experience Audit Closure —— */
-/* زر رجوع ثابت أخف وأهدأ — يبقى ثابتًا في مكانه */
+/* زر رجوع علوي مضغوط — أخف بلا blur/glow */
 .app-back-btn--bar.fixed-back-bar,
 button.app-back-btn--bar[data-fixed-back-bar="1"] {
   min-height: 42px;
   min-width: 42px;
-  padding: 0.45rem 0.9rem 0.45rem 0.75rem;
-  gap: 0.35rem;
-  font-size: 0.88rem;
+  padding: 0.38rem 0.8rem 0.38rem 0.68rem;
+  gap: 0.3rem;
+  font-size: 0.84rem;
   font-weight: 600;
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 18%, transparent);
-  background: color-mix(in srgb, var(--mj-surface, #fff) 92%, transparent);
-  box-shadow:
-    0 4px 14px -10px rgba(11, 32, 24, 0.28),
-    inset 0 1px 0 color-mix(in srgb, #fff 40%, transparent);
-  backdrop-filter: blur(10px) saturate(1.08);
-  -webkit-backdrop-filter: blur(10px) saturate(1.08);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 14%, transparent);
+  background: color-mix(in srgb, var(--mj-surface, #fff) 94%, transparent);
+  box-shadow: 0 2px 8px rgba(11, 32, 24, 0.1);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 .app-back-btn--bar.fixed-back-bar:hover {
-  box-shadow:
-    0 6px 16px -10px rgba(11, 32, 24, 0.32),
-    inset 0 1px 0 color-mix(in srgb, #fff 45%, transparent);
+  box-shadow: 0 3px 10px rgba(11, 32, 24, 0.12);
+}
+
+html.dark .app-back-btn--bar.fixed-back-bar,
+html[data-theme="dark"] .app-back-btn--bar.fixed-back-bar {
+  background: color-mix(in srgb, var(--pd-card, #24302b) 82%, transparent);
+  color: var(--pd-ink, #ede8df);
+  border-color: color-mix(in srgb, var(--pd-emerald, #4fb48b) 12%, transparent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* بطاقات معرفة أخف + هرمية أوضح */

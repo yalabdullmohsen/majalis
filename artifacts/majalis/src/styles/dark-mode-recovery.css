@@ -49,7 +49,7 @@ html.dark {
   --dm-text-on-primary: #06231a;
   --dm-input: #1a2421;
   --dm-input-placeholder: #b5ada0;
-  --dm-bottom-nav: #121916;
+  --dm-bottom-nav: #0c1210;
   --dm-drawer: #1c2622;
   --dm-drawer-item: transparent;
   --dm-drawer-item-selected: var(--dm-surface-selected);
@@ -136,7 +136,7 @@ html[data-theme="dark"] .bottom-nav__tab-icon,
 html.dark .bottom-nav__tab,
 html.dark .bottom-nav__tab-label,
 html.dark .bottom-nav__tab-icon {
-  color: var(--dm-text-muted) !important;
+  color: color-mix(in srgb, var(--dm-text-muted) 78%, #6a7a72) !important;
   opacity: 1 !important;
 }
 
@@ -147,7 +147,7 @@ html.dark .bottom-nav__tab.is-active,
 html.dark .bottom-nav__tab.is-active .bottom-nav__tab-label,
 html.dark .bottom-nav__tab.is-active .bottom-nav__tab-icon {
   color: var(--dm-accent-gold) !important;
-  background: color-mix(in srgb, var(--dm-primary) 12%, transparent) !important;
+  background: color-mix(in srgb, var(--dm-primary) 8%, transparent) !important;
   filter: none !important;
   text-shadow: none !important;
 }
@@ -283,9 +283,16 @@ html.dark .home-universal-search::after {
 html[data-theme="dark"] .hus-field,
 html.dark .hus-field {
   background: var(--dm-input) !important;
-  border: 1px solid var(--dm-border-default) !important;
+  border: 1px solid color-mix(in srgb, var(--dm-border-subtle) 70%, transparent) !important;
   box-shadow: none !important;
   color: var(--dm-text-primary) !important;
+}
+
+html[data-theme="dark"] .hus-field:focus-within,
+html.dark .hus-field:focus-within {
+  border-color: color-mix(in srgb, var(--dm-accent-gold) 42%, transparent) !important;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--dm-accent-gold) 22%, transparent) !important;
+  background: color-mix(in srgb, var(--dm-input) 88%, #0c1210) !important;
 }
 
 html[data-theme="dark"] .hus-input,

@@ -78,7 +78,7 @@ const recovery = read("src/styles/dark-mode-recovery.css");
 assert.match(recovery, /--dm-bg:\s*#0f1613/, "خلفية استرداد عميقة");
 assert.match(recovery, /--dm-text-primary:\s*#ede8df/, "نص استرداد دافئ");
 assert.match(recovery, /--dm-accent-gold:\s*#c9a86c/, "ذهب استرداد");
-assert.match(recovery, /--dm-bottom-nav:\s*#121916/, "شريط سفلي أغمق");
+assert.match(recovery, /--dm-bottom-nav:\s*#0c1210/, "شريط سفلي أغمق متكامل");
 assert.match(
   recovery,
   /0 1px 2px rgba\(0, 0, 0, 0\.16\),\s*0 4px 14px rgba\(0, 0, 0, 0\.18\)/,
@@ -109,11 +109,16 @@ assertAA("حبر دافئ على سطح", "#EDE8DF", "#1B2421");
 assertAA("حبر دافئ على بطاقة", "#EDE8DF", "#24302B");
 assertAA("ثانوي على سطح", "#D8D0C4", "#1B2421");
 assertAA("مكتوم على سطح", "#B5ADA0", "#1B2421");
-assertAA("ذهب على شريط سفلي", "#C9A86C", "#121916");
+assertAA("ذهب على شريط سفلي", "#C9A86C", "#0C1210");
 assertAA("زمرد رابط على سطح", "#8FD4B0", "#1B2421");
 assertAA("حبر على زمرد", "#06231A", "#4FB48B");
 assertAA("قرآن حبر على لوحة", "#EBE4D8", "#15201C");
 assertAA("غابة على بطاقة", "#8FD4B0", "#24302B");
 assertAA("حبر brand-deep على بطاقة", "#EDE8DF", "#24302B");
+assert.match(refine, /--pd-success:/, "توكن نجاح");
+assert.match(refine, /--pd-warning:/, "توكن تحذير");
+assert.match(refine, /--pd-surface-elevated:/, "سطح مرتفع موحّد");
+assert.match(refine, /\.hus-field:focus-within/, "تركيز بحث أوضح");
+assert.match(refine, /pts-countdown|pts-next/, "صقل عدّاد الصلاة");
 
 console.log("premium-dark-theme-gate.test.ts: ok");
