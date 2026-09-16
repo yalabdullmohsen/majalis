@@ -84,7 +84,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "privacy-center", label: "مركز الخصوصية",   path: "/privacy-center", group: "تطبيق",     status: "active",       inSideNav: false, inBottomNav: false },
   { id: "terms",        label: "شروط الاستخدام",      path: "/terms",        group: "تطبيق",         status: "active",       inSideNav: false, inBottomNav: false },
   { id: "submit",       label: "أضف محتوى",           path: "/submit",       group: "تطبيق",         status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "features-in-progress", label: "قيد التطوير", path: "/features-in-progress", group: "تطبيق", status: "disabled", inSideNav: false, inBottomNav: false },
+  { id: "features-in-progress", label: "مسار داخلي", path: "/features-in-progress", group: "تطبيق", status: "disabled", inSideNav: false, inBottomNav: false },
   // ── الإدارة ───────────────────────────────────────────────────
   { id: "admin",        label: "لوحة التحكم",       path: "/admin",        group: "إدارة",         status: "admin-only",   inSideNav: true,  inBottomNav: false },
   { id: "settings",     label: "الإعدادات",          path: "/settings",     group: "حساب",          status: "requires-auth",inSideNav: true,  inBottomNav: false },

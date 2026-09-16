@@ -1,17 +1,77 @@
 {
   "summary": {
-    "generatedAt": "2026-09-06T06:22:39.057Z",
-    "scannedFiles": 3982,
-    "issueCount": 2,
+    "generatedAt": "2026-09-16T20:36:34.635Z",
+    "scannedFiles": 4363,
+    "issueCount": 8,
     "bySeverity": {
       "critical": 0,
-      "high": 0,
-      "medium": 2,
+      "high": 4,
+      "medium": 4,
       "low": 0
     },
-    "autoFixable": 2
+    "autoFixable": 4
   },
   "issues": [
+    {
+      "file": "src/lib/fawaid-text.ts",
+      "text": "وهذا مما يستحق من المسلم أن يتأمله",
+      "problem": "ذيل خطابة قالبي في فوائد",
+      "suggested": "حذف/استبدال بنص نهائي",
+      "severity": "high",
+      "type": "blocked-phrase",
+      "reason": "قد يحتاج صياغة تحريرية",
+      "autoFixable": false
+    },
+    {
+      "file": "src/lib/fawaid-text.ts",
+      "text": "فليُلزم المسلم العمل بما علم",
+      "problem": "ذيل خطابة قالبي في فوائد",
+      "suggested": "حذف/استبدال بنص نهائي",
+      "severity": "high",
+      "type": "blocked-phrase",
+      "reason": "قد يحتاج صياغة تحريرية",
+      "autoFixable": false
+    },
+    {
+      "file": "src/lib/fawaid-text.ts",
+      "text": "فليُلزم المسلم العمل بما علم",
+      "problem": "ذيل خطابة قالبي في فوائد",
+      "suggested": "حذف/استبدال بنص نهائي",
+      "severity": "high",
+      "type": "blocked-phrase",
+      "reason": "قد يحتاج صياغة تحريرية",
+      "autoFixable": false
+    },
+    {
+      "file": "src/lib/fawaid-text.ts",
+      "text": "وهذا من فوائد التدبر في كتاب الله والعمل بما فيه",
+      "problem": "ذيل خطابة قالبي في فوائد",
+      "suggested": "حذف/استبدال بنص نهائي",
+      "severity": "high",
+      "type": "blocked-phrase",
+      "reason": "قد يحتاج صياغة تحريرية",
+      "autoFixable": false
+    },
+    {
+      "file": "src/data/library-catalog.json",
+      "text": "القران",
+      "problem": "مصطلح/إملاء غير موحّد — يُفضّل «القرآن»",
+      "suggested": "القرآن",
+      "severity": "medium",
+      "type": "term",
+      "reason": "قابل للإصلاح الآمن",
+      "autoFixable": true
+    },
+    {
+      "file": "src/data/library-catalog.json",
+      "text": "السنه",
+      "problem": "مصطلح/إملاء غير موحّد — يُفضّل «السنة»",
+      "suggested": "السنة",
+      "severity": "medium",
+      "type": "term",
+      "reason": "قابل للإصلاح الآمن",
+      "autoFixable": true
+    },
     {
       "file": "src/lib/quran-text-normalize.ts",
       "text": "الصلاه",

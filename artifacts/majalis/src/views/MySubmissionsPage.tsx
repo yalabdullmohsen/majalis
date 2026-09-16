@@ -91,7 +91,7 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
         {/* Approved lesson notice */}
         {sub.status === "approved" && sub.type === "lesson" && (
           <div className="msr-card__notice">
-            <PartyPopper size={14} className="inline ms-1" />تهانينا! درسك قُبِل وسيُضاف قريباً إلى قسم الدروس.
+            <PartyPopper size={14} className="inline ms-1" />تهانينا! قُبل درسك وهو في مسار النشر ضمن قسم الدروس.
           </div>
         )}
 

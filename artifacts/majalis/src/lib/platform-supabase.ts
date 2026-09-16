@@ -63,7 +63,7 @@ export async function adminDeleteUpdate(id: string) {
 }
 
 export async function adminSetPlatformContentStatus(
-  table: "fiqh_council_decisions" | "sharia_rulings" | "annual_courses" | "platform_updates",
+  table: "sharia_rulings" | "annual_courses" | "platform_updates",
   id: string,
   status: string,
 ) {
