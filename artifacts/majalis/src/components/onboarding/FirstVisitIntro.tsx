@@ -7,7 +7,6 @@ import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { firstVisitIntroConfig } from "@/config/first-visit-intro";
 import { markFirstVisitIntroSeen } from "@/lib/first-visit-intro-state";
 import { loadLastPageSync } from "@/lib/quran-last-page";
-import { normalizeAyahKey } from "@/lib/quran-api";
 import { navigateTo } from "@/lib/navigation-intent";
 import "@/styles/components/first-visit-intro.css";
 
