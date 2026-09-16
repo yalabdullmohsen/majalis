@@ -482,7 +482,7 @@
     "id": "kw-murtaqa-madarij-altalab-0",
     "external_key": "kw-murtaqa-madarij-altalab-0",
     "title": "دورة مدارج الطلب — المسار الانتقائي — متاح 24 ساعة",
-    "speaker_name": "يُعلن لاحقًا",
+    "speaker_name": "مطلق الجاسر وآخرون",
     "sheikh_image_url": "",
     "category": "تأصيل",
     "city": "",
@@ -513,7 +513,7 @@
     "is_course": true,
     "course_id": "murtaqa-madarij-altalab",
     "sheikhs": {
-      "name": "متاح 24 ساعة"
+      "name": "مطلق الجاسر وآخرون"
     },
     "session_count": null
   },
@@ -724,7 +724,7 @@
     "id": "kw-fiqh-ibadaat-course-0",
     "external_key": "kw-fiqh-ibadaat-course-0",
     "title": "دورة الفقه العملي للعبادات — الدرس الأول — الطهارة",
-    "speaker_name": "يُعلن لاحقًا",
+    "speaker_name": "يوسف بن أحمد القاسم",
     "sheikh_image_url": "",
     "category": "فقه",
     "city": "العاصمة",
@@ -756,7 +756,7 @@
       "الدرس الثاني — الصلاة"
     ],
     "sheikhs": {
-      "name": "الطهارة"
+      "name": "يوسف بن أحمد القاسم"
     }
   },
   {
@@ -1096,7 +1096,7 @@
     "id": "kw-jahraa-muhimmat-aqeeda-women-2026-0",
     "external_key": "kw-jahraa-muhimmat-aqeeda-women-2026-0",
     "title": "دورة مهمات في العقيدة — ثلاثة الأصول — القواعد الأربع — نواقض الإسلام",
-    "speaker_name": "يُعلن لاحقًا",
+    "speaker_name": "أ. جميلة الهاجري",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "تأصيل",
     "city": "العاصمة",
@@ -1122,7 +1122,7 @@
     "is_course": true,
     "course_id": "jahraa-muhimmat-aqeeda-women-2026",
     "sheikhs": {
-      "name": "نواقض الإسلام"
+      "name": "أ. جميلة الهاجري"
     },
     "session_count": null
   },
@@ -1130,7 +1130,7 @@
     "id": "kw-asima-umdat-ahkam-sarra-2026-0",
     "external_key": "kw-asima-umdat-ahkam-sarra-2026-0",
     "title": "دورة عمدة الأحكام — للإمام عبدالغني المقدسي — عمدة الأحكام — 18 مجلساً",
-    "speaker_name": "يُعلن لاحقًا",
+    "speaker_name": "محمد هشام طاهري",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "تأصيل",
     "city": "",
@@ -1156,7 +1156,7 @@
     "is_course": true,
     "course_id": "asima-umdat-ahkam-sarra-2026",
     "sheikhs": {
-      "name": "18 مجلساً"
+      "name": "محمد هشام طاهري"
     },
     "session_count": null
   },
@@ -1202,7 +1202,7 @@
     "id": "kw-ahmadi-zad-muslim-ulum-quran-2026-0",
     "external_key": "kw-ahmadi-zad-muslim-ulum-quran-2026-0",
     "title": "الميسر في علوم القرآن",
-    "speaker_name": "يُعلن لاحقًا",
+    "speaker_name": "لافي عايض العازمي",
     "sheikh_image_url": "/sheikhs/default-sheikh.svg",
     "category": "تأصيل",
     "city": "",
@@ -1235,7 +1235,7 @@
       "المجلس الثاني — علوم القرآن"
     ],
     "sheikhs": {
-      "name": "علوم القرآن"
+      "name": "لافي عايض العازمي"
     }
   },
   {
@@ -1828,11 +1828,11 @@
     "sheikh_image_url": "/logo.png",
     "category": "فقه",
     "city": "",
-    "region": "",
-    "mosque": "",
-    "day_of_week": "",
-    "lesson_time": "",
-    "schedule": "",
+    "region": "إلكتروني",
+    "mosque": "عن بُعد — دورة إلكترونية",
+    "day_of_week": "طوال الأسبوع",
+    "lesson_time": "مساءً — وفق جدول الدورة المعلن",
+    "schedule": "طوال الأسبوع — وفق جدول الدورة",
     "description": "دورة إلكترونية مكثفة مدتها شهر. · شرح المتن كاملاً مع تطبيقات فقهية. · شهادة حضور إلكترونية. · التسجيل المسبق مجاني — يُعلَن عن رابط التسجيل قبل بدء الدورة. · المتن: متن أبي شجاع",
     "audience": "الكل",
     "delivery": "حضور فقط",
@@ -1854,7 +1854,8 @@
     "sheikhs": {
       "name": "أ. عمر بن محمد سالم"
     },
-    "session_count": null
+    "session_count": null,
+    "governorate": "عن بُعد"
   },
   {
     "id": "sci-quran-memorization-program",
@@ -2838,11 +2839,11 @@
     "sheikh_image_url": "/sheikhs/mutlaq-aljasser.svg",
     "category": "أخرى",
     "city": "",
-    "region": "",
-    "mosque": "",
-    "day_of_week": "",
-    "lesson_time": "",
-    "schedule": "",
+    "region": "إلكتروني",
+    "mosque": "عن بُعد — منصة مرتقى",
+    "day_of_week": "طوال الأسبوع",
+    "lesson_time": "على مدار اليوم — دروس مسجّلة",
+    "schedule": "طوال الأسبوع — دروس مسجّلة",
     "description": "8 متون في 8 علوم خلال شهرين (حسب الإعلان الأصلي). · الدراسة مجانية عن بُعد — الدروس مسجلة. · متابعة يومية على التلغرام. · شهادة بعد اجتياز كل متن بنجاح. · جميع متون الدورة متاحة بصيغة PDF. · المتون: تفسير الفاتحة والمعوذات، من جوامع كلم النبي ﷺ، القول السديد، المسائل الفقهية للشيخ عبدالله بن خلف الدحيان، قصيدة السير إلى الله، الأرجوزة الميئية في السيرة، منظومة درة الطالب، مكارم الأخلاق لابن عثيمين.",
     "audience": "الكل",
     "delivery": "حضور فقط",
@@ -2864,6 +2865,7 @@
     "sheikhs": {
       "name": "د. مطلق جاسر مطلق الجاسر"
     },
-    "session_count": null
+    "session_count": null,
+    "governorate": "عن بُعد"
   }
 ]

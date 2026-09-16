@@ -47,6 +47,9 @@ function InstitutionCard({ inst }: { inst: Institution }) {
           </span>
         </div>
         <span className="inst-card__type-badge">{TYPE_LABELS[inst.type]}</span>
+        {inst.contentStatus === "needs_review" && !(inst.website && inst.description.length >= 200) ? (
+          <span className="inst-card__review-badge" title="التعريف قيد المراجعة البشرية">قيد المراجعة</span>
+        ) : null}
       </div>
       <p className="inst-card__desc">{inst.description}</p>
       <div className="inst-card__links">
@@ -167,7 +170,7 @@ export default function InstitutionsPage() {
             <div className="vault-empty__icon" aria-hidden="true">
               <Search size={40} strokeWidth={1.3} />
             </div>
-            <p>لا توجد نتائج مطابقة.</p>
+            <p>لا مؤسسات مطابقة. جرّب نوعًا آخر أو امسح البحث.</p>
           </div>
         ) : (
           <div className="inst-grid">
@@ -185,7 +188,7 @@ export default function InstitutionsPage() {
           <ShareButtons title="المؤسسات الإسلامية — سُنّة" url="https://www.ssunnah.com/institutions" />
         </div>
         <div className="px-4 pb-6 mt-4">
-          <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
+          <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك حول المؤسسات والمعالم" count={4} />
         </div>
       </div>
     </SectionTemplatePage>

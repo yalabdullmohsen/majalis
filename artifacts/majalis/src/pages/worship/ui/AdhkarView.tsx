@@ -104,7 +104,7 @@ export default function AdhkarPage() {
       canonicalPath: path,
       title: active
         ? `${active.name} | الأذكار | سُنّة`
-        : "الأذكار والأدعية الإسلامية | سُنّة",
+        : "الأذكار الإسلامية | سُنّة",
       description: active
         ? `${active.description.slice(0, 140)}… مع بيان المصدر والدرجة قدر الإمكان.`
         : "أذكار وأدعية مأثورة مع بيان المصدر والدرجة قدر الإمكان.",
@@ -255,7 +255,7 @@ export default function AdhkarPage() {
     <SectionTemplatePage
       route="/adhkar"
       title="الأذكار"
-      subtitle="أذكار الصباح والمساء والنوم وبعد الصلاة من القرآن والسنة — مع العدّ والحفظ والمشاركة."
+      subtitle="أذكار الصباح والمساء والنوم وبعد الصلاة من القرآن والسنة — مع العدّ والحفظ والمشاركة بسهولة."
       eyebrow="العبادة اليومية"
       groupTitle="ورد الأذكار"
     >
@@ -427,7 +427,7 @@ export default function AdhkarPage() {
             { href: "/mushaf", label: "المصحف" },
           ]}
         />
-        <SectionQuiz sectionId="akhlaq" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />
+        <SectionQuiz route="/adhkar" title="اختبر معلوماتك في الأذكار" count={4} />
       </div>
     </PageShell>
     </SectionTemplatePage>

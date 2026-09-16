@@ -52,7 +52,7 @@ function QuizBody({ questions, onRefresh }: QuizBodyProps) {
 
           {!revealed[i] ? (
             <button type="button" className="sq-reveal-btn" onClick={() => reveal(i)}>
-              اظهر الإجابة
+              أظهر الإجابة
             </button>
           ) : (
             <>

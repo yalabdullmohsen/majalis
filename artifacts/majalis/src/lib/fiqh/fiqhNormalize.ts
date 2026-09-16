@@ -564,6 +564,7 @@ const BOOK_DOOR_MAP: Record<string, FiqhCanonicalDoor> = {
   waqf: "waqf_hiba",
   hiba: "waqf_hiba",
   wasaya: "waqf_hiba",
+  "wasaya-faraid": "faraid",
   faraid: "faraid",
   luqata: "muamalat",
   ghasb: "muamalat",
@@ -574,8 +575,10 @@ const BOOK_DOOR_MAP: Record<string, FiqhCanonicalDoor> = {
   khul: "talaq",
   talaq: "talaq",
   raja: "iddah_rida",
+  rajaa: "iddah_rida",
   ila: "talaq",
   iddah: "iddah_rida",
+  idad: "iddah_rida",
   rida: "iddah_rida",
   nafaqat: "nafaqat",
   jinayat: "jinayat",
@@ -590,6 +593,37 @@ const BOOK_DOOR_MAP: Record<string, FiqhCanonicalDoor> = {
   dawa: "qada",
   iqrar: "iqrar",
 };
+
+/**
+ * ربط معرف الباب (الفصل) بباب البوابة — يملأ الأبواب الفرعية من محتوى الكتب الموجودة
+ * بدل إبقائها `needs_completion` رغم وجود مسائل تحت كتاب أب.
+ */
+const CHAPTER_DOOR_RULES: Array<{ re: RegExp; door: FiqhCanonicalDoor }> = [
+  { re: /^(adahi)(-|$)/, door: "udhiya" },
+  { re: /^(dhaka)(-|$)/, door: "sayd" },
+  { re: /^sayd$/, door: "sayd" },
+  { re: /^(riba)(-|$)/, door: "riba" },
+  { re: /^(ijara|jaala)(-|$)/, door: "ijara" },
+  { re: /^(qard)(-|$)/, door: "qard" },
+  { re: /^(waqf|hiba|wasaya|tabarru|musa-)(-|$)/, door: "waqf_hiba" },
+  {
+    re: /^(faraid|ashab-furud|asabat|usul-masail|awl|tashih|munasakhat|qismat-tarikat|dhawu|mirath|wala)(-|$)/,
+    door: "faraid",
+  },
+  {
+    re: /^(talaq|khul|ila|zihar|lian|sarih|ikhtilaf-adad|istithna|taliq|tawil-half|shakk-talaq)(-|$)/,
+    door: "talaq",
+  },
+  { re: /^(idad|istibra|rida|rajaa)(-|$)/, door: "iddah_rida" },
+  { re: /^(nafaqat|hadana)(-|$)/, door: "nafaqat" },
+  { re: /^(diyat|shijaj|aqila|kaffarat-qatl)(-|$)/, door: "diyat" },
+  { re: /^(hudud|hadd|qadhf|sariqa|qutta|ahl-baghy|hukm-murtad|tazir)(-|$)/, door: "hudud" },
+  {
+    re: /^(shahadat|shurut-shahada|mawani-shahada|mashhud|ada-shahada|shahada|ruju-shahada)(-|$)/,
+    door: "shahadat",
+  },
+  { re: /^(iqrar|hasil-iqrar)(-|$)/, door: "iqrar" },
+];
 
 function categoryFallbackDoor(category: FiqhBookCategory): FiqhCanonicalDoor {
   switch (category) {
@@ -610,8 +644,19 @@ export function resolveBookDoor(book: FiqhBook): FiqhCanonicalDoor {
   return BOOK_DOOR_MAP[book.id] ?? categoryFallbackDoor(book.category);
 }
 
+/** يصنّف المسألة حسب معرف الفصل أولًا، ثم الكتاب. */
+export function resolveChapterDoorId(chapterId: string | undefined | null): FiqhCanonicalDoor | null {
+  const id = String(chapterId || "").trim();
+  if (!id) return null;
+  if (BOOK_DOOR_MAP[id]) return BOOK_DOOR_MAP[id];
+  for (const rule of CHAPTER_DOOR_RULES) {
+    if (rule.re.test(id)) return rule.door;
+  }
+  return null;
+}
+
 export function resolveLessonDoor(hit: FiqhLessonHit): FiqhCanonicalDoor {
-  return resolveBookDoor(hit.book);
+  return resolveChapterDoorId(hit.chapter?.id) ?? resolveBookDoor(hit.book);
 }
 
 export function normalizeFiqhText(text: string): string {
@@ -729,19 +774,20 @@ export function buildFiqhDoorSummaries(): FiqhDoorSummary[] {
   }
 
   for (const book of getAllFiqhBooks()) {
-    const door = resolveBookDoor(book);
-    const bucket = byDoor.get(door) ?? byDoor.get("other")!;
     for (const chapter of book.chapters) {
       const lessons = chapter.lessons;
-      if (lessons.length > 0) bucket.chapters.add(`${book.id}:${chapter.id}`);
+      if (lessons.length === 0) continue;
       for (const lesson of lessons) {
+        const door = resolveChapterDoorId(chapter.id) ?? resolveBookDoor(book);
+        const bucket = byDoor.get(door) ?? byDoor.get("other")!;
+        bucket.chapters.add(`${book.id}:${chapter.id}`);
         bucket.issues += 1;
         bucket.statuses.push(getLessonContentStatus(lesson));
       }
     }
   }
 
-  // لفّ الأبواب الفرعية داخل بطاقات البوابة العلنية (الجنايات←الحدود، القضاء←الشهادات)
+  // لفّ الأبواب الفرعية داخل بطاقات البوابة العلنية
   const rollupInto = (target: FiqhCanonicalDoor, sources: FiqhCanonicalDoor[]) => {
     const to = byDoor.get(target);
     if (!to) return;
@@ -754,8 +800,12 @@ export function buildFiqhDoorSummaries(): FiqhDoorSummary[] {
       to.statuses.push(...from.statuses);
     }
   };
+  rollupInto("usrah", ["usrah", "nikah", "talaq", "iddah_rida", "nafaqat"]);
+  rollupInto("muamalat", ["muamalat", "buyu", "riba", "ijara", "sharika", "qard", "waqf_hiba", "faraid"]);
   rollupInto("jinayat", ["jinayat", "hudud", "diyat"]);
   rollupInto("qada", ["qada", "shahadat", "iqrar"]);
+  rollupInto("atima", ["atima", "sayd"]);
+  rollupInto("hajj", ["hajj", "udhiya"]);
 
   return FIQH_DOOR_ORDER.map((door) => {
     const meta = FIQH_DOOR_META[door];

@@ -58,7 +58,7 @@ function QiblaCompass({
       <svg
         viewBox="0 0 200 200"
         className="qibla-svg"
-        aria-label={`وصلة القبلة، الزاوية ${Math.round(bearing)} درجة`}
+        aria-label={`بوصلة القبلة، الزاوية ${Math.round(bearing)} درجة`}
       >
         <defs>
           <radialGradient id="qibla-face" cx="50%" cy="40%" r="65%">

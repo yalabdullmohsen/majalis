@@ -382,7 +382,7 @@ export default function IslamicStoriesPage() {
           <span>{error}</span>
         </div>
       ) : stories.length === 0 ? (
-        <Empty title="لا توجد قصص معتمدة بعد" text="يمكن اعتماد القصص من لوحة التحكم." />
+        <Empty title="لا توجد قصص معتمدة بعد" text="لا قصص معتمدة للعرض الآن. تصفّح الأمم أو السيرة." />
       ) : filtered.length === 0 ? (
         <Empty text="لا توجد نتائج للبحث أو الفلتر المحدد." />
       ) : (
@@ -408,7 +408,7 @@ export default function IslamicStoriesPage() {
               { href: "/seerah", label: "السيرة النبوية" },
             ]}
           />
-          <SectionQuiz sectionId="prophets" title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
+          <SectionQuiz sectionId="prophets" title="اختبر معلوماتك في القصص والتاريخ" count={4} />
         </>
       )}
       </div>

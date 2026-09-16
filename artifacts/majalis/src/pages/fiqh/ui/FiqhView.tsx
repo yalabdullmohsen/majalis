@@ -28,6 +28,7 @@ import { UnifiedPrimaryFilters } from "@/components/filters/UnifiedPrimaryFilter
 import { GridScreen } from "@/components/design-system/screens";
 import { isHiddenFromNav } from "@/lib/nav-visibility";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
+import { EMPTY, SEARCH, SECTION_LEAD } from "@/lib/ui-copy";
 import "@/styles/pages/fiqh-hub.css";
 import "@/styles/components/hub-card.css";
 
@@ -51,7 +52,7 @@ function FiqhHubSearch({
             type="search"
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
-            placeholder="ابحث في الكتب والأبواب والمسائل…"
+            placeholder={SEARCH.fiqh}
             autoComplete="off"
             enterKeyHint="search"
           />
@@ -105,7 +106,7 @@ function SearchHitList({
   lessons: FiqhLessonHit[];
 }) {
   if (books.length === 0 && chapters.length === 0 && lessons.length === 0) {
-    return <p className="fiqh-lux-empty">لا نتائج مطابقة داخل الفقه — جرّب كلمة أخرى.</p>;
+    return <p className="fiqh-lux-empty">{EMPTY.fiqhSearch}</p>;
   }
 
   return (
@@ -232,7 +233,7 @@ function FiqhBooksBody() {
               <BookCard key={book.id} book={book} />
             ))}
           </KnowledgeLayout>
-          {books.length === 0 ? <p className="fiqh-lux-empty">لا كتب في هذا التصنيف.</p> : null}
+          {books.length === 0 ? <p className="fiqh-lux-empty">{EMPTY.fiqhCategory}</p> : null}
         </section>
       )}
 
@@ -315,11 +316,11 @@ export default function FiqhPage() {
       <SectionTemplatePage
         route="/fiqh"
         title="الفقه"
-        subtitle="كتب فقه مرتبة: كتاب ← باب ← مسائل موثّقة على المذهب الحنبلي."
+        subtitle={SECTION_LEAD.fiqh}
       >
         <div className="fiqh-lux-shell" dir="rtl">
           <p className="fiqh-hub-edu-note" role="note">
-            محتوى تعليمي موثّق على المذهب الحنبلي — للفهم والتعلّم، وليس فتوى شخصية من المنصة.
+            {SECTION_LEAD.fiqhNote}
           </p>
           <FiqhBooksBody />
           <section className="fiqh-hub-stats" aria-label="حجم المحتوى">

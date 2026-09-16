@@ -104,7 +104,7 @@ export const USUL_HUB_TOPICS: UsulHubTopic[] = [
   {
     id: "amr-nahy",
     title: "الأمر والنهي",
-    summary: "هيكل دلالات الأمر والنهي في النصوص — يُستكمل من المتون المعتمدة.",
+    summary: "هيكل دلالات الأمر والنهي في النصوص — إطار تعليمي؛ راجع المتن المشار إليه.",
     kind: "باب",
     status: "structure",
     source: {

@@ -1,8 +1,8 @@
 {
   "scope": "src/pages + src/views (بدون Mushaf/ImmersiveQuran)",
   "metric": "خلو من قيم مباشرة في JSX style/className (مواءمة ESLint DS lock)",
-  "total": 385,
-  "clean": 385,
+  "total": 392,
+  "clean": 392,
   "violators": 0,
   "coveragePct": 100,
   "allowlistSize": 0,

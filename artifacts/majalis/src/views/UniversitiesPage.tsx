@@ -164,7 +164,7 @@ function UniversitiesContent() {
     <SectionTemplatePage
       route="/universities"
       title="دليل الجامعات والكليات الشرعية"
-      subtitle="موسوعة شاملة للجامعات التي تُقدّم دراسات شرعية حول العالم. ابحث وقارن وصل لرابط التقديم الرسمي مباشرة."
+      subtitle="دليل تعريفي لجامعات وكليات تقدّم دراسات شرعية — مع روابط رسمية للتحقق قبل التقديم."
       groupTitle="أقسام الدليل"
     >
     <div dir="rtl" className="up-root">
@@ -203,9 +203,7 @@ function UniversitiesContent() {
         {seedNeeded && universities.length > 0 && (
           <div className="up-alert" role="status">
             <Landmark size={14} aria-hidden="true" className="inline ms-1" />
-            يُعرض الآن الكتالوج الموثّق المضمَّن. لمزامنة قاعدة البيانات شغّل:
-            {" "}
-            <code className="up-code">node scripts/apply-universities-migrations.mjs</code>
+            تعذّر مزامنة دليل الجامعات الآن. تظهر النسخة المحلية المعتمدة إن وُجدت.
           </div>
         )}
 
@@ -263,7 +261,7 @@ function UniversitiesContent() {
         {!loading && universities.length === 0 && !seedNeeded && (
           <div className="up-empty-state up-empty-state--py12">
             <Search size={40} strokeWidth={1.3} className="mx-auto mb-3" aria-hidden="true" />
-            <p>لا توجد نتائج مطابقة للبحث الحالي.</p>
+            <p>لا توجد جامعات مطابقة. جرّب دولة أخرى أو امسح البحث.</p>
           </div>
         )}
 
@@ -281,7 +279,7 @@ function UniversitiesContent() {
       </div>
       <RelatedKnowledge kind="book" query="جامعات إسلامية" title="مواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
+        <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في الجامعات الشرعية" count={4} />
       </div>
 
       <CompareBar />

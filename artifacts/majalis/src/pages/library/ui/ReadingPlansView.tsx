@@ -166,7 +166,7 @@ function NewPlanForm({ userId, onCreated, onClose }: { userId: string; onCreated
         <input
           value={selectedBook ? selectedBook.title : query}
           onChange={(e) => { setQuery(e.target.value); setSelectedSlug(null); }}
-          placeholder="ابحث عن كتاب في المكتبة..."
+          placeholder="ابحث عن كتاب..."
           className="rp-text-input"
         />
         {!selectedBook && matches.length > 0 && (
@@ -305,7 +305,7 @@ export default function ReadingPlansPage() {
           {plans.length === 0 && !showForm ? (
             <div className="rp-empty">
               <BookOpen size={34} strokeWidth={1} aria-hidden="true" />
-              <p>لا توجد خطط قراءة بعد</p>
+              <p>لا توجد خطط قراءة بعد. أنشئ خطة لتتابع تقدّمك.</p>
             </div>
           ) : (
             <div className="rp-plans-list">

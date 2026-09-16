@@ -64,10 +64,10 @@ const SECTIONS = [
     icon: "fiqh",
     links: [
       { href: "/fiqh",        label: "مدخل الفقه",          desc: "بوابة الفقه والأحكام" },
-      { href: "/fiqh?tab=rulings", label: "الأحكام الشرعية", desc: "ضمن بوابة الفقه" },
-      { href: "/fiqh?tab=qawaid", label: "القواعد الفقهية", desc: "ضمن بوابة الفقه" },
-      { href: "/fiqh?tab=madhahib", label: "المذاهب الأربعة", desc: "ضمن بوابة الفقه" },
-      { href: "/fiqh?tab=nawazil", label: "النوازل المعاصرة", desc: "ضمن بوابة الفقه" },
+      { href: "/fiqh?tab=rulings", label: "الأحكام الشرعية", desc: "فتاوى وأحكام موثّقة" },
+      { href: "/fiqh?tab=qawaid", label: "القواعد الفقهية", desc: "القواعد الخمس وما يتفرع عنها" },
+      { href: "/fiqh?tab=madhahib", label: "المذاهب الأربعة", desc: "الحنفي والمالكي والشافعي والحنبلي" },
+      { href: "/fiqh?tab=nawazil", label: "النوازل المعاصرة", desc: "مسائل العصر ضمن أبواب الفقه" },
       { href: "/fiqh?tab=ibadat", label: "العبادات", desc: "طهارة وصلاة وزكاة وصيام وحج" },
       { href: "/tahara",      label: "الطهارة",              desc: "الوضوء والغسل والتيمم" },
       { href: "/salah-guide", label: "الصلاة",               desc: "دليل الصلاة كاملاً" },
@@ -92,7 +92,7 @@ const SECTIONS = [
     title: "العبادة والأذكار",
     icon: "adhkar",
     links: [
-      { href: "/adhkar",            label: "الأذكار والأدعية",    desc: "الصباح والمساء والنوم والأدعية المأثورة" },
+      { href: "/adhkar",            label: "الأذكار",    desc: "الصباح والمساء والنوم والأدعية المأثورة" },
       { href: "/tasbih",            label: "التسبيح",              desc: "عداد التسبيح الرقمي" },
       { href: "/sunan-yawmiyya",    label: "السنن اليومية",        desc: "السنن مع تتبع إتمامها" },
       { href: "/fadail-aamal",      label: "فضائل الأعمال",        desc: "أحاديث في الفضائل" },

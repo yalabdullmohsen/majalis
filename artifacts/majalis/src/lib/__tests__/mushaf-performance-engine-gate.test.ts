@@ -29,7 +29,7 @@ assert.match(line, /LONG_PRESS_MS/);
 assert.match(settings, /sepia/);
 assert.match(settings, /بيج دافئ/);
 assert.match(settings, /oled/);
-assert.match(settings, /أسود OLED/);
+assert.match(settings, /أسود كامل/);
 assert.match(settings, /hideLevel/);
 assert.match(settings, /اختبار الحفظ/);
 assert.match(css, /data-mushaf-theme="sepia"/);

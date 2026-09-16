@@ -372,7 +372,7 @@ export default function TarikhIslamiPage() {
           <section className="tarikh-section">
             <h2 className="tarikh-section__title">نتائج البحث ({searchResults.length})</h2>
             {searchResults.length === 0 ? (
-              <p className="tarikh-empty">لا توجد نتائج مطابقة.</p>
+              <p className="tarikh-empty">لا أحداث مطابقة. جرّب مرحلة أخرى أو امسح البحث.</p>
             ) : (
               <ul className="tarikh-card-list">
                 {searchResults.map((item) => (

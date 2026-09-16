@@ -132,7 +132,7 @@ export const TafsirTabPanel = memo(function TafsirTabPanel({
   };
 
   if (!primaryEditions.length) {
-    return <p className="mm-ayah-bar__status">لا يوجد تفسير متاح لهذه الآية حاليًا</p>;
+    return <p className="mm-ayah-bar__status">لا تفسير متاح لهذه الآية في المصدر المعتمد حاليًا.</p>;
   }
 
   const active = primaryEditions.find((e) => e.id === editionId) ?? primaryEditions[0];

@@ -139,7 +139,7 @@ const LABEL_MAP: Record<string, string> = {
   "/islam-stats":                   "إحصائيات الإسلام",
 
   // ─── المكتبة والبحث ───────────────────────────────────────────────
-  "/library":                       "الرئيسية",
+  "/library":                       "البحث",
   "/fawaid":                        "الفوائد",
   "/research":                      "البحث العلمي",
   "/scholarly-research":            "البحث الأكاديمي",

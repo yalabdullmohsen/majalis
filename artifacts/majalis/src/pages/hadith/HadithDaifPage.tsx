@@ -54,7 +54,7 @@ export default function HadithDaifPage() {
         <ShareButtons title="أحاديث ضعيفة للتنبيه والتمييز — سُنّة" url="https://www.ssunnah.com/hadith/daif" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في علوم الحديث" count={4} />
+        <SectionQuiz sectionId="hadith" title="اختبر معلوماتك في الحديث الضعيف" count={4} />
       </div>
     </>
   );

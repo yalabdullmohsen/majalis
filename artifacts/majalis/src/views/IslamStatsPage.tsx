@@ -316,7 +316,7 @@ export default function IslamStatsPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "إحصاءات الإسلام في العالم",
-          description: "حقائق وإحصاءات موثقة عن الإسلام من انتشاره إلى إعجاز القرآن والحضارة الإسلامية؛ من انتشار الإسلام إلى إعجاز القرآن؛ إحصاءات موثّقة عن",
+          description: "حقائق وإحصاءات موثقة عن الإسلام من انتشاره إلى إعجاز القرآن والحضارة الإسلامية.",
           numberOfItems: TABS.length,
           itemListElement: TABS.map((tab, i) => ({
             "@type": "ListItem",

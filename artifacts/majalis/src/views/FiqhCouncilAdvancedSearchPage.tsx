@@ -151,7 +151,7 @@ export default function FiqhCouncilAdvancedSearchPage() {
       {loading && results.length === 0 ? (
         <SkeletonCardGrid />
       ) : results.length === 0 ? (
-        <Empty text="لا توجد نتائج مطابقة." />
+        <Empty text="لا توجد نتائج مطابقة. جرّب تعديل كلمات البحث أو الفلاتر." />
       ) : (
         <div className="page-card-grid" aria-busy={loading}>
           {results.map((item) => (

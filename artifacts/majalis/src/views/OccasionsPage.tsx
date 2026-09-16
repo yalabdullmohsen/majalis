@@ -204,7 +204,7 @@ export default function OccasionsPage() {
         <ShareButtons title="المناسبات الإسلامية — سُنّة" url="https://www.ssunnah.com/occasions" />
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
+        <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في المناسبات الإسلامية" count={4} />
       </div>
     </div>
     </UtilityScreen>

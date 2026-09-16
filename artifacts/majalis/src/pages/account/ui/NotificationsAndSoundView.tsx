@@ -71,7 +71,7 @@ export default function NotificationsAndSoundView() {
               آخر جدولة ناجحة:{" "}
               {status.lastSuccessfulScheduleAt
                 ? new Date(status.lastSuccessfulScheduleAt).toLocaleString("ar")
-                : "لا يوجد بعد"}
+                : "لم تُسجَّل جدولة بعد"}
             </li>
             {status.enabledPrayersAr.length > 0 ? (
               <li>الصلوات المفعّلة: {status.enabledPrayersAr.join("، ")}</li>
