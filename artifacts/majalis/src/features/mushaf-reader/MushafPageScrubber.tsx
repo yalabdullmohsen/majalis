@@ -69,7 +69,7 @@ export const MushafPageScrubber = memo(function MushafPageScrubber({
       <div className="nm-page-scrubber__meta" id={labelId}>
         <span className="nm-page-scrubber__page" dir="ltr">
           {toArabicDigits(draft)}
-          <span className="nm-page-scrubber__of"> / {toArabicDigits(MUSHAF_PAGE_MAX)}</span>
+          <span className="nm-page-scrubber__of">/{toArabicDigits(MUSHAF_PAGE_MAX)}</span>
         </span>
         <span className="nm-page-scrubber__juz">
           الجزء {toArabicDigits(Math.max(1, Math.min(30, juzNumber || 1)))}

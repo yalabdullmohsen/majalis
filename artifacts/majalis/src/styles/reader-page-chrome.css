@@ -2,11 +2,11 @@
  * صقل Chrome أدوات القراءة فقط — خارج mushaf-reader.css
  * حتى لا يُفعَّل قفل سياسة خط/مقياس المصحف على أي تعديل CSS باسم mushaf*.
  *
- * Premium Quran Reader (Quran.com / Apple Books / Kindle):
- * خروج دائم · أسهم سفلية · Fade فقط · Touch ≥44px · بلا Layout Shift
+ * Final UX Polish (Quran.com / Apple Books / Kindle):
+ * Focus Mode · Toolbar أخف · أسهم أوضح · Scrubber نحيف · Tafsir هادئ · Fade فقط
  */
 
-/* زر الخروج العائم القديم — مُعطَّل (الخروج عبر Compact Toolbar فقط) */
+/* زر الخروج العائم السابق — مُعطَّل (الخروج عبر Compact Toolbar فقط) */
 .nm-exit-control,
 .nm-exit-control[data-visible="1"] {
   display: none !important;
@@ -17,17 +17,33 @@
 
 /* busy: إبقاء الأسهم ظاهرة مع منع التفاعل أثناء التسوية */
 .nm-page-arrows[data-visible="1"][data-busy="1"] .nm-page-arrow:not(:disabled) {
-  opacity: 0.45;
+  opacity: 0.42;
   pointer-events: none;
 }
 
-/* ─── P0: خروج دائم — أعلى اليسار الفيزيائي · ≥44px · لا يختفي ─── */
+/* ─── P0: شريط مضغوط (~25–30% أخف) — لا يهيمن على الصفحة ─── */
+.nm-root {
+  --nm-chrome-h: 1.72rem;
+}
+
+.nm-controls--compact .nm-controls__bar {
+  transform: none !important;
+  min-height: calc(var(--nm-chrome-h) + var(--inset-top, 0px));
+  padding: calc(0.12rem + var(--inset-top, 0px)) 0.45rem 0.12rem !important;
+  gap: 0.28rem !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  transition: opacity 160ms ease, background-color 160ms ease, border-color 160ms ease !important;
+}
+
+/* ─── P0: خروج دائم — أعلى اليسار · ≥44px · طارئ عند التركيز ─── */
 .nm-controls--compact .nm-controls__exit {
   display: inline-flex !important;
   position: absolute;
   z-index: 45;
-  left: max(0.5rem, var(--inset-left, 0px));
-  top: max(0.4rem, var(--inset-top, 0px));
+  left: max(0.4rem, var(--inset-left, 0px));
+  top: max(0.32rem, var(--inset-top, 0px));
   width: 2.75rem; /* 44px */
   height: 2.75rem;
   min-width: 2.75rem;
@@ -37,83 +53,97 @@
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 22%, transparent);
-  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 58%, transparent);
-  color: color-mix(in srgb, var(--nm-meta, #5c4a32) 86%, var(--nm-gold, #b08d57));
+  border: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 14%, transparent);
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 42%, transparent);
+  color: color-mix(in srgb, var(--nm-meta, #5c4a32) 78%, var(--nm-gold, #b08d57));
   box-shadow: none;
   font-size: 0;
   line-height: 0;
   letter-spacing: 0;
-  opacity: 0.9;
+  opacity: 0.55;
   visibility: visible;
   pointer-events: auto !important;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition: opacity 180ms ease, background-color 180ms ease, border-color 180ms ease;
+  transition: opacity 160ms ease, background-color 160ms ease, border-color 160ms ease;
 }
 
 .nm-controls--compact .nm-controls__exit::before {
   content: "‹";
-  font-size: 1.3rem;
-  font-weight: 550;
+  font-size: 1.22rem;
+  font-weight: 500;
   line-height: 1;
+  opacity: 0.92;
 }
 
-.nm-controls--compact .nm-controls__exit:active {
-  opacity: 1;
-  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 80%, var(--nm-gold, #b08d57) 8%);
+.nm-controls--compact .nm-controls__exit:active,
+.nm-controls--compact .nm-controls__exit:hover {
+  opacity: 0.88;
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 68%, var(--nm-gold, #b08d57) 6%);
 }
 
-/* Fade فقط للشريط — ممنوع translateY الذي يحرّك الإحساس بالنص */
-.nm-controls--compact .nm-controls__bar {
-  transform: none !important;
-  transition: opacity 180ms ease, background-color 180ms ease, border-color 180ms ease !important;
-}
-
+/* Focus / chrome مخفي: الصفحة فقط + خروج طارئ */
 .nm-root[data-chrome="0"] .nm-controls--compact .nm-controls__bar {
   opacity: 1 !important;
   transform: none !important;
   background: transparent !important;
   border-bottom-color: transparent !important;
+  border-bottom-width: 0 !important;
   pointer-events: none !important;
+  box-shadow: none !important;
 }
 
 .nm-root[data-chrome="0"] .nm-controls--compact .nm-controls__bar > *:not(.nm-controls__exit) {
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
-  transition: opacity 180ms ease, visibility 180ms ease;
+  transition: opacity 160ms ease, visibility 160ms ease;
 }
 
-.nm-root[data-chrome="0"] .nm-controls--compact .nm-controls__exit,
+.nm-root[data-chrome="0"] .nm-controls--compact .nm-controls__exit {
+  opacity: 0.42 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  border-color: color-mix(in srgb, var(--nm-gold, #b08d57) 10%, transparent);
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 28%, transparent);
+}
+
+.nm-root[data-chrome="0"] .nm-controls--compact .nm-controls__exit:active,
+.nm-root[data-chrome="0"] .nm-controls--compact .nm-controls__exit:hover {
+  opacity: 0.78 !important;
+}
+
 .nm-root[data-chrome="1"] .nm-controls--compact .nm-controls__exit {
-  opacity: 0.9 !important;
+  opacity: 0.72 !important;
   visibility: visible !important;
   pointer-events: auto !important;
 }
 
 .nm-root[data-chrome="1"] .nm-controls--compact .nm-controls__bar {
-  padding-left: calc(2.75rem + 0.75rem + max(0.5rem, var(--inset-left, 0px)));
-  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 82%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 12%, transparent);
+  padding-left: calc(2.75rem + 0.55rem + max(0.4rem, var(--inset-left, 0px)));
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 62%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 8%, transparent);
 }
 
-/* أدوات أخف عند الظهور */
+/* أدوات أخف عند الظهور — وزن بصري أقل */
 .nm-root[data-chrome="1"] .nm-controls--compact .nm-controls__btn:not(.nm-controls__exit) {
-  min-height: 2.25rem;
-  padding: 0.2rem 0.5rem;
-  font-size: 0.76rem;
+  min-height: 1.85rem;
+  padding: 0.12rem 0.4rem;
+  font-size: 0.7rem;
   font-weight: 550;
-  border-color: color-mix(in srgb, var(--nm-gold, #b08d57) 18%, transparent);
-  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 72%, transparent);
+  border-radius: 0.4rem;
+  border-color: color-mix(in srgb, var(--nm-gold, #b08d57) 12%, transparent);
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 55%, transparent);
   box-shadow: none;
+  opacity: 0.92;
 }
 
 .nm-root[data-chrome="1"] .nm-controls--compact .nm-controls__page {
-  min-height: 2.25rem;
-  font-size: 0.86rem;
+  min-height: 1.85rem;
+  font-size: 0.78rem;
   font-weight: 650;
-  opacity: 0.92;
+  opacity: 0.88;
+  padding: 0.1rem 0.35rem;
 }
 
 /* يغلب إخفاء .nm-controls بالكامل من mushaf-reader.css في وضع التركيز */
@@ -125,14 +155,16 @@
 
 .nm-root[data-focus-reading="1"][data-chrome="0"] .nm-controls--compact .nm-controls__bar > *:not(.nm-controls__exit),
 .nm-root[data-focus-reading="1"][data-chrome="0"] .nm-page-arrows,
-.nm-root[data-focus-reading="1"][data-chrome="0"] .mm-audio-dock {
+.nm-root[data-focus-reading="1"][data-chrome="0"] .mm-audio-dock,
+.nm-root[data-focus-reading="1"][data-chrome="0"] .nm-page-scrubber,
+.nm-root[data-chrome="0"] .nm-page-scrubber {
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
 }
 
 .nm-root[data-focus-reading="1"][data-chrome="0"] .nm-controls--compact .nm-controls__exit {
-  opacity: 0.9 !important;
+  opacity: 0.42 !important;
   visibility: visible !important;
   pointer-events: auto !important;
 }
@@ -141,94 +173,94 @@
   display: none !important;
 }
 
-/* ─── P0: أسهم سفلية ≥44px — لا تحجز Geometry الصفحة ─── */
+/* ─── P0: أسهم سفلية — وضوح دون ضوضاء · ≥44px ─── */
 .nm-page-arrow {
   top: auto !important;
-  bottom: max(0.85rem, var(--inset-bottom, 0px), var(--safe-bottom, 0px)) !important;
+  bottom: max(0.7rem, var(--inset-bottom, 0px), var(--safe-bottom, 0px)) !important;
   transform: none !important;
   width: 2.75rem; /* 44px */
   height: 2.75rem;
   min-width: 2.75rem;
   min-height: 2.75rem;
-  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 42%, transparent);
-  border: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 18%, transparent);
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 36%, transparent);
+  border: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 16%, transparent);
   box-shadow: none;
-  opacity: 0.48;
-  transition: opacity 180ms ease, background-color 180ms ease, border-color 180ms ease;
+  opacity: 0.52;
+  transition: opacity 160ms ease, background-color 160ms ease, border-color 160ms ease;
 }
 
 .nm-page-arrows {
-  /* طبقة مطلقة — لا تغيّر ارتفاع صفحة المصحف */
-  transition: opacity 180ms ease, visibility 180ms ease;
+  transition: opacity 160ms ease, visibility 160ms ease;
 }
 
 .nm-page-arrows[data-visible="1"] .nm-page-arrow:not(:disabled) {
-  opacity: 0.68;
+  opacity: 0.74;
 }
 
 .nm-page-arrow:not(:disabled):active,
 .nm-page-arrows[data-visible="1"] .nm-page-arrow:not(:disabled):hover {
-  opacity: 0.9;
-  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 70%, var(--nm-gold, #b08d57) 8%);
+  opacity: 0.92;
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 64%, var(--nm-gold, #b08d57) 6%);
+  border-color: color-mix(in srgb, var(--nm-gold, #b08d57) 28%, transparent);
 }
 
 .nm-page-arrow__hit {
-  /* توسيع هدف اللمس دون تكبير الشكل البصري أكثر */
-  inset: -0.35rem;
+  inset: -0.4rem;
 }
 
 .nm-page-arrow__icon {
-  font-size: 1.28rem;
-  font-weight: 500;
-  opacity: 0.82;
+  font-size: 1.36rem;
+  font-weight: 550;
+  opacity: 0.9;
+  letter-spacing: -0.02em;
 }
 
-/* الخروج يبقى قابلًا للضغط أثناء السحب (لا يُلغى كالأسهم) */
+/* الخروج يبقى قابلًا للضغط أثناء السحب */
 .nm-root[data-mushaf-panning="1"] .nm-controls--compact .nm-controls__exit {
   pointer-events: auto !important;
-  opacity: 0.75;
+  opacity: 0.55;
 }
 
 html.dark .nm-controls--compact .nm-controls__exit,
 html[data-theme="dark"] .nm-controls--compact .nm-controls__exit {
-  background: color-mix(in srgb, #1a241c 55%, transparent);
-  border-color: color-mix(in srgb, #8a6b2e 28%, transparent);
-  color: color-mix(in srgb, #e8dcc8 80%, #d4b483);
+  background: color-mix(in srgb, #1a241c 42%, transparent);
+  border-color: color-mix(in srgb, #8a6b2e 18%, transparent);
+  color: color-mix(in srgb, #e8dcc8 72%, #d4b483);
 }
 
 html.dark .nm-root[data-chrome="1"] .nm-controls--compact .nm-controls__bar,
 html[data-theme="dark"] .nm-root[data-chrome="1"] .nm-controls--compact .nm-controls__bar {
-  background: color-mix(in srgb, #1a241c 78%, transparent);
-  border-bottom-color: color-mix(in srgb, #8a6b2e 18%, transparent);
+  background: color-mix(in srgb, #1a241c 58%, transparent);
+  border-bottom-color: color-mix(in srgb, #8a6b2e 12%, transparent);
 }
 
 html.dark .nm-root[data-chrome="1"] .nm-controls--compact .nm-controls__btn:not(.nm-controls__exit),
 html[data-theme="dark"] .nm-root[data-chrome="1"] .nm-controls--compact .nm-controls__btn:not(.nm-controls__exit) {
-  background: color-mix(in srgb, #243028 70%, transparent);
-  border-color: color-mix(in srgb, #8a6b2e 22%, transparent);
-  color: color-mix(in srgb, #e8dcc8 88%, #d4b483);
+  background: color-mix(in srgb, #243028 52%, transparent);
+  border-color: color-mix(in srgb, #8a6b2e 14%, transparent);
+  color: color-mix(in srgb, #e8dcc8 86%, #d4b483);
 }
 
 html.dark .nm-page-arrow,
 html[data-theme="dark"] .nm-page-arrow {
-  background: color-mix(in srgb, #2a2418 42%, transparent);
-  border-color: color-mix(in srgb, #8a6b2e 22%, transparent);
-  color: color-mix(in srgb, #d4b483 68%, #f0e6d2);
+  background: color-mix(in srgb, #2a2418 34%, transparent);
+  border-color: color-mix(in srgb, #8a6b2e 16%, transparent);
+  color: color-mix(in srgb, #d4b483 72%, #f0e6d2);
 }
 
-/* ─── P0: Page Scrubber — يظهر مع Controls فقط، خارج Geometry ─── */
+/* ─── P1: Page Scrubber — نحيف · خفيف · يظهر مع Controls فقط ─── */
 .nm-page-scrubber {
   position: absolute;
   z-index: 34;
-  left: max(3.4rem, calc(var(--inset-left, 0px) + 3.1rem));
-  right: max(3.4rem, calc(var(--inset-right, 0px) + 3.1rem));
-  bottom: max(4.1rem, calc(var(--inset-bottom, 0px) + 3.6rem), calc(var(--safe-bottom, 0px) + 3.6rem));
+  left: max(3.25rem, calc(var(--inset-left, 0px) + 2.95rem));
+  right: max(3.25rem, calc(var(--inset-right, 0px) + 2.95rem));
+  bottom: max(3.55rem, calc(var(--inset-bottom, 0px) + 3.05rem), calc(var(--safe-bottom, 0px) + 3.05rem));
   display: grid;
-  gap: 0.35rem;
-  padding: 0.45rem 0.7rem 0.55rem;
-  border-radius: 0.95rem;
-  border: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 18%, transparent);
-  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 78%, transparent);
+  gap: 0.08rem;
+  padding: 0.18rem 0.45rem 0.1rem;
+  border-radius: 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 10%, transparent);
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 52%, transparent);
   box-shadow: none;
   opacity: 0;
   visibility: hidden;
@@ -246,84 +278,86 @@ html[data-theme="dark"] .nm-page-arrow {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 0.75rem;
-  min-height: 1.1rem;
+  gap: 0.5rem;
+  min-height: 0.95rem;
+  padding-inline: 0.1rem;
 }
 
 .nm-page-scrubber__page {
-  font-size: 0.92rem;
-  font-weight: 700;
+  font-size: 0.78rem;
+  font-weight: 650;
   color: var(--nm-ink, #2a2118);
   letter-spacing: 0.01em;
+  opacity: 0.92;
 }
 
 .nm-page-scrubber__of {
-  font-size: 0.72rem;
-  font-weight: 550;
+  font-size: 0.66rem;
+  font-weight: 500;
   color: var(--nm-meta, #5c4a32);
-  opacity: 0.85;
+  opacity: 0.72;
 }
 
 .nm-page-scrubber__juz {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: color-mix(in srgb, var(--nm-meta, #5c4a32) 88%, var(--nm-gold, #b08d57));
+  font-size: 0.68rem;
+  font-weight: 550;
+  color: color-mix(in srgb, var(--nm-meta, #5c4a32) 82%, var(--nm-gold, #b08d57));
+  opacity: 0.88;
 }
 
 .nm-page-scrubber__range {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  height: 2.75rem; /* touch ≥44px */
+  height: 2.75rem; /* touch ≥44px — المسار البصري أنحف أدناه */
   margin: 0;
   background: transparent;
   cursor: pointer;
 }
 
 .nm-page-scrubber__range:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--nm-gold, #b08d57) 55%, transparent);
-  outline-offset: 2px;
+  outline: 2px solid color-mix(in srgb, var(--nm-gold, #b08d57) 45%, transparent);
+  outline-offset: 1px;
   border-radius: 999px;
 }
 
 .nm-page-scrubber__range::-webkit-slider-runnable-track {
-  height: 0.28rem;
+  height: 0.18rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--nm-gold, #b08d57) 28%, var(--nm-paper, #f7f1e3));
+  background: color-mix(in srgb, var(--nm-gold, #b08d57) 18%, var(--nm-paper, #f7f1e3));
 }
 
 .nm-page-scrubber__range::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 1.15rem;
-  height: 1.15rem;
-  margin-top: -0.44rem;
+  width: 0.95rem;
+  height: 0.95rem;
+  margin-top: -0.38rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 35%, transparent);
-  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 88%, var(--nm-gold, #b08d57) 12%);
+  border: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 28%, transparent);
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 82%, var(--nm-gold, #b08d57) 10%);
   box-shadow: none;
 }
 
 .nm-page-scrubber__range::-moz-range-track {
-  height: 0.28rem;
+  height: 0.18rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--nm-gold, #b08d57) 28%, var(--nm-paper, #f7f1e3));
+  background: color-mix(in srgb, var(--nm-gold, #b08d57) 18%, var(--nm-paper, #f7f1e3));
 }
 
 .nm-page-scrubber__range::-moz-range-thumb {
-  width: 1.15rem;
-  height: 1.15rem;
+  width: 0.95rem;
+  height: 0.95rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 35%, transparent);
-  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 88%, var(--nm-gold, #b08d57) 12%);
+  border: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 28%, transparent);
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 82%, var(--nm-gold, #b08d57) 10%);
 }
 
 .nm-page-scrubber[data-busy="1"] {
-  opacity: 0.55;
+  opacity: 0.48;
 }
 
-.nm-root[data-mushaf-panning="1"] .nm-page-scrubber,
-.nm-root[data-focus-reading="1"][data-chrome="0"] .nm-page-scrubber {
+.nm-root[data-mushaf-panning="1"] .nm-page-scrubber {
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
@@ -331,8 +365,8 @@ html[data-theme="dark"] .nm-page-arrow {
 
 html.dark .nm-page-scrubber,
 html[data-theme="dark"] .nm-page-scrubber {
-  background: color-mix(in srgb, #1a241c 78%, transparent);
-  border-color: color-mix(in srgb, #8a6b2e 24%, transparent);
+  background: color-mix(in srgb, #1a241c 52%, transparent);
+  border-color: color-mix(in srgb, #8a6b2e 14%, transparent);
 }
 
 html.dark .nm-page-scrubber__page,
@@ -344,7 +378,120 @@ html.dark .nm-page-scrubber__juz,
 html[data-theme="dark"] .nm-page-scrubber__juz,
 html.dark .nm-page-scrubber__of,
 html[data-theme="dark"] .nm-page-scrubber__of {
-  color: color-mix(in srgb, #d4b483 70%, #e8dcc8);
+  color: color-mix(in srgb, #d4b483 62%, #e8dcc8);
+}
+
+/* ─── P1: Tafsir Sheet — أخف · أقل كثافة · ظل هادئ ─── */
+.mm-tafsir-sheet__panel.quran-sheet__panel,
+.mm-tafsir-sheet__panel {
+  box-shadow: 0 -4px 18px color-mix(in srgb, #5c4a28 8%, transparent) !important;
+  border-top: 1px solid color-mix(in srgb, var(--mm-gold, #a68b67) 12%, transparent);
+}
+
+.mm-tafsir-sheet__panel .quran-sheet__handle {
+  margin-block: 0.1rem 0.02rem;
+  background: color-mix(in srgb, var(--quran-sheet-ink, #111) 14%, transparent);
+}
+
+.mm-tafsir-sheet__panel .quran-sheet__head {
+  padding-block: 0.06rem 0.02rem;
+  padding-inline: 0.85rem;
+}
+
+.mm-tafsir-sheet__panel .quran-sheet__title {
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  opacity: 0.94;
+}
+
+.mm-tafsir-sheet__panel .quran-sheet__close {
+  border-color: color-mix(in srgb, var(--mm-gold, #a68b67) 14%, transparent);
+  background: color-mix(in srgb, var(--mm-paper, #fdf9f3) 70%, transparent);
+}
+
+.mm-tafsir {
+  gap: 0.28rem !important;
+}
+
+.mm-tafsir__meta {
+  gap: 0.04rem !important;
+}
+
+.mm-tafsir__meta-ref {
+  font-size: 0.62rem !important;
+  font-weight: 500 !important;
+  opacity: 0.58 !important;
+  letter-spacing: 0.02em;
+}
+
+.mm-tafsir__ayah {
+  margin: 0.02rem 0 0.06rem !important;
+  font-size: 1.05rem !important;
+  line-height: 1.5 !important;
+  font-weight: 600 !important;
+  opacity: 0.94;
+}
+
+.mm-tafsir__toolbar {
+  gap: 0.16rem !important;
+}
+
+.mm-tafsir__depth-btn,
+.mm-tafsir__ed-btn {
+  min-height: 2rem !important;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  border-radius: 0.45rem !important;
+  padding: 0.1rem 0.28rem !important;
+  border-color: color-mix(in srgb, var(--mm-gold, #a68b67) 16%, transparent) !important;
+  background: color-mix(in srgb, var(--mm-paper, #fdf9f3) 78%, transparent) !important;
+  box-shadow: none !important;
+}
+
+.mm-tafsir__depth-btn.is-active,
+.mm-tafsir__ed-btn.is-active {
+  background: color-mix(in srgb, var(--mm-ui-accent, #135034) 10%, var(--mm-paper, #fdf9f3)) !important;
+  border-color: color-mix(in srgb, var(--mm-ui-accent, #135034) 32%, transparent) !important;
+}
+
+.mm-tafsir__body {
+  font-size: 0.94rem !important;
+  line-height: 1.7 !important;
+  padding-block-start: 0.06rem !important;
+}
+
+.mm-tafsir-sheet__panel .quran-sheet__body,
+.mm-tafsir.quran-sheet__body {
+  gap: 0.28rem !important;
+  padding-inline: 0.8rem !important;
+}
+
+.mm-tafsir__status {
+  font-size: 0.82rem !important;
+  opacity: 0.78;
+}
+
+html.dark .mm-tafsir-sheet__panel.quran-sheet__panel,
+html[data-theme="dark"] .mm-tafsir-sheet__panel.quran-sheet__panel,
+html.dark .mm-tafsir-sheet__panel,
+html[data-theme="dark"] .mm-tafsir-sheet__panel {
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.28) !important;
+  border-top-color: color-mix(in srgb, #8a6b2e 16%, transparent);
+}
+
+html.dark .mm-tafsir__ed-btn,
+html[data-theme="dark"] .mm-tafsir__ed-btn {
+  background: color-mix(in srgb, #1a241c 70%, transparent) !important;
+  border-color: color-mix(in srgb, #8a6b2e 16%, transparent) !important;
+  color: color-mix(in srgb, #e8dcc8 88%, #d4b483);
+}
+
+/* قائمة الآية — أخف حدودًا */
+.nm-verse-menu {
+  border-color: color-mix(in srgb, var(--nm-gold, #b08d57) 12%, transparent);
+  box-shadow: none;
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 88%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

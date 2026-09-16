@@ -67,6 +67,7 @@ export const MushafPageArrows = memo(function MushafPageArrows({
         className="nm-page-arrow nm-page-arrow--next"
         data-testid="mushaf-page-arrow-next"
         aria-label="الصفحة التالية"
+        title="الصفحة التالية"
         tabIndex={show && !atLast ? 0 : -1}
         disabled={atLast}
         aria-disabled={busy || !show || atLast ? true : undefined}
@@ -79,7 +80,7 @@ export const MushafPageArrows = memo(function MushafPageArrows({
         onPointerDown={(e) => e.stopPropagation()}
       >
         <span className="nm-page-arrow__hit" aria-hidden="true" />
-        <span className="nm-page-arrow__icon" aria-hidden="true">
+        <span className="nm-page-arrow__icon" aria-hidden="true" data-dir="next">
           ‹
         </span>
       </button>
@@ -89,6 +90,7 @@ export const MushafPageArrows = memo(function MushafPageArrows({
         className="nm-page-arrow nm-page-arrow--prev"
         data-testid="mushaf-page-arrow-prev"
         aria-label="الصفحة السابقة"
+        title="الصفحة السابقة"
         tabIndex={show && !atFirst ? 0 : -1}
         disabled={atFirst}
         aria-disabled={busy || !show || atFirst ? true : undefined}
@@ -101,7 +103,7 @@ export const MushafPageArrows = memo(function MushafPageArrows({
         onPointerDown={(e) => e.stopPropagation()}
       >
         <span className="nm-page-arrow__hit" aria-hidden="true" />
-        <span className="nm-page-arrow__icon" aria-hidden="true">
+        <span className="nm-page-arrow__icon" aria-hidden="true" data-dir="prev">
           ›
         </span>
       </button>
