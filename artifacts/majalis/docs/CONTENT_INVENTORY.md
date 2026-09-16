@@ -1,61 +1,45 @@
-# CONTENT_INVENTORY — سُنّة
+# CONTENT_INVENTORY — سُنّة (جولة 2)
 
 تاريخ الجرد: 2026-09-16  
+الفرع: `cursor/content-quality-completeness-r2`  
 النطاق: `artifacts/majalis` فقط  
-المصدر: AppRoutes · routes.ts · sections.registry · sitemap · seo-routes · seeds · public/data
+الأساس: بعد دمج #2064 و#2065
 
 ## مبدأ
 
 لا يُختَرَع محتوى شرعي. الجودة والتوثيق مقدَّمان على ملء الفراغ.
 
-## خريطة الأقسام (ملخص)
+## خريطة الأقسام (بعد الجولة 2)
 
-| القسم | Route رئيسي | مصدر البيانات | الحالة | ملاحظات |
-|---|---|---|---|---|
-| الرئيسية | `/` | catalog + seeds | مكتمل | |
-| مركز القرآن | `/quran-hub` | static hub | مكتمل | |
-| المصحف | `/mushaf` | QPC + pages | مكتمل مقفول | لا تعديل نص/ترتيب |
-| التلاوة/القراء | عبر المصحف + dock | audio registries | مكتمل | |
-| التفسير | `/tafsir` + sheet | editions JSON | مكتمل موثّق | |
-| فهرس السور | `/surahs` ونحوه | quran data | مكتمل | |
-| الدروس | `/lessons` | seed + Supabase | مكتمل جزئيًا | فارغ بدون Supabase |
-| العلماء | `/teachers` | seed | مكتمل جزئيًا | |
-| الأقسام | `/sections` | registry | مكتمل | |
-| التوحيد | `/tawhid` | knowledge pack | مكتمل | |
-| الحديث | `/hadith/*` | public/data/hadith | مكتمل موثّق | |
-| الأربعون | `/arbaeen-nawawi` | seed | مكتمل | |
-| الفرق | `/islamic-sects` | static | مكتمل | |
-| الفوائد | `/fawaid` | seed | مكتمل جزئيًا | |
-| الإعجاز | `/miracles` | seed | hides needs_review | |
-| التاريخ | `/tarikh-islami` | knowledge | needs_review كثير | لا يُنشر غير موثّق |
-| السيرة | `/seerah` | knowledge | مكتمل جزئيًا | |
-| قصص الأنبياء | `/prophets` | knowledge | مكتمل موثّق | |
-| الأذكار | `/adhkar` | seed | مكتمل | |
-| الصلاة | `/prayer-times` | AlAdhan + calc | مكتمل | |
-| القبلة | `/qibla` | calc | مكتمل | |
-| التسبيح | `/tasbih` | local | مكتمل | |
-| البحث | `/search` | search index | مكتمل | بلا قرارات فقهية |
-| دليل طالب العلم | `/adab-talab-ilm` ونحوه | static | مكتمل جزئيًا | |
-| المحتوى اليومي | home strip | seeds | مكتمل | |
-| الحساب | `/settings` `/my-learning` | Supabase/local | مكتمل | |
-| الإدارة | `/admin/*` | Supabase | مكتمل | |
-| Empty/Error | مكوّنات مشتركة | UI | مكتمل | |
-| SEO/Sitemap | generate-seo | scripts | نُظّف من المجمع | |
-| ~~المجمع الفقهي~~ | `/fiqh-council*` | — | **محذوف منتجيًا** | Redirect → `/fiqh` |
+| القسم | Route | مصدر | قبل | بعد | ملاحظات |
+|---|---|---|---|---|---|
+| الرئيسية | `/` | catalog | مكتمل | مكتمل | |
+| مركز القرآن | `/quran-hub` | hub | مكتمل | مكتمل | |
+| المصحف | `/mushaf` | QPC | مقفول | مقفول | لا تعديل نص |
+| التفسير | `/tafsir` | editions | مكتمل | مكتمل | |
+| الدروس | `/lessons` | seed+Supabase | جزئي | جزئي+منظّف | إزالة وسم المجمع من ندوة النوازل |
+| العلماء | `/teachers` | seed | جزئي | جزئي | |
+| التوحيد | `/tawhid` | knowledge | مكتمل | مكتمل | |
+| الحديث | `/hadith/*` | public/data/hadith | مكتمل | مكتمل | فهرس البحث الموحّد = مداخل أقسام فقط (متعمد) |
+| الأربعون | `/arbaeen-nawawi` | seed | مكتمل | مكتمل | |
+| الفرق | `/islamic-sects` | static | مكتمل | مكتمل | |
+| الفوائد | `/fawaid` | seed | مكتمل | مكتمل | |
+| الإعجاز | `/miracles` | seed | مكتمل | مكتمل | |
+| التاريخ | `/tarikh-islami` | knowledge | تقرير قديم needs_review | **verified 3578** | تصحيح manifest |
+| السيرة/الأنبياء | `/seerah` `/prophets` | knowledge | مكتمل | مكتمل | |
+| الأذكار/صلاة/قبلة/تسبيح | متعددة | seeds/calc | مكتمل | مكتمل | |
+| البحث | `/search` | index | مكتمل | مكتمل | بلا قرارات فقهية |
+| بطاقات الحفظ | `/memorize`→flashcards | UI | اسم قديم | **سُنّة** | |
+| الخصوصية | `/privacy` | static+SEO | «خوادم مجالس» | **سُنّة** | |
+| ~~المجمع الفقهي~~ | `/fiqh-council*` | — | Redirect | **حذف UI/بذور** | Redirect يبقى |
 
-## تصنيف المحتوى
+## ما أُزيل في الجولة 2
 
-- **Verified**: يظهر للمستخدم مع مصدر.
-- **Needs verification / Unsupported**: لا يُنشر؛ يُسجَّل في `CONTENT_GAPS_REPORT.md`.
+- صفحات `FiqhCouncil*.tsx` وواجهات الإدارة المرتبطة
+- `src/components/fiqh-council/**`
+- بذور/خدمات المجمع غير الموصولة بالمنتج الحي
+- نقل `NAWAZIL_TOPICS` إلى `src/lib/fiqh/nawazil-topics.ts` لاستخدام بوابة الفقه فقط
 
-## اكتشاف routes
+## بوابات
 
-- Runtime: `src/AppRoutes.tsx` (~364 path)
-- Registry: `src/app/router/routes.ts` (~388)
-- أقسام حيّة: `src/config/sections.registry.ts` (~78)
-- SEO: `src/lib/seo-routes.json` (~212) · `public/sitemap.xml` (~764)
-
-## بوابات المحتوى ذات الصلة
-
-- `test:content-gates` · `test:religious-content` · `test:public-weak-content`
-- `test:fiqh-council-completeness` · `test:content-audit-gates`
+- `test:fiqh-council-completeness` · `test:content-gates` · `test:religious-content`

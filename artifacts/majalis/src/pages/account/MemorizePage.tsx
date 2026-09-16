@@ -10,7 +10,7 @@ export default function MemorizePage() {
   useEffect(() => {
     applyPageSeo({
       path: "/memorize",
-      title: "بطاقات الحفظ · مجلس علم",
+      title: "بطاقات الحفظ · سُنّة",
       description: "احفظ المتون والمصطلحات بالتكرار المتباعد.",
       keywords: ["بطاقات الحفظ", "تكرار متباعد", "الأربعون النووية", "مصطلحات"],
     });

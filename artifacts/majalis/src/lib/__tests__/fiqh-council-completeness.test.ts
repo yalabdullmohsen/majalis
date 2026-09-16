@@ -15,6 +15,14 @@ assert.match(routes, /path="\/fiqh-council"/);
 assert.match(routes, /path="\/fiqh-council\/:rest\*"/);
 assert.ok((routes.match(/Redirect to="\/fiqh"/g) || []).length >= 2);
 assert.doesNotMatch(routes, /FiqhCouncil\w*Page/);
+assert.equal(existsSync(resolve(root, "src/views/FiqhCouncilPage.tsx")), false);
+assert.equal(existsSync(resolve(root, "src/components/fiqh-council")), false);
+assert.equal(existsSync(resolve(root, "src/lib/fiqh-council-seed.ts")), false);
+assert.ok(existsSync(resolve(root, "src/lib/fiqh/nawazil-topics.ts")));
+
+assert.doesNotMatch(read("src/pages/account/MemorizePage.tsx"), /مجلس علم/);
+assert.doesNotMatch(read("scripts/generate-seo.mjs"), /خوادم مجالس/);
+assert.doesNotMatch(read("src/lib/scientific-announcements-seed.ts"), /مجمع فقهي/);
 
 for (const rel of [
   "src/lib/navigation.ts",

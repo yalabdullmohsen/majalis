@@ -14,7 +14,7 @@ import {
   lessonPath,
 } from "@/lib/fiqh-books";
 import { USUL_HUB_TOPICS } from "@/lib/fiqh/fiqh-usul-topics";
-import { NAWAZIL_TOPICS } from "@/lib/fiqh-council-nawazil";
+import { NAWAZIL_TOPICS } from "@/lib/fiqh/nawazil-topics";
 import { QAWAID_PUBLIC_COUNT } from "@/lib/fiqh/qawaid-public-count";
 import { normalizeArabic } from "@/shared/arabic-normalize";
 

@@ -1,8 +1,8 @@
 /**
- * Phase 1 code-quality invariants: cycle breaks, year helper, official-source predicate.
+ * Phase 1 code-quality invariants: year helper, official-source predicate, cycle removal.
  */
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -20,14 +20,6 @@ import {
 const here = dirname(fileURLToPath(import.meta.url));
 const libDir = join(here, "..");
 
-function assertNoImportCycle(aRel: string, bRel: string, label: string) {
-  const a = readFileSync(join(libDir, aRel), "utf8");
-  const b = readFileSync(join(libDir, bRel), "utf8");
-  const aImportsB = a.includes(bRel.replace(/\.ts$/, "")) || a.includes(`/${bRel.replace(/\.ts$/, "")}`);
-  const bImportsA = b.includes(aRel.replace(/\.ts$/, "")) || b.includes(`/${aRel.replace(/\.ts$/, "")}`);
-  assert.equal(aImportsB && bImportsA, false, `${label}: mutual import still present`);
-}
-
 // Fiqh year helper
 {
   const years = fiqhYearFilterOptions(2030);
@@ -41,7 +33,7 @@ function assertNoImportCycle(aRel: string, bRel: string, label: string) {
 {
   assert.equal(
     isOfficialSourceVerified({
-      source_name: "مجمع الفقه",
+      source_name: "مرجع موثّق",
       source_url: "https://example.com/x",
       confidence_level: "source_verified",
     }),
@@ -49,7 +41,7 @@ function assertNoImportCycle(aRel: string, bRel: string, label: string) {
   );
   assert.equal(
     isOfficialSourceVerified({
-      source_name: "مجمع الفقه",
+      source_name: "مرجع موثّق",
       source_url: "https://example.com/x",
       confidence_level: "draft",
     }),
@@ -63,13 +55,11 @@ function assertNoImportCycle(aRel: string, bRel: string, label: string) {
   assert.ok(QURAN_APP_FONT_DEFAULT < QURAN_APP_FONT_MAX);
 }
 
-// Cycle breaks (static import graph)
-assertNoImportCycle("fiqh-council-trust.ts", "fiqh-verification-service.ts", "fiqh trust↔verification");
-{
-  const verification = readFileSync(join(libDir, "fiqh-verification-service.ts"), "utf8");
-  assert.match(verification, /fiqh-official-source/);
-  assert.doesNotMatch(verification, /fiqh-council-trust/);
-}
+// Council product modules must stay deleted (no reintroduction cycle)
+assert.equal(existsSync(join(libDir, "fiqh-council-trust.ts")), false);
+assert.equal(existsSync(join(libDir, "fiqh-verification-service.ts")), false);
+assert.equal(existsSync(join(libDir, "fiqh-council-seed.ts")), false);
+
 {
   const storage = readFileSync(join(libDir, "majlis-local-storage-service.ts"), "utf8");
   assert.match(storage, /from ["']@\/lib\/quran-app-constants["']/);

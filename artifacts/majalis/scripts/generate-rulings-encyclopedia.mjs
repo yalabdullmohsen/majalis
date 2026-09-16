@@ -375,8 +375,11 @@ function fromRulingsSeed() {
 }
 
 function fromFiqhCouncilSeed() {
-  const src = fs.readFileSync(path.resolve(ROOT, "src/lib/fiqh-council-seed.ts"), "utf8");
-  const re = /id:\s*"([^"]+)"[\s\S]*?title:\s*"((?:\\.|[^"\\])*)"[\s\S]*?ruling_text:\s*`([\s\S]*?)`[\s\S]*?category:\s*"([^"]+)"[\s\S]*?source_name:\s*"([^"]*)"/g;
+  try {
+    const seedPath = path.resolve(ROOT, "src/lib/fiqh-council-seed.ts");
+    if (!fs.existsSync(seedPath)) return [];
+    const src = fs.readFileSync(seedPath, "utf8");
+    const re = /id:\s*"([^"]+)"[\s\S]*?title:\s*"((?:\\.|[^"\\])*)"[\s\S]*?ruling_text:\s*`([\s\S]*?)`[\s\S]*?category:\s*"([^"]+)"[\s\S]*?source_name:\s*"([^"]*)"/g;
   const out = [];
   let m;
   while ((m = re.exec(src))) {
@@ -404,6 +407,9 @@ function fromFiqhCouncilSeed() {
     );
   }
   return out.filter(Boolean);
+  } catch {
+    return [];
+  }
 }
 
 // ملاحظة حوكمة: أُزيلت fromQuizCsv() — أسئلة المسابقة (data/quiz_questions.csv)

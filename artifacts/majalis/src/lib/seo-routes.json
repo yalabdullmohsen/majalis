@@ -872,22 +872,6 @@
       "robots": "noindex, nofollow"
     },
     {
-      "path": "/admin/fiqh-review",
-      "title": "مراجعة الفقه — لوحة التحكم",
-      "description": "صفحات داخلية لإدارة محتوى سُنّة ومراجعته، غير مخصصة للفهرسة العامة ولا تظهر في نتائج البحث.",
-      "keywords": [],
-      "sitemap": false,
-      "robots": "noindex, nofollow"
-    },
-    {
-      "path": "/admin/fiqh-quality",
-      "title": "جودة المحتوى الفقهي — لوحة التحكم",
-      "description": "صفحات داخلية لإدارة محتوى سُنّة ومراجعته، غير مخصصة للفهرسة العامة ولا تظهر في نتائج البحث.",
-      "keywords": [],
-      "sitemap": false,
-      "robots": "noindex, nofollow"
-    },
-    {
       "path": "/admin/content-production",
       "title": "إنتاج المحتوى — لوحة التحكم",
       "description": "صفحات داخلية لإدارة محتوى سُنّة ومراجعته، غير مخصصة للفهرسة العامة ولا تظهر في نتائج البحث.",

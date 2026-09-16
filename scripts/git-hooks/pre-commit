@@ -32,7 +32,9 @@ NEED_POLICY=0
 while IFS= read -r f; do
   [[ -z "$f" ]] && continue
   if [[ "$f" == artifacts/majalis/src/* || "$f" == artifacts/majalis/lib/* ]]; then
+    # *.generated.ts stubs are eslint-ignored; listing them triggers --max-warnings noise
     case "$f" in
+      *.generated.ts) ;;
       *.ts|*.tsx|*.js|*.jsx) ESLINT_FILES+=("${f#artifacts/majalis/}") ;;
     esac
   fi
@@ -50,7 +52,7 @@ if [[ ${#ESLINT_FILES[@]} -gt 0 ]]; then
   echo "⏳ ESLint (${#ESLINT_FILES[@]} ملف)…"
   (
     cd "$APP_DIR"
-    "$PNPM_BIN" exec eslint "${ESLINT_FILES[@]}" --max-warnings=0
+    "$PNPM_BIN" exec eslint "${ESLINT_FILES[@]}" --max-warnings=0 --no-warn-ignored
   ) || fail "ESLint"
   pass "ESLint (staged)"
 else
