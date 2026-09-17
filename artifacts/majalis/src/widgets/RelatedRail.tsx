@@ -19,7 +19,7 @@ export type RelatedRailItem = {
 function hrefFor(kind: string, slug: string): string {
   switch (kind) {
     case "scholar":
-      return `/tarikh-islami/${slug}`;
+      return `/scholars/${slug}`;
     case "book":
       return `/search?q=${encodeURIComponent(slug)}`;
     case "hadith":
@@ -103,9 +103,11 @@ export function GraphRelatedRail({
           links.flatMap((L) => {
             const titleAr = titleByKey.get(`${L.to.kind}:${L.to.slug}`);
             if (!titleAr || titleAr === L.to.slug) return [];
+            const href = hrefFor(L.to.kind, L.to.slug);
+            if (!href) return [];
             const item: RelatedRailItem = {
               titleAr,
-              href: hrefFor(L.to.kind, L.to.slug),
+              href,
               groupAr: L.labelAr,
             };
             return [item];

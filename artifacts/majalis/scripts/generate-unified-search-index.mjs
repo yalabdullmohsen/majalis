@@ -254,6 +254,29 @@ for (const [id, kind, title, href, parts] of APP_PAGES) {
   pushDoc(id, kind, title, href, parts, "صفحة");
 }
 
+// ── علماء الأمة (صفحات /scholars المعتمدة) ───────────────────────────────────
+{
+  const { SCHOLAR_PROFILES } = await import("../src/data/scholars-profiles.ts");
+  for (const p of SCHOLAR_PROFILES) {
+    pushDoc(
+      `scholar:${p.slug}`,
+      "scholar",
+      p.name,
+      `/scholars/${p.slug}`,
+      [p.fullName, ...(p.specialty ?? []), ...(p.aliases ?? []), p.era, p.summary?.slice(0, 120)],
+      p.specialty?.[0] || "عالِم",
+    );
+  }
+  pushDoc(
+    "app:scholars",
+    "scholar",
+    "علماء الأمة",
+    "/scholars",
+    ["علماء", "تراجم", "أعلام"],
+    "صفحة",
+  );
+}
+
 // ── الذين ذكروا في القرآن (دفعة الأسماء الصريحة) ─────────────────────────────
 try {
   const peoplePath = path.join(appRoot, "public/data/quran-people/people.json");

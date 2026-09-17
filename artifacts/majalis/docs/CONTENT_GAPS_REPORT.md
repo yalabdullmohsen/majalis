@@ -23,7 +23,7 @@
 | الفوائد | `/fawaid` | curated | r6 نظيف | نظيف | — |
 | التاريخ/سيرة/أنبياء | `/tarikh*` `/prophets` | data | جيد | جيد | — |
 | الأذكار/صلاة/قبلة/تسبيح | worship | engines | جيد | جيد | — |
-| البحث | `/search` | index 4715 | بلا مجمع | بلا مجمع | — |
+| البحث | `/search` | index 4725 | بلا مجمع | بلا مجمع | علماء `/scholars` مفهرسون (Wave2) |
 | المكتبة | `/library` | catalog | ~170 بلا URL | **Needs verification** | لا اختراع روابط |
 | أحكام مؤرشفة | archive | 119 pending | غير منشور | غير منشور | — |
 | deferred-nawazil | content/fiqh | 4 | internal | internal | — |

@@ -61,13 +61,26 @@ States used: `COMPLETE` | `IMPROVED` | `BLOCKED_SOURCE` | `BLOCKED_LICENSE` | `E
 
 ## Next waves
 
-- **Wave 2:** Quran metadata presentation, lessons/scholars/series/search depth  
+- **Wave 2:** Quran metadata presentation, lessons/scholars/series/search depth — **DONE** (see below)
 - **Wave 3:** Aqeedah / Hadith / Seerah / History / sects presentation  
 - **Wave 4:** Prayer / Adhkar / account copy  
 - **Wave 5:** Remaining sections + Empty/Error  
 - **Wave 6:** Admin governance + SEO generators  
 - **Wave 7:** Full route validation matrix + FINAL report  
 
+## Wave 2 (merged after Wave 1)
+
+| Fix | Status |
+|---|---|
+| Harvest OCR/handles/`&nbsp;`/platform boilerplate stripped | IMPROVED |
+| Corrupt harvest sheikh/place hidden | IMPROVED |
+| RelatedRail scholar → `/scholars` or search (not broken `/tarikh-islami`) | IMPROVED |
+| `SCHOLAR_PROFILES` indexed in unified search (+10 docs) | IMPROVED |
+| SearchView fully hides blocked hrefs (no title leak) | IMPROVED |
+| Surah name fallback via `getSurahMeta` | IMPROVED |
+| Gate | `test:content-quality-wave2` |
+
 ## Gate
 
-`artifacts/majalis/src/lib/__tests__/content-quality-wave1-p0-gate.test.ts`
+`artifacts/majalis/src/lib/__tests__/content-quality-wave1-p0-gate.test.ts`  
+`artifacts/majalis/src/lib/__tests__/content-quality-wave2-gate.test.ts`

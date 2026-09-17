@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertCircle,
   BookMarked,
@@ -33,7 +33,6 @@ import {
   getTopSearchQueries,
 } from "@/lib/search-history";
 import {
-  highlightOriginalParts,
   SEARCH_SCOPE_DEFS,
   SEARCH_SCOPE_LABELS,
   isSearchScopeId,
@@ -70,24 +69,6 @@ const SECTION_CHIPS = [
   { href: "/universities", label: "الجامعات" },
   { href: "/mosques", label: "المساجد" },
 ] as const;
-
-
-const VERIFIED_SOURCE_LABEL = "موثّق بمصدر";
-
-function highlightText(text: string, query: string): ReactNode {
-  if (!text || !query.trim()) return text;
-  const parts = highlightOriginalParts(text, query.trim());
-  if (parts.length === 1 && !parts[0]!.hit) return text;
-  return parts.map((p, i) =>
-    p.hit ? (
-      <mark key={i} className="srch-hl">
-        {p.text}
-      </mark>
-    ) : (
-      <span key={i}>{p.text}</span>
-    ),
-  );
-}
 
 const SCOPE_ICONS = {
   quran: BookOpen,
@@ -129,19 +110,9 @@ const ResultCard = memo(function ResultCard({
   query: string;
 }) {
   const href = resultHref(item);
+  // لا نعرض عنوان المحتوى المحجوب أصلًا — الإخفاء الكامل أسلم من بطاقة «غير متاح»
   if (isBlockedOrAdminHref(href) || isBlockedSearchHref(href)) {
-    return (
-      <div className="srch-result-card soft-card soft-card--on-light srch-result-card--blocked">
-        <span className="srch-result-card__kind">غير متاح</span>
-        <h3 className="srch-result-card__title">{highlightText(item.title, query)}</h3>
-        <p className="srch-result-card__reason">المحتوى غير متاح حاليًا في التطبيق</p>
-        <span className="srch-result-card__status sr-only">{VERIFIED_SOURCE_LABEL}</span>
-        <div className="srch-result-card__actions">
-          <Link href="/search" className="srch-result-card__action">بحث آخر</Link>
-          <Link href="/" className="srch-result-card__action srch-result-card__action--ghost">الرئيسية</Link>
-        </div>
-      </div>
-    );
+    return null;
   }
   const reason = resolveSearchMatchReason(item, query);
   return (
@@ -277,7 +248,10 @@ export default function SearchPage() {
             await import("@/features/search/app-search")
           ).runAppSearch(q, { scope: nextScope, limit: 240, signal: ctrl.signal });
       if (ctrl.signal.aborted || seq !== requestSeqRef.current) return;
-      const filtered = res.results.filter((item) => !isBlockedOrAdminHref(resultHref(item)));
+      const filtered = res.results.filter((item) => {
+        const href = resultHref(item);
+        return !isBlockedOrAdminHref(href) && !isBlockedSearchHref(href);
+      });
       const ranked = [...filtered].sort((a, b) => compareSearchResultsByMatch(a, b, q));
       setResults(ranked);
       setSuggestions(res.suggestions ?? []);

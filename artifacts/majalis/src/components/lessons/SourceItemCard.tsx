@@ -1,5 +1,6 @@
 import { ExternalLink, UserRound } from "lucide-react";
 import type { HarvestFeedCard } from "@/lib/harvest-feed";
+import { cleanHarvestDisplayText, isPresentableDisplayText } from "@/lib/harvest-display-text";
 import { formatRelativeTime } from "@/lib/lesson-time";
 import "@/styles/components/source-item-card.css";
 
@@ -10,10 +11,14 @@ type Props = {
 
 export function SourceItemCard({ card, compact }: Props) {
   const source = card.sources[0];
+  const title = cleanHarvestDisplayText(card.title_ar);
+  const summary = cleanHarvestDisplayText(card.summary_ar);
+  const sheikh = card.sheikh && isPresentableDisplayText(card.sheikh) ? cleanHarvestDisplayText(card.sheikh) : "";
+  const place = card.place && isPresentableDisplayText(card.place) ? cleanHarvestDisplayText(card.place) : "";
   const countdown = card.starts_at
     ? formatRelativeTime(Date.parse(card.starts_at))
     : card.time_text || "";
-  const meta = [card.sheikh, card.place, countdown].filter(Boolean).join(" · ");
+  const meta = [sheikh, place, countdown].filter(Boolean).join(" · ");
 
   return (
     <article className="src-card" data-src-type={card.type} dir="rtl">
@@ -21,8 +26,10 @@ export function SourceItemCard({ card, compact }: Props) {
         <span className="src-card__badge">{card.type}</span>
         {source ? <span className="src-card__org">{source.name_ar}</span> : null}
       </header>
-      <h3 className="src-card__title">{card.title_ar}</h3>
-      {!compact && card.summary_ar ? <p className="src-card__summary">{card.summary_ar}</p> : null}
+      <h3 className="src-card__title">{title}</h3>
+      {!compact && summary && isPresentableDisplayText(summary, 12) ? (
+        <p className="src-card__summary">{summary}</p>
+      ) : null}
       {meta ? (
         <p className="src-card__meta">
           <UserRound size={14} aria-hidden />
