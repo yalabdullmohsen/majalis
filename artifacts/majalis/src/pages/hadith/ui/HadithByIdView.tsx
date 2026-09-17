@@ -64,13 +64,16 @@ export default function HadithByIdView() {
 
   useEffect(() => {
     if (!hadith) return;
+    const publicTitle = hadith.numberingSystem?.trim()
+      || [hadith.book, hadith.chapter].filter(Boolean).join(" — ")
+      || "حديث";
     applyPageSeo({
       path: `/hadith/${hadith.id}`,
-      title: `${hadith.id} | الحديث | سُنّة`,
+      title: `${publicTitle} | الحديث | سُنّة`,
       description: hadith.isMawdu
         ? `تحذير: حديث موضوع — ${hadith.matn.slice(0, 120)}`
         : hadith.matn.slice(0, 160),
-      keywords: ["حديث", hadith.id, hadith.book],
+      keywords: ["حديث", hadith.book, hadith.numberingSystem].filter(Boolean) as string[],
     });
   }, [hadith]);
 
@@ -116,12 +119,18 @@ export default function HadithByIdView() {
       ) : null}
 
       <header className="hadith-detail-card hadith-detail-card--head" data-kx-kind="summary">
-        <p className="hadith-detail-card__eyebrow">{hadith.numberingSystem}</p>
-        <h1 className="hadith-by-id__id">
+        <p className="hadith-detail-card__eyebrow">حديث</p>
+        <h1 className="hadith-by-id__title">
+          {hadith.numberingSystem?.trim() || hadith.chapter || "حديث موثّق"}
+        </h1>
+        {hadith.chapter && hadith.numberingSystem ? (
+          <p className="hadith-by-id__meta">{hadith.chapter}</p>
+        ) : null}
+        <p className="hadith-by-id__id-row">
           <button
             type="button"
             className="hadith-id-chip"
-            title="نسخ المعرّف"
+            title="نسخ المرجع الداخلي للفريق"
             onClick={() => {
               void navigator.clipboard?.writeText(hadith.id).then(() => {
                 setCopied(true);
@@ -129,13 +138,10 @@ export default function HadithByIdView() {
               });
             }}
           >
-            {hadith.id}
+            مرجع النسخ
           </button>
           {copied ? <span className="hadith-id-copied">تم النسخ</span> : null}
-        </h1>
-        {hadith.chapter ? (
-          <p className="hadith-by-id__meta">{hadith.chapter}</p>
-        ) : null}
+        </p>
       </header>
 
       <section className="hadith-detail-card hadith-detail-card--matn" aria-label="متن الحديث" data-kx-kind="definition">

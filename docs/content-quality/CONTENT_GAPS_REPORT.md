@@ -28,7 +28,7 @@
 | report button | lesson detail | IMPROVED | `#id` in mailto subject | title-only subject | P1 | wave8-gate |
 | library | `/search` | BLOCKED_SOURCE | 172 books no URL | OWNER — no invent | P0 | documented |
 | fiqh_council SQL | hosted | EXCLUDED | purge not run | OWNER_ACTION | P0 | documented |
-| aqidah/hadith/sects | various | COMPLETE claim | presentation polish | Wave 9 | P1 | pending |
+| aqidah/hadith/sects | various | IMPROVED_VERIFIED | Wave9 presentation | done | P1 | wave9-gate |
 | seerah/history | various | COMPLETE claim | presentation polish | Wave 10 | P1 | pending |
 | prayer/adhkar copy | various | COMPLETE claim | copy polish | Wave 11 | P2 | pending |
 | search/SEO regen | — | IMPROVED | deeper SEO | Wave 13 | P2 | pending |
@@ -47,3 +47,16 @@
 | report mailto subject | IMPROVED_VERIFIED (no `#id`) |
 | library URLs | BLOCKED_SOURCE (unchanged) |
 | entry budget headroom | IMPROVED_VERIFIED (locale/ErrorBoundary copy tightened) |
+
+
+## Wave 9 final states (PR #2086)
+
+| section | finalState |
+|---|---|
+| hadith by-id public title | IMPROVED_VERIFIED |
+| hadith modal book index | IMPROVED_VERIFIED |
+| tawhid path card | IMPROVED_VERIFIED |
+| fiqh usul → qawaid | IMPROVED_VERIFIED |
+| islamic-sects structure/empty/dark/review | IMPROVED_VERIFIED |
+| tawhid filler tails | IMPROVED_VERIFIED |
+| umda/bulugh stubs | BLOCKED_SOURCE |

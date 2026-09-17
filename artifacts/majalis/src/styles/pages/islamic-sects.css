@@ -609,3 +609,30 @@ html.dark .sect-related__link--ghost,
 .topic-page--sects .sect-card.is-open {
   scroll-margin-bottom: calc(var(--global-back-clearance, 4.5rem) + 1rem);
 }
+
+html.dark .sect-card__pill,
+[data-theme="dark"] .sect-card__pill {
+  background: color-mix(in srgb, var(--mj-brand) 22%, transparent);
+  color: var(--mj-ink, #eef4f0);
+  border-color: color-mix(in srgb, var(--mj-brand) 35%, transparent);
+}
+
+html.dark .sect-card__cta,
+[data-theme="dark"] .sect-card__cta {
+  color: var(--mj-ink, #eef4f0);
+}
+
+.sect-hub__empty {
+  margin: 0.75rem 0 1.25rem;
+  padding: 1rem 1.1rem;
+  border-radius: 12px;
+  border: 1px dashed color-mix(in srgb, var(--mj-brand) 28%, transparent);
+  background: color-mix(in srgb, var(--mj-brand) 6%, transparent);
+  text-align: start;
+}
+.sect-hub__empty p { margin: 0 0 0.75rem; line-height: 1.7; }
+
+html.dark .sect-hub__empty,
+[data-theme="dark"] .sect-hub__empty {
+  color: var(--mj-ink-2, #c5d2cb);
+}

@@ -84,7 +84,7 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
     id: "aqeedah-path",
     emoji: "", title: "مسار تعلّم العقيدة",
     desc: "منهج متدرّج في أركان الإيمان والتوحيد من مصادر أهل السنة",
-    href: "/lessons", badge: "مسار", color: "var(--mj-brand)",
+    href: "/tawhid/ahl-sunnah", badge: "مسار", color: "var(--mj-brand)",
   },
   {
     id: "ahl-sunnah",

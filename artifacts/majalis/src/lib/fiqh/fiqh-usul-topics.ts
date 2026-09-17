@@ -171,6 +171,6 @@ export const USUL_HUB_TOPICS: UsulHubTopic[] = [
     summary: "اربط بأبواب الفقه الظاهرة بعد ضبط القواعد في مصادرها المعتمدة.",
     kind: "رابط",
     status: "ready",
-    href: "/fiqh",
+    href: "/fiqh-qawaid",
   },
 ];

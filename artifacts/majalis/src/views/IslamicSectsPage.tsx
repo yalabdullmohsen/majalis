@@ -61,7 +61,7 @@ const SECTS: Sect[] = [
     ],
     keyScholars: ["الإمام أحمد بن حنبل", "الطحاوي", "ابن تيمية", "ابن القيم", "ابن أبي العز", "اللالكائي"],
     status: "قائمة",
-    spread: "الغالبية العظمى من المسلمين في العالم (نحو 85-90%)",
+    spread: "الغالبية العظمى من المسلمين في العالم",
     quote: "«عليكم بسنتي وسنة الخلفاء الراشدين المهديين من بعدي، عَضّوا عليها بالنواجذ» — رواه أبو داود والترمذي، وحسّنه الترمذي وصححه جمع من أهل العلم. وأما حديث افتراق الأمة فله طرق يتكلم فيها أهل الحديث؛ والعمدة لزوم الجماعة على الحق لا مجرد العدد.",
   },
   {
@@ -535,7 +535,7 @@ const SECTS: Sect[] = [
     keyBooks: [],
     keyScholars: [],
     status: "قائمة",
-    spread: "سوريا (الساحل السوري 15-20%)، وتركيا العلويون الأناضوليون ذوو جذور مشابهة",
+    spread: "مناطق من الساحل السوري، وتركيا (علويو الأناضول ذوو جذور مشابهة)",
   },
   {
     id: "shaykhi",
@@ -956,8 +956,27 @@ export default function IslamicSectsPage() {
         </div>
 
         <p className="sect-hub__results" aria-live="polite">
-          {filtered.length} نتيجة
+          {filtered.length === 0
+            ? "لا نتائج مطابقة — اضبط البحث أو التصنيف"
+            : `${filtered.length} نتيجة`}
         </p>
+
+        {filtered.length === 0 ? (
+          <div className="sect-hub__empty" role="status">
+            <p>جرّب كلمة أقصر أو اختر تصنيفًا أوسع، ثم أعد المحاولة.</p>
+            <button
+              type="button"
+              className="sect-hub__chip is-active"
+              onClick={() => {
+                setSearch("");
+                setCategory("الكل");
+                setStatusF("الكل");
+              }}
+            >
+              مسح عوامل التصفية
+            </button>
+          </div>
+        ) : null}
 
         <div className="sect-hub__grid">
           {filtered.map((sect) => {
@@ -1009,9 +1028,18 @@ export default function IslamicSectsPage() {
                     id={`${sect.id}-detail`}
                     data-content-type="directory-detail"
                   >
-                    <section className="sect-block sect-block--overview" aria-labelledby={`${sect.id}-overview`}>
-                      <h4 id={`${sect.id}-overview`} className="sect-block__title">
-                        نظرة عامة
+                    <section className="sect-block sect-block--overview" aria-labelledby={`${sect.id}-def`}>
+                      <h4 id={`${sect.id}-def`} className="sect-block__title">
+                        التعريف
+                      </h4>
+                      <p className="sect-block__prose">
+                        {sect.fullName} — ضمن تصنيف «{sect.category}».
+                      </p>
+                    </section>
+
+                    <section className="sect-block" aria-labelledby={`${sect.id}-origin`}>
+                      <h4 id={`${sect.id}-origin`} className="sect-block__title">
+                        النشأة
                       </h4>
                       <p className="sect-block__prose">{sect.foundingCause}</p>
                     </section>
@@ -1037,7 +1065,7 @@ export default function IslamicSectsPage() {
                             {/\d+\s*[-–—]\s*\d+\s*%|\d+\s*%/.test(sect.spread) ? (
                               <span className="sect-card__verify">
                                 {" "}
-                                ملاحظة تحقق: النسبة المذكورة تحتاج مصدرًا وتاريخ تحقق — وُسمت needs_specialist_review.
+                                ملاحظة تحقق: أي نسبة رقمية تحتاج مصدرًا وتاريخ تحقق — العرض للتنظيم فقط.
                               </span>
                             ) : null}
                           </dd>
@@ -1097,7 +1125,7 @@ export default function IslamicSectsPage() {
 
                     {needsReview ? (
                       <p className="sect-card__verify">
-                        حالة المحتوى: needs_specialist_review — العرض للتنظيم فقط دون حكم جديد.
+                        حالة المحتوى: يحتاج تحققًا من مختص — العرض للتنظيم فقط دون حكم جديد.
                       </p>
                     ) : null}
 
@@ -1106,7 +1134,7 @@ export default function IslamicSectsPage() {
                         <h4 className="sect-block__title">تعلّم ذو صلة</h4>
                         <div className="sect-related">
                           <InternalLinkCard
-                            href="/tawhid"
+                            href="/tawhid/ahl-sunnah"
                             title="دروس عقيدة أهل السنة والجماعة"
                             variant="compact"
                             className="sect-related__link"
