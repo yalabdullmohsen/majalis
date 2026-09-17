@@ -17,6 +17,17 @@ html.dark {
   --dm-surface-feature: #16352c;
   --dm-surface-overlay: color-mix(in srgb, #0a1210 72%, transparent);
   --dm-surface-scrim: color-mix(in srgb, #050a08 58%, transparent);
+  --surface-overlay: var(--dm-surface-overlay);
+  --dark-overlay: var(--dm-surface-overlay);
+  --surface-float: var(--dm-surface-interactive);
+  --dark-float: var(--dm-surface-interactive);
+  --dark-card: var(--dm-surface-elevated);
+  --dark-bg: var(--dm-bg);
+  --dark-surface: var(--dm-surface);
+  --dark-elevated: var(--dm-surface-elevated);
+  --dark-interactive: var(--dm-surface-interactive);
+  --dark-border: var(--dm-border-subtle);
+  --dark-border-subtle: var(--dm-border-subtle);
 
   --dm-text-primary: #ede8df;
   --dm-text-secondary: #d8d0c4;

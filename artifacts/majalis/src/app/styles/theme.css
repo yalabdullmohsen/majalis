@@ -441,11 +441,44 @@ html.dark,
   --color-mushaf-numeral: #EDE6D8;
   --color-mushaf-badge-bg: #241F17;
   --color-mushaf-badge-border: #C9A96A;
-  --shadow-mj: none;
-  --mj-elev-1: none;
-  --mj-elev-2: none;
-  --mj-elev-3: none;
-  --mj-sh: none;
+
+  /* ═══ Dark System Contract — مصدر دلالي واحد (لا أنظمة متوازية) ═══ */
+  --dark-bg: var(--surface-app);
+  --dark-surface: var(--mj-surface);
+  --dark-elevated: var(--surface-elevated);
+  --dark-card: var(--surface-elevated);
+  --dark-interactive: var(--surface-interactive);
+  --dark-overlay: color-mix(in srgb, #0a1210 72%, transparent);
+  --dark-float: var(--surface-interactive);
+  --dark-border: var(--border-elevated);
+  --dark-border-subtle: color-mix(in srgb, #8fd4b0 12%, #35443f);
+  --dark-elev-1:
+    0 1px 2px rgba(0, 0, 0, 0.16),
+    0 4px 14px rgba(0, 0, 0, 0.18);
+  --dark-elev-2:
+    0 2px 4px rgba(0, 0, 0, 0.18),
+    0 8px 22px rgba(0, 0, 0, 0.24);
+  --dark-elev-3:
+    0 4px 10px rgba(0, 0, 0, 0.22),
+    0 18px 40px rgba(0, 0, 0, 0.34);
+
+  --ss-card-bg: var(--dark-card);
+  --ss-card-border: var(--dark-border);
+  --soft-card-bg: var(--dark-card);
+  --soft-tile-bg: var(--dark-card);
+  --soft-card-border: var(--dark-border-subtle);
+  --soft-tile-border: var(--dark-border-subtle);
+  --soft-card-grad: none;
+  --soft-tile-grad: none;
+  --surface-float: var(--dark-float);
+  --surface-overlay: var(--dark-overlay);
+
+  /* ظلال حيّة ليلاً — لا تُصفَّر (كانت none فتفرّق البطاقات عن الصقل) */
+  --shadow-mj: var(--dark-elev-1);
+  --mj-elev-1: var(--dark-elev-1);
+  --mj-elev-2: var(--dark-elev-2);
+  --mj-elev-3: var(--dark-elev-3);
+  --mj-sh: var(--dark-elev-1);
   --on-green: var(--on-dark-strong);
   --on-surface: var(--mj-ink);
   --on-surface-muted: var(--mj-ink-2);
@@ -453,6 +486,7 @@ html.dark,
   --radius-pill: 999px;
   --mj-r-pill: 999px;
   --r-full: 9999px;
+  --radius-card: 1.25rem;
 }
 
 /* نص فوق أخضر/داكن: يعيد رموز النص دون لمس لون الصفحة */

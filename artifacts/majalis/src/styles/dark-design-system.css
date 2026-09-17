@@ -7,20 +7,20 @@
 :is(html[data-theme="dark"], html.dark) {
   color-scheme: dark;
 
-  /* سلم الأسطح — قيم صريحة (تُكمّل theme.css ولا تعتمد على invert) */
-  --surface: #161e1b;
-  --surface-secondary: #1c2622;
-  --surface-elevated: #24302b;
-  --surface-interactive: #2b3933;
+  /* سلم الأسطح — جسر إلى Dark System Contract في theme.css (لا هكس منافس) */
+  --surface: var(--dark-surface, #161e1b);
+  --surface-secondary: var(--mj-surface, #1c2622);
+  --surface-elevated: var(--dark-elevated, #24302b);
+  --surface-interactive: var(--dark-interactive, #2b3933);
   --surface-hero: #1a2822;
-  --surface-hero-ink: #f3efe6;
+  --surface-hero-ink: var(--on-dark-strong, #f3efe6);
   --surface-hero-muted: #c5d8ce;
   --text-primary: #ede8df;
   --text-secondary: #d8d0c4;
   --text-muted: #b5ada0;
   --icon-primary: #8fd4b0;
   --icon-secondary: #c5d8ce;
-  --border-elevated: color-mix(in srgb, #c9a86c 10%, #35443f);
+  --border-elevated: var(--dark-border, color-mix(in srgb, #c9a86c 10%, #35443f));
   --card-separator: color-mix(in srgb, #8fd4b0 12%, #2a3733);
 
   /* جسر للمكوّنات القديمة */
@@ -31,17 +31,16 @@
   --mj-ink: var(--text-primary);
   --mj-ink-2: var(--text-secondary);
   --mj-muted: var(--text-muted);
-  --ss-card-bg: var(--surface-elevated);
-  --ss-card-border: var(--border-elevated);
+  --ss-card-bg: var(--dark-card, var(--surface-elevated));
+  --ss-card-border: var(--dark-border, var(--border-elevated));
   --bg-elevated: var(--surface-elevated);
   --color-surface-elevated: var(--surface-elevated);
-  /* يطابق mj-theme-boot — بطاقات soft قبل اكتمال تحميل هذا الملف */
   --soft-card-bg: var(--surface-elevated);
   --soft-tile-bg: var(--surface-elevated);
   --soft-card-grad: none;
   --soft-tile-grad: none;
-  --soft-card-border: #3a4a44;
-  --soft-tile-border: #3a4a44;
+  --soft-card-border: var(--dark-border-subtle, #3a4a44);
+  --soft-tile-border: var(--dark-border-subtle, #3a4a44);
 }
 
 /* —— خلفية التطبيق: سطح، ليست جدارًا أسود —— */
@@ -57,7 +56,7 @@
   color: var(--text-primary);
 }
 
-/* —— بطاقات: سطح مرتفع فوق الخلفية —— */
+/* —— بطاقات: سطح مرتفع فوق الخلفية (توكن واحد — بلا هكس منافس) —— */
 :is(html[data-theme="dark"], html.dark) .soft-card,
 :is(html[data-theme="dark"], html.dark) .soft-card--on-light,
 :is(html[data-theme="dark"], html.dark) .hub-card,
@@ -73,12 +72,15 @@
 :is(html[data-theme="dark"], html.dark) .rsc,
 :is(html[data-theme="dark"], html.dark) [data-card="1"],
 :is(html[data-theme="dark"], html.dark) [class*="soft-card"] {
-  background-color: #24302b !important;
+  background-color: var(--dark-card, var(--surface-elevated)) !important;
   background-image: none !important;
-  background: #24302b !important;
-  border-color: color-mix(in srgb, #c9a86c 10%, #35443f) !important;
-  color: #ede8df !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16), 0 4px 14px rgba(0, 0, 0, 0.18);
+  background: var(--dark-card, var(--surface-elevated)) !important;
+  border: 1px solid var(--dark-border, var(--border-elevated)) !important;
+  border-radius: var(--radius-card, 1.25rem) !important;
+  color: var(--text-primary, #ede8df) !important;
+  box-shadow: var(--dark-elev-1, var(--pd-elev-1, 0 1px 2px rgba(0, 0, 0, 0.16))) !important;
+  outline: none !important;
+  filter: none !important;
 }
 
 :is(html[data-theme="dark"], html.dark) .soft-card:active,
