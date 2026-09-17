@@ -21,8 +21,9 @@
 		<string>ar</string>
 		<string>en</string>
 	</array>
+	<!-- ASCII only: Xcode names the .ipa from CFBundleName; non-ASCII → ITMS-90168 -->
 	<key>CFBundleName</key>
-	<string>سُنّة</string>
+	<string>Sunnah</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
