@@ -19,3 +19,6 @@ supabase/.temp/
 docs/AUDIO_QA.full-audit.log
 artifacts/mushaf-single-pass/
 artifacts/mushaf-multi-viewport/
+
+# Local App Store export artifacts
+store/app-store/out/

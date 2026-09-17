@@ -365,6 +365,7 @@
     "verify:spacing-gate": "node scripts/verify-spacing-gate.mjs",
     "verify:meta-consistency": "node scripts/verify-meta-consistency-gate.mjs",
     "verify:ios-edge": "node scripts/verify-ios-edge-gate.mjs",
+    "verify:ios-bundle-name-ascii": "bash scripts/verify-ios-bundle-name-ascii.sh",
     "verify:fsd-layers": "node scripts/verify-fsd-layers.mjs",
     "verify:route-registry": "node --import tsx scripts/verify-route-registry.mjs",
     "verify:sections-registry": "node --import tsx scripts/verify-sections-registry.mjs",
