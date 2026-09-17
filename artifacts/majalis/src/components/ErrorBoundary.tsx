@@ -167,7 +167,7 @@ export class ErrorBoundary extends Component<Props, State> {
           <p className="error-boundary-page__title">حدث خلل مؤقت في العرض</p>
           <p className="error-boundary-page__body">
             {chunkError
-              ? "تعذّر تحميل ملفات الصفحة بعد تحديث المنصة. اضغط «تحديث المنصة» لمسح الكاش وإعادة التحميل."
+              ? "تعذّر التحميل بعد تحديث المنصة. اضغط «تحديث المنصة» ثم أعد المحاولة."
               : userFacingBody()}
           </p>
           <p className="error-boundary-page__id">

@@ -80,7 +80,23 @@ States used: `COMPLETE` | `IMPROVED` | `BLOCKED_SOURCE` | `BLOCKED_LICENSE` | `E
 | Surah name fallback via `getSurahMeta` | IMPROVED |
 | Gate | `test:content-quality-wave2` |
 
+## Wave 8 (continuation — lessons/scholars remaining)
+
+| Fix | Status |
+|---|---|
+| Lesson descriptions strip phones/`@handles` | IMPROVED_VERIFIED |
+| Harvest ellipsis-truncated titles dropped | IMPROVED_VERIFIED (feed data; short titles still rejected) |
+| `/learn/series/:slug` keep slug → `/lessons/:slug` | DEFERRED (entry budget; still redirects to `/lessons`) |
+| Annual course summary strip `**عن الدورة:**` fragments | IMPROVED_VERIFIED |
+| Scholar/Quran-person SEO truncate at word | IMPROVED_VERIFIED |
+| Scholar empty works/sources/faq sections hidden | IMPROVED_VERIFIED |
+| Content report mailto subject without `#id` | IMPROVED_VERIFIED |
+| Gate | `test:content-quality-wave8` |
+
+See also: `docs/content-quality/CONTENT_GAPS_REPORT.md` (remaining matrix).
+
 ## Gate
 
 `artifacts/majalis/src/lib/__tests__/content-quality-wave1-p0-gate.test.ts`  
-`artifacts/majalis/src/lib/__tests__/content-quality-wave2-gate.test.ts`
+`artifacts/majalis/src/lib/__tests__/content-quality-wave2-gate.test.ts`  
+`artifacts/majalis/src/lib/__tests__/content-quality-wave8-gate.test.ts`

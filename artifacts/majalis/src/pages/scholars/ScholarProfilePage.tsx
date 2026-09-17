@@ -8,6 +8,7 @@ import {
 } from "@/data/scholars-profiles";
 import NotFound from "@/views/not-found";
 import { ShareButtons } from "@/components/ContentActions";
+import { truncateAtWord } from "@/lib/content-display-polish";
 import "@/styles/pages/scholar-profile.css";
 
 function ScholarProfileView({ profile }: { profile: ScholarProfile }) {
@@ -15,7 +16,7 @@ function ScholarProfileView({ profile }: { profile: ScholarProfile }) {
     applyPageSeo({
       path: `/scholars/${profile.slug}`,
       title: `${profile.name} | سُنّة`,
-      description: profile.summary.slice(0, 155),
+      description: truncateAtWord(profile.summary, 155),
       keywords: [profile.name, profile.fullName, ...profile.specialty, "علماء"],
       jsonLd: [
         {
@@ -69,6 +70,7 @@ function ScholarProfileView({ profile }: { profile: ScholarProfile }) {
         ) : null}
       </section>
 
+      {profile.works.length > 0 ? (
       <section className="sp-section" aria-labelledby="sp-works">
         <h2 id="sp-works">أهم المؤلفات</h2>
         <ul className="sp-list">
@@ -80,7 +82,9 @@ function ScholarProfileView({ profile }: { profile: ScholarProfile }) {
           ))}
         </ul>
       </section>
+      ) : null}
 
+      {profile.sources.length > 0 ? (
       <section className="sp-section" aria-labelledby="sp-src">
         <h2 id="sp-src">مصادر الترجمة</h2>
         <ul className="sp-list">
@@ -89,7 +93,9 @@ function ScholarProfileView({ profile }: { profile: ScholarProfile }) {
           ))}
         </ul>
       </section>
+      ) : null}
 
+      {profile.faq.length > 0 ? (
       <section className="sp-section" aria-labelledby="sp-faq">
         <h2 id="sp-faq">أسئلة مختصرة</h2>
         <dl className="sp-faq">
@@ -101,6 +107,7 @@ function ScholarProfileView({ profile }: { profile: ScholarProfile }) {
           ))}
         </dl>
       </section>
+      ) : null}
 
       <nav className="sp-related" aria-label="روابط ذات صلة">
         {profile.related.map((r) => (
