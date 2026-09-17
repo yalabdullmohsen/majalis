@@ -33,6 +33,7 @@ export function HomeHeroLcp() {
       className="m2030-hero home-page-hero home-page-hero--eyebrow-ready home-page-hero--actions-ready"
       fullBleed={false}
       withPattern={false}
+      showBack={false}
       eyebrow={greeting}
       title="سُنّة"
       actions={

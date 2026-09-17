@@ -914,3 +914,92 @@ html[data-theme="dark"] .quran-hub-grid,
 html.dark .quran-hub-grid {
   gap: clamp(0.75rem, 2.2vw, 1.1rem) !important;
 }
+
+/* ── Stabilization launch: hero readability + mint/glow trim (proven only) ── */
+html[data-theme="dark"] .page-hero-mj,
+html.dark .page-hero-mj,
+html[data-theme="dark"] .m2030-hero,
+html.dark .m2030-hero,
+html[data-theme="dark"] .section-hero,
+html.dark .section-hero {
+  background-color: var(--surface-hero, #1a2822) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+html[data-theme="dark"] .page-hero-mj__title,
+html.dark .page-hero-mj__title,
+html[data-theme="dark"] .m2030-hero__title,
+html.dark .m2030-hero__title,
+html[data-theme="dark"] .section-hero__title,
+html.dark .section-hero__title {
+  color: var(--surface-hero-ink, #f3efe6) !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+html[data-theme="dark"] .page-hero-mj__desc,
+html.dark .page-hero-mj__desc,
+html[data-theme="dark"] .page-hero-mj__subtitle,
+html.dark .page-hero-mj__subtitle,
+html[data-theme="dark"] .m2030-hero__desc,
+html.dark .m2030-hero__desc,
+html[data-theme="dark"] .section-hero__desc,
+html.dark .section-hero__desc {
+  color: var(--surface-hero-muted, #c5d8ce) !important;
+  opacity: 1 !important;
+}
+html[data-theme="dark"] .page-hero-mj__glow,
+html.dark .page-hero-mj__glow,
+html[data-theme="dark"] .m2030-hero__glow,
+html.dark .m2030-hero__glow,
+html[data-theme="dark"] .asp-hero__glow,
+html.dark .asp-hero__glow {
+  display: none !important;
+  opacity: 0 !important;
+}
+/* رجوع الهيرو — نص فاتح على سطح داكن (بوابة contrast)
+ * يتجاوز modern-section-shell الذي يفرض #16241e على bleed heroes. */
+html[data-theme="dark"] .page-hero-mj__back,
+html.dark .page-hero-mj__back,
+html[data-theme="dark"] .app-back-btn--hero,
+html.dark .app-back-btn--hero,
+html[data-theme="dark"] .page-hero-mj .mj-btn--ghost,
+html.dark .page-hero-mj .mj-btn--ghost,
+html[data-theme="dark"] .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back,
+html.dark .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back,
+html[data-theme="dark"] .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn.mj-btn--ghost,
+html.dark .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn.mj-btn--ghost,
+html[data-theme="dark"] .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn--ghost,
+html.dark .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn--ghost {
+  color: #f3efe6 !important;
+  border-color: color-mix(in srgb, #f3efe6 32%, transparent) !important;
+  background: #0a3d2e !important;
+  background-color: #0a3d2e !important;
+  background-image: none !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+}
+html[data-theme="dark"] .page-hero-mj__back span,
+html.dark .page-hero-mj__back span,
+html[data-theme="dark"] .app-back-btn--hero span,
+html.dark .app-back-btn--hero span,
+html[data-theme="dark"] .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back *,
+html.dark .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back * {
+  color: inherit !important;
+}
+/* تقليل أسطح mint الواسعة المتبقية على بطاقات المعرفة */
+html[data-theme="dark"] .isp-page .soft-card,
+html.dark .isp-page .soft-card,
+html[data-theme="dark"] .tawhid-page .soft-card,
+html.dark .tawhid-page .soft-card,
+html[data-theme="dark"] .tarikh-page .soft-card,
+html.dark .tarikh-page .soft-card,
+html[data-theme="dark"] .seerah-page .soft-card,
+html.dark .seerah-page .soft-card,
+html[data-theme="dark"] .hadith-page .soft-card,
+html.dark .hadith-page .soft-card {
+  background: var(--surface-feature, #151e1b) !important;
+  border-color: var(--surface-feature-border, #2a3832) !important;
+  box-shadow: none !important;
+}

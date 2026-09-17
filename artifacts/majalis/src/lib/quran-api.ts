@@ -725,7 +725,12 @@ const POS_KEY = "mj-quran-pos-v3";
 
 export function savePosition(surah: number, ayah: number) {
   try {
-    localStorage.setItem(POS_KEY, JSON.stringify({ surah, ayah, at: Date.now() }));
+    const s = Math.floor(Number(surah));
+    const a = Math.floor(Number(ayah));
+    /* رقم الآية داخل السورة فقط — أطول سورة 286؛ لا تخزّن معرّفًا عالميًا. */
+    if (!Number.isFinite(s) || s < 1 || s > 114) return;
+    if (!Number.isFinite(a) || a < 1 || a > 286) return;
+    localStorage.setItem(POS_KEY, JSON.stringify({ surah: s, ayah: a, at: Date.now() }));
   } catch {
     // ignore
   }
@@ -739,7 +744,8 @@ export function loadPosition(): { surah: number; ayah: number } | null {
     const surah = Number(parsed?.surah);
     const ayah = Number(parsed?.ayah);
     if (!Number.isFinite(surah) || surah < 1 || surah > 114) return null;
-    if (!Number.isFinite(ayah) || ayah < 1) return null;
+    /* رفض المعرّفات العالمية المخزّنة خطأً (مثل 2:689). */
+    if (!Number.isFinite(ayah) || ayah < 1 || ayah > 286) return null;
     return { surah, ayah };
   } catch {
     return null;
@@ -749,12 +755,28 @@ export function loadPosition(): { surah: number; ayah: number } | null {
 // ─── Page-view position persistence (وضع "الصفحة" الحقيقي) ────────────────
 const PAGE_POS_KEY = "mj-quran-page-pos-v1";
 
+/** مفتاح آية صالح للتخزين: رقم داخل السورة فقط (أطول سورة = 286) — بلا معرّف عالمي. */
+function isSurahLocalAyahKey(key: string): boolean {
+  const m = key.trim().match(/^(\d{1,3}):(\d{1,3})$/);
+  if (!m) return false;
+  const surah = Number(m[1]);
+  const ayah = Number(m[2]);
+  return (
+    Number.isFinite(surah) &&
+    Number.isFinite(ayah) &&
+    surah >= 1 &&
+    surah <= 114 &&
+    ayah >= 1 &&
+    ayah <= 286
+  );
+}
+
 export function savePagePosition(page: number, ayahKeyOverride?: string) {
   try {
     const clamped = Math.min(604, Math.max(1, Math.floor(page)));
     const ayahKey =
-      typeof ayahKeyOverride === "string" && /^\d{1,3}:\d{1,3}$/.test(ayahKeyOverride)
-        ? ayahKeyOverride
+      typeof ayahKeyOverride === "string" && isSurahLocalAyahKey(ayahKeyOverride)
+        ? ayahKeyOverride.trim()
         : currentPageFirstAyah(clamped);
     localStorage.setItem(
       PAGE_POS_KEY,
@@ -773,8 +795,8 @@ export function loadReadingAyahKey(): string | null {
     const raw = localStorage.getItem(PAGE_POS_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as { ayahKey?: string };
-    if (typeof parsed?.ayahKey === "string" && /^\d{1,3}:\d{1,3}$/.test(parsed.ayahKey)) {
-      return parsed.ayahKey;
+    if (typeof parsed?.ayahKey === "string" && isSurahLocalAyahKey(parsed.ayahKey)) {
+      return parsed.ayahKey.trim();
     }
   } catch {
     /* ignore */
@@ -787,10 +809,10 @@ export function loadPagePosition(): number | null {
     const raw = localStorage.getItem(PAGE_POS_KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as { page?: number; ayahKey?: string };
-      if (typeof parsed?.ayahKey === "string" && /^\d{1,3}:\d{1,3}$/.test(parsed.ayahKey)) {
+      if (typeof parsed?.ayahKey === "string" && isSurahLocalAyahKey(parsed.ayahKey)) {
         const fallback =
           typeof parsed.page === "number" ? legacyPageToCurrentPage(parsed.page) : undefined;
-        const page = ayahKeyToPage(parsed.ayahKey, fallback);
+        const page = ayahKeyToPage(parsed.ayahKey.trim(), fallback);
         if (loadLastPageSync() == null) void saveLastPage(page);
         return page;
       }

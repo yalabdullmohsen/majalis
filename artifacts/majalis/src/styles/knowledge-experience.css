@@ -929,6 +929,8 @@ html[data-theme="dark"] .app-back-btn--bar.fixed-back-bar {
 /* الرجوع المدمج في الهيدر/اللوبي يغني عن FAB — لا تراكب */
 body:has([data-section-back="1"]) .app-back-btn--bar.fixed-back-bar,
 body:has([data-section-back="1"]) .global-back-control-host,
+body:has(.page-hero-mj__back) .app-back-btn--bar.fixed-back-bar,
+body:has(.page-hero-mj__back) .global-back-control-host,
 body:has(.app-back-btn--lobby) .app-back-btn--bar.fixed-back-bar,
 body:has(.app-back-btn--hero) .app-back-btn--bar.fixed-back-bar,
 body:has(.section-hero__back) .app-back-btn--bar.fixed-back-bar {
