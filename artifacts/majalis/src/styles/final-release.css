@@ -31,7 +31,11 @@
   --bottom-nav-total: var(--nav-h, calc(var(--bottom-nav-height) + var(--inset-bottom)));
   --content-pb: calc(var(--bottom-nav-height) + var(--inset-bottom, 0px) + 24px);
   --top-section-bar-h: 3.5rem;
-  --sticky-below-chrome: calc(var(--header-h, calc(56px + var(--inset-top))) + var(--top-section-bar-h));
+  /* تحت كامل الكروم العلوي (هيدر+بحث+تيكر) لا --header-h وحده — وإلا تطفو الفلاتر داخل شريط البحث */
+  --sticky-below-chrome: calc(
+    var(--app-top-chrome-h, var(--header-h, calc(56px + var(--inset-top, 0px)))) +
+      var(--top-section-bar-h, 0px)
+  );
   /* ارتفاع الشريط المتحرك ≤ ٣٦px (٢٫٢٥rem) + توسيط flex؛ safe-area منفصل في صف الهيدر */
   --ticker-h: 2.65rem;
   --ticker-row-pad-block: 0;

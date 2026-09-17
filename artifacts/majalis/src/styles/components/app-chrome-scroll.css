@@ -96,6 +96,11 @@ html:not(.pts-immersive) body {
     /* transform فقط — لا height:0 حتى لا يختفي الشريط فجأة */
   }
 
+  /* عند إخفاء الكروم: لا تُبقِ offset هيدر وهمي — وإلا تطفو الفلاتر في منتصف الشاشة */
+  .app-shell.app-chrome-hidden {
+    --sticky-below-chrome: max(0px, var(--inset-top, 0px));
+  }
+
   .app-main {
     transition: none;
   }

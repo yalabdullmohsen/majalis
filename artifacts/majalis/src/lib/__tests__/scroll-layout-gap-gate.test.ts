@@ -74,9 +74,24 @@ assert.match(
 );
 
 assert.match(
+  chrome,
+  /\.app-shell\.app-chrome-hidden\s*\{[\s\S]*?--sticky-below-chrome:\s*max\(0px,\s*var\(--inset-top/,
+  "عند إخفاء الكروم يُصفَّر offset الفلاتر sticky",
+);
+assert.match(
+  finalCss,
+  /--sticky-below-chrome:\s*calc\(\s*var\(--app-top-chrome-h/,
+  "sticky تحت كامل الكروم (هيدر+بحث+تيكر) لا header-h وحده",
+);
+assert.match(
   lessonsCss,
   /\.lessons-v3-sticky[\s\S]*?top:\s*var\(--sticky-below-chrome/,
   "شريط تصفية الدروس تحت الكروم العلوي",
+);
+assert.match(
+  lessonsCss,
+  /\.lessons-v3-sticky[\s\S]*?z-index:\s*var\(--z-sticky/,
+  "z-index موحّد لشريط فلاتر الدروس",
 );
 assert.doesNotMatch(
   lessonsCss,

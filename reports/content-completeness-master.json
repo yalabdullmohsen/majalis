@@ -9206,5 +9206,28 @@
     "library book source URLs with verified publishers",
     "LICENSE_RISKS store items"
   ],
-  "wave1Gate": "artifacts/majalis/src/lib/__tests__/content-quality-wave1-p0-gate.test.ts"
+  "wave1Gate": "artifacts/majalis/src/lib/__tests__/content-quality-wave1-p0-gate.test.ts",
+  "wave11": {
+    "status": "IMPROVED_VERIFIED",
+    "commitBase": "486be9823",
+    "items": [
+      {
+        "id": "adhkar-seo-truncate",
+        "finalState": "IMPROVED_VERIFIED"
+      },
+      {
+        "id": "author-aliases-scholars-9",
+        "finalState": "IMPROVED_VERIFIED"
+      },
+      {
+        "id": "author-aliases-remainder",
+        "finalState": "BLOCKED_SOURCE"
+      },
+      {
+        "id": "library-urls",
+        "finalState": "BLOCKED_SOURCE"
+      }
+    ],
+    "updatedAt": "2026-09-17T22:17:55.928937+00:00"
+  }
 }

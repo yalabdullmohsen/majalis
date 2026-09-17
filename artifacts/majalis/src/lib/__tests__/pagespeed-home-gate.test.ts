@@ -29,7 +29,7 @@ assert.match(boot, /MAX_MS\s*=\s*1400/, "سقف صلب لانتظار الخطو
 assert.match(splash, /SPLASH_MIN_VISIBLE_MS\s*=\s*220/);
 assert.match(splash, /SPLASH_LCP_SOFT_MS\s*=\s*480/);
 assert.match(splash, /SPLASH_MAX_VISIBLE_MS\s*=\s*1_?400|SPLASH_MAX_VISIBLE_MS\s*=\s*1400/);
-assert.match(splash, /SPLASH_FADE_OUT_MS\s*=\s*320/);
+assert.match(splash, /SPLASH_FADE_OUT_MS\s*=\s*200/);
 assert.match(boot, /sessionStorage\.getItem\(KEY\)/, "تخطّي الدخولية في نفس الجلسة");
 assert.match(html, /<meta charset="UTF-8"\s*\/>/, "charset موجود");
 {

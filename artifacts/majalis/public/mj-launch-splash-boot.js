@@ -7,7 +7,7 @@
         var MIN_MS = 220;
         var SOFT_MAX_MS = 480;
         var MAX_MS = 1400;
-        var EXIT_MS = 320;
+        var EXIT_MS = 200;
         var bootReady = false;
         var shellStable = false;
         var start = (window.performance && performance.now) ? performance.now() : Date.now();
@@ -100,12 +100,7 @@
           bootReady = true;
           shellStable = true;
           tryDismiss();
-          try {
-            var C = window.Capacitor;
-            if (C && C.isNativePlatform && C.isNativePlatform() && C.Plugins && C.Plugins.SplashScreen) {
-              C.Plugins.SplashScreen.hide({ fadeOutDuration: EXIT_MS });
-            }
-          } catch (eCap) {}
+          /* Capacitor hide: splash-screen.ts only */
         }, MAX_MS);
         window.setTimeout(tryDismiss, MIN_MS);
         void SOFT_MAX_MS;
