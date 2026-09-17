@@ -957,6 +957,37 @@ html.dark .asp-hero__glow {
   display: none !important;
   opacity: 0 !important;
 }
+/* رجوع الهيرو — نص فاتح على سطح داكن (بوابة contrast)
+ * يتجاوز modern-section-shell الذي يفرض #16241e على bleed heroes. */
+html[data-theme="dark"] .page-hero-mj__back,
+html.dark .page-hero-mj__back,
+html[data-theme="dark"] .app-back-btn--hero,
+html.dark .app-back-btn--hero,
+html[data-theme="dark"] .page-hero-mj .mj-btn--ghost,
+html.dark .page-hero-mj .mj-btn--ghost,
+html[data-theme="dark"] .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back,
+html.dark .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back,
+html[data-theme="dark"] .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn.mj-btn--ghost,
+html.dark .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn.mj-btn--ghost,
+html[data-theme="dark"] .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn--ghost,
+html.dark .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn--ghost {
+  color: #f3efe6 !important;
+  border-color: color-mix(in srgb, #f3efe6 32%, transparent) !important;
+  background: #0a3d2e !important;
+  background-color: #0a3d2e !important;
+  background-image: none !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+}
+html[data-theme="dark"] .page-hero-mj__back span,
+html.dark .page-hero-mj__back span,
+html[data-theme="dark"] .app-back-btn--hero span,
+html.dark .app-back-btn--hero span,
+html[data-theme="dark"] .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back *,
+html.dark .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back * {
+  color: inherit !important;
+}
 /* تقليل أسطح mint الواسعة المتبقية على بطاقات المعرفة */
 html[data-theme="dark"] .isp-page .soft-card,
 html.dark .isp-page .soft-card,
