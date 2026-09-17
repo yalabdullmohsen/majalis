@@ -1,0 +1,434 @@
+{
+  "generatedFromCommit": "975505911116f6190e2d09fc97ced3dbbb02e37d",
+  "generatedAt": "2026-09-16T22:50:40Z",
+  "repositoryRoot": "/Users/alabdullmohsen/majlis-app",
+  "primaryProduct": "artifacts/majalis",
+  "originMainCommitAtGeneration": "bad075588ecc66a98a864ab9274e537b0174daf4",
+  "productionPaths": [
+    {
+      "path": "artifacts/majalis",
+      "role": "web_and_capacitor",
+      "sourceFile": "PLATFORMS.md"
+    },
+    {
+      "path": "artifacts/api-server",
+      "role": "expo_push_api",
+      "sourceFile": "docs/REPO_INDEX.md"
+    }
+  ],
+  "frozenPaths": [
+    {
+      "path": "artifacts/majalis-mobile",
+      "role": "expo_frozen",
+      "sourceFile": "PLATFORMS.md"
+    }
+  ],
+  "referencePaths": [
+    {
+      "path": "artifacts/mushafi",
+      "role": "tasmee3_reference_do_not_delete",
+      "sourceFile": "PLATFORMS.md"
+    },
+    {
+      "path": ".migration-backup",
+      "role": "early_schema_snapshot",
+      "sourceFile": "AGENTS.md"
+    }
+  ],
+  "deprecatedPaths": [
+    {
+      "path": "artifacts/majlisilm-flutter",
+      "role": "legacy_flutter_excluded_workspace",
+      "sourceFile": "pnpm-workspace.yaml"
+    }
+  ],
+  "apps": [
+    {
+      "name": "Sunnah web",
+      "path": "artifacts/majalis",
+      "stack": [
+        "vite",
+        "react",
+        "wouter"
+      ],
+      "sourceFile": "artifacts/majalis/package.json"
+    },
+    {
+      "name": "Sunnah capacitor",
+      "path": "artifacts/majalis",
+      "appId": "com.yousef.majlisilm",
+      "sourceFile": "artifacts/majalis/capacitor.config.ts"
+    },
+    {
+      "name": "api-server",
+      "path": "artifacts/api-server",
+      "stack": [
+        "express",
+        "expo-server-sdk"
+      ],
+      "sourceFile": "artifacts/api-server"
+    },
+    {
+      "name": "majalis-mobile",
+      "path": "artifacts/majalis-mobile",
+      "status": "frozen",
+      "sourceFile": "PLATFORMS.md"
+    },
+    {
+      "name": "mushafi",
+      "path": "artifacts/mushafi",
+      "status": "reference",
+      "sourceFile": "artifacts/mushafi/TASMEE3_INVENTORY.md"
+    }
+  ],
+  "packages": [
+    {
+      "name": "@workspace/majalis",
+      "path": "artifacts/majalis"
+    },
+    {
+      "name": "@workspace/api-server",
+      "path": "artifacts/api-server"
+    },
+    {
+      "name": "@workspace/majalis-mobile",
+      "path": "artifacts/majalis-mobile"
+    },
+    {
+      "name": "workspace scripts",
+      "path": "scripts"
+    }
+  ],
+  "routes": {
+    "appRoutesPathCount": 364,
+    "homeRouteInAppTsx": "/",
+    "sectionsRegistryRouteCount": 78,
+    "seoRoutesApprox": 210,
+    "sourceFile": "artifacts/majalis/src/AppRoutes.tsx",
+    "bottomNav": [
+      "/",
+      "/quran-hub",
+      "/lessons",
+      "/prayer-times",
+      "/sections"
+    ],
+    "bottomNavSourceFile": "artifacts/majalis/src/config/sections.registry.ts",
+    "note": "Full path list in 05_ROUTES_AND_NAVIGATION.md"
+  },
+  "features": [
+    {
+      "id": "mushaf",
+      "route": "/mushaf",
+      "status": "Active",
+      "sourceFile": "artifacts/majalis/src/pages/quran/MushafReaderPage.tsx"
+    },
+    {
+      "id": "quran-hub",
+      "route": "/quran-hub",
+      "status": "Active"
+    },
+    {
+      "id": "lessons",
+      "route": "/lessons",
+      "status": "Active"
+    },
+    {
+      "id": "prayer-times",
+      "route": "/prayer-times",
+      "status": "Active"
+    },
+    {
+      "id": "adhkar",
+      "route": "/adhkar",
+      "status": "Active"
+    },
+    {
+      "id": "hadith",
+      "route": "/hadith",
+      "status": "Active"
+    },
+    {
+      "id": "search",
+      "route": "/search",
+      "status": "Active"
+    },
+    {
+      "id": "sections",
+      "route": "/sections",
+      "status": "Active"
+    },
+    {
+      "id": "fiqh",
+      "route": "/fiqh",
+      "status": "Active"
+    },
+    {
+      "id": "fiqh-council",
+      "route": "/fiqh-council",
+      "status": "DeprecatedRedirect",
+      "sourceFile": "artifacts/majalis/src/AppRoutes.tsx"
+    },
+    {
+      "id": "admin",
+      "route": "/admin",
+      "status": "ActiveAdmin"
+    },
+    {
+      "id": "assistant",
+      "route": "/assistant",
+      "status": "Active"
+    },
+    {
+      "id": "tasmee3",
+      "route": null,
+      "status": "FutureReference",
+      "sourceFile": "PLATFORMS.md"
+    }
+  ],
+  "entities": [
+    {
+      "name": "profiles",
+      "sourceFile": ".migration-backup/01_schema.sql"
+    },
+    {
+      "name": "sheikhs",
+      "sourceFile": ".migration-backup/01_schema.sql"
+    },
+    {
+      "name": "lessons",
+      "sourceFile": ".migration-backup/01_schema.sql"
+    },
+    {
+      "name": "notifications",
+      "sourceFile": "supabase/platform_v2_schema_fixed.sql"
+    },
+    {
+      "name": "push_subscriptions",
+      "sourceFile": "artifacts/majalis/supabase/push_subscriptions_v1.sql"
+    },
+    {
+      "name": "uniqueCreateTableNamesInRepoApprox",
+      "value": 353,
+      "confidence": "ConfirmedFromRepoScan",
+      "hostedApplied": null
+    }
+  ],
+  "externalServices": [
+    {
+      "name": "Supabase",
+      "sourceFile": "AGENTS.md"
+    },
+    {
+      "name": "Vercel",
+      "sourceFile": "artifacts/majalis/vercel.json"
+    },
+    {
+      "name": "AppleTestFlight",
+      "sourceFile": ".github/workflows/ios-testflight-deploy.yml"
+    },
+    {
+      "name": "ExpoPush",
+      "sourceFile": "artifacts/api-server"
+    },
+    {
+      "name": "Anthropic",
+      "sourceFile": "AGENTS.md"
+    },
+    {
+      "name": "Upstash",
+      "sourceFile": "artifacts/majalis/.env.local.example"
+    },
+    {
+      "name": "InstagramGraph",
+      "sourceFile": "artifacts/majalis/.env.local.example"
+    }
+  ],
+  "environmentVariableNames": [
+    "VITE_SUPABASE_URL",
+    "VITE_SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_URL",
+    "DATABASE_URL",
+    "SUPABASE_POOLER_HOST",
+    "MAJALIS_PRODUCTION_CONTENT",
+    "VITE_MAJALIS_PRODUCTION_CONTENT",
+    "CRON_SECRET",
+    "ADMIN_API_SECRET",
+    "UPSTASH_REDIS_REST_URL",
+    "UPSTASH_REDIS_REST_TOKEN",
+    "OPENAI_API_KEY",
+    "ANTHROPIC_API_KEY",
+    "INSTAGRAM_GRAPH_ACCESS_TOKEN",
+    "INSTAGRAM_APP_ID",
+    "INSTAGRAM_APP_SECRET",
+    "INSTAGRAM_BUSINESS_ACCOUNT_ID",
+    "INSTAGRAM_WEBHOOK_VERIFY_TOKEN",
+    "PORT",
+    "BASE_PATH",
+    "EXPO_PUBLIC_SUPABASE_URL",
+    "EXPO_PUBLIC_SUPABASE_ANON_KEY",
+    "MAJALIS_ALLOW_CLI_MIGRATIONS"
+  ],
+  "ciCommands": [
+    "pnpm run verify:preflight",
+    "pnpm run verify:ci",
+    "pnpm run typecheck",
+    "PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run build",
+    "pnpm --filter @workspace/majalis run lint",
+    "pnpm --filter @workspace/majalis run test:bundle-budget",
+    "pnpm --filter @workspace/majalis run test:mushaf-gates"
+  ],
+  "qualityGates": [
+    {
+      "name": "content-guard",
+      "sourceFile": "artifacts/majalis/package.json"
+    },
+    {
+      "name": "bundle-budget",
+      "sourceFile": "artifacts/majalis/scripts/test-bundle-budget.mjs"
+    },
+    {
+      "name": "mushaf-604-integrity",
+      "sourceFile": "artifacts/majalis/src/lib/__tests__/mushaf-604-integrity-gate.test.ts"
+    },
+    {
+      "name": "content-quality-r7",
+      "sourceFile": "artifacts/majalis/src/lib/__tests__/content-quality-r7-gate.test.ts"
+    },
+    {
+      "name": "ayah-ref-normalize",
+      "sourceFile": "artifacts/majalis/src/lib/__tests__/ayah-ref-normalize-gate.test.ts"
+    },
+    {
+      "name": "no-runtime-ddl",
+      "sourceFile": "scripts/verify-no-runtime-ddl.mjs"
+    },
+    {
+      "name": "path-lane",
+      "sourceFile": ".github/scripts/safe-auto-merge/path-classifier.mjs"
+    },
+    {
+      "name": "ci-required",
+      "sourceFile": ".github/workflows/ci.yml"
+    }
+  ],
+  "knownIssues": [
+    {
+      "id": "deploy-doc-conflict",
+      "severity": "P1",
+      "summary": "DEPLOYMENT.md production-branch vs vercel main auto-deploy",
+      "sourceFile": "DEPLOYMENT.md"
+    },
+    {
+      "id": "git-root-doc-stale",
+      "severity": "P2",
+      "summary": "AGENTS.md path majalis-correct vs actual majlis-app",
+      "sourceFile": "AGENTS.md"
+    },
+    {
+      "id": "license-risks",
+      "severity": "P1",
+      "summary": "Adhan/QPC/library licensing unresolved",
+      "sourceFile": "LICENSE_RISKS.md"
+    },
+    {
+      "id": "hosted-schema-unverifiable",
+      "severity": "P1",
+      "summary": "Applied Supabase schema unknown from git alone",
+      "sourceFile": "docs/project-knowledge/06_DATA_SUPABASE_AND_RLS.md"
+    },
+    {
+      "id": "prayer-device-unverified",
+      "severity": "P1",
+      "summary": "Real-device notification verification required",
+      "sourceFile": "docs/PRAYER_TIME_DIAGNOSIS.md"
+    },
+    {
+      "id": "email-confirm-ux",
+      "severity": "P1",
+      "summary": "Signup without immediate session",
+      "sourceFile": "AGENTS.md"
+    },
+    {
+      "id": "ia-bottom-mismatch",
+      "severity": "P2",
+      "summary": "IA_BOTTOM_TABS differs from live bottom nav",
+      "sourceFile": "artifacts/majalis/src/lib/ia-final-structure.ts"
+    },
+    {
+      "id": "project-audit-filename-missing",
+      "severity": "P3",
+      "summary": "PROJECT_AUDIT.md not found; AUDIT.md exists",
+      "sourceFile": null
+    }
+  ],
+  "ownerDecisions": [
+    {
+      "id": "prayer-method",
+      "sourceFile": "docs/project-knowledge/19_OWNER_DECISIONS.md"
+    },
+    {
+      "id": "audio-licenses",
+      "sourceFile": "LICENSE_RISKS.md"
+    },
+    {
+      "id": "bundle-id",
+      "sourceFile": "artifacts/majalis/capacitor.config.ts"
+    },
+    {
+      "id": "supabase-sql-apply",
+      "sourceFile": "docs/REQUIRES_EXPLICIT_APPROVAL.md"
+    },
+    {
+      "id": "publish-policy",
+      "sourceFile": "DEPLOYMENT.md"
+    },
+    {
+      "id": "auth-dashboard",
+      "sourceFile": "docs/REQUIRES_EXPLICIT_APPROVAL.md"
+    }
+  ],
+  "knowledgeFiles": [
+    "docs/project-knowledge/00_EXECUTIVE_SUMMARY.md",
+    "docs/project-knowledge/01_REPOSITORY_MAP.md",
+    "docs/project-knowledge/02_ARCHITECTURE.md",
+    "docs/project-knowledge/03_TECH_STACK_AND_DEPENDENCIES.md",
+    "docs/project-knowledge/04_PRODUCT_AND_FEATURES.md",
+    "docs/project-knowledge/05_ROUTES_AND_NAVIGATION.md",
+    "docs/project-knowledge/06_DATA_SUPABASE_AND_RLS.md",
+    "docs/project-knowledge/07_AUTH_SECURITY_PRIVACY.md",
+    "docs/project-knowledge/08_CONTENT_SYSTEM.md",
+    "docs/project-knowledge/09_QURAN_MUSHAF_AUDIO.md",
+    "docs/project-knowledge/10_PRAYER_NOTIFICATIONS_AUDIO.md",
+    "docs/project-knowledge/11_DESIGN_SYSTEM_AND_UI.md",
+    "docs/project-knowledge/12_PERFORMANCE.md",
+    "docs/project-knowledge/13_ADMIN_AND_OPERATIONS.md",
+    "docs/project-knowledge/14_CI_CD_DEPLOYMENT.md",
+    "docs/project-knowledge/15_TESTING_AND_QUALITY_GATES.md",
+    "docs/project-knowledge/16_ENVIRONMENTS_AND_EXTERNAL_SERVICES.md",
+    "docs/project-knowledge/17_RISKS_AND_TECHNICAL_DEBT.md",
+    "docs/project-knowledge/18_ROADMAP.md",
+    "docs/project-knowledge/19_OWNER_DECISIONS.md",
+    "docs/project-knowledge/20_AI_AGENT_MEMORY.md",
+    "docs/project-knowledge/KNOWLEDGE_INDEX.json"
+  ],
+  "conflicts": [
+    {
+      "id": "deployment-policy",
+      "sources": [
+        "DEPLOYMENT.md",
+        "artifacts/majalis/vercel.json",
+        ".github/workflows/auto-deploy.yml",
+        "AGENTS.md"
+      ]
+    },
+    {
+      "id": "git-root-path",
+      "sources": [
+        "AGENTS.md",
+        "docs/REPO_INDEX.md",
+        "git rev-parse actual"
+      ]
+    }
+  ]
+}

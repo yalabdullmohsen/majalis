@@ -69,12 +69,14 @@ function highlightText(text: string, query: string): ReactNode {
 
 function verificationLabel(status?: string | null, hasSource?: boolean): string | null {
   if (
-    hasSource ||
-    status === "verified" ||
     status === "pending_review" ||
     status === "pending" ||
-    status === "needs_review"
+    status === "needs_review" ||
+    status === "draft"
   ) {
+    return null;
+  }
+  if (hasSource || status === "verified") {
     return "موثّق بمصدر";
   }
   return null;
@@ -89,7 +91,7 @@ function resultHref(item: SearchResultItem): string {
 
 export function isBlockedSearchHref(href?: string | null): boolean {
   if (!href) return false;
-  return /^\/(admin|dashboard|internal|login|register|auth)(\/|$)/i.test(href);
+  return /^\/(admin|dashboard|internal|login|register|auth|fiqh-council)(\/|$)/i.test(href);
 }
 
 export const SearchResultCard = memo(function SearchResultCard({
@@ -105,6 +107,14 @@ export const SearchResultCard = memo(function SearchResultCard({
 }) {
   const href = resultHref(item);
   if (isBlockedSearchHref(href)) return null;
+  if (
+    item.verification_status === "draft" ||
+    item.verification_status === "pending_review" ||
+    item.verification_status === "pending" ||
+    item.verification_status === "needs_review"
+  ) {
+    return null;
+  }
 
   const family = searchKindFamily(item.kind);
   const kindLabel = searchKindLabelAr(item.kind);

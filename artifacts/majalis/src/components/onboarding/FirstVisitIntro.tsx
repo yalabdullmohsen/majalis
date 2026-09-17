@@ -48,7 +48,7 @@ const SURAH_SHORT: readonly string[] = [
   "المسد", "الإخلاص", "الفلق", "الناس",
 ];
 
-/** بلا سحب quran-api إلى حزمة الإقلاع — أطول سورة 286 آية. */
+/** بلا سحب ayah-ref-normalize إلى حزمة الإقلاع — أطول سورة 286 آية؛ لا معرّف عالمي. */
 function sanitizeIntroAyahKey(key: string): string | null {
   const m = key.trim().match(/^(\d{1,3}):(\d{1,3})$/);
   if (!m) return null;
@@ -59,6 +59,7 @@ function sanitizeIntroAyahKey(key: string): string | null {
   return `${s}:${a}`;
 }
 
+/** تطبيع مرجع الآية للعرض — يرفض المعرّف العالمي (مثل 2:689). */
 function readStoredAyahKey(): string | null {
   try {
     const raw = localStorage.getItem("mj-quran-page-pos-v1");

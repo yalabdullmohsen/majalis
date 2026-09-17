@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { useId } from "react";
+import { lazy, Suspense, useId } from "react";
 import { cn } from "@/lib/utils";
 import { PatternBackdrop } from "./PatternBackdrop";
 import {
@@ -9,6 +9,8 @@ import {
   Caption,
 } from "@/components/design-system/text";
 import "@/styles/components/page-hero.css";
+
+const PageHeroIntegratedBack = lazy(() => import("./PageHeroIntegratedBack"));
 
 type PageHeroProps = {
   eyebrow?: string;
@@ -20,6 +22,9 @@ type PageHeroProps = {
   withPattern?: boolean;
   /** بطل بعرض الشاشة الكامل وخلفية هوية عميقة (افتراضي للصفحات الداخلية) */
   fullBleed?: boolean;
+  /** رجوع مدمج في الهيرو — يخفي FAB العام عبر data-section-back / .page-hero-mj__back */
+  showBack?: boolean;
+  backFallbackHref?: string;
   className?: string;
   children?: ReactNode;
 };
@@ -27,7 +32,7 @@ type PageHeroProps = {
 /**
  * بطل صفحة موحّد: تباين مضمون (--mj-ink / --mj-ink-2 على --mj-bg)
  * مع زخرفة عبر PatternBackdrop فقط.
- * الرجوع عبر FloatingBackButton فقط (لا زر داخل الهيرو).
+ * الرجوع مدمج (showBack) عبر chunk مؤجّل — لا ينتفخ entry عبر الرئيسية.
  */
 export function PageHero({
   eyebrow,
@@ -37,6 +42,8 @@ export function PageHero({
   actions,
   withPattern = true,
   fullBleed = true,
+  showBack = true,
+  backFallbackHref = "/",
   className,
   children,
 }: PageHeroProps) {
@@ -51,6 +58,11 @@ export function PageHero({
     >
       {withPattern ? <PatternBackdrop /> : null}
       <div className="page-hero-mj__content">
+        {showBack ? (
+          <Suspense fallback={null}>
+            <PageHeroIntegratedBack fallbackHref={backFallbackHref} />
+          </Suspense>
+        ) : null}
         {eyebrow ? (
           <Caption
             as="p"

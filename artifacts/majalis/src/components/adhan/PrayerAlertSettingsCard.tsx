@@ -10,6 +10,10 @@ import {
   type PreAlertMinutes,
 } from "@/lib/prayer-alert-preferences";
 import {
+  patchPrayerNotificationPreferences,
+  syncLegacyTogglesFromUnified,
+} from "@/lib/prayer-notifications/preferences";
+import {
   getNotificationPermissionStatus,
   requestNotificationPermission,
   type PermissionStatus,
@@ -41,6 +45,12 @@ export function PrayerAlertSettingsCard() {
 
   const patch = (p: Partial<PrayerAlertPreferences>) => {
     setPrefs(patchPrayerAlertPrefs(p));
+    if (typeof p.alertsEnabled === "boolean") {
+      const unified = patchPrayerNotificationPreferences({
+        masterEnabled: p.alertsEnabled,
+      });
+      syncLegacyTogglesFromUnified(unified);
+    }
   };
 
   const applyGlobalMinutes = (minutes: PreAlertMinutes) => {
@@ -120,7 +130,9 @@ export function PrayerAlertSettingsCard() {
             <div>
               <p className="pasc-explainer__title">تفعيل تنبيهات الصلاة</p>
               <p className="pasc-explainer__desc">
-                لننبّهك قبل الصلاة وعند دخول وقتها، حتى لو كان التطبيق مغلقًا.
+                {isNative
+                  ? "لننبّهك قبل الصلاة وعند دخول وقتها عبر إشعارات الجهاز (يتطلب إذن النظام)."
+                  : "في المتصفح تعمل التنبيهات أثناء فتح التطبيق؛ على التطبيق الأصلي تُجدول عبر إشعارات الجهاز بعد منح الإذن."}
               </p>
               <div className="pasc-explainer__actions">
                 <button

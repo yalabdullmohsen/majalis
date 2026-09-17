@@ -100,7 +100,7 @@ export function AppBackButton({
       data-floating-back={variant === "floating" ? "1" : undefined}
       data-fixed-back-bar={variant === "bar" ? "1" : undefined}
       data-mode="back"
-      data-section-back={variant === "lobby" ? "1" : undefined}
+      data-section-back={variant === "lobby" || variant === "hero" ? "1" : undefined}
       onPointerDown={(e) => {
         if (e.button !== 0) return;
         e.preventDefault();

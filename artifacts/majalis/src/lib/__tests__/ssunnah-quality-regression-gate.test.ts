@@ -78,11 +78,13 @@ assert.match(
   "SectionHero renders header back (FAB disabled)",
 );
 assert.doesNotMatch(sectionHero, /variant=["']floating["']/, "SectionHero must not use floating variant");
-assert.doesNotMatch(
+assert.match(
   pageHero,
   /AppBackButton|showBack|page-hero-mj__back/,
-  "Duplicate back buttons visible: PageHero must not render inline back",
+  "PageHero renders integrated header back (no overlay FAB covering content)",
 );
+assert.match(pageHero, /showBack\s*=\s*true|showBack = true/, "showBack افتراضي للصفحات الداخلية");
+assert.doesNotMatch(pageHero, /variant=["']floating["']/, "PageHero must not use floating variant");
 
 /* ── 3) Filters / chips / centered last card ── */
 assert.match(

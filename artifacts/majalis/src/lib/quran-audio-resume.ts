@@ -39,7 +39,8 @@ function isAudioResumeState(v: unknown): v is QuranAudioResumeState {
     surah >= 1 &&
     surah <= 114 &&
     Number.isFinite(ayah) &&
-    ayah >= 1
+    ayah >= 1 &&
+    ayah <= 286
   );
 }
 
