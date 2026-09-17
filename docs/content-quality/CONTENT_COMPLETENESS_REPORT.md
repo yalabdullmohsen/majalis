@@ -114,3 +114,14 @@ See also: `docs/content-quality/CONTENT_GAPS_REPORT.md` (remaining matrix).
 | Soften unsourced demographic % | IMPROVED_VERIFIED |
 | Strip repeated tawhid filler tails | IMPROVED_VERIFIED |
 | Gate | `test:content-quality-wave9` |
+
+
+## Wave 10 (seerah / history / prophets / benefits)
+
+| Fix | Status |
+|---|---|
+| Seerah `#phase` deep-link + element ids | IMPROVED_VERIFIED |
+| Prophets: remove identical generic triad; keep Quran loci when known | IMPROVED_VERIFIED |
+| Tarikh: drop overused «مفصلي» badge | IMPROVED_VERIFIED |
+| Seerah dark event/timeline text | IMPROVED_VERIFIED |
+| Gate | `test:content-quality-wave10` |

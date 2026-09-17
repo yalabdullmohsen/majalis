@@ -60,3 +60,15 @@
 | islamic-sects structure/empty/dark/review | IMPROVED_VERIFIED |
 | tawhid filler tails | IMPROVED_VERIFIED |
 | umda/bulugh stubs | BLOCKED_SOURCE |
+
+
+## Wave 10 final states
+
+| section | finalState |
+|---|---|
+| seerah deep-links | IMPROVED_VERIFIED |
+| prophets generic sections | IMPROVED_VERIFIED |
+| tarikh featured badge noise | IMPROVED_VERIFIED |
+| seerah dark text | IMPROVED_VERIFIED |
+| fawaid template clusters | PENDING_NEXT (large seed; not claimed complete) |
+| author-aliases → scholars | PENDING_NEXT |
