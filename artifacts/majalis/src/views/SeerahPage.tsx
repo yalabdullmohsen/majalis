@@ -256,8 +256,20 @@ const SOURCES = [
 
 export default function SeerahPage() {
   usePageView("seerah", null);
-  const [activeId, setActiveId] = useState(PHASES[0].id);
-  const filteredPhases = PHASES;
+  const [activeId, setActiveId] = useState(() => {
+    if (typeof window === "undefined") return PHASES[0].id;
+    const hash = window.location.hash.replace(/^#/, "");
+    return PHASES.some((p) => p.id === hash) ? hash : PHASES[0].id;
+  });
+
+  useEffect(() => {
+    const onHash = () => {
+      const hash = window.location.hash.replace(/^#/, "");
+      if (PHASES.some((p) => p.id === hash)) setActiveId(hash);
+    };
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
 
   useEffect(() => {
     applyPageSeo({
@@ -288,6 +300,9 @@ export default function SeerahPage() {
 
   const goTo = (id: string) => {
     setActiveId(id);
+    if (typeof window !== "undefined" && window.history?.replaceState) {
+      window.history.replaceState(null, "", `#${id}`);
+    }
     if (window.innerWidth <= 720) {
       const panel = document.getElementById("seerah-panel");
       if (panel) panel.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -333,13 +348,13 @@ export default function SeerahPage() {
           {/* Sidebar، قائمة المراحل */}
           <nav className="seerah-timeline" aria-label="مراحل السيرة النبوية">
             <div className="seerah-timeline__line" aria-hidden="true" />
-            {filteredPhases.length === 0 ? (
+            {PHASES.length === 0 ? (
               <p className="seerah-timeline__empty" role="status">
                 لا نتائج لهذا البحث. جرّب كلمة أخرى، أو راجع المصادر أدناه للتفصيل.
               </p>
-            ) : filteredPhases.map(phase => (
+            ) : PHASES.map(phase => (
               <button
-                key={phase.id}
+                key={phase.id} id={phase.id}
                 type="button"
                 className={`seerah-timeline__item seerah-phase--${phase.id}${activeId === phase.id ? " seerah-timeline__item--active" : ""}`}
                 onClick={() => goTo(phase.id)}

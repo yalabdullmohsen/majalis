@@ -72,8 +72,8 @@ assert.match(app, /\/prophets\/zakariya/);
 assert.match(app, /\/prophets\/zakaria/);
 assert.match(app, /zakariyya/);
 const prophetsPage = read("src/views/ProphetStoriesPage.tsx");
-assert.match(prophetsPage, /ما ثبت في القرآن/);
-assert.match(prophetsPage, /ما لا يصح الجزم به/);
+assert.match(prophetsPage, /مواضع في القرآن/);
+assert.match(prophetsPage, /دون الجزم بما سكت عنه الوحي|يُقتصر على نص القرآن/);
 
 // 7) quran selection لا يغيّر route عند الآية — onSelectVerse محلي
 const mushafVp = read("src/features/mushaf-madinah/VerifiedMushafReader.tsx");

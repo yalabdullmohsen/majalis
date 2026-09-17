@@ -408,9 +408,7 @@ function ProphetDetailView({
 
   const sections: DetailSection[] = [
     { id: "bio", label: "نبذة" },
-    { id: "established-quran", label: "ما ثبت في القرآن" },
-    { id: "established-sunnah", label: "ما ثبت في السنة" },
-    { id: "uncertain", label: "ما لا يصح الجزم به" },
+    ...(p?.mainSurahs?.length ? [{ id: "quran-loci", label: "مواضع في القرآن" }] : []),
     ...(sup?.miracle ? [{ id: "miracle", label: "المعجزة" }] : []),
     { id: "surahs", label: "السور" },
     { id: "attrs", label: "الصفات" },
@@ -716,39 +714,18 @@ function ProphetDetailView({
           <p className="prophet-section-lux__text">{p.briefBio}</p>
         </section>
 
-        <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="established-quran">
-          <div className="prophet-section-lux__header">
-            <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
-            <h2 className="prophet-section-lux__title">ما ثبت في القرآن</h2>
-          </div>
-          <p className="prophet-section-lux__text">
-            يُقتصر على ما نصّ عليه القرآن في قصة {p.arabicName} عليه السلام
-            {p.mainSurahs?.length ? `، ومن أبرز مواضعه: ${p.mainSurahs.slice(0, 6).join("، ")}` : ""}.
-            ولا يُزاد على النص بغرائب أو تفاصيل لم ترد في الوحي.
-          </p>
-        </section>
-
-        <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="established-sunnah">
-          <div className="prophet-section-lux__header">
-            <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
-            <h2 className="prophet-section-lux__title">ما ثبت في السنة</h2>
-          </div>
-          <p className="prophet-section-lux__text">
-            ما صحّ من السنة في أخبار الأنبياء يُذكر مع التخريج والدرجة عند إيراده.
-            وما لم يصحّ لا يُبنى عليه اعتقاد ولا يُعرض كحقيقة.
-          </p>
-        </section>
-
-        <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="uncertain">
-          <div className="prophet-section-lux__header">
-            <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
-            <h2 className="prophet-section-lux__title">ما لا يصح الجزم به</h2>
-          </div>
-          <p className="prophet-section-lux__text">
-            التواريخ العددية الدقيقة، وتفاصيل الإسرائيليات، وما سكت عنه الوحي — يُعرض بصيغة التوقف لا الجزم.
-            منهج سُنّة: القرآن ثم الصحيح من السنة، ويُؤخَّر كلام المؤرخين.
-          </p>
-        </section>
+        {p.mainSurahs?.length ? (
+          <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="quran-loci">
+            <div className="prophet-section-lux__header">
+              <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
+              <h2 className="prophet-section-lux__title">مواضع في القرآن</h2>
+            </div>
+            <p className="prophet-section-lux__text">
+              من أبرز السور التي ورد فيها ذكر {p.arabicName} عليه السلام: {p.mainSurahs.slice(0, 8).join("، ")}.
+              يُقتصر على نص القرآن وما صحّ من السنة عند إيراده، دون الجزم بما سكت عنه الوحي.
+            </p>
+          </section>
+        ) : null}
 
         <ScholarlyTrustBadge
           compact

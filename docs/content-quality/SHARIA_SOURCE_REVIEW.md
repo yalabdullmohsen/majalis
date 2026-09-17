@@ -24,3 +24,5 @@
 
 
 **Wave 9 action:** Presentation/navigation/copy only for aqeedah, hadith, usul, sects. No new rulings or demographic inventions; unsourced % softened. Blocked book stubs remain disabled.
+
+**Wave 10 action:** Seerah deep-links, prophets presentation (no invented triad content), tarikh badge noise, seerah dark readability. No invented dates/events.

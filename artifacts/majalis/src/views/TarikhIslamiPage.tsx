@@ -69,9 +69,6 @@ function HistoryCard({
           <span className="tarikh-card__cat">{HISTORY_CATEGORIES[item.category]}</span>
           <span className="tarikh-card__kind">{HISTORY_KIND_LABELS[item.kind]}</span>
           {item.startHere ? <span className="tarikh-card__badge">ابدأ من هنا</span> : null}
-          {item.featured && !item.startHere ? (
-            <span className="tarikh-card__badge tarikh-card__badge--featured">مفصلي</span>
-          ) : null}
         </div>
         <h3 className="tarikh-card__title">{item.title}</h3>
         <p className="tarikh-card__summary">{item.summary}</p>
