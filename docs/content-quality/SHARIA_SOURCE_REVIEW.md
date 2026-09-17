@@ -1,0 +1,18 @@
+# SHARIA_SOURCE_REVIEW — Wave 1
+
+**Rule:** No invented sharia content. This file lists **status only** — no long copyrighted text copies.
+
+| Material / surface | Status | Existing source | Block reason | Required action |
+|---|---|---|---|---|
+| Live fiqh-council product UI | EXCLUDED | Redirects to `/fiqh` | Product removed | Keep redirects; owner hosted purge |
+| Search draft/pending items | EXCLUDED from public | SearchResultCards filter | Governance | Keep filter + tests |
+| Library books with URL (18) | VERIFIED (link-out) | `external_url` in catalog | — | Maintain links |
+| Library books without URL (172) | NEEDS_REVIEW / bibliographic | Author+title only | No publisher URL evidence | Owner supply URLs or keep bibliographic note |
+| Archived rulings 119 pending_review | DRAFT unpublished | Inventory reports | Not public | Do not publish without review |
+| `deferred-nawazil.json` | EXCLUDED internal | content/fiqh | Internal | Keep off public routes |
+| Hadith verified packs | VERIFIED where packs exist | `public/data/hadith-verified` | Truncated salutation fixed in r7 | Continue gates |
+| Quran text / QPC pages | VERIFIED immutable | QPC assets | Must not edit | Mushaf gates |
+| IIFA / majma citations inside scholarly essays | VERIFIED as citation (not product) | Page sources | Not fiqh-council product | Do not mass-delete word «مجمع» |
+| LICENSE_RISKS adhan/QPC/books | BLOCKED_LICENSE for store | LICENSE_RISKS.md | Store redistribute | Owner decisions |
+
+**Wave 1 action:** Document + gate public exposure. No new rulings, bios, or book URLs invented.
