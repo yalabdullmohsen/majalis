@@ -12,7 +12,7 @@ type Props = {
 };
 
 export function ContentReportButton({ contentType, contentId, title }: Props) {
-  const subject = encodeURIComponent(`تصحيح محتوى علمي — ${contentType} #${contentId}`);
+  const subject = encodeURIComponent(`تصحيح محتوى علمي — ${contentType}`);
   const body = encodeURIComponent(
     `صفحة: ${window.location.href}\n` +
     `نوع المحتوى: ${contentType}\n` +

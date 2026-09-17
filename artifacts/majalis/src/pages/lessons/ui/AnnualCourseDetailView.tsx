@@ -8,6 +8,7 @@ import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 import "@/styles/pages/annual-course-detail.css";
 import { DetailScreen } from "@/components/design-system/screens";
+import { cleanAnnualCourseSummary } from "@/lib/content-display-polish";
 
 function buildMapsEmbed(mapUrl?: string, venue?: string, city?: string) {
   if (mapUrl?.includes("google.com/maps") || mapUrl?.includes("maps.app")) {
@@ -54,10 +55,11 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
     // params.id لا item.id — يطابق الرابط الفعلي في شريط العنوان دومًا
     // (راجع نفس الإصلاح في RulingDetailPage.tsx، 2026-07-25).
     const path = `/annual-courses/${params.id}`;
+    const summary = cleanAnnualCourseSummary(item.summary) || item.title;
     applyPageSeo({
       path,
       title: `${item.title} | الدورات العلمية، سُنّة`,
-      description: item.summary || item.title,
+      description: summary,
       keywords: [...(item.keywords || []), item.course_type, "دورات شرعية", "طلب العلم"],
       ogType: "website",
       canonicalPath: path,
@@ -66,7 +68,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
           "@context": "https://schema.org",
           "@type": "LearningResource",
           name: item.title,
-          description: item.summary,
+          description: summary,
           learningResourceType: "دورة علمية",
           provider: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
           publisher: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
@@ -85,7 +87,8 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
   if (!item) return <Empty text="الدورة غير موجودة." />;
 
   const mapEmbed = buildMapsEmbed(item.map_url, item.venue_name, item.venue_city);
-  const copyText = [item.title, item.summary, item.body].filter(Boolean).join("\n\n");
+  const summary = cleanAnnualCourseSummary(item.summary);
+  const copyText = [item.title, summary || item.summary, item.body].filter(Boolean).join("\n\n");
 
   return (
     <DetailScreen compose="mark">
@@ -96,7 +99,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
         { label: item.title },
       ]}
       title={item.title}
-      subtitle={item.summary}
+      subtitle={summary || item.summary}
       meta={[item.course_type, item.season, item.year].filter(Boolean).join(" · ")}
       tags={item.keywords}
       body={item.body}

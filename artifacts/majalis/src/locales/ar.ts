@@ -67,13 +67,13 @@ export const ar = {
   settings_search_history: "حفظ سجل البحث",
   settings_assistant_verbose: "إجابات المساعد التفصيلية",
   settings_privacy: "الخصوصية والأمان",
-  settings_privacy_desc: "يمكنك إدارة بياناتك المحلية المحفوظة في هذا المتصفح، وتشمل تفضيلات الخط والوضع وموضع القراءة.",
+  settings_privacy_desc: "إدارة بياناتك المحلية هنا: الخط والوضع وموضع القراءة.",
   settings_download_data: "تحميل البيانات",
   settings_clear_local: "حذف بيانات الإعدادات المحلية",
   settings_ai: "الذكاء الاصطناعي",
   settings_ai_suggestions: "تشغيل الاقتراحات الذكية",
   settings_source_detail: "مستوى عرض المصادر",
-  settings_ai_note: "سجل الاستفسارات محفوظ في سجلات الخادم عند استخدام المساعد الموثق، ولا يُستخدم لإنشاء أحكام بلا مصادر.",
+  settings_ai_note: "استفسارات المساعد تُحفظ في سجلات الخادم ولا تُستخدم للإعلان.",
 
   // ── Auth pages ──
   login_title: "تسجيل الدخول",

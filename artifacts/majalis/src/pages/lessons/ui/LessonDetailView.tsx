@@ -21,6 +21,7 @@ import { LessonRecordingPlayer } from "@/components/lessons/LessonRecordingPlaye
 import { DetailScreen } from "@/components/design-system/screens";
 import { AppBackButton } from "@/components/common/AppBackButton";
 import { cleanDisplayText } from "@/lib/display-text";
+import { cleanLessonPublicText } from "@/lib/content-display-polish";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { formatShortLessonTime } from "@/lib/lesson-time";
 import { useLessonSeo } from "@/lib/seo";
@@ -422,7 +423,7 @@ export default function LessonDetailPage({
         {(unified.note || unified.description) && (
           <div className="lesson-detail-body lesson-detail-body--tight">
             <h2>عن الدرس</h2>
-            <p>{cleanDisplayText(unified.note || unified.description || buildAutoDescription(unified))}</p>
+            <p>{cleanLessonPublicText(unified.note || unified.description || buildAutoDescription(unified))}</p>
           </div>
         )}
 

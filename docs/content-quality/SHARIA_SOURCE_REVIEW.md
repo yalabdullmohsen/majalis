@@ -19,3 +19,6 @@
 
 **Wave 2 action:** Sanitize harvest display; scholar rail → `/scholars`; index `SCHOLAR_PROFILES` in search; hide blocked search titles. No invented scholar bios or harvest titles.
 
+**Wave 8 action:** Strip lesson contact noise (data + detail display); drop ellipsis-truncated harvest cards from feed; clean annual-course summary fragments; SEO word-boundary truncate; hide empty scholar sections; report mailto without public `#id`. Locale/ErrorBoundary microcopy tightened for entry gzip headroom. No invented content. `/learn/series/:slug` slug-preserving redirect deferred (entry budget).
+
+

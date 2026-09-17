@@ -345,7 +345,7 @@ export const lessonAds: LessonAd[] = [
     hasWomenSection: true,
     startDate: "2026-07-05",
     endDate: "2026-07-16",
-    detailIntro: "للتسجيل: @jouryaldahi على إنستقرام أو الاتصال على 66240438. الفترة: 5–16 يوليو 2026.",
+    detailIntro: "حضوري — الفترة: 5–16 يوليو 2026.",
     sessions: [
       {
         label: "جلسات الأحد والثلاثاء والخميس",
@@ -353,7 +353,7 @@ export const lessonAds: LessonAd[] = [
         time: "4:30م – 8:30م",
         venue: "أكاديمية جوري الضاحي",
         district: "كيفان",
-        note: "حضوري — للتسجيل: @jouryaldahi (إنستقرام) أو 66240438",
+        note: "حضوري",
       },
     ],
   },

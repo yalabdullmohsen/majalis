@@ -56,6 +56,7 @@ let accountsCache: HarvestAccount[] | null = null;
 
 /** تنظيف حقول العرض ورفض البطاقات الفاسدة (OCR / عناوين مقطوعة بلا معنى). */
 export function sanitizeHarvestCard(raw: HarvestFeedCard): HarvestFeedCard | null {
+  if (/…|\.{3}\s*$/.test(String(raw.title_ar || "").trim())) return null;
   const title_ar = cleanHarvestDisplayText(raw.title_ar);
   if (!isPresentableDisplayText(title_ar, 8)) return null;
 

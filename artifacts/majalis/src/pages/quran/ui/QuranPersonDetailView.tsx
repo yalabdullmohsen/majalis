@@ -16,6 +16,7 @@ import {
 import "@/styles/pages/quran-hub.css";
 import "@/styles/pages/quran-people.css";
 import { DetailScreen } from "@/components/design-system/screens";
+import { truncateAtWord } from "@/lib/content-display-polish";
 
 function splitReadableParagraphs(text: string): string[] {
   const raw = String(text || "").replace(/\s+/g, " ").trim();
@@ -53,10 +54,7 @@ export default function QuranPersonDetailView() {
       if (cancelled) return;
       if (p) {
         setPerson(p);
-        const seoDesc = String(p.definition || "")
-          .replace(/\s+/g, " ")
-          .trim()
-          .slice(0, 155);
+        const seoDesc = truncateAtWord(String(p.definition || ""), 155);
         applyPageSeo({
           title: `${p.nameAr} في القرآن`,
           description: seoDesc,
