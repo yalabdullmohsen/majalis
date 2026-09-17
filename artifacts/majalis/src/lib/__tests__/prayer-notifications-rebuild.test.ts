@@ -17,6 +17,8 @@ import {
   defaultPrayerNotificationPreferences,
   migrateFromLegacyPreferences,
   isPrayerAlertEnabled,
+  patchPrayerNotificationPreferences,
+  loadPrayerNotificationPreferences,
 } from "../prayer-notifications/preferences";
 import {
   collectLegacyPrayerCancelIds,
@@ -187,6 +189,28 @@ function enabledPrefs(
   try {
     assert.equal(migrateFromLegacyPreferences().masterEnabled, false);
     console.log("  ✓ legacy migration conservative when absent");
+
+    // Enabling master with zero prayers must heal to all-on (device schedule path).
+    const enabled = patchPrayerNotificationPreferences({ masterEnabled: true });
+    assert.equal(enabled.masterEnabled, true);
+    assert.equal(enabled.prayers.fajr, true);
+    assert.equal(enabled.prayers.dhuhr, true);
+    assert.equal(enabled.prayers.asr, true);
+    assert.equal(enabled.prayers.maghrib, true);
+    assert.equal(enabled.prayers.isha, true);
+    assert.equal(isPrayerAlertEnabled(enabled, "fajr"), true);
+    console.log("  ✓ master on with zero prayers heals to all-on");
+
+    // Poisoned store: master on, all prayers off → load heals.
+    store["majalis-prayer-notification-prefs-v1"] = JSON.stringify({
+      ...defaultPrayerNotificationPreferences(),
+      masterEnabled: true,
+      prayers: { fajr: false, dhuhr: false, asr: false, maghrib: false, isha: false },
+    });
+    const healed = loadPrayerNotificationPreferences();
+    assert.equal(healed.prayers.fajr, true);
+    assert.equal(healed.prayers.isha, true);
+    console.log("  ✓ load heals poisoned master-on/zero-prayers store");
   } finally {
     globalThis.localStorage = orig;
   }
