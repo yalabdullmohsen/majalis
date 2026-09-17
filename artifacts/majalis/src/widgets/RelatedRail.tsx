@@ -50,12 +50,18 @@ export function RelatedRail({
   titleAr?: string;
   items?: readonly RelatedRailItem[];
 }) {
-  if (!items.length) return null;
+  const safe = items.filter((item) => {
+    const href = item.href || "";
+    if (!href) return false;
+    if (/^\/(admin|dashboard|internal|fiqh-council)(\/|$)/i.test(href)) return false;
+    return true;
+  });
+  if (!safe.length) return null;
   return (
     <section className="related-rail" aria-label={titleAr}>
       <h2 className="related-rail__title">{titleAr}</h2>
       <ul className="related-rail__list">
-        {items.map((item) => (
+        {safe.map((item) => (
           <li key={`${item.groupAr ?? ""}-${item.href}`}>
             <Link href={item.href}>
               {item.groupAr ? (

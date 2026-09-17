@@ -1003,3 +1003,37 @@ html.dark .hadith-page .soft-card {
   border-color: var(--surface-feature-border, #2a3832) !important;
   box-shadow: none !important;
 }
+
+/* Launch: card hierarchy density (Quran hub / lobby / lessons / library / review) */
+html[data-theme="dark"] .quran-hub-card__title,
+html.dark .quran-hub-card__title,
+html[data-theme="dark"] .section-lobby .card .card__label,
+html.dark .section-lobby .card .card__label,
+html[data-theme="dark"] .lesson-unified-card__title,
+html.dark .lesson-unified-card__title {
+  color: var(--txt-primary, #f3f7f5) !important;
+  line-height: 1.35 !important;
+}
+html[data-theme="dark"] .quran-hub-card__desc,
+html.dark .quran-hub-card__desc,
+html[data-theme="dark"] .section-lobby .card .card__subtitle,
+html.dark .section-lobby .card .card__subtitle,
+html[data-theme="dark"] .lesson-unified-card__desc,
+html.dark .lesson-unified-card__desc,
+html[data-theme="dark"] .ct-review-meta,
+html.dark .ct-review-meta {
+  color: #c9d5cf !important;
+  opacity: 1 !important;
+  line-height: 1.55 !important;
+}
+.soft-card:not([data-scripture]),
+.lesson-unified-card,
+.quran-hub-card,
+.section-lobby .card {
+  gap: 0.45rem;
+}
+.soft-card:not([data-scripture]) p,
+.lesson-unified-card p,
+.quran-hub-card__desc {
+  max-width: 42rem;
+}
