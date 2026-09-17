@@ -108,6 +108,9 @@ export function hasInPageBackChrome(pathname: string): boolean {
     p === "/adhan-help" ||
     p.startsWith("/adhan-help/") ||
     p === "/profile" ||
-    p.startsWith("/profile/")
+    p.startsWith("/profile/") ||
+    p === "/search" ||
+    p.startsWith("/search/") ||
+    /^\/lessons\/[^/]+$/.test(p)
   );
 }

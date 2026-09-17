@@ -1,11 +1,15 @@
 import { pageFirstAyahMushaf1 } from "@/lib/quran-data/ayah-page-index.generated";
 import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN } from "@/lib/quran-last-page";
+import { normalizeSurahAyah } from "@/lib/ayah-ref-normalize";
 
 /** صفحة المصحف (١–٦٠٤) التي تقع عليها الآية — بحث ثنائي على أول آية لكل صفحة. */
 export function findMushafPageForAyah(surah: number, ayah: number): number {
   if (!Number.isFinite(surah) || !Number.isFinite(ayah) || surah < 1 || ayah < 1) {
     return MUSHAF_PAGE_MIN;
   }
+  const n = normalizeSurahAyah(surah, ayah);
+  surah = n.surah;
+  ayah = n.ayah;
   let lo = MUSHAF_PAGE_MIN;
   let hi = MUSHAF_PAGE_MAX;
   let ans = MUSHAF_PAGE_MIN;
@@ -22,10 +26,11 @@ export function findMushafPageForAyah(surah: number, ayah: number): number {
   return ans;
 }
 
+/** يرفض المعرّف العالمي (مثل 2:689) ويعيد رقم الآية داخل السورة فقط. */
 export function parseVerseKey(verseKey: string): { surah: number; ayah: number } | null {
   const [s, a] = verseKey.split(":").map(Number);
   if (!Number.isFinite(s) || !Number.isFinite(a) || s! < 1 || a! < 1) return null;
-  return { surah: s!, ayah: a! };
+  return normalizeSurahAyah(s!, a!);
 }
 
 export type RecitationRange = "ayah" | "passage" | "page" | "surah";

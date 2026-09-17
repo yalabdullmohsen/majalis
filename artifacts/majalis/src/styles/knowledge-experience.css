@@ -927,6 +927,7 @@ html[data-theme="dark"] .app-back-btn--bar.fixed-back-bar {
 }
 
 /* الرجوع المدمج في الهيدر/اللوبي يغني عن FAB — لا تراكب */
+/* الرجوع المدمج في الهيدر/اللوبي يغني عن FAB — لا تراكب */
 body:has([data-section-back="1"]) .app-back-btn--bar.fixed-back-bar,
 body:has([data-section-back="1"]) .global-back-control-host,
 body:has(.page-hero-mj__back) .app-back-btn--bar.fixed-back-bar,
@@ -934,6 +935,14 @@ body:has(.page-hero-mj__back) .global-back-control-host,
 body:has(.app-back-btn--lobby) .app-back-btn--bar.fixed-back-bar,
 body:has(.app-back-btn--hero) .app-back-btn--bar.fixed-back-bar,
 body:has(.section-hero__back) .app-back-btn--bar.fixed-back-bar {
+  display: none !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+body:has(.lesson-detail-back) .app-back-btn--bar.fixed-back-bar,
+body:has(.lesson-detail-back) .global-back-control-host,
+body:has(.srch-page-back) .app-back-btn--bar.fixed-back-bar,
+body:has(.srch-page-back) .global-back-control-host {
   display: none !important;
   pointer-events: none !important;
   visibility: hidden !important;

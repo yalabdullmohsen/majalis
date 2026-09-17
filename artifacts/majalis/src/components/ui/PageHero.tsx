@@ -59,7 +59,16 @@ export function PageHero({
       {withPattern ? <PatternBackdrop /> : null}
       <div className="page-hero-mj__content">
         {showBack ? (
-          <Suspense fallback={null}>
+          <Suspense
+            fallback={
+              <span
+                className="page-hero-mj__back"
+                data-section-back="1"
+                aria-hidden="true"
+                hidden
+              />
+            }
+          >
             <PageHeroIntegratedBack fallbackHref={backFallbackHref} />
           </Suspense>
         ) : null}

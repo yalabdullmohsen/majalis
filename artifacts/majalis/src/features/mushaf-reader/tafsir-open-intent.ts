@@ -38,11 +38,13 @@ export function bumpTafsirGeneration(): number {
 }
 
 export function parseVerseKeyParts(verseKey: string): { surahId: number; ayahId: number } | null {
-  const m = /^(\d{1,3}):(\d{1,3})$/.exec(verseKey.trim());
+  const m = /^(\d{1,3}):(\d{1,4})$/.exec(verseKey.trim());
   if (!m) return null;
   const surahId = Number(m[1]);
   const ayahId = Number(m[2]);
-  if (!(surahId >= 1 && surahId <= 114 && ayahId >= 1 && ayahId <= 286)) return null;
+  if (!(surahId >= 1 && surahId <= 114 && ayahId >= 1)) return null;
+  /* رفض المعرّف العالمي داخل السورة (مثل 689 في البقرة) */
+  if (ayahId > 286) return null;
   return { surahId, ayahId };
 }
 
