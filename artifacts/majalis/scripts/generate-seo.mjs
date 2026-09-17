@@ -26,6 +26,7 @@ import {
   isPrivateSeoPath,
 } from "./seo-path-class.mjs";
 import { enforceSeoPolicy } from "./seo-index-policy.mjs";
+import { buildSitemapXmlDocument, isExcludedFromSitemap } from "./sitemap-xml.mjs";
 import { IA_BREADCRUMB_PARENTS, IA_REDIRECTS } from "../src/lib/ia-final-structure.ts";
 import { dedupeLinksByHref } from "../src/lib/link-dedupe.ts";
 
@@ -2760,38 +2761,19 @@ const sitemapPages = pages.filter(
     p.sitemap &&
     !(p.route.robots || "").includes("noindex") &&
     !IA_REDIRECTS[p.route.path] &&
-    p.route.path !== "/library" &&
-    !String(p.route.path).startsWith("/library/") &&
-    p.route.path !== "/more" &&
-    p.route.path !== "/fiqh-council" &&
-    !String(p.route.path).startsWith("/fiqh-council/"),
+    !isExcludedFromSitemap(p.route.path),
 );
-const LASTMOD_TODAY = "2026-08-26";
-const LASTMOD_PATHS = new Set([
-  "/",
-  "/lessons",
-  "/competitions",
-  "/quran-hub",
-  "/mushaf",
-  "/adhkar",
-  "/prayer-times",
-  "/fiqh",
-  "/tarikh-islami",
-]);
+const LASTMOD_TODAY = new Date().toISOString().slice(0, 10);
 
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemapPages
-  .map((p) => {
-    const loc = escapeXml(absoluteUrl(p.route.path));
-    const lastmod = LASTMOD_PATHS.has(p.route.path)
-      ? `\n    <lastmod>${LASTMOD_TODAY}</lastmod>`
-      : "";
-    return `  <url>\n    <loc>${loc}</loc>${lastmod}\n    <changefreq>${escapeXml(p.changefreq)}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>`;
-  })
-  .join("\n")}
-</urlset>
-`;
+const sitemap = buildSitemapXmlDocument(
+  sitemapPages.map((p) => ({
+    loc: p.route.path,
+    lastmod: LASTMOD_TODAY,
+    changefreq: p.changefreq,
+    priority: p.priority,
+  })),
+  { siteUrl: SITE_URL, lastmodFallback: LASTMOD_TODAY, stylesheetHref: "/sitemap.xsl" },
+);
 
 // robots.txt — تلميح زحف فقط؛ لا تُدرَج مسارات الإدارة هنا (كشف غير مرغوب)
 const robots = `# ${SITE_URL}/robots.txt

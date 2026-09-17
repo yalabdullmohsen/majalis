@@ -5,6 +5,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
+import { buildSitemapXmlDocument } from "../../scripts/sitemap-xml.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const APP_ROOT = join(__dirname, "../..");
@@ -120,49 +121,34 @@ export async function fetchDynamicUrls() {
 export async function buildSitemapXml() {
   const config = loadSeoConfig();
   const base = config.siteUrl.replace(/\/+$/, "");
-  const staticRoutes = (config.routes || []).filter((r) => r.sitemap !== false);
+  const staticRoutes = (config.routes || []).filter(
+    (r) => r.sitemap !== false && !String(r.robots || "").includes("noindex"),
+  );
 
   const dynamic = await fetchDynamicUrls();
-  const seen = new Set();
-
   const entries = [];
+
   for (const r of staticRoutes) {
-    const loc = `${base}${r.path}`;
-    if (seen.has(loc)) continue;
-    seen.add(loc);
     entries.push({
-      loc,
+      loc: r.path,
       priority: r.priority ?? 0.5,
       changefreq: r.changefreq || "weekly",
     });
   }
 
   for (const d of dynamic) {
-    const loc = `${base}${d.loc}`;
-    if (seen.has(loc)) continue;
-    seen.add(loc);
     entries.push({
-      loc,
+      loc: d.loc,
       priority: d.priority ?? 0.6,
       changefreq: "weekly",
-      lastmod: d.lastmod ? new Date(d.lastmod).toISOString().slice(0, 10) : undefined,
+      lastmod: d.lastmod,
     });
   }
 
-  const body = entries
-    .map(
-      (e) => `  <url>
-    <loc>${escapeXml(e.loc)}</loc>${e.lastmod ? `\n    <lastmod>${e.lastmod}</lastmod>` : ""}
-    <changefreq>${e.changefreq}</changefreq>
-    <priority>${Number(e.priority).toFixed(2)}</priority>
-  </url>`,
-    )
-    .join("\n");
-
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${body}
-</urlset>`;
+  return buildSitemapXmlDocument(entries, {
+    siteUrl: base,
+    stylesheetHref: "/sitemap.xsl",
+  });
 }
 
 export async function buildFeedXml() {
