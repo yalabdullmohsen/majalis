@@ -9,7 +9,7 @@ const STORE_KEY = "sunnah.audio.platform.prefs.v1";
 const PRAYERS: readonly PrayerVoiceKey[] = ["fajr", "dhuhr", "asr", "maghrib", "isha"];
 
 function defaultVoiceId(): string {
-  return listSelectableAdhanVoices()[0]?.id ?? "short-takbeerat";
+  return listSelectableAdhanVoices()[0]?.id ?? "system-default";
 }
 
 function defaultReciterId(): string {

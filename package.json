@@ -22,6 +22,8 @@
     "ci:changed-scope": "node scripts/ci/changed-scope.mjs",
     "verify:changed": "node scripts/verify-changed-scope.mjs",
     "verify:preflight": "node scripts/verify-preflight.mjs",
+    "verify:store-assets": "node scripts/verify-store-assets.mjs",
+    "store:strip-unresolved-assets": "node scripts/store-strip-unresolved-assets.mjs",
     "verify:ci-fast": "pnpm run verify:preflight && node scripts/verify-ci.mjs -- --changed",
     "verify:ci-full": "node scripts/verify-ci.mjs && pnpm --filter @workspace/majalis run test:regression",
     "audit:ci-queue": "node scripts/ci-queue-health.mjs",

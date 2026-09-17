@@ -8,7 +8,7 @@ export const ADHAN_VOICE_CATALOG: readonly AdhanVoiceEntry[] = [
   { id: "madinah-pending", labelAr: "نمط المدينة", region: "madinah", personNameAr: null, delivery: "stream", licenseStatus: "pending_owner_approval", catalogId: null, notesAr: "معلّق حتى الترخيص." },
   { id: "gulf-kuwait", labelAr: "أذان خليجي (الكويت)", region: "gulf", personNameAr: null, delivery: "bundled_short_clip", licenseStatus: "style_only_preview", catalogId: "kuwait", notesAr: "مقطع قصير." },
   { id: "egyptian-style", labelAr: "أذان بنمط مصري", region: "egyptian", personNameAr: null, delivery: "stream", licenseStatus: "style_only_preview", catalogId: "egypt", notesAr: "بث عند الطلب." },
-  { id: "short-takbeerat", labelAr: "تنبيه مختصر / تكبيرات", region: "short_alert", personNameAr: null, delivery: "bundled_short_clip", licenseStatus: "verified_for_production", catalogId: "takbeerat", notesAr: "مناسب لإشعار النظام." },
+  { id: "system-default", labelAr: "صوت النظام الافتراضي", region: "short_alert", personNameAr: null, delivery: "bundled_short_clip", licenseStatus: "verified_for_production", catalogId: null, notesAr: "إشعار النظام بلا ملف أذان." },
   { id: "ali-mulla-pending", labelAr: "علي ملا (معلّق)", region: "makkah", personNameAr: "علي ملا", delivery: "stream", licenseStatus: "pending_owner_approval", catalogId: null, notesAr: "يتطلب ترخيصًا صريحًا." },
   { id: "essam-bukhari-pending", labelAr: "عصام بخاري (معلّق)", region: "madinah", personNameAr: "عصام بخاري", delivery: "stream", licenseStatus: "pending_owner_approval", catalogId: null, notesAr: "يتطلب ترخيصًا صريحًا." },
   { id: "alafasy-adhan-pending", labelAr: "مشاري العفاسي — أذان (معلّق)", region: "gulf", personNameAr: "مشاري راشد العفاسي", delivery: "stream", licenseStatus: "pending_owner_approval", catalogId: "alafasy", notesAr: "أذان شخصي معلّق." },
@@ -16,11 +16,7 @@ export const ADHAN_VOICE_CATALOG: readonly AdhanVoiceEntry[] = [
 ] as const;
 
 export function listSelectableAdhanVoices(): AdhanVoiceEntry[] {
-  return ADHAN_VOICE_CATALOG.filter(
-    (v) =>
-      v.licenseStatus === "verified_for_production" ||
-      v.licenseStatus === "style_only_preview",
-  );
+  return ADHAN_VOICE_CATALOG.filter((v) => v.licenseStatus === "verified_for_production");
 }
 
 export function listPendingAdhanVoices(): AdhanVoiceEntry[] {
