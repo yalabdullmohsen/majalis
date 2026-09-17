@@ -19,6 +19,7 @@ export const SITEMAP_DENY_PATHS = new Set([
   "/fiqh-council/stats",
   "/fiqh-council/compare",
   "/fiqh-council/recommendations",
+  "/fiqh-council",
 ]);
 
 /** أنماط مسار ممنوعة في sitemap (بادئة). */
@@ -28,6 +29,7 @@ export const SITEMAP_DENY_PREFIXES = [
   "/api/",
   "/auth/",
   "/internal/",
+  "/fiqh-council/",
 ];
 
 /** مسارات noindex افتراضيًا (لو لم تُحدَّد robots في seo-routes). */
