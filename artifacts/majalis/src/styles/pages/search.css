@@ -7,7 +7,7 @@
 .page-shell.search-page {
   min-height: 100dvh;
   min-height: 100svh;
-  overflow-y: auto;
+  overflow-y: visible;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   padding-top: max(0.75rem, var(--inset-top, 0px));
@@ -15,10 +15,17 @@
   box-sizing: border-box;
 }
 
+@media (min-width: 880px) {
+  .search-page.page-shell,
+  .page-shell.search-page {
+    overflow-y: auto;
+  }
+}
+
 .search-page .search-page-form {
   position: sticky;
-  top: 0;
-  z-index: 5;
+  top: var(--sticky-below-chrome, var(--app-top-chrome-h, 0px));
+  z-index: var(--z-sticky, 100);
   background: var(--mj-bg, #f7f6f2);
   padding-block: 0.35rem 0.55rem;
   margin-inline: -0.15rem;
@@ -603,8 +610,8 @@ html[data-theme="dark"] .srch-quick-card:hover {
   gap: 0.45rem;
   margin-bottom: 0.75rem;
   position: sticky;
-  top: 0;
-  z-index: 5;
+  top: var(--sticky-below-chrome, var(--app-top-chrome-h, 0px));
+  z-index: var(--z-sticky, 100);
   background: var(--mj-bg, #f7f6f2);
   padding-block: 0.2rem 0.35rem;
 }

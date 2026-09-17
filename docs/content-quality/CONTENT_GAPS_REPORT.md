@@ -72,3 +72,14 @@
 | seerah dark text | IMPROVED_VERIFIED |
 | fawaid template clusters | PENDING_NEXT (large seed; not claimed complete) |
 | author-aliases → scholars | PENDING_NEXT |
+
+
+## Wave 11 final states
+
+| section | finalState |
+|---|---|
+| adhkar SEO truncateAtWord | IMPROVED_VERIFIED |
+| author-aliases (9 profiles) → `/scholars` | IMPROVED_VERIFIED |
+| remaining aliases without profile | BLOCKED_SOURCE (stay unlinked; no `/search` fake) |
+| fawaid template clusters | PENDING_NEXT |
+| library URLs | BLOCKED_SOURCE |

@@ -455,8 +455,8 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 
 .lessons-v3-sticky {
   position: sticky;
-  top: var(--sticky-below-chrome, 0px);
-  z-index: 8;
+  top: var(--sticky-below-chrome, var(--app-top-chrome-h, 0px));
+  z-index: var(--z-sticky, 100);
   display: grid;
   gap: 0.55rem;
   padding-block: 0.15rem 0.55rem;

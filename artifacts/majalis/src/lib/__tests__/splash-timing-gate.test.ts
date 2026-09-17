@@ -1,5 +1,5 @@
 /**
- * بوابة: توقيت دخولية MajlisSplash — إحساس واضح (≈220–480ms) مع تلاشي 320ms.
+ * بوابة: توقيت دخولية MajlisSplash — إحساس واضح (≈220–480ms) مع تلاشي 200ms.
  * تشغيل: node --import tsx src/lib/__tests__/splash-timing-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -17,7 +17,7 @@ const majlisSplash = readFileSync(resolve(root, "src/lib/majlis-splash.ts"), "ut
 assert.match(majlisSplash, /SPLASH_MIN_VISIBLE_MS\s*=\s*220/);
 assert.match(majlisSplash, /SPLASH_LCP_SOFT_MS\s*=\s*480/);
 assert.match(majlisSplash, /SPLASH_MAX_VISIBLE_MS\s*=\s*1_?400|SPLASH_MAX_VISIBLE_MS\s*=\s*1400/);
-assert.match(majlisSplash, /SPLASH_FADE_OUT_MS\s*=\s*320/);
+assert.match(majlisSplash, /SPLASH_FADE_OUT_MS\s*=\s*200/);
 assert.match(splash, /SPLASH_MIN_VISIBLE_MS/);
 assert.match(splash, /SPLASH_MAX_VISIBLE_MS/);
 assert.match(splash, /SPLASH_FADE_OUT_MS/);
@@ -35,12 +35,12 @@ assert.ok(existsSync(resolve(root, "src/components/MajlisSplash.tsx")));
 assert.match(html, /id="mj-launch-splash"/);
 assert.match(html, /src="\/mj-launch-splash-boot\.js"/);
 assert.match(html, /mj-launch-splash__tagline/);
-assert.match(html, /transition:opacity \.32s/);
+assert.match(html, /transition:opacity \.20s/);
 const boot = readFileSync(resolve(root, "public/mj-launch-splash-boot.js"), "utf8");
 assert.match(boot, /MIN_MS\s*=\s*220/);
 assert.match(boot, /SOFT_MAX_MS\s*=\s*480/);
 assert.match(boot, /MAX_MS\s*=\s*1400/);
-assert.match(boot, /EXIT_MS\s*=\s*320/);
+assert.match(boot, /EXIT_MS\s*=\s*200/);
 assert.match(html, /mj-launch-splash__title/);
 assert.match(boot, /splash_timing=1/, "معامل قياس توقيت الدخولية");
 assert.doesNotMatch(html, /id="mj-silent-splash"/);

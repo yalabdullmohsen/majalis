@@ -125,3 +125,14 @@ See also: `docs/content-quality/CONTENT_GAPS_REPORT.md` (remaining matrix).
 | Tarikh: drop overused «مفصلي» badge | IMPROVED_VERIFIED |
 | Seerah dark event/timeline text | IMPROVED_VERIFIED |
 | Gate | `test:content-quality-wave10` |
+
+## Wave 11 (worship copy + author→scholar)
+
+| Fix | Status |
+|---|---|
+| Adhkar SEO description truncates at word boundary | IMPROVED_VERIFIED |
+| 9 author-aliases → `/scholars/:slug` (was `/search`) | IMPROVED_VERIFIED |
+| `resolveAuthorScholarLink` ignores `/search` placeholders | IMPROVED_VERIFIED |
+| Remaining aliases without scholar profile | BLOCKED_SOURCE (no invent) |
+| Library books without URL | BLOCKED_SOURCE (unchanged) |
+| Gate | `test:content-quality-wave11` |

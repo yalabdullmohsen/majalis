@@ -17,8 +17,8 @@ export const SPLASH_LCP_SOFT_MS = 480;
 /** السقف الصلب — انتظار خطوط الواجهة قبل كشف النص. */
 export const SPLASH_MAX_VISIBLE_MS = 1_400;
 
-/** مدة تلاشي الخروج (متزامنة مع CSS transition في index.html). */
-export const SPLASH_FADE_OUT_MS = 320;
+/** مدة تلاشي الخروج (متزامنة مع CSS transition في index.html) — 150–220ms. */
+export const SPLASH_FADE_OUT_MS = 200;
 
 export const SPLASH_SESSION_KEY = "mj.launch-splash.session.v3";
 

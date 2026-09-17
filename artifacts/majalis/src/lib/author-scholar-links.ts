@@ -42,6 +42,7 @@ const ALIAS_TOKENS: Array<{ tokens: Set<string>; identity: Set<string>; href: st
 
 for (const row of authorAliases as AliasRow[]) {
   const href = row.href;
+  if (!href || href === "/search") continue;
   const key = normalizeName(row.name);
   if (key && !BY_NAME.has(key)) BY_NAME.set(key, href);
   if (row.fullName) {
@@ -92,20 +93,27 @@ export function resolveAuthorScholarLink(author: string | null | undefined): Aut
   const key = normalizeName(label);
   const exact = BY_NAME.get(key);
   if (exact) {
-    const id = exact.match(/\/tarikh-islami\/([^/?#]+)/)?.[1] ?? null;
-    return { label, scholarId: id, href: exact };
+    const id =
+      exact.match(/\/scholars\/([^/?#]+)/)?.[1] ??
+      exact.match(/\/tarikh-islami\/([^/?#]+)/)?.[1] ??
+      null;
+    return { label, scholarId: id, href: exact === "/search" ? null : exact };
   }
 
   const byTokens = matchByTokens(label);
   if (byTokens) {
-    const id = byTokens.match(/\/tarikh-islami\/([^/?#]+)/)?.[1] ?? null;
-    return { label, scholarId: id, href: byTokens };
+    const id =
+      byTokens.match(/\/scholars\/([^/?#]+)/)?.[1] ??
+      byTokens.match(/\/tarikh-islami\/([^/?#]+)/)?.[1] ??
+      null;
+    return { label, scholarId: id, href: byTokens === "/search" ? null : byTokens };
   }
 
   let bestHref: string | null = null;
   let bestScore = 0;
   for (const [aliasKey, href] of BY_NAME) {
     if (aliasKey.length < 5) continue;
+    if (href === "/search") continue;
     if (key.includes(aliasKey) || aliasKey.includes(key)) {
       const score = Math.min(key.length, aliasKey.length);
       if (score > bestScore) {
@@ -115,7 +123,10 @@ export function resolveAuthorScholarLink(author: string | null | undefined): Aut
     }
   }
   if (bestHref && bestScore >= 8) {
-    const id = bestHref.match(/\/tarikh-islami\/([^/?#]+)/)?.[1] ?? null;
+    const id =
+      bestHref.match(/\/scholars\/([^/?#]+)/)?.[1] ??
+      bestHref.match(/\/tarikh-islami\/([^/?#]+)/)?.[1] ??
+      null;
     return { label, scholarId: id, href: bestHref };
   }
 

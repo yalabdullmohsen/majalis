@@ -3,49 +3,49 @@
     "legacyId": "abu-hanifa",
     "name": "أبو حنيفة النعمان",
     "fullName": "النعمان بن ثابت الكوفي",
-    "href": "/search",
+    "href": "/scholars/abu-hanifa",
     "relatedLinks": []
   },
   {
     "legacyId": "malik",
     "name": "الإمام مالك",
     "fullName": "مالك بن أنس الأصبحي",
-    "href": "/search",
+    "href": "/scholars/malik",
     "relatedLinks": []
   },
   {
     "legacyId": "shafi",
     "name": "الإمام الشافعي",
     "fullName": "محمد بن إدريس الشافعي",
-    "href": "/search",
+    "href": "/scholars/shafii",
     "relatedLinks": []
   },
   {
     "legacyId": "ahmad",
     "name": "الإمام أحمد",
     "fullName": "أحمد بن محمد بن حنبل الشيباني",
-    "href": "/search",
+    "href": "/scholars/ahmad",
     "relatedLinks": []
   },
   {
     "legacyId": "bukhari",
     "name": "الإمام البخاري",
     "fullName": "محمد بن إسماعيل البخاري",
-    "href": "/search",
+    "href": "/scholars/bukhari",
     "relatedLinks": []
   },
   {
     "legacyId": "muslim",
     "name": "الإمام مسلم",
     "fullName": "مسلم بن الحجاج القشيري النيسابوري",
-    "href": "/search",
+    "href": "/scholars/muslim",
     "relatedLinks": []
   },
   {
     "legacyId": "ibn-taymiyya",
     "name": "ابن تيمية",
     "fullName": "أحمد بن عبد الحليم بن تيمية الحراني",
-    "href": "/search",
+    "href": "/scholars/ibn-taymiyyah",
     "relatedLinks": []
   },
   {
@@ -59,7 +59,7 @@
     "legacyId": "nawawi",
     "name": "الإمام النووي",
     "fullName": "أبو زكريا يحيى بن شرف النووي الدمشقي",
-    "href": "/search",
+    "href": "/scholars/nawawi",
     "relatedLinks": []
   },
   {
@@ -129,7 +129,7 @@
     "legacyId": "ibn-kathir",
     "name": "ابن كثير",
     "fullName": "إسماعيل بن عمر بن كثير الدمشقي",
-    "href": "/search",
+    "href": "/scholars/ibn-kathir",
     "relatedLinks": []
   },
   {

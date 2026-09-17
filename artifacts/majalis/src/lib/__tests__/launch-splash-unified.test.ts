@@ -27,10 +27,10 @@ assert.match(bootJs, /__mjDismissSplash/, "دالة dismiss للدخولية");
 assert.match(bootJs, /MIN_MS\s*=\s*220/, "حد أدنى 220ms");
 assert.match(bootJs, /SOFT_MAX_MS\s*=\s*480/, "هدف LCP ليّن 480ms");
 assert.match(bootJs, /MAX_MS\s*=\s*1400/, "سقف صلب لخطوط الواجهة");
-assert.match(bootJs, /EXIT_MS\s*=\s*320/, "تلاشي خروج 320ms");
+assert.match(bootJs, /EXIT_MS\s*=\s*200/, "تلاشي خروج 200ms");
 assert.match(bootJs, /splash_timing=1/, "معامل قياس توقيت الدخولية");
 assert.match(bootJs, /127\.0\.0\.1/, "مسار سريع لمعاينة CI المحلية");
-assert.match(indexHtml, /transition:opacity \.32s/, "تلاشي CSS 320ms");
+assert.match(indexHtml, /transition:opacity \.20s/, "تلاشي CSS 200ms");
 assert.doesNotMatch(indexHtml, /id="mj-boot-skeleton"/, "بلا هيكل تحميل كامل الشاشة");
 {
   const crit = indexHtml.match(/<style id="mj-lcp-critical">([\s\S]*?)<\/style>/)?.[1] ?? "";
@@ -77,7 +77,7 @@ const majlisSplash = readFileSync(resolve(root, "src/lib/majlis-splash.ts"), "ut
 assert.match(majlisSplash, /SPLASH_MIN_VISIBLE_MS\s*=\s*220/);
 assert.match(majlisSplash, /SPLASH_LCP_SOFT_MS\s*=\s*480/);
 assert.match(majlisSplash, /SPLASH_MAX_VISIBLE_MS\s*=\s*1_?400|SPLASH_MAX_VISIBLE_MS\s*=\s*1400/);
-assert.match(majlisSplash, /SPLASH_FADE_OUT_MS\s*=\s*320/);
+assert.match(majlisSplash, /SPLASH_FADE_OUT_MS\s*=\s*200/);
 assert.match(majlisSplash, /معك في العلم والعمل/);
 assert.match(majlisSplash, /session\.v3/);
 

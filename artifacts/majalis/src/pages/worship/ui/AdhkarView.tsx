@@ -18,6 +18,7 @@ import { haptics } from "@/lib/haptics";
 import { markMorningAdhkarDone } from "@/lib/local-milestones";
 import { recordUserActivity } from "@/lib/user-streak";
 import { AdhkarFocusNav } from "./AdhkarFocusNav";
+import { truncateAtWord } from "@/lib/content-display-polish";
 import "@/styles/pages/adhkar.css";
 import "@/styles/pages/tasbih.css";
 import "@/styles/components/thumb-zone.css";
@@ -106,7 +107,7 @@ export default function AdhkarPage() {
         ? `${active.name} | الأذكار | سُنّة`
         : "الأذكار الإسلامية | سُنّة",
       description: active
-        ? `${active.description.slice(0, 140)}… مع بيان المصدر والدرجة قدر الإمكان.`
+        ? `${truncateAtWord(active.description, 140)} مع بيان المصدر والدرجة قدر الإمكان.`
         : "أذكار وأدعية مأثورة مع بيان المصدر والدرجة قدر الإمكان.",
       jsonLd: [
         {
