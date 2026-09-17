@@ -66,3 +66,12 @@ Routes في AppRoutes: **364** · أقسام registry: **78** (76 live / 2 hidde
 - روابط كتب بلا مصدر مثبت.
 - أحكام فقهية جديدة أو إعادة منتج المجمع.
 - أي متن حديث ناقص بلا مصدر كامل.
+
+## Wave 1 (P0 inventory) — 2026-09-17
+
+جرد كامل: `reports/content-completeness-master.json` (364 مسارًا بسجل نهائي)  
+تقرير: `docs/content-quality/CONTENT_COMPLETENESS_REPORT.md`  
+مصادر: `docs/content-quality/SHARIA_SOURCE_REVIEW.md`  
+بوابة: `pnpm --filter @workspace/majalis run test:content-quality-wave1`
+
+النقص المفتوح للمالك (بدون اختراع): روابط كتب المكتبة 172، purge صفوف `fiqh_council_*` المستضافة، بنود `LICENSE_RISKS`.
