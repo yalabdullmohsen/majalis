@@ -293,3 +293,35 @@ html[data-theme="dark"] .compact-sources--in-rsc .compact-sources__item {
   margin-block-start: 1.25rem;
   padding-block-start: 0.35rem;
 }
+
+/* Launch: quoted scripture / evidence presentation (no new copy) */
+.isp-page blockquote,
+.tawhid-page blockquote,
+.topic-page blockquote,
+.hadith-page blockquote,
+.tarikh-page blockquote,
+.seerah-page blockquote,
+.topic-page .section-hero__quote,
+.kx-block--evidence .kx-block__body {
+  line-height: 1.95;
+  margin-block: 0.85rem 1rem;
+  max-width: 40rem;
+  padding-inline: 0.85rem;
+  border-inline-start: 3px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 55%, transparent);
+}
+
+html[data-theme="dark"] .isp-page blockquote,
+html.dark .isp-page blockquote,
+html[data-theme="dark"] .tawhid-page blockquote,
+html.dark .tawhid-page blockquote,
+html[data-theme="dark"] .topic-page blockquote,
+html.dark .topic-page blockquote,
+html[data-theme="dark"] .hadith-page blockquote,
+html.dark .hadith-page blockquote,
+html[data-theme="dark"] .tarikh-page blockquote,
+html.dark .tarikh-page blockquote,
+html[data-theme="dark"] .seerah-page blockquote,
+html.dark .seerah-page blockquote {
+  color: var(--txt-primary, #ecf2ef);
+  border-inline-start-color: color-mix(in srgb, #5fbf98 45%, transparent);
+}

@@ -64,6 +64,7 @@ export default function NotificationsAndSoundView() {
         <LegalSection title="الحالة">
           <ul className="settings-note" style={{ listStyle: "none", padding: 0, margin: 0 }}>
             <li>تنبيهات الصلاة: {status.prayerMasterEnabled ? "مفعّلة" : "متوقفة"}</li>
+            <li>مسار التوصيل: {status.deliveryContextAr}</li>
             <li>المؤذن الحالي: {status.currentAdhanLabelAr}</li>
             <li>القارئ الحالي: {status.currentReciterLabelAr}</li>
             <li>ساعات الهدوء: {status.quietHoursLabelAr}</li>

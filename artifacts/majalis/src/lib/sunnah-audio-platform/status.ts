@@ -1,6 +1,7 @@
 /**
  * حالة مجمّعة لشاشة الإشعارات والصوت — بلا سجلات موقع.
  */
+import { isNative } from "@/lib/capacitor-utils";
 import { loadPrayerNotificationPreferences } from "@/lib/prayer-notifications/preferences";
 import {
   PRAYER_ALERT_STYLE_AR,
@@ -8,7 +9,7 @@ import {
   PRAYER_NOTIFICATION_KEYS,
 } from "@/lib/prayer-notifications/types";
 import { loadSunnahNotificationPrefs } from "@/lib/sunnah-notifications/preferences";
-import { getAdhanVoice } from "./adhan-catalog";
+import { getAdhanVoice, listSelectableAdhanVoices } from "./adhan-catalog";
 import { loadSunnahAudioPreferences } from "./preferences";
 import { getMurattalReciter } from "./quran-murattal-catalog";
 
@@ -20,13 +21,16 @@ export type NotificationsAndSoundStatus = {
   currentReciterLabelAr: string;
   quietHoursLabelAr: string;
   alertStylesSummaryAr: string;
+  /** واقع المنصة: web لا يجدول LocalNotifications */
+  deliveryContextAr: string;
 };
 
 export function getNotificationsAndSoundStatus(): NotificationsAndSoundStatus {
   const prayer = loadPrayerNotificationPreferences();
   const notif = loadSunnahNotificationPrefs();
   const audio = loadSunnahAudioPreferences();
-  const voice = getAdhanVoice(audio.defaultAdhanVoiceId);
+  const voice =
+    getAdhanVoice(audio.defaultAdhanVoiceId) ?? listSelectableAdhanVoices()[0];
   const reciter = getMurattalReciter(audio.defaultMurattalReciterId);
 
   const enabledPrayersAr = PRAYER_NOTIFICATION_KEYS.filter(
@@ -43,6 +47,10 @@ export function getNotificationsAndSoundStatus(): NotificationsAndSoundStatus {
     ? `من ${qh.startHour}:00 إلى ${qh.endHour}:00`
     : "ساعات الهدوء متوقفة";
 
+  const deliveryContextAr = isNative
+    ? "تطبيق أصلي — الجدولة عبر إشعارات الجهاز (التحقق على الجهاز مطلوب)"
+    : "متصفح ويب — لا جدولة LocalNotifications؛ التنبيه أثناء فتح التطبيق فقط";
+
   return {
     prayerMasterEnabled: Boolean(prayer.masterEnabled && prayer.featureEnabled),
     lastSuccessfulScheduleAt: prayer.lastSuccessfulScheduleAt,
@@ -51,5 +59,6 @@ export function getNotificationsAndSoundStatus(): NotificationsAndSoundStatus {
     currentReciterLabelAr: reciter?.nameAr ?? "غير محدد",
     quietHoursLabelAr,
     alertStylesSummaryAr,
+    deliveryContextAr,
   };
 }

@@ -34,22 +34,30 @@ function clampQuality(v: unknown): StreamQuality {
   return "medium";
 }
 
+function isSelectableVoiceId(id: string): boolean {
+  return listSelectableAdhanVoices().some((v) => v.id === id);
+}
+
 export function normalizeSunnahAudioPreferences(
   raw: Partial<SunnahAudioPreferences> | null | undefined,
 ): SunnahAudioPreferences {
   const base = defaultSunnahAudioPreferences();
   if (!raw || typeof raw !== "object") return base;
+  const fallback = defaultVoiceId();
   const voices = { ...base.adhanVoiceByPrayer };
   for (const key of PRAYERS) {
     const v = raw.adhanVoiceByPrayer?.[key];
-    voices[key] = typeof v === "string" && v.trim() ? v.trim() : base.adhanVoiceByPrayer[key];
+    const trimmed = typeof v === "string" && v.trim() ? v.trim() : base.adhanVoiceByPrayer[key];
+    /* لا تُبقي معرّفات معلّقة قانونياً كمختار فعّال */
+    voices[key] = isSelectableVoiceId(trimmed) ? trimmed : fallback;
   }
+  const defaultRaw =
+    typeof raw.defaultAdhanVoiceId === "string" && raw.defaultAdhanVoiceId.trim()
+      ? raw.defaultAdhanVoiceId.trim()
+      : base.defaultAdhanVoiceId;
   return {
     schemaVersion: 1,
-    defaultAdhanVoiceId:
-      typeof raw.defaultAdhanVoiceId === "string" && raw.defaultAdhanVoiceId.trim()
-        ? raw.defaultAdhanVoiceId.trim()
-        : base.defaultAdhanVoiceId,
+    defaultAdhanVoiceId: isSelectableVoiceId(defaultRaw) ? defaultRaw : fallback,
     adhanVoiceByPrayer: voices,
     defaultMurattalReciterId:
       typeof raw.defaultMurattalReciterId === "string" && raw.defaultMurattalReciterId.trim()
