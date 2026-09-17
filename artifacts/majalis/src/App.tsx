@@ -394,9 +394,12 @@ function PrayerAlertSchedulerBootstrap() {
       if (document.visibilityState === "visible") rescheduleOnForeground();
     };
     const onPrefsChanged = () => {
+      if (!data) return;
       void loadScheduler().then((mod) => {
         mod.invalidatePrayerNativeSchedule();
-        void mod.recheckPrayerAlertWindow(data, { force: true });
+        // Force full native reschedule (same path as AdhanSettingsView) so toggles
+        // on real devices actually re-apply LocalNotifications.
+        void mod.startPrayerAlertScheduler(data, { forceNativeReschedule: true });
       });
     };
     let lastTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -427,6 +430,8 @@ function PrayerAlertSchedulerBootstrap() {
     const clockId = window.setInterval(onClockTick, 60_000);
     document.addEventListener("visibilitychange", onVisible);
     window.addEventListener(PRAYER_ALERT_PREFS_CHANGED_EVENT, onPrefsChanged);
+    // String literal — avoid importing prayer-notifications/preferences into the entry chunk.
+    window.addEventListener("majalis:prayer-notification-prefs-changed", onPrefsChanged);
     window.addEventListener("majalis:adhan-prefs-changed", onPrefsChanged);
 
     // iOS WKWebView: appStateChange أوثق من visibilitychange في بعض مسارات الخلفية→المقدمة.
@@ -455,6 +460,7 @@ function PrayerAlertSchedulerBootstrap() {
       window.clearInterval(clockId);
       document.removeEventListener("visibilitychange", onVisible);
       window.removeEventListener(PRAYER_ALERT_PREFS_CHANGED_EVENT, onPrefsChanged);
+      window.removeEventListener("majalis:prayer-notification-prefs-changed", onPrefsChanged);
       window.removeEventListener("majalis:adhan-prefs-changed", onPrefsChanged);
       removeAppState?.();
     };

@@ -46,9 +46,16 @@ export function PrayerAlertSettingsCard() {
   const patch = (p: Partial<PrayerAlertPreferences>) => {
     setPrefs(patchPrayerAlertPrefs(p));
     if (typeof p.alertsEnabled === "boolean") {
-      const unified = patchPrayerNotificationPreferences({
-        masterEnabled: p.alertsEnabled,
-      });
+      // Enabling master with zero unified prayers must not wipe adhan per-prayer
+      // flags via syncLegacy — turn all five on so native schedule can fire.
+      const unified = patchPrayerNotificationPreferences(
+        p.alertsEnabled
+          ? {
+              masterEnabled: true,
+              prayers: { fajr: true, dhuhr: true, asr: true, maghrib: true, isha: true },
+            }
+          : { masterEnabled: false },
+      );
       syncLegacyTogglesFromUnified(unified);
     }
   };

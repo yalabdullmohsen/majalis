@@ -164,11 +164,23 @@ function normalize(
   };
 }
 
+/**
+ * Master on + zero prayers can never schedule, and syncLegacyTogglesFromUnified
+ * would wipe adhan per-prayer flags. Heal to all-on so device delivery works.
+ */
+function healMasterWithoutPrayers(
+  prefs: PrayerNotificationPreferences,
+): PrayerNotificationPreferences {
+  if (!prefs.masterEnabled) return prefs;
+  if (PRAYER_NOTIFICATION_KEYS.some((k) => prefs.prayers[k])) return prefs;
+  return { ...prefs, prayers: emptyPrayers(true) };
+}
+
 export function loadPrayerNotificationPreferences(): PrayerNotificationPreferences {
   try {
     const raw = localStorage.getItem(STORE_KEY);
     if (!raw) {
-      const migrated = migrateFromLegacyPreferences();
+      const migrated = healMasterWithoutPrayers(migrateFromLegacyPreferences());
       savePrayerNotificationPreferences(migrated, { silent: true });
       return migrated;
     }
@@ -177,15 +189,23 @@ export function loadPrayerNotificationPreferences(): PrayerNotificationPreferenc
       typeof parsed.schemaVersion !== "number" ||
       parsed.schemaVersion < PRAYER_NOTIFICATION_SCHEMA_VERSION
     ) {
-      const merged = normalize({
-        ...migrateFromLegacyPreferences(),
-        ...parsed,
-        schemaVersion: PRAYER_NOTIFICATION_SCHEMA_VERSION,
-      });
+      const merged = healMasterWithoutPrayers(
+        normalize({
+          ...migrateFromLegacyPreferences(),
+          ...parsed,
+          schemaVersion: PRAYER_NOTIFICATION_SCHEMA_VERSION,
+        }),
+      );
       savePrayerNotificationPreferences(merged, { silent: true });
       return merged;
     }
-    return normalize(parsed);
+    const normalized = normalize(parsed);
+    const healed = healMasterWithoutPrayers(normalized);
+    if (healed !== normalized) {
+      savePrayerNotificationPreferences(healed, { silent: true });
+      syncLegacyTogglesFromUnified(healed);
+    }
+    return healed;
   } catch {
     return defaultPrayerNotificationPreferences();
   }
@@ -213,17 +233,19 @@ export function patchPrayerNotificationPreferences(
   patch: Partial<PrayerNotificationPreferences>,
 ): PrayerNotificationPreferences {
   const current = loadPrayerNotificationPreferences();
-  const next = normalize({
-    ...current,
-    ...patch,
-    prayers: patch.prayers ? { ...current.prayers, ...patch.prayers } : current.prayers,
-    alertStyleByPrayer: patch.alertStyleByPrayer
-      ? { ...current.alertStyleByPrayer, ...patch.alertStyleByPrayer }
-      : current.alertStyleByPrayer,
-    voiceIdByPrayer: patch.voiceIdByPrayer
-      ? { ...current.voiceIdByPrayer, ...patch.voiceIdByPrayer }
-      : current.voiceIdByPrayer,
-  });
+  const next = healMasterWithoutPrayers(
+    normalize({
+      ...current,
+      ...patch,
+      prayers: patch.prayers ? { ...current.prayers, ...patch.prayers } : current.prayers,
+      alertStyleByPrayer: patch.alertStyleByPrayer
+        ? { ...current.alertStyleByPrayer, ...patch.alertStyleByPrayer }
+        : current.alertStyleByPrayer,
+      voiceIdByPrayer: patch.voiceIdByPrayer
+        ? { ...current.voiceIdByPrayer, ...patch.voiceIdByPrayer }
+        : current.voiceIdByPrayer,
+    }),
+  );
   savePrayerNotificationPreferences(next);
   return next;
 }
