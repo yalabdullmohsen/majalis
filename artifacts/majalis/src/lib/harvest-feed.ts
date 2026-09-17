@@ -1,4 +1,5 @@
 import { isOutsideKuwaitHarvestItem } from "@/lib/lesson-kuwait-scope";
+import { cleanHarvestDisplayText, isPresentableDisplayText } from "@/lib/harvest-display-text";
 /**
  * تحميل بطاقات حصاد المصادر من feed.json
  */
@@ -53,13 +54,45 @@ export type HarvestAccount = {
 let feedCache: HarvestFeedCard[] | null = null;
 let accountsCache: HarvestAccount[] | null = null;
 
+/** تنظيف حقول العرض ورفض البطاقات الفاسدة (OCR / عناوين مقطوعة بلا معنى). */
+export function sanitizeHarvestCard(raw: HarvestFeedCard): HarvestFeedCard | null {
+  const title_ar = cleanHarvestDisplayText(raw.title_ar);
+  if (!isPresentableDisplayText(title_ar, 8)) return null;
+
+  const summaryRaw = cleanHarvestDisplayText(raw.summary_ar);
+  const summary_ar = isPresentableDisplayText(summaryRaw, 12) ? summaryRaw : "";
+
+  const sheikhRaw = raw.sheikh ? cleanHarvestDisplayText(raw.sheikh) : "";
+  const sheikh =
+    sheikhRaw && isPresentableDisplayText(sheikhRaw, 3) && !/دروس الشيخ ومواعيد|الموقع الإلكترون/u.test(sheikhRaw)
+      ? sheikhRaw
+      : null;
+
+  const placeRaw = raw.place ? cleanHarvestDisplayText(raw.place) : "";
+  const place =
+    placeRaw && isPresentableDisplayText(placeRaw, 3) && placeRaw.length <= 80 && !/^https?:/i.test(placeRaw)
+      ? placeRaw
+      : null;
+
+  return {
+    ...raw,
+    title_ar,
+    summary_ar,
+    sheikh,
+    place,
+  };
+}
+
 export async function loadHarvestFeed(): Promise<HarvestFeedCard[]> {
   if (feedCache) return feedCache;
   const res = await fetch("/data/lessons/feed.json", { cache: "no-cache" });
   if (!res.ok) return [];
   const data = await res.json();
   const items: HarvestFeedCard[] = Array.isArray(data.items) ? data.items : [];
-  const kuwaitOnly = items.filter((item) => !isOutsideKuwaitHarvestItem(item));
+  const kuwaitOnly = items
+    .filter((item) => !isOutsideKuwaitHarvestItem(item))
+    .map(sanitizeHarvestCard)
+    .filter((c): c is HarvestFeedCard => c != null);
   feedCache = kuwaitOnly;
   return kuwaitOnly;
 }

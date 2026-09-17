@@ -16,3 +16,6 @@
 | LICENSE_RISKS adhan/QPC/books | BLOCKED_LICENSE for store | LICENSE_RISKS.md | Store redistribute | Owner decisions |
 
 **Wave 1 action:** Document + gate public exposure. No new rulings, bios, or book URLs invented.
+
+**Wave 2 action:** Sanitize harvest display; scholar rail → `/scholars`; index `SCHOLAR_PROFILES` in search; hide blocked search titles. No invented scholar bios or harvest titles.
+

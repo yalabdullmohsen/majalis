@@ -192,7 +192,7 @@ export default function QuranPersonDetailView() {
           </p>
           <div className="qp-person-detail__ayah-grid">
             {person.occurrences.map((o) => {
-              const surahName = getSurahMeta(o.surah)?.name ?? String(o.surah);
+              const surahName = getSurahMeta(o.surah).name;
               return (
                 <Link
                   key={`${o.surah}:${o.ayah}`}

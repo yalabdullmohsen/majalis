@@ -37,12 +37,15 @@ if (!ayah.surah || !ayah.ayahNumber) fail("آية اليوم بلا سورة/ر�
 const hadith = getDailyHadith();
 if (!hadith.source?.trim()) fail("حديث اليوم بلا مصدر");
 
-// 2) search لا يعرض admin
+// 2) search لا يعرض admin/council ولا يسرّب عنوانًا محجوبًا
 const searchView = read("src/pages/account/ui/SearchView.tsx");
+const searchCards = read("src/components/search/SearchResultCards.tsx");
 assert.match(searchView, /isBlockedOrAdminHref/);
-assert.match(searchView, /موثّق بمصدر/);
-assert.match(searchView, /قيد الإكمال|partial/);
-assert.match(searchView, /highlightText/);
+assert.match(searchView, /isBlockedSearchHref/);
+assert.match(searchView, /return null/);
+assert.match(searchCards, /موثّق بمصدر/);
+assert.match(searchView, /partial/);
+assert.match(searchCards, /highlightOriginalParts|highlightText|srch-hl/);
 
 // 3) qa لا يدعي التوثيق بلا مصدر
 const dailyQuiz = read("src/components/quiz-game/DailyChallengeQuiz.tsx");
