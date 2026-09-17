@@ -100,3 +100,17 @@ See also: `docs/content-quality/CONTENT_GAPS_REPORT.md` (remaining matrix).
 `artifacts/majalis/src/lib/__tests__/content-quality-wave1-p0-gate.test.ts`  
 `artifacts/majalis/src/lib/__tests__/content-quality-wave2-gate.test.ts`  
 `artifacts/majalis/src/lib/__tests__/content-quality-wave8-gate.test.ts`
+
+
+## Wave 9 (aqeedah / hadith / usul / sects)
+
+| Fix | Status |
+|---|---|
+| Hadith by-id H1/SEO without raw corpus id | IMPROVED_VERIFIED |
+| Hide opaque CDN book index in modal | IMPROVED_VERIFIED |
+| Tawhid learning path → `/tawhid/ahl-sunnah` | IMPROVED_VERIFIED |
+| Usul «القواعد الأصولية» → `/fiqh-qawaid` | IMPROVED_VERIFIED |
+| Sects: تعريف/نشأة, empty state, Arabic review, related link, dark pills | IMPROVED_VERIFIED |
+| Soften unsourced demographic % | IMPROVED_VERIFIED |
+| Strip repeated tawhid filler tails | IMPROVED_VERIFIED |
+| Gate | `test:content-quality-wave9` |

@@ -343,12 +343,6 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
             <strong>طريقة التخريج</strong>
             <span>{methodLabel}</span>
           </div>
-          {meta.book != null && (
-            <div className="hadith-modal__meta-item">
-              <strong>رقم الكتاب</strong>
-              <span>{String(meta.book)}</span>
-            </div>
-          )}
           {meta.in_book != null && (
             <div className="hadith-modal__meta-item">
               <strong>رقمه داخل الكتاب</strong>
