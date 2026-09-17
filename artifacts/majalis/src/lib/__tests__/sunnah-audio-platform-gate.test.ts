@@ -56,16 +56,11 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 {
   const selectable = listSelectableAdhanVoices();
   assert.ok(selectable.length >= 1);
-  assert.ok(
-    selectable.every(
-      (v) =>
-        v.licenseStatus === "verified_for_production" ||
-        v.licenseStatus === "style_only_preview",
-    ),
-  );
+  assert.ok(selectable.every((v) => v.licenseStatus === "verified_for_production"));
+  assert.ok(selectable.some((v) => v.id === "system-default"));
   assert.ok(listPendingAdhanVoices().length >= 1);
   assert.ok(listMurattalReciters().length >= 10);
-  console.log("  ✓ adhan/murattal catalogs");
+  console.log("  ✓ adhan/murattal catalogs (store-safe selectable)");
 }
 
 {

@@ -1,0 +1,31 @@
+{
+  "$schema_note": "Paths relative to artifacts/majalis that MUST NOT appear in a Store Release Candidate binary (dist or native sync) until licenseStatus is VERIFIED or OWNER_APPROVED with written evidence.",
+  "storeSourceCommitFile": "docs/store-release/STORE_SOURCE_COMMIT.txt",
+  "excludedFromStoreBinary": [
+    "public/sounds/adhan/*.mp3",
+    "public/sounds/adhan/*.m4a",
+    "public/audio/adhan/*.mp3",
+    "public/audio/adhan/*.m4a",
+    "ios/App/App/Sounds/adhan-*.caf",
+    "ios/App/App/Sounds/prayer_aqsa.caf",
+    "ios/App/App/Sounds/prayer_egypt.caf",
+    "ios/App/App/Sounds/prayer_makkah.caf",
+    "ios/App/App/adhan-*.caf",
+    "ios/App/App/adhan-seq-*.caf"
+  ],
+  "allowedSystemNotificationSounds": [
+    "prayer-alert.caf",
+    "alarm-clear.caf",
+    "short-ring.caf",
+    "soft-ring.caf",
+    "prayer_default.caf",
+    "prayer_clear.caf",
+    "prayer_quiet.caf",
+    "prayer_soft.caf",
+    "prayer_takbeerat.caf"
+  ],
+  "notes": [
+    "allowedSystemNotificationSounds remain provisional until OWNER_APPROVED; store catalog UI must default to OS system sound when evidence is missing.",
+    "Streaming-only sources (everyayah, mp3quran, Quran.com, AlQuran Cloud, mohsalvi CDN) must never be copied into the binary."
+  ]
+}
