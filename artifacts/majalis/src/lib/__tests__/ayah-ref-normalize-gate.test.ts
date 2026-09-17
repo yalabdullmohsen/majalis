@@ -24,6 +24,7 @@ console.log("=== global id 689 never shown as البقرة آية 689 ===");
   const g = globalAyahToSurahAyah(689);
   assert.deepEqual(n, g);
   assert.equal(normalizeAyahKey("2:689"), `${g.surah}:${g.ayah}`);
+  assert.notEqual(g.ayah, 689, "global 689 must never display as local ayah 689");
 }
 
 console.log("=== Open mushaf card uses normalize ===");

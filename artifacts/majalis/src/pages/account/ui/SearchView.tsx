@@ -22,6 +22,7 @@ import { Link, useSearch } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { VirtualList } from "@/components/VirtualList";
 import { CompactSectionHeader } from "@/components/ui/CompactSectionHeader";
+import { AppBackButton } from "@/components/common/AppBackButton";
 import { SearchSkeleton } from "@/components/ui-common";
 import { SEARCH_INPUT_ATTRS, handleSearchEnterKey } from "@/lib/search-input";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -338,6 +339,13 @@ export default function SearchPage() {
   return (
     <ListScreen compose="mark">
     <div className="page-shell narrow search-page search-home srch-page--v2 ds-page" dir="rtl">
+      <AppBackButton
+        variant="inline"
+        fallbackHref="/"
+        label="رجوع"
+        data-section-back="1"
+        className="srch-page-back"
+      />
       <CompactSectionHeader
         title="البحث"
         description="ابحث في القرآن، التفسير، الدروس، الفقه، السيرة والمحتوى العلمي."

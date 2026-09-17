@@ -772,6 +772,23 @@ html[data-theme="dark"] .srch-quick-card:hover {
   flex-direction: column;
   gap: 0.55rem;
 }
+/* RC polish: search results readability */
+.srch-page-back {
+  margin-block-end: 0.55rem;
+  min-height: 44px;
+}
+.srch-result-card__title {
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+.srch-result-card__snippet,
+.srch-result-card__meta {
+  line-height: 1.55;
+  max-width: 42rem;
+}
+.srch-results-list {
+  gap: 0.7rem;
+}
 /* السطح من soft-card / soft-card--on-light؛ هنا التخطيط فقط */
 .srch-result-card.soft-card {
   display: flex;

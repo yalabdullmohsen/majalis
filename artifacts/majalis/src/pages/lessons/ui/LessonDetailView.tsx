@@ -19,6 +19,7 @@ import {
 import { ShareButtons } from "@/components/ContentActions";
 import { LessonRecordingPlayer } from "@/components/lessons/LessonRecordingPlayer";
 import { DetailScreen } from "@/components/design-system/screens";
+import { AppBackButton } from "@/components/common/AppBackButton";
 import { cleanDisplayText } from "@/lib/display-text";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { formatShortLessonTime } from "@/lib/lesson-time";
@@ -275,6 +276,13 @@ export default function LessonDetailPage({
   return (
     <DetailScreen compose="mark">
     <div className="page-shell narrow lesson-detail-page mj-page" aria-busy={loading}>
+      <AppBackButton
+        variant="inline"
+        fallbackHref="/lessons"
+        label="رجوع"
+        data-section-back="1"
+        className="lesson-detail-back"
+      />
       <ReadingProgressBar />
       <nav className="lesson-detail-breadcrumb" aria-label="مسار التصفح">
         <Link href="/">الرئيسية</Link>

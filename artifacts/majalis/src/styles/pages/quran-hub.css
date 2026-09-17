@@ -573,6 +573,24 @@ html.dark .quran-open-mushaf__icon {
   font-size: 12px;
   line-height: 1.35;
 }
+
+/* RC polish: categories / lobby cards */
+.section-lobby__grid {
+  gap: clamp(0.7rem, 2vw, 1rem);
+}
+.section-lobby__featured,
+.section-lobby .soft-card {
+  line-height: 1.5;
+}
+.section-lobby__desc {
+  line-height: 1.55;
+  max-width: 42rem;
+}
+html[data-theme="dark"] .section-lobby__desc,
+html.dark .section-lobby__desc {
+  color: #c9d5cf;
+  opacity: 1;
+}
 .quran-hub-grid {
   gap: 0.75rem;
 }
@@ -587,4 +605,27 @@ html.dark .quran-open-mushaf__icon {
 }
 .quran-hub-hero {
   padding-block: 1rem;
+}
+
+/* RC polish: clearer hierarchy / spacing (no redesign) */
+.quran-hub-card__title {
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+.quran-hub-card__desc {
+  line-height: 1.55;
+  max-width: 42rem;
+}
+.quran-hub-open-mushaf {
+  margin-block: 0.35rem 0.75rem;
+}
+html[data-theme="dark"] .quran-hub-hero__title,
+html.dark .quran-hub-hero__title {
+  color: var(--surface-hero-ink, #f3efe6);
+  opacity: 1;
+}
+html[data-theme="dark"] .quran-hub-hero__sub,
+html.dark .quran-hub-hero__sub {
+  color: var(--surface-hero-muted, #c5d8ce);
+  opacity: 1;
 }

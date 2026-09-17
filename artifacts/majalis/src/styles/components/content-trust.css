@@ -46,6 +46,14 @@
   font-size: 0.8rem;
   color: var(--majalis-muted, var(--mj-brand));
   line-height: 1.6;
+  max-width: 42rem;
+  letter-spacing: 0;
+}
+
+html[data-theme="dark"] .ct-review-meta,
+html.dark .ct-review-meta {
+  color: #c9d5cf;
+  opacity: 1;
 }
 
 .ct-publication-blocked {
