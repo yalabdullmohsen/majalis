@@ -257,6 +257,19 @@
   border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent) !important;
 }
 
+html[data-theme="dark"] .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back,
+html.dark .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back,
+html[data-theme="dark"] .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn.mj-btn--ghost,
+html.dark .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn.mj-btn--ghost,
+html[data-theme="dark"] .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn--ghost,
+html.dark .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn--ghost {
+  color: #f3efe6 !important;
+  background: #0a3d2e !important;
+  background-color: #0a3d2e !important;
+  background-image: none !important;
+  border-color: color-mix(in srgb, #f3efe6 32%, transparent) !important;
+}
+
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__desc {
   color: var(--mss-on-hero-muted) !important;
 }
