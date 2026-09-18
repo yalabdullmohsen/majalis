@@ -19,6 +19,8 @@ export type PrayerChipCopyInput = {
 export type PrayerChipCopy = {
   /** النص المعروض داخل الشريحة */
   text: string;
+  /** صيغة أقصر للهيدر المدمج (iPad / Split View) */
+  compactText: string;
   prayerName: string;
   timeText: string | null;
   isNow: boolean;
@@ -71,6 +73,8 @@ function remainingCopy(prayerName: string, remainingSeconds: number): PrayerChip
   const phrase = formatAdhanRemainingPhrase(remainingSeconds);
   return {
     text: `متبقي على ${name}: ${phrase}`,
+    /** صيغة مدمجة للهيدر الضيق / iPad — بلا تفكيك حروف */
+    compactText: `${name} · ${phrase}`,
     prayerName: name,
     timeText: phrase,
     isNow: false,
@@ -92,6 +96,7 @@ export function buildPrayerChipCopy(input: PrayerChipCopyInput): PrayerChipCopy 
     }
     return {
       text: `حان وقت ${name}`,
+      compactText: `حان · ${name}`,
       prayerName: name,
       timeText: null,
       isNow: true,
@@ -109,6 +114,7 @@ export function buildPrayerChipCopy(input: PrayerChipCopyInput): PrayerChipCopy 
     }
     return {
       text: `حان وقت ${name}`,
+      compactText: `حان · ${name}`,
       prayerName: name,
       timeText: null,
       isNow: true,

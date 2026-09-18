@@ -85,8 +85,8 @@ assert.equal(topCount, 1, "شريط أقسام علوي واحد");
 assert.equal(bottomCount, 1, "شريط سفلي واحد");
 
 const navCss = readFileSync(resolve(srcRoot, "styles/m2030/navigation.css"), "utf8");
-assert.match(navCss, /max-width:\s*767\.98px/, "إخفاء الشريط العلوي على الجوال");
-assert.match(navCss, /min-width:\s*768px/, "إخفاء الشريط السفلي على سطح المكتب");
+assert.match(navCss, /max-width:\s*879\.98px/, "إخفاء الشريط العلوي على الجوال (يطابق MOBILE_NAV_MAX_WIDTH)");
+assert.match(navCss, /min-width:\s*880px/, "إخفاء الشريط السفلي فوق حد الشريط السفلي الموحّد");
 
 const guard = readFileSync(resolve(srcRoot, "components/PageLoadingGuard.tsx"), "utf8");
 assert.match(guard, /useDeferredLoading/);
