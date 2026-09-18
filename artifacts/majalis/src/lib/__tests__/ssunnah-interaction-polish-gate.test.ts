@@ -27,8 +27,13 @@ assert.doesNotMatch(
 assert.doesNotMatch(native, /scale\(0\.94\)/, "لا scale(0.94) في إحساس اللمس");
 assert.match(
   native,
-  /mj-route-push-in[\s\S]*translate3d\(calc\(var\(--mj-nav-sign/,
-  "دخول الصفحة: انزلاق مكاني هادئ (استمرارية Apple) لا شاشة جديدة",
+  /mj-route-push-in[\s\S]*opacity:\s*0\.9[0-9]/,
+  "دخول الصفحة: Fast Fade هادئ (استمرارية) لا شاشة جديدة",
+);
+assert.doesNotMatch(
+  native,
+  /mj-route-push-in[\s\S]{0,220}translate3d\([^)]*(1[6-9]|[2-9]\d)px/,
+  "دخول الصفحة بلا انزلاق كبير",
 );
 assert.match(sheet, /ss-sheet-in/, "شيت سفلي بحركة دخول ناعمة");
 assert.match(sheet, /--radius-sheet,\s*28px/, "حواف شيت ناعمة");
