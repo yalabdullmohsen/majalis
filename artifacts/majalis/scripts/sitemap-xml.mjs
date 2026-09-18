@@ -4,6 +4,13 @@
  */
 import { isSitemapDenied } from "./seo-index-policy.mjs";
 
+/**
+ * تاريخ lastmod حتمي — لا يُشتق من لحظة البناء.
+ * يُحدَّث يدويًا عند تغيّر جوهري في مسارات الفهرسة (ليس يوميًا).
+ * يطابق طابع التغذية الثابت في generate-seo (FEED_DATE).
+ */
+export const STABLE_SITEMAP_LASTMOD = "2026-07-25";
+
 const CHANGEFREQ = new Set([
   "always",
   "hourly",
@@ -66,8 +73,7 @@ function normalizeLastmod(value, fallbackIsoDate) {
  */
 export function buildSitemapXmlDocument(entries, opts) {
   const siteUrl = String(opts.siteUrl || "https://www.ssunnah.com").replace(/\/+$/, "");
-  const lastmodFallback =
-    opts.lastmodFallback || new Date().toISOString().slice(0, 10);
+  const lastmodFallback = opts.lastmodFallback || STABLE_SITEMAP_LASTMOD;
   const stylesheetHref =
     opts.stylesheetHref === null ? null : opts.stylesheetHref || "/sitemap.xsl";
 
