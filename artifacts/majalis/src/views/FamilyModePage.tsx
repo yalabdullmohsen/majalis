@@ -336,7 +336,7 @@ export default function FamilyModePage() {
       <PageStatusShell title="الوضع العائلي" className="page-shell narrow fm-login-prompt">
         <div className="fm-login-icon" aria-hidden="true"><Lock size={40} strokeWidth={1.3} /></div>
         <p className="fm-login-msg">
-          سجّل الدخول للوصول إلى الوضع العائلي.
+          سجّل الدخول لإدارة الوضع العائلي وضوابط المحتوى.
         </p>
         <Link href="/login?next=/family" className="ss-action-btn ss-action-btn--secondary">تسجيل الدخول</Link>
       </PageStatusShell>

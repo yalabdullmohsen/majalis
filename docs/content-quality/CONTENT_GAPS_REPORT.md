@@ -225,3 +225,11 @@
 | new-muslim/flashcards/vault/transcribe/memorization-plans | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
 | admin empties | DEFERRED |
+
+## Wave 27 final states
+
+| section | finalState |
+|---|---|
+| SEO polish lessons/fawaid/quran/family login | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |

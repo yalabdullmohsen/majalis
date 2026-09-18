@@ -74,14 +74,14 @@ export default function KuwaitLessonsPage() {
     applyPageSeo({
       path: "/kuwait-lessons",
       title: "دروس مشايخ الكويت | سُنّة",
-      description: "جميع الدروس العلمية القادمة لمشايخ الكويت، محدَّثة تلقائياً من مصادر معتمدة. محتوى معتمد في منهج سُنّة",
+      description: "الدروس العلمية القادمة لمشايخ الكويت، محدَّثة من مصادر معتمدة.",
       keywords: ["دروس الكويت", "مشايخ الكويت", "دروس كويتية", "علماء الكويت", "حلقات علمية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "دروس مشايخ الكويت القادمة",
-          description: "قائمة الدروس الشرعية القادمة لعلماء ومشايخ الكويت؛ محتوى معتمد في منهج سُنّة",
+          description: "قائمة الدروس الشرعية القادمة لعلماء ومشايخ الكويت.",
           url: "https://www.ssunnah.com/kuwait-lessons",
           about: {
             "@type": "Country",
@@ -92,7 +92,7 @@ export default function KuwaitLessonsPage() {
           "@context": "https://schema.org",
           "@type": "Event",
           name: "الدروس العلمية الأسبوعية في الكويت",
-          description: "دروس شرعية منتظمة في مساجد ومراكز الكويت العلمية؛ محتوى معتمد في منهج سُنّة",
+          description: "دروس شرعية منتظمة في مساجد ومراكز الكويت العلمية.",
           location: {
             "@type": "Country",
             name: "الكويت",

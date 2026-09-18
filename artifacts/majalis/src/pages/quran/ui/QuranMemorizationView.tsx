@@ -244,13 +244,13 @@ export default function QuranMemorizationPage() {
       path: "/quran-memorization",
       title: "اختبارات الحفظ القرآني | سُنّة",
       description:
-        "12 نوعًا من اختبارات حفظ القرآن الكريم مع نظام المراجعة المتباعدة. اختبر حفظك وتتبّع تقدمك سورةً سورة. محتوى معتمد في منهج سُنّة",
+        "12 نوعًا من اختبارات حفظ القرآن مع مراجعة متباعدة — اختبر حفظك سورةً سورة.",
       keywords: ["حفظ القرآن", "اختبار الحفظ", "مراجعة القرآن", "حفظ السور", "spaced repetition"],
       jsonLd: [{
         "@context": "https://schema.org",
         "@type": "LearningResource",
         name: "اختبارات الحفظ القرآني",
-        description: "12 نوعًا من اختبارات حفظ القرآن الكريم مع نظام المراجعة المتباعدة. محتوى معتمد في منهج سُنّة",
+        description: "اختبارات حفظ قرآني بأنواع متعددة ونظام مراجعة متباعدة.",
         url: "https://www.ssunnah.com/quran-memorization",
         inLanguage: "ar",
         educationalLevel: "Beginner",
