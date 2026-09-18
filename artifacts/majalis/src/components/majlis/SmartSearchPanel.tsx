@@ -9,6 +9,7 @@ import {
   type SearchCategory,
   type SmartSearchItem,
 } from "@/lib/smart-search-engine";
+import { EMPTY } from "@/lib/ui-copy";
 import "@/styles/majlisilm-shell.css";
 
 export type SmartSearchPanelProps = {
@@ -101,7 +102,7 @@ export function SmartSearchPanel({ open, onClose, onSelect }: SmartSearchPanelPr
           </li>
         ))}
         {results.length === 0 ? (
-          <li className="smart-search__empty">لا نتائج مطابقة</li>
+          <li className="smart-search__empty">{EMPTY.searchShort}</li>
         ) : null}
       </ul>
     </div>

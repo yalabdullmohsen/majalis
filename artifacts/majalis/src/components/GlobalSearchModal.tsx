@@ -28,7 +28,7 @@ import {
 } from "@/lib/knowledge-platform";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { TEXT_API_ORIGINS, useResourcePrewarm } from "@/lib/resource-prewarm";
-import { ACTION, EMPTY } from "@/lib/ui-copy";
+import { ACTION, EMPTY, STATUS } from "@/lib/ui-copy";
 import "@/styles/components/global-search-modal.css";
 
 // ── ثوابت ───────────────────────────────────────────────────────────────────
@@ -517,10 +517,10 @@ export function GlobalSearchModal({ onClose }: Props) {
           {!showIdleHome && error && !loading && (
             <div className="gsm-error-state" role="alert" aria-live="assertive">
               <p className="gsm-state-icon"><AlertTriangle size={32} strokeWidth={1.5} aria-hidden="true" /></p>
-              <p className="gsm-state-title">تعذر تنفيذ البحث. حاول مرة أخرى.</p>
-              <p className="gsm-state-hint">تحقق من الاتصال بالإنترنت ثم أعد المحاولة.</p>
+              <p className="gsm-state-title">{STATUS.loadError}</p>
+              <p className="gsm-state-hint">{STATUS.networkError}</p>
               <button type="button" onClick={() => doSearch(query, activeFilter)} className="gsm-retry-btn">
-                أعد المحاولة
+                {ACTION.retry}
               </button>
             </div>
           )}
