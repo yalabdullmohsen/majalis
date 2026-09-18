@@ -6,6 +6,7 @@ import { formatFileSize, type UserSubmission, type SubmissionStatus } from "@/li
 import { Link } from "wouter";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import "@/styles/pages/my-submissions.css";
 import { UtilityScreen } from "@/components/design-system/screens";
 
@@ -219,7 +220,7 @@ export default function MySubmissionsPage() {
       {list !== null && list.length === 0 && (
         <div className="msp-empty-state">
           <div className="msp-empty-state__icon" aria-hidden="true"><FileText size={40} strokeWidth={1.3} /></div>
-          <p className="msp-empty-state__msg">لا توجد مساهمات مرتبطة بهذا البريد.</p>
+          <p className="msp-empty-state__msg">{EMPTY.data}</p>
           <Link href="/upload">
             <button type="button" className="msp-cta-btn">ارفع درساً</button>
           </Link>

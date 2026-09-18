@@ -128,3 +128,12 @@
 | citations/mindmap/learning-paths empties | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
 | hosted fiqh_council purge | OWNER_ACTION |
+
+## Wave 16 final states
+
+| section | finalState |
+|---|---|
+| knowledge-graph / my-submissions empties | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| hosted fiqh_council purge | OWNER_ACTION |
+| admin empties | DEFERRED (out of public scope) |
