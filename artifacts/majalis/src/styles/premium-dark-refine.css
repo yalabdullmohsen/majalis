@@ -629,3 +629,281 @@ html.pts-immersive:is([data-theme="dark"], .dark) .app-main {
 :is(html[data-theme="dark"], html.dark) :is(.soft-card, .hub-card, .ss-card, [data-card="1"])::after {
   box-shadow: none !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+ * Final Dark Pass — عيوب بصرية فقط (لا إعادة تصميم)
+ * ═══════════════════════════════════════════════════════════════ */
+
+/* P0: شارة «للزائر الجديد» — حبة ناعمة متكاملة لا مستطيل غريب */
+:is(html[data-theme="dark"], html.dark) :is(.hsh-eyebrow, .meth-eyebrow) {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.25rem !important;
+  margin: 0 !important;
+  padding: 0.28rem 0.78rem !important;
+  border-radius: var(--radius-mj-pill, 999px) !important;
+  background: color-mix(in srgb, var(--pd-emerald) 14%, var(--pd-elevated)) !important;
+  color: var(--pd-ink) !important;
+  border: 1px solid color-mix(in srgb, var(--pd-emerald) 22%, var(--pd-border-subtle)) !important;
+  box-shadow: none !important;
+  filter: none !important;
+  font-size: 0.78rem !important;
+  font-weight: 650 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.35 !important;
+}
+
+/* P0: عناوين الأقسام/البطاقات — تباين أقوى مع الإبقاء على وصف أخفت */
+:is(html[data-theme="dark"], html.dark) :is(
+  .hub-card__title,
+  .section-card__title,
+  .section-entry-card__title,
+  .topic-card__title,
+  .ui-card__title,
+  .mj-card__title,
+  .soft-card__title,
+  .lesson-card__title,
+  .category-card__title,
+  .twh-hub-card__title,
+  .quran-hub-card__title,
+  .hadith-hub-card .hub-card__title,
+  .section-lobby__card-title,
+  .lpp-path-card__title,
+  [data-card="1"] :is(h2, h3, .card-title)
+) {
+  color: #f4efe6 !important;
+  opacity: 1 !important;
+  font-weight: 800 !important;
+  text-shadow: none !important;
+  -webkit-text-fill-color: #f4efe6 !important;
+}
+
+:is(html[data-theme="dark"], html.dark) :is(
+  .hub-card__desc,
+  .section-card__desc,
+  .section-entry-card__desc,
+  .topic-card__desc,
+  .soft-card__desc,
+  .ui-card__desc,
+  .mj-card__desc,
+  .category-card__desc,
+  .quran-hub-card__desc,
+  .lpp-path-card__desc
+) {
+  color: color-mix(in srgb, var(--pd-ink-2) 92%, #a8b5ad) !important;
+  opacity: 1 !important;
+}
+
+/* P0: إزالة أشرطة التوهج الجانبية الزخرفية (border-inline-start الملونة) */
+:is(html[data-theme="dark"], html.dark) :is(
+  .gs-surface,
+  .gs-surface--feature,
+  .gs-surface--knowledge,
+  .gs-surface--islamic,
+  .gs-surface--highlighted,
+  .soft-card,
+  .soft-card--on-light,
+  .soft-tile--on-light,
+  .hub-card,
+  .hub-tile,
+  .section-card,
+  .section-hub__card,
+  .ds-card,
+  .mj-card,
+  .ui-card,
+  .list-card,
+  .page-card,
+  .content-card,
+  .topic-card,
+  .mk-topic-card,
+  .mk-card,
+  .mk-lane-card,
+  .lesson-unified-card,
+  .lesson-card,
+  .kuwait-lesson-card,
+  .hadith-card,
+  .hadith-hub-card,
+  .hdl-card,
+  .fiqh-book-card,
+  .fiqh-category-card,
+  .fiqh-issue-card,
+  .fqh-hub-card,
+  .twh-hub-card,
+  .quran-hub-card,
+  .tarikh-card,
+  .seerah-panel,
+  .seerah-notice,
+  .seerah-timeline,
+  .seerah-phase,
+  .prophet-lux-card,
+  .prophet-fact-card,
+  .prophet-lesson-card,
+  .isp-card,
+  .inst-card,
+  .ilm-card,
+  .univ-card,
+  .nb-azm-card,
+  .nb-miracle-card,
+  .lib-card,
+  .lpp-path-card,
+  .settings-card,
+  .home-daily-card,
+  .section-lobby__featured,
+  .card--featured,
+  .ss-state-card,
+  .an-card,
+  .tf-card,
+  .tf-path-card,
+  .tf-spotlight-card,
+  .tf-edition-card,
+  .tf-intro,
+  .info-card,
+  .info-card--caution,
+  .rsc,
+  .mj-framed
+):not([data-scripture]):not(.mushaf-page):not(.ayah-card) {
+  border-inline-start-width: 1px !important;
+  border-inline-start-style: solid !important;
+  border-inline-start-color: var(--dark-border-subtle, var(--pd-border-subtle)) !important;
+  box-shadow: var(--dark-elev-1, var(--pd-elev-1)) !important;
+}
+
+/* P0: تسطيح Card-in-Card — خطوات الزائر ومحتوى متداخل */
+:is(html[data-theme="dark"], html.dark) .home-start-here .hsh-step,
+:is(html[data-theme="dark"], html.dark) .home-start-here .hsh-steps {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  filter: none !important;
+}
+:is(html[data-theme="dark"], html.dark) .home-start-here .hsh-steps {
+  border: none !important;
+  padding: 0 !important;
+}
+:is(html[data-theme="dark"], html.dark) .home-start-here .hsh-step {
+  border: none !important;
+  border-bottom: 1px solid var(--dark-border-subtle, var(--pd-border-subtle)) !important;
+  border-radius: 0 !important;
+  padding-block: 0.85rem !important;
+}
+:is(html[data-theme="dark"], html.dark) .home-start-here .hsh-step:last-child {
+  border-bottom: none !important;
+}
+:is(html[data-theme="dark"], html.dark) .home-start-here .hsh-step__num {
+  background: color-mix(in srgb, var(--pd-emerald) 16%, var(--pd-elevated)) !important;
+  color: var(--pd-ink) !important;
+  border: 1px solid color-mix(in srgb, var(--pd-emerald) 20%, transparent) !important;
+  border-radius: var(--radius-mj-pill, 999px) !important;
+  box-shadow: none !important;
+}
+
+/* متداخل عام: الحاوية الداخلية بلا ظل/حد مضاعف */
+:is(html[data-theme="dark"], html.dark) :is(
+  .hub-card, .section-card, .soft-card, .lpp-path-card, .home-start-here, .pts-card
+) :is(.hub-card, .section-card, .soft-card, .ss-card, .mj-card, [data-card="1"]) {
+  box-shadow: none !important;
+  border-color: color-mix(in srgb, var(--pd-border-subtle) 70%, transparent) !important;
+  background-color: var(--dark-interactive, var(--pd-elevated)) !important;
+}
+
+/* P1: شريط سفلي موحّد — بما فيه شاشة الصلاة (pts-immersive) */
+:is(html[data-theme="dark"], html.dark) :is(
+  .bottom-nav, .bottom-nav--v2, .bottom-nav--m2030
+),
+:is(html[data-theme="dark"], html.dark).pts-immersive :is(
+  .bottom-nav, .bottom-nav--v2, .bottom-nav--m2030
+),
+html.pts-immersive:is([data-theme="dark"], .dark) :is(
+  .bottom-nav, .bottom-nav--v2, .bottom-nav--m2030
+) {
+  background-color: var(--dm-bottom-nav, #0c1210) !important;
+  background-image: none !important;
+  border-top: 1px solid color-mix(in srgb, var(--pd-border-subtle) 55%, transparent) !important;
+  box-shadow: 0 -1px 0 color-mix(in srgb, var(--pd-gold) 4%, transparent) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+:is(html[data-theme="dark"], html.dark).pts-immersive .bottom-nav__tab.is-active,
+html.pts-immersive:is([data-theme="dark"], .dark) .bottom-nav__tab.is-active {
+  background: color-mix(in srgb, var(--pd-emerald) 7%, transparent) !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+}
+:is(html[data-theme="dark"], html.dark).pts-immersive .bottom-nav__tab.is-active :is(.bottom-nav__tab-label, .bottom-nav__tab-icon),
+html.pts-immersive:is([data-theme="dark"], .dark) .bottom-nav__tab.is-active :is(.bottom-nav__tab-label, .bottom-nav__tab-icon) {
+  color: var(--pd-gold) !important;
+}
+:is(html[data-theme="dark"], html.dark).pts-immersive .bottom-nav__tab.is-active::before,
+html.pts-immersive:is([data-theme="dark"], .dark) .bottom-nav__tab.is-active::before {
+  background: var(--pd-gold) !important;
+  box-shadow: none !important;
+  height: 2px !important;
+}
+
+/* P1: تباين metadata / chips / filters */
+:is(html[data-theme="dark"], html.dark) :is(
+  .hub-card__meta,
+  .soft-card__meta,
+  .card-meta,
+  .text-meta,
+  .meta,
+  .caption,
+  .helper-text,
+  .filter-label,
+  .chip-label,
+  [data-meta="1"]
+) {
+  color: color-mix(in srgb, var(--pd-ink-muted) 94%, #c4bbb0) !important;
+  opacity: 1 !important;
+}
+
+:is(html[data-theme="dark"], html.dark) :is(
+  .mj-filter-chip,
+  .filter-chips__chip,
+  .ds-chip,
+  .chip,
+  .tag-chip,
+  .segmented-chip,
+  .badge:not(.hsh-eyebrow):not(.meth-eyebrow)
+) {
+  color: var(--pd-ink-2) !important;
+}
+
+/* P1: تقليل ضوضاء الحدود/الوهج */
+:is(html[data-theme="dark"], html.dark) :is(
+  .soft-card, .hub-card, .section-card, .ss-card, .mj-card, [data-card="1"]
+) {
+  outline: none !important;
+  background-image: none !important;
+}
+:is(html[data-theme="dark"], html.dark) :is(
+  .soft-card, .hub-card, .section-card, .ss-card, .mj-card, [data-card="1"]
+)::before,
+:is(html[data-theme="dark"], html.dark) :is(
+  .soft-card, .hub-card, .section-card, .ss-card, .mj-card, [data-card="1"]
+)::after {
+  background: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* P1: طبقات عائمة — بلا تكديس بصري */
+:is(html[data-theme="dark"], html.dark) :is(
+  .top-sponsor-bar,
+  .announcement-bar,
+  .lessons-v3-sticky,
+  .filter-bar,
+  .mj-sticky-filters,
+  .search-page-form,
+  .srch-home-form
+) {
+  background-color: var(--surface-float, var(--pd-elevated)) !important;
+  background-image: none !important;
+  border-color: var(--dark-border-subtle, var(--pd-border-subtle)) !important;
+  box-shadow: var(--dark-elev-1, var(--pd-elev-1)) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+}
