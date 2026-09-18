@@ -7,7 +7,7 @@ export const FAWAID_CATEGORIES = [
   "فوائد فقهية",
   "فوائد تربوية",
   "فوائد دعوية",
-  "آداب وأخلاق"
+  "الأخلاق",
 ] as const;
 
 export const SEED_FAWAID = [
@@ -6760,7 +6760,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-645",
     text: "ليس الشديد بالصُّرعة؛ إنما الشديد الذي يملك نفسه عند الغضب.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "متفق عليه",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
@@ -6823,7 +6823,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-652",
     text: "الكلمة الطيبة صدقة؛ وطلاقة الوجه من المعروف اليسير العظيم الأجر.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "السنة الصحيحة",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
@@ -6868,7 +6868,7 @@ export const SEED_FAWAID = [
   {
     id: "seed-fawaid-657",
     text: "التواضع يرفع العبد؛ ومن تواضع لله رفعه.",
-    category: "آداب وأخلاق",
+    category: "الأخلاق",
     source: "معنى السنة الصحيحة",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",

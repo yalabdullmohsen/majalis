@@ -23,7 +23,10 @@ assert.match(page, /title="أسباب النزول"|أسباب النزول/);
 
 const texts = FAWAID_CURATED_SEED.map((f) => f.text);
 assert.equal(new Set(texts).size, texts.length, "لا تكرار حرفي لنص الفائدة");
-assert.ok(texts.length >= 1500, `حجم معقول بعد إزالة التكرار (${texts.length})`);
+// Content Excellence 2026-09: أُزيلت عناقيد القوالب (موضوع×باب) وذيولها المكررة
+// من ~1623 إلى ~1128 فائدة فريدة أوضح للزائر — الجودة أعلى والعدد الأدنى يعكس التنقية لا النقص.
+assert.ok(texts.length >= 1000, `حجم معقول بعد إزالة التكرار والقوالب (${texts.length})`);
+assert.ok(texts.length < 1500, `لا ارتداد لعناقيد القوالب المتضخّمة (${texts.length})`);
 
 const daif = JSON.parse(read("public/data/hadith-verified/daif-000.json")) as Array<{
   source_name?: string;
