@@ -128,3 +128,116 @@
 | citations/mindmap/learning-paths empties | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
 | hosted fiqh_council purge | OWNER_ACTION |
+
+## Wave 16 final states
+
+| section | finalState |
+|---|---|
+| knowledge-graph / my-submissions empties | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| hosted fiqh_council purge | OWNER_ACTION |
+| admin empties | DEFERRED (out of public scope) |
+
+## Wave 17 final states
+
+| section | finalState |
+|---|---|
+| adhkar/duas/tafsir/fawaid empties | IMPROVED_VERIFIED |
+| duas-quran/hadith-science/glossary | IMPROVED_VERIFIED |
+| teacher/reading-plans/arbaeen-nawawi | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
+
+## Wave 18 final states
+
+| section | finalState |
+|---|---|
+| quran circles/index/people/numbers/makki/search | IMPROVED_VERIFIED |
+| lessons/rulings/qawaid/hadith/search/notifications | IMPROVED_VERIFIED |
+| adhkar loadError → STATUS | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
+
+## Wave 19 final states
+
+| section | finalState |
+|---|---|
+| discover-islam / new-muslim / sins detail not-found | IMPROVED_VERIFIED |
+| auto-content / annual-course / path loadError | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
+
+## Wave 20 final states
+
+| section | finalState |
+|---|---|
+| citation/tarikh/university/learning-path detail | IMPROVED_VERIFIED |
+| competitions/rulings/calendar/miracles empties | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
+
+## Wave 21 final states
+
+| section | finalState |
+|---|---|
+| auto/sins/annual SEO not-found polish | IMPROVED_VERIFIED |
+| hadith-by-id/tajweed/stories/rulings/quran load | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
+
+## Wave 22 final states
+
+| section | finalState |
+|---|---|
+| memorization/mutashabihat/knowledge-graph load | IMPROVED_VERIFIED |
+| reading-plans login empty polish | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
+
+## Wave 23 final states
+
+| section | finalState |
+|---|---|
+| search/universities/contact/settings errors | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
+
+## Wave 24 final states
+
+| section | finalState |
+|---|---|
+| privacy/research-detail/scholarly-research messages | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
+
+## Wave 25 final states
+
+| section | finalState |
+|---|---|
+| miracles/notifications/daily-wird/privacy export | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
+
+## Wave 26 final states
+
+| section | finalState |
+|---|---|
+| new-muslim/flashcards/vault/transcribe/memorization-plans | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
+
+## Wave 27 final states
+
+| section | finalState |
+|---|---|
+| SEO polish lessons/fawaid/quran/family login | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
+
+## Wave 28 final states
+
+| section | finalState |
+|---|---|
+| SEO boilerplate cleanup (22 public pages) | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |

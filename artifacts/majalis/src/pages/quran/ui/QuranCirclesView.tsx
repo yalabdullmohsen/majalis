@@ -12,6 +12,7 @@ import { FilterBar } from "@/components/filters/FilterBar";
 import { FilterSheet } from "@/components/filters/FilterSheet";
 import { SegmentedFilter } from "@/components/filters/SegmentedFilter";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import {
   getQuranCircles,
   type CircleFilters,
@@ -353,7 +354,7 @@ export default function QuranCirclesPage() {
         {!awaitingFilterResults ? (
           <p className="qc-result-count" aria-live="polite">
             {visible.length === 0
-              ? "لا نتائج"
+              ? EMPTY.searchShort
               : visible.length === 1
                 ? "نتيجة واحدة"
                 : `${visible.length} نتيجة`}
@@ -416,7 +417,7 @@ export default function QuranCirclesPage() {
       {awaitingFilterResults || (loading && circles.length === 0) ? (
         <p className="qc-empty" role="status" aria-busy="true">تحديث الدليل…</p>
       ) : visible.length === 0 ? (
-        <p className="qc-empty">لا توجد حلقات مطابقة لهذا الفلتر حاليًا. جرّب تصفية أخرى أو امسح الفلاتر.</p>
+        <p className="qc-empty">{EMPTY.search}</p>
       ) : (
         <div className="qc-results" aria-busy={loading}>
           {byGov.map(([gov, list]) => (

@@ -54,7 +54,7 @@ import {
 } from "@/lib/knowledge-platform";
 import "@/styles/pages/search.css";
 import "@/styles/pages/search-legacy.css";
-import { ACTION, EMPTY, SEARCH } from "@/lib/ui-copy";
+import { ACTION, EMPTY, SEARCH, STATUS } from "@/lib/ui-copy";
 import { ListScreen } from "@/components/design-system/screens";
 
 const PAGE_SIZE = 40;
@@ -269,7 +269,7 @@ export default function SearchPage() {
     } catch (err) {
       if (seq !== requestSeqRef.current) return;
       if ((err as Error)?.name === "AbortError") return;
-      const msg = err instanceof Error ? err.message : "تعذّر إكمال البحث";
+      const msg = err instanceof Error ? err.message : STATUS.loadError;
       setError(msg);
       trackSearchUx("search_failed", { query: q, scope: nextScope, message: msg });
     } finally {
@@ -478,7 +478,7 @@ export default function SearchPage() {
         <div className="srch-error-inline" role="alert">
           <AlertCircle size={16} strokeWidth={2} aria-hidden />
           <div className="srch-error-inline__body">
-            <p className="srch-error-inline__title">تعذّر إكمال البحث</p>
+            <p className="srch-error-inline__title">{STATUS.loadError}</p>
             <p className="srch-error-inline__reason">{error}</p>
             <div className="srch-error-inline__actions">
               <button type="button" className="srch-error-inline__retry" onClick={() => void run(term, scope)}>
@@ -498,9 +498,7 @@ export default function SearchPage() {
       ) : showEmpty ? (
         <div className="search-no-results ss-state-card" role="status">
           <p className="search-no-results__msg ss-state-card__title">
-            {scope !== "all"
-              ? "لا توجد نتائج في هذا القسم، جرّب كلمة أخرى أو ابحث في الكل."
-              : EMPTY.search /* لم نجد نتيجة مطابقة — جرّب */}
+            {EMPTY.search}
           </p>
           {scope !== "all" ? (
             <button type="button" className="srch-home-submit ss-action-btn ss-action-btn--primary mj-pressable" onClick={() => setScope("all")}>

@@ -5,6 +5,7 @@ import { ContentDetailLayout } from "@/components/platform/ContentDetailLayout";
 import { fetchLiveAutoContentBySlug, getPublishedAutoContentBySlug } from "@/lib/auto-content-service";
 import { mapContentTypeToUpdateType } from "@/lib/auto-content/auto-content-utils";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 import type { AutoImportedContent } from "@/lib/auto-content/auto-content-utils";
@@ -36,7 +37,7 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
       applyPageSeo({
         path: `/updates/auto/${params.slug}`,
         title: "المادة غير موجودة | سُنّة",
-        description: "لم يُعثر على هذه المادة أو لم تُعتمد بعد.",
+        description: "هذه المادة غير متاحة في الفهرس العام أو لم تُعتمد بعد.",
         robots: "noindex, follow",
         jsonLd: [],
       });
@@ -67,7 +68,7 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
   }, [item, loading, params.slug]);
 
   if (loading && !item) return <SkeletonCardGrid />;
-  if (!item) return <Empty text="المادة غير موجودة أو لم تُعتمد بعد." />;
+  if (!item) return <Empty text={EMPTY.data} />;
 
   const updateType = mapContentTypeToUpdateType(item.content_type);
 

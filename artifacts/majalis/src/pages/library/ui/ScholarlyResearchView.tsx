@@ -18,6 +18,7 @@ import {
 } from "@/lib/rag-service";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/scholarly-research.css";
 import { ListScreen } from "@/components/design-system/screens";
@@ -174,7 +175,7 @@ export default function ScholarlyResearchPage() {
 
   const handleSave = useCallback(async () => {
     if (!result || !isLoggedIn) {
-      setSaveMsg(isLoggedIn ? "لا توجد نتائج بحث للحفظ. نفّذ بحثًا أولًا." : "يجب تسجيل الدخول أولاً");
+      setSaveMsg(isLoggedIn ? EMPTY.search : "يجب تسجيل الدخول أولاً");
       return;
     }
     setSaveMsg("يُحفظ…");
@@ -185,9 +186,9 @@ export default function ScholarlyResearchPage() {
         answer_snapshot:  result.answer,
         sources_snapshot: result.sources,
       });
-      setSaveMsg(saved.ok ? "تم الحفظ في مكتبتك" : "فشل الحفظ");
+      setSaveMsg(saved.ok ? "تم الحفظ في مكتبتك" : STATUS.loadError);
     } catch {
-      setSaveMsg("فشل الحفظ");
+      setSaveMsg(STATUS.loadError);
     } finally {
       setTimeout(() => setSaveMsg(null), 4000);
     }

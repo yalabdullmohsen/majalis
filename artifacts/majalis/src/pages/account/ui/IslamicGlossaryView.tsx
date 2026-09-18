@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useSearch } from "wouter";
 import { BookOpen, ChevronDown, ChevronUp } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
@@ -1884,7 +1885,7 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
 
         <div className="gl-results-meta">
           {filtered.length === 0 ? (
-            <p className="gl-empty">لا توجد نتائج مطابقة. جرّب كلمة أخرى.</p>
+            <p className="gl-empty">{EMPTY.search}</p>
           ) : (
             <p className="gl-results-count">{formatArabicNumber(filtered.length)} مصطلح</p>
           )}

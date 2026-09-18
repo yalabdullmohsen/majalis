@@ -27,6 +27,7 @@ import { AssessmentModal } from "@/components/learning/AssessmentModal";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import "@/styles/pages/learning-path-detail.css";
 import {
@@ -210,7 +211,7 @@ export default function LearningPathDetailPage() {
       applyPageSeo({
         path: path_,
         title: "المسار غير موجود | سُنّة",
-        description: "لم يُعثر على هذا المسار التعليمي.",
+        description: "هذا المسار التعليمي غير متاح في الفهرس العام.",
         robots: "noindex, follow",
         jsonLd: [],
       });
@@ -301,7 +302,7 @@ export default function LearningPathDetailPage() {
   };
 
   if (loading && !(path && path.slug === slug)) return <SkeletonPage />;
-  if (!path) return <div className="page-shell"><p>المسار غير موجود.</p></div>;
+  if (!path) return <div className="page-shell"><p>{EMPTY.data}</p></div>;
 
   return (
     <div className="page-shell narrow lpd2-page" dir="rtl">

@@ -12,6 +12,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
 import { KnowledgeLayout } from "@/components/knowledge";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 
@@ -108,7 +109,7 @@ export default function RulingsPage() {
     applyPageSeo({
       path: "/rulings",
       title: "الأحكام الشرعية | سُنّة",
-      description: "موسوعة الأحكام الشرعية في الفقه الإسلامي، استعرض الأحكام مرتّبةً حسب الأبواب الفقهية والتصنيفات. محتوى معتمد في منهج سُنّة",
+      description: "موسوعة الأحكام الشرعية في الفقه الإسلامي، استعرض الأحكام مرتّبةً حسب الأبواب الفقهية والتصنيفات.",
       keywords: ["أحكام شرعية", "فقه إسلامي", "الأحكام الفقهية", "حكم شرعي", "موسوعة فقهية"],
       jsonLd: [
         {
@@ -116,7 +117,7 @@ export default function RulingsPage() {
           "@type": "WebPage",
           name: "موسوعة الأحكام الشرعية",
           url: "https://www.ssunnah.com/rulings",
-          description: "أحكام الفقه الإسلامي مرتّبةً حسب الأبواب والتصنيفات الفقهية؛ محتوى معتمد في منهج سُنّة",
+          description: "أحكام الفقه الإسلامي مرتّبةً حسب الأبواب والتصنيفات الفقهية.",
           about: { "@type": "Thing", name: "الأحكام الشرعية في الفقه الإسلامي" },
           provider: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
         },
@@ -267,7 +268,7 @@ export default function RulingsPage() {
               ? dbState.dbError === "table_missing"
                 ? "جدول sharia_rulings غير موجود، طبّق migrations التفعيل أولاً."
                 : `تعذّر تحميل الأحكام: ${dbState.dbError}`
-              : "تعذّر تحميل الأحكام الشرعية حاليًا. يرجى المحاولة مرة أخرى بعد قليل."
+              : STATUS.loadError
           }
           onRetry={loadRulings}
         />
@@ -284,8 +285,8 @@ export default function RulingsPage() {
                 ? "قاعدة البيانات جاهزة لكن لم تُستورد الأحكام بعد. شغّل Production Activation من لوحة الإدارة."
                 : "لم تُنشر أحكام في الموسوعة بعد. يمكنك تصفح الأسئلة والأجوبة أو بوابة الفقه في الأثناء."
               : !debouncedSearch.trim() && category === "الكل" && !subcategory
-                ? "لا توجد أحكام منشورة في الموسوعة حاليًا. جرّب الأسئلة والأجوبة أو بوابة الفقه."
-                : "لا توجد أحكام مطابقة لبحثك أو الفلتر الحالي. جرّب تصنيفاً آخر أو امسح البحث."
+                ? EMPTY.data
+                : EMPTY.search
           }
         />
       ) : (

@@ -107,7 +107,7 @@ export default function TranscribePage() {
     }
 
     if (!isLoggedIn) {
-      setErrorMessage("يجب تسجيل الدخول أولاً.");
+      setErrorMessage("سجّل الدخول لمتابعة التفريغ.");
       return;
     }
 
@@ -119,7 +119,7 @@ export default function TranscribePage() {
       const user = sessionData.session?.user;
       const accessToken = sessionData.session?.access_token;
       if (!user || !accessToken) {
-        setErrorMessage("يجب تسجيل الدخول.");
+        setErrorMessage("سجّل الدخول لمتابعة التفريغ.");
         setStatus("error");
         return;
       }

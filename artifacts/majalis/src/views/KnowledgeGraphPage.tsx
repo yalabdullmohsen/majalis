@@ -25,6 +25,7 @@ import {
 } from "@/lib/supabase";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import { absoluteUrl } from "@/lib/site-config";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { Chip } from "@/components/ui-common";
@@ -187,7 +188,7 @@ export default function KnowledgeGraphPage() {
     applyPageSeo({
       path: "/knowledge-graph",
       title: "الرسم البياني المعرفي | سُنّة",
-      description: "استكشف العلاقات بين المفاهيم الإسلامية، رسم بياني تفاعلي يربط العلماء والكتب والمسائل الفقهية. محتوى معتمد في منهج سُنّة",
+      description: "استكشف العلاقات بين المفاهيم الإسلامية، رسم بياني تفاعلي يربط العلماء والكتب والمسائل الفقهية.",
       keywords: ["رسم بياني معرفي", "علاقات إسلامية", "استكشاف المعرفة", "خريطة علمية", "علم الشبكات"],
       jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الرسم البياني المعرفي الإسلامي", url: absoluteUrl("/knowledge-graph"), about: { "@type": "Thing", name: "شبكة المعرفة الإسلامية التفاعلية" } }],
     });
@@ -408,12 +409,12 @@ export default function KnowledgeGraphPage() {
             <div className="kng-loading" aria-busy="true">تحديث الرسم…</div>
           ) : gNodes.length === 0 ? (
             <div className="kng-empty">
-              <p className="kng-empty__title">لا توجد بيانات بعد</p>
+              <p className="kng-empty__title">{EMPTY.data}</p>
               <p className="kng-empty__desc">
                 {isAdmin
                   ? <>شغّل <code>knowledge_graph_islamic_v1.sql</code> و<code>knowledge_graph_islamic_seed_v1.sql</code> في Supabase، ثم أعد التحميل.</>
                   : <>
-                      تعذّر تحميل الرسم الآن. يمكنك مؤقتًا تصفّح{" "}
+                      {STATUS.loadError} يمكنك مؤقتًا تصفّح{" "}
                       <Link href="/prophets">قصص الأنبياء</Link>
                       {" "}و{" "}
                       <Link href="/fiqh">الفقه</Link>
@@ -554,7 +555,7 @@ export default function KnowledgeGraphPage() {
                       );
                     })}
                   {visEdges.filter(e => e.source === selected.id || e.target === selected.id).length === 0 && (
-                    <li className="kng-panel__rel-empty">لا توجد علاقات مرئية</li>
+                    <li className="kng-panel__rel-empty">{EMPTY.data}</li>
                   )}
                 </ul>
               </div>
@@ -628,7 +629,7 @@ export default function KnowledgeGraphPage() {
           )}
 
           {tagResults.length === 0 && searchTag && !tagLoading && (
-            <p className="kng-no-results">لا توجد نتائج للوسم "{searchTag}". جرّب وسماً آخر.</p>
+            <p className="kng-no-results">{EMPTY.search}</p>
           )}
 
           {!searchTag && (

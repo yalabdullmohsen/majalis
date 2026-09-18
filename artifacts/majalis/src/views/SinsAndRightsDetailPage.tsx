@@ -2,6 +2,7 @@ import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import {
   getTopicBySlug,
   getRelatedTopics,
@@ -25,7 +26,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
       applyPageSeo({
         path: `/sins-and-rights/${params.slug}`,
         title: "موضوع غير متاح | سُنّة",
-        description: "لم يُعثر على هذا الموضوع.",
+        description: "هذا الموضوع غير متاح في الفهرس العام.",
         robots: "noindex, follow",
         jsonLd: [],
       });
@@ -60,7 +61,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
   if (!topic) {
     return (
       <div className="snr-detail-page">
-        <Empty text="هذا الموضوع غير متاح حالياً." />
+        <Empty text={EMPTY.data} />
         <div style={{ textAlign: "center", marginTop: "1rem" }}>
           <Link href="/sins-and-rights" style={{ color: "var(--elite-green, var(--mj-brand-deep))", fontWeight: 600 }}>
             ← العودة إلى الذنوب والحقوق

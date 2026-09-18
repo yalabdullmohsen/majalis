@@ -1,7 +1,7 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "@/lib/seo";
-import { EMPTY } from "@/lib/ui-copy";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import { fetchSurahDetail, type Ayah } from "@/lib/quran-api";
 import {
   MUTASHABIHAT,
@@ -38,10 +38,10 @@ function AyahText({ surah, ayah: ayahNum, surahName }: { surah: number; ayah: nu
       .then((detail) => {
         if (cancelled) return;
         const a = detail.ayahs.find((a: Ayah) => a.numberInSurah === ayahNum);
-        setText(a?.text ?? "تعذّر تحميل الآية");
+        setText(a?.text ?? STATUS.loadError);
       })
       .catch(() => {
-        if (!cancelled) setText("تعذّر التحميل");
+        if (!cancelled) setText(STATUS.loadError);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -223,13 +223,13 @@ export default function MutashabihatPage() {
       path: "/mutashabihat",
       title: "الآيات المتشابهات في القرآن | سُنّة",
       description:
-        "نظام متخصص لدراسة الآيات المتشابهات في القرآن الكريم مع نصوص الآيات وتلميحات الاختلاف الدقيق. محتوى معتمد في منهج سُنّة",
+        "نظام متخصص لدراسة الآيات المتشابهات في القرآن الكريم مع نصوص الآيات وتلميحات الاختلاف الدقيق.",
       keywords: ["الآيات المتشابهات", "متشابه القرآن", "حفظ القرآن", "تلاوة القرآن"],
       jsonLd: [{
         "@context": "https://schema.org",
         "@type": "WebPage",
         name: "الآيات المتشابهات في القرآن",
-        description: "نظام متخصص لدراسة الآيات المتشابهات في القرآن الكريم. محتوى معتمد في منهج سُنّة",
+        description: "نظام متخصص لدراسة الآيات المتشابهات في القرآن الكريم.",
         url: "https://www.ssunnah.com/mutashabihat",
         inLanguage: "ar",
         publisher: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },

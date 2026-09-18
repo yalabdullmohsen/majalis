@@ -3,6 +3,7 @@ import { useParams } from "wouter";
 import { PageHeader, Empty } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { getArticleBySlug, getArticleTranslations, type DawahArticle, type DawahTranslation } from "@/lib/dawah-service";
 import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
 import { UtilityScreen } from "@/components/design-system/screens";
@@ -50,7 +51,7 @@ export default function DiscoverIslamArticleDetailPage() {
   if (item === null) {
     return (
       <DiscoverIslamShell detail>
-        <Empty text="لم يُعثر على هذا المقال." />
+        <Empty text={EMPTY.data} />
       </DiscoverIslamShell>
     );
   }

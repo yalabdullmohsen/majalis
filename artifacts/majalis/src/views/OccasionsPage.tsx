@@ -40,14 +40,14 @@ export default function OccasionsPage() {
     applyPageSeo({
       path: "/occasions",
       title: "المناسبات الإسلامية والمواسم | سُنّة",
-      description: "تقويم المناسبات الإسلامية والأعياد والمواسم الدينية، رمضان وعيد الفطر وعيد الأضحى والمواسم الهجرية. محتوى معتمد في منهج سُنّة",
+      description: "تقويم المناسبات الإسلامية والأعياد والمواسم الدينية، رمضان وعيد الفطر وعيد الأضحى والمواسم الهجرية.",
       keywords: ["مناسبات إسلامية", "أعياد إسلامية", "رمضان", "عيد الأضحى", "المواسم الدينية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "المناسبات والمواسم الإسلامية",
-          description: "تقويم الأعياد والمناسبات الدينية في الشهور الهجرية؛ محتوى معتمد في منهج سُنّة",
+          description: "تقويم الأعياد والمناسبات الدينية في الشهور الهجرية.",
           numberOfItems: 12,
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "شهر رمضان المبارك", url: "https://www.ssunnah.com/occasions?month=9" },

@@ -449,13 +449,13 @@ function MiracleDetailPage({ slug }: { slug: string }) {
         );
         const found = rows.find((m) => m.slug === slug) || seeded || null;
         if (!found) {
-          setError("الموضوع غير موجود أو غير معتمد للعرض.");
+          setError(EMPTY.data);
           setItem(null);
           return;
         }
         const rich = getMiracleSeedBySlug(found.slug) || found;
         if (rich.verification_status === "needs_review") {
-          setError("هذا الموضوع قيد المراجعة وغير ظاهر للعامة.");
+          setError(EMPTY.data);
           setItem(null);
           return;
         }
@@ -529,7 +529,7 @@ function MiracleDetailPage({ slug }: { slug: string }) {
         eyebrow="الإعجاز العلمي"
       >
         <div className="mk-page" dir="rtl">
-          <p className="page-desc">{error || "تعذّر عرض هذا الموضوع."}</p>
+          <p className="page-desc">{error || EMPTY.data}</p>
           <Link href="/miracles" className="mk-expand-btn">العودة للإعجاز العلمي</Link>
         </div>
       </TopicPage>

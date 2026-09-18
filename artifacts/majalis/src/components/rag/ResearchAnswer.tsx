@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ClipboardCopy, Library, Save, Scale } from "lucide-react";
 import { SourceCard } from "./SourceCard";
 import type { RAGResult, ContentType } from "@/lib/rag-service";
+import { EMPTY } from "@/lib/ui-copy";
 import "@/styles/components/content-actions-rag.css";
 
 interface Props {
@@ -195,7 +196,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
         {["hadith", "fiqh", "lessons", "books", "all"].includes(activeTab) && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {getSourcesForTab(activeTab).length === 0 ? (
-              <div className="ra-empty">لا توجد نتائج في هذا التصنيف</div>
+              <div className="ra-empty">{EMPTY.searchShort}</div>
             ) : (
               getSourcesForTab(activeTab).map((s) => (
                 <SourceCard key={`${s.content_type}:${s.index}`} source={s} />

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { STATUS } from "@/lib/ui-copy";
 import { truncateAtWord } from "@/lib/utils";
 import { ShareButtons } from "@/components/ContentActions";
 import {
@@ -227,7 +228,7 @@ export default function ResearchDetailPage() {
                 setReportOpen(false);
                 alert("تم استلام البلاغ للمراجعة.");
               } catch {
-                alert("تعذّر حفظ البلاغ محليًا.");
+                alert(STATUS.loadError);
               }
             }}
           >

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { Link } from "wouter";
 import { ArrowRight, BookOpen, ChevronRight, Search, X, AlertTriangle } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { STATUS } from "@/lib/ui-copy";
 import {
   HADITH_COLLECTIONS,
   fetchAllHadiths,
@@ -302,7 +303,7 @@ function CollectionBrowser({ meta }: { meta: CdnCollectionMeta }) {
     return (
       <div className="hb-error" role="alert">
         <AlertTriangle size={22} className="inline ms-2" />
-        تعذّر تحميل {meta.name}. تحقق من الاتصال بالإنترنت وحاول مجدداً.
+        {STATUS.networkError}
       </div>
     );
   }

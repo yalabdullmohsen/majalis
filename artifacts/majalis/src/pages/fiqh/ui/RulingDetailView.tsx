@@ -6,6 +6,7 @@ import { resolveRulingByIdentifier, getRelatedRulingsEncyclopedia } from "@/lib/
 import { buildRulingRelations } from "@/lib/rulings-relations";
 import type { RulingRelationLink, ShariaRulingExtended } from "@/lib/rulings-types";
 import { applyPageSeo } from "@/lib/seo";
+import { STATUS } from "@/lib/ui-copy";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 import { ScholarlyTrustBadge, type TrustData } from "@/components/ScholarlyTrustBadge";
@@ -84,7 +85,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
       applyPageSeo({
         path: `/rulings/${params.id}`,
         title: gone ? "الحكم محذوف | سُنّة" : "الحكم غير موجود | سُنّة",
-        description: gone ? "أُزيل هذا الحكم من الموسوعة." : "لم يُعثر على هذا الحكم الشرعي.",
+        description: gone ? "أُزيل هذا الحكم من الموسوعة." : "هذا الحكم الشرعي غير متاح في الموسوعة.",
         robots: "noindex, follow",
         jsonLd: [],
       });
@@ -124,7 +125,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
   if (loadError) {
     return (
       <ErrorState
-        text="تعذّر تحميل الحكم الشرعي. يرجى المحاولة مرة أخرى."
+        text={STATUS.loadError}
         onRetry={() => setRetryTick((n) => n + 1)}
       />
     );

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { Search, BookOpen, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -1096,7 +1097,7 @@ export default function DuasPage() {
 
       {/* ═══ شبكة الأدعية ═══ */}
       {filtered.length === 0 ? (
-        <p className="duas-empty">لا توجد أدعية مطابقة. جرّب كلمة أخرى أو امسح التصفية، أو تصفّح أدعية القرآن.</p>
+        <p className="duas-empty">{EMPTY.search}</p>
       ) : (
         <div className="duas-list">
           {filtered.map((dua) => {

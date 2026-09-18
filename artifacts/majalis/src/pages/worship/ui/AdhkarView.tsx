@@ -4,6 +4,7 @@ import { useLocation, useParams } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
 import { ADHKAR_CATEGORIES, FEATURED_ADHKAR_SLUGS } from "@/lib/adhkar-seed";
 import { usePublishedAdhkarItems, isPublishableAdhkar, getUnverifiedAdhkarItems } from "@/lib/adhkar-service";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import { Empty } from "@/components/ui-common";
 import { PageShell } from "@/components/layout/PageShell";
 import { UtilityScreen } from "@/components/design-system/screens";
@@ -114,7 +115,7 @@ export default function AdhkarPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "أقسام الأذكار الإسلامية",
-          description: "أذكار الصباح والمساء والصلاة والسفر والنوم وسائر المناسبات؛ محتوى معتمد في منهج سُنّة",
+          description: "أذكار الصباح والمساء والصلاة والسفر والنوم وسائر المناسبات.",
           numberOfItems: ADHKAR_CATEGORIES.length,
           itemListElement: ADHKAR_CATEGORIES.map((c, i) => ({
             "@type": "ListItem",
@@ -303,9 +304,9 @@ export default function AdhkarPage() {
       {isLoading && publishedItems.length === 0 ? (
         <div className="adhkar-loading-hint" role="status" aria-busy="true" aria-label="تحديث الأذكار" />
       ) : isError && publishedItems.length === 0 ? (
-        <Empty text="تعذّر تحميل الأذكار." />
+        <Empty text={STATUS.loadError} />
       ) : total === 0 ? (
-        <Empty text="لا توجد أذكار في هذا القسم حاليًا. جرّب قسمًا آخر." />
+        <Empty text={EMPTY.data} />
       ) : current ? (
         <div className="adhkar-focus-shell">
           {/* عداد الأذكار — سياق واضح: الذكر ن من م */}

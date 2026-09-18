@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { STATUS } from "@/lib/ui-copy";
 import { useLanguage } from "@/components/LanguageProvider";
 import { submitDawahContactRequest, CONTACT_RELIGIONS, type ReligionCode } from "@/lib/dawah-service";
 import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
@@ -111,7 +112,7 @@ export default function DiscoverIslamContactPage() {
           أوافق على استخدام بياناتي فقط لغرض التواصل معي في هذا الطلب.
         </label>
 
-        {result && !result.ok && <p className="dii-form-error">{result.error === "consent_required" ? "الموافقة على سياسة الخصوصية مطلوبة." : "تعذّر إرسال الطلب، حاول مجددًا."}</p>}
+        {result && !result.ok && <p className="dii-form-error">{result.error === "consent_required" ? "الموافقة على سياسة الخصوصية مطلوبة." : STATUS.networkError}</p>}
 
         <button type="submit" disabled={busy} className="asp-run-btn" aria-busy={busy}>{busy ? "إرسال…" : "إرسال الطلب"}</button>
       </form>

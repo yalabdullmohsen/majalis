@@ -431,7 +431,7 @@ export default function SinsAndRightsPage() {
           "@context": "https://schema.org",
           "@type": "Article",
           headline: "الذنوب والحقوق — منظومة معرفية شرعية",
-          description: "شرح أنواع الذنوب والتمييز بين حقوق الله وحقوق العباد وشروط التوبة الصحيحة. محتوى معتمد في منهج سُنّة",
+          description: "شرح أنواع الذنوب والتمييز بين حقوق الله وحقوق العباد وشروط التوبة الصحيحة.",
           url: "https://www.ssunnah.com/sins-and-rights",
           inLanguage: "ar",
           publisher: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { BookOpen, Info } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { STATUS } from "@/lib/ui-copy";
 import { fetchSurahIndexLocal, fetchRevelationTypes, type SurahIndexEntry } from "@/lib/surah-index";
 
 type RevelationFilter = "all" | "meccan" | "medinan";
@@ -89,7 +90,7 @@ export default function RevelationOrderPage() {
       ) : loadError && surahs.length === 0 ? (
         <div className="revord-empty">
           <BookOpen size={32} strokeWidth={1} aria-hidden="true" />
-          <p>تعذّر تحميل بيانات السور. تحقّق من اتصالك وأعد المحاولة.</p>
+          <p>{STATUS.networkError}</p>
         </div>
       ) : (
         <ol className="revord-timeline" aria-label="السور مرتبة حسب ترتيب النزول" aria-busy={loading}>

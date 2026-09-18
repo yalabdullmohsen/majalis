@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import { Star, BookOpen } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import {
   fetchSurahIndexLocal,
   fetchRevelationTypes,
@@ -66,7 +67,7 @@ export default function SurahIndexPage() {
       path: "/quran/surahs",
       title: "فهرس السور | سُنّة",
       description:
-        "فهرس سور القرآن الكريم الـ114 كاملة: رقم السورة واسمها وعدد آياتها وتصنيفها المكي أو المدني، مع بحث سريع ومفضلة. محتوى معتمد في منهج سُنّة",
+        "فهرس سور القرآن الـ114: الرقم والاسم وعدد الآيات والمكي/المدني، مع بحث سريع ومفضلة — وفق منهج سُنّة.",
       keywords: ["فهرس السور", "سور القرآن", "مكية ومدنية", "المصحف"],
     });
   }, []);
@@ -238,12 +239,12 @@ export default function SurahIndexPage() {
       ) : loadError && surahs.length === 0 ? (
         <div className="surah-index-empty">
           <BookOpen size={32} strokeWidth={1} aria-hidden="true" />
-          <p>تعذّر تحميل فهرس السور. تحقّق من اتصالك وأعد المحاولة.</p>
+          <p>{STATUS.networkError}</p>
         </div>
       ) : filtered.length === 0 ? (
         <div className="surah-index-empty">
           <BookOpen size={32} strokeWidth={1} aria-hidden="true" />
-          <p>{filter === "favorites" ? "لا سور في مفضلتك بعد." : "لا نتائج مطابقة."}</p>
+          <p>{filter === "favorites" ? EMPTY.bookmarks : EMPTY.searchShort}</p>
         </div>
       ) : (
         <div aria-busy={loading}>

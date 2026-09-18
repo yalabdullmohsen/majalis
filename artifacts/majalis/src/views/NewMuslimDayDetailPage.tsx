@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "wouter";
 import { PageHeader, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import { useAuth } from "@/components/AuthProvider";
 import { getNewMuslimPath, getNewMuslimProgress, markNewMuslimDayComplete, type NewMuslimDay } from "@/lib/dawah-service";
 import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
@@ -45,14 +46,14 @@ export default function NewMuslimDayDetailPage() {
   if (days === null) {
     return (
       <DiscoverIslamShell detail>
-        <PageHeader eyebrow="التعريف بالإسلام" title="اليوم" />
+        <PageHeader eyebrow="التعريف بالإسلام" title="مسار المسلم الجديد" subtitle={STATUS.contentLoading} />
       </DiscoverIslamShell>
     );
   }
   if (!item) {
     return (
       <DiscoverIslamShell detail>
-        <Empty text="لم يُعثر على هذا اليوم." />
+        <Empty text={EMPTY.data} />
       </DiscoverIslamShell>
     );
   }
@@ -74,7 +75,7 @@ export default function NewMuslimDayDetailPage() {
           {isDone ? "✓ تم إنجاز هذا اليوم" : "وضع علامة إنجاز"}
         </button>
       ) : (
-        <p className="dii-path-day-title" style={{ marginTop: "1rem" }}>سجّل الدخول لحفظ تقدّمك عبر الأيام.</p>
+        <p className="dii-path-day-title" style={{ marginTop: "1rem" }}>سجّل الدخول لحفظ تقدّمك في مسار الأيام.</p>
       )}
 
       <div className="dii-cta-row dii-section">

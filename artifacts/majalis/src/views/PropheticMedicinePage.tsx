@@ -60,14 +60,14 @@ export default function PropheticMedicinePage() {
       applyPageSeo({
         path: "/prophetic-medicine",
         title: "الطب النبوي | سُنّة",
-        description: "موسوعة الطب النبوي، هدي النبي ﷺ في الصحة والتداوي بالأغذية والأعشاب والرقية الشرعية. محتوى معتمد في منهج سُنّة",
+        description: "موسوعة الطب النبوي، هدي النبي ﷺ في الصحة والتداوي بالأغذية والأعشاب والرقية الشرعية.",
         keywords: ["طب نبوي", "هدي النبي", "تداوي", "أعشاب إسلامية", "رقية شرعية"],
         jsonLd: [
           {
             "@context": "https://schema.org",
             "@type": "ItemList",
             name: "موسوعة الطب النبوي",
-            description: "هدي النبي ﷺ في الصحة والتداوي من الأغذية والأعشاب والرقية الشرعية؛ محتوى معتمد في منهج سُنّة",
+            description: "هدي النبي ﷺ في الصحة والتداوي من الأغذية والأعشاب والرقية الشرعية.",
             numberOfItems: m.PROPHETIC_MEDICINE_ITEMS.length,
             itemListElement: m.PROPHETIC_MEDICINE_ITEMS.slice(0, 20).map((item: { id: string; name: string }, i: number) => ({
               "@type": "ListItem",

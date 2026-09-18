@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -123,14 +124,14 @@ export default function FawaidPage({
     applyPageSeo({
       path: "/fawaid",
       title: "الفوائد الشرعية | سُنّة",
-      description: "منصة لنشر ومشاركة الفوائد الشرعية، فوائد قرآنية وحديثية وعقدية وفقهية وتربوية. محتوى معتمد في منهج سُنّة",
+      description: "فوائد شرعية قرآنية وحديثية وعقدية وفقهية وتربوية — للنشر والمشاركة والقراءة.",
       keywords: ["فوائد شرعية", "فوائد علمية", "فوائد قرآنية", "فوائد حديثية", "الفوائد الإسلامية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "أقسام الفوائد الشرعية",
-          description: "أقسام الفوائد الشرعية على المنصة؛ محتوى معتمد في منهج سُنّة",
+          description: "تصنيفات الفوائد الشرعية على سُنّة.",
           itemListElement: FAWAID_CATEGORIES.map((cat, i) => ({
             "@type": "ListItem",
             position: i + 1,
@@ -318,7 +319,7 @@ export default function FawaidPage({
         {loading && displayItems.length === 0 ? (
           <SkeletonCardGrid count={8} />
         ) : displayItems.length === 0 && !loading ? (
-          <Empty text={debouncedSearch.trim() ? `لا توجد فوائد مطابقة لـ «${debouncedSearch.trim()}». جرّب كلمة أخرى.` : "لا توجد فوائد في هذا القسم حاليًا."} />
+          <Empty text={debouncedSearch.trim() ? EMPTY.search : EMPTY.data} />
         ) : (
           <>
             <div className="faidah-grid">

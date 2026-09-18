@@ -2,6 +2,7 @@ import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useMemo, useState } from "react";
 import { BookOpen, ChevronDown, ChevronUp, Layers, Scale, Search, Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -561,7 +562,7 @@ export default function FiqhQawaidPage() {
               />
             </div>
             {filteredFaraa.length === 0 && (
-              <p className="fq-empty">لا نتائج للبحث</p>
+              <p className="fq-empty">{EMPTY.searchShort}</p>
             )}
             <div className="fq-faraa-grid">
               {filteredFaraa.map((q, i) => (

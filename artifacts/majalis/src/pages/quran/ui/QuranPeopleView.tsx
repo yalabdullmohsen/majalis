@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { toArabicDigits } from "@/lib/utils";
 import {
@@ -114,7 +115,7 @@ export default function QuranPeopleView() {
         {loading && people.length === 0 ? (
           <p className="qp-people__status" role="status" aria-busy="true"></p>
         ) : filtered.length === 0 ? (
-          <p className="qp-people__status">لا نتائج مطابقة.</p>
+          <p className="qp-people__status">{EMPTY.searchShort}</p>
         ) : (
           <>
             <p className="qp-people__meta-count">

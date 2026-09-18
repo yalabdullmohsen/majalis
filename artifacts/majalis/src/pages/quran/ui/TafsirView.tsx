@@ -11,6 +11,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import {
@@ -312,7 +313,7 @@ export default function TafsirPage() {
       {filtered.length === 0 ? (
         <div className="tf-empty">
           <BookOpen size={36} aria-hidden="true" />
-          <p>لا توجد نتائج للبحث. جرّب كلمة أخرى أو امسح التصفية.</p>
+          <p>{EMPTY.search}</p>
         </div>
       ) : (
         <section className="tf-section" aria-label="مواد علم التفسير">

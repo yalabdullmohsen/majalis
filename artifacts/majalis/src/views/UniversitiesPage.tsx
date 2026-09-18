@@ -5,7 +5,7 @@ import { CompareBar } from "@/components/universities/CompareBar";
 import { UniversityCard } from "@/components/universities/UniversityCard";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
-import { EMPTY } from "@/lib/ui-copy";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
@@ -126,7 +126,7 @@ function UniversitiesContent() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "دليل الجامعات الإسلامية حول العالم",
-          description: "جامعات ومعاهد إسلامية في عشرات الدول العربية والإسلامية؛ محتوى معتمد في منهج سُنّة",
+          description: "جامعات ومعاهد إسلامية في عشرات الدول العربية والإسلامية.",
           numberOfItems: COUNTRIES.length,
           itemListElement: COUNTRIES.map((country, i) => ({
             "@type": "ListItem",
@@ -204,7 +204,7 @@ function UniversitiesContent() {
         {seedNeeded && universities.length > 0 && (
           <div className="up-alert" role="status">
             <Landmark size={14} aria-hidden="true" className="inline ms-1" />
-            تعذّر مزامنة دليل الجامعات الآن. تظهر النسخة المحلية المعتمدة إن وُجدت.
+            {STATUS.networkError} تظهر النسخة المحلية المعتمدة إن وُجدت.
           </div>
         )}
 

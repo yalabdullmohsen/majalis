@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Download, Shield, Trash2, Cookie, Wifi } from "lucide-react";
 import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { applyPageSeo } from "@/lib/seo";
+import { STATUS } from "@/lib/ui-copy";
 import { useAuth } from "@/components/AuthProvider";
 import { supabase } from "@/lib/supabase";
 import { readCookieConsent, writeCookieConsent } from "@/lib/cookie-consent";
@@ -48,7 +49,7 @@ export default function PrivacyCenterPage() {
         headers: { Authorization: `Bearer ${token}` },
       });
       const body = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(body.error || "فشل التصدير");
+      if (!res.ok) throw new Error(body.error || STATUS.loadError);
       const blob = new Blob([JSON.stringify(body, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -58,7 +59,7 @@ export default function PrivacyCenterPage() {
       URL.revokeObjectURL(url);
       setExportMsg("تم تنزيل نسخة بياناتك.");
     } catch (e) {
-      setExportMsg(e instanceof Error ? e.message : "تعذّر التصدير");
+      setExportMsg(e instanceof Error ? e.message : STATUS.loadError);
     } finally {
       setExporting(false);
     }
