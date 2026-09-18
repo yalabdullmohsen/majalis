@@ -23,12 +23,12 @@ const instant = read("src/styles/components/instant-interaction.css");
 assert.match(instant, /touch-action:\s*manipulation/);
 
 const native = read("src/styles/components/native-feel.css");
-assert.match(native, /mj-route-brand-fade/);
-assert.match(native, /mj-route-brand-wash/);
+assert.match(native, /mj-route-push-in/);
 assert.match(native, /mj-route-push/);
 assert.match(native, /mj-smooth-image/);
-assert.match(native, /cubic-bezier\(0\.22/);
+assert.match(native, /cubic-bezier\(0\.32,\s*0\.72,\s*0,\s*1\)/);
 assert.match(native, /mj-chrome-stable/);
+assert.doesNotMatch(native, /mj-route-brand-wash/);
 
 const app = read("src/App.tsx") + "\n" + read("src/AppRoutes.tsx");
 assert.match(app, /EdgeSwipeBack/);

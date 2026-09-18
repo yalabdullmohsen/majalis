@@ -1,5 +1,5 @@
 /**
- * بوابة انتقالات الصفحات — تلاشي سريع بلا وميض سطح، مع احترام تقليل الحركة.
+ * بوابة انتقالات الصفحات — استمرارية مكانية بهدوء Apple، بلا شاشة جديدة.
  */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -23,26 +23,33 @@ assert.match(app, /RouteEnterMotion/, "مركّب في App");
 assert.match(app, /app-top-chrome/, "كروم علوي ثابت في الشجرة");
 assert.match(native, /\.app-top-chrome/, "كروم علوي ثابت أثناء الانتقال");
 
-assert.match(native, /mj-route-brand-wash/, "غطاء سطح أثناء الدخول");
-assert.match(native, /background:\s*var\(--mj-bg/, "غطاء بنفس سطح الصفحة — بلا وميض لون");
-assert.doesNotMatch(
-  native.slice(native.indexOf("@keyframes mj-route-brand-wash"), native.indexOf("/* سحب حافة")),
-  /linear-gradient/,
-  "غطاء الانتقال بلا تدرج لوني يسبب وميضًا",
-);
+assert.match(native, /mj-route-push-in/, "دفع مكاني (Apple-like)");
+assert.match(native, /mj-route-pop-in/, "رجوع مكاني");
+assert.match(native, /mj-route-tab-in/, "تبديل تبويب هادئ");
+assert.match(native, /--mj-nav-sign/, "اتجاه انزلاق يحترم RTL");
+assert.match(native, /background:\s*var\(--mj-bg/, "سطح الصفحة ثابت — بلا وميض لون");
+assert.doesNotMatch(native, /mj-route-brand-wash/, "لا غطاء لوني يقطع الاستمرارية");
 assert.doesNotMatch(native, /filter:\s*saturate/, "لا تشبع لوني أثناء الدخول");
+
+const pushBlock = native.slice(
+  native.indexOf("@keyframes mj-route-push-in"),
+  native.indexOf("@keyframes mj-route-pop-in"),
+);
+assert.match(pushBlock, /opacity:\s*0\.9[0-9]/, "الدفع لا يخفي المحتوى (استمرارية)");
+assert.doesNotMatch(pushBlock, /opacity:\s*0\s*;/, "لا خفوت كامل يشعر بشاشة جديدة");
 
 const ms = [...spatial.matchAll(/push:\s*(\d+)/g)].map((m) => Number(m[1]));
 assert.ok(ms[0] >= 120 && ms[0] <= 180, `push duration ضمن 120–180ms (وجد ${ms[0]})`);
-const cssMs = [...native.matchAll(/mj-route-brand-fade\s+(\d+)ms/g)].map((m) => Number(m[1]));
+const tabMs = [...spatial.matchAll(/tab:\s*(\d+)/g)].map((m) => Number(m[1]));
+assert.ok(tabMs[0] > 0 && tabMs[0] <= 120, `tab سريع ≤120ms (وجد ${tabMs[0]})`);
+
+const cssMs = [
+  ...native.matchAll(/mj-route-(?:push|pop|tab|modal)-in\s+(\d+)ms/g),
+].map((m) => Number(m[1]));
+assert.ok(cssMs.length >= 3, "مدد CSS للأنواع الأساسية");
 assert.ok(
   cssMs.every((n) => n <= 220),
   `مدة CSS ≤220ms (وجد ${cssMs.join(",")})`,
-);
-const washMs = [...native.matchAll(/mj-route-brand-wash\s+(\d+)ms/g)].map((m) => Number(m[1]));
-assert.ok(
-  washMs.every((n) => n <= 220),
-  `مدة الغطاء ≤220ms (وجد ${washMs.join(",")})`,
 );
 
 assert.match(lrf, /lrf-wrap--skel/, "هيكل مسار فوري");
