@@ -70,8 +70,8 @@
 | prophets generic sections | IMPROVED_VERIFIED |
 | tarikh featured badge noise | IMPROVED_VERIFIED |
 | seerah dark text | IMPROVED_VERIFIED |
-| fawaid template clusters | PENDING_NEXT (large seed; not claimed complete) |
-| author-aliases → scholars | PENDING_NEXT |
+| fawaid template clusters | IMPROVED_VERIFIED (collapsed permutations + strip tails) |
+| author-aliases → scholars | IMPROVED_VERIFIED (9 profiles; rest BLOCKED_SOURCE) |
 
 
 ## Wave 11 final states
@@ -81,5 +81,5 @@
 | adhkar SEO truncateAtWord | IMPROVED_VERIFIED |
 | author-aliases (9 profiles) → `/scholars` | IMPROVED_VERIFIED |
 | remaining aliases without profile | BLOCKED_SOURCE (stay unlinked; no `/search` fake) |
-| fawaid template clusters | PENDING_NEXT |
+| fawaid template clusters | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |

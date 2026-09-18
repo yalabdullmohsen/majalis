@@ -18,6 +18,7 @@ import { formatAbwabCount, formatMasailCount } from "@/lib/arabic-count";
 import "@/styles/pages/fiqh-hub.css";
 import { DetailScreen } from "@/components/design-system/screens";
 import { KnowledgeLayout } from "@/components/knowledge";
+import { truncateAtWord } from "@/lib/utils";
 
 export default function FiqhBookPage() {
   const params = useParams<{ bookId: string }>();
@@ -39,7 +40,7 @@ export default function FiqhBookPage() {
     applyPageSeo({
       path: `/fiqh/books/${book.id}`,
       title: `${book.title} | الفقه | سُنّة`,
-      description: editorial.description.slice(0, 160),
+      description: truncateAtWord(editorial.description, 160),
       keywords: [book.title, "فقه", "حنبلي", "سُنّة", ...(book.aliases ?? [])],
       jsonLd: [
         bookJsonLd({

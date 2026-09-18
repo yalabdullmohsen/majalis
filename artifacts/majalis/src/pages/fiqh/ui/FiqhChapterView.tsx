@@ -18,6 +18,7 @@ import { formatMasailCount } from "@/lib/arabic-count";
 import "@/styles/pages/fiqh-hub.css";
 import { DetailScreen } from "@/components/design-system/screens";
 import { KnowledgeLayout } from "@/components/knowledge";
+import { truncateAtWord } from "@/lib/utils";
 
 type TocItem = { id: string; label: string };
 
@@ -36,7 +37,7 @@ export default function FiqhChapterPage() {
     applyPageSeo({
       path: chapterHref(book.id, chapter.id),
       title: `${chapter.title} | ${book.title} | الفقه | سُنّة`,
-      description: (chapter.summary || chapter.definition || chapter.title).slice(0, 160),
+      description: truncateAtWord(chapter.summary || chapter.definition || chapter.title, 160),
       keywords: [chapter.title, book.title, "فقه", "حنبلي", "سُنّة"],
       jsonLd: breadcrumbJsonLd([
         { name: "الرئيسية", path: "/" },
@@ -232,11 +233,7 @@ export default function FiqhChapterPage() {
                   <InternalLinkCard
                     href={lessonHref(book, lesson)}
                     title={lesson.title}
-                    description={
-                      lesson.summary.length > 110
-                        ? `${lesson.summary.slice(0, 100).trim()}…`
-                        : lesson.summary
-                    }
+                    description={truncateAtWord(lesson.summary, 100)}
                     badge={String(li + 1)}
                     className="ve-chapter-card"
                   />

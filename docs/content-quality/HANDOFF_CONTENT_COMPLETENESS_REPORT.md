@@ -22,7 +22,7 @@ Ayah normalize COMPLETE_VERIFIED. Mushaf QPC NOT_APPLICABLE.
 | Remaining author aliases | BLOCKED_SOURCE | No invented scholar pages |
 | Library books without URL | BLOCKED_SOURCE | OWNER — no invent |
 | Hosted fiqh_council SQL purge | OWNER_ACTION | Requires owner approval |
-| Fawaid template clusters | PENDING_NEXT | Large seed; not claimed |
+| Fawaid template clusters | IMPROVED_VERIFIED | Collapsed topic×bab permutations; stripped template tails |
 | Series deep links keep slug | DEFERRED | Entry budget |
 
 ## Allowed final states used

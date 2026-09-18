@@ -2,6 +2,7 @@ import { SEO_SITE } from "./seo-nav-labels";
 import { SITE_DESCRIPTION } from "./site-config";
 import type { KuwaitLessonRecord } from "./kuwait-lessons";
 import { formatSheikhName, stripSheikhHonorifics } from "./sheikh-name";
+import { truncateAtWord } from "./content-display-polish";
 
 const SITE_URL = SEO_SITE.siteUrl;
 const SITE_NAME = SEO_SITE.siteName;
@@ -338,7 +339,7 @@ export function islamicStoryJsonLd(story: {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: story.title,
-    description: story.body ? story.body.slice(0, 160) : `${story.title} — قصة إسلامية موثقة.`,
+    description: story.body ? truncateAtWord(story.body, 160) : `${story.title} — قصة إسلامية موثقة.`,
     url: absoluteUrl(url),
     inLanguage: "ar",
     author: { "@type": "Organization", name: SITE_NAME },

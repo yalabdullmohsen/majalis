@@ -8,6 +8,7 @@ import { normalizeArabic } from "@/shared/arabic-normalize";
 import { QURAN_TOPICS, searchQuranTopics, type QuranTopicSearchHit } from "@/lib/quran-topics-index";
 import { ADHKAR_CATEGORIES, getAdhkarByCategory, type AdhkarItem } from "@/lib/adhkar-seed";
 import { FIQH_HUB_TOPICS, type FiqhHubTopic } from "@/lib/fiqh-hub-topics";
+import { truncateAtWord } from "@/lib/content-display-polish";
 
 export type TopicCategoryId =
   | "purification"
@@ -185,7 +186,7 @@ function adhkarToEvidence(items: AdhkarItem[], limit: number): TopicEvidenceItem
   return items.slice(0, limit).map((a) => ({
     kind: "adhkar" as const,
     id: a.id,
-    title: a.text.slice(0, 60) + (a.text.length > 60 ? "…" : ""),
+    title: truncateAtWord(a.text, 60),
     href: `/adhkar/${ADHKAR_CATEGORIES.find((c) => c.id === a.categoryId)?.slug || "misc"}?id=${a.id}`,
     snippet: a.source,
     meta: a.categoryId,
@@ -198,7 +199,7 @@ function fiqhToEvidence(topics: FiqhHubTopic[]): TopicEvidenceItem[] {
     id: t.id,
     title: t.title,
     href: t.href,
-    snippet: t.desc?.slice(0, 100),
+    snippet: t.desc ? truncateAtWord(t.desc, 100) : undefined,
     meta: t.kind,
   }));
 }

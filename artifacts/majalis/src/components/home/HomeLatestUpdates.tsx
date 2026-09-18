@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { fetchLiveAutoContent, autoContentToUpdateItem } from "@/lib/auto-content-service";
 import type { MergedUpdateItem } from "@/lib/auto-content/auto-content-utils";
 import { displayText } from "@/lib/display-text";
+import { truncateAtWord } from "@/lib/utils";
 import { Widget } from "@/components/widgets/Widget";
 
 const UpdatesIcon = () => (
@@ -64,7 +65,7 @@ export function HomeLatestUpdates() {
       id="latest-updates"
       icon={<UpdatesIcon />}
       eyebrow="محتوى موثّق"
-      title="آخر المستجدات من المصادر الرسمية"
+      title="آخر المستجدات"
       moreHref="/updates"
       moreLabel="جميع المستجدات"
       state="ready"
@@ -78,7 +79,7 @@ export function HomeLatestUpdates() {
           >
             <span className="page-tag">{TYPE_LABELS[item.update_type] || "تحديث"}</span>
             <strong>{displayText(item.title)}</strong>
-            {item.summary && <span>{displayText(item.summary.slice(0, 120))}{item.summary.length > 120 ? "…" : ""}</span>}
+            {item.summary && <span>{displayText(truncateAtWord(item.summary, 120))}</span>}
             <span className="home-daily-meta">
               {item.source_name && <span>{item.source_name}</span>}
               {item.published_at && <span>{formatDate(item.published_at)}</span>}

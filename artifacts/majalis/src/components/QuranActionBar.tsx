@@ -10,7 +10,7 @@ import { getSurahMeta } from "@/lib/quran-api";
 import { getReciter, saveReciterId } from "@/lib/quran-audio";
 import { getVerifiedReciters, getVerifiedRecitersSyncFallback } from "@/lib/audio-registry";
 import { shareAyahAsText } from "@/lib/share-ayah";
-import { toArabicDigits } from "@/lib/utils";
+import { toArabicDigits, truncateAtWord } from "@/lib/utils";
 import "@/styles/quran-engine-ui.css";
 
 export type QuranActionBarAyah = {
@@ -188,7 +188,7 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
         const row = await db.addBookmark({
           surahId: ayah.surah,
           ayahId: ayah.ayah,
-          note: ayah.text.slice(0, 120),
+          note: truncateAtWord(ayah.text, 120),
         });
         if (!row) {
           setStatus("تعذّر حفظ الإشارة. قد يكون التخزين المحلي غير متاح.");
@@ -229,7 +229,7 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
         ) : null}
       </header>
 
-      <p className="qe-abar__preview">{ayah.text.length > 140 ? `${ayah.text.slice(0, 140)}…` : ayah.text}</p>
+      <p className="qe-abar__preview">{truncateAtWord(ayah.text, 140)}</p>
 
       <button
         type="button"

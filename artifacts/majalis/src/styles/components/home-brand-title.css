@@ -119,7 +119,18 @@ html.dark .home-page-hero .pattern-backdrop {
 }
 
 .home-page-hero .page-hero-mj__desc {
-  display: none;
+  display: block;
+  margin: 0.35rem auto 0;
+  max-width: 28rem;
+  font-size: clamp(0.92rem, 2.6vw, 1.05rem);
+  line-height: 1.55;
+  color: var(--mj-ink-2, var(--text-secondary, #4a5c54));
+  text-wrap: pretty;
+}
+
+html[data-theme="dark"] .home-page-hero .page-hero-mj__desc,
+html.dark .home-page-hero .page-hero-mj__desc {
+  color: var(--on-dark-secondary, var(--dm-text-muted, #b5ada0));
 }
 
 .home-page-hero .page-hero-mj__actions {

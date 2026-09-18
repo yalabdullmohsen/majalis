@@ -12,6 +12,7 @@ import {
 } from "@/lib/knowledge-loader";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { truncateAtWord } from "@/lib/utils";
 import "@/styles/pages/knowledge.css";
 import { UtilityScreen } from "@/components/design-system/screens";
 
@@ -52,7 +53,10 @@ export default function KnowledgeSectionPage() {
           if (one && section === "discover-islam") markDiscoverStation(one.id);
           if (one) {
             const path = `/knowledge/${section}/${id}`;
-            const desc = one.body.replace(/##[^\n]*/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
+            const desc = truncateAtWord(
+              one.body.replace(/##[^\n]*/g, " ").replace(/\s+/g, " ").trim(),
+              160,
+            );
             applyPageSeo({
               path,
               title: `${one.title} | ${SECTION_TITLE[section] || "معرفة"}`,

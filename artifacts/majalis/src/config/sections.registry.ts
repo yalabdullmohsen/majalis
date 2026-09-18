@@ -258,7 +258,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     id: "quran",
     label: "مركز القرآن الكريم",
     navLabel: "القرآن",
-    subtitle: "المصحف والتلاوة والتجويد والتفسير",
+    subtitle: "مصحف وتلاوة وتجويد وحفظ — من موضعك الأخير",
     route: "/quran-hub",
     icon: BookOpen,
     group: "sciences",
@@ -271,7 +271,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "lessons",
     label: "الدروس",
-    subtitle: "دروس ودورات علمية مرتّبة للحضور",
+    subtitle: "دروس علمية مرتّبة للحضور أو المتابعة لاحقًا",
     route: "/lessons",
     icon: GraduationCap,
     group: "learning",
@@ -283,7 +283,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "prayer",
     label: "الصلاة",
-    subtitle: "المواقيت والقبلة وتنبيهات الأذان",
+    subtitle: "أوقات الصلاة والقبلة وتنبيه الأذان لموقعك",
     route: "/prayer-times",
     icon: MoonStar,
     group: "worship",
@@ -295,7 +295,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "sections",
     label: "الأقسام",
-    subtitle: "فهرس الأقسام الشرعية والأدوات",
+    subtitle: "عقيدة وحديث وسيرة ومكتبة وأدوات طالب العلم",
     route: "/sections",
     icon: Layers,
     group: "account",

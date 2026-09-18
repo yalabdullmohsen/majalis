@@ -9,6 +9,7 @@ import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 import type { AutoImportedContent } from "@/lib/auto-content/auto-content-utils";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { truncateAtWord } from "@/lib/utils";
 
 export default function AutoContentDetailPage({ params }: { params: { slug: string } }) {
   const [item, setItem] = useState<AutoImportedContent | null>(null);
@@ -59,7 +60,7 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
         breadcrumbJsonLd([
           { name: "الرئيسية", path: "/" },
           { name: "آخر المستجدات", path: "/updates" },
-          { name: item.title.slice(0, 60), path },
+          { name: truncateAtWord(item.title, 60), path },
         ]),
       ],
     });

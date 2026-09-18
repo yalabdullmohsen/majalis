@@ -44,12 +44,12 @@ export const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc:
 
 /* ── المميزات البارزة — ٦ أبواب رئيسية فقط (مطابقة IA_HOME_PRIMARY) ── */
 export const FEATURED: { href: string; Icon: LucideIcon; title: string; desc: string; cta: string }[] = [
-  { href: "/quran-hub", Icon: BookMarked, title: seoNavLabel("/quran-hub", "مركز القرآن"), desc: "المصحف والتجويد والحفظ وعلوم القرآن في باب واحد", cta: "افتح" },
-  { href: "/lessons", Icon: GraduationCap, title: seoNavLabel("/lessons", "الدروس والدورات"), desc: "دروس ودورات مرتّبة بحسب الموضوع والمستوى", cta: "افتح" },
-  { href: "/prayer-times", Icon: Clock, title: seoNavLabel("/prayer-times", "مواقيت الصلاة"), desc: "مواقيت دقيقة مع اتجاه القبلة وتنبيهات الأذان", cta: "افتح" },
-  { href: "/fiqh", Icon: Scale, title: seoNavLabel("/fiqh", "الفقه والأحكام"), desc: "الأحكام والقواعد الشرعية تحت باب واحد", cta: "افتح" },
-  { href: "/adhkar", Icon: RotateCw, title: seoNavLabel("/adhkar", "الأذكار اليومية"), desc: "أذكار الصباح والمساء والنوم وما بينهما مرتّبة للورد", cta: "افتح" },
-  { href: "/sections", Icon: Layers, title: seoNavLabel("/sections", "جميع الأقسام"), desc: "فهرس يجمع الفقه والحديث والأعلام والعبادات", cta: "افتح" },
+  { href: "/quran-hub", Icon: BookMarked, title: seoNavLabel("/quran-hub", "مركز القرآن"), desc: "مصحف وتلاوة وتجويد وحفظ — من موضعك الأخير", cta: "افتح" },
+  { href: "/lessons", Icon: GraduationCap, title: seoNavLabel("/lessons", "الدروس والدورات"), desc: "دروس علمية مرتّبة للحضور أو المتابعة لاحقًا", cta: "افتح" },
+  { href: "/prayer-times", Icon: Clock, title: seoNavLabel("/prayer-times", "مواقيت الصلاة"), desc: "أوقات الصلاة والقبلة وتنبيه الأذان لموقعك", cta: "افتح" },
+  { href: "/fiqh", Icon: Scale, title: seoNavLabel("/fiqh", "الفقه والأحكام"), desc: "مسائل وكتب فقهية موثّقة في موضع واحد", cta: "افتح" },
+  { href: "/adhkar", Icon: RotateCw, title: seoNavLabel("/adhkar", "الأذكار اليومية"), desc: "أذكار الصباح والمساء وما بينهما", cta: "افتح" },
+  { href: "/sections", Icon: Layers, title: seoNavLabel("/sections", "جميع الأقسام"), desc: "عقيدة وحديث وسيرة ومكتبة وأدوات طالب العلم", cta: "افتح" },
 ];
 
 /* ── أقسام مصنّفة ── */

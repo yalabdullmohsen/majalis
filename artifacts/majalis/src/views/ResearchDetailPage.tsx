@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { truncateAtWord } from "@/lib/utils";
 import { ShareButtons } from "@/components/ContentActions";
 import {
   RESEARCH_KIND_LABELS,
@@ -39,7 +40,7 @@ export default function ResearchDetailPage() {
     applyPageSeo({
       path: `/academic-research/${research.slug}`,
       title: `${research.title} | الأبحاث الشرعية`,
-      description: research.abstract.slice(0, 160),
+      description: truncateAtWord(research.abstract, 160),
       keywords: research.keywords,
       robots: research.reviewStatus !== "published" || research.isPersonal ? "noindex,nofollow" : undefined,
       jsonLd: research.reviewStatus === "published"
