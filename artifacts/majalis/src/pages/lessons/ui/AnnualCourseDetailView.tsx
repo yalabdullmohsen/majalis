@@ -4,6 +4,7 @@ import { SkeletonPage, Empty } from "@/components/ui-common";
 import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
 import { getAnnualCourseById, getRelatedCourses } from "@/lib/platform-content-service";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 import "@/styles/pages/annual-course-detail.css";
@@ -84,7 +85,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
   }, [item, loading, params.id]);
 
   if (loading && !item) return <SkeletonPage />;
-  if (!item) return <Empty text="الدورة غير موجودة." />;
+  if (!item) return <Empty text={EMPTY.data} />;
 
   const mapEmbed = buildMapsEmbed(item.map_url, item.venue_name, item.venue_city);
   const summary = cleanAnnualCourseSummary(item.summary);

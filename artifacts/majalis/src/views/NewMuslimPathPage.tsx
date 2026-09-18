@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { PageHeader, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { STATUS } from "@/lib/ui-copy";
 import { useAuth } from "@/components/AuthProvider";
 import { getNewMuslimPath, getNewMuslimProgress, type NewMuslimDay } from "@/lib/dawah-service";
 import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
@@ -37,7 +38,7 @@ export default function NewMuslimPathPage() {
           ))}
         </div>
       ) : days.length === 0 ? (
-        <Empty text="تعذّر تحميل أيام المسار. تحقق من الاتصال ثم أعد المحاولة." />
+        <Empty text={STATUS.loadError} />
       ) : (
         <ol className="dii-path-list">
           {days.map((d) => {

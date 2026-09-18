@@ -147,3 +147,22 @@
 | teacher/reading-plans/arbaeen-nawawi | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
 | admin empties | DEFERRED |
+
+## Wave 18 final states
+
+| section | finalState |
+|---|---|
+| quran circles/index/people/numbers/makki/search | IMPROVED_VERIFIED |
+| lessons/rulings/qawaid/hadith/search/notifications | IMPROVED_VERIFIED |
+| adhkar loadError → STATUS | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
+
+## Wave 19 final states
+
+| section | finalState |
+|---|---|
+| discover-islam / new-muslim / sins detail not-found | IMPROVED_VERIFIED |
+| auto-content / annual-course / path loadError | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |

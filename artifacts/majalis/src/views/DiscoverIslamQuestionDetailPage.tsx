@@ -4,6 +4,7 @@ import { PageHeader, Empty } from "@/components/ui-common";
 import { ShareButtons } from "@/components/ContentActions";
 import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { getQuestionBySlug, getQuestionTranslations, type DawahQuestion, type DawahTranslation } from "@/lib/dawah-service";
 import { supabase } from "@/lib/supabase";
 import { UtilityScreen } from "@/components/design-system/screens";
@@ -50,7 +51,7 @@ export default function DiscoverIslamQuestionDetailPage() {
   if (item === null) {
     return (
       <DiscoverIslamShell detail>
-        <Empty text="لم يُعثر على هذا السؤال." />
+        <Empty text={EMPTY.data} />
       </DiscoverIslamShell>
     );
   }

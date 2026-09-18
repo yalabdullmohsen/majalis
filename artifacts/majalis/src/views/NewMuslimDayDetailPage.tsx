@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "wouter";
 import { PageHeader, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { useAuth } from "@/components/AuthProvider";
 import { getNewMuslimPath, getNewMuslimProgress, markNewMuslimDayComplete, type NewMuslimDay } from "@/lib/dawah-service";
 import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
@@ -52,7 +53,7 @@ export default function NewMuslimDayDetailPage() {
   if (!item) {
     return (
       <DiscoverIslamShell detail>
-        <Empty text="لم يُعثر على هذا اليوم." />
+        <Empty text={EMPTY.data} />
       </DiscoverIslamShell>
     );
   }

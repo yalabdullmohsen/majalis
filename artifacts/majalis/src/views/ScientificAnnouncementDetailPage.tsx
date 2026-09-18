@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { Empty } from "@/components/ui-common";
+import { EMPTY } from "@/lib/ui-copy";
 import {
   buildShareText,
   formatAnnouncementDate,
@@ -57,11 +58,11 @@ export default function ScientificAnnouncementDetailPage({
         <MetaHead
           path={`/scientific-announcements/${params.id}`}
           title="الإعلان غير موجود | سُنّة"
-          description="لم يُعثر على هذا الإعلان العلمي."
+          description="هذا الإعلان غير متاح في الفهرس العام."
           robots="noindex, follow"
           jsonLd={[]}
         />
-        <Empty text="لم يُعثر على الإعلان." />
+        <Empty text={EMPTY.data} />
         <Link href="/lessons" className="sci-ann-detail__back">
           العودة إلى الدروس
         </Link>

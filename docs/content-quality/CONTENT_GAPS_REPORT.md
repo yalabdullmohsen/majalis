@@ -157,3 +157,12 @@
 | adhkar loadError → STATUS | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
 | admin empties | DEFERRED |
+
+## Wave 19 final states
+
+| section | finalState |
+|---|---|
+| discover-islam / new-muslim / sins detail not-found | IMPROVED_VERIFIED |
+| auto-content / annual-course / path loadError | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
