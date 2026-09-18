@@ -147,7 +147,7 @@ html[data-theme="dark"] .bottom-nav__tab-icon,
 html.dark .bottom-nav__tab,
 html.dark .bottom-nav__tab-label,
 html.dark .bottom-nav__tab-icon {
-  color: color-mix(in srgb, var(--dm-text-muted) 78%, #6a7a72) !important;
+  color: var(--dm-text-secondary, #d8d0c4) !important;
   opacity: 1 !important;
 }
 

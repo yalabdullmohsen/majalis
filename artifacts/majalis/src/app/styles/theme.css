@@ -341,12 +341,12 @@ html.dark,
   --chip-bg: #16261F;
   --chip-fg: #B8E0CC;
   /* --on-brand-muted يبقى فاتحًا: الأسطح الزمردية الصلبة (#0F5C45) لا تُقلَب ليلاً */
-  /* خلفية عميقة فقط للأسطح — النص عبر --mj-brand-deep (غابة مقروءة) / --mj-brand-deep-ink */
+  /* سطح عميق: --mj-brand-deep-surface · نص مقروء: --mj-brand-deep / --color-primary-dark */
   --mj-brand-deep-surface: #0E1C17;
   --mj-brand-deep: #8FD4B0;
   --mj-brand-deep-ink: #EDE8DF;
   --elite-forest: #8FD4B0;
-  --color-primary-dark: var(--mj-brand-deep-surface);
+  --color-primary-dark: var(--mj-brand-deep);
   --color-active-tab-bg: color-mix(in srgb, var(--elite-forest, #8fd4b0) 16%, transparent);
   --mj-on-brand: #06231A;
   --mj-accent: #C9A86C;
