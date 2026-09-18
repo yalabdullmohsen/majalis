@@ -129,12 +129,12 @@ console.log("\n=== nav-visibility تنظيف ===");
   assert(resolveMergedPath("/researches") === "/academic-research", "researches → academic-research");
   assert(resolveMergedPath("/start-here") === "/lessons", "start-here → lessons");
   assert(Object.keys(MERGED_PATH_REDIRECTS).length >= 10, "جدول التوجيه غير فارغ");
-  assert(!isComingSoonPath("/kids"), "ركن الأطفال مفتوح");
   assert(!isComingSoonPath("/mushaf"), "المصحف لم يعد قريبًا");
   assert(!isComingSoonPath("/mushaf/1"), "مسارات المصحف الفرعية مفتوحة");
 
   const homeHrefs = FEATURE_CATS.flatMap((c) => c.items.map((i) => i.href));
   assert(!homeHrefs.includes("/flashcards"), "الكتالوج بلا بطاقات منفصلة");
+  assert(!homeHrefs.includes("/kids"), "الكتالوج بلا ركن الأطفال");
   assert(homeHrefs.includes("/quran-hub"), "بوابة القرآن في الكتالوج");
   assert(!homeHrefs.includes("/memorization"), "الحفظ تحت مركز القرآن الكريم لا كقسم عام");
   assert(homeHrefs.includes("/universities") && homeHrefs.includes("/academic-research"), "الجامعات والرسائل في الكتالوج");

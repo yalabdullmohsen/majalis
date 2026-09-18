@@ -29,7 +29,6 @@ function loadKnownPaths() {
     "/settings",
     "/library",
     "/more",
-    "/kids",
     "/flashcards",
     "/islamic-glossary",
     "/hadith-science",

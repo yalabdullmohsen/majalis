@@ -22,8 +22,6 @@
     { "pattern": "xxx+\\s*$", "flags": "im", "message": "حشو xxx ظاهر" }
   ],
   "uiAllowedSoonPaths": [
-    "/kids",
-    "ركن الأطفال",
     "comingSoon",
     "isComingSoon",
     "__tests__",
