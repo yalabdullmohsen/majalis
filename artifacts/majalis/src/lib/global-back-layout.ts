@@ -1,6 +1,6 @@
 /**
  * منسّق تخطيط زر الرجوع العام — أسفل يمين فوق الشريط السفلي.
- * لا يغطي أعلى الصفحة؛ يظهر بعد التمرير فقط.
+ * لا يغطي أعلى الصفحة؛ ظاهر دائمًا خارج الشاشات المستثناة.
  */
 export type BackAvoidanceInsets = {
   safeAreaBottom: number;
@@ -16,8 +16,8 @@ export type BackTopInsets = {
 
 export const BACK_CONTROL_SIZE_PX = 44;
 export const BACK_CONTROL_GAP_PX = 12;
-/** عتبة ظهور زر الرجوع بعد التمرير (px) */
-export const BACK_FAB_SCROLL_SHOW_PX = 120;
+/** كان عتبة ظهور بعد التمرير — أصبح 0 (ظاهر فورًا) مع الإبقاء على الاسم للتوافق */
+export const BACK_FAB_SCROLL_SHOW_PX = 0;
 
 export function computeBackControlBottomOffset(insets: BackAvoidanceInsets): number {
   const stack =

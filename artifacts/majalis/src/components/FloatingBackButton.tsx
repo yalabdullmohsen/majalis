@@ -2,14 +2,13 @@
  * GlobalBackControlHost — مصدر حقيقة واحد لزر الرجوع العام في سُنّة.
  * يُركَّب مرة واحدة في جذر التطبيق.
  * FLOATING_BACK_DISABLED = لا FAB دائري علوي قديم.
- * UNIFIED_BACK_FAB = زر رجوع موحّد أسفل يمين (فوق Bottom Nav) يظهر بعد التمرير.
+ * UNIFIED_BACK_FAB = زر رجوع موحّد أسفل يمين (فوق Bottom Nav) ظاهر دائمًا خارج الرئيسية/المصحف.
  */
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import { AppBackButton } from "@/components/common/AppBackButton";
 import {
   BACK_CONTROL_SIZE_PX,
-  BACK_FAB_SCROLL_SHOW_PX,
   computeBackControlBottomOffset,
   computeContentBottomInsetForBack,
 } from "@/lib/global-back-layout";
@@ -21,17 +20,6 @@ function readCssPx(varName: string, fallback: number): number {
   const raw = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
   const n = Number.parseFloat(raw);
   return Number.isFinite(n) ? n : fallback;
-}
-
-function readScrollY(): number {
-  const root = document.querySelector<HTMLElement>('[data-scroll-root="1"]');
-  const rootY = root ? root.scrollTop : 0;
-  return Math.max(
-    window.scrollY || 0,
-    document.documentElement.scrollTop || 0,
-    document.body.scrollTop || 0,
-    rootY,
-  );
 }
 
 function syncBackLayoutVars(host: HTMLElement | null) {
@@ -64,13 +52,14 @@ function syncBackLayoutVars(host: HTMLElement | null) {
   document.documentElement.style.setProperty("--global-back-size", `${BACK_CONTROL_SIZE_PX}px`);
   document.documentElement.setAttribute("data-global-back-host", "1");
   document.documentElement.setAttribute("data-global-back-edge", "bottom");
+  document.documentElement.setAttribute("data-global-back-visible", "1");
   if (host) {
     host.style.bottom = `${bottom}px`;
     host.style.top = "auto";
   }
 }
 
-/** المضيف الوحيد لزر الرجوع العام — أسفل يمين بعد التمرير */
+/** المضيف الوحيد لزر الرجوع العام — أسفل يمين ظاهر دائمًا */
 export function GlobalBackControlHost() {
   const hostRef = useRef<HTMLDivElement>(null);
   const [location] = useLocation();
@@ -80,7 +69,6 @@ export function GlobalBackControlHost() {
   const hideOnAdhanSettings =
     path === "/adhan-settings" || path.startsWith("/adhan-settings/");
   const hideBack = hideOnHome || hideOnMushaf || hideOnAdhanSettings;
-  const [scrolled, setScrolled] = useState(false);
 
   useLayoutEffect(() => {
     if (hideBack) {
@@ -107,35 +95,11 @@ export function GlobalBackControlHost() {
 
   useEffect(() => {
     if (hideBack) {
-      setScrolled(false);
-      return;
-    }
-    const onScroll = () => {
-      const next = readScrollY() > BACK_FAB_SCROLL_SHOW_PX;
-      setScrolled((prev) => (prev === next ? prev : next));
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    document.addEventListener("scroll", onScroll, { passive: true, capture: true });
-    const root = document.querySelector<HTMLElement>('[data-scroll-root="1"]');
-    root?.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      document.removeEventListener("scroll", onScroll, true);
-      root?.removeEventListener("scroll", onScroll);
-    };
-  }, [hideBack, path]);
-
-  useEffect(() => {
-    if (hideBack) {
       document.documentElement.removeAttribute("data-global-back-visible");
       return;
     }
-    document.documentElement.setAttribute(
-      "data-global-back-visible",
-      scrolled ? "1" : "0",
-    );
-  }, [hideBack, scrolled]);
+    document.documentElement.setAttribute("data-global-back-visible", "1");
+  }, [hideBack, path]);
 
   if (hideBack) return null;
 
@@ -146,8 +110,7 @@ export function GlobalBackControlHost() {
       data-global-back-control-host="1"
       data-testid="global-back-control-host"
       data-edge="bottom"
-      data-visible={scrolled ? "1" : "0"}
-      aria-hidden={!scrolled}
+      data-visible="1"
     >
       <AppBackButton
         variant="bar"
@@ -155,7 +118,6 @@ export function GlobalBackControlHost() {
         label="رجوع"
         aria-label="رجوع"
         className="global-back-control-host__btn"
-        tabIndex={scrolled ? 0 : -1}
       />
     </div>
   );
