@@ -38,8 +38,9 @@ export function classifyHadithGrade(grade: string | null | undefined): HadithGra
   if (/موضوع|باطل|مكذوب|لا\s*أصل/i.test(g)) return "mawdu";
   if (/ضعيف/.test(g)) return "daif";
   if (/حسن\s*صحيح|صحيح\s*حسن/i.test(g)) return "sahih";
-  if (/^حسن\b|\bحسن\b/.test(g)) return "hasan";
-  if (/^صحيح\b|متفق/i.test(g)) return "sahih";
+  // لا تستخدم \b مع العربية — حدود الكلمات ASCII فقط وتُفشل «صحيح»/«حسن».
+  if (/^حسن(\s|$)/.test(g) || /(^|\s)حسن(\s|$)/.test(g)) return "hasan";
+  if (/^صحيح(\s|$)/.test(g) || /متفق/.test(g)) return "sahih";
   if (/قيد|مراجعة|تدقيق/i.test(g)) return "pending";
   return "unknown";
 }

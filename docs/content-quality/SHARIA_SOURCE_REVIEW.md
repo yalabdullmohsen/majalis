@@ -15,7 +15,9 @@
 | IIFA / majma citations inside scholarly essays | VERIFIED as citation (not product) | Page sources | Not fiqh-council product | Do not mass-delete word «مجمع» |
 | LICENSE_RISKS adhan/QPC/books | BLOCKED_LICENSE for store | LICENSE_RISKS.md | Store redistribute | Owner decisions |
 
-**Wave 1 action:** Document + gate public exposure. No new rulings, bios, or book URLs invented.
+**Wave 1 action (2026-09-18 reinforce):** Byte-lock محمي لـ manifest/pages-manifest/basmala؛ قائمة الحديث العامة ترشّح `isHadithComplete`؛ البحث يخفي partial/NEEDS_SCHOLAR_REVIEW؛ طابور `SCHOLAR_REVIEW_QUEUE.md`. لا اختراع أحكام أو روابط مكتبة.
+
+**Wave 1 action (prior):** Document + gate public exposure. No new rulings, bios, or book URLs invented.
 
 **Wave 2 action:** Sanitize harvest display; scholar rail → `/scholars`; index `SCHOLAR_PROFILES` in search; hide blocked search titles. No invented scholar bios or harvest titles.
 
