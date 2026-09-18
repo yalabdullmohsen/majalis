@@ -28,6 +28,8 @@ assert(hero.includes("resolveDailyContext"), "التحية من السياق ا�
 assert(hero.includes("setInterval"), "التحية تُزامَن دوريًا مع ساعة الجهاز");
 assert(hero.includes('title="سُنّة"') || hero.includes("title=\"سُنّة\""), "اسم التطبيق عنوان الهيرو");
 assert(hero.includes("تصفح الأقسام"), "زر ثانوي لتصفح الأقسام");
+assert(hero.includes("تابع التعلم"), "زر أساسي للعائد: تابع التعلم");
+assert(!hero.includes("تابع التصفح"), "العائد لا يُوجَّه بتسمية تصفح عام");
 assert(!home.includes("<PageHero"), "الهيرو ليس مكرراً داخل HomeView");
 assert(css.includes("home-page-hero"), "أنماط الهيرو المدمجة");
 assert(!css.includes("home-brand-title__panel"), "لا لوحة زخرفية للهوية في البطاقة");

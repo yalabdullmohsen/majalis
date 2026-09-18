@@ -6,9 +6,9 @@
 
 | حقل | قيمة |
 |---|---|
-| Current stage | **2 — Route transitions** (PR-03 جارٍ) |
-| Latest measured commit | `13931126ede38503dcf8749ad0558d1bb540ce2b` |
-| Next stage | 1 — Startup + App Shell (بعد دمج PR-01 فقط) |
+| Current stage | **Excellence Home (Phase 2)** — زر استكمال التعلم في الهيرو |
+| Latest measured commit | `691566eed` (`origin/main`, بعد #2110) |
+| Next stage | Performance: bio lookup بدون `sheikhs.list()` الكامل · ثم تخصيص/مسارات حسب الأولوية |
 
 ## PRs
 
@@ -16,29 +16,36 @@
 |---|---|---|
 | PR-01 | Baseline + instrumentation + regression budgets | ✅ مدموج #2108 |
 | PR-02 | Startup fade 160ms + single hide coordinator | ✅ مدموج #2109 |
-| PR-03 | Fast Fade route transitions (no large slide) | جاري |
-| PR-02 … PR-22 | انظر خطة البرنامج | لم تبدأ |
+| PR-03 | Fast Fade route transitions (no large slide) | ✅ مدموج #2110 |
+| PR-04 | Home hero CTA: تابع التعلم (بلا تضخم Entry) | جاري |
+
+## Excellence & Growth — خريطة مختصرة
+
+| Phase | الموضوع | الحالة |
+|---|---|---|
+| 1 Stabilization | إقلاع + انتقالات Fast Fade + بوابات | ✅ (#2108–#2110) |
+| 2 Home | وضوح الاستكمال من الهيرو | جاري (هذا الـPR) |
+| 3–14 | تخصيص / رفيق / مسارات / بحث / علماء / a11y / جوال | لم تبدأ (مرحلة واحدة لاحقًا) |
+| 15–16 | أداء + قابلية توسّع (`sheikhs.list` في سيرة الدرس) | مُشخَّص — PR لاحق |
+| 17–18 | Polish / Final | بعد المراحل ذات الأثر |
 
 ## ما سُلِّم حتى الآن
 
-- خط أساس Bundle حقيقي في `BASELINE.md` + `baseline-metrics.json`
-- تفعيل بوابات إقلاع كانت موجودة وغير مربوطة (`startup-readiness` / `startup-shell-stability`)
-- بوابة `product-evolution-p0-baseline-gate` تمنع حذف التوثيق أو تخفيف سقف Entry
+- خط أساس Bundle في `BASELINE.md` + `baseline-metrics.json` (Entry JS gzip **120.3 KiB**)
+- بوابات إقلاع مربوطة + Splash fade 160ms
+- انتقالات صفحة Fast Fade بلا انزلاق كبير
+- هيرو: «رفيقك اليومي» + زر عائد «تابع التعلم» (بدل تصفح عام)
 
 ## أداء قبل/بعد
 
 | مقياس | قبل البرنامج (أساس) | بعد |
 |---|---|---|
-| Entry JS gzip | 120.3 KiB @ `13931126` | — (لم تتغير بعد مرحلة 0) |
+| Entry JS gzip | 120.3 KiB @ `13931126` | لا يُحدَّث يدويًا دون إعادة قياس |
 | Cold/Warm/Click-to-* | NOT MEASURED | — |
+| تفاصيل درس: `sheikhs.list()` | اختناق توسّع مثبت في الكود | إصلاح معلّق لـPR أداء |
 
-## AI / تعلّم / منصات / CI
+## المتبقي (OWNER / لاحق)
 
-- AI grounding: لم يبدأ (مراحل لاحقة + موافقة مالك للمزوّد)
-- Learning flows: عقود لاحقًا (مرحلة 5+)
-- Web/iOS/Android: لا ادّعاء جهاز في مرحلة 0
-- Blocked owner decisions: لا شيء بعد لمرحلة 0 (SQL/AI لاحقًا)
-
-## المتبقي
-
-المراحل 1–20 وPRs 02–22 حسب الخطة المعتمدة، مرحلة واحدة نشطة في كل وقت.
+- قياس زمن التشغيل على جهاز (Cold/Warm)
+- استعلام سيرة شيخ موجَّه بدل قائمة 300
+- ميزات التخصيص/المسارات/المساعد — موافقة نطاق + محتوى موثّق فقط

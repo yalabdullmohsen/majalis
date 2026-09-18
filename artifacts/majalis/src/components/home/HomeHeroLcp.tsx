@@ -47,7 +47,7 @@ export function HomeHeroLcp() {
       actions={
         <>
           <Link href={continueHref} className="mj-btn m2030-btn m2030-btn--primary">
-            {isFirstVisit ? "ابدأ الآن" : "تابع التصفح"}
+            {isFirstVisit ? "ابدأ الآن" : "تابع التعلم"}
           </Link>
           <Link href="/sections" className="mj-btn m2030-btn m2030-btn--ghost">
             تصفح الأقسام
