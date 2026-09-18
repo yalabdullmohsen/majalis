@@ -209,3 +209,11 @@
 | privacy/research-detail/scholarly-research messages | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
 | admin empties | DEFERRED |
+
+## Wave 25 final states
+
+| section | finalState |
+|---|---|
+| miracles/notifications/daily-wird/privacy export | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |

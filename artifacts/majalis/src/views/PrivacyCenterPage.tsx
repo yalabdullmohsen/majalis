@@ -49,7 +49,7 @@ export default function PrivacyCenterPage() {
         headers: { Authorization: `Bearer ${token}` },
       });
       const body = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(body.error || "فشل التصدير");
+      if (!res.ok) throw new Error(body.error || STATUS.loadError);
       const blob = new Blob([JSON.stringify(body, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");

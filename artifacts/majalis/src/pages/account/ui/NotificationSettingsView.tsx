@@ -46,7 +46,7 @@ import {
   type NotifRecord,
 } from "@/lib/notification-history";
 import { applyPageSeo } from "@/lib/seo";
-import { EMPTY } from "@/lib/ui-copy";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import { PushPrompt } from "@/components/PushPrompt";
 import { SunnahChannelsPanel } from "@/components/notifications/SunnahChannelsPanel";
 import { fireTestLocalNotification } from "@/lib/notifications/test-trigger";
@@ -524,7 +524,7 @@ export default function NotificationSettingsPage() {
     } else if (result.reason === "permission") {
       setTestStatus("الإذن غير ممنوح");
     } else {
-      setTestStatus("فشل الإرسال");
+      setTestStatus(STATUS.loadError);
     }
     window.setTimeout(() => setTestStatus(null), 4000);
   };

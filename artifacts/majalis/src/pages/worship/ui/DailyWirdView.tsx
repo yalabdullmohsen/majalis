@@ -11,6 +11,7 @@ import {
 } from "@/lib/quran-api";
 import { incrementTaskProgress } from "@/lib/daily-progress";
 import { applyPageSeo } from "@/lib/seo";
+import { STATUS } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
@@ -373,7 +374,7 @@ export default function DailyWirdPage() {
                   ? "تم جدولة تذكير الورد يوميًا الساعة 5 مساءً"
                   : result.reason === "permission"
                     ? "يلزم السماح بالإشعارات أولًا"
-                    : "تعذّرت جدولة التذكير",
+                    : STATUS.loadError,
               );
             });
           }}
