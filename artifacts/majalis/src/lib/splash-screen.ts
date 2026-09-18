@@ -117,12 +117,8 @@ export function armNativeSplashController(): void {
     });
   };
 
-  /* مصدر واحد: لا تخفِ Capacitor قبل استقرار الهيكل (يمنع وميض الكروم تحت Splash) */
+  /* مصدر واحد: shell-stable أو سقف SPLASH_MAX_VISIBLE_MS — بلا مؤقّت ثانٍ موازٍ */
   window.addEventListener("mj:shell-stable", hideHtmlAndNative, { once: true });
-  // صمام إضافي: إن لم تصل أحداث الاستقرار، أخفِ بتلاشي
-  window.setTimeout(() => {
-    void hideNativeSplash(false);
-  }, SPLASH_MAX_VISIBLE_MS * 2);
 }
 
 /** @deprecated */
