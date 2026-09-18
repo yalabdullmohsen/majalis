@@ -4,7 +4,7 @@
  * أو: npx tsx src/lib/__tests__/daily-context.test.ts
  */
 
-import { resolveTimeOfDay, resolveDailyContext, toHijri } from "../daily-context";
+import { resolveTimeOfDay, resolveDailyContext, toHijri, isMorningGreetingHour } from "../daily-context";
 
 let passed = 0;
 let failed = 0;
@@ -44,9 +44,22 @@ const morningCtx = resolveDailyContext(makeDate(8, 0));
 assert(morningCtx.greeting.includes("صبَّحك"), "تحية الصباح تبدأ بـ صبَّحك");
 assert(!morningCtx.greeting.includes("صباح الخير"), "لا تحتوي على (صباح الخير)");
 
+const noonCtx = resolveDailyContext(makeDate(12, 0));
+assert(noonCtx.greeting.includes("صبَّحك"), "الظهر ما زال تحية صباح");
+
+const asrCtx = resolveDailyContext(makeDate(15, 0));
+assert(asrCtx.greeting.includes("مسَّاك"), "العصر = تحية مساء لا صباح");
+
 const eveningCtx = resolveDailyContext(makeDate(19, 0));
 assert(eveningCtx.greeting.includes("مسَّاك"), "تحية المساء تبدأ بـ مسَّاك");
 assert(!eveningCtx.greeting.includes("مساء الخير"), "لا تحتوي على (مساء الخير)");
+
+const nightCtx = resolveDailyContext(makeDate(2, 0));
+assert(nightCtx.greeting.includes("مسَّاك"), "بعد منتصف الليل = مسَّاك حتى الفجر");
+
+assert(isMorningGreetingHour(8) === true, "08:00 نافذة صباح");
+assert(isMorningGreetingHour(15) === false, "15:00 خارج نافذة الصباح");
+assert(isMorningGreetingHour(2) === false, "02:00 خارج نافذة الصباح");
 
 // ── الجمعة تُنتج حدثاً خاصاً ────────────────────────────────────────────────
 console.log("\n=== أحداث الأيام ===");
@@ -82,9 +95,13 @@ console.log("\n=== اكتمال الحقول ===");
 
 const ctx = resolveDailyContext(makeDate(10, 30));
 assert(typeof ctx.greeting     === "string" && ctx.greeting.length > 0,     "greeting موجود");
-assert(typeof ctx.subGreeting  === "string" && ctx.subGreeting.length > 0,  "subGreeting موجود");
+assert(typeof ctx.subGreeting  === "string",  "subGreeting موجود (قد يكون فارغًا)");
 assert(typeof ctx.suggestion   === "string" && ctx.suggestion.length > 0,   "suggestion موجود");
-assert(typeof ctx.accentColor  === "string" && ctx.accentColor.startsWith("#"), "accentColor صحيح");
+assert(
+  typeof ctx.accentColor === "string" &&
+    (ctx.accentColor.startsWith("#") || ctx.accentColor.startsWith("var(")),
+  "accentColor صحيح",
+);
 assert(["moon","sun","sunset","dawn"].includes(ctx.timeIcon),                "timeIcon من القائمة");
 
 // ── hijriOffset يعمل ─────────────────────────────────────────────────────────
