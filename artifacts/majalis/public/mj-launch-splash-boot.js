@@ -7,7 +7,7 @@
         var MIN_MS = 220;
         var SOFT_MAX_MS = 480;
         var MAX_MS = 1400;
-        var EXIT_MS = 200;
+        var EXIT_MS = 160;
         var bootReady = false;
         var shellStable = false;
         var start = (window.performance && performance.now) ? performance.now() : Date.now();
