@@ -1,0 +1,92 @@
+{
+  "$comment": "قياس آلي لمرحلة 0 — لا تُحدَّث الأرقام يدويًا دون إعادة تشغيل أدوات القياس.",
+  "program": "sunnah-product-evolution",
+  "stage": 0,
+  "measuredAt": "2026-09-18T15:49:56.256Z",
+  "commit": "13931126ede38503dcf8749ad0558d1bb540ce2b",
+  "branchBase": "origin/main",
+  "environment": "local-agent-build",
+  "productRoot": "artifacts/majalis",
+  "commands": {
+    "build": "PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run build",
+    "bundleBudget": "node artifacts/majalis/scripts/test-bundle-budget.mjs",
+    "criticalCss": "node artifacts/majalis/scripts/test-critical-css-budget.mjs"
+  },
+  "bundle": {
+    "entryJs": {
+      "file": "index-DvIZKdTl.js",
+      "rawBytes": 394065,
+      "gzipBytes": 123198,
+      "gzipKiB": 120.3,
+      "budgetKiB": 120,
+      "zlibSlackBytes": 320,
+      "gate": "pass"
+    },
+    "iconsJs": {
+      "file": "icons-CrrzXclI.js",
+      "gzipBytes": 22748,
+      "gzipKiB": 22.2,
+      "budgetKiB": 30,
+      "gate": "pass"
+    },
+    "mainCss": {
+      "file": "index-Blv7h4zq.css",
+      "rawBytes": 339479,
+      "gzipBytes": 61575,
+      "gzipKiB": 60.1,
+      "budgetKiB": 100,
+      "gate": "pass"
+    },
+    "vendor": {
+      "reactGzipKiB": 3.3,
+      "reactDomGzipKiB": 54.2
+    },
+    "softWarnings": [
+      {
+        "chunk": "fiqh-books-COxvQfqM.js",
+        "gzipKiB": 251.5,
+        "note": "lazy content chunk فوق soft 150 KiB — ليس فشل بوابة entry"
+      }
+    ]
+  },
+  "criticalCss": {
+    "mainCssRawBytes": 339479,
+    "mainCssBudgetBytes": 505000,
+    "embeddedBytes": 13460,
+    "gate": "pass"
+  },
+  "historicalReferences": {
+    "lhciPreviewMedian": {
+      "source": "artifacts/majalis/config/lhci-main-baseline.json",
+      "measuredAt": "2026-08-29",
+      "cls": 0.0692,
+      "lcpMs": 7056,
+      "fcpMs": 4100,
+      "note": "مرجع LHCI سابق — ليس قياس هذه الجولة"
+    },
+    "psiMobileExam7": {
+      "source": "artifacts/majalis/scripts/perf-baseline.json",
+      "commit": "4fca70dc",
+      "measuredAt": "2026-08-17",
+      "performance": 58,
+      "lcpMs": 6300,
+      "tbtMs": 560,
+      "cls": 0.033,
+      "note": "مرجع PSI سابق — ليس قياس هذه الجولة"
+    }
+  },
+  "notMeasuredThisRun": [
+    "coldStartMs",
+    "warmStartMs",
+    "resumeMs",
+    "clickToShellMs",
+    "clickToContentMs",
+    "networkRequestCount",
+    "duplicateRequestCount",
+    "routeChunkLoadMs",
+    "componentMountCount",
+    "longTasks",
+    "clsLive",
+    "capacitorDeviceTimings"
+  ]
+}
