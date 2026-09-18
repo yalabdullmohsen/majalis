@@ -284,11 +284,6 @@
       "permanent": true
     },
     {
-      "source": "/support",
-      "destination": "/contact",
-      "permanent": true
-    },
-    {
       "source": "/man-nahnu",
       "destination": "/about",
       "permanent": true
