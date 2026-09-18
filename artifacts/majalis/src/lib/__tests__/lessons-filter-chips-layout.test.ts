@@ -1,5 +1,5 @@
 /**
- * فلتر الدروس: بطاقة مستطيلة، أهداف لمس ≥44px، بلا قصّ نص.
+ * فلتر الدروس: شريط بحواف ناعمة، أهداف لمس ≥44px، بلا قصّ نص.
  * تشغيل: node --import tsx src/lib/__tests__/lessons-filter-chips-layout.test.ts
  */
 import assert from "node:assert/strict";
@@ -12,6 +12,7 @@ const appRoot = resolve(__dirname, "../../..");
 
 const filtersCss = readFileSync(resolve(appRoot, "src/styles/components/filters.css"), "utf8");
 const lessonsCss = readFileSync(resolve(appRoot, "src/styles/pages/lessons.css"), "utf8");
+const unifyCss = readFileSync(resolve(appRoot, "src/styles/visual-identity-unify.css"), "utf8");
 const chipsTsx = readFileSync(resolve(appRoot, "src/components/ui/FilterChips.tsx"), "utf8");
 const lessonsView = readFileSync(resolve(appRoot, "src/pages/lessons/ui/LessonsView.tsx"), "utf8");
 
@@ -19,7 +20,18 @@ assert.equal(/exclusive-choice/.test(chipsTsx), false, "بلا exclusive-choice 
 assert.match(chipsTsx, /SegmentedFilter/, "FilterChips يغلف النظام الموحّد");
 assert.match(filtersCss, /\.mj-filter-chip\s*\{[\s\S]*?min-height:\s*44px/);
 assert.match(filtersCss, /\.mj-filter-chip\.is-active\s*\{[\s\S]*?color:\s*#fff/);
+assert.match(filtersCss, /\.mj-filter-fields\s+select[\s\S]*?border-radius:\s*var\(--radius-control/);
 assert.match(lessonsCss, /\.lessons-page-v3/);
+assert.match(
+  lessonsCss,
+  /\.lessons-v3-sticky\s*\{[^}]*border-radius:\s*var\(--radius-card/,
+  "شريط فلتر الدروس بحواف ناعمة",
+);
+assert.match(
+  unifyCss,
+  /\.lessons-v3-sticky[\s\S]{0,220}border-radius:\s*var\(--radius-card/,
+  "توحيد الهوية يبقي حواف شريط الفلتر ناعمة",
+);
 assert.match(lessonsView, /"الكل"/);
 assert.match(lessonsView, /SectionLobby/);
 assert.match(lessonsView, /useDebouncedValue/);

@@ -311,7 +311,7 @@ html.dark .mj-filter-fields label,
 .mj-filter-fields select {
   min-height: 44px;
   width: 100%;
-  border-radius: 8px;
+  border-radius: var(--radius-control, 14px);
   border: 1px solid var(--mj-hairline, #d5ddd8);
   background: var(--mj-surface, #fff);
   color: var(--mj-ink, #12201b);

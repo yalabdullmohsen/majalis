@@ -459,9 +459,11 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
   z-index: var(--z-sticky, 100);
   display: grid;
   gap: 0.55rem;
-  padding-block: 0.15rem 0.55rem;
+  padding-block: 0.45rem 0.55rem;
+  padding-inline: 0.55rem;
   margin-bottom: 0.35rem;
   background: color-mix(in srgb, #e7f4ee 70%, var(--mj-bg, #f3f7f5));
+  border-radius: var(--radius-card, 18px);
 }
 
 /* لا تضاعف حشو .ds-page فوق .section-lobby */
