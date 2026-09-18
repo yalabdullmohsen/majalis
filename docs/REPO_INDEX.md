@@ -35,6 +35,7 @@
 - صفحات مسطّحة كثيرة: `src/views/*.tsx` (~211)
 - مصحف: `src/pages/quran/ui/MushafPageView.tsx` + `src/components/quran/*` + `src/styles/quran.css` / `mushaf-v2.css`
 - تنقّل مكاني: `src/lib/spatial-nav.ts` + `src/components/motion/*` + `styles/components/native-feel.css`
+- سرد واعٍ (نطق فقط): `src/lib/ai-narration/*` + `src/lib/speech-read-aloud.ts` — واجهة منتج: قصص الأنبياء
 - prerender/SEO: سكربتات `artifacts/majalis/scripts/prerender.mjs`, `post-build-seo.mjs`, بوابات `verify:seo-prerender` داخل `package.json` build
 - sitemap: يُولَّد ضمن سلسلة `generate:seo` / post-build (لا تحذف مسارًا ظاهرًا فيه بلا حذف المدخل)
 

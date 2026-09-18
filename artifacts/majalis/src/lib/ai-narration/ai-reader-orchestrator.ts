@@ -1,9 +1,16 @@
 /**
  * AIReaderOrchestrator — مسار السرد العربي لسُنّة.
- * الذكاء يحسّن النطق والتقسيم فقط؛ لا يعيد كتابة المحتوى الشرعي.
+ * الذكاء/التجهيز يحسّن النطق والتقسيم فقط؛ لا يعيد كتابة المحتوى الشرعي.
  */
 
 import { partitionProtectedText } from "@/lib/audio-reader/protected-text";
+import { prepareArabicForNarration } from "./arabic-prep";
+import {
+  resolveNarrationProsody,
+  type NarrationContentKind,
+  type NarrationProsody,
+  type ReadingMode,
+} from "./narration-profiles";
 import {
   applyPronunciationLexicon,
   lexiconWordCount,
@@ -19,7 +26,7 @@ import {
 import { isNeuralTtsClientEnabled, requestNeuralTts } from "./neural-tts-client";
 import {
   isSpeechReadAloudSupported,
-  speakArabicText,
+  speakArabicSegments,
   stopSpeechReadAloud,
 } from "@/lib/speech-read-aloud";
 
@@ -36,6 +43,9 @@ export type OrchestratorPrepareResult = {
   lexiconVersion: string;
   ssmlVersion: string;
   lexiconSize: number;
+  prosody: NarrationProsody;
+  /** نصوص المقاطع للجهاز — بعد التجهيز فقط */
+  deviceSegmentTexts: string[];
 };
 
 export type OrchestratorPlayResult = {
@@ -58,13 +68,21 @@ function stripNoise(raw: string): string {
     .trim();
 }
 
-/** يستخرج نصًا قابلًا للقراءة مع عزل المحمي. */
+/** يستخرج نصًا قابلًا للقراءة مع عزل المحمي + تجهيز عربي + قاموس. */
 export function prepareNarrationForPlayback(input: {
   contentId: string;
   body: string;
   title?: string;
   rate?: number;
+  mode?: ReadingMode;
+  contentKind?: NarrationContentKind;
 }): OrchestratorPrepareResult {
+  const prosody = resolveNarrationProsody({
+    mode: input.mode,
+    contentKind: input.contentKind,
+  });
+  const rate = input.rate ?? prosody.rate;
+
   const displayText = [input.title, input.body].filter(Boolean).join("\n\n");
   const cleaned = stripNoise(displayText);
   const pieces = partitionProtectedText(cleaned);
@@ -73,7 +91,7 @@ export function prepareNarrationForPlayback(input: {
     .map((p) => p.text.trim())
     .filter(Boolean);
   const protectedSkipped = pieces.filter((p) => p.type === "protected").length;
-  const speakableJoined = speakableParts.join("\n\n");
+  const speakableJoined = prepareArabicForNarration(speakableParts.join("\n\n"));
   const pronounced = applyPronunciationLexicon(speakableJoined);
   const segments = segmentEditorialText(pronounced);
   const match = assertSegmentsPreserveText(pronounced, segments);
@@ -88,8 +106,14 @@ export function prepareNarrationForPlayback(input: {
       : [{ kind: "paragraph", text: pronounced }],
     locale: "ar-SA",
     voiceName: "ar-SA-ZariyahNeural",
-    rate: input.rate ?? 1,
+    rate,
+    breakScale: prosody.breakScale,
   });
+  const deviceSegmentTexts = usableSegments
+    .filter((s) => s.kind !== "break")
+    .map((s) => s.text.trim())
+    .filter(Boolean);
+
   return {
     contentId: input.contentId,
     speakableText: pronounced,
@@ -101,6 +125,8 @@ export function prepareNarrationForPlayback(input: {
     lexiconVersion: PRONUNCIATION_LEXICON_VERSION,
     ssmlVersion: SSML_VERSION,
     lexiconSize: lexiconWordCount(),
+    prosody,
+    deviceSegmentTexts,
   };
 }
 
@@ -120,13 +146,16 @@ export function stopAiNarration(): void {
 }
 
 /**
- * تشغيل مسار السرد: Neural إن توفر، وإلا صوت الجهاز مع تسمية صادقة.
+ * تشغيل مسار السرد: Neural إن توفر، وإلا صوت الجهاز بمقاطع تدريجية بعد Prep.
+ * ممنوع تمرير النص الخام المصدر دون تجهيز.
  */
 export async function playAiNarration(input: {
   contentId: string;
   body: string;
   title?: string;
   rate?: number;
+  mode?: ReadingMode;
+  contentKind?: NarrationContentKind;
   onEnd?: () => void;
   onError?: () => void;
 }): Promise<OrchestratorPlayResult> {
@@ -149,7 +178,7 @@ export async function playAiNarration(input: {
       speakText: prepared.speakableText,
       ssml: prepared.ssml,
       locale: "ar-SA",
-      rate: input.rate ?? 1,
+      rate: prepared.prosody.rate,
     });
     if (gen !== playGeneration) {
       return { ok: false, engine: "none", reason: "cancelled", userLabel: "أُلغيت القراءة" };
@@ -165,7 +194,7 @@ export async function playAiNarration(input: {
         };
         audio.onerror = () => {
           URL.revokeObjectURL(neural.audioUrl);
-          const fallback = speakDevice(prepared.speakableText, input);
+          const fallback = speakDevicePrepared(prepared, input);
           if (!fallback.ok) input.onError?.();
         };
         await audio.play();
@@ -180,12 +209,12 @@ export async function playAiNarration(input: {
     }
   }
 
-  return speakDevice(prepared.speakableText, input);
+  return speakDevicePrepared(prepared, input);
 }
 
-function speakDevice(
-  text: string,
-  input: { rate?: number; onEnd?: () => void; onError?: () => void },
+function speakDevicePrepared(
+  prepared: OrchestratorPrepareResult,
+  input: { onEnd?: () => void; onError?: () => void },
 ): OrchestratorPlayResult {
   if (!isSpeechReadAloudSupported()) {
     return {
@@ -195,8 +224,23 @@ function speakDevice(
       userLabel: "القراءة الصوتية غير متاحة على هذا الجهاز",
     };
   }
-  const state = speakArabicText(text, {
-    rate: input.rate ?? 0.95,
+  const segments =
+    prepared.deviceSegmentTexts.length > 0
+      ? prepared.deviceSegmentTexts
+      : prepared.speakableText
+        ? [prepared.speakableText]
+        : [];
+  if (!segments.length) {
+    return {
+      ok: false,
+      engine: "none",
+      reason: "empty_after_prep",
+      userLabel: "لا يوجد نص مُجهَّز للقراءة",
+    };
+  }
+  const state = speakArabicSegments(segments, {
+    rate: prepared.prosody.rate,
+    gapMs: prepared.prosody.deviceGapMs,
     onEnd: input.onEnd,
     onError: input.onError,
   });
