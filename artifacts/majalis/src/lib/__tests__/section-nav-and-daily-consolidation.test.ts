@@ -192,7 +192,7 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
     "التذييل في غلاف التطبيق (ويب فقط — مخفي على Capacitor)",
   );
   const footerWrapperSrc = readFileSync(resolve(appRoot, "src/lib/site-footer-nav.ts"), "utf-8");
-  assert(footerWrapperSrc.includes("الريادة الإسلامية الرقمية"), "سطر الريادة في التذييل");
+  assert(footerWrapperSrc.includes("رفيقك اليومي لطلب العلم"), "سطر القيمة في التذييل");
   assert(
     moreSecSrc.includes("sections.registry") && servicesNavSrc.includes("sections.registry"),
     "مركز الخدمات/الأقسام من السجل",

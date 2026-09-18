@@ -3,7 +3,7 @@ import { Link } from "wouter";
 import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
-import { SITE_DESCRIPTION } from "@/lib/site-config";
+import { SITE_DESCRIPTION, SITE_URL } from "@/lib/site-config";
 import { UtilityScreen } from "@/components/design-system/screens";
 
 type VersionInfo = {
@@ -22,17 +22,29 @@ export default function AboutPage() {
     applyPageSeo({
       path: "/about",
       title: "حول التطبيق | سُنّة",
-      description: SITE_DESCRIPTION,
-      keywords: ["حول التطبيق", "سُنّة", "إصدار", "أقسام"],
+      description:
+        "تعرّف على تطبيق سُنّة — رفيقك اليومي لطلب العلم من دروس العلماء والقرآن والفوائد في تجربة واحدة.",
+      keywords: [
+        "حول التطبيق",
+        "تطبيق سُنّة",
+        "تطبيق العلوم الشرعية",
+        "دروس العلماء",
+        "القرآن والأذكار",
+        "تعلم العلوم الشرعية",
+        "سُنّة",
+      ],
       jsonLd: [
         {
           "@context": "https://schema.org",
-          "@type": "WebApplication",
+          "@type": "SoftwareApplication",
           name: "سُنّة",
-          url: "https://www.ssunnah.com",
+          url: SITE_URL,
           applicationCategory: "EducationalApplication",
+          operatingSystem: "Web",
           inLanguage: "ar",
-          operatingSystem: "Web, iOS, Android",
+          description:
+            "تعرّف على تطبيق سُنّة — رفيقك اليومي لطلب العلم من دروس العلماء والقرآن والفوائد في تجربة واحدة.",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
         },
       ],
     });
@@ -49,19 +61,28 @@ export default function AboutPage() {
     <LegalPageLayout eyebrow="التطبيق" title="حول التطبيق">
       <LegalSection title="ماذا يقدّم التطبيق">
         <p>{SITE_DESCRIPTION}</p>
+        <p>تعلّم من العلماء والدروس الموثقة في مكان واحد.</p>
         <p>
-          يجمع التطبيق لطالب العلم والمسلم العام أدوات يومية ومراجع شرعية في مكان واحد:
-          مصحف رقمي، أذكار موثّقة، مواقيت صلاة، مسارات علم، وبحث سريع في المحتوى.
+          أكمل رحلتك العلمية بسهولة: دروس العلماء والسلاسل والقرآن والبحث والمفضلة والمراجعة
+          في مكان واحد.
         </p>
       </LegalSection>
 
-      <LegalSection title="أبرز الأقسام والأدوات">
+      <LegalSection title="أبرز ما ستجده">
         <ul>
-          <li><strong>المصحف وعلوم القرآن:</strong> قراءة ومتابعة وحفظ ومراجع مرتبطة.</li>
-          <li><strong>الأذكار ومواقيت الصلاة:</strong> عون على المداومة في اليوم والليلة.</li>
-          <li><strong>العلم والمحتوى:</strong> عقيدة، حديث، سيرة، فقه، تفسير، قصص أنبياء، وتاريخ.</li>
-          <li><strong>أدوات التعلّم:</strong> بحث، محفوظات، تتبّع تقدّم، وتنبيهات.</li>
+          <li><strong>الدروس والسلاسل:</strong> تعلّم من العلماء والدروس الموثقة بترتيب واضح.</li>
+          <li><strong>القرآن:</strong> قراءة ومتابعة ضمن تجربة يومية هادئة.</li>
+          <li><strong>البحث والفوائد:</strong> وصول سريع لما تحتاجه وحفظ ما ينفعك.</li>
+          <li><strong>المفضلة والمراجعة:</strong> ارجع لما حفظت وواصل من حيث توقفت.</li>
+          <li><strong>المسارات التعليمية:</strong> خطوات مرتبة لطالب العلم عند توفرها.</li>
         </ul>
+      </LegalSection>
+
+      <LegalSection title="تجربة الآيفون">
+        <p>
+          سُنّة مبنية كتطبيق أصلي للآيفون بنفس المحتوى: الدروس والعلماء والقرآن والمتابعة.
+          رابط التحميل من App Store يُعرض هنا فور النشر الرسمي.
+        </p>
       </LegalSection>
 
       <LegalSection title="رقم الإصدار">
@@ -88,8 +109,8 @@ export default function AboutPage() {
       <LegalSection title="مصادر المحتوى">
         <p>
           يُستمد المحتوى من مصادر شرعية معتبرة قدر الإمكان، مع العزو والمراجعة. التفصيل المنهجي
-          في صفحة <Link href="/about">من نحن</Link> وصفحة <Link href="/methodology">منهجية التوثيق</Link>
-          وصفحة <Link href="/data-licenses">المصادر والتراخيص</Link>.
+          في صفحة <Link href="/methodology">منهجية التوثيق</Link>
+          {" "}وصفحة <Link href="/data-licenses">المصادر والتراخيص</Link>.
         </p>
       </LegalSection>
 

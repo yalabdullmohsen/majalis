@@ -7,6 +7,7 @@ import {
   SITE_FOOTER_TAGLINE,
   type FooterGroup,
 } from "@/lib/site-footer-nav";
+/** دعوة المتجر: اربط Slot بعد تعيين رابط App Store الإنتاجي. */
 
 function FooterGroupBlock({
   group,
