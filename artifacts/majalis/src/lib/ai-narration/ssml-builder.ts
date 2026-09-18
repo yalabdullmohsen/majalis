@@ -36,23 +36,27 @@ export function buildArabicSsml(opts: {
   locale?: string;
   voiceName?: string;
   rate?: number;
+  /** مضاعف أزمنة الوقف (أوضاع تعليمية أطول) */
+  breakScale?: number;
 }): string {
   const locale = opts.locale ?? "ar-SA";
   const rate = rateToSsmlPercent(opts.rate ?? 1);
+  const scale = Math.max(0.5, opts.breakScale ?? 1);
+  const br = (ms: number) => Math.max(120, Math.round(ms * scale));
   const parts: string[] = [];
   for (const seg of opts.segments) {
     const safe = escapeSsml(seg.text.trim());
     if (!safe && seg.kind !== "break") continue;
     if (seg.kind === "title") {
-      parts.push(`<p><s>${safe}</s></p><break time="600ms"/>`);
+      parts.push(`<p><s>${safe}</s></p><break time="${br(600)}ms"/>`);
     } else if (seg.kind === "list") {
-      parts.push(`<p>${safe}</p><break time="350ms"/>`);
+      parts.push(`<p>${safe}</p><break time="${br(350)}ms"/>`);
     } else if (seg.kind === "quote") {
-      parts.push(`<p><prosody rate="-5%">${safe}</prosody></p><break time="400ms"/>`);
+      parts.push(`<p><prosody rate="-5%">${safe}</prosody></p><break time="${br(400)}ms"/>`);
     } else if (seg.kind === "break") {
-      parts.push(`<break time="500ms"/>`);
+      parts.push(`<break time="${br(500)}ms"/>`);
     } else {
-      parts.push(`<p>${safe}</p><break time="280ms"/>`);
+      parts.push(`<p>${safe}</p><break time="${br(280)}ms"/>`);
     }
   }
   const voiceOpen = opts.voiceName
