@@ -20,6 +20,7 @@ import {
   UNIVERSAL_SECTION_LABELS,
   UNIVERSAL_SECTION_ORDER,
 } from "@/features/search/universal-home-search";
+import { EMPTY } from "@/lib/ui-copy";
 import "@/styles/components/home-universal-search.css";
 
 const FOCUS_SUGGESTIONS = [
@@ -233,7 +234,7 @@ export function HomeUniversalSearch() {
               </div>
 
               {visibleSections.length === 0 ? (
-                <p className="hus-empty">لا نتائج مطابقة</p>
+                <p className="hus-empty">{EMPTY.searchShort}</p>
               ) : (
                 visibleSections.map((sec) => {
                   const open = expanded[sec.id] === true;

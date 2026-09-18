@@ -11,6 +11,7 @@ import { beginAbortScope, abortScope } from "@/lib/route-abort";
 import { buildTeachersFromLessons } from "@/lib/teachers-index";
 import { hrefTeachers } from "@/lib/content-href";
 import { toArabicDigits } from "@/lib/utils";
+import { EMPTY } from "@/lib/ui-copy";
 import "@/styles/pages/teachers.css";
 
 export default function TeachersIndexPage() {
@@ -88,7 +89,7 @@ export default function TeachersIndexPage() {
       {loading && teachers.length === 0 ? (
         <SkeletonCardGrid count={8} />
       ) : filtered.length === 0 ? (
-        <p className="tch-empty">لا يوجد مشايخ مطابقون للبحث.</p>
+        <p className="tch-empty">{EMPTY.search}</p>
       ) : (
         <div className="tch-grid" role="list" aria-busy={loading}>
           {filtered.map((teacher) => (
