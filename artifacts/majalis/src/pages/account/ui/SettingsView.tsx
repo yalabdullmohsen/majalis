@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { STATUS } from "@/lib/ui-copy";
 import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { UtilityScreen } from "@/components/design-system/screens";
 import { SettingsList, SettingsToggleRow } from "@/components/design-system/SettingsList";
@@ -563,7 +564,7 @@ export default function SettingsPage() {
                     })
                     .catch(() => {
                       setCacheRefreshBusy(false);
-                      setCacheRefreshNote("تعذّر تحديث النسخة. حاول مرة أخرى.");
+                      setCacheRefreshNote(STATUS.loadError);
                     });
                 },
                 disabled: cacheRefreshBusy,

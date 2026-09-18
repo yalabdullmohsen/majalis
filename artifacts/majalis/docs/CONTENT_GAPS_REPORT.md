@@ -193,3 +193,11 @@
 | reading-plans login empty polish | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
 | admin empties | DEFERRED |
+
+## Wave 23 final states
+
+| section | finalState |
+|---|---|
+| search/universities/contact/settings errors | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
