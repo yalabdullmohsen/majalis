@@ -38,6 +38,43 @@ assert.match(
   /html\[data-theme="dark"\]\s+\.section-lobby__group-title[\s\S]*?color:\s*#e8eeec/,
 );
 
+/* شريط سفلي ليلاً — لا @media تالف ولا لون سطح غامق كنص */
+assert.doesNotMatch(
+  finalCss,
+  /@media\s*\(\s*max-width:\s*56px\s*;/,
+  "لا @media تالف يُسقط ألوان الشريط الليلي",
+);
+assert.match(
+  finalCss,
+  /@media\s*\(\s*max-width:\s*879px\s*\)\s*\{[\s\S]*?html\[data-theme="dark"\]\s+\.bottom-nav(?:--v2)?\s+\.bottom-nav__tab[\s\S]*?color:\s*var\(--color-text-muted/,
+  "تبويبات الشريط السفلي ليلاً بلون نص مقروء",
+);
+assert.match(
+  finalCss,
+  /html\[data-theme="dark"\]\s+\.bottom-nav(?:--v2)?\s+\.bottom-nav__tab\.is-active[\s\S]*?color:\s*var\(--mj-accent/,
+  "التبويب النشط ليلاً بلون accent لا سطح غامق",
+);
+assert.match(
+  finalCss,
+  /html\[data-theme="dark"\]\s+\.top-section-bar__tab[\s\S]*?color:\s*var\(--color-text-muted/,
+  "شريط الأقسام العلوي ليلاً مقروء",
+);
+
+const themeDarkPrimary = theme.match(
+  /\.dark\s*\{[\s\S]*?--color-primary-dark:\s*([^;]+);/,
+);
+assert.ok(themeDarkPrimary, "تعريف --color-primary-dark في الوضع الليلي");
+assert.match(
+  themeDarkPrimary[1],
+  /--mj-brand-deep/,
+  "--color-primary-dark ليلاً = حبر مقروء لا سطح غامق",
+);
+assert.doesNotMatch(
+  themeDarkPrimary[1],
+  /deep-surface/,
+  "--color-primary-dark ليلاً لا يشير لـ deep-surface",
+);
+
 assert.match(nav, /HeaderAdSlot/, "إعلان الهيدر موجود");
 assert.doesNotMatch(nav, /header-ad-slot--spacer/, "لا spacer شفاف — الإعلان مدمج");
 assert.doesNotMatch(nav, /navbar-v3__ad-row/, "لا صف إعلان منفصل");

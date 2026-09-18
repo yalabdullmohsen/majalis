@@ -111,11 +111,11 @@ a.card--featured,
   min-height: 44px;
   padding: 1.1rem 0.85rem 1.15rem;
   text-align: center;
-  /* نفس أخضر الفقه الغامق (--mj-brand-deep) — موحّد لمركز القرآن والدروس */
+  /* نفس أخضر الفقه الغامق — نهاراً عبر --color-primary-dark؛ ليلاً عبر deep-surface */
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-tile, 24px);
-  background-color: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
+  background-color: var(--mj-brand-deep-surface, var(--color-primary-dark, var(--mj-brand-deep, #123f2e)));
   background-image:
     linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, transparent 55%),
     radial-gradient(ellipse 80% 60% at 100% 0%, rgba(184, 150, 63, 0.14) 0%, transparent 55%);
@@ -343,7 +343,7 @@ html[data-theme="dark"] button.card--featured,
 html.dark button.card--featured,
 html[data-theme="dark"] .card--featured,
 html.dark .card--featured {
-  background-color: var(--color-primary-dark, #0f3d2e);
+  background-color: var(--mj-brand-deep-surface, #0f3d2e);
   background-image:
     linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, transparent 55%),
     radial-gradient(ellipse 80% 60% at 100% 0%, rgba(184, 150, 63, 0.12) 0%, transparent 55%);

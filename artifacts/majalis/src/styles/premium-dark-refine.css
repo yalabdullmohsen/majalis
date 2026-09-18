@@ -259,7 +259,14 @@
   background: transparent !important;
   box-shadow: none !important;
   filter: none !important;
-  opacity: 0.72;
+  opacity: 1;
+  color: var(--on-dark-secondary, var(--pd-ink-2, #d8d0c4)) !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .bottom-nav__tab:not(.is-active) .bottom-nav__tab-label,
+:is(html[data-theme="dark"], html.dark) .bottom-nav__tab:not(.is-active) .bottom-nav__tab-icon {
+  color: inherit !important;
+  opacity: 1 !important;
 }
 
 :is(html[data-theme="dark"], html.dark) .bottom-nav__tab.is-active {

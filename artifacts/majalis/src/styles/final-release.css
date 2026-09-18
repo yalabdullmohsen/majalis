@@ -1165,14 +1165,39 @@ html[data-theme="dark"] .bottom-nav--v2 {
   border-top-color: var(--color-border) !important;
   box-shadow: 0 -1px 0 color-mix(in srgb, #fff 8%, transparent) !important;
 }
-@media (max-width: 56px;
+@media (max-width: 879px) {
+  html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab,
+  html[data-theme="dark"] .bottom-nav .bottom-nav__tab,
+  html.dark .bottom-nav--v2 .bottom-nav__tab,
+  html.dark .bottom-nav .bottom-nav__tab {
+    /* نص خامل مقروء على شريط ليلي — لا --color-primary-dark (سطح غامق) */
+    color: var(--color-text-muted, var(--on-dark-secondary, #d8d0c4)) !important;
     border-radius: var(--radius-nav, var(--mj-r-md, 28px)) !important;
   }
   html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active,
-  html[data-theme="dark"] .bottom-nav .bottom-nav__tab.is-active {
+  html[data-theme="dark"] .bottom-nav .bottom-nav__tab.is-active,
+  html.dark .bottom-nav--v2 .bottom-nav__tab.is-active,
+  html.dark .bottom-nav .bottom-nav__tab.is-active {
     color: var(--mj-accent, #c4a35a) !important;
     background: color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent) !important;
   }
+  html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab-label,
+  html[data-theme="dark"] .bottom-nav .bottom-nav__tab-label,
+  html.dark .bottom-nav--v2 .bottom-nav__tab-label,
+  html.dark .bottom-nav .bottom-nav__tab-label {
+    color: inherit !important;
+    opacity: 1 !important;
+  }
+}
+
+/* شريط الأقسام العلوي ليلاً — نفس عقد النص المقروء */
+html[data-theme="dark"] .top-section-bar__tab,
+html.dark .top-section-bar__tab {
+  color: var(--color-text-muted, var(--on-dark-secondary, #d8d0c4)) !important;
+}
+html[data-theme="dark"] .top-section-bar__tab.is-active,
+html.dark .top-section-bar__tab.is-active {
+  color: var(--mj-brand, var(--brand-on-surface, #8fd4b0)) !important;
 }
 
 /* أزرار رجوع/أعلى العامة (App.tsx) — كانت محصورة بـupdates.css الكسول */
