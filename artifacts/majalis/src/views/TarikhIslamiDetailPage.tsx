@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react";
 import { Link, useRoute } from "wouter";
 import { TopicPage } from "@/components/topic/TopicPage";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import {
   ReadingBulletList,
@@ -66,7 +67,7 @@ export default function TarikhIslamiDetailPage() {
       applyPageSeo({
         path: `/tarikh-islami/${id}`,
         title: "عنصر غير موجود | التاريخ الإسلامي",
-        description: "لم يُعثر على هذا العنصر في فهرس التاريخ الإسلامي.",
+        description: "هذا العنصر غير متاح في فهرس التاريخ الإسلامي.",
         robots: "noindex, follow",
       });
       return;
@@ -101,7 +102,7 @@ export default function TarikhIslamiDetailPage() {
         ]}
         eyebrow="التاريخ الإسلامي"
         title="عنصر غير موجود"
-        subtitle="لم يُعثر على هذا العنصر في فهرس التاريخ الإسلامي."
+        subtitle={EMPTY.data}
         className="topic-page--tarikh-detail"
       >
         <Link href="/tarikh-islami" className="tarikh-link">

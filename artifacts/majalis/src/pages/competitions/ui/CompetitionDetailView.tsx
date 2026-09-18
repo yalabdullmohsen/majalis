@@ -4,6 +4,7 @@ import { ArrowRight, ExternalLink, Trophy } from "lucide-react";
 import { ShareButtons } from "@/components/ContentActions";
 import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import {
   COMPETITION_TYPE_LABELS,
   buildCompetitionShareText,
@@ -23,7 +24,7 @@ export default function CompetitionDetailView({ params }: { params: { id: string
       applyPageSeo({
         path: `/competitions/${params.id}`,
         title: "المسابقة غير موجودة | سُنّة",
-        description: "لم يُعثر على إعلان هذه المسابقة.",
+        description: "إعلان هذه المسابقة غير متاح في الفهرس العام.",
       });
       return;
     }
@@ -38,7 +39,7 @@ export default function CompetitionDetailView({ params }: { params: { id: string
   if (!item) {
     return (
       <div className="cmp-detail" dir="rtl">
-        <p role="status">لم يُعثر على هذه المسابقة.</p>
+        <p role="status">{EMPTY.data}</p>
         <Link href="/competitions" className="cmp-btn cmp-btn--ghost">
           العودة إلى المسابقات
         </Link>

@@ -529,7 +529,7 @@ function MiracleDetailPage({ slug }: { slug: string }) {
         eyebrow="الإعجاز العلمي"
       >
         <div className="mk-page" dir="rtl">
-          <p className="page-desc">{error || "تعذّر عرض هذا الموضوع."}</p>
+          <p className="page-desc">{error || EMPTY.data}</p>
           <Link href="/miracles" className="mk-expand-btn">العودة للإعجاز العلمي</Link>
         </div>
       </TopicPage>

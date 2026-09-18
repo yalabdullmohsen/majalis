@@ -15,6 +15,7 @@ import { CompareProvider } from "@/components/universities/CompareContext";
 import { useCompare } from "@/components/universities/CompareContext";
 import { CompareBar } from "@/components/universities/CompareBar";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import "@/styles/pages/university-detail.css";
 import "@/styles/pages/learning-path-dashboard.css";
 import { UtilityScreen } from "@/components/design-system/screens";
@@ -301,7 +302,7 @@ export default function UniversityDetailPage() {
       applyPageSeo({
         path: `/universities/${slug}`,
         title: "الجامعة غير موجودة | سُنّة",
-        description: "لم يُعثر على هذه الجامعة.",
+        description: "هذه الجامعة غير متاحة في الدليل العام.",
         robots: "noindex, follow",
         jsonLd: [],
       });
@@ -337,6 +338,7 @@ export default function UniversityDetailPage() {
         <div>
           <Landmark size={48} strokeWidth={1.3} className="mx-auto mb-4" aria-hidden="true" />
           <p className="udp-not-found-title">الجامعة غير موجودة</p>
+          <p className="udp-not-found-desc">{EMPTY.data}</p>
           <Link href="/universities" className="udp-back-link">→ العودة للدليل</Link>
         </div>
       </div>

@@ -16,6 +16,7 @@ import {
 } from "@/lib/citation-service";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import { truncateAtWord } from "@/lib/utils";
 import "@/styles/pages/citation-public.css";
 import { UtilityScreen } from "@/components/design-system/screens";
@@ -60,17 +61,17 @@ export default function CitationPublicPage() {
             ],
           });
         } else {
-          setError(r.error || "الاقتباس غير موجود");
+          setError(r.error || EMPTY.data);
           applyPageSeo({
             path: `/c/${slug}`,
             title: "الاقتباس غير موجود | سُنّة",
-            description: "لم يُعثر على هذا الاقتباس.",
+            description: "هذا الاقتباس غير متاح في الفهرس العام.",
             robots: "noindex, follow",
             jsonLd: [],
           });
         }
       })
-      .catch(() => setError("خطأ في الاتصال"))
+      .catch(() => setError(STATUS.networkError))
       .finally(() => setLoading(false));
   }, [slug]);
 
@@ -110,7 +111,7 @@ export default function CitationPublicPage() {
   if (error || !citation) {
     return (
       <div className="cpp-error">
-        <p className="cpp-error__text">{error || "الاقتباس غير موجود"}</p>
+        <p className="cpp-error__text">{error || EMPTY.data}</p>
         <Link href="/" className="cpp-error__link">العودة للرئيسية</Link>
       </div>
     );

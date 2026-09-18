@@ -166,3 +166,12 @@
 | auto-content / annual-course / path loadError | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
 | admin empties | DEFERRED |
+
+## Wave 20 final states
+
+| section | finalState |
+|---|---|
+| citation/tarikh/university/learning-path detail | IMPROVED_VERIFIED |
+| competitions/rulings/calendar/miracles empties | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |

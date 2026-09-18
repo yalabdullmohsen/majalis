@@ -16,6 +16,7 @@ import { arSA } from "date-fns/locale";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import { PageHeader, ErrorState } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { STATUS } from "@/lib/ui-copy";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { CalendarDayCell } from "@/components/calendar/CalendarDayCell";
 import {
@@ -251,7 +252,7 @@ export default function CalendarPage() {
       {loading && events.length === 0 ? (
         <CalendarGridSkeleton />
       ) : loadError && events.length === 0 ? (
-        <ErrorState text="تعذّر تحميل مواعيد الدروس. يرجى المحاولة مرة أخرى." onRetry={() => setRetryTick((n) => n + 1)} />
+        <ErrorState text={STATUS.loadError} onRetry={() => setRetryTick((n) => n + 1)} />
       ) : (
         <div aria-busy={loading}>
           {view === "month" && (
