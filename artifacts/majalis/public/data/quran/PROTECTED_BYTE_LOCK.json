@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "purpose": "Byte-for-byte lock of protected Quran-adjacent sources (read-only verify; never auto-edit).",
+  "generatedAt": "2026-09-18",
+  "files": {
+    "public/data/quran/manifest.json": {
+      "sha256": "30831c1b3051d5fc1b20aacd321ffc11d9d58fbb6910a30af2924603c3c58a56",
+      "bytes": 30070
+    },
+    "public/data/quran/pages-manifest.json": {
+      "sha256": "aefa2d249b6b2b1f359701d4b82baa866886d4954eea3c420d6bd239857f4e94",
+      "bytes": 92333
+    },
+    "src/lib/quran-data/basmala-qpc-words.ts": {
+      "sha256": "49af6267f86f50a90af1e8e35039b4edfb4bb245e35e25734e52ebfc9167fd78",
+      "bytes": 1283
+    }
+  }
+}

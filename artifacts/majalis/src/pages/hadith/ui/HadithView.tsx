@@ -57,7 +57,7 @@ import {
   type HadithGradeFilter,
 } from "@/lib/hadith/hadithFilters";
 import { buildHadithSearchIndex } from "@/lib/hadith/hadithSearch";
-import type { HadithRecord } from "@/lib/hadith/hadithNormalize";
+import { isHadithComplete, type HadithRecord } from "@/lib/hadith/hadithNormalize";
 import "@/styles/components/hadith-badge.css";
 import "@/styles/pages/hadith.css";
 import "@/styles/pages/hadith-design-language.css";
@@ -564,12 +564,13 @@ export function HadithSection({
             ...cdnToHadithItems(bukhari, "bukhari", "صحيح البخاري", { grade: "صحيح" }),
             ...cdnToHadithItems(muslim, "muslim", "صحيح مسلم", { grade: "صحيح" }),
           ];
-          setItems(mergeCorpusWithCurated(corpus, curated));
+          // العامة: متن + مصدر + درجة مثبتة فقط — لا صفوف ناقصة التوثيق.
+          setItems(mergeCorpusWithCurated(corpus, curated).filter(isHadithComplete));
           return;
         }
 
         if (curated.length > 0) {
-          setItems(curated);
+          setItems(curated.filter(isHadithComplete));
           return;
         }
         setItems([]);

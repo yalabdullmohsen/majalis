@@ -111,7 +111,11 @@ export const SearchResultCard = memo(function SearchResultCard({
     item.verification_status === "draft" ||
     item.verification_status === "pending_review" ||
     item.verification_status === "pending" ||
-    item.verification_status === "needs_review"
+    item.verification_status === "needs_review" ||
+    item.verification_status === "needs_scholar_review" ||
+    item.verification_status === "NEEDS_SCHOLAR_REVIEW" ||
+    item.verification_status === "partial" ||
+    item.partial
   ) {
     return null;
   }
@@ -130,10 +134,6 @@ export const SearchResultCard = memo(function SearchResultCard({
     });
   const snippet = item.summary?.trim();
   const source = item.source_name?.trim();
-  const partial =
-    item.partial ||
-    item.verification_status === "partial" ||
-    item.verification_status === "draft";
   const verified = verificationLabel(item.verification_status, Boolean(source));
   const Icon = FAMILY_ICON[family];
 
@@ -153,7 +153,6 @@ export const SearchResultCard = memo(function SearchResultCard({
             <Icon size={14} strokeWidth={2} aria-hidden="true" />
             {kindLabel}
           </span>
-          {partial ? <span className="srch-result-card__status">قيد الإكمال</span> : null}
           {verified ? <span className="srch-result-card__status">{verified}</span> : null}
         </div>
         <h3 className="srch-result-card__title">{highlightText(item.title, query)}</h3>
