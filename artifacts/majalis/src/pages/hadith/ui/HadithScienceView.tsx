@@ -13,6 +13,7 @@ import { UtilityScreen } from "@/components/design-system/screens";
 import { KnowledgeLayout } from "@/components/knowledge";
 import { UnifiedPrimaryFilters } from "@/components/filters/UnifiedPrimaryFilters";
 import "@/styles/knowledge-experience.css";
+import { truncateAtWord } from "@/lib/utils";
 
 /* ─── أنواع البيانات ─── */
 type HadithTerm = {
@@ -999,7 +1000,7 @@ export default function HadithSciencePage() {
           itemListElement: TERMS.slice(0, 20).map((t, i) => ({
             "@type": "ListItem",
             position: i + 1,
-            name: `${t.term}: ${t.definition.slice(0, 60)}`,
+            name: `${t.term}: ${truncateAtWord(t.definition, 60)}`,
             url: `https://www.ssunnah.com/hadith-science#${t.id}`,
           })),
         },

@@ -9,6 +9,7 @@ import {
   type HighlightColor,
   HIGHLIGHT_COLOR_LABEL,
 } from "@/lib/text-highlights";
+import { truncateAtWord } from "@/lib/utils";
 import "@/styles/components/text-highlight-capture.css";
 
 type Props = {
@@ -116,8 +117,7 @@ export function TextHighlightCapture({
           style={{ left: pop.x, top: pop.y }}
         >
           <p className="thc-pop__quote" dir="rtl" lang="ar">
-            {pop.quote.slice(0, 120)}
-            {pop.quote.length > 120 ? "…" : ""}
+            {truncateAtWord(pop.quote, 120)}
           </p>
           <div className="thc-pop__colors" role="group" aria-label="لون التحديد">
             {(["yellow", "green", "blue"] as HighlightColor[]).map((c) => (

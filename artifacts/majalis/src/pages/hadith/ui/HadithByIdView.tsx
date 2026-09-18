@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { truncateAtWord } from "@/lib/utils";
 import {
   getHadithById,
   parseHadithId,
@@ -71,8 +72,8 @@ export default function HadithByIdView() {
       path: `/hadith/${hadith.id}`,
       title: `${publicTitle} | الحديث | سُنّة`,
       description: hadith.isMawdu
-        ? `تحذير: حديث موضوع — ${hadith.matn.slice(0, 120)}`
-        : hadith.matn.slice(0, 160),
+        ? `تحذير: حديث موضوع — ${truncateAtWord(hadith.matn, 120)}`
+        : truncateAtWord(hadith.matn, 160),
       keywords: ["حديث", hadith.book, hadith.numberingSystem].filter(Boolean) as string[],
     });
   }, [hadith]);

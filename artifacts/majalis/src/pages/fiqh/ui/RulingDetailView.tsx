@@ -16,6 +16,7 @@ import NotFound from "@/views/not-found";
 import type { RulingResolveStatus } from "@/lib/rulings-resolver";
 import { DetailScreen } from "@/components/design-system/screens";
 import { KnowledgeLayout } from "@/components/knowledge";
+import { truncateAtWord } from "@/lib/utils";
 
 export default function RulingDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<ShariaRulingExtended | null>(null);
@@ -92,7 +93,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
     const path = `/rulings/${params.id}`;
     const description =
       item.summary ||
-      item.body?.replace(/\*\*/g, "").slice(0, 160) ||
+      (item.body ? truncateAtWord(item.body.replace(/\*\*/g, ""), 160) : "") ||
       item.title;
     applyPageSeo({
       path,

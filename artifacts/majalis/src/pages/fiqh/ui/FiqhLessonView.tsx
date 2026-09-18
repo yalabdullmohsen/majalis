@@ -10,7 +10,7 @@ import {
   getFiqhLessonAny,
 } from "@/lib/fiqh-books";
 import { ShareButtons } from "@/components/ContentActions";
-import { cn } from "@/lib/utils";
+import { cn, truncateAtWord } from "@/lib/utils";
 import {
   breadcrumbJsonLd,
   learningResourceJsonLd,
@@ -109,7 +109,7 @@ export default function FiqhLessonPage() {
     applyPageSeo({
       path: hit.href,
       title: `${hit.lesson.title} | ${hit.book.title} | سُنّة`,
-      description: hit.lesson.summary.slice(0, 160),
+      description: truncateAtWord(hit.lesson.summary, 160),
       keywords: [...(hit.lesson.keywords ?? []), hit.lesson.title, hit.chapter.title, hit.book.title, "فقه"],
       robots: severelyIncomplete ? "noindex, follow" : undefined,
       jsonLd: severelyIncomplete
@@ -117,7 +117,7 @@ export default function FiqhLessonPage() {
         : [
             learningResourceJsonLd({
               name: hit.lesson.title,
-              description: hit.lesson.summary.slice(0, 200),
+              description: truncateAtWord(hit.lesson.summary, 200),
               url: hit.href,
               about: `${hit.book.title} — ${hit.chapter.title}`,
               educationalLevel: hit.lesson.level,

@@ -47,6 +47,7 @@ const seedPath = join(dirname(fileURLToPath(import.meta.url)), "../fawaid-curate
 const seedSrc = readFileSync(seedPath, "utf8");
 assert(!/وهذه فائدة تعليمية/.test(seedSrc), "البذرة بلا ذيل «فائدة تعليمية»");
 assert(!/وهذا يُقرأ بضابط العلم/.test(seedSrc), "البذرة بلا ذيل «بضابط العلم»");
+assert(!/وهذا يقرأ بضابط العلم/.test(seedSrc), "البذرة بلا ذيل «يقرأ بضابط» بلا شدة");
 assert(!/وأن محبة النبي ﷺ (?:تظهر|تُصان)/.test(seedSrc), "البذرة بلا جملة محبة النبي القالبية");
 assert(!/تُقرأ مع مصادرها/.test(seedSrc), "البذرة بلا ذيل «تُقرأ مع مصادرها»");
 assert(!/يجب على المسلم معرفته والعمل به/.test(seedSrc), "البذرة بلا ذيل «معرفته والعمل به»");

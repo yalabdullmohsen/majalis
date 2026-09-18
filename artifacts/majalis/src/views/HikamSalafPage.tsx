@@ -8,6 +8,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/hikam-salaf.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { truncateAtWord } from "@/lib/utils";
 
 /* ─── أنواع البيانات ─── */
 type Hikma = {
@@ -1529,7 +1530,7 @@ export default function HikamSalafPage() {
           itemListElement: HIKAM.slice(0, 20).map((h, i) => ({
             "@type": "ListItem",
             position: i + 1,
-            name: `${h.scholar}: ${h.text.slice(0, 60)}`,
+            name: `${h.scholar}: ${truncateAtWord(h.text, 60)}`,
             url: `https://www.ssunnah.com/hikam-salaf#${h.id}`,
           })),
         },

@@ -1,5 +1,6 @@
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { getSurahList } from "@/lib/quran-api";
+import { truncateAtWord } from "@/lib/content-display-polish";
 
 export async function searchLocalExtensions(query: string) {
   const q = query.trim();
@@ -65,7 +66,7 @@ export async function searchLocalExtensions(query: string) {
     .map((s) => ({
       id: String(s.number),
       title: `قصة سورة ${s.name}`,
-      meta: s.namingReason.slice(0, 60) + "...",
+      meta: truncateAtWord(s.namingReason, 60),
       href: `/quran/surah-stories/${s.number}`,
     }));
 

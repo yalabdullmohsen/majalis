@@ -14,6 +14,7 @@ import {
   type FiqhLesson,
   type FiqhLessonHit,
 } from "@/lib/fiqh-books";
+import { truncateAtWord } from "@/lib/content-display-polish";
 
 export type FiqhRegistryNode = {
   id: string;
@@ -57,7 +58,7 @@ function toLesson(book: FiqhBook, ch: FiqhChapter, lesson: FiqhLesson, order: nu
     id: lesson.id,
     order,
     title: lesson.title,
-    blurb: lesson.summary.slice(0, 120),
+    blurb: truncateAtWord(lesson.summary, 120),
     tags: [book.category, lesson.level],
     sources: (lesson.sources ?? []).map((s) => `${s.book} — ${s.author}`),
     bookId: book.id,

@@ -6,6 +6,7 @@ import { arabicMatchAny, normalizeArabic } from "@/lib/arabic-search";
 import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN } from "@/lib/quran-last-page";
 import { findMushafPageForAyah } from "./mushaf-page-for-ayah";
 import { QuranSearchEngine } from "@/lib/mushaf-v2";
+import { truncateAtWord } from "@/lib/utils";
 
 type Hit = {
   surah: number;
@@ -105,7 +106,7 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
                 ayah,
                 page,
                 surahName: getSurahMeta(surah).name,
-                preview: String(r.snippet ?? r.label).slice(0, 120),
+                preview: truncateAtWord(String(r.snippet ?? r.label), 120),
               };
             });
           setHits(next);

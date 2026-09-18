@@ -12,6 +12,7 @@ import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { PageShell } from "@/components/layout/PageShell";
 import { PAGE_EXPLORE_LINKS } from "@/lib/explore-links";
 import { ListScreen } from "@/components/design-system/screens";
+import { truncateAtWord } from "@/lib/utils";
 
 const CATEGORIES = [...ASMA_CATEGORIES];
 const STATUS_FILTERS: Array<"الكل" | AsmaStatus> = ["الكل", "ثابت", "مشهور"];
@@ -190,7 +191,7 @@ export default function AsmaaHusnaPage() {
               <span className="ah-card__num">{a.num}</span>
               <span className={`ah-card__status ah-card__status--${a.status === "ثابت" ? "thabit" : "mashhur"}`}>{a.status}</span>
               <span className="ah-card__name">{a.arabic}</span>
-              <span className="ah-card__meaning">{a.meaning.slice(0, 35)}{a.meaning.length > 35 ? "…" : ""}</span>
+              <span className="ah-card__meaning">{truncateAtWord(a.meaning, 35)}</span>
               <button
                 type="button"
                 className={`ah-card__fav${favs.has(a.num) ? "ah-card__fav--active" : ""}`}

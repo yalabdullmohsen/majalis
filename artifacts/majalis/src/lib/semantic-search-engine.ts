@@ -7,6 +7,7 @@ import { normalizeArabic } from "@/shared/arabic-normalize";
 import { arabicIncludes, arabicMatchAny } from "@/lib/arabic-search";
 import { expandSearchTerms } from "@/lib/search-synonyms";
 import { searchQuranTopics } from "@/lib/quran-topics-index";
+import { truncateAtWord } from "@/lib/content-display-polish";
 
 export type SearchIntent =
   | "quran"
@@ -90,7 +91,7 @@ export function semanticSearchDocuments(
           id: doc.id,
           title: doc.title,
           href: doc.href,
-          snippet: doc.body?.slice(0, 160),
+          snippet: doc.body ? truncateAtWord(doc.body, 160) : undefined,
           score,
           source: "text",
         });
