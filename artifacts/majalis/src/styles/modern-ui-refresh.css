@@ -626,3 +626,216 @@ button.soft-pill:active,
 
 /* Design System Adoption — كتلة التبني العالمي في ssunnah-ds-canonical.css (مؤجّل) */
 
+/* ═══════════════════════════════════════════════════════════
+   Design Excellence — صفحات ثانوية/خدمية (Premium polish)
+   لا يمسّ المصحف ولا [data-scripture]. الهوية والألوان قائمة.
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  --mur-ink: var(--mj-ink, #14241c);
+  --mur-ink-secondary: color-mix(in srgb, var(--mj-ink, #14241c) 78%, var(--mj-muted, #5a6b63));
+  --mur-surface-quiet: color-mix(in srgb, var(--mj-brand, #146b52) 5%, var(--mj-surface, #fffcf8));
+  --mur-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.dark,
+html[data-theme="dark"] {
+  --mur-ink: var(--mj-ink, #f2f6f4);
+  --mur-ink-secondary: color-mix(in srgb, var(--mj-ink, #f2f6f4) 72%, #9aada4);
+  --mur-surface-quiet: color-mix(in srgb, var(--mj-brand, #4fb48b) 10%, var(--mj-surface, #121a17));
+}
+
+/* —— طباعة الصفحات القانونية/الخدمية: أوضح وأقل بهتانًا —— */
+.legal-page-eyebrow {
+  opacity: 1 !important;
+  font-weight: 650 !important;
+  letter-spacing: 0.01em;
+  color: var(--mur-ink-secondary) !important;
+}
+
+.legal-page-hero h1 {
+  letter-spacing: -0.01em;
+  color: var(--mur-ink) !important;
+}
+
+.legal-page-updated {
+  opacity: 1 !important;
+  color: var(--mur-ink-secondary) !important;
+}
+
+.legal-section h2 {
+  font-size: clamp(1.05rem, 2.4vw, 1.18rem) !important;
+  font-weight: 750 !important;
+  line-height: 1.35 !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep, #0f4f3d)) !important;
+  margin-block-end: 0.75rem !important;
+}
+
+.legal-section p,
+.legal-section li {
+  font-size: 0.98rem !important;
+  line-height: 1.8 !important;
+  color: var(--mur-ink-secondary) !important;
+}
+
+.legal-section strong {
+  color: var(--mur-ink) !important;
+  font-weight: 700;
+}
+
+.legal-page-body {
+  padding-block: 1.35rem 2.75rem !important;
+}
+
+.legal-section {
+  margin-bottom: 1.5rem !important;
+}
+
+/* —— بطاقات التواصل/الدعم أنظف —— */
+.contact-email-card,
+.contact-ads-block,
+.support-page__card {
+  border: 1px solid transparent !important;
+  box-shadow: var(--mur-shadow) !important;
+  border-radius: var(--mur-radius) !important;
+  background: var(--mur-surface-quiet) !important;
+}
+
+.contact-email-card__label,
+.contact-lead,
+.support-page__lead {
+  color: var(--mur-ink-secondary) !important;
+  font-size: 0.98rem !important;
+  line-height: 1.7 !important;
+}
+
+.contact-email-card__link,
+.support-page__card-cta {
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep, #0f4f3d)) !important;
+  font-weight: 750 !important;
+}
+
+.contact-btn {
+  transition:
+    transform 160ms var(--mur-ease),
+    opacity 160ms var(--mur-ease),
+    background-color 160ms var(--mur-ease) !important;
+}
+
+.contact-btn:active {
+  transform: scale(0.98);
+}
+
+.contact-btn:focus-visible,
+.support-page__card-cta:focus-visible,
+.settings-legal-link:focus-visible,
+.contact-email-card__link:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--mj-brand, #146b52) 55%, transparent);
+  outline-offset: 2px;
+}
+
+/* —— إعدادات أقرب لـ Apple Settings —— */
+.settings-page .legal-section h2 {
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--mur-ink-secondary) !important;
+  margin-block: 1.15rem 0.45rem !important;
+  padding-inline: 0.15rem;
+}
+
+.settings-account-card {
+  border-radius: var(--mur-radius) !important;
+  box-shadow: var(--mur-shadow) !important;
+  border: none !important;
+  padding: 1.05rem 1.1rem !important;
+}
+
+.settings-account-card p {
+  font-size: 0.92rem !important;
+  line-height: 1.65 !important;
+  color: var(--mur-ink-secondary) !important;
+}
+
+.settings-field {
+  font-size: 0.9rem !important;
+  color: var(--mur-ink-secondary) !important;
+}
+
+.settings-choice,
+.settings-row,
+.settings-toggle-row {
+  min-height: 2.75rem;
+  border-radius: var(--mur-radius-sm) !important;
+}
+
+/* —— حالات فارغة أوضح وأدفأ —— */
+.ds-empty,
+.lessons-empty-state,
+.search-empty-state,
+.lrn-empty-state,
+.up-empty-state,
+.msp-empty-state {
+  opacity: 1 !important;
+  padding: clamp(1.5rem, 4vw, 2.25rem) 1.15rem !important;
+  text-align: center;
+  color: var(--mur-ink-secondary) !important;
+  font-size: 0.98rem !important;
+  line-height: 1.7 !important;
+  border-radius: var(--mur-radius) !important;
+  background: var(--mur-surface-quiet);
+  border: 1px solid transparent;
+  box-shadow: var(--mur-shadow-press);
+}
+
+.ds-empty__title,
+.msp-empty-state__icon {
+  color: var(--mur-ink) !important;
+  font-weight: 750;
+}
+
+.up-empty-state {
+  opacity: 1 !important;
+}
+
+/* —— تفاعلات دقيقة عامة للصفحات الخدمية —— */
+@media (hover: hover) and (pointer: fine) {
+  .support-page__card:hover,
+  .contact-topic:hover,
+  .contact-email-card:hover {
+    box-shadow: var(--mur-shadow) !important;
+    transform: translateY(-1px);
+  }
+
+  .support-page__card,
+  .contact-topic,
+  .contact-email-card {
+    transition:
+      transform 180ms var(--mur-ease),
+      box-shadow 180ms var(--mur-ease);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .support-page__card,
+  .contact-topic,
+  .contact-email-card,
+  .contact-btn {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+html.dark .legal-section h2,
+html[data-theme="dark"] .legal-section h2 {
+  color: var(--mj-brand, #4fb48b) !important;
+}
+
+html.dark .contact-email-card__link,
+html[data-theme="dark"] .contact-email-card__link,
+html.dark .support-page__card-cta,
+html[data-theme="dark"] .support-page__card-cta {
+  color: var(--mj-brand, #4fb48b) !important;
+}
+

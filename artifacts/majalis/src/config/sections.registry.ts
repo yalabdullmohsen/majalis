@@ -1174,15 +1174,15 @@ const SECTION_SEEDS: SectionSeed[] = [
   {
     id: "support",
     label: "الدعم الفني",
-    subtitle: "تواصل ومساعدة والإبلاغ عن المشكلات",
+    subtitle: "مساعدة وتواصل وإبلاغ",
     route: "/support",
     icon: HelpCircle,
     group: "account",
     order: 50,
     surfaces: ACCOUNT_DRAWER,
     status: "live",
-    keywords: ["دعم", "تواصل", "دعم فني"],
-    aliases: ["تواصل معنا", "الدعم والتواصل"],
+    keywords: ["دعم", "تواصل"],
+    aliases: ["تواصل معنا"],
   },
   {
     id: "about",

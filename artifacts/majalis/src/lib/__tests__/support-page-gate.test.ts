@@ -41,10 +41,13 @@ assert.match(page, /mailtoWithSubject/);
 assert.match(page, /الإبلاغ عن مشكلة/);
 assert.match(page, /الاقتراحات/);
 assert.match(page, /الرد على الاستفسارات/);
+assert.match(page, /أسئلة شائعة/);
+assert.match(page, /Accordion/);
 assert.match(page, /path:\s*"\/support"/);
 assert.match(page, /styles\/pages\/support\.css/);
 
 assert.match(css, /\.support-page__card/);
 assert.match(css, /grid-template-columns:\s*repeat\(2/);
+assert.match(css, /\.support-page__faq/);
 
 console.log("support-page-gate.test.ts: ok");

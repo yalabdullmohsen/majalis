@@ -1,6 +1,5 @@
 /**
- * شجرة المسارات خارج الرئيسية — تُحمَّل كسولًا حتى لا تنتفخ حزمة الإقلاع.
- * الرئيسية تبقى في App.tsx مع HomeHeroLcp + HomeRestShell.
+ * مسارات خارج الرئيسية — تحميل كسول. الرئيسية في App.tsx.
  */
 import { Suspense, type ComponentType } from "react";
 import { Redirect, Route, Switch, useParams } from "wouter";
