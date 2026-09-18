@@ -12,6 +12,7 @@ import {
 } from "@/lib/knowledge-loader";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY, SEARCH } from "@/lib/ui-copy";
 import { truncateAtWord } from "@/lib/utils";
 import "@/styles/pages/knowledge.css";
 import { UtilityScreen } from "@/components/design-system/screens";
@@ -186,13 +187,13 @@ export default function KnowledgeSectionPage() {
       <PageHeader eyebrow="معرفة" title={SECTION_TITLE[section] || "معرفة"} />
       <label className="knowledge-filter">
         تصفية
-        <input value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="ابحث في العناوين…" />
+        <input value={filter} onChange={(e) => setFilter(e.target.value)} placeholder={SEARCH.global} />
       </label>
       {section === "discover-islam" && (
         <p className="page-meta">محطات منجزة محلياً: {progress.discoverStations.length}</p>
       )}
       {visible.length === 0 ? (
-        <p className="page-meta">لا موضوعات في هذا القسم حاليًا، أو لا نتائج لهذا البحث.</p>
+        <p className="page-meta">{filter.trim() ? EMPTY.search : EMPTY.data}</p>
       ) : (
         <ul className="knowledge-index-list">
           {visible.slice(0, 200).map((it) => (

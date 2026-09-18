@@ -5,6 +5,7 @@ import { CompareBar } from "@/components/universities/CompareBar";
 import { UniversityCard } from "@/components/universities/UniversityCard";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
@@ -261,7 +262,7 @@ function UniversitiesContent() {
         {!loading && universities.length === 0 && !seedNeeded && (
           <div className="up-empty-state up-empty-state--py12">
             <Search size={40} strokeWidth={1.3} className="mx-auto mb-3" aria-hidden="true" />
-            <p>لا توجد جامعات مطابقة. جرّب دولة أخرى أو امسح البحث.</p>
+            <p>{EMPTY.search}</p>
           </div>
         )}
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { InternalLinkCard } from "@/components/ui/InternalCards";
 import { ChevronLeft } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -957,13 +958,13 @@ export default function IslamicSectsPage() {
 
         <p className="sect-hub__results" aria-live="polite">
           {filtered.length === 0
-            ? "لا نتائج مطابقة — اضبط البحث أو التصنيف"
+            ? EMPTY.searchShort
             : `${filtered.length} نتيجة`}
         </p>
 
         {filtered.length === 0 ? (
           <div className="sect-hub__empty" role="status">
-            <p>جرّب كلمة أقصر أو اختر تصنيفًا أوسع، ثم أعد المحاولة.</p>
+            <p>{EMPTY.search}</p>
             <button
               type="button"
               className="sect-hub__chip is-active"

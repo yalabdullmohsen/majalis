@@ -88,9 +88,7 @@ function HighlightsLibrary({ query }: { query: string }) {
         <div className="vault-empty">
           <div className="vault-empty__icon" aria-hidden="true"><Lightbulb size={40} strokeWidth={1.3} /></div>
           <p>
-            {query
-              ? "لا نتائج في مكتبة الفوائد."
-              : "حدّد نصًا في التفسير أو الفوائد واختر لونًا لحفظ فائدة علمية هنا."}
+            {query ? EMPTY.searchShort : EMPTY.citations}
           </p>
         </div>
       )}
@@ -401,7 +399,7 @@ function GuestVault() {
           {filteredBookmarks.length === 0 && (
             <div className="vault-empty">
               <div className="vault-empty__icon"><BookmarkCheck size={32} strokeWidth={1.3} /></div>
-              <p>{search ? "لا نتائج للبحث." : EMPTY.bookmarks}</p>
+              <p>{search ? EMPTY.searchShort : EMPTY.bookmarks}</p>
               <a className="vault-empty__cta mj-pressable" href="/lessons">{ACTION.browseContent}</a>
             </div>
           )}
@@ -432,7 +430,7 @@ function GuestVault() {
           {filteredResume.length === 0 && (
             <div className="vault-empty">
               <div className="vault-empty__icon" aria-hidden="true"><BookOpen size={40} strokeWidth={1.3} /></div>
-              <p>{search ? "لا نتائج للبحث." : "ابدأ القراءة في الحديث أو الأذكار أو الفوائد ليُحفظ موضعك هنا."}</p>
+              <p>{search ? EMPTY.searchShort : EMPTY.continueEmpty}</p>
             </div>
           )}
           {filteredResume.map((r) => (
@@ -460,7 +458,7 @@ function GuestVault() {
           {filteredOffline.length === 0 && (
             <div className="vault-empty">
               <div className="vault-empty__icon" aria-hidden="true"><FileText size={40} strokeWidth={1.3} /></div>
-              <p>{search ? "لا نتائج للبحث." : "استخدم «قراءة لاحقًا» من شريط إجراءات المحتوى لحفظ النص على الجهاز."}</p>
+              <p>{search ? EMPTY.searchShort : EMPTY.downloads}</p>
             </div>
           )}
           {filteredOffline.map((o) => (
@@ -647,7 +645,7 @@ export default function VaultPage() {
               {filteredBookmarks.length === 0 && (
                 <div className="vault-empty">
                   <div className="vault-empty__icon"><BookmarkCheck size={32} strokeWidth={1.3} /></div>
-                  <p>{search ? "لا نتائج للبحث." : EMPTY.bookmarks}</p>
+                  <p>{search ? EMPTY.searchShort : EMPTY.bookmarks}</p>
               <a className="vault-empty__cta mj-pressable" href="/lessons">{ACTION.browseContent}</a>
                 </div>
               )}
@@ -672,7 +670,7 @@ export default function VaultPage() {
               {filteredResume.length === 0 && (
                 <div className="vault-empty">
                   <div className="vault-empty__icon" aria-hidden="true"><BookOpen size={40} strokeWidth={1.3} /></div>
-                  <p>{search ? "لا نتائج للبحث." : "لم تفتح مواد بعد. سيظهر هنا ما تتابعه للقراءة لاحقًا."}</p>
+                  <p>{search ? EMPTY.searchShort : EMPTY.continueEmpty}</p>
                 </div>
               )}
               {filteredResume.map((r) => (

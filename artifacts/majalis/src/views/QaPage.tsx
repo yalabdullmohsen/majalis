@@ -4,6 +4,7 @@ import { Scale } from "lucide-react";
 import { Link, useSearch } from "wouter";
 import { getQaCategories, getQaQuestions } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/qa.css";
@@ -254,15 +255,10 @@ export default function QaPage({
     if (picked) setRandomId(picked.id);
   };
 
-  const emptyMessage = useMemo(() => {
-    if (debouncedSearch.trim()) {
-      return `لا توجد أسئلة مطابقة لـ «${debouncedSearch.trim()}».`;
-    }
-    if (categorySlug !== "all") {
-      return "لا توجد أسئلة في هذا التصنيف.";
-    }
-    return "لا توجد أسئلة منشورة.";
-  }, [categorySlug, debouncedSearch]);
+  const emptyMessage = useMemo(
+    () => (debouncedSearch.trim() ? EMPTY.search : EMPTY.data),
+    [debouncedSearch],
+  );
 
   const filtersPanel = (
     <>

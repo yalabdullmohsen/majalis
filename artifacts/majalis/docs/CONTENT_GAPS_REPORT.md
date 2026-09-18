@@ -1,77 +1,111 @@
-# CONTENT_GAPS_REPORT — سُنّة (جولة 7 · اكتمال الجودة)
+# CONTENT_COMPLETENESS — remaining gap matrix (post Wave1–2)
 
-تاريخ: 2026-09-17  
-القاعدة: **لا اختراع محتوى شرعي**. الفراغ يُوثَّق أو Empty State موجّه.
+**Base main:** `b633b6cd1`  
+**Product:** `artifacts/majalis`
 
-## جرد الأقسام (ملخص تنفيذي)
+## Already COMPLETE / IMPROVED (do not re-do)
 
-| القسم | Route(ات) | المصدر | الحالة قبل | بعد r7 | ملاحظات |
-|---|---|---|---|---|---|
-| الرئيسية | `/` | widgets + updates | مكتمل مع تحديث مجمع | تحديث مجمع أُزيلت تسميته | — |
-| القرآن / المركز | `/quran-hub` | hub cards | جيد | جيد + تطبيع مرجع آية | — |
-| المصحف | `/mushaf` | QPC | محمي | محمي بلا تغيير نص | — |
-| التلاوة/القراء | mushaf + audio | registry | جيد | جيد | — |
-| التفسير | `/tafsir` | saadi packs | جيد | جيد | — |
-| فهرس السور | hub | static | جيد | جيد | — |
-| الدروس/السلاسل | `/lessons` | supabase+chunks | جيد | عنوان بلا UUID | — |
-| العلماء | `/scholars` | seeds | جيد (r5) | جيد | — |
-| الأقسام | `/sections` | registry 78 | جيد | علوم قرآن→`/quran-sciences`→knowledge | — |
-| العقيدة | topics | pages | جيد | جيد | — |
-| الحديث | `/hadith` | verified packs | قطع salutation | سجلات مقطوعة حُذفت | — |
-| الأربعون | `/arbaeen-nawawi` | seed | جيد | جيد | — |
-| الفرق | `/islamic-sects` | page | جيد | جيد | — |
-| الفوائد | `/fawaid` | curated | r6 نظيف | نظيف | — |
-| التاريخ/سيرة/أنبياء | `/tarikh*` `/prophets` | data | جيد | جيد | — |
-| الأذكار/صلاة/قبلة/تسبيح | worship | engines | جيد | جيد | — |
-| البحث | `/search` | index 4725 | بلا مجمع | بلا مجمع | علماء `/scholars` مفهرسون (Wave2) |
-| المكتبة | `/library` | catalog | ~170 بلا URL | **Needs verification** | لا اختراع روابط |
-| أحكام مؤرشفة | archive | 119 pending | غير منشور | غير منشور | — |
-| deferred-nawazil | content/fiqh | 4 | internal | internal | — |
-| المجمع الفقهي | `/fiqh-council` | محذوف | redirects | redirects + MANUAL purge | — |
-| الإدارة | `/admin*` | panels | بلا كتابة council | بلا كتابة | — |
-| SEO/Sitemap | generators | scripts | بلا council | بلا council | — |
+| Section | Status | Evidence |
+|---|---|---|
+| fiqh-council public | EXCLUDED | redirects + gates |
+| Search draft/pending | IMPROVED_VERIFIED | SearchResultCards + SearchView |
+| Harvest OCR handles (Wave2) | IMPROVED_VERIFIED | harvest-display-text |
+| Scholars in search | IMPROVED_VERIFIED | generate-unified-search-index |
+| RelatedRail scholars | IMPROVED_VERIFIED | `/scholars/:slug` |
+| Ayah normalize | COMPLETE_VERIFIED | ayah-ref-normalize |
+| Mushaf QPC text | NOT_APPLICABLE | protected |
 
-Routes في AppRoutes: **364** · أقسام registry: **78** (76 live / 2 hidden).
+## Remaining (Wave 8+)
 
-## ما أُصلح في الجولة 7
+| section | route | previousStatus | remainingGap | action | priority | acceptanceTest |
+|---|---|---|---|---|---|---|
+| lessons | `/lessons` | IMPROVED | phones/handles in descriptions | strip via cleanLessonPublicText | P0 | wave8-gate |
+| harvest | `/lessons` feed | IMPROVED | ellipsis mid-title cards | drop truncated | P0 | wave8-gate |
+| series deep links | `/learn/series/:slug` | REGRESSION-context | slug lost on redirect | **DEFERRED** — entry budget; stays `/lessons` | P1 | documented |
+| annual courses | `/annual-courses/:id` | IMPROVED | garbled `**عن الدورة:**` summaries | cleanAnnualCourseSummary | P1 | wave8-gate |
+| scholars | `/scholars/:slug` | IMPROVED | SEO mid-word cut; empty section heads | truncateAtWord + guards | P1 | wave8-gate |
+| quran people | `/quran/people/:slug` | IMPROVED | SEO mid-word cut | truncateAtWord | P1 | wave8-gate |
+| report button | lesson detail | IMPROVED | `#id` in mailto subject | title-only subject | P1 | wave8-gate |
+| library | `/search` | BLOCKED_SOURCE | 172 books no URL | OWNER — no invent | P0 | documented |
+| fiqh_council SQL | hosted | EXCLUDED | purge not run | OWNER_ACTION | P0 | documented |
+| aqidah/hadith/sects | various | IMPROVED_VERIFIED | Wave9 presentation | done | P1 | wave9-gate |
+| seerah/history | various | COMPLETE claim | presentation polish | Wave 10 | P1 | pending |
+| prayer/adhkar copy | various | COMPLETE claim | copy polish | Wave 11 | P2 | pending |
+| search/SEO regen | — | IMPROVED | mid-word SEO clamp | truncateAtWord-style clamp | P2 | wave12-gate |
+| admin governance | `/admin` | IMPROVED | field gates | Wave 14 | P1 | pending |
+| home empty/widgets | `/` | IMPROVED | weak empty copy | unify EMPTY.data | P2 | wave12-gate |
 
-- إصلاح جمل مقطوعة في `AlamatSaahPage`.
-- حذف أحاديث/شواهد مقطوعة عند `صلى الله عليه و.` (JSON + مصادر TS) بدل اختراع المتن.
-- إزالة تسمية «مجمع الفقه» من `updates-seed`.
-- تصحيح مسار `quran-sciences` → `/ulum-quran`.
-- RelatedRail: لا عرض slug خام.
-- إحصاءات الإدارة: «درس بلا عنوان» بدل UUID.
-- تطبيع مراجع الآيات (`normalizeSurahAyah`) — لا معرّفات عالمية ظاهرة.
-- إعادة تسمية `assistant-soon` → `assistant-gate`.
-- بوابة `content-quality-r7-gate`.
+## Wave 8 final states (this PR)
 
-## Needs verification (لا تُنشر)
+| section | finalState |
+|---|---|
+| lessons contact display | IMPROVED_VERIFIED (data scrub + detail `cleanLessonPublicText`) |
+| harvest truncated cards | IMPROVED_VERIFIED (runtime sanitize drops `…` titles; feed.json schema kept ≥1) |
+| learn series redirects | DEFERRED (entry budget; `/learn/series/:slug` → `/lessons`) |
+| annual course summaries | IMPROVED_VERIFIED |
+| scholars SEO/empty | IMPROVED_VERIFIED |
+| quran people SEO | IMPROVED_VERIFIED |
+| report mailto subject | IMPROVED_VERIFIED (no `#id`) |
+| library URLs | BLOCKED_SOURCE (unchanged) |
+| entry budget headroom | IMPROVED_VERIFIED (locale/ErrorBoundary copy tightened) |
 
-1. روابط مصادر كتب المكتبة (~170).
-2. `content/fiqh/deferred-nawazil.json`.
-3. موسوعة أحكام مؤرشفة (119 pending_review).
-4. صفوف `fiqh_council_*` على Supabase حتى purge المالك.
 
-## MANUAL_OWNER_ACTION
+## Wave 9 final states (PR #2086)
 
-الملف: `supabase/fiqh_council_product_purge_v1.sql`
+| section | finalState |
+|---|---|
+| hadith by-id public title | IMPROVED_VERIFIED |
+| hadith modal book index | IMPROVED_VERIFIED |
+| tawhid path card | IMPROVED_VERIFIED |
+| fiqh usul → qawaid | IMPROVED_VERIFIED |
+| islamic-sects structure/empty/dark/review | IMPROVED_VERIFIED |
+| tawhid filler tails | IMPROVED_VERIFIED |
+| umda/bulugh stubs | BLOCKED_SOURCE |
 
-1. نسخة احتياطية.
-2. تشغيل الـmigration يدويًا على المشروع المستضاف.
-3. لا يُدَّعى التنفيذ من هذا الـPR.
 
-## ما لن يُملأ هنا
+## Wave 10 final states
 
-- مقالات/تراجم مولَّدة.
-- روابط كتب بلا مصدر مثبت.
-- أحكام فقهية جديدة أو إعادة منتج المجمع.
-- أي متن حديث ناقص بلا مصدر كامل.
+| section | finalState |
+|---|---|
+| seerah deep-links | IMPROVED_VERIFIED |
+| prophets generic sections | IMPROVED_VERIFIED |
+| tarikh featured badge noise | IMPROVED_VERIFIED |
+| seerah dark text | IMPROVED_VERIFIED |
+| fawaid template clusters | IMPROVED_VERIFIED (collapsed permutations + strip tails) |
+| author-aliases → scholars | IMPROVED_VERIFIED (9 profiles; rest BLOCKED_SOURCE) |
 
-## Wave 1 (P0 inventory) — 2026-09-17
 
-جرد كامل: `reports/content-completeness-master.json` (364 مسارًا بسجل نهائي)  
-تقرير: `docs/content-quality/CONTENT_COMPLETENESS_REPORT.md`  
-مصادر: `docs/content-quality/SHARIA_SOURCE_REVIEW.md`  
-بوابة: `pnpm --filter @workspace/majalis run test:content-quality-wave1`
+## Wave 11 final states
 
-النقص المفتوح للمالك (بدون اختراع): روابط كتب المكتبة 172، purge صفوف `fiqh_council_*` المستضافة، بنود `LICENSE_RISKS`.
+| section | finalState |
+|---|---|
+| adhkar SEO truncateAtWord | IMPROVED_VERIFIED |
+| author-aliases (9 profiles) → `/scholars` | IMPROVED_VERIFIED |
+| remaining aliases without profile | BLOCKED_SOURCE (stay unlinked; no `/search` fake) |
+| fawaid template clusters | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+
+
+## Wave 12 final states
+
+| section | finalState |
+|---|---|
+| SEO meta clamp word-boundary | IMPROVED_VERIFIED |
+| home widget empty copy | IMPROVED_VERIFIED |
+| home start-here lead clarity | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| author aliases without profile | BLOCKED_SOURCE |
+| hosted fiqh_council purge | OWNER_ACTION |
+
+## Wave 13 final states
+
+| section | finalState |
+|---|---|
+| vault/knowledge/seerah/asmaa/akhlaq empties | IMPROVED_VERIFIED (EMPTY.*) |
+| sects/tarikh/topics/universities/landmarks | IMPROVED_VERIFIED |
+| occasions/qa/stories empties | IMPROVED_VERIFIED |
+| ui-copy entry budget (SECTION_LEAD→fiqh module) | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| author aliases without profile | BLOCKED_SOURCE |
+| hosted fiqh_council purge | OWNER_ACTION |
+| critical CSS 60KiB leftover dist | Class C — clean dist before verify |

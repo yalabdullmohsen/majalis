@@ -96,3 +96,16 @@
 | library URLs | BLOCKED_SOURCE |
 | author aliases without profile | BLOCKED_SOURCE |
 | hosted fiqh_council purge | OWNER_ACTION |
+
+## Wave 13 final states
+
+| section | finalState |
+|---|---|
+| vault/knowledge/seerah/asmaa/akhlaq empties | IMPROVED_VERIFIED (EMPTY.*) |
+| sects/tarikh/topics/universities/landmarks | IMPROVED_VERIFIED |
+| occasions/qa/stories empties | IMPROVED_VERIFIED |
+| ui-copy entry budget (SECTION_LEAD→fiqh module) | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| author aliases without profile | BLOCKED_SOURCE |
+| hosted fiqh_council purge | OWNER_ACTION |
+| critical CSS 60KiB leftover dist | Class C — clean dist before verify |

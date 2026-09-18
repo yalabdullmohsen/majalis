@@ -9,6 +9,6 @@ assert.equal(BRAND_NAME, "سُنّة");
 assert.ok(BUTTON.start.length <= 10);
 assert.ok(BUTTON.details.length <= 20);
 assert.ok(EMPTY.search.includes("جرّب"));
-assert.ok(EMPTY.competitions.includes("حالية"));
+assert.ok(EMPTY.competitions.includes("جارية"));
 
 console.log("✓ copy-quality-gate");

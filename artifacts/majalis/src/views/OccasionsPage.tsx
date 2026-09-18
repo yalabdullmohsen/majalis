@@ -14,6 +14,7 @@ import { HijriMonthSelect } from "@/components/HijriMonthSelect";
 import { getHijriMonthName, isSacredMonth } from "@/lib/hijri-utils";
 import { contentKindLabel } from "@/lib/religious-content";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import "@/styles/pages/occasions.css";
 import "@/styles/components/home/home-learning-seasons.css";
@@ -143,7 +144,7 @@ export default function OccasionsPage() {
         <SkeletonCardGrid count={6} />
       ) : filtered.length === 0 ? (
         <p className="occasions-filter__count occasions-filter__count--empty">
-          لا توجد مناسبات في هذا الشهر.
+          {EMPTY.data}
         </p>
       ) : (
         <div className="occasions-list">

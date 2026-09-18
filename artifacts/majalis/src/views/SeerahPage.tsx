@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Bird, BookOpen, Gem, Heart, Landmark, MapPin, Megaphone, Moon, ScrollText, Sparkles, Sprout, Swords } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { Link } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
@@ -350,7 +351,7 @@ export default function SeerahPage() {
             <div className="seerah-timeline__line" aria-hidden="true" />
             {PHASES.length === 0 ? (
               <p className="seerah-timeline__empty" role="status">
-                لا نتائج لهذا البحث. جرّب كلمة أخرى، أو راجع المصادر أدناه للتفصيل.
+                {EMPTY.search}
               </p>
             ) : PHASES.map(phase => (
               <button
