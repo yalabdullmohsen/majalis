@@ -7,6 +7,7 @@ import { useThemePreference } from "./ThemePreferenceProvider";
 
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 import { useIsMobileNav } from "@/hooks/useIsMobileNav";
+import { useCompactChrome } from "@/hooks/useCompactChrome";
 import { isNavHrefActive } from "@/lib/nav-active";
 import { isImmersiveChromePath, isCompactHeaderPath } from "@/lib/immersive-chrome";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
@@ -20,6 +21,7 @@ import "@/styles/components/dark-emerald-menus.css";
 import "@/styles/components/app-chrome-scroll.css";
 import "@/styles/components/top-chrome-layout.css";
 import "@/styles/components/header-ad-slot.css";
+import "@/styles/components/ipad-responsive-layout.css";
 
 const HeaderTicker = lazy(() =>
   import("./HeaderTicker").then((m) => ({ default: m.HeaderTicker })),
@@ -28,7 +30,7 @@ const SideNavDrawer = lazy(() =>
   import("./SideNavDrawer").then((m) => ({ default: m.SideNavDrawer })),
 );
 
-function PrayerChipLive() {
+function PrayerChipLive({ compact }: { compact: boolean }) {
   const cd = useSharedPrayerCountdownLive();
 
   if (!cd?.next) return null;
@@ -39,14 +41,20 @@ function PrayerChipLive() {
     nextPrayerName: cd.graceNextSlot?.name ?? null,
     nextRemainingSeconds: cd.graceNextSeconds,
   });
+  const label = compact ? copy.compactText : copy.text;
   return (
-    <Link href="/prayer-times" className="navbar-prayer-chip" aria-label={copy.text}>
-      <span className="navbar-prayer-chip__name">{copy.text}</span>
+    <Link
+      href="/prayer-times"
+      className={`navbar-prayer-chip${compact ? " navbar-prayer-chip--compact" : ""}`}
+      aria-label={copy.text}
+      title={copy.text}
+    >
+      <span className="navbar-prayer-chip__name">{label}</span>
     </Link>
   );
 }
 
-function PrayerChip() {
+function PrayerChip({ compact }: { compact: boolean }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -70,13 +78,17 @@ function PrayerChip() {
 
   if (!ready) {
     return (
-      <Link href="/prayer-times" className="navbar-prayer-chip navbar-prayer-chip--placeholder" aria-label="مواقيت الصلاة">
-        <span className="navbar-prayer-chip__name">مواقيت الصلاة</span>
+      <Link
+        href="/prayer-times"
+        className={`navbar-prayer-chip navbar-prayer-chip--placeholder${compact ? " navbar-prayer-chip--compact" : ""}`}
+        aria-label="مواقيت الصلاة"
+      >
+        <span className="navbar-prayer-chip__name">{compact ? "مواقيت" : "مواقيت الصلاة"}</span>
       </Link>
     );
   }
 
-  return <PrayerChipLive />;
+  return <PrayerChipLive compact={compact} />;
 }
 
 function tabCls(active: boolean, extra = "") {
@@ -126,10 +138,17 @@ export default function NavBar() {
   const { resolvedTheme, toggleDark } = useThemePreference();
   const [location, navigate] = useLocation();
   const isMobile = useIsMobileNav();
+  const isCompactChrome = useCompactChrome();
   const { isMenuOpen, toggleMenu, openMenu, closeMenu, closeAll } = useMobileNavState();
   const [drawerMounted, setDrawerMounted] = useState(false);
   /** نص زر البحث بعرض كامل يسرق LCP من h1 — يُؤجَّل بعد نافذة القياس */
   const [searchLabelReady, setSearchLabelReady] = useState(false);
+  const showChromeExtras =
+    !isImmersiveChromePath(location) && !isCompactHeaderPath(location);
+  /** صفوف بحث/تيكّر منفصلة: جوال + iPad/Split View */
+  const useStackedChrome = isCompactChrome && showChromeExtras;
+  /** التيكر داخل صف الهيدر فقط على سطح المكتب العريض */
+  const tickerInHeaderEnd = !isCompactChrome && showChromeExtras;
 
   useEffect(() => {
     if (isMenuOpen) setDrawerMounted(true);
@@ -306,8 +325,10 @@ export default function NavBar() {
           )}
 
           <div className="navbar-v3__end">
-            {/* عداد الصلاة التالية — سطح المكتب فقط؛ يُخفى داخل صفحة المواقيت نفسها */}
-            {!isMobile && !isImmersiveChromePath(location) && <PrayerChip />}
+            {/* عداد الصلاة — لوحيات وسطح المكتب؛ صيغة مدمجة على iPad */}
+            {!isMobile && showChromeExtras && (
+              <PrayerChip compact={isCompactChrome} />
+            )}
             {/* زر الوضع الليلي */}
             <button
               type="button"
@@ -321,8 +342,8 @@ export default function NavBar() {
                 : <Moon size={17} strokeWidth={1.6} aria-hidden="true" />
               }
             </button>
-            {/* سطح المكتب فقط — على الجوال صف البحث الكامل أدناه يغني عن الأيقونة */}
-            {!isMobile && (
+            {/* بحث أيقوني فقط عندما لا يوجد صف بحث منفصل */}
+            {!useStackedChrome && (
               <button
                 type="button"
                 onClick={openSearch}
@@ -333,8 +354,29 @@ export default function NavBar() {
                 <Search size={17} strokeWidth={1.8} aria-hidden="true" />
               </button>
             )}
-            {!isMobile && !isImmersiveChromePath(location) && !isCompactHeaderPath(location) && <DeferredHeaderTicker />}
-            {!isMobile && desktopAuthLinks}
+            {tickerInHeaderEnd && <DeferredHeaderTicker />}
+            {/* سطح مكتب عريض: روابط حساب كاملة · لوحية: أيقونة كالجوال */}
+            {!isMobile && !isCompactChrome && desktopAuthLinks}
+            {!isMobile && isCompactChrome && authLoading && (
+              <span
+                className="navbar-mobile-login navbar-mobile-login--pending"
+                aria-busy="true"
+                aria-label="تحديث الحساب"
+              >
+                <User size={16} strokeWidth={1.8} aria-hidden="true" />
+              </span>
+            )}
+            {!isMobile && isCompactChrome && !authLoading && !isLoggedIn && (
+              <Link href="/login" className="navbar-mobile-login" aria-label="تسجيل الدخول">
+                <User size={16} strokeWidth={1.8} aria-hidden="true" />
+                <span className="navbar-mobile-login__label">دخول</span>
+              </Link>
+            )}
+            {!isMobile && isCompactChrome && !authLoading && isLoggedIn && (
+              <Link href="/stats" className="navbar-mobile-login navbar-mobile-login--active" aria-label="حسابي">
+                <User size={16} strokeWidth={1.8} aria-hidden="true" />
+              </Link>
+            )}
 
             {/* Mobile: زر دخول/حساب — ثابت الأبعاد أثناء استعادة الجلسة لتفادي وميض دخول→حساب */}
             {isMobile && authLoading && (
@@ -360,8 +402,8 @@ export default function NavBar() {
           </div>
         </div>
 
-        {/* صف بحث مستقل — لا يتداخل مع التبويبات أو التيكر */}
-        {isMobile && !isImmersiveChromePath(location) && !isCompactHeaderPath(location) && (
+        {/* صف بحث مستقل — جوال وiPad؛ لا يتداخل مع التبويبات أو التيكر */}
+        {useStackedChrome && (
           <div className="navbar-v3__search-row">
             <button
               type="button"
@@ -371,7 +413,6 @@ export default function NavBar() {
               data-label-ready={searchLabelReady ? "1" : "0"}
             >
               <Search size={16} strokeWidth={1.8} aria-hidden="true" />
-              {/* تأجيل النص: الزر بعرض كامل يسرق LCP من عنوان الرئيسية */}
               <span aria-hidden={searchLabelReady ? undefined : true}>
                 {searchLabelReady ? "ابحث في المحتوى…" : "\u00a0"}
               </span>
@@ -379,8 +420,8 @@ export default function NavBar() {
           </div>
         )}
 
-        {/* صف مستقل تحت أزرار الهيدر — يمنع تداخل التيكر مع القائمة/البحث/الحساب */}
-        {isMobile && !isImmersiveChromePath(location) && !isCompactHeaderPath(location) && (
+        {/* صف تيكّر مستقل — يمنع تداخل التيكر مع القائمة/البحث/الحساب */}
+        {useStackedChrome && (
           <div className="navbar-ticker-row" aria-label="شريط تنبيهات ومقتطفات">
             <DeferredHeaderTicker />
           </div>

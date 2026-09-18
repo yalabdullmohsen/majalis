@@ -149,7 +149,7 @@
     "test:quran-scaffold": "node --import tsx src/tests/core-engine.sample.test.ts",
     "test:quran-audio": "node --import tsx src/tests/audio-engine.test.ts",
     "test:nav-active": "node --import tsx src/lib/__tests__/nav-active.test.ts && node --import tsx src/lib/__tests__/scroll-reset-on-nav.test.ts && node --import tsx src/lib/__tests__/critical-routes-no-home-redirect.test.ts && node --import tsx src/lib/__tests__/content-trust-more-page-gate.test.ts && node --import tsx src/lib/__tests__/perf-seo-cache-gate.test.ts && node --import tsx src/lib/__tests__/canonical-apex-gate.test.ts && node --import tsx src/lib/__tests__/critical-css-gzip-gate.test.ts && node --import tsx src/hooks/__tests__/useAutoHideBottomNav.test.ts",
-    "test:mobile-nav-dedupe": "node --import tsx src/lib/__tests__/mobile-nav-dedupe.test.ts && node --import tsx src/lib/__tests__/side-nav-drawer-gate.test.ts && node --import tsx src/lib/__tests__/app-navigation.test.ts",
+    "test:mobile-nav-dedupe": "node --import tsx src/lib/__tests__/mobile-nav-dedupe.test.ts && node --import tsx src/lib/__tests__/side-nav-drawer-gate.test.ts && node --import tsx src/lib/__tests__/app-navigation.test.ts && pnpm run test:ipad-responsive",
     "test:responsive-overflow": "playwright test tests/responsive-overflow.spec.ts --project=desktop",
     "test:responsive-breakpoints-gate": "node --import tsx src/lib/__tests__/responsive-breakpoints-gate.test.ts",
     "test:onboarding-state": "node --import tsx src/lib/__tests__/onboarding-state.test.ts && node --import tsx src/lib/__tests__/first-visit-intro-state.test.ts && node --import tsx src/lib/__tests__/app-start-gate.test.ts && node --import tsx src/lib/__tests__/focus-arrival.test.ts",
@@ -578,7 +578,8 @@
     "test:content-quality-wave27": "node --import tsx src/lib/__tests__/content-quality-wave27-gate.test.ts",
     "test:content-quality-wave28": "node --import tsx src/lib/__tests__/content-quality-wave28-gate.test.ts",
     "test:content-quality-wave29": "node --import tsx src/lib/__tests__/content-quality-wave29-gate.test.ts",
-    "test:content-quality-wave30": "node --import tsx src/lib/__tests__/content-quality-wave30-gate.test.ts"
+    "test:content-quality-wave30": "node --import tsx src/lib/__tests__/content-quality-wave30-gate.test.ts",
+    "test:ipad-responsive": "node --import tsx src/lib/__tests__/ipad-responsive-layout-gate.test.ts"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
