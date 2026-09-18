@@ -24,6 +24,8 @@ function assert(cond: boolean, label: string) {
 console.log("\n=== هيرو الترحيب بدون هوية مكررة ===");
 assert(!home.includes("HomeBrandTitle"), "HomeView بلا HomeBrandTitle");
 assert(hero.includes("greeting"), "التحية ظاهرة في الهيرو الثابت");
+assert(hero.includes("resolveDailyContext"), "التحية من السياق اليومي حسب وقت الجهاز");
+assert(hero.includes("setInterval"), "التحية تُزامَن دوريًا مع ساعة الجهاز");
 assert(hero.includes('title="سُنّة"') || hero.includes("title=\"سُنّة\""), "اسم التطبيق عنوان الهيرو");
 assert(hero.includes("تصفح الأقسام"), "زر ثانوي لتصفح الأقسام");
 assert(!home.includes("<PageHero"), "الهيرو ليس مكرراً داخل HomeView");

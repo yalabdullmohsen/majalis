@@ -2,7 +2,7 @@
  * هيرو الرئيسية خارج Suspense — يبقى h1 «سُنّة» في DOM من أول رسم App
  * حتى لا يُعاد قياس LCP عند استبدال HomePage الكسول.
  */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { PageHero } from "@/components/ui/PageHero";
 import { resolveDailyContext } from "@/lib/daily-context";
@@ -12,7 +12,14 @@ import "@/styles/components/home-brand-title.css";
 import "@/styles/m2030/home.css";
 
 export function HomeHeroLcp() {
-  const greeting = resolveDailyContext().greeting;
+  // تحية حسب ساعة الجهاز المحلية (لا وقت خادم البناء) — تُزامَن عند التركيب وكل دقيقة
+  const [greeting, setGreeting] = useState(() => resolveDailyContext().greeting);
+  useEffect(() => {
+    const sync = () => setGreeting(resolveDailyContext().greeting);
+    sync();
+    const id = window.setInterval(sync, 60_000);
+    return () => window.clearInterval(id);
+  }, []);
   const [isFirstVisit] = useState(() => {
     try {
       return !hasSeenFirstVisitIntroSync() && localStorage.getItem("majlis-home-welcomed-v1") !== "1";

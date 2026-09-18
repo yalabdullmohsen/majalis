@@ -4,8 +4,6 @@
  * تحدد: التحية، الحدث، واللون بناءً على الوقت والتاريخ.
  */
 
-import { useState, useEffect } from "react";
-
 // ── أوقات الصلاة التقريبية (بتوقيت السعودية للنموذج) ──────────────────────
 // الاستخدام الحقيقي يستفيد من API الأوقات، لكن للعرض نستخدم معيار ثابت.
 
@@ -46,16 +44,26 @@ export interface DailyContext {
 }
 
 // ── جدول التحيّات حسب وقت اليوم ─────────────────────────────────────────────
+// صبَّحك: من الفجر حتى قبل العصر · مسَّاك: من العصر حتى آخر الليل
+// القطع على فترات اليوم (لا عشوائي، ولا جداول ثابتة منفصلة عن الساعة المحلية)
+
+const GREETING_MORNING = "صبَّحك الله بالخير";
+const GREETING_EVENING = "مسَّاك الله بالخير";
 
 const TIME_GREETINGS: Record<TimeOfDay, { main: string; sub: string; icon: DailyContext["timeIcon"] }> = {
-  fajr:    { main: "صبَّحك الله بالخير", sub: "", icon: "dawn"   },
-  duha:    { main: "صبَّحك الله بالخير", sub: "", icon: "sun"    },
-  zuhr:    { main: "صبَّحك الله بالخير", sub: "", icon: "sun"    },
-  asr:     { main: "صبَّحك الله بالخير", sub: "", icon: "sun"    },
-  maghrib: { main: "مسَّاك الله بالخير", sub: "", icon: "sunset" },
-  isha:    { main: "مسَّاك الله بالخير", sub: "", icon: "sunset" },
-  layl:    { main: "مسَّاك الله بالخير", sub: "", icon: "moon"   },
+  fajr:    { main: GREETING_MORNING, sub: "", icon: "dawn"   },
+  duha:    { main: GREETING_MORNING, sub: "", icon: "sun"    },
+  zuhr:    { main: GREETING_MORNING, sub: "", icon: "sun"    },
+  asr:     { main: GREETING_EVENING, sub: "", icon: "sun"    },
+  maghrib: { main: GREETING_EVENING, sub: "", icon: "sunset" },
+  isha:    { main: GREETING_EVENING, sub: "", icon: "sunset" },
+  layl:    { main: GREETING_EVENING, sub: "", icon: "moon"   },
 };
+
+/** هل الساعة المحلية ضمن نافذة تحية الصباح؟ (فجر→قبل العصر ≈ 04:00–14:30) */
+export function isMorningGreetingHour(hour: number): boolean {
+  return hour >= 4 && hour < 14.5;
+}
 
 // ── الأيام الهجرية المميّزة ──────────────────────────────────────────────────
 
@@ -155,29 +163,6 @@ export function toHijri(date: Date, offsetDays = 0): HijriDate {
 
 // ── المحرّك الرئيسي ───────────────────────────────────────────────────────────
 
-// ── hook تفاعلي — يتحدث تلقائيًا عند تغيُّر فترة اليوم ────────────────────
-
-/**
- * useDailyContext — hook يُعيد سياق اليوم ويُحدِّثه تلقائيًا.
- * يفحص الوقت كل 60 ثانية؛ عند انتقال فترة اليوم (فجر→ضحى→...) يُحدِّث
- * الحالة مباشرةً بدون إعادة تحميل الصفحة.
- */
-export function useDailyContext(hijriOffset = 0): DailyContext {
-  const [ctx, setCtx] = useState<DailyContext>(() =>
-    resolveDailyContext(new Date(), hijriOffset)
-  );
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      const fresh = resolveDailyContext(new Date(), hijriOffset);
-      setCtx((prev) => (prev.timeOfDay === fresh.timeOfDay ? prev : fresh));
-    }, 60_000);
-    return () => clearInterval(id);
-  }, [hijriOffset]);
-
-  return ctx;
-}
-
 /**
  * resolveDailyContext — دالة نقية تأخذ وقتاً وتُعيد سياق اليوم.
  * @param now  كائن Date (الافتراضي: new Date())
@@ -205,9 +190,11 @@ export function resolveDailyContext(
   const accentColor = hijriEvent?.color ?? dayEvent?.color ?? TIME_COLORS[timeOfDay];
 
   const greetingData = TIME_GREETINGS[timeOfDay];
+  // ضمان اتساق التحية مع الساعة المحلية حتى لو تغيّر سلم الفترات لاحقاً
+  const greetingMain = isMorningGreetingHour(hour) ? GREETING_MORNING : GREETING_EVENING;
 
   return {
-    greeting:    greetingData.main,
+    greeting:    greetingMain,
     subGreeting: greetingData.sub,
     event,
     accentColor,
