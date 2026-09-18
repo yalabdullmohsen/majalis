@@ -51,6 +51,11 @@ button,
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
+  background: var(--mj-bg, var(--ss-bg, #f7f4ee));
+  color: var(--mj-ink, inherit);
+}
+html:is(.dark, [data-theme="dark"]) .lrf-wrap--skel {
+  background: var(--mj-bg, #121816);
 }
 
 .lrf-wrap--page {
