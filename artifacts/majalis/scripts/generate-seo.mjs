@@ -317,9 +317,20 @@ function padDesc(text, suffix) {
   return clamp(t, META_DESC_MAX);
 }
 
+/** اقتصاص عند حدود الكلمة — يمنع قطع منتصف كلمة عربية في عناوين/أوصاف SEO. */
 function clamp(text, max = META_DESC_MAX) {
   const t = String(text || "").replace(/\s+/g, " ").trim();
-  return t.length <= max ? t : `${t.slice(0, max - 1).trimEnd()}…`;
+  if (t.length <= max) return t;
+  const slice = t.slice(0, max);
+  const cut = Math.max(
+    slice.lastIndexOf(" "),
+    slice.lastIndexOf("،"),
+    slice.lastIndexOf("."),
+    slice.lastIndexOf("؛"),
+    0,
+  );
+  const base = cut >= Math.floor(max * 0.6) ? slice.slice(0, cut) : slice;
+  return `${base.trim()}…`;
 }
 
 function escapeXml(value) {

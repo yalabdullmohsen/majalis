@@ -25,7 +25,7 @@ export const HOME_START_HERE_STEPS = [
 export const HOME_START_HERE_COPY = {
   eyebrow: "للزائر الجديد",
   title: "ابدأ من هنا",
-  lead: "ثلاث خطوات قصيرة، ثم اختر دروسك حسب مستواك.",
+  lead: "ثلاث خطوات قصيرة: أذكار، درس قريب، ثم دليل مرتّب لطالب العلم.",
   primaryCta: "الدروس والدورات",
   secondaryCta: "دليل طالب العلم",
 } as const;

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Link } from "wouter";
 import { LogIn, type LucideIcon } from "lucide-react";
+import { EMPTY, ACTION } from "@/lib/ui-copy";
 
 /**
  * غلاف موحّد لودجات الرئيسية (المرحلة 7) — أربع حالات إلزامية: تحميل/فارغ/
@@ -51,9 +52,9 @@ export function Widget({
   state,
   skeletonRows = 3,
   emptyIcon: EmptyIcon,
-  emptyMessage = "لا يوجد محتوى بعد.",
+  emptyMessage = EMPTY.data,
   emptyCtaHref,
-  emptyCtaLabel = "استكشف",
+  emptyCtaLabel = ACTION.discoverMore,
   authMessage = "سجّل الدخول لمتابعة هذا القسم.",
   authCtaLabel = "تسجيل الدخول",
   children,

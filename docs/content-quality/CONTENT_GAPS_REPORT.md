@@ -31,8 +31,9 @@
 | aqidah/hadith/sects | various | IMPROVED_VERIFIED | Wave9 presentation | done | P1 | wave9-gate |
 | seerah/history | various | COMPLETE claim | presentation polish | Wave 10 | P1 | pending |
 | prayer/adhkar copy | various | COMPLETE claim | copy polish | Wave 11 | P2 | pending |
-| search/SEO regen | — | IMPROVED | deeper SEO | Wave 13 | P2 | pending |
+| search/SEO regen | — | IMPROVED | mid-word SEO clamp | truncateAtWord-style clamp | P2 | wave12-gate |
 | admin governance | `/admin` | IMPROVED | field gates | Wave 14 | P1 | pending |
+| home empty/widgets | `/` | IMPROVED | weak empty copy | unify EMPTY.data | P2 | wave12-gate |
 
 ## Wave 8 final states (this PR)
 
@@ -83,3 +84,15 @@
 | remaining aliases without profile | BLOCKED_SOURCE (stay unlinked; no `/search` fake) |
 | fawaid template clusters | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
+
+
+## Wave 12 final states
+
+| section | finalState |
+|---|---|
+| SEO meta clamp word-boundary | IMPROVED_VERIFIED |
+| home widget empty copy | IMPROVED_VERIFIED |
+| home start-here lead clarity | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| author aliases without profile | BLOCKED_SOURCE |
+| hosted fiqh_council purge | OWNER_ACTION |
