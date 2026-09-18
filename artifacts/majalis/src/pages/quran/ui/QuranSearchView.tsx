@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
-import { EMPTY } from "@/lib/ui-copy";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import { toArabicDigits } from "@/lib/utils";
 import {
   loadQuranVerseDatabase,
@@ -180,7 +180,7 @@ export default function QuranSearchPage() {
 
       {dbError ? (
         <div className="ds-empty">
-          <h2>تعذّر تحميل قاعدة الآيات</h2>
+          <h2>{STATUS.loadError}</h2>
           <p>أعد المحاولة لاحقًا، أو افتح المصحف مباشرة.</p>
           <Link href="/mushaf">المصحف الشريف</Link>
         </div>

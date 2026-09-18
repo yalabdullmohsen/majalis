@@ -47,7 +47,7 @@ export default function AnnualCourseDetailPage({ params }: { params: { id: strin
       applyPageSeo({
         path: `/annual-courses/${params.id}`,
         title: "الدورة غير موجودة | سُنّة",
-        description: "لم يُعثر على هذه الدورة العلمية.",
+        description: "هذه الدورة العلمية غير متاحة في الفهرس العام.",
         robots: "noindex, follow",
         jsonLd: [],
       });

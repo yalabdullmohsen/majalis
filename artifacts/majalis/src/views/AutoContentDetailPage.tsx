@@ -37,7 +37,7 @@ export default function AutoContentDetailPage({ params }: { params: { slug: stri
       applyPageSeo({
         path: `/updates/auto/${params.slug}`,
         title: "المادة غير موجودة | سُنّة",
-        description: "لم يُعثر على هذه المادة أو لم تُعتمد بعد.",
+        description: "هذه المادة غير متاحة في الفهرس العام أو لم تُعتمد بعد.",
         robots: "noindex, follow",
         jsonLd: [],
       });

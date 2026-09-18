@@ -5,6 +5,7 @@
 import { useEffect } from "react";
 import { Link, useParams } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import {
   TAJWEED_CHAPTERS,
@@ -39,7 +40,7 @@ export function TajweedChapterView() {
   if (!chapter) {
     return (
       <div className="tj-page" dir="rtl" data-quran-tajweed="1">
-        <p className="tj-empty">الباب غير موجود.</p>
+        <p className="tj-empty">{EMPTY.data}</p>
         <Link href="/quran-hub/tajweed">العودة لفهرس التجويد</Link>
       </div>
     );

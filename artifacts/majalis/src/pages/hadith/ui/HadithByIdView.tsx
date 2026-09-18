@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { truncateAtWord } from "@/lib/utils";
 import {
   getHadithById,
@@ -97,7 +98,7 @@ export default function HadithByIdView() {
     return (
       <div className="page-shell hadith-by-id" dir="rtl">
         <div className="hadith-detail-card hadith-detail-card--notice">
-          <p>لم يُعثر على الحديث في المصادر المحمّلة بعد.</p>
+          <p>{EMPTY.data}</p>
           <Link href="/hadith/sahih" className="hadith-detail-link">تصفّح الأحاديث الصحيحة</Link>
         </div>
       </div>

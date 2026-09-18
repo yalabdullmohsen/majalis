@@ -12,7 +12,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
 import { KnowledgeLayout } from "@/components/knowledge";
 import { applyPageSeo } from "@/lib/seo";
-import { EMPTY } from "@/lib/ui-copy";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 
@@ -268,7 +268,7 @@ export default function RulingsPage() {
               ? dbState.dbError === "table_missing"
                 ? "جدول sharia_rulings غير موجود، طبّق migrations التفعيل أولاً."
                 : `تعذّر تحميل الأحكام: ${dbState.dbError}`
-              : "تعذّر تحميل الأحكام الشرعية حاليًا. يرجى المحاولة مرة أخرى بعد قليل."
+              : STATUS.loadError
           }
           onRetry={loadRulings}
         />

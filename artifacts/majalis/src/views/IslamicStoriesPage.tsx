@@ -8,7 +8,7 @@ import { SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { getIslamicStoriesCached, loadIslamicStoriesSeed } from "@/lib/islamic-stories-seed";
 import { applyPageSeo } from "@/lib/seo";
-import { EMPTY } from "@/lib/ui-copy";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -248,7 +248,7 @@ export default function IslamicStoriesPage() {
       .then(async ({ data, error: err }) => {
         if (cancelled) return;
         if (err) {
-          setError("تعذّر تحميل القصص.");
+          setError(STATUS.loadError);
           await applySeed();
         } else {
           const rows = (data || []) as IslamicStory[];
@@ -258,7 +258,7 @@ export default function IslamicStoriesPage() {
       })
       .catch(async () => {
         if (cancelled) return;
-        setError("تعذّر تحميل القصص.");
+        setError(STATUS.loadError);
         await applySeed();
       })
       .finally(() => {

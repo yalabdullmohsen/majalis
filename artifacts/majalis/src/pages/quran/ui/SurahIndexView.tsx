@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import { Star, BookOpen } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
-import { EMPTY } from "@/lib/ui-copy";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import {
   fetchSurahIndexLocal,
   fetchRevelationTypes,
@@ -239,7 +239,7 @@ export default function SurahIndexPage() {
       ) : loadError && surahs.length === 0 ? (
         <div className="surah-index-empty">
           <BookOpen size={32} strokeWidth={1} aria-hidden="true" />
-          <p>تعذّر تحميل فهرس السور. تحقّق من اتصالك وأعد المحاولة.</p>
+          <p>{STATUS.networkError}</p>
         </div>
       ) : filtered.length === 0 ? (
         <div className="surah-index-empty">

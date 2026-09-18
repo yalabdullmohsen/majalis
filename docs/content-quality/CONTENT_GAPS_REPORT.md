@@ -175,3 +175,12 @@
 | competitions/rulings/calendar/miracles empties | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
 | admin empties | DEFERRED |
+
+## Wave 21 final states
+
+| section | finalState |
+|---|---|
+| auto/sins/annual SEO not-found polish | IMPROVED_VERIFIED |
+| hadith-by-id/tajweed/stories/rulings/quran load | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |

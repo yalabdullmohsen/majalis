@@ -26,7 +26,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
       applyPageSeo({
         path: `/sins-and-rights/${params.slug}`,
         title: "موضوع غير متاح | سُنّة",
-        description: "لم يُعثر على هذا الموضوع.",
+        description: "هذا الموضوع غير متاح في الفهرس العام.",
         robots: "noindex, follow",
         jsonLd: [],
       });
