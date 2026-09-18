@@ -183,7 +183,6 @@ const PATHS = [
   "/janaza",
   "/janna-naar",
   "/jumuah",
-  "/kids",
   "/knowledge-graph",
   "/knowledge-map",
   "/kuwait-lessons",
