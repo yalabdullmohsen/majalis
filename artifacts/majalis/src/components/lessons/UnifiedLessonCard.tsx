@@ -20,6 +20,8 @@ import {
 import { getLessonDeliveryMode } from "@/lib/lessons/lessonNormalize";
 import { looksLikePersonSpeaker } from "@/lib/lesson-speaker-guard";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { stashLessonForNavigation } from "@/lib/lessons-service";
+import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 
 type Props = {
   lesson: UnifiedLesson;
@@ -28,6 +30,38 @@ type Props = {
   registered?: boolean;
   onToggleRegister?: () => void;
 };
+
+function unifiedToStashRecord(lesson: UnifiedLesson): KuwaitLessonRecord {
+  return {
+    id: lesson.id,
+    title: lesson.title,
+    sheikhName: lesson.sheikhName,
+    organizerName: lesson.organizerName,
+    sheikhImage: lesson.sheikhImage,
+    category: lesson.category,
+    day: lesson.day,
+    time: lesson.scheduleTime || lesson.time,
+    mosque: lesson.mosque,
+    region: lesson.region,
+    governorate: lesson.governorate,
+    sortKey: lesson.sortKey,
+    nextOccurrenceMs: lesson.nextOccurrenceMs,
+    note: lesson.note,
+    description: lesson.description,
+    gregorianDate: lesson.gregorianDate,
+    hijriDate: lesson.hijriDate,
+    activityType: lesson.activityType || "درس",
+    sessionCount: lesson.sessionCount,
+    linkedLessons: lesson.linkedLessons,
+    hasLiveStream: lesson.hasLiveStream,
+    hasRecording: lesson.hasRecording,
+    recordingUrl: lesson.recordingUrl,
+    mapsUrl: lesson.mapsUrl,
+    streamUrl: lesson.streamUrl,
+    siteUrl: lesson.siteUrl,
+    keywords: lesson.keywords,
+  };
+}
 
 function FactRow({ label, value }: { label: string; value?: string | null }) {
   const text = value != null && value !== "" ? cleanDisplayText(String(value)) : "";
@@ -214,8 +248,14 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
           className={`lesson-unified-card__actions${compact ? " lesson-unified-card__actions--compact" : ""}`}
         >
           {lesson.detailsHref ? (
-            <Link href={lesson.detailsHref} className="lesson-unified-card__btn lesson-unified-card__btn--primary">
-              التفاصيل
+            <Link
+              href={lesson.detailsHref}
+              className="lesson-unified-card__btn lesson-unified-card__btn--primary"
+              onClick={() => stashLessonForNavigation(unifiedToStashRecord(lesson))}
+              onPointerEnter={() => {
+                void import("@/pages/lessons/LessonDetailPage").catch(() => undefined);
+              }}
+            >              التفاصيل
             </Link>
           ) : null}
           <div className="lesson-unified-card__actions-secondary">
