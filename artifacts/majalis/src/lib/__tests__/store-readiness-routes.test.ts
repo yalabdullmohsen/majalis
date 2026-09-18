@@ -19,7 +19,9 @@ assert.match(appSrc, /path="\/account\/delete"/, "account/delete alias");
 assert.match(appSrc, /path="\/support"/, "support alias");
 assert.match(appSrc, /Redirect to="\/about"/, "who-we-are → about");
 assert.match(appSrc, /Redirect to="\/account-deletion"/, "delete-account → account-deletion");
-assert.match(appSrc, /Redirect to="\/contact"/, "support → contact");
+assert.match(appSrc, /SafeLazyRoute component=\{ContactPage\}/, "contact/support share ContactPage lazy");
+assert.doesNotMatch(appSrc, /path="\/support"><Redirect to="\/contact"/, "support is not redirected to contact");
+assert.doesNotMatch(appSrc, /lazy\(\(\) => import\("@\/views\/SupportPage"\)\)/, "no separate SupportPage lazy");
 
 const account =
   SERVICES_CENTER_GROUPS.find((g) => g.id === "account") ||

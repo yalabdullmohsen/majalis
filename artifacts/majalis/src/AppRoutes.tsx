@@ -298,7 +298,7 @@ export default function AppRoutes() {
       <Route path="/delete-account"><Redirect to="/account-deletion" /></Route>
       <Route path="/account/delete"><Redirect to="/account-deletion" /></Route>
       <Route path="/contact"><SafeLazyRoute component={ContactPage} /></Route>
-      <Route path="/support"><Redirect to="/contact" /></Route>
+      <Route path="/support"><SafeLazyRoute component={ContactPage} /></Route>
       <Route path="/settings"><SafeLazyRoute component={SettingsPage} /></Route>
       <Route path="/feature-tour"><SafeLazyRoute component={FeatureTourPage} /></Route>
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>

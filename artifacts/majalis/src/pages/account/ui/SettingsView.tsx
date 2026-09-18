@@ -687,7 +687,7 @@ export default function SettingsPage() {
               { id: "feature-tour", title: "جولة المزايا", href: "/feature-tour" },
               { id: "about", title: "حول التطبيق", href: "/about" },
               { id: "licenses", title: "المصادر والتراخيص", href: "/data-licenses" },
-              { id: "contact", title: "الدعم والتواصل", href: "/contact" },
+              { id: "contact", title: "الدعم الفني", href: "/support" },
               { id: "privacy", title: "سياسة الخصوصية", href: "/privacy" },
               { id: "terms", title: "شروط الاستخدام", href: "/terms" },
             ]}

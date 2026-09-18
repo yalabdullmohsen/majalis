@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useSearch } from "wouter";
+import { useLocation, useSearch } from "wouter";
 import { AlertTriangle, Check, Copy, Lock, Mail, MessageSquare, Settings2, Users2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
@@ -8,6 +8,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { CONTACT_EMAIL, mailtoWithSubject } from "@/lib/site-config";
 import "@/styles/pages/contact.css";
 import { UtilityScreen } from "@/components/design-system/screens";
+import SupportPage from "@/views/SupportPage";
 
 const FAQ = [
   {
@@ -53,6 +54,14 @@ function resolveTopicId(raw: string): string | null {
 }
 
 export default function ContactPage() {
+  const [location] = useLocation();
+  if (location === "/support") {
+    return <SupportPage />;
+  }
+  return <ContactPageBody />;
+}
+
+function ContactPageBody() {
   const search = useSearch();
   const topicParam = useMemo(() => new URLSearchParams(search.startsWith("?") ? search.slice(1) : search).get("topic") || "", [search]);
   const activeTopicId = useMemo(() => resolveTopicId(topicParam), [topicParam]);
