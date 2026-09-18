@@ -23,7 +23,7 @@ assert.match(fab, /isImmersiveChromePath|hideOnMushaf/, "إخفاء على ال�
 assert.match(fab, /adhan-settings|hideOnAdhanSettings/, "إخفاء على إعدادات الأذان — هيدر داخلي");
 assert.match(fab, /hideBack/, "إخفاء موحّد");
 assert.doesNotMatch(fab, /ChevronUp/);
-assert.match(fab, /BACK_FAB_SCROLL_SHOW_PX|data-visible/, "يظهر بعد التمرير");
+assert.match(fab, /data-visible="1"|data-global-back-visible/, "ظاهر أسفل يمين");
 assert.match(fab, /data-edge="bottom"|data-global-back-edge/, "أسفل يمين");
 
 const calm = read("src/styles/sections-calm-polish.css");
@@ -46,11 +46,17 @@ assert.doesNotMatch(
 );
 assert.match(backCss, /inset-inline-end:\s*unset/, "لا منطق RTL يقلب الزر لليسار");
 assert.match(backCss, /html\.chrome-immersive[\s\S]{0,220}?display:\s*none/, "إخفاء CSS في المصحف");
-assert.match(backCss, /data-visible="1"|data-global-back-visible/, "ظهور بعد التمرير");
-assert.match(
+assert.match(backCss, /data-visible="1"|data-global-back-visible/, "ظهور FAB");
+// الرجوع المدمج مخفي بـ calm-polish — لا نخفي FAB بـ :has وإلا يختفي السهم بالكامل.
+assert.doesNotMatch(
   backCss,
-  /data-section-back[\s\S]{0,280}?display:\s*none|app-back-btn--lobby[\s\S]{0,200}?display:\s*none/,
-  "إخفاء FAB عند الرجوع المدمج",
+  /body:has\(\[data-section-back/,
+  "لا إخفاء FAB بسبب data-section-back المخفي أصلًا",
+);
+assert.doesNotMatch(
+  backCss,
+  /body:has\(\.lesson-detail-back\)[\s\S]{0,120}?display:\s*none/,
+  "لا إخفاء FAB بسبب lesson-detail-back المخفي",
 );
 assert.match(backCss, /\.app-back-btn--bar\.fixed-back-bar\s*>\s*span[\s\S]{0,80}?display:\s*none/, "FAB أيقونة فقط");
 

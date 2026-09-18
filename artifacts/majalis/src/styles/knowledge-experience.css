@@ -654,7 +654,7 @@ button.floating-back-btn[data-floating-back="1"] {
   pointer-events: none !important;
 }
 
-/* Back FAB موحّد — أسفل يمين فوق Bottom Nav · يظهر بعد التمرير فقط */
+/* Back FAB موحّد — أسفل يمين فوق Bottom Nav · ظاهر دائمًا خارج المستثنيات */
 .app-back-btn--bar.fixed-back-bar,
 button.app-back-btn--bar[data-fixed-back-bar="1"] {
   position: fixed;
@@ -700,7 +700,7 @@ button.app-back-btn--bar[data-fixed-back-bar="1"] {
     background 180ms ease;
 }
 
-/* ظاهر بعد التمرير فقط — fade بلا Layout Shift */
+/* ظاهر دائمًا عبر data-visible="1" من المضيف */
 .global-back-control-host[data-visible="1"] .app-back-btn--bar.fixed-back-bar,
 html[data-global-back-visible="1"] .app-back-btn--bar.fixed-back-bar,
 html[data-global-back-visible="1"] button.app-back-btn--bar[data-fixed-back-bar="1"] {
@@ -926,27 +926,9 @@ html[data-theme="dark"] .app-back-btn--bar.fixed-back-bar {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
 }
 
-/* الرجوع المدمج في الهيدر/اللوبي يغني عن FAB — لا تراكب */
-/* الرجوع المدمج في الهيدر/اللوبي يغني عن FAB — لا تراكب */
-body:has([data-section-back="1"]) .app-back-btn--bar.fixed-back-bar,
-body:has([data-section-back="1"]) .global-back-control-host,
-body:has(.page-hero-mj__back) .app-back-btn--bar.fixed-back-bar,
-body:has(.page-hero-mj__back) .global-back-control-host,
-body:has(.app-back-btn--lobby) .app-back-btn--bar.fixed-back-bar,
-body:has(.app-back-btn--hero) .app-back-btn--bar.fixed-back-bar,
-body:has(.section-hero__back) .app-back-btn--bar.fixed-back-bar {
-  display: none !important;
-  pointer-events: none !important;
-  visibility: hidden !important;
-}
-body:has(.lesson-detail-back) .app-back-btn--bar.fixed-back-bar,
-body:has(.lesson-detail-back) .global-back-control-host,
-body:has(.srch-page-back) .app-back-btn--bar.fixed-back-bar,
-body:has(.srch-page-back) .global-back-control-host {
-  display: none !important;
-  pointer-events: none !important;
-  visibility: hidden !important;
-}
+/* الرجوع المدمج في الهيدر/اللوبي مخفي عبر sections-calm-polish —
+   فلا نخفي FAB العام بـ :has() وإلا يختفي الرجوع بالكامل. */
+/* المصحف الغمري فقط يبقى بلا FAB (قاعدة chrome-immersive أعلاه). */
 
 /* حجز أسفل المحتوى فقط عند ظهور FAB */
 @media (max-width: 879px) {
