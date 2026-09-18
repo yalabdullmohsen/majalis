@@ -2,6 +2,7 @@ import { SectionIcon } from "@/components/ui/SectionIcon";
 import "@/styles/quran-memorization.css";
 import { useEffect, useState, useCallback } from "react";
 import { applyPageSeo } from "@/lib/seo";
+import { STATUS } from "@/lib/ui-copy";
 import { fetchSurahList, type SurahSummary } from "@/lib/quran-api";
 import {
   TEST_LABELS,
@@ -69,8 +70,8 @@ function QuestionCard({
       const dir = question.type === "next-ayah" ? "next" : question.type === "prev-ayah" ? "prev" : null;
       if (dir) {
         fetchAdjacentAyah(question.surahNumber, question.ayahNumber, dir)
-          .then((ayah) => setAdjacentAyah(ayah?.text ?? "تعذّر تحميل نص الآية."))
-          .catch(() => setAdjacentAyah("تعذّر التحميل"));
+          .then((ayah) => setAdjacentAyah(ayah?.text ?? STATUS.loadError))
+          .catch(() => setAdjacentAyah(STATUS.loadError));
       }
     }
   }, [question, isAutoReveal]);
@@ -260,7 +261,7 @@ export default function QuranMemorizationPage() {
 
     fetchSurahList()
       .then((list) => setSurahList(list))
-      .catch(() => setError("تعذّر تحميل قائمة السور. تحقق من الاتصال بالإنترنت."));
+      .catch(() => setError(STATUS.networkError));
 
     setDueCards(getDueCards());
   }, []);
@@ -287,7 +288,7 @@ export default function QuranMemorizationPage() {
       setScore(0);
       setPhase("quiz");
     } catch {
-      setError("تعذّر تحميل أسئلة الاختبار. تحقق من الاتصال بالإنترنت.");
+      setError(STATUS.networkError);
     } finally {
       setLoading(false);
     }

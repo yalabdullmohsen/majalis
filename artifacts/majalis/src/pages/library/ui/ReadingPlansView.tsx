@@ -288,7 +288,7 @@ export default function ReadingPlansPage() {
       {authLoading ? (
         <Loading />
       ) : !isLoggedIn ? (
-        <Empty text="سجّل الدخول لإنشاء خطط قراءة ومتابعة تقدّمك." />
+        <Empty text="سجّل الدخول لإنشاء خطط قراءة ومتابعة تقدّمك في الكتب." />
       ) : loading && plans.length === 0 ? (
         <Loading />
       ) : (

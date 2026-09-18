@@ -184,3 +184,12 @@
 | hadith-by-id/tajweed/stories/rulings/quran load | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
 | admin empties | DEFERRED |
+
+## Wave 22 final states
+
+| section | finalState |
+|---|---|
+| memorization/mutashabihat/knowledge-graph load | IMPROVED_VERIFIED |
+| reading-plans login empty polish | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |

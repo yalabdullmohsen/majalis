@@ -25,7 +25,7 @@ import {
 } from "@/lib/supabase";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
-import { EMPTY } from "@/lib/ui-copy";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import { absoluteUrl } from "@/lib/site-config";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { Chip } from "@/components/ui-common";
@@ -414,7 +414,7 @@ export default function KnowledgeGraphPage() {
                 {isAdmin
                   ? <>شغّل <code>knowledge_graph_islamic_v1.sql</code> و<code>knowledge_graph_islamic_seed_v1.sql</code> في Supabase، ثم أعد التحميل.</>
                   : <>
-                      تعذّر تحميل الرسم الآن. يمكنك مؤقتًا تصفّح{" "}
+                      {STATUS.loadError} يمكنك مؤقتًا تصفّح{" "}
                       <Link href="/prophets">قصص الأنبياء</Link>
                       {" "}و{" "}
                       <Link href="/fiqh">الفقه</Link>
