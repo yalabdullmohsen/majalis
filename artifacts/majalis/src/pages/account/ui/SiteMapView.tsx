@@ -166,7 +166,7 @@ const SECTIONS = [
       { href: "/universities/compare", label: "مقارنة الجامعات", desc: "مقارنة البرامج الشرعية" },
       { href: "/notifications-and-sound", label: "الإشعارات والصوت", desc: "مركز الإشعارات ومنصة الصوت" },
       { href: "/adhan-settings", label: "إعدادات الأذان", desc: "تنبيهات الصلاة والمؤذن" },
-      { href: "/contact", label: "التواصل والدعم", desc: "للملاحظات والاقتراحات" },
+      { href: "/support", label: "الدعم الفني", desc: "للملاحظات والاقتراحات والمشكلات" },
       { href: "/privacy", label: "سياسة الخصوصية", desc: "كيف نحمي بياناتك" },
       { href: "/terms", label: "الشروط والأحكام", desc: "شروط استخدام المنصة" },
       { href: "/account-deletion", label: "حذف الحساب", desc: "طلب حذف حسابك وبياناتك" },

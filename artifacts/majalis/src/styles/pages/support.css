@@ -1,0 +1,105 @@
+/* صفحة الدعم الفني — Premium polish · App Store Support URL: /support */
+
+.support-page__lead {
+  max-width: 38rem;
+  margin-block-end: 1.25rem;
+}
+
+.support-page__sections {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin-block: 0.15rem 0.35rem;
+}
+
+@media (min-width: 880px) {
+  .support-page__sections {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+}
+
+.support-page__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1.05rem;
+  border-radius: 1.15rem;
+  min-width: 0;
+}
+
+.support-page__card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.support-page__card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 0.7rem;
+  flex-shrink: 0;
+  color: var(--majalis-emerald-deep, var(--mj-brand));
+  background: color-mix(in srgb, var(--mj-brand) 12%, transparent);
+}
+
+.support-page__card-title {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
+  line-height: 1.35;
+}
+
+.support-page__card-body {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--majalis-ink, var(--mj-ink));
+  text-align: start;
+}
+
+.support-page__card-cta {
+  align-self: flex-start;
+  margin-block-start: 0.1rem;
+  font-size: 0.9rem;
+  font-weight: 750;
+  text-decoration: none;
+  text-align: start;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.support-page__card-cta:hover {
+  text-decoration: underline;
+}
+
+.support-page__faq {
+  margin-block-start: 0.15rem;
+}
+
+.support-page__faq .contact-faq__trigger {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.support-page__faq .contact-faq__a {
+  font-size: 0.94rem;
+  line-height: 1.7;
+  color: var(--majalis-ink-soft, var(--mj-muted));
+}
+
+html[data-theme="dark"] .support-page__card,
+html.dark .support-page__card {
+  background: color-mix(in srgb, var(--mj-brand) 8%, transparent);
+}
+
+html[data-theme="dark"] .support-page__faq .contact-faq__a,
+html.dark .support-page__faq .contact-faq__a {
+  color: color-mix(in srgb, var(--mj-ink, #f2f6f4) 72%, #9aada4);
+}

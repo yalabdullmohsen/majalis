@@ -32,7 +32,6 @@ export const IA_REDIRECTS: Record<string, string> = {
   "/qa": "/quiz",
   "/courses": "/lessons",
   "/memorize": "/flashcards",
-  "/support": "/contact",
   "/about-us": "/about",
   "/who-we-are": "/about",
   "/man-nahnu": "/about",

@@ -200,7 +200,6 @@ export const SECTION_MERGE_REDIRECTS: ReadonlyArray<{ from: string; to: string; 
   { from: "/memorize", to: "/flashcards", note: "بطاقات المراجعة → بطاقات الحفظ والمراجعة" },
   { from: "/my-citations", to: "/flashcards", note: "المحفوظات → بطاقات الحفظ والمراجعة" },
   { from: "/citations", to: "/flashcards", note: "citations → بطاقات الحفظ والمراجعة" },
-  { from: "/support", to: "/contact", note: "الدعم → تواصل معنا (canonical)" },
   { from: "/about-us", to: "/about", note: "من نحن → عن سُنّة" },
   { from: "/aqidah", to: "/tawhid", note: "عقيدة قديم → التوحيد/العقيدة" },
   { from: "/prayer", to: "/prayer-times", note: "صلاة مختصر → مواقيت الصلاة" },
@@ -1174,8 +1173,8 @@ const SECTION_SEEDS: SectionSeed[] = [
   },
   {
     id: "support",
-    label: "الدعم والتواصل",
-    subtitle: "تواصل ومساعدة المستخدم",
+    label: "الدعم الفني",
+    subtitle: "مساعدة وتواصل وإبلاغ",
     route: "/support",
     icon: HelpCircle,
     group: "account",

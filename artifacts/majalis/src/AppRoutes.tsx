@@ -1,6 +1,5 @@
 /**
- * شجرة المسارات خارج الرئيسية — تُحمَّل كسولًا حتى لا تنتفخ حزمة الإقلاع.
- * الرئيسية تبقى في App.tsx مع HomeHeroLcp + HomeRestShell.
+ * مسارات خارج الرئيسية — تحميل كسول. الرئيسية في App.tsx.
  */
 import { Suspense, type ComponentType } from "react";
 import { Redirect, Route, Switch, useParams } from "wouter";
@@ -298,7 +297,7 @@ export default function AppRoutes() {
       <Route path="/delete-account"><Redirect to="/account-deletion" /></Route>
       <Route path="/account/delete"><Redirect to="/account-deletion" /></Route>
       <Route path="/contact"><SafeLazyRoute component={ContactPage} /></Route>
-      <Route path="/support"><Redirect to="/contact" /></Route>
+      <Route path="/support"><SafeLazyRoute component={ContactPage} /></Route>
       <Route path="/settings"><SafeLazyRoute component={SettingsPage} /></Route>
       <Route path="/feature-tour"><SafeLazyRoute component={FeatureTourPage} /></Route>
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>
