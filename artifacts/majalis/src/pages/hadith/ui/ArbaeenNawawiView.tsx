@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
 import { MoreHorizontal } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ARBAEEN_NAWAWI } from "@/lib/arbaeen-nawawi-seed";
 import { ContentReportLink } from "@/components/ContentReportLink";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -214,7 +215,7 @@ export default function ArbaeenNawawiPage() {
             </label>
             {query.trim() ? (
               <p className="an-results-count" aria-live="polite">
-                {filtered.length === 0 ? "لا نتائج مطابقة" : `${filtered.length} نتيجة`}
+                {filtered.length === 0 ? EMPTY.searchShort : `${filtered.length} نتيجة`}
               </p>
             ) : null}
 
@@ -284,7 +285,7 @@ export default function ArbaeenNawawiPage() {
 
           {filtered.length === 0 ? (
             <p className="an-empty" role="status">
-              لا توجد نتائج لهذا البحث أو التصنيف. جرّب عبارة أقصر أو اختر «الكل».
+              {EMPTY.search}
             </p>
           ) : (
             <div className="an-list" role="list">

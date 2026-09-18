@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { FAQBox, RelatedLinksBox, SourceBox } from "@/components/content/ContentReading";
 import { BookOpen, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -1080,7 +1081,7 @@ export default function HadithSciencePage() {
       {filtered.length === 0 ? (
         <div className="hs-empty">
           <BookOpen size={36} aria-hidden="true" />
-          <p>لا توجد نتائج للبحث. جرّب كلمة أخرى أو تصفّح بابًا آخر من علوم الحديث.</p>
+          <p>{EMPTY.search}</p>
         </div>
       ) : (
         <div className="hs-grid">

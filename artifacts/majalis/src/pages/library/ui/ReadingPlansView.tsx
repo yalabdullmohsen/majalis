@@ -4,6 +4,7 @@ import { BookOpen, Pause, Play, Plus, X } from "lucide-react";
 import { PageHeader, Loading, Empty, Card } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import "@/styles/pages/reading-plans.css";
 import { useBooksQuery, useBookQuery } from "@/entities/book";
 import {
@@ -305,7 +306,7 @@ export default function ReadingPlansPage() {
           {plans.length === 0 && !showForm ? (
             <div className="rp-empty">
               <BookOpen size={34} strokeWidth={1} aria-hidden="true" />
-              <p>لا توجد خطط قراءة بعد. أنشئ خطة لتتابع تقدّمك.</p>
+              <p>{EMPTY.data}</p>
             </div>
           ) : (
             <div className="rp-plans-list">

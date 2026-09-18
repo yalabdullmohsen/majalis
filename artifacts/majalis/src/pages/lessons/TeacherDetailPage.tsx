@@ -4,6 +4,7 @@ import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { PageShell } from "@/components/layout/PageShell";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { getUnifiedLessonsSplit } from "@/lib/lessons-service";
 import { RequestManager } from "@/lib/request-manager";
 import { beginAbortScope, abortScope } from "@/lib/route-abort";
@@ -128,7 +129,7 @@ export default function TeacherDetailPage() {
       )}
 
       {active.length === 0 && archived.length === 0 && (
-        <p className="tch-empty">لا توجد دروس مرتبطة بهذا الشيخ حاليًا.</p>
+        <p className="tch-empty">{EMPTY.data}</p>
       )}
     </PageShell>
   );

@@ -4,6 +4,7 @@ import { useLocation, useParams } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
 import { ADHKAR_CATEGORIES, FEATURED_ADHKAR_SLUGS } from "@/lib/adhkar-seed";
 import { usePublishedAdhkarItems, isPublishableAdhkar, getUnverifiedAdhkarItems } from "@/lib/adhkar-service";
+import { EMPTY } from "@/lib/ui-copy";
 import { Empty } from "@/components/ui-common";
 import { PageShell } from "@/components/layout/PageShell";
 import { UtilityScreen } from "@/components/design-system/screens";
@@ -305,7 +306,7 @@ export default function AdhkarPage() {
       ) : isError && publishedItems.length === 0 ? (
         <Empty text="تعذّر تحميل الأذكار." />
       ) : total === 0 ? (
-        <Empty text="لا توجد أذكار في هذا القسم حاليًا. جرّب قسمًا آخر." />
+        <Empty text={EMPTY.data} />
       ) : current ? (
         <div className="adhkar-focus-shell">
           {/* عداد الأذكار — سياق واضح: الذكر ن من م */}

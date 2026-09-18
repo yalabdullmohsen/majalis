@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -318,7 +319,7 @@ export default function FawaidPage({
         {loading && displayItems.length === 0 ? (
           <SkeletonCardGrid count={8} />
         ) : displayItems.length === 0 && !loading ? (
-          <Empty text={debouncedSearch.trim() ? `لا توجد فوائد مطابقة لـ «${debouncedSearch.trim()}». جرّب كلمة أخرى.` : "لا توجد فوائد في هذا القسم حاليًا."} />
+          <Empty text={debouncedSearch.trim() ? EMPTY.search : EMPTY.data} />
         ) : (
           <>
             <div className="faidah-grid">

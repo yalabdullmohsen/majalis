@@ -137,3 +137,13 @@
 | library URLs | BLOCKED_SOURCE |
 | hosted fiqh_council purge | OWNER_ACTION |
 | admin empties | DEFERRED (out of public scope) |
+
+## Wave 17 final states
+
+| section | finalState |
+|---|---|
+| adhkar/duas/tafsir/fawaid empties | IMPROVED_VERIFIED |
+| duas-quran/hadith-science/glossary | IMPROVED_VERIFIED |
+| teacher/reading-plans/arbaeen-nawawi | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
