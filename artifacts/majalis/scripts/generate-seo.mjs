@@ -26,7 +26,7 @@ import {
   isPrivateSeoPath,
 } from "./seo-path-class.mjs";
 import { enforceSeoPolicy } from "./seo-index-policy.mjs";
-import { buildSitemapXmlDocument, isExcludedFromSitemap } from "./sitemap-xml.mjs";
+import { buildSitemapXmlDocument, isExcludedFromSitemap, STABLE_SITEMAP_LASTMOD } from "./sitemap-xml.mjs";
 import { IA_BREADCRUMB_PARENTS, IA_REDIRECTS } from "../src/lib/ia-final-structure.ts";
 import { dedupeLinksByHref } from "../src/lib/link-dedupe.ts";
 
@@ -262,8 +262,7 @@ ${related?.length ? linkList("روابط ذات صلة", related) : ""}`;
 
 const publicDir = resolve(appRoot, "public");
 const seoPrerenderDir = resolve(appRoot, "seo-prerender");
-// (أُزيل buildDate: كان مستهلَكه الوحيد <lastmod> في sitemap، وقد حُذف —
-//  وبإزالته لم يبقَ في هذا المولّد أي مصدر غير حتمي.)
+// تواريخ المخرجات حتمية (STABLE_SITEMAP_LASTMOD / FEED_DATE) — لا new Date() يومي.
 
 // مُخرَج بناء، لا مصدر: يُمسح كاملاً كي لا تبقى صفحات يتيمة من توليد سابق.
 await rm(seoPrerenderDir, { recursive: true, force: true });
@@ -777,7 +776,7 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
       </article>
     </main>
     <footer>
-      <p>© ${new Date().getFullYear()} ${escapeHtml(SITE_NAME)} — ${escapeHtml(SITE_URL)}</p>
+      <p>© ${STABLE_SITEMAP_LASTMOD.slice(0, 4)} ${escapeHtml(SITE_NAME)} — ${escapeHtml(SITE_URL)}</p>
     </footer>
   </body>
 </html>`;
@@ -2763,16 +2762,16 @@ const sitemapPages = pages.filter(
     !IA_REDIRECTS[p.route.path] &&
     !isExcludedFromSitemap(p.route.path),
 );
-const LASTMOD_TODAY = new Date().toISOString().slice(0, 10);
+const LASTMOD = STABLE_SITEMAP_LASTMOD;
 
 const sitemap = buildSitemapXmlDocument(
   sitemapPages.map((p) => ({
     loc: p.route.path,
-    lastmod: LASTMOD_TODAY,
+    lastmod: LASTMOD,
     changefreq: p.changefreq,
     priority: p.priority,
   })),
-  { siteUrl: SITE_URL, lastmodFallback: LASTMOD_TODAY, stylesheetHref: "/sitemap.xsl" },
+  { siteUrl: SITE_URL, lastmodFallback: LASTMOD, stylesheetHref: "/sitemap.xsl" },
 );
 
 // robots.txt — تلميح زحف فقط؛ لا تُدرَج مسارات الإدارة هنا (كشف غير مرغوب)
@@ -2813,7 +2812,7 @@ Sitemap: ${SITE_URL}/sitemap.xml
 // فيرى قارئ RSS كل العناصر «نُشرت للتو» بعد كل نشر، وهو ادّعاء غير صحيح
 // ويُعيد كتابة feed.xml المُتتبَّع في git في كل بناء بلا تغيّر محتوى.
 // حين تُضاف تواريخ حقيقية للسجلات يُشتق pubDate منها لكل عنصر.
-const FEED_DATE = new Date("2026-07-25T00:00:00Z").toUTCString();
+const FEED_DATE = new Date(`${STABLE_SITEMAP_LASTMOD}T00:00:00Z`).toUTCString();
 const rssItems = [
   ...PUBLIC_ANNUAL_COURSES.slice(0, 3).map((row) => ({
     title: `[دورة علمية] ${row.title || row.name || "دورة شرعية"}`,
