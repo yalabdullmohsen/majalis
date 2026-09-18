@@ -330,7 +330,7 @@ function GuestVault() {
       <PageHeader
         eyebrow="على هذا الجهاز"
         title="المحفظة العلمية"
-        subtitle="محفوظاتك وموضع قراءتك محفوظان محليًا. سجّل الدخول للمزامنة بين الأجهزة."
+        subtitle="محفوظاتك وموضع قراءتك على هذا الجهاز. سجّل الدخول للمزامنة بين أجهزتك."
       />
 
       <div className="vault-login-prompt vault-login-prompt--inline">
@@ -596,7 +596,7 @@ export default function VaultPage() {
       <PageHeader
         eyebrow="المعرفة"
         title="المحفظة العلمية"
-        subtitle="مكان موحّد لكل ما حفظته وقرأته وسجّلته في رحلتك مع العلم."
+        subtitle="مكان موحّد لما حفظته وقرأته وسجّلته في رحلتك مع العلم."
       />
 
       {/* Search */}
