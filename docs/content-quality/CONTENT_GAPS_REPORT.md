@@ -119,3 +119,12 @@
 | updates/arbaeen/discover-islam/vault notes | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
 | hosted fiqh_council purge | OWNER_ACTION |
+
+## Wave 15 final states
+
+| section | finalState |
+|---|---|
+| academic research demo badge/filter | IMPROVED_VERIFIED |
+| citations/mindmap/learning-paths empties | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| hosted fiqh_council purge | OWNER_ACTION |

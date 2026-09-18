@@ -10,6 +10,7 @@ import { estimateWeeksRange } from "@/lib/learning-paths/engine";
 import { useAuth } from "@/components/AuthProvider";
 import { supabase } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import "@/styles/pages/learning-paths.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
@@ -173,9 +174,9 @@ export default function LearningPathsPage() {
 
       {loading && paths.length === 0 && <SkeletonCardGrid count={8} />}
       {!loading && loadError && paths.length === 0 && (
-        <ErrorState text="تعذّر تحميل المسارات العلمية. يرجى المحاولة مرة أخرى." onRetry={() => setRetryTick((n) => n + 1)} />
+        <ErrorState text={STATUS.loadError} onRetry={() => setRetryTick((n) => n + 1)} />
       )}
-      {!loading && !loadError && paths.length === 0 && <Empty text="لا توجد مسارات متاحة حالياً." />}
+      {!loading && !loadError && paths.length === 0 && <Empty text={EMPTY.data} />}
 
       {paths.length > 0 && Object.entries(displayed).map(([category, items]) => {
         const meta = CATEGORY_META[category] ?? CATEGORY_META.other;
