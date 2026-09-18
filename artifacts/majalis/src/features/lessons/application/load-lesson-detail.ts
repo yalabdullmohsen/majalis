@@ -5,6 +5,8 @@ import type {
   LessonEngagementPort,
   LessonsRepository,
   LoadLessonDetailResult,
+  LoadLessonExtrasResult,
+  LoadLessonPrimaryResult,
   SheikhsLookupPort,
 } from "../domain/ports";
 
@@ -15,10 +17,12 @@ export type LoadLessonDetailDeps = {
   sheikhs: SheikhsLookupPort;
 };
 
-async function enrich(
+const EMPTY_STATS = { views: 0, saves: 0, shares: 0 };
+
+export async function enrichLessonDetail(
   lesson: KuwaitLessonRecord,
   deps: LoadLessonDetailDeps,
-): Promise<Pick<LoadLessonDetailResult, "similar" | "sameSheikh" | "seriesLessons" | "stats">> {
+): Promise<LoadLessonExtrasResult> {
   const [similar, sameSheikh, seriesLessons, stats] = await Promise.all([
     deps.catalog.fetchRelated(lesson),
     deps.catalog.fetchSameSheikh(lesson),
@@ -28,10 +32,12 @@ async function enrich(
   return { similar, sameSheikh, seriesLessons, stats };
 }
 
-async function resolveSheikhBio(
+export async function resolveSheikhBio(
   name: string | undefined,
   sheikhs: SheikhsLookupPort,
+  embeddedBio?: string,
 ): Promise<string> {
+  if (embeddedBio?.trim()) return embeddedBio.trim();
   if (!name) return "";
   try {
     const { data } = await sheikhs.list();
@@ -43,92 +49,83 @@ async function resolveSheikhBio(
   }
 }
 
+function emptyPrimary(): LoadLessonPrimaryResult {
+  return { kuwaitLesson: null, dbLesson: null, sheikhBio: "" };
+}
+
 /**
- * Application use case: load a lesson detail page model.
- * Keeps orchestration out of React views.
+ * Primary lesson only — title/metadata for instant shell.
+ * Does not await sheikhs.list() or related/stats.
+ */
+export async function loadLessonPrimary(
+  deps: LoadLessonDetailDeps,
+  id: string | undefined,
+  initialLesson?: KuwaitLessonRecord | null,
+): Promise<LoadLessonPrimaryResult> {
+  if (initialLesson) {
+    return { kuwaitLesson: initialLesson, dbLesson: null, sheikhBio: "" };
+  }
+
+  if (!id) return emptyPrimary();
+
+  const { lesson: staticLesson } = await deps.catalog.getById(id);
+  if (staticLesson) {
+    return { kuwaitLesson: staticLesson, dbLesson: null, sheikhBio: "" };
+  }
+
+  const { lesson: dbLesson } = await deps.lessonsRepo.getById(id);
+  if (!dbLesson) return emptyPrimary();
+
+  return {
+    kuwaitLesson: null,
+    dbLesson,
+    sheikhBio: dbLesson.sheikhs?.bio?.trim() || "",
+  };
+}
+
+function speakerForBio(primary: LoadLessonPrimaryResult): string | undefined {
+  if (primary.kuwaitLesson?.sheikhName) return primary.kuwaitLesson.sheikhName;
+  const db = primary.dbLesson;
+  if (!db) return undefined;
+  if (typeof db.speaker_name === "string" && db.speaker_name) return db.speaker_name;
+  if (typeof db.sheikhs?.name === "string" && db.sheikhs.name) return db.sheikhs.name;
+  return mapLessonRow(db).sheikhName;
+}
+
+/**
+ * Full detail (primary + extras + bio). Prefer progressive primary→secondary in the UI.
  */
 export async function loadLessonDetail(
   deps: LoadLessonDetailDeps,
   id: string | undefined,
   initialLesson?: KuwaitLessonRecord | null,
 ): Promise<LoadLessonDetailResult> {
-  const emptyStats = { views: 0, saves: 0, shares: 0 };
+  const primary = await loadLessonPrimary(deps, id, initialLesson);
+  const forEnrich =
+    primary.kuwaitLesson ||
+    (primary.dbLesson ? mapLessonRow(primary.dbLesson) : null);
 
-  if (initialLesson) {
-    const extras = await enrich(initialLesson, deps).catch(() => ({
-      similar: [] as KuwaitLessonRecord[],
-      sameSheikh: [] as KuwaitLessonRecord[],
-      seriesLessons: [] as KuwaitLessonRecord[],
-      stats: emptyStats,
-    }));
-    const sheikhBio = await resolveSheikhBio(initialLesson.sheikhName, deps.sheikhs);
+  if (!forEnrich) {
     return {
-      kuwaitLesson: initialLesson,
-      dbLesson: null,
-      ...extras,
-      sheikhBio,
-    };
-  }
-
-  if (!id) {
-    return {
-      kuwaitLesson: null,
-      dbLesson: null,
+      ...primary,
       similar: [],
       sameSheikh: [],
       seriesLessons: [],
-      stats: emptyStats,
-      sheikhBio: "",
+      stats: EMPTY_STATS,
     };
   }
 
-  const { lesson: staticLesson } = await deps.catalog.getById(id);
-  if (staticLesson) {
-    const extras = await enrich(staticLesson, deps).catch(() => ({
+  const [extras, sheikhBio] = await Promise.all([
+    enrichLessonDetail(forEnrich, deps).catch(() => ({
       similar: [] as KuwaitLessonRecord[],
       sameSheikh: [] as KuwaitLessonRecord[],
       seriesLessons: [] as KuwaitLessonRecord[],
-      stats: emptyStats,
-    }));
-    const sheikhBio = await resolveSheikhBio(staticLesson.sheikhName, deps.sheikhs);
-    return {
-      kuwaitLesson: staticLesson,
-      dbLesson: null,
-      ...extras,
-      sheikhBio,
-    };
-  }
+      stats: EMPTY_STATS,
+    })),
+    primary.sheikhBio
+      ? Promise.resolve(primary.sheikhBio)
+      : resolveSheikhBio(speakerForBio(primary), deps.sheikhs, primary.dbLesson?.sheikhs?.bio),
+  ]);
 
-  const { lesson: dbLesson } = await deps.lessonsRepo.getById(id);
-  if (!dbLesson) {
-    return {
-      kuwaitLesson: null,
-      dbLesson: null,
-      similar: [],
-      sameSheikh: [],
-      seriesLessons: [],
-      stats: emptyStats,
-      sheikhBio: "",
-    };
-  }
-
-  const mapped = mapLessonRow(dbLesson);
-  const extras = await enrich(mapped, deps).catch(() => ({
-    similar: [] as KuwaitLessonRecord[],
-    sameSheikh: [] as KuwaitLessonRecord[],
-    seriesLessons: [] as KuwaitLessonRecord[],
-    stats: emptyStats,
-  }));
-  const speaker =
-    (typeof dbLesson.speaker_name === "string" && dbLesson.speaker_name) ||
-    (typeof dbLesson.sheikhs?.name === "string" && dbLesson.sheikhs.name) ||
-    mapped.sheikhName;
-  const sheikhBio = await resolveSheikhBio(speaker, deps.sheikhs);
-
-  return {
-    kuwaitLesson: null,
-    dbLesson,
-    ...extras,
-    sheikhBio,
-  };
+  return { ...primary, ...extras, sheikhBio };
 }

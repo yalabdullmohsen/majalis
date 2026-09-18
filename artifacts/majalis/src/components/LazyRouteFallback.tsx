@@ -14,6 +14,8 @@ export function LazyRouteFallback() {
   const settingsShell = /^\/(settings|more|adhan-settings|notification-settings)(\/|$)/.test(path);
   const searchShell = /^\/search(\/|$)/.test(path);
   const adhkarShell = /^\/(adhkar|tasbih|duas)(\/|$)/.test(path);
+  const lessonsShell = /^\/lessons(\/|$)/.test(path);
+  const lessonDetail = /^\/lessons\/[^/]+/.test(path);
 
   return (
     <div
@@ -29,6 +31,8 @@ export function LazyRouteFallback() {
         settingsShell ? "lrf-wrap--settings" : "",
         searchShell ? "lrf-wrap--search" : "",
         adhkarShell ? "lrf-wrap--adhkar" : "",
+        lessonsShell ? "lrf-wrap--lessons" : "",
+        lessonDetail ? "lrf-wrap--lesson-detail" : "",
       ]
         .filter(Boolean)
         .join(" ")}
@@ -46,7 +50,11 @@ export function LazyRouteFallback() {
               ? "search"
               : adhkarShell
                 ? "adhkar"
-                : undefined
+                : lessonDetail
+                  ? "lesson-detail"
+                  : lessonsShell
+                    ? "lessons"
+                    : undefined
       }
     >
       <div className="lrf-skel lrf-skel--page" aria-hidden="true">

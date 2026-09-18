@@ -15,7 +15,7 @@ import { normalizeActivityType } from "./activity-label";
 import { isBootstrapOwnerEmail, isOwnerProfile, hasUnrestrictedAdminAccess, resolveUserEmail } from "./owner-config";
 
 /** Columns that exist on the live `sheikhs` table (no image_url / avatar_url). */
-const SHEIKH_EMBED = "sheikhs(id, name, city, photo_url)";
+const SHEIKH_EMBED = "sheikhs(id, name, city, photo_url, bio)";
 const SHEIKH_EMBED_MIN = "sheikhs(name, photo_url)";
 
 /** Columns needed by list/home lesson cards — avoid select('*'). */

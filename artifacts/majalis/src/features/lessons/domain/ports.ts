@@ -73,3 +73,15 @@ export type LoadLessonDetailResult = {
   stats: LessonEngagementStats;
   sheikhBio: string;
 };
+
+/** Primary payload for instant shell — no related/stats. */
+export type LoadLessonPrimaryResult = {
+  kuwaitLesson: KuwaitLessonRecord | null;
+  dbLesson: LessonDbRow | null;
+  sheikhBio: string;
+};
+
+export type LoadLessonExtrasResult = Pick<
+  LoadLessonDetailResult,
+  "similar" | "sameSheikh" | "seriesLessons" | "stats"
+>;

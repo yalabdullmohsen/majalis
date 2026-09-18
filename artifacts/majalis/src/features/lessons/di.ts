@@ -1,16 +1,23 @@
-import { loadLessonDetail, type LoadLessonDetailDeps } from "./application/load-lesson-detail";
+import { loadLessonDetail, loadLessonPrimary, enrichLessonDetail, resolveSheikhBio, type LoadLessonDetailDeps } from "./application/load-lesson-detail";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
-import type { LoadLessonDetailResult } from "./domain/ports";
+import type { LoadLessonDetailResult, LoadLessonExtrasResult, LoadLessonPrimaryResult } from "./domain/ports";
 import { createLessonCatalogAdapter } from "./infrastructure/lesson-catalog-adapter";
 import { createLessonEngagementAdapter } from "./infrastructure/lesson-engagement-adapter";
 import { createSupabaseLessonsRepository } from "./infrastructure/supabase-lessons-repository";
 import { createSheikhsLookupAdapter } from "./infrastructure/sheikhs-lookup-adapter";
+import { mapLessonRow } from "@/lib/kuwait-lessons";
 
 export type LessonsModule = {
   loadLessonDetail: (
     id: string | undefined,
     initialLesson?: KuwaitLessonRecord | null,
   ) => Promise<LoadLessonDetailResult>;
+  loadLessonPrimary: (
+    id: string | undefined,
+    initialLesson?: KuwaitLessonRecord | null,
+  ) => Promise<LoadLessonPrimaryResult>;
+  enrichLessonDetail: (lesson: KuwaitLessonRecord) => Promise<LoadLessonExtrasResult>;
+  resolveSheikhBio: (name: string | undefined, embeddedBio?: string) => Promise<string>;
 };
 
 export type LessonsModuleOverrides = Partial<LoadLessonDetailDeps>;
@@ -25,6 +32,9 @@ export function createLessonsModule(overrides: LessonsModuleOverrides = {}): Les
 
   return {
     loadLessonDetail: (id, initialLesson) => loadLessonDetail(deps, id, initialLesson),
+    loadLessonPrimary: (id, initialLesson) => loadLessonPrimary(deps, id, initialLesson),
+    enrichLessonDetail: (lesson) => enrichLessonDetail(lesson, deps),
+    resolveSheikhBio: (name, embeddedBio) => resolveSheikhBio(name, deps.sheikhs, embeddedBio),
   };
 }
 
@@ -39,3 +49,5 @@ export function getLessonsModule(): LessonsModule {
 export function resetLessonsModuleForTests(): void {
   singleton = null;
 }
+
+export { mapLessonRow };

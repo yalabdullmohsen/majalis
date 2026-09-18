@@ -16,8 +16,8 @@ const MOTION_CLASSES: Record<Exclude<NavMotionKind, "none">, string> = {
 };
 
 /**
- * انتقالات مكانية على #main-content (تلاشي بهوية التطبيق).
- * push/tab/modal: خفوت بيج/زمرد · pop: كشف ناعم.
+ * انتقالات مكانية على #main-content (استمرارية بهدوء Apple).
+ * push/pop: انزلاق خفيف · tab: خفوت دقيق · modal: كشف ناعم من الأسفل.
  */
 export function RouteEnterMotion() {
   const [location] = useLocation();
@@ -66,7 +66,7 @@ export function RouteEnterMotion() {
       document.documentElement.dataset.navMotion = kind;
     });
 
-    const ms = NAV_MOTION_MS[kind] + 40;
+    const ms = NAV_MOTION_MS[kind] + 24;
     const t = window.setTimeout(() => {
       main.classList.remove(cls);
       if (document.documentElement.dataset.navMotion === kind) {

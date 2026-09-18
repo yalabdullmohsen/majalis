@@ -37,7 +37,10 @@ const sheetCss = read("src/features/mushaf-madinah/quran-sheet/quran-sheet.css")
 const tafsir = read("src/features/mushaf-madinah/MushafTafsirSheet.tsx");
 
 function maxRouteAnimMs(css: string): number {
-  const matches = [...css.matchAll(/#main-content\.mj-route-\w+[^{]*\{[^}]*animation:[^;]*?(\d+)ms/g)];
+  const matches = [
+    ...css.matchAll(/#main-content\.mj-route-\w+[^{]*\{[^}]*animation:[^;]*?(\d+)ms/g),
+    ...css.matchAll(/#main-content:is\([^)]*\)[^{]*\{[^}]*animation:[^;]*?(\d+)ms/g),
+  ];
   return matches.reduce((max, m) => Math.max(max, Number(m[1])), 0);
 }
 

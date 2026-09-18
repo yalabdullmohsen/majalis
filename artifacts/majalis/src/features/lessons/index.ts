@@ -6,10 +6,12 @@ export { createLessonsModule, getLessonsModule, resetLessonsModuleForTests } fro
 export type { LessonsModule, LessonsModuleOverrides } from "./di";
 export type {
   LoadLessonDetailResult,
+  LoadLessonPrimaryResult,
+  LoadLessonExtrasResult,
   LessonDbRow,
   LessonsRepository,
   LessonCatalogPort,
   LessonEngagementPort,
   SheikhsLookupPort,
 } from "./domain/ports";
-export { loadLessonDetail } from "./application/load-lesson-detail";
+export { loadLessonDetail, loadLessonPrimary, enrichLessonDetail } from "./application/load-lesson-detail";
