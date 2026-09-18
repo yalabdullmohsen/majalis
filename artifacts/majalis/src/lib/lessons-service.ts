@@ -167,6 +167,60 @@ export function invalidateLessonsCache() {
   cacheTs = 0;
 }
 
+/** قراءة متزامنة من الذاكرة/localStorage — لتفاصيل الدرس بلا انتظار الشبكة. */
+export function peekCachedLessonById(id: string): KuwaitLessonRecord | null {
+  const canonical = canonicalizeLessonPublicId(id) || id;
+  const match = (lessons: KuwaitLessonRecord[]) =>
+    lessons.find((l) => l.id === id || l.id === canonical) ?? null;
+
+  if (cachedResult?.lessons?.length) {
+    const hit = match(cachedResult.lessons);
+    if (hit) return hit;
+  }
+
+  const persisted = readPersistedLessons();
+  if (persisted?.lessons?.length) {
+    if (!cachedResult) {
+      cachedResult = persisted;
+      cacheTs = Date.now();
+    }
+    return match(persisted.lessons);
+  }
+
+  const seedRow = findSeedLessonById(canonical) || findSeedLessonById(id);
+  return seedRow ? mapLessonRow(seedRow) : null;
+}
+
+const LESSON_NAV_STASH_PREFIX = "majalis-lesson-nav:";
+
+/** يخزّن درس القائمة عند النقر لفتح التفاصيل فورًا. */
+export function stashLessonForNavigation(lesson: KuwaitLessonRecord): void {
+  try {
+    const key = canonicalizeLessonPublicId(lesson.id) || lesson.id;
+    sessionStorage.setItem(
+      `${LESSON_NAV_STASH_PREFIX}${key}`,
+      JSON.stringify({ lesson, savedAt: Date.now() }),
+    );
+  } catch {
+    /* private mode / quota */
+  }
+}
+
+export function takeStashedLesson(id: string): KuwaitLessonRecord | null {
+  try {
+    const key = canonicalizeLessonPublicId(id) || id;
+    const raw = sessionStorage.getItem(`${LESSON_NAV_STASH_PREFIX}${key}`);
+    if (!raw) return null;
+    sessionStorage.removeItem(`${LESSON_NAV_STASH_PREFIX}${key}`);
+    const parsed = JSON.parse(raw) as { lesson?: KuwaitLessonRecord; savedAt?: number };
+    if (!parsed?.lesson?.id || !parsed.lesson.title) return null;
+    if (parsed.savedAt && Date.now() - parsed.savedAt > 120_000) return null;
+    return parsed.lesson;
+  } catch {
+    return null;
+  }
+}
+
 /** Alias موحّد — يجلب الدروس والدورات والمحاضرات من مصدر واحد. */
 export const getUnifiedLessons = fetchLessons;
 

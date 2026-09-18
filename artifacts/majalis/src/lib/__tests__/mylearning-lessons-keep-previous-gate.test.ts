@@ -39,7 +39,7 @@ assert.doesNotMatch(
   /\.catch\(\(\)\s*=>\s*\{[^}]*setSimilar\(\[\]\)/s,
   "LessonDetail: لا تفرّغ الروابط عند الخطأ",
 );
-assert.match(detail, /loading\s*&&\s*!lesson/, "LessonDetail: هيكل فقط بلا درس سابق");
+assert.match(detail, /loading\s*&&\s*!unified/, "LessonDetail: هيكل فقط بلا درس موحّد (قشرة فورية)");
 assert.match(detail, /aria-busy=\{loading\}/, "LessonDetail: aria-busy");
 
 const lessons = read("src/pages/lessons/ui/LessonsView.tsx");

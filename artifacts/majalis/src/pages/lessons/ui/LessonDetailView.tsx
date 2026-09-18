@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation, useSearch } from "wouter";
 import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 import { ReadingProgressBar } from "@/components/ReadingProgressBar";
@@ -38,6 +38,8 @@ import { canonicalizeLessonPublicId, isOrphanKuwaitLessonHashId } from "@/lib/le
 import { getLessonsModule, type LessonDbRow } from "@/features/lessons";
 import { applyPageSeo } from "@/lib/seo";
 import { getLessonDeliveryMode } from "@/lib/lessons/lessonNormalize";
+import { peekCachedLessonById, takeStashedLesson } from "@/lib/lessons-service";
+import { mapLessonRow } from "@/lib/kuwait-lessons";
 import "@/styles/pages/not-found.css";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
@@ -168,37 +170,75 @@ export default function LessonDetailPage({
   // و(2) — كانتا تُنتجان "ومضة" عنوان/JSON-LD خاطئ عند كل تحميل صفحة قبل أن
   // يُصحِّحهما (3)، وتُبقيان العنوان خاطئاً بلا تصحيح أبداً لأي درس مصدره
   // DB مباشرة لا `kuwaitLesson` الثابت.
-  const [kuwaitLesson, setKuwaitLesson] = useState<KuwaitLessonRecord | null>(initialLesson ?? null);
+  const bootRef = useRef<KuwaitLessonRecord | null | undefined>(undefined);
+  const seenIdRef = useRef<string | null>(null);
+  if (bootRef.current === undefined) {
+    bootRef.current =
+      initialLesson ??
+      (params.id ? takeStashedLesson(params.id) || peekCachedLessonById(params.id) : null);
+    seenIdRef.current = params.id ?? null;
+  }
+  const [kuwaitLesson, setKuwaitLesson] = useState<KuwaitLessonRecord | null>(() => bootRef.current ?? null);
   const [similar, setSimilar] = useState<KuwaitLessonRecord[]>([]);
   const [sameSheikh, setSameSheikh] = useState<KuwaitLessonRecord[]>([]);
   const [seriesLessons, setSeriesLessons] = useState<KuwaitLessonRecord[]>([]);
   const [sheikhBio, setSheikhBio] = useState<string>("");
   const [stats, setStats] = useState<LessonEngagementStats>({ views: 0, saves: 0, shares: 0 });
-  const [loading, setLoading] = useState(!initialLesson);
+  const [loading, setLoading] = useState(() => !(bootRef.current));
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(!initialLesson);
+    const mod = getLessonsModule();
+    if (seenIdRef.current !== params.id) {
+      seenIdRef.current = params.id ?? null;
+      bootRef.current =
+        initialLesson ??
+        (params.id ? takeStashedLesson(params.id) || peekCachedLessonById(params.id) : null);
+    }
+    const seed =
+      initialLesson ||
+      bootRef.current ||
+      (params.id ? peekCachedLessonById(params.id) : null);
+    setKuwaitLesson(seed);
+    setLesson(null);
+    setSimilar([]);
+    setSameSheikh([]);
+    setSeriesLessons([]);
+    setSheikhBio("");
+    setStats({ views: 0, saves: 0, shares: 0 });
+    setLoading(!seed);
 
-    getLessonsModule()
-      .loadLessonDetail(params.id, initialLesson)
-      .then((result) => {
+    // Progressive: primary shell first, then related/stats/bio.
+    void (async () => {
+      try {
+        const primary = await mod.loadLessonPrimary(params.id, seed);
         if (cancelled) return;
-        setKuwaitLesson(result.kuwaitLesson);
-        setLesson(result.dbLesson);
-        setSimilar(result.similar);
-        setSameSheikh(result.sameSheikh);
-        setSeriesLessons(result.seriesLessons);
-        setStats(result.stats);
-        setSheikhBio(result.sheikhBio);
-      })
-      .catch(() => {
+        if (primary.kuwaitLesson) setKuwaitLesson(primary.kuwaitLesson);
+        else if (primary.dbLesson) setKuwaitLesson(null);
+        setLesson(primary.dbLesson);
+        if (primary.sheikhBio) setSheikhBio(primary.sheikhBio);
+        setLoading(false);
+
+        const forEnrich =
+          primary.kuwaitLesson || (primary.dbLesson ? mapLessonRow(primary.dbLesson) : null);
+        if (!forEnrich || cancelled) return;
+
+        const [extras, bio] = await Promise.all([
+          mod.enrichLessonDetail(forEnrich),
+          primary.sheikhBio
+            ? Promise.resolve(primary.sheikhBio)
+            : mod.resolveSheikhBio(forEnrich.sheikhName, primary.dbLesson?.sheikhs?.bio),
+        ]);
         if (cancelled) return;
-        // أبقِ الدرس والروابط السابقة عند فشل إعادة الجلب
-      })
-      .finally(() => {
+        setSimilar(extras.similar);
+        setSameSheikh(extras.sameSheikh);
+        setSeriesLessons(extras.seriesLessons);
+        setStats(extras.stats);
+        setSheikhBio(bio);
+      } catch {
         if (!cancelled) setLoading(false);
-      });
+      }
+    })();
 
     return () => {
       cancelled = true;
@@ -263,7 +303,27 @@ export default function LessonDetailPage({
   useLessonSeo(seoLesson, `/lessons/${params.id}`, loading);
   usePageView("lesson", params.id);
 
-  if (loading && !lesson) return <SkeletonPage />;
+  const [showSecondaryRail, setShowSecondaryRail] = useState(false);
+  useEffect(() => {
+    const w = typeof window !== "undefined" ? window : null;
+    if (!w) {
+      setShowSecondaryRail(true);
+      return;
+    }
+    let idleId = 0;
+    let timeoutId = 0;
+    if (typeof w.requestIdleCallback === "function") {
+      idleId = w.requestIdleCallback(() => setShowSecondaryRail(true), { timeout: 1500 });
+    } else {
+      timeoutId = w.setTimeout(() => setShowSecondaryRail(true), 400);
+    }
+    return () => {
+      if (idleId && typeof w.cancelIdleCallback === "function") w.cancelIdleCallback(idleId);
+      if (timeoutId) w.clearTimeout(timeoutId);
+    };
+  }, [params.id]);
+
+  if (loading && !unified) return <SkeletonPage />;
   if (!unified) return <LessonUnavailable lessonId={params.id} />;
 
   const sheikhName = unified.sheikhName;
@@ -520,12 +580,12 @@ export default function LessonDetailPage({
           </section>
         </SectionErrorBoundary>
       )}
-      {lesson?.id && (
+      {showSecondaryRail && lesson?.id && (
         <SectionErrorBoundary name="الرسم البياني المعرفي">
           <KnowledgeRelatedItems sourceType="lesson" sourceId={String(lesson.id)} />
         </SectionErrorBoundary>
       )}
-      {lesson?.id && (
+      {showSecondaryRail && lesson?.id && (
         <SectionErrorBoundary name="محتوى ذو صلة">
           <RecommendationWidget
             useRelated
@@ -538,9 +598,11 @@ export default function LessonDetailPage({
           />
         </SectionErrorBoundary>
       )}
-      <div className="px-4 pb-6 mt-4">
-        <SectionQuiz route="/lessons" title="اختبر معلوماتك في العلوم الشرعية" count={4} />
-      </div>
+      {showSecondaryRail && (
+        <div className="px-4 pb-6 mt-4">
+          <SectionQuiz route="/lessons" title="اختبر معلوماتك في العلوم الشرعية" count={4} />
+        </div>
+      )}
     </div>
     </DetailScreen>
   );
