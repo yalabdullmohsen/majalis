@@ -36,6 +36,7 @@ export function HomeHeroLcp() {
       showBack={false}
       eyebrow={greeting}
       title="سُنّة"
+      description="منصة علمية موثّقة: مصحف، دروس، فقه، حديث، وعبادة يومية."
       actions={
         <>
           <Link href={continueHref} className="mj-btn m2030-btn m2030-btn--primary">

@@ -67,7 +67,7 @@ export default function TeacherDetailPage() {
   if (loading && lessons.length === 0) {
     return (
       <PageShell variant="narrow" className="tch-page">
-        <PageHeader eyebrow="دروس الكويت" title="المشيخ" />
+        <PageHeader eyebrow="دروس الكويت" title="الشيخ" />
         <SkeletonCardGrid count={4} />
       </PageShell>
     );
@@ -76,9 +76,9 @@ export default function TeacherDetailPage() {
   if (!teacher) {
     return (
       <PageShell variant="narrow" className="tch-page">
-        <PageHeader eyebrow="دروس الكويت" title="المشيخ غير موجود" />
+        <PageHeader eyebrow="دروس الكويت" title="الشيخ غير موجود" />
         <p className="tch-empty">
-          لم نجد مشيخًا بهذا المعرّف في دروس الكويت.
+          لم نجد شيخًا بهذا المعرّف في دروس الكويت.
           {" "}
           <Link href="/teachers">العودة لفهرس المشايخ</Link>
           {" · "}
@@ -128,7 +128,7 @@ export default function TeacherDetailPage() {
       )}
 
       {active.length === 0 && archived.length === 0 && (
-        <p className="tch-empty">لا توجد دروس مرتبطة بهذا المشيخ حاليًا.</p>
+        <p className="tch-empty">لا توجد دروس مرتبطة بهذا الشيخ حاليًا.</p>
       )}
     </PageShell>
   );

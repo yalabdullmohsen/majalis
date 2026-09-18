@@ -71,7 +71,7 @@
 | tarikh featured badge noise | IMPROVED_VERIFIED |
 | seerah dark text | IMPROVED_VERIFIED |
 | fawaid template clusters | IMPROVED_VERIFIED (collapsed permutations + strip tails) |
-| author-aliases → scholars | PENDING_NEXT |
+| author-aliases → scholars | IMPROVED_VERIFIED (9 profiles; rest BLOCKED_SOURCE) |
 
 
 ## Wave 11 final states
