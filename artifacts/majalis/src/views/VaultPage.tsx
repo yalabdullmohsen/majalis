@@ -240,7 +240,7 @@ function NotesTab({
       {notes.length === 0 && (
         <div className="vault-empty">
           <div className="vault-empty__icon" aria-hidden="true"><FileText size={40} strokeWidth={1.3} /></div>
-          <p>لا توجد ملاحظات بعد. ابدأ بتدوين أفكارك وفوائدك.</p>
+          <p>{EMPTY.citations}</p>
         </div>
       )}
 

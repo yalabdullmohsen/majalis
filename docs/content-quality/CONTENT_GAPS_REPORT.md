@@ -109,3 +109,13 @@
 | author aliases without profile | BLOCKED_SOURCE |
 | hosted fiqh_council purge | OWNER_ACTION |
 | critical CSS 60KiB leftover dist | Class C — clean dist before verify |
+
+## Wave 14 final states
+
+| section | finalState |
+|---|---|
+| hikam/prophets/sahabah/fadail/sunan empties | IMPROVED_VERIFIED |
+| mutashabihat/nations/sins/miracles | IMPROVED_VERIFIED |
+| updates/arbaeen/discover-islam/vault notes | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| hosted fiqh_council purge | OWNER_ACTION |

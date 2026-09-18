@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { ShareButtons } from "@/components/ContentActions";
 import {
@@ -162,7 +163,7 @@ export default function NationsPage() {
       {view === "grid" ? (
         results.length === 0 ? (
           <p className="nations-empty">
-            لا توجد أمة مطابقة لهذه الفلاتر. جرّب الاسم أو أحد مرادفاته — مثل «قوم هود» بدل «عاد».
+            {EMPTY.search}
           </p>
         ) : (
           <>

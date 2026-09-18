@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { Copy, Heart, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -1637,7 +1638,7 @@ export default function HikamSalafPage() {
 
       {/* الحكم */}
       {filtered.length === 0 ? (
-        <div className="hk-empty"><p>لا توجد نتائج، جرِّب بحثاً آخر</p></div>
+        <div className="hk-empty"><p>{EMPTY.search}</p></div>
       ) : (
         <div className="hk-grid">
           {filtered.map((h) => {

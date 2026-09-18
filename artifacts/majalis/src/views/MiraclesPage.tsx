@@ -28,6 +28,7 @@ import {
 } from "@/lib/miracles-seed";
 import { safeLoadEffect } from "@/lib/safe-load";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ShareButtons } from "@/components/ContentActions";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
@@ -320,7 +321,7 @@ function MiraclesListPage({
           status={status}
           error={error}
           onRetry={() => setReloadKey((k) => k + 1)}
-          emptyText="لا توجد موضوعات معتمدة في هذا المسار حاليًا."
+          emptyText={EMPTY.data}
           keepContentWhileLoading
           contentBusy={loading && items.length > 0}
         >

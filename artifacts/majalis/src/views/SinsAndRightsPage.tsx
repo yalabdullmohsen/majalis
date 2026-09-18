@@ -2,6 +2,7 @@ import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import {
   SINS_TOPICS,
   SINS_CATEGORIES,
@@ -225,7 +226,7 @@ function sinSeverityBadge(sev: string) {
 
 function TopicsGrid({ category }: { category: RightsCategory }) {
   const topics = SINS_TOPICS.filter((t) => t.rightsCategory === category);
-  if (!topics.length) return <div className="snr-empty">لا توجد موضوعات في هذا التصنيف حالياً. تصفّح تصنيفًا آخر من القائمة.</div>;
+  if (!topics.length) return <div className="snr-empty">{EMPTY.data}</div>;
   return (
     <div className="snr-topics-grid">
       {topics.map((topic) => (

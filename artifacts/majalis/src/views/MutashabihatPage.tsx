@@ -1,6 +1,7 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { fetchSurahDetail, type Ayah } from "@/lib/quran-api";
 import {
   MUTASHABIHAT,
@@ -354,7 +355,7 @@ export default function MutashabihatPage() {
         {/* القائمة */}
         {filtered.length === 0 ? (
           <p style={{ textAlign: "center", padding: "2rem", color: "var(--mj-muted)" }}>
-            لا توجد نتائج تطابق البحث
+            {EMPTY.searchShort}
           </p>
         ) : (
           filtered.map((pair) => (

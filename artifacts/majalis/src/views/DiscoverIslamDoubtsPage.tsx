@@ -3,6 +3,7 @@ import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { HubCard } from "@/components/ui/HubCard";
 import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { getShubuhatByCategory, type DawahShubha } from "@/lib/dawah-service";
 import { UtilityScreen } from "@/components/design-system/screens";
 
@@ -28,7 +29,7 @@ export default function DiscoverIslamDoubtsPage() {
       {items === null ? (
         <SkeletonCardGrid />
       ) : items.length === 0 ? (
-        <Empty text="لا توجد شبهات منشورة بعد. تصفّح بقية أبواب اكتشف الإسلام." />
+        <Empty text={EMPTY.data} />
       ) : (
         <div className="hub-card-grid dii-list-grid dii-section">
           {items.map((s) => (
