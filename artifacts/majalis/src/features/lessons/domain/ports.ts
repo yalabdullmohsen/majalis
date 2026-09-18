@@ -61,7 +61,10 @@ export type LessonEngagementPort = {
 };
 
 export type SheikhsLookupPort = {
+  /** قائمة كاملة — لفهارس العلماء فقط، لا لمسار سيرة درس واحد. */
   list(): Promise<{ data: SheikhLookupRow[] }>;
+  /** بحث موجَّه بالاسم لسيرة واحدة — يمنع O(n) شبكة على كل فتح درس. */
+  findByName(name: string): Promise<SheikhLookupRow | null>;
 };
 
 export type LoadLessonDetailResult = {

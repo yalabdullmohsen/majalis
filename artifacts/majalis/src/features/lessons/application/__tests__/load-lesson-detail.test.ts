@@ -70,6 +70,10 @@ function makeDeps(opts?: {
     async list() {
       return { data: [{ name: "أحمد", bio: "سيرة الشيخ" }] };
     },
+    async findByName(name) {
+      if (name.includes("أحمد") || name === "أحمد") return { name: "أحمد", bio: "سيرة الشيخ" };
+      return null;
+    },
   };
 
   return { catalog, lessonsRepo, engagement, sheikhs };

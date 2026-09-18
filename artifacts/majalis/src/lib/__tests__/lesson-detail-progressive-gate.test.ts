@@ -24,8 +24,14 @@ assert.match(view, /takeStashedLesson|peekCachedLessonById/, "قشرة فوري�
 assert.match(app, /export async function loadLessonPrimary/);
 assert.doesNotMatch(
   app.slice(app.indexOf("export async function loadLessonPrimary"), app.indexOf("export async function loadLessonDetail")),
+  /sheikhs\.(list|findByName)\(/,
+  "primary لا ينتظر قائمة/بحث المشايخ",
+);
+assert.match(app, /sheikhs\.findByName\(/, "السيرة عبر findByName موجَّه");
+assert.doesNotMatch(
+  app.slice(app.indexOf("export async function resolveSheikhBio"), app.indexOf("function emptyPrimary")),
   /sheikhs\.list\(/,
-  "primary لا ينتظر قائمة المشايخ",
+  "resolveSheikhBio لا يستدعي list() — منع تراجع overfetch",
 );
 
 function baseLesson(overrides: Partial<KuwaitLessonRecord> = {}): KuwaitLessonRecord {
@@ -49,6 +55,7 @@ function baseLesson(overrides: Partial<KuwaitLessonRecord> = {}): KuwaitLessonRe
 
 function makeDeps() {
   let listCalls = 0;
+  let findCalls = 0;
   let relatedCalls = 0;
   const catalog: LessonCatalogPort = {
     async getById() {
@@ -86,10 +93,20 @@ function makeDeps() {
       await new Promise((r) => setTimeout(r, 50));
       return { data: [{ name: "أحمد", bio: "سيرة" }] };
     },
+    async findByName(name) {
+      findCalls += 1;
+      await new Promise((r) => setTimeout(r, 5));
+      if (name === "أحمد") return { name: "أحمد", bio: "سيرة" };
+      return null;
+    },
   };
   return {
     deps: { catalog, lessonsRepo, engagement, sheikhs },
-    counters: { get listCalls() { return listCalls; }, get relatedCalls() { return relatedCalls; } },
+    counters: {
+      get listCalls() { return listCalls; },
+      get findCalls() { return findCalls; },
+      get relatedCalls() { return relatedCalls; },
+    },
   };
 }
 
@@ -111,10 +128,12 @@ function makeDeps() {
 }
 
 {
-  const { deps } = makeDeps();
+  const { deps, counters } = makeDeps();
   const full = await loadLessonDetail(deps, "kw-1");
   assert.equal(full.kuwaitLesson?.id, "kw-1");
   assert.equal(full.sheikhBio, "سيرة");
+  assert.equal(counters.listCalls, 0, "التفاصيل الكاملة بلا sheikhs.list");
+  assert.ok(counters.findCalls >= 1, "السيرة عبر findByName");
 }
 
 console.log("lesson-detail-progressive-gate: ok");

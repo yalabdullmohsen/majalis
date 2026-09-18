@@ -1,5 +1,4 @@
 import { mapLessonRow, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
-import { sheikhNameKey } from "@/lib/sheikh-name";
 import type {
   LessonCatalogPort,
   LessonEngagementPort,
@@ -40,9 +39,7 @@ export async function resolveSheikhBio(
   if (embeddedBio?.trim()) return embeddedBio.trim();
   if (!name) return "";
   try {
-    const { data } = await sheikhs.list();
-    const key = sheikhNameKey(name);
-    const match = (data || []).find((s) => sheikhNameKey(s.name || "") === key);
+    const match = await sheikhs.findByName(name);
     return match?.bio || "";
   } catch {
     return "";
@@ -55,7 +52,7 @@ function emptyPrimary(): LoadLessonPrimaryResult {
 
 /**
  * Primary lesson only — title/metadata for instant shell.
- * Does not await sheikhs.list() or related/stats.
+ * Does not await sheikhs.findByName/list or related/stats.
  */
 export async function loadLessonPrimary(
   deps: LoadLessonDetailDeps,
