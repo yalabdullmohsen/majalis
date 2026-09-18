@@ -4,6 +4,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { useEffect } from "react";
 import {
   buildQuranStatsCatalog,
@@ -196,7 +197,7 @@ export default function QuranNumbersPage() {
       </div>
 
       {filtered.length === 0 ? (
-        <p className="sections-hub__empty">لا نتائج مطابقة في البطاقات المعتمدة.</p>
+        <p className="sections-hub__empty">{EMPTY.search}</p>
       ) : null}
 
       <AppBottomSheet

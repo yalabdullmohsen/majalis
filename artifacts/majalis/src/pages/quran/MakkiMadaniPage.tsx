@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import { PageHeader } from "@/components/ui-common";
+import { EMPTY } from "@/lib/ui-copy";
 import { SurahInfoCard } from "@/components/quran/SurahInfoCard";
 import { getSurahList } from "@/lib/quran-api";
 
@@ -45,7 +46,7 @@ export default function MakkiMadaniPage() {
       </div>
 
       <p className="revelation-review-note">التصنيفات أدناه هي التصنيف المشهور في فهرس المصحف المستخدم داخل التطبيق. تفاصيل مواضع الخلاف وأسباب النزول وترتيب النزول لا تُنشر هنا قبل مراجعة علمية بشرية موثقة.</p>
-      {surahs.length ? <div className="surah-info-grid">{surahs.map((surah) => <SurahInfoCard key={surah.number} surah={surah} />)}</div> : <div className="ds-empty"><h2>لا توجد نتائج</h2><p>جرّب اسمًا آخر أو أزل التصفية.</p></div>}
+      {surahs.length ? <div className="surah-info-grid">{surahs.map((surah) => <SurahInfoCard key={surah.number} surah={surah} />)}</div> : <div className="ds-empty"><h2>{EMPTY.searchShort}</h2><p>{EMPTY.search}</p></div>}
 
       <section className="ds-card revelation-sources"><h2>مراجع المنهج</h2><ul><li>البرهان في علوم القرآن — بدر الدين الزركشي.</li><li>الإتقان في علوم القرآن — جلال الدين السيوطي.</li><li>مناهل العرفان في علوم القرآن — محمد عبد العظيم الزرقاني.</li></ul><p>تحتاج البيانات التفصيلية لكل سورة إلى اعتماد لجنة المراجعة العلمية قبل إضافتها للعامة.</p><Link href="/mushaf">العودة إلى المصحف</Link> · <Link href="/ulum-quran">علوم القرآن</Link> · <Link href="/quran-hub">مركز القرآن الكريم</Link></section>
     </div>

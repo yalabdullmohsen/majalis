@@ -42,6 +42,7 @@ import "@/styles/pages/lessons-legacy.css";
 import "@/components/sections/section-cards.css";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { formatSheikhName } from "@/lib/sheikh-name";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -646,13 +647,13 @@ export default function LessonsPage({
             loading={loading}
             error={null}
             empty={!loading && quickFiltered.length === 0}
-            emptyText="لا توجد دروس مطابقة للتصفية الحالية. جرّب مسح الفلاتر أو تصفّح الأرشيف."
+            emptyText={EMPTY.search}
             onRetry={() => safeLocationReload()}
           >
             <>
               <section className="lessons-v2-section lessons-v2-section--first">
                 {listLessons.length === 0 ? (
-                  <Empty text="لا توجد دروس مطابقة — جرّب مسح الفلاتر أو توسيع البحث." />
+                  <Empty text={EMPTY.search} />
                 ) : (
                   <>
                     {renderGrid(

@@ -12,6 +12,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
 import { KnowledgeLayout } from "@/components/knowledge";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 
@@ -284,8 +285,8 @@ export default function RulingsPage() {
                 ? "قاعدة البيانات جاهزة لكن لم تُستورد الأحكام بعد. شغّل Production Activation من لوحة الإدارة."
                 : "لم تُنشر أحكام في الموسوعة بعد. يمكنك تصفح الأسئلة والأجوبة أو بوابة الفقه في الأثناء."
               : !debouncedSearch.trim() && category === "الكل" && !subcategory
-                ? "لا توجد أحكام منشورة في الموسوعة حاليًا. جرّب الأسئلة والأجوبة أو بوابة الفقه."
-                : "لا توجد أحكام مطابقة لبحثك أو الفلتر الحالي. جرّب تصنيفاً آخر أو امسح البحث."
+                ? EMPTY.data
+                : EMPTY.search
           }
         />
       ) : (

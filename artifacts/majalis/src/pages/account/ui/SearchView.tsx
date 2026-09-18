@@ -499,7 +499,7 @@ export default function SearchPage() {
         <div className="search-no-results ss-state-card" role="status">
           <p className="search-no-results__msg ss-state-card__title">
             {scope !== "all"
-              ? "لا توجد نتائج في هذا القسم، جرّب كلمة أخرى أو ابحث في الكل."
+              ? EMPTY.search
               : EMPTY.search /* لم نجد نتيجة مطابقة — جرّب */}
           </p>
           {scope !== "all" ? (

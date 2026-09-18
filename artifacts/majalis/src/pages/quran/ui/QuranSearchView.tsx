@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { toArabicDigits } from "@/lib/utils";
 import {
   loadQuranVerseDatabase,
@@ -217,7 +218,7 @@ export default function QuranSearchPage() {
       {!loadingDb && !dbError && debounced && !surahOnly ? (
         <div className="quran-search-page__meta" aria-live="polite">
           {results.length === 0 ? (
-            <span>لا نتائج لـ «{debounced}»</span>
+            <span>{EMPTY.searchShort}</span>
           ) : (
             <span>
               {toArabicDigits(results.length)}

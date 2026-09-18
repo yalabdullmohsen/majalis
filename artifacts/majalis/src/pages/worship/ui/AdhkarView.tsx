@@ -4,7 +4,7 @@ import { useLocation, useParams } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
 import { ADHKAR_CATEGORIES, FEATURED_ADHKAR_SLUGS } from "@/lib/adhkar-seed";
 import { usePublishedAdhkarItems, isPublishableAdhkar, getUnverifiedAdhkarItems } from "@/lib/adhkar-service";
-import { EMPTY } from "@/lib/ui-copy";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import { Empty } from "@/components/ui-common";
 import { PageShell } from "@/components/layout/PageShell";
 import { UtilityScreen } from "@/components/design-system/screens";
@@ -304,7 +304,7 @@ export default function AdhkarPage() {
       {isLoading && publishedItems.length === 0 ? (
         <div className="adhkar-loading-hint" role="status" aria-busy="true" aria-label="تحديث الأذكار" />
       ) : isError && publishedItems.length === 0 ? (
-        <Empty text="تعذّر تحميل الأذكار." />
+        <Empty text={STATUS.loadError} />
       ) : total === 0 ? (
         <Empty text={EMPTY.data} />
       ) : current ? (

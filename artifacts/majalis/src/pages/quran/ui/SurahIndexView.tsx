@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import { Star, BookOpen } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import {
   fetchSurahIndexLocal,
   fetchRevelationTypes,
@@ -243,7 +244,7 @@ export default function SurahIndexPage() {
       ) : filtered.length === 0 ? (
         <div className="surah-index-empty">
           <BookOpen size={32} strokeWidth={1} aria-hidden="true" />
-          <p>{filter === "favorites" ? "لا سور في مفضلتك بعد." : "لا نتائج مطابقة."}</p>
+          <p>{filter === "favorites" ? EMPTY.bookmarks : EMPTY.searchShort}</p>
         </div>
       ) : (
         <div aria-busy={loading}>

@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { truncateAtWord } from "@/lib/utils";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { getVerifiedHadith } from "@/lib/supabase";
@@ -458,7 +459,7 @@ export const HADITH_CLASS_META: Record<HadithClass, {
     title: "الأحاديث الصحيحة",
     subtitle:
       "متون من الصحيحين وما ثبت إسناده: اتصال السند، عدالة الرواة وضبطهم، وسلامة المتن من الشذوذ والعلة. يُحتج به في العقائد والأحكام على منهج أهل السنة.",
-    empty: "لا توجد أحاديث في هذا التصنيف.",
+    empty: EMPTY.data,
     countUnit: "حديث",
   },
   daif: {
@@ -892,7 +893,7 @@ export function HadithSection({
         <Empty
           text={
             debouncedSearch.trim()
-              ? `لا توجد أحاديث مطابقة لـ «${debouncedSearch.trim()}».`
+              ? EMPTY.search
               : meta.empty
           }
         />
