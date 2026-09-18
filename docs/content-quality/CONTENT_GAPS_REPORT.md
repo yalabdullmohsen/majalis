@@ -31,8 +31,9 @@
 | aqidah/hadith/sects | various | IMPROVED_VERIFIED | Wave9 presentation | done | P1 | wave9-gate |
 | seerah/history | various | COMPLETE claim | presentation polish | Wave 10 | P1 | pending |
 | prayer/adhkar copy | various | COMPLETE claim | copy polish | Wave 11 | P2 | pending |
-| search/SEO regen | — | IMPROVED | deeper SEO | Wave 13 | P2 | pending |
+| search/SEO regen | — | IMPROVED | mid-word SEO clamp | truncateAtWord-style clamp | P2 | wave12-gate |
 | admin governance | `/admin` | IMPROVED | field gates | Wave 14 | P1 | pending |
+| home empty/widgets | `/` | IMPROVED | weak empty copy | unify EMPTY.data | P2 | wave12-gate |
 
 ## Wave 8 final states (this PR)
 
@@ -83,3 +84,47 @@
 | remaining aliases without profile | BLOCKED_SOURCE (stay unlinked; no `/search` fake) |
 | fawaid template clusters | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
+
+
+## Wave 12 final states
+
+| section | finalState |
+|---|---|
+| SEO meta clamp word-boundary | IMPROVED_VERIFIED |
+| home widget empty copy | IMPROVED_VERIFIED |
+| home start-here lead clarity | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| author aliases without profile | BLOCKED_SOURCE |
+| hosted fiqh_council purge | OWNER_ACTION |
+
+## Wave 13 final states
+
+| section | finalState |
+|---|---|
+| vault/knowledge/seerah/asmaa/akhlaq empties | IMPROVED_VERIFIED (EMPTY.*) |
+| sects/tarikh/topics/universities/landmarks | IMPROVED_VERIFIED |
+| occasions/qa/stories empties | IMPROVED_VERIFIED |
+| ui-copy entry budget (SECTION_LEAD→fiqh module) | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| author aliases without profile | BLOCKED_SOURCE |
+| hosted fiqh_council purge | OWNER_ACTION |
+| critical CSS 60KiB leftover dist | Class C — clean dist before verify |
+
+## Wave 14 final states
+
+| section | finalState |
+|---|---|
+| hikam/prophets/sahabah/fadail/sunan empties | IMPROVED_VERIFIED |
+| mutashabihat/nations/sins/miracles | IMPROVED_VERIFIED |
+| updates/arbaeen/discover-islam/vault notes | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| hosted fiqh_council purge | OWNER_ACTION |
+
+## Wave 15 final states
+
+| section | finalState |
+|---|---|
+| academic research demo badge/filter | IMPROVED_VERIFIED |
+| citations/mindmap/learning-paths empties | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| hosted fiqh_council purge | OWNER_ACTION |

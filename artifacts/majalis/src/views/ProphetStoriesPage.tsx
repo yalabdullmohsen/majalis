@@ -3,6 +3,7 @@ import { CalendarDays, ChevronLeft, ChevronRight, HelpCircle, LayoutList, Sparkl
 import { Link, useLocation } from "wouter";
 import { PROPHETS, getProphet, resolveProphetSlug, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { prophetArticleJsonLd, breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { supabase } from "@/lib/supabase";
@@ -1299,7 +1300,7 @@ export default function ProphetStoriesPage({
             {results.length === 0 ? (
               <div className="prophets-lux-empty">
                 <IslamicStar size={24} color={IVORY} opacity={0.3} />
-                <p>لا توجد نتائج لـ «{search}». جرّب كلمة أخرى أو امسح البحث.</p>
+                <p>{EMPTY.search}</p>
               </div>
             ) : (
               <>

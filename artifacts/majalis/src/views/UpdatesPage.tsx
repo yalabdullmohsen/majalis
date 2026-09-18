@@ -7,6 +7,7 @@ import { usePageView } from "@/hooks/usePageView";
 import { ShareButtons } from "@/components/ContentActions";
 import type { MergedUpdateItem } from "@/lib/auto-content/auto-content-utils";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/updates.css";
@@ -133,9 +134,9 @@ export default function UpdatesPage() {
       {loading && items.length === 0 ? (
         <SkeletonCardGrid />
       ) : loadError && items.length === 0 ? (
-        <ErrorState text="تعذّر تحميل المستجدات. يرجى المحاولة مرة أخرى." onRetry={() => setRetryTick((n) => n + 1)} />
+        <ErrorState text={STATUS.loadError} onRetry={() => setRetryTick((n) => n + 1)} />
       ) : filtered.length === 0 ? (
-        <Empty text="لا توجد مستجدات منشورة حاليًا." />
+        <Empty text={EMPTY.data} />
       ) : (
         <div className="updates-timeline" aria-busy={loading}>
           {filtered.map((item) => (

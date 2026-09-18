@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { ArrowRight, Heart } from "lucide-react";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { fetchPublishedArbaeenLove, type ArbaeenHadith } from "@/lib/arbaeen-love-service";
 import { UtilityScreen } from "@/components/design-system/screens";
@@ -53,7 +54,7 @@ export default function ArbaeenLovePage() {
       {loading && items.length === 0 ? (
         <SkeletonCardGrid count={4} />
       ) : items.length === 0 ? (
-        <Empty text="لا توجد أحاديث منشورة بعد في هذه المجموعة." />
+        <Empty text={EMPTY.data} />
       ) : (
         <div className="fiqh-review-list" aria-busy={loading}>
           {items.map((item) => (

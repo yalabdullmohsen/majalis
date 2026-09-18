@@ -2,6 +2,7 @@ import "@/styles/pages/asmaa-husna.css";
 import { useEffect, useMemo, useState } from "react";
 import { Search, Star, BookOpen, Heart } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -175,7 +176,7 @@ export default function AsmaaHusnaPage() {
 
       {/* ═══ شبكة الأسماء ═══ */}
       {filtered.length === 0 ? (
-        <p className="ah-empty">لا يوجد اسم مطابق للبحث. جرّب كلمة أخرى أو امسح التصفية.</p>
+        <p className="ah-empty">{EMPTY.search}</p>
       ) : (
         <div className="ah-grid">
           {filtered.map((a) => (

@@ -6,6 +6,7 @@ import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { PageShell } from "@/components/layout/PageShell";
 import { fetchAllTopics } from "@/lib/scholarly-intelligence-service";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -186,7 +187,7 @@ export default function TopicsIndexPage() {
       {loading && Object.keys(displayed).length === 0 && <SkeletonCardGrid />}
 
       {!loading && Object.entries(displayed).length === 0 && search.trim() && (
-        <p className="tip-footer-note">لا توجد موضوعات مطابقة لـ «{search}». جرّب كلمة أخرى أو امسح البحث.</p>
+        <p className="tip-footer-note">{EMPTY.search}</p>
       )}
 
       <div aria-busy={loading}>

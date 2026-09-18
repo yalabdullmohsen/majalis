@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import { Link } from "wouter";
 import { ChevronDown, ChevronLeft, ExternalLink, Layers, List, Map, Sparkles, Waypoints, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { MIND_MAPS, MIND_MAP_CATEGORIES, type MindMap, type MindMapNode } from "@/lib/mind-maps-data";
@@ -276,7 +277,7 @@ export default function MindMapPage() {
       {/* قائمة الخرائط */}
       <div className="mm-list">
         {filtered.length === 0 ? (
-          <p className="mm-empty">لا توجد خرائط في هذه الفئة حتى الآن</p>
+          <p className="mm-empty">{EMPTY.data}</p>
         ) : (
           filtered.map(map => (
             <MindMapCard

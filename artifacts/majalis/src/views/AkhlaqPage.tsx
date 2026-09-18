@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ChevronDown, ChevronUp, Check } from "lucide-react";
 import { InternalLinkCard } from "@/components/ui/InternalCards";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -1121,7 +1122,7 @@ export default function AkhlaqPage() {
       </div>
 
       {filtered.length === 0 && (
-        <p className="akl-empty">لا يوجد خلق مطابق. جرّب كلمة أخرى أو امسح البحث.</p>
+        <p className="akl-empty">{EMPTY.search}</p>
       )}
 
       <SectionQuiz sectionId="akhlaq" title="اختبر معلوماتك في مكارم الأخلاق" count={4} />

@@ -3,6 +3,7 @@ import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { HubCard } from "@/components/ui/HubCard";
 import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { getDawahCategories, getQuestionsByCategory, getQuestionsByReligion, searchDawahQuestions, RELIGIONS, type DawahCategory, type DawahQuestion, type ReligionCode } from "@/lib/dawah-service";
 import { STATIC_DAWAH_QUESTIONS } from "@/lib/dawah-static-fallback";
 import { UtilityScreen } from "@/components/design-system/screens";
@@ -105,7 +106,7 @@ export default function DiscoverIslamQuestionsPage() {
       {loading && items.length === 0 ? (
         <SkeletonCardGrid />
       ) : items.length === 0 ? (
-        <Empty text="لا توجد أسئلة مطابقة بعد." />
+        <Empty text={EMPTY.search} />
       ) : (
         <div className="hub-card-grid dii-list-grid dii-section" aria-busy={loading}>
           {items.map((q) => (

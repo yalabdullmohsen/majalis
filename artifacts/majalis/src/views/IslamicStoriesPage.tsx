@@ -8,6 +8,7 @@ import { SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { getIslamicStoriesCached, loadIslamicStoriesSeed } from "@/lib/islamic-stories-seed";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -382,9 +383,9 @@ export default function IslamicStoriesPage() {
           <span>{error}</span>
         </div>
       ) : stories.length === 0 ? (
-        <Empty title="لا توجد قصص معتمدة بعد" text="لا قصص معتمدة للعرض الآن. تصفّح الأمم أو السيرة." />
+        <Empty title={EMPTY.data} text={EMPTY.generic} />
       ) : filtered.length === 0 ? (
-        <Empty text="لا توجد نتائج للبحث أو الفلتر المحدد." />
+        <Empty text={EMPTY.search} />
       ) : (
         <div className="isp-grid" aria-busy={loading}>
           {filtered.map((story) => (

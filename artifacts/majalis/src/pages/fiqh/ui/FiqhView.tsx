@@ -28,7 +28,7 @@ import { UnifiedPrimaryFilters } from "@/components/filters/UnifiedPrimaryFilter
 import { GridScreen } from "@/components/design-system/screens";
 import { isHiddenFromNav } from "@/lib/nav-visibility";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
-import { EMPTY, SEARCH, SECTION_LEAD } from "@/lib/ui-copy";
+import { FIQH_EMPTY, FIQH_SEARCH, SECTION_LEAD } from "@/lib/ui-copy-fiqh";
 import "@/styles/pages/fiqh-hub.css";
 import "@/styles/components/hub-card.css";
 
@@ -52,7 +52,7 @@ function FiqhHubSearch({
             type="search"
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
-            placeholder={SEARCH.fiqh}
+            placeholder={FIQH_SEARCH}
             autoComplete="off"
             enterKeyHint="search"
           />
@@ -106,7 +106,7 @@ function SearchHitList({
   lessons: FiqhLessonHit[];
 }) {
   if (books.length === 0 && chapters.length === 0 && lessons.length === 0) {
-    return <p className="fiqh-lux-empty">{EMPTY.fiqhSearch}</p>;
+    return <p className="fiqh-lux-empty">{FIQH_EMPTY.search}</p>;
   }
 
   return (
@@ -233,7 +233,7 @@ function FiqhBooksBody() {
               <BookCard key={book.id} book={book} />
             ))}
           </KnowledgeLayout>
-          {books.length === 0 ? <p className="fiqh-lux-empty">{EMPTY.fiqhCategory}</p> : null}
+          {books.length === 0 ? <p className="fiqh-lux-empty">{FIQH_EMPTY.category}</p> : null}
         </section>
       )}
 

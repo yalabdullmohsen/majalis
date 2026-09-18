@@ -1,6 +1,7 @@
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "../lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -1141,7 +1142,7 @@ export default function FadailAamalPage() {
         {filtered.length === 0 && (
           <div className="fa-empty">
             <span className="fa-empty__icon"><SectionIcon name="🔍" size={18} /></span>
-            <p>لا توجد نتائج مطابقة. جرّب كلمة أخرى أو امسح التصفية.</p>
+            <p>{EMPTY.search}</p>
           </div>
         )}
 

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { Check, CheckCircle2, Search, Sparkles, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -1005,7 +1006,7 @@ export default function SunanYawmiyyaPage() {
 
       {filtered.length === 0 && (
         <div className="sy-empty">
-          <p>لا توجد نتائج، جرِّب بحثاً آخر</p>
+          <p>{EMPTY.search}</p>
         </div>
       )}
 

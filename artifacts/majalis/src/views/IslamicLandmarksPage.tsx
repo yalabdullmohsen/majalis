@@ -2,6 +2,7 @@ import "@/styles/islamic-landmarks.css";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState, useMemo, lazy, Suspense } from "react";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import {
   ISLAMIC_LANDMARKS,
   LANDMARK_COUNTRIES,
@@ -436,7 +437,7 @@ export default function IslamicLandmarksPage() {
 
         <div className={`ilm-grid${listView ? " ilm-grid--list" : ""}`}>
           {filtered.length === 0 ? (
-            <p className="ilm-empty">لا توجد مواقع تطابق معايير البحث. جرّب كلمة أخرى أو غيّر التصنيف.</p>
+            <p className="ilm-empty">{EMPTY.search}</p>
           ) : (
             filtered.map((lm) => (
               <LandmarkCard

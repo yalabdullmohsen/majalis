@@ -45,7 +45,7 @@ console.log("=== sects: arabic review + structure + empty + related ===");
   assert.match(src, /يحتاج تحققًا من مختص/);
   assert.match(src, /التعريف/);
   assert.match(src, /النشأة/);
-  assert.match(src, /لا نتائج مطابقة/);
+  assert.match(src, /EMPTY\.searchShort/);
   assert.match(src, /href="\/tawhid\/ahl-sunnah"/);
   assert.doesNotMatch(src, /85-90%/);
 }

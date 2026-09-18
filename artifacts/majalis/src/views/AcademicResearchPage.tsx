@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, useTransition, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import { EMPTY } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import {
@@ -67,13 +68,34 @@ export default function AcademicResearchPage() {
     [q, categoryId, kind, sort, yearFrom],
   );
 
-  const results = useMemo(() => queryPublished(filters), [filters]);
+  const results = useMemo(
+    () => queryPublished(filters).filter((r) => !r.isDemo),
+    [filters],
+  );
   const stats = useMemo(() => computeResearchStats(), []);
-  const latest = useMemo(() => queryPublished({ sort: "newest" }).slice(0, 6), []);
-  const mostViewed = useMemo(() => queryPublished({ sort: "most_viewed" }).slice(0, 6), []);
-  const featured = useMemo(() => queryPublished({}).filter((r) => r.featured).slice(0, 6), []);
-  const theses = useMemo(() => queryPublished({ thesesOnly: true, sort: "newest" }).slice(0, 6), []);
-  const peerReviewed = useMemo(() => queryPublished({ peerReviewed: true, sort: "newest" }).slice(0, 6), []);
+  const latest = useMemo(
+    () => queryPublished({ sort: "newest" }).filter((r) => !r.isDemo).slice(0, 6),
+    [],
+  );
+  const mostViewed = useMemo(
+    () => queryPublished({ sort: "most_viewed" }).filter((r) => !r.isDemo).slice(0, 6),
+    [],
+  );
+  const featured = useMemo(
+    () => queryPublished({}).filter((r) => r.featured && !r.isDemo).slice(0, 6),
+    [],
+  );
+  const theses = useMemo(
+    () => queryPublished({ thesesOnly: true, sort: "newest" }).filter((r) => !r.isDemo).slice(0, 6),
+    [],
+  );
+  const peerReviewed = useMemo(
+    () =>
+      queryPublished({ peerReviewed: true, sort: "newest" })
+        .filter((r) => !r.isDemo)
+        .slice(0, 6),
+    [],
+  );
 
   const onSearch = (value: string) => {
     setQ(value);
@@ -197,7 +219,7 @@ export default function AcademicResearchPage() {
         )}
         {!pending && results.length === 0 && (
           <div className="sr-empty">
-            <p><strong>لا توجد نتائج منشورة بعد</strong></p>
+            <p><strong>{EMPTY.data}</strong></p>
             <p>الفهرس يعتمد على أبحاث موثّقة فقط. لا تُعرض أرقام أو أسماء وهمية في الإنتاج.</p>
             <Link href="/academic-research/submit" className="sr-btn sr-btn--outline">أضف بحثًا للمراجعة</Link>
           </div>
@@ -212,7 +234,6 @@ export default function AcademicResearchPage() {
                 {r.university && <span>{r.university}</span>}
                 {r.year && <span>{r.year}</span>}
                 {r.categoryIds[0] && <span>{categoryLabel(r.categoryIds[0])}</span>}
-                {r.isDemo && <span className="sr-badge">تجريبي</span>}
               </p>
               <p className="sr-card__abs">{r.abstract}</p>
             </Link>
