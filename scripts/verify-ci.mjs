@@ -242,6 +242,11 @@ const waves = [
         cmd: "pnpm",
         args: ["--filter", "@workspace/majalis", "run", "sunnah-ai-narration-p0-gate"],
       },
+      {
+        name: "AI narration pipeline gate",
+        cmd: "pnpm",
+        args: ["--filter", "@workspace/majalis", "run", "ai-narration-pipeline-gate"],
+      },
 
     ],
   },

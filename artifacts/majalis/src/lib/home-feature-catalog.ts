@@ -71,7 +71,6 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/malaika",       Icon: Sparkles, title: seoNavLabel("/malaika", "الملائكة في الإسلام"), desc: "أسماؤهم ومهامهم وصفاتهم وفضائلهم من الوحي" },
       { href: "/wasaya-nabawiyya", Icon: Scroll,  title: seoNavLabel("/wasaya-nabawiyya", "الوصايا النبوية"),    desc: "49 وصية جامعة وخاصة بالصحابة مع التطبيق" },
       { href: "/raqaiq",          Icon: Heart,  title: seoNavLabel("/raqaiq", "الرقائق والزهد"),      desc: "نصوص في الزهد والمحاسبة من أقوال العلماء والزاهدين" },
-      { href: "/kids",            Icon: Sparkles, title: seoNavLabel("/kids", "ركن الأطفال"), desc: "قصص أنبياء وأذكار وقرآن وأسئلة ميسّرة بمرافقة ولي الأمر" },
     ],
   },
   {

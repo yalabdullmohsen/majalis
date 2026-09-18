@@ -562,6 +562,8 @@
     "test:app-audio-coordinator": "node --import tsx src/lib/__tests__/app-audio-coordinator-gate.test.ts",
     "sunnah-ai-narration-p0-gate": "node --import tsx src/lib/__tests__/sunnah-ai-narration-back-dark-p0-gate.test.ts",
     "verify:sunnah-ai-narration-p0": "node --import tsx src/lib/__tests__/sunnah-ai-narration-back-dark-p0-gate.test.ts",
+    "test:ai-narration-pipeline": "node --import tsx src/lib/__tests__/ai-narration-pipeline-gate.test.ts",
+    "ai-narration-pipeline-gate": "node --import tsx src/lib/__tests__/ai-narration-pipeline-gate.test.ts",
     "test:mushaf-ayah-nav-highlight": "node --import tsx src/lib/__tests__/mushaf-ayah-navigation-highlight-gate.test.ts",
     "test:mushaf-signature-p0-baseline": "node --import tsx src/lib/__tests__/mushaf-signature-p0-baseline-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-immersive-reader-chrome-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-authentic-p0-baseline-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-authentic-p1-ornaments-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-verse-marker-printed-gold-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-warm-yellow-printed-gate.test.ts && node --import tsx src/lib/__tests__/mushaf-reference-rosette-correction-gate.test.ts",
     "test:content-quality-wave20": "node --import tsx src/lib/__tests__/content-quality-wave20-gate.test.ts",

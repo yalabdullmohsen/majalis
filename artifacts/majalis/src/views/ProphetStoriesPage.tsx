@@ -387,7 +387,8 @@ function ProphetDetailView({
         contentId: `prophet:${slug}`,
         title: p?.arabicName,
         body: speakableText,
-        rate: 0.95,
+        mode: "immersive",
+        contentKind: "prophet_story",
         onEnd: () => {
           setSpeechPlaying(false);
           setSpeechEngine("none");
