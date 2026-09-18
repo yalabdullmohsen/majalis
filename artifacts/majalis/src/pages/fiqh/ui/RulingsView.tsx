@@ -17,46 +17,46 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 
 const RULINGS_ICON_MAP: Record<string, LucideIcon> = {
-  Landmark, Droplets, Banknote, Moon, MapPin, Handshake, Utensils, Shirt, Users,
-  ScrollText, Scale, FileSignature, Shield, Heart, BookOpen, GraduationCap, FlaskConical, Flame,
+ Landmark, Droplets, Banknote, Moon, MapPin, Handshake, Utensils, Shirt, Users,
+ ScrollText, Scale, FileSignature, Shield, Heart, BookOpen, GraduationCap, FlaskConical, Flame,
 };
 function CatIcon({ name }: { name?: string }) {
-  const I: LucideIcon = (name ? RULINGS_ICON_MAP[name] : undefined) ?? BookOpen;
-  return <I size={16} className="inline ms-1" />;
+ const I: LucideIcon = (name ? RULINGS_ICON_MAP[name] : undefined) ?? BookOpen;
+ return <I size={16} className="inline ms-1" />;
 }
 
 const FIQH_HUB_TABS = [
-  { key: "rulings", label: "الأحكام الشرعية", href: "/fiqh" },
-  { key: "qa",      label: "الأسئلة والأجوبة", href: "/quiz" },
+ { key: "rulings", label: "الأحكام الشرعية", href: "/fiqh" },
+ { key: "qa",   label: "الأسئلة والأجوبة", href: "/quiz" },
 ] as const;
 type FiqhTab = (typeof FIQH_HUB_TABS)[number]["key"];
 
 function FiqhHubStrip({ current }: { current: FiqhTab }) {
-  return (
-    <nav className="fiqh-hub-strip" dir="rtl" aria-label="الأقسام الشرعية">
-      <Link href="/fiqh" className="fiqh-hub-strip__brand"><Scale size={14} className="inline ms-1" />الفقه الإسلامي</Link>
-      <span className="fiqh-hub-strip__sep" aria-hidden="true">·</span>
-      {FIQH_HUB_TABS.map((item) => (
-        <Link
-          key={item.key}
-          href={item.href}
-          className={`fiqh-hub-strip__tab${item.key === current ? " fiqh-hub-strip__tab--active" : ""}`}
-          aria-current={item.key === current ? "page" : undefined}
-        >
-          {item.label}
-        </Link>
-      ))}
-    </nav>
-  );
+ return (
+  <nav className="fiqh-hub-strip" dir="rtl" aria-label="الأقسام الشرعية">
+   <Link href="/fiqh" className="fiqh-hub-strip__brand"><Scale size={14} className="inline ms-1" />الفقه الإسلامي</Link>
+   <span className="fiqh-hub-strip__sep" aria-hidden="true">·</span>
+   {FIQH_HUB_TABS.map((item) => (
+    <Link
+     key={item.key}
+     href={item.href}
+     className={`fiqh-hub-strip__tab${item.key === current ? " fiqh-hub-strip__tab--active" : ""}`}
+     aria-current={item.key === current ? "page" : undefined}
+    >
+     {item.label}
+    </Link>
+   ))}
+  </nav>
+ );
 }
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { RulingCard } from "@/components/ui-common";
 import { RulingCategoryGrid } from "@/components/rulings/RulingCategoryGrid";
 import { RulingFilters } from "@/components/rulings/RulingFilters";
 import {
-  getRulingsEncyclopedia,
-  getRulingCategoryStats,
-  getRulingsEncyclopediaTotal,
+ getRulingsEncyclopedia,
+ getRulingCategoryStats,
+ getRulingsEncyclopediaTotal,
 } from "@/lib/rulings-service";
 import type { CategoryStat, RulingSortMode, ShariaRulingExtended } from "@/lib/rulings-types";
 import { usePageView } from "@/hooks/usePageView";
@@ -69,284 +69,284 @@ import { ListScreen } from "@/components/design-system/screens";
 const PAGE_SIZE = 24;
 
 export default function RulingsPage() {
-  useReadingScrollMemory("rulings");
-  const { isAdmin } = useAuth();
-  const [items, setItems] = useState<ShariaRulingExtended[]>([]);
-  const [total, setTotal] = useState(0);
-  const [page, setPage] = usePersistedState("filters:/rulings:page", 1);
-  const [loading, setLoading] = useState(true);
-  const [dbState, setDbState] = useState<{ needsSeed?: boolean; dbError?: string }>({});
-  const [stats, setStats] = useState<CategoryStat[]>([]);
-  const [encyclopediaTotal, setEncyclopediaTotal] = useState(0);
-  const [category, setCategory] = usePersistedState("filters:/rulings:category", "الكل");
-  const [subcategory, setSubcategory] = usePersistedState<string | undefined>("filters:/rulings:subcategory", undefined);
-  const [search, setSearch] = usePersistedState("filters:/rulings:search", "");
-  const [sort, setSort] = usePersistedState<RulingSortMode>("filters:/rulings:sort", "importance");
-  const [showAdvanced, setShowAdvanced] = useState(false);
-  const [filtersOpen, setFiltersOpen] = useState(false);
-  const debouncedSearch = useDebouncedValue(search);
-  const urlSearch = useSearch();
+ useReadingScrollMemory("rulings");
+ const { isAdmin } = useAuth();
+ const [items, setItems] = useState<ShariaRulingExtended[]>([]);
+ const [total, setTotal] = useState(0);
+ const [page, setPage] = usePersistedState("filters:/rulings:page", 1);
+ const [loading, setLoading] = useState(true);
+ const [dbState, setDbState] = useState<{ needsSeed?: boolean; dbError?: string }>({});
+ const [stats, setStats] = useState<CategoryStat[]>([]);
+ const [encyclopediaTotal, setEncyclopediaTotal] = useState(0);
+ const [category, setCategory] = usePersistedState("filters:/rulings:category", "الكل");
+ const [subcategory, setSubcategory] = usePersistedState<string | undefined>("filters:/rulings:subcategory", undefined);
+ const [search, setSearch] = usePersistedState("filters:/rulings:search", "");
+ const [sort, setSort] = usePersistedState<RulingSortMode>("filters:/rulings:sort", "importance");
+ const [showAdvanced, setShowAdvanced] = useState(false);
+ const [filtersOpen, setFiltersOpen] = useState(false);
+ const debouncedSearch = useDebouncedValue(search);
+ const urlSearch = useSearch();
 
-  usePageView("rulings", null);
+ usePageView("rulings", null);
 
-  // رابط وارد بـ`?category=...` (من RulingDetailPage/FiqhPage) كان يُتجاهَل
-  // كليًا هنا: الحالة تُقرأ فقط من usePersistedState بلا مزامنة مع رابط
-  // URL الفعلي عند الوصول — نفس عائلة عطل TYPE_HREF.scholar الصامت
-  // (رابط يُبنى صحيحًا لكن لا يُقرأ في الوجهة، فيهبط المستخدم على الفلتر
-  // الافتراضي/السابق بلا أي خطأ ظاهر). اكتُشف بالفحص المباشر 2026-07-18.
-  // امتداد 2026-07-19: أُضيف دعم `?subcategory=...` بنفس المنطق — بعض بطاقات
-  // FiqhPage تحتاج الهبوط على تصنيف فرعي محدد (مثل «الطب» ضمن «النوازل
-  // المعاصرة») لا القسم الرئيسي فقط.
-  useEffect(() => {
-    const params = new URLSearchParams(urlSearch);
-    const cat = params.get("category");
-    const sub = params.get("subcategory");
-    if (cat) setCategory(cat);
-    if (sub) setSubcategory(sub);
-  }, [urlSearch]);
+ // رابط وارد بـ`?category=...` (من RulingDetailPage/FiqhPage) كان يُتجاهَل
+ // كليًا هنا: الحالة تُقرأ فقط من usePersistedState بلا مزامنة مع رابط
+ // URL الفعلي عند الوصول — نفس عائلة عطل TYPE_HREF.scholar الصامت
+ // (رابط يُبنى صحيحًا لكن لا يُقرأ في الوجهة، فيهبط المستخدم على الفلتر
+ // الافتراضي/السابق بلا أي خطأ ظاهر). اكتُشف بالفحص المباشر 2026-07-18.
+ // امتداد 2026-07-19: أُضيف دعم `?subcategory=...` بنفس المنطق — بعض بطاقات
+ // FiqhPage تحتاج الهبوط على تصنيف فرعي محدد (مثل «الطب» ضمن «النوازل
+ // المعاصرة») لا القسم الرئيسي فقط.
+ useEffect(() => {
+  const params = new URLSearchParams(urlSearch);
+  const cat = params.get("category");
+  const sub = params.get("subcategory");
+  if (cat) setCategory(cat);
+  if (sub) setSubcategory(sub);
+ }, [urlSearch]);
 
-  useEffect(() => {
-    applyPageSeo({
-      path: "/rulings",
-      title: "الأحكام الشرعية | سُنّة",
-      description: "موسوعة الأحكام الشرعية في الفقه الإسلامي، استعرض الأحكام مرتّبةً حسب الأبواب الفقهية والتصنيفات. محتوى معتمد في منهج سُنّة",
-      keywords: ["أحكام شرعية", "فقه إسلامي", "الأحكام الفقهية", "حكم شرعي", "موسوعة فقهية"],
-      jsonLd: [
-        {
-          "@context": "https://schema.org",
-          "@type": "WebPage",
-          name: "موسوعة الأحكام الشرعية",
-          url: "https://www.ssunnah.com/rulings",
-          description: "أحكام الفقه الإسلامي مرتّبةً حسب الأبواب والتصنيفات الفقهية؛ محتوى معتمد في منهج سُنّة",
-          about: { "@type": "Thing", name: "الأحكام الشرعية في الفقه الإسلامي" },
-          provider: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
-        },
-      ],
-    });
-  }, []);
+ useEffect(() => {
+  applyPageSeo({
+   path: "/rulings",
+   title: "الأحكام الشرعية | سُنّة",
+   description: "موسوعة الأحكام الشرعية في الفقه الإسلامي، استعرض الأحكام مرتّبةً حسب الأبواب الفقهية والتصنيفات.",
+   keywords: ["أحكام شرعية", "فقه إسلامي", "الأحكام الفقهية", "حكم شرعي", "موسوعة فقهية"],
+   jsonLd: [
+    {
+     "@context": "https://schema.org",
+     "@type": "WebPage",
+     name: "موسوعة الأحكام الشرعية",
+     url: "https://www.ssunnah.com/rulings",
+     description: "أحكام الفقه الإسلامي مرتّبةً حسب الأبواب والتصنيفات الفقهية.",
+     about: { "@type": "Thing", name: "الأحكام الشرعية في الفقه الإسلامي" },
+     provider: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
+    },
+   ],
+  });
+ }, []);
 
-  const loadStats = useCallback(async () => {
-    const [catStats, totalCount] = await Promise.all([
-      getRulingCategoryStats(),
-      isAdmin ? getRulingsEncyclopediaTotal() : Promise.resolve(0),
-    ]);
-    setStats(catStats);
-    setEncyclopediaTotal(totalCount);
-  }, [isAdmin]);
+ const loadStats = useCallback(async () => {
+  const [catStats, totalCount] = await Promise.all([
+   getRulingCategoryStats(),
+   isAdmin ? getRulingsEncyclopediaTotal() : Promise.resolve(0),
+  ]);
+  setStats(catStats);
+  setEncyclopediaTotal(totalCount);
+ }, [isAdmin]);
 
-  const loadRulings = useCallback(async () => {
-    setLoading(true);
-    try {
-      const result = await RequestManager.run("rulings:encyclopedia", () =>
-        getRulingsEncyclopedia({
-          category,
-          subcategory,
-          search: debouncedSearch,
-          sort,
-          page,
-          limit: PAGE_SIZE,
-        }),
+ const loadRulings = useCallback(async () => {
+  setLoading(true);
+  try {
+   const result = await RequestManager.run("rulings:encyclopedia", () =>
+    getRulingsEncyclopedia({
+     category,
+     subcategory,
+     search: debouncedSearch,
+     sort,
+     page,
+     limit: PAGE_SIZE,
+    }),
+   );
+   setItems(result.data);
+   setTotal(result.total);
+   setDbState({ needsSeed: result.needsSeed, dbError: result.dbError });
+  } catch (err) {
+   // أبقِ القائمة السابقة عند فشل إعادة الجلب
+   setDbState({ dbError: String((err as Error)?.message || err) });
+  } finally {
+   setLoading(false);
+  }
+ }, [category, subcategory, debouncedSearch, sort, page]);
+
+ useEffect(() => {
+  loadStats();
+ }, [loadStats]);
+
+ useEffect(() => {
+  setPage(1);
+ }, [category, subcategory, debouncedSearch, sort]);
+
+ useEffect(() => {
+  loadRulings();
+ }, [loadRulings]);
+
+ const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+ const mainCategories = RULINGS_CATEGORY_TREE.length;
+
+ const handleCategorySelect = (cat: string, sub?: string) => {
+  setCategory(cat);
+  setSubcategory(sub);
+ };
+
+ const filtersPanel = (
+  <>
+   <input
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    placeholder="ابحث في العنوان، الدليل، الآيات..."
+    className="page-search-input full content-hub-search"
+    aria-label="بحث في موسوعة الأحكام الشرعية"
+   />
+   <RulingFilters
+    sort={sort}
+    onSortChange={setSort}
+    showAdvanced={showAdvanced}
+    onToggleAdvanced={() => setShowAdvanced((v) => !v)}
+   />
+   {showAdvanced ? (
+    <RulingCategoryGrid
+     stats={stats}
+     activeCategory={category}
+     activeSubcategory={subcategory}
+     onSelect={handleCategorySelect}
+    />
+   ) : (
+    <div className="content-hub-chips ruling-quick-chips" role="tablist" aria-label="تصفية الأحكام">
+     <button
+      role="tab"
+      type="button"
+      className={category === "الكل" ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+      onClick={() => handleCategorySelect("الكل")}
+      aria-selected={category === "الكل"}
+     >
+      {isAdmin ? `الكل (${encyclopediaTotal || total})` : "الكل"}
+     </button>
+     {RULINGS_CATEGORY_TREE.slice(0, 8).map((cat) => {
+      const count = stats.filter((s) => s.category === cat.name).reduce((n, s) => n + s.count, 0);
+      if (!count) return null;
+      return (
+       <button
+        key={cat.slug}
+        role="tab"
+        type="button"
+        className={
+         category === cat.name ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"
+        }
+        onClick={() => handleCategorySelect(cat.name)}
+        aria-selected={category === cat.name}
+       >
+        <CatIcon name={cat.icon} />{cat.name}{isAdmin ? ` (${count})` : ""}
+       </button>
       );
-      setItems(result.data);
-      setTotal(result.total);
-      setDbState({ needsSeed: result.needsSeed, dbError: result.dbError });
-    } catch (err) {
-      // أبقِ القائمة السابقة عند فشل إعادة الجلب
-      setDbState({ dbError: String((err as Error)?.message || err) });
-    } finally {
-      setLoading(false);
-    }
-  }, [category, subcategory, debouncedSearch, sort, page]);
+     })}
+     <button type="button" className="content-hub-chip" onClick={() => setShowAdvanced(true)}>
+      كل الأبواب...
+     </button>
+    </div>
+   )}
+  </>
+ );
 
-  useEffect(() => {
-    loadStats();
-  }, [loadStats]);
+ return (
+  <ListScreen compose="mark">
+  <KnowledgeLayout kind="fiqh" className="content-hub-page rulings-encyclopedia-page" data-kx="1">
+   <PageHeader
+    eyebrow="موسوعة الفقه"
+    title="الأحكام الشرعية"
+    subtitle="فهرس علمي للأحكام، موثّق بالأدلة والمراجع."
+   />
 
-  useEffect(() => {
-    setPage(1);
-  }, [category, subcategory, debouncedSearch, sort]);
+   <FiqhHubStrip current="rulings" />
 
-  useEffect(() => {
-    loadRulings();
-  }, [loadRulings]);
+   <div className="ds-section__head">
+    {isAdmin && (
+     <div className="page-stats-row ruling-stats-bar page-stats-row--flush">
+      <span>{encyclopediaTotal || total} حكم</span>
+      <span>{mainCategories} قسم</span>
+      <span>{stats.length} تصنيف</span>
+     </div>
+    )}
+    <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
+   </div>
 
-  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
-  const mainCategories = RULINGS_CATEGORY_TREE.length;
-
-  const handleCategorySelect = (cat: string, sub?: string) => {
-    setCategory(cat);
-    setSubcategory(sub);
-  };
-
-  const filtersPanel = (
+   {loading && items.length === 0 ? (
+    <SkeletonCardGrid />
+   ) : !loading && dbState.dbError && !dbState.needsSeed ? (
+    <ErrorState
+     text={
+      isAdmin
+       ? dbState.dbError === "table_missing"
+        ? "جدول sharia_rulings غير موجود، طبّق migrations التفعيل أولاً."
+        : `تعذّر تحميل الأحكام: ${dbState.dbError}`
+       : STATUS.loadError
+     }
+     onRetry={loadRulings}
+    />
+   ) : items.length === 0 ? (
+    <Empty
+     title={
+      !debouncedSearch.trim() && category === "الكل" && !subcategory
+       ? "لا أحكام منشورة بعد"
+       : undefined
+     }
+     text={
+      dbState.needsSeed
+       ? isAdmin
+        ? "قاعدة البيانات جاهزة لكن لم تُستورد الأحكام بعد. شغّل Production Activation من لوحة الإدارة."
+        : "لم تُنشر أحكام في الموسوعة بعد. يمكنك تصفح الأسئلة والأجوبة أو بوابة الفقه في الأثناء."
+       : !debouncedSearch.trim() && category === "الكل" && !subcategory
+        ? EMPTY.data
+        : EMPTY.search
+     }
+    />
+   ) : (
     <>
-      <input
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="ابحث في العنوان، الدليل، الآيات..."
-        className="page-search-input full content-hub-search"
-        aria-label="بحث في موسوعة الأحكام الشرعية"
-      />
-      <RulingFilters
-        sort={sort}
-        onSortChange={setSort}
-        showAdvanced={showAdvanced}
-        onToggleAdvanced={() => setShowAdvanced((v) => !v)}
-      />
-      {showAdvanced ? (
-        <RulingCategoryGrid
-          stats={stats}
-          activeCategory={category}
-          activeSubcategory={subcategory}
-          onSelect={handleCategorySelect}
-        />
-      ) : (
-        <div className="content-hub-chips ruling-quick-chips" role="tablist" aria-label="تصفية الأحكام">
-          <button
-            role="tab"
-            type="button"
-            className={category === "الكل" ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-            onClick={() => handleCategorySelect("الكل")}
-            aria-selected={category === "الكل"}
-          >
-            {isAdmin ? `الكل (${encyclopediaTotal || total})` : "الكل"}
-          </button>
-          {RULINGS_CATEGORY_TREE.slice(0, 8).map((cat) => {
-            const count = stats.filter((s) => s.category === cat.name).reduce((n, s) => n + s.count, 0);
-            if (!count) return null;
-            return (
-              <button
-                key={cat.slug}
-                role="tab"
-                type="button"
-                className={
-                  category === cat.name ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"
-                }
-                onClick={() => handleCategorySelect(cat.name)}
-                aria-selected={category === cat.name}
-              >
-                <CatIcon name={cat.icon} />{cat.name}{isAdmin ? ` (${count})` : ""}
-              </button>
-            );
-          })}
-          <button type="button" className="content-hub-chip" onClick={() => setShowAdvanced(true)}>
-            كل الأبواب...
-          </button>
-        </div>
-      )}
+     <div className="ruling-card-grid">
+      {items.map((item) => (
+       <RulingCard key={item.id} ruling={item} />
+      ))}
+     </div>
+
+     {totalPages > 1 && (
+      <nav className="ruling-pagination" aria-label="ترقيم الصفحات">
+       <button
+        type="button"
+        disabled={page <= 1}
+        onClick={() => setPage((p) => Math.max(1, p - 1))}
+       >
+        السابق
+       </button>
+       <span>
+        صفحة {page} من {totalPages}{isAdmin ? ` (${total} حكم)` : ""}
+       </span>
+       <button
+        type="button"
+        disabled={page >= totalPages}
+        onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+       >
+        التالي
+       </button>
+      </nav>
+     )}
     </>
-  );
+   )}
 
-  return (
-    <ListScreen compose="mark">
-    <KnowledgeLayout kind="fiqh" className="content-hub-page rulings-encyclopedia-page" data-kx="1">
-      <PageHeader
-        eyebrow="موسوعة الفقه"
-        title="الأحكام الشرعية"
-        subtitle="فهرس علمي للأحكام، موثّق بالأدلة والمراجع."
-      />
+   <aside className="ds-filters-panel ds-filters-panel--desktop">
+    <div className="ds-filters-panel__head">
+     <h2>بحث وتصفية</h2>
+    </div>
+    {filtersPanel}
+   </aside>
 
-      <FiqhHubStrip current="rulings" />
-
-      <div className="ds-section__head">
-        {isAdmin && (
-          <div className="page-stats-row ruling-stats-bar page-stats-row--flush">
-            <span>{encyclopediaTotal || total} حكم</span>
-            <span>{mainCategories} قسم</span>
-            <span>{stats.length} تصنيف</span>
-          </div>
-        )}
-        <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
-      </div>
-
-      {loading && items.length === 0 ? (
-        <SkeletonCardGrid />
-      ) : !loading && dbState.dbError && !dbState.needsSeed ? (
-        <ErrorState
-          text={
-            isAdmin
-              ? dbState.dbError === "table_missing"
-                ? "جدول sharia_rulings غير موجود، طبّق migrations التفعيل أولاً."
-                : `تعذّر تحميل الأحكام: ${dbState.dbError}`
-              : STATUS.loadError
-          }
-          onRetry={loadRulings}
-        />
-      ) : items.length === 0 ? (
-        <Empty
-          title={
-            !debouncedSearch.trim() && category === "الكل" && !subcategory
-              ? "لا أحكام منشورة بعد"
-              : undefined
-          }
-          text={
-            dbState.needsSeed
-              ? isAdmin
-                ? "قاعدة البيانات جاهزة لكن لم تُستورد الأحكام بعد. شغّل Production Activation من لوحة الإدارة."
-                : "لم تُنشر أحكام في الموسوعة بعد. يمكنك تصفح الأسئلة والأجوبة أو بوابة الفقه في الأثناء."
-              : !debouncedSearch.trim() && category === "الكل" && !subcategory
-                ? EMPTY.data
-                : EMPTY.search
-          }
-        />
-      ) : (
-        <>
-          <div className="ruling-card-grid">
-            {items.map((item) => (
-              <RulingCard key={item.id} ruling={item} />
-            ))}
-          </div>
-
-          {totalPages > 1 && (
-            <nav className="ruling-pagination" aria-label="ترقيم الصفحات">
-              <button
-                type="button"
-                disabled={page <= 1}
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-              >
-                السابق
-              </button>
-              <span>
-                صفحة {page} من {totalPages}{isAdmin ? ` (${total} حكم)` : ""}
-              </span>
-              <button
-                type="button"
-                disabled={page >= totalPages}
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              >
-                التالي
-              </button>
-            </nav>
-          )}
-        </>
-      )}
-
-      <aside className="ds-filters-panel ds-filters-panel--desktop">
-        <div className="ds-filters-panel__head">
-          <h2>بحث وتصفية</h2>
-        </div>
-        {filtersPanel}
-      </aside>
-
-      <div className="twh-share">
-        <ShareButtons title="الأحكام الشرعية — سُنّة" url="https://www.ssunnah.com/rulings" />
-      </div>
-      <ExploreAlsoNav
-        title="استكشف أيضًا"
-        links={[
-          { href: "/quiz", label: "الأسئلة والأجوبة" },
-          { href: "/salah-guide", label: "دليل الصلاة" },
-          { href: "/lessons", label: "الدروس العلمية" },
-        ]}
-      />
-      <div className="px-4 pb-6 mt-4">
-        <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الأحكام الشرعية" count={4} />
-      </div>
-      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
-        {filtersPanel}
-      </FilterBottomSheet>
-      <AdminQuickEdit section="rulings" />
-    </KnowledgeLayout>
-    </ListScreen>
-  );
+   <div className="twh-share">
+    <ShareButtons title="الأحكام الشرعية — سُنّة" url="https://www.ssunnah.com/rulings" />
+   </div>
+   <ExploreAlsoNav
+    title="استكشف أيضًا"
+    links={[
+     { href: "/quiz", label: "الأسئلة والأجوبة" },
+     { href: "/salah-guide", label: "دليل الصلاة" },
+     { href: "/lessons", label: "الدروس العلمية" },
+    ]}
+   />
+   <div className="px-4 pb-6 mt-4">
+    <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في الأحكام الشرعية" count={4} />
+   </div>
+   <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
+    {filtersPanel}
+   </FilterBottomSheet>
+   <AdminQuickEdit section="rulings" />
+  </KnowledgeLayout>
+  </ListScreen>
+ );
 }

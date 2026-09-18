@@ -233,3 +233,11 @@
 | SEO polish lessons/fawaid/quran/family login | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
 | admin empties | DEFERRED |
+
+## Wave 28 final states
+
+| section | finalState |
+|---|---|
+| SEO boilerplate cleanup (22 public pages) | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
