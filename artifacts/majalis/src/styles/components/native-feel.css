@@ -76,8 +76,8 @@ html[dir="ltr"] {
 
 @keyframes mj-route-push-in {
   from {
-    opacity: 0.94;
-    transform: translate3d(calc(var(--mj-nav-sign, -1) * 16px), 0, 0);
+    opacity: 0.96;
+    transform: translate3d(0, 0, 0);
   }
   to {
     opacity: 1;
@@ -87,7 +87,7 @@ html[dir="ltr"] {
 @keyframes mj-route-pop-in {
   from {
     opacity: 0.97;
-    transform: translate3d(calc(var(--mj-nav-sign, -1) * -10px), 0, 0);
+    transform: translate3d(0, 0, 0);
   }
   to {
     opacity: 1;
@@ -100,8 +100,8 @@ html[dir="ltr"] {
 }
 @keyframes mj-route-modal-in {
   from {
-    opacity: 0.95;
-    transform: translate3d(0, 5px, 0);
+    opacity: 0.96;
+    transform: translate3d(0, 0, 0);
   }
   to {
     opacity: 1;
@@ -122,16 +122,16 @@ html:is(.dark, [data-theme="dark"]) #main-content:is(.mj-route-enter, .mj-route-
   background: var(--mj-bg, #121816);
 }
 
-/* لا غطاء لوني — الاستمرارية تأتي من الانزلاق الخفيف لا من الخفوت */
+/* الاستمرارية: Fast Fade فقط — بلا انزلاق كبير أو Bounce */
 #main-content.mj-route-push > *,
 #main-content.mj-route-enter > * {
-  animation: mj-route-push-in 150ms cubic-bezier(0.32, 0.72, 0, 1) both;
+  animation: mj-route-push-in 160ms cubic-bezier(0.32, 0.72, 0, 1) both;
 }
 #main-content.mj-route-pop > * {
-  animation: mj-route-pop-in 130ms cubic-bezier(0.32, 0.72, 0, 1) both;
+  animation: mj-route-pop-in 150ms cubic-bezier(0.32, 0.72, 0, 1) both;
 }
 #main-content.mj-route-tab > * {
-  animation: mj-route-tab-in 90ms ease-out both;
+  animation: mj-route-tab-in 120ms ease-out both;
 }
 #main-content.mj-route-modal > * {
   animation: mj-route-modal-in 140ms cubic-bezier(0.32, 0.72, 0, 1) both;

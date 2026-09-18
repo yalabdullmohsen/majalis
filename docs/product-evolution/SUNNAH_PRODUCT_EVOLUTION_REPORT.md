@@ -6,7 +6,7 @@
 
 | حقل | قيمة |
 |---|---|
-| Current stage | **1 — Startup** (PR-02 جارٍ بعد دمج #2108) |
+| Current stage | **2 — Route transitions** (PR-03 جارٍ) |
 | Latest measured commit | `13931126ede38503dcf8749ad0558d1bb540ce2b` |
 | Next stage | 1 — Startup + App Shell (بعد دمج PR-01 فقط) |
 
@@ -15,7 +15,8 @@
 | PR | المرحلة | الحالة |
 |---|---|---|
 | PR-01 | Baseline + instrumentation + regression budgets | ✅ مدموج #2108 |
-| PR-02 | Startup fade 160ms + single hide coordinator | جاري |
+| PR-02 | Startup fade 160ms + single hide coordinator | ✅ مدموج #2109 |
+| PR-03 | Fast Fade route transitions (no large slide) | جاري |
 | PR-02 … PR-22 | انظر خطة البرنامج | لم تبدأ |
 
 ## ما سُلِّم حتى الآن

@@ -16,8 +16,8 @@ const MOTION_CLASSES: Record<Exclude<NavMotionKind, "none">, string> = {
 };
 
 /**
- * انتقالات مكانية على #main-content (استمرارية بهدوء Apple).
- * push/pop: انزلاق خفيف · tab: خفوت دقيق · modal: كشف ناعم من الأسفل.
+ * انتقالات على #main-content — Fast Fade موحّد (120–180ms)، بلا انزلاق كبير.
+ * push/pop/tab/modal: خفوت دقيق · الكروم خارج المحتوى يبقى مثبتًا.
  */
 export function RouteEnterMotion() {
   const [location] = useLocation();
