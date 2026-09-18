@@ -1,0 +1,87 @@
+/* دعوة تحميل الآيفون — خفيفة وغير مزعجة */
+.ios-app-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-xl, 1rem);
+  background: color-mix(in srgb, var(--mj-brand, #0f5c45) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand, #0f5c45) 18%, transparent);
+  color: var(--mj-fg, #1a1a1a);
+}
+
+.ios-app-cta__text {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.ios-app-cta__lead {
+  margin: 0;
+  font-weight: 650;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.ios-app-cta__detail {
+  margin: 0.2rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--mj-muted, #5a635e);
+}
+
+.ios-app-cta__action {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: var(--radius-lg, 0.75rem);
+  background: var(--mj-brand, #0f5c45);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.ios-app-cta__action:hover {
+  filter: brightness(1.05);
+}
+
+.ios-app-cta__action:focus-visible {
+  outline: 2px solid var(--mj-brand, #0f5c45);
+  outline-offset: 2px;
+}
+
+.ios-app-cta--footer {
+  margin: 0.75rem 0 0;
+  padding: 0.65rem 0.85rem;
+  background: transparent;
+  border: none;
+  border-top: 1px solid color-mix(in srgb, var(--mj-fg, #1a1a1a) 10%, transparent);
+  border-radius: 0;
+}
+
+.ios-app-cta--inline {
+  margin-block: 1rem;
+}
+
+html[data-theme="dark"] .ios-app-cta,
+html.dark .ios-app-cta {
+  background: color-mix(in srgb, var(--mj-brand-dark, #4fb48b) 12%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand-dark, #4fb48b) 22%, transparent);
+  color: var(--mj-fg, #f2f2f2);
+}
+
+html[data-theme="dark"] .ios-app-cta__detail,
+html.dark .ios-app-cta__detail {
+  color: var(--mj-muted, #a8b0ab);
+}
+
+html[data-theme="dark"] .ios-app-cta--footer,
+html.dark .ios-app-cta--footer {
+  background: transparent;
+  border-top-color: color-mix(in srgb, var(--mj-fg, #f2f2f2) 14%, transparent);
+}

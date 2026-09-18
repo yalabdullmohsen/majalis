@@ -14,4 +14,4 @@ export const SITE_FOOTER_GROUPS: FooterGroup[] = footerNav.map((g) => ({
   links: filterNavItems(g.links.map((l) => ({ href: l.href, label: l.label }))),
 })).filter((g) => g.links.length > 0);
 
-export const SITE_FOOTER_TAGLINE = "الريادة الإسلامية الرقمية";
+export const SITE_FOOTER_TAGLINE = "رفيقك اليومي لطلب العلم";
