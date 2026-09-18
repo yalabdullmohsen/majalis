@@ -13,11 +13,13 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 const teacher = read("src/pages/lessons/TeacherDetailPage.tsx");
 assert.doesNotMatch(teacher, /المشيخ|مشيخًا/, "بلا خطأ «المشيخ» الظاهر للمستخدم");
 assert.match(teacher, /الشيخ غير موجود/);
-assert.match(teacher, /بهذا الشيخ/);
+assert.match(teacher, /بهذا المعرّف/);
 
 const hero = read("src/components/home/HomeHeroLcp.tsx");
 assert.match(hero, /description=/, "هيرو الرئيسية يحمل جملة داعمة");
-assert.match(hero, /منصة علمية موثّقة/);
+assert.match(hero, /رفيقك اليومي/);
+assert.doesNotMatch(hero, /منصة علمية موثّقة/);
+assert.doesNotMatch(hero, /مصحف، دروس، فقه/);
 
 const empty = read("src/lib/ui-copy.ts");
 assert.match(empty, /لا يتوفر محتوى هنا الآن/);
