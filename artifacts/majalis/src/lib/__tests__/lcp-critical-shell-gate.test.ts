@@ -51,6 +51,8 @@ assert.match(html, /id="mj-theme-boot"|v6-direct-boot-2026-08/, "ثيم مبكر
 }
 
 assert.match(homeHero, /title="سُنّة"/, "عنوان الرئيسية في React (HomeHeroLcp)");
+assert.match(homeHero, /تابع التعلم/, "زر العائد يوجّه لاستكمال التعلم");
+assert.doesNotMatch(homeHero, /تابع التصفح/, "العائد بلا تسمية تصفح عام");
 assert.doesNotMatch(home, /titleDomId/, "لا تبنّي عقدة HTML");
 assert.doesNotMatch(hero, /titleDomId/, "PageHero بلا نقل عقدة");
 assert.doesNotMatch(homeHero, /titleDomId/, "HomeHeroLcp بلا نقل عقدة");

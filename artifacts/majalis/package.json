@@ -130,7 +130,7 @@
     "test:no-legacy-flash": "node scripts/test-no-legacy-flash.mjs",
     "test:splash-timing": "node scripts/test-splash-timing.mjs",
     "test:sw-cache-version": "node scripts/test-sw-cache-version.mjs",
-    "test:lcp-critical-shell": "node --import tsx src/lib/__tests__/lcp-critical-shell-gate.test.ts",
+    "test:lcp-critical-shell": "node --import tsx src/lib/__tests__/lcp-critical-shell-gate.test.ts && node --import tsx src/lib/__tests__/home-brand-hero.test.ts",
     "test:cls-home-gate": "node --import tsx src/lib/__tests__/cls-home-gate.test.ts",
     "test:tbt-split-worker": "node --import tsx src/lib/__tests__/tbt-split-worker-gate.test.ts",
     "test:css-decompose": "node --import tsx src/lib/__tests__/css-decompose-gate.test.ts",
