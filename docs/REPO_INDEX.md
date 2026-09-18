@@ -64,6 +64,11 @@
 | `ios-*.yml` | paths على ios/capacitor |
 | `mushaf-gates-nightly.yml` | ليلي كامل |
 
+
+## تطور المنتج
+
+| `docs/product-evolution/` | خط أساس برنامج التطوير + تقرير المراحل (P0+) |
+
 ## حوكمة الوكيل
 
 | ملف | دور |
