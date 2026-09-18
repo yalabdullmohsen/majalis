@@ -19,10 +19,12 @@ const appRoot = resolve(here, "../../../../");
 const searchView = readFileSync(resolve(appRoot, "src/pages/account/ui/SearchView.tsx"), "utf8");
 const searchModal = readFileSync(resolve(appRoot, "src/components/GlobalSearchModal.tsx"), "utf8");
 
-assert.match(searchView, /ابحث في المحتوى/);
-assert.match(searchView, /250/);
+assert.match(searchView, /SEARCH\.placeholder/);
+assert.match(searchView, /PAGE_SIZE\s*=\s*40/);
+assert.match(searchView, /limit:\s*240/);
 assert.match(searchView, /AbortController/);
-assert.match(searchView, /لا توجد نتائج في هذا القسم، جرّب كلمة أخرى أو ابحث في الكل/);
+assert.match(searchView, /EMPTY\.search/);
+assert.match(searchModal, /EMPTY\.search/);
 assert.match(searchModal, /key: "tafsir"/);
 assert.match(searchModal, /key: "seerah"/);
 assert.match(searchModal, /key: "quran"/);

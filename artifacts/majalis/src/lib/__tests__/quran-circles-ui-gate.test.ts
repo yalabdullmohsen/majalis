@@ -19,7 +19,8 @@ assert.match(view, /SegmentedFilter/);
 assert.match(view, /نوع الحضور/);
 assert.match(view, /حضوري/);
 assert.match(view, /عن بُعد/);
-assert.match(view, /لا توجد حلقات مطابقة لهذا الفلتر حاليًا/);
+assert.match(view, /EMPTY\.search/);
+assert.match(view, /EMPTY\.searchShort/);
 assert.match(view, /qc-hub-nav/);
 assert.match(view, /aria-current="page"/);
 

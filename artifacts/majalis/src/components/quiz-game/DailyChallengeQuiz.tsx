@@ -12,6 +12,7 @@ import { getDayIndex } from "@/lib/daily-content";
 import { recordQuizAttempt } from "@/lib/quiz-performance-service";
 import { hapticNotify } from "@/lib/capacitor-utils";
 import { toArabicDigits } from "@/lib/utils";
+import { EMPTY } from "@/lib/ui-copy";
 import "@/styles/components/daily-challenge-quiz.css";
 
 type LevelId = "easy" | "medium" | "hard";
@@ -222,7 +223,7 @@ export function DailyChallengeQuiz() {
       </div>
 
       {!question ? (
-        <p className="dcq__empty">لا توجد أسئلة في هذا المستوى حاليًا.</p>
+        <p className="dcq__empty">{EMPTY.data}</p>
       ) : (
         <article className="dcq__card soft-card soft-card--on-light">
           <p className="dcq__question">{question.q}</p>

@@ -28,6 +28,7 @@ import {
 } from "@/lib/knowledge-platform";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { TEXT_API_ORIGINS, useResourcePrewarm } from "@/lib/resource-prewarm";
+import { ACTION, EMPTY } from "@/lib/ui-copy";
 import "@/styles/components/global-search-modal.css";
 
 // ── ثوابت ───────────────────────────────────────────────────────────────────
@@ -529,8 +530,8 @@ export function GlobalSearchModal({ onClose }: Props) {
               <p className="gsm-state-icon"><Search size={32} strokeWidth={1.5} aria-hidden="true" /></p>
               <p className="gsm-state-title">
                 {query.trim()
-                  ? `لا نتائج لـ «${query.trim()}».`
-                  : "لا توجد نتائج في هذا القسم، جرّب كلمة أخرى أو ابحث في الكل"}
+                  ? `${EMPTY.searchShort} «${query.trim()}»`
+                  : EMPTY.search}
               </p>
               <button
                 type="button"
@@ -540,7 +541,7 @@ export function GlobalSearchModal({ onClose }: Props) {
                   setActiveFilter("all");
                 }}
               >
-                {query.trim() ? "مسح البحث" : "عرض الأقسام"}
+                {query.trim() ? ACTION.clearSearch : "عرض الأقسام"}
               </button>
               {suggestion && (
                 <p className="gsm-state-hint">

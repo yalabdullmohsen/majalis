@@ -21,6 +21,7 @@ import {
   type RealUserLearningStats,
 } from "@/lib/learning-paths-service";
 import { DashboardScreen } from "@/components/design-system/screens";
+import { EMPTY } from "@/lib/ui-copy";
 
 /* ── أيقونات المحتوى ────────────────────────────────────────────────────── */
 const CONTENT_ICONS: Record<string, React.ComponentType<{ size?: number }>> = {
@@ -297,7 +298,7 @@ export default function MyLearningPage() {
           ) : (
             <div className="myl2-empty">
               <BookOpen size={32} strokeWidth={1} aria-hidden="true" />
-              <p>مكتبتك فارغة حتى الآن. أضف دروسًا أو كتبًا من أقسام التعلّم.</p>
+              <p>{EMPTY.bookmarks}</p>
             </div>
           )}
         </section>
