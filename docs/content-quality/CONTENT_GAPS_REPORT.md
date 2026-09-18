@@ -1,7 +1,18 @@
 # CONTENT_COMPLETENESS — remaining gap matrix (post Wave1–2)
 
-**Base main:** `b633b6cd1`  
+**Base main:** `679594286` (post App Discovery #2114)  
 **Product:** `artifacts/majalis`
+
+## Wave 1 reinforce (this program — 2026-09-18)
+
+| Item | finalState |
+|---|---|
+| Protected Quran byte-lock | IMPROVED_VERIFIED (`PROTECTED_BYTE_LOCK` + verify script) |
+| Hadith public incomplete rows | IMPROVED_VERIFIED (`isHadithComplete` filter on list) |
+| Search partial / NEEDS_SCHOLAR_REVIEW | IMPROVED_VERIFIED (hidden; no «قيد الإكمال») |
+| Scholar review queue | IMPROVED_VERIFIED (`docs/content-quality/SCHOLAR_REVIEW_QUEUE.md`) |
+| library URLs | BLOCKED_SOURCE (OWNER) |
+| hosted fiqh_council purge | OWNER_ACTION |
 
 ## Already COMPLETE / IMPROVED (do not re-do)
 
