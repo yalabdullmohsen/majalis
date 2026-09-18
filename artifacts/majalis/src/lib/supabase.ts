@@ -78,6 +78,7 @@ import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { sanitizeFormRecord } from "./sanitize";
 import { isSupabaseConfigured, formatSupabaseError, logSupabaseError } from "./supabase-config";
 import { allowSeedFallback } from "@/lib/cms/production-config";
+import { sheikhNameKey, stripSheikhHonorifics } from "./sheikh-name";
 
 export { bootstrapSupabaseFromServer };
 
@@ -314,6 +315,42 @@ export async function getSheikhs() {
     (s) => String(s?.name ?? "").trim(),
   ).sort((a: any, b: any) => String(a?.name ?? "").localeCompare(String(b?.name ?? ""), "ar"));
   return { ...result, data: merged };
+}
+
+/**
+ * سيرة عالم واحد بالاسم — بدون سحب قائمة sheikhs كاملة (تفاصيل الدرس).
+ * يطابق بعد تطبيع اللقب؛ عند غياب الشبكة/الجدول يعود للبذرة.
+ */
+export async function getSheikhLookupByName(
+  name: string,
+): Promise<{ name?: string; bio?: string } | null> {
+  const key = sheikhNameKey(name);
+  if (!key) return null;
+  const core = stripSheikhHonorifics(name).trim();
+  const { DEMO_SHEIKHS } = await loadSeedData();
+  const fromSeed = () =>
+    (DEMO_SHEIKHS as { name?: string; bio?: string }[]).find(
+      (s) => sheikhNameKey(String(s?.name ?? "")) === key,
+    ) ?? null;
+
+  if (!isConfigured || !core) return fromSeed();
+
+  try {
+    const safeCore = core.replace(/[%_\\]/g, "").slice(0, 64);
+    if (!safeCore) return fromSeed();
+    const { data, error } = await supabase
+      .from("sheikhs")
+      .select("name, bio")
+      .ilike("name", `%${safeCore}%`)
+      .limit(40);
+    if (error) throw error;
+    const match = (data || []).find((s) => sheikhNameKey(String(s?.name ?? "")) === key);
+    if (match) return match;
+    return fromSeed();
+  } catch (err) {
+    logSupabaseError("getSheikhLookupByName", err, { name: core });
+    return fromSeed();
+  }
 }
 
 export async function getSheikhById(id: string) {

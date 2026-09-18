@@ -1,4 +1,4 @@
-import { getSheikhs } from "@/lib/supabase";
+import { getSheikhs, getSheikhLookupByName } from "@/lib/supabase";
 import type { SheikhsLookupPort, SheikhLookupRow } from "../domain/ports";
 
 export function createSheikhsLookupAdapter(): SheikhsLookupPort {
@@ -6,6 +6,9 @@ export function createSheikhsLookupAdapter(): SheikhsLookupPort {
     async list() {
       const { data } = await getSheikhs();
       return { data: (data || []) as SheikhLookupRow[] };
+    },
+    async findByName(name: string) {
+      return getSheikhLookupByName(name);
     },
   };
 }
