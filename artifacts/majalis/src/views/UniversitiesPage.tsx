@@ -11,12 +11,12 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { usePersistedState } from "@/hooks/usePersistedState";
 import {
- fetchUniversities,
- DEGREE_LEVELS,
- STUDY_MODES,
- LANGUAGES,
- type University,
- type UniversityFilters,
+  fetchUniversities,
+  DEGREE_LEVELS,
+  STUDY_MODES,
+  LANGUAGES,
+  type University,
+  type UniversityFilters,
 } from "@/lib/universities-service";
 import "@/styles/pages/universities.css";
 import "@/styles/pages/learning-path-dashboard.css";
@@ -24,304 +24,304 @@ import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { UtilityScreen } from "@/components/design-system/screens";
 
 const COUNTRIES = [
- "المملكة العربية السعودية",
- "مصر",
- "الأردن",
- "قطر",
- "الكويت",
- "الإمارات العربية المتحدة",
- "البحرين",
- "عُمان",
- "اليمن",
- "العراق",
- "سوريا",
- "لبنان",
- "فلسطين",
- "المغرب",
- "الجزائر",
- "تونس",
- "ليبيا",
- "موريتانيا",
- "السودان",
- "النيجر",
- "نيجيريا",
- "السنغال",
- "تركيا",
- "إيران",
- "باكستان",
- "الهند",
- "بنغلاديش",
- "أفغانستان",
- "ماليزيا",
- "إندونيسيا",
- "بروناي",
- "المملكة المتحدة",
- "الولايات المتحدة الأمريكية",
- "كندا",
- "فرنسا",
- "ألمانيا",
- "أستراليا",
+  "المملكة العربية السعودية",
+  "مصر",
+  "الأردن",
+  "قطر",
+  "الكويت",
+  "الإمارات العربية المتحدة",
+  "البحرين",
+  "عُمان",
+  "اليمن",
+  "العراق",
+  "سوريا",
+  "لبنان",
+  "فلسطين",
+  "المغرب",
+  "الجزائر",
+  "تونس",
+  "ليبيا",
+  "موريتانيا",
+  "السودان",
+  "النيجر",
+  "نيجيريا",
+  "السنغال",
+  "تركيا",
+  "إيران",
+  "باكستان",
+  "الهند",
+  "بنغلاديش",
+  "أفغانستان",
+  "ماليزيا",
+  "إندونيسيا",
+  "بروناي",
+  "المملكة المتحدة",
+  "الولايات المتحدة الأمريكية",
+  "كندا",
+  "فرنسا",
+  "ألمانيا",
+  "أستراليا",
 ];
 
 function FilterSelect({
- label, value, onChange, options, placeholder = "الكل",
+  label, value, onChange, options, placeholder = "الكل",
 }: {
- label: string;
- value: string;
- onChange: (v: string) => void;
- options: string[];
- placeholder?: string;
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  options: string[];
+  placeholder?: string;
 }) {
- return (
-  <label className="flex flex-col gap-1 min-w-0">
-   <span className="up-filter-label">{label}</span>
-   <select
-    value={value}
-    onChange={(e) => onChange(e.target.value)}
-    className="up-filter-select"
-   >
-    <option value="">{placeholder}</option>
-    {options.map((o) => <option key={o} value={o}>{o}</option>)}
-   </select>
-  </label>
- );
+  return (
+    <label className="flex flex-col gap-1 min-w-0">
+      <span className="up-filter-label">{label}</span>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="up-filter-select"
+      >
+        <option value="">{placeholder}</option>
+        {options.map((o) => <option key={o} value={o}>{o}</option>)}
+      </select>
+    </label>
+  );
 }
 
 function UniversitiesContent() {
- const [universities, setUniversities] = useState<University[]>([]);
- const [loading, setLoading]      = useState(true);
- const [, setTotal]           = useState(0);
- const [seedNeeded, setSeedNeeded]   = useState(false);
- const [search, setSearch]       = usePersistedState("filters:/universities:search", "");
- const [searchInput, setSearchInput]  = usePersistedState("filters:/universities:searchInput", "");
- const [filters, setFilters]      = usePersistedState<UniversityFilters>("filters:/universities:filters", {});
- const [filtersOpen, setFiltersOpen]  = useState(false);
- const [noticeOpen, setNoticeOpen] = useState(() => {
-  try { return localStorage.getItem("univ-notice-dismissed") !== "1"; } catch { return true; }
- });
- const activeFilterCount = Object.values(filters).filter(Boolean).length;
-
- const load = useCallback(async () => {
-  setLoading(true);
-  try {
-   const res = await fetchUniversities({ ...filters, search: search || undefined });
-   setUniversities(res.items);
-   setTotal(res.total);
-   setSeedNeeded(!!res.seed_needed);
-  } catch (err) {
-   console.error("فشل تحميل الجامعات:", err);
-  } finally {
-   setLoading(false);
-  }
- }, [filters, search]);
-
- useEffect(() => {
-  applyPageSeo({
-   path: "/universities",
-   title: "دليل الجامعات الإسلامية | سُنّة",
-   description: "دليل الجامعات والمعاهد الإسلامية حول العالم: ابحث وقارن حسب التخصص والمستوى وطريقة الدراسة.",
-   keywords: ["جامعات إسلامية", "كليات شريعة", "دراسة شرعية", "جامعة إسلامية", "معهد ديني"],
-   jsonLd: [
-    {
-     "@context": "https://schema.org",
-     "@type": "ItemList",
-     name: "دليل الجامعات الإسلامية حول العالم",
-     description: "جامعات ومعاهد إسلامية في عشرات الدول العربية والإسلامية.",
-     numberOfItems: COUNTRIES.length,
-     itemListElement: COUNTRIES.map((country, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: `الجامعات الإسلامية في ${country}`,
-      url: `https://www.ssunnah.com/universities?country=${encodeURIComponent(country)}`,
-     })),
-    },
-   ],
+  const [universities, setUniversities] = useState<University[]>([]);
+  const [loading, setLoading]           = useState(true);
+  const [, setTotal]                     = useState(0);
+  const [seedNeeded, setSeedNeeded]     = useState(false);
+  const [search, setSearch]             = usePersistedState("filters:/universities:search", "");
+  const [searchInput, setSearchInput]   = usePersistedState("filters:/universities:searchInput", "");
+  const [filters, setFilters]           = usePersistedState<UniversityFilters>("filters:/universities:filters", {});
+  const [filtersOpen, setFiltersOpen]   = useState(false);
+  const [noticeOpen, setNoticeOpen] = useState(() => {
+    try { return localStorage.getItem("univ-notice-dismissed") !== "1"; } catch { return true; }
   });
- }, []);
+  const activeFilterCount = Object.values(filters).filter(Boolean).length;
 
- useEffect(() => { load(); }, [load]);
+  const load = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetchUniversities({ ...filters, search: search || undefined });
+      setUniversities(res.items);
+      setTotal(res.total);
+      setSeedNeeded(!!res.seed_needed);
+    } catch (err) {
+      console.error("فشل تحميل الجامعات:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, [filters, search]);
 
- // رابط `?country=...` في JSON-LD أعلى (لكل دولة بـCOUNTRIES) كان يُتجاهَل
- // كليًا: `filters` تُهيَّأ فقط من usePersistedState بلا قراءة أي شيء من
- // الرابط الفعلي — عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف
- // بالفحص المباشر 2026-07-18.
- useEffect(() => {
-  const country = new URLSearchParams(window.location.search).get("country");
-  if (country && COUNTRIES.includes(country)) {
-   setFilters((prev) => ({ ...prev, country }));
+  useEffect(() => {
+    applyPageSeo({
+      path: "/universities",
+      title: "دليل الجامعات الإسلامية | سُنّة",
+      description: "دليل الجامعات والمعاهد الإسلامية حول العالم: ابحث وقارن حسب التخصص والمستوى وطريقة الدراسة.",
+      keywords: ["جامعات إسلامية", "كليات شريعة", "دراسة شرعية", "جامعة إسلامية", "معهد ديني"],
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "دليل الجامعات الإسلامية حول العالم",
+          description: "جامعات ومعاهد إسلامية في عشرات الدول العربية والإسلامية.",
+          numberOfItems: COUNTRIES.length,
+          itemListElement: COUNTRIES.map((country, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `الجامعات الإسلامية في ${country}`,
+            url: `https://www.ssunnah.com/universities?country=${encodeURIComponent(country)}`,
+          })),
+        },
+      ],
+    });
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
+
+  // رابط `?country=...` في JSON-LD أعلى (لكل دولة بـCOUNTRIES) كان يُتجاهَل
+  // كليًا: `filters` تُهيَّأ فقط من usePersistedState بلا قراءة أي شيء من
+  // الرابط الفعلي — عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف
+  // بالفحص المباشر 2026-07-18.
+  useEffect(() => {
+    const country = new URLSearchParams(window.location.search).get("country");
+    if (country && COUNTRIES.includes(country)) {
+      setFilters((prev) => ({ ...prev, country }));
+    }
+  }, []);
+
+  function setFilter(key: keyof UniversityFilters, value: string | boolean | undefined) {
+    setFilters((prev) => ({ ...prev, [key]: value || undefined }));
   }
- }, []);
 
- function setFilter(key: keyof UniversityFilters, value: string | boolean | undefined) {
-  setFilters((prev) => ({ ...prev, [key]: value || undefined }));
- }
+  function handleSearch(e: React.FormEvent) {
+    e.preventDefault();
+    setSearch(searchInput);
+  }
 
- function handleSearch(e: React.FormEvent) {
-  e.preventDefault();
-  setSearch(searchInput);
- }
-
- return (
-  <SectionTemplatePage
-   route="/universities"
-   title="دليل الجامعات والكليات الشرعية"
-   subtitle="دليل تعريفي لجامعات وكليات تقدّم دراسات شرعية — مع روابط رسمية للتحقق قبل التقديم."
-   groupTitle="أقسام الدليل"
-  >
-  <div dir="rtl" className="up-root">
-   <form onSubmit={handleSearch} className="mt-4 flex gap-2 max-w-md mx-auto px-4">
-      <input
-       type="text"
-       value={searchInput}
-       onChange={(e) => setSearchInput(e.target.value)}
-       placeholder="ابحث عن جامعة أو تخصص…"
-       aria-label="بحث عن جامعة أو تخصص"
-       className="flex-1 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-white/50 up-search-input"
-      />
-      <button type="submit"
-       className="px-4 py-2.5 bg-white/20 hover:bg-white/30 text-[color:var(--mj-on-brand)] text-sm rounded-xl font-medium transition-colors">
-       بحث
-      </button>
-     </form>
-
-   <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
-    {/* تنبيه موثوقية البيانات */}
-    <details
-     className="up-alert up-alert--notice"
-     open={noticeOpen}
-     onToggle={(e) => {
-      const open = (e.currentTarget as HTMLDetailsElement).open;
-      setNoticeOpen(open);
-      try { localStorage.setItem("univ-notice-dismissed", open ? "0" : "1"); } catch { /* ignore */ }
-     }}
+  return (
+    <SectionTemplatePage
+      route="/universities"
+      title="دليل الجامعات والكليات الشرعية"
+      subtitle="دليل تعريفي لجامعات وكليات تقدّم دراسات شرعية — مع روابط رسمية للتحقق قبل التقديم."
+      groupTitle="أقسام الدليل"
     >
-     <summary>تحقق من الموقع الرسمي قبل التقديم</summary>
-     <p>
-      البرامج والمواعيد والرسوم قد تتغيّر. راجع الموقع الرسمي للجامعة قبل التقديم، ولا تعتمد على أرقام غير مؤكدة في هذا الدليل.
-     </p>
-    </details>
+    <div dir="rtl" className="up-root">
+      <form onSubmit={handleSearch} className="mt-4 flex gap-2 max-w-md mx-auto px-4">
+            <input
+              type="text"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              placeholder="ابحث عن جامعة أو تخصص…"
+              aria-label="بحث عن جامعة أو تخصص"
+              className="flex-1 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-white/50 up-search-input"
+            />
+            <button type="submit"
+              className="px-4 py-2.5 bg-white/20 hover:bg-white/30 text-[color:var(--mj-on-brand)] text-sm rounded-xl font-medium transition-colors">
+              بحث
+            </button>
+          </form>
 
-    {seedNeeded && universities.length > 0 && (
-     <div className="up-alert" role="status">
-      <Landmark size={14} aria-hidden="true" className="inline ms-1" />
-      {STATUS.networkError} تظهر النسخة المحلية المعتمدة إن وُجدت.
-     </div>
-    )}
+      <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
+        {/* تنبيه موثوقية البيانات */}
+        <details
+          className="up-alert up-alert--notice"
+          open={noticeOpen}
+          onToggle={(e) => {
+            const open = (e.currentTarget as HTMLDetailsElement).open;
+            setNoticeOpen(open);
+            try { localStorage.setItem("univ-notice-dismissed", open ? "0" : "1"); } catch { /* ignore */ }
+          }}
+        >
+          <summary>تحقق من الموقع الرسمي قبل التقديم</summary>
+          <p>
+            البرامج والمواعيد والرسوم قد تتغيّر. راجع الموقع الرسمي للجامعة قبل التقديم، ولا تعتمد على أرقام غير مؤكدة في هذا الدليل.
+          </p>
+        </details>
 
-    {/* رقائق الدولة السريعة + زر التصفية المتقدمة */}
-    <div className="up-quick-filters">
-     <div className="content-hub-chips up-country-chips" role="tablist" aria-label="تصفية حسب الدولة">
-      <button
-       type="button" role="tab" aria-selected={!filters.country}
-       className={!filters.country ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-       onClick={() => setFilter("country", undefined)}
-      >كل الدول</button>
-      {COUNTRIES.map((c) => (
-       <button
-        key={c} type="button" role="tab" aria-selected={filters.country === c}
-        className={filters.country === c ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-        onClick={() => setFilter("country", filters.country === c ? undefined : c)}
-       >{c}</button>
-      ))}
-     </div>
-     <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label={`تصفية متقدمة${activeFilterCount ? ` (${activeFilterCount})` : ""}`} />
+        {seedNeeded && universities.length > 0 && (
+          <div className="up-alert" role="status">
+            <Landmark size={14} aria-hidden="true" className="inline ms-1" />
+            {STATUS.networkError} تظهر النسخة المحلية المعتمدة إن وُجدت.
+          </div>
+        )}
+
+        {/* رقائق الدولة السريعة + زر التصفية المتقدمة */}
+        <div className="up-quick-filters">
+          <div className="content-hub-chips up-country-chips" role="tablist" aria-label="تصفية حسب الدولة">
+            <button
+              type="button" role="tab" aria-selected={!filters.country}
+              className={!filters.country ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+              onClick={() => setFilter("country", undefined)}
+            >كل الدول</button>
+            {COUNTRIES.map((c) => (
+              <button
+                key={c} type="button" role="tab" aria-selected={filters.country === c}
+                className={filters.country === c ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+                onClick={() => setFilter("country", filters.country === c ? undefined : c)}
+              >{c}</button>
+            ))}
+          </div>
+          <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label={`تصفية متقدمة${activeFilterCount ? ` (${activeFilterCount})` : ""}`} />
+        </div>
+
+        {/* إحصائية */}
+        <div className="flex items-center justify-between">
+          <p className="up-count-text">
+            {loading ? "" : `${universities.length} جامعة`}
+            {search && `، نتائج "${search}"`}
+          </p>
+          {Object.values(filters).some(Boolean) || search ? (
+            <button type="button"
+              onClick={() => { setFilters({}); setSearch(""); setSearchInput(""); }}
+              className="up-clear-btn">
+              مسح الفلاتر
+            </button>
+          ) : null}
+        </div>
+
+        {/* Grid */}
+        {seedNeeded && !loading && universities.length === 0 && (
+          <div className="up-empty-state">
+            <Landmark size={40} strokeWidth={1.3} className="mx-auto mb-3" aria-hidden="true" />
+            <p>جداول الجامعات لم تُطبَّق بعد على قاعدة البيانات.</p>
+            <p className="text-xs mt-2">شغّل: <code className="up-code">node scripts/apply-universities-migrations.mjs</code></p>
+          </div>
+        )}
+
+        {loading && universities.length === 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" role="status" aria-busy="true" aria-label="تحميل الجامعات">
+            {[1,2,3,4,5,6].map((i) => (
+              <div key={i} className="up-skeleton" />
+            ))}
+          </div>
+        )}
+
+        {!loading && universities.length === 0 && !seedNeeded && (
+          <div className="up-empty-state up-empty-state--py12">
+            <Search size={40} strokeWidth={1.3} className="mx-auto mb-3" aria-hidden="true" />
+            <p>{EMPTY.search}</p>
+          </div>
+        )}
+
+        {universities.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" aria-busy={loading}>
+            {universities.map((u) => (
+              <UniversityCard key={u.id} university={u} />
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="twh-share">
+        <ShareButtons title="الجامعات الإسلامية — سُنّة" url="https://www.ssunnah.com/universities" />
+      </div>
+      <RelatedKnowledge kind="book" query="جامعات إسلامية" title="مواد ذات صلة" limit={6} />
+      <div className="px-4 pb-6 mt-4">
+        <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في الجامعات الشرعية" count={4} />
+      </div>
+
+      <CompareBar />
+
+      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="تصفية متقدمة">
+        <div className="up-sheet-filters">
+          <FilterSelect label="الدرجة العلمية" value={filters.degree_level || ""} onChange={(v) => setFilter("degree_level", v as UniversityFilters["degree_level"])} options={DEGREE_LEVELS} />
+          <FilterSelect label="نظام الدراسة"   value={filters.study_mode || ""}   onChange={(v) => setFilter("study_mode", v as UniversityFilters["study_mode"])}   options={STUDY_MODES} />
+          <FilterSelect label="لغة الدراسة"    value={filters.study_language || ""} onChange={(v) => setFilter("study_language", v)} options={LANGUAGES} />
+          <div className="flex flex-col gap-1.5">
+            <span className="up-filter-label">خيارات إضافية</span>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={!!filters.has_scholarship}
+                onChange={(e) => setFilter("has_scholarship", e.target.checked || undefined)}
+                className="accent-emerald-600" />
+              <span className="up-filter-opt-label">منح متاحة</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={!!filters.is_verified}
+                onChange={(e) => setFilter("is_verified", e.target.checked || undefined)}
+                className="accent-emerald-600" />
+              <span className="up-filter-opt-label">موثقة فقط</span>
+            </label>
+          </div>
+          <button type="button" className="up-clear-btn" onClick={() => setFiltersOpen(false)}>
+            تطبيق
+          </button>
+        </div>
+      </FilterBottomSheet>
     </div>
-
-    {/* إحصائية */}
-    <div className="flex items-center justify-between">
-     <p className="up-count-text">
-      {loading ? "" : `${universities.length} جامعة`}
-      {search && `، نتائج "${search}"`}
-     </p>
-     {Object.values(filters).some(Boolean) || search ? (
-      <button type="button"
-       onClick={() => { setFilters({}); setSearch(""); setSearchInput(""); }}
-       className="up-clear-btn">
-       مسح الفلاتر
-      </button>
-     ) : null}
-    </div>
-
-    {/* Grid */}
-    {seedNeeded && !loading && universities.length === 0 && (
-     <div className="up-empty-state">
-      <Landmark size={40} strokeWidth={1.3} className="mx-auto mb-3" aria-hidden="true" />
-      <p>جداول الجامعات لم تُطبَّق بعد على قاعدة البيانات.</p>
-      <p className="text-xs mt-2">شغّل: <code className="up-code">node scripts/apply-universities-migrations.mjs</code></p>
-     </div>
-    )}
-
-    {loading && universities.length === 0 && (
-     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" role="status" aria-busy="true" aria-label="تحميل الجامعات">
-      {[1,2,3,4,5,6].map((i) => (
-       <div key={i} className="up-skeleton" />
-      ))}
-     </div>
-    )}
-
-    {!loading && universities.length === 0 && !seedNeeded && (
-     <div className="up-empty-state up-empty-state--py12">
-      <Search size={40} strokeWidth={1.3} className="mx-auto mb-3" aria-hidden="true" />
-      <p>{EMPTY.search}</p>
-     </div>
-    )}
-
-    {universities.length > 0 && (
-     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" aria-busy={loading}>
-      {universities.map((u) => (
-       <UniversityCard key={u.id} university={u} />
-      ))}
-     </div>
-    )}
-   </div>
-
-   <div className="twh-share">
-    <ShareButtons title="الجامعات الإسلامية — سُنّة" url="https://www.ssunnah.com/universities" />
-   </div>
-   <RelatedKnowledge kind="book" query="جامعات إسلامية" title="مواد ذات صلة" limit={6} />
-   <div className="px-4 pb-6 mt-4">
-    <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك في الجامعات الشرعية" count={4} />
-   </div>
-
-   <CompareBar />
-
-   <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="تصفية متقدمة">
-    <div className="up-sheet-filters">
-     <FilterSelect label="الدرجة العلمية" value={filters.degree_level || ""} onChange={(v) => setFilter("degree_level", v as UniversityFilters["degree_level"])} options={DEGREE_LEVELS} />
-     <FilterSelect label="نظام الدراسة"  value={filters.study_mode || ""}  onChange={(v) => setFilter("study_mode", v as UniversityFilters["study_mode"])}  options={STUDY_MODES} />
-     <FilterSelect label="لغة الدراسة"  value={filters.study_language || ""} onChange={(v) => setFilter("study_language", v)} options={LANGUAGES} />
-     <div className="flex flex-col gap-1.5">
-      <span className="up-filter-label">خيارات إضافية</span>
-      <label className="flex items-center gap-2 cursor-pointer">
-       <input type="checkbox" checked={!!filters.has_scholarship}
-        onChange={(e) => setFilter("has_scholarship", e.target.checked || undefined)}
-        className="accent-emerald-600" />
-       <span className="up-filter-opt-label">منح متاحة</span>
-      </label>
-      <label className="flex items-center gap-2 cursor-pointer">
-       <input type="checkbox" checked={!!filters.is_verified}
-        onChange={(e) => setFilter("is_verified", e.target.checked || undefined)}
-        className="accent-emerald-600" />
-       <span className="up-filter-opt-label">موثقة فقط</span>
-      </label>
-     </div>
-     <button type="button" className="up-clear-btn" onClick={() => setFiltersOpen(false)}>
-      تطبيق
-     </button>
-    </div>
-   </FilterBottomSheet>
-  </div>
-  </SectionTemplatePage>
- );
+    </SectionTemplatePage>
+  );
 }
 
 export default function UniversitiesPage() {
- return (
-  <UtilityScreen compose="mark">
-  <CompareProvider>
-   <UniversitiesContent />
-  </CompareProvider>
- 
-  </UtilityScreen>
- );
+  return (
+    <UtilityScreen compose="mark">
+    <CompareProvider>
+      <UniversitiesContent />
+    </CompareProvider>
+  
+    </UtilityScreen>
+  );
 }

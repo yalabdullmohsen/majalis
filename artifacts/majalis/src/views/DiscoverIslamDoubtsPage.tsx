@@ -10,42 +10,42 @@ import { UtilityScreen } from "@/components/design-system/screens";
 const COMPLEXITY_LABEL: Record<string, string> = { basic: "أساسي", intermediate: "متوسط", advanced: "متقدّم" };
 
 export default function DiscoverIslamDoubtsPage() {
- const [items, setItems] = useState<DawahShubha[] | null>(null);
+  const [items, setItems] = useState<DawahShubha[] | null>(null);
 
- useEffect(() => {
-  applyPageSeo({
-   path: "/discover-islam/doubts",
-   title: "ردود على الشبهات حول الإسلام | التعريف بالإسلام",
-   description: "ردود موثّقة وهادئة على أشهر الشبهات المثارة حول الإسلام، بصياغة الشبهة الحقيقية دون تحريف.",
-  });
-  getShubuhatByCategory().then(setItems);
- }, []);
+  useEffect(() => {
+    applyPageSeo({
+      path: "/discover-islam/doubts",
+      title: "ردود على الشبهات حول الإسلام | التعريف بالإسلام",
+      description: "ردود موثّقة وهادئة على أشهر الشبهات المثارة حول الإسلام، بصياغة الشبهة الحقيقية دون تحريف.",
+    });
+    getShubuhatByCategory().then(setItems);
+  }, []);
 
- return (
-  <UtilityScreen compose="mark">
-  <DiscoverIslamShell>
-   <PageHeader eyebrow="التعريف بالإسلام" title="الشبهات والتفنيدات" subtitle="نعرض الشبهة بصياغتها الحقيقية، ثم نجيب بالدليل والسياق — لا ردود سطحية." />
+  return (
+    <UtilityScreen compose="mark">
+    <DiscoverIslamShell>
+      <PageHeader eyebrow="التعريف بالإسلام" title="الشبهات والتفنيدات" subtitle="نعرض الشبهة بصياغتها الحقيقية، ثم نجيب بالدليل والسياق — لا ردود سطحية." />
 
-   {items === null ? (
-    <SkeletonCardGrid />
-   ) : items.length === 0 ? (
-    <Empty text={EMPTY.data} />
-   ) : (
-    <div className="hub-card-grid dii-list-grid dii-section">
-     {items.map((s) => (
-      <HubCard
-       key={s.id}
-       href={`/discover-islam/doubts/${s.slug}`}
-       title={s.title}
-       description={s.short_answer}
-       badge={COMPLEXITY_LABEL[s.complexity_level] || "شبهة"}
-       className="dii-hub-card dii-list-card"
-      />
-     ))}
-    </div>
-   )}
-  </DiscoverIslamShell>
- 
-  </UtilityScreen>
- );
+      {items === null ? (
+        <SkeletonCardGrid />
+      ) : items.length === 0 ? (
+        <Empty text={EMPTY.data} />
+      ) : (
+        <div className="hub-card-grid dii-list-grid dii-section">
+          {items.map((s) => (
+            <HubCard
+              key={s.id}
+              href={`/discover-islam/doubts/${s.slug}`}
+              title={s.title}
+              description={s.short_answer}
+              badge={COMPLEXITY_LABEL[s.complexity_level] || "شبهة"}
+              className="dii-hub-card dii-list-card"
+            />
+          ))}
+        </div>
+      )}
+    </DiscoverIslamShell>
+  
+    </UtilityScreen>
+  );
 }
