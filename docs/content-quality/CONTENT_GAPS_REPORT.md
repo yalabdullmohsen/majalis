@@ -201,3 +201,11 @@
 | search/universities/contact/settings errors | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
 | admin empties | DEFERRED |
+
+## Wave 24 final states
+
+| section | finalState |
+|---|---|
+| privacy/research-detail/scholarly-research messages | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
