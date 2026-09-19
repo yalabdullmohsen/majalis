@@ -63,6 +63,10 @@ assert.equal(egypt.sound, "adhan-short-egypt.caf");
 const aqsa = resolveNativeNotificationSound({ muezzinId: "aqsa" });
 assert.equal(aqsa.sound, "adhan-short-aqsa.caf");
 
+const kuwait = resolveNativeNotificationSound({ muezzinId: "kuwait" });
+assert.equal(kuwait.sound, "short-ring.caf");
+assert.equal(kuwait.fallbackUsed, false);
+
 const inApp = resolveNativeNotificationSound({ manifestId: "in-app-makkah" });
 assert.equal(inApp.sound, "default");
 assert.equal(inApp.fallbackUsed, true);

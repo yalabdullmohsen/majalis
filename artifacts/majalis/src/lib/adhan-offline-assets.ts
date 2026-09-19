@@ -157,7 +157,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
       short: `${CDN}/general/makkah-haram-02.mp3`,
       takbir: `${CDN}/general/makkah-haram-02.mp3`,
     },
-    notificationSound: "prayer-alert.caf",
+    notificationSound: "short-ring.caf",
   },
 ];
 

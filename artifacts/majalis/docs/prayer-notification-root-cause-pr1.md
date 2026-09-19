@@ -11,6 +11,7 @@
 3. **تسمية مضللة:** خيار «تنبيه أذان قصير متوافق مع iOS» كان في مجموعة `adhan` (داخل التطبيق) مع `iosNotificationSound: prayer-alert.caf` بينما يوجد `adhan-short-makkah.caf` في الحزمة غير مستخدم لمكة.
 
 4. **حزمة مكة:** `notificationSound` لـ makkah كان `prayer-alert.caf` بدل `adhan-short-makkah.caf`.
+5. **حزمة الكويت:** كانت `prayer-alert.caf` بينما الكتالوج يعلن `short-ring.caf` — صُحّحت في نفس PR-1.
 
 ## rejectedHypotheses
 
