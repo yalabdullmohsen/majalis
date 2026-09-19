@@ -86,6 +86,6 @@ for (const path of enriched) {
   assert.ok(r?.description && r.description.length >= 75, `${path} SEO ≥75`);
 }
 assert.match(read("src/lib/seo-routes.json"), /جدول شهري وأسبوعي ويومي لمواعيد الدروس والحلقات العلمية مع متابعة الحضور في سُنّة/);
-assert.match(read("src/lib/seo-routes.json"), /احسب اتجاه القبلة بدقة بحسب موقعك الجغرافي باستخدام البوصلة الرقمية في سُنّة/);
+assert.match(read("src/lib/seo-routes.json"), /احسب اتجاه القبلة بدقة بحسب موقعك الجغرافي باستخدام البوصلة الرقمية الميسّرة في سُنّة/);
 
 console.log("content-quality-wave33-gate.test.ts: ok");

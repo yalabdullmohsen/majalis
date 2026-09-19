@@ -31,6 +31,7 @@ import {
 import type { QuranController } from "@/lib/quran-controller";
 import { ImmersiveVerseOptionsSheet } from "@/components/quran/ImmersiveVerseOptionsSheet";
 import { ImmersivePrefsDrawer } from "@/components/quran/ImmersivePrefsDrawer";
+import { STATUS } from "@/lib/ui-copy";
 import "@/styles/quran-immersive-reader.css";
 
 export type ImmersiveQuranPageProps = {
@@ -161,7 +162,7 @@ export function ImmersiveQuranPage({
     }
     void navigator.clipboard?.writeText(selectedText).then(
       () => setCopyStatus("تم النسخ"),
-      () => setCopyStatus("تعذّر النسخ"),
+      () => setCopyStatus(STATUS.loadError),
     );
   }, [selectedIndex, selectedText, onCopyVerse]);
 

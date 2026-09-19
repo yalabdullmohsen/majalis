@@ -346,7 +346,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       if (snap.playerState === "error") {
         const msg = snap.errorMessage || "تعذر تشغيل هذه الآية لهذا القارئ";
         setAudioError(msg);
-        setAudioStatus("فشل التحميل");
+        setAudioStatus(STATUS.loadError);
         mushafAudioLog("error", {
           reciterId: snap.reciterId,
           ayahKey: snap.surah != null && snap.ayah != null ? `${snap.surah}:${snap.ayah}` : null,
@@ -626,7 +626,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       await navigator.clipboard.writeText(label);
       setCopyStatus("تم النسخ");
     } catch {
-      setCopyStatus("تعذّر النسخ");
+      setCopyStatus(STATUS.loadError);
     }
   }, [selectedVerseKey, versePreview]);
 
@@ -686,7 +686,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       });
       setCopyStatus("تم تجهيز البطاقة");
     } catch {
-      setCopyStatus("تعذّر إنشاء البطاقة");
+      setCopyStatus(STATUS.loadError);
       haptics.error();
     }
   }, [selectedVerseKey, versePreview]);
@@ -713,7 +713,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       setCopyStatus("تم حفظ العلامة");
     } catch {
       haptics.error();
-      setCopyStatus("تعذّر حفظ العلامة");
+      setCopyStatus(STATUS.loadError);
     }
   }, [page, selectedVerseKey]);
 

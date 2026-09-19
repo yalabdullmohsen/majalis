@@ -20,7 +20,7 @@ import {
 } from "@/lib/prayer-location-prefs";
 import { KUWAIT_GOVERNORATES, setSelectedGovernorate } from "@/lib/prayer-kuwait-geo";
 import { suggestMethodForRegion } from "@/lib/prayer-calc-prefs";
-import { EMPTY } from "@/lib/ui-copy";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 
 type Props = {
   onChanged: (loc: PrayerActiveLocation) => void;
@@ -118,7 +118,7 @@ export function PrayerLocationPicker({ onChanged }: Props) {
       },
       () => {
         setGpsBusy(false);
-        setGpsError("تعذّر الحصول على الموقع. فعّل الصلاحية أو اختر مدينة يدوياً.");
+        setGpsError(STATUS.networkError);
       },
       { enableHighAccuracy: true, timeout: 12_000, maximumAge: 60_000 },
     );

@@ -16,7 +16,7 @@ import {
   subscribeAppAudio,
 } from "@/lib/audio";
 import "@/styles/components/muezzin-picker.css";
-import { EMPTY } from "@/lib/ui-copy";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 
 function previewSourceId(muezzinId: string): string {
   return `muezzin-picker-${muezzinId}`;
@@ -159,7 +159,7 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
         clearPreviewTimers();
         setPreviewing(null);
         setProgress(0);
-        setPreviewError(result.error ?? "تعذّر تشغيل المعاينة");
+        setPreviewError(result.error ?? STATUS.networkError);
         activeMuezzinRef.current = null;
       }
     });

@@ -16,6 +16,7 @@ import {
 } from "@/lib/quran-mini-player";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { useMediaSession } from "@/hooks/useMediaSession";
+import { BUTTON, STATUS } from "@/lib/ui-copy";
 import {
   HIFZ_PLAYBACK_RATES,
   hifzPrefsToLoopConfig,
@@ -226,7 +227,7 @@ export function QuranMiniPlayerBar() {
 
       {isError && (
         <div className="quran-mini-player__error" role="alert">
-          <span>{snap.errorMessage || "تعذّر تشغيل التلاوة."}</span>
+          <span>{snap.errorMessage || STATUS.networkError}</span>
           <button
             type="button"
             className="quran-mini-player__retry"
@@ -236,7 +237,7 @@ export function QuranMiniPlayerBar() {
               }
             }}
           >
-            إعادة المحاولة
+            {BUTTON.retry}
           </button>
         </div>
       )}

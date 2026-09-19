@@ -18,7 +18,7 @@ export const EMPTY = {
   continueEmpty: "ابدأ من المصحف أو الدروس.",
   bookmarks: "لم تحفظ مواد بعد.",
   downloads: "لا مواد منزّلة على هذا الجهاز.",
-  offline: "تعذّر الاتصال. يمكنك متابعة المحتوى المحفوظ.",
+  offline: "أنت غير متصل، سيتم عرض المحتوى المحفوظ",
 } as const;
 
 export const SEARCH = {
