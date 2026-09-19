@@ -2408,7 +2408,7 @@
     {
       "path": "/auth/callback",
       "title": "إتمام تسجيل الدخول",
-      "description": "إتمام تسجيل الدخول إلى سُنّة للوصول إلى المحتوى المحفوظ والإعدادات.",
+      "description": "إتمام تسجيل الدخول إلى منصة سُنّة للوصول لمحتواك الشرعي.",
       "keywords": [],
       "sitemap": false,
       "robots": "noindex, nofollow"
