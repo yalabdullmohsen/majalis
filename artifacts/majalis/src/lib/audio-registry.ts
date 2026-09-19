@@ -30,13 +30,21 @@ export type AudioRegistry = {
 
 const REGISTRY_URL = "/data/audio/audio-registry.json";
 
-// البداية المطلوبة: قرّاء مُحقَّقون QA (يشمل ياسر الدوسري وسعود الشريم).
+// قرّاء مُحقَّقون QA (EveryAyah) — يُوسَّع فقط بعد فحص عيّنة معالم ناجح.
 export const DEFAULT_VERIFIED_RECITER_IDS = [
   "husary",
   "minshawi",
   "alafasy",
   "dosari",
   "shuraim",
+  "abdulsamad",
+  "sudais",
+  "maher",
+  "hudhaify",
+  "basfar",
+  "shatri",
+  "ayyoub",
+  "ali_jaber",
 ] as const;
 
 function isVerifiedAyahReciter(id: string): boolean {

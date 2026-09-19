@@ -19,6 +19,7 @@ import { haptics } from "@/lib/haptics";
 import { markMorningAdhkarDone } from "@/lib/local-milestones";
 import { recordUserActivity } from "@/lib/user-streak";
 import { AdhkarFocusNav } from "./AdhkarFocusNav";
+import { AdhkarRemindersCard } from "@/components/adhkar/AdhkarRemindersCard";
 import { truncateAtWord } from "@/lib/content-display-polish";
 import "@/styles/pages/adhkar.css";
 import "@/styles/pages/tasbih.css";
@@ -299,6 +300,8 @@ export default function AdhkarPage() {
       {activeCategory && category !== "all" && (
         <p className="adhkar-category-desc">{activeCategory.description}</p>
       )}
+
+      <AdhkarRemindersCard />
 
       {/* منطقة الذكر */}
       {isLoading && publishedItems.length === 0 ? (

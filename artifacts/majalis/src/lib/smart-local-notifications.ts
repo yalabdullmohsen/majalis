@@ -82,28 +82,44 @@ export function buildDailySmartSchedule(opts?: {
   const items: SmartNotifScheduleItem[] = [];
   const reminderMinute = prefs.reminderHour * 60 + prefs.reminderMinute;
 
-  // أذكار الصباح/المساء — تُفعَّل صراحة عبر adhkarReminder (لا طلب إذن تلقائي)
+  // أذكار الصباح/المساء/النوم — تُفعَّل صراحة عبر adhkarReminder (لا طلب إذن تلقائي)
   const adhkarOn = prefs.sections?.adhkar?.enabled ?? prefs.adhkarReminder;
   if (adhkarOn) {
-    const morning = pickSectionMessage("adhkar");
     items.push({
       id: "adhkar-morning",
       kind: "adhkar",
-      title: morning.title,
-      body: morning.body,
+      title: "أذكار الصباح",
+      body: "ورد الصباح جاهز.",
       minuteOfDay: 6 * 60 + 30,
       tag: "majalis-adhkar-morning",
-      url: "/adhkar",
+      url: "/adhkar/morning",
     });
-    const evening = pickSectionMessage("adhkar");
     items.push({
       id: "adhkar-evening",
       kind: "adhkar",
-      title: evening.title,
-      body: evening.body,
+      title: "أذكار المساء",
+      body: "ورد المساء جاهز.",
       minuteOfDay: 17 * 60 + 30,
       tag: "majalis-adhkar-evening",
-      url: "/adhkar",
+      url: "/adhkar/evening",
+    });
+    items.push({
+      id: "adhkar-sleep",
+      kind: "adhkar",
+      title: "أذكار النوم",
+      body: "أذكار قبل النوم.",
+      minuteOfDay: 21 * 60 + 30,
+      tag: "majalis-adhkar-sleep",
+      url: "/adhkar/sleep",
+    });
+    items.push({
+      id: "adhkar-after-salah",
+      kind: "adhkar",
+      title: "أذكار بعد الصلاة",
+      body: "سبّح واستغفر بعد صلاتك.",
+      minuteOfDay: 12 * 60 + 30,
+      tag: "majalis-adhkar-after-salah",
+      url: "/adhkar/after-salah",
     });
   }
 

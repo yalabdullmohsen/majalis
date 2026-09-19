@@ -30,6 +30,8 @@ export const SETTINGS_MUEZZIN_LABELS: Record<string, string> = {
   makkah: "تنبيه أذان قصير متوافق مع iOS",
   alharam: "تنبيه أذان قصير متوافق مع iOS",
   kuwait: "أذان خليجي قصير",
+  egypt: "أذان تقليدي",
+  aqsa: "أذان المسجد الأقصى",
   takbeerat: "رنة قصيرة",
   soft: "رنة هادئة",
 };
@@ -57,6 +59,28 @@ const OPTIONS: SettingsSoundOption[] = [
     requireLocal: true,
     previewUrl: "/audio/adhan/adhan-gulf-short.mp3",
     iosNotificationSound: "short-ring.caf",
+  },
+  {
+    id: "egypt",
+    group: "adhan",
+    label: "أذان تقليدي",
+    muezzinId: "egypt",
+    playbackMode: "short",
+    soundProfile: "clear",
+    requireLocal: true,
+    previewUrl: "/audio/adhan/adhan-egypt-full.m4a",
+    iosNotificationSound: "adhan-short-egypt.caf",
+  },
+  {
+    id: "aqsa",
+    group: "adhan",
+    label: "أذان المسجد الأقصى",
+    muezzinId: "aqsa",
+    playbackMode: "short",
+    soundProfile: "clear",
+    requireLocal: true,
+    previewUrl: "/audio/adhan/adhan-aqsa-full.mp3",
+    iosNotificationSound: "adhan-short-aqsa.caf",
   },
   // —— صوت إشعار الصلاة ——
   {

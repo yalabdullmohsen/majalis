@@ -52,6 +52,11 @@ import {
 import { getMuezzin } from "@/lib/adhan-audio";
 import { resolveAdhanClip } from "@/lib/adhan-playback-modes";
 import { loadNotifPrefs, saveNotifPrefs } from "@/lib/local-notifications";
+import { syncSmartLocalNotifications } from "@/lib/smart-local-notifications";
+import {
+  ensureDhikrPhraseRemindersScheduled,
+  cancelNativeDhikrPhraseReminders,
+} from "@/lib/dhikr-phrase-reminders";
 import "@/styles/pages/adhan-settings.css";
 import { UtilityScreen } from "@/components/design-system/screens";
 import { SettingsToggleRow } from "@/components/design-system/SettingsList";
@@ -864,9 +869,17 @@ export default function AdhanSettingsPage() {
             title="تذكير الأذكار"
             checked={notifPrefs.adhkarReminder}
             onChange={(v) => {
-              const next = { ...notifPrefs, adhkarReminder: v };
+              const next = {
+                ...notifPrefs,
+                adhkarReminder: v,
+                sections: {
+                  ...notifPrefs.sections,
+                  adhkar: { ...notifPrefs.sections.adhkar, enabled: v },
+                },
+              };
               saveNotifPrefs(next);
               setNotifPrefs(next);
+              void syncSmartLocalNotifications();
               flashSaved();
             }}
           />
@@ -878,6 +891,9 @@ export default function AdhanSettingsPage() {
               const next = { ...notifPrefs, dhikrPhraseReminder: v };
               saveNotifPrefs(next);
               setNotifPrefs(next);
+              void syncSmartLocalNotifications();
+              if (v) void ensureDhikrPhraseRemindersScheduled();
+              else void cancelNativeDhikrPhraseReminders();
               flashSaved();
             }}
           />

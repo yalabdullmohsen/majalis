@@ -32,6 +32,8 @@ assert.doesNotMatch(prompts, /بانتظار تسجيل مرخّص/);
 
 assert.match(catalog, /adhan-makkah\.mp3/);
 assert.match(catalog, /adhan-gulf-short\.mp3/);
+assert.match(catalog, /adhan-egypt-full\.m4a/);
+assert.match(catalog, /adhan-aqsa-full\.mp3/);
 assert.match(catalog, /prayer-alert\.mp3/);
 assert.match(catalog, /alarm-clear\.mp3/);
 assert.doesNotMatch(catalog, /adhan-madinah\.mp3|adhan-qatami\.mp3/);
@@ -39,6 +41,8 @@ assert.doesNotMatch(catalog, /adhan-madinah\.mp3|adhan-qatami\.mp3/);
 const options = listAvailableSettingsSounds();
 assert.ok(options.some((o) => o.group === "adhan" && o.id === "makkah"));
 assert.ok(options.some((o) => o.group === "adhan" && o.id === "kuwait"));
+assert.ok(options.some((o) => o.group === "adhan" && o.id === "egypt"));
+assert.ok(options.some((o) => o.group === "adhan" && o.id === "aqsa"));
 assert.ok(!options.some((o) => o.id === "madinah"), "madinah غير معتمد للإنتاج");
 assert.ok(!options.some((o) => o.id === "qatami"), "qatami محظور");
 assert.ok(options.some((o) => o.group === "tone" && o.id === "tone-prayer"));
