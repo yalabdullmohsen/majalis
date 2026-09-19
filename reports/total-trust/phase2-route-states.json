@@ -1,0 +1,150 @@
+{
+  "program": "SUNNAH_TOTAL_TRUST",
+  "phase": 2,
+  "generatedAt": "2026-09-19T20:56:57.997Z",
+  "criticalRoutes": 10,
+  "offlineBannerGlobal": true,
+  "needsReview": [],
+  "findings": [],
+  "routeStates": [
+    {
+      "route": "/",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/components/HomeDashboard.tsx",
+        "src/components/OfflineBanner.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/mushaf",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/quran/MushafReaderPage.tsx",
+        "src/features/mushaf-madinah/VerifiedMushafReader.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/lessons",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/lessons/LessonsPage.tsx",
+        "src/pages/lessons/ui/LessonsView.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/prayer-times",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/worship/PrayerTimesPage.tsx",
+        "src/pages/worship/ui/PrayerTimesView.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/adhkar",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/worship/AdhkarPage.tsx",
+        "src/pages/worship/ui/AdhkarView.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/search",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/account/SearchPage.tsx",
+        "src/pages/account/ui/SearchView.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/sections",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/account/SectionsPage.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/quran-hub",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/quran/QuranHubPage.tsx",
+        "src/pages/quran/ui/QuranHubView.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/hadith",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/hadith/HadithPage.tsx",
+        "src/pages/hadith/ui/HadithView.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/fiqh",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/fiqh/FiqhPage.tsx",
+        "src/pages/fiqh/ui/FiqhView.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    }
+  ]
+}
