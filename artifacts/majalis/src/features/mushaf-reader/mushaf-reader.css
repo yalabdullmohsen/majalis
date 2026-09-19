@@ -367,10 +367,12 @@ html[data-theme="dark"] .nm-page__header-hizb,
 
 /*
  * SunnahFatihaBraidedMedallion — دائرة هندسية حقيقية (aspect 1:1).
- * السبب الجذري السابق: inset نسبي على مستطيل عمودي + border-radius:50% + mask ellipse
- * → بيضاوي يختلف حسب نسبة عرض/ارتفاع الجهاز.
- * الحل: عرض=ارتفاع=min(cqw,cqh) ممركز؛ mask بدائرة (circle) لا ellipse.
- * الزخرفة/الألوان كما هي — absolute فقط؛ لا نص ولا Geometry ولا Mapping.
+ * السبب الجذري (قصّ/انزياح على ص1–ص2):
+ *   الحجم كان min(92cqw, 86cqh). على شاشة طويلة (آيفون عمودي) 92cqw > ارتفاع المسرح،
+ *   وعلى شاشة عريضة 86cqh > العرض — مع overflow:hidden على .nm-page__stage تُقصّ الدائرة
+ *   ويبدو المركز مائلًا؛ max-width/max-height كانا يكسران التربيع بعد القصّ.
+ * الحل: الحجم من cqmin فقط (أصغر بُعد) بهوامش متماثلة — لا قصّ، مركز رياضي على كل الأجهزة.
+ * لا نص قرآن ولا أرقام صفحات ولا Geometry شبكة ١٥.
  */
 .nm-page__fatiha-medallion {
   position: absolute;
@@ -380,13 +382,11 @@ html[data-theme="dark"] .nm-page__header-hizb,
   transform: translate(-50%, -50%);
   z-index: 0;
   pointer-events: none;
-  /* أصغر بُعد للصفحة → دائرة مستقلة عن نسبة الجهاز */
-  --nm-medallion-size: min(92cqw, 86cqh);
+  /* هامش ≥7% من أصغر بُعد — الدائرة دائمًا داخل المسرح */
+  --nm-medallion-size: 86cqmin;
   width: var(--nm-medallion-size);
   height: var(--nm-medallion-size);
   aspect-ratio: 1 / 1;
-  max-width: 100%;
-  max-height: 100%;
   box-sizing: border-box;
   border-radius: 50%;
   border: 1px solid color-mix(in srgb, var(--mushaf-printed-gold-border) 70%, var(--mushaf-paper-edge));
@@ -408,23 +408,24 @@ html[data-theme="dark"] .nm-page__header-hizb,
   mask: radial-gradient(circle at center, transparent 63%, #000 64.2% 72.5%, transparent 73.5%);
   opacity: 0.62;
 }
-/* بداية البقرة — نفس الدائرة الهندسية؛ شفافية أخف قليلًا */
+/* بداية البقرة — نفس القاعدة الهندسية؛ شفافية أخف قليلًا */
 .nm-page--lead .nm-page__fatiha-medallion,
 .nm-page[data-page-type="surah-start"] .nm-page__fatiha-medallion {
-  --nm-medallion-size: min(90cqw, 84cqh);
+  --nm-medallion-size: 84cqmin;
   opacity: 0.52;
 }
 
-/* fallback إن لم تُدعم container size (نادر) — ما زال مربعًا عبر aspect-ratio */
+/* fallback إن لم تُدعم cqmin — مربع عبر vmin (أصغر بعد viewport) */
 @supports not (width: 1cqmin) {
   .nm-page__fatiha-medallion {
-    width: min(92%, 72vw);
-    height: auto;
+    --nm-medallion-size: min(86%, 72vmin);
+    width: var(--nm-medallion-size);
+    height: var(--nm-medallion-size);
     aspect-ratio: 1 / 1;
   }
   .nm-page--lead .nm-page__fatiha-medallion,
   .nm-page[data-page-type="surah-start"] .nm-page__fatiha-medallion {
-    width: min(90%, 70vw);
+    --nm-medallion-size: min(84%, 70vmin);
   }
 }
 

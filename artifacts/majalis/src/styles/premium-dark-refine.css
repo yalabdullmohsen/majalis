@@ -138,6 +138,9 @@
   --mss-shadow-card: var(--pd-elev-1);
   --mss-hero-glow: transparent;
   --mss-hero-glow-strong: transparent;
+  --mss-on-hero: var(--pd-ink, #ede8df);
+  --mss-on-hero-muted: var(--pd-ink-2, #d8d0c4);
+  --mss-on-hero-accent: var(--pd-emerald, #4fb48b);
   --ss-shadow-soft: var(--pd-elev-1);
   --elite-shadow-xs: var(--pd-elev-1);
   --elite-shadow-sm: var(--pd-elev-1);
@@ -457,10 +460,20 @@
   border-color: color-mix(in srgb, var(--pd-border-subtle) 50%, transparent) !important;
 }
 
-:is(html[data-theme="dark"], html.dark) .section-hero :is(h1, h2, .section-hero__title),
-:is(html[data-theme="dark"], html.dark) .page-title,
-:is(html[data-theme="dark"], html.dark) .section-title {
-  color: var(--pd-ink) !important;
+:is(html[data-theme="dark"], html.dark) :is(
+  .section-hero h1,
+  .section-hero h2,
+  .section-hero__title,
+  .page-title,
+  .section-title,
+  .section-lobby__title,
+  .quran-hub-page__title,
+  .mss-section__title,
+  .home-section__title,
+  .page-hero-mj__title,
+  .topic-page__title
+) {
+  color: var(--mss-on-hero, var(--pd-ink)) !important;
   font-weight: 700;
 }
 
