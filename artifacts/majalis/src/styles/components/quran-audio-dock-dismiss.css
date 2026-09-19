@@ -12,6 +12,41 @@
   pointer-events: none;
 }
 
+.mm-audio-dock__close {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, #111 14%, transparent);
+  background: color-mix(in srgb, #111 6%, transparent);
+  color: #111;
+  font: inherit;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.nm-root .mm-audio-dock__close {
+  border-color: color-mix(in srgb, var(--nm-ink, #111) 16%, transparent);
+  background: color-mix(in srgb, var(--nm-ink, #111) 7%, transparent);
+  color: var(--nm-ink, #111);
+}
+
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__close,
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__close,
+html[data-theme="dark"] .mm-audio-dock__close,
+html.dark .mm-audio-dock__close {
+  border-color: color-mix(in srgb, #f3efe6 22%, transparent);
+  background: color-mix(in srgb, #f3efe6 8%, #1a1f1c);
+  color: #f3efe6;
+}
+
 .nm-root .mm-audio-dock__handle {
   background: color-mix(in srgb, var(--nm-ink, #111) 22%, transparent);
 }

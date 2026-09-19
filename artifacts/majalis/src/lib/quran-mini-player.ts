@@ -55,9 +55,15 @@ export function handoffMushafPlayback(opts: {
   showMiniPlayer();
 }
 
+/**
+ * CLOSE: يوقف التلاوة · يلغي الحلقة/النطاق · يفرّغ المحرّك · يخفي المشغّل.
+ * لا يغيّر المسار. لا يعادل COLLAPSE (طي فقط) ولا STOP الجزئي داخل الرصيف.
+ */
 export function stopMiniPlayer(): void {
   try {
-    AudioEngine.getInstance().stopAndUnload();
+    const engine = AudioEngine.getInstance();
+    engine.setLoopConfig(engine.getSnapshot().surah ?? 1, null);
+    engine.stopAndUnload();
   } catch {
     /* ignore */
   }
