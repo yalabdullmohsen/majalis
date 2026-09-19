@@ -584,6 +584,8 @@
     "test:design-excellence": "node --import tsx src/lib/__tests__/design-excellence-utility-gate.test.ts",
     "test:mushaf-nextgen-baseline": "node --import tsx src/lib/__tests__/mushaf-nextgen-baseline-gate.test.ts",
     "test:mushaf-display-clarity": "node --import tsx src/lib/__tests__/mushaf-display-clarity-gate.test.ts",
+    "test:mushaf-internal-perf-pr1": "node --import tsx src/lib/__tests__/mushaf-internal-perf-pr1-gate.test.ts",
+    "capture:mushaf-internal-perf-baseline": "node scripts/mushaf-internal-perf-baseline.mjs --write",
     "test:quran-journey-pr1": "node --import tsx src/lib/__tests__/quran-journey-pr1-contracts-gate.test.ts"
   },
   "devDependencies": {
