@@ -1,0 +1,86 @@
+{
+  "program": "SUNNAH_TOTAL_TRUST",
+  "phase": 3,
+  "generatedAt": "2026-09-19T20:56:58.152Z",
+  "boundaryPages": [
+    1,
+    2,
+    5,
+    100,
+    221,
+    300,
+    459,
+    604
+  ],
+  "byteLockOk": true,
+  "byteLockStdout": "✓ قفل بايت القرآن: 3 ملفًا مطابقًا Byte-for-Byte",
+  "pageReports": [
+    {
+      "page": 1,
+      "ok": true,
+      "verseCount": 7,
+      "first": "1:1",
+      "last": "1:7",
+      "sha256": "56eaee7455f62855"
+    },
+    {
+      "page": 2,
+      "ok": true,
+      "verseCount": 5,
+      "first": "2:1",
+      "last": "2:5",
+      "sha256": "27c07dabea316293"
+    },
+    {
+      "page": 5,
+      "ok": true,
+      "verseCount": 5,
+      "first": "2:25",
+      "last": "2:29",
+      "sha256": "245ae62902a6bb09"
+    },
+    {
+      "page": 100,
+      "ok": true,
+      "verseCount": 6,
+      "first": "4:135",
+      "last": "4:140",
+      "sha256": "41f7a84c42622197"
+    },
+    {
+      "page": 221,
+      "ok": true,
+      "verseCount": 8,
+      "first": "10:107",
+      "last": "11:5",
+      "sha256": "a4a4b0eb22917620"
+    },
+    {
+      "page": 300,
+      "ok": true,
+      "verseCount": 8,
+      "first": "18:54",
+      "last": "18:61",
+      "sha256": "df75c8d06afac961"
+    },
+    {
+      "page": 459,
+      "ok": true,
+      "verseCount": 5,
+      "first": "39:6",
+      "last": "39:10",
+      "sha256": "c48d3b7a25e20eff"
+    },
+    {
+      "page": 604,
+      "ok": true,
+      "verseCount": 15,
+      "first": "112:1",
+      "last": "114:6",
+      "sha256": "4d407874da9a426f"
+    }
+  ],
+  "issues": [],
+  "releaseBlocker": false,
+  "note": "لا تعديل على نص القرآن؛ التحقق قراءة فقط. أي انحراف → مراجعة بشرية متخصصة."
+}

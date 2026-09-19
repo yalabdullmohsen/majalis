@@ -279,10 +279,10 @@
       "route": "/adhkar",
       "pageTitle": "SafeLazyRoute",
       "dataSource": "app-routes",
-      "loadingState": "PENDING_MATRIX",
-      "emptyState": "PENDING_MATRIX",
-      "errorState": "PENDING_MATRIX",
-      "offlineState": "PENDING_MATRIX",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
       "publicContent": "public_candidate",
       "searchVisibility": true,
       "seoVisibility": true,
@@ -298,7 +298,8 @@
       "isRedirect": false,
       "redirectTo": null,
       "inSitemap": true,
-      "inSeoJson": true
+      "inSeoJson": true,
+      "phase2Checked": true
     },
     {
       "route": "/adhkar/:slug",
@@ -2529,10 +2530,10 @@
       "route": "/fiqh",
       "pageTitle": "SafeLazyRoute",
       "dataSource": "app-routes",
-      "loadingState": "PENDING_MATRIX",
-      "emptyState": "PENDING_MATRIX",
-      "errorState": "PENDING_MATRIX",
-      "offlineState": "PENDING_MATRIX",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
       "publicContent": "public_candidate",
       "searchVisibility": true,
       "seoVisibility": true,
@@ -2548,7 +2549,8 @@
       "isRedirect": false,
       "redirectTo": null,
       "inSitemap": true,
-      "inSeoJson": true
+      "inSeoJson": true,
+      "phase2Checked": true
     },
     {
       "route": "/fiqh-council",
@@ -2804,10 +2806,10 @@
       "route": "/hadith",
       "pageTitle": "SafeLazyRoute",
       "dataSource": "app-routes",
-      "loadingState": "PENDING_MATRIX",
-      "emptyState": "PENDING_MATRIX",
-      "errorState": "PENDING_MATRIX",
-      "offlineState": "PENDING_MATRIX",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
       "publicContent": "public_candidate",
       "searchVisibility": true,
       "seoVisibility": true,
@@ -2823,7 +2825,8 @@
       "isRedirect": false,
       "redirectTo": null,
       "inSitemap": true,
-      "inSeoJson": true
+      "inSeoJson": true,
+      "phase2Checked": true
     },
     {
       "route": "/hadith-science",
@@ -4154,10 +4157,10 @@
       "route": "/lessons",
       "pageTitle": "SafeLazyRoute",
       "dataSource": "app-routes",
-      "loadingState": "PENDING_MATRIX",
-      "emptyState": "PENDING_MATRIX",
-      "errorState": "PENDING_MATRIX",
-      "offlineState": "PENDING_MATRIX",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
       "publicContent": "public_candidate",
       "searchVisibility": true,
       "seoVisibility": true,
@@ -4173,7 +4176,8 @@
       "isRedirect": false,
       "redirectTo": null,
       "inSitemap": true,
-      "inSeoJson": true
+      "inSeoJson": true,
+      "phase2Checked": true
     },
     {
       "route": "/lessons/:id",
@@ -4979,10 +4983,10 @@
       "route": "/mushaf",
       "pageTitle": "SafeLazyRoute",
       "dataSource": "app-routes",
-      "loadingState": "PENDING_MATRIX",
-      "emptyState": "PENDING_MATRIX",
-      "errorState": "PENDING_MATRIX",
-      "offlineState": "PENDING_MATRIX",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
       "publicContent": "documented",
       "searchVisibility": true,
       "seoVisibility": true,
@@ -4994,11 +4998,12 @@
       "sourceVerification": "VERIFIED_EXACT",
       "languageVerification": "WAVE1_DEFERRED_P2",
       "accessibility": "PENDING",
-      "finalStatus": "NOT_APPLICABLE",
+      "finalStatus": "LINGUISTICALLY_REVIEWED",
       "isRedirect": false,
       "redirectTo": null,
       "inSitemap": true,
-      "inSeoJson": true
+      "inSeoJson": true,
+      "phase2Checked": true
     },
     {
       "route": "/mushaf-v2-preview",
@@ -5579,10 +5584,10 @@
       "route": "/prayer-times",
       "pageTitle": "SafeLazyRoute",
       "dataSource": "app-routes",
-      "loadingState": "PENDING_MATRIX",
-      "emptyState": "PENDING_MATRIX",
-      "errorState": "PENDING_MATRIX",
-      "offlineState": "PENDING_MATRIX",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
       "publicContent": "public_candidate",
       "searchVisibility": true,
       "seoVisibility": true,
@@ -5598,7 +5603,8 @@
       "isRedirect": false,
       "redirectTo": null,
       "inSitemap": true,
-      "inSeoJson": true
+      "inSeoJson": true,
+      "phase2Checked": true
     },
     {
       "route": "/privacy",
@@ -6279,10 +6285,10 @@
       "route": "/quran-hub",
       "pageTitle": "SafeLazyRoute",
       "dataSource": "app-routes",
-      "loadingState": "PENDING_MATRIX",
-      "emptyState": "PENDING_MATRIX",
-      "errorState": "PENDING_MATRIX",
-      "offlineState": "PENDING_MATRIX",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
       "publicContent": "public_candidate",
       "searchVisibility": true,
       "seoVisibility": true,
@@ -6298,7 +6304,8 @@
       "isRedirect": false,
       "redirectTo": null,
       "inSitemap": true,
-      "inSeoJson": true
+      "inSeoJson": true,
+      "phase2Checked": true
     },
     {
       "route": "/quran-hub/numbers",
@@ -7604,10 +7611,10 @@
       "route": "/search",
       "pageTitle": "SafeLazyRoute",
       "dataSource": "app-routes",
-      "loadingState": "PENDING_MATRIX",
-      "emptyState": "PENDING_MATRIX",
-      "errorState": "PENDING_MATRIX",
-      "offlineState": "PENDING_MATRIX",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
       "publicContent": "public_candidate",
       "searchVisibility": true,
       "seoVisibility": true,
@@ -7623,7 +7630,8 @@
       "isRedirect": false,
       "redirectTo": null,
       "inSitemap": false,
-      "inSeoJson": true
+      "inSeoJson": true,
+      "phase2Checked": true
     },
     {
       "route": "/search/:q",
@@ -7654,10 +7662,10 @@
       "route": "/sections",
       "pageTitle": "SafeLazyRoute",
       "dataSource": "app-routes",
-      "loadingState": "PENDING_MATRIX",
-      "emptyState": "PENDING_MATRIX",
-      "errorState": "PENDING_MATRIX",
-      "offlineState": "PENDING_MATRIX",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
       "publicContent": "public_candidate",
       "searchVisibility": true,
       "seoVisibility": true,
@@ -7673,7 +7681,8 @@
       "isRedirect": false,
       "redirectTo": null,
       "inSitemap": true,
-      "inSeoJson": true
+      "inSeoJson": true,
+      "phase2Checked": true
     },
     {
       "route": "/seerah",
@@ -9099,6 +9108,18 @@
       "redirectTo": null,
       "inSitemap": true,
       "inSeoJson": true
+    },
+    {
+      "route": "/",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceVerification": "PENDING",
+      "finalStatus": "LINGUISTICALLY_REVIEWED",
+      "phase2Checked": true
     }
-  ]
+  ],
+  "updatedAt": "2026-09-19T20:56:57.995Z",
+  "phase": "phase2-route-states"
 }
