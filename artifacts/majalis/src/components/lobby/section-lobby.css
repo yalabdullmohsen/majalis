@@ -351,6 +351,20 @@ html.dark .section-lobby {
   color: var(--on-surface, var(--mj-ink, #e8eeeb));
 }
 
+html[data-theme="dark"] .section-lobby__title,
+html.dark .section-lobby__title,
+html[data-theme="dark"] .section-lobby .quran-hub-page__title,
+html.dark .section-lobby .quran-hub-page__title {
+  color: var(--mss-on-hero, var(--on-surface, #f3efe6)) !important;
+}
+
+html[data-theme="dark"] .section-lobby__title::after,
+html.dark .section-lobby__title::after,
+html[data-theme="dark"] .section-lobby .quran-hub-page__title::after,
+html.dark .section-lobby .quran-hub-page__title::after {
+  background: var(--mss-on-hero-accent, var(--surface-islamic-accent, #6fd0a8));
+}
+
 html[data-theme="dark"] .section-lobby__chip,
 html.dark .section-lobby__chip {
   background: rgb(2 44 34 / 0.35); /* emerald-950/35 */
