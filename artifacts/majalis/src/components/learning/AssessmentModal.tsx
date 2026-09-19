@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { X, CheckCircle2, XCircle } from "lucide-react";
 import { fetchAssessment, submitAssessment, type AssessmentQuestion } from "@/lib/learning-assessment-service";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import "@/styles/pages/mawarith.css";
 
 export function AssessmentModal({
@@ -26,7 +27,7 @@ export function AssessmentModal({
   useEffect(() => {
     fetchAssessment(assessmentId).then((res) => {
       if (!res.ok || !res.assessment || !res.questions) {
-        setError(res.error || "تعذّر تحميل التقييم");
+        setError(res.error || STATUS.loadError);
       } else {
         setTitle(res.assessment.title);
         setPassPercentage(res.assessment.passPercentage);
@@ -47,7 +48,7 @@ export function AssessmentModal({
     const res = await submitAssessment(assessmentId, answers, learningItemId);
     setSubmitting(false);
     if (!res.ok) {
-      setError(res.error || "تعذّر إرسال الإجابات");
+      setError(res.error || STATUS.networkError);
       return;
     }
     setResult({ scorePct: res.scorePct ?? 0, passed: !!res.passed });
@@ -72,7 +73,7 @@ export function AssessmentModal({
           {error && <div className="mwc-error" role="alert">{error}</div>}
 
           {!loading && !error && !result && questions.length === 0 && (
-            <p className="am-loading">لا أسئلة معتمدة لهذا التقييم بعد.</p>
+            <p className="am-loading">{EMPTY.data}</p>
           )}
 
           {!loading && !error && !result && questions.length > 0 && (

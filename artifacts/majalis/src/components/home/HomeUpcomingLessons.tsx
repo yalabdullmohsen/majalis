@@ -12,7 +12,7 @@ import {
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import { computeNextOccurrenceMs, getKuwaitClock } from "@/lib/lesson-time";
 import { Widget } from "@/components/widgets/Widget";
-import { EMPTY } from "@/lib/ui-copy";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 
 const LessonsIcon = () => (
   <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16">
@@ -70,7 +70,7 @@ export function HomeUpcomingLessons({
       .catch((err) => {
         if (!mountedRef.current || (err as Error)?.name === "AbortError") return;
         /* أبقِ الدروس السابقة عند فشل إعادة الجلب */
-        setLoadError("تعذّر تحميل دروس اليوم. حاول مجددًا.");
+        setLoadError(STATUS.loadError);
       })
       .finally(() => {
         if (mountedRef.current) setLoading(false);

@@ -58,9 +58,9 @@ assert.match(css, /\.mm-controls__page[\s\S]*?font-weight:\s*800/);
 assert.match(css, /grid-template-columns:\s*1fr auto 1fr/);
 
 assert.match(search, /QuranSearchEngine|searchVersesInCorpus/);
-assert.match(search, /لا نتائج/);
+assert.match(search, /EMPTY\.searchShort/);
 assert.match(search, /aria-label=["']تحديث النتائج["']|تحديث النتائج/, "بحث المصحف: حالة صامتة بلا «جاري البحث»");
-assert.match(search, /تعذّر البحث/);
+assert.match(search, /STATUS\.loadError/);
 assert.match(search, /e\.preventDefault\(\)/);
 assert.match(search, /رقم الصفحة يجب أن يكون بين/);
 assert.match(search, /300/);

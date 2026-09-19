@@ -7,6 +7,7 @@ import { supabase } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/family-mode.css";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { EMPTY } from "@/lib/ui-copy";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -155,7 +156,7 @@ function ParentView({ userId }: { userId: string }) {
       </div>
 
       {links.length === 0 && (
-        <p className="fm-empty">لا يوجد أبناء مرتبطون بعد. أنشئ رمز دعوة وأعطه لابنك.</p>
+        <p className="fm-empty">{EMPTY.data}</p>
       )}
 
       {/* Pending invites */}

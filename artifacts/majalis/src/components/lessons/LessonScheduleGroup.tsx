@@ -1,6 +1,7 @@
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import type { LessonScheduleEntry } from "@/lib/lessons/lessonGrouping";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
+import { EMPTY } from "@/lib/ui-copy";
 import { UnifiedLessonCard } from "./UnifiedLessonCard";
 
 type Props = {
@@ -13,7 +14,7 @@ type Props = {
 export function LessonScheduleGroup({
   entries,
   archived = false,
-  emptyText = "لا توجد دروس مطابقة.",
+  emptyText = EMPTY.search,
 }: Props) {
   if (entries.length === 0) {
     return <p className="lessons-empty-state">{emptyText}</p>;

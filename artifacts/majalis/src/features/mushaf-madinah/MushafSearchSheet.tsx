@@ -7,6 +7,7 @@ import { MUSHAF_PAGE_MAX, MUSHAF_PAGE_MIN } from "@/lib/quran-last-page";
 import { findMushafPageForAyah } from "./mushaf-page-for-ayah";
 import { QuranSearchEngine } from "@/lib/mushaf-v2";
 import { truncateAtWord } from "@/lib/utils";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 
 type Hit = {
   surah: number;
@@ -110,10 +111,10 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
               };
             });
           setHits(next);
-          if (next.length === 0) setError("لا نتائج");
+          if (next.length === 0) setError(EMPTY.searchShort);
         })
         .catch(() => {
-          if (!cancelled) setError("تعذّر البحث");
+          if (!cancelled) setError(STATUS.loadError);
         })
         .finally(() => {
           if (!cancelled) setLoading(false);
@@ -174,7 +175,7 @@ export function MushafSearchSheet({ open, mode = "search", onClose, onGotoPage }
       goPage(first.page, `${first.surah}:${first.ayah}`);
       return;
     }
-    if (!loading && error === "لا نتائج") return;
+    if (!loading && error === EMPTY.searchShort) return;
   };
 
   if (!open) return null;

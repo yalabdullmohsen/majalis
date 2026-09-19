@@ -255,3 +255,15 @@
 | quiz affinity warnings | EXCLUDED (lexicon metric — not content) |
 | admin empties | DEFERRED |
 
+## Wave 32 final states
+
+| section | finalState |
+|---|---|
+| TopicPage / LazySection / LessonSchedule empties·errors | IMPROVED_VERIFIED |
+| DirectQa / LandmarksMap / AssessmentModal copy | IMPROVED_VERIFIED |
+| MushafSearchSheet / MushafAudioDock search empties | IMPROVED_VERIFIED |
+| FamilyMode + HomeUpcomingLessons loadError | IMPROVED_VERIFIED |
+| short public SEO (≥65, skip /auth/*) | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
+

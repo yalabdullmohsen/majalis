@@ -17,6 +17,7 @@ import { getReciter } from "@/lib/quran-audio";
 import { useVerifiedReciters } from "@/hooks/useVerifiedReciters";
 import { useMushafAudioClock } from "./mushaf-audio-clock-store";
 import type { RecitationRange } from "./mushaf-page-for-ayah";
+import { EMPTY } from "@/lib/ui-copy";
 import "@/styles/components/quran-audio-dock-dismiss.css";
 import "@/styles/components/quran-audio-chrome.css";
 
@@ -393,7 +394,7 @@ export function MushafAudioDock({
                 <p className="mm-reciter-sheet__hint">{verseLabel || "التلاوات"}</p>
                 <ul className="mm-reciter-sheet__list quran-reciter-list" role="listbox" aria-label="قائمة القراء">
                   {filtered.length === 0 ? (
-                    <li className="mm-reciter-sheet__empty">لا نتائج — جرّب اسمًا آخر أو اختر القارئ من القائمة الكاملة</li>
+                    <li className="mm-reciter-sheet__empty">{EMPTY.searchShort}</li>
                   ) : null}
                   {filtered.map((r) => {
                     const selected = r.id === reciterId;
