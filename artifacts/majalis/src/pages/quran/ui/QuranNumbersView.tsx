@@ -17,6 +17,13 @@ import {
   QURAN_STAT_GROUP_LABEL,
   QURAN_STAT_KIND_LABEL,
 } from "@/lib/quran-stats/types";
+import type { QuranStatTheme } from "@/lib/quran-stats/themes";
+import {
+  QURAN_STAT_THEME_BLURB,
+  QURAN_STAT_THEME_LABEL,
+  QURAN_STAT_THEMES,
+  filterStatsByTheme,
+} from "@/lib/quran-stats/themes";
 import { formatArabicNumber } from "@/lib/numerals";
 import { findMushafPageForAyah } from "@/features/mushaf-madinah/mushaf-page-for-ayah";
 import { AppBottomSheet } from "@/components/ui/AppBottomSheet";
@@ -50,7 +57,8 @@ function mushafHref(surah: number, ayah: number): string {
 
 export default function QuranNumbersPage() {
   const [active, setActive] = useState<QuranStat | null>(null);
-  const [group, setGroup] = useState<QuranStatGroup | "all">("bunya");
+  const [theme, setTheme] = useState<QuranStatTheme | "all">("asasi");
+  const [group, setGroup] = useState<QuranStatGroup | "all">("all");
   const [query, setQuery] = useState("");
   const [shareStatus, setShareStatus] = useState<string | null>(null);
 
@@ -59,18 +67,18 @@ export default function QuranNumbersPage() {
       path: "/quran-hub/numbers",
       title: "القرآن في أرقام — سُنّة",
       description:
-        "إحصاءات قرآنية موثّقة من مصادر مطبوعة: بنية المصحف، المعجم المفهرس، وعدّ الآي، بلا اشتقاق رقمي من نص المصحف.",
-      keywords: ["إحصاءات", "عدد الآيات", "المعجم المفهرس", "عدّ الآي"],
+        "إحصاءات قرآنية موثّقة من مصادر مطبوعة: أساسيات المصحف، الألفاظ الشائعة، الأنبياء، والأوامر والنواهي اللفظية — بلا اشتقاق رقمي من نص المصحف.",
+      keywords: ["إحصاءات", "عدد الآيات", "المعجم المفهرس", "عدّ الآي", "أنبياء"],
     });
   }, []);
 
   const filtered = useMemo(() => {
-    return CATALOG.filter((s) => {
+    return filterStatsByTheme(CATALOG, theme).filter((s) => {
       if (group !== "all" && s.group !== group) return false;
       const blob = `${s.label} ${s.note ?? ""} ${s.detail ?? ""} ${formatStatSourceLine(s.source)} ${displayValue(s.value)}`;
       return matchesSectionQuery(blob, query);
     });
-  }, [group, query]);
+  }, [theme, group, query]);
 
   const onShare = useCallback(async (stat: QuranStat) => {
     const text = [
@@ -124,9 +132,9 @@ export default function QuranNumbersPage() {
         </p>
         <p>
           أما عدّ الألفاظ فالمرجع الأصل <strong>المعجم المفهرس لألفاظ القرآن الكريم</strong> لمحمد
-          فؤاد عبد الباقي، مع التفريق بين اللفظ والمادة والموضوع. يشمل القسم: بنية المصحف، أشهر
-          الألفاظ، أسماء الأنبياء والأعلام، وموضوعات اليوم الآخر — بلا اشتقاق رقمي آلي من نص المصحف،
-          وبلا سرد «إعجاز تقابلي».
+          فؤاد عبد الباقي، مع التفريق بين اللفظ والمادة والموضوع. المحاور الستة: أساسيات المصحف،
+          الألفاظ الشائعة، الأنبياء والأعلام، الأوامر اللفظية، النواهي اللفظية، والألفاظ المتقابلة
+          (عرض منفصل بلا سرد إعجازي) — بلا اشتقاق رقمي آلي من نص المصحف.
         </p>
       </section>
 
@@ -147,7 +155,35 @@ export default function QuranNumbersPage() {
             aria-label="بحث في القرآن في أرقام"
           />
         </label>
-        <div className="quran-numbers-tabs" role="tablist" aria-label="مجموعات الإحصاءات">
+        <div className="quran-numbers-tabs" role="tablist" aria-label="محاور الإحصاءات">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={theme === "all"}
+            data-active={theme === "all" ? "1" : "0"}
+            onClick={() => setTheme("all")}
+          >
+            الكل
+          </button>
+          {QURAN_STAT_THEMES.map((t) => (
+            <button
+              key={t}
+              type="button"
+              role="tab"
+              aria-selected={theme === t}
+              data-active={theme === t ? "1" : "0"}
+              onClick={() => setTheme(t)}
+            >
+              {QURAN_STAT_THEME_LABEL[t]}
+            </button>
+          ))}
+        </div>
+        {theme !== "all" ? (
+          <p className="quran-numbers-theme-blurb" aria-live="polite">
+            {QURAN_STAT_THEME_BLURB[theme]}
+          </p>
+        ) : null}
+        <div className="quran-numbers-tabs quran-numbers-tabs--groups" role="tablist" aria-label="تصنيف المصدر">
           <button
             type="button"
             role="tab"
@@ -155,7 +191,7 @@ export default function QuranNumbersPage() {
             data-active={group === "all" ? "1" : "0"}
             onClick={() => setGroup("all")}
           >
-            الكل
+            كل التصنيفات
           </button>
           {GROUPS.map((g) => (
             <button
