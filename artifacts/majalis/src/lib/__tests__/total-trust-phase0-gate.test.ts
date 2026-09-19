@@ -27,7 +27,7 @@ assert.match(program, /لا تعديل النسخة المقدمة/);
 
 const phase0 = readRepo("docs/content-quality/TOTAL_TRUST_PHASE0.md");
 assert.match(phase0, /cursor\/sunnah-total-trust-audit/);
-assert.match(phase0, /47fc1cc7/);
+assert.match(phase0, /246407ae/);
 
 const lock = spawnSync("node", ["scripts/verify-protected-quran-byte-lock.mjs"], {
   cwd: majalisRoot,

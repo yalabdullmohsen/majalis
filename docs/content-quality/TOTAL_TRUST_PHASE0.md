@@ -3,8 +3,8 @@
 | حقل | قيمة |
 |---|---|
 | `auditBranch` | `cursor/sunnah-total-trust-audit` |
-| `sourceCommit` | `47fc1cc7ceb0e764c3a9b4805eeae27732c42e21` (`origin/main` عند البدء) |
-| `currentProductionCommit` | `47fc1cc7` عبر `https://www.ssunnah.com/version.json` (200) |
+| `sourceCommit` | `246407ae1491f12238ee3ee21905aa24d0d092fc` (`origin/main` بعد دمج Wave35؛ أساس التدقيق الحالي) |
+| `currentProductionCommit` | `246407ae` عبر `https://www.ssunnah.com/version.json` (200) |
 | `currentTestFlightBuild` | غير مثبت آليًا من هذه البيئة — راجع `docs/release/RELEASE_FREEZE.md` (Build 46 / 1.0.0 على فرع RC تاريخيًا) |
 | `currentAppStoreSubmissionVersion` | قيد مراجعة Apple — **لا تعديل Connect**؛ الوثائق المحلية: `artifacts/majalis/store/app-store/review-notes.md` (Version 1.0) |
 | `product` | `artifacts/majalis` |
