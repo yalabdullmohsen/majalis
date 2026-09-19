@@ -3,6 +3,7 @@
  */
 import {
   getSettingsSoundOption,
+  readRememberedAdhanSoundId,
   resolveSelectedToneSoundId,
 } from "@/lib/adhan-settings-sound-catalog";
 import { loadPrayerAlertPrefs } from "@/lib/prayer-alert-preferences";
@@ -19,6 +20,7 @@ import {
   platformNotificationSoundName,
   resolveAdhanStyleNotificationSound,
 } from "@/lib/prayer-notification-sounds";
+import { resolveNativeNotificationSound } from "@/lib/prayer-sound-manifest";
 import { loadAdhanPrefs } from "@/lib/adhan-preferences";
 
 export const TEST_NOTIFICATION_NATIVE_ID = 99901;
@@ -33,6 +35,15 @@ export const TEST_NOTIFICATION_DELAY_MS = 15_000;
 function testNotificationSound(): string {
   if (!PRAYER_CUSTOM_SOUNDS_ENABLED) return DEFAULT_ALERT_SOUND;
   try {
+    const rememberedAdhan = readRememberedAdhanSoundId();
+    const adhanOpt = rememberedAdhan ? getSettingsSoundOption(rememberedAdhan) : undefined;
+    if (adhanOpt?.iosNotificationSound) {
+      const r = resolveNativeNotificationSound({
+        nativeFileName: adhanOpt.iosNotificationSound,
+        muezzinId: adhanOpt.muezzinId,
+      });
+      return platformNotificationSoundName(r.sound);
+    }
     const alertPrefs = loadPrayerAlertPrefs();
     const toneId = resolveSelectedToneSoundId(alertPrefs.soundProfile);
     const opt = getSettingsSoundOption(toneId);

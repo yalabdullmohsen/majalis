@@ -14,10 +14,15 @@ import {
 import { buildScheduledPrayerNotificationCopy } from "@/lib/prayer-notification-copy";
 import {
   resolvePrayerNotificationSound,
-  resolveAdhanStyleNotificationSound,
   soundRoleForNotifKind,
   type PrayerSoundProfile,
 } from "@/lib/prayer-notification-sounds";
+import { resolveNativeNotificationSound } from "@/lib/prayer-sound-manifest";
+import {
+  getSettingsSoundOption,
+  readRememberedAdhanSoundId,
+  readRememberedToneSoundId,
+} from "@/lib/adhan-settings-sound-catalog";
 import { POST_REMINDER_MINUTES } from "@/lib/prayer-alert-preferences";
 import { getEffectiveMuezzinId, isIqamahEnabledForPrayer, loadAdhanPrefs } from "@/lib/adhan-preferences";
 import {
@@ -109,18 +114,54 @@ function assertIosNotificationFilename(sound: string): string {
   return cleaned;
 }
 
+/**
+ * مصدر حقيقة الصوت الأصلي:
+ * 1) اختيار المستخدم المحفوظ في كتالوج الإعدادات (`iosNotificationSound`)
+ * 2) Manifest حسب muezzinId (دخول الوقت)
+ * 3) profile/role كاحتياط
+ * 4) SYSTEM_DEFAULT عند الفشل
+ */
 function safeSound(
   role: "quiet" | "clear" | "soft",
   profile: PrayerSoundProfile,
   muezzinId?: string,
 ): string {
   try {
-    if (role === "clear" && muezzinId) {
-      return assertIosNotificationFilename(resolveAdhanStyleNotificationSound(muezzinId));
+    if (profile === "system") {
+      return DEFAULT_ALERT_SOUND;
     }
-    return assertIosNotificationFilename(
-      resolvePrayerNotificationSound(role, profile) || DEFAULT_ALERT_SOUND,
-    );
+
+    if (role === "clear") {
+      const rememberedAdhan = readRememberedAdhanSoundId();
+      const adhanOpt = rememberedAdhan ? getSettingsSoundOption(rememberedAdhan) : undefined;
+      const catalogFile =
+        adhanOpt?.iosNotificationSound ??
+        (muezzinId ? getSettingsSoundOption(muezzinId)?.iosNotificationSound : null);
+      const resolved = resolveNativeNotificationSound({
+        nativeFileName: catalogFile,
+        muezzinId: adhanOpt?.muezzinId ?? muezzinId,
+      });
+      if (import.meta.env?.DEV && resolved.fallbackUsed) {
+        console.info("[notifications/prayer] sound fallback", resolved);
+      }
+      return assertIosNotificationFilename(resolved.sound);
+    }
+
+    const rememberedTone = readRememberedToneSoundId();
+    const toneOpt = rememberedTone ? getSettingsSoundOption(rememberedTone) : undefined;
+    if (toneOpt?.playbackMode === "silent" || !toneOpt?.iosNotificationSound) {
+      if (toneOpt?.playbackMode === "silent") return DEFAULT_ALERT_SOUND;
+      return assertIosNotificationFilename(
+        resolvePrayerNotificationSound(role, profile) || DEFAULT_ALERT_SOUND,
+      );
+    }
+    const resolved = resolveNativeNotificationSound({
+      nativeFileName: toneOpt.iosNotificationSound,
+    });
+    if (import.meta.env?.DEV && resolved.fallbackUsed) {
+      console.info("[notifications/prayer] tone sound fallback", resolved);
+    }
+    return assertIosNotificationFilename(resolved.sound);
   } catch {
     return DEFAULT_ALERT_SOUND;
   }
