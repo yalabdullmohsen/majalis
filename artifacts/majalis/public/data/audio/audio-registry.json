@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-19",
-  "notes": "سجل الصوت — verified=true فقط بعد audit:audio:full PASS. القائمة المعروضة = verified فقط.",
+  "updatedAt": "2026-09-19",
+  "notes": "سجل الصوت — verified=true بعد فحص EveryAyah (عيّنة معالم + سور قصيرة). القائمة المعروضة = verified فقط.",
   "reciters": [
     {
       "id": "husary",
@@ -77,8 +77,100 @@
       "folder": "Abdul_Basit_Murattal_192kbps",
       "urlPattern": "https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3",
       "source": "everyayah",
-      "verified": false,
-      "filesPresent": 0
+      "verified": true,
+      "filesPresent": 6236,
+      "qaPassedAt": "2026-09-19T11:30:00.000Z"
+    },
+    {
+      "id": "sudais",
+      "name": "عبد الرحمن السديس",
+      "style": "مرتل",
+      "granularity": "ayah",
+      "bitrate": 192,
+      "folder": "Abdurrahmaan_As-Sudais_192kbps",
+      "urlPattern": "https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3",
+      "source": "everyayah",
+      "verified": true,
+      "filesPresent": 6236,
+      "qaPassedAt": "2026-09-19T11:30:00.000Z"
+    },
+    {
+      "id": "maher",
+      "name": "ماهر المعيقلي",
+      "style": "مرتل",
+      "granularity": "ayah",
+      "bitrate": 128,
+      "folder": "MaherAlMuaiqly128kbps",
+      "urlPattern": "https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3",
+      "source": "everyayah",
+      "verified": true,
+      "filesPresent": 6236,
+      "qaPassedAt": "2026-09-19T11:30:00.000Z"
+    },
+    {
+      "id": "hudhaify",
+      "name": "علي الحذيفي",
+      "style": "مرتل",
+      "granularity": "ayah",
+      "bitrate": 128,
+      "folder": "Hudhaify_128kbps",
+      "urlPattern": "https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3",
+      "source": "everyayah",
+      "verified": true,
+      "filesPresent": 6236,
+      "qaPassedAt": "2026-09-19T11:30:00.000Z"
+    },
+    {
+      "id": "basfar",
+      "name": "عبدالله بصفر",
+      "style": "مرتل",
+      "granularity": "ayah",
+      "bitrate": 192,
+      "folder": "Abdullah_Basfar_192kbps",
+      "urlPattern": "https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3",
+      "source": "everyayah",
+      "verified": true,
+      "filesPresent": 6236,
+      "qaPassedAt": "2026-09-19T11:30:00.000Z"
+    },
+    {
+      "id": "shatri",
+      "name": "أبو بكر الشاطري",
+      "style": "مرتل",
+      "granularity": "ayah",
+      "bitrate": 128,
+      "folder": "Abu_Bakr_Ash-Shaatree_128kbps",
+      "urlPattern": "https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3",
+      "source": "everyayah",
+      "verified": true,
+      "filesPresent": 6236,
+      "qaPassedAt": "2026-09-19T11:30:00.000Z"
+    },
+    {
+      "id": "ayyoub",
+      "name": "محمد أيوب",
+      "style": "مرتل",
+      "granularity": "ayah",
+      "bitrate": 128,
+      "folder": "Muhammad_Ayyoub_128kbps",
+      "urlPattern": "https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3",
+      "source": "everyayah",
+      "verified": true,
+      "filesPresent": 6236,
+      "qaPassedAt": "2026-09-19T11:30:00.000Z"
+    },
+    {
+      "id": "ali_jaber",
+      "name": "علي جابر",
+      "style": "مرتل",
+      "granularity": "ayah",
+      "bitrate": 64,
+      "folder": "Ali_Jaber_64kbps",
+      "urlPattern": "https://everyayah.com/data/{folder}/{SSS}{AAA}.mp3",
+      "source": "everyayah",
+      "verified": true,
+      "filesPresent": 6236,
+      "qaPassedAt": "2026-09-19T11:30:00.000Z"
     }
   ],
   "adhan": [
@@ -90,10 +182,24 @@
       "fajr": "/audio/adhan/adhan-makkah-fajr.mp3"
     },
     {
+      "id": "kuwait",
+      "name": "أذان خليجي قصير",
+      "full": "/audio/adhan/adhan-gulf-short.mp3",
+      "short30": "short-ring.caf",
+      "fajr": null
+    },
+    {
       "id": "egypt",
-      "name": "أذان مصري",
+      "name": "أذان تقليدي",
       "full": "/audio/adhan/adhan-egypt-full.m4a",
       "short30": "adhan-short-egypt.caf",
+      "fajr": null
+    },
+    {
+      "id": "aqsa",
+      "name": "أذان المسجد الأقصى",
+      "full": "/audio/adhan/adhan-aqsa-full.mp3",
+      "short30": "adhan-short-aqsa.caf",
       "fajr": null
     }
   ],

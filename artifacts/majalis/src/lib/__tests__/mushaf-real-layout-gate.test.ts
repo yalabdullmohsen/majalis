@@ -132,7 +132,7 @@ assert.match(dock, /useVerifiedReciters/);
 assert.match(dock, /DEFAULT_VERIFIED_RECITER_IDS/);
 assert.match(
   audioRegistry,
-  /DEFAULT_VERIFIED_RECITER_IDS = \[\s*"husary",\s*"minshawi",\s*"alafasy",\s*"dosari",\s*"shuraim",?\s*\]/,
+  /DEFAULT_VERIFIED_RECITER_IDS = \[\s*"husary",\s*"minshawi",\s*"alafasy",\s*"dosari",\s*"shuraim",\s*"abdulsamad",\s*"sudais",\s*"maher",\s*"hudhaify",\s*"basfar",\s*"shatri",\s*"ayyoub",\s*"ali_jaber",?\s*\]/,
 );
 for (const id of ["alafasy", "abdulsamad", "husary", "minshawi", "ghamdi", "maher"]) {
   assert.match(quranAudio, new RegExp(`id:\\s*"${id}"`), `quran-audio RECITERS يتضمن ${id}`);

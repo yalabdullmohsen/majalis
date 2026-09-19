@@ -29,6 +29,17 @@ const FOLDER_BY_RECITER_ID = {
   husary: "Husary_128kbps",
   minshawi: "Minshawy_Murattal_128kbps",
   alafasy: "Alafasy_128kbps",
+  dosari: "Yasser_Ad-Dussary_128kbps",
+  shuraim: "Saood_ash-Shuraym_128kbps",
+  abdulsamad: "Abdul_Basit_Murattal_192kbps",
+  sudais: "Abdurrahmaan_As-Sudais_192kbps",
+  maher: "MaherAlMuaiqly128kbps",
+  hudhaify: "Hudhaify_128kbps",
+  basfar: "Abdullah_Basfar_192kbps",
+  shatri: "Abu_Bakr_Ash-Shaatree_128kbps",
+  ayyoub: "Muhammad_Ayyoub_128kbps",
+  ali_jaber: "Ali_Jaber_64kbps",
+  ajamy: "Ahmed_ibn_Ali_al-Ajamy_64kbps_QuranExplorer.Com",
 };
 
 /** سور قصيرة — كل الآيات */
@@ -254,7 +265,7 @@ async function writeStratifiedGate(payload) {
 }
 
 async function auditReciter(rec, opts) {
-  const folder = FOLDER_BY_RECITER_ID[rec.id];
+  const folder = (typeof rec.folder === "string" && rec.folder) || FOLDER_BY_RECITER_ID[rec.id];
   if (!folder) {
     return { reciterId: rec.id, ok: false, skipped: true, reason: "missing folder mapping" };
   }
