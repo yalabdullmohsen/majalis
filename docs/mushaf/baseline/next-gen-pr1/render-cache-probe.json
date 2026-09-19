@@ -1,0 +1,8 @@
+{
+  "missBeforePut": true,
+  "putPage": 5,
+  "hitAfterPut": true,
+  "secondHit": true,
+  "missOtherPage": true,
+  "maxEntriesConstant": 16
+}
