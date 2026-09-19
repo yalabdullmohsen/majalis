@@ -12,7 +12,8 @@
   --ps-on-emerald-soft: rgba(255, 255, 255, 0.88);
   --ps-surface: var(--mj-surface, var(--mj-white, #ffffff));
   --ps-canvas: var(--mj-bg, var(--msk-canvas, var(--mj-surface)));
-  --ps-ink: var(--mj-ink, var(--majalis-ink, var(--mj-ink)));
+  /* fallback صلب — يمنع دائرية mj-ink الفارغة → نص شفاف تقريبًا */
+  --ps-ink: var(--mj-ink, var(--majalis-ink, #16241e));
   /* ثانوي ≥85% وضوحًا من الأساسي — لا رمادي باهت ولا hairline */
   --ps-ink-soft: var(--text-secondary, var(--mj-ink-2, #3A4A44));
   --ps-line: var(--mj-hairline, var(--msk-border, #E5E0D5));
@@ -94,7 +95,7 @@ html.dark .nb-table__row--clickable:hover td {
 
 html[data-theme="dark"] .prophets-page-lead,
 html.dark .prophets-page-lead {
-  color: var(--text-secondary, var(--mj-hairline));
+  color: var(--text-secondary, #C8D5CF);
 }
 
 .prophets-light-section {
@@ -530,13 +531,13 @@ html.dark .prophets-page-lead {
   /* لون التمييز على الداكن: يُفتَّح بقوة حتى يبقى مقروءاً مع أغمق قيم PROPHET_HUE */
   --prophet-color-on-dark: color-mix(in srgb, var(--prophet-color, var(--mj-brand, #1f6b56)) 28%, #F4F7F5);
   --prophet-accent-on-dark: color-mix(in srgb, var(--prophet-accent, var(--mj-accent)) 55%, var(--mj-white, #ffffff));
-  /* نص أساسي على الداكن — أبيض صلب (لا mj-bg الليلي الداكن، ولا rgba باهت) */
-  --ps-text-primary: var(--text-on-dark, var(--color-on-dark, var(--mj-white, #ffffff)));
-  --ps-text-body: var(--text-on-dark, var(--mj-white, #ffffff));
-  --ps-detail-soft: var(--ps-text-body);
-  --ps-detail-muted: var(--text-on-dark-secondary, #F3F5F4);
+  /* نص أساسي على الداكن — أبيض صلب لا يعتمد على توكن قد يُعاد تعريفه بخطأ */
+  --ps-text-primary: #ffffff;
+  --ps-text-body: #f3f5f4;
+  --ps-detail-soft: #f3f5f4;
+  --ps-detail-muted: #e8eeec;
   --ps-detail-border: rgba(243, 245, 244, 0.22);
-  --ps-detail-card: rgba(255, 255, 255, 0.08);
+  --ps-detail-card: rgba(255, 255, 255, 0.1);
   border-radius: 0;
   overflow: clip;
 }
@@ -629,11 +630,12 @@ html.dark .prophets-page-lead {
 /* ── Detail Hero ── */
 .prophet-detail-lux__hero {
   position: relative;
-  padding: clamp(2.5rem, 6vw, 3.75rem) clamp(1.1rem, 4vw, 2rem) clamp(2.25rem, 5vw, 3.25rem);
+  /* هيرو مضغوط — المحتوى يظهر فورًا دون فراغ علوي مهدر */
+  padding: clamp(1.1rem, 3.2vw, 1.65rem) clamp(1rem, 3.5vw, 1.5rem) clamp(1.15rem, 3vw, 1.75rem);
   text-align: center;
   overflow: hidden;
   border-bottom: 1px solid var(--ps-detail-border);
-  margin: 0.65rem max(0.75rem, var(--page-gutter, 1rem)) 0;
+  margin: 0.35rem max(0.75rem, var(--page-gutter, 1rem)) 0;
   border-radius: var(--radius-card, 24px);
   background-color: #0B1A2E;
   background-image: linear-gradient(
@@ -686,7 +688,7 @@ html.dark .prophets-page-lead {
 }
 .prophet-detail-lux__name {
   font-family: var(--font-body);
-  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-size: clamp(1.55rem, 4.5vw, 2.35rem);
   color: var(--ps-text-primary, var(--text-on-dark, var(--mj-white, #ffffff)));
   margin: 0;
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
@@ -2000,12 +2002,23 @@ html.dark .prophets-page-lead {
 .topic-page.topic-page--prophets [data-section-hero] {
   width: auto;
   max-width: none;
-  margin: 0.65rem max(0.75rem, var(--page-gutter, 1rem)) 1.1rem;
+  margin: 0.35rem max(0.75rem, var(--page-gutter, 1rem)) 0.65rem;
   border-radius: var(--radius-card, 24px);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 14px 36px rgba(11, 32, 24, 0.14);
   overflow: hidden;
+  /* إلغاء تكديس padding المزدوج (topic-page__hero + safe-hero) */
+  padding: 0.85rem max(1rem, var(--page-gutter, 1rem)) 0.95rem;
+}
+
+.topic-page.topic-page--prophets .topic-page__crumb {
+  padding-top: calc(var(--inset-top, 0px) + 0.25rem);
+  padding-bottom: 0.25rem;
+}
+
+.topic-page.topic-page--prophets {
+  min-height: 0;
 }
 
 .topic-page.topic-page--prophets .topic-page__body {

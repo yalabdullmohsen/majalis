@@ -1,0 +1,62 @@
+/**
+ * ضوابط إغلاق/طي/إيقاف رصيف التلاوة — منفصل عن mushaf*.css لتفادي بوابة مقياس الخط.
+ */
+.mm-audio-dock__handle {
+  width: 2.25rem;
+  height: 3px;
+  margin: 0.1rem auto 0.15rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, #5c4a28 28%, transparent);
+  flex: 0 0 auto;
+  touch-action: none;
+  pointer-events: none;
+}
+
+.nm-root .mm-audio-dock__handle {
+  background: color-mix(in srgb, var(--nm-ink, #111) 22%, transparent);
+}
+
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__handle,
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__handle {
+  background: color-mix(in srgb, #f3efe6 28%, transparent);
+}
+
+.mm-audio-dock__controls button.mm-audio-dock__stop {
+  appearance: none;
+  border: 0;
+  background: color-mix(in srgb, #111 8%, transparent);
+  color: #111;
+  font: inherit;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  border-radius: 0.65rem;
+}
+
+.mm-audio-dock__controls button.mm-audio-dock__stop:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.nm-root .mm-audio-dock__controls button.mm-audio-dock__stop {
+  background: color-mix(in srgb, var(--nm-ink, #111) 8%, transparent);
+  color: var(--nm-ink, #111);
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+}
+
+.mm-viewport[data-mushaf-theme="night"] .mm-audio-dock__controls button.mm-audio-dock__stop,
+.mm-viewport[data-mushaf-theme="oled"] .mm-audio-dock__controls button.mm-audio-dock__stop {
+  color: #f3efe6;
+  background: color-mix(in srgb, #f3efe6 8%, #1a1f1c);
+  border-color: color-mix(in srgb, #cbb892 40%, transparent);
+}
+
+html[data-theme="dark"] .mm-audio-dock__controls button.mm-audio-dock__stop,
+html.dark .mm-audio-dock__controls button.mm-audio-dock__stop {
+  color: #f3efe6;
+  background: color-mix(in srgb, #f3efe6 8%, #1a1f1c);
+}

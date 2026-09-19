@@ -21,6 +21,7 @@ import {
   stopAiNarration,
   type NarrationEngine,
 } from "@/lib/ai-narration";
+import { unlockAudioOnUserGesture } from "@/lib/quran/quranRecitationService";
 import "@/styles/pages/prophet-stories.css";
 import { UtilityScreen } from "@/components/design-system/screens";
 import { ProphetMushafMentions } from "@/components/prophets/ProphetMushafMentions";
@@ -336,36 +337,36 @@ function ProphetDetailView({
   const [speechPlaying, setSpeechPlaying] = useState(false);
   const [speechEngine, setSpeechEngine] = useState<NarrationEngine>("none");
   const [speechUnsupported, setSpeechUnsupported] = useState(false);
+  const [speechError, setSpeechError] = useState<string | null>(null);
   const articleRef = useRef<HTMLElement>(null);
   const prevProphet = p && p.id > 1 ? PROPHETS[p.id - 2] : null;
   const nextProphet = p && p.id < PROPHETS.length ? PROPHETS[p.id] : null;
   const knowledgeBlocks = knowledge?.body ? knowledgeBodyBlocks(knowledge.body) : [];
 
+  /**
+   * نص الاستماع من مصدر العرض الأساسي فقط (prophets-data + معجزة مكمّلة).
+   * لا نخلط معرفة موسّعة/Supabase في الصوت حتى لا ينفصل عن البطاقات الظاهرة،
+   * ولا تُفرَّغ القراءة بسبب آيات محمية في JSON.
+   */
   const speakableText = useMemo(() => {
     if (!p) return "";
     const parts: string[] = [
-      p.arabicName,
+      `${p.arabicName} عليه السلام`,
       p.title,
       p.briefBio,
       ...p.keyAttributes,
       ...p.lessons,
     ];
     if (sup?.miracle) parts.push(sup.miracle);
-    for (const block of knowledgeBlocks) {
-      if (block.title) parts.push(block.title);
-      parts.push(...block.paragraphs);
-    }
-    if (dbStory?.content) {
-      parts.push(...dbStory.content.split("\n").filter(Boolean));
-    }
     return parts.filter(Boolean).join(". ");
-  }, [p, knowledgeBlocks, dbStory, sup]);
+  }, [p, sup]);
 
   useEffect(() => {
     stopAiNarration();
     setSpeechPlaying(false);
     setSpeechEngine("none");
     setSpeechUnsupported(false);
+    setSpeechError(null);
     return () => {
       stopAiNarration();
     };
@@ -378,13 +379,20 @@ function ProphetDetailView({
       setSpeechEngine("none");
       return;
     }
+    setSpeechError(null);
+    if (!speakableText.trim()) {
+      setSpeechError("لا يوجد نص قابل للقراءة الصوتية");
+      return;
+    }
+    unlockAudioOnUserGesture();
     if (!isSpeechReadAloudSupported()) {
       setSpeechUnsupported(true);
+      setSpeechError("القراءة الصوتية غير متاحة على هذا الجهاز");
       return;
     }
     void (async () => {
       const result = await playAiNarration({
-        contentId: `prophet:${slug}`,
+        contentId: `prophet:${canonicalSlug || slug}`,
         title: p?.arabicName,
         body: speakableText,
         mode: "immersive",
@@ -397,16 +405,21 @@ function ProphetDetailView({
           setSpeechPlaying(false);
           setSpeechEngine("none");
           setSpeechUnsupported(true);
+          setSpeechError("تعذر تشغيل التعليق الصوتي");
         },
       });
       if (result.ok) {
         setSpeechPlaying(true);
         setSpeechEngine(result.engine);
+        setSpeechError(null);
       } else if (result.reason === "device_unsupported") {
         setSpeechUnsupported(true);
+        setSpeechError(result.userLabel);
+      } else {
+        setSpeechError(result.userLabel || "تعذر بدء القراءة الصوتية");
       }
     })();
-  }, [speechPlaying, speakableText, slug, p?.arabicName]);
+  }, [speechPlaying, speakableText, slug, canonicalSlug, p?.arabicName]);
 
   const sections: DetailSection[] = [
     { id: "bio", label: "نبذة" },
@@ -630,9 +643,9 @@ function ProphetDetailView({
           </div>
         </div>
       </div>
-      {speechUnsupported ? (
+      {speechUnsupported || speechError ? (
         <p className="prophet-speech-unsupported" role="status">
-          القراءة الصوتية غير مدعومة على هذا الجهاز
+          {speechError || "القراءة الصوتية غير مدعومة على هذا الجهاز"}
         </p>
       ) : null}
 

@@ -1,0 +1,27 @@
+{
+  "measuredAt": "2026-09-19T06:37:37.597Z",
+  "commit": "ead50727dcfcfec8a1234eb474889e6fd638fdb3",
+  "entryJs": {
+    "f": "index-D9E_Xkrp.js",
+    "raw": 394203,
+    "gz": 123173
+  },
+  "mushafJs": [
+    {
+      "f": "MushafReaderPage-B6sJZIuH.js",
+      "raw": 76486,
+      "gz": 25094
+    }
+  ],
+  "mushafCss": [
+    {
+      "f": "MushafReaderPage-BO3C9eCb.css",
+      "raw": 147564,
+      "gz": 24374
+    }
+  ],
+  "renderCacheMaxEntries": 16,
+  "layoutCacheMax": 12,
+  "sourceGeometryBaseline": "docs/mushaf/baseline/next-gen-pr1/summary.json",
+  "sourceNextGenDoc": "docs/mushaf/MUSHAF_NEXT_GEN_BASELINE.md"
+}

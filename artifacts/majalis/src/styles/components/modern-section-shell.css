@@ -15,11 +15,7 @@
   --mss-hero-to: #245f4d;
   --mss-hero-glow: rgba(210, 180, 93, 0.22);
   --mss-hero-glow-strong: rgba(210, 180, 93, 0.28);
-  /*
-   * نص soft-hero: حبر ثابت على سطح فاتح — لا نربط بـ --mj-ink لأنه يصبح فاتحًا ليلاً
-   * فيصير أبيض على بيج ≈ 1:1 (فشل Color contrast على .topic-page__title).
-   * السطح نفسه يبقى parchment فاتحًا في الوضعين (soft-card على ضوء).
-   */
+  /* soft-hero: نهاري حبر غامق؛ ليلي يُعاد ضبطه في green-surface / premium-dark */
   --mss-on-hero: #16241e;
   --mss-on-hero-muted: #3d4f47;
   --mss-on-hero-accent: #123f2e;

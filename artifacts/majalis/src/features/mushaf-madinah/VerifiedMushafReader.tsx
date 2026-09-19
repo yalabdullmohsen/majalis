@@ -891,9 +891,13 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
           onSeek={(seconds) => audio.seek(seconds)}
           onSpeed={(rate) => audio.setPlaybackRate(rate)}
           onClose={() => {
+            /* إغلاق صريح: يخفي الرصيف ويوقف التلاوة */
             setAudioDockOpen(false);
-            setAudioDockMini(false);
-            void audio.pause();
+            setAudioDockMini(true);
+            void audio.stop();
+          }}
+          onStop={() => {
+            void audio.stop();
           }}
         />
       </Suspense>

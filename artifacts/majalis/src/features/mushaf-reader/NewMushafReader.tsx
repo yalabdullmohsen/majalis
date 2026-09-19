@@ -1250,9 +1250,14 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           onSpeed={(rate) => audio.setPlaybackRate(rate)}
           onPlayRange={(range, repeat, delayMs) => void playRange(range, repeat, delayMs)}
           onClose={() => {
+            /* إغلاق صريح: يخفي الرصيف ويوقف التلاوة */
             setAudioDockOpen(false);
             setAudioDockMini(true);
-            recitation.pause();
+            recitation.stop();
+          }}
+          onStop={() => {
+            /* إيقاف منفصل عن الطي/الإغلاق — الموضع يبقى عبر المحرّك حتى إعادة التشغيل */
+            recitation.stop();
           }}
         />
       </Suspense>
