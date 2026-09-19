@@ -1,0 +1,66 @@
+{
+  "program": "sunnah-mushaf-internal-architecture-performance-fluidity",
+  "stage": 1,
+  "stageName": "baseline-instrumentation-guards",
+  "measuredAt": "2026-09-19T06:37:37.597Z",
+  "commit": "ead50727dcfcfec8a1234eb474889e6fd638fdb3",
+  "branchBase": "origin/main",
+  "reader": "new-mushaf-reader",
+  "presetId": "sunnah-mushaf-signature-v1",
+  "bundle": {
+    "entryJs": {
+      "file": "index-D9E_Xkrp.js",
+      "rawBytes": 394203,
+      "gzipBytes": 123173,
+      "gzipKiB": 120.29,
+      "note": "app entry — mushaf stays lazy"
+    },
+    "mushafReaderPageJs": {
+      "file": "MushafReaderPage-B6sJZIuH.js",
+      "rawBytes": 76486,
+      "gzipBytes": 25094,
+      "gzipKiB": 24.51
+    },
+    "mushafReaderPageCss": {
+      "file": "MushafReaderPage-BO3C9eCb.css",
+      "rawBytes": 147564,
+      "gzipBytes": 24374,
+      "gzipKiB": 23.8
+    }
+  },
+  "caches": {
+    "renderModelMaxEntries": 16,
+    "layoutCacheMax": 12,
+    "renderCacheProbe": "docs/mushaf/baseline/next-gen-pr1/render-cache-probe.json"
+  },
+  "geometryBaseline": {
+    "source": "docs/mushaf/baseline/next-gen-pr1/summary.json",
+    "measuredAt": "2026-09-19T05:08:42.612Z",
+    "commitHint": "6788f6dd0",
+    "pagesSample": [1, 2, 5, 100, 221, 459, 604],
+    "overflowFalse": true,
+    "overlapFalse": true,
+    "fontCheckTrue": true
+  },
+  "budgetsLocked": {
+    "entryJsGzipBytes": 123200,
+    "mushafReaderPageJsGzipBytesSoft": 40960,
+    "note": "entry = 120KiB+320B؛ soft لمسار MushafReaderPage = 40KiB gzip — لا رفع لـ entry"
+  },
+  "notMeasuredThisRun": [
+    "tapToRouteStartMs",
+    "routeChunkLoadMs",
+    "fontReadyMs",
+    "firstPageRenderMs",
+    "firstInteractiveFrameMs",
+    "touchToMoveMsDevice",
+    "swipeFpsDevice",
+    "pageCommitLatencyMsDevice",
+    "transitionSettledMsDevice",
+    "memoryAfter25TurnsMb",
+    "memoryAfter100TurnsMb",
+    "darkModeMeasure",
+    "reducedMotionTransitionMs",
+    "physicalIphoneIpad"
+  ]
+}

@@ -31,26 +31,28 @@ assert.match(page, /nm-page__ornament-frame/);
 
 /**
  * ميدالية الفاتحة (ص1) — دائرة هندسية حقيقية (عرض = ارتفاع عبر cqmin).
- * قبل: inset نسبي على مستطيل → بيضاوي يختلف حسب الجهاز.
+ * الحجم من cqmin فقط حتى لا تُقصّ على آيفون عمودي / آيباد أفقي.
  */
 const fatihaBlock = css.slice(
   css.indexOf(".nm-page__fatiha-medallion {"),
   css.indexOf(".nm-page__fatiha-medallion {") + 1600,
 );
 assert.match(fatihaBlock, /aspect-ratio:\s*1\s*\/\s*1/);
-assert.match(fatihaBlock, /min\(\s*92cqw\s*,\s*86cqh\s*\)/);
+assert.match(fatihaBlock, /--nm-medallion-size:\s*86cqmin/);
 assert.match(fatihaBlock, /radial-gradient\(\s*circle at center/);
+assert.doesNotMatch(fatihaBlock, /min\(\s*92cqw\s*,\s*86cqh\s*\)/);
 assert.doesNotMatch(fatihaBlock, /inset:\s*10%\s+-7\.5%\s+14%\s+-7\.5%/);
 assert.doesNotMatch(fatihaBlock, /radial-gradient\(\s*ellipse at center/);
 
 /**
- * ميدالية البقرة (ص2) — نفس الدائرة الهندسية
+ * ميدالية البقرة (ص2) — نفس الدائرة الهندسية عبر cqmin
  */
 const baqarahBlock = css.slice(
   css.indexOf(".nm-page--lead .nm-page__fatiha-medallion"),
   css.indexOf(".nm-page--lead .nm-page__fatiha-medallion") + 280,
 );
-assert.match(baqarahBlock, /min\(\s*90cqw\s*,\s*84cqh\s*\)/);
+assert.match(baqarahBlock, /--nm-medallion-size:\s*84cqmin/);
+assert.doesNotMatch(baqarahBlock, /min\(\s*90cqw\s*,\s*84cqh\s*\)/);
 assert.doesNotMatch(baqarahBlock, /inset:\s*11%\s+-7\.5%\s+15%\s+-7\.5%/);
 assert.match(baqarahBlock, /opacity:\s*0\.52/);
 assert.match(page, /sunnah-fatiha-medallion|SunnahFatihaBraidedMedallion/);

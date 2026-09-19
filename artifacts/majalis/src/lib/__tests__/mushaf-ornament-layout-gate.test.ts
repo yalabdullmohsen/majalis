@@ -17,11 +17,12 @@ const page = read("src/features/mushaf-reader/MushafPage.tsx");
 assert.match(css, /container-type:\s*size/);
 assert.match(css, /container-name:\s*mushaf-page-stage/);
 
-/** الميدالية دائرة رياضية: عرض = ارتفاع، قناع circle لا ellipse */
+/** الميدالية دائرة رياضية: عرض = ارتفاع من cqmin، قناع circle لا ellipse */
 const medallionIdx = css.indexOf(".nm-page__fatiha-medallion {");
 assert.ok(medallionIdx > 0, "قاعدة الميدالية موجودة");
-const medallion = css.slice(medallionIdx, medallionIdx + 1200);
+const medallion = css.slice(medallionIdx, medallionIdx + 1400);
 assert.match(medallion, /aspect-ratio:\s*1\s*\/\s*1/);
+assert.match(medallion, /--nm-medallion-size:\s*86cqmin/);
 assert.match(medallion, /width:\s*var\(--nm-medallion-size\)/);
 assert.match(medallion, /height:\s*var\(--nm-medallion-size\)/);
 assert.match(medallion, /transform:\s*translate\(-50%,\s*-50%\)/);
@@ -29,12 +30,12 @@ assert.match(medallion, /border-radius:\s*50%/);
 assert.match(medallion, /radial-gradient\(\s*circle at center/);
 assert.doesNotMatch(medallion, /radial-gradient\(\s*ellipse/);
 assert.doesNotMatch(medallion, /inset:\s*\d+%/);
+assert.doesNotMatch(medallion, /min\(\s*92cqw\s*,\s*86cqh\s*\)/);
 
-/** الزخارف داخل حدود الصفحة — absolute على المسرح، بلا overflow زخرفي */
+/** الزخارف داخل حدود الصفحة — absolute على المسرح؛ الحجم من cqmin يمنع القصّ */
 assert.match(css, /\.nm-page__stage[\s\S]{0,120}position:\s*relative/);
-assert.match(medallion, /max-width:\s*100%/);
-assert.match(medallion, /max-height:\s*100%/);
 assert.match(medallion, /pointer-events:\s*none/);
+assert.match(css, /\.nm-page--lead[\s\S]{0,120}--nm-medallion-size:\s*84cqmin/);
 
 /** إطار الصفحة الخارجي يبقى مخفيًا (Comfort Pass) — بلا تكرار زخرفة */
 const frameBlock = css.slice(
