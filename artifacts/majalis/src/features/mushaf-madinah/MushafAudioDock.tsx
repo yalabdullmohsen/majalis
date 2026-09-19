@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
   Check,
@@ -8,6 +8,7 @@ import {
   Play,
   SkipBack,
   SkipForward,
+  Square,
   X,
 } from "lucide-react";
 import type { PlayerState } from "@/core/audio/AudioEngine";
@@ -16,9 +17,13 @@ import { getReciter } from "@/lib/quran-audio";
 import { useVerifiedReciters } from "@/hooks/useVerifiedReciters";
 import { useMushafAudioClock } from "./mushaf-audio-clock-store";
 import type { RecitationRange } from "./mushaf-page-for-ayah";
+import "@/styles/components/quran-audio-dock-dismiss.css";
 
 /** @deprecated استخدم useVerifiedReciters — يُبقى للاختبارات والتوافق */
 export const MUSHAF_RECITER_IDS = DEFAULT_VERIFIED_RECITER_IDS;
+
+/** عتبة السحب الرأسي لطي/توسيع الرصيف دون إيقاف التلاوة */
+const COLLAPSE_SWIPE_PX = 36;
 
 type Props = {
   open: boolean;
@@ -34,7 +39,10 @@ type Props = {
   onNext: () => void;
   onReciterChange: (id: string) => void;
   onPlayReciter?: (id: string) => void;
+  /** إغلاق الرصيف (إخفاء) — لا يُخلط مع الطي */
   onClose?: () => void;
+  /** إيقاف التلاوة صراحةً دون طي الرصيف */
+  onStop?: () => void;
   onSeek?: (seconds: number) => void;
   onSpeed?: (rate: number) => void;
   onPlayRange?: (range: RecitationRange, repeatCount: number, delayMs?: number) => void;
@@ -58,6 +66,7 @@ export function MushafAudioDock({
   onReciterChange,
   onPlayReciter,
   onClose,
+  onStop,
   onSeek,
   onSpeed,
   onPlayRange,
@@ -72,6 +81,7 @@ export function MushafAudioDock({
   const [repeatCount, setRepeatCount] = useState(1);
   const [range, setRange] = useState<RecitationRange>("ayah");
   const [hifzOpen, setHifzOpen] = useState(false);
+  const swipeRef = useRef<{ y0: number; mini0: boolean } | null>(null);
   const playing = playerState === "playing" || playerState === "buffering" || playerState === "loading";
   const loading = playerState === "loading" || playerState === "buffering";
   const reciters = useVerifiedReciters();
@@ -90,7 +100,7 @@ export function MushafAudioDock({
     (playerState === "playing"
       ? "يعمل الآن"
       : playerState === "paused"
-        ? "متوقف"
+        ? "متوقف مؤقتًا"
         : loading
           ? "تجهيز الصوت"
           : playerState === "ended"
@@ -106,6 +116,29 @@ export function MushafAudioDock({
     setReaderQuery("");
   };
 
+  const onSwipePointerDown = useCallback(
+    (e: React.PointerEvent) => {
+      if (!onMiniChange) return;
+      if ((e.target as HTMLElement).closest("button, input, select, label, a, textarea")) return;
+      swipeRef.current = { y0: e.clientY, mini0: mini };
+      (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+    },
+    [mini, onMiniChange],
+  );
+
+  const onSwipePointerUp = useCallback(
+    (e: React.PointerEvent) => {
+      const d = swipeRef.current;
+      swipeRef.current = null;
+      if (!d || !onMiniChange) return;
+      const dy = e.clientY - d.y0;
+      /* سحب لأسفل يطوي · لأعلى يوسّع — بلا إيقاف تشغيل */
+      if (dy > COLLAPSE_SWIPE_PX && !d.mini0) onMiniChange(true);
+      else if (dy < -COLLAPSE_SWIPE_PX && d.mini0) onMiniChange(false);
+    },
+    [onMiniChange],
+  );
+
   return (
     <>
       <div
@@ -118,7 +151,16 @@ export function MushafAudioDock({
         role="region"
         aria-label="مشغّل التلاوة"
         aria-busy={loading}
+        dir="rtl"
+        onPointerDown={onSwipePointerDown}
+        onPointerUp={onSwipePointerUp}
+        onPointerCancel={() => {
+          swipeRef.current = null;
+        }}
       >
+        {onMiniChange ? (
+          <div className="mm-audio-dock__handle" aria-hidden="true" data-testid="mushaf-dock-handle" />
+        ) : null}
         <div className="mm-audio-dock__head">
           <div className="mm-audio-dock__meta">
             <button
@@ -148,7 +190,7 @@ export function MushafAudioDock({
                 className="mm-audio-dock__mini"
                 aria-pressed={!mini}
                 aria-label={mini ? "توسيع المشغل" : "طي المشغل"}
-                data-testid="mushaf-dock-expand"
+                data-testid="mushaf-dock-collapse"
                 onClick={() => onMiniChange(!mini)}
               >
                 {mini ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
@@ -160,6 +202,7 @@ export function MushafAudioDock({
                 className="mm-audio-dock__close"
                 onClick={onClose}
                 aria-label="إغلاق المشغّل"
+                data-testid="mushaf-dock-close"
               >
                 <X size={18} aria-hidden="true" />
               </button>
@@ -192,11 +235,23 @@ export function MushafAudioDock({
             type="button"
             className="mm-audio-dock__play"
             onClick={onTogglePlay}
-            aria-label={playing ? "إيقاف" : "تشغيل"}
+            aria-label={playing ? "إيقاف مؤقت" : "تشغيل"}
             data-testid="mushaf-dock-play"
           >
             {playing ? <Pause size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" />}
           </button>
+          {onStop ? (
+            <button
+              type="button"
+              className="mm-audio-dock__stop"
+              onClick={onStop}
+              aria-label="إيقاف التلاوة"
+              data-testid="mushaf-dock-stop"
+              disabled={!playing && playerState !== "paused"}
+            >
+              <Square size={14} aria-hidden="true" fill="currentColor" />
+            </button>
+          ) : null}
           <button type="button" onClick={onNext} aria-label="الآية التالية">
             <SkipForward size={16} aria-hidden="true" />
           </button>

@@ -25,6 +25,7 @@ type Props = {
   onRetry?: () => void;
   onPickOtherReciter?: () => void;
   onClose?: () => void;
+  onStop?: () => void;
   onSeek?: (seconds: number) => void;
   onSpeed?: (rate: number) => void;
   onPlayRange?: (range: RecitationRange, repeatCount: number, delayMs?: number) => void;
@@ -48,6 +49,7 @@ export function QuranAudioPlayer({
   onRetry,
   onPickOtherReciter,
   onClose,
+  onStop,
   onSeek,
   onSpeed,
   onPlayRange,
@@ -75,6 +77,7 @@ export function QuranAudioPlayer({
         onReciterChange={onReciterChange}
         onPlayReciter={onPlayReciter}
         onClose={onClose}
+        onStop={onStop}
         onSeek={onSeek}
         onSpeed={onSpeed}
         onPlayRange={onPlayRange}
