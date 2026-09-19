@@ -1,0 +1,78 @@
+{
+  "program": "sunnah-internal-architecture-excellence",
+  "stage": 1,
+  "stageName": "baseline-instrumentation-guards",
+  "measuredAt": "2026-09-19T06:29:04.935Z",
+  "commit": "e729831e2d95f2e1c8db135c5ec78e290f05c1d0",
+  "branchBase": "origin/main",
+  "environment": "local-agent-build",
+  "productRoot": "artifacts/majalis",
+  "commands": {
+    "build": "PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run build",
+    "bundleBudget": "pnpm --filter @workspace/majalis run test:bundle-budget",
+    "capture": "node artifacts/majalis/scripts/architecture-excellence-baseline.mjs --write"
+  },
+  "bundle": {
+    "entryJs": {
+      "file": "index-D9E_Xkrp.js",
+      "rawBytes": 394203,
+      "gzipBytes": 123173,
+      "gzipKiB": 120.29,
+      "budgetKiB": 120,
+      "zlibSlackBytes": 320,
+      "gate": "pass"
+    },
+    "iconsJs": {
+      "file": "icons-CUnclxhB.js",
+      "rawBytes": 72905,
+      "gzipBytes": 22749,
+      "gzipKiB": 22.22,
+      "budgetKiB": 30,
+      "gate": "pass"
+    },
+    "mainCss": {
+      "file": "index-Blv7h4zq.css",
+      "rawBytes": 339479,
+      "gzipBytes": 61575,
+      "gzipKiB": 60.13,
+      "budgetKiB": 100,
+      "gate": "pass"
+    },
+    "softWarnings": [
+      {
+        "chunk": "fiqh-books-CewgjBsl.js",
+        "gzipKiB": 251.5,
+        "note": "lazy content chunk فوق soft 150 KiB — ليس فشل بوابة entry"
+      }
+    ]
+  },
+  "budgetsLocked": {
+    "entryJsGzipBytes": 123200,
+    "iconsJsGzipBytes": 30720,
+    "mainCssGzipBytes": 102400,
+    "note": "120*1024+320 · 30*1024 · 100*1024 — لا تُرفع في هذا البرنامج"
+  },
+  "historicalPsiMedian": {
+    "source": "artifacts/majalis/scripts/perf-baseline.json",
+    "updatedAt": "2026-08-17T16:56:00.000Z",
+    "lcpMs": 6300,
+    "tbtMs": 560,
+    "cls": 0.033,
+    "performance": 58,
+    "note": "مرجع تاريخي فقط — ليس قياس هذه الجلسة"
+  },
+  "notMeasuredThisRun": [
+    "coldStartMs",
+    "warmStartMs",
+    "resumeMs",
+    "clickToShellMs",
+    "clickToContentMs",
+    "lessonDetailShellMs",
+    "searchTypingLagMs",
+    "duplicateRequestCount",
+    "memoryAfter25RoutesMb",
+    "memoryAfter100RoutesMb",
+    "lighthouseHomeThisSession",
+    "homeNetworkRequestCount"
+  ]
+}
