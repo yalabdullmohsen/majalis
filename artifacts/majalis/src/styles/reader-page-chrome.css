@@ -598,3 +598,47 @@ html[data-theme="dark"] .mm-tafsir__ed-btn {
     transition: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════
+ * Phase 18 — صفاء العرض (Compositor)
+ * يُحمَّل بعد mushaf-reader.css ليهزم will-change الدائم بلا لمس
+ * ملف mushaf*.css (قفل سياسة خط/مقياس).
+ * ═══════════════════════════════════════════════════════════ */
+
+.nm-page__body {
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: auto;
+}
+
+.nm-pager-track,
+.nm-root .mm-pager-track {
+  will-change: auto;
+}
+
+.nm-pager-scroller.is-panning .nm-pager-track,
+.nm-root .mm-pager-scroller.is-panning .mm-pager-track,
+.nm-root[data-mushaf-panning="1"] .nm-pager-track,
+.nm-root[data-mushaf-panning="1"] .mm-pager-track,
+.nm-root[data-pager-settled="0"] .nm-pager-track,
+.nm-root[data-pager-settled="0"] .mm-pager-track,
+.nm-root[data-ultra-smooth="1"][data-pager-settled="0"] .nm-pager-track,
+.nm-root[data-ultra-smooth="1"][data-pager-settled="0"] .mm-pager-track,
+.nm-root[data-ultra-smooth="1"][data-mushaf-panning="1"] .nm-pager-track,
+.nm-root[data-ultra-smooth="1"][data-mushaf-panning="1"] .mm-pager-track {
+  will-change: transform;
+}
+
+.nm-root[data-pager-settled="1"]:not([data-mushaf-panning="1"]) .nm-pager-track,
+.nm-root[data-pager-settled="1"]:not([data-mushaf-panning="1"]) .mm-pager-track,
+.nm-root[data-ultra-smooth="1"][data-pager-settled="1"]:not([data-mushaf-panning="1"]) .nm-pager-track,
+.nm-root[data-ultra-smooth="1"][data-pager-settled="1"]:not([data-mushaf-panning="1"]) .mm-pager-track {
+  will-change: auto;
+}
+
+.nm-root[data-mushaf-panning="1"] .nm-page,
+.nm-root[data-pager-settled="0"] .nm-page,
+.nm-root[data-pager-settled="1"] .nm-page {
+  filter: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
