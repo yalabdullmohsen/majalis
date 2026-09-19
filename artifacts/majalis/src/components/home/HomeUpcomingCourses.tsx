@@ -6,6 +6,7 @@ import { beginAbortScope, abortScope } from "@/lib/route-abort";
 import { sortKuwaitLessons, type KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import { Widget, type WidgetState } from "@/components/widgets/Widget";
+import { EMPTY } from "@/lib/ui-copy";
 
 function isCourse(lesson: KuwaitLessonRecord) {
   return lesson.isCourse || lesson.activityType === "دورة";
@@ -62,7 +63,7 @@ export function HomeUpcomingCourses() {
       moreLabel="كل الدورات"
       state={state}
       skeletonRows={3}
-      emptyMessage="لا توجد دورات قادمة حالياً."
+      emptyMessage={EMPTY.data}
       emptyCtaHref="/lessons"
       emptyCtaLabel="تصفّح الدروس"
     >

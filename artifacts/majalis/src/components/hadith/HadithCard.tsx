@@ -165,12 +165,7 @@ export function HadithCard({ item: h, onExpand, detailHref }: Props) {
             <span className="hdl-card__meta-label">المصدر</span>
             <span className="hdl-role--source">{source}</span>
           </div>
-        ) : (
-          <div className="hdl-card__meta-row">
-            <span className="hdl-card__meta-label">المصدر</span>
-            <span className="hadith-meta-item--incomplete">قيد الإكمال</span>
-          </div>
-        )}
+        ) : null}
         {takhrijShort ? (
           <div className="hdl-card__meta-row">
             <span className="hdl-card__meta-label">التخريج</span>

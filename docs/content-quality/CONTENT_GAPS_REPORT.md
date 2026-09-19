@@ -259,7 +259,10 @@
 |---|---|
 | fiqh guide / section hub / prayer location / surah jump empties | IMPROVED_VERIFIED |
 | ScreenShell + assistant offline copy | IMPROVED_VERIFIED |
+| ActiveFilters / home lessons·courses / adhan pickers empties | IMPROVED_VERIFIED |
+| HadithCard «قيد الإكمال» public badge | IMPROVED_VERIFIED (hidden when source missing) |
 | short public SEO (24 routes) | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
+| quiz affinity warnings | EXCLUDED (lexicon metric — not content) |
 | admin empties | DEFERRED |
 

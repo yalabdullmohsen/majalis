@@ -1,5 +1,5 @@
 /**
- * Wave 31 — فراغات الفقه/الأقسام/الصلاة/قفز السور + ScreenShell + SEO قصير.
+ * Wave 31 — فراغات موحّدة (بحث/فلاتر/رئيسية/أذان) + إزالة «قيد الإكمال» من HadithCard + SEO.
  * تشغيل: node --import tsx src/lib/__tests__/content-quality-wave31-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -36,6 +36,29 @@ assert.doesNotMatch(shell, /أنت غير متصل بالإنترنت/);
 const asst = read("src/components/assistant/AssistantChatView.tsx");
 assert.match(asst, /STATUS\.networkError/);
 assert.doesNotMatch(asst, /تعذر الاتصال بالخادم/);
+
+const filters = read("src/components/filters/ActiveFilters.tsx");
+assert.match(filters, /EMPTY\.search/);
+assert.doesNotMatch(filters, /لا توجد نتائج مطابقة\. جرّب تعديل التصفية/);
+
+const lessons = read("src/components/home/HomeUpcomingLessons.tsx");
+assert.match(lessons, /EMPTY\.data/);
+assert.doesNotMatch(lessons, /لا توجد دروس مجدولة اليوم/);
+
+const courses = read("src/components/home/HomeUpcomingCourses.tsx");
+assert.match(courses, /EMPTY\.data/);
+assert.doesNotMatch(courses, /لا توجد دورات قادمة حالياً/);
+
+const audioPicker = read("src/components/adhan/PrayerAudioPicker.tsx");
+assert.match(audioPicker, /EMPTY\.searchShort/);
+assert.doesNotMatch(audioPicker, /لا نتائج لهذا البحث\./);
+
+const muezzin = read("src/components/adhan/MuezzinPicker.tsx");
+assert.match(muezzin, /EMPTY\.searchShort/);
+assert.doesNotMatch(muezzin, /لا نتائج مطابقة للبحث/);
+
+const hadith = read("src/components/hadith/HadithCard.tsx");
+assert.doesNotMatch(hadith, /قيد الإكمال/);
 
 const seo = read("src/lib/seo-routes.json");
 assert.match(seo, /ضبط أصوات الأذان القصيرة وتنبيهات الصلوات/);
