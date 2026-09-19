@@ -65,14 +65,9 @@ html.dark,
 
   --surface-feature-ink: #f3efe6;
   --surface-feature-ink-muted: #d8d0c4;
-
-  /* عناوين soft-hero على سطح islamic الداكن — حبر دافئ AA (لا #16241e) */
-  --mss-on-hero: #f3efe6;
-  --mss-on-hero-muted: #d8d0c4;
-  --mss-on-hero-accent: #6fd0a8;
-  --color-hero-fg: var(--mss-on-hero);
-  --color-hero-fg-muted: var(--mss-on-hero-muted);
-  --color-hero-fg-accent: var(--mss-on-hero-accent);
+  --mss-on-hero: var(--surface-feature-ink);
+  --mss-on-hero-muted: var(--surface-feature-ink-muted);
+  --mss-on-hero-accent: var(--surface-islamic-accent);
 
   --surface-feature-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.04),

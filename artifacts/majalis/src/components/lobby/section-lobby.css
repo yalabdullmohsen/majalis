@@ -71,7 +71,7 @@
   font-size: 24px;
   font-weight: 800;
   line-height: 1.3;
-  color: inherit;
+  color: var(--mss-on-hero, inherit);
 }
 
 .section-lobby__title::after,
@@ -82,7 +82,7 @@
   height: 2px;
   margin-block-start: 8px;
   border-radius: 999px;
-  background: var(--color-primary-dark, var(--mj-brand-deep, #123f2e));
+  background: var(--mss-on-hero-accent, var(--color-primary-dark, var(--mj-brand-deep, #123f2e)));
 }
 
 .section-lobby__head-row {
@@ -349,20 +349,6 @@ html[data-theme="dark"] .section-lobby,
 html.dark .section-lobby {
   background: var(--surface-app, var(--mj-bg));
   color: var(--on-surface, var(--mj-ink, #e8eeeb));
-}
-
-html[data-theme="dark"] .section-lobby__title,
-html.dark .section-lobby__title,
-html[data-theme="dark"] .section-lobby .quran-hub-page__title,
-html.dark .section-lobby .quran-hub-page__title {
-  color: var(--mss-on-hero, var(--on-surface, #f3efe6)) !important;
-}
-
-html[data-theme="dark"] .section-lobby__title::after,
-html.dark .section-lobby__title::after,
-html[data-theme="dark"] .section-lobby .quran-hub-page__title::after,
-html.dark .section-lobby .quran-hub-page__title::after {
-  background: var(--mss-on-hero-accent, var(--surface-islamic-accent, #6fd0a8));
 }
 
 html[data-theme="dark"] .section-lobby__chip,

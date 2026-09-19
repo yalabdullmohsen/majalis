@@ -142,7 +142,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.error) {
-      const isDev = import.meta.env?.DEV;
+      const isDev = import.meta.env.DEV;
       const chunkError = isChunkLoadError(this.state.error);
 
       if (this.state.recovering || (chunkError && isChunkRecoveryInFlight())) {

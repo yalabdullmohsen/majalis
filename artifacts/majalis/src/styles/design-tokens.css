@@ -227,15 +227,6 @@ html.dark,
   --surfaceKnowledge: var(--surface-knowledge);
   --surfaceIslamic: var(--surface-islamic);
   --surfaceHighlighted: var(--surface-highlighted);
-
-  /* عناوين الهيرو على الأسطح الداكنة — تباين AA دون تبييض النص الجاري */
-  --mss-on-hero: #f3efe6;
-  --mss-on-hero-muted: #d8d0c4;
-  --mss-on-hero-accent: #6fd0a8;
-  --mss-section-hero-bg: var(--surface-islamic);
-  --color-hero-fg: var(--mss-on-hero);
-  --color-hero-fg-muted: var(--mss-on-hero-muted);
-  --color-hero-fg-accent: var(--mss-on-hero-accent);
 }
 
 /* فوق الأسطح الخضراء الغامقة — أبيض دائمًا */

@@ -36,25 +36,25 @@ function contrast(a: string, b: string): number {
 }
 
 const green = read("src/styles/green-surface-system.css");
-const tokens = read("src/styles/design-tokens.css");
 const refine = read("src/styles/premium-dark-refine.css");
 const lobby = read("src/components/lobby/section-lobby.css");
 const mss = read("src/styles/components/modern-section-shell.css");
 
 console.log("\n=== عناوين الوضع الليلي — رموز ===");
 
-/* ليلي: mss-on-hero يجب أن يُعاد ضبطه (لا يبقى #16241e) */
+/* ليلي: mss-on-hero يُعاد ضبطه عبر حبر السطح (لا يبقى #16241e) */
 {
   const darkIdx = green.indexOf('html[data-theme="dark"]');
   assert.ok(darkIdx >= 0, "green-surface dark block");
   const darkBlock = green.slice(darkIdx, darkIdx + 1800);
-  assert.match(darkBlock, /--mss-on-hero:\s*#f3efe6/i);
-  assert.match(darkBlock, /--mss-on-hero-muted:\s*#d8d0c4/i);
-  assert.match(darkBlock, /--mss-on-hero-accent:\s*#6fd0a8/i);
+  assert.match(darkBlock, /--surface-feature-ink:\s*#f3efe6/i);
+  assert.match(darkBlock, /--surface-feature-ink-muted:\s*#d8d0c4/i);
+  assert.match(darkBlock, /--mss-on-hero:\s*var\(--surface-feature-ink\)/i);
+  assert.match(darkBlock, /--mss-on-hero-muted:\s*var\(--surface-feature-ink-muted\)/i);
+  assert.match(darkBlock, /--mss-on-hero-accent:\s*var\(--surface-islamic-accent\)/i);
   assert.doesNotMatch(darkBlock, /--mss-on-hero:\s*#16241e/i);
 }
 
-assert.match(tokens, /--mss-on-hero:\s*#f3efe6/i);
 assert.match(refine, /--mss-on-hero:\s*var\(--pd-ink/);
 assert.match(lobby, /section-lobby__title[\s\S]*?--mss-on-hero/);
 assert.match(refine, /section-lobby__title/);

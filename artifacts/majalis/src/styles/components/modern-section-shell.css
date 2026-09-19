@@ -15,12 +15,7 @@
   --mss-hero-to: #245f4d;
   --mss-hero-glow: rgba(210, 180, 93, 0.22);
   --mss-hero-glow-strong: rgba(210, 180, 93, 0.28);
-  /*
-   * نص soft-hero على سطح islamic:
-   * نهاري = حبر غامق (#16241e) على parchment أخضر فاتح.
-   * ليلي = يُعاد ضبط --mss-on-hero في green-surface-system / premium-dark
-   * لأن --mss-section-hero-bg يصبح غابة داكنة — الإبقاء على #16241e ≈ 1:1.
-   */
+  /* soft-hero: نهاري حبر غامق؛ ليلي يُعاد ضبطه في green-surface / premium-dark */
   --mss-on-hero: #16241e;
   --mss-on-hero-muted: #3d4f47;
   --mss-on-hero-accent: #123f2e;
