@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { SurahSummary } from "@/lib/quran-api";
 import { JUZ_START_PAGES } from "@/lib/quran-api";
 import { getBookmarks, type QuranBookmark } from "@/lib/quran-personal";
-import { getMyBookmarks, type MyBookmark } from "@/lib/quran-my-bookmarks";
+import type { MyBookmark } from "@/lib/quran-my-bookmarks";
 import { toArabicDigits } from "@/lib/utils";
 import { SurahIndexFlatList } from "@/components/quran/SurahIndexFlatList";
 
@@ -25,7 +25,9 @@ export function SurahList({ surahs: _surahs, currentSurah, onSelect, onClose, on
   useEffect(() => {
     if (tab === "bookmarks") {
       setBookmarks(getBookmarks());
-      setPageBookmarks(getMyBookmarks());
+      void import("@/lib/quran-my-bookmarks").then(({ getMyBookmarks }) => {
+        setPageBookmarks(getMyBookmarks());
+      });
     }
   }, [tab]);
 

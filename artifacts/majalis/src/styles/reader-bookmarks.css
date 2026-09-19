@@ -1,0 +1,180 @@
+/**
+ * فواصل المصحف — مؤشر وملحن فقط (لا مدير).
+ * بلا mushaf*.css لتجنّب قفل سياسة خط/مقياس.
+ */
+
+.rb-composer {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 52;
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.75rem 0.85rem calc(0.85rem + var(--safe-bottom, 0px));
+  background: var(--nm-paper, #f7f1e3);
+  color: var(--nm-ink, #1c160e);
+  border-top: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 22%, transparent);
+  border-radius: 1rem 1rem 0 0;
+  max-height: min(58%, 22rem);
+  overflow: auto;
+  pointer-events: auto;
+}
+
+.rb-composer__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.rb-composer__title {
+  display: grid;
+  gap: 0.15rem;
+  text-align: end;
+}
+
+.rb-composer__eyebrow {
+  font-size: 0.7rem;
+  color: var(--nm-meta, #5f4814);
+}
+
+.rb-composer__close {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 28%, transparent);
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 90%, var(--nm-gold, #b08d57) 8%);
+  border-radius: 0.45rem;
+  min-height: 2.4rem;
+  min-width: 2.75rem;
+  padding: 0.25rem 0.55rem;
+  font-size: 0.78rem;
+}
+
+.rb-composer__kinds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: flex-end;
+}
+
+.rb-composer__kind {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  border: 1px solid color-mix(in srgb, var(--rb-kind, #5c564c) 35%, transparent);
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 92%, var(--rb-kind, #5c564c) 6%);
+  color: var(--nm-ink, #1c160e);
+  border-radius: 999px;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.72rem;
+  min-height: 2.2rem;
+}
+
+.rb-composer__kind.is-active {
+  background: color-mix(in srgb, var(--rb-kind, #5c564c) 18%, var(--nm-paper, #f7f1e3));
+  border-color: color-mix(in srgb, var(--rb-kind, #5c564c) 55%, transparent);
+  font-weight: 700;
+}
+
+.rb-composer__kind-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--rb-kind, #5c564c);
+}
+
+.rb-composer__slots,
+.rb-composer__swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: flex-end;
+}
+
+.rb-composer__slot {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 24%, transparent);
+  background: transparent;
+  border-radius: 0.4rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.72rem;
+  min-height: 2.2rem;
+}
+
+.rb-composer__slot.is-active {
+  background: color-mix(in srgb, var(--nm-gold, #b08d57) 14%, transparent);
+  font-weight: 700;
+}
+
+.rb-composer__input,
+.rb-composer__note textarea {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--nm-gold, #b08d57) 22%, transparent);
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--nm-paper, #f7f1e3) 96%, #fff);
+  color: inherit;
+  padding: 0.45rem 0.55rem;
+  font: inherit;
+}
+
+.rb-composer__note {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--nm-meta, #5f4814);
+}
+
+.rb-composer__swatch {
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  appearance: none;
+}
+
+.rb-composer__swatch.is-active {
+  border-color: var(--nm-ink, #1c160e);
+}
+
+.rb-composer__save {
+  appearance: none;
+  border: 0;
+  border-radius: 0.55rem;
+  min-height: 2.75rem;
+  background: color-mix(in srgb, var(--nm-gold, #b08d57) 28%, var(--nm-paper, #f7f1e3));
+  color: var(--nm-ink, #1c160e);
+  font-weight: 700;
+}
+
+.rb-composer__error {
+  margin: 0;
+  color: #8a2f2f;
+  font-size: 0.78rem;
+}
+
+.rb-markers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.rb-markers__dot {
+  position: absolute;
+  inset-inline-start: 0.12rem;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, #fff 55%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, #000 8%, transparent);
+  padding: 0;
+  pointer-events: auto;
+  appearance: none;
+  transform: translateY(-50%);
+}
+
+.rb-markers__dot::after {
+  content: "";
+  position: absolute;
+  inset: -1.1rem;
+}

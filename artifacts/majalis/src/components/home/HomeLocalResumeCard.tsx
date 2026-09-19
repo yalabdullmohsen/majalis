@@ -8,7 +8,7 @@ import { getSurahMeta, loadPagePosition, loadReadingAyahKey } from "@/lib/quran-
 import { normalizeAyahKey, normalizeSurahAyah } from "@/lib/ayah-ref-normalize";
 import { AUDIO_RESUME_CHANGED_EVENT, loadAudioResumeState } from "@/lib/quran-audio-resume";
 import { getContinueReadingEntries, type ContinueSection } from "@/lib/continue-reading";
-import { ayahKeyToPage } from "@/lib/quran-my-bookmarks";
+import { ayahKeyToPage } from "@/lib/quran-ayah-page";
 import { toArabicDigits } from "@/lib/utils";
 import { FEATURE_TOUR_HYDRATED_EVENT } from "@/lib/feature-tour-state";
 import "@/styles/components/home-local-resume.css";

@@ -1,0 +1,229 @@
+/**
+ * مدير الفواصل — حزمة منفصلة عن قارئ المصحف (lazy route).
+ */
+
+.rb-manager {
+  min-height: 100dvh;
+  padding: max(0.75rem, var(--inset-top, 0px)) 0.85rem
+    calc(1.25rem + var(--inset-bottom, 0px));
+  background: linear-gradient(180deg, #f8f3e8 0%, #f3ecdc 48%, #efe6d4 100%);
+  color: #1c160e;
+}
+
+html.dark .rb-manager,
+html[data-theme="dark"] .rb-manager {
+  background: linear-gradient(180deg, #141a16 0%, #101612 100%);
+  color: #efe6d4;
+}
+
+.rb-manager__header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.rb-manager__title {
+  margin: 0;
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.rb-manager__back,
+.rb-manager__ghost {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, #b08d57 28%, transparent);
+  background: color-mix(in srgb, #f7f1e3 88%, #b08d57 8%);
+  border-radius: 0.45rem;
+  min-height: 2.4rem;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.78rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.rb-manager__count {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.rb-manager__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.45rem;
+  margin-bottom: 0.75rem;
+}
+
+.rb-manager__stats > div {
+  display: grid;
+  gap: 0.1rem;
+  place-items: center;
+  padding: 0.55rem 0.35rem;
+  border-radius: 0.55rem;
+  background: color-mix(in srgb, #fff 55%, #f7f1e3);
+  border: 1px solid color-mix(in srgb, #b08d57 16%, transparent);
+}
+
+html.dark .rb-manager__stats > div,
+html[data-theme="dark"] .rb-manager__stats > div {
+  background: color-mix(in srgb, #1c2820 80%, #8a6b2e 8%);
+}
+
+.rb-manager__stats strong {
+  font-size: 1.1rem;
+}
+
+.rb-manager__stats span {
+  font-size: 0.72rem;
+  opacity: 0.8;
+}
+
+.rb-manager__last {
+  width: 100%;
+  appearance: none;
+  margin-bottom: 0.65rem;
+  border: 1px solid color-mix(in srgb, #b08d57 22%, transparent);
+  background: color-mix(in srgb, #b08d57 10%, transparent);
+  border-radius: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.65rem;
+  text-align: start;
+  color: inherit;
+  font-size: 0.82rem;
+}
+
+.rb-manager__toolbar {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: 0.55rem;
+}
+
+.rb-manager__search,
+.rb-manager__select {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, #b08d57 22%, transparent);
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, #f7f1e3 96%, #fff);
+  color: inherit;
+  padding: 0.45rem 0.55rem;
+  font: inherit;
+}
+
+.rb-manager__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  margin-bottom: 0.85rem;
+}
+
+.rb-manager__check {
+  display: inline-flex;
+  gap: 0.3rem;
+  align-items: center;
+  font-size: 0.78rem;
+}
+
+.rb-manager__empty {
+  text-align: center;
+  opacity: 0.75;
+  padding: 2rem 0.5rem;
+}
+
+.rb-manager__group {
+  margin-bottom: 1rem;
+}
+
+.rb-manager__group h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.4rem;
+  font-size: 0.92rem;
+}
+
+.rb-manager__group h2 em {
+  font-style: normal;
+  opacity: 0.65;
+  font-size: 0.8rem;
+}
+
+.rb-manager__swatch {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+}
+
+.rb-manager__group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.rb-manager__group li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.35rem;
+  align-items: stretch;
+  border: 1px solid color-mix(in srgb, #b08d57 16%, transparent);
+  border-radius: 0.55rem;
+  background: color-mix(in srgb, #fff 50%, #f7f1e3);
+  padding: 0.2rem;
+}
+
+html.dark .rb-manager__group li,
+html[data-theme="dark"] .rb-manager__group li {
+  background: color-mix(in srgb, #1c2820 78%, transparent);
+}
+
+.rb-manager__group li.is-archived {
+  opacity: 0.55;
+}
+
+.rb-manager__item {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: start;
+  padding: 0.45rem 0.5rem;
+  display: grid;
+  gap: 0.15rem;
+  min-height: 2.75rem;
+}
+
+.rb-manager__item-label {
+  font-weight: 700;
+  font-size: 0.86rem;
+}
+
+.rb-manager__item-note {
+  font-size: 0.78rem;
+  opacity: 0.8;
+}
+
+.rb-manager__item-meta {
+  font-size: 0.7rem;
+  opacity: 0.65;
+}
+
+.rb-manager__item-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.rb-manager__item-actions button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 0.68rem;
+  min-height: 1.7rem;
+  padding: 0 0.35rem;
+  opacity: 0.75;
+}

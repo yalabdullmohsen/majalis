@@ -27,7 +27,7 @@ export const MUSHAF_READER_NAV_SLOTS: readonly MushafReaderNavSlot[] = [
   { id: "chromeToggle", enabled: true },
   { id: "pageArrows", enabled: true },
   { id: "pageScrubber", enabled: true },
-  { id: "bookmark", enabled: false, reserved: true },
+  { id: "bookmark", enabled: true },
   { id: "quickJump", enabled: false, reserved: true },
   { id: "tafsirLayer", enabled: false, reserved: true },
   { id: "audioSync", enabled: false, reserved: true },

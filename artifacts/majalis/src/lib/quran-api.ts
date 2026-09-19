@@ -20,7 +20,7 @@ import {
   currentPageFirstAyah,
   legacyPageToAyahKey,
   legacyPageToCurrentPage,
-} from "@/lib/quran-my-bookmarks";
+} from "@/lib/quran-ayah-page";
 
 const BASE = "https://api.alquran.cloud/v1";
 const LOCAL_QURAN_DATA_BASE = "/data/quran";

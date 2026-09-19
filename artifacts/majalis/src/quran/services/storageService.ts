@@ -16,11 +16,7 @@ import {
   loadLastPage,
   loadLastPageSync,
 } from "@/lib/quran-last-page";
-import {
-  MY_BOOKMARKS_KEY,
-  type MyBookmark,
-  getMyBookmarks,
-} from "@/lib/quran-my-bookmarks";
+import type { MyBookmark } from "@/lib/quran-my-bookmarks";
 
 export type { MyBookmark };
 
@@ -51,6 +47,7 @@ export const storageService = {
 
   /** RN: AsyncStorage.setItem('bookmarks', …) → web key `myBookmarks`. */
   saveBookmarks: async (bookmarks: MyBookmark[]): Promise<void> => {
+    const { MY_BOOKMARKS_KEY } = await import("@/lib/quran-my-bookmarks");
     try {
       if (typeof localStorage === "undefined") return;
       localStorage.setItem(MY_BOOKMARKS_KEY, JSON.stringify(bookmarks));
@@ -60,7 +57,10 @@ export const storageService = {
   },
 
   /** RN: getItem + JSON.parse → [] ; web key `myBookmarks`. */
-  getBookmarks: async (): Promise<MyBookmark[]> => getMyBookmarks(),
+  getBookmarks: async (): Promise<MyBookmark[]> => {
+    const { getMyBookmarks } = await import("@/lib/quran-my-bookmarks");
+    return getMyBookmarks();
+  },
 };
 
 export default storageService;

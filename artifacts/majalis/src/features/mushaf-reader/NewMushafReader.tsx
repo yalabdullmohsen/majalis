@@ -81,6 +81,7 @@ import { MushafControlsLayer, MushafVerseMenu } from "./MushafControlsLayer";
 import { MushafPageArrows } from "./MushafPageArrows";
 import { MushafPageScrubber } from "./MushafPageScrubber";
 import { isMushafNavCapabilityEnabled } from "./mushaf-reader-nav-contract";
+import { MushafBookmarkComposer, MushafBookmarkMarkers } from "@/features/mushaf-bookmarks";
 import {
   loadPageArrowsEnabled,
   savePageArrowsEnabled,
@@ -114,6 +115,7 @@ import "./mushaf-reader.css";
 import "@/features/mushaf-madinah/mushaf-madinah.css";
 /* صقل Chrome الخروج/الأسهم — بعد mushaf-reader حتى يفوز بدون لمس Geometry */
 import "@/styles/reader-page-chrome.css";
+import "@/styles/reader-bookmarks.css";
 
 const MushafTafsirSheet = lazy(() =>
   import("@/features/mushaf-madinah/MushafTafsirSheet").then((m) => ({
@@ -175,6 +177,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const [gotoOpen, setGotoOpen] = useState(false);
   const [selectedVerseKey, setSelectedVerseKey] = useState<string | null>(null);
   const [actionsOpen, setActionsOpen] = useState(false);
+  const [bookmarkComposerOpen, setBookmarkComposerOpen] = useState(false);
+  const [bookmarkEpoch, setBookmarkEpoch] = useState(0);
   const [tafsirOpen, setTafsirOpen] = useState(false);
   /** آية التفسير معزولة عن التحديد وعن آية الصوت */
   const [tafsirVerseKey, setTafsirVerseKey] = useState<string | null>(null);
@@ -398,6 +402,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         gotoOpen ||
         controlsMoreOpen ||
         actionsOpen ||
+        bookmarkComposerOpen ||
         (audioDockOpen && !audioDockMini),
     );
     if (chromeHoldRef.current) {
@@ -412,6 +417,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     };
   }, [
     actionsOpen,
+    bookmarkComposerOpen,
     audioDockMini,
     audioDockOpen,
     chromeOpen,
@@ -919,32 +925,22 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     }
   }, [selectedVerseKey, versePreview]);
 
-  const onBookmark = useCallback(async () => {
+  const onBookmark = useCallback(() => {
     if (!selectedVerseKey) return;
-    const parsed = parseVerseKey(selectedVerseKey);
-    const label = parsed
-      ? `${getSurahMeta(parsed.surah).name} · آية ${parsed.ayah}`
-      : `آية ${selectedVerseKey}`;
-    try {
-      const { getMyBookmarks, saveBookmarks } = await import("@/lib/quran-my-bookmarks");
-      const list = getMyBookmarks().filter((b) => b.ayahKey !== selectedVerseKey);
-      await saveBookmarks([
-        {
-          id: Date.now(),
-          ayahKey: selectedVerseKey,
-          page,
-          label,
-          date: new Date().toLocaleDateString("ar"),
-        },
-        ...list,
-      ]);
-      haptics.success();
-      setStatus("تم حفظ العلامة");
-    } catch {
-      haptics.error();
-      setStatus("تعذّر حفظ العلامة");
-    }
-  }, [page, selectedVerseKey]);
+    if (!isMushafNavCapabilityEnabled("bookmark")) return;
+    setActionsOpen(false);
+    setBookmarkComposerOpen(true);
+    setChromeOpen(false);
+  }, [selectedVerseKey]);
+
+  const closeBookmarkComposer = useCallback(() => {
+    setBookmarkComposerOpen(false);
+  }, []);
+
+  const onBookmarkSaved = useCallback((message: string) => {
+    setStatus(message);
+    setBookmarkEpoch((n) => n + 1);
+  }, []);
 
   const verseLabel = useMemo(() => {
     const key = playingVerseKey ?? selectedVerseKey;
@@ -993,7 +989,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       (isQpcPageFontReady(page - 1) && Boolean(getCachedMushafPage(page - 1))));
 
   /* شيتات فقط تعطّل السحب — الجيران يُجهَّزان في الخلفية بلا قطع اللمس */
-  const edgesDisabled = tafsirOpen || searchOpen || indexOpen;
+  const edgesDisabled = tafsirOpen || searchOpen || indexOpen || bookmarkComposerOpen;
   /* إخفاء الرصيف عند فتح قائمة الآية لتفادي تعارض أزرار التشغيل */
 
   const onPageNumberPressCurrent = useCallback(() => {
@@ -1016,6 +1012,17 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         onLongPressVerse={role === "current" && pagerSettled ? onLongPressVerse : undefined}
         onPageNumberPress={role === "current" ? onPageNumberPressCurrent : undefined}
         error={role === "current" ? error : null}
+        showBookmarkMarkers={role === "current" && pagerSettled}
+        bookmarkEpoch={bookmarkEpoch}
+        onBookmarkMarkerOpen={
+          role === "current"
+            ? (ayahKey) => {
+                setSelectedVerseKey(ayahKey);
+                setActionsOpen(true);
+                setChromeOpen(false);
+              }
+            : undefined
+        }
       />
     ),
     [
@@ -1024,6 +1031,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       onLongPressVerse,
       onPageNumberPressCurrent,
       error,
+      bookmarkEpoch,
     ],
   );
 
@@ -1068,6 +1076,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     setTafsirOpen(false);
     setTafsirVerseKey(null);
     setActionsOpen(false);
+    setBookmarkComposerOpen(false);
     setSelectedVerseKey(null);
     setControlsMoreOpen(false);
     setGotoOpen(false);
@@ -1132,7 +1141,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         mushafTurnMark("touchStart", page);
       }}
       onNavigateCancel={cancelPageTurnFreeze}
-      ignoreSelector=".nm-controls, .nm-verse-menu, .nm-page-arrows, .nm-page-arrow, .nm-page-scrubber, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, input, textarea, select, button"
+      ignoreSelector=".nm-controls, .nm-verse-menu, .nm-page-arrows, .nm-page-arrow, .nm-page-scrubber, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, .rb-composer, .rb-markers, input, textarea, select, button"
       onTapEmpty={() => {
         if (actionsOpen) {
           closeActions();
@@ -1315,8 +1324,17 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           onPlay={() => void playSelected()}
           onTafsir={openTafsir}
           onCopy={() => void onCopy()}
-          onBookmark={() => void onBookmark()}
+          onBookmark={onBookmark}
           onClose={closeActions}
+        />
+      ) : null}
+
+      {bookmarkComposerOpen && selectedVerseKey ? (
+        <MushafBookmarkComposer
+          verseKey={selectedVerseKey}
+          page={page}
+          onClose={closeBookmarkComposer}
+          onSaved={onBookmarkSaved}
         />
       ) : null}
 
@@ -1368,6 +1386,9 @@ const PrefetchPage = memo(function PrefetchPage({
   onLongPressVerse,
   onPageNumberPress,
   error = null,
+  showBookmarkMarkers = false,
+  bookmarkEpoch = 0,
+  onBookmarkMarkerOpen,
 }: {
   pageNumber: number;
   active?: boolean;
@@ -1376,7 +1397,12 @@ const PrefetchPage = memo(function PrefetchPage({
   onLongPressVerse?: (verseKey: string) => void;
   onPageNumberPress?: () => void;
   error?: string | null;
+  showBookmarkMarkers?: boolean;
+  bookmarkEpoch?: number;
+  onBookmarkMarkerOpen?: (ayahKey: string) => void;
 }) {
+  const shellRef = useRef<HTMLDivElement | null>(null);
+  const [shellEl, setShellEl] = useState<HTMLElement | null>(null);
   const [layout, setLayout] = useState<MushafPageLayout | null>(() => {
     const model = getCachedPageRenderModel(pageNumber);
     if (model?.layout) return model.layout;
@@ -1413,6 +1439,10 @@ const PrefetchPage = memo(function PrefetchPage({
 
   return (
     <div
+      ref={(el) => {
+        shellRef.current = el;
+        setShellEl(el);
+      }}
       className="nm-shell mm-page-shell mushaf-page-frame"
       data-testid={active ? "mushaf-page-shell" : undefined}
       data-page-pane={active ? "active" : "prefetch"}
@@ -1437,6 +1467,15 @@ const PrefetchPage = memo(function PrefetchPage({
           onPageNumberPress={onPageNumberPress}
         />
       )}
+      {showBookmarkMarkers && canPaint ? (
+        <MushafBookmarkMarkers
+          key={bookmarkEpoch}
+          page={pageNumber}
+          container={shellEl}
+          enabled={selectionEnabled}
+          onOpenAyah={onBookmarkMarkerOpen}
+        />
+      ) : null}
     </div>
   );
 });
