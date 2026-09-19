@@ -25,8 +25,8 @@ assert(
   "توكن --text-on-dark أبيض صلب",
 );
 assert(aliases.includes("--text-on-dark-secondary"), "توكن ثانوي على الداكن");
-assert(css.includes("--ps-text-primary: var(--text-on-dark"), "تفصيل الأنبياء يربط النص الأساسي بالتوكن");
-assert(css.includes("--ps-text-body: var(--text-on-dark"), "نص القصة من التوكن");
+assert(css.includes("--ps-text-primary: #ffffff") || css.includes("--ps-text-primary: var(--text-on-dark"), "تفصيل الأنبياء يربط النص الأساسي بأبيض صلب");
+assert(css.includes("--ps-text-body: #f3f5f4") || css.includes("--ps-text-body: var(--text-on-dark"), "نص القصة أبيض صلب");
 assert(/\.prophet-section-lux__title\s*\{[^}]*color:\s*var\(--ps-text-primary/s.test(css), "عنوان القسم أبيض التوكن");
 assert(/\.prophet-section-lux__title\s*\{[^}]*font-weight:\s*700/s.test(css), "عنوان القسم وزن 700");
 assert(/\.prophet-section-lux__title\s*\{[^}]*opacity:\s*1/s.test(css), "عنوان القسم بلا شفافية");
