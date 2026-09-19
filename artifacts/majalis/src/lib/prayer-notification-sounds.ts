@@ -11,6 +11,7 @@
 import { Capacitor } from "@capacitor/core";
 import { DEFAULT_ALERT_SOUND } from "@/lib/notifications/channels";
 import { notificationSoundForAdhanPack } from "@/lib/adhan-offline-assets";
+import { resolveNativeNotificationSound } from "@/lib/prayer-sound-manifest";
 
 /** أسماء ملفات الملف الشخصي (قصير ≤٣٠ث) في حزمة iOS. */
 export const PRAYER_SOUND_FILES = {
@@ -32,12 +33,12 @@ export const PRAYER_LEGACY_SOUND_FILES = {
 
 /** أصوات إضافية للمعاينة/التعيين حسب نمط الأذان (إشعار قصير). */
 export const PRAYER_ADHAN_STYLE_SOUNDS = {
-  makkah: "prayer-alert.caf",
-  egypt: "prayer-alert.caf",
-  aqsa: "prayer-alert.caf",
+  makkah: "adhan-short-makkah.caf",
+  egypt: "adhan-short-egypt.caf",
+  aqsa: "adhan-short-aqsa.caf",
   turkey: "prayer-alert.caf",
   kuwait: "short-ring.caf",
-  takbeerat: "short-ring.caf",
+  takbeerat: "adhan-short-takbeerat.caf",
   soft: "soft-ring.caf",
   qatami: "prayer-alert.caf",
   default: "prayer-alert.caf",
@@ -118,9 +119,13 @@ export function resolvePrayerNotificationSound(
   }
 }
 
-/** صوت إشعار قصير حسب معرّف تسجيل الأذان (fallback لـ clear). */
+/** صوت إشعار قصير حسب معرّف تسجيل الأذان — عبر Manifest ثم الحزمة ثم fallback آمن. */
 export function resolveAdhanStyleNotificationSound(recordingId: string): string {
   if (!PRAYER_CUSTOM_SOUNDS_ENABLED) return DEFAULT_ALERT_SOUND;
+  const resolved = resolveNativeNotificationSound({ muezzinId: recordingId });
+  if (!resolved.fallbackUsed && resolved.sound !== DEFAULT_ALERT_SOUND) {
+    return platformNotificationSoundName(resolved.sound);
+  }
   const fromPack = notificationSoundForAdhanPack(recordingId);
   if (fromPack) return platformNotificationSoundName(fromPack);
   const key = recordingId as keyof typeof PRAYER_ADHAN_STYLE_SOUNDS;

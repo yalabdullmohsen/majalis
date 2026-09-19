@@ -34,7 +34,8 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
       short: `${CDN}/general/makkah-haram-02.mp3`,
       takbir: `${CDN}/general/makkah-haram-02.mp3`,
     },
-    notificationSound: "prayer-alert.caf",
+    /** إشعار خلفية قصير — ليس ملف المعاينة داخل التطبيق */
+    notificationSound: "adhan-short-makkah.caf",
   },
   {
     id: "qatami",
@@ -94,7 +95,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
       takbir: `${CDN}/general/makkah-haram-02.mp3`,
       general: `${CDN}/general/makkah-haram-02.mp3`,
     },
-    notificationSound: "short-ring.caf",
+    notificationSound: "adhan-short-takbeerat.caf",
   },
   {
     id: "alharam",

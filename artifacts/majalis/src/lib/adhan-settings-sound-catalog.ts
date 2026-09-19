@@ -47,7 +47,7 @@ const OPTIONS: SettingsSoundOption[] = [
     soundProfile: "clear",
     requireLocal: true,
     previewUrl: "/audio/adhan/adhan-makkah.mp3",
-    iosNotificationSound: "prayer-alert.caf",
+    iosNotificationSound: "adhan-short-makkah.caf",
   },
   {
     id: "kuwait",
