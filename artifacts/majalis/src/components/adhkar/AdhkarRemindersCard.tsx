@@ -14,6 +14,7 @@ import {
 } from "@/lib/local-notifications";
 import { syncSmartLocalNotifications } from "@/lib/smart-local-notifications";
 import { SettingsToggleRow } from "@/components/design-system/SettingsList";
+import { STATUS } from "@/lib/ui-copy";
 
 export function AdhkarRemindersCard() {
   const [prefs, setPrefs] = useState<NotifPrefs>(() => loadNotifPrefs());
@@ -38,14 +39,14 @@ export function AdhkarRemindersCard() {
             ? `تم جدولة ${r.scheduled} تذكيرًا للذكر.`
             : r.reason === "permission"
               ? "يلزم إذن الإشعارات لتفعيل التذكيرات."
-              : "تعذّر جدولة تذكيرات الذكر.",
+              : STATUS.networkError,
         );
       } else {
         await cancelNativeDhikrPhraseReminders();
         setStatus(next.adhkarReminder ? "تم تحديث تذكيرات الأذكار." : "أُوقفَت تذكيرات الأذكار.");
       }
     } catch {
-      setStatus("تعذّر حفظ التذكيرات.");
+      setStatus(STATUS.networkError);
     } finally {
       setBusy(false);
     }

@@ -16,6 +16,7 @@ import {
   type HifzPrefs,
 } from "@/lib/recitation-hifz-prefs";
 import { toArabicDigits } from "@/lib/utils";
+import { STATUS } from "@/lib/ui-copy";
 import { useMediaSession } from "@/hooks/useMediaSession";
 import "@/styles/components/hifz-audio-loop-player.css";
 
@@ -171,11 +172,11 @@ export function HifzAudioLoopPlayer({ surah, reciterId }: HifzAudioLoopPlayerPro
   );
 
   if (loadingAyahs) {
-    return <div className="hifz-loop hifz-loop__loading">تجهيز الآيات…</div>;
+    return <div className="hifz-loop hifz-loop__loading">{STATUS.contentLoading}</div>;
   }
 
   if (!ayahs.length) {
-    return <div className="hifz-loop hifz-loop__empty">تعذّر تحميل نص السورة.</div>;
+    return <div className="hifz-loop hifz-loop__empty">{STATUS.loadError}</div>;
   }
 
   const totalAyahs = ayahs.length;

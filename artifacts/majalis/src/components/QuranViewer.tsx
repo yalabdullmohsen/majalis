@@ -64,6 +64,7 @@ import { shareVerse } from "@/lib/share-ayah";
 import { QuranActionBar } from "@/components/QuranActionBar";
 import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
 import { toArabicDigits } from "@/lib/utils";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import "@/styles/quran-engine-ui.css";
 import "@/styles/quran-immersive-reader.css";
 
@@ -393,7 +394,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
           setError(
             err instanceof Error && err.message
               ? err.message
-              : "تعذّر تحميل السورة. تحقق من الاتصال ثم أعد المحاولة.",
+              : STATUS.networkError,
           );
           setAyahs([]);
         }
@@ -657,9 +658,9 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
                       ) : ayahTafsir ? (
                         <p className="qe-ayah__tafsir-text">{ayahTafsir}</p>
                       ) : tafsirError ? (
-                        <span className="qe-ayah__tafsir-status">تعذّر تحميل التفسير لهذه الآية.</span>
+                        <span className="qe-ayah__tafsir-status">{STATUS.loadError}</span>
                       ) : (
-                        <span className="qe-ayah__tafsir-status">لا يتوفر تفسير لهذه الآية حاليًا.</span>
+                        <span className="qe-ayah__tafsir-status">{EMPTY.data}</span>
                       )}
                     </div>
                   ) : null}

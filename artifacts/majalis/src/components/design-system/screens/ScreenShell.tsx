@@ -26,7 +26,7 @@ export function ScreenShell({
   density = "regular",
   status = "ready",
   onRetry,
-  emptyTitle = "لا محتوى حالياً",
+  emptyTitle = EMPTY.data,
   emptyDescription,
   className,
   children,

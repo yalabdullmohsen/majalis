@@ -684,7 +684,7 @@ export default function LessonsPage({
                   <p className="lessons-empty-state">
                     الدروس المنتهية في{" "}
                     <Link href="/lessons/archive">الأرشيف</Link>
-                    {archivedLessons.length > 0 ? ` (${archivedLessons.length})` : " — لا يوجد مؤرشف حالياً"}
+                    {archivedLessons.length > 0 ? ` (${archivedLessons.length})` : ` — ${EMPTY.data}`}
                     .
                   </p>
                 </section>

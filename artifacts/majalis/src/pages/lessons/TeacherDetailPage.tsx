@@ -79,7 +79,7 @@ export default function TeacherDetailPage() {
       <PageShell variant="narrow" className="tch-page">
         <PageHeader eyebrow="دروس الكويت" title="الشيخ غير موجود" />
         <p className="tch-empty">
-          لم نجد شيخًا بهذا المعرّف في دروس الكويت.
+          {EMPTY.search}
           {" "}
           <Link href="/teachers">العودة لفهرس المشايخ</Link>
           {" · "}

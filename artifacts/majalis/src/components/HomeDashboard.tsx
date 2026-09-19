@@ -11,6 +11,7 @@ import { getReciter, saveReciterId } from "@/lib/quran-audio";
 import { getVerifiedReciters, getVerifiedRecitersSyncFallback } from "@/lib/audio-registry";
 import { toArabicDigits } from "@/lib/utils";
 import type { BookmarkRecord, ReadingProgress } from "@/core/quran/DatabaseManager";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import "@/styles/quran-engine-ui.css";
 
 export type HomeDashboardProps = {
@@ -58,7 +59,7 @@ export function HomeDashboard({ onContinue, onOpenViewer }: HomeDashboardProps) 
       } catch (err) {
         if (!cancelled) {
           console.warn("[HomeDashboard] load:", err);
-          setLoadError("تعذّر تحميل بيانات القراءة المحلية. يمكنك المتابعة من موضع افتراضي.");
+          setLoadError(STATUS.loadError);
         }
       }
     })();
@@ -204,7 +205,7 @@ export function HomeDashboard({ onContinue, onOpenViewer }: HomeDashboardProps) 
           <p>من مذكراتك المحلية</p>
         </header>
         {bookmarks.length === 0 ? (
-          <p className="qe-dash__empty">لا إشارات بعد — أضف واحدة من شريط الآية.</p>
+          <p className="qe-dash__empty">{EMPTY.bookmarks}</p>
         ) : (
           <ul className="qe-dash__notes">
             {bookmarks.map((b) => {
