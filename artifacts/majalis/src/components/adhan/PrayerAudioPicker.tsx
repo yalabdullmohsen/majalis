@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Check, Search, Volume2, X } from "lucide-react";
 import type { SettingsSoundOption } from "@/lib/adhan-settings-sound-catalog";
 import { listProductionApprovedAudio } from "@/lib/prayer-audio-rights-registry";
+import { EMPTY } from "@/lib/ui-copy";
 
 type Props = {
   open: boolean;
@@ -141,7 +142,7 @@ export function PrayerAudioPicker({
           })}
           {filtered.length === 0 ? (
             <li className="prayer-audio-picker__empty" role="status">
-              لا نتائج لهذا البحث.
+              {EMPTY.searchShort}
             </li>
           ) : null}
         </ul>

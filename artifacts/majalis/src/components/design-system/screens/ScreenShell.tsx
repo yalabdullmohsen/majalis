@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { EmptyState } from "@/components/ui/mj";
 import { BodyText } from "@/components/design-system/text";
 import type { SsScreenDensity, SsScreenPattern } from "@/lib/ssunnah-screen-patterns";
+import { ACTION, EMPTY, STATUS } from "@/lib/ui-copy";
 
 export type ScreenShellStatus = "ready" | "loading" | "empty" | "error";
 
@@ -58,12 +59,12 @@ export function ScreenShell({
         <div className="ss-screen__state" role="alert">
           <BodyText>
             {typeof navigator !== "undefined" && navigator.onLine === false
-              ? "أنت غير متصل بالإنترنت. اتصل بالشبكة ثم أعد المحاولة."
-              : "تعذّر تحميل المحتوى مؤقتًا. أعد المحاولة بعد لحظات."}
+              ? EMPTY.offline
+              : STATUS.loadError}
           </BodyText>
           {onRetry ? (
             <button type="button" className="ss-screen__retry mj-pressable" onClick={onRetry}>
-              إعادة المحاولة
+              {ACTION.retry}
             </button>
           ) : null}
         </div>

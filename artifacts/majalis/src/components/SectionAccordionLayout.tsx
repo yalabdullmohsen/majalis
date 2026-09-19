@@ -12,6 +12,7 @@ import {
   LabelText,
   ExplanationText,
 } from "@/components/design-system/text";
+import { EMPTY } from "@/lib/ui-copy";
 import "@/styles/pages/section-hub.css";
 
 /** ألوان بطاقات من رموز الهوية — بلا هكس نصّي عشوائي */
@@ -159,7 +160,7 @@ export function SectionAccordionLayout({
 
         {filtered.length === 0 ? (
           <BodyText className="section-hub__empty" role="status">
-            لا نتائج مطابقة — جرّب كلمات أخرى أو اختر بابًا من الفلاتر.
+            {EMPTY.search}
           </BodyText>
         ) : (
           <div className="section-hub__grid">

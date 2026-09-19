@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { cn, toArabicDigits } from "@/lib/utils";
 import { FilterResetButton } from "./FilterResetButton";
+import { EMPTY } from "@/lib/ui-copy";
 
 export type ActiveFilterItem = {
   id: string;
@@ -29,7 +30,7 @@ export function ActiveFilters({
       {resultCount != null && (
         <p className="mj-active-filters__count">
           {resultCount === 0
-            ? "لا توجد نتائج مطابقة. جرّب تعديل التصفية."
+            ? EMPTY.search
             : `${toArabicDigits(resultCount)} ${resultCount === 1 ? "نتيجة" : "نتائج"}`}
         </p>
       )}

@@ -20,6 +20,7 @@ import {
 } from "@/lib/prayer-location-prefs";
 import { KUWAIT_GOVERNORATES, setSelectedGovernorate } from "@/lib/prayer-kuwait-geo";
 import { suggestMethodForRegion } from "@/lib/prayer-calc-prefs";
+import { EMPTY } from "@/lib/ui-copy";
 
 type Props = {
   onChanged: (loc: PrayerActiveLocation) => void;
@@ -225,7 +226,7 @@ export function PrayerLocationPicker({ onChanged }: Props) {
           </li>
         ))}
         {ready && hits.length === 0 && (
-          <li className="pts-loc__empty">لا نتائج — جرّب دولة أخرى أو بحثاً أقصر.</li>
+          <li className="pts-loc__empty">{EMPTY.search}</li>
         )}
       </ul>
     </div>

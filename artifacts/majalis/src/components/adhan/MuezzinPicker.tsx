@@ -16,6 +16,7 @@ import {
   subscribeAppAudio,
 } from "@/lib/audio";
 import "@/styles/components/muezzin-picker.css";
+import { EMPTY } from "@/lib/ui-copy";
 
 function previewSourceId(muezzinId: string): string {
   return `muezzin-picker-${muezzinId}`;
@@ -285,7 +286,7 @@ export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false
 
         <div className="mzp-list">
           {featured.length === 0 && grouped.length === 0 ? (
-            <p className="mzp-empty">لا نتائج مطابقة للبحث.</p>
+            <p className="mzp-empty">{EMPTY.searchShort}</p>
           ) : (
             <>
               {featured.length > 0 ? (
