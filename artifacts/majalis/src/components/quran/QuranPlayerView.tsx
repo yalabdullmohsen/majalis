@@ -14,6 +14,7 @@ import {
 import { fetchSurahDetail, getSurahMeta } from "@/lib/quran-api";
 import { getReciter, loadReciterId } from "@/lib/quran-audio";
 import { toArabicDigits } from "@/lib/utils";
+import { STATUS } from "@/lib/ui-copy";
 
 export type QuranPlayerViewProps = {
   reciterId?: string;
@@ -63,7 +64,7 @@ export function QuranPlayerView({ reciterId: reciterProp, surahNumber }: QuranPl
           })),
         );
       } catch {
-        if (!cancelled) setLoadError("تعذّر تحميل نص السورة.");
+        if (!cancelled) setLoadError(STATUS.loadError);
       }
     })();
     return () => {

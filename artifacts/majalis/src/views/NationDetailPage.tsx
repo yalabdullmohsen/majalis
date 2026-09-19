@@ -15,6 +15,7 @@ import {
 import { PunishmentIcon } from "@/components/nations/PunishmentIcon";
 import "@/styles/nations.css";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { EMPTY } from "@/lib/ui-copy";
 
 const READ_POS_KEY = "nations:last-chapter";
 const FAV_KEY = "nations:favorites";
@@ -122,9 +123,9 @@ export default function NationDetailPage() {
   if (!nation) {
     return (
       <div className="page-shell nations-page" dir="rtl">
-        <PageHeader eyebrow="الأمم السابقة" title="لم نجد هذه الأمة" />
+        <PageHeader eyebrow="الأمم السابقة" title="غير موجود" />
         <p className="nations-empty">
-          الرابط الذي فتحته لا يطابق أي أمة في القسم.{" "}
+          {EMPTY.search}{" "}
           <Link href="/nations" className="nations-link">عُد إلى فهرس الأمم السابقة</Link>.
         </p>
       </div>

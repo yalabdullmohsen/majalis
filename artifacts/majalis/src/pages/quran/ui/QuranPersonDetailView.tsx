@@ -17,6 +17,7 @@ import "@/styles/pages/quran-hub.css";
 import "@/styles/pages/quran-people.css";
 import { DetailScreen } from "@/components/design-system/screens";
 import { truncateAtWord } from "@/lib/content-display-polish";
+import { EMPTY } from "@/lib/ui-copy";
 
 function splitReadableParagraphs(text: string): string[] {
   const raw = String(text || "").replace(/\s+/g, " ").trim();
@@ -97,7 +98,7 @@ export default function QuranPersonDetailView() {
       <SectionTemplatePage
         route="/quran/people"
         title="غير موجود"
-        subtitle="لم نجد هذه الشخصية في الفهرس المنشور"
+        subtitle={EMPTY.search}
         groupTitle="المذكورون في القرآن"
         breadcrumb={[
           { label: "الرئيسية", href: "/" },

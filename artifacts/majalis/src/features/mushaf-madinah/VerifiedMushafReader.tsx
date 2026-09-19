@@ -34,6 +34,7 @@ import {
   MUSHAF_PAGE_MAX,
 } from "@/lib/quran-last-page";
 import { useMediaSession } from "@/hooks/useMediaSession";
+import { STATUS } from "@/lib/ui-copy";
 import { AyahActionSheet } from "./AyahActionSheet";
 import { MushafControls } from "./MushafControls";
 import { MushafPage } from "./MushafPage";
@@ -255,7 +256,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         if (!cancelled) setLayout(data);
       })
       .catch(() => {
-        if (!cancelled) setError("تعذّر تحميل الصفحة");
+        if (!cancelled) setError(STATUS.loadError);
       });
     const saver = getPowerSaverState();
     if (saver.mode === "aggressive") {

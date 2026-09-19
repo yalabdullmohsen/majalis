@@ -45,6 +45,7 @@ import {
   QuranSettingsRepository,
 } from "@/lib/mushaf-v2";
 import { useMediaSession } from "@/hooks/useMediaSession";
+import { STATUS } from "@/lib/ui-copy";
 import { MushafPager } from "./MushafPager";
 import {
   setMushafAudioClock,
@@ -331,7 +332,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         if (!cancelled) setLayout(data);
       })
       .catch(() => {
-        if (!cancelled) setError("تعذّر تحميل الصفحة");
+        if (!cancelled) setError(STATUS.loadError);
       });
     const saver = getPowerSaverState();
     if (saver.mode !== "aggressive") {

@@ -17,6 +17,7 @@ import type { PlayerState } from "@/core/audio/AudioEngine";
 import { getReciter } from "@/lib/quran-audio";
 import { getSurahMeta } from "@/lib/quran-api";
 import { QURAN_DATA_FEATURES } from "@/lib/quran-data/flags";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import {
   displayScholarLabel,
   findTafsirAudioForAyah,
@@ -210,7 +211,7 @@ export const AyahActionSheet = memo(function AyahActionSheet({
       .catch(() => {
         if (cancelled) return;
         setTafsirAudioClip(null);
-        setTafsirAudioError("تعذّر تحميل كتالوج التفسير الصوتي");
+        setTafsirAudioError(STATUS.loadError);
       })
       .finally(() => {
         if (cancelled) return;
@@ -684,7 +685,7 @@ export const AyahActionSheet = memo(function AyahActionSheet({
             {showTajweedTab && tab === "tajweed" ? (
               <div className="ayah-action-sheet__tajweed" data-testid="mushaf-tajweed-empty">
                 <p className="mm-ayah-bar__status">
-                  لا توجد أحكام تجويد متاحة لهذه الآية حاليًا.
+                  {EMPTY.data}
                 </p>
                 <p className="mm-ayah-bar__status" data-testid="mushaf-ayah-see-also">
                   انظر أيضًا:{" "}

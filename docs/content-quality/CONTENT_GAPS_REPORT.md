@@ -278,3 +278,14 @@
 | library URLs | BLOCKED_SOURCE |
 | admin empties | DEFERRED |
 
+## Wave 33 final states
+
+| section | finalState |
+|---|---|
+| ScreenShell / Teacher / QuranPerson / Nation empties | IMPROVED_VERIFIED |
+| HomeDashboard / QuranPlayer / Hifz / QuranViewer errors | IMPROVED_VERIFIED |
+| AdhkarReminders + Mushaf page load + Ayah tajweed empty | IMPROVED_VERIFIED |
+| Lessons archived empty polish | IMPROVED_VERIFIED |
+| public SEO thin routes (≥75) | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |

@@ -47,7 +47,7 @@ assert.match(actions, /وضع الحفظ|mushaf-hifz-toggle/);
 assert.match(actions, /ayah-action-sheet__player|mushaf-compact-player/);
 assert.doesNotMatch(actions, /isAiTarteelEnabled|تسميع بالذكاء الاصطناعي|تلاوة بالذكاء/);
 assert.doesNotMatch(actions, /recitation-test-ai\?surah=.*ayah=/);
-assert.match(actions, /لا توجد أحكام تجويد متاحة لهذه الآية حاليًا/);
+assert.match(actions, /EMPTY\.data/);
 assert.match(actions, /QURAN_DATA_FEATURES/);
 assert.match(css, /font-size:\s*22px/);
 assert.match(css, /min-width:\s*44px/);
