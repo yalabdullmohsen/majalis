@@ -584,6 +584,7 @@
     "test:design-excellence": "node --import tsx src/lib/__tests__/design-excellence-utility-gate.test.ts",
     "test:mushaf-nextgen-baseline": "node --import tsx src/lib/__tests__/mushaf-nextgen-baseline-gate.test.ts",
     "test:mushaf-display-clarity": "node --import tsx src/lib/__tests__/mushaf-display-clarity-gate.test.ts",
+    "test:mushaf-intent-coordinator-pr18": "node --import tsx src/lib/__tests__/mushaf-intent-coordinator-pr18-gate.test.ts",
     "test:quran-journey-pr1": "node --import tsx src/lib/__tests__/quran-journey-pr1-contracts-gate.test.ts"
   },
   "devDependencies": {
