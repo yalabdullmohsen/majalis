@@ -71,6 +71,6 @@ for (const r of seo.routes) {
   );
 }
 assert.match(read("src/lib/seo-routes.json"), /أذكار الصباح والمساء والنوم والسفر مع المصدر والحكم عند الحاجة — لورد يومي واضح/);
-assert.match(read("src/lib/seo-routes.json"), /اختيار القرّاء والاستماع عبر مصحف المدينة برواية حفص عن عاصم في تجربة واحدة/);
+assert.match(read("src/lib/seo-routes.json"), /مركز التلاوة: استمع للقرآن بأصوات معتمدة وتابع تقدمك في الحفظ والعرض الصوتي عبر سُنّة/);
 
 console.log("content-quality-wave32-gate.test.ts: ok");

@@ -104,7 +104,7 @@ assert.equal(entitlements.includes("critical-alerts"), false);
 assert.doesNotMatch(settingsView, /تجاوز الصامت|Critical Alerts|تجاوز التركيز/);
 assert.match(prefsSrc, /bypassSilentMode:\s*false/);
 assert.match(settingsView, /fireTestLocalNotification\(10_000\)/);
-assert.match(settingsView, /فشل التشغيل/);
+assert.match(settingsView, /STATUS\.networkError/);
 assert.match(settingsView, /اختبار إشعار خلال ١٠ ثوانٍ|اختبار الإشعار بعد ١٠ ثوانٍ/);
 assert.match(settingsView, /فحص حالة الأذان/);
 assert.match(settingsView, /useAdhanDeveloperTools/);

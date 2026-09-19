@@ -209,11 +209,11 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
         if (result.shared) {
           setShareStatus(result.method === "clipboard" ? "نُسخ النص للمشاركة" : "تمت المشاركة");
         } else {
-          setShareStatus("تعذّرت المشاركة");
+          setShareStatus(STATUS.loadError);
         }
       } catch (error) {
         console.error("خطأ في المشاركة:", error instanceof Error ? error.message : error);
-        setShareStatus("تعذّرت المشاركة");
+        setShareStatus(STATUS.loadError);
       }
     },
     [meta.name],

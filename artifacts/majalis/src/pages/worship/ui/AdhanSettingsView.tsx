@@ -60,6 +60,7 @@ import {
 import "@/styles/pages/adhan-settings.css";
 import { UtilityScreen } from "@/components/design-system/screens";
 import { SettingsToggleRow } from "@/components/design-system/SettingsList";
+import { STATUS } from "@/lib/ui-copy";
 
 const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 30];
 
@@ -196,7 +197,7 @@ function PrayerScheduleHealthCard({ onRepair }: { onRepair: () => void }) {
       setDetail(`مجدولة الآن: ${pending.count} · القادم: ${nextLabel} · ${platformNote}`);
       setNeedsRepair(health.repairAction !== "none");
     } catch {
-      setLabel("تعذّر فحص حالة الجدولة");
+      setLabel(STATUS.loadError);
       setDetail(null);
       setNeedsRepair(true);
     }
@@ -282,7 +283,7 @@ function AndroidAdhanNativeCard({
     const muezzin = getMuezzin(selectedMuezzinId);
     const clip = resolveAdhanClip(muezzin, { isFajr: false, mode: "full" });
     if (!clip) {
-      setFgsMsg("تعذّر تجهيز ملف الأذان المحلي.");
+      setFgsMsg(STATUS.loadError);
       setFgsBusy(false);
       return;
     }
@@ -294,7 +295,7 @@ function AndroidAdhanNativeCard({
     setFgsMsg(
       ok
         ? "تُشغَّل الخدمة الأمامية — الأذان كاملاً حتى النهاية (ملف محلي)."
-        : "تعذّر تشغيل خدمة الأذان على هذا الجهاز.",
+        : STATUS.networkError,
     );
     setFgsBusy(false);
   }
@@ -573,7 +574,7 @@ export default function AdhanSettingsPage() {
               );
         if (!res.ok) {
           setPlayingId(null);
-          setSoundMsg(res.error ?? "تعذّر تشغيل المعاينة.");
+          setSoundMsg(res.error ?? STATUS.networkError);
           return;
         }
         setSoundMsg(
@@ -585,13 +586,13 @@ export default function AdhanSettingsPage() {
       }
       const result = await playAdhanPreview(opt.muezzinId, "short", prefs.volume ?? 1);
       if (!result.ok) {
-        setSoundMsg("فشل التشغيل: تعذّر المعاينة — تجربة الصوت الافتراضي.");
+        setSoundMsg(STATUS.networkError);
         const fallback = await playAdhanPreview("makkah", "short", prefs.volume ?? 1);
         if (!fallback.ok) setPlayingId(null);
       }
     } catch {
       setPlayingId(null);
-      setSoundMsg("تعذّر تشغيل المعاينة.");
+      setSoundMsg(STATUS.networkError);
     }
   }
 
@@ -610,13 +611,13 @@ export default function AdhanSettingsPage() {
         setNotifTestMsg(
           res.reason === "permission"
             ? "فعّل إذن الإشعارات أولًا من بطاقة تنبيهات الصلاة."
-            : "تعذّر جدولة إشعار الاختبار.",
+            : STATUS.loadError,
         );
         return;
       }
       setNotifTestMsg("سيصل إشعار قصير خلال ١٠ ثوانٍ.");
     } catch {
-      setNotifTestMsg("تعذّر اختبار الإشعار.");
+      setNotifTestMsg(STATUS.loadError);
     }
   }
 
@@ -645,7 +646,7 @@ export default function AdhanSettingsPage() {
         `آخر خطأ صوت: ${diag.lastError ?? "—"}`,
       ]);
     } catch {
-      setStatusLines(["تعذّر فحص حالة الأذان."]);
+      setStatusLines([STATUS.loadError]);
     } finally {
       setStatusBusy(false);
     }
@@ -667,7 +668,7 @@ export default function AdhanSettingsPage() {
       );
       flashSaved();
     } catch {
-      setRescheduleMsg("تعذّرت إعادة الجدولة. حاول مرة أخرى.");
+      setRescheduleMsg(STATUS.loadError);
     } finally {
       setRescheduleBusy(false);
     }
@@ -687,7 +688,7 @@ export default function AdhanSettingsPage() {
       setRescheduleMsg("حُذفت التنبيهات القديمة وأُعيد ضبطها.");
       flashSaved();
     } catch {
-      setRescheduleMsg("تعذّر الحذف وإعادة الضبط.");
+      setRescheduleMsg(STATUS.loadError);
     } finally {
       setRescheduleBusy(false);
     }
