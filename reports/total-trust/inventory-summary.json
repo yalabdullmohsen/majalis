@@ -1,0 +1,42 @@
+{
+  "program": "SUNNAH_TOTAL_TRUST",
+  "generatedAt": "2026-09-19T20:35:41.855Z",
+  "sourceCommit": "47fc1cc7ceb0e764c3a9b4805eeae27732c42e21",
+  "auditBranch": "cursor/sunnah-total-trust-audit",
+  "product": "artifacts/majalis",
+  "statusTaxonomy": [
+    "VERIFIED_EXACT",
+    "VERIFIED_WITH_CORRECTION",
+    "LINGUISTICALLY_REVIEWED",
+    "NEEDS_SCHOLAR_REVIEW",
+    "NEEDS_SOURCE",
+    "CONFLICTING_SOURCES",
+    "BLOCKED_LICENSE",
+    "DRAFT",
+    "EXCLUDED",
+    "NOT_APPLICABLE"
+  ],
+  "publicDisplayAllowed": [
+    "VERIFIED_EXACT",
+    "VERIFIED_WITH_CORRECTION"
+  ],
+  "totals": {
+    "appRoutePaths": 364,
+    "seoRoutes": 210,
+    "sitemapUrls": 765,
+    "inventoryRows": 364,
+    "redirectsDetected": 125,
+    "matrixRows": 364,
+    "findings": 1
+  },
+  "quranByteLock": "run verify:protected-quran-byte-lock separately",
+  "findings": [
+    {
+      "severity": "OWNER_DECISION",
+      "code": "APP_STORE_METADATA_CLAIM",
+      "route": "store/app-store/review-notes.md",
+      "detail": "نصوص مراجعة المتجر تذكر fatwas/Learning paths بينما المنتج الحي أزال/حوّل بعض هذه الأسطح — لا تُسحب المراجعة تلقائيًا؛ يلزم OWNER_DECISION قبل تعديل Connect.",
+      "releaseClass": "POTENTIAL_RELEASE_BLOCKER_CRITICAL"
+    }
+  ]
+}
