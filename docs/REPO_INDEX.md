@@ -68,6 +68,7 @@
 ## تطور المنتج
 
 | `docs/product-evolution/` | خط أساس برنامج التطوير + تقرير المراحل (P0+) |
+| `docs/content-quality/TOTAL_TRUST_*` + `reports/total-trust/` | برنامج TOTAL TRUST (تحقق محتوى/مسارات؛ لا حكم شرعي آلي) |
 
 ## حوكمة الوكيل
 
