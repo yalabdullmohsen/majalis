@@ -132,7 +132,7 @@ export const AyahActionSheet = memo(function AyahActionSheet({
           : "ابدأ التلاوة";
   const audioStateLabel =
     audioError || playerState === "error"
-      ? "حدث خطأ"
+      ? STATUS.loadError
       : playerState === "playing"
         ? "يعمل الآن"
         : loading
@@ -460,7 +460,7 @@ export const AyahActionSheet = memo(function AyahActionSheet({
                             (r) => {
                               if (!r.ok) {
                                 setTafsirAudioActiveClipId(null);
-                                setTafsirAudioError(r.reason || "تعذّر تشغيل التفسير الصوتي");
+                                setTafsirAudioError(r.reason || STATUS.networkError);
                               }
                             },
                           );

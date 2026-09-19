@@ -29,7 +29,7 @@ assert.doesNotMatch(gsm, /تعذر تنفيذ البحث/);
 
 const seo = read("src/lib/seo-routes.json");
 assert.doesNotMatch(seo, /ابدأ رحلتك في طلب العلم الشرعي/);
-assert.match(seo, /إنشاء حساب في سُنّة للوصول إلى المحتوى المحفوظ/);
+assert.match(seo, /أنشئ حسابًا في سُنّة لحفظ تقدمك ومفضلاتك/);
 assert.match(seo, /إدارة التعلم العائلي وضوابط المحتوى/);
 
 console.log("content-quality-wave30-gate.test.ts: ok");

@@ -9,6 +9,7 @@ import {
 } from "@/lib/prayer-annual";
 import { getActivePrayerLocation } from "@/lib/prayer-location-prefs";
 import { toArabicIndicDigits } from "@/lib/numerals";
+import { STATUS } from "@/lib/ui-copy";
 
 const MONTHS_AR = [
   "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
@@ -35,7 +36,7 @@ export function PrayerAnnualTimetable() {
           : await generateYearTimetable(year);
       setRows(data);
     } catch {
-      setError("تعذّر توليد الإمساكية محلياً.");
+      setError(STATUS.loadError);
     } finally {
       setBusy(false);
     }

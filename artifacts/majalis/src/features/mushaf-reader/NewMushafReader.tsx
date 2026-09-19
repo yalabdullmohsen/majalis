@@ -923,7 +923,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       await navigator.clipboard.writeText(label);
       setStatus("تم النسخ");
     } catch {
-      setStatus("تعذّر النسخ");
+      setStatus(STATUS.loadError);
     }
   }, [selectedVerseKey, versePreview]);
 
