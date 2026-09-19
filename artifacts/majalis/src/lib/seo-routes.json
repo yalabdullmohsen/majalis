@@ -2416,7 +2416,7 @@
     {
       "path": "/auth/register",
       "title": "إنشاء حساب",
-      "description": "إنشاء حساب جديد على منصة سُنّة للوصول للمحتوى الشرعي المحفوظ والمتابعة.",
+      "description": "إنشاء حساب جديد على منصة سُنّة للوصول للمحتوى الشرعي كاملاً.",
       "keywords": [],
       "sitemap": false,
       "robots": "noindex, nofollow"

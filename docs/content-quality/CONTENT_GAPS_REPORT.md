@@ -274,7 +274,7 @@
 | DirectQa / LandmarksMap / AssessmentModal copy | IMPROVED_VERIFIED |
 | MushafSearchSheet / MushafAudioDock search empties | IMPROVED_VERIFIED |
 | FamilyMode + HomeUpcomingLessons loadError | IMPROVED_VERIFIED |
-| short public SEO (≥65, skip auth/callback) | IMPROVED_VERIFIED |
+| short public SEO (≥65, skip /auth/*) | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
 | admin empties | DEFERRED |
 

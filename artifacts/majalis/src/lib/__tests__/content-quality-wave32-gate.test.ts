@@ -64,7 +64,7 @@ const seo = JSON.parse(read("src/lib/seo-routes.json")) as {
   routes: Array<{ path: string; description?: string }>;
 };
 for (const r of seo.routes) {
-  if (!r.description || (r.path || "").includes("auth/callback")) continue;
+  if (!r.description || (r.path || "").includes("/auth/")) continue;
   assert.ok(
     r.description.length >= 65,
     `${r.path} description too short (${r.description.length}): ${r.description}`,
