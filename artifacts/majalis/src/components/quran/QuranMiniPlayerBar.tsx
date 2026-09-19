@@ -7,7 +7,7 @@ import { ChevronUp, Pause, Play, SkipBack, SkipForward, X } from "lucide-react";
 import { AudioEngine, type AudioEngineSnapshot } from "@/core/audio/AudioEngine";
 import { getSurahMeta } from "@/lib/quran-api";
 import { getReciter } from "@/lib/quran-audio";
-import { ayahKeyToPage } from "@/lib/quran-my-bookmarks";
+import { ayahKeyToPage } from "@/lib/quran-ayah-page";
 import { toArabicDigits } from "@/lib/utils";
 import {
   stopMiniPlayer,

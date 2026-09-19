@@ -705,6 +705,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         page,
         label,
         date: new Date().toLocaleDateString("ar"),
+        kind: "custom" as const,
       };
       await saveBookmarks([next, ...list]);
       haptics.success();
