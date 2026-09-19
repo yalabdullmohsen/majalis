@@ -23,11 +23,7 @@ import {
   loadLastPageSync,
   saveLastPage as persistLastPage,
 } from "@/lib/quran-last-page";
-import {
-  getMyBookmarks,
-  saveBookmarks as persistBookmarks,
-  type MyBookmark,
-} from "@/lib/quran-my-bookmarks";
+import type { MyBookmark } from "@/lib/quran-my-bookmarks";
 
 export type { MyBookmark };
 
@@ -53,13 +49,15 @@ export const storageService = {
   getLastPageNumber: async (): Promise<number | null> => loadLastPage(),
   getLastPageNumberSync: (): number | null => loadLastPageSync(),
 
-  // ── إدارة الفواصل المتعددة ─────────────────────────────────────────────
+  // ── إدارة الفواصل المتعددة (كسول — خارج مسار الإقلاع) ───────────────────
   saveBookmarks: async (bookmarks: MyBookmark[]): Promise<void> => {
-    await persistBookmarks(bookmarks);
+    const { saveBookmarks } = await import("@/lib/quran-my-bookmarks");
+    await saveBookmarks(bookmarks);
   },
 
   getBookmarks: async (): Promise<MyBookmark[]> => {
     try {
+      const { getMyBookmarks } = await import("@/lib/quran-my-bookmarks");
       return getMyBookmarks();
     } catch {
       return [];

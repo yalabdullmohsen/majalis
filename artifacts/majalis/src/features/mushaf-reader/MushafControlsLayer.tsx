@@ -206,6 +206,14 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
               onChange={(e) => onPageArrowsEnabledChange(e.target.checked)}
             />
           </label>
+          <a
+            className="nm-controls-more__row"
+            href="/mushaf/bookmarks"
+            data-testid="mushaf-bookmarks-manager-link"
+            onClick={() => onMoreOpenChange?.(false)}
+          >
+            إدارة الفواصل
+          </a>
           <button
             type="button"
             className="nm-controls-more__close"
@@ -329,7 +337,7 @@ export const MushafVerseMenu = memo(function MushafVerseMenu({
           نسخ
         </button>
         <button type="button" className="nm-verse-menu__action" onClick={onBookmark}>
-          حفظ
+          إضافة فاصل
         </button>
       </div>
       <div className="nm-verse-menu__status" aria-live="polite">

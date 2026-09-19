@@ -9,7 +9,7 @@ import {
   MUSHAF_PAGE_MAX,
 } from "@/lib/quran-last-page";
 import { loadReadingAyahKey, SURAH_START_PAGES } from "@/lib/quran-api";
-import { ayahKeyToPage } from "@/lib/quran-my-bookmarks";
+import { ayahKeyToPage } from "@/lib/quran-ayah-page";
 import { useNavigationPaintGate } from "@/hooks/useNavigationPaintGate";
 import { ScriptureScreen } from "@/components/design-system/screens";
 import { migrateMushafUserData, isMushafReaderV2Enabled } from "@/lib/mushaf-v2";

@@ -1,40 +1,68 @@
 /**
- * Web port of RN AsyncStorage `myBookmarks` — فواصل/إشارات المصحف.
- *
- * المرجع المستقر: آية `ayahKey` (سورة:آية).
- * الحقل `page` مشتق للعرض. السجلات القديمة (page فقط) تُهاجر عبر
- * خرائط mushaf=1 المضغوطة.
+ * فواصل المصحف — تخزين محلي (ayahKey مستقر، page مشتق).
  */
 
-import {
-  findPageByFirstAyah,
-  legacyPageFirstAyahKey,
-  legacyPageToCurrentPageNum,
-  pageFirstAyahMushaf1,
-} from "@/lib/quran-data/ayah-page-index.generated";
 import { storageGetSync, storageSetSync } from "@/lib/native-storage";
 import { recoverLocalJsonTmp, writeLocalJsonAtomic } from "@/lib/safe-json";
 import { runOptimisticWalPersist } from "@/lib/sovereign/optimistic-wal";
+import type { MushafBookmarkKind, MushafWirdSlot } from "@/lib/quran-bookmark-kinds";
+import {
+  ayahKeyToPage,
+  currentPageFirstAyah,
+  legacyPageToAyahKey,
+  legacyPageToCurrentPage,
+  clampMushafPageNum as clampPage,
+} from "@/lib/quran-ayah-page";
+
+export type { MushafBookmarkKind, MushafWirdSlot };
+export {
+  ayahKeyToPage,
+  currentPageFirstAyah,
+  legacyPageToAyahKey,
+  legacyPageToCurrentPage,
+} from "@/lib/quran-ayah-page";
 
 export const MY_BOOKMARKS_KEY = "myBookmarks";
 export const MY_BOOKMARKS_MIGRATED_KEY = "myBookmarks:ayah-migrated-v1";
+export const MY_BOOKMARKS_MAX = 1000;
+
+function isKind(v: unknown): v is MushafBookmarkKind {
+  return (
+    v === "wird" ||
+    v === "hifz" ||
+    v === "review" ||
+    v === "tadabbur" ||
+    v === "lesson" ||
+    v === "custom"
+  );
+}
 
 export type MyBookmark = {
   id: number;
-  /** مرجع مستقر — لا ينزاح مع تغيير ترسيم الصفحات */
   ayahKey: string;
-  /** رقم الصفحة الحالي المشتق من mushaf=1 (للعرض/التنقل) */
   page: number;
   label: string;
   date: string;
+  kind: MushafBookmarkKind;
+  note?: string;
+  customColor?: string;
+  customName?: string;
+  wirdSlot?: MushafWirdSlot;
+  khatmaId?: string;
+  archived?: boolean;
+  favorite?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
-type LegacyBookmark = {
+type LegacyBookmark = Partial<MyBookmark> & {
   id?: number;
   page?: number;
   label?: string;
   date?: string;
   ayahKey?: string;
+  kind?: string;
+  wirdSlot?: string;
 };
 
 let memBookmarks: MyBookmark[] | null = null;
@@ -60,37 +88,14 @@ function persistList(list: MyBookmark[]): void {
   }
 }
 
-function clampPage(page: number): number {
-  if (!Number.isFinite(page)) return 1;
-  return Math.min(604, Math.max(1, Math.floor(page)));
-}
-
 function isAyahKey(s: unknown): s is string {
   return typeof s === "string" && /^\d{1,3}:\d{1,3}$/.test(s);
 }
 
-export function legacyPageToAyahKey(page: number): string {
-  return legacyPageFirstAyahKey(page);
-}
-
-/** صفحة قديمة → صفحة mushaf=1 الحالية (عبر أول آية كانت على الصفحة) */
-export function legacyPageToCurrentPage(page: number): number {
-  return legacyPageToCurrentPageNum(page);
-}
-
-/** أول آية على صفحة mushaf=1 الحالية */
-export function currentPageFirstAyah(page: number): string {
-  return pageFirstAyahMushaf1(page);
-}
-
-/**
- * آية → صفحة: إن وُجدت كأول آية لصفحة؛ وإلا يُستخدم fallbackPage.
- */
-export function ayahKeyToPage(ayahKey: string, fallbackPage?: number): number {
-  const hit = findPageByFirstAyah(ayahKey);
-  if (hit != null) return hit;
-  if (typeof fallbackPage === "number") return clampPage(fallbackPage);
-  return 1;
+function str(v: unknown, max: number): string | undefined {
+  if (typeof v !== "string") return undefined;
+  const t = v.trim();
+  return t ? t.slice(0, max) : undefined;
 }
 
 function normalizeBookmark(raw: LegacyBookmark): MyBookmark | null {
@@ -105,12 +110,34 @@ function normalizeBookmark(raw: LegacyBookmark): MyBookmark | null {
     ayahKey = legacyPageToAyahKey(raw.page);
     page = legacyPageToCurrentPage(raw.page);
   } else {
-    page =
-      typeof raw.page === "number"
-        ? clampPage(raw.page)
-        : ayahKeyToPage(ayahKey);
+    page = typeof raw.page === "number" ? clampPage(raw.page) : ayahKeyToPage(ayahKey);
   }
-  return { id: raw.id, ayahKey, page, label: raw.label, date: raw.date };
+  const kind: MushafBookmarkKind = isKind(raw.kind) ? raw.kind : "custom";
+  const wirdSlot: MushafWirdSlot | undefined =
+    raw.wirdSlot === "morning" || raw.wirdSlot === "evening" || raw.wirdSlot === "any"
+      ? raw.wirdSlot
+      : undefined;
+  const customColor =
+    typeof raw.customColor === "string" && /^#[0-9a-fA-F]{6}$/.test(raw.customColor)
+      ? raw.customColor
+      : undefined;
+  return {
+    id: raw.id,
+    ayahKey,
+    page,
+    label: raw.label,
+    date: raw.date,
+    kind,
+    note: str(raw.note, 240),
+    customColor,
+    customName: str(raw.customName, 48),
+    wirdSlot,
+    khatmaId: str(raw.khatmaId, 64),
+    archived: raw.archived === true,
+    favorite: raw.favorite === true,
+    createdAt: str(raw.createdAt, 40),
+    updatedAt: str(raw.updatedAt, 40),
+  };
 }
 
 function migrateStorageIfNeeded(): void {
@@ -204,6 +231,9 @@ export async function addBookmark(page: number, label: string): Promise<MyBookma
       page: p,
       label: (label || `صفحة ${p}`).trim(),
       date: new Date().toLocaleDateString("ar"),
+      kind: "custom",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
     const next = [...getMyBookmarks(), newBookmark];
     persistList(next);
@@ -252,4 +282,13 @@ export function isPageBookmarked(page: number): boolean {
 export function resetMyBookmarksCacheForTests(): void {
   memBookmarks = null;
   memPageIndex = null;
+}
+
+export function getBookmarksOnPage(page: number): MyBookmark[] {
+  const p = clampPage(page);
+  return getMyBookmarks().filter((b) => !b.archived && b.page === p);
+}
+
+export function getBookmarksForAyah(ayahKey: string): MyBookmark[] {
+  return getMyBookmarks().filter((b) => !b.archived && b.ayahKey === ayahKey);
 }

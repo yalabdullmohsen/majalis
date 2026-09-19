@@ -51,6 +51,7 @@ const QuranSearchPage = lazy(() => import("@/pages/quran/QuranSearchPage"));
 const RevelationOrderPage = lazy(() => import("@/pages/quran/RevelationOrderPage"));
 const MakkiMadaniPage = lazy(() => import("@/pages/quran/MakkiMadaniPage"));
 const MushafReaderPage = lazy(() => import("@/pages/quran/MushafReaderPage"));
+const MushafBookmarksPage = lazy(() => import("@/pages/quran/MushafBookmarksPage"));
 const QuranHubPage = lazy(() => import("@/pages/quran/QuranHubPage"));
 const QuranNumbersPage = lazy(() => import("@/pages/quran/QuranNumbersPage"));
 const QuranPeoplePage = lazy(() => import("@/pages/quran/QuranPeoplePage"));
@@ -516,6 +517,7 @@ export default function AppRoutes() {
       </Route>
       <Route path="/quran"><Redirect to="/quran-hub" /></Route>
       {/* مصحف المدينة — قارئ واحد عبر /mushaf?page=؛ المسارات القديمة تُحوَّل بلا إعادة تركيب */}
+      <Route path="/mushaf/bookmarks"><SafeLazyRoute component={MushafBookmarksPage} /></Route>
       <Route path="/mushaf/page/:page">
         {(params) => <Redirect to={`/mushaf?page=${encodeURIComponent(params.page || "1")}`} />}
       </Route>
