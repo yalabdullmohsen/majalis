@@ -7,6 +7,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import type { FiqhGuideSection } from "@/lib/fiqh-guides/types";
 import "@/styles/pages/fiqh-guide.css";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { EMPTY } from "@/lib/ui-copy";
 
 type Props = { section: FiqhGuideSection };
 
@@ -79,7 +80,7 @@ export function FiqhGuidePage({ section }: Props) {
 
       <div className="fg-grid">
         {filteredCards.length === 0 ? (
-          <p className="fg-empty" role="status">لا نتائج لهذا البحث في الباب الحالي.</p>
+          <p className="fg-empty" role="status">{EMPTY.search}</p>
         ) : (
           filteredCards.map((card) => (
             <article key={card.id} className="fg-card">

@@ -241,3 +241,14 @@
 | SEO boilerplate cleanup (22 public pages) | IMPROVED_VERIFIED |
 | library URLs | BLOCKED_SOURCE |
 | admin empties | DEFERRED |
+
+## Wave 31 final states
+
+| section | finalState |
+|---|---|
+| fiqh guide / section hub / prayer location / surah jump empties | IMPROVED_VERIFIED |
+| ScreenShell + assistant offline copy | IMPROVED_VERIFIED |
+| short public SEO (24 routes) | IMPROVED_VERIFIED |
+| library URLs | BLOCKED_SOURCE |
+| admin empties | DEFERRED |
+

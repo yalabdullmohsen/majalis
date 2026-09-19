@@ -17,6 +17,7 @@ import { scoreTolerantMatch } from "@/features/search/tolerant-match";
 import { toWesternDigits } from "@/shared/arabic-normalize";
 import { toArabicDigits } from "@/lib/utils";
 import { VirtualList, type VirtualListHandle } from "@/components/VirtualList";
+import { ACTION, EMPTY } from "@/lib/ui-copy";
 import "@/styles/components/quran-surah-jump-search.css";
 
 export type QuranSurahJumpSearchProps = {
@@ -300,9 +301,9 @@ export function QuranSurahJumpSearch({
 
           {debounced && hits.length === 0 && !showJumpAyah && !showJumpPageOnly ? (
             <div className="quran-surah-jump__empty">
-              <p>لا نتائج لـ «{debounced}»</p>
+              <p>{EMPTY.searchShort}</p>
               <button type="button" onClick={() => setQuery("")}>
-                مسح البحث
+                {ACTION.clearSearch}
               </button>
             </div>
           ) : null}

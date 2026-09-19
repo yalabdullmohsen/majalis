@@ -17,6 +17,7 @@ import type { AssistantHealth } from "@/lib/assistant-api";
 import type { ChatMessage } from "@/hooks/useAssistantChat";
 import { ASSISTANT_WELCOME_MESSAGE } from "@/hooks/useAssistantChat";
 import { AssistantReply } from "./AssistantReply";
+import { STATUS } from "@/lib/ui-copy";
 import "@/styles/components/assistant-chat.css";
 import "@/styles/pages/assistant-shell.css";
 
@@ -240,7 +241,7 @@ export function AssistantChatView({
                   ? "مدعوم بالذكاء الاصطناعي مع مصادر محلية"
                   : health.mode === "local"
                     ? "يعمل بالمصادر المحلية"
-                    : "تعذر الاتصال بالخادم"
+                    : STATUS.networkError
               }
             >
               <span className="acv-status__dot" aria-hidden="true" />
