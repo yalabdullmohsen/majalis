@@ -1,0 +1,77 @@
+{
+  "measuredAt": "2026-09-19T05:08:28.147Z",
+  "chunks": [
+    {
+      "f": "index-CzTQMd4j.js",
+      "raw": 394203,
+      "gz": 123198,
+      "hit": true
+    },
+    {
+      "f": "tarikh-islami-DziRvXAR.js",
+      "raw": 575292,
+      "gz": 107991,
+      "hit": true
+    },
+    {
+      "f": "ProphetStoriesPage-DCQgngah.js",
+      "raw": 92117,
+      "gz": 26535,
+      "hit": true
+    },
+    {
+      "f": "MushafReaderPage-_0z34Qcv.js",
+      "raw": 76486,
+      "gz": 25093,
+      "hit": true
+    },
+    {
+      "f": "TafsirPage-2KO_rm7O.js",
+      "raw": 86275,
+      "gz": 22918,
+      "hit": true
+    },
+    {
+      "f": "AppRoutes-B-RhR-kO.js",
+      "raw": 88814,
+      "gz": 20761,
+      "hit": true
+    },
+    {
+      "f": "SurahStoriesPage-BEL3zzCr.js",
+      "raw": 111854,
+      "gz": 17821,
+      "hit": true
+    },
+    {
+      "f": "seo-routes-CwOhVJYM.js",
+      "raw": 83480,
+      "gz": 16504,
+      "hit": true
+    },
+    {
+      "f": "QuranNumbersPage-uWaRY-eu.js",
+      "raw": 55686,
+      "gz": 12134,
+      "hit": true
+    },
+    {
+      "f": "QuranEnginePage-CVBdWEEM.js",
+      "raw": 37892,
+      "gz": 11698,
+      "hit": true
+    },
+    {
+      "f": "HomeBelowFold-S5lMPb9s.js",
+      "raw": 33675,
+      "gz": 11339,
+      "hit": true
+    },
+    {
+      "f": "TajweedChapterPage-CC3bZ4Aq.js",
+      "raw": 37543,
+      "gz": 10514,
+      "hit": true
+    }
+  ]
+}
