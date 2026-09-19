@@ -1,7 +1,7 @@
 # مراجعة إحصاءات القرآن — معتمدة للعرض
 
 **المراجع:** وكيل المحتوى — مراجعة أولية على المصادر المطبوعة المعتمدة  
-**التاريخ:** ٢٠٢٦-٠٨-١٧
+**التاريخ:** ٢٠٢٦-٠٩-٢٠
 
 ## ما تم التحقق منه
 
@@ -30,12 +30,17 @@
 | madani-count | madani-surahs |
 | nuzul-span | nuzul-years |
 
-### alfaz.json (٣١)
+### alfaz.json (٤٧)
 
 | id | topicKey |
 |---|---|
 | allah-lafz | allah |
 | rahman-lafz | rahman |
+| rabb-madda | rabb |
+| qul-lafz | qul |
+| nas-lafz | nas |
+| insan-lafz | insan |
+| ard-lafz | ard |
 | wahd-madda | wahd |
 | shirk-madda | shirk |
 | iman-madda | iman |
@@ -65,6 +70,17 @@
 | jinn-madda | jinn |
 | asma-husna | asma-husna |
 | longest-word | longest-word |
+| musa-lafz | musa |
+| ibrahim-lafz | ibrahim |
+| nuh-lafz | nuh |
+| yusuf-lafz | yusuf |
+| isa-lafz | isa |
+| adam-lafz | adam |
+| sulayman-lafz | sulayman |
+| dawud-lafz | dawud |
+| muhammad-lafz | muhammad |
+| ahmad-lafz | ahmad |
+| firawn-lafz | firawn |
 
 ### mawdoo.json (١٤)
 
@@ -115,4 +131,4 @@
 
 ## المجموع
 
-**٧٥** بطاقة معتمدة عبر المجموعات الخمس.
+**٩١** بطاقة معتمدة عبر المجموعات الخمس.
