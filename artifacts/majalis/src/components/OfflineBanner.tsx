@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Wifi, WifiOff, RefreshCw } from "lucide-react";
+import { BUTTON, EMPTY } from "@/lib/ui-copy";
 import "@/styles/components/language-offline.css";
 
 type Status = "online" | "offline" | "back-online";
@@ -74,7 +75,7 @@ export function OfflineBanner() {
         <>
           <WifiOff size={14} aria-hidden="true" className="offline-banner__icon" />
           <span className="offline-banner__text">
-            أنت غير متصل، سيتم عرض المحتوى المحفوظ
+            {EMPTY.offline}
             {pending > 0 ? ` · ${pending} تغيير بانتظار المزامنة` : ""}
           </span>
           <button
@@ -82,7 +83,7 @@ export function OfflineBanner() {
             className="offline-banner__retry mj-pressable"
             onClick={() => window.location.reload()}
           >
-            إعادة المحاولة
+            {BUTTON.retry}
           </button>
         </>
       ) : showPendingOnly ? (

@@ -73,8 +73,8 @@ assert.match(mushafVis, /stabilizeVisualContext/, "لقطات المصحف تس�
 const offline = read("src/components/OfflineBanner.tsx");
 assert.match(
   offline,
-  /أنت غير متصل، سيتم عرض المحتوى المحفوظ/,
-  "نص الأوفلاين مطابق للجودة",
+  /EMPTY\.offline/,
+  "نص الأوفلاين من ui-copy",
 );
 
 console.log("ssunnah-stability-foundation-gate.test.ts: ok");

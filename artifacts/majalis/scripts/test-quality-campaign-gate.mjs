@@ -30,8 +30,12 @@ for (const name of [
 }
 
 const banner = read("src/components/OfflineBanner.tsx");
-if (!banner.includes("أنت غير متصل، سيتم عرض المحتوى المحفوظ")) {
-  violations.push("OfflineBanner: رسالة الأوفلاين غير مطابقة");
+if (!banner.includes("EMPTY.offline")) {
+  violations.push("OfflineBanner: يجب استخدام EMPTY.offline");
+}
+const uiCopy = read("src/lib/ui-copy.ts");
+if (!uiCopy.includes('offline: "أنت غير متصل، سيتم عرض المحتوى المحفوظ"')) {
+  violations.push("ui-copy: EMPTY.offline غير مطابق لنص الأوفلاين المعتمد");
 }
 
 const offlineCss = read("src/styles/components/language-offline.css");

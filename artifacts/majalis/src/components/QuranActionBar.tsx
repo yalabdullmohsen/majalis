@@ -11,6 +11,7 @@ import { getReciter, saveReciterId } from "@/lib/quran-audio";
 import { getVerifiedReciters, getVerifiedRecitersSyncFallback } from "@/lib/audio-registry";
 import { shareAyahAsText } from "@/lib/share-ayah";
 import { toArabicDigits, truncateAtWord } from "@/lib/utils";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import "@/styles/quran-engine-ui.css";
 
 export type QuranActionBarAyah = {
@@ -72,7 +73,7 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
       setAudioBusy(snap.playerState === "loading" || snap.playerState === "buffering");
       setRepeatMode(snap.repeatMode);
       if (snap.playerState === "error") {
-        setStatus("تعذّر تشغيل التلاوة. تحقق من الاتصال أو جرّب قارئًا آخر.");
+        setStatus(STATUS.networkError);
         setStatusWarn(true);
       }
     });
@@ -130,13 +131,13 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
       await audio.togglePlay(ayah.surah, ayah.ayah);
       const snap = audio.getSnapshot();
       if (snap.playerState === "error") {
-        setStatus("تعذّر تشغيل التلاوة. تحقق من الاتصال أو جرّب قارئًا آخر.");
+        setStatus(STATUS.networkError);
         setStatusWarn(true);
       } else {
         setStatus(null);
       }
     } catch {
-      setStatus("تعذّر تشغيل التلاوة. تحقق من الاتصال أو جرّب قارئًا آخر.");
+      setStatus(STATUS.networkError);
       setStatusWarn(true);
     }
   };
@@ -160,12 +161,12 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
         setTafsirText(row.text);
       } else {
         setTafsirText(null);
-        setStatus("التفسير غير متاح لهذه الآية حاليًا. حاول لاحقًا.");
+        setStatus(EMPTY.data);
         setStatusWarn(true);
       }
     } catch {
       setTafsirText(null);
-      setStatus("تعذّر جلب التفسير. تحقق من الاتصال ثم أعد المحاولة.");
+      setStatus(STATUS.networkError);
       setStatusWarn(true);
     } finally {
       setTafsirLoading(false);
@@ -178,7 +179,7 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
       if (bookmarked) {
         const ok = await db.removeBookmark(ayah.surah, ayah.ayah);
         if (!ok) {
-          setStatus("تعذّر إزالة الإشارة.");
+          setStatus(STATUS.loadError);
           setStatusWarn(true);
           return;
         }
@@ -191,7 +192,7 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
           note: truncateAtWord(ayah.text, 120),
         });
         if (!row) {
-          setStatus("تعذّر حفظ الإشارة. قد يكون التخزين المحلي غير متاح.");
+          setStatus(STATUS.loadError);
           setStatusWarn(true);
           return;
         }
@@ -199,7 +200,7 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
         setStatus("حُفظت الإشارة");
       }
     } catch {
-      setStatus("تعذّر تحديث الإشارة.");
+      setStatus(STATUS.loadError);
       setStatusWarn(true);
     }
   };
@@ -208,10 +209,10 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
     setStatusWarn(false);
     try {
       const ok = await shareAyahAsText(ayah.text, surahName, ayah.ayah);
-      setStatus(ok ? "تمت المشاركة" : "تعذّرت المشاركة");
+      setStatus(ok ? "تمت المشاركة" : STATUS.loadError);
       setStatusWarn(!ok);
     } catch {
-      setStatus("تعذّرت المشاركة");
+      setStatus(STATUS.loadError);
       setStatusWarn(true);
     }
   };
