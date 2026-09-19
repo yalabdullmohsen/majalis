@@ -1,0 +1,100 @@
+{
+  "program": "sunnah-whole-app-excellence",
+  "stage": 1,
+  "stageName": "whole-app-baseline-protection-gates",
+  "measuredAt": "2026-09-19T10:40:47.419Z",
+  "commit": "6c197f577535a36f8feb9547abb5a02baa103f5d",
+  "branchBase": "origin/main",
+  "environment": "local-agent-build",
+  "productRoot": "artifacts/majalis",
+  "commands": {
+    "build": "PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run build",
+    "bundleBudget": "pnpm --filter @workspace/majalis run test:bundle-budget",
+    "capture": "node artifacts/majalis/scripts/whole-app-baseline.mjs --write"
+  },
+  "bundle": {
+    "entryJs": {
+      "file": "index-uXAsnAaN.js",
+      "rawBytes": 375057,
+      "gzipBytes": 117085,
+      "gzipKiB": 114.34,
+      "budgetKiB": 120,
+      "zlibSlackBytes": 320,
+      "gate": "pass"
+    },
+    "iconsJs": {
+      "file": "icons-BA8uIA1L.js",
+      "rawBytes": 72905,
+      "gzipBytes": 22749,
+      "gzipKiB": 22.22,
+      "budgetKiB": 30,
+      "gate": "pass"
+    },
+    "mainCss": {
+      "file": "index-Q_QQ-IFT.css",
+      "rawBytes": 339627,
+      "gzipBytes": 61595,
+      "gzipKiB": 60.15,
+      "budgetKiB": 100,
+      "gate": "pass"
+    },
+    "mushafReaderPageJs": {
+      "file": "MushafReaderPage-CYy6e8Ai.js",
+      "rawBytes": 75498,
+      "gzipBytes": 24748,
+      "gzipKiB": 24.17,
+      "softCeilingKiB": 40,
+      "gate": "pass"
+    },
+    "mushafReaderPageCss": {
+      "file": "MushafReaderPage-Bj5NLgEj.css",
+      "rawBytes": 150913,
+      "gzipBytes": 24848,
+      "gzipKiB": 24.27
+    },
+    "softWarnings": [
+      {
+        "chunk": "fiqh-books-B8qVRFuS.js",
+        "gzipKiB": 251.5,
+        "note": "lazy content chunk فوق soft 150 KiB — ليس فشل بوابة entry"
+      }
+    ]
+  },
+  "budgetsLocked": {
+    "entryJsGzipBytes": 123200,
+    "iconsJsGzipBytes": 30720,
+    "mainCssGzipBytes": 102400,
+    "mushafReaderPageJsGzipBytesSoft": 40960,
+    "note": "120*1024+320 · 30*1024 · 100*1024 · mushaf soft 40KiB — لا تُرفع في هذا البرنامج"
+  },
+  "relatedBaselines": [
+    "docs/performance/ARCHITECTURE_BASELINE.md",
+    "docs/mushaf/MUSHAF_INTERNAL_PERFORMANCE_BASELINE.md"
+  ],
+  "notMeasuredThisRun": [
+    "coldStartMs",
+    "warmStartMs",
+    "resumeMs",
+    "homeReadinessMs",
+    "routeTransitionMs",
+    "clickToShellMs",
+    "clickToContentMs",
+    "lessonListMs",
+    "lessonDetailShellMs",
+    "searchTypingLagMs",
+    "prayerSurfaceMs",
+    "quranHubMs",
+    "mushafOpenMs",
+    "settingsOpenMs",
+    "touchToResponseMs",
+    "frameDropCount",
+    "longTaskCount",
+    "clsSession",
+    "duplicateRequestCount",
+    "renderCountSample",
+    "memoryAfter25RoutesMb",
+    "memoryAfter100RoutesMb",
+    "lighthouseHomeThisSession",
+    "homeNetworkRequestCount"
+  ]
+}
