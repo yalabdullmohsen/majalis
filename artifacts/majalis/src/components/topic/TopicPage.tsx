@@ -27,6 +27,7 @@ import {
   CardTitle,
   Caption,
 } from "@/components/design-system/text";
+import { ACTION, EMPTY, STATUS } from "@/lib/ui-copy";
 import "@/styles/components/topic-page.css";
 import "@/styles/components/safe-hero.css";
 
@@ -244,19 +245,19 @@ export function TopicPage({
         ) : null}
         {status === "empty" ? (
           <div className="topic-page__state" role="status">
-            <BodyText>لا محتوى في هذا القسم حالياً.</BodyText>
+            <BodyText>{EMPTY.data}</BodyText>
           </div>
         ) : null}
         {status === "error" ? (
           <div className="topic-page__state" role="alert">
             <BodyText>
               {typeof navigator !== "undefined" && navigator.onLine === false
-                ? "أنت غير متصل بالإنترنت. اتصل بالشبكة ثم أعد المحاولة."
-                : "تعذّر تحميل المحتوى مؤقتًا. أعد المحاولة بعد لحظات."}
+                ? EMPTY.offline
+                : STATUS.loadError}
             </BodyText>
             {onRetry ? (
               <button type="button" className="topic-page__retry" onClick={onRetry}>
-                إعادة المحاولة
+                {ACTION.retry}
               </button>
             ) : null}
           </div>

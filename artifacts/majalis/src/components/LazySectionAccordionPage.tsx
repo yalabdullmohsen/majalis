@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { SectionAccordionLayout } from "@/components/SectionAccordionLayout";
 import { accordionExploreLinks, type AccordionExploreKey } from "@/lib/explore-links";
 import type { DarsSection } from "@/lib/dars-types";
+import { STATUS } from "@/lib/ui-copy";
 
 type Loader = () => Promise<Record<string, unknown>>;
 
@@ -51,7 +52,7 @@ export function LazySectionAccordionPage({
   if (error) {
     return (
       <div className="page-shell" dir="rtl">
-        <p role="alert">تعذّر تحميل الفهرس. أعد المحاولة لاحقًا.</p>
+        <p role="alert">{STATUS.loadError}</p>
       </div>
     );
   }
@@ -59,7 +60,7 @@ export function LazySectionAccordionPage({
   if (!sections) {
     return (
       <div className="page-shell" dir="rtl" aria-busy="true">
-        <p>تحديث الفهرس…</p>
+        <p>{STATUS.contentLoading}</p>
       </div>
     );
   }

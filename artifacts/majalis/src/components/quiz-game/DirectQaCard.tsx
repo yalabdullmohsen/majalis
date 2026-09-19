@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { Search } from "lucide-react";
 import { loadSeedQa, type SeedQaItem } from "@/lib/qa-seed";
 import { QA_DISCLAIMER } from "@/lib/theme";
+import { EMPTY } from "@/lib/ui-copy";
 
 type Status = "loading" | "found" | "not-found";
 
@@ -56,7 +57,7 @@ export function DirectQaCard({ qaId, onDismiss }: { qaId: string; onDismiss: () 
   if (status === "not-found" || !item) {
     return (
       <div className="qzg-direct-qa qzg-direct-qa--missing">
-        <p>تعذّر العثور على هذا السؤال، فقد يكون قد أُزيل أو تغيّر رابطه.</p>
+        <p>{EMPTY.generic}</p>
         <button type="button" className="qzg-direct-qa__cta" onClick={onDismiss}>
           الذهاب إلى لعبة سين جيم
         </button>

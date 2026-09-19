@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { IslamicLandmark } from "@/lib/islamic-landmarks-data";
+import { ACTION, EMPTY, STATUS } from "@/lib/ui-copy";
 
 /** Leaflet يُحمَّل كسولًا لتجنب مشاكل SSR. */
 let L: typeof import("leaflet") | null = null;
@@ -170,18 +171,18 @@ export default function LandmarksMap({ landmarks, onSelect }: Props) {
       )}
       {status === "empty" && (
         <p className="ilm-map-state" role="status">
-          لا مواقع ضمن التصفية الحالية — اعرض القائمة أدناه.
+          {EMPTY.search}
         </p>
       )}
       {status === "error" && (
         <div className="ilm-map-state ilm-map-state--error" role="alert">
-          <p>تعذّر تحميل بلاط الخريطة. يمكنك تصفّح المواقع من القائمة.</p>
+          <p>{STATUS.loadError}</p>
           <button
             type="button"
             className="ilm-map-retry"
             onClick={() => window.location.reload()}
           >
-            إعادة المحاولة
+            {ACTION.retry}
           </button>
         </div>
       )}
