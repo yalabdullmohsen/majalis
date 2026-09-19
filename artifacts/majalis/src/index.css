@@ -2970,9 +2970,9 @@ html.dark .navbar-menu-btn--drawer {
 
 .navbar-register--mobile {
   font-size: clamp(0.68rem, 2.8vw, 0.75rem);
-  padding: 0 0.5rem;
+  padding: 0 0.55rem;
   min-width: 2.75rem;
-  max-width: 3.75rem;
+  width: auto;
   height: var(--mobile-touch-min);
   min-height: var(--mobile-touch-min);
 }
@@ -3912,29 +3912,28 @@ svg {
     justify-content: center;
     white-space: nowrap;
     flex-shrink: 0;
-    padding: 0;
-    min-width: 4.25rem;
-    width: 4.25rem;
+    padding: 0 0.55rem;
+    min-width: 2.75rem;
+    width: auto;
     height: var(--mobile-touch-min);
     min-height: var(--mobile-touch-min);
     line-height: 1;
-    font-size: clamp(0.72rem, 3vw, 0.82rem);
+    font-size: clamp(0.68rem, 2.8vw, 0.82rem);
   }
 
   .navbar-menu-btn--more {
-    min-width: 3.65rem;
-    width: 3.65rem;
+    min-width: 2.75rem;
+    width: auto;
   }
 
   .navbar-login--mobile {
-    font-size: clamp(0.68rem, 2.8vw, 0.75rem);
-    padding: 0 0.5rem;
+    font-size: clamp(0.68rem, 2.8vw, 0.78rem);
+    padding: 0 0.55rem;
     min-width: 2.75rem;
-    max-width: 3.75rem;
+    width: auto;
     height: var(--mobile-touch-min);
     min-height: var(--mobile-touch-min);
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: nowrap;
     flex-shrink: 0;
   }
 
@@ -4106,8 +4105,8 @@ svg {
   }
 
   .navbar-menu-btn {
-    min-width: 3.85rem;
-    width: 3.85rem;
+    min-width: 2.75rem;
+    width: auto;
     font-size: 0.72rem;
   }
 
@@ -4132,15 +4131,15 @@ svg {
 @media (max-width: 360px) {
   .navbar-menu-btn,
   .navbar-menu-btn--more {
-    min-width: 3.35rem;
-    width: 3.35rem;
+    min-width: 2.75rem;
+    width: auto;
     font-size: 0.68rem;
   }
 
   .navbar-login--mobile {
-    max-width: 3.25rem;
     min-width: 2.5rem;
-    font-size: 0.65rem;
+    width: auto;
+    font-size: 0.68rem;
   }
 
   .home-hero-lead--v3 {
