@@ -317,16 +317,22 @@ html.dark .app-shell {
   gap: 0.35rem;
   padding: 0.6rem 1rem;
   min-height: 44px;
+  min-width: 2.75rem;
+  width: auto;
+  max-width: none;
   border-radius: 9999px;
   color: var(--color-text-muted, #5C5C56);
-  font-size: 0.85rem;
+  font-size: clamp(0.72rem, 1.6vw, 0.85rem);
   font-weight: 600;
   line-height: 1;
   white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
   text-decoration: none;
   flex-shrink: 0;
   border: 1.5px solid transparent;
   background: transparent;
+  box-sizing: border-box;
   transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
 }
 .top-section-bar__tab:hover { color: var(--color-primary-deep, var(--mj-brand-deep)); }
@@ -391,9 +397,15 @@ html.dark .nav-soon-badge {
   padding-inline: .8rem;
   border-radius: var(--radius-md);
   color: var(--color-text-muted);
-  font-size: .86rem;
+  font-size: clamp(0.75rem, 1.4vw, 0.86rem);
   font-weight: 600;
   text-decoration: none;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+  width: auto;
+  max-width: none;
+  flex: 0 0 auto;
   transition: color var(--motion-fast), background var(--motion-fast);
 }
 .navbar-v3__tabs .nav-tab::after { content: none; }
@@ -404,14 +416,12 @@ html.dark .nav-soon-badge {
   flex-shrink: 0;
   min-width: 0;
 }
-/* توحيد القائمة / الوضع الليلي / الحساب: نفس الحاوية والحجم ≥44×44 */
+/* توحيد القائمة / الوضع الليلي / الحساب: ارتفاع لمس ≥44؛
+   أيقونات: عرض 44 · نصوص (دخول): عرض مرن + حشو بلا قص عربي */
 .navbar-menu-btn, .navbar-theme-toggle, .navbar-mobile-login {
-  width: 44px;
   height: 44px;
   min-width: 44px;
   min-height: 44px;
-  max-width: 44px;
-  padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -423,7 +433,43 @@ html.dark .nav-soon-badge {
   color: var(--mj-ink-2, var(--color-text-muted));
   box-shadow: none;
   text-decoration: none;
+  white-space: nowrap;
+  overflow: visible;
   transition: background var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast);
+}
+.navbar-theme-toggle {
+  width: 44px;
+  max-width: 44px;
+  padding: 0;
+}
+.navbar-menu-btn {
+  width: auto;
+  max-width: none;
+  padding-inline: 0.65rem;
+  gap: 0.35rem;
+}
+.navbar-mobile-login {
+  width: 44px;
+  max-width: 44px;
+  padding: 0;
+}
+.navbar-v3 .navbar-mobile-login:has(.navbar-mobile-login__label) {
+  width: auto !important;
+  max-width: none !important;
+  min-width: 44px !important;
+  padding-inline: 0.55rem !important;
+  gap: 0.28rem !important;
+  overflow: visible !important;
+}
+.navbar-v3 .navbar-mobile-login__label {
+  display: inline !important;
+  font-size: clamp(0.68rem, 2.6vw, 0.78rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  flex-shrink: 0 !important;
 }
 .navbar-menu-btn--drawer {
   background: var(--mj-surface-2, var(--color-surface-muted)) !important;
@@ -1103,8 +1149,17 @@ html.dark .top-section-bar {
     padding-inline: max(16px, var(--gutter-inline-start, 16px))
       max(16px, var(--gutter-inline-end, 16px));
   }
-  /* الوضع الليلي يبقى في الهيدر؛ إخفاء زر البحث المدمج فقط عبر القاعدة أدناه */
-  .navbar-menu-btn__label, .navbar-mobile-login__label { display: none; }
+  /* قائمة: أيقونة فقط على الجوال (aria-label كافٍ) · «دخول» يبقى ظاهرًا دائمًا */
+  .navbar-menu-btn__label { display: none; }
+  .navbar-menu-btn {
+    width: 44px;
+    max-width: 44px;
+    padding: 0;
+    gap: 0;
+  }
+  .navbar-mobile-login__label {
+    display: inline !important;
+  }
   .hpv4-hero { border-radius: var(--radius-lg); }
   .site-footer--v3 .site-footer-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-6); }
 
