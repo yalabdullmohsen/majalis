@@ -30,12 +30,15 @@ function syncBackLayoutVars(host: HTMLElement | null) {
     readCssPx("--bottom-nav-height", 64) ||
     readCssPx("--bottom-nav-h", 64) ||
     64;
-  const miniPlayer = document.documentElement.classList.contains("audio-dock-open") ||
+  const miniPlayer =
+    document.documentElement.getAttribute("data-quran-mini-player") === "mini" ||
+    document.documentElement.getAttribute("data-quran-mini-player") === "expanded" ||
+    document.documentElement.classList.contains("audio-dock-open") ||
     document.documentElement.getAttribute("data-audio-dock") === "1"
-    ? readCssPx("--audio-dock-h", 72) ||
-      readCssPx("--quran-mini-player-offset", 0) ||
-      72
-    : readCssPx("--quran-mini-player-offset", 0);
+      ? readCssPx("--quran-mini-player-offset", 0) ||
+        readCssPx("--audio-dock-h", 72) ||
+        52
+      : readCssPx("--quran-mini-player-offset", 0);
   const insets = {
     safeAreaBottom: safeBottom,
     bottomNavigationHeight: bottomNav,
@@ -83,7 +86,7 @@ export function GlobalBackControlHost() {
     const mo = new MutationObserver(sync);
     mo.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ["class", "data-audio-dock", "data-theme"],
+      attributeFilter: ["class", "data-audio-dock", "data-quran-mini-player", "data-theme"],
     });
     mo.observe(document.body, { attributes: true, attributeFilter: ["class"] });
     return () => {

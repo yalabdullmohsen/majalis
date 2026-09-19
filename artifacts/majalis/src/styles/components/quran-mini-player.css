@@ -1,28 +1,33 @@
-/* مشغّل تلاوة مصغّر ثابت — 56px مطوي، توسعة spring فوق شريط التنقّل */
+/* مشغّل تلاوة عالمي — Mini مضغوط · Expanded = Bottom Sheet · طبقات z موحّدة */
+:root {
+  --z-audio-mini: 210;
+  --z-audio-expanded: 230;
+}
+
 .quran-mini-player {
-  --qmp-h: 48px;
-  --qmp-ink: var(--mj-on-brand, #f7faf8);
-  --qmp-ink-muted: color-mix(in srgb, var(--qmp-ink) 78%, transparent);
+  --qmp-h: 52px;
+  --qmp-ink: var(--mj-ink, #14241c);
+  --qmp-ink-muted: color-mix(in srgb, var(--qmp-ink) 62%, transparent);
+  --qmp-surface: var(--mj-surface, #fbfaf6);
+  --qmp-surface-deep: color-mix(in srgb, var(--mj-brand-soft, #e2efe8) 55%, var(--qmp-surface));
+  --qmp-border: color-mix(in srgb, var(--mj-brand, #146b52) 22%, transparent);
+  --qmp-accent: var(--mj-brand, #146b52);
+  --qmp-on-accent: var(--mj-on-brand, #f7faf8);
   position: fixed;
   inset-inline: 0;
-  bottom: calc(var(--bottom-nav-h, 56px) + var(--inset-bottom, 0px));
-  z-index: 60;
+  bottom: calc(var(--bottom-nav-h, var(--bottom-nav-height, 56px)) + var(--inset-bottom, 0px));
+  z-index: var(--z-audio-mini, 210);
   display: flex;
   flex-direction: column;
-  max-height: min(58vh, 22rem);
-  background:
-    linear-gradient(
-      165deg,
-      color-mix(in srgb, var(--mj-brand, #146b52) 88%, #1a8f6e) 0%,
-      var(--mj-brand-deep, #0d4a39) 100%
-    );
+  max-height: var(--qmp-h);
+  background: var(--qmp-surface);
   color: var(--qmp-ink);
-  border-block-start: 1px solid color-mix(in srgb, #fff 22%, transparent);
-  border-radius: 1rem 1rem 0 0;
-  box-shadow: 0 -6px 20px -14px rgb(0 0 0 / 0.28);
+  border-block-start: 1px solid var(--qmp-border);
+  border-radius: 0.95rem 0.95rem 0 0;
+  box-shadow: 0 -4px 18px -12px rgb(0 0 0 / 0.22);
   transition:
-    max-height 360ms var(--mj-ease-spring, cubic-bezier(0.22, 1.15, 0.36, 1)),
-    transform 360ms var(--mj-ease-spring, cubic-bezier(0.22, 1.15, 0.36, 1));
+    max-height 320ms var(--mj-ease-spring, cubic-bezier(0.22, 1.15, 0.36, 1)),
+    background 200ms ease;
   will-change: max-height;
   touch-action: pan-y;
   overflow: hidden;
@@ -32,13 +37,19 @@
   bottom: var(--inset-bottom, 0px);
 }
 
+.quran-mini-player--expanded {
+  z-index: var(--z-audio-expanded, 230);
+  max-height: min(46dvh, 22rem);
+  background: var(--qmp-surface);
+}
+
 .quran-mini-player__handle {
   flex: 0 0 auto;
-  width: 2.25rem;
+  width: 2.1rem;
   height: 3px;
-  margin: 0.22rem auto 0;
+  margin: 0.28rem auto 0.05rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mj-on-brand, #fff) 35%, transparent);
+  background: color-mix(in srgb, var(--qmp-ink) 22%, transparent);
 }
 
 .quran-mini-player__error {
@@ -46,11 +57,11 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 0.45rem 0.85rem;
+  padding: 0.4rem 0.85rem;
   font-size: 0.8rem;
   line-height: 1.45;
-  background: color-mix(in srgb, #b91c1c 55%, transparent);
-  color: #fff;
+  background: color-mix(in srgb, #b91c1c 18%, var(--qmp-surface));
+  color: #7f1d1d;
 }
 
 .quran-mini-player__retry {
@@ -59,23 +70,58 @@
   min-width: 44px;
   padding: 0.35rem 0.75rem;
   border-radius: 0.5rem;
-  border: 1px solid color-mix(in srgb, #fff 45%, transparent);
-  background: color-mix(in srgb, #fff 12%, transparent);
+  border: 1px solid color-mix(in srgb, #7f1d1d 35%, transparent);
+  background: color-mix(in srgb, #fff 70%, transparent);
   color: inherit;
   font: inherit;
   cursor: pointer;
 }
 
+.quran-mini-player__head {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  padding: 0.1rem 0.55rem 0.15rem;
+  flex: 0 0 auto;
+}
+
+.quran-mini-player--expanded .quran-mini-player__head {
+  display: flex;
+}
+
+.quran-mini-player__title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--qmp-accent);
+  text-align: center;
+  flex: 1 1 auto;
+}
+
 .quran-mini-player__bar {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) auto auto auto;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   align-items: center;
-  gap: 0.25rem 0.4rem;
+  gap: 0.2rem 0.35rem;
   height: var(--qmp-h);
   min-height: var(--qmp-h);
   max-height: var(--qmp-h);
-  padding: 0 0.55rem 0.2rem;
+  padding: 0 0.45rem 0.15rem;
   box-sizing: border-box;
+}
+
+.quran-mini-player--expanded .quran-mini-player__bar {
+  height: auto;
+  max-height: none;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr);
+  padding-block: 0.15rem 0.25rem;
+}
+
+.quran-mini-player--expanded .quran-mini-player__bar .quran-mini-player__expand,
+.quran-mini-player--expanded .quran-mini-player__bar .quran-mini-player__close {
+  display: none;
 }
 
 .quran-mini-player__meta {
@@ -85,7 +131,7 @@
   gap: 0.05rem;
   min-width: 0;
   min-height: 44px;
-  padding: 0.15rem 0.25rem;
+  padding: 0.1rem 0.2rem;
   border: 0;
   background: transparent;
   color: inherit;
@@ -94,7 +140,7 @@
 }
 
 .quran-mini-player__meta strong {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--qmp-ink);
   white-space: nowrap;
@@ -104,7 +150,7 @@
 }
 
 .quran-mini-player__meta span {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--qmp-ink-muted);
   white-space: nowrap;
   overflow: hidden;
@@ -115,46 +161,73 @@
 .quran-mini-player__controls {
   display: inline-flex;
   align-items: center;
-  gap: 0.15rem;
+  gap: 0.1rem;
+}
+
+.quran-mini-player--expanded .quran-mini-player__controls {
+  justify-content: center;
+  width: 100%;
+  gap: 0.35rem;
+  padding-block: 0.15rem;
 }
 
 .quran-mini-player__toggle,
 .quran-mini-player__close,
 .quran-mini-player__expand,
+.quran-mini-player__collapse,
 .quran-mini-player__btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 44px;
   height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border: 0;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mj-on-brand, #fff) 14%, transparent);
-  color: inherit;
+  background: color-mix(in srgb, var(--qmp-accent) 10%, transparent);
+  color: var(--qmp-accent);
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .quran-mini-player__btn {
   width: 40px;
   height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  background: transparent;
+  color: var(--qmp-ink);
+}
+
+.quran-mini-player__toggle {
+  background: var(--qmp-accent);
+  color: var(--qmp-on-accent);
+}
+
+.quran-mini-player__close {
+  background: color-mix(in srgb, var(--qmp-ink) 6%, transparent);
+  color: var(--qmp-ink);
+  border: 1px solid color-mix(in srgb, var(--qmp-ink) 14%, transparent);
 }
 
 .quran-mini-player__rate {
   min-width: 44px;
   height: 36px;
-  padding: 0 0.4rem;
+  padding: 0 0.35rem;
   border: 0;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mj-on-brand, #fff) 12%, transparent);
-  color: inherit;
+  background: color-mix(in srgb, var(--qmp-accent) 8%, transparent);
+  color: var(--qmp-accent);
   font: inherit;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
   cursor: pointer;
 }
 
-.quran-mini-player__expand svg {
-  transition: transform 280ms var(--mj-ease-spring, cubic-bezier(0.22, 1.15, 0.36, 1));
+.quran-mini-player__expand svg,
+.quran-mini-player__collapse svg {
+  transition: transform 240ms var(--mj-ease-spring, cubic-bezier(0.22, 1.15, 0.36, 1));
 }
 
 .quran-mini-player__expand svg.is-flipped {
@@ -162,112 +235,99 @@
 }
 
 .quran-mini-player__seek {
-  grid-column: 1 / -1;
-  height: 2px;
-  margin-top: -0.35rem;
-  padding: 0 0.35rem;
-}
-
-.quran-mini-player__progress {
-  height: 2px;
-  width: 100%;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--mj-on-brand, #fff) 18%, transparent);
-  position: relative;
-  overflow: hidden;
-}
-
-.quran-mini-player__progress::after {
-  content: "";
-  position: absolute;
-  inset-block: 0;
-  inset-inline-start: 0;
-  width: calc(var(--qmp-progress, 0) * 100%);
-  background: var(--mj-accent, #c4a35a);
-}
-
-.quran-mini-player--expanded .quran-mini-player__seek {
   display: none;
 }
 
 .quran-mini-player__sheet {
   flex: 1 1 auto;
   overflow: auto;
-  padding: 0.35rem 0.75rem 0.85rem;
-  border-block-start: 1px solid color-mix(in srgb, var(--mj-on-brand, #fff) 12%, transparent);
+  padding: 0.25rem 0.75rem calc(0.65rem + var(--inset-bottom, 0px));
+  border-block-start: 1px solid color-mix(in srgb, var(--qmp-ink) 8%, transparent);
   overscroll-behavior: contain;
+  background: var(--qmp-surface);
 }
 
 .quran-mini-player__sheet-meta {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  margin-bottom: 0.65rem;
-  font-size: 0.78rem;
-  opacity: 0.9;
+  gap: 0.3rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.76rem;
+  color: var(--qmp-ink-muted);
 }
 
 .quran-mini-player__range {
   width: 100%;
-  height: 4px;
-  accent-color: var(--mj-accent, #c4a35a);
+  height: 28px;
+  accent-color: var(--qmp-accent);
   cursor: pointer;
 }
 
 .quran-mini-player__hifz {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.55rem 0.65rem;
   margin: 0;
-  padding: 0.55rem 0.65rem 0.75rem;
-  border: 1px solid color-mix(in srgb, #fff 22%, transparent);
-  border-radius: 1rem;
-  background: color-mix(in srgb, #fff 10%, transparent);
-  color: var(--qmp-ink);
+  padding: 0;
+  border: 0;
 }
 
-.quran-mini-player__hifz legend {
-  padding-inline: 0.35rem;
+.quran-mini-player__hifz > summary {
+  list-style: none;
+  cursor: pointer;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.35rem;
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--qmp-ink);
+  color: var(--qmp-accent);
+  border-radius: 0.65rem;
+  background: color-mix(in srgb, var(--qmp-accent) 8%, transparent);
+}
+
+.quran-mini-player__hifz > summary::-webkit-details-marker {
+  display: none;
+}
+
+.quran-mini-player__hifz-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem 0.55rem;
+  margin-top: 0.45rem;
+  padding: 0.45rem 0.55rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--qmp-ink) 10%, transparent);
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, var(--qmp-surface-deep) 70%, transparent);
 }
 
 .quran-mini-player__hifz label {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  font-size: 0.75rem;
+  gap: 0.15rem;
+  font-size: 0.72rem;
   color: var(--qmp-ink-muted);
 }
 
 .quran-mini-player__hifz input,
 .quran-mini-player__hifz select {
   min-height: 44px;
-  padding: 0.35rem 0.5rem;
-  border-radius: 0.75rem;
-  border: 1px solid color-mix(in srgb, #fff 28%, transparent);
-  background: color-mix(in srgb, #fff 14%, transparent);
+  padding: 0.3rem 0.45rem;
+  border-radius: 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--qmp-ink) 14%, transparent);
+  background: var(--qmp-surface);
   color: var(--qmp-ink);
   font: inherit;
-  color-scheme: dark;
-}
-
-.quran-mini-player__hifz input::placeholder {
-  color: var(--qmp-ink-muted);
 }
 
 .quran-mini-player__hifz-actions {
   grid-column: 1 / -1;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
+  gap: 0.4rem;
 }
 
 .quran-mini-player__hifz-apply,
 .quran-mini-player__hifz-clear {
   min-height: 44px;
-  padding: 0.4rem 0.9rem;
+  padding: 0.35rem 0.85rem;
   border: 0;
   border-radius: 999px;
   font: inherit;
@@ -276,40 +336,75 @@
 }
 
 .quran-mini-player__hifz-apply {
-  background: var(--mj-accent, #c4a35a);
-  color: var(--mj-brand-deep, #0f3d2e);
+  background: var(--qmp-accent);
+  color: var(--qmp-on-accent);
 }
 
 .quran-mini-player__hifz-clear {
-  background: color-mix(in srgb, var(--mj-on-brand, #fff) 14%, transparent);
+  background: color-mix(in srgb, var(--qmp-ink) 8%, transparent);
   color: inherit;
 }
 
 .quran-mini-player__toggle:active,
 .quran-mini-player__close:active,
 .quran-mini-player__expand:active,
+.quran-mini-player__collapse:active,
 .quran-mini-player__btn:active {
-  background: color-mix(in srgb, var(--mj-on-brand, #fff) 24%, transparent);
+  filter: brightness(0.96);
 }
 
-/* مساحة للمصحف الغمري حتى لا يغطي الشريط الآيات */
+html[data-theme="dark"] .quran-mini-player,
+html.dark .quran-mini-player {
+  --qmp-ink: #f3efe6;
+  --qmp-ink-muted: color-mix(in srgb, #f3efe6 70%, #9aa39a);
+  --qmp-surface: #152018;
+  --qmp-surface-deep: #101810;
+  --qmp-border: color-mix(in srgb, #5ec49a 28%, transparent);
+  --qmp-accent: #5ec49a;
+  --qmp-on-accent: #0a1410;
+}
+
+/* إزاحة العوائم فوق المشغّل المصغّر — من ارتفاع الشريط + safe area */
+html:has(.quran-mini-player) {
+  --quran-mini-player-offset: var(--qmp-h, 52px);
+}
+
+html:has(.quran-mini-player--expanded) {
+  --quran-mini-player-offset: min(46dvh, 22rem);
+}
+
 html.chrome-immersive {
   --quran-mini-player-offset: 0px;
 }
+
 html.chrome-immersive:has(.quran-mini-player) {
-  --quran-mini-player-offset: calc(var(--qmp-h, 56px) + var(--inset-bottom, 0px));
+  --quran-mini-player-offset: calc(var(--qmp-h, 52px) + var(--inset-bottom, 0px));
+}
+
+/* عند المصغّر: ارفع زر الصعود فوقه */
+html:has(.quran-mini-player:not(.quran-mini-player--expanded)) .scroll-to-top,
+html:has(.quran-mini-player:not(.quran-mini-player--expanded)) .mj-scroll-top,
+html:has(.quran-mini-player:not(.quran-mini-player--expanded)) .fab-scroll-top,
+html:has(.quran-mini-player:not(.quran-mini-player--expanded)) .floating-back-btn,
+html:has(.quran-mini-player:not(.quran-mini-player--expanded)) .global-back-btn {
+  bottom: calc(
+    var(--bottom-nav-h, var(--bottom-nav-height, 56px)) + var(--inset-bottom, 0px) +
+      var(--quran-mini-player-offset, 0px) + 12px
+  ) !important;
+  z-index: var(--z-fab, 220);
+}
+
+/* عند التوسيع: أخفِ العوائم غير الضرورية حتى لا تتداخل مع الشيت */
+html:has(.quran-mini-player--expanded) .scroll-to-top,
+html:has(.quran-mini-player--expanded) .mj-scroll-top,
+html:has(.quran-mini-player--expanded) .fab-scroll-top {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
 }
 
 @media (max-width: 640px) {
-  .quran-mini-player__bar {
-    grid-template-columns: minmax(0, 1fr) auto auto;
-  }
-
-  .quran-mini-player__seek {
+  .quran-mini-player:not(.quran-mini-player--expanded) .quran-mini-player__rate {
     display: none;
-  }
-
-  .quran-mini-player:not(.quran-mini-player--expanded) .quran-mini-player__progress {
-    /* شريط رفيع فوق الحافة السفلية للشريط */
   }
 }

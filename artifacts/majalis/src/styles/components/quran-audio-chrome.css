@@ -1,0 +1,149 @@
+/**
+ * طبقات وتخطيط مشغّل/شيتات المصحف — خارج mushaf*.css لتفادي سياسة مقياس الخط.
+ * يُستورد من المكوّنات فقط.
+ */
+
+:root {
+  --z-audio-mini: 210;
+  --z-audio-expanded: 230;
+  --z-sheet-backdrop: 240;
+  --z-sheet: 250;
+  --z-critical-dialog: 400;
+}
+
+/* ── رصيف التلاوة: ارتفاع تكيّفي + طبقات z ── */
+.nm-root .mm-audio-dock {
+  background: var(--nm-paper) !important;
+  background-image: none !important;
+  min-height: calc(var(--audio-player-height, 6.5rem) + var(--safe-bottom, 0px));
+  max-height: min(42dvh, calc(14rem + var(--safe-bottom, 0px)));
+  padding: 0.45rem 0.85rem calc(0.45rem + var(--safe-bottom, 0px));
+  z-index: var(--z-audio-expanded, 230);
+  gap: 0.3rem;
+}
+
+.nm-root .mm-audio-dock[data-mini="1"] {
+  z-index: var(--z-audio-mini, 210);
+  min-height: calc(var(--audio-player-height, 3.5rem) + var(--safe-bottom, 0px));
+  max-height: calc(var(--audio-player-height, 3.5rem) + var(--safe-bottom, 0px));
+  padding: 0.3rem 0.75rem calc(0.3rem + var(--safe-bottom, 0px));
+}
+
+.mm-audio-dock {
+  z-index: var(--z-audio-mini, 210);
+}
+
+.mm-audio-dock[data-expanded="1"] {
+  z-index: var(--z-audio-expanded, 230);
+  max-height: min(42dvh, 20rem);
+  min-height: 6.5rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.mm-audio-dock__close,
+.mm-audio-dock__mini {
+  border: 1px solid color-mix(in srgb, #111 12%, transparent);
+  background: color-mix(in srgb, #111 6%, transparent);
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── شيت إجراءات الآية: مضغوط بلا تغطية مفرطة ── */
+.ayah-action-sheet.is-collapsed.is-tilawa .mm-ayah-bar__panel {
+  height: auto;
+  max-height: min(168px, 34dvh);
+  min-height: 132px;
+}
+
+.ayah-action-sheet.is-half .mm-ayah-bar__panel {
+  height: min(48dvh, 28rem);
+  max-height: min(48dvh, 28rem);
+  min-height: 40dvh;
+}
+
+.ayah-action-sheet.is-full .mm-ayah-bar__panel,
+.ayah-action-sheet.is-expanded.is-full .mm-ayah-bar__panel {
+  height: min(86dvh, 40rem);
+  max-height: min(86dvh, 40rem);
+  min-height: 70dvh;
+}
+
+.mm-ayah-bar__close {
+  border: 1px solid color-mix(in srgb, #111 14%, transparent);
+  background: color-mix(in srgb, #111 5%, transparent);
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 999px;
+  position: relative;
+  z-index: 2;
+}
+
+.mm-ayah-bar__close svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ayah-action-sheet__actions-grid .quran-tab,
+.ayah-action-sheet__actions-grid button {
+  min-height: 44px;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.1rem;
+  gap: 1px;
+  border-radius: 10px;
+}
+
+.ayah-action-sheet__actions-grid .quran-tab svg,
+.ayah-action-sheet__actions-grid button svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* ── إعدادات المصحف: إغلاق رأس مضغوط · بلا مساحة سفلية مفرطة ── */
+.mm-settings-sheet__panel {
+  max-height: min(68dvh, 30rem);
+  padding-bottom: calc(0.65rem + var(--inset-bottom, 0px));
+}
+
+.mm-settings-sheet .quran-sheet__head {
+  padding: 0.2rem 0.75rem 0.2rem;
+}
+
+.mm-settings-sheet .quran-sheet__close {
+  width: 44px;
+  height: 44px;
+  border: 1px solid color-mix(in srgb, var(--mm-gold, #a68b67) 36%, transparent);
+  background: color-mix(in srgb, var(--mm-paper, #fdf9f3) 92%, #fff);
+}
+
+.mm-settings-sheet .quran-sheet__title {
+  font-size: 0.98rem;
+}
+
+.mm-settings-sheet__body {
+  gap: 0.55rem;
+  padding-bottom: 0.35rem;
+}
+
+/* ── ميدالية ص1–ص2: تثبيت مركز الدائرة دون تغيير النص/الهندسة ── */
+.nm-page__fatiha-medallion {
+  max-width: 86cqmin;
+  max-height: 86cqmin;
+  margin: 0;
+  inset-inline: auto;
+  inset-block: auto;
+}
+
+.nm-page--lead .nm-page__fatiha-medallion,
+.nm-page[data-page-type="surah-start"] .nm-page__fatiha-medallion {
+  max-width: 84cqmin;
+  max-height: 84cqmin;
+}

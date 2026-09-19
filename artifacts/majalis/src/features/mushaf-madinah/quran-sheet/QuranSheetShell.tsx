@@ -1,6 +1,7 @@
 import { type ReactNode, type RefObject } from "react";
 import { X } from "lucide-react";
 import { createPortal } from "react-dom";
+import "@/styles/components/quran-audio-chrome.css";
 
 export type QuranSheetSnap = "peek" | "half" | "full";
 
@@ -100,7 +101,7 @@ export function QuranSheetShell({
             ) : (
               <span id={titleId} />
             )}
-            <button type="button" className="quran-sheet__close" onClick={onClose} aria-label="إغلاق" tabIndex={open ? 0 : -1}>
+            <button type="button" className="quran-sheet__close" onClick={onClose} aria-label="إغلاق" tabIndex={open ? 0 : -1} data-testid="mushaf-settings-close">
               <X size={14} strokeWidth={2.25} aria-hidden="true" />
             </button>
           </header>

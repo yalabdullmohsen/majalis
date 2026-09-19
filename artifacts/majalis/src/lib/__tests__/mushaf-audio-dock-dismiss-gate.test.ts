@@ -29,7 +29,7 @@ assert.match(dock, /COLLAPSE_SWIPE_PX|onMiniChange\(true\)/);
 assert.match(dock, /onPointerDown=\{onSwipePointerDown\}/);
 assert.match(dock, /aria-label=\{mini \? "توسيع المشغل" : "طي المشغل"\}/);
 assert.match(dock, /aria-label="إيقاف التلاوة"/);
-assert.match(dock, /aria-label="إغلاق المشغّل"/);
+assert.match(dock, /aria-label="إغلاق مشغل التلاوة"/);
 assert.match(dock, /quran-audio-dock-dismiss\.css/);
 
 /* الطي عبر السحب لا يستدعي pause/stop */

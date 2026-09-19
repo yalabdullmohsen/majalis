@@ -18,6 +18,7 @@ import { useVerifiedReciters } from "@/hooks/useVerifiedReciters";
 import { useMushafAudioClock } from "./mushaf-audio-clock-store";
 import type { RecitationRange } from "./mushaf-page-for-ayah";
 import "@/styles/components/quran-audio-dock-dismiss.css";
+import "@/styles/components/quran-audio-chrome.css";
 
 /** @deprecated استخدم useVerifiedReciters — يُبقى للاختبارات والتوافق */
 export const MUSHAF_RECITER_IDS = DEFAULT_VERIFIED_RECITER_IDS;
@@ -201,7 +202,7 @@ export function MushafAudioDock({
                 type="button"
                 className="mm-audio-dock__close"
                 onClick={onClose}
-                aria-label="إغلاق المشغّل"
+                aria-label="إغلاق مشغل التلاوة"
                 data-testid="mushaf-dock-close"
               >
                 <X size={18} aria-hidden="true" />

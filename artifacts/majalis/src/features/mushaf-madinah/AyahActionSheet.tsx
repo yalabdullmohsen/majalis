@@ -29,6 +29,7 @@ import {
 import { useVerifiedReciters } from "@/hooks/useVerifiedReciters";
 import { parseVerseKey, type RecitationRange } from "./mushaf-page-for-ayah";
 import { useMushafAudioClock } from "./mushaf-audio-clock-store";
+import "@/styles/components/quran-audio-chrome.css";
 
 const TafsirTabPanel = lazy(() =>
   import("./TafsirTabPanel").then((m) => ({ default: m.TafsirTabPanel })),
@@ -348,6 +349,7 @@ export const AyahActionSheet = memo(function AyahActionSheet({
               className="mm-ayah-bar__close"
               onClick={onClose}
               aria-label="إغلاق"
+              data-testid="ayah-actions-close"
             >
               <X size={18} aria-hidden="true" />
             </button>

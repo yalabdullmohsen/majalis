@@ -1,9 +1,10 @@
 /**
- * شريط تلاوة مصغّر ثابت (56px) فوق شريط التنقّل — توسعة بحركة spring ووضع حفظ.
+ * شريط تلاوة مصغّر ثابت فوق شريط التنقّل — توسعة Sheet منظمة + إغلاق صريح.
+ * COLLAPSE = طي مع استمرار التلاوة · CLOSE = إيقاف + إزالة من الشاشة.
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
-import { ChevronUp, Pause, Play, SkipBack, SkipForward, X } from "lucide-react";
+import { ChevronDown, ChevronUp, Pause, Play, SkipBack, SkipForward, X } from "lucide-react";
 import { AudioEngine, type AudioEngineSnapshot } from "@/core/audio/AudioEngine";
 import { getSurahMeta } from "@/lib/quran-api";
 import { getReciter } from "@/lib/quran-audio";
@@ -73,7 +74,16 @@ export function QuranMiniPlayerBar() {
     if (!visible) setExpanded(false);
   }, [visible]);
 
-  // مزامنة نموذج الحفظ مع الآية الجارية عند أول ظهور
+  useEffect(() => {
+    const root = document.documentElement;
+    if (!visible || immersive) {
+      root.removeAttribute("data-quran-mini-player");
+      return;
+    }
+    root.setAttribute("data-quran-mini-player", expanded ? "expanded" : "mini");
+    return () => root.removeAttribute("data-quran-mini-player");
+  }, [visible, expanded, immersive]);
+
   useEffect(() => {
     if (!visible || snap.surah == null || snap.ayah == null) return;
     setHifz((prev) => {
@@ -116,9 +126,16 @@ export function QuranMiniPlayerBar() {
       : null,
   );
 
+  const collapse = useCallback(() => setExpanded(false), []);
+  const expand = useCallback(() => setExpanded(true), []);
+  const closePlayer = useCallback(() => {
+    setExpanded(false);
+    stopMiniPlayer();
+  }, []);
+
   const onPointerDown = useCallback(
     (e: React.PointerEvent) => {
-      if ((e.target as HTMLElement).closest("button, input, select, label")) return;
+      if ((e.target as HTMLElement).closest("button, input, select, label, summary")) return;
       dragRef.current = { y0: e.clientY, expanded0: expanded };
       (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
     },
@@ -130,7 +147,7 @@ export function QuranMiniPlayerBar() {
     dragRef.current = null;
     if (!d) return;
     const dy = e.clientY - d.y0;
-    // سحب لأعلى يوسّع، لأسفل يطوي (إحداثيات الشاشة: أعلى = أصغر Y)
+    /* سحب لأسفل يطوي فقط — لا يغلق نهائيًا */
     if (dy < -36) setExpanded(true);
     else if (dy > 36) setExpanded(false);
   }, []);
@@ -157,14 +174,13 @@ export function QuranMiniPlayerBar() {
 
   if (!visible) return null;
   if (snap.surah == null || snap.ayah == null) return null;
-  /* المصحف له رصيف تلاوة داخلي — الشريط الأخضر العام يغطي الآيات */
+  /* المصحف له رصيف تلاوة داخلي — الشريط العام يغطي الآيات */
   if (immersive) return null;
 
   const surahName = getSurahMeta(snap.surah).name.replace(/^سُورَةُ\s*/u, "");
   const reciterName = getReciter(snap.reciterId).nameAr;
   const page = ayahKeyToPage(`${snap.surah}:${snap.ayah}`);
   const duration = snap.duration > 0 ? snap.duration : 0;
-  const progress = duration > 0 ? Math.min(1, snap.currentTime / duration) : 0;
   const engine = AudioEngine.getInstance();
   const totalAyahs = getSurahMeta(snap.surah).ayahs;
   const loopActive = snap.loopConfig != null;
@@ -176,6 +192,7 @@ export function QuranMiniPlayerBar() {
       className={`quran-mini-player${expanded ? " quran-mini-player--expanded" : ""}${immersive ? " quran-mini-player--immersive" : ""}${isError ? " quran-mini-player--error" : ""}`}
       role="region"
       aria-label="تشغيل التلاوة"
+      data-expanded={expanded ? "1" : "0"}
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}
       onPointerCancel={() => {
@@ -183,6 +200,29 @@ export function QuranMiniPlayerBar() {
       }}
     >
       <div className="quran-mini-player__handle" aria-hidden="true" />
+
+      {expanded ? (
+        <div className="quran-mini-player__head">
+          <button
+            type="button"
+            className="quran-mini-player__collapse"
+            aria-label="طي المشغل"
+            onClick={collapse}
+          >
+            <ChevronDown size={18} aria-hidden="true" />
+          </button>
+          <h2 className="quran-mini-player__title">التلاوة</h2>
+          <button
+            type="button"
+            className="quran-mini-player__close"
+            aria-label="إغلاق مشغل التلاوة"
+            data-testid="quran-mini-player-close"
+            onClick={closePlayer}
+          >
+            <X size={18} aria-hidden="true" />
+          </button>
+        </div>
+      ) : null}
 
       {isError && (
         <div className="quran-mini-player__error" role="alert">
@@ -253,31 +293,28 @@ export function QuranMiniPlayerBar() {
           </button>
         </div>
 
-        <div className="quran-mini-player__seek" aria-hidden={!expanded}>
-          <div
-            className="quran-mini-player__progress"
-            style={{ ["--qmp-progress" as string]: String(progress) }}
-          />
-        </div>
-
-        <button
-          type="button"
-          className="quran-mini-player__expand"
-          aria-label={expanded ? "تصغير المشغّل" : "توسيع المشغّل"}
-          aria-expanded={expanded}
-          onClick={() => setExpanded((v) => !v)}
-        >
-          <ChevronUp size={18} className={expanded ? "is-flipped" : undefined} />
-        </button>
-
-        <button
-          type="button"
-          className="quran-mini-player__close"
-          aria-label="إيقاف وإغلاق المشغّل"
-          onClick={() => stopMiniPlayer()}
-        >
-          <X size={18} />
-        </button>
+        {!expanded ? (
+          <>
+            <button
+              type="button"
+              className="quran-mini-player__expand"
+              aria-label="توسيع المشغل"
+              aria-expanded={false}
+              onClick={expand}
+            >
+              <ChevronUp size={18} />
+            </button>
+            <button
+              type="button"
+              className="quran-mini-player__close"
+              aria-label="إغلاق مشغل التلاوة"
+              data-testid="quran-mini-player-close"
+              onClick={closePlayer}
+            >
+              <X size={18} />
+            </button>
+          </>
+        ) : null}
       </div>
 
       {expanded ? (
@@ -299,99 +336,101 @@ export function QuranMiniPlayerBar() {
             />
           </div>
 
-          <fieldset className="quran-mini-player__hifz">
-            <legend>وضع الحفظ</legend>
-            <label>
-              من آية
-              <input
-                type="number"
-                min={1}
-                max={totalAyahs}
-                value={hifz.startAyah}
-                onChange={(e) =>
-                  setHifz((p) => ({
-                    ...p,
-                    startAyah: Math.max(1, Math.min(totalAyahs, Number(e.target.value) || 1)),
-                  }))
-                }
-              />
-            </label>
-            <label>
-              إلى آية
-              <input
-                type="number"
-                min={1}
-                max={totalAyahs}
-                value={hifz.endAyah}
-                onChange={(e) =>
-                  setHifz((p) => ({
-                    ...p,
-                    endAyah: Math.max(1, Math.min(totalAyahs, Number(e.target.value) || 1)),
-                  }))
-                }
-              />
-            </label>
-            <label>
-              التكرار
-              <select
-                value={hifz.repeatCount === 0 ? "inf" : String(hifz.repeatCount)}
-                onChange={(e) => {
-                  const v = e.target.value;
-                  setHifz((p) => ({
-                    ...p,
-                    repeatCount: v === "inf" ? 0 : Math.max(1, Math.min(20, Number(v) || 1)),
-                  }));
-                }}
-              >
-                {Array.from({ length: 20 }, (_, i) => i + 1).map((n) => (
-                  <option key={n} value={n}>
-                    {toArabicDigits(n)}
-                  </option>
-                ))}
-                <option value="inf">لا نهائي</option>
-              </select>
-            </label>
-            <label>
-              السرعة
-              <select
-                value={String(hifz.playbackRate)}
-                onChange={(e) =>
-                  setHifz((p) => ({ ...p, playbackRate: Number(e.target.value) || 1 }))
-                }
-              >
-                {HIFZ_PLAYBACK_RATES.map((r) => (
-                  <option key={r} value={r}>
-                    {rateLabel(r)}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              صمت بين التكرارات
-              <select
-                value={String(hifz.delayMs)}
-                onChange={(e) =>
-                  setHifz((p) => ({ ...p, delayMs: Number(e.target.value) || 0 }))
-                }
-              >
-                {SILENCE_OPTIONS_MS.map((ms) => (
-                  <option key={ms} value={ms}>
-                    {ms === 0 ? "بدون" : `${toArabicDigits(ms / 1000)} ث`}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <div className="quran-mini-player__hifz-actions">
-              <button type="button" className="quran-mini-player__hifz-apply" onClick={applyHifz}>
-                بدء التكرار
-              </button>
-              {loopActive ? (
-                <button type="button" className="quran-mini-player__hifz-clear" onClick={clearHifz}>
-                  إيقاف التكرار
+          <details className="quran-mini-player__hifz" open={loopActive || undefined}>
+            <summary>وضع الحفظ</summary>
+            <div className="quran-mini-player__hifz-grid">
+              <label>
+                من آية
+                <input
+                  type="number"
+                  min={1}
+                  max={totalAyahs}
+                  value={hifz.startAyah}
+                  onChange={(e) =>
+                    setHifz((p) => ({
+                      ...p,
+                      startAyah: Math.max(1, Math.min(totalAyahs, Number(e.target.value) || 1)),
+                    }))
+                  }
+                />
+              </label>
+              <label>
+                إلى آية
+                <input
+                  type="number"
+                  min={1}
+                  max={totalAyahs}
+                  value={hifz.endAyah}
+                  onChange={(e) =>
+                    setHifz((p) => ({
+                      ...p,
+                      endAyah: Math.max(1, Math.min(totalAyahs, Number(e.target.value) || 1)),
+                    }))
+                  }
+                />
+              </label>
+              <label>
+                التكرار
+                <select
+                  value={hifz.repeatCount === 0 ? "inf" : String(hifz.repeatCount)}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    setHifz((p) => ({
+                      ...p,
+                      repeatCount: v === "inf" ? 0 : Math.max(1, Math.min(20, Number(v) || 1)),
+                    }));
+                  }}
+                >
+                  {Array.from({ length: 20 }, (_, i) => i + 1).map((n) => (
+                    <option key={n} value={n}>
+                      {toArabicDigits(n)}
+                    </option>
+                  ))}
+                  <option value="inf">لا نهائي</option>
+                </select>
+              </label>
+              <label>
+                السرعة
+                <select
+                  value={String(hifz.playbackRate)}
+                  onChange={(e) =>
+                    setHifz((p) => ({ ...p, playbackRate: Number(e.target.value) || 1 }))
+                  }
+                >
+                  {HIFZ_PLAYBACK_RATES.map((r) => (
+                    <option key={r} value={r}>
+                      {rateLabel(r)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                صمت بين التكرارات
+                <select
+                  value={String(hifz.delayMs)}
+                  onChange={(e) =>
+                    setHifz((p) => ({ ...p, delayMs: Number(e.target.value) || 0 }))
+                  }
+                >
+                  {SILENCE_OPTIONS_MS.map((ms) => (
+                    <option key={ms} value={ms}>
+                      {ms === 0 ? "بدون" : `${toArabicDigits(ms / 1000)} ث`}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <div className="quran-mini-player__hifz-actions">
+                <button type="button" className="quran-mini-player__hifz-apply" onClick={applyHifz}>
+                  بدء التكرار
                 </button>
-              ) : null}
+                {loopActive ? (
+                  <button type="button" className="quran-mini-player__hifz-clear" onClick={clearHifz}>
+                    إيقاف التكرار
+                  </button>
+                ) : null}
+              </div>
             </div>
-          </fieldset>
+          </details>
         </div>
       ) : null}
     </div>

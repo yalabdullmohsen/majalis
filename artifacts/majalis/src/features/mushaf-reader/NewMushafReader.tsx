@@ -116,6 +116,7 @@ import "@/features/mushaf-madinah/mushaf-madinah.css";
 /* صقل Chrome الخروج/الأسهم — بعد mushaf-reader حتى يفوز بدون لمس Geometry */
 import "@/styles/reader-page-chrome.css";
 import "@/styles/reader-bookmarks.css";
+import "@/styles/components/quran-audio-chrome.css";
 
 const MushafTafsirSheet = lazy(() =>
   import("@/features/mushaf-madinah/MushafTafsirSheet").then((m) => ({
