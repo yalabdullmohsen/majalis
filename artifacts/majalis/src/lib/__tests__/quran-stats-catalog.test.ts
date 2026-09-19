@@ -14,12 +14,23 @@ import {
 } from "../quran-stats/catalog";
 import { FORBIDDEN_STAT_SOURCES } from "../quran-stats/types";
 import type { QuranStat } from "../quran-stats/types";
+import {
+  QURAN_STAT_THEMES,
+  assertThemeIdsExist,
+  filterStatsByTheme,
+} from "../quran-stats/themes";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
 
 const catalog = buildQuranStatsCatalog();
 assert.ok(catalog.length >= 60, `عدد الإحصاءات ${catalog.length} < 60`);
 assert.doesNotThrow(() => assertQuranStatsCatalog(catalog));
+assertThemeIdsExist(new Set(catalog.map((s) => s.id)));
+
+for (const theme of QURAN_STAT_THEMES) {
+  const themed = filterStatsByTheme(catalog, theme);
+  assert.ok(themed.length >= 4, `محور ${theme} فارغ أو ضعيف: ${themed.length}`);
+}
 
 for (const g of ["bunya", "alfaz", "mawdoo", "suwar", "ajaib"] as const) {
   assert.ok(catalog.some((s) => s.group === g), `مجموعة ناقصة: ${g}`);

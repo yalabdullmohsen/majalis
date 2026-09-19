@@ -30,7 +30,7 @@
 | madani-count | madani-surahs |
 | nuzul-span | nuzul-years |
 
-### alfaz.json (٤٧)
+### alfaz.json (٥١)
 
 | id | topicKey |
 |---|---|
@@ -81,6 +81,10 @@
 | muhammad-lafz | muhammad |
 | ahmad-lafz | ahmad |
 | firawn-lafz | firawn |
+| khutuwat-shaitan | khutuwat-shaitan |
+| fasad-madda | fasad |
+| shahr-lafz | shahr |
+| sana-madda | sana |
 
 ### mawdoo.json (١٤)
 
@@ -131,4 +135,8 @@
 
 ## المجموع
 
-**٩١** بطاقة معتمدة عبر المجموعات الخمس.
+**٩٥** بطاقة معتمدة عبر المجموعات الخمس.
+
+## محاور العرض (واجهة)
+
+ستة محاور في `/quran-hub/numbers` تربط البطاقات أعلاه بلا أرقام جديدة: أساسيات المصحف · ألفاظ شائعة · أنبياء وأعلام · أوامر لفظية · نواهٍ لفظية · ألفاظ متقابلة (بلا سرد إعجازي).

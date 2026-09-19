@@ -74,6 +74,19 @@
   gap: 8px;
 }
 
+.quran-numbers-tabs--groups button {
+  min-height: 36px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.quran-numbers-theme-blurb {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--mj-muted, #5d726a);
+}
+
 .quran-numbers-tabs button,
 .quran-numbers-freq-modes button,
 .quran-stat-sheet__actions button {
