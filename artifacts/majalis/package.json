@@ -586,6 +586,8 @@
     "test:mushaf-display-clarity": "node --import tsx src/lib/__tests__/mushaf-display-clarity-gate.test.ts",
     "test:architecture-excellence-pr1": "node --import tsx src/lib/__tests__/architecture-excellence-pr1-gate.test.ts",
     "capture:architecture-baseline": "node scripts/architecture-excellence-baseline.mjs --write",
+    "test:whole-app-excellence-pr01": "node --import tsx src/lib/__tests__/whole-app-excellence-pr01-gate.test.ts",
+    "capture:whole-app-baseline": "node scripts/whole-app-baseline.mjs --write",
     "test:mushaf-internal-perf-pr1": "node --import tsx src/lib/__tests__/mushaf-internal-perf-pr1-gate.test.ts",
     "capture:mushaf-internal-perf-baseline": "node scripts/mushaf-internal-perf-baseline.mjs --write",
     "test:quran-journey-pr1": "node --import tsx src/lib/__tests__/quran-journey-pr1-contracts-gate.test.ts",
