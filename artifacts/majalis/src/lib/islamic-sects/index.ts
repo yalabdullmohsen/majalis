@@ -30,3 +30,14 @@ export {
   entityKindLabelAr,
 } from "./catalog";
 export type { IslamicSectSummary, IslamicSectsListFilters } from "./catalog";
+export {
+  evaluateIslamicSectsPublishReadiness,
+  resolvePublicationStatusFromHumanDecision,
+  assertNoDraftInPublicList,
+  ISLAMIC_SECTS_SHARIA_BLOCKER_FLAGS,
+} from "./publish-guards";
+export type {
+  IslamicSectsHumanDecisionRecord,
+  IslamicSectsPublishEvaluation,
+  IslamicSectsPublishEvaluationInput,
+} from "./publish-guards";

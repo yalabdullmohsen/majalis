@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "policy": "human_only_publish_no_ai_approval_sharia_specialist_required_for_sensitive",
+  "notesAr": [
+    "الذكاء الاصطناعي لا يضع APPROVED ولا PUBLISHED.",
+    "كل قرار يجب أن يملأه مراجع بشري بالاسم والتاريخ.",
+    "السجلات ذات flags مثل needs_sharia_specialist أو collective_takfir_* لا تُنشر حتى قرار مختص شرعي صريح.",
+    "اكتمال الحقول وحده لا يكفي."
+  ],
+  "decisions": []
+}

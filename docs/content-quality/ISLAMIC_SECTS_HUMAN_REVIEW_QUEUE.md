@@ -63,7 +63,7 @@
 3. قرار taxonomy: هل تبقى الحركات السياسية والمنهج الفقهي ضمن قسم «الفرق»؟
 4. لا SQL مستضاف في هذه الموجة.
 5. لا تعديل نسخة App Store تلقائيًا.
-6. بعد الموافقة البشرية فقط: نقل السجل إلى `HUMAN_REVIEWED` ثم `PUBLISHED`.
+6. بعد الموافقة البشرية فقط: أدخل القرار في `docs/content-quality/islamic-sects-human-decisions.json` ثم أعد بناء الجرد؛ لا يضع Cursor `PUBLISHED` في الـoverlay.
 
 ## ما لا يفعله Cursor في PR-4 / اللاحق قبل القرار البشري
 
