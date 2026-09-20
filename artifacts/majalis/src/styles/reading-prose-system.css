@@ -1,0 +1,452 @@
+/**
+ * نظام قراءة عالمي — Typography + تنفّس الفقرات (CSS فقط).
+ * لا يلمس نص القرآن ولا يغيّر محتوى علمياً؛ لا بطاقات جديدة حول كل فقرة.
+ * يستثني المصحف/QPC. كل الرموز هنا (مؤجّل) حتى لا تمسّ ميزانية CSS الحرج.
+ */
+
+:root {
+  /* قراءة عربية طويلة */
+  --lh-reading: 1.9;
+  --lh-reading-title: 1.3;
+  --lh-reading-section: 1.35;
+
+  /* نظام قراءة موحّد — لا أحجام عشوائية */
+  --type-title-xl: var(--font-2xl, 1.75rem);
+  --type-title-l: var(--font-xl, 1.375rem);
+  --type-section: var(--font-lg, 1.125rem);
+  --type-body-lg: var(--font-md, 1.0625rem);
+  --type-body-regular: var(--font-base, 1rem);
+  --type-body-sm: var(--font-sm, 0.875rem);
+  --type-metadata: var(--font-sm, 0.875rem);
+  --type-caption: var(--font-xs, 0.8125rem);
+
+  --read-measure: 38rem;
+  --read-measure-narrow: 34rem;
+  --read-para-gap: 0.95em;
+  --read-heading-gap-before: 1.45rem;
+  --read-heading-gap-after: 0.55rem;
+  --read-card-pad-block: 1.15rem;
+  --read-card-pad-inline: 1.2rem;
+
+  /* جسر أدوار --ss-* */
+  --ss-type-screen-title: var(--type-title-xl, var(--text-mj-h1));
+  --ss-type-section-title: var(--type-section, var(--text-mj-h2));
+  --ss-type-card-title: var(--type-section, var(--text-mj-h2));
+  --ss-type-body: var(--type-body-regular, var(--text-mj-body));
+  --ss-type-explanation: var(--type-body-lg, var(--text-mj-body));
+  --ss-type-supporting: var(--type-body-sm, var(--text-mj-small));
+  --ss-type-label: var(--type-metadata, var(--text-mj-small));
+  --ss-type-caption: var(--type-caption, var(--text-mj-tiny));
+  --ss-lh-body: var(--lh-reading, 1.9);
+  --ss-lh-title: var(--lh-reading-title, 1.3);
+  --ss-lh-scripture: 1.95;
+}
+
+.type-title-xl {
+  font-size: var(--type-title-xl);
+  font-weight: var(--font-weight-extrabold, 800);
+  line-height: var(--lh-reading-title, 1.3);
+  letter-spacing: 0;
+}
+.type-title-l {
+  font-size: var(--type-title-l);
+  font-weight: var(--font-weight-extrabold, 800);
+  line-height: var(--lh-reading-title, 1.3);
+  letter-spacing: 0;
+}
+.type-section {
+  font-size: var(--type-section);
+  font-weight: var(--font-weight-bold, 700);
+  line-height: var(--lh-reading-section, 1.35);
+  letter-spacing: 0;
+}
+.type-body-lg {
+  font-size: var(--type-body-lg);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--lh-reading, 1.9);
+  letter-spacing: 0;
+}
+.type-body-regular,
+.type-body {
+  font-size: var(--type-body-regular);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--lh-reading, 1.9);
+  letter-spacing: 0;
+}
+.type-body-sm {
+  font-size: var(--type-body-sm);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--lh-prose, 1.85);
+  letter-spacing: 0;
+}
+.type-metadata {
+  font-size: var(--type-metadata);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--lh-ui, 1.6);
+  letter-spacing: 0;
+  color: var(--text-secondary, var(--mj-ink-2));
+}
+.type-caption {
+  font-size: max(0.8125rem, var(--type-caption));
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--lh-ui, 1.6);
+  letter-spacing: 0;
+  color: var(--text-muted, var(--mj-muted));
+}
+
+/* أسطح القراءة الطويلة (معرفة / عقيدة / سيرة / تاريخ / دروس / تفاسير / مقالات) */
+.reading-prose-system,
+.cr-shell,
+.kx-layout,
+.kx-layout--reader,
+.kx-layout--knowledge,
+.topic-page__body,
+.isp-page .isp-body,
+.isp-page .isp-section,
+.tawhid-page,
+.tawheed-page,
+.tarikh-page,
+.seerah-page,
+.hadith-page .hadith-body,
+.content-detail-body,
+.mk-detail,
+.lesson-content,
+.story-content,
+.full-content,
+.reading-prose,
+.sr-prose,
+.qp-person-detail__prose,
+.rsc__body,
+.gl-term__detail,
+.hs-card__body,
+.uq-section,
+.qr-section,
+.tf-card,
+.sect-block__prose {
+  max-width: var(--read-measure, 38rem);
+  width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+  font-size: var(--type-body-regular, var(--text-body));
+  line-height: var(--lh-reading, 1.9);
+  letter-spacing: 0;
+  color: var(--mj-ink, var(--text-primary, #16241e));
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* عنوان رئيسي أوضح بكثير من المتن */
+.reading-prose-system :is(h1, .type-title-xl, .ss-text--screen-title, .page-hero-mj__title, .topic-page__title),
+.cr-shell :is(h1, .ss-text--screen-title),
+.topic-page__body :is(h1, .ss-text--screen-title),
+.isp-page :is(h1, .isp-title),
+.tawhid-page h1,
+.tarikh-page h1,
+.seerah-page h1,
+.lesson-content h1,
+.story-content h1 {
+  font-size: var(--type-title-xl);
+  font-weight: var(--font-weight-extrabold, 800);
+  line-height: var(--lh-reading-title, 1.3);
+  letter-spacing: 0;
+  color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
+  margin-block: 0 var(--read-heading-gap-after, 0.55rem);
+}
+
+.reading-prose-system :is(h2, .type-title-l, .ss-text--section-title),
+.cr-shell :is(h2, .ss-text--section-title),
+.kx-block__title,
+.topic-page__body h2,
+.isp-page h2,
+.tawhid-page h2,
+.tarikh-page h2,
+.seerah-page h2,
+.hadith-page h2,
+.lesson-content h2,
+.story-content h2,
+.rsc__title,
+.qr-section h2,
+.uq-section h2,
+.hs-card__term,
+.gl-term__title,
+.sr-section__title {
+  font-size: var(--type-title-l);
+  font-weight: var(--font-weight-extrabold, 800);
+  line-height: var(--lh-reading-section, 1.35);
+  letter-spacing: 0;
+  color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
+  margin-block: var(--read-heading-gap-before, 1.45rem) var(--read-heading-gap-after, 0.55rem);
+}
+
+.reading-prose-system :is(h3, .type-section, .ss-text--card-title),
+.cr-shell h3,
+.topic-page__body h3,
+.isp-page h3,
+.tawhid-page h3,
+.tarikh-page h3,
+.seerah-page h3,
+.lesson-content h3 {
+  font-size: var(--type-section);
+  font-weight: var(--font-weight-bold, 700);
+  line-height: var(--lh-reading-section, 1.35);
+  letter-spacing: 0;
+  color: var(--mj-ink, var(--text-primary));
+  margin-block: 1.15rem 0.45rem;
+}
+
+/* فقرات منفصلة — تنفّس ثابت بلا كتل ضخمة بصرياً */
+.reading-prose-system :is(p, li, .ss-text--body, .ss-text--explanation, .type-body-lg, .type-body-regular),
+.cr-shell :is(p, li),
+.kx-block__body,
+.kx-block__body p,
+.topic-page__body p,
+.isp-page :is(.isp-body, .isp-section) p,
+.tawhid-page p,
+.tarikh-page p,
+.seerah-page p,
+.seerah-section p,
+.hadith-page .hadith-body p,
+.content-detail-body p,
+.mk-detail p,
+.lesson-content p,
+.story-content p,
+.full-content p,
+.reading-prose p,
+.sr-prose,
+.sr-prose li,
+.qp-person-detail__prose p,
+.rsc__body,
+.rsc__body p,
+.rsc__prose,
+.gl-term__body,
+.gl-term__detail,
+.hs-card__def,
+.hs-card__note,
+.uq-section p,
+.qr-section p,
+.tf-card p,
+.sect-block__prose,
+.tawheed-principle-card p {
+  font-size: var(--type-body-lg, var(--type-body-regular));
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--lh-reading, 1.9);
+  letter-spacing: 0;
+  color: var(--mj-ink, var(--text-primary, #16241e));
+  max-width: var(--read-measure, 38rem);
+  margin-block: 0 var(--read-para-gap, 0.95em);
+  overflow-wrap: anywhere;
+}
+
+.reading-prose-system :is(p, li):last-child,
+.kx-block__body p:last-child,
+.rsc__body p:last-child,
+.cr-shell p:last-child {
+  margin-bottom: 0;
+}
+
+/* مقدمة قصيرة بصرياً — أول فقرة أوضح قليلاً دون تغيير النص */
+.topic-page__body > p:first-of-type,
+.isp-page .isp-body > p:first-of-type,
+.cr-shell > p:first-of-type,
+.kx-layout > .kx-block:first-child .kx-block__body > p:first-of-type,
+.lesson-content > p:first-of-type,
+.story-content > p:first-of-type,
+.tawhid-page > p:first-of-type,
+.tarikh-page > p:first-of-type,
+.seerah-page > p:first-of-type {
+  font-size: var(--type-body-lg);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--lh-reading, 1.9);
+  margin-bottom: calc(var(--read-para-gap, 0.95em) * 1.15);
+}
+
+/* قوائم — مسافات مريحة */
+.reading-prose-system ul,
+.reading-prose-system ol,
+.cr-shell ul,
+.cr-shell ol,
+.topic-page__body ul,
+.topic-page__body ol,
+.kx-block__body ul,
+.isp-page ul,
+.tawhid-page ul,
+.tarikh-page ul,
+.seerah-page ul,
+.lesson-content ul,
+.sr-prose {
+  padding-inline-start: 1.15rem;
+  margin-block: 0.55rem 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+/* مصطلحات بارزة — وزن ولون هادئ (بلا أخضر مزعج) */
+.reading-prose-system :is(strong, b, dfn, .term, [data-term]),
+.cr-shell :is(strong, b, dfn),
+.kx-block__body :is(strong, b, dfn),
+.topic-page__body :is(strong, b, dfn),
+.isp-page :is(strong, b, dfn),
+.tawhid-page :is(strong, b, dfn),
+.gl-term__title,
+.hs-card__term,
+.uq-section strong,
+.qr-section strong,
+.tf-card strong,
+.sect-block__prose strong {
+  font-weight: var(--font-weight-bold, 700);
+  color: var(--mj-ink, var(--text-primary));
+  letter-spacing: 0;
+}
+
+.reading-prose-system em,
+.cr-shell em,
+.kx-block__body em {
+  font-style: italic;
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--mj-ink-2, var(--text-secondary));
+}
+
+/* بيانات وصفية / مصادر */
+.reading-prose-system :is(.meta, .caption, .type-metadata, .type-caption, .ss-text--caption, .ss-text--label),
+.qr-source,
+.gl-term__source,
+.hs-card__example,
+.content-detail-sources,
+.compact-sources--in-rsc .compact-sources__text {
+  font-size: var(--type-metadata);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--lh-ui, 1.6);
+  color: var(--mj-ink-2, var(--text-secondary));
+}
+
+/* بطاقات قراءة موجودة — تنفّس أفضل بلا بطاقات جديدة */
+.rsc,
+.qr-section,
+.uq-section,
+.hs-card,
+.gl-term,
+.tf-card,
+.kx-block:not(.kx-block--definition),
+.tawheed-principle-card,
+.content-detail-body > section,
+.mk-detail .mk-block {
+  padding-block: var(--read-card-pad-block, 1.15rem) !important;
+  padding-inline: var(--read-card-pad-inline, 1.2rem) !important;
+}
+
+.kx-block {
+  --kx-pad: var(--read-card-pad-block, 1.15rem) var(--read-card-pad-inline, 1.2rem);
+}
+
+.kx-block__body {
+  font-size: var(--type-body-lg) !important;
+  line-height: var(--lh-reading, 1.9) !important;
+}
+
+.kx-block__title {
+  font-size: var(--type-section) !important;
+  font-weight: var(--font-weight-extrabold, 800) !important;
+  line-height: var(--lh-reading-section, 1.35) !important;
+  margin-bottom: var(--read-heading-gap-after, 0.55rem) !important;
+}
+
+.kx-block__label {
+  font-size: var(--type-caption) !important;
+  font-weight: var(--font-weight-semibold, 600) !important;
+  letter-spacing: 0 !important;
+  color: var(--mj-ink-2, var(--text-secondary)) !important;
+}
+
+/* أقسام متتابعة — فصل بصري خفيف */
+.isp-page section + section,
+.tawhid-page section + section,
+.topic-page__body section + section,
+.tarikh-page section + section,
+.seerah-page section + section,
+.kx-flow > .kx-block + .kx-block,
+.cr-shell > * + * {
+  margin-block-start: 1.15rem;
+}
+
+/* iPhone / شاشات ضيقة — عرض أسطر أقصر + هوامش آمنة */
+@media (max-width: 480px) {
+  .reading-prose-system,
+  .cr-shell,
+  .kx-layout,
+  .topic-page__body,
+  .rsc__body,
+  .lesson-content,
+  .story-content {
+    max-width: var(--read-measure-narrow, 34rem);
+    padding-inline: max(0.35rem, var(--inset-start, 0px), var(--inset-end, 0px));
+  }
+
+  .reading-prose-system :is(p, li),
+  .cr-shell :is(p, li),
+  .kx-block__body,
+  .topic-page__body p,
+  .rsc__body {
+    font-size: var(--type-body-regular);
+    line-height: 1.95;
+  }
+}
+
+/* iPad / متوسط */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .reading-prose-system,
+  .cr-shell,
+  .kx-layout--reader,
+  .topic-page__body {
+    max-width: 40rem;
+  }
+}
+
+/* ليلي — تباين عناوين/متن دون رفع الأخضر */
+html.dark .reading-prose-system :is(h1, h2, .type-title-xl, .type-title-l, .ss-text--screen-title, .ss-text--section-title),
+html[data-theme="dark"] .reading-prose-system :is(h1, h2, .type-title-xl, .type-title-l),
+html.dark .topic-page__body :is(h1, h2),
+html.dark .isp-page :is(h1, h2),
+html.dark .tawhid-page :is(h1, h2),
+html.dark .tarikh-page :is(h1, h2),
+html.dark .seerah-page :is(h1, h2),
+html.dark .kx-block__title,
+html.dark .rsc__title,
+html.dark .qr-section h2,
+html.dark .hs-card__term,
+html.dark .gl-term__title,
+html[data-theme="dark"] .topic-page__body :is(h1, h2),
+html[data-theme="dark"] .kx-block__title,
+html[data-theme="dark"] .rsc__title {
+  color: var(--txt-primary, #ecf2ef) !important;
+  opacity: 1 !important;
+}
+
+html.dark .reading-prose-system :is(p, li, .kx-block__body),
+html.dark .topic-page__body p,
+html.dark .isp-page p,
+html.dark .tawhid-page p,
+html.dark .rsc__body,
+html.dark .qr-section p,
+html.dark .hs-card__def,
+html[data-theme="dark"] .topic-page__body p,
+html[data-theme="dark"] .rsc__body {
+  color: var(--mj-ink, #e8efeb) !important;
+}
+
+html.dark .reading-prose-system :is(strong, b, dfn, .term),
+html[data-theme="dark"] .reading-prose-system :is(strong, b, dfn) {
+  color: var(--txt-primary, #f8fafc) !important;
+}
+
+/* استثناء المصحف/QPC — لا إعادة تعريف أحجام الآيات */
+.mm-reader,
+.mushaf-reader,
+[data-mushaf],
+.qpc-page,
+.qpc-ayah,
+[class*="qpc-v2"] {
+  max-width: none;
+  font-size: unset;
+  line-height: unset;
+}

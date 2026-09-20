@@ -41,7 +41,6 @@ import "./styles/brand-v4.css";
 import "./styles/tokens.css";
 // رموز دلالية موحّدة (سطح/نص/حد/خطوط) — بعد tokens وقبل الطبقات القديمة
 import "./styles/design-tokens.css";
-import "./styles/components/badge-system.css";
 import "./styles/breakpoints.css";
 import "./styles/typography-scale.css";
 import "./styles/typography-app.css";
@@ -105,6 +104,7 @@ function loadNonCriticalCss() {
   /* طبقات تحديث الواجهة + رموز ds-* — مؤجّلة تحت ميزانية CSS الحرج (<60KiB gzip) */
   void import("./styles/ssunnah-semantic-tokens.css");
   void import("./styles/ssunnah-card-unify.css");
+  void import("./styles/components/badge-system.css");
   void import("./styles/modern-ui-refresh.css");
   void import("./styles/ssunnah-ds-canonical.css");
   void import("./styles/m2030/foundation.css");
@@ -128,6 +128,7 @@ function loadNonCriticalCss() {
   void import("./styles/components/instant-interaction.css");
   void import("./styles/components/compact-sources.css");
   void import("./styles/components/content-reading-shell.css");
+  void import("./styles/reading-prose-system.css");
   void import("./styles/components/reading-section-card.css");
   void import("./styles/components/native-feel.css");
   void import("./styles/m2030/interactions.css");
