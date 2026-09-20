@@ -1,11 +1,12 @@
 # طابور المراجعة البشرية — الفرق الإسلامية
 
-**الحالة:** PR-4 · مراجعة الدفعة الأولى (تخفيف عرض + تدقيق ادعاءات)  
+**الحالة:** PR-5 · تخفيف بقية السجلات (29) بعد دفعة PR-4  
 **المسار:** `/islamic-sects`  
 **مصدر الواجهة:** `artifacts/majalis/src/data/islamic-sects.ts`  
 **الجرد:** `docs/content-quality/islamic-sects-inventory.json`  
 **التصنيف:** `docs/content-quality/islamic-sects-taxonomy.json`  
-**تقرير الدفعة 1:** `docs/content-quality/ISLAMIC_SECTS_BATCH1_SOURCE_REVIEW.md`
+**تقرير الدفعة 1:** `docs/content-quality/ISLAMIC_SECTS_BATCH1_SOURCE_REVIEW.md`  
+**تقرير الدفعة 2:** `docs/content-quality/ISLAMIC_SECTS_BATCH2_SOURCE_REVIEW.md`
 
 ## قواعد ملزمة
 
@@ -42,6 +43,7 @@
 | ISR-019 | جميع السجلات (35) | قائمة/تاريخية بلا توثيق | فلاتر | حالة | P0 | تاريخي | undocumented حتى مصدر | باقٍ undocumented |
 | ISR-020 | جميع السجلات (35) | لا primarySources محققة | جرد | داخلي | NEEDS_SOURCE | P0 | مصدري + حقوقي | لا PUBLISHED | باقٍ 0 primary |
 | ISR-021 | الدفعة 1 (6) | مرشحون ببليوغرافيون بلا طبعة/صفحة | keyBooks | تفاصيل | ببليوغرافيا | P1 | مصدري | مطابقة الدرر/المحقق | أُضيف وسم مرشح |
+| ISR-022 | الدفعة 2 (29) | انقراض/غالبية/نسب/تكفير جماعي بصوت التطبيق | واجهة | قائمة+تفاصيل | حياد + مصدر | P0 | شرعي + تاريخي | NEEDS_MORE_EVIDENCE | خُفّف العرض؛ أيقونات محايدة؛ لا PUBLISHED |
 
 ## ملخص إحصائي (عقد النشر)
 
@@ -51,6 +53,7 @@
 | `PUBLISHED` | 0 |
 | مخفي عن عقد النشر العام | 35 |
 | دفعة PR-4 رُوجعت عرضيًا | 6 |
+| دفعة PR-5 رُوجعت عرضيًا | 29 |
 | ما زال يحتاج قرار بشري للنشر | 35 |
 
 ## Owner Actions
