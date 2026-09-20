@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState, useCallback, startTransition } from "react";
 import { Pencil, Search, SlidersHorizontal, Trash2, X } from "lucide-react";
-import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { Link } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
@@ -209,7 +208,6 @@ function LessonsFilterFields({
           <option value="لا">بدون بث</option>
         </select>
       </label>
-      <AdminQuickEdit section="lessons" />
     </div>
   );
 }

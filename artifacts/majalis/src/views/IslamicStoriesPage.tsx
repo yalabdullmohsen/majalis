@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { AlertTriangle, Bird, BookOpen, Castle, Compass, Flower2, Gem, Landmark, Leaf, Map as MapIcon, Moon, Ruler, Sailboat, Scale, Shield, Star, Sun, Sword } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { supabase } from "@/lib/supabase";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { SkeletonCardGrid, Empty } from "@/components/ui-common";
@@ -88,7 +87,6 @@ function StoryCard({ story, onSelect }: { story: IslamicStory; onSelect: () => v
         <span className="isp-card__cta" aria-hidden="true">اقرأ القصة</span>
       </button>
       <div className="isp-card__admin">
-        <AdminQuickEdit section="islamic-stories" />
       </div>
     </article>
   );

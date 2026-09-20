@@ -5,7 +5,6 @@ import { applyPageSeo } from "@/lib/seo";
 import { EMPTY } from "@/lib/ui-copy";
 import { Link } from "wouter";
 import { usePageView } from "@/hooks/usePageView";
-import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
@@ -461,8 +460,6 @@ export default function SeerahPage() {
       <div className="page-shell narrow">
         <SectionQuiz sectionId="seerah" title="اختبر معلوماتك في السيرة النبوية" count={4} />
       </div>
-
-      <AdminQuickEdit section="prophet-stories" />
     </SectionTemplatePage>
     </DashboardScreen>
   );

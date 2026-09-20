@@ -13,7 +13,6 @@ import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { EMPTY } from "@/lib/ui-copy";
 import { truncateAtWord } from "@/lib/utils";
-import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { getVerifiedHadith } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
 import { normalizeArabic } from "@/lib/arabic-search";
@@ -437,7 +436,6 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
           <p><AlertTriangle size={13} className="inline ms-1" />تحقق من صحة الحديث ومصدره قبل النشر أو الاستشهاد به.</p>
         </footer>
       </div>
-      <AdminQuickEdit section="hadith" />
     </div>
   );
 }
