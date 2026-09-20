@@ -28,16 +28,19 @@ assert.match(tokens, /Dark Green Surface System/, "dark green tokens");
 
 assert.match(green, /--surface-feature-accent:/, "accent token");
 assert.match(green, /--surface-feature-border:/, "border token");
-assert.match(green, /border-inline-start:\s*3px\s+solid/, "accent side border");
+assert.doesNotMatch(green, /border-inline-start:\s*[34]px/, "لا شريط جانبي زخرفي على Green Surface");
 assert.match(green, /\.seerah-panel/, "seerah panels on green surface");
 assert.match(green, /\.hub-card/, "hub cards on green surface");
 assert.match(green, /html\.dark|data-theme="dark"/, "dark green system");
 
 assert.match(main, /green-surface-system\.css/, "main imports green surface");
+assert.match(main, /card-decorative-strip-cleanup\.css/, "main يحمّل تنظيف الشرائط");
 
 assert.match(calm, /--surface-feature/, "calm polish uses green surface");
+assert.doesNotMatch(calm, /border-inline-start:\s*[34]px\s+solid\s+var\(--surface-feature-accent/, "calm بلا شريط accent");
 
 assert.match(unify, /--surface-feature/, "card unify uses green surface");
+assert.doesNotMatch(unify, /border-inline-start:\s*[34]px/, "unify بلا شريط زخرفي");
 assert.match(hub, /--surface-feature/, "hub-card uses green surface tokens");
 assert.doesNotMatch(
   hub,

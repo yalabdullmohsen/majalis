@@ -83,7 +83,6 @@ html.dark,
   background: var(--surface-feature) !important;
   background-image: none !important;
   border: 1px solid var(--surface-feature-border) !important;
-  border-inline-start: 3px solid var(--surface-feature-accent) !important;
   border-radius: var(--surface-feature-radius) !important;
   box-shadow: var(--surface-feature-shadow) !important;
   color: var(--surface-feature-ink) !important;
@@ -92,19 +91,16 @@ html.dark,
 .gs-surface--knowledge {
   background: var(--surface-knowledge) !important;
   border-color: var(--surface-knowledge-border) !important;
-  border-inline-start-color: var(--surface-knowledge-accent) !important;
 }
 
 .gs-surface--islamic {
   background: var(--surface-islamic) !important;
   border-color: var(--surface-islamic-border) !important;
-  border-inline-start-color: var(--surface-islamic-accent) !important;
 }
 
 .gs-surface--highlighted {
   background: var(--surface-highlighted) !important;
   border-color: var(--surface-highlighted-border) !important;
-  border-inline-start-color: var(--surface-highlighted-accent) !important;
 }
 
 /* ── بطاقات المحتوى الرئيسية (Legacy → Green Surface) ──
@@ -214,7 +210,6 @@ html.dark,
   background: var(--surface-feature) !important;
   background-image: none !important;
   border: 1px solid var(--surface-feature-border) !important;
-  border-inline-start: 3px solid var(--surface-feature-accent) !important;
   border-radius: var(--surface-feature-radius) !important;
   box-shadow: var(--surface-feature-shadow) !important;
   color: var(--surface-feature-ink) !important;
@@ -229,7 +224,6 @@ html.dark,
 .ai-detail {
   background: var(--surface-knowledge) !important;
   border-color: var(--surface-knowledge-border) !important;
-  border-inline-start-color: var(--surface-knowledge-accent) !important;
 }
 
 /* بطاقات إسلامية مميزة (سيرة / عقيدة / تاريخ / إعجاز) */
@@ -246,14 +240,12 @@ html.dark,
 .card--featured:not([data-scripture]) {
   background: var(--surface-islamic) !important;
   border-color: var(--surface-islamic-border) !important;
-  border-inline-start-color: var(--surface-islamic-accent) !important;
 }
 
 /* تنبيه حذر — يبقى ضمن العائلة مع درجة دافئة خفيفة فوق الأخضر */
 .info-card--caution {
   background: color-mix(in srgb, #fef3c7 35%, var(--surface-knowledge)) !important;
   border-color: color-mix(in srgb, #a16207 28%, var(--surface-knowledge-border)) !important;
-  border-inline-start-color: #a16207 !important;
   color: var(--surface-feature-ink) !important;
 }
 

@@ -167,7 +167,6 @@ html.dark {
   /* Green Surface System — لا بطاقات بيضاء/بيج قديمة */
   background: var(--surface-feature, var(--surface)) !important;
   border: 1px solid var(--surface-feature-border, color-mix(in srgb, var(--border) 80%, transparent)) !important;
-  border-inline-start: 3px solid var(--surface-feature-accent, var(--primary)) !important;
   border-radius: var(--radius-card) !important;
   box-shadow: var(--surface-feature-shadow, none) !important;
   color: var(--surface-feature-ink, var(--text)) !important;
@@ -364,7 +363,6 @@ html.dark .lessons-page-v2 .filter-chips__chip.is-active {
   gap: 0.45rem !important;
   background: var(--surface-feature, var(--surface)) !important;
   border: 1px solid var(--surface-feature-border, color-mix(in srgb, var(--border) 85%, transparent)) !important;
-  border-inline-start: 3px solid var(--surface-feature-accent, var(--primary)) !important;
   border-radius: var(--radius-card) !important;
   box-shadow: var(--surface-feature-shadow, none) !important;
   color: var(--surface-feature-ink, var(--text)) !important;

@@ -19,7 +19,7 @@
 
 | مشكلة | دليل حالي | موجة الإصلاح |
 |---|---|---|
-| شريط أخضر جانبي على البطاقات | `green-surface-system.css` + ~28 ملف CSS بـ `border-inline-start: 3–4px` | **PR-2** |
+| شريط أخضر جانبي على البطاقات | `green-surface-system.css` + ~28 ملف CSS بـ `border-inline-start: 3–4px` | **PR-2 ✅** (مصدر DS + طبقة `card-decorative-strip-cleanup.css`) |
 | Card داخل Card | `FeatureCard` يلف `AppCard` داخل رابط بطاقة | PR-2 / ترحيل مكوّنات |
 | حدود متراكبة / ظل+حد ثقيل | `box-shadow` + `border` + accent strip معًا في Green Surface | PR-2 |
 | فراغ بعد إزالة حدود | صفحات تعتمد على الإطار بدل المساحة | PR-4…5 |
