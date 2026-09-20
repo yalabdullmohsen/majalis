@@ -584,6 +584,7 @@
     "test:content-quality-wave29": "node --import tsx src/lib/__tests__/content-quality-wave29-gate.test.ts",
     "test:content-quality-wave30": "node --import tsx src/lib/__tests__/content-quality-wave30-gate.test.ts",
     "test:content-quality-wave31": "node --import tsx src/lib/__tests__/content-quality-wave31-gate.test.ts",
+    "test:section-topics-expand": "node --import tsx src/lib/__tests__/section-topics-expand-gate.test.ts",
     "test:ipad-responsive": "node --import tsx src/lib/__tests__/ipad-responsive-layout-gate.test.ts",
     "test:support-page": "node --import tsx src/lib/__tests__/support-page-gate.test.ts && node --import tsx src/lib/__tests__/store-readiness-routes.test.ts && node --import tsx src/lib/__tests__/contact-page-rebuild-gate.test.ts",
     "test:design-excellence": "node --import tsx src/lib/__tests__/design-excellence-utility-gate.test.ts",

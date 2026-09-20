@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { ExploreAlsoNav, type ExploreAlsoLink } from "@/components/ExploreAlsoNav";
-import type { DarsSection } from "@/lib/dars-types";
+import { AppBottomSheet } from "@/components/ui/AppBottomSheet";
+import type { DarsItem, DarsSection } from "@/lib/dars-types";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { toArabicDigits } from "@/lib/utils";
 import {
@@ -13,6 +14,9 @@ import {
   ExplanationText,
 } from "@/components/design-system/text";
 import { EMPTY } from "@/lib/ui-copy";
+import {
+  shouldInlineExpandTopics,
+} from "@/lib/section-topics-expand";
 import "@/styles/pages/section-hub.css";
 
 /** ألوان بطاقات من رموز الهوية — بلا هكس نصّي عشوائي */
@@ -52,7 +56,10 @@ export function SectionAccordionLayout({
   relatedTitle,
   statsLabels,
 }: Props) {
-  const [openId, setOpenId] = useState<string | null>(null);
+  /** أكورديون داخلي فقط — بطاقة واحدة مفتوحة */
+  const [inlineOpenId, setInlineOpenId] = useState<string | null>(null);
+  /** ورقة سفلية للأبواب ذات موضوعات كثيرة */
+  const [sheetSectionId, setSheetSectionId] = useState<string | null>(null);
   const [filterId, setFilterId] = useState<string>("all");
   const [search, setSearch] = useState("");
   const [draft, setDraft] = useState("");
@@ -77,6 +84,10 @@ export function SectionAccordionLayout({
       .filter((sec) => sec.lessons.length > 0 || (!q && (filterId === "all" || filterId === sec.id)));
   }, [sections, filterId, search]);
 
+  const sheetSection = sheetSectionId
+    ? filtered.find((s) => s.id === sheetSectionId) ?? sections.find((s) => s.id === sheetSectionId)
+    : null;
+
   const resolvedSubtitle =
     subtitle ??
     `مسار ميسر — ${toArabicDigits(sections.length)} أبواب · ${toArabicDigits(totalLessons)} موضوعًا`;
@@ -84,6 +95,16 @@ export function SectionAccordionLayout({
   const intro =
     description ??
     "فهرس دراسي مرتّب للطلبة، ببطاقات واضحة وفلاتر موحّدة — دون عناصر تجريبية أو أرقام عشوائية.";
+
+  function openSectionTopics(sec: DarsSection) {
+    if (shouldInlineExpandTopics(sec.lessons.length)) {
+      setSheetSectionId(null);
+      setInlineOpenId((prev) => (prev === sec.id ? null : sec.id));
+      return;
+    }
+    setInlineOpenId(null);
+    setSheetSectionId(sec.id);
+  }
 
   return (
     <SectionTemplatePage
@@ -149,7 +170,7 @@ export function SectionAccordionLayout({
                 className={`section-hub__chip${filterId === sec.id ? " is-active" : ""}`}
                 onClick={() => {
                   setFilterId(sec.id);
-                  setOpenId(sec.id);
+                  openSectionTopics(sec);
                 }}
               >
                 {sec.title}
@@ -165,13 +186,16 @@ export function SectionAccordionLayout({
         ) : (
           <div className="section-hub__grid">
             {filtered.map((sec, idx) => {
-              const open = openId === sec.id;
+              const inlineOpen = inlineOpenId === sec.id;
               const accent = resolveAccent(sec.color, idx);
+              const inlineMode = shouldInlineExpandTopics(sec.lessons.length);
               return (
                 <article
                   key={sec.id}
-                  className={`section-hub__card${open ? " is-open" : ""}`}
+                  className={`section-hub__card${inlineOpen ? " is-open" : ""}`}
                   style={{ ["--card-accent" as string]: accent }}
+                  data-topics-mode={inlineMode ? "inline" : "sheet"}
+                  data-topics-count={sec.lessons.length}
                 >
                   <Caption className="section-hub__card-kicker">الباب {toArabicDigits(idx + 1)}</Caption>
                   <CardTitle className="section-hub__card-title">{sec.title}</CardTitle>
@@ -182,41 +206,20 @@ export function SectionAccordionLayout({
                     <button
                       type="button"
                       className="section-hub__cta"
-                      aria-expanded={open}
-                      onClick={() => setOpenId(open ? null : sec.id)}
+                      aria-expanded={inlineOpen || sheetSectionId === sec.id}
+                      onClick={() => openSectionTopics(sec)}
                     >
-                      {open ? "إخفاء الموضوعات" : "ابدأ الباب"}
+                      {inlineOpen
+                        ? "إخفاء الموضوعات"
+                        : sheetSectionId === sec.id
+                          ? "الموضوعات مفتوحة"
+                          : "عرض الموضوعات"}
                     </button>
-                    {!open && (
-                      <button
-                        type="button"
-                        className="section-hub__cta section-hub__cta--ghost"
-                        onClick={() => setOpenId(sec.id)}
-                      >
-                        عرض الموضوعات
-                      </button>
-                    )}
                   </div>
 
-                  {open && (
-                    <ul className="section-hub__topics">
-                      {sec.lessons.map((lesson) => (
-                        <li key={lesson.id} className="section-hub__topic">
-                          <CardTitle as="h4" className="section-hub__topic-title">
-                            {lesson.title}
-                          </CardTitle>
-                          {lesson.summary ? (
-                            <SupportingText className="section-hub__topic-summary">
-                              {lesson.summary}
-                            </SupportingText>
-                          ) : null}
-                          {lesson.body ? (
-                            <BodyText className="section-hub__topic-body">{lesson.body}</BodyText>
-                          ) : null}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  {inlineOpen && inlineMode ? (
+                    <SectionTopicsList lessons={sec.lessons} compact />
+                  ) : null}
                 </article>
               );
             })}
@@ -237,12 +240,62 @@ export function SectionAccordionLayout({
           />
         </footer>
       ) : null}
+
+      <AppBottomSheet
+        open={Boolean(sheetSection)}
+        onClose={() => setSheetSectionId(null)}
+        title={sheetSection ? sheetSection.title : "الموضوعات"}
+        snap="half"
+      >
+        {sheetSection ? (
+          <div className="section-hub__sheet-body">
+            <SupportingText className="section-hub__sheet-meta">
+              {toArabicDigits(sheetSection.lessons.length)} موضوعًا
+            </SupportingText>
+            <SectionTopicsList lessons={sheetSection.lessons} compact={false} />
+          </div>
+        ) : null}
+      </AppBottomSheet>
     </SectionTemplatePage>
   );
 }
 
+function SectionTopicsList({
+  lessons,
+  compact,
+}: {
+  lessons: DarsItem[];
+  /** داخل البطاقة: عنوان + ملخص قصير فقط — بلا متن كامل */
+  compact: boolean;
+}) {
+  return (
+    <ul className={`section-hub__topics${compact ? " section-hub__topics--compact" : ""}`}>
+      {lessons.map((lesson) => (
+        <li key={lesson.id} className="section-hub__topic">
+          <CardTitle as="h4" className="section-hub__topic-title">
+            {lesson.title}
+          </CardTitle>
+          {lesson.summary ? (
+            <SupportingText
+              className={
+                compact
+                  ? "section-hub__topic-summary section-hub__topic-summary--clamp"
+                  : "section-hub__topic-summary"
+              }
+            >
+              {lesson.summary}
+            </SupportingText>
+          ) : null}
+          {!compact && lesson.body ? (
+            <BodyText className="section-hub__topic-body">{lesson.body}</BodyText>
+          ) : null}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function resolveAccent(raw: string | undefined, idx: number): string {
-  // المحتوى قد يحمل لونًا قديمًا — نتجاهله ونستخدم رموز الهوية فقط
   void raw;
   return CARD_ACCENTS[idx % CARD_ACCENTS.length]!;
 }
