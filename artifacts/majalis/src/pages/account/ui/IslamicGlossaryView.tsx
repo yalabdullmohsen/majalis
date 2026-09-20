@@ -1854,7 +1854,7 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
     <div className="gl-page mj-page" dir="rtl" data-islamic-glossary="1">
       <p className="gl-hero__actions">
         <Link href="/flashcards" className="gl-hero__btn">
-          راجِع بالبطاقات
+          بطاقات المراجعة
         </Link>
         {lockedCategory === "quran" ? (
           <Link href="/islamic-glossary" className="gl-hero__btn gl-hero__btn--ghost">
@@ -1950,7 +1950,7 @@ export default function IslamicGlossaryPage({ lockedCategory }: IslamicGlossaryP
             <div className="gl-term__body">
               <p>
                 اختر التصنيف أو ابحث بالكلمة، ثم افتح المصطلح لقراءة التعريف والتفصيل والمصدر عند توافره.
-                للمراجعة النشطة استخدم <Link href="/flashcards">البطاقات</Link>.
+                للمراجعة النشطة استخدم <Link href="/flashcards">بطاقات المراجعة</Link>.
               </p>
             </div>
           </Card>

@@ -156,6 +156,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.7rem;
+  align-items: start;
 }
 
 @media (max-width: 360px) {
@@ -168,7 +169,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
-  min-height: 100%;
+  /* لا تمدد فارغ لمطابقة صف الشبكة — كان يسبب فراغًا ضخمًا وCLS */
+  min-height: 0;
+  height: auto;
   padding: 0.95rem 0.9rem;
   border-radius: var(--sh-radius);
   border: 1px solid color-mix(in srgb, var(--card-accent, var(--sh-accent)) 18%, var(--mj-hairline, var(--mj-hairline, #e3e8e6)));
@@ -216,8 +219,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
-  margin-top: auto;
-  padding-top: 0.25rem;
+  margin-top: 0.15rem;
+  padding-top: 0.15rem;
 }
 
 .section-hub__cta {
@@ -248,11 +251,35 @@
   gap: 0.45rem;
 }
 
+.section-hub__topics--compact {
+  gap: 0.35rem;
+}
+
 .section-hub__topic {
-  padding: 0.7rem 0.8rem;
-  border-radius: 18px;
+  padding: 0.55rem 0.7rem;
+  border-radius: 14px;
   background: color-mix(in srgb, var(--mj-bg, #f4f7f5) 70%, var(--mj-surface, var(--mj-white, #ffffff)));
   border: 1px solid color-mix(in srgb, var(--card-accent, var(--sh-accent)) 10%, var(--mj-hairline, var(--mj-hairline, #e3e8e6)));
+}
+
+.section-hub__topic-summary--clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-block-start: 0.25rem;
+}
+
+.section-hub__sheet-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding-block-end: 0.5rem;
+}
+
+.section-hub__sheet-meta {
+  margin: 0;
+  color: var(--mj-ink-3, #5a6b63);
 }
 
 .section-hub__topic-title {
