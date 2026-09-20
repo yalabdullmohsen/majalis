@@ -14,9 +14,9 @@
   justify-content: center;
   box-sizing: border-box;
   margin-inline: max(0.75rem, var(--m2030-pad, 1rem));
-  margin-block: 0.35rem 0.85rem;
-  padding-block: 1.2rem 1.35rem;
-  padding-inline: 1.15rem;
+  margin-block: var(--svl-space-xs, 0.25rem) var(--svl-space-m, 0.75rem);
+  padding-block: var(--svl-space-l, 1rem) var(--svl-space-xl, 1.5rem);
+  padding-inline: var(--svl-space-l, 1rem);
   border-radius: var(--radius-2xl, var(--mj-r-xl, 1.75rem));
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 9%, var(--mj-hairline, transparent));
   background-color: transparent !important;

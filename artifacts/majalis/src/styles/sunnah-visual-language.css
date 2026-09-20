@@ -1,5 +1,5 @@
 /**
- * Sunnah Visual Language (SVL) — رموز + طبقات أسطح + زخارف + رؤوس (PR-1…3).
+ * Sunnah Visual Language (SVL) — رموز + طبقات أسطح + زخارف + رؤوس + مسافات (PR-1…4).
  * مؤجّل من main — خارج ميزانية CSS الحرج.
  * المصحف/QPC خارج النطاق.
  */
@@ -27,6 +27,26 @@
   --svl-success: var(--mj-brand, #146b52);
   --svl-warning: var(--mj-accent, #b08a3e);
   --svl-error: var(--mj-danger, #b54a4a);
+
+  /* ── Spacing scale (4px · XS…XL) — مصدر واحد للإيقاع ── */
+  --svl-space-xs: 0.25rem; /* 4 */
+  --svl-space-s: 0.5rem; /* 8 */
+  --svl-space-m: 0.75rem; /* 12 */
+  --svl-space-l: 1rem; /* 16 */
+  --svl-space-xl: 1.5rem; /* 24 */
+  --svl-space-1: var(--svl-space-xs);
+  --svl-space-2: var(--svl-space-s);
+  --svl-space-3: var(--svl-space-m);
+  --svl-space-4: var(--svl-space-l);
+  --svl-space-5: 1.25rem;
+  --svl-space-6: var(--svl-space-xl);
+  --svl-space-8: 2rem;
+  --svl-space-section: var(--svl-space-m);
+  --svl-space-card: var(--svl-space-l);
+  --svl-space-card-gap: var(--svl-space-m);
+  --svl-space-list-gap: var(--svl-space-s);
+  --svl-space-hero: var(--svl-space-m) var(--svl-space-l) var(--svl-space-s);
+  --svl-space-title-to-body: var(--svl-space-s);
 
   /* ── Radius family ── */
   --svl-radius-sm: var(--radius-sm, 14px);
@@ -437,3 +457,76 @@ html[data-theme="dark"] {
 [data-mushaf] .svl-pattern {
   display: none !important;
 }
+
+/* ── Spacing rhythm (PR-4) — إيقاع موحّد بلا فراغ مهدور ── */
+.svl-page-header.page-hero-mj,
+.page-hero-mj.svl-page-header {
+  padding: clamp(0.65rem, 2.4vw, 1rem);
+  padding-block-end: var(--svl-space-m);
+  margin-block-end: var(--svl-space-s);
+}
+
+.svl-page-header .page-hero-mj__content {
+  gap: var(--svl-space-title-to-body);
+}
+
+.svl-page-header .svl-header-ornament,
+.page-hero-mj.svl-page-header .svl-header-ornament {
+  margin-block: var(--svl-space-xs) var(--svl-space-s);
+}
+
+.svl-card-surface {
+  padding: var(--svl-space-card);
+}
+
+.svl-section-header {
+  margin-block: var(--svl-space-m) var(--svl-space-s);
+  gap: var(--svl-space-xs);
+}
+
+/* شبكات/قوائم شائعة — فجوة موحّدة */
+.section-lobby__grid,
+.ss-feature-grid,
+.page-related__grid,
+.hub-grid,
+.more-hub-grid {
+  gap: var(--svl-space-card-gap) !important;
+}
+
+.section-lobby__body,
+.topic-page__body > .page-shell__content,
+.sect-hub,
+.fiqh-hub {
+  gap: var(--svl-space-section);
+}
+
+/* عنوان → محتوى أقرب */
+.page-shell__intro {
+  margin-block-start: var(--svl-space-m);
+  margin-block-end: var(--svl-space-l);
+}
+
+.page-shell__content > section + section,
+.page-shell__content > .page-shell-section + .page-shell-section {
+  margin-block-start: var(--svl-space-xl);
+}
+
+@media (min-width: 768px) {
+  .page-shell__content > section + section,
+  .page-shell__content > .page-shell-section + .page-shell-section {
+    margin-block-start: var(--svl-space-8);
+  }
+}
+
+.page-shell__related {
+  margin-block-start: var(--svl-space-8);
+}
+
+/* Accordion: لا حجز فراغ للمخفي */
+details:not([open]) > *:not(summary) {
+  display: none;
+}
+details[open] > summary {
+  margin-block-end: var(--svl-space-s);
+}
+

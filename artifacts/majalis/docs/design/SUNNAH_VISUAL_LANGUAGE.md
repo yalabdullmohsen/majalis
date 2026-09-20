@@ -1,6 +1,6 @@
 # Sunnah Visual Language (SVL)
 
-**الحالة:** موجة 3 / 10 — طباعة + رؤوس صفحات/أقسام.  
+**الحالة:** موجة 4 / 10 — Spacing Scale + إيقاع فراغ موحّد.  
 **لا إعلان:** `SUNNAH_VISUAL_EXCELLENCE_COMPLETE` حتى اكتمال كل الموجات والنشر.
 
 ## المبادئ
@@ -22,13 +22,13 @@
 | شريط أخضر جانبي على البطاقات | `green-surface-system.css` + ~28 ملف CSS بـ `border-inline-start: 3–4px` | **PR-2 ✅** |
 | عمود جانبي على هيرو الأقسام | `page-hero-mj--bleed` كان `4px` | **PR-3 ✅** |
 | خط أخضر قصير تحت العناوين | `::after` على lobby / quran-hub / sections-hub | **PR-3 ✅** → `--svl-header-ornament-bg` |
-| Card داخل Card | `FeatureCard` يلف `AppCard` داخل رابط بطاقة | ترحيل لاحق / PR-4 |
-| فراغ بعد إزالة حدود | صفحات تعتمد على الإطار بدل المساحة | PR-4…5 |
+| Card داخل Card | `FeatureCard` يلف `AppCard` داخل رابط بطاقة | ترحيل لاحق / PR-5 |
+| فراغ بعد إزالة حدود / هيرو متمدد | padding/margin غير موحّدة · `min-height` زخرفي | **PR-4 ✅** |
 | ضعف فصل عنوان/متن/مراجع | `reading-prose-system` + رؤوس SVL | **PR-3 ✅** أساس الرؤوس |
 | اختلاف بطاقات الأقسام | طبقات متعددة | PR-2 + ترحيل |
 | قائمة جانبية مسطحة | m2030 navigation | PR-6 |
 | تداخل أزرار عائمة | final-release / floating | PR-6/7 |
-| خلفيات فارغة بلا بنية خفيفة | primitives + PageHero motif | PR-1 + PR-3 · تطبيق أوسع PR-4 |
+| خلفيات فارغة بلا بنية خفيفة | primitives + PageHero motif | PR-1 + PR-3 · تطبيق أوسع لاحقًا |
 
 **استثناءات وظيفية للشرائط:** اقتباس/دليل (`blockquote`، `kx-block--definition`، حالة admin/hadith grading).
 
@@ -51,6 +51,34 @@
 | Medium | `--svl-radius-md` | بطاقات |
 | Large | `--svl-radius-lg` | أقسام / sheets |
 | Capsule | `--svl-radius-pill` | أزرار محددة فقط |
+
+## مقياس المسافات (PR-4)
+
+مقياس واحد (أساس 4px). ممنوع أرقام عشوائية لعناصر من نفس الدور.
+
+| اسم | رمز | قيمة |
+|---|---|---|
+| XS | `--svl-space-xs` | 0.25rem (4) |
+| S | `--svl-space-s` | 0.5rem (8) |
+| M | `--svl-space-m` | 0.75rem (12) |
+| L | `--svl-space-l` | 1rem (16) |
+| XL | `--svl-space-xl` | 1.5rem (24) |
+| 8 | `--svl-space-8` | 2rem (32) |
+
+أدوار:
+
+| دور | رمز |
+|---|---|
+| Section stack | `--svl-space-section` → M |
+| Card padding | `--svl-space-card` → L |
+| Card / grid gap | `--svl-space-card-gap` → M |
+| List gap | `--svl-space-list-gap` → S |
+| Title → body | `--svl-space-title-to-body` → S |
+| Hero padding | `--svl-space-hero` |
+
+تطبيق الإيقاع: `.svl-page-header` · `.svl-card-surface` · `.svl-section-header` · شبكات lobby/hub · `page-shell` · `details` accordion (لا حجز فراغ للمخفي).
+
+ملفات مرتبطة: `page-hero.css` · `page-shell.css` · `modern-section-shell.css` · `home-brand-title.css` · `sections-calm-polish.css` · `ssunnah-ux-polish.css`.
 
 ## مقياس الطباعة (PR-3)
 
@@ -96,7 +124,8 @@
 - PR-1: `sunnah-visual-language.css` · geometry primitives · gate
 - PR-2: `card-decorative-strip-cleanup.css` · إزالة شرائط البطاقات
 - PR-3: رموز طباعة · `HeaderOrnament` · رؤوس · توحيد `::after` · إزالة شريط الهيرو
+- PR-4: Spacing Scale · إيقاع Hero/Shell/Lobby/Cards/Accordion
 
 ## موجات لاحقة
 
-PR-4 Home/Quran Hub · PR-5 أقسام علمية · … · PR-10 انحدار بصري.
+PR-5 أقسام علمية · … · PR-10 انحدار بصري.

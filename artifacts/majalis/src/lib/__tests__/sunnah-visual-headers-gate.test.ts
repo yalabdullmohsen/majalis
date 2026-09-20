@@ -81,9 +81,11 @@ assert.doesNotMatch(
   /border-inline-start:\s*[34]px\s+solid/,
   "هيروات الأقسام في modern-section-shell بلا عمود جانبي",
 );
+assert.match(shell, /--svl-space-m/, "هيرو الأقسام يستخدم مقياس المسافات");
 
 assert.match(doc, /PR-3/);
 assert.match(doc, /HeaderOrnament|رؤوس|طباعة/);
+assert.match(doc, /مقياس المسافات \(PR-4\)|--svl-space-xs/);
 assert.match(doc, /لا إعلان|SUNNAH_VISUAL_EXCELLENCE_COMPLETE/);
 
 const pkg = read("package.json");

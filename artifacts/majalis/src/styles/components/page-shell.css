@@ -1,6 +1,6 @@
 .page-shell__intro {
-  margin-block-start: var(--mj-s4); /* 16 */
-  margin-block-end: var(--mj-s6); /* 24 */
+  margin-block-start: var(--svl-space-m, var(--mj-s3, 12px));
+  margin-block-end: var(--svl-space-l, var(--mj-s4)); /* 16 */
   /* الهدف: مقدمة مضغوطة (عنوان + سطر)؛ لا قصّ قسري حتى لا يُخفى المحتوى */
 }
 
@@ -25,18 +25,18 @@
 
 .page-shell__content > section + section,
 .page-shell__content > .page-shell-section + .page-shell-section {
-  margin-block-start: var(--mj-s8); /* 32 */
+  margin-block-start: var(--svl-space-xl, var(--mj-s6, 24px));
 }
 
 @media (min-width: 768px) {
   .page-shell__content > section + section,
   .page-shell__content > .page-shell-section + .page-shell-section {
-    margin-block-start: var(--mj-s12, 48px);
+    margin-block-start: var(--svl-space-8, var(--mj-s8, 32px));
   }
 }
 
 .page-shell__related {
-  margin-block-start: var(--mj-s12, 48px);
+  margin-block-start: var(--svl-space-8, var(--mj-s8, 32px));
 }
 
 .page-related__title {
@@ -49,7 +49,7 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: var(--mj-s3); /* 12 */
+  gap: var(--svl-space-card-gap, var(--mj-s3, 12px));
   grid-template-columns: 1fr;
 }
 

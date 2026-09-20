@@ -215,8 +215,8 @@
   width: auto;
   max-width: min(56rem, calc(100% - 2 * max(1rem, var(--page-gutter, 1rem))));
   margin-inline: auto;
-  margin-block: 0.65rem 0.85rem;
-  padding-block: 1.05rem !important;
+  margin-block: var(--svl-space-s, 0.5rem) var(--svl-space-m, 0.75rem);
+  padding-block: var(--svl-space-m, 0.75rem) !important;
   padding-inline: max(1rem, var(--page-gutter, 1rem)) !important;
 }
 
