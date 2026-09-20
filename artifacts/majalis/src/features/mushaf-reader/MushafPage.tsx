@@ -5,6 +5,11 @@ import { MushafSurahBanner } from "./MushafSurahBanner";
 import { MushafBasmalaView, MushafVerseLayer } from "./MushafVerseLayer";
 import { AyahSelectionOverlay } from "./AyahSelectionOverlay";
 import { mushafPerfInc } from "./mushaf-turn-telemetry";
+import {
+  resolveContentRowCount,
+  resolveSlotOrder,
+  type MushafPageLayoutKind,
+} from "./page-layout-engine";
 
 /** تسمية ربع الحزب من rub_el_hizb المعتمد — بلا تخمين خارج البيانات. */
 function rubQuarterLabel(rub: number): string {
@@ -64,8 +69,9 @@ function isLastSurahLine(words: QpcWord[], layout: MushafPageLayout): boolean {
 
 /**
  * MushafPage — صفحة ثابتة القياس من أول إطار.
- * شبكة ١٥ سطرًا لكل الصفحات (نفس bodyTop) — بلا توسيط flex يقفز النص.
+ * الصفحات العادية: شبكة ١٥ سطرًا. ص١–ص٢: Page Layout Engine (خانات مملوءة فقط).
  * ارتفاع الحاوية/المتن ثابت عبر --mushaf-* لمنع layout shift عند قلب الصفحة.
+ * بلا إطار زخرفي / ميدالية — النص القرآني محور الصفحة.
  */
 function mushafPagePropsEqual(prev: Props, next: Props): boolean {
   return (
@@ -94,7 +100,7 @@ export const MushafPage = memo(function MushafPage({
   const isOpeningP1 = layout.pageNumber === 1;
   const isLeadP2 = layout.pageNumber === 2;
   const surahStart = !isOpeningP1 && !isLeadP2 && layout.surahsStartingOnPage.length > 0;
-  const pageType = isOpeningP1
+  const pageType: MushafPageLayoutKind = isOpeningP1
     ? "opening"
     : isLeadP2
       ? "lead"
@@ -103,7 +109,11 @@ export const MushafPage = memo(function MushafPage({
         : "normal";
 
   const slots = useMemo(() => buildSlots(layout), [layout]);
-  const slotOrder = useMemo(() => Array.from({ length: 15 }, (_, i) => i + 1), []);
+  const slotOrder = useMemo(
+    () => resolveSlotOrder(pageType, slots.keys()),
+    [pageType, slots],
+  );
+  const contentRows = resolveContentRowCount(slotOrder);
 
   const footerPage = displayPageNumber ?? layout.pageNumber;
   mushafPerfInc("pageRender");
@@ -169,29 +179,6 @@ export const MushafPage = memo(function MushafPage({
       </header>
 
       <div className="nm-page__stage" data-testid="mushaf-page-frame">
-        {/* زخارف أصلية لسُنّة — طبقات absolute بلا تأثير على شبكة ١٥ أو قياس الخط */}
-        <div
-          className="nm-page__ornament-frame"
-          data-component="AuthenticWarmMushafPageFrame"
-          data-testid="authentic-mushaf-page-frame"
-          aria-hidden="true"
-        />
-        {isOpeningP1 ? (
-          <div
-            className="nm-page__fatiha-medallion"
-            data-component="SunnahFatihaBraidedMedallion"
-            data-testid="sunnah-fatiha-medallion"
-            aria-hidden="true"
-          />
-        ) : null}
-        {isLeadP2 ? (
-          <div
-            className="nm-page__fatiha-medallion nm-page__baqarah-medallion"
-            data-component="SunnahBaqarahMedallion"
-            data-testid="sunnah-baqarah-medallion"
-            aria-hidden="true"
-          />
-        ) : null}
         {sectionMark ? (
           <span
             className="nm-page__section-mark"
@@ -212,6 +199,12 @@ export const MushafPage = memo(function MushafPage({
           }}
           className="nm-page__body"
           data-layout="pageBody"
+          data-content-rows={contentRows}
+          style={
+            {
+              ["--nm-content-rows"]: contentRows,
+            } as CSSProperties
+          }
         >
           <AyahSelectionOverlay container={bodyEl} enabled={selectionEnabled} />
           {slotOrder.map((slot) => {

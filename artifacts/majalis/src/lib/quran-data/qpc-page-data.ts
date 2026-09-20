@@ -281,9 +281,9 @@ async function buildMushafPageLayout(pageNumber: number): Promise<MushafPageLayo
     let bannerSlot: number;
     let basmalaSlot: number | null = null;
     if (isOpening) {
-      /* ص١–٢: الشارة في الخانة ٣، البسملة في ٤ إن وُجدت، ثم الأسطر تباعًا */
-      bannerSlot = 3;
-      if (chapter.bismillahPre) basmalaSlot = 4;
+      /* ص١–٢ Content Driven: الشارة من الخانة ١، البسملة ٢ إن وُجدت — بلا فراغ علوي لزخرفة */
+      bannerSlot = 1;
+      if (chapter.bismillahPre) basmalaSlot = 2;
     } else {
       /* الصفحات العادية: الشارة ثم البسملة — سطران مستقلان دائماً.
        * عند gap===1 تُدرَج البسملة كسطر إضافي غير مُمثَّل في line_number
@@ -296,7 +296,7 @@ async function buildMushafPageLayout(pageNumber: number): Promise<MushafPageLayo
 
   const lineRows: Extract<MushafPageRow, { kind: "line" }>[] = [];
   if (isOpening) {
-    const startSlot = headers[0]?.basmalaSlot != null ? 5 : 4;
+    const startSlot = headers[0]?.basmalaSlot != null ? 3 : 2;
     usedLines.forEach((ln, i) => {
       lineRows.push({
         kind: "line",

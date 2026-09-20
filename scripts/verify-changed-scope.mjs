@@ -61,15 +61,44 @@ function policyViolations(paths) {
     }
   }
 
-  const mushafCssChanged = paths.some(
+  const mushafMetricTouched = paths.some(
     (p) =>
-      /mushaf.*\.css$/i.test(p) ||
       /quran-font-size/i.test(p) ||
       /useMushafPageFontFit/i.test(p) ||
-      /useNewMushafFontFit/i.test(p),
+      /useNewMushafFontFit/i.test(p) ||
+      /fitPageFontSize/i.test(p) ||
+      /sunnah-mushaf-signature-preset/i.test(p),
   );
-  if (mushafCssChanged) {
+  if (mushafMetricTouched) {
     issues.push("تغيير محتمل على خط/مقياس المصحف أو التفسير — ممنوع بدون مراجعة");
+  }
+
+  for (const p of paths) {
+    if (!/mushaf.*\.css$/i.test(p)) continue;
+    let prev = "";
+    let curr = "";
+    try {
+      curr = readFileSync(resolve(ROOT, p), "utf8");
+    } catch {
+      continue;
+    }
+    try {
+      prev = execFileSync("git", ["show", `origin/main:${p}`], {
+        cwd: ROOT,
+        encoding: "utf8",
+      });
+    } catch {
+      prev = "";
+    }
+    const metricToken = (src) =>
+      [...src.matchAll(/--(?:mushaf-font-size|mushaf-line-height|mm-qpc-size|nm-qpc-size)\s*:\s*([^;]+)/gi)]
+        .map((m) => m[0].replace(/\s+/g, " "))
+        .sort()
+        .join("|");
+    if (metricToken(curr) !== metricToken(prev)) {
+      issues.push("تغيير محتمل على خط/مقياس المصحف أو التفسير — ممنوع بدون مراجعة");
+      break;
+    }
   }
 
   const userFacing = paths.filter((p) => /^artifacts\/majalis\/src\//i.test(p));

@@ -251,9 +251,6 @@
 /* علامة حزب/ربع — absolute خفيفة بلا إزاحة شبكة */
 .nm-page__stage {
   position: relative;
-  /* مقاسات الحاوية لحساب دائرة ميدالية الافتتاح (cqmin) */
-  container-type: size;
-  container-name: mushaf-page-stage;
 }
 /* علامة حزب/ربع في الهامش — من البيانات المعتمدة، خارج Text Flow */
 .nm-page__section-mark{
@@ -278,15 +275,6 @@
   opacity:.55;
   border-color:color-mix(in srgb,var(--nm-meta,#6b6358) 55%,var(--mushaf-gold-primary,#a07d4a));
 }
-/*
- * صفحات الافتتاح (ص1/ص2): الميدالية هي الزخرفة الأساسية؛ نقطة الحزب الذهبية
- * عند الزاوية تبدو كعنصر شارد وتتداخل بصريًا — الرأس النصي (جزء/حزب) يكفي.
- */
-.nm-page--opening .nm-page__section-mark,
-.nm-page--lead .nm-page__section-mark {
-  display: none !important;
-}
-
 /* الجزء: طرف البداية (يمين في RTL) · الحزب: طرف النهاية (يسار في RTL) */
 .nm-page__header-juz,
 .nm-page__header-hizb {
@@ -346,101 +334,9 @@ html[data-theme="dark"] .nm-page__header-hizb,
 }
 
 /*
- * AuthenticWarmMushafPageFrame — Comfort Pass:
- * الإطار الذهبي الخارجي كان يسرق الانتباه من النص → مخفي بالكامل بصريًا.
- * يبقى العنصر في الـDOM للتوافق مع البوابات؛ الكارتوش/الفاتحة/علامات الآيات دون مساس.
+ * Content Driven Opening: حُذف AuthenticWarmMushafPageFrame وSunnahFatihaBraidedMedallion
+ * نهائيًا من الـDOM/CSS. قواعد التعبئة في reader-page-chrome.css.
  */
-.nm-page__ornament-frame {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  border: 0;
-  box-shadow: none;
-  opacity: 0;
-  visibility: hidden;
-}
-.nm-page__ornament-frame::before,
-.nm-page__ornament-frame::after {
-  content: none;
-}
-
-/*
- * SunnahFatihaBraidedMedallion — دائرة هندسية حقيقية (aspect 1:1).
- * السبب الجذري (قصّ/انزياح على ص1–ص2):
- *   الحجم كان min(92cqw, 86cqh). على شاشة طويلة (آيفون عمودي) 92cqw > ارتفاع المسرح،
- *   وعلى شاشة عريضة 86cqh > العرض — مع overflow:hidden على .nm-page__stage تُقصّ الدائرة
- *   ويبدو المركز مائلًا؛ max-width/max-height كانا يكسران التربيع بعد القصّ.
- * الحل: الحجم من cqmin فقط (أصغر بُعد) بهوامش متماثلة — لا قصّ، مركز رياضي على كل الأجهزة.
- * لا نص قرآن ولا أرقام صفحات ولا Geometry شبكة ١٥.
- */
-.nm-page__fatiha-medallion {
-  position: absolute;
-  inset: auto;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-  pointer-events: none;
-  /* هامش ≥7% من أصغر بُعد — الدائرة دائمًا داخل المسرح */
-  --nm-medallion-size: 86cqmin;
-  width: var(--nm-medallion-size);
-  height: var(--nm-medallion-size);
-  aspect-ratio: 1 / 1;
-  box-sizing: border-box;
-  border-radius: 50%;
-  border: 1px solid color-mix(in srgb, var(--mushaf-printed-gold-border) 70%, var(--mushaf-paper-edge));
-  box-shadow:
-    inset 0 0 0 0.85px color-mix(in srgb, var(--mushaf-printed-gold) 40%, transparent),
-    inset 0 0 0 0.4rem color-mix(in srgb, var(--mushaf-paper-reading-surface) 92%, transparent);
-  background:
-    repeating-linear-gradient(
-      38deg,
-      color-mix(in srgb, var(--mushaf-printed-gold) 52%, transparent) 0 1.05px,
-      transparent 1.05px 3.1px
-    ),
-    repeating-linear-gradient(
-      -38deg,
-      color-mix(in srgb, var(--mushaf-printed-gold-border) 42%, transparent) 0 1.05px,
-      transparent 1.05px 3.1px
-    );
-  -webkit-mask: radial-gradient(circle at center, transparent 63%, #000 64.2% 72.5%, transparent 73.5%);
-  mask: radial-gradient(circle at center, transparent 63%, #000 64.2% 72.5%, transparent 73.5%);
-  opacity: 0.62;
-}
-/* بداية البقرة — نفس القاعدة الهندسية؛ شفافية أخف قليلًا */
-.nm-page--lead .nm-page__fatiha-medallion,
-.nm-page[data-page-type="surah-start"] .nm-page__fatiha-medallion {
-  --nm-medallion-size: 84cqmin;
-  opacity: 0.52;
-}
-
-/* fallback إن لم تُدعم cqmin — مربع عبر vmin (أصغر بعد viewport) */
-@supports not (width: 1cqmin) {
-  .nm-page__fatiha-medallion {
-    --nm-medallion-size: min(86%, 72vmin);
-    width: var(--nm-medallion-size);
-    height: var(--nm-medallion-size);
-    aspect-ratio: 1 / 1;
-  }
-  .nm-page--lead .nm-page__fatiha-medallion,
-  .nm-page[data-page-type="surah-start"] .nm-page__fatiha-medallion {
-    --nm-medallion-size: min(84%, 70vmin);
-  }
-}
-
-html.dark .nm-page__ornament-frame,
-html[data-theme="dark"] .nm-page__ornament-frame {
-  opacity: 0;
-  visibility: hidden;
-  border: 0;
-  box-shadow: none;
-}
-
-html.dark .nm-page__fatiha-medallion,
-html[data-theme="dark"] .nm-page__fatiha-medallion {
-  opacity: 0.42;
-}
 
 /* صفحات بداية السورة (افتتاح/بقرة/أي سورة): رأس/إطار/بسملة متقاربة داخل الشبكة الثابتة */
 .nm-page--opening .nm-page__stage,

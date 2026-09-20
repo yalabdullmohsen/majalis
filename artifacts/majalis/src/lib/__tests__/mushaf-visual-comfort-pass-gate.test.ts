@@ -1,5 +1,5 @@
 /**
- * بوابة Comfort Pass: وردة أوضح + ورق أفتح + إطار صفحة مخفي.
+ * بوابة Comfort Pass: وردة أوضح + ورق أفتح + بلا إطار/قوس زخرفي.
  * تشغيل: node --import tsx src/lib/__tests__/mushaf-visual-comfort-pass-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -18,13 +18,10 @@ assert.match(css, /--mushaf-paper-reading-surface:\s*#fffbef/i);
 assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
 assert.doesNotMatch(css, /--mushaf-ayah-mark-size:\s*0\.98em/);
 
-const frameBlock = css.slice(css.indexOf(".nm-page__ornament-frame"), css.indexOf(".nm-page__ornament-frame") + 420);
-assert.match(frameBlock, /opacity:\s*0/);
-assert.match(frameBlock, /visibility:\s*hidden/);
-assert.match(frameBlock, /border:\s*0/);
-
-assert.match(page, /nm-page__ornament-frame/);
-assert.match(page, /nm-page__fatiha-medallion|SunnahFatihaBraidedMedallion/);
+assert.doesNotMatch(page, /nm-page__ornament-frame/);
+assert.doesNotMatch(page, /nm-page__fatiha-medallion|SunnahFatihaBraidedMedallion/);
+assert.doesNotMatch(css, /\.nm-page__ornament-frame\s*\{/);
+assert.doesNotMatch(css, /\.nm-page__fatiha-medallion\s*\{/);
 assert.match(css, /\.nm-ayah-mark\s*\{/);
 assert.match(css, /\.nm-surah-banner/);
 assert.doesNotMatch(css, /--mushaf-paper-warm-yellow:\s*#ffffff/i);

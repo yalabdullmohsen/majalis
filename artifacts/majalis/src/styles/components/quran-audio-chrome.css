@@ -132,18 +132,3 @@
   gap: 0.55rem;
   padding-bottom: 0.35rem;
 }
-
-/* ── ميدالية ص1–ص2: تثبيت مركز الدائرة دون تغيير النص/الهندسة ── */
-.nm-page__fatiha-medallion {
-  max-width: 86cqmin;
-  max-height: 86cqmin;
-  margin: 0;
-  inset-inline: auto;
-  inset-block: auto;
-}
-
-.nm-page--lead .nm-page__fatiha-medallion,
-.nm-page[data-page-type="surah-start"] .nm-page__fatiha-medallion {
-  max-width: 84cqmin;
-  max-height: 84cqmin;
-}
