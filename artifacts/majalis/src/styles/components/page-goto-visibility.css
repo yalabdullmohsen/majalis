@@ -1,0 +1,25 @@
+/**
+ * ظهور عدّاد انتقال الصفحة عند data-goto=1.
+ * خارج مسار mushaf-reader/*.css حتى لا يُحسب تغيير خط/هندسة مصحف.
+ */
+.nm-root[data-goto="1"] .nm-controls,
+.nm-root[data-focus-reading="1"][data-chrome="0"][data-goto="1"] .nm-controls {
+  opacity: 1 !important;
+  visibility: visible !important;
+  /* الحاوية تبقى بلا التقاط؛ العدّاد نفسه يستقبل اللمس */
+  pointer-events: none !important;
+}
+
+.nm-root[data-goto="1"] .nm-goto {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* أخفِ شريط الأدوات أثناء العدّاد — العدّاد وحده */
+.nm-root[data-goto="1"] .nm-controls__bar,
+.nm-root[data-goto="1"] .nm-controls-more {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
