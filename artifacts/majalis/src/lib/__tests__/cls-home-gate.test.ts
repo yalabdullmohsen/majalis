@@ -28,6 +28,7 @@ const boot = readFileSync(resolve(root, "public/mj-launch-splash-boot.js"), "utf
 assert.match(html, /src="\/mj-launch-splash-boot\.js"/);
 assert.match(boot, /SOFT_MAX_MS\s*=\s*480/, "هدف LCP ليّن");
 assert.match(boot, /MAX_MS\s*=\s*1400/, "سقف انتظار خطوط");
+assert.match(boot, /MIN_MS\s*=\s*0/, "بلا تأخير اصطناعي");
 assert.match(critical, /\.hsh-steps[\s\S]*min-height:\s*22rem/, "حجز ارتفاع hsh-steps");
 assert.match(critical, /\.hsh-step[\s\S]*min-height:\s*6\.25rem/, "حجز ارتفاع hsh-step");
 assert.match(critical, /\.home-page-hero\.page-hero-mj[\s\S]*min-height:\s*11rem/, "حجز ارتفاع هيرو الرئيسية");

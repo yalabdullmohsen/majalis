@@ -18,15 +18,15 @@ const sectsCss = read("src/styles/pages/islamic-sects.css");
 const sectsPage = read("src/views/IslamicSectsPage.tsx");
 
 assert.match(indexHtml, /id="mj-launch-splash"/);
-assert.match(indexHtml, /معك في العلم والعمل/);
+assert.match(indexHtml, /رفيقك في العلم والعمل/);
 assert.match(indexHtml, /#F7F3EB|#f7f3eb/i);
 assert.match(splashBoot, /mj-launch-splash/);
 
 /* مسار الخطأ الأصلي: نفس خلفية الدخولية + شعار — بلا شاشة رمادية ثانية */
 assert.match(native, /#F7F3EB|#f7f3eb/i, "startup-background-flash: native-load-error must use splash beige");
-assert.match(native, /معك في العلم والعمل/, "native-load-error must reuse Sunnah tagline");
+assert.match(native, /رفيقك في العلم والعمل/, "native-load-error must reuse Sunnah tagline");
 assert.match(native, /data-startup-surface="sunnah"/);
-assert.match(native, /\.pulse|class="pulse"/, "linear pulse like splash, not gray circular identity");
+assert.match(native, /\.progress|class="progress"|mj-launch-splash__progress|\.pulse|class="pulse"/, "خط تقدّم خطي مثل الدخولية");
 assert.doesNotMatch(
   native,
   /background:\s*#f2f4f3/i,

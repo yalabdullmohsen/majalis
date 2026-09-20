@@ -40,10 +40,10 @@ assert.doesNotMatch(html, /dns-prefetch/, "لا dns-prefetch في الإقلاع
   assert.ok(n <= 2, `preconnect ≤2 (الفعلي ${n})`);
 }
 assert.match(html, /src="\/mj-launch-splash-boot\.js"/);
-assert.match(readFileSync(resolve(root, "public/mj-launch-splash-boot.js"), "utf8"), /MIN_MS\s*=\s*220/, "حد أدنى للدخولية");
+assert.match(readFileSync(resolve(root, "public/mj-launch-splash-boot.js"), "utf8"), /MIN_MS\s*=\s*0/, "بلا تأخير اصطناعي");
 assert.match(html, /mj-launch-splash__title/, "عنوان الهوية");
 assert.match(html, /mj-launch-splash__tagline/, "عبارة قصيرة تحت الاسم");
-assert.match(html, /معك في العلم والعمل/, "نص العبارة");
+assert.match(html, /رفيقك في العلم والعمل/, "نص العبارة");
 assert.match(html, /id="mj-theme-boot"|v6-direct-boot-2026-08/, "ثيم مبكر قبل الرسم");
 {
   const crit = html.match(/<style id="mj-lcp-critical">([\s\S]*?)<\/style>/)?.[1] ?? "";
