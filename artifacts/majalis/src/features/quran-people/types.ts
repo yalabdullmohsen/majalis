@@ -1,5 +1,5 @@
 /**
- * الذين ذكروا في القرآن — أنواع وتحميل كسول.
+ * المذكورون في القرآن الكريم — أنواع وتحميل كسول.
  * لا تُعرض مادة status≠published. الوصفي/غير الموثّق → PEOPLE_REVIEW_QUEUE.
  * الأنبياء (category=prophet) مستبعدون من هذا الفهرس — موجودون في /prophets.
  */
@@ -7,7 +7,7 @@
 import { resolveCanonicalAyahHref } from "@/lib/quran-navigation";
 
 /** عنوان المنتج المعتمد للتنقّل والـSEO */
-export const QURAN_PEOPLE_PAGE_TITLE = "الذين ذكروا في القرآن";
+export const QURAN_PEOPLE_PAGE_TITLE = "المذكورون في القرآن الكريم";
 
 export type PersonCategory =
   | "prophet"

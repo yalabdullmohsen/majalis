@@ -40,7 +40,7 @@ console.log("\n=== عبارات توثيق محظورة في الواجهة ال
   assert(/librarySourceLabel/.test(seoGen), "مولّد SEO يستخدم تسمية مصدر المكتبة");
 }
 
-console.log("\n=== آزر والاحترازات في الذين ذكروا في القرآن ===");
+console.log("\n=== آزر والاحترازات في المذكورون في القرآن الكريم ===");
 {
   const catalog = JSON.parse(read("public/data/quran-people/people.json"));
   const people = catalog.people || [];

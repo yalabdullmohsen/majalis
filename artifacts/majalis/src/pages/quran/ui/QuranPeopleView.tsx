@@ -34,7 +34,7 @@ export default function QuranPeopleView() {
   useEffect(() => {
     applyPageSeo({
       title: QURAN_PEOPLE_PAGE_TITLE,
-      description: "فهرس الذين ذُكروا في القرآن بأسمائهم الصريحة من غير الأنبياء، مع مواضع الآيات وربط بقصص الأنبياء والأمم.",
+      description: "فهرس المذكورين في القرآن الكريم بأسمائهم الصريحة من غير الأنبياء، مع مواضع الآيات وربط بقصص الأنبياء والأمم.",
       path: "/quran/people",
     });
     let cancelled = false;
@@ -68,12 +68,12 @@ export default function QuranPeopleView() {
       route="/quran/people"
       title={QURAN_PEOPLE_PAGE_TITLE}
       subtitle="أسماء صريحة بمواضع الآيات، مع تعريف موجز وعِبَر مرتبطة بالسياق القرآني"
-      groupTitle="المذكورون في القرآن"
+      groupTitle="المذكورون في القرآن الكريم"
     >
     <div className="quran-hub-page qp-people" dir="rtl">
       <div className="qp-people__body">
         <p className="qp-people__intro">
-          فهرس لمن ذُكروا في القرآن بأسمائهم الصريحة من غير الأنبياء، مع مواضع الآيات وروابط للسياق.
+          فهرس للمذكورين في القرآن الكريم بأسمائهم الصريحة من غير الأنبياء، مع مواضع الآيات وروابط للسياق.
           الأنبياء عليهم السلام في قسم مستقل.{" "}
           <Link href="/prophets">قصص الأنبياء</Link>
           {" · "}

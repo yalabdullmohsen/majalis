@@ -84,7 +84,7 @@ export default function QuranPersonDetailView() {
     return (
       <SectionTemplatePage
         route="/quran/people"
-        title="الذين ذكروا في القرآن"
+        title="المذكورون في القرآن الكريم"
         subtitle="تجهيز بيانات الشخصية…"
         groupTitle="المذكورون في القرآن"
       >
@@ -102,12 +102,12 @@ export default function QuranPersonDetailView() {
         groupTitle="المذكورون في القرآن"
         breadcrumb={[
           { label: "الرئيسية", href: "/" },
-          { label: "الذين ذكروا في القرآن", href: "/quran/people" },
+          { label: "المذكورون في القرآن الكريم", href: "/quran/people" },
           { label: "غير موجود" },
         ]}
       >
         <p className="qp-people__status">
-          <Link href="/quran/people">العودة إلى الذين ذكروا في القرآن</Link>
+          <Link href="/quran/people">العودة إلى المذكورين في القرآن الكريم</Link>
           {" · "}
           <Link href="/prophets">قصص الأنبياء</Link>
         </p>
@@ -124,11 +124,11 @@ export default function QuranPersonDetailView() {
       route="/quran/people"
       title={person.nameAr}
       subtitle={`${PERSON_CATEGORY_LABEL[person.category]} · ${MENTION_TYPE_LABEL[person.mentionType]}`}
-      eyebrow="الذين ذكروا في القرآن"
+      eyebrow="المذكورون في القرآن الكريم"
       groupTitle="مواضع الذكر"
       breadcrumb={[
         { label: "الرئيسية", href: "/" },
-        { label: "الذين ذكروا في القرآن", href: "/quran/people" },
+        { label: "المذكورون في القرآن الكريم", href: "/quran/people" },
         { label: person.nameAr },
       ]}
     >

@@ -1,5 +1,5 @@
 /**
- * بوابة: الذين ذكروا في القرآن بلا أنبياء (قسم /prophets مستقل).
+ * بوابة: المذكورون في القرآن الكريم بلا أنبياء (قسم /prophets مستقل).
  * تشغيل: node --import tsx src/lib/__tests__/quran-people-no-prophets-gate.test.ts
  */
 import assert from "node:assert/strict";
