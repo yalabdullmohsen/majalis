@@ -43,7 +43,7 @@ console.log("=== sects: arabic review + structure + empty + related ===");
   const detail = read("src/views/IslamicSectsDetailPage.tsx");
   assert.doesNotMatch(list, /وُسمت needs_specialist_review/);
   assert.doesNotMatch(list, /حالة المحتوى: needs_specialist_review/);
-  assert.match(detail, /يحتاج تحققًا من مختص/);
+  assert.match(detail, /قرار بشري|مختصين|PUBLISHED/);
   assert.match(detail, /التعريف/);
   assert.match(detail, /النشأة/);
   assert.match(list, /EMPTY\.searchShort/);
@@ -52,6 +52,8 @@ console.log("=== sects: arabic review + structure + empty + related ===");
   assert.match(list, /KnowledgeSummaryCard/);
   assert.doesNotMatch(list, /aria-expanded/);
   assert.doesNotMatch(list, /sect-card__detail/);
+  assert.doesNotMatch(detail, /الغالبية العظمى من المسلمين في العالم/);
+  assert.doesNotMatch(detail, /الخوارج \(أهل الوعيد\)/);
 }
 
 console.log("=== sects dark pills ===");

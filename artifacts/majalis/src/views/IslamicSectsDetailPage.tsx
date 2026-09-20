@@ -14,11 +14,36 @@ import "@/styles/pages/islamic-sects.css";
 
 const LIST_PATH = "/islamic-sects";
 
+/** عبارات تتطلب ملاحظة تحقق في العرض (لا تُعتمد كحقائق منشورة). */
+function sectNeedsSourceBanner(sect: {
+  spread?: string;
+  founder?: string;
+  fullName?: string;
+  quote?: string;
+  keyBeliefs?: string[];
+}): boolean {
+  const blob = [
+    sect.spread,
+    sect.founder,
+    sect.fullName,
+    sect.quote,
+    ...(sect.keyBeliefs ?? []),
+  ]
+    .filter(Boolean)
+    .join("\n");
+  return (
+    /\d+\s*[-–—]\s*\d+\s*%|\d+\s*%/.test(blob) ||
+    /غير موثّق|تحتاج إحالة|قيد المراجعة|مرشح ببليوغرافي|لم تُراجع هنا|تسمية خارجية/.test(
+      blob,
+    )
+  );
+}
+
 export default function IslamicSectsDetailPage() {
   const [, params] = useRoute("/islamic-sects/:id");
   const id = params?.id ?? "";
   const sect = getIslamicSectById(id);
-  const needsReview = /\d+\s*[-–—]\s*\d+\s*%|\d+\s*%/.test(sect?.spread || "");
+  const needsReview = sect ? sectNeedsSourceBanner(sect) : false;
 
   const sections = useMemo((): KnowledgeDetailSurfaceSection[] => {
     if (!sect) return [];
@@ -27,7 +52,7 @@ export default function IslamicSectsDetailPage() {
         id: `${sect.id}-def`,
         title: "التعريف",
         variant: "overview",
-        prose: `${sect.fullName} — ضمن تصنيف «${sect.category}».`,
+        prose: `${sect.fullName} — ضمن تصنيف واجهة قديم «${sect.category}» (التصنيف العلمي في عقد الجرد منفصل).`,
       },
       {
         id: `${sect.id}-summary`,
@@ -41,7 +66,7 @@ export default function IslamicSectsDetailPage() {
           { label: "الفترة", value: sect.era },
           { label: "المنشأ", value: sect.origin },
           {
-            label: "شخصيات مرتبطة تاريخيًا (حسب المصدر الحالي للعرض)",
+            label: "شخصيات مرتبطة تاريخيًا (ليس بالضرورة «مؤسسًا»)",
             value: sect.founder,
           },
         ],
@@ -52,7 +77,7 @@ export default function IslamicSectsDetailPage() {
         prose: sect.spread
           ? `${sect.spread}${
               needsReview
-                ? " ملاحظة تحقق: أي نسبة رقمية تحتاج مصدرًا وتاريخ تحقق — العرض للتنظيم فقط."
+                ? " — أي ادعاء انتشار أو نسبة يحتاج مصدرًا وتاريخ تحقق؛ العرض للتنظيم فقط."
                 : ""
             }`
           : undefined,
@@ -81,9 +106,8 @@ export default function IslamicSectsDetailPage() {
       {
         id: `${sect.id}-review`,
         title: "حالة المراجعة",
-        prose: needsReview
-          ? "يحتاج تحققًا من مختص — العرض للتنظيم فقط دون حكم جديد."
-          : "يخضع هذا السجل لعقد مراجعة المحتوى (لا يُعد منشورًا نهائيًا حتى قرار بشري).",
+        prose:
+          "هذا السجل ضمن عقد مراجعة المحتوى: ليس PUBLISHED. لا حكم شرعي باسم سُنّة. التسميات الذاتية والخارجية والحقول التاريخية تحتاج مطابقة مصادر معتمدة وقرار بشري قبل النشر.",
       },
       ...(sect.id === "ahl-al-sunna"
         ? [
@@ -167,13 +191,14 @@ export default function IslamicSectsDetailPage() {
         ]}
         eyebrow="العقيدة والتوحيد"
         title={sect.name}
-        subtitle={`${sect.category} · ${sect.status}`}
+        subtitle={`${sect.category} · حالة العرض: ${sect.status} (غير موثّقة كواقع معاصر حتى مصدر)`}
         className="topic-page--sects topic-page--sects-detail"
       >
         <KnowledgeLayout kind="knowledge" className="sect-detail-kx">
           <p className="sect-hub__note">
             <strong>ملاحظة منهجية:</strong> عرض علمي تاريخي وفق مصادر العرض الحالية، ولا يمثل فتوى
-            شرعية. الحكم التفصيلي يُرجع فيه إلى المختصين.
+            شرعية ولا حكمًا على الأعيان. الحكم التفصيلي يُرجع فيه إلى المختصين. لا يُعد السجل
+            منشورًا نهائيًا (`PUBLISHED`) حتى قرار بشري بعد مطابقة مصادر معتمدة.
           </p>
           <KnowledgeDetailSurface sections={sections} />
           <div className="sect-hub__share">
