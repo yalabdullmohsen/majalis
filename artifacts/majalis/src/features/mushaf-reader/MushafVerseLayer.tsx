@@ -76,9 +76,24 @@ const VerseWord = memo(function VerseWord({
     .filter(Boolean)
     .join(" ");
 
+  /* كلمات المتن: عرض فقط — الضغط للتحديد/القائمة على رقم الآية حصراً */
+  if (!isEnd) {
+    return (
+      <span
+        className={`nm-word ${state}`.trim()}
+        data-type={word.charType}
+        data-key={word.verseKey}
+        data-verse={word.verseKey}
+        data-ayah={word.verseKey}
+      >
+        {word.glyphText}
+      </span>
+    );
+  }
+
   return (
     <span
-      className={`nm-word${isEnd ? " nm-word--end" : ""} ${state}`.trim()}
+      className={`nm-word nm-word--end ${state}`.trim()}
       data-type={word.charType}
       data-key={word.verseKey}
       data-verse={word.verseKey}
@@ -103,13 +118,9 @@ const VerseWord = memo(function VerseWord({
         }
       }}
     >
-      {isEnd ? (
-        <span className="nm-ayah-mark" aria-hidden="true">
-          <span className="nm-ayah-mark__glyph">{word.glyphText}</span>
-        </span>
-      ) : (
-        word.glyphText
-      )}
+      <span className="nm-ayah-mark" aria-hidden="true">
+        <span className="nm-ayah-mark__glyph">{word.glyphText}</span>
+      </span>
     </span>
   );
 });
@@ -241,61 +252,67 @@ export const MushafBasmalaView = memo(function MushafBasmalaView({
       data-ayah="1:1"
       dir="rtl"
       lang="ar"
-      role={onSelect || onLongPress ? "button" : undefined}
-      tabIndex={onSelect || onLongPress ? 0 : undefined}
-      onPointerDown={(e) => {
-        if (!onLongPress && !onSelect) return;
-        if (mushafPageIsPanning()) return;
-        clear();
-        const longTimer = window.setTimeout(() => {
-          const cur = pressRef.current;
-          if (!cur || cur.longFired) return;
-          if (mushafPageIsPanning()) {
-            clear();
-            return;
-          }
-          cur.longFired = true;
-          (onLongPress ?? onSelect)?.();
-        }, LONG_PRESS_MS);
-        pressRef.current = { x: e.clientX, y: e.clientY, longTimer, longFired: false };
-      }}
-      onPointerMove={(e) => {
-        const cur = pressRef.current;
-        if (!cur) return;
-        if (
-          Math.abs(e.clientX - cur.x) > TAP_SLOP_X_PX ||
-          Math.abs(e.clientY - cur.y) > TAP_SLOP_Y_PX ||
-          mushafPageIsPanning()
-        ) {
-          clear();
-        }
-      }}
-      onPointerUp={() => {
-        const cur = pressRef.current;
-        if (mushafPageIsPanning()) {
-          clear();
-          return;
-        }
-        if (cur && !cur.longFired) onSelect?.();
-        clear();
-      }}
-      onPointerCancel={clear}
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-      }}
-      onKeyDown={(e) => {
-        if ((e.key === "Enter" || e.key === " ") && onSelect) {
-          e.preventDefault();
-          onSelect();
-        }
-      }}
     >
       {body.map((w) => (
         <span key={w.id}>{w.glyphText}</span>
       ))}
       {end ? (
-        <span className="nm-ayah-mark" aria-hidden="true">
+        <span
+          className="nm-ayah-mark nm-basmala__num"
+          data-testid="mushaf-ayah-hit"
+          data-verse="1:1"
+          data-ayah="1:1"
+          role={onSelect || onLongPress ? "button" : undefined}
+          tabIndex={onSelect || onLongPress ? 0 : undefined}
+          aria-label={verseAriaLabel("1:1")}
+          onPointerDown={(e) => {
+            if (!onLongPress && !onSelect) return;
+            if (mushafPageIsPanning()) return;
+            clear();
+            const longTimer = window.setTimeout(() => {
+              const cur = pressRef.current;
+              if (!cur || cur.longFired) return;
+              if (mushafPageIsPanning()) {
+                clear();
+                return;
+              }
+              cur.longFired = true;
+              (onLongPress ?? onSelect)?.();
+            }, LONG_PRESS_MS);
+            pressRef.current = { x: e.clientX, y: e.clientY, longTimer, longFired: false };
+          }}
+          onPointerMove={(e) => {
+            const cur = pressRef.current;
+            if (!cur) return;
+            if (
+              Math.abs(e.clientX - cur.x) > TAP_SLOP_X_PX ||
+              Math.abs(e.clientY - cur.y) > TAP_SLOP_Y_PX ||
+              mushafPageIsPanning()
+            ) {
+              clear();
+            }
+          }}
+          onPointerUp={() => {
+            const cur = pressRef.current;
+            if (mushafPageIsPanning()) {
+              clear();
+              return;
+            }
+            if (cur && !cur.longFired) onSelect?.();
+            clear();
+          }}
+          onPointerCancel={clear}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+          onKeyDown={(e) => {
+            if ((e.key === "Enter" || e.key === " ") && onSelect) {
+              e.preventDefault();
+              onSelect();
+            }
+          }}
+        >
           <span className="nm-ayah-mark__glyph">{end.glyphText}</span>
         </span>
       ) : null}

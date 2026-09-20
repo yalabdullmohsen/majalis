@@ -73,9 +73,24 @@ const AyahWordSpan = memo(function AyahWordSpan({
     .filter(Boolean)
     .join(" ");
 
+  /* كلمات المتن: عرض فقط — الضغط على رقم الآية (end) حصراً */
+  if (!isEnd) {
+    return (
+      <span
+        className={`mm-ayah-line__word mm-ayah-hit ${stateClass}`.trim()}
+        data-type={word.charType}
+        data-key={word.verseKey}
+        data-verse={word.verseKey}
+        data-ayah={word.verseKey}
+      >
+        {word.glyphText}
+      </span>
+    );
+  }
+
   return (
     <span
-      className={`mm-ayah-line__word mm-ayah-hit ${isEnd ? "mm-ayah-hit--end" : ""} ${stateClass}`.trim()}
+      className={`mm-ayah-line__word mm-ayah-hit mm-ayah-hit--end ${stateClass}`.trim()}
       data-type={word.charType}
       data-key={word.verseKey}
       data-verse={word.verseKey}
