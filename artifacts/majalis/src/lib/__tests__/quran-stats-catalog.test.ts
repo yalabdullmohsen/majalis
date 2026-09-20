@@ -16,6 +16,7 @@ import { FORBIDDEN_STAT_SOURCES } from "../quran-stats/types";
 import type { QuranStat } from "../quran-stats/types";
 import {
   QURAN_STAT_THEMES,
+  assertNoOrphanThemeCoverage,
   assertThemeIdsExist,
   filterStatsByTheme,
 } from "../quran-stats/themes";
@@ -25,7 +26,14 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../.
 const catalog = buildQuranStatsCatalog();
 assert.ok(catalog.length >= 60, `عدد الإحصاءات ${catalog.length} < 60`);
 assert.doesNotThrow(() => assertQuranStatsCatalog(catalog));
-assertThemeIdsExist(new Set(catalog.map((s) => s.id)));
+const catalogIds = new Set(catalog.map((s) => s.id));
+assertThemeIdsExist(catalogIds);
+assertNoOrphanThemeCoverage(catalogIds);
+assert.ok(
+  catalog.some((s) => s.id === "words-disputed"),
+  "بطاقة عدد الكلمات يجب أن تكون في الكتالوج",
+);
+assert.equal(filterStatsByTheme(catalog, "all").length, catalog.length);
 
 for (const theme of QURAN_STAT_THEMES) {
   const themed = filterStatsByTheme(catalog, theme);
@@ -124,5 +132,18 @@ for (const s of catalog) {
   if (s.basis === "mawdoo") assert.ok((s.evidence?.length ?? 0) >= 1, s.id);
   if (s.group === "alfaz" || s.group === "mawdoo") assert.ok(s.basis, s.id);
 }
+
+/** صفحة الإسلام في أرقام تعرض الكتالوج الكامل لا قائمة مختصرة */
+const islamStatsSrc = fs.readFileSync(
+  path.join(root, "src/views/IslamStatsPage.tsx"),
+  "utf8",
+);
+assert.match(islamStatsSrc, /buildQuranStatsCatalog/);
+assert.doesNotMatch(islamStatsSrc, /const QURAN_STATS:\s*StatCard\[\]/);
+assert.doesNotMatch(
+  islamStatsSrc,
+  /إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ/,
+  "لا تُعرض آية يدوية في تبويب الإحصاءات",
+);
 
 console.log(`quran-stats-catalog.test.ts: ok (${catalog.length} بطاقة)`);

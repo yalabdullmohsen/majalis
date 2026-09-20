@@ -1,11 +1,51 @@
 import { useEffect, useState, useMemo } from "react";
+import { Link } from "wouter";
 import { AlertTriangle, BarChart3, BookOpen, Globe, Heart, Star, TrendingUp, Users } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import {
+  buildQuranStatsCatalog,
+  formatStatSourceLine,
+} from "@/lib/quran-stats/catalog";
+import {
+  QURAN_STAT_GROUP_LABEL,
+  type QuranStat,
+  type QuranStatGroup,
+} from "@/lib/quran-stats/types";
+import { formatArabicNumber } from "@/lib/numerals";
 import "@/styles/pages/islam-stats.css";
 import { UtilityScreen } from "@/components/design-system/screens";
+
+const QURAN_STATS_CATALOG = buildQuranStatsCatalog();
+const QURAN_STAT_GROUPS: QuranStatGroup[] = ["bunya", "alfaz", "mawdoo", "suwar", "ajaib"];
+const QURAN_CARD_COLORS = [
+  "var(--mj-brand-deep)",
+  "#1a5a7a",
+  "var(--mj-brand)",
+  "#312E81",
+  "#9B1C1C",
+  "#1E3A5F",
+];
+
+function quranCardColor(index: number): string {
+  return QURAN_CARD_COLORS[index % QURAN_CARD_COLORS.length]!;
+}
+
+function displayQuranValue(value: number | string): string {
+  return formatArabicNumber(value);
+}
+
+function quranStatSearchBlob(s: QuranStat): string[] {
+  return [
+    s.label,
+    String(s.value),
+    s.note ?? "",
+    s.detail ?? "",
+    formatStatSourceLine(s.source),
+  ];
+}
 
 /* ══════════════════════════════════════════════════════════════════
    §241، الإسلام في أرقام  (.is-*)
@@ -84,25 +124,6 @@ const POPULATION_BARS: BarItem[] = [
   { label: "السعودية",  value: 33,  max: 270, unit: "م", color: "var(--mj-brand)" },
   { label: "أوزبكستان", value: 29,  max: 270, unit: "م", color: "#1a5a7a" },
   { label: "الكويت",    value: 2,   max: 270, unit: "م", color: "#312E81" },
-];
-
-const QURAN_STATS: StatCard[] = [
-  { value: "١١٤",  label: "سورة",        sub: "منها ٨٦ مكية و٢٨ مدنية", color: "var(--mj-brand-deep)" },
-  { value: "٦٢٣٦", label: "آية",          sub: "في الرواية الأكثر شيوعاً", color: "#1a5a7a" },
-  { value: "٣٠",   label: "جزءاً",        sub: "قسمة اصطلاحية للتلاوة والمراجعة لا توقيفية", color: "var(--mj-brand)" },
-  { value: "٧٧٤٣٩", label: "كلمة",       sub: "على أشهر أعداد العادّين، والعدّ فيه اختلاف يسير", color: "#312E81" },
-  { value: "٣٢٣٠١٥", label: "حرف",       sub: "فيما نقله السيوطي في الإتقان، ولأهل العدّ أقوال أخرى", color: "var(--mj-brand)" },
-  { value: "٢٣",   label: "سنة للنزول",  sub: "بدأ في رمضان سنة ٦١٠م تقريباً", color: "#9B1C1C" },
-  { value: "٤",    label: "جمعوا القرآن على عهده ﷺ", sub: "أبيّ بن كعب، ومعاذ، وزيد بن ثابت، وأبو زيد رضي الله عنهم — رواه البخاري", color: "var(--mj-brand-deep)" },
-  { value: "١",    label: "مصدر أول للتشريع", sub: "ثم السنة النبوية المبيّنة له", color: "#1E3A5F" },
-  { value: "٧",    label: "أحرف أُنزل عليها", sub: "الأحرف السبعة غير القراءات؛ والقراءات المتواترة عشر", color: "var(--mj-brand-deep)" },
-  { value: "١٠",   label: "قراءات متواترة", sub: "رواها العشرة، وأشهرها اليوم رواية حفص عن عاصم", color: "var(--mj-brand)" },
-  { value: "٧٨", label: "لغة تُرجمت إليها معاني القرآن", sub: "ترجمات صادرة عن مجمع الملك فهد لطباعة المصحف الشريف", color: "#312E81" },
-  { value: "٦٠", label: "حزباً", sub: "كل حزب أربعة أرباع، والمجموع ٢٤٠ ربعاً", color: "var(--mj-brand)" },
-  { value: "٢٥",   label: "نبياً مذكوراً باسمه", sub: "أكثرهم ذكراً موسى رضي الله عنه في نحو ١٣٦ موضعاً", color: "#1a5a7a" },
-  { value: "١٥",   label: "سجدة تلاوة", sub: "موزَّعة على ١٤ سورة وفق قول الجمهور", color: "var(--mj-brand-deep)" },
-  { value: "٢٩",   label: "سورة بحروف مقطعة", sub: "مثل الم وحم وطس — والحروف المقطعة ١٤ حرفاً", color: "#312E81" },
-  { value: "٣",    label: "مراحل للجمع والتدوين", sub: "عهد النبي ﷺ ثم أبي بكر ثم عثمان رضي الله عنهم", color: "var(--mj-brand)" },
 ];
 
 const HISTORY_TIMELINE: TimelineItem[] = [
@@ -304,13 +325,26 @@ export default function IslamStatsPage() {
   const filteredScience = useMemo(() =>
     search.trim() ? SCIENCE_CARDS.filter(c => arabicMatchAny([c.topic, c.ref, c.discovery], search)) : SCIENCE_CARDS,
   [search]);
+  const filteredQuranStats = useMemo(() => {
+    if (!search.trim()) return QURAN_STATS_CATALOG;
+    return QURAN_STATS_CATALOG.filter((s) => arabicMatchAny(quranStatSearchBlob(s), search));
+  }, [search]);
+  const quranStatsByGroup = useMemo(() => {
+    const map = new Map<QuranStatGroup, QuranStat[]>();
+    for (const g of QURAN_STAT_GROUPS) map.set(g, []);
+    for (const s of filteredQuranStats) {
+      map.get(s.group)?.push(s);
+    }
+    return map;
+  }, [filteredQuranStats]);
 
   useEffect(() => {
     applyPageSeo({
       path: "/islam-stats",
       title: "الإسلام في أرقام | سُنّة",
-      description: "إحصاءات وأرقام مثيرة عن الإسلام في العالم: المسلمون، القرآن، الحضارة الإسلامية، والدلالات الكونية. من انتشار الإسلام إلى إعجاز القرآن",
-      keywords: ["الإسلام في أرقام", "إحصاءات المسلمين", "الإعجاز القرآني", "الحضارة الإسلامية"],
+      description:
+        "إحصاءات موثّقة عن الإسلام في العالم والقرآن الكريم (بما فيها عدّ الكلمات والألفاظ) والحضارة الإسلامية والدلالات الكونية — مع مصدر كل رقم.",
+      keywords: ["الإسلام في أرقام", "إحصاءات المسلمين", "إحصاءات القرآن", "عدد الكلمات", "الحضارة الإسلامية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
@@ -403,23 +437,60 @@ export default function IslamStatsPage() {
         {/* ── القرآن الكريم ── */}
         {activeTab === "quran" && (
           <div className="is-section" role="tabpanel" id="is-panel-quran" aria-labelledby="is-tab-quran">
-            <div className="is-quran-highlight">
-              <p className="is-quran-highlight__text">
-                إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ
+            <div className="is-science-intro">
+              <BookOpen size={20} aria-hidden="true" />
+              <p>
+                كامل إحصاءات القرآن المعتمدة في سُنّة ({formatArabicNumber(QURAN_STATS_CATALOG.length)} بطاقة)
+                — بما فيها عدّ الكلمات والألفاظ والسور والموضوعات — من مصادر مطبوعة فقط، بلا اشتقاق رقمي من نص المصحف.
+                {" "}
+                <Link href="/quran-hub/numbers">التفاصيل والمراجع في «القرآن في أرقام»</Link>.
               </p>
-              <p className="is-quran-highlight__ref">سورة الحجر: ٩</p>
             </div>
-            <div className="is-stats-grid">
-              {QURAN_STATS.map((s, i) => (
-                <div key={i} className="is-stat-card" style={{ "--is-card-color": s.color } as { [k: string]: string }}>
-                  <span className="is-stat-card__val">{s.value}</span>
-                  <span className="is-stat-card__lbl">{s.label}</span>
-                  {s.sub && <span className="is-stat-card__sub">{s.sub}</span>}
+            <div className="is-search-wrap">
+              <input
+                type="search"
+                className="ds-input is-search-input"
+                placeholder="ابحث في إحصاءات القرآن والكلمات والألفاظ…"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                aria-label="بحث في إحصاءات القرآن"
+              />
+            </div>
+            {QURAN_STAT_GROUPS.map((group) => {
+              const items = quranStatsByGroup.get(group) ?? [];
+              if (items.length === 0) return null;
+              return (
+                <div key={group} className="is-quran-group">
+                  <div className="is-section-title">
+                    <BookOpen size={16} aria-hidden="true" />
+                    <h2>
+                      {QURAN_STAT_GROUP_LABEL[group]} ({formatArabicNumber(items.length)})
+                    </h2>
+                  </div>
+                  <div className="is-stats-grid">
+                    {items.map((s, i) => (
+                      <div
+                        key={s.id}
+                        className="is-stat-card"
+                        style={{ "--is-card-color": quranCardColor(i) } as { [k: string]: string }}
+                      >
+                        <span className="is-stat-card__val">{displayQuranValue(s.value)}</span>
+                        <span className="is-stat-card__lbl">{s.label}</span>
+                        {(s.note || s.detail) && (
+                          <span className="is-stat-card__sub">{s.note ?? s.detail}</span>
+                        )}
+                        <span className="is-stat-card__src">{formatStatSourceLine(s.source)}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ))}
-            </div>
+              );
+            })}
+            {filteredQuranStats.length === 0 ? (
+              <p className="is-note" role="status">لا نتائج مطابقة لبحثك في إحصاءات القرآن.</p>
+            ) : null}
             <div className="is-note">
-              <BookOpen size={14} aria-hidden="true" /> الإحصاءات وفق رواية حفص عن عاصم، المعتمدة في معظم البلدان الإسلامية
+              <BookOpen size={14} aria-hidden="true" /> المصادر: مصحف المدينة، الإتقان، المعجم المفهرس، وكتب العدّ المطبوعة — كل بطاقة تعرض مرجعها أسفلها.
             </div>
           </div>
         )}
