@@ -20,7 +20,7 @@ import { UtilityScreen } from "@/components/design-system/screens";
 const SECTION_TITLE: Record<string, string> = {
   prophets: "قصص الأنبياء",
   nations: "الأمم السابقة",
-  quiz: "سين جيم",
+  quiz: "تحدي الأسئلة",
   "quran-people": "الذين ذُكروا في القرآن",
   tafsir: "التفسير",
   history: "التاريخ الإسلامي",

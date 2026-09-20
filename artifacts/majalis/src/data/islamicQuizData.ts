@@ -1,3 +1,6 @@
+import { QUIZ_CATEGORY_DEFS, resolveQuizCategoryPoolId } from "./quiz-categories";
+import type { QuizQuestionKind } from "./quiz-categories";
+
 export interface QuizQuestion {
   id: string;
   q: string;
@@ -6,6 +9,15 @@ export interface QuizQuestion {
   pending?: boolean;
   /** مصدر مختصر إن وُجد — وإلا لا يُعرض سطر المصدر */
   source?: string;
+  /** نوع السؤال — الافتراضي open (كشف الإجابة) */
+  kind?: QuizQuestionKind;
+  /** خيارات لاختيار من متعدد / صح-خطأ */
+  choices?: string[];
+  /** فهرس الإجابة الصحيحة في choices (mcq / true_false) */
+  correctIndex?: number;
+  /** عناصر للترتيب أو أزواج للمطابقة */
+  items?: string[];
+  pairs?: Array<[string, string]>;
 }
 
 export interface GameCategory {
@@ -22,17 +34,12 @@ export interface CategoryQuestions {
   600: QuizQuestion[];
 }
 
-export const GAME_CATEGORIES: GameCategory[] = [
-  { id: "quran",    name: "القرآن الكريم",     icon: "book-open" },
-  { id: "hadith",   name: "الحديث الشريف",     icon: "scroll-text" },
-  { id: "sira",     name: "السيرة النبوية",     icon: "moon" },
-  { id: "anbiya",   name: "قصص الأنبياء",      icon: "star" },
-  { id: "fiqh",     name: "الفقه",              icon: "scale" },
-  { id: "aqeeda",   name: "العقيدة",            icon: "building-2" },
-  { id: "tarikh",   name: "التاريخ الإسلامي",   icon: "landmark" },
-  { id: "akhlaq",   name: "الأخلاق والصحابة",  icon: "gem" },
-];
-
+/** فئات اللعبة — ديناميكية من السجل (قابلة للزيادة) */
+export const GAME_CATEGORIES: GameCategory[] = QUIZ_CATEGORY_DEFS.map((c) => ({
+  id: c.id,
+  name: c.name,
+  icon: c.icon,
+}));
 export const ALL_QUESTIONS: Record<string, CategoryQuestions> = {
 
   // ─── القرآن الكريم ────────────────────────────────────────────────
@@ -599,6 +606,101 @@ export const ALL_QUESTIONS: Record<string, CategoryQuestions> = {
   },
 };
 
+/** املأ الفئات الجديدة ببنوك فارغة — المحتوى يأتي من Supabase أو fallback */
+for (const cat of QUIZ_CATEGORY_DEFS) {
+  if (!ALL_QUESTIONS[cat.id]) {
+    ALL_QUESTIONS[cat.id] = { 200: [], 400: [], 600: [] };
+  }
+}
+
+/** عيّنات أنواع أسئلة للفئات الجديدة (قابلة للتوسعة) */
+ALL_QUESTIONS.nahw = {
+  200: [
+    {
+      id: "nahw200_01",
+      kind: "mcq",
+      q: "ما علامة رفع الفاعل المفرد؟",
+      a: "الضمة",
+      hint: "الفاعل مرفوع دائمًا",
+      choices: ["الضمة", "الفتحة", "الكسرة", "السكون"],
+      correctIndex: 0,
+    },
+    {
+      id: "nahw200_02",
+      kind: "true_false",
+      q: "المبتدأ مرفوع دائمًا.",
+      a: "صح",
+      hint: "المبتدأ والخبر مرفوعان",
+      choices: ["صح", "خطأ"],
+      correctIndex: 0,
+    },
+  ],
+  400: [
+    {
+      id: "nahw400_01",
+      kind: "fill_blank",
+      q: "اسم مرفوع يأتي بعد فعل تام ويُسند إليه الفعل يُسمّى ……",
+      a: "فاعلًا",
+      hint: "من أركان الجملة الفعلية",
+    },
+  ],
+  600: [
+    {
+      id: "nahw600_01",
+      kind: "order",
+      q: "رتّب عناصر الجملة الفعلية الأساسية:",
+      a: "فعل → فاعل → مفعول به",
+      hint: "الترتيب الأصلي للجملة الفعلية",
+      items: ["فعل", "فاعل", "مفعول به"],
+    },
+  ],
+};
+
+ALL_QUESTIONS.balagha = {
+  200: [
+    {
+      id: "bal200_01",
+      kind: "mcq",
+      q: "أيٌّ من التالي من علوم البلاغة الثلاثة؟",
+      a: "المعاني والبيان والبديع",
+      hint: "تقسيم البلاغة عند المتأخرين",
+      choices: ["المعاني والبيان والبديع", "النحو والصرف والعروض", "الفقه والأصول والعقيدة", "العروض والقافية فقط"],
+      correctIndex: 0,
+    },
+  ],
+  400: [
+    {
+      id: "bal400_01",
+      kind: "match",
+      q: "طابق المصطلح البلاغي بتعريفه المبسّط:",
+      a: "تشبيه↔تمثيل · استعارة↔مجاز علاقته المشابهة · كناية↔لازم المعنى",
+      hint: "من أبواب علم البيان",
+      pairs: [
+        ["تشبيه", "عقد مماثلة بين طرفين"],
+        ["استعارة", "مجاز علاقته المشابهة"],
+        ["كناية", "لفظ أُريد لازم معناه"],
+      ],
+    },
+  ],
+  600: [],
+};
+
+ALL_QUESTIONS.tawhid = {
+  200: [
+    {
+      id: "taw200_01",
+      kind: "true_false",
+      q: "توحيد الربوبية هو إفراد الله بالعبادة.",
+      a: "خطأ — ذلك توحيد الألوهية",
+      hint: "الربوبية: الخلق والملك والتدبير · الألوهية: العبادة",
+      choices: ["صح", "خطأ"],
+      correctIndex: 1,
+    },
+  ],
+  400: [],
+  600: [],
+};
+
 export function getRandomQuestions(
   categoryId: string,
   points: PointValue,
@@ -617,9 +719,16 @@ export function pickQuestion(
   persistedUsedIds: Set<string> = new Set(),
 ): QuizQuestion | null {
   const allUsed = persistedUsedIds.size > 0 ? new Set([...usedIds, ...persistedUsedIds]) : usedIds;
-  const available = (pool[categoryId]?.[points] ?? []).filter((q) => !allUsed.has(q.id));
-  if (available.length === 0) return null;
-  return available[Math.floor(Math.random() * available.length)];
+  const tryIds = [categoryId, resolveQuizCategoryPoolId(categoryId)].filter(
+    (id, i, arr) => arr.indexOf(id) === i,
+  );
+  for (const id of tryIds) {
+    const available = (pool[id]?.[points] ?? []).filter((q) => !allUsed.has(q.id));
+    if (available.length > 0) {
+      return available[Math.floor(Math.random() * available.length)];
+    }
+  }
+  return null;
 }
 
 // Maps Supabase quiz_questions columns to game categoryId
@@ -627,18 +736,21 @@ const SECTION_TO_CATEGORY: Record<string, string> = {
   // ── القرآن (→ quran) ──────────────────────────────────────────────
   "القرآن": "quran",
   "القرآن الكريم": "quran",
-  "علوم القرآن": "quran",
-  "التجويد": "quran",
+  "علوم القرآن": "ulum_quran",
+  "التجويد": "tajweed",
+  "التفسير": "tafsir",
   // ── الحديث (→ hadith) ─────────────────────────────────────────────
   "الحديث": "hadith",
   "الحديث الشريف": "hadith",
   "السنة": "hadith",
   "الأحاديث النبوية": "hadith",
   "الحديث النبوي": "hadith",
+  "مصطلح الحديث": "mustalah",
   // ── السيرة النبوية (→ sira) ───────────────────────────────────────
   "السيرة": "sira",
   "السيرة النبوية": "sira",
   "سيرة النبي": "sira",
+  "أمهات المؤمنين": "ummahat",
   // ── الأنبياء (→ anbiya) ───────────────────────────────────────────
   "الأنبياء": "anbiya",
   "الأنبياء والرسل": "anbiya",
@@ -647,45 +759,56 @@ const SECTION_TO_CATEGORY: Record<string, string> = {
   "الفقه": "fiqh",
   "الفقه الإسلامي": "fiqh",
   "الأحكام": "fiqh",
-  "الفرائض والمواريث": "fiqh",
-  "الحج": "fiqh",
+  "الفرائض والمواريث": "faraid",
+  "الفرائض": "faraid",
+  "الحج": "hajj",
+  "الحج والعمرة": "hajj",
+  "أصول الفقه": "usul_fiqh",
   // ── العقيدة (→ aqeeda) ────────────────────────────────────────────
   "العقيدة": "aqeeda",
   "العقيدة الإسلامية": "aqeeda",
   "العقيدة والأخلاق": "aqeeda",
+  "التوحيد": "tawhid",
+  "أسماء الله الحسنى": "asma",
+  "الأسماء الحسنى": "asma",
   // ── التاريخ الإسلامي (→ tarikh) ──────────────────────────────────
   "التاريخ الإسلامي": "tarikh",
   "الأندلس": "tarikh",
   "الخلفاء": "tarikh",
-  "العلماء": "tarikh",
+  "العلماء": "ulama",
+  "علماء الإسلام": "ulama",
   "المعارك": "tarikh",
   "الفتوحات": "tarikh",
   "الفتوحات الإسلامية": "tarikh",
   "الصالحون": "tarikh",
-  // ── الأخلاق والصحابة (→ akhlaq) ─────────────────────────────────
-  "الصحابة": "akhlaq",
-  "الصحابة الكرام": "akhlaq",
-  "خلفاء راشدون": "akhlaq",
+  "التاريخ": "tarikh",
+  // ── الأخلاق والصحابة ─────────────────────────────────
+  "الصحابة": "sahaba",
+  "الصحابة الكرام": "sahaba",
+  "خلفاء راشدون": "sahaba",
   "الأخلاق": "akhlaq",
   "الأخلاق الإسلامية": "akhlaq",
   "الأخلاق والآداب": "akhlaq",
   "الأخلاق والرقائق": "akhlaq",
-  "الآداب": "akhlaq",
-  "الآداب الإسلامية": "akhlaq",
-  "العلماء والأئمة": "akhlaq",
-  "الأسماء الحسنى": "aqeeda",
-  // ── الأذكار والأدعية (→ aqeeda) ──────────────────────────────────
-  "الأذكار": "aqeeda",
-  "الأذكار والأدعية": "aqeeda",
-  "الأدعية": "aqeeda",
+  "الآداب": "adab",
+  "الآداب الشرعية": "adab",
+  "الآداب الإسلامية": "adab",
+  "العلماء والأئمة": "ulama",
+  // ── الأذكار والأدعية ──────────────────────────────────
+  "الأذكار": "adhkar",
+  "الأذكار والأدعية": "adhkar",
+  "الأدعية": "adhkar",
+  // ── اللغة ─────────────────────────────────────────────────────
+  "اللغة العربية": "arabic",
+  "النحو": "nahw",
+  "الصرف": "sarf",
+  "البلاغة": "balagha",
+  "الأدب العربي": "adab_ar",
+  "المعجم الشرعي": "glossary",
   // ── الرقائق والزهد (→ akhlaq) ────────────────────────────────────
   "الرقائق": "akhlaq",
   "الزهد": "akhlaq",
-  // ── فقه إضافي ─────────────────────────────────────────────────────
-  "الحج والعمرة": "fiqh",
   "الألغاز الشرعية": "fiqh",
-  // ── تاريخ إضافي ───────────────────────────────────────────────────
-  "التاريخ": "tarikh",
 };
 
 // اكتُشف 2026-07-18: quiz_questions.level الحي مقيَّد بـCHECK constraint

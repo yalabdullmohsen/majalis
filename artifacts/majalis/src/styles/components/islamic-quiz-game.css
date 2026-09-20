@@ -35,11 +35,25 @@
 .qzg-team-card--active .qzg-lifeline--eliminate { --qzg-ll-color: #C080FF; }
 .qzg-team-card--active .qzg-lifeline--pass      { --qzg-ll-color: #80C0FF; }
 
-.qzg-setup { max-width: 640px; margin: 0 auto; }
-.qzg-setup__hero { text-align: center; margin-bottom: 2rem; }
-.qzg-setup__icon { font-size: 3rem; margin-bottom: 0.5rem; }
-.qzg-setup__title { margin: 0; font-size: 2rem; color: var(--majalis-emerald-deep); font-weight: 800; }
-.qzg-setup__sub   { margin: 0.5rem 0 0; color: var(--majalis-ink-soft); font-size: 0.9rem; }
+.qzg-setup { max-width: 720px; margin: 0 auto; padding-block-end: 0.5rem; }
+.qzg-setup__hero { text-align: center; margin-bottom: 0.85rem; }
+.qzg-setup__icon { margin-bottom: 0.25rem; color: var(--majalis-emerald-deep, var(--mj-brand-deep)); }
+.qzg-setup__title {
+  margin: 0;
+  font-size: clamp(1.35rem, 4.2vw, 1.75rem);
+  color: var(--majalis-emerald-deep);
+  font-weight: 800;
+  line-height: 1.25;
+  min-height: 2rem;
+}
+.qzg-setup__sub {
+  margin: 0.35rem auto 0;
+  color: var(--majalis-ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  max-width: 28rem;
+  min-height: 2.6rem;
+}
 
 /* Shared card, inputs, buttons */
 .qzg-section-card {
@@ -245,8 +259,15 @@
 .qzg-winner-unit        { margin: 0.25rem 0 0; font-size: 0.78rem; color: var(--majalis-ink-soft); }
 
 /* Root wrapper */
-.qzg-root  { min-height: calc(100svh - 64px); background: var(--ds-parchment, var(--majalis-parchment)); padding: 1.25rem 1rem; direction: rtl; font-family: inherit; color: var(--ds-ink, var(--majalis-ink)); }
-.qzg-inner { max-width: 860px; margin: 0 auto; padding-bottom: 3rem; }
+.qzg-root  {
+  background: var(--ds-parchment, var(--majalis-parchment));
+  padding: 0.35rem 0 1rem;
+  direction: rtl;
+  font-family: inherit;
+  color: var(--ds-ink, var(--majalis-ink));
+}
+.qzg-root--embedded { padding-block-start: 0; }
+.qzg-inner { max-width: 860px; margin: 0 auto; padding-bottom: 1rem; }
 .qzg-game-title-bar { text-align: center; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--ds-line-color); }
 .qzg-game-title { color: var(--majalis-brass); font-weight: 700; }
 
@@ -321,3 +342,156 @@
   font-family: inherit;
   text-align: center;
 }
+
+/* ── تحدي الأسئلة — شبكة حديثة وأوضاع لعب ───────────────────────── */
+.qzg-setup__brand {
+  margin: 0.35rem 0 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--majalis-brass, var(--mj-brand));
+  letter-spacing: 0.02em;
+}
+.qzg-play-modes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+@media (min-width: 640px) {
+  .qzg-play-modes { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.qzg-play-mode {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.7rem 0.55rem;
+  border-radius: var(--radius-card, 1rem);
+  border: 1px solid var(--soft-card-border, var(--ds-line-color));
+  background: var(--soft-card-bg, var(--mj-surface, #fffcf7));
+  color: var(--majalis-ink, var(--mj-ink));
+  text-align: center;
+  cursor: pointer;
+  font-family: inherit;
+  min-height: 3.6rem;
+}
+.qzg-play-mode--on {
+  border-color: var(--majalis-emerald, var(--mj-brand));
+  background: color-mix(in srgb, var(--majalis-emerald, var(--mj-brand)) 12%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--majalis-emerald, var(--mj-brand)) 35%, transparent);
+}
+.qzg-play-mode__label { font-weight: 800; font-size: 0.92rem; }
+.qzg-play-mode__desc { font-size: 0.72rem; color: var(--majalis-ink-soft); }
+.qzg-team-extra {
+  margin-block-start: 0.65rem;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--majalis-brass, var(--mj-brand));
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.qzg-daily-hint {
+  text-align: center;
+  color: var(--majalis-ink-soft);
+  font-size: 0.9rem;
+  margin: 0.25rem 0 1rem;
+  min-height: 1.4rem;
+}
+.qzg-cats-actions { display: flex; gap: 0.45rem; margin-bottom: 0.65rem; }
+.qzg-chip-btn {
+  border: 1px solid var(--ds-line-color);
+  background: var(--mj-surface-2, var(--ds-card, #fff));
+  color: var(--majalis-ink);
+  border-radius: 999px;
+  padding: 0.28rem 0.7rem;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.qzg-cats-grid--dynamic {
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: 0.45rem;
+}
+.qzg-cat-btn {
+  min-height: 4.25rem;
+  padding: 0.55rem 0.4rem;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+.qzg-kinds-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: center;
+  margin: 0.35rem 0 1rem;
+  min-height: 1.75rem;
+}
+.qzg-kinds-bar span {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--majalis-emerald, var(--mj-brand)) 10%, transparent);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald, var(--mj-brand)) 22%, transparent);
+}
+.qzg-choices { display: grid; gap: 0.45rem; margin-block-start: 0.85rem; }
+.qzg-choice {
+  text-align: start;
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--radius-card, 0.9rem);
+  border: 1px solid var(--ds-line-color);
+  background: var(--mj-surface, #fff);
+  color: var(--majalis-ink);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 2.75rem;
+}
+.qzg-choice--on {
+  border-color: var(--majalis-emerald, var(--mj-brand));
+  background: color-mix(in srgb, var(--majalis-emerald, var(--mj-brand)) 12%, transparent);
+}
+.qzg-order-list, .qzg-match-list {
+  margin: 0.75rem 0 0;
+  padding-inline-start: 1.2rem;
+  color: var(--majalis-ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.qzg-match-list { list-style: none; padding: 0; display: grid; gap: 0.35rem; }
+.qzg-match-list li {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.4rem;
+  align-items: center;
+  padding: 0.45rem 0.55rem;
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--mj-ink) 4%, transparent);
+}
+.qzg-back-setup {
+  display: inline-flex;
+  margin-bottom: 0.75rem;
+  border: 0;
+  background: transparent;
+  color: var(--majalis-brass, var(--mj-brand));
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.qzg-section-card { margin-bottom: 0.65rem; padding: 0.85rem 0.9rem; }
+.qzg-fill-hint { margin: 0.65rem 0 0; font-size: 0.85rem; color: var(--majalis-ink-soft); min-height: 1.25rem; }
+:is(html[data-theme="dark"], html.dark) :is(.qzg-play-mode, .qzg-choice, .qzg-chip-btn, .qzg-section-card) {
+  background: var(--surface-elevated, #24302b);
+  color: var(--text-primary, #f4f7f5);
+  border-color: var(--border-elevated, #3a4a44);
+}
+:is(html[data-theme="dark"], html.dark) .qzg-setup__title { color: var(--text-primary, #f4f7f5); }
+:is(html[data-theme="dark"], html.dark) :is(.qzg-setup__sub, .qzg-fill-hint) { color: var(--text-secondary, #c5d0cb); }
+@media (min-width: 768px) {
+  .qzg-cats-grid--dynamic { grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); }
+}
+

@@ -54,7 +54,7 @@ console.log("\n=== recent-pages — /qa ملغى و/quiz وحيد ===");
   const qaKeys = [...src.matchAll(/^\s*"(\/qa)"\s*:/gm)].map((m) => m[1]);
   assert(quizKeys.length === 1, `مفتاح "/quiz" يظهر مرة واحدة فقط (الفعلي: ${quizKeys.length})`);
   assert(qaKeys.length === 0, `مفتاح "/qa" غير موجود بعد التحويل إلى /quiz (الفعلي: ${qaKeys.length})`);
-  assert(/"\/quiz"\s*:\s*"لعبة سين جيم"/.test(src), 'تسمية "/quiz" هي «لعبة سين جيم»');
+  assert(/"\/quiz"\s*:\s*"تحدي الأسئلة"/.test(src), 'تسمية "/quiz" هي «تحدي الأسئلة»');
 }
 
 console.log(`\n=== النتيجة: ${passed} نجاح، ${failed} فشل ===`);

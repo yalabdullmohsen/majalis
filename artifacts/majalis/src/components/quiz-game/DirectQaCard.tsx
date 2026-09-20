@@ -59,13 +59,13 @@ export function DirectQaCard({ qaId, onDismiss }: { qaId: string; onDismiss: () 
       <div className="qzg-direct-qa qzg-direct-qa--missing">
         <p>{EMPTY.generic}</p>
         <button type="button" className="qzg-direct-qa__cta" onClick={onDismiss}>
-          الذهاب إلى لعبة سين جيم
+          الذهاب إلى تحدي الأسئلة
         </button>
       </div>
     );
   }
 
-  const category = item.qa_categories?.name || "سين جيم";
+  const category = item.qa_categories?.name || "تحدي الأسئلة";
   const answer = stripAnswerPrefix(item.answer);
 
   return (
@@ -77,7 +77,7 @@ export function DirectQaCard({ qaId, onDismiss }: { qaId: string; onDismiss: () 
       <p className="qzg-direct-qa__a">{answer}</p>
       <p className="qzg-direct-qa__disclaimer">{QA_DISCLAIMER}</p>
       <button type="button" className="qzg-direct-qa__cta" onClick={onDismiss}>
-        الذهاب إلى لعبة سين جيم
+        الذهاب إلى تحدي الأسئلة
       </button>
     </div>
   );

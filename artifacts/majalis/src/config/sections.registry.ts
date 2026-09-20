@@ -1070,17 +1070,17 @@ const SECTION_SEEDS: SectionSeed[] = [
   // —— ٦. التعلّم الشخصي ——
   {
     id: "qa",
-    label: "سين جيم",
-    navLabel: "سين جيم",
-    subtitle: "اختبار معلومات شرعية بأسئلة متعددة",
+    label: "تحدي الأسئلة",
+    navLabel: "تحدي الأسئلة",
+    subtitle: "اختبر معلوماتك الشرعية في عشرات الفئات",
     route: "/quiz",
     icon: MessageCircleQuestion,
     group: "learning",
     order: 20,
     surfaces: NAV,
     status: "live",
-    keywords: ["أسئلة", "أجوبة", "س ج", "مسابقة", "اختبار", "سين جيم"],
-    aliases: ["لعبة سين جيم", "الأسئلة والأجوبة"],
+    keywords: ["أسئلة", "أجوبة", "تحدي", "مسابقة", "اختبار", "تحدي الأسئلة", "سين جيم"],
+    aliases: ["تحدي سُنّة", "لعبة سين جيم", "الأسئلة والأجوبة", "سين جيم"],
   },
   {
     id: "progress",

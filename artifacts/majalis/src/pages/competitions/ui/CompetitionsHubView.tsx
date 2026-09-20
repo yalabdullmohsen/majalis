@@ -122,7 +122,7 @@ export default function CompetitionsHubView() {
             <p>لا مسابقات خارجية منشورة حاليًا. نضيف مسابقات موثوقة عند توفر مصادرها بإذن الله.</p>
             <p className="cmp-empty__hint">
               في الأثناء جرّب{" "}
-              <Link href="/quiz">أسئلة سين جيم</Link>
+              <Link href="/quiz">تحدي الأسئلة</Link>
               {" "}أو{" "}
               <Link href="/lessons">الدروس العلمية</Link>.
             </p>
