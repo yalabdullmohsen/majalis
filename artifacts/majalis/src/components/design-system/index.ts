@@ -60,6 +60,15 @@ export {
 } from "@/lib/ssunnah-screen-patterns";
 
 export {
+  GeometricMotif,
+  GeometricDivider,
+  IconMedallion,
+  type GeometricMotifProps,
+  type GeometricDividerProps,
+  type IconMedallionProps,
+} from "./geometry";
+
+export {
   ContentSection,
   DefinitionBox,
   EvidenceBox,

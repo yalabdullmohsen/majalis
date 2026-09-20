@@ -129,6 +129,7 @@ function loadNonCriticalCss() {
   void import("./styles/components/compact-sources.css");
   void import("./styles/components/content-reading-shell.css");
   void import("./styles/reading-prose-system.css");
+  void import("./styles/sunnah-visual-language.css");
   void import("./styles/components/reading-section-card.css");
   void import("./styles/components/native-feel.css");
   void import("./styles/m2030/interactions.css");
