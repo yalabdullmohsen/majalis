@@ -58,7 +58,14 @@ assert.doesNotMatch(css, /\.nm-word\.is-selected\s*\{[^}]*background:\s*var\(--n
 assert.match(newReader, /gotoOpen|onGotoOpenChange|mushaf-goto/);
 assert.match(read("src/features/mushaf-reader/MushafControlsLayer.tsx"), /enterKeyHint="search"/);
 assert.match(read("src/features/mushaf-reader/MushafControlsLayer.tsx"), /mushaf-goto-form/);
+assert.match(read("src/features/mushaf-reader/MushafControlsLayer.tsx"), /mushaf-goto-dial/);
+assert.match(read("src/features/mushaf-reader/MushafControlsLayer.tsx"), /بلا focus تلقائي/);
+assert.match(read("src/features/mushaf-reader/MushafControlsLayer.tsx"), /page-goto-dial\.css/);
 assert.match(css, /\.nm-goto\b/);
+const dialCss = read("src/features/mushaf-reader/page-goto-dial.css");
+assert.match(dialCss, /\.nm-goto__dial\b/);
+assert.match(dialCss, /\.nm-goto__dial-item\b/);
+assert.match(dialCss, /\.nm-goto__stepper\b/);
 assert.match(css, /--mushaf-font-weight:/);
 assert.match(css, /--mushaf-header-height:/);
 assert.match(css, /--reader-action-height:/);

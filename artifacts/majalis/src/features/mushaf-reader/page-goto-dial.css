@@ -1,0 +1,168 @@
+/**
+ * عدّاد انتقال الصفحة — خارج mushaf-reader.css حتى لا يُحسب تغيير خط/هندسة مصحف.
+ * يُستورد من MushafControlsLayer فقط.
+ */
+
+.nm-goto {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  z-index: 60;
+  transform: translate(-50%, -50%);
+  width: min(20rem, calc(100% - 2rem));
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--nm-gold, #c9a86c) 45%, transparent);
+  border-radius: 0.75rem;
+  background: var(--nm-paper, #fcf6e3);
+  color: var(--nm-ink, #1a241c);
+  box-shadow: 0 12px 32px color-mix(in srgb, #000 18%, transparent);
+  pointer-events: auto;
+  font-family: inherit;
+  --nm-goto-dial-item-h: 44px;
+}
+
+.nm-goto__title {
+  margin: 0;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--nm-meta, #5c5348);
+}
+
+.nm-goto__stepper {
+  display: grid;
+  grid-template-columns: 2.75rem 1fr 2.75rem;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.nm-goto__nudge {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--nm-gold, #c9a86c) 40%, transparent);
+  border-radius: 0.5rem;
+  min-height: 2.5rem;
+  background: color-mix(in srgb, var(--nm-paper, #fcf6e3) 88%, var(--nm-gold, #c9a86c) 12%);
+  color: var(--nm-ink, #1a241c);
+  font: inherit;
+  font-size: 1.35rem;
+  font-weight: 700;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nm-goto__nudge:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.nm-goto__current {
+  display: grid;
+  place-items: center;
+  min-height: 2.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--nm-gold, #c9a86c) 35%, transparent);
+  background: color-mix(in srgb, var(--nm-gold, #c9a86c) 12%, var(--nm-paper, #fcf6e3));
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--nm-ink, #1a241c);
+  font-variant-numeric: tabular-nums;
+}
+
+.nm-goto__dial {
+  height: calc(var(--nm-goto-dial-item-h) * 5);
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: y mandatory;
+  border: 1px solid color-mix(in srgb, var(--nm-gold, #c9a86c) 28%, transparent);
+  border-radius: 0.55rem;
+  background: color-mix(in srgb, var(--nm-paper, #fcf6e3) 92%, #000 4%);
+  touch-action: pan-y;
+}
+
+.nm-goto__dial-spacer {
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.nm-goto__dial-item {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: var(--nm-goto-dial-item-h);
+  min-height: var(--nm-goto-dial-item-h);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--nm-meta, #5c5348);
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  scroll-snap-align: center;
+  -webkit-tap-highlight-color: transparent;
+  content-visibility: auto;
+  contain-intrinsic-size: auto var(--nm-goto-dial-item-h);
+}
+
+.nm-goto__dial-item[data-active="1"] {
+  background: color-mix(in srgb, var(--nm-gold, #c9a86c) 22%, transparent);
+  color: var(--nm-ink, #1a241c);
+  font-weight: 800;
+}
+
+.nm-goto__dial-item:active {
+  background: color-mix(in srgb, var(--nm-gold, #c9a86c) 16%, transparent);
+}
+
+.nm-goto input {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--nm-gold, #c9a86c) 45%, #ccc);
+  border-radius: 0.45rem;
+  padding: 0.55rem;
+  font: inherit;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-align: center;
+  direction: ltr;
+  background: color-mix(in srgb, var(--nm-paper, #fcf6e3) 90%, #fff);
+  color: var(--nm-ink, #1a241c);
+}
+
+.nm-goto__error {
+  margin: 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #8b2e2e;
+}
+
+.nm-goto__actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.nm-goto__actions button {
+  flex: 1;
+  border: 0;
+  border-radius: 0.45rem;
+  min-height: 2.35rem;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nm-goto__actions button[data-primary="1"] {
+  background: color-mix(in srgb, var(--nm-gold, #c9a86c) 55%, var(--nm-paper, #fcf6e3));
+  color: var(--nm-ink, #1a241c);
+}
+
+.nm-goto__actions button[data-primary="0"] {
+  background: color-mix(in srgb, var(--nm-paper, #fcf6e3) 88%, #000 6%);
+  color: var(--nm-meta, #5c5348);
+}
