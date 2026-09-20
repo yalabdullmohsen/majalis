@@ -76,7 +76,7 @@
 
 | `docs/product-evolution/` | خط أساس برنامج التطوير + تقرير المراحل (P0+) |
 | `docs/content-quality/TOTAL_TRUST_*` + `reports/total-trust/` | برنامج TOTAL TRUST (تحقق محتوى/مسارات؛ لا حكم شرعي آلي) |
-| `docs/content-quality/islamic-sects-*` + `ISLAMIC_SECTS_HUMAN_REVIEW_QUEUE.md` | جرد/تصنيف/حالات نشر قسم الفرق (PR-1؛ لا PUBLISHED آلي) |
+| `docs/content-quality/islamic-sects-*` + `ISLAMIC_SECTS_HUMAN_REVIEW_QUEUE.md` + `ISLAMIC_SECTS_BATCH1_SOURCE_REVIEW.md` | جرد/تصنيف/مراجعة دفعة 1 (لا PUBLISHED آلي) |
 
 ## حوكمة الوكيل
 
