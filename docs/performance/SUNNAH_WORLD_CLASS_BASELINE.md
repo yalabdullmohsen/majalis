@@ -53,7 +53,7 @@
 | تصنيف | Issue | Evidence | Wave |
 |---|---|---|---|
 | PARTIAL | شرائط جانبية خضراء على بطاقات عامة أُزيلت من DS؛ بقايا صفحات محلية محتملة | SVL PR-2 `#2150` · `card-decorative-strip-cleanup.css` | PR-7 |
-| FAIL→fix pending | عمود 4px على هيرو الأقسام (`page-hero-mj--bleed`) — إصلاح في SVL PR-3 `#2151` (لم يُدمج بعد على main عند القياس) | `page-hero.css` على `551aee391` ما زال يحمل 4px حتى دمج #2151 | PR-7 / SVL-3 |
+| FAIL→FIXED on main | عمود 4px على هيرو الأقسام — أُصلح في SVL PR-3 `#2151` (دُمج `2026-09-20`)؛ القياس أدناه كان قبل الدمج على `551aee391` | `page-hero.css` قبل الدمج | PR-7 يتحقق عدم رجوع |
 | PARTIAL | خط أخضر قصير تحت عناوين lobby/quran-hub | `section-lobby.css` · `quran-numbers.css` | PR-8/9 |
 | PARTIAL | Card داخل Card في بعض Feature paths | SVL inventory | PR-7 |
 | UNKNOWN | Touch lag / Dead touch / Ghost click على جهاز | لا harness في هذه الجلسة | PR-3 |
