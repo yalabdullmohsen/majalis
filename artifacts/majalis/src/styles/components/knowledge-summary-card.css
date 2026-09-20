@@ -180,6 +180,41 @@
   text-align: start;
 }
 
+/* قراءة عربية موحّدة داخل سطح التفاصيل */
+.kx-detail-surface .rsc__title,
+.kx-detail-surface .rsc__prose,
+.kx-detail-surface .rsc-list,
+.kx-detail-surface .rsc-list__item {
+  text-align: start;
+}
+
+.kx-detail-surface .rsc__prose {
+  font-weight: 400;
+  line-height: 1.85;
+  max-width: min(36rem, 100%);
+}
+
+.kx-detail-surface .rsc {
+  /* سطح واحد متتابع: فواصل خفيفة بلا بطاقة داخل بطاقة زخرفية */
+  box-shadow: none;
+  background: transparent;
+  border-color: color-mix(in srgb, var(--mj-brand) 14%, var(--ss-border, var(--mj-hairline)));
+}
+
+.kx-detail-surface {
+  padding-bottom: calc(
+    var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + var(--global-back-clearance, 4.5rem) +
+      1.25rem
+  );
+}
+
+.topic-page--sects-detail .sect-detail-kx,
+.topic-page--madhahib-detail {
+  padding-bottom: calc(
+    var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 1rem
+  );
+}
+
 html.dark .kx-summary-card__pill,
 [data-theme="dark"] .kx-summary-card__pill {
   background: color-mix(in srgb, var(--mj-brand) 22%, transparent);
