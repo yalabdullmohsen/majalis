@@ -1,0 +1,121 @@
+{
+  "program": "sunnah-world-class-product-polish",
+  "stage": 1,
+  "stageName": "quality-baseline-measure",
+  "measuredAt": "2026-09-20T06:05:59.137Z",
+  "commit": "551aee391f03d7d59fa767411b7ea24f3d2ad86d",
+  "branchBase": "origin/main",
+  "environment": "local-agent-build",
+  "productRoot": "artifacts/majalis",
+  "appStoreNote": "التطبيق قيد مراجعة Apple — هذا الخط أساس للإصدار التالي فقط؛ لا تعديل لـBuild المقدمة.",
+  "commands": {
+    "build": "PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run build",
+    "bundleBudget": "pnpm --filter @workspace/majalis run test:bundle-budget",
+    "capture": "node artifacts/majalis/scripts/sunnah-world-class-baseline.mjs --write"
+  },
+  "bundle": {
+    "entryJs": {
+      "file": "index-CRX-qD-q.js",
+      "rawBytes": 377625,
+      "gzipBytes": 117440,
+      "gzipKiB": 114.69,
+      "budgetKiB": 120,
+      "zlibSlackBytes": 320,
+      "gate": "pass"
+    },
+    "iconsJs": {
+      "file": "icons-CO28lmET.js",
+      "rawBytes": 72905,
+      "gzipBytes": 22749,
+      "gzipKiB": 22.22,
+      "budgetKiB": 30,
+      "gate": "pass"
+    },
+    "mainCss": {
+      "file": "index-BiNWIW9r.css",
+      "rawBytes": 333989,
+      "gzipBytes": 60733,
+      "gzipKiB": 59.31,
+      "budgetKiB": 100,
+      "gate": "pass"
+    },
+    "mushafReaderPageJs": {
+      "file": "MushafReaderPage-iDU1xf4G.js",
+      "rawBytes": 75931,
+      "gzipBytes": 24861,
+      "gzipKiB": 24.28,
+      "softCeilingKiB": 40,
+      "gate": "pass"
+    },
+    "mushafReaderPageCss": {
+      "file": "MushafReaderPage-S1WEcgzp.css",
+      "rawBytes": 155399,
+      "gzipBytes": 25625,
+      "gzipKiB": 25.02
+    },
+    "softWarnings": [
+      {
+        "chunk": "fiqh-books-BNbapBXO.js",
+        "gzipKiB": 251.5,
+        "note": "lazy content chunk فوق soft 150 KiB — ليس فشل بوابة entry"
+      }
+    ]
+  },
+  "budgetsLocked": {
+    "entryJsGzipBytes": 123200,
+    "iconsJsGzipBytes": 30720,
+    "mainCssGzipBytes": 102400,
+    "mushafReaderPageJsGzipBytesSoft": 40960,
+    "note": "120*1024+320 · 30*1024 · 100*1024 · mushaf soft 40KiB — لا تُرفع في هذا البرنامج"
+  },
+  "relatedBaselines": [
+    "docs/performance/WHOLE_APP_BASELINE.md",
+    "docs/performance/ARCHITECTURE_BASELINE.md",
+    "docs/mushaf/MUSHAF_INTERNAL_PERFORMANCE_BASELINE.md",
+    "artifacts/majalis/docs/design/SUNNAH_VISUAL_LANGUAGE.md"
+  ],
+  "historicalPsiReferenceOnly": {
+    "source": "artifacts/majalis/scripts/perf-baseline.json",
+    "date": "2026-08-17",
+    "note": "مرجع تاريخي فقط — لا ادعاء تحسن مقابل هذا البرنامج",
+    "performance": 58,
+    "lcpMs": 6300,
+    "tbtMs": 560,
+    "cls": 0.033
+  },
+  "notMeasuredThisRun": [
+    "coldStartMs",
+    "warmStartMs",
+    "resumeMs",
+    "deepLinkOpenMs",
+    "stableShellReadyMs",
+    "firstMeaningfulContentMs",
+    "touchToFeedbackMs",
+    "touchToNavigationMs",
+    "buttonResponseMs",
+    "cardResponseMs",
+    "filterResponseMs",
+    "searchTypingLatencyMs",
+    "sheetOpenCloseMs",
+    "homeToSectionMs",
+    "sectionToDetailMs",
+    "searchToResultMs",
+    "lessonListToDetailMs",
+    "quranHubToMushafMs",
+    "prayerToSettingsMs",
+    "backNavigationMs",
+    "frameDropCount",
+    "longTaskCount",
+    "layoutShiftSession",
+    "renderCountSample",
+    "remountCountSample",
+    "repaintCostSample",
+    "memoryGrowthMb",
+    "duplicateRequestCount",
+    "lighthouseHomeThisSession",
+    "homeNetworkRequestCount",
+    "fpsScrollHome",
+    "fpsScrollQuranHub",
+    "fpsScrollLessons"
+  ]
+}
