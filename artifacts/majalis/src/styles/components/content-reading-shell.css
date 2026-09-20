@@ -5,23 +5,25 @@
 .cr-shell {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  max-width: 42rem;
+  gap: 1rem;
+  max-width: var(--read-measure, 38rem);
   margin-inline: auto;
   width: 100%;
   padding-inline: 0.15rem;
   padding-bottom: calc(0.75rem + var(--bottom-nav-height, 4.5rem));
+  font-size: var(--type-body-regular, var(--text-body));
+  line-height: var(--lh-reading, 1.9);
 }
 
 .cr-note {
   margin: 0;
-  padding: 0.9rem 1.05rem;
+  padding: var(--read-card-pad-block, 1.15rem) var(--read-card-pad-inline, 1.2rem);
   border-radius: var(--radius-card, 24px);
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent);
   background: color-mix(in srgb, var(--mj-brand, #1f6b56) 7%, var(--ss-card-bg, #fffcf7));
   color: var(--mj-ink, #16241e);
-  font-size: 0.9rem;
-  line-height: 1.7;
+  font-size: var(--type-body-sm, 0.9rem);
+  line-height: var(--lh-prose, 1.85);
   font-weight: 550;
 }
 
@@ -54,17 +56,17 @@
 }
 
 .cr-faq__q {
-  margin: 0 0 0.35rem;
-  font-size: 0.95rem;
+  margin: 0 0 0.45rem;
+  font-size: var(--type-section, 0.95rem);
   font-weight: 800;
   color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
-  line-height: 1.4;
+  line-height: var(--lh-reading-section, 1.35);
 }
 
 .cr-faq__a {
   margin: 0;
-  font-size: 0.92rem;
-  line-height: 1.75;
+  font-size: var(--type-body-regular, 0.92rem);
+  line-height: var(--lh-reading, 1.9);
   color: var(--mj-ink, #16241e);
   font-weight: 500;
 }
@@ -109,7 +111,7 @@
 .hs-card__body,
 .gl-term__detail,
 .tawheed-principle-card {
-  padding: 1.05rem 1.15rem !important;
+  padding: var(--read-card-pad-block, 1.15rem) var(--read-card-pad-inline, 1.2rem) !important;
 }
 
 .qr-section h2,
@@ -119,7 +121,10 @@
 .tawheed-principle-card h2,
 .tawheed-principle-card h3 {
   color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39)) !important;
+  font-size: var(--type-title-l, var(--text-h1)) !important;
   font-weight: 800 !important;
+  line-height: var(--lh-reading-section, 1.35) !important;
+  margin-block: 0 var(--read-heading-gap-after, 0.55rem) !important;
   opacity: 1 !important;
 }
 
@@ -132,8 +137,11 @@
 .tawheed-principle-card p {
   color: var(--mj-ink, #16241e) !important;
   opacity: 1 !important;
-  line-height: 1.85 !important;
-  font-weight: 500 !important;
+  font-size: var(--type-body-lg, var(--text-body)) !important;
+  line-height: var(--lh-reading, 1.9) !important;
+  font-weight: 400 !important;
+  margin-block: 0 var(--read-para-gap, 0.95em) !important;
+  max-width: var(--read-measure, 38rem) !important;
 }
 
 .qr-source,
@@ -263,26 +271,32 @@ html[data-theme="dark"] .compact-sources--in-rsc .compact-sources__item {
 .isp-page .isp-section p,
 .tawhid-page p,
 .topic-page .topic-body p,
+.topic-page__body p,
 .hadith-page .hadith-body p,
 .tarikh-page p,
 .seerah-page p,
 .seerah-section p {
-  line-height: 1.85;
-  margin-block: 0.65rem 0.85rem;
-  max-width: 42rem;
+  font-size: var(--type-body-lg, var(--text-body));
+  line-height: var(--lh-reading, 1.9);
+  margin-block: 0 var(--read-para-gap, 0.95em);
+  max-width: var(--read-measure, 38rem);
 }
 
 .isp-page h2,
 .isp-page h3,
 .tawhid-page h2,
 .topic-page h2,
+.topic-page__body h2,
 .hadith-page h2,
 .tarikh-page h2,
 .seerah-page h2 {
-  margin-block-start: 1.35rem;
-  margin-block-end: 0.55rem;
-  line-height: 1.35;
+  font-size: var(--type-title-l, var(--text-h1));
+  font-weight: var(--font-weight-extrabold, 800);
+  margin-block-start: var(--read-heading-gap-before, 1.45rem);
+  margin-block-end: var(--read-heading-gap-after, 0.55rem);
+  line-height: var(--lh-reading-section, 1.35);
   letter-spacing: 0;
+  color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
 }
 
 .isp-page section + section,
