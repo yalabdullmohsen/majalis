@@ -743,6 +743,25 @@ function buildRecord(sect) {
   };
 }
 
+function deriveEraBucket(era) {
+  if (!era) return "غير محدد";
+  if (/القرن الأول|من القرن الأول|1\s*هـ|الفتنة الأولى|صفين/.test(era))
+    return "القرن الأول الهجري";
+  if (/القرن الثاني|2\s*هـ|اعتزال واصل/.test(era)) return "القرن الثاني الهجري";
+  if (/القرن الثالث|3\s*هـ/.test(era)) return "القرن الثالث الهجري";
+  if (/القرن الرابع|4\s*هـ/.test(era)) return "القرن الرابع الهجري";
+  if (/القرن الخامس|5\s*هـ/.test(era)) return "القرن الخامس الهجري";
+  if (/القرن السادس|6\s*هـ/.test(era)) return "القرن السادس الهجري";
+  if (
+    /القرن التاسع|القرن الثالث عشر|القرن الرابع عشر|القرن التاسع عشر|القرن العشرون|الحادي والعشرون|ميلاد|م —|م\)/.test(
+      era,
+    )
+  ) {
+    return "حديث / معاصر";
+  }
+  return "فترات أخرى";
+}
+
 function main() {
   const taxonomy = JSON.parse(fs.readFileSync(taxonomyPath, "utf8"));
   const pageSrc = fs.readFileSync(pagePath, "utf8");
@@ -758,7 +777,7 @@ function main() {
       throw new Error(`Unknown entityKind ${r.entityKind} for ${r.id}`);
     }
     if (r.publicationStatus === "PUBLISHED") {
-      throw new Error(`PUBLISHED forbidden in PR-1 build for ${r.id}`);
+      throw new Error(`PUBLISHED forbidden in automated build for ${r.id}`);
     }
   }
 
@@ -780,8 +799,45 @@ function main() {
   };
 
   fs.writeFileSync(outPath, `${JSON.stringify(doc, null, 2)}\n`, "utf8");
+
+  /** ملخص عام للقائمة — بلا معتقدات/اقتباسات/كتب كاملة (حجم الحزمة). */
+  const publicMeta = {
+    version: 1,
+    generatedAt: doc.generatedAt,
+    policy: doc.policy,
+    records: records.map((r) => ({
+      id: r.id,
+      publicationStatus: r.publicationStatus,
+      entityKind: r.entityKind,
+      historicalStatus: r.historicalStatus,
+      alternateNames: r.alternateNames,
+      selfDesignation: r.selfDesignation,
+      externalDesignations: r.externalDesignations,
+      eraBucket: deriveEraBucket(r.emergencePeriod),
+      searchKeywords: [
+        r.canonicalName,
+        ...r.alternateNames,
+        ...r.selfDesignation,
+        ...r.externalDesignations,
+        r.summary || "",
+      ].filter(Boolean),
+    })),
+  };
+  const publicMetaPath = path.join(
+    majalisRoot,
+    "src/data/islamic-sects-public-meta.json",
+  );
+  fs.writeFileSync(
+    publicMetaPath,
+    `${JSON.stringify(publicMeta, null, 2)}\n`,
+    "utf8",
+  );
+
   console.log(
     `islamic-sects-inventory: records=${doc.recordCount} published=${doc.publishedCount} hidden=${doc.hiddenCount}`,
+  );
+  console.log(
+    `islamic-sects-public-meta: ${publicMeta.records.length} summary rows → ${path.relative(repoRoot, publicMetaPath)}`,
   );
 }
 

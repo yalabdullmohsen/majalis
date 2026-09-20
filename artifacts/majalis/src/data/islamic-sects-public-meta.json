@@ -1,0 +1,813 @@
+{
+  "version": 1,
+  "generatedAt": "2026-09-20T15:51:35.267Z",
+  "policy": "no_ai_invention_no_memory_completion_no_auto_publish_human_review_required",
+  "records": [
+    {
+      "id": "ahl-al-sunna",
+      "publicationStatus": "NEEDS_SOURCE",
+      "entityKind": "creedal_school",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "أهل السنة والجماعة (الجماعة)",
+        "أهل السنة"
+      ],
+      "selfDesignation": [
+        "أهل السنة والجماعة",
+        "أهل السنة"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "القرن الأول الهجري",
+      "searchKeywords": [
+        "أهل السنة والجماعة",
+        "أهل السنة والجماعة (الجماعة)",
+        "أهل السنة",
+        "أهل السنة والجماعة",
+        "أهل السنة",
+        "وصف عرضي: التمسك بسنة النبي ﷺ وإجماع الصحابة والاتباع لا الابتداع — كل بند عقدي أدناه يحتاج إحالة ومراجعة شرعية"
+      ]
+    },
+    {
+      "id": "ashariyya",
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "entityKind": "creedal_school",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "أهل السنة — المدرسة الأشعرية",
+        "الأشاعرة",
+        "المدرسة الأشعرية"
+      ],
+      "selfDesignation": [
+        "الأشاعرة",
+        "المدرسة الأشعرية"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "القرن الرابع الهجري",
+      "searchKeywords": [
+        "الأشعرية",
+        "أهل السنة — المدرسة الأشعرية",
+        "الأشاعرة",
+        "المدرسة الأشعرية",
+        "الأشاعرة",
+        "المدرسة الأشعرية",
+        "وصف عرضي شائع: مواجهة المعتزلة بأدوات كلامية مع التمسك بالنصوص — يحتاج مصادر ذاتية وتحليلية مفصولة"
+      ]
+    },
+    {
+      "id": "maturidiyya",
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "entityKind": "creedal_school",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "أهل السنة — المدرسة الماتريدية"
+      ],
+      "selfDesignation": [
+        "الماتريدية"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "القرن الثالث الهجري",
+      "searchKeywords": [
+        "الماتريدية",
+        "أهل السنة — المدرسة الماتريدية",
+        "الماتريدية",
+        "وصف عرضي: تدعيم مقالات أهل السنة في مواجهة المعتزلة والجهمية في خراسان وما وراء النهر — يحتاج مصادر"
+      ]
+    },
+    {
+      "id": "shia-ithna",
+      "publicationStatus": "NEEDS_SOURCE",
+      "entityKind": "shi_i_branch",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "الشيعة الإمامية الاثنا عشرية",
+        "الإمامية",
+        "الاثنا عشرية",
+        "الرافضة (تسمية خارجية خلافية)"
+      ],
+      "selfDesignation": [
+        "الإمامية",
+        "الاثنا عشرية"
+      ],
+      "externalDesignations": [
+        "الرافضة (تسمية خارجية خلافية)"
+      ],
+      "eraBucket": "القرن الأول الهجري",
+      "searchKeywords": [
+        "الشيعة الاثنا عشرية",
+        "الشيعة الإمامية الاثنا عشرية",
+        "الإمامية",
+        "الاثنا عشرية",
+        "الرافضة (تسمية خارجية خلافية)",
+        "الإمامية",
+        "الاثنا عشرية",
+        "الرافضة (تسمية خارجية خلافية)",
+        "الاعتقاد بأن الإمامة حق إلهي لآل البيت النبوي من نسل علي وفاطمة"
+      ]
+    },
+    {
+      "id": "zaidiyya",
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "entityKind": "shi_i_branch",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "الزيدية — الشيعة الزيدية"
+      ],
+      "selfDesignation": [
+        "الزيدية"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "القرن الثاني الهجري",
+      "searchKeywords": [
+        "الزيدية",
+        "الزيدية — الشيعة الزيدية",
+        "الزيدية",
+        "رفض السكوت عن الظلم والمطالبة بإمامة العالم المجاهد من آل البيت"
+      ]
+    },
+    {
+      "id": "ismaeliyya",
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "entityKind": "shi_i_branch",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "الإسماعيلية — الشيعة السبعية",
+        "السبعية (وصف تاريخي)"
+      ],
+      "selfDesignation": [
+        "الإسماعيلية"
+      ],
+      "externalDesignations": [
+        "السبعية (وصف تاريخي)"
+      ],
+      "eraBucket": "القرن الثاني الهجري",
+      "searchKeywords": [
+        "الإسماعيلية",
+        "الإسماعيلية — الشيعة السبعية",
+        "السبعية (وصف تاريخي)",
+        "الإسماعيلية",
+        "السبعية (وصف تاريخي)",
+        "الاعتقاد بأن الإمامة انتقلت من الصادق إلى إسماعيل ثم ابنه محمد لا إلى موسى الكاظم"
+      ]
+    },
+    {
+      "id": "khawarij",
+      "publicationStatus": "NEEDS_SHARIA_REVIEW",
+      "entityKind": "historical_sect",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "الخوارج — تسمية تاريخية؛ «أهل الوعيد» تسمية خارجية خلافية لا تُعرض كاسم ذاتي",
+        "أهل الوعيد (تسمية خارجية)"
+      ],
+      "selfDesignation": [],
+      "externalDesignations": [
+        "الخوارج",
+        "أهل الوعيد (تسمية خارجية)"
+      ],
+      "eraBucket": "القرن الأول الهجري",
+      "searchKeywords": [
+        "الخوارج",
+        "الخوارج — تسمية تاريخية؛ «أهل الوعيد» تسمية خارجية خلافية لا تُعرض كاسم ذاتي",
+        "أهل الوعيد (تسمية خارجية)",
+        "الخوارج",
+        "أهل الوعيد (تسمية خارجية)",
+        "وصف عرضي شائع: رفض التحكيم وتكفير من قبله تحت شعار «لا حكم إلا لله» — المقالات والفروع تحتاج مصادر مقالات مفصولة عن الحكم على الأعيان"
+      ]
+    },
+    {
+      "id": "ibadiyya",
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "entityKind": "independent_community",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "الإباضية — تسمية ذاتية شائعة؛ الربط بلقب «الخوارج» تسمية خارجية يرفضها كثير من الإباضية",
+        "الخوارج (تسمية يرفضها كثير من الإباضية)"
+      ],
+      "selfDesignation": [
+        "الإباضية"
+      ],
+      "externalDesignations": [
+        "الخوارج (تسمية يرفضها كثير من الإباضية)"
+      ],
+      "eraBucket": "القرن الأول الهجري",
+      "searchKeywords": [
+        "الإباضية",
+        "الإباضية — تسمية ذاتية شائعة؛ الربط بلقب «الخوارج» تسمية خارجية يرفضها كثير من الإباضية",
+        "الخوارج (تسمية يرفضها كثير من الإباضية)",
+        "الإباضية",
+        "الخوارج (تسمية يرفضها كثير من الإباضية)",
+        "عرض تاريخي شائع يربط النشأة بسياق المحكمة؛ كثير من المصادر الإباضية ترفض التصنيف ضمن «الخوارج» — يحتاج مصادر ذاتية وتحليلية مفصولة"
+      ]
+    },
+    {
+      "id": "mutazila",
+      "publicationStatus": "NEEDS_SOURCE",
+      "entityKind": "kalam_school",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "المعتزلة — أصحاب العدل والتوحيد (تسمية ذاتية/تاريخية شائعة)",
+        "أصحاب العدل والتوحيد"
+      ],
+      "selfDesignation": [
+        "المعتزلة",
+        "أصحاب العدل والتوحيد"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "القرن الثاني الهجري",
+      "searchKeywords": [
+        "المعتزلة",
+        "المعتزلة — أصحاب العدل والتوحيد (تسمية ذاتية/تاريخية شائعة)",
+        "أصحاب العدل والتوحيد",
+        "المعتزلة",
+        "أصحاب العدل والتوحيد",
+        "وصف عرضي شائع: الاعتزال عن مجلس الحسن البصري في مرتكب الكبيرة والقول بالمنزلة بين المنزلتين — يحتاج مصدر مقالات"
+      ]
+    },
+    {
+      "id": "murjia",
+      "publicationStatus": "NEEDS_SOURCE",
+      "entityKind": "historical_sect",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "المرجئة (أهل الإرجاء)"
+      ],
+      "selfDesignation": [],
+      "externalDesignations": [
+        "المرجئة"
+      ],
+      "eraBucket": "القرن الأول الهجري",
+      "searchKeywords": [
+        "المرجئة",
+        "المرجئة (أهل الإرجاء)",
+        "المرجئة",
+        "التوقف عن الحكم على أصحاب الكبائر وإرجاء أمرهم إلى الله"
+      ]
+    },
+    {
+      "id": "jahmiyya",
+      "publicationStatus": "NEEDS_SOURCE",
+      "entityKind": "historical_sect",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "الجهمية — أتباع جهم بن صفوان"
+      ],
+      "selfDesignation": [],
+      "externalDesignations": [
+        "الجهمية"
+      ],
+      "eraBucket": "القرن الثاني الهجري",
+      "searchKeywords": [
+        "الجهمية",
+        "الجهمية — أتباع جهم بن صفوان",
+        "الجهمية",
+        "إفراط في التنزيه أفضى إلى تعطيل الصفات الإلهية ونفيها كلياً"
+      ]
+    },
+    {
+      "id": "sufiyya",
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "entityKind": "sufi_current",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "التصوف الإسلامي — الطريقة الصوفية",
+        "التصوف",
+        "أهل التصوف"
+      ],
+      "selfDesignation": [
+        "التصوف",
+        "أهل التصوف"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "القرن الثاني الهجري",
+      "searchKeywords": [
+        "التصوف الإسلامي",
+        "التصوف الإسلامي — الطريقة الصوفية",
+        "التصوف",
+        "أهل التصوف",
+        "التصوف",
+        "أهل التصوف",
+        "التركيز على الجانب الروحي والتزكوي في الإسلام والزهد في الدنيا"
+      ]
+    },
+    {
+      "id": "athariyya",
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "entityKind": "creedal_school",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "المدرسة الأثرية — أهل الحديث والسنة",
+        "أهل الحديث",
+        "الأثرية",
+        "أهل الأثر"
+      ],
+      "selfDesignation": [
+        "أهل الحديث",
+        "الأثرية",
+        "أهل الأثر"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "القرن الأول الهجري",
+      "searchKeywords": [
+        "الأثرية (أهل الحديث والأثر)",
+        "المدرسة الأثرية — أهل الحديث والسنة",
+        "أهل الحديث",
+        "الأثرية",
+        "أهل الأثر",
+        "أهل الحديث",
+        "الأثرية",
+        "أهل الأثر",
+        "التمسك بالكتاب والسنة وآثار السلف دون الخوض في الكلام أو التأويل"
+      ]
+    },
+    {
+      "id": "deobandiyya",
+      "publicationStatus": "NEEDS_SOURCE",
+      "entityKind": "reform_trend",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "الديوبندية — مدرسة دار العلوم ديوبند"
+      ],
+      "selfDesignation": [
+        "الديوبندية"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "القرن الثالث الهجري",
+      "searchKeywords": [
+        "الديوبندية",
+        "الديوبندية — مدرسة دار العلوم ديوبند",
+        "الديوبندية",
+        "إنقاذ الهوية الإسلامية في شبه القارة الهندية بعد سقوط المغول وتمدد الاستعمار البريطاني"
+      ]
+    },
+    {
+      "id": "barelwiyya",
+      "publicationStatus": "NEEDS_SOURCE",
+      "entityKind": "sufi_current",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "البريلوية — أهل السنة والجماعة الهندية",
+        "أهل السنة والجماعة (عند أتباعها في جنوب آسيا)"
+      ],
+      "selfDesignation": [
+        "أهل السنة والجماعة (عند أتباعها في جنوب آسيا)"
+      ],
+      "externalDesignations": [
+        "البريلوية"
+      ],
+      "eraBucket": "القرن الثالث الهجري",
+      "searchKeywords": [
+        "البريلوية",
+        "البريلوية — أهل السنة والجماعة الهندية",
+        "أهل السنة والجماعة (عند أتباعها في جنوب آسيا)",
+        "أهل السنة والجماعة (عند أتباعها في جنوب آسيا)",
+        "البريلوية",
+        "الدفاع عن تقاليد الصوفية السنية والرد على ما رأوه تشدداً عند الديوبندية في إنكار التعظيم"
+      ]
+    },
+    {
+      "id": "tabligh-jamaat",
+      "publicationStatus": "NEEDS_SOURCE",
+      "entityKind": "political_creedal_movement",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "جماعة التبليغ والدعوة — دعوة فردية إلى الإسلام",
+        "جماعة التبليغ"
+      ],
+      "selfDesignation": [
+        "جماعة التبليغ"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "القرن الرابع الهجري",
+      "searchKeywords": [
+        "جماعة التبليغ والدعوة",
+        "جماعة التبليغ والدعوة — دعوة فردية إلى الإسلام",
+        "جماعة التبليغ",
+        "جماعة التبليغ",
+        "استنهاض هِمَم المسلمين على الأساسيات الدينية عبر الجولات الدعوية الميدانية"
+      ]
+    },
+    {
+      "id": "ikhwan-muslimoon",
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "entityKind": "political_creedal_movement",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "جماعة الإخوان المسلمين — حركة إسلامية إصلاحية"
+      ],
+      "selfDesignation": [
+        "الإخوان المسلمون"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "القرن الرابع الهجري",
+      "searchKeywords": [
+        "الإخوان المسلمون",
+        "جماعة الإخوان المسلمين — حركة إسلامية إصلاحية",
+        "الإخوان المسلمون",
+        "مواجهة الغزو الثقافي الغربي وتحرير المسلمين من الاستعمار بإحياء الهوية الإسلامية"
+      ]
+    },
+    {
+      "id": "qadariyya",
+      "publicationStatus": "NEEDS_SOURCE",
+      "entityKind": "historical_sect",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "القدرية — أهل الإرادة الحرة الكاملة"
+      ],
+      "selfDesignation": [],
+      "externalDesignations": [
+        "القدرية"
+      ],
+      "eraBucket": "القرن الأول الهجري",
+      "searchKeywords": [
+        "القدرية",
+        "القدرية — أهل الإرادة الحرة الكاملة",
+        "القدرية",
+        "الاحتجاج بالعدل الإلهي ضد ما رأوه من جبر في فهم القدر"
+      ]
+    },
+    {
+      "id": "jabriyya",
+      "publicationStatus": "NEEDS_SOURCE",
+      "entityKind": "historical_sect",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "الجبرية — أهل الجبر المطلق"
+      ],
+      "selfDesignation": [],
+      "externalDesignations": [
+        "الجبرية"
+      ],
+      "eraBucket": "القرن الأول الهجري",
+      "searchKeywords": [
+        "الجبرية",
+        "الجبرية — أهل الجبر المطلق",
+        "الجبرية",
+        "التأكيد على ربوبية الله المطلقة حتى أفضى غلوهم إلى سلب العبد أي إرادة"
+      ]
+    },
+    {
+      "id": "karramiyya",
+      "publicationStatus": "NEEDS_SOURCE",
+      "entityKind": "historical_sect",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "الكرامية — أتباع ابن كرّام"
+      ],
+      "selfDesignation": [
+        "الكرامية"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "القرن الثالث الهجري",
+      "searchKeywords": [
+        "الكرامية",
+        "الكرامية — أتباع ابن كرّام",
+        "الكرامية",
+        "التبسيط العقدي في بيئة شعبية أفضى إلى تعبيرات توهم التشبيه"
+      ]
+    },
+    {
+      "id": "nusayriyya",
+      "publicationStatus": "NEEDS_SHARIA_REVIEW",
+      "entityKind": "independent_community",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "النصيريون — العلويون في سوريا",
+        "العلويون (تسمية معاصرة شائعة)",
+        "النصيريون"
+      ],
+      "selfDesignation": [
+        "العلويون (تسمية معاصرة شائعة)"
+      ],
+      "externalDesignations": [
+        "النصيريون"
+      ],
+      "eraBucket": "القرن الثالث الهجري",
+      "searchKeywords": [
+        "النصيريون (العلويون)",
+        "النصيريون — العلويون في سوريا",
+        "العلويون (تسمية معاصرة شائعة)",
+        "النصيريون",
+        "العلويون (تسمية معاصرة شائعة)",
+        "النصيريون",
+        "الغلو في تقديس علي بن أبي طالب إلى حد التأليه، وعقيدة باطنية سرية"
+      ]
+    },
+    {
+      "id": "shaykhi",
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "entityKind": "shi_i_branch",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "الشيخية — مدرسة شيعية إيرانية تقليدية"
+      ],
+      "selfDesignation": [
+        "الشيخية"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "القرن الثالث الهجري",
+      "searchKeywords": [
+        "الشيخية",
+        "الشيخية — مدرسة شيعية إيرانية تقليدية",
+        "الشيخية",
+        "محاولة التوفيق بين الفلسفة الإشراقية والعرفان والفقه الإمامي الاثني عشري"
+      ]
+    },
+    {
+      "id": "duruz",
+      "publicationStatus": "NEEDS_SHARIA_REVIEW",
+      "entityKind": "independent_community",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "الدروز — أهل التوحيد الدرزي",
+        "الموحّدون الدروز"
+      ],
+      "selfDesignation": [
+        "الموحّدون الدروز"
+      ],
+      "externalDesignations": [
+        "الدروز"
+      ],
+      "eraBucket": "القرن الأول الهجري",
+      "searchKeywords": [
+        "الدروز",
+        "الدروز — أهل التوحيد الدرزي",
+        "الموحّدون الدروز",
+        "الموحّدون الدروز",
+        "الدروز",
+        "انشقاق عن الإسماعيلية الفاطمية بادعاء ألوهية الخليفة الحاكم بأمر الله"
+      ]
+    },
+    {
+      "id": "ahmadiyya",
+      "publicationStatus": "NEEDS_SHARIA_REVIEW",
+      "entityKind": "independent_community",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "الأحمدية — الحركة القاديانية",
+        "الأحمدية",
+        "القاديانية"
+      ],
+      "selfDesignation": [
+        "الأحمدية"
+      ],
+      "externalDesignations": [
+        "القاديانية"
+      ],
+      "eraBucket": "القرن الثالث الهجري",
+      "searchKeywords": [
+        "الأحمدية (القاديانية)",
+        "الأحمدية — الحركة القاديانية",
+        "الأحمدية",
+        "القاديانية",
+        "الأحمدية",
+        "القاديانية",
+        "ادّعى ميرزا غلام أحمد النبوة والمهدية والمسيحية — مخالفاً ختم النبوة الثابت بإجماع الأمة"
+      ]
+    },
+    {
+      "id": "sabaiyya",
+      "publicationStatus": "CONFLICTING_SOURCES",
+      "entityKind": "historical_sect",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "السبئية — أوائل الغلاة من الشيعة التاريخيين",
+        "السبئية"
+      ],
+      "selfDesignation": [],
+      "externalDesignations": [
+        "السبئية"
+      ],
+      "eraBucket": "القرن الأول الهجري",
+      "searchKeywords": [
+        "السبئية والغلاة الأوائل",
+        "السبئية — أوائل الغلاة من الشيعة التاريخيين",
+        "السبئية",
+        "السبئية",
+        "الغلو في تقديس علي بن أبي طالب حتى نسب إليه الرجعة أو الخصائص الربانية"
+      ]
+    },
+    {
+      "id": "kullabiyya",
+      "publicationStatus": "NEEDS_SOURCE",
+      "entityKind": "kalam_school",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "الكلابية — أتباع محمد بن كُلّاب القطان"
+      ],
+      "selfDesignation": [
+        "الكلابية"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "القرن الثالث الهجري",
+      "searchKeywords": [
+        "الكلابية",
+        "الكلابية — أتباع محمد بن كُلّاب القطان",
+        "الكلابية",
+        "التوفيق بين عقيدة السلف وأدوات المتكلمين، في مرحلة ما قبل الأشعرية"
+      ]
+    },
+    {
+      "id": "islah-hadith",
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "entityKind": "reform_trend",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "التيار الإصلاحي التجديدي — القرن 19-20م",
+        "الإصلاح الإسلامي",
+        "التجديد"
+      ],
+      "selfDesignation": [
+        "الإصلاح الإسلامي",
+        "التجديد"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "حديث / معاصر",
+      "searchKeywords": [
+        "مدرسة الإصلاح الإسلامي",
+        "التيار الإصلاحي التجديدي — القرن 19-20م",
+        "الإصلاح الإسلامي",
+        "التجديد",
+        "الإصلاح الإسلامي",
+        "التجديد",
+        "مواجهة التخلف الحضاري ونقد الاستعمار الغربي وتجديد الخطاب الديني بالعودة إلى النصوص"
+      ]
+    },
+    {
+      "id": "falsafa-islamiyya",
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "entityKind": "philosophical_school",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "مدرسة الفلسفة الإسلامية — الفارابي وابن سينا",
+        "الفلاسفة"
+      ],
+      "selfDesignation": [],
+      "externalDesignations": [
+        "الفلاسفة"
+      ],
+      "eraBucket": "القرن الثالث الهجري",
+      "searchKeywords": [
+        "الفلاسفة الإسلاميون",
+        "مدرسة الفلسفة الإسلامية — الفارابي وابن سينا",
+        "الفلاسفة",
+        "الفلاسفة",
+        "التوفيق بين الفلسفة اليونانية (أرسطو وأفلاطون) والعقيدة الإسلامية"
+      ]
+    },
+    {
+      "id": "babiyya",
+      "publicationStatus": "NEEDS_SHARIA_REVIEW",
+      "entityKind": "independent_community",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "البابية — حركة دينية إيرانية انشقت عن الشيخية"
+      ],
+      "selfDesignation": [
+        "البابية"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "حديث / معاصر",
+      "searchKeywords": [
+        "البابية",
+        "البابية — حركة دينية إيرانية انشقت عن الشيخية",
+        "البابية",
+        "ادّعى أنه باب للإمام الغائب ثم رقّى ادعاءاته إلى النبوة والكشف الجديد مخالفاً ختم النبوة"
+      ]
+    },
+    {
+      "id": "mahdiyya-sudaniyya",
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "entityKind": "political_creedal_movement",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "المهدية السودانية — حركة سياسية دينية",
+        "الأنصار (لاحقاً)",
+        "المهدية"
+      ],
+      "selfDesignation": [
+        "الأنصار (لاحقاً)"
+      ],
+      "externalDesignations": [
+        "المهدية"
+      ],
+      "eraBucket": "حديث / معاصر",
+      "searchKeywords": [
+        "المهدية السودانية",
+        "المهدية السودانية — حركة سياسية دينية",
+        "الأنصار (لاحقاً)",
+        "المهدية",
+        "الأنصار (لاحقاً)",
+        "المهدية",
+        "مقاومة الاستعمار المصري-البريطاني مع ادعاء المهدية وتأسيس دولة دينية"
+      ]
+    },
+    {
+      "id": "baha-i",
+      "publicationStatus": "NEEDS_SHARIA_REVIEW",
+      "entityKind": "independent_community",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "الديانة البهائية — فرقة منشقة عن الإسلام"
+      ],
+      "selfDesignation": [
+        "البهائية"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "حديث / معاصر",
+      "searchKeywords": [
+        "البهائية",
+        "الديانة البهائية — فرقة منشقة عن الإسلام",
+        "البهائية",
+        "تشعّبت من البابية وتطوَّرت إلى دين مستقل بادعاء نبوة جديدة ووحي جديد"
+      ]
+    },
+    {
+      "id": "ansar-sunna",
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "entityKind": "reform_trend",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "جماعة أنصار السنة المحمدية — الحركة السلفية المصرية",
+        "أنصار السنة المحمدية"
+      ],
+      "selfDesignation": [
+        "أنصار السنة المحمدية"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "القرن الرابع الهجري",
+      "searchKeywords": [
+        "جماعة أنصار السنة المحمدية",
+        "جماعة أنصار السنة المحمدية — الحركة السلفية المصرية",
+        "أنصار السنة المحمدية",
+        "أنصار السنة المحمدية",
+        "محاربة البدع والخرافات ونشر السنة النبوية الصحيحة في مواجهة التصوف الطرقي المنتشر"
+      ]
+    },
+    {
+      "id": "maqasid-school",
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "entityKind": "fiqh_methodology",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "التيار المقاصدي المعاصر — فقه الأهداف والغايات",
+        "المقاصديون (وصف معاصر)"
+      ],
+      "selfDesignation": [
+        "المقاصديون (وصف معاصر)"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "حديث / معاصر",
+      "searchKeywords": [
+        "مدرسة المقاصد الشرعية",
+        "التيار المقاصدي المعاصر — فقه الأهداف والغايات",
+        "المقاصديون (وصف معاصر)",
+        "المقاصديون (وصف معاصر)",
+        "الحاجة إلى منهج فقهي يستوعب المستجدات بالنظر في مآلات الأحكام وأهداف الشريعة"
+      ]
+    },
+    {
+      "id": "ishraqiyya",
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "entityKind": "philosophical_school",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "الحكمة الإشراقية — فلسفة النور والتجلي",
+        "الإشراقية"
+      ],
+      "selfDesignation": [
+        "الإشراقية"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "القرن السادس الهجري",
+      "searchKeywords": [
+        "المدرسة الإشراقية",
+        "الحكمة الإشراقية — فلسفة النور والتجلي",
+        "الإشراقية",
+        "الإشراقية",
+        "التوفيق بين الفلسفة اليونانية والحكمة الفارسية القديمة والتصوف الإسلامي عبر مفهوم النور"
+      ]
+    },
+    {
+      "id": "wasatiyya",
+      "publicationStatus": "NEEDS_SOURCE",
+      "entityKind": "contemporary_trend",
+      "historicalStatus": "undocumented",
+      "alternateNames": [
+        "تيار الوسطية والاعتدال الإسلامي المعاصر",
+        "الوسطية"
+      ],
+      "selfDesignation": [
+        "الوسطية"
+      ],
+      "externalDesignations": [],
+      "eraBucket": "حديث / معاصر",
+      "searchKeywords": [
+        "تيار الوسطية الإسلامية",
+        "تيار الوسطية والاعتدال الإسلامي المعاصر",
+        "الوسطية",
+        "الوسطية",
+        "مواجهة التطرف من جهة والعلمانية الكاملة من جهة أخرى، والتمسك بالوسطية التي وصفها الله للأمة"
+      ]
+    }
+  ]
+}
