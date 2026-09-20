@@ -9,6 +9,7 @@ import { QURAN_TOPICS, searchQuranTopics, type QuranTopicSearchHit } from "@/lib
 import { ADHKAR_CATEGORIES, getAdhkarByCategory, type AdhkarItem } from "@/lib/adhkar-seed";
 import { FIQH_HUB_TOPICS, type FiqhHubTopic } from "@/lib/fiqh-hub-topics";
 import { truncateAtWord } from "@/lib/content-display-polish";
+import { resolveCanonicalAyahHref } from "@/lib/quran-navigation";
 
 export type TopicCategoryId =
   | "purification"
@@ -175,7 +176,7 @@ function quranHitsToEvidence(hits: QuranTopicSearchHit[]): TopicEvidenceItem[] {
       kind: "quran" as const,
       id: `${h.topicId}:${v.surah}:${v.ayah}`,
       title: h.title,
-      href: `/mushaf/${v.surah}?ayah=${v.ayah}`,
+      href: resolveCanonicalAyahHref(v.surah, v.ayah, "other"),
       snippet: `${v.surah}:${v.ayah}`,
       meta: h.topicId,
     })),

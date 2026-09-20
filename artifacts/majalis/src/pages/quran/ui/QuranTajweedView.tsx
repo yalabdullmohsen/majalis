@@ -14,13 +14,12 @@ import {
   getTajweedChapter,
 } from "@/lib/quran-tajweed/chapters";
 import { formatArabicNumber } from "@/lib/numerals";
-import { findMushafPageForAyah } from "@/features/mushaf-madinah/mushaf-page-for-ayah";
+import { resolveCanonicalAyahHref } from "@/lib/quran-navigation";
 import "@/styles/pages/tajweed.css";
 import { DashboardScreen } from "@/components/design-system/screens";
 
 function mushafHref(surah: number, ayah: number): string {
-  const page = findMushafPageForAyah(surah, ayah);
-  return `/mushaf?page=${page}&ayah=${surah}:${ayah}`;
+  return resolveCanonicalAyahHref(surah, ayah, "other");
 }
 
 export function TajweedChapterView() {

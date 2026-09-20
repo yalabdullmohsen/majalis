@@ -5,7 +5,6 @@ import {
   useMushafAyahPlayingKey,
   useMushafAyahSelectedKey,
 } from "@/features/mushaf-madinah/mushaf-ayah-sync-store";
-import { QURAN_NAV_HIGHLIGHT_HOLD_MS } from "@/lib/quran-navigation";
 
 type Props = {
   container: HTMLElement | null;
@@ -79,9 +78,7 @@ export const AyahSelectionOverlay = memo(function AyahSelectionOverlay({
   const [selected, setSelected] = useState<TextBand[]>([]);
   const [playing, setPlaying] = useState<TextBand[]>([]);
   const [navigation, setNavigation] = useState<TextBand[]>([]);
-  const [navFading, setNavFading] = useState(false);
   const rafRef = useRef<number | null>(null);
-  const navFadeTimer = useRef<number | null>(null);
 
   useLayoutEffect(() => {
     if (!container || !enabled) {
@@ -130,17 +127,6 @@ export const AyahSelectionOverlay = memo(function AyahSelectionOverlay({
   }, [container, enabled, playingKey, selectedKey, navigationKey]);
 
   useLayoutEffect(() => {
-    setNavFading(false);
-    if (navFadeTimer.current != null) window.clearTimeout(navFadeTimer.current);
-    if (!navigationKey) return;
-    /* ابدأ التلاشي قبل المسح النهائي من المضيف */
-    navFadeTimer.current = window.setTimeout(() => setNavFading(true), QURAN_NAV_HIGHLIGHT_HOLD_MS);
-    return () => {
-      if (navFadeTimer.current != null) window.clearTimeout(navFadeTimer.current);
-    };
-  }, [navigationKey]);
-
-  useLayoutEffect(() => {
     return () => {
       if (!container) clearTextMeasureCache();
     };
@@ -160,7 +146,7 @@ export const AyahSelectionOverlay = memo(function AyahSelectionOverlay({
       {navigation.map((b, i) => (
         <span
           key={`nav-${navigationKey}-${i}-${Math.round(b.left)}-${Math.round(b.top)}`}
-          className={`nm-ayah-sel__band nm-ayah-sel__band--navigation${navFading ? " is-fading" : ""}`}
+          className="nm-ayah-sel__band nm-ayah-sel__band--navigation"
           style={{ left: b.left, top: b.top, width: b.width, height: b.height }}
         />
       ))}

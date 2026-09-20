@@ -1,12 +1,16 @@
 /**
  * مسارات خارج الرئيسية — تحميل كسول. الرئيسية في App.tsx.
  */
-import { Suspense, type ComponentType } from "react";
-import { Redirect, Route, Switch, useParams } from "wouter";
+import { Suspense, useEffect, useMemo, type ComponentType } from "react";
+import { Redirect, Route, Switch, useParams, useSearch } from "wouter";
 import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
+import {
+  resolveLegacyMushafSurahRedirect,
+  stashPendingNavigationHighlight,
+} from "@/lib/quran-navigation";
 
 const lazy = lazyWithRetry;
 
@@ -246,6 +250,23 @@ const UniversitiesPage = lazy(() => import("@/views/UniversitiesPage"));
 const UniversityDetailPage = lazy(() => import("@/views/UniversityDetailPage"));
 const UniversitiesComparePage = lazy(() => import("@/views/UniversitiesComparePage"));
 const UniversitiesAdminPage = lazyWithRetry(() => import("@/views/admin/UniversitiesAdminPage"), "UniversitiesAdminPage");
+
+/** تحويل `/mushaf/:surah?ayah=` إلى العقد الموحّد مع stash للتحديد. */
+function LegacyMushafSurahRedirect({ surahParam }: { surahParam: string }) {
+  const search = useSearch();
+  const result = useMemo(
+    () => resolveLegacyMushafSurahRedirect(surahParam, search),
+    [surahParam, search],
+  );
+
+  useEffect(() => {
+    if (!result.pending) return;
+    stashPendingNavigationHighlight(result.pending);
+    window.dispatchEvent(new CustomEvent("ssunnah:quran-nav-pending"));
+  }, [result]);
+
+  return <Redirect to={result.href} />;
+}
 
 function SafeLazyRoute({ component: Component }: { component: ComponentType<any> }) {
   // useParams يُعيد params المسار الحالي (مثل { id } أو { slug })
@@ -524,13 +545,7 @@ export default function AppRoutes() {
       <Route path="/mushaf/page"><Redirect to="/mushaf" /></Route>
       <Route path="/mushaf/about-edition"><Redirect to="/mushaf?page=1" /></Route>
       <Route path="/mushaf/:surah">
-        {(params) => {
-          const raw = String(params.surah || "").trim();
-          if (/^\d+$/.test(raw)) {
-            return <Redirect to={`/mushaf?page=${raw}`} />;
-          }
-          return <Redirect to="/mushaf" />;
-        }}
+        {(params) => <LegacyMushafSurahRedirect surahParam={String(params.surah || "")} />}
       </Route>
       <Route path="/mushaf"><SafeLazyRoute component={MushafReaderPage} /></Route>
       <Route path="/quran/mushaf"><Redirect to="/mushaf" /></Route>

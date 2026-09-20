@@ -5,6 +5,7 @@
  */
 
 import { scrollActiveAyahIntoView } from "@/lib/quran-audio-resume";
+import { resolveCanonicalAyahHref } from "@/lib/quran-navigation";
 
 export type DeepLinkTargetKind = "ayah" | "matn" | "adhkar";
 
@@ -38,8 +39,11 @@ const HIGHLIGHT_CLASS = "majalis-deep-link-target";
 export function buildAyahDeepLink(surah: number, ayah: number, opts?: { useHash?: boolean }): string {
   const s = Math.max(1, Math.min(114, Math.floor(surah)));
   const a = Math.max(1, Math.floor(ayah));
-  if (opts?.useHash) return `/mushaf/${s}#ayah-${a}`;
-  return `/mushaf/${s}?ayah=${a}`;
+  const canonical = resolveCanonicalAyahHref(s, a, "deep-link");
+  if (opts?.useHash && canonical !== "/mushaf") {
+    return `${canonical}#ayah-${a}`;
+  }
+  return canonical;
 }
 
 /** Build a shareable path for a matn/article line anchor. */
