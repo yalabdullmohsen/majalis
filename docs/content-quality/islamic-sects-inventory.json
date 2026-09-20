@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-20T15:28:49.666Z",
+  "generatedAt": "2026-09-20T15:51:35.267Z",
   "policy": "no_ai_invention_no_memory_completion_no_auto_publish_human_review_required",
   "sourceOfTruthUi": "artifacts/majalis/src/data/islamic-sects.ts",
   "route": "/islamic-sects",

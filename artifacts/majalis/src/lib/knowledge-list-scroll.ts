@@ -5,6 +5,9 @@ export type KnowledgeListState = {
   search?: string;
   category?: string;
   status?: string;
+  entityKind?: string;
+  eraBucket?: string;
+  historicalStatus?: string;
   savedAt: number;
 };
 
