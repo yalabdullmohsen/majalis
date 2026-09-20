@@ -64,6 +64,16 @@ a.bottom-nav__tab,
   padding-block-end: calc(0.65rem + var(--inset-bottom));
 }
 
+@media (max-height: 430px) and (orientation: landscape) {
+  .app-sheet {
+    max-height: min(92svh, calc(100dvh - var(--inset-top, 0px) - var(--inset-bottom, 0px)));
+    border-radius: 14px 14px 0 0;
+  }
+  .app-sheet-overlay {
+    padding-block-end: max(8px, calc(8px + var(--inset-bottom) + var(--keyboard-inset)));
+  }
+}
+
 @media (prefers-reduced-transparency: reduce) {
   .bottom-nav,
   .bottom-nav--v2,
@@ -112,3 +122,45 @@ html.pts-immersive .app-main {
   padding-inline: 0;
   padding-block-end: 0;
 }
+
+/*
+ * Adaptive surfaces — مؤجّل مع ios-edge (خارج CSS الحرج).
+ * بطاقات/عناوين لا تُخرج النص ولا تدفع المستند أفقيًا.
+ */
+.hub-card,
+.section-entry-card,
+.soft-card,
+.lesson-unified-card,
+.info-card,
+.ds-card,
+.topic-card,
+.an-row,
+.tarikh-card,
+.notif-card,
+.settings-list__row,
+.settings-row,
+.mur-settings-row {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.hub-card__title,
+.section-entry-card__title,
+.lesson-unified-card__title,
+.info-card__title,
+.topic-card__title,
+.an-row__title,
+.tarikh-card__title,
+.notif-card__title,
+.settings-list__title,
+.settings-row__title,
+.mur-settings-row__title,
+.ds-card__title {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  text-wrap: pretty;
+  min-width: 0;
+  max-width: 100%;
+}
+

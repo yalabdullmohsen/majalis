@@ -1,17 +1,21 @@
 /**
- * سلّم نقاط التوقّف الموحّد — المصدر الوحيد للأبعاد.
- * آيفون: 320/375/390/430 · آيباد: 768/820/1024 · سطح المكتب: 1280/1440/1728
- * المصحف مستثنى (docs/MUSHAF_SPEC.md + layout-bands).
+ * سلّم نقاط التوقّف الموحّد — المصدر الوحيد للأبعاد (CSS حرج — أبقيه نحيفًا).
+ * قبول الموجة ١: 320/360/390/430/768/834/1024/1366 + أفق الجوال.
+ * أسطح البطاقات التكيّفية في ios-edge.css (مؤجّل) — لا تضخّم gzip الحرج.
+ * المصحف مستثنى من قيود الحاوية (docs/MUSHAF_SPEC.md + layout-bands).
  */
 :root {
   --bp-xs: 320px;
+  --bp-android-sm: 360px;
   --bp-sm: 375px;
   --bp-md: 390px;
   --bp-lg: 430px;
   --bp-tablet: 768px;
+  --bp-ipad-air: 834px;
   --bp-tablet-lg: 820px;
   --bp-desktop: 1024px;
   --bp-laptop: 1280px;
+  --bp-laptop-wide: 1366px;
   --bp-wide: 1440px;
   --bp-ultrawide: 1728px;
 
@@ -76,8 +80,10 @@ body {
 }
 
 .responsive-grid > * {
+  min-width: 0;
   min-height: 0;
   height: 100%;
+  max-width: 100%;
 }
 
 /* تمرير أفقي محكوم للجداول/الشرائح — بلا دفع للمستند */
@@ -118,6 +124,20 @@ body {
 
   .navbar-ticker-row {
     display: none;
+  }
+}
+
+/* آيباد Air / laptop-wide — توسيع مسار المحتوى */
+@media (min-width: 834px) {
+  :root {
+    --content-max-wide: min(52rem, 94vw);
+    --page-pad-x: max(1.25rem, var(--inset-left, 0px), var(--inset-right, 0px));
+  }
+}
+
+@media (min-width: 1366px) {
+  :root {
+    --content-max-wide: min(56rem, 92vw);
   }
 }
 
