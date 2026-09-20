@@ -3,7 +3,7 @@ import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { useSearch } from "wouter";
 import { DirectQaCard } from "./DirectQaCard";
 import {
-  Award, BookOpen, BookMarked, CheckCircle2, Compass, GraduationCap, Handshake, Heart, Languages, Library, Lightbulb, Map, MessageCircle, PenLine, RefreshCw, ScrollText, Moon, Search, Send, Sparkles, Star, Scale, Building2, Landmark, Gem, Trophy, User, Users, XCircle, Zap,
+  Award, BookOpen, BookMarked, CheckCircle2, Coins, Compass, Droplets, GraduationCap, Handshake, Heart, Languages, Library, Lightbulb, Map, MessageCircle, PenLine, RefreshCw, ScrollText, Moon, Search, Send, Sparkles, Star, Scale, Building2, Landmark, Gem, Trophy, User, Users, XCircle, Zap, Sunrise,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -15,6 +15,8 @@ import {
   type PointValue,
   type QuizQuestion,
 } from "@/data/islamicQuizData";
+import { buildPublishedLocalPools } from "@/data/quiz-bank/playable-pools";
+import { getPublishedQuestionCount } from "@/data/quiz-bank";
 import { getQuizQuestions, getLocalUsedQuizIds, markQuizQuestionUsed } from "@/lib/supabase";
 import { recordQuizAttempt } from "@/lib/quiz-performance-service";
 import { hapticNotify } from "@/lib/capacitor-utils";
@@ -41,6 +43,10 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
   compass: Compass,
   map: Map,
   "message-circle": MessageCircle,
+  droplets: Droplets,
+  "hands-praying": Heart,
+  coins: Coins,
+  sunrise: Sunrise,
 };
 
 function CategoryIcon({ name, size = 18 }: { name: string; size?: number }) {
@@ -403,11 +409,13 @@ function SetupPhase({
   onDaily,
   initialSelected = [],
   minCategories = 1,
+  publishedCount = 0,
 }: {
   onStart: (cats: string[], mode: GameMode, names: string[]) => void;
   onDaily: () => void;
   initialSelected?: string[];
   minCategories?: number;
+  publishedCount?: number;
 }) {
   const [playMode, setPlayMode] = useState<PlayMode>("solo");
   const [teamCount, setTeamCount] = useState<2 | 3 | 4>(2);
@@ -415,6 +423,7 @@ function SetupPhase({
   const [soloName, setSoloName] = useState("");
   const [selected, setSelected] = useState<string[]>(initialSelected);
   const [showTeam, setShowTeam] = useState(false);
+  const [questionCount, setQuestionCount] = useState<5 | 10 | 15>(10);
 
   const toggle = (id: string) =>
     setSelected((prev) =>
@@ -436,11 +445,11 @@ function SetupPhase({
   const resolveCats = (): string[] => {
     if (playMode === "random") {
       const shuffled = [...GAME_CATEGORIES].sort(() => Math.random() - 0.5);
-      return shuffled.slice(0, Math.min(8, shuffled.length)).map((c) => c.id);
+      return shuffled.slice(0, Math.min(questionCount, shuffled.length)).map((c) => c.id);
     }
     if (playMode === "quick") {
       const base = selected.length > 0 ? selected : GAME_CATEGORIES.map((c) => c.id);
-      return base.slice(0, Math.min(6, base.length));
+      return base.slice(0, Math.min(questionCount, base.length));
     }
     return selected;
   };
@@ -475,10 +484,16 @@ function SetupPhase({
         </div>
         <h1 className="qzg-setup__title">تحدي الأسئلة</h1>
         <p className="qzg-setup__sub">
-          اختبر معلوماتك الشرعية عبر مئات الأسئلة في عشرات الفئات.
+          اختبر معلوماتك في العلوم الشرعية واللغة العربية من خلال أسئلة متنوعة وموثقة.
         </p>
         <p className="qzg-setup__brand">تحدي سُنّة</p>
       </div>
+
+      <p className="qzg-daily-hint" role="status">
+        {publishedCount > 0
+          ? `أسئلة منشورة محليًا جاهزة للّعب: ${publishedCount}`
+          : "البنك المحلي قيد التوثيق — لا يُعرض للعامة إلا PUBLISHED بعد المراجعة البشرية. قد تُحمَّل أسئلة منشورة من الخادم."}
+      </p>
 
       <section className="qzg-section-card soft-card soft-card--on-light" aria-label="نمط التحدي">
         <h2 className="qzg-section-h2">اختر النمط</h2>
@@ -509,6 +524,26 @@ function SetupPhase({
           </button>
         ) : null}
       </section>
+
+      {playMode === "quick" || playMode === "random" ? (
+        <section className="qzg-section-card soft-card soft-card--on-light" aria-label="عدد الفئات">
+          <h2 className="qzg-section-h2">عدد الفئات في الجولة</h2>
+          <div className="qzg-play-modes" role="group" aria-label="عدد الفئات">
+            {([5, 10, 15] as const).map((n) => (
+              <button
+                key={n}
+                type="button"
+                aria-pressed={questionCount === n}
+                className={`qzg-play-mode${questionCount === n ? " qzg-play-mode--on" : ""}`}
+                onClick={() => setQuestionCount(n)}
+              >
+                <span className="qzg-play-mode__label">{n}</span>
+                <span className="qzg-play-mode__desc">فئات</span>
+              </button>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       {playMode === "daily" ? (
         <p className="qzg-daily-hint">سؤال واحد يتجدّد يوميًا لكل المستخدمين.</p>
@@ -973,8 +1008,9 @@ function WinnerPhase({ teams, mode, onReset }: { teams: Team[]; mode: GameMode; 
 
 export function IslamicQuizGame({ onDaily }: { onDaily?: () => void } = {}) {
   const [state, dispatch] = useReducer(reducer, initial);
-  const poolRef = useRef<Record<string, CategoryQuestions>>(ALL_QUESTIONS);
+  const poolRef = useRef<Record<string, CategoryQuestions>>(buildPublishedLocalPools());
   const persistedUsedIdsRef = useRef<Set<string>>(new Set());
+  const publishedCount = getPublishedQuestionCount();
 
   // وجهة روابط البحث: /quiz?qa=<id> تفتح سؤالاً محدَّداً مباشرةً قبل أي شيء آخر.
   const urlSearch = useSearch();
@@ -1029,9 +1065,11 @@ export function IslamicQuizGame({ onDaily }: { onDaily?: () => void } = {}) {
   }, [state.phase, state.passedToTeamId]);
 
   useEffect(() => {
+    const base = buildPublishedLocalPools();
+    poolRef.current = base;
     getQuizQuestions().then(({ data }) => {
       if (data && data.length > 0) {
-        poolRef.current = mergeSupabaseQuestions(data);
+        poolRef.current = mergeSupabaseQuestions(data, base);
       }
     });
     persistedUsedIdsRef.current = getLocalUsedQuizIds();
@@ -1085,6 +1123,7 @@ export function IslamicQuizGame({ onDaily }: { onDaily?: () => void } = {}) {
             onDaily={handleDaily}
             initialSelected={catsFromUrl}
             minCategories={catsFromUrl.length > 0 ? 1 : 1}
+            publishedCount={publishedCount}
           />
         )}
         {state.phase === "board" && (

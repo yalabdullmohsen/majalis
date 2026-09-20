@@ -759,8 +759,8 @@ const SECTION_TO_CATEGORY: Record<string, string> = {
   "الفقه": "fiqh",
   "الفقه الإسلامي": "fiqh",
   "الأحكام": "fiqh",
-  "الفرائض والمواريث": "faraid",
-  "الفرائض": "faraid",
+  "الفرائض والمواريث": "fiqh",
+  "الفرائض": "fiqh",
   "الحج": "hajj",
   "الحج والعمرة": "hajj",
   "أصول الفقه": "usul_fiqh",
@@ -769,14 +769,14 @@ const SECTION_TO_CATEGORY: Record<string, string> = {
   "العقيدة الإسلامية": "aqeeda",
   "العقيدة والأخلاق": "aqeeda",
   "التوحيد": "tawhid",
-  "أسماء الله الحسنى": "asma",
-  "الأسماء الحسنى": "asma",
+  "أسماء الله الحسنى": "aqeeda",
+  "الأسماء الحسنى": "aqeeda",
   // ── التاريخ الإسلامي (→ tarikh) ──────────────────────────────────
   "التاريخ الإسلامي": "tarikh",
   "الأندلس": "tarikh",
   "الخلفاء": "tarikh",
-  "العلماء": "ulama",
-  "علماء الإسلام": "ulama",
+  "العلماء": "tarikh",
+  "علماء الإسلام": "tarikh",
   "المعارك": "tarikh",
   "الفتوحات": "tarikh",
   "الفتوحات الإسلامية": "tarikh",
@@ -790,10 +790,10 @@ const SECTION_TO_CATEGORY: Record<string, string> = {
   "الأخلاق الإسلامية": "akhlaq",
   "الأخلاق والآداب": "akhlaq",
   "الأخلاق والرقائق": "akhlaq",
-  "الآداب": "adab",
-  "الآداب الشرعية": "adab",
-  "الآداب الإسلامية": "adab",
-  "العلماء والأئمة": "ulama",
+  "الآداب": "akhlaq",
+  "الآداب الشرعية": "akhlaq",
+  "الآداب الإسلامية": "akhlaq",
+  "العلماء والأئمة": "tarikh",
   // ── الأذكار والأدعية ──────────────────────────────────
   "الأذكار": "adhkar",
   "الأذكار والأدعية": "adhkar",
@@ -803,7 +803,7 @@ const SECTION_TO_CATEGORY: Record<string, string> = {
   "النحو": "nahw",
   "الصرف": "sarf",
   "البلاغة": "balagha",
-  "الأدب العربي": "adab_ar",
+  "الأدب العربي": "arabic",
   "المعجم الشرعي": "glossary",
   // ── الرقائق والزهد (→ akhlaq) ────────────────────────────────────
   "الرقائق": "akhlaq",
@@ -844,10 +844,15 @@ type SupabaseQuizRow = {
 
 export function mergeSupabaseQuestions(
   rows: SupabaseQuizRow[],
+  basePool: Record<string, CategoryQuestions> = ALL_QUESTIONS,
 ): Record<string, CategoryQuestions> {
   const merged: Record<string, CategoryQuestions> = {};
-  for (const [cat, levels] of Object.entries(ALL_QUESTIONS)) {
+  for (const [cat, levels] of Object.entries(basePool)) {
     merged[cat] = { 200: [...levels[200]], 400: [...levels[400]], 600: [...levels[600]] };
+  }
+  // ضمان وجود أغلفة لكل فئة معرّفة حتى لو القاعدة فارغة
+  for (const cat of QUIZ_CATEGORY_DEFS) {
+    if (!merged[cat.id]) merged[cat.id] = { 200: [], 400: [], 600: [] };
   }
 
   const existingIds = new Set(

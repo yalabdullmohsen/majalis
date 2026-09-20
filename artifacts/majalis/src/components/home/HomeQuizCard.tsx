@@ -5,7 +5,8 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { fetchHomeQuizStats, type HomeQuizStats } from "@/lib/quiz-performance-service";
-import { getDailyChallenge, totalQuestionBankSize, type DailyChallengeQuestion } from "@/lib/quiz-daily-challenge";
+import { getDailyChallenge, type DailyChallengeQuestion } from "@/lib/quiz-daily-challenge";
+import { getPublishedQuestionCount } from "@/data/quiz-bank";
 import { GAME_CATEGORIES } from "@/data/islamicQuizData";
 
 /**
@@ -36,7 +37,7 @@ export function HomeQuizCard() {
     return () => { cancelled = true; };
   }, [authLoading, isLoggedIn]);
 
-  const totalQuestions = totalQuestionBankSize();
+  const publishedLocal = getPublishedQuestionCount();
 
   return (
     <section className="ds-quiz-home-card" dir="rtl" aria-label="تحدي الأسئلة"
@@ -46,8 +47,10 @@ export function HomeQuizCard() {
           <span className="ds-quiz-home-card__badge">تحدي سُنّة</span>
           <h2 className="ds-quiz-home-card__title">تحدي الأسئلة</h2>
           <p className="ds-quiz-home-card__desc">
-            اختبر معلوماتك الشرعية عبر مئات الأسئلة في عشرات الفئات — {totalQuestions}+ سؤالًا
-            عبر {GAME_CATEGORIES.length} فئة.
+            اختبر معلوماتك في العلوم الشرعية واللغة العربية من خلال أسئلة متنوعة وموثقة
+            {publishedLocal > 0
+              ? ` — ${publishedLocal} سؤالًا منشورًا عبر ${GAME_CATEGORIES.length} فئة.`
+              : "."}
           </p>
           <Link href="/quiz" className="ds-quiz-home-card__btn">ابدأ التحدي</Link>
         </div>

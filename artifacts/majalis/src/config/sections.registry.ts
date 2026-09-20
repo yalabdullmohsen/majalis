@@ -1072,7 +1072,7 @@ const SECTION_SEEDS: SectionSeed[] = [
     id: "qa",
     label: "تحدي الأسئلة",
     navLabel: "تحدي الأسئلة",
-    subtitle: "اختبر معلوماتك الشرعية في عشرات الفئات",
+    subtitle: "أسئلة شرعية ولغوية موثقة بعد المراجعة",
     route: "/quiz",
     icon: MessageCircleQuestion,
     group: "learning",

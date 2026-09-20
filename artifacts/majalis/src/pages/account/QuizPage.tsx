@@ -14,7 +14,7 @@ export default function QuizPage() {
     applyPageSeo({
       path: "/quiz",
       title: "تحدي الأسئلة | سُنّة",
-      description: "اختبر معلوماتك الشرعية عبر مئات الأسئلة في عشرات الفئات — تحدي سُنّة.",
+      description: "اختبر معلوماتك في العلوم الشرعية واللغة العربية من خلال أسئلة متنوعة وموثقة.",
       keywords: ["تحدي الأسئلة", "تحدي سُنّة", "مسابقة إسلامية", "اختبار معلومات", "أسئلة شرعية"],
       jsonLd: [
         {
@@ -22,7 +22,7 @@ export default function QuizPage() {
           "@type": "Quiz",
           name: "تحدي الأسئلة",
           url: "https://www.ssunnah.com/quiz",
-          description: "اختبر معلوماتك الشرعية عبر مئات الأسئلة في عشرات الفئات",
+          description: "اختبر معلوماتك في العلوم الشرعية واللغة العربية من خلال أسئلة متنوعة وموثقة",
           educationalLevel: "متعدد المستويات",
           inLanguage: "ar",
           provider: { "@type": "Organization", name: "سُنّة", url: "https://www.ssunnah.com" },
@@ -35,7 +35,7 @@ export default function QuizPage() {
     <SectionTemplatePage
       route="/quiz"
       title="تحدي الأسئلة"
-      subtitle="اختبر معلوماتك الشرعية عبر مئات الأسئلة في عشرات الفئات."
+      subtitle="اختبر معلوماتك في العلوم الشرعية واللغة العربية من خلال أسئلة متنوعة وموثقة."
       eyebrow="تحدي سُنّة"
       groupTitle=""
     >
