@@ -22,13 +22,11 @@
   border: 1px solid color-mix(in srgb, var(--mj-brand, #146b52) 14%, var(--mj-hairline, #d9d3c8));
   border-radius: var(--radius-card, 24px);
   padding: 1rem 1.1rem;
-  border-inline-start: 3px solid color-mix(in srgb, var(--mj-brand, #146b52) 55%, transparent);
   box-shadow: none;
   color: var(--color-text, var(--mj-ink));
 }
 
 .dii-block--accent {
-  border-inline-start-color: var(--mj-brand, #146b52);
   background: color-mix(in srgb, var(--mj-brand, #146b52) 9%, var(--color-surface, var(--mj-surface)));
 }
 
@@ -38,7 +36,6 @@
 }
 
 .dii-block--evidence {
-  border-inline-start-color: var(--mj-brand-deep, #0b3d2e);
 }
 
 .dii-block .page-tag {

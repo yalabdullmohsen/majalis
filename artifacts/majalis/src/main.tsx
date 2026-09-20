@@ -125,6 +125,8 @@ function loadNonCriticalCss() {
       void import("./styles/visual-identity-unify.css");
       // إعادة طبقة الاسترداد الليلي آخرًا حتى تفوز على final-release
       void import("./styles/dark-mode-recovery.css");
+      // كنس الشريط الزخرفي بعد الطبقات المتأخرة
+      void import("./styles/card-decorative-strip-cleanup.css");
     });
   });
   void import("./styles/components/instant-interaction.css");

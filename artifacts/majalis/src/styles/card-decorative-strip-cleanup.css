@@ -29,7 +29,7 @@
 .lesson-card:not(.lesson-card--legacy-ok):not([data-scripture]),
 .kuwait-lesson-card,
 .hadith-card:not([data-scripture]),
-.hadith-hub-card,
+.hadith-hub-card:not(.hadith-hub-card--sahih):not(.hadith-hub-card--daif):not(.hadith-hub-card--mawdu):not(.hadith-hub-card--arbaeen),
 .hdl-card,
 .fiqh-book-card,
 .fiqh-category-card,
@@ -146,3 +146,13 @@
 }
 
 /* استثناءات وظيفية موثّقة في البوابة: blockquote / kx-block--definition / mushaf / status strips */
+
+/* بطاقات الحالة الوظيفية — لا تُسطَّح هنا */
+.hadith-hub-card--sahih,
+.hadith-hub-card--daif,
+.hadith-hub-card--mawdu,
+.hadith-hub-card--arbaeen,
+.cat-node[data-status],
+[data-status-strip="1"] {
+  /* التعريف في ملفات الحالة */
+}

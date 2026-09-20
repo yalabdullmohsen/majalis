@@ -164,7 +164,6 @@ html.dark {
 .hlr__card,
 .page-card,
 .ss-state-card {
-  /* Green Surface System — لا بطاقات بيضاء/بيج قديمة */
   background: var(--surface-feature, var(--surface)) !important;
   border: 1px solid var(--surface-feature-border, color-mix(in srgb, var(--border) 80%, transparent)) !important;
   border-radius: var(--radius-card) !important;
@@ -757,7 +756,6 @@ html[data-theme="dark"] .hlr__card,
 html.dark .hlr__card {
   background: var(--surface-feature, var(--surface)) !important;
   border-color: var(--surface-feature-border, color-mix(in srgb, var(--border) 85%, transparent)) !important;
-  border-inline-start-color: var(--surface-feature-accent, var(--primary)) !important;
   color: var(--surface-feature-ink, var(--text)) !important;
 }
 

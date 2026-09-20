@@ -156,7 +156,6 @@
 .occasion-evidence {
   font-size: 0.875rem;
   color: var(--text-secondary, var(--mj-ink-2, var(--mj-ink-2)));
-  border-inline-start: 3px solid var(--mj-brand, #1e5f4b);
   padding-inline-start: 0.7rem;
   margin: 0;
   line-height: var(--lh-type-prose, 1.75);

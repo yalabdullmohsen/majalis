@@ -489,7 +489,6 @@
   margin-bottom: 1rem;
   font-size: 0.8125rem;
   color: var(--mj-muted);
-  border-inline-start: 3px solid var(--fiqh-accent, var(--mj-brand-deep));
 }
 
 .fiqh-research-disclaimer-inline {
@@ -771,7 +770,6 @@
   gap: 0;
   position: relative;
   padding-inline-start: 1.5rem;
-  border-inline-start: 2px solid rgba(22, 78, 60, 0.15);
 }
 
 .fiqh-timeline-event {
@@ -1014,6 +1012,5 @@
 }
 
 .search-result-row--fiqh {
-  border-inline-start: 3px solid var(--emerald, var(--mj-brand));
 }
 

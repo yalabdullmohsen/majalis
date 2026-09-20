@@ -104,14 +104,12 @@
   margin-bottom: 0;
 }
 
-/* تعريف: شريط جانبي بدون صندوق ثقيل */
+/* تعريف: سطح خفيف بلا شريط جانبي زخرفي */
 .kx-block--definition {
-  background: transparent;
-  border: none;
-  border-inline-start: 3px solid var(--kx-brand);
-  border-radius: 0;
-  padding-inline: 0.95rem 0.15rem;
-  padding-block: 0.15rem 0.35rem;
+  background: color-mix(in srgb, var(--kx-brand) 6%, var(--kx-surface, var(--mj-surface, #fff)));
+  border: 1px solid color-mix(in srgb, var(--kx-brand) 16%, transparent);
+  border-radius: var(--radius-card, 24px);
+  padding: 0.75rem 0.95rem;
 }
 
 .kx-block--definition .kx-block__title {
@@ -162,8 +160,7 @@
 .kx-block--evidence {
   background: color-mix(in srgb, var(--mj-accent, #b8963f) 8%, var(--kx-surface));
   border: 1px solid color-mix(in srgb, var(--mj-accent, #b8963f) 22%, transparent);
-  border-inline-start-width: 3px;
-  border-inline-start-color: var(--mj-accent, #b8963f);
+  border-inline-start-width: 1px;
 }
 
 .kx-block--evidence .kx-block__body {
@@ -206,8 +203,7 @@
 .kx-block--warning {
   background: color-mix(in srgb, #b45309 8%, var(--kx-surface));
   border: 1px solid color-mix(in srgb, #b45309 28%, transparent);
-  border-inline-start-width: 3px;
-  border-inline-start-color: #b45309;
+  border-inline-start-width: 1px;
 }
 
 .kx-block--warning .kx-block__label,
@@ -309,7 +305,6 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  border-inline-start: 2px solid color-mix(in srgb, var(--kx-brand) 28%, transparent);
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
@@ -546,7 +541,6 @@
 }
 
 .fiqh-lux-lesson[data-kx="1"] .fiqh-lux-section[data-kx-kind="definition"] {
-  border-inline-start: 3px solid var(--kx-brand);
   padding-inline-start: 0.85rem;
   border-block-end: none;
 }
@@ -564,7 +558,6 @@
   border-radius: 14px;
   padding: 0.75rem 0.9rem;
   border-block-end: none;
-  border-inline-start: 3px solid #b45309;
 }
 
 .fiqh-lux-lesson[data-kx="1"] .fiqh-lux-section[data-kx-kind="ruling"] {
@@ -617,7 +610,6 @@
 
 html.dark .kx-block--definition,
 html[data-theme="dark"] .kx-block--definition {
-  border-inline-start-color: var(--mj-brand, #5cc095);
 }
 
 html.dark .kx-library-card,
@@ -777,7 +769,6 @@ html.chrome-immersive [data-global-back-control-host] {
 /* —— تنويع كتل data-kx-kind خارج الفقه —— */
 [data-kx-kind="definition"],
 .kx-block--definition {
-  border-inline-start: 3px solid var(--kx-brand, #1f6b56);
   padding-inline-start: 0.75rem;
 }
 
@@ -798,7 +789,6 @@ html.chrome-immersive [data-global-back-control-host] {
 
 [data-kx-kind="warning"] {
   background: color-mix(in srgb, #b45309 8%, transparent);
-  border-inline-start: 3px solid #b45309;
   border-radius: 14px;
   padding: 0.7rem 0.85rem;
 }
@@ -845,8 +835,7 @@ html.chrome-immersive [data-global-back-control-host] {
 .rsc--notes {
   background: color-mix(in srgb, #b45309 8%, var(--rsc-bg, #fffcf7));
   border-color: color-mix(in srgb, #b45309 26%, transparent);
-  border-inline-start-width: 3px;
-  border-inline-start-color: #b45309;
+  border-inline-start-width: 1px;
   box-shadow: none;
 }
 .rsc--outcomes,
@@ -863,7 +852,6 @@ html.chrome-immersive [data-global-back-control-host] {
 .rsc--timeline {
   background: transparent;
   border: none;
-  border-inline-start: 2px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 30%, transparent);
   border-radius: 0;
   box-shadow: none;
   padding-inline-start: 1rem;
@@ -872,7 +860,6 @@ html.chrome-immersive [data-global-back-control-host] {
   box-shadow: none;
   border-radius: 0;
   border: none;
-  border-inline-start: 3px solid var(--mj-brand, #1f6b56);
   background: transparent;
   padding-inline: 0.95rem 0.15rem;
 }

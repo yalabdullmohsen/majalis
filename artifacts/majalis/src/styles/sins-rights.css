@@ -875,7 +875,6 @@ html[data-theme="dark"] .snr-detail-short-desc { color: #D6D5CE !important; }
 /* ── الأدلة ── */
 .snr-evidence-item {
   border-radius: var(--elite-r-sm, 8px);
-  border-inline-start: 3px solid rgba(24,54,42,0.25);
   padding: 0.875rem 1rem;
   margin-bottom: 0.75rem;
   background: rgba(24,54,42,0.03);

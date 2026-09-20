@@ -438,7 +438,6 @@ html.dark .sect-hub__chip.is-active,
   max-width: var(--sect-read-max);
   border-radius: var(--radius-card, 18px);
   border: 1px solid color-mix(in srgb, var(--mj-brand) 18%, transparent);
-  border-inline-start: 3px solid color-mix(in srgb, var(--mj-brand-deep, #12362c) 70%, var(--mj-brand));
   background: color-mix(in srgb, var(--mj-brand) 7%, var(--ss-card-bg, var(--mj-surface)));
   color: var(--color-text, var(--mj-ink));
   font-size: 0.92rem;

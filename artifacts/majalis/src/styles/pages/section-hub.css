@@ -301,7 +301,6 @@
 
 .section-hub__topic-body {
   padding-inline-start: 0.65rem;
-  border-inline-start: 3px solid color-mix(in srgb, var(--card-accent, var(--sh-accent)) 45%, transparent);
 }
 
 .section-hub__empty {

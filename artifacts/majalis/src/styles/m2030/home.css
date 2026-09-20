@@ -508,7 +508,7 @@ html.dark .m2030-feature__title {
   padding: 0.85rem;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-inline-start: 3px solid var(--brand);
+  border-radius: var(--radius-card, 24px);
 }
 
 .m2030-customize {

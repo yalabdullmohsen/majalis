@@ -1,5 +1,5 @@
 /**
- * بوابة: هيرو الأقسام بطاقة داخل الهامش — بلا شريط أخضر ممتد ولا عمود جانبي (SVL PR-3).
+ * بوابة: هيرو الأقسام بطاقة داخل الهامش — بلا شريط أخضر زخرفي ولا امتداد بعرض الشاشة (SVL).
  * node --import tsx src/lib/__tests__/full-bleed-page-hero.test.ts
  */
 import assert from "node:assert/strict";
@@ -21,9 +21,10 @@ assert.match(heroCss, /max-width:\s*min\(56rem/);
 assert.match(heroCss, /background-image:\s*none/);
 assert.doesNotMatch(
   heroCss,
-  /border-inline-start:\s*[34]px\s+solid/,
-  "ممنوع عمود أخضر جانبي على هيرو الأقسام",
+  /border-inline-start:\s*[2345]px\s+solid/,
+  "لا شريط جانبي زخرفي على هيرو الأقسام",
 );
+assert.match(heroCss, /border:\s*1px\s+solid/);
 assert.match(heroCss, /border-inline-start-width:\s*1px/);
 assert.match(heroCss, /--mss-hero-gradient|--mss-hero-from|--mss-section-hero-bg/);
 
