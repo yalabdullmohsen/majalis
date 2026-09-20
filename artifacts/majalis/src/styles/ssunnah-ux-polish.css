@@ -776,10 +776,15 @@ p,
 
 .navbar-v3,
 .top-section-bar,
-.compact-section-header,
-.topic-page__crumb {
+.compact-section-header {
   min-height: 2.75rem;
   box-sizing: border-box;
+}
+
+.topic-page__crumb {
+  min-height: 0;
+  box-sizing: border-box;
+  background: transparent;
 }
 
 .bottom-nav,

@@ -97,7 +97,7 @@ html.dark {
   --color-border: var(--border);
   --color-text: var(--text);
   --color-muted: var(--text-muted);
-  --color-selected: color-mix(in srgb, #5fbf98 28%, #1b2421);
+  --color-selected: var(--state-current-bg, color-mix(in srgb, #5fbf98 12%, #1b2421));
   --shadow-soft: var(--shadow);
 
   --mj-chip-bg: #222c28;
@@ -471,17 +471,30 @@ html.dark .lessons-page-v2 .filter-chips__chip.is-active {
 }
 
 .sidebar-item.active,
-.sidebar-item.is-active,
-.sidebar-item[aria-current="page"] {
-  background: var(--color-selected) !important;
-  color: var(--mj-brand-deep, var(--primary)) !important;
-  border: 1px solid color-mix(in srgb, var(--primary) 28%, transparent) !important;
+.sidebar-item.is-active {
+  background: var(--state-selected-bg, var(--mj-chip-active-bg, var(--primary))) !important;
+  color: var(--state-selected-fg, var(--mj-chip-active-fg, #06231a)) !important;
+  border: 1px solid var(--state-selected-border, color-mix(in srgb, var(--primary) 28%, transparent)) !important;
   box-shadow: none !important;
 }
 
+.sidebar-item[aria-current="page"] {
+  background: var(--state-current-bg, var(--color-selected)) !important;
+  color: var(--state-current-fg, var(--mj-brand-deep, var(--primary))) !important;
+  border: 1px solid var(--state-current-border, color-mix(in srgb, var(--primary) 22%, transparent)) !important;
+  box-shadow: inset -3px 0 0 var(--state-current-indicator, var(--primary)) !important;
+}
+
 html[data-theme="dark"] .sidebar-item.active,
-html.dark .sidebar-item.active {
-  color: var(--text) !important;
+html.dark .sidebar-item.active,
+html[data-theme="dark"] .sidebar-item.is-active,
+html.dark .sidebar-item.is-active {
+  color: var(--state-selected-fg, #06231a) !important;
+}
+
+html[data-theme="dark"] .sidebar-item[aria-current="page"],
+html.dark .sidebar-item[aria-current="page"] {
+  color: var(--state-current-fg, #b8e0cc) !important;
 }
 
 .sidebar-item-title {

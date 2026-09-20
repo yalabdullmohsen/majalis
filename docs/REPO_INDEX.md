@@ -51,6 +51,7 @@
 - لا `framer-motion` (بوابة `test:native-feel`).
 - ازدواج `@types/react` web/mobile معروف؛ `skipLibCheck`؛ لا «تصلح» بحذف UI.
 - مسار المصحف الغمري: `isImmersiveChromePath` يخفي الشرائط العامة.
+- حالات تفاعل ليلي: `src/styles/interaction-states.css` (DEFAULT/HOVER/ACTIVE/FOCUS_VISIBLE/SELECTED/CURRENT/HIGHLIGHTED/VISITED + `::selection` + breadcrumbs).
 
 ## Workflows (مختصر)
 
