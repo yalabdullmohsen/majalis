@@ -5,27 +5,29 @@
  */
 
 :root {
-  /* ── Color tokens (أسماء المواصفة → جسر إلى هوية سُنّة) ── */
-  --svl-background-primary: var(--mj-bg, var(--ds-background, #f7f4ee));
-  --svl-background-secondary: var(--mj-surface-2, var(--ds-backgroundSubtle, #f4f1ea));
-  --svl-surface-primary: var(--mj-surface, var(--ds-surface, #fffcf7));
-  --svl-surface-elevated: var(--mj-surface, var(--ds-surfaceElevated, #fffcf7));
-  --svl-surface-section: color-mix(in srgb, var(--mj-brand, #146b52) 3.5%, var(--svl-background-primary));
-  --svl-surface-accent-soft: color-mix(in srgb, var(--mj-brand, #146b52) 7%, var(--svl-surface-primary));
+  /* ── Visual Refresh v1 — Premium Islamic (Emerald · Ivory · Soft Gold) ── */
+  --svl-background-primary: var(--mj-bg, var(--ds-background, #f3efe6));
+  --svl-background-secondary: var(--mj-surface-2, #ebe6db);
+  --svl-surface-primary: #fffcf6;
+  --svl-surface-elevated: #ffffff;
+  --svl-surface-section: color-mix(in srgb, var(--mj-brand, #0f5c45) 5%, var(--svl-background-primary));
+  --svl-surface-accent-soft: color-mix(in srgb, var(--mj-brand, #0f5c45) 9%, var(--svl-surface-primary));
+  --svl-surface-layered: color-mix(in srgb, #fff9f0 82%, #0f5c45 4%);
 
-  --svl-text-primary: var(--mj-ink, var(--ds-textPrimary, #16241e));
-  --svl-text-secondary: var(--mj-ink-2, var(--ds-textSecondary, #3d4f47));
-  --svl-text-muted: var(--mj-muted, var(--ds-textMuted, #5e6e67));
+  --svl-text-primary: var(--mj-ink, #12201a);
+  --svl-text-secondary: var(--mj-ink-2, #2f4038);
+  --svl-text-muted: var(--mj-muted, #4a5c54);
 
-  --svl-border-subtle: color-mix(in srgb, var(--mj-hairline, #d9d3c8) 70%, transparent);
-  --svl-border-strong: var(--mj-hairline, #d9d3c8);
+  --svl-border-subtle: color-mix(in srgb, #cfc6b6 78%, transparent);
+  --svl-border-strong: #c4baa8;
 
-  --svl-accent-primary: var(--mj-brand, #146b52);
-  --svl-accent-primary-deep: var(--mj-brand-deep, #0d4a39);
-  --svl-accent-gold: var(--mj-accent, #b08a3e);
+  --svl-accent-primary: var(--mj-brand, #0f5c45);
+  --svl-accent-primary-deep: var(--mj-brand-deep, #0a3d2e);
+  --svl-accent-gold: var(--mj-accent, #a8843a);
+  --svl-accent-gold-soft: #c4a35a;
 
-  --svl-success: var(--mj-brand, #146b52);
-  --svl-warning: var(--mj-accent, #b08a3e);
+  --svl-success: #0d4a39;
+  --svl-warning: var(--mj-accent, #a8843a);
   --svl-error: var(--mj-danger, #b54a4a);
 
   /* ── Spacing scale (4px · XS…XL) — مصدر واحد للإيقاع ── */
@@ -54,9 +56,15 @@
   --svl-radius-lg: var(--radius-sheet, 28px);
   --svl-radius-pill: 999px;
 
-  /* ── Depth (خفيف — حد أو ظل، لا الاثنين بثقل) ── */
-  --svl-shadow-card: 0 6px 18px -14px color-mix(in srgb, var(--mj-brand-deep, #0a3d2e) 22%, transparent);
-  --svl-shadow-elevated: 0 14px 36px -18px color-mix(in srgb, #0a1210 35%, transparent);
+  /* ── Depth — Elevation إلزامي للبطاقات (لا flat بالكامل) ── */
+  --svl-shadow-card:
+    0 1px 0 color-mix(in srgb, #ffffff 70%, transparent),
+    0 8px 22px -14px color-mix(in srgb, var(--mj-brand-deep, #0a3d2e) 28%, transparent);
+  --svl-shadow-elevated:
+    0 1px 0 color-mix(in srgb, #ffffff 55%, transparent),
+    0 16px 40px -18px color-mix(in srgb, #0a1210 38%, transparent);
+  --svl-shadow-hero:
+    0 12px 36px -16px color-mix(in srgb, #0a3d2e 42%, transparent);
 
   /* ── Typography scale (جسر إلى reading-prose / --ss-type) ── */
   --svl-type-display: var(--type-title-xl, clamp(1.75rem, 4.5vw, 2.15rem));
@@ -89,23 +97,32 @@
 
 html.dark,
 html[data-theme="dark"] {
-  --svl-background-primary: var(--mj-bg, #131a18);
-  --svl-background-secondary: var(--mj-surface-2, #222d29);
-  --svl-surface-primary: var(--mj-surface, #1b2421);
-  --svl-surface-elevated: var(--mj-surface, #222d29);
-  --svl-surface-section: color-mix(in srgb, #1a4a3a 12%, #131a18);
-  --svl-surface-accent-soft: color-mix(in srgb, #1f5a46 16%, #1b2421);
-  --svl-text-primary: var(--mj-ink, #f3efe6);
-  --svl-text-secondary: var(--mj-ink-2, #d8d0c4);
-  --svl-text-muted: var(--mj-muted, #c5d0cb);
-  --svl-border-subtle: color-mix(in srgb, #35443f 70%, transparent);
-  --svl-border-strong: #35443f;
+  /* Dark Luxury — Deep Emerald Night */
+  --svl-background-primary: #0e1613;
+  --svl-background-secondary: #15201c;
+  --svl-surface-primary: #17221e;
+  --svl-surface-elevated: #1e2b26;
+  --svl-surface-section: color-mix(in srgb, #1a4a3a 18%, #0e1613);
+  --svl-surface-accent-soft: color-mix(in srgb, #1f5a46 22%, #17221e);
+  --svl-surface-layered: color-mix(in srgb, #1a4a3a 14%, #121c18);
+  --svl-text-primary: #f4f1ea;
+  --svl-text-secondary: #d2ddd7;
+  --svl-text-muted: #b7c6bf;
+  --svl-border-subtle: color-mix(in srgb, #3d524a 72%, transparent);
+  --svl-border-strong: #3d524a;
   --svl-accent-primary: #5fbf98;
-  --svl-accent-primary-deep: #6fd0a8;
-  --svl-motif-opacity: 0.08;
-  --svl-pattern-opacity: 0.04;
-  --svl-shadow-card: 0 6px 18px -14px rgba(0, 0, 0, 0.45);
-  --svl-shadow-elevated: 0 16px 40px -16px rgba(0, 0, 0, 0.55);
+  --svl-accent-primary-deep: #7dceb0;
+  --svl-accent-gold: #c4a35a;
+  --svl-accent-gold-soft: #d4b56e;
+  --svl-motif-opacity: 0.1;
+  --svl-pattern-opacity: 0.05;
+  --svl-shadow-card:
+    0 1px 0 color-mix(in srgb, #ffffff 6%, transparent),
+    0 10px 28px -14px rgba(0, 0, 0, 0.55);
+  --svl-shadow-elevated:
+    0 1px 0 color-mix(in srgb, #ffffff 8%, transparent),
+    0 18px 44px -16px rgba(0, 0, 0, 0.62);
+  --svl-shadow-hero: 0 14px 40px -14px rgba(0, 0, 0, 0.65);
 }
 
 /* ── Surface layers ── */
@@ -131,7 +148,7 @@ html[data-theme="dark"] {
   border-radius: var(--svl-radius-md);
   border-inline-start-width: 1px;
   border-inline-start-color: var(--svl-border-subtle);
-  box-shadow: none;
+  box-shadow: var(--svl-shadow-card);
 }
 
 .svl-card-surface--elevated {

@@ -37,9 +37,11 @@ export function HomeHeroLcp() {
 
   return (
     <PageHero
-      className="m2030-hero home-page-hero home-page-hero--eyebrow-ready home-page-hero--actions-ready"
+      className="m2030-hero home-page-hero home-page-hero--eyebrow-ready home-page-hero--actions-ready home-welcome-premium sgs-hero-geometry"
       fullBleed={false}
       withPattern={false}
+      withCornerMotif={true}
+      withOrnament={true}
       showBack={false}
       eyebrow={greeting}
       title="سُنّة"

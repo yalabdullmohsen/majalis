@@ -107,16 +107,17 @@ export function QuranOpenMushafCard() {
 
   return (
     <article
-      className="quran-open-mushaf"
+      className="quran-open-mushaf sgs-card-geometry"
       dir="rtl"
       data-quran-open-mushaf="1"
+      data-sgs="card"
       aria-label={`المصحف — ${info.resumeLine}`}
     >
       <div className="quran-open-mushaf__accent" aria-hidden="true" />
 
       <div className="quran-open-mushaf__body">
         <div className="quran-open-mushaf__icon" aria-hidden="true">
-          <BookOpen size={18} strokeWidth={1.9} />
+          <BookOpen size={22} strokeWidth={1.9} />
         </div>
         <div className="quran-open-mushaf__text">
           <h2 className="quran-open-mushaf__title">فتح المصحف</h2>
