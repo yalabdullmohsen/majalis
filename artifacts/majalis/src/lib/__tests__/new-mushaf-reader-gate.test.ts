@@ -46,6 +46,13 @@ assert.match(verse, /word\.glyphText/);
 assert.match(verse, /nm-ayah-mark/);
 assert.match(verse, /is-selected/);
 assert.match(verse, /is-playing/);
+assert.match(verse, /charType === "end"/);
+assert.match(
+  verse,
+  /\/\* كلمات المتن: عرض فقط|if \(!isEnd\)/,
+  "ضغط رقم الآية فقط — كلمات المتن بلا زر",
+);
+assert.match(verse, /data-testid="mushaf-ayah-hit"/);
 
 assert.match(pageView, /AyahSelectionOverlay/);
 assert.match(pageView, /onPageNumberPress/);
