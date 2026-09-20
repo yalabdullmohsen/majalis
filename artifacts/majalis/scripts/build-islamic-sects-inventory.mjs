@@ -21,6 +21,10 @@ const taxonomyPath = path.join(
   repoRoot,
   "docs/content-quality/islamic-sects-taxonomy.json",
 );
+const decisionsPath = path.join(
+  repoRoot,
+  "docs/content-quality/islamic-sects-human-decisions.json",
+);
 
 const PUBLICATION_STATES = new Set([
   "DRAFT",
@@ -35,6 +39,45 @@ const PUBLICATION_STATES = new Set([
   "PUBLISHED",
   "REJECTED",
 ]);
+
+const SHARIA_BLOCKER_FLAGS = new Set([
+  "needs_sharia_specialist",
+  "collective_takfir_in_app_voice",
+  "collective_takfir",
+]);
+
+const APPROVING = new Set(["APPROVED", "APPROVED_WITH_CORRECTION"]);
+
+function resolvePublicationStatus({
+  overlayStatus,
+  decision,
+  hasSource,
+  licenseStatus,
+  shariaReviewStatus,
+  inventoryFlags,
+}) {
+  if (overlayStatus === "PUBLISHED") {
+    throw new Error("overlay must not set PUBLISHED");
+  }
+  if (!decision) return overlayStatus;
+  if (decision.decision === "REJECTED") return "REJECTED";
+  if (decision.decision === "NEEDS_MORE_EVIDENCE") {
+    return overlayStatus === "DRAFT" ? "NEEDS_SOURCE" : overlayStatus;
+  }
+  if (!APPROVING.has(decision.decision)) return overlayStatus;
+
+  const flags = inventoryFlags || [];
+  const shariaBlocker =
+    flags.some((f) => SHARIA_BLOCKER_FLAGS.has(f)) &&
+    !decision.shariaSpecialistCleared;
+  const blocked =
+    !hasSource ||
+    licenseStatus === "blocked" ||
+    shariaReviewStatus === "NEEDS_SHARIA_REVIEW" ||
+    shariaReviewStatus === "CONFLICTING_SOURCES" ||
+    shariaBlocker;
+  return blocked ? "HUMAN_REVIEWED" : "PUBLISHED";
+}
 
 /** طبقات مراجعة يدوية لكل id — لا تُنشئ محتوى علميًا جديدًا */
 const REVIEW_OVERLAY = {
@@ -663,7 +706,7 @@ function mapUiStatus(label) {
   return "undocumented";
 }
 
-function buildRecord(sect) {
+function buildRecord(sect, decisionsById) {
   const overlay = REVIEW_OVERLAY[sect.id];
   if (!overlay) {
     throw new Error(`Missing REVIEW_OVERLAY for ${sect.id}`);
@@ -692,6 +735,34 @@ function buildRecord(sect) {
     ),
   ];
 
+  const primarySources = [];
+  const secondarySources = sect.keyBooks;
+  const hasSource =
+    primarySources.length > 0 || secondarySources.length > 0;
+  const decision = decisionsById.get(sect.id) || null;
+  const licenseStatus = "unknown";
+  const publicationStatus = resolvePublicationStatus({
+    overlayStatus: overlay.publicationStatus,
+    decision,
+    hasSource,
+    licenseStatus,
+    shariaReviewStatus: overlay.shariaReviewStatus,
+    inventoryFlags: overlay.inventoryFlags,
+  });
+
+  // لا يُسمح بـ PUBLISHED بلا قرار موافق + مصدر
+  if (publicationStatus === "PUBLISHED") {
+    if (!decision || !APPROVING.has(decision.decision)) {
+      throw new Error(`PUBLISHED without approving human decision: ${sect.id}`);
+    }
+    if (!hasSource) {
+      throw new Error(`PUBLISHED without sources: ${sect.id}`);
+    }
+    if (!decision.reviewer || !decision.reviewedAt) {
+      throw new Error(`PUBLISHED missing reviewer/reviewedAt: ${sect.id}`);
+    }
+  }
+
   return {
     id: sect.id,
     slug: sect.id,
@@ -715,19 +786,20 @@ function buildRecord(sect) {
     internalBranches: [],
     geographicSpreadHistorical: null,
     geographicSpreadCurrent: sect.spread || null,
-    primarySources: [],
-    secondarySources: sect.keyBooks,
+    primarySources,
+    secondarySources,
     attributedCritiques: [],
     quotations: sect.quote ? [sect.quote] : [],
     sourceReferences: [],
     sourceUrls: [],
-    licenseStatus: "unknown",
+    licenseStatus,
     factualReviewStatus: overlay.factualReviewStatus,
     shariaReviewStatus: overlay.shariaReviewStatus,
     languageReviewStatus: overlay.languageReviewStatus,
-    reviewer: null,
-    reviewedAt: null,
-    publicationStatus: overlay.publicationStatus,
+    reviewer: decision?.reviewer ?? null,
+    reviewedAt: decision?.reviewedAt ?? null,
+    humanDecision: decision?.decision ?? null,
+    publicationStatus,
     uiSource: {
       file: "artifacts/majalis/src/data/islamic-sects.ts",
       era: sect.era,
@@ -764,20 +836,30 @@ function deriveEraBucket(era) {
 
 function main() {
   const taxonomy = JSON.parse(fs.readFileSync(taxonomyPath, "utf8"));
+  const decisionsDoc = JSON.parse(fs.readFileSync(decisionsPath, "utf8"));
+  if (!decisionsDoc.policy?.includes("human_only_publish")) {
+    throw new Error("human decisions policy missing human_only_publish");
+  }
+  const decisionsById = new Map();
+  for (const d of decisionsDoc.decisions || []) {
+    if (!d?.id || !d?.decision) throw new Error("invalid human decision entry");
+    if (decisionsById.has(d.id)) {
+      throw new Error(`duplicate human decision for ${d.id}`);
+    }
+    decisionsById.set(d.id, d);
+  }
+
   const pageSrc = fs.readFileSync(pagePath, "utf8");
   const sects = parseSects(pageSrc);
   if (sects.length < 1) throw new Error("No sects parsed");
 
-  const records = sects.map(buildRecord);
+  const records = sects.map((s) => buildRecord(s, decisionsById));
   const slugs = new Set();
   for (const r of records) {
     if (slugs.has(r.slug)) throw new Error(`Duplicate slug ${r.slug}`);
     slugs.add(r.slug);
     if (!taxonomy.entityKinds.some((k) => k.id === r.entityKind)) {
       throw new Error(`Unknown entityKind ${r.entityKind} for ${r.id}`);
-    }
-    if (r.publicationStatus === "PUBLISHED") {
-      throw new Error(`PUBLISHED forbidden in automated build for ${r.id}`);
     }
   }
 
@@ -790,6 +872,8 @@ function main() {
     policy:
       "no_ai_invention_no_memory_completion_no_auto_publish_human_review_required",
     sourceOfTruthUi: "artifacts/majalis/src/data/islamic-sects.ts",
+    humanDecisionsRef:
+      "docs/content-quality/islamic-sects-human-decisions.json",
     route: "/islamic-sects",
     recordCount: records.length,
     publishedCount,
