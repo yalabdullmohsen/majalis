@@ -1,5 +1,5 @@
 /**
- * بوابة تصحيح المرجع: زهرة الآية + ضفيرة الفاتحة + كارتوش مضغوط + ورق هادئ.
+ * بوابة تصحيح المرجع: زهرة الآية + كارتوش مضغوط + ورق هادئ — بلا قوس فاتحة.
  * تشغيل: node --import tsx src/lib/__tests__/mushaf-reference-rosette-correction-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -28,10 +28,9 @@ assert.match(css, /SunnahVerseRosette/);
 assert.match(css, /\.nm-ayah-mark[\s\S]*?clip-path:\s*polygon/);
 assert.doesNotMatch(css, /\.nm-ayah-mark[\s\S]*?50% 2%/);
 
-assert.match(page, /SunnahFatihaBraidedMedallion/);
-assert.match(css, /SunnahFatihaBraidedMedallion|ضفيرة هندسية/);
-assert.doesNotMatch(css, /\.nm-page__fatiha-medallion[\s\S]*?conic-gradient/);
-assert.match(css, /\.nm-page__fatiha-medallion[\s\S]*?repeating-linear-gradient/);
+assert.doesNotMatch(page, /SunnahFatihaBraidedMedallion|nm-page__fatiha-medallion/);
+assert.doesNotMatch(css, /\.nm-page__fatiha-medallion\s*\{/);
+assert.match(readFileSync(resolve(root, "src/styles/reader-page-chrome.css"), "utf8"), /Content Driven Layout/);
 
 assert.match(banner, /SunnahSurahCartoucheCompact/);
 assert.match(css, /\.nm-surah-banner[\s\S]*?width:\s*fit-content/);

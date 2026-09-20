@@ -52,8 +52,8 @@ export function computePageSlots(pageNumber, chapters, raw) {
     let bannerSlot;
     let basmalaSlot = null;
     if (isOpening) {
-      bannerSlot = 3;
-      if (chapter.bismillah_pre) basmalaSlot = 4;
+      bannerSlot = 1;
+      if (chapter.bismillah_pre) basmalaSlot = 2;
     } else {
       bannerSlot = Math.max(1, prevUsed + 1);
       basmalaSlot = chapter.bismillah_pre ? bannerSlot + 1 : null;
@@ -64,7 +64,7 @@ export function computePageSlots(pageNumber, chapters, raw) {
   }
 
   if (isOpening) {
-    const startSlot = [...slots.keys()].includes(4) ? 5 : 4;
+    const startSlot = [...slots.keys()].includes(2) ? 3 : 2;
     usedLines.forEach((ln, i) => {
       slots.set(startSlot + i, { kind: "line", lineNumber: ln });
     });

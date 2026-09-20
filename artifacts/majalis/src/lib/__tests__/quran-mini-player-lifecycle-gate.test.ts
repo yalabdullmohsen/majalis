@@ -61,7 +61,7 @@ assert.match(ayah, /ayah-actions-close/);
 assert.match(ayah, /mm-ayah-bar__close/);
 assert.match(chrome, /mm-settings-sheet \.quran-sheet__close/);
 assert.match(chrome, /ayah-action-sheet\.is-collapsed/);
-assert.match(chrome, /nm-page__fatiha-medallion/);
+assert.doesNotMatch(chrome, /nm-page__fatiha-medallion/);
 assert.match(chrome, /max-height:\s*min\(42dvh/);
 assert.match(dock, /quran-audio-chrome\.css/);
 
