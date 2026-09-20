@@ -105,6 +105,28 @@ body.app-sheet-open .app-sheet-overlay--elevated .app-sheet-overlay__scrim {
   background: var(--mj-surface, var(--surface, #fff));
 }
 
+/* أفق قصير: الشيت لا يغطي الشاشة بالكامل ولا يُقص خلف Home Indicator */
+@media (max-height: 430px) and (orientation: landscape) {
+  .app-sheet-overlay {
+    padding-block-end: max(8px, var(--inset-bottom, 0px));
+    align-items: stretch;
+  }
+  .app-sheet,
+  .app-sheet--half,
+  .app-sheet--full,
+  .app-sheet--auto,
+  .update-available-sheet.app-sheet--auto,
+  .update-available-sheet {
+    max-height: min(92svh, calc(100dvh - var(--inset-top, 0px) - var(--inset-bottom, 0px)));
+    border-radius: 14px 14px 0 0;
+  }
+  .app-sheet__body {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 /* شيت التحديث: ارتفاع حسب المحتوى بلا فراغ أبيض */
 .update-available-sheet.app-sheet--auto,
 .update-available-sheet {
