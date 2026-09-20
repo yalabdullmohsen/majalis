@@ -138,13 +138,27 @@ html.dark .sect-hub__chip.is-active,
   box-sizing: border-box;
 }
 
+/* iPad Portrait / عرض متوسط: عمودان */
 @media (min-width: 720px) {
   .sect-hub__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  /* البطاقة المفتوحة تأخذ العرض الكامل للقراءة */
+  /* بقايا توسعة قديمة — إن وُجدت تأخذ العرض الكامل */
   .sect-hub__grid > .sect-card.is-open {
     grid-column: 1 / -1;
+  }
+}
+
+/* iPad Landscape / سطح مكتب عريض: ثلاثة أعمدة دون Overflow */
+@media (min-width: 1024px) and (orientation: landscape) {
+  .sect-hub__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1100px) and (orientation: portrait) {
+  .sect-hub__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -634,4 +648,35 @@ html.dark .sect-card__cta,
 html.dark .sect-hub__empty,
 [data-theme="dark"] .sect-hub__empty {
   color: var(--mj-ink-2, #c5d2cb);
+}
+
+html.dark .sect-hub__note,
+[data-theme="dark"] .sect-hub__note {
+  background: color-mix(in srgb, var(--mj-accent, #c4a35a) 14%, #15201c);
+  border-color: color-mix(in srgb, var(--mj-accent, #c4a35a) 40%, var(--mj-hairline));
+  color: var(--mj-ink, #eef4f0);
+}
+
+html.dark .sect-hub__search,
+[data-theme="dark"] .sect-hub__search {
+  background: var(--ss-card-bg, #15201c);
+  border-color: color-mix(in srgb, var(--mj-brand) 28%, var(--mj-hairline));
+  color: var(--mj-ink, #eef4f0);
+}
+
+html.dark .sect-hub__results,
+[data-theme="dark"] .sect-hub__results,
+html.dark .sect-hub__filter-label,
+[data-theme="dark"] .sect-hub__filter-label {
+  color: var(--mj-muted, #9bb0a6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sect-hub__chip,
+  .sect-card,
+  .sect-card__toggle,
+  .sect-related__link {
+    transition: none !important;
+    animation: none !important;
+  }
 }

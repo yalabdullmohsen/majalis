@@ -215,9 +215,89 @@
   );
 }
 
+html.dark .kx-summary-card,
+[data-theme="dark"] .kx-summary-card {
+  background: var(--ss-card-bg, var(--mj-surface, #15201c));
+  border-color: color-mix(in srgb, var(--mj-brand) 28%, var(--mj-hairline, #2a3a34));
+  box-shadow: none;
+}
+
+html.dark .kx-summary-card__title,
+[data-theme="dark"] .kx-summary-card__title {
+  color: var(--mj-ink, #eef4f0);
+}
+
+html.dark .kx-summary-card__summary,
+[data-theme="dark"] .kx-summary-card__summary {
+  color: var(--mj-ink-2, #c5d2cb);
+}
+
+html.dark .kx-summary-card__cta,
+[data-theme="dark"] .kx-summary-card__cta {
+  color: color-mix(in srgb, var(--mj-brand, #5fbf98) 75%, #eef4f0);
+}
+
+html.dark .kx-summary-card__icon,
+[data-theme="dark"] .kx-summary-card__icon {
+  background: color-mix(in srgb, var(--mj-brand) 18%, #15201c);
+  color: color-mix(in srgb, var(--mj-brand, #5fbf98) 80%, #eef4f0);
+}
+
 html.dark .kx-summary-card__pill,
 [data-theme="dark"] .kx-summary-card__pill {
   background: color-mix(in srgb, var(--mj-brand) 22%, transparent);
   color: var(--on-dark-strong, #e8f5ef);
   border-color: color-mix(in srgb, var(--mj-brand) 35%, transparent);
+}
+
+html.dark .kx-summary-card__pill--muted,
+[data-theme="dark"] .kx-summary-card__pill--muted {
+  background: color-mix(in srgb, var(--mj-muted, #9bb0a6) 18%, transparent);
+  color: var(--mj-ink-2, #c5d2cb);
+  border-color: color-mix(in srgb, var(--mj-muted, #9bb0a6) 28%, transparent);
+}
+
+html.dark .kx-summary-card__pill--review,
+[data-theme="dark"] .kx-summary-card__pill--review {
+  background: color-mix(in srgb, var(--mj-accent, #c4a35a) 18%, transparent);
+  color: var(--mj-ink, #eef4f0);
+  border-color: color-mix(in srgb, var(--mj-accent, #c4a35a) 40%, transparent);
+}
+
+html.dark .kx-detail-surface .rsc,
+[data-theme="dark"] .kx-detail-surface .rsc {
+  border-color: color-mix(in srgb, var(--mj-brand) 24%, var(--mj-hairline, #2a3a34));
+  background: transparent;
+}
+
+html.dark .kx-detail-meta__row dt,
+[data-theme="dark"] .kx-detail-meta__row dt {
+  color: var(--mj-muted, #9bb0a6);
+}
+
+html.dark .kx-detail-meta__row dd,
+[data-theme="dark"] .kx-detail-meta__row dd,
+html.dark .kx-detail-quote,
+[data-theme="dark"] .kx-detail-quote {
+  color: var(--mj-ink, #eef4f0);
+}
+
+/* iPad Landscape: عرض قراءة مريح دون تمدد مفرط */
+@media (min-width: 1024px) and (orientation: landscape) {
+  .kx-detail-surface {
+    max-width: min(42rem, 100%);
+  }
+
+  .kx-detail-surface .rsc__prose {
+    max-width: min(38rem, 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kx-summary-card,
+  .kx-summary-card__link,
+  .kx-detail-surface {
+    transition: none !important;
+    animation: none !important;
+  }
 }
