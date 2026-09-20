@@ -246,6 +246,11 @@ function ProphetCard({
   const accent = prophetAccent(prophet.slug);
   const sup = SUPPLEMENT[prophet.slug];
   const isUlulAzm = ULUL_AZM_SLUGS.includes(prophet.slug);
+  const trait = prophet.keyAttributes?.[0]
+    ? truncateAtWord(prophet.keyAttributes[0], 28)
+    : prophet.peopleOrPlace
+      ? truncateAtWord(prophet.peopleOrPlace, 28)
+      : null;
 
   return (
     <div
@@ -274,24 +279,16 @@ function ProphetCard({
           <span className="prophet-lux-card__pbuh"> عليه السلام</span>
         </h3>
         <p className="prophet-lux-card__title">{prophet.title}</p>
-        <p className="prophet-lux-card__bio">{truncateAtWord(prophet.briefBio, 90)}</p>
+        <p className="prophet-lux-card__bio">{truncateAtWord(prophet.briefBio, 36)}</p>
 
         <div className="prophet-lux-card__chips" aria-label="بيانات ثانوية">
-          {prophet.peopleOrPlace ? (
-            <span className="prophet-lux-card__chip">{prophet.peopleOrPlace}</span>
-          ) : null}
-          {prophet.quranTitle ? (
-            <span className="prophet-lux-card__chip prophet-lux-card__chip--quran">
-              ﴿ {prophet.quranTitle} ﴾
-            </span>
+          {trait ? (
+            <span className="prophet-lux-card__chip">{trait}</span>
           ) : null}
           {sup ? (
             <span className="prophet-lux-card__chip prophet-lux-card__chip--stat">
               ذُكر {sup.mentioned} مرة
             </span>
-          ) : null}
-          {sup?.book ? (
-            <span className="prophet-lux-card__chip prophet-lux-card__chip--book">{sup.book}</span>
           ) : null}
           {isUlulAzm ? (
             <span className="prophet-lux-card__chip prophet-lux-card__chip--azm">أولو العزم</span>
@@ -1230,6 +1227,7 @@ export default function ProphetStoriesPage({
     <SectionTemplatePage
       route="/prophets"
       className="topic-page--prophets"
+      layoutIntegrity="prophets-v1"
       title="الأنبياء والرسل"
       subtitle={`أحسن القصص — ${PROPHETS.length} نبيًا مذكورًا في القرآن · خمسة من أولي العزم`}
       eyebrow="القصص والأعلام"
@@ -1338,7 +1336,7 @@ export default function ProphetStoriesPage({
                         <div className="prophets-seerah-bridge__eyebrow">عرض تفاعلي</div>
                         <h3 className="prophets-seerah-bridge__title">شجرة أنساب الأنبياء</h3>
                         <p className="prophets-seerah-bridge__desc">
-                          شاهد صلة النسب بين الأنبياء عليهم السلام من آدم إلى محمد ﷺ في شجرة تفاعلية واحدة.
+                          صلة النسب من آدم إلى محمد ﷺ في شجرة تفاعلية واحدة.
                         </p>
                       </div>
                       <div className="prophets-seerah-bridge__arrow" aria-hidden="true">←</div>
@@ -1346,21 +1344,40 @@ export default function ProphetStoriesPage({
                   </Link>
                 )}
                 {!search && (
-                  <Link href="/seerah" className="prophets-seerah-link">
-                    <div className="prophets-seerah-bridge">
-                      <div className="prophets-seerah-bridge__ornament" aria-hidden="true">
-                        <IslamicStar size={28} color={IVORY} opacity={0.7} />
-                      </div>
-                      <div className="prophets-seerah-bridge__body">
-                        <div className="prophets-seerah-bridge__eyebrow">التسلسل التاريخي · الفصل الأخير</div>
-                        <h3 className="prophets-seerah-bridge__title">بداية السيرة النبوية الشريفة</h3>
-                        <p className="prophets-seerah-bridge__desc">
-                          امتداداً لرسالة الأنبياء، وُلد خاتم النبيين محمد ﷺ، اقرأ سيرته من النسب إلى الرسالة والهجرة والفتح.
-                        </p>
-                      </div>
-                      <div className="prophets-seerah-bridge__arrow" aria-hidden="true">←</div>
-                    </div>
-                  </Link>
+                  <section className="prophets-seerah-brief" aria-labelledby="prophets-seerah-brief-title">
+                    <h2 id="prophets-seerah-brief-title" className="prophets-seerah-brief__title">
+                      السيرة النبوية المختصرة
+                    </h2>
+                    <p className="prophets-seerah-brief__lead">
+                      محطات مختارة من حياة خاتم النبيين ﷺ — للتفاصيل الكاملة انتقل إلى قسم السيرة.
+                    </p>
+                    <ol className="prophets-seerah-timeline">
+                      {[
+                        ["عام الفيل", "سنة ولادة النبي ﷺ في مكة."],
+                        ["المولد", "وُلد محمد بن عبد الله ﷺ في مكة المكرمة."],
+                        ["البعثة", "نزول الوحي في غار حراء وبدء الرسالة."],
+                        ["الدعوة", "دعوة سرّية ثم جهرية في مكة."],
+                        ["الهجرة", "الهجرة إلى المدينة وبداية المجتمع المسلم."],
+                        ["بدر", "أول نصر عظيم للمسلمين."],
+                        ["الحديبية", "صلح فتح به الله أبواب الدعوة."],
+                        ["فتح مكة", "دخول مكة بلا قتال وإتمام النعمة."],
+                        ["حجة الوداع", "خطبة جامعة وأداء مناسك الحج."],
+                        ["الوفاة", "انتقال النبي ﷺ إلى الرفيق الأعلى."],
+                      ].map(([title, line]) => (
+                        <li key={title} className="prophets-seerah-timeline__item">
+                          <span className="prophets-seerah-timeline__dot" aria-hidden="true" />
+                          <div className="prophets-seerah-timeline__body">
+                            <strong className="prophets-seerah-timeline__name">{title}</strong>
+                            <p className="prophets-seerah-timeline__line">{line}</p>
+                          </div>
+                        </li>
+                      ))}
+                    </ol>
+                    <Link href="/seerah" className="prophets-seerah-full-cta">
+                      <span className="prophets-seerah-full-cta__label">اقرأ السيرة النبوية الكاملة</span>
+                      <span className="prophets-seerah-full-cta__hint" aria-hidden="true">←</span>
+                    </Link>
+                  </section>
                 )}
               </>
             )}

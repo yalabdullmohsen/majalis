@@ -1978,11 +1978,11 @@ html.dark .prophets-page-lead {
 .topic-page.topic-page--prophets {
   width: 100%;
   max-width: none;
-  min-height: 100dvh;
-  min-height: 100svh;
+  min-height: 0;
   margin: 0;
   border-radius: 0;
-  overflow: clip;
+  /* clip السابق كان يقصّ الهيرو والـsticky ويُظهر إطارًا معلقًا */
+  overflow: visible;
   background: var(--ps-canvas, var(--mj-bg, var(--mj-surface)));
   padding-bottom: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px);
   box-sizing: border-box;
@@ -1995,18 +1995,16 @@ html.dark .prophets-page-lead {
   max-width: none;
 }
 
+/* Full-bleed hero — لا بطاقة عائمة ولا فراغ أبيض علوي */
 .topic-page.topic-page--prophets .topic-page__hero,
 .topic-page.topic-page--prophets .topic-page__hero-inner,
 .topic-page.topic-page--prophets [data-section-hero] {
-  width: auto;
+  width: 100%;
   max-width: none;
-  margin: 0.35rem max(0.75rem, var(--page-gutter, 1rem)) 0.65rem;
-  border-radius: var(--radius-card, 24px);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 14px 36px rgba(11, 32, 24, 0.14);
-  overflow: hidden;
-  /* إلغاء تكديس padding المزدوج (topic-page__hero + safe-hero) */
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
   padding: 0.85rem max(1rem, var(--page-gutter, 1rem)) 0.95rem;
 }
 
@@ -2693,11 +2691,11 @@ html[data-theme="dark"] .prophets-lux-page [class*="card"] {
 }
 
 .prophet-lux-card {
-  /* ~+20% مساحة مقروءة عن الجيل السابق */
-  padding-block: 1.45rem 3.35rem;
-  padding-inline: 1.35rem;
-  min-height: 16.2rem;
-  gap: 0.35rem;
+  /* بطاقة موحّدة مختصرة — بلا فراغ سفلي ضخم */
+  padding-block: 1.1rem 2.75rem;
+  padding-inline: 1.15rem;
+  min-height: 12.5rem;
+  gap: 0.3rem;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.5),
     0 14px 32px -16px rgba(11, 32, 24, 0.22);
@@ -2723,13 +2721,16 @@ html[data-theme="dark"] .prophets-lux-page [class*="card"] {
   margin: 0 0 0.45rem;
 }
 .prophet-lux-card__bio {
-  font-size: 0.94rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  line-height: 1.8;
+  line-height: 1.65;
   color: var(--ps-ink-soft);
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  margin: 0 0 0.65rem;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  margin: 0 0 0.55rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .prophet-lux-card__chips {
   display: flex;
@@ -2927,7 +2928,7 @@ html[data-theme="dark"] .prophet-detail-lux {
 
 @media (max-width: 390px) {
   .prophet-lux-card {
-    min-height: 15.2rem;
+    min-height: 11.5rem;
     padding-block: 1.3rem 3.1rem;
   }
   .prophet-lux-card__name {
@@ -3011,4 +3012,138 @@ html.dark .prophet-mushaf-mention-card,
 html[data-theme="dark"] .prophet-mushaf-mention-card {
   background: color-mix(in srgb, #142019 92%, #8a6b2e 8%);
   border-color: color-mix(in srgb, #8a6b2e 40%, transparent);
+}
+
+/* ── سيرة نبوية مختصرة (Timeline) داخل قصص الأنبياء ── */
+.prophets-seerah-brief {
+  margin: 1.5rem 0 1.25rem;
+  padding: 1.15rem 1.1rem 1.25rem;
+  border-radius: var(--radius-card, 20px);
+  border: 1px solid color-mix(in srgb, var(--ps-emerald, #1e5f4b) 22%, var(--ps-line, #d7e0dc));
+  background: color-mix(in srgb, var(--ps-surface, #fff) 92%, var(--ps-emerald, #1e5f4b) 8%);
+  text-align: start;
+}
+.prophets-seerah-brief__title {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--ps-ink, var(--mj-ink));
+}
+.prophets-seerah-brief__lead {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--ps-ink-soft, var(--mj-ink-2));
+}
+.prophets-seerah-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.prophets-seerah-timeline__item {
+  display: grid;
+  grid-template-columns: 1.1rem minmax(0, 1fr);
+  gap: 0.65rem;
+  padding-block: 0.55rem;
+  position: relative;
+}
+.prophets-seerah-timeline__item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0.42rem;
+  top: 1.35rem;
+  bottom: -0.15rem;
+  width: 2px;
+  background: color-mix(in srgb, var(--ps-emerald, #1e5f4b) 45%, transparent);
+}
+.prophets-seerah-timeline__dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-top: 0.35rem;
+  border-radius: 999px;
+  background: var(--ps-emerald, #1e5f4b);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ps-emerald, #1e5f4b) 22%, transparent);
+}
+.prophets-seerah-timeline__name {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--ps-ink, var(--mj-ink));
+}
+.prophets-seerah-timeline__line {
+  margin: 0.15rem 0 0;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--ps-ink-soft, var(--mj-ink-2));
+}
+.prophets-seerah-full-cta {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-button, 14px);
+  text-decoration: none;
+  background: var(--ps-emerald, #12362c);
+  color: #f4faf7;
+  font-weight: 750;
+}
+.prophets-seerah-full-cta__label {
+  font-size: 0.95rem;
+}
+.prophets-seerah-full-cta__hint {
+  opacity: 0.9;
+}
+
+html.dark .prophets-seerah-brief,
+html[data-theme="dark"] .prophets-seerah-brief {
+  background: color-mix(in srgb, #0f1a16 90%, #1e5f4b 10%);
+  border-color: color-mix(in srgb, #5fbf98 28%, transparent);
+}
+html.dark .prophets-seerah-brief__title,
+html.dark .prophets-seerah-timeline__name,
+html[data-theme="dark"] .prophets-seerah-brief__title,
+html[data-theme="dark"] .prophets-seerah-timeline__name {
+  color: #f3f5f4;
+}
+html.dark .prophets-seerah-brief__lead,
+html.dark .prophets-seerah-timeline__line,
+html[data-theme="dark"] .prophets-seerah-brief__lead,
+html[data-theme="dark"] .prophets-seerah-timeline__line {
+  color: #c8d5cf;
+}
+html.dark .prophets-seerah-full-cta,
+html[data-theme="dark"] .prophets-seerah-full-cta {
+  background: color-mix(in srgb, #5fbf98 28%, #0f1a16);
+  color: #f3f5f4;
+}
+
+/* تباين ليلي لعناصر nb-* التي كانت تستخدم mj-muted/ink-2 */
+html.dark .nb-azm-miracle,
+html.dark .nb-azm-mentions,
+html.dark .nb-miracle-ref,
+html.dark .nb-table-note,
+html.dark .nb-table td,
+html[data-theme="dark"] .nb-azm-miracle,
+html[data-theme="dark"] .nb-azm-mentions,
+html[data-theme="dark"] .nb-miracle-ref,
+html[data-theme="dark"] .nb-table-note,
+html[data-theme="dark"] .nb-table td {
+  color: #c8d5cf;
+}
+html.dark .prophets-lux-search::placeholder,
+html[data-theme="dark"] .prophets-lux-search::placeholder {
+  color: #9bb0a6;
+  opacity: 1;
+}
+
+/* LayoutIntegrity — منع بطاقة هيرو عائمة في قصص الأنبياء */
+.topic-page--prophets[data-layout-integrity="prophets-v1"] .topic-page__hero {
+  margin-inline: 0;
+  border-radius: 0;
 }

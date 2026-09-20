@@ -17,8 +17,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { InformationCard } from "@/components/ui/InformationCard";
-import { AdminQuickEdit } from "@/components/AdminQuickEdit";
-import { useAuth } from "@/components/AuthProvider";
 import { getMiracles } from "@/lib/supabase";
 import { AsyncDataView } from "@/components/AsyncDataView";
 import {
@@ -219,7 +217,6 @@ function MiraclesListPage({
   initialItems?: MiracleSeedItem[];
 }) {
   const [location] = useLocation();
-  const { isAdmin } = useAuth();
   const sourceType = sourceLabel(lane);
   const topicParam = useMemo((): MiracleTopicFilter => {
     const q = location.includes("?") ? location.split("?")[1] : "";
@@ -404,8 +401,6 @@ function MiraclesListPage({
                     </span>
                   </div>
                   </Link>
-
-                  {isAdmin && <AdminQuickEdit section="miracles" searchTerm={item.title} />}
                 </article>
               );
             })}
@@ -426,7 +421,6 @@ function MiraclesListPage({
 }
 
 function MiracleDetailPage({ slug }: { slug: string }) {
-  const { isAdmin } = useAuth();
   const seeded = useMemo(() => getMiracleSeedBySlug(slug), [slug]);
   const [item, setItem] = useState<MiracleSeedItem | null>(seeded);
   const [siblings, setSiblings] = useState<MiracleSeedItem[]>([]);
@@ -636,8 +630,6 @@ function MiracleDetailPage({ slug }: { slug: string }) {
             </ReadingSectionCard>
           ) : null}
         </article>
-
-        {isAdmin && <AdminQuickEdit section="miracles" searchTerm={item.title} />}
 
         <ShareButtons
           title={item.title}

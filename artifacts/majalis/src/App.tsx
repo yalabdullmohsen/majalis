@@ -743,8 +743,8 @@ function AppShellInner() {
       {/* تذييل الموقع للويب فقط — داخل التطبيق الأصلي يُخفى (App Store: الروابط القانونية في الإعدادات) */}
       {!hideSiteChrome && !isNative && <DeferredSiteFooter />}
       {!hideSiteChrome && <DeferredAssistantWidget />}
-      {/* أزرار تحرير المشرف العائمة لا تغطي المواقيت/المصحف */}
-      {isAdmin && !hideSiteChrome && (
+      {/* أدوات المشرف فقط داخل /admin — لا FABs فوق التطبيق العام */}
+      {isAdmin && !hideSiteChrome && location.startsWith("/admin") && (
         <Suspense fallback={null}>
           <AdminSiteEditBar />
         </Suspense>
