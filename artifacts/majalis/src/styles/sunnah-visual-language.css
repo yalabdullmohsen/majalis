@@ -1,6 +1,5 @@
 /**
- * Sunnah Visual Language (SVL) — رموز + طبقات أسطح + زخارف هندسية خفيفة.
- * موجة PR-1: أساس فقط. لا يطبّق إعادة تصميم الصفحات هنا.
+ * Sunnah Visual Language (SVL) — رموز + طبقات أسطح + زخارف + رؤوس (PR-1…3).
  * مؤجّل من main — خارج ميزانية CSS الحرج.
  * المصحف/QPC خارج النطاق.
  */
@@ -38,6 +37,30 @@
   /* ── Depth (خفيف — حد أو ظل، لا الاثنين بثقل) ── */
   --svl-shadow-card: 0 6px 18px -14px color-mix(in srgb, var(--mj-brand-deep, #0a3d2e) 22%, transparent);
   --svl-shadow-elevated: 0 14px 36px -18px color-mix(in srgb, #0a1210 35%, transparent);
+
+  /* ── Typography scale (جسر إلى reading-prose / --ss-type) ── */
+  --svl-type-display: var(--type-title-xl, clamp(1.75rem, 4.5vw, 2.15rem));
+  --svl-type-page-title: var(--type-page-title, var(--type-title-xl, clamp(1.5rem, 4vw, 1.9rem)));
+  --svl-type-section-title: var(--type-title-l, var(--ss-type-section-title, 1.25rem));
+  --svl-type-card-title: var(--type-section, var(--ss-type-card-title, 1.05rem));
+  --svl-type-body-lg: var(--type-body-lg, var(--ss-type-explanation, 1.0625rem));
+  --svl-type-body: var(--type-body-regular, var(--ss-type-body, 1rem));
+  --svl-type-supporting: var(--type-body-sm, var(--ss-type-supporting, 0.875rem));
+  --svl-type-metadata: var(--type-metadata, var(--ss-type-label, 0.875rem));
+  --svl-type-caption: var(--type-caption, var(--ss-type-caption, 0.8125rem));
+  --svl-lh-title: var(--lh-reading-title, 1.3);
+  --svl-lh-body: var(--lh-reading, 1.9);
+  --svl-read-measure: var(--read-measure, 38rem);
+
+  /* ── Header ornament (بديل الخط الأخضر القصير) ── */
+  --svl-header-ornament-bg: linear-gradient(
+    to inline-end,
+    transparent 0%,
+    color-mix(in srgb, var(--svl-accent-primary) 55%, transparent) 35%,
+    color-mix(in srgb, var(--svl-accent-gold) 50%, transparent) 50%,
+    color-mix(in srgb, var(--svl-accent-primary) 55%, transparent) 65%,
+    transparent 100%
+  );
 
   /* ── Motif opacity ── */
   --svl-motif-opacity: 0.12;
@@ -219,16 +242,151 @@ html[data-theme="dark"] {
   height: 0.35rem;
   margin-block: 0.45rem 0.85rem;
   margin-inline: 0;
-  background:
-    linear-gradient(
-      to inline-end,
-      transparent 0%,
-      color-mix(in srgb, var(--svl-accent-primary) 55%, transparent) 35%,
-      color-mix(in srgb, var(--svl-accent-gold) 50%, transparent) 50%,
-      color-mix(in srgb, var(--svl-accent-primary) 55%, transparent) 65%,
-      transparent 100%
-    );
+  background: var(--svl-header-ornament-bg);
   border-radius: var(--svl-radius-pill);
+}
+
+.svl-header-ornament--center {
+  margin-inline: auto;
+}
+
+/* ── Page / Section headers (PR-3) ── */
+.svl-page-header,
+.page-hero-mj.svl-page-header {
+  color: var(--svl-text-primary);
+}
+
+.svl-page-header .page-hero-mj__title,
+.svl-page-header .svl-page-header__title {
+  font-size: var(--svl-type-page-title);
+  line-height: var(--svl-lh-title);
+  color: var(--svl-text-primary);
+  font-weight: 800;
+}
+
+.svl-page-header .page-hero-mj__desc,
+.svl-page-header .svl-page-header__desc {
+  font-size: var(--svl-type-body);
+  line-height: var(--svl-lh-body);
+  color: var(--svl-text-secondary);
+  max-width: var(--svl-read-measure);
+  text-align: start;
+}
+
+.svl-page-header .page-hero-mj__eyebrow,
+.svl-page-header .svl-page-header__badge {
+  font-size: var(--svl-type-caption);
+  color: var(--svl-accent-primary-deep);
+  font-weight: 700;
+}
+
+.svl-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-block: 0.75rem 0.5rem;
+  margin-inline: max(0.75rem, var(--page-gutter, 1rem));
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--svl-text-primary);
+}
+
+.svl-section-header__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.svl-section-header__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.svl-section-header__title {
+  margin: 0;
+  font-size: var(--svl-type-section-title);
+  font-weight: 800;
+  line-height: var(--svl-lh-title);
+  color: var(--svl-text-primary);
+}
+
+.svl-section-header__eyebrow {
+  margin: 0;
+  font-size: var(--svl-type-caption);
+  font-weight: 700;
+  color: var(--svl-accent-primary-deep);
+}
+
+.svl-section-header__desc {
+  margin: 0;
+  font-size: var(--svl-type-supporting);
+  line-height: 1.55;
+  color: var(--svl-text-secondary);
+  max-width: min(48ch, var(--svl-read-measure));
+  text-align: start;
+}
+
+.svl-section-header__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.svl-section-header .svl-header-ornament {
+  margin-block: 0.35rem 0.4rem;
+}
+
+.svl-section-header__divider {
+  margin-block: 0.55rem 0.15rem;
+}
+
+/* استبدال الخط الأخضر القصير المتكرر بزخرفة SVL الموحّدة */
+.section-lobby__title::after,
+.section-lobby .quran-hub-page__title::after,
+.quran-hub-page__title::after,
+.sections-hub__group-title::after {
+  width: 2.75rem !important;
+  height: 0.35rem !important;
+  margin-block-start: 0.45rem !important;
+  border-radius: var(--svl-radius-pill) !important;
+  background: var(--svl-header-ornament-bg) !important;
+}
+
+/* رأس القسم المضغوط → سطح خفيف بلا بطاقة ثقيلة */
+.compact-section-header {
+  border-color: var(--svl-border-subtle);
+  background: color-mix(in srgb, var(--svl-surface-section) 70%, transparent);
+  box-shadow: none;
+  border-radius: var(--svl-radius-md);
+}
+
+.compact-section-header__title {
+  font-size: var(--svl-type-section-title);
+  line-height: var(--svl-lh-title);
+  color: var(--svl-text-primary);
+}
+
+.compact-section-header__desc {
+  font-size: var(--svl-type-supporting);
+  color: var(--svl-text-secondary);
+  text-align: start;
+}
+
+.compact-section-header__eyebrow {
+  color: var(--svl-accent-primary-deep);
+}
+
+.compact-section-header__icon {
+  border-radius: var(--svl-radius-sm);
+  background: color-mix(in srgb, var(--svl-accent-primary) 10%, transparent);
+  color: var(--svl-accent-primary-deep);
 }
 
 .svl-quote {

@@ -93,5 +93,6 @@ assert.match(divider, /role="separator"/);
 
 const pkg = read("package.json");
 assert.match(pkg, /sunnah-visual-language-gate/, "البوابة مربوطة في package.json");
+assert.match(css, /--svl-type-page-title|--svl-type-display/, "رموز طباعة SVL (PR-3)");
 
 console.log("sunnah-visual-language-gate.test.ts: ok");
