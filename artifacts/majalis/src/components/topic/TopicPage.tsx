@@ -80,6 +80,8 @@ export type TopicPageProps = {
   onRetry?: () => void;
   /** صنف إضافي للصفحة (مثل topic-page--prophets للامتداد الكامل) */
   className?: string;
+  /** علامة LayoutIntegrityGuard — تمنع هيرو عائم/إطار مقصوص في أقسام محددة */
+  layoutIntegrity?: string;
   children?: ReactNode;
 };
 
@@ -109,6 +111,7 @@ export function TopicPage({
   status = "ready",
   onRetry,
   className,
+  layoutIntegrity,
   children,
 }: TopicPageProps) {
   const theme = getTopicTheme(themeId);
@@ -178,6 +181,7 @@ export function TopicPage({
       dir="rtl"
       data-topic-theme={theme.id}
       data-section-template="1"
+      {...(layoutIntegrity ? { "data-layout-integrity": layoutIntegrity } : {})}
       style={{ "--section-accent": sectionAccent } as CSSProperties}
     >
       <SectionHero

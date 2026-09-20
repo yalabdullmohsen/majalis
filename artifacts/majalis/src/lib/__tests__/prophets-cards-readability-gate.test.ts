@@ -22,8 +22,8 @@ assert.match(
   /\.prophets-lux-grid\s*>\s*:last-child:nth-child\(odd\)[\s\S]{0,120}?max-width:\s*none/s,
 );
 
-/* ~+20% مساحة */
-assert.match(css, /\.prophet-lux-card\s*\{[^}]*min-height:\s*16\.2rem/s);
+/* ~مساحة موحّدة أقصر */
+assert.match(css, /\.prophet-lux-card\s*\{[^}]*min-height:\s*12\.5rem/s);
 assert.match(css, /\.prophet-lux-card__name\s*\{[^}]*font-size:\s*clamp\(1\.32rem/s);
 assert.match(css, /\.prophet-lux-card__name\s*\{[^}]*font-weight:\s*800/s);
 assert.match(css, /\.prophet-lux-card__title\s*\{[^}]*font-weight:\s*750/s);
@@ -49,6 +49,13 @@ assert.doesNotMatch(css, /word-break:\s*break-all/);
 
 /* عرض ضيق: عمود واحد + chips أصغر عند 320px */
 assert.match(css, /@media \(max-width:\s*320px\)[\s\S]{0,220}?\.prophet-lux-card__chip/s);
-assert.match(css, /@media \(max-width:\s*390px\)[\s\S]{0,220}?min-height:\s*15\.2rem/s);
+assert.match(css, /@media \(max-width:\s*390px\)[\s\S]{0,220}?min-height:\s*11\.5rem/s);
+
+/* سيرة مختصرة + CTA كامل */
+assert.match(view, /prophets-seerah-brief/);
+assert.match(view, /prophets-seerah-timeline/);
+assert.match(view, /اقرأ السيرة النبوية الكاملة/);
+assert.match(view, /href="\/seerah"/);
+assert.doesNotMatch(view, /بداية السيرة النبوية الشريفة/);
 
 console.log("prophets-cards-readability-gate: ok");

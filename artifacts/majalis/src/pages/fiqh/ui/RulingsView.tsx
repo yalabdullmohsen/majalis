@@ -6,7 +6,6 @@ import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { Banknote, BookOpen, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, MapPin, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link, useSearch } from "wouter";
-import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
@@ -345,7 +344,6 @@ export default function RulingsPage() {
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}
       </FilterBottomSheet>
-      <AdminQuickEdit section="rulings" />
     </KnowledgeLayout>
     </ListScreen>
   );
