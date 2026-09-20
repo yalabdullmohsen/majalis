@@ -1,0 +1,281 @@
+/**
+ * Sunnah Visual Language (SVL) — رموز + طبقات أسطح + زخارف هندسية خفيفة.
+ * موجة PR-1: أساس فقط. لا يطبّق إعادة تصميم الصفحات هنا.
+ * مؤجّل من main — خارج ميزانية CSS الحرج.
+ * المصحف/QPC خارج النطاق.
+ */
+
+:root {
+  /* ── Color tokens (أسماء المواصفة → جسر إلى هوية سُنّة) ── */
+  --svl-background-primary: var(--mj-bg, var(--ds-background, #f7f4ee));
+  --svl-background-secondary: var(--mj-surface-2, var(--ds-backgroundSubtle, #f4f1ea));
+  --svl-surface-primary: var(--mj-surface, var(--ds-surface, #fffcf7));
+  --svl-surface-elevated: var(--mj-surface, var(--ds-surfaceElevated, #fffcf7));
+  --svl-surface-section: color-mix(in srgb, var(--mj-brand, #146b52) 3.5%, var(--svl-background-primary));
+  --svl-surface-accent-soft: color-mix(in srgb, var(--mj-brand, #146b52) 7%, var(--svl-surface-primary));
+
+  --svl-text-primary: var(--mj-ink, var(--ds-textPrimary, #16241e));
+  --svl-text-secondary: var(--mj-ink-2, var(--ds-textSecondary, #3d4f47));
+  --svl-text-muted: var(--mj-muted, var(--ds-textMuted, #5e6e67));
+
+  --svl-border-subtle: color-mix(in srgb, var(--mj-hairline, #d9d3c8) 70%, transparent);
+  --svl-border-strong: var(--mj-hairline, #d9d3c8);
+
+  --svl-accent-primary: var(--mj-brand, #146b52);
+  --svl-accent-primary-deep: var(--mj-brand-deep, #0d4a39);
+  --svl-accent-gold: var(--mj-accent, #b08a3e);
+
+  --svl-success: var(--mj-brand, #146b52);
+  --svl-warning: var(--mj-accent, #b08a3e);
+  --svl-error: var(--mj-danger, #b54a4a);
+
+  /* ── Radius family ── */
+  --svl-radius-sm: var(--radius-sm, 14px);
+  --svl-radius-md: var(--radius-card, 24px);
+  --svl-radius-lg: var(--radius-sheet, 28px);
+  --svl-radius-pill: 999px;
+
+  /* ── Depth (خفيف — حد أو ظل، لا الاثنين بثقل) ── */
+  --svl-shadow-card: 0 6px 18px -14px color-mix(in srgb, var(--mj-brand-deep, #0a3d2e) 22%, transparent);
+  --svl-shadow-elevated: 0 14px 36px -18px color-mix(in srgb, #0a1210 35%, transparent);
+
+  /* ── Motif opacity ── */
+  --svl-motif-opacity: 0.12;
+  --svl-pattern-opacity: 0.06;
+}
+
+html.dark,
+html[data-theme="dark"] {
+  --svl-background-primary: var(--mj-bg, #131a18);
+  --svl-background-secondary: var(--mj-surface-2, #222d29);
+  --svl-surface-primary: var(--mj-surface, #1b2421);
+  --svl-surface-elevated: var(--mj-surface, #222d29);
+  --svl-surface-section: color-mix(in srgb, #1a4a3a 12%, #131a18);
+  --svl-surface-accent-soft: color-mix(in srgb, #1f5a46 16%, #1b2421);
+  --svl-text-primary: var(--mj-ink, #f3efe6);
+  --svl-text-secondary: var(--mj-ink-2, #d8d0c4);
+  --svl-text-muted: var(--mj-muted, #c5d0cb);
+  --svl-border-subtle: color-mix(in srgb, #35443f 70%, transparent);
+  --svl-border-strong: #35443f;
+  --svl-accent-primary: #5fbf98;
+  --svl-accent-primary-deep: #6fd0a8;
+  --svl-motif-opacity: 0.08;
+  --svl-pattern-opacity: 0.04;
+  --svl-shadow-card: 0 6px 18px -14px rgba(0, 0, 0, 0.45);
+  --svl-shadow-elevated: 0 16px 40px -16px rgba(0, 0, 0, 0.55);
+}
+
+/* ── Surface layers ── */
+.svl-app-bg {
+  background: var(--svl-background-primary);
+  color: var(--svl-text-primary);
+}
+
+.svl-section-surface {
+  background: var(--svl-surface-section);
+  border: 1px solid var(--svl-border-subtle);
+  border-radius: var(--svl-radius-lg);
+  /* لا شريط جانبي زخرفي */
+  border-inline-start-width: 1px;
+  border-inline-start-color: var(--svl-border-subtle);
+  box-shadow: none;
+}
+
+.svl-card-surface {
+  background: var(--svl-surface-primary);
+  color: var(--svl-text-primary);
+  border: 1px solid var(--svl-border-subtle);
+  border-radius: var(--svl-radius-md);
+  border-inline-start-width: 1px;
+  border-inline-start-color: var(--svl-border-subtle);
+  box-shadow: none;
+}
+
+.svl-card-surface--elevated {
+  background: var(--svl-surface-elevated);
+  border-color: var(--svl-border-strong);
+  box-shadow: var(--svl-shadow-elevated);
+}
+
+.svl-card-surface--soft-shadow {
+  border-color: transparent;
+  box-shadow: var(--svl-shadow-card);
+}
+
+.svl-surface-accent-soft {
+  background: var(--svl-surface-accent-soft);
+}
+
+/* عقد PR-1: أسطح SVL بلا عمود أخضر زخرفي */
+.svl-card-surface,
+.svl-section-surface,
+.svl-elevated,
+[data-svl-surface] {
+  border-inline-start-width: 1px !important;
+}
+
+.svl-elevated {
+  background: var(--svl-surface-elevated);
+  border: 1px solid var(--svl-border-strong);
+  border-radius: var(--svl-radius-lg);
+  box-shadow: var(--svl-shadow-elevated);
+}
+
+/* ── Geometric primitives ── */
+.svl-motif,
+.svl-divider,
+.svl-pattern,
+.svl-medallion,
+.svl-header-ornament,
+.svl-quote::before {
+  pointer-events: none;
+}
+
+.svl-motif {
+  position: absolute;
+  width: 3.25rem;
+  height: 3.25rem;
+  opacity: var(--svl-motif-opacity);
+  color: var(--svl-accent-primary-deep);
+  z-index: 0;
+}
+
+.svl-motif--corner {
+  inset-block-start: 0.35rem;
+  inset-inline-end: 0.35rem;
+}
+
+.svl-motif svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.svl-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-block: 1.15rem 1.25rem;
+  color: var(--svl-accent-primary-deep);
+  opacity: 0.45;
+}
+
+.svl-divider__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    to inline-end,
+    transparent,
+    color-mix(in srgb, var(--svl-accent-primary) 45%, transparent),
+    transparent
+  );
+}
+
+.svl-divider__mark {
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 1px solid currentColor;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.svl-pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: var(--svl-pattern-opacity);
+  background-image:
+    linear-gradient(30deg, color-mix(in srgb, var(--svl-accent-primary) 35%, transparent) 1px, transparent 1px),
+    linear-gradient(150deg, color-mix(in srgb, var(--svl-accent-primary) 28%, transparent) 1px, transparent 1px);
+  background-size: 22px 22px;
+  border-radius: inherit;
+}
+
+.svl-pattern--hero {
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 88%);
+}
+
+.svl-medallion {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--svl-radius-md);
+  border: 1px solid color-mix(in srgb, var(--svl-accent-primary) 28%, var(--svl-border-subtle));
+  background: color-mix(in srgb, var(--svl-accent-primary) 8%, var(--svl-surface-primary));
+  color: var(--svl-accent-primary-deep);
+  flex-shrink: 0;
+}
+
+.svl-medallion > * {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.svl-header-ornament {
+  display: block;
+  width: 2.75rem;
+  height: 0.35rem;
+  margin-block: 0.45rem 0.85rem;
+  margin-inline: 0;
+  background:
+    linear-gradient(
+      to inline-end,
+      transparent 0%,
+      color-mix(in srgb, var(--svl-accent-primary) 55%, transparent) 35%,
+      color-mix(in srgb, var(--svl-accent-gold) 50%, transparent) 50%,
+      color-mix(in srgb, var(--svl-accent-primary) 55%, transparent) 65%,
+      transparent 100%
+    );
+  border-radius: var(--svl-radius-pill);
+}
+
+.svl-quote {
+  position: relative;
+  margin-block: 0.85rem 1rem;
+  padding-block: 0.35rem;
+  padding-inline: 1rem 0.25rem;
+  max-width: var(--read-measure, 38rem);
+  color: var(--svl-text-primary);
+  line-height: var(--lh-reading, 1.9);
+}
+
+.svl-quote::before {
+  content: "";
+  position: absolute;
+  inset-block: 0.15rem;
+  inset-inline-start: 0;
+  width: 2px;
+  border-radius: var(--svl-radius-pill);
+  background: color-mix(in srgb, var(--svl-accent-gold) 55%, var(--svl-accent-primary));
+  opacity: 0.7;
+}
+
+/* حاوية تسمح بزخرفة زاوية دون كسر التخطيط */
+.svl-ornament-host {
+  position: relative;
+  isolation: isolate;
+}
+
+.svl-ornament-host > :not(.svl-motif):not(.svl-pattern) {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svl-motif,
+  .svl-divider,
+  .svl-pattern,
+  .svl-header-ornament {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* استثناء المصحف */
+.mm-reader .svl-pattern,
+.mushaf-reader .svl-pattern,
+[data-mushaf] .svl-pattern {
+  display: none !important;
+}
