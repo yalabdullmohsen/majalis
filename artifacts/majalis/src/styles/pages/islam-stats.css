@@ -61,6 +61,11 @@
 .is-stat-card__val { font-size: var(--ds-text-2xl); font-weight: 900; line-height: 1; color: var(--is-card-color, var(--mj-brand)); }
 .is-stat-card__lbl { font-size: .82rem; font-weight: 700; color: var(--mj-ink); }
 .is-stat-card__sub { font-size: 0.8rem; color: var(--mj-muted); line-height: 1.4; }
+.is-stat-card__src {
+  font-size: 0.72rem; color: var(--mj-muted); line-height: 1.35; margin-top: .15rem;
+  border-top: 1px solid var(--mj-surface-2); padding-top: .35rem;
+}
+.is-quran-group { display: flex; flex-direction: column; gap: var(--ds-space-3); }
 
 /* section title */
 .is-section-title {
