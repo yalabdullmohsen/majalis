@@ -14,9 +14,12 @@ const BG = "#F7F3EB";
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
 assert.match(indexHtml, /id="mj-launch-splash"/, "دخولية MajlisSplash في HTML الحرج");
 assert.match(indexHtml, /mj-launch-splash__tagline/, "عبارة قصيرة تحت الاسم");
-assert.match(indexHtml, /معك في العلم والعمل/, "عبارة الدخولية");
+assert.match(indexHtml, /رفيقك في العلم والعمل/, "عبارة الدخولية");
 assert.match(indexHtml, /mj-launch-splash__title/, "عنوان الهوية سُنّة");
+assert.match(indexHtml, /mj-launch-splash__progress/, "خط تقدّم أنيق");
+assert.doesNotMatch(indexHtml, /mj-launch-splash__pulse/, "بلا نبض دوّار قديم");
 assert.doesNotMatch(indexHtml, /علم نافع، وعمل صالح/, "بلا عبارة قديمة");
+assert.doesNotMatch(indexHtml, /معك في العلم والعمل/, "بلا عبارة الدخولية السابقة");
 assert.doesNotMatch(indexHtml, /id="mj-silent-splash"/, "لا دخولية صامتة قديمة");
 assert.doesNotMatch(indexHtml, /id="mj-boot-splash"/, "لا طبقة boot قديمة");
 assert.doesNotMatch(indexHtml, /#0E1A15/, "لا خلفية خضراء داكنة قديمة في الإقلاع");
@@ -24,10 +27,11 @@ assert.match(indexHtml, /prefers-reduced-motion:\s*reduce/, "مسار بلا ح�
 assert.match(indexHtml, /src="\/mj-launch-splash-boot\.js"/, "دخولية الإطلاق من ملف خارجي (CSP self)");
 const bootJs = readFileSync(resolve(root, "public/mj-launch-splash-boot.js"), "utf8");
 assert.match(bootJs, /__mjDismissSplash/, "دالة dismiss للدخولية");
-assert.match(bootJs, /MIN_MS\s*=\s*220/, "حد أدنى 220ms");
+assert.match(bootJs, /MIN_MS\s*=\s*0/, "بلا تأخير اصطناعي عند الجاهزية");
 assert.match(bootJs, /SOFT_MAX_MS\s*=\s*480/, "هدف LCP ليّن 480ms");
 assert.match(bootJs, /MAX_MS\s*=\s*1400/, "سقف صلب لخطوط الواجهة");
 assert.match(bootJs, /EXIT_MS\s*=\s*160/, "تلاشي خروج 160ms");
+assert.match(bootJs, /session\.v4/, "مفتاح جلسة الدخولية v4");
 assert.match(bootJs, /splash_timing=1/, "معامل قياس توقيت الدخولية");
 assert.match(bootJs, /127\.0\.0\.1/, "مسار سريع لمعاينة CI المحلية");
 assert.match(indexHtml, /transition:opacity \.16s/, "تلاشي CSS 160ms");
@@ -74,12 +78,12 @@ assert.doesNotMatch(
 );
 
 const majlisSplash = readFileSync(resolve(root, "src/lib/majlis-splash.ts"), "utf8");
-assert.match(majlisSplash, /SPLASH_MIN_VISIBLE_MS\s*=\s*220/);
+assert.match(majlisSplash, /SPLASH_MIN_VISIBLE_MS\s*=\s*0/);
 assert.match(majlisSplash, /SPLASH_LCP_SOFT_MS\s*=\s*480/);
 assert.match(majlisSplash, /SPLASH_MAX_VISIBLE_MS\s*=\s*1_?400|SPLASH_MAX_VISIBLE_MS\s*=\s*1400/);
 assert.match(majlisSplash, /SPLASH_FADE_OUT_MS\s*=\s*160/);
-assert.match(majlisSplash, /معك في العلم والعمل/);
-assert.match(majlisSplash, /session\.v3/);
+assert.match(majlisSplash, /رفيقك في العلم والعمل/);
+assert.match(majlisSplash, /session\.v4/);
 
 const mainSrc = readFileSync(resolve(root, "src/main.tsx"), "utf8");
 assert.match(mainSrc, /mj:app-painted/, "main يعلن أول رسم");

@@ -13,7 +13,7 @@ test.use({ viewport: VIEWPORT });
 async function openMushaf(page: Page, n: number) {
   await page.addInitScript(() => {
     try {
-      window.sessionStorage.setItem("mj.launch-splash.session.v3", "1");
+      window.sessionStorage.setItem("mj.launch-splash.session.v4", "1");
     } catch {
       /* ignore */
     }

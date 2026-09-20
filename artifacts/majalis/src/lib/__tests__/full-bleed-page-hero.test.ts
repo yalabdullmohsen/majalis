@@ -1,5 +1,5 @@
 /**
- * بوابة: هيرو الأقسام بطاقة داخل الهامش — بلا شريط أخضر زخرفي ولا امتداد بعرض الشاشة.
+ * بوابة: هيرو الأقسام بطاقة داخل الهامش — بلا شريط أخضر زخرفي ولا امتداد بعرض الشاشة (SVL).
  * node --import tsx src/lib/__tests__/full-bleed-page-hero.test.ts
  */
 import assert from "node:assert/strict";
@@ -25,10 +25,13 @@ assert.doesNotMatch(
   "لا شريط جانبي زخرفي على هيرو الأقسام",
 );
 assert.match(heroCss, /border:\s*1px\s+solid/);
+assert.match(heroCss, /border-inline-start-width:\s*1px/);
 assert.match(heroCss, /--mss-hero-gradient|--mss-hero-from|--mss-section-hero-bg/);
 
 const pageHero = read("src/components/ui/PageHero.tsx");
 assert.match(pageHero, /fullBleed/);
 assert.match(pageHero, /page-hero-mj--bleed/);
+assert.match(pageHero, /HeaderOrnament|svl-header-ornament/);
+assert.match(pageHero, /svl-page-header/);
 
 console.log("full-bleed-page-hero.test.ts: ok");

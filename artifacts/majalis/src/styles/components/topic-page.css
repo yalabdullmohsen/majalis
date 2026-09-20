@@ -18,7 +18,7 @@
   line-height: 1.5;
   color: var(--msk-text-2, var(--mj-ink-2));
   padding: calc(var(--inset-top, 0px) + 0.5rem) var(--page-gutter, 1rem) 0.5rem;
-  background: var(--surface-app, var(--mj-bg));
+  background: transparent;
 }
 
 .topic-page__crumb a {
@@ -343,7 +343,8 @@ html.dark .topic-page__hero {
 
 html[data-theme="dark"] .topic-page__crumb,
 html.dark .topic-page__crumb {
-  color: color-mix(in srgb, var(--msk-text-1, #e8eeec) 82%, transparent);
+  color: var(--txt-secondary, #d8d0c4);
+  background: transparent;
 }
 
 html[data-theme="dark"] .topic-page__group-title,

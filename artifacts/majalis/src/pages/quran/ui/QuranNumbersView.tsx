@@ -25,7 +25,7 @@ import {
   filterStatsByTheme,
 } from "@/lib/quran-stats/themes";
 import { formatArabicNumber } from "@/lib/numerals";
-import { findMushafPageForAyah } from "@/features/mushaf-madinah/mushaf-page-for-ayah";
+import { resolveCanonicalAyahHref } from "@/lib/quran-navigation";
 import { AppBottomSheet } from "@/components/ui/AppBottomSheet";
 import { normalizeArabic } from "@/shared/arabic-normalize";
 import { scoreTolerantMatch } from "@/features/search/tolerant-match";
@@ -51,13 +51,12 @@ function matchesSectionQuery(blob: string, query: string): boolean {
 }
 
 function mushafHref(surah: number, ayah: number): string {
-  const page = findMushafPageForAyah(surah, ayah);
-  return `/mushaf?page=${page}&ayah=${surah}:${ayah}`;
+  return resolveCanonicalAyahHref(surah, ayah, "other");
 }
 
 export default function QuranNumbersPage() {
   const [active, setActive] = useState<QuranStat | null>(null);
-  const [theme, setTheme] = useState<QuranStatTheme | "all">("asasi");
+  const [theme, setTheme] = useState<QuranStatTheme | "all">("all");
   const [group, setGroup] = useState<QuranStatGroup | "all">("all");
   const [query, setQuery] = useState("");
   const [shareStatus, setShareStatus] = useState<string | null>(null);
@@ -132,9 +131,9 @@ export default function QuranNumbersPage() {
         </p>
         <p>
           أما عدّ الألفاظ فالمرجع الأصل <strong>المعجم المفهرس لألفاظ القرآن الكريم</strong> لمحمد
-          فؤاد عبد الباقي، مع التفريق بين اللفظ والمادة والموضوع. المحاور الستة: أساسيات المصحف،
-          الألفاظ الشائعة، الأنبياء والأعلام، الأوامر اللفظية، النواهي اللفظية، والألفاظ المتقابلة
-          (عرض منفصل بلا سرد إعجازي) — بلا اشتقاق رقمي آلي من نص المصحف.
+          فؤاد عبد الباقي، مع التفريق بين اللفظ والمادة والموضوع. تُعرض البطاقات المعتمدة كاملةً —
+          بما فيها عدّ الكلمات والألفاظ والسور والموضوعات — عبر محاور التصفية أو تبويب «الكل»، بلا
+          اشتقاق رقمي آلي من نص المصحف.
         </p>
       </section>
 

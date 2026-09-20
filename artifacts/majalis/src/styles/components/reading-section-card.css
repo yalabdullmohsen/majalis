@@ -8,8 +8,8 @@
   --rsc-muted: var(--mj-ink-2, var(--majalis-ink-soft, #3d5349));
   --rsc-title: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
   margin: 0 0 0.85rem;
-  padding: 1.05rem 1.15rem;
-  max-width: 42rem;
+  padding: var(--read-card-pad-block, 1.15rem) var(--read-card-pad-inline, 1.2rem);
+  max-width: var(--read-measure, 38rem);
   width: 100%;
   margin-inline: auto;
   box-sizing: border-box;
@@ -48,24 +48,24 @@
 }
 
 .rsc__title {
-  margin: 0 0 0.7rem;
-  font-size: 0.95rem;
+  margin: 0 0 var(--read-heading-gap-after, 0.55rem);
+  font-size: var(--type-section, 0.95rem);
   font-weight: 800;
-  line-height: 1.35;
+  line-height: var(--lh-reading-section, 1.35);
   color: var(--rsc-title);
 }
 
 .rsc__body {
   margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.9;
+  font-size: var(--type-body-lg, 0.95rem);
+  line-height: var(--lh-reading, 1.9);
   color: var(--rsc-ink);
   text-align: start;
-  max-width: 40rem;
+  max-width: var(--read-measure-narrow, 34rem);
 }
 
 .rsc__body p {
-  margin: 0 0 0.75rem;
+  margin: 0 0 var(--read-para-gap, 0.95em);
 }
 
 .rsc__body p:last-child {

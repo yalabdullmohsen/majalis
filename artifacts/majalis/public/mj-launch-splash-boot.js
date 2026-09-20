@@ -1,10 +1,11 @@
       (function () {
         var el = document.getElementById("mj-launch-splash");
         if (!el) return;
-        var KEY = "mj.launch-splash.session.v3";
+        var KEY = "mj.launch-splash.session.v4";
         var done = false;
         var appReady = false;
-        var MIN_MS = 220;
+        /* بلا تأخير اصطناعي — الإخفاء فور جاهزية الهيكل/الخطوط */
+        var MIN_MS = 0;
         var SOFT_MAX_MS = 480;
         var MAX_MS = 1400;
         var EXIT_MS = 160;
@@ -102,7 +103,7 @@
           tryDismiss();
           /* Capacitor hide: splash-screen.ts only */
         }, MAX_MS);
-        window.setTimeout(tryDismiss, MIN_MS);
+        window.setTimeout(tryDismiss, Math.max(0, MIN_MS));
         void SOFT_MAX_MS;
       })();
 try{if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){try{performance.mark("mj:fonts-ready")}catch(e){}})}}catch(e){}

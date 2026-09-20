@@ -20,6 +20,10 @@ assert.match(banner, /data-testid="update-available-apply"/, "زر تحديث ق
 assert.match(banner, /onClick=\{onUpdate\}/, "زر تحديث مربوط بـ onClick");
 assert.match(banner, /onPointerUp/, "pointerUp لموثوقية اللمس على iOS");
 assert.match(banner, /onLater|dismissUpdate/, "لاحقًا يغلق النافذة");
+assert.match(banner, /dismissible=\{optional\}/, "لاحقًا يُخفى عند التحديث الإجباري");
+assert.match(banner, /الإصدار الحالي/, "عرض الإصدار الحالي");
+assert.match(banner, /الإصدار الجديد/, "عرض الإصدار الجديد");
+assert.match(banner, /يتوفر إصدار أحدث من سُنّة/, "نص أوضح للتحديث");
 assert.match(banner, /\belevated\b/, "الشيت elevated فوق الشريط السفلي");
 assert.match(banner, /updateAvailable && shellReady/, "لا شيت فوق شاشة غير مستقرة");
 assert.match(banner, /تعذر التحديث تلقائيًا/, "رسالة فشل عند تعليق التحديث");
@@ -35,6 +39,17 @@ assert.match(hook, /searchParams\.set\(["']v["']/, "fallback ?v=timestamp لـ i
 assert.match(hook, /isAppShellStable|app-booting/, "لا شيت فوق شاشة إقلاع");
 assert.match(hook, /PURGE_BUDGET_MS/, "مهلة لمسح الكاش حتى لا يعلق");
 assert.match(hook, /clearUserRefreshFlag/, "مسار تنظيف علم التحديث");
+assert.match(hook, /setDismissedVersion/, "لاحقًا يحفظ النسخة المتجاهلة");
+assert.match(hook, /checkForUpdate/, "قرار النافذة عبر checkForUpdate");
+
+const versionCheck = read("src/lib/version-check.ts");
+assert.match(versionCheck, /DISMISSED_VERSION_KEY/, "مفتاح localStorage للتجاهل");
+assert.match(versionCheck, /checkForUpdate/, "API قرار التحديث");
+assert.match(versionCheck, /networkError/, "فشل الشبكة لا يفتح نافذة");
+assert.match(versionCheck, /updateRequired/, "تحديث إجباري منفصل عن الاختياري");
+
+const sheetSrc = read("src/components/ui/AppBottomSheet.tsx");
+assert.match(sheetSrc, /dismissible\s*=\s*true/, "AppBottomSheet يدعم dismissible");
 
 // مسار زر التحديث يجب ألا يخرج مبكرًا بسبب alreadyDidBootReload
 {

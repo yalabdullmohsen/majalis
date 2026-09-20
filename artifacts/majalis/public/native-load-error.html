@@ -63,30 +63,25 @@
         color: color-mix(in srgb, var(--mj-splash-ink) 78%, transparent);
         max-width: 16rem;
       }
-      .pulse {
-        width: 2.4rem;
-        height: 0.18rem;
+      .progress {
+        width: 3.4rem;
+        height: 0.14rem;
         border-radius: 999px;
-        background: color-mix(in srgb, var(--mj-splash-ink) 22%, transparent);
+        background: color-mix(in srgb, var(--mj-splash-ink) 18%, transparent);
         overflow: hidden;
-        position: relative;
-        margin-block-start: 0.15rem;
+        margin-block-start: 0.2rem;
       }
-      .pulse::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        width: 40%;
+      .progress-bar {
+        display: block;
+        height: 100%;
+        width: 0;
         border-radius: inherit;
         background: var(--mj-splash-ink);
-        animation: mj-sp 0.9s ease-in-out infinite;
+        animation: mj-splash-progress 0.7s ease-out forwards;
       }
-      @keyframes mj-sp {
-        from {
-          transform: translateX(150%);
-        }
+      @keyframes mj-splash-progress {
         to {
-          transform: translateX(-250%);
+          width: 100%;
         }
       }
 
@@ -185,9 +180,8 @@
       .is-loading .fail-title {
         display: none;
       }
-      .is-final .pulse {
+      .is-final .progress {
         display: none;
-        animation: none;
       }
       .is-final .soft-status {
         display: none;
@@ -208,10 +202,10 @@
         display: none;
       }
       @media (prefers-reduced-motion: reduce) {
-        .pulse::after {
+        .progress-bar {
           animation: none;
           width: 100%;
-          opacity: 0.45;
+          opacity: 0.5;
         }
       }
     </style>
@@ -221,8 +215,8 @@
       <div class="mark" aria-hidden="true">
         <p class="brand">سُنّة</p>
       </div>
-      <p class="tagline">معك في العلم والعمل</p>
-      <div class="pulse" aria-hidden="true"></div>
+      <p class="tagline">رفيقك في العلم والعمل</p>
+      <div class="progress" aria-hidden="true"><span class="progress-bar"></span></div>
       <div class="mushaf-skel" aria-hidden="true">
         <div class="mushaf-skel__bar"></div>
         <div class="mushaf-skel__bar"></div>

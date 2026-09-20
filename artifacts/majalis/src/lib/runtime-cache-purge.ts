@@ -61,6 +61,8 @@ const LEGACY_COLD_BOOT_KEYS = [
   "mj.silent-splash.session",
   "mj.launch-splash.session.v1",
   "mj.launch-splash.session.v2",
+  "mj.launch-splash.session.v3",
+  "mj.launch-splash.session.v4",
   "majalis-layout-cache-v0",
   "majalis-font-fit-cache-v0",
   "majalis-mushaf-layout-draft",

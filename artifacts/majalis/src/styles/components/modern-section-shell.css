@@ -97,9 +97,11 @@
   background-color: var(--mss-section-hero-bg) !important;
   background-image: none !important;
   color: var(--mss-on-hero) !important;
-  border: 1px solid var(--color-border, var(--mj-hairline, #e3e8e6)) !important;
-  border-radius: var(--mss-radius-hero) !important;
-  box-shadow: var(--mss-shadow-card) !important;
+  border: 1px solid var(--svl-border-subtle, var(--color-border, var(--mj-hairline, #e3e8e6))) !important;
+  border-inline-start-width: 1px !important;
+  border-inline-start-color: var(--svl-border-subtle, var(--color-border, var(--mj-hairline, #e3e8e6))) !important;
+  border-radius: var(--svl-radius-lg, var(--mss-radius-hero)) !important;
+  box-shadow: none !important;
   min-height: 0 !important;
   width: auto;
   max-width: min(56rem, calc(100% - 2 * max(1rem, var(--page-gutter, 1rem))));

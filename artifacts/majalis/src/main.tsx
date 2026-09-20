@@ -41,7 +41,6 @@ import "./styles/brand-v4.css";
 import "./styles/tokens.css";
 // رموز دلالية موحّدة (سطح/نص/حد/خطوط) — بعد tokens وقبل الطبقات القديمة
 import "./styles/design-tokens.css";
-import "./styles/components/badge-system.css";
 import "./styles/breakpoints.css";
 import "./styles/typography-scale.css";
 import "./styles/typography-app.css";
@@ -66,8 +65,8 @@ import "./styles/ssunnah-ux-polish.css";
 /* semantic-tokens + card-unify مؤجّلان — ميزانية CSS الحرج ≤60KiB gzip */
 /* Green Surface System — يفوز على تلميع الأقسام الأبيض القديم */
 import "./styles/green-surface-system.css";
-/* إزالة الأعمدة الخضراء الزخرفية من بطاقات المحتوى (بعد Green Surface) */
-import "./styles/card-decorative-strip-cleanup.css";
+/* حالات تفاعل متمايزة + ::selection + breadcrumbs — بعد الأسطح الخضراء */
+import "./styles/interaction-states.css";
 /* استرداد ليلي P0 — متزامن؛ القواعد مقيّدة بـ html.dark لتقليل theme flash */
 import "./styles/dark-mode-recovery.css";
 // dark-mode-surfaces (~24KB) — فوري فقط إن كان الثيم داكنًا عند الإقلاع؛ وإلا بعد load
@@ -81,7 +80,7 @@ import "./styles/dark-mode-recovery.css";
       import("./styles/dark-mode-surfaces.css"),
       import("./styles/dark-design-system.css"),
       import("./styles/premium-dark-refine.css"),
-    ]);
+      import("./styles/interaction-states.css"),    ]);
   }
 }
 
@@ -107,6 +106,7 @@ function loadNonCriticalCss() {
   /* طبقات تحديث الواجهة + رموز ds-* — مؤجّلة تحت ميزانية CSS الحرج (<60KiB gzip) */
   void import("./styles/ssunnah-semantic-tokens.css");
   void import("./styles/ssunnah-card-unify.css");
+  void import("./styles/components/badge-system.css");
   void import("./styles/modern-ui-refresh.css");
   void import("./styles/ssunnah-ds-canonical.css");
   void import("./styles/m2030/foundation.css");
@@ -132,10 +132,14 @@ function loadNonCriticalCss() {
   void import("./styles/components/instant-interaction.css");
   void import("./styles/components/compact-sources.css");
   void import("./styles/components/content-reading-shell.css");
+  void import("./styles/reading-prose-system.css");
+  void import("./styles/sunnah-visual-language.css");
   void import("./styles/components/reading-section-card.css");
   void import("./styles/components/native-feel.css");
   void import("./styles/m2030/interactions.css");
   void import("./styles/m2030/pages.css");
+  /* SVL PR-2: بعد طبقات الصفحات — إلغاء الشرائط الزخرفية 3–4px */
+  void import("./styles/card-decorative-strip-cleanup.css");
   // final-release يُحمَّل بعد design-system أعلاه — لا تحميل متوازٍ
   const isDark =
     document.documentElement.classList.contains("dark") ||
@@ -145,12 +149,14 @@ function loadNonCriticalCss() {
       import("./styles/dark-mode-surfaces.css"),
       import("./styles/dark-design-system.css"),
       import("./styles/premium-dark-refine.css"),
+      import("./styles/interaction-states.css"),
     ]);
   } else {
     // تحميل مسبق لتمكين التبديل بدون وميض
     void import("./styles/dark-mode-surfaces.css");
     void import("./styles/dark-design-system.css");
     void import("./styles/premium-dark-refine.css");
+    void import("./styles/interaction-states.css");
   }
 }
 function scheduleNonCriticalCss() {

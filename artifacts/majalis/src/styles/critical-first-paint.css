@@ -356,6 +356,9 @@ html.app-booting .hus-field {
 }
 
 .mj-home-lcp-ph__hero-cta{display:inline-flex;align-items:center;justify-content:center;min-width:9.5rem;min-height:2.65rem;}
+.home-page-hero .page-hero-mj__eyebrow,
+.home-page-hero .m2030-hero__eyebrow{min-height:1.35rem;}
+.home-page-hero .page-hero-mj__actions{min-height:2.85rem;}
 
 /* لا انتقالات هيكل حتى اكتمال أول رسم — يمنع وميض/قفز عند أول دخول */
 html:not(.app-hydrated) .app-shell,

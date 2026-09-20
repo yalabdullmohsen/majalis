@@ -8,6 +8,8 @@ import {
   ExplanationText,
   Caption,
 } from "@/components/design-system/text";
+import { HeaderOrnament } from "@/components/design-system/geometry/HeaderOrnament";
+import { GeometricMotif } from "@/components/design-system/geometry/GeometricMotif";
 import "@/styles/components/page-hero.css";
 
 const PageHeroIntegratedBack = lazy(() => import("./PageHeroIntegratedBack"));
@@ -25,6 +27,10 @@ type PageHeroProps = {
   /** رجوع مدمج في الهيرو — يخفي FAB العام عبر data-section-back / .page-hero-mj__back */
   showBack?: boolean;
   backFallbackHref?: string;
+  /** زخرفة هندسية تحت العنوان (افتراضي: نعم؛ تُخفى في الرئيسية عبر CSS) */
+  withOrnament?: boolean;
+  /** زخرفة زاوية خفيفة */
+  withCornerMotif?: boolean;
   className?: string;
   children?: ReactNode;
 };
@@ -44,6 +50,8 @@ export function PageHero({
   fullBleed = true,
   showBack = true,
   backFallbackHref = "/",
+  withOrnament = true,
+  withCornerMotif = true,
   className,
   children,
 }: PageHeroProps) {
@@ -52,11 +60,19 @@ export function PageHero({
 
   return (
     <header
-      className={cn("page-hero-mj", fullBleed && "page-hero-mj--bleed", className)}
+      className={cn(
+        "page-hero-mj",
+        "svl-page-header",
+        "svl-ornament-host",
+        fullBleed && "page-hero-mj--bleed",
+        className,
+      )}
       dir="rtl"
       aria-labelledby={titleId}
+      data-svl-page-header="1"
     >
       {withPattern ? <PatternBackdrop /> : null}
+      {withCornerMotif ? <GeometricMotif placement="corner" /> : null}
       <div className="page-hero-mj__content">
         {showBack ? (
           <Suspense
@@ -84,6 +100,7 @@ export function PageHero({
         <ScreenTitle id={titleId} className="page-hero-mj__title" tone={onHero ? "onBrand" : "default"}>
           {title}
         </ScreenTitle>
+        {withOrnament ? <HeaderOrnament /> : null}
         {headline ? (
           <SupportingText
             as="p"

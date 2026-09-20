@@ -23,10 +23,10 @@ const navBack = read("src/lib/navigation-back.ts");
 
 const boot = read("public/mj-launch-splash-boot.js");
 assert.match(html, /src="\/mj-launch-splash-boot\.js"/);
-assert.match(boot, /MIN_MS\s*=\s*220/, "دخولية محسوسة — LCP");
+assert.match(boot, /MIN_MS\s*=\s*0/, "بلا تأخير اصطناعي عند الجاهزية");
 assert.match(boot, /SOFT_MAX_MS\s*=\s*480/, "هدف LCP ليّن ≤480ms عند جاهزية الخطوط");
 assert.match(boot, /MAX_MS\s*=\s*1400/, "سقف صلب لانتظار الخطوط — منع FOUT");
-assert.match(splash, /SPLASH_MIN_VISIBLE_MS\s*=\s*220/);
+assert.match(splash, /SPLASH_MIN_VISIBLE_MS\s*=\s*0/);
 assert.match(splash, /SPLASH_LCP_SOFT_MS\s*=\s*480/);
 assert.match(splash, /SPLASH_MAX_VISIBLE_MS\s*=\s*1_?400|SPLASH_MAX_VISIBLE_MS\s*=\s*1400/);
 assert.match(splash, /SPLASH_FADE_OUT_MS\s*=\s*160/);

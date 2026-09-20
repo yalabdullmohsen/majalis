@@ -16,7 +16,9 @@ import { migrateMushafUserData, isMushafReaderV2Enabled } from "@/lib/mushaf-v2"
 import {
   QuranNavigationService,
   buildQuranAyahReference,
+  createPendingNavigationHighlight,
   parseMushafNavQuery,
+  peekPendingNavigationHighlight,
   stashPendingNavigationHighlight,
   type QuranNavigationSource,
 } from "@/lib/quran-navigation";
@@ -75,15 +77,7 @@ export default function MushafReaderPage() {
       highlightMode: "navigation",
     });
     if (!built.ok) return;
-    stashPendingNavigationHighlight({
-      verseKey: `${built.ref.surahId}:${built.ref.ayahId}`,
-      pageNumber: built.ref.pageNumber,
-      source: built.ref.navigationSource,
-      requestedAt: built.ref.requestedAt,
-      suppressTafsir: true,
-      suppressAudio: true,
-      suppressAyahActions: true,
-    });
+    stashPendingNavigationHighlight(createPendingNavigationHighlight(built.ref));
     if (typeof window !== "undefined") {
       window.dispatchEvent(new CustomEvent("ssunnah:quran-nav-pending"));
     }
@@ -171,6 +165,7 @@ function resolvePage(
   search: string,
 ): number {
   const nav = parseMushafNavQuery(search);
+  /* Intent مباشر (سورة+آية) أعلى من Last Position */
   if (nav.surahId != null && nav.ayahId != null) {
     const built = buildQuranAyahReference({
       surahId: nav.surahId,
@@ -178,6 +173,10 @@ function resolvePage(
       navigationSource: "deep-link",
     });
     if (built.ok) return clampMushafPage(built.ref.pageNumber);
+  }
+  if (peekPendingNavigationHighlight()) {
+    const pending = peekPendingNavigationHighlight();
+    if (pending) return clampMushafPage(pending.pageNumber);
   }
   if (nav.page != null) return clampMushafPage(nav.page);
 

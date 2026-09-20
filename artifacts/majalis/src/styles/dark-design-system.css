@@ -386,6 +386,12 @@
   color: var(--text-secondary) !important;
   line-height: 1.7;
 }
+:is(html[data-theme="dark"], html.dark) .update-available-sheet__version-row dt {
+  color: var(--text-secondary) !important;
+}
+:is(html[data-theme="dark"], html.dark) .update-available-sheet__version-row dd {
+  color: var(--text-primary) !important;
+}
 :is(html[data-theme="dark"], html.dark) .update-available-sheet .app-sheet__footer,
 :is(html[data-theme="dark"], html.dark) .update-available-sheet .app-sheet__footer-slot {
   background: var(--surface-secondary) !important;

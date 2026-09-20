@@ -462,6 +462,19 @@ html.dark,
     0 4px 10px rgba(0, 0, 0, 0.22),
     0 18px 40px rgba(0, 0, 0, 0.34);
 
+  /* Interaction states — ليلي (مصدر دلالي؛ التفاصيل في interaction-states.css) */
+  --state-selected-bg: #5fbf98;
+  --state-selected-fg: #06231a;
+  --state-current-bg: color-mix(in srgb, #5fbf98 12%, #1b2421);
+  --state-current-fg: #b8e0cc;
+  --state-highlighted-bg: color-mix(in srgb, #1f5a46 14%, #1b2421);
+  --state-focus-outline: 2px solid color-mix(in srgb, #c9a86c 72%, #8fd4b0);
+  --state-selection-bg: color-mix(in srgb, #5fbf98 38%, #0f1613);
+  --state-selection-fg: #f3efe6;
+  /* legacy wash للتنقّل — ليس صلباً كـ chip selected */
+  --color-selected: var(--state-current-bg);
+  --color-current: var(--state-current-bg);
+
   --ss-card-bg: var(--dark-card);
   --ss-card-border: var(--dark-border);
   --soft-card-bg: var(--dark-card);

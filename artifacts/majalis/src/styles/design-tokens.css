@@ -106,15 +106,10 @@
   --lh-body: 1.75;
   --lh-prose: 1.85;
 
-  /* خطوط واجهة موحّدة عبر --font-ui (Amiri) — المصحف يستخدم QPC منفصلًا */
   --font-heading: var(--font-ui, var(--font-app, "Amiri", "Traditional Arabic", serif));
   --font-body-ui: var(--font-ui, var(--font-app, "Amiri", "Traditional Arabic", serif));
   --brand-contrast: var(--brand-on-white);
 
-  /*
-   * طبقة DS الدلالية (أسماء ثابتة للمكوّنات الجديدة).
-   * لا تُستبدل القيم هنا — جسر فقط إلى الرموز أعلاه حتى لا تتفرّق الألوان.
-   */
   --ds-background: var(--bg);
   --ds-surface: var(--surface);
   --ds-surfaceElevated: var(--surface-elevated);
@@ -132,17 +127,12 @@
   --ds-overlay: color-mix(in srgb, var(--mj-ink, #16241e) 42%, transparent);
   --ds-divider: var(--border);
 
-  /* حركة موحّدة */
   --motion-fast: 120ms;
   --motion-normal: 220ms;
   --motion-slow: 350ms;
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
 
-  /*
-   * أسماء منتج سُنّة (ثابتة للمكوّنات الجديدة) — جسر فقط، بلا ألوان مكرّرة.
-   * primary green · deep green · soft gold · warm/card bg · muted · borders
-   */
   --ss-primary-green: var(--mj-brand, #0F5C45);
   --ss-deep-green: var(--mj-brand-deep, #0A3D2E);
   --ss-soft-gold: var(--mj-accent, #B08A3E);

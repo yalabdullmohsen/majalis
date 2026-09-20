@@ -207,9 +207,18 @@
   filter: none !important;
 }
 
-/* تركيز هادئ — بلا هالة نيون حول البطاقة */
-:is(html[data-theme="dark"], html.dark) .soft-card:is(:focus-visible, .is-active, [aria-selected="true"]),
-:is(html[data-theme="dark"], html.dark) .hub-card:is(:focus-visible, .is-active, [aria-current="page"]),
+/* تركيز هادئ — منفصل عن active/selected/current */
+:is(html[data-theme="dark"], html.dark) .soft-card:focus-visible,
+:is(html[data-theme="dark"], html.dark) .hub-card:focus-visible,
+:is(html[data-theme="dark"], html.dark) .top-section-bar__tab:focus-visible,
+:is(html[data-theme="dark"], html.dark) .mj-segmented-filter :focus-visible {
+  outline: var(--state-focus-outline, 2px solid color-mix(in srgb, #c9a86c 72%, #8fd4b0));
+  outline-offset: var(--state-focus-outline-offset, 2px);
+  box-shadow: var(--pd-elev-1) !important;
+}
+
+:is(html[data-theme="dark"], html.dark) .soft-card:is(.is-active, [aria-selected="true"]),
+:is(html[data-theme="dark"], html.dark) .hub-card:is(.is-active, [aria-current="page"]),
 :is(html[data-theme="dark"], html.dark) .top-section-bar__tab.is-active,
 :is(html[data-theme="dark"], html.dark) .mj-segmented-filter [aria-pressed="true"],
 :is(html[data-theme="dark"], html.dark) .an-cat--active {

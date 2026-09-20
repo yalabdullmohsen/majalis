@@ -18,6 +18,7 @@ import { toWesternDigits } from "@/shared/arabic-normalize";
 import { toArabicDigits } from "@/lib/utils";
 import { VirtualList, type VirtualListHandle } from "@/components/VirtualList";
 import { ACTION, EMPTY } from "@/lib/ui-copy";
+import { resolveCanonicalAyahHref } from "@/lib/quran-navigation";
 import "@/styles/components/quran-surah-jump-search.css";
 
 export type QuranSurahJumpSearchProps = {
@@ -156,11 +157,11 @@ export function QuranSurahJumpSearch({
       return;
     }
     if (opts?.ayah && opts.surah) {
-      navigate(`/mushaf/${opts.surah}?ayah=${opts.ayah}`);
+      navigate(resolveCanonicalAyahHref(opts.surah, opts.ayah, "search"));
       return;
     }
     if (opts?.surah) {
-      navigate(`/mushaf/${opts.surah}`);
+      navigate(`/mushaf?page=${page}`);
       return;
     }
     navigate(mushafPageHref(page));

@@ -1,15 +1,36 @@
-import { memo, useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type FormEvent,
+  type KeyboardEvent,
+} from "react";
 import { getSurahMeta } from "@/lib/quran-api";
 import { toArabicDigits } from "@/lib/utils";
 import { parseVerseKey } from "@/features/mushaf-madinah/mushaf-page-for-ayah";
 import {
   MUSHAF_PAGE_MAX,
   MUSHAF_PAGE_MIN,
+  clampMushafPage,
   parseMushafPageQuery,
 } from "@/lib/quran-last-page";
+import "./page-goto-dial.css";
 
 /** أرقام غربية/عربية/فارسية فقط أثناء الكتابة */
 const PAGE_DIGIT_RE = /[0-9٠-٩۰-۹]/g;
+
+/** قائمة ثابتة ١…٦٠٤ — تُبنى مرة واحدة خارج المكوّن */
+const MUSHAF_PAGE_LIST: readonly number[] = Array.from(
+  { length: MUSHAF_PAGE_MAX - MUSHAF_PAGE_MIN + 1 },
+  (_, i) => MUSHAF_PAGE_MIN + i,
+);
+
+/** ارتفاع عنصر العدّاد — يطابق CSS (--nm-goto-dial-item-h) */
+const DIAL_ITEM_H = 44;
+const DIAL_OVERSCAN = 8;
 
 function sanitizePageDraft(raw: string): string {
   return (raw.match(PAGE_DIGIT_RE) ?? []).join("");
@@ -55,9 +76,26 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
 }: ControlsProps) {
   const [draft, setDraft] = useState(String(pageNumber));
   const [gotoError, setGotoError] = useState<string | null>(null);
+  const [dialStart, setDialStart] = useState(0);
+  const [dialCount, setDialCount] = useState(16);
   const titleId = useId();
   const moreTitleId = useId();
+  const dialId = useId();
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const dialRef = useRef<HTMLDivElement | null>(null);
+
+  const syncDialWindow = useCallback(() => {
+    const dial = dialRef.current;
+    if (!dial) return;
+    const viewH = dial.clientHeight || DIAL_ITEM_H * 5;
+    const start = Math.max(0, Math.floor(dial.scrollTop / DIAL_ITEM_H) - DIAL_OVERSCAN);
+    const count = Math.min(
+      MUSHAF_PAGE_LIST.length - start,
+      Math.ceil(viewH / DIAL_ITEM_H) + DIAL_OVERSCAN * 2,
+    );
+    setDialStart((prev) => (prev === start ? prev : start));
+    setDialCount((prev) => (prev === count ? prev : count));
+  }, []);
 
   useEffect(() => {
     setDraft(String(pageNumber));
@@ -68,20 +106,37 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
     if (!gotoOpen) return;
     setDraft(String(pageNumber));
     setGotoError(null);
+    /* بلا focus تلقائي — فتح لوحة المفاتيح يبطئ iOS؛ العدّاد يظهر فورًا */
     const id = window.requestAnimationFrame(() => {
-      const el = inputRef.current;
-      if (!el) return;
-      el.focus({ preventScroll: true });
-      el.select();
+      const dial = dialRef.current;
+      if (!dial) return;
+      const targetTop = (pageNumber - MUSHAF_PAGE_MIN) * DIAL_ITEM_H - (dial.clientHeight - DIAL_ITEM_H) / 2;
+      dial.scrollTop = Math.max(0, targetTop);
+      syncDialWindow();
     });
     return () => window.cancelAnimationFrame(id);
-  }, [gotoOpen, pageNumber]);
+  }, [gotoOpen, pageNumber, syncDialWindow]);
 
   const closeGoto = () => {
     inputRef.current?.blur();
     onGotoOpenChange(false);
     setGotoError(null);
   };
+
+  const jumpToPage = useCallback(
+    (raw: number) => {
+      const n = clampMushafPage(raw);
+      if (n < MUSHAF_PAGE_MIN || n > MUSHAF_PAGE_MAX) {
+        setGotoError(`أدخل رقمًا بين ${MUSHAF_PAGE_MIN} و${MUSHAF_PAGE_MAX}`);
+        return;
+      }
+      setGotoError(null);
+      inputRef.current?.blur();
+      onGoto(n);
+      onGotoOpenChange(false);
+    },
+    [onGoto, onGotoOpenChange],
+  );
 
   const handleGoToPage = (e?: FormEvent) => {
     e?.preventDefault();
@@ -92,10 +147,7 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
       inputRef.current?.focus({ preventScroll: true });
       return;
     }
-    setGotoError(null);
-    inputRef.current?.blur();
-    onGoto(n);
-    onGotoOpenChange(false);
+    jumpToPage(n);
   };
 
   const onInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -103,6 +155,14 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
     e.preventDefault();
     handleGoToPage();
   };
+
+  const nudgePage = (delta: number) => {
+    jumpToPage(pageNumber + delta);
+  };
+
+  const dialSlice = MUSHAF_PAGE_LIST.slice(dialStart, dialStart + dialCount);
+  const dialSpacerTop = dialStart * DIAL_ITEM_H;
+  const dialSpacerBottom = Math.max(0, (MUSHAF_PAGE_LIST.length - dialStart - dialCount) * DIAL_ITEM_H);
 
   return (
     <div
@@ -237,9 +297,79 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
           <h2 id={titleId} className="nm-goto__title">
             انتقال إلى صفحة
           </h2>
+
+          <div className="nm-goto__stepper" role="group" aria-label="تعديل رقم الصفحة">
+            <button
+              type="button"
+              className="nm-goto__nudge"
+              data-testid="mushaf-goto-prev"
+              aria-label="الصفحة السابقة"
+              disabled={pageNumber <= MUSHAF_PAGE_MIN}
+              onClick={(e) => {
+                e.preventDefault();
+                nudgePage(-1);
+              }}
+            >
+              −
+            </button>
+            <span className="nm-goto__current" aria-live="polite" dir="ltr">
+              {toArabicDigits(pageNumber)}
+            </span>
+            <button
+              type="button"
+              className="nm-goto__nudge"
+              data-testid="mushaf-goto-next"
+              aria-label="الصفحة التالية"
+              disabled={pageNumber >= MUSHAF_PAGE_MAX}
+              onClick={(e) => {
+                e.preventDefault();
+                nudgePage(1);
+              }}
+            >
+              +
+            </button>
+          </div>
+
+          <div
+            ref={dialRef}
+            id={dialId}
+            className="nm-goto__dial"
+            data-testid="mushaf-goto-dial"
+            role="listbox"
+            tabIndex={0}
+            aria-label={`اختر صفحة من ${MUSHAF_PAGE_MIN} إلى ${MUSHAF_PAGE_MAX}`}
+            aria-activedescendant={`mushaf-goto-page-${pageNumber}`}
+            onScroll={syncDialWindow}
+          >
+            <div className="nm-goto__dial-spacer" style={{ height: dialSpacerTop }} aria-hidden="true" />
+            {dialSlice.map((n) => {
+              const active = n === pageNumber;
+              return (
+                <button
+                  key={n}
+                  type="button"
+                  id={`mushaf-goto-page-${n}`}
+                  role="option"
+                  aria-selected={active}
+                  data-page={n}
+                  data-active={active ? "1" : undefined}
+                  className="nm-goto__dial-item"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    jumpToPage(n);
+                  }}
+                >
+                  {toArabicDigits(n)}
+                </button>
+              );
+            })}
+            <div className="nm-goto__dial-spacer" style={{ height: dialSpacerBottom }} aria-hidden="true" />
+          </div>
+
           {/*
-            iOS: inputMode=numeric يخفي زر البحث.
-            text + enterKeyHint=search يظهر «بحث» مع قبول الأرقام فقط.
+            iOS: لا نفتح لوحة المفاتيح عند الظهور.
+            الكتابة اختيارية عبر الحقل أدناه عند الحاجة.
           */}
           <input
             ref={inputRef}
@@ -261,7 +391,8 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
             dir="ltr"
             aria-label="رقم الصفحة"
             aria-invalid={gotoError ? true : undefined}
-            aria-describedby={gotoError ? `${titleId}-err` : undefined}
+            aria-describedby={gotoError ? `${titleId}-err` : dialId}
+            placeholder={`${MUSHAF_PAGE_MIN}–${MUSHAF_PAGE_MAX}`}
             data-testid="mushaf-goto-input"
           />
           {gotoError ? (

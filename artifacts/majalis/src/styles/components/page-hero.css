@@ -39,7 +39,7 @@ html.dark .pattern-backdrop {
   overflow: visible;
 }
 
-/* هيرو الأقسام: بطاقة سطح داخل الهامش — لا شريط أخضر بعرض الشاشة */
+/* هيرو الأقسام: بطاقة سطح داخل الهامش — بلا شريط أخضر جانبي (SVL PR-3) */
 .page-hero-mj--bleed:not(.home-page-hero) {
   width: auto;
   max-width: min(56rem, calc(100% - 2 * max(1rem, var(--page-gutter, 1rem))));
@@ -48,16 +48,18 @@ html.dark .pattern-backdrop {
   margin-block: 0.65rem 0.85rem;
   padding-block: 1.05rem;
   padding-inline: max(1rem, var(--page-gutter, 1rem));
-  border-radius: var(--mss-radius-hero, 1.35rem);
+  border-radius: var(--svl-radius-lg, var(--mss-radius-hero, 1.35rem));
   /* رموز mss (--mss-hero-from / --mss-hero-gradient) للبطاقات المميزة فقط */
   background-color: var(
     --mss-section-hero-bg,
-    color-mix(in srgb, var(--mj-brand, #1f6b56) 5.5%, var(--mj-surface, #fffef9))
+    var(--svl-surface-section, color-mix(in srgb, var(--mj-brand, #1f6b56) 5.5%, var(--mj-surface, #fffef9)))
   );
   background-image: none;
-  color: var(--mj-ink, #16241e);
-  border: 1px solid var(--mj-hairline, #e3e8e6);
-  box-shadow: var(--shadow-soft, 0 10px 28px rgba(36, 31, 24, 0.08));
+  color: var(--svl-text-primary, var(--mj-ink, #16241e));
+  border: 1px solid var(--svl-border-subtle, var(--mj-hairline, #e3e8e6));
+  border-inline-start-width: 1px;
+  border-inline-start-color: var(--svl-border-subtle, var(--mj-hairline, #e3e8e6));
+  box-shadow: none;
 }
 .page-hero-mj--bleed:not(.home-page-hero) .pattern-backdrop {
   color: var(--mj-brand, #1f6b56);
@@ -107,10 +109,18 @@ html.dark .pattern-backdrop {
 .page-hero-mj__title {
   margin: 0;
   font-family: var(--font-heading, var(--mj-face, var(--font-display)));
-  font-size: var(--type-page-title, clamp(1.625rem, 5vw, 2rem));
+  font-size: var(--svl-type-page-title, var(--type-page-title, clamp(1.625rem, 5vw, 2rem)));
   font-weight: 800;
-  line-height: 1.35;
-  color: var(--text-primary, var(--mj-ink)) !important;
+  line-height: var(--svl-lh-title, 1.35);
+  color: var(--svl-text-primary, var(--text-primary, var(--mj-ink))) !important;
+}
+.page-hero-mj .svl-header-ornament {
+  margin-block: 0.35rem 0.55rem;
+}
+/* الرئيسية: لا زخرفة تحت العنوان المشكّل */
+.page-hero-mj.home-page-hero .svl-header-ornament,
+.page-hero-mj.home-page-hero .svl-motif {
+  display: none;
 }
 .page-hero-mj__headline {
   margin: 0;

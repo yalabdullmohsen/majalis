@@ -24,7 +24,7 @@ mkdirSync(SHOT_DIR, { recursive: true });
 async function openMushaf(page: Page, n: number) {
   await page.addInitScript(() => {
     try {
-      window.sessionStorage.setItem("mj.launch-splash.session.v3", "1");
+      window.sessionStorage.setItem("mj.launch-splash.session.v4", "1");
       window.localStorage.setItem("majalis-theme", "light");
       window.localStorage.setItem("ssunnah-mushaf-appearance-v1", "light");
     } catch {

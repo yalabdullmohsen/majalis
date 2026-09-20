@@ -4,6 +4,8 @@
  * الأنبياء (category=prophet) مستبعدون من هذا الفهرس — موجودون في /prophets.
  */
 
+import { resolveCanonicalAyahHref } from "@/lib/quran-navigation";
+
 /** عنوان المنتج المعتمد للتنقّل والـSEO */
 export const QURAN_PEOPLE_PAGE_TITLE = "الذين ذكروا في القرآن";
 
@@ -128,7 +130,7 @@ export function peopleForAyah(
 }
 
 export function mushafAyahHref(surah: number, ayah: number): string {
-  return `/mushaf/${surah}?ayah=${ayah}`;
+  return resolveCanonicalAyahHref(surah, ayah, "quran-people");
 }
 
 export function prophetStoryHref(prophetSlug: string): string {

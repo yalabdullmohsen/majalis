@@ -7,6 +7,7 @@ import {
   Caption,
   LabelText,
 } from "@/components/design-system/text";
+import { HeaderOrnament } from "@/components/design-system/geometry/HeaderOrnament";
 import "./compact-section-header.css";
 
 export type CompactSectionStat = {
@@ -23,10 +24,13 @@ type Props = {
   actions?: ReactNode;
   className?: string;
   titleId?: string;
+  /** زخرفة تحت العنوان (SVL) */
+  withOrnament?: boolean;
 };
 
 /**
  * رأس قسم موحّد مضغوط — بديل البطاقات الخضراء الضخمة.
+ * SVL PR-3: سطح خفيف + زخرفة هندسية بدل الخط الأخضر القصير.
  */
 export function CompactSectionHeader({
   title,
@@ -37,11 +41,13 @@ export function CompactSectionHeader({
   actions,
   className,
   titleId = "compact-section-title",
+  withOrnament = true,
 }: Props) {
   return (
     <header
-      className={cn("compact-section-header", className)}
+      className={cn("compact-section-header", "svl-section-header--compact", className)}
       data-section-hero="1"
+      data-svl-section-header="1"
       aria-labelledby={titleId}
     >
       <div className="compact-section-header__row">
@@ -59,6 +65,7 @@ export function CompactSectionHeader({
           <ScreenTitle id={titleId} className="compact-section-header__title">
             {title}
           </ScreenTitle>
+          {withOrnament ? <HeaderOrnament /> : null}
           {description ? (
             <SupportingText className="compact-section-header__desc">{description}</SupportingText>
           ) : null}
@@ -80,3 +87,5 @@ export function CompactSectionHeader({
 
 /** اسم بديل مطابق للمواصفات */
 export const SectionIntroHeader = CompactSectionHeader;
+/** اسم SVL الموحّد */
+export const SectionHeader = CompactSectionHeader;
