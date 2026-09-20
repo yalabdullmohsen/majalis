@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const majalisRoot = path.resolve(__dirname, "..");
 const repoRoot = path.resolve(majalisRoot, "../..");
-const pagePath = path.join(majalisRoot, "src/views/IslamicSectsPage.tsx");
+const pagePath = path.join(majalisRoot, "src/data/islamic-sects.ts");
 const outPath = path.join(
   repoRoot,
   "docs/content-quality/islamic-sects-inventory.json",
@@ -546,10 +546,10 @@ function extractOptionalQuote(block) {
 }
 
 function parseSects(src) {
-  const start = src.indexOf("const SECTS: Sect[] = [");
-  if (start < 0) throw new Error("SECTS array not found");
+  const start = src.indexOf("export const ISLAMIC_SECTS: IslamicSect[] = [");
+  if (start < 0) throw new Error("ISLAMIC_SECTS array not found");
   const end = src.indexOf("\n];\n", start);
-  if (end < 0) throw new Error("SECTS array end not found");
+  if (end < 0) throw new Error("ISLAMIC_SECTS array end not found");
   const body = src.slice(start, end);
   const blocks = body.split(/\n  \{\n/).slice(1);
   const sects = [];
@@ -649,7 +649,7 @@ function buildRecord(sect) {
     reviewedAt: null,
     publicationStatus: overlay.publicationStatus,
     uiSource: {
-      file: "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+      file: "artifacts/majalis/src/data/islamic-sects.ts",
       era: sect.era,
       origin: sect.origin,
       founder: sect.founder,
@@ -690,7 +690,7 @@ function main() {
     generatedAt: new Date().toISOString(),
     policy:
       "no_ai_invention_no_memory_completion_no_auto_publish_human_review_required",
-    sourceOfTruthUi: "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+    sourceOfTruthUi: "artifacts/majalis/src/data/islamic-sects.ts",
     route: "/islamic-sects",
     recordCount: records.length,
     publishedCount,

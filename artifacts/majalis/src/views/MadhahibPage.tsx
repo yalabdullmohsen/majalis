@@ -1,361 +1,115 @@
-import { SectionIcon } from "@/components/ui/SectionIcon";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import "@/styles/pages/madhahib.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { KnowledgeSummaryCard } from "@/components/knowledge/KnowledgeSummaryCard";
+import { MADHAHIB } from "@/data/madhahib";
+import { saveKnowledgeListState } from "@/lib/knowledge-list-scroll";
+import "@/styles/pages/madhahib.css";
 import { UtilityScreen } from "@/components/design-system/screens";
 
-type Madhhab = {
-  id: string;
-  color: string;
-  icon: string;
-  name: string;
-  fullName: string;
-  founder: string;
-  born: string;
-  died: string;
-  origin: string;
-  spread: string;
-  summary: string;
-  methodology: string;
-  sources: string[];
-  features: string[];
-  books: { title: string; author: string }[];
-  scholars: string[];
-  quote: { text: string; source: string };
-};
-
-const MADHAHIB: Madhhab[] = [
-  {
-    id: "hanafi",
-    color: "var(--mj-brand-deep)",
-    icon: "🕌",
-    name: "الحنفي",
-    fullName: "المذهب الحنفي",
-    founder: "أبو حنيفة النعمان بن ثابت",
-    born: "80 هـ",
-    died: "150 هـ",
-    origin: "الكوفة، العراق",
-    spread: "تركيا، الهند، باكستان، آسيا الوسطى، البلقان، مصر (جزء)",
-    summary: "أوسع المذاهب الأربعة انتشاراً في العالم، ويُعدّ أقدمها تدويناً منهجياً. يتميز بالاهتمام بالرأي والقياس والاستحسان، وقد نشأ في البيئة.",
-    methodology: "يعتمد على: القرآن، السنة، الإجماع، ثم القياس، ثم الاستحسان، ثم عرف الناس. أكثر اعتماداً على الرأي والقياس مقارنةً بغيره.",
-    sources: ["القرآن الكريم", "السنة النبوية", "الإجماع", "القياس", "الاستحسان", "العرف"],
-    features: [
-      "أوسع مجالاً للرأي والاجتهاد القياسي",
-      "يُراعي أعراف الناس وتعاملاتهم",
-      "له نظام فقهي دقيق في المعاملات والقضاء",
-      "أكثر مرونة في بعض مسائل البيوع والعقود",
-    ],
-    books: [
-      { title: "الهداية", author: "المرغيناني" },
-      { title: "بدائع الصنائع", author: "الكاساني" },
-      { title: "رد المحتار (حاشية ابن عابدين)", author: "ابن عابدين" },
-      { title: "الاختيار لتعليل المختار", author: "ابن مودود الموصلي" },
-      { title: "شرح معاني الآثار", author: "أبو جعفر الطحاوي" },
-    ],
-    scholars: ["أبو يوسف", "محمد الشيباني", "زفر", "الحسن بن زياد", "ابن عابدين", "الكاساني", "الطحاوي"],
-    quote: { text: "أصل ما نقول به كتاب الله، فما لم نجده فسنة رسول الله، فما لم نجده فيهما فبما قاله الصحابة.", source: "أبو حنيفة — نقله الخطيب البغدادي في «تاريخ بغداد» وابن حجر في «مناقب أبي حنيفة»" },
-  },
-  {
-    id: "maliki",
-    color: "var(--mj-brand-deep)",
-    icon: "🌿",
-    name: "المالكي",
-    fullName: "المذهب المالكي",
-    founder: "مالك بن أنس",
-    born: "93 هـ",
-    died: "179 هـ",
-    origin: "المدينة المنورة",
-    spread: "المغرب العربي، غرب أفريقيا، الأندلس (تاريخياً)، السودان، الكويت وجزء من الخليج",
-    summary: "المذهب الذي نشأ في مدينة رسول الله ﷺ، ويتميز باعتبار عمل أهل المدينة حجةً شرعية. يُراعي المصلحة المرسلة وسد الذرائع، وله حضور قوي في شمال.",
-    methodology: "يعتمد على: القرآن، السنة، إجماع الصحابة، عمل أهل المدينة، القياس، المصلحة المرسلة، سد الذرائع، الاستحسان.",
-    sources: ["القرآن الكريم", "السنة النبوية", "عمل أهل المدينة", "إجماع الصحابة", "القياس", "المصلحة المرسلة", "سد الذرائع"],
-    features: [
-      "يعتبر عمل أهل المدينة حجة شرعية متقدمة على القياس",
-      "يُعنى بسد الذرائع المفضية إلى المحرمات",
-      "له اهتمام بالغ بالمقاصد الشرعية",
-      "يُراعي المصالح المرسلة في تشريع الأحكام",
-    ],
-    books: [
-      { title: "الموطأ", author: "الإمام مالك" },
-      { title: "المدونة الكبرى", author: "الإمام سحنون" },
-      { title: "مختصر خليل", author: "خليل بن إسحاق" },
-      { title: "الذخيرة", author: "القرافي" },
-      { title: "الكافي في فقه أهل المدينة", author: "ابن عبد البر" },
-    ],
-    scholars: ["ابن القاسم", "أشهب", "ابن وهب", "سحنون", "القرافي", "ابن رشد الحفيد", "ابن عبد البر"],
-    quote: { text: "كل أحد يؤخذ من كلامه ويُرد إلا صاحب هذا القبر، ويُشير إلى قبر النبي ﷺ.", source: "الإمام مالك — نقله ابن عبد البر في «الجامع» وابن عبد الهادي في «إرشاد السالك»" },
-  },
-  {
-    id: "shafii",
-    color: "#176649",
-    icon: "📜",
-    name: "الشافعي",
-    fullName: "المذهب الشافعي",
-    founder: "محمد بن إدريس الشافعي",
-    born: "150 هـ",
-    died: "204 هـ",
-    origin: "مكة المكرمة، قضى حياته بين الحجاز والعراق ومصر",
-    spread: "مصر، اليمن، إندونيسيا، ماليزيا، بروناي، الفلبين، شرق أفريقيا، الشام",
-    summary: "أول من دوَّن منهجية الأصول في كتابه «الرسالة»، وهو المؤسس لعلم أصول الفقه. توسط بين أهل الرأي وأهل الحديث، مع تمسك دقيق بالنصوص مع القياس.",
-    methodology: "يعتمد على: القرآن، السنة (حتى الآحاد في الأحكام)، الإجماع، ثم القياس. أول من أصّل علم أصول الفقه في سياق الاستدلال الفقهي.",
-    sources: ["القرآن الكريم", "السنة النبوية (الآحاد حجة)", "الإجماع", "القياس"],
-    features: [
-      "مؤسس علم أصول الفقه (كتاب الرسالة)",
-      "حديث الآحاد حجة في الأحكام بلا شرط إضافي",
-      "القياس منضبط بضوابط صارمة",
-      "اهتمام بالغ بالنص ودقة الاستدلال",
-    ],
-    books: [
-      { title: "الأم", author: "الإمام الشافعي" },
-      { title: "الرسالة", author: "الإمام الشافعي" },
-      { title: "المجموع", author: "النووي" },
-      { title: "روضة الطالبين", author: "النووي" },
-      { title: "مغني المحتاج", author: "الخطيب الشربيني" },
-      { title: "الحاوي الكبير", author: "الماوردي" },
-    ],
-    scholars: ["المزني", "البويطي", "النووي", "الرافعي", "ابن حجر الهيتمي", "الماوردي", "الغزالي"],
-    quote: { text: "إذا صح الحديث فهو مذهبي، واضرب بقولي الحائط.", source: "الإمام الشافعي — نقله النووي في «المجموع» وابن القيم في «إعلام الموقعين»" },
-  },
-  {
-    id: "hanbali",
-    color: "#0C5E47",
-    icon: "📿",
-    name: "الحنبلي",
-    fullName: "المذهب الحنبلي",
-    founder: "أحمد بن محمد بن حنبل",
-    born: "164 هـ",
-    died: "241 هـ",
-    origin: "بغداد",
-    spread: "السعودية، قطر، الإمارات، الكويت، الأردن، سوريا (جزء)",
-    summary: "من أكثر المذاهب عنايةً بالنصوص وآثار الصحابة، ويكثر من ذكر الروايات المتعددة في المسألة الواحدة. يتميز بالاهتمام البالغ بالسنة والحديث. من أكثر المذاهب تمسكًا بالأثر في جزيرة العرب اليوم.",
-    methodology: "يعتمد على: القرآن، السنة والآثار (مع اعتبار الحديث الضعيف غير الشديد عند عدم المعارض عند كثير من أصحابه)، أقوال الصحابة، الإجماع، ثم القياس. يقدّم الأثر والحديث الضعيف غير الشديد عند عدم المعارض على القياس عند كثير من أصحابه.",
-    sources: ["القرآن الكريم", "السنة النبوية (توسع فيها)", "أقوال الصحابة", "الإجماع", "القياس الضيق"],
-    features: [
-      "التمسك الشديد بالنص ورفض الرأي المجرد",
-      "تقديم الأثر على القياس عند إمكان الاستدلال به",
-      "الأخذ بأقوال الصحابة ولو دون إجماع",
-      "التحفظ على القياس وتضييق نطاقه",
-    ],
-    books: [
-      { title: "مسند الإمام أحمد", author: "الإمام أحمد" },
-      { title: "المغني", author: "ابن قدامة" },
-      { title: "الإنصاف", author: "المرداوي" },
-      { title: "كشاف القناع", author: "البهوتي" },
-      { title: "الفروع", author: "ابن مفلح" },
-      { title: "الآداب الشرعية", author: "ابن مفلح" },
-    ],
-    scholars: ["ابن قدامة", "ابن تيمية", "ابن القيم", "المرداوي", "البهوتي", "ابن رجب", "ابن مفلح"],
-    quote: { text: "لا تقلدني ولا تقلد مالكاً ولا الشافعي ولا الثوري، وخذ من حيث أخذوا.", source: "الإمام أحمد — نقله ابن القيم في «إعلام الموقعين»" },
-  },
-];
+const LIST_PATH = "/madhahib";
 
 export default function MadhahibPage() {
-  const [openId, setOpenId] = useState<string | null>(null);
-
   useEffect(() => {
     applyPageSeo({
-      path: "/madhahib",
+      path: LIST_PATH,
       title: "المذاهب الفقهية الأربعة | سُنّة",
-      description: "تعرَّف على المذاهب الفقهية الأربعة: الحنفي والمالكي والشافعي والحنبلي؛ مع بيان منهج كل مذهب ومصادره؛ مرجع في المذاهب الفقهية الأربعة.",
+      description:
+        "تعرَّف على المذاهب الفقهية الأربعة: الحنفي والمالكي والشافعي والحنبلي؛ مع بيان منهج كل مذهب ومصادره؛ مرجع في المذاهب الفقهية الأربعة.",
       keywords: ["مذاهب فقهية", "فقه إسلامي", "حنفي مالكي شافعي حنبلي", "أصول الفقه"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "المذاهب الفقهية الأربعة",
-          description: "المذاهب الفقهية الأربعة: الحنفي والمالكي والشافعي والحنبلي؛ مع بيان منهج كل مذهب ومصادره ومؤسسيه وانتشاره الجغرافي — للتعلم.",
+          description:
+            "المذاهب الفقهية الأربعة: الحنفي والمالكي والشافعي والحنبلي؛ مع بيان منهج كل مذهب ومصادره ومؤسسيه وانتشاره الجغرافي — للتعلم.",
           numberOfItems: MADHAHIB.length,
           itemListElement: MADHAHIB.map((m, i) => ({
             "@type": "ListItem",
             position: i + 1,
             name: `${m.fullName} — ${m.founder}`,
-            url: `https://www.ssunnah.com/madhahib#${m.id}`,
+            url: `https://www.ssunnah.com${LIST_PATH}/${m.id}`,
           })),
         },
       ],
     });
   }, []);
 
-  function toggle(id: string) {
-    setOpenId((prev) => (prev === id ? null : id));
-  }
+  const persistBeforeNavigate = () => {
+    saveKnowledgeListState(LIST_PATH, {
+      scrollY: typeof window !== "undefined" ? window.scrollY : 0,
+    });
+  };
 
   return (
     <UtilityScreen compose="mark">
-    <main className="mdb-page" dir="rtl">
-      {/* هيرو */}
-      <section className="mdb-hero">
-        <div className="mdb-hero__badge">الفقه الإسلامي</div>
-        <h1 className="mdb-hero__title">المذاهب الفقهية الأربعة</h1>
-        <p className="mdb-hero__sub">
-          المذاهب الأربعة من ثمار الاجتهاد الفقهي في الإسلام، كلها قائمة على الكتاب والسنة والإجماع،
-          تختلف في بعض الأصول والتفريعات، ويجمعها الولاء لمنهج أهل السنة والجماعة. والخلاف بينها في الفروع سائغ معتبر مع بيان الراجح بدليله عند حاجة العمل، وحفظ مقام المخالف.
-        </p>
-        {/* أزرار تنقل */}
-        <div className="mdb-hero__nav">
+      <main className="mdb-page" dir="rtl">
+        <section className="mdb-hero">
+          <div className="mdb-hero__badge">الفقه الإسلامي</div>
+          <h1 className="mdb-hero__title">المذاهب الفقهية الأربعة</h1>
+          <p className="mdb-hero__sub">
+            المذاهب الأربعة من ثمار الاجتهاد الفقهي في الإسلام، كلها قائمة على الكتاب والسنة
+            والإجماع، تختلف في بعض الأصول والتفريعات، ويجمعها الولاء لمنهج أهل السنة والجماعة.
+            والخلاف بينها في الفروع سائغ معتبر مع بيان الراجح بدليله عند حاجة العمل، وحفظ مقام
+            المخالف.
+          </p>
+        </section>
+
+        <div className="mdb-list mdb-list--summary">
           {MADHAHIB.map((m) => (
-            <button
+            <KnowledgeSummaryCard
               key={m.id}
-              type="button"
-              className={`mdb-hero__nav-btn${openId === m.id ? " mdb-hero__nav-btn--active" : ""}`}
-              onClick={() => toggle(m.id)}
-              aria-pressed={openId === m.id}
-            >
-              <span className="mdb-hero__nav-icon"><SectionIcon name={m.icon} size={22} /></span>
-              <span className="mdb-hero__nav-name">{m.name}</span>
-            </button>
+              id={m.id}
+              href={`${LIST_PATH}/${m.id}`}
+              title={m.fullName}
+              icon={m.icon}
+              category="مذهب فقهي"
+              summary={m.summary}
+              onNavigate={persistBeforeNavigate}
+            />
           ))}
         </div>
-      </section>
 
-      {/* بطاقات المذاهب */}
-      <div className="mdb-list">
-        {MADHAHIB.map((m) => {
-          const isOpen = openId === m.id;
-          return (
-            <article key={m.id} className={`mdb-card${isOpen ? " mdb-card--open" : ""}`}>
-              {/* رأس البطاقة */}
-              <button
-                type="button"
-                className="mdb-card__header"
-                onClick={() => toggle(m.id)}
-                aria-expanded={isOpen}
-              >
-                <div className="mdb-card__header-left">
-                  <span className="mdb-card__icon"><SectionIcon name={m.icon} size={24} /></span>
-                  <div>
-                    <div className="mdb-card__name">{m.fullName}</div>
-                    <div className="mdb-card__founder">الإمام {m.founder} ({m.born}–{m.died})</div>
-                    <div className="mdb-card__origin">{m.origin}</div>
-                  </div>
-                </div>
-                <span className="mdb-card__spread">{m.spread.split("،")[0]}…</span>
-              </button>
-
-              {/* تفاصيل */}
-              {isOpen && (
-                <div className="mdb-card__body">
-                  <section className="mdb-block mdb-block--overview">
-                    <h3 className="mdb-block__title">نظرة عامة</h3>
-                    <p className="mdb-card__summary">{m.summary}</p>
-                  </section>
-
-                  <dl className="mdb-meta" aria-label="بيانات المذهب">
-                    <div className="mdb-meta__row">
-                      <dt>الاسم الكامل</dt>
-                      <dd>{m.fullName}</dd>
-                    </div>
-                    <div className="mdb-meta__row">
-                      <dt>المؤسس</dt>
-                      <dd>
-                        الإمام {m.founder} ({m.born}–{m.died})
-                      </dd>
-                    </div>
-                    <div className="mdb-meta__row">
-                      <dt>المنشأ</dt>
-                      <dd>{m.origin}</dd>
-                    </div>
-                    <div className="mdb-meta__row">
-                      <dt>الانتشار</dt>
-                      <dd>{m.spread}</dd>
-                    </div>
-                  </dl>
-
-                  <section className="mdb-block">
-                    <h3 className="mdb-block__title">المنهج الأصولي</h3>
-                    <p className="mdb-section__body">{m.methodology}</p>
-                  </section>
-
-                  <section className="mdb-block">
-                    <h3 className="mdb-block__title">مصادر التشريع</h3>
-                    <ul className="mdb-list-compact">
-                      {m.sources.map((s, i) => (
-                        <li key={i}>{s}</li>
-                      ))}
-                    </ul>
-                  </section>
-
-                  <section className="mdb-block">
-                    <h3 className="mdb-block__title">أبرز المميزات</h3>
-                    <ul className="mdb-list-compact">
-                      {m.features.map((f, i) => (
-                        <li key={i}>{f}</li>
-                      ))}
-                    </ul>
-                  </section>
-
-                  <section className="mdb-block">
-                    <h3 className="mdb-block__title">أهم المصنَّفات</h3>
-                    <ul className="mdb-list-compact mdb-list-compact--books">
-                      {m.books.map((b, i) => (
-                        <li key={i}>
-                          <span className="mdb-book__title">{b.title}</span>
-                          <span className="mdb-book__author">{b.author}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-
-                  <section className="mdb-block">
-                    <h3 className="mdb-block__title">كبار علماء المذهب</h3>
-                    <ul className="mdb-list-compact">
-                      {m.scholars.map((s, i) => (
-                        <li key={i}>{s}</li>
-                      ))}
-                    </ul>
-                  </section>
-
-                  <section className="mdb-block mdb-block--quote">
-                    <h3 className="mdb-block__title">نص منقول</h3>
-                    <blockquote className="mdb-quote">
-                      <p>«{m.quote.text}»</p>
-                      <footer>— {m.quote.source}</footer>
-                    </blockquote>
-                  </section>
-                </div>
-              )}
-            </article>
-          );
-        })}
-      </div>
-
-      {/* تنبيه */}
-      <div className="mdb-notice">
-        <p>
-          جميع المذاهب الأربعة مذاهب معتبرة في الإسلام، والاختلاف المعتبر بينها من سعة الشريعة ورحمة الاجتهاد المنضبط.
-          المسلم يتبع مذهبه بعلم أو يسأل أهل العلم في بلده.
-        </p>
-      </div>
-
-      <div className="twh-share">
-        <ShareButtons title="المذاهب الفقهية الأربعة — سُنّة" url="https://www.ssunnah.com/madhahib" />
-      </div>
-
-      {/* صفحات ذات صلة */}
-      <section className="mdb-related">
-        <h2 className="mdb-related__title">استكشف أيضاً</h2>
-        <div className="mdb-related__grid">
-          {[
-            { href: "/fiqh",           label: "الفقه الإسلامي" },
-            { href: "/fiqh-qawaid",    label: "القواعد الفقهية" },
-            { href: "/hadith-science", label: "مصطلح الحديث" },
-            { href: "/tawhid",         label: "التوحيد والعقيدة" },
-            { href: "/arkan",          label: "أركان الإسلام" },
-            { href: "/tarikh-islami",       label: "التاريخ الإسلامي" },
-          ].map(({ href, label }) => (
-            <Link key={href} href={href} className="mdb-related__link">{label}</Link>
-          ))}
+        <div className="mdb-notice">
+          <p>
+            جميع المذاهب الأربعة مذاهب معتبرة في الإسلام، والاختلاف المعتبر بينها من سعة الشريعة
+            ورحمة الاجتهاد المنضبط. المسلم يتبع مذهبه بعلم أو يسأل أهل العلم في بلده.
+          </p>
         </div>
-      </section>
-      <RelatedKnowledge kind="fatwa" query="المذاهب الفقهية" title="معرفة ذات صلة بالمذاهب" limit={6} />
-      <div className="px-4 pb-6 mt-4">
-        <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في المذاهب الفقهية" count={4} />
-      </div>
-    </main>
+
+        <div className="twh-share">
+          <ShareButtons
+            title="المذاهب الفقهية الأربعة — سُنّة"
+            url={`https://www.ssunnah.com${LIST_PATH}`}
+          />
+        </div>
+
+        <section className="mdb-related">
+          <h2 className="mdb-related__title">استكشف أيضاً</h2>
+          <div className="mdb-related__grid">
+            {[
+              { href: "/fiqh", label: "الفقه الإسلامي" },
+              { href: "/fiqh-qawaid", label: "القواعد الفقهية" },
+              { href: "/hadith-science", label: "مصطلح الحديث" },
+              { href: "/tawhid", label: "التوحيد والعقيدة" },
+              { href: "/arkan", label: "أركان الإسلام" },
+              { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
+            ].map(({ href, label }) => (
+              <Link key={href} href={href} className="mdb-related__link">
+                {label}
+              </Link>
+            ))}
+          </div>
+        </section>
+        <RelatedKnowledge kind="fatwa" query="المذاهب الفقهية" title="معرفة ذات صلة بالمذاهب" limit={6} />
+        <div className="px-4 pb-6 mt-4">
+          <SectionQuiz sectionId="fiqh" title="اختبر معلوماتك في المذاهب الفقهية" count={4} />
+        </div>
+      </main>
     </UtilityScreen>
   );
 }

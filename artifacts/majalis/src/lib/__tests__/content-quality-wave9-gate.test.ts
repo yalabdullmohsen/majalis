@@ -39,21 +39,27 @@ console.log("=== usul qawaid link ===");
 
 console.log("=== sects: arabic review + structure + empty + related ===");
 {
-  const src = read("src/views/IslamicSectsPage.tsx");
-  assert.doesNotMatch(src, /وُسمت needs_specialist_review/);
-  assert.doesNotMatch(src, /حالة المحتوى: needs_specialist_review/);
-  assert.match(src, /يحتاج تحققًا من مختص/);
-  assert.match(src, /التعريف/);
-  assert.match(src, /النشأة/);
-  assert.match(src, /EMPTY\.searchShort/);
-  assert.match(src, /href="\/tawhid\/ahl-sunnah"/);
-  assert.doesNotMatch(src, /85-90%/);
+  const list = read("src/views/IslamicSectsPage.tsx");
+  const detail = read("src/views/IslamicSectsDetailPage.tsx");
+  assert.doesNotMatch(list, /وُسمت needs_specialist_review/);
+  assert.doesNotMatch(list, /حالة المحتوى: needs_specialist_review/);
+  assert.match(detail, /يحتاج تحققًا من مختص/);
+  assert.match(detail, /التعريف/);
+  assert.match(detail, /النشأة/);
+  assert.match(list, /EMPTY\.searchShort/);
+  assert.match(detail, /href="\/tawhid\/ahl-sunnah"/);
+  assert.doesNotMatch(list + detail, /85-90%/);
+  assert.match(list, /KnowledgeSummaryCard/);
+  assert.doesNotMatch(list, /aria-expanded/);
+  assert.doesNotMatch(list, /sect-card__detail/);
 }
 
 console.log("=== sects dark pills ===");
 {
-  const css = read("src/styles/pages/islamic-sects.css");
-  assert.match(css, /html\.dark \.sect-card__pill/);
+  const css =
+    read("src/styles/pages/islamic-sects.css") +
+    read("src/styles/components/knowledge-summary-card.css");
+  assert.match(css, /html\.dark \.(?:sect-card|kx-summary-card)__pill/);
 }
 
 console.log("content-quality-wave9-gate: ok");

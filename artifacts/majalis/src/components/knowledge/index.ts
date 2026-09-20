@@ -7,6 +7,16 @@ export {
 } from "./KnowledgeLayout";
 
 export {
+  KnowledgeSummaryCard,
+  hasKnowledgeDetailContent,
+  type KnowledgeSummaryCardProps,
+  type KnowledgeDetailSection,
+  type KnowledgeDetailField,
+} from "./KnowledgeSummaryCard";
+
+export { KnowledgeDetailSurface } from "./KnowledgeDetailSurface";
+
+export {
   DefinitionBlock,
   LearningOutcomesBlock,
   EvidenceBlock,

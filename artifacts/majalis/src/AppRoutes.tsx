@@ -151,6 +151,8 @@ const ArkanImanPage = lazy(() => import("@/views/ArkanImanPage"));
 const HadithSciencePage = lazy(() => import("@/pages/hadith/HadithSciencePage"));
 const MadhahibPage = lazy(() => import("@/views/MadhahibPage"));
 const IslamicSectsPage = lazy(() => import("@/views/IslamicSectsPage"));
+const IslamicSectsDetailPage = lazy(() => import("@/views/IslamicSectsDetailPage"));
+const MadhahibDetailPage = lazy(() => import("@/views/MadhahibDetailPage"));
 const FiqhQawaidPage = lazy(() => import("@/pages/fiqh/FiqhQawaidPage"));
 const ShimaelPage = lazy(() => import("@/views/ShimaelPage"));
 const IslamStatsPage = lazy(() => import("@/views/IslamStatsPage"));
@@ -406,7 +408,9 @@ export default function AppRoutes() {
       <Route path="/arkan"><SafeLazyRoute component={ArkanIslamPage} /></Route>
       <Route path="/arkan-iman"><SafeLazyRoute component={ArkanImanPage} /></Route>
       <Route path="/hadith-science"><SafeLazyRoute component={HadithSciencePage} /></Route>
+      <Route path="/madhahib/:id"><SafeLazyRoute component={MadhahibDetailPage} /></Route>
       <Route path="/madhahib"><SafeLazyRoute component={MadhahibPage} /></Route>
+      <Route path="/islamic-sects/:id"><SafeLazyRoute component={IslamicSectsDetailPage} /></Route>
       <Route path="/islamic-sects"><SafeLazyRoute component={IslamicSectsPage} /></Route>
       <Route path="/fiqh-qawaid"><SafeLazyRoute component={FiqhQawaidPage} /></Route>
       <Route path="/shamael"><SafeLazyRoute component={ShimaelPage} /></Route>
