@@ -8,10 +8,19 @@ const APPLY_FAIL_MSG = "تعذر التحديث تلقائيًا، حاول مر
 /**
  * شيت سفلي عند اكتشاف نشر أحدث عبر /version.json.
  * «تحديث» يفرض SKIP_WAITING + مسح كاش بميزانية زمنية + reload(force) + fallback ?v=
- * «لاحقاً» يغلق فورًا بلا انتظار.
+ * «لاحقاً» يحفظ remoteVersion ولا يعيد العرض لنفس النشر.
+ * التحديث الإجباري (updateRequired) يخفي «لاحقًا».
  */
 export function UpdateAvailableBanner() {
-  const { updateAvailable, applyUpdate, dismissUpdate, shellReady } = useVersionCheck();
+  const {
+    updateAvailable,
+    updateRequired,
+    currentVersion,
+    remoteVersion,
+    applyUpdate,
+    dismissUpdate,
+    shellReady,
+  } = useVersionCheck();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const watchdogRef = useRef<number | null>(null);
@@ -33,13 +42,14 @@ export function UpdateAvailableBanner() {
   }, [clearWatchdog]);
 
   const onLater = useCallback(() => {
+    if (updateRequired) return;
     clearWatchdog();
     applyingRef.current = false;
     clearUserRefreshFlag();
     setBusy(false);
     setError(null);
     dismissUpdate();
-  }, [clearWatchdog, dismissUpdate]);
+  }, [clearWatchdog, dismissUpdate, updateRequired]);
 
   const onUpdate = useCallback(() => {
     // Guard على ref حتى لا يُبتلع الضغط الأول بـ disabled بعد setState غير متزامن (iOS WebView).
@@ -61,13 +71,16 @@ export function UpdateAvailableBanner() {
     });
   }, [applyUpdate, busy, clearWatchdog, failApply]);
 
+  const optional = !updateRequired;
+
   return (
     <AppBottomSheet
       open={Boolean(updateAvailable && shellReady)}
       onClose={onLater}
       title="تتوفر نسخة جديدة"
       snap="auto"
-      closeLabel="لاحقاً"
+      closeLabel="لاحقًا"
+      dismissible={optional}
       elevated
       className="update-available-sheet"
       footer={
@@ -88,8 +101,24 @@ export function UpdateAvailableBanner() {
       }
     >
       <p className="update-available-sheet__copy">
-        نُشرت نسخة أحدث من التطبيق. اضغط «تحديث النسخة» لتحميلها، أو «لاحقاً» للمتابعة بالنسخة الحالية.
+        يتوفر إصدار أحدث من سُنّة يحتوي على تحسينات وإصلاحات.
       </p>
+      {(currentVersion || remoteVersion) && (
+        <dl className="update-available-sheet__versions" data-testid="update-available-versions">
+          {currentVersion ? (
+            <div className="update-available-sheet__version-row">
+              <dt>الإصدار الحالي</dt>
+              <dd dir="ltr">{currentVersion}</dd>
+            </div>
+          ) : null}
+          {remoteVersion ? (
+            <div className="update-available-sheet__version-row">
+              <dt>الإصدار الجديد</dt>
+              <dd dir="ltr">{remoteVersion}</dd>
+            </div>
+          ) : null}
+        </dl>
+      )}
       {error ? (
         <p className="update-available-sheet__error" role="alert" data-testid="update-available-error">
           {error}
