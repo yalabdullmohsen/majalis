@@ -1,0 +1,2434 @@
+{
+  "version": 1,
+  "generatedAt": "2026-09-20T13:59:50.766Z",
+  "policy": "no_ai_invention_no_memory_completion_no_auto_publish_human_review_required",
+  "sourceOfTruthUi": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+  "route": "/islamic-sects",
+  "recordCount": 35,
+  "publishedCount": 0,
+  "hiddenCount": 35,
+  "taxonomyRef": "docs/content-quality/islamic-sects-taxonomy.json",
+  "records": [
+    {
+      "id": "ahl-al-sunna",
+      "slug": "ahl-al-sunna",
+      "canonicalName": "أهل السنة والجماعة",
+      "alternateNames": [
+        "أهل السنة والجماعة (الجماعة)",
+        "أهل السنة"
+      ],
+      "selfDesignation": [
+        "أهل السنة والجماعة",
+        "أهل السنة"
+      ],
+      "externalDesignations": [],
+      "parentTradition": null,
+      "entityKind": "creedal_school",
+      "legacyUiCategory": "مدرسة سنية",
+      "classification": "creedal_school",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "من القرن الأول الهجري",
+      "emergencePlace": "الحجاز / الشام / العراق",
+      "attributedFounder": "التأسيس النبوي — الصحابة الكرام",
+      "keyHistoricalFigures": [
+        "الإمام أحمد بن حنبل",
+        "الطحاوي",
+        "ابن تيمية",
+        "ابن القيم",
+        "ابن أبي العز",
+        "اللالكائي"
+      ],
+      "summary": "التمسك بسنة النبي ﷺ وإجماع الصحابة والاتباع لا الابتداع",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "القرآن الكريم كلام الله غير مخلوق",
+        "الإيمان قول وعمل واعتقاد، يزيد وينقص",
+        "إثبات الأسماء والصفات بلا تحريف ولا تعطيل ولا تكييف ولا تمثيل",
+        "الصحابة عدول لا يُطعن في أحد منهم، والكفّ عما شجر بينهم",
+        "محبة آل البيت بلا غلوّ يرفعهم فوق منزلتهم",
+        "رؤية الله في الآخرة حق ثابت بالكتاب والسنة",
+        "كرامات الأولياء حق لا تبلغ درجة معجزات الأنبياء",
+        "القدر خيره وشره من الله تعالى — علمًا وكتابةً ومشيئةً وخلقًا",
+        "الوسطية بين الخوارج والمرجئة في باب الأسماء والأحكام",
+        "اتباع السنة وترك البدع في الدين"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "الغالبية العظمى من المسلمين في العالم",
+      "primarySources": [],
+      "secondarySources": [
+        "العقيدة الواسطية — ابن تيمية",
+        "العقيدة الطحاوية — الطحاوي (مع شرح ابن أبي العز)",
+        "لمعة الاعتقاد — ابن قدامة",
+        "شرح أصول اعتقاد أهل السنة — اللالكائي",
+        "أصول السنة — الإمام أحمد"
+      ],
+      "attributedCritiques": [],
+      "quotations": [
+        "«عليكم بسنتي وسنة الخلفاء الراشدين المهديين من بعدي، عَضّوا عليها بالنواجذ» — رواه أبو داود والترمذي، وحسّنه الترمذي وصححه جمع من أهل العلم. وأما حديث افتراق الأمة فله طرق يتكلم فيها أهل الحديث؛ والعمدة لزوم الجماعة على الحق لا مجرد العدد."
+      ],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SOURCE",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "من القرن الأول الهجري",
+        "origin": "الحجاز / الشام / العراق",
+        "founder": "التأسيس النبوي — الصحابة الكرام",
+        "statusLabel": "قائمة",
+        "spread": "الغالبية العظمى من المسلمين في العالم",
+        "keyBeliefsCount": 10,
+        "keyBooksCount": 5,
+        "hasQuote": true
+      },
+      "inventoryFlags": [
+        "spread_claim_unverified",
+        "founder_field_conflates_prophetic_foundation",
+        "beliefs_mix_descriptive_and_normative",
+        "quote_needs_hadith_verification_display"
+      ]
+    },
+    {
+      "id": "ashariyya",
+      "slug": "ashariyya",
+      "canonicalName": "الأشعرية",
+      "alternateNames": [
+        "أهل السنة — المدرسة الأشعرية",
+        "الأشاعرة",
+        "المدرسة الأشعرية"
+      ],
+      "selfDesignation": [
+        "الأشاعرة",
+        "المدرسة الأشعرية"
+      ],
+      "externalDesignations": [],
+      "parentTradition": "ahl-al-sunna",
+      "entityKind": "creedal_school",
+      "legacyUiCategory": "مدرسة عقدية",
+      "classification": "creedal_school",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الرابع الهجري (ت.324 هـ)",
+      "emergencePlace": "البصرة / بغداد",
+      "attributedFounder": "أبو الحسن الأشعري (260-324 هـ)",
+      "keyHistoricalFigures": [
+        "الإمام الغزالي",
+        "إمام الحرمين الجويني",
+        "الفخر الرازي",
+        "الآمدي"
+      ],
+      "summary": "مواجهة المعتزلة بالمنطق والبرهان العقلي مع التمسك بالنصوص والتسليم لها",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "تأويل الصفات المتشابهة بما يليق بجلال الله",
+        "العقل لا يستقل بمعرفة الحسن والقبح",
+        "القرآن الكريم كلام الله غير مخلوق",
+        "الكسب: للعبد اكتساب وإرادة والله خالق الأفعال",
+        "الرؤية حق لأهل الجنة"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "سائدة في المغرب العربي ومصر والشام وجنوب آسيا وتركيا",
+      "primarySources": [],
+      "secondarySources": [
+        "الإبانة عن أصول الديانة — الأشعري",
+        "اللمع في الرد على أهل الزيغ — الأشعري",
+        "التمهيد — الباقلاني",
+        "الإرشاد — الجويني"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_HISTORICAL_REVIEW",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الرابع الهجري (ت.324 هـ)",
+        "origin": "البصرة / بغداد",
+        "founder": "أبو الحسن الأشعري (260-324 هـ)",
+        "statusLabel": "قائمة",
+        "spread": "سائدة في المغرب العربي ومصر والشام وجنوب آسيا وتركيا",
+        "keyBeliefsCount": 5,
+        "keyBooksCount": 4,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "era_needs_source_check",
+        "beliefs_oversimplified",
+        "spread_claim_unverified"
+      ]
+    },
+    {
+      "id": "maturidiyya",
+      "slug": "maturidiyya",
+      "canonicalName": "الماتريدية",
+      "alternateNames": [
+        "أهل السنة — المدرسة الماتريدية"
+      ],
+      "selfDesignation": [
+        "الماتريدية"
+      ],
+      "externalDesignations": [],
+      "parentTradition": "ahl-al-sunna",
+      "entityKind": "creedal_school",
+      "legacyUiCategory": "مدرسة عقدية",
+      "classification": "creedal_school",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الرابع الهجري (ت.333 هـ)",
+      "emergencePlace": "سمرقند / ما وراء النهر",
+      "attributedFounder": "أبو منصور الماتريدي (238-333 هـ)",
+      "keyHistoricalFigures": [
+        "أبو المعين النسفي",
+        "أبو البركات النسفي",
+        "كمال الدين ابن الهمام"
+      ],
+      "summary": "تدعيم عقيدة أهل السنة في مواجهة المعتزلة والجهمية في بلاد خراسان",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "تنزيه الله عن التشبيه مع إثبات الصفات اللائقة بجلاله",
+        "العقل يعرف وجود الله والحسن والقبح، والشرع يؤكدهما ويفصّلهما",
+        "القرآن الكريم كلام الله القديم النفسي",
+        "الإيمان لا يزيد ولا ينقص في أصله"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "سائدة في الأحناف في تركيا وآسيا الوسطى وجنوب آسيا",
+      "primarySources": [],
+      "secondarySources": [
+        "كتاب التوحيد — الماتريدي",
+        "تأويلات أهل السنة — الماتريدي",
+        "شرح الفقه الأكبر — ملا علي القاري"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_HISTORICAL_REVIEW",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الرابع الهجري (ت.333 هـ)",
+        "origin": "سمرقند / ما وراء النهر",
+        "founder": "أبو منصور الماتريدي (238-333 هـ)",
+        "statusLabel": "قائمة",
+        "spread": "سائدة في الأحناف في تركيا وآسيا الوسطى وجنوب آسيا",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 3,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "faith_increase_decrease_claim_needs_nuance",
+        "spread_claim_unverified"
+      ]
+    },
+    {
+      "id": "shia-ithna",
+      "slug": "shia-ithna",
+      "canonicalName": "الشيعة الاثنا عشرية",
+      "alternateNames": [
+        "الشيعة الإمامية الاثنا عشرية",
+        "الإمامية",
+        "الاثنا عشرية",
+        "الرافضة (تسمية خارجية خلافية)"
+      ],
+      "selfDesignation": [
+        "الإمامية",
+        "الاثنا عشرية"
+      ],
+      "externalDesignations": [
+        "الرافضة (تسمية خارجية خلافية)"
+      ],
+      "parentTradition": null,
+      "entityKind": "shi_i_branch",
+      "legacyUiCategory": "شيعة",
+      "classification": "shi_i_branch",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الأول الهجري (بدأت الجذور بعد مقتل الحسين 61 هـ)",
+      "emergencePlace": "الكوفة / العراق",
+      "attributedFounder": "تبلورت حول القول بإمامة اثني عشر إماماً من آل البيت، وبرز فقهها الجعفري في تراث جعفر الصادق (ت.148 هـ)",
+      "keyHistoricalFigures": [
+        "الشيخ الطوسي",
+        "الشيخ المفيد",
+        "العلامة الحلي",
+        "الخميني"
+      ],
+      "summary": "الاعتقاد بأن الإمامة حق إلهي لآل البيت النبوي من نسل علي وفاطمة",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الإمامة من أصول الدين، وهي نص إلهي لا اختيار بشري",
+        "اثنا عشر إماماً معصومون من نسل علي بن أبي طالب",
+        "الإمام الثاني عشر (المهدي) غائب وسيعود في آخر الزمان",
+        "المتعة (زواج مؤقت) جائزة",
+        "بعض الروايات تختلف في السنة عن صحيح البخاري ومسلم"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "إيران (الغالبية)، العراق، لبنان، البحرين، أجزاء من باكستان واليمن",
+      "primarySources": [],
+      "secondarySources": [
+        "الكافي — الكليني",
+        "من لا يحضره الفقيه — الصدوق",
+        "نهج البلاغة"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SOURCE",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الأول الهجري (بدأت الجذور بعد مقتل الحسين 61 هـ)",
+        "origin": "الكوفة / العراق",
+        "founder": "تبلورت حول القول بإمامة اثني عشر إماماً من آل البيت، وبرز فقهها الجعفري في تراث جعفر الصادق (ت.148 هـ)",
+        "statusLabel": "قائمة",
+        "spread": "إيران (الغالبية)، العراق، لبنان، البحرين، أجزاء من باكستان واليمن",
+        "keyBeliefsCount": 5,
+        "keyBooksCount": 3,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "emergence_reduction_needs_source",
+        "fiqh_items_mixed_with_creed",
+        "spread_percent_style_claims_absent_but_broad"
+      ]
+    },
+    {
+      "id": "zaidiyya",
+      "slug": "zaidiyya",
+      "canonicalName": "الزيدية",
+      "alternateNames": [
+        "الزيدية — الشيعة الزيدية"
+      ],
+      "selfDesignation": [
+        "الزيدية"
+      ],
+      "externalDesignations": [],
+      "parentTradition": null,
+      "entityKind": "shi_i_branch",
+      "legacyUiCategory": "شيعة",
+      "classification": "shi_i_branch",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الثاني الهجري (ثورة زيد 122 هـ)",
+      "emergencePlace": "الكوفة / اليمن",
+      "attributedFounder": "زيد بن علي بن الحسين بن علي (ت. 122 هـ)",
+      "keyHistoricalFigures": [
+        "يحيى بن الحسين (الهادي)",
+        "الناصر للحق الأطروش"
+      ],
+      "summary": "رفض السكوت عن الظلم والمطالبة بإمامة العالم المجاهد من آل البيت",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الإمامة لمن هو من ذرية علي وفاطمة وقام بالسيف ضد الظالمين",
+        "الأئمة غير معصومين وعددهم غير محدد",
+        "أقرب الفرق الشيعية لأهل السنة في الفقه والعقيدة",
+        "يرون صحة خلافة أبي بكر وعمر مع تفضيل علي"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "اليمن (الحوثيون يعتنقون الزيدية) وبعض مناطق قزوين",
+      "primarySources": [],
+      "secondarySources": [
+        "مسند الإمام زيد",
+        "البحر الزخار — المهدي لدين الله"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_HISTORICAL_REVIEW",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الثاني الهجري (ثورة زيد 122 هـ)",
+        "origin": "الكوفة / اليمن",
+        "founder": "زيد بن علي بن الحسين بن علي (ت. 122 هـ)",
+        "statusLabel": "قائمة",
+        "spread": "اليمن (الحوثيون يعتنقون الزيدية) وبعض مناطق قزوين",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 2,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "comparative_claim_aqrab_needs_attribution",
+        "contemporary_political_link_needs_care"
+      ]
+    },
+    {
+      "id": "ismaeliyya",
+      "slug": "ismaeliyya",
+      "canonicalName": "الإسماعيلية",
+      "alternateNames": [
+        "الإسماعيلية — الشيعة السبعية",
+        "السبعية (وصف تاريخي)"
+      ],
+      "selfDesignation": [
+        "الإسماعيلية"
+      ],
+      "externalDesignations": [
+        "السبعية (وصف تاريخي)"
+      ],
+      "parentTradition": null,
+      "entityKind": "shi_i_branch",
+      "legacyUiCategory": "شيعة",
+      "classification": "shi_i_branch",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الثاني الهجري (انشقاق 148 هـ)",
+      "emergencePlace": "المدينة المنورة / مصر / فارس",
+      "attributedFounder": "إسماعيل بن جعفر الصادق (ت. 145 هـ) ومن ناصروا خط إمامته",
+      "keyHistoricalFigures": [
+        "القاضي النعمان",
+        "حميد الدين الكرماني"
+      ],
+      "summary": "الاعتقاد بأن الإمامة انتقلت من الصادق إلى إسماعيل ثم ابنه محمد لا إلى موسى الكاظم",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الإمامة استمرت في نسل إسماعيل وللنصوص ظاهر وباطن",
+        "التأويل الباطني للنصوص الشرعية",
+        "فروع عدة: الفاطمية والنزارية والمستعلية والدروز"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "الهند وباكستان وأفغانستان وأجزاء من إفريقيا وسوريا (فرقة الآغاخانية النزارية)",
+      "primarySources": [],
+      "secondarySources": [
+        "دعائم الإسلام — النعمان بن محمد",
+        "راحة العقل — حميد الدين الكرماني"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_HISTORICAL_REVIEW",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الثاني الهجري (انشقاق 148 هـ)",
+        "origin": "المدينة المنورة / مصر / فارس",
+        "founder": "إسماعيل بن جعفر الصادق (ت. 145 هـ) ومن ناصروا خط إمامته",
+        "statusLabel": "قائمة",
+        "spread": "الهند وباكستان وأفغانستان وأجزاء من إفريقيا وسوريا (فرقة الآغاخانية النزارية)",
+        "keyBeliefsCount": 3,
+        "keyBooksCount": 2,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "branches_listed_without_tree",
+        "founder_field_needs_split"
+      ]
+    },
+    {
+      "id": "khawarij",
+      "slug": "khawarij",
+      "canonicalName": "الخوارج",
+      "alternateNames": [
+        "الخوارج (أهل الوعيد)",
+        "أهل الوعيد (تسمية خارجية)"
+      ],
+      "selfDesignation": [],
+      "externalDesignations": [
+        "الخوارج",
+        "أهل الوعيد (تسمية خارجية)"
+      ],
+      "parentTradition": null,
+      "entityKind": "historical_sect",
+      "legacyUiCategory": "فرقة تاريخية",
+      "classification": "historical_sect",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الأول الهجري (38 هـ — معركة صفين)",
+      "emergencePlace": "الكوفة / حروراء",
+      "attributedFounder": "خرجوا على علي بن أبي طالب بعد قبوله التحكيم في صفين",
+      "keyHistoricalFigures": [],
+      "summary": "رفض التحكيم البشري في الخلافة وتكفير من قبله — «لا حكم إلا لله»",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "تكفير مرتكب الكبيرة وخلوده في النار",
+        "الخروج على كل إمام ظالم واجب شرعاً",
+        "الإيمان لا يتجزأ: ترك الفريضة كفر",
+        "اشتهروا بالغلو في التكفير واستحلال قتال المخالفين"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "انقرضوا إلا الإباضية التي تتبرأ من لقب «الخوارج» وتُعدّ أعدل فرقهم",
+      "primarySources": [],
+      "secondarySources": [
+        "لا كتب مستقلة لمعظمهم — أُثّر عنهم خطب وشعر",
+        "كتاب الملل والنحل (عرض نقدي) — الشهرستاني"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SHARIA_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الأول الهجري (38 هـ — معركة صفين)",
+        "origin": "الكوفة / حروراء",
+        "founder": "خرجوا على علي بن أبي طالب بعد قبوله التحكيم في صفين",
+        "statusLabel": "تاريخية",
+        "spread": "انقرضوا إلا الإباضية التي تتبرأ من لقب «الخوارج» وتُعدّ أعدل فرقهم",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 2,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "external_pejorative_label_in_fullname",
+        "extinction_claim_unverified",
+        "ibadiyya_linkage_oversimplified",
+        "app_voice_normative_language"
+      ]
+    },
+    {
+      "id": "ibadiyya",
+      "slug": "ibadiyya",
+      "canonicalName": "الإباضية",
+      "alternateNames": [
+        "الإباضية — أتباع عبد الله بن إباض",
+        "الخوارج (تسمية يرفضها كثير من الإباضية)"
+      ],
+      "selfDesignation": [
+        "الإباضية"
+      ],
+      "externalDesignations": [
+        "الخوارج (تسمية يرفضها كثير من الإباضية)"
+      ],
+      "parentTradition": null,
+      "entityKind": "independent_community",
+      "legacyUiCategory": "فرقة مستقلة",
+      "classification": "independent_community",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الأول الهجري (انشقوا عن الخوارج نحو 65 هـ)",
+      "emergencePlace": "البصرة / عُمان",
+      "attributedFounder": "عبد الله بن إباض التميمي (ت. نحو 86 هـ) وجابر بن زيد",
+      "keyHistoricalFigures": [
+        "جابر بن زيد الأزدي",
+        "أبو عبيدة مسلم بن أبي كريمة"
+      ],
+      "summary": "فصل أنفسهم عن غلو الخوارج في التكفير مع الاحتفاظ ببعض أصولهم",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "مرتكب الكبيرة كافر كفر نعمة لا كفر ملة (خلافاً للخوارج)",
+        "الإمامة الشورى وللمسلمين خلع إمامهم",
+        "يخالفون غلاة الخوارج في تكفير المخالفين واستحلال دمائهم",
+        "الرؤية غير ممكنة لله يوم القيامة"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "عُمان (المذهب الرسمي)، وجيوب في زنجبار وتونس والجزائر وليبيا",
+      "primarySources": [],
+      "secondarySources": [
+        "المصنف — الكِنْدي",
+        "بيان الشرع — محمد بن إبراهيم الكِنْدي"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_HISTORICAL_REVIEW",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الأول الهجري (انشقوا عن الخوارج نحو 65 هـ)",
+        "origin": "البصرة / عُمان",
+        "founder": "عبد الله بن إباض التميمي (ت. نحو 86 هـ) وجابر بن زيد",
+        "statusLabel": "قائمة",
+        "spread": "عُمان (المذهب الرسمي)، وجيوب في زنجبار وتونس والجزائر وليبيا",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 2,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "origin_from_khawarij_needs_nuanced_sources",
+        "founder_dual_attribution"
+      ]
+    },
+    {
+      "id": "mutazila",
+      "slug": "mutazila",
+      "canonicalName": "المعتزلة",
+      "alternateNames": [
+        "المعتزلة — أصحاب العدل والتوحيد",
+        "أصحاب العدل والتوحيد"
+      ],
+      "selfDesignation": [
+        "المعتزلة",
+        "أصحاب العدل والتوحيد"
+      ],
+      "externalDesignations": [],
+      "parentTradition": null,
+      "entityKind": "kalam_school",
+      "legacyUiCategory": "فرقة تاريخية",
+      "classification": "kalam_school",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الثاني الهجري (اعتزال واصل بن عطاء نحو 105 هـ)",
+      "emergencePlace": "البصرة / بغداد",
+      "attributedFounder": "واصل بن عطاء (80-131 هـ) وعمرو بن عبيد",
+      "keyHistoricalFigures": [
+        "النظام",
+        "الجاحظ",
+        "الزمخشري",
+        "القاضي عبد الجبار"
+      ],
+      "summary": "الاعتزال عن مجلس الحسن البصري في مسألة مرتكب الكبيرة — المنزلة بين المنزلتين",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "التوحيد: نفي الصفات القائمة بالذات (الصفات أعيان الذات لا زائدة عليها)",
+        "العدل: الله لا يخلق أفعال العباد — للعبد إرادة حقيقية (خلافاً للجبرية)",
+        "المنزلة بين المنزلتين: الفاسق لا مؤمن ولا كافر",
+        "الوعد والوعيد: الله لا يغفر صاحب الكبيرة غير التائب عندهم (التزاماً بالوعيد)",
+        "القرآن مخلوق — أزمة الخلق في عهد المأمون والمعتصم"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "انقرضت كفرقة منظمة في القرن السادس الهجري مع انتشار الأشعرية والماتريدية",
+      "primarySources": [],
+      "secondarySources": [
+        "المغني — القاضي عبد الجبار",
+        "شرح الأصول الخمسة — القاضي عبد الجبار",
+        "الكشاف — الزمخشري (في التفسير)"
+      ],
+      "attributedCritiques": [],
+      "quotations": [
+        "الإنسان بطبيعته يعرف الحسن والقبح عقلاً — واصل بن عطاء"
+      ],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SOURCE",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الثاني الهجري (اعتزال واصل بن عطاء نحو 105 هـ)",
+        "origin": "البصرة / بغداد",
+        "founder": "واصل بن عطاء (80-131 هـ) وعمرو بن عبيد",
+        "statusLabel": "تاريخية",
+        "spread": "انقرضت كفرقة منظمة في القرن السادس الهجري مع انتشار الأشعرية والماتريدية",
+        "keyBeliefsCount": 5,
+        "keyBooksCount": 3,
+        "hasQuote": true
+      },
+      "inventoryFlags": [
+        "extinction_date_claim_unverified",
+        "quote_attribution_needs_source"
+      ]
+    },
+    {
+      "id": "murjia",
+      "slug": "murjia",
+      "canonicalName": "المرجئة",
+      "alternateNames": [
+        "المرجئة (أهل الإرجاء)"
+      ],
+      "selfDesignation": [],
+      "externalDesignations": [
+        "المرجئة"
+      ],
+      "parentTradition": null,
+      "entityKind": "historical_sect",
+      "legacyUiCategory": "فرقة تاريخية",
+      "classification": "historical_sect",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الأول الهجري (ظهرت في الفتنة الأولى 36-41 هـ)",
+      "emergencePlace": "الكوفة / الشام",
+      "attributedFounder": "نُسب إليهم القول بالإرجاء في أهل الكبائر والتوقف في الفتن الأولى",
+      "keyHistoricalFigures": [
+        "جهم بن صفوان (غلا حتى أنكر الصفات)",
+        "الحسن بن محمد ابن الحنفية"
+      ],
+      "summary": "التوقف عن الحكم على أصحاب الكبائر وإرجاء أمرهم إلى الله",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الإيمان هو المعرفة والتصديق القلبي فحسب، والعمل ليس ركناً فيه",
+        "لا يضر مع الإيمان ذنب، ولا ينفع مع الكفر طاعة",
+        "التوقف عن الحكم على مرتكب الكبيرة بنار أو بجنة"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "انقرضت كفرقة مستقلة، وبعض مقولاتها يُحذَّر منها في كتب العقيدة",
+      "primarySources": [],
+      "secondarySources": [],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SOURCE",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الأول الهجري (ظهرت في الفتنة الأولى 36-41 هـ)",
+        "origin": "الكوفة / الشام",
+        "founder": "نُسب إليهم القول بالإرجاء في أهل الكبائر والتوقف في الفتن الأولى",
+        "statusLabel": "تاريخية",
+        "spread": "انقرضت كفرقة مستقلة، وبعض مقولاتها يُحذَّر منها في كتب العقيدة",
+        "keyBeliefsCount": 3,
+        "keyBooksCount": 0,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "umbrella_label_multiple_streams",
+        "jahm_listed_as_scholar_needs_split",
+        "no_primary_books"
+      ]
+    },
+    {
+      "id": "jahmiyya",
+      "slug": "jahmiyya",
+      "canonicalName": "الجهمية",
+      "alternateNames": [
+        "الجهمية — أتباع جهم بن صفوان"
+      ],
+      "selfDesignation": [],
+      "externalDesignations": [
+        "الجهمية"
+      ],
+      "parentTradition": null,
+      "entityKind": "historical_sect",
+      "legacyUiCategory": "فرقة تاريخية",
+      "classification": "historical_sect",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الثاني الهجري (ت. جهم 128 هـ)",
+      "emergencePlace": "ترمذ / خراسان",
+      "attributedFounder": "جهم بن صفوان (ت. 128 هـ)",
+      "keyHistoricalFigures": [],
+      "summary": "إفراط في التنزيه أفضى إلى تعطيل الصفات الإلهية ونفيها كلياً",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "نفي جميع صفات الله تعالى تنزيهاً مطلقاً",
+        "الإيمان مجرد المعرفة القلبية",
+        "الجنة والنار تفنيان بعد دخول أهلهما",
+        "الجبر المحض: لا قدرة للعبد أصلاً"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "انقرضت ورُدَّ عليها في كتب العقيدة السنية كالرد على الجهمية للإمام أحمد",
+      "primarySources": [],
+      "secondarySources": [],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SOURCE",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الثاني الهجري (ت. جهم 128 هـ)",
+        "origin": "ترمذ / خراسان",
+        "founder": "جهم بن صفوان (ت. 128 هـ)",
+        "statusLabel": "تاريخية",
+        "spread": "انقرضت ورُدَّ عليها في كتب العقيدة السنية كالرد على الجهمية للإمام أحمد",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 0,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "no_primary_books",
+        "beliefs_from_critics_only"
+      ]
+    },
+    {
+      "id": "sufiyya",
+      "slug": "sufiyya",
+      "canonicalName": "التصوف الإسلامي",
+      "alternateNames": [
+        "التصوف الإسلامي — الطريقة الصوفية",
+        "التصوف",
+        "أهل التصوف"
+      ],
+      "selfDesignation": [
+        "التصوف",
+        "أهل التصوف"
+      ],
+      "externalDesignations": [],
+      "parentTradition": "ahl-al-sunna",
+      "entityKind": "sufi_current",
+      "legacyUiCategory": "مدرسة سنية",
+      "classification": "sufi_current",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الثاني الهجري (أوائل الزهاد)",
+      "emergencePlace": "البصرة / بغداد / خراسان",
+      "attributedFounder": "نشأ من الزهاد الأوائل كالحسن البصري والفضيل بن عياض",
+      "keyHistoricalFigures": [
+        "الجنيد البغدادي",
+        "الحارث المحاسبي",
+        "ابن عطاء الله السكندري"
+      ],
+      "summary": "التركيز على الجانب الروحي والتزكوي في الإسلام والزهد في الدنيا",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "التسليك الروحي والتزكية عبر ذكر الله وورد منتظم",
+        "التربية على يد شيخ مرشد",
+        "الطرق الصوفية (القادرية، النقشبندية، الشاذلية...)",
+        "الخلاف في بعض ممارساتهم: المقبول منها الزهد والذكر والمردود الغلو والبدع"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "منتشرة في إفريقيا والشام وتركيا والمغرب والهند",
+      "primarySources": [],
+      "secondarySources": [
+        "الرسالة القشيرية — القشيري",
+        "إحياء علوم الدين — الغزالي",
+        "مدارج السالكين — ابن القيم (نقدي توجيهي)"
+      ],
+      "attributedCritiques": [],
+      "quotations": [
+        "التصوف بناؤه على ثلاثة أشياء: الافتقار إلى الله، والإشارة بلسان الاضطرار، وإسقاط التدبير — الجنيد البغدادي"
+      ],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_HISTORICAL_REVIEW",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الثاني الهجري (أوائل الزهاد)",
+        "origin": "البصرة / بغداد / خراسان",
+        "founder": "نشأ من الزهاد الأوائل كالحسن البصري والفضيل بن عياض",
+        "statusLabel": "قائمة",
+        "spread": "منتشرة في إفريقيا والشام وتركيا والمغرب والهند",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 3,
+        "hasQuote": true
+      },
+      "inventoryFlags": [
+        "not_a_single_sect",
+        "taxonomy_mismatch_legacy_sunni_school",
+        "normative_accept_reject_in_beliefs"
+      ]
+    },
+    {
+      "id": "athariyya",
+      "slug": "athariyya",
+      "canonicalName": "الأثرية (أهل الحديث والأثر)",
+      "alternateNames": [
+        "المدرسة الأثرية — أهل الحديث والسنة",
+        "أهل الحديث",
+        "الأثرية",
+        "أهل الأثر"
+      ],
+      "selfDesignation": [
+        "أهل الحديث",
+        "الأثرية",
+        "أهل الأثر"
+      ],
+      "externalDesignations": [],
+      "parentTradition": "ahl-al-sunna",
+      "entityKind": "creedal_school",
+      "legacyUiCategory": "مدرسة عقدية",
+      "classification": "creedal_school",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الثاني الهجري (نسبةً للإمام أحمد ت.241هـ)",
+      "emergencePlace": "الحجاز / العراق / الشام",
+      "attributedFounder": "نسبةً لمنهج الإمام أحمد بن حنبل وسائر أئمة الحديث كالبخاري وأبي زرعة",
+      "keyHistoricalFigures": [
+        "الإمام أحمد بن حنبل",
+        "ابن تيمية",
+        "ابن القيم",
+        "ابن عبد البر",
+        "الذهبي"
+      ],
+      "summary": "التمسك بالكتاب والسنة وآثار السلف دون الخوض في الكلام أو التأويل",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "إثبات الصفات الإلهية كما جاءت بلا تشبيه، مع تفويض الكيفية إلى الله",
+        "تقديم النص على العقل عند أي تعارض ظاهري",
+        "الإيمان قول وعمل واعتقاد يزيد وينقص",
+        "الوقوف مع ما ثبت عن السلف الصالح من الصحابة والتابعين"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "سائدة في السعودية ودول الخليج وأوساط المهتمين بعلوم الحديث عالمياً",
+      "primarySources": [],
+      "secondarySources": [
+        "السنة — ابن أبي عاصم",
+        "العقيدة الواسطية — ابن تيمية",
+        "التدمرية والحموية — ابن تيمية",
+        "الصواعق المرسلة — ابن القيم"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_HISTORICAL_REVIEW",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الثاني الهجري (نسبةً للإمام أحمد ت.241هـ)",
+        "origin": "الحجاز / العراق / الشام",
+        "founder": "نسبةً لمنهج الإمام أحمد بن حنبل وسائر أئمة الحديث كالبخاري وأبي زرعة",
+        "statusLabel": "قائمة",
+        "spread": "سائدة في السعودية ودول الخليج وأوساط المهتمين بعلوم الحديث عالمياً",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 4,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "founder_as_nisba_not_founder",
+        "spread_gulf_claim_unverified"
+      ]
+    },
+    {
+      "id": "deobandiyya",
+      "slug": "deobandiyya",
+      "canonicalName": "الديوبندية",
+      "alternateNames": [
+        "الديوبندية — مدرسة دار العلوم ديوبند"
+      ],
+      "selfDesignation": [
+        "الديوبندية"
+      ],
+      "externalDesignations": [],
+      "parentTradition": "ahl-al-sunna",
+      "entityKind": "reform_trend",
+      "legacyUiCategory": "مدرسة سنية",
+      "classification": "reform_trend",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الثالث عشر الهجري (1867م — 1283هـ)",
+      "emergencePlace": "ديوبند، الهند البريطانية",
+      "attributedFounder": "محمد قاسم النانوتوي (ت.1297هـ) ورشيد أحمد الكنكوهي (ت.1323هـ)",
+      "keyHistoricalFigures": [
+        "محمد قاسم النانوتوي",
+        "رشيد أحمد الكنكوهي",
+        "أشرف علي التهانوي",
+        "محمود الحسن الديوبندي"
+      ],
+      "summary": "إنقاذ الهوية الإسلامية في شبه القارة الهندية بعد سقوط المغول وتمدد الاستعمار البريطاني",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "التمسك بالمذهب الحنفي في الفقه والماتريدية أو الأشعرية في العقيدة",
+        "التصوف المعتدل المنضبط بالشريعة ضمن الطرق الحنفية",
+        "التركيز على التعليم الديني التقليدي ومقاومة الاستعمار",
+        "نقد البدع والخرافات مع قبول الممارسات الصوفية المشروعة"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "الهند وباكستان وبنغلاديش وأفغانستان وبريطانيا وأفريقيا — صاحبة أكبر شبكة مدارس دينية",
+      "primarySources": [],
+      "secondarySources": [
+        "بذل المجهود في حل أبي داود — الساهارنفوري",
+        "حجة الله البالغة — شاه ولي الله الدهلوي (مصدر فكري للمدرسة)"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SOURCE",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الثالث عشر الهجري (1867م — 1283هـ)",
+        "origin": "ديوبند، الهند البريطانية",
+        "founder": "محمد قاسم النانوتوي (ت.1297هـ) ورشيد أحمد الكنكوهي (ت.1323هـ)",
+        "statusLabel": "قائمة",
+        "spread": "الهند وباكستان وبنغلاديش وأفغانستان وبريطانيا وأفريقيا — صاحبة أكبر شبكة مدارس دينية",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 2,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "largest_network_claim_unverified"
+      ]
+    },
+    {
+      "id": "barelwiyya",
+      "slug": "barelwiyya",
+      "canonicalName": "البريلوية",
+      "alternateNames": [
+        "البريلوية — أهل السنة والجماعة الهندية",
+        "أهل السنة والجماعة (عند أتباعها في جنوب آسيا)"
+      ],
+      "selfDesignation": [
+        "أهل السنة والجماعة (عند أتباعها في جنوب آسيا)"
+      ],
+      "externalDesignations": [
+        "البريلوية"
+      ],
+      "parentTradition": "ahl-al-sunna",
+      "entityKind": "sufi_current",
+      "legacyUiCategory": "مدرسة سنية",
+      "classification": "sufi_current",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الثالث عشر الهجري (1880م — 1297هـ)",
+      "emergencePlace": "بريلي، الهند البريطانية (أوتار براديش)",
+      "attributedFounder": "أحمد رضا خان البريلوي (ت.1340هـ/1921م)",
+      "keyHistoricalFigures": [
+        "أحمد رضا خان البريلوي",
+        "حامد رضا خان",
+        "حامد رضا خان"
+      ],
+      "summary": "الدفاع عن تقاليد الصوفية السنية والرد على ما رأوه تشدداً عند الديوبندية في إنكار التعظيم",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "تعظيم النبي ﷺ وتقديره، والتوسل به وبالأولياء",
+        "جواز إحياء الموالد والاحتفالات الدينية التقليدية",
+        "قبول زيارة الأضرحة والتبرك بالصالحين",
+        "المزج بين الفقه الحنفي والتصوف الصافي"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "الغالبية في باكستان والهند وبنغلاديش، وجاليات جنوب آسيا في بريطانيا",
+      "primarySources": [],
+      "secondarySources": [
+        "فتاوى رضوية — أحمد رضا خان",
+        "الدولة المكية بالمادة الغيبية — أحمد رضا خان"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SOURCE",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الثالث عشر الهجري (1880م — 1297هـ)",
+        "origin": "بريلي، الهند البريطانية (أوتار براديش)",
+        "founder": "أحمد رضا خان البريلوي (ت.1340هـ/1921م)",
+        "statusLabel": "قائمة",
+        "spread": "الغالبية في باكستان والهند وبنغلاديش، وجاليات جنوب آسيا في بريطانيا",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 2,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "duplicate_scholar_name",
+        "majority_claim_unverified",
+        "self_vs_external_name"
+      ]
+    },
+    {
+      "id": "tabligh-jamaat",
+      "slug": "tabligh-jamaat",
+      "canonicalName": "جماعة التبليغ والدعوة",
+      "alternateNames": [
+        "جماعة التبليغ والدعوة — دعوة فردية إلى الإسلام",
+        "جماعة التبليغ"
+      ],
+      "selfDesignation": [
+        "جماعة التبليغ"
+      ],
+      "externalDesignations": [],
+      "parentTradition": "deobandiyya",
+      "entityKind": "political_creedal_movement",
+      "legacyUiCategory": "مدرسة سنية",
+      "classification": "political_creedal_movement",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الرابع عشر الهجري (1926م — 1345هـ)",
+      "emergencePlace": "ميوات، الهند البريطانية",
+      "attributedFounder": "محمد إلياس الكاندهلوي (1885-1944م)",
+      "keyHistoricalFigures": [
+        "محمد إلياس الكاندهلوي",
+        "محمد يوسف الكاندهلوي",
+        "محمد سعد الكاندهلوي"
+      ],
+      "summary": "استنهاض هِمَم المسلمين على الأساسيات الدينية عبر الجولات الدعوية الميدانية",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الدعوة الفردية بالحكمة والموعظة الحسنة والتنقل إلى المساجد",
+        "لا انتماء سياسي ولا خوض في الخلافات الفقهية — التركيز على ما اتفق عليه",
+        "ستة أصول: الكلمة، الصلاة، العلم والذكر، إكرام المسلمين، إخلاص النية، الخروج في سبيل الله",
+        "الإطار العقدي والفقهي حنفي ماتريدي في الغالب مع مرونة واسعة"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "الأكبر في العالم — تعمل في أكثر من 150 دولة، اجتماعها السنوي في جنوب آسيا يجمع أعداداً كبيرة",
+      "primarySources": [],
+      "secondarySources": [
+        "تبليغي نصاب (فضائل الأعمال) — زكريا الكاندهلوي",
+        "حياة الصحابة — محمد يوسف الكاندهلوي"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SOURCE",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الرابع عشر الهجري (1926م — 1345هـ)",
+        "origin": "ميوات، الهند البريطانية",
+        "founder": "محمد إلياس الكاندهلوي (1885-1944م)",
+        "statusLabel": "قائمة",
+        "spread": "الأكبر في العالم — تعمل في أكثر من 150 دولة، اجتماعها السنوي في جنوب آسيا يجمع أعداداً كبيرة",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 2,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "not_a_sect",
+        "largest_in_world_claim_unverified",
+        "legacy_category_sunni_school_mismatch"
+      ]
+    },
+    {
+      "id": "ikhwan-muslimoon",
+      "slug": "ikhwan-muslimoon",
+      "canonicalName": "الإخوان المسلمون",
+      "alternateNames": [
+        "جماعة الإخوان المسلمين — حركة إسلامية إصلاحية"
+      ],
+      "selfDesignation": [
+        "الإخوان المسلمون"
+      ],
+      "externalDesignations": [],
+      "parentTradition": null,
+      "entityKind": "political_creedal_movement",
+      "legacyUiCategory": "مدرسة سنية",
+      "classification": "political_creedal_movement",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الرابع عشر الهجري (1928م — 1347هـ)",
+      "emergencePlace": "الإسماعيلية، مصر",
+      "attributedFounder": "حسن البنا (1906-1949م)",
+      "keyHistoricalFigures": [
+        "حسن البنا",
+        "سيد قطب",
+        "يوسف القرضاوي",
+        "مصطفى مشهور"
+      ],
+      "summary": "مواجهة الغزو الثقافي الغربي وتحرير المسلمين من الاستعمار بإحياء الهوية الإسلامية",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الإسلام دين شامل يتضمن التشريع والسياسة والاجتماع والاقتصاد",
+        "الإصلاح التدريجي من الفرد إلى الأسرة إلى المجتمع إلى الدولة",
+        "لا تنتسب إلى مذهب فقهي بعينه، وتعمل ضمن الإطار السني العام",
+        "تقبل العمل السياسي وخوض الانتخابات في جل تجاربها"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "مصر والأردن وفلسطين وسوريا وتونس والمغرب وتركيا وغيرها — مرجعية رئيسية للإسلام السياسي",
+      "primarySources": [],
+      "secondarySources": [
+        "رسائل الإمام البنا — حسن البنا",
+        "معالم في الطريق — سيد قطب",
+        "الفقه الإسلامي — يوسف القرضاوي"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_HISTORICAL_REVIEW",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الرابع عشر الهجري (1928م — 1347هـ)",
+        "origin": "الإسماعيلية، مصر",
+        "founder": "حسن البنا (1906-1949م)",
+        "statusLabel": "قائمة",
+        "spread": "مصر والأردن وفلسطين وسوريا وتونس والمغرب وتركيا وغيرها — مرجعية رئيسية للإسلام السياسي",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 3,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "not_a_sect",
+        "political_islam_label_needs_care",
+        "legacy_category_mismatch"
+      ]
+    },
+    {
+      "id": "qadariyya",
+      "slug": "qadariyya",
+      "canonicalName": "القدرية",
+      "alternateNames": [
+        "القدرية — أهل الإرادة الحرة الكاملة"
+      ],
+      "selfDesignation": [],
+      "externalDesignations": [
+        "القدرية"
+      ],
+      "parentTradition": null,
+      "entityKind": "historical_sect",
+      "legacyUiCategory": "فرقة تاريخية",
+      "classification": "historical_sect",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الأول الهجري",
+      "emergencePlace": "الشام / البصرة",
+      "attributedFounder": "معبد الجهني (ت.80هـ) وغيلان الدمشقي (ت.105هـ)",
+      "keyHistoricalFigures": [],
+      "summary": "الاحتجاج بالعدل الإلهي ضد ما رأوه من جبر في فهم القدر",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الإنسان يخلق أفعاله بإرادته المستقلة كلياً دون تعلق بمشيئة الله",
+        "الله لا يعلم أفعال العباد قبل وقوعها (عند غلاتهم)",
+        "ردَّ عليهم ابن عمر وعلماء الصحابة وقال ﷺ: «القدرية مجوس هذه الأمة» — أبو داود"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "انقرضت ككيان مستقل وذابت في المعتزلة التي أخذت جانباً من مقولاتهم",
+      "primarySources": [],
+      "secondarySources": [],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SOURCE",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الأول الهجري",
+        "origin": "الشام / البصرة",
+        "founder": "معبد الجهني (ت.80هـ) وغيلان الدمشقي (ت.105هـ)",
+        "statusLabel": "تاريخية",
+        "spread": "انقرضت ككيان مستقل وذابت في المعتزلة التي أخذت جانباً من مقولاتهم",
+        "keyBeliefsCount": 3,
+        "keyBooksCount": 0,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "hadith_in_beliefs_needs_verification_display",
+        "no_books",
+        "umbrella_label"
+      ]
+    },
+    {
+      "id": "jabriyya",
+      "slug": "jabriyya",
+      "canonicalName": "الجبرية",
+      "alternateNames": [
+        "الجبرية — أهل الجبر المطلق"
+      ],
+      "selfDesignation": [],
+      "externalDesignations": [
+        "الجبرية"
+      ],
+      "parentTradition": null,
+      "entityKind": "historical_sect",
+      "legacyUiCategory": "فرقة تاريخية",
+      "classification": "historical_sect",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الأول والثاني الهجري",
+      "emergencePlace": "الشام / خراسان",
+      "attributedFounder": "جهم بن صفوان (ت.128هـ) في الجبر الكلي",
+      "keyHistoricalFigures": [],
+      "summary": "التأكيد على ربوبية الله المطلقة حتى أفضى غلوهم إلى سلب العبد أي إرادة",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "العبد مجبور في أفعاله كلياً لا إرادة له ولا قدرة حقيقية",
+        "الأفعال كلها لله والعبد كالريشة في الهواء",
+        "يستلزم قولهم نفي الثواب والعقاب العادلين"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "انقرضت كفرقة، وبعض أثرها في مصطلح «الجبر» يُدرَّس في كتب العقيدة نقداً لا إثباتاً",
+      "primarySources": [],
+      "secondarySources": [
+        "الرد على الجهمية والجبرية — الإمام أحمد"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SOURCE",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الأول والثاني الهجري",
+        "origin": "الشام / خراسان",
+        "founder": "جهم بن صفوان (ت.128هـ) في الجبر الكلي",
+        "statusLabel": "تاريخية",
+        "spread": "انقرضت كفرقة، وبعض أثرها في مصطلح «الجبر» يُدرَّس في كتب العقيدة نقداً لا إثباتاً",
+        "keyBeliefsCount": 3,
+        "keyBooksCount": 1,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "overlap_with_jahmiyya",
+        "normative_implication_in_beliefs",
+        "books_are_refutations_not_primary"
+      ]
+    },
+    {
+      "id": "karramiyya",
+      "slug": "karramiyya",
+      "canonicalName": "الكرامية",
+      "alternateNames": [
+        "الكرامية — أتباع ابن كرّام"
+      ],
+      "selfDesignation": [
+        "الكرامية"
+      ],
+      "externalDesignations": [],
+      "parentTradition": null,
+      "entityKind": "historical_sect",
+      "legacyUiCategory": "فرقة تاريخية",
+      "classification": "historical_sect",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الثالث الهجري (ت.255هـ)",
+      "emergencePlace": "سجستان / نيسابور / خراسان",
+      "attributedFounder": "محمد بن كرّام السجستاني (ت.255هـ)",
+      "keyHistoricalFigures": [],
+      "summary": "التبسيط العقدي في بيئة شعبية أفضى إلى تعبيرات توهم التشبيه",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الإيمان مجرد النطق باللسان دون اشتراط اعتقاد القلب",
+        "بعض تعبيراتهم عن الذات الإلهية توهم الحدوث والتشبيه",
+        "كانوا نشطين في الزهد والوعظ الشعبي في خراسان"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "انتشرت في خراسان وأفغانستان وانقرضت في القرن السابع الهجري",
+      "primarySources": [],
+      "secondarySources": [],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SOURCE",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الثالث الهجري (ت.255هـ)",
+        "origin": "سجستان / نيسابور / خراسان",
+        "founder": "محمد بن كرّام السجستاني (ت.255هـ)",
+        "statusLabel": "تاريخية",
+        "spread": "انتشرت في خراسان وأفغانستان وانقرضت في القرن السابع الهجري",
+        "keyBeliefsCount": 3,
+        "keyBooksCount": 0,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "extinction_century_unverified",
+        "no_books"
+      ]
+    },
+    {
+      "id": "nusayriyya",
+      "slug": "nusayriyya",
+      "canonicalName": "النصيريون (العلويون)",
+      "alternateNames": [
+        "النصيريون — العلويون في سوريا",
+        "العلويون (تسمية معاصرة شائعة)",
+        "النصيريون"
+      ],
+      "selfDesignation": [
+        "العلويون (تسمية معاصرة شائعة)"
+      ],
+      "externalDesignations": [
+        "النصيريون"
+      ],
+      "parentTradition": null,
+      "entityKind": "independent_community",
+      "legacyUiCategory": "شيعة",
+      "classification": "independent_community",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الثالث الهجري (نحو 260هـ)",
+      "emergencePlace": "الكوفة / الشام",
+      "attributedFounder": "محمد بن نصير النميري (ت. نحو 270هـ)",
+      "keyHistoricalFigures": [],
+      "summary": "الغلو في تقديس علي بن أبي طالب إلى حد التأليه، وعقيدة باطنية سرية",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الاعتقاد بألوهية علي بن أبي طالب أو اتحاد الذات الإلهية فيه",
+        "عقيدة باطنية ذات طبقات سرية — العامة لا يعلمون الباطن الكامل",
+        "الاعتقاد بالتناسخ والحلول",
+        "يرى أهل العلم السني أنهم خارج ملة الإسلام، وردَّ عليهم ابن تيمية تفصيلاً"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "مناطق من الساحل السوري، وتركيا (علويو الأناضول ذوو جذور مشابهة)",
+      "primarySources": [],
+      "secondarySources": [],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SHARIA_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الثالث الهجري (نحو 260هـ)",
+        "origin": "الكوفة / الشام",
+        "founder": "محمد بن نصير النميري (ت. نحو 270هـ)",
+        "statusLabel": "قائمة",
+        "spread": "مناطق من الساحل السوري، وتركيا (علويو الأناضول ذوو جذور مشابهة)",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 0,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "collective_takfir_in_app_voice",
+        "needs_sharia_specialist",
+        "no_primary_sources_listed"
+      ]
+    },
+    {
+      "id": "shaykhi",
+      "slug": "shaykhi",
+      "canonicalName": "الشيخية",
+      "alternateNames": [
+        "الشيخية — مدرسة شيعية إيرانية تقليدية"
+      ],
+      "selfDesignation": [
+        "الشيخية"
+      ],
+      "externalDesignations": [],
+      "parentTradition": "shia-ithna",
+      "entityKind": "shi_i_branch",
+      "legacyUiCategory": "شيعة",
+      "classification": "shi_i_branch",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الثالث عشر الهجري (1820م — 1236هـ)",
+      "emergencePlace": "إيران / العراق",
+      "attributedFounder": "أحمد الأحسائي (1753-1826م)",
+      "keyHistoricalFigures": [
+        "أحمد الأحسائي",
+        "كاظم الرشتي"
+      ],
+      "summary": "محاولة التوفيق بين الفلسفة الإشراقية والعرفان والفقه الإمامي الاثني عشري",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الاعتقاد بركن رابع يربط الإمام الغائب بالشيعة عبر وسيط نيابي",
+        "تأويل باطني لبعض العقائد الشيعية كالمعراج والحشر الجسدي",
+        "رفض بعض عقائد الفلاسفة مع اعتناق منهج صوفي-عرفاني خاص",
+        "وجود توتر مع الفقه الشيعي التقليدي (الأصولية)، وانشق عنها لاحقاً الباب والبهاء"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "إيران والكويت والبحرين وبعض مناطق العراق",
+      "primarySources": [],
+      "secondarySources": [
+        "شرح الزيارة الجامعة الكبيرة — أحمد الأحسائي",
+        "حياة النفس — أحمد الأحسائي"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_HISTORICAL_REVIEW",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الثالث عشر الهجري (1820م — 1236هـ)",
+        "origin": "إيران / العراق",
+        "founder": "أحمد الأحسائي (1753-1826م)",
+        "statusLabel": "قائمة",
+        "spread": "إيران والكويت والبحرين وبعض مناطق العراق",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 2,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "internal_branch_vs_independent"
+      ]
+    },
+    {
+      "id": "duruz",
+      "slug": "duruz",
+      "canonicalName": "الدروز",
+      "alternateNames": [
+        "الدروز — أهل التوحيد الدرزي",
+        "الموحّدون الدروز"
+      ],
+      "selfDesignation": [
+        "الموحّدون الدروز"
+      ],
+      "externalDesignations": [
+        "الدروز"
+      ],
+      "parentTradition": "ismaeliyya",
+      "entityKind": "independent_community",
+      "legacyUiCategory": "فرقة مستقلة",
+      "classification": "independent_community",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الخامس الهجري (411هـ/1020م)",
+      "emergencePlace": "مصر الفاطمية / جبال الشام",
+      "attributedFounder": "حمزة بن علي الزوزني وأنوشتكين الدرزي — ادّعيا ألوهية الحاكم بأمر الله الفاطمي",
+      "keyHistoricalFigures": [],
+      "summary": "انشقاق عن الإسماعيلية الفاطمية بادعاء ألوهية الخليفة الحاكم بأمر الله",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الإيمان بألوهية الحاكم بأمر الله الفاطمي أو تجلِّي الإله فيه",
+        "الاعتقاد بالتناسخ وإنكار البعث الجسدي",
+        "السرية التامة — العُقَّال (الخاصة) وحدهم يعلمون العقيدة الكاملة",
+        "يُجمع علماء السنة على أنهم خرجوا من دائرة الإسلام"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "لبنان (8%) وسوريا (3%) والأردن وفلسطين (منطقة الجولان)",
+      "primarySources": [],
+      "secondarySources": [
+        "رسائل الحكمة — حمزة بن علي"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SHARIA_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الخامس الهجري (411هـ/1020م)",
+        "origin": "مصر الفاطمية / جبال الشام",
+        "founder": "حمزة بن علي الزوزني وأنوشتكين الدرزي — ادّعيا ألوهية الحاكم بأمر الله الفاطمي",
+        "statusLabel": "قائمة",
+        "spread": "لبنان (8%) وسوريا (3%) والأردن وفلسطين (منطقة الجولان)",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 1,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "collective_takfir_in_app_voice",
+        "percent_spread_unverified",
+        "needs_sharia_specialist"
+      ]
+    },
+    {
+      "id": "ahmadiyya",
+      "slug": "ahmadiyya",
+      "canonicalName": "الأحمدية (القاديانية)",
+      "alternateNames": [
+        "الأحمدية — الحركة القاديانية",
+        "الأحمدية",
+        "القاديانية"
+      ],
+      "selfDesignation": [
+        "الأحمدية"
+      ],
+      "externalDesignations": [
+        "القاديانية"
+      ],
+      "parentTradition": null,
+      "entityKind": "independent_community",
+      "legacyUiCategory": "فرقة مستقلة",
+      "classification": "independent_community",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الثالث عشر الهجري (1889م — 1306هـ)",
+      "emergencePlace": "قاديان، البنجاب الهندي",
+      "attributedFounder": "ميرزا غلام أحمد القادياني (ت.1908م/1326هـ)",
+      "keyHistoricalFigures": [],
+      "summary": "ادّعى ميرزا غلام أحمد النبوة والمهدية والمسيحية — مخالفاً ختم النبوة الثابت بإجماع الأمة",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الاعتقاد بنبوة ميرزا غلام أحمد بعد النبي ﷺ",
+        "إعادة تأويل معنى الجهاد والإنكار على مفهومه الدفاعي",
+        "إنكار ختم النبوة بمعناه الإجماعي",
+        "أجمع العلماء والمجامع الفقهية الدولية على كفرهم وخروجهم من الملة"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "باكستان (مصنَّفون أقلية غير مسلمة) والهند وأجزاء من أفريقيا والغرب",
+      "primarySources": [],
+      "secondarySources": [
+        "قرار مجلس الفقه الإسلامي الدولي 1985م بشأن القاديانية"
+      ],
+      "attributedCritiques": [],
+      "quotations": [
+        "«من أجمع المسلمون على كفره فكافر» — الإجماع الفقهي على انتهاء النبوة"
+      ],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SHARIA_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الثالث عشر الهجري (1889م — 1306هـ)",
+        "origin": "قاديان، البنجاب الهندي",
+        "founder": "ميرزا غلام أحمد القادياني (ت.1908م/1326هـ)",
+        "statusLabel": "قائمة",
+        "spread": "باكستان (مصنَّفون أقلية غير مسلمة) والهند وأجزاء من أفريقيا والغرب",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 1,
+        "hasQuote": true
+      },
+      "inventoryFlags": [
+        "collective_takfir_in_app_voice",
+        "books_are_refutations_not_self_sources",
+        "needs_sharia_specialist",
+        "hostile_icon_ui"
+      ]
+    },
+    {
+      "id": "sabaiyya",
+      "slug": "sabaiyya",
+      "canonicalName": "السبئية والغلاة الأوائل",
+      "alternateNames": [
+        "السبئية — أوائل الغلاة من الشيعة التاريخيين",
+        "السبئية"
+      ],
+      "selfDesignation": [],
+      "externalDesignations": [
+        "السبئية"
+      ],
+      "parentTradition": null,
+      "entityKind": "historical_sect",
+      "legacyUiCategory": "فرقة تاريخية",
+      "classification": "historical_sect",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الأول الهجري (منتصف القرن)",
+      "emergencePlace": "الكوفة / مصر / اليمن",
+      "attributedFounder": "تُنسب إلى عبد الله بن سبأ — وجوده ونسبة الآراء إليه مثار نقاش مؤرخي",
+      "keyHistoricalFigures": [],
+      "summary": "الغلو في تقديس علي بن أبي طالب حتى نسب إليه الرجعة أو الخصائص الربانية",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الغلو في آل البيت حتى الإفضاء إلى التأليه في بعض الروايات",
+        "الاعتقاد بالرجعة: أن علياً لم يمت وسيعود",
+        "الغلو مذموم شرعاً: «لا تطروني كما أطرت النصارى ابن مريم» — البخاري:3445"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "انقرضت ككيان، لكن الغلو في التشيع استمر في فرق أخرى كالنصيريين والدروز",
+      "primarySources": [],
+      "secondarySources": [],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "CONFLICTING_SOURCES",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "CONFLICTING_SOURCES",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الأول الهجري (منتصف القرن)",
+        "origin": "الكوفة / مصر / اليمن",
+        "founder": "تُنسب إلى عبد الله بن سبأ — وجوده ونسبة الآراء إليه مثار نقاش مؤرخي",
+        "statusLabel": "تاريخية",
+        "spread": "انقرضت ككيان، لكن الغلو في التشيع استمر في فرق أخرى كالنصيريين والدروز",
+        "keyBeliefsCount": 3,
+        "keyBooksCount": 0,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "founder_historicity_disputed",
+        "conflicting_sources_flag",
+        "hadith_in_beliefs"
+      ]
+    },
+    {
+      "id": "kullabiyya",
+      "slug": "kullabiyya",
+      "canonicalName": "الكلابية",
+      "alternateNames": [
+        "الكلابية — أتباع محمد بن كُلّاب القطان"
+      ],
+      "selfDesignation": [
+        "الكلابية"
+      ],
+      "externalDesignations": [],
+      "parentTradition": null,
+      "entityKind": "kalam_school",
+      "legacyUiCategory": "مدرسة عقدية",
+      "classification": "kalam_school",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الثالث الهجري (ت. نحو 240هـ)",
+      "emergencePlace": "البصرة / بغداد",
+      "attributedFounder": "أبو محمد عبد الله بن سعيد بن كُلّاب القطان البصري",
+      "keyHistoricalFigures": [
+        "ابن كُلّاب (المؤسس)",
+        "الحارث المحاسبي (رفيق عصره)"
+      ],
+      "summary": "التوفيق بين عقيدة السلف وأدوات المتكلمين، في مرحلة ما قبل الأشعرية",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "إثبات الصفات لله تعالى على خلاف المعتزلة",
+        "الكلام النفسي: القرآن كلام الله النفسي قديم، واللفظ البشري به حادث",
+        "مهّد مذهبه للمدرسة الأشعرية التي انبثقت منه لاحقاً"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "بغداد والبصرة، ثم امتصّ الأشعريُّ كثيراً من مواقفها في مذهبه الجديد",
+      "primarySources": [],
+      "secondarySources": [
+        "مؤلفات مفقودة أُشير إليها في كتب الفرق — مقالات الإسلاميين للأشعري"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SOURCE",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الثالث الهجري (ت. نحو 240هـ)",
+        "origin": "البصرة / بغداد",
+        "founder": "أبو محمد عبد الله بن سعيد بن كُلّاب القطان البصري",
+        "statusLabel": "تاريخية",
+        "spread": "بغداد والبصرة، ثم امتصّ الأشعريُّ كثيراً من مواقفها في مذهبه الجديد",
+        "keyBeliefsCount": 3,
+        "keyBooksCount": 1,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "lost_works",
+        "bridge_to_ashari_claim_needs_source"
+      ]
+    },
+    {
+      "id": "islah-hadith",
+      "slug": "islah-hadith",
+      "canonicalName": "مدرسة الإصلاح الإسلامي",
+      "alternateNames": [
+        "التيار الإصلاحي التجديدي — القرن 19-20م",
+        "الإصلاح الإسلامي",
+        "التجديد"
+      ],
+      "selfDesignation": [
+        "الإصلاح الإسلامي",
+        "التجديد"
+      ],
+      "externalDesignations": [],
+      "parentTradition": null,
+      "entityKind": "reform_trend",
+      "legacyUiCategory": "مدرسة عقدية",
+      "classification": "reform_trend",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن التاسع عشر والعشرون الميلادي",
+      "emergencePlace": "مصر / الهند / بلاد الشام",
+      "attributedFounder": "جمال الدين الأفغاني (1839-1897) ومحمد عبده (1849-1905) ورشيد رضا (1865-1935)",
+      "keyHistoricalFigures": [
+        "محمد عبده",
+        "رشيد رضا",
+        "جمال الدين الأفغاني"
+      ],
+      "summary": "مواجهة التخلف الحضاري ونقد الاستعمار الغربي وتجديد الخطاب الديني بالعودة إلى النصوص",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الجمع بين العقل والنقل في الفهم الديني",
+        "نقد التقليد الأعمى والدعوة إلى الاجتهاد المنضبط",
+        "التمييز بين ثوابت الإسلام ومتغيرات التطبيق التاريخي"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "مصر والعالم العربي وجنوب آسيا وأفريقيا",
+      "primarySources": [],
+      "secondarySources": [
+        "رسالة التوحيد — محمد عبده",
+        "تفسير المنار — رشيد رضا",
+        "العروة الوثقى — الأفغاني وعبده"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_HISTORICAL_REVIEW",
+      "shariaReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن التاسع عشر والعشرون الميلادي",
+        "origin": "مصر / الهند / بلاد الشام",
+        "founder": "جمال الدين الأفغاني (1839-1897) ومحمد عبده (1849-1905) ورشيد رضا (1865-1935)",
+        "statusLabel": "قائمة",
+        "spread": "مصر والعالم العربي وجنوب آسيا وأفريقيا",
+        "keyBeliefsCount": 3,
+        "keyBooksCount": 3,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "not_a_sect",
+        "umbrella_modern_trend",
+        "legacy_category_mismatch"
+      ]
+    },
+    {
+      "id": "falsafa-islamiyya",
+      "slug": "falsafa-islamiyya",
+      "canonicalName": "الفلاسفة الإسلاميون",
+      "alternateNames": [
+        "مدرسة الفلسفة الإسلامية — الفارابي وابن سينا",
+        "الفلاسفة"
+      ],
+      "selfDesignation": [],
+      "externalDesignations": [
+        "الفلاسفة"
+      ],
+      "parentTradition": null,
+      "entityKind": "philosophical_school",
+      "legacyUiCategory": "مدرسة عقدية",
+      "classification": "philosophical_school",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الثالث إلى السابع الهجري",
+      "emergencePlace": "بغداد / فارس / الأندلس",
+      "attributedFounder": "الكندي (ت.873م)، الفارابي (ت.950م)، ابن سينا (ت.1037م)، ابن رشد (ت.1198م)",
+      "keyHistoricalFigures": [
+        "الكندي",
+        "الفارابي",
+        "ابن سينا",
+        "ابن رشد (الأندلس)"
+      ],
+      "summary": "التوفيق بين الفلسفة اليونانية (أرسطو وأفلاطون) والعقيدة الإسلامية",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "قِدَم العالم بالزمان (رأي ابن سينا) — وهو ما رفضه الغزالي في تهافت الفلاسفة",
+        "الله هو واجب الوجود ومبدع الكون بالضرورة لا بالاختيار (فرق عقدي كبير)",
+        "النبوة: ظاهرة فيضية للعقل الفعَّال لا وحي من الله مباشر — مخالف للسنة",
+        "معظم علماء السنة رفضوا هذه الأقوال خاصةً في تأويل النبوة ومسائل الآخرة"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "بغداد وفارس والأندلس ثم توقف بعد ابن رشد في الغرب الإسلامي",
+      "primarySources": [],
+      "secondarySources": [
+        "الشفاء — ابن سينا",
+        "آراء أهل المدينة الفاضلة — الفارابي",
+        "تهافت التهافت — ابن رشد (رداً على الغزالي)"
+      ],
+      "attributedCritiques": [],
+      "quotations": [
+        "تناول علماء كالغزالي وابن تيمية آراء الفلاسفة بالنقد، خصوصاً في الإلهيات والنبوة والمعاد"
+      ],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_HISTORICAL_REVIEW",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الثالث إلى السابع الهجري",
+        "origin": "بغداد / فارس / الأندلس",
+        "founder": "الكندي (ت.873م)، الفارابي (ت.950م)، ابن سينا (ت.1037م)، ابن رشد (ت.1198م)",
+        "statusLabel": "تاريخية",
+        "spread": "بغداد وفارس والأندلس ثم توقف بعد ابن رشد في الغرب الإسلامي",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 3,
+        "hasQuote": true
+      },
+      "inventoryFlags": [
+        "not_a_sect",
+        "multi_century_umbrella",
+        "normative_rejection_in_beliefs"
+      ]
+    },
+    {
+      "id": "babiyya",
+      "slug": "babiyya",
+      "canonicalName": "البابية",
+      "alternateNames": [
+        "البابية — حركة دينية إيرانية انشقت عن الشيخية"
+      ],
+      "selfDesignation": [
+        "البابية"
+      ],
+      "externalDesignations": [],
+      "parentTradition": "shaykhi",
+      "entityKind": "independent_community",
+      "legacyUiCategory": "فرقة مستقلة",
+      "classification": "independent_community",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن التاسع عشر الميلادي (1260هـ/1844م)",
+      "emergencePlace": "شيراز، إيران",
+      "attributedFounder": "علي محمد الشيرازي (1819-1850م) الملقَّب بـ«الباب»",
+      "keyHistoricalFigures": [],
+      "summary": "ادّعى أنه باب للإمام الغائب ثم رقّى ادعاءاته إلى النبوة والكشف الجديد مخالفاً ختم النبوة",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "ادعاء علي محمد أنه «الباب» للإمام الغائب ثم تطور الادعاء إلى النبوة",
+        "نسخ أحكام الإسلام بكتاب جديد يُسمى «البيان»",
+        "أجمع علماء الإسلام على أن دعواه خروج صريح من الإسلام",
+        "مهّدت لظهور البهائية التي تشعّبت منها بعد إعدامه"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "إيران والعراق وانقرضت ككيان بعد إعدام مؤسسها وانقلاب أتباعه إلى البهائية",
+      "primarySources": [],
+      "secondarySources": [
+        "البيان الفارسي — علي محمد الشيرازي"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SHARIA_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن التاسع عشر الميلادي (1260هـ/1844م)",
+        "origin": "شيراز، إيران",
+        "founder": "علي محمد الشيرازي (1819-1850م) الملقَّب بـ«الباب»",
+        "statusLabel": "تاريخية",
+        "spread": "إيران والعراق وانقرضت ككيان بعد إعدام مؤسسها وانقلاب أتباعه إلى البهائية",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 1,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "collective_takfir_in_app_voice",
+        "needs_sharia_specialist",
+        "hostile_icon_ui"
+      ]
+    },
+    {
+      "id": "mahdiyya-sudaniyya",
+      "slug": "mahdiyya-sudaniyya",
+      "canonicalName": "المهدية السودانية",
+      "alternateNames": [
+        "المهدية السودانية — حركة سياسية دينية",
+        "الأنصار (لاحقاً)",
+        "المهدية"
+      ],
+      "selfDesignation": [
+        "الأنصار (لاحقاً)"
+      ],
+      "externalDesignations": [
+        "المهدية"
+      ],
+      "parentTradition": null,
+      "entityKind": "political_creedal_movement",
+      "legacyUiCategory": "فرقة مستقلة",
+      "classification": "political_creedal_movement",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن التاسع عشر الميلادي (1298هـ/1881م)",
+      "emergencePlace": "السودان — النيل الأبيض",
+      "attributedFounder": "محمد أحمد بن عبد الله (1844-1885م) ادّعى أنه المهدي المنتظر",
+      "keyHistoricalFigures": [],
+      "summary": "مقاومة الاستعمار المصري-البريطاني مع ادعاء المهدية وتأسيس دولة دينية",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "ادعاء محمد أحمد أنه المهدي المنتظر بنص نبوي",
+        "تعديل الصلاة وإضافة شهادة «وأن محمد أحمد خليفة رسول الله»",
+        "أكثر علماء السنة رفضوا هذا الادعاء لمخالفته علامات المهدي الواردة في السنة"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "انتهت دولتها عام 1316هـ/1898م مع معركة أمدرمان، لكن أتباعه (الأنصار) لا يزالون حزباً سودانياً",
+      "primarySources": [],
+      "secondarySources": [],
+      "attributedCritiques": [],
+      "quotations": [
+        "«المهدي من أهل بيتي... يواطئ اسمه اسمي» — شروط علمية دقيقة لم يستوفها محمد أحمد"
+      ],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_HISTORICAL_REVIEW",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن التاسع عشر الميلادي (1298هـ/1881م)",
+        "origin": "السودان — النيل الأبيض",
+        "founder": "محمد أحمد بن عبد الله (1844-1885م) ادّعى أنه المهدي المنتظر",
+        "statusLabel": "تاريخية",
+        "spread": "انتهت دولتها عام 1316هـ/1898م مع معركة أمدرمان، لكن أتباعه (الأنصار) لا يزالون حزباً سودانياً",
+        "keyBeliefsCount": 3,
+        "keyBooksCount": 0,
+        "hasQuote": true
+      },
+      "inventoryFlags": [
+        "movement_vs_sect",
+        "normative_rejection_in_beliefs",
+        "quote_needs_source_context"
+      ]
+    },
+    {
+      "id": "baha-i",
+      "slug": "baha-i",
+      "canonicalName": "البهائية",
+      "alternateNames": [
+        "الديانة البهائية — فرقة منشقة عن الإسلام"
+      ],
+      "selfDesignation": [
+        "البهائية"
+      ],
+      "externalDesignations": [],
+      "parentTradition": "babiyya",
+      "entityKind": "independent_community",
+      "legacyUiCategory": "فرقة مستقلة",
+      "classification": "independent_community",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن التاسع عشر الميلادي (1268هـ/1852م)",
+      "emergencePlace": "إيران — بغداد — أكا (فلسطين)",
+      "attributedFounder": "ميرزا حسين علي النوري الملقَّب بـ«بهاء الله» (1817-1892م)",
+      "keyHistoricalFigures": [],
+      "summary": "تشعّبت من البابية وتطوَّرت إلى دين مستقل بادعاء نبوة جديدة ووحي جديد",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الاعتقاد بنبوة بهاء الله بعد محمد ﷺ مع ادعاء وحي جديد يُلغي ختم النبوة",
+        "وحدة الأديان: ادعاء أن الإسلام والمسيحية واليهودية تعبير واحد عن حقيقة واحدة",
+        "أجمع العلماء والمجامع الإسلامية الدولية على خروجها من الإسلام"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "إيران والهند والغرب وأفريقيا — تواجه حظراً قانونياً وتضييقاً في إيران ودول أخرى",
+      "primarySources": [],
+      "secondarySources": [
+        "الكتاب الأقدس — بهاء الله"
+      ],
+      "attributedCritiques": [],
+      "quotations": [
+        "قرار مجمع الفقه الإسلامي الدولي: البهائية ليست من الإسلام في شيء"
+      ],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SHARIA_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن التاسع عشر الميلادي (1268هـ/1852م)",
+        "origin": "إيران — بغداد — أكا (فلسطين)",
+        "founder": "ميرزا حسين علي النوري الملقَّب بـ«بهاء الله» (1817-1892م)",
+        "statusLabel": "قائمة",
+        "spread": "إيران والهند والغرب وأفريقيا — تواجه حظراً قانونياً وتضييقاً في إيران ودول أخرى",
+        "keyBeliefsCount": 3,
+        "keyBooksCount": 1,
+        "hasQuote": true
+      },
+      "inventoryFlags": [
+        "religion_vs_islamic_sect_taxonomy",
+        "collective_takfir_in_app_voice",
+        "needs_sharia_specialist",
+        "hostile_icon_ui"
+      ]
+    },
+    {
+      "id": "ansar-sunna",
+      "slug": "ansar-sunna",
+      "canonicalName": "جماعة أنصار السنة المحمدية",
+      "alternateNames": [
+        "جماعة أنصار السنة المحمدية — الحركة السلفية المصرية",
+        "أنصار السنة المحمدية"
+      ],
+      "selfDesignation": [
+        "أنصار السنة المحمدية"
+      ],
+      "externalDesignations": [],
+      "parentTradition": "ahl-al-sunna",
+      "entityKind": "reform_trend",
+      "legacyUiCategory": "مدرسة سنية",
+      "classification": "reform_trend",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن الرابع عشر الهجري (1345هـ/1926م)",
+      "emergencePlace": "مصر — القاهرة",
+      "attributedFounder": "محمد حامد الفِقي (1892-1959م)",
+      "keyHistoricalFigures": [
+        "محمد حامد الفقي",
+        "محب الدين الخطيب",
+        "محمد عبد الرزاق حمزة"
+      ],
+      "summary": "محاربة البدع والخرافات ونشر السنة النبوية الصحيحة في مواجهة التصوف الطرقي المنتشر",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "التمسك بالكتاب والسنة على فهم السلف الصالح",
+        "رفض التقليد الأعمى والدعوة إلى العودة إلى النصوص الصحيحة",
+        "نقد الخرافات والبدع المنتشرة في التصوف الشعبي",
+        "التعاون مع الحركة الوهابية في المملكة العربية السعودية فكرياً"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "مصر بالدرجة الأولى، مع امتدادات في السودان وليبيا والكويت",
+      "primarySources": [],
+      "secondarySources": [
+        "الهدية السنية وتحفة الوهابية — محمد حامد الفقي",
+        "الفرقان بين أولياء الرحمن وأولياء الشيطان — ابن تيمية (تحقيق وترويج)"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_HISTORICAL_REVIEW",
+      "shariaReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن الرابع عشر الهجري (1345هـ/1926م)",
+        "origin": "مصر — القاهرة",
+        "founder": "محمد حامد الفِقي (1892-1959م)",
+        "statusLabel": "قائمة",
+        "spread": "مصر بالدرجة الأولى، مع امتدادات في السودان وليبيا والكويت",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 2,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "organization_not_sect",
+        "wahhabi_cooperation_label_needs_care"
+      ]
+    },
+    {
+      "id": "maqasid-school",
+      "slug": "maqasid-school",
+      "canonicalName": "مدرسة المقاصد الشرعية",
+      "alternateNames": [
+        "التيار المقاصدي المعاصر — فقه الأهداف والغايات",
+        "المقاصديون (وصف معاصر)"
+      ],
+      "selfDesignation": [
+        "المقاصديون (وصف معاصر)"
+      ],
+      "externalDesignations": [],
+      "parentTradition": null,
+      "entityKind": "fiqh_methodology",
+      "legacyUiCategory": "مدرسة سنية",
+      "classification": "fiqh_methodology",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن التاسع عشر حتى اليوم",
+      "emergencePlace": "تونس / المغرب / مصر — بداياتها الحديثة عند ابن عاشور",
+      "attributedFounder": "محمد الطاهر ابن عاشور (1879-1973م) في مؤلفه «مقاصد الشريعة الإسلامية»",
+      "keyHistoricalFigures": [
+        "ابن عاشور",
+        "أحمد الريسوني",
+        "جاسر عودة",
+        "محمد مصطفى شلبي"
+      ],
+      "summary": "الحاجة إلى منهج فقهي يستوعب المستجدات بالنظر في مآلات الأحكام وأهداف الشريعة",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الشريعة مبنية على مقاصد عامة: حفظ الدين والنفس والعقل والنسل والمال",
+        "الاجتهاد مشروط بفهم مقاصد الشارع لا باستنباط الحكم من النص وحده",
+        "المنهج المقاصدي يُعين على حل النوازل والمسائل المستجدة",
+        "لا تعارض بين المقاصد ومقتضيات النص الصريح"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "المغرب وتونس ومصر والخليج وأكاديميات الدراسات الإسلامية حول العالم",
+      "primarySources": [],
+      "secondarySources": [
+        "مقاصد الشريعة الإسلامية — محمد الطاهر ابن عاشور",
+        "نظرية المقاصد عند الإمام الشاطبي — أحمد الريسوني",
+        "الموافقات — الشاطبي (المرجع الكلاسيكي التأسيسي)"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_HISTORICAL_REVIEW",
+      "shariaReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن التاسع عشر حتى اليوم",
+        "origin": "تونس / المغرب / مصر — بداياتها الحديثة عند ابن عاشور",
+        "founder": "محمد الطاهر ابن عاشور (1879-1973م) في مؤلفه «مقاصد الشريعة الإسلامية»",
+        "statusLabel": "قائمة",
+        "spread": "المغرب وتونس ومصر والخليج وأكاديميات الدراسات الإسلامية حول العالم",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 3,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "not_a_sect",
+        "legacy_category_sunni_school_mismatch",
+        "classical_vs_modern_conflation"
+      ]
+    },
+    {
+      "id": "ishraqiyya",
+      "slug": "ishraqiyya",
+      "canonicalName": "المدرسة الإشراقية",
+      "alternateNames": [
+        "الحكمة الإشراقية — فلسفة النور والتجلي",
+        "الإشراقية"
+      ],
+      "selfDesignation": [
+        "الإشراقية"
+      ],
+      "externalDesignations": [],
+      "parentTradition": null,
+      "entityKind": "philosophical_school",
+      "legacyUiCategory": "مدرسة عقدية",
+      "classification": "philosophical_school",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن السادس الهجري (ت.587هـ/1191م)",
+      "emergencePlace": "فارس — الأناضول",
+      "attributedFounder": "شهاب الدين السهروردي (1154-1191م) — «شيخ الإشراق»",
+      "keyHistoricalFigures": [
+        "السهروردي (المؤسس)",
+        "قطب الدين الشيرازي (الشارح)",
+        "ملا صدرا (المطوِّر)"
+      ],
+      "summary": "التوفيق بين الفلسفة اليونانية والحكمة الفارسية القديمة والتصوف الإسلامي عبر مفهوم النور",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الوجود سلسلة من الأنوار تنبثق من النور الأقصى (الله)",
+        "المعرفة الحقيقية تُنال بالإشراق الداخلي والرياضة الروحية لا بالمنطق وحده",
+        "انتقد كثير من العلماء السنة مواضع الغلو فيها تجاه أصول التوحيد والنبوة"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "إيران وتركيا والهند — تأثيرها في الفلسفة الإيرانية لا يزال حياً",
+      "primarySources": [],
+      "secondarySources": [
+        "حكمة الإشراق — السهروردي",
+        "المطارحات والمقاومات — السهروردي"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_HISTORICAL_REVIEW",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن السادس الهجري (ت.587هـ/1191م)",
+        "origin": "فارس — الأناضول",
+        "founder": "شهاب الدين السهروردي (1154-1191م) — «شيخ الإشراق»",
+        "statusLabel": "تاريخية",
+        "spread": "إيران وتركيا والهند — تأثيرها في الفلسفة الإيرانية لا يزال حياً",
+        "keyBeliefsCount": 3,
+        "keyBooksCount": 2,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "not_a_sect",
+        "influence_alive_vs_status_historical"
+      ]
+    },
+    {
+      "id": "wasatiyya",
+      "slug": "wasatiyya",
+      "canonicalName": "تيار الوسطية الإسلامية",
+      "alternateNames": [
+        "تيار الوسطية والاعتدال الإسلامي المعاصر",
+        "الوسطية"
+      ],
+      "selfDesignation": [
+        "الوسطية"
+      ],
+      "externalDesignations": [],
+      "parentTradition": null,
+      "entityKind": "contemporary_trend",
+      "legacyUiCategory": "مدرسة عقدية",
+      "classification": "contemporary_trend",
+      "historicalStatus": "undocumented",
+      "contemporaryStatus": null,
+      "emergencePeriod": "القرن العشرون والحادي والعشرون",
+      "emergencePlace": "مصر / قطر / تركيا",
+      "attributedFounder": "يوسف القرضاوي (1926-2022م) بوصفه أبرز رموزه الفقهية",
+      "keyHistoricalFigures": [
+        "يوسف القرضاوي",
+        "محمد الغزالي",
+        "وهبة الزحيلي",
+        "رجب طيب أردوغان (سياسياً)"
+      ],
+      "summary": "مواجهة التطرف من جهة والعلمانية الكاملة من جهة أخرى، والتمسك بالوسطية التي وصفها الله للأمة",
+      "historicalContext": null,
+      "coreDoctrines": [
+        "الالتزام بالقرآن والسنة مع مراعاة مقتضيات العصر",
+        "رفض الغلو والتطرف ورفض التفريط والانحلال بالقدر ذاته",
+        "التوازن بين الثوابت والمتغيرات — اجتهاد منضبط في المستجدات",
+        "الانفتاح على الحوار مع الآخر دون الذوبان فيه"
+      ],
+      "internalBranches": [],
+      "geographicSpreadHistorical": null,
+      "geographicSpreadCurrent": "مصر وقطر والمغرب وماليزيا وأندونيسيا — مرجعية لمنظمات إسلامية عديدة حول العالم",
+      "primarySources": [],
+      "secondarySources": [
+        "الصحوة الإسلامية بين الجحود والتطرف — يوسف القرضاوي",
+        "الخصائص العامة للإسلام — يوسف القرضاوي",
+        "وسطية الإسلام وسماحته — مصطفى السباعي"
+      ],
+      "attributedCritiques": [],
+      "quotations": [],
+      "sourceReferences": [],
+      "sourceUrls": [],
+      "licenseStatus": "unknown",
+      "factualReviewStatus": "NEEDS_SOURCE",
+      "shariaReviewStatus": "NEEDS_SHARIA_REVIEW",
+      "languageReviewStatus": "NEEDS_LANGUAGE_REVIEW",
+      "reviewer": null,
+      "reviewedAt": null,
+      "publicationStatus": "NEEDS_SOURCE",
+      "uiSource": {
+        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "era": "القرن العشرون والحادي والعشرون",
+        "origin": "مصر / قطر / تركيا",
+        "founder": "يوسف القرضاوي (1926-2022م) بوصفه أبرز رموزه الفقهية",
+        "statusLabel": "قائمة",
+        "spread": "مصر وقطر والمغرب وماليزيا وأندونيسيا — مرجعية لمنظمات إسلامية عديدة حول العالم",
+        "keyBeliefsCount": 4,
+        "keyBooksCount": 3,
+        "hasQuote": false
+      },
+      "inventoryFlags": [
+        "not_a_sect",
+        "political_figure_as_key_scholar",
+        "umbrella_slogan"
+      ]
+    }
+  ]
+}

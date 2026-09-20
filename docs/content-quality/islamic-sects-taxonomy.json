@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "id": "islamic-sects-taxonomy",
+  "titleAr": "تصنيف علمي لقسم الفرق الإسلامية",
+  "policy": "no_ai_invention_no_memory_completion_no_sharia_ruling",
+  "notesAr": [
+    "لا تُنشأ سجلات لمجرد ورود اسم عابر في مصدر.",
+    "يُفرَّق بين الفرقة والمذهب الفقهي والمدرسة العقدية والحركة السياسية والاتجاه الفكري والطريقة الصوفية والاسم التاريخي والفرع الداخلي.",
+    "التصنيفات الظاهرة في الواجهة الحالية (مدرسة سنية / شيعة / …) تصنيفات تراث واجهة قديمة وتحتاج مراجعة؛ المصدر العلمي هو entityKind.",
+    "الحالة قائمة/تاريخية في الواجهة غير موثّقة تلقائيًا — تُعامَل undocumented حتى مصدر حديث صريح."
+  ],
+  "entityKinds": [
+    {
+      "id": "method_intro",
+      "labelAr": "مقدمات ومنهج دراسة الفرق",
+      "descriptionAr": "مواد منهجية عن دراسة المقالات والملل؛ ليست فرقة."
+    },
+    {
+      "id": "creedal_school",
+      "labelAr": "مدرسة عقدية",
+      "descriptionAr": "منهج عقدي داخل إطار أوسع (مثل أثرية/أشعرية/ماتريدية)."
+    },
+    {
+      "id": "kalam_school",
+      "labelAr": "مدرسة كلامية / فرقة كلامية",
+      "descriptionAr": "تيارات كلامية تاريخية أو امتداداتها (معتزلة، كلابية، …)."
+    },
+    {
+      "id": "historical_sect",
+      "labelAr": "فرقة تاريخية",
+      "descriptionAr": "كيان مقالات تاريخي موثّق؛ لا يُفترض استمراره المعاصر بلا مصدر."
+    },
+    {
+      "id": "political_creedal_movement",
+      "labelAr": "حركة سياسية-عقدية أو تنظيم دعوي",
+      "descriptionAr": "تنظيم أو حركة معاصرة/حديثة ذات بُعد سياسي أو دعوي؛ ليست «فرقة» بالمعنى الكلاسيكي بالضرورة."
+    },
+    {
+      "id": "shi_i_branch",
+      "labelAr": "فرع شيعي",
+      "descriptionAr": "فروع داخل التشيع (اثنا عشرية، زيدية، إسماعيلية، …) مع تمييز الفروع الداخلية."
+    },
+    {
+      "id": "sufi_current",
+      "labelAr": "تيار / طرق صوفية",
+      "descriptionAr": "تصوف وطرق؛ ليس مذهبًا فقهيًا ولا فرقة مقالات واحدة بالضرورة."
+    },
+    {
+      "id": "philosophical_school",
+      "labelAr": "مدرسة فلسفية",
+      "descriptionAr": "فلسفة إسلامية أو إشراق؛ تُعرض بوصفها مدرسة فكرية لا فرقة عبادية."
+    },
+    {
+      "id": "reform_trend",
+      "labelAr": "اتجاه إصلاحي / تجديدي",
+      "descriptionAr": "تيارات إصلاح حديثة؛ ليست فرقة عقائدية مغلقة بالضرورة."
+    },
+    {
+      "id": "fiqh_methodology",
+      "labelAr": "منهج فقهي / مقاصدي",
+      "descriptionAr": "منهج استنباط فقهي؛ خارج تصنيف «فرقة» إلا لعرض علائقي واضح."
+    },
+    {
+      "id": "independent_community",
+      "labelAr": "جماعة مستقلة / مجتمع ديني",
+      "descriptionAr": "جماعات ذات هوية مستقلة قد تكون داخل أو خارج دائرة الإسلام حسب المصادر — الحكم الشرعي للمختص فقط."
+    },
+    {
+      "id": "contemporary_trend",
+      "labelAr": "اتجاه معاصر",
+      "descriptionAr": "وصف معاصر فضفاض يحتاج مصدرًا حديثًا وحدودًا واضحة."
+    },
+    {
+      "id": "unclassified_needs_review",
+      "labelAr": "غير مصنَّف — يحتاج مراجعة",
+      "descriptionAr": "سجل موجود في الواجهة الحالية بلا تصنيف علمي مستقر بعد."
+    }
+  ],
+  "legacyUiCategories": [
+    "مدرسة سنية",
+    "شيعة",
+    "مدرسة عقدية",
+    "فرقة مستقلة",
+    "فرقة تاريخية"
+  ],
+  "historicalStatusValues": ["historical", "contemporary", "mixed", "undocumented"],
+  "publicationStates": [
+    "DRAFT",
+    "NEEDS_SOURCE",
+    "SOURCE_VERIFIED",
+    "NEEDS_HISTORICAL_REVIEW",
+    "NEEDS_SHARIA_REVIEW",
+    "NEEDS_LANGUAGE_REVIEW",
+    "CONFLICTING_SOURCES",
+    "BLOCKED_LICENSE",
+    "HUMAN_REVIEWED",
+    "PUBLISHED",
+    "REJECTED"
+  ],
+  "publicVisibleStates": ["PUBLISHED"],
+  "humanReviewDecisions": [
+    "APPROVED",
+    "APPROVED_WITH_CORRECTION",
+    "NEEDS_MORE_EVIDENCE",
+    "REJECTED"
+  ],
+  "namingAxes": [
+    "canonicalName",
+    "selfDesignation",
+    "historicalNames",
+    "externalDesignations"
+  ],
+  "forbiddenUiWithoutSourceAndReview": [
+    "فرقة ناجية",
+    "هالكة",
+    "انقرضت",
+    "الغالبية العظمى",
+    "منتشرة في العالم",
+    "قائمة",
+    "تكفير جماعي بصوت التطبيق"
+  ]
+}
