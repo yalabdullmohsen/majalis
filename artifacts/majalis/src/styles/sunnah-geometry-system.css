@@ -1,0 +1,107 @@
+/**
+ * Sunnah Geometry System (SGS) — زخرفة هندسية خفيفة فقط.
+ * أقواس · نجمة هندسية · وحدة زخرفية — بلا إزعاج للمحتوى.
+ * مؤجّل من CSS الحرج · pointer-events: none · prefers-reduced-motion.
+ */
+
+:root {
+  --sgs-ink: color-mix(in srgb, var(--svl-accent-primary, #0f5c45) 55%, transparent);
+  --sgs-gold: color-mix(in srgb, var(--svl-accent-gold, #a8843a) 45%, transparent);
+  --sgs-opacity: 0.14;
+  --sgs-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' fill='none'%3E%3Cpath d='M48 8 L56 36 L84 36 L62 52 L70 80 L48 64 L26 80 L34 52 L12 36 L40 36 Z' stroke='%230F5C45' stroke-opacity='0.22' stroke-width='1.2'/%3E%3C/svg%3E");
+  --sgs-arch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' fill='none'%3E%3Cpath d='M10 70 V38 A50 50 0 0 1 110 38 V70' stroke='%230F5C45' stroke-opacity='0.2' stroke-width='1.4'/%3E%3Cpath d='M28 70 V42 A32 32 0 0 1 92 42 V70' stroke='%23A8843A' stroke-opacity='0.16' stroke-width='1'/%3E%3C/svg%3E");
+  --sgs-tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cpath d='M32 4 L60 32 L32 60 L4 32 Z' fill='none' stroke='%230F5C45' stroke-opacity='0.12' stroke-width='1'/%3E%3C/svg%3E");
+}
+
+html.dark,
+html[data-theme="dark"] {
+  --sgs-ink: color-mix(in srgb, #5fbf98 40%, transparent);
+  --sgs-gold: color-mix(in srgb, #c4a35a 35%, transparent);
+  --sgs-opacity: 0.11;
+  --sgs-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' fill='none'%3E%3Cpath d='M48 8 L56 36 L84 36 L62 52 L70 80 L48 64 L26 80 L34 52 L12 36 L40 36 Z' stroke='%235FBF98' stroke-opacity='0.28' stroke-width='1.2'/%3E%3C/svg%3E");
+  --sgs-arch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' fill='none'%3E%3Cpath d='M10 70 V38 A50 50 0 0 1 110 38 V70' stroke='%235FBF98' stroke-opacity='0.26' stroke-width='1.4'/%3E%3Cpath d='M28 70 V42 A32 32 0 0 1 92 42 V70' stroke='%23C4A35A' stroke-opacity='0.2' stroke-width='1'/%3E%3C/svg%3E");
+  --sgs-tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cpath d='M32 4 L60 32 L32 60 L4 32 Z' fill='none' stroke='%235FBF98' stroke-opacity='0.16' stroke-width='1'/%3E%3C/svg%3E");
+}
+
+.sgs-hero-geometry,
+.sgs-card-geometry,
+.sgs-splash-geometry,
+[data-sgs="hero"],
+[data-sgs="card"] {
+  position: relative;
+  isolation: isolate;
+}
+
+.sgs-hero-geometry::before,
+[data-sgs="hero"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--sgs-opacity);
+  background-image: var(--sgs-arch), var(--sgs-tile);
+  background-repeat: no-repeat, repeat;
+  background-position: 100% 0, center;
+  background-size: min(42%, 11rem) auto, 4rem 4rem;
+  border-radius: inherit;
+}
+
+.sgs-hero-geometry > *,
+[data-sgs="hero"] > * {
+  position: relative;
+  z-index: 1;
+}
+
+.sgs-card-geometry::after,
+[data-sgs="card"]::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: 0.65rem;
+  top: 0.55rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  pointer-events: none;
+  opacity: calc(var(--sgs-opacity) + 0.04);
+  background-image: var(--sgs-star);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.sgs-splash-geometry {
+  background-image: var(--sgs-tile);
+  background-size: 3.5rem 3.5rem;
+  background-repeat: repeat;
+}
+
+.sgs-arch-rail {
+  position: relative;
+}
+.sgs-arch-rail::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0.35rem;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  width: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--svl-accent-primary, #0f5c45) 12%,
+    var(--svl-accent-gold, #a8843a) 50%,
+    var(--svl-accent-primary, #0f5c45) 88%,
+    transparent
+  );
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sgs-hero-geometry::before,
+  .sgs-card-geometry::after,
+  [data-sgs="hero"]::before,
+  [data-sgs="card"]::after {
+    transition: none;
+  }
+}

@@ -1,0 +1,359 @@
+/**
+ * Visual Refresh v1 — عمق بصري + تباين + Premium Islamic على الأسطح الحية.
+ * مؤجّل من CSS الحرج. لا Material 3 · لا نيون · لا flat بالكامل.
+ */
+
+/* ── طبقات عالمية للبطاقات الشائعة ── */
+.card,
+.card--compact,
+.ss-feature-card__inner,
+.section-lobby .card,
+.reading-section-card,
+.rsc,
+.info-card,
+.hadith-card,
+.an-card,
+.prophet-lux-card,
+.prophet-fact-card,
+.tarikh-card,
+.quran-hub-card,
+.nb-azm-card,
+[data-svl-surface="card"] {
+  background: var(--svl-surface-primary, var(--mj-surface, #fffcf6));
+  border-color: var(--svl-border-subtle, color-mix(in srgb, var(--mj-hairline) 80%, transparent));
+  box-shadow: var(--svl-shadow-card);
+}
+
+.card__label,
+.ss-feature-card__title,
+.quran-hub-card__title,
+.section-lobby__card-title,
+.prophet-lux-card__name {
+  color: var(--svl-text-primary, var(--mj-ink, #12201a));
+  font-weight: 750;
+}
+
+.card__subtitle,
+.ss-feature-card__desc,
+.quran-hub-card__desc,
+.prophet-lux-card__bio,
+.prophet-lux-card__title {
+  color: var(--svl-text-secondary, var(--mj-ink-2, #2f4038));
+}
+
+.card__icon,
+.ss-feature-card__icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  background: color-mix(in srgb, var(--svl-accent-primary, #0f5c45) 12%, var(--svl-surface-primary, #fff));
+  color: var(--svl-accent-primary-deep, #0a3d2e);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--svl-accent-gold, #a8843a) 22%, transparent);
+}
+
+/* ── الرئيسية: Premium Welcome Card ── */
+.home-page-hero.page-hero-mj,
+.home-welcome-premium.page-hero-mj {
+  min-height: 11rem;
+  margin-inline: max(0.75rem, var(--page-gutter, 1rem));
+  margin-block: 0.55rem 0.85rem;
+  padding: 1.15rem 1.1rem 1.25rem;
+  border-radius: var(--svl-radius-lg, 28px);
+  border: 1px solid color-mix(in srgb, var(--svl-accent-primary, #0f5c45) 18%, var(--svl-border-subtle));
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--svl-accent-primary, #0f5c45) 16%, #fffcf6) 0%,
+      color-mix(in srgb, var(--svl-accent-gold, #a8843a) 8%, #f7f3eb) 48%,
+      color-mix(in srgb, var(--svl-accent-primary, #0f5c45) 10%, #f3efe6) 100%
+    );
+  box-shadow: var(--svl-shadow-hero, var(--svl-shadow-elevated));
+  color: var(--svl-text-primary, #12201a);
+  overflow: hidden;
+}
+
+.home-page-hero .page-hero-mj__title,
+.home-welcome-premium .page-hero-mj__title {
+  color: var(--svl-text-primary, #12201a);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-shadow: none;
+}
+
+.home-page-hero .page-hero-mj__desc,
+.home-welcome-premium .page-hero-mj__desc {
+  color: var(--svl-text-secondary, #2f4038);
+  font-weight: 550;
+  max-width: 28rem;
+}
+
+.home-page-hero .page-hero-mj__eyebrow,
+.home-welcome-premium .page-hero-mj__eyebrow {
+  color: var(--svl-accent-primary-deep, #0a3d2e);
+  font-weight: 700;
+}
+
+.home-page-hero .m2030-btn--primary,
+.home-welcome-premium .m2030-btn--primary {
+  background: var(--svl-accent-primary-deep, #0a3d2e);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 8px 18px -10px color-mix(in srgb, #0a3d2e 55%, transparent);
+  font-weight: 750;
+  min-height: 2.75rem;
+}
+
+.home-page-hero .m2030-btn--ghost,
+.home-welcome-premium .m2030-btn--ghost {
+  color: var(--svl-accent-primary-deep, #0a3d2e);
+  border-color: color-mix(in srgb, var(--svl-accent-primary, #0f5c45) 35%, transparent);
+  background: color-mix(in srgb, #ffffff 55%, transparent);
+  font-weight: 650;
+}
+
+/* تقليل الفراغ العلوي تحت الهيرو */
+.m2030-home .hus,
+.m2030-home .home-sacred-day {
+  margin-top: 0.55rem;
+}
+
+/* ── مركز القرآن: Feature Cards ── */
+[data-quran-hub="1"] .card,
+[data-quran-hub="1"] .card--featured,
+.quran-open-mushaf-card,
+.qom-card {
+  min-height: 5.5rem;
+  box-shadow: var(--svl-shadow-elevated);
+  border-color: color-mix(in srgb, var(--svl-accent-primary, #0f5c45) 20%, var(--svl-border-subtle));
+}
+
+[data-quran-hub="1"] .card__icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+[data-quran-hub="1"] .card__icon svg {
+  width: 1.55rem;
+  height: 1.55rem;
+}
+
+[data-quran-hub="1"] .card__label {
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+[data-quran-hub="1"] .card__subtitle {
+  color: var(--svl-text-secondary, #2f4038);
+  font-weight: 550;
+}
+
+.quran-open-mushaf {
+  position: relative;
+  isolation: isolate;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--svl-accent-primary, #0f5c45) 14%, var(--svl-surface-elevated, #fff)) 0%,
+      var(--svl-surface-primary, #fffcf6) 100%
+    );
+  border: 1px solid color-mix(in srgb, var(--svl-accent-primary, #0f5c45) 22%, var(--svl-border-subtle));
+  box-shadow: var(--svl-shadow-elevated);
+  border-radius: var(--svl-radius-md, 24px);
+}
+
+.quran-open-mushaf__icon {
+  width: 2.85rem;
+  height: 2.85rem;
+  color: var(--svl-accent-primary-deep, #0a3d2e);
+  background: color-mix(in srgb, var(--svl-accent-gold, #a8843a) 14%, #fff);
+}
+
+.quran-open-mushaf__title {
+  font-weight: 800;
+  color: var(--svl-text-primary, #12201a);
+}
+
+.quran-open-mushaf__desc,
+.quran-open-mushaf__resume {
+  color: var(--svl-text-secondary, #2f4038);
+}
+
+.quran-hub-card {
+  box-shadow: var(--svl-shadow-card);
+  border-color: color-mix(in srgb, var(--svl-accent-primary, #0f5c45) 16%, var(--svl-border-subtle));
+}
+
+.quran-hub-card__title {
+  font-weight: 800;
+  color: var(--svl-accent-primary-deep, var(--mj-brand-deep));
+}
+
+.quran-hub-card__desc {
+  color: var(--svl-text-secondary, var(--mj-ink-2));
+}
+
+/* ── قصص الأنبياء + السيرة ── */
+.topic-page--prophets .topic-page__hero,
+.prophets-lux-page .prophets-lux-hero {
+  box-shadow: var(--svl-shadow-hero);
+}
+
+.prophet-lux-card {
+  background: linear-gradient(
+    165deg,
+    var(--svl-surface-elevated, #fff) 0%,
+    color-mix(in srgb, var(--svl-accent-primary, #0f5c45) 5%, var(--svl-surface-primary)) 100%
+  );
+  box-shadow: var(--svl-shadow-card);
+}
+
+.prophet-lux-card__chip,
+.prophet-lux-card__chip--stat,
+.prophet-lux-card__chip--azm {
+  border-color: color-mix(in srgb, var(--svl-accent-gold, #a8843a) 28%, var(--svl-border-subtle));
+  background: color-mix(in srgb, var(--svl-accent-primary, #0f5c45) 9%, var(--svl-surface-primary));
+  color: var(--svl-text-primary);
+  font-weight: 700;
+}
+
+.prophet-lux-card__chip--azm {
+  background: color-mix(in srgb, var(--svl-accent-gold, #a8843a) 18%, var(--svl-surface-primary));
+}
+
+.prophets-seerah-brief,
+.seerah-journey,
+[data-seerah-brief="1"] {
+  background: var(--svl-surface-layered, var(--svl-surface-section));
+  border: 1px solid color-mix(in srgb, var(--svl-accent-primary) 22%, var(--svl-border-subtle));
+  box-shadow: var(--svl-shadow-card);
+  border-radius: var(--svl-radius-md);
+}
+
+.prophets-seerah-timeline__dot,
+.seerah-journey__dot {
+  background: var(--svl-accent-primary, #0f5c45);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--svl-accent-gold, #a8843a) 28%, transparent);
+}
+
+.prophets-seerah-timeline__item:not(:last-child)::after,
+.seerah-journey__item:not(:last-child)::after {
+  background: linear-gradient(
+    to bottom,
+    var(--svl-accent-primary),
+    var(--svl-accent-gold)
+  );
+}
+
+.prophets-seerah-full-cta,
+.seerah-journey__cta {
+  background: var(--svl-accent-primary-deep, #0a3d2e);
+  color: #f8faf8;
+  box-shadow: var(--svl-shadow-card);
+  font-weight: 750;
+}
+
+/* ── لوبات الأقسام العامة ── */
+.section-lobby__head h1,
+.section-lobby [data-lobby-title] {
+  color: var(--svl-text-primary, #12201a);
+  font-weight: 800;
+}
+
+.section-lobby .card:hover {
+  filter: none;
+  box-shadow: var(--svl-shadow-elevated);
+  border-color: color-mix(in srgb, var(--svl-accent-primary) 28%, var(--svl-border-subtle));
+}
+
+/* ── Dark Luxury ── */
+html.dark .card,
+html[data-theme="dark"] .card,
+html.dark .ss-feature-card__inner,
+html[data-theme="dark"] .ss-feature-card__inner,
+html.dark .quran-hub-card,
+html[data-theme="dark"] .quran-hub-card,
+html.dark .prophet-lux-card,
+html[data-theme="dark"] .prophet-lux-card,
+html.dark .reading-section-card,
+html[data-theme="dark"] .reading-section-card {
+  background: var(--svl-surface-primary, #17221e);
+  border-color: var(--svl-border-subtle);
+  box-shadow: var(--svl-shadow-card);
+  color: var(--svl-text-primary, #f4f1ea);
+}
+
+html.dark .card__label,
+html.dark .ss-feature-card__title,
+html.dark .quran-hub-card__title,
+html.dark .prophet-lux-card__name,
+html[data-theme="dark"] .card__label,
+html[data-theme="dark"] .ss-feature-card__title,
+html[data-theme="dark"] .quran-hub-card__title,
+html[data-theme="dark"] .prophet-lux-card__name {
+  color: #f4f1ea;
+}
+
+html.dark .card__subtitle,
+html.dark .ss-feature-card__desc,
+html.dark .quran-hub-card__desc,
+html.dark .prophet-lux-card__bio,
+html[data-theme="dark"] .card__subtitle,
+html[data-theme="dark"] .ss-feature-card__desc,
+html[data-theme="dark"] .quran-hub-card__desc,
+html[data-theme="dark"] .prophet-lux-card__bio {
+  color: #d2ddd7;
+}
+
+html.dark .home-page-hero.page-hero-mj,
+html.dark .home-welcome-premium.page-hero-mj,
+html[data-theme="dark"] .home-page-hero.page-hero-mj,
+html[data-theme="dark"] .home-welcome-premium.page-hero-mj {
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, #1a4a3a 55%, #0e1613) 0%,
+      color-mix(in srgb, #c4a35a 10%, #15201c) 55%,
+      #121c18 100%
+    );
+  border-color: color-mix(in srgb, #5fbf98 28%, transparent);
+  color: #f4f1ea;
+}
+
+html.dark .home-page-hero .page-hero-mj__title,
+html.dark .home-welcome-premium .page-hero-mj__title,
+html[data-theme="dark"] .home-page-hero .page-hero-mj__title,
+html[data-theme="dark"] .home-welcome-premium .page-hero-mj__title {
+  color: #f4f1ea;
+}
+
+html.dark .home-page-hero .page-hero-mj__desc,
+html.dark .home-welcome-premium .page-hero-mj__desc,
+html[data-theme="dark"] .home-page-hero .page-hero-mj__desc,
+html[data-theme="dark"] .home-welcome-premium .page-hero-mj__desc {
+  color: #d2ddd7;
+}
+
+html.dark .home-page-hero .m2030-btn--primary,
+html.dark .home-welcome-premium .m2030-btn--primary,
+html[data-theme="dark"] .home-page-hero .m2030-btn--primary,
+html[data-theme="dark"] .home-welcome-premium .m2030-btn--primary {
+  background: color-mix(in srgb, #5fbf98 32%, #0e1613);
+  color: #f4f1ea;
+}
+
+html.dark .home-page-hero .m2030-btn--ghost,
+html.dark .home-welcome-premium .m2030-btn--ghost,
+html[data-theme="dark"] .home-page-hero .m2030-btn--ghost,
+html[data-theme="dark"] .home-welcome-premium .m2030-btn--ghost {
+  color: #d2ddd7;
+  border-color: color-mix(in srgb, #5fbf98 35%, transparent);
+  background: color-mix(in srgb, #17221e 70%, transparent);
+}
+
+html.dark .card__icon,
+html.dark .ss-feature-card__icon,
+html[data-theme="dark"] .card__icon,
+html[data-theme="dark"] .ss-feature-card__icon {
+  background: color-mix(in srgb, #5fbf98 16%, #17221e);
+  color: #c4a35a;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #c4a35a 30%, transparent);
+}
