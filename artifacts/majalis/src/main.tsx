@@ -134,6 +134,8 @@ function loadNonCriticalCss() {
   void import("./styles/components/native-feel.css");
   void import("./styles/m2030/interactions.css");
   void import("./styles/m2030/pages.css");
+  /* SVL PR-2: بعد طبقات الصفحات — إلغاء الشرائط الزخرفية 3–4px */
+  void import("./styles/card-decorative-strip-cleanup.css");
   // final-release يُحمَّل بعد design-system أعلاه — لا تحميل متوازٍ
   const isDark =
     document.documentElement.classList.contains("dark") ||
