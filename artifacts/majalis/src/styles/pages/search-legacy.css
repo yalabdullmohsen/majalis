@@ -50,7 +50,6 @@
 }
 
 .search-result-row--quran {
-  border-inline-start: 3px solid var(--clr-primary, var(--mj-brand));
   background: rgba(23,61,53, 0.03);
 }
 

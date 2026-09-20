@@ -66,6 +66,8 @@ import "./styles/ssunnah-ux-polish.css";
 /* semantic-tokens + card-unify مؤجّلان — ميزانية CSS الحرج ≤60KiB gzip */
 /* Green Surface System — يفوز على تلميع الأقسام الأبيض القديم */
 import "./styles/green-surface-system.css";
+/* إزالة الأعمدة الخضراء الزخرفية من بطاقات المحتوى (بعد Green Surface) */
+import "./styles/card-decorative-strip-cleanup.css";
 /* استرداد ليلي P0 — متزامن؛ القواعد مقيّدة بـ html.dark لتقليل theme flash */
 import "./styles/dark-mode-recovery.css";
 // dark-mode-surfaces (~24KB) — فوري فقط إن كان الثيم داكنًا عند الإقلاع؛ وإلا بعد load
@@ -123,6 +125,8 @@ function loadNonCriticalCss() {
       void import("./styles/visual-identity-unify.css");
       // إعادة طبقة الاسترداد الليلي آخرًا حتى تفوز على final-release
       void import("./styles/dark-mode-recovery.css");
+      // كنس الشريط الزخرفي بعد الطبقات المتأخرة
+      void import("./styles/card-decorative-strip-cleanup.css");
     });
   });
   void import("./styles/components/instant-interaction.css");

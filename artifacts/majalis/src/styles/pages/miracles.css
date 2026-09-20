@@ -183,7 +183,6 @@
   border-radius: var(--radius-card, var(--mk-radius, 24px));
   background: var(--mk-surface);
   border: 1px solid color-mix(in srgb, var(--mk-green) 12%, var(--mk-line));
-  border-inline-start: 3px solid color-mix(in srgb, var(--mk-green) 55%, transparent);
   box-shadow: var(--shadow-soft, 0 8px 22px rgba(36, 31, 24, 0.07));
 }
 

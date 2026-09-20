@@ -312,17 +312,14 @@ html.dark .as-tab--active,
 .amr-notes {
   background: color-mix(in srgb, var(--mj-brand) 6%, var(--ss-card-bg, #fffcf7));
   border-radius: var(--radius-card, 24px);
-  border-inline-start: 3px solid color-mix(in srgb, var(--mj-brand) 55%, transparent);
 }
 
 .ai-dalil--quran,
 .amr-evidence--quran {
-  border-inline-start-color: var(--mj-brand);
 }
 
 .ai-dalil--hadith,
 .amr-evidence--hadith {
-  border-inline-start-color: var(--mj-brand-deep);
 }
 
 /* علامات الساعة: إزالة بنفسجي غير هويّة */
@@ -361,12 +358,10 @@ html.dark .as-tab--active,
 
 .amr-basis__quran {
   font-weight: 700;
-  border-inline-start: 3px solid var(--mj-brand-deep);
   padding-inline-start: 0.85rem;
 }
 
 .amr-basis__hadith {
-  border-inline-start: 3px solid var(--mj-brand);
   padding-inline-start: 0.85rem;
   color: var(--color-text-muted, var(--mj-ink-2));
 }

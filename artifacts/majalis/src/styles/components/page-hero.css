@@ -57,7 +57,6 @@ html.dark .pattern-backdrop {
   background-image: none;
   color: var(--mj-ink, #16241e);
   border: 1px solid var(--mj-hairline, #e3e8e6);
-  border-inline-start: 4px solid var(--mj-brand, #1f6b56);
   box-shadow: var(--shadow-soft, 0 10px 28px rgba(36, 31, 24, 0.08));
 }
 .page-hero-mj--bleed:not(.home-page-hero) .pattern-backdrop {

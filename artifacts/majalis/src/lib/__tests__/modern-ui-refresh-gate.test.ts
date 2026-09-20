@@ -25,7 +25,8 @@ assert.match(mur, /\.mur-settings-list/, "قائمة إعدادات حديثة")
 assert.match(mur, /\.reading-info-block/, "كتل قراءة");
 assert.match(mur, /prefers-reduced-motion/, "احترام تقليل الحركة");
 assert.match(mur, /Design System Adoption/, "طبقة تبني عالمي");
-assert.match(unify, /border:\s*1px solid transparent/, "بطاقات بلا حدود ثقيلة");
+assert.match(unify, /border:\s*1px solid var\(--surface-feature-border/, "حد خفيف موحّد بلا شريط جانبي");
+assert.doesNotMatch(unify, /border-inline-start:\s*[2345]px/, "لا شريط زخرفي في card-unify");
 assert.match(soft, /--soft-card-border:\s*transparent/, "soft-card فاتح بلا إطار");
 assert.match(index, /SettingsList/, "تصدير SettingsList");
 assert.match(settingsList, /mur-settings-row/, "صفوف SettingsList");

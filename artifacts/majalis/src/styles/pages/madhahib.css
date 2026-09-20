@@ -231,7 +231,6 @@
   max-width: var(--mdb-read-max);
   border-radius: 0.9rem;
   border: 1px solid color-mix(in srgb, var(--mj-brand) 20%, transparent);
-  border-inline-start: 3px solid var(--mj-brand-deep);
   background: color-mix(in srgb, var(--mj-brand) 8%, var(--ss-card-bg, #fff));
   color: var(--mj-brand-deep);
   box-shadow: none;

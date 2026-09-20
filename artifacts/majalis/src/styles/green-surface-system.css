@@ -26,11 +26,9 @@
   --surface-feature-ink: var(--mj-ink, #16241e);
   --surface-feature-ink-muted: var(--mj-ink-2, #4f5f58);
 
-  /* ظلال / نصف قطر موحّد */
+  /* ظلال / نصف قطر موحّد — ظل خفيف فقط (بلا inset ثقيل ولا شريط جانبي) */
   --surface-feature-radius: var(--radius-card, 24px);
-  --surface-feature-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.55),
-    0 8px 22px -16px rgba(10, 61, 46, 0.16);
+  --surface-feature-shadow: 0 6px 18px -14px rgba(10, 61, 46, 0.12);
   --surface-feature-pad: clamp(0.9rem, 2.6vw, 1.2rem);
 
   /* أسماء مطلوبة في المواصفات (camelCase aliases) */
@@ -69,21 +67,18 @@ html.dark,
   --mss-on-hero-muted: var(--surface-feature-ink-muted);
   --mss-on-hero-accent: var(--surface-islamic-accent);
 
-  --surface-feature-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    0 6px 18px -16px rgba(0, 0, 0, 0.5);
+  --surface-feature-shadow: 0 6px 16px -14px rgba(0, 0, 0, 0.45);
 
   --mss-section-hero-bg: var(--surface-islamic);
   --soft-card-on-light-bg: var(--surface-feature);
 }
 
-/* ── أداة تطبيق موحّدة ── */
+/* ── أداة تطبيق موحّدة — سطح واحد · حد خفيف · بلا شريط جانبي زخرفي ── */
 .gs-surface,
 .gs-surface--feature {
   background: var(--surface-feature) !important;
   background-image: none !important;
   border: 1px solid var(--surface-feature-border) !important;
-  border-inline-start: 3px solid var(--surface-feature-accent) !important;
   border-radius: var(--surface-feature-radius) !important;
   box-shadow: var(--surface-feature-shadow) !important;
   color: var(--surface-feature-ink) !important;
@@ -92,19 +87,16 @@ html.dark,
 .gs-surface--knowledge {
   background: var(--surface-knowledge) !important;
   border-color: var(--surface-knowledge-border) !important;
-  border-inline-start-color: var(--surface-knowledge-accent) !important;
 }
 
 .gs-surface--islamic {
   background: var(--surface-islamic) !important;
   border-color: var(--surface-islamic-border) !important;
-  border-inline-start-color: var(--surface-islamic-accent) !important;
 }
 
 .gs-surface--highlighted {
   background: var(--surface-highlighted) !important;
   border-color: var(--surface-highlighted-border) !important;
-  border-inline-start-color: var(--surface-highlighted-accent) !important;
 }
 
 /* ── بطاقات المحتوى الرئيسية (Legacy → Green Surface) ──
@@ -214,7 +206,6 @@ html.dark,
   background: var(--surface-feature) !important;
   background-image: none !important;
   border: 1px solid var(--surface-feature-border) !important;
-  border-inline-start: 3px solid var(--surface-feature-accent) !important;
   border-radius: var(--surface-feature-radius) !important;
   box-shadow: var(--surface-feature-shadow) !important;
   color: var(--surface-feature-ink) !important;
@@ -229,7 +220,6 @@ html.dark,
 .ai-detail {
   background: var(--surface-knowledge) !important;
   border-color: var(--surface-knowledge-border) !important;
-  border-inline-start-color: var(--surface-knowledge-accent) !important;
 }
 
 /* بطاقات إسلامية مميزة (سيرة / عقيدة / تاريخ / إعجاز) */
@@ -246,14 +236,12 @@ html.dark,
 .card--featured:not([data-scripture]) {
   background: var(--surface-islamic) !important;
   border-color: var(--surface-islamic-border) !important;
-  border-inline-start-color: var(--surface-islamic-accent) !important;
 }
 
-/* تنبيه حذر — يبقى ضمن العائلة مع درجة دافئة خفيفة فوق الأخضر */
+/* تنبيه حذر — حد موحّد دافئ (بلا شريط جانبي زخرفي) */
 .info-card--caution {
   background: color-mix(in srgb, #fef3c7 35%, var(--surface-knowledge)) !important;
-  border-color: color-mix(in srgb, #a16207 28%, var(--surface-knowledge-border)) !important;
-  border-inline-start-color: #a16207 !important;
+  border: 1px solid color-mix(in srgb, #a16207 28%, var(--surface-knowledge-border)) !important;
   color: var(--surface-feature-ink) !important;
 }
 

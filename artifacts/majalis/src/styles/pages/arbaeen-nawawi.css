@@ -62,7 +62,6 @@
   border-radius: var(--radius-card, 24px);
   padding: 1.1rem;
   border: 1.5px solid var(--mj-hairline, var(--mj-hairline, #e3e8e6));
-  border-inline-start: 4px solid var(--majalis-emerald);
   transition: box-shadow 0.15s, border-color 0.15s;
 }
 .an-card:hover { box-shadow: 0 4px 16px rgba(31,77,58,0.1); }
@@ -232,7 +231,6 @@
   font-size: 0.82rem;
   line-height: 1.7;
   color: var(--mj-ink-2, var(--mj-muted));
-  border-inline-start: 2px solid color-mix(in srgb, var(--mj-brand, var(--mj-brand-deep)) 28%, transparent);
   padding-inline-start: 0.65rem;
 }
 .an-row__benefit {
