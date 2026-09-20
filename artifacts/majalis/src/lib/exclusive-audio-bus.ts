@@ -58,10 +58,20 @@ async function stopKnownEngines(except: AudioBusOwner): Promise<void> {
   }
   if (except !== "adhan") {
     try {
-      const { stopAdhan } = await import("@/lib/adhan-playback");
-      stopAdhan();
+      const { tryStopAthanFromForeignOwner } = await import(
+        "@/lib/athan-playback-manager"
+      );
+      // جلسة الصلاة محمية — لن يُوقف الأذان الجاري لوقت الصلاة
+      if (!tryStopAthanFromForeignOwner()) {
+        /* prayer session kept playing */
+      }
     } catch {
-      /* ignore */
+      try {
+        const { stopAdhan } = await import("@/lib/adhan-playback");
+        stopAdhan();
+      } catch {
+        /* ignore */
+      }
     }
   }
   if (except !== "audioReader") {

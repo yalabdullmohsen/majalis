@@ -121,7 +121,9 @@ assert.equal(
 );
 
 const audioSrc = readFileSync(resolve(appRoot, "src/lib/adhan-audio.ts"), "utf8");
-assert.match(audioSrc, /resolveAdhanClip/, "playAdhan يمر عبر resolveAdhanClip");
+assert.match(audioSrc, /playPrayerAthanSync/, "playAdhan يوكّل لـ AthanPlaybackManager");
+const managerSrc = readFileSync(resolve(appRoot, "src/lib/athan-playback-manager.ts"), "utf8");
+assert.match(managerSrc, /resolveAdhanClip/, "المدير يمر عبر resolveAdhanClip");
 const modesSrc = readFileSync(resolve(appRoot, "src/lib/adhan-playback-modes.ts"), "utf8");
 assert.match(
   modesSrc,

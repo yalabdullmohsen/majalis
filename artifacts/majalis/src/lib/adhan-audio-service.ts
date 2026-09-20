@@ -336,24 +336,40 @@ export async function testAdhanSound(
 }
 
 export function stopAdhanPreview(): void {
-  stopPlayback();
-  stopCatalogAdhan();
-  pushAttempt("stop");
-  clearAdhanMediaSession();
-  // قطع معاينة المنسّق إن كانت هي المصدر النشط (بدون انتظار طابور)
-  void import("@/lib/audio/app-audio-coordinator")
+  void import("@/lib/athan-playback-manager")
     .then((m) => {
-      const s = m.getAppAudioSnapshot();
-      if (
-        s.activeKind === "adhanPreview" ||
-        s.activeKind === "notificationPreview" ||
-        s.activeKind === "prayerPrompt"
-      ) {
-        m.forceStopAppAudioSync();
+      if (m.isProtectedAthanSession()) {
+        // جلسة صلاة جارية — أوقف معاينة المنسّق فقط إن وُجدت
+        return import("@/lib/audio/app-audio-coordinator").then((coord) => {
+          const s = coord.getAppAudioSnapshot();
+          if (
+            s.activeKind === "adhanPreview" ||
+            s.activeKind === "notificationPreview" ||
+            s.activeKind === "prayerPrompt"
+          ) {
+            coord.forceStopAppAudioSync();
+          }
+        });
       }
+      m.stopAthan("leave");
+      pushAttempt("stop");
+      clearAdhanMediaSession();
+      return import("@/lib/audio/app-audio-coordinator").then((coord) => {
+        const s = coord.getAppAudioSnapshot();
+        if (
+          s.activeKind === "adhanPreview" ||
+          s.activeKind === "notificationPreview" ||
+          s.activeKind === "prayerPrompt"
+        ) {
+          coord.forceStopAppAudioSync();
+        }
+      });
     })
     .catch(() => {
-      /* ignore */
+      stopPlayback({ force: true });
+      stopCatalogAdhan();
+      pushAttempt("stop");
+      clearAdhanMediaSession();
     });
 }
 

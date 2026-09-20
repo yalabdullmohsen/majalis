@@ -20,11 +20,13 @@ import {
 import {
   isAdhanPlaying as playbackIsPlaying,
   playAdhanUrl,
-  stopAdhan as playbackStop,
   type AdhanPlayResult,
 } from "./adhan-playback";
 import {
-  resolveAdhanClip,
+  playPrayerAthanSync,
+  stopAthan as managerStopAthan,
+} from "./athan-playback-manager";
+import {
   resolveIqamahClip,
   type AdhanPlaybackMode,
 } from "./adhan-playback-modes";
@@ -583,7 +585,7 @@ export function getDefaultFajrMuezzin(): Muezzin {
 // ─── Audio Engine (يوكّل إلى adhan-playback الخفيف) ───────────────────────────
 
 export function stopAdhan() {
-  playbackStop();
+  managerStopAthan("user");
 }
 
 export function isAdhanPlaying() {
@@ -591,7 +593,7 @@ export function isAdhanPlaying() {
 }
 
 /**
- * تشغيل الأذان حسب الصيغة.
+ * تشغيل الأذان حسب الصيغة — عبر AthanPlaybackManager (جلسة صلاة محمية، بلا maxMs).
  * للفجر: fajrUrl فقط — بلا استبدال بالنسخة العامة.
  * silent → null (إشعار بلا صوت).
  */
@@ -601,10 +603,7 @@ export function playAdhan(
   mode: AdhanPlaybackMode = "full",
   volume = 1,
 ): HTMLAudioElement | null {
-  const clip = resolveAdhanClip(muezzin, { isFajr, mode });
-  if (!clip) return null;
-  const vol = Math.min(1, Math.max(0, volume));
-  return playAdhanUrl(clip.url, vol, { maxMs: clip.maxMs });
+  return playPrayerAthanSync(muezzin, isFajr, mode, volume);
 }
 
 /** تشغيل الإقامة إن وُجد ملف مستقل */
