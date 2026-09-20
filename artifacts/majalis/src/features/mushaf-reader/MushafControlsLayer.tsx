@@ -18,6 +18,7 @@ import {
   parseMushafPageQuery,
 } from "@/lib/quran-last-page";
 import "./page-goto-dial.css";
+import "@/styles/components/page-goto-visibility.css";
 
 /** أرقام غربية/عربية/فارسية فقط أثناء الكتابة */
 const PAGE_DIGIT_RE = /[0-9٠-٩۰-۹]/g;

@@ -1004,8 +1004,10 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
 
   const onPageNumberPressCurrent = useCallback(() => {
     setGotoOpen(true);
-    setChromeOpen(false);
     setActionsOpen(false);
+    setControlsMoreOpen(false);
+    /* لا تعتمد على إخفاء الكروم: وضع التركيز يخفي .nm-controls عند data-chrome=0 */
+    setChromeOpen(true);
   }, []);
 
   /*
@@ -1067,7 +1069,10 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
 
   const onControlsGotoOpenChange = useCallback((open: boolean) => {
     setGotoOpen(open);
-    if (open) setControlsMoreOpen(false);
+    if (open) {
+      setControlsMoreOpen(false);
+      setChromeOpen(true);
+    }
   }, []);
 
   const onControlsGoto = useCallback(
@@ -1168,6 +1173,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       }}
       className="nm-root mm-viewport mushaf-shell"
       data-chrome={chromeOpen ? "1" : "0"}
+      data-goto={gotoOpen ? "1" : "0"}
       data-ayah-bar={actionsOpen ? "1" : "0"}
       data-audio-dock={audioDockVisible ? "1" : "0"}
       data-audio-mini={audioDockVisible && audioDockMini ? "1" : "0"}

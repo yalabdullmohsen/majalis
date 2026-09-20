@@ -17,8 +17,11 @@ const page = read("src/features/mushaf-reader/MushafPage.tsx");
 
 assert.match(page, /onPageNumberPress/, "رقم الصفحة قابل للضغط");
 assert.match(reader, /setGotoOpen\(true\)/, "يفتح انتقال الصفحة");
+assert.match(reader, /data-goto=\{gotoOpen/, "علامة data-goto على الجذر");
+assert.match(reader, /setChromeOpen\(true\)/, "يبقي الكروم حتى لا يُخفى العدّاد");
 assert.match(controls, /mushaf-goto-dial/, "عدّاد صفحات");
 assert.match(controls, /page-goto-dial\.css/, "أنماط العدّاد منفصلة عن هندسة المصحف");
+assert.match(controls, /page-goto-visibility\.css/, "ظهور العدّاد خارج mushaf-reader.css");
 assert.match(controls, /DIAL_ITEM_H/, "محاكاة ارتفاع عنصر العدّاد");
 assert.match(controls, /بلا focus تلقائي/, "لا يفتح لوحة المفاتيح فورًا");
 assert.doesNotMatch(
@@ -32,5 +35,14 @@ assert.match(controls, /jumpToPage/);
 assert.match(dialCss, /\.nm-goto__dial\b/);
 assert.match(dialCss, /scroll-snap-type:\s*y\s+mandatory/);
 assert.match(dialCss, /\.nm-goto__dial-item\[data-active="1"\]/);
+
+const visCss = read("src/styles/components/page-goto-visibility.css");
+assert.match(visCss, /data-goto="1"/);
+assert.match(visCss, /\.nm-goto/);
+assert.doesNotMatch(
+  reader,
+  /setGotoOpen\(true\);\s*setChromeOpen\(false\)/,
+  "لا يغلق الكروم فور فتح العدّاد (كان يخفي العدّاد في وضع التركيز)",
+);
 
 console.log("mushaf-fast-page-dial-gate.test.ts: ok");
