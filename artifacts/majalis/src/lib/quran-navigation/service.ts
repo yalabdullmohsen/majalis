@@ -6,11 +6,21 @@ import { buildMushafAyahHref } from "./href";
 const RETURN_CTX_KEY = "ssunnah:quran-nav-return-v1";
 const PENDING_NAV_KEY = "ssunnah:quran-nav-pending-v1";
 
+export type PendingAyahSelectionStatus =
+  | "pending"
+  | "pageReady"
+  | "geometryReady"
+  | "revealed"
+  | "dismissed"
+  | "failed";
+
 export type PendingNavigationHighlight = {
   verseKey: string;
   pageNumber: number;
   source: string;
   requestedAt: number;
+  navigationIntentId: string;
+  status: PendingAyahSelectionStatus;
   suppressTafsir: true;
   suppressAudio: true;
   suppressAyahActions: true;
@@ -54,6 +64,23 @@ export function clearQuranReturnContext(): void {
   clearSession(RETURN_CTX_KEY);
 }
 
+export function createPendingNavigationHighlight(
+  ref: Pick<QuranAyahReference, "surahId" | "ayahId" | "pageNumber" | "navigationSource" | "requestedAt">,
+): PendingNavigationHighlight {
+  const verseKey = `${ref.surahId}:${ref.ayahId}`;
+  return {
+    verseKey,
+    pageNumber: ref.pageNumber,
+    source: ref.navigationSource,
+    requestedAt: ref.requestedAt,
+    navigationIntentId: `nav-${ref.requestedAt}-${verseKey}`,
+    status: "pending",
+    suppressTafsir: true,
+    suppressAudio: true,
+    suppressAyahActions: true,
+  };
+}
+
 export function stashPendingNavigationHighlight(pending: PendingNavigationHighlight): void {
   writeSession(PENDING_NAV_KEY, pending);
 }
@@ -66,6 +93,25 @@ export function consumePendingNavigationHighlight(): PendingNavigationHighlight 
 
 export function peekPendingNavigationHighlight(): PendingNavigationHighlight | null {
   return readSession<PendingNavigationHighlight>(PENDING_NAV_KEY);
+}
+
+export function clearPendingNavigationHighlight(): void {
+  clearSession(PENDING_NAV_KEY);
+}
+
+export function hasActiveNavigationIntent(): boolean {
+  return peekPendingNavigationHighlight() != null;
+}
+
+/**
+ * Canonical entry — validate → resolve page → stash pending → open reader.
+ * Alias name مطلوب في عقد المهمة: openMushafAtReference.
+ */
+export function openMushafAtReference(
+  input: BuildReferenceInput,
+  opts?: { returnContext?: QuranReturnContext; replace?: boolean },
+): { ok: true; href: string; ref: QuranAyahReference } | { ok: false; error: string } {
+  return QuranNavigationService.openAyah(input, opts);
 }
 
 /** خدمة تنقّل مركزية — كل الأقسام تستدعيها. */
@@ -104,15 +150,7 @@ export const QuranNavigationService = {
       });
     }
 
-    stashPendingNavigationHighlight({
-      verseKey: `${built.ref.surahId}:${built.ref.ayahId}`,
-      pageNumber: built.ref.pageNumber,
-      source: built.ref.navigationSource,
-      requestedAt: built.ref.requestedAt,
-      suppressTafsir: true,
-      suppressAudio: true,
-      suppressAyahActions: true,
-    });
+    stashPendingNavigationHighlight(createPendingNavigationHighlight(built.ref));
 
     const href = buildMushafAyahHref(built.ref, {
       returnTo,

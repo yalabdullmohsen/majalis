@@ -55,13 +55,13 @@ import {
   setMushafAyahSearchHighlight,
   setMushafAyahSyncKeys,
   setNavigationHighlightedAyahId,
+  useMushafAyahNavigationKey,
 } from "@/features/mushaf-madinah/mushaf-ayah-sync-store";
 import {
-  QURAN_NAV_HIGHLIGHT_FADE_MS,
-  QURAN_NAV_HIGHLIGHT_HOLD_MS,
-  consumePendingNavigationHighlight,
+  clearPendingNavigationHighlight,
   peekPendingNavigationHighlight,
 } from "@/lib/quran-navigation";
+import { toArabicDigits } from "@/lib/utils";
 import {
   findMushafPageForAyah,
   parseVerseKey,
@@ -112,6 +112,7 @@ import {
 import { migrateLegacyMushafReaderPrefs } from "./sunnah-mushaf-classic-preset";
 import { migrateToSunnahMushafSignature } from "./sunnah-mushaf-signature-preset";
 import "./mushaf-reader.css";
+import "@/styles/ayah-nav-selection.css";
 /* شيتات التلاوة/البحث/التفسير — فئات مشتركة */
 import "@/features/mushaf-madinah/mushaf-madinah.css";
 /* صقل Chrome الخروج/الأسهم — بعد mushaf-reader حتى يفوز بدون لمس Geometry */
@@ -265,6 +266,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   onPageChangeRef.current = onPageChange;
   const suppressPageSyncRef = useRef(false);
   const pendingSelectRef = useRef<string | null>(null);
+  /** Intent تنقّل طُبّق كشفًا — إن غادر المستخدم صفحته يُلغى */
+  const revealedNavIntentRef = useRef<string | null>(null);
   const actionsOpenRef = useRef(false);
   actionsOpenRef.current = actionsOpen;
   const audio = useMemo(() => getAudioEngine(), []);
@@ -435,16 +438,29 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     setMushafAyahSyncKeys(selectedVerseKey, playingVerseKey);
   }, [selectedVerseKey, playingVerseKey]);
 
-  /** تمييز تنقّل سياقي — بلا تفسير/أدوات/صوت */
+  /** تمييز تنقّل سياقي — بلا تفسير/أدوات/صوت؛ يبقى حتى إلغاء يدوي أو مغادرة صفحة الهدف */
   useEffect(() => {
     const applyPendingNav = () => {
       const pending = peekPendingNavigationHighlight();
       if (!pending) {
-        setNavigationHighlightedAyahId(null);
-        return null;
+        if (revealedNavIntentRef.current) {
+          setNavigationHighlightedAyahId(null);
+          revealedNavIntentRef.current = null;
+        }
+        return;
       }
-      if (pending.pageNumber !== pageRef.current) return null;
-      consumePendingNavigationHighlight();
+      if (pending.pageNumber !== pageRef.current) {
+        const intentId = pending.navigationIntentId ?? `compat-${pending.verseKey}`;
+        /* لا تمسح الـintent أثناء الانتقال نحو الهدف — فقط بعد كشف ناجح ثم مغادرة */
+        if (revealedNavIntentRef.current === intentId) {
+          clearPendingNavigationHighlight();
+          setNavigationHighlightedAyahId(null);
+          revealedNavIntentRef.current = null;
+        } else {
+          setNavigationHighlightedAyahId(null);
+        }
+        return;
+      }
       setTafsirOpen(false);
       setTafsirVerseKey(null);
       tafsirIntentRef.current = null;
@@ -452,22 +468,14 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       setChromeOpen(false);
       setAudioDockOpen(false);
       setNavigationHighlightedAyahId(pending.verseKey);
-      return window.setTimeout(() => {
-        setNavigationHighlightedAyahId(null);
-      }, QURAN_NAV_HIGHLIGHT_HOLD_MS + QURAN_NAV_HIGHLIGHT_FADE_MS);
+      revealedNavIntentRef.current = pending.navigationIntentId ?? `compat-${pending.verseKey}`;
     };
 
-    let clearId = applyPendingNav();
-    const onNavEvent = () => {
-      if (clearId != null) window.clearTimeout(clearId);
-      clearId = applyPendingNav();
-    };
+    applyPendingNav();
+    const onNavEvent = () => applyPendingNav();
     window.addEventListener("ssunnah:quran-nav-pending", onNavEvent);
     return () => {
       window.removeEventListener("ssunnah:quran-nav-pending", onNavEvent);
-      if (clearId != null) window.clearTimeout(clearId);
-      /* تقليب الصفحة يُنظّف تمييز التنقّل */
-      setNavigationHighlightedAyahId(null);
     };
   }, [page]);
 
@@ -1143,7 +1151,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         mushafTurnMark("touchStart", page);
       }}
       onNavigateCancel={cancelPageTurnFreeze}
-      ignoreSelector=".nm-controls, .nm-verse-menu, .nm-page-arrows, .nm-page-arrow, .nm-page-scrubber, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, .rb-composer, .rb-markers, input, textarea, select, button"
+      ignoreSelector=".nm-controls, .nm-verse-menu, .nm-page-arrows, .nm-page-arrow, .nm-page-scrubber, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, .rb-composer, .rb-markers, .nm-nav-highlight-chip, input, textarea, select, button"
       onTapEmpty={() => {
         if (actionsOpen) {
           closeActions();
@@ -1181,6 +1189,13 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       <div className="sr-only" aria-live="polite" data-testid="mushaf-page-live">
         {`الصفحة ${page}`}
       </div>
+      <NavigationHighlightChip
+        onDismiss={() => {
+          clearPendingNavigationHighlight();
+          setNavigationHighlightedAyahId(null);
+          revealedNavIntentRef.current = null;
+        }}
+      />
       {import.meta.env.DEV ? (
         <div
           aria-hidden
@@ -1482,6 +1497,35 @@ const PrefetchPage = memo(function PrefetchPage({
   );
 });
 
+
+function NavigationHighlightChip({ onDismiss }: { onDismiss: () => void }) {
+  const navigationKey = useMushafAyahNavigationKey();
+  if (!navigationKey) return null;
+  const [surahRaw, ayahRaw] = navigationKey.split(":");
+  const surahId = Number.parseInt(surahRaw || "", 10);
+  const ayahId = Number.parseInt(ayahRaw || "", 10);
+  if (!Number.isFinite(surahId) || !Number.isFinite(ayahId)) return null;
+  const surahName = getSurahMeta(surahId)?.name ?? String(surahId);
+  const label = `${surahName}، آية ${toArabicDigits(ayahId)}`;
+  return (
+    <div
+      className="nm-nav-highlight-chip"
+      role="status"
+      data-testid="mushaf-nav-highlight-chip"
+      dir="rtl"
+    >
+      <span className="nm-nav-highlight-chip__label">{label}</span>
+      <button
+        type="button"
+        className="nm-nav-highlight-chip__dismiss"
+        onClick={onDismiss}
+        aria-label="إلغاء التحديد"
+      >
+        إلغاء التحديد
+      </button>
+    </div>
+  );
+}
 
 function MediaBridge({
   active,

@@ -1,4 +1,5 @@
-import type { QuranAyahReference } from "./types";
+import type { QuranAyahReference, QuranNavigationSource } from "./types";
+import { buildQuranAyahReference } from "./validate";
 
 /** عقد Deep Link الموحّد — قارئ واحد، بلا route لكل صفحة. */
 export function buildMushafAyahHref(
@@ -13,6 +14,29 @@ export function buildMushafAyahHref(
   qs.set("source", ref.navigationSource);
   if (opts?.returnTo) qs.set("returnTo", opts.returnTo);
   return `/mushaf?${qs.toString()}`;
+}
+
+/**
+ * resolveCanonicalAyahReference → href — مسار واحد لكل مصادر الانتقال.
+ * يعيد `/mushaf` عند مرجع غير صالح (لا يمرّر رقم سورة كصفحة).
+ */
+export function resolveCanonicalAyahHref(
+  surahId: number,
+  ayahId: number,
+  navigationSource: QuranNavigationSource = "other",
+  opts?: { returnTo?: string; highlight?: boolean },
+): string {
+  const built = buildQuranAyahReference({
+    surahId,
+    ayahId,
+    navigationSource,
+    highlightMode: opts?.highlight === false ? "none" : "navigation",
+  });
+  if (!built.ok) return "/mushaf";
+  return buildMushafAyahHref(built.ref, {
+    returnTo: opts?.returnTo,
+    highlight: opts?.highlight !== false,
+  });
 }
 
 export type ParsedMushafNavQuery = {

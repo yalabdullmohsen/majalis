@@ -25,7 +25,7 @@ import {
   filterStatsByTheme,
 } from "@/lib/quran-stats/themes";
 import { formatArabicNumber } from "@/lib/numerals";
-import { findMushafPageForAyah } from "@/features/mushaf-madinah/mushaf-page-for-ayah";
+import { resolveCanonicalAyahHref } from "@/lib/quran-navigation";
 import { AppBottomSheet } from "@/components/ui/AppBottomSheet";
 import { normalizeArabic } from "@/shared/arabic-normalize";
 import { scoreTolerantMatch } from "@/features/search/tolerant-match";
@@ -51,8 +51,7 @@ function matchesSectionQuery(blob: string, query: string): boolean {
 }
 
 function mushafHref(surah: number, ayah: number): string {
-  const page = findMushafPageForAyah(surah, ayah);
-  return `/mushaf?page=${page}&ayah=${surah}:${ayah}`;
+  return resolveCanonicalAyahHref(surah, ayah, "other");
 }
 
 export default function QuranNumbersPage() {

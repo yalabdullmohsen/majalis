@@ -19,6 +19,7 @@ import { matchSurahNumber } from "@/features/search/mushaf-jump";
 import { highlightOriginalParts, scoreTolerantMatch } from "@/features/search/tolerant-match";
 import { getSurahMeta, SURAH_START_PAGES } from "@/lib/quran-api";
 import { mushafPageHref } from "@/lib/quran-surah-list";
+import { resolveCanonicalAyahHref } from "@/lib/quran-navigation";
 import { PageHeader } from "@/components/ui-common";
 import { VirtualList } from "@/components/VirtualList";
 import "@/styles/pages/quran-search.css";
@@ -120,7 +121,7 @@ export default function QuranSearchPage() {
     }
     const first = results[0];
     if (first) {
-      navigate(`/mushaf/${first.surahNumber}?ayah=${first.ayahNumber}`);
+      navigate(resolveCanonicalAyahHref(first.surahNumber, first.ayahNumber, "search"));
     }
   }
 
@@ -246,7 +247,7 @@ export default function QuranSearchPage() {
             const name = displaySurahName(hit.surahNumber);
             return (
               <Link
-                href={`/mushaf/${hit.surahNumber}?ayah=${hit.ayahNumber}`}
+                href={resolveCanonicalAyahHref(hit.surahNumber, hit.ayahNumber, "search")}
                 className="quran-search-page__hit"
               >
                 <header>
