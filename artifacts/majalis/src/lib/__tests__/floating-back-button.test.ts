@@ -33,7 +33,15 @@ assert.match(calm, /\.scroll-to-top[\s\S]{0,200}?stt-label|\.stt-label/, "زر �
 const scroll = read("src/components/ScrollToTop.tsx");
 assert.match(scroll, /ArrowUp|إلى الأعلى/);
 assert.match(scroll, /scrollY\s*>\s*\d+/);
+assert.match(scroll, /aria-modal|data-radix-dialog|isModalOverlayOpen|MutationObserver/);
 assert.doesNotMatch(scroll, /useReadingProgress|stt-ring/);
+
+assert.match(calm, /\.scroll-to-top[\s\S]{0,400}?height:\s*40px/, "زر أعلى صغير");
+assert.match(
+  calm,
+  /:has\(\[role="dialog"\]\[data-state="open"\]\)[\s\S]{0,120}?\.scroll-to-top/,
+  "إخفاء زر أعلى عند Dialog مفتوح",
+);
 
 const backCss = read("src/styles/knowledge-experience.css");
 assert.match(backCss, /\.app-back-btn--bar\.fixed-back-bar/, "شريط ثابت");
