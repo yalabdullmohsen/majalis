@@ -115,6 +115,7 @@
 .gs-surface--islamic,
 .gs-surface--highlighted,
 .page-hero-mj:not(.page-hero-mj--bleed),
+.page-hero-mj--bleed:not(.home-page-hero),
 .mss-section-hero:not([data-scripture]),
 .fqh-hub-card,
 .home-more-card,

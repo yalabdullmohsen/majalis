@@ -63,10 +63,24 @@ export {
   GeometricMotif,
   GeometricDivider,
   IconMedallion,
+  HeaderOrnament,
   type GeometricMotifProps,
   type GeometricDividerProps,
   type IconMedallionProps,
+  type HeaderOrnamentProps,
 } from "./geometry";
+
+/** رؤوس موحّدة — CompactSectionHeader هو SectionHeader في SVL PR-3 */
+export {
+  CompactSectionHeader,
+  SectionIntroHeader,
+  SectionHeader,
+  type CompactSectionStat,
+} from "@/components/ui/CompactSectionHeader";
+export {
+  SvlSectionHeader,
+  type SvlSectionHeaderProps,
+} from "./headers/SvlSectionHeader";
 
 export {
   ContentSection,
