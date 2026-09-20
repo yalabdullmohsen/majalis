@@ -10,7 +10,8 @@
 
 import { isNative } from "./capacitor-utils";
 import { getEffectiveMuezzinId, loadAdhanPrefs, PRAYER_ARABIC, type PrayerKey } from "./adhan-preferences";
-import { getMuezzin, playAdhan } from "./adhan-audio";
+import { getMuezzin } from "./adhan-audio";
+import { playPrayerAthanSync } from "./athan-playback-manager";
 import { ADHAN_IOS_MAX_SEGMENTS } from "./adhan-ios-segments";
 import { ADHAN_EVENT_NAME, type AdhanEvent } from "./adhan-events";
 
@@ -181,7 +182,7 @@ export async function resumeAdhanInternally(opts?: {
     /* ويب أو فشل الجلسة — نكمل بـ HTMLAudio */
   }
 
-  const audio = playAdhan(muezzin, isFajr, "full", prefs.volume ?? 1);
+  const audio = playPrayerAthanSync(muezzin, isFajr, "full", prefs.volume ?? 1);
   if (audio && typeof window !== "undefined") {
     const event: AdhanEvent = {
       type: "adhan",

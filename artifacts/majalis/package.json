@@ -205,7 +205,7 @@
     "test:adhan-catalog": "node --import tsx src/lib/__tests__/adhan-catalog.test.ts && pnpm run test:tafsir-audio",
     "test:tafsir-audio": "node --import tsx src/lib/__tests__/tafsir-audio-bus.test.ts",
     "test:adhan-fajr-thasweeb": "node --import tsx src/lib/__tests__/adhan-fajr-thasweeb.test.ts",
-    "test:adhan-playback-modes": "node --import tsx src/lib/__tests__/adhan-playback-modes.test.ts",
+    "test:adhan-playback-modes": "node --import tsx src/lib/__tests__/adhan-playback-modes.test.ts && node --import tsx src/lib/__tests__/athan-playback-manager.test.ts",
     "test:adhan-audio-quality": "node scripts/adhan-audio/check-adhan-audio-quality.mjs",
     "test:adhan-ios-segments": "node --import tsx src/lib/__tests__/adhan-muezzin-library.test.ts && node --import tsx src/lib/__tests__/adhan-ios-segments.test.ts",
     "test:adhan-smart-cancel": "node --import tsx src/lib/__tests__/adhan-smart-cancel.test.ts",

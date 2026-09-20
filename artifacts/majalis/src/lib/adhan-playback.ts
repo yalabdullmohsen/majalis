@@ -10,6 +10,16 @@ let _current: HTMLAudioElement | null = null;
 let _stopTimer: ReturnType<typeof setTimeout> | null = null;
 let _fadeRaf: number | null = null;
 let _objectUrl: string | null = null;
+/** حماية جلسة أذان الصلاة — stop/play خارجي بلا force لا يقطع */
+let _sessionProtected = false;
+
+export function setAdhanElementProtected(value: boolean): void {
+  _sessionProtected = value;
+}
+
+export function isAdhanElementProtected(): boolean {
+  return _sessionProtected;
+}
 
 const FADE_MS = 900;
 
@@ -139,12 +149,15 @@ const ADHAN_FAIL_MSG = "تعذر تشغيل الصوت، جرّب نوعًا آ�
 export async function playAdhanUrlAsync(
   url: string,
   volume = 1,
-  opts?: { maxMs?: number | null; fadeIn?: boolean },
+  opts?: { maxMs?: number | null; fadeIn?: boolean; force?: boolean },
 ): Promise<AdhanPlayResult> {
   if (!url) {
     return { ok: false, code: "missing_file", message: ADHAN_FAIL_MSG };
   }
-  stopAdhan();
+  if (_sessionProtected && !opts?.force) {
+    return { ok: false, code: "unknown", message: "جلسة أذان صلاة جارية — لا تُستبدل." };
+  }
+  stopAdhan({ force: true });
   const audio = new Audio();
   try {
     audio.setAttribute("playsinline", "true");
@@ -161,7 +174,7 @@ export async function playAdhanUrlAsync(
 
   const maxMs = opts?.maxMs;
   if (typeof maxMs === "number" && maxMs > 0) {
-    _stopTimer = setTimeout(() => stopAdhan(), maxMs);
+    _stopTimer = setTimeout(() => stopAdhan({ force: true }), maxMs);
   }
 
   void import("@/lib/native-playback-audio")
@@ -208,12 +221,12 @@ export async function playAdhanUrlAsync(
       err instanceof Error &&
       (err.message === "media_error" || err.message === "load_timeout")
     ) {
-      stopAdhan();
+      stopAdhan({ force: true });
       const code = err.message === "media_error" ? "missing_file" : "load_failed";
       emitPlayError(code, ADHAN_FAIL_MSG, url);
       return { ok: false, code, message: ADHAN_FAIL_MSG };
     }
-    stopAdhan();
+    stopAdhan({ force: true });
     const classified = classifyPlayError(err);
     const message =
       classified.code === "autoplay_blocked" ? classified.message : ADHAN_FAIL_MSG;
@@ -228,9 +241,12 @@ export async function playAdhanUrlAsync(
 export function playAdhanUrl(
   url: string,
   volume = 1,
-  opts?: { maxMs?: number | null; fadeIn?: boolean },
+  opts?: { maxMs?: number | null; fadeIn?: boolean; force?: boolean },
 ): HTMLAudioElement {
-  stopAdhan();
+  if (_sessionProtected && !opts?.force) {
+    return _current ?? new Audio();
+  }
+  stopAdhan({ force: true });
   const audio = new Audio();
   const targetVol = Math.min(1, Math.max(0, volume));
   const useFade = opts?.fadeIn !== false;
@@ -240,7 +256,7 @@ export function playAdhanUrl(
 
   const maxMs = opts?.maxMs;
   if (typeof maxMs === "number" && maxMs > 0) {
-    _stopTimer = setTimeout(() => stopAdhan(), maxMs);
+    _stopTimer = setTimeout(() => stopAdhan({ force: true }), maxMs);
   }
 
   audio.src = preferLocalAdhanUrl(url);
@@ -274,7 +290,11 @@ export function playAdhanUrl(
   return audio;
 }
 
-export function stopAdhan() {
+export function stopAdhan(opts?: { force?: boolean }) {
+  if (_sessionProtected && !opts?.force) {
+    return;
+  }
+  _sessionProtected = false;
   clearStopTimer();
   clearFade();
   if (_current) {

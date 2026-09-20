@@ -101,13 +101,26 @@ async function stopForeignEngines(except: AppAudioKind | null): Promise<void> {
   }
   if (!keepAdhan) {
     try {
-      const { stopAdhan } = await import("@/lib/adhan-playback");
-      stopAdhan();
-    } catch { /* ignore */ }
-    try {
-      const { stopAdhanPreview } = await import("@/lib/adhan-audio-service");
-      stopAdhanPreview();
-    } catch { /* ignore */ }
+      const { tryStopAthanFromForeignOwner, isProtectedAthanSession } = await import(
+        "@/lib/athan-playback-manager"
+      );
+      if (isProtectedAthanSession()) {
+        /* لا تقطع أذان دخول الوقت من معاينة/درس/تلاوة */
+      } else {
+        tryStopAthanFromForeignOwner();
+        const { stopAdhanPreview } = await import("@/lib/adhan-audio-service");
+        stopAdhanPreview();
+      }
+    } catch {
+      try {
+        const { stopAdhan } = await import("@/lib/adhan-playback");
+        stopAdhan();
+      } catch { /* ignore */ }
+      try {
+        const { stopAdhanPreview } = await import("@/lib/adhan-audio-service");
+        stopAdhanPreview();
+      } catch { /* ignore */ }
+    }
   }
   if (!keepLesson) {
     try {

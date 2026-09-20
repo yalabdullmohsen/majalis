@@ -26,9 +26,9 @@ import {
   getEffectiveMuezzinId,
   getEffectivePlaybackMode,
   isIqamahEnabledForPrayer,
-  type AdhanPlaybackMode,
 } from "./adhan-preferences";
-import { getMuezzin, hasFajrAdhan, playAdhan, playIqamah } from "./adhan-audio";
+import { getMuezzin, hasFajrAdhan, playIqamah } from "./adhan-audio";
+import { playPrayerAthanSync } from "./athan-playback-manager";
 import { hapticTap, isIOS, isNative } from "./capacitor-utils";
 import { ADHAN_EVENT_NAME, type AdhanEvent } from "./adhan-events";
 import {
@@ -149,10 +149,6 @@ function dispatchAdhanEvent(event: AdhanEvent) {
   showBrowserNotification(event);
 }
 
-function mapFullToSilent(mode: AdhanPlaybackMode): AdhanPlaybackMode {
-  return mode === "full" ? "silent" : mode;
-}
-
 function scheduleForPrayer(
   slot: PrayerSlot,
   key: PrayerKey,
@@ -174,9 +170,8 @@ function scheduleForPrayer(
 
   const adhanTargetEpoch = Date.now() + adhanDelay;
   const deliveryMode = getEffectivePlaybackMode(prefs, key);
-  // طلب المستخدم: حذف تشغيل الأذان الكامل (full) والاكتفاء بإشعار وقت الصلاة.
-  // عمليًا نعامل mode=full كـsilent داخل الـscheduler فقط (لا نغيّر تفضيلات المستخدم).
-  const effectiveDeliveryMode = mapFullToSilent(deliveryMode);
+  // صيغة المستخدم كما هي — الكامل يكتمل عبر AthanPlaybackManager بلا قصّ زمني.
+  const effectiveDeliveryMode = deliveryMode;
 
   if (isAdhanAndroidAlarmAvailable() && effectiveDeliveryMode === "full") {
     void cancelAndroidFullAdhan(key);
@@ -220,7 +215,7 @@ function scheduleForPrayer(
     const fresh = loadAdhanPrefs();
     if (!fresh.globalEnabled || !fresh.prayers[key].enabled) return;
     const mode = getEffectivePlaybackMode(fresh, key);
-    const effectiveMode = mapFullToSilent(mode);
+    const effectiveMode = mode;
     const muezzinId = getEffectiveMuezzinId(fresh, key);
     const muezzin = getMuezzin(muezzinId);
     const isFajr = key === "fajr";
@@ -246,7 +241,7 @@ function scheduleForPrayer(
         typeof document !== "undefined" && document.visibilityState === "visible";
       if (inForeground) {
         void import("./adhan-ios-segments").then((m) => m.cancelAdhanIosSegmentChain(key));
-        const audio = playAdhan(muezzin, isFajr, "full", fresh.volume ?? 1);
+        const audio = playPrayerAthanSync(muezzin, isFajr, "full", fresh.volume ?? 1);
         if (!audio && isFajr) return;
       }
       if (fresh.vibrateEnabled) void hapticTap("medium");
@@ -276,7 +271,7 @@ function scheduleForPrayer(
       }
     }
 
-    const audio = playAdhan(muezzin, isFajr, effectiveMode, fresh.volume ?? 1);
+    const audio = playPrayerAthanSync(muezzin, isFajr, effectiveMode, fresh.volume ?? 1);
     if (!audio && isFajr && effectiveMode !== "silent") return;
     if (fresh.vibrateEnabled) void hapticTap("medium");
     dispatchAdhanEvent({

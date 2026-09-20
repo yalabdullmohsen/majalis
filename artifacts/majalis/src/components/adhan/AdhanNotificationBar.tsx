@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { X, Volume2, Clock, Landmark } from "lucide-react";
 import { ADHAN_EVENT_NAME, type AdhanEvent } from "@/lib/adhan-events";
-import { isAdhanPlaying, stopAdhan } from "@/lib/adhan-playback";
+import { isAdhanPlaying } from "@/lib/adhan-playback";
+import { stopAthan } from "@/lib/athan-playback-manager";
 import {
   buildScheduledPrayerNotificationCopy,
 } from "@/lib/prayer-notification-copy";
@@ -74,7 +75,7 @@ function AdhanToast({ event, onDismiss }: { event: ActiveEvent; onDismiss: () =>
     : copy.body;
 
   function handleStop() {
-    stopAdhan();
+    stopAthan("user");
     setPlaying(false);
   }
 
