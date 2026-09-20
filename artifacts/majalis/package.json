@@ -602,7 +602,8 @@
     "test:content-quality-wave34": "node --import tsx src/lib/__tests__/content-quality-wave34-gate.test.ts",
     "test:content-quality-wave35": "node --import tsx src/lib/__tests__/content-quality-wave35-gate.test.ts",
     "test:total-trust-phase0": "node --import tsx src/lib/__tests__/total-trust-phase0-gate.test.ts",
-    "test:total-trust-phase2": "node --import tsx src/lib/__tests__/total-trust-phase2-gate.test.ts"
+    "test:total-trust-phase2": "node --import tsx src/lib/__tests__/total-trust-phase2-gate.test.ts",
+    "test:total-trust-phase4": "node --import tsx src/lib/__tests__/total-trust-phase4-gate.test.ts"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
