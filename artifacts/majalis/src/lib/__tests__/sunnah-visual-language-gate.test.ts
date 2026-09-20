@@ -95,4 +95,22 @@ const pkg = read("package.json");
 assert.match(pkg, /sunnah-visual-language-gate/, "البوابة مربوطة في package.json");
 assert.match(css, /--svl-type-page-title|--svl-type-display/, "رموز طباعة SVL (PR-3)");
 
+for (const token of [
+  "--svl-space-xs",
+  "--svl-space-s",
+  "--svl-space-m",
+  "--svl-space-l",
+  "--svl-space-xl",
+  "--svl-space-card",
+  "--svl-space-card-gap",
+  "--svl-space-list-gap",
+  "--svl-space-section",
+  "--svl-space-title-to-body",
+]) {
+  assert.match(css, new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `مسافة ${token}`);
+}
+assert.match(css, /Spacing rhythm \(PR-4\)/);
+assert.match(doc, /مقياس المسافات \(PR-4\)|--svl-space-xs/);
+assert.match(css, /details:not\(\[open\]\)/);
+
 console.log("sunnah-visual-language-gate.test.ts: ok");

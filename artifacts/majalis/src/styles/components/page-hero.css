@@ -20,7 +20,7 @@ html.dark .pattern-backdrop {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 8rem;
+  min-height: 4.5rem;
 }
 
 /* ── PageHero ── */
@@ -30,8 +30,8 @@ html.dark .pattern-backdrop {
   isolation: isolate;
   background: var(--mj-bg);
   color: var(--mj-ink);
-  padding: clamp(0.85rem, 3.5vw, 1.35rem);
-  padding-block-end: 1.15rem;
+  padding: clamp(0.65rem, 2.4vw, 1rem);
+  padding-block-end: var(--svl-space-m, 0.75rem);
 }
 
 /* الرئيسية: لا تقصّ العنوان المشكّل */
@@ -45,8 +45,8 @@ html.dark .pattern-backdrop {
   max-width: min(56rem, calc(100% - 2 * max(1rem, var(--page-gutter, 1rem))));
   box-sizing: border-box;
   margin-inline: auto;
-  margin-block: 0.65rem 0.85rem;
-  padding-block: 1.05rem;
+  margin-block: var(--svl-space-s, 0.4rem) var(--svl-space-m, 0.55rem);
+  padding-block: var(--svl-space-m, 0.75rem);
   padding-inline: max(1rem, var(--page-gutter, 1rem));
   border-radius: var(--svl-radius-lg, var(--mss-radius-hero, 1.35rem));
   /* رموز mss (--mss-hero-from / --mss-hero-gradient) للبطاقات المميزة فقط */
@@ -86,7 +86,7 @@ html.dark .pattern-backdrop {
   z-index: 1;
   max-width: 40rem;
   display: grid;
-  gap: 0.45rem;
+  gap: var(--svl-space-title-to-body, 0.5rem);
 }
 .page-hero-mj__back {
   justify-self: start;
@@ -115,7 +115,7 @@ html.dark .pattern-backdrop {
   color: var(--svl-text-primary, var(--text-primary, var(--mj-ink))) !important;
 }
 .page-hero-mj .svl-header-ornament {
-  margin-block: 0.35rem 0.55rem;
+  margin-block: var(--svl-space-xs, 0.25rem) var(--svl-space-s, 0.5rem);
 }
 /* الرئيسية: لا زخرفة تحت العنوان المشكّل */
 .page-hero-mj.home-page-hero .svl-header-ornament,

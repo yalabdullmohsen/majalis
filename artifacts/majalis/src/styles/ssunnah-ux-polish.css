@@ -725,9 +725,9 @@ html[data-audio-dock="1"] .floating-back-btn {
 
 .topic-page__hero {
   margin-block-start: 0 !important;
-  margin-block-end: 0.5rem;
-  padding-block-start: 1rem !important;
-  padding-block-end: 1.1rem;
+  margin-block-end: var(--svl-space-s, 0.4rem);
+  padding-block-start: var(--svl-space-m, 0.75rem) !important;
+  padding-block-end: var(--svl-space-l, 1rem);
 }
 
 .topic-page__title,

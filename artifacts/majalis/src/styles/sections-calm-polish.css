@@ -683,9 +683,9 @@ a.m2030-btn,
 
 /* ── تماسك التطبيق: تباعد + لمس + عائم ─────────────────────────────── */
 :root {
-  --section-stack-gap: 0.85rem;
-  --page-pad-block: 0.85rem;
-  --filter-row-gap: 0.45rem;
+  --section-stack-gap: var(--svl-space-section, 0.75rem);
+  --page-pad-block: var(--svl-space-m, 0.75rem);
+  --filter-row-gap: var(--svl-space-s, 0.45rem);
 }
 
 .sect-hub,
