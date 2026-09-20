@@ -40,7 +40,7 @@ export const ACCORDION_EXPLORE_LINKS = {
   ],
   fikr: [
     { href: "/fiqh", label: "بوابة الفقه" },
-    { href: "/quiz", label: "سين جيم" },
+    { href: "/quiz", label: "تحدي الأسئلة" },
     { href: "/discover-islam", label: "تعرّف على الإسلام" },
     { href: "/methodology", label: "منهجية التوثيق" },
   ],
@@ -58,7 +58,7 @@ export const ACCORDION_EXPLORE_LINKS = {
   ],
   mawsuaat: [
     { href: "/fawaid", label: "الفوائد" },
-    { href: "/quiz", label: "سين جيم" },
+    { href: "/quiz", label: "تحدي الأسئلة" },
     { href: "/fiqh", label: "بوابة الفقه" },
     { href: "/daily-wird", label: "الورد اليومي" },
     { href: "/sections", label: "الأقسام" },

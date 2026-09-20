@@ -162,12 +162,6 @@ export const ROUTE_QUOTE: Record<string, SectionTemplateQuote> = {
     type: "ayah",
     sectionId: "usul-fiqh",
   },
-  "/quiz": {
-    text: "وَقُل رَّبِّ زِدْنِي عِلْمًا",
-    ref: "طه: ١١٤",
-    type: "ayah",
-    sectionId: "qa",
-  },
   "/memorization": {
     text: "وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ",
     ref: "القمر: ١٧",

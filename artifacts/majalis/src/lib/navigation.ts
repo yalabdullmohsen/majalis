@@ -79,7 +79,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   // الأدوات
   { href: "/prayer-times",  label: seoNavLabel("/prayer-times", "مواقيت الصلاة") },
   { href: "/qibla",         label: seoNavLabel("/qibla", "القبلة") },
-  { href: "/quiz",          label: seoNavLabel("/quiz", "لعبة سين جيم") },
+  { href: "/quiz",          label: seoNavLabel("/quiz", "تحدي الأسئلة") },
   // عام
   { href: "/search",        label: seoNavLabel("/search", "البحث") },
   { href: "/settings",      label: seoNavLabel("/settings", "الإعدادات") },
@@ -157,7 +157,7 @@ export const HOME_MORE_SECTIONS_RAW = [
   { href: "/assistant", title: seoNavLabel("/assistant", "المساعد العلمي"), description: "إرشاد علمي داخل التطبيق بضوابط واضحة" },
   { href: "/islamic-directory", title: seoNavLabel("/islamic-directory", "الدليل الإسلامي"), description: "مؤسسات ومساجد ومشاهد للبحث المحلي" },
   { href: "/my-learning", title: seoNavLabel("/my-learning", "حسابي"), description: "متابعة تقدمك وإنجازاتك التعليمية" },
-  { href: "/quiz", title: seoNavLabel("/quiz", "لعبة سين جيم"), description: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة" },
+  { href: "/quiz", title: seoNavLabel("/quiz", "تحدي الأسئلة"), description: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة" },
   { href: "/tarikh-islami", title: seoNavLabel("/tarikh-islami", "التاريخ الإسلامي"), description: "خط زمني بالأحداث من قبل البعثة إلى يومنا مع بوابة للسيرة" },
   { href: "/asma-husna",  title: seoNavLabel("/asma-husna", "الأسماء الحسنى"),       description: "أسماء الله التسعة والتسعون — كل اسم بمعناه وآيته ومنفعته" },
   { href: "/akhlaq",     title: seoNavLabel("/akhlaq", "مكارم الأخلاق"),    description: "أخلاق إسلامية مع آيات وأحاديث وأقوال العلماء والتطبيق العملي" },

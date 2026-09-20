@@ -49,7 +49,7 @@ export const secondaryNav: readonly NavLinkItem[] = [
   { id: "quran-people", href: "/quran/people", label: "الذين ذكروا في القرآن" },
   { id: "sources", href: "/sources", label: "دليل الجهات" },
   { id: "sections", href: "/sections", label: "الأقسام" },
-  { id: "quiz", href: "/quiz", label: "سين جيم" },
+  { id: "quiz", href: "/quiz", label: "تحدي الأسئلة" },
   { id: "competitions", href: "/competitions", label: "المسابقات" },
 ] as const;
 
@@ -87,7 +87,7 @@ export const footerNav: readonly FooterGroup[] = [
     links: [
       { href: "/lessons", label: "الدروس" },
       { href: "/search", label: "البحث" },
-      { href: "/quiz", label: "سين جيم" },
+      { href: "/quiz", label: "تحدي الأسئلة" },
       { href: "/competitions", label: "المسابقات" },
       { href: "/teachers", label: "المشايخ" },
       { href: "/adhkar", label: "الأذكار" },

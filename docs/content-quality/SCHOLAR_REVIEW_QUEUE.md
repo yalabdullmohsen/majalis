@@ -13,6 +13,8 @@
 | SRQ-RUL-ARCH-001 | أرشيف rulings | pending_review | ~119 سجل أرشيف غير منشور | DRAFT / NEEDS_SCHOLAR_REVIEW | seeds أرشيفية | مراجعة عالم + مصدر خارجي | P1 | لا تنشر قبل المراجعة | | | | |
 | SRQ-BOOK-UMDA | `/fiqh` stubs | متن عمدة / بلوغ | stubs كتب بلا أصل منشور كافٍ | BLOCKED_SOURCE | واجهة معطّلة | أصل مرخّص + متن موثّق | P1 | إبقاء محجوب | | | | |
 | SRQ-ALIAS-001 | علماء / aliases | أسماء بلا ملف عالم | aliases بلا `SCHOLAR_PROFILES` | BLOCKED_SOURCE | قائمة aliases | ترجمة موثّقة أو إبقاء بلا رابط | P2 | لا تختلق تراجم | | | | |
+| SRQ-QUIZ-BANK-001 | `/quiz` تحدي الأسئلة | بنك أسئلة محلي | ~490 سؤالًا بلا مسار SOURCE/HUMAN | DRAFT / NEEDS_SOURCE — محجوب عن PUBLISHED | `islamicQuizData` + `quiz-bank` | مصادر قابلة للتتبع + مراجعة شرعية/لغوية منفصلة | P0 | لا تنشر قبل SOURCE_VERIFIED ثم HUMAN_REVIEWED؛ Batch1: قرآن/حديث/عقيدة/فقه/سيرة/نحو/بلاغة | | | | الذكاء الاصطناعي لا يضع PUBLISHED |
+
 
 ## قرارات المراجع (لاحقاً)
 

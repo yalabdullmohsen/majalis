@@ -3,7 +3,7 @@ import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { useSearch } from "wouter";
 import { DirectQaCard } from "./DirectQaCard";
 import {
-  Award, BookOpen, CheckCircle2, Handshake, Library, Lightbulb, RefreshCw, ScrollText, Moon, Search, Send, Star, Scale, Building2, Landmark, Gem, Trophy, User, Users, XCircle, Zap,
+  Award, BookOpen, BookMarked, CheckCircle2, Coins, Compass, Droplets, GraduationCap, Handshake, Heart, Languages, Library, Lightbulb, Map, MessageCircle, PenLine, RefreshCw, ScrollText, Moon, Search, Send, Sparkles, Star, Scale, Building2, Landmark, Gem, Trophy, User, Users, XCircle, Zap, Sunrise,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -15,6 +15,8 @@ import {
   type PointValue,
   type QuizQuestion,
 } from "@/data/islamicQuizData";
+import { buildPublishedLocalPools } from "@/data/quiz-bank/playable-pools";
+import { getPublishedQuestionCount } from "@/data/quiz-bank";
 import { getQuizQuestions, getLocalUsedQuizIds, markQuizQuestionUsed } from "@/lib/supabase";
 import { recordQuizAttempt } from "@/lib/quiz-performance-service";
 import { hapticNotify } from "@/lib/capacitor-utils";
@@ -23,6 +25,7 @@ import { hapticNotify } from "@/lib/capacitor-utils";
 
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
   "book-open": BookOpen,
+  "book-marked": BookMarked,
   "scroll-text": ScrollText,
   moon: Moon,
   star: Star,
@@ -30,6 +33,20 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
   "building-2": Building2,
   landmark: Landmark,
   gem: Gem,
+  library: Library,
+  users: Users,
+  heart: Heart,
+  sparkles: Sparkles,
+  languages: Languages,
+  "pen-line": PenLine,
+  "graduation-cap": GraduationCap,
+  compass: Compass,
+  map: Map,
+  "message-circle": MessageCircle,
+  droplets: Droplets,
+  "hands-praying": Heart,
+  coins: Coins,
+  sunrise: Sunrise,
 };
 
 function CategoryIcon({ name, size = 18 }: { name: string; size?: number }) {
@@ -375,30 +392,46 @@ export function parseCatsFromUrl(search: string): string[] {
     seen.add(id);
     out.push(id);
   }
-  return out.slice(0, 6);
+  return out;
 }
+
+type PlayMode = "solo" | "quick" | "daily" | "random" | "team";
+
+const PLAY_MODES: Array<{ id: PlayMode; label: string; desc: string }> = [
+  { id: "solo", label: "فردي", desc: "لوحة نقاط" },
+  { id: "quick", label: "تحدي سريع", desc: "١٠ أسئلة" },
+  { id: "daily", label: "تحدي يومي", desc: "سؤال اليوم" },
+  { id: "random", label: "عشوائي", desc: "فئات متنوعة" },
+];
 
 function SetupPhase({
   onStart,
+  onDaily,
   initialSelected = [],
-  minCategories = 2,
+  minCategories = 1,
+  publishedCount = 0,
 }: {
   onStart: (cats: string[], mode: GameMode, names: string[]) => void;
+  onDaily: () => void;
   initialSelected?: string[];
   minCategories?: number;
+  publishedCount?: number;
 }) {
-  const [mode, setMode] = useState<GameMode>("team");
+  const [playMode, setPlayMode] = useState<PlayMode>("solo");
   const [teamCount, setTeamCount] = useState<2 | 3 | 4>(2);
   const [teamNames, setTeamNames] = useState<string[]>(["", ""]);
   const [soloName, setSoloName] = useState("");
   const [selected, setSelected] = useState<string[]>(initialSelected);
+  const [showTeam, setShowTeam] = useState(false);
+  const [questionCount, setQuestionCount] = useState<5 | 10 | 15>(10);
 
   const toggle = (id: string) =>
     setSelected((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : prev.length < 6 ? [...prev, id] : prev,
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
 
-  const canStart = selected.length >= minCategories;
+  const selectAll = () => setSelected(GAME_CATEGORIES.map((c) => c.id));
+  const clearAll = () => setSelected([]);
 
   const changeTeamCount = (n: 2 | 3 | 4) => {
     setTeamCount(n);
@@ -409,145 +442,200 @@ function SetupPhase({
     });
   };
 
+  const resolveCats = (): string[] => {
+    if (playMode === "random") {
+      const shuffled = [...GAME_CATEGORIES].sort(() => Math.random() - 0.5);
+      return shuffled.slice(0, Math.min(questionCount, shuffled.length)).map((c) => c.id);
+    }
+    if (playMode === "quick") {
+      const base = selected.length > 0 ? selected : GAME_CATEGORIES.map((c) => c.id);
+      return base.slice(0, Math.min(questionCount, base.length));
+    }
+    return selected;
+  };
+
+  const canStart =
+    playMode === "daily" ||
+    playMode === "random" ||
+    selected.length >= minCategories ||
+    (playMode === "quick" && GAME_CATEGORIES.length > 0);
+
   const handleStart = () => {
     if (!canStart) return;
-    if (mode === "solo") {
-      onStart(selected, "solo", [soloName]);
-    } else {
-      const names = teamNames.map((n, i) => n.trim() || DEFAULT_TEAM_NAMES[i]);
-      onStart(selected, "team", names);
+    if (playMode === "daily") {
+      onDaily();
+      return;
     }
+    const cats = resolveCats();
+    if (cats.length < 1) return;
+    if (showTeam && playMode === "solo") {
+      const names = teamNames.map((n, i) => n.trim() || DEFAULT_TEAM_NAMES[i]);
+      onStart(cats, "team", names);
+      return;
+    }
+    onStart(cats, "solo", [soloName.trim() || "اللاعب"]);
   };
 
   return (
     <div className="qzg-setup">
       <div className="qzg-setup__hero">
-        <div className="qzg-setup__icon"><Landmark size={40} strokeWidth={1.3} /></div>
-        <h1 className="qzg-setup__title">لعبة سين جيم – أسئلة وأجوبة</h1>
-        <p className="qzg-setup__sub">اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة</p>
+        <div className="qzg-setup__icon" aria-hidden="true">
+          <Landmark size={36} strokeWidth={1.4} />
+        </div>
+        <h1 className="qzg-setup__title">تحدي الأسئلة</h1>
         <p className="qzg-setup__sub">
-          {mode === "solo"
-            ? "تحدَّ نفسك في اختبار معلوماتك الإسلامية"
-            : "لعبة جماعية تنافسية بطابع إسلامي — فرق تتنافس على النقاط"}
+          اختبر معلوماتك في العلوم الشرعية واللغة العربية من خلال أسئلة متنوعة وموثقة.
         </p>
+        <p className="qzg-setup__brand">تحدي سُنّة</p>
       </div>
 
-      <section className="qzg-section-card soft-card soft-card--on-light">
-        <h2 className="qzg-section-h2"><Users size={18} className="inline ms-1" />نمط اللعب</h2>
-        <div className="qzg-mode-toggle">
-          <button
-            type="button"
-            onClick={() => setMode("solo")}
-            className={`qzg-mode-btn${mode === "solo" ? " qzg-mode-btn--on" : ""}`}
-          >
-            <User size={16} className="inline ms-1" />فردي
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode("team")}
-            className={`qzg-mode-btn${mode === "team" ? " qzg-mode-btn--on" : ""}`}
-          >
-            <Users size={16} className="inline ms-1" />جماعي
-          </button>
+      <p className="qzg-daily-hint" role="status">
+        {publishedCount > 0
+          ? `أسئلة منشورة محليًا جاهزة للّعب: ${publishedCount}`
+          : "البنك المحلي قيد التوثيق — لا يُعرض للعامة إلا PUBLISHED بعد المراجعة البشرية. قد تُحمَّل أسئلة منشورة من الخادم."}
+      </p>
+
+      <section className="qzg-section-card soft-card soft-card--on-light" aria-label="نمط التحدي">
+        <h2 className="qzg-section-h2">اختر النمط</h2>
+        <div className="qzg-play-modes" role="group" aria-label="أنماط التحدي">
+          {PLAY_MODES.map((m) => (
+            <button
+              key={m.id}
+              type="button"
+              aria-pressed={playMode === m.id}
+              onClick={() => {
+                setPlayMode(m.id);
+                setShowTeam(false);
+              }}
+              className={`qzg-play-mode${playMode === m.id ? " qzg-play-mode--on" : ""}`}
+            >
+              <span className="qzg-play-mode__label">{m.label}</span>
+              <span className="qzg-play-mode__desc">{m.desc}</span>
+            </button>
+          ))}
         </div>
+        {playMode === "solo" ? (
+          <button
+            type="button"
+            className="qzg-team-extra"
+            onClick={() => setShowTeam((v) => !v)}
+          >
+            {showTeam ? "إخفاء الوضع الجماعي" : "وضع جماعي (اختياري)"}
+          </button>
+        ) : null}
       </section>
 
-      {mode === "team" ? (
-        <section className="qzg-section-card soft-card soft-card--on-light">
-          <h2 className="qzg-section-h2"><Trophy size={18} className="inline ms-1" />عدد الفرق وأسماؤها</h2>
-          <div className="qzg-team-count-row">
-            {([2, 3, 4] as const).map((n) => (
+      {playMode === "quick" || playMode === "random" ? (
+        <section className="qzg-section-card soft-card soft-card--on-light" aria-label="عدد الفئات">
+          <h2 className="qzg-section-h2">عدد الفئات في الجولة</h2>
+          <div className="qzg-play-modes" role="group" aria-label="عدد الفئات">
+            {([5, 10, 15] as const).map((n) => (
               <button
                 key={n}
                 type="button"
-                onClick={() => changeTeamCount(n)}
-                className={`qzg-count-btn${teamCount === n ? " qzg-count-btn--on" : ""}`}
+                aria-pressed={questionCount === n}
+                className={`qzg-play-mode${questionCount === n ? " qzg-play-mode--on" : ""}`}
+                onClick={() => setQuestionCount(n)}
               >
-                {n} فرق
+                <span className="qzg-play-mode__label">{n}</span>
+                <span className="qzg-play-mode__desc">فئات</span>
               </button>
             ))}
           </div>
-          <div className="qzg-teams-grid qzg-teams-grid--dynamic" style={{ "--qzg-teams-cols": teamCount } as React.CSSProperties}>
-            {teamNames.map((name, i) => (
-              <div key={i}>
-                <label htmlFor={`qzg-team${i + 1}`} className="qzg-team-label">{DEFAULT_TEAM_NAMES[i]}</label>
-                <input
-                  id={`qzg-team${i + 1}`}
-                  value={name}
-                  onChange={(e) => setTeamNames((prev) => prev.map((v, idx) => (idx === i ? e.target.value : v)))}
-                  placeholder={DEFAULT_TEAM_NAMES[i]}
-                  maxLength={20}
-                  className="qzg-input"
-                />
-              </div>
-            ))}
-          </div>
         </section>
+      ) : null}
+
+      {playMode === "daily" ? (
+        <p className="qzg-daily-hint">سؤال واحد يتجدّد يوميًا لكل المستخدمين.</p>
       ) : (
-        <section className="qzg-section-card soft-card soft-card--on-light">
-          <h2 className="qzg-section-h2"><User size={18} className="inline ms-1" />اسمك (اختياري)</h2>
-          <input
-            value={soloName}
-            onChange={(e) => setSoloName(e.target.value)}
-            placeholder="اللاعب"
-            maxLength={20}
-            className="qzg-input"
-          />
-        </section>
-      )}
-
-      <section className="qzg-section-card soft-card soft-card--on-light">
-        <div className="qzg-cats-head">
-          <h2 className="qzg-section-h2 qzg-section-h2--flush"><Library size={16} className="inline ms-1" />اختر الفئات</h2>
-          <span className="qzg-cats-count">{selected.length}/6 ({minCategories} كحد أدنى)</span>
-        </div>
-        <div className="qzg-cats-grid">
-          {GAME_CATEGORIES.map((cat) => {
-            const on = selected.includes(cat.id);
-            const maxed = !on && selected.length >= 6;
-            return (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => toggle(cat.id)}
-                disabled={maxed}
-                className={`qzg-cat-btn${on ? " qzg-cat-btn--on" : ""}${maxed ? " qzg-cat-btn--maxed" : ""}`}
-              >
-                <div className="qzg-cat-btn__icon">
-                  <CategoryIcon name={cat.icon} size={20} />
-                </div>
-                {cat.name}
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="qzg-section-card soft-card soft-card--on-light qzg-section-card--mb-lg">
-        <h3 className="qzg-lifelines-h3">
-          <Zap size={14} className="inline ms-1" />
-          {mode === "solo" ? "مساعدة إضافية" : "وسائل المساعدة (لكل فريق 3 وسائل)"}
-        </h3>
-        <div className={`qzg-lifelines-grid${mode === "solo" ? " qzg-lifelines-grid--solo" : ""}`}>
-          {mode === "solo" ? (
-            <div className="qzg-lifeline-info">
-              <div className="qzg-lifeline-info__title qzg-ll--transfer">مساعدة إضافية</div>
-              <div className="qzg-lifeline-info__desc">تخطَّ سؤالاً واحدًا صعبًا بلا خسارة نقاط — تُستخدم مرة واحدة طوال اللعبة</div>
-            </div>
-          ) : (
-            ([
-              ["qzg-ll--score",    "خصم نقاط",     "تُخصم نقاط الخلية من رصيد فريق منافس تختاره"],
-              ["qzg-ll--exclude",  "استبعاد لاعب", "يُستبعد لاعب من فريق منافس تختاره"],
-              ["qzg-ll--transfer", "تمرير السؤال", "يُحوَّل السؤال لفريق منافس تختاره"],
-            ] as [string, string, string][]).map(([llMod, title, desc]) => (
-              <div key={title} className="qzg-lifeline-info">
-                <div className={`qzg-lifeline-info__title ${llMod}`}>{title}</div>
-                <div className="qzg-lifeline-info__desc">{desc}</div>
+        <>
+          {showTeam ? (
+            <section className="qzg-section-card soft-card soft-card--on-light">
+              <h2 className="qzg-section-h2"><Users size={18} className="inline ms-1" />عدد الفرق</h2>
+              <div className="qzg-team-count-row">
+                {([2, 3, 4] as const).map((n) => (
+                  <button
+                    key={n}
+                    type="button"
+                    onClick={() => changeTeamCount(n)}
+                    className={`qzg-count-btn${teamCount === n ? " qzg-count-btn--on" : ""}`}
+                  >
+                    {n} فرق
+                  </button>
+                ))}
               </div>
-            ))
-          )}
-        </div>
-      </section>
+              <div className="qzg-teams-grid qzg-teams-grid--dynamic" style={{ "--qzg-teams-cols": teamCount } as React.CSSProperties}>
+                {teamNames.map((name, i) => (
+                  <div key={i}>
+                    <label htmlFor={`qzg-team${i + 1}`} className="qzg-team-label">{DEFAULT_TEAM_NAMES[i]}</label>
+                    <input
+                      id={`qzg-team${i + 1}`}
+                      value={name}
+                      onChange={(e) => setTeamNames((prev) => prev.map((v, idx) => (idx === i ? e.target.value : v)))}
+                      placeholder={DEFAULT_TEAM_NAMES[i]}
+                      maxLength={20}
+                      className="qzg-input"
+                    />
+                  </div>
+                ))}
+              </div>
+            </section>
+          ) : playMode !== "random" ? (
+            <section className="qzg-section-card soft-card soft-card--on-light">
+              <h2 className="qzg-section-h2"><User size={18} className="inline ms-1" />اسمك (اختياري)</h2>
+              <input
+                value={soloName}
+                onChange={(e) => setSoloName(e.target.value)}
+                placeholder="اللاعب"
+                maxLength={20}
+                className="qzg-input"
+              />
+            </section>
+          ) : null}
+
+          {playMode !== "random" ? (
+            <section className="qzg-section-card soft-card soft-card--on-light">
+              <div className="qzg-cats-head">
+                <h2 className="qzg-section-h2 qzg-section-h2--flush">
+                  <Library size={16} className="inline ms-1" />الفئات
+                </h2>
+                <span className="qzg-cats-count">{selected.length} · {GAME_CATEGORIES.length}</span>
+              </div>
+              <div className="qzg-cats-actions">
+                <button type="button" className="qzg-chip-btn" onClick={selectAll}>تحديد الكل</button>
+                <button type="button" className="qzg-chip-btn" onClick={clearAll}>مسح</button>
+              </div>
+              <div className="qzg-cats-grid qzg-cats-grid--dynamic" role="group" aria-label="فئات التحدي">
+                {GAME_CATEGORIES.map((cat) => {
+                  const on = selected.includes(cat.id);
+                  return (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => toggle(cat.id)}
+                      aria-pressed={on}
+                      className={`qzg-cat-btn${on ? " qzg-cat-btn--on" : ""}`}
+                    >
+                      <div className="qzg-cat-btn__icon">
+                        <CategoryIcon name={cat.icon} size={18} />
+                      </div>
+                      {cat.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+          ) : null}
+
+          <section className="qzg-kinds-bar" aria-label="أنواع الأسئلة المدعومة">
+            <span>اختيار من متعدد</span>
+            <span>صح أو خطأ</span>
+            <span>أكمل الفراغ</span>
+            <span>الترتيب</span>
+            <span>المطابقة</span>
+          </section>
+        </>
+      )}
 
       <button
         type="button"
@@ -555,7 +643,11 @@ function SetupPhase({
         disabled={!canStart}
         className={`qzg-btn-primary qzg-btn-primary--wide${canStart ? "" : " qzg-btn-primary--disabled"}`}
       >
-        {canStart ? "ابدأ اللعبة" : "اختر فئتين على الأقل"}
+        {playMode === "daily"
+          ? "افتح تحدي اليوم"
+          : canStart
+            ? "ابدأ التحدي"
+            : `اختر ${minCategories} فئة على الأقل`}
       </button>
     </div>
   );
@@ -652,6 +744,7 @@ function QuestionPhase({
   const [revealed, setRevealed] = useState(false);
   const [pendingTarget, setPendingTarget] = useState<LifelineKind | null>(null);
   const [eliminateBanner, setEliminateBanner] = useState<string | null>(null);
+  const [pickedChoice, setPickedChoice] = useState<number | null>(null);
   const { activeCell, activeQuestion, teams, activeTeamId, passedToTeamId, showHint, mode } = state;
 
   if (!activeCell) return null;
@@ -660,16 +753,18 @@ function QuestionPhase({
   const activeTeamObj = teams.find((t) => t.id === activeTeamId)!;
   const scoringTeam = passedToTeamId ? teams.find((t) => t.id === passedToTeamId) : activeTeamObj;
   const otherTeams = teams.filter((t) => t.id !== activeTeamId);
+  const kind = activeQuestion?.kind ?? "open";
+  const hasChoices = (kind === "mcq" || kind === "true_false") && (activeQuestion?.choices?.length ?? 0) > 0;
 
   // اختيار الفريق المستهدف: مع فريق منافس واحد فقط (الوضع الثنائي التقليدي)
   // يُطبَّق التأثير فورًا كما كان دومًا — لا كسر للسلوك الحالي. مع 3-4 فرق
   // يفتح لوحة اختيار صريحة لاسم الفريق المستهدَف.
-  const requestTeamAction = (kind: LifelineKind) => {
+  const requestTeamAction = (kindLl: LifelineKind) => {
     if (otherTeams.length === 0) return;
     if (otherTeams.length === 1) {
-      applyTeamAction(kind, otherTeams[0].id);
+      applyTeamAction(kindLl, otherTeams[0].id);
     } else {
-      setPendingTarget(kind);
+      setPendingTarget(kindLl);
     }
   };
 
@@ -712,6 +807,47 @@ function QuestionPhase({
           <p className="qzg-q-noq">لا يوجد سؤال متاح — حدد النتيجة يدوياً</p>
         )}
 
+        {hasChoices && !revealed ? (
+          <div className="qzg-choices" role="listbox" aria-label="الخيارات">
+            {activeQuestion!.choices!.map((choice, idx) => (
+              <button
+                key={`${activeQuestion!.id}-${idx}`}
+                type="button"
+                role="option"
+                aria-selected={pickedChoice === idx}
+                className={`qzg-choice${pickedChoice === idx ? " qzg-choice--on" : ""}`}
+                onClick={() => setPickedChoice(idx)}
+              >
+                {choice}
+              </button>
+            ))}
+          </div>
+        ) : null}
+
+        {kind === "fill_blank" && !revealed ? (
+          <p className="qzg-fill-hint" role="note">أكمل الفراغ ثم اكشف الإجابة للمراجعة.</p>
+        ) : null}
+
+        {kind === "order" && activeQuestion?.items?.length ? (
+          <ol className="qzg-order-list" aria-label="رتّب العناصر">
+            {activeQuestion.items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ol>
+        ) : null}
+
+        {kind === "match" && activeQuestion?.pairs?.length ? (
+          <ul className="qzg-match-list" aria-label="طابق الأزواج">
+            {activeQuestion.pairs.map(([left, right]) => (
+              <li key={`${left}-${right}`}>
+                <span>{left}</span>
+                <span aria-hidden="true">↔</span>
+                <span>{right}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
         {mode === "team" && !passedToTeamId && (
           <div className="qzg-q-transfer-row">
             <button type="button" onClick={() => requestTeamAction("transfer")} className="qzg-btn-transfer">
@@ -722,12 +858,24 @@ function QuestionPhase({
       </div>
 
       {!revealed && (
-        <button type="button" onClick={() => setRevealed(true)} className="qzg-btn-gold qzg-btn-gold--wide qzg-btn-gold--mb">
-          <Search size={14} className="inline ms-1" />كشف الإجابة
+        <button
+          type="button"
+          onClick={() => {
+            setRevealed(true);
+            if (hasChoices && pickedChoice != null && activeQuestion?.correctIndex != null) {
+              if (pickedChoice === activeQuestion.correctIndex) onMarkCorrect();
+              else onMarkWrong();
+            }
+          }}
+          disabled={hasChoices && pickedChoice == null}
+          className="qzg-btn-gold qzg-btn-gold--wide qzg-btn-gold--mb"
+        >
+          <Search size={14} className="inline ms-1" />
+          {hasChoices ? "تأكيد الإجابة" : "كشف الإجابة"}
         </button>
       )}
 
-      {revealed && (
+      {revealed && !(hasChoices && pickedChoice != null && activeQuestion?.correctIndex != null) && (
         <>
           <div className="qzg-section-card soft-card soft-card--on-light qzg-section-card--mb-sm">
             <p className="qzg-answer-label">الإجابة الصحيحة:</p>
@@ -858,10 +1006,11 @@ function WinnerPhase({ teams, mode, onReset }: { teams: Team[]; mode: GameMode; 
 
 // ─── Main ──────────────────────────────────────────────────────────────────
 
-export function IslamicQuizGame() {
+export function IslamicQuizGame({ onDaily }: { onDaily?: () => void } = {}) {
   const [state, dispatch] = useReducer(reducer, initial);
-  const poolRef = useRef<Record<string, CategoryQuestions>>(ALL_QUESTIONS);
+  const poolRef = useRef<Record<string, CategoryQuestions>>(buildPublishedLocalPools());
   const persistedUsedIdsRef = useRef<Set<string>>(new Set());
+  const publishedCount = getPublishedQuestionCount();
 
   // وجهة روابط البحث: /quiz?qa=<id> تفتح سؤالاً محدَّداً مباشرةً قبل أي شيء آخر.
   const urlSearch = useSearch();
@@ -898,10 +1047,6 @@ export function IslamicQuizGame() {
       setTimerSec((prev) => {
         if (prev <= 1) {
           clearTimer();
-          // تمديد تلقائي (30ث لفريق آخر) عند انتهاء الوقت لأول مرة — لا يُطبَّق
-          // إلا حين يوجد فريق منافس واحد بالضبط (الوضع الثنائي التقليدي)، إذ
-          // لا يوجد هدف واحد واضح لتحويله إليه تلقائيًا مع 3-4 فرق أو في
-          // الوضع الفردي؛ في تلك الحالات ينتهي السؤال مباشرةً بـ"خطأ".
           const others = state.teams.filter((t) => t.id !== state.activeTeamId);
           const canAutoForward = others.length === 1 && !passedRef.current;
           if (canAutoForward) {
@@ -920,18 +1065,26 @@ export function IslamicQuizGame() {
   }, [state.phase, state.passedToTeamId]);
 
   useEffect(() => {
+    const base = buildPublishedLocalPools();
+    poolRef.current = base;
     getQuizQuestions().then(({ data }) => {
       if (data && data.length > 0) {
-        poolRef.current = mergeSupabaseQuestions(data);
+        poolRef.current = mergeSupabaseQuestions(data, base);
       }
     });
     persistedUsedIdsRef.current = getLocalUsedQuizIds();
   }, []);
 
   const handleStart = useCallback(
-    (cats: string[], mode: GameMode, names: string[]) => dispatch({ type: "START_GAME", mode, categories: cats, names }),
+    (cats: string[], mode: GameMode, names: string[]) => {
+      dispatch({ type: "START_GAME", mode, categories: cats, names });
+    },
     [],
   );
+
+  const handleDaily = useCallback(() => {
+    onDaily?.();
+  }, [onDaily]);
 
   const handleMarkCorrect = useCallback(() => {
     clearTimer();
@@ -960,15 +1113,17 @@ export function IslamicQuizGame() {
 
         {!directQaId && (state.phase === "board" || state.phase === "question") && (
           <div className="qzg-game-title-bar">
-            <span className="qzg-game-title"><Landmark size={16} className="inline ms-1" />سين جيم</span>
+            <span className="qzg-game-title"><Landmark size={16} className="inline ms-1" />تحدي الأسئلة</span>
           </div>
         )}
 
         {!directQaId && state.phase === "setup" && (
           <SetupPhase
             onStart={handleStart}
+            onDaily={handleDaily}
             initialSelected={catsFromUrl}
-            minCategories={catsFromUrl.length > 0 ? 1 : 2}
+            minCategories={catsFromUrl.length > 0 ? 1 : 1}
+            publishedCount={publishedCount}
           />
         )}
         {state.phase === "board" && (

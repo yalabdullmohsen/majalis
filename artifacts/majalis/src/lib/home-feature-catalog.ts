@@ -37,7 +37,7 @@ import { filterNavItems } from "@/lib/nav-visibility";
 export const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc: string }[] = [
   { href: "/daily-wird", Icon: Star,          label: seoNavLabel("/daily-wird", "أكمل وردك"),       desc: "ختم يومي منتظم للقرآن والأذكار مع تتبّع التقدم" },
   { href: "/lessons",    Icon: GraduationCap, label: seoNavLabel("/lessons", "الدروس"),     desc: "تابع تعلّمك بدروس ودورات علمية مرتّبة بالمستوى" },
-  { href: "/quiz",       Icon: Target,        label: seoNavLabel("/quiz", "لعبة سين جيم"),  desc: "أسئلة شرعية ومعرفية متدرجة للمراجعة والاختبار" },
+  { href: "/quiz",       Icon: Target,        label: seoNavLabel("/quiz", "تحدي الأسئلة"),  desc: "أسئلة شرعية ومعرفية متدرجة للمراجعة والاختبار" },
   { href: "/adhkar",     Icon: RotateCw,      label: seoNavLabel("/adhkar", "أذكار اليوم"),     desc: "أذكار الصباح والمساء والنوم وما بينهما" },
 ];
 
@@ -120,7 +120,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     label: "أدوات التعلم",
     items: [
       { href: "/my-learning",     Icon: Layers,      title: seoNavLabel("/my-learning", "لوحتي التعليمية"),   desc: "متابعة تقدمك في الدروس والبطاقات للمراجعة السريعة" },
-      { href: "/quiz",            Icon: Target,      title: seoNavLabel("/quiz", "لعبة سين جيم"),   desc: "أسئلة شرعية ومعرفية متدرجة للمراجعة والاختبار" },
+      { href: "/quiz",            Icon: Target,      title: seoNavLabel("/quiz", "تحدي الأسئلة"),   desc: "أسئلة شرعية ومعرفية متدرجة للمراجعة والاختبار" },
       { href: "/assistant",       Icon: Bot,         title: seoNavLabel("/assistant", "المساعد العلمي"),    desc: "البحث الموثّق متاح الآن من هذه البطاقة؛ المساعد التحاوري يُفتح عند تفعيل الميزة" },
       { href: "/occasions", Icon: CalendarDays, title: seoNavLabel("/occasions", "المناسبات الإسلامية"), desc: "التواريخ الهجرية والمناسبات الشرعية مع التذكير" },
       { href: "/islamic-directory", Icon: Landmark, title: seoNavLabel("/islamic-directory", "دليل المؤسسات والمساجد"), desc: "مؤسسات ومساجد ومعالم مرتّبة للبحث المحلي" },

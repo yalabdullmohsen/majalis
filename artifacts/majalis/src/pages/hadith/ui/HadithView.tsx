@@ -1103,7 +1103,7 @@ export default function HadithPage() {
             links={[
               { href: "/fawaid", label: "الفوائد" },
               { href: "/tarikh-islami", label: "التاريخ الإسلامي" },
-              { href: "/quiz", label: "سين جيم" },
+              { href: "/quiz", label: "تحدي الأسئلة" },
             ]}
           />
           <SectionQuiz sectionId="hadith" aria-label="اختبر معلوماتك في علوم الحديث" count={4} />
