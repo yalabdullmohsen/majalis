@@ -599,6 +599,7 @@
     "test:mushaf-internal-perf-pr1": "node --import tsx src/lib/__tests__/mushaf-internal-perf-pr1-gate.test.ts",
     "capture:mushaf-internal-perf-baseline": "node scripts/mushaf-internal-perf-baseline.mjs --write",
     "test:quran-journey-pr1": "node --import tsx src/lib/__tests__/quran-journey-pr1-contracts-gate.test.ts",
+    "test:lessons-guide-pr1": "node --import tsx src/lib/__tests__/lessons-guide-pr1-gate.test.ts",
     "test:mushaf-advanced-bookmarks": "node --import tsx src/lib/__tests__/mushaf-advanced-bookmarks-gate.test.ts",
     "test:content-quality-wave32": "node --import tsx src/lib/__tests__/content-quality-wave32-gate.test.ts",
     "test:content-quality-wave33": "node --import tsx src/lib/__tests__/content-quality-wave33-gate.test.ts",
