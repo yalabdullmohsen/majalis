@@ -1,0 +1,188 @@
+/**
+ * بطاقة معرفة مختصرة + سطح تفاصيل — بلا شريط جانبي أخضر زخرفي، بلا Card داخل Card.
+ */
+
+.kx-summary-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  border-radius: var(--radius-card, 24px);
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, var(--mj-hairline)));
+  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
+  box-shadow: var(--ss-shadow-soft, 0 2px 10px -6px rgba(11, 32, 24, 0.14));
+  box-sizing: border-box;
+}
+
+.kx-summary-card__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1rem 1.05rem;
+  text-decoration: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  min-width: 0;
+  border-radius: inherit;
+  outline: none;
+}
+
+.kx-summary-card__link:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--mj-brand) 55%, transparent);
+  outline-offset: 2px;
+}
+
+.kx-summary-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  min-width: 0;
+}
+
+.kx-summary-card__icon {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-card, 24px);
+  flex-shrink: 0;
+  background: color-mix(in srgb, var(--mj-brand) 12%, var(--ss-card-bg, var(--mj-surface)));
+  color: var(--brand-on-light, var(--mj-brand-deep));
+}
+
+.kx-summary-card__head-text {
+  min-width: 0;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.kx-summary-card__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.45;
+  color: var(--color-text, var(--mj-ink));
+  text-align: start;
+  overflow-wrap: break-word;
+}
+
+.kx-summary-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.kx-summary-card__pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--mj-brand) 12%, transparent);
+  color: var(--brand-on-light, var(--mj-brand-deep));
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 22%, transparent);
+}
+
+.kx-summary-card__pill--muted {
+  background: color-mix(in srgb, var(--mj-muted) 12%, transparent);
+  color: var(--color-text-muted, var(--mj-muted));
+  border-color: color-mix(in srgb, var(--mj-muted) 22%, transparent);
+}
+
+.kx-summary-card__pill--review {
+  background: color-mix(in srgb, var(--mj-accent, #c4a35a) 14%, transparent);
+  color: var(--color-text, var(--mj-ink));
+  border-color: color-mix(in srgb, var(--mj-accent, #c4a35a) 35%, transparent);
+}
+
+.kx-summary-card__summary {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--color-text-muted, var(--mj-ink-2));
+  text-align: start;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.kx-summary-card__cta {
+  margin-top: 0.15rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--brand-on-light, var(--mj-brand-deep));
+}
+
+/* سطح التفاصيل — سطح واحد، محاذاة بداية، بلا شريط جانبي زخرفي */
+.kx-detail-surface {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: min(40rem, 100%);
+  min-width: 0;
+  text-align: start;
+}
+
+.kx-detail-surface__section {
+  /* ReadingSectionCard يوفر الإطار؛ لا نلفّه ببطاقة إضافية */
+  margin: 0;
+}
+
+.kx-detail-meta {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.kx-detail-meta__row {
+  display: grid;
+  gap: 0.2rem;
+  text-align: start;
+}
+
+.kx-detail-meta__row dt {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text-muted, var(--mj-muted));
+}
+
+.kx-detail-meta__row dd {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  font-weight: 400;
+  color: var(--color-text, var(--mj-ink));
+}
+
+.kx-detail-quote {
+  margin: 0;
+  padding: 0.75rem 0 0;
+  border: none;
+  border-inline-start: none;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  font-weight: 400;
+  color: var(--color-text, var(--mj-ink));
+  text-align: start;
+}
+
+html.dark .kx-summary-card__pill,
+[data-theme="dark"] .kx-summary-card__pill {
+  background: color-mix(in srgb, var(--mj-brand) 22%, transparent);
+  color: var(--on-dark-strong, #e8f5ef);
+  border-color: color-mix(in srgb, var(--mj-brand) 35%, transparent);
+}

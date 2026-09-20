@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-20T13:59:50.766Z",
+  "generatedAt": "2026-09-20T14:21:00.749Z",
   "policy": "no_ai_invention_no_memory_completion_no_auto_publish_human_review_required",
-  "sourceOfTruthUi": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+  "sourceOfTruthUi": "artifacts/majalis/src/data/islamic-sects.ts",
   "route": "/islamic-sects",
   "recordCount": 35,
   "publishedCount": 0,
@@ -78,7 +78,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SOURCE",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "من القرن الأول الهجري",
         "origin": "الحجاز / الشام / العراق",
         "founder": "التأسيس النبوي — الصحابة الكرام",
@@ -155,7 +155,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الرابع الهجري (ت.324 هـ)",
         "origin": "البصرة / بغداد",
         "founder": "أبو الحسن الأشعري (260-324 هـ)",
@@ -225,7 +225,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الرابع الهجري (ت.333 هـ)",
         "origin": "سمرقند / ما وراء النهر",
         "founder": "أبو منصور الماتريدي (238-333 هـ)",
@@ -302,7 +302,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SOURCE",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الأول الهجري (بدأت الجذور بعد مقتل الحسين 61 هـ)",
         "origin": "الكوفة / العراق",
         "founder": "تبلورت حول القول بإمامة اثني عشر إماماً من آل البيت، وبرز فقهها الجعفري في تراث جعفر الصادق (ت.148 هـ)",
@@ -370,7 +370,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الثاني الهجري (ثورة زيد 122 هـ)",
         "origin": "الكوفة / اليمن",
         "founder": "زيد بن علي بن الحسين بن علي (ت. 122 هـ)",
@@ -439,7 +439,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الثاني الهجري (انشقاق 148 هـ)",
         "origin": "المدينة المنورة / مصر / فارس",
         "founder": "إسماعيل بن جعفر الصادق (ت. 145 هـ) ومن ناصروا خط إمامته",
@@ -505,7 +505,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SHARIA_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الأول الهجري (38 هـ — معركة صفين)",
         "origin": "الكوفة / حروراء",
         "founder": "خرجوا على علي بن أبي طالب بعد قبوله التحكيم في صفين",
@@ -577,7 +577,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الأول الهجري (انشقوا عن الخوارج نحو 65 هـ)",
         "origin": "البصرة / عُمان",
         "founder": "عبد الله بن إباض التميمي (ت. نحو 86 هـ) وجابر بن زيد",
@@ -652,7 +652,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SOURCE",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الثاني الهجري (اعتزال واصل بن عطاء نحو 105 هـ)",
         "origin": "البصرة / بغداد",
         "founder": "واصل بن عطاء (80-131 هـ) وعمرو بن عبيد",
@@ -715,7 +715,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SOURCE",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الأول الهجري (ظهرت في الفتنة الأولى 36-41 هـ)",
         "origin": "الكوفة / الشام",
         "founder": "نُسب إليهم القول بالإرجاء في أهل الكبائر والتوقف في الفتن الأولى",
@@ -777,7 +777,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SOURCE",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الثاني الهجري (ت. جهم 128 هـ)",
         "origin": "ترمذ / خراسان",
         "founder": "جهم بن صفوان (ت. 128 هـ)",
@@ -851,7 +851,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الثاني الهجري (أوائل الزهاد)",
         "origin": "البصرة / بغداد / خراسان",
         "founder": "نشأ من الزهاد الأوائل كالحسن البصري والفضيل بن عياض",
@@ -929,7 +929,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الثاني الهجري (نسبةً للإمام أحمد ت.241هـ)",
         "origin": "الحجاز / العراق / الشام",
         "founder": "نسبةً لمنهج الإمام أحمد بن حنبل وسائر أئمة الحديث كالبخاري وأبي زرعة",
@@ -998,7 +998,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SOURCE",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الثالث عشر الهجري (1867م — 1283هـ)",
         "origin": "ديوبند، الهند البريطانية",
         "founder": "محمد قاسم النانوتوي (ت.1297هـ) ورشيد أحمد الكنكوهي (ت.1323هـ)",
@@ -1068,7 +1068,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SOURCE",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الثالث عشر الهجري (1880م — 1297هـ)",
         "origin": "بريلي، الهند البريطانية (أوتار براديش)",
         "founder": "أحمد رضا خان البريلوي (ت.1340هـ/1921م)",
@@ -1138,7 +1138,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SOURCE",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الرابع عشر الهجري (1926م — 1345هـ)",
         "origin": "ميوات، الهند البريطانية",
         "founder": "محمد إلياس الكاندهلوي (1885-1944م)",
@@ -1209,7 +1209,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الرابع عشر الهجري (1928م — 1347هـ)",
         "origin": "الإسماعيلية، مصر",
         "founder": "حسن البنا (1906-1949م)",
@@ -1270,7 +1270,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SOURCE",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الأول الهجري",
         "origin": "الشام / البصرة",
         "founder": "معبد الجهني (ت.80هـ) وغيلان الدمشقي (ت.105هـ)",
@@ -1333,7 +1333,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SOURCE",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الأول والثاني الهجري",
         "origin": "الشام / خراسان",
         "founder": "جهم بن صفوان (ت.128هـ) في الجبر الكلي",
@@ -1394,7 +1394,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SOURCE",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الثالث الهجري (ت.255هـ)",
         "origin": "سجستان / نيسابور / خراسان",
         "founder": "محمد بن كرّام السجستاني (ت.255هـ)",
@@ -1459,7 +1459,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SHARIA_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الثالث الهجري (نحو 260هـ)",
         "origin": "الكوفة / الشام",
         "founder": "محمد بن نصير النميري (ت. نحو 270هـ)",
@@ -1527,7 +1527,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الثالث عشر الهجري (1820م — 1236هـ)",
         "origin": "إيران / العراق",
         "founder": "أحمد الأحسائي (1753-1826م)",
@@ -1592,7 +1592,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SHARIA_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الخامس الهجري (411هـ/1020م)",
         "origin": "مصر الفاطمية / جبال الشام",
         "founder": "حمزة بن علي الزوزني وأنوشتكين الدرزي — ادّعيا ألوهية الحاكم بأمر الله الفاطمي",
@@ -1662,7 +1662,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SHARIA_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الثالث عشر الهجري (1889م — 1306هـ)",
         "origin": "قاديان، البنجاب الهندي",
         "founder": "ميرزا غلام أحمد القادياني (ت.1908م/1326هـ)",
@@ -1725,7 +1725,7 @@
       "reviewedAt": null,
       "publicationStatus": "CONFLICTING_SOURCES",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الأول الهجري (منتصف القرن)",
         "origin": "الكوفة / مصر / اليمن",
         "founder": "تُنسب إلى عبد الله بن سبأ — وجوده ونسبة الآراء إليه مثار نقاش مؤرخي",
@@ -1791,7 +1791,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SOURCE",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الثالث الهجري (ت. نحو 240هـ)",
         "origin": "البصرة / بغداد",
         "founder": "أبو محمد عبد الله بن سعيد بن كُلّاب القطان البصري",
@@ -1862,7 +1862,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن التاسع عشر والعشرون الميلادي",
         "origin": "مصر / الهند / بلاد الشام",
         "founder": "جمال الدين الأفغاني (1839-1897) ومحمد عبده (1849-1905) ورشيد رضا (1865-1935)",
@@ -1936,7 +1936,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الثالث إلى السابع الهجري",
         "origin": "بغداد / فارس / الأندلس",
         "founder": "الكندي (ت.873م)، الفارابي (ت.950م)، ابن سينا (ت.1037م)، ابن رشد (ت.1198م)",
@@ -2000,7 +2000,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SHARIA_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن التاسع عشر الميلادي (1260هـ/1844م)",
         "origin": "شيراز، إيران",
         "founder": "علي محمد الشيرازي (1819-1850م) الملقَّب بـ«الباب»",
@@ -2067,7 +2067,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن التاسع عشر الميلادي (1298هـ/1881م)",
         "origin": "السودان — النيل الأبيض",
         "founder": "محمد أحمد بن عبد الله (1844-1885م) ادّعى أنه المهدي المنتظر",
@@ -2132,7 +2132,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SHARIA_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن التاسع عشر الميلادي (1268هـ/1852م)",
         "origin": "إيران — بغداد — أكا (فلسطين)",
         "founder": "ميرزا حسين علي النوري الملقَّب بـ«بهاء الله» (1817-1892م)",
@@ -2203,7 +2203,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن الرابع عشر الهجري (1345هـ/1926م)",
         "origin": "مصر — القاهرة",
         "founder": "محمد حامد الفِقي (1892-1959م)",
@@ -2274,7 +2274,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن التاسع عشر حتى اليوم",
         "origin": "تونس / المغرب / مصر — بداياتها الحديثة عند ابن عاشور",
         "founder": "محمد الطاهر ابن عاشور (1879-1973م) في مؤلفه «مقاصد الشريعة الإسلامية»",
@@ -2343,7 +2343,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_HISTORICAL_REVIEW",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن السادس الهجري (ت.587هـ/1191م)",
         "origin": "فارس — الأناضول",
         "founder": "شهاب الدين السهروردي (1154-1191م) — «شيخ الإشراق»",
@@ -2414,7 +2414,7 @@
       "reviewedAt": null,
       "publicationStatus": "NEEDS_SOURCE",
       "uiSource": {
-        "file": "artifacts/majalis/src/views/IslamicSectsPage.tsx",
+        "file": "artifacts/majalis/src/data/islamic-sects.ts",
         "era": "القرن العشرون والحادي والعشرون",
         "origin": "مصر / قطر / تركيا",
         "founder": "يوسف القرضاوي (1926-2022م) بوصفه أبرز رموزه الفقهية",

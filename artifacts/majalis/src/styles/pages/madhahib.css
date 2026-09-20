@@ -58,6 +58,19 @@
 
 /* قائمة البطاقات */
 .mdb-list { display: flex; flex-direction: column; gap: 1rem; }
+.mdb-list--summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.85rem;
+  width: 100%;
+  min-width: 0;
+  padding-bottom: calc(var(--bottom-nav-height, 88px) + var(--inset-bottom, 0px) + 1.5rem);
+}
+@media (min-width: 720px) {
+  .mdb-list--summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 
 /* البطاقة */
 .mdb-card {

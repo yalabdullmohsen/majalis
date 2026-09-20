@@ -48,9 +48,14 @@ assert.doesNotMatch(
   "narrow-detail-card",
 );
 assert.doesNotMatch(sectsCss, /word-break:\s*break-all/);
-assert.match(sectsPage, /sect-list/);
-assert.match(sectsPage, /عرض التفاصيل|إغلاق التفاصيل/);
-assert.match(sectsPage, /needs_specialist_review/);
+assert.match(sectsPage, /KnowledgeSummaryCard/);
+assert.match(sectsPage, /عرض التفاصيل|onNavigate/);
+assert.match(
+  sectsPage + read("src/components/knowledge/KnowledgeSummaryCard.tsx"),
+  /needs_specialist_review/,
+);
 assert.doesNotMatch(sectsPage, /keyScholars\.join\([`'"]،[`'"]\)/);
+assert.doesNotMatch(sectsPage, /sect-card__detail|aria-expanded/);
+assert.match(read("src/views/IslamicSectsDetailPage.tsx"), /KnowledgeDetailSurface/);
 
 console.log("startup-surface-unify-gate: ok");

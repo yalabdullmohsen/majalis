@@ -29,14 +29,14 @@ const queuePath = resolve(
   repoRoot,
   "docs/content-quality/ISLAMIC_SECTS_HUMAN_REVIEW_QUEUE.md",
 );
-const pagePath = resolve(majalisRoot, "src/views/IslamicSectsPage.tsx");
+const pagePath = resolve(majalisRoot, "src/data/islamic-sects.ts");
 const buildScript = resolve(
   majalisRoot,
   "scripts/build-islamic-sects-inventory.mjs",
 );
 
 assert.ok(existsSync(buildScript), "build-islamic-sects-inventory.mjs");
-assert.ok(existsSync(pagePath), "IslamicSectsPage.tsx");
+assert.ok(existsSync(pagePath), "islamic-sects.ts");
 assert.ok(existsSync(taxonomyPath), "islamic-sects-taxonomy.json");
 assert.ok(existsSync(queuePath), "ISLAMIC_SECTS_HUMAN_REVIEW_QUEUE.md");
 
