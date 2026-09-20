@@ -42,14 +42,29 @@
 | `reports/total-trust/content-inventory.json` | سجل عناصر المسارات |
 | `reports/total-trust/route-coverage-matrix.json` | مصفوفة تغطية Routes |
 | `docs/content-quality/TOTAL_TRUST_PHASE0.md` | تثبيت المستودع |
+| `docs/content-quality/TOTAL_TRUST_PHASE2.md` | مرحلتان 2–3 |
+| `docs/content-quality/TOTAL_TRUST_PHASE4.md` | حديث / تفسير / SEO |
 
 ## أوامر
 
 ```bash
 node scripts/total-trust-inventory.mjs
+node scripts/total-trust-route-states.mjs
+node scripts/total-trust-mushaf-boundary.mjs
+node scripts/total-trust-hadith-tafsir.mjs
 pnpm --filter @workspace/majalis run verify:protected-quran-byte-lock
 pnpm --filter @workspace/majalis run test:total-trust-phase0
+pnpm --filter @workspace/majalis run test:total-trust-phase2
+pnpm --filter @workspace/majalis run test:total-trust-phase4
 ```
+
+## المراحل
+
+| مرحلة | نطاق | حالة |
+|---|---|---|
+| 0 | جرد + قفل مصحف + Finding المتجر | مدمج |
+| 2–3 | حالات المسارات الحرجة + حدود المصحف | مدمج |
+| 4 | حديث / تفسير / SEO ثابت | هذا الفرع |
 
 ## PR
 

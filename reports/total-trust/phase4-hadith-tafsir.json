@@ -1,0 +1,270 @@
+{
+  "program": "SUNNAH_TOTAL_TRUST",
+  "phase": 4,
+  "generatedAt": "2026-09-20T04:05:48.104Z",
+  "auditedRoutes": 13,
+  "offlineBannerGlobal": true,
+  "needsReview": [],
+  "redirects": [
+    {
+      "route": "/hadith/arbaeen",
+      "to": "/arbaeen-nawawi",
+      "proven": true
+    },
+    {
+      "route": "/quran/tafsir",
+      "to": "/tafsir",
+      "proven": true
+    }
+  ],
+  "findings": [],
+  "routeStates": [
+    {
+      "route": "/hadith",
+      "kind": "page",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/hadith/HadithPage.tsx",
+        "src/pages/hadith/ui/HadithView.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "seoInJson": true,
+      "seoDescriptionLen": 117,
+      "seoRequired": true,
+      "seoOk": true,
+      "dynamicSeo": true,
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/hadith/sahih",
+      "kind": "page",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/hadith/HadithSahihPage.tsx",
+        "src/pages/hadith/HadithPage.tsx",
+        "src/pages/hadith/ui/HadithClassGuide.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "seoInJson": true,
+      "seoDescriptionLen": 91,
+      "seoRequired": true,
+      "seoOk": true,
+      "dynamicSeo": true,
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/hadith/daif",
+      "kind": "page",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/hadith/HadithDaifPage.tsx",
+        "src/pages/hadith/HadithPage.tsx",
+        "src/pages/hadith/ui/HadithClassGuide.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "seoInJson": true,
+      "seoDescriptionLen": 92,
+      "seoRequired": true,
+      "seoOk": true,
+      "dynamicSeo": true,
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/hadith/mawdu",
+      "kind": "page",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/hadith/HadithMawduPage.tsx",
+        "src/pages/hadith/HadithPage.tsx",
+        "src/pages/hadith/ui/HadithClassGuide.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "seoInJson": true,
+      "seoDescriptionLen": 92,
+      "seoRequired": true,
+      "seoOk": true,
+      "dynamicSeo": true,
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/hadith/books",
+      "kind": "page",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/hadith/HadithBooksPage.tsx",
+        "src/pages/hadith/ui/HadithBooksView.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "seoInJson": true,
+      "seoDescriptionLen": 132,
+      "seoRequired": true,
+      "seoOk": true,
+      "dynamicSeo": true,
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/hadith/books-and-rulings",
+      "kind": "static_index",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/hadith/HadithBooksAndRulingsPage.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "seoInJson": true,
+      "seoDescriptionLen": 83,
+      "seoRequired": true,
+      "seoOk": true,
+      "dynamicSeo": true,
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/hadith/:id",
+      "kind": "page",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/hadith/HadithByIdPage.tsx",
+        "src/pages/hadith/ui/HadithByIdView.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "seoInJson": false,
+      "seoDescriptionLen": 0,
+      "seoRequired": false,
+      "seoOk": true,
+      "dynamicSeo": true,
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/hadith-science",
+      "kind": "page",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/hadith/HadithSciencePage.tsx",
+        "src/pages/hadith/ui/HadithScienceView.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "seoInJson": true,
+      "seoDescriptionLen": 88,
+      "seoRequired": true,
+      "seoOk": true,
+      "dynamicSeo": true,
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/hadith/arbaeen",
+      "kind": "redirect",
+      "redirectTo": "/arbaeen-nawawi",
+      "redirectProven": true,
+      "loadingState": "NOT_APPLICABLE",
+      "emptyState": "NOT_APPLICABLE",
+      "errorState": "NOT_APPLICABLE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "seoInJson": false,
+      "seoRequired": false,
+      "finalStatus": "VERIFIED_EXACT"
+    },
+    {
+      "route": "/hadith/arbaeen-love-of-allah",
+      "kind": "page",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/views/ArbaeenLovePage.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "seoInJson": true,
+      "seoDescriptionLen": 117,
+      "seoRequired": true,
+      "seoOk": true,
+      "dynamicSeo": true,
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/arbaeen-nawawi",
+      "kind": "page",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/hadith/ArbaeenNawawiPage.tsx",
+        "src/pages/hadith/ui/ArbaeenNawawiView.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "seoInJson": true,
+      "seoDescriptionLen": 81,
+      "seoRequired": true,
+      "seoOk": true,
+      "dynamicSeo": true,
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/tafsir",
+      "kind": "page",
+      "loadingState": "PASS_SOURCE",
+      "emptyState": "PASS_SOURCE",
+      "errorState": "PASS_SOURCE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "sourceFilesChecked": [
+        "src/pages/quran/TafsirPage.tsx",
+        "src/pages/quran/ui/TafsirView.tsx",
+        "src/lib/ui-copy.ts"
+      ],
+      "missingFiles": [],
+      "seoInJson": true,
+      "seoDescriptionLen": 140,
+      "seoRequired": true,
+      "seoOk": true,
+      "dynamicSeo": true,
+      "finalStatus": "LINGUISTICALLY_REVIEWED"
+    },
+    {
+      "route": "/quran/tafsir",
+      "kind": "redirect",
+      "redirectTo": "/tafsir",
+      "redirectProven": true,
+      "loadingState": "NOT_APPLICABLE",
+      "emptyState": "NOT_APPLICABLE",
+      "errorState": "NOT_APPLICABLE",
+      "offlineState": "PASS_GLOBAL_BANNER",
+      "seoInJson": false,
+      "seoRequired": false,
+      "finalStatus": "VERIFIED_EXACT"
+    }
+  ]
+}

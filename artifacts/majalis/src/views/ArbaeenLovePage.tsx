@@ -3,7 +3,7 @@ import { Link } from "wouter";
 import { ArrowRight, Heart } from "lucide-react";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
-import { EMPTY } from "@/lib/ui-copy";
+import { EMPTY, STATUS } from "@/lib/ui-copy";
 import { ShareButtons } from "@/components/ContentActions";
 import { fetchPublishedArbaeenLove, type ArbaeenHadith } from "@/lib/arbaeen-love-service";
 import { UtilityScreen } from "@/components/design-system/screens";
@@ -11,22 +11,34 @@ import { UtilityScreen } from "@/components/design-system/screens";
 export default function ArbaeenLovePage() {
   const [items, setItems] = useState<ArbaeenHadith[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadFailed, setLoadFailed] = useState(false);
 
   useEffect(() => {
     applyPageSeo({
       path: "/hadith/arbaeen-love-of-allah",
       title: "الأربعون في محبة رب العالمين | سُنّة",
-      description: "أحاديث نبوية موثقة في محبة الله لعباده ومحبة العبد لربه، من صحيح البخاري ومسلم وغيرهما.",
-      keywords: ["الأربعون", "محبة الله", "أحاديث محبة الله", "سُنّة"],
+      description:
+        "أحاديث نبوية موثّقة في محبة الله لعباده ومحبة العبد لربه، من الصحيحين وغيرهما — تُنشر بعد مراجعة علمية بلا توليد آلي.",
+      keywords: ["الأربعون", "محبة الله", "أحاديث محبة الله", "صحيح البخاري", "صحيح مسلم", "سُنّة"],
     });
   }, []);
 
   useEffect(() => {
     let active = true;
+    setLoadFailed(false);
     fetchPublishedArbaeenLove()
-      .then((data) => { if (active) setItems(data); })
-      .finally(() => { if (active) setLoading(false); });
-    return () => { active = false; };
+      .then((data) => {
+        if (active) setItems(data);
+      })
+      .catch(() => {
+        if (active) setLoadFailed(true);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
   }, []);
 
   return (
@@ -53,6 +65,8 @@ export default function ArbaeenLovePage() {
 
       {loading && items.length === 0 ? (
         <SkeletonCardGrid count={4} />
+      ) : loadFailed ? (
+        <Empty text={STATUS.networkError} />
       ) : items.length === 0 ? (
         <Empty text={EMPTY.data} />
       ) : (
