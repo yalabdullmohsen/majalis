@@ -1,0 +1,401 @@
+/**
+ * Interaction States System — سُنّة
+ * حالات تفاعل متمايزة: DEFAULT / HOVER / ACTIVE / FOCUS_VISIBLE /
+ * SELECTED / CURRENT / HIGHLIGHTED / VISITED.
+ * لا يُعاد استخدام Token واحد لكل الحالات.
+ * لا يمسّ المصحف/آيات/data-scripture.
+ */
+
+:root {
+  /* DEFAULT */
+  --state-default-bg: transparent;
+  --state-default-fg: var(--mj-ink, #16241e);
+  --state-default-border: var(--mj-hairline, #d9d3c8);
+
+  /* HOVER — لمسة خفيفة فوق السطح */
+  --state-hover-bg: color-mix(in srgb, var(--mj-brand, #146b52) 6%, transparent);
+  --state-hover-fg: var(--mj-ink, #16241e);
+  --state-hover-border: color-mix(in srgb, var(--mj-brand, #146b52) 22%, var(--mj-hairline, #d9d3c8));
+
+  /* ACTIVE (pressed) — أعمق من hover بلا لون ممتلئ */
+  --state-active-bg: color-mix(in srgb, var(--mj-brand, #146b52) 10%, transparent);
+  --state-active-fg: var(--mj-brand-deep, #0d4a39);
+  --state-active-border: color-mix(in srgb, var(--mj-brand, #146b52) 28%, var(--mj-hairline, #d9d3c8));
+
+  /* FOCUS_VISIBLE — حلقة ذهبية هادئة؛ ليست خلفية تحديد */
+  --state-focus-ring: 0 0 0 2px var(--mj-bg, #f7f4ee), 0 0 0 4px var(--mj-accent, #c9a86c);
+  --state-focus-outline: 2px solid color-mix(in srgb, var(--mj-accent, #c9a86c) 70%, var(--mj-brand, #146b52));
+  --state-focus-outline-offset: 2px;
+  --state-focus-bg: transparent;
+
+  /* SELECTED — اختيار صريح (فلتر/خيار) */
+  --state-selected-bg: color-mix(in srgb, var(--mj-brand, #146b52) 12%, #ffffff);
+  --state-selected-fg: var(--mj-brand-deep, #0d4a39);
+  --state-selected-border: color-mix(in srgb, var(--mj-brand, #146b52) 32%, var(--mj-hairline, #d9d3c8));
+
+  /* CURRENT — مسار تنقّل (aria-current) أهدأ من selected */
+  --state-current-bg: color-mix(in srgb, var(--mj-brand, #146b52) 8%, transparent);
+  --state-current-fg: var(--mj-brand-deep, #0d4a39);
+  --state-current-border: color-mix(in srgb, var(--mj-brand, #146b52) 20%, transparent);
+  --state-current-indicator: var(--mj-brand, #146b52);
+
+  /* HIGHLIGHTED — تأكيد محتوى مقصود فقط (ليس تحديد نص) */
+  --state-highlighted-bg: color-mix(in srgb, var(--mj-brand, #146b52) 7%, #f4faf7);
+  --state-highlighted-fg: var(--mj-ink, #16241e);
+  --state-highlighted-border: color-mix(in srgb, var(--mj-brand, #146b52) 18%, var(--mj-hairline, #d9d3c8));
+
+  /* VISITED */
+  --state-visited-fg: color-mix(in srgb, var(--mj-brand-deep, #0d4a39) 70%, #4f5f58);
+
+  /* Text selection — فقط عند تحديد المستخدم */
+  --state-selection-bg: color-mix(in srgb, var(--mj-brand, #146b52) 28%, #ffffff);
+  --state-selection-fg: var(--mj-brand-deep, #0d4a39);
+
+  /* جسر للتوافق مع الرموز القديمة — selected ≠ soft ≠ focus */
+  --color-selected: var(--state-selected-bg);
+  --color-current: var(--state-current-bg);
+  --focus-ring: var(--state-focus-ring);
+  --focus-color: var(--mj-accent, #c9a86c);
+}
+
+html[data-theme="dark"],
+html.dark,
+:root[data-theme="dark"] {
+  --state-default-bg: transparent;
+  --state-default-fg: var(--mj-ink, #ede8df);
+  --state-default-border: var(--mj-hairline, #35443f);
+
+  --state-hover-bg: color-mix(in srgb, #5fbf98 10%, transparent);
+  --state-hover-fg: var(--mj-ink, #ede8df);
+  --state-hover-border: color-mix(in srgb, #5fbf98 22%, #35443f);
+
+  --state-active-bg: color-mix(in srgb, #5fbf98 16%, #1b2421);
+  --state-active-fg: #b8e0cc;
+  --state-active-border: color-mix(in srgb, #5fbf98 28%, #35443f);
+
+  /* Focus: ذهب — لا نعناع يختلط مع selected */
+  --state-focus-ring: 0 0 0 2px var(--surface-app, #0f1613), 0 0 0 4px color-mix(in srgb, #c9a86c 55%, transparent);
+  --state-focus-outline: 2px solid color-mix(in srgb, #c9a86c 72%, #8fd4b0);
+  --state-focus-outline-offset: 2px;
+  --state-focus-bg: transparent;
+
+  /* Selected: سطح مرتفع + نص داكن على نعناع صلب — ليس wash شفاف */
+  --state-selected-bg: #5fbf98;
+  --state-selected-fg: #06231a;
+  --state-selected-border: color-mix(in srgb, #5fbf98 70%, #2a3832);
+
+  /* Current: مؤشر هادئ بلا مستطيل أخضر ممتلئ */
+  --state-current-bg: color-mix(in srgb, #5fbf98 12%, #1b2421);
+  --state-current-fg: #b8e0cc;
+  --state-current-border: color-mix(in srgb, #5fbf98 22%, transparent);
+  --state-current-indicator: #5fbf98;
+
+  /* Highlighted: أهدأ من selected — لا يُشبه التحديد */
+  --state-highlighted-bg: color-mix(in srgb, #1f5a46 14%, #1b2421);
+  --state-highlighted-fg: #ede8df;
+  --state-highlighted-border: color-mix(in srgb, #4a6d5e 30%, #24302c);
+
+  --state-visited-fg: color-mix(in srgb, #8fd4b0 55%, #b5ada0);
+
+  --state-selection-bg: color-mix(in srgb, #5fbf98 38%, #0f1613);
+  --state-selection-fg: #f3efe6;
+
+  /* legacy: wash للتنقّل؛ chips تستخدم --state-selected-* مباشرة */
+  --color-selected: var(--state-current-bg);
+  --color-current: var(--state-current-bg);
+  --focus-ring: var(--state-focus-ring);
+  --focus-color: #c9a86c;
+
+  /* فصل soft عن selected — soft للزخرفة فقط */
+  --primary-soft: color-mix(in srgb, #5fbf98 10%, transparent);
+  --mj-brand-soft: color-mix(in srgb, #5fbf98 10%, #1b2421);
+  --color-primary-soft: var(--mj-brand-soft);
+}
+
+/* ═══ Text Selection — فقط عند تحديد المستخدم فعليًا ═══ */
+::selection {
+  background: var(--state-selection-bg);
+  color: var(--state-selection-fg);
+}
+::-moz-selection {
+  background: var(--state-selection-bg);
+  color: var(--state-selection-fg);
+}
+
+/* المصحف: لا ألوان selection مخصّصة تتداخل مع الرسم */
+[data-scripture] ::selection,
+.mushaf-page ::selection,
+.ayah-card ::selection,
+[data-mushaf-theme] ::selection {
+  background: Highlight;
+  color: HighlightText;
+}
+
+/* ═══ Breadcrumbs — شفافة، بلا مستطيل أسود/overlay ═══ */
+.breadcrumbs,
+.breadcrumbs-list,
+.topic-page__crumb,
+.section-hero__chrome,
+.hb-breadcrumb,
+.lpd2-breadcrumb,
+.snr-detail-breadcrumb,
+.lesson-detail-breadcrumb,
+.lrn-breadcrumb,
+.tarikh-breadcrumbs,
+[data-section-crumb="1"] {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  outline: none !important;
+  filter: none !important;
+}
+
+.breadcrumbs-item,
+.topic-page__crumb-item,
+.hb-breadcrumb__link,
+.lpd2-breadcrumb a,
+.snr-detail-breadcrumb a,
+.lesson-detail-breadcrumb a,
+.tarikh-breadcrumbs a {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .breadcrumbs,
+html.dark .breadcrumbs,
+html[data-theme="dark"] .breadcrumbs-list,
+html.dark .breadcrumbs-list,
+html[data-theme="dark"] .topic-page__crumb,
+html.dark .topic-page__crumb,
+html[data-theme="dark"] .hb-breadcrumb,
+html.dark .hb-breadcrumb,
+html[data-theme="dark"] .lpd2-breadcrumb,
+html.dark .lpd2-breadcrumb,
+html[data-theme="dark"] .snr-detail-breadcrumb,
+html.dark .snr-detail-breadcrumb,
+html[data-theme="dark"] .lesson-detail-breadcrumb,
+html.dark .lesson-detail-breadcrumb,
+html[data-theme="dark"] .lrn-breadcrumb,
+html.dark .lrn-breadcrumb,
+html[data-theme="dark"] .tarikh-breadcrumbs,
+html.dark .tarikh-breadcrumbs,
+html[data-theme="dark"] [data-section-crumb="1"],
+html.dark [data-section-crumb="1"] {
+  background: transparent !important;
+  color: var(--txt-secondary, var(--mj-ink-2, #d8d0c4)) !important;
+  min-height: 0;
+  padding-block: 0.35rem;
+}
+
+html[data-theme="dark"] .breadcrumbs-item a,
+html.dark .breadcrumbs-item a,
+html[data-theme="dark"] .topic-page__crumb a,
+html.dark .topic-page__crumb a,
+html[data-theme="dark"] .hb-breadcrumb__link,
+html.dark .hb-breadcrumb__link,
+html[data-theme="dark"] .lpd2-breadcrumb a,
+html.dark .lpd2-breadcrumb a {
+  color: var(--brand-on-surface, var(--mj-brand-deep, #8fd4b0)) !important;
+  background: transparent !important;
+}
+
+html[data-theme="dark"] .breadcrumbs-sep,
+html.dark .breadcrumbs-sep,
+html[data-theme="dark"] .hb-breadcrumb__sep,
+html.dark .hb-breadcrumb__sep,
+html[data-theme="dark"] .topic-page__crumb [aria-hidden],
+html.dark .topic-page__crumb [aria-hidden] {
+  color: var(--txt-muted, #b5ada0) !important;
+  opacity: 0.7;
+}
+
+/* ═══ منع Highlight وهمي على نصوص وصفية / متابعة قراءة ═══ */
+html[data-theme="dark"] .quran-open-mushaf__resume,
+html.dark .quran-open-mushaf__resume,
+html[data-theme="dark"] .quran-open-mushaf__desc,
+html.dark .quran-open-mushaf__desc,
+html[data-theme="dark"] .section-hub__intro-text,
+html.dark .section-hub__intro-text,
+html[data-theme="dark"] .section-lobby__desc,
+html.dark .section-lobby__desc,
+html[data-theme="dark"] .hub-card__desc,
+html.dark .hub-card__desc,
+html[data-theme="dark"] .topic-page__sub,
+html.dark .topic-page__sub,
+html[data-theme="dark"] .topic-page__lede,
+html.dark .topic-page__lede {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html[data-theme="dark"] .quran-open-mushaf__resume,
+html.dark .quran-open-mushaf__resume {
+  color: var(--txt-secondary, #d8d0c4) !important;
+  padding-inline: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* مقدمات الأقسام: سطح هادئ بلا wash يشبه التحديد */
+html[data-theme="dark"] .section-hub__intro,
+html.dark .section-hub__intro {
+  background: var(--surface-elevated, #24302b) !important;
+  border-color: var(--border-subtle, #35443f) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] .th-section__intro,
+html.dark .th-section__intro,
+html[data-theme="dark"] .sw-section__intro,
+html.dark .sw-section__intro {
+  background: var(--surface-2, #222d29) !important;
+  border-color: var(--border-subtle, #35443f) !important;
+}
+
+/* تسمية الدليل: بلا مستطيل خلف النص */
+html[data-theme="dark"] .sw-dalil strong,
+html.dark .sw-dalil strong,
+html[data-theme="dark"] [class*="dalil"] strong,
+html.dark [class*="dalil"] strong {
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  color: var(--txt-secondary, #c2cfca) !important;
+}
+
+/* ═══ Chips: default ≠ selected ≠ focus ═══ */
+html[data-theme="dark"] :is(
+  .filter-chips__chip,
+  .mj-filter-chip,
+  .ds-chip,
+  .section-hub__chip,
+  .section-lobby__chip,
+  .lessons-filter-tab
+):not(.is-active):not([aria-pressed="true"]):not([aria-selected="true"]),
+html.dark :is(
+  .filter-chips__chip,
+  .mj-filter-chip,
+  .ds-chip,
+  .section-hub__chip,
+  .section-lobby__chip,
+  .lessons-filter-tab
+):not(.is-active):not([aria-pressed="true"]):not([aria-selected="true"]) {
+  background: var(--mj-chip-bg, #222c28) !important;
+  color: var(--mj-chip-fg, #f3f7f5) !important;
+  border-color: var(--mj-chip-border, #3a4641) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] :is(
+  .filter-chips__chip.is-active,
+  .mj-filter-chip.is-active,
+  .ds-chip.is-active,
+  .section-hub__chip.is-active,
+  .section-lobby__chip.is-active,
+  .lessons-filter-tab--active,
+  .lessons-filter-tab.is-active,
+  .fiqh-hub-strip__tab--active
+),
+html.dark :is(
+  .filter-chips__chip.is-active,
+  .mj-filter-chip.is-active,
+  .ds-chip.is-active,
+  .section-hub__chip.is-active,
+  .section-lobby__chip.is-active,
+  .lessons-filter-tab--active,
+  .lessons-filter-tab.is-active,
+  .fiqh-hub-strip__tab--active
+) {
+  background: var(--state-selected-bg) !important;
+  color: var(--state-selected-fg) !important;
+  border-color: var(--state-selected-border) !important;
+}
+
+/* Focus-visible منفصل — لا خلفية selected */
+html[data-theme="dark"] :is(
+  .filter-chips__chip,
+  .mj-filter-chip,
+  .ds-chip,
+  .section-hub__chip,
+  .section-lobby__chip,
+  .hub-card,
+  .soft-card,
+  .bottom-nav__tab,
+  a,
+  button
+):focus-visible,
+html.dark :is(
+  .filter-chips__chip,
+  .mj-filter-chip,
+  .ds-chip,
+  .section-hub__chip,
+  .section-lobby__chip,
+  .hub-card,
+  .soft-card,
+  .bottom-nav__tab,
+  a,
+  button
+):focus-visible {
+  outline: var(--state-focus-outline) !important;
+  outline-offset: var(--state-focus-outline-offset) !important;
+  box-shadow: none !important;
+}
+
+/* Current nav — مؤشر لا wash كامل كـ selected */
+html[data-theme="dark"] :is(
+  .sidebar-item[aria-current="page"],
+  .bottom-nav__tab[aria-current="page"],
+  .nav-tab[aria-current="page"]
+),
+html.dark :is(
+  .sidebar-item[aria-current="page"],
+  .bottom-nav__tab[aria-current="page"],
+  .nav-tab[aria-current="page"]
+) {
+  background: var(--state-current-bg) !important;
+  color: var(--state-current-fg) !important;
+  box-shadow: inset -3px 0 0 var(--state-current-indicator) !important;
+}
+
+/* ═══ بطاقات ليلاً: تمايز سطح/حد عن الخلفية ═══ */
+html[data-theme="dark"] :is(
+  .hub-card,
+  .soft-card,
+  .section-hub__card,
+  .quran-hub-card,
+  .lesson-unified-card,
+  .mj-card,
+  .content-card
+):not([data-scripture]):not(.mushaf-page),
+html.dark :is(
+  .hub-card,
+  .soft-card,
+  .section-hub__card,
+  .quran-hub-card,
+  .lesson-unified-card,
+  .mj-card,
+  .content-card
+):not([data-scripture]):not(.mushaf-page) {
+  background: var(--dark-card, var(--surface-elevated, #24302b)) !important;
+  border: 1px solid var(--dark-border-subtle, #3a4a44) !important;
+  color: var(--txt-primary, #ede8df) !important;
+}
+
+html[data-theme="dark"] :is(
+  .hub-card__icon,
+  .section-hub__icon,
+  .section-card__icon
+),
+html.dark :is(
+  .hub-card__icon,
+  .section-hub__icon,
+  .section-card__icon
+) {
+  background: color-mix(in srgb, #5fbf98 14%, #1b2421) !important;
+  color: #8fd4b0 !important;
+  border-color: color-mix(in srgb, #5fbf98 22%, transparent) !important;
+}

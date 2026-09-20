@@ -65,6 +65,8 @@ import "./styles/ssunnah-ux-polish.css";
 /* semantic-tokens + card-unify مؤجّلان — ميزانية CSS الحرج ≤60KiB gzip */
 /* Green Surface System — يفوز على تلميع الأقسام الأبيض القديم */
 import "./styles/green-surface-system.css";
+/* حالات تفاعل متمايزة + ::selection + breadcrumbs — بعد الأسطح الخضراء */
+import "./styles/interaction-states.css";
 /* استرداد ليلي P0 — متزامن؛ القواعد مقيّدة بـ html.dark لتقليل theme flash */
 import "./styles/dark-mode-recovery.css";
 // dark-mode-surfaces (~24KB) — فوري فقط إن كان الثيم داكنًا عند الإقلاع؛ وإلا بعد load
@@ -78,7 +80,7 @@ import "./styles/dark-mode-recovery.css";
       import("./styles/dark-mode-surfaces.css"),
       import("./styles/dark-design-system.css"),
       import("./styles/premium-dark-refine.css"),
-    ]);
+      import("./styles/interaction-states.css"),    ]);
   }
 }
 
@@ -145,12 +147,14 @@ function loadNonCriticalCss() {
       import("./styles/dark-mode-surfaces.css"),
       import("./styles/dark-design-system.css"),
       import("./styles/premium-dark-refine.css"),
+      import("./styles/interaction-states.css"),
     ]);
   } else {
     // تحميل مسبق لتمكين التبديل بدون وميض
     void import("./styles/dark-mode-surfaces.css");
     void import("./styles/dark-design-system.css");
     void import("./styles/premium-dark-refine.css");
+    void import("./styles/interaction-states.css");
   }
 }
 function scheduleNonCriticalCss() {

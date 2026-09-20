@@ -3654,6 +3654,7 @@ body.assistant-panel-open {
 
 .breadcrumbs {
   margin-bottom: 1rem;
+  background: transparent;
 }
 
 .breadcrumbs-list {
@@ -3665,17 +3666,20 @@ body.assistant-panel-open {
   margin: 0;
   font-size: 0.8125rem;
   color: var(--ink-soft, #5c5348);
+  background: transparent;
 }
 
 .breadcrumbs-item {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
+  background: transparent;
 }
 
 .breadcrumbs-item a {
   color: var(--emerald-deep, var(--mj-brand-deep));
   text-decoration: none;
+  background: transparent;
 }
 
 .breadcrumbs-sep {

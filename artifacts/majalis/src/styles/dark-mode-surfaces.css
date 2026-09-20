@@ -62,15 +62,15 @@ html.dark .sw-dalil__ref {
   color: var(--gold, #D9B871) !important;
 }
 
-/* تسمية «الدليل:» وأشباهها */
+/* تسمية «الدليل:» وأشباهها — بلا مستطيل خلف النص */
 html[data-theme="dark"] .sw-dalil strong,
 html.dark .sw-dalil strong,
 html[data-theme="dark"] [class*="dalil"] strong,
 html.dark [class*="dalil"] strong {
   color: var(--txt-secondary, #C2CFCA) !important;
-  background: var(--surface-3, #2A3733);
-  padding: 0.1em 0.35em;
-  border-radius: 0.25rem;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
 }
 
 /* صفوف سنن الوضوء */
@@ -791,9 +791,10 @@ html.dark .quran-open-mushaf__desc {
 }
 html[data-theme="dark"] .quran-open-mushaf__resume,
 html.dark .quran-open-mushaf__resume {
-  color: var(--txt-primary, #ecf2ef) !important;
-  background: color-mix(in srgb, #1a4a3a 28%, transparent) !important;
-  border-color: color-mix(in srgb, #3d5c50 40%, transparent) !important;
+  color: var(--txt-secondary, #d8d0c4) !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 html[data-theme="dark"] .quran-hub-card,
 html.dark .quran-hub-card,
