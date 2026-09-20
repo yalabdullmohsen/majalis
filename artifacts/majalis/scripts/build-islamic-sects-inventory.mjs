@@ -100,6 +100,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: ["الرافضة (تسمية خارجية خلافية)"],
     parentTradition: null,
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "emergence_reduction_needs_source",
       "fiqh_items_mixed_with_creed",
       "spread_percent_style_claims_absent_but_broad",
@@ -115,6 +117,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: [],
     parentTradition: null,
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "comparative_claim_aqrab_needs_attribution",
       "contemporary_political_link_needs_care",
     ],
@@ -128,7 +132,9 @@ const REVIEW_OVERLAY = {
     selfDesignation: ["الإسماعيلية"],
     externalDesignations: ["السبعية (وصف تاريخي)"],
     parentTradition: null,
-    inventoryFlags: ["branches_listed_without_tree", "founder_field_needs_split"],
+    inventoryFlags: [
+      "pr5_batch2_claim_audit",
+"branches_listed_without_tree", "founder_field_needs_split"],
     factualReviewStatus: "NEEDS_HISTORICAL_REVIEW",
     shariaReviewStatus: "NEEDS_SHARIA_REVIEW",
     languageReviewStatus: "NEEDS_LANGUAGE_REVIEW",
@@ -195,6 +201,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: ["المرجئة"],
     parentTradition: null,
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "umbrella_label_multiple_streams",
       "jahm_listed_as_scholar_needs_split",
       "no_primary_books",
@@ -209,7 +217,9 @@ const REVIEW_OVERLAY = {
     selfDesignation: [],
     externalDesignations: ["الجهمية"],
     parentTradition: null,
-    inventoryFlags: ["no_primary_books", "beliefs_from_critics_only"],
+    inventoryFlags: [
+      "pr5_batch2_claim_audit",
+"no_primary_books", "beliefs_from_critics_only"],
     factualReviewStatus: "NEEDS_SOURCE",
     shariaReviewStatus: "NEEDS_SHARIA_REVIEW",
     languageReviewStatus: "NEEDS_LANGUAGE_REVIEW",
@@ -221,6 +231,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: [],
     parentTradition: "ahl-al-sunna",
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "not_a_single_sect",
       "taxonomy_mismatch_legacy_sunni_school",
       "normative_accept_reject_in_beliefs",
@@ -235,7 +247,9 @@ const REVIEW_OVERLAY = {
     selfDesignation: ["أهل الحديث", "الأثرية", "أهل الأثر"],
     externalDesignations: [],
     parentTradition: "ahl-al-sunna",
-    inventoryFlags: ["founder_as_nisba_not_founder", "spread_gulf_claim_unverified"],
+    inventoryFlags: [
+      "pr5_batch2_claim_audit",
+"founder_as_nisba_not_founder", "spread_gulf_claim_unverified"],
     factualReviewStatus: "NEEDS_HISTORICAL_REVIEW",
     shariaReviewStatus: "NEEDS_SHARIA_REVIEW",
     languageReviewStatus: "NEEDS_LANGUAGE_REVIEW",
@@ -246,7 +260,9 @@ const REVIEW_OVERLAY = {
     selfDesignation: ["الديوبندية"],
     externalDesignations: [],
     parentTradition: "ahl-al-sunna",
-    inventoryFlags: ["largest_network_claim_unverified"],
+    inventoryFlags: [
+      "pr5_batch2_claim_audit",
+"largest_network_claim_unverified"],
     factualReviewStatus: "NEEDS_SOURCE",
     shariaReviewStatus: "NEEDS_LANGUAGE_REVIEW",
     languageReviewStatus: "NEEDS_LANGUAGE_REVIEW",
@@ -258,6 +274,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: ["البريلوية"],
     parentTradition: "ahl-al-sunna",
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "duplicate_scholar_name",
       "majority_claim_unverified",
       "self_vs_external_name",
@@ -273,6 +291,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: [],
     parentTradition: "deobandiyya",
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "not_a_sect",
       "largest_in_world_claim_unverified",
       "legacy_category_sunni_school_mismatch",
@@ -288,6 +308,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: [],
     parentTradition: null,
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "not_a_sect",
       "political_islam_label_needs_care",
       "legacy_category_mismatch",
@@ -303,6 +325,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: ["القدرية"],
     parentTradition: null,
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "hadith_in_beliefs_needs_verification_display",
       "no_books",
       "umbrella_label",
@@ -318,6 +342,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: ["الجبرية"],
     parentTradition: null,
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "overlap_with_jahmiyya",
       "normative_implication_in_beliefs",
       "books_are_refutations_not_primary",
@@ -332,7 +358,9 @@ const REVIEW_OVERLAY = {
     selfDesignation: ["الكرامية"],
     externalDesignations: [],
     parentTradition: null,
-    inventoryFlags: ["extinction_century_unverified", "no_books"],
+    inventoryFlags: [
+      "pr5_batch2_claim_audit",
+"extinction_century_unverified", "no_books"],
     factualReviewStatus: "NEEDS_SOURCE",
     shariaReviewStatus: "NEEDS_SHARIA_REVIEW",
     languageReviewStatus: "NEEDS_LANGUAGE_REVIEW",
@@ -344,6 +372,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: ["النصيريون"],
     parentTradition: null,
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "collective_takfir_in_app_voice",
       "needs_sharia_specialist",
       "no_primary_sources_listed",
@@ -358,7 +388,9 @@ const REVIEW_OVERLAY = {
     selfDesignation: ["الشيخية"],
     externalDesignations: [],
     parentTradition: "shia-ithna",
-    inventoryFlags: ["internal_branch_vs_independent"],
+    inventoryFlags: [
+      "pr5_batch2_claim_audit",
+"internal_branch_vs_independent"],
     factualReviewStatus: "NEEDS_HISTORICAL_REVIEW",
     shariaReviewStatus: "NEEDS_SHARIA_REVIEW",
     languageReviewStatus: "NEEDS_LANGUAGE_REVIEW",
@@ -370,6 +402,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: ["الدروز"],
     parentTradition: "ismaeliyya",
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "collective_takfir_in_app_voice",
       "percent_spread_unverified",
       "needs_sharia_specialist",
@@ -385,6 +419,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: ["القاديانية"],
     parentTradition: null,
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "collective_takfir_in_app_voice",
       "books_are_refutations_not_self_sources",
       "needs_sharia_specialist",
@@ -401,6 +437,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: ["السبئية"],
     parentTradition: null,
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "founder_historicity_disputed",
       "conflicting_sources_flag",
       "hadith_in_beliefs",
@@ -415,7 +453,9 @@ const REVIEW_OVERLAY = {
     selfDesignation: ["الكلابية"],
     externalDesignations: [],
     parentTradition: null,
-    inventoryFlags: ["lost_works", "bridge_to_ashari_claim_needs_source"],
+    inventoryFlags: [
+      "pr5_batch2_claim_audit",
+"lost_works", "bridge_to_ashari_claim_needs_source"],
     factualReviewStatus: "NEEDS_SOURCE",
     shariaReviewStatus: "NEEDS_SHARIA_REVIEW",
     languageReviewStatus: "NEEDS_LANGUAGE_REVIEW",
@@ -426,7 +466,9 @@ const REVIEW_OVERLAY = {
     selfDesignation: ["الإصلاح الإسلامي", "التجديد"],
     externalDesignations: [],
     parentTradition: null,
-    inventoryFlags: ["not_a_sect", "umbrella_modern_trend", "legacy_category_mismatch"],
+    inventoryFlags: [
+      "pr5_batch2_claim_audit",
+"not_a_sect", "umbrella_modern_trend", "legacy_category_mismatch"],
     factualReviewStatus: "NEEDS_HISTORICAL_REVIEW",
     shariaReviewStatus: "NEEDS_LANGUAGE_REVIEW",
     languageReviewStatus: "NEEDS_LANGUAGE_REVIEW",
@@ -438,6 +480,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: ["الفلاسفة"],
     parentTradition: null,
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "not_a_sect",
       "multi_century_umbrella",
       "normative_rejection_in_beliefs",
@@ -453,6 +497,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: [],
     parentTradition: "shaykhi",
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "collective_takfir_in_app_voice",
       "needs_sharia_specialist",
       "hostile_icon_ui",
@@ -468,6 +514,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: ["المهدية"],
     parentTradition: null,
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "movement_vs_sect",
       "normative_rejection_in_beliefs",
       "quote_needs_source_context",
@@ -483,6 +531,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: [],
     parentTradition: "babiyya",
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "religion_vs_islamic_sect_taxonomy",
       "collective_takfir_in_app_voice",
       "needs_sharia_specialist",
@@ -498,7 +548,9 @@ const REVIEW_OVERLAY = {
     selfDesignation: ["أنصار السنة المحمدية"],
     externalDesignations: [],
     parentTradition: "ahl-al-sunna",
-    inventoryFlags: ["organization_not_sect", "wahhabi_cooperation_label_needs_care"],
+    inventoryFlags: [
+      "pr5_batch2_claim_audit",
+"organization_not_sect", "wahhabi_cooperation_label_needs_care"],
     factualReviewStatus: "NEEDS_HISTORICAL_REVIEW",
     shariaReviewStatus: "NEEDS_LANGUAGE_REVIEW",
     languageReviewStatus: "NEEDS_LANGUAGE_REVIEW",
@@ -510,6 +562,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: [],
     parentTradition: null,
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "not_a_sect",
       "legacy_category_sunni_school_mismatch",
       "classical_vs_modern_conflation",
@@ -524,7 +578,9 @@ const REVIEW_OVERLAY = {
     selfDesignation: ["الإشراقية"],
     externalDesignations: [],
     parentTradition: null,
-    inventoryFlags: ["not_a_sect", "influence_alive_vs_status_historical"],
+    inventoryFlags: [
+      "pr5_batch2_claim_audit",
+"not_a_sect", "influence_alive_vs_status_historical"],
     factualReviewStatus: "NEEDS_HISTORICAL_REVIEW",
     shariaReviewStatus: "NEEDS_SHARIA_REVIEW",
     languageReviewStatus: "NEEDS_LANGUAGE_REVIEW",
@@ -536,6 +592,8 @@ const REVIEW_OVERLAY = {
     externalDesignations: [],
     parentTradition: null,
     inventoryFlags: [
+      "pr5_batch2_claim_audit",
+
       "not_a_sect",
       "political_figure_as_key_scholar",
       "umbrella_slogan",

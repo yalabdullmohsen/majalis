@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-20T15:11:40.374Z",
+  "generatedAt": "2026-09-20T15:28:49.666Z",
   "policy": "no_ai_invention_no_memory_completion_no_auto_publish_human_review_required",
   "sourceOfTruthUi": "artifacts/majalis/src/data/islamic-sects.ts",
   "route": "/islamic-sects",
@@ -294,7 +294,7 @@
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "إيران (الغالبية)، العراق، لبنان، البحرين، أجزاء من باكستان واليمن",
+      "geographicSpreadCurrent": "يُذكر حضور في إيران والعراق ولبنان والبحرين ومناطق أخرى — نسب الأغلبية غير موثّقة في هذا السجل",
       "primarySources": [],
       "secondarySources": [
         "الكافي — الكليني",
@@ -318,12 +318,13 @@
         "origin": "الكوفة / العراق",
         "founder": "تبلورت حول القول بإمامة اثني عشر إماماً من آل البيت، وبرز فقهها الجعفري في تراث جعفر الصادق (ت.148 هـ)",
         "statusLabel": "قائمة",
-        "spread": "إيران (الغالبية)، العراق، لبنان، البحرين، أجزاء من باكستان واليمن",
+        "spread": "يُذكر حضور في إيران والعراق ولبنان والبحرين ومناطق أخرى — نسب الأغلبية غير موثّقة في هذا السجل",
         "keyBeliefsCount": 5,
         "keyBooksCount": 3,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "emergence_reduction_needs_source",
         "fiqh_items_mixed_with_creed",
         "spread_percent_style_claims_absent_but_broad"
@@ -358,12 +359,12 @@
       "coreDoctrines": [
         "الإمامة لمن هو من ذرية علي وفاطمة وقام بالسيف ضد الظالمين",
         "الأئمة غير معصومين وعددهم غير محدد",
-        "أقرب الفرق الشيعية لأهل السنة في الفقه والعقيدة",
+        "وُصف في بعض الأدبيات المقارنة بأنه أقرب فروع التشيع إلى أهل السنة — يحتاج نسبة مصدر ولا يُعمَّم",
         "يرون صحة خلافة أبي بكر وعمر مع تفضيل علي"
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "اليمن (الحوثيون يعتنقون الزيدية) وبعض مناطق قزوين",
+      "geographicSpreadCurrent": "يُذكر حضور تاريخي/معاصر في اليمن ومناطق أخرى — الربط السياسي المعاصر يحتاج حذرًا ومصدرًا (قيد المراجعة)",
       "primarySources": [],
       "secondarySources": [
         "مسند الإمام زيد",
@@ -386,12 +387,13 @@
         "origin": "الكوفة / اليمن",
         "founder": "زيد بن علي بن الحسين بن علي (ت. 122 هـ)",
         "statusLabel": "قائمة",
-        "spread": "اليمن (الحوثيون يعتنقون الزيدية) وبعض مناطق قزوين",
+        "spread": "يُذكر حضور تاريخي/معاصر في اليمن ومناطق أخرى — الربط السياسي المعاصر يحتاج حذرًا ومصدرًا (قيد المراجعة)",
         "keyBeliefsCount": 4,
         "keyBooksCount": 2,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "comparative_claim_aqrab_needs_attribution",
         "contemporary_political_link_needs_care"
       ]
@@ -432,7 +434,7 @@
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "الهند وباكستان وأفغانستان وأجزاء من إفريقيا وسوريا (فرقة الآغاخانية النزارية)",
+      "geographicSpreadCurrent": "يُذكر حضور فروع في مناطق متعددة — التوزيع المعاصر غير موثّق بمصدر في هذا السجل",
       "primarySources": [],
       "secondarySources": [
         "دعائم الإسلام — النعمان بن محمد",
@@ -455,12 +457,13 @@
         "origin": "المدينة المنورة / مصر / فارس",
         "founder": "إسماعيل بن جعفر الصادق (ت. 145 هـ) ومن ناصروا خط إمامته",
         "statusLabel": "قائمة",
-        "spread": "الهند وباكستان وأفغانستان وأجزاء من إفريقيا وسوريا (فرقة الآغاخانية النزارية)",
+        "spread": "يُذكر حضور فروع في مناطق متعددة — التوزيع المعاصر غير موثّق بمصدر في هذا السجل",
         "keyBeliefsCount": 3,
         "keyBooksCount": 2,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "branches_listed_without_tree",
         "founder_field_needs_split"
       ]
@@ -720,7 +723,7 @@
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "انقرضت كفرقة مستقلة، وبعض مقولاتها يُحذَّر منها في كتب العقيدة",
+      "geographicSpreadCurrent": "يُعرض كثيرًا كتيار تاريخي؛ القول بالانقراض غير موثّق في هذا السجل — بعض المقولات تُناقش في كتب العقيدة (قيد المراجعة)",
       "primarySources": [],
       "secondarySources": [],
       "attributedCritiques": [],
@@ -740,12 +743,13 @@
         "origin": "الكوفة / الشام",
         "founder": "نُسب إليهم القول بالإرجاء في أهل الكبائر والتوقف في الفتن الأولى",
         "statusLabel": "تاريخية",
-        "spread": "انقرضت كفرقة مستقلة، وبعض مقولاتها يُحذَّر منها في كتب العقيدة",
+        "spread": "يُعرض كثيرًا كتيار تاريخي؛ القول بالانقراض غير موثّق في هذا السجل — بعض المقولات تُناقش في كتب العقيدة (قيد المراجعة)",
         "keyBeliefsCount": 3,
         "keyBooksCount": 0,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "umbrella_label_multiple_streams",
         "jahm_listed_as_scholar_needs_split",
         "no_primary_books"
@@ -782,7 +786,7 @@
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "انقرضت ورُدَّ عليها في كتب العقيدة السنية كالرد على الجهمية للإمام أحمد",
+      "geographicSpreadCurrent": "يُعرض كثيرًا كتيار تاريخي؛ الردود عليها في كتب العقيدة (مثل الرد على الجهمية) مصادر نقدية — القول بالانقراض غير موثّق هنا",
       "primarySources": [],
       "secondarySources": [],
       "attributedCritiques": [],
@@ -802,12 +806,13 @@
         "origin": "ترمذ / خراسان",
         "founder": "جهم بن صفوان (ت. 128 هـ)",
         "statusLabel": "تاريخية",
-        "spread": "انقرضت ورُدَّ عليها في كتب العقيدة السنية كالرد على الجهمية للإمام أحمد",
+        "spread": "يُعرض كثيرًا كتيار تاريخي؛ الردود عليها في كتب العقيدة (مثل الرد على الجهمية) مصادر نقدية — القول بالانقراض غير موثّق هنا",
         "keyBeliefsCount": 4,
         "keyBooksCount": 0,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "no_primary_books",
         "beliefs_from_critics_only"
       ]
@@ -846,11 +851,11 @@
         "التسليك الروحي والتزكية عبر ذكر الله وورد منتظم",
         "التربية على يد شيخ مرشد",
         "الطرق الصوفية (القادرية، النقشبندية، الشاذلية...)",
-        "الخلاف في بعض ممارساتهم: المقبول منها الزهد والذكر والمردود الغلو والبدع"
+        "خلاف تاريخي حول بعض الممارسات: يُفرَّق في الأدبيات بين الزهد والذكر وبين ما يُوصف بالغلو — يحتاج مصادر ونسبة"
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "منتشرة في إفريقيا والشام وتركيا والمغرب والهند",
+      "geographicSpreadCurrent": "يُذكر حضور في مناطق متعددة — عبارة «منتشرة» المطلقة غير موثّقة في هذا السجل",
       "primarySources": [],
       "secondarySources": [
         "الرسالة القشيرية — القشيري",
@@ -876,12 +881,13 @@
         "origin": "البصرة / بغداد / خراسان",
         "founder": "نشأ من الزهاد الأوائل كالحسن البصري والفضيل بن عياض",
         "statusLabel": "قائمة",
-        "spread": "منتشرة في إفريقيا والشام وتركيا والمغرب والهند",
+        "spread": "يُذكر حضور في مناطق متعددة — عبارة «منتشرة» المطلقة غير موثّقة في هذا السجل",
         "keyBeliefsCount": 4,
         "keyBooksCount": 3,
         "hasQuote": true
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "not_a_single_sect",
         "taxonomy_mismatch_legacy_sunni_school",
         "normative_accept_reject_in_beliefs"
@@ -929,7 +935,7 @@
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "سائدة في السعودية ودول الخليج وأوساط المهتمين بعلوم الحديث عالمياً",
+      "geographicSpreadCurrent": "يُذكر حضور في بيئات متعددة — الانتشار المعاصر غير موثّق بمصدر في هذا السجل",
       "primarySources": [],
       "secondarySources": [
         "السنة — ابن أبي عاصم",
@@ -954,12 +960,13 @@
         "origin": "الحجاز / العراق / الشام",
         "founder": "نسبةً لمنهج الإمام أحمد بن حنبل وسائر أئمة الحديث كالبخاري وأبي زرعة",
         "statusLabel": "قائمة",
-        "spread": "سائدة في السعودية ودول الخليج وأوساط المهتمين بعلوم الحديث عالمياً",
+        "spread": "يُذكر حضور في بيئات متعددة — الانتشار المعاصر غير موثّق بمصدر في هذا السجل",
         "keyBeliefsCount": 4,
         "keyBooksCount": 4,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "founder_as_nisba_not_founder",
         "spread_gulf_claim_unverified"
       ]
@@ -1000,7 +1007,7 @@
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "الهند وباكستان وبنغلاديش وأفغانستان وبريطانيا وأفريقيا — صاحبة أكبر شبكة مدارس دينية",
+      "geographicSpreadCurrent": "يُذكر حضور في جنوب آسيا ومناطق أخرى — ادعاء «أكبر شبكة» غير موثّق في هذا السجل",
       "primarySources": [],
       "secondarySources": [
         "بذل المجهود في حل أبي داود — الساهارنفوري",
@@ -1023,12 +1030,13 @@
         "origin": "ديوبند، الهند البريطانية",
         "founder": "محمد قاسم النانوتوي (ت.1297هـ) ورشيد أحمد الكنكوهي (ت.1323هـ)",
         "statusLabel": "قائمة",
-        "spread": "الهند وباكستان وبنغلاديش وأفغانستان وبريطانيا وأفريقيا — صاحبة أكبر شبكة مدارس دينية",
+        "spread": "يُذكر حضور في جنوب آسيا ومناطق أخرى — ادعاء «أكبر شبكة» غير موثّق في هذا السجل",
         "keyBeliefsCount": 4,
         "keyBooksCount": 2,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "largest_network_claim_unverified"
       ]
     },
@@ -1057,7 +1065,6 @@
       "attributedFounder": "أحمد رضا خان البريلوي (ت.1340هـ/1921م)",
       "keyHistoricalFigures": [
         "أحمد رضا خان البريلوي",
-        "حامد رضا خان",
         "حامد رضا خان"
       ],
       "summary": "الدفاع عن تقاليد الصوفية السنية والرد على ما رأوه تشدداً عند الديوبندية في إنكار التعظيم",
@@ -1070,7 +1077,7 @@
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "الغالبية في باكستان والهند وبنغلاديش، وجاليات جنوب آسيا في بريطانيا",
+      "geographicSpreadCurrent": "يُذكر حضور في جنوب آسيا وجاليات — ادعاء «الغالبية» غير موثّق في هذا السجل",
       "primarySources": [],
       "secondarySources": [
         "فتاوى رضوية — أحمد رضا خان",
@@ -1093,12 +1100,13 @@
         "origin": "بريلي، الهند البريطانية (أوتار براديش)",
         "founder": "أحمد رضا خان البريلوي (ت.1340هـ/1921م)",
         "statusLabel": "قائمة",
-        "spread": "الغالبية في باكستان والهند وبنغلاديش، وجاليات جنوب آسيا في بريطانيا",
+        "spread": "يُذكر حضور في جنوب آسيا وجاليات — ادعاء «الغالبية» غير موثّق في هذا السجل",
         "keyBeliefsCount": 4,
         "keyBooksCount": 2,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "duplicate_scholar_name",
         "majority_claim_unverified",
         "self_vs_external_name"
@@ -1140,7 +1148,7 @@
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "الأكبر في العالم — تعمل في أكثر من 150 دولة، اجتماعها السنوي في جنوب آسيا يجمع أعداداً كبيرة",
+      "geographicSpreadCurrent": "يُذكر نشاط دعوي في دول متعددة — الأرقام والأوصاف المطلقة غير موثّقة في هذا السجل",
       "primarySources": [],
       "secondarySources": [
         "تبليغي نصاب (فضائل الأعمال) — زكريا الكاندهلوي",
@@ -1163,12 +1171,13 @@
         "origin": "ميوات، الهند البريطانية",
         "founder": "محمد إلياس الكاندهلوي (1885-1944م)",
         "statusLabel": "قائمة",
-        "spread": "الأكبر في العالم — تعمل في أكثر من 150 دولة، اجتماعها السنوي في جنوب آسيا يجمع أعداداً كبيرة",
+        "spread": "يُذكر نشاط دعوي في دول متعددة — الأرقام والأوصاف المطلقة غير موثّقة في هذا السجل",
         "keyBeliefsCount": 4,
         "keyBooksCount": 2,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "not_a_sect",
         "largest_in_world_claim_unverified",
         "legacy_category_sunni_school_mismatch"
@@ -1210,7 +1219,7 @@
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "مصر والأردن وفلسطين وسوريا وتونس والمغرب وتركيا وغيرها — مرجعية رئيسية للإسلام السياسي",
+      "geographicSpreadCurrent": "يُذكر حضور تنظيمي في بلدان متعددة — وصف «مرجعية رئيسية» يحتاج مصدرًا وتحليلًا (قيد المراجعة)",
       "primarySources": [],
       "secondarySources": [
         "رسائل الإمام البنا — حسن البنا",
@@ -1234,12 +1243,13 @@
         "origin": "الإسماعيلية، مصر",
         "founder": "حسن البنا (1906-1949م)",
         "statusLabel": "قائمة",
-        "spread": "مصر والأردن وفلسطين وسوريا وتونس والمغرب وتركيا وغيرها — مرجعية رئيسية للإسلام السياسي",
+        "spread": "يُذكر حضور تنظيمي في بلدان متعددة — وصف «مرجعية رئيسية» يحتاج مصدرًا وتحليلًا (قيد المراجعة)",
         "keyBeliefsCount": 4,
         "keyBooksCount": 3,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "not_a_sect",
         "political_islam_label_needs_care",
         "legacy_category_mismatch"
@@ -1271,11 +1281,11 @@
       "coreDoctrines": [
         "الإنسان يخلق أفعاله بإرادته المستقلة كلياً دون تعلق بمشيئة الله",
         "الله لا يعلم أفعال العباد قبل وقوعها (عند غلاتهم)",
-        "ردَّ عليهم ابن عمر وعلماء الصحابة وقال ﷺ: «القدرية مجوس هذه الأمة» — أبو داود"
+        "يُذكر في بعض كتب الحديث أثرٌ في ذم القدرية (أبو داود وغيره) — التخريج والدرجة والسياق يحتاجان مراجعة حديثية؛ لا يُعرض كحكم من التطبيق"
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "انقرضت ككيان مستقل وذابت في المعتزلة التي أخذت جانباً من مقولاتهم",
+      "geographicSpreadCurrent": "يُعرض كثيرًا كتيار تاريخي؛ الربط بالمعتزلة والقول بالانقراض يحتاجان مصادر — غير موثّقين هنا",
       "primarySources": [],
       "secondarySources": [],
       "attributedCritiques": [],
@@ -1295,12 +1305,13 @@
         "origin": "الشام / البصرة",
         "founder": "معبد الجهني (ت.80هـ) وغيلان الدمشقي (ت.105هـ)",
         "statusLabel": "تاريخية",
-        "spread": "انقرضت ككيان مستقل وذابت في المعتزلة التي أخذت جانباً من مقولاتهم",
+        "spread": "يُعرض كثيرًا كتيار تاريخي؛ الربط بالمعتزلة والقول بالانقراض يحتاجان مصادر — غير موثّقين هنا",
         "keyBeliefsCount": 3,
         "keyBooksCount": 0,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "hadith_in_beliefs_needs_verification_display",
         "no_books",
         "umbrella_label"
@@ -1332,11 +1343,11 @@
       "coreDoctrines": [
         "العبد مجبور في أفعاله كلياً لا إرادة له ولا قدرة حقيقية",
         "الأفعال كلها لله والعبد كالريشة في الهواء",
-        "يستلزم قولهم نفي الثواب والعقاب العادلين"
+        "يُستنتج في بعض الردود لوازم على القول — هذا استدلال نقدي منسوب يحتاج إحالة لا حكم من التطبيق"
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "انقرضت كفرقة، وبعض أثرها في مصطلح «الجبر» يُدرَّس في كتب العقيدة نقداً لا إثباتاً",
+      "geographicSpreadCurrent": "يُعرض كثيرًا كتيار تاريخي؛ أثر مصطلح الجبر في كتب العقيدة نقدي — القول بالانقراض غير موثّق هنا",
       "primarySources": [],
       "secondarySources": [
         "الرد على الجهمية والجبرية — الإمام أحمد"
@@ -1358,12 +1369,13 @@
         "origin": "الشام / خراسان",
         "founder": "جهم بن صفوان (ت.128هـ) في الجبر الكلي",
         "statusLabel": "تاريخية",
-        "spread": "انقرضت كفرقة، وبعض أثرها في مصطلح «الجبر» يُدرَّس في كتب العقيدة نقداً لا إثباتاً",
+        "spread": "يُعرض كثيرًا كتيار تاريخي؛ أثر مصطلح الجبر في كتب العقيدة نقدي — القول بالانقراض غير موثّق هنا",
         "keyBeliefsCount": 3,
         "keyBooksCount": 1,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "overlap_with_jahmiyya",
         "normative_implication_in_beliefs",
         "books_are_refutations_not_primary"
@@ -1399,7 +1411,7 @@
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "انتشرت في خراسان وأفغانستان وانقرضت في القرن السابع الهجري",
+      "geographicSpreadCurrent": "يُذكر حضور تاريخي في خراسان وما حولها — تاريخ الانقراض غير موثّق في هذا السجل",
       "primarySources": [],
       "secondarySources": [],
       "attributedCritiques": [],
@@ -1419,12 +1431,13 @@
         "origin": "سجستان / نيسابور / خراسان",
         "founder": "محمد بن كرّام السجستاني (ت.255هـ)",
         "statusLabel": "تاريخية",
-        "spread": "انتشرت في خراسان وأفغانستان وانقرضت في القرن السابع الهجري",
+        "spread": "يُذكر حضور تاريخي في خراسان وما حولها — تاريخ الانقراض غير موثّق في هذا السجل",
         "keyBeliefsCount": 3,
         "keyBooksCount": 0,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "extinction_century_unverified",
         "no_books"
       ]
@@ -1460,11 +1473,11 @@
         "الاعتقاد بألوهية علي بن أبي طالب أو اتحاد الذات الإلهية فيه",
         "عقيدة باطنية ذات طبقات سرية — العامة لا يعلمون الباطن الكامل",
         "الاعتقاد بالتناسخ والحلول",
-        "يرى أهل العلم السني أنهم خارج ملة الإسلام، وردَّ عليهم ابن تيمية تفصيلاً"
+        "نُسب إلى مصادر سنية نقدية (ومنها ردود ابن تيمية) أحكامًا على المقالة — لا حكم جماعي من التطبيق على أفراد؛ يحتاج مراجعة شرعية متخصصة قبل أي عرض نهائي"
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "مناطق من الساحل السوري، وتركيا (علويو الأناضول ذوو جذور مشابهة)",
+      "geographicSpreadCurrent": "يُذكر حضور في مناطق من الساحل السوري وتركيا — التشابه الجذري يحتاج مصادر متخصصة (قيد المراجعة)",
       "primarySources": [],
       "secondarySources": [],
       "attributedCritiques": [],
@@ -1484,12 +1497,13 @@
         "origin": "الكوفة / الشام",
         "founder": "محمد بن نصير النميري (ت. نحو 270هـ)",
         "statusLabel": "قائمة",
-        "spread": "مناطق من الساحل السوري، وتركيا (علويو الأناضول ذوو جذور مشابهة)",
+        "spread": "يُذكر حضور في مناطق من الساحل السوري وتركيا — التشابه الجذري يحتاج مصادر متخصصة (قيد المراجعة)",
         "keyBeliefsCount": 4,
         "keyBooksCount": 0,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "collective_takfir_in_app_voice",
         "needs_sharia_specialist",
         "no_primary_sources_listed"
@@ -1558,6 +1572,7 @@
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "internal_branch_vs_independent"
       ]
     },
@@ -1591,11 +1606,11 @@
         "الإيمان بألوهية الحاكم بأمر الله الفاطمي أو تجلِّي الإله فيه",
         "الاعتقاد بالتناسخ وإنكار البعث الجسدي",
         "السرية التامة — العُقَّال (الخاصة) وحدهم يعلمون العقيدة الكاملة",
-        "يُجمع علماء السنة على أنهم خرجوا من دائرة الإسلام"
+        "تُنسب إلى مصادر سنية أحكامًا على المقالة — لا حكم جماعي من التطبيق؛ يحتاج مراجعة شرعية متخصصة وإحالة دقيقة"
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "لبنان (8%) وسوريا (3%) والأردن وفلسطين (منطقة الجولان)",
+      "geographicSpreadCurrent": "يُذكر حضور في لبنان وسوريا والأردن وفلسطين — النسب المئوية محذوفة حتى مصدر حديث موثّق",
       "primarySources": [],
       "secondarySources": [
         "رسائل الحكمة — حمزة بن علي"
@@ -1617,12 +1632,13 @@
         "origin": "مصر الفاطمية / جبال الشام",
         "founder": "حمزة بن علي الزوزني وأنوشتكين الدرزي — ادّعيا ألوهية الحاكم بأمر الله الفاطمي",
         "statusLabel": "قائمة",
-        "spread": "لبنان (8%) وسوريا (3%) والأردن وفلسطين (منطقة الجولان)",
+        "spread": "يُذكر حضور في لبنان وسوريا والأردن وفلسطين — النسب المئوية محذوفة حتى مصدر حديث موثّق",
         "keyBeliefsCount": 4,
         "keyBooksCount": 1,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "collective_takfir_in_app_voice",
         "percent_spread_unverified",
         "needs_sharia_specialist"
@@ -1659,19 +1675,17 @@
         "الاعتقاد بنبوة ميرزا غلام أحمد بعد النبي ﷺ",
         "إعادة تأويل معنى الجهاد والإنكار على مفهومه الدفاعي",
         "إنكار ختم النبوة بمعناه الإجماعي",
-        "أجمع العلماء والمجامع الفقهية الدولية على كفرهم وخروجهم من الملة"
+        "تُنسب إلى مجامع/فتاوى منشورة أحكامًا على المقالة — تُعرض كنقد منسوب لا بصوت التطبيق؛ تحتاج مراجعة شرعية وإحالة نص القرار"
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "باكستان (مصنَّفون أقلية غير مسلمة) والهند وأجزاء من أفريقيا والغرب",
+      "geographicSpreadCurrent": "يُذكر حضور في باكستان والهند ومناطق أخرى — التصنيفات القانونية تحتاج مصدرًا حديثًا (قيد المراجعة)",
       "primarySources": [],
       "secondarySources": [
-        "قرار مجلس الفقه الإسلامي الدولي 1985م بشأن القاديانية"
+        "قرار منسوب لمجلس فقه إسلامي دولي (1985م) — يُعرض كمرجع نقدي منسوب يحتاج نصًا ورقم دورة؛ ليس مصدرًا ذاتيًا للتعريف"
       ],
       "attributedCritiques": [],
-      "quotations": [
-        "«من أجمع المسلمون على كفره فكافر» — الإجماع الفقهي على انتهاء النبوة"
-      ],
+      "quotations": [],
       "sourceReferences": [],
       "sourceUrls": [],
       "licenseStatus": "unknown",
@@ -1687,12 +1701,13 @@
         "origin": "قاديان، البنجاب الهندي",
         "founder": "ميرزا غلام أحمد القادياني (ت.1908م/1326هـ)",
         "statusLabel": "قائمة",
-        "spread": "باكستان (مصنَّفون أقلية غير مسلمة) والهند وأجزاء من أفريقيا والغرب",
+        "spread": "يُذكر حضور في باكستان والهند ومناطق أخرى — التصنيفات القانونية تحتاج مصدرًا حديثًا (قيد المراجعة)",
         "keyBeliefsCount": 4,
         "keyBooksCount": 1,
-        "hasQuote": true
+        "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "collective_takfir_in_app_voice",
         "books_are_refutations_not_self_sources",
         "needs_sharia_specialist",
@@ -1730,7 +1745,7 @@
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "انقرضت ككيان، لكن الغلو في التشيع استمر في فرق أخرى كالنصيريين والدروز",
+      "geographicSpreadCurrent": "يُعرض كتيار تاريخي؛ الربط بتيارات لاحقة اختزال يحتاج مصادر — غير موثّق هنا",
       "primarySources": [],
       "secondarySources": [],
       "attributedCritiques": [],
@@ -1750,12 +1765,13 @@
         "origin": "الكوفة / مصر / اليمن",
         "founder": "تُنسب إلى عبد الله بن سبأ — وجوده ونسبة الآراء إليه مثار نقاش مؤرخي",
         "statusLabel": "تاريخية",
-        "spread": "انقرضت ككيان، لكن الغلو في التشيع استمر في فرق أخرى كالنصيريين والدروز",
+        "spread": "يُعرض كتيار تاريخي؛ الربط بتيارات لاحقة اختزال يحتاج مصادر — غير موثّق هنا",
         "keyBeliefsCount": 3,
         "keyBooksCount": 0,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "founder_historicity_disputed",
         "conflicting_sources_flag",
         "hadith_in_beliefs"
@@ -1794,7 +1810,7 @@
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "بغداد والبصرة، ثم امتصّ الأشعريُّ كثيراً من مواقفها في مذهبه الجديد",
+      "geographicSpreadCurrent": "يُذكر حضور تاريخي في بغداد والبصرة؛ علاقة التأثير بالأشعرية تحتاج مصادر مقالات (قيد المراجعة)",
       "primarySources": [],
       "secondarySources": [
         "مؤلفات مفقودة أُشير إليها في كتب الفرق — مقالات الإسلاميين للأشعري"
@@ -1816,12 +1832,13 @@
         "origin": "البصرة / بغداد",
         "founder": "أبو محمد عبد الله بن سعيد بن كُلّاب القطان البصري",
         "statusLabel": "تاريخية",
-        "spread": "بغداد والبصرة، ثم امتصّ الأشعريُّ كثيراً من مواقفها في مذهبه الجديد",
+        "spread": "يُذكر حضور تاريخي في بغداد والبصرة؛ علاقة التأثير بالأشعرية تحتاج مصادر مقالات (قيد المراجعة)",
         "keyBeliefsCount": 3,
         "keyBooksCount": 1,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "lost_works",
         "bridge_to_ashari_claim_needs_source"
       ]
@@ -1863,7 +1880,7 @@
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "مصر والعالم العربي وجنوب آسيا وأفريقيا",
+      "geographicSpreadCurrent": "يُذكر حضور فكري في مناطق متعددة — الانتشار غير موثّق بمصدر في هذا السجل",
       "primarySources": [],
       "secondarySources": [
         "رسالة التوحيد — محمد عبده",
@@ -1887,12 +1904,13 @@
         "origin": "مصر / الهند / بلاد الشام",
         "founder": "جمال الدين الأفغاني (1839-1897) ومحمد عبده (1849-1905) ورشيد رضا (1865-1935)",
         "statusLabel": "قائمة",
-        "spread": "مصر والعالم العربي وجنوب آسيا وأفريقيا",
+        "spread": "يُذكر حضور فكري في مناطق متعددة — الانتشار غير موثّق بمصدر في هذا السجل",
         "keyBeliefsCount": 3,
         "keyBooksCount": 3,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "not_a_sect",
         "umbrella_modern_trend",
         "legacy_category_mismatch"
@@ -1931,11 +1949,11 @@
         "قِدَم العالم بالزمان (رأي ابن سينا) — وهو ما رفضه الغزالي في تهافت الفلاسفة",
         "الله هو واجب الوجود ومبدع الكون بالضرورة لا بالاختيار (فرق عقدي كبير)",
         "النبوة: ظاهرة فيضية للعقل الفعَّال لا وحي من الله مباشر — مخالف للسنة",
-        "معظم علماء السنة رفضوا هذه الأقوال خاصةً في تأويل النبوة ومسائل الآخرة"
+        "نُسب إلى علماء سنة نقدٌ لهذه الأقوال (خصوصًا النبوة والمعاد) — يُعرض كنقد منسوب يحتاج إحالة"
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "بغداد وفارس والأندلس ثم توقف بعد ابن رشد في الغرب الإسلامي",
+      "geographicSpreadCurrent": "يُذكر حضور تاريخي في بغداد وفارس والأندلس — حدود الاستمرار غير موثّقة هنا",
       "primarySources": [],
       "secondarySources": [
         "الشفاء — ابن سينا",
@@ -1961,12 +1979,13 @@
         "origin": "بغداد / فارس / الأندلس",
         "founder": "الكندي (ت.873م)، الفارابي (ت.950م)، ابن سينا (ت.1037م)، ابن رشد (ت.1198م)",
         "statusLabel": "تاريخية",
-        "spread": "بغداد وفارس والأندلس ثم توقف بعد ابن رشد في الغرب الإسلامي",
+        "spread": "يُذكر حضور تاريخي في بغداد وفارس والأندلس — حدود الاستمرار غير موثّقة هنا",
         "keyBeliefsCount": 4,
         "keyBooksCount": 3,
         "hasQuote": true
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "not_a_sect",
         "multi_century_umbrella",
         "normative_rejection_in_beliefs"
@@ -1998,12 +2017,12 @@
       "coreDoctrines": [
         "ادعاء علي محمد أنه «الباب» للإمام الغائب ثم تطور الادعاء إلى النبوة",
         "نسخ أحكام الإسلام بكتاب جديد يُسمى «البيان»",
-        "أجمع علماء الإسلام على أن دعواه خروج صريح من الإسلام",
+        "تُنسب إلى مصادر إسلامية أحكامًا على الدعوى — تُعرض كنقد منسوب؛ تحتاج مراجعة شرعية وإحالة",
         "مهّدت لظهور البهائية التي تشعّبت منها بعد إعدامه"
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "إيران والعراق وانقرضت ككيان بعد إعدام مؤسسها وانقلاب أتباعه إلى البهائية",
+      "geographicSpreadCurrent": "يُذكر سياق تاريخي في إيران والعراق؛ القول بالانقراض والتحول للبهائية يحتاج مصادر — غير موثّق هنا",
       "primarySources": [],
       "secondarySources": [
         "البيان الفارسي — علي محمد الشيرازي"
@@ -2025,12 +2044,13 @@
         "origin": "شيراز، إيران",
         "founder": "علي محمد الشيرازي (1819-1850م) الملقَّب بـ«الباب»",
         "statusLabel": "تاريخية",
-        "spread": "إيران والعراق وانقرضت ككيان بعد إعدام مؤسسها وانقلاب أتباعه إلى البهائية",
+        "spread": "يُذكر سياق تاريخي في إيران والعراق؛ القول بالانقراض والتحول للبهائية يحتاج مصادر — غير موثّق هنا",
         "keyBeliefsCount": 4,
         "keyBooksCount": 1,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "collective_takfir_in_app_voice",
         "needs_sharia_specialist",
         "hostile_icon_ui"
@@ -2066,17 +2086,15 @@
       "coreDoctrines": [
         "ادعاء محمد أحمد أنه المهدي المنتظر بنص نبوي",
         "تعديل الصلاة وإضافة شهادة «وأن محمد أحمد خليفة رسول الله»",
-        "أكثر علماء السنة رفضوا هذا الادعاء لمخالفته علامات المهدي الواردة في السنة"
+        "نُسب إلى علماء سنة رفضٌ للادعاء استنادًا إلى علامات المهدي في الروايات — يحتاج إحالة؛ لا حكم من التطبيق"
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "انتهت دولتها عام 1316هـ/1898م مع معركة أمدرمان، لكن أتباعه (الأنصار) لا يزالون حزباً سودانياً",
+      "geographicSpreadCurrent": "يُذكر سياق دولة تاريخية في السودان؛ الاستمرار المعاصر كحزب يحتاج مصدرًا حديثًا (قيد المراجعة)",
       "primarySources": [],
       "secondarySources": [],
       "attributedCritiques": [],
-      "quotations": [
-        "«المهدي من أهل بيتي... يواطئ اسمه اسمي» — شروط علمية دقيقة لم يستوفها محمد أحمد"
-      ],
+      "quotations": [],
       "sourceReferences": [],
       "sourceUrls": [],
       "licenseStatus": "unknown",
@@ -2092,12 +2110,13 @@
         "origin": "السودان — النيل الأبيض",
         "founder": "محمد أحمد بن عبد الله (1844-1885م) ادّعى أنه المهدي المنتظر",
         "statusLabel": "تاريخية",
-        "spread": "انتهت دولتها عام 1316هـ/1898م مع معركة أمدرمان، لكن أتباعه (الأنصار) لا يزالون حزباً سودانياً",
+        "spread": "يُذكر سياق دولة تاريخية في السودان؛ الاستمرار المعاصر كحزب يحتاج مصدرًا حديثًا (قيد المراجعة)",
         "keyBeliefsCount": 3,
         "keyBooksCount": 0,
-        "hasQuote": true
+        "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "movement_vs_sect",
         "normative_rejection_in_beliefs",
         "quote_needs_source_context"
@@ -2129,19 +2148,17 @@
       "coreDoctrines": [
         "الاعتقاد بنبوة بهاء الله بعد محمد ﷺ مع ادعاء وحي جديد يُلغي ختم النبوة",
         "وحدة الأديان: ادعاء أن الإسلام والمسيحية واليهودية تعبير واحد عن حقيقة واحدة",
-        "أجمع العلماء والمجامع الإسلامية الدولية على خروجها من الإسلام"
+        "تُنسب إلى مجامع/فتاوى منشورة أحكامًا على المقالة — تُعرض كنقد منسوب؛ تحتاج مراجعة شرعية وإحالة نص القرار"
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "إيران والهند والغرب وأفريقيا — تواجه حظراً قانونياً وتضييقاً في إيران ودول أخرى",
+      "geographicSpreadCurrent": "يُذكر حضور في مناطق متعددة — الأوضاع القانونية المعاصرة تحتاج مصادر حديثة (قيد المراجعة)",
       "primarySources": [],
       "secondarySources": [
         "الكتاب الأقدس — بهاء الله"
       ],
       "attributedCritiques": [],
-      "quotations": [
-        "قرار مجمع الفقه الإسلامي الدولي: البهائية ليست من الإسلام في شيء"
-      ],
+      "quotations": [],
       "sourceReferences": [],
       "sourceUrls": [],
       "licenseStatus": "unknown",
@@ -2157,12 +2174,13 @@
         "origin": "إيران — بغداد — أكا (فلسطين)",
         "founder": "ميرزا حسين علي النوري الملقَّب بـ«بهاء الله» (1817-1892م)",
         "statusLabel": "قائمة",
-        "spread": "إيران والهند والغرب وأفريقيا — تواجه حظراً قانونياً وتضييقاً في إيران ودول أخرى",
+        "spread": "يُذكر حضور في مناطق متعددة — الأوضاع القانونية المعاصرة تحتاج مصادر حديثة (قيد المراجعة)",
         "keyBeliefsCount": 3,
         "keyBooksCount": 1,
-        "hasQuote": true
+        "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "religion_vs_islamic_sect_taxonomy",
         "collective_takfir_in_app_voice",
         "needs_sharia_specialist",
@@ -2205,7 +2223,7 @@
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "مصر بالدرجة الأولى، مع امتدادات في السودان وليبيا والكويت",
+      "geographicSpreadCurrent": "يُذكر حضور في مصر ومناطق أخرى — غير موثّق بمصدر معاصر في هذا السجل",
       "primarySources": [],
       "secondarySources": [
         "الهدية السنية وتحفة الوهابية — محمد حامد الفقي",
@@ -2228,12 +2246,13 @@
         "origin": "مصر — القاهرة",
         "founder": "محمد حامد الفِقي (1892-1959م)",
         "statusLabel": "قائمة",
-        "spread": "مصر بالدرجة الأولى، مع امتدادات في السودان وليبيا والكويت",
+        "spread": "يُذكر حضور في مصر ومناطق أخرى — غير موثّق بمصدر معاصر في هذا السجل",
         "keyBeliefsCount": 4,
         "keyBooksCount": 2,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "organization_not_sect",
         "wahhabi_cooperation_label_needs_care"
       ]
@@ -2275,7 +2294,7 @@
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "المغرب وتونس ومصر والخليج وأكاديميات الدراسات الإسلامية حول العالم",
+      "geographicSpreadCurrent": "يُذكر حضور أكاديمي في مناطق متعددة — غير موثّق بمصدر في هذا السجل",
       "primarySources": [],
       "secondarySources": [
         "مقاصد الشريعة الإسلامية — محمد الطاهر ابن عاشور",
@@ -2299,12 +2318,13 @@
         "origin": "تونس / المغرب / مصر — بداياتها الحديثة عند ابن عاشور",
         "founder": "محمد الطاهر ابن عاشور (1879-1973م) في مؤلفه «مقاصد الشريعة الإسلامية»",
         "statusLabel": "قائمة",
-        "spread": "المغرب وتونس ومصر والخليج وأكاديميات الدراسات الإسلامية حول العالم",
+        "spread": "يُذكر حضور أكاديمي في مناطق متعددة — غير موثّق بمصدر في هذا السجل",
         "keyBeliefsCount": 4,
         "keyBooksCount": 3,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "not_a_sect",
         "legacy_category_sunni_school_mismatch",
         "classical_vs_modern_conflation"
@@ -2341,11 +2361,11 @@
       "coreDoctrines": [
         "الوجود سلسلة من الأنوار تنبثق من النور الأقصى (الله)",
         "المعرفة الحقيقية تُنال بالإشراق الداخلي والرياضة الروحية لا بالمنطق وحده",
-        "انتقد كثير من العلماء السنة مواضع الغلو فيها تجاه أصول التوحيد والنبوة"
+        "نُسب إلى علماء سنة نقدٌ لمواضع فيها — يُعرض كنقد منسوب يحتاج إحالة"
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "إيران وتركيا والهند — تأثيرها في الفلسفة الإيرانية لا يزال حياً",
+      "geographicSpreadCurrent": "يُذكر تأثير تاريخي في بيئات فلسفية — الاستمرار المعاصر يحتاج مصدرًا (قيد المراجعة)",
       "primarySources": [],
       "secondarySources": [
         "حكمة الإشراق — السهروردي",
@@ -2368,12 +2388,13 @@
         "origin": "فارس — الأناضول",
         "founder": "شهاب الدين السهروردي (1154-1191م) — «شيخ الإشراق»",
         "statusLabel": "تاريخية",
-        "spread": "إيران وتركيا والهند — تأثيرها في الفلسفة الإيرانية لا يزال حياً",
+        "spread": "يُذكر تأثير تاريخي في بيئات فلسفية — الاستمرار المعاصر يحتاج مصدرًا (قيد المراجعة)",
         "keyBeliefsCount": 3,
         "keyBooksCount": 2,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "not_a_sect",
         "influence_alive_vs_status_historical"
       ]
@@ -2402,8 +2423,7 @@
       "keyHistoricalFigures": [
         "يوسف القرضاوي",
         "محمد الغزالي",
-        "وهبة الزحيلي",
-        "رجب طيب أردوغان (سياسياً)"
+        "وهبة الزحيلي"
       ],
       "summary": "مواجهة التطرف من جهة والعلمانية الكاملة من جهة أخرى، والتمسك بالوسطية التي وصفها الله للأمة",
       "historicalContext": null,
@@ -2415,7 +2435,7 @@
       ],
       "internalBranches": [],
       "geographicSpreadHistorical": null,
-      "geographicSpreadCurrent": "مصر وقطر والمغرب وماليزيا وأندونيسيا — مرجعية لمنظمات إسلامية عديدة حول العالم",
+      "geographicSpreadCurrent": "يُذكر حضور خطابي في مناطق متعددة — وصف «مرجعية» غير موثّق في هذا السجل",
       "primarySources": [],
       "secondarySources": [
         "الصحوة الإسلامية بين الجحود والتطرف — يوسف القرضاوي",
@@ -2439,12 +2459,13 @@
         "origin": "مصر / قطر / تركيا",
         "founder": "يوسف القرضاوي (1926-2022م) بوصفه أبرز رموزه الفقهية",
         "statusLabel": "قائمة",
-        "spread": "مصر وقطر والمغرب وماليزيا وأندونيسيا — مرجعية لمنظمات إسلامية عديدة حول العالم",
+        "spread": "يُذكر حضور خطابي في مناطق متعددة — وصف «مرجعية» غير موثّق في هذا السجل",
         "keyBeliefsCount": 4,
         "keyBooksCount": 3,
         "hasQuote": false
       },
       "inventoryFlags": [
+        "pr5_batch2_claim_audit",
         "not_a_sect",
         "political_figure_as_key_scholar",
         "umbrella_slogan"
