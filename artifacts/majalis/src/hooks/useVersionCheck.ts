@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   VERSION_CHECK_INTERVAL_MS,
+  checkForUpdate,
   getLoadedCommit,
-  isNewVersionAvailable,
+  setDismissedVersion,
+  type VersionCheckResult,
 } from "@/lib/version-check";
 import { safeLocationReload } from "@/lib/safe-reload";
 import { isChunkRecoveryInFlight } from "@/lib/chunk-recovery";
@@ -124,63 +126,105 @@ export function isAppShellStable(): boolean {
   return isShellStableNow();
 }
 
+type PendingPrompt = {
+  remoteVersion: string;
+  updateRequired: boolean;
+};
+
 /**
  * فحص نشر أحدث عبر /version.json.
  * - خلال الإقلاع: لا شيء (لا شيت ولا reload) حتى يستقر الهيكل.
  * - بعد الاستقرار: شيت هادئ فقط؛ زر تحديث يفرض reload حقيقي.
+ * - «لاحقًا» يحفظ remoteVersion في localStorage ولا يعيد العرض لنفس النشر.
  */
 export function useVersionCheck() {
   const [updateAvailable, setUpdateAvailable] = useState(false);
+  const [updateRequired, setUpdateRequired] = useState(false);
+  const [currentVersion, setCurrentVersion] = useState<string | null>(null);
+  const [remoteVersion, setRemoteVersion] = useState<string | null>(null);
   const [shellReady, setShellReady] = useState(() => isAppShellStable());
   const [loadedCommit] = useState(() => getLoadedCommit());
   const checkingRef = useRef(false);
-  const dismissedRef = useRef(false);
   const bootAtRef = useRef(Date.now());
-  const pendingUpdateRef = useRef(false);
+  const pendingUpdateRef = useRef<PendingPrompt | null>(null);
+  /** آخر remote عُرض/تُجوهل في هذه الجلسة — لا يمنع نشرًا أحدث لاحقًا */
+  const sessionSkippedRemoteRef = useRef<string | null>(null);
 
   const applyUpdate = useCallback(async () => {
     await performUserRequestedUpdate();
   }, []);
 
   const dismissUpdate = useCallback(() => {
-    dismissedRef.current = true;
-    pendingUpdateRef.current = false;
+    const id = remoteVersion || pendingUpdateRef.current?.remoteVersion;
+    if (id) {
+      setDismissedVersion(id);
+      sessionSkippedRemoteRef.current = id;
+    }
+    pendingUpdateRef.current = null;
     setUpdateAvailable(false);
+    setUpdateRequired(false);
+  }, [remoteVersion]);
+
+  const revealPrompt = useCallback((result: VersionCheckResult) => {
+    if (!result.remoteVersion) return;
+    setCurrentVersion(result.currentVersion);
+    setRemoteVersion(result.remoteVersion);
+    setUpdateRequired(result.updateRequired);
+    setUpdateAvailable(true);
   }, []);
 
   useEffect(() => {
     if (shellReady) return;
     return whenAppShellStable(() => {
       setShellReady(true);
-      if (pendingUpdateRef.current && !dismissedRef.current) {
+      const pending = pendingUpdateRef.current;
+              if (pending && sessionSkippedRemoteRef.current !== pending.remoteVersion) {
+        const loaded = getLoadedCommit();
+        setCurrentVersion(loaded ? loaded.slice(0, 8) : null);
+        setRemoteVersion(pending.remoteVersion);
+        setUpdateRequired(pending.updateRequired);
         setUpdateAvailable(true);
+        pendingUpdateRef.current = null;
       }
     });
   }, [shellReady]);
 
   const check = useCallback(async () => {
     if (typeof navigator !== "undefined" && navigator.webdriver) return;
-    if (!loadedCommit || checkingRef.current || dismissedRef.current) return;
+    if (!loadedCommit || checkingRef.current) return;
     if (isChunkRecoveryInFlight()) return;
 
     checkingRef.current = true;
     try {
-      const found = await isNewVersionAvailable(loadedCommit);
-      if (!found || dismissedRef.current || isChunkRecoveryInFlight()) return;
+      const result = await checkForUpdate(loadedCommit);
+      setCurrentVersion(result.currentVersion);
+      if (result.remoteVersion) setRemoteVersion(result.remoteVersion);
+
+      if (!result.updateAvailable || isChunkRecoveryInFlight()) return;
+      if (
+        result.remoteVersion &&
+        sessionSkippedRemoteRef.current === result.remoteVersion &&
+        !result.updateRequired
+      ) {
+        return;
+      }
 
       const inBootWindow = Date.now() - bootAtRef.current < BOOT_QUIET_MS;
       // أثناء الإقلاع: أخّر الشيت فقط — لا reload صامت (كان مصدر الوميض).
       if (inBootWindow || !isAppShellStable() || !shellReady) {
-        pendingUpdateRef.current = true;
+        pendingUpdateRef.current = {
+          remoteVersion: result.remoteVersion!,
+          updateRequired: result.updateRequired,
+        };
         return;
       }
 
-      pendingUpdateRef.current = false;
-      setUpdateAvailable(true);
+      pendingUpdateRef.current = null;
+      revealPrompt(result);
     } finally {
       checkingRef.current = false;
     }
-  }, [loadedCommit, shellReady]);
+  }, [loadedCommit, shellReady, revealPrompt]);
 
   useEffect(() => {
     if (!loadedCommit || updateAvailable) return;
@@ -205,5 +249,13 @@ export function useVersionCheck() {
     };
   }, [loadedCommit, updateAvailable, check, shellReady]);
 
-  return { updateAvailable, applyUpdate, dismissUpdate, shellReady };
+  return {
+    updateAvailable,
+    updateRequired,
+    currentVersion,
+    remoteVersion,
+    applyUpdate,
+    dismissUpdate,
+    shellReady,
+  };
 }

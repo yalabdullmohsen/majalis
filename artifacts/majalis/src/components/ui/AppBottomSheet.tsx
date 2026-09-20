@@ -24,6 +24,11 @@ type Props = {
   /** يرفع الطبقة فوق شيتات أخرى (مثل شيت الآية z≈10020) */
   elevated?: boolean;
   initialFocusRef?: React.RefObject<HTMLElement | null>;
+  /**
+   * عند false (تحديث إجباري): لا زر «لاحقًا»، لا إغلاق بالخلفية/السحب/Escape.
+   * الافتراضي true.
+   */
+  dismissible?: boolean;
 };
 
 /**
@@ -46,6 +51,7 @@ export function AppBottomSheet({
   className = "",
   elevated = false,
   initialFocusRef,
+  dismissible = true,
 }: Props) {
   const titleId = useId();
   const sheetRef = useRef<HTMLDivElement>(null);
@@ -64,10 +70,11 @@ export function AppBottomSheet({
   initialFocusRefStable.current = initialFocusRef;
 
   const requestClose = useCallback(() => {
+    if (!dismissible) return;
     if (closingRef.current) return;
     closingRef.current = true;
     onCloseRef.current();
-  }, []);
+  }, [dismissible]);
 
   useEffect(() => {
     if (!open) {
@@ -111,6 +118,7 @@ export function AppBottomSheet({
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
+        if (!dismissible) return;
         e.preventDefault();
         requestClose();
         return;
@@ -155,7 +163,7 @@ export function AppBottomSheet({
       previouslyFocused.current?.focus?.({ preventScroll: true });
       closingRef.current = false;
     };
-  }, [open, requestClose]);
+  }, [open, requestClose, dismissible]);
 
   if (!open || typeof document === "undefined") return null;
 
@@ -217,8 +225,10 @@ export function AppBottomSheet({
       <button
         type="button"
         className="app-sheet-overlay__scrim"
-        aria-label="إغلاق"
-        onClick={requestClose}
+        aria-label={dismissible ? "إغلاق" : undefined}
+        aria-hidden={dismissible ? undefined : true}
+        tabIndex={dismissible ? 0 : -1}
+        onClick={dismissible ? requestClose : undefined}
       />
       <div
         ref={sheetRef}
@@ -233,17 +243,17 @@ export function AppBottomSheet({
           className="app-sheet__handle"
           role="presentation"
           aria-hidden="true"
-          onPointerDown={onHandlePointerDown}
-          onPointerMove={onHandlePointerMove}
-          onPointerUp={onHandlePointerUp}
-          onPointerCancel={onHandlePointerUp}
+          onPointerDown={dismissible ? onHandlePointerDown : undefined}
+          onPointerMove={dismissible ? onHandlePointerMove : undefined}
+          onPointerUp={dismissible ? onHandlePointerUp : undefined}
+          onPointerCancel={dismissible ? onHandlePointerUp : undefined}
         />
         <header
           className="app-sheet__head"
-          onPointerDown={onHandlePointerDown}
-          onPointerMove={onHandlePointerMove}
-          onPointerUp={onHandlePointerUp}
-          onPointerCancel={onHandlePointerUp}
+          onPointerDown={dismissible ? onHandlePointerDown : undefined}
+          onPointerMove={dismissible ? onHandlePointerMove : undefined}
+          onPointerUp={dismissible ? onHandlePointerUp : undefined}
+          onPointerCancel={dismissible ? onHandlePointerUp : undefined}
         >
           <h2 id={titleId} className="app-sheet__title">
             {title}
@@ -251,12 +261,18 @@ export function AppBottomSheet({
           {headerExtra ? <div className="app-sheet__head-extra">{headerExtra}</div> : null}
         </header>
         <div className="app-sheet__body">{children}</div>
-        {footer ? <div className="app-sheet__footer-slot">{footer}</div> : null}
-        <div className="app-sheet__footer">
-          <button type="button" className="app-sheet__close" onClick={requestClose}>
-            {closeLabel}
-          </button>
-        </div>
+        {dismissible ? (
+          <>
+            {footer ? <div className="app-sheet__footer-slot">{footer}</div> : null}
+            <div className="app-sheet__footer">
+              <button type="button" className="app-sheet__close" onClick={requestClose}>
+                {closeLabel}
+              </button>
+            </div>
+          </>
+        ) : footer ? (
+          <div className="app-sheet__footer">{footer}</div>
+        ) : null}
       </div>
     </div>,
     document.body,
