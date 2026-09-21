@@ -778,6 +778,17 @@
       "robots": "noindex, nofollow"
     },
     {
+      "path": "/admin/v3",
+      "title": "لوحة التحكم v3",
+      "description": "صفحات داخلية لـ Admin v3 لإدارة محتوى سُنّة ومراجعته، غير مخصصة للفهرسة العامة ولا تظهر في نتائج البحث.",
+      "keywords": [
+        "لوحة التحكم",
+        "Admin v3"
+      ],
+      "sitemap": false,
+      "robots": "noindex, nofollow"
+    },
+    {
       "path": "/admin/dashboard",
       "title": "لوحة التحكم المتقدمة",
       "description": "صفحات داخلية لإدارة محتوى سُنّة ومراجعته، غير مخصصة للفهرسة العامة ولا تظهر في نتائج البحث.",
