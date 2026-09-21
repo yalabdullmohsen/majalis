@@ -197,6 +197,10 @@ const WaqfPage = lazy(() => import("@/views/WaqfPage"));
 const SadaqaPage = lazy(() => import("@/views/SadaqaPage"));
 const AdminPage = lazyWithRetry(() => import("@/views/AdminPage"), "AdminPage");
 const AdminV3App = lazyWithRetry(() => import("@/admin-v3/AdminV3App"), "AdminV3App");
+const AdminEntryBridge = lazyWithRetry(
+  () => import("@/admin-v3/AdminEntryBridge"),
+  "AdminEntryBridge",
+);
 const LessonImportImagePage = lazyWithRetry(() => import("@/views/admin/LessonImportImagePage"), "LessonImportImagePage");
 const LessonImportUrlPage = lazyWithRetry(() => import("@/views/admin/LessonImportUrlPage"), "LessonImportUrlPage");
 const AutomationSourcesPage = lazyWithRetry(() => import("@/views/admin/AutomationSourcesPage"), "AutomationSourcesPage");
@@ -695,8 +699,8 @@ export default function AppRoutes() {
       <Route path="/admin/import"><Redirect to="/admin/content-import/url" /></Route>
       <Route path="/admin/content"><Redirect to="/admin/auto-content" /></Route>
       <Route path="/admin/auto-content"><AdminLazyRoute component={AutoContentPage} /></Route>
-      <Route path="/admin/fiqh-review"><Redirect to="/admin" /></Route>
-      <Route path="/admin/fiqh-quality"><Redirect to="/admin" /></Route>
+      <Route path="/admin/fiqh-review"><Redirect to="/admin/v3" /></Route>
+      <Route path="/admin/fiqh-quality"><Redirect to="/admin/v3" /></Route>
       <Route path="/admin/content-production"><AdminLazyRoute component={ContentProductionDashboardPage} /></Route>
       <Route path="/admin/automation/content-production"><AdminLazyRoute component={ContentProductionDashboardPage} /></Route>
       <Route path="/admin/feature-status"><AdminLazyRoute component={FeatureStatusPage} /></Route>
@@ -713,7 +717,8 @@ export default function AppRoutes() {
       <Route path="/admin/v3/settings"><AdminLazyRoute component={AdminV3App} /></Route>
       <Route path="/admin/v3/audit"><AdminLazyRoute component={AdminV3App} /></Route>
       <Route path="/admin/v3"><AdminLazyRoute component={AdminV3App} /></Route>
-      <Route path="/admin"><AdminLazyRoute component={AdminPage} /></Route>
+      <Route path="/admin/legacy"><AdminLazyRoute component={AdminPage} /></Route>
+      <Route path="/admin"><AdminLazyRoute component={AdminEntryBridge} /></Route>
       <Route component={() => (
         <Suspense fallback={<LazyRouteFallback />}>
           <NotFound />

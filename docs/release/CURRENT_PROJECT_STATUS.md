@@ -1,41 +1,38 @@
 # CURRENT PROJECT STATUS — سُنّة
 
-**Status surface of record**  
-**Updated:** 2026-09-21 · Full Remediation **Wave 6**  
-**Detail pins:** `docs/release/CURRENT_RELEASE_TRUTH.md`  
-**Audit:** `docs/audit/SUNNAH_FULL_PROJECT_AUDIT.md` (`PARTIAL`)
+**Updated:** 2026-09-21 · Full Remediation **Wave 7**  
+**Canonical pins:** `docs/release/CURRENT_RELEASE_TRUTH.md`  
+**Admin migration:** `docs/admin/ADMIN_V3_MIGRATION_REPORT.md`
 
 ## Repository tip
 
 | Field | Value |
 |---|---|
-| `origin/main` (Wave 6 base) | `bafe16232bb345f98918dc3f101831259e7ee475` |
-| Resolve root | `git rev-parse --show-toplevel` |
-
-## Production tip
-
-Re-check `version.json` after merge. Store **HOLD**.
+| Wave 7 base `origin/main` | `168e2155f8d754da963d466749d40d2f2ce0dc92` |
 
 ## Program progress
 
 | Wave | Focus | State |
 |---|---|---|
-| 1–4 | Truth · Store · Library · Publication | **MERGED** (#2192–#2195) |
-| 5 | Admin v3 Shell | **MERGED** (#2196) |
-| 6 | Admin v3 Centers | **IN_PROGRESS** |
-| 7 | Legacy Admin migration/delete | QUEUED |
+| 1–6 | Truth → Admin v3 centers | **MERGED** (#2192–#2197) |
+| 7 | Legacy Admin entry migration | **IN_PROGRESS** |
 | 8–14 | Deep links → store closure | QUEUED |
 
-## Wave 6 deltas
+## Wave 7 deltas
 
-- Centers workspace + catalog of Legacy tools
-- Search / filters / pagination / states / permissions labels
-- Gate `admin-v3-centers-gate.test.ts`
-- Report `WAVE6_ADMIN_V3_CENTERS.md`
+- `/admin` (no section) → `/admin/v3`
+- `/admin?section=*` keeps Legacy CRUD
+- `/admin/legacy` explicit Legacy shell
+- Nav entry points → `/admin/v3`
+- **Legacy delete BLOCKED** (CRUD not ported)
 
-## Remaining blockers (classes)
+## Store readiness
 
-OWNER_ACTION · DEVICE_REQUIRED · BLOCKED_LICENSE · BLOCKED_SOURCE (library 172 / sects 0 published)
+**HOLD**
+
+## Remaining blocker classes
+
+OWNER_ACTION · DEVICE_REQUIRED · BLOCKED_LICENSE · BLOCKED_SOURCE · Legacy CRUD delete BLOCKED
 
 ## Explicit non-claims
 

@@ -65,6 +65,7 @@ const PATHS = [
   "/adhkar",
   "/adhkar/:slug",
   "/admin",
+  "/admin/legacy",
   "/admin/v3",
   "/admin/v3/content",
   "/admin/v3/review",

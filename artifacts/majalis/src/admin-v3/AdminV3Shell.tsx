@@ -83,10 +83,10 @@ export function AdminV3Shell({ children }: Props) {
           ))}
         </nav>
         <Link
-          href="/admin"
+          href="/admin/legacy"
           className="av3-legacy-link"
           onClick={() =>
-            emitAdminV3AuditEvent("admin.legacy.open", "/admin", { from: center.id })
+            emitAdminV3AuditEvent("admin.legacy.open", "/admin/legacy", { from: center.id })
           }
         >
           اللوحة السابقة (Legacy)
@@ -150,7 +150,7 @@ export function AdminV3Shell({ children }: Props) {
                   <Link href="/" className="av3-menu__item" role="menuitem">
                     التطبيق العام
                   </Link>
-                  <Link href="/admin" className="av3-menu__item" role="menuitem">
+                  <Link href="/admin/legacy" className="av3-menu__item" role="menuitem">
                     اللوحة السابقة
                   </Link>
                   <button

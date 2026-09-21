@@ -257,7 +257,7 @@ export default function NavBar() {
     <div className="navbar-auth">
       <Link href="/stats" className="navbar-user-link">{user?.profile?.full_name || user?.email || t("nav_my_account")}</Link>
       {isAdmin && (
-        <Link href="/admin" className="navbar-admin-link">
+        <Link href="/admin/v3" className="navbar-admin-link">
           {t("nav_admin_panel")}
         </Link>
       )}
@@ -315,7 +315,7 @@ export default function NavBar() {
                 </Link>
               ))}
               {isAdmin && !authLoading && (
-                <Link href="/admin" className={tabCls(location.startsWith("/admin"), "nav-tab--admin")} aria-current={location.startsWith("/admin") ? "page" : undefined}>
+                <Link href="/admin/v3" className={tabCls(location.startsWith("/admin"), "nav-tab--admin")} aria-current={location.startsWith("/admin") ? "page" : undefined}>
                   {t("nav_admin_panel")}
                 </Link>
               )}
