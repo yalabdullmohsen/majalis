@@ -1,6 +1,7 @@
 /**
  * الشريط السفلي — مشتق من سجل الأقسام فقط.
  * مركز القرآن · الدروس · الرئيسية · الصلاة · الأقسام
+ * Visual Redesign V2: تلميع بصري عبر html[data-v2-nav="1"] (بلا تغيير تبويبات/مسارات).
  */
 import { useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
@@ -11,6 +12,7 @@ import { getActiveTab, type BottomTabId } from "@/lib/get-active-tab";
 import { haptics } from "@/lib/haptics";
 import { prefetchAppRoutesShell } from "@/lib/prefetch-app-routes";
 import { shouldAllowNavigation } from "@/lib/nav-click-guard";
+import "@/styles/pages/profile-hub-v2.css";
 
 const HREF_TO_ID: Record<string, BottomTabId> = {
   "/": "home",

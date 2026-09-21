@@ -11,6 +11,7 @@ import {
   type ProgressSnapshot,
 } from "@/lib/knowledge-platform";
 import "@/styles/pages/knowledge-platform-p0.css";
+import "@/styles/pages/profile-hub-v2.css";
 
 export default function ProgressCenterView() {
   const [snap, setSnap] = useState<ProgressSnapshot | null>(null);

@@ -35,8 +35,8 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 | 2 | Dashboard Homepage | **merged** (#2202) |
 | 3 | Quran Hub | **merged** (#2203) |
 | 4 | Stories & Seerah | **merged** (#2204) |
-| 5 | Library & Search | **this** |
-| 6 | Profile Hub + bottom nav (5 tabs) | queued |
+| 5 | Library & Search | **merged** (#2205) |
+| 6 | Profile Hub + bottom nav (5 tabs) | **this** |
 | 7 | Dark Mode Luxury Night polish | queued |
 | 8 | Visual QA | queued |
 
@@ -70,6 +70,14 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 - `html[data-v2-search="1"]` على `/search`
 - Search First: شريط بحث بارز · تصنيفات مرتبة · بطاقات نتائج أنيقة
 - CSS: `styles/pages/library-search-v2.css`
+
+## PR-6 Profile Hub + Bottom Nav
+
+- `html[data-v2-profile="1"]` على `/settings` و `/progress`
+- بطاقة حساب عاجية · أفاتار Rounded Premium زمردي · صفوف إعدادات أنيقة
+- مركز التقدّم: بطاقات متابعة + أزرار زمردية
+- `html[data-v2-nav="1"]` — تلميع الشريط السفلي (5 تبويبات كما هي، بلا تغيير مسارات)
+- CSS: `styles/pages/profile-hub-v2.css`
 
 ## Gate
 

@@ -722,6 +722,32 @@ function AppShellInner() {
     };
   }, [isSearchPath]);
 
+  const isProfileHubPath =
+    location === "/settings" ||
+    location.startsWith("/settings?") ||
+    location === "/progress" ||
+    location.startsWith("/progress?");
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isProfileHubPath) {
+      root.setAttribute("data-v2-profile", "1");
+    } else {
+      root.removeAttribute("data-v2-profile");
+    }
+    return () => {
+      root.removeAttribute("data-v2-profile");
+    };
+  }, [isProfileHubPath]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.setAttribute("data-v2-nav", "1");
+    return () => {
+      root.removeAttribute("data-v2-nav");
+    };
+  }, []);
+
   useEffect(() => {
     const evtHandler = () => openGlobalSearch();
     const soonHandler = (e: Event) => {

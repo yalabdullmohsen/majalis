@@ -51,6 +51,7 @@ import {
   refreshAppAndPurgeCaches,
 } from "@/lib/runtime-cache-purge";
 import "@/styles/pages/settings.css";
+import "@/styles/pages/profile-hub-v2.css";
 
 const ReciterDownloadManager = lazy(() =>
   import("@/components/quran/ReciterDownloadManager").then((m) => ({
