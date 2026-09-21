@@ -65,6 +65,7 @@ const {
   filterMapPins,
   filterTimelineUpcoming,
   assessLessonsGuideGeo,
+  isLessonsGuideMapAllowed,
 } = await import("../lessons-guide/index.ts");
 
 resetLessonsGuideFlags();
@@ -136,8 +137,17 @@ assert.ok(filterTimelineUpcoming([item, noSchedule]).some((x) => x.lessonId === 
 const report = assessLessonsGuideGeo([noGeo]);
 assert.equal(report.capability, "BLOCKED_DATA");
 assert.equal(report.hasDedicatedCoordinatesColumn, false);
+assert.equal(isLessonsGuideMapAllowed(report), false);
+
+setLessonsGuideFlagsForTests({ lessonsGuideMapEnabled: true });
+assert.equal(isLessonsGuideMapAllowed(report), false, "BLOCKED_DATA يمنع الخريطة حتى مع العلم");
+resetLessonsGuideFlags();
 
 const partial = assessLessonsGuideGeo([item]);
 assert.equal(partial.capability, "partial_url_coords");
+assert.equal(isLessonsGuideMapAllowed(partial), false, "العلم OFF افتراضيًا");
+setLessonsGuideFlagsForTests({ lessonsGuideMapEnabled: true });
+assert.equal(isLessonsGuideMapAllowed(partial), true);
+resetLessonsGuideFlags();
 
 console.log("lessons-guide-pr1-gate.test.ts: ok");
