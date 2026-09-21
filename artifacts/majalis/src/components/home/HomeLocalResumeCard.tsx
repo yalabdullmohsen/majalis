@@ -38,7 +38,11 @@ function buildItems(): ResumeItem[] {
   const ayahKey = loadReadingAyahKey();
   const audio = loadAudioResumeState();
 
-  if (page != null && page >= 1) {
+  // صفحة 1 بدون آية محفوظة ≠ استئناف ذي معنى (لا تُعرض كـ«آخر قراءة» وهمية)
+  const hasMeaningfulMushafResume =
+    page != null && page >= 1 && (page > 1 || Boolean(ayahKey && ayahKey !== "1:1"));
+
+  if (hasMeaningfulMushafResume && page != null) {
     const safeKey = ayahKey ? normalizeAyahKey(ayahKey) : null;
     const surahHint = (() => {
       if (!safeKey) return "";
