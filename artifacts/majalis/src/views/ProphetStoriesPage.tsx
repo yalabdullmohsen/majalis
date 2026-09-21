@@ -23,6 +23,7 @@ import {
 } from "@/lib/ai-narration";
 import { unlockAudioOnUserGesture } from "@/lib/quran/quranRecitationService";
 import "@/styles/pages/prophet-stories.css";
+import "@/styles/pages/stories-seerah-v2.css";
 import { UtilityScreen } from "@/components/design-system/screens";
 import { ProphetMushafMentions } from "@/components/prophets/ProphetMushafMentions";
 import { PROPHET_MUSHAF_MENTIONS, PROPHET_MUSHAF_NAV_SOURCE } from "@/lib/prophet-mushaf-mentions";
