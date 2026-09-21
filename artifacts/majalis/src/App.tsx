@@ -36,6 +36,7 @@ import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { isMiniPlayerVisible, subscribeMiniPlayer } from "@/lib/quran-mini-player";
 import { HomeHeroLcp, HomeRestShell } from "@/components/home/HomeHeroLcp";
 import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
+import "@/styles/pages/luxury-night-v2.css";
 /** شريط/كروم ثقيل (lucide + nav-map) — كسول حتى لا يدخل مسار أول زيارة / LCP */
 const SafeAreaDebugOverlay = lazyWithRetry(
   () =>
@@ -745,6 +746,23 @@ function AppShellInner() {
     root.setAttribute("data-v2-nav", "1");
     return () => {
       root.removeAttribute("data-v2-nav");
+    };
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const syncNight = () => {
+      const dark =
+        root.getAttribute("data-theme") === "dark" || root.classList.contains("dark");
+      if (dark) root.setAttribute("data-v2-night", "1");
+      else root.removeAttribute("data-v2-night");
+    };
+    syncNight();
+    const obs = new MutationObserver(syncNight);
+    obs.observe(root, { attributes: true, attributeFilter: ["data-theme", "class"] });
+    return () => {
+      obs.disconnect();
+      root.removeAttribute("data-v2-night");
     };
   }, []);
 

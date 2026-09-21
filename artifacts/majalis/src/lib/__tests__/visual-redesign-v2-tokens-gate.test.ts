@@ -178,6 +178,29 @@ console.log("=== PR-6 Profile Hub + Bottom Nav ===");
   assert.match(doc, /profile-hub-v2\.css/);
 }
 
+console.log("=== PR-7 Dark Mode Luxury Night ===");
+{
+  const app = read("src/App.tsx");
+  assert.match(app, /data-v2-night/);
+  assert.ok(existsSync(resolve(majalisRoot, "src/styles/pages/luxury-night-v2.css")));
+  assert.match(app, /luxury-night-v2\.css/);
+  const tokens = read("src/styles/visual-redesign-v2-tokens.css");
+  assert.match(tokens, /--v2-color-night-muted:\s*#b3c9bd/i);
+  assert.match(tokens, /--v2-color-night-emerald-text/);
+  assert.match(tokens, /emerald-soft:[\s\S]*night-surface/);
+  const night = read("src/styles/pages/luxury-night-v2.css");
+  assert.match(night, /data-v2-night/);
+  assert.match(night, /quran-open-mushaf/);
+  assert.match(night, /Deep Emerald Night|Luxury Night/);
+  assert.match(night, /night-emerald-text/);
+  assert.doesNotMatch(night, /border-inline-start:\s*[34]px/);
+  const card = read("src/styles/components/sunnah-card-v2.css");
+  assert.match(card, /\.sc2--welcome \.sc2-cta[\s\S]*color:\s*var\(--v2-color-emerald\)/);
+  const doc = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2.md"), "utf8");
+  assert.match(doc, /PR-7 Dark Mode/);
+  assert.match(doc, /luxury-night-v2\.css/);
+}
+
 console.log("=== package script ===");
 {
   const pkg = read("package.json");
