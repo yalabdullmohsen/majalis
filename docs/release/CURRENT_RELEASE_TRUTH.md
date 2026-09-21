@@ -2,7 +2,7 @@
 
 **Generated:** 2026-09-21  
 **Program:** SUNNAH FULL PROJECT REMEDIATION (post-audit)  
-**Wave:** Wave 1 — truth / docs sync only  
+**Wave:** Wave 4 — publication honesty  
 **Authority:** Measured from `origin/main` + live production — not from stale freeze pins alone.  
 **Canonical status surface:** `docs/release/CURRENT_PROJECT_STATUS.md`
 
@@ -12,17 +12,16 @@
 
 | Surface | Value | Evidence |
 |---|---|---|
-| Git root | resolve via `git rev-parse --show-toplevel` (example worktree: `/Users/alabdullmohsen/majlis-app`) | command |
-| `origin/main` | `5e99cd7cf53244444916b0ecd7b55b3a8953cfd8` | `git rev-parse origin/main` |
-| Local HEAD (at truth capture) | same as `origin/main` | clean match |
-| Production host | `https://www.ssunnah.com` | operational |
-| Production `version.json` | `5e99cd7c` · `builtAt` `2026-09-21T12:10:15.331Z` · `ref` `main` | HTTP 200 |
+| Git root | resolve via `git rev-parse --show-toplevel` | command |
+| `origin/main` (Wave 4 base) | `bd4838b07bf70861ed8313e07163a15d35d81bcc` | `git rev-parse origin/main` |
+| Production `version.json` | `bd4838b0` · `builtAt` `2026-09-21T15:34:09.728Z` · `ref` `main` | HTTP 200 |
 | Production home | HTTP 200 | curl |
 | Full project audit | `docs/audit/SUNNAH_FULL_PROJECT_AUDIT.md` · status `PARTIAL` | committed baseline |
-| Store RC pin | **not set by owner** — web tip ≠ automatic Store RC | `STORE_100_PERCENT_READINESS.md` |
-| Historical tip (STALE) | `3ba020f2…` (pre #2190/#2191) | superseded |
+| Publication contract | `docs/content-quality/PUBLICATION_CONTRACT.md` | Wave 4 |
+| Store RC pin | **not set by owner** — web tip ≠ automatic Store RC | HOLD |
+| Historical tip (STALE) | `5e99cd7c` (audit/Wave1 capture) · `3ba020f2` (pre #2190) | superseded |
 
-**Smoke:** Production commit **matches** `origin/main` tip at capture. Store remains **HOLD**.
+**Smoke:** Production commit **matches** Wave 3 / Wave 4 base tip. Store remains **HOLD**.
 
 ---
 
@@ -54,7 +53,7 @@
 | Active status docs drift | P0 | **Wave 1 (this PR)** |
 | Store flavor / license binary strip hardening (beyond #2191) | P0 | Wave 2 |
 | Library public UI must not expose `source_missing` (172) | P0 | Wave 3 |
-| Publication honesty / empty states (sects 0 published, quiz, etc.) | P0/P1 | Wave 4 |
+| Publication honesty / empty states (sects 0 published, quiz, etc.) | P0/P1 | **Wave 4 (this PR)** |
 | Admin v3 Shell | P1 | Wave 5 |
 | Admin v3 Centers | P1 | Wave 6 |
 | Legacy Admin migration then delete | P1 | Wave 7 |

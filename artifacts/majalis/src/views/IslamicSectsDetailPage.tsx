@@ -8,10 +8,7 @@ import { InternalLinkCard } from "@/components/ui/InternalCards";
 import { KnowledgeLayout } from "@/components/knowledge";
 import { KnowledgeDetailSurface } from "@/components/knowledge/KnowledgeDetailSurface";
 import type { KnowledgeDetailSurfaceSection } from "@/components/knowledge/KnowledgeDetailSurface";
-import {
-  getIslamicSectPublicationStatus,
-  getPublishedIslamicSectById,
-} from "@/lib/islamic-sects";
+import { getPublishedIslamicSectById } from "@/lib/islamic-sects";
 import { getIslamicSectById } from "@/data/islamic-sects";
 import { UtilityScreen } from "@/components/design-system/screens";
 import "@/styles/pages/islamic-sects.css";
@@ -47,7 +44,6 @@ export default function IslamicSectsDetailPage() {
   const id = params?.id ?? "";
   const sect = getPublishedIslamicSectById(id);
   const existsUnpublished = !sect && Boolean(getIslamicSectById(id));
-  const publicationStatus = getIslamicSectPublicationStatus(id);
   const needsReview = sect ? sectNeedsSourceBanner(sect) : false;
   /** lazy: المراجع والنصوص بعد تفاعل/تمرير بسيط لتقليل العمل الأولي */
   const [loadHeavy, setLoadHeavy] = useState(false);
@@ -129,9 +125,9 @@ export default function IslamicSectsDetailPage() {
     }
 
     base.push({
-      id: `${sect.id}-review`,
-      title: "حالة المراجعة",
-      prose: `منشور للعامة · حالة العقد: ${publicationStatus ?? "PUBLISHED"}. لا حكم شرعي باسم سُنّة.`,
+      id: `${sect.id}-disclaimer`,
+      title: "تنويه",
+      prose: "عرض علمي تاريخي معتمد للعامة. لا حكم شرعي باسم سُنّة ولا فتوى من التطبيق.",
     });
 
     if (sect.id === "ahl-al-sunna") {
@@ -159,17 +155,17 @@ export default function IslamicSectsDetailPage() {
     }
 
     return base;
-  }, [sect, needsReview, loadHeavy, publicationStatus]);
+  }, [sect, needsReview, loadHeavy]);
 
   useEffect(() => {
     if (!sect) {
       applyPageSeo({
         path: `${LIST_PATH}/${id}`,
         title: existsUnpublished
-          ? "سجل قيد المراجعة | الفرق الإسلامية | سُنّة"
+          ? "سجل غير متاح | الفرق الإسلامية | سُنّة"
           : "سجل غير موجود | الفرق الإسلامية | سُنّة",
         description: existsUnpublished
-          ? "هذا السجل غير منشور للعامة بعد — بانتظار مراجعة بشرية ومصادر."
+          ? EMPTY.recordNotPublic
           : "هذا السجل غير متاح في فهرس الفرق الإسلامية.",
         robots: "noindex, follow",
       });
@@ -192,15 +188,11 @@ export default function IslamicSectsDetailPage() {
           breadcrumb={[
             { label: "الرئيسية", href: "/" },
             { label: "الفرق الإسلامية", href: LIST_PATH },
-            { label: existsUnpublished ? "قيد المراجعة" : "غير موجود" },
+            { label: existsUnpublished ? "غير متاح" : "غير موجود" },
           ]}
           eyebrow="العقيدة والتوحيد"
-          title={existsUnpublished ? "سجل قيد المراجعة" : "سجل غير موجود"}
-          subtitle={
-            existsUnpublished
-              ? "لا يُعرض للعامة حتى حالة PUBLISHED بعد قرار بشري ومصادر معتمدة."
-              : EMPTY.data
-          }
+          title={existsUnpublished ? "سجل غير متاح" : "سجل غير موجود"}
+          subtitle={existsUnpublished ? EMPTY.recordNotPublic : EMPTY.data}
           className="topic-page--sects topic-page--sects-detail"
         >
           <Link href={LIST_PATH} className="sect-hub__chip is-active">

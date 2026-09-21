@@ -1,11 +1,11 @@
 # SUNNAH STABILIZATION — تقرير حي
 
 **الحالة:** `PARTIAL`  
-**آخر تحديث:** 2026-09-21 (Full Remediation Wave 1 — truth sync post-audit)  
-**Source (`origin/main`):** `5e99cd7cf53244444916b0ecd7b55b3a8953cfd8`  
-**Production (`www.ssunnah.com/version.json`):** `5e99cd7c` · matched tip · `builtAt` `2026-09-21T12:10:15.331Z`  
+**آخر تحديث:** 2026-09-21 (Full Remediation Wave 4 — publication honesty)  
+**Source (`origin/main` base):** `bd4838b07bf70861ed8313e07163a15d35d81bcc`  
+**Production (`www.ssunnah.com/version.json`):** `bd4838b0` · matched tip · `builtAt` `2026-09-21T15:34:09.728Z`  
 **مرجع الحقيقة:** `docs/release/CURRENT_PROJECT_STATUS.md` · `docs/release/CURRENT_RELEASE_TRUTH.md`  
-**ملاحظة:** pin السابق `3ba020f2` = **STALE_REPORT** (قبل #2190/#2191)
+**ملاحظة:** pin `5e99cd7c` / `3ba020f2` = **STALE_REPORT** بالنسبة لسطح الحالة النشط
 
 ## موجات
 
@@ -21,7 +21,7 @@
 | PR-8 Admin v3 Shell | **PENDING** | — | بعد جرد #2176 · Remediation PR-5 |
 | PR-9 مراكز Admin | **PENDING** | — | Remediation PR-6 |
 | PR-10 حذف Legacy Admin | **BLOCKED** | — | حتى اكتمال الترحيل · Remediation PR-7 |
-| PR-11 صدق المحتوى | **PENDING** | — | بلا نشر آلي · Remediation PR-4 |
+| PR-11 صدق المحتوى | **IN_PROGRESS** | — | بلا نشر آلي · Remediation Wave 4 |
 | PR-12 تحقق شامل | **PENDING** | — | Remediation PR-12 |
 
 ## مجاور (ليس ضمن ترقيم الاستقرار، مدموج على نفس الـtip)
@@ -32,7 +32,8 @@
 | أذان ميداني CC0 (`field` / `field-full`) | #2189 | MERGED · الإنتاج يعتمدها · المتجر ما زال HOLD |
 | مزامنة حقيقة الإصدار (سابق) | #2190 | MERGED |
 | حراسة أصول المتجر | #2191 | MERGED · HOLD باقٍ |
-| Full Remediation Wave 1 (docs/status) | — | IN_PROGRESS |
+| Full Remediation Waves 1–3 | #2192–#2194 | MERGED |
+| Full Remediation Wave 4 (publication honesty) | — | IN_PROGRESS |
 
 ## معيار الإغلاق
 

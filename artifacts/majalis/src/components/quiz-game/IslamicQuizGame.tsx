@@ -491,8 +491,8 @@ function SetupPhase({
 
       <p className="qzg-daily-hint" role="status">
         {publishedCount > 0
-          ? `أسئلة منشورة محليًا جاهزة للّعب: ${publishedCount}`
-          : "البنك المحلي قيد التوثيق — لا يُعرض للعامة إلا PUBLISHED بعد المراجعة البشرية. قد تُحمَّل أسئلة منشورة من الخادم."}
+          ? `أسئلة موثّقة جاهزة للّعب: ${publishedCount}`
+          : "البنك المحلي قيد التوثيق والمراجعة. تُعرض للعامة الأسئلة المعتمدة فقط؛ قد تُحمَّل أسئلة موثّقة من الخادم عند توفرها."}
       </p>
 
       <section className="qzg-section-card soft-card soft-card--on-light" aria-label="نمط التحدي">

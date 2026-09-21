@@ -40,61 +40,76 @@ export default function IslamicSectsPage() {
 
   const published = useMemo(() => listPublishedIslamicSectSummaries(), []);
   const publishedTotal = countPublishedIslamicSectsFromMeta();
+  const hasPublished = publishedTotal > 0;
 
   const filtered = useMemo(
     () =>
-      filterIslamicSectSummaries(published, {
-        search: deferredSearch,
-        entityKind,
-        historicalStatus,
-        eraBucket,
-        legacyCategory,
-      }),
-    [published, deferredSearch, entityKind, historicalStatus, eraBucket, legacyCategory],
+      hasPublished
+        ? filterIslamicSectSummaries(published, {
+            search: deferredSearch,
+            entityKind,
+            historicalStatus,
+            eraBucket,
+            legacyCategory,
+          })
+        : [],
+    [
+      hasPublished,
+      published,
+      deferredSearch,
+      entityKind,
+      historicalStatus,
+      eraBucket,
+      legacyCategory,
+    ],
   );
 
   const entityChips = useMemo(
-    () => buildFilterChips(published, "entityKind", entityKindLabelAr),
-    [published],
+    () => (hasPublished ? buildFilterChips(published, "entityKind", entityKindLabelAr) : []),
+    [hasPublished, published],
   );
   const statusChips = useMemo(
-    () => buildFilterChips(published, "historicalStatus"),
-    [published],
+    () => (hasPublished ? buildFilterChips(published, "historicalStatus") : []),
+    [hasPublished, published],
   );
   const eraChips = useMemo(
-    () => buildFilterChips(published, "eraBucket"),
-    [published],
+    () => (hasPublished ? buildFilterChips(published, "eraBucket") : []),
+    [hasPublished, published],
   );
   const legacyChips = useMemo(
-    () => buildFilterChips(published, "legacyCategory"),
-    [published],
+    () => (hasPublished ? buildFilterChips(published, "legacyCategory") : []),
+    [hasPublished, published],
   );
 
   useEffect(() => {
     applyPageSeo({
       path: LIST_PATH,
       title: "الفرق الإسلامية — نشأتها وعقائدها | سُنّة",
-      description:
-        "موسوعة علمية تاريخية في الفرق والمذاهب الإسلامية: تُعرض السجلات المعتمدة بعد المراجعة البشرية فقط.",
+      description: hasPublished
+        ? "موسوعة علمية تاريخية في الفرق والمذاهب الإسلامية: تُعرض السجلات المعتمدة بعد المراجعة البشرية فقط."
+        : "قسم الفرق الإسلامية قيد الإعداد. يُعرض للعامة ما اكتملت مراجعته واعتماده فقط.",
       keywords: ["فرق إسلامية", "مذاهب", "أهل السنة", "تاريخ الإسلام"],
-      jsonLd: [
-        {
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          name: "الفرق والمذاهب الإسلامية",
-          description:
-            "سجلات الفرق الإسلامية المنشورة بعد مراجعة بشرية ومصادر معتمدة",
-          numberOfItems: publishedTotal,
-          itemListElement: published.slice(0, 20).map((s, i) => ({
-            "@type": "ListItem",
-            position: i + 1,
-            name: s.name,
-            url: `https://www.ssunnah.com${LIST_PATH}/${s.id}`,
-          })),
-        },
-      ],
+      robots: hasPublished ? undefined : "noindex, follow",
+      jsonLd: hasPublished
+        ? [
+            {
+              "@context": "https://schema.org",
+              "@type": "ItemList",
+              name: "الفرق والمذاهب الإسلامية",
+              description:
+                "سجلات الفرق الإسلامية المنشورة بعد مراجعة بشرية ومصادر معتمدة",
+              numberOfItems: publishedTotal,
+              itemListElement: published.slice(0, 20).map((s, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                name: s.name,
+                url: `https://www.ssunnah.com${LIST_PATH}/${s.id}`,
+              })),
+            },
+          ]
+        : undefined,
     });
-  }, [published, publishedTotal]);
+  }, [hasPublished, published, publishedTotal]);
 
   useEffect(() => {
     if (saved && typeof saved.scrollY === "number") {
@@ -128,171 +143,176 @@ export default function IslamicSectsPage() {
       <SectionTemplatePage
         route={LIST_PATH}
         title="الفرق الإسلامية"
-        subtitle="موسوعة علمية تاريخية — يُعرض للعامة ما اجتاز المراجعة البشرية فقط"
+        subtitle={
+          hasPublished
+            ? "موسوعة علمية تاريخية — يُعرض للعامة ما اجتاز المراجعة البشرية فقط"
+            : EMPTY.sectionPreparing
+        }
         groupTitle="الفرق والمذاهب"
         className="topic-page--sects"
         eyebrow="العقيدة والتوحيد"
       >
         <div className="sect-hub">
           <p className="sect-hub__note">
-            <strong>ملاحظة منهجية:</strong> العرض للعامة مقصور على السجلات ذات الحالة{" "}
-            <code>PUBLISHED</code> بعد قرار بشري ومصادر معتمدة. لا فتوى شرعية من التطبيق.
-            {publishedTotal === 0
-              ? " حاليًا لا توجد سجلات منشورة بعد؛ المحتوى قيد طابور المراجعة."
-              : null}
+            <strong>ملاحظة منهجية:</strong> العرض للعامة مقصور على السجلات المعتمدة بعد
+            مراجعة بشرية ومصادر موثّقة. لا فتوى شرعية من التطبيق.
           </p>
 
-          <input
-            {...SEARCH_INPUT_ATTRS}
-            value={search}
-            onChange={(e) => {
-              const v = e.target.value;
-              startTransition(() => setSearch(v));
-            }}
-            onKeyDown={(e) => handleSearchEnterKey(e)}
-            placeholder="ابحث بالاسم أو الأسماء البديلة أو الملخص…"
-            className="sect-hub__search"
-            aria-label="بحث في الفرق الإسلامية المنشورة"
-          />
-
-          <div className="sect-hub__filters">
-            {entityChips.length > 1 ? (
-              <>
-                <p className="sect-hub__filter-label">النوع</p>
-                <div className="sect-hub__chips" role="group" aria-label="تصفية النوع">
-                  {entityChips.map((c) => (
-                    <button
-                      type="button"
-                      key={c.value}
-                      className={`sect-hub__chip${entityKind === c.value ? " is-active" : ""}`}
-                      onClick={() => startTransition(() => setEntityKind(c.value))}
-                    >
-                      {c.label}
-                      {c.value !== "الكل" ? ` (${c.count})` : ""}
-                    </button>
-                  ))}
-                </div>
-              </>
-            ) : null}
-
-            {statusChips.length > 1 ? (
-              <>
-                <p className="sect-hub__filter-label">الحالة التاريخية</p>
-                <div
-                  className="sect-hub__chips"
-                  role="group"
-                  aria-label="تصفية الحالة التاريخية"
-                >
-                  {statusChips.map((c) => (
-                    <button
-                      type="button"
-                      key={c.value}
-                      className={`sect-hub__chip${historicalStatus === c.value ? " is-active" : ""}`}
-                      onClick={() =>
-                        startTransition(() => setHistoricalStatus(c.value))
-                      }
-                    >
-                      {c.label}
-                      {c.value !== "الكل" ? ` (${c.count})` : ""}
-                    </button>
-                  ))}
-                </div>
-              </>
-            ) : null}
-
-            {eraChips.length > 1 ? (
-              <>
-                <p className="sect-hub__filter-label">الفترة</p>
-                <div className="sect-hub__chips" role="group" aria-label="تصفية الفترة">
-                  {eraChips.map((c) => (
-                    <button
-                      type="button"
-                      key={c.value}
-                      className={`sect-hub__chip${eraBucket === c.value ? " is-active" : ""}`}
-                      onClick={() => startTransition(() => setEraBucket(c.value))}
-                    >
-                      {c.label}
-                      {c.value !== "الكل" ? ` (${c.count})` : ""}
-                    </button>
-                  ))}
-                </div>
-              </>
-            ) : null}
-
-            {legacyChips.length > 1 ? (
-              <>
-                <p className="sect-hub__filter-label">التصنيف</p>
-                <div className="sect-hub__chips" role="group" aria-label="تصفية التصنيف">
-                  {legacyChips.map((c) => (
-                    <button
-                      type="button"
-                      key={c.value}
-                      className={`sect-hub__chip${legacyCategory === c.value ? " is-active" : ""}`}
-                      onClick={() =>
-                        startTransition(() => setLegacyCategory(c.value))
-                      }
-                    >
-                      {c.label}
-                      {c.value !== "الكل" ? ` (${c.count})` : ""}
-                    </button>
-                  ))}
-                </div>
-              </>
-            ) : null}
-          </div>
-
-          <p className="sect-hub__results" aria-live="polite">
-            {publishedTotal === 0
-              ? "0 سجل منشور"
-              : filtered.length === 0
-                ? EMPTY.searchShort
-                : `${filtered.length} من ${publishedTotal} منشور`}
-          </p>
-
-          {filtered.length === 0 ? (
+          {!hasPublished ? (
             <div className="sect-hub__empty" role="status">
-              <p>
-                {publishedTotal === 0
-                  ? "لا تُعرض سجلات للعامة حتى اعتماد بشري ومصادر. راجع طابور المراجعة البشرية."
-                  : EMPTY.search}
-              </p>
-              {publishedTotal > 0 ? (
-                <button
-                  type="button"
-                  className="sect-hub__chip is-active"
-                  onClick={resetFilters}
-                >
-                  مسح عوامل التصفية
-                </button>
-              ) : null}
+              <p>{EMPTY.sectionPreparing}</p>
             </div>
-          ) : null}
-
-          <div className="sect-hub__grid">
-            {filtered.map((sect) => (
-              <KnowledgeSummaryCard
-                key={sect.id}
-                id={sect.id}
-                href={`${LIST_PATH}/${sect.id}`}
-                title={sect.name}
-                icon={sect.icon}
-                category={entityKindLabelAr(sect.entityKind)}
-                status={sect.statusLabel}
-                statusMuted={sect.historicalStatus === "historical"}
-                summary={sect.summary}
-                onNavigate={persistBeforeNavigate}
+          ) : (
+            <>
+              <input
+                {...SEARCH_INPUT_ATTRS}
+                value={search}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  startTransition(() => setSearch(v));
+                }}
+                onKeyDown={(e) => handleSearchEnterKey(e)}
+                placeholder="ابحث بالاسم أو الأسماء البديلة أو الملخص…"
+                className="sect-hub__search"
+                aria-label="بحث في الفرق الإسلامية المنشورة"
               />
-            ))}
-          </div>
 
-          <div className="sect-hub__share">
-            <p className="sect-hub__share-title">شارك الفائدة</p>
-            <ShareButtons
-              title="الفرق الإسلامية — سُنّة"
-              url={`https://www.ssunnah.com${LIST_PATH}`}
-            />
-          </div>
-          <SectionQuiz sectionId="aqidah" title="اختبر معلوماتك في العقيدة والفرق" count={4} />
+              <div className="sect-hub__filters">
+                {entityChips.length > 1 ? (
+                  <>
+                    <p className="sect-hub__filter-label">النوع</p>
+                    <div className="sect-hub__chips" role="group" aria-label="تصفية النوع">
+                      {entityChips.map((c) => (
+                        <button
+                          type="button"
+                          key={c.value}
+                          className={`sect-hub__chip${entityKind === c.value ? " is-active" : ""}`}
+                          onClick={() => startTransition(() => setEntityKind(c.value))}
+                        >
+                          {c.label}
+                          {c.value !== "الكل" ? ` (${c.count})` : ""}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                ) : null}
+
+                {statusChips.length > 1 ? (
+                  <>
+                    <p className="sect-hub__filter-label">الحالة التاريخية</p>
+                    <div
+                      className="sect-hub__chips"
+                      role="group"
+                      aria-label="تصفية الحالة التاريخية"
+                    >
+                      {statusChips.map((c) => (
+                        <button
+                          type="button"
+                          key={c.value}
+                          className={`sect-hub__chip${historicalStatus === c.value ? " is-active" : ""}`}
+                          onClick={() =>
+                            startTransition(() => setHistoricalStatus(c.value))
+                          }
+                        >
+                          {c.label}
+                          {c.value !== "الكل" ? ` (${c.count})` : ""}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                ) : null}
+
+                {eraChips.length > 1 ? (
+                  <>
+                    <p className="sect-hub__filter-label">الفترة</p>
+                    <div className="sect-hub__chips" role="group" aria-label="تصفية الفترة">
+                      {eraChips.map((c) => (
+                        <button
+                          type="button"
+                          key={c.value}
+                          className={`sect-hub__chip${eraBucket === c.value ? " is-active" : ""}`}
+                          onClick={() => startTransition(() => setEraBucket(c.value))}
+                        >
+                          {c.label}
+                          {c.value !== "الكل" ? ` (${c.count})` : ""}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                ) : null}
+
+                {legacyChips.length > 1 ? (
+                  <>
+                    <p className="sect-hub__filter-label">التصنيف</p>
+                    <div className="sect-hub__chips" role="group" aria-label="تصفية التصنيف">
+                      {legacyChips.map((c) => (
+                        <button
+                          type="button"
+                          key={c.value}
+                          className={`sect-hub__chip${legacyCategory === c.value ? " is-active" : ""}`}
+                          onClick={() =>
+                            startTransition(() => setLegacyCategory(c.value))
+                          }
+                        >
+                          {c.label}
+                          {c.value !== "الكل" ? ` (${c.count})` : ""}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                ) : null}
+              </div>
+
+              <p className="sect-hub__results" aria-live="polite">
+                {filtered.length === 0
+                  ? EMPTY.searchShort
+                  : `${filtered.length} من ${publishedTotal}`}
+              </p>
+
+              {filtered.length === 0 ? (
+                <div className="sect-hub__empty" role="status">
+                  <p>{EMPTY.search}</p>
+                  <button
+                    type="button"
+                    className="sect-hub__chip is-active"
+                    onClick={resetFilters}
+                  >
+                    مسح عوامل التصفية
+                  </button>
+                </div>
+              ) : null}
+
+              <div className="sect-hub__grid">
+                {filtered.map((sect) => (
+                  <KnowledgeSummaryCard
+                    key={sect.id}
+                    id={sect.id}
+                    href={`${LIST_PATH}/${sect.id}`}
+                    title={sect.name}
+                    icon={sect.icon}
+                    category={entityKindLabelAr(sect.entityKind)}
+                    status={sect.statusLabel}
+                    statusMuted={sect.historicalStatus === "historical"}
+                    summary={sect.summary}
+                    onNavigate={persistBeforeNavigate}
+                  />
+                ))}
+              </div>
+
+              <div className="sect-hub__share">
+                <p className="sect-hub__share-title">شارك الفائدة</p>
+                <ShareButtons
+                  title="الفرق الإسلامية — سُنّة"
+                  url={`https://www.ssunnah.com${LIST_PATH}`}
+                />
+              </div>
+              <SectionQuiz
+                sectionId="aqidah"
+                title="اختبر معلوماتك في العقيدة والفرق"
+                count={4}
+              />
+            </>
+          )}
         </div>
       </SectionTemplatePage>
     </UtilityScreen>

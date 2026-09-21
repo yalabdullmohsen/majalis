@@ -115,8 +115,15 @@ assert.match(listSrc, /listPublishedIslamicSectSummaries/);
 assert.match(listSrc, /countPublishedIslamicSectsFromMeta|publishedTotal/);
 assert.match(listSrc, /buildFilterChips/);
 assert.match(detailSrc, /getPublishedIslamicSectById/);
-assert.match(detailSrc, /قيد المراجعة|PUBLISHED/);
+assert.match(detailSrc, /غير متاح|recordNotPublic|EMPTY\.recordNotPublic/);
+assert.doesNotMatch(
+  detailSrc,
+  /حالة العقد|حتى حالة PUBLISHED|<code>PUBLISHED<\/code>/,
+  "لا enums نشر في واجهة التفاصيل للعامة",
+);
 assert.doesNotMatch(listSrc, /ISLAMIC_SECTS\.filter/);
+assert.match(listSrc, /hasPublished|publishedTotal > 0/);
+assert.doesNotMatch(listSrc, /0 سجل منشور|<code>PUBLISHED<\/code>/);
 
 console.log(
   `islamic-sects-search-filters-gate.test.ts: ok (meta=${meta.records.length} published=${countPublishedIslamicSectsFromMeta()})`,
