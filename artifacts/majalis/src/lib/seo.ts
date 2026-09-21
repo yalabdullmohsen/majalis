@@ -284,7 +284,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
       ...requiredRoute(routes, "/quran/people"),
       path: normalized,
       title: `${personSlug} في القرآن | سُنّة`,
-      description: `«${personSlug}» في فهرس الذين ذكروا في القرآن — التعريف وسبب الذكر ومواضع الآيات.`,
+      description: `«${personSlug}» في فهرس المذكورين في القرآن الكريم — التعريف وسبب الذكر ومواضع الآيات.`,
       ogType: "article",
     };
   }

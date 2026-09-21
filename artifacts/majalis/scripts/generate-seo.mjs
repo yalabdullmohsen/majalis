@@ -208,7 +208,7 @@ const QURAN_PEOPLE = (QURAN_PEOPLE_CATALOG.people || []).filter(
   (p) => p.status === "published" && p.category !== "prophet",
 );
 if (!QURAN_PEOPLE.some((p) => p.slug === "azar" || p.nameAr === "آزر")) {
-  throw new Error("قائمة الذين ذكروا في القرآن تفتقد آزر (الأنعام 6:74)");
+  throw new Error("قائمة المذكورين في القرآن الكريم تفتقد آزر (الأنعام 6:74)");
 }
 
 
@@ -941,7 +941,7 @@ const LIST_JSON_LD = {
   ),
   "/quran/people": itemListJsonLdScript(
     QURAN_PEOPLE.map((p) => ({ name: p.nameAr, url: `/quran/people/${p.slug}` })),
-    "الذين ذكروا في القرآن",
+    "المذكورون في القرآن الكريم",
   ),
   "/tarikh-islami": itemListJsonLdScript(
     ISLAMIC_HISTORY_ITEMS.filter((i) => i.featured).map((i) => ({ name: i.title, url: `/tarikh-islami/${i.id}` })),
@@ -1064,13 +1064,13 @@ ${linkList(
 )}
 ${linkList("روابط ذات صلة", [
   { name: "قصص الأنبياء", url: "/prophets" },
-  { name: "الذين ذكروا في القرآن", url: "/quran/people" },
+  { name: "المذكورون في القرآن الكريم", url: "/quran/people" },
   { name: "قصص السور", url: "/quran/surah-stories" },
   { name: "مركز القرآن", url: "/quran-hub" },
 ])}`,
   "/quran/people": `<p>فهرس للذين ذُكروا في القرآن بأسمائهم الصريحة من غير الأنبياء، مع مواضع الآيات وروابط للسياق. الأنبياء عليهم السلام في قسم قصص الأنبياء.</p>
 ${linkList(
-  "من الذين ذكروا في القرآن",
+  "من المذكورين في القرآن الكريم",
   QURAN_PEOPLE.map((p) => ({ name: p.nameAr, url: `/quran/people/${p.slug}` })),
 )}
 ${linkList("روابط ذات صلة", [
@@ -2607,19 +2607,19 @@ for (const n of NATIONS) {
   );
 }
 
-// الذين ذكروا في القرآن — من people.json
+// المذكورون في القرآن الكريم — من people.json
 for (const person of QURAN_PEOPLE) {
-  const peopleSuffix = `${person.nameAr} في فهرس الذين ذكروا في القرآن، مع التعريف وسبب الذكر ومواضع الآيات.`;
+  const peopleSuffix = `${person.nameAr} في فهرس المذكورين في القرآن الكريم، مع التعريف وسبب الذكر ومواضع الآيات.`;
   addPage(
     {
       path: `/quran/people/${person.slug}`,
       title: `${person.nameAr} في القرآن`,
       description: clamp(padDesc(person.definition, peopleSuffix), META_DESC_MAX),
-      keywords: [person.nameAr, ...(person.aliases || []), "الذين ذكروا في القرآن", "أعلام القرآن"].filter(Boolean),
+      keywords: [person.nameAr, ...(person.aliases || []), "المذكورون في القرآن الكريم", "أعلام القرآن"].filter(Boolean),
       ogType: "article",
     },
     {
-      parents: [{ name: "الذين ذكروا في القرآن", path: "/quran/people" }],
+      parents: [{ name: "المذكورون في القرآن الكريم", path: "/quran/people" }],
       richBody: `<h2>التعريف</h2>
 <p>${escapeHtml(person.definition)}</p>
 ${person.whyMentioned ? `<h2>سبب الذكر</h2>\n<p>${escapeHtml(person.whyMentioned)}</p>` : ""}

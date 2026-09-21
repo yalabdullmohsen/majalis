@@ -419,7 +419,7 @@ export default function KnowledgeGraphPage() {
                       {" "}و{" "}
                       <Link href="/fiqh">الفقه</Link>
                       {" "}و{" "}
-                      <Link href="/quran/people">الذين ذُكروا في القرآن</Link>.
+                      <Link href="/quran/people">المذكورون في القرآن الكريم</Link>.
                     </>}
               </p>
             </div>

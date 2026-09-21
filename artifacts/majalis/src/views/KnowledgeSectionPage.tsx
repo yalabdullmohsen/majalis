@@ -21,7 +21,7 @@ const SECTION_TITLE: Record<string, string> = {
   prophets: "قصص الأنبياء",
   nations: "الأمم السابقة",
   quiz: "تحدي الأسئلة",
-  "quran-people": "الذين ذُكروا في القرآن",
+  "quran-people": "المذكورون في القرآن الكريم",
   tafsir: "التفسير",
   history: "التاريخ الإسلامي",
   "intro-islam": "التعريف بالإسلام",

@@ -188,7 +188,7 @@ const APP_PAGES = [
   ["app:tarikh-islami", "history", "التاريخ الإسلامي", "/tarikh-islami", ["تاريخ", "سيرة", "حضارة"]],
   ["app:seerah", "seerah", "السيرة النبوية", "/seerah", ["سيرة"]],
   ["app:prophets", "prophet", "قصص الأنبياء", "/prophets", ["أنبياء", "ابتلاءات"]],
-  ["app:quran-people", "person", "الذين ذكروا في القرآن", "/quran/people", ["أعلام", "شخصيات", "مذكورون", "فرعون", "مريم", "أشخاص القرآن"]],
+  ["app:quran-people", "person", "المذكورون في القرآن الكريم", "/quran/people", ["أعلام", "شخصيات", "مذكورون", "فرعون", "مريم", "أشخاص القرآن", "الذين ذكروا في القرآن", "الذين ذُكروا في القرآن"]],
   ["app:nations", "nation", "الأمم السابقة", "/nations", ["أمم"]],
   ["app:stories", "story", "القصص الإسلامية", "/stories", ["قصص"]],
   ["app:adhkar", "adhkar", "الأذكار والأدعية", "/adhkar", ["أذكار", "أدعية"]],
@@ -277,7 +277,7 @@ for (const [id, kind, title, href, parts] of APP_PAGES) {
   );
 }
 
-// ── الذين ذكروا في القرآن (دفعة الأسماء الصريحة) ─────────────────────────────
+// ── المذكورون في القرآن الكريم (دفعة الأسماء الصريحة) ─────────────────────────────
 try {
   const peoplePath = path.join(appRoot, "public/data/quran-people/people.json");
   const peopleJson = JSON.parse(fs.readFileSync(peoplePath, "utf8"));
@@ -300,7 +300,7 @@ try {
       [
         ...(p.aliases ?? []),
         p.category,
-        "الذين ذكروا في القرآن",
+        "المذكورون في القرآن الكريم",
         "أشخاص القرآن",
         defHint,
         whyHint,

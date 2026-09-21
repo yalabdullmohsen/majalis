@@ -30,7 +30,7 @@ const LABEL_MAP: Record<string, string> = {
   "/quran/surah-stories":           "أسباب النزول",
   "/surah-stories":                 "أسباب النزول",
   "/ulum-quran":                    "علوم القرآن",
-  "/quran/people":                  "الذين ذُكروا في القرآن",
+  "/quran/people":                  "المذكورون في القرآن الكريم",
   "/sections":                      "الأقسام",
   "/more":                          "الأقسام",
   "/mushaf":                        "المصحف",

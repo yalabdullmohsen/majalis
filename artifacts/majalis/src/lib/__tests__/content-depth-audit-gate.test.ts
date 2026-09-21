@@ -12,7 +12,7 @@ const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const people = JSON.parse(read("public/data/quran-people/people.json"));
 const list = people.people || [];
-assert.ok(list.length >= 90, `الذين ذكروا في القرآن ≥90 في البيانات (الآن ${list.length})`);
+assert.ok(list.length >= 90, `المذكورون في القرآن الكريم ≥90 في البيانات (الآن ${list.length})`);
 assert.ok(
   list.every((p: { slug?: string; nameAr?: string; definition?: string; status?: string; occurrences?: unknown[] }) =>
     Boolean(p.slug && p.nameAr && p.definition && Array.isArray(p.occurrences) && p.occurrences.length > 0),

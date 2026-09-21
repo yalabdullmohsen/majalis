@@ -427,7 +427,7 @@ const SECTION_SEEDS: SectionSeed[] = [
   },
   {
     id: "quran-figures",
-    label: "الذين ذُكروا في القرآن",
+    label: "المذكورون في القرآن الكريم",
     subtitle: "أعلام ومواضع ذكر — بلا أنبياء (قسمهم مستقل)",
     route: "/quran/people",
     icon: Users,
@@ -435,8 +435,8 @@ const SECTION_SEEDS: SectionSeed[] = [
     order: 8,
     surfaces: SEARCH_ONLY,
     status: "live",
-    keywords: ["أعلام قرآن", "شخصيات"],
-    aliases: ["الذين ذكروا في القرآن"],
+    keywords: ["أعلام قرآن", "شخصيات", "المذكورون"],
+    aliases: ["الذين ذكروا في القرآن", "الذين ذُكروا في القرآن", "المذكورون في القرآن"],
     hub: "quran",
   },
   {

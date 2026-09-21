@@ -1,5 +1,5 @@
 /**
- * بوابة b050: الذين ذُكروا في القرآن — لا «الزانية» بدل الزبانية، ولا حكمة مكررة آليًا.
+ * بوابة b050: المذكورون في القرآن الكريم — لا «الزانية» بدل الزبانية، ولا حكمة مكررة آليًا.
  * تشغيل: node --import tsx src/lib/__tests__/content-audit-b050-quran-people-gate.test.ts
  */
 import assert from "node:assert/strict";

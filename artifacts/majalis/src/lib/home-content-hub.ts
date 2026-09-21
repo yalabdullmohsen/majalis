@@ -25,7 +25,7 @@ export const HOME_CONTENT_HUB: ContentHubCard[] = [
   {
     href: "/quran/people",
     Icon: Users,
-    title: seoNavLabel("/quran/people", "الذين ذكروا في القرآن"),
+    title: seoNavLabel("/quran/people", "المذكورون في القرآن الكريم"),
     subtitle: "أسماء صريحة في القرآن مع مواضع الآيات والعِبَر",
     preload: () => import("@/pages/quran/QuranPeoplePage"),
   },

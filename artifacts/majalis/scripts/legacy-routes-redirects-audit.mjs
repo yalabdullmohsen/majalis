@@ -48,7 +48,7 @@ const IMPORTANT_SECTIONS = [
   { path: "/seerah", label: "السيرة" },
   { path: "/prophets", label: "قصص الأنبياء" },
   { path: "/nations", label: "الأمم السابقة" },
-  { path: "/quran/people", label: "الذين ذكروا في القرآن" },
+  { path: "/quran/people", label: "المذكورون في القرآن الكريم" },
   { path: "/sources", label: "المصادر" },
   { path: "/search", label: "البحث" },
 ];
