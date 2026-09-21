@@ -646,12 +646,13 @@ html[data-theme="dark"] .mm-tafsir__ed-btn {
 /*
  * Content Driven Layout (ص١–ص٢) — صقل فوق mushaf-reader.css فقط.
  * السبب الجذري للفراغ: repeat(N, 1fr) كان يوسّع كل خانة فيترك النص عائمًا وسط فراغ.
+ * PR-6: توازن رأسي أدق + تباين علامة الآية — بلا مساس بالنص/QPC/ص٣…٦٠٤.
  */
 .nm-page--opening .nm-page__body,
 .nm-page--lead .nm-page__body {
   grid-template-rows: repeat(var(--nm-content-rows, 8), minmax(0, auto));
   align-content: space-evenly;
-  padding-block: 0.08em 0.18em;
+  padding-block: 0.06em 0.14em;
   width: 100%;
 }
 
@@ -666,6 +667,30 @@ html[data-theme="dark"] .mm-tafsir__ed-btn {
   display: none;
 }
 
+/* تكتل الإطار/البسملة أقرب للآيات دون إزاحة ارتفاع الـslot */
+.nm-page--opening .nm-slot[data-kind="banner"],
+.nm-page--lead .nm-slot[data-kind="banner"] {
+  padding-block-end: 0.04em;
+}
+
+.nm-page--opening .nm-slot[data-kind="basmala"],
+.nm-page--lead .nm-slot[data-kind="basmala"] {
+  padding-block-end: 0.02em;
+}
+
+.nm-page--opening .nm-slot[data-kind="basmala"] + .nm-slot,
+.nm-page--lead .nm-slot[data-kind="basmala"] + .nm-slot,
+.nm-page--opening .nm-slot[data-kind="line"],
+.nm-page--lead .nm-slot[data-kind="line"] {
+  align-items: center;
+}
+
+.nm-page--opening .nm-page__footer,
+.nm-page--lead .nm-page__footer {
+  align-items: center;
+  padding-block-start: 0.08em;
+}
+
 /* ص١–ص٢ فقط: علامة آية أوضح قليلًا — لا تمس ص٣…٦٠٤ (قفل 1.15em + geometry) */
 .nm-page--opening,
 .nm-page--lead {
@@ -675,24 +700,24 @@ html[data-theme="dark"] .mm-tafsir__ed-btn {
 .nm-page--opening .nm-ayah-mark,
 .nm-page--lead .nm-ayah-mark {
   border-width: 1.5px;
-  font-size: 0.64em;
+  font-size: 0.65em;
   font-weight: 750;
   box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--quran-gold-ink, #5f4814) 22%, transparent);
+    inset 0 0 0 1px color-mix(in srgb, var(--quran-gold-ink, #5f4814) 30%, transparent);
 }
 
 /* توازن عمودي للهواتف الضيقة */
 @media (max-width: 390px) {
   .nm-page--opening .nm-page__body,
   .nm-page--lead .nm-page__body {
-    padding-block: 0.04em 0.12em;
+    padding-block: 0.04em 0.1em;
   }
 }
 
 @media (min-width: 768px) {
   .nm-page--opening .nm-page__body,
   .nm-page--lead .nm-page__body {
-    padding-block: 0.12em 0.28em;
+    padding-block: 0.1em 0.22em;
   }
 }
 
