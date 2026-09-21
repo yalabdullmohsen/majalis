@@ -9,6 +9,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import "@/styles/pages/seerah.css";
+import "@/styles/pages/stories-seerah-v2.css";
 import { DashboardScreen } from "@/components/design-system/screens";
 import {
   KnowledgeLayout,

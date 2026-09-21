@@ -33,8 +33,8 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 |---|---|---|
 | 1 | Design Tokens + SunnahCard V2 | **merged** (#2201) |
 | 2 | Dashboard Homepage | **merged** (#2202) |
-| 3 | Quran Hub | **this** |
-| 4 | Stories & Seerah | queued |
+| 3 | Quran Hub | **merged** (#2203) |
+| 4 | Stories & Seerah | **this** |
 | 5 | Library & Search | queued |
 | 6 | Profile Hub + bottom nav (5 tabs) | queued |
 | 7 | Dark Mode Luxury Night polish | queued |
@@ -56,6 +56,13 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 - بطاقات اللوبي أكبر · عاجية · أيقونات Rounded Premium
 - المصحف: ذهب أدوات القراءة موحّد مع `--v2-color-gold` فقط (لا نص)
 - CSS: `styles/pages/quran-hub-v2.css`
+
+## PR-4 Stories & Seerah
+
+- `html[data-v2-stories="1"]` على `/prophets` و `/seerah`
+- بطاقات أنبياء أكبر · عاجية · بلا سكة جانبية
+- السيرة: Timeline حديث (نقاط زمرد/ذهب + لوحة مرحلة كبيرة)
+- CSS: `styles/pages/stories-seerah-v2.css`
 
 ## Gate
 

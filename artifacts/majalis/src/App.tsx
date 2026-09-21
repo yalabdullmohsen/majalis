@@ -687,6 +687,24 @@ function AppShellInner() {
     };
   }, [isQuranHubPath]);
 
+  const isStoriesPath =
+    location === "/prophets" ||
+    location.startsWith("/prophets/") ||
+    location === "/seerah" ||
+    location.startsWith("/seerah?");
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isStoriesPath) {
+      root.setAttribute("data-v2-stories", "1");
+    } else {
+      root.removeAttribute("data-v2-stories");
+    }
+    return () => {
+      root.removeAttribute("data-v2-stories");
+    };
+  }, [isStoriesPath]);
+
   useEffect(() => {
     const evtHandler = () => openGlobalSearch();
     const soonHandler = (e: Event) => {
