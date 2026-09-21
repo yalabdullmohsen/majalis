@@ -11,15 +11,15 @@
   padding: 2.5rem 1rem;
   text-align: center;
 }
-.adv-error-state__icon { color: #dc2626; opacity: 0.75; }
-.adv-error-state__msg  { font-size: 0.88rem; color: var(--clr-ink-soft, var(--mj-muted)); margin: 0; max-width: 340px; }
+.adv-error-state__icon { color: var(--mj-danger, var(--svl-accent-danger, #b44a4a)); opacity: 0.85; }
+.adv-error-state__msg  { font-size: 0.88rem; color: var(--svl-text-secondary, var(--clr-ink-soft, var(--mj-muted))); margin: 0; max-width: 340px; }
 .adv-error-state__retry {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   padding: 0.5rem 1.1rem;
-  background: var(--mj-brand);
-  color: #fff;
+  background: var(--svl-accent-primary-deep, var(--mj-brand));
+  color: var(--mj-on-brand, var(--svl-text-on-brand, #f8faf8));
   border: none;
   border-radius: var(--ds-radius);
   font-size: 0.82rem;
@@ -27,7 +27,7 @@
   cursor: pointer;
   transition: background .15s;
 }
-.adv-error-state__retry:hover { background: var(--mj-brand-deep); }
+.adv-error-state__retry:hover { background: var(--mj-brand-deep, var(--svl-accent-primary-deep)); }
 
 /* ── نُقل إلى styles/components/scholarly-trust.css ── */
 /* ── Global Design Consistency Fixes ── */

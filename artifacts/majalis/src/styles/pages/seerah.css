@@ -287,8 +287,8 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   border-radius: var(--radius-card, 24px);
   border: 1px solid var(--majalis-line);
   padding: 1.75rem;
-  min-height: 340px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  min-height: 0;
+  box-shadow: var(--svl-shadow-card, 0 2px 12px rgba(0,0,0,0.06));
 }
 @media (max-width: 720px) {
   .seerah-panel { padding: var(--ds-space-5); scroll-margin-top: 1rem; }

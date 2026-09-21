@@ -41,6 +41,7 @@ assert.match(refresh, /home-welcome-premium/);
 assert.match(refresh, /Feature Cards/);
 assert.match(refresh, /\[data-quran-hub="1"\]/);
 assert.match(refresh, /prophet-lux-card/);
+assert.match(refresh, /بقية الأقسام العامة \(PR-5\)/);
 assert.match(refresh, /Dark Luxury/);
 assert.doesNotMatch(refresh, /#00ff|#39ff|#ff00|neon/i);
 

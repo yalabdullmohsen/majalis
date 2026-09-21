@@ -1078,17 +1078,25 @@ html.dark .lesson-detail-page .lesson-unified-card:not(.soft-card),
 html[data-theme="dark"] .lesson-detail-page .lesson-unified-card:not(.soft-card),
 html.dark .lessons-similar-section .lesson-unified-card:not(.soft-card),
 html[data-theme="dark"] .lessons-similar-section .lesson-unified-card:not(.soft-card) {
-  --lesson-green-soft: #15241e;
-  background-color: #12201b !important;
-  background-image: linear-gradient(165deg, #17241f 0%, #12201b 100%) !important;
+  --lesson-green-soft: color-mix(in srgb, var(--svl-accent-primary, #0f5c45) 18%, var(--svl-surface-primary, #17221e));
+  background-color: var(--svl-surface-primary, #17221e) !important;
+  background-image: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--svl-accent-primary, #0f5c45) 12%, var(--svl-surface-primary, #17221e)) 0%,
+    var(--svl-surface-primary, #17221e) 100%
+  ) !important;
   border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #5a9e88)) 28%, var(--mj-hairline)) !important;
-  color: #e7f0eb;
+  color: var(--svl-text-primary, #e7f0eb);
 }
 
 html.dark .lessons-page-v2 .lesson-unified-card--today:not(.soft-card),
 html[data-theme="dark"] .lessons-page-v2 .lesson-unified-card--today:not(.soft-card) {
-  background-color: #15201c !important;
-  background-image: linear-gradient(165deg, color-mix(in srgb, #2f6b57 28%, #121a16) 0%, #15201c 100%) !important;
+  background-color: var(--svl-surface-primary, #17221e) !important;
+  background-image: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--svl-accent-primary, #2f6b57) 28%, var(--svl-surface-primary, #121a16)) 0%,
+    var(--svl-surface-primary, #15201c) 100%
+  ) !important;
   border-color: color-mix(in srgb, var(--mj-brand, var(--mj-brand, #5a9e88)) 45%, var(--mj-hairline)) !important;
 }
 

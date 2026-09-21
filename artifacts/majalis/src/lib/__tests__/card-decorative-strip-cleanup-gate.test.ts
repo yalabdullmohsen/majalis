@@ -30,10 +30,12 @@ const docSrc = read(doc);
 
 assert.match(mainSrc, /card-decorative-strip-cleanup\.css/);
 assert.match(cleanCss, /border-inline-start-width:\s*1px\s*!important/);
+assert.match(cleanCss, /border-inline-end-width:\s*1px\s*!important/);
 assert.match(cleanCss, /\.hub-card/);
 assert.match(cleanCss, /\.lesson-unified-card/);
 assert.match(cleanCss, /kx-block--definition|blockquote|mushaf|status.strip/i);
 assert.doesNotMatch(cleanCss, /border-inline-start:\s*[34]px/);
+assert.doesNotMatch(cleanCss, /border-inline-end:\s*[34]px/);
 
 assert.doesNotMatch(greenCss, /border-inline-start:\s*[34]px/);
 assert.doesNotMatch(unifyCss, /border-inline-start:\s*[34]px/);

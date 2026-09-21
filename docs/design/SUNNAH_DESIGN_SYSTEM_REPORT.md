@@ -35,10 +35,11 @@
 
 ## خارج هذه الموجة
 
-- استبدال hex في الرئيسية/مركز القرآن/الأنبياء → PR-4
-- بقية الأقسام → PR-5
+- استبدال hex في الرئيسية/مركز القرآن/الأنبياء → PR-4 ✅
+- بقية الأقسام → PR-5 (شرائط RTL end + تغطية visual-refresh + أذكار/سيرة/فقه/معرفة/حالات فارغة)
 - حذف brand-v4 / m2030 كحزم هوية منافسة → PR-7
 
 ## بوابة
 
-`src/lib/__tests__/sunnah-design-system-consolidation-gate.test.ts`
+`src/lib/__tests__/sunnah-design-system-consolidation-gate.test.ts`  
+`src/lib/__tests__/sunnah-pr5-sections-visual-gate.test.ts`

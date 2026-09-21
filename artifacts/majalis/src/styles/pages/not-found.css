@@ -3,7 +3,7 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .nf2-page {
-  min-height: 70vh;
+  min-height: min(70vh, 32rem);
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -42,12 +42,12 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: rgba(23,61,53,.1);
+  background: color-mix(in srgb, var(--svl-accent-primary, var(--mj-brand)) 12%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1.25rem;
-  border: 1.5px solid rgba(23,61,53,.18);
+  border: 1.5px solid color-mix(in srgb, var(--svl-accent-primary, var(--mj-brand)) 22%, transparent);
 }
 .nf2-compass { color: var(--mj-brand); }
 

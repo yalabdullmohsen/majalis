@@ -49,9 +49,9 @@
   width: 100%;
   max-width: 640px;
   min-height: 12.5rem;
-  height: 12.5rem;
+  height: auto;
   box-shadow: var(--mj-elev-1, 0 2px 16px rgba(0,0,0,.06));
-  overflow: hidden;
+  overflow: visible;
 }
 
 .adhkar-focus-text {
@@ -61,10 +61,8 @@
   color: var(--majalis-ink, var(--mj-ink));
   margin: 0;
   opacity: 1;
-  max-height: 100%;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
+  max-height: none;
+  overflow: visible;
   width: 100%;
   padding-inline: 0.15rem;
 }

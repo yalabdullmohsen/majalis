@@ -12,8 +12,8 @@
 | PR-1 تثبيت + triage | **MERGED** | #2181 | triage + إغلاق مسودات |
 | PR-2 عزل Admin | **MERGED** | #2182 | لا أدوات فوق التطبيق العام |
 | PR-3 Design tokens | **MERGED** | #2183 | `--sunnah-*` + تقرير DS |
-| PR-4 رئيسية/قرآن/أنبياء | **IN_PROGRESS** | (فرع حالي) | استئناف حقيقي + ذهب + لا clip |
-| PR-5 أقسام عامة | PENDING | — | |
+| PR-4 رئيسية/قرآن/أنبياء | **MERGED** | #2184 | استئناف حقيقي + ذهب + لا clip |
+| PR-5 أقسام عامة | **IN_PROGRESS** | (فرع حالي) | شرائط RTL + سطوح + أذكار/فقه/معرفة |
 | PR-6 مصحف ص١–ص٢ | **PARTIAL** | #2180 MERGED | أساس layout/gold على main |
 | PR-7 legacy cleanup | PENDING | — | |
 | PR-8 Admin v3 Shell | PENDING | — | بعد جرد #2176 |
