@@ -196,6 +196,7 @@ const JumuahPage = lazy(() => import("@/views/JumuahPage"));
 const WaqfPage = lazy(() => import("@/views/WaqfPage"));
 const SadaqaPage = lazy(() => import("@/views/SadaqaPage"));
 const AdminPage = lazyWithRetry(() => import("@/views/AdminPage"), "AdminPage");
+const AdminV3App = lazyWithRetry(() => import("@/admin-v3/AdminV3App"), "AdminV3App");
 const LessonImportImagePage = lazyWithRetry(() => import("@/views/admin/LessonImportImagePage"), "LessonImportImagePage");
 const LessonImportUrlPage = lazyWithRetry(() => import("@/views/admin/LessonImportUrlPage"), "LessonImportUrlPage");
 const AutomationSourcesPage = lazyWithRetry(() => import("@/views/admin/AutomationSourcesPage"), "AutomationSourcesPage");
@@ -702,6 +703,16 @@ export default function AppRoutes() {
       <Route path="/admin/dashboard"><AdminLazyRoute component={AdminDashboardPage} /></Route>
       <Route path="/admin/users"><Redirect to="/admin?section=users" /></Route>
       <Route path="/admin/universities"><AdminLazyRoute component={UniversitiesAdminPage} /></Route>
+      <Route path="/admin/v3/content"><AdminLazyRoute component={AdminV3App} /></Route>
+      <Route path="/admin/v3/review"><AdminLazyRoute component={AdminV3App} /></Route>
+      <Route path="/admin/v3/users"><AdminLazyRoute component={AdminV3App} /></Route>
+      <Route path="/admin/v3/notifications"><AdminLazyRoute component={AdminV3App} /></Route>
+      <Route path="/admin/v3/analytics"><AdminLazyRoute component={AdminV3App} /></Route>
+      <Route path="/admin/v3/automation"><AdminLazyRoute component={AdminV3App} /></Route>
+      <Route path="/admin/v3/system"><AdminLazyRoute component={AdminV3App} /></Route>
+      <Route path="/admin/v3/settings"><AdminLazyRoute component={AdminV3App} /></Route>
+      <Route path="/admin/v3/audit"><AdminLazyRoute component={AdminV3App} /></Route>
+      <Route path="/admin/v3"><AdminLazyRoute component={AdminV3App} /></Route>
       <Route path="/admin"><AdminLazyRoute component={AdminPage} /></Route>
       <Route component={() => (
         <Suspense fallback={<LazyRouteFallback />}>
