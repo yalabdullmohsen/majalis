@@ -152,6 +152,32 @@ console.log("=== PR-5 Library & Search ===");
   assert.match(doc, /library-search-v2\.css/);
 }
 
+console.log("=== PR-6 Profile Hub + Bottom Nav ===");
+{
+  const app = read("src/App.tsx");
+  assert.match(app, /data-v2-profile/);
+  assert.match(app, /data-v2-nav/);
+  assert.ok(existsSync(resolve(majalisRoot, "src/styles/pages/profile-hub-v2.css")));
+  const settings = read("src/pages/account/ui/SettingsView.tsx");
+  const progress = read("src/pages/account/ui/ProgressCenterView.tsx");
+  const nav = read("src/components/BottomNavBar.tsx");
+  assert.match(settings, /profile-hub-v2\.css/);
+  assert.match(progress, /profile-hub-v2\.css/);
+  assert.match(nav, /profile-hub-v2\.css/);
+  const css = read("src/styles/pages/profile-hub-v2.css");
+  assert.match(css, /data-v2-profile/);
+  assert.match(css, /data-v2-nav/);
+  assert.match(css, /settings-account-card/);
+  assert.match(css, /bottom-nav--v2/);
+  assert.match(css, /kp-continue/);
+  assert.doesNotMatch(css, /border-inline-start:\s*[34]px/);
+  const tabs = read("src/lib/nav-map.ts");
+  assert.match(tabs, /BOTTOM_NAV_TABS/);
+  const doc = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2.md"), "utf8");
+  assert.match(doc, /PR-6 Profile Hub/);
+  assert.match(doc, /profile-hub-v2\.css/);
+}
+
 console.log("=== package script ===");
 {
   const pkg = read("package.json");
