@@ -41,6 +41,8 @@ import "./styles/brand-v4.css";
 import "./styles/tokens.css";
 // رموز دلالية موحّدة (سطح/نص/حد/خطوط) — بعد tokens وقبل الطبقات القديمة
 import "./styles/design-tokens.css";
+/* Visual Redesign V2 — رموز Dashboard الفاخرة (متغيرات فقط · خفيفة) */
+import "./styles/visual-redesign-v2-tokens.css";
 import "./styles/breakpoints.css";
 import "./styles/typography-scale.css";
 import "./styles/typography-app.css";

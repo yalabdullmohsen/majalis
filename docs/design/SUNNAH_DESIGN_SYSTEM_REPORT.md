@@ -38,6 +38,7 @@
 - استبدال hex في الرئيسية/مركز القرآن/الأنبياء → PR-4 ✅
 - بقية الأقسام → PR-5 (شرائط RTL end + تغطية visual-refresh + أذكار/سيرة/فقه/معرفة/حالات فارغة)
 - حذف brand-v4 / m2030 كحزم هوية منافسة → PR-7
+- **Visual Redesign V2** → `docs/design/VISUAL_REDESIGN_V2.md` (tokens + SunnahCard V2 → شاشات Dashboard)
 
 ## بوابة
 

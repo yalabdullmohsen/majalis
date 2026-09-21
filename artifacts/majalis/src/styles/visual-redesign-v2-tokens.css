@@ -1,0 +1,94 @@
+/**
+ * Visual Redesign V2 — رموز الهوية Premium Islamic Dashboard
+ *
+ * مصدر التجربة: مرجع بصري (لا نسخ شعار/صور).
+ * القيم الحرفية الأساسية تبقى في theme.css (--sunnah-* / --mj-*).
+ * هذا الملف يضيف طبقة V2 دلالية للاستهلاك في الشاشات المُعاد تصميمها.
+ *
+ * لا يغيّر نص المصحف · لا يمس Admin v3 · لا يغيّر Routes.
+ */
+:root {
+  /* ── لوحة V2 (أسماء صريحة؛ القيم عبر Sunnah SoT) ── */
+  --v2-color-ivory: #f9f8f4;
+  --v2-color-ivory-surface: #fffcf8;
+  --v2-color-ivory-muted: #efe8dc;
+  --v2-color-emerald: var(--sunnah-emerald, #0f5c45);
+  --v2-color-emerald-deep: var(--sunnah-emerald-deep, #0a3d2e);
+  --v2-color-emerald-soft: var(--mj-brand-soft, #e2efe8);
+  --v2-color-gold: var(--sunnah-quran-gold, #c9a82e);
+  --v2-color-ink: var(--sunnah-ink, #16241e);
+  --v2-color-ink-muted: var(--sunnah-ink-muted, #5e6e67);
+  --v2-color-on-emerald: #ffffff;
+
+  /* Luxury Night — Deep Emerald Night (ليس عكسًا خامًا) */
+  --v2-color-night-bg: var(--sunnah-night-bg, #0a1612);
+  --v2-color-night-surface: var(--sunnah-night-surface, #12261f);
+  --v2-color-night-elevated: #18332a;
+  --v2-color-night-ink: var(--sunnah-night-text, #edf5f0);
+  --v2-color-night-muted: #a8bfb4;
+  --v2-color-night-gold: var(--sunnah-night-gold, #c4a84a);
+  --v2-color-night-hairline: rgba(237, 245, 240, 0.12);
+
+  /* ── هندسة البطاقات الفاخرة ── */
+  --v2-radius-sm: 14px;
+  --v2-radius-md: 18px;
+  --v2-radius-lg: 22px;
+  --v2-radius-xl: 26px;
+  --v2-radius-card: var(--v2-radius-xl);
+  --v2-radius-icon: 16px;
+  --v2-radius-pill: 999px;
+
+  --v2-space-1: 0.25rem;
+  --v2-space-2: 0.5rem;
+  --v2-space-3: 0.75rem;
+  --v2-space-4: 1rem;
+  --v2-space-5: 1.25rem;
+  --v2-space-6: 1.5rem;
+  --v2-space-8: 2rem;
+  --v2-space-10: 2.5rem;
+
+  --v2-shadow-soft: 0 4px 16px rgba(22, 36, 30, 0.05);
+  --v2-shadow-card: 0 8px 28px rgba(22, 36, 30, 0.07);
+  --v2-shadow-elevated: 0 12px 40px rgba(22, 36, 30, 0.1);
+  --v2-hairline: color-mix(in srgb, var(--v2-color-ink) 8%, transparent);
+
+  /* ── Micro motion فقط ── */
+  --v2-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --v2-duration-fast: 140ms;
+  --v2-duration: 220ms;
+  --v2-duration-slow: 320ms;
+
+  /* أيقونات Rounded Premium */
+  --v2-icon-size: 1.35rem;
+  --v2-icon-tile: 2.75rem;
+  --v2-icon-stroke: 1.75;
+}
+
+html[data-theme="dark"],
+html.dark {
+  --v2-color-ivory: var(--v2-color-night-bg);
+  --v2-color-ivory-surface: var(--v2-color-night-surface);
+  --v2-color-ivory-muted: var(--v2-color-night-elevated);
+  --v2-color-ink: var(--v2-color-night-ink);
+  --v2-color-ink-muted: var(--v2-color-night-muted);
+  --v2-color-gold: var(--v2-color-night-gold);
+  --v2-hairline: var(--v2-color-night-hairline);
+  --v2-shadow-soft: 0 4px 18px rgba(0, 0, 0, 0.28);
+  --v2-shadow-card: 0 10px 32px rgba(0, 0, 0, 0.35);
+  --v2-shadow-elevated: 0 14px 44px rgba(0, 0, 0, 0.42);
+}
+
+/* جسر اختياري: الصفحة العامة يمكن أن تتبنى خلفية V2 دون كسر القديم */
+html[data-v2-dashboard="1"] body,
+html[data-v2-dashboard="1"] .app-shell {
+  background-color: var(--v2-color-ivory);
+  color: var(--v2-color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --v2-duration-fast: 1ms;
+    --v2-duration: 1ms;
+    --v2-duration-slow: 1ms;
+  }
+}
