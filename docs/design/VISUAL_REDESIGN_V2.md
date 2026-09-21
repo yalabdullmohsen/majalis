@@ -34,8 +34,8 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 | 1 | Design Tokens + SunnahCard V2 | **merged** (#2201) |
 | 2 | Dashboard Homepage | **merged** (#2202) |
 | 3 | Quran Hub | **merged** (#2203) |
-| 4 | Stories & Seerah | **this** |
-| 5 | Library & Search | queued |
+| 4 | Stories & Seerah | **merged** (#2204) |
+| 5 | Library & Search | **this** |
 | 6 | Profile Hub + bottom nav (5 tabs) | queued |
 | 7 | Dark Mode Luxury Night polish | queued |
 | 8 | Visual QA | queued |
@@ -63,6 +63,13 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 - بطاقات أنبياء أكبر · عاجية · بلا سكة جانبية
 - السيرة: Timeline حديث (نقاط زمرد/ذهب + لوحة مرحلة كبيرة)
 - CSS: `styles/pages/stories-seerah-v2.css`
+
+## PR-5 Library & Search
+
+- `/library` → `/search` (عقد المنتج القائم)
+- `html[data-v2-search="1"]` على `/search`
+- Search First: شريط بحث بارز · تصنيفات مرتبة · بطاقات نتائج أنيقة
+- CSS: `styles/pages/library-search-v2.css`
 
 ## Gate
 

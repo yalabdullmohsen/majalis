@@ -705,6 +705,23 @@ function AppShellInner() {
     };
   }, [isStoriesPath]);
 
+  const isSearchPath =
+    location === "/search" ||
+    location.startsWith("/search/") ||
+    location.startsWith("/search?");
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isSearchPath) {
+      root.setAttribute("data-v2-search", "1");
+    } else {
+      root.removeAttribute("data-v2-search");
+    }
+    return () => {
+      root.removeAttribute("data-v2-search");
+    };
+  }, [isSearchPath]);
+
   useEffect(() => {
     const evtHandler = () => openGlobalSearch();
     const soonHandler = (e: Event) => {

@@ -136,6 +136,22 @@ console.log("=== PR-4 Stories & Seerah ===");
   assert.match(doc, /stories-seerah-v2\.css/);
 }
 
+console.log("=== PR-5 Library & Search ===");
+{
+  const app = read("src/App.tsx");
+  assert.match(app, /data-v2-search/);
+  assert.ok(existsSync(resolve(majalisRoot, "src/styles/pages/library-search-v2.css")));
+  const search = read("src/pages/account/ui/SearchView.tsx");
+  assert.match(search, /library-search-v2\.css/);
+  const css = read("src/styles/pages/library-search-v2.css");
+  assert.match(css, /data-v2-search/);
+  assert.match(css, /srch-home-form|Search First/);
+  assert.match(css, /srch-result-card/);
+  const doc = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2.md"), "utf8");
+  assert.match(doc, /PR-5 Library/);
+  assert.match(doc, /library-search-v2\.css/);
+}
+
 console.log("=== package script ===");
 {
   const pkg = read("package.json");

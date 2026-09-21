@@ -1,0 +1,142 @@
+/**
+ * Visual Redesign V2 — Library & Search (Search First).
+ * /library يحوّل إلى /search — هذه الشاشة هي مركز البحث/المكتبة البصري.
+ * html[data-v2-search="1"]
+ */
+
+html[data-v2-search="1"] .search-page,
+html[data-v2-search="1"] .srch-page--v2 {
+  background: var(--v2-color-ivory, #f9f8f4);
+  color: var(--v2-color-ink, #16241e);
+}
+
+html[data-v2-search="1"] .search-page .srch-home-form,
+html[data-v2-search="1"] .search-page .search-page-form {
+  position: sticky;
+  top: var(--sticky-below-chrome, var(--app-top-chrome-h, 0px));
+  z-index: var(--z-sticky, 100);
+  background: color-mix(in srgb, var(--v2-color-ivory, #f9f8f4) 92%, transparent);
+  backdrop-filter: blur(8px);
+  padding-block: var(--v2-space-3, 0.75rem);
+  margin-bottom: var(--v2-space-4, 1rem);
+}
+
+html[data-v2-search="1"] .srch-home-field,
+html[data-v2-search="1"] .srch-home-field input {
+  border-radius: var(--v2-radius-lg, 22px);
+  border-color: var(--v2-hairline);
+  background: var(--v2-color-ivory-surface, #fffcf8);
+  box-shadow: var(--v2-shadow-soft);
+  min-height: 52px;
+  color: var(--v2-color-ink);
+}
+
+html[data-v2-search="1"] .srch-home-field:focus-within {
+  border-color: color-mix(in srgb, var(--v2-color-emerald) 45%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--v2-color-emerald) 16%, transparent);
+}
+
+html[data-v2-search="1"] .srch-home-submit {
+  min-height: 52px;
+  border-radius: var(--v2-radius-pill, 999px);
+  background: var(--v2-color-emerald, #0f5c45);
+  color: var(--v2-color-on-emerald, #fff);
+  border: none;
+  font-weight: 700;
+  padding-inline: var(--v2-space-5, 1.25rem);
+}
+
+html[data-v2-search="1"] .srch-home-submit:focus-visible {
+  outline: 2px solid var(--v2-color-gold, #c9a82e);
+  outline-offset: 2px;
+}
+
+/* تصنيفات مرتبة — chips فاخرة */
+html[data-v2-search="1"] .srch-scope-grid {
+  gap: var(--v2-space-3, 0.75rem);
+}
+
+html[data-v2-search="1"] .srch-scope-card,
+html[data-v2-search="1"] [data-search-scope] {
+  border-radius: var(--v2-radius-md, 18px);
+  border: 1px solid var(--v2-hairline);
+  background: var(--v2-color-ivory-surface, #fffcf8);
+  box-shadow: var(--v2-shadow-soft);
+  min-height: 4.5rem;
+  padding: var(--v2-space-3, 0.75rem);
+}
+
+html[data-v2-search="1"] .srch-scope-card.is-active,
+html[data-v2-search="1"] [data-search-scope][aria-pressed="true"],
+html[data-v2-search="1"] [data-search-scope].is-active {
+  background: var(--v2-color-emerald, #0f5c45);
+  color: var(--v2-color-on-emerald, #fff);
+  border-color: transparent;
+}
+
+/* بطاقات نتائج — شبيهة بكتب أنيقة */
+html[data-v2-search="1"] .srch-result-card,
+html[data-v2-search="1"] [data-search-result="1"] {
+  border-radius: var(--v2-radius-card, 26px);
+  border: 1px solid var(--v2-hairline);
+  background: var(--v2-color-ivory-surface, #fffcf8);
+  box-shadow: var(--v2-shadow-card);
+  padding: var(--v2-space-4, 1rem) var(--v2-space-5, 1.25rem);
+  margin-block: var(--v2-space-3, 0.75rem);
+  min-height: 5rem;
+}
+
+html[data-v2-search="1"] .srch-result-card__title {
+  font-weight: 800;
+  color: var(--v2-color-ink);
+  font-size: 1.05rem;
+}
+
+html[data-v2-search="1"] .srch-result-card__snippet {
+  color: var(--v2-color-ink-muted);
+  line-height: 1.65;
+}
+
+html[data-v2-search="1"] .srch-hl {
+  background: color-mix(in srgb, var(--v2-color-gold, #c9a82e) 28%, transparent);
+  color: inherit;
+  border-radius: 0.2em;
+  padding-inline: 0.1em;
+}
+
+html[data-v2-search="1"] .srch-home-idle,
+html[data-v2-search="1"] .srch-idle {
+  border-radius: var(--v2-radius-card, 26px);
+  background: var(--v2-color-ivory-muted, #efe8dc);
+  border: 1px solid var(--v2-hairline);
+  padding: var(--v2-space-6, 1.5rem);
+}
+
+html[data-v2-search="1"] .srch-page-back {
+  border-radius: var(--v2-radius-pill, 999px);
+  border-color: var(--v2-hairline);
+  background: var(--v2-color-ivory-surface, #fffcf8);
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+}
+
+html[data-theme="dark"][data-v2-search="1"] .search-page,
+html.dark[data-v2-search="1"] .search-page {
+  background: var(--v2-color-night-bg, #0a1612);
+  color: var(--v2-color-night-ink, #edf5f0);
+}
+
+html[data-theme="dark"][data-v2-search="1"] .srch-result-card,
+html.dark[data-v2-search="1"] .srch-result-card,
+html[data-theme="dark"][data-v2-search="1"] .srch-home-field,
+html.dark[data-v2-search="1"] .srch-home-field {
+  background: var(--v2-color-night-surface, #12261f);
+  border-color: var(--v2-color-night-hairline);
+  color: var(--v2-color-night-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-v2-search="1"] .srch-result-card,
+  html[data-v2-search="1"] .srch-home-submit {
+    transition: none;
+  }
+}
