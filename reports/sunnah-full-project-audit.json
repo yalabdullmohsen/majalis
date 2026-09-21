@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "program": "SUNNAH_FULL_PROJECT_AUDIT",
+  "status": "PARTIAL",
+  "completeDeclared": false,
+  "completeToken": "SUNNAH_FULL_AUDIT_COMPLETE",
+  "completeTokenDeclared": false,
+  "generatedAtUtc": "2026-09-21T12:11:58Z",
+  "phase": "DISCOVERY_AND_VERIFICATION_ONLY",
+  "confidence": {
+    "overall": "MEDIUM",
+    "gitAndProduction": "HIGH",
+    "routeInventory": "HIGH",
+    "libraryRecount": "HIGH",
+    "licenseDocs": "HIGH",
+    "visualEveryRoute": "LOW",
+    "deviceMatrix": "NOT_RUN",
+    "localVerifyCiThisSession": "NOT_RUN"
+  },
+  "source": {
+    "gitRoot": "/Users/alabdullmohsen/majlis-app",
+    "remote": "https://github.com/yalabdullmohsen/majalis.git",
+    "branchAtStart": "cursor/remediation-pr2-store-license-guards",
+    "examinedAs": "detached origin/main",
+    "commit": "5e99cd7cf53244444916b0ecd7b55b3a8953cfd8",
+    "shortCommit": "5e99cd7cf",
+    "agentsMdClaimsRoot": "/Users/alabdullmohsen/majalis-correct/",
+    "agentsMdConflict": true,
+    "repoIndexRoot": "/Users/alabdullmohsen/majlis-app"
+  },
+  "production": {
+    "url": "https://www.ssunnah.com",
+    "versionJson": {
+      "commit": "5e99cd7c",
+      "builtAt": "2026-09-21T12:10:15.331Z",
+      "ref": "main"
+    },
+    "parityWithOriginMainAtMeasurement": true,
+    "earlierSessionObservation": "53162dbe before deploy of #2191 completed"
+  },
+  "routes": {
+    "sourceFile": "artifacts/majalis/src/AppRoutes.tsx",
+    "uniquePathCount": 366,
+    "totalTrustMatrixRowsStale": 365,
+    "criticalSmoke": [
+      { "path": "/", "http": 200 },
+      { "path": "/mushaf", "http": 200 },
+      { "path": "/lessons", "http": 200 },
+      { "path": "/search", "http": 200 },
+      { "path": "/islamic-sects", "http": 200 },
+      { "path": "/seerah", "http": 200 },
+      { "path": "/quiz", "http": 200 },
+      { "path": "/prayer", "http": 308, "location": "/prayer-times" },
+      { "path": "/library", "http": 308, "location": "/search" },
+      { "path": "/quran", "http": 308, "location": "/quran-hub" },
+      { "path": "/learn/series/test", "http": 308, "location": "/lessons", "severity": "P0_DEEPLINK" },
+      { "path": "/admin", "http": 404 },
+      { "path": "/account", "http": 404 }
+    ]
+  },
+  "counts": {
+    "p0": 13,
+    "p1": 12,
+    "p2": 8,
+    "p3": 3,
+    "libraryTotal": 190,
+    "librarySourceVerified": 18,
+    "librarySourceMissing": 172,
+    "librarySourceBroken": 0,
+    "sectsTotal": 35,
+    "sectsPublished": 0,
+    "sectsHidden": 35,
+    "mushafScriptsNoOp": 34,
+    "mushafScriptsRealish": 35,
+    "openDraftPrs": 1
+  },
+  "storeReadiness": {
+    "verdict": "HOLD",
+    "evidence": "docs/store-release/STORE_100_PERCENT_READINESS.md"
+  },
+  "stabilization": {
+    "verdict": "PARTIAL",
+    "pr1to7": "MERGED",
+    "pr8AdminShell": "PENDING",
+    "pr9Centers": "PENDING",
+    "pr10LegacyDelete": "BLOCKED",
+    "pr11ContentHonesty": "PENDING",
+    "pr12Final": "PENDING"
+  },
+  "contentReadiness": "NOT_READY",
+  "adminV3Readiness": "NOT_STARTED_BUILD_INVENTORY_DONE",
+  "quranMushafReadiness": "PARTIAL_WEB_NOT_READY_STORE",
+  "prayerAudioReadiness": "PARTIAL_CODE_DEVICE_REQUIRED",
+  "performance": {
+    "entryJsGzipKiBArchitectureBaseline": 120.29,
+    "entryJsGzipKiBWorldClassBaseline": 114.69,
+    "fiqhBooksSoftGzipKiB": 251.5,
+    "remeasuredOnTip5e99": false,
+    "budgetRaiseAllowed": false
+  },
+  "ci": {
+    "localVerifyPreflightThisSession": "NOT_RUN",
+    "localVerifyCiThisSession": "NOT_RUN",
+    "tipDeployWorkflowAtObservation": "in_progress_or_completing",
+    "mushafUiNoOps": 34
+  },
+  "openPrs": [
+    {
+      "number": 1791,
+      "title": "mobile: Offline-First (MMKV + React Query persist)",
+      "branch": "fix/mobile-offline-first",
+      "draft": true,
+      "mergeable": "MERGEABLE",
+      "updatedAt": "2026-09-13T21:49:51Z",
+      "recommendation": "CLOSE_RECOMMENDED"
+    }
+  ],
+  "mergedDuringOrJustBeforeAudit": [
+    { "number": 2190, "title": "Remediation PR-1 truth sync", "sha": "53162dbe6" },
+    { "number": 2191, "title": "Remediation PR-2 store license guards", "sha": "5e99cd7cf" }
+  ],
+  "issues": [
+    { "id": "P0-STORE-HOLD", "severity": "P0_BLOCKER", "status": "CONFIRMED", "domain": "store", "title": "Store readiness HOLD" },
+    { "id": "P0-LICENSE-QPC", "severity": "P0_BLOCKER", "status": "BLOCKED_LICENSE", "domain": "license", "title": "QPC font redistribution" },
+    { "id": "P0-LICENSE-HISN", "severity": "P0_BLOCKER", "status": "BLOCKED_LICENSE", "domain": "license", "title": "Hisn Muslim edition rights" },
+    { "id": "P0-LICENSE-EVERYAYAH", "severity": "P0_BLOCKER", "status": "BLOCKED_LICENSE", "domain": "license", "title": "everyayah/mp3quran offline packs" },
+    { "id": "P0-LICENSE-CAF", "severity": "P0_BLOCKER", "status": "OWNER_ACTION", "domain": "license", "title": "CAF/adhan binary exclusion" },
+    { "id": "P0-LIB-SOURCE", "severity": "P0_BLOCKER", "status": "CONFIRMED", "domain": "content", "title": "172 library source_missing" },
+    { "id": "P0-DEEPLINK-SERIES", "severity": "P0_BLOCKER", "status": "CONFIRMED", "domain": "routing", "title": "/learn/series/:slug redirects to /lessons" },
+    { "id": "P0-CONTENT-PUB", "severity": "P0_BLOCKER", "status": "PARTIAL", "domain": "content", "title": "Publication honesty guards pending" },
+    { "id": "P0-SECTS-EMPTY", "severity": "P0_BLOCKER", "status": "CONFIRMED", "domain": "content", "title": "Islamic sects publishedCount=0" },
+    { "id": "P0-MUSHAF-NOOP", "severity": "P0_BLOCKER", "status": "CONFIRMED", "domain": "mushaf", "title": "34 mushaf UI scripts no-op" },
+    { "id": "P0-DEVICE-PRAYER", "severity": "P0_BLOCKER", "status": "DEVICE_REQUIRED", "domain": "prayer", "title": "Prayer notifications unproven on device" },
+    { "id": "P0-OWNER-SIGNING", "severity": "P0_BLOCKER", "status": "OWNER_ACTION", "domain": "store", "title": "Bundle ID and signing" },
+    { "id": "P0-PROD-PARITY-DOCS", "severity": "P0_BLOCKER", "status": "STALE_REPORT", "domain": "docs", "title": "CURRENT_RELEASE_TRUTH pin stale vs tip" },
+    { "id": "P1-ADMIN-V3", "severity": "P1_HIGH", "status": "CONFIRMED", "domain": "admin", "title": "Admin v3 pending" },
+    { "id": "P1-PERF-ENTRY", "severity": "P1_HIGH", "status": "STALE_REPORT", "domain": "performance", "title": "Entry JS near ceiling historical 120.29" },
+    { "id": "P1-AGENTS-PATH", "severity": "P1_HIGH", "status": "CONFIRMED", "domain": "docs", "title": "AGENTS.md wrong git root" },
+    { "id": "P1-PR-1791", "severity": "P1_HIGH", "status": "CLOSE_RECOMMENDED", "domain": "prs", "title": "Draft offline-first PR" }
+  ],
+  "alreadyFixed": [
+    "Stabilization PR-1..7 (#2181-#2187)",
+    "Unified splash / tagline رفيقك (#2188)",
+    "CC0 field/field-full adhan (#2189)",
+    "Remediation PR-1 truth sync (#2190)",
+    "Remediation PR-2 store asset guards (#2191)",
+    "AdminSiteEditBar isolated from public App (#2182)"
+  ],
+  "staleOrConflictingReports": [
+    "docs/release/CURRENT_RELEASE_TRUTH.md (pin 3ba020f2)",
+    "docs/release/SUNNAH_STABILIZATION_REPORT.md (same pin)",
+    "docs/store-release/STORE_100_PERCENT_READINESS.md (web tip pin)",
+    "reports/release-readiness-report.json (2026-09-13)",
+    "reports/total-trust/* (2026-09-19)",
+    "reports/content-completeness-master.json (2026-09-17)",
+    "AGENTS.md vs docs/REPO_INDEX.md git root"
+  ],
+  "ownerActions": [
+    "Bundle ID",
+    "Signing certificates/profiles",
+    "App Store Connect / Play credentials",
+    "CAF exclusion decision",
+    "QPC written permission or strip",
+    "Hisn permission or replace",
+    "everyayah/mp3quran offline policy",
+    "madinah/qatami final rights",
+    "Hosted SQL + MFA + leaked-password",
+    "Pin Store RC commit",
+    "Device matrix sign-off",
+    "Final App Store GO/WITHDRAW",
+    "Store metadata vs live product"
+  ],
+  "deviceRequired": [
+    "Prayer notification delivery matrix",
+    "Verified adhan sound on physical device",
+    "Mushaf geometry/gestures SE/Pro Max/iPad/Split View",
+    "VoiceOver/Large Text/Bold/Reduced Motion",
+    "Background tilawa + player vs bottom nav",
+    "Cold/Warm/Resume splash count on device",
+    "TestFlight upgrade/clean/soak"
+  ],
+  "licenseBlockers": [
+    "QPC",
+    "Hisn",
+    "everyayah/mp3quran offline",
+    "unresolved CAF/adhan packs",
+    "madinah rights_uncertain",
+    "qatami rejected"
+  ],
+  "sourceBlockers": [
+    "library source_missing 172",
+    "islamic sects unpublished 35",
+    "quiz/rulings human review queues"
+  ],
+  "executionWaves": [
+    { "wave": 1, "focus": "P0 safety Quran posture privacy store blockers docs sync" },
+    { "wave": 2, "focus": "Licenses and source guards" },
+    { "wave": 3, "focus": "Content publication safety" },
+    { "wave": 4, "focus": "Admin v3 shell" },
+    { "wave": 5, "focus": "Admin v3 centers and migration readiness" },
+    { "wave": 6, "focus": "Prayer and audio reliability code+runbooks" },
+    { "wave": 7, "focus": "Mushaf device validation and no-op gate contract" },
+    { "wave": 8, "focus": "Performance and bundles" },
+    { "wave": 9, "focus": "Responsive accessibility visuals" },
+    { "wave": 10, "focus": "Legacy cleanup PR hygiene production closure" }
+  ],
+  "notRunThisSession": [
+    "Full visual open of every public route with screenshots",
+    "pnpm run verify:preflight",
+    "pnpm run verify:ci",
+    "Entry JS remasure on tip",
+    "Physical device matrix",
+    "Hosted SQL",
+    "Archive/AAB"
+  ],
+  "artifactsCreated": [
+    "docs/audit/SUNNAH_FULL_PROJECT_AUDIT.md",
+    "reports/sunnah-full-project-audit.json"
+  ],
+  "explicitNonClaims": [
+    "Not 100% ready",
+    "Green CI is not full product safety",
+    "Component existence is not feature proof",
+    "Test existence is not test execution proof",
+    "Screenshot is not all-device proof",
+    "File in repo is not license clearance",
+    "Content present is not published",
+    "Successful web build is not store-ready"
+  ]
+}

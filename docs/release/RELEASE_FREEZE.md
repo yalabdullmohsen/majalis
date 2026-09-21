@@ -1,9 +1,9 @@
 # تجميد إصدار سُنّة — Release Freeze
 
 **الحالة:** `STORE_RC_ACTIVE` (تجميد مرشّح المتجر) · **ليس** حظرًا مطلقًا على `main` أثناء برنامج الإصلاح  
-**آخر مزامنة حقيقة:** 2026-09-21 · `docs/release/CURRENT_RELEASE_TRUTH.md`  
-**Tip `origin/main` عند المزامنة:** `3ba020f2f402b81f01dce3ceeb809f78c3ab1089`  
-**إنتاج `www.ssunnah.com`:** `3ba020f2` (متطابق مع الـtip)
+**آخر مزامنة حقيقة:** 2026-09-21 · `docs/release/CURRENT_PROJECT_STATUS.md`  
+**Tip `origin/main` عند المزامنة:** `5e99cd7cf53244444916b0ecd7b55b3a8953cfd8`  
+**إنتاج `www.ssunnah.com`:** `5e99cd7c` (متطابق مع الـtip) · pin التاريخي `3ba020f2` = STALE
 
 ## فصل السياسات (إصلاح تعارض التقرير)
 
