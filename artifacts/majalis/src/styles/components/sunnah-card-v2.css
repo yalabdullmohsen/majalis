@@ -136,7 +136,7 @@
 
 .sc2--welcome .sc2-cta {
   background: var(--v2-color-on-emerald);
-  color: var(--v2-color-emerald-deep);
+  color: var(--v2-color-emerald);
 }
 
 @media (prefers-reduced-motion: reduce) {

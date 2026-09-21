@@ -36,8 +36,8 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 | 3 | Quran Hub | **merged** (#2203) |
 | 4 | Stories & Seerah | **merged** (#2204) |
 | 5 | Library & Search | **merged** (#2205) |
-| 6 | Profile Hub + bottom nav (5 tabs) | **this** |
-| 7 | Dark Mode Luxury Night polish | queued |
+| 6 | Profile Hub + bottom nav (5 tabs) | **merged** (#2206) |
+| 7 | Dark Mode Luxury Night polish | **this** |
 | 8 | Visual QA | queued |
 
 ## PR-2 Dashboard Homepage
@@ -78,6 +78,14 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 - مركز التقدّم: بطاقات متابعة + أزرار زمردية
 - `html[data-v2-nav="1"]` — تلميع الشريط السفلي (5 تبويبات كما هي، بلا تغيير مسارات)
 - CSS: `styles/pages/profile-hub-v2.css`
+
+## PR-7 Dark Mode Luxury Night
+
+- `html[data-v2-night="1"]` عند `data-theme=dark` / `.dark`
+- Deep Emerald Night: أسطح/بطاقات/أيقونات/أوصاف AA · ذهب للزخرفة فقط
+- `--v2-color-night-muted` أوضح · `--v2-color-night-emerald-text` للعناوين
+- سد فجوة Quran Hub الليلية · مواءمة الشريط السفلي
+- CSS: `styles/pages/luxury-night-v2.css`
 
 ## Gate
 
