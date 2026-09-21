@@ -9,7 +9,7 @@
  * تشغيل: node --import tsx src/lib/__tests__/store-release-assets-gate.test.ts
  */
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { listSelectableAdhanVoices } from "../sunnah-audio-platform";
@@ -58,6 +58,10 @@ assert.ok(
 assert.ok(
   globs.excludedFromStoreBinary.some((g: string) => g.includes("adhan-*.caf") || g.includes("Sounds/adhan")),
   "store strip must cover iOS adhan CAF",
+);
+assert.ok(
+  globs.excludedFromStoreBinary.some((g: string) => g.includes("qpc-v2")),
+  "store strip must cover QPC fonts (BLOCKED_LICENSE until OWNER OK)",
 );
 
 const manifest = readFileSync(resolve(store, "STORE_ASSET_MANIFEST.md"), "utf8");
@@ -129,10 +133,47 @@ assert.match(manifest, /MISSING_EVIDENCE|EXCLUDED|HOLD|CC0/);
     );
   }
 
+  const madinah = getAudioRightsRecord("madinah");
+  const qatami = getAudioRightsRecord("qatami");
+  assert.equal(madinah?.approvedForProduction, false);
+  assert.equal(qatami?.approvedForProduction, false);
+  assert.equal(qatami?.status, "rejected");
+
   const prod = listProductionApprovedAudio();
   assert.ok(prod.some((r) => r.audioId === "field"));
   assert.ok(prod.some((r) => r.audioId === "field-full"));
   assert.ok(prod.every((r) => r.licenseType !== "rights_uncertain"));
+}
+
+{
+  const forbidden =
+    /(?:^|\/)(?:adhan-)?(?:qatami|madinah)(?:[-_.]|$)|madinah-general|nasser-al-qatami/i;
+  const walk = (dir: string, out: string[] = []): string[] => {
+    if (!existsSync(dir)) return out;
+    for (const name of readdirSync(dir)) {
+      const p = resolve(dir, name);
+      if (statSync(p).isDirectory()) walk(p, out);
+      else out.push(p);
+    }
+    return out;
+  };
+  for (const dir of [
+    resolve(appRoot, "public/audio/adhan"),
+    resolve(appRoot, "public/sounds/adhan"),
+  ]) {
+    for (const f of walk(dir)) {
+      if (!/\.(mp3|m4a|caf|wav|ogg)$/i.test(f)) continue;
+      assert.equal(
+        forbidden.test(f),
+        false,
+        `blocked-license media must not ship in public/: ${f}`,
+      );
+    }
+  }
+  assert.ok(
+    existsSync(resolve(appRoot, "scripts/native-strip-qpc-fonts.mjs")),
+    "native QPC strip script required for store builds",
+  );
 }
 
 console.log("store-release-assets-gate.test.ts: ok", {

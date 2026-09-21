@@ -75,6 +75,34 @@ if (!/audioId:\s*"madinah"/.test(rightsSrc) || !/audioId:\s*"qatami"/.test(right
 if (!/approvedForProduction:\s*false/.test(rightsSrc)) {
   fail("rights registry must retain non-production entries");
 }
+// madinah / qatami must stay approvedForProduction: false (no silent flip)
+{
+  const madinahBlock = rightsSrc.match(/audioId:\s*"madinah"[\s\S]*?celebrityNameRisk:/);
+  const qatamiBlock = rightsSrc.match(/audioId:\s*"qatami"[\s\S]*?celebrityNameRisk:/);
+  if (!madinahBlock || !/approvedForProduction:\s*false/.test(madinahBlock[0])) {
+    fail("madinah must remain approvedForProduction: false");
+  }
+  if (!qatamiBlock || !/approvedForProduction:\s*false/.test(qatamiBlock[0])) {
+    fail("qatami must remain approvedForProduction: false");
+  }
+  if (!qatamiBlock || !/status:\s*"rejected"/.test(qatamiBlock[0])) {
+    fail("qatami must remain status rejected");
+  }
+}
+
+const forbiddenName =
+  /(?:^|\/)(?:adhan-)?(?:qatami|madinah)(?:[-_.]|$)|madinah-general|nasser-al-qatami/i;
+for (const dir of [
+  join(majalis, "public/audio/adhan"),
+  join(majalis, "public/sounds/adhan"),
+]) {
+  for (const f of walkFiles(dir)) {
+    const rel = relative(majalis, f);
+    if (forbiddenName.test(rel) && isExcludedMediaName(f)) {
+      fail(`blocked-license media must not exist in public tree: ${rel}`);
+    }
+  }
+}
 
 const manifest = readFileSync(join(storeDir, "STORE_ASSET_MANIFEST.md"), "utf8");
 if (!/CC0/.test(manifest)) fail("STORE_ASSET_MANIFEST must document CC0 field packs");
@@ -84,17 +112,29 @@ if (!/madinah/i.test(manifest) || !/qatami/i.test(manifest)) {
 if (!/field-full/i.test(manifest) || !/\bfield\b/i.test(manifest)) {
   fail("STORE_ASSET_MANIFEST must document field / field-full");
 }
+if (!/QPC/i.test(manifest) || !/Hisn|حصن/i.test(manifest)) {
+  fail("STORE_ASSET_MANIFEST must document QPC and Hisn owner-pending blockers");
+}
+if (!existsSync(join(majalis, "scripts/native-strip-qpc-fonts.mjs"))) {
+  fail("native-strip-qpc-fonts.mjs missing — required for store native QPC strip");
+}
 
 const dist = join(majalis, "dist");
 const checkDist = process.env.STORE_CHECK_DIST === "1" || process.argv.includes("--check-dist");
 if (checkDist && existsSync(dist)) {
-  for (const dir of [join(dist, "sounds/adhan"), join(dist, "audio/adhan")]) {
-    for (const f of walkFiles(dir).filter((p) => isExcludedMediaName(p))) {
-      fail(`unresolved media in dist: ${relative(majalis, f)}`);
+  for (const dir of [
+    join(dist, "sounds/adhan"),
+    join(dist, "audio/adhan"),
+    join(dist, "fonts/qpc-v2"),
+  ]) {
+    for (const f of walkFiles(dir).filter(
+      (p) => isExcludedMediaName(p) || /qpc-v2|\.(woff2?|ttf|otf)$/i.test(p),
+    )) {
+      fail(`store-forbidden asset in dist: ${relative(majalis, f)}`);
     }
   }
 } else if (existsSync(dist)) {
-  console.log("  note: dist present — skipped media scan (use --check-dist after strip)");
+  console.log("  note: dist present — skipped media/QPC scan (use --check-dist after strip)");
 }
 
 if (failures.length) {

@@ -200,6 +200,11 @@ const waves = [
         args: ["scripts/verify-schema-drift-expectations.mjs"],
       },
       {
+        name: "store assets / license gate",
+        cmd: "pnpm",
+        args: ["run", "verify:store-assets"],
+      },
+      {
         name: "shell/meta gates",
         cmd: "bash",
         args: [

@@ -10,7 +10,7 @@ Machine-readable companion: `excluded-asset-globs.json`
 
 | Asset | Path / source | In git tree? | Delivery | Rights holder | License | Evidence | Commercial? | Redistribute in app? | Attribution? | Decision | Action |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| QPC V2 fonts | QPC / CDN / mushaf assets | Yes (reader) | Bundled glyphs | KFGQPC/QUL | Unclear for store redistribute | LICENSE_RISKS | Unknown | Needs written OK | Usually yes | **OWNER_APPROVED pending** | Owner written approval or hold store |
+| QPC V2 fonts | QPC / CDN / mushaf assets | Yes (reader) | Bundled glyphs (web); **stripped from store dist** | KFGQPC/QUL | Unclear for store redistribute | LICENSE_RISKS · `store-strip` · `native-strip-qpc-fonts.mjs` | Unknown | Needs written OK | Usually yes | **OWNER_APPROVED pending / BLOCKED_LICENSE store** | Owner written approval or keep strip |
 | QCF_BSML | Not shipped | No | N/A | KFGQPC | N/A | SVG ornament workaround | N/A | N/A | N/A | **EXCLUDED** | Keep omitted |
 | Madinah page images 604 | Not in repo | No | N/A | — | None | LICENSE_RISKS | No | No | — | **EXCLUDED** | Keep disabled |
 | Audio tafsir catalog | Empty by design | No | N/A | — | — | LICENSE_RISKS | — | — | — | **EXCLUDED** | Keep empty |

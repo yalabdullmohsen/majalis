@@ -1,5 +1,7 @@
 /**
- * store-strip-unresolved-assets — delete MISSING_EVIDENCE media from dist before cap sync.
+ * store-strip-unresolved-assets — delete store-forbidden assets from dist before cap sync.
+ * - All adhan media under dist/{sounds,audio}/adhan (until OWNER allowlist)
+ * - QPC V2 font packs under dist/fonts/qpc-v2 (BLOCKED_LICENSE until written OK)
  * Does not delete source files in public/ (web may still use them outside store RC).
  *
  * Usage: node scripts/store-strip-unresolved-assets.mjs
@@ -15,7 +17,8 @@ if (!existsSync(dist)) {
   process.exit(0);
 }
 
-const targets = [join(dist, "sounds/adhan"), join(dist, "audio/adhan")];
+const mediaTargets = [join(dist, "sounds/adhan"), join(dist, "audio/adhan")];
+const qpcDir = join(dist, "fonts/qpc-v2");
 let removed = 0;
 
 function wipeMedia(dir) {
@@ -35,5 +38,12 @@ function wipeMedia(dir) {
   }
 }
 
-for (const t of targets) wipeMedia(t);
-console.log(`store-strip: removed ${removed} unresolved media file(s) from dist`);
+for (const t of mediaTargets) wipeMedia(t);
+
+if (existsSync(qpcDir)) {
+  rmSync(qpcDir, { recursive: true, force: true });
+  removed += 1;
+  console.log(`  removed ${relative(dist, qpcDir)}/ (QPC fonts — BLOCKED_LICENSE until OWNER OK)`);
+}
+
+console.log(`store-strip: removed ${removed} store-forbidden path(s) from dist`);

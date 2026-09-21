@@ -6,6 +6,7 @@
     "public/sounds/adhan/*.m4a",
     "public/audio/adhan/*.mp3",
     "public/audio/adhan/*.m4a",
+    "public/fonts/qpc-v2/**",
     "ios/App/App/Sounds/adhan-*.caf",
     "ios/App/App/Sounds/prayer_aqsa.caf",
     "ios/App/App/Sounds/prayer_egypt.caf",
@@ -28,6 +29,8 @@
     "allowedSystemNotificationSounds remain provisional until OWNER_APPROVED; store catalog UI must default to OS system sound when evidence is missing.",
     "Streaming-only sources (everyayah, mp3quran, Quran.com, AlQuran Cloud, mohsalvi CDN) must never be copied into the binary.",
     "Web production may ship CC0 field/field-full under public/audio/adhan; Store RC strip still removes ALL dist/audio/adhan media until OWNER allowlists specific files.",
-    "madinah and qatami are rejected/uncertain — files removed from public bundle; do not re-add without written rights."
+    "madinah and qatami are rejected/uncertain — files removed from public bundle; do not re-add without written rights.",
+    "Store strip also removes dist/fonts/qpc-v2 (QPC redistribution BLOCKED_LICENSE until OWNER written OK). Web public/fonts/qpc-v2 may remain for browser; native-strip-qpc-fonts.mjs strips after cap sync.",
+    "Legacy public/sounds/adhan/madinah-general.* must stay deleted (Wave 2)."
   ]
 }

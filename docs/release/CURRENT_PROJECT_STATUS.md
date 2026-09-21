@@ -33,8 +33,8 @@ Web tip is **not** an automatic Store RC pin.
 
 | Wave | Focus | State |
 |---|---|---|
-| 1 | Truth / docs / AGENTS path / status surface | **IN_PROGRESS (this PR)** |
-| 2 | Store & licenses (guards beyond #2191) | QUEUED |
+| 1 | Truth / docs / AGENTS path / status surface | **MERGED** (#2192) |
+| 2 | Store & licenses (guards beyond #2191) | **IN_PROGRESS** |
 | 3 | Library sources (hide `source_missing`) | QUEUED |
 | 4 | Publication honesty | QUEUED |
 | 5–7 | Admin v3 shell → centers → legacy migration | QUEUED |
@@ -46,7 +46,16 @@ Web tip is **not** an automatic Store RC pin.
 | 13 | Legacy cleanup + #1791 | QUEUED |
 | 14 | Store/production closure docs | QUEUED |
 
-Prior merges still valid: Stabilization #2181–#2187 · splash #2188 · CC0 adhan #2189 · truth #2190 · store guards #2191.
+Prior merges still valid: Stabilization #2181–#2187 · splash #2188 · CC0 adhan #2189 · truth #2190 · store guards #2191 · Wave 1 #2192.
+
+## Wave 2 deltas (this PR)
+
+- Deleted legacy `public/sounds/adhan/madinah-general.m4a`
+- Hard-ban gate: no qatami/madinah media in public adhan trees
+- Store strip removes `dist/fonts/qpc-v2` in addition to adhan media
+- `verify:store-assets` wired into `verify:ci` repo-gates
+- Inventory: `reports/store-license-inventory.json`
+- Store readiness remains **HOLD** (CAF Archive + OWNER license acceptances still open)
 
 ## Open P0 (implementable or classified)
 
