@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { AlertTriangle, Pencil } from "lucide-react";
+import { useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { isAdminSurfaceAllowed } from "@/lib/admin-surface";
 import { safeLocationReload } from "@/lib/safe-reload";
 import "@/styles/components/admin-inline-edit.css";
 
@@ -292,11 +294,13 @@ type AdminInlineEditProps = {
 
 export function AdminInlineEdit({ contentType, contentId, initialData, className, onSaved }: AdminInlineEditProps) {
   const { isAdmin } = useAuth();
+  const [location] = useLocation();
   const [open, setOpen] = useState(false);
 
   const handleClose = useCallback(() => setOpen(false), []);
 
-  if (!isAdmin || !contentId) return null;
+  /* ممنوع فوق الصفحات العامة — حتى للمشرف (سطح الإدارة = /admin فقط) */
+  if (!isAdminSurfaceAllowed(location, isAdmin) || !contentId) return null;
 
   return (
     <>

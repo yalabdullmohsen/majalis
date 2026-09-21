@@ -2,19 +2,19 @@
 
 **الحالة:** `PARTIAL`  
 **آخر تحديث:** 2026-09-21  
-**Source (origin/main):** `5a0fe21a9`  
-**Production:** يُحدَّث بعد Smoke — `version.json` لم يُسترجع من النطاق العام في لحظة القياس
+**Source (origin/main):** يتبع آخر دمج  
+**Production:** يُحدَّث بعد Smoke
 
 ## موجات
 
 | موجة | الحالة | PR | ملاحظة |
 |---|---|---|---|
-| PR-1 تثبيت + triage | **IN_PROGRESS** | (هذا الفرع) | انظر `SUNNAH_STABILIZATION_PR1_TRIAGE.md` |
-| PR-2 عزل Admin | PENDING | — | |
-| PR-3 Design tokens | PENDING | — | |
+| PR-1 تثبيت + triage | **MERGED** | #2181 | triage + إغلاق مسودات |
+| PR-2 عزل Admin | **IN_PROGRESS** | (فرع حالي) | لا أدوات فوق التطبيق العام |
+| PR-3 Design tokens | PENDING | — | قد يسبقه hotfix CSS budget |
 | PR-4 رئيسية/قرآن/أنبياء | PENDING | — | |
 | PR-5 أقسام عامة | PENDING | — | |
-| PR-6 مصحف ص١–ص٢ | WAITING | #2180 | MERGE_REQUIRED |
+| PR-6 مصحف ص١–ص٢ | **PARTIAL** | #2180 MERGED | أساس layout/gold على main |
 | PR-7 legacy cleanup | PENDING | — | |
 | PR-8 Admin v3 Shell | PENDING | — | بعد جرد #2176 |
 | PR-9 مراكز Admin | PENDING | — | |

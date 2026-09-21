@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, useCallback, startTransition } from "react";
-import { Pencil, Search, SlidersHorizontal, Trash2, X } from "lucide-react";
+import { Search, SlidersHorizontal, X } from "lucide-react";
 import { ShareButtons } from "@/components/ContentActions";
 import { Link } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
@@ -22,9 +22,9 @@ import {
   applyLessonQuickFilters,
   type LessonQuickFilters,
 } from "@/components/lessons/LessonFilters";
-import { supabase } from "@/lib/supabase";
 import { safeLocationReload } from "@/lib/safe-reload";
-import { DEFAULT_KUWAIT_FILTERS,
+import {
+  DEFAULT_KUWAIT_FILTERS,
   extractFilterOptions,
   filterKuwaitLessons,
   sortKuwaitLessons,
@@ -243,7 +243,7 @@ export default function LessonsPage({
   const [searchOpen, setSearchOpen] = useState(() => Boolean(filters.search.trim()));
   const [myReg, setMyReg] = useState<string[]>([]);
   const [, setTab] = useTabFromUrl();
-  const { user, isLoggedIn, isAdmin, loading: authLoading } = useAuth();
+  const { user, isLoggedIn, loading: authLoading } = useAuth();
 
   useEffect(() => {
     setFilters((prev) => (prev.search === debouncedSearch ? prev : { ...prev, search: debouncedSearch }));
@@ -498,23 +498,10 @@ export default function LessonsPage({
     }
   };
 
-  const handleAdminDelete = useCallback(async (lessonId: string) => {
-    if (!isAdmin) return;
-    if (!window.confirm("هل أنت متأكد من حذف هذا الدرس؟")) return;
-    try {
-      const { error } = await supabase.from("lessons").delete().eq("id", lessonId);
-      if (error) throw error;
-      setActiveLessons((prev) => prev.filter((l) => l.id !== lessonId));
-      setArchivedLessons((prev) => prev.filter((l) => l.id !== lessonId));
-    } catch (err) {
-      alert(`فشل الحذف: ${(err as Error)?.message || err}`);
-    }
-  }, [isAdmin]);
-
   const renderGrid = (lessons: KuwaitLessonRecord[], prefix = "", featuredHome = false) => (
     <div className="page-card-grid lesson-unified-grid">
       {lessons.map((lesson) => (
-        <div key={`${prefix}${lesson.id}`} className={isAdmin ? "lesson-card-admin-wrap" : ""}>
+        <div key={`${prefix}${lesson.id}`}>
           <UnifiedLessonCard
             lesson={fromKuwaitLesson(lesson, prefix.startsWith("archived"), { featuredHome })}
             compact
@@ -522,29 +509,6 @@ export default function LessonsPage({
             registered={myReg.includes(lesson.id)}
             onToggleRegister={() => toggleReg(lesson.id)}
           />
-          {isAdmin && (
-            <div className="lesson-admin-toolbar">
-              <a
-                href={`/admin?edit=${lesson.id}`}
-                className="lesson-admin-btn lesson-admin-btn--edit"
-                aria-label="تعديل"
-              >
-                <Pencil size={13} strokeWidth={1.4} aria-hidden="true" />
-                تعديل
-              </a>
-              {!lesson.id.startsWith("kw-") && (
-                <button
-                  type="button"
-                  className="lesson-admin-btn lesson-admin-btn--delete"
-                  aria-label="حذف"
-                  onClick={() => handleAdminDelete(lesson.id)}
-                >
-                  <Trash2 size={13} strokeWidth={1.4} aria-hidden="true" />
-                  حذف
-                </button>
-              )}
-            </div>
-          )}
         </div>
       ))}
     </div>

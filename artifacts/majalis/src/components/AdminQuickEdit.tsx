@@ -1,5 +1,7 @@
 import { Pencil } from "lucide-react";
+import { useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
+import { isAdminSurfaceAllowed } from "@/lib/admin-surface";
 
 type AdminQuickEditProps = {
   /** اسم القسم في لوحة التحكم (مثال: "lessons", "sheikhs", "library") */
@@ -11,11 +13,12 @@ type AdminQuickEditProps = {
 };
 
 /**
- * زر تعديل سريع يظهر فقط للمشرفين — ينقل مباشرةً لقسم الإدارة مع تعبئة البحث
+ * زر تعديل سريع — داخل `/admin` فقط (لا FABs فوق التطبيق العام).
  */
 export function AdminQuickEdit({ section, searchTerm, label }: AdminQuickEditProps) {
   const { isAdmin } = useAuth();
-  if (!isAdmin) return null;
+  const [location] = useLocation();
+  if (!isAdminSurfaceAllowed(location, isAdmin)) return null;
 
   const params = new URLSearchParams({ section });
   if (searchTerm?.trim()) params.set("q", searchTerm.trim());
