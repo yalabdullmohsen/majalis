@@ -1,25 +1,36 @@
 # تجميد إصدار سُنّة — Release Freeze
 
-**الحالة:** ACTIVE  
-**الفرع الوحيد للإصدار:** `release/sunnah-stable-1.0`  
-**أساس الحقيقة (Source of Truth):** `b0efc979d4ac08c5d16ca6432d709301c8069494`  
-**تشغيل CI الأخضر على main:** [34783252522](https://github.com/yalabdullmohsen/majalis/actions/runs/34783252522)  
-**ملاحظة:** التقرير السابق ذكر `42f43aff2` / run `34774534175` — هذان أقدم؛ لا يُعتمدان مع وجود green أحدث على tip الـmain.  
-**الإصدار:** `1.0.0` · **Build:** `46`
+**الحالة:** `STORE_RC_ACTIVE` (تجميد مرشّح المتجر) · **ليس** حظرًا مطلقًا على `main` أثناء برنامج الإصلاح  
+**آخر مزامنة حقيقة:** 2026-09-21 · `docs/release/CURRENT_RELEASE_TRUTH.md`  
+**Tip `origin/main` عند المزامنة:** `3ba020f2f402b81f01dce3ceeb809f78c3ab1089`  
+**إنتاج `www.ssunnah.com`:** `3ba020f2` (متطابق مع الـtip)
 
-## القواعد
+## فصل السياسات (إصلاح تعارض التقرير)
 
-1. لا ميزات جديدة، لا إعادة تصميم، لا تغيير بصري إضافي للمصحف/الخط/إطار السورة.
-2. لا دمج إلى `main` إلا إصلاح مثبت داخل Release Candidate، صغير، مراجع، أخضر محليًا وعلى CI.
-3. كل PR مفتوح خارج نطاق الاستقرار: Draft + `hold` + `no-deploy`.
-4. Auto-merge معطّل عمليًا (Draft يُتخطّى في `auto-merge-to-main.yml`).
-5. لا تعديل لـ Verify build / ci-required لإجبار النجاح.
-6. TestFlight وApp Store من Commit الـRC فقط بعد 3× Full Release Lane خضراء.
+| مسار | السياسة |
+|---|---|
+| **Store Release Candidate** | تجميد صارم: لا ميزات جديدة داخل ثنائي المتجر؛ Archive/AAB من **pin صريح** يسجّله المالك؛ TestFlight بعد 3× Full Release Lane خضراء على ذلك الـpin |
+| **`main` / Vercel production web** | يُسمح بدمج موجات Stabilization + Full Remediation فقط، خضراء محليًا وعلى CI، بدون تخفيف بوابات، وبدون ادعاء GO للمتجر |
 
-## المسار
+**ملاحظة تاريخية:** وثيقة سابقة ثبّتت SoT على `b0efc979…` وrun CI قديم. ذلك الـpin **لم يعد tip** — لا يُستخدم كمصدر حقيقة للويب الحي. أي بناء متجر يجب أن يعيد تثبيت الـpin صراحةً.
 
-Stabilize → Verify → Test → Release
+**فرع RC المقترح (إن وُجد):** `release/sunnah-stable-1.0`  
+**الإصدار المستهدف:** `1.0.0` (Build رقم المتجر يحدّده المالك عند الأرشفة)
 
-## رفع التجميد
+## قواعد Store RC
 
-فقط بعد حكم نهائي `READY FOR APP STORE SUBMISSION` أو `READY WITH MANUAL APP STORE STEPS` وموافقة المالك صراحةً.
+1. لا إعادة تصميم المصحف/الخط/إطار السورة داخل ثنائي المتجر.  
+2. لا إدخال أصل `approvedForProduction: false` أو `rights_uncertain` / `rejected`.  
+3. PRs خارج نطاق RC: تبقى على `main` عبر برنامج الإصلاح؛ لا تُخلط مع Archive دون pin جديد.  
+4. لا تعديل لـ Verify build / ci-required لإجبار النجاح.  
+5. TestFlight وApp Store من Commit الـRC المسجّل فقط.
+
+## قواعد main (برنامج الإصلاح)
+
+1. PR واحد لكل موجة Remediation/Stabilization المتبقية.  
+2. لا ادعاء `STORE GO` أو `SUNNAH_*_COMPLETE` من نجاح CI وحده.  
+3. OWNER_ONLY و DEVICE_REQUIRED تُوثَّق ولا تُنفَّذ آليًا.
+
+## رفع تجميد المتجر
+
+فقط بعد حكم نهائي `READY FOR APP STORE SUBMISSION` أو `READY WITH MANUAL APP STORE STEPS` وموافقة المالك صراحةً — انظر `docs/release/OWNER_ACTIONS_CURRENT.md`.
