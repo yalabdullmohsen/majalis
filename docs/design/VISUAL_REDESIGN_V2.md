@@ -37,8 +37,8 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 | 4 | Stories & Seerah | **merged** (#2204) |
 | 5 | Library & Search | **merged** (#2205) |
 | 6 | Profile Hub + bottom nav (5 tabs) | **merged** (#2206) |
-| 7 | Dark Mode Luxury Night polish | **this** |
-| 8 | Visual QA | queued |
+| 7 | Dark Mode Luxury Night polish | **merged** (#2207) |
+| 8 | Visual QA | **this** |
 
 ## PR-2 Dashboard Homepage
 
@@ -85,8 +85,15 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 - Deep Emerald Night: أسطح/بطاقات/أيقونات/أوصاف AA · ذهب للزخرفة فقط
 - `--v2-color-night-muted` أوضح · `--v2-color-night-emerald-text` للعناوين
 - سد فجوة Quran Hub الليلية · مواءمة الشريط السفلي
-- CSS: `styles/pages/luxury-night-v2.css`
+- CSS: `styles/pages/luxury-night-v2.css` (مؤجّل: إقلاع داكن في `main` · تبديل السمة في `App`)
+
+## PR-8 Visual QA
+
+- قائمة قبول الشاشات + opt-in map + ملاحظات a11y/contrast
+- إثبات اكتمال القطار (PR-1…PR-7) دون إعادة تصميم
+- Doc: `docs/design/VISUAL_REDESIGN_V2_QA.md`
 
 ## Gate
 
-`src/lib/__tests__/visual-redesign-v2-tokens-gate.test.ts`
+`src/lib/__tests__/visual-redesign-v2-tokens-gate.test.ts`  
+QA checklist: `docs/design/VISUAL_REDESIGN_V2_QA.md`

@@ -81,7 +81,9 @@ import "./styles/dark-mode-recovery.css";
       import("./styles/dark-mode-surfaces.css"),
       import("./styles/dark-design-system.css"),
       import("./styles/premium-dark-refine.css"),
-      import("./styles/interaction-states.css"),    ]);
+      import("./styles/interaction-states.css"),
+      import("./styles/pages/luxury-night-v2.css"),
+    ]);
   }
 }
 

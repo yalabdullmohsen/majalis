@@ -184,6 +184,9 @@ console.log("=== PR-7 Dark Mode Luxury Night ===");
   assert.match(app, /data-v2-night/);
   assert.ok(existsSync(resolve(majalisRoot, "src/styles/pages/luxury-night-v2.css")));
   assert.match(app, /luxury-night-v2\.css/);
+  assert.match(app, /void import\(/);
+  const main = read("src/main.tsx");
+  assert.match(main, /luxury-night-v2\.css/);
   const tokens = read("src/styles/visual-redesign-v2-tokens.css");
   assert.match(tokens, /--v2-color-night-muted:\s*#b3c9bd/i);
   assert.match(tokens, /--v2-color-night-emerald-text/);
@@ -199,6 +202,51 @@ console.log("=== PR-7 Dark Mode Luxury Night ===");
   const doc = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2.md"), "utf8");
   assert.match(doc, /PR-7 Dark Mode/);
   assert.match(doc, /luxury-night-v2\.css/);
+}
+
+console.log("=== PR-8 Visual QA ===");
+{
+  const qa = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2_QA.md"), "utf8");
+  assert.match(qa, /Visual QA/);
+  assert.match(qa, /data-v2-dashboard/);
+  assert.match(qa, /data-v2-quran-hub/);
+  assert.match(qa, /data-v2-stories/);
+  assert.match(qa, /data-v2-search/);
+  assert.match(qa, /data-v2-profile/);
+  assert.match(qa, /data-v2-nav/);
+  assert.match(qa, /data-v2-night/);
+  assert.match(qa, /Acceptance/);
+  assert.match(qa, /Color contrast/);
+  const surfaces = [
+    "home-dashboard-v2.css",
+    "quran-hub-v2.css",
+    "stories-seerah-v2.css",
+    "library-search-v2.css",
+    "profile-hub-v2.css",
+    "luxury-night-v2.css",
+    "sunnah-card-v2.css",
+  ];
+  for (const f of surfaces) {
+    const rel = f.startsWith("sunnah")
+      ? `src/styles/components/${f}`
+      : `src/styles/pages/${f}`;
+    assert.ok(existsSync(resolve(majalisRoot, rel)), `missing ${rel}`);
+  }
+  const app = read("src/App.tsx");
+  for (const attr of [
+    "data-v2-dashboard",
+    "data-v2-quran-hub",
+    "data-v2-stories",
+    "data-v2-search",
+    "data-v2-profile",
+    "data-v2-nav",
+    "data-v2-night",
+  ]) {
+    assert.match(app, new RegExp(attr));
+  }
+  const doc = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2.md"), "utf8");
+  assert.match(doc, /PR-8 Visual QA/);
+  assert.match(doc, /VISUAL_REDESIGN_V2_QA\.md/);
 }
 
 console.log("=== package script ===");
