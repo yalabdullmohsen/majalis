@@ -90,7 +90,8 @@ for (const name of [
   assert.match(dsIndex, new RegExp(name), `المكوّن الموحّد ناقص من الفهرس: ${name}`);
 }
 
-assert.match(below, /FeatureCard/, "الرئيسية تستخدم FeatureCard للبوابات");
+assert.match(below, /SunnahCardV2/, "الرئيسية تستخدم SunnahCardV2 للبوابات (Visual Redesign V2)");
 assert.match(below, /home-primary-portals/, "بوابات العلم أعلى تحت الطية");
+assert.match(below, /HomeQuickAccessV2/, "الوصول السريع V2 على الرئيسية");
 
 console.log("ssunnah-anti-legacy-ui-gate.test.ts: ok");

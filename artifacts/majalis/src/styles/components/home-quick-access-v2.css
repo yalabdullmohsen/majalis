@@ -1,0 +1,58 @@
+/* وصول سريع V2 — Rounded Premium Icons */
+.hq2 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--v2-space-3, 0.75rem);
+  margin-block: var(--v2-space-2, 0.5rem) var(--v2-space-4, 1rem);
+  padding-inline: max(0.75rem, var(--m2030-pad, 1rem));
+}
+
+.hq2-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--v2-space-2, 0.5rem);
+  min-height: 44px;
+  padding: var(--v2-space-3, 0.75rem) var(--v2-space-2, 0.5rem);
+  text-decoration: none;
+  color: var(--v2-color-ink, var(--mj-ink));
+  border-radius: var(--v2-radius-md, 18px);
+  transition: transform var(--v2-duration-fast, 140ms) var(--v2-ease-out, ease);
+}
+
+.hq2-tile:hover {
+  transform: translateY(-1px);
+}
+
+.hq2-tile:focus-visible {
+  outline: 2px solid var(--v2-color-gold, #c9a82e);
+  outline-offset: 2px;
+}
+
+.hq2-tile__icon {
+  display: grid;
+  place-items: center;
+  width: var(--v2-icon-tile, 2.75rem);
+  height: var(--v2-icon-tile, 2.75rem);
+  border-radius: var(--v2-radius-icon, 16px);
+  background: var(--v2-color-ivory-surface, #fffcf8);
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+  border: 1px solid var(--v2-hairline, transparent);
+  box-shadow: var(--v2-shadow-soft, 0 4px 16px rgba(22, 36, 30, 0.05));
+}
+
+.hq2-tile__label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hq2-tile {
+    transition: none;
+  }
+  .hq2-tile:hover {
+    transform: none;
+  }
+}

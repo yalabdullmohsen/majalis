@@ -1,0 +1,157 @@
+/**
+ * Visual Redesign V2 — Dashboard Homepage surfaces.
+ * يُفعَّل عبر html[data-v2-dashboard="1"] على مسار /.
+ * لا يغيّر Routes ولا محتوى شرعي.
+ */
+
+html[data-v2-dashboard="1"] .m2030-home {
+  background: var(--v2-color-ivory);
+  color: var(--v2-color-ink);
+  --m2030-band-gap: var(--v2-space-4);
+}
+
+html[data-v2-dashboard="1"] .m2030-home .m2030-band {
+  margin-block: var(--v2-space-3) var(--v2-space-4);
+  padding-inline: max(0.75rem, var(--m2030-pad, 1rem));
+}
+
+html[data-v2-dashboard="1"] .m2030-home .m2030-band--sage {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+html[data-v2-dashboard="1"] .m2030-home .m2030-band__title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--v2-color-ink);
+  letter-spacing: 0;
+}
+
+html[data-v2-dashboard="1"] .m2030-home .m2030-band__link {
+  color: var(--v2-color-emerald);
+  font-weight: 700;
+}
+
+/* إخفاء الأعمدة الخضراء الجانبية القديمة داخل الرئيسية */
+html[data-v2-dashboard="1"] .m2030-home [class*="border-inline-start"],
+html[data-v2-dashboard="1"] .m2030-home .soft-card--accent-bar,
+html[data-v2-dashboard="1"] .m2030-home .mj-card--rail {
+  border-inline-start: none !important;
+  box-shadow: var(--v2-shadow-soft);
+}
+
+/* بطاقات أقسام — شبكة أنظف */
+html[data-v2-dashboard="1"] .m2030-home .home-primary-portals .ss-feature-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--v2-space-3);
+}
+
+@media (min-width: 640px) {
+  html[data-v2-dashboard="1"] .m2030-home .home-primary-portals .ss-feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+html[data-v2-dashboard="1"] .m2030-home .home-primary-portals .sc2 {
+  min-height: 5.5rem;
+}
+
+/* ابدأ من هنا — هدوء + بلا بطاقة داخل بطاقة */
+html[data-v2-dashboard="1"] .m2030-home .home-start-here {
+  background: var(--v2-color-ivory-surface);
+  border: 1px solid var(--v2-hairline);
+  border-radius: var(--v2-radius-card);
+  box-shadow: var(--v2-shadow-soft);
+  padding: var(--v2-space-5);
+}
+
+html[data-v2-dashboard="1"] .m2030-home .hsh-eyebrow {
+  color: var(--v2-color-emerald);
+  font-weight: 700;
+}
+
+html[data-v2-dashboard="1"] .m2030-home .hsh-actions__primary {
+  background: var(--v2-color-emerald);
+  color: var(--v2-color-on-emerald);
+  border-radius: var(--v2-radius-pill);
+  border: none;
+}
+
+html[data-v2-dashboard="1"] .m2030-home .hsh-step {
+  background: transparent;
+  border: none;
+  border-block-end: 1px solid var(--v2-hairline);
+  border-radius: 0;
+  box-shadow: none;
+  padding-inline: 0;
+}
+
+html[data-v2-dashboard="1"] .m2030-home .hsh-step:last-child {
+  border-block-end: none;
+}
+
+/* متابعة — سطح واحد بلا Card-in-Card */
+html[data-v2-dashboard="1"] .m2030-home .home-resume-v2,
+html[data-v2-dashboard="1"] .m2030-home .home-resume-v2 .mj-card,
+html[data-v2-dashboard="1"] .m2030-home .home-resume-v2 .soft-card {
+  background: var(--v2-color-ivory-surface);
+  border: 1px solid var(--v2-hairline);
+  border-radius: var(--v2-radius-card);
+  box-shadow: var(--v2-shadow-card);
+}
+
+html[data-v2-dashboard="1"] .m2030-home .home-resume-v2 .mj-card.soft-card {
+  padding: var(--v2-space-4);
+}
+
+html[data-v2-dashboard="1"] .m2030-home .home-resume-v2 .mj-card .mj-card,
+html[data-v2-dashboard="1"] .m2030-home .home-resume-v2 .soft-card .soft-card {
+  box-shadow: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+/* بحث / آية / ورد — أسطح عاجية ناعمة */
+html[data-v2-dashboard="1"] .m2030-home .hus-field {
+  border-radius: var(--v2-radius-lg);
+  border-color: var(--v2-hairline);
+  background: var(--v2-color-ivory-surface);
+  box-shadow: var(--v2-shadow-soft);
+}
+
+html[data-v2-dashboard="1"] .m2030-home .home-sacred-day:not(.home-sacred-day--ph) {
+  border-radius: var(--v2-radius-card);
+  background: var(--v2-color-ivory-muted);
+  border: 1px solid var(--v2-hairline);
+  box-shadow: none;
+}
+
+html[data-v2-dashboard="1"] .m2030-home .daily-wird-card {
+  border-radius: var(--v2-radius-card);
+  border: 1px solid var(--v2-hairline);
+  box-shadow: var(--v2-shadow-card);
+  background: var(--v2-color-ivory-surface);
+}
+
+/* هدوء بصري للعناصر الثانوية */
+html[data-v2-dashboard="1"] .m2030-home .home-live-now-ph,
+html[data-v2-dashboard="1"] .m2030-home .home-share-slim,
+html[data-v2-dashboard="1"] .m2030-home .home-friday-slim {
+  opacity: 0.92;
+}
+
+html[data-v2-dashboard="1"] .m2030-home .m2030-customize {
+  border-radius: var(--v2-radius-pill);
+  color: var(--v2-color-ink-muted);
+  border: 1px solid var(--v2-hairline);
+  background: var(--v2-color-ivory-surface);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-v2-dashboard="1"] .m2030-home * {
+    scroll-behavior: auto;
+  }
+}

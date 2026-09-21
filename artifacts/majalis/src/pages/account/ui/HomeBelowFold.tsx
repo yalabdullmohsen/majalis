@@ -28,7 +28,8 @@ import { HomeExplorePlatform } from "@/components/home/HomeExplorePlatform";
 import { HomeContentHub } from "@/components/home/HomeContentHub";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { ShareFaida } from "@/components/ShareFaida";
-import { FeatureCard } from "@/components/design-system";
+import { SunnahCardV2 } from "@/components/design-system";
+import { HomeQuickAccessV2 } from "@/components/home/HomeQuickAccessV2";
 import { IA_HOME_PRIMARY } from "@/lib/ia-final-structure";
 import { prefetchHomeWarmRoutes, prefetchRoute } from "@/lib/prefetch-route";
 import {
@@ -157,21 +158,24 @@ export function HomePrimaryDiscovery() {
 
   return (
     <>
+      <HomeQuickAccessV2 />
+
       <section
         className="m2030-band home-primary-portals home-primary-portals--compact"
-        aria-label="بوابات العلم"
+        aria-label="الأقسام الرئيسية"
         data-testid="home-primary-portals"
       >
         <div className="m2030-band__head">
-          <h2 className="m2030-band__title">بوابات العلم</h2>
+          <h2 className="m2030-band__title">الأقسام الرئيسية</h2>
         </div>
         <div className="ss-feature-grid" data-cards-grid="1">
           {FEATURED_CATS.map(({ href, title, desc, Icon }) => (
-            <FeatureCard
+            <SunnahCardV2
               key={href}
               href={href}
               title={title}
               description={desc}
+              ctaLabel="افتح"
               icon={<Icon size={18} strokeWidth={1.8} aria-hidden="true" />}
             />
           ))}
@@ -230,11 +234,11 @@ export default function HomeBelowFold() {
         </section>
       ) : null}
 
-      <section className="m2030-band" aria-label="متابعة من حيث توقفت">
+      <section className="m2030-band home-resume-v2" aria-label="متابعة من حيث توقفت">
         <div className="m2030-band__head">
-          <h2 className="m2030-band__title">متابعة من حيث توقفت</h2>
+          <h2 className="m2030-band__title">استكمال الرحلة</h2>
         </div>
-        <div className="m2030-panel mj-card mj-card--raised soft-card soft-card--on-light">
+        <div className="m2030-panel home-resume-v2__panel">
           <SafeHomeSection name="local-resume">
             <HomeLocalResumeCard />
           </SafeHomeSection>

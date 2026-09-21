@@ -16,6 +16,7 @@ import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { shouldShowFirstVisitIntro } from "@/lib/first-visit-intro-state";
 import { DashboardScreen } from "@/components/design-system/screens";
 import "@/styles/m2030/home.css";
+import "@/styles/pages/home-dashboard-v2.css";
 import "@/styles/components/first-visit-intro.css";
 
 const FirstVisitIntro = lazy(() =>

@@ -68,6 +68,27 @@ console.log("=== docs ===");
   assert.match(doc, /Premium Islamic Dashboard/);
   assert.match(doc, /Deep Emerald/);
   assert.match(doc, /SunnahCardV2/);
+  assert.match(doc, /HomeQuickAccessV2/);
+  assert.match(doc, /home-dashboard-v2\.css/);
+}
+
+console.log("=== PR-2 Dashboard Homepage ===");
+{
+  const app = read("src/App.tsx");
+  assert.match(app, /data-v2-dashboard/);
+  assert.match(app, /m2030-home--v2/);
+  assert.ok(existsSync(resolve(majalisRoot, "src/components/home/HomeQuickAccessV2.tsx")));
+  assert.ok(existsSync(resolve(majalisRoot, "src/styles/pages/home-dashboard-v2.css")));
+  const below = read("src/pages/account/ui/HomeBelowFold.tsx");
+  assert.match(below, /SunnahCardV2/);
+  assert.match(below, /HomeQuickAccessV2/);
+  assert.match(below, /استكمال الرحلة/);
+  assert.doesNotMatch(below, /FeatureCard/);
+  const brand = read("src/styles/components/home-brand-title.css");
+  assert.match(brand, /data-v2-dashboard/);
+  assert.match(brand, /--v2-color-emerald/);
+  const homeView = read("src/pages/account/ui/HomeView.tsx");
+  assert.match(homeView, /home-dashboard-v2\.css/);
 }
 
 console.log("=== package script ===");

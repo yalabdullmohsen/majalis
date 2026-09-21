@@ -31,14 +31,23 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 
 | PR | Focus | Status |
 |---|---|---|
-| 1 | Design Tokens + SunnahCard V2 | **this** |
-| 2 | Dashboard Homepage | queued |
+| 1 | Design Tokens + SunnahCard V2 | **merged** (#2201) |
+| 2 | Dashboard Homepage | **this** |
 | 3 | Quran Hub | queued |
 | 4 | Stories & Seerah | queued |
 | 5 | Library & Search | queued |
 | 6 | Profile Hub + bottom nav (5 tabs) | queued |
 | 7 | Dark Mode Luxury Night polish | queued |
 | 8 | Visual QA | queued |
+
+## PR-2 Dashboard Homepage
+
+- `html[data-v2-dashboard="1"]` على مسار `/`
+- بطاقة ترحيب زمردية (هيرو LCP محفوظ: h1 «سُنّة»)
+- `HomeQuickAccessV2` — أيقونات Rounded Premium
+- بوابات → `SunnahCardV2`
+- أسطح عاجية · بلا Card-in-Card في متابعة الرحلة
+- CSS: `styles/pages/home-dashboard-v2.css`
 
 ## Gate
 
