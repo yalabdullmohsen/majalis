@@ -175,7 +175,8 @@ const waves = [
         args: [
           "-c",
           "pnpm --filter @workspace/majalis exec node --import tsx scripts/generate-content-counts.ts --check && " +
-            "pnpm --filter @workspace/majalis exec node scripts/generate-quran-pages-manifest.mjs --check",
+            "pnpm --filter @workspace/majalis exec node scripts/generate-quran-pages-manifest.mjs --check && " +
+            "pnpm --filter @workspace/majalis exec node scripts/generate-seo-nav-labels.mjs --check",
         ],
       },
     ],
