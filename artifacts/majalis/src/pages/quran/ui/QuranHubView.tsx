@@ -5,6 +5,7 @@ import { QuranOpenMushafCard } from "@/components/quran/QuranOpenMushafCard";
 import { getLobby } from "@/config/section-lobbies";
 import { DashboardScreen } from "@/components/design-system/screens";
 import "@/components/sections/section-cards.css";
+import "@/styles/pages/quran-hub-v2.css";
 
 export default function QuranHubPage() {
   const lobby = useMemo(() => getLobby("quran"), []);
@@ -20,7 +21,7 @@ export default function QuranHubPage() {
   }, []);
 
   return (
-    <DashboardScreen compose="mark">
+    <DashboardScreen compose="mark" className="quran-hub-v2">
       <SectionLobby
         lobbyId="quran"
         title={lobby.title}

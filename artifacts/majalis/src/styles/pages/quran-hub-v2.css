@@ -1,0 +1,160 @@
+/**
+ * Visual Redesign V2 — Quran Hub surfaces.
+ * يُفعَّل عبر html[data-v2-quran-hub="1"] على /quran-hub.
+ * لا يغيّر Routes · لا يمسّ نص المصحف.
+ */
+
+html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] {
+  background: var(--v2-color-ivory, #f9f8f4);
+  color: var(--v2-color-ink, #16241e);
+  gap: var(--v2-space-5, 1.25rem);
+  padding-inline: max(1rem, var(--v2-space-4, 1rem));
+}
+
+html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .section-lobby__title,
+html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .quran-hub-page__title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--v2-color-ink);
+}
+
+html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .section-lobby__title::after,
+html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .quran-hub-page__title::after {
+  width: 2.5rem;
+  height: 3px;
+  border-radius: var(--v2-radius-pill, 999px);
+  background: linear-gradient(
+    90deg,
+    var(--v2-color-emerald, #0f5c45),
+    var(--v2-color-gold, #c9a82e)
+  );
+}
+
+html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .section-lobby__back {
+  border-radius: var(--v2-radius-pill, 999px);
+  border-color: var(--v2-hairline);
+  background: var(--v2-color-ivory-surface, #fffcf8);
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+  box-shadow: var(--v2-shadow-soft);
+}
+
+html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .section-lobby__group-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--v2-color-ink);
+}
+
+/* بطاقة استمرار القراءة — كبيرة · زمردية · بلا عمود جانبي */
+html[data-v2-quran-hub="1"] .quran-open-mushaf {
+  --qom-accent: var(--v2-color-emerald, #0f5c45);
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--v2-space-4, 1rem);
+  min-height: 8.5rem;
+  padding: var(--v2-space-5, 1.25rem) var(--v2-space-5, 1.25rem);
+  border-radius: var(--v2-radius-card, 26px);
+  border-color: transparent;
+  /* صلب للتباين ثم تدرج زخرفي */
+  background-color: var(--v2-color-emerald, #0f5c45);
+  background-image:
+    radial-gradient(
+      120% 80% at 100% 0%,
+      color-mix(in srgb, var(--v2-color-gold, #c9a82e) 20%, transparent) 0%,
+      transparent 55%
+    ),
+    linear-gradient(
+      145deg,
+      var(--v2-color-emerald, #0f5c45) 0%,
+      var(--v2-color-emerald-deep, #0a3d2e) 100%
+    );
+  color: var(--v2-color-on-emerald, #fff);
+  box-shadow: var(--v2-shadow-elevated);
+}
+
+html[data-v2-quran-hub="1"] .quran-open-mushaf__accent {
+  display: none;
+}
+
+html[data-v2-quran-hub="1"] .quran-open-mushaf__body {
+  width: 100%;
+  padding-inline-start: 0;
+}
+
+html[data-v2-quran-hub="1"] .quran-open-mushaf__icon {
+  width: var(--v2-icon-tile, 2.75rem);
+  height: var(--v2-icon-tile, 2.75rem);
+  border-radius: var(--v2-radius-icon, 16px);
+  background: color-mix(in srgb, var(--v2-color-on-emerald, #fff) 16%, transparent);
+  color: var(--v2-color-on-emerald, #fff);
+}
+
+html[data-v2-quran-hub="1"] .quran-open-mushaf__title {
+  font-size: 1.2rem;
+  color: var(--v2-color-on-emerald, #fff);
+}
+
+html[data-v2-quran-hub="1"] .quran-open-mushaf__desc,
+html[data-v2-quran-hub="1"] .quran-open-mushaf__resume {
+  color: color-mix(in srgb, var(--v2-color-on-emerald, #fff) 88%, transparent);
+}
+
+html[data-v2-quran-hub="1"] .quran-open-mushaf__cta {
+  align-self: flex-start;
+  min-height: 44px;
+  padding-inline: var(--v2-space-4, 1rem);
+  border-radius: var(--v2-radius-pill, 999px);
+  background: var(--v2-color-on-emerald, #fff);
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+  font-weight: 700;
+}
+
+html[data-v2-quran-hub="1"] .quran-open-mushaf__cta:focus-visible {
+  outline: 2px solid var(--v2-color-gold, #c9a82e);
+  outline-offset: 2px;
+}
+
+/* بطاقات الأقسام — كبيرة · نظيفة · بلا عمود أخضر */
+html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .section-lobby__grid {
+  gap: var(--v2-space-3, 0.75rem);
+}
+
+html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .card,
+html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] [data-section-card] {
+  border-radius: var(--v2-radius-card, 26px);
+  border: 1px solid var(--v2-hairline);
+  background: var(--v2-color-ivory-surface, #fffcf8);
+  box-shadow: var(--v2-shadow-card);
+  min-height: 5.25rem;
+  padding: var(--v2-space-4, 1rem);
+}
+
+html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .card__icon {
+  width: var(--v2-icon-tile, 2.75rem);
+  height: var(--v2-icon-tile, 2.75rem);
+  border-radius: var(--v2-radius-icon, 16px);
+  background: var(--v2-color-emerald-soft, #e2efe8);
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+}
+
+html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .card__label {
+  font-weight: 800;
+  color: var(--v2-color-ink);
+}
+
+html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .card__subtitle {
+  color: var(--v2-color-ink-muted);
+}
+
+/* إخفاء السكك الخضراء الجانبية داخل مركز القرآن */
+html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .soft-card--accent-bar,
+html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .mj-card--rail,
+html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] [class*="border-inline-start"] {
+  border-inline-start: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-v2-quran-hub="1"] .quran-open-mushaf,
+  html[data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .card {
+    transition: none;
+  }
+}

@@ -32,8 +32,8 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 | PR | Focus | Status |
 |---|---|---|
 | 1 | Design Tokens + SunnahCard V2 | **merged** (#2201) |
-| 2 | Dashboard Homepage | **this** |
-| 3 | Quran Hub | queued |
+| 2 | Dashboard Homepage | **merged** (#2202) |
+| 3 | Quran Hub | **this** |
 | 4 | Stories & Seerah | queued |
 | 5 | Library & Search | queued |
 | 6 | Profile Hub + bottom nav (5 tabs) | queued |
@@ -48,6 +48,14 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 - بوابات → `SunnahCardV2`
 - أسطح عاجية · بلا Card-in-Card في متابعة الرحلة
 - CSS: `styles/pages/home-dashboard-v2.css`
+
+## PR-3 Quran Hub
+
+- `html[data-v2-quran-hub="1"]` على `/quran-hub`
+- بطاقة استمرار قراءة زمردية كبيرة (بلا عمود جانبي)
+- بطاقات اللوبي أكبر · عاجية · أيقونات Rounded Premium
+- المصحف: ذهب أدوات القراءة موحّد مع `--v2-color-gold` فقط (لا نص)
+- CSS: `styles/pages/quran-hub-v2.css`
 
 ## Gate
 
