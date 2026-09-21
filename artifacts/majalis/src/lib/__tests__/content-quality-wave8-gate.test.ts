@@ -47,11 +47,15 @@ console.log("=== harvest drops ellipsis-truncated titles ===");
   assert.equal(sanitizeHarvestCard(card), null);
 }
 
-console.log("=== learn series redirect documented (entry budget) ===");
+console.log("=== learn series redirect preserves slug ===");
 {
   const routes = read("src/AppRoutes.tsx");
   assert.match(routes, /path="\/learn\/series\/:slug"/);
-  assert.match(routes, /Redirect to="\/lessons"/);
+  assert.match(routes, /LegacyLearnIdRedirect|buildLegacyLearnTarget/);
+  assert.doesNotMatch(
+    routes,
+    /path="\/learn\/series\/:slug"><Redirect to="\/lessons"/,
+  );
 }
 
 console.log("=== annual course summary strip ===");

@@ -86,7 +86,7 @@ States used: `COMPLETE` | `IMPROVED` | `BLOCKED_SOURCE` | `BLOCKED_LICENSE` | `E
 |---|---|
 | Lesson descriptions strip phones/`@handles` | IMPROVED_VERIFIED |
 | Harvest ellipsis-truncated titles dropped | IMPROVED_VERIFIED (feed data; short titles still rejected) |
-| `/learn/series/:slug` keep slug → `/lessons/:slug` | DEFERRED (entry budget; still redirects to `/lessons`) |
+| `/learn/series/:slug` keep slug → `/lessons/:slug` | IMPROVED_VERIFIED (Wave 8 remediation) |
 | Annual course summary strip `**عن الدورة:**` fragments | IMPROVED_VERIFIED |
 | Scholar/Quran-person SEO truncate at word | IMPROVED_VERIFIED |
 | Scholar empty works/sources/faq sections hidden | IMPROVED_VERIFIED |

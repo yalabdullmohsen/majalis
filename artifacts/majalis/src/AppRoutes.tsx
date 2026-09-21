@@ -7,6 +7,7 @@ import { AdminRouteGuard } from "@/components/AdminRouteGuard";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
+import { buildLegacyLearnTarget } from "@/lib/legacy-learn-redirect";
 import {
   resolveLegacyMushafSurahRedirect,
   stashPendingNavigationHighlight,
@@ -275,6 +276,13 @@ function LegacyMushafSurahRedirect({ surahParam }: { surahParam: string }) {
   return <Redirect to={result.href} />;
 }
 
+/** `/learn/series|:lesson` → `/lessons/:id` مع الحفاظ على المعرّف والاستعلام المسموح. */
+function LegacyLearnIdRedirect({ id }: { id: string }) {
+  const search = useSearch();
+  const href = useMemo(() => buildLegacyLearnTarget(id, search), [id, search]);
+  return <Redirect to={href} />;
+}
+
 function SafeLazyRoute({ component: Component }: { component: ComponentType<any> }) {
   // useParams يُعيد params المسار الحالي (مثل { id } أو { slug })
   // ويُمرَّر كـ prop "params" لجميع صفحات التفاصيل
@@ -348,7 +356,7 @@ export default function AppRoutes() {
       <Route path="/courses"><Redirect to="/lessons" /></Route>
       <Route path="/sheikhs/:id"><Redirect to="/teachers" /></Route>
       <Route path="/sheikhs"><Redirect to="/teachers" /></Route>
-      {/* المكتبة العلمية أُزيلت من الواجهة العامة — الروابط القديمة → البحث */}
+      {/* PRODUCT_INTENT: المكتبة العامة أُزيلت — /library → /search (انظر docs/content-quality/LIBRARY_ROUTE_INTENT.md) */}
       <Route path="/library/:id"><Redirect to="/search" /></Route>
       <Route path="/library"><Redirect to="/search" /></Route>
       <Route path="/miracles/topic/:slug"><SafeLazyRoute component={MiraclesPage} /></Route>
@@ -487,9 +495,13 @@ export default function AppRoutes() {
       {/* مسارات التعلم أُلغيت — تحويل دائم إلى الدروس */}
       <Route path="/learning/paths/:slug"><Redirect to="/lessons" /></Route>
       <Route path="/learning/paths"><Redirect to="/lessons" /></Route>
-      {/* دروس التعلّم (/learn) أُلغيت — تحويل دائم إلى الدروس */}
-      <Route path="/learn/series/:slug"><Redirect to="/lessons" /></Route>
-      <Route path="/learn/lesson/:id"><Redirect to="/lessons" /></Route>
+      {/* /learn القديم: السلسلة والدرس يحافظان على المعرّف → /lessons/:id (غير المتاح = صفحة درس غير متاح) */}
+      <Route path="/learn/series/:slug">
+        {(params) => <LegacyLearnIdRedirect id={params.slug || ""} />}
+      </Route>
+      <Route path="/learn/lesson/:id">
+        {(params) => <LegacyLearnIdRedirect id={params.id || ""} />}
+      </Route>
       <Route path="/learn/:slug"><Redirect to="/lessons" /></Route>
       <Route path="/learn"><Redirect to="/lessons" /></Route>
       <Route path="/learning/quiz/:slug"><Redirect to="/quiz" /></Route>

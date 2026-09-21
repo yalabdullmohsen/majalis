@@ -1,30 +1,29 @@
 # CURRENT PROJECT STATUS — سُنّة
 
-**Updated:** 2026-09-21 · Full Remediation **Wave 7**  
+**Updated:** 2026-09-21 · Full Remediation **Wave 8**  
 **Canonical pins:** `docs/release/CURRENT_RELEASE_TRUTH.md`  
-**Admin migration:** `docs/admin/ADMIN_V3_MIGRATION_REPORT.md`
+**Library route intent:** `docs/content-quality/LIBRARY_ROUTE_INTENT.md`
 
 ## Repository tip
 
 | Field | Value |
 |---|---|
-| Wave 7 base `origin/main` | `168e2155f8d754da963d466749d40d2f2ce0dc92` |
+| Wave 8 base `origin/main` | `98e29a655bc48a461e469cfc16fe154cc095c28a` |
 
 ## Program progress
 
 | Wave | Focus | State |
 |---|---|---|
-| 1–6 | Truth → Admin v3 centers | **MERGED** (#2192–#2197) |
-| 7 | Legacy Admin entry migration | **IN_PROGRESS** |
-| 8–14 | Deep links → store closure | QUEUED |
+| 1–7 | Truth → Legacy Admin entry | **MERGED** (#2192–#2198) |
+| 8 | Deep links + lessons-guide honesty | **IN_PROGRESS** |
+| 9–14 | Mushaf → store closure | QUEUED |
 
-## Wave 7 deltas
+## Wave 8 deltas
 
-- `/admin` (no section) → `/admin/v3`
-- `/admin?section=*` keeps Legacy CRUD
-- `/admin/legacy` explicit Legacy shell
-- Nav entry points → `/admin/v3`
-- **Legacy delete BLOCKED** (CRUD not ported)
+- `/learn/series/:slug` → `/lessons/:slug` (slug preserved; invalid → `/lessons`)
+- `/learn/lesson/:id` → `/lessons/:id` similarly
+- `/library` → `/search` documented as **PRODUCT_INTENT**
+- Lessons-guide map remains OFF; `isLessonsGuideMapAllowed` false on `BLOCKED_DATA`
 
 ## Store readiness
 

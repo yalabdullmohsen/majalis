@@ -32,4 +32,4 @@ export {
   toScheduledLessonGuideItem,
 } from "./mapFromLesson";
 
-export { assessLessonsGuideGeo } from "./geo-capability";
+export { assessLessonsGuideGeo, isLessonsGuideMapAllowed } from "./geo-capability";
