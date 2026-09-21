@@ -494,10 +494,10 @@ function NativeNotificationsBootstrap() {
 function HomeLazyRoute() {
   return (
     <ErrorBoundary>
-      <div className="m2030-home" dir="rtl">
+      <div className="m2030-home m2030-home--v2" dir="rtl">
         {/* h1 + «ابدأ من هنا» خارج Suspense — يمنع تأخير 2.2s من سرقة LCP تحت throttling */}
         <HomeHeroLcp />
-        <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
+        <section className="m2030-band m2030-band--sage home-start-here-band" aria-label="مدخل المبتدئ">
           <HomeStartHereSection />
         </section>
         <Suspense fallback={<HomeRestShell />}>
@@ -659,6 +659,18 @@ function AppShellInner() {
       document.documentElement.classList.remove("chrome-immersive");
     };
   }, [onPrayer, immersive]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isHomePath) {
+      root.setAttribute("data-v2-dashboard", "1");
+    } else {
+      root.removeAttribute("data-v2-dashboard");
+    }
+    return () => {
+      root.removeAttribute("data-v2-dashboard");
+    };
+  }, [isHomePath]);
 
   useEffect(() => {
     const evtHandler = () => openGlobalSearch();
