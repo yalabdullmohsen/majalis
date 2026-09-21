@@ -54,6 +54,7 @@ import {
 } from "@/lib/knowledge-platform";
 import "@/styles/pages/search.css";
 import "@/styles/pages/search-legacy.css";
+import "@/styles/pages/library-search-v2.css";
 import { ACTION, EMPTY, SEARCH, STATUS } from "@/lib/ui-copy";
 import { ListScreen } from "@/components/design-system/screens";
 
