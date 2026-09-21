@@ -178,7 +178,7 @@ export const SideNavDrawer = memo(function SideNavDrawer({
                 <>
                   {isAdmin ? (
                     <Link
-                      href="/admin"
+                      href="/admin/v3"
                       onClick={onClose}
                       className={`sidebar-item${isActive("/admin") ? " active" : ""}`}
                       aria-current={isActive("/admin") ? "page" : undefined}

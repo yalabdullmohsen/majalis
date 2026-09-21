@@ -621,6 +621,7 @@
     "test:publication-honesty": "node --import tsx src/lib/__tests__/publication-honesty-gate.test.ts",
     "test:admin-v3-shell": "node --import tsx src/lib/__tests__/admin-v3-shell-gate.test.ts",
     "test:admin-v3-centers": "node --import tsx src/lib/__tests__/admin-v3-centers-gate.test.ts",
+    "test:admin-v3-migration": "node --import tsx src/lib/__tests__/admin-v3-migration-gate.test.ts",
     "test:knowledge-summary-card": "node --import tsx src/lib/__tests__/knowledge-summary-card-gate.test.ts",
     "test:knowledge-fabs-spacing": "node --import tsx src/lib/__tests__/knowledge-fabs-spacing-gate.test.ts",
     "test:islamic-sects-a11y-responsive": "node --import tsx src/lib/__tests__/islamic-sects-a11y-responsive-gate.test.ts",

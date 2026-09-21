@@ -1,8 +1,8 @@
 # SUNNAH STABILIZATION — تقرير حي
 
 **الحالة:** `PARTIAL`  
-**آخر تحديث:** 2026-09-21 (Full Remediation Wave 6 — Admin v3 Centers)  
-**Source (`origin/main` base):** `bafe16232bb345f98918dc3f101831259e7ee475`  
+**آخر تحديث:** 2026-09-21 (Full Remediation Wave 7 — Legacy Admin entry migration)  
+**Source (`origin/main` base):** `168e2155f8d754da963d466749d40d2f2ce0dc92`  
 **Production:** re-check `version.json` after merge · Store **HOLD**  
 **مرجع الحقيقة:** `docs/release/CURRENT_PROJECT_STATUS.md` · `docs/release/CURRENT_RELEASE_TRUTH.md`  
 **ملاحظة:** pins الأقدم = **STALE_REPORT** لسطح الحالة النشط
@@ -20,7 +20,7 @@
 | PR-7 legacy cleanup | **MERGED** | #2187 | SAFE_REMOVE ميت فقط — `docs/release/LEGACY_CLEANUP_REPORT.md` · بقايا SAFE_REMOVE/NEEDS_PORT → Remediation PR-12 |
 | PR-8 Admin v3 Shell | **MERGED** | #2196 | `/admin/v3` shell |
 | PR-9 مراكز Admin | **IN_PROGRESS** | — | Remediation Wave 6 |
-| PR-10 حذف Legacy Admin | **BLOCKED** | — | حتى اكتمال الترحيل · Remediation PR-7 |
+| PR-10 حذف Legacy Admin | **BLOCKED** | — | Wave 7: entry migrated · delete still BLOCKED |
 | PR-11 صدق المحتوى | **IN_PROGRESS** | — | بلا نشر آلي · Remediation Wave 4 |
 | PR-12 تحقق شامل | **PENDING** | — | Remediation PR-12 |
 
@@ -34,7 +34,8 @@
 | حراسة أصول المتجر | #2191 | MERGED · HOLD باقٍ |
 | Full Remediation Waves 1–4 | #2192–#2195 | MERGED |
 | Full Remediation Wave 5 (Admin v3 Shell) | #2196 | MERGED |
-| Full Remediation Wave 6 (Admin v3 Centers) | — | IN_PROGRESS |
+| Full Remediation Wave 6 (Admin v3 Centers) | #2197 | MERGED |
+| Full Remediation Wave 7 (Legacy entry migrate) | — | IN_PROGRESS |
 
 ## معيار الإغلاق
 
