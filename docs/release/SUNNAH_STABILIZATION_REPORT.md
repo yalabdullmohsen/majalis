@@ -14,8 +14,8 @@
 | PR-3 Design tokens | **MERGED** | #2183 | `--sunnah-*` + تقرير DS |
 | PR-4 رئيسية/قرآن/أنبياء | **MERGED** | #2184 | استئناف حقيقي + ذهب + لا clip |
 | PR-5 أقسام عامة | **MERGED** | #2185 | شرائط RTL + سطوح + أذكار/فقه/معرفة |
-| PR-6 مصحف ص١–ص٢ | **IN_PROGRESS** | (فرع حالي) | توازن أدق + تباين علامة + basmala spacing 0 |
-| PR-7 legacy cleanup | PENDING | — | |
+| PR-6 مصحف ص١–ص٢ | **MERGED** | #2186 | توازن ص١–ص٢ + تباين علامة |
+| PR-7 legacy cleanup | **IN_PROGRESS** | (فرع حالي) | تقرير + SAFE_REMOVE ميت فقط — `docs/release/LEGACY_CLEANUP_REPORT.md` |
 | PR-8 Admin v3 Shell | PENDING | — | بعد جرد #2176 |
 | PR-9 مراكز Admin | PENDING | — | |
 | PR-10 حذف Legacy Admin | BLOCKED | — | حتى اكتمال الترحيل |

@@ -251,7 +251,7 @@ ai-agents · auth-context · auto-content · auto-knowledge-engine · autonomous
 | `styles/pages/admin-shell.css` | Drawer/Shell — **يُستبدل** |
 | `styles/pages/admin-review-hub.css` | خانة المراجعة |
 | `styles/pages/admin-categories.css` | تصنيفات |
-| `styles/pages/fiqh-admin.css` | فقه |
+| ~~`styles/pages/fiqh-admin.css`~~ | **أُزيل PR-7** — كان يتيمًا (صفر استيراد/أصناف TS)؛ ليس سطح Admin حي |
 | `styles/pages/prophet-stories-admin.css` | قصص |
 | `styles/pages/universities-admin.css` | جامعات |
 | `styles/components/admin-inline-edit.css` | تعديل مضمّن |
