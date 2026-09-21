@@ -120,7 +120,20 @@
 .fqh-hub-card,
 .home-more-card,
 .home-sunnah-card,
-.home-occasion-card {
+.home-occasion-card,
+.twh-section-intro,
+.twh-pillar-card,
+.uq-lead,
+.sg-lead,
+.mw-lead,
+.tw-section-lead,
+.knowledge-article,
+.lesson-unified-card,
+.srch-result-card,
+.settings-card,
+.ss-state-card,
+.nf2-card,
+.adv-error-state {
   border-inline-start-width: 1px !important;
   border-inline-start-color: var(--svl-card-border) !important;
   border-inline-start-style: solid !important;
@@ -145,6 +158,62 @@
   border-inline-start-width: 1px !important;
 }
 
+/*
+ * RTL decorative bars often used border-inline-end (start visually in RTL).
+ * Flatten decorative end strips on the same public cards — keep functional
+ * quotes / definitions / mushaf / grading strips via exclusions below.
+ */
+.soft-card:not([data-scripture]):not(.mushaf-page):not(.ayah-card),
+.soft-card--on-light:not([data-scripture]),
+.hub-card:not([data-legacy-ok]):not([data-scripture]),
+.section-card:not([data-scripture]),
+.section-hub__card:not([data-scripture]),
+.ds-card:not([data-scripture]),
+.mj-card:not([data-scripture]),
+.ui-card:not([data-scripture]):not(.mushaf-page):not(.ayah-card),
+.content-card:not([data-scripture]),
+.topic-card:not([data-scripture]),
+.mk-topic-card,
+.mk-card,
+.mk-lane-card,
+.lesson-unified-card,
+.hadith-card:not([data-scripture]),
+.hadith-hub-card:not(.hadith-hub-card--sahih):not(.hadith-hub-card--daif):not(.hadith-hub-card--mawdu):not(.hadith-hub-card--arbaeen),
+.fiqh-category-card,
+.fiqh-issue-card,
+.fqh-hub-card,
+.twh-hub-card,
+.twh-section-intro,
+.twh-pillar-card,
+.quran-hub-card,
+.tarikh-card,
+.seerah-panel,
+.prophet-lux-card,
+.sect-card,
+.akl-card,
+.uq-lead,
+.uq-fact-item,
+.uq-dalil-box,
+.uq-info-box,
+.sg-lead,
+.mw-lead,
+.tw-section-lead,
+.srch-result-card,
+.knowledge-article,
+.settings-card,
+.ss-state-card,
+.nf2-card,
+.rsc,
+.gs-surface,
+.gs-surface--feature,
+.gs-surface--knowledge,
+.info-card:not(.info-card--caution),
+.ai-disclaimer-bar {
+  border-inline-end-width: 1px !important;
+  border-inline-end-color: var(--svl-card-border) !important;
+  border-inline-end-style: solid !important;
+}
+
 /* استثناءات وظيفية موثّقة في البوابة: blockquote / kx-block--definition / mushaf / status strips */
 
 /* بطاقات الحالة الوظيفية — لا تُسطَّح هنا */
@@ -155,4 +224,14 @@
 .cat-node[data-status],
 [data-status-strip="1"] {
   /* التعريف في ملفات الحالة */
+}
+
+/* بطاقة داخل بطاقة بلا وظيفة — سطح مسطّح للداخلية */
+.soft-card .soft-card,
+.soft-card--on-light .soft-card,
+.soft-card .soft-card--on-light,
+.ss-state-card .soft-card,
+.section-lobby .soft-card .soft-card {
+  box-shadow: none;
+  background: var(--svl-surface-layered, var(--svl-surface-section, var(--mj-surface-2, var(--mj-surface))));
 }

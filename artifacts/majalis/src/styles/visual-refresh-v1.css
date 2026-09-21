@@ -264,6 +264,68 @@
   border-color: color-mix(in srgb, var(--svl-accent-primary) 28%, var(--svl-border-subtle));
 }
 
+/* ── بقية الأقسام العامة (PR-5) ── */
+.hadith-card,
+.hadith-hub-card,
+.fiqh-category-card,
+.fqh-hub-card,
+.tf-card,
+.tf-path-card,
+.tf-spotlight-card,
+.uq-fact-item,
+.lesson-unified-card,
+.srch-result-card,
+.knowledge-article,
+.knowledge-index-link,
+.settings-card,
+.twh-pillar-card,
+.sect-card,
+.ss-state-card,
+.nf2-card {
+  background: var(--svl-surface-primary, var(--mj-surface, #fffcf6));
+  border-color: var(--svl-border-subtle, color-mix(in srgb, var(--mj-hairline) 80%, transparent));
+  box-shadow: var(--svl-shadow-card);
+  color: var(--svl-text-primary, var(--mj-ink, #12201a));
+}
+
+.ds-empty,
+.lessons-empty-state,
+.search-empty-state {
+  background: var(--svl-surface-layered, var(--svl-surface-section, var(--mj-surface)));
+  border-color: var(--svl-border-subtle, color-mix(in srgb, var(--mj-hairline) 80%, transparent));
+  box-shadow: var(--svl-shadow-card);
+  color: var(--svl-text-primary, var(--mj-ink, #12201a));
+}
+
+.fiqh-category-card__title,
+.lesson-unified-card__title,
+.srch-result-card__title,
+.twh-pillar-card__title,
+.sect-card__title,
+.hadith-hub-card__title {
+  color: var(--svl-text-primary, var(--mj-ink, #12201a));
+  font-weight: 750;
+}
+
+.fiqh-category-card__desc,
+.lesson-unified-card__meta,
+.srch-result-card__snippet,
+.sect-card__desc {
+  color: var(--svl-text-secondary, var(--mj-ink-2, #2f4038));
+}
+
+.adhkar-focus-card {
+  background: var(--svl-surface-elevated, var(--svl-surface-primary, #fffcf6));
+  border-color: color-mix(in srgb, var(--svl-accent-primary) 18%, var(--svl-border-subtle));
+  box-shadow: var(--svl-shadow-card);
+}
+
+.seerah-panel {
+  background: var(--svl-surface-primary, var(--mj-surface, #fffcf6));
+  box-shadow: var(--svl-shadow-card);
+  border-color: var(--svl-border-subtle);
+}
+
 /* ── Dark Luxury ── */
 html.dark .card,
 html[data-theme="dark"] .card,
@@ -274,7 +336,25 @@ html[data-theme="dark"] .quran-hub-card,
 html.dark .prophet-lux-card,
 html[data-theme="dark"] .prophet-lux-card,
 html.dark .reading-section-card,
-html[data-theme="dark"] .reading-section-card {
+html[data-theme="dark"] .reading-section-card,
+html.dark .hadith-card,
+html[data-theme="dark"] .hadith-card,
+html.dark .fiqh-category-card,
+html[data-theme="dark"] .fiqh-category-card,
+html.dark .lesson-unified-card,
+html[data-theme="dark"] .lesson-unified-card,
+html.dark .srch-result-card,
+html[data-theme="dark"] .srch-result-card,
+html.dark .knowledge-article,
+html[data-theme="dark"] .knowledge-article,
+html.dark .settings-card,
+html[data-theme="dark"] .settings-card,
+html.dark .ss-state-card,
+html[data-theme="dark"] .ss-state-card,
+html.dark .seerah-panel,
+html[data-theme="dark"] .seerah-panel,
+html.dark .adhkar-focus-card,
+html[data-theme="dark"] .adhkar-focus-card {
   background: var(--svl-surface-primary, #17221e);
   border-color: var(--svl-border-subtle);
   box-shadow: var(--svl-shadow-card);

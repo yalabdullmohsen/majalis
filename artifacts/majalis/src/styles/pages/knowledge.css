@@ -13,19 +13,26 @@
 .knowledge-article {
   font-size: calc(1rem * var(--knowledge-font-scale, 1));
   padding: 1rem 1.1rem;
-  border-radius: 0.75rem;
-  color: var(--mj-white, #ffffff);
-  background: var(--surface-brand-solid, #0f6b4c);
+  border-radius: var(--svl-radius-md, var(--radius-card, 24px));
+  color: var(--svl-text-primary, var(--mj-ink, #12201a));
+  background: var(--svl-surface-primary, var(--mj-surface, #fffcf6));
+  border: 1px solid var(--svl-border-subtle, var(--mj-hairline, #d9d3c8));
+  box-shadow: var(--svl-shadow-card, none);
 }
 
 .knowledge-article a,
 .knowledge-article-body {
-  color: var(--mj-white, #ffffff);
+  color: inherit;
+}
+
+.knowledge-article a {
+  color: var(--svl-accent-primary-deep, var(--mj-brand-deep, #0a3d2e));
+  text-decoration-thickness: from-font;
 }
 
 .knowledge-article h2,
 .knowledge-article h3 {
-  color: var(--mj-white, #ffffff);
+  color: var(--svl-text-primary, var(--mj-ink, #12201a));
   margin-top: 1rem;
 }
 
@@ -51,10 +58,11 @@
   gap: 0.75rem;
   min-height: 44px;
   padding: 0.75rem 1rem;
-  border-radius: 0;
+  border-radius: var(--svl-radius-sm, var(--radius-card, 16px));
   text-decoration: none;
-  color: var(--mj-ink, #1a1a1a);
-  background: transparent;
+  color: var(--svl-text-primary, var(--mj-ink, #12201a));
+  background: var(--svl-surface-primary, var(--mj-surface, #fffcf6));
+  border: 1px solid var(--svl-border-subtle, var(--mj-hairline, #d9d3c8));
 }
 
 .knowledge-badge {
