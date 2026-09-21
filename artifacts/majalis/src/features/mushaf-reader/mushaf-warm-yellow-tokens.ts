@@ -20,17 +20,22 @@ export const mushafInkSecondary = "#3A2E1A" as const;
 export const mushafWaqfInk = "#2A2014" as const;
 export const mushafMetadataInk = "#5F4814" as const;
 
-/** ذهب مطبعي هادئ — لإطار الصفحة والزخارف (أخف من العلامات) */
+/** ذهب مطبعي موحّد — Quran Gold Token (إطار + علامات + زخارف) */
 export const mushafPrintedGold = "#C9A82E" as const;
 export const mushafPrintedGoldDark = "#A8881A" as const;
 export const mushafPrintedGoldBorder = "#B89620" as const;
 export const mushafPrintedGoldText = "#5F4814" as const;
 export const mushafOrnamentMuted = "#C4A84A" as const;
 
-/** علامات الآيات — أصفر ذهبي مطفأ (SunnahVerseRosette) */
-export const mushafVerseMarkerFill = "#DCB424" as const;
-export const mushafVerseMarkerBorder = "#B58F16" as const;
-export const mushafVerseMarkerNumber = "#5F4812" as const;
+/** Quran Gold — نفس الدرجة للعلامات والإطار (لا درجات ذهبية متعددة) */
+export const quranGold = mushafPrintedGold;
+export const quranGoldDeep = mushafPrintedGoldBorder;
+export const quranGoldInk = mushafPrintedGoldText;
+
+/** علامات الآيات — نفس Quran Gold Token */
+export const mushafVerseMarkerFill = quranGold;
+export const mushafVerseMarkerBorder = quranGoldDeep;
+export const mushafVerseMarkerNumber = quranGoldInk;
 export const mushafVerseMarkerHighlight = "#E4C038" as const;
 
 /** ليلي — ذهبي مطفأ على ورق فحمي دافئ */

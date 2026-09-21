@@ -19,9 +19,12 @@ const tokens = readFileSync(
   "utf8",
 );
 
-assert.match(tokens, new RegExp(`mushafVerseMarkerFill\\s*=\\s*"${mushafVerseMarkerFill}"`));
-assert.match(tokens, new RegExp(`mushafVerseMarkerBorder\\s*=\\s*"${mushafVerseMarkerBorder}"`));
-assert.match(tokens, new RegExp(`mushafVerseMarkerNumber\\s*=\\s*"${mushafVerseMarkerNumber}"`));
+assert.match(tokens, /mushafVerseMarkerFill\s*=\s*quranGold/);
+assert.match(tokens, /mushafVerseMarkerBorder\s*=\s*quranGoldDeep/);
+assert.match(tokens, /mushafVerseMarkerNumber\s*=\s*quranGoldInk/);
+assert.equal(mushafVerseMarkerFill.toLowerCase(), "#c9a82e");
+assert.equal(mushafVerseMarkerBorder.toLowerCase(), "#b89620");
+assert.equal(mushafVerseMarkerNumber.toLowerCase(), "#5f4814");
 
 assert.match(css, new RegExp(`--mushaf-verse-marker-fill:\\s*${mushafVerseMarkerFill}`, "i"));
 assert.match(css, new RegExp(`--mushaf-verse-marker-border:\\s*${mushafVerseMarkerBorder}`, "i"));
@@ -30,7 +33,8 @@ assert.match(css, /\.nm-ayah-mark\s*\{[^}]*border:[^;]*var\(--mushaf-verse-marke
 assert.match(css, /\.nm-ayah-mark\s*\{[^}]*color:\s*var\(--mushaf-verse-marker-number\)/s);
 assert.match(css, /--mushaf-surah-frame-accent:\s*var\(--mushaf-printed-gold\)/);
 assert.match(css, /--mushaf-surah-frame-ornament:\s*var\(--mushaf-printed-gold-border\)/);
-assert.doesNotMatch(css, /--mushaf-verse-marker-fill:\s*#(c9a227|ffd700|a3864d)/i);
+assert.doesNotMatch(css, /--mushaf-verse-marker-fill:\s*#(dcb424|c9a227|ffd700|a3864d)/i);
+assert.match(css, /--quran-gold:\s*#c9a82e/i);
 assert.match(css, /--mushaf-text-color:\s*var\(--mushaf-ink-primary\)/);
 assert.match(css, /--nm-ink:\s*var\(--mushaf-text-color\)/);
 assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
