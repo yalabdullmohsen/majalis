@@ -4,7 +4,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { AdminV3Shell } from "./AdminV3Shell";
 import { AdminV3ErrorBoundary } from "./AdminV3ErrorBoundary";
 import { AdminV3Dashboard } from "./AdminV3Dashboard";
-import { AdminV3CenterStub } from "./AdminV3CenterStub";
+import { AdminV3CenterWorkspace } from "./centers/AdminV3CenterWorkspace";
 import { resolveAdminV3Center } from "./nav";
 
 /**
@@ -29,7 +29,7 @@ export default function AdminV3App() {
 
   return (
     <AdminV3ErrorBoundary>
-      <AdminV3Shell>{isHome ? <AdminV3Dashboard /> : <AdminV3CenterStub />}</AdminV3Shell>
+      <AdminV3Shell>{isHome ? <AdminV3Dashboard /> : <AdminV3CenterWorkspace />}</AdminV3Shell>
     </AdminV3ErrorBoundary>
   );
 }
