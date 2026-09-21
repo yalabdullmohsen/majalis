@@ -305,7 +305,7 @@
     "test:mushaf-gates": "pnpm run test:mushaf-gates:unit",
     "test:governance": "node scripts/test-content-governance.mjs",
     "test:counts": "node scripts/test-content-counts.mjs",
-    "test:library-integrity": "node scripts/test-library-integrity.mjs",
+    "test:library-integrity": "node scripts/test-library-integrity.mjs && node --import tsx src/lib/__tests__/library-public-source-gate.test.ts",
     "fetch:quran-data": "node scripts/fetch-quran-data.mjs",
     "verify:quran-data": "node --import tsx scripts/verify-quran-integrity.mjs",
     "verify:quran-pages": "node --import tsx scripts/verify-quran-pages-manifest.mjs",

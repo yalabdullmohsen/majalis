@@ -20,6 +20,8 @@ const { DEMO_QUIZ_QUESTIONS } = await import("../src/lib/quiz-seed.js");
 const { MIND_MAPS } = await import("../src/lib/mind-maps-data.js");
 
 const { LIBRARY_CATALOG } = await import("../src/lib/library-catalog.js");
+const { hasVerifiedLibrarySource } = await import("../src/lib/library-service.js");
+const publicLibraryCount = LIBRARY_CATALOG.filter(hasVerifiedLibrarySource).length;
 const rulingsArchiveManifest = resolve(appRoot, "content/archive/rulings-encyclopedia/data/manifest.json");
 let rulingsTotal = 0;
 try {
@@ -58,8 +60,9 @@ const universitiesCatalog = JSON.parse(
 
 const counts = {
   $comment:
-    "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
-  books: LIBRARY_CATALOG.length,
+    "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts. books = المنشور العام (مصدر موثّق فقط).",
+  books: publicLibraryCount,
+  booksCatalogTotal: LIBRARY_CATALOG.length,
   islamicHistory: ISLAMIC_HISTORY_ITEMS.length,
   fawaid: SEED_FAWAID.length,
   // المصدر الرسمي المنشور: public/data/*/manifest.json (البذور التجريبية قد تكون فارغة)

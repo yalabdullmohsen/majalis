@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "program": "SUNNAH_FULL_PROJECT_REMEDIATION",
+  "wave": 3,
+  "generatedAtUtc": "2026-09-21T15:20:00Z",
+  "policy": "لا اختلاق مصادر. السطح العام = source_verified فقط. السجلات الكاملة تبقى للإدارة.",
+  "counts": {
+    "total": 190,
+    "source_verified": 18,
+    "source_missing": 172,
+    "source_broken": 0,
+    "publicVisible": 18,
+    "adminCatalogVisible": 190
+  },
+  "surfacesHardened": [
+    "getPublicLibraryCatalog / filterLibraryCatalog (default)",
+    "searchLibraryCatalog",
+    "getFeaturedLibraryBooks / getRelatedLibraryBooks",
+    "mergeLibraryWithCatalog",
+    "getLibrary / getLibraryItemById (supabase)",
+    "bookRepository entity API",
+    "scholar-library-links",
+    "DEMO_LIBRARY",
+    "content-counts.json books field"
+  ],
+  "notDone": [
+    "Mass inventing URLs for 172 missing — forbidden",
+    "Auto-converting missing → verified",
+    "Deleting admin catalog rows"
+  ],
+  "gates": [
+    "pnpm --filter @workspace/majalis run test:library-integrity"
+  ]
+}

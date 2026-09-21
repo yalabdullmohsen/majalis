@@ -4,7 +4,7 @@ import { FAWAID_CURATED_CATEGORIES } from "./fawaid-curated-categories";
 import { filterQualityFawaid } from "./content-quality";
 import { loadLessonsSeed, getLessonsSeedCached } from "./lessons-seed";
 import { filterMiraclesSeed, searchMiraclesSeed } from "./miracles-seed";
-import { getLibraryCatalog } from "./library-service";
+import { getPublicLibraryCatalog } from "./library-service";
 import { SHEIKHS_SEED, dedupeSheikhs } from "./sheikhs-seed";
 
 export { FAWAID_CURATED_CATEGORIES as FAWAID_CATEGORIES };
@@ -87,7 +87,7 @@ export const DEMO_LESSONS = arrayProxy(() => getLessonsSeedCached());
  */
 export const DEMO_SHEIKHS = dedupeSheikhs(SHEIKHS_SEED);
 
-export const DEMO_LIBRARY = getLibraryCatalog();
+export const DEMO_LIBRARY = getPublicLibraryCatalog();
 
 export const DEMO_MIRACLES = filterMiraclesSeed();
 
