@@ -10,7 +10,6 @@ import { hasSeenFirstVisitIntroSync } from "@/lib/first-visit-intro-state";
 import { getRecentPages } from "@/lib/recent-pages";
 import "@/styles/components/home-brand-title.css";
 import "@/styles/m2030/home.css";
-import "@/styles/pages/home-dashboard-v2.css";
 
 export function HomeHeroLcp() {
   // تحية حسب ساعة الجهاز المحلية (لا وقت خادم البناء) — تُزامَن عند التركيب وكل دقيقة
