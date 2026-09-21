@@ -597,7 +597,9 @@ html.dark .card__subtitle {
 .topic-page,
 .search-page,
 .pts-screen {
-  padding-bottom: calc(var(--content-pb, 88px) + 0.75rem);
+  padding-bottom: calc(
+    var(--content-pb, 88px) + 0.75rem + var(--quran-mini-player-offset, 0px)
+  );
 }
 
 /* لا يغطي العائم المشغّل — يرفع فوق الشريط فقط */
