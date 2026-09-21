@@ -207,6 +207,9 @@
   --sunnah-quran-gold: #C9A82E;
   --sunnah-ink: var(--mj-ink);
   --sunnah-ink-muted: var(--mj-muted);
+  /* Visual Redesign V2 — ظلال/حواف بطاقة Dashboard (الIvory الهدف عبر --v2-*) */
+  --sunnah-v2-radius-card: 26px;
+  --sunnah-v2-shadow-card: 0 8px 28px rgba(22, 36, 30, 0.07);
   --svl-accent-gold: var(--sunnah-quran-gold);
   --color-secondary: #5C6B4A;
   --color-secondary-soft: #E8EBE3;
@@ -323,7 +326,8 @@
   --color-text: var(--mj-ink);
 }
 
-/* الوضع الليلي — غابة عميقة، نص دافئ، أسطح متمايزة (بلا fallback نهاري) */
+/* الوضع الليلي — غابة عميقة، نص دافئ، أسطح متمايزة (بلا fallback نهاري)
+ * Deep Emerald Night الكامل لـ Visual Redesign V2 → --v2-color-night-* (PR-7) */
 html[data-theme="dark"],
 html.dark,
 [data-theme="dark"],

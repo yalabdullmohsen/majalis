@@ -45,6 +45,26 @@ export const SS_COLOR = {
   nightGold: "var(--ss-color-night-gold)",
 } as const;
 
+/** Visual Redesign V2 — استهلاك عبر CSS vars فقط */
+export const V2_COLOR = {
+  ivory: "var(--v2-color-ivory)",
+  ivorySurface: "var(--v2-color-ivory-surface)",
+  emerald: "var(--v2-color-emerald)",
+  emeraldDeep: "var(--v2-color-emerald-deep)",
+  gold: "var(--v2-color-gold)",
+  ink: "var(--v2-color-ink)",
+  inkMuted: "var(--v2-color-ink-muted)",
+  nightBg: "var(--v2-color-night-bg)",
+  nightSurface: "var(--v2-color-night-surface)",
+  nightGold: "var(--v2-color-night-gold)",
+} as const;
+
+export const V2_RADIUS = {
+  card: "var(--v2-radius-card)",
+  icon: "var(--v2-radius-icon)",
+  pill: "var(--v2-radius-pill)",
+} as const;
+
 export const SS_SPACE = {
   1: "var(--ss-space-1)",
   2: "var(--ss-space-2)",
