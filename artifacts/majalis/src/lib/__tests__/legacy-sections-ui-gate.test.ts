@@ -1,9 +1,10 @@
 /**
  * بوابة انحدار: أقسام كانت على قالب قديم (هيرو/بطاقات خضراء داكنة).
+ * + PR-7: منع رجوع CSS/صفحات SAFE_REMOVE المثبتة في LEGACY_CLEANUP_REPORT.
  * Run: node --import tsx src/lib/__tests__/legacy-sections-ui-gate.test.ts
  */
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -96,5 +97,22 @@ for (const [name, src] of [
     `Duplicate back buttons visible: ${name} must not render local back`,
   );
 }
+
+/* PR-7 SAFE_REMOVE — صفر استيراد + صفر أصناف TS وقت الحذف */
+for (const rel of [
+  "src/styles/components/adhan-active-overlay.css",
+  "src/styles/pages/fiqh-admin.css",
+  "src/styles/pages/fiqh-council.css",
+  "src/styles/pages/library.css",
+  "src/views/AboutUsPage.tsx",
+] as const) {
+  assert.equal(existsSync(resolve(root, rel)), false, `PR-7: يجب ألا يعود ${rel}`);
+}
+
+const mainSrc = read("src/main.tsx");
+assert.match(mainSrc, /brand-v4\.css/, "PR-7: brand-v4 يبقى مؤسَّسة");
+assert.match(mainSrc, /final-release\.css/, "PR-7: final-release يبقى حتى NEEDS_PORT");
+assert.match(mainSrc, /sunnah-visual-language\.css/, "PR-7: SVL يبقى KEEP");
+assert.match(mainSrc, /m2030\/foundation\.css/, "PR-7: m2030 foundation يبقى KEEP");
 
 console.log("legacy-sections-ui-gate: ok");

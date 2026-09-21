@@ -41,9 +41,10 @@
 
 ## CSS — حرج مستورد من `main.tsx` (مستورد)
 
-`app/styles/theme.css` · `brand-v4.css` · `tokens.css` · `index.css` · `design-system.css` · `instant-interaction.css` · `native-feel.css` · `chunk-recovery-toast.css` · `final-release.css` · `brand-v4-components.css` · `brand-v4-contrast-fixes.css` · `a11y-release-gate.css` · `capacitor-native-ux.css` · `m2030/{foundation,navigation,pages,interactions}.css` · `theme-aliases.css` · `ios-edge.css`
+`app/styles/theme.css` · `brand-v4.css` · `tokens.css` · `index.css` · `design-system.css` · `instant-interaction.css` · `native-feel.css` · `chunk-recovery-toast.css` · `final-release.css` · `brand-v4-components.css` · `brand-v4-contrast-fixes.css` · `a11y-release-gate.css` · `capacitor-native-ux.css` · `m2030/{foundation,navigation,pages,interactions}.css` · `theme-aliases.css` · `ios-edge.css` · `sunnah-visual-language.css` (مؤجّل) · `m2030/home.css` (مع الرئيسية)
 
-باقي ~210 ملفات CSS تحت `src/styles/**` و`src/**/*.css`: **على الأرجح محملة كسولًا مع الصفحات/المكوّنات** — قبل الحذف: `rg -n "filename.css" artifacts/majalis`.
+`brand-v4` / `m2030` / `final-release` / SVL = **KEEP** وقت التشغيل حتى هجرة مرحلية — التصنيف الكامل: `docs/release/LEGACY_CLEANUP_REPORT.md` (PR-7).  
+`styles/pages/*-legacy.css` = مستوردة كسولًا (ليست SAFE_REMOVE بالاسم). قبل أي حذف CSS: `rg -n "filename.css" artifacts/majalis`.
 
 ## رموز / تعارضات شائعة
 
