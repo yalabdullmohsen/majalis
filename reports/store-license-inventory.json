@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "program": "SUNNAH_FULL_PROJECT_REMEDIATION",
+  "wave": 2,
+  "generatedAtUtc": "2026-09-21T15:00:00Z",
+  "sourceCommitHint": "see origin/main after Wave 2 merges",
+  "storeReadiness": "HOLD",
+  "policy": {
+    "noFlipApprovedWithoutEvidence": true,
+    "storeStripRemovesAllDistAdhanUntilOwnerAllowlist": true,
+    "storeStripRemovesQpcFontsUntilOwnerOk": true,
+    "uiHideInsufficientForStoreBinary": true
+  },
+  "assets": [
+    {
+      "id": "field",
+      "path": "artifacts/majalis/public/audio/adhan/adhan-field.m4a",
+      "source": "Wikimedia File:Adhan.ogg",
+      "owner": "Wikimedia / public domain dedication",
+      "license": "CC0-1.0",
+      "redistributionAllowed": true,
+      "appStoreAllowed": "NEEDS_OWNER_DECISION",
+      "attribution": "optional thanks",
+      "approvedForProduction": true,
+      "evidence": "prayer-audio-rights-registry.ts + STORE_ASSET_MANIFEST.md",
+      "classification": "APPROVED_WEB / STORE_STRIP_UNTIL_OWNER"
+    },
+    {
+      "id": "field-full",
+      "path": "artifacts/majalis/public/audio/adhan/adhan-field-full.m4a",
+      "source": "Wikimedia File:Beautiful_adhan.ogg",
+      "owner": "Wikimedia / public domain dedication",
+      "license": "CC0-1.0",
+      "redistributionAllowed": true,
+      "appStoreAllowed": "NEEDS_OWNER_DECISION",
+      "attribution": "optional thanks",
+      "approvedForProduction": true,
+      "evidence": "prayer-audio-rights-registry.ts + STORE_ASSET_MANIFEST.md",
+      "classification": "APPROVED_WEB / STORE_STRIP_UNTIL_OWNER"
+    },
+    {
+      "id": "madinah",
+      "path": null,
+      "source": "third-party CDN (removed)",
+      "owner": "uncertain",
+      "license": "rights_uncertain",
+      "redistributionAllowed": false,
+      "appStoreAllowed": false,
+      "attribution": "required if ever re-added",
+      "approvedForProduction": false,
+      "evidence": "registry + public-tree hard ban (Wave 2)",
+      "classification": "BLOCKED_LICENSE / REMOVE_FROM_BUILD"
+    },
+    {
+      "id": "qatami",
+      "path": null,
+      "source": "celebrity / CDN (removed)",
+      "owner": "performer name risk",
+      "license": "rejected",
+      "redistributionAllowed": false,
+      "appStoreAllowed": false,
+      "attribution": "n/a",
+      "approvedForProduction": false,
+      "evidence": "registry status rejected + public-tree hard ban",
+      "classification": "REMOVE_FROM_BUILD"
+    },
+    {
+      "id": "legacy-madinah-general",
+      "path": "artifacts/majalis/public/sounds/adhan/madinah-general.m4a",
+      "source": "legacy pack",
+      "owner": "uncertain",
+      "license": "unresolved",
+      "redistributionAllowed": false,
+      "appStoreAllowed": false,
+      "attribution": "n/a",
+      "approvedForProduction": false,
+      "evidence": "deleted Wave 2; offline map redirects to makkah",
+      "classification": "REMOVE_FROM_BUILD"
+    },
+    {
+      "id": "qpc-v2-fonts",
+      "path": "artifacts/majalis/public/fonts/qpc-v2",
+      "source": "KFGQPC / QUL",
+      "owner": "KFGQPC/QUL",
+      "license": "unclear for store redistribute",
+      "redistributionAllowed": "NEEDS_OWNER_DECISION",
+      "appStoreAllowed": false,
+      "attribution": "usually required",
+      "approvedForProduction": "web reader only pending store OK",
+      "evidence": "LICENSE_RISKS.md · native-strip-qpc-fonts.mjs · store-strip dist/fonts/qpc-v2",
+      "classification": "BLOCKED_LICENSE"
+    },
+    {
+      "id": "hisn-muslim",
+      "path": "app content corpus",
+      "source": "edition-dependent",
+      "owner": "compiler / publisher",
+      "license": "unclear",
+      "redistributionAllowed": "NEEDS_OWNER_DECISION",
+      "appStoreAllowed": false,
+      "attribution": "likely",
+      "approvedForProduction": "OWNER_ACTION",
+      "evidence": "LICENSE_RISKS.md",
+      "classification": "BLOCKED_LICENSE / OWNER_ACTION"
+    },
+    {
+      "id": "everyayah-offline",
+      "path": null,
+      "source": "EveryAyah remote",
+      "owner": "EveryAyah",
+      "license": "ToS unsigned for bundling",
+      "redistributionAllowed": false,
+      "appStoreAllowed": false,
+      "attribution": "required",
+      "approvedForProduction": "STREAM_ONLY",
+      "evidence": "LICENSE_RISKS.md",
+      "classification": "BLOCKED_LICENSE (offline) / STREAM_ONLY"
+    },
+    {
+      "id": "mp3quran-offline",
+      "path": null,
+      "source": "mp3quran remote",
+      "owner": "mp3quran",
+      "license": "ToS unsigned for bundling",
+      "redistributionAllowed": false,
+      "appStoreAllowed": false,
+      "attribution": "required",
+      "approvedForProduction": "STREAM_ONLY",
+      "evidence": "LICENSE_RISKS.md",
+      "classification": "BLOCKED_LICENSE (offline) / STREAM_ONLY"
+    },
+    {
+      "id": "ios-adhan-caf-family",
+      "path": "artifacts/majalis/ios/App/App/Sounds/adhan-*.caf",
+      "source": "mixed / derived",
+      "owner": "mixed",
+      "license": "unresolved except documented CC0 shorts",
+      "redistributionAllowed": "NEEDS_OWNER_DECISION",
+      "appStoreAllowed": false,
+      "attribution": "varies",
+      "approvedForProduction": "OWNER exclude-or-allowlist",
+      "evidence": "STORE_EXCLUSION_REPORT.md · MANUAL_OWNER_ACTION.md",
+      "classification": "NEEDS_OWNER_DECISION"
+    },
+    {
+      "id": "system-default-notification",
+      "path": null,
+      "source": "OS",
+      "owner": "Apple/Google",
+      "license": "platform",
+      "redistributionAllowed": true,
+      "appStoreAllowed": true,
+      "attribution": "n/a",
+      "approvedForProduction": true,
+      "evidence": "sunnah-audio-platform adhan-catalog system-default",
+      "classification": "APPROVED"
+    }
+  ],
+  "gates": [
+    "pnpm run verify:store-assets",
+    "pnpm --filter @workspace/majalis run test:prayer-audio-rights",
+    "scripts/store-strip-unresolved-assets.mjs",
+    "artifacts/majalis/scripts/native-strip-qpc-fonts.mjs"
+  ],
+  "ownerActionsRemaining": [
+    "CAF exclude-or-allowlist for Archive",
+    "QPC written redistribution OK or keep strip",
+    "Hisn edition permission or replace",
+    "everyayah/mp3quran offline policy",
+    "Allowlist specific CC0 field packs for store binary if desired",
+    "Pin Store RC commit"
+  ]
+}
