@@ -45,6 +45,18 @@
   --ss-color-on-brand: var(--color-on-brand, var(--mj-on-brand));
   --ss-color-border: var(--color-hairline, var(--mj-hairline));
   --ss-color-danger: var(--color-danger, var(--mj-danger));
+  /* Sunnah Stabilization aliases */
+  --ss-color-ivory: var(--sunnah-ivory, var(--ss-color-bg));
+  --ss-color-ivory-surface: var(--sunnah-ivory-surface, var(--ss-color-surface));
+  --ss-color-ivory-muted: var(--sunnah-ivory-muted, var(--ss-color-surface-2));
+  --ss-color-emerald: var(--sunnah-emerald, var(--ss-color-brand));
+  --ss-color-emerald-deep: var(--sunnah-emerald-deep, var(--ss-color-brand-deep));
+  --ss-color-quran-gold: var(--sunnah-quran-gold);
+  --ss-color-ink: var(--sunnah-ink, var(--ss-color-text));
+  --ss-color-ink-muted: var(--sunnah-ink-muted, var(--ss-color-text-muted));
+  --ss-color-night-bg: var(--sunnah-night-bg, var(--ss-color-bg));
+  --ss-color-night-text: var(--sunnah-night-text, var(--ss-color-text));
+  --ss-color-night-gold: var(--sunnah-night-gold, var(--ss-color-quran-gold));
 
   /* ── Spacing ── */
   --ss-space-1: var(--spacing-mj-1);
