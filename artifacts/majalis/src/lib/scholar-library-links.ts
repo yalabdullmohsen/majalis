@@ -1,8 +1,9 @@
 /**
- * ربط عناوين مؤلفات العلماء بالبحث عند تطابق موثوق مع فهرس المراجع.
+ * ربط عناوين مؤلفات العلماء بالبحث عند تطابق موثوق مع فهرس المراجع **ذات المصدر الموثّق**.
  * لا يغيّر بيانات العلماء — يطابق النص المعروض فقط. المسار العلني `/library` محوَّل.
  */
 import { LIBRARY_CATALOG, type LibraryBook } from "@/lib/library-catalog";
+import { hasVerifiedLibrarySource } from "@/lib/library-service";
 
 function normalizeTitle(value: string): string {
   return value
@@ -15,8 +16,10 @@ function normalizeTitle(value: string): string {
     .toLowerCase();
 }
 
+const PUBLIC_CATALOG = LIBRARY_CATALOG.filter(hasVerifiedLibrarySource);
+
 const CATALOG_BY_NORM = new Map<string, LibraryBook>();
-for (const book of LIBRARY_CATALOG) {
+for (const book of PUBLIC_CATALOG) {
   const key = normalizeTitle(book.title);
   if (key && !CATALOG_BY_NORM.has(key)) CATALOG_BY_NORM.set(key, book);
   for (const kw of book.keywords) {
@@ -112,7 +115,7 @@ export function resolveScholarWorkLink(work: string, authorHint?: string): Schol
   if (coreKey.length >= 8) {
     let best: LibraryBook | null = null;
     let bestScore = 0;
-    for (const book of LIBRARY_CATALOG) {
+    for (const book of PUBLIC_CATALOG) {
       const titleKey = normalizeTitle(book.title);
       if (titleKey.length < 8) continue;
       if (!coreKey.includes(titleKey) && !titleKey.includes(coreKey)) continue;

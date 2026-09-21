@@ -14,6 +14,20 @@ export type LibraryItem = LibraryBook & {
   source_url?: string;
 };
 
+/** مصدر موثّق = رابط https صالح — بلا اختلاق. */
+export function hasVerifiedLibrarySource(
+  book: Pick<LibraryBook, "external_url" | "sourceUrl"> | { external_url?: string; sourceUrl?: string },
+): boolean {
+  const url = String(book.external_url || book.sourceUrl || "").trim();
+  if (!url) return false;
+  try {
+    const u = new URL(url);
+    return /^https?:$/i.test(u.protocol) && Boolean(u.hostname);
+  } catch {
+    return false;
+  }
+}
+
 export function isCatalogBookId(id: string) {
   return id.startsWith("book-");
 }
@@ -43,8 +57,14 @@ export function mapCatalogToItem(book: LibraryBook): LibraryItem {
   };
 }
 
+/** الفهرس الكامل — للإدارة والتدقيق فقط. */
 export function getLibraryCatalog(): LibraryItem[] {
   return sortLibraryItems(LIBRARY_CATALOG.map(mapCatalogToItem));
+}
+
+/** السطح العام: كتب ذات مصدر موثّق فقط. */
+export function getPublicLibraryCatalog(): LibraryItem[] {
+  return getLibraryCatalog().filter(hasVerifiedLibrarySource);
 }
 
 export function getLibraryBookById(id: string): LibraryItem | null {
@@ -52,8 +72,15 @@ export function getLibraryBookById(id: string): LibraryItem | null {
   return book ? mapCatalogToItem(book) : null;
 }
 
+/** تفاصيل عامة: لا تُرجع كتابًا بلا مصدر موثّق. */
+export function getPublicLibraryBookById(id: string): LibraryItem | null {
+  const book = getLibraryBookById(id);
+  if (!book || !hasVerifiedLibrarySource(book)) return null;
+  return book;
+}
+
 export function getFeaturedLibraryBooks(limit = 6): LibraryItem[] {
-  return getLibraryCatalog()
+  return getPublicLibraryCatalog()
     .filter((book) => !book.caution)
     .slice(0, limit);
 }
@@ -62,16 +89,26 @@ export function filterLibraryCatalog({
   category,
   type,
   search,
+  includeUnverified = false,
 }: {
   category?: string;
   type?: string;
   search?: string;
+  /** true للإدارة فقط — الافتراضي يخفي source_missing */
+  includeUnverified?: boolean;
 }): LibraryItem[] {
   const q = search?.trim();
-  return getLibraryCatalog().filter((item) => {
+  const base = includeUnverified ? getLibraryCatalog() : getPublicLibraryCatalog();
+  return base.filter((item) => {
     if (category && category !== "الكل" && item.category !== category) return false;
     if (type && type !== "الكل" && item.type !== type) return false;
-    if (q && !arabicMatchAny([item.title, item.author, item.description, item.category, item.type, ...(item.keywords || [])], q)) {
+    if (
+      q &&
+      !arabicMatchAny(
+        [item.title, item.author, item.description, item.category, item.type, ...(item.keywords || [])],
+        q,
+      )
+    ) {
       return false;
     }
     return true;
@@ -85,24 +122,30 @@ export function searchLibraryCatalog(term: string, limit = 20): LibraryItem[] {
 }
 
 export function getRelatedLibraryBooks(book: LibraryItem, limit = 4): LibraryItem[] {
-  return getLibraryCatalog()
+  return getPublicLibraryCatalog()
     .filter((row) => row.id !== book.id && row.category === book.category)
     .slice(0, limit);
 }
 
 export function mergeLibraryWithCatalog(dbRows: LibraryItem[]): LibraryItem[] {
-  if (!dbRows.length) return getLibraryCatalog();
+  if (!dbRows.length) return getPublicLibraryCatalog();
 
   const merged = [...dbRows];
 
   for (const book of LIBRARY_CATALOG) {
+    if (!hasVerifiedLibrarySource(book)) continue;
     if (!merged.some((row) => row.id === book.id)) {
       merged.push(mapCatalogToItem(book));
     }
   }
 
   return sortLibraryItems(
-    merged.filter((row) => !String(row.id).startsWith("lib-") && !String(row.title || "").includes("تفريغ")),
+    merged.filter(
+      (row) =>
+        !String(row.id).startsWith("lib-") &&
+        !String(row.title || "").includes("تفريغ") &&
+        hasVerifiedLibrarySource(row),
+    ),
   );
 }
 

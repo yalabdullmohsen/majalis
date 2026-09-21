@@ -4,7 +4,8 @@ import { arabicMatchAny, arabicSearchPatterns, ilikePattern } from "./arabic-sea
 import { loadSeedData } from "./seed-loader";
 import {
   filterLibraryCatalog,
-  getLibraryBookById,
+  getPublicLibraryBookById,
+  hasVerifiedLibrarySource,
   mergeLibraryWithCatalog,
   normalizeLibraryRow,
   searchLibraryCatalog,
@@ -715,6 +716,7 @@ export async function getLibrary({ type, category }: { type?: string; category?:
     let result = merged;
     if (category && category !== "الكل") result = result.filter((row) => row.category === category);
     if (type && type !== "الكل") result = result.filter((row) => row.type === type);
+    result = result.filter(hasVerifiedLibrarySource);
     return { data: result, error: null, usingSeed: false };
   } catch (err) {
     logSupabaseError("getLibrary", err);
@@ -741,14 +743,18 @@ export async function getLibraryItemById(id: string) {
         .eq("status", "approved")
         .maybeSingle();
       if (!error && data) {
-        return { data: normalizeLibraryRow(data), error: null };
+        const item = normalizeLibraryRow(data);
+        if (!hasVerifiedLibrarySource(item) && !item.file_url) {
+          return { data: null, error: new Error("not found") };
+        }
+        return { data: item, error: null };
       }
     } catch (err) {
       logSupabaseError("getLibraryItemById", err);
     }
   }
 
-  const catalog = getLibraryBookById(id);
+  const catalog = getPublicLibraryBookById(id);
   return { data: catalog, error: catalog ? null : new Error("not found") };
 }
 
