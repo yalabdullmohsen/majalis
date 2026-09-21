@@ -40,11 +40,7 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
   {
     id: "qatami",
     labelAr: "أذان ناصر القطامي",
-    local: {
-      general: "/audio/adhan/adhan-qatami.mp3",
-      short: "/audio/adhan/adhan-qatami.mp3",
-      takbir: "/audio/adhan/adhan-takbeerat-short.mp3",
-    },
+    local: {},
     remote: {
       general: `${CDN}/general/nasser-al-qatami-01.mp3`,
       short: `${CDN}/general/nasser-al-qatami-01.mp3`,
@@ -159,6 +155,28 @@ export const OFFLINE_ADHAN_CORE_PACKS: OfflineAdhanPack[] = [
     },
     notificationSound: "short-ring.caf",
   },
+  {
+    id: "field",
+    labelAr: "أذان ميداني",
+    local: {
+      general: "/audio/adhan/adhan-field.m4a",
+      short: "/audio/adhan/adhan-field-short.m4a",
+      takbir: "/audio/adhan/adhan-takbeerat-short.mp3",
+    },
+    remote: {},
+    notificationSound: "adhan-short-field.caf",
+  },
+  {
+    id: "field-full",
+    labelAr: "أذان ميداني كامل",
+    local: {
+      general: "/audio/adhan/adhan-field-full.m4a",
+      short: "/audio/adhan/adhan-field-short.m4a",
+      takbir: "/audio/adhan/adhan-takbeerat-short.mp3",
+    },
+    remote: {},
+    notificationSound: "adhan-short-field-full.caf",
+  },
 ];
 
 export const OFFLINE_FEATURED_MUEZZIN_IDS = [
@@ -166,6 +184,8 @@ export const OFFLINE_FEATURED_MUEZZIN_IDS = [
   "alharam",
   "aqsa",
   "kuwait",
+  "field",
+  "field-full",
   "takbeerat",
   "soft",
 ] as const;

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-13",
+  "updatedAt": "2026-09-21",
   "productName": "سُنّة",
   "sources": [
     {
@@ -22,10 +22,17 @@
       "licensePageEvidence": "docs/audio-rights/evidence/wikimedia-adhan-ogg-2026-09-13.html",
       "originalPath": "docs/audio-rights/evidence/originals/Adhan.ogg",
       "sha256": "faeb03e4338554fb8b54dba98ed4949648615b58e991bbd560a89f4837dde413",
-      "status": "license_verified_pending_audio_qa",
-      "approvedForProduction": false,
-      "notificationCompatible": false,
-      "notes": "مدة تقريبية 42ث — أطول من حد إشعار iOS 30ث دون قصّ موثّق."
+      "catalogId": "field",
+      "bundledPaths": [
+        "public/audio/adhan/adhan-field.m4a",
+        "public/audio/adhan/adhan-field-short.m4a",
+        "ios/App/App/Sounds/adhan-short-field.caf",
+        "android/app/src/main/res/raw/adhan_short_field.mp3"
+      ],
+      "status": "approved_for_production",
+      "approvedForProduction": true,
+      "notificationCompatible": true,
+      "notes": "محوّل إلى أذان ميداني (field) + قصّ إشعار 10ث."
     },
     {
       "id": "wikimedia-beautiful-adhan",
@@ -36,10 +43,16 @@
       "licensePageEvidence": "docs/audio-rights/evidence/wikimedia-beautiful-adhan-2026-09-13.html",
       "originalPath": "docs/audio-rights/evidence/originals/Beautiful_adhan.ogg",
       "sha256": "35fe06b08fe80505c550c33fed8a783fa9901ddc81ac884958b4be048f5b2a79",
-      "status": "license_verified_pending_audio_qa",
-      "approvedForProduction": false,
-      "notificationCompatible": false,
-      "notes": "مدة ~154ث — مرشّح أذان داخل التطبيق بعد فحص الجودة، ليس إشعارًا."
+      "catalogId": "field-full",
+      "bundledPaths": [
+        "public/audio/adhan/adhan-field-full.m4a",
+        "ios/App/App/Sounds/adhan-short-field-full.caf",
+        "android/app/src/main/res/raw/adhan_short_field_full.mp3"
+      ],
+      "status": "approved_for_production",
+      "approvedForProduction": true,
+      "notificationCompatible": true,
+      "notes": "مقتطف حزمة ~58ث (field-full) ضمن ميزانية الصوت؛ الأصل الكامل في evidence."
     },
     {
       "id": "wikimedia-azan-ogg",

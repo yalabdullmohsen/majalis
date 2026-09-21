@@ -34,6 +34,8 @@ for (const r of listProductionApprovedAudio()) {
 assert.equal(isCatalogIdAllowedInProductionUi("qatami"), false);
 assert.equal(isCatalogIdAllowedInProductionUi("madinah"), false);
 assert.equal(isCatalogIdAllowedInProductionUi("makkah"), true);
+assert.equal(isCatalogIdAllowedInProductionUi("field"), true);
+assert.equal(isCatalogIdAllowedInProductionUi("field-full"), true);
 assert.equal(isCatalogIdAllowedInProductionUi("tone-prayer"), true);
 
 const available = listAvailableSettingsSounds();

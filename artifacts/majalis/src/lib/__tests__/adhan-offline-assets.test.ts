@@ -30,10 +30,14 @@ assert.ok(resolveOfflineClipUrl("takbeerat", "takbir")?.startsWith("/audio/adhan
 assert.ok(resolveOfflineClipUrl("alharam", "general")?.startsWith("/audio/adhan/"));
 assert.ok(resolveOfflineClipUrl("turkey", "general")?.startsWith("/audio/adhan/"));
 assert.ok(resolveOfflineClipUrl("soft", "short")?.startsWith("/audio/adhan/"));
+assert.ok(resolveOfflineClipUrl("field", "general")?.startsWith("/audio/adhan/"));
+assert.ok(resolveOfflineClipUrl("field-full", "general")?.startsWith("/audio/adhan/"));
 
 assert.equal(notificationSoundForAdhanPack("makkah"), "adhan-short-makkah.caf");
 assert.equal(notificationSoundForAdhanPack("madinah"), "adhan-short-makkah.caf");
 assert.equal(notificationSoundForAdhanPack("egypt"), "adhan-short-egypt.caf");
+assert.equal(notificationSoundForAdhanPack("field"), "adhan-short-field.caf");
+assert.equal(notificationSoundForAdhanPack("field-full"), "adhan-short-field-full.caf");
 
 const aqsa = getMuezzin("aqsa");
 assert.equal(aqsa.audioAvailable, true, "الأقصى متاح للاختيار");

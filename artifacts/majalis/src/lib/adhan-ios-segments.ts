@@ -68,6 +68,8 @@ export function adhanIosSoundName(
   const shortMap: Record<string, string> = {
     egypt: "adhan-short-egypt.caf",
     aqsa: "adhan-short-aqsa.caf",
+    field: "adhan-short-field.caf",
+    "field-full": "adhan-short-field-full.caf",
     takbeerat: "adhan-short-takbeerat.caf",
     soft: "adhan-short-takbeerat.caf",
   };

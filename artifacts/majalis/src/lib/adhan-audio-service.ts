@@ -31,6 +31,8 @@ export const ADHAN_FULL_AUDIO_PATHS = {
   aqsa: "/audio/adhan/adhan-aqsa-full.mp3",
   egypt: "/audio/adhan/adhan-egypt-full.m4a",
   alharam: "/audio/adhan/adhan-haram-full.m4a",
+  field: "/audio/adhan/adhan-field.m4a",
+  "field-full": "/audio/adhan/adhan-field-full.m4a",
   fajrMakkah: "/audio/adhan/adhan-makkah-fajr.mp3",
   soft: "/audio/adhan/adhan-soft-alert.m4a",
   takbeerat: "/audio/adhan/adhan-takbeerat-short.mp3",
@@ -43,6 +45,8 @@ export type AdhanStyleId =
   | "turkey"
   | "kuwait"
   | "alharam"
+  | "field"
+  | "field-full"
   | "takbeerat"
   | "soft"
   | "custom"
@@ -513,7 +517,7 @@ function resolveFullPathForStyle(style: AdhanStyleId): string | null {
   if (style === "silent") return null;
   if (style === "takbeerat") return ADHAN_FULL_AUDIO_PATHS.takbeerat;
   if (style === "soft") return ADHAN_FULL_AUDIO_PATHS.soft;
-  if (style === "makkah" || style === "aqsa" || style === "egypt" || style === "alharam") {
+  if (style === "makkah" || style === "aqsa" || style === "egypt" || style === "alharam" || style === "field" || style === "field-full") {
     return ADHAN_FULL_AUDIO_PATHS[style];
   }
   return ADHAN_FULL_AUDIO_PATHS.makkah;

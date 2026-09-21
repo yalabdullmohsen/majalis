@@ -38,6 +38,8 @@ export const PRAYER_ADHAN_STYLE_SOUNDS = {
   aqsa: "adhan-short-aqsa.caf",
   turkey: "prayer-alert.caf",
   kuwait: "short-ring.caf",
+  field: "adhan-short-field.caf",
+  "field-full": "adhan-short-field-full.caf",
   takbeerat: "adhan-short-takbeerat.caf",
   soft: "soft-ring.caf",
   qatami: "prayer-alert.caf",
