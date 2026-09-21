@@ -59,22 +59,19 @@ const splashTs = readFileSync(resolve(root, "src/lib/splash-screen.ts"), "utf8")
 assert.match(splashTs, /SplashScreen\.hide/, "يخفي الإطلاق الأصلي");
 assert.match(splashTs, /SPLASH_MIN_VISIBLE_MS/);
 assert.match(splashTs, /SPLASH_MAX_VISIBLE_MS/);
-assert.match(splashTs, /mj:shell-stable/, "إخفاء Capacitor+HTML بعد استقرار الهيكل");
-assert.match(splashTs, /hideCapacitorSplash|hideCapacitor|hideNativeSplash/, "مسار إخفاء أصلي");
+assert.match(splashTs, /mj:shell-stable/, "إخفاء HTML بعد استقرار الهيكل");
+assert.match(splashTs, /hideCapacitorSplash\(true\)/, "إخفاء Capacitor فور التسليح");
+assert.match(splashTs, /dismissHtmlLaunchSplash/, "HTML مستقل عن Capacitor");
+assert.doesNotMatch(splashTs, /SplashScreen\.show\s*\(/, "ممنوع إعادة إظهار Splash على Resume");
 assert.doesNotMatch(
   splashTs,
   /addEventListener\(\s*["']mj:boot-ready["']/,
-  "لا إخفاء Capacitor مبكر على boot-ready",
+  "لا إخفاء HTML مبكر على boot-ready",
 );
 assert.doesNotMatch(
   splashTs,
   /addEventListener\(\s*["']mj:app-painted["']/,
-  "لا إخفاء Capacitor مبكر على app-painted",
-);
-assert.doesNotMatch(
-  splashTs,
-  /requestAnimationFrame\(\(\)\s*=>\s*\{\s*requestAnimationFrame\(hide\)/,
-  "لا إخفاء بـ double-rAF قبل جاهزية الخطوط",
+  "لا إخفاء HTML مبكر على app-painted",
 );
 
 const majlisSplash = readFileSync(resolve(root, "src/lib/majlis-splash.ts"), "utf8");
@@ -103,7 +100,8 @@ assert.doesNotMatch(launch, /mk-progress/, "بلا شريط تقدّم");
 assert.doesNotMatch(launch, /image="Splash"/, "بلا Splash قديم");
 assert.doesNotMatch(launch, /systemBackgroundColor/, "بلا خلفية نظام بيضاء");
 assert.match(launch, /safeArea|Safe area/i, "يحترم safe area");
-assert.match(launch, /0\.94901960784313721/, `خلفية ${BG}`);
+assert.match(launch, /0\.96862745098039216/, `خلفية LaunchScreen = ${BG} (#F7F3EB)`);
+assert.doesNotMatch(launch, /0\.94901960784313721/, "بلا خلفية #F2F4F3 القديمة");
 
 const capTs = readFileSync(resolve(root, "capacitor.config.ts"), "utf8");
 assert.match(capTs, /launchShowDuration:\s*0/, "مدة إظهار Splash = 0");
@@ -130,6 +128,10 @@ const colors = readFileSync(resolve(root, "android/app/src/main/res/values/color
 assert.match(colors, new RegExp(`splash_background">${BG}<`));
 
 assert.ok(!existsSync(resolve(root, "ios/App/App/Assets.xcassets/Splash.imageset")), "لا Splash.imageset");
+assert.ok(!existsSync(resolve(root, "ios/App/App/Assets.xcassets/LaunchMark.imageset")), "لا LaunchMark قديم");
+assert.ok(!existsSync(resolve(root, "public/brand/silent-splash-390x844.png")), "لا silent-splash أخضر");
+assert.ok(!existsSync(resolve(root, "public/brand/silent-splash-390x844-dark.png")), "لا silent-splash dark");
+assert.ok(!existsSync(resolve(root, "public/brand/silent-splash-mark-512.png")), "لا silent-splash mark");
 assert.ok(!existsSync(resolve(root, "assets/splash.png")), "لا assets/splash.png");
 assert.ok(!existsSync(resolve(root, "public/brand/apple-splash")), "لا apple-splash يتيمة");
 assert.ok(!existsSync(resolve(root, "public/brand/splash-boot.css")), "لا splash-boot.css");
@@ -141,7 +143,7 @@ assert.ok(!existsSync(resolve(root, "src/lib/launch-readiness.ts")), "launch-rea
 
 const xcassets = resolve(root, "ios/App/App/Assets.xcassets");
 for (const name of readdirSync(xcassets)) {
-  if (/splash|default@|splash-2732/i.test(name)) {
+  if (/splash|LaunchMark|default@|splash-2732/i.test(name)) {
     assert.fail(`أصل يتيم في xcassets: ${name}`);
   }
 }
