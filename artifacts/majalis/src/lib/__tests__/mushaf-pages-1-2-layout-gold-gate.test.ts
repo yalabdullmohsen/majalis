@@ -66,5 +66,19 @@ assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
 assert.match(chrome, /\.nm-page--opening[\s\S]{0,80}--mushaf-ayah-mark-size:\s*1\.22em/);
 assert.match(chrome, /\.nm-page--opening \.nm-ayah-mark[\s\S]{0,120}border-width:\s*1\.5px/);
 assert.match(chrome, /\.nm-page--opening \.nm-ayah-mark[\s\S]{0,200}box-shadow:/);
+assert.match(chrome, /\.nm-page--opening \.nm-ayah-mark[\s\S]{0,160}font-size:\s*0\.65em/);
+assert.match(
+  chrome,
+  /color-mix\(in srgb,\s*var\(--quran-gold-ink[^)]*\)\s*30%/i,
+);
+
+console.log("=== توازن ص١–ص٢ + بلا letter-spacing على البسملة ===");
+assert.match(chrome, /\.nm-page--opening \.nm-slot\[data-kind="banner"\][\s\S]{0,80}padding-block-end:\s*0\.04em/);
+assert.match(chrome, /\.nm-page--opening \.nm-slot\[data-kind="basmala"\][\s\S]{0,80}padding-block-end:\s*0\.02em/);
+assert.match(chrome, /\.nm-page--opening \.nm-slot\[data-kind="line"\][\s\S]{0,60}align-items:\s*center/);
+assert.match(css, /\.nm-basmala\s*\{[^}]*letter-spacing:\s*0\b/s);
+assert.doesNotMatch(css, /\.nm-basmala\s*\{[^}]*letter-spacing:\s*0\.01em/s);
+assert.equal(isContentPackedPage("surah-start"), false);
+assert.equal(isContentPackedPage("normal"), false);
 
 console.log("mushaf-pages-1-2-layout-gold-gate.test.ts: ok");

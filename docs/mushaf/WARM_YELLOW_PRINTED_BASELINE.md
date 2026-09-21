@@ -1,42 +1,41 @@
 # Sunnah Warm Yellow — Baseline
 
-تاريخ: 2026-09-14  
-فرع: `cursor/sunnah-warm-yellow-printed-mushaf`  
-أساس `main`: `7ef552f39`
+تاريخ تحديث: 2026-09-21 (PR-6 مزامنة مع Quran Gold الموحّد)  
+مرجع التنفيذ: `mushaf-warm-yellow-tokens.ts` + `mushaf-reader.css`
 
 ## Quran Integrity (P0)
 
 | فحص | نتيجة |
 |---|---|
-| mushaf-604-integrity-gate | ok pages=604 ayahs=6236 lineSlots=8820 |
-| new-mushaf-reader-gate | ok |
+| mushaf-604-integrity-gate | مطلوب أخضر قبل الدمج |
+| new-mushaf-reader-gate | مطلوب أخضر قبل الدمج |
 
-لم يُمسّ أي ملف بيانات قرآن / Page Mapping / Line Mapping.
+لم يُمسّ أي ملف بيانات قرآن / Page Mapping / Line Mapping في موجات التثبيت البصري.
 
 ## Geometry المحمية
 
-- `--mushaf-ayah-mark-size: 0.98em`
-- شبكة 15 سطرًا
+- `--mushaf-ayah-mark-size: 1.15em` عالميًا (ص٣…٦٠٤)
+- ص١–ص٢ فقط: `1.22em` عبر `.nm-page--opening` / `.nm-page--lead`
+- شبكة 15 سطرًا للصفحات العادية؛ content-driven لصفحتي الافتتاح
 - ممنوع: letter-spacing على النص / scaleX / auto-fit
 
-## Runtime Colors
+## Runtime Colors (Light)
 
-| Token | قبل | بعد (Light) | بعد (Dark) |
-|---|---|---|---|
-| paper | `#fcf7ec` | `#F8F1D4` | `#2A2418` |
-| ink | `#1a1510` | `#1C160E` | `#F5EED8` |
-| verse fill | `#a3864d` | `#DDBA28` | `#C4A030` |
-| verse border | `#8a7042` | `#C49918` | `#A88618` |
-| verse number | `#6b5530` | `#5F4814` | `#F0E2B8` |
-| printed gold | — | `#D4B12A` | muted via dark fill |
-
-## مرجع بصري (تقريبي)
-
-| عنصر | نطاق |
+| Token | قيمة |
 |---|---|
-| ورق | `#FBF5DA` … `#F7EDC8` |
-| علامة تعبئة | `#D8AE20` … `#E1BB2D` |
-| علامة حد | `#B58B14` … `#C49918` |
-| رقم | `#5F4814` … `#75591A` |
+| paper | `#FCF6E3` |
+| ink | `#1C160E` |
+| verse fill / Quran Gold | `#C9A82E` |
+| verse border | `#B89620` |
+| verse number | `#5F4814` |
+| printed gold | `#C9A82E` |
 
-الصور مرجع بصري فقط — بلا OCR وبلا قص زخارف.
+## Dark
+
+| Token | قيمة |
+|---|---|
+| verse fill | `#C4A030` |
+| verse border | `#A88618` |
+| verse number | `#F0E2B8` |
+
+انظر أيضًا: `docs/mushaf/FIRST_PAGES_VISUAL_VALIDATION.md`
