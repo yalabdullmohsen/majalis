@@ -29,6 +29,20 @@ export const SS_COLOR = {
   onBrand: "var(--ss-color-on-brand)",
   border: "var(--ss-color-border)",
   danger: "var(--ss-color-danger)",
+  /** Warm Ivory / layered ivory */
+  ivory: "var(--ss-color-ivory)",
+  ivorySurface: "var(--ss-color-ivory-surface)",
+  ivoryMuted: "var(--ss-color-ivory-muted)",
+  /** Deep Emerald primary */
+  emerald: "var(--ss-color-emerald)",
+  emeraldDeep: "var(--ss-color-emerald-deep)",
+  /** Quran Gold Token — موحّد مع المصحف */
+  quranGold: "var(--ss-color-quran-gold)",
+  ink: "var(--ss-color-ink)",
+  inkMuted: "var(--ss-color-ink-muted)",
+  nightBg: "var(--ss-color-night-bg)",
+  nightText: "var(--ss-color-night-text)",
+  nightGold: "var(--ss-color-night-gold)",
 } as const;
 
 export const SS_SPACE = {

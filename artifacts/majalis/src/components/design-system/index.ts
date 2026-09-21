@@ -28,11 +28,12 @@ export {
 export { SectionCard } from "@/components/sections/SectionCard";
 export { FeaturedSectionCard } from "@/components/sections/FeaturedSectionCard";
 /** بطاقة شبكة الأقسام — نفس نظام الحواف/الألوان عبر soft-card */
-export { SectionEntryCard, HubCard as SectionHubCard } from "@/components/ui/HubCard";
+export { SectionEntryCard, HubCard as SectionHubCard, HubCard as NavigationCard } from "@/components/ui/HubCard";
 export type { SectionEntryCardProps, SectionEntryVariant } from "@/components/ui/HubCard";
 export { UnifiedLessonCard as LessonCard } from "@/components/lessons/UnifiedLessonCard";
 export { FloatingBackButton, AppBackButton } from "@/components/FloatingBackButton";
 export { LazyRouteFallback as RouteFallback, LazyRouteFallback } from "@/components/LazyRouteFallback";
+export { EmptyState, Empty as NoticeEmpty } from "@/components/ui-common";
 export { TopicPage as AppPage, SectionTemplatePage } from "@/components/topic/TopicPage";
 export { SectionHero } from "@/components/topic/SectionHero";
 export {

@@ -5,8 +5,8 @@
  */
 
 :root {
-  --sgs-ink: color-mix(in srgb, var(--svl-accent-primary, #0f5c45) 55%, transparent);
-  --sgs-gold: color-mix(in srgb, var(--svl-accent-gold, #a8843a) 45%, transparent);
+  --sgs-ink: color-mix(in srgb, var(--svl-accent-primary, var(--sunnah-emerald, #0f5c45)) 55%, transparent);
+  --sgs-gold: color-mix(in srgb, var(--svl-accent-gold, var(--sunnah-quran-gold, #c9a82e)) 45%, transparent);
   --sgs-opacity: 0.14;
   --sgs-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' fill='none'%3E%3Cpath d='M48 8 L56 36 L84 36 L62 52 L70 80 L48 64 L26 80 L34 52 L12 36 L40 36 Z' stroke='%230F5C45' stroke-opacity='0.22' stroke-width='1.2'/%3E%3C/svg%3E");
   --sgs-arch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' fill='none'%3E%3Cpath d='M10 70 V38 A50 50 0 0 1 110 38 V70' stroke='%230F5C45' stroke-opacity='0.2' stroke-width='1.4'/%3E%3Cpath d='M28 70 V42 A32 32 0 0 1 92 42 V70' stroke='%23A8843A' stroke-opacity='0.16' stroke-width='1'/%3E%3C/svg%3E");

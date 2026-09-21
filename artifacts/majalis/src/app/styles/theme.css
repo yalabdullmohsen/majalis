@@ -198,6 +198,16 @@
   --mj-brand: #0F5C45;
   --mj-brand-soft: #E2EFE8;
   --mj-brand-deep: #0A3D2E;
+  /* Sunnah Design System — أسماء استقرار (مصدر حرفي؛ الاستهلاك عبر --ss-*) */
+  --sunnah-ivory: var(--surface-app);
+  --sunnah-ivory-surface: var(--mj-surface);
+  --sunnah-ivory-muted: var(--mj-surface-2);
+  --sunnah-emerald: var(--mj-brand);
+  --sunnah-emerald-deep: var(--mj-brand-deep);
+  --sunnah-quran-gold: #C9A82E;
+  --sunnah-ink: var(--mj-ink);
+  --sunnah-ink-muted: var(--mj-muted);
+  --svl-accent-gold: var(--sunnah-quran-gold);
   --color-secondary: #5C6B4A;
   --color-secondary-soft: #E8EBE3;
   /* أخضر الهوية الغامق الموحّد (بنر الفقه) — للتبويبات/البنرات الرئيسية */
@@ -335,6 +345,13 @@ html.dark,
   --mj-muted: #B5ADA0;
   --mj-brand: #4FB48B;
   --mj-brand-soft: #16261F;
+  /* ليلي — أسماء استقرار */
+  --sunnah-night-bg: var(--surface-app);
+  --sunnah-night-surface: var(--mj-surface);
+  --sunnah-night-text: var(--mj-ink);
+  --sunnah-night-gold: #C4A84A;
+  --sunnah-quran-gold: #C9A82E;
+  --svl-accent-gold: var(--sunnah-night-gold);
   --on-surface: #EDE8DF;
   --on-surface-muted: #B5ADA0;
   --brand-on-white: #7BD6AE;

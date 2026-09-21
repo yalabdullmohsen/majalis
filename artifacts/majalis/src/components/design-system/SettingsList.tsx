@@ -36,7 +36,7 @@ export function SettingsList({ title, rows, className }: SettingsListProps) {
             <>
               {row.icon ? <span className="mur-settings-row__icon">{row.icon}</span> : <span />}
               <span className="min-w-0">
-                <span className={cn("mur-settings-row__title", row.danger && "text-[var(--mj-danger,#b54a4a)]")}>
+                <span className={cn("mur-settings-row__title", row.danger && "text-[var(--mj-danger)]")}>
                   {row.title}
                 </span>
                 {row.description ? (
