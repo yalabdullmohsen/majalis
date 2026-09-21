@@ -1,8 +1,11 @@
 /**
  * متحكّم شاشة الإطلاق — ويب (index.html) + Capacitor SplashScreen.
  *
- * HTML (#mj-launch-splash): يُخفى بعد mj:shell-stable (أو السقف) حتى لا يُكشف الهيكل وهو لا يزال app-booting.
- * Capacitor: يُخفى مع HTML عند shell-stable — مصدر إخفاء واحد بلا كشف مبكر.
+ * مسار واحد للإقلاع الأصلي:
+ *   LaunchScreen (لون فقط) → #mj-launch-splash (الهوية الرسمية) → التطبيق
+ *
+ * Capacitor SplashScreen طبقة تغطية صامتة؛ تُخفى فورًا عند التسليح حتى لا تظهر
+ * كدخولية ثانية فوق HTML. الدخولية الوحيدة ذات العلامة/العبارة هي #mj-launch-splash.
  */
 import { Capacitor } from "@capacitor/core";
 import {
@@ -98,27 +101,28 @@ function scheduleAfterMinVisible(run: () => void): void {
 }
 
 /**
- * يخفي دخولية HTML (#mj-launch-splash) على الويب والأصلي بعد استقرار الهيكل،
- * ويخفي Capacitor SplashScreen مع HTML عند mj:shell-stable (مصدر إخفاء واحد).
- * يجب أن يعمل على الويب أيضًا — وإلا تبقى «سُنّة» إن حُظر سكربت الإقلاع بـ CSP.
+ * يخفي Capacitor فورًا (طبقة صامتة فقط)، ويبقي #mj-launch-splash حتى mj:shell-stable.
+ * لا تُعاد طبقة Capacitor عند العودة من الخلفية — الدخولية Cold Start فقط عبر HTML.
  */
 export function armNativeSplashController(): void {
   armedAt = performance.now();
 
+  /* كشف الدخولية الرسمية فورًا — بلا طبقة Capacitor فوقها */
+  void hideCapacitorSplash(true);
+
   const deadline = window.setTimeout(() => {
-    /* سقف زمني — مع تلاشي ناعم (لا إزالة فورية تسبب وميض) */
     void hideNativeSplash(false);
   }, SPLASH_MAX_VISIBLE_MS);
 
-  const hideHtmlAndNative = () => {
+  const hideHtmlWhenReady = () => {
     window.clearTimeout(deadline);
     scheduleAfterMinVisible(() => {
-      void hideNativeSplash(false);
+      dismissHtmlLaunchSplash(false);
+      void hideCapacitorSplash(true);
     });
   };
 
-  /* مصدر واحد: shell-stable أو سقف SPLASH_MAX_VISIBLE_MS — بلا مؤقّت ثانٍ موازٍ */
-  window.addEventListener("mj:shell-stable", hideHtmlAndNative, { once: true });
+  window.addEventListener("mj:shell-stable", hideHtmlWhenReady, { once: true });
 }
 
 /** @deprecated */
