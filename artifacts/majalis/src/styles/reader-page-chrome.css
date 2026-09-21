@@ -645,38 +645,47 @@ html[data-theme="dark"] .mm-tafsir__ed-btn {
 
 /*
  * Content Driven Layout (ص١–ص٢) — خارج mushaf-reader.css:
- * الخانات المملوءة فقط تُوزَّع على ارتفاع المتن عبر --nm-content-rows.
- * بلا قوس/إطار زخرفي؛ النص محور الصفحة.
+ * خانات مملوءة فقط + صفوف auto + توزيع متساوٍ على ارتفاع المتن.
+ * السبب الجذري للفراغ: repeat(N, 1fr) كان يوسّع كل خانة فيترك النص عائمًا وسط فراغ.
  */
 .nm-page--opening .nm-page__body,
 .nm-page--lead .nm-page__body {
   display: grid;
-  grid-template-rows: repeat(var(--nm-content-rows, 8), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--nm-content-rows, 8), minmax(0, auto));
   justify-content: stretch;
-  align-content: stretch;
+  align-content: space-evenly;
   gap: 0;
-  padding-block: 0.15em 0.35em;
+  padding-block: 0.08em 0.18em;
   width: 100%;
   max-width: 100%;
+}
+
+/* استغلال عرض الصفحة — بلا space-between على الكلمات (ممنوع لتشويش QPC) */
+.nm-page--opening .nm-line,
+.nm-page--lead .nm-line {
+  width: 100%;
+  max-width: 100%;
+  padding-inline: 0;
 }
 
 .nm-page--opening .nm-slot[data-kind="banner"],
 .nm-page--lead .nm-slot[data-kind="banner"],
 .nm-page[data-page-type="surah-start"] .nm-slot[data-kind="banner"] {
   align-items: flex-end;
-  padding-block-end: 0.06em;
+  padding-block-end: 0.04em;
 }
 
 .nm-page--opening .nm-slot[data-kind="basmala"],
 .nm-page--lead .nm-slot[data-kind="basmala"],
 .nm-page[data-page-type="surah-start"] .nm-slot[data-kind="basmala"] {
-  align-items: center;
-  padding-block-end: 0.04em;
+  align-items: flex-end;
+  padding-block-end: 0.02em;
 }
 
 .nm-page--opening .nm-slot[data-kind="line"],
 .nm-page--lead .nm-slot[data-kind="line"] {
   align-items: center;
+  width: 100%;
 }
 
 .nm-page--opening .nm-slot[data-kind="basmala"] + .nm-slot,
@@ -689,5 +698,41 @@ html[data-theme="dark"] .mm-tafsir__ed-btn {
 .nm-page--lead .nm-slot[data-kind="empty"],
 .nm-page[data-page-type="surah-start"] .nm-slot[data-kind="empty"] {
   display: none;
+}
+
+/* ص١–ص٢ فقط: علامة آية أوضح قليلًا — لا تمس ص٣…٦٠٤ (قفل 1.15em + geometry) */
+.nm-page--opening,
+.nm-page--lead {
+  --mushaf-ayah-mark-size: 1.22em;
+}
+
+.nm-page--opening .nm-ayah-mark,
+.nm-page--lead .nm-ayah-mark {
+  border-width: 1.5px;
+  font-size: 0.64em;
+  font-weight: 750;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--quran-gold-ink, #5f4814) 22%, transparent);
+  clip-path: polygon(
+    50% 5%, 57% 13%, 67% 9%, 69% 21%, 81% 22%, 77% 33%, 91% 38%, 83% 50%,
+    91% 62%, 77% 67%, 81% 78%, 69% 79%, 67% 91%, 57% 87%, 50% 95%, 43% 87%,
+    33% 91%, 31% 79%, 19% 78%, 23% 67%, 9% 62%, 17% 50%, 9% 38%, 23% 33%,
+    19% 22%, 31% 21%, 33% 9%, 43% 13%
+  );
+}
+
+/* توازن عمودي للهواتف الضيقة */
+@media (max-width: 390px) {
+  .nm-page--opening .nm-page__body,
+  .nm-page--lead .nm-page__body {
+    padding-block: 0.04em 0.12em;
+  }
+}
+
+@media (min-width: 768px) {
+  .nm-page--opening .nm-page__body,
+  .nm-page--lead .nm-page__body {
+    padding-block: 0.12em 0.28em;
+  }
 }
 

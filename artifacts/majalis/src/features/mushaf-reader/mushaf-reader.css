@@ -32,9 +32,13 @@
   --mushaf-printed-gold-dark: #a8881a;
   --mushaf-printed-gold-border: #b89620;
   --mushaf-printed-gold-text: #5f4814;
-  --mushaf-verse-marker-fill: #dcb424;
-  --mushaf-verse-marker-border: #b58f16;
-  --mushaf-verse-marker-number: #5f4812;
+  /* Quran Gold Token — درجة واحدة للعلامات والإطار والزخارف */
+  --quran-gold: #c9a82e;
+  --quran-gold-deep: #b89620;
+  --quran-gold-ink: #5f4814;
+  --mushaf-verse-marker-fill: #c9a82e;
+  --mushaf-verse-marker-border: #b89620;
+  --mushaf-verse-marker-number: #5f4814;
   --mushaf-verse-marker-highlight: #e4c038;
   --mushaf-verse-marker-dark-fill: #c4a030;
   --mushaf-verse-marker-dark-border: #a88618;
@@ -372,13 +376,13 @@ html[data-theme="dark"] .nm-page__header-hizb,
   color: var(--mushaf-text-color, var(--nm-ink));
 }
 
-/* صفحات الافتتاح/المقدمة: نفس شبكة ١٥ — بلا توسيط يغيّر bodyTop */
+/* صفحات الافتتاح/المقدمة: Content Driven — صفوف = المحتوى فقط (انظر reader-page-chrome) */
 .nm-page--opening .nm-page__body,
 .nm-page--lead .nm-page__body {
   display: grid;
-  grid-template-rows: repeat(15, minmax(0, 1fr));
+  grid-template-rows: repeat(var(--nm-content-rows, 8), minmax(0, auto));
   justify-content: stretch;
-  align-content: stretch;
+  align-content: space-evenly;
   gap: 0;
   padding-block: 0;
   width: 100%;
