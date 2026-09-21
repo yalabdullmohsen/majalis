@@ -65,6 +65,26 @@ if (!fnMatch) {
   }
 }
 
+const rightsSrc = readFileSync(join(majalis, "src/lib/prayer-audio-rights-registry.ts"), "utf8");
+if (!/audioId:\s*"field"/.test(rightsSrc) || !/audioId:\s*"field-full"/.test(rightsSrc)) {
+  fail("rights registry must document CC0 field / field-full");
+}
+if (!/audioId:\s*"madinah"/.test(rightsSrc) || !/audioId:\s*"qatami"/.test(rightsSrc)) {
+  fail("rights registry must keep madinah/qatami records (blocked)");
+}
+if (!/approvedForProduction:\s*false/.test(rightsSrc)) {
+  fail("rights registry must retain non-production entries");
+}
+
+const manifest = readFileSync(join(storeDir, "STORE_ASSET_MANIFEST.md"), "utf8");
+if (!/CC0/.test(manifest)) fail("STORE_ASSET_MANIFEST must document CC0 field packs");
+if (!/madinah/i.test(manifest) || !/qatami/i.test(manifest)) {
+  fail("STORE_ASSET_MANIFEST must document madinah/qatami exclusion");
+}
+if (!/field-full/i.test(manifest) || !/\bfield\b/i.test(manifest)) {
+  fail("STORE_ASSET_MANIFEST must document field / field-full");
+}
+
 const dist = join(majalis, "dist");
 const checkDist = process.env.STORE_CHECK_DIST === "1" || process.argv.includes("--check-dist");
 if (checkDist && existsSync(dist)) {
@@ -85,3 +105,4 @@ if (failures.length) {
 
 console.log("verify:store-assets OK");
 console.log(`  STORE_SOURCE_COMMIT=${commit}`);
+console.log("  policy: store RC strips all dist adhan media until OWNER allowlist");

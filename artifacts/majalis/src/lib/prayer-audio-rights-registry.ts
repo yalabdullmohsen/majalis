@@ -233,7 +233,7 @@ export const PRAYER_AUDIO_RIGHTS_REGISTRY: readonly AudioRightsRecord[] = [
     displayNameAr: "أذان بنمط مدني (معاينة فقط)",
     originalFileName: "adhan-madinah.mp3",
     sourcePlatform: "third-party-cdn",
-    sourceUrl: "/audio/adhan/adhan-madinah.mp3",
+    sourceUrl: "",
     licenseType: "rights_uncertain",
     licenseUrl: "",
     attributionRequired: true,
@@ -245,7 +245,8 @@ export const PRAYER_AUDIO_RIGHTS_REGISTRY: readonly AudioRightsRecord[] = [
     inAppPlaybackCompatible: false,
     approvedForProduction: false,
     status: "rights_uncertain",
-    verificationNotes: "لا يُعرض كإنتاج حتى اكتمال دليل الترخيص؛ بلا نسبة لمسجد/مؤذن مشهور.",
+    verificationNotes:
+      "أُزيل من حزمة public/audio/adhan — لا يُعرض في UI الإنتاج؛ بانتظار دليل ترخيص. بلا نسبة لمسجد/مؤذن مشهور.",
     celebrityNameRisk: true,
   },
   {
@@ -253,7 +254,7 @@ export const PRAYER_AUDIO_RIGHTS_REGISTRY: readonly AudioRightsRecord[] = [
     displayNameAr: "تسجيل أذان — غير معتمد للإنتاج",
     originalFileName: "adhan-qatami.mp3",
     sourcePlatform: "third-party-cdn",
-    sourceUrl: "/audio/adhan/adhan-qatami.mp3",
+    sourceUrl: "",
     licenseType: "rights_uncertain",
     licenseUrl: "",
     attributionRequired: true,
@@ -265,7 +266,8 @@ export const PRAYER_AUDIO_RIGHTS_REGISTRY: readonly AudioRightsRecord[] = [
     inAppPlaybackCompatible: false,
     approvedForProduction: false,
     status: "rejected",
-    verificationNotes: "يُحظر عرض اسم مشهور أو تضمين التسجيل دون إثبات حقوق.",
+    verificationNotes:
+      "أُزيل من حزمة public/audio/adhan — محظور في UI؛ يُحظر عرض اسم مشهور دون إثبات حقوق.",
     celebrityNameRisk: true,
   },
   {

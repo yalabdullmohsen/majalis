@@ -26,6 +26,8 @@
   ],
   "notes": [
     "allowedSystemNotificationSounds remain provisional until OWNER_APPROVED; store catalog UI must default to OS system sound when evidence is missing.",
-    "Streaming-only sources (everyayah, mp3quran, Quran.com, AlQuran Cloud, mohsalvi CDN) must never be copied into the binary."
+    "Streaming-only sources (everyayah, mp3quran, Quran.com, AlQuran Cloud, mohsalvi CDN) must never be copied into the binary.",
+    "Web production may ship CC0 field/field-full under public/audio/adhan; Store RC strip still removes ALL dist/audio/adhan media until OWNER allowlists specific files.",
+    "madinah and qatami are rejected/uncertain — files removed from public bundle; do not re-add without written rights."
   ]
 }
