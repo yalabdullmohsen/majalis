@@ -2,7 +2,7 @@
 
 حدّث بسطر عند تغيير بنيوي. لا تُعِد بناء الفهرس من الصفر كل جلسة.
 
-جذر Git: `/Users/alabdullmohsen/majalis-correct` · GitHub: `yalabdullmohsen/majalis` · منتج الويب: `artifacts/majalis`.
+جذر Git الفعلي: `/Users/alabdullmohsen/majlis-app` (لا تستخدم `majalis-correct`) · GitHub: `yalabdullmohsen/majalis` · منتج الويب: `artifacts/majalis`.
 
 ## حزم artifacts
 
