@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode, Suspense, lazy } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import "@/styles/pages/admin-shell.css";
@@ -11,6 +11,10 @@ import {
   Target, Unlock, User, Users,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+
+const AdminSiteEditBar = lazy(() =>
+  import("@/components/AdminSiteEditBar").then((m) => ({ default: m.AdminSiteEditBar })),
+);
 
 export type AdminSection =
   | "dashboard"
@@ -334,6 +338,10 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
           {children}
         </main>
       </div>
+      {/* تحرير الصفحة — داخل هيكل الإدارة فقط (لا يُحمَّل في App العام) */}
+      <Suspense fallback={null}>
+        <AdminSiteEditBar />
+      </Suspense>
     </AdminShellContext.Provider>
   );
 }

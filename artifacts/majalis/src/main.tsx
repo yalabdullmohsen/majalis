@@ -32,7 +32,7 @@ import "./app/styles/theme.css";
 // واجهة استهلاك سُنّة (--ss-*) + أصناف .ss-text — جسر فقط بلا قيم حرفية جديدة
 import "./styles/ssunnah-theme-api.css";
 import "./styles/ssunnah-screen-patterns.css";
-import "./styles/soft-cards.css";
+/* soft-cards مؤجّل تحت ميزانية CSS الحرج */
 // visual-enrichment مؤجَّل — ليس حرجًا لأول طلاء (ميزانية CSS الحرج ≤60KiB gzip)
 // page-hero / filters / hub-card تُحمَّل مع مكوّناتها (خارج CSS الحرج)
 // طبقات الأساس m2030 — foundation/navigation مؤجّلة (ليست حرجة لأول شاشة)
@@ -63,8 +63,7 @@ import "./styles/section-cards-theme.css";
 /* صقل منتج سُنّة — توكنات/بطاقات/درج/بحث/ليلي */
 import "./styles/ssunnah-ux-polish.css";
 /* semantic-tokens + card-unify مؤجّلان — ميزانية CSS الحرج ≤60KiB gzip */
-/* Green Surface System — يفوز على تلميع الأقسام الأبيض القديم */
-import "./styles/green-surface-system.css";
+/* Green Surface System — مؤجّل تحت الميزانية (انظر loadNonCriticalCss) */
 /* حالات تفاعل متمايزة + ::selection + breadcrumbs — بعد الأسطح الخضراء */
 import "./styles/interaction-states.css";
 /* استرداد ليلي P0 — متزامن؛ القواعد مقيّدة بـ html.dark لتقليل theme flash */
@@ -104,6 +103,8 @@ if (
 // طبقات مظهر غير حرجة — بعد load + idle حتى لا تنافس LCP (كانت void import فوريًا)
 function loadNonCriticalCss() {
   /* طبقات تحديث الواجهة + رموز ds-* — مؤجّلة تحت ميزانية CSS الحرج (<60KiB gzip) */
+  void import("./styles/green-surface-system.css");
+  void import("./styles/soft-cards.css");
   void import("./styles/ssunnah-semantic-tokens.css");
   void import("./styles/ssunnah-card-unify.css");
   void import("./styles/components/badge-system.css");

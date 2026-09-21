@@ -1,6 +1,6 @@
 import { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState, type ComponentType } from "react";
 import { Route, Switch, Router as WouterRouter, useLocation } from "wouter";
-import { AuthProvider, useAuth } from "@/components/AuthProvider";
+import { AuthProvider } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
 import { ThemePreferenceProvider } from "@/components/ThemePreferenceProvider";
 import { UserPreferencesProvider } from "@/components/UserPreferencesProvider";
@@ -103,10 +103,6 @@ if (typeof window !== "undefined") {
 const AssistantFloatingWidget = lazyWithRetry(
   () => import("@/components/assistant/AssistantFloatingWidget").then((m) => ({ default: m.AssistantFloatingWidget })),
   "AssistantFloatingWidget",
-);
-const AdminSiteEditBar = lazyWithRetry(
-  () => import("@/components/AdminSiteEditBar").then((m) => ({ default: m.AdminSiteEditBar })),
-  "AdminSiteEditBar",
 );
 const PrayerCountdownBanner = lazyWithRetry(
   () => import("@/components/prayer/PrayerCountdownBanner").then((m) => ({ default: m.PrayerCountdownBanner })),
@@ -616,7 +612,6 @@ function ChromeBottomFallback() {
 
 function AppShellInner() {
   const { dir, t } = useLanguage();
-  const { isAdmin } = useAuth();
   const [searchOpen, setSearchOpen] = useState(false);
   const [comingSoonTitle, setComingSoonTitle] = useState("");
   const [comingSoonOpen, setComingSoonOpen] = useState(false);
@@ -743,12 +738,7 @@ function AppShellInner() {
       {/* تذييل الموقع للويب فقط — داخل التطبيق الأصلي يُخفى (App Store: الروابط القانونية في الإعدادات) */}
       {!hideSiteChrome && !isNative && <DeferredSiteFooter />}
       {!hideSiteChrome && <DeferredAssistantWidget />}
-      {/* أدوات المشرف فقط داخل /admin — لا FABs فوق التطبيق العام */}
-      {isAdmin && !hideSiteChrome && location.startsWith("/admin") && (
-        <Suspense fallback={null}>
-          <AdminSiteEditBar />
-        </Suspense>
-      )}
+      {/* أدوات المشرف تُحمَّل من AdminShell فقط — لا استيراد في الهيكل العام */}
       {!hideSiteChrome && (
         <Suspense fallback={null}>
           <ScrollToTop />

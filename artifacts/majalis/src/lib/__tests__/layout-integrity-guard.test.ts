@@ -11,17 +11,13 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
 const app = read("src/App.tsx");
+const adminShell = read("src/views/admin/AdminShell.tsx");
 const prophetsCss = read("src/styles/pages/prophet-stories.css");
 const prophetsPage = read("src/views/ProphetStoriesPage.tsx");
 
-console.log("=== Admin FABs فقط داخل /admin ===");
-assert.match(app, /location\.startsWith\("\/admin"\)/);
-assert.match(app, /AdminSiteEditBar/);
-// لا يُعرض AdminSiteEditBar بلا شرط المسار
-assert.doesNotMatch(
-  app,
-  /isAdmin && !hideSiteChrome && \(\s*<Suspense[\s\S]{0,80}?AdminSiteEditBar/,
-);
+console.log("=== Admin FABs خارج App العام ===");
+assert.doesNotMatch(app, /AdminSiteEditBar/);
+assert.match(adminShell, /AdminSiteEditBar/);
 
 console.log("=== لا AdminQuickEdit في صفحات عامة ===");
 for (const rel of [
