@@ -1,10 +1,11 @@
 # SUNNAH STABILIZATION — تقرير حي
 
 **الحالة:** `PARTIAL`  
-**آخر تحديث:** 2026-09-21 (Remediation PR-1 truth sync)  
-**Source (`origin/main`):** `3ba020f2f402b81f01dce3ceeb809f78c3ab1089`  
-**Production (`www.ssunnah.com/version.json`):** `3ba020f2` · matched tip  
-**مرجع الحقيقة:** `docs/release/CURRENT_RELEASE_TRUTH.md`
+**آخر تحديث:** 2026-09-21 (Full Remediation Wave 1 — truth sync post-audit)  
+**Source (`origin/main`):** `5e99cd7cf53244444916b0ecd7b55b3a8953cfd8`  
+**Production (`www.ssunnah.com/version.json`):** `5e99cd7c` · matched tip · `builtAt` `2026-09-21T12:10:15.331Z`  
+**مرجع الحقيقة:** `docs/release/CURRENT_PROJECT_STATUS.md` · `docs/release/CURRENT_RELEASE_TRUTH.md`  
+**ملاحظة:** pin السابق `3ba020f2` = **STALE_REPORT** (قبل #2190/#2191)
 
 ## موجات
 
@@ -29,6 +30,9 @@
 |---|---|---|
 | دخولية رسمية واحدة | #2188 | MERGED |
 | أذان ميداني CC0 (`field` / `field-full`) | #2189 | MERGED · الإنتاج يعتمدها · المتجر ما زال HOLD |
+| مزامنة حقيقة الإصدار (سابق) | #2190 | MERGED |
+| حراسة أصول المتجر | #2191 | MERGED · HOLD باقٍ |
+| Full Remediation Wave 1 (docs/status) | — | IN_PROGRESS |
 
 ## معيار الإغلاق
 

@@ -60,25 +60,26 @@ authenticated flows you need a pre-confirmed account or to confirm the email out
 
 ### ⚠️ قاعدة Git الحرجة — يجب اتباعها دائماً
 
-**جذر git الصحيح:** `/Users/alabdullmohsen/majalis-correct/` (جذر الـ monorepo)
+**جذر git:** اكتشف دائمًا بـ `git rev-parse --show-toplevel` (لا تثبّت مسار آلة مثل `majalis-correct` أو مسار worktree محلي في التعليمات).  
+فهرس المستودع: `docs/REPO_INDEX.md`. حالة الإصدار الحية: `docs/release/CURRENT_PROJECT_STATUS.md`.
 
-جميع عمليات `git add / commit / push` **يجب** تنفيذها من هذا المسار، لأن:
+جميع عمليات `git add / commit / push` **يجب** تنفيذها من جذر الـ monorepo، لأن:
 - Vercel يبني من `artifacts/majalis/` داخل المستودع
 - أي commit من داخل `artifacts/majalis/` يضع الملفات في `src/` بجذر المستودع — **مسار خاطئ** لا يُبنى
 
 ```bash
 # ✅ الطريقة الصحيحة دائماً
-cd /Users/alabdullmohsen/majalis-correct
+cd "$(git rev-parse --show-toplevel)"
 git add artifacts/majalis/src/index.css   # المسار يبدأ بـ artifacts/majalis/
 git commit -m "..."
-git push origin main
+git push origin HEAD
 
 # ❌ خطأ — يُفسد النشر
-cd /Users/alabdullmohsen/majalis-correct/artifacts/majalis
+cd "$(git rev-parse --show-toplevel)/artifacts/majalis"
 git add src/index.css   # يذهب لجذر المستودع وليس artifacts/majalis/
 ```
 
-**التحقق السريع:** `git rev-parse --show-toplevel` يجب أن يُعيد `/Users/alabdullmohsen/majalis-correct`
+**التحقق السريع:** `git rev-parse --show-toplevel` يجب أن يحتوي `pnpm-workspace.yaml` و`artifacts/majalis/` — وليس مجلد الحزمة وحده.
 
 ### Lint / test / build
 

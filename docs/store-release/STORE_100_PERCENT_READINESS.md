@@ -1,12 +1,13 @@
 # STORE 100% READINESS — سُنّة 1.0.0
 
 **Verdict:** **HOLD**  
-**Truth sync:** 2026-09-21 · `docs/release/CURRENT_RELEASE_TRUTH.md`  
-**Live web tip (`origin/main` / production):** `3ba020f2` — **not** an automatic Store RC pin.  
+**Truth sync:** 2026-09-21 · `docs/release/CURRENT_PROJECT_STATUS.md`  
+**Live web tip (`origin/main` / production):** `5e99cd7c` — **not** an automatic Store RC pin.  
+**Historical web tip (STALE):** `3ba020f2` (pre store-guard #2191)  
 **Pinned Phase-0 commit (historical):** `ed5320b1f23c7b21d230c0698e86ce5cb8731ebc`  
 **After PR-A on main (historical):** `af09bc46488b1945352dc2b679f667020af74777`  
 **Re-pin policy:** Store RC Archive/AAB must record the exact commit built; do not mix Phase-0 pin, PR-A pin, or web tip without a full rebuild + owner pin.  
-**Latest hardening PR-A:** #2081  
+**Latest hardening PR-A:** #2081 · **Store asset guards:** #2191  
 **Owner actions:** `docs/release/OWNER_ACTIONS_CURRENT.md`
 
 | Gate | Status | Evidence |
@@ -28,7 +29,7 @@
 | Admin MFA decision recorded | ☐ | Owner dashboard |
 | Leaked-password decision recorded | ☐ | Owner dashboard / plan |
 | No service role in client bundle | ☑ | Existing gates |
-| CI green (web tip) | ☑ | tip `3ba020f2` green on main at truth sync |
+| CI green (web tip) | ☑ | tip `5e99cd7c` on main + production at Wave-1 sync; re-verify after each wave |
 | Visual/Contrast/LHCI green | ☑ | Prior main + PR checks when green |
 | Mushaf gates green | ☑ | verify:ci path; some package UI scripts still no-op — Remediation PR-9 |
 | Privacy/store metadata complete | ☐ | Checklists pending |
