@@ -96,6 +96,27 @@ console.log("=== PR-2 Dashboard Homepage ===");
   assert.match(homeView, /home-dashboard-v2\.css/);
 }
 
+console.log("=== PR-3 Quran Hub ===");
+{
+  const app = read("src/App.tsx");
+  assert.match(app, /data-v2-quran-hub/);
+  assert.ok(existsSync(resolve(majalisRoot, "src/styles/pages/quran-hub-v2.css")));
+  const hub = read("src/pages/quran/ui/QuranHubView.tsx");
+  assert.match(hub, /quran-hub-v2\.css/);
+  assert.match(hub, /quran-hub-v2/);
+  const hubCss = read("src/styles/pages/quran-hub-v2.css");
+  assert.match(hubCss, /data-v2-quran-hub/);
+  assert.match(hubCss, /quran-open-mushaf/);
+  assert.match(hubCss, /--v2-radius-card/);
+  assert.doesNotMatch(hubCss, /border-inline-start:\s*[34]px/);
+  const mushafCss = read("src/features/mushaf-reader/mushaf-reader.css");
+  assert.match(mushafCss, /--v2-color-gold/);
+  assert.match(mushafCss, /nm-controls__btn:focus-visible/);
+  const doc = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2.md"), "utf8");
+  assert.match(doc, /PR-3 Quran Hub/);
+  assert.match(doc, /quran-hub-v2\.css/);
+}
+
 console.log("=== package script ===");
 {
   const pkg = read("package.json");

@@ -1781,3 +1781,14 @@ html[data-theme="dark"] .nm-page-arrow {
     transition: none;
   }
 }
+
+/* Visual Redesign V2 — أدوات القراءة: ذهب موحّد مع --v2-color-gold (بلا مساس بالنص) */
+.nm-root {
+  --nm-gold: var(--v2-color-gold, var(--mushaf-printed-gold, #c9a82e));
+  --nm-gold-deep: var(--v2-color-gold, var(--mushaf-printed-gold-border, #b89620));
+}
+
+.nm-controls__btn:focus-visible {
+  outline: 2px solid var(--v2-color-gold, var(--nm-gold-deep, #b89620));
+  outline-offset: 2px;
+}

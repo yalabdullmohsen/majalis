@@ -672,6 +672,21 @@ function AppShellInner() {
     };
   }, [isHomePath]);
 
+  const isQuranHubPath =
+    location === "/quran-hub" || location.startsWith("/quran-hub?");
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isQuranHubPath) {
+      root.setAttribute("data-v2-quran-hub", "1");
+    } else {
+      root.removeAttribute("data-v2-quran-hub");
+    }
+    return () => {
+      root.removeAttribute("data-v2-quran-hub");
+    };
+  }, [isQuranHubPath]);
+
   useEffect(() => {
     const evtHandler = () => openGlobalSearch();
     const soonHandler = (e: Event) => {
