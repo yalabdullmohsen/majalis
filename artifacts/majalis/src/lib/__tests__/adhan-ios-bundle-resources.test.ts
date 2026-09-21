@@ -19,6 +19,8 @@ const required = [
   "adhan-short-egypt.caf",
   "adhan-short-takbeerat.caf",
   "adhan-short-makkah-fajr.caf",
+  "adhan-short-field.caf",
+  "adhan-short-field-full.caf",
   "adhan-seq-makkah-01.caf",
   "adhan-seq-makkah-02.caf",
   "adhan-seq-makkah-03.caf",
@@ -48,6 +50,8 @@ for (const name of [
   "adhan-haram-full.m4a",
   "adhan-soft-alert.m4a",
   "adhan-makkah-fajr.mp3",
+  "adhan-field.m4a",
+  "adhan-field-full.m4a",
 ]) {
   assert.ok(existsSync(join(fullDir, name)), `missing full audio ${name}`);
 }
@@ -59,6 +63,8 @@ for (const name of [
   "adhan_short_egypt.mp3",
   "adhan_short_aqsa.mp3",
   "adhan_short_takbeerat.mp3",
+  "adhan_short_field.mp3",
+  "adhan_short_field_full.mp3",
   "adhan_seq_makkah_01.mp3",
   "adhan_seq_makkah_02.mp3",
   "adhan_seq_makkah_03.mp3",

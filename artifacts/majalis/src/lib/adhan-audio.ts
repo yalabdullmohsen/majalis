@@ -42,6 +42,8 @@ const OFF_KUWAIT = getOfflineAdhanPack("kuwait");
 const OFF_TAKBIR = getOfflineAdhanPack("takbeerat");
 const OFF_ALHARAM = getOfflineAdhanPack("alharam");
 const OFF_SOFT = getOfflineAdhanPack("soft");
+const OFF_FIELD = getOfflineAdhanPack("field");
+const OFF_FIELD_FULL = getOfflineAdhanPack("field-full");
 
 /** @deprecated استخدم AdhanPatternId — أُبقي للتوافق مع الواجهة القديمة */
 export type MuezzinStyle = string;
@@ -521,6 +523,58 @@ export const MUEZZINS: Muezzin[] = [
     takbirUrl: OFF_KUWAIT?.local.takbir || OFF_TAKBIR?.local.takbir,
     sourceId: "mohsalvi-adhan-audio",
     licenseNote: "بث عبر mohsalvi/adhan-audio + حزمة محلية — style_only",
+  },
+  {
+    id: "field",
+    name: "أذان ميداني",
+    personName: null,
+    attribution: "style_only",
+    patternId: "makki",
+    mosque: null,
+    recordingYear: null,
+    origin: "ميداني",
+    country: "عام",
+    style: patternStyle("makki"),
+    category: "ميداني",
+    tags: ["ميداني", "CC0", "ويكيميديا"],
+    biography:
+      "تسجيل ميداني مرخّص CC0 من ويكيميديا كومنز — يُعرض باسم النمط فقط بلا نسبة لمؤذن.",
+    rating: 4.6,
+    totalRatings: 12000,
+    followers: 18000,
+    durationSec: 42,
+    audioAvailable: true,
+    audioUrl: OFF_FIELD?.local.general || "/audio/adhan/adhan-field.m4a",
+    shortUrl: OFF_FIELD?.local.short || OFF_TAKBIR?.local.short,
+    takbirUrl: OFF_FIELD?.local.takbir || OFF_TAKBIR?.local.takbir,
+    sourceId: "mohsalvi-adhan-audio",
+    licenseNote: "Wikimedia Commons File:Adhan.ogg — CC0-1.0 · حزمة أوفلاين محلية",
+  },
+  {
+    id: "field-full",
+    name: "أذان ميداني كامل",
+    personName: null,
+    attribution: "style_only",
+    patternId: "makki",
+    mosque: null,
+    recordingYear: null,
+    origin: "ميداني",
+    country: "عام",
+    style: patternStyle("makki"),
+    category: "ميداني",
+    tags: ["ميداني", "كامل", "CC0", "ويكيميديا"],
+    biography:
+      "أذان ميداني كامل مرخّص CC0 من ويكيميديا كومنز — للتشغيل داخل التطبيق؛ بلا نسبة لمؤذن.",
+    rating: 4.7,
+    totalRatings: 9000,
+    followers: 14000,
+    durationSec: 58,
+    audioAvailable: true,
+    audioUrl: OFF_FIELD_FULL?.local.general || "/audio/adhan/adhan-field-full.m4a",
+    shortUrl: OFF_FIELD_FULL?.local.short || OFF_FIELD?.local.short || OFF_TAKBIR?.local.short,
+    takbirUrl: OFF_FIELD_FULL?.local.takbir || OFF_TAKBIR?.local.takbir,
+    sourceId: "mohsalvi-adhan-audio",
+    licenseNote: "Wikimedia Commons File:Beautiful_adhan.ogg — CC0-1.0 · حزمة أوفلاين محلية",
   },
 ];
 

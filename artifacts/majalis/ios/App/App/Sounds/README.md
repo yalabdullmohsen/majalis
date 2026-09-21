@@ -21,10 +21,11 @@ cd artifacts/majalis && npx cap open ios
 ## ملفات CAF المطلوبة (≤30ث)
 
 - `adhan-short-makkah.caf`
-- `adhan-short-madinah.caf`
 - `adhan-short-egypt.caf`
 - `adhan-short-aqsa.caf`
 - `adhan-short-takbeerat.caf`
+- `adhan-short-field.caf`
+- `adhan-short-field-full.caf`
 
 توليد من `public/audio/adhan/*.mp3` عبر `afconvert` (مقطع ≤10ث، IMA4).
 
