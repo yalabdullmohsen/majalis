@@ -1,0 +1,132 @@
+/**
+ * SUNNAH VISUAL IDENTITY RESET — PR-10
+ * Responsive + Accessibility polish تحت data-v2-app
+ * لا مصحف غمري · لا Admin · لا Routes · لا محتوى شرعي
+ */
+
+/* ── Touch targets ≥ 44px على مؤشر خشن ── */
+@media (pointer: coarse) {
+  html[data-v2-app="1"] .hub-card,
+  html[data-v2-app="1"] .section-entry-card,
+  html[data-v2-app="1"] .more-page-tile,
+  html[data-v2-app="1"] .sc2,
+  html[data-v2-app="1"] .mj-filter-chip,
+  html[data-v2-app="1"] .filter-chips__chip,
+  html[data-v2-app="1"] [role="tab"],
+  html[data-v2-app="1"] .topic-page__tab,
+  html[data-v2-app="1"] .th-tab,
+  html[data-v2-app="1"] .sidebar-item,
+  html[data-v2-app="1"] .id-content-row {
+    min-height: 2.75rem;
+  }
+
+  html[data-v2-app="1"][data-v2-nav="1"] .bottom-nav--v2 .bottom-nav__tab {
+    min-height: 2.75rem;
+  }
+
+  html[data-v2-app="1"] .global-back-btn,
+  html[data-v2-app="1"] .floating-back-btn,
+  html[data-v2-app="1"] .app-back-btn--bar.fixed-back-bar,
+  html[data-v2-app="1"] .scroll-to-top,
+  html[data-v2-app="1"] .assistant-fab,
+  html[data-v2-app="1"] .assistant-floating,
+  html[data-v2-app="1"] [data-assistant-fab="1"],
+  html[data-v2-app="1"] .sidebar-close {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+  }
+}
+
+/* ── عرض ضيق: شبكة أوضح · بلا تمدّد أفقي ── */
+@media (max-width: 389px) {
+  html[data-v2-app="1"] .hub-card-grid,
+  html[data-v2-app="1"] .section-lobby__grid,
+  html[data-v2-app="1"] .more-hub-grid,
+  html[data-v2-app="1"] .fiqh-category-grid,
+  html[data-v2-app="1"] .qa-v2-category-grid,
+  html[data-v2-app="1"] .ruling-category-grid,
+  html[data-v2-app="1"] .hadith-hub-grid {
+    gap: 0.45rem;
+    --hub-grid-gap: 0.45rem;
+  }
+
+  html[data-v2-app="1"] .page-shell,
+  html[data-v2-app="1"] .content-hub,
+  html[data-v2-app="1"] .section-lobby,
+  html[data-v2-app="1"] .grid-screen,
+  html[data-v2-app="1"] .topic-page {
+    padding-inline-start: max(0.75rem, var(--inset-start, 0px));
+    padding-inline-end: max(0.75rem, var(--inset-end, 0px));
+  }
+
+  html[data-v2-app="1"] .hub-card__title,
+  html[data-v2-app="1"] .section-entry-card__title,
+  html[data-v2-app="1"] .ss-feature-card__title {
+    font-size: var(--v2-type-card-title, 0.95rem);
+  }
+}
+
+/* ── لوح/سطح مكتب: مقياس قراءة متماسك ── */
+@media (min-width: 768px) {
+  html[data-v2-app="1"] .topic-page__body,
+  html[data-v2-app="1"] .lesson-detail-body,
+  html[data-v2-app="1"] .hadith-detail-card,
+  html[data-v2-app="1"] .id-detail-section {
+    max-inline-size: 40rem;
+    margin-inline: auto;
+  }
+
+  html[data-v2-app="1"] .hub-card-grid,
+  html[data-v2-app="1"] .section-lobby__grid {
+    gap: 0.75rem;
+    --hub-grid-gap: 0.75rem;
+  }
+}
+
+/* ── Safe area لكروم سفلي ── */
+html[data-v2-app="1"][data-v2-nav="1"] .bottom-nav.bottom-nav--v2 {
+  padding-bottom: max(0.35rem, var(--inset-bottom, 0px));
+}
+
+/* ── Focus-visible موحّد لعناصر الهوية المتبقية ── */
+html[data-v2-app="1"] .hub-card:focus-visible,
+html[data-v2-app="1"] .section-entry-card:focus-visible,
+html[data-v2-app="1"] .more-page-tile:focus-visible,
+html[data-v2-app="1"] .sc2:focus-visible,
+html[data-v2-app="1"] .ss-feature-card__inner:focus-visible,
+html[data-v2-app="1"] .id-content-row:focus-visible,
+html[data-v2-app="1"] .scroll-to-top:focus-visible,
+html[data-v2-app="1"] .assistant-fab:focus-visible,
+html[data-v2-app="1"] .assistant-floating:focus-visible,
+html[data-v2-app="1"] [data-assistant-fab="1"]:focus-visible {
+  outline: none;
+  box-shadow: var(--v2-focus-ring);
+}
+
+/* ── Reduced motion: إيقاف ضغط/انتقالات الهوية ── */
+@media (prefers-reduced-motion: reduce) {
+  html[data-v2-app="1"] .mj-pressable,
+  html[data-v2-app="1"] .sc2,
+  html[data-v2-app="1"] .hub-card,
+  html[data-v2-app="1"] .section-entry-card,
+  html[data-v2-app="1"] .more-page-tile,
+  html[data-v2-app="1"] .bottom-nav__tab,
+  html[data-v2-app="1"] .sidebar-item,
+  html[data-v2-app="1"] .mj-filter-chip,
+  html[data-v2-app="1"] .filter-chips__chip,
+  html[data-v2-app="1"] .global-back-btn,
+  html[data-v2-app="1"] .floating-back-btn,
+  html[data-v2-app="1"] .assistant-fab,
+  html[data-v2-app="1"] .assistant-floating {
+    transition: none;
+    animation: none;
+  }
+
+  html[data-v2-app="1"] .mj-pressable:active,
+  html[data-v2-app="1"] .sc2:active,
+  html[data-v2-app="1"] .hub-card:active,
+  html[data-v2-app="1"] .bottom-nav__tab:active,
+  html[data-v2-app="1"] .section-entry-card:active {
+    transform: none;
+  }
+}

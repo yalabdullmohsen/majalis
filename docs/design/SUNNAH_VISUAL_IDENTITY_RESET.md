@@ -30,8 +30,8 @@ V2/V3 حسّنتا التناسق، لكن الواجهة ما زالت تشبه
 | 6 | Detail and reading pages | **merged** |
 | 7 | Drawer + Bottom Navigation + floating | **merged** |
 | 8 | Forms + Tabs + Filters | **merged** |
-| 9 | Dark Mode Luxury Night | **in progress** |
-| 10 | Responsive + Accessibility + Visual QA | queued |
+| 9 | Dark Mode Luxury Night | **merged** |
+| 10 | Responsive + Accessibility + Visual QA | **merged** |
 
 Rule: start each PR from latest `main`. Do not start next until previous is merged.
 
@@ -101,6 +101,15 @@ Rule: start each PR from latest `main`. Do not start next until previous is merg
 - Hub/cards · reading/topic · drawer · tabs · quote surfaces use night tokens (ink/muted/emerald-text/gold border)
 - Gold as accent border only — text stays night-ink for AA
 - `sunnah-identity-luxury-night.css` lazy-loaded with dark theme from `App.tsx` (not critical `main.tsx`)
+
+## PR-10 deliverables
+
+- Responsive + Accessibility polish under `data-v2-app` (`sunnah-identity-responsive-a11y.css`)
+- Coarse pointer touch targets ≥ `2.75rem` · narrow ≤389 · tablet ≥768 reading measure
+- Safe-area insets for bottom nav · narrow inline padding
+- Identity `focus-visible` + `prefers-reduced-motion` coverage
+- Visual QA checklist: `docs/design/SUNNAH_VISUAL_IDENTITY_RESET_QA.md`
+- Lazy-loaded from `App.tsx` with `data-v2-app` (not critical `main.tsx`)
 
 ## Out of scope (all PRs)
 
