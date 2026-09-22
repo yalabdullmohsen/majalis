@@ -1,0 +1,168 @@
+/**
+ * SUNNAH VISUAL IDENTITY RESET — PR-5
+ * Sections lobby + category grids densify
+ * يُطبَّق مع data-v2-app (+ data-v2-sections عند /sections)
+ * لا يمس المصحف · لا Routes · لا محتوى شرعي · لا Admin
+ */
+
+/* ── Sections lobby: تجاوز min-height الضخم من Expansion B ── */
+html[data-v2-app="1"][data-v2-sections="1"] .section-lobby,
+html[data-v2-app="1"][data-v2-sections="1"] .grid-screen {
+  gap: var(--v2-gap-section, 0.85rem);
+}
+
+html[data-v2-app="1"][data-v2-sections="1"] .section-lobby__title {
+  font-size: var(--v2-type-page-title, 1.15rem);
+  font-weight: var(--v2-fw-bold, 700);
+  line-height: var(--v2-lh-title);
+  margin-block-end: 0.35rem;
+}
+
+/* شريط زخرفي أخف — القاعدة تبقى في lessons-sections-v2 للبوابة */
+html[data-v2-app="1"][data-v2-sections="1"] .section-lobby__title::after {
+  width: 1.75rem;
+  height: 2px;
+  margin-block-start: 0.35rem;
+  opacity: 0.85;
+}
+
+html[data-v2-app="1"][data-v2-sections="1"] .section-lobby__group-title {
+  font-size: var(--v2-type-section-title, 0.95rem);
+  font-weight: var(--v2-fw-bold, 700);
+  margin-block: 0.55rem 0.35rem;
+}
+
+html[data-v2-app="1"][data-v2-sections="1"] .section-lobby__grid,
+html[data-v2-app="1"][data-v2-sections="1"] .hub-card-grid,
+html[data-v2-app="1"][data-v2-sections="1"] .more-hub-grid {
+  gap: 0.55rem;
+  --hub-grid-gap: 0.55rem;
+}
+
+html[data-v2-app="1"][data-v2-sections="1"] .hub-card,
+html[data-v2-app="1"][data-v2-sections="1"] .section-entry-card,
+html[data-v2-app="1"][data-v2-sections="1"] .more-page-tile {
+  min-height: 0;
+  height: auto;
+  padding: var(--v2-pad-card, 0.75rem);
+  border-radius: var(--v2-radius-card, 16px);
+  box-shadow: var(--v2-shadow-soft);
+}
+
+html[data-v2-app="1"][data-v2-sections="1"] .hub-card__icon,
+html[data-v2-app="1"][data-v2-sections="1"] .section-entry-card__icon,
+html[data-v2-app="1"][data-v2-sections="1"] .more-page-tile__icon {
+  width: var(--v2-icon-tile, 2.25rem);
+  height: var(--v2-icon-tile, 2.25rem);
+  border-radius: var(--v2-radius-icon, 12px);
+}
+
+html[data-v2-app="1"][data-v2-sections="1"] .hub-card__title,
+html[data-v2-app="1"][data-v2-sections="1"] .section-entry-card__title,
+html[data-v2-app="1"][data-v2-sections="1"] .more-page-tile__label,
+html[data-v2-app="1"][data-v2-sections="1"] .more-page-tile__title {
+  font-size: var(--v2-type-card-title, 1rem);
+  font-weight: var(--v2-fw-bold, 700);
+  line-height: var(--v2-lh-title);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+html[data-v2-app="1"][data-v2-sections="1"] .hub-card__desc,
+html[data-v2-app="1"][data-v2-sections="1"] .section-entry-card__desc,
+html[data-v2-app="1"][data-v2-sections="1"] .more-page-tile__sub {
+  font-size: var(--v2-type-supporting, 0.85rem);
+  line-height: var(--v2-lh-body);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+html[data-v2-app="1"][data-v2-sections="1"] .ph2__desc {
+  font-size: var(--v2-type-supporting, 0.88rem);
+  max-width: 28rem;
+  margin-block-end: 0.25rem;
+}
+
+/* ── Category / hub grids على المسارات العامة (فقه · أسئلة · أحكام · حديث · اكتشف) ── */
+html[data-v2-app="1"] .hub-card-grid,
+html[data-v2-app="1"] .fiqh-category-grid,
+html[data-v2-app="1"] .fiqh-issue-grid,
+html[data-v2-app="1"] .qa-v2-category-grid,
+html[data-v2-app="1"] .ruling-category-grid,
+html[data-v2-app="1"] .hadith-hub-grid,
+html[data-v2-app="1"] .dii-hub-grid.hub-card-grid,
+html[data-v2-app="1"] .fqh-hub-grid,
+html[data-v2-app="1"] .twh-hub-grid {
+  gap: 0.55rem;
+  --hub-grid-gap: 0.55rem;
+}
+
+html[data-v2-app="1"] .fiqh-category-card,
+html[data-v2-app="1"] .qa-v2-category-card,
+html[data-v2-app="1"] .ruling-category-card,
+html[data-v2-app="1"] .hadith-hub-card {
+  min-height: 0;
+  height: auto;
+  padding: 0.55rem 0.65rem;
+  border-radius: var(--v2-radius-card, 16px);
+  box-shadow: var(--v2-shadow-soft);
+  background: var(--v2-surface-raised, var(--mj-surface));
+  border-color: var(--v2-hairline, var(--mj-hairline));
+}
+
+html[data-v2-app="1"] .ruling-category-card {
+  min-height: 0;
+  padding: 0.55rem 0.45rem;
+}
+
+html[data-v2-app="1"] .qa-v2-category-card__name,
+html[data-v2-app="1"] .fiqh-category-card__title,
+html[data-v2-app="1"] .ruling-category-card__name,
+html[data-v2-app="1"] .hadith-hub-card__title {
+  font-size: var(--v2-type-card-title, 0.95rem);
+  font-weight: var(--v2-fw-bold, 700);
+  line-height: var(--v2-lh-title);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+html[data-v2-app="1"] .qa-v2-category-card__desc,
+html[data-v2-app="1"] .fiqh-category-card__desc,
+html[data-v2-app="1"] .hadith-hub-card__desc {
+  font-size: var(--v2-type-supporting, 0.8rem);
+  line-height: var(--v2-lh-body);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+html[data-v2-app="1"] .qa-v2-category-card__count,
+html[data-v2-app="1"] .ruling-category-card__count {
+  font-size: var(--v2-type-caption, 0.72rem);
+  border-radius: var(--v2-radius-sm, 8px);
+  padding: 0.1rem 0.4rem;
+}
+
+html[data-v2-app="1"] .qa-v2-section-title {
+  font-size: var(--v2-type-section-title, 0.95rem);
+  margin-block-end: 0.45rem;
+}
+
+@media (min-width: 720px) {
+  html[data-v2-app="1"] .hub-card-grid,
+  html[data-v2-app="1"][data-v2-sections="1"] .hub-card-grid {
+    --hub-grid-gap: 0.65rem;
+    gap: 0.65rem;
+  }
+}

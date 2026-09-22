@@ -9,6 +9,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/qa.css";
 import "@/styles/pages/fiqh-hub.css";
+import "@/styles/sunnah-identity-sections.css";
 
 const FIQH_HUB_TABS = [
   { key: "rulings", label: "الأحكام الشرعية", href: "/fiqh" },

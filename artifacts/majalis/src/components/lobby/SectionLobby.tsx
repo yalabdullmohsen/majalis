@@ -7,6 +7,7 @@ import type { LobbyChip, LobbyGroup, LobbyId, LobbyItem, LobbyPrimary, LobbyQuad
 import type { SectionDef } from "@/config/sections.registry";
 import { cn } from "@/lib/utils";
 import "./section-lobby.css";
+import "@/styles/sunnah-identity-sections.css";
 
 type LobbySurfaceId = LobbyId | "hub";
 

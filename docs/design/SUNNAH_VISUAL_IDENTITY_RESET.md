@@ -24,9 +24,9 @@ V2/V3 حسّنتا التناسق، لكن الواجهة ما زالت تشبه
 |---|---|---|
 | 1 | Typography + density + surface tokens | **merged** |
 | 2 | Global header + search + daily strip | **merged** |
-| 3 | Cards and content rows | **in progress** |
-| 4 | Home and Quran Hub | queued |
-| 5 | Sections and category grids | queued |
+| 3 | Cards and content rows | **merged** |
+| 4 | Home and Quran Hub | **merged** |
+| 5 | Sections and category grids | **in progress** |
 | 6 | Detail and reading pages | queued |
 | 7 | Drawer + Bottom Navigation + floating | queued |
 | 8 | Forms + Tabs + Filters | queued |
@@ -65,6 +65,13 @@ Rule: start each PR from latest `main`. Do not start next until previous is merg
 - Home Hero A: one valuable continue (`hw3-chip--lead`) · compact meta · primary CTA
 - Quran Hub: smaller title · compact `quran-open-mushaf` · denser feature grid
 - `sunnah-identity-home-hub.css` (no mushaf reader changes)
+
+## PR-5 deliverables
+
+- Sections lobby densify under `data-v2-app` + `data-v2-sections` (override Expansion B `min-height: 6.5rem`)
+- Tighter `hub-card-grid` / `section-lobby__grid` gaps · 2-line clamps · smaller icons
+- Category grids: fiqh · QA · rulings · hadith · discover (`sunnah-identity-sections.css`)
+- Loaded with `SectionLobby` + hub pages (not `main.tsx` — يحافظ على ميزانية CSS الحرج)
 
 ## Out of scope (all PRs)
 

@@ -33,6 +33,7 @@ import { FIQH_EMPTY, FIQH_SEARCH, SECTION_LEAD } from "@/lib/ui-copy-fiqh";
 import "@/styles/pages/fiqh-hub.css";
 import "@/styles/components/hub-card.css";
 import "@/styles/pages/knowledge-dashboards-v2.css";
+import "@/styles/sunnah-identity-sections.css";
 
 function FiqhHubSearch({
   query,
