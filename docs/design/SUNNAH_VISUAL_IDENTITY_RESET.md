@@ -29,8 +29,8 @@ V2/V3 حسّنتا التناسق، لكن الواجهة ما زالت تشبه
 | 5 | Sections and category grids | **merged** |
 | 6 | Detail and reading pages | **merged** |
 | 7 | Drawer + Bottom Navigation + floating | **merged** |
-| 8 | Forms + Tabs + Filters | **in progress** |
-| 9 | Dark Mode Luxury Night | queued |
+| 8 | Forms + Tabs + Filters | **merged** |
+| 9 | Dark Mode Luxury Night | **in progress** |
 | 10 | Responsive + Accessibility + Visual QA | queued |
 
 Rule: start each PR from latest `main`. Do not start next until previous is merged.
@@ -94,6 +94,13 @@ Rule: start each PR from latest `main`. Do not start next until previous is merg
 - Tabs (`role=tab` / topic / tahara): compact · no decorative letter-spacing
 - Login/auth form controls: control height · identity focus (`sunnah-identity-forms-filters.css`)
 - Loaded with FilterChip + FilterBar + SegmentedFilter + LoginView (not `main.tsx`)
+
+## PR-9 deliverables
+
+- Luxury Night polish for Identity surfaces under `data-v2-app` + `data-v2-night`
+- Hub/cards · reading/topic · drawer · tabs · quote surfaces use night tokens (ink/muted/emerald-text/gold border)
+- Gold as accent border only — text stays night-ink for AA
+- `sunnah-identity-luxury-night.css` lazy-loaded with dark theme from `App.tsx` (not critical `main.tsx`)
 
 ## Out of scope (all PRs)
 
