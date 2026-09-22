@@ -324,6 +324,38 @@ console.log("=== Expansion PR-C Knowledge Dashboards ===");
   assert.match(doc, /knowledge-dashboards-v2\.css/);
 }
 
+console.log("=== Expansion PR-D Worship + Glossary + History ===");
+{
+  const app = read("src/App.tsx");
+  assert.match(app, /data-v2-worship/);
+  assert.match(app, /data-v2-glossary/);
+  assert.match(app, /data-v2-history/);
+  assert.match(app, /worship-history-v2\.css/);
+  assert.ok(existsSync(resolve(majalisRoot, "src/styles/pages/worship-history-v2.css")));
+  const adhkar = read("src/pages/worship/ui/AdhkarView.tsx");
+  const prayer = read("src/pages/worship/ui/PrayerTimesView.tsx");
+  const glossary = read("src/pages/account/ui/IslamicGlossaryView.tsx");
+  const tarikh = read("src/views/TarikhIslamiPage.tsx");
+  const salah = read("src/pages/fiqh/ui/SalahGuideView.tsx");
+  assert.match(adhkar, /worship-history-v2\.css/);
+  assert.match(adhkar, /EmptyStateV2/);
+  assert.match(prayer, /worship-history-v2\.css/);
+  assert.match(glossary, /worship-history-v2\.css/);
+  assert.match(glossary, /EmptyStateV2/);
+  assert.match(tarikh, /worship-history-v2\.css/);
+  assert.match(tarikh, /EmptyStateV2/);
+  assert.match(salah, /worship-history-v2\.css/);
+  const css = read("src/styles/pages/worship-history-v2.css");
+  assert.match(css, /data-v2-worship/);
+  assert.match(css, /data-v2-glossary/);
+  assert.match(css, /data-v2-history/);
+  assert.match(css, /adhkar-focus-card|tarikh-card|gl-term/);
+  assert.doesNotMatch(css, /border-inline-start:\s*[34]px/);
+  const doc = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2.md"), "utf8");
+  assert.match(doc, /Expansion PR-D|Worship/);
+  assert.match(doc, /worship-history-v2\.css/);
+}
+
 console.log("=== package script ===");
 {
   const pkg = read("package.json");
