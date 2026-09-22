@@ -71,6 +71,7 @@
 
 | `artifacts/majalis/docs/design/SUNNAH_VISUAL_LANGUAGE.md` | لغة سُنّة البصرية (SVL) — أساس + موجات PR |
 | `docs/design/SUNNAH_DESIGN_SYSTEM_REPORT.md` | توحيد Design System (PR-3 استقرار) |
+| `docs/design/SUNNAH_FOUNDATION_RESET_PR0_BASELINE.md` | Foundation Reset PR-0 — خريطة اعتماديات + Baseline |
 
 | `docs/performance/SUNNAH_WORLD_CLASS_BASELINE.md` | خط أساس برنامج World-Class Product Polish (PR-1) |
 
