@@ -644,17 +644,16 @@ html[data-theme="dark"] .mm-tafsir__ed-btn {
 }
 
 /*
- * Content Driven Layout (ص١–ص٢) — First Spread Visual Layout.
- * ROOT CAUSE: align-content:space-evenly كان يوزّع الأسطر على كامل الارتفاع → فراغات عشوائية.
- * الحل: كتلة قراءة متماسكة (center + gap) · Accent يتبع MushafAppearanceTheme · بلا مساس بالنص/QPC.
+ * Content Driven Layout (ص١–ص٢) — First Spread via MushafOpeningSpreadLayout.
+ * ROOT CAUSE السابق: تضخيم --mushaf-ayah-mark-size + إعادة استخدام number-size كـfont-size للحاوية.
+ * العقد: نفس مقياس العلامة العام (1.15em / 0.62em / glyph) · Accent من data-mushaf-accent فقط.
  */
 .nm-page--opening,
-.nm-page--lead {
-  /* تخطيط فقط — الألوان من data-mushaf-accent على .nm-root */
+.nm-page--lead,
+.nm-opening-spread {
+  /* تخطيط فقط — لا تضخيم علامة · الألوان من data-mushaf-accent على .nm-root */
   --mushaf-opening-meta-surface: #f3ebd8;
   --mushaf-opening-meta-text: #3a2e1a;
-  --mushaf-ayah-mark-size: 1.22em;
-  --mushaf-ayah-mark-number-size: 0.7em;
 }
 
 .nm-page--opening .nm-page__body,
@@ -724,16 +723,12 @@ html[data-theme="dark"] .mm-tafsir__ed-btn {
   opacity: 1;
 }
 
+/* علامة موحّدة — لا font-size منفصل يضخّم الصندوق */
 .nm-page--opening .nm-ayah-mark,
 .nm-page--lead .nm-ayah-mark {
-  border-width: 1.5px;
   border-color: var(--mushaf-marker-border);
   background: var(--mushaf-marker-background);
   color: var(--mushaf-marker-number);
-  font-size: var(--mushaf-ayah-mark-number-size, 0.7em);
-  font-weight: 800;
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-accent-secondary) 35%, transparent);
 }
 
 .nm-page--opening .nm-surah-banner,

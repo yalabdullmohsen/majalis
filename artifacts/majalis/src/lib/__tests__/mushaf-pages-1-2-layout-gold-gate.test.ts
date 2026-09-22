@@ -67,12 +67,16 @@ assert.doesNotMatch(css, /--mushaf-verse-marker-fill:\s*#dcb424/i);
 console.log("=== علامة آية أوضح بلا تجاوز النص عالميًا ===");
 assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
 assert.match(css, /--mushaf-ayah-mark-font-size:\s*0\.62em/);
-assert.match(css, /--mushaf-ayah-mark-number-size:\s*1\.16em/);
+assert.match(css, /--mushaf-ayah-mark-number-size:\s*1\.28em/);
 assert.match(css, /\.nm-ayah-mark__glyph\s*\{[^}]*font-size:\s*var\(--mushaf-ayah-mark-number-size/s);
-assert.match(chrome, /\.nm-page--opening[\s\S]{0,400}--mushaf-ayah-mark-size:\s*1\.22em/);
-assert.match(chrome, /\.nm-page--opening \.nm-ayah-mark[\s\S]{0,400}border-width:\s*1\.5px/);
-assert.match(chrome, /\.nm-page--opening \.nm-ayah-mark[\s\S]{0,400}box-shadow:/);
+/* ص١–ص٢: لا تضخيم علامة منفصل — نفس عقد العلامة العام */
+assert.doesNotMatch(chrome, /\.nm-page--opening[\s\S]{0,400}--mushaf-ayah-mark-size:\s*1\.22em/);
+assert.doesNotMatch(
+  chrome,
+  /\.nm-page--opening \.nm-ayah-mark[\s\S]{0,200}font-size:\s*var\(--mushaf-ayah-mark-number-size/,
+);
 assert.match(chrome, /\.nm-page--opening \.nm-ayah-mark[\s\S]{0,400}mushaf-marker-background/);
+assert.match(page, /MushafOpeningSpreadLayout/);
 
 console.log("=== توازن ص١–ص٢ + بلا letter-spacing على البسملة ===");
 assert.match(chrome, /\.nm-page--opening \.nm-slot\[data-kind="banner"\][\s\S]{0,80}padding-block-end:\s*0\.04em/);

@@ -46,10 +46,13 @@ console.log("=== CSS accent contract ===");
   assert.match(css, /--mushaf-verse-marker-fill:\s*var\(--mushaf-marker-background\)/);
   assert.match(css, /\[data-mushaf-accent="gold"\]/);
   assert.match(css, /--mushaf-ayah-mark-font-size:\s*0\.62em/);
-  assert.match(css, /--mushaf-ayah-mark-number-size:\s*1\.16em/);
+  assert.match(css, /--mushaf-ayah-mark-number-size:\s*1\.28em/);
   assert.match(css, /\.nm-ayah-mark\s*\{[^}]*font-size:\s*var\(--mushaf-ayah-mark-font-size/s);
   assert.match(css, /\.nm-ayah-mark__glyph\s*\{[^}]*font-size:\s*var\(--mushaf-ayah-mark-number-size/s);
   assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
+  assert.match(css, /html\.dark \.nm-root\[data-mushaf-accent="gold"\]/);
+  assert.match(css, /--mushaf-accent-strong:/);
+  assert.match(css, /--mushaf-accent-soft:/);
   assert.doesNotMatch(css, /transform:\s*scale\(/);
 }
 
@@ -88,7 +91,7 @@ console.log("=== لا مساس بالنص/QPC ===");
 {
   const page = read("src/features/mushaf-reader/MushafPage.tsx");
   assert.doesNotMatch(page, /replace\(|mutateAyah|editGlyph|OCR/);
-  assert.match(page, /MushafOpeningPageLayout/);
+  assert.match(page, /MushafOpeningSpreadLayout/);
 }
 
 console.log("mushaf-dual-appearance-theme-gate.test.ts: ok");

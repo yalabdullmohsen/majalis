@@ -42,6 +42,8 @@
    */
   --mushaf-accent-primary: #0e7a6b;
   --mushaf-accent-secondary: #0a5c52;
+  --mushaf-accent-strong: var(--mushaf-accent-secondary);
+  --mushaf-accent-soft: color-mix(in srgb, var(--mushaf-accent-primary) 18%, transparent);
   --mushaf-marker-background: var(--mushaf-accent-primary);
   --mushaf-marker-border: color-mix(in srgb, var(--mushaf-printed-gold-border) 55%, var(--mushaf-accent-secondary));
   --mushaf-marker-number: #f7f3e8;
@@ -82,8 +84,11 @@
    * font-size على الحاوية يثبت em للـbox (1.15×0.62 ≈ parent).
    * تكبير الرقم على الـglyph فقط — لا تغيّر font-size الحاوية وإلا يكبر العرض ويفيض السطر.
    */
+  /*
+   * رقم أوضح على الـglyph فقط — الصندوق يبقى 0.62em×1.15em (عقد geometry ص600).
+   */
   --mushaf-ayah-mark-font-size: 0.62em;
-  --mushaf-ayah-mark-number-size: 1.16em;
+  --mushaf-ayah-mark-number-size: 1.28em;
 
   /* طبقات سفلية داخل القارئ */
   --bottom-nav-height: 64px;
@@ -152,6 +157,8 @@
 html[data-mushaf-accent="gold"] .nm-root {
   --mushaf-accent-primary: var(--quran-gold);
   --mushaf-accent-secondary: var(--quran-gold-deep);
+  --mushaf-accent-strong: var(--quran-gold-deep);
+  --mushaf-accent-soft: color-mix(in srgb, var(--quran-gold) 18%, transparent);
   --mushaf-marker-background: var(--quran-gold);
   --mushaf-marker-border: var(--quran-gold-deep);
   --mushaf-marker-number: var(--quran-gold-ink);
@@ -824,10 +831,17 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   display: block;
   line-height: 1;
   text-align: center;
-  font-size: var(--mushaf-ayah-mark-number-size, 1.16em);
+  font-size: var(--mushaf-ayah-mark-number-size, 1.28em);
   font-weight: inherit;
   color: inherit;
   transform: translateY(0.02em);
+}
+
+.nm-basmala__num-hit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: -0.1em;
 }
 
 .nm-word--end {
@@ -1246,6 +1260,42 @@ html.dark .nm-root {
   --mushaf-surah-frame-accent: var(--mushaf-surah-header-line);
   --mushaf-surah-frame-ornament: var(--mushaf-surah-header-ornament);
   --mushaf-surah-frame-border: var(--mushaf-surah-header-line);
+}
+
+/*
+ * GOLD + Night/Dark — خصوصية أعلى من remapper الليلي حتى لا تبقى العلامات زمردية.
+ * يجب أن يلي كتلة night أعلاه مباشرة.
+ */
+html[data-mushaf-appearance="night"] .nm-root[data-mushaf-accent="gold"],
+html[data-theme="dark"] .nm-root[data-mushaf-accent="gold"],
+html.dark .nm-root[data-mushaf-accent="gold"],
+html[data-mushaf-appearance="night"][data-mushaf-accent="gold"] .nm-root,
+html[data-theme="dark"][data-mushaf-accent="gold"] .nm-root,
+html.dark[data-mushaf-accent="gold"] .nm-root {
+  --mushaf-verse-marker-dark-fill: #c4a030;
+  --mushaf-verse-marker-dark-border: #a88618;
+  --mushaf-verse-marker-dark-number: #f0e2b8;
+  --mushaf-accent-primary: var(--mushaf-verse-marker-dark-fill);
+  --mushaf-accent-secondary: var(--mushaf-verse-marker-dark-border);
+  --mushaf-accent-strong: var(--mushaf-verse-marker-dark-border);
+  --mushaf-accent-soft: color-mix(in srgb, var(--mushaf-verse-marker-dark-fill) 22%, transparent);
+  --mushaf-marker-background: var(--mushaf-verse-marker-dark-fill);
+  --mushaf-marker-border: var(--mushaf-verse-marker-dark-border);
+  --mushaf-marker-number: var(--mushaf-verse-marker-dark-number);
+  --mushaf-surah-header-line: var(--mushaf-verse-marker-dark-fill);
+  --mushaf-surah-header-ornament: var(--mushaf-verse-marker-dark-border);
+  --mushaf-verse-marker-fill: var(--mushaf-marker-background);
+  --mushaf-verse-marker-border: var(--mushaf-marker-border);
+  --mushaf-verse-marker-number: var(--mushaf-marker-number);
+  --mushaf-verse-marker-gold: var(--mushaf-marker-background);
+  --mushaf-verse-marker-text: var(--mushaf-marker-number);
+  --nm-gold: var(--mushaf-marker-background);
+  --nm-gold-deep: var(--mushaf-marker-border);
+  --mushaf-surah-frame-accent: var(--mushaf-surah-header-line);
+  --mushaf-surah-frame-ornament: var(--mushaf-surah-header-ornament);
+  --mushaf-surah-frame-border: var(--mushaf-surah-header-line);
+  --mushaf-selected-ayah: color-mix(in srgb, var(--mushaf-verse-marker-dark-fill) 22%, transparent);
+  --mushaf-focus-ring: color-mix(in srgb, var(--mushaf-verse-marker-dark-fill) 48%, transparent);
 }
 
 html[data-theme="dark"] .nm-root .mm-audio-dock,

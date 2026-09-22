@@ -1310,20 +1310,21 @@ html.dark .mm-viewport .mm-page-footer__badge,
 .mm-page-edge--next {
   /* يمين الشاشة في RTL = inline-start = الصفحة التالية */
   inset-inline-start: 0;
-  width: 15%;
-  max-width: none;
+  /* ضيّق النطاق حتى لا يسرق ضغط علامات الآيات قرب الحافة */
+  width: 8%;
+  max-width: 2.5rem;
 }
 
 .mm-page-edge--prev {
   /* يسار الشاشة = inline-end = الصفحة السابقة */
   inset-inline-end: 0;
-  width: 15%;
-  max-width: none;
+  width: 8%;
+  max-width: 2.5rem;
 }
 
 .mm-viewport[data-chrome="0"] .mm-page-edge {
-  width: 15%;
-  max-width: none;
+  width: 8%;
+  max-width: 2.5rem;
 }
 
 /* محدد مطلوب لبوابة التخطيط؛ الحواف تبقى قابلة للضغط — beginPageTurn يغلق الشيت */

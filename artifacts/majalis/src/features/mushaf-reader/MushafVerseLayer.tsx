@@ -14,6 +14,7 @@ import {
   useMushafAyahWordSearchHighlight,
   useMushafAyahWordSelected,
 } from "@/features/mushaf-madinah/mushaf-ayah-sync-store";
+import { MushafAyahMarker } from "./MushafAyahMarker";
 
 type LineProps = {
   words: QpcWord[];
@@ -76,8 +77,9 @@ const VerseWord = memo(function VerseWord({
     .filter(Boolean)
     .join(" ");
 
-  /* كلمات المتن: عرض فقط — الضغط للتحديد/القائمة على رقم الآية حصراً */
+  /* كلمات المتن قابلة للتحديد — نفس الآية عبر data-ayah · العلامة تبقى هدفًا أيضًا */
   if (!isEnd) {
+    const interactive = Boolean(onSelectVerse);
     return (
       <span
         className={`nm-word ${state}`.trim()}
@@ -85,6 +87,33 @@ const VerseWord = memo(function VerseWord({
         data-key={word.verseKey}
         data-verse={word.verseKey}
         data-ayah={word.verseKey}
+        data-testid={interactive ? "mushaf-ayah-hit" : undefined}
+        role={interactive ? "button" : undefined}
+        tabIndex={interactive ? 0 : undefined}
+        aria-label={interactive ? verseAriaLabel(word.verseKey) : undefined}
+        aria-pressed={interactive ? selected : undefined}
+        onPointerDown={interactive ? (e) => startPress(word.verseKey, e) : undefined}
+        onPointerMove={interactive ? movePress : undefined}
+        onPointerUp={interactive ? () => endPress(word.verseKey) : undefined}
+        onPointerCancel={interactive ? clearPress : undefined}
+        onClick={
+          interactive
+            ? (e: MouseEvent<HTMLElement>) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }
+            : undefined
+        }
+        onKeyDown={
+          interactive
+            ? (e: KeyboardEvent<HTMLElement>) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  onSelectVerse?.(word.verseKey);
+                }
+              }
+            : undefined
+        }
       >
         {word.glyphText}
       </span>
@@ -118,9 +147,7 @@ const VerseWord = memo(function VerseWord({
         }
       }}
     >
-      <span className="nm-ayah-mark" aria-hidden="true">
-        <span className="nm-ayah-mark__glyph">{word.glyphText}</span>
-      </span>
+      <MushafAyahMarker glyph={word.glyphText} />
     </span>
   );
 });
@@ -254,11 +281,69 @@ export const MushafBasmalaView = memo(function MushafBasmalaView({
       lang="ar"
     >
       {body.map((w) => (
-        <span key={w.id}>{w.glyphText}</span>
+        <span
+          key={w.id}
+          data-ayah="1:1"
+          data-verse="1:1"
+          data-testid={onSelect || onLongPress ? "mushaf-ayah-hit" : undefined}
+          role={onSelect || onLongPress ? "button" : undefined}
+          tabIndex={onSelect || onLongPress ? 0 : undefined}
+          aria-label={onSelect || onLongPress ? verseAriaLabel("1:1") : undefined}
+          onPointerDown={
+            onSelect || onLongPress
+              ? (e) => {
+                  if (mushafPageIsPanning()) return;
+                  clear();
+                  const longTimer = window.setTimeout(() => {
+                    const cur = pressRef.current;
+                    if (!cur || cur.longFired) return;
+                    if (mushafPageIsPanning()) {
+                      clear();
+                      return;
+                    }
+                    cur.longFired = true;
+                    (onLongPress ?? onSelect)?.();
+                  }, LONG_PRESS_MS);
+                  pressRef.current = { x: e.clientX, y: e.clientY, longTimer, longFired: false };
+                }
+              : undefined
+          }
+          onPointerMove={
+            onSelect || onLongPress
+              ? (e) => {
+                  const cur = pressRef.current;
+                  if (!cur) return;
+                  if (
+                    Math.abs(e.clientX - cur.x) > TAP_SLOP_X_PX ||
+                    Math.abs(e.clientY - cur.y) > TAP_SLOP_Y_PX ||
+                    mushafPageIsPanning()
+                  ) {
+                    clear();
+                  }
+                }
+              : undefined
+          }
+          onPointerUp={
+            onSelect || onLongPress
+              ? () => {
+                  const cur = pressRef.current;
+                  if (mushafPageIsPanning()) {
+                    clear();
+                    return;
+                  }
+                  if (cur && !cur.longFired) onSelect?.();
+                  clear();
+                }
+              : undefined
+          }
+          onPointerCancel={onSelect || onLongPress ? clear : undefined}
+        >
+          {w.glyphText}
+        </span>
       ))}
       {end ? (
         <span
-          className="nm-ayah-mark nm-basmala__num"
+          className="nm-basmala__num-hit"
           data-testid="mushaf-ayah-hit"
           data-verse="1:1"
           data-ayah="1:1"
@@ -313,7 +398,7 @@ export const MushafBasmalaView = memo(function MushafBasmalaView({
             }
           }}
         >
-          <span className="nm-ayah-mark__glyph">{end.glyphText}</span>
+          <MushafAyahMarker className="nm-basmala__num" glyph={end.glyphText} />
         </span>
       ) : null}
     </div>
