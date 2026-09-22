@@ -644,16 +644,44 @@ html[data-theme="dark"] .mm-tafsir__ed-btn {
 }
 
 /*
- * Content Driven Layout (ص١–ص٢) — صقل فوق mushaf-reader.css فقط.
- * السبب الجذري للفراغ: repeat(N, 1fr) كان يوسّع كل خانة فيترك النص عائمًا وسط فراغ.
- * PR-6: توازن رأسي أدق + تباين علامة الآية — بلا مساس بالنص/QPC/ص٣…٦٠٤.
+ * Content Driven Layout (ص١–ص٢) — First Spread Visual Layout.
+ * ROOT CAUSE: align-content:space-evenly كان يوزّع الأسطر على كامل الارتفاع → فراغات عشوائية.
+ * الحل: كتلة قراءة متماسكة (center + gap) · علامات فيروزية · بلا مساس بالنص/QPC/ص٣…٦٠٤.
  */
+.nm-page--opening,
+.nm-page--lead {
+  --mushaf-opening-turquoise: #0e7a6b;
+  --mushaf-opening-turquoise-deep: #0a5c52;
+  --mushaf-opening-marker-fill: var(--mushaf-opening-turquoise);
+  --mushaf-opening-marker-border: var(--mushaf-printed-gold-border, #b89620);
+  --mushaf-opening-marker-number: #f7f3e8;
+  --mushaf-opening-gold-accent: var(--mushaf-printed-gold, #c9a82e);
+  --mushaf-opening-meta-surface: #f3ebd8;
+  --mushaf-opening-meta-text: #3a2e1a;
+  --mushaf-ayah-mark-size: 1.22em;
+  --mushaf-verse-marker-fill: var(--mushaf-opening-marker-fill);
+  --mushaf-verse-marker-border: var(--mushaf-opening-marker-border);
+  --mushaf-verse-marker-number: var(--mushaf-opening-marker-number);
+  --mushaf-surah-frame-accent: var(--mushaf-opening-gold-accent);
+  --mushaf-surah-frame-ornament: var(--mushaf-opening-turquoise);
+  --mushaf-surah-frame-border: color-mix(
+    in srgb,
+    var(--mushaf-opening-gold-accent) 55%,
+    var(--mushaf-opening-turquoise)
+  );
+}
+
 .nm-page--opening .nm-page__body,
 .nm-page--lead .nm-page__body {
   grid-template-rows: repeat(var(--nm-content-rows, 8), minmax(0, auto));
-  align-content: space-evenly;
-  padding-block: 0.06em 0.14em;
-  width: 100%;
+  align-content: center;
+  justify-content: center;
+  justify-items: center;
+  row-gap: 0.14em;
+  padding-block: 0.08em 0.16em;
+  width: min(100%, 22.5rem);
+  max-width: 100%;
+  margin-inline: auto;
 }
 
 .nm-page--opening .nm-line,
@@ -667,10 +695,10 @@ html[data-theme="dark"] .mm-tafsir__ed-btn {
   display: none;
 }
 
-/* تكتل الإطار/البسملة أقرب للآيات دون إزاحة ارتفاع الـslot */
 .nm-page--opening .nm-slot[data-kind="banner"],
 .nm-page--lead .nm-slot[data-kind="banner"] {
   padding-block-end: 0.04em;
+  width: 100%;
 }
 
 .nm-page--opening .nm-slot[data-kind="basmala"],
@@ -683,6 +711,7 @@ html[data-theme="dark"] .mm-tafsir__ed-btn {
 .nm-page--opening .nm-slot[data-kind="line"],
 .nm-page--lead .nm-slot[data-kind="line"] {
   align-items: center;
+  width: 100%;
 }
 
 .nm-page--opening .nm-page__footer,
@@ -691,33 +720,90 @@ html[data-theme="dark"] .mm-tafsir__ed-btn {
   padding-block-start: 0.08em;
 }
 
-/* ص١–ص٢ فقط: علامة آية أوضح قليلًا — لا تمس ص٣…٦٠٤ (قفل 1.15em + geometry) */
-.nm-page--opening,
-.nm-page--lead {
-  --mushaf-ayah-mark-size: 1.22em;
+.nm-page--opening .nm-page__header-juz,
+.nm-page--opening .nm-page__header-hizb,
+.nm-page--lead .nm-page__header-juz,
+.nm-page--lead .nm-page__header-hizb {
+  display: inline-flex;
+  align-items: center;
+  max-width: max-content;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--mushaf-opening-gold-accent) 28%, transparent);
+  background: var(--mushaf-opening-meta-surface);
+  color: var(--mushaf-opening-meta-text);
+  font-size: 0.68rem;
+  font-weight: 650;
+  line-height: 1.2;
+  opacity: 1;
 }
 
 .nm-page--opening .nm-ayah-mark,
 .nm-page--lead .nm-ayah-mark {
   border-width: 1.5px;
+  border-color: var(--mushaf-opening-marker-border);
+  background: var(--mushaf-opening-marker-fill);
+  color: var(--mushaf-opening-marker-number);
   font-size: 0.65em;
   font-weight: 750;
   box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--quran-gold-ink, #5f4814) 30%, transparent);
+    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-opening-gold-accent) 42%, transparent);
 }
 
-/* توازن عمودي للهواتف الضيقة */
+.nm-page--opening .nm-surah-banner,
+.nm-page--lead .nm-surah-banner {
+  --mushaf-surah-frame-height: 1.85rem;
+  min-width: min(100%, 8.5rem);
+  max-width: min(92%, 16rem);
+  border-color: color-mix(
+    in srgb,
+    var(--mushaf-opening-gold-accent) 60%,
+    var(--mushaf-opening-turquoise)
+  );
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--mushaf-opening-turquoise) 22%, transparent);
+}
+
+.nm-page--opening .nm-surah-banner__ornament,
+.nm-page--lead .nm-surah-banner__ornament {
+  background: radial-gradient(
+    circle at center,
+    var(--mushaf-opening-gold-accent) 0 38%,
+    var(--mushaf-opening-turquoise) 42% 70%,
+    transparent 72%
+  );
+}
+
+.nm-page--opening .nm-page__footer-num,
+.nm-page--lead .nm-page__footer-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.65rem;
+  min-height: 1.65rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--mushaf-opening-gold-accent) 35%, transparent);
+  background: var(--mushaf-opening-meta-surface);
+  color: var(--mushaf-opening-meta-text);
+  font-weight: 700;
+}
+
 @media (max-width: 390px) {
   .nm-page--opening .nm-page__body,
   .nm-page--lead .nm-page__body {
-    padding-block: 0.04em 0.1em;
+    padding-block: 0.05em 0.1em;
+    row-gap: 0.1em;
+    width: min(100%, 20.5rem);
   }
 }
 
 @media (min-width: 768px) {
   .nm-page--opening .nm-page__body,
   .nm-page--lead .nm-page__body {
-    padding-block: 0.1em 0.22em;
+    width: min(100%, 24rem);
+    row-gap: 0.16em;
+    padding-block: 0.1em 0.2em;
   }
 }
 

@@ -145,6 +145,7 @@ export const MushafPage = memo(function MushafPage({
       data-page={footerPage}
       data-page-type={pageType}
       data-layout="pageShell"
+      data-component={isOpeningP1 || isLeadP2 ? "MushafOpeningPageLayout" : undefined}
       data-testid="mushaf-page"
       data-opening={isOpeningP1 || isLeadP2 ? "1" : "0"}
       data-mm-fit="1"
