@@ -14,6 +14,7 @@ import {
 } from "@/lib/global-back-layout";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { normalizeNavPath } from "@/lib/navigation-back";
+import "@/styles/sunnah-identity-chrome-nav.css";
 
 function readCssPx(varName: string, fallback: number): number {
   if (typeof window === "undefined") return fallback;

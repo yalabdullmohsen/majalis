@@ -1,0 +1,194 @@
+/**
+ * SUNNAH VISUAL IDENTITY RESET — PR-7
+ * Drawer + Bottom Nav + floating chrome densify
+ * يُطبَّق مع data-v2-app (+ data-v2-nav للشريط السفلي)
+ * لا يمس المصحف الغمري · لا Routes · لا محتوى · لا Admin
+ */
+
+/* ── Bottom Nav: ظل أخف · نشط بلا قفزة ذهبية · تسمية UI ── */
+html[data-v2-app="1"][data-v2-nav="1"] .bottom-nav.bottom-nav--v2 {
+  box-shadow: var(--v2-shadow-soft);
+  border-radius: var(--v2-radius-card, 16px) var(--v2-radius-card, 16px) 0 0;
+}
+
+html[data-v2-app="1"][data-v2-nav="1"] .bottom-nav--v2 .bottom-nav__tab {
+  min-height: var(--v2-row-min, 2.5rem);
+  gap: 0.15rem;
+  border-radius: var(--v2-radius-md, 14px);
+}
+
+html[data-v2-app="1"][data-v2-nav="1"] .bottom-nav--v2 .bottom-nav__tab-icon {
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: var(--v2-radius-icon, 12px);
+}
+
+html[data-v2-app="1"][data-v2-nav="1"] .bottom-nav--v2 .bottom-nav__tab-label {
+  font-family: var(--v2-font-ui);
+  font-size: var(--v2-type-caption, 0.72rem);
+  font-weight: var(--v2-fw-medium, 500);
+  letter-spacing: 0;
+  line-height: var(--v2-lh-meta, 1.4);
+}
+
+html[data-v2-app="1"][data-v2-nav="1"] .bottom-nav--v2 .bottom-nav__tab.is-active .bottom-nav__tab-icon {
+  box-shadow: var(--v2-shadow-soft);
+  transform: none;
+}
+
+html[data-v2-app="1"][data-v2-nav="1"] .bottom-nav--v2 .bottom-nav__tab.is-active .bottom-nav__tab-label {
+  font-weight: var(--v2-fw-bold, 700);
+}
+
+html[data-v2-app="1"][data-v2-nav="1"] .bottom-nav--v2 .bottom-nav__tab:focus-visible {
+  outline: none;
+  box-shadow: var(--v2-focus-ring);
+}
+
+html[data-theme="dark"][data-v2-app="1"][data-v2-nav="1"] .bottom-nav.bottom-nav--v2,
+html.dark[data-v2-app="1"][data-v2-nav="1"] .bottom-nav.bottom-nav--v2 {
+  box-shadow: var(--v2-shadow-soft);
+}
+
+/* ── Side drawer: صفوف أكثف · أيقونات أصغر · UI فقط ── */
+html[data-v2-app="1"] .drawer-panel,
+html[data-v2-app="1"] .sidebar-panel {
+  width: min(82vw, 300px);
+  padding: calc(var(--inset-top) + 8px) 12px calc(var(--inset-bottom) + 12px);
+  gap: 2px;
+  box-shadow: var(--v2-shadow-soft);
+  background: var(--v2-surface-raised, var(--surface, #fffcf8));
+  border-inline-end-color: var(--v2-hairline, var(--border));
+}
+
+html[data-v2-app="1"] .sidebar-header {
+  gap: 0.65rem;
+  padding: 0.35rem 0.35rem 0.75rem;
+}
+
+html[data-v2-app="1"] .sidebar-title {
+  font-family: var(--v2-font-ui);
+  font-size: var(--v2-type-section-title, 1rem);
+  font-weight: var(--v2-fw-bold, 700);
+  line-height: var(--v2-lh-title, 1.4);
+  letter-spacing: 0;
+}
+
+html[data-v2-app="1"] .sidebar-close {
+  width: var(--v2-control-h, 2.75rem);
+  height: var(--v2-control-h, 2.75rem);
+  min-width: var(--v2-control-h, 2.75rem);
+  min-height: var(--v2-control-h, 2.75rem);
+  border-radius: var(--v2-radius-md, 14px);
+  box-shadow: none;
+}
+
+html[data-v2-app="1"] .sidebar-close:focus-visible {
+  outline: none;
+  box-shadow: var(--v2-focus-ring);
+}
+
+html[data-v2-app="1"] .sidebar-section {
+  margin-top: 0.35rem;
+  padding-top: 0.55rem;
+}
+
+html[data-v2-app="1"] .sidebar-section-title {
+  padding: 0 0.5rem 0.4rem;
+  font-family: var(--v2-font-ui);
+  font-size: var(--v2-type-caption, 0.75rem);
+  font-weight: var(--v2-fw-medium, 500);
+  letter-spacing: 0;
+  color: var(--v2-color-ink-muted, var(--text-muted));
+}
+
+html[data-v2-app="1"] .sidebar-item {
+  min-height: var(--v2-row-min, 2.5rem);
+  gap: 0.65rem;
+  padding: 0.4rem 0.55rem;
+  border-radius: var(--v2-radius-md, 14px);
+}
+
+html[data-v2-app="1"] .sidebar-item:focus-visible {
+  outline: none;
+  box-shadow: var(--v2-focus-ring);
+}
+
+html[data-v2-app="1"] .sidebar-item-icon {
+  width: var(--v2-icon-tile, 2.25rem);
+  height: var(--v2-icon-tile, 2.25rem);
+  border-radius: var(--v2-radius-icon, 12px);
+  box-shadow: none;
+}
+
+html[data-v2-app="1"] .sidebar-item-title {
+  font-family: var(--v2-font-ui);
+  font-size: var(--v2-type-supporting, 0.9rem);
+  font-weight: var(--v2-fw-bold, 700);
+  line-height: var(--v2-lh-title, 1.4);
+  letter-spacing: 0;
+}
+
+html[data-v2-app="1"] .sidebar-item-sub {
+  font-size: var(--v2-type-caption, 0.72rem);
+  line-height: var(--v2-lh-meta, 1.4);
+  color: var(--v2-color-ink-muted);
+}
+
+/* ── Floating back / scroll-top: ظل هوية أخف · حجم مضغوط ── */
+html[data-v2-app="1"] .global-back-btn,
+html[data-v2-app="1"] .floating-back-btn,
+html[data-v2-app="1"] .app-back-btn--bar.fixed-back-bar,
+html[data-v2-app="1"] button.app-back-btn--bar[data-fixed-back-bar="1"] {
+  width: 2.75rem;
+  height: 2.75rem;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border-radius: var(--v2-radius-pill, 999px);
+  box-shadow: var(--v2-shadow-soft);
+  background: var(--v2-surface-raised, color-mix(in srgb, var(--mj-surface, #fff) 94%, var(--v2-color-emerald-soft, #e2efe8)));
+  border-color: var(--v2-hairline, color-mix(in srgb, var(--mj-brand, #146b52) 22%, transparent));
+  color: var(--v2-color-emerald-deep, var(--mj-brand-deep, #0d4a39));
+}
+
+html[data-v2-app="1"] .global-back-btn:focus-visible,
+html[data-v2-app="1"] .floating-back-btn:focus-visible,
+html[data-v2-app="1"] .app-back-btn--bar.fixed-back-bar:focus-visible {
+  outline: none;
+  box-shadow: var(--v2-focus-ring);
+}
+
+html[data-v2-app="1"] .scroll-to-top {
+  width: 2.75rem;
+  height: 2.75rem;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  box-shadow: var(--v2-shadow-soft);
+  border-radius: var(--v2-radius-pill, 999px);
+}
+
+html[data-v2-app="1"] .assistant-fab,
+html[data-v2-app="1"] .assistant-floating,
+html[data-v2-app="1"] [data-assistant-fab="1"] {
+  box-shadow: var(--v2-shadow-soft);
+  border-radius: var(--v2-radius-pill, 999px);
+}
+
+html[data-theme="dark"][data-v2-app="1"] .global-back-btn,
+html.dark[data-v2-app="1"] .global-back-btn,
+html[data-theme="dark"][data-v2-app="1"] .floating-back-btn,
+html.dark[data-v2-app="1"] .floating-back-btn,
+html[data-theme="dark"][data-v2-app="1"] .app-back-btn--bar.fixed-back-bar,
+html.dark[data-v2-app="1"] .app-back-btn--bar.fixed-back-bar {
+  background: var(--v2-color-night-surface, #12261f);
+  color: var(--v2-color-night-ink, #edf5f0);
+  border-color: var(--v2-color-night-hairline, rgba(255, 255, 255, 0.12));
+  box-shadow: var(--v2-shadow-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-v2-app="1"][data-v2-nav="1"] .bottom-nav--v2 .bottom-nav__tab:active,
+  html[data-v2-app="1"][data-v2-nav="1"] .bottom-nav--v2 .bottom-nav__tab.is-active .bottom-nav__tab-icon {
+    transform: none;
+  }
+}
