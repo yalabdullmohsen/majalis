@@ -57,9 +57,18 @@ console.log("=== CSS heights ===");
 {
   const critical = read("src/styles/critical-first-paint.css");
   assert.match(critical, /--search-height:\s*0px/);
-  assert.match(critical, /data-home-chrome="1"/);
+  assert.match(critical, /data-home-chrome="0"/);
   assert.match(critical, /--ticker-row-h:\s*0px/);
-  assert.match(critical, /html\[data-home-chrome="1"\]/);
+  assert.match(critical, /html\[data-home-chrome="0"\]/);
+
+  const html = read("index.html");
+  const htmlOpen = html.slice(html.indexOf("<html"), html.indexOf(">") + 1);
+  assert.doesNotMatch(
+    htmlOpen,
+    /data-home-chrome/,
+    "لا data-home-chrome على وسم html الثابت — يحافظ على علامة جاهزية LHCI ضمن 800 بايت",
+  );
+  assert.ok(html.indexOf("majalis") < 800, "علامة majalis ضمن أول 800 بايت لجاهزية المعاينة");
 
   const top = read("src/styles/components/top-chrome-layout.css");
   assert.match(top, /navbar-search-toggle[\s\S]{0,80}inline-flex/);

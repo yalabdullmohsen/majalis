@@ -28,10 +28,11 @@
     --nav-chrome: 84px;
     --bottom-nav-height: 64px;
     --content-pb: calc(var(--bottom-nav-height, 64px) + var(--inset-bottom, 0px) + 24px);
+    --ticker-row-h: calc(var(--ticker-h, 2.25rem) + 0.65rem);
   }
 
-  html[data-home-chrome="1"] {
-    --ticker-row-h: calc(var(--ticker-h, 2.25rem) + 0.65rem);
+  html[data-home-chrome="0"] {
+    --ticker-row-h: 0px;
   }
 }
 

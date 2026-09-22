@@ -41,10 +41,11 @@
     --page-width: min(56rem, 94vw);
     --content-max-wide: 48rem;
     --page-pad-x: max(1.25rem, var(--inset-left, 0px), var(--inset-right, 0px));
+    --ticker-row-h: calc(var(--ticker-h, 2.25rem) + 0.65rem);
   }
 
-  html[data-home-chrome="1"] {
-    --ticker-row-h: calc(var(--ticker-h, 2.25rem) + 0.65rem);
+  html[data-home-chrome="0"] {
+    --ticker-row-h: 0px;
   }
 
   .navbar-v3__inner {
