@@ -1,5 +1,5 @@
 /**
- * بوابة محدّثة: ذهب/أصفر علامات الآيات المطبعي (Warm Yellow).
+ * بوابة محدّثة: لوحة ذهب مطبعية محفوظة + Accent Theme يختار التعبئة.
  * تشغيل: node --import tsx src/lib/__tests__/mushaf-verse-marker-printed-gold-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -10,6 +10,7 @@ import {
   mushafVerseMarkerFill,
   mushafVerseMarkerBorder,
   mushafVerseMarkerNumber,
+  quranGold,
 } from "../../features/mushaf-reader/mushaf-warm-yellow-tokens";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
@@ -25,18 +26,17 @@ assert.match(tokens, /mushafVerseMarkerNumber\s*=\s*quranGoldInk/);
 assert.equal(mushafVerseMarkerFill.toLowerCase(), "#c9a82e");
 assert.equal(mushafVerseMarkerBorder.toLowerCase(), "#b89620");
 assert.equal(mushafVerseMarkerNumber.toLowerCase(), "#5f4814");
+assert.equal(quranGold.toLowerCase(), "#c9a82e");
 
-assert.match(css, new RegExp(`--mushaf-verse-marker-fill:\\s*${mushafVerseMarkerFill}`, "i"));
-assert.match(css, new RegExp(`--mushaf-verse-marker-border:\\s*${mushafVerseMarkerBorder}`, "i"));
-assert.match(css, new RegExp(`--mushaf-verse-marker-number:\\s*${mushafVerseMarkerNumber}`, "i"));
+assert.match(css, /--quran-gold:\s*#c9a82e/i);
+assert.match(css, /--mushaf-printed-gold:\s*#c9a82e/i);
+assert.match(css, /--mushaf-verse-marker-fill:\s*var\(--mushaf-marker-background\)/);
+assert.match(css, /\[data-mushaf-accent="gold"\][\s\S]{0,500}--mushaf-marker-background:\s*var\(--quran-gold\)/);
 assert.match(css, /\.nm-ayah-mark\s*\{[^}]*border:[^;]*var\(--mushaf-verse-marker-border\)/s);
 assert.match(css, /\.nm-ayah-mark\s*\{[^}]*color:\s*var\(--mushaf-verse-marker-number\)/s);
-assert.match(css, /--mushaf-surah-frame-accent:\s*var\(--mushaf-printed-gold\)/);
-assert.match(css, /--mushaf-surah-frame-ornament:\s*var\(--mushaf-printed-gold-border\)/);
-assert.doesNotMatch(css, /--mushaf-verse-marker-fill:\s*#(dcb424|c9a227|ffd700|a3864d)/i);
-assert.match(css, /--quran-gold:\s*#c9a82e/i);
 assert.match(css, /--mushaf-text-color:\s*var\(--mushaf-ink-primary\)/);
 assert.match(css, /--nm-ink:\s*var\(--mushaf-text-color\)/);
 assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
+assert.doesNotMatch(css, /--mushaf-verse-marker-fill:\s*#(dcb424|c9a227|ffd700|a3864d)/i);
 
 console.log("mushaf-verse-marker-printed-gold-gate.test.ts: ok");

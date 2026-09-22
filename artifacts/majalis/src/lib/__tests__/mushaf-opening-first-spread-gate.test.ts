@@ -1,6 +1,6 @@
 /**
- * First Spread Visual Layout — ص١–ص٢ فقط.
- * كتلة قراءة متماسكة · علامات فيروزية · بلا مساس بالنص/QPC/ص٣…٦٠٤.
+ * First Spread Visual Layout — ص١–ص٢.
+ * كتلة قراءة متماسكة · Accent يتبع Theme · بلا مساس بالنص/QPC.
  * Run: node --import tsx src/lib/__tests__/mushaf-opening-first-spread-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -46,14 +46,18 @@ assert.doesNotMatch(
   /\.nm-page--opening \.nm-page__body[\s\S]{0,200}align-content:\s*space-evenly/,
 );
 
-console.log("=== AyahMarkerOpening فيروزي · ذهب عالمي محفوظ ===");
+console.log("=== Accent موحّد · لوحة زمردي/ذهب محفوظة ===");
 assert.equal(mushafOpeningTurquoise.toLowerCase(), "#0e7a6b");
 assert.equal(mushafOpeningMarkerFill.toLowerCase(), "#0e7a6b");
 assert.equal(mushafVerseMarkerFill.toLowerCase(), quranGold.toLowerCase());
-assert.match(tokens, /mushafOpeningTurquoise/);
-assert.match(chrome, /--mushaf-opening-turquoise:\s*#0e7a6b/i);
-assert.match(chrome, /\.nm-page--opening \.nm-ayah-mark[\s\S]{0,200}mushaf-opening-marker-fill/);
-assert.match(css, /--mushaf-verse-marker-fill:\s*#c9a82e/i);
+assert.match(tokens, /mushafOpeningTurquoise|mushafEmeraldPrimary/);
+assert.match(css, /--mushaf-accent-primary:\s*#0e7a6b/i);
+assert.match(css, /\[data-mushaf-accent="gold"\]/);
+assert.doesNotMatch(
+  chrome,
+  /\.nm-page--opening[\s\S]{0,500}--mushaf-verse-marker-fill:\s*var\(--mushaf-opening/,
+);
+assert.match(chrome, /\.nm-page--opening \.nm-ayah-mark[\s\S]{0,200}mushaf-marker-background/);
 assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
 
 console.log("=== Metadata pills + footer surface ===");
