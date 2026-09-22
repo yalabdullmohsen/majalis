@@ -1,19 +1,19 @@
 {
   "version": 1,
-  "generated_at": "2026-09-03T08:31:22.957Z",
+  "generated_at": "2026-09-22T19:13:14.856Z",
   "items": [
     {
-      "id": "12057ca46560064e227755ac46d095bf485958ec",
-      "type": "دورة",
-      "title_ar": "ندعوكم اليوم لحضور الدورة العلمية التعليق على الأربعون النووية للشيخ د راشد بن …",
-      "summary_ar": "ندعوكم اليوم لحضور الدوره العلميه: التعليق علي ( الاربعون النوويه &nbsp;) للشيخ د. راشد بن صليهم الهاجري @rashedsfh يومي الاربعاء والخميس بعد صلاه العصر مسجد…",
-      "sheikh": "راشد بن صليهم الهاجري @rashedsfh ️ يومي الأربعاء والخميس",
-      "place": "مبارك عبدالله الصباح - الجهراء&nbsp; https://maps",
+      "id": "e4c55103f08ddc965653cd450212a38c2172dfd9",
+      "type": "محاضرة",
+      "title_ar": "خطبة وقفات مع حديث العرباض بن سارية فضيلة الشيخ محمد فهد السفران مرئي صوتي قناة…",
+      "summary_ar": "خطبه - وقفات مع حديث العرباض بن ساريه فضيله الشيخ محمد فهد السفران مرئي: https://youtu.be/2jePVbSkuPk?si= صوتي: https://drosq8.com/play/24892 قناه موقع دروس ال…",
+      "sheikh": "محمد فهد السفران 🎥 مرئي: https://youtu",
+      "place": null,
       "audience": "عام",
       "starts_at": null,
       "time_text": null,
       "register_url": "https://t.me/DrosQ8",
-      "schedule_kind": "upcoming",
+      "schedule_kind": null,
       "women_attendance": "men_only",
       "women_attendance_note": null,
       "sources": [
@@ -21,42 +21,40 @@
           "id": "telegram-DrosQ8",
           "name_ar": "دروس الكويت",
           "url": "https://t.me/DrosQ8",
-          "post_url": "https://t.me/DrosQ8/27716",
+          "post_url": "https://t.me/DrosQ8/27958",
           "platform": "telegram"
         }
       ],
       "image_url": null,
-      "published_at": "2026-09-03T08:07:24.408Z",
-      "confidence": 0.9,
-      "description": "يلقيها راشد بن صليهم الهاجري @rashedsfh ️ يومي الأربعاء والخميس. بطاقة تعريف من بيانات الحلقة في المنصة."
+      "published_at": "2026-09-22T18:50:53.535Z",
+      "confidence": 0.8
     },
     {
-      "id": "541ec505a8df4cc63b965ee2861ca442bf558be9",
-      "type": "درس",
-      "title_ar": "يسرنا دعوتكم لحضور لقاء بعنوان بناء شخصية الطفل مع أ هدى السباعي يوم الاربعاء م…",
-      "summary_ar": "يسرنا دعوتكم لحضور لقاء بعنوان بناء شخصيه الطفل مع ا.هدي السباعي يوم الاربعاء مساء تاريخ ٢ سبتمبر الرابط بالمعرف والقصه Photo by ارث on August 31, 2026. May be…",
+      "id": "f0f6dacf1347fb2dc406d5fbdf9b0bd369fe9f72",
+      "type": "محاضرة",
+      "title_ar": "غداً الأربعاء بعد صلاة المغرب بإذن الله مسجد الياقوت درس تلخيص مختصر المقنع الم…",
+      "summary_ar": "غدا الاربعاء بعد صلاه المغرب باذن الله مسجد الياقوت درس تلخيص مختصر المقنع المجلس (136) – باب صريح الطلاق وكنايته للشيخ عثمان الخميس لتفاصيل المحاضرات وللبث ال…",
       "sheikh": null,
-      "place": "حساب إرث عبر الانستقرام Erth",
+      "place": "الياقوت",
       "audience": "عام",
       "starts_at": null,
       "time_text": null,
       "register_url": null,
-      "schedule_kind": "weekly",
+      "schedule_kind": "upcoming",
       "women_attendance": "men_only",
       "women_attendance_note": null,
       "sources": [
         {
-          "id": "ig-erth.kwt",
-          "name_ar": "إرث",
-          "url": "https://instagram.com/erth.kwt",
-          "post_url": "https://www.instagram.com/p/DctN3N2AooB/",
+          "id": "ig-othmanalkamees",
+          "name_ar": "د. عثمان الخميس",
+          "url": "https://instagram.com/othmanalkamees",
+          "post_url": "https://www.instagram.com/p/DdldrzpGyb2/",
           "platform": "instagram"
         }
       ],
       "image_url": null,
-      "published_at": "2026-08-31T00:00:00.000Z",
-      "confidence": 0.75,
-      "description": ". بطاقة تعريف من بيانات الحلقة في المنصة."
+      "published_at": "2026-09-22T18:49:18.671Z",
+      "confidence": 0.75
     },
     {
       "id": "92817884645b3c0b08509fe5f534f0d573c4acc0",
@@ -85,90 +83,6 @@
       "published_at": "2026-08-28T23:56:30.232Z",
       "confidence": 0.9,
       "description": "يلقيها الدكتور مصطفى حسنين عبدالهادي حسنين www. بطاقة تعريف من بيانات الحلقة في المنصة."
-    },
-    {
-      "id": "32d73b4bc9ff89b3f811713f89c7c10f98679110",
-      "type": "محاضرة",
-      "title_ar": "غداً السبت الساعة صباحاً بإذن الله بمسجد الياقوت قراءة صحيح مسلم وصلنا إلى باب …",
-      "summary_ar": "غدا السبت الساعه 10:00 صباحا باذن الله بمسجد الياقوت قراءه صحيح مسلم وصلنا الي باب طلاق الثلاث المجلس 32 للشيخ عثمان الخميس لتفاصيل المحاضرات وللبث المباشر في …",
-      "sheikh": "جميع دروس الشيخ ومواعيد محاضراته تجدونها في الموقع الإلكترون",
-      "place": "الياقوت",
-      "audience": "عام",
-      "starts_at": null,
-      "time_text": "10:00 ص",
-      "register_url": null,
-      "schedule_kind": "upcoming",
-      "women_attendance": "men_only",
-      "women_attendance_note": null,
-      "sources": [
-        {
-          "id": "ig-othmanalkamees",
-          "name_ar": "د. عثمان الخميس",
-          "url": "https://instagram.com/othmanalkamees",
-          "post_url": "https://www.instagram.com/p/DcmOQFwiKDX/",
-          "platform": "instagram"
-        }
-      ],
-      "image_url": null,
-      "published_at": "2026-08-28T00:00:00.000Z",
-      "confidence": 0.95,
-      "description": "يلقيها جميع دروس الشيخ ومواعيد محاضراته تجدونها في الموقع الإلكترون. بطاقة تعريف من بيانات الحلقة في المنصة."
-    },
-    {
-      "id": "e340e49b5677b8f673feeff1febbe422c74a1398",
-      "type": "محاضرة",
-      "title_ar": "لقاء الجمعة الأسبوعي كلنا شوق للقياكن أحبتنا في الله مع الدكتورة مريم مندكار حف…",
-      "summary_ar": "لقاء الجمعه الاسبوعي كلنا شوق للقياكن احبتنا في الله مع الدكتوره مريم مندكار حفظها الله Photo by مسجد راشد الخياط on August 27, 2026. May be an image of ‎pie, …",
-      "sheikh": "ة مريم مندكار حفظها الله",
-      "place": "الله",
-      "audience": "عام",
-      "starts_at": "2026-08-28T00:00:00.000Z",
-      "time_text": null,
-      "register_url": null,
-      "schedule_kind": "weekly",
-      "women_attendance": "men_only",
-      "women_attendance_note": null,
-      "sources": [
-        {
-          "id": "ig-m_alkhayatq8",
-          "name_ar": "مسجد راشد الخياط",
-          "url": "https://instagram.com/m_alkhayatq8",
-          "post_url": "https://www.instagram.com/p/DckS0kEIr3i/",
-          "platform": "instagram"
-        }
-      ],
-      "image_url": null,
-      "published_at": "2026-08-27T00:00:00.000Z",
-      "confidence": 0.95,
-      "description": "يلقيها ة مريم مندكار حفظها الله. بطاقة تعريف من بيانات الحلقة في المنصة."
-    },
-    {
-      "id": "521409728e47b4bf644be0da76c2d29acd4a1ce5",
-      "type": "حلقة",
-      "title_ar": "ودج بإنجاز يفرحج كل أسبوع؟ حلقات إرواء للقرآن ودج يكون عندج إنجاز يفرحج كل اسبو…",
-      "summary_ar": "ودج بانجاز يفرحج كل اسبوع؟ Photo by حلقات ارواء للقران on August 26, 2026. May be an image of ‎text that says '‎ودج يكون عندج انجاز يفرحج كل اسبوع؟ CrwDa ទេ ال…",
-      "sheikh": null,
-      "place": null,
-      "audience": "نشء",
-      "starts_at": null,
-      "time_text": null,
-      "register_url": null,
-      "schedule_kind": "weekly",
-      "women_attendance": "men_only",
-      "women_attendance_note": null,
-      "sources": [
-        {
-          "id": "ig-erwaa.quran",
-          "name_ar": "حلقات إرواء للقرآن — جامعة الكويت",
-          "url": "https://instagram.com/erwaa.quran",
-          "post_url": "https://www.instagram.com/p/DcgSaZ1MoJO/",
-          "platform": "instagram"
-        }
-      ],
-      "image_url": null,
-      "published_at": "2026-08-26T16:34:23.140Z",
-      "confidence": 0.65,
-      "description": ". بطاقة تعريف من بيانات الحلقة في المنصة."
     }
   ]
 }
