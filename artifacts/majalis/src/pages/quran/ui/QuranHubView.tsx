@@ -6,6 +6,7 @@ import { getLobby } from "@/config/section-lobbies";
 import { DashboardScreen } from "@/components/design-system/screens";
 import "@/components/sections/section-cards.css";
 import "@/styles/pages/quran-hub-v2.css";
+import "@/styles/sunnah-identity-home-hub.css";
 
 export default function QuranHubPage() {
   const lobby = useMemo(() => getLobby("quran"), []);
