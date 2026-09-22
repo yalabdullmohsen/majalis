@@ -298,6 +298,32 @@ console.log("=== Expansion PR-B Lessons + Sections ===");
   assert.match(doc, /lessons-sections-v2\.css/);
 }
 
+console.log("=== Expansion PR-C Knowledge Dashboards ===");
+{
+  const app = read("src/App.tsx");
+  assert.match(app, /data-v2-knowledge/);
+  assert.match(app, /isKnowledgeHubPath/);
+  assert.match(app, /knowledge-dashboards-v2\.css/);
+  assert.ok(existsSync(resolve(majalisRoot, "src/styles/pages/knowledge-dashboards-v2.css")));
+  const fiqh = read("src/pages/fiqh/ui/FiqhView.tsx");
+  const hadith = read("src/pages/hadith/ui/HadithView.tsx");
+  const tawhid = read("src/views/TawhidPage.tsx");
+  assert.match(fiqh, /knowledge-dashboards-v2\.css/);
+  assert.match(fiqh, /EmptyStateV2/);
+  assert.match(hadith, /knowledge-dashboards-v2\.css/);
+  assert.match(hadith, /EmptyStateV2/);
+  assert.match(tawhid, /knowledge-dashboards-v2\.css/);
+  const css = read("src/styles/pages/knowledge-dashboards-v2.css");
+  assert.match(css, /data-v2-knowledge/);
+  assert.match(css, /topic-page__hero/);
+  assert.match(css, /hadith-card/);
+  assert.match(css, /kx-library-card|hub-card/);
+  assert.doesNotMatch(css, /border-inline-start:\s*[34]px/);
+  const doc = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2.md"), "utf8");
+  assert.match(doc, /Expansion PR-C|Knowledge Dashboard/);
+  assert.match(doc, /knowledge-dashboards-v2\.css/);
+}
+
 console.log("=== package script ===");
 {
   const pkg = read("package.json");
