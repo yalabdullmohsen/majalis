@@ -1,13 +1,14 @@
 /**
  * Visual Redesign V2 — Dashboard Homepage surfaces.
+ * V3 Premium Polish Pass — Welcome strip · Compact sacred · tighter rhythm.
  * يُفعَّل عبر html[data-v2-dashboard="1"] على مسار /.
- * لا يغيّر Routes ولا محتوى شرعي.
+ * لا يغيّر Routes ولا محتوى شرعي · لا يلمس tokens الأساسية.
  */
 
 html[data-v2-dashboard="1"] .m2030-home {
   background: var(--v2-color-ivory);
   color: var(--v2-color-ink);
-  --m2030-band-gap: var(--v2-space-4);
+  --m2030-band-gap: var(--v2-space-3);
 }
 
 /* زخرفة هيرو V2 (مؤجّلة مع HomeView — التباين الصلب في home-brand-title.css) */
@@ -87,8 +88,151 @@ html[data-v2-dashboard="1"].dark .home-page-hero.page-hero-mj::after {
 }
 
 html[data-v2-dashboard="1"] .m2030-home .m2030-band {
-  margin-block: var(--v2-space-3) var(--v2-space-4);
+  margin-block: var(--v2-space-2) var(--v2-space-3);
   padding-inline: max(0.75rem, var(--m2030-pad, 1rem));
+}
+
+/* ── V3 Welcome Experience strip داخل الهيرو ── */
+html[data-v2-dashboard="1"] .home-page-hero.home-welcome-v3 .page-hero-mj__content {
+  gap: 0.5rem;
+}
+
+html[data-v2-dashboard="1"] .home-page-hero.home-welcome-v3 .page-hero-mj__desc {
+  margin-top: 0.15rem;
+  max-width: 24rem;
+  font-size: 0.92rem;
+  opacity: 0.92;
+}
+
+html[data-v2-dashboard="1"] .home-page-hero.home-welcome-v3 .page-hero-mj__actions {
+  margin-top: 0.2rem;
+  gap: 0.45rem;
+}
+
+html[data-v2-dashboard="1"] .hw3 {
+  width: 100%;
+  max-width: 36rem;
+  margin-inline: auto;
+  margin-block-start: 0.45rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+html[data-v2-dashboard="1"] .hw3-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+@media (min-width: 640px) {
+  html[data-v2-dashboard="1"] .hw3-strip {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+html[data-v2-dashboard="1"] .hw3-chip {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  min-height: 2.75rem;
+  padding: 0.45rem 0.65rem;
+  border-radius: var(--v2-radius-md, 14px);
+  border: 1px solid color-mix(in srgb, var(--v2-color-on-emerald, #fff) 22%, transparent);
+  background: color-mix(in srgb, var(--v2-color-on-emerald, #fff) 10%, transparent);
+  color: var(--v2-color-on-emerald, #fff);
+  text-decoration: none;
+  overflow: hidden;
+  transition:
+    background-color var(--v2-duration-fast, 140ms) var(--v2-ease-out, ease),
+    transform var(--v2-duration-fast, 140ms) var(--v2-ease-out, ease);
+}
+
+html[data-v2-dashboard="1"] .hw3-chip:hover {
+  background: color-mix(in srgb, var(--v2-color-on-emerald, #fff) 16%, transparent);
+}
+
+html[data-v2-dashboard="1"] .hw3-chip:active {
+  transform: scale(0.98);
+}
+
+html[data-v2-dashboard="1"] .hw3-chip:focus-visible {
+  outline: 2px solid var(--v2-color-gold, #c9a82e);
+  outline-offset: 2px;
+}
+
+html[data-v2-dashboard="1"] .hw3-chip__k {
+  font-size: 0.68rem;
+  font-weight: 700;
+  opacity: 0.78;
+  letter-spacing: 0.01em;
+}
+
+html[data-v2-dashboard="1"] .hw3-chip__v {
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.3;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html[data-v2-dashboard="1"] .hw3-chip--progress .hw3-chip__bar {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  height: 2px;
+  background: color-mix(in srgb, var(--v2-color-on-emerald, #fff) 18%, transparent);
+}
+
+html[data-v2-dashboard="1"] .hw3-chip--progress .hw3-chip__bar::after {
+  content: "";
+  display: block;
+  height: 100%;
+  width: var(--hw3-pct, 0%);
+  background: var(--v2-color-gold, #c9a82e);
+  border-radius: inherit;
+}
+
+html[data-v2-dashboard="1"] .hw3-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+html[data-v2-dashboard="1"] .hw3-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  padding-inline: 0.75rem;
+  border-radius: var(--v2-radius-pill, 999px);
+  border: 1px solid color-mix(in srgb, var(--v2-color-gold, #c9a82e) 45%, transparent);
+  background: color-mix(in srgb, var(--v2-color-gold, #c9a82e) 14%, transparent);
+  color: var(--v2-color-on-emerald, #fff);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background-color var(--v2-duration-fast, 140ms) var(--v2-ease-out, ease),
+    transform var(--v2-duration-fast, 140ms) var(--v2-ease-out, ease);
+}
+
+html[data-v2-dashboard="1"] .hw3-action:hover {
+  background: color-mix(in srgb, var(--v2-color-gold, #c9a82e) 24%, transparent);
+}
+
+html[data-v2-dashboard="1"] .hw3-action:active {
+  transform: scale(0.97);
+}
+
+html[data-v2-dashboard="1"] .hw3-action:focus-visible {
+  outline: 2px solid var(--v2-color-gold, #c9a82e);
+  outline-offset: 2px;
 }
 
 html[data-v2-dashboard="1"] .m2030-home .m2030-band--sage {
@@ -190,19 +334,127 @@ html[data-v2-dashboard="1"] .m2030-home .home-resume-v2 .soft-card .soft-card {
   padding: 0;
 }
 
-/* بحث / آية / ورد — أسطح عاجية ناعمة */
+/* بحث / آية / ورد — أسطح عاجية ناعمة + Premium Search */
+html[data-v2-dashboard="1"] .m2030-home .hus {
+  margin-block: 0.45rem 0.15rem;
+}
+
 html[data-v2-dashboard="1"] .m2030-home .hus-field {
   border-radius: var(--v2-radius-lg);
-  border-color: var(--v2-hairline);
+  border-color: color-mix(in srgb, var(--v2-color-emerald, #0f5c45) 16%, var(--v2-hairline));
   background: var(--v2-color-ivory-surface);
-  box-shadow: var(--v2-shadow-soft);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 72%, transparent),
+    0 4px 16px color-mix(in srgb, var(--v2-color-emerald-deep, #0a3d2e) 6%, transparent);
+  transition:
+    border-color var(--v2-duration-fast, 140ms) var(--v2-ease-out, ease),
+    box-shadow var(--v2-duration, 200ms) var(--v2-ease-out, ease);
+}
+
+html[data-v2-dashboard="1"] .m2030-home .hus-field.is-focused {
+  border-color: color-mix(in srgb, var(--v2-color-emerald, #0f5c45) 42%, transparent);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--v2-color-gold, #c9a82e) 28%, transparent),
+    0 6px 18px color-mix(in srgb, var(--v2-color-emerald-deep, #0a3d2e) 8%, transparent);
+}
+
+html[data-v2-dashboard="1"] .m2030-home .hus-icon {
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+  opacity: 0.85;
+}
+
+/* Compact Sacred Card — حديث/آية اليوم */
+html[data-v2-dashboard="1"] .m2030-home .home-sacred-day-slot {
+  min-height: 6.25rem;
+}
+
+html[data-v2-dashboard="1"] .m2030-home .home-sacred-day--ph {
+  min-height: 6.25rem;
 }
 
 html[data-v2-dashboard="1"] .m2030-home .home-sacred-day:not(.home-sacred-day--ph) {
+  margin-block: 0.4rem 0.55rem;
+  padding: 0.75rem 1rem 0.85rem;
   border-radius: var(--v2-radius-card);
-  background: var(--v2-color-ivory-muted);
+  background: var(--v2-color-ivory-surface);
   border: 1px solid var(--v2-hairline);
-  box-shadow: none;
+  box-shadow: var(--v2-shadow-soft);
+  position: relative;
+}
+
+html[data-v2-dashboard="1"] .m2030-home .home-sacred-day:not(.home-sacred-day--ph)::before {
+  content: "";
+  position: absolute;
+  inset-block: 0.85rem;
+  inset-inline-start: 0;
+  width: 2px;
+  border-radius: var(--v2-radius-pill, 999px);
+  background: linear-gradient(
+    180deg,
+    var(--v2-color-gold, #c9a82e),
+    var(--v2-color-emerald, #0f5c45)
+  );
+}
+
+html[data-v2-dashboard="1"] .m2030-home .home-sacred-day__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-block-end: 0.25rem;
+}
+
+html[data-v2-dashboard="1"] .m2030-home .home-sacred-day__date {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--v2-color-ink-muted);
+}
+
+html[data-v2-dashboard="1"] .m2030-home .home-sacred-day__kicker {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+}
+
+html[data-v2-dashboard="1"] .m2030-home .home-sacred-day__text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+html[data-v2-dashboard="1"] .m2030-home .home-sacred-day__text--ayah {
+  line-height: 1.85;
+  -webkit-line-clamp: 2;
+}
+
+html[data-v2-dashboard="1"] .m2030-home .home-sacred-day__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-block-start: 0.4rem;
+}
+
+html[data-v2-dashboard="1"] .m2030-home .home-sacred-day__source {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--v2-color-ink-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+html[data-v2-dashboard="1"] .m2030-home .home-sacred-day__link {
+  margin-top: 0;
+  flex: 0 0 auto;
+  font-size: 0.82rem;
 }
 
 html[data-v2-dashboard="1"] .m2030-home .daily-wird-card {
@@ -227,7 +479,10 @@ html[data-v2-dashboard="1"] .m2030-home .m2030-customize {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html[data-v2-dashboard="1"] .m2030-home * {
+  html[data-v2-dashboard="1"] .m2030-home *,
+  html[data-v2-dashboard="1"] .hw3-chip,
+  html[data-v2-dashboard="1"] .hw3-action {
     scroll-behavior: auto;
+    transition: none !important;
   }
 }

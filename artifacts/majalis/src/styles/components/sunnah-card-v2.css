@@ -1,18 +1,34 @@
-/* SunnahCard V2 — Premium Islamic Dashboard cards */
+/* SunnahCard V2 — Premium Islamic Dashboard cards · V3 hierarchy polish */
 .sc2 {
   display: flex;
   align-items: flex-start;
   gap: var(--v2-space-4);
   padding: var(--v2-space-5) var(--v2-space-5);
   border-radius: var(--v2-radius-card);
-  border: 1px solid var(--v2-hairline);
+  border: 1px solid color-mix(in srgb, var(--v2-hairline) 88%, var(--v2-color-emerald));
   background: var(--v2-color-ivory-surface);
-  box-shadow: var(--v2-shadow-card);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, #fff 70%, transparent),
+    var(--v2-shadow-card);
   color: var(--v2-color-ink);
   box-sizing: border-box;
   transition:
     transform var(--v2-duration-fast) var(--v2-ease-out),
-    box-shadow var(--v2-duration) var(--v2-ease-out);
+    box-shadow var(--v2-duration) var(--v2-ease-out),
+    border-color var(--v2-duration-fast) var(--v2-ease-out);
+}
+
+.sc2:hover {
+  border-color: color-mix(in srgb, var(--v2-color-emerald) 28%, var(--v2-hairline));
+  box-shadow:
+    0 1px 0 color-mix(in srgb, #fff 70%, transparent),
+    var(--v2-shadow-elevated, 0 12px 40px rgba(22, 36, 30, 0.1));
+  transform: translateY(-1px);
+}
+
+.sc2:active {
+  transform: translateY(0) scale(0.995);
+  box-shadow: var(--v2-shadow-soft);
 }
 
 .sc2--welcome {
@@ -36,6 +52,11 @@
   box-shadow: var(--v2-shadow-elevated);
   position: relative;
   overflow: hidden;
+}
+
+.sc2--welcome:hover {
+  transform: translateY(-1px);
+  border-color: transparent;
 }
 
 .sc2--welcome::after {
@@ -62,19 +83,26 @@
   width: var(--v2-icon-tile);
   height: var(--v2-icon-tile);
   border-radius: var(--v2-radius-icon);
-  background: var(--v2-color-emerald-soft);
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--v2-color-gold) 12%, var(--v2-color-emerald-soft)) 0%,
+      var(--v2-color-emerald-soft) 100%
+    );
   color: var(--v2-color-emerald-deep);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--v2-color-gold) 22%, transparent);
 }
 
 .sc2--welcome .sc2-icon {
   background: color-mix(in srgb, var(--v2-color-on-emerald) 16%, transparent);
   color: var(--v2-color-on-emerald);
+  box-shadow: none;
 }
 
 .sc2-icon svg {
   width: var(--v2-icon-size);
   height: var(--v2-icon-size);
-  stroke-width: var(--v2-icon-stroke);
+  stroke-width: calc(var(--v2-icon-stroke) + 0.15);
 }
 
 .sc2-body {
@@ -89,16 +117,18 @@
 
 .sc2-title {
   margin: 0;
-  font-size: 1.125rem;
+  font-size: 1.15rem;
   font-weight: 800;
-  line-height: 1.35;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
   color: inherit;
 }
 
 .sc2-desc {
   margin: 0;
-  font-size: 0.9375rem;
-  line-height: 1.65;
+  font-size: 0.9rem;
+  font-weight: 450;
+  line-height: 1.6;
   color: var(--v2-color-ink-muted);
 }
 
@@ -122,11 +152,17 @@
   font-size: 0.9375rem;
   text-decoration: none;
   cursor: pointer;
-  transition: opacity var(--v2-duration-fast) var(--v2-ease-out);
+  transition:
+    opacity var(--v2-duration-fast) var(--v2-ease-out),
+    transform var(--v2-duration-fast) var(--v2-ease-out);
 }
 
 .sc2-cta:hover {
-  opacity: 0.92;
+  opacity: 0.94;
+}
+
+.sc2-cta:active {
+  transform: scale(0.98);
 }
 
 .sc2-cta:focus-visible {
@@ -140,7 +176,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sc2 {
+  .sc2,
+  .sc2-cta {
     transition: none;
+  }
+
+  .sc2:hover,
+  .sc2:active {
+    transform: none;
   }
 }

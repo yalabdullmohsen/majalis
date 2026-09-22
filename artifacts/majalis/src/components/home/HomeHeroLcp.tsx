@@ -1,6 +1,7 @@
 /**
  * هيرو الرئيسية خارج Suspense — يبقى h1 «سُنّة» في DOM من أول رسم App
  * حتى لا يُعاد قياس LCP عند استبدال HomePage الكسول.
+ * V3: Welcome Experience — متابعة / قراءة / ورد / تقدم / إجراءات سريعة.
  */
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
@@ -8,8 +9,74 @@ import { PageHero } from "@/components/ui/PageHero";
 import { resolveDailyContext } from "@/lib/daily-context";
 import { hasSeenFirstVisitIntroSync } from "@/lib/first-visit-intro-state";
 import { getRecentPages } from "@/lib/recent-pages";
+import { getLatestContinueReading } from "@/lib/continue-reading";
+import { loadLastPageSync } from "@/lib/quran-last-page";
+import {
+  getTaskStats,
+  getTodayProgress,
+  PROGRESS_TASKS,
+} from "@/lib/daily-progress";
+import { toArabicDigits } from "@/lib/utils";
 import "@/styles/components/home-brand-title.css";
 import "@/styles/m2030/home.css";
+
+type WelcomeSnapshot = {
+  continueHref: string;
+  continueLabel: string | null;
+  mushafPage: number | null;
+  progressPct: number;
+  doneCount: number;
+  totalTasks: number;
+};
+
+function readWelcomeSnapshot(): WelcomeSnapshot {
+  let continueHref = "/lessons";
+  let continueLabel: string | null = null;
+  try {
+    const latest = getLatestContinueReading();
+    if (latest?.route) {
+      continueHref = latest.route;
+      continueLabel = latest.title;
+    } else {
+      const recent = getRecentPages(2).find((p) => p.href !== "/");
+      if (recent) {
+        continueHref = recent.href;
+        continueLabel = recent.label;
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+
+  let mushafPage: number | null = null;
+  try {
+    mushafPage = loadLastPageSync();
+  } catch {
+    /* ignore */
+  }
+
+  let progressPct = 0;
+  let doneCount = 0;
+  const totalTasks = PROGRESS_TASKS.length;
+  try {
+    const progress = getTodayProgress();
+    doneCount = PROGRESS_TASKS.filter(
+      (task) => getTaskStats(task, progress).percent >= 100,
+    ).length;
+    progressPct = totalTasks ? Math.round((doneCount / totalTasks) * 100) : 0;
+  } catch {
+    /* ignore */
+  }
+
+  return {
+    continueHref,
+    continueLabel,
+    mushafPage,
+    progressPct,
+    doneCount,
+    totalTasks,
+  };
+}
 
 export function HomeHeroLcp() {
   // تحية حسب ساعة الجهاز المحلية (لا وقت خادم البناء) — تُزامَن عند التركيب وكل دقيقة
@@ -27,21 +94,16 @@ export function HomeHeroLcp() {
       return true;
     }
   });
-  const [continueHref] = useState(() => {
-    try {
-      return getRecentPages(2).find((p) => p.href !== "/")?.href || "/lessons";
-    } catch {
-      return "/lessons";
-    }
-  });
+  const [welcome] = useState(() => readWelcomeSnapshot());
+  const continueHref = welcome.continueHref;
 
   return (
     <PageHero
-      className="m2030-hero home-page-hero home-page-hero--eyebrow-ready home-page-hero--actions-ready home-welcome-premium sgs-hero-geometry"
+      className="m2030-hero home-page-hero home-page-hero--eyebrow-ready home-page-hero--actions-ready home-welcome-premium home-welcome-v3 sgs-hero-geometry"
       fullBleed={false}
       withPattern={false}
-      withCornerMotif={true}
-      withOrnament={true}
+      withCornerMotif={false}
+      withOrnament={false}
       showBack={false}
       eyebrow={greeting}
       title="سُنّة"
@@ -56,7 +118,73 @@ export function HomeHeroLcp() {
           </Link>
         </>
       }
-    />
+    >
+      <nav className="hw3" aria-label="متابعة سريعة">
+        <div className="hw3-strip" role="list">
+          {welcome.continueLabel ? (
+            <Link
+              href={continueHref}
+              className="hw3-chip"
+              role="listitem"
+              aria-label={`آخر متابعة: ${welcome.continueLabel}`}
+            >
+              <span className="hw3-chip__k">متابعة</span>
+              <span className="hw3-chip__v">{welcome.continueLabel}</span>
+            </Link>
+          ) : null}
+          {welcome.mushafPage != null && welcome.mushafPage > 1 ? (
+            <Link
+              href={`/mushaf?page=${welcome.mushafPage}`}
+              className="hw3-chip"
+              role="listitem"
+              aria-label={`آخر قراءة: صفحة ${toArabicDigits(welcome.mushafPage)}`}
+            >
+              <span className="hw3-chip__k">قراءة</span>
+              <span className="hw3-chip__v">ص {toArabicDigits(welcome.mushafPage)}</span>
+            </Link>
+          ) : null}
+          <Link
+            href="/daily-wird"
+            className="hw3-chip"
+            role="listitem"
+            aria-label={`الورد اليومي · تقدم ${toArabicDigits(welcome.progressPct)}٪`}
+          >
+            <span className="hw3-chip__k">الورد</span>
+            <span className="hw3-chip__v">
+              {toArabicDigits(welcome.doneCount)}/{toArabicDigits(welcome.totalTasks)}
+            </span>
+          </Link>
+          <Link
+            href="/daily-wird"
+            className="hw3-chip hw3-chip--progress"
+            role="listitem"
+            aria-label={`تقدمك اليومي ${toArabicDigits(welcome.progressPct)}٪`}
+          >
+            <span className="hw3-chip__k">تقدم</span>
+            <span className="hw3-chip__v">{toArabicDigits(welcome.progressPct)}٪</span>
+            <span
+              className="hw3-chip__bar"
+              aria-hidden="true"
+              style={{ ["--hw3-pct" as string]: `${welcome.progressPct}%` }}
+            />
+          </Link>
+        </div>
+        <div className="hw3-actions" role="list" aria-label="إجراءات سريعة">
+          <Link href="/quran-hub" className="hw3-action" role="listitem">
+            القرآن
+          </Link>
+          <Link href="/adhkar" className="hw3-action" role="listitem">
+            الأذكار
+          </Link>
+          <Link href="/lessons" className="hw3-action" role="listitem">
+            الدروس
+          </Link>
+          <Link href="/prayer-times" className="hw3-action" role="listitem">
+            الصلاة
+          </Link>
+        </div>
+      </nav>
+    </PageHero>
   );
 }
 
@@ -77,7 +205,7 @@ export function HomeSearchShell() {
 export function HomeSacredOfDaySkeleton() {
   return (
     <div
-      className="home-sacred-day home-sacred-day--ph"
+      className="home-sacred-day home-sacred-day--ph home-sacred-day--compact"
       aria-busy="true"
       aria-label="آية من القرآن"
       data-testid="home-sacred-of-day"

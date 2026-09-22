@@ -275,10 +275,10 @@ html.app-booting .hus-field {
   border-radius: 1rem;
 }
 
-/* CLS: حجز أقسام الرئيسية قبل swap من HomeRestShell */
+/* CLS: حجز أقسام الرئيسية قبل swap من HomeRestShell — يطابق Compact Sacred */
 .home-sacred-day-slot,
 .home-sacred-day--ph {
-  min-height: 9.75rem;
+  min-height: 6.25rem;
   box-sizing: border-box;
 }
 
