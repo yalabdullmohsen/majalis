@@ -43,16 +43,17 @@ assert.match(newReader, /useStableMushafLayout/);
 assert.doesNotMatch(newReader, /features\/mushaf-madinah\/MushafPager/);
 
 assert.match(verse, /word\.glyphText/);
-assert.match(verse, /nm-ayah-mark/);
+assert.match(verse, /nm-ayah-mark|MushafAyahMarker/);
 assert.match(verse, /is-selected/);
 assert.match(verse, /is-playing/);
 assert.match(verse, /charType === "end"/);
 assert.match(
   verse,
-  /\/\* كلمات المتن: عرض فقط|if \(!isEnd\)/,
-  "ضغط رقم الآية فقط — كلمات المتن بلا زر",
+  /كلمات المتن قابلة للتحديد|data-testid=\{interactive \? "mushaf-ayah-hit"/,
+  "ضغط الآية على المتن والعلامة",
 );
 assert.match(verse, /data-testid="mushaf-ayah-hit"/);
+assert.match(verse, /MushafAyahMarker/);
 
 assert.match(pageView, /AyahSelectionOverlay/);
 assert.match(pageView, /onPageNumberPress/);

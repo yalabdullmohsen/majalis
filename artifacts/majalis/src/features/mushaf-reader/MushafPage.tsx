@@ -3,6 +3,7 @@ import type { MushafPageLayout, QpcWord } from "@/lib/quran-data/qpc-page-data";
 import { toArabicIndicDigits as toArabicDigits, toArabicPageDigits } from "@/lib/numerals";
 import { MushafSurahBanner } from "./MushafSurahBanner";
 import { MushafBasmalaView, MushafVerseLayer } from "./MushafVerseLayer";
+import { MushafOpeningSpreadLayout } from "./MushafOpeningSpreadLayout";
 import { AyahSelectionOverlay } from "./AyahSelectionOverlay";
 import { mushafPerfInc } from "./mushaf-turn-telemetry";
 import {
@@ -139,24 +140,8 @@ export const MushafPage = memo(function MushafPage({
     [onLongPressVerse],
   );
 
-  return (
-    <article
-      className={`nm-page${isOpeningP1 ? " nm-page--opening" : ""}${isLeadP2 ? " nm-page--lead" : ""}`}
-      data-page={footerPage}
-      data-page-type={pageType}
-      data-layout="pageShell"
-      data-component={isOpeningP1 || isLeadP2 ? "MushafOpeningPageLayout" : undefined}
-      data-testid="mushaf-page"
-      data-opening={isOpeningP1 || isLeadP2 ? "1" : "0"}
-      data-mm-fit="1"
-      style={
-        {
-          ["--nm-qpc-family"]: fontFamily,
-          ["--mm-qpc-family"]: fontFamily,
-        } as CSSProperties
-      }
-      aria-label={`صفحة المصحف ${toArabicDigits(footerPage)}، الجزء ${toArabicDigits(layout.juzNumber)}، الحزب ${toArabicDigits(layout.hizbNumber)}`}
-    >
+  const pageInner = (
+    <>
       {/*
         MushafPageMetadataHeader — رأس مصحف أصيل:
         الجزء بطرف البداية (يمين RTL) · الحزب بطرف النهاية (يسار RTL).
@@ -273,6 +258,34 @@ export const MushafPage = memo(function MushafPage({
         </button>
         <span className="nm-page__footer-spacer" aria-hidden="true" />
       </footer>
+    </>
+  );
+
+  return (
+    <article
+      className={`nm-page${isOpeningP1 ? " nm-page--opening" : ""}${isLeadP2 ? " nm-page--lead" : ""}`}
+      data-page={footerPage}
+      data-page-type={pageType}
+      data-layout="pageShell"
+      data-component={isOpeningP1 || isLeadP2 ? "MushafOpeningSpreadLayout" : undefined}
+      data-testid="mushaf-page"
+      data-opening={isOpeningP1 || isLeadP2 ? "1" : "0"}
+      data-mm-fit="1"
+      style={
+        {
+          ["--nm-qpc-family"]: fontFamily,
+          ["--mm-qpc-family"]: fontFamily,
+        } as CSSProperties
+      }
+      aria-label={`صفحة المصحف ${toArabicDigits(footerPage)}، الجزء ${toArabicDigits(layout.juzNumber)}، الحزب ${toArabicDigits(layout.hizbNumber)}`}
+    >
+      {isOpeningP1 || isLeadP2 ? (
+        <MushafOpeningSpreadLayout pageNumber={isOpeningP1 ? 1 : 2}>
+          {pageInner}
+        </MushafOpeningSpreadLayout>
+      ) : (
+        pageInner
+      )}
     </article>
   );
 }, mushafPagePropsEqual);

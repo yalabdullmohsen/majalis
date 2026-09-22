@@ -24,7 +24,7 @@ const data = read("src/lib/quran-data/qpc-page-data.ts");
 const tokens = read("src/features/mushaf-reader/mushaf-warm-yellow-tokens.ts");
 
 console.log("=== لا مساس بالنص / التقسيم ===");
-assert.match(page, /MushafOpeningPageLayout/);
+assert.match(page, /MushafOpeningSpreadLayout/);
 assert.match(page, /layout\.pageNumber === 1/);
 assert.match(page, /layout\.pageNumber === 2/);
 assert.doesNotMatch(page, /replace\(|mutateAyah|editGlyph|OCR|letter-spacing:\s*[^0]/);
