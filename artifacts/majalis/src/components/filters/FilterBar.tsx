@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { cn, toArabicDigits } from "@/lib/utils";
 import { FilterToggle } from "./FilterSheet";
 import { FilterResetButton } from "./FilterResetButton";
+import "@/styles/sunnah-identity-forms-filters.css";
 
 type Props = {
   searchValue: string;

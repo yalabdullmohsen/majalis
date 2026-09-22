@@ -28,8 +28,8 @@ V2/V3 حسّنتا التناسق، لكن الواجهة ما زالت تشبه
 | 4 | Home and Quran Hub | **merged** |
 | 5 | Sections and category grids | **merged** |
 | 6 | Detail and reading pages | **merged** |
-| 7 | Drawer + Bottom Navigation + floating | **in progress** |
-| 8 | Forms + Tabs + Filters | queued |
+| 7 | Drawer + Bottom Navigation + floating | **merged** |
+| 8 | Forms + Tabs + Filters | **in progress** |
 | 9 | Dark Mode Luxury Night | queued |
 | 10 | Responsive + Accessibility + Visual QA | queued |
 
@@ -86,6 +86,14 @@ Rule: start each PR from latest `main`. Do not start next until previous is merg
 - Side drawer: denser rows/icons · UI font on titles · quieter panel shadow
 - Floating back bar + assistant FAB: compact size · `--v2-shadow-soft`
 - `sunnah-identity-chrome-nav.css` loaded with BottomNavBar + SideNavDrawer + FloatingBack + Assistant FAB (not `main.tsx`)
+
+## PR-8 deliverables
+
+- Filter chips / segmented: denser height · UI type · identity active + focus ring
+- Filter bar search field densify under `data-v2-app`
+- Tabs (`role=tab` / topic / tahara): compact · no decorative letter-spacing
+- Login/auth form controls: control height · identity focus (`sunnah-identity-forms-filters.css`)
+- Loaded with FilterChip + FilterBar + SegmentedFilter + LoginView (not `main.tsx`)
 
 ## Out of scope (all PRs)
 

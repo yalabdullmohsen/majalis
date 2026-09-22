@@ -1,0 +1,193 @@
+/**
+ * SUNNAH VISUAL IDENTITY RESET — PR-8
+ * Forms + Tabs + Filters densify
+ * يُطبَّق مع data-v2-app
+ * لا يمس المصحف · لا Admin · لا Routes · لا محتوى شرعي
+ */
+
+/* ── Filter chips / segmented ── */
+html[data-v2-app="1"] .mj-segmented-filter,
+html[data-v2-app="1"] .filter-chips,
+html[data-v2-app="1"] .lesson-filters__chips {
+  gap: 0.3rem;
+}
+
+html[data-v2-app="1"] .mj-filter-chip,
+html[data-v2-app="1"] .filter-chips__chip,
+html[data-v2-app="1"] .ds-chip,
+html[data-v2-app="1"] .section-hub__chip,
+html[data-v2-app="1"] .section-lobby__chip,
+html[data-v2-app="1"] .fiqh-hub-strip__tab,
+html[data-v2-app="1"] .lessons-filter-tab {
+  min-height: var(--v2-row-min, 2.5rem) !important;
+  min-width: 0 !important;
+  padding: 0.3rem 0.7rem !important;
+  border-radius: var(--v2-radius-md, 14px) !important;
+  font-family: var(--v2-font-ui) !important;
+  font-size: var(--v2-type-supporting, 0.85rem) !important;
+  font-weight: var(--v2-fw-medium, 500) !important;
+  letter-spacing: 0 !important;
+  line-height: var(--v2-lh-ui, 1.45) !important;
+  box-shadow: none !important;
+  background: var(--v2-surface-muted, var(--mj-chip-bg, var(--surface))) !important;
+  border: 1px solid var(--v2-hairline, var(--mj-hairline)) !important;
+  color: var(--v2-color-ink, var(--mj-ink)) !important;
+}
+
+html[data-v2-app="1"] .mj-filter-chip.is-active,
+html[data-v2-app="1"] .mj-filter-chip[aria-pressed="true"],
+html[data-v2-app="1"] .filter-chips__chip.is-active,
+html[data-v2-app="1"] .ds-chip.is-active,
+html[data-v2-app="1"] .section-hub__chip.is-active,
+html[data-v2-app="1"] .section-lobby__chip.is-active,
+html[data-v2-app="1"] .fiqh-hub-strip__tab--active,
+html[data-v2-app="1"] .lessons-filter-tab--active,
+html[data-v2-app="1"] .lessons-filter-tab.is-active {
+  background: var(--v2-color-emerald, var(--mj-brand)) !important;
+  border-color: var(--v2-color-emerald-deep, var(--mj-brand-deep)) !important;
+  color: var(--v2-color-on-emerald, #fff) !important;
+  box-shadow: var(--v2-shadow-soft) !important;
+  font-weight: var(--v2-fw-bold, 700) !important;
+}
+
+html[data-v2-app="1"] .mj-filter-chip:focus-visible,
+html[data-v2-app="1"] .filter-chips__chip:focus-visible {
+  outline: none !important;
+  box-shadow: var(--v2-focus-ring) !important;
+}
+
+html[data-v2-app="1"] .mj-segmented-filter .mj-filter-chip__mark {
+  display: none;
+}
+
+/* ── Filter bar search ── */
+html[data-v2-app="1"] .mj-filter-bar {
+  gap: 0.45rem;
+}
+
+html[data-v2-app="1"] .mj-filter-bar__search input,
+html[data-v2-app="1"] .mj-filter-bar input[type="search"],
+html[data-v2-app="1"] .mj-filter-bar input[role="combobox"] {
+  min-height: var(--v2-control-h, 2.75rem);
+  border-radius: var(--v2-radius-md, 14px);
+  border-color: var(--v2-hairline);
+  background: var(--v2-surface-raised, var(--mj-surface));
+  font-family: var(--v2-font-ui);
+  font-size: var(--v2-type-body, 1rem);
+  letter-spacing: 0;
+  box-shadow: none;
+}
+
+html[data-v2-app="1"] .mj-filter-bar__search input:focus,
+html[data-v2-app="1"] .mj-filter-bar__search input:focus-visible {
+  outline: none;
+  border-color: color-mix(in srgb, var(--v2-color-emerald) 40%, var(--v2-hairline));
+  box-shadow: var(--v2-focus-ring);
+}
+
+html[data-v2-app="1"] .mj-filter-bar__badge {
+  font-size: var(--v2-type-caption, 0.72rem);
+  border-radius: var(--v2-radius-sm, 8px);
+  min-width: 1.25rem;
+  padding: 0.1rem 0.35rem;
+}
+
+/* ── Tabs (غير مصحف) ── */
+html[data-v2-app="1"] [role="tab"],
+html[data-v2-app="1"] .topic-page__tab,
+html[data-v2-app="1"] .th-tab,
+html[data-v2-app="1"] .tabs-list [role="tab"] {
+  min-height: var(--v2-row-min, 2.5rem);
+  padding-inline: 0.85rem;
+  border-radius: var(--v2-radius-md, 14px);
+  font-family: var(--v2-font-ui);
+  font-size: var(--v2-type-supporting, 0.85rem);
+  font-weight: var(--v2-fw-medium, 500);
+  letter-spacing: 0;
+  box-shadow: none;
+}
+
+html[data-v2-app="1"] [role="tab"]:focus-visible,
+html[data-v2-app="1"] .topic-page__tab:focus-visible,
+html[data-v2-app="1"] .th-tab:focus-visible {
+  outline: none;
+  box-shadow: var(--v2-focus-ring);
+}
+
+html[data-v2-app="1"] [role="tab"][aria-selected="true"],
+html[data-v2-app="1"] .topic-page__tab.is-active,
+html[data-v2-app="1"] .th-tab.th-tab--active {
+  font-weight: var(--v2-fw-bold, 700);
+  border-color: var(--v2-color-emerald, var(--mj-brand));
+  background: color-mix(in srgb, var(--v2-color-emerald-soft, #e2efe8) 88%, transparent);
+  color: var(--v2-color-emerald-deep, var(--mj-brand-deep));
+}
+
+/* ── Forms / auth controls ── */
+html[data-v2-app="1"] .login-form input:not([type="checkbox"]):not([type="radio"]),
+html[data-v2-app="1"] .login-form textarea,
+html[data-v2-app="1"] .login-form select,
+html[data-v2-app="1"] .auth-form input:not([type="checkbox"]):not([type="radio"]),
+html[data-v2-app="1"] .auth-form textarea,
+html[data-v2-app="1"] form.ss-form input:not([type="checkbox"]):not([type="radio"]),
+html[data-v2-app="1"] form.ss-form textarea,
+html[data-v2-app="1"] .hus-field,
+html[data-v2-app="1"] .hus-input {
+  min-height: var(--v2-control-h, 2.75rem);
+  border-radius: var(--v2-radius-md, 14px);
+  border-color: var(--v2-hairline);
+  background: var(--v2-surface-raised, var(--mj-surface));
+  font-family: var(--v2-font-ui);
+  font-size: var(--v2-type-body, 1rem);
+  letter-spacing: 0;
+  box-shadow: none;
+}
+
+html[data-v2-app="1"] .login-form label,
+html[data-v2-app="1"] .auth-form label,
+html[data-v2-app="1"] form.ss-form label {
+  font-family: var(--v2-font-ui);
+  font-size: var(--v2-type-supporting, 0.9rem);
+  font-weight: var(--v2-fw-medium, 500);
+  letter-spacing: 0;
+  color: var(--v2-color-ink-muted);
+}
+
+html[data-v2-app="1"] .login-form input:focus,
+html[data-v2-app="1"] .login-form input:focus-visible,
+html[data-v2-app="1"] .auth-form input:focus-visible,
+html[data-v2-app="1"] .hus-field.is-focused,
+html[data-v2-app="1"] .hus-field:focus-within {
+  outline: none;
+  border-color: color-mix(in srgb, var(--v2-color-emerald) 40%, var(--v2-hairline));
+  box-shadow: var(--v2-focus-ring);
+}
+
+html[data-v2-app="1"] .login-form button[type="submit"],
+html[data-v2-app="1"] .auth-form button[type="submit"],
+html[data-v2-app="1"] form.ss-form button[type="submit"] {
+  min-height: var(--v2-control-h, 2.75rem);
+  border-radius: var(--v2-radius-md, 14px);
+  font-family: var(--v2-font-ui);
+  font-weight: var(--v2-fw-bold, 700);
+  letter-spacing: 0;
+  box-shadow: var(--v2-shadow-soft);
+}
+
+html[data-theme="dark"][data-v2-app="1"] .mj-filter-chip,
+html.dark[data-v2-app="1"] .mj-filter-chip,
+html[data-theme="dark"][data-v2-app="1"] .filter-chips__chip,
+html.dark[data-v2-app="1"] .filter-chips__chip {
+  background: var(--v2-color-night-elevated, #1a2f28) !important;
+  border-color: var(--v2-color-night-hairline) !important;
+  color: var(--v2-color-night-ink) !important;
+}
+
+html[data-theme="dark"][data-v2-app="1"] .mj-filter-chip.is-active,
+html.dark[data-v2-app="1"] .mj-filter-chip.is-active,
+html[data-theme="dark"][data-v2-app="1"] .filter-chips__chip.is-active,
+html.dark[data-v2-app="1"] .filter-chips__chip.is-active {
+  background: color-mix(in srgb, var(--v2-color-emerald) 38%, transparent) !important;
+  border-color: var(--v2-color-emerald) !important;
+  color: var(--v2-color-night-ink) !important;
+}

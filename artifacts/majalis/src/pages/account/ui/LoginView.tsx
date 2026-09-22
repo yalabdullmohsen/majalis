@@ -15,6 +15,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { canSubmitForm } from "@/lib/form-rate-limit";
 import { sanitizeAuthNext } from "@/lib/auth-redirect";
 import "@/styles/pages/auth.css";
+import "@/styles/sunnah-identity-forms-filters.css";
 
 type AuthTab = "login" | "register" | "forgot";
 

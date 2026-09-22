@@ -221,6 +221,7 @@ html[data-v2-app="1"] .bottom-nav__tab:active {
 /* PR-5 sections/grids: sunnah-identity-sections.css (يُحمَّل مع SectionLobby + صفحات الشبكات) */
 /* PR-6 detail/reading: sunnah-identity-detail-reading.css (TopicPage + درس/حديث/مقال) */
 /* PR-7 drawer/nav/fab: sunnah-identity-chrome-nav.css (BottomNav + SideNav + FloatingBack) */
+/* PR-8 forms/tabs/filters: sunnah-identity-forms-filters.css (FilterChip/Bar + Login) */
 
 /* ── PR-3: تكثيف FeatureCard + شبكات الأقسام ── */
 html[data-v2-app="1"] .ss-feature-card__inner {
