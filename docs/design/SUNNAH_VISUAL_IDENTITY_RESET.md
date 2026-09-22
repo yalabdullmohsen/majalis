@@ -51,7 +51,7 @@ Rule: start each PR from latest `main`. Do not start next until previous is merg
 - Full header search row removed — home uses `HomeUniversalSearch`; internal pages use header search icon
 - Header ticker (daily strip) on **home only** (`shouldShowHeaderTicker` / `data-home-chrome`)
 - Chrome fallback without stacked search row
-- `--search-height: 0` · ticker height reserved only when `html[data-home-chrome="1"]`
+- `--search-height: 0` · ticker height reserved by default on compact viewports; zeroed when `html[data-home-chrome="0"]` (set by App; not on static `<html>` — keeps LHCI readiness marker within 800 bytes)
 
 ## Out of scope (all PRs)
 
