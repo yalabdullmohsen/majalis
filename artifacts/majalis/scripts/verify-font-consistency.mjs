@@ -97,6 +97,8 @@ function isAllowed(rawValue) {
   if (/^var\(\s*--font-app\b/i.test(value)) return true;
   if (/^var\(\s*--mj-(face|ui|num)\b/i.test(value)) return true;
   if (/^var\(\s*--(mj-)?font-/i.test(value)) return true; // تُحلّ عبر :root إلى IBM Plex Sans Arabic (أو --font-quran المعتمد)
+  // Identity Reset PR-1: أدوار Display/UI على Amiri (aliases في visual-redesign-v2-tokens)
+  if (/^var\(\s*--v2-font-(display|ui|latin)\b/i.test(value)) return true;
   const fallback = unwrapVar(value);
   if (fallback) return isAllowed(fallback); // يُحكَمُ على البديلِ المصرَّحِ لا على اسمِ المتغيّر
   const first = firstToken(value);

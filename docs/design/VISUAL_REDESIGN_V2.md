@@ -163,3 +163,8 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 
 `src/lib/__tests__/visual-redesign-v2-tokens-gate.test.ts`  
 QA checklist: `docs/design/VISUAL_REDESIGN_V2_QA.md`
+
+## Successor train
+
+**SUNNAH VISUAL IDENTITY RESET** — يعيد ضبط Typography / Density / Surfaces / Navigation فوق مصدر V2 المشترك (لا DS رابعة).  
+الوثيقة: `docs/design/SUNNAH_VISUAL_IDENTITY_RESET.md` · بوابة PR-1: `test:sunnah-identity-reset-pr1`

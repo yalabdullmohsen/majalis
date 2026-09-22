@@ -1,0 +1,217 @@
+/**
+ * SUNNAH VISUAL IDENTITY RESET — PR-1
+ * Typography roles · Density baseline · Surface redistribution
+ *
+ * يُطبَّق على html[data-v2-app="1"] (المسارات العامة خارج المصحف/Admin).
+ * لا يمس المصحف · لا Admin · لا Routes · لا Design System رابعة.
+ */
+
+/* ── Typography: UI افتراضي · Display محصور ── */
+html[data-v2-app="1"] .app-shell,
+html[data-v2-app="1"] .page-shell,
+html[data-v2-app="1"] .content-hub,
+html[data-v2-app="1"] .section-lobby,
+html[data-v2-app="1"] .kp-page,
+html[data-v2-app="1"] main {
+  font-family: var(--v2-font-ui);
+  font-weight: var(--v2-fw-regular);
+  line-height: var(--v2-lh-body);
+  text-align: start;
+}
+
+/* Display — شعار/عناوين مميزة/اقتباسات فقط */
+html[data-v2-app="1"] .home-page-hero .page-hero-mj__title,
+html[data-v2-app="1"] [data-display-type="1"],
+html[data-v2-app="1"] .brand-wordmark,
+html[data-v2-app="1"] .quote-surface,
+html[data-v2-app="1"] .quote-surface__text {
+  font-family: var(--v2-font-display);
+  font-weight: var(--v2-fw-bold);
+  line-height: var(--v2-lh-display);
+}
+
+/* Chrome UI — ممنوع Display/زخرفي */
+html[data-v2-app="1"] button,
+html[data-v2-app="1"] .mj-btn,
+html[data-v2-app="1"] .m2030-btn,
+html[data-v2-app="1"] input,
+html[data-v2-app="1"] textarea,
+html[data-v2-app="1"] select,
+html[data-v2-app="1"] .bottom-nav,
+html[data-v2-app="1"] .bottom-nav__tab-label,
+html[data-v2-app="1"] .hus,
+html[data-v2-app="1"] .hus-input,
+html[data-v2-app="1"] .navbar-menu-btn,
+html[data-v2-app="1"] .navbar-menu-btn--drawer,
+html[data-v2-app="1"] .filter-chip,
+html[data-v2-app="1"] [role="tab"],
+html[data-v2-app="1"] .sc2-cta,
+html[data-v2-app="1"] .ph2__eyebrow,
+html[data-v2-app="1"] .meta,
+html[data-v2-app="1"] .caption,
+html[data-v2-app="1"] .text-meta {
+  font-family: var(--v2-font-ui) !important;
+}
+
+/* Type scale mapping */
+html[data-v2-app="1"] .ph2__title,
+html[data-v2-app="1"] .page-header-v2 .ph2__title,
+html[data-v2-app="1"] .section-lobby__title,
+html[data-v2-app="1"] .content-hub__title {
+  font-size: var(--v2-type-page-title);
+  font-weight: var(--v2-fw-bold);
+  line-height: var(--v2-lh-title);
+  letter-spacing: 0;
+}
+
+html[data-v2-app="1"] .section-lobby__group-title,
+html[data-v2-app="1"] .m2030-band__title,
+html[data-v2-app="1"] .kp-section__title {
+  font-size: var(--v2-type-section-title);
+  font-weight: var(--v2-fw-bold);
+  line-height: var(--v2-lh-title);
+}
+
+html[data-v2-app="1"] .sc2-title,
+html[data-v2-app="1"] .hub-card__title,
+html[data-v2-app="1"] .section-entry-card__title,
+html[data-v2-app="1"] .mj-card-title,
+html[data-v2-app="1"] .lesson-unified-card__title {
+  font-size: var(--v2-type-card-title);
+  font-weight: var(--v2-fw-bold);
+  line-height: var(--v2-lh-title);
+  /* لا تجاوز 2 أسطر داخل بطاقة */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+html[data-v2-app="1"] .sc2-desc,
+html[data-v2-app="1"] .hub-card__desc,
+html[data-v2-app="1"] .section-entry-card__desc,
+html[data-v2-app="1"] .ph2__desc,
+html[data-v2-app="1"] .es2__desc {
+  font-size: var(--v2-type-supporting);
+  font-weight: var(--v2-fw-regular);
+  line-height: var(--v2-lh-body);
+  color: var(--v2-color-ink-muted);
+  text-align: start;
+}
+
+html[data-v2-app="1"] .meta,
+html[data-v2-app="1"] .caption,
+html[data-v2-app="1"] .text-meta,
+html[data-v2-app="1"] .lesson-unified-card__facts,
+html[data-v2-app="1"] .home-sacred-day__source,
+html[data-v2-app="1"] .home-sacred-day__date {
+  font-size: var(--v2-type-metadata);
+  font-weight: var(--v2-fw-medium);
+  line-height: var(--v2-lh-meta);
+  color: var(--v2-color-ink-muted);
+}
+
+/* إنجليزي داخل سياق عربي */
+html[data-v2-app="1"] :lang(en),
+html[data-v2-app="1"] .ltr-inline,
+html[data-v2-app="1"] [dir="ltr"]:not(html):not(body) {
+  font-family: var(--v2-font-latin);
+  unicode-bidi: isolate;
+}
+
+/* ── Surfaces: أقل أخضر باهت · أقل ظل ضبابي ── */
+html[data-v2-app="1"] .soft-card,
+html[data-v2-app="1"] .mj-card,
+html[data-v2-app="1"] .hub-card,
+html[data-v2-app="1"] .section-entry-card,
+html[data-v2-app="1"] .ss-app-card,
+html[data-v2-app="1"] .sc2:not(.sc2--welcome) {
+  background: var(--v2-surface-raised);
+  border-color: var(--v2-hairline);
+  box-shadow: var(--v2-shadow-soft);
+  padding: var(--v2-pad-card);
+  min-height: 0;
+}
+
+html[data-v2-app="1"] .sc2--welcome {
+  min-height: 0;
+  padding: var(--v2-pad-card) var(--v2-pad-section);
+}
+
+/* لا تجعل كل بلاطة أيقونة خلفية emerald-soft صلبة — تمييز هادئ */
+html[data-v2-app="1"] .hub-card__icon,
+html[data-v2-app="1"] .section-entry-card__icon,
+html[data-v2-app="1"] .more-page-tile__icon,
+html[data-v2-app="1"] .es2__icon {
+  width: var(--v2-icon-tile);
+  height: var(--v2-icon-tile);
+  background: var(--v2-surface-functional);
+  box-shadow: none;
+}
+
+/* ── Density rhythm ── */
+html[data-v2-app="1"] .m2030-band,
+html[data-v2-app="1"] .page-shell__section,
+html[data-v2-app="1"] .content-hub__section {
+  margin-block: var(--v2-gap-section);
+}
+
+html[data-v2-app="1"] .ph2,
+html[data-v2-app="1"] .page-header-v2 {
+  padding-block: var(--v2-pad-section) var(--v2-gap-stack);
+  margin-block-end: var(--v2-gap-stack);
+}
+
+html[data-v2-app="1"] .bottom-nav__tab,
+html[data-v2-app="1"] .filter-chip,
+html[data-v2-app="1"] [role="tab"] {
+  min-height: var(--v2-row-min);
+}
+
+html[data-v2-app="1"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+html[data-v2-app="1"] .hus-field,
+html[data-v2-app="1"] .mj-btn,
+html[data-v2-app="1"] .m2030-btn {
+  min-height: var(--v2-control-h);
+}
+
+/* Focus هوية — حقول وأزرار فقط (لا تعطيل outline عام) */
+html[data-v2-app="1"] input:focus-visible,
+html[data-v2-app="1"] textarea:focus-visible,
+html[data-v2-app="1"] select:focus-visible,
+html[data-v2-app="1"] .hus-field.is-focused,
+html[data-v2-app="1"] .mj-btn:focus-visible,
+html[data-v2-app="1"] .m2030-btn:focus-visible,
+html[data-v2-app="1"] .sc2-cta:focus-visible {
+  outline: none;
+  border-color: color-mix(in srgb, var(--v2-color-emerald) 40%, var(--v2-hairline));
+  box-shadow: var(--v2-focus-ring);
+}
+
+html[data-v2-app="1"] input:focus,
+html[data-v2-app="1"] textarea:focus,
+html[data-v2-app="1"] select:focus {
+  outline: none;
+  border-color: color-mix(in srgb, var(--v2-color-emerald) 40%, var(--v2-hairline));
+  box-shadow: var(--v2-focus-ring);
+}
+
+/* Press feedback baseline */
+html[data-v2-app="1"] .mj-pressable:active,
+html[data-v2-app="1"] .sc2:active,
+html[data-v2-app="1"] .hub-card:active,
+html[data-v2-app="1"] .bottom-nav__tab:active {
+  transform: scale(0.98);
+  transition: transform var(--v2-duration-press) var(--v2-ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-v2-app="1"] .mj-pressable:active,
+  html[data-v2-app="1"] .sc2:active,
+  html[data-v2-app="1"] .hub-card:active,
+  html[data-v2-app="1"] .bottom-nav__tab:active {
+    transform: none;
+    transition: none;
+  }
+}

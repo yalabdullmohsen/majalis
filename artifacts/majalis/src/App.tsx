@@ -670,12 +670,18 @@ function AppShellInner() {
     const root = document.documentElement;
     if (enableV2App) {
       root.setAttribute("data-v2-app", "1");
+      // Identity Reset PR-1: كثافة STANDARD على الهاتف (قراءة → comfortable لاحقًا)
+      if (!root.getAttribute("data-density")) {
+        root.setAttribute("data-density", "standard");
+      }
       void import("@/styles/pages/app-shell-v2.css");
     } else {
       root.removeAttribute("data-v2-app");
+      root.removeAttribute("data-density");
     }
     return () => {
       root.removeAttribute("data-v2-app");
+      root.removeAttribute("data-density");
     };
   }, [enableV2App]);
 

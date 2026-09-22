@@ -43,6 +43,7 @@ import "./styles/tokens.css";
 import "./styles/design-tokens.css";
 /* Visual Redesign V2 — رموز Dashboard الفاخرة (متغيرات فقط · خفيفة) */
 import "./styles/visual-redesign-v2-tokens.css";
+import "./styles/sunnah-identity-reset.css";
 import "./styles/breakpoints.css";
 import "./styles/typography-scale.css";
 import "./styles/typography-app.css";

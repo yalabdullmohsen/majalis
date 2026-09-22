@@ -3,26 +3,26 @@
  * خط الواجهة الموحّد: Amiri عبر --font-ui (--font-app alias).
  */
 
-:root {
-  --font-heading: var(--font-ui, var(--font-app, "Amiri", "Traditional Arabic", serif));
-  --font-body-ui: var(--font-ui, var(--font-app, "Amiri", "Traditional Arabic", serif));
+  :root {
+  --font-heading: var(--v2-font-display, var(--font-ui, var(--font-app, "Amiri", "Traditional Arabic", serif)));
+  --font-body-ui: var(--v2-font-ui, var(--font-ui, var(--font-app, "Amiri", "Traditional Arabic", serif)));
   --brand-contrast: var(--brand-on-white, var(--mj-brand-deep));
 
-  /* مقاسات موحّدة */
-  --type-page-title: clamp(1.625rem, 5vw, 2rem);       /* 26–32px */
-  --type-card-title: clamp(1.125rem, 3.2vw, 1.375rem); /* 18–22px */
-  --type-card-desc: clamp(0.875rem, 2.6vw, 1rem);      /* 14–16px */
-  --type-card-body: clamp(0.9375rem, 2.8vw, 1.0625rem); /* 15–17px */
-  --type-nav-label: clamp(0.75rem, 2.2vw, 0.8125rem);  /* 12–13px */
+  /* مقاسات موحّدة — Identity Reset scale (متوافقة مع --v2-type-*) */
+  --type-page-title: var(--v2-type-page-title, clamp(1.35rem, 4vw, 1.75rem));
+  --type-card-title: var(--v2-type-card-title, clamp(1rem, 2.8vw, 1.125rem));
+  --type-card-desc: var(--v2-type-supporting, clamp(0.875rem, 2.6vw, 1rem));
+  --type-card-body: var(--v2-type-body, clamp(0.9375rem, 2.8vw, 1.0625rem));
+  --type-nav-label: var(--v2-type-caption, clamp(0.75rem, 2.2vw, 0.8125rem));
 
-  --lh-type-ui: 1.65;
-  --lh-type-card: 1.55;
-  --lh-type-prose: 1.75;
+  --lh-type-ui: var(--v2-lh-ui, 1.45);
+  --lh-type-card: var(--v2-lh-title, 1.4);
+  --lh-type-prose: var(--v2-lh-body, 1.7);
 
   /* أوزان الواجهة فقط: 400 / 500 / 700 (مغطاة بملفات Amiri) */
-  --fw-regular: 400;
-  --fw-medium: 500;
-  --fw-bold: 700;
+  --fw-regular: var(--v2-fw-regular, 400);
+  --fw-medium: var(--v2-fw-medium, 500);
+  --fw-bold: var(--v2-fw-bold, 700);
 
   /* نصوص فوق الخلفيات الداكنة/المتدرجة */
   --text-on-dark-primary: #ffffff;
