@@ -25,7 +25,7 @@ console.log("=== theme SoT ivory + emerald + gold ===");
 console.log("=== V2 tokens file ===");
 {
   const v2 = read("src/styles/visual-redesign-v2-tokens.css");
-  assert.match(v2, /--v2-color-ivory:\s*#f9f8f4/i);
+  assert.match(v2, /--v2-color-ivory:\s*var\(--sf-color-ivory-canvas/i);
   assert.match(v2, /--v2-color-emerald/);
   assert.match(v2, /--v2-color-gold/);
   assert.match(v2, /--v2-color-night-bg/);
@@ -33,6 +33,7 @@ console.log("=== V2 tokens file ===");
   assert.match(v2, /--v2-duration-fast/);
   assert.match(v2, /data-v2-dashboard/);
   assert.match(v2, /prefers-reduced-motion/);
+  assert.match(v2, /SunnahFoundationTokens|--sf-/);
 }
 
 console.log("=== wired in main ===");
