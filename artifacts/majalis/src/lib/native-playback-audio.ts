@@ -6,13 +6,25 @@ import { isAndroid, isIOS, isNative } from "@/lib/capacitor-utils";
 
 export type NativeAudioMode = "inactive" | "playback" | "recording";
 
+export type NativeNowPlayingMeta = {
+  title?: string;
+  artist?: string;
+  album?: string;
+  playing?: boolean;
+  elapsed?: number;
+  duration?: number;
+  playbackRate?: number;
+};
+
 type PlaybackAudioPlugin = {
-  enablePlayback: () => Promise<{ ok: boolean; mode: NativeAudioMode }>;
+  enablePlayback: (opts?: NativeNowPlayingMeta) => Promise<{ ok: boolean; mode: NativeAudioMode }>;
   enableRecording: () => Promise<{ ok: boolean; mode: NativeAudioMode }>;
   deactivate: () => Promise<{ ok: boolean; mode: NativeAudioMode }>;
   currentMode: () => Promise<{ mode: NativeAudioMode }>;
+  setNowPlaying?: (opts: NativeNowPlayingMeta) => Promise<{ ok: boolean }>;
+  clearNowPlaying?: () => Promise<{ ok: boolean }>;
   addListener?: (
-    event: "audioInterruption" | "audioRouteChange",
+    event: "audioInterruption" | "audioRouteChange" | "remoteCommand" | "audioSessionError",
     cb: (data: Record<string, unknown>) => void,
   ) => Promise<{ remove: () => Promise<void> }>;
 };
@@ -26,6 +38,7 @@ let pluginPromise: Promise<PlaybackAudioPlugin | null> | null = null;
 let androidPluginPromise: Promise<AndroidMediaPlugin | null> | null = null;
 let activeMode: NativeAudioMode = "inactive";
 let playbackRefCount = 0;
+let lastMeta: NativeNowPlayingMeta = {};
 
 async function getPlugin(): Promise<PlaybackAudioPlugin | null> {
   if (!isNative || !isIOS) return null;
@@ -57,22 +70,30 @@ async function getAndroidMediaPlugin(): Promise<AndroidMediaPlugin | null> {
   return androidPluginPromise;
 }
 
-/** للاشتراك في أحداث المقاطعة/تغيير المسار من طبقة التشغيل (iOS). */
+/** للاشتراك في أحداث المقاطعة/تغيير المسار / أوامر القفل من طبقة التشغيل (iOS). */
 export function getNativePlaybackPlugin(): Promise<PlaybackAudioPlugin | null> {
   return getPlugin();
 }
 
 /** Call immediately before HTMLAudioElement.play() that needs background audio. */
 export async function ensureNativePlaybackAudioSession(
-  meta?: { title?: string; artist?: string },
+  meta?: NativeNowPlayingMeta,
 ): Promise<void> {
   if (activeMode === "recording") {
     throw new Error("audio_session_busy_recording");
   }
 
+  if (meta) {
+    lastMeta = { ...lastMeta, ...meta, playing: meta.playing ?? true };
+  }
+
   const ios = await getPlugin();
   if (ios) {
-    const result = await ios.enablePlayback();
+    const result = await ios.enablePlayback({
+      title: lastMeta.title ?? "تلاوة القرآن",
+      artist: lastMeta.artist ?? "سُنّة",
+      album: lastMeta.album ?? "سُنّة",
+    });
     if (!result?.ok) {
       throw new Error("audio_session_playback_failed");
     }
@@ -81,14 +102,30 @@ export async function ensureNativePlaybackAudioSession(
   const android = await getAndroidMediaPlugin();
   if (android) {
     await android.startForeground({
-      title: meta?.title ?? "تلاوة القرآن",
-      artist: meta?.artist ?? "سُنّة",
+      title: lastMeta.title ?? "تلاوة القرآن",
+      artist: lastMeta.artist ?? "سُنّة",
     });
   }
 
   if (!ios && !android) return;
   activeMode = "playback";
   playbackRefCount += 1;
+}
+
+/** Update lock-screen / Control Center metadata while tilawa is active. */
+export async function updateNativeNowPlaying(meta: NativeNowPlayingMeta): Promise<void> {
+  lastMeta = { ...lastMeta, ...meta };
+  const ios = await getPlugin();
+  if (!ios?.setNowPlaying) return;
+  await ios.setNowPlaying({
+    title: lastMeta.title,
+    artist: lastMeta.artist,
+    album: lastMeta.album,
+    playing: lastMeta.playing ?? activeMode === "playback",
+    elapsed: lastMeta.elapsed,
+    duration: lastMeta.duration,
+    playbackRate: lastMeta.playbackRate,
+  });
 }
 
 /** Switch to recording before speech / recitation capture. */
@@ -114,6 +151,7 @@ export async function deactivateNativeAudioSession(): Promise<void> {
 
   const ios = await getPlugin();
   if (ios) {
+    await ios.clearNowPlaying?.().catch(() => undefined);
     const result = await ios.deactivate();
     if (!result?.ok) {
       throw new Error("audio_session_deactivate_failed");
@@ -127,6 +165,7 @@ export async function deactivateNativeAudioSession(): Promise<void> {
 
   activeMode = "inactive";
   playbackRefCount = 0;
+  lastMeta = {};
 }
 
 export function getNativeAudioMode(): NativeAudioMode {
@@ -145,7 +184,7 @@ export function installNativePlaybackForegroundResume(): void {
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState !== "visible") return;
     if (activeMode !== "playback") return;
-    void ensureNativePlaybackAudioSession().catch((err: unknown) => {
+    void ensureNativePlaybackAudioSession(lastMeta).catch((err: unknown) => {
       console.warn("[native-playback-audio] foreground resume failed:", err);
     });
   });
@@ -154,14 +193,14 @@ export function installNativePlaybackForegroundResume(): void {
       if (!plugin?.addListener) return;
       void plugin.addListener("audioInterruption", (data) => {
         if (data.type === "ended" && data.shouldResume && activeMode === "playback") {
-          void ensureNativePlaybackAudioSession().catch((err: unknown) => {
+          void ensureNativePlaybackAudioSession(lastMeta).catch((err: unknown) => {
             console.warn("[native-playback-audio] interruption resume failed:", err);
           });
         }
       });
       void plugin.addListener("audioRouteChange", () => {
         if (activeMode === "playback") {
-          void ensureNativePlaybackAudioSession().catch((err: unknown) => {
+          void ensureNativePlaybackAudioSession(lastMeta).catch((err: unknown) => {
             console.warn("[native-playback-audio] route-change resume failed:", err);
           });
         }
@@ -177,4 +216,5 @@ export function __resetNativeAudioSessionStateForTests(): void {
   pluginPromise = null;
   androidPluginPromise = null;
   foregroundHookInstalled = false;
+  lastMeta = {};
 }

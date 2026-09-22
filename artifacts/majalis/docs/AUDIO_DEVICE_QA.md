@@ -15,8 +15,9 @@
 
 **التحقق التقني الحالي:**
 - `Info.plist`: `UIBackgroundModes` → `audio`
-- `MajlisPlaybackAudioPlugin.swift`: `enablePlayback()` → `.playback`
-- يُستدعى من `AudioEngine.activatePlaybackSession()` عند التشغيل
+- `MajlisPlaybackAudioPlugin.swift`: `enablePlayback()` → `.playback` + `MPNowPlayingInfoCenter` + إعادة تفعيل عند الخلفية
+- يُستدعى **بـ await** من `AudioEngine.activatePlaybackSession()` **قبل** `play()`
+- Runbook الجهاز: `docs/AUDIO_BACKGROUND_DEVICE_RUNBOOK.md`
 
 ---
 

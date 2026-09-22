@@ -297,6 +297,9 @@
 							com.apple.AssociatedDomains = {
 								enabled = 1;
 							};
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 						};
 					};
 					B1510D7D13624EAA92273304 = {
