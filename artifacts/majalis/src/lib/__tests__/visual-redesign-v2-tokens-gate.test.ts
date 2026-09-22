@@ -389,6 +389,33 @@ console.log("=== Expansion PR-E Learn + Legal + Offline + Error ===");
   assert.match(doc, /learn-legal-v2\.css/);
 }
 
+console.log("=== Expansion PR-F Final QA ===");
+{
+  const doc = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2.md"), "utf8");
+  assert.match(doc, /Expansion PR-F|Final QA/);
+  assert.match(doc, /#2213/);
+  const qa = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2_QA.md"), "utf8");
+  assert.match(qa, /data-v2-app/);
+  assert.match(qa, /data-v2-knowledge/);
+  assert.match(qa, /data-v2-worship/);
+  assert.match(qa, /data-v2-learn/);
+  assert.match(qa, /data-v2-legal/);
+  assert.match(qa, /data-v2-offline/);
+  assert.match(qa, /Expansion/);
+  assert.match(qa, /learn-legal-v2\.css/);
+  assert.match(qa, /knowledge-dashboards-v2\.css/);
+  assert.match(qa, /worship-history-v2\.css/);
+  for (const f of [
+    "app-shell-v2.css",
+    "lessons-sections-v2.css",
+    "knowledge-dashboards-v2.css",
+    "worship-history-v2.css",
+    "learn-legal-v2.css",
+  ]) {
+    assert.ok(existsSync(resolve(majalisRoot, `src/styles/pages/${f}`)), f);
+  }
+}
+
 console.log("=== package script ===");
 {
   const pkg = read("package.json");
