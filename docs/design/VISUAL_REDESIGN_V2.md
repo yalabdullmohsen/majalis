@@ -47,8 +47,8 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 | A | App Shell V2 default + PageHeader/EmptyState | **merged** (#2209) |
 | B | Lessons + Sections | **merged** (#2210) |
 | C | Fiqh / Hadith / Aqidah knowledge dashboards | **merged** (#2211) |
-| D | Prayer / Adhkar / Glossary / History | **this** |
-| E | Quiz / Challenges / Settings-Legal / Error states | queued |
+| D | Prayer / Adhkar / Glossary / History | **merged** (#2212) |
+| E | Quiz / Challenges / Settings-Legal / Error states | **this** |
 | F | Final QA + OUTPUT | queued |
 
 ## Expansion PR-A — App Shell default
@@ -84,6 +84,15 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 - Timeline: نقاط زمرد/ذهب لعصور التاريخ
 - EmptyStateV2 في فراغ الأذكار/المعجم/التاريخ
 - CSS: `styles/pages/worship-history-v2.css`
+
+## Expansion PR-E — Learn + Legal + Offline + Error
+
+- `html[data-v2-learn="1"]` على `/quiz*` — Game-like (بطاقات/تقدّم/CTA زمردي) بلا تغيير منطق اللعبة
+- `html[data-v2-legal="1"]` على `/about` · `/privacy*` · `/terms` · `/support` · `/contact`
+- `html[data-v2-offline="1"]` على `/offline` — PageHeaderV2 + EmptyStateV2
+- ErrorBoundary + Offline banner عبر `data-v2-app` داخل نفس CSS
+- الإعدادات/التقدّم: مغطّاة سابقًا بـ `data-v2-profile` (#2206) — مراجعة توافق فقط
+- CSS: `styles/pages/learn-legal-v2.css`
 
 ## PR-2 Dashboard Homepage
 

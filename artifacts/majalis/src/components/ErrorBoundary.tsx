@@ -9,6 +9,7 @@ import {
 } from "@/lib/chunk-recovery";
 import { clearChunkReloadGuard } from "@/lib/lazy-with-retry";
 import "@/styles/components/error-boundary.css";
+import "@/styles/pages/learn-legal-v2.css";
 
 type Props = { children: ReactNode };
 type State = {

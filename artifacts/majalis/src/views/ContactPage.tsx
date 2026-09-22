@@ -7,6 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { applyPageSeo } from "@/lib/seo";
 import { CONTACT_EMAIL, mailtoWithSubject } from "@/lib/site-config";
 import "@/styles/pages/contact.css";
+import "@/styles/pages/learn-legal-v2.css";
 import { UtilityScreen } from "@/components/design-system/screens";
 import SupportPage from "@/views/SupportPage";
 

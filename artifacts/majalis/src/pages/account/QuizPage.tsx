@@ -6,6 +6,7 @@ import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/components/islamic-quiz-game.css";
 import "@/styles/pages/quiz.css";
+import "@/styles/pages/learn-legal-v2.css";
 
 export default function QuizPage() {
   const [showDaily, setShowDaily] = useState(false);

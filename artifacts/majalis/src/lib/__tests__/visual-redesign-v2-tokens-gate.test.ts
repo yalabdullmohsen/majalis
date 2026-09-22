@@ -356,6 +356,39 @@ console.log("=== Expansion PR-D Worship + Glossary + History ===");
   assert.match(doc, /worship-history-v2\.css/);
 }
 
+console.log("=== Expansion PR-E Learn + Legal + Offline + Error ===");
+{
+  const app = read("src/App.tsx");
+  assert.match(app, /data-v2-learn/);
+  assert.match(app, /data-v2-legal/);
+  assert.match(app, /data-v2-offline/);
+  assert.match(app, /learn-legal-v2\.css/);
+  assert.ok(existsSync(resolve(majalisRoot, "src/styles/pages/learn-legal-v2.css")));
+  const quiz = read("src/pages/account/QuizPage.tsx");
+  const about = read("src/views/AboutPage.tsx");
+  const privacy = read("src/views/PrivacyPage.tsx");
+  const support = read("src/views/SupportPage.tsx");
+  const offline = read("src/pages/account/ui/OfflineCenterView.tsx");
+  const err = read("src/components/ErrorBoundary.tsx");
+  assert.match(quiz, /learn-legal-v2\.css/);
+  assert.match(about, /learn-legal-v2\.css/);
+  assert.match(privacy, /learn-legal-v2\.css/);
+  assert.match(support, /learn-legal-v2\.css/);
+  assert.match(offline, /learn-legal-v2\.css/);
+  assert.match(offline, /PageHeaderV2/);
+  assert.match(offline, /EmptyStateV2/);
+  assert.match(err, /learn-legal-v2\.css/);
+  const css = read("src/styles/pages/learn-legal-v2.css");
+  assert.match(css, /data-v2-learn/);
+  assert.match(css, /data-v2-legal/);
+  assert.match(css, /data-v2-offline/);
+  assert.match(css, /error-boundary|qzg-section-card|legal-page-hero/);
+  assert.doesNotMatch(css, /border-inline-start:\s*[34]px/);
+  const doc = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2.md"), "utf8");
+  assert.match(doc, /Expansion PR-E|Learn/);
+  assert.match(doc, /learn-legal-v2\.css/);
+}
+
 console.log("=== package script ===");
 {
   const pkg = read("package.json");

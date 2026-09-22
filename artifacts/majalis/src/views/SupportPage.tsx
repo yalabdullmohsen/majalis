@@ -7,6 +7,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { CONTACT_EMAIL, mailtoWithSubject, absoluteUrl } from "@/lib/site-config";
 import "@/styles/pages/contact.css";
 import "@/styles/pages/support.css";
+import "@/styles/pages/learn-legal-v2.css";
 
 const SUPPORT_SECTIONS = [
   {
