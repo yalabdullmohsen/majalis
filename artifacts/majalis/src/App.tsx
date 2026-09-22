@@ -680,6 +680,8 @@ function AppShellInner() {
         root.setAttribute("data-density", "standard");
       }
       void import("@/styles/pages/app-shell-v2.css");
+      // Identity Reset PR-10: Responsive + A11y (خارج CSS الحرج)
+      void import("@/styles/sunnah-identity-responsive-a11y.css");
     } else {
       root.removeAttribute("data-v2-app");
       root.removeAttribute("data-density");
