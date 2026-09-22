@@ -89,7 +89,9 @@ html.dark {
 
 /* جسر اختياري: الصفحة العامة يمكن أن تتبنى خلفية V2 دون كسر القديم */
 html[data-v2-dashboard="1"] body,
-html[data-v2-dashboard="1"] .app-shell {
+html[data-v2-dashboard="1"] .app-shell,
+html[data-v2-app="1"] body,
+html[data-v2-app="1"] .app-shell {
   background-color: var(--v2-color-ivory);
   color: var(--v2-color-ink);
 }

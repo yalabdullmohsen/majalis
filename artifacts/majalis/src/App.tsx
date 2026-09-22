@@ -660,6 +660,25 @@ function AppShellInner() {
     };
   }, [onPrayer, immersive]);
 
+  const isAdminPath =
+    location === "/admin" ||
+    location.startsWith("/admin/") ||
+    location.startsWith("/admin?");
+  const enableV2App = !immersive && !isAdminPath;
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (enableV2App) {
+      root.setAttribute("data-v2-app", "1");
+      void import("@/styles/pages/app-shell-v2.css");
+    } else {
+      root.removeAttribute("data-v2-app");
+    }
+    return () => {
+      root.removeAttribute("data-v2-app");
+    };
+  }, [enableV2App]);
+
   useEffect(() => {
     const root = document.documentElement;
     if (isHomePath) {
