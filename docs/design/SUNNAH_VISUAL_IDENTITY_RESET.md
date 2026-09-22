@@ -16,13 +16,14 @@ V2/V3 حسّنتا التناسق، لكن الواجهة ما زالت تشبه
 | V2 + Identity Reset tokens | `styles/visual-redesign-v2-tokens.css` |
 | Identity Reset application (PR-1+) | `styles/sunnah-identity-reset.css` |
 | TS aliases | `lib/ssunnah-theme.ts` (`V2_TYPE` / `V2_FONT` / `V2_DENSITY` / `V2_SURFACE`) |
+| Header chrome paths | `lib/ticker-quiet-paths.ts` + `NavBar.tsx` |
 
 ## PR train
 
 | PR | Focus | Status |
 |---|---|---|
-| 1 | Typography + density + surface tokens | **in progress** |
-| 2 | Global header + search + daily strip | queued |
+| 1 | Typography + density + surface tokens | **merged** |
+| 2 | Global header + search + daily strip | **in progress** |
 | 3 | Cards and content rows | queued |
 | 4 | Home and Quran Hub | queued |
 | 5 | Sections and category grids | queued |
@@ -43,6 +44,14 @@ Rule: start each PR from latest `main`. Do not start next until previous is merg
 - Softer shadows · identity focus ring
 - Remove Aref Ruqaa from drawer chrome button
 - Default `data-density="standard"` with `data-v2-app`
+
+## PR-2 deliverables
+
+- Compact mobile header actions (icon search · smaller toggles)
+- Full header search row removed — home uses `HomeUniversalSearch`; internal pages use header search icon
+- Header ticker (daily strip) on **home only** (`shouldShowHeaderTicker` / `data-home-chrome`)
+- Chrome fallback without stacked search row
+- `--search-height: 0` · ticker height reserved only when `html[data-home-chrome="1"]`
 
 ## Out of scope (all PRs)
 

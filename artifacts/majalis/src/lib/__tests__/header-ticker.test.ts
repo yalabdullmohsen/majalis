@@ -46,10 +46,17 @@ console.log("\n=== محتوى معتمد بمصدر — نفس مصدر مجلس
 console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موحّدة بلا سحب للأسفل ===");
 {
   const navBarSrc = readFileSync(resolve(appRoot, "src/components/NavBar.tsx"), "utf-8");
-  assert(navBarSrc.includes("navbar-search-toggle"), "زر بحث واضح موجود في الهيدر (سطح المكتب)");
-  assert(navBarSrc.includes("navbar-v3__search-row") || navBarSrc.includes("navbar-v3__search-btn"), "صف بحث كامل على الجوال");
+  assert(navBarSrc.includes("navbar-search-toggle"), "زر بحث واضح موجود في الهيدر");
+  assert(
+    navBarSrc.includes("shouldShowHeaderSearchRow") || navBarSrc.includes("navbar-v3__search-row"),
+    "عقد صف البحث الكامل مربوط بمسار Identity Reset",
+  );
   assert(!navBarSrc.includes("SearchBox"), "لا مربع بحث مضمّن قديم متبقٍّ في مصدر الهيدر");
   assert(navBarSrc.includes("HeaderTicker"), "الشريط المتحرك مُدرَج فعليًا في الهيدر");
+  assert(
+    navBarSrc.includes("shouldShowHeaderTicker") || navBarSrc.includes("showHeaderTicker"),
+    "التيكّر مقيّد بمسار الرئيسية (Identity Reset PR-2)",
+  );
   assert(!navBarSrc.includes("navbar-v3__tabs-row"), "لا صف تبويبات مكرر في الهيدر — TopSectionBar يكفي");
 
   const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf-8") + "\n" + readFileSync(resolve(appRoot, "src/AppRoutes.tsx"), "utf-8");

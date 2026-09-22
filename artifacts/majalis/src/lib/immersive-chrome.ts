@@ -40,8 +40,8 @@ export function isHadithReaderPath(pathname: string): boolean {
   );
 }
 
-/** صفحات وظيفية — تُخفى فيها الشريط المتحرك الطويل؛ الوظيفة أولًا.
- * صفحة الدخول/التسجيل ليست ضمنها — الشريط المتحرك يظهر هناك. */
+/** صفحات وظيفية — بلا صف بحث/تيكّر مكدّس (Identity Reset: التيكر على الرئيسية فقط عبر shouldShowHeaderTicker).
+ * صفحة الدخول/التسجيل ليست ضمنها. */
 export function isCompactHeaderPath(pathname: string): boolean {
   const p = pathname.replace(/\/+$/, "") || "/";
   if (isImmersiveChromePath(p)) return true;
@@ -81,7 +81,7 @@ export function isQuranImmersivePath(pathname: string): boolean {
   return p === "/mushaf" || p.startsWith("/mushaf/");
 }
 
-/** صفحة دخول/تسجيل — بلا شريط سفلي/تذييل/مساعد؛ الهيدر والتيكر ظاهران */
+/** صفحة دخول/تسجيل — بلا شريط سفلي/تذييل/مساعد؛ الهيدر ظاهر (التيكّر على الرئيسية فقط) */
 export function isAuthStandalonePath(pathname: string): boolean {
   const p = pathname.replace(/\/+$/, "") || "/";
   return (
