@@ -1,0 +1,319 @@
+/**
+ * SUNNAH VISUAL IDENTITY RESET — PR-6
+ * Detail + reading pages densify
+ * يُطبَّق مع data-v2-app على TopicPage / درس / حديث / مقالات قراءة
+ * لا يمس المصحف · لا Routes · لا محتوى شرعي · لا Admin
+ */
+
+/* ── TopicPage: لافتة + جسم أوضح وأكثف ── */
+html[data-v2-app="1"] .topic-page__hero {
+  margin-block: 0.45rem 0.65rem;
+  padding: 1.15rem max(0.85rem, var(--page-gutter, 1rem)) 1rem;
+  border-radius: var(--v2-radius-card, 16px);
+  box-shadow: var(--v2-shadow-soft);
+}
+
+html[data-v2-app="1"] .topic-page__hero-inner {
+  gap: 0.55rem;
+}
+
+html[data-v2-app="1"] .topic-page__eyebrow {
+  font-size: var(--v2-type-caption, 0.75rem);
+  padding: 0.2rem 0.55rem;
+}
+
+/* ليلي: شريحة eyebrow بحبر فاتح — يتجاوز soft-hero #123f2e على سطح ليلي */
+html.dark[data-v2-app="1"] .topic-page__eyebrow,
+html[data-theme="dark"][data-v2-app="1"] .topic-page__eyebrow,
+html.dark[data-v2-app="1"] .topic-page__hero .topic-page__eyebrow,
+html[data-theme="dark"][data-v2-app="1"] .topic-page__hero .topic-page__eyebrow,
+html.dark[data-v2-app="1"] .topic-page__hero .safe-hero__badge,
+html[data-theme="dark"][data-v2-app="1"] .topic-page__hero .safe-hero__badge {
+  color: #eef7f2 !important;
+  background: color-mix(in srgb, #ffffff 16%, var(--v2-color-night-surface, #12261f)) !important;
+  border-color: color-mix(in srgb, #ffffff 22%, transparent);
+}
+
+html[data-v2-app="1"] .topic-page__title {
+  margin-block-end: 0.25rem;
+  font-size: var(--v2-type-page-title, 1.35rem);
+  font-weight: var(--v2-fw-bold, 700);
+  line-height: var(--v2-lh-title, 1.4);
+}
+
+html[data-v2-app="1"] .topic-page__sub {
+  font-size: var(--v2-type-supporting, 0.9375rem);
+  line-height: var(--v2-lh-body, 1.7);
+}
+
+html[data-v2-app="1"] .topic-page__quote {
+  margin-block-start: 0.65rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--v2-radius-md, 14px);
+}
+
+html[data-v2-app="1"] .topic-page__quote-text {
+  font-size: var(--v2-type-body, 1rem);
+  line-height: var(--v2-lh-body, 1.7);
+}
+
+html[data-v2-app="1"] .topic-page__group-title {
+  margin-block: 0.85rem 0.45rem;
+  padding-block-end: 0.3rem;
+  font-size: var(--v2-type-section-title, 1.05rem);
+}
+
+html[data-v2-app="1"] .topic-page__tabs {
+  padding-block: 0.4rem;
+  gap: 0.3rem;
+}
+
+html[data-v2-app="1"] .topic-page__tab {
+  min-height: var(--v2-row-min, 2.5rem);
+  padding-inline: 0.85rem;
+  border-radius: var(--v2-radius-md, 14px);
+  font-size: var(--v2-type-supporting, 0.85rem);
+}
+
+html[data-v2-app="1"] .topic-page__body {
+  padding-block-start: 0.75rem;
+  max-width: var(--read-measure, 36rem);
+}
+
+/* ── Reading measure + rhythm (بدون تغيير النص) ── */
+html[data-v2-app="1"] .reading-prose-system,
+html[data-v2-app="1"] .cr-shell,
+html[data-v2-app="1"] .kx-layout,
+html[data-v2-app="1"] .kx-layout--reader,
+html[data-v2-app="1"] .kx-layout--knowledge,
+html[data-v2-app="1"] .topic-page__body,
+html[data-v2-app="1"] .lesson-content,
+html[data-v2-app="1"] .story-content,
+html[data-v2-app="1"] .content-detail-body,
+html[data-v2-app="1"] .mk-detail,
+html[data-v2-app="1"] .hadith-page .hadith-body,
+html[data-v2-app="1"] .full-content,
+html[data-v2-app="1"] .reading-prose,
+html[data-v2-app="1"] .sr-prose,
+html[data-v2-app="1"] .rsc__body {
+  --lh-reading: 1.75;
+  --lh-reading-title: 1.3;
+  --lh-reading-section: 1.35;
+  --read-measure: 36rem;
+  --read-measure-narrow: 32rem;
+  --read-para-gap: 0.7em;
+  --read-heading-gap-before: 1.05rem;
+  --read-heading-gap-after: 0.4rem;
+  --read-card-pad-block: 0.85rem;
+  --read-card-pad-inline: 0.9rem;
+  max-width: var(--read-measure, 36rem);
+  line-height: var(--lh-reading, 1.75);
+}
+
+html[data-v2-app="1"] .reading-prose-system :is(h1, .type-title-xl, .ss-text--screen-title),
+html[data-v2-app="1"] .topic-page__body :is(h1, .ss-text--screen-title),
+html[data-v2-app="1"] .lesson-content h1,
+html[data-v2-app="1"] .cr-shell :is(h1, .ss-text--screen-title) {
+  font-size: var(--v2-type-page-title, 1.35rem);
+  font-weight: var(--v2-fw-bold, 700);
+  line-height: var(--v2-lh-title, 1.4);
+  margin-block-end: var(--read-heading-gap-after, 0.4rem);
+}
+
+html[data-v2-app="1"] .reading-prose-system :is(h2, .type-title-l, .ss-text--section-title),
+html[data-v2-app="1"] .topic-page__body h2,
+html[data-v2-app="1"] .lesson-content h2,
+html[data-v2-app="1"] .kx-block__title,
+html[data-v2-app="1"] .rsc__title {
+  font-size: var(--v2-type-section-title, 1.1rem);
+  font-weight: var(--v2-fw-bold, 700);
+  line-height: var(--v2-lh-title, 1.4);
+  margin-block: var(--read-heading-gap-before, 1.05rem) var(--read-heading-gap-after, 0.4rem);
+}
+
+html[data-v2-app="1"] .reading-prose-system :is(h3, .type-section),
+html[data-v2-app="1"] .topic-page__body h3,
+html[data-v2-app="1"] .lesson-content h3 {
+  font-size: var(--v2-type-card-title, 1rem);
+  margin-block: 0.85rem 0.35rem;
+}
+
+html[data-v2-app="1"] .reading-prose-system :is(p, li, .ss-text--body, .ss-text--explanation),
+html[data-v2-app="1"] .topic-page__body p,
+html[data-v2-app="1"] .lesson-content p,
+html[data-v2-app="1"] .content-detail-body p,
+html[data-v2-app="1"] .mk-detail p,
+html[data-v2-app="1"] .cr-shell :is(p, li),
+html[data-v2-app="1"] .kx-block__body,
+html[data-v2-app="1"] .kx-block__body p,
+html[data-v2-app="1"] .rsc__body p,
+html[data-v2-app="1"] .hadith-page .hadith-body p {
+  font-size: var(--v2-type-body, 1rem);
+  line-height: var(--lh-reading, 1.75);
+  margin-block: 0 var(--read-para-gap, 0.7em);
+  max-width: var(--read-measure, 36rem);
+}
+
+html[data-v2-app="1"] .reading-prose-system ul,
+html[data-v2-app="1"] .reading-prose-system ol,
+html[data-v2-app="1"] .topic-page__body ul,
+html[data-v2-app="1"] .topic-page__body ol,
+html[data-v2-app="1"] .cr-shell ul,
+html[data-v2-app="1"] .cr-shell ol,
+html[data-v2-app="1"] .lesson-content ul {
+  margin-block: 0.4rem 0.7rem;
+  gap: 0.35rem;
+  padding-inline-start: 1rem;
+}
+
+html[data-v2-app="1"] .isp-page section + section,
+html[data-v2-app="1"] .tawhid-page section + section,
+html[data-v2-app="1"] .topic-page__body section + section,
+html[data-v2-app="1"] .tarikh-page section + section,
+html[data-v2-app="1"] .seerah-page section + section,
+html[data-v2-app="1"] .kx-flow > .kx-block + .kx-block,
+html[data-v2-app="1"] .cr-shell > * + * {
+  margin-block-start: 0.85rem;
+}
+
+html[data-v2-app="1"] .rsc,
+html[data-v2-app="1"] .qr-section,
+html[data-v2-app="1"] .uq-section,
+html[data-v2-app="1"] .hs-card,
+html[data-v2-app="1"] .gl-term,
+html[data-v2-app="1"] .tf-card,
+html[data-v2-app="1"] .kx-block:not(.kx-block--definition),
+html[data-v2-app="1"] .tawheed-principle-card,
+html[data-v2-app="1"] .content-detail-body > section,
+html[data-v2-app="1"] .mk-detail .mk-block {
+  padding-block: var(--read-card-pad-block, 0.85rem);
+  padding-inline: var(--read-card-pad-inline, 0.9rem);
+  box-shadow: var(--v2-shadow-soft);
+  border-radius: var(--v2-radius-card, 16px);
+}
+
+html[data-v2-app="1"] .cr-shell {
+  gap: var(--v2-gap-stack, 0.75rem);
+  padding-bottom: calc(0.5rem + var(--bottom-nav-height, 4.5rem));
+}
+
+html[data-v2-app="1"] .cr-note,
+html[data-v2-app="1"] .cr-faq__item {
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--v2-radius-md, 14px);
+}
+
+html[data-v2-app="1"] .id-detail-section {
+  padding-block: var(--v2-pad-section, 0.85rem);
+}
+
+html[data-v2-app="1"] .id-detail-section__title {
+  margin-block-end: var(--v2-gap-stack, 0.55rem);
+  font-size: var(--v2-type-section-title, 1.05rem);
+}
+
+html[data-v2-app="1"] .id-detail-section__body {
+  gap: var(--v2-gap-stack, 0.55rem);
+}
+
+/* ── Lesson detail ── */
+html[data-v2-app="1"] .lesson-detail-page {
+  max-width: var(--read-measure, 36rem);
+  margin-inline: auto;
+}
+
+html[data-v2-app="1"] .lesson-detail-page .lesson-detail-card,
+html[data-v2-app="1"] .lesson-detail-page .lesson-detail-card--compact {
+  padding: var(--v2-pad-card, 0.85rem);
+  border-radius: var(--v2-radius-card, 16px);
+  box-shadow: var(--v2-shadow-soft);
+}
+
+html[data-v2-app="1"] .lesson-detail-title {
+  font-size: var(--v2-type-page-title, 1.25rem);
+  line-height: var(--v2-lh-title, 1.4);
+}
+
+html[data-v2-app="1"] .lesson-detail-info-grid {
+  gap: 0.45rem;
+}
+
+html[data-v2-app="1"] .lesson-detail-info-grid > div {
+  padding: 0.45rem 0.55rem;
+  border-radius: var(--v2-radius-sm, 8px);
+}
+
+html[data-v2-app="1"] .lesson-detail-body--tight p {
+  margin-block: 0 0.65em;
+  line-height: var(--lh-reading, 1.75);
+}
+
+html[data-v2-app="1"] .lesson-detail-body--tight h2 {
+  margin-block: 0.85rem 0.35rem;
+  font-size: var(--v2-type-section-title, 1.05rem);
+}
+
+/* ── Hadith detail ── */
+html[data-v2-app="1"] .hadith-by-id {
+  max-width: var(--read-measure, 36rem);
+  padding: 0.75rem 0.9rem 1.5rem;
+}
+
+html[data-v2-app="1"] .hadith-detail-card {
+  padding: var(--v2-pad-card, 0.85rem);
+  border-radius: var(--v2-radius-card, 16px);
+  box-shadow: var(--v2-shadow-soft);
+  margin-block-end: var(--v2-gap-stack, 0.65rem);
+}
+
+html[data-v2-app="1"] .hadith-detail-card__eyebrow {
+  font-size: var(--v2-type-caption, 0.75rem);
+}
+
+html[data-v2-app="1"] .hadith-detail-card__title {
+  font-size: var(--v2-type-section-title, 1.05rem);
+  line-height: var(--v2-lh-title, 1.4);
+}
+
+html[data-v2-app="1"] .hadith-detail-matn {
+  font-size: var(--v2-type-body, 1rem);
+  line-height: var(--lh-reading, 1.75);
+}
+
+html[data-v2-app="1"] .hadith-detail-dl {
+  gap: 0.35rem;
+}
+
+html[data-v2-app="1"] .hadith-detail-dl dt {
+  font-size: var(--v2-type-caption, 0.75rem);
+}
+
+html[data-v2-app="1"] .hadith-detail-dl dd {
+  font-size: var(--v2-type-supporting, 0.9rem);
+}
+
+/* ── Article / discover detail prose ── */
+html[data-v2-app="1"] .dii-article-body,
+html[data-v2-app="1"] .discover-article__body,
+html[data-v2-app="1"] .ss-screen-detail,
+html[data-v2-app="1"] .ss-screen-reader {
+  max-width: var(--read-measure, 36rem);
+}
+
+html[data-v2-app="1"] .ss-screen-detail,
+html[data-v2-app="1"] .ss-screen-reader {
+  gap: var(--v2-gap-stack, 0.65rem);
+}
+
+@media (max-width: 480px) {
+  html[data-v2-app="1"] .topic-page__hero {
+    padding: 1rem 0.85rem 0.85rem;
+  }
+
+  html[data-v2-app="1"] .reading-prose-system :is(p, li),
+  html[data-v2-app="1"] .topic-page__body p,
+  html[data-v2-app="1"] .lesson-content p,
+  html[data-v2-app="1"] .hadith-detail-matn {
+    line-height: 1.8;
+  }
+}

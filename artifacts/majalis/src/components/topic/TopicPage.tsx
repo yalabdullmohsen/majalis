@@ -30,6 +30,7 @@ import {
 import { ACTION, EMPTY, STATUS } from "@/lib/ui-copy";
 import "@/styles/components/topic-page.css";
 import "@/styles/components/safe-hero.css";
+import "@/styles/sunnah-identity-detail-reading.css";
 
 export { SectionHero } from "@/components/topic/SectionHero";
 

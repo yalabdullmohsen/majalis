@@ -7,6 +7,7 @@ import { EMPTY } from "@/lib/ui-copy";
 import { getArticleBySlug, getArticleTranslations, type DawahArticle, type DawahTranslation } from "@/lib/dawah-service";
 import { DiscoverIslamShell } from "@/components/discover-islam/DiscoverIslamShell";
 import { UtilityScreen } from "@/components/design-system/screens";
+import "@/styles/sunnah-identity-detail-reading.css";
 
 const LANG_LABELS: Record<string, string> = { en: "English", fr: "Français", tr: "Türkçe", ur: "اردو", id: "Bahasa Indonesia" };
 const FULL_TEXT_NOTE: Record<string, string> = {

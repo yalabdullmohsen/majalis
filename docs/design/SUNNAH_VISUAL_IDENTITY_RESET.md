@@ -26,8 +26,8 @@ V2/V3 حسّنتا التناسق، لكن الواجهة ما زالت تشبه
 | 2 | Global header + search + daily strip | **merged** |
 | 3 | Cards and content rows | **merged** |
 | 4 | Home and Quran Hub | **merged** |
-| 5 | Sections and category grids | **in progress** |
-| 6 | Detail and reading pages | queued |
+| 5 | Sections and category grids | **merged** |
+| 6 | Detail and reading pages | **in progress** |
 | 7 | Drawer + Bottom Navigation + floating | queued |
 | 8 | Forms + Tabs + Filters | queued |
 | 9 | Dark Mode Luxury Night | queued |
@@ -72,6 +72,13 @@ Rule: start each PR from latest `main`. Do not start next until previous is merg
 - Tighter `hub-card-grid` / `section-lobby__grid` gaps · 2-line clamps · smaller icons
 - Category grids: fiqh · QA · rulings · hadith · discover (`sunnah-identity-sections.css`)
 - Loaded with `SectionLobby` + hub pages (not `main.tsx` — يحافظ على ميزانية CSS الحرج)
+
+## PR-6 deliverables
+
+- TopicPage hero/tabs/body densify under `data-v2-app`
+- Reading rhythm: `--lh-reading: 1.75` · tighter `--read-para-gap` / card pads / measure `36rem`
+- Lesson detail · hadith-by-id · article detail surfaces (`sunnah-identity-detail-reading.css`)
+- Loaded with TopicPage + LessonDetailView + HadithByIdView + DiscoverIslamArticleDetailPage (not `main.tsx`)
 
 ## Out of scope (all PRs)
 
