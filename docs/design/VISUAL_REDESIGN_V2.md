@@ -44,8 +44,8 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 
 | PR | Focus | Status |
 |---|---|---|
-| A | App Shell V2 default + PageHeader/EmptyState | **this** |
-| B | Lessons + Sections | queued |
+| A | App Shell V2 default + PageHeader/EmptyState | **merged** (#2209) |
+| B | Lessons + Sections | **this** |
 | C | Fiqh / Hadith / Aqidah knowledge dashboards | queued |
 | D | Prayer / Adhkar / Glossary / History | queued |
 | E | Quiz / Challenges / Settings-Legal / Error states | queued |
@@ -58,6 +58,14 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 - `PageHeaderV2` · `EmptyStateV2`
 - CSS مؤجّل: `styles/pages/app-shell-v2.css` (لا يدخل ميزانية CSS الحرج)
 - لا إعادة تصميم الشاشات المكتملة في #2201–#2208
+
+## Expansion PR-B — Lessons + Sections
+
+- `html[data-v2-lessons="1"]` على `/lessons*`
+- `html[data-v2-sections="1"]` على `/sections`
+- دروس: فلاتر/بطاقات موحّدة · EmptyStateV2
+- أقسام: PageHeaderV2 · بلاطات Rounded Premium
+- CSS: `styles/pages/lessons-sections-v2.css`
 
 ## PR-2 Dashboard Homepage
 
