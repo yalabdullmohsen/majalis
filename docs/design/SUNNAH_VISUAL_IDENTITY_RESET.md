@@ -60,11 +60,6 @@ Rule: start each PR from latest `main`. Do not start next until previous is merg
 - `sunnah-identity-cards.css` · exports from design-system
 - Hub/section soft cards: `min-height: 0` · 2-line clamp under `data-v2-app`
 
-## PR-3 deliverables
-
-- `CompactNavigationCard` · `ContentRow` · `DetailSection` · `QuoteSurface` · `StatusNotice`
-- FeatureCard / hub densify under `data-v2-app`
-
 ## PR-4 deliverables
 
 - Home Hero A: one valuable continue (`hw3-chip--lead`) · compact meta · primary CTA
