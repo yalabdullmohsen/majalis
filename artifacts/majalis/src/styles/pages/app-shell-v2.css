@@ -485,11 +485,91 @@ html.dark[data-v2-app="1"] .topic-page__group-title {
   color: var(--v2-color-night-emerald-text, #9fd4bf);
 }
 
+/* ── V3 Premium Polish — cards / empty / separators / micro press ── */
+html[data-v2-app="1"] .soft-card,
+html[data-v2-app="1"] .hub-card,
+html[data-v2-app="1"] .section-entry-card,
+html[data-v2-app="1"] .mj-card,
+html[data-v2-app="1"] .ss-app-card,
+html[data-v2-app="1"] .qzg-section-card,
+html[data-v2-app="1"] .ruling-card,
+html[data-v2-app="1"] .kx-library-card,
+html[data-v2-app="1"] .topic-card,
+html[data-v2-app="1"] .hadith-card {
+  box-shadow:
+    0 1px 0 color-mix(in srgb, #fff 65%, transparent),
+    var(--v2-shadow-soft);
+  transition:
+    transform var(--v2-duration-fast, 140ms) var(--v2-ease-out, ease),
+    box-shadow var(--v2-duration, 200ms) var(--v2-ease-out, ease),
+    border-color var(--v2-duration-fast, 140ms) var(--v2-ease-out, ease);
+}
+
+html[data-v2-app="1"] .soft-card:hover,
+html[data-v2-app="1"] .hub-card:hover,
+html[data-v2-app="1"] .section-entry-card:hover,
+html[data-v2-app="1"] .mj-card:hover,
+html[data-v2-app="1"] .kx-library-card:hover,
+html[data-v2-app="1"] .topic-card:hover,
+html[data-v2-app="1"] .hadith-card:hover {
+  border-color: color-mix(in srgb, var(--v2-color-emerald, #0f5c45) 24%, var(--v2-hairline));
+  box-shadow: var(--v2-shadow-card);
+  transform: translateY(-1px);
+}
+
+html[data-v2-app="1"] .soft-card:active,
+html[data-v2-app="1"] .hub-card:active,
+html[data-v2-app="1"] .section-entry-card:active,
+html[data-v2-app="1"] .mj-card:active,
+html[data-v2-app="1"] .kx-library-card:active {
+  transform: scale(0.995);
+}
+
+html[data-v2-app="1"] .hub-card__icon,
+html[data-v2-app="1"] .section-entry-card__icon,
+html[data-v2-app="1"] .more-page-tile__icon,
+html[data-v2-app="1"] .es2__icon {
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--v2-color-gold, #c9a82e) 12%, var(--v2-color-emerald-soft, #e2efe8)) 0%,
+      var(--v2-color-emerald-soft, #e2efe8) 100%
+    );
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--v2-color-gold, #c9a82e) 22%, transparent);
+}
+
+html[data-v2-app="1"] .ph2,
+html[data-v2-app="1"] .page-header-v2 {
+  padding-block: var(--v2-space-4, 1rem) var(--v2-space-3, 0.75rem);
+  margin-block-end: var(--v2-space-3, 0.75rem);
+}
+
+html[data-v2-app="1"] .es2,
+html[data-v2-app="1"] .mj-empty {
+  gap: var(--v2-space-2, 0.5rem);
+  padding: var(--v2-space-6, 1.5rem) var(--v2-space-5, 1.25rem);
+}
+
+html[data-v2-app="1"] .es2__cta:active {
+  transform: scale(0.98);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html[data-v2-app="1"] .soft-card,
+  html[data-v2-app="1"] .hub-card,
+  html[data-v2-app="1"] .section-entry-card,
+  html[data-v2-app="1"] .mj-card,
   html[data-v2-app="1"] .es2__cta,
   html[data-v2-app="1"] .topic-page__hero,
-  html[data-v2-app="1"] .kx-library-card {
+  html[data-v2-app="1"] .kx-library-card,
+  html[data-v2-app="1"] .topic-card,
+  html[data-v2-app="1"] .hadith-card {
     transition: none;
+  }
+
+  html[data-v2-app="1"] .soft-card:hover,
+  html[data-v2-app="1"] .hub-card:hover,
+  html[data-v2-app="1"] .mj-card:hover {
+    transform: none;
   }
 }

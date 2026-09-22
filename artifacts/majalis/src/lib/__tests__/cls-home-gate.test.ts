@@ -57,7 +57,7 @@ assert.match(critical, /\.navbar-v3__tagline-mark[\s\S]*aspect-ratio/, "حجز �
 }
 {
   const polish = readFileSync(resolve(root, "src/styles/ssunnah-ux-polish.css"), "utf8");
-  assert.match(polish, /\.home-sacred-day--ph[\s\S]*min-height:\s*9\.75rem/, "min-height لهيكل آية اليوم");
+  assert.match(polish, /\.home-sacred-day--ph[\s\S]*min-height:\s*6\.25rem/, "min-height لهيكل آية اليوم المضغوط");
 }
 {
   const boot = readFileSync(resolve(root, "public/mj-launch-splash-boot.js"), "utf8");
@@ -92,7 +92,7 @@ assert.equal(
     /HomeRestShell[\s\S]*HomeSacredOfDaySkeleton[\s\S]*HomePrimaryDiscoveryPlaceholder[\s\S]*HomeDailyWirdSkeleton[\s\S]*HomeLiveNowPlaceholder[\s\S]*HomeBelowFoldPlaceholder/,
     "HomeRestShell يطابق ترتيب الصفحة (بحث→آية→اكتشاف→ورد→بث→تحت الطية)",
   );
-  assert.match(critical, /\.home-sacred-day--ph[\s\S]*min-height:\s*9\.75rem/, "حجز آية اليوم في CSS الحرج");
+  assert.match(critical, /\.home-sacred-day--ph[\s\S]*min-height:\s*6\.25rem/, "حجز آية اليوم المضغوطة في CSS الحرج");
   assert.match(critical, /\.mj-home-primary-discovery-ph[\s\S]*min-height:\s*12rem/, "حجز الاكتشاف في CSS الحرج");
   assert.match(critical, /\.home-live-now-ph[\s\S]*min-height:\s*3\.25rem/, "حجز البث في CSS الحرج");
 }
