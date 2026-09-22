@@ -1,0 +1,185 @@
+/**
+ * SUNNAH VISUAL IDENTITY RESET — PR-4
+ * Home Hero (A) + Quran Hub densify
+ * يُطبَّق مع data-v2-app + data-v2-dashboard / data-v2-quran-hub
+ * لا يمس المصحف · لا Routes · لا محتوى شرعي
+ */
+
+/* ── Home Hero A: ترحيب مختصر · متابعة واحدة · CTA رئيسي · هندسة خفيفة ── */
+html[data-v2-app="1"][data-v2-dashboard="1"] .home-page-hero.home-welcome-v3 .page-hero-mj__content {
+  gap: 0.4rem;
+}
+
+html[data-v2-app="1"][data-v2-dashboard="1"] .home-page-hero.home-welcome-v3 .page-hero-mj__desc {
+  margin-top: 0;
+  max-width: 22rem;
+  font-size: var(--v2-type-supporting, 0.9rem);
+  line-height: var(--v2-lh-body);
+  opacity: 0.94;
+}
+
+html[data-v2-app="1"][data-v2-dashboard="1"] .home-page-hero.home-welcome-v3 .page-hero-mj__actions {
+  margin-top: 0.15rem;
+  gap: 0.4rem;
+}
+
+html[data-v2-app="1"][data-v2-dashboard="1"] .home-page-hero .m2030-btn--ghost {
+  min-height: 2.25rem;
+  padding-inline: 0.85rem;
+  font-size: var(--v2-type-supporting, 0.88rem);
+  font-weight: var(--v2-fw-medium, 500);
+}
+
+html[data-v2-app="1"][data-v2-dashboard="1"] .hw3 {
+  margin-block-start: 0.35rem;
+  gap: 0.4rem;
+}
+
+html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-primary {
+  width: 100%;
+}
+
+html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-chip--lead {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--v2-radius-md, 14px);
+  border: 1px solid color-mix(in srgb, var(--v2-color-on-emerald, #fff) 22%, transparent);
+  background: color-mix(in srgb, var(--v2-color-on-emerald, #fff) 12%, transparent);
+  color: var(--v2-color-on-emerald, #fff);
+  text-decoration: none;
+}
+
+html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-chip--lead .hw3-chip__k {
+  font-size: var(--v2-type-caption, 0.72rem);
+  opacity: 0.85;
+}
+
+html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-chip--lead .hw3-chip__v {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--v2-type-supporting, 0.88rem);
+  font-weight: var(--v2-fw-bold, 700);
+  text-align: start;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  overflow: hidden;
+}
+
+html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  font-size: var(--v2-type-caption, 0.72rem);
+  color: color-mix(in srgb, var(--v2-color-on-emerald, #fff) 82%, transparent);
+}
+
+html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-meta a {
+  color: inherit;
+  text-decoration: none;
+  border-block-end: 1px solid color-mix(in srgb, var(--v2-color-on-emerald, #fff) 28%, transparent);
+}
+
+html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-actions {
+  gap: 0.35rem;
+}
+
+html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-action {
+  min-height: 2rem;
+  padding: 0.3rem 0.65rem;
+  font-size: var(--v2-type-caption, 0.75rem);
+}
+
+/* هندسة خفيفة فقط — لا نمط داخل كل بطاقة */
+html[data-v2-app="1"][data-v2-dashboard="1"] .home-page-hero.sgs-hero-geometry::before {
+  opacity: 0.9;
+}
+
+/* ── Quran Hub: عنوان أصغر · متابعة محكمة · شبكة مضغوطة ── */
+html[data-v2-app="1"][data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] {
+  gap: var(--v2-gap-section, 0.85rem);
+}
+
+html[data-v2-app="1"][data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .section-lobby__title {
+  font-size: var(--v2-type-page-title, 1.15rem);
+  font-weight: var(--v2-fw-bold, 700);
+  line-height: var(--v2-lh-title);
+}
+
+html[data-v2-app="1"][data-v2-quran-hub="1"] .quran-open-mushaf {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 0;
+  padding: 0.85rem 1rem;
+  border-radius: var(--v2-radius-card, 18px);
+  box-shadow: var(--v2-shadow-soft);
+}
+
+html[data-v2-app="1"][data-v2-quran-hub="1"] .quran-open-mushaf__icon {
+  width: var(--v2-icon-tile, 2.25rem);
+  height: var(--v2-icon-tile, 2.25rem);
+  flex: 0 0 auto;
+}
+
+html[data-v2-app="1"][data-v2-quran-hub="1"] .quran-open-mushaf__title {
+  font-size: var(--v2-type-card-title, 1rem);
+  line-height: var(--v2-lh-title);
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+html[data-v2-app="1"][data-v2-quran-hub="1"] .quran-open-mushaf__desc,
+html[data-v2-app="1"][data-v2-quran-hub="1"] .quran-open-mushaf__resume {
+  font-size: var(--v2-type-supporting, 0.85rem);
+  line-height: var(--v2-lh-body);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+html[data-v2-app="1"][data-v2-quran-hub="1"] .quran-open-mushaf__cta {
+  min-height: 2.25rem;
+  padding-inline: 0.85rem;
+  font-size: var(--v2-type-supporting, 0.88rem);
+  align-self: center;
+  margin-inline-start: auto;
+}
+
+html[data-v2-app="1"][data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .section-lobby__grid {
+  gap: 0.55rem;
+}
+
+html[data-v2-app="1"][data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .card,
+html[data-v2-app="1"][data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] [data-section-card] {
+  min-height: 0;
+  height: auto;
+  padding: var(--v2-pad-card, 0.75rem);
+  border-radius: var(--v2-radius-card, 16px);
+  box-shadow: var(--v2-shadow-soft);
+}
+
+html[data-v2-app="1"][data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .card__icon {
+  width: var(--v2-icon-tile, 2.25rem);
+  height: var(--v2-icon-tile, 2.25rem);
+}
+
+html[data-v2-app="1"][data-v2-quran-hub="1"] .section-lobby[data-quran-hub="1"] .card__subtitle {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}

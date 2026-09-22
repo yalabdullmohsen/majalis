@@ -19,6 +19,7 @@ import {
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/components/home-brand-title.css";
 import "@/styles/m2030/home.css";
+import "@/styles/sunnah-identity-home-hub.css";
 
 type WelcomeSnapshot = {
   continueHref: string;
@@ -119,55 +120,48 @@ export function HomeHeroLcp() {
         </>
       }
     >
-      <nav className="hw3" aria-label="متابعة سريعة">
-        <div className="hw3-strip" role="list">
-          {welcome.continueLabel ? (
-            <Link
-              href={continueHref}
-              className="hw3-chip"
-              role="listitem"
-              aria-label={`آخر متابعة: ${welcome.continueLabel}`}
-            >
-              <span className="hw3-chip__k">متابعة</span>
-              <span className="hw3-chip__v">{welcome.continueLabel}</span>
-            </Link>
-          ) : null}
-          {welcome.mushafPage != null && welcome.mushafPage > 1 ? (
+      <nav className="hw3 hw3--identity" aria-label="متابعة سريعة">
+        {(welcome.continueLabel || (welcome.mushafPage != null && welcome.mushafPage > 1)) ? (
+          <div className="hw3-primary" role="list">
+            {welcome.continueLabel ? (
+              <Link
+                href={continueHref}
+                className="hw3-chip hw3-chip--lead"
+                role="listitem"
+                aria-label={`آخر متابعة: ${welcome.continueLabel}`}
+              >
+                <span className="hw3-chip__k">متابعة</span>
+                <span className="hw3-chip__v">{welcome.continueLabel}</span>
+              </Link>
+            ) : (
+              <Link
+                href={`/mushaf?page=${welcome.mushafPage}`}
+                className="hw3-chip hw3-chip--lead"
+                role="listitem"
+                aria-label={`آخر قراءة: صفحة ${toArabicDigits(welcome.mushafPage!)}`}
+              >
+                <span className="hw3-chip__k">قراءة</span>
+                <span className="hw3-chip__v">ص {toArabicDigits(welcome.mushafPage!)}</span>
+              </Link>
+            )}
+          </div>
+        ) : null}
+        <div className="hw3-meta" role="list" aria-label="ملخص اليوم">
+          <Link href="/daily-wird" role="listitem" aria-label={`الورد اليومي · ${toArabicDigits(welcome.doneCount)} من ${toArabicDigits(welcome.totalTasks)}`}>
+            الورد {toArabicDigits(welcome.doneCount)}/{toArabicDigits(welcome.totalTasks)}
+          </Link>
+          <Link href="/daily-wird" role="listitem" aria-label={`تقدمك اليومي ${toArabicDigits(welcome.progressPct)}٪`}>
+            تقدم {toArabicDigits(welcome.progressPct)}٪
+          </Link>
+          {welcome.continueLabel && welcome.mushafPage != null && welcome.mushafPage > 1 ? (
             <Link
               href={`/mushaf?page=${welcome.mushafPage}`}
-              className="hw3-chip"
               role="listitem"
               aria-label={`آخر قراءة: صفحة ${toArabicDigits(welcome.mushafPage)}`}
             >
-              <span className="hw3-chip__k">قراءة</span>
-              <span className="hw3-chip__v">ص {toArabicDigits(welcome.mushafPage)}</span>
+              مصحف ص {toArabicDigits(welcome.mushafPage)}
             </Link>
           ) : null}
-          <Link
-            href="/daily-wird"
-            className="hw3-chip"
-            role="listitem"
-            aria-label={`الورد اليومي · تقدم ${toArabicDigits(welcome.progressPct)}٪`}
-          >
-            <span className="hw3-chip__k">الورد</span>
-            <span className="hw3-chip__v">
-              {toArabicDigits(welcome.doneCount)}/{toArabicDigits(welcome.totalTasks)}
-            </span>
-          </Link>
-          <Link
-            href="/daily-wird"
-            className="hw3-chip hw3-chip--progress"
-            role="listitem"
-            aria-label={`تقدمك اليومي ${toArabicDigits(welcome.progressPct)}٪`}
-          >
-            <span className="hw3-chip__k">تقدم</span>
-            <span className="hw3-chip__v">{toArabicDigits(welcome.progressPct)}٪</span>
-            <span
-              className="hw3-chip__bar"
-              aria-hidden="true"
-              style={{ ["--hw3-pct" as string]: `${welcome.progressPct}%` }}
-            />
-          </Link>
         </div>
         <div className="hw3-actions" role="list" aria-label="إجراءات سريعة">
           <Link href="/quran-hub" className="hw3-action" role="listitem">
