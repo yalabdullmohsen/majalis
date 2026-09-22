@@ -4,7 +4,8 @@
  *
  * CI note (Node 24): `pnpm/action-setup` (self-installer / npm install of
  * pnpm or @pnpm/exe) emits DEP0169 via `url.parse()`. Workflows must use
- * Corepack (`corepack enable` + `corepack prepare --activate`) instead.
+ * Corepack via `corepack enable` + `corepack prepare`, أو المسار المتين
+ * `.github/actions/setup-workspace/activate-pnpm.sh` (retry + npm fallback).
  */
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
@@ -28,13 +29,17 @@ const workflowsDir = join(repoRoot, ".github", "workflows");
 const workflowFiles = readdirSync(workflowsDir).filter((f) => f.endsWith(".yml") || f.endsWith(".yaml"));
 const actionSetupHits = [];
 const missingCorepack = [];
+const usesCorepackContract = (text) =>
+  /corepack\s+enable/.test(text) ||
+  /setup-workspace\/activate-pnpm\.sh/.test(text) ||
+  /actions\/setup-workspace/.test(text);
 for (const file of workflowFiles) {
   const text = readFileSync(join(workflowsDir, file), "utf8");
   if (text.includes("pnpm/action-setup@") && !ACTION_SETUP_ALLOWED.has(file)) actionSetupHits.push(file);
   const installsPnpm =
     /pnpm\s+install/.test(text) || /cache:\s*['"]?pnpm['"]?/.test(text);
   const usesActionSetup = text.includes("pnpm/action-setup@");
-  if (installsPnpm && !/corepack\s+enable/.test(text) && !usesActionSetup) missingCorepack.push(file);
+  if (installsPnpm && !usesCorepackContract(text) && !usesActionSetup) missingCorepack.push(file);
 }
 assert.equal(
   actionSetupHits.length,
