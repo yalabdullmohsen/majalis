@@ -48,8 +48,8 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 | B | Lessons + Sections | **merged** (#2210) |
 | C | Fiqh / Hadith / Aqidah knowledge dashboards | **merged** (#2211) |
 | D | Prayer / Adhkar / Glossary / History | **merged** (#2212) |
-| E | Quiz / Challenges / Settings-Legal / Error states | **this** |
-| F | Final QA + OUTPUT | queued |
+| E | Quiz / Challenges / Settings-Legal / Error states | **merged** (#2213) |
+| F | Final QA + OUTPUT | **this** |
 
 ## Expansion PR-A — App Shell default
 
@@ -93,6 +93,12 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 - ErrorBoundary + Offline banner عبر `data-v2-app` داخل نفس CSS
 - الإعدادات/التقدّم: مغطّاة سابقًا بـ `data-v2-profile` (#2206) — مراجعة توافق فقط
 - CSS: `styles/pages/learn-legal-v2.css`
+
+## Expansion PR-F — Final QA + OUTPUT
+
+- إغلاق قطار التوسيع: تحديث opt-in map + قائمة قبول الشاشات في `VISUAL_REDESIGN_V2_QA.md`
+- تأكيد: لا مصحف نص · لا Admin v3 · لا رفع ميزانيات · Contrast/Visual عبر CI لكل PR سابق
+- OUTPUT ONLY للمالك بعد الدمج
 
 ## PR-2 Dashboard Homepage
 
