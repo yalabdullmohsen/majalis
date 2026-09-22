@@ -46,12 +46,15 @@
 @media (max-width: 879px) {
   :root {
     --header-chrome: 48px;
-    --search-height: 3.25rem;
+    /* افتراض الرئيسية (دخول شائع) — يُصفَّر عند data-home-chrome=0 */
     --ticker-row-h: calc(var(--ticker-h) + 0.65rem);
     --app-top-chrome-h: calc(
       var(--header-chrome) + var(--inset-top, 0px) + var(--ad-banner-height) + var(--search-height) +
         var(--ticker-row-h)
     );
+  }
+  html[data-home-chrome="0"] {
+    --ticker-row-h: 0px;
   }
 }
 

@@ -23,7 +23,7 @@ assert.match(app, /isAuthStandalonePath/);
 assert.match(app, /hideTopChrome/);
 assert.match(app, /onAuthStandalone/);
 assert.match(app, /!hideTopChrome \?/);
-assert.match(immersive, /الشريط المتحرك يظهر/);
+assert.match(immersive, /الشريط المتحرك يظهر|التيكّر على الرئيسية فقط/);
 assert.match(fab, /isAuthStandalonePath/);
 
 assert.match(login, /login-app-icon/);

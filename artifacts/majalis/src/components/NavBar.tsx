@@ -10,6 +10,10 @@ import { useIsMobileNav } from "@/hooks/useIsMobileNav";
 import { useCompactChrome } from "@/hooks/useCompactChrome";
 import { isNavHrefActive } from "@/lib/nav-active";
 import { isImmersiveChromePath, isCompactHeaderPath } from "@/lib/immersive-chrome";
+import {
+  shouldShowHeaderSearchRow,
+  shouldShowHeaderTicker,
+} from "@/lib/ticker-quiet-paths";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { getActiveTab } from "@/lib/get-active-tab";
 import { LOBBY_SEARCH_FILTER } from "@/config/section-lobby-chrome";
@@ -141,23 +145,19 @@ export default function NavBar() {
   const isCompactChrome = useCompactChrome();
   const { isMenuOpen, toggleMenu, openMenu, closeMenu, closeAll } = useMobileNavState();
   const [drawerMounted, setDrawerMounted] = useState(false);
-  /** نص زر البحث بعرض كامل يسرق LCP من h1 — يُؤجَّل بعد نافذة القياس */
-  const [searchLabelReady, setSearchLabelReady] = useState(false);
   const showChromeExtras =
     !isImmersiveChromePath(location) && !isCompactHeaderPath(location);
-  /** صفوف بحث/تيكّر منفصلة: جوال + iPad/Split View */
-  const useStackedChrome = isCompactChrome && showChromeExtras;
-  /** التيكر داخل صف الهيدر فقط على سطح المكتب العريض */
-  const tickerInHeaderEnd = !isCompactChrome && showChromeExtras;
+  /** Identity Reset PR-2: تيكّر يومي على الرئيسية فقط */
+  const showHeaderTicker = shouldShowHeaderTicker(location);
+  const showFullSearchRow = shouldShowHeaderSearchRow(location);
+  /** صف تيكّر منفصل: جوال + iPad/Split View على الرئيسية */
+  const useStackedChrome = isCompactChrome && showHeaderTicker;
+  /** التيكر داخل صف الهيدر فقط على سطح المكتب العريض · الرئيسية */
+  const tickerInHeaderEnd = !isCompactChrome && showHeaderTicker;
 
   useEffect(() => {
     if (isMenuOpen) setDrawerMounted(true);
   }, [isMenuOpen]);
-
-  useEffect(() => {
-    const id = window.setTimeout(() => setSearchLabelReady(true), 5_500);
-    return () => window.clearTimeout(id);
-  }, []);
 
   const isActive = (href: string) => {
     const path = href.split("?")[0] || href;
@@ -342,8 +342,8 @@ export default function NavBar() {
                 : <Moon size={17} strokeWidth={1.6} aria-hidden="true" />
               }
             </button>
-            {/* بحث أيقوني فقط عندما لا يوجد صف بحث منفصل */}
-            {!useStackedChrome && (
+            {/* بحث أيقوني — الصفحات الداخلية؛ الرئيسية تستخدم HUS */}
+            {!showFullSearchRow && (
               <button
                 type="button"
                 onClick={openSearch}
@@ -402,25 +402,22 @@ export default function NavBar() {
           </div>
         </div>
 
-        {/* صف بحث مستقل — جوال وiPad؛ لا يتداخل مع التبويبات أو التيكر */}
-        {useStackedChrome && (
+        {/* صف بحث كامل — معطّل في Identity Reset (HUS + أيقونة) */}
+        {showFullSearchRow && useStackedChrome && (
           <div className="navbar-v3__search-row">
             <button
               type="button"
               className="navbar-v3__search-btn"
               onClick={openSearch}
               aria-label="فتح البحث"
-              data-label-ready={searchLabelReady ? "1" : "0"}
             >
               <Search size={16} strokeWidth={1.8} aria-hidden="true" />
-              <span aria-hidden={searchLabelReady ? undefined : true}>
-                {searchLabelReady ? "ابحث في المحتوى…" : "\u00a0"}
-              </span>
+              <span>ابحث في المحتوى…</span>
             </button>
           </div>
         )}
 
-        {/* صف تيكّر مستقل — يمنع تداخل التيكر مع القائمة/البحث/الحساب */}
+        {/* صف تيكّر — الرئيسية فقط */}
         {useStackedChrome && (
           <div className="navbar-ticker-row" aria-label="شريط تنبيهات ومقتطفات">
             <DeferredHeaderTicker />

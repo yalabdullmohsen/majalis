@@ -32,6 +32,7 @@ import { trackContinueReading } from "@/lib/continue-reading";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isAuthStandalonePath, isImmersiveChromePath, isPinnedChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
+import { isHomeChromePath } from "@/lib/ticker-quiet-paths";
 import { isNative, isNativeApp } from "@/lib/capacitor-utils";
 import { isMiniPlayerVisible, subscribeMiniPlayer } from "@/lib/quran-mini-player";
 import { HomeHeroLcp, HomeRestShell } from "@/components/home/HomeHeroLcp";
@@ -590,7 +591,7 @@ function DeferredPrayerCountdownBanner({ defer }: { defer: boolean }) {
   return <PrayerCountdownBanner />;
 }
 
-function ChromeNavFallback() {
+function ChromeNavFallback({ homeChrome }: { homeChrome: boolean }) {
   return (
     <header className="navbar-v3 chrome-boot-ph" aria-hidden="true">
       <div className="navbar-v3__inner">
@@ -600,8 +601,7 @@ function ChromeNavFallback() {
           <span className="navbar-mobile-login navbar-mobile-login--pending" />
         </div>
       </div>
-      <div className="navbar-v3__search-row" />
-      <div className="navbar-ticker-row" />
+      {homeChrome ? <div className="navbar-ticker-row" /> : null}
     </header>
   );
 }
@@ -625,6 +625,11 @@ function AppShellInner() {
   const hideSiteChrome = hideTopChrome || onAuthStandalone;
   const deferHomePrayerChrome = location === "/" || location === "";
   const isHomePath = deferHomePrayerChrome;
+  const homeChrome = isHomeChromePath(location);
+
+  useLayoutEffect(() => {
+    document.documentElement.dataset.homeChrome = homeChrome ? "1" : "0";
+  }, [homeChrome]);
 
   const searchScrollYRef = useRef(0);
 
@@ -1121,7 +1126,7 @@ function AppShellInner() {
       <IdleRuntimeBoot />
       {!hideTopChrome ? (
         <div className="app-top-chrome">
-          <Suspense fallback={<ChromeNavFallback />}>
+          <Suspense fallback={<ChromeNavFallback homeChrome={homeChrome} />}>
             <NavBar />
           </Suspense>
         </div>

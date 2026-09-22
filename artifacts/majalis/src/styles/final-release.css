@@ -2120,7 +2120,7 @@ header.navbar-v3,
      ارتفاعه المنطقي وإلا هبطت كل رؤوس sticky بـ3.5rem زائدة. */
   :root{--top-section-bar-h:0px}
   .navbar-v3{min-height:0!important}
-  .navbar-theme-toggle.navbar-search-toggle{display:none!important}
+  .navbar-theme-toggle.navbar-search-toggle{display:inline-flex!important}
   .navbar-v3__search-row{width:100%;box-sizing:border-box;padding:.45rem max(16px,var(--gutter-inline-start,16px)) .35rem max(16px,var(--gutter-inline-end,16px));border-block-start:1px solid var(--mj-hairline,var(--color-border));background:var(--mj-bg,var(--color-background))}
   .navbar-v3__search-btn{width:100%;min-height:44px;display:flex;align-items:center;gap:.55rem;padding:.55rem .9rem;border:1px solid var(--mj-hairline,var(--color-border));border-radius:var(--mj-r-pill,999px);background:var(--mj-surface,var(--color-surface));color:var(--mj-muted,var(--color-text-muted));text-align:start}
   .navbar-ticker-row .header-ticker{width:100%;min-width:0;border-radius:var(--radius-button,18px);min-height:var(--ticker-h);height:var(--ticker-h);max-height:var(--ticker-h);display:flex;align-items:center;justify-content:center;padding-block:0;padding-inline:.65rem;border:1px solid color-mix(in srgb,var(--mj-hairline,var(--color-border)) 80%,transparent);background:var(--mj-surface,var(--color-surface))}

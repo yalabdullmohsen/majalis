@@ -62,8 +62,8 @@ assert.equal(isCompactHeaderPath("/prophets"), true, "قصص الأنبياء ب
 assert.equal(isCompactHeaderPath("/prophets/nuh"), true);
 assert.equal(isPinnedChromePath("/prophets"), true, "كروم قصص الأنبياء مثبَّت بلا إخفاء transform");
 assert.equal(isPinnedChromePath("/prophets/musa"), true);
-assert.equal(isCompactHeaderPath("/login"), false, "الدخول يُظهر الشريط المتحرك");
-assert.equal(isCompactHeaderPath("/register"), false, "التسجيل يُظهر الشريط المتحرك");
+assert.equal(isCompactHeaderPath("/login"), false, "الدخول ليس مسار هيدر وظيفي مضغوط");
+assert.equal(isCompactHeaderPath("/register"), false, "التسجيل ليس مسار هيدر وظيفي مضغوط");
 assert.equal(isCompactHeaderPath("/"), false);
 assert.equal(isCompactHeaderPath("/hadith"), true, "قوائم الحديث بلا صف بحث عام مكرر");
 assert.equal(isCompactHeaderPath("/arbaeen-nawawi"), true);
@@ -102,7 +102,8 @@ assert.match(readFileSync(resolve(appRoot, "src/config/sections.registry.ts"), "
 
 const navBar = readFileSync(resolve(appRoot, "src/components/NavBar.tsx"), "utf8");
 assert.match(navBar, /isImmersiveChromePath\(location\)\) return null/);
-assert.match(navBar, /isCompactHeaderPath\(location\)/, "NavBar يخفّي التيكر على المسارات الوظيفية");
+assert.match(navBar, /isCompactHeaderPath\(location\)/, "NavBar يستخدم isCompactHeaderPath لExtras");
+assert.match(navBar, /shouldShowHeaderTicker|showHeaderTicker/, "NavBar يقيّد التيكر بالرئيسية");
 
 const prayerRanks = readFileSync(resolve(appRoot, "src/pages/worship/ui/PrayerRanksView.tsx"), "utf8");
 assert.equal(prayerRanks.includes("SectionQuiz"), false, "مراتب الصلاة بلا SectionQuiz");

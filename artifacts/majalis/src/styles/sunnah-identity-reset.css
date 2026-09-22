@@ -215,3 +215,5 @@ html[data-v2-app="1"] .bottom-nav__tab:active {
     transition: none;
   }
 }
+
+/* PR-2 chrome: top-chrome-layout.css (مع NavBar — خارج فهرس CSS الحرج) */

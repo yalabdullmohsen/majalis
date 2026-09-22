@@ -29,18 +29,23 @@
   padding-inline: 0.55rem;
 }
 
-/* ── كروم مدمج للوحيات: نفس صفوف الجوال (بحث + تيكّر) حتى 1279px ── */
+/* ── كروم مدمج للوحيات: تيكّر على الرئيسية فقط حتى 1279px ── */
 @media (min-width: 880px) and (max-width: 1279px) {
   :root {
     --header-chrome: 52px;
     --app-header-height: 52px;
-    --search-height: 3.25rem;
+    --search-height: 0px;
     --ticker-height: var(--ticker-h, 2.25rem);
     /* لا شريط سفلي على اللوحية — حجز محتوى أخف */
     --content-pb: calc(1.5rem + var(--inset-bottom, 0px));
     --page-width: min(56rem, 94vw);
     --content-max-wide: 48rem;
     --page-pad-x: max(1.25rem, var(--inset-left, 0px), var(--inset-right, 0px));
+    --ticker-row-h: calc(var(--ticker-h, 2.25rem) + 0.65rem);
+  }
+
+  html[data-home-chrome="0"] {
+    --ticker-row-h: 0px;
   }
 
   .navbar-v3__inner {
