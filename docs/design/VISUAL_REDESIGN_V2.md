@@ -45,8 +45,8 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 | PR | Focus | Status |
 |---|---|---|
 | A | App Shell V2 default + PageHeader/EmptyState | **merged** (#2209) |
-| B | Lessons + Sections | **this** |
-| C | Fiqh / Hadith / Aqidah knowledge dashboards | queued |
+| B | Lessons + Sections | **merged** (#2210) |
+| C | Fiqh / Hadith / Aqidah knowledge dashboards | **this** |
 | D | Prayer / Adhkar / Glossary / History | queued |
 | E | Quiz / Challenges / Settings-Legal / Error states | queued |
 | F | Final QA + OUTPUT | queued |
@@ -66,6 +66,14 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 - دروس: فلاتر/بطاقات موحّدة · EmptyStateV2
 - أقسام: PageHeaderV2 · بلاطات Rounded Premium
 - CSS: `styles/pages/lessons-sections-v2.css`
+
+## Expansion PR-C — Knowledge Dashboards (Fiqh / Hadith / Aqidah)
+
+- `html[data-v2-knowledge="1"]` على `/fiqh*` · `/hadith*` · `/tawhid*` · `/aqidah` · `/fiqh-qawaid` · `/hadith-science`
+- SectionHero → مظهر Page Header V2 (عاجي · حبر · بلا هيرو داكن)
+- بطاقات فقه/حديث/توحيد → SunnahCard V2 look · Rounded Premium icons
+- EmptyStateV2 في فراغ الفقه والحديث
+- CSS: `styles/pages/knowledge-dashboards-v2.css` (مؤجّل من App + استيراد الصفحات)
 
 ## PR-2 Dashboard Homepage
 

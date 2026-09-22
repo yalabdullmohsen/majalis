@@ -1,0 +1,291 @@
+/**
+ * Visual Redesign V2 Expansion C — Knowledge Dashboards (Fiqh / Hadith / Aqidah).
+ * html[data-v2-knowledge="1"]
+ * Knowledge Dashboard · Page Header V2 بدل هيرو داكن · بلا عمود جانبي.
+ * لا يغيّر Routes/محتوى شرعي.
+ */
+
+/* ── سطح اللوحة ── */
+html[data-v2-knowledge="1"] .topic-page,
+html[data-v2-knowledge="1"] .fiqh-lux-shell,
+html[data-v2-knowledge="1"] .fiqh-lux-page,
+html[data-v2-knowledge="1"] .hadith-page,
+html[data-v2-knowledge="1"] .tawhid-hub,
+html[data-v2-knowledge="1"] .topic-page--tawhid .topic-page__body {
+  background: var(--v2-color-ivory, #f9f8f4);
+  color: var(--v2-color-ink, #16241e);
+}
+
+/* ── SectionHero → Page Header V2 (بلا هيرو زمردي داكن) ── */
+html[data-v2-knowledge="1"] .section-hero {
+  background: transparent;
+  padding-inline: max(1rem, var(--page-gutter, 1rem));
+}
+
+html[data-v2-knowledge="1"] .topic-page__hero,
+html[data-v2-knowledge="1"] .topic-page__hero.on-dark,
+html[data-v2-knowledge="1"] .topic-page__hero.safe-hero {
+  max-width: min(56rem, 100%);
+  margin: 0.35rem auto 0.75rem;
+  border-radius: var(--v2-radius-card, 26px);
+  border: 1px solid var(--v2-hairline);
+  background-color: var(--v2-color-ivory-surface, #fffcf8);
+  background-image: none;
+  color: var(--v2-color-ink, #16241e);
+  box-shadow: var(--v2-shadow-soft);
+  padding: var(--v2-space-5, 1.25rem) var(--v2-space-5, 1.25rem) var(--v2-space-4, 1rem);
+}
+
+html[data-v2-knowledge="1"] .topic-page__hero::before,
+html[data-v2-knowledge="1"] .topic-page__hero::after,
+html[data-v2-knowledge="1"] .safe-hero__decor {
+  display: none;
+}
+
+html[data-v2-knowledge="1"] .topic-page__hero .ss-text--on-brand,
+html[data-v2-knowledge="1"] .topic-page__hero .topic-page__title,
+html[data-v2-knowledge="1"] .topic-page__hero .topic-page__eyebrow,
+html[data-v2-knowledge="1"] .topic-page__hero .safe-hero__badge {
+  color: var(--v2-color-ink, #16241e);
+}
+
+html[data-v2-knowledge="1"] .topic-page__hero .topic-page__sub,
+html[data-v2-knowledge="1"] .topic-page__hero .topic-page__quote-text,
+html[data-v2-knowledge="1"] .topic-page__hero .topic-page__quote-ref {
+  color: var(--v2-color-ink-muted, #5e6e67);
+}
+
+html[data-v2-knowledge="1"] .topic-page__eyebrow,
+html[data-v2-knowledge="1"] .safe-hero__badge {
+  background: var(--v2-color-emerald-soft, #e2efe8);
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+  border-radius: var(--v2-radius-pill, 999px);
+  font-weight: 700;
+}
+
+html[data-v2-knowledge="1"] .topic-page__title {
+  font-weight: 800;
+  font-size: clamp(1.35rem, 4vw, 1.75rem);
+}
+
+html[data-v2-knowledge="1"] .topic-page__title::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 3px;
+  margin-block-start: 0.55rem;
+  border-radius: var(--v2-radius-pill, 999px);
+  background: linear-gradient(
+    90deg,
+    var(--v2-color-emerald, #0f5c45),
+    var(--v2-color-gold, #c9a82e)
+  );
+}
+
+html[data-v2-knowledge="1"] .section-hero__back,
+html[data-v2-knowledge="1"] .section-hero__back-row .app-back-btn {
+  border-radius: var(--v2-radius-pill, 999px);
+  border-color: var(--v2-hairline);
+  background: var(--v2-color-ivory-surface, #fffcf8);
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+  box-shadow: var(--v2-shadow-soft);
+}
+
+html[data-v2-knowledge="1"] .topic-page__group-title {
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+  font-weight: 800;
+}
+
+/* ── بطاقات Knowledge Dashboard ── */
+html[data-v2-knowledge="1"] .hub-card,
+html[data-v2-knowledge="1"] .section-entry-card,
+html[data-v2-knowledge="1"] .kx-library-card,
+html[data-v2-knowledge="1"] .fiqh-book-card,
+html[data-v2-knowledge="1"] .hadith-card,
+html[data-v2-knowledge="1"] .hadith-card.ui-card,
+html[data-v2-knowledge="1"] .tawheed-type-card,
+html[data-v2-knowledge="1"] .twh-pillar-card,
+html[data-v2-knowledge="1"] .fiqh-lux-chapter__head,
+html[data-v2-knowledge="1"] .fiqh-lux-lesson-link {
+  border-radius: var(--v2-radius-card, 26px);
+  border: 1px solid var(--v2-hairline);
+  background: var(--v2-color-ivory-surface, #fffcf8);
+  box-shadow: var(--v2-shadow-soft);
+  color: var(--v2-color-ink, #16241e);
+}
+
+html[data-v2-knowledge="1"] .hub-card::before,
+html[data-v2-knowledge="1"] .section-entry-card::before,
+html[data-v2-knowledge="1"] .kx-library-card::before,
+html[data-v2-knowledge="1"] .hadith-card::before,
+html[data-v2-knowledge="1"] .tawheed-type-card::before {
+  border-inline-start-width: 0;
+  width: 0;
+  background: none;
+  box-shadow: none;
+}
+
+html[data-v2-knowledge="1"] .hadith-card__text,
+html[data-v2-knowledge="1"] .hadith-card__text--matn {
+  border-inline-start-width: 0;
+  border-inline-start-color: transparent;
+  color: var(--v2-color-ink, #16241e);
+}
+
+html[data-v2-knowledge="1"] .hub-card__icon,
+html[data-v2-knowledge="1"] .section-entry-card__icon,
+html[data-v2-knowledge="1"] .twh-pillar-icon,
+html[data-v2-knowledge="1"] .section-hero__icon {
+  width: var(--v2-icon-tile, 2.75rem);
+  height: var(--v2-icon-tile, 2.75rem);
+  border-radius: var(--v2-radius-icon, 16px);
+  background: var(--v2-color-emerald-soft, #e2efe8);
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+}
+
+html[data-v2-knowledge="1"] .tawheed-type-card__num,
+html[data-v2-knowledge="1"] .twh-pillar-num {
+  background: var(--v2-color-emerald-soft, #e2efe8);
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+  border-radius: var(--v2-radius-icon, 16px);
+}
+
+/* ── فقه: فلاتر وبحث وإحصاءات ── */
+html[data-v2-knowledge="1"] .fiqh-hub-search__field,
+html[data-v2-knowledge="1"] .fiqh-hub-search__field input,
+html[data-v2-knowledge="1"] .twh-search-input,
+html[data-v2-knowledge="1"] .page-search-input {
+  border-radius: var(--v2-radius-lg, 22px);
+  border-color: var(--v2-hairline);
+  background: var(--v2-color-ivory-surface, #fffcf8);
+  color: var(--v2-color-ink);
+  min-height: 44px;
+}
+
+html[data-v2-knowledge="1"] .fiqh-hub-search__icon-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--v2-radius-icon, 16px);
+  background: var(--v2-color-emerald-soft, #e2efe8);
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+  border: 1px solid var(--v2-hairline);
+}
+
+html[data-v2-knowledge="1"] .fiqh-hub-section__title,
+html[data-v2-knowledge="1"] .hadith-page__browse-title,
+html[data-v2-knowledge="1"] .tawheed-principles-heading {
+  color: var(--v2-color-ink, #16241e);
+  font-weight: 800;
+}
+
+html[data-v2-knowledge="1"] .fiqh-hub-stats__item,
+html[data-v2-knowledge="1"] .fiqh-hub-edu-note,
+html[data-v2-knowledge="1"] .hadith-page__browse-lead,
+html[data-v2-knowledge="1"] .hadith-scientific-notice,
+html[data-v2-knowledge="1"] .hadith-source-note,
+html[data-v2-knowledge="1"] .twh-section-intro {
+  color: var(--v2-color-ink-muted, #5e6e67);
+}
+
+html[data-v2-knowledge="1"] .fiqh-hub-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--v2-space-3, 0.75rem);
+}
+
+html[data-v2-knowledge="1"] .fiqh-hub-stats__item {
+  border-radius: var(--v2-radius-pill, 999px);
+  border: 1px solid var(--v2-hairline);
+  background: var(--v2-color-ivory-surface, #fffcf8);
+  padding: 0.35rem 0.85rem;
+  font-weight: 700;
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+}
+
+/* ── حديث: تبديل أقسام + أدوات ── */
+html[data-v2-knowledge="1"] .hadith-class-switch__link {
+  border-radius: var(--v2-radius-pill, 999px);
+  border: 1px solid var(--v2-hairline);
+  background: var(--v2-color-ivory-surface, #fffcf8);
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+}
+
+html[data-v2-knowledge="1"] .hadith-class-switch__link.is-active {
+  background: var(--v2-color-emerald, #0f5c45);
+  border-color: transparent;
+  color: var(--v2-color-on-emerald, #fff);
+}
+
+html[data-v2-knowledge="1"] .hadith-toolbar,
+html[data-v2-knowledge="1"] .hadith-filters-panel,
+html[data-v2-knowledge="1"] .twh-jumpnav {
+  gap: var(--v2-space-2, 0.5rem);
+}
+
+html[data-v2-knowledge="1"] .twh-jumpnav__btn,
+html[data-v2-knowledge="1"] .twh-goto-btn {
+  border-radius: var(--v2-radius-pill, 999px);
+  border: 1px solid var(--v2-hairline);
+  background: var(--v2-color-emerald-soft, #e2efe8);
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+  font-weight: 700;
+}
+
+/* ── Dark / Luxury Night ── */
+html[data-theme="dark"][data-v2-knowledge="1"] .topic-page,
+html.dark[data-v2-knowledge="1"] .topic-page,
+html[data-theme="dark"][data-v2-knowledge="1"] .fiqh-lux-shell,
+html.dark[data-v2-knowledge="1"] .fiqh-lux-shell,
+html[data-theme="dark"][data-v2-knowledge="1"] .hadith-page,
+html.dark[data-v2-knowledge="1"] .hadith-page,
+html[data-theme="dark"][data-v2-knowledge="1"] .tawhid-hub,
+html.dark[data-v2-knowledge="1"] .tawhid-hub {
+  background: var(--v2-color-night-bg, #0a1612);
+  color: var(--v2-color-night-ink, #edf5f0);
+}
+
+html[data-theme="dark"][data-v2-knowledge="1"] .topic-page__hero,
+html.dark[data-v2-knowledge="1"] .topic-page__hero,
+html[data-theme="dark"][data-v2-knowledge="1"] .hub-card,
+html.dark[data-v2-knowledge="1"] .hub-card,
+html[data-theme="dark"][data-v2-knowledge="1"] .kx-library-card,
+html.dark[data-v2-knowledge="1"] .kx-library-card,
+html[data-theme="dark"][data-v2-knowledge="1"] .hadith-card,
+html.dark[data-v2-knowledge="1"] .hadith-card,
+html[data-theme="dark"][data-v2-knowledge="1"] .tawheed-type-card,
+html.dark[data-v2-knowledge="1"] .tawheed-type-card,
+html[data-theme="dark"][data-v2-knowledge="1"] .twh-pillar-card,
+html.dark[data-v2-knowledge="1"] .twh-pillar-card {
+  background: var(--v2-color-night-surface, #12261f);
+  border-color: var(--v2-color-night-hairline);
+  color: var(--v2-color-night-ink);
+}
+
+html[data-theme="dark"][data-v2-knowledge="1"] .topic-page__hero .ss-text--on-brand,
+html.dark[data-v2-knowledge="1"] .topic-page__hero .ss-text--on-brand,
+html[data-theme="dark"][data-v2-knowledge="1"] .topic-page__title,
+html.dark[data-v2-knowledge="1"] .topic-page__title {
+  color: var(--v2-color-night-ink, #edf5f0);
+}
+
+html[data-theme="dark"][data-v2-knowledge="1"] .topic-page__hero .topic-page__sub,
+html.dark[data-v2-knowledge="1"] .topic-page__hero .topic-page__sub,
+html[data-theme="dark"][data-v2-knowledge="1"] .fiqh-hub-edu-note,
+html.dark[data-v2-knowledge="1"] .fiqh-hub-edu-note {
+  color: var(--v2-color-night-muted, #a8c4b8);
+}
+
+html[data-theme="dark"][data-v2-knowledge="1"] .topic-page__group-title,
+html.dark[data-v2-knowledge="1"] .topic-page__group-title,
+html[data-theme="dark"][data-v2-knowledge="1"] .fiqh-hub-section__title,
+html.dark[data-v2-knowledge="1"] .fiqh-hub-section__title {
+  color: var(--v2-color-night-emerald-text, #9fd4bf);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-v2-knowledge="1"] .hub-card,
+  html[data-v2-knowledge="1"] .hadith-card,
+  html[data-v2-knowledge="1"] .kx-library-card {
+    transition: none;
+  }
+}

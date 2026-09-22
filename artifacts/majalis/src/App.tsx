@@ -793,6 +793,36 @@ function AppShellInner() {
     };
   }, [isSectionsPath]);
 
+  const isKnowledgeHubPath =
+    location === "/fiqh" ||
+    location.startsWith("/fiqh/") ||
+    location.startsWith("/fiqh?") ||
+    location === "/fiqh-qawaid" ||
+    location.startsWith("/fiqh-qawaid?") ||
+    location === "/hadith" ||
+    location.startsWith("/hadith/") ||
+    location.startsWith("/hadith?") ||
+    location === "/hadith-science" ||
+    location.startsWith("/hadith-science?") ||
+    location === "/tawhid" ||
+    location.startsWith("/tawhid/") ||
+    location.startsWith("/tawhid?") ||
+    location === "/aqidah" ||
+    location.startsWith("/aqidah?");
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isKnowledgeHubPath) {
+      root.setAttribute("data-v2-knowledge", "1");
+      void import("@/styles/pages/knowledge-dashboards-v2.css");
+    } else {
+      root.removeAttribute("data-v2-knowledge");
+    }
+    return () => {
+      root.removeAttribute("data-v2-knowledge");
+    };
+  }, [isKnowledgeHubPath]);
+
   useEffect(() => {
     const root = document.documentElement;
     root.setAttribute("data-v2-nav", "1");

@@ -26,11 +26,12 @@ import {
   type HadithSearchScope,
   type HadithSortMode,
 } from "@/lib/hadith-access";
-import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { SectionEntryCard } from "@/components/ui/HubCard";
 import { HadithEntryCard } from "@/components/hadith/HadithEntryCard";
 import { GridScreen } from "@/components/design-system/screens";
+import { EmptyStateV2 } from "@/components/design-system";
 import { ExclusiveChoiceGroup } from "@/components/ui/ExclusiveChoiceGroup";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { ShareButtons } from "@/components/ContentActions";
@@ -60,6 +61,7 @@ import { isHadithComplete, type HadithRecord } from "@/lib/hadith/hadithNormaliz
 import "@/styles/components/hadith-badge.css";
 import "@/styles/pages/hadith.css";
 import "@/styles/pages/hadith-design-language.css";
+import "@/styles/pages/knowledge-dashboards-v2.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -889,12 +891,9 @@ export function HadithSection({
       {loading && displayItems.length === 0 ? (
         <SkeletonCardGrid count={8} />
       ) : displayItems.length === 0 && !loading ? (
-        <Empty
-          text={
-            debouncedSearch.trim()
-              ? EMPTY.search
-              : meta.empty
-          }
+        <EmptyStateV2
+          title="لا أحاديث مطابقة"
+          description={debouncedSearch.trim() ? EMPTY.search : meta.empty}
         />
       ) : (
         <>

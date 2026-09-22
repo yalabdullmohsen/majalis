@@ -10,6 +10,7 @@ import { KnowledgeLibraryCard, KnowledgeLayout } from "@/components/knowledge";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
 import { SEARCH_INPUT_ATTRS, handleSearchEnterKey } from "@/lib/search-input";
 import "@/styles/pages/tawhid.css";
+import "@/styles/pages/knowledge-dashboards-v2.css";
 import { UtilityScreen } from "@/components/design-system/screens";
 
 // ─── أقسام العقيدة والتوحيد ──────────────────────────────────────────────────
