@@ -241,12 +241,38 @@ console.log("=== PR-8 Visual QA ===");
     "data-v2-profile",
     "data-v2-nav",
     "data-v2-night",
+    "data-v2-app",
   ]) {
     assert.match(app, new RegExp(attr));
   }
   const doc = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2.md"), "utf8");
   assert.match(doc, /PR-8 Visual QA/);
   assert.match(doc, /VISUAL_REDESIGN_V2_QA\.md/);
+}
+
+console.log("=== Expansion PR-A App Shell default ===");
+{
+  const app = read("src/App.tsx");
+  assert.match(app, /data-v2-app/);
+  assert.match(app, /app-shell-v2\.css/);
+  assert.match(app, /enableV2App/);
+  assert.ok(existsSync(resolve(majalisRoot, "src/styles/pages/app-shell-v2.css")));
+  assert.ok(existsSync(resolve(majalisRoot, "src/components/design-system/PageHeaderV2.tsx")));
+  assert.ok(existsSync(resolve(majalisRoot, "src/components/design-system/EmptyStateV2.tsx")));
+  const shell = read("src/styles/pages/app-shell-v2.css");
+  assert.match(shell, /data-v2-app/);
+  assert.match(shell, /soft-card/);
+  assert.match(shell, /page-header-v2|\.ph2/);
+  assert.match(shell, /empty-state-v2|\.es2/);
+  assert.doesNotMatch(shell, /border-inline-start:\s*[34]px/);
+  const idx = read("src/components/design-system/index.ts");
+  assert.match(idx, /PageHeaderV2/);
+  assert.match(idx, /EmptyStateV2/);
+  const tokens = read("src/styles/visual-redesign-v2-tokens.css");
+  assert.match(tokens, /data-v2-app/);
+  const doc = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2.md"), "utf8");
+  assert.match(doc, /Expansion PR-A|App Shell V2 default/);
+  assert.match(doc, /app-shell-v2\.css/);
 }
 
 console.log("=== package script ===");

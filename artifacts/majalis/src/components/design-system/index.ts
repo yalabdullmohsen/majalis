@@ -4,6 +4,8 @@
  */
 export { AppCard, type AppCardProps } from "./AppCard";
 export { SunnahCardV2, type SunnahCardV2Props } from "./SunnahCardV2";
+export { PageHeaderV2, type PageHeaderV2Props } from "./PageHeaderV2";
+export { EmptyStateV2, type EmptyStateV2Props } from "./EmptyStateV2";
 export { FeatureCard, type FeatureCardProps } from "./FeatureCard";
 export { ContentCard, type ContentCardProps } from "./ContentCard";
 export { ActionButton, type ActionButtonProps } from "./ActionButton";

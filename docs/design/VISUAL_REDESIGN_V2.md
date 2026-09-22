@@ -38,7 +38,26 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 | 5 | Library & Search | **merged** (#2205) |
 | 6 | Profile Hub + bottom nav (5 tabs) | **merged** (#2206) |
 | 7 | Dark Mode Luxury Night polish | **merged** (#2207) |
-| 8 | Visual QA | **this** |
+| 8 | Visual QA | **merged** (#2208) |
+
+## Expansion train (V2 default for remaining app)
+
+| PR | Focus | Status |
+|---|---|---|
+| A | App Shell V2 default + PageHeader/EmptyState | **this** |
+| B | Lessons + Sections | queued |
+| C | Fiqh / Hadith / Aqidah knowledge dashboards | queued |
+| D | Prayer / Adhkar / Glossary / History | queued |
+| E | Quiz / Challenges / Settings-Legal / Error states | queued |
+| F | Final QA + OUTPUT | queued |
+
+## Expansion PR-A — App Shell default
+
+- `html[data-v2-app="1"]` على كل المسارات العامة (يُستثنى المصحف الغمري و`/admin`)
+- جسر بصري: `soft-card` / `hub-card` / `mj-card` → مظهر SunnahCard V2
+- `PageHeaderV2` · `EmptyStateV2`
+- CSS مؤجّل: `styles/pages/app-shell-v2.css` (لا يدخل ميزانية CSS الحرج)
+- لا إعادة تصميم الشاشات المكتملة في #2201–#2208
 
 ## PR-2 Dashboard Homepage
 
