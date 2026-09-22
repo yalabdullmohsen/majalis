@@ -65,40 +65,47 @@ jobs:
         with:
           node-version: 24
 
-      - name: Enable Corepack (pnpm)
-        run: |
-          corepack enable
-          corepack prepare --activate
-
-      - name: Confirm CI Verify build (push — تخطّي build مكرر)
-        id: ci_gate
-        if: github.event_name == 'push'
+      # push فقط قد يحتاج build محلي. schedule/dispatch = تحقق version.json فقط
+      # (Vercel ينشر main مباشرة — لا تفعّل Corepack بلا حاجة؛ فشل registry كان يسقط التحقق).
+      - name: Decide local build requirement
+        id: need_build
         env:
           GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
         run: |
           set -euo pipefail
+          if [ "${EVENT_NAME}" != "push" ]; then
+            echo "required=false" >> "$GITHUB_OUTPUT"
+            echo "event=${EVENT_NAME} — تحقق إنتاج فقط (بلا Corepack/pnpm install)"
+            exit 0
+          fi
           ok=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${{ github.sha }}/check-runs" \
             --jq '[.check_runs[] | select(.name=="Verify build" and .conclusion=="success")] | length' || echo "0")
           if [ "$ok" != "0" ]; then
-            echo "skip_build=true" >> "$GITHUB_OUTPUT"
+            echo "required=false" >> "$GITHUB_OUTPUT"
             echo "CI Verify build أخضر — لا build محلي مكرر"
           else
-            echo "skip_build=false" >> "$GITHUB_OUTPUT"
+            echo "required=true" >> "$GITHUB_OUTPUT"
             echo "Verify build غير متاح — fallback إلى build محلي"
           fi
 
+      # نفس عقد setup-workspace: corepack retry ثم npm install -g pnpm@packageManager
+      - name: Enable pnpm (corepack retry + npm fallback)
+        if: steps.need_build.outputs.required == 'true'
+        run: bash .github/actions/setup-workspace/activate-pnpm.sh
+
       - name: Install dependencies
-        if: steps.ci_gate.outputs.skip_build != 'true'
+        if: steps.need_build.outputs.required == 'true'
         run: pnpm install --frozen-lockfile
 
       - name: Type check
-        if: steps.ci_gate.outputs.skip_build != 'true'
+        if: steps.need_build.outputs.required == 'true'
         run: |
           pnpm run typecheck:libs
           pnpm --filter @workspace/majalis run typecheck
 
       - name: Production build (fallback فقط إن لم ينجح CI)
-        if: steps.ci_gate.outputs.skip_build != 'true'
+        if: steps.need_build.outputs.required == 'true'
         env:
           PORT: "24216"
           BASE_PATH: "/"
@@ -257,10 +264,8 @@ jobs:
         with:
           node-version: 24
 
-      - name: Enable Corepack (pnpm)
-        run: |
-          corepack enable
-          corepack prepare --activate
+      - name: Enable pnpm (corepack retry + npm fallback)
+        run: bash .github/actions/setup-workspace/activate-pnpm.sh
 
       - name: PSI — FCP/SI 2200/2500 + لا انحدار عن فحص 12
         env:
@@ -326,10 +331,17 @@ jobs:
           echo "expect_sha=${SHA} short=${SHORT}"
 
           if [ "${DEPLOY_RESULT}" != "success" ]; then
-            echo "verification=failure" >> "$GITHUB_OUTPUT"
+            # تسجيل صريح — لا يُفسَّر كفشل تحقق مضلل؛ final-report يسقط المسار بسبب deploy
+            echo "verification=blocked_by_deploy" >> "$GITHUB_OUTPUT"
             echo "production_url=" >> "$GITHUB_OUTPUT"
-            echo "::error::deploy job لم ينجح — لا يمكن اعتبار الإنتاج منشوراً"
-            exit 1
+            echo "::warning::BLOCKED_BY_DEPLOY — deploy job=${DEPLOY_RESULT}؛ لا Production URL من هذا التشغيل"
+            {
+              echo "## post-deploy-truth: BLOCKED_BY_DEPLOY"
+              echo "- Deploy result: \`${DEPLOY_RESULT}\`"
+              echo "- السبب: فشل/إلغاء خطوة النشر قبل التحقق من version.json"
+              echo "- لا يُعتبر الإنتاج منشورًا من هذا التشغيل"
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
           fi
 
           # الفرع يجب أن يكون main (push/schedule/dispatch على هذا الـworkflow)
@@ -660,7 +672,11 @@ jobs:
 
           # قواعد النجاح: فشل حقيقي فقط يمنع الإنتاج
           if [ "${deploy_line}" != "success" ]; then
-            echo "::error::فشل deploy — Workflow Failure"
+            if [ "${post_line}" = "blocked_by_deploy" ]; then
+              echo "::error::فشل deploy — post-deploy-truth=BLOCKED_BY_DEPLOY — Workflow Failure"
+            else
+              echo "::error::فشل deploy — Workflow Failure"
+            fi
             exit 1
           fi
           if [ "${post_line}" = "failure" ]; then
