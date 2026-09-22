@@ -222,6 +222,7 @@ html[data-v2-app="1"] .bottom-nav__tab:active {
 /* PR-6 detail/reading: sunnah-identity-detail-reading.css (TopicPage + درس/حديث/مقال) */
 /* PR-7 drawer/nav/fab: sunnah-identity-chrome-nav.css (BottomNav + SideNav + FloatingBack) */
 /* PR-8 forms/tabs/filters: sunnah-identity-forms-filters.css (FilterChip/Bar + Login) */
+/* PR-9 luxury night: sunnah-identity-luxury-night.css (يُحمَّل كسولًا مع الوضع الليلي من App) */
 
 /* ── PR-3: تكثيف FeatureCard + شبكات الأقسام ── */
 html[data-v2-app="1"] .ss-feature-card__inner {

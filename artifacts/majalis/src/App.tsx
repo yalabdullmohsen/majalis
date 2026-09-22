@@ -1051,6 +1051,7 @@ function AppShellInner() {
       if (nightCssLoaded) return;
       nightCssLoaded = true;
       void import("@/styles/pages/luxury-night-v2.css");
+      void import("@/styles/sunnah-identity-luxury-night.css");
     };
     const syncNight = () => {
       const dark =
