@@ -759,6 +759,40 @@ function AppShellInner() {
     };
   }, [isProfileHubPath]);
 
+  const isLessonsPath =
+    location === "/lessons" ||
+    location.startsWith("/lessons/") ||
+    location.startsWith("/lessons?");
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isLessonsPath) {
+      root.setAttribute("data-v2-lessons", "1");
+    } else {
+      root.removeAttribute("data-v2-lessons");
+    }
+    return () => {
+      root.removeAttribute("data-v2-lessons");
+    };
+  }, [isLessonsPath]);
+
+  const isSectionsPath =
+    location === "/sections" ||
+    location.startsWith("/sections?") ||
+    location.startsWith("/sections/");
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isSectionsPath) {
+      root.setAttribute("data-v2-sections", "1");
+    } else {
+      root.removeAttribute("data-v2-sections");
+    }
+    return () => {
+      root.removeAttribute("data-v2-sections");
+    };
+  }, [isSectionsPath]);
+
   useEffect(() => {
     const root = document.documentElement;
     root.setAttribute("data-v2-nav", "1");

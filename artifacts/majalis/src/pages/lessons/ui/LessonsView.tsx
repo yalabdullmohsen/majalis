@@ -4,7 +4,8 @@ import { ShareButtons } from "@/components/ContentActions";
 import { Link } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { ErrorState, Empty } from "@/components/ui-common";
+import { ErrorState } from "@/components/ui-common";
+import { EmptyStateV2 } from "@/components/design-system";
 import { HarvestFeedPanel } from "@/components/lessons/HarvestFeedPanel";
 import { SectionLobby } from "@/components/lobby/SectionLobby";
 import { ListScreen } from "@/components/design-system/screens";
@@ -38,6 +39,7 @@ import { regionsForGovernorate } from "@/lib/kuwait-regions";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import "@/styles/pages/lessons.css";
 import "@/styles/pages/lessons-legacy.css";
+import "@/styles/pages/lessons-sections-v2.css";
 import "@/components/sections/section-cards.css";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
@@ -615,7 +617,12 @@ export default function LessonsPage({
             <>
               <section className="lessons-v2-section lessons-v2-section--first">
                 {listLessons.length === 0 ? (
-                  <Empty text={EMPTY.search} />
+                  <EmptyStateV2
+                    title="لا دروس مطابقة"
+                    description={EMPTY.search}
+                    ctaLabel="مسح التصفية"
+                    onCtaClick={clearAllFilters}
+                  />
                 ) : (
                   <>
                     {renderGrid(

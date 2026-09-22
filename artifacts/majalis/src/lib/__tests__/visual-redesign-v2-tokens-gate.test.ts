@@ -275,6 +275,29 @@ console.log("=== Expansion PR-A App Shell default ===");
   assert.match(doc, /app-shell-v2\.css/);
 }
 
+console.log("=== Expansion PR-B Lessons + Sections ===");
+{
+  const app = read("src/App.tsx");
+  assert.match(app, /data-v2-lessons/);
+  assert.match(app, /data-v2-sections/);
+  assert.ok(existsSync(resolve(majalisRoot, "src/styles/pages/lessons-sections-v2.css")));
+  const lessons = read("src/pages/lessons/ui/LessonsView.tsx");
+  const sections = read("src/pages/account/SectionsPage.tsx");
+  assert.match(lessons, /lessons-sections-v2\.css/);
+  assert.match(lessons, /EmptyStateV2/);
+  assert.match(sections, /lessons-sections-v2\.css/);
+  assert.match(sections, /PageHeaderV2/);
+  const css = read("src/styles/pages/lessons-sections-v2.css");
+  assert.match(css, /data-v2-lessons/);
+  assert.match(css, /data-v2-sections/);
+  assert.match(css, /lesson-unified-card/);
+  assert.match(css, /hub-card|section-entry-card/);
+  assert.doesNotMatch(css, /border-inline-start:\s*[34]px/);
+  const doc = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2.md"), "utf8");
+  assert.match(doc, /Expansion PR-B|Lessons \+ Sections/);
+  assert.match(doc, /lessons-sections-v2\.css/);
+}
+
 console.log("=== package script ===");
 {
   const pkg = read("package.json");
