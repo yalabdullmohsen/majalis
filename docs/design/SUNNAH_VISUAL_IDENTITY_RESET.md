@@ -27,8 +27,8 @@ V2/V3 حسّنتا التناسق، لكن الواجهة ما زالت تشبه
 | 3 | Cards and content rows | **merged** |
 | 4 | Home and Quran Hub | **merged** |
 | 5 | Sections and category grids | **merged** |
-| 6 | Detail and reading pages | **in progress** |
-| 7 | Drawer + Bottom Navigation + floating | queued |
+| 6 | Detail and reading pages | **merged** |
+| 7 | Drawer + Bottom Navigation + floating | **in progress** |
 | 8 | Forms + Tabs + Filters | queued |
 | 9 | Dark Mode Luxury Night | queued |
 | 10 | Responsive + Accessibility + Visual QA | queued |
@@ -79,6 +79,13 @@ Rule: start each PR from latest `main`. Do not start next until previous is merg
 - Reading rhythm: `--lh-reading: 1.75` · tighter `--read-para-gap` / card pads / measure `36rem`
 - Lesson detail · hadith-by-id · article detail surfaces (`sunnah-identity-detail-reading.css`)
 - Loaded with TopicPage + LessonDetailView + HadithByIdView + DiscoverIslamArticleDetailPage (not `main.tsx`)
+
+## PR-7 deliverables
+
+- Bottom Nav: softer shadow · no active icon lift/gold ring · `letter-spacing: 0` · identity focus
+- Side drawer: denser rows/icons · UI font on titles · quieter panel shadow
+- Floating back bar + assistant FAB: compact size · `--v2-shadow-soft`
+- `sunnah-identity-chrome-nav.css` loaded with BottomNavBar + SideNavDrawer + FloatingBack + Assistant FAB (not `main.tsx`)
 
 ## Out of scope (all PRs)
 

@@ -8,6 +8,7 @@ import { isNavHrefActive } from "@/lib/nav-active";
 import { SIDEBAR_NAV_GROUPS } from "@/lib/sidebar-nav";
 import { DrawerFromRegistry } from "@/components/layout/DrawerFromRegistry";
 import "@/styles/components/sidebar-redesign.css";
+import "@/styles/sunnah-identity-chrome-nav.css";
 
 type DrawerProps = {
   open: boolean;

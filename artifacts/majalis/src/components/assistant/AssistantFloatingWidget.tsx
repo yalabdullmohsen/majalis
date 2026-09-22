@@ -5,6 +5,7 @@ import { Sparkles, X } from "lucide-react";
 import { useAssistantChat } from "@/hooks/useAssistantChat";
 import { AssistantChatView } from "./AssistantChatView";
 import { isAssistantFabHiddenPath } from "@/lib/assistant-fab-paths";
+import "@/styles/sunnah-identity-chrome-nav.css";
 import { isAssistantFeatureEnabled } from "@/lib/assistant-feature-flag";
 
 export function AssistantFloatingWidget() {
