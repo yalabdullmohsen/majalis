@@ -36,6 +36,8 @@ export const QURAN_EXPERIENCE_NEXT = {
   verseHighlight: true,
   nightTheme: true,
   offlineBasics: true,
+  /** مظهر Accent موحّد: زمردي | ذهبي على ص١…٦٠٤ */
+  dualAppearanceThemes: true,
   /** ختمة/ورد/حفظ/مشاركة متقدمة — P2 */
   khatmaWird: false,
   hifzMode: false,

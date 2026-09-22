@@ -44,8 +44,8 @@ export const mushafVerseMarkerDarkBorder = "#A88618" as const;
 export const mushafVerseMarkerDarkNumber = "#F0E2B8" as const;
 
 /**
- * First Spread (ص١–ص٢ فقط) — فيروزي أساسي + ذهب خفيف.
- * لا يغيّر توكنات الذهب المطبعي للصفحات 3…604.
+ * First Spread / Emerald accent — نفس درجات الزمردي في MushafAppearanceTheme.
+ * لا تُفرض على ص١–ص٢ بمعزل عن اختيار المستخدم؛ الافتراضي EMERALD عالميًا.
  */
 export const mushafOpeningTurquoise = "#0E7A6B" as const;
 export const mushafOpeningTurquoiseDeep = "#0A5C52" as const;
@@ -55,6 +55,10 @@ export const mushafOpeningMarkerNumber = "#F7F3E8" as const;
 export const mushafOpeningGoldAccent = mushafPrintedGold;
 export const mushafOpeningMetadataSurface = "#F3EBD8" as const;
 export const mushafOpeningMetadataText = "#3A2E1A" as const;
+
+/** مرادفات Accent */
+export const mushafEmeraldPrimary = mushafOpeningTurquoise;
+export const mushafEmeraldSecondary = mushafOpeningTurquoiseDeep;
 
 /** توافق خلفي مع التوكنات السابقة */
 export const mushafVerseMarkerGold = mushafVerseMarkerFill;

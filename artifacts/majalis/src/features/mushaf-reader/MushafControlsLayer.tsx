@@ -17,6 +17,10 @@ import {
   clampMushafPage,
   parseMushafPageQuery,
 } from "@/lib/quran-last-page";
+import {
+  mushafAppearanceThemeLabel,
+  type MushafAppearanceTheme,
+} from "@/lib/mushaf-v2/mushaf-appearance-theme";
 import "./page-goto-dial.css";
 import "@/styles/components/page-goto-visibility.css";
 
@@ -55,6 +59,9 @@ type ControlsProps = {
   onPageArrowsEnabledChange?: (enabled: boolean) => void;
   moreOpen?: boolean;
   onMoreOpenChange?: (open: boolean) => void;
+  /** Accent: زمردي | ذهبي */
+  accentTheme?: MushafAppearanceTheme;
+  onAccentThemeChange?: (theme: MushafAppearanceTheme) => void;
 };
 
 /** طبقة أدوات القراءة — شريط مضغوط فوق المصحف (خارج Geometry) */
@@ -74,6 +81,8 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
   onPageArrowsEnabledChange,
   moreOpen = false,
   onMoreOpenChange,
+  accentTheme = "EMERALD",
+  onAccentThemeChange,
 }: ControlsProps) {
   const [draft, setDraft] = useState(String(pageNumber));
   const [gotoError, setGotoError] = useState<string | null>(null);
@@ -257,6 +266,50 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
           <h2 id={moreTitleId} className="nm-controls-more__title">
             إعدادات المصحف
           </h2>
+          {onAccentThemeChange ? (
+            <fieldset
+              className="nm-controls-more__accent"
+              data-testid="mushaf-accent-theme"
+            >
+              <legend className="nm-controls-more__legend">المظهر</legend>
+              <div
+                className="nm-controls-more__accent-options"
+                role="radiogroup"
+                aria-label="مظهر علامات الآيات وترويسة السورة"
+              >
+                {(["EMERALD", "GOLD"] as const).map((id) => {
+                  const selected = accentTheme === id;
+                  return (
+                    <button
+                      key={id}
+                      type="button"
+                      role="radio"
+                      aria-checked={selected}
+                      data-testid={`mushaf-accent-${id.toLowerCase()}`}
+                      className={`nm-controls-more__accent-option${selected ? " is-selected" : ""}`}
+                      onClick={() => onAccentThemeChange(id)}
+                    >
+                      <span
+                        className="nm-controls-more__accent-swatch"
+                        data-accent={id === "GOLD" ? "gold" : "emerald"}
+                        aria-hidden="true"
+                      >
+                        <span className="nm-controls-more__accent-swatch-num">١</span>
+                      </span>
+                      <span className="nm-controls-more__accent-label">
+                        {mushafAppearanceThemeLabel(id)}
+                      </span>
+                      {selected ? (
+                        <span className="nm-controls-more__accent-check" aria-hidden="true">
+                          ✓
+                        </span>
+                      ) : null}
+                    </button>
+                  );
+                })}
+              </div>
+            </fieldset>
+          ) : null}
           <label className="nm-controls-more__row">
             <span>إظهار أسهم تقليب الصفحات</span>
             <input

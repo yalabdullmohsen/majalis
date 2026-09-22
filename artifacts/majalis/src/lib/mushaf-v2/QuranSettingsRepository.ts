@@ -11,7 +11,14 @@ import {
   type MushafAppearanceMode,
   type MushafAppearanceResolved,
 } from "./appearance-prefs";
+import {
+  applyMushafAccentTheme,
+  loadMushafAccentTheme,
+  saveMushafAccentTheme,
+} from "./accent-prefs";
 import { QURAN_EXPERIENCE_NEXT } from "./flags";
+import type { MushafAppearanceTheme } from "./mushaf-appearance-theme";
+import { MUSHAF_ACCENT_DEFAULT } from "./mushaf-appearance-theme";
 
 const KEYS = {
   restoreLastPage: "ssunnah-mushaf-restore-last-page-v1",
@@ -24,6 +31,8 @@ const KEYS = {
 export type QuranReadingPrefs = {
   appearanceMode: MushafAppearanceMode;
   appearanceResolved: MushafAppearanceResolved;
+  /** Accent: زمردي | ذهبي — منفصل عن فاتح/ليلي */
+  accentTheme: MushafAppearanceTheme;
   restoreLastPage: boolean;
   reduceMotion: boolean;
   /** وضع قراءة نصية مرنة — منفصل عن صفحة المصحف الثابتة */
@@ -75,6 +84,21 @@ export const QuranSettingsRepository = {
 
   resolveAppearance(mode?: MushafAppearanceMode): MushafAppearanceResolved {
     return resolveMushafAppearance(mode ?? loadMushafAppearanceMode());
+  },
+
+  getAccentTheme(): MushafAppearanceTheme {
+    if (!QURAN_EXPERIENCE_NEXT.dualAppearanceThemes) return MUSHAF_ACCENT_DEFAULT;
+    return loadMushafAccentTheme();
+  },
+
+  setAccentTheme(theme: MushafAppearanceTheme): void {
+    if (!QURAN_EXPERIENCE_NEXT.dualAppearanceThemes) return;
+    saveMushafAccentTheme(theme);
+  },
+
+  applyAccentTheme(theme?: MushafAppearanceTheme, root?: HTMLElement | null): void {
+    if (!QURAN_EXPERIENCE_NEXT.dualAppearanceThemes) return;
+    applyMushafAccentTheme(theme ?? loadMushafAccentTheme(), root);
   },
 
   getRestoreLastPage(): boolean {
@@ -139,6 +163,7 @@ export const QuranSettingsRepository = {
     return {
       appearanceMode,
       appearanceResolved: resolveMushafAppearance(appearanceMode),
+      accentTheme: this.getAccentTheme(),
       restoreLastPage: this.getRestoreLastPage(),
       reduceMotion: this.getReduceMotion(),
       textReadingMode: this.isTextReadingModeEnabled(),

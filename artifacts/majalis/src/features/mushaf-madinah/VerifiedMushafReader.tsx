@@ -40,6 +40,10 @@ import { MushafControls } from "./MushafControls";
 import { MushafPage } from "./MushafPage";
 import { MushafPager, SWIPE_MIN_PX } from "./MushafPager";
 import { MushafSettingsSheet, type MushafHideLevel, type MushafThemeChoice } from "./MushafSettingsSheet";
+import {
+  QuranSettingsRepository,
+  type MushafAppearanceTheme,
+} from "@/lib/mushaf-v2";
 import { setMushafAudioClock, useMushafAudioClock } from "./mushaf-audio-clock-store";
 import { setMushafAyahSyncKeys } from "./mushaf-ayah-sync-store";
 import {
@@ -154,6 +158,9 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
   const theme = resolveTheme(themeChoice);
   const [hideLevel, setHideLevel] = useState<MushafHideLevel>(() => loadHideLevel());
   const [ayahMarks, setAyahMarks] = useState<boolean>(() => loadAyahMarks());
+  const [accentTheme, setAccentTheme] = useState<MushafAppearanceTheme>(() =>
+    QuranSettingsRepository.getAccentTheme(),
+  );
   const [revealedVerses, setRevealedVerses] = useState<ReadonlySet<string>>(() => new Set());
 
   const { fontFamily, ready: fontReady } = useQpcPageFont(page);
@@ -806,6 +813,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       data-ayah-bar={actionsOpen ? "1" : "0"}
       data-audio-dock={audioDockVisible ? (audioDockMini ? "mini" : "1") : "0"}
       data-mushaf-theme={theme}
+      data-mushaf-accent={accentTheme === "GOLD" ? "gold" : "emerald"}
       data-ayah-marks={ayahMarks ? "1" : "0"}
       data-text-profile={lowEndText ? "low" : "normal"}
       data-testid="mushaf-viewport"
@@ -1033,6 +1041,12 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         onHideLevel={setHideLevel}
         ayahMarks={ayahMarks}
         onAyahMarks={setAyahMarks}
+        accentTheme={accentTheme}
+        onAccentTheme={(t) => {
+          setAccentTheme(t);
+          QuranSettingsRepository.setAccentTheme(t);
+          QuranSettingsRepository.applyAccentTheme(t);
+        }}
         onClose={() => setSettingsOpen(false)}
       />
 

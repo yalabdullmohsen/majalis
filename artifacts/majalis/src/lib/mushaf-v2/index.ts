@@ -44,3 +44,19 @@ export {
   type MushafAppearanceMode,
   type MushafAppearanceResolved,
 } from "./appearance-prefs";
+export {
+  loadMushafAccentTheme,
+  saveMushafAccentTheme,
+  applyMushafAccentTheme,
+  readAccentThemeFromDom,
+} from "./accent-prefs";
+export {
+  MUSHAF_APPEARANCE_THEME,
+  MUSHAF_ACCENT_DEFAULT,
+  MUSHAF_ACCENT_STORAGE_KEY,
+  themeToAccentAttr,
+  accentAttrToTheme,
+  mushafAppearanceThemeLabel,
+  type MushafAppearanceTheme,
+  type MushafAccentAttr,
+} from "./mushaf-appearance-theme";

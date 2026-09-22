@@ -1,5 +1,5 @@
 /**
- * Guard: ص١–ص٢ امتلاء عمودي + ذهب موحّد + علامة آية أوضح — بلا مساس بالنص القرآني.
+ * Guard: ص١–ص٢ امتلاء عمودي + Accent Theme + علامة آية أوضح — بلا مساس بالنص القرآني.
  * تشغيل: node --import tsx src/lib/__tests__/mushaf-pages-1-2-layout-gold-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -12,6 +12,7 @@ import {
   mushafVerseMarkerBorder,
   mushafVerseMarkerNumber,
   quranGold,
+  mushafOpeningTurquoise,
 } from "../../features/mushaf-reader/mushaf-warm-yellow-tokens";
 import {
   isContentPackedPage,
@@ -51,25 +52,27 @@ assert.doesNotMatch(
   /\.nm-page--opening \.nm-page__body[\s\S]{0,160}grid-template-rows:\s*repeat\(15,/s,
 );
 
-console.log("=== Quran Gold موحّد (ص٣…٦٠٤) + فيروزي للافتتاح ===");
+console.log("=== Quran Gold palette + Emerald default accent ===");
 assert.equal(quranGold.toLowerCase(), mushafPrintedGold.toLowerCase());
 assert.equal(mushafVerseMarkerFill.toLowerCase(), mushafPrintedGold.toLowerCase());
 assert.equal(mushafVerseMarkerBorder.toLowerCase(), "#b89620");
 assert.equal(mushafVerseMarkerNumber.toLowerCase(), "#5f4814");
+assert.equal(mushafOpeningTurquoise.toLowerCase(), "#0e7a6b");
 assert.match(css, /--quran-gold:\s*#c9a82e/i);
-assert.match(css, /--mushaf-verse-marker-fill:\s*#c9a82e/i);
 assert.match(css, /--mushaf-printed-gold:\s*#c9a82e/i);
+assert.match(css, /--mushaf-accent-primary:\s*#0e7a6b/i);
+assert.match(css, /\[data-mushaf-accent="gold"\]/);
 assert.doesNotMatch(css, /--mushaf-verse-marker-fill:\s*#dcb424/i);
-assert.match(chrome, /--mushaf-opening-turquoise:\s*#0e7a6b/i);
-assert.match(chrome, /--mushaf-opening-marker-fill:\s*var\(--mushaf-opening-turquoise\)/);
 
 console.log("=== علامة آية أوضح بلا تجاوز النص عالميًا ===");
 assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
-assert.match(chrome, /\.nm-page--opening[\s\S]{0,900}--mushaf-ayah-mark-size:\s*1\.22em/);
+assert.match(css, /--mushaf-ayah-mark-font-size:\s*0\.62em/);
+assert.match(css, /--mushaf-ayah-mark-number-size:\s*1\.16em/);
+assert.match(css, /\.nm-ayah-mark__glyph\s*\{[^}]*font-size:\s*var\(--mushaf-ayah-mark-number-size/s);
+assert.match(chrome, /\.nm-page--opening[\s\S]{0,400}--mushaf-ayah-mark-size:\s*1\.22em/);
 assert.match(chrome, /\.nm-page--opening \.nm-ayah-mark[\s\S]{0,400}border-width:\s*1\.5px/);
 assert.match(chrome, /\.nm-page--opening \.nm-ayah-mark[\s\S]{0,400}box-shadow:/);
-assert.match(chrome, /\.nm-page--opening \.nm-ayah-mark[\s\S]{0,400}font-size:\s*0\.65em/);
-assert.match(chrome, /mushaf-opening-gold-accent/);
+assert.match(chrome, /\.nm-page--opening \.nm-ayah-mark[\s\S]{0,400}mushaf-marker-background/);
 
 console.log("=== توازن ص١–ص٢ + بلا letter-spacing على البسملة ===");
 assert.match(chrome, /\.nm-page--opening \.nm-slot\[data-kind="banner"\][\s\S]{0,80}padding-block-end:\s*0\.04em/);

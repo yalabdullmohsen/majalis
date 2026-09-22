@@ -8,6 +8,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   mushafPaperWarmYellow,
+  mushafPrintedGold,
   mushafVerseMarkerFill,
   mushafVerseMarkerBorder,
   mushafVerseMarkerNumber,
@@ -19,9 +20,16 @@ const page = readFileSync(resolve(root, "src/features/mushaf-reader/MushafPage.t
 const banner = readFileSync(resolve(root, "src/features/mushaf-reader/MushafSurahBanner.tsx"), "utf8");
 
 assert.match(css, new RegExp(`--mushaf-paper-warm-yellow:\\s*${mushafPaperWarmYellow}`, "i"));
-assert.match(css, new RegExp(`--mushaf-verse-marker-fill:\\s*${mushafVerseMarkerFill}`, "i"));
-assert.match(css, new RegExp(`--mushaf-verse-marker-border:\\s*${mushafVerseMarkerBorder}`, "i"));
-assert.match(css, new RegExp(`--mushaf-verse-marker-number:\\s*${mushafVerseMarkerNumber}`, "i"));
+assert.match(css, /--mushaf-verse-marker-fill:\s*var\(--mushaf-marker-background\)/);
+assert.match(css, /--mushaf-verse-marker-border:\s*var\(--mushaf-marker-border\)/);
+assert.match(css, /--mushaf-verse-marker-number:\s*var\(--mushaf-marker-number\)/);
+assert.match(
+  css,
+  /\[data-mushaf-accent="gold"\][\s\S]{0,400}--mushaf-marker-background:\s*var\(--quran-gold\)/,
+);
+assert.equal(mushafVerseMarkerFill.toLowerCase(), mushafPrintedGold.toLowerCase());
+assert.equal(mushafVerseMarkerBorder.toLowerCase(), "#b89620");
+assert.equal(mushafVerseMarkerNumber.toLowerCase(), "#5f4814");
 assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
 
 assert.match(css, /SunnahVerseRosette/);
