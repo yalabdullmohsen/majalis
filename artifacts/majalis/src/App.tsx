@@ -710,7 +710,16 @@ function AppShellInner() {
     location === "/prophets" ||
     location.startsWith("/prophets/") ||
     location === "/seerah" ||
-    location.startsWith("/seerah?");
+    location.startsWith("/seerah?") ||
+    location === "/stories" ||
+    location.startsWith("/stories?") ||
+    location === "/nations" ||
+    location.startsWith("/nations/") ||
+    location.startsWith("/nations?") ||
+    location === "/sahabah" ||
+    location.startsWith("/sahabah?") ||
+    location === "/shamael" ||
+    location.startsWith("/shamael?");
 
   useEffect(() => {
     const root = document.documentElement;
@@ -745,7 +754,21 @@ function AppShellInner() {
     location === "/settings" ||
     location.startsWith("/settings?") ||
     location === "/progress" ||
-    location.startsWith("/progress?");
+    location.startsWith("/progress?") ||
+    location === "/vault" ||
+    location.startsWith("/vault?") ||
+    location === "/my-learning" ||
+    location.startsWith("/my-learning?") ||
+    location === "/stats" ||
+    location.startsWith("/stats?") ||
+    location === "/profile" ||
+    location.startsWith("/profile?") ||
+    location === "/notification-settings" ||
+    location.startsWith("/notification-settings?") ||
+    location === "/notifications-and-sound" ||
+    location.startsWith("/notifications-and-sound?") ||
+    location === "/feature-tour" ||
+    location.startsWith("/feature-tour?");
 
   useEffect(() => {
     const root = document.documentElement;
@@ -808,7 +831,26 @@ function AppShellInner() {
     location.startsWith("/tawhid/") ||
     location.startsWith("/tawhid?") ||
     location === "/aqidah" ||
-    location.startsWith("/aqidah?");
+    location.startsWith("/aqidah?") ||
+    location === "/tafsir" ||
+    location.startsWith("/tafsir?") ||
+    location === "/ulum-quran" ||
+    location.startsWith("/ulum-quran?") ||
+    location === "/quran-knowledge" ||
+    location.startsWith("/quran-knowledge?") ||
+    location === "/mutashabihat" ||
+    location.startsWith("/mutashabihat?") ||
+    location === "/madhahib" ||
+    location.startsWith("/madhahib/") ||
+    location.startsWith("/madhahib?") ||
+    location === "/islamic-sects" ||
+    location.startsWith("/islamic-sects/") ||
+    location.startsWith("/islamic-sects?") ||
+    location === "/methodology" ||
+    location.startsWith("/methodology?") ||
+    location === "/sources" ||
+    location.startsWith("/sources/") ||
+    location.startsWith("/sources?");
 
   useEffect(() => {
     const root = document.documentElement;
@@ -827,12 +869,36 @@ function AppShellInner() {
     location === "/adhkar" ||
     location.startsWith("/adhkar/") ||
     location.startsWith("/adhkar?") ||
+    location === "/duas" ||
+    location.startsWith("/duas?") ||
+    location === "/duas-quran" ||
+    location.startsWith("/duas-quran?") ||
     location === "/prayer-times" ||
     location.startsWith("/prayer-times?") ||
     location === "/prayer-ranks" ||
     location.startsWith("/prayer-ranks?") ||
     location === "/salah-guide" ||
-    location.startsWith("/salah-guide?");
+    location.startsWith("/salah-guide?") ||
+    location === "/zakat" ||
+    location.startsWith("/zakat?") ||
+    location === "/sawm" ||
+    location.startsWith("/sawm?") ||
+    location === "/hajj" ||
+    location.startsWith("/hajj?") ||
+    location === "/tahara" ||
+    location.startsWith("/tahara?") ||
+    location === "/jumuah" ||
+    location.startsWith("/jumuah?") ||
+    location === "/janaza" ||
+    location.startsWith("/janaza?") ||
+    location === "/ruqya" ||
+    location.startsWith("/ruqya?") ||
+    location === "/udhiya" ||
+    location.startsWith("/udhiya?") ||
+    location === "/sadaqa" ||
+    location.startsWith("/sadaqa?") ||
+    location === "/waqf" ||
+    location.startsWith("/waqf?");
 
   useEffect(() => {
     const root = document.documentElement;
@@ -887,7 +953,12 @@ function AppShellInner() {
   const isLearnPath =
     location === "/quiz" ||
     location.startsWith("/quiz/") ||
-    location.startsWith("/quiz?");
+    location.startsWith("/quiz?") ||
+    location === "/competitions" ||
+    location.startsWith("/competitions/") ||
+    location.startsWith("/competitions?") ||
+    location === "/flashcards" ||
+    location.startsWith("/flashcards?");
 
   useEffect(() => {
     const root = document.documentElement;
@@ -915,7 +986,15 @@ function AppShellInner() {
     location === "/support" ||
     location.startsWith("/support?") ||
     location === "/contact" ||
-    location.startsWith("/contact?");
+    location.startsWith("/contact?") ||
+    location === "/data-licenses" ||
+    location.startsWith("/data-licenses?") ||
+    location === "/fatwa-policy" ||
+    location.startsWith("/fatwa-policy?") ||
+    location === "/account-deletion" ||
+    location.startsWith("/account-deletion?") ||
+    location === "/sitemap" ||
+    location.startsWith("/sitemap?");
 
   useEffect(() => {
     const root = document.documentElement;

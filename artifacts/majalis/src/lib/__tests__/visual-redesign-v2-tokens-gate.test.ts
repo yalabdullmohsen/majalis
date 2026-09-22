@@ -264,6 +264,9 @@ console.log("=== Expansion PR-A App Shell default ===");
   assert.match(shell, /soft-card/);
   assert.match(shell, /page-header-v2|\.ph2/);
   assert.match(shell, /empty-state-v2|\.es2/);
+  assert.match(shell, /topic-page__hero/);
+  assert.match(shell, /legal-page-hero/);
+  assert.match(shell, /kx-library-card|topic-card/);
   assert.doesNotMatch(shell, /border-inline-start:\s*[34]px/);
   const idx = read("src/components/design-system/index.ts");
   assert.match(idx, /PageHeaderV2/);
@@ -273,6 +276,27 @@ console.log("=== Expansion PR-A App Shell default ===");
   const doc = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2.md"), "utf8");
   assert.match(doc, /Expansion PR-A|App Shell V2 default/);
   assert.match(doc, /app-shell-v2\.css/);
+  assert.match(app, /\/tafsir|\/ulum-quran/);
+  assert.match(app, /\/duas|\/zakat/);
+  assert.match(app, /\/vault|\/flashcards|\/competitions/);
+}
+
+console.log("=== Full-app V2 coverage (SectionHero global) ===");
+{
+  const app = read("src/App.tsx");
+  assert.match(app, /\/tafsir/);
+  assert.match(app, /\/ulum-quran/);
+  assert.match(app, /\/quran-knowledge/);
+  assert.match(app, /\/duas/);
+  assert.match(app, /\/vault/);
+  assert.match(app, /\/flashcards/);
+  assert.match(app, /\/competitions/);
+  assert.match(app, /\/stories/);
+  const shell = read("src/styles/pages/app-shell-v2.css");
+  assert.match(shell, /Full-app coverage|topic-page__hero/);
+  assert.match(shell, /fqh-hub-hero|legal-page-hero/);
+  const qa = readFileSync(resolve(repoRoot, "docs/design/VISUAL_REDESIGN_V2_QA.md"), "utf8");
+  assert.match(qa, /Full-app|topic-page__hero|جميع الشاشات|global SectionHero/i);
 }
 
 console.log("=== Expansion PR-B Lessons + Sections ===");

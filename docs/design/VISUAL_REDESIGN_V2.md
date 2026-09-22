@@ -100,6 +100,12 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 - تأكيد: لا مصحف نص · لا Admin v3 · لا رفع ميزانيات · Contrast/Visual عبر CI لكل PR سابق
 - OUTPUT ONLY للمالك بعد الدمج
 
+## Full-app coverage — SectionHero عالمي
+
+- تقوية `app-shell-v2.css`: كل `topic-page__hero` / `legal-page-hero` / بطاقات عامة → V2 تحت `data-v2-app`
+- توسيع opt-in: تفسير · علوم قرآن · أدعية · عبادات · مخزن · بطاقات · منافسات · قصص
+- الهدف: لا شاشة عامة بهيرو/بطاقة قديمة
+
 ## PR-2 Dashboard Homepage
 
 - `html[data-v2-dashboard="1"]` على مسار `/`
