@@ -41,6 +41,7 @@ import { getLessonDeliveryMode } from "@/lib/lessons/lessonNormalize";
 import { peekCachedLessonById, takeStashedLesson } from "@/lib/lessons-service";
 import { mapLessonRow } from "@/lib/kuwait-lessons";
 import "@/styles/pages/not-found.css";
+import "@/styles/sunnah-identity-detail-reading.css";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {

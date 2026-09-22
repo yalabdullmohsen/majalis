@@ -15,6 +15,7 @@ import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { ReaderScreen } from "@/components/design-system/screens";
 import { KnowledgeLayout } from "@/components/knowledge";
 import "@/styles/pages/hadith.css";
+import "@/styles/sunnah-identity-detail-reading.css";
 
 function ShareBlock({ hadith }: { hadith: HadithRecord }) {
   const warning = hadith.isMawdu
