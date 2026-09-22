@@ -42,6 +42,11 @@ console.log("=== CSS densify ===");
   assert.match(css, /reading-prose-system|topic-page__body/);
   assert.match(css, /html\.dark\[data-v2-app="1"\] \.topic-page__eyebrow/);
   assert.match(css, /#eef7f2/);
+  /* منع تراجع soft-hero #123f2e على eyebrow الليلي (CI #7333) */
+  assert.doesNotMatch(
+    css,
+    /html\.dark\[data-v2-app="1"\][\s\S]{0,280}\.topic-page__eyebrow[\s\S]{0,200}#123[fF]2[eE]/,
+  );
   /* !important مسموح فقط لتجاوز soft-hero الليلي على eyebrow */
   const importantCount = (css.match(/!important/g) || []).length;
   assert.ok(importantCount <= 2, `unexpected !important count=${importantCount}`);
@@ -61,6 +66,15 @@ console.log("=== docs + package ===");
   const doc = readFileSync(resolve(repoRoot, "docs/design/SUNNAH_VISUAL_IDENTITY_RESET.md"), "utf8");
   assert.match(doc, /PR-6/);
   assert.match(doc, /Detail|reading|تفاصيل|قراءة/i);
+  const rootCause = readFileSync(
+    resolve(repoRoot, "docs/ci/IDENTITY_RESET_PR6_CONTRAST_ROOT_CAUSE.md"),
+    "utf8",
+  );
+  assert.match(rootCause, /ROOT_CAUSE_CONFIRMED/);
+  assert.match(rootCause, /\.topic-page__eyebrow/);
+  assert.match(rootCause, /#123F2E|#123f2e/);
+  assert.match(rootCause, /1\.35:1/);
+  assert.match(rootCause, /#eef7f2/);
   const pkg = read("package.json");
   assert.match(pkg, /test:sunnah-identity-reset-pr6/);
 }
