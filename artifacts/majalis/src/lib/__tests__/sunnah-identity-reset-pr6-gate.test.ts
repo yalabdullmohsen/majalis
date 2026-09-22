@@ -40,7 +40,11 @@ console.log("=== CSS densify ===");
   assert.match(css, /--read-para-gap/);
   assert.match(css, /lesson-detail|hadith-detail/);
   assert.match(css, /reading-prose-system|topic-page__body/);
-  assert.doesNotMatch(css, /!important/);
+  assert.match(css, /html\.dark\[data-v2-app="1"\] \.topic-page__eyebrow/);
+  assert.match(css, /#eef7f2/);
+  /* !important مسموح فقط لتجاوز soft-hero الليلي على eyebrow */
+  const importantCount = (css.match(/!important/g) || []).length;
+  assert.ok(importantCount <= 2, `unexpected !important count=${importantCount}`);
   assert.doesNotMatch(css, /mushaf-reader|qpc-v2|AdminV3|letter-spacing:\s*[^0]/);
 }
 

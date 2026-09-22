@@ -22,6 +22,18 @@ html[data-v2-app="1"] .topic-page__eyebrow {
   padding: 0.2rem 0.55rem;
 }
 
+/* ليلي: شريحة eyebrow بحبر فاتح — يتجاوز soft-hero #123f2e على سطح ليلي */
+html.dark[data-v2-app="1"] .topic-page__eyebrow,
+html[data-theme="dark"][data-v2-app="1"] .topic-page__eyebrow,
+html.dark[data-v2-app="1"] .topic-page__hero .topic-page__eyebrow,
+html[data-theme="dark"][data-v2-app="1"] .topic-page__hero .topic-page__eyebrow,
+html.dark[data-v2-app="1"] .topic-page__hero .safe-hero__badge,
+html[data-theme="dark"][data-v2-app="1"] .topic-page__hero .safe-hero__badge {
+  color: #eef7f2 !important;
+  background: color-mix(in srgb, #ffffff 16%, var(--v2-color-night-surface, #12261f)) !important;
+  border-color: color-mix(in srgb, #ffffff 22%, transparent);
+}
+
 html[data-v2-app="1"] .topic-page__title {
   margin-block-end: 0.25rem;
   font-size: var(--v2-type-page-title, 1.35rem);
