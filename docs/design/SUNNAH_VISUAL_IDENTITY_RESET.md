@@ -23,8 +23,8 @@ V2/V3 حسّنتا التناسق، لكن الواجهة ما زالت تشبه
 | PR | Focus | Status |
 |---|---|---|
 | 1 | Typography + density + surface tokens | **merged** |
-| 2 | Global header + search + daily strip | **in progress** |
-| 3 | Cards and content rows | queued |
+| 2 | Global header + search + daily strip | **merged** |
+| 3 | Cards and content rows | **in progress** |
 | 4 | Home and Quran Hub | queued |
 | 5 | Sections and category grids | queued |
 | 6 | Detail and reading pages | queued |
@@ -52,6 +52,13 @@ Rule: start each PR from latest `main`. Do not start next until previous is merg
 - Header ticker (daily strip) on **home only** (`shouldShowHeaderTicker` / `data-home-chrome`)
 - Chrome fallback without stacked search row
 - `--search-height: 0` · ticker height reserved by default on compact viewports; zeroed when `html[data-home-chrome="0"]` (set by App; not on static `<html>` — keeps LHCI readiness marker within 800 bytes)
+
+## PR-3 deliverables
+
+- `CompactNavigationCard` · `ContentRow` · `DetailSection` · `QuoteSurface` · `StatusNotice`
+- `FeatureCard` densified via identity CSS (existing component)
+- `sunnah-identity-cards.css` · exports from design-system
+- Hub/section soft cards: `min-height: 0` · 2-line clamp under `data-v2-app`
 
 ## Out of scope (all PRs)
 

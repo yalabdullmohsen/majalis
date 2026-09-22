@@ -217,3 +217,44 @@ html[data-v2-app="1"] .bottom-nav__tab:active {
 }
 
 /* PR-2 chrome: top-chrome-layout.css (مع NavBar — خارج فهرس CSS الحرج) */
+/* PR-3 card primitives: sunnah-identity-cards.css (يُحمَّل مع IdentitySurfaces) */
+
+/* ── PR-3: تكثيف FeatureCard + شبكات الأقسام ── */
+html[data-v2-app="1"] .ss-feature-card__inner {
+  min-height: 0;
+  padding: var(--v2-pad-card);
+  box-shadow: var(--v2-shadow-soft);
+}
+
+html[data-v2-app="1"] .ss-feature-card__title {
+  font-size: var(--v2-type-card-title);
+  line-height: var(--v2-lh-title);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+html[data-v2-app="1"] .ss-feature-card__desc {
+  font-size: var(--v2-type-supporting);
+  color: var(--v2-color-ink-muted);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+html[data-v2-app="1"] .hub-card,
+html[data-v2-app="1"] .section-entry-card,
+html[data-v2-app="1"] .soft-card:not(.sc2--welcome) {
+  min-height: 0;
+  height: auto;
+}
+
+html[data-v2-app="1"] .hub-card__desc,
+html[data-v2-app="1"] .section-entry-card__desc {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
