@@ -9,6 +9,7 @@ import { GridScreen } from "@/components/design-system/screens";
 import { PageHeaderV2 } from "@/components/design-system";
 import "@/components/sections/section-cards.css";
 import "@/styles/pages/lessons-sections-v2.css";
+import "@/styles/sunnah-identity-sections.css";
 
 export default function SectionsPage() {
   useEffect(() => {

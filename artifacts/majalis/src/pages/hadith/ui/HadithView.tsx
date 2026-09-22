@@ -62,6 +62,7 @@ import "@/styles/components/hadith-badge.css";
 import "@/styles/pages/hadith.css";
 import "@/styles/pages/hadith-design-language.css";
 import "@/styles/pages/knowledge-dashboards-v2.css";
+import "@/styles/sunnah-identity-sections.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

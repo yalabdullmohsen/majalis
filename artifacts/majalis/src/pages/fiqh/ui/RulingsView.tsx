@@ -1,5 +1,6 @@
 import "@/styles/rulings-encyclopedia.css";
 import "@/styles/pages/fiqh-hub.css";
+import "@/styles/sunnah-identity-sections.css";
 import { useCallback, useEffect, useState } from "react";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
