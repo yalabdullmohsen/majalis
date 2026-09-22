@@ -1,93 +1,87 @@
 /**
- * Visual Redesign V2 — رموز الهوية Premium Islamic Dashboard
- * + Identity Reset PR-1: Typography roles · Density · Surface distribution
- *
- * مصدر التجربة: مرجع بصري (لا نسخ شعار/صور).
- * القيم الحرفية الأساسية تبقى في theme.css (--sunnah-* / --mj-*).
- * هذا الملف يضيف طبقة V2 دلالية — لا Design System رابعة.
+ * Visual Redesign V2 — طبقة استهلاك دلالية (جسر).
+ * Foundation Reset PR-1: القيم من SunnahFoundationTokens (--sf-*).
+ * لا Design System رابعة — لا قيم حرفية جديدة للوحة/السلم.
  *
  * لا يغيّر نص المصحف · لا يمس Admin v3 · لا يغيّر Routes.
  */
 :root {
-  /* ── لوحة V2 (أسماء صريحة؛ القيم عبر Sunnah SoT) ── */
-  --v2-color-ivory: #f9f8f4;
-  --v2-color-ivory-surface: #fffcf8;
-  --v2-color-ivory-muted: #efe8dc;
-  --v2-color-emerald: var(--sunnah-emerald, #0f5c45);
-  --v2-color-emerald-deep: var(--sunnah-emerald-deep, #0a3d2e);
-  --v2-color-emerald-soft: var(--mj-brand-soft, #e2efe8);
-  --v2-color-gold: var(--sunnah-quran-gold, #c9a82e);
-  --v2-color-ink: var(--sunnah-ink, #16241e);
-  --v2-color-ink-muted: var(--sunnah-ink-muted, #5e6e67);
-  --v2-color-on-emerald: #ffffff;
+  /* ── لوحة V2 ← Foundation ── */
+  --v2-color-ivory: var(--sf-color-ivory-canvas, #f9f8f4);
+  --v2-color-ivory-surface: var(--sf-color-ivory-raised, #fffcf8);
+  --v2-color-ivory-muted: var(--sf-color-warm-ivory-muted, #efe8dc);
+  --v2-color-emerald: var(--sf-color-deep-emerald, var(--sunnah-emerald, #0f5c45));
+  --v2-color-emerald-deep: var(--sf-color-deep-emerald-deep, var(--sunnah-emerald-deep, #0a3d2e));
+  --v2-color-emerald-soft: var(--sf-color-deep-emerald-soft, var(--mj-brand-soft, #e2efe8));
+  --v2-color-gold: var(--sf-color-quran-gold, var(--sunnah-quran-gold, #c9a82e));
+  --v2-color-ink: var(--sf-color-rich-ink, var(--sunnah-ink, #16241e));
+  --v2-color-ink-muted: var(--sf-color-rich-ink-muted, var(--sunnah-ink-muted, #5e6e67));
+  --v2-color-on-emerald: var(--sf-color-on-emerald, #ffffff);
 
-  /* Luxury Night — Deep Emerald Night (ليس عكسًا خامًا) */
-  --v2-color-night-bg: var(--sunnah-night-bg, #0a1612);
-  --v2-color-night-surface: var(--sunnah-night-surface, #12261f);
-  --v2-color-night-elevated: #18332a;
-  --v2-color-night-ink: var(--sunnah-night-text, #edf5f0);
-  /* AA على night-bg وnight-surface (تجنّب رمادي باهت) */
+  /* Luxury Night ← Foundation */
+  --v2-color-night-bg: var(--sf-color-luxury-night, var(--sunnah-night-bg, #0a1612));
+  --v2-color-night-surface: var(--sf-color-luxury-night-surface, var(--sunnah-night-surface, #12261f));
+  --v2-color-night-elevated: var(--sf-color-luxury-night-elevated, #18332a);
+  --v2-color-night-ink: var(--sf-color-luxury-night-ink, var(--sunnah-night-text, #edf5f0));
   --v2-color-night-muted: #b3c9bd;
-  --v2-color-night-gold: var(--sunnah-night-gold, #c4a84a);
+  --v2-color-night-gold: var(--sf-color-luxury-night-gold, var(--sunnah-night-gold, #c4a84a));
   --v2-color-night-hairline: rgba(237, 245, 240, 0.14);
-  /* نص زمردي على خلفيات ليلية (لا يُستخدم كخلفية صلبة) */
   --v2-color-night-emerald-text: #9fd4bf;
 
   /* ── Identity Reset: توزيع الأسطح ~70/20/8/2 ── */
-  --v2-surface-canvas: var(--v2-color-ivory); /* ~70% خلفية محايدة */
-  --v2-surface-raised: var(--v2-color-ivory-surface); /* ~20% أسطح متمايزة */
-  --v2-surface-muted: var(--v2-color-ivory-muted);
+  --v2-surface-canvas: var(--sf-surface-canvas, var(--v2-color-ivory));
+  --v2-surface-raised: var(--sf-surface-raised, var(--v2-color-ivory-surface));
+  --v2-surface-muted: var(--sf-surface-muted, var(--v2-color-ivory-muted));
   --v2-surface-functional: color-mix(
     in srgb,
     var(--v2-color-emerald) 10%,
     var(--v2-color-ivory-surface)
-  ); /* ~8% أخضر وظيفي خفيف — ليس خلفية بطاقة عامة */
-  --v2-accent-gold: var(--v2-color-gold); /* ~2% Accent رفيع */
+  );
+  --v2-accent-gold: var(--v2-color-gold);
 
-  /* ── Typography roles (Amiri موجود مسبقاً — فصل الأدوار لا مكتبة جديدة) ── */
-  --v2-font-display: "Amiri", "MajlisAmiriFallback", "Traditional Arabic", serif;
-  --v2-font-ui: "Amiri", "MajlisAmiriFallback", "MajlisFallback", "Traditional Arabic", serif;
-  --v2-font-latin: "Amiri", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* ── Typography ← Foundation / --font-app ── */
+  --v2-font-display: var(--sf-font-display, var(--font-app));
+  --v2-font-ui: var(--sf-font-ui, var(--font-app));
+  --v2-font-latin: var(--font-app);
 
-  /* Type scale */
-  --v2-type-display: clamp(1.75rem, 5.5vw, 2.35rem);
-  --v2-type-page-title: clamp(1.35rem, 4vw, 1.75rem);
-  --v2-type-section-title: clamp(1.125rem, 3vw, 1.35rem);
-  --v2-type-card-title: clamp(1rem, 2.8vw, 1.125rem);
-  --v2-type-body: 1rem;
-  --v2-type-supporting: 0.9375rem;
-  --v2-type-metadata: 0.8125rem;
-  --v2-type-caption: 0.75rem;
+  --v2-type-display: var(--sf-type-display, clamp(1.75rem, 5.5vw, 2.35rem));
+  --v2-type-page-title: var(--sf-type-page-title, clamp(1.35rem, 4vw, 1.75rem));
+  --v2-type-section-title: var(--sf-type-section-title, clamp(1.125rem, 3vw, 1.35rem));
+  --v2-type-card-title: var(--sf-type-card-title, clamp(1rem, 2.8vw, 1.125rem));
+  --v2-type-body: var(--sf-type-body, 1rem);
+  --v2-type-supporting: var(--sf-type-supporting, 0.9375rem);
+  --v2-type-metadata: var(--sf-type-metadata, 0.8125rem);
+  --v2-type-caption: var(--sf-type-caption, 0.75rem);
 
-  --v2-lh-display: 1.35;
-  --v2-lh-title: 1.4;
-  --v2-lh-body: 1.7;
-  --v2-lh-ui: 1.45;
+  --v2-lh-display: var(--sf-lh-display, 1.35);
+  --v2-lh-title: var(--sf-lh-title, 1.4);
+  --v2-lh-body: var(--sf-lh-body, 1.7);
+  --v2-lh-ui: var(--sf-lh-ui, 1.45);
   --v2-lh-meta: 1.4;
 
-  --v2-fw-regular: 400;
-  --v2-fw-medium: 500;
-  --v2-fw-semibold: 600;
-  --v2-fw-bold: 700;
+  --v2-fw-regular: var(--sf-fw-regular, 400);
+  --v2-fw-medium: var(--sf-fw-medium, 500);
+  --v2-fw-semibold: var(--sf-fw-semibold, 600);
+  --v2-fw-bold: var(--sf-fw-bold, 700);
 
-  /* ── Density System: COMPACT | STANDARD | COMFORTABLE ── */
-  --v2-density-name: standard;
-  --v2-pad-card: 1rem;
-  --v2-pad-section: 1rem;
-  --v2-gap-stack: 0.75rem;
-  --v2-gap-section: 1rem;
-  --v2-row-min: 2.75rem;
-  --v2-control-h: 2.75rem;
-  --v2-header-h: 3rem;
+  /* ── Density ← Foundation: COMPACT | STANDARD | READING ── */
+  --v2-density-name: var(--sf-density-name, standard);
+  --v2-pad-card: var(--sf-pad-card, 1rem);
+  --v2-pad-section: var(--sf-pad-section, 1rem);
+  --v2-gap-stack: var(--sf-gap-stack, 0.75rem);
+  --v2-gap-section: var(--sf-gap-section, 1rem);
+  --v2-row-min: var(--sf-row-min, 2.75rem);
+  --v2-control-h: var(--sf-control-h, 2.75rem);
+  --v2-header-h: var(--sf-header-h, 3rem);
 
-  /* ── هندسة البطاقات الفاخرة ── */
-  --v2-radius-sm: 12px;
-  --v2-radius-md: 16px;
-  --v2-radius-lg: 20px;
-  --v2-radius-xl: 24px;
-  --v2-radius-card: var(--v2-radius-lg);
-  --v2-radius-icon: 14px;
-  --v2-radius-pill: 999px;
+  /* ── Radius / Shadow ← Foundation ── */
+  --v2-radius-sm: var(--sf-radius-sm, 12px);
+  --v2-radius-md: var(--sf-radius-md, 16px);
+  --v2-radius-lg: var(--sf-radius-lg, 20px);
+  --v2-radius-xl: var(--sf-radius-xl, 24px);
+  --v2-radius-card: var(--sf-radius-card, var(--v2-radius-lg));
+  --v2-radius-icon: var(--sf-radius-control, 14px);
+  --v2-radius-pill: var(--sf-radius-pill, 999px);
 
   --v2-space-1: 0.25rem;
   --v2-space-2: 0.5rem;
@@ -98,11 +92,10 @@
   --v2-space-8: 2rem;
   --v2-space-10: 2.5rem;
 
-  /* ظلال محسوبة — أقل ضبابية واتساعًا */
-  --v2-shadow-soft: 0 1px 2px rgba(22, 36, 30, 0.04), 0 2px 8px rgba(22, 36, 30, 0.04);
-  --v2-shadow-card: 0 1px 2px rgba(22, 36, 30, 0.04), 0 4px 14px rgba(22, 36, 30, 0.06);
-  --v2-shadow-elevated: 0 2px 4px rgba(22, 36, 30, 0.05), 0 10px 28px rgba(22, 36, 30, 0.08);
-  --v2-hairline: color-mix(in srgb, var(--v2-color-ink) 8%, transparent);
+  --v2-shadow-soft: var(--sf-shadow-soft);
+  --v2-shadow-card: var(--sf-shadow-card);
+  --v2-shadow-elevated: var(--sf-shadow-elevated);
+  --v2-hairline: var(--sf-hairline);
 
   /* ── Micro motion فقط (80–120ms للضغط) ── */
   --v2-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -116,47 +109,22 @@
   --v2-icon-tile: 2.5rem;
   --v2-icon-stroke: 1.75;
 
-  /* Focus ring — هوية سُنّة (لا أزرق المتصفح) */
-  --v2-focus-ring: 0 0 0 3px color-mix(in srgb, var(--v2-color-gold) 42%, transparent);
+  --v2-focus-ring: var(--sf-focus-ring);
 }
 
-/* Density: COMPACT — قوائم/فلاتر */
+/* Density mirrors Foundation (COMPACT | STANDARD | READING); comfortable = alias */
 html[data-density="compact"] {
-  --v2-density-name: compact;
-  --v2-pad-card: 0.75rem;
-  --v2-pad-section: 0.75rem;
-  --v2-gap-stack: 0.5rem;
-  --v2-gap-section: 0.75rem;
-  --v2-row-min: 2.5rem;
-  --v2-control-h: 2.5rem;
-  --v2-header-h: 2.75rem;
   --v2-icon-tile: 2.25rem;
 }
 
-/* Density: STANDARD — هاتف (افتراضي) */
 html[data-density="standard"],
 html[data-v2-app="1"]:not([data-density]) {
-  --v2-density-name: standard;
-  --v2-pad-card: 1rem;
-  --v2-pad-section: 1rem;
-  --v2-gap-stack: 0.75rem;
-  --v2-gap-section: 1rem;
-  --v2-row-min: 2.75rem;
-  --v2-control-h: 2.75rem;
-  --v2-header-h: 3rem;
+  --v2-icon-tile: 2.5rem;
 }
 
-/* Density: COMFORTABLE — صفحات قراءة */
+html[data-density="reading"],
 html[data-density="comfortable"] {
-  --v2-density-name: comfortable;
-  --v2-pad-card: 1.25rem;
-  --v2-pad-section: 1.25rem;
-  --v2-gap-stack: 1rem;
-  --v2-gap-section: 1.5rem;
-  --v2-row-min: 3rem;
-  --v2-control-h: 2.75rem;
-  --v2-header-h: 3.25rem;
-  --v2-lh-body: 1.8;
+  --v2-lh-body: var(--sf-lh-body, 1.8);
 }
 
 html[data-theme="dark"],

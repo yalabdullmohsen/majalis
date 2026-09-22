@@ -1,4 +1,8 @@
 /*
+ * LEGACY_NON_SOT (Foundation Reset PR-1)
+ * ليس مصدر حقيقة للوحة/الطباعة — المصدر: sunnah-foundation-tokens.css (--sf-*).
+ * يبقى آخر طبقة تشغيل حتى PR-13 — لا تضف سلم طباعة/ظلال جديدة هنا.
+ *
  * Majlisilm final release visual system
  * Contemporary Islamic architecture: measured geometry, quiet ivory surfaces,
  * pine green interaction and restrained brass accents. This file is deliberately

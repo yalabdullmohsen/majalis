@@ -1,4 +1,8 @@
 /**
+ * LEGACY_NON_SOT (Foundation Reset PR-1)
+ * ليس مصدر حقيقة للوحة — المصدر: sunnah-foundation-tokens.css (--sf-*).
+ * يبقى للتشغيل حتى PR-13 — لا تعرّف --mj-brand / radius سلم جديد هنا.
+ *
  * visual-identity-unify.css
  * طبقة توحيد الهوية البصرية — مصحف هادئ (عاجي + أخضر عميق + ذهبي).
  * تُحمَّل متأخرًا بعد theme-aliases / semantic-layer لتفوز بدون كسر الوظائف.

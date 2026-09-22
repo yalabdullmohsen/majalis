@@ -1,8 +1,27 @@
 /**
  * سجل رموز سُنّة — أسماء CSS فقط (لا هكس مكرر).
- * المصدر الحرفي: `app/styles/theme.css`
+ * المصدر الحرفي للأسس (PR-1): `styles/sunnah-theme` → `sunnah-foundation-tokens.css` (--sf-*)
+ * المصدر التشغيلي التاريخي: `app/styles/theme.css`
  * الجسر الدلالي: `styles/ssunnah-theme-api.css` (--ss-*)
  */
+
+export {
+  SunnahFoundationTokens,
+  SF_COLOR,
+  SF_FONT,
+  SF_TYPE,
+  SF_TYPE_SCALE,
+  SF_DENSITY,
+  SF_SPACE,
+  SF_RADIUS,
+  SF_SHADOW,
+  SF_SURFACE,
+  SF_STATE,
+  SF_FOCUS,
+  SF_LAYER,
+  SF_SAFE_AREA,
+} from "./sunnah-foundation-tokens";
+export type { SfTypeRole, SfDensity } from "./sunnah-foundation-tokens";
 
 export const SS_TYPE = {
   screenTitle: "var(--ss-type-screen-title)",

@@ -1,0 +1,68 @@
+/**
+ * SunnahFoundation — أصناف طباعة اختيارية (مؤجّلة عن CSS الحرج).
+ * القيم من --sf-type-* في sunnah-foundation-tokens.css.
+ */
+.sf-type-display,
+[data-sf-type="display"] {
+  font-family: var(--font-app);
+  font-size: var(--sf-type-display);
+  font-weight: var(--sf-fw-bold);
+  line-height: var(--sf-lh-display);
+  letter-spacing: 0;
+}
+
+.sf-type-page-title,
+[data-sf-type="page-title"] {
+  font-family: var(--font-app);
+  font-size: var(--sf-type-page-title);
+  font-weight: var(--sf-fw-bold);
+  line-height: var(--sf-lh-title);
+}
+
+.sf-type-section-title,
+[data-sf-type="section-title"] {
+  font-family: var(--font-app);
+  font-size: var(--sf-type-section-title);
+  font-weight: var(--sf-fw-bold);
+  line-height: var(--sf-lh-title);
+}
+
+.sf-type-card-title,
+[data-sf-type="card-title"] {
+  font-family: var(--font-app);
+  font-size: var(--sf-type-card-title);
+  font-weight: var(--sf-fw-bold);
+  line-height: var(--sf-lh-ui);
+}
+
+.sf-type-body,
+[data-sf-type="body"] {
+  font-family: var(--font-app);
+  font-size: var(--sf-type-body);
+  font-weight: var(--sf-fw-regular);
+  line-height: var(--sf-lh-body);
+}
+
+.sf-type-supporting,
+[data-sf-type="supporting"] {
+  font-family: var(--font-app);
+  font-size: var(--sf-type-supporting);
+  font-weight: var(--sf-fw-regular);
+  line-height: var(--sf-lh-ui);
+}
+
+.sf-type-metadata,
+[data-sf-type="metadata"] {
+  font-family: var(--font-app);
+  font-size: var(--sf-type-metadata);
+  font-weight: var(--sf-fw-medium);
+  line-height: var(--sf-lh-ui);
+}
+
+.sf-type-caption,
+[data-sf-type="caption"] {
+  font-family: var(--font-app);
+  font-size: var(--sf-type-caption);
+  font-weight: var(--sf-fw-medium);
+  line-height: var(--sf-lh-ui);
+}

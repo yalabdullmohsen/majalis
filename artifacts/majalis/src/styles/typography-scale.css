@@ -1,17 +1,18 @@
 /**
- * سُلّم طباعي موحّد (خارج المصحف/QPC). المصدر: design-tokens.css.
+ * سُلّم طباعي موحّد (خارج المصحف/QPC).
+ * Foundation Reset PR-1: المصدر SunnahFoundationTokens (--sf-type-*).
  */
 :root {
-  --text-display: var(--font-2xl, 1.75rem);
-  --text-h1: var(--font-xl, 1.5rem);
-  --text-h2: var(--font-lg, 1.3125rem);
-  --text-h3: var(--font-md, 1.125rem);
-  --text-body-lg: var(--font-md, 1.125rem);
-  --text-body: var(--font-base, 1.0625rem);
-  --text-body-sm: var(--font-sm, 1rem);
-  --text-label: var(--font-sm, 1rem);
-  --text-caption: var(--font-xs, 0.875rem);
-  --text-nav: var(--font-xs, 0.875rem);
+  --text-display: var(--sf-type-display, var(--font-2xl, 1.75rem));
+  --text-h1: var(--sf-type-page-title, var(--font-xl, 1.5rem));
+  --text-h2: var(--sf-type-section-title, var(--font-lg, 1.3125rem));
+  --text-h3: var(--sf-type-card-title, var(--font-md, 1.125rem));
+  --text-body-lg: var(--sf-type-body, var(--font-md, 1.125rem));
+  --text-body: var(--sf-type-body, var(--font-base, 1.0625rem));
+  --text-body-sm: var(--sf-type-supporting, var(--font-sm, 1rem));
+  --text-label: var(--sf-type-metadata, var(--font-sm, 1rem));
+  --text-caption: var(--sf-type-caption, var(--font-xs, 0.875rem));
+  --text-nav: var(--sf-type-caption, var(--font-xs, 0.875rem));
   --mj-fs-display: var(--text-display);
   --mj-fs-h1: var(--text-h1);
   --mj-fs-h2: var(--text-h2);

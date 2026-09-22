@@ -29,6 +29,8 @@ import { logLcpCandidateHint } from "./lib/home-lcp-static-shell";
 import "./styles/fonts-ui.css";
 // هوية identity-v2 — الرموز أولاً (@theme + --mj-*) قبل أي طبقة قديمة
 import "./app/styles/theme.css";
+// Foundation Reset PR-1 — مصدر الحقيقة (--sf-*) قبل الطبقات القديمة
+import "./styles/sunnah-foundation-tokens.css";
 // واجهة استهلاك سُنّة (--ss-*) + أصناف .ss-text — جسر فقط بلا قيم حرفية جديدة
 import "./styles/ssunnah-theme-api.css";
 import "./styles/ssunnah-screen-patterns.css";
@@ -36,6 +38,7 @@ import "./styles/ssunnah-screen-patterns.css";
 // visual-enrichment مؤجَّل — ليس حرجًا لأول طلاء (ميزانية CSS الحرج ≤60KiB gzip)
 // page-hero / filters / hub-card تُحمَّل مع مكوّناتها (خارج CSS الحرج)
 // طبقات الأساس m2030 — foundation/navigation مؤجّلة (ليست حرجة لأول شاشة)
+/* LEGACY_NON_SOT — brand-v4 / green-surface / final-release / unify حتى PR-13 */
 import "./styles/brand-v4.css";
 // أزواج (سطح ← لون فوقه) — يشتق من brand-v4 ويجب أن يليه مباشرة
 import "./styles/tokens.css";
@@ -108,6 +111,7 @@ if (
 // طبقات مظهر غير حرجة — بعد load + idle حتى لا تنافس LCP (كانت void import فوريًا)
 function loadNonCriticalCss() {
   /* طبقات تحديث الواجهة + رموز ds-* — مؤجّلة تحت ميزانية CSS الحرج (<60KiB gzip) */
+  void import("./styles/sunnah-foundation-type.css");
   void import("./styles/green-surface-system.css");
   void import("./styles/soft-cards.css");
   void import("./styles/ssunnah-semantic-tokens.css");
