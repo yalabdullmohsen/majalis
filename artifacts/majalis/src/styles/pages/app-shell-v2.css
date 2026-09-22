@@ -259,9 +259,237 @@ html.dark[data-v2-app="1"] .ph2__eyebrow {
   color: var(--v2-color-night-emerald-text, #9fd4bf);
 }
 
+/* ═══════════════════════════════════════════════════════════════
+ * Full-app coverage — SectionHero / Legal / بطاقات عامة
+ * يطبّق Page Header V2 على كل صفحات Topic/Legal العامة
+ * (لا يستثنى إلا المصحف الغمري وAdmin عبر enableV2App)
+ * ═══════════════════════════════════════════════════════════════ */
+
+html[data-v2-app="1"] .topic-page,
+html[data-v2-app="1"] .topic-page__body,
+html[data-v2-app="1"] .dashboard-screen,
+html[data-v2-app="1"] .list-screen,
+html[data-v2-app="1"] .utility-screen {
+  background-color: var(--v2-color-ivory, #f9f8f4);
+  color: var(--v2-color-ink, #16241e);
+}
+
+html[data-v2-app="1"] .section-hero {
+  background: transparent;
+  padding-inline: max(1rem, var(--page-gutter, 1rem));
+}
+
+html[data-v2-app="1"] .topic-page__hero,
+html[data-v2-app="1"] .topic-page__hero.on-dark,
+html[data-v2-app="1"] .topic-page__hero.safe-hero,
+html[data-v2-app="1"] .fqh-hub-hero,
+html[data-v2-app="1"] .twh-hub-hero {
+  max-width: min(56rem, 100%);
+  margin: 0.35rem auto 0.75rem;
+  border-radius: var(--v2-radius-card, 26px);
+  border: 1px solid var(--v2-hairline);
+  background-color: var(--v2-color-ivory-surface, #fffcf8);
+  background-image: none;
+  color: var(--v2-color-ink, #16241e);
+  box-shadow: var(--v2-shadow-soft);
+  padding: var(--v2-space-5, 1.25rem) var(--v2-space-5, 1.25rem) var(--v2-space-4, 1rem);
+}
+
+html[data-v2-app="1"] .topic-page__hero::before,
+html[data-v2-app="1"] .topic-page__hero::after,
+html[data-v2-app="1"] .fqh-hub-hero::after,
+html[data-v2-app="1"] .safe-hero__decor {
+  display: none;
+}
+
+html[data-v2-app="1"] .topic-page__hero .ss-text--on-brand,
+html[data-v2-app="1"] .topic-page__hero .topic-page__title,
+html[data-v2-app="1"] .topic-page__hero .topic-page__eyebrow,
+html[data-v2-app="1"] .topic-page__hero .safe-hero__badge,
+html[data-v2-app="1"] .fqh-hub-hero__title,
+html[data-v2-app="1"] .fqh-hub-hero__eyebrow {
+  color: var(--v2-color-ink, #16241e);
+}
+
+html[data-v2-app="1"] .topic-page__hero .topic-page__sub,
+html[data-v2-app="1"] .topic-page__hero .topic-page__quote-text,
+html[data-v2-app="1"] .topic-page__hero .topic-page__quote-ref,
+html[data-v2-app="1"] .fqh-hub-hero__sub {
+  color: var(--v2-color-ink-muted, #5e6e67);
+}
+
+html[data-v2-app="1"] .topic-page__eyebrow,
+html[data-v2-app="1"] .safe-hero__badge {
+  background: var(--v2-color-emerald-soft, #e2efe8);
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+  border-radius: var(--v2-radius-pill, 999px);
+  font-weight: 700;
+}
+
+html[data-v2-app="1"] .topic-page__title {
+  font-weight: 800;
+  font-size: clamp(1.35rem, 4vw, 1.75rem);
+}
+
+html[data-v2-app="1"] .topic-page__title::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 3px;
+  margin-block-start: 0.55rem;
+  border-radius: var(--v2-radius-pill, 999px);
+  background: linear-gradient(
+    90deg,
+    var(--v2-color-emerald, #0f5c45),
+    var(--v2-color-gold, #c9a82e)
+  );
+}
+
+html[data-v2-app="1"] .section-hero__back,
+html[data-v2-app="1"] .section-hero__back-row .app-back-btn {
+  border-radius: var(--v2-radius-pill, 999px);
+  border-color: var(--v2-hairline);
+  background: var(--v2-color-ivory-surface, #fffcf8);
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+  box-shadow: var(--v2-shadow-soft);
+}
+
+html[data-v2-app="1"] .topic-page__group-title {
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+  font-weight: 800;
+}
+
+/* بطاقات إضافية → V2 */
+html[data-v2-app="1"] .kx-library-card,
+html[data-v2-app="1"] .topic-card,
+html[data-v2-app="1"] .ui-card,
+html[data-v2-app="1"] .hadith-card,
+html[data-v2-app="1"] .hadith-card.ui-card,
+html[data-v2-app="1"] .gl-term,
+html[data-v2-app="1"] .tarikh-card,
+html[data-v2-app="1"] .more-page-tile,
+html[data-v2-app="1"] .vault-card,
+html[data-v2-app="1"] .flashcard,
+html[data-v2-app="1"] .competition-card,
+html[data-v2-app="1"] .dua-card,
+html[data-v2-app="1"] .kp-list--packs li {
+  border-radius: var(--v2-radius-card, 26px);
+  border: 1px solid var(--v2-hairline);
+  background: var(--v2-color-ivory-surface, #fffcf8);
+  box-shadow: var(--v2-shadow-soft);
+  color: var(--v2-color-ink, #16241e);
+}
+
+html[data-v2-app="1"] .kx-library-card::before,
+html[data-v2-app="1"] .topic-card::before,
+html[data-v2-app="1"] .hadith-card::before,
+html[data-v2-app="1"] .tarikh-card::before {
+  border-inline-start-width: 0;
+  width: 0;
+  background: none;
+  box-shadow: none;
+}
+
+/* Legal تحت الجسر العام */
+html[data-v2-app="1"] .legal-page-hero {
+  border-radius: var(--v2-radius-card, 26px);
+  border: 1px solid var(--v2-hairline);
+  background: var(--v2-color-ivory-surface, #fffcf8);
+  box-shadow: var(--v2-shadow-soft);
+  margin-block-end: var(--v2-space-4, 1rem);
+  padding: var(--v2-space-5, 1.25rem);
+}
+
+html[data-v2-app="1"] .legal-page-eyebrow {
+  display: inline-flex;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--v2-radius-pill, 999px);
+  background: var(--v2-color-emerald-soft, #e2efe8);
+  color: var(--v2-color-emerald-deep, #0a3d2e);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+html[data-v2-app="1"] .legal-page-hero h1 {
+  color: var(--v2-color-ink, #16241e);
+  font-weight: 800;
+}
+
+html[data-v2-app="1"] .legal-page-hero h1::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 3px;
+  margin-block-start: 0.55rem;
+  border-radius: var(--v2-radius-pill, 999px);
+  background: linear-gradient(
+    90deg,
+    var(--v2-color-emerald, #0f5c45),
+    var(--v2-color-gold, #c9a82e)
+  );
+}
+
+html[data-v2-app="1"] .legal-section {
+  border-radius: var(--v2-radius-card, 26px);
+  border: 1px solid var(--v2-hairline);
+  background: var(--v2-color-ivory-surface, #fffcf8);
+  box-shadow: var(--v2-shadow-soft);
+  padding: var(--v2-space-4, 1rem) var(--v2-space-5, 1.25rem);
+  margin-block-end: var(--v2-space-4, 1rem);
+}
+
+/* Dark — أبطال/قانون/بطاقات إضافية */
+html[data-theme="dark"][data-v2-app="1"] .topic-page,
+html.dark[data-v2-app="1"] .topic-page,
+html[data-theme="dark"][data-v2-app="1"] .topic-page__body,
+html.dark[data-v2-app="1"] .topic-page__body {
+  background-color: var(--v2-color-night-bg, #0a1612);
+  color: var(--v2-color-night-ink, #edf5f0);
+}
+
+html[data-theme="dark"][data-v2-app="1"] .topic-page__hero,
+html.dark[data-v2-app="1"] .topic-page__hero,
+html[data-theme="dark"][data-v2-app="1"] .legal-page-hero,
+html.dark[data-v2-app="1"] .legal-page-hero,
+html[data-theme="dark"][data-v2-app="1"] .legal-section,
+html.dark[data-v2-app="1"] .legal-section,
+html[data-theme="dark"][data-v2-app="1"] .kx-library-card,
+html.dark[data-v2-app="1"] .kx-library-card,
+html[data-theme="dark"][data-v2-app="1"] .topic-card,
+html.dark[data-v2-app="1"] .topic-card,
+html[data-theme="dark"][data-v2-app="1"] .hadith-card,
+html.dark[data-v2-app="1"] .hadith-card,
+html[data-theme="dark"][data-v2-app="1"] .gl-term,
+html.dark[data-v2-app="1"] .gl-term {
+  background: var(--v2-color-night-surface, #12261f);
+  border-color: var(--v2-color-night-hairline);
+  color: var(--v2-color-night-ink);
+}
+
+html[data-theme="dark"][data-v2-app="1"] .topic-page__hero .ss-text--on-brand,
+html.dark[data-v2-app="1"] .topic-page__hero .ss-text--on-brand,
+html[data-theme="dark"][data-v2-app="1"] .topic-page__title,
+html.dark[data-v2-app="1"] .topic-page__title,
+html[data-theme="dark"][data-v2-app="1"] .legal-page-hero h1,
+html.dark[data-v2-app="1"] .legal-page-hero h1 {
+  color: var(--v2-color-night-ink, #edf5f0);
+}
+
+html[data-theme="dark"][data-v2-app="1"] .topic-page__hero .topic-page__sub,
+html.dark[data-v2-app="1"] .topic-page__hero .topic-page__sub {
+  color: var(--v2-color-night-muted, #b3c9bd);
+}
+
+html[data-theme="dark"][data-v2-app="1"] .topic-page__group-title,
+html.dark[data-v2-app="1"] .topic-page__group-title {
+  color: var(--v2-color-night-emerald-text, #9fd4bf);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html[data-v2-app="1"] .soft-card,
-  html[data-v2-app="1"] .es2__cta {
+  html[data-v2-app="1"] .es2__cta,
+  html[data-v2-app="1"] .topic-page__hero,
+  html[data-v2-app="1"] .kx-library-card {
     transition: none;
   }
 }

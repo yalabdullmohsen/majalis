@@ -70,8 +70,14 @@
 |---|---|
 | Mushaf immersive (`/mushaf`) | out of scope — text/layout frozen |
 | Admin v3 (`/admin*`) | out of scope |
-| Deep topic subpages without dedicated opt-in | inherit `data-v2-app` shell bridge; follow-up polish if visual gaps remain |
 | Mushaf bookmarks / native-only chrome | not part of public V2 expansion |
+
+## Full-app coverage (post-expansion)
+
+- `html[data-v2-app="1"]` يحوّل **كل** `SectionHero` / `.topic-page__hero` / `.legal-page-hero` إلى Page Header V2 عاجي
+- بطاقات إضافية: `kx-library-card` · `topic-card` · `hadith-card` · `gl-term` · `tarikh-card` · vault/flashcard/competition
+- مسارات موسّعة: تفسير · علوم قرآن · أدعية · زكاة/صوم/حج · مخزن/مفضّلة · بطاقات · منافسات · قصص/أمم
+- أي صفحة عامة بلا opt-in مخصّص ترث الجسر الكامل — لا هيرو داكن قديم
 
 ## A11y / contrast notes
 
