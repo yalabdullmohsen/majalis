@@ -8,6 +8,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { supabase } from "@/lib/supabase";
 import { readCookieConsent, writeCookieConsent } from "@/lib/cookie-consent";
 import { UtilityScreen } from "@/components/design-system/screens";
+import "@/styles/pages/learn-legal-v2.css";
 
 /**
  * Interactive privacy hub — rights + consent + export/delete links.

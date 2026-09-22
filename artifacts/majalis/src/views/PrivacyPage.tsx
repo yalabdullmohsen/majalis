@@ -4,6 +4,7 @@ import { LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { UtilityScreen } from "@/components/design-system/screens";
+import "@/styles/pages/learn-legal-v2.css";
 
 export default function PrivacyPage() {
   useEffect(() => {

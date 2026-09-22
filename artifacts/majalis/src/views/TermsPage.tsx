@@ -5,6 +5,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { CONTACT_EMAIL } from "@/lib/site-config";
 import { UtilityScreen } from "@/components/design-system/screens";
+import "@/styles/pages/learn-legal-v2.css";
 
 export default function TermsPage() {
   useEffect(() => {

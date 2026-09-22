@@ -884,6 +884,68 @@ function AppShellInner() {
     };
   }, [isHistoryPath]);
 
+  const isLearnPath =
+    location === "/quiz" ||
+    location.startsWith("/quiz/") ||
+    location.startsWith("/quiz?");
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isLearnPath) {
+      root.setAttribute("data-v2-learn", "1");
+      void import("@/styles/pages/learn-legal-v2.css");
+    } else {
+      root.removeAttribute("data-v2-learn");
+    }
+    return () => {
+      root.removeAttribute("data-v2-learn");
+    };
+  }, [isLearnPath]);
+
+  const isLegalPath =
+    location === "/about" ||
+    location.startsWith("/about?") ||
+    location === "/privacy" ||
+    location.startsWith("/privacy/") ||
+    location.startsWith("/privacy?") ||
+    location === "/privacy-center" ||
+    location.startsWith("/privacy-center?") ||
+    location === "/terms" ||
+    location.startsWith("/terms?") ||
+    location === "/support" ||
+    location.startsWith("/support?") ||
+    location === "/contact" ||
+    location.startsWith("/contact?");
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isLegalPath) {
+      root.setAttribute("data-v2-legal", "1");
+      void import("@/styles/pages/learn-legal-v2.css");
+    } else {
+      root.removeAttribute("data-v2-legal");
+    }
+    return () => {
+      root.removeAttribute("data-v2-legal");
+    };
+  }, [isLegalPath]);
+
+  const isOfflinePath =
+    location === "/offline" || location.startsWith("/offline?");
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isOfflinePath) {
+      root.setAttribute("data-v2-offline", "1");
+      void import("@/styles/pages/learn-legal-v2.css");
+    } else {
+      root.removeAttribute("data-v2-offline");
+    }
+    return () => {
+      root.removeAttribute("data-v2-offline");
+    };
+  }, [isOfflinePath]);
+
   useEffect(() => {
     const root = document.documentElement;
     root.setAttribute("data-v2-nav", "1");

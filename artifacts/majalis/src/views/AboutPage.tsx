@@ -5,6 +5,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { SITE_DESCRIPTION, SITE_URL } from "@/lib/site-config";
 import { UtilityScreen } from "@/components/design-system/screens";
+import "@/styles/pages/learn-legal-v2.css";
 
 type VersionInfo = {
   shortCommit?: string;
