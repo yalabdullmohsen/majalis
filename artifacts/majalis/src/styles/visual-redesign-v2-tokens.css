@@ -1,9 +1,10 @@
 /**
  * Visual Redesign V2 — رموز الهوية Premium Islamic Dashboard
+ * + Identity Reset PR-1: Typography roles · Density · Surface distribution
  *
  * مصدر التجربة: مرجع بصري (لا نسخ شعار/صور).
  * القيم الحرفية الأساسية تبقى في theme.css (--sunnah-* / --mj-*).
- * هذا الملف يضيف طبقة V2 دلالية للاستهلاك في الشاشات المُعاد تصميمها.
+ * هذا الملف يضيف طبقة V2 دلالية — لا Design System رابعة.
  *
  * لا يغيّر نص المصحف · لا يمس Admin v3 · لا يغيّر Routes.
  */
@@ -32,13 +33,60 @@
   /* نص زمردي على خلفيات ليلية (لا يُستخدم كخلفية صلبة) */
   --v2-color-night-emerald-text: #9fd4bf;
 
+  /* ── Identity Reset: توزيع الأسطح ~70/20/8/2 ── */
+  --v2-surface-canvas: var(--v2-color-ivory); /* ~70% خلفية محايدة */
+  --v2-surface-raised: var(--v2-color-ivory-surface); /* ~20% أسطح متمايزة */
+  --v2-surface-muted: var(--v2-color-ivory-muted);
+  --v2-surface-functional: color-mix(
+    in srgb,
+    var(--v2-color-emerald) 10%,
+    var(--v2-color-ivory-surface)
+  ); /* ~8% أخضر وظيفي خفيف — ليس خلفية بطاقة عامة */
+  --v2-accent-gold: var(--v2-color-gold); /* ~2% Accent رفيع */
+
+  /* ── Typography roles (Amiri موجود مسبقاً — فصل الأدوار لا مكتبة جديدة) ── */
+  --v2-font-display: "Amiri", "MajlisAmiriFallback", "Traditional Arabic", serif;
+  --v2-font-ui: "Amiri", "MajlisAmiriFallback", "MajlisFallback", "Traditional Arabic", serif;
+  --v2-font-latin: "Amiri", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Type scale */
+  --v2-type-display: clamp(1.75rem, 5.5vw, 2.35rem);
+  --v2-type-page-title: clamp(1.35rem, 4vw, 1.75rem);
+  --v2-type-section-title: clamp(1.125rem, 3vw, 1.35rem);
+  --v2-type-card-title: clamp(1rem, 2.8vw, 1.125rem);
+  --v2-type-body: 1rem;
+  --v2-type-supporting: 0.9375rem;
+  --v2-type-metadata: 0.8125rem;
+  --v2-type-caption: 0.75rem;
+
+  --v2-lh-display: 1.35;
+  --v2-lh-title: 1.4;
+  --v2-lh-body: 1.7;
+  --v2-lh-ui: 1.45;
+  --v2-lh-meta: 1.4;
+
+  --v2-fw-regular: 400;
+  --v2-fw-medium: 500;
+  --v2-fw-semibold: 600;
+  --v2-fw-bold: 700;
+
+  /* ── Density System: COMPACT | STANDARD | COMFORTABLE ── */
+  --v2-density-name: standard;
+  --v2-pad-card: 1rem;
+  --v2-pad-section: 1rem;
+  --v2-gap-stack: 0.75rem;
+  --v2-gap-section: 1rem;
+  --v2-row-min: 2.75rem;
+  --v2-control-h: 2.75rem;
+  --v2-header-h: 3rem;
+
   /* ── هندسة البطاقات الفاخرة ── */
-  --v2-radius-sm: 14px;
-  --v2-radius-md: 18px;
-  --v2-radius-lg: 22px;
-  --v2-radius-xl: 26px;
-  --v2-radius-card: var(--v2-radius-xl);
-  --v2-radius-icon: 16px;
+  --v2-radius-sm: 12px;
+  --v2-radius-md: 16px;
+  --v2-radius-lg: 20px;
+  --v2-radius-xl: 24px;
+  --v2-radius-card: var(--v2-radius-lg);
+  --v2-radius-icon: 14px;
   --v2-radius-pill: 999px;
 
   --v2-space-1: 0.25rem;
@@ -50,21 +98,65 @@
   --v2-space-8: 2rem;
   --v2-space-10: 2.5rem;
 
-  --v2-shadow-soft: 0 4px 16px rgba(22, 36, 30, 0.05);
-  --v2-shadow-card: 0 8px 28px rgba(22, 36, 30, 0.07);
-  --v2-shadow-elevated: 0 12px 40px rgba(22, 36, 30, 0.1);
+  /* ظلال محسوبة — أقل ضبابية واتساعًا */
+  --v2-shadow-soft: 0 1px 2px rgba(22, 36, 30, 0.04), 0 2px 8px rgba(22, 36, 30, 0.04);
+  --v2-shadow-card: 0 1px 2px rgba(22, 36, 30, 0.04), 0 4px 14px rgba(22, 36, 30, 0.06);
+  --v2-shadow-elevated: 0 2px 4px rgba(22, 36, 30, 0.05), 0 10px 28px rgba(22, 36, 30, 0.08);
   --v2-hairline: color-mix(in srgb, var(--v2-color-ink) 8%, transparent);
 
-  /* ── Micro motion فقط ── */
+  /* ── Micro motion فقط (80–120ms للضغط) ── */
   --v2-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --v2-duration-fast: 140ms;
-  --v2-duration: 220ms;
-  --v2-duration-slow: 320ms;
+  --v2-duration-press: 100ms;
+  --v2-duration-fast: 120ms;
+  --v2-duration: 200ms;
+  --v2-duration-slow: 280ms;
 
-  /* أيقونات Rounded Premium */
-  --v2-icon-size: 1.35rem;
-  --v2-icon-tile: 2.75rem;
+  /* أيقونات Rounded Premium — أصغر قليلًا لكثافة STANDARD */
+  --v2-icon-size: 1.25rem;
+  --v2-icon-tile: 2.5rem;
   --v2-icon-stroke: 1.75;
+
+  /* Focus ring — هوية سُنّة (لا أزرق المتصفح) */
+  --v2-focus-ring: 0 0 0 3px color-mix(in srgb, var(--v2-color-gold) 42%, transparent);
+}
+
+/* Density: COMPACT — قوائم/فلاتر */
+html[data-density="compact"] {
+  --v2-density-name: compact;
+  --v2-pad-card: 0.75rem;
+  --v2-pad-section: 0.75rem;
+  --v2-gap-stack: 0.5rem;
+  --v2-gap-section: 0.75rem;
+  --v2-row-min: 2.5rem;
+  --v2-control-h: 2.5rem;
+  --v2-header-h: 2.75rem;
+  --v2-icon-tile: 2.25rem;
+}
+
+/* Density: STANDARD — هاتف (افتراضي) */
+html[data-density="standard"],
+html[data-v2-app="1"]:not([data-density]) {
+  --v2-density-name: standard;
+  --v2-pad-card: 1rem;
+  --v2-pad-section: 1rem;
+  --v2-gap-stack: 0.75rem;
+  --v2-gap-section: 1rem;
+  --v2-row-min: 2.75rem;
+  --v2-control-h: 2.75rem;
+  --v2-header-h: 3rem;
+}
+
+/* Density: COMFORTABLE — صفحات قراءة */
+html[data-density="comfortable"] {
+  --v2-density-name: comfortable;
+  --v2-pad-card: 1.25rem;
+  --v2-pad-section: 1.25rem;
+  --v2-gap-stack: 1rem;
+  --v2-gap-section: 1.5rem;
+  --v2-row-min: 3rem;
+  --v2-control-h: 2.75rem;
+  --v2-header-h: 3.25rem;
+  --v2-lh-body: 1.8;
 }
 
 html[data-theme="dark"],
@@ -81,10 +173,18 @@ html.dark {
     var(--v2-color-emerald, #0f5c45) 34%,
     var(--v2-color-night-surface, #12261f)
   );
+  --v2-surface-canvas: var(--v2-color-night-bg);
+  --v2-surface-raised: var(--v2-color-night-surface);
+  --v2-surface-muted: var(--v2-color-night-elevated);
+  --v2-surface-functional: color-mix(
+    in srgb,
+    var(--v2-color-emerald) 18%,
+    var(--v2-color-night-surface)
+  );
   --v2-hairline: var(--v2-color-night-hairline);
-  --v2-shadow-soft: 0 4px 18px rgba(0, 0, 0, 0.28);
-  --v2-shadow-card: 0 10px 32px rgba(0, 0, 0, 0.35);
-  --v2-shadow-elevated: 0 14px 44px rgba(0, 0, 0, 0.42);
+  --v2-shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.2), 0 2px 10px rgba(0, 0, 0, 0.22);
+  --v2-shadow-card: 0 2px 4px rgba(0, 0, 0, 0.22), 0 8px 22px rgba(0, 0, 0, 0.28);
+  --v2-shadow-elevated: 0 4px 8px rgba(0, 0, 0, 0.28), 0 14px 36px rgba(0, 0, 0, 0.36);
 }
 
 /* جسر اختياري: الصفحة العامة يمكن أن تتبنى خلفية V2 دون كسر القديم */
@@ -92,12 +192,13 @@ html[data-v2-dashboard="1"] body,
 html[data-v2-dashboard="1"] .app-shell,
 html[data-v2-app="1"] body,
 html[data-v2-app="1"] .app-shell {
-  background-color: var(--v2-color-ivory);
+  background-color: var(--v2-surface-canvas);
   color: var(--v2-color-ink);
 }
 
 @media (prefers-reduced-motion: reduce) {
   :root {
+    --v2-duration-press: 1ms;
     --v2-duration-fast: 1ms;
     --v2-duration: 1ms;
     --v2-duration-slow: 1ms;

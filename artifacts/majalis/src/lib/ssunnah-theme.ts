@@ -65,6 +65,41 @@ export const V2_RADIUS = {
   pill: "var(--v2-radius-pill)",
 } as const;
 
+/** Identity Reset PR-1 — Typography / Density / Surfaces */
+export const V2_TYPE = {
+  display: "var(--v2-type-display)",
+  pageTitle: "var(--v2-type-page-title)",
+  sectionTitle: "var(--v2-type-section-title)",
+  cardTitle: "var(--v2-type-card-title)",
+  body: "var(--v2-type-body)",
+  supporting: "var(--v2-type-supporting)",
+  metadata: "var(--v2-type-metadata)",
+  caption: "var(--v2-type-caption)",
+} as const;
+
+export const V2_FONT = {
+  display: "var(--v2-font-display)",
+  ui: "var(--v2-font-ui)",
+  latin: "var(--v2-font-latin)",
+} as const;
+
+export const V2_DENSITY = {
+  padCard: "var(--v2-pad-card)",
+  padSection: "var(--v2-pad-section)",
+  gapStack: "var(--v2-gap-stack)",
+  gapSection: "var(--v2-gap-section)",
+  rowMin: "var(--v2-row-min)",
+  controlH: "var(--v2-control-h)",
+} as const;
+
+export const V2_SURFACE = {
+  canvas: "var(--v2-surface-canvas)",
+  raised: "var(--v2-surface-raised)",
+  muted: "var(--v2-surface-muted)",
+  functional: "var(--v2-surface-functional)",
+  accentGold: "var(--v2-accent-gold)",
+} as const;
+
 export const SS_SPACE = {
   1: "var(--ss-space-1)",
   2: "var(--ss-space-2)",

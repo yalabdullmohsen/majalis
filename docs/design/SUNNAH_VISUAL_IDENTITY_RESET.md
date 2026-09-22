@@ -1,0 +1,49 @@
+# SUNNAH VISUAL IDENTITY RESET
+
+**Started:** 2026-09-22  
+**Brand:** سُنّة  
+**Constraint:** Visual only · no routes · no content · no mushaf text · no Admin v3 · no new Design System
+
+## Problem
+
+V2/V3 حسّنتا التناسق، لكن الواجهة ما زالت تشبه ويب مكبرًا: كثافة ضعيفة، بطاقات ضخمة، تكرار بحث/حديث، خط زخرفي في Chrome، Focus أزرق، عناصر عائمة.
+
+## Source of truth (shared — no 4th DS)
+
+| Layer | File |
+|---|---|
+| Literal colors | `app/styles/theme.css` |
+| V2 + Identity Reset tokens | `styles/visual-redesign-v2-tokens.css` |
+| Identity Reset application (PR-1+) | `styles/sunnah-identity-reset.css` |
+| TS aliases | `lib/ssunnah-theme.ts` (`V2_TYPE` / `V2_FONT` / `V2_DENSITY` / `V2_SURFACE`) |
+
+## PR train
+
+| PR | Focus | Status |
+|---|---|---|
+| 1 | Typography + density + surface tokens | **in progress** |
+| 2 | Global header + search + daily strip | queued |
+| 3 | Cards and content rows | queued |
+| 4 | Home and Quran Hub | queued |
+| 5 | Sections and category grids | queued |
+| 6 | Detail and reading pages | queued |
+| 7 | Drawer + Bottom Navigation + floating | queued |
+| 8 | Forms + Tabs + Filters | queued |
+| 9 | Dark Mode Luxury Night | queued |
+| 10 | Responsive + Accessibility + Visual QA | queued |
+
+Rule: start each PR from latest `main`. Do not start next until previous is merged.
+
+## PR-1 deliverables
+
+- `--v2-font-display` / `--v2-font-ui` / `--v2-font-latin`
+- Type scale: display · page · section · card · body · supporting · metadata · caption
+- Density: `compact` | `standard` | `comfortable` via `html[data-density]`
+- Surfaces: canvas / raised / muted / functional / gold accent (~70/20/8/2)
+- Softer shadows · identity focus ring
+- Remove Aref Ruqaa from drawer chrome button
+- Default `data-density="standard"` with `data-v2-app`
+
+## Out of scope (all PRs)
+
+Mushaf reader · Quran text · Admin v3 · DB · Routes · SEO · indexing · permissions · publishing
