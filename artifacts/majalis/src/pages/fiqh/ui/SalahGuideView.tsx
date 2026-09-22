@@ -1,4 +1,5 @@
 import "@/styles/pages/salah-guide.css";
+import "@/styles/pages/worship-history-v2.css";
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "@/lib/seo";

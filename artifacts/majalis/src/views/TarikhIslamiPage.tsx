@@ -24,8 +24,10 @@ import {
   type IslamicHistoryItem,
 } from "@/data/islamic-history";
 import "@/styles/pages/tarikh-islami.css";
+import "@/styles/pages/worship-history-v2.css";
 import { DashboardScreen } from "@/components/design-system/screens";
 import { KnowledgeLayout } from "@/components/knowledge";
+import { EmptyStateV2 } from "@/components/design-system";
 
 type FilterId = HistoryCategory | "all";
 
@@ -370,7 +372,7 @@ export default function TarikhIslamiPage() {
           <section className="tarikh-section">
             <h2 className="tarikh-section__title">نتائج البحث ({searchResults.length})</h2>
             {searchResults.length === 0 ? (
-              <p className="tarikh-empty">{EMPTY.search}</p>
+              <EmptyStateV2 title="لا نتائج" description={EMPTY.search} />
             ) : (
               <ul className="tarikh-card-list">
                 {searchResults.map((item) => (

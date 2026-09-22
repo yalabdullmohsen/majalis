@@ -46,8 +46,8 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 |---|---|---|
 | A | App Shell V2 default + PageHeader/EmptyState | **merged** (#2209) |
 | B | Lessons + Sections | **merged** (#2210) |
-| C | Fiqh / Hadith / Aqidah knowledge dashboards | **this** |
-| D | Prayer / Adhkar / Glossary / History | queued |
+| C | Fiqh / Hadith / Aqidah knowledge dashboards | **merged** (#2211) |
+| D | Prayer / Adhkar / Glossary / History | **this** |
 | E | Quiz / Challenges / Settings-Legal / Error states | queued |
 | F | Final QA + OUTPUT | queued |
 
@@ -74,6 +74,16 @@ Calm · premium · modern Islamic · Dashboard + Cards · generous space · roun
 - بطاقات فقه/حديث/توحيد → SunnahCard V2 look · Rounded Premium icons
 - EmptyStateV2 في فراغ الفقه والحديث
 - CSS: `styles/pages/knowledge-dashboards-v2.css` (مؤجّل من App + استيراد الصفحات)
+
+## Expansion PR-D — Worship + Glossary + History
+
+- `html[data-v2-worship="1"]` على `/adhkar*` · `/prayer-times` · `/prayer-ranks` · `/salah-guide`
+- `html[data-v2-glossary="1"]` على `/islamic-glossary`
+- `html[data-v2-history="1"]` على `/tarikh-islami*`
+- Guided Experience: بطاقات أذكار + تقدّم + إجراءات سريعة · أوقات صلاة عاجية
+- Timeline: نقاط زمرد/ذهب لعصور التاريخ
+- EmptyStateV2 في فراغ الأذكار/المعجم/التاريخ
+- CSS: `styles/pages/worship-history-v2.css`
 
 ## PR-2 Dashboard Homepage
 

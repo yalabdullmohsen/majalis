@@ -823,6 +823,67 @@ function AppShellInner() {
     };
   }, [isKnowledgeHubPath]);
 
+  const isWorshipPath =
+    location === "/adhkar" ||
+    location.startsWith("/adhkar/") ||
+    location.startsWith("/adhkar?") ||
+    location === "/prayer-times" ||
+    location.startsWith("/prayer-times?") ||
+    location === "/prayer-ranks" ||
+    location.startsWith("/prayer-ranks?") ||
+    location === "/salah-guide" ||
+    location.startsWith("/salah-guide?");
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isWorshipPath) {
+      root.setAttribute("data-v2-worship", "1");
+      void import("@/styles/pages/worship-history-v2.css");
+    } else {
+      root.removeAttribute("data-v2-worship");
+    }
+    return () => {
+      root.removeAttribute("data-v2-worship");
+    };
+  }, [isWorshipPath]);
+
+  const isGlossaryPath =
+    location === "/islamic-glossary" ||
+    location.startsWith("/islamic-glossary?") ||
+    location === "/glossary" ||
+    location.startsWith("/glossary?");
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isGlossaryPath) {
+      root.setAttribute("data-v2-glossary", "1");
+      void import("@/styles/pages/worship-history-v2.css");
+    } else {
+      root.removeAttribute("data-v2-glossary");
+    }
+    return () => {
+      root.removeAttribute("data-v2-glossary");
+    };
+  }, [isGlossaryPath]);
+
+  const isHistoryPath =
+    location === "/tarikh-islami" ||
+    location.startsWith("/tarikh-islami/") ||
+    location.startsWith("/tarikh-islami?");
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isHistoryPath) {
+      root.setAttribute("data-v2-history", "1");
+      void import("@/styles/pages/worship-history-v2.css");
+    } else {
+      root.removeAttribute("data-v2-history");
+    }
+    return () => {
+      root.removeAttribute("data-v2-history");
+    };
+  }, [isHistoryPath]);
+
   useEffect(() => {
     const root = document.documentElement;
     root.setAttribute("data-v2-nav", "1");

@@ -26,6 +26,7 @@ import { toArabicDigits } from "@/lib/utils";
 import { DashboardScreen } from "@/components/design-system/screens";
 import { RANKS } from "@/lib/prayer-ranks-data";
 import "@/styles/pages/prayer-times.css";
+import "@/styles/pages/worship-history-v2.css";
 
 const PrayerAnnualTimetable = lazy(() =>
   import("@/components/prayer/PrayerAnnualTimetable").then((m) => ({

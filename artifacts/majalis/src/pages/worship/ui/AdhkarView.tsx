@@ -5,7 +5,7 @@ import { navigateTo } from "@/lib/navigation-intent";
 import { ADHKAR_CATEGORIES, FEATURED_ADHKAR_SLUGS } from "@/lib/adhkar-seed";
 import { usePublishedAdhkarItems, isPublishableAdhkar, getUnverifiedAdhkarItems } from "@/lib/adhkar-service";
 import { EMPTY, STATUS } from "@/lib/ui-copy";
-import { Empty } from "@/components/ui-common";
+import { EmptyStateV2 } from "@/components/design-system";
 import { PageShell } from "@/components/layout/PageShell";
 import { UtilityScreen } from "@/components/design-system/screens";
 import { SectionTemplatePage } from "@/components/topic/TopicPage";
@@ -24,6 +24,7 @@ import { truncateAtWord } from "@/lib/content-display-polish";
 import "@/styles/pages/adhkar.css";
 import "@/styles/pages/tasbih.css";
 import "@/styles/components/thumb-zone.css";
+import "@/styles/pages/worship-history-v2.css";
 
 const AdhkarDhikrSheet = lazy(() =>
   import("./AdhkarDhikrSheet").then((m) => ({ default: m.AdhkarDhikrSheet })),
@@ -307,9 +308,9 @@ export default function AdhkarPage() {
       {isLoading && publishedItems.length === 0 ? (
         <div className="adhkar-loading-hint" role="status" aria-busy="true" aria-label="تحديث الأذكار" />
       ) : isError && publishedItems.length === 0 ? (
-        <Empty text={STATUS.loadError} />
+        <EmptyStateV2 title="تعذّر التحميل" description={STATUS.loadError} />
       ) : total === 0 ? (
-        <Empty text={EMPTY.data} />
+        <EmptyStateV2 title="لا أذكار هنا" description={EMPTY.data} />
       ) : current ? (
         <div className="adhkar-focus-shell">
           {/* عداد الأذكار — سياق واضح: الذكر ن من م */}
