@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import { ChevronLeft } from "lucide-react";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
-import { CardTitle, SupportingText, Caption } from "@/components/design-system/text";
+import { CardTitle, SupportingText, Caption, SectionTitle } from "@/components/design-system/text";
 import "@/styles/sunnah-identity-cards.css";
 
 export type CompactNavigationCardProps = {
@@ -120,7 +120,7 @@ export type DetailSectionProps = {
 export function DetailSection({ title, children, className }: DetailSectionProps) {
   return (
     <section className={cn("id-detail-section", className)} data-identity-card="detail-section">
-      {title ? <h2 className="id-detail-section__title">{title}</h2> : null}
+      {title ? <SectionTitle className="id-detail-section__title">{title}</SectionTitle> : null}
       <div className="id-detail-section__body">{children}</div>
     </section>
   );
