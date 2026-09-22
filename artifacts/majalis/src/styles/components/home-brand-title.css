@@ -197,6 +197,11 @@ html[data-v2-dashboard="1"] .home-page-hero .page-hero-mj__title {
   color: var(--v2-color-on-emerald, #fff) !important;
 }
 
+html[data-v2-dashboard="1"] .home-page-hero .page-hero-mj__eyebrow,
+html[data-v2-dashboard="1"] .home-page-hero .page-hero-mj__desc {
+  color: color-mix(in srgb, var(--v2-color-on-emerald, #fff) 90%, transparent) !important;
+}
+
 html[data-v2-dashboard="1"][data-theme="dark"] .home-page-hero.page-hero-mj,
 html[data-v2-dashboard="1"].dark .home-page-hero.page-hero-mj {
   background-color: var(--v2-color-emerald-deep, #0a3d2e) !important;
