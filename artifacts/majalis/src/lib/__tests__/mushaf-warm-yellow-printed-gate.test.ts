@@ -26,7 +26,7 @@ assert.match(css, new RegExp(`--mushaf-printed-gold:\\s*${mushafPrintedGold}`, "
 assert.match(css, new RegExp(`--mushaf-ink:\\s*${mushafInkPrimary}`, "i"));
 assert.match(
   css,
-  /\[data-mushaf-accent="gold"\][\s\S]{0,400}--mushaf-marker-background:\s*var\(--quran-gold\)/,
+  /\[data-mushaf-accent="gold"\][\s\S]{0,400}--mushaf-accent-fill:\s*var\(--quran-gold\)/,
 );
 assert.equal(mushafVerseMarkerFill.toLowerCase(), mushafPrintedGold.toLowerCase());
 assert.equal(mushafVerseMarkerBorder.toLowerCase(), "#b89620");

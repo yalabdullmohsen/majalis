@@ -60,7 +60,7 @@ assert.equal(mushafVerseMarkerNumber.toLowerCase(), "#5f4814");
 assert.equal(mushafOpeningTurquoise.toLowerCase(), "#0e7a6b");
 assert.match(css, /--quran-gold:\s*#c9a82e/i);
 assert.match(css, /--mushaf-printed-gold:\s*#c9a82e/i);
-assert.match(css, /--mushaf-accent-primary:\s*#0e7a6b/i);
+assert.match(css, /--mushaf-accent-fill:\s*#0e7a6b/i);
 assert.match(css, /\[data-mushaf-accent="gold"\]/);
 assert.doesNotMatch(css, /--mushaf-verse-marker-fill:\s*#dcb424/i);
 

@@ -41,8 +41,9 @@ assert.equal(mushafVerseMarkerFill.toLowerCase(), "#c9a82e");
 console.log("=== CSS accent contract ===");
 {
   const css = read("src/features/mushaf-reader/mushaf-reader.css");
-  assert.match(css, /--mushaf-accent-primary:\s*#0e7a6b/i);
-  assert.match(css, /--mushaf-marker-background:\s*var\(--mushaf-accent-primary\)/);
+  assert.match(css, /--mushaf-accent-fill:\s*#0e7a6b/i);
+  assert.match(css, /--mushaf-accent-primary:\s*var\(--mushaf-accent-fill\)/);
+  assert.match(css, /--mushaf-marker-background:\s*var\(--mushaf-accent-fill\)/);
   assert.match(css, /--mushaf-verse-marker-fill:\s*var\(--mushaf-marker-background\)/);
   assert.match(css, /\[data-mushaf-accent="gold"\]/);
   assert.match(css, /--mushaf-ayah-mark-font-size:\s*0\.62em/);
@@ -67,14 +68,21 @@ console.log("=== Opening inherits accent (no forced turquoise split) ===");
   assert.match(chrome, /align-content:\s*center/);
 }
 
-console.log("=== Wiring: NewMushafReader + Controls + Settings ===");
+console.log("=== Wiring: Provider + NewMushafReader + Controls + Settings ===");
 {
+  const provider = read("src/lib/mushaf-v2/MushafAppearanceProvider.tsx");
+  assert.match(provider, /MushafAppearanceProvider/);
+  assert.match(provider, /useMushafAppearance/);
+  assert.match(provider, /saveMushafAccentTheme|applyMushafAccentTheme/);
+  const readerPage = read("src/pages/quran/MushafReaderPage.tsx");
+  assert.match(readerPage, /MushafAppearanceProvider/);
   const reader = read("src/features/mushaf-reader/NewMushafReader.tsx");
-  assert.match(reader, /data-mushaf-accent/);
-  assert.match(reader, /applyAccentTheme|setAccentTheme/);
+  assert.match(reader, /useMushafAppearance/);
+  assert.match(reader, /data-mushaf-accent=\{accentAttr\}/);
+  assert.doesNotMatch(reader, /useState\(\(\) => QuranSettingsRepository\.getAccentTheme/);
   const controls = read("src/features/mushaf-reader/MushafControlsLayer.tsx");
   assert.match(controls, /mushaf-accent-theme/);
-  assert.match(controls, /الزمردي|mushafAppearanceThemeLabel/);
+  assert.match(controls, /mushafAppearanceThemeLabel/);
   assert.match(controls, /aria-checked/);
   const settings = read("src/features/mushaf-madinah/MushafSettingsSheet.tsx");
   assert.match(settings, /onAccentTheme/);
@@ -85,6 +93,9 @@ console.log("=== Wiring: NewMushafReader + Controls + Settings ===");
   assert.match(prefs, /MUSHAF_ACCENT_STORAGE_KEY/);
   const themeMod = read("src/lib/mushaf-v2/mushaf-appearance-theme.ts");
   assert.match(themeMod, /ssunnah-mushaf-accent-theme-v1/);
+  const css = read("src/features/mushaf-reader/mushaf-reader.css");
+  assert.match(css, /--mushaf-accent-fill-night:/);
+  assert.match(css, /\[data-mushaf-accent="gold"\][\s\S]{0,600}--mushaf-accent-fill-night/);
 }
 
 console.log("=== لا مساس بالنص/QPC ===");

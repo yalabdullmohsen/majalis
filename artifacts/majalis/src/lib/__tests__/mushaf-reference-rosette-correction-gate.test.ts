@@ -25,7 +25,7 @@ assert.match(css, /--mushaf-verse-marker-border:\s*var\(--mushaf-marker-border\)
 assert.match(css, /--mushaf-verse-marker-number:\s*var\(--mushaf-marker-number\)/);
 assert.match(
   css,
-  /\[data-mushaf-accent="gold"\][\s\S]{0,400}--mushaf-marker-background:\s*var\(--quran-gold\)/,
+  /\[data-mushaf-accent="gold"\][\s\S]{0,400}--mushaf-accent-fill:\s*var\(--quran-gold\)/,
 );
 assert.equal(mushafVerseMarkerFill.toLowerCase(), mushafPrintedGold.toLowerCase());
 assert.equal(mushafVerseMarkerBorder.toLowerCase(), "#b89620");
