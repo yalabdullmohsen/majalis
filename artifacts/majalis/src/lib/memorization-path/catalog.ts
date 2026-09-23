@@ -4,9 +4,9 @@
  */
 
 import { isHifzPathPubliclyVisible } from "./publication-states";
-import type { HifzPath } from "./types";
+import type { HifzCategory, HifzPath } from "./types";
 
-/** لا مسارات منشورة في PR-0. */
+/** لا مسارات منشورة — القوالب DRAFT فقط في الوثائق. */
 const PATHS: readonly HifzPath[] = [];
 
 export function listAllHifzPathsInternal(): readonly HifzPath[] {
@@ -20,6 +20,12 @@ export function listPublishedHifzPaths(): HifzPath[] {
   );
 }
 
+export function listPublishedHifzPathsByCategory(
+  category: HifzCategory,
+): HifzPath[] {
+  return listPublishedHifzPaths().filter((p) => p.category === category);
+}
+
 export function getPublishedHifzPathBySlug(slug: string): HifzPath | null {
   const path = PATHS.find((p) => p.slug === slug);
   if (!path || !isHifzPathPubliclyVisible(path.publicationStatus)) return null;
@@ -28,4 +34,12 @@ export function getPublishedHifzPathBySlug(slug: string): HifzPath | null {
 
 export function countPublishedHifzPaths(): number {
   return listPublishedHifzPaths().length;
+}
+
+/** وحدات منشورة داخل مسار منشور فقط. */
+export function listPublishedUnitsForPath(path: HifzPath) {
+  return path.units
+    .filter((u) => isHifzPathPubliclyVisible(u.publicationStatus))
+    .slice()
+    .sort((a, b) => a.sequence - b.sequence);
 }
