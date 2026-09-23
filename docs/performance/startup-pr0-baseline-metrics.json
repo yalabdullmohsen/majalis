@@ -1,0 +1,89 @@
+{
+  "program": "sunnah-startup-pipeline-rebuild",
+  "stage": 0,
+  "stageName": "timeline-baseline-inventory",
+  "measuredAt": "2026-09-23T19:05:08Z",
+  "commit": "c7816065a5537ee13651db30b93cc5395b2d13e4",
+  "branchBase": "origin/main",
+  "environment": "local-agent-code-inventory",
+  "productRoot": "artifacts/majalis",
+  "report": "docs/performance/STARTUP_ROOT_CAUSE_REPORT.md",
+  "acceptanceClaimForbiddenUntilLater": "SUNNAH_STARTUP_STABLE_AND_RELEASE_READY",
+  "devMarksModule": "artifacts/majalis/src/lib/startup-performance-marks.ts",
+  "devMarks": [
+    "startup:native-end",
+    "startup:js-start",
+    "startup:root-mounted",
+    "startup:theme-ready",
+    "startup:fonts-ready",
+    "startup:session-ready",
+    "startup:cache-ready",
+    "startup:shell-ready",
+    "startup:content-ready",
+    "startup:stable"
+  ],
+  "marksWiredInPr0": [
+    "startup:native-end",
+    "startup:js-start",
+    "startup:root-mounted",
+    "startup:theme-ready",
+    "startup:fonts-ready",
+    "startup:session-ready",
+    "startup:shell-ready",
+    "startup:content-ready",
+    "startup:stable"
+  ],
+  "marksDeferred": [
+    {
+      "name": "startup:cache-ready",
+      "reason": "Service Worker registration path — PR-6"
+    }
+  ],
+  "readinessSourcesInventoried": [
+    "html.app-booting",
+    "mj:boot-ready / BootFlags",
+    "mj:shell-stable",
+    "SPLASH_SESSION_KEY / #mj-launch-splash",
+    "chunk-recovery in-flight",
+    "UpdateAvailableBanner / useVersionCheck",
+    "OfflineBanner pending",
+    "AuthProvider session",
+    "dataset.mjFonts / theme"
+  ],
+  "userVisibleSurfacesLinkedToSymptoms": {
+    "offlineBannerPending": "محفوظ محليًا — تتم مزامنة {n} عنصرًا",
+    "chunkRecoveryToast": "تم تحديث المنصة، جاري تحسين العرض…",
+    "errorBoundaryUpdatePage": "تحديث العرض",
+    "launchSplashTagline": "رفيقك في العلم والعمل"
+  },
+  "timingConstantsMs": {
+    "BOOT_FONT_TIMEOUT_MS": 280,
+    "BOOT_STORAGE_TIMEOUT_MS": 450,
+    "SHELL_STABLE_GRACE_MS": 600,
+    "SPLASH_MIN_VISIBLE_MS": 0,
+    "SPLASH_MAX_VISIBLE_MS": 1400,
+    "SPLASH_FADE_OUT_MS": 160,
+    "SW_REGISTER_DELAY_MS": 5000,
+    "indexClearBootingSafetyMs": 1400
+  },
+  "runtimeNotMeasuredThisRun": [
+    "nativeLaunchToShellMs",
+    "jsStartMs",
+    "firstStableFrameMs",
+    "firstInteractiveFrameMs",
+    "fontReadyMs",
+    "clsColdStart",
+    "rootMountCount",
+    "headerMountCount",
+    "homeMountCount",
+    "startupNetworkRequestCount",
+    "longTasksStartup",
+    "deviceScreenshots",
+    "testFlightRecording"
+  ],
+  "budgetsLocked": {
+    "note": "لا رفع performance budgets في برنامج الإقلاع",
+    "referTo": "docs/performance/SUNNAH_WORLD_CLASS_BASELINE.md"
+  },
+  "nextPr": "PR-1 AppStartupController state machine"
+}
