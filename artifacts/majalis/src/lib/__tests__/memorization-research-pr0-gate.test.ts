@@ -24,7 +24,9 @@ assert.match(contracts, /مسارات مقترحة للحفظ بحسب المس�
 assert.doesNotMatch(contracts, /SUNNAH_MEMORIZATION_AND_RESEARCH_READY\s*=\s*true/);
 assert.match(contracts, /Feature Flags|Flags OFF|OFF/);
 assert.match(contracts, /\/hifz-path/);
-assert.match(contracts, /\/scholarly-research/);
+assert.match(contracts, /\/academic-research/);
+assert.match(contracts, /lib\/researches/);
+assert.match(contracts, /لا مسار موازٍ|لا بناء UI موازٍ/);
 
 const templates = JSON.parse(
   readRepo("docs/memorization-research/path-templates.json"),
@@ -43,9 +45,14 @@ assert.ok(
 
 const inventory = JSON.parse(
   readRepo("docs/memorization-research/research-inventory.json"),
-) as { indexedPublishedCount: number; pdfUploadInV1: boolean };
+) as {
+  indexedPublishedCount: number;
+  pdfUploadInV1: boolean;
+  legacySurface?: { route: string };
+};
 assert.equal(inventory.indexedPublishedCount, 0);
 assert.equal(inventory.pdfUploadInV1, false);
+assert.equal(inventory.legacySurface?.route, "/academic-research");
 
 const {
   MEMORIZATION_RESEARCH_FLAGS_DEFAULT,

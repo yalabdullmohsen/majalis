@@ -1,7 +1,15 @@
 {
   "schemaVersion": 1,
-  "note": "لا بحوث مفهرسة للعامة في PR-0 — لا استيراد جماعي بلا إذن",
+  "note": "عقد scholarly-research الجديد = 0 منشور تحت المراجعات الأربع. السطح الحي /academic-research + lib/researches إرث يحتاج تدقيق حقوق قبل المطابقة.",
   "indexedPublishedCount": 0,
+  "legacySurface": {
+    "route": "/academic-research",
+    "module": "artifacts/majalis/src/lib/researches",
+    "featureRegistryId": "researches",
+    "status": "active_needs_policy_hardening",
+    "aliases": ["/researches", "/research", "/sharia-research"],
+    "disabledStub": "/scholarly-research → /quiz (PR-1: redirect to /academic-research)"
+  },
   "draftOrQueuedCount": 0,
   "records": [],
   "allowedSourcePriority": [

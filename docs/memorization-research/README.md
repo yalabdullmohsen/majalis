@@ -14,7 +14,7 @@
 | مسار | دور |
 |---|---|
 | `artifacts/majalis/src/lib/memorization-path/*` | أعلام · أنواع · حالات نشر/تقدم · كتالوج فارغ للعامة |
-| `artifacts/majalis/src/lib/scholarly-research/*` | أعلام · أنواع · مراجعات أربع · أدوار · كتالوج فارغ |
+| `artifacts/majalis/src/lib/scholarly-research/*` | عقود حوكمة (مراجعات أربع · أدوار) فوق السطح الحي `/academic-research` + `lib/researches` — بلا UI موازٍ |
 | `test:memorization-research-pr0` | بوابة نصية |
 
 ## مبادئ ثابتة

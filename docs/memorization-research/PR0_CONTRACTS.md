@@ -39,9 +39,11 @@ UI (لاحقًا PR-1+):
 مصادر حقيقة موجودة يُعاد استخدامها:
   · قرآن: api.alquran.cloud عبر quran-api / قارئ المصحف — بلا تكرار نص
   · أدوات حفظ قائمة: /memorization · /quran-memorization · /quran/hifz-loop · /arbaeen-nawawi
+  · بحوث قائمة: /academic-research + lib/researches (لا مسار موازٍ)
   · مراجعة محتوى: نمط islamic-sects (حالات نشر + حراسة PUBLISHED)
   · أعلام: نمط lessons-guide / quran-journey (افتراضي OFF)
   · Admin: /admin/v3 centers (CRUD كامل لاحقًا PR-7/8)
+  · فلاتر: FilterSheet / ResearchFilters في lib/researches
 ```
 
 **فصل عن الموجود:** `/memorization` الحالي = «الحفظ والمراجعة» (أدوات قرآن/اختبارات). القسم الجديد **مسار الحفظ** = مسارات متدرجة + محفوظاتي + مراجعة. لا حذف للمسارات القديمة في PR-0؛ الربط/الدمج قرار لاحق بعد Flags ON.
@@ -55,16 +57,18 @@ UI (لاحقًا PR-1+):
 
 | Route | قسم | ملاحظة |
 |---|---|---|
-| `/hifz-path` | مسار الحفظ | فهرس + متابعة + مراجعات اليوم |
+| `/hifz-path` | مسار الحفظ | فهرس + متابعة + مراجعات اليوم (جديد) |
 | `/hifz-path/my` | محفوظاتي | |
 | `/hifz-path/c/:category` | تصنيفات | |
 | `/hifz-path/p/:slug` | صفحة مسار | |
 | `/hifz-path/p/:slug/u/:unitId` | وحدة حفظ | خارج قارئ المصحف |
-| `/scholarly-research` | البحوث | فهرس + بحث + فلاتر — **يستبدل** الـRedirect الحالي إلى `/quiz` في PR-1 خلف العلم |
-| `/scholarly-research/suggest` | اقترح بحثًا | لا رفع PDF في v1 |
-| `/scholarly-research/:slug` | تفاصيل | رابط المصدر الأصلي فقط |
+| `/academic-research` | البحوث الشرعية | **المسار الحي الحالي** (`AcademicResearchPage` + `lib/researches`) — يُطوَّر ولا يُستبدل بمسار موازٍ |
+| `/academic-research/submit` | اقترح/أرسل | موجود؛ يُقيَّد بسياسة «اقترح بحثًا» + لا PDF في موجات لاحقة |
+| `/academic-research/:id` | تفاصيل | موجود |
+| `/researches` `/research` `/sharia-research` | aliases | Redirect → `/academic-research` |
+| `/scholarly-research` | معطّل | Redirect→`/quiz` اليوم · في PR-1 يُحوَّل إلى `/academic-research` (لا منتج موازٍ) |
 | `/admin/v3/hifz-path/*` | Admin | PR-7 |
-| `/admin/v3/scholarly-research/*` | Admin | PR-8 |
+| `/admin/v3/academic-research/*` | Admin | PR-8 — يعزّز المراجعات الأربع فوق `lib/researches` |
 
 لا تُسجَّل في `AppRoutes` / sitemap / search index حتى PR-1+ والعلم ON + حالات قبول.
 
@@ -150,7 +154,14 @@ UI (لاحقًا PR-1+):
 
 ## 9) عدد البحوث المفهرسة فعليًا
 
-**0** — انظر [`research-inventory.json`](./research-inventory.json).
+| طبقة | العدد | ملاحظة |
+|---|---|---|
+| عقد `scholarly-research/catalog` (جديد) | **0** | لا سجلات تحت حالات المراجعات الأربع الجديدة |
+| سطح حي `lib/researches` + `/academic-research` | موجود (بذور/demo) | **إرث** — يحتاج تدقيق حقوق/مصدر قبل اعتباره مطابقًا لمعايير هذا البرنامج |
+
+انظر [`research-inventory.json`](./research-inventory.json).
+
+**قرار PR-0:** لا بناء UI موازٍ. الموجات اللاحقة تُهاجر/تُشدّد `lib/researches` نحو عقد المراجعات الأربع + منع PDF + «اقترح بحثًا».
 
 ---
 
