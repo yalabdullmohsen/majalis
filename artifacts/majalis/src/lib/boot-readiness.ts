@@ -1,7 +1,9 @@
 /**
  * طبقة جاهزية إقلاع واحدة — ثيم/خطوط/CSS/تخزين قبل إعلان أول رسم مرئي.
  * ينتظر document.fonts فعليًا؛ لا يُعلن الجاهزية بمهلة عشوائية قصيرة تُسبب FOUT.
+ * يبلّغ AppStartupController عند اكتمال الحد الأدنى (MINIMUM_READY).
  */
+import { notifyMinimumReady } from "@/lib/app-startup-controller";
 
 export type BootFlags = {
   themeReady: boolean;
@@ -124,6 +126,7 @@ export async function awaitBootReadiness(): Promise<BootFlags> {
   } catch {
     /* ignore */
   }
+  notifyMinimumReady("await-boot-readiness");
   return { ...flags };
 }
 
