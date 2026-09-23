@@ -62,12 +62,19 @@ ok(pluginSwift.includes('jsName = "MajlisPlaybackAudio"'), "plugin jsName Majlis
 ok(pluginSwift.includes("enablePlayback"), "enablePlayback method");
 ok(pluginSwift.includes("enableRecording"), "enableRecording method");
 ok(pluginSwift.includes("deactivate"), "deactivate method");
+ok(pluginSwift.includes("MPNowPlayingInfoCenter"), "Now Playing metadata center");
+ok(pluginSwift.includes("MPRemoteCommandCenter"), "remote transport commands");
+ok(pluginSwift.includes("reassertPlaybackIfNeeded"), "background session reassert");
 ok(pluginSwift.includes("interruptionNotification"), "handles audio interruptions");
 ok(pluginSwift.includes("routeChangeNotification"), "handles route changes");
 ok(!/try\?/.test(pluginSwift), "plugin does not swallow errors with try?");
 ok(!/call\.resolve\(\[\]\)/.test(pluginSwift), "plugin does not resolve empty on failure");
 ok(pluginSwift.includes("AUDIO_SESSION_FAILED"), "playback rejects with AUDIO_SESSION_FAILED code");
 ok(pluginSwift.includes("mediaServicesWereResetNotification"), "playback observes media services reset");
+ok(
+  /setCategory\(\s*\.playback[\s\S]*?options:\s*\[\s*\.allowAirPlay,\s*\.allowBluetoothA2DP\s*\]/.test(pluginSwift),
+  "playback category without duckOthers (continuous media)",
+);
 
 // حذف تام لميزة التسميع بالذكاء الاصطناعي — افحص الإزالة، لا تقرأ ملفات محذوفة
 ok(!existsSync(join(iosApp, "App", "MajlisSpeechRecognitionPlugin.swift")), "speech recognition plugin removed");

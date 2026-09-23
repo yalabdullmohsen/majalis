@@ -104,6 +104,25 @@ Logged-in features include: submitting content suggestions, saving learning prog
 
 ---
 
+## Background Audio (Guideline 2.5.4)
+
+The app declares `UIBackgroundModes = audio` because **Quran tilawa continues while the app is backgrounded or the device is locked**.
+
+### How to verify (required)
+
+1. Launch the app → open **المصحف** (Quran Mushaf) via the main Quran entry (deep link `/mushaf`).
+2. Tap any ayah → start **تلاوة** (play) from the ayah sheet or audio dock.
+3. Press Home / switch apps — **audio must keep playing**.
+4. Open Control Center — **Now Playing** shows the surah, ayah, and reciter; pause/play work.
+5. Lock the device — audio continues; Lock Screen transport controls work.
+6. Return to the app — playback position and ayah remain consistent.
+
+There is **no** silent audio keep-alive. Background mode is used only for real Quran (and related lesson) media playback via `AVAudioSession` category `.playback`.
+
+Local prayer **notifications** use `remote-notification` / notification sounds and are independent of continuous background audio.
+
+---
+
 ## Test Notes
 
 1. The app requires an internet connection for lesson streaming and database content.

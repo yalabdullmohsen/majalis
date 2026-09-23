@@ -360,8 +360,9 @@ export class AudioEngine {
       el.playbackRate = this.playbackRate;
       el.volume = 1;
       // لا نبدأ من volume=0 (سبب فجوة ~48ms) — الانتقال التقني يجب أن يكون فورياً
+      await this.activatePlaybackSession({ title: `سورة ${surah} · آية ${ayah}`, artist: "سُنّة" });
+      if (gen !== this.playGeneration) return false;
       const playWait = el.play();
-      void this.activatePlaybackSession();
       await playWait;
       if (gen !== this.playGeneration) return false;
       try {
@@ -418,10 +419,18 @@ export class AudioEngine {
     });
   }
 
-  private async activatePlaybackSession(): Promise<void> {
+  private async activatePlaybackSession(meta?: {
+    title?: string;
+    artist?: string;
+  }): Promise<void> {
     try {
       const { ensureNativePlaybackAudioSession } = await import("@/lib/native-playback-audio");
-      await ensureNativePlaybackAudioSession();
+      await ensureNativePlaybackAudioSession({
+        title: meta?.title,
+        artist: meta?.artist,
+        album: "تلاوة القرآن",
+        playing: true,
+      });
     } catch (err) {
       console.warn("[AudioEngine] native playback session:", err);
     }
@@ -432,44 +441,25 @@ export class AudioEngine {
   private bindInterruptionListeners(): void {
     if (this.interruptionBound) return;
     this.interruptionBound = true;
-    void import("@/lib/native-playback-audio").then(({ getNativePlaybackPlugin }) => {
-      void getNativePlaybackPlugin().then((plugin) => {
-        if (!plugin?.addListener) return;
-        void plugin.addListener("audioInterruption", (data) => {
-          const type = String(data.type ?? "");
-          if (type === "began") {
-            this.pause();
-            return;
-          }
-          if (type === "ended" && data.shouldResume === true) {
-            const el = this.audio;
-            if (!el || this.surah == null || this.ayah == null) return;
-            void el.play().then(() => this.setPlayerState("playing")).catch(() => {
-              this.setPlayerState("error");
-            });
-          }
-        }).then((handle) => {
-          this.interruptionCleanups.push(() => {
-            void handle.remove();
-          });
-        });
-        void plugin.addListener("audioRouteChange", (data) => {
-          // AVAudioSession.RouteChangeReason.oldDeviceUnavailable == 2
-          const reasonNum = Number(data.reason);
-          const reason = String(data.reason ?? data.type ?? "");
-          if (
-            reasonNum === 2 ||
-            /oldDeviceUnavailable|headphones|unplug|disconnect/i.test(reason)
-          ) {
-            this.pause();
-          }
-        }).then((handle) => {
-          this.interruptionCleanups.push(() => {
-            void handle.remove();
-          });
-        });
-      });
-    });
+    void import("./audio-engine-native-bridge").then((m) =>
+      m.bindAudioEngineNative({
+        pause: () => this.pause(),
+        stop: () => this.stop(),
+        skipNext: () => this.skipNext(),
+        skipPrev: () => this.skipPrev(),
+        togglePlay: (s, a) => this.togglePlay(s, a),
+        getPlayerState: () => this.playerState,
+        getSurah: () => this.surah,
+        getAyah: () => this.ayah,
+        getAudioEl: () => this.audio,
+        getPlaybackRate: () => this.playbackRate,
+        setPlayerState: (state) => this.setPlayerState(state),
+        activatePlaybackSession: (meta) => this.activatePlaybackSession(meta),
+        addCleanup: (fn) => {
+          this.interruptionCleanups.push(fn);
+        },
+      }),
+    );
   }
 
   private async releasePlaybackSession(): Promise<void> {
@@ -623,10 +613,10 @@ export class AudioEngine {
     this.ayah = null;
     this.setPlayerState("loading");
     try {
+      await this.activatePlaybackSession({ title: "تلاوة", artist: "سُنّة" });
       el.src = url;
       el.playbackRate = this.playbackRate;
       const playWait = el.play();
-      void this.activatePlaybackSession();
       await Promise.race([
         playWait,
         new Promise<void>((_, reject) => {
@@ -758,7 +748,9 @@ export class AudioEngine {
     }
     if (this.teachEnabled) this.teachPhase = "teacher";
 
-    void this.activatePlaybackSession();
+    /* فعّل AVAudioSession قبل play حتى لا تُعلَّق التلاوة عند الخلفية/القفل */
+    await this.activatePlaybackSession({ title: `سورة ${surah} · آية ${ayah}`, artist: "سُنّة" });
+    if (gen !== this.playGeneration) return;
     try {
       this.getIdleElRef().pause();
     } catch {
@@ -851,6 +843,7 @@ export class AudioEngine {
         this.setPlayerState("paused");
       } else {
         try {
+          await this.activatePlaybackSession({ title: `سورة ${surah} · آية ${ayah}`, artist: "سُنّة" });
           await el.play();
           this.setPlayerState("playing");
         } catch (err) {
