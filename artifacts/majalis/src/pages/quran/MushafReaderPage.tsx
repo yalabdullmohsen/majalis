@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams, useSearch } from "wouter";
 import { navigateTo } from "@/lib/navigation-intent";
 import { NewMushafReader as MushafViewport } from "@/features/mushaf-reader";
+import { MushafAppearanceProvider } from "@/lib/mushaf-v2";
 import { applyPageSeo } from "@/lib/seo";
 import {
   clampMushafPage,
@@ -150,12 +151,14 @@ export default function MushafReaderPage() {
 
   return (
     <ScriptureScreen compose="mark">
-      <MushafViewport
-        pageNumber={pageNumber}
-        onPageChange={onPageChange}
-        onExit={() => QuranNavigationService.exitToReturnContext("/quran-hub")}
-        onIndex={() => navigateTo("/quran-hub", { mode: "screen" })}
-      />
+      <MushafAppearanceProvider>
+        <MushafViewport
+          pageNumber={pageNumber}
+          onPageChange={onPageChange}
+          onExit={() => QuranNavigationService.exitToReturnContext("/quran-hub")}
+          onIndex={() => navigateTo("/quran-hub", { mode: "screen" })}
+        />
+      </MushafAppearanceProvider>
     </ScriptureScreen>
   );
 }

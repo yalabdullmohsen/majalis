@@ -43,6 +43,7 @@ import {
   MushafReaderController,
   MushafPageRepository,
   QuranSettingsRepository,
+  useMushafAppearance,
 } from "@/lib/mushaf-v2";
 import { useMediaSession } from "@/hooks/useMediaSession";
 import { STATUS } from "@/lib/ui-copy";
@@ -175,7 +176,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const [focusReadingMode, setFocusReadingMode] = useState(false);
   const [pageArrowsEnabled, setPageArrowsEnabled] = useState(() => loadPageArrowsEnabled());
   const [controlsMoreOpen, setControlsMoreOpen] = useState(false);
-  const [accentTheme, setAccentTheme] = useState(() => QuranSettingsRepository.getAccentTheme());
+  const { theme: accentTheme, accentAttr, setTheme: setAccentTheme } = useMushafAppearance();
   const focusReadingModeRef = useRef(false);
   focusReadingModeRef.current = focusReadingMode;
   const [gotoOpen, setGotoOpen] = useState(false);
@@ -279,7 +280,6 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     if (isMushafReaderV2Enabled()) migrateMushafUserData();
     const appearance = QuranSettingsRepository.getAppearanceMode();
     QuranSettingsRepository.applyAppearance(appearance);
-    QuranSettingsRepository.applyAccentTheme();
 
     const mq =
       appearance === "system" && typeof window !== "undefined"
@@ -1189,7 +1189,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       /* مصدر واحد: تفضيل التركيز الصريح فقط — عقد الإخفاء عبر data-chrome */
       data-focus-reading={focusReadingMode ? "1" : "0"}
       data-page-arrows={pageArrowsEnabled ? "1" : "0"}
-      data-mushaf-accent={accentTheme === "GOLD" ? "gold" : "emerald"}
+      data-mushaf-accent={accentAttr}
       data-signature-preset={import.meta.env.DEV ? "sunnah-mushaf-signature-v1" : undefined}
       dir="rtl"
       renderPage={renderPage}
@@ -1335,11 +1335,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         moreOpen={controlsMoreOpen}
         onMoreOpenChange={onControlsMoreOpenChange}
         accentTheme={accentTheme}
-        onAccentThemeChange={(theme) => {
-          setAccentTheme(theme);
-          QuranSettingsRepository.setAccentTheme(theme);
-          QuranSettingsRepository.applyAccentTheme(theme);
-        }}
+        onAccentThemeChange={setAccentTheme}
         gotoOpen={gotoOpen}
         onGotoOpenChange={onControlsGotoOpenChange}
         onGoto={onControlsGoto}

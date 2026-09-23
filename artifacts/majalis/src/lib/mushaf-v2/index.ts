@@ -60,3 +60,9 @@ export {
   type MushafAppearanceTheme,
   type MushafAccentAttr,
 } from "./mushaf-appearance-theme";
+export {
+  MushafAppearanceProvider,
+  useMushafAppearance,
+  useMushafAppearanceOptional,
+  type MushafAppearanceContextValue,
+} from "./MushafAppearanceProvider";

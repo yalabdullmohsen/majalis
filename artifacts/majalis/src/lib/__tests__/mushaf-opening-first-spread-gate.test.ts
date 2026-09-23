@@ -51,7 +51,7 @@ assert.equal(mushafOpeningTurquoise.toLowerCase(), "#0e7a6b");
 assert.equal(mushafOpeningMarkerFill.toLowerCase(), "#0e7a6b");
 assert.equal(mushafVerseMarkerFill.toLowerCase(), quranGold.toLowerCase());
 assert.match(tokens, /mushafOpeningTurquoise|mushafEmeraldPrimary/);
-assert.match(css, /--mushaf-accent-primary:\s*#0e7a6b/i);
+assert.match(css, /--mushaf-accent-fill:\s*#0e7a6b/i);
 assert.match(css, /\[data-mushaf-accent="gold"\]/);
 assert.doesNotMatch(
   chrome,

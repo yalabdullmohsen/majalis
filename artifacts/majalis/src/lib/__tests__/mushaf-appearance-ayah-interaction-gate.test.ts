@@ -23,13 +23,15 @@ assert.match(verse, /MushafAyahMarker/);
 assert.match(page, /MushafOpeningSpreadLayout/);
 assert.doesNotMatch(verse, /OpeningAyahMarker|GreenAyahMarker|GoldAyahMarker/);
 
-console.log("=== GOLD dark cascade beats night remapper ===");
-assert.match(css, /html\.dark \.nm-root\[data-mushaf-accent="gold"\]/);
-assert.match(css, /html\[data-theme="dark"\] \.nm-root\[data-mushaf-accent="gold"\]/);
+console.log("=== GOLD slots feed night remapper (no emerald lock) ===");
+assert.match(css, /--mushaf-accent-fill-night:/);
+assert.match(css, /\.nm-root\[data-mushaf-accent="gold"\][\s\S]{0,800}--mushaf-accent-fill-night:\s*#c4a030/i);
 assert.match(
   css,
-  /html\.dark \.nm-root\[data-mushaf-accent="gold"\][\s\S]{0,1200}--mushaf-marker-background:\s*var\(--mushaf-verse-marker-dark-fill\)/,
+  /html\.dark \.nm-root[\s\S]{0,600}--mushaf-marker-background:\s*var\(--mushaf-verse-marker-dark-fill\)/,
 );
+assert.match(css, /html\.dark \.nm-root\[data-mushaf-accent="gold"\]/);
+assert.match(css, /html\[data-theme="dark"\] \.nm-root\[data-mushaf-accent="gold"\]/);
 assert.match(css, /--mushaf-accent-strong:/);
 assert.match(css, /--mushaf-accent-soft:/);
 
