@@ -31,8 +31,10 @@ assert.match(plugin, /reassertPlaybackIfNeeded|MajlisAppDidEnterBackground/);
 assert.match(plugin, /setNowPlaying/);
 assert.doesNotMatch(plugin, /duckOthers[\s\S]{0,80}allowAirPlay/);
 
-console.log("=== AudioEngine awaits session before play ===");
-assert.match(engine, /await this\.activatePlaybackSession/);
+console.log("=== AudioEngine gesture-safe session kick + native bridge ===");
+assert.match(engine, /kickPlaybackSession/);
+assert.match(engine, /activatePlaybackSession/);
+assert.match(engine, /NEVER await before HTMLMediaElement\.play/);
 assert.match(engine, /audio-engine-native-bridge/);
 assert.match(bridge, /updateNativeNowPlaying/);
 assert.match(bridge, /enablePlayback:\s*\(opts\?:/);
