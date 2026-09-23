@@ -160,12 +160,22 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
   const theme = resolveTheme(themeChoice);
   const [hideLevel, setHideLevel] = useState<MushafHideLevel>(() => loadHideLevel());
   const [ayahMarks, setAyahMarks] = useState<boolean>(() => loadAyahMarks());
+  /**
+   * Accent: Provider أولًا. بدون Provider — نفس storage/DOM عبر QuranSettingsRepository فقط
+   * (لا setState محلي مستقل يفقد الحفظ أو يخلق مصدر حقيقة ثانٍ).
+   */
   const appearanceCtx = useMushafAppearanceOptional();
   const [accentThemeLocal, setAccentThemeLocal] = useState<MushafAppearanceTheme>(() =>
     QuranSettingsRepository.getAccentTheme(),
   );
   const accentTheme = appearanceCtx?.theme ?? accentThemeLocal;
-  const setAccentTheme = appearanceCtx?.setTheme ?? setAccentThemeLocal;
+  const setAccentTheme = appearanceCtx?.setTheme
+    ? appearanceCtx.setTheme
+    : (t: MushafAppearanceTheme) => {
+        QuranSettingsRepository.setAccentTheme(t);
+        QuranSettingsRepository.applyAccentTheme(t);
+        setAccentThemeLocal(t);
+      };
   const accentAttr = appearanceCtx?.accentAttr ?? themeToAccentAttr(accentTheme);
   const [revealedVerses, setRevealedVerses] = useState<ReadonlySet<string>>(() => new Set());
 
@@ -1048,13 +1058,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         ayahMarks={ayahMarks}
         onAyahMarks={setAyahMarks}
         accentTheme={accentTheme}
-        onAccentTheme={(t) => {
-          setAccentTheme(t);
-          if (!appearanceCtx) {
-            QuranSettingsRepository.setAccentTheme(t);
-            QuranSettingsRepository.applyAccentTheme(t);
-          }
-        }}
+        onAccentTheme={setAccentTheme}
         onClose={() => setSettingsOpen(false)}
       />
 

@@ -2,6 +2,8 @@
  * MushafAppearanceProvider — مصدر حقيقة واحد لسمة Accent (EMERALD | GOLD).
  * يزامن: React context · localStorage · data-mushaf-accent على .nm-root/html.
  * لا يمس النص القرآني ولا Page Mapping.
+ *
+ * PR-1: تطبيق متزامن عند الإقلاع (بلا انتظار useEffect) لمنع وميض السمة.
  */
 import {
   createContext,
@@ -34,10 +36,18 @@ export type MushafAppearanceContextValue = {
 
 const MushafAppearanceContext = createContext<MushafAppearanceContextValue | null>(null);
 
+function readInitialTheme(): MushafAppearanceTheme {
+  if (!QURAN_EXPERIENCE_NEXT.dualAppearanceThemes) return "EMERALD";
+  const initial = loadMushafAccentTheme();
+  /* تطبيق فوري قبل أول paint للمصحف — يكمّل boot script في index.html */
+  if (typeof document !== "undefined") {
+    applyMushafAccentTheme(initial);
+  }
+  return initial;
+}
+
 export function MushafAppearanceProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<MushafAppearanceTheme>(() =>
-    QURAN_EXPERIENCE_NEXT.dualAppearanceThemes ? loadMushafAccentTheme() : "EMERALD",
-  );
+  const [theme, setThemeState] = useState<MushafAppearanceTheme>(readInitialTheme);
 
   useEffect(() => {
     if (!QURAN_EXPERIENCE_NEXT.dualAppearanceThemes) return;
