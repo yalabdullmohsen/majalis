@@ -16,6 +16,21 @@ const LINE_HEIGHT = "1.85";
 const FONT_WEIGHT = "400";
 /** لا نعيد حساب الخط إلا إذا تغيّر العرض بهذا القدر (فتح الرصيف يغيّر الارتفاع فقط) */
 const WIDTH_LOCK_PX = 4;
+/** سقف متن هاتفي — اللوح (≥768×600) يستخدم العرض المتاح بلا عمود 480 */
+const PHONE_BODY_CAP_PX = 30 * 16;
+const TABLET_MIN_WIDTH_PX = 768;
+/** يستبعد landscape الهاتف (~390 ارتفاعًا) مع الإبقاء على iPad landscape */
+const TABLET_MIN_HEIGHT_PX = 600;
+
+function resolveBodyWidthPx(viewportW: number, viewportH: number): number {
+  const available = viewportW - SIDE_PAD * 2;
+  const isTablet =
+    viewportW >= TABLET_MIN_WIDTH_PX && viewportH >= TABLET_MIN_HEIGHT_PX;
+  if (isTablet) {
+    return Math.max(120, available);
+  }
+  return Math.max(120, Math.min(available, PHONE_BODY_CAP_PX));
+}
 
 /**
  * مصدر القياس الوحيد لمصحف الإنتاج (`NewMushafReader`).
@@ -36,7 +51,7 @@ export function useStableMushafLayout(
     if (!root) return;
 
     const applyGeometry = (w: number, h: number, size: number, bodyH: number) => {
-      const bodyW = Math.max(120, Math.min(w - SIDE_PAD * 2, 30 * 16));
+      const bodyW = resolveBodyWidthPx(w, h);
       /* ثابت — المشغّل overlay؛ لا نقرأ --reader-bottom-stack حتى لا يتغيّر المقياس */
       const bottomSafe = "0px";
       root.style.setProperty("--mushaf-page-width", `${w}px`);
@@ -118,7 +133,7 @@ export function useStableMushafLayout(
         return;
       }
 
-      const bodyW = Math.max(120, Math.min(w - SIDE_PAD * 2, 30 * 16));
+      const bodyW = resolveBodyWidthPx(w, h);
       const bodyH = measuredBodyH;
       const size = resolveSignatureFontSizePx(bodyW, bodyH);
 
