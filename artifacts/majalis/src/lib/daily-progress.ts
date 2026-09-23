@@ -1,4 +1,5 @@
 import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
+import { storageSetSync } from "@/lib/native-storage";
 import { registerUnloadPersist } from "@/lib/unload-persist";
 
 export const DAILY_PROGRESS_LS_KEY = "majalis-daily-progress-v1";
@@ -84,6 +85,11 @@ function writeStore(data: Record<string, DayProgress>) {
   lastStore = data;
   ensureUnloadRegistration();
   writeLocalJson(STORAGE_KEY, data);
+  try {
+    storageSetSync(STORAGE_KEY, JSON.stringify(data));
+  } catch {
+    /* ignore */
+  }
 }
 
 export function getTodayProgress(): DayProgress {

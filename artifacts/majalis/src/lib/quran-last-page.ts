@@ -125,7 +125,15 @@ export function loadLastPageSync(): number | null {
   }
 }
 
-/** للاختبارات */
-export function resetLastPageCacheForTests(): void {
+/**
+ * يُبطل الكاش الذاكري بعد مزامنة Preferences→localStorage
+ * حتى لا تبقى `null` من قراءة مبكرة قبل الاستعادة.
+ */
+export function invalidateLastPageMemCache(): void {
   memLastPage = undefined;
+}
+
+/** للاختبارات — مرادف لـ invalidateLastPageMemCache */
+export function resetLastPageCacheForTests(): void {
+  invalidateLastPageMemCache();
 }

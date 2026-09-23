@@ -37,6 +37,8 @@ html[data-v2-app="1"][data-v2-dashboard="1"] .hw3 {
 
 html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-primary {
   width: 100%;
+  /* Startup PR-5: حجز ارتفاع شريحة المتابعة من أول إطار */
+  min-height: 2.5rem;
 }
 
 html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-chip--lead {
@@ -76,15 +78,27 @@ html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-chip--lead .hw3-chip__v {
 html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-meta {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.35rem 0.75rem;
+  min-height: 1.35rem;
   font-size: var(--v2-type-caption, 0.72rem);
   color: color-mix(in srgb, var(--v2-color-on-emerald, #fff) 82%, transparent);
 }
 
-html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-meta a {
+html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-meta a,
+html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-meta .hw3-meta__ph {
   color: inherit;
   text-decoration: none;
   border-block-end: 1px solid color-mix(in srgb, var(--v2-color-on-emerald, #fff) 28%, transparent);
+}
+
+html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-meta .hw3-meta__ph {
+  min-inline-size: 4.5rem;
+  opacity: 0.72;
+}
+
+html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-chip__v--ph {
+  min-inline-size: 7rem;
 }
 
 html[data-v2-app="1"][data-v2-dashboard="1"] .hw3-actions {

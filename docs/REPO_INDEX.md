@@ -81,6 +81,7 @@
 | `artifacts/majalis/src/lib/background-ui-fonts.ts` | **Startup PR-2** — تسخين خطوط اختيارية بعد INTERACTIVE بلا UI |
 | `artifacts/majalis/ios/.../LaunchBackground.colorset` | **Startup PR-3** — لون إطلاق أصلي فاتح/داكن يطابق App Shell |
 | `artifacts/majalis/src/App.tsx` (`ChromeNavFallback` / `ChromeBottomFallback`) | **Startup PR-4** — هيكل هيدر/تذييل ثابت من أول إطار |
+| `artifacts/majalis/src/components/home/HomeHeroLcp.tsx` | **Startup PR-5** — Hero hydration مستقر (بلا ٠٪ قبل الاستعادة + شرائح ثابتة) |
 
 | `docs/lessons-guide/` | دليل الدروس — عقد + Migration مقترحة (Feature Flag OFF) |
 

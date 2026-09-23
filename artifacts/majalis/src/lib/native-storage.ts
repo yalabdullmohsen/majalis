@@ -59,6 +59,8 @@ export const NATIVE_PROGRESS_KEYS = [
   "lastPage",
   "myBookmarks",
   "majalis-continue-reading-v1",
+  /** تقدم مهام اليوم — لهيرو الرئيسية (ورد/نسبة) بعد استعادة Preferences */
+  "majalis-daily-progress-v1",
   "majalis-daily-wird-done-v1",
   "majalis-daily-challenge-score-v1",
   "majalis-daily-challenge-best-v1",
@@ -185,6 +187,13 @@ export async function hydrateNativeStorage(
   })();
 
   await withTimeout(work, HYDRATE_BUDGET_MS);
+
+  try {
+    const { invalidateLastPageMemCache } = await import("@/lib/quran-last-page");
+    invalidateLastPageMemCache();
+  } catch {
+    /* ignore */
+  }
 
   if (typeof window !== "undefined") {
     window.dispatchEvent(new Event("mj:feature-tour-storage-ready"));
