@@ -1,0 +1,113 @@
+{
+  "generatedAt": "2026-09-23T13:28:27.380906+00:00",
+  "baseCommit": "158d2f21ecf006bddedf0f069379ae6572938f4f",
+  "status": "INVENTORY_ONLY_PR0",
+  "filters": [
+    {
+      "route": "/quran-hub/numbers",
+      "filterId": "theme",
+      "visibleLabel": "محاور الإحصاءات (tabs)",
+      "dataField": "theme",
+      "source": "QURAN_STAT_THEMES + filterStatsByTheme",
+      "options": [
+        "asasi",
+        "anbiya",
+        "awamir",
+        "nawahi",
+        "mutaqabila",
+        "suwar",
+        "mawdoo",
+        "ajaib"
+      ],
+      "urlSync": false,
+      "emptyBehavior": "grid empty — uses EMPTY copy if filtered.length===0 (verify)",
+      "classification": "WORKING_BUT_UX_DEBT",
+      "notes": "صفّان من التبويبات (theme + group) بلا hierarchy واضحة — مطابق لشكوى الصور"
+    },
+    {
+      "route": "/quran-hub/numbers",
+      "filterId": "group",
+      "visibleLabel": "تصنيف المصدر (tabs)",
+      "dataField": "group",
+      "source": "GROUPS bunya/alfaz/mawdoo/suwar/ajaib",
+      "options": [
+        "bunya",
+        "alfaz",
+        "mawdoo",
+        "suwar",
+        "ajaib"
+      ],
+      "urlSync": false,
+      "classification": "WORKING_BUT_UX_DEBT",
+      "notes": "منافس لصف الثيمات؛ يُدمَج في Filter Sheet في PR-2/PR-5"
+    },
+    {
+      "route": "/quran-hub/numbers",
+      "filterId": "query",
+      "visibleLabel": "بحث في الأرقام والألفاظ",
+      "dataField": "query",
+      "source": "normalizeArabic + scoreTolerantMatch",
+      "urlSync": false,
+      "classification": "WORKING"
+    },
+    {
+      "route": "/islamic-landmarks",
+      "filterId": "type/country/era",
+      "visibleLabel": "FilterBottomSheet type+country+era",
+      "dataField": "type|country|era",
+      "source": "ISLAMIC_LANDMARKS + LANDMARK_*",
+      "urlSync": false,
+      "classification": "WORKING_NEEDS_AUDIT",
+      "notes": "يحتاج اختبار كل خيار؛ بيانات الفضائل/المصادر تحتاج مراجعة شرعية PR-5"
+    },
+    {
+      "route": "/discover-islam/contact",
+      "filterId": "n/a-form-fields",
+      "visibleLabel": "native <select> gender/religion/contactMethod",
+      "dataField": "form",
+      "classification": "BROKEN_UX",
+      "notes": "Select افتراضي + checkbox؛ خارج هوية سُنّة — PR-3"
+    },
+    {
+      "route": "/arabic-language (+ LazySectionAccordion siblings)",
+      "filterId": "section-search",
+      "visibleLabel": "بحث داخل SectionAccordionLayout",
+      "classification": "WORKING_BUT_DETAILS_UX_BROKEN",
+      "notes": "التفاصيل عبر AppBottomSheet صغيرة على iPad — PR-4 ReadingPage"
+    }
+  ],
+  "sharedBrokenPatterns": [
+    {
+      "id": "LazySectionAccordionPage+AppBottomSheet",
+      "routes": [
+        "/arabic-language",
+        "/durus-imaniyya",
+        "/durus-mutanawwia",
+        "/tazkiya-topics",
+        "/iman-topics",
+        "/fikr-waqia",
+        "/usra-mujtama",
+        "/mawsuaat",
+        "/maqasid-sharia",
+        "/dalail-nubuwwah",
+        "/sunnah-studies"
+      ],
+      "class": "CONSOLIDATE→ReadingPage"
+    },
+    {
+      "id": "native_html_select",
+      "countInTsxCss": 161,
+      "class": "PORT→SelectField"
+    },
+    {
+      "id": "mushaf_phone_max_width_430",
+      "file": "mushaf-madinah.css",
+      "class": "FIX_OPEN_PR2240"
+    },
+    {
+      "id": "mushaf_no_toolbar_onboarding",
+      "file": "NewMushafReader.tsx",
+      "class": "MISSING→PR-7"
+    }
+  ]
+}

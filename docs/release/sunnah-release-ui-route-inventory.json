@@ -1,0 +1,3662 @@
+{
+  "generatedAt": "2026-09-23T13:24:26.791028+00:00",
+  "baseCommit": "158d2f21ecf006bddedf0f069379ae6572938f4f",
+  "source": "artifacts/majalis/src/AppRoutes.tsx + app/router/routes.ts",
+  "counts": {
+    "appRoutesEntries": 377,
+    "public": 340,
+    "publicPages": 224,
+    "publicRedirects": 116,
+    "admin": 37,
+    "routesTsPaths": 0,
+    "releaseFocusTagged": 28
+  },
+  "routes": [
+    {
+      "route": "/quran-engine/viewer",
+      "kind": "page",
+      "component": "QuranEnginePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranEnginePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran-engine",
+      "kind": "page",
+      "component": "QuranEnginePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranEnginePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/about",
+      "kind": "page",
+      "component": "AboutPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/AboutPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/about-us",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/about",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/who-we-are",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/about",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/man-nahnu",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/about",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/sources/:id",
+      "kind": "page",
+      "component": "SourceDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/sources/SourceDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/sources",
+      "kind": "page",
+      "component": "SourcesDirectoryPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/sources/SourcesDirectoryPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/data-licenses",
+      "kind": "page",
+      "component": "SourcesLicensesPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/SourcesLicensesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/sources-licenses",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/data-licenses",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/licenses",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/data-licenses",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/methodology",
+      "kind": "page",
+      "component": "MethodologyPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/MethodologyPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/fatwa-policy",
+      "kind": "page",
+      "component": "FatwaPolicyPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/fiqh/FatwaPolicyPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/sitemap",
+      "kind": "page",
+      "component": "SiteMapPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/SiteMapPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/privacy",
+      "kind": "page",
+      "component": "PrivacyPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/PrivacyPage",
+      "releaseFocus": "privacy"
+    },
+    {
+      "route": "/privacy-center",
+      "kind": "page",
+      "component": "PrivacyCenterPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/PrivacyCenterPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/privacy-policy",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/privacy",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/terms",
+      "kind": "page",
+      "component": "TermsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/TermsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/account-deletion",
+      "kind": "page",
+      "component": "AccountDeletionPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/AccountDeletionPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/delete-account",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/account-deletion",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/account/delete",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/account-deletion",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/contact",
+      "kind": "page",
+      "component": "ContactPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ContactPage",
+      "releaseFocus": "form-contact"
+    },
+    {
+      "route": "/support",
+      "kind": "page",
+      "component": "ContactPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ContactPage",
+      "releaseFocus": "form-contact-alias"
+    },
+    {
+      "route": "/settings",
+      "kind": "page",
+      "component": "SettingsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/SettingsPage",
+      "releaseFocus": "settings"
+    },
+    {
+      "route": "/feature-tour",
+      "kind": "page",
+      "component": "FeatureTourPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/FeatureTourPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/search/:q",
+      "kind": "page",
+      "component": "SearchPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/SearchPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/search",
+      "kind": "page",
+      "component": "SearchPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/SearchPage",
+      "releaseFocus": "search"
+    },
+    {
+      "route": "/topics/:slug",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/sections",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/topics",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/sections",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/scientific-announcements/:id",
+      "kind": "page",
+      "component": "ScientificAnnouncementDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ScientificAnnouncementDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/lessons/current",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/lessons/archive",
+      "kind": "page",
+      "component": "LessonsArchivePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/lessons/LessonsArchivePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/competitions/:id",
+      "kind": "page",
+      "component": "CompetitionDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/competitions/CompetitionDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/competitions",
+      "kind": "page",
+      "component": "CompetitionsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/competitions/CompetitionsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/lessons",
+      "kind": "page",
+      "component": "LessonsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/lessons/LessonsPage",
+      "releaseFocus": "lessons"
+    },
+    {
+      "route": "/lessons/:id",
+      "kind": "page",
+      "component": "LessonDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/lessons/LessonDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/teachers/:slug",
+      "kind": "page",
+      "component": "TeacherDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/lessons/TeacherDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/teachers",
+      "kind": "page",
+      "component": "TeachersIndexPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/lessons/TeachersIndexPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/calendar",
+      "kind": "page",
+      "component": "CalendarPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/CalendarPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/kuwait-lessons",
+      "kind": "page",
+      "component": "KuwaitLessonsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/lessons/KuwaitLessonsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/announcements",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/courses",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/sheikhs/:id",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/teachers",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/sheikhs",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/teachers",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/library/:id",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/search",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/library",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/search",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/miracles/topic/:slug",
+      "kind": "page",
+      "component": "MiraclesPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/MiraclesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/miracles/quran",
+      "kind": "page",
+      "component": "MiraclesPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/MiraclesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/miracles/sunnah",
+      "kind": "page",
+      "component": "MiraclesPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/MiraclesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/miracles",
+      "kind": "page",
+      "component": "MiraclesPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/MiraclesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/prophetic-medicine",
+      "kind": "page",
+      "component": "PropheticMedicinePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/PropheticMedicinePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran-circles",
+      "kind": "page",
+      "component": "QuranCirclesPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranCirclesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/fawaid",
+      "kind": "page",
+      "component": "FawaidPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/FawaidPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/hadith/books",
+      "kind": "page",
+      "component": "HadithBooksPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/hadith/HadithBooksPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/hadith/books-and-rulings",
+      "kind": "page",
+      "component": "HadithBooksAndRulingsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/hadith/HadithBooksAndRulingsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/hadith/arbaeen",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/arbaeen-nawawi",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/hadith/arbaeen-love-of-allah",
+      "kind": "page",
+      "component": "ArbaeenLovePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ArbaeenLovePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/hadith/sahih",
+      "kind": "page",
+      "component": "HadithSahihPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/hadith/HadithSahihPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/hadith/daif",
+      "kind": "page",
+      "component": "HadithDaifPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/hadith/HadithDaifPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/hadith/mawdu",
+      "kind": "page",
+      "component": "HadithMawduPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/hadith/HadithMawduPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/hadith/:id",
+      "kind": "redirect",
+      "component": "HadithByIdPage",
+      "redirectTo": "/hadith",
+      "public": true,
+      "module": "@/pages/hadith/HadithByIdPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/hadith",
+      "kind": "page",
+      "component": "HadithPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/hadith/HadithPage",
+      "releaseFocus": "hadith"
+    },
+    {
+      "route": "/stories",
+      "kind": "page",
+      "component": "IslamicStoriesPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/IslamicStoriesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/nations/:slug",
+      "kind": "page",
+      "component": "NationDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/NationDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/nations",
+      "kind": "page",
+      "component": "NationsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/NationsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/prophets-stories/:slug",
+      "kind": "page",
+      "component": "ProphetStoriesPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ProphetStoriesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/prophets-stories",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/prophets",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/prophet-stories/:slug",
+      "kind": "page",
+      "component": "ProphetStoriesPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ProphetStoriesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/prophet-stories",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/prophets",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/prophets/tree",
+      "kind": "page",
+      "component": "ProphetsFamilyTreePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ProphetsFamilyTreePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/prophets/ishaq",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/prophets/is-haq",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/prophets/ishaaq",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/prophets/is-haq",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/prophets/alyasa",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/prophets/al-yasa",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/prophets/al-yasaa",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/prophets/al-yasa",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/prophets/zakariya",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/prophets/zakariyya",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/prophets/zakaria",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/prophets/zakariyya",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/prophets/:slug",
+      "kind": "page",
+      "component": "ProphetStoriesPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ProphetStoriesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/prophets",
+      "kind": "page",
+      "component": "ProphetStoriesPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ProphetStoriesPage",
+      "releaseFocus": "prophets"
+    },
+    {
+      "route": "/islamic-stories",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/stories",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/adhkar/:slug",
+      "kind": "page",
+      "component": "AdhkarPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/worship/AdhkarPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/duas",
+      "kind": "page",
+      "component": "DuasPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/worship/DuasPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/adhkar",
+      "kind": "page",
+      "component": "AdhkarPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/worship/AdhkarPage",
+      "releaseFocus": "adhkar"
+    },
+    {
+      "route": "/qa",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/quiz",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/qa/:rest*",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/quiz",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/quiz",
+      "kind": "page",
+      "component": "QuizPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/QuizPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/knowledge-graph",
+      "kind": "page",
+      "component": "KnowledgeGraphPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/KnowledgeGraphPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/knowledge-map",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/knowledge-graph",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/islamic-history/:rest*",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/tarikh-islami",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/islamic-history",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/tarikh-islami",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/mind-map",
+      "kind": "page",
+      "component": "MindMapPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/MindMapPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/islamic-landmarks",
+      "kind": "page",
+      "component": "IslamicLandmarksPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/IslamicLandmarksPage",
+      "releaseFocus": "landmarks-mashahid"
+    },
+    {
+      "route": "/mutashabihat",
+      "kind": "page",
+      "component": "MutashabihatPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/MutashabihatPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/scholars/:id",
+      "kind": "page",
+      "component": "ScholarProfilePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/scholars/ScholarProfilePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/scholars",
+      "kind": "page",
+      "component": "ScholarProfilePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/scholars/ScholarProfilePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/tarikh-islami/:id",
+      "kind": "page",
+      "component": "TarikhIslamiDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/TarikhIslamiDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/asma-husna",
+      "kind": "page",
+      "component": "AsmaaHusnaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/AsmaaHusnaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/akhlaq",
+      "kind": "page",
+      "component": "AkhlaqPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/AkhlaqPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/arkan",
+      "kind": "page",
+      "component": "ArkanIslamPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ArkanIslamPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/arkan-iman",
+      "kind": "page",
+      "component": "ArkanImanPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ArkanImanPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/hadith-science",
+      "kind": "page",
+      "component": "HadithSciencePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/hadith/HadithSciencePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/madhahib/:id",
+      "kind": "page",
+      "component": "MadhahibDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/MadhahibDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/madhahib",
+      "kind": "page",
+      "component": "MadhahibPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/MadhahibPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/islamic-sects/:id",
+      "kind": "page",
+      "component": "IslamicSectsDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/IslamicSectsDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/islamic-sects",
+      "kind": "page",
+      "component": "IslamicSectsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/IslamicSectsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/fiqh-qawaid",
+      "kind": "page",
+      "component": "FiqhQawaidPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/fiqh/FiqhQawaidPage",
+      "releaseFocus": "qawaid"
+    },
+    {
+      "route": "/shamael",
+      "kind": "page",
+      "component": "ShimaelPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ShimaelPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/islam-stats",
+      "kind": "page",
+      "component": "IslamStatsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/IslamStatsPage",
+      "releaseFocus": "stats-related"
+    },
+    {
+      "route": "/glossary",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/islamic-glossary",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/islamic-glossary",
+      "kind": "page",
+      "component": "IslamicGlossaryPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/IslamicGlossaryPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/adab-talab-ilm",
+      "kind": "page",
+      "component": "AdabTalabIlmPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/AdabTalabIlmPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/anbiya",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/prophets",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/janna-naar",
+      "kind": "page",
+      "component": "JannaNaarPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/JannaNaarPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/alamat-saah",
+      "kind": "page",
+      "component": "AlamatSaahPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/AlamatSaahPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/malaika",
+      "kind": "page",
+      "component": "MalaikaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/MalaikaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/wasaya-nabawiyya",
+      "kind": "page",
+      "component": "WasayaNabawiyyaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/WasayaNabawiyyaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/raqaiq",
+      "kind": "page",
+      "component": "RaqaiqPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/RaqaiqPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/sunan-yawmiyya",
+      "kind": "page",
+      "component": "SunanYawmiyyaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/SunanYawmiyyaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/hikam-salaf",
+      "kind": "page",
+      "component": "HikamSalafPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/HikamSalafPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/zakat",
+      "kind": "page",
+      "component": "ZakatPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/fiqh/ZakatPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/sawm",
+      "kind": "page",
+      "component": "SawmPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/SawmPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/hajj",
+      "kind": "page",
+      "component": "HajjPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/fiqh/HajjPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/tahara",
+      "kind": "page",
+      "component": "TaharaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/TaharaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/fadail-aamal",
+      "kind": "page",
+      "component": "FadailAamalPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/FadailAamalPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/janaza",
+      "kind": "page",
+      "component": "JanazaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/fiqh/JanazaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/sahabah",
+      "kind": "page",
+      "component": "SahabahPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/SahabahPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/tazkiya",
+      "kind": "page",
+      "component": "TazkiyaHubPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/tazkiya/TazkiyaHubPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/tawba",
+      "kind": "page",
+      "component": "TawbaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/TawbaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/sins-and-rights",
+      "kind": "page",
+      "component": "SinsAndRightsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/SinsAndRightsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/sins-and-rights/:slug",
+      "kind": "page",
+      "component": "SinsAndRightsDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/SinsAndRightsDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/amr-bil-maruf",
+      "kind": "page",
+      "component": "AmrBilMarufPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/AmrBilMarufPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/ulum-quran",
+      "kind": "page",
+      "component": "UlumQuranPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/UlumQuranPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/tafsir",
+      "kind": "page",
+      "component": "TafsirPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/TafsirPage",
+      "releaseFocus": "tafsir"
+    },
+    {
+      "route": "/quran/tafsir",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/tafsir",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/mawarith",
+      "kind": "page",
+      "component": "MawarithPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/fiqh/MawarithPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/mawarith/calculator",
+      "kind": "page",
+      "component": "MawarithCalculatorPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/fiqh/MawarithCalculatorPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/salah-guide",
+      "kind": "page",
+      "component": "SalahGuidePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/fiqh/SalahGuidePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/jumuah",
+      "kind": "page",
+      "component": "JumuahPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/JumuahPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/riba",
+      "kind": "page",
+      "component": "RibaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/RibaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/nikah",
+      "kind": "page",
+      "component": "NikahPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/fiqh/NikahPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/talaq",
+      "kind": "page",
+      "component": "TalaqPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/fiqh/TalaqPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/udhiya",
+      "kind": "page",
+      "component": "UdhiyaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/UdhiyaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/ruqya",
+      "kind": "page",
+      "component": "RuqyaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/RuqyaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/waqf",
+      "kind": "page",
+      "component": "WaqfPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/WaqfPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/sadaqa",
+      "kind": "page",
+      "component": "SadaqaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/SadaqaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/duas-quran",
+      "kind": "page",
+      "component": "DuasQuranPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/DuasQuranPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/submit",
+      "kind": "page",
+      "component": "SubmitContentPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/SubmitContentPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/upload",
+      "kind": "page",
+      "component": "UploadPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/UploadPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/my-submissions",
+      "kind": "page",
+      "component": "MySubmissionsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/MySubmissionsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/stats",
+      "kind": "page",
+      "component": "UserStatsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/UserStatsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/profile",
+      "kind": "page",
+      "component": "UserStatsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/UserStatsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/learning-plan",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/reading-plans",
+      "kind": "page",
+      "component": "ReadingPlansPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/library/ReadingPlansPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/flashcards",
+      "kind": "page",
+      "component": "FlashCardsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/FlashCardsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/memorize",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/flashcards",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/my-citations",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/flashcards",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/citations",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/flashcards",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/car-mode",
+      "kind": "page",
+      "component": "CarModePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/CarModePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/mosque-mode",
+      "kind": "page",
+      "component": "MosqueModePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/MosqueModePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/notification-settings",
+      "kind": "page",
+      "component": "NotificationSettingsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/NotificationSettingsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/notifications-and-sound",
+      "kind": "page",
+      "component": "NotificationsAndSoundPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/NotificationsAndSoundPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/study-room",
+      "kind": "page",
+      "component": "StudyRoomPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/StudyRoomPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/family",
+      "kind": "page",
+      "component": "FamilyModePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/FamilyModePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/family-mode",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/family",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/vault",
+      "kind": "page",
+      "component": "VaultPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/VaultPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/progress",
+      "kind": "page",
+      "component": "ProgressCenterPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/ProgressCenterPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/offline",
+      "kind": "page",
+      "component": "OfflineCenterPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/OfflineCenterPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/researcher",
+      "kind": "page",
+      "component": "ResearcherProfilePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ResearcherProfilePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/researcher-profile",
+      "kind": "page",
+      "component": "ResearcherProfilePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ResearcherProfilePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/institutions",
+      "kind": "page",
+      "component": "InstitutionsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/InstitutionsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/auth/callback",
+      "kind": "page",
+      "component": "AuthCallbackPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/AuthCallbackPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/auth/update-password",
+      "kind": "page",
+      "component": "UpdatePasswordPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/UpdatePasswordPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/learning/paths/:slug",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/learning/paths",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/learn/series/:slug",
+      "kind": "page",
+      "component": null,
+      "redirectTo": null,
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/learn/lesson/:id",
+      "kind": "page",
+      "component": null,
+      "redirectTo": null,
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/learn/:slug",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/learn",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/learning/quiz/:slug",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/quiz",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/learning/quiz",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/quiz",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/learning/calendar",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/calendar",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/learning/certificates/:code",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/learning/certificates",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/my-learning",
+      "kind": "page",
+      "component": "MyLearningPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/lessons/MyLearningPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/c/:slug",
+      "kind": "page",
+      "component": "CitationPublicPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/CitationPublicPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/learning",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/learning-paths",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/tracks",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/study-paths",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/pathways",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/lessons/paths",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/courses/paths",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/assistant",
+      "kind": "page",
+      "component": null,
+      "redirectTo": null,
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/scholarly-research",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/quiz",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/academic-research/submit",
+      "kind": "page",
+      "component": "ResearchSubmitPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ResearchSubmitPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/academic-research/assistant",
+      "kind": "page",
+      "component": "ResearchAssistantPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ResearchAssistantPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/academic-research/:id",
+      "kind": "page",
+      "component": "ResearchDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ResearchDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/academic-research",
+      "kind": "page",
+      "component": "AcademicResearchPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/AcademicResearchPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/researches",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/academic-research",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/sharia-research",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/academic-research",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/research",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/academic-research",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/learning-path/dashboard",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/my-learning",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/learning-path/book/:bookId",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/learning-path/:scienceSlug",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/learning-path",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/start-here",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/universities/compare",
+      "kind": "page",
+      "component": "UniversitiesComparePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/UniversitiesComparePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/universities/:slug",
+      "kind": "page",
+      "component": "UniversityDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/UniversityDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/universities",
+      "kind": "page",
+      "component": "UniversitiesPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/UniversitiesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/condolences",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/transcribe",
+      "kind": "page",
+      "component": null,
+      "redirectTo": null,
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/quran-hub",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/mushaf/bookmarks",
+      "kind": "page",
+      "component": "MushafBookmarksPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/MushafBookmarksPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/mushaf/page/:page",
+      "kind": "page",
+      "component": null,
+      "redirectTo": null,
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/mushaf/page",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/mushaf",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/mushaf/about-edition",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/mushaf?page=1",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/mushaf/:surah",
+      "kind": "page",
+      "component": null,
+      "redirectTo": null,
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/mushaf",
+      "kind": "page",
+      "component": "MushafReaderPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/MushafReaderPage",
+      "releaseFocus": "mushaf"
+    },
+    {
+      "route": "/quran/mushaf",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/mushaf",
+      "public": true,
+      "releaseFocus": "mushaf-redirect"
+    },
+    {
+      "route": "/mushaf-v2-preview",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/mushaf",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/demo-ayah-reader",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/mushaf",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran-hub/numbers",
+      "kind": "page",
+      "component": "QuranNumbersPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranNumbersPage",
+      "releaseFocus": "quran-in-numbers"
+    },
+    {
+      "route": "/quran-hub/tajweed/:chapter",
+      "kind": "page",
+      "component": "TajweedChapterPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/TajweedChapterPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran-hub/tajweed",
+      "kind": "page",
+      "component": "QuranTajweedPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranTajweedPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran-hub/qiraat",
+      "kind": "page",
+      "component": "QuranQiraatPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranQiraatPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran-hub/seven-ahruf",
+      "kind": "page",
+      "component": "QuranSevenAhrufPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranSevenAhrufPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran-hub/tilawa",
+      "kind": "page",
+      "component": "QuranTilawaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranTilawaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran-hub/terms",
+      "kind": "page",
+      "component": "QuranUlumTermsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranUlumTermsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran-hub",
+      "kind": "page",
+      "component": "QuranHubPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranHubPage",
+      "releaseFocus": "quran-hub"
+    },
+    {
+      "route": "/quran/terms",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/quran-hub/terms",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran-knowledge",
+      "kind": "page",
+      "component": "QuranKnowledgeHubPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranKnowledgeHubPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/memorization",
+      "kind": "page",
+      "component": "MemorizationHubPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/MemorizationHubPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/occasions-lessons",
+      "kind": "page",
+      "component": "OccasionsLessonsHubPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/lessons/OccasionsLessonsHubPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/islamic-directory",
+      "kind": "page",
+      "component": "IslamicDirectoryHubPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/IslamicDirectoryHubPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran-index",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/quran-knowledge",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/asbab-al-nuzul",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/quran/surah-stories",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran-stories",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/quran/surah-stories",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/memorization-tests",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/memorization",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/memorization-plans",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/memorization",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/islamic-institutions",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/islamic-directory",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/mosques",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/islamic-directory",
+      "public": true,
+      "releaseFocus": "mosques-alias"
+    },
+    {
+      "route": "/reviewed-cards",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/my-learning",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/scientific-library",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/latest",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/fatwas",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/fiqh",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/explore",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/sections",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/news",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/events",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/occasions-lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/islamic-events",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/occasions-lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/lesson-calendar",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/occasions-lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/review-plans",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/memorization",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/masajid",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/islamic-directory",
+      "public": true,
+      "releaseFocus": "mosques"
+    },
+    {
+      "route": "/quran-sciences",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/quran-knowledge",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran/recitation-test-ai",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/quran-hub",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran/surahs",
+      "kind": "page",
+      "component": "SurahIndexPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/SurahIndexPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran/search",
+      "kind": "page",
+      "component": "QuranSearchPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranSearchPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran/people/:slug",
+      "kind": "page",
+      "component": "QuranPersonDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranPersonDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran/people",
+      "kind": "page",
+      "component": "QuranPeoplePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranPeoplePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran/revelation-order",
+      "kind": "page",
+      "component": "RevelationOrderPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/RevelationOrderPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran/makki-madani",
+      "kind": "page",
+      "component": "MakkiMadaniPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/MakkiMadaniPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran-memorization",
+      "kind": "page",
+      "component": "QuranMemorizationPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranMemorizationPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran/hifz-loop",
+      "kind": "page",
+      "component": "QuranHifzLoopPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranHifzLoopPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran/worship-hub",
+      "kind": "page",
+      "component": "QuranWorshipHubPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranWorshipHubPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran/offline-player",
+      "kind": "page",
+      "component": "QuranOfflinePlayerPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranOfflinePlayerPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran/memorization-plans",
+      "kind": "page",
+      "component": "QuranMemorizationPlansPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/QuranMemorizationPlansPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/tajweed",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/quran-hub/tajweed",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/surah-stories",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/quran/surah-stories",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran/tajweed",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/quran-hub/tajweed",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/tawhid/:slug",
+      "kind": "page",
+      "component": "TawhidTopicPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/TawhidTopicPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/tawhid",
+      "kind": "page",
+      "component": "TawhidPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/TawhidPage",
+      "releaseFocus": "tawhid"
+    },
+    {
+      "route": "/aqidah",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/tawhid",
+      "public": true,
+      "releaseFocus": "aqidah"
+    },
+    {
+      "route": "/discover-islam",
+      "kind": "page",
+      "component": "DiscoverIslamPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/DiscoverIslamPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/discover-islam/questions",
+      "kind": "page",
+      "component": "DiscoverIslamQuestionsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/DiscoverIslamQuestionsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/discover-islam/questions/:slug",
+      "kind": "page",
+      "component": "DiscoverIslamQuestionDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/DiscoverIslamQuestionDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/discover-islam/doubts",
+      "kind": "page",
+      "component": "DiscoverIslamDoubtsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/DiscoverIslamDoubtsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/discover-islam/doubts/:slug",
+      "kind": "page",
+      "component": "DiscoverIslamDoubtDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/DiscoverIslamDoubtDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/discover-islam/articles/:slug",
+      "kind": "page",
+      "component": "DiscoverIslamArticleDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/DiscoverIslamArticleDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/discover-islam/how-to-convert",
+      "kind": "page",
+      "component": "HowToBecomeMuslimPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/HowToBecomeMuslimPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/discover-islam/new-muslim",
+      "kind": "page",
+      "component": "NewMuslimPathPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/NewMuslimPathPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/discover-islam/new-muslim/:day",
+      "kind": "page",
+      "component": "NewMuslimDayDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/NewMuslimDayDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/discover-islam/contact",
+      "kind": "page",
+      "component": "DiscoverIslamContactPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/DiscoverIslamContactPage",
+      "releaseFocus": "form-discover"
+    },
+    {
+      "route": "/knowledge/:section/:id",
+      "kind": "page",
+      "component": "KnowledgeSectionPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/KnowledgeSectionPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/knowledge/:section",
+      "kind": "page",
+      "component": "KnowledgeSectionPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/KnowledgeSectionPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/knowledge",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/knowledge/intro-islam",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/fiqh/books/:bookId/lessons/:lessonId",
+      "kind": "page",
+      "component": "FiqhLessonPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/fiqh/FiqhLessonPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/fiqh/books/:bookId/chapters/:chapterId",
+      "kind": "page",
+      "component": "FiqhChapterPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/fiqh/FiqhChapterPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/fiqh/books/:bookId",
+      "kind": "page",
+      "component": "FiqhBookPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/fiqh/FiqhBookPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/fiqh/usul",
+      "kind": "page",
+      "component": "FiqhUsulPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/fiqh/FiqhUsulPage",
+      "releaseFocus": "usul"
+    },
+    {
+      "route": "/fiqh/topics/:topicId",
+      "kind": "page",
+      "component": "FiqhTopicPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/fiqh/FiqhTopicPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/fiqh",
+      "kind": "page",
+      "component": "FiqhPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/fiqh/FiqhPage",
+      "releaseFocus": "scientific-hub"
+    },
+    {
+      "route": "/seerah",
+      "kind": "page",
+      "component": "SeerahPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/SeerahPage",
+      "releaseFocus": "seerah"
+    },
+    {
+      "route": "/quran/surah-stories/:number",
+      "kind": "page",
+      "component": "SurahStoryDetailRoute",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/SurahStoriesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran/surah-stories",
+      "kind": "page",
+      "component": "SurahStoriesPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/quran/SurahStoriesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/prayer-times",
+      "kind": "page",
+      "component": "PrayerTimesPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/worship/PrayerTimesPage",
+      "releaseFocus": "prayer"
+    },
+    {
+      "route": "/prayer",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/prayer-times",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/prayer-countdown",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/prayer-times",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/prayer-ranks",
+      "kind": "page",
+      "component": "PrayerRanksPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/worship/PrayerRanksPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/muezzins/:rest",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/adhan-settings",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/muezzins",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/adhan-settings",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/adhan-settings",
+      "kind": "page",
+      "component": "AdhanSettingsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/worship/AdhanSettingsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/adhan-help",
+      "kind": "page",
+      "component": "AdhanHelpPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/worship/AdhanHelpPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/qibla",
+      "kind": "page",
+      "component": "QiblaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/worship/QiblaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/tasbih",
+      "kind": "page",
+      "component": "TasbihPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/worship/TasbihPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/daily-wird",
+      "kind": "page",
+      "component": "DailyWirdPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/worship/DailyWirdPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/occasions",
+      "kind": "page",
+      "component": "OccasionsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/OccasionsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/features-in-progress",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/arbaeen-nawawi/:id",
+      "kind": "page",
+      "component": "ArbaeenHadithDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/hadith/ArbaeenHadithDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/arbaeen-nawawi",
+      "kind": "page",
+      "component": "ArbaeenNawawiPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/hadith/ArbaeenNawawiPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/sujood-sahw",
+      "kind": "page",
+      "component": "SujoodSahwPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/SujoodSahwPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/amrad-qalbiyya",
+      "kind": "page",
+      "component": "AmradQalbiyyaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/AmradQalbiyyaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/durus-imaniyya",
+      "kind": "page",
+      "component": "DurusImaniyyaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/DurusImaniyyaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/durus-mutanawwia",
+      "kind": "page",
+      "component": "DurusMutanawwiaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/DurusMutanawwiaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/iman-topics",
+      "kind": "page",
+      "component": "ImanTopicsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ImanTopicsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/quran-studies",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/ulum-quran",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/sunnah-studies",
+      "kind": "page",
+      "component": "SunnahStudiesPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/hadith/SunnahStudiesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/tazkiya-topics",
+      "kind": "page",
+      "component": "TazkiyaTopicsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/TazkiyaTopicsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/tarikh-islami",
+      "kind": "page",
+      "component": "TarikhIslamiPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/TarikhIslamiPage",
+      "releaseFocus": "history"
+    },
+    {
+      "route": "/usra-mujtama",
+      "kind": "page",
+      "component": "UsraMujtamaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/UsraMujtamaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/fikr-waqia",
+      "kind": "page",
+      "component": "FikrWaqiaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/FikrWaqiaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/mawsuaat",
+      "kind": "page",
+      "component": "MawsuaatPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/MawsuaatPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/arabic-language",
+      "kind": "page",
+      "component": "ArabicLanguagePage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/ArabicLanguagePage",
+      "releaseFocus": "nahw-section"
+    },
+    {
+      "route": "/maqasid-sharia",
+      "kind": "page",
+      "component": "MaqasidShariaPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/MaqasidShariaPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/dalail-nubuwwah",
+      "kind": "page",
+      "component": "DalailNubuwwahPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/DalailNubuwwahPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/masarat",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/cards",
+      "kind": "page",
+      "component": "CardsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/CardsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/annual-courses/:id",
+      "kind": "page",
+      "component": "AnnualCourseDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/lessons/AnnualCourseDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/annual-courses",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/lessons",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/fiqh-council/:rest*",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/fiqh",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/fiqh-council",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/fiqh",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/fatwa/:id",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/fiqh",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/fatwa",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/fiqh",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/rulings/:id",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/fiqh",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/rulings",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/fiqh",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/updates/auto/:slug",
+      "kind": "page",
+      "component": "AutoContentDetailPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/AutoContentDetailPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/updates",
+      "kind": "page",
+      "component": "UpdatesPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/views/UpdatesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/sections",
+      "kind": "page",
+      "component": "SectionsPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/SectionsPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/more",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/sections",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/whats-new",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/login",
+      "kind": "page",
+      "component": "LoginPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/LoginPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/register",
+      "kind": "page",
+      "component": "RegisterPage",
+      "redirectTo": null,
+      "public": true,
+      "module": "@/pages/account/RegisterPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/auth/register",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/register",
+      "public": true,
+      "releaseFocus": null
+    },
+    {
+      "route": "/internal/status",
+      "kind": "page",
+      "component": "InternalStatusPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/internal/InternalStatusPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/sources",
+      "kind": "page",
+      "component": "AutomationSourcesPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/AutomationSourcesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/automation/sources",
+      "kind": "page",
+      "component": "AutomationSourcesPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/AutomationSourcesPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/automation/dashboard",
+      "kind": "page",
+      "component": "AutomationDashboardPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/AutomationDashboardPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/automation/platform",
+      "kind": "page",
+      "component": "MajlisKnowledgeEnginePage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/MajlisKnowledgeEnginePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/automation/center",
+      "kind": "page",
+      "component": "AutomationCenterPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/AutomationCenterPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/autonomous-platform",
+      "kind": "page",
+      "component": "AutonomousPlatformPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/AutonomousPlatformPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/automation",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/admin/automation/center",
+      "public": false,
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/integrations/instagram",
+      "kind": "page",
+      "component": "InstagramIntegrationPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/InstagramIntegrationPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/review-hub",
+      "kind": "page",
+      "component": "ReviewHubPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/ReviewHubPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/review-center",
+      "kind": "page",
+      "component": "AutomationReviewPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/AutomationReviewPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/automation/review",
+      "kind": "page",
+      "component": "AutomationReviewPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/AutomationReviewPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/content-import/url",
+      "kind": "page",
+      "component": "LessonImportUrlPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/LessonImportUrlPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/content-import/image",
+      "kind": "page",
+      "component": "LessonImportImagePage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/LessonImportImagePage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/import",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/admin/content-import/url",
+      "public": false,
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/content",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/admin/auto-content",
+      "public": false,
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/auto-content",
+      "kind": "page",
+      "component": "AutoContentPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/AutoContentPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/fiqh-review",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/admin/v3",
+      "public": false,
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/fiqh-quality",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/admin/v3",
+      "public": false,
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/content-production",
+      "kind": "page",
+      "component": "ContentProductionDashboardPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/ContentProductionDashboardPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/automation/content-production",
+      "kind": "page",
+      "component": "ContentProductionDashboardPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/ContentProductionDashboardPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/feature-status",
+      "kind": "page",
+      "component": "FeatureStatusPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/FeatureStatusPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/dashboard",
+      "kind": "page",
+      "component": "AdminDashboardPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/AdminDashboardPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/users",
+      "kind": "redirect",
+      "component": null,
+      "redirectTo": "/admin?section=users",
+      "public": false,
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/universities",
+      "kind": "page",
+      "component": "UniversitiesAdminPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/admin/UniversitiesAdminPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/v3/content",
+      "kind": "page",
+      "component": "AdminV3App",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/admin-v3/AdminV3App",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/v3/review",
+      "kind": "page",
+      "component": "AdminV3App",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/admin-v3/AdminV3App",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/v3/users",
+      "kind": "page",
+      "component": "AdminV3App",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/admin-v3/AdminV3App",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/v3/notifications",
+      "kind": "page",
+      "component": "AdminV3App",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/admin-v3/AdminV3App",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/v3/analytics",
+      "kind": "page",
+      "component": "AdminV3App",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/admin-v3/AdminV3App",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/v3/automation",
+      "kind": "page",
+      "component": "AdminV3App",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/admin-v3/AdminV3App",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/v3/system",
+      "kind": "page",
+      "component": "AdminV3App",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/admin-v3/AdminV3App",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/v3/settings",
+      "kind": "page",
+      "component": "AdminV3App",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/admin-v3/AdminV3App",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/v3/audit",
+      "kind": "page",
+      "component": "AdminV3App",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/admin-v3/AdminV3App",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/v3",
+      "kind": "page",
+      "component": "AdminV3App",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/admin-v3/AdminV3App",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin/legacy",
+      "kind": "page",
+      "component": "AdminPage",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/views/AdminPage",
+      "releaseFocus": null
+    },
+    {
+      "route": "/admin",
+      "kind": "page",
+      "component": "AdminEntryBridge",
+      "redirectTo": null,
+      "public": false,
+      "module": "@/admin-v3/AdminEntryBridge",
+      "releaseFocus": null
+    }
+  ],
+  "registryPathsOnlyInTs": [],
+  "appOnlyNotInTs": [
+    "/about",
+    "/about-us",
+    "/academic-research",
+    "/academic-research/:id",
+    "/academic-research/assistant",
+    "/academic-research/submit",
+    "/account-deletion",
+    "/account/delete",
+    "/adab-talab-ilm",
+    "/adhan-help",
+    "/adhan-settings",
+    "/adhkar",
+    "/adhkar/:slug",
+    "/admin",
+    "/admin/auto-content",
+    "/admin/automation",
+    "/admin/automation/center",
+    "/admin/automation/content-production",
+    "/admin/automation/dashboard",
+    "/admin/automation/platform",
+    "/admin/automation/review",
+    "/admin/automation/sources",
+    "/admin/autonomous-platform",
+    "/admin/content",
+    "/admin/content-import/image",
+    "/admin/content-import/url",
+    "/admin/content-production",
+    "/admin/dashboard",
+    "/admin/feature-status",
+    "/admin/fiqh-quality",
+    "/admin/fiqh-review",
+    "/admin/import",
+    "/admin/integrations/instagram",
+    "/admin/legacy",
+    "/admin/review-center",
+    "/admin/review-hub",
+    "/admin/sources",
+    "/admin/universities",
+    "/admin/users",
+    "/admin/v3",
+    "/admin/v3/analytics",
+    "/admin/v3/audit",
+    "/admin/v3/automation",
+    "/admin/v3/content",
+    "/admin/v3/notifications",
+    "/admin/v3/review",
+    "/admin/v3/settings",
+    "/admin/v3/system",
+    "/admin/v3/users",
+    "/akhlaq",
+    "/alamat-saah",
+    "/amr-bil-maruf",
+    "/amrad-qalbiyya",
+    "/anbiya",
+    "/announcements",
+    "/annual-courses",
+    "/annual-courses/:id",
+    "/aqidah",
+    "/arabic-language",
+    "/arbaeen-nawawi",
+    "/arbaeen-nawawi/:id",
+    "/arkan",
+    "/arkan-iman",
+    "/asbab-al-nuzul",
+    "/asma-husna",
+    "/assistant",
+    "/auth/callback",
+    "/auth/register",
+    "/auth/update-password",
+    "/c/:slug",
+    "/calendar",
+    "/car-mode",
+    "/cards",
+    "/citations",
+    "/competitions",
+    "/competitions/:id",
+    "/condolences",
+    "/contact",
+    "/courses",
+    "/courses/paths",
+    "/daily-wird",
+    "/dalail-nubuwwah",
+    "/data-licenses",
+    "/delete-account",
+    "/demo-ayah-reader",
+    "/discover-islam",
+    "/discover-islam/articles/:slug",
+    "/discover-islam/contact",
+    "/discover-islam/doubts",
+    "/discover-islam/doubts/:slug",
+    "/discover-islam/how-to-convert",
+    "/discover-islam/new-muslim",
+    "/discover-islam/new-muslim/:day",
+    "/discover-islam/questions",
+    "/discover-islam/questions/:slug",
+    "/duas",
+    "/duas-quran",
+    "/durus-imaniyya",
+    "/durus-mutanawwia",
+    "/events",
+    "/explore",
+    "/fadail-aamal",
+    "/family",
+    "/family-mode",
+    "/fatwa",
+    "/fatwa-policy",
+    "/fatwa/:id",
+    "/fatwas",
+    "/fawaid",
+    "/feature-tour",
+    "/features-in-progress",
+    "/fikr-waqia",
+    "/fiqh",
+    "/fiqh-council",
+    "/fiqh-council/:rest*",
+    "/fiqh-qawaid",
+    "/fiqh/books/:bookId",
+    "/fiqh/books/:bookId/chapters/:chapterId",
+    "/fiqh/books/:bookId/lessons/:lessonId",
+    "/fiqh/topics/:topicId",
+    "/fiqh/usul",
+    "/flashcards",
+    "/glossary",
+    "/hadith",
+    "/hadith-science",
+    "/hadith/:id",
+    "/hadith/arbaeen",
+    "/hadith/arbaeen-love-of-allah",
+    "/hadith/books",
+    "/hadith/books-and-rulings",
+    "/hadith/daif",
+    "/hadith/mawdu",
+    "/hadith/sahih",
+    "/hajj",
+    "/hikam-salaf",
+    "/iman-topics",
+    "/institutions",
+    "/internal/status",
+    "/islam-stats",
+    "/islamic-directory",
+    "/islamic-events",
+    "/islamic-glossary",
+    "/islamic-history",
+    "/islamic-history/:rest*",
+    "/islamic-institutions",
+    "/islamic-landmarks",
+    "/islamic-sects",
+    "/islamic-sects/:id",
+    "/islamic-stories",
+    "/janaza",
+    "/janna-naar",
+    "/jumuah",
+    "/knowledge",
+    "/knowledge-graph",
+    "/knowledge-map",
+    "/knowledge/:section",
+    "/knowledge/:section/:id",
+    "/kuwait-lessons",
+    "/latest",
+    "/learn",
+    "/learn/:slug",
+    "/learn/lesson/:id",
+    "/learn/series/:slug",
+    "/learning",
+    "/learning-path",
+    "/learning-path/:scienceSlug",
+    "/learning-path/book/:bookId",
+    "/learning-path/dashboard",
+    "/learning-paths",
+    "/learning-plan",
+    "/learning/calendar",
+    "/learning/certificates",
+    "/learning/certificates/:code",
+    "/learning/paths",
+    "/learning/paths/:slug",
+    "/learning/quiz",
+    "/learning/quiz/:slug",
+    "/lesson-calendar",
+    "/lessons",
+    "/lessons/:id",
+    "/lessons/archive",
+    "/lessons/current",
+    "/lessons/paths",
+    "/library",
+    "/library/:id",
+    "/licenses",
+    "/login",
+    "/madhahib",
+    "/madhahib/:id",
+    "/malaika",
+    "/man-nahnu",
+    "/maqasid-sharia",
+    "/masajid",
+    "/masarat",
+    "/mawarith",
+    "/mawarith/calculator",
+    "/mawsuaat",
+    "/memorization",
+    "/memorization-plans",
+    "/memorization-tests",
+    "/memorize",
+    "/methodology",
+    "/mind-map",
+    "/miracles",
+    "/miracles/quran",
+    "/miracles/sunnah",
+    "/miracles/topic/:slug",
+    "/more",
+    "/mosque-mode",
+    "/mosques",
+    "/muezzins",
+    "/muezzins/:rest",
+    "/mushaf",
+    "/mushaf-v2-preview",
+    "/mushaf/:surah",
+    "/mushaf/about-edition",
+    "/mushaf/bookmarks",
+    "/mushaf/page",
+    "/mushaf/page/:page",
+    "/mutashabihat",
+    "/my-citations",
+    "/my-learning",
+    "/my-submissions",
+    "/nations",
+    "/nations/:slug",
+    "/news",
+    "/nikah",
+    "/notification-settings",
+    "/notifications-and-sound",
+    "/occasions",
+    "/occasions-lessons",
+    "/offline",
+    "/pathways",
+    "/prayer",
+    "/prayer-countdown",
+    "/prayer-ranks",
+    "/prayer-times",
+    "/privacy",
+    "/privacy-center",
+    "/privacy-policy",
+    "/profile",
+    "/progress",
+    "/prophet-stories",
+    "/prophet-stories/:slug",
+    "/prophetic-medicine",
+    "/prophets",
+    "/prophets-stories",
+    "/prophets-stories/:slug",
+    "/prophets/:slug",
+    "/prophets/al-yasaa",
+    "/prophets/alyasa",
+    "/prophets/ishaaq",
+    "/prophets/ishaq",
+    "/prophets/tree",
+    "/prophets/zakaria",
+    "/prophets/zakariya",
+    "/qa",
+    "/qa/:rest*",
+    "/qibla",
+    "/quiz",
+    "/quran",
+    "/quran-circles",
+    "/quran-engine",
+    "/quran-engine/viewer",
+    "/quran-hub",
+    "/quran-hub/numbers",
+    "/quran-hub/qiraat",
+    "/quran-hub/seven-ahruf",
+    "/quran-hub/tajweed",
+    "/quran-hub/tajweed/:chapter",
+    "/quran-hub/terms",
+    "/quran-hub/tilawa",
+    "/quran-index",
+    "/quran-knowledge",
+    "/quran-memorization",
+    "/quran-sciences",
+    "/quran-stories",
+    "/quran-studies",
+    "/quran/hifz-loop",
+    "/quran/makki-madani",
+    "/quran/memorization-plans",
+    "/quran/mushaf",
+    "/quran/offline-player",
+    "/quran/people",
+    "/quran/people/:slug",
+    "/quran/recitation-test-ai",
+    "/quran/revelation-order",
+    "/quran/search",
+    "/quran/surah-stories",
+    "/quran/surah-stories/:number",
+    "/quran/surahs",
+    "/quran/tafsir",
+    "/quran/tajweed",
+    "/quran/terms",
+    "/quran/worship-hub",
+    "/raqaiq",
+    "/reading-plans",
+    "/register",
+    "/research",
+    "/researcher",
+    "/researcher-profile",
+    "/researches",
+    "/review-plans",
+    "/reviewed-cards",
+    "/riba",
+    "/rulings",
+    "/rulings/:id",
+    "/ruqya",
+    "/sadaqa",
+    "/sahabah",
+    "/salah-guide",
+    "/sawm",
+    "/scholarly-research",
+    "/scholars",
+    "/scholars/:id",
+    "/scientific-announcements/:id",
+    "/scientific-library",
+    "/search",
+    "/search/:q",
+    "/sections",
+    "/seerah",
+    "/settings",
+    "/shamael",
+    "/sharia-research",
+    "/sheikhs",
+    "/sheikhs/:id",
+    "/sins-and-rights",
+    "/sins-and-rights/:slug",
+    "/sitemap",
+    "/sources",
+    "/sources-licenses",
+    "/sources/:id",
+    "/start-here",
+    "/stats",
+    "/stories",
+    "/study-paths",
+    "/study-room",
+    "/submit",
+    "/sujood-sahw",
+    "/sunan-yawmiyya",
+    "/sunnah-studies",
+    "/support",
+    "/surah-stories",
+    "/tafsir",
+    "/tahara",
+    "/tajweed",
+    "/talaq",
+    "/tarikh-islami",
+    "/tarikh-islami/:id",
+    "/tasbih",
+    "/tawba",
+    "/tawhid",
+    "/tawhid/:slug",
+    "/tazkiya",
+    "/tazkiya-topics",
+    "/teachers",
+    "/teachers/:slug",
+    "/terms",
+    "/topics",
+    "/topics/:slug",
+    "/tracks",
+    "/transcribe",
+    "/udhiya",
+    "/ulum-quran",
+    "/universities",
+    "/universities/:slug",
+    "/universities/compare",
+    "/updates",
+    "/updates/auto/:slug",
+    "/upload",
+    "/usra-mujtama",
+    "/vault",
+    "/waqf",
+    "/wasaya-nabawiyya",
+    "/whats-new",
+    "/who-we-are",
+    "/zakat"
+  ]
+}
