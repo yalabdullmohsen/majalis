@@ -1,0 +1,14 @@
+/**
+ * أبعاد صناديق هيدر الإقلاع — خارج CSS الحرج المضمّن (ميزانية ≤14KiB).
+ * يُستورد من App مع fallback الكروم.
+ */
+.chrome-boot-ph__slot {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  visibility: hidden;
+  pointer-events: none;
+}

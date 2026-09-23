@@ -211,6 +211,7 @@ App: … Language / AuthProvider / Router shell …
 | **1** | `AppStartupController` state machine — `src/lib/app-startup-controller.ts` |
 | **2** | خطوط Amiri مسبقة + إخفاء مزامنة OfflineBanner عن المستخدم (`DEBUG_ONLY`) |
 | **3** | Native Launch لون فقط (فاتح/داكن) + عقد دخولية واحدة |
+| **4** | App Shell ثابت — ChromeNav/Bottom fallback بهندسة نهائية |
 | 2 | خطوط + إخفاء sync عن المستخدم |
 | 3 | Native launch + دخولية واحدة |
 | 4 | App Shell + Header + BottomNav ثابتان |
