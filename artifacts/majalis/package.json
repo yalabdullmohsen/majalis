@@ -624,6 +624,7 @@
     "test:memorization-research-pr2": "node --import tsx src/lib/__tests__/memorization-research-pr2-gate.test.ts",
     "test:memorization-research-pr3": "node --import tsx src/lib/__tests__/memorization-research-pr3-gate.test.ts",
     "test:memorization-research-pr4": "node --import tsx src/lib/__tests__/memorization-research-pr4-gate.test.ts",
+    "test:memorization-research-pr5": "node --import tsx src/lib/__tests__/memorization-research-pr5-gate.test.ts",
     "test:visual-redesign-v2-tokens": "node --import tsx src/lib/__tests__/visual-redesign-v2-tokens-gate.test.ts",
     "test:sunnah-identity-reset-pr1": "node --import tsx src/lib/__tests__/sunnah-identity-reset-pr1-gate.test.ts",
     "test:sunnah-identity-reset-pr2": "node --import tsx src/lib/__tests__/sunnah-identity-reset-pr2-gate.test.ts",

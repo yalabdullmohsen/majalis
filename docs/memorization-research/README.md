@@ -1,6 +1,6 @@
 # مسار الحفظ + البحوث الشرعية — فهرس البرنامج
 
-**الحالة الحالية:** PR-0…PR-4 · عقود الحفظ خلف Flags OFF · فهرس البحوث على `/academic-research` · لا `SUNNAH_MEMORIZATION_AND_RESEARCH_READY`
+**الحالة الحالية:** PR-0…PR-5 · فهرس + تفاصيل البحوث على `/academic-research` · عقود الحفظ خلف Flags OFF · لا `SUNNAH_MEMORIZATION_AND_RESEARCH_READY`
 
 | وثيقة | دور |
 |---|---|
@@ -15,9 +15,9 @@
 |---|---|
 | `artifacts/majalis/src/lib/memorization-path/*` | أعلام · أنواع · تقدم محلي · كتالوج فارغ للعامة |
 | `artifacts/majalis/src/pages/hifz-path/*` | Hub · محفوظاتي · تصنيف · مسار · وحدة/ممارسة |
-| `artifacts/majalis/src/lib/scholarly-research/*` | حوكمة مراجعات + بحث كتالوج فارغ فوق `/academic-research` |
-| `artifacts/majalis/src/lib/researches/*` + `AcademicResearchPage` | السطح الحي للفهرس/الفلاتر |
-| `test:memorization-research-pr0` … `pr4` | بوابات نصية |
+| `artifacts/majalis/src/lib/scholarly-research/*` | حوكمة مراجعات + بحث + سياسة روابط المصدر |
+| `artifacts/majalis/src/lib/researches/*` + AcademicResearch / ResearchDetail | السطح الحي للفهرس والتفاصيل |
+| `test:memorization-research-pr0` … `pr5` | بوابات نصية |
 
 ## مبادئ ثابتة
 
