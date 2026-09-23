@@ -1,0 +1,443 @@
+[
+  {
+    "route": "/",
+    "vp": "iphone-14",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "سُنّة | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/home__iphone-14__light.png"
+  },
+  {
+    "route": "/",
+    "vp": "ipad-portrait",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "سُنّة | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/home__ipad-portrait__light.png"
+  },
+  {
+    "route": "/quran-hub/numbers",
+    "vp": "iphone-14",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "القرآن في أرقام — سُنّة | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/quran-hub-numbers__iphone-14__light.png"
+  },
+  {
+    "route": "/quran-hub/numbers",
+    "vp": "ipad-portrait",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "القرآن في أرقام | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/quran-hub-numbers__ipad-portrait__light.png"
+  },
+  {
+    "route": "/discover-islam/contact",
+    "vp": "iphone-14",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "تواصل سرّي مع داعية | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/discover-islam-contact__iphone-14__light.png"
+  },
+  {
+    "route": "/discover-islam/contact",
+    "vp": "ipad-portrait",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "تواصل سرّي مع داعية | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/discover-islam-contact__ipad-portrait__light.png"
+  },
+  {
+    "route": "/arabic-language",
+    "vp": "iphone-14",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "النحو والصرف والبلاغة لطالب العلم | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/arabic-language__iphone-14__light.png"
+  },
+  {
+    "route": "/arabic-language",
+    "vp": "ipad-portrait",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "النحو والصرف والبلاغة لطالب العلم | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/arabic-language__ipad-portrait__light.png"
+  },
+  {
+    "route": "/islamic-landmarks",
+    "vp": "iphone-14",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "المشاهد الإسلامية والمساجد التاريخية | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/islamic-landmarks__iphone-14__light.png"
+  },
+  {
+    "route": "/islamic-landmarks",
+    "vp": "ipad-portrait",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "المشاهد الإسلامية والمساجد التاريخية | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/islamic-landmarks__ipad-portrait__light.png"
+  },
+  {
+    "route": "/islamic-directory",
+    "vp": "iphone-14",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "الدليل الإسلامي | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/islamic-directory__iphone-14__light.png"
+  },
+  {
+    "route": "/islamic-directory",
+    "vp": "ipad-portrait",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "الدليل الإسلامي | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/islamic-directory__ipad-portrait__light.png"
+  },
+  {
+    "route": "/mushaf",
+    "vp": "iphone-14",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "المصحف — صفحة 1 | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/mushaf__iphone-14__light.png"
+  },
+  {
+    "route": "/mushaf",
+    "vp": "ipad-portrait",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "المصحف — صفحة 1 | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/mushaf__ipad-portrait__light.png"
+  },
+  {
+    "route": "/contact",
+    "vp": "iphone-14",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "تواصل معنا | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/contact__iphone-14__light.png"
+  },
+  {
+    "route": "/contact",
+    "vp": "ipad-portrait",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "تواصل معنا | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/contact__ipad-portrait__light.png"
+  },
+  {
+    "route": "/fiqh",
+    "vp": "iphone-14",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "الفقه | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/fiqh__iphone-14__light.png"
+  },
+  {
+    "route": "/fiqh",
+    "vp": "ipad-portrait",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "الفقه | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/fiqh__ipad-portrait__light.png"
+  },
+  {
+    "route": "/search",
+    "vp": "iphone-14",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "البحث | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/search__iphone-14__light.png"
+  },
+  {
+    "route": "/search",
+    "vp": "ipad-portrait",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "البحث | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/search__ipad-portrait__light.png"
+  },
+  {
+    "route": "/quran-hub/numbers",
+    "vp": "iphone-14",
+    "theme": "dark",
+    "largeText": false,
+    "status": "ok",
+    "title": "القرآن في أرقام — سُنّة | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/quran-hub-numbers__iphone-14__dark.png"
+  },
+  {
+    "route": "/quran-hub/numbers",
+    "vp": "ipad-portrait",
+    "theme": "light",
+    "largeText": true,
+    "status": "ok",
+    "title": "القرآن في أرقام — سُنّة | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/quran-hub-numbers__ipad-portrait__light__lg.png"
+  },
+  {
+    "route": "/discover-islam/contact",
+    "vp": "iphone-14",
+    "theme": "dark",
+    "largeText": false,
+    "status": "ok",
+    "title": "تواصل سرّي مع داعية | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/discover-islam-contact__iphone-14__dark.png"
+  },
+  {
+    "route": "/discover-islam/contact",
+    "vp": "ipad-portrait",
+    "theme": "light",
+    "largeText": true,
+    "status": "ok",
+    "title": "تواصل سرّي مع داعية | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/discover-islam-contact__ipad-portrait__light__lg.png"
+  },
+  {
+    "route": "/arabic-language",
+    "vp": "iphone-14",
+    "theme": "dark",
+    "largeText": false,
+    "status": "ok",
+    "title": "النحو والصرف والبلاغة لطالب العلم | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/arabic-language__iphone-14__dark.png"
+  },
+  {
+    "route": "/arabic-language",
+    "vp": "ipad-portrait",
+    "theme": "light",
+    "largeText": true,
+    "status": "ok",
+    "title": "النحو والصرف والبلاغة لطالب العلم | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/arabic-language__ipad-portrait__light__lg.png"
+  },
+  {
+    "route": "/mushaf",
+    "vp": "iphone-14",
+    "theme": "dark",
+    "largeText": false,
+    "status": "ok",
+    "title": "المصحف — صفحة 1 | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/mushaf__iphone-14__dark.png"
+  },
+  {
+    "route": "/mushaf",
+    "vp": "ipad-portrait",
+    "theme": "light",
+    "largeText": true,
+    "status": "ok",
+    "title": "المصحف — صفحة 1 | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/mushaf__ipad-portrait__light__lg.png"
+  },
+  {
+    "route": "/quran-hub/numbers",
+    "vp": "iphone-se",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "القرآن في أرقام — سُنّة | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/quran-hub-numbers__iphone-se__light.png"
+  },
+  {
+    "route": "/quran-hub/numbers",
+    "vp": "iphone-8",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "القرآن في أرقام — سُنّة | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/quran-hub-numbers__iphone-8__light.png"
+  },
+  {
+    "route": "/quran-hub/numbers",
+    "vp": "iphone-14pm",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "القرآن في أرقام — سُنّة | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/quran-hub-numbers__iphone-14pm__light.png"
+  },
+  {
+    "route": "/quran-hub/numbers",
+    "vp": "ipad-landscape",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "القرآن في أرقام — سُنّة | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/quran-hub-numbers__ipad-landscape__light.png"
+  },
+  {
+    "route": "/quran-hub/numbers",
+    "vp": "ipad-split",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "القرآن في أرقام — سُنّة | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/quran-hub-numbers__ipad-split__light.png"
+  },
+  {
+    "route": "/quran-hub/numbers",
+    "vp": "web-1024",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "القرآن في أرقام — سُنّة | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/quran-hub-numbers__web-1024__light.png"
+  },
+  {
+    "route": "/quran-hub/numbers",
+    "vp": "web-1440",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "القرآن في أرقام — سُنّة | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/quran-hub-numbers__web-1440__light.png"
+  },
+  {
+    "route": "/mushaf",
+    "vp": "iphone-se",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "المصحف — صفحة 1 | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/mushaf__iphone-se__light.png"
+  },
+  {
+    "route": "/mushaf",
+    "vp": "iphone-8",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "المصحف — صفحة 1 | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/mushaf__iphone-8__light.png"
+  },
+  {
+    "route": "/mushaf",
+    "vp": "iphone-14pm",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "المصحف — صفحة 1 | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/mushaf__iphone-14pm__light.png"
+  },
+  {
+    "route": "/mushaf",
+    "vp": "ipad-landscape",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "المصحف — صفحة 1 | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/mushaf__ipad-landscape__light.png"
+  },
+  {
+    "route": "/mushaf",
+    "vp": "ipad-split",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "المصحف — صفحة 1 | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/mushaf__ipad-split__light.png"
+  },
+  {
+    "route": "/mushaf",
+    "vp": "web-1024",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "المصحف — صفحة 1 | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/mushaf__web-1024__light.png"
+  },
+  {
+    "route": "/mushaf",
+    "vp": "web-1440",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "المصحف — صفحة 1 | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/mushaf__web-1440__light.png"
+  },
+  {
+    "route": "/discover-islam/contact",
+    "vp": "iphone-se",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "تواصل سرّي مع داعية | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/discover-islam-contact__iphone-se__light.png"
+  },
+  {
+    "route": "/discover-islam/contact",
+    "vp": "iphone-8",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "تواصل سرّي مع داعية | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/discover-islam-contact__iphone-8__light.png"
+  },
+  {
+    "route": "/discover-islam/contact",
+    "vp": "iphone-14pm",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "تواصل سرّي مع داعية | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/discover-islam-contact__iphone-14pm__light.png"
+  },
+  {
+    "route": "/discover-islam/contact",
+    "vp": "ipad-landscape",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "تواصل سرّي مع داعية | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/discover-islam-contact__ipad-landscape__light.png"
+  },
+  {
+    "route": "/discover-islam/contact",
+    "vp": "ipad-split",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "تواصل سرّي مع داعية | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/discover-islam-contact__ipad-split__light.png"
+  },
+  {
+    "route": "/discover-islam/contact",
+    "vp": "web-1024",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "تواصل سرّي مع داعية | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/discover-islam-contact__web-1024__light.png"
+  },
+  {
+    "route": "/discover-islam/contact",
+    "vp": "web-1440",
+    "theme": "light",
+    "largeText": false,
+    "status": "ok",
+    "title": "تواصل سرّي مع داعية | سُنّة",
+    "file": "/tmp/sunnah-release-baseline/discover-islam-contact__web-1440__light.png"
+  }
+]

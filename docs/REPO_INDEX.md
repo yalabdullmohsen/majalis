@@ -83,6 +83,7 @@
 | `docs/content-quality/islamic-sects-*` + `ISLAMIC_SECTS_*` | جرد/قرارات بشرية/حراسة نشر الفرق (لا PUBLISHED آلي) |
 | `docs/admin/LEGACY_ADMIN_INVENTORY.md` | جرد Admin Legacy قبل Admin v3 Complete Rebuild |
 | `docs/release/CURRENT_PROJECT_STATUS.md` | **سطح الحالة الحي الوحيد** — tip/إنتاج/HOLD/P0/Owner/Device |
+| `docs/release/SUNNAH_RELEASE_UI_BASELINE.md` | **PR-0 إطلاق واجهة** — جرد Routes/فلاتر/عيوب مؤكدة قبل أي إعادة بناء UI |
 | `docs/release/CURRENT_RELEASE_TRUTH.md` | حقيقة main/إنتاج/تصنيف البنود — مصدر مزامنة التقارير |
 | `docs/release/OWNER_ACTIONS_CURRENT.md` | قرارات المالك فقط (لا ينفّذها الوكيل) |
 | `docs/release/RELEASE_FREEZE.md` | تجميد Store RC مفصول عن دمج main للإصلاح |
