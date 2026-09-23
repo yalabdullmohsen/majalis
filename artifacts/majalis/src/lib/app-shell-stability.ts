@@ -3,6 +3,8 @@
  * مصدر حقيقة واحد لـ app-booting / أول paint.
  */
 
+import { markStartup } from "@/lib/startup-performance-marks";
+
 export const SHELL_STABLE_EVENT = "mj:shell-stable";
 export const BOOT_READY_EVENT = "mj:boot-ready";
 
@@ -39,6 +41,8 @@ export function markAppShellStable(): void {
   } catch {
     /* ignore */
   }
+  markStartup("startup:shell-ready");
+  markStartup("startup:stable");
   if (typeof document === "undefined") return;
   if (!shellStableAt) shellStableAt = Date.now();
   try {

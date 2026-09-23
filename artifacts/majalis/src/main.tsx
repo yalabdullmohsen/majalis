@@ -21,6 +21,7 @@ import { hydrateNativeStorage } from "./lib/native-storage";
 import { installInAppNavigationGuard } from "./lib/in-app-navigation";
 import { armNativeSplashController } from "./lib/splash-screen";
 import { awaitBootReadiness, registerBootStorageGate } from "./lib/boot-readiness";
+import { markStartup } from "./lib/startup-performance-marks";
 import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
 import { initOnboardingState } from "./lib/onboarding-state";
 import { scheduleOnIdle } from "./lib/yield-to-main";
@@ -257,6 +258,7 @@ prefetchTopRoutesOnIdle();
 
 async function mount() {
   const started = performance.now();
+  markStartup("startup:js-start");
 
   // ترحيل راية الخصوصية ومسح مفاتيح الدخولية القديمة — بلا شاشة بدء.
   initOnboardingState();
@@ -289,6 +291,7 @@ async function mount() {
     void import("./lib/startup-safe-mode").then((m) => m.recordStartupFailure("create_root_failed")).catch(() => {});
     return;
   }
+  markStartup("startup:root-mounted");
 
   // مزامنة التخزين الأصلي بالتوازي مع الرسم — لا await قبل createRoot.
   const storageHydrate = hydrateNativeStorage().catch(() => {});
@@ -298,10 +301,14 @@ async function mount() {
   markBootAwaitPaint();
   armNativeSplashController();
   void awaitBootReadiness().then(() => {
+    markStartup("startup:theme-ready");
+    markStartup("startup:fonts-ready");
+    markStartup("startup:session-ready");
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         window.dispatchEvent(new Event("mj:app-painted"));
         window.dispatchEvent(new Event("app:first-paint"));
+        markStartup("startup:content-ready");
         scheduleMushafLastPagePrewarm();
       });
     });
