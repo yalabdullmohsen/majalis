@@ -100,8 +100,17 @@ assert.doesNotMatch(launch, /mk-progress/, "بلا شريط تقدّم");
 assert.doesNotMatch(launch, /image="Splash"/, "بلا Splash قديم");
 assert.doesNotMatch(launch, /systemBackgroundColor/, "بلا خلفية نظام بيضاء");
 assert.match(launch, /safeArea|Safe area/i, "يحترم safe area");
-assert.match(launch, /0\.96862745098039216/, `خلفية LaunchScreen = ${BG} (#F7F3EB)`);
+assert.match(launch, /name="LaunchBackground"/, "خلفية LaunchScreen من أصل لوني فاتح/داكن");
+assert.doesNotMatch(launch, /<label\b/i, "بلا نصوص تحميل أصلية");
+assert.doesNotMatch(launch, /UIActivityIndicator|progressView|mk-progress/i, "بلا Progress أصلي");
 assert.doesNotMatch(launch, /0\.94901960784313721/, "بلا خلفية #F2F4F3 القديمة");
+
+const launchColorset = readFileSync(
+  resolve(root, "ios/App/App/Assets.xcassets/LaunchBackground.colorset/Contents.json"),
+  "utf8",
+);
+assert.match(launchColorset, /"luminosity"[\s\S]*"dark"/, "لون ليلي لـ LaunchBackground");
+assert.match(launchColorset, /0\.969|0\.968/, "مكوّن أحمر ≈ #F7F3EB");
 
 const capTs = readFileSync(resolve(root, "capacitor.config.ts"), "utf8");
 assert.match(capTs, /launchShowDuration:\s*0/, "مدة إظهار Splash = 0");
