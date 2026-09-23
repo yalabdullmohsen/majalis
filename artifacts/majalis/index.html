@@ -127,6 +127,24 @@
           html.dataset.contrast = contrast;
           html.dataset.seniorMode = senior ? "1" : "0";
 
+          /* مصحف Accent قبل React — يمنع وميض زمردي عند GOLD المحفوظ */
+          try {
+            var mushafAccentRaw = localStorage.getItem("ssunnah-mushaf-accent-theme-v1");
+            var mushafAccent = "emerald";
+            if (mushafAccentRaw) {
+              var mushafAccentNorm = String(mushafAccentRaw).trim().toUpperCase();
+              if (
+                mushafAccentNorm === "GOLD" ||
+                mushafAccentNorm === "YELLOW" ||
+                mushafAccentNorm === "PRINTED" ||
+                mushafAccentRaw === "gold"
+              ) {
+                mushafAccent = "gold";
+              }
+            }
+            html.setAttribute("data-mushaf-accent", mushafAccent);
+          } catch (_) {}
+
           function clearBooting() {
             html.classList.remove("app-booting");
             html.dataset.appBooting = "0";
