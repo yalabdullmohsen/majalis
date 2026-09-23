@@ -259,7 +259,8 @@ html.dark .mm-viewport,
 
 .mm-page-shell,
 .mushaf-page-frame {
-  width: min(100%, 430px);
+  /* عرض الصفحة من --mm-page-max-w (هاتفي 430px افتراضيًا؛ اللوح عبر JS/breakpoint) */
+  width: min(100%, var(--mm-page-max-w));
   max-width: var(--mm-page-max-w);
   height: 100%;
   max-height: 100%;
@@ -345,7 +346,7 @@ html.dark .mm-viewport,
 
 .mm-pager__sheet .mm-page-shell,
 .mm-pager__sheet .mushaf-page-frame {
-  width: min(100%, 430px);
+  width: min(100%, var(--mm-page-max-w));
   height: 100%;
   max-width: var(--mm-page-max-w);
   margin-inline: auto;
@@ -2614,6 +2615,15 @@ html.dark .mm-goto__actions button[data-primary="1"] {
 
   .ayah-action-sheet__primary {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* iPad / tablet: املأ العرض المتاح — لا عمود هاتف 430px في المنتصف.
+ * يقترن بـ min-height لاستبعاد landscape الهاتف. */
+@media (min-width: 768px) and (min-height: 600px) {
+  .mm-viewport {
+    --mm-page-max-w: 100%;
+    --mushaf-page-width: 100%;
   }
 }
 

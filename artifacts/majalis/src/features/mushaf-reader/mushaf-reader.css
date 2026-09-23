@@ -152,6 +152,17 @@
   text-size-adjust: 100%;
 }
 
+/* iPad / tablet: املأ العرض قبل/بعد metrics — بلا عمود 28rem في المنتصف.
+ * min-height يستبعد landscape الهاتف (~390) دون كسر iPad landscape. */
+@media (min-width: 768px) and (min-height: 600px) {
+  .nm-root {
+    --mushaf-page-width: 100%;
+    --mushaf-body-width: 100%;
+    --nm-page-max-w: 100%;
+    --mm-page-max-w: 100%;
+  }
+}
+
 /* GOLD theme — كل الصفحات ١…٦٠٤ */
 .nm-root[data-mushaf-accent="gold"],
 html[data-mushaf-accent="gold"] .nm-root {
@@ -219,7 +230,7 @@ html[data-mushaf-accent="gold"] .nm-root {
 .nm-root .mm-page-shell,
 .nm-shell {
   position: relative;
-  width: 100%;
+  width: min(100%, var(--nm-page-max-w));
   height: 100%;
   max-width: var(--nm-page-max-w);
   margin-inline: auto;
