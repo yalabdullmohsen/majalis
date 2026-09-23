@@ -281,8 +281,6 @@ NOT CAPTURED — لا سطح منتج في PR-0.
 
 ---
 
-## خطة PR (لا تُنفَّذ هنا)
+## خطة PR (لا تُنفَّذ هنا بالكامل)
 
-PR-1 Routes+Nav خلف علم · PR-2 صفحة الحفظ · PR-3 وحدة/تقدم · PR-4 فهرس بحوث · PR-5 تفاصيل · PR-6 اقتراح · PR-7 Admin حفظ · PR-8 Admin بحوث · PR-9 Search/SEO · PR-10 Offline · PR-11 a11y · PR-12 Security · PR-13 Smoke/Release.
-
-كل PR من أحدث `origin/main` بعد دمج السابق.
+PR-1 Routes+Nav خلف علم — **يُنفَّذ في فرع منفصل بعد دمج PR-0** · PR-2 صفحة الحفظ · …

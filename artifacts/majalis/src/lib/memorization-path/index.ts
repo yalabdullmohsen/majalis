@@ -49,3 +49,5 @@ export {
   listAllHifzPathsInternal,
   listPublishedHifzPaths,
 } from "./catalog";
+
+export { HIFZ_PATH_NAV_HREF, getHifzPathNavEntry } from "./nav";

@@ -122,12 +122,10 @@ assert.equal(isHifzPathEnabled(), true);
 resetMemorizationResearchFlags();
 assert.equal(isHifzPathEnabled(), false);
 
+/** PR-0 عقود؛ Routes أُضيفت في PR-1 خلف العلم — لا استيراد scholarly-research صفحة موازية */
 const appRoutes = readPkg("src/AppRoutes.tsx");
-assert.doesNotMatch(appRoutes, /path="\/hifz-path/);
-/** stub قديم — يُستبدل في PR-1 بصفحة خلف العلم؛ PR-0 لا يفعّل القسم */
-assert.match(appRoutes, /path="\/scholarly-research"><Redirect to="\/quiz"/);
-assert.doesNotMatch(appRoutes, /component=\{ScholarlyResearchPage\}|component=\{HifzPathPage\}/);
-assert.doesNotMatch(appRoutes, /lazy\(\(\) => import\([^)]*HifzPath/);
+assert.match(appRoutes, /path="\/scholarly-research"><Redirect to="\/academic-research"/);
+assert.doesNotMatch(appRoutes, /component=\{ScholarlyResearchPage\}/);
 assert.doesNotMatch(appRoutes, /lazy\(\(\) => import\([^)]*scholarly-research\//i);
 
 const mainTsx = readPkg("src/main.tsx");

@@ -69,6 +69,7 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/hadith-science",
   "/hadith/arbaeen", // مسار قديم → /arbaeen-nawawi
   "/memorization", // تحت مركز القرآن الكريم
+  "/hifz-path", // مسار الحفظ — خلف Feature Flag (مخفي حتى ON)
 ]);
 
 /**

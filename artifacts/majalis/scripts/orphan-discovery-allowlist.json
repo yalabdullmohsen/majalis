@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-08-06T23:32:33.630434Z",
-  "note": "مسارات ثابتة ثانوية/أدوات خارج سطح الدخول بعد R5 (اكتشاف الأب + خريطة الموقع + محاور) — يُسمح بها مؤقتاً ويمنع إضافة جديد بلا اكتشاف.",
+  "note": "مسارات ثابتة ثانوية/أدوات خارج سطح الدخول — يُسمح بها مؤقتاً ويمنع إضافة جديد بلا اكتشاف. /hifz-path خلف Feature Flag OFF حتى موجات لاحقة.",
   "paths": [
     "/academic-research/assistant",
     "/academic-research/submit",
@@ -13,6 +13,8 @@
     "/feature-tour",
     "/fikr-waqia",
     "/flashcards",
+    "/hifz-path",
+    "/hifz-path/my",
     "/institutions",
     "/internal/status",
     "/islamic-landmarks",
