@@ -6,4 +6,5 @@ export * from "./duplicates";
 export * from "./import-sources";
 export * from "./service";
 export * from "./assistant";
+export * from "./facets";
 export { RESEARCH_DEMO_SEED, RESEARCH_PUBLISHED_SEED } from "./demo-seed";
