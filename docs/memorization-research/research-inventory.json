@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "note": "لا بحوث مفهرسة للعامة في PR-0 — لا استيراد جماعي بلا إذن",
+  "indexedPublishedCount": 0,
+  "draftOrQueuedCount": 0,
+  "records": [],
+  "allowedSourcePriority": [
+    "university_repository",
+    "university_library",
+    "doi_or_journal",
+    "licensed_database",
+    "institutional_author_page",
+    "national_repository",
+    "other_after_human_rights_review"
+  ],
+  "v1FileHosting": "EXTERNAL_LINK_ONLY_OR_NONE",
+  "pdfUploadInV1": false,
+  "bulkImportWithoutLicense": false
+}

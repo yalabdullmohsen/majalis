@@ -83,6 +83,7 @@
 | `artifacts/majalis/src/App.tsx` (`ChromeNavFallback` / `ChromeBottomFallback`) | **Startup PR-4** — هيكل هيدر/تذييل ثابت من أول إطار |
 
 | `docs/lessons-guide/` | دليل الدروس — عقد + Migration مقترحة (Feature Flag OFF) |
+| `docs/memorization-research/` | **مسار الحفظ + البحوث الشرعية PR-0** — عقود/حقوق/قوالب (Flags OFF · بلا Routes عامة) |
 
 | `docs/product-evolution/` | خط أساس برنامج التطوير + تقرير المراحل (P0+) |
 | `docs/content-quality/TOTAL_TRUST_*` + `reports/total-trust/` | برنامج TOTAL TRUST (تحقق محتوى/مسارات؛ لا حكم شرعي آلي) |

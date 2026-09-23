@@ -618,6 +618,7 @@
     "capture:mushaf-internal-perf-baseline": "node scripts/mushaf-internal-perf-baseline.mjs --write",
     "test:quran-journey-pr1": "node --import tsx src/lib/__tests__/quran-journey-pr1-contracts-gate.test.ts",
     "test:lessons-guide-pr1": "node --import tsx src/lib/__tests__/lessons-guide-pr1-gate.test.ts",
+    "test:memorization-research-pr0": "node --import tsx src/lib/__tests__/memorization-research-pr0-gate.test.ts",
     "test:visual-redesign-v2-tokens": "node --import tsx src/lib/__tests__/visual-redesign-v2-tokens-gate.test.ts",
     "test:sunnah-identity-reset-pr1": "node --import tsx src/lib/__tests__/sunnah-identity-reset-pr1-gate.test.ts",
     "test:sunnah-identity-reset-pr2": "node --import tsx src/lib/__tests__/sunnah-identity-reset-pr2-gate.test.ts",
