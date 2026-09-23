@@ -1,7 +1,12 @@
 /**
- * ملخص متابعة الحفظ ومراجعات اليوم — فارغ حتى PR-3 (تخزين التقدم).
- * لا تقدّم بيانات وهمية.
+ * ملخص متابعة الحفظ ومراجعات اليوم — من تخزين التقدم المحلي.
+ * لا تقدّم بيانات وهمية عند فراغ المخزن.
  */
+
+import {
+  listDueHifzReviews,
+  resolveContinueTarget,
+} from "./progress-store";
 
 export type HifzContinueTarget = {
   pathSlug: string;
@@ -17,12 +22,22 @@ export type HifzDueReviewItem = {
   unitTitle: string;
 };
 
-/** لا هدف متابعة قبل تخزين التقدم (PR-3). */
 export function getHifzContinueTarget(): HifzContinueTarget | null {
-  return null;
+  const rec = resolveContinueTarget();
+  if (!rec) return null;
+  return {
+    pathSlug: rec.pathSlug,
+    pathTitle: rec.pathTitle,
+    unitId: rec.unitId,
+    unitTitle: rec.unitTitle,
+  };
 }
 
-/** لا مراجعات مستحقة قبل تخزين التقدم (PR-3). */
 export function listHifzDueReviewsToday(): readonly HifzDueReviewItem[] {
-  return [];
+  return listDueHifzReviews().map((u) => ({
+    pathSlug: u.pathSlug,
+    pathTitle: u.pathTitle,
+    unitId: u.unitId,
+    unitTitle: u.unitTitle,
+  }));
 }

@@ -1,21 +1,18 @@
 /**
- * وحدة حفظ — هيكل فقط في PR-2؛ تجربة التكرار/التقدم في PR-3.
+ * وحدة حفظ — تجربة التكرار والتقدم خلف hifzPathPracticeEnabled.
  * لا تعديل لنص القرآن · لا إخفاء يوهم صفحة مصحف.
  */
 import { useEffect, useMemo } from "react";
 import { Link, Redirect, useParams } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { UtilityScreen } from "@/components/design-system/screens";
-import {
-  EmptyStateV2,
-  PageHeaderV2,
-  StatusNotice,
-} from "@/components/design-system";
+import { EmptyStateV2, PageHeaderV2 } from "@/components/design-system";
 import {
   getPublishedHifzPathBySlug,
   isHifzPathEnabled,
   listPublishedUnitsForPath,
 } from "@/lib/memorization-path";
+import { HifzUnitPracticePanel } from "./HifzUnitPracticePanel";
 
 const PATH = "/hifz-path";
 
@@ -47,7 +44,7 @@ function HifzPathUnitShell() {
         ? `${unit.title} | ${path?.title ?? "مسار الحفظ"} | سُنّة`
         : "وحدة غير متاحة | سُنّة",
       description: unit
-        ? `وحدة حفظ ضمن ${path?.title ?? "مسار الحفظ"} — تجربة التدريب تُكمَل لاحقًا.`
+        ? `وحدة حفظ ضمن ${path?.title ?? "مسار الحفظ"} — تدريب ذاتي بلا شهادة حفظ.`
         : "الوحدة غير متاحة للعامة حتى اعتماد النشر.",
       robots: "noindex, follow",
     });
@@ -59,7 +56,7 @@ function HifzPathUnitShell() {
         <main className="mx-auto w-full max-w-3xl px-4 py-4" dir="rtl">
           <EmptyStateV2
             title="الوحدة غير متاحة"
-            description="تُعرض الوحدات المنشورة فقط. تجربة الحفظ التفصيلية تُفعَّل بعد اعتماد المحتوى."
+            description="تُعرض الوحدات المنشورة فقط."
             ctaLabel="العودة للمسار"
             href={slug ? `${PATH}/p/${slug}` : PATH}
           />
@@ -77,11 +74,7 @@ function HifzPathUnitShell() {
           title={unit.title}
           description={`الوحدة ${unit.sequence}`}
         />
-        <StatusNotice tone="info" title="تجربة الوحدة قادمة">
-          عرض النص والتكرار والاختبار الذاتي وتسجيل «أتممت هذه الوحدة» يُكمَل في
-          موجة لاحقة. القرآن يُعرض عبر المرجع المعتمد فقط — خارج قارئ المصحف
-          الأساسي ودون تعديل الرسم أو التشكيل.
-        </StatusNotice>
+        <HifzUnitPracticePanel path={path} unit={unit} />
         <p className="mt-4 text-center text-sm">
           <Link
             href={`${PATH}/p/${path.slug}`}

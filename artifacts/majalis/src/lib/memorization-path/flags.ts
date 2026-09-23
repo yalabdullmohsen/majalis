@@ -72,6 +72,14 @@ export function isHifzPathEnabled(): boolean {
   return runtimeFlags.hifzPathEnabled === true;
 }
 
+/** تجربة الوحدة (تكرار/مراجعة) — منفصلة عن ظهور القسم. */
+export function isHifzPathPracticeEnabled(): boolean {
+  return (
+    runtimeFlags.hifzPathEnabled === true &&
+    runtimeFlags.hifzPathPracticeEnabled === true
+  );
+}
+
 export function isScholarlyResearchEnabled(): boolean {
   return runtimeFlags.scholarlyResearchEnabled === true;
 }
