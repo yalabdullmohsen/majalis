@@ -2,6 +2,7 @@
  * هيرو الرئيسية خارج Suspense — يبقى h1 «سُنّة» في DOM من أول رسم App
  * حتى لا يُعاد قياس LCP عند استبدال HomePage الكسول.
  * V3: Welcome Experience — متابعة / قراءة / ورد / تقدم / إجراءات سريعة.
+ * Startup PR-5: لا تُعرض نسبة ٠٪ قبل استعادة التخزين؛ شرائح primary/meta بهندسة ثابتة.
  */
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
@@ -10,12 +11,14 @@ import { resolveDailyContext } from "@/lib/daily-context";
 import { hasSeenFirstVisitIntroSync } from "@/lib/first-visit-intro-state";
 import { getRecentPages } from "@/lib/recent-pages";
 import { getLatestContinueReading } from "@/lib/continue-reading";
-import { loadLastPageSync } from "@/lib/quran-last-page";
+import { invalidateLastPageMemCache, loadLastPageSync } from "@/lib/quran-last-page";
 import {
   getTaskStats,
   getTodayProgress,
   PROGRESS_TASKS,
 } from "@/lib/daily-progress";
+import { getBootFlags } from "@/lib/boot-readiness";
+import { isNative } from "@/lib/capacitor-utils";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/components/home-brand-title.css";
 import "@/styles/m2030/home.css";
@@ -29,6 +32,32 @@ type WelcomeSnapshot = {
   doneCount: number;
   totalTasks: number;
 };
+
+const HERO_STORAGE_EVENTS = ["mj:boot-ready", "mj:feature-tour-storage-ready"] as const;
+
+const HERO_LS_HINT_KEYS = [
+  "majalis-continue-reading-v1",
+  "lastPage",
+  "majalis-daily-progress-v1",
+] as const;
+
+function heroStorageLooksReady(): boolean {
+  try {
+    if (getBootFlags().storageReady) return true;
+  } catch {
+    /* ignore */
+  }
+  if (!isNative) return true;
+  try {
+    if (typeof localStorage === "undefined") return false;
+    return HERO_LS_HINT_KEYS.some((key) => {
+      const v = localStorage.getItem(key);
+      return v != null && v !== "";
+    });
+  } catch {
+    return false;
+  }
+}
 
 function readWelcomeSnapshot(): WelcomeSnapshot {
   let continueHref = "/lessons";
@@ -95,8 +124,40 @@ export function HomeHeroLcp() {
       return true;
     }
   });
-  const [welcome] = useState(() => readWelcomeSnapshot());
-  const continueHref = welcome.continueHref;
+  /** null = بانتظار استعادة التخزين — لا تُعرض ٠٪ كقيمة حقيقية */
+  const [welcome, setWelcome] = useState<WelcomeSnapshot | null>(() => {
+    if (typeof window === "undefined") return null;
+    if (!heroStorageLooksReady()) return null;
+    return readWelcomeSnapshot();
+  });
+
+  useEffect(() => {
+    const apply = () => {
+      invalidateLastPageMemCache();
+      setWelcome(readWelcomeSnapshot());
+    };
+    if (heroStorageLooksReady()) apply();
+    for (const ev of HERO_STORAGE_EVENTS) {
+      window.addEventListener(ev, apply);
+    }
+    return () => {
+      for (const ev of HERO_STORAGE_EVENTS) {
+        window.removeEventListener(ev, apply);
+      }
+    };
+  }, []);
+
+  const pending = welcome === null;
+  const snap = welcome ?? {
+    continueHref: "/lessons",
+    continueLabel: null,
+    mushafPage: null,
+    progressPct: 0,
+    doneCount: 0,
+    totalTasks: PROGRESS_TASKS.length,
+  };
+  const continueHref = snap.continueHref;
+  const totalTasksAr = toArabicDigits(snap.totalTasks);
 
   return (
     <PageHero
@@ -120,48 +181,91 @@ export function HomeHeroLcp() {
         </>
       }
     >
-      <nav className="hw3 hw3--identity" aria-label="متابعة سريعة">
-        {(welcome.continueLabel || (welcome.mushafPage != null && welcome.mushafPage > 1)) ? (
-          <div className="hw3-primary" role="list">
-            {welcome.continueLabel ? (
-              <Link
-                href={continueHref}
-                className="hw3-chip hw3-chip--lead"
-                role="listitem"
-                aria-label={`آخر متابعة: ${welcome.continueLabel}`}
-              >
-                <span className="hw3-chip__k">متابعة</span>
-                <span className="hw3-chip__v">{welcome.continueLabel}</span>
-              </Link>
-            ) : (
-              <Link
-                href={`/mushaf?page=${welcome.mushafPage}`}
-                className="hw3-chip hw3-chip--lead"
-                role="listitem"
-                aria-label={`آخر قراءة: صفحة ${toArabicDigits(welcome.mushafPage!)}`}
-              >
-                <span className="hw3-chip__k">قراءة</span>
-                <span className="hw3-chip__v">ص {toArabicDigits(welcome.mushafPage!)}</span>
-              </Link>
-            )}
-          </div>
-        ) : null}
-        <div className="hw3-meta" role="list" aria-label="ملخص اليوم">
-          <Link href="/daily-wird" role="listitem" aria-label={`الورد اليومي · ${toArabicDigits(welcome.doneCount)} من ${toArabicDigits(welcome.totalTasks)}`}>
-            الورد {toArabicDigits(welcome.doneCount)}/{toArabicDigits(welcome.totalTasks)}
-          </Link>
-          <Link href="/daily-wird" role="listitem" aria-label={`تقدمك اليومي ${toArabicDigits(welcome.progressPct)}٪`}>
-            تقدم {toArabicDigits(welcome.progressPct)}٪
-          </Link>
-          {welcome.continueLabel && welcome.mushafPage != null && welcome.mushafPage > 1 ? (
+      <nav className="hw3 hw3--identity" aria-label="متابعة سريعة" data-hero-ready={pending ? "0" : "1"}>
+        {/* شريحة أولية دائمة — نفس min-height سواء متابعة/قراءة/افتراضي */}
+        <div className="hw3-primary" role="list">
+          {snap.continueLabel ? (
             <Link
-              href={`/mushaf?page=${welcome.mushafPage}`}
+              href={continueHref}
+              className="hw3-chip hw3-chip--lead"
               role="listitem"
-              aria-label={`آخر قراءة: صفحة ${toArabicDigits(welcome.mushafPage)}`}
+              aria-label={`آخر متابعة: ${snap.continueLabel}`}
             >
-              مصحف ص {toArabicDigits(welcome.mushafPage)}
+              <span className="hw3-chip__k">متابعة</span>
+              <span className="hw3-chip__v">{snap.continueLabel}</span>
             </Link>
-          ) : null}
+          ) : snap.mushafPage != null && snap.mushafPage > 1 ? (
+            <Link
+              href={`/mushaf?page=${snap.mushafPage}`}
+              className="hw3-chip hw3-chip--lead"
+              role="listitem"
+              aria-label={`آخر قراءة: صفحة ${toArabicDigits(snap.mushafPage)}`}
+            >
+              <span className="hw3-chip__k">قراءة</span>
+              <span className="hw3-chip__v">ص {toArabicDigits(snap.mushafPage)}</span>
+            </Link>
+          ) : (
+            <Link
+              href="/lessons"
+              className="hw3-chip hw3-chip--lead"
+              role="listitem"
+              aria-busy={pending || undefined}
+              aria-label={pending ? "جاري استعادة المتابعة" : "ابدأ من الدروس"}
+            >
+              <span className="hw3-chip__k">متابعة</span>
+              <span className="hw3-chip__v hw3-chip__v--ph">
+                {pending ? "\u00a0" : "ابدأ من الدروس"}
+              </span>
+            </Link>
+          )}
+        </div>
+        <div className="hw3-meta" role="list" aria-label="ملخص اليوم">
+          {pending ? (
+            <>
+              <span role="listitem" className="hw3-meta__ph" aria-busy="true">
+                الورد —/{totalTasksAr}
+              </span>
+              <span role="listitem" className="hw3-meta__ph" aria-busy="true">
+                تقدم —٪
+              </span>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/daily-wird"
+                role="listitem"
+                aria-label={`الورد اليومي · ${toArabicDigits(snap.doneCount)} من ${totalTasksAr}`}
+              >
+                الورد {toArabicDigits(snap.doneCount)}/{totalTasksAr}
+              </Link>
+              <Link
+                href="/daily-wird"
+                role="listitem"
+                aria-label={`تقدمك اليومي ${toArabicDigits(snap.progressPct)}٪`}
+              >
+                تقدم {toArabicDigits(snap.progressPct)}٪
+              </Link>
+            </>
+          )}
+          {snap.mushafPage != null && snap.mushafPage > 1 ? (
+            <Link
+              href={`/mushaf?page=${snap.mushafPage}`}
+              role="listitem"
+              aria-label={`آخر قراءة: صفحة ${toArabicDigits(snap.mushafPage)}`}
+            >
+              مصحف ص {toArabicDigits(snap.mushafPage)}
+            </Link>
+          ) : (
+            <Link
+              href="/mushaf"
+              role="listitem"
+              className={pending ? "hw3-meta__ph" : undefined}
+              aria-busy={pending || undefined}
+              aria-label="المصحف"
+            >
+              المصحف
+            </Link>
+          )}
         </div>
         <div className="hw3-actions" role="list" aria-label="إجراءات سريعة">
           <Link href="/quran-hub" className="hw3-action" role="listitem">
