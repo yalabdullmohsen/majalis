@@ -78,6 +78,7 @@
 | `docs/performance/STARTUP_ROOT_CAUSE_REPORT.md` | **Startup PR-0** — Timeline + جرد مصادر الجاهزية + أسباب جذرية (بلا إصلاح منتج) |
 | `docs/performance/startup-pr0-baseline-metrics.json` | مقاييس/جرد Startup PR-0 (NOT MEASURED للجهاز) |
 | `artifacts/majalis/src/lib/app-startup-controller.ts` | **Startup PR-1** — AppStartupController (آلة حالات الإقلاع مصدر حقيقة واحد) |
+| `artifacts/majalis/src/lib/background-ui-fonts.ts` | **Startup PR-2** — تسخين خطوط اختيارية بعد INTERACTIVE بلا UI |
 
 | `docs/lessons-guide/` | دليل الدروس — عقد + Migration مقترحة (Feature Flag OFF) |
 

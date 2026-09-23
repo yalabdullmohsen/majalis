@@ -25,6 +25,7 @@ import {
   notifyBootstrapping,
   reportFatalError,
 } from "./lib/app-startup-controller";
+import { scheduleBackgroundUiFontWarm } from "./lib/background-ui-fonts";
 import { markStartup } from "./lib/startup-performance-marks";
 import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
 import { initOnboardingState } from "./lib/onboarding-state";
@@ -307,6 +308,7 @@ async function mount() {
   // أخفِ الإطلاق بعد جاهزية الثيم/الخطوط/التخزين (document.fonts داخل awaitBootReadiness).
   markBootAwaitPaint();
   armNativeSplashController();
+  scheduleBackgroundUiFontWarm();
   void awaitBootReadiness().then(() => {
     markStartup("startup:theme-ready");
     markStartup("startup:fonts-ready");
