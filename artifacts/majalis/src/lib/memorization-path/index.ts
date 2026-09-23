@@ -3,6 +3,7 @@ export {
   getMemorizationResearchFlags,
   hydrateMemorizationResearchFlagsFromStorage,
   isHifzPathEnabled,
+  isHifzPathPracticeEnabled,
   isMemorizationResearchFlagOn,
   isScholarlyResearchEnabled,
   persistMemorizationResearchFlagOverrides,
@@ -66,5 +67,26 @@ export {
   type HifzContinueTarget,
   type HifzDueReviewItem,
 } from "./continue-summary";
+
+export {
+  HIFZ_DEFAULT_REVISION_INTERVALS,
+  HIFZ_PROGRESS_SCHEMA_VERSION,
+  HIFZ_PROGRESS_STORE_KEY,
+  getUnitProgress,
+  listAllUnitProgress,
+  listDueHifzReviews,
+  listMyHifzUnits,
+  markHifzUnitReviewed,
+  markHifzUnitSelfReported,
+  pathProgressPercent,
+  recordHifzRepetition,
+  refreshDueHifzReviews,
+  resetHifzProgressStoreForTests,
+  resolveContinueTarget,
+  startHifzUnit,
+  unitProgressKey,
+  type HifzProgressStore,
+  type HifzUnitProgressRecord,
+} from "./progress-store";
 
 export { HIFZ_PATH_NAV_HREF, getHifzPathNavEntry } from "./nav";

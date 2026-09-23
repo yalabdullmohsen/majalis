@@ -15,12 +15,15 @@ import {
 } from "@/components/design-system";
 import {
   HIFZ_PATH_USER_TAGLINE,
+  HIFZ_PROGRESS_USER_LABELS,
   getPublishedHifzPathBySlug,
+  getUnitProgress,
   hifzCategoryLabel,
   hifzLevelLabel,
   isHifzPathEnabled,
   listPublishedHifzPaths,
   listPublishedUnitsForPath,
+  pathProgressPercent,
 } from "@/lib/memorization-path";
 
 const PATH = "/hifz-path";
@@ -57,6 +60,14 @@ function HifzPathDetailShell() {
     () => (path ? listPublishedUnitsForPath(path) : []),
     [path],
   );
+
+  const progressPct = useMemo(() => {
+    if (!path) return null;
+    return pathProgressPercent(
+      path.slug,
+      units.map((u) => u.unitId),
+    );
+  }, [path, units]);
 
   useEffect(() => {
     applyPageSeo({
@@ -111,10 +122,16 @@ function HifzPathDetailShell() {
         </DetailSection>
 
         <DetailSection title="التقدم والمراجعة">
-          <StatusNotice tone="neutral">
-            لا تقدّم مسجّل بعد. عند توفر تجربة الوحدة يمكنك استخدام «أتممت هذه
-            الوحدة» أو «سجلتها ضمن محفوظاتي» — بلا شهادة حفظ.
-          </StatusNotice>
+          {progressPct == null ? (
+            <StatusNotice tone="neutral">
+              لا تقدّم مسجّل بعد. عند توفر تجربة الوحدة يمكنك استخدام «أتممت هذه
+              الوحدة» أو «سجلتها ضمن محفوظاتي» — بلا شهادة حفظ.
+            </StatusNotice>
+          ) : (
+            <StatusNotice tone="neutral" title={`التقدم ${progressPct}%`}>
+              نسبة حقيقية من الوحدات التي سجّلتها ذاتيًا — ليست شهادة حفظ.
+            </StatusNotice>
+          )}
         </DetailSection>
 
         <DetailSection title="خطة الوحدات">
@@ -125,15 +142,22 @@ function HifzPathDetailShell() {
             />
           ) : (
             <div className="flex flex-col gap-1">
-              {units.map((unit) => (
-                <ContentRow
-                  key={unit.unitId}
-                  href={`${PATH}/p/${path.slug}/u/${unit.unitId}`}
-                  title={unit.title}
-                  meta={`الوحدة ${unit.sequence}`}
-                  description="ابدأ الحفظ"
-                />
-              ))}
+              {units.map((unit) => {
+                const prog = getUnitProgress(path.slug, unit.unitId);
+                return (
+                  <ContentRow
+                    key={unit.unitId}
+                    href={`${PATH}/p/${path.slug}/u/${unit.unitId}`}
+                    title={unit.title}
+                    meta={`الوحدة ${unit.sequence}${
+                      prog
+                        ? ` · ${HIFZ_PROGRESS_USER_LABELS[prog.state]}`
+                        : ""
+                    }`}
+                    description={prog ? "تابع" : "ابدأ الحفظ"}
+                  />
+                );
+              })}
             </div>
           )}
         </DetailSection>

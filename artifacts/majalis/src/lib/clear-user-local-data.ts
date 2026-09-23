@@ -7,6 +7,7 @@ const EXACT_KEYS = [
   "majalis-user-settings-v1",
   "majalis-reading-progress-v1",
   "majalis-daily-progress-v1",
+  "ssunnah-hifz-path-progress-v1",
   "majalis-user-streak-v1",
   "majalis-search-analytics",
   "majalis-governorate-v1",
