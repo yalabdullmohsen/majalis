@@ -2,16 +2,16 @@
   "month": "2026-09",
   "items": [
     {
-      "id": "e4c55103f08ddc965653cd450212a38c2172dfd9",
-      "type": "محاضرة",
-      "title_ar": "خطبة وقفات مع حديث العرباض بن سارية فضيلة الشيخ محمد فهد السفران مرئي صوتي قناة…",
-      "summary_ar": "خطبه - وقفات مع حديث العرباض بن ساريه فضيله الشيخ محمد فهد السفران مرئي: https://youtu.be/2jePVbSkuPk?si= صوتي: https://drosq8.com/play/24892 قناه موقع دروس ال…",
-      "sheikh": "محمد فهد السفران 🎥 مرئي: https://youtu",
-      "place": null,
+      "id": "e4985e0f49df8196166a7119bedd1420288a6dbe",
+      "type": "درس",
+      "title_ar": "الآن مباشر شرح الأرجوزة الميئية في ذكر حال أشرف البرية لفضيلة الشيخ د دغش العجم…",
+      "summary_ar": "الان مباشر (1) شرح الارجوزه الميئيه في ذكر حال اشرف البريه لفضيله الشيخ د. دغش العجمي رابط البث المباشر https://www.youtube.com/live/DtbXXOo1BXE?si= تحميل الكت…",
+      "sheikh": "دغش العجمي 🔗 رابط البث المباشر https://www",
+      "place": "ذكر حال أشرف البرية 🎙️ لفضيلة الشيخ د",
       "audience": "عام",
       "starts_at": null,
       "time_text": null,
-      "register_url": "https://t.me/DrosQ8",
+      "register_url": "https://t.me/DrosQ8/27972",
       "schedule_kind": null,
       "women_attendance": "men_only",
       "women_attendance_note": null,
@@ -20,13 +20,13 @@
           "id": "telegram-DrosQ8",
           "name_ar": "دروس الكويت",
           "url": "https://t.me/DrosQ8",
-          "post_url": "https://t.me/DrosQ8/27958",
+          "post_url": "https://t.me/DrosQ8/27973",
           "platform": "telegram"
         }
       ],
       "image_url": null,
-      "published_at": "2026-09-22T18:50:53.535Z",
-      "confidence": 0.8
+      "published_at": "2026-09-23T19:09:29.404Z",
+      "confidence": 0.9
     },
     {
       "id": "f0f6dacf1347fb2dc406d5fbdf9b0bd369fe9f72",
