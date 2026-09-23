@@ -95,7 +95,7 @@ sequenceDiagram
 | Theme class | ثيم مبكر في HTML + تفضيل لاحق | وميض محتمل إن تأخّر |
 | Fonts `dataset.mjFonts` | بعد `awaitBootReadiness` | FOUT إن تجاوز السقف |
 
-**لا يوجد `AppStartupController` بعد.** حالات البرنامج (NATIVE_LAUNCH…FATAL_ERROR) غير معرّفة في الكود — هدف PR-1.
+**لا يوجد `AppStartupController` بعد في PR-0.** حالات البرنامج (NATIVE_LAUNCH…FATAL_ERROR) هدف **PR-1** — نُفِّذ في `artifacts/majalis/src/lib/app-startup-controller.ts` بعد دمج هذا التقرير.
 
 ### 3.2 ترتيب Providers / Mount (مختصر)
 
@@ -208,7 +208,7 @@ App: … Language / AuthProvider / Router shell …
 | PR | هدف |
 |---|---|
 | **0** | هذا التقرير + علامات DEV + بوابة + baseline JSON |
-| 1 | `AppStartupController` state machine |
+| **1** | `AppStartupController` state machine — `src/lib/app-startup-controller.ts` |
 | 2 | خطوط + إخفاء sync عن المستخدم |
 | 3 | Native launch + دخولية واحدة |
 | 4 | App Shell + Header + BottomNav ثابتان |

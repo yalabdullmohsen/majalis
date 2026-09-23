@@ -15,6 +15,7 @@ import {
   SPLASH_MIN_VISIBLE_MS,
   SPLASH_SESSION_KEY,
 } from "@/lib/majlis-splash";
+import { notifyNativeLaunchEnded } from "@/lib/app-startup-controller";
 import { markStartup } from "@/lib/startup-performance-marks";
 
 export {
@@ -111,6 +112,7 @@ export function armNativeSplashController(): void {
   /* كشف الدخولية الرسمية فورًا — بلا طبقة Capacitor فوقها */
   void hideCapacitorSplash(true).then(() => {
     markStartup("startup:native-end");
+    notifyNativeLaunchEnded("capacitor-splash-hidden");
   });
 
   const deadline = window.setTimeout(() => {

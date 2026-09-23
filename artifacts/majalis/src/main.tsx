@@ -21,6 +21,10 @@ import { hydrateNativeStorage } from "./lib/native-storage";
 import { installInAppNavigationGuard } from "./lib/in-app-navigation";
 import { armNativeSplashController } from "./lib/splash-screen";
 import { awaitBootReadiness, registerBootStorageGate } from "./lib/boot-readiness";
+import {
+  notifyBootstrapping,
+  reportFatalError,
+} from "./lib/app-startup-controller";
 import { markStartup } from "./lib/startup-performance-marks";
 import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
 import { initOnboardingState } from "./lib/onboarding-state";
@@ -259,6 +263,7 @@ prefetchTopRoutesOnIdle();
 async function mount() {
   const started = performance.now();
   markStartup("startup:js-start");
+  notifyBootstrapping("main-mount");
 
   // ترحيل راية الخصوصية ومسح مفاتيح الدخولية القديمة — بلا شاشة بدء.
   initOnboardingState();
@@ -272,6 +277,7 @@ async function mount() {
   const rootEl = document.getElementById("root");
   if (!rootEl) {
     console.error("[boot] #root missing — cannot mount");
+    reportFatalError("#root missing", "root-missing");
     return;
   }
 
@@ -288,6 +294,7 @@ async function mount() {
     );
   } catch (err) {
     console.error("[boot] createRoot failed", err);
+    reportFatalError("createRoot failed", "create-root-failed");
     void import("./lib/startup-safe-mode").then((m) => m.recordStartupFailure("create_root_failed")).catch(() => {});
     return;
   }
