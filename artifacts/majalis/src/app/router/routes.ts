@@ -35,6 +35,8 @@ function titleFromPath(path: string): string {
   "/adhkar": "الأذكار",
   "/prayer-times": "الصلاة",
   "/memorize": "الحفظ",
+  "/hifz-path": "مسار الحفظ",
+  "/hifz-path/my": "محفوظاتي",
   "/search": "البحث",
   "/islamic-glossary": "المعجم الشرعي",
   "/quiz": "المسابقة",
@@ -237,6 +239,11 @@ const PATHS = [
   "/mawarith/calculator",
   "/mawsuaat",
   "/memorization",
+  "/hifz-path",
+  "/hifz-path/my",
+  "/hifz-path/c/:category",
+  "/hifz-path/p/:slug",
+  "/hifz-path/p/:slug/u/:unitId",
   "/memorization-plans",
   "/memorization-tests",
   "/memorize",
@@ -450,7 +457,7 @@ function inferSection(path: string): AppRouteSection {
 }
 
 const SITEMAP_EXCLUDED =
-  /^\/(admin|dashboard|login|register|api|search|settings|account|auth|internal)(\/|$)/;
+  /^\/(admin|dashboard|login|register|api|search|settings|account|auth|internal|hifz-path)(\/|$)/;
 
 export const ROUTE_REGISTRY: readonly AppRoute[] = PATHS.map((path) => ({
   path,
