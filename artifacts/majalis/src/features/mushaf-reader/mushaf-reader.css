@@ -37,29 +37,35 @@
   --quran-gold-deep: #b89620;
   --quran-gold-ink: #5f4814;
   /*
-   * MushafAppearanceTheme — افتراضي EMERALD على ص١…٦٠٤.
-   * GOLD عبر .nm-root[data-mushaf-accent="gold"]
+   * MushafAppearanceTheme —slots fill/fill-night تتبدّل مع data-mushaf-accent.
+   * remapper الليلي يقرأ *-night فقط؛ لا يعيد فرض الزمردي فوق الذهب.
    */
-  --mushaf-accent-primary: #0e7a6b;
-  --mushaf-accent-secondary: #0a5c52;
-  --mushaf-accent-strong: var(--mushaf-accent-secondary);
-  --mushaf-accent-soft: color-mix(in srgb, var(--mushaf-accent-primary) 18%, transparent);
-  --mushaf-marker-background: var(--mushaf-accent-primary);
-  --mushaf-marker-border: color-mix(in srgb, var(--mushaf-printed-gold-border) 55%, var(--mushaf-accent-secondary));
-  --mushaf-marker-number: #f7f3e8;
-  --mushaf-surah-header-line: var(--mushaf-accent-primary);
-  --mushaf-surah-header-ornament: var(--mushaf-accent-secondary);
-  --mushaf-metadata-border: color-mix(in srgb, var(--mushaf-accent-primary) 32%, transparent);
+  --mushaf-accent-fill: #0e7a6b;
+  --mushaf-accent-fill-strong: #0a5c52;
+  --mushaf-accent-number: #f7f3e8;
+  --mushaf-accent-fill-night: #2a9b88;
+  --mushaf-accent-fill-night-strong: #1e7a6c;
+  --mushaf-accent-number-night: #f0f7f4;
+  --mushaf-accent-primary: var(--mushaf-accent-fill);
+  --mushaf-accent-secondary: var(--mushaf-accent-fill-strong);
+  --mushaf-accent-strong: var(--mushaf-accent-fill-strong);
+  --mushaf-accent-soft: color-mix(in srgb, var(--mushaf-accent-fill) 18%, transparent);
+  --mushaf-marker-background: var(--mushaf-accent-fill);
+  --mushaf-marker-border: color-mix(in srgb, var(--mushaf-printed-gold-border) 55%, var(--mushaf-accent-fill-strong));
+  --mushaf-marker-number: var(--mushaf-accent-number);
+  --mushaf-surah-header-line: var(--mushaf-accent-fill);
+  --mushaf-surah-header-ornament: var(--mushaf-accent-fill-strong);
+  --mushaf-metadata-border: color-mix(in srgb, var(--mushaf-accent-fill) 32%, transparent);
   --mushaf-metadata-text: var(--mushaf-metadata-ink);
-  --mushaf-focus-ring: color-mix(in srgb, var(--mushaf-accent-primary) 42%, transparent);
-  --mushaf-selected-ayah: color-mix(in srgb, var(--mushaf-accent-primary) 18%, transparent);
+  --mushaf-focus-ring: color-mix(in srgb, var(--mushaf-accent-fill) 42%, transparent);
+  --mushaf-selected-ayah: color-mix(in srgb, var(--mushaf-accent-fill) 18%, transparent);
   --mushaf-verse-marker-fill: var(--mushaf-marker-background);
   --mushaf-verse-marker-border: var(--mushaf-marker-border);
   --mushaf-verse-marker-number: var(--mushaf-marker-number);
-  --mushaf-verse-marker-highlight: color-mix(in srgb, var(--mushaf-accent-primary) 72%, #ffffff);
-  --mushaf-verse-marker-dark-fill: #2a9b88;
-  --mushaf-verse-marker-dark-border: #1e7a6c;
-  --mushaf-verse-marker-dark-number: #f0f7f4;
+  --mushaf-verse-marker-highlight: color-mix(in srgb, var(--mushaf-accent-fill) 72%, #ffffff);
+  --mushaf-verse-marker-dark-fill: var(--mushaf-accent-fill-night);
+  --mushaf-verse-marker-dark-border: var(--mushaf-accent-fill-night-strong);
+  --mushaf-verse-marker-dark-number: var(--mushaf-accent-number-night);
   /* aliases توافقية */
   --mushaf-verse-marker-gold: var(--mushaf-verse-marker-fill);
   --mushaf-verse-marker-text: var(--mushaf-verse-marker-number);
@@ -152,18 +158,24 @@
   text-size-adjust: 100%;
 }
 
-/* GOLD theme — كل الصفحات ١…٦٠٤ */
+/* GOLD theme — يبدّل slots النهار والليل معًا؛ remapper الليلي يستهلك *-night */
 .nm-root[data-mushaf-accent="gold"],
 html[data-mushaf-accent="gold"] .nm-root {
-  --mushaf-accent-primary: var(--quran-gold);
-  --mushaf-accent-secondary: var(--quran-gold-deep);
-  --mushaf-accent-strong: var(--quran-gold-deep);
+  --mushaf-accent-fill: var(--quran-gold);
+  --mushaf-accent-fill-strong: var(--quran-gold-deep);
+  --mushaf-accent-number: var(--quran-gold-ink);
+  --mushaf-accent-fill-night: #c4a030;
+  --mushaf-accent-fill-night-strong: #a88618;
+  --mushaf-accent-number-night: #f0e2b8;
+  --mushaf-accent-primary: var(--mushaf-accent-fill);
+  --mushaf-accent-secondary: var(--mushaf-accent-fill-strong);
+  --mushaf-accent-strong: var(--mushaf-accent-fill-strong);
   --mushaf-accent-soft: color-mix(in srgb, var(--quran-gold) 18%, transparent);
-  --mushaf-marker-background: var(--quran-gold);
-  --mushaf-marker-border: var(--quran-gold-deep);
-  --mushaf-marker-number: var(--quran-gold-ink);
-  --mushaf-surah-header-line: var(--quran-gold);
-  --mushaf-surah-header-ornament: var(--quran-gold-deep);
+  --mushaf-marker-background: var(--mushaf-accent-fill);
+  --mushaf-marker-border: var(--mushaf-accent-fill-strong);
+  --mushaf-marker-number: var(--mushaf-accent-number);
+  --mushaf-surah-header-line: var(--mushaf-accent-fill);
+  --mushaf-surah-header-ornament: var(--mushaf-accent-fill-strong);
   --mushaf-metadata-border: color-mix(in srgb, var(--quran-gold) 28%, transparent);
   --mushaf-focus-ring: color-mix(in srgb, var(--quran-gold) 42%, transparent);
   --mushaf-selected-ayah: color-mix(in srgb, var(--quran-gold) 16%, transparent);
@@ -171,9 +183,9 @@ html[data-mushaf-accent="gold"] .nm-root {
   --mushaf-verse-marker-border: var(--mushaf-marker-border);
   --mushaf-verse-marker-number: var(--mushaf-marker-number);
   --mushaf-verse-marker-highlight: #e4c038;
-  --mushaf-verse-marker-dark-fill: #c4a030;
-  --mushaf-verse-marker-dark-border: #a88618;
-  --mushaf-verse-marker-dark-number: #f0e2b8;
+  --mushaf-verse-marker-dark-fill: var(--mushaf-accent-fill-night);
+  --mushaf-verse-marker-dark-border: var(--mushaf-accent-fill-night-strong);
+  --mushaf-verse-marker-dark-number: var(--mushaf-accent-number-night);
   --mushaf-surah-frame-border: var(--mushaf-surah-header-line);
   --mushaf-surah-frame-accent: var(--mushaf-surah-header-line);
   --mushaf-surah-frame-ornament: var(--mushaf-surah-header-ornament);
@@ -1242,7 +1254,7 @@ html.dark .nm-root {
   --nm-paper-deep: #1a1610;
   --nm-ink: var(--mushaf-ink-dark);
   --nm-meta: #d4c29a;
-  /* Accent ليلي: يستخدم *-dark-* وفق السمة المختارة */
+  /* Accent ليلي: slots *-night (تبدّلها data-mushaf-accent قبل هذا remapper) */
   --mushaf-accent-primary: var(--mushaf-verse-marker-dark-fill);
   --mushaf-accent-secondary: var(--mushaf-verse-marker-dark-border);
   --mushaf-marker-background: var(--mushaf-verse-marker-dark-fill);
@@ -1263,8 +1275,7 @@ html.dark .nm-root {
 }
 
 /*
- * GOLD + Night/Dark — خصوصية أعلى من remapper الليلي حتى لا تبقى العلامات زمردية.
- * يجب أن يلي كتلة night أعلاه مباشرة.
+ * GOLD + Night/Dark — يثبت highlight/selected بعد remapper (slots *-night مضبوطة أعلاه).
  */
 html[data-mushaf-appearance="night"] .nm-root[data-mushaf-accent="gold"],
 html[data-theme="dark"] .nm-root[data-mushaf-accent="gold"],
@@ -1272,30 +1283,9 @@ html.dark .nm-root[data-mushaf-accent="gold"],
 html[data-mushaf-appearance="night"][data-mushaf-accent="gold"] .nm-root,
 html[data-theme="dark"][data-mushaf-accent="gold"] .nm-root,
 html.dark[data-mushaf-accent="gold"] .nm-root {
-  --mushaf-verse-marker-dark-fill: #c4a030;
-  --mushaf-verse-marker-dark-border: #a88618;
-  --mushaf-verse-marker-dark-number: #f0e2b8;
-  --mushaf-accent-primary: var(--mushaf-verse-marker-dark-fill);
-  --mushaf-accent-secondary: var(--mushaf-verse-marker-dark-border);
-  --mushaf-accent-strong: var(--mushaf-verse-marker-dark-border);
-  --mushaf-accent-soft: color-mix(in srgb, var(--mushaf-verse-marker-dark-fill) 22%, transparent);
-  --mushaf-marker-background: var(--mushaf-verse-marker-dark-fill);
-  --mushaf-marker-border: var(--mushaf-verse-marker-dark-border);
-  --mushaf-marker-number: var(--mushaf-verse-marker-dark-number);
-  --mushaf-surah-header-line: var(--mushaf-verse-marker-dark-fill);
-  --mushaf-surah-header-ornament: var(--mushaf-verse-marker-dark-border);
-  --mushaf-verse-marker-fill: var(--mushaf-marker-background);
-  --mushaf-verse-marker-border: var(--mushaf-marker-border);
-  --mushaf-verse-marker-number: var(--mushaf-marker-number);
-  --mushaf-verse-marker-gold: var(--mushaf-marker-background);
-  --mushaf-verse-marker-text: var(--mushaf-marker-number);
-  --nm-gold: var(--mushaf-marker-background);
-  --nm-gold-deep: var(--mushaf-marker-border);
-  --mushaf-surah-frame-accent: var(--mushaf-surah-header-line);
-  --mushaf-surah-frame-ornament: var(--mushaf-surah-header-ornament);
-  --mushaf-surah-frame-border: var(--mushaf-surah-header-line);
-  --mushaf-selected-ayah: color-mix(in srgb, var(--mushaf-verse-marker-dark-fill) 22%, transparent);
-  --mushaf-focus-ring: color-mix(in srgb, var(--mushaf-verse-marker-dark-fill) 48%, transparent);
+  --mushaf-selected-ayah: color-mix(in srgb, var(--mushaf-accent-fill-night) 22%, transparent);
+  --mushaf-focus-ring: color-mix(in srgb, var(--mushaf-accent-fill-night) 48%, transparent);
+  --mushaf-accent-soft: color-mix(in srgb, var(--mushaf-accent-fill-night) 22%, transparent);
 }
 
 html[data-theme="dark"] .nm-root .mm-audio-dock,

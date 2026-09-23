@@ -42,6 +42,8 @@ import { MushafPager, SWIPE_MIN_PX } from "./MushafPager";
 import { MushafSettingsSheet, type MushafHideLevel, type MushafThemeChoice } from "./MushafSettingsSheet";
 import {
   QuranSettingsRepository,
+  useMushafAppearanceOptional,
+  themeToAccentAttr,
   type MushafAppearanceTheme,
 } from "@/lib/mushaf-v2";
 import { setMushafAudioClock, useMushafAudioClock } from "./mushaf-audio-clock-store";
@@ -158,9 +160,13 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
   const theme = resolveTheme(themeChoice);
   const [hideLevel, setHideLevel] = useState<MushafHideLevel>(() => loadHideLevel());
   const [ayahMarks, setAyahMarks] = useState<boolean>(() => loadAyahMarks());
-  const [accentTheme, setAccentTheme] = useState<MushafAppearanceTheme>(() =>
+  const appearanceCtx = useMushafAppearanceOptional();
+  const [accentThemeLocal, setAccentThemeLocal] = useState<MushafAppearanceTheme>(() =>
     QuranSettingsRepository.getAccentTheme(),
   );
+  const accentTheme = appearanceCtx?.theme ?? accentThemeLocal;
+  const setAccentTheme = appearanceCtx?.setTheme ?? setAccentThemeLocal;
+  const accentAttr = appearanceCtx?.accentAttr ?? themeToAccentAttr(accentTheme);
   const [revealedVerses, setRevealedVerses] = useState<ReadonlySet<string>>(() => new Set());
 
   const { fontFamily, ready: fontReady } = useQpcPageFont(page);
@@ -813,7 +819,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       data-ayah-bar={actionsOpen ? "1" : "0"}
       data-audio-dock={audioDockVisible ? (audioDockMini ? "mini" : "1") : "0"}
       data-mushaf-theme={theme}
-      data-mushaf-accent={accentTheme === "GOLD" ? "gold" : "emerald"}
+      data-mushaf-accent={accentAttr}
       data-ayah-marks={ayahMarks ? "1" : "0"}
       data-text-profile={lowEndText ? "low" : "normal"}
       data-testid="mushaf-viewport"
@@ -1044,8 +1050,10 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         accentTheme={accentTheme}
         onAccentTheme={(t) => {
           setAccentTheme(t);
-          QuranSettingsRepository.setAccentTheme(t);
-          QuranSettingsRepository.applyAccentTheme(t);
+          if (!appearanceCtx) {
+            QuranSettingsRepository.setAccentTheme(t);
+            QuranSettingsRepository.applyAccentTheme(t);
+          }
         }}
         onClose={() => setSettingsOpen(false)}
       />
