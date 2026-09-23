@@ -84,7 +84,7 @@
 | `artifacts/majalis/src/components/home/HomeHeroLcp.tsx` | **Startup PR-5** — Hero hydration مستقر (بلا ٠٪ قبل الاستعادة + شرائح ثابتة) |
 
 | `docs/lessons-guide/` | دليل الدروس — عقد + Migration مقترحة (Feature Flag OFF) |
-| `docs/memorization-research/` | **مسار الحفظ + البحوث الشرعية** — PR-0…PR-3 (Hub + تقدم محلي) خلف Flags OFF (`test:memorization-research-pr3`) |
+| `docs/memorization-research/` | **مسار الحفظ + البحوث الشرعية** — PR-0…PR-4 (فهرس/فلاتر academic-research) · Flags OFF للعقود الجديدة (`test:memorization-research-pr4`) |
 
 | `docs/product-evolution/` | خط أساس برنامج التطوير + تقرير المراحل (P0+) |
 | `docs/content-quality/TOTAL_TRUST_*` + `reports/total-trust/` | برنامج TOTAL TRUST (تحقق محتوى/مسارات؛ لا حكم شرعي آلي) |

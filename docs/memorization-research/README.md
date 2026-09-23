@@ -1,13 +1,13 @@
 # مسار الحفظ + البحوث الشرعية — فهرس البرنامج
 
-**الحالة الحالية:** PR-0…PR-3 · **Feature Flags OFF** · Routes مسجّلة لكن مغلقة للعامة · لا `SUNNAH_MEMORIZATION_AND_RESEARCH_READY`
+**الحالة الحالية:** PR-0…PR-4 · عقود الحفظ خلف Flags OFF · فهرس البحوث على `/academic-research` · لا `SUNNAH_MEMORIZATION_AND_RESEARCH_READY`
 
 | وثيقة | دور |
 |---|---|
 | [`PR0_CONTRACTS.md`](./PR0_CONTRACTS.md) | تحليل · عقود بيانات · مصادر/حقوق · جرد موجود · خطة PR |
 | [`OWNER_ACTIONS.md`](./OWNER_ACTIONS.md) | قرارات مالك الحقوق فقط (لا ينفّذها الوكيل) |
 | [`path-templates.json`](./path-templates.json) | قوالب مسارات حفظ — كلها غير منشورة |
-| [`research-inventory.json`](./research-inventory.json) | جرد البحوث المفهرسة (= 0 حالياً) |
+| [`research-inventory.json`](./research-inventory.json) | جرد البحوث المفهرسة (عقد scholarly = 0) |
 
 ## كود العقود (خلف العلم)
 
@@ -15,8 +15,9 @@
 |---|---|
 | `artifacts/majalis/src/lib/memorization-path/*` | أعلام · أنواع · تقدم محلي · كتالوج فارغ للعامة |
 | `artifacts/majalis/src/pages/hifz-path/*` | Hub · محفوظاتي · تصنيف · مسار · وحدة/ممارسة |
-| `artifacts/majalis/src/lib/scholarly-research/*` | عقود حوكمة فوق `/academic-research` + `lib/researches` |
-| `test:memorization-research-pr0` … `pr3` | بوابات نصية |
+| `artifacts/majalis/src/lib/scholarly-research/*` | حوكمة مراجعات + بحث كتالوج فارغ فوق `/academic-research` |
+| `artifacts/majalis/src/lib/researches/*` + `AcademicResearchPage` | السطح الحي للفهرس/الفلاتر |
+| `test:memorization-research-pr0` … `pr4` | بوابات نصية |
 
 ## مبادئ ثابتة
 

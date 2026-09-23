@@ -59,3 +59,9 @@ export {
   listAllScholarlyResearchInternal,
   listPublishedScholarlyResearch,
 } from "./catalog";
+
+export {
+  matchesScholarlyFilters,
+  searchPublishedScholarlyResearch,
+  type ScholarlySearchFilters,
+} from "./search";
