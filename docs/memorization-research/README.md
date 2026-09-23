@@ -1,6 +1,6 @@
 # مسار الحفظ + البحوث الشرعية — فهرس البرنامج
 
-**الحالة الحالية:** PR-0 عقود فقط · **Feature Flags OFF** · لا Routes عامة · لا `SUNNAH_MEMORIZATION_AND_RESEARCH_READY`
+**الحالة الحالية:** PR-0…PR-2 · **Feature Flags OFF** · Routes مسجّلة لكن مغلقة للعامة · لا `SUNNAH_MEMORIZATION_AND_RESEARCH_READY`
 
 | وثيقة | دور |
 |---|---|
@@ -14,8 +14,9 @@
 | مسار | دور |
 |---|---|
 | `artifacts/majalis/src/lib/memorization-path/*` | أعلام · أنواع · حالات نشر/تقدم · كتالوج فارغ للعامة |
+| `artifacts/majalis/src/pages/hifz-path/*` | Hub · محفوظاتي · تصنيف · مسار · وحدة (هيكل) |
 | `artifacts/majalis/src/lib/scholarly-research/*` | عقود حوكمة (مراجعات أربع · أدوار) فوق السطح الحي `/academic-research` + `lib/researches` — بلا UI موازٍ |
-| `test:memorization-research-pr0` | بوابة نصية |
+| `test:memorization-research-pr0` … `pr2` | بوابات نصية |
 
 ## مبادئ ثابتة
 

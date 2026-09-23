@@ -48,6 +48,23 @@ export {
   getPublishedHifzPathBySlug,
   listAllHifzPathsInternal,
   listPublishedHifzPaths,
+  listPublishedHifzPathsByCategory,
+  listPublishedUnitsForPath,
 } from "./catalog";
+
+export {
+  HIFZ_CATEGORY_LABELS,
+  HIFZ_LEVEL_LABELS,
+  hifzCategoryLabel,
+  hifzLevelLabel,
+  isHifzCategory,
+} from "./labels";
+
+export {
+  getHifzContinueTarget,
+  listHifzDueReviewsToday,
+  type HifzContinueTarget,
+  type HifzDueReviewItem,
+} from "./continue-summary";
 
 export { HIFZ_PATH_NAV_HREF, getHifzPathNavEntry } from "./nav";

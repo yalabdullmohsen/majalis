@@ -182,7 +182,14 @@ const UlumQuranPage = lazy(() => import("@/pages/quran/UlumQuranPage"));
 const QuranKnowledgeHubPage = lazy(() => import("@/pages/quran/QuranKnowledgeHubPage"));
 const MemorizationHubPage = lazy(() => import("@/views/MemorizationHubPage"));
 const HifzPathPage = lazy(() => import("@/pages/hifz-path/HifzPathPage"));
-const HifzPathChildPage = lazy(() => import("@/pages/hifz-path/HifzPathChildPage"));
+const HifzPathMyPage = lazy(() => import("@/pages/hifz-path/HifzPathMyPage"));
+const HifzPathCategoryPage = lazy(
+  () => import("@/pages/hifz-path/HifzPathCategoryPage"),
+);
+const HifzPathDetailPage = lazy(
+  () => import("@/pages/hifz-path/HifzPathDetailPage"),
+);
+const HifzPathUnitPage = lazy(() => import("@/pages/hifz-path/HifzPathUnitPage"));
 const OccasionsLessonsHubPage = lazy(() => import("@/pages/lessons/OccasionsLessonsHubPage"));
 const IslamicDirectoryHubPage = lazy(() => import("@/views/IslamicDirectoryHubPage"));
 const TafsirPage = lazy(() => import("@/pages/quran/TafsirPage"));
@@ -584,10 +591,10 @@ export default function AppRoutes() {
       <Route path="/quran/terms"><Redirect to="/quran-hub/terms" /></Route>
       <Route path="/quran-knowledge"><SafeLazyRoute component={QuranKnowledgeHubPage} /></Route>
       <Route path="/memorization"><SafeLazyRoute component={MemorizationHubPage} /></Route>
-      <Route path="/hifz-path/p/:slug/u/:unitId"><SafeLazyRoute component={HifzPathChildPage} /></Route>
-      <Route path="/hifz-path/p/:slug"><SafeLazyRoute component={HifzPathChildPage} /></Route>
-      <Route path="/hifz-path/c/:category"><SafeLazyRoute component={HifzPathChildPage} /></Route>
-      <Route path="/hifz-path/my"><SafeLazyRoute component={HifzPathChildPage} /></Route>
+      <Route path="/hifz-path/p/:slug/u/:unitId"><SafeLazyRoute component={HifzPathUnitPage} /></Route>
+      <Route path="/hifz-path/p/:slug"><SafeLazyRoute component={HifzPathDetailPage} /></Route>
+      <Route path="/hifz-path/c/:category"><SafeLazyRoute component={HifzPathCategoryPage} /></Route>
+      <Route path="/hifz-path/my"><SafeLazyRoute component={HifzPathMyPage} /></Route>
       <Route path="/hifz-path"><SafeLazyRoute component={HifzPathPage} /></Route>
       <Route path="/occasions-lessons"><SafeLazyRoute component={OccasionsLessonsHubPage} /></Route>
       <Route path="/islamic-directory"><SafeLazyRoute component={IslamicDirectoryHubPage} /></Route>
