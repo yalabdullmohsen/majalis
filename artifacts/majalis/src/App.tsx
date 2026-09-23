@@ -12,7 +12,11 @@ import { VisualViewportKeyboardBridge } from "@/hooks/useVisualViewportOffset";
 import { ensureChromeMeta } from "@/lib/ensure-chrome-meta";
 import { PageChromeSync } from "@/components/PageChromeSync";
 import { useAutoHideBottomNav } from "@/hooks/useAutoHideBottomNav";
+import { getActiveTab, type BottomTabId } from "@/lib/get-active-tab";
+import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
+import { isComingSoonPath } from "@/lib/nav-visibility";
 import { ErrorBoundary, SectionErrorBoundary } from "@/components/ErrorBoundary";
+import "@/styles/components/chrome-boot-ph.css";
 import { usePageSeo } from "@/lib/seo";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { useSharedPrayerData } from "@/components/prayer/PrayerCountdownProvider";
@@ -591,14 +595,34 @@ function DeferredPrayerCountdownBanner({ defer }: { defer: boolean }) {
   return <PrayerCountdownBanner />;
 }
 
+/** يطابق BottomNavBar — معرفة المسار قبل ظهور الشريط. */
+const CHROME_BOOT_HREF_TO_ID: Record<string, BottomTabId> = {
+  "/": "home",
+  "/mushaf": "quran",
+  "/quran-hub": "quran",
+  "/quran-knowledge": "quran",
+  "/lessons": "lessons",
+  "/prayer-times": "prayer",
+  "/sections": "sections",
+  "/more": "sections",
+};
+
+/**
+ * هيكل هيدر ثابت الأبعاد — نفس صناديق الأيقونات قبل وصول NavBar.
+ * يمنع قفز البحث/الوضع الليلي/الحساب/القائمة أثناء Suspense.
+ */
 function ChromeNavFallback({ homeChrome }: { homeChrome: boolean }) {
   return (
-    <header className="navbar-v3 chrome-boot-ph" aria-hidden="true">
+    <header className="navbar-v3 chrome-boot-ph mj-chrome-stable" aria-hidden="true">
       <div className="navbar-v3__inner">
-        <div className="navbar-v3__start" />
-        <div className="navbar-v3__mid-spacer" />
+        <div className="navbar-v3__start">
+          <span className="navbar-menu-btn navbar-menu-btn--drawer chrome-boot-ph__slot" />
+        </div>
+        <div className="navbar-v3__mid-spacer" aria-hidden="true" />
         <div className="navbar-v3__end">
-          <span className="navbar-mobile-login navbar-mobile-login--pending" />
+          <span className="navbar-theme-toggle chrome-boot-ph__slot" />
+          <span className="navbar-theme-toggle navbar-search-toggle chrome-boot-ph__slot" />
+          <span className="navbar-mobile-login navbar-mobile-login--pending chrome-boot-ph__slot" />
         </div>
       </div>
       {homeChrome ? <div className="navbar-ticker-row" /> : null}
@@ -606,8 +630,35 @@ function ChromeNavFallback({ homeChrome }: { homeChrome: boolean }) {
   );
 }
 
+/** شريط سفلي بنفس التبويبات والحالة النشطة من المسار — بلا وميض active بعد hydrate. */
 function ChromeBottomFallback() {
-  return <div className="bottom-nav chrome-boot-ph" data-bottom-nav aria-hidden="true" />;
+  const [location] = useLocation();
+  const activeId = getActiveTab(location);
+  return (
+    <nav
+      className="bottom-nav bottom-nav--v2 bottom-nav--m2030 chrome-boot-ph mj-chrome-stable bottom-nav--visible"
+      aria-hidden="true"
+      data-bottom-nav="sections-ia"
+      data-chrome-boot="1"
+    >
+      {BOTTOM_NAV_TABS.filter(({ href }) => !isComingSoonPath(href)).map(({ href, label, Icon }) => {
+        const id = CHROME_BOOT_HREF_TO_ID[href];
+        const active = id === activeId;
+        return (
+          <span
+            key={href}
+            className={`bottom-nav__tab${active ? " is-active" : ""}`}
+            aria-hidden="true"
+          >
+            <span className="bottom-nav__tab-icon">
+              <Icon size={18} strokeWidth={active ? 2 : 1.5} aria-hidden="true" />
+            </span>
+            <span className="bottom-nav__tab-label">{label}</span>
+          </span>
+        );
+      })}
+    </nav>
+  );
 }
 
 function AppShellInner() {
