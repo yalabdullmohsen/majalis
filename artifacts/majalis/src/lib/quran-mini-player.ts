@@ -1,8 +1,7 @@
 /**
  * حالة شريط التلاوة المصغّر — يستمر بعد مغادرة المصحف عبر AudioEngine.
+ * AudioEngine يُحمَّل كسولًا حتى لا يدخل حزمة الإقلاع (App يستورد الظهور فقط).
  */
-import { AudioEngine } from "@/core/audio/AudioEngine";
-
 export type MiniPlayerVisibility = {
   visible: boolean;
 };
@@ -49,9 +48,11 @@ export function handoffMushafPlayback(opts: {
   ayah: number;
   reciterId: string;
 }): void {
-  const engine = AudioEngine.getInstance();
-  engine.setReciter(opts.reciterId);
-  void engine.playAyah(opts.surah, opts.ayah, opts.reciterId);
+  void import("@/core/audio/AudioEngine").then(({ AudioEngine }) => {
+    const engine = AudioEngine.getInstance();
+    engine.setReciter(opts.reciterId);
+    void engine.playAyah(opts.surah, opts.ayah, opts.reciterId);
+  });
   showMiniPlayer();
 }
 
@@ -60,12 +61,12 @@ export function handoffMushafPlayback(opts: {
  * لا يغيّر المسار. لا يعادل COLLAPSE (طي فقط) ولا STOP الجزئي داخل الرصيف.
  */
 export function stopMiniPlayer(): void {
-  try {
-    const engine = AudioEngine.getInstance();
-    engine.setLoopConfig(engine.getSnapshot().surah ?? 1, null);
-    engine.stopAndUnload();
-  } catch {
-    /* ignore */
-  }
+  void import("@/core/audio/AudioEngine")
+    .then(({ AudioEngine }) => {
+      const engine = AudioEngine.getInstance();
+      engine.setLoopConfig(engine.getSnapshot().surah ?? 1, null);
+      engine.stopAndUnload();
+    })
+    .catch(() => undefined);
   hideMiniPlayer();
 }

@@ -127,7 +127,7 @@ export class AudioEngine {
   /** استعادة من توقف الشبكة لكل عنصر صوت */
   private stallByEl = new WeakMap<HTMLAudioElement, StallRecoveryHandle>();
   private bufferingWatchTimer: ReturnType<typeof setTimeout> | null = null;
-  private static readonly BUFFERING_WATCH_MS = 12_000;
+  private static readonly BUFFERING_WATCH_MS = 20_000;
 
   static getInstance(): AudioEngine {
     if (!AudioEngine.instance) AudioEngine.instance = new AudioEngine();
@@ -360,8 +360,7 @@ export class AudioEngine {
       el.playbackRate = this.playbackRate;
       el.volume = 1;
       // لا نبدأ من volume=0 (سبب فجوة ~48ms) — الانتقال التقني يجب أن يكون فورياً
-      await this.activatePlaybackSession({ title: `سورة ${surah} · آية ${ayah}`, artist: "سُنّة" });
-      if (gen !== this.playGeneration) return false;
+      this.kickPlaybackSession({ title: `سورة ${surah} · آية ${ayah}`, artist: "سُنّة" });
       const playWait = el.play();
       await playWait;
       if (gen !== this.playGeneration) return false;
@@ -437,6 +436,45 @@ export class AudioEngine {
     this.bindInterruptionListeners();
   }
 
+  /** NEVER await before HTMLMediaElement.play() — preserves iOS/iPad gesture. */
+  private kickPlaybackSession(meta?: { title?: string; artist?: string }): void {
+    void this.activatePlaybackSession(meta);
+    this.tlog("session_kick");
+  }
+
+  private tlog(
+    phase:
+      | "play_request"
+      | "session_kick"
+      | "url_try"
+      | "url_ok"
+      | "url_fail"
+      | "timeout"
+      | "state",
+    extra?: {
+      surah?: number;
+      ayah?: number;
+      url?: string;
+      reason?: string;
+      ms?: number;
+      status?: number | string;
+    },
+  ): void {
+    void import("@/lib/tilawa-playback-log").then(({ logTilawa }) => {
+      logTilawa({
+        phase,
+        surah: extra?.surah ?? this.surah ?? undefined,
+        ayah: extra?.ayah ?? this.ayah ?? undefined,
+        reciterId: this.reciterId,
+        state: this.playerState,
+        url: extra?.url,
+        reason: extra?.reason,
+        ms: extra?.ms,
+        status: extra?.status,
+      });
+    });
+  }
+
   /** استئناف بعد المكالمة / إيقاف عند نزع السمّاعة — عبر الجسر الأصلي. */
   private bindInterruptionListeners(): void {
     if (this.interruptionBound) return;
@@ -492,6 +530,7 @@ export class AudioEngine {
   }
 
   private setPlayerState(state: PlayerState, errorMessage: string | null = null): void {
+    if (state !== this.playerState) this.tlog("state", { reason: `${this.playerState}->${state}` });
     this.playerState = state;
     this.errorMessage = state === "error" ? errorMessage : null;
     if (state === "loading" || state === "buffering") this.armBufferingWatch();
@@ -613,14 +652,14 @@ export class AudioEngine {
     this.ayah = null;
     this.setPlayerState("loading");
     try {
-      await this.activatePlaybackSession({ title: "تلاوة", artist: "سُنّة" });
+      this.kickPlaybackSession({ title: "تلاوة", artist: "سُنّة" });
       el.src = url;
       el.playbackRate = this.playbackRate;
       const playWait = el.play();
       await Promise.race([
         playWait,
         new Promise<void>((_, reject) => {
-          window.setTimeout(() => reject(new Error("audio_load_timeout")), 10_000);
+          window.setTimeout(() => reject(new Error("audio_load_timeout")), 15_000);
         }),
       ]);
       this.setPlayerState("playing");
@@ -748,9 +787,9 @@ export class AudioEngine {
     }
     if (this.teachEnabled) this.teachPhase = "teacher";
 
-    /* فعّل AVAudioSession قبل play حتى لا تُعلَّق التلاوة عند الخلفية/القفل */
-    await this.activatePlaybackSession({ title: `سورة ${surah} · آية ${ayah}`, artist: "سُنّة" });
-    if (gen !== this.playGeneration) return;
+    /* NEVER await session before play — iPad gesture */
+    this.kickPlaybackSession({ title: `سورة ${surah} · آية ${ayah}`, artist: "سُنّة" });
+    this.tlog("play_request", { surah, ayah });
     try {
       this.getIdleElRef().pause();
     } catch {
@@ -763,14 +802,15 @@ export class AudioEngine {
       return;
     }
 
-    const budgetMs = 10_000;
-    const perUrlMs = 3_500;
+    const budgetMs = 18_000;
+    const perUrlMs = 8_000;
     const startedAt = Date.now();
     let lastErr: unknown = null;
     for (const url of urls) {
       if (gen !== this.playGeneration) return;
       const remaining = budgetMs - (Date.now() - startedAt);
       if (remaining < 200) break;
+      this.tlog("url_try", { surah, ayah, url });
       try {
         el.pause();
         el.src = url;
@@ -782,6 +822,7 @@ export class AudioEngine {
         }
         await this.waitUntilPlaying(el, Math.min(perUrlMs, remaining));
         if (gen !== this.playGeneration) return;
+        this.tlog("url_ok", { surah, ayah, url, status: 200, ms: Date.now() - startedAt });
         recordCdnSuccess(url);
         recordReadingActivity({ surah, ayah, reciterId: this.reciterId });
         this.setPlayerState("playing");
@@ -798,6 +839,13 @@ export class AudioEngine {
       } catch (err) {
         lastErr = err;
         recordCdnFailure(url);
+        this.tlog("url_fail", {
+          surah,
+          ayah,
+          url,
+          reason: err instanceof Error ? err.message : String(err),
+          ms: Date.now() - startedAt,
+        });
         if (import.meta.env.DEV) {
           console.warn("[AudioEngine] playAyah candidate failed:", url, err);
         }
@@ -816,6 +864,15 @@ export class AudioEngine {
       this.setPlayerState(
         "error",
         "الجهاز منع التشغيل قبل تفاعل المستخدم — اضغط زر التلاوة مرة أخرى.",
+      );
+      return;
+    }
+    const msg = lastErr instanceof Error ? lastErr.message : "";
+    if (/timeout/i.test(msg)) {
+      this.tlog("timeout", { surah, ayah, reason: msg, ms: Date.now() - startedAt });
+      this.setPlayerState(
+        "error",
+        "انتهت مهلة تحميل التلاوة. تحقق من الشبكة أو جرّب قارئًا آخر.",
       );
       return;
     }
@@ -843,7 +900,7 @@ export class AudioEngine {
         this.setPlayerState("paused");
       } else {
         try {
-          await this.activatePlaybackSession({ title: `سورة ${surah} · آية ${ayah}`, artist: "سُنّة" });
+          this.kickPlaybackSession({ title: `سورة ${surah} · آية ${ayah}`, artist: "سُنّة" });
           await el.play();
           this.setPlayerState("playing");
         } catch (err) {
