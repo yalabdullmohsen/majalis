@@ -1,0 +1,32 @@
+{
+  "program": "sunnah-startup-and-update-pipeline",
+  "stage": 0,
+  "stageName": "update-display-hang-root-cause",
+  "measuredAt": "2026-09-24T17:22:00Z",
+  "commitBase": "6b9333430",
+  "branch": "cursor/startup-update-display-pr0-rootcause",
+  "report": "docs/performance/UPDATE_DISPLAY_HANG_ROOT_CAUSE_PR0.md",
+  "acceptanceClaimForbidden": "SUNNAH_STARTUP_AND_UPDATE_PIPELINE_STABLE",
+  "rootCauseSummary": "ErrorBoundary.recovering full-page + ChunkRecoveryToast + forced reload after ChunkLoadError; no escape while recovering; dual messages same event",
+  "hangLastStep": "recovering UI shown → setTimeout(80) → safeLocationReload(force) pending or post-reload still stale",
+  "sources": {
+    "fullPageTitle": "artifacts/majalis/src/components/ErrorBoundary.tsx",
+    "fullPageBody": "artifacts/majalis/src/components/ErrorBoundary.tsx",
+    "toastEvent": "artifacts/majalis/src/lib/chunk-recovery.ts",
+    "toastUi": "artifacts/majalis/src/components/ChunkRecoveryToast.tsx",
+    "lazyPath": "artifacts/majalis/src/lib/lazy-with-retry.ts",
+    "reload": "artifacts/majalis/src/lib/safe-reload.ts",
+    "swRegister": "artifacts/majalis/src/lib/service-worker.ts",
+    "swScript": "artifacts/majalis/public/sw.js"
+  },
+  "userVisibleStringsStillPresent": [
+    "تحديث العرض",
+    "تم تحديث المنصة. يُحدَّث العرض…",
+    "تم تحديث المنصة، جاري تحسين العرض…"
+  ],
+  "appUpdateManagerExists": false,
+  "updateDisplayInStartupController": false,
+  "deviceMatrix": "NOT_MEASURED",
+  "testFlight": "NOT_MEASURED",
+  "localCodePathProven": true
+}

@@ -126,7 +126,7 @@
     "verify:rc:full": "node scripts/release-candidate-check.mjs --full",
     "content:inventory": "node scripts/content-inventory.mjs",
     "test:seo": "node scripts/test-seo.mjs && node scripts/test-official-brand-seo.mjs && node scripts/check-seo-indexing.js && pnpm run test:sitemap-xml && node --import tsx src/lib/__tests__/seo-admin-privacy.test.ts && node --import tsx src/lib/__tests__/seo-sensitive-noindex-gate.test.ts && node --import tsx src/lib/__tests__/seo-title-excellence-gate.test.ts && node --import tsx src/lib/__tests__/ios-app-discovery-gate.test.ts && pnpm run test:support-page && pnpm run test:design-excellence",
-    "test:startup-pr0": "node --import tsx src/lib/__tests__/startup-performance-marks.test.ts && node --import tsx src/lib/__tests__/startup-pr0-timeline-gate.test.ts",
+    "test:startup-pr0": "node --import tsx src/lib/__tests__/startup-performance-marks.test.ts && node --import tsx src/lib/__tests__/startup-pr0-timeline-gate.test.ts && node --import tsx src/lib/__tests__/update-display-hang-pr0-gate.test.ts",
     "test:startup-pr1": "node --import tsx src/lib/__tests__/app-startup-controller.test.ts && node --import tsx src/lib/__tests__/startup-pr1-controller-gate.test.ts",
     "test:startup-pr2": "node --import tsx src/lib/__tests__/startup-pr2-fonts-sync-gate.test.ts",
     "test:startup-pr3": "node --import tsx src/lib/__tests__/startup-pr3-native-launch-gate.test.ts",
