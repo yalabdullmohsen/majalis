@@ -1,8 +1,8 @@
 # تقرير نطاق التغييرات
 
-**التاريخ:** 2026-09-16T00:39:41.090Z
-**عدد الملفات:** 90
-**النطاقات:** content/data، other، ui/layout، quran/mushaf، docs
+**التاريخ:** 2026-09-24T22:16:33.299Z
+**عدد الملفات:** 12
+**النطاقات:** other، quran/mushaf، ui/layout، docs
 **docs-only:** لا
 
 ## البوابات المقترحة
@@ -13,7 +13,7 @@
 | api | — |
 | seo | ✓ |
 | pwa | — |
-| content | ✓ |
+| content | — |
 | ios | — |
 | full | ✓ |
 | mushaf | ✓ |
@@ -21,52 +21,23 @@
 | visual | ✓ |
 | lighthouse | ✓ |
 | color_contrast | ✓ |
-| data_audit | ✓ |
+| data_audit | — |
 
 ## الملفات المتغيرة (أول 40)
 
-- `artifacts/majalis/public/data/lessons/chunk-000.json` → content_data
-- `artifacts/majalis/public/data/search/index.json` → content_data
-- `artifacts/majalis/scripts/lessons-seed.snapshot.json` → other
-- `artifacts/majalis/scripts/validate-kuwait-lessons.mjs` → other
-- `artifacts/majalis/seo-prerender/lessons/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-abdulaziz-alfawzan-fiqh-weekly-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-ahmadi-umdat-ahkam-sabah-abu-khashaba-2026-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-ahmadi-zad-muslim-ulum-quran-2026-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-ahmadi-zad-muslim-usool-athlatha-2026-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-ajraa-murtaqa-course-3-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-arabic-nahw-beginner-course-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-asima-umdat-ahkam-sarra-2026-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-fiqh-ibadaat-course-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-fiqh-maliki-risala-program-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-fiqh-purification-program-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-jahraa-muhimmat-aqeeda-women-2026-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-jury-aldahi-sharia-program-4-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-khalid-almushlih-usool-program-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-mahboula-dosari-umdat-tawhid-2026-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-murtaqa-madarij-altalab-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-mutlaq-aljasr-talaeea-elm-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-osama-shatti-prayer-book-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-othman-talkhis-mukhtasar-almuqni-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/kw-rashed-fundamental-course-0/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/sci-fiqh-ibadat-weekly/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/sci-fiqh-inheritance-course/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/sci-online-fiqh-course-shafii/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/sci-rawdat-alafham-muwaiziri/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/sci-talae-alilm-murtaqaa/index.html` → other
-- `artifacts/majalis/seo-prerender/lessons/sci-umdat-ahkam-daham/index.html` → other
-- `artifacts/majalis/src/components/ComingSoonDialog.tsx` → ui_layout
-- `artifacts/majalis/src/components/GlobalSearchModal.tsx` → ui_layout
-- `artifacts/majalis/src/components/home/home-start-here-data.ts` → ui_layout
-- `artifacts/majalis/src/components/lessons/UnifiedLessonCard.tsx` → ui_layout
-- `artifacts/majalis/src/components/ui/TopicQuiz.tsx` → ui_layout
-- `artifacts/majalis/src/config/section-lobbies.ts` → ui_layout
-- `artifacts/majalis/src/config/sections.registry.ts` → ui_layout
-- `artifacts/majalis/src/data/institutions-catalog.json` → ui_layout
-- `artifacts/majalis/src/data/library-catalog.json` → ui_layout
-- `artifacts/majalis/src/data/universities-catalog.json` → ui_layout
+- `artifacts/majalis/package.json` → other
+- `artifacts/majalis/scripts/interaction-touch-static-audit.mjs` → other
+- `artifacts/majalis/src/features/mushaf-reader/NewMushafReader.tsx` → quran_mushaf
+- `artifacts/majalis/src/features/mushaf-reader/mushaf-reader.css` → quran_mushaf
+- `artifacts/majalis/src/features/mushaf-reader/page-goto-dial.css` → quran_mushaf
+- `artifacts/majalis/src/index.css` → ui_layout
+- `artifacts/majalis/src/lib/__tests__/touch-interaction-system-gate.test.ts` → ui_layout
+- `artifacts/majalis/src/styles/breakpoints.css` → ui_layout
+- `artifacts/majalis/src/styles/components/native-feel.css` → ui_layout
+- `artifacts/majalis/src/styles/critical-first-paint.css` → ui_layout
+- `docs/qa/INTERACTION_AUDIT.md` → docs
+- `docs/qa/interaction-touch-under44-static.json` → docs
 
-… +50 ملفًا
 
 ## سياسات
 

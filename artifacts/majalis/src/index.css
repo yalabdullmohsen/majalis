@@ -1628,6 +1628,8 @@ input, textarea, select { font-family: inherit; }
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
+  min-height: var(--touch-comfortable, 48px);
+  min-width: var(--touch-min, 44px);
   padding: 0.4rem 0.9rem;
   border: none;
   border-radius: 0.45rem;
@@ -1638,7 +1640,6 @@ input, textarea, select { font-family: inherit; }
   font-family: inherit;
   cursor: pointer;
   transition: background var(--mn-transition), color var(--mn-transition), box-shadow var(--mn-transition);
-  min-height: 36px;
   white-space: nowrap;
 }
 
@@ -1710,6 +1711,7 @@ input, textarea, select { font-family: inherit; }
   display: flex;
   align-items: center;
   gap: var(--ds-space-2);
+  min-height: var(--touch-comfortable, 48px);
   padding: 0.55rem 0.75rem;
   border-radius: 0.45rem;
   font-size: var(--ds-text-sm);
@@ -1720,7 +1722,7 @@ input, textarea, select { font-family: inherit; }
   user-select: none;
   outline: none;
   transition: background var(--mn-transition), color var(--mn-transition);
-  min-height: 38px;
+  min-height: var(--touch-comfortable, 48px);
   /* أيقونات */
   --icon-size: var(--mn-icon-size);
 }
@@ -1792,7 +1794,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .content-hub-chip {
-  min-height: 40px;
+  min-height: var(--touch-comfortable, 48px);
 }
 
 @media (max-width: 900px) {
@@ -1876,7 +1878,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .favorite-btn--compact {
-  min-height: 40px;
+  min-height: var(--touch-comfortable, 48px);
   padding: 0.45rem 0.85rem;
   font-size: 0.8125rem;
 }
@@ -2192,7 +2194,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .reading-toolbar__btn {
-  min-height: 36px;
+  min-height: var(--touch-comfortable, 48px);
   padding: 0.35rem 0.75rem;
   border-radius: 0.6rem;
   border: 1px solid var(--msk-border, #E8E7E2);
@@ -2443,7 +2445,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 
   .content-hub-chip,
   .page-chip-row button {
-    min-height: 40px;
+    min-height: var(--touch-comfortable, 48px);
     padding: 0.45rem 0.75rem;
   }
 
@@ -4841,7 +4843,10 @@ body.has-assistant-fab .app-main {
 .tab-btn,
 .page-tab-btn {
   flex-shrink: 0;
+  min-height: var(--touch-comfortable, 48px);
+  min-width: var(--touch-min, 44px);
   padding: 0.45rem 1rem;
+  touch-action: manipulation;
   border-radius: 0.55rem;
   font-size: 0.82rem;
   font-weight: 600;
@@ -4851,7 +4856,6 @@ body.has-assistant-fab .app-main {
   cursor: pointer;
   font-family: inherit;
   transition: background 180ms cubic-bezier(0.16, 1, 0.3, 1), color 180ms ease;
-  min-height: 36px;
 }
 
 .tab-btn--active,
