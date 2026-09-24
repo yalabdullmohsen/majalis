@@ -22,7 +22,10 @@
   --content-max: 42rem; /* ~72ch للنص المتدفّق */
   --content-max-wide: 48rem; /* ~80ch */
   --page-pad-x: max(1rem, var(--inset-left, 0px), var(--inset-right, 0px));
+  /* Touch & Interaction System — هدف لمس مريح ≥44، مفضّل 48 */
   --touch-min: 44px;
+  --touch-comfortable: 48px;
+  --ss-chrome-motion: 180ms;
   --app-vh: 100dvh;
 }
 
@@ -99,7 +102,7 @@ body {
   height: 4px;
 }
 
-/* أهداف لمس ≥ 44×44 */
+/* أهداف لمس ≥ 44×44 (مفضّل 48 عبر hit-expand) */
 .touch-target,
 .bottom-nav__tab,
 .ds-filter-toggle,
@@ -107,6 +110,25 @@ body {
 .navbar-menu-btn {
   min-width: var(--touch-min);
   min-height: var(--touch-min);
+}
+
+/**
+ * توسيع منطقة اللمس دون تكبير الشكل البصري.
+ * يُطبَّق على الأزرار الصغيرة داخل شرائط الأدوات.
+ */
+.ss-hit-expand {
+  position: relative;
+  isolation: isolate;
+}
+
+.ss-hit-expand::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100%, var(--touch-comfortable, 48px));
+  height: max(100%, var(--touch-comfortable, 48px));
+  transform: translate(-50%, -50%);
 }
 
 /* أفق الجوال: لا تبتلع الترويسة نصف الشاشة */

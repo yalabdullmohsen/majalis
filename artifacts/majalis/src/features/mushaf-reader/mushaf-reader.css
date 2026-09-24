@@ -954,7 +954,7 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   border-bottom: 1px solid color-mix(in srgb, var(--nm-gold) 18%, transparent);
   opacity: 0;
   transform: translateY(-6px);
-  transition: opacity 140ms ease, transform 140ms ease;
+  transition: opacity var(--ss-chrome-motion, 180ms) ease, transform var(--ss-chrome-motion, 180ms) ease;
   pointer-events: none;
 }
 
@@ -971,11 +971,17 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   background: color-mix(in srgb, var(--nm-paper) 90%, var(--nm-gold) 10%);
   color: var(--nm-meta);
   border-radius: 0.5rem;
-  min-height: 2.2rem;
+  position: relative;
+  isolation: isolate;
+  /* منطقة لمس ≥48؛ الشكل يبقى مضغوطًا عبر padding */
+  min-height: var(--touch-comfortable, 48px);
+  min-width: var(--touch-comfortable, 48px);
   padding: 0.35rem 0.7rem;
   font-size: 0.85rem;
   font-family: inherit;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .nm-controls__btn:active {
@@ -991,11 +997,15 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   font: inherit;
   font-size: 0.95rem;
   font-weight: 700;
-  min-height: 2.2rem;
+  position: relative;
+  isolation: isolate;
+  min-height: var(--touch-comfortable, 48px);
+  min-width: var(--touch-comfortable, 48px);
   padding: 0.25rem 0.55rem;
   border-radius: 0.45rem;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .nm-controls__page:active {
@@ -1059,7 +1069,7 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   flex: 1;
   border: 0;
   border-radius: 0.45rem;
-  min-height: 2.35rem;
+  min-height: var(--touch-comfortable, 48px);
   font: inherit;
   font-weight: 600;
   cursor: pointer;
@@ -1665,14 +1675,16 @@ html[data-theme="dark"] .nm-exit-control {
 }
 
 .nm-controls--compact .nm-controls__btn {
-  min-height: 2rem;
+  min-height: var(--touch-comfortable, 48px);
+  min-width: var(--touch-comfortable, 48px);
   padding: 0.25rem 0.55rem;
   font-size: 0.78rem;
   border-radius: 0.45rem;
 }
 
 .nm-controls--compact .nm-controls__page {
-  min-height: 2rem;
+  min-height: var(--touch-comfortable, 48px);
+  min-width: var(--touch-comfortable, 48px);
   font-size: 0.88rem;
   padding: 0.2rem 0.45rem;
 }
@@ -1827,7 +1839,7 @@ html[data-theme="dark"] .nm-exit-control {
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 160ms ease, visibility 160ms ease;
+  transition: opacity var(--ss-chrome-motion, 180ms) ease, visibility var(--ss-chrome-motion, 180ms) ease;
 }
 
 .nm-page-arrows[data-visible="1"] {
@@ -1842,8 +1854,8 @@ html[data-theme="dark"] .nm-exit-control {
   z-index: 29;
   display: grid;
   place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: var(--touch-comfortable, 48px);
+  height: var(--touch-comfortable, 48px);
   margin: 0;
   padding: 0;
   border: 0;
@@ -1855,7 +1867,8 @@ html[data-theme="dark"] .nm-exit-control {
   pointer-events: none;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition: opacity 140ms ease, background-color 140ms ease;
+  touch-action: manipulation;
+  transition: opacity var(--ss-chrome-motion, 180ms) ease, background-color var(--ss-chrome-motion, 180ms) ease;
 }
 
 .nm-page-arrows[data-visible="1"] .nm-page-arrow:not(:disabled) {
@@ -1886,7 +1899,8 @@ html[data-theme="dark"] .nm-exit-control {
 
 .nm-page-arrow__hit {
   position: absolute;
-  inset: -0.35rem;
+  /* Hit slop إضافي حول السهم البصري دون تغيير موضعه */
+  inset: -0.65rem;
 }
 
 .nm-page-arrow__icon {

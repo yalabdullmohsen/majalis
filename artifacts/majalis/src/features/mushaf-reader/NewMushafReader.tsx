@@ -1178,7 +1178,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         mushafTurnMark("touchStart", page);
       }}
       onNavigateCancel={cancelPageTurnFreeze}
-      ignoreSelector=".nm-controls, .nm-verse-menu, .nm-page-arrows, .nm-page-arrow, .nm-page-scrubber, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, .rb-composer, .rb-markers, .nm-nav-highlight-chip, input, textarea, select, button"
+      ignoreSelector=".nm-controls, .nm-verse-menu, .nm-page-arrows, .nm-page-arrow, .nm-page-scrubber, .mm-audio-dock, .mm-ayah-bar, .ayah-action-sheet, .mm-search-sheet, .rb-composer, .rb-markers, .nm-nav-highlight-chip, [data-testid='mushaf-ayah-hit'], [data-testid='mushaf-basmala'], .nm-word, .nm-basmala, input, textarea, select, button"
       onTapEmpty={() => {
         if (actionsOpen) {
           closeActions();
