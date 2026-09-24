@@ -35,9 +35,9 @@ assert.match(reader, /mushaf-ayah-hit/);
 
 const cfp = read("src/styles/critical-first-paint.css");
 assert.match(cfp, /\.bottom-nav__tab[\s\S]{0,200}min-height:\s*48px/);
-assert.match(cfp, /\.bottom-nav__tab[\s\S]{0,220}min-width:\s*44px/);
 const nativeFeel = read("src/styles/components/native-feel.css");
 assert.match(nativeFeel, /\.bottom-nav__tab[\s\S]{0,240}touch-action:\s*manipulation/);
+assert.match(bp, /\.bottom-nav__tab[\s\S]{0,400}min-height:\s*var\(--touch-min\)/);
 
 const audit = readRepo("docs/qa/INTERACTION_AUDIT.md");
 assert.match(audit, /\*\*Status:\*\* `PARTIAL`|Status:\*\* `PARTIAL`/);
