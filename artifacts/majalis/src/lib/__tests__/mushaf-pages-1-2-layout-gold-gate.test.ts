@@ -52,16 +52,17 @@ assert.doesNotMatch(
   /\.nm-page--opening \.nm-page__body[\s\S]{0,160}grid-template-rows:\s*repeat\(15,/s,
 );
 
-console.log("=== Quran Gold palette + Emerald default accent ===");
+console.log("=== Quran Gold palette (single appearance) ===");
 assert.equal(quranGold.toLowerCase(), mushafPrintedGold.toLowerCase());
 assert.equal(mushafVerseMarkerFill.toLowerCase(), mushafPrintedGold.toLowerCase());
 assert.equal(mushafVerseMarkerBorder.toLowerCase(), "#b89620");
 assert.equal(mushafVerseMarkerNumber.toLowerCase(), "#5f4814");
-assert.equal(mushafOpeningTurquoise.toLowerCase(), "#0e7a6b");
+assert.equal(mushafOpeningTurquoise.toLowerCase(), "#c9a82e");
 assert.match(css, /--quran-gold:\s*#c9a82e/i);
 assert.match(css, /--mushaf-printed-gold:\s*#c9a82e/i);
-assert.match(css, /--mushaf-accent-fill:\s*#0e7a6b/i);
+assert.match(css, /--mushaf-accent-fill:\s*var\(--quran-gold\)/i);
 assert.match(css, /\[data-mushaf-accent="gold"\]/);
+assert.doesNotMatch(css, /--mushaf-accent-fill:\s*#0e7a6b/i);
 assert.doesNotMatch(css, /--mushaf-verse-marker-fill:\s*#dcb424/i);
 
 console.log("=== علامة آية أوضح بلا تجاوز النص عالميًا ===");

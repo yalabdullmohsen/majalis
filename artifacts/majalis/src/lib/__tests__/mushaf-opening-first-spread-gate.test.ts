@@ -46,13 +46,14 @@ assert.doesNotMatch(
   /\.nm-page--opening \.nm-page__body[\s\S]{0,200}align-content:\s*space-evenly/,
 );
 
-console.log("=== Accent موحّد · لوحة زمردي/ذهب محفوظة ===");
-assert.equal(mushafOpeningTurquoise.toLowerCase(), "#0e7a6b");
-assert.equal(mushafOpeningMarkerFill.toLowerCase(), "#0e7a6b");
+console.log("=== Accent ذهبي ثابت · بلا زمردي افتراضي ===");
+assert.equal(mushafOpeningTurquoise.toLowerCase(), "#c9a82e");
+assert.equal(mushafOpeningMarkerFill.toLowerCase(), "#c9a82e");
 assert.equal(mushafVerseMarkerFill.toLowerCase(), quranGold.toLowerCase());
 assert.match(tokens, /mushafOpeningTurquoise|mushafEmeraldPrimary/);
-assert.match(css, /--mushaf-accent-fill:\s*#0e7a6b/i);
+assert.match(css, /--mushaf-accent-fill:\s*var\(--quran-gold\)/i);
 assert.match(css, /\[data-mushaf-accent="gold"\]/);
+assert.doesNotMatch(css, /--mushaf-accent-fill:\s*#0e7a6b/i);
 assert.doesNotMatch(
   chrome,
   /\.nm-page--opening[\s\S]{0,500}--mushaf-verse-marker-fill:\s*var\(--mushaf-opening/,

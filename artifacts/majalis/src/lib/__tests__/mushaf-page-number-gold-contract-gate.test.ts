@@ -45,7 +45,7 @@ console.log("=== No hardcoded page digits 1/2 in opening template ===");
 assert.doesNotMatch(page, />\s*[١٢]\s*</);
 assert.doesNotMatch(page, /toArabicPageDigits\(\s*[12]\s*\)/);
 
-console.log("=== GOLD / EMERALD tokens on markers + page number ===");
+console.log("=== GOLD tokens on markers + page number ===");
 assert.match(css, /--mushaf-page-number:\s*var\(--mushaf-accent-fill\)/);
 assert.match(css, /--mushaf-page-control:\s*var\(--mushaf-accent-fill-strong\)/);
 assert.match(css, /\[data-mushaf-accent="gold"\][\s\S]{0,2000}--mushaf-page-number/);
@@ -56,10 +56,11 @@ assert.match(css, /\.nm-ayah-mark\s*\{/);
 assert.match(chrome, /\.nm-page--opening \.nm-ayah-mark[\s\S]{0,200}mushaf-marker-background/);
 assert.match(chrome, /\.nm-page--opening \.nm-page__footer-num[\s\S]{0,500}--mushaf-page-number/);
 
-console.log("=== Provider single source ===");
+console.log("=== Provider migration shell (no multi-theme state) ===");
 assert.match(provider, /MushafAppearanceProvider/);
 assert.match(provider, /applyMushafAccentTheme/);
-assert.match(provider, /saveMushafAccentTheme\(next\)/);
-assert.doesNotMatch(provider, /isGreen|isGold|GreenAyahMarker|GoldAyahMarker/);
+assert.doesNotMatch(provider, /saveMushafAccentTheme\(next\)/);
+assert.doesNotMatch(provider, /useState<MushafAppearanceTheme>/);
+assert.doesNotMatch(provider, /isGreen|isGold|GreenAyahMarker|GoldAyahMarker|EMERALD/);
 
 console.log("mushaf-page-number-gold-contract-gate.test.ts: ok");

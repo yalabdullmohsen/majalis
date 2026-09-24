@@ -49,11 +49,15 @@ export {
   saveMushafAccentTheme,
   applyMushafAccentTheme,
   readAccentThemeFromDom,
+  migrateMushafAccentStorageOnce,
 } from "./accent-prefs";
 export {
   MUSHAF_APPEARANCE_THEME,
+  MUSHAF_GOLD_APPEARANCE,
   MUSHAF_ACCENT_DEFAULT,
-  MUSHAF_ACCENT_STORAGE_KEY,
+  MUSHAF_ACCENT_STORAGE_KEY_LEGACY,
+  MUSHAF_SETTINGS_SCHEMA_VERSION,
+  MUSHAF_SETTINGS_SCHEMA_VERSION_KEY,
   themeToAccentAttr,
   accentAttrToTheme,
   mushafAppearanceThemeLabel,

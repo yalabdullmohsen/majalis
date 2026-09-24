@@ -40,12 +40,6 @@ import { MushafControls } from "./MushafControls";
 import { MushafPage } from "./MushafPage";
 import { MushafPager, SWIPE_MIN_PX } from "./MushafPager";
 import { MushafSettingsSheet, type MushafHideLevel, type MushafThemeChoice } from "./MushafSettingsSheet";
-import {
-  QuranSettingsRepository,
-  useMushafAppearanceOptional,
-  themeToAccentAttr,
-  type MushafAppearanceTheme,
-} from "@/lib/mushaf-v2";
 import { setMushafAudioClock, useMushafAudioClock } from "./mushaf-audio-clock-store";
 import { setMushafAyahSyncKeys } from "./mushaf-ayah-sync-store";
 import {
@@ -160,23 +154,6 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
   const theme = resolveTheme(themeChoice);
   const [hideLevel, setHideLevel] = useState<MushafHideLevel>(() => loadHideLevel());
   const [ayahMarks, setAyahMarks] = useState<boolean>(() => loadAyahMarks());
-  /**
-   * Accent: Provider أولًا. بدون Provider — نفس storage/DOM عبر QuranSettingsRepository فقط
-   * (لا setState محلي مستقل يفقد الحفظ أو يخلق مصدر حقيقة ثانٍ).
-   */
-  const appearanceCtx = useMushafAppearanceOptional();
-  const [accentThemeLocal, setAccentThemeLocal] = useState<MushafAppearanceTheme>(() =>
-    QuranSettingsRepository.getAccentTheme(),
-  );
-  const accentTheme = appearanceCtx?.theme ?? accentThemeLocal;
-  const setAccentTheme = appearanceCtx?.setTheme
-    ? appearanceCtx.setTheme
-    : (t: MushafAppearanceTheme) => {
-        QuranSettingsRepository.setAccentTheme(t);
-        QuranSettingsRepository.applyAccentTheme(t);
-        setAccentThemeLocal(t);
-      };
-  const accentAttr = appearanceCtx?.accentAttr ?? themeToAccentAttr(accentTheme);
   const [revealedVerses, setRevealedVerses] = useState<ReadonlySet<string>>(() => new Set());
 
   const { fontFamily, ready: fontReady } = useQpcPageFont(page);
@@ -829,7 +806,7 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
       data-ayah-bar={actionsOpen ? "1" : "0"}
       data-audio-dock={audioDockVisible ? (audioDockMini ? "mini" : "1") : "0"}
       data-mushaf-theme={theme}
-      data-mushaf-accent={accentAttr}
+      data-mushaf-accent="gold"
       data-ayah-marks={ayahMarks ? "1" : "0"}
       data-text-profile={lowEndText ? "low" : "normal"}
       data-testid="mushaf-viewport"
@@ -1057,8 +1034,6 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
         onHideLevel={setHideLevel}
         ayahMarks={ayahMarks}
         onAyahMarks={setAyahMarks}
-        accentTheme={accentTheme}
-        onAccentTheme={setAccentTheme}
         onClose={() => setSettingsOpen(false)}
       />
 

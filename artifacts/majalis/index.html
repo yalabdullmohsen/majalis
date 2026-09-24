@@ -127,22 +127,11 @@
           html.dataset.contrast = contrast;
           html.dataset.seniorMode = senior ? "1" : "0";
 
-          /* مصحف Accent قبل React — يمنع وميض زمردي عند GOLD المحفوظ */
+          /* مصحف: مظهر ذهبي ثابت — Migration تمسح مفتاح Accent القديم وتمنع وميض زمردي */
           try {
-            var mushafAccentRaw = localStorage.getItem("ssunnah-mushaf-accent-theme-v1");
-            var mushafAccent = "emerald";
-            if (mushafAccentRaw) {
-              var mushafAccentNorm = String(mushafAccentRaw).trim().toUpperCase();
-              if (
-                mushafAccentNorm === "GOLD" ||
-                mushafAccentNorm === "YELLOW" ||
-                mushafAccentNorm === "PRINTED" ||
-                mushafAccentRaw === "gold"
-              ) {
-                mushafAccent = "gold";
-              }
-            }
-            html.setAttribute("data-mushaf-accent", mushafAccent);
+            localStorage.removeItem("ssunnah-mushaf-accent-theme-v1");
+            localStorage.setItem("ssunnah-mushaf-settings-schema-v2", "2-gold-only");
+            html.setAttribute("data-mushaf-accent", "gold");
           } catch (_) {}
 
           function clearBooting() {

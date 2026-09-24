@@ -51,7 +51,7 @@ const preset = read("src/features/mushaf-reader/sunnah-mushaf-signature-preset.t
 assert.match(preset, /pageMappingVersion:\s*"madinah-604-v1"/);
 assert.match(preset, /lineMappingVersion:\s*"qpc-layout-v2"/);
 assert.match(preset, /SIGNATURE_FONT_SIZE_MAX_PX\s*=\s*24/);
-assert.match(preset, /sms-2026-09-24-gold-page-numbers/);
+assert.match(preset, /sms-2026-09-24-single-gold/);
 
 const readerPage = read("src/pages/quran/MushafReaderPage.tsx");
 assert.match(readerPage, /NewMushafReader/);

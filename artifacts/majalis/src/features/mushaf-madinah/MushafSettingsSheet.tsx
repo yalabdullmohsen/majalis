@@ -1,5 +1,4 @@
 import { Check } from "lucide-react";
-import type { MushafAppearanceTheme } from "@/lib/mushaf-v2/mushaf-appearance-theme";
 import { QuranSheetShell } from "./quran-sheet";
 
 export type MushafThemeChoice = "auto" | "paper" | "sepia" | "night" | "oled";
@@ -14,12 +13,10 @@ type Props = {
   onHideLevel: (level: MushafHideLevel) => void;
   ayahMarks: boolean;
   onAyahMarks: (on: boolean) => void;
-  accentTheme?: MushafAppearanceTheme;
-  onAccentTheme?: (theme: MushafAppearanceTheme) => void;
   onClose: () => void;
 };
 
-/** إعدادات المصحف — QuranSettingsSheet الموحّد. */
+/** إعدادات المصحف — QuranSettingsSheet الموحّد. بلا اختيار Accent (ذهبي ثابت). */
 export function MushafSettingsSheet({
   open,
   theme,
@@ -28,8 +25,6 @@ export function MushafSettingsSheet({
   onHideLevel,
   ayahMarks,
   onAyahMarks,
-  accentTheme = "EMERALD",
-  onAccentTheme,
   onClose,
 }: Props) {
   return (
@@ -81,29 +76,6 @@ export function MushafSettingsSheet({
             </button>
           ))}
         </section>
-        {onAccentTheme ? (
-          <section className="mm-settings-sheet__card quran-card" data-testid="mushaf-settings-accent">
-            <h3>لون العلامات</h3>
-            {(
-              [
-                ["EMERALD", "الزمردي"],
-                ["GOLD", "الذهبي"],
-              ] as const
-            ).map(([id, label]) => (
-              <button
-                key={id}
-                type="button"
-                role="radio"
-                aria-checked={accentTheme === id}
-                className={`mm-settings-sheet__row quran-row${accentTheme === id ? " is-active" : ""}`}
-                onClick={() => onAccentTheme(id)}
-              >
-                <span>{label}</span>
-                {accentTheme === id ? <Check size={18} aria-hidden="true" /> : null}
-              </button>
-            ))}
-          </section>
-        ) : null}
         <section className="mm-settings-sheet__card quran-card">
           <h3>علامات الآيات</h3>
           <p className="mm-settings-sheet__hint">

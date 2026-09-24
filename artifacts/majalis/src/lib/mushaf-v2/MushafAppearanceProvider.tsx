@@ -1,89 +1,42 @@
 /**
- * MushafAppearanceProvider — مصدر حقيقة واحد لسمة Accent (EMERALD | GOLD).
- * يزامن: React context · localStorage · data-mushaf-accent على .nm-root/html.
- * لا يمس النص القرآني ولا Page Mapping.
- *
- * PR-1: تطبيق متزامن عند الإقلاع (بلا انتظار useEffect) لمنع وميض السمة.
+ * MushafAppearanceProvider — يثبّت المظهر الذهبي مرة واحدة عند الإقلاع.
+ * لا حالة متعددة · لا setTheme · لا اختيار مستخدم.
  */
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from "react";
-import {
-  applyMushafAccentTheme,
-  loadMushafAccentTheme,
-  saveMushafAccentTheme,
-} from "./accent-prefs";
-import {
-  mushafAppearanceThemeLabel,
-  themeToAccentAttr,
-  type MushafAccentAttr,
-  type MushafAppearanceTheme,
-} from "./mushaf-appearance-theme";
-import { QURAN_EXPERIENCE_NEXT } from "./flags";
+import { useLayoutEffect, type ReactNode } from "react";
+import { applyMushafAccentTheme, migrateMushafAccentStorageOnce } from "./accent-prefs";
+import type { MushafAccentAttr, MushafAppearanceTheme } from "./mushaf-appearance-theme";
 
 export type MushafAppearanceContextValue = {
   theme: MushafAppearanceTheme;
   accentAttr: MushafAccentAttr;
   label: string;
+  /** لا-op — المظهر ثابت */
   setTheme: (theme: MushafAppearanceTheme) => void;
 };
 
-const MushafAppearanceContext = createContext<MushafAppearanceContextValue | null>(null);
-
-function readInitialTheme(): MushafAppearanceTheme {
-  if (!QURAN_EXPERIENCE_NEXT.dualAppearanceThemes) return "EMERALD";
-  const initial = loadMushafAccentTheme();
-  /* تطبيق فوري قبل أول paint للمصحف — يكمّل boot script في index.html */
-  if (typeof document !== "undefined") {
-    applyMushafAccentTheme(initial);
-  }
-  return initial;
-}
-
+/** غلاف يثبت الذهب قبل paint ويمسح مفتاح Accent القديم */
 export function MushafAppearanceProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<MushafAppearanceTheme>(readInitialTheme);
-
-  useEffect(() => {
-    if (!QURAN_EXPERIENCE_NEXT.dualAppearanceThemes) return;
-    applyMushafAccentTheme(theme);
-  }, [theme]);
-
-  const setTheme = useCallback((next: MushafAppearanceTheme) => {
-    if (!QURAN_EXPERIENCE_NEXT.dualAppearanceThemes) return;
-    setThemeState(next);
-    saveMushafAccentTheme(next);
+  useLayoutEffect(() => {
+    migrateMushafAccentStorageOnce();
+    applyMushafAccentTheme("GOLD");
   }, []);
-
-  const value = useMemo<MushafAppearanceContextValue>(
-    () => ({
-      theme,
-      accentAttr: themeToAccentAttr(theme),
-      label: mushafAppearanceThemeLabel(theme),
-      setTheme,
-    }),
-    [theme, setTheme],
-  );
-
-  return (
-    <MushafAppearanceContext.Provider value={value}>{children}</MushafAppearanceContext.Provider>
-  );
+  return children;
 }
 
+const FIXED: MushafAppearanceContextValue = {
+  theme: "GOLD",
+  accentAttr: "gold",
+  label: "الذهبي",
+  setTheme: () => {
+    /* مظهر ثابت — تجاهل */
+  },
+};
+
+/** توافق: يعيد القيم الذهبية الثابتة دائمًا */
 export function useMushafAppearance(): MushafAppearanceContextValue {
-  const ctx = useContext(MushafAppearanceContext);
-  if (!ctx) {
-    throw new Error("useMushafAppearance must be used within <MushafAppearanceProvider>");
-  }
-  return ctx;
+  return FIXED;
 }
 
-/** للاستهلاك الاختياري خارج الغلاف (اختبارات / طبقات مشتركة). */
-export function useMushafAppearanceOptional(): MushafAppearanceContextValue | null {
-  return useContext(MushafAppearanceContext);
+export function useMushafAppearanceOptional(): MushafAppearanceContextValue {
+  return FIXED;
 }

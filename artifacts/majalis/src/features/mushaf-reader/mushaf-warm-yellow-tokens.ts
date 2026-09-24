@@ -44,21 +44,21 @@ export const mushafVerseMarkerDarkBorder = "#A88618" as const;
 export const mushafVerseMarkerDarkNumber = "#F0E2B8" as const;
 
 /**
- * First Spread / Emerald accent — نفس درجات الزمردي في MushafAppearanceTheme.
- * لا تُفرض على ص١–ص٢ بمعزل عن اختيار المستخدم؛ الافتراضي EMERALD عالميًا.
+ * First Spread — لم يعد له Accent زمردي منفصل؛ العلامة ذهبية عالميًا.
+ * الثوابت أدناه توافق تاريخي فقط (لا تُستخدم كافتراضي للمصحف).
  */
-export const mushafOpeningTurquoise = "#0E7A6B" as const;
-export const mushafOpeningTurquoiseDeep = "#0A5C52" as const;
-export const mushafOpeningMarkerFill = mushafOpeningTurquoise;
-export const mushafOpeningMarkerBorder = mushafPrintedGoldBorder;
-export const mushafOpeningMarkerNumber = "#F7F3E8" as const;
+export const mushafOpeningTurquoise = "#C9A82E" as const;
+export const mushafOpeningTurquoiseDeep = "#B89620" as const;
+export const mushafOpeningMarkerFill = mushafVerseMarkerFill;
+export const mushafOpeningMarkerBorder = mushafVerseMarkerBorder;
+export const mushafOpeningMarkerNumber = mushafVerseMarkerNumber;
 export const mushafOpeningGoldAccent = mushafPrintedGold;
 export const mushafOpeningMetadataSurface = "#F3EBD8" as const;
 export const mushafOpeningMetadataText = "#3A2E1A" as const;
 
-/** مرادفات Accent */
-export const mushafEmeraldPrimary = mushafOpeningTurquoise;
-export const mushafEmeraldSecondary = mushafOpeningTurquoiseDeep;
+/** @deprecated مرادفات قديمة — تشير للذهب */
+export const mushafEmeraldPrimary = mushafVerseMarkerFill;
+export const mushafEmeraldSecondary = mushafVerseMarkerBorder;
 
 /** توافق خلفي مع التوكنات السابقة */
 export const mushafVerseMarkerGold = mushafVerseMarkerFill;
