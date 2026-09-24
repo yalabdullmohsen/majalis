@@ -101,14 +101,19 @@ const ilmPage = readFileSync(resolve(root, "src/views/IslamicLandmarksPage.tsx")
 const univCard = readFileSync(resolve(root, "src/components/universities/UniversityCard.tsx"), "utf8");
 assert.doesNotMatch(ilmCss, /#5B21B6|#5B21B6/i, "لا بنفسجي صلب في المعالم");
 assert.match(ilmCss, /\.ilm-card/, "ilm-card موجود");
+assert.match(ilmCss, /\.ilm-chip/, "chips تصنيفات");
+assert.match(ilmCss, /\.ilm-explorer/, "مستكشف خريطة ملء الشاشة");
+assert.doesNotMatch(ilmCss, /\.ilm-map-wrap\s*\{/, "لا حاوية خريطة رئيسية في Discover");
 assert.match(instCss, /html\.dark \.inst-card|html\[data-theme="dark"\] \.inst-card/);
 assert.match(theme, /\.ilm-card/);
 assert.match(theme, /\.inst-card/);
 assert.match(instPage, /soft-card/, "بطاقات المؤسسات ضمن soft-card");
-assert.match(ilmPage, /soft-card/, "بطاقات المعالم ضمن soft-card");
+assert.match(ilmPage, /soft-card|LandmarkDiscoverCard/, "بطاقات المعالم soft/discover");
 assert.match(instPage, /mj-pressable/, "مؤسسات قابلة للضغط بصريًا");
-assert.match(ilmPage, /mj-pressable/, "معالم قابلة للضغط");
+assert.match(ilmPage, /mj-pressable|LandmarkDiscoverCard/, "معالم قابلة للضغط");
 assert.match(instPage, /SectionTemplatePage/, "المؤسسات على قالب القسم الموحّد");
+assert.match(ilmPage, /AppPage|SectionTemplatePage/, "المعالم على قالب AppPage");
+assert.doesNotMatch(ilmPage, /FloatingBackButton|position:\s*fixed[\s\S]{0,80}fab/i, "لا عناصر عائمة قديمة في الصفحة");
 assert.match(univCard, /univ-card/, "بطاقة الجامعة موحّدة");
 assert.match(univCard, /soft-card|mj-pressable/, "جامعة soft/pressable");
 
