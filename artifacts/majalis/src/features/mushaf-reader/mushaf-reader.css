@@ -100,9 +100,16 @@
    */
   /*
    * رقم أوضح على الـglyph فقط — الصندوق يبقى 0.62em×1.15em (عقد geometry ص600).
+   * 1.40em ≈ +9٪ وضوح داخلي دون تغيير advance width.
    */
   --mushaf-ayah-mark-font-size: 0.62em;
-  --mushaf-ayah-mark-number-size: 1.28em;
+  --mushaf-ayah-mark-number-size: 1.40em;
+  /* aliases لعقد الفاصل (Fill/Stroke/Number من Quran Gold Tokens) */
+  --mushaf-ayah-marker-fill: var(--mushaf-verse-marker-fill);
+  --mushaf-ayah-marker-stroke: var(--mushaf-verse-marker-border);
+  --mushaf-ayah-marker-number: var(--mushaf-verse-marker-number);
+  --mushaf-ayah-marker-size: var(--mushaf-ayah-mark-size);
+  --mushaf-ayah-marker-inner-size: var(--mushaf-ayah-mark-number-size);
 
   /* طبقات سفلية داخل القارئ */
   --bottom-nav-height: 64px;
@@ -800,7 +807,8 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
 
 /*
  * SunnahVerseRosette — Visual Baseline: وردة 1.15em مقفلة — الزيادة الإضافية تسبب lineOverflow على ص600.
- * بلا نجمة/أشعة/ظل/توهج، بلا overflow، بلا تغيير fontSize للنص.
+ * 8 بتلات ناعمة شبه دائرية — بلا أشواك/مسامير/ظل/توهج، بلا overflow، بلا تغيير fontSize للنص.
+ * المساحة الداخلية أوسع للرقم عبر تقليل عمق الفصوص (tip≈40 / valley≈35).
  */
 .nm-ayah-mark {
   position: relative;
@@ -821,17 +829,29 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   color: var(--mushaf-verse-marker-number);
   font-family: inherit;
   font-size: var(--mushaf-ayah-mark-font-size, 0.62em);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1;
   overflow: hidden;
   transform: none;
   box-shadow: none;
-  /* فصوص ناعمة شبه دائرية — أطراف قصيرة داخل نفس الـbounding box */
+  /* 8 بتلات: طرف 40٪ / وادي 35٪ — حواف مستديرة داخل نفس الـbounding box */
   clip-path: polygon(
-    50% 6%, 58% 14%, 68% 10%, 70% 22%, 82% 24%, 78% 34%, 90% 40%, 82% 50%,
-    90% 60%, 78% 66%, 82% 76%, 70% 78%, 68% 90%, 58% 86%, 50% 94%, 42% 86%,
-    32% 90%, 30% 78%, 18% 76%, 22% 66%, 10% 60%, 18% 50%, 10% 40%, 22% 34%,
-    18% 24%, 30% 22%, 32% 10%, 42% 14%
+    50.0% 10.0%,
+    63.4% 17.7%,
+    78.3% 21.7%,
+    82.3% 36.6%,
+    90.0% 50.0%,
+    82.3% 63.4%,
+    78.3% 78.3%,
+    63.4% 82.3%,
+    50.0% 90.0%,
+    36.6% 82.3%,
+    21.7% 78.3%,
+    17.7% 63.4%,
+    10.0% 50.0%,
+    17.7% 36.6%,
+    21.7% 21.7%,
+    36.6% 17.7%
   );
 }
 
@@ -840,10 +860,11 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   display: block;
   line-height: 1;
   text-align: center;
-  font-size: var(--mushaf-ayah-mark-number-size, 1.28em);
+  font-size: var(--mushaf-ayah-mark-number-size, 1.40em);
   font-weight: inherit;
   color: inherit;
-  transform: translateY(0.02em);
+  font-variant-numeric: tabular-nums;
+  transform: translateY(0.01em);
 }
 
 .nm-basmala__num-hit {
