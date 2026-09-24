@@ -1,0 +1,120 @@
+{
+  "program": "sunnah-zero-flicker-layout-shift",
+  "stage": 0,
+  "stageName": "reproduction-baseline-root-cause",
+  "measuredAt": "2026-09-24T21:50:00Z",
+  "commit": "07d580b0afdfc65ce9142129a73c6201f1e47854",
+  "branchBase": "origin/main",
+  "environment": "local-agent-code-inventory",
+  "productRoot": "artifacts/majalis",
+  "report": "docs/performance/ZERO_FLICKER_LAYOUT_SHIFT_ROOT_CAUSE_PR0.md",
+  "acceptanceClaimForbiddenUntilLater": "SUNNAH_ZERO_FLICKER_AND_LAYOUT_SHIFT_COMPLETE",
+  "priorRelatedReports": [
+    "docs/performance/STARTUP_ROOT_CAUSE_REPORT.md",
+    "docs/performance/STARTUP_AND_DARK_MODE_ROOT_CAUSE.md",
+    "docs/performance/UPDATE_DISPLAY_HANG_ROOT_CAUSE_PR0.md"
+  ],
+  "confirmedRootCauses": [
+    "CHUNK_LOAD_FAILURE",
+    "SERVICE_WORKER_STALE_ASSET",
+    "OTHER_CONFIRMED",
+    "CRITICAL_CSS_LATE",
+    "THEME_HYDRATION_LATE",
+    "FONT_SWAP_LAYOUT_SHIFT",
+    "PAGE_REMOUNT",
+    "SKELETON_SIZE_MISMATCH",
+    "ASYNC_DATA_LAYOUT_SHIFT",
+    "PRAYER_LOCATION_SHIFT",
+    "PRAYER_CALCULATION_SHIFT"
+  ],
+  "notConfirmedThisRun": [
+    "ROOT_REMOUNT",
+    "ROUTER_REMOUNT",
+    "SAFE_AREA_LATE",
+    "IMAGE_WITHOUT_DIMENSIONS",
+    "ICON_WITHOUT_DIMENSIONS",
+    "PRAYER_TIMEZONE_SHIFT",
+    "PRAYER_PERMISSION_SHIFT"
+  ],
+  "prayerJumpPrimaryChain": [
+    "LazyRouteFallback (PAGE_REMOUNT path)",
+    "empty branch without pts-hero when !countdown.next",
+    "ready branch with pts-hero + pts-list + conditional hijri",
+    "home PrayerCountdownScope deferMs=20000 delays provider enable"
+  ],
+  "startupMarksLegacyModule": "artifacts/majalis/src/lib/startup-performance-marks.ts",
+  "prayerMarksModule": "artifacts/majalis/src/lib/prayer-performance-marks.ts",
+  "devMountCountersModule": "artifacts/majalis/src/lib/dev-mount-counters.ts",
+  "prayerMarks": [
+    "prayer:navigation-start",
+    "prayer:route-mount",
+    "prayer:cached-data-ready",
+    "prayer:timezone-ready",
+    "prayer:location-ready",
+    "prayer:permissions-ready",
+    "prayer:calculation-ready",
+    "prayer:first-frame",
+    "prayer:first-stable-frame",
+    "prayer:interactive"
+  ],
+  "prayerMarksWiredInPr0": [
+    "prayer:route-mount",
+    "prayer:cached-data-ready",
+    "prayer:timezone-ready",
+    "prayer:location-ready",
+    "prayer:calculation-ready",
+    "prayer:first-frame",
+    "prayer:first-stable-frame",
+    "prayer:interactive"
+  ],
+  "prayerMarksDeferred": [
+    {
+      "name": "prayer:navigation-start",
+      "reason": "يحتاج ربط على nav click قبل تحميل الحزمة — PR-1/5"
+    },
+    {
+      "name": "prayer:permissions-ready",
+      "reason": "لا مسار إذن geolocation منفصل في الصفحة الحالية — يُربط عند فصل PrayerLocationStore"
+    }
+  ],
+  "runtimeMetrics": {
+    "clsColdStart": null,
+    "clsPrayerEntry": null,
+    "rootMountCount": null,
+    "routerMountCount": null,
+    "appShellMountCount": null,
+    "headerMountCount": null,
+    "bottomNavMountCount": null,
+    "prayerPageMountCount": null,
+    "prayerPageRenderCountPerSecondTick": null,
+    "firstStableFrameMs": null,
+    "firstInteractiveFrameMs": null,
+    "fontSwapShiftObserved": null,
+    "themeShiftObserved": null
+  },
+  "runtimeNotMeasuredThisRun": [
+    "clsColdStart",
+    "clsPrayerEntry",
+    "rootMountCount",
+    "routerMountCount",
+    "appShellMountCount",
+    "headerMountCount",
+    "bottomNavMountCount",
+    "prayerPageMountCount",
+    "deviceScreenshots",
+    "slowMotionVideos",
+    "testFlightRecording",
+    "coldWarmResumeMatrix",
+    "upgradeFromAffectedBuild"
+  ],
+  "codeEvidencePaths": {
+    "updateDisplayPage": "artifacts/majalis/src/components/ErrorBoundary.tsx",
+    "chunkRecoveryToast": "artifacts/majalis/src/lib/chunk-recovery.ts",
+    "prayerDualTree": "artifacts/majalis/src/pages/worship/ui/PrayerTimesView.tsx",
+    "prayerCountdownHook": "artifacts/majalis/src/hooks/usePrayerCountdown.ts",
+    "prayerDeferOnHome": "artifacts/majalis/src/App.tsx",
+    "fontDisplayOptional": "artifacts/majalis/src/styles/fonts-ui.css",
+    "appStartupController": "artifacts/majalis/src/lib/app-startup-controller.ts"
+  },
+  "nextPr": "PR-1 AppStartupController + pre-paint Theme/RTL + mark name gaps"
+}
