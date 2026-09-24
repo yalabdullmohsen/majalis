@@ -107,11 +107,11 @@ assert.doesNotMatch(ilmCss, /\.ilm-map-wrap\s*\{/, "لا حاوية خريطة �
 assert.match(instCss, /html\.dark \.inst-card|html\[data-theme="dark"\] \.inst-card/);
 assert.match(theme, /\.ilm-card/);
 assert.match(theme, /\.inst-card/);
-assert.match(instPage, /soft-card/, "بطاقات المؤسسات ضمن soft-card");
+assert.match(instPage, /soft-card|InstitutionDiscoverCard/, "بطاقات المؤسسات soft/discover");
 assert.match(ilmPage, /soft-card|LandmarkDiscoverCard/, "بطاقات المعالم soft/discover");
-assert.match(instPage, /mj-pressable/, "مؤسسات قابلة للضغط بصريًا");
+assert.match(instPage, /mj-pressable|InstitutionDiscoverCard/, "مؤسسات قابلة للضغط بصريًا");
 assert.match(ilmPage, /mj-pressable|LandmarkDiscoverCard/, "معالم قابلة للضغط");
-assert.match(instPage, /SectionTemplatePage/, "المؤسسات على قالب القسم الموحّد");
+assert.match(instPage, /AppPage|ilm-discover|inst-discover/, "المؤسسات على Discover/AppPage");
 assert.match(ilmPage, /AppPage|SectionTemplatePage/, "المعالم على قالب AppPage");
 assert.doesNotMatch(ilmPage, /FloatingBackButton|position:\s*fixed[\s\S]{0,80}fab/i, "لا عناصر عائمة قديمة في الصفحة");
 assert.match(univCard, /univ-card/, "بطاقة الجامعة موحّدة");

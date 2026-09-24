@@ -1,15 +1,28 @@
-import { useEffect, useState } from "react";
-import { BookOpen, Building2, GraduationCap, Globe, Library, MapPin, Search } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+/**
+ * Discover — دليل المؤسسات الإسلامية
+ * نفس تجربة المشاهد: Featured + chips + بطاقات؛ بلا خريطة رئيسية.
+ */
+import { useEffect, useMemo, useState } from "react";
+import { Search } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
-import { ShareButtons } from "@/components/ContentActions";
+import { EMPTY } from "@/lib/ui-copy";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { SectionTemplatePage } from "@/components/topic/TopicPage";
-import "@/styles/pages/institutions.css";
-
-import { INSTITUTIONS, type Institution } from "@/data/institutions-catalog";
+import { AppPage, PageHeaderV2, EmptyStateV2 } from "@/components/design-system";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { SectionTitle, SupportingText } from "@/components/design-system/text";
+import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
+import { InstitutionDiscoverCard } from "@/components/institutions/InstitutionDiscoverCard";
+import {
+  INSTITUTIONS,
+  INSTITUTION_COUNTRIES,
+  getFeaturedInstitutions,
+  type Institution,
+} from "@/data/institutions-catalog";
+import "@/styles/islamic-landmarks.css";
+import "@/styles/components/directory-media.css";
+import "@/styles/pages/institutions.css";
 
 /** استبعاد أي إدخال مرتبط بمنتج المجمع/القرارات المحذوف */
 const PUBLIC_INSTITUTIONS = INSTITUTIONS.filter(
@@ -18,82 +31,35 @@ const PUBLIC_INSTITUTIONS = INSTITUTIONS.filter(
     !/مجمع الفقه|المجمع الفقهي|قرارات فقهية/.test(`${i.name} ${i.description}`),
 );
 
-const TYPE_LABELS: Record<Institution["type"], string> = {
-  mosque: "المساجد",
-  center: "المراكز الإسلامية",
-  university: "الجامعات",
-  library: "المكتبات",
-};
-
-const TYPE_ICONS: Record<Institution["type"], LucideIcon> = {
-  mosque: Building2,
-  center: Library,
-  university: GraduationCap,
-  library: BookOpen,
-};
-
-const TYPE_FILTERS: { key: Institution["type"] | "all"; label: string }[] = [
-  { key: "all", label: "الكل" },
+const TYPE_FILTERS: { key: Institution["type"] | "الكل"; label: string }[] = [
+  { key: "الكل", label: "الكل" },
   { key: "mosque", label: "المساجد" },
   { key: "university", label: "الجامعات" },
   { key: "center", label: "المراكز" },
   { key: "library", label: "المكتبات" },
 ];
 
-// ─── Institution Card ─────────────────────────────────────────────────────────
-
-function InstitutionCard({ inst }: { inst: Institution }) {
-  return (
-    <div className="inst-card soft-card soft-card--on-light mj-pressable" id={inst.id}>
-      <div className="inst-card__head">
-        <span className="inst-card__icon" aria-hidden="true">{(() => { const I = TYPE_ICONS[inst.type]; return <I size={22} strokeWidth={1.5} />; })()}</span>
-        <div className="inst-card__meta">
-          <h3 className="inst-card__name">{inst.name}</h3>
-          <span className="inst-card__location">
-            {inst.city}، {inst.country}
-          </span>
-        </div>
-        <span className="inst-card__type-badge">{TYPE_LABELS[inst.type]}</span>
-        {inst.contentStatus === "needs_review" && !inst.website ? (
-          <span className="inst-card__review-badge" title="التعريف موجز ويُستكمل عند توفر مصدر رسمي">تعريف موجز</span>
-        ) : null}
-      </div>
-      <p className="inst-card__desc">{inst.description}</p>
-      <div className="inst-card__links">
-        {inst.website && (
-          <a
-            href={inst.website}
-            className="inst-card__link inst-card__link--web"
-            target="_blank" rel="noopener noreferrer"
-          >
-            <Globe size={13} strokeWidth={1.8} aria-hidden="true" /> الموقع الرسمي
-          </a>
-        )}
-        {inst.mapQuery && (
-          <a
-            href={`https://maps.google.com/?q=${encodeURIComponent(inst.mapQuery)}`}
-            className="inst-card__link inst-card__link--map"
-            target="_blank" rel="noopener noreferrer"
-          >
-            <MapPin size={13} strokeWidth={1.8} aria-hidden="true" /> الموقع على الخريطة
-          </a>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ─── Main Page ────────────────────────────────────────────────────────────────
-
 export default function InstitutionsPage() {
-  const [filter, setFilter] = useState<Institution["type"] | "all">("all");
+  const [activeType, setActiveType] = useState<Institution["type"] | "الكل">("الكل");
+  const [activeCountry, setActiveCountry] = useState<string>("الكل");
+  const [search, setSearch] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+
+  const featured = useMemo(() => getFeaturedInstitutions(), []);
 
   useEffect(() => {
     applyPageSeo({
       path: "/institutions",
       title: "المؤسسات الإسلامية | سُنّة",
-      description: "دليل المؤسسات الإسلامية والمراكز الشرعية، مساجد ومعاهد وجامعات وهيئات إسلامية.",
-      keywords: ["مؤسسات إسلامية", "مراكز إسلامية", "معاهد شرعية", "جامعات إسلامية", "هيئات دينية"],
+      description:
+        "دليل المؤسسات الإسلامية والمراكز الشرعية، مساجد ومعاهد وجامعات وهيئات إسلامية.",
+      keywords: [
+        "مؤسسات إسلامية",
+        "مراكز إسلامية",
+        "معاهد شرعية",
+        "جامعات إسلامية",
+        "هيئات دينية",
+      ],
       jsonLd: [
         {
           "@context": "https://schema.org",
@@ -111,95 +77,204 @@ export default function InstitutionsPage() {
       ],
     });
   }, []);
-  const [search, setSearch] = useState("");
 
-  const filtered = PUBLIC_INSTITUTIONS.filter((inst) => {
-    const matchType = filter === "all" || inst.type === filter;
-    const matchSearch = arabicMatchAny([inst.name, inst.city, inst.country, inst.description], search);
-    return matchType && matchSearch;
-  });
+  const filtered = useMemo(() => {
+    return PUBLIC_INSTITUTIONS.filter((inst) => {
+      if (activeType !== "الكل" && inst.type !== activeType) return false;
+      if (activeCountry !== "الكل" && inst.country !== activeCountry) return false;
+      if (search.trim()) {
+        return arabicMatchAny(
+          [inst.name, inst.city, inst.country, inst.description],
+          search,
+        );
+      }
+      return true;
+    });
+  }, [activeType, activeCountry, search]);
+
+  const activeFilterCount = [
+    activeType !== "الكل",
+    activeCountry !== "الكل",
+  ].filter(Boolean).length;
 
   return (
     <UtilityScreen compose="mark">
-    <SectionTemplatePage
-      route="/institutions"
-      title="دليل المؤسسات الإسلامية"
-      subtitle="فهرس بأبرز المساجد والجامعات والمراكز البحثية والمكتبات الإسلامية في العالم."
-      eyebrow="الدليل الإسلامي"
-      breadcrumb={[
-        { label: "الرئيسية", href: "/" },
-        { label: "الدليل الإسلامي", href: "/islamic-directory" },
-        { label: "المؤسسات" },
-      ]}
-    >
-      <div className="inst-page" dir="rtl">
-        <div className="inst-search-wrap">
-          <input
-            type="text"
-            className="vault-search"
-            aria-label="ابحث باسم المؤسسة أو البلد أو المدينة…"
-            placeholder="ابحث باسم المؤسسة أو البلد أو المدينة…"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            dir="rtl"
+      <AppPage
+        themeId="history"
+        sectionRoute="/institutions"
+        title="دليل المؤسسات الإسلامية"
+        subtitle="فهرس بأبرز المساجد والجامعات والمراكز البحثية والمكتبات الإسلامية في العالم."
+        eyebrow="الدليل الإسلامي"
+        breadcrumb={[
+          { label: "الرئيسية", href: "/" },
+          { label: "الدليل الإسلامي", href: "/islamic-directory" },
+          { label: "المؤسسات" },
+        ]}
+      >
+        <div className="ilm-discover inst-discover" data-testid="inst-discover" dir="rtl">
+          <PageHeaderV2
+            eyebrow="استكشاف"
+            title="ابدأ الاستكشاف"
+            description="بطاقات حديثة ومؤسسات مميزة — بنفس تجربة المساجد والمشاهد."
           />
-          {search && (
-            <button type="button" className="vault-search-clear" onClick={() => setSearch("")} aria-label="مسح البحث">
-              ✕
-            </button>
-          )}
-        </div>
 
-        <div className="inst-filters" role="tablist" aria-label="تصفية حسب نوع المؤسسة">
-          {TYPE_FILTERS.map((f) => (
-            <button
-              key={f.key}
-              type="button"
-              role="tab"
-              aria-selected={filter === f.key}
-              className={`vault-tab${filter === f.key ? " vault-tab--active" : ""}`}
-              onClick={() => setFilter(f.key as Institution["type"] | "all")}
-            >
-              {f.label}
-              <span className="vault-tab__count">
-                {f.key === "all"
-                  ? PUBLIC_INSTITUTIONS.length
-                  : PUBLIC_INSTITUTIONS.filter((i) => i.type === f.key).length}
-              </span>
-            </button>
-          ))}
-        </div>
+          {featured.length > 0 ? (
+            <section className="ilm-featured" aria-labelledby="inst-featured-title">
+              <div className="ilm-section__head">
+                <SectionTitle id="inst-featured-title" className="ilm-section__title">
+                  مؤسسات مميزة
+                </SectionTitle>
+                <SupportingText className="ilm-section__sub">
+                  أبرز المؤسسات التي يبدأ بها الاستكشاف
+                </SupportingText>
+              </div>
+              <div className="ilm-featured__track">
+                {featured.map((inst) => (
+                  <InstitutionDiscoverCard
+                    key={`featured-${inst.id}`}
+                    institution={inst}
+                    variant="featured"
+                  />
+                ))}
+              </div>
+            </section>
+          ) : null}
 
-        {search && <p className="inst-results-count">{filtered.length} نتيجة لـ "{search}"</p>}
-
-        {filtered.length === 0 ? (
-          <div className="vault-empty">
-            <div className="vault-empty__icon" aria-hidden="true">
-              <Search size={40} strokeWidth={1.3} />
+          <section className="ilm-discover__controls" aria-label="تصفية وبحث">
+            <div className="ilm-search-wrap">
+              <Search size={16} className="ilm-search__icon" aria-hidden />
+              <input
+                type="search"
+                className="ilm-search"
+                placeholder="ابحث باسم المؤسسة أو البلد أو المدينة…"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                aria-label="البحث في المؤسسات الإسلامية"
+              />
             </div>
-            <p>لا مؤسسات مطابقة. جرّب نوعًا آخر أو امسح البحث.</p>
-          </div>
-        ) : (
-          <div className="inst-grid">
-            {filtered.map((inst) => (
-              <InstitutionCard key={inst.id} inst={inst} />
-            ))}
-          </div>
-        )}
 
-        <p className="inst-disclaimer">
-          * هذا الدليل مرجعي تعريفي. للتحقق من المعلومات يُرجى مراجعة المواقع الرسمية لكل مؤسسة.
-        </p>
+            <div className="ilm-chips" role="tablist" aria-label="تصفية حسب نوع المؤسسة">
+              {TYPE_FILTERS.map((f) => (
+                <button
+                  key={f.key}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeType === f.key}
+                  className={`ilm-chip${activeType === f.key ? " ilm-chip--active" : ""}`}
+                  onClick={() => setActiveType(f.key)}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
 
-        <div className="twh-share">
-          <ShareButtons title="المؤسسات الإسلامية — سُنّة" url="https://www.ssunnah.com/institutions" />
+            <div className="ilm-toolbar">
+              <p className="ilm-count" aria-live="polite">
+                {filtered.length === PUBLIC_INSTITUTIONS.length
+                  ? `${filtered.length} مؤسسة`
+                  : `${filtered.length} من أصل ${PUBLIC_INSTITUTIONS.length}`}
+              </p>
+              <FilterToggle
+                expanded={filtersOpen}
+                onClick={() => setFiltersOpen(true)}
+                label={
+                  activeFilterCount > 0 ? `تصفية (${activeFilterCount})` : "تصفية متقدمة"
+                }
+              />
+            </div>
+          </section>
+
+          <FilterBottomSheet
+            open={filtersOpen}
+            onClose={() => setFiltersOpen(false)}
+            title="تصفية المؤسسات"
+          >
+            <div className="ilm-sheet-filters">
+              <label className="ilm-sheet-field">
+                <span>الدولة</span>
+                <select
+                  className="ilm-select"
+                  value={activeCountry}
+                  onChange={(e) => setActiveCountry(e.target.value)}
+                  aria-label="فلترة حسب الدولة"
+                >
+                  {INSTITUTION_COUNTRIES.map((country) => (
+                    <option key={country} value={country}>
+                      {country === "الكل" ? "كل الدول" : country}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="ilm-sheet-field">
+                <span>النوع</span>
+                <select
+                  className="ilm-select"
+                  value={activeType}
+                  onChange={(e) =>
+                    setActiveType(e.target.value as Institution["type"] | "الكل")
+                  }
+                  aria-label="فلترة حسب النوع"
+                >
+                  {TYPE_FILTERS.map((f) => (
+                    <option key={f.key} value={f.key}>
+                      {f.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <button
+                type="button"
+                className="ilm-sheet-apply"
+                onClick={() => setFiltersOpen(false)}
+              >
+                عرض النتائج ({filtered.length})
+              </button>
+            </div>
+          </FilterBottomSheet>
+
+          <section className="ilm-catalog" aria-labelledby="inst-catalog-title">
+            <SectionTitle id="inst-catalog-title" className="ilm-section__title">
+              جميع المؤسسات
+            </SectionTitle>
+            {filtered.length === 0 ? (
+              <EmptyStateV2
+                title={EMPTY.search}
+                description="جرّب مسح التصفية أو تغيير كلمة البحث."
+                ctaLabel="مسح التصفية"
+                onCtaClick={() => {
+                  setSearch("");
+                  setActiveType("الكل");
+                  setActiveCountry("الكل");
+                }}
+              />
+            ) : (
+              <div className="ilm-grid">
+                {filtered.map((inst) => (
+                  <InstitutionDiscoverCard key={inst.id} institution={inst} />
+                ))}
+              </div>
+            )}
+          </section>
+
+          <p className="inst-disclaimer">
+            * هذا الدليل مرجعي تعريفي. للتحقق من المعلومات يُرجى مراجعة المواقع الرسمية لكل مؤسسة.
+          </p>
+
+          <div className="ilm-share-wrap">
+            <ShareButtons
+              title="المؤسسات الإسلامية — سُنّة"
+              url="https://www.ssunnah.com/institutions"
+            />
+          </div>
+          <div className="inst-quiz-wrap">
+            <SectionQuiz
+              sectionId="islamic-history"
+              title="اختبر معلوماتك حول المؤسسات والمعالم"
+              count={4}
+            />
+          </div>
         </div>
-        <div className="px-4 pb-6 mt-4">
-          <SectionQuiz sectionId="islamic-history" title="اختبر معلوماتك حول المؤسسات والمعالم" count={4} />
-        </div>
-      </div>
-    </SectionTemplatePage>
-  
+      </AppPage>
     </UtilityScreen>
   );
 }
