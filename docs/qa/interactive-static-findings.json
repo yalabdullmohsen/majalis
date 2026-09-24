@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "pr": "PR-0",
+  "measuredAt": "2026-09-24T21:37:05.688Z",
+  "commit": "36ec6a62b",
+  "routesFromRegistry": 385,
+  "sourceFilesScanned": 1784,
+  "tagCounts": {
+    "buttonOpenTags": 1337,
+    "anchorOpenTags": 129,
+    "roleButton": 24,
+    "onClickAttrs": 1461
+  },
+  "staticFindings": {
+    "hrefHash": 0,
+    "emptyOnClick": 0,
+    "javascriptHref": 0,
+    "notImplementedOrTodoAction": 0
+  },
+  "samples": {
+    "hrefHash": [],
+    "emptyOnClick": [],
+    "javascriptHref": [],
+    "notImplemented": []
+  },
+  "runtimeStatus": "NOT_MEASURED",
+  "note": "Static scan only. PASS/BROKEN/NO_OP runtime counts require Playwright matrix (PR-2+)."
+}
