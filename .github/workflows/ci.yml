@@ -502,6 +502,8 @@ jobs:
       - name: Assert dist artifact matches this source
         run: |
           set -euo pipefail
+          # Same-run reuse: stamped attempt may be older than github.run_attempt when
+          # `rerun --failed` skips a successful build producer (see isCompatibleWorkflowRunAttempt).
           node .github/scripts/ci/dist-artifact-identity.mjs assert \
             --dist artifacts/majalis/dist \
             --source-sha "${{ needs.classify.outputs.source_sha }}" \
@@ -579,6 +581,8 @@ jobs:
       - name: Assert dist artifact matches this source
         run: |
           set -euo pipefail
+          # Same-run reuse: stamped attempt may be older than github.run_attempt when
+          # `rerun --failed` skips a successful build producer (see isCompatibleWorkflowRunAttempt).
           node .github/scripts/ci/dist-artifact-identity.mjs assert \
             --dist artifacts/majalis/dist \
             --source-sha "${{ needs.classify.outputs.source_sha }}" \
@@ -649,6 +653,8 @@ jobs:
       - name: Assert dist artifact matches this source
         run: |
           set -euo pipefail
+          # Same-run reuse: stamped attempt may be older than github.run_attempt when
+          # `rerun --failed` skips a successful build producer (see isCompatibleWorkflowRunAttempt).
           node .github/scripts/ci/dist-artifact-identity.mjs assert \
             --dist artifacts/majalis/dist \
             --source-sha "${{ needs.classify.outputs.source_sha }}" \

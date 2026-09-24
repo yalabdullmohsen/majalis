@@ -16,6 +16,7 @@ import {
   computeLocalSourceFingerprint,
   createDistArtifactManifest,
   formatMismatchTable,
+  isCompatibleWorkflowRunAttempt,
   readDistArtifactManifest,
   resolveCanonicalSourceSha,
   validateManifestShape,
@@ -95,11 +96,19 @@ describe("manifest schema", () => {
     assert.ok(r.rows.some((row) => row.field === "workflowRunId"));
   });
 
-  it("rejects artifact from a previous run attempt", () => {
+  it("allows same-run dist reuse from an earlier attempt (rerun-failed)", () => {
     const m = createDistArtifactManifest({ ...base, workflowRunAttempt: "1" });
+    const r = assertDistArtifactManifest(m, { ...base, workflowRunAttempt: "2" });
+    assert.equal(r.ok, true);
+    assert.equal(isCompatibleWorkflowRunAttempt("1", "2"), true);
+  });
+
+  it("rejects artifact stamped for a newer attempt than the consumer", () => {
+    const m = createDistArtifactManifest({ ...base, workflowRunAttempt: "3" });
     const r = assertDistArtifactManifest(m, { ...base, workflowRunAttempt: "2" });
     assert.equal(r.ok, false);
     assert.ok(r.rows.some((row) => row.field === "workflowRunAttempt"));
+    assert.equal(isCompatibleWorkflowRunAttempt("3", "2"), false);
   });
 });
 

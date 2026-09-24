@@ -48,9 +48,12 @@ export {
 
 export {
   SCHOLARLY_FORBIDDEN_PUBLISH_CTA,
+  SCHOLARLY_FORBIDDEN_HOSTED_DOWNLOAD_CTA,
+  SCHOLARLY_OPEN_ORIGINAL_CTA,
   SCHOLARLY_RESEARCH_PDF_UPLOAD_ALLOWED,
   SCHOLARLY_SUGGEST_CTA,
   isSafeExternalHttpUrl,
+  safeOriginalSourceHref,
 } from "./url-policy";
 
 export {
