@@ -1,5 +1,5 @@
 /**
- * بطاقات نتائج بحث متخصصة حسب عائلة النوع — بلا تسميات إنجليزية.
+ * بطاقات نتائج بحث — هوية سُنّة موحّدة (أيقونة + نوع + وصف + مصدر + سهم).
  */
 import { memo, type ReactNode } from "react";
 import { Link } from "wouter";
@@ -7,6 +7,7 @@ import {
   BookMarked,
   BookOpen,
   Building2,
+  ChevronLeft,
   GraduationCap,
   Landmark,
   MapPin,
@@ -25,6 +26,7 @@ import {
   resolveSearchMatchReason,
   type SearchMatchReason,
 } from "@/features/search/search-match-reason";
+import { isUnusableSearchHref } from "@/features/search/search-sanitize";
 
 export type SearchResultItem = AppSearchResult & {
   partial?: boolean;
@@ -72,7 +74,9 @@ function verificationLabel(status?: string | null, hasSource?: boolean): string 
     status === "pending_review" ||
     status === "pending" ||
     status === "needs_review" ||
-    status === "draft"
+    status === "draft" ||
+    status === "archived" ||
+    status === "disabled"
   ) {
     return null;
   }
@@ -86,12 +90,16 @@ function resultHref(item: SearchResultItem): string {
   if (item.href) return item.href;
   if (item.kind === "qa") return `/quiz?qa=${encodeURIComponent(item.id)}`;
   if (item.kind === "fawaid") return `/fawaid#${encodeURIComponent(item.id)}`;
-  return "/search";
+  return "";
 }
 
 export function isBlockedSearchHref(href?: string | null): boolean {
   if (!href) return false;
-  return /^\/(admin|dashboard|internal|login|register|auth|fiqh-council)(\/|$)/i.test(href);
+  // مسارات إدارية + مجمع ملغى — تُستبعد من نتائج البحث العامة
+  if (/^\/(admin|dashboard|internal|login|register|auth|fiqh-council)(\/|$)/i.test(href)) {
+    return true;
+  }
+  return isUnusableSearchHref(href);
 }
 
 export const SearchResultCard = memo(function SearchResultCard({
@@ -106,9 +114,11 @@ export const SearchResultCard = memo(function SearchResultCard({
   onOpen?: (item: SearchResultItem) => void;
 }) {
   const href = resultHref(item);
-  if (isBlockedSearchHref(href)) return null;
+  if (!href || isBlockedSearchHref(href)) return null;
   if (
     item.verification_status === "draft" ||
+    item.verification_status === "archived" ||
+    item.verification_status === "disabled" ||
     item.verification_status === "pending_review" ||
     item.verification_status === "pending" ||
     item.verification_status === "needs_review" ||
@@ -148,24 +158,29 @@ export const SearchResultCard = memo(function SearchResultCard({
         className="srch-result-card__link"
         onClick={() => onOpen?.(item)}
       >
-        <div className="srch-result-card__top">
-          <span className="srch-result-card__kind" data-family={family}>
-            <Icon size={14} strokeWidth={2} aria-hidden="true" />
-            {kindLabel}
+        <span className="srch-result-card__icon" aria-hidden="true">
+          <Icon size={18} strokeWidth={1.85} />
+        </span>
+        <span className="srch-result-card__body">
+          <span className="srch-result-card__top">
+            <span className="srch-result-card__kind" data-family={family}>
+              {kindLabel}
+            </span>
+            {verified ? <span className="srch-result-card__status">{verified}</span> : null}
           </span>
-          {verified ? <span className="srch-result-card__status">{verified}</span> : null}
-        </div>
-        <h3 className="srch-result-card__title">{highlightText(item.title, query)}</h3>
-        <p className="srch-result-card__reason">{reason.label}</p>
-        {snippet ? (
-          <p className="srch-result-card__excerpt">{highlightText(snippet, query)}</p>
-        ) : null}
-        {source ? (
-          <p className="srch-result-card__source">
-            المصدر: {highlightText(source, query)}
-          </p>
-        ) : null}
-        <span className="srch-result-card__open">فتح</span>
+          <h3 className="srch-result-card__title">{highlightText(item.title, query)}</h3>
+          {snippet ? (
+            <p className="srch-result-card__excerpt">{highlightText(snippet, query)}</p>
+          ) : (
+            <p className="srch-result-card__reason">{reason.label}</p>
+          )}
+          {source ? (
+            <p className="srch-result-card__source">المصدر: {highlightText(source, query)}</p>
+          ) : null}
+        </span>
+        <span className="srch-result-card__chevron" aria-hidden="true">
+          <ChevronLeft size={18} strokeWidth={2} />
+        </span>
       </Link>
     </article>
   );

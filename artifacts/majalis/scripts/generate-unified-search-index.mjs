@@ -16,30 +16,46 @@ const { getSurahList } = await import("../src/lib/quran-api.ts");
 const { normalizeArabic } = await import("../src/shared/arabic-normalize.ts");
 const { ADHKAR_CATEGORIES, getAllAdhkarItems } = await import("../src/lib/adhkar-seed.ts");
 const { NATIONS } = await import("../src/lib/nations-seed.ts");
+const { PROPHETS } = await import("../src/lib/prophets-data.ts");
 const { MUSHAF_TAFSIR_EDITIONS } = await import("../src/lib/quran-data/tafsir-editions.ts");
 const { IA_REDIRECTS } = await import("../src/lib/ia-final-structure.ts");
 const { isHiddenFromNav } = await import("../src/lib/nav-visibility.ts");
 
 const REDIRECT_HREFS = new Set(Object.keys(IA_REDIRECTS));
+/** مسارات بلا صفحة محتوى صالحة في البحث العام */
+const BLOCKED_SEARCH_HREFS = new Set(["/search", "/knowledge/quiz", "/qa"]);
 
 /** @typedef {{ id: string, kind: string, titleAr: string, href: string, norm: string, meta?: string }} SearchDoc */
 
 /** @type {SearchDoc[]} */
 const docs = [];
 const seen = new Set();
+const dedupeKeys = new Set();
+
+function entityDedupKey(titleAr, href) {
+  const clean = String(href || "").split("?")[0].split("#")[0].replace(/\/$/, "") || "/";
+  let title = normalizeArabic(titleAr || "");
+  if (title === "علم التفسير" || title === "التفسير" || title === "تفسير") title = "التفسير";
+  return `${clean}::${title}`;
+}
 
 /** @param {SearchDoc} d */
 function push(d) {
   if (!d.titleAr || seen.has(d.id)) return;
+  const key = entityDedupKey(d.titleAr, d.href);
+  if (dedupeKeys.has(key)) return;
   seen.add(d.id);
+  dedupeKeys.add(key);
   docs.push(d);
 }
 
 function pushDoc(id, kind, titleAr, href, parts = [], meta) {
   const clean = String(href || "").split("?")[0].split("#")[0];
   if (REDIRECT_HREFS.has(clean) || clean === "/qa" || clean.startsWith("/qa/")) return;
+  if (BLOCKED_SEARCH_HREFS.has(clean)) return;
   // لا تُفهرس أقسام مخفية من الاكتشاف العام أو مساراتها الفرعية
   if (isHiddenFromNav(clean)) return;
+  if (!String(titleAr || "").trim()) return;
   push({
     id,
     kind,
@@ -88,7 +104,8 @@ for (const t of MUSHAF_TAFSIR_EDITIONS) {
     t.author,
   );
 }
-pushDoc("tafsir:hub", "tafsir", "علم التفسير", "/tafsir", ["تفسير القرآن", "أصول التفسير"], "قسم");
+pushDoc("tafsir:hub-only", "tafsir", "التفسير", "/tafsir", ["تفسير القرآن", "أصول التفسير", "علم التفسير"], "قسم");
+// ملاحظة: لا نُفهرس «علم التفسير» كعنوان منفصل — يُدمَج مع «التفسير» عبر dedupe
 
 // ── الأحاديث ───────────────────────────────────────────────────────────────
 pushDoc("hadith:hub", "hadith", "الحديث وعلومه", "/hadith", ["صحيح البخاري", "صحيح مسلم", "أحاديث"], "قسم");
@@ -134,6 +151,20 @@ for (const n of NATIONS) {
     `/nations/${n.slug}`,
     [n.prophet?.name, n.punishment?.type, "أمم سابقة"],
     n.prophet?.name,
+  );
+}
+
+// ── الأنبياء (المسار المعتمد /prophets/:slug فقط) ───────────────────────────
+for (const p of PROPHETS) {
+  if (!p?.slug || !p?.arabicName) continue;
+  const title = `${p.arabicName} عليه السلام`.replace(/محمد عليه السلام/, "محمد ﷺ");
+  pushDoc(
+    `prophet:${p.slug}`,
+    "prophet",
+    p.slug === "muhammad" ? "محمد ﷺ" : title,
+    `/prophets/${p.slug}`,
+    [p.arabicName, p.title, p.quranTitle, ...(p.keyAttributes ?? []), "نبي", "قصص الأنبياء"],
+    "نبي",
   );
 }
 
@@ -199,7 +230,6 @@ const APP_PAGES = [
   ["app:adhan-settings", "settings", "إعدادات الأذان", "/adhan-settings", ["أذان", "مؤذن"]],
   ["app:settings", "settings", "الإعدادات", "/settings", ["حساب", "تفضيلات"]],
   ["app:notification-settings", "settings", "إعدادات الإشعارات", "/notification-settings", ["إشعارات"]],
-  ["app:search", "app", "البحث الشامل", "/search", ["بحث"]],
   ["app:assistant", "app", "المساعد العلمي", "/assistant", ["مساعد"]],
   ["app:quiz", "app", "لعبة سين جيم", "/quiz", ["اختبار"]],
   ["app:ibtillaat", "prophet", "ابتلاءات الأنبياء", "/prophets", ["ابتلاء", "أنبياء"]],
@@ -348,6 +378,11 @@ try {
     };
     for (const it of items) {
       if (it.section === "quiz") continue;
+      // الأنبياء والأمم: الفهرس المعتمد /prophets و /nations فقط — لا /knowledge/...
+      if (it.section === "prophets" || it.section === "nations") continue;
+      const body = String(it.body || "").trim();
+      if (body.length < 40) continue;
+      if (it.review_status && it.review_status !== "verified") continue;
       pushDoc(
         `knowledge:${it.id}`,
         it.section || "knowledge",
@@ -357,16 +392,7 @@ try {
         (it.tags || [])[0],
       );
     }
-    if (items.some((it) => it.section === "quiz")) {
-      pushDoc(
-        "knowledge:quiz-bank",
-        "quiz",
-        "بنك أسئلة سين جيم (معرفة)",
-        "/knowledge/quiz",
-        ["سين جيم", "أسئلة"],
-        "knowledge",
-      );
-    }
+    // لا نُفهرس /knowledge/quiz — الصفحة بلا محتوى فهرسي صالح في البحث العام
   }
 } catch (e) {
   console.warn("knowledge index skipped:", e.message);
