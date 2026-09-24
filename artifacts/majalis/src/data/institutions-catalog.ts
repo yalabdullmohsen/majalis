@@ -27,3 +27,30 @@ export type Institution = {
 import raw from "./institutions-catalog.json";
 
 export const INSTITUTIONS: Institution[] = raw as Institution[];
+
+/** مواقع مميزة لشريط Discover — دون تعديل نصوص الكتالوج. */
+export const FEATURED_INSTITUTION_IDS = [
+  "masjid-haram",
+  "masjid-nabawi",
+  "masjid-aqsa",
+  "al-azhar-mosque-inst",
+  "medina-university",
+  "qarawiyyin",
+] as const;
+
+export function getInstitutionById(id: string): Institution | undefined {
+  return INSTITUTIONS.find((inst) => inst.id === id);
+}
+
+export function getFeaturedInstitutions(): Institution[] {
+  return FEATURED_INSTITUTION_IDS.map((id) => getInstitutionById(id)).filter(
+    (inst): inst is Institution => Boolean(inst),
+  );
+}
+
+export const INSTITUTION_COUNTRIES: string[] = [
+  "الكل",
+  ...Array.from(new Set(INSTITUTIONS.map((i) => i.country))).sort((a, b) =>
+    a.localeCompare(b, "ar"),
+  ),
+];

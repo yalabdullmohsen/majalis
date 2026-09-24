@@ -1,89 +1,16 @@
-/* InstitutionsPage — deferred */
+/* InstitutionsPage — Discover (يشارك islamic-landmarks.css للهيكل) */
 
-/* ── منقول من الطبقة الحرجة: institutions ── */
-/* ══════════════════════════════════════════════════════════════════════════════
-   Phase 5 — دليل المؤسسات (Institutions)
-   ══════════════════════════════════════════════════════════════════════════════ */
-
-.inst-page { padding-bottom: 4rem; }
-.inst-search-wrap { position: relative; margin-bottom: 1.25rem; }
-.inst-filters {
+.inst-discover .inst-card__links {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
-  margin-bottom: 1.25rem;
-}
-.inst-results-count {
-  font-size: 0.85rem;
-  color: var(--color-text-muted, var(--mj-ink-2, #4f5f58));
-  margin-bottom: 0.75rem;
+  margin-top: 0.25rem;
 }
 
-.inst-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
-  gap: 1rem;
-}
-
-.inst-card {
-  background: var(--ss-card-bg, var(--color-surface, var(--mj-surface)));
-  border: 1px solid var(--ds-line-color);
-  border-radius: var(--radius-card, 24px);
-  padding: 1.125rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-  transition: box-shadow 0.15s;
-}
-.inst-card:hover { box-shadow: var(--ds-shadow); }
-.inst-card__head {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-}
-.inst-card__icon { font-size: 1.8rem; flex-shrink: 0; line-height: 1; }
-.inst-card__meta { flex: 1; min-width: 0; }
-.inst-card__name {
-  margin: 0 0 0.2rem;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--color-text, var(--mj-ink, #16241e));
-  line-height: 1.3;
-}
-.inst-card__location { font-size: 0.78rem; color: var(--color-text-muted, var(--mj-ink-2, #4f5f58)); }
-.inst-card__type-badge {
-  flex-shrink: 0;
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 0.2rem 0.55rem;
-  border-radius: 999px;
-  background: var(--ds-emerald-soft);
-  color: var(--ds-emerald-deep);
-  white-space: nowrap;
-}
-.inst-card__review-badge {
-  flex-shrink: 0;
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 0.15rem 0.5rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, #c9a227 18%, transparent);
-  color: #8a6d1a;
-  white-space: nowrap;
-}
-html.dark .inst-card__review-badge,
-html[data-theme="dark"] .inst-card__review-badge {
-  background: color-mix(in srgb, #e8c547 22%, transparent);
-  color: #f0df9a;
-}
-.inst-card__desc {
-  margin: 0;
-  font-size: 0.825rem;
-  color: var(--color-text-muted, var(--mj-ink-2, #4f5f58));
-  line-height: 1.55;
-}
-.inst-card__links { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.25rem; }
-.inst-card__link {
+.inst-discover .inst-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
   font-size: 0.8rem;
   padding: 0.3rem 0.7rem;
   border-radius: 999px;
@@ -91,43 +18,55 @@ html[data-theme="dark"] .inst-card__review-badge {
   font-weight: 600;
   transition: opacity 0.15s;
 }
-.inst-card__link:hover { opacity: 0.8; }
-.inst-card__link--web { background: var(--ds-emerald-soft); color: var(--ds-emerald-deep); }
-.inst-card__link--map { background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent); color: var(--majalis-emerald, var(--mj-brand)); }
+
+.inst-discover .inst-card__link:hover {
+  opacity: 0.85;
+}
+
+.inst-discover .inst-card__link--web {
+  background: color-mix(in srgb, var(--mj-brand, #146b52) 14%, #fff);
+  color: var(--mj-brand-deep, #0d4a38);
+}
+
+.inst-discover .inst-card__link--map {
+  background: color-mix(in srgb, var(--mj-brand, #146b52) 8%, transparent);
+  color: var(--mj-brand, #146b52);
+}
 
 .inst-disclaimer {
   font-size: 0.78rem;
   color: var(--color-text-muted, var(--mj-ink-2, #4f5f58));
-  margin-top: 2rem;
+  margin: 0.5rem 0 0;
   text-align: center;
 }
 
+.inst-quiz-wrap {
+  padding-inline: 0;
+  padding-block-end: 1.5rem;
+  margin-block-start: 0.5rem;
+}
 
-/* توحيد هوية بطاقات المؤسسات */
-.inst-card {
-  border-color: color-mix(in srgb, var(--mj-brand) 18%, var(--ss-border, var(--color-border, var(--mj-hairline))));
-  box-shadow: var(--ss-shadow-soft, none);
-}
-.inst-card:hover {
-  box-shadow: var(--ss-shadow-soft, 0 6px 18px -12px rgba(15, 40, 30, 0.18));
-  border-color: color-mix(in srgb, var(--mj-brand) 28%, var(--ss-border, var(--color-border)));
-}
-html.dark .inst-page,
-html[data-theme="dark"] .inst-page {
-  background: var(--mj-bg, #121816);
-  color: var(--mj-ink, #f3f7f5);
-}
+/* الحفاظ على عقد الثيم/البوابات لـ .inst-card في الوضع الداكن */
 html.dark .inst-card,
 html[data-theme="dark"] .inst-card {
-  background: var(--mj-surface, var(--mj-surface)) !important;
-  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, var(--mj-hairline)) !important;
-  color: var(--mj-ink, #f3f7f5) !important;
+  background: var(--mj-surface, #1b2421);
+  border-color: color-mix(in srgb, var(--mj-brand, #5fbf98) 28%, #2a3832);
+  color: var(--mj-ink, #f3f7f5);
 }
-html.dark .inst-card__name,
-html[data-theme="dark"] .inst-card__name { color: var(--mj-ink, #f3f7f5) !important; }
-html.dark .inst-card__desc,
-html.dark .inst-card__location,
-html[data-theme="dark"] .inst-card__desc,
-html[data-theme="dark"] .inst-card__location {
-  color: var(--mj-ink-2, #c5d0cb) !important;
+
+html.dark .inst-discover .inst-card__link--web,
+html[data-theme="dark"] .inst-discover .inst-card__link--web {
+  background: color-mix(in srgb, var(--mj-brand, #1a8f6e) 28%, #1b2421);
+  color: #d8f0e6;
+}
+
+html.dark .inst-discover .inst-card__link--map,
+html[data-theme="dark"] .inst-discover .inst-card__link--map {
+  background: color-mix(in srgb, var(--mj-brand, #1a8f6e) 18%, #1b2421);
+  color: #d8f0e6;
+}
+
+html.dark .inst-disclaimer,
+html[data-theme="dark"] .inst-disclaimer {
+  color: var(--mj-muted, #9aada4);
 }
