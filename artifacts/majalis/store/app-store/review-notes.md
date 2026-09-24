@@ -1,139 +1,75 @@
-# App Review Notes — سُنّة
+# App Review Notes — سُنّة (paste into App Store Connect)
 
 **Version:** 1.0  
+**Build:** 54 (remediation after rejection of Build 53)  
 **Bundle ID:** com.yousef.majlisilm  
-**Category:** Education / Reference  
 
 ---
 
-## App Overview
+## Guideline 2.1 — Sign-in / Demonstration Mode
 
-سُنّة ("Islamic Knowledge Councils") is a comprehensive Arabic-language Islamic education platform. It provides:
+### Demo account (works offline of email confirmation)
 
-- Full Quran browsing with audio streaming from multiple renowned reciters
-- Adhkar (daily remembrances) with a counter, morning/evening dhikr
-- Accurate prayer times calculator using the Adhan library (local computation)
-- Qibla compass using device geolocation (one-time, not stored)
-- Verified hadith database (sahih, da'if, mawdu') with scholarly grading
-- Islamic jurisprudence (fiqh), fatwas, and scholarly rulings
-- Lessons and annual courses from Islamic scholars
-- Learning paths and flashcards for students of Islamic knowledge
-- Prophet's biography (seerah), Companions' biographies, Islamic history
+| Field | Value |
+|-------|-------|
+| Email | `apple.review@ssunnah.com` |
+| Password | `SunnahReview-2026!` |
 
-The app serves the Kuwaiti Islamic scholarly community and Arabic-speaking Muslims worldwide.
+**How to sign in (any of these):**
+
+1. Open **تسجيل الدخول** (`/login`).
+2. Enter the email and password above → Sign in.  
+   **OR** tap **«وضع مراجعة App Store»** (App Store Review Mode) under the guest link — one tap, no network auth required.
+3. You land on Home as a signed-in review user (local demonstration session). Logged-in surfaces (settings account, vault/progress affordances, etc.) become available. **No admin privileges.**
+
+### Guest access (no account required)
+
+Most of the product works without login: Quran Mushaf, adhkar, prayer times, Qibla, hadith, lessons browsing, fiqh, seerah. Tap **المتابعة كزائر** on the login screen or use the app from Home.
+
+### Why the previous demo failed
+
+The prior note pointed at `info@ssunnah.com` with a password “provided separately,” and production Supabase may require email confirmation. Build 54 adds a **local Demonstration Mode** that does not depend on email confirmation or network auth success.
 
 ---
 
-## Religious Content Sources
+## Guideline 2.5.4 — Background Audio
 
-**Quranic Text:** Sourced from the Official Quran (Hafs narration). Displayed as-is, no AI modification.
+The app declares `UIBackgroundModes = audio` because **Quran tilawa continues while backgrounded or locked**.
 
-**Hadith Content:** Sourced from authenticated hadith collections. Each hadith record includes:
-- Chain classification (sahih/da'if/mawdu')
-- `is_approved` and `verified_by` fields reviewed by human scholars before publication
-- Source attribution (Sahih Bukhari, Muslim, Abu Dawud, etc.)
+### Exact verification path (please follow)
 
-**Scholarly Content:** All lessons, fatwas, and jurisprudential content is uploaded by verified scholars (`scientific_reviewer` role) and approved via the admin review queue before being published.
+1. Launch **سُنّة**.
+2. Open **المصحف** (Quran) — main Quran entry / route `/mushaf`.
+3. Tap an ayah → start **تلاوة** (play) from the ayah actions or audio dock. Confirm sound plays in foreground.
+4. Press **Home** (or switch apps) — **audio must keep playing ≥ 60 seconds**.
+5. Open **Control Center** — **Now Playing** shows surah/ayah and reciter; pause/play work.
+6. **Lock** the device — audio continues; Lock Screen transport controls work.
+7. Unlock and return — position and ayah remain consistent.
 
-**No religious content is AI-generated.** The AI assistant feature (`/assistant`) answers general queries but explicitly refers users to qualified scholars for personal fatwas. AI responses are not stored in the religious content database.
+There is **no** silent keep-alive. Background mode is only for real Quran/lesson playback via `AVAudioSession` `.playback` + Now Playing (`MajlisPlaybackAudioPlugin`).
+
+Prayer reminders use notifications (`remote-notification`) and are separate from continuous background audio.
+
+Device runbook (internal): `artifacts/majalis/docs/AUDIO_BACKGROUND_DEVICE_RUNBOOK.md`.
+
+---
+
+## App Overview (short)
+
+Arabic RTL Islamic education: full Quran with audio, adhkar, prayer times, Qibla, hadith, fiqh, lessons. Optional account. No ads / no tracking SDKs.
 
 ---
 
 ## Permissions
 
-### 1. Location (When In Use)
-- **Purpose:** Calculate Qibla direction and distance to Mecca
-- **Usage:** One-time read on the Qibla page (`/qibla`) when user opens it
-- **Storage:** Not stored anywhere — computed in-browser and discarded
-- **Fallback:** If user denies, a manual city coordinate selector is available
-- **Info.plist key:** `NSLocationWhenInUseUsageDescription`
-
-### 2. Device Motion / Orientation
-- **Purpose:** Rotate the Qibla compass according to device heading
-- **Usage:** `DeviceOrientationEvent` API — only on Qibla page
-- **iOS Permission:** Explicitly requested via `DeviceOrientationEvent.requestPermission()`
-- **Info.plist key:** `NSMotionUsageDescription`
-
-### 3. Notifications (Local)
-- **Purpose:** Prayer time reminders and daily dhikr reminders
-- **Usage:** User-opted local notifications scheduled via Capacitor LocalNotifications
-- **Control:** Full user control in `/notification-settings` page and iOS Settings
-- **Default:** Off — user must explicitly enable
+- **Location When In Use:** Qibla only; not stored; manual city fallback if denied.
+- **Motion:** Qibla compass heading.
+- **Notifications:** Opt-in prayer/dhikr reminders.
 
 ---
 
-## Account & Data
+## Test tips
 
-**Account system:** Optional. Most content is accessible without an account.
-
-**Registration requires:** Email address only. Used for account management; not shared with third parties or used for advertising.
-
-**Account deletion:** Available at `/account-deletion` — permanently deletes user account and associated data from Supabase.
-
-**Local data (no account needed):**
-- Preferences (dark mode, font size, language) — stored in device localStorage
-- Recent pages visited — stored in device localStorage
-- Adhkar / tasbih counters — stored in device localStorage
-
-**No financial data, no health data, no contacts, no photos are collected.**
-
----
-
-## Third-Party Services
-
-| Service | Purpose | Data sent |
-|---------|---------|-----------|
-| Supabase | Database & Authentication | Email, user ID |
-| Anthropic API | AI Assistant feature (`/assistant`) | User's chat messages (optional feature) |
-| Upstash Redis | Rate limiting (server-side) | Anonymized request metadata |
-
-**No advertising SDKs. No analytics SDKs. No tracking.**
-
----
-
-## Demo Account (for Review)
-
-If the reviewer needs to test logged-in features:
-
-- **Email:** info@ssunnah.com  
-- **Password:** *(provided separately via App Review Notes field in App Store Connect)*
-
-Logged-in features include: submitting content suggestions, saving learning progress, and accessing the personal vault.
-
-*Note: Most content (Quran, adhkar, prayer times, hadith, lessons) is fully accessible without login.*
-
----
-
-## Background Audio (Guideline 2.5.4)
-
-The app declares `UIBackgroundModes = audio` because **Quran tilawa continues while the app is backgrounded or the device is locked**.
-
-### How to verify (required)
-
-1. Launch the app → open **المصحف** (Quran Mushaf) via the main Quran entry (deep link `/mushaf`).
-2. Tap any ayah → start **تلاوة** (play) from the ayah sheet or audio dock.
-3. Press Home / switch apps — **audio must keep playing**.
-4. Open Control Center — **Now Playing** shows the surah, ayah, and reciter; pause/play work.
-5. Lock the device — audio continues; Lock Screen transport controls work.
-6. Return to the app — playback position and ayah remain consistent.
-
-There is **no** silent audio keep-alive. Background mode is used only for real Quran (and related lesson) media playback via `AVAudioSession` category `.playback`.
-
-Local prayer **notifications** use `remote-notification` / notification sounds and are independent of continuous background audio.
-
----
-
-## Test Notes
-
-1. The app requires an internet connection for lesson streaming and database content.
-2. Prayer times are calculated locally using the `adhan` npm library — no server request needed.
-3. The Qibla page requests location permission. On simulator, location can be set to "Kuwait City" (29.3759° N, 47.9774° E) for testing.
-4. The AI assistant (`/assistant`) requires an active Anthropic API connection.
-5. The app is in Arabic (RTL layout). All user-facing text is in Arabic.
-
----
-
-## Known Limitations
-
-- Icon assets are placeholder — final design assets will be provided before release.
-- Android build is configured but this submission is iOS only.
+- Arabic RTL UI.
+- Prayer times compute locally (Adhan library).
+- Network needed for streamed lessons / remote content; Mushaf tilawa needs reachable audio URLs (or cached ayahs).
