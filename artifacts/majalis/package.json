@@ -666,6 +666,7 @@
     "test:islamic-sects-a11y-responsive": "node --import tsx src/lib/__tests__/islamic-sects-a11y-responsive-gate.test.ts",
     "content:islamic-sects-inventory": "node scripts/build-islamic-sects-inventory.mjs",
     "test:mushaf-reference-rebuild-pr0": "node --import tsx src/lib/__tests__/mushaf-reference-rebuild-pr0-gate.test.ts",
+    "test:mushaf-reference-rebuild-pr1": "node --import tsx src/lib/__tests__/mushaf-reference-rebuild-pr1-gate.test.ts",
     "test:startup-and-dark-mode-pr0": "node --import tsx src/lib/__tests__/startup-and-dark-mode-pr0-gate.test.ts",
     "test:mushaf-display-mode": "node --import tsx src/lib/__tests__/mushaf-display-mode-gate.test.ts"
   },
