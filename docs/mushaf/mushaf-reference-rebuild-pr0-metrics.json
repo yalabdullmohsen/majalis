@@ -1,0 +1,44 @@
+{
+  "program": "mushaf-reference-rebuild",
+  "stage": 0,
+  "stageName": "reference-baseline-inventory",
+  "measuredAt": "2026-09-24T18:40:00Z",
+  "commitBase": "aac7385b6",
+  "branch": "cursor/mushaf-reference-rebuild-pr0-baseline",
+  "report": "docs/mushaf/MUSHAF_REFERENCE_REBUILD_BASELINE.md",
+  "acceptanceClaimForbidden": "MUSHAF_REFERENCE_REBUILD_COMPLETE",
+  "quranFingerprint": {
+    "codesSha": "b21f6bdad370b8a6feea12236c844f809b3bdf9c191d312ac216543ed3c3ab7d",
+    "textsSha": "d7d6cae756ecb5fafe2885e9ab0f7193e9771864216b93ceb364b80a39a6ae26",
+    "verseOrderSha": "c7fb16ced00ce9d1cacd0d1405d9ad2958219e1f7bbe89c1ae37899d84fb1264",
+    "ayahCount": 6236,
+    "wordCount": 83665,
+    "mushafId": 1
+  },
+  "currentTokens": {
+    "paper": "#FCF6E3",
+    "ink": "#1C160E",
+    "ayahMarkerFill": "#C9A82E",
+    "ayahMarkerNumber": "#5F4814",
+    "fontSizePx": 24,
+    "lineHeight": 1.85,
+    "ayahMarkSizeEm": 1.15
+  },
+  "referenceSamplesApprox": {
+    "paperReading": "#FFFCF7",
+    "paperSearchChrome": "#F4EFE9",
+    "ink": "#0B0909",
+    "ayahGoldJpegAvg": "#B29575"
+  },
+  "gaps": [
+    "paper-more-yellow-than-reference-ivory",
+    "page-background-uses-gradient",
+    "surah-header-visual-fidelity",
+    "search-index-ui-alignment",
+    "qpc-font-store-license-pending"
+  ],
+  "qpcFontFiles": 604,
+  "fontLicenseId": "kfgqpc-qpc-v2-pending-store-signoff",
+  "productPatchInThisPr": false,
+  "deviceMatrix": "NOT_MEASURED"
+}
