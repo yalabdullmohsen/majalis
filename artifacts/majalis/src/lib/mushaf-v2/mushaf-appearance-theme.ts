@@ -1,37 +1,38 @@
 /**
- * MushafAppearanceTheme — عقد مظهر المصحف (Accent فقط).
- * لا يمس النص القرآني ولا Page Mapping ولا Geometry.
+ * MushafAppearanceTheme — مظهر المصحف الذهبي الثابت فقط.
+ * لا اختيار مستخدم · لا مظهر زمردي · لا يمس النص القرآني ولا Page Mapping ولا Geometry.
  *
- * القيم: EMERALD | GOLD
- * التطبيق عبر data-mushaf-accent على .nm-root
+ * MUSHAF_GOLD_APPEARANCE — هوية Accent الرسمية الوحيدة.
  */
 
-export type MushafAppearanceTheme = "EMERALD" | "GOLD";
+/** قيمة data-attribute الثابتة */
+export type MushafAccentAttr = "gold";
 
-/** قيمة data-attribute (kebab) */
-export type MushafAccentAttr = "emerald" | "gold";
+/**
+ * @deprecated لا اختيار مظهر بعد الآن — القيمة الوحيدة GOLD للتوافق المؤقت مع المستدعين.
+ */
+export type MushafAppearanceTheme = "GOLD";
+
+export const MUSHAF_GOLD_APPEARANCE = "GOLD" as const;
 
 export const MUSHAF_APPEARANCE_THEME = {
-  EMERALD: "EMERALD",
   GOLD: "GOLD",
 } as const satisfies Record<MushafAppearanceTheme, MushafAppearanceTheme>;
 
-export const MUSHAF_ACCENT_DEFAULT: MushafAppearanceTheme = "EMERALD";
+/** الافتراضي والوحيد */
+export const MUSHAF_ACCENT_DEFAULT: MushafAppearanceTheme = "GOLD";
 
-export const MUSHAF_ACCENT_STORAGE_KEY = "ssunnah-mushaf-accent-theme-v1";
+/**
+ * مفتاح التخزين القديم (v1) — يُحذف مرة واحدة عند Migration.
+ * لا يُكتب إليه بعد الآن.
+ */
+export const MUSHAF_ACCENT_STORAGE_KEY_LEGACY = "ssunnah-mushaf-accent-theme-v1";
 
-/** زمردي — Light */
-export const mushafEmeraldPrimary = "#0E7A6B" as const;
-export const mushafEmeraldSecondary = "#0A5C52" as const;
-export const mushafEmeraldMarkerNumber = "#F7F3E8" as const;
-export const mushafEmeraldMetaBorder = "#0E7A6B" as const;
+/** Schema version لإعدادات المصحف (مظهر ثابت — لا قيمة Accent محفوظة) */
+export const MUSHAF_SETTINGS_SCHEMA_VERSION_KEY = "ssunnah-mushaf-settings-schema-v2";
+export const MUSHAF_SETTINGS_SCHEMA_VERSION = "2-gold-only";
 
-/** زمردي — Night (هادئ بلا توهج) */
-export const mushafEmeraldDarkPrimary = "#2A9B88" as const;
-export const mushafEmeraldDarkSecondary = "#1E7A6C" as const;
-export const mushafEmeraldDarkMarkerNumber = "#F0F7F4" as const;
-
-/** ذهبي — من توكنات المطبعي (تُعرَّف في mushaf-warm-yellow-tokens) */
+/** ذهبي — Light */
 export const mushafGoldPrimary = "#C9A82E" as const;
 export const mushafGoldSecondary = "#B89620" as const;
 export const mushafGoldMarkerNumber = "#5F4814" as const;
@@ -39,25 +40,19 @@ export const mushafGoldDarkPrimary = "#C4A030" as const;
 export const mushafGoldDarkSecondary = "#A88618" as const;
 export const mushafGoldDarkMarkerNumber = "#F0E2B8" as const;
 
-export function themeToAccentAttr(theme: MushafAppearanceTheme): MushafAccentAttr {
-  return theme === "GOLD" ? "gold" : "emerald";
+export function themeToAccentAttr(_theme?: MushafAppearanceTheme): MushafAccentAttr {
+  return "gold";
 }
 
-export function accentAttrToTheme(attr: string | null | undefined): MushafAppearanceTheme {
-  if (attr === "gold") return "GOLD";
-  return "EMERALD";
+export function accentAttrToTheme(_attr?: string | null): MushafAppearanceTheme {
+  return "GOLD";
 }
 
-export function parseMushafAppearanceTheme(raw: string | null | undefined): MushafAppearanceTheme | null {
-  if (!raw) return null;
-  const v = raw.trim().toUpperCase();
-  if (v === "EMERALD" || v === "GREEN" || v === "TURQUOISE" || v === "OPENING") return "EMERALD";
-  if (v === "GOLD" || v === "YELLOW" || v === "PRINTED") return "GOLD";
-  if (raw === "emerald" || raw === "green") return "EMERALD";
-  if (raw === "gold") return "GOLD";
-  return null;
+/** أي قيمة قديمة تُتجاهل — النتيجة دائمًا GOLD */
+export function parseMushafAppearanceTheme(_raw?: string | null): MushafAppearanceTheme {
+  return "GOLD";
 }
 
-export function mushafAppearanceThemeLabel(theme: MushafAppearanceTheme): string {
-  return theme === "GOLD" ? "الذهبي" : "الزمردي";
+export function mushafAppearanceThemeLabel(_theme?: MushafAppearanceTheme): string {
+  return "الذهبي";
 }

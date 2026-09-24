@@ -1,43 +1,50 @@
 /**
- * تفضيل Accent المصحف (زمردي / ذهبي) — محلي، بلا حساب.
- * data-mushaf-accent على .nm-root (أو html أثناء الإقلاع).
+ * مظهر المصحف الذهبي الثابت — Migration مرة واحدة من مفتاح Accent القديم.
+ * لا قراءة مظهر زمردي · لا حفظ اختيار · data-mushaf-accent="gold" دائمًا.
  */
 
 import {
-  MUSHAF_ACCENT_DEFAULT,
-  MUSHAF_ACCENT_STORAGE_KEY,
-  accentAttrToTheme,
-  parseMushafAppearanceTheme,
-  themeToAccentAttr,
+  MUSHAF_ACCENT_STORAGE_KEY_LEGACY,
+  MUSHAF_SETTINGS_SCHEMA_VERSION,
+  MUSHAF_SETTINGS_SCHEMA_VERSION_KEY,
   type MushafAppearanceTheme,
 } from "./mushaf-appearance-theme";
 
+/** يزيل مفتاح المظهر القديم ويثبّت schema — مرة واحدة بلا Flash زمردي */
+export function migrateMushafAccentStorageOnce(): void {
+  if (typeof localStorage === "undefined") return;
+  try {
+    const schema = localStorage.getItem(MUSHAF_SETTINGS_SCHEMA_VERSION_KEY);
+    if (schema === MUSHAF_SETTINGS_SCHEMA_VERSION) {
+      /* حتى مع schema حديثة: امسح المفتاح القديم إن بقي من جلسة قديمة */
+      localStorage.removeItem(MUSHAF_ACCENT_STORAGE_KEY_LEGACY);
+      return;
+    }
+    localStorage.removeItem(MUSHAF_ACCENT_STORAGE_KEY_LEGACY);
+    localStorage.setItem(MUSHAF_SETTINGS_SCHEMA_VERSION_KEY, MUSHAF_SETTINGS_SCHEMA_VERSION);
+  } catch {
+    /* ignore */
+  }
+}
+
+/** دائمًا GOLD — التوافق مع المستدعين القدامى */
 export function loadMushafAccentTheme(): MushafAppearanceTheme {
-  try {
-    const raw = localStorage.getItem(MUSHAF_ACCENT_STORAGE_KEY);
-    const parsed = parseMushafAppearanceTheme(raw);
-    if (parsed) return parsed;
-  } catch {
-    /* ignore */
-  }
-  return MUSHAF_ACCENT_DEFAULT;
+  migrateMushafAccentStorageOnce();
+  return "GOLD";
 }
 
-export function saveMushafAccentTheme(theme: MushafAppearanceTheme): void {
-  try {
-    localStorage.setItem(MUSHAF_ACCENT_STORAGE_KEY, theme);
-  } catch {
-    /* ignore */
-  }
-  applyMushafAccentTheme(theme);
+/** لا يحفظ اختيارًا — يطبّق الذهب ويمسح المفتاح القديم فقط */
+export function saveMushafAccentTheme(_theme?: MushafAppearanceTheme): void {
+  migrateMushafAccentStorageOnce();
+  applyMushafAccentTheme("GOLD");
 }
 
-/** يطبّق السمة فورًا دون إعادة تحميل */
+/** يطبّق الذهب فورًا على html و.nm-root — بلا وميض زمردي */
 export function applyMushafAccentTheme(
-  theme: MushafAppearanceTheme = loadMushafAccentTheme(),
+  _theme: MushafAppearanceTheme = "GOLD",
   root?: HTMLElement | null,
 ): void {
-  const attr = themeToAccentAttr(theme);
+  migrateMushafAccentStorageOnce();
   const targets: HTMLElement[] = [];
   if (root) targets.push(root);
   if (typeof document !== "undefined") {
@@ -45,15 +52,14 @@ export function applyMushafAccentTheme(
     document.querySelectorAll<HTMLElement>(".nm-root").forEach((el) => targets.push(el));
   }
   for (const el of targets) {
-    el.setAttribute("data-mushaf-accent", attr);
+    el.setAttribute("data-mushaf-accent", "gold");
+    /* إزالة أي قيمة زمردية عالقة */
+    if (el.getAttribute("data-mushaf-accent") !== "gold") {
+      el.setAttribute("data-mushaf-accent", "gold");
+    }
   }
 }
 
-export function readAccentThemeFromDom(root?: HTMLElement | null): MushafAppearanceTheme {
-  const el =
-    root ??
-    (typeof document !== "undefined"
-      ? document.querySelector<HTMLElement>(".nm-root") ?? document.documentElement
-      : null);
-  return accentAttrToTheme(el?.getAttribute("data-mushaf-accent"));
+export function readAccentThemeFromDom(_root?: HTMLElement | null): MushafAppearanceTheme {
+  return "GOLD";
 }

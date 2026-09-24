@@ -43,7 +43,6 @@ import {
   MushafReaderController,
   MushafPageRepository,
   QuranSettingsRepository,
-  useMushafAppearance,
 } from "@/lib/mushaf-v2";
 import { useMediaSession } from "@/hooks/useMediaSession";
 import { STATUS } from "@/lib/ui-copy";
@@ -176,7 +175,6 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   const [focusReadingMode, setFocusReadingMode] = useState(false);
   const [pageArrowsEnabled, setPageArrowsEnabled] = useState(() => loadPageArrowsEnabled());
   const [controlsMoreOpen, setControlsMoreOpen] = useState(false);
-  const { theme: accentTheme, accentAttr, setTheme: setAccentTheme } = useMushafAppearance();
   const focusReadingModeRef = useRef(false);
   focusReadingModeRef.current = focusReadingMode;
   const [gotoOpen, setGotoOpen] = useState(false);
@@ -1189,7 +1187,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       /* مصدر واحد: تفضيل التركيز الصريح فقط — عقد الإخفاء عبر data-chrome */
       data-focus-reading={focusReadingMode ? "1" : "0"}
       data-page-arrows={pageArrowsEnabled ? "1" : "0"}
-      data-mushaf-accent={accentAttr}
+      data-mushaf-accent="gold"
       data-signature-preset={import.meta.env.DEV ? "sunnah-mushaf-signature-v1" : undefined}
       dir="rtl"
       renderPage={renderPage}
@@ -1209,10 +1207,10 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         <div
           aria-hidden
           data-testid="mushaf-appearance-diag"
-          data-selected-theme={accentTheme}
-          data-provider-theme={accentTheme}
-          data-root-accent={accentAttr}
-          data-persisted-theme={typeof localStorage !== "undefined" ? localStorage.getItem("ssunnah-mushaf-accent-theme-v1") ?? "" : ""}
+          data-selected-theme="GOLD"
+          data-provider-theme="GOLD"
+          data-root-accent="gold"
+          data-persisted-theme=""
           data-page-layout={page === 1 ? "opening" : page === 2 ? "lead" : "regular"}
           style={{
             position: "fixed",
@@ -1231,7 +1229,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
             whiteSpace: "pre-wrap",
           }}
         >
-          {`theme=${accentTheme}\nattr=${accentAttr}\npage=${page}`}
+          {`theme=GOLD\nattr=gold\npage=${page}`}
         </div>
       ) : null}
       {import.meta.env.DEV ? (
@@ -1363,8 +1361,6 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         onPageArrowsEnabledChange={onPageArrowsEnabledChange}
         moreOpen={controlsMoreOpen}
         onMoreOpenChange={onControlsMoreOpenChange}
-        accentTheme={accentTheme}
-        onAccentThemeChange={setAccentTheme}
         gotoOpen={gotoOpen}
         onGotoOpenChange={onControlsGotoOpenChange}
         onGoto={onControlsGoto}

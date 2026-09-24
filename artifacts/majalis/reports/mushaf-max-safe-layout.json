@@ -17,7 +17,7 @@
     "sidePx": { "from": 5, "to": 2 },
     "SIGNATURE_FONT_SIZE_MAX_PX": 24,
     "SIGNATURE_WIDTH_CAPACITY_EM": 15.8,
-    "cacheVersion": "sms-2026-09-24-gold-page-numbers",
+    "cacheVersion": "sms-2026-09-24-single-gold",
     "vertical": "metrics-lock: safe-area only (no stacked top/bottom pad)",
     "footerPadding": "tightened inside fixed 40px footer slot"
   },
