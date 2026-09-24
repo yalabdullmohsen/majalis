@@ -3,6 +3,8 @@ import { applyPageSeo } from "@/lib/seo";
 import { Link, useLocation } from "wouter";
 import { ArrowRight, Bell, Compass, HandHeart, MapPin, CircleDot, Settings2 } from "lucide-react";
 import { useSharedPrayerCountdown } from "@/components/prayer/PrayerCountdownProvider";
+import { markPrayer } from "@/lib/prayer-performance-marks";
+import { recordDevMount, recordDevRender } from "@/lib/dev-mount-counters";
 import {
   formatTime12,
   type PrayerSlot,
@@ -139,9 +141,29 @@ export default function PrayerTimesPage() {
   const [madhab, setMadhab] = useState<PrayerMadhabId>(() => getPrayerMadhab());
   const [highLat, setHighLat] = useState<HighLatitudeRuleId>(() => getHighLatitudeRule());
 
+  recordDevRender("prayerPage");
+
   function handleBack() {
     goBackOrFallback(normalizeNavPath(location), "/");
   }
+
+  useEffect(() => {
+    recordDevMount("prayerPage");
+    markPrayer("prayer:route-mount");
+    markPrayer("prayer:first-frame");
+    let stableRaf = 0;
+    let interactiveRaf = 0;
+    stableRaf = requestAnimationFrame(() => {
+      markPrayer("prayer:first-stable-frame");
+      interactiveRaf = requestAnimationFrame(() => {
+        markPrayer("prayer:interactive");
+      });
+    });
+    return () => {
+      cancelAnimationFrame(stableRaf);
+      cancelAnimationFrame(interactiveRaf);
+    };
+  }, []);
 
   useEffect(() => {
     applyPageSeo({
