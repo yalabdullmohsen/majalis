@@ -137,6 +137,10 @@ const KnowledgeGraphPage = lazy(() => import("@/views/KnowledgeGraphPage"));
 const SectionsPage = lazy(() => import("@/pages/account/SectionsPage"));
 const MindMapPage = lazy(() => import("@/views/MindMapPage"));
 const IslamicLandmarksPage = lazy(() => import("@/views/IslamicLandmarksPage"));
+const IslamicLandmarkDetailPage = lazy(() => import("@/views/IslamicLandmarkDetailPage"));
+const IslamicLandmarksMapExplorerPage = lazy(
+  () => import("@/views/IslamicLandmarksMapExplorerPage"),
+);
 const MutashabihatPage = lazy(() => import("@/views/MutashabihatPage"));
 const QuranMemorizationPage = lazy(() => import("@/pages/quran/QuranMemorizationPage"));
 const QuranMemorizationPlansPage = lazy(() => import("@/pages/quran/QuranMemorizationPlansPage"));
@@ -420,7 +424,15 @@ export default function AppRoutes() {
       <Route path="/islamic-history/:rest*"><Redirect to="/tarikh-islami" /></Route>
       <Route path="/islamic-history"><Redirect to="/tarikh-islami" /></Route>
       <Route path="/mind-map"><SafeLazyRoute component={MindMapPage} /></Route>
-      <Route path="/islamic-landmarks"><SafeLazyRoute component={IslamicLandmarksPage} /></Route>
+      <Route path="/islamic-landmarks/map">
+        <SafeLazyRoute component={IslamicLandmarksMapExplorerPage} />
+      </Route>
+      <Route path="/islamic-landmarks/:id">
+        <SafeLazyRoute component={IslamicLandmarkDetailPage} />
+      </Route>
+      <Route path="/islamic-landmarks">
+        <SafeLazyRoute component={IslamicLandmarksPage} />
+      </Route>
       <Route path="/mutashabihat"><SafeLazyRoute component={MutashabihatPage} /></Route>
       <Route path="/scholars/:id"><SafeLazyRoute component={ScholarProfilePage} /></Route>
       <Route path="/scholars"><SafeLazyRoute component={ScholarProfilePage} /></Route>

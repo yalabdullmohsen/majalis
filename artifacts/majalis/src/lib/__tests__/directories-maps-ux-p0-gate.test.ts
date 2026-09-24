@@ -42,15 +42,26 @@ assert.match(mediaCss, /object-fit:\s*cover/, "object-fit cover");
 assert.match(mediaCss, /writing-mode:\s*horizontal-tb/, "كتابة أفقية");
 
 const landmarksPage = read("src/views/IslamicLandmarksPage.tsx");
-assert.match(landmarksPage, /DirectoryMedia/, "الصفحة تستخدم DirectoryMedia");
+assert.match(landmarksPage, /DirectoryMedia|LandmarkDiscoverCard/, "الصفحة تستخدم بطاقات وسائط");
 assert.match(landmarksPage, /FilterBottomSheet/, "فلاتر في ورقة");
-// البطاقة المختصرة: لا capacity داخل LandmarkCard (يُسمح في النافذة التفصيلية)
-const cardFn = landmarksPage.slice(
-  landmarksPage.indexOf("function LandmarkCard"),
-  landmarksPage.indexOf("function LandmarkModal"),
-);
-assert.doesNotMatch(cardFn, /capacity/, "بطاقة القائمة لا تعرض سعة بلا مصدر");
+assert.match(landmarksPage, /AppPage|PageHeaderV2/, "قالب AppPage/PageHeader");
+assert.match(landmarksPage, /islamic-landmarks\/map/, "الخريطة عبر مستكشف ملء الشاشة");
+assert.doesNotMatch(landmarksPage, /ilm-map-wrap|showMap/, "لا خريطة مضمّنة في Discover");
 assert.doesNotMatch(landmarksPage, /FloatingBackButton/, "لا زر رجوع عائم في المشاهد");
+assert.doesNotMatch(landmarksPage, /LandmarkModal|ilm-modal/, "لا نافذة تفاصيل قديمة");
+
+const discoverCard = read("src/components/landmarks/LandmarkDiscoverCard.tsx");
+assert.match(discoverCard, /DirectoryMedia/, "البطاقة تستخدم DirectoryMedia");
+assert.doesNotMatch(discoverCard, /capacity/, "بطاقة القائمة لا تعرض سعة بلا مصدر");
+
+const detailPage = read("src/views/IslamicLandmarkDetailPage.tsx");
+assert.match(detailPage, /getLandmarkById/, "تفاصيل من الكتالوج");
+assert.match(detailPage, /PageHeaderV2/, "ترويسة تفاصيل حديثة");
+assert.match(detailPage, /significance/, "الأهمية الإسلامية معروضة");
+
+const explorerPage = read("src/views/IslamicLandmarksMapExplorerPage.tsx");
+assert.match(explorerPage, /LandmarksMap/, "المستكشف يحمّل الخريطة");
+assert.match(explorerPage, /ilm-explorer|data-testid="ilm-map-explorer"/, "مستكشف معرف");
 
 // ── Tasbeeh ───────────────────────────────────────────────────────
 const tasbeeh = read("src/components/reading/TasbeehCounter.tsx");

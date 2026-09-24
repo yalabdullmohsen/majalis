@@ -561,3 +561,27 @@ export const ISLAMIC_LANDMARKS: IslamicLandmark[] = [
     tags: ["تمبكتو", "مالي", "طين", "ساحل"],
   }
 ];
+
+/** مواقع مميزة للواجهة Discover — ترتيب عرض فقط، بلا تعديل على السجلات أعلاه. */
+export const FEATURED_LANDMARK_IDS = [
+  "masjid-haram",
+  "masjid-nabawi",
+  "masjid-aqsa",
+  "al-azhar-mosque",
+  "qarawiyyin-mosque",
+  "cordoba",
+] as const;
+
+export function getLandmarkById(id: string): IslamicLandmark | undefined {
+  return ISLAMIC_LANDMARKS.find((lm) => lm.id === id);
+}
+
+export function getFeaturedLandmarks(): IslamicLandmark[] {
+  return FEATURED_LANDMARK_IDS.map((id) => getLandmarkById(id)).filter(
+    (lm): lm is IslamicLandmark => Boolean(lm),
+  );
+}
+
+export function landmarkMapsUrl(lm: Pick<IslamicLandmark, "lat" | "lng" | "name">): string {
+  return `https://www.google.com/maps/search/?api=1&query=${lm.lat},${lm.lng}`;
+}
