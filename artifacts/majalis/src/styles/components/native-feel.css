@@ -47,6 +47,9 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  min-height: var(--touch-min, 44px);
+  min-width: var(--touch-min, 44px);
+  touch-action: manipulation;
 }
 
 /* —— تمرير حريري —— */

@@ -1,0 +1,725 @@
+{
+  "schemaVersion": 1,
+  "measuredAt": "2026-09-24T21:45:20.759Z",
+  "commit": "36ec6a62b",
+  "interactiveCssRulesUnder44": 127,
+  "samples": [
+    {
+      "file": "src/components/ui/compact-section-header.css",
+      "sel": ".compact-section-header__chip",
+      "issues": [
+        "min-height 24.8px"
+      ]
+    },
+    {
+      "file": "src/features/mushaf-madinah/mushaf-madinah.css",
+      "sel": ".mm-controls__exit",
+      "issues": [
+        "min-height 29.6px"
+      ]
+    },
+    {
+      "file": "src/features/mushaf-madinah/mushaf-madinah.css",
+      "sel": ".mm-audio-dock__range button",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/features/mushaf-madinah/mushaf-madinah.css",
+      "sel": ".mm-audio-dock__hifz-toggle, .mm-audio-dock__apply-range",
+      "issues": [
+        "min-height 42px"
+      ]
+    },
+    {
+      "file": "src/features/mushaf-madinah/mushaf-madinah.css",
+      "sel": ".mm-audio-dock__reciter-btn",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/features/mushaf-madinah/mushaf-madinah.css",
+      "sel": ".mm-audio-dock__controls button",
+      "issues": [
+        "min-width 40px",
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/features/mushaf-madinah/mushaf-madinah.css",
+      "sel": ".mm-audio-dock__rates button",
+      "issues": [
+        "min-width 36px"
+      ]
+    },
+    {
+      "file": "src/features/mushaf-madinah/mushaf-madinah.css",
+      "sel": ".mm-ayah-bar__actions button",
+      "issues": [
+        "min-height 34.4px"
+      ]
+    },
+    {
+      "file": "src/features/mushaf-madinah/mushaf-madinah.css",
+      "sel": ".mm-tafsir__depth-btn, .mm-tafsir__ed-btn",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/features/mushaf-madinah/mushaf-madinah.css",
+      "sel": ".mm-tafsir__depth-btn, .mm-tafsir__ed-btn",
+      "issues": [
+        "min-height 32px"
+      ]
+    },
+    {
+      "file": "src/features/mushaf-madinah/mushaf-madinah.css",
+      "sel": ".mm-tafsir__editions .quran-tab",
+      "issues": [
+        "min-height 34px"
+      ]
+    },
+    {
+      "file": "src/features/mushaf-madinah/mushaf-madinah.css",
+      "sel": ".ayah-action-sheet__tilawa-reader-btn",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/features/mushaf-madinah/mushaf-madinah.css",
+      "sel": ".ayah-action-sheet__tafsir .quran-btn--segment, .ayah-action-sheet__tafsir-depth button",
+      "issues": [
+        "min-height 28px"
+      ]
+    },
+    {
+      "file": "src/features/mushaf-madinah/mushaf-madinah.css",
+      "sel": ".ayah-action-sheet__tafsir-font .ayah-action-sheet__font-btn",
+      "issues": [
+        "min-width 28px",
+        "min-height 28px"
+      ]
+    },
+    {
+      "file": "src/features/mushaf-madinah/mushaf-madinah.css",
+      "sel": ".mm-search-sheet__juz-rail button",
+      "issues": [
+        "min-height 28px"
+      ]
+    },
+    {
+      "file": "src/index.css",
+      "sel": ".tasbeeh-counter__btn",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/index.css",
+      "sel": ".reading-toolbar__size",
+      "issues": [
+        "min-width 40px"
+      ]
+    },
+    {
+      "file": "src/styles/admin.css",
+      "sel": ".admin-logout-btn",
+      "issues": [
+        "min-height 34px"
+      ]
+    },
+    {
+      "file": "src/styles/admin.css",
+      "sel": ".admin-nav__item",
+      "issues": [
+        "min-height 38px"
+      ]
+    },
+    {
+      "file": "src/styles/admin.css",
+      "sel": ".ii-btn",
+      "issues": [
+        "min-height 38px"
+      ]
+    },
+    {
+      "file": "src/styles/components/filters.css",
+      "sel": ".mj-filter-bar__badge",
+      "issues": [
+        "min-width 20px"
+      ]
+    },
+    {
+      "file": "src/styles/components/first-visit-intro.css",
+      "sel": ".first-visit-intro__btn",
+      "issues": [
+        "min-height 42.4px"
+      ]
+    },
+    {
+      "file": "src/styles/components/global-search-modal.css",
+      "sel": ".gsm-clear-btn",
+      "issues": [
+        "min-width 32px",
+        "min-height 32px"
+      ]
+    },
+    {
+      "file": "src/styles/components/global-search-modal.css",
+      "sel": ".gsm-chip",
+      "issues": [
+        "min-height 32px"
+      ]
+    },
+    {
+      "file": "src/styles/components/global-search-modal.css",
+      "sel": ".gsm-quicklink-btn",
+      "issues": [
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/components/home-universal-search.css",
+      "sel": ".hus-filters button",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/components/hub-card.css",
+      "sel": ".navbar-prayer-chip",
+      "issues": [
+        "min-height 33.6px"
+      ]
+    },
+    {
+      "file": "src/styles/components/ipad-responsive-layout.css",
+      "sel": ".navbar-v3__search-btn",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/components/mobile-pwa.css",
+      "sel": ".pwa-soft-banner__btn",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/components/muezzin-picker.css",
+      "sel": ".mzp-preview-btn",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/components/page-hero.css",
+      "sel": ".page-hero-mj__actions .mj-btn--primary, .page-hero-mj__actions .m2030-btn--primary",
+      "issues": [
+        "min-height 42.4px"
+      ]
+    },
+    {
+      "file": "src/styles/components/page-hero.css",
+      "sel": ".page-hero-mj__actions .mj-btn--ghost, .page-hero-mj__actions .m2030-btn--ghost",
+      "issues": [
+        "min-height 42.4px"
+      ]
+    },
+    {
+      "file": "src/styles/components/page-hero.css",
+      "sel": ".filter-chips__chip",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/components/quran-audio-dock-dismiss.css",
+      "sel": ".mm-audio-dock__controls button.mm-audio-dock__stop",
+      "issues": [
+        "min-width 40px",
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/components/quran-mini-player.css",
+      "sel": ".quran-mini-player__btn",
+      "issues": [
+        "min-width 40px",
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/components/share-faida.css",
+      "sel": ".share-faida__btn",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/components/share-faida.css",
+      "sel": ".share-faida--sm .share-faida__btn",
+      "issues": [
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/components/share-faida.css",
+      "sel": ".share-faida__icon-btn",
+      "issues": [
+        "min-width 32px",
+        "min-height 32px"
+      ]
+    },
+    {
+      "file": "src/styles/components/top-chrome-layout.css",
+      "sel": ".navbar-v3__search-btn",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/components/top-chrome-layout.css",
+      "sel": "/* Identity Reset PR-2 — header مضغوط (مع NavBar) */ html[data-v2-app=\"1\"] .navbar-theme-toggle, html[data-v2-app=\"1\"] .",
+      "issues": [
+        "min-width 36px",
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/components/top-chrome-layout.css",
+      "sel": "html[data-v2-app=\"1\"] .navbar-menu-btn--drawer",
+      "issues": [
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/design-system.css",
+      "sel": "/* ── Buttons ── */ .ds-btn, .ui-card-btn, .page-action-btn, .login-submit",
+      "issues": [
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/design-system.css",
+      "sel": ".ds-btn--sm",
+      "issues": [
+        "min-height 30px"
+      ]
+    },
+    {
+      "file": "src/styles/design-system.css",
+      "sel": ".content-hub-chip",
+      "issues": [
+        "min-height 30px"
+      ]
+    },
+    {
+      "file": "src/styles/design-system.css",
+      "sel": ".ds-filter-toggle",
+      "issues": [
+        "min-height 32px"
+      ]
+    },
+    {
+      "file": "src/styles/design-system.css",
+      "sel": ".search-filters-grid select, .search-filters-grid input",
+      "issues": [
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/design-system.css",
+      "sel": ".ruling-pagination button",
+      "issues": [
+        "min-height 32px"
+      ]
+    },
+    {
+      "file": "src/styles/design-system.css",
+      "sel": ".content-submit-form button",
+      "issues": [
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/design-system.css",
+      "sel": ".login-oauth__btn",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/design-system.css",
+      "sel": ".hcz-row__move button",
+      "issues": [
+        "min-height 28px"
+      ]
+    },
+    {
+      "file": "src/styles/final-release.css",
+      "sel": ".lesson-unified-card__compact-chip",
+      "issues": [
+        "min-height 32px"
+      ]
+    },
+    {
+      "file": "src/styles/final-release.css",
+      "sel": ".content-hub-chip, .ds-chip",
+      "issues": [
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/highlighted-content.css",
+      "sel": ".content-action-bar__btn, .content-action-bar__link",
+      "issues": [
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/islamic-landmarks.css",
+      "sel": ".ilm-chip",
+      "issues": [
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/knowledge-experience.css",
+      "sel": ".kx-filter-row__more",
+      "issues": [
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/m2030/home.css",
+      "sel": ".m2030-btn",
+      "issues": [
+        "min-height 42.4px"
+      ]
+    },
+    {
+      "file": "src/styles/m2030/interactions.css",
+      "sel": "/* ── تبويبات / فلاتر / Chips ── */ .kuwait-tab, .lessons-tab, [class*=\"filter\"] button, .filter-chip, .chip, .segmented",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/m2030/navigation.css",
+      "sel": ".top-section-bar__tab",
+      "issues": [
+        "min-height 37.6px"
+      ]
+    },
+    {
+      "file": "src/styles/majlisilm-shell.css",
+      "sel": ".ai-recitation__btn",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/modern-ui-refresh.css",
+      "sel": ".mj-filter-chip",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/adhan-settings.css",
+      "sel": ".ads-chip",
+      "issues": [
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/adhan-settings.css",
+      "sel": "/* مفتاح قياسي: مسار + مقبض — يغلب قواعد min-height:44 على الأزرار */ .ads-toggle",
+      "issues": [
+        "min-height 31px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/adhan-settings.css",
+      "sel": ".ads-pill-btn",
+      "issues": [
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/adhan-settings.css",
+      "sel": ".ads-pill-btn-ghost",
+      "issues": [
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/adhan-settings.css",
+      "sel": ".ads-toolbar",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/adhan-settings.css",
+      "sel": ".prayer-audio-picker__chip",
+      "issues": [
+        "min-height 32px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/admin-review-hub.css",
+      "sel": ".rh-btn",
+      "issues": [
+        "min-height 37.6px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/admin-v3-shell.css",
+      "sel": ".av3-chip, .av3-chip-btn",
+      "issues": [
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/auth.css",
+      "sel": ".login-tab",
+      "issues": [
+        "min-height 37.6px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/fiqh-hub.css",
+      "sel": ".fiqh-lux-page .section-lobby__chip",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/fiqh-hub.css",
+      "sel": ".fiqh-filters__chip",
+      "issues": [
+        "min-height 32px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/fiqh-hub.css",
+      "sel": ".fiqh-hub-search__icon-btn",
+      "issues": [
+        "min-width 32px",
+        "min-height 32px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/fiqh-hub.css",
+      "sel": ".fiqh-report__chip",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/hadith-design-language.css",
+      "sel": "/* Chips تباين أعلى */ .hdl-chip, .hdl-discover__book",
+      "issues": [
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/hadith.css",
+      "sel": ".hadith-access-bar__sort button",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/hadith.css",
+      "sel": ".hadith-letter-index button",
+      "issues": [
+        "min-width 32px",
+        "min-height 32px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/hadith.css",
+      "sel": ".hadith-access-bar__row--scope button",
+      "issues": [
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/hadith.css",
+      "sel": ".hadith-modal__isnad-toggle",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/hadith.css",
+      "sel": ".hadith-action-btn",
+      "issues": [
+        "min-width 34.4px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/hadith.css",
+      "sel": ".hadith-modal-btn",
+      "issues": [
+        "min-height 41.6px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/hadith.css",
+      "sel": ".hadith-action-btn",
+      "issues": [
+        "min-width 40px",
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/home-legacy.css",
+      "sel": ".home-section-error button",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/knowledge-platform-p0.css",
+      "sel": ".kp-btn",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/lessons-legacy.css",
+      "sel": ".lesson-unified-card__btn",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/lessons-legacy.css",
+      "sel": ".lesson-unified-card--compact .lesson-unified-card__btn",
+      "issues": [
+        "min-height 34px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/lessons.css",
+      "sel": "/* زر التصفية: عرض المحتوى فقط — لا شريط فارغ بعرض الصفحة */ .lessons-v3-sticky .ds-filter-toggle",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/lessons.css",
+      "sel": ".lessons-page-v2 .lesson-unified-card__btn, .lesson-detail-page .lesson-unified-card__btn, .lessons-similar-section .les",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/lessons.css",
+      "sel": ".lessons-page-v2 .lesson-unified-card__actions--compact .lesson-unified-card__btn--secondary, .lessons-page-v2 .lesson-u",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/lessons.css",
+      "sel": ".lesson-detail-report .crb-btn, .crb-btn",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/lessons.css",
+      "sel": ".lesson-filters--compact .lesson-filters__bar",
+      "issues": [
+        "min-height 32px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/lessons.css",
+      "sel": ".lesson-filters__icon-btn",
+      "issues": [
+        "min-width 36px",
+        "min-height 36px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/lessons.css",
+      "sel": ".lesson-filters__badge",
+      "issues": [
+        "min-width 16px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/lessons.css",
+      "sel": ".lesson-filters__search-field input",
+      "issues": [
+        "min-height 32px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/lessons.css",
+      "sel": ".lessons-page-v3 .lesson-filters__chips .filter-chips__chip, .lessons-page-v3 .filter-chips__chip",
+      "issues": [
+        "min-height 32px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/lessons.css",
+      "sel": ".lesson-unified-card__btn",
+      "issues": [
+        "min-height 38.4px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/mawarith.css",
+      "sel": ".mwc-counter-row__btn",
+      "issues": [
+        "min-height 32px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/notifications.css",
+      "sel": ".nh-btn",
+      "issues": [
+        "min-height 32px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/notifications.css",
+      "sel": ".nh-tab",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/prayer-times.css",
+      "sel": ".pts-location, .pts-location--chip",
+      "issues": [
+        "min-height 40px"
+      ]
+    },
+    {
+      "file": "src/styles/pages/prayer-times.css",
+      "sel": ".pts-ranks__toggle",
+      "issues": [
+        "min-height 38.4px"
+      ]
+    }
+  ],
+  "mushafContracts": {
+    "controlsBtnUsesTouchComfortable": true,
+    "chromeMotion180": true,
+    "pageArrow48": true
+  },
+  "note": "Static CSS only — runtime hit-testing NOT_MEASURED without Playwright/device."
+}
