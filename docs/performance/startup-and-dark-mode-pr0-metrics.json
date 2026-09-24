@@ -1,0 +1,30 @@
+{
+  "program": "sunnah-startup-and-dark-mode",
+  "stage": 0,
+  "stageName": "startup-fouc-and-dark-root-cause",
+  "measuredAt": "2026-09-24T19:15:00Z",
+  "commitBase": "16385bace",
+  "branch": "cursor/startup-dark-mode-pr0-rootcause",
+  "report": "docs/performance/STARTUP_AND_DARK_MODE_ROOT_CAUSE.md",
+  "acceptanceClaimForbidden": "SUNNAH_STARTUP_AND_DARK_MODE_COMPLETE",
+  "confirmedClassifications": [
+    "CHUNK_LOAD_FAILURE",
+    "CRITICAL_CSS_NOT_READY",
+    "THEME_HYDRATION_LATE"
+  ],
+  "possibleClassifications": [
+    "STALE_HTML_NEW_ASSETS",
+    "SERVICE_WORKER_WAITING",
+    "CONTROLLER_CHANGE_LOOP"
+  ],
+  "updateUiSources": {
+    "toast": "src/components/ChunkRecoveryToast.tsx",
+    "fullPage": "src/components/ErrorBoundary.tsx",
+    "announce": "src/lib/chunk-recovery.ts"
+  },
+  "appUpdateManagerExists": false,
+  "semanticAppSurfaceTokensExist": false,
+  "productPatchInThisPr": false,
+  "deviceMatrix": "NOT_MEASURED",
+  "testFlight": "NOT_MEASURED"
+}

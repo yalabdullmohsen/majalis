@@ -665,7 +665,8 @@
     "test:knowledge-fabs-spacing": "node --import tsx src/lib/__tests__/knowledge-fabs-spacing-gate.test.ts",
     "test:islamic-sects-a11y-responsive": "node --import tsx src/lib/__tests__/islamic-sects-a11y-responsive-gate.test.ts",
     "content:islamic-sects-inventory": "node scripts/build-islamic-sects-inventory.mjs",
-    "test:mushaf-reference-rebuild-pr0": "node --import tsx src/lib/__tests__/mushaf-reference-rebuild-pr0-gate.test.ts"
+    "test:mushaf-reference-rebuild-pr0": "node --import tsx src/lib/__tests__/mushaf-reference-rebuild-pr0-gate.test.ts",
+    "test:startup-and-dark-mode-pr0": "node --import tsx src/lib/__tests__/startup-and-dark-mode-pr0-gate.test.ts"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
