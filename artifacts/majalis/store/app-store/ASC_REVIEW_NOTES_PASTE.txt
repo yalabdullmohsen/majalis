@@ -1,0 +1,25 @@
+APP STORE CONNECT — Review Notes (copy/paste)
+
+Build: 1.0 (54)
+App: سُنّة (Sunnah)
+
+=== Guideline 2.1 — Demo / Demonstration Mode ===
+
+Email: apple.review@ssunnah.com
+Password: SunnahReview-2026!
+
+OR on the Login screen tap: «وضع مراجعة App Store» (one-tap local review session; no email confirmation).
+
+Guest path: «المتابعة كزائر» — Quran, adhkar, prayer times, hadith, lessons work without login.
+
+Previous info@ssunnah.com note was insufficient when email confirmation blocked sign-in; Build 54 adds local Demonstration Mode.
+
+=== Guideline 2.5.4 — Background Audio ===
+
+1) Open المصحف (/mushaf)
+2) Play tilawa on any ayah
+3) Press Home — audio continues ≥60s
+4) Control Center — Now Playing + pause/play
+5) Lock screen — audio + transport controls continue
+
+UIBackgroundModes=audio is only for real Quran/lesson playback (AVAudioSession playback + Now Playing). No silent keep-alive.

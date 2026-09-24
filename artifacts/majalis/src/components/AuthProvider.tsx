@@ -84,8 +84,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               );
             }
           } else {
-            setUser(null);
-            setStatus("unauthenticated");
+            const { hasAppStoreReviewSession, buildAppStoreReviewUser } = await import(
+              "@/lib/app-store-review-auth"
+            );
+            if (hasAppStoreReviewSession()) {
+              const reviewUser = buildAppStoreReviewUser() as NonNullable<AuthUser>;
+              setUser(reviewUser);
+              setStatus("authenticated");
+              lastUserIdRef.current = reviewUser.id;
+            } else {
+              setUser(null);
+              setStatus("unauthenticated");
+            }
           }
         } catch {
           if (activeRef.current && signedOutGeneration.current === generationAtStart) {
@@ -216,6 +226,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [queryClient]);
 
   const refreshUser = useCallback(async () => {
+    const { hasAppStoreReviewSession, buildAppStoreReviewUser } = await import(
+      "@/lib/app-store-review-auth"
+    );
+    if (hasAppStoreReviewSession()) {
+      const reviewUser = buildAppStoreReviewUser() as NonNullable<AuthUser>;
+      setUser(reviewUser);
+      setStatus("authenticated");
+      return reviewUser;
+    }
     if (!authApi) return null;
     const gen = signedOutGeneration.current;
     const next = await authApi.getCurrentUser();
@@ -225,14 +244,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return next;
   }, [authApi]);
 
+  const login = useCallback(
+    async (email: string, password: string) => {
+      const {
+        matchesAppStoreReviewCredentials,
+        buildAppStoreReviewUser,
+        persistAppStoreReviewSession,
+      } = await import("@/lib/app-store-review-auth");
+      if (matchesAppStoreReviewCredentials(email, password)) {
+        const reviewUser = buildAppStoreReviewUser() as NonNullable<AuthUser>;
+        persistAppStoreReviewSession();
+        lastUserIdRef.current = reviewUser.id;
+        setUser(reviewUser);
+        setStatus("authenticated");
+        return { data: { user: reviewUser, session: null }, error: null } as never;
+      }
+      if (!authApi) return noopAuth();
+      return authApi.signIn(email, password);
+    },
+    [authApi],
+  );
+
   const logout = useCallback(async () => {
-    if (!authApi) return { error: null };
     signedOutGeneration.current += 1;
     const prevId = lastUserIdRef.current ?? user?.id ?? null;
     lastUserIdRef.current = null;
     setUser(null);
     setStatus("unauthenticated");
     queryClient.clear();
+    void import("@/lib/app-store-review-auth").then((m) => m.clearAppStoreReviewSession());
     void import("@/lib/quran-audio-resume").then((m) => m.clearAudioResumeState());
     void import("@/lib/lesson-audio-resume").then((m) => m.clearAllLessonAudioResume());
     void import("@/lib/sync-engine").then((m) => {
@@ -240,6 +280,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       m.stopSyncAndClearScope(m.activeSyncScope(prevId));
       m.bootstrapSyncEngine(null);
     });
+    if (!authApi) return { error: null };
     try {
       return await authApi.signOut();
     } catch (error) {
@@ -280,12 +321,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       isOwner,
       isSuperAdmin,
       isSheikh: governanceRole === "scientific_reviewer" || user?.profile?.role === "sheikh",
-      login: authApi?.signIn ?? noopAuth,
+      login,
       register: authApi?.signUp ?? noopAuth,
       logout,
       refreshUser,
     };
-  }, [authApi, user, status, logout, refreshUser]);
+  }, [authApi, user, status, login, logout, refreshUser]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
