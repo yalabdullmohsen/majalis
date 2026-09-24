@@ -423,7 +423,7 @@ html[data-theme="dark"] .ilm-badge--era {
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
+  padding-top: max(0.75rem, var(--inset-top, 0px));
   background: color-mix(in srgb, var(--mj-surface, #fff) 94%, transparent);
   border-bottom: 1px solid var(--mj-hairline, #d9d3c8);
 }
@@ -530,7 +530,7 @@ html[data-theme="dark"] .ilm-badge--era {
 .ilm-map-state {
   position: absolute;
   inset-inline: 1rem;
-  bottom: calc(1rem + env(safe-area-inset-bottom, 0px) + var(--bottom-nav-height, 0px));
+  bottom: calc(1rem + var(--inset-bottom, 0px) + var(--bottom-nav-height, 0px));
   z-index: 500;
   margin: 0;
   padding: 0.65rem 0.85rem;
