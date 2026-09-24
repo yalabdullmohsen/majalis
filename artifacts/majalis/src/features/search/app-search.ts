@@ -18,6 +18,7 @@ import {
   isSearchScopeId,
   type SearchScopeId,
 } from "@/features/search/search-scopes";
+import { sanitizeSearchResults } from "@/features/search/search-sanitize";
 
 export type AppSearchResult = {
   id: string;
@@ -112,21 +113,22 @@ function flattenGroups(groups: Record<string, UnifiedSearchHit[]>, query = ""): 
 }
 
 function pack(results: AppSearchResult[], extra: Partial<AppSearchResponse> = {}): AppSearchResponse {
+  const cleaned = sanitizeSearchResults(results);
   const groups: Record<string, AppSearchResult[]> = {};
   const counts: Record<string, number> = {};
-  for (const r of results) {
+  for (const r of cleaned) {
     (groups[r.kind] ??= []).push(r);
     counts[r.kind] = (counts[r.kind] ?? 0) + 1;
   }
   return {
-    results,
+    suggestion: null,
+    suggestions: [],
+    responseMs: 0,
+    scope: "all",
+    ...extra,
+    results: cleaned,
     groups,
     counts,
-    suggestion: extra.suggestion ?? null,
-    suggestions: extra.suggestions ?? [],
-    responseMs: extra.responseMs ?? 0,
-    scope: extra.scope ?? "all",
-    ...extra,
   };
 }
 

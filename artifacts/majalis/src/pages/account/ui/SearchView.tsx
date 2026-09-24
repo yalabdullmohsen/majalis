@@ -4,7 +4,6 @@ import {
   BookMarked,
   BookOpen,
   Clock3,
-  Compass,
   Flame,
   GraduationCap,
   Heart,
@@ -21,7 +20,6 @@ import {
 import { Link, useSearch } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { VirtualList } from "@/components/VirtualList";
-import { CompactSectionHeader } from "@/components/ui/CompactSectionHeader";
 import { AppBackButton } from "@/components/common/AppBackButton";
 import { SearchSkeleton } from "@/components/ui-common";
 import { SEARCH_INPUT_ATTRS, handleSearchEnterKey } from "@/lib/search-input";
@@ -48,12 +46,13 @@ import {
   SearchResultCard,
   isBlockedSearchHref,
 } from "@/components/search/SearchResultCards";
+import { groupSearchResultsBySection } from "@/features/search/search-result-sections";
+import { sanitizeSearchResults } from "@/features/search/search-sanitize";
 import {
   isKnowledgePlatformP0Enabled,
   runKnowledgeSearch,
 } from "@/lib/knowledge-platform";
 import "@/styles/pages/search.css";
-import "@/styles/pages/search-legacy.css";
 import "@/styles/pages/library-search-v2.css";
 import { ACTION, EMPTY, SEARCH, STATUS } from "@/lib/ui-copy";
 import { ListScreen } from "@/components/design-system/screens";
@@ -66,9 +65,9 @@ const SECTION_CHIPS = [
   { href: "/lessons", label: "الدروس" },
   { href: "/tarikh-islami", label: "التاريخ" },
   { href: "/seerah", label: "السيرة" },
-  { href: "/scholars", label: "العلماء" },
-  { href: "/universities", label: "الجامعات" },
-  { href: "/mosques", label: "المساجد" },
+  { href: "/prophets", label: "الأنبياء" },
+  { href: "/adhkar", label: "الأذكار" },
+  { href: "/tafsir", label: "التفسير" },
 ] as const;
 
 const SCOPE_ICONS = {
@@ -249,10 +248,12 @@ export default function SearchPage() {
             await import("@/features/search/app-search")
           ).runAppSearch(q, { scope: nextScope, limit: 240, signal: ctrl.signal });
       if (ctrl.signal.aborted || seq !== requestSeqRef.current) return;
-      const filtered = res.results.filter((item) => {
-        const href = resultHref(item);
-        return !isBlockedOrAdminHref(href) && !isBlockedSearchHref(href);
-      });
+      const filtered = sanitizeSearchResults(
+        res.results.filter((item) => {
+          const href = resultHref(item);
+          return !isBlockedOrAdminHref(href) && !isBlockedSearchHref(href);
+        }),
+      );
       const ranked = [...filtered].sort((a, b) => compareSearchResultsByMatch(a, b, q));
       setResults(ranked);
       setSuggestions(res.suggestions ?? []);
@@ -310,10 +311,14 @@ export default function SearchPage() {
   const resultItems = useMemo(() => results.slice(0, page * PAGE_SIZE), [results, page]);
   const hasMore = resultItems.length < results.length;
   const queryForHighlight = debouncedTerm.trim() || term.trim();
+  const resultSections = useMemo(
+    () => groupSearchResultsBySection(resultItems),
+    [resultItems],
+  );
 
   return (
     <ListScreen compose="mark">
-    <div className="page-shell narrow search-page search-home srch-page--v2 ds-page" dir="rtl">
+    <div className="page-shell narrow search-page search-home srch-page--v2 srch-page--identity ds-page" dir="rtl">
       <AppBackButton
         variant="inline"
         fallbackHref="/"
@@ -321,11 +326,16 @@ export default function SearchPage() {
         data-section-back="1"
         className="srch-page-back"
       />
-      <CompactSectionHeader
-        title="البحث"
-        description="ابحث في القرآن، التفسير، الدروس، الفقه، السيرة والمحتوى العلمي."
-        titleId="search-home-title"
-      />
+
+      <header className="srch-hero" aria-labelledby="search-home-title">
+        <p className="srch-hero__brand">سُنّة</p>
+        <h1 id="search-home-title" className="srch-hero__title">
+          البحث
+        </h1>
+        <p className="srch-hero__desc">
+          ابحث في القرآن، التفسير، الحديث، الفقه، السيرة، الأذكار، والدروس.
+        </p>
+      </header>
 
       <form
         className="srch-home-form"
@@ -409,7 +419,7 @@ export default function SearchPage() {
             <section className="srch-idle__block" aria-labelledby="srch-hist">
               <div className="srch-idle__head">
                 <h2 id="srch-hist" className="srch-idle__title">
-                  <Clock3 size={14} aria-hidden /> آخر عمليات البحث
+                  <Clock3 size={14} aria-hidden /> عمليات البحث الأخيرة
                 </h2>
                 <button
                   type="button"
@@ -430,13 +440,11 @@ export default function SearchPage() {
                 ))}
               </div>
             </section>
-          ) : (
-            <p className="srch-home-idle__hint">ابدأ بالكتابة أو اختر قسمًا لاستعراض محتواه.</p>
-          )}
+          ) : null}
 
           <section className="srch-idle__block" aria-labelledby="srch-pop">
             <h2 id="srch-pop" className="srch-idle__title">
-              <Flame size={14} aria-hidden /> الشائع
+              <Flame size={14} aria-hidden /> موضوعات شائعة
             </h2>
             <div className="srch-idle__chips">
               {popular.map((s) => (
@@ -447,22 +455,9 @@ export default function SearchPage() {
             </div>
           </section>
 
-          <section className="srch-idle__block" aria-labelledby="srch-suggest">
-            <h2 id="srch-suggest" className="srch-idle__title">
-              <Compass size={14} aria-hidden /> مقترحات
-            </h2>
-            <div className="srch-idle__chips">
-              {["أركان الإسلام", "صحيح مسلم", "غزوة بدر", "ابن تيمية"].map((s) => (
-                <button key={s} type="button" className="srch-chip" onClick={() => submit(s)}>
-                  {s}
-                </button>
-              ))}
-            </div>
-          </section>
-
           <section className="srch-idle__block" aria-labelledby="srch-secs">
             <h2 id="srch-secs" className="srch-idle__title">
-              <LayoutGrid size={14} aria-hidden /> الأقسام الشائعة
+              <LayoutGrid size={14} aria-hidden /> أقسام سريعة
             </h2>
             <div className="srch-idle__chips">
               {SECTION_CHIPS.map((s) => (
@@ -499,8 +494,9 @@ export default function SearchPage() {
       ) : showEmpty ? (
         <div className="search-no-results ss-state-card" role="status">
           <p className="search-no-results__msg ss-state-card__title">
-            {EMPTY.search}
+            {EMPTY.searchShort}
           </p>
+          <p className="search-no-results__hint-copy">{EMPTY.search}</p>
           {scope !== "all" ? (
             <button type="button" className="srch-home-submit ss-action-btn ss-action-btn--primary mj-pressable" onClick={() => setScope("all")}>
               ابحث في الكل
@@ -530,7 +526,15 @@ export default function SearchPage() {
               ))}
               ؟
             </p>
-          ) : null}
+          ) : (
+            <div className="srch-idle__chips srch-idle__chips--suggest">
+              {popular.slice(0, 4).map((s) => (
+                <button key={s} type="button" className="srch-chip" onClick={() => submit(s)}>
+                  {s}
+                </button>
+              ))}
+            </div>
+          )}
           <div className="srch-empty-v2__sections">
             {SECTION_CHIPS.slice(0, 4).map((s) => (
               <Link key={s.href} href={s.href} className="srch-chip srch-chip--link">
@@ -546,19 +550,32 @@ export default function SearchPage() {
             {term.trim() ? ` نتيجة لـ «${term.trim()}»` : " موضوعًا في هذا القسم"}
             {loading ? " · جارٍ التحديث…" : null}
           </p>
-          <VirtualList
-            className="srch-results-list"
-            items={resultItems}
-            estimateSize={96}
-            virtualizeAbove={24}
-            getItemKey={(item, index) => item.id || item.href || index}
-            renderItem={(item) => (
-              <ResultCard
-                item={item}
-                query={queryForHighlight}
-              />
-            )}
-          />
+          <div className="srch-result-sections">
+            {resultSections.map((section) => (
+              <section
+                key={section.id}
+                className="srch-result-section"
+                aria-labelledby={`srch-sec-${section.id}`}
+              >
+                <h2 id={`srch-sec-${section.id}`} className="srch-result-section__title">
+                  {section.label}
+                  <span className="srch-result-section__count">
+                    {section.items.length.toLocaleString("ar-EG")}
+                  </span>
+                </h2>
+                <VirtualList
+                  className="srch-results-list"
+                  items={section.items}
+                  estimateSize={104}
+                  virtualizeAbove={16}
+                  getItemKey={(item, index) => item.id || item.href || index}
+                  renderItem={(item) => (
+                    <ResultCard item={item} query={queryForHighlight} />
+                  )}
+                />
+              </section>
+            ))}
+          </div>
           {hasMore ? (
             <div className="srch-more">
               <button type="button" className="srch-more__btn" onClick={() => setPage((p) => p + 1)}>
