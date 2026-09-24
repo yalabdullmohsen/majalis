@@ -61,16 +61,45 @@ function policyViolations(paths) {
     }
   }
 
-  const mushafMetricTouched = paths.some(
+  const mushafMetricPathTouched = paths.some(
     (p) =>
       /quran-font-size/i.test(p) ||
       /useMushafPageFontFit/i.test(p) ||
       /useNewMushafFontFit/i.test(p) ||
-      /fitPageFontSize/i.test(p) ||
-      /sunnah-mushaf-signature-preset/i.test(p),
+      /fitPageFontSize/i.test(p),
   );
-  if (mushafMetricTouched) {
+  if (mushafMetricPathTouched) {
     issues.push("تغيير محتمل على خط/مقياس المصحف أو التفسير — ممنوع بدون مراجعة");
+  }
+
+  /* signature-preset: ارفع المخالفة فقط عند تغيّر مقاييس الخط/الأسطر — لا عند CACHE_VERSION وحده */
+  const presetRel = "artifacts/majalis/src/features/mushaf-reader/sunnah-mushaf-signature-preset.ts";
+  if (paths.some((p) => p.replace(/\\/g, "/") === presetRel || /sunnah-mushaf-signature-preset/i.test(p))) {
+    let prev = "";
+    let curr = "";
+    try {
+      curr = readFileSync(resolve(ROOT, presetRel), "utf8");
+    } catch {
+      curr = "";
+    }
+    try {
+      prev = execFileSync("git", ["show", `origin/main:${presetRel}`], {
+        cwd: ROOT,
+        encoding: "utf8",
+      });
+    } catch {
+      prev = "";
+    }
+    const metricFingerprint = (src) =>
+      [...src.matchAll(
+        /(?:SIGNATURE_FONT_SIZE[A-Z_]*|linesPerPage|lineHeight|pageScale|contentInsets|fontId|fontVersion|pageMappingVersion|lineMappingVersion)\s*[:=][^\n;]+/g,
+      )]
+        .map((m) => m[0].replace(/\s+/g, " "))
+        .sort()
+        .join("|");
+    if (metricFingerprint(curr) !== metricFingerprint(prev)) {
+      issues.push("تغيير محتمل على خط/مقياس المصحف أو التفسير — ممنوع بدون مراجعة");
+    }
   }
 
   for (const p of paths) {

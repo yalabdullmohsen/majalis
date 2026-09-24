@@ -59,6 +59,11 @@
   --mushaf-metadata-text: var(--mushaf-metadata-ink);
   --mushaf-focus-ring: color-mix(in srgb, var(--mushaf-accent-fill) 42%, transparent);
   --mushaf-selected-ayah: color-mix(in srgb, var(--mushaf-accent-fill) 18%, transparent);
+  --mushaf-page-number: var(--mushaf-accent-fill);
+  --mushaf-page-control: var(--mushaf-accent-fill-strong);
+  /* مزامنة أدوات mm-viewport مع Accent — يمنع بقاء #135034 بعد GOLD */
+  --mm-ui-accent: var(--mushaf-accent-fill);
+  --mm-ui-accent-deep: var(--mushaf-accent-fill-strong);
   --mushaf-verse-marker-fill: var(--mushaf-marker-background);
   --mushaf-verse-marker-border: var(--mushaf-marker-border);
   --mushaf-verse-marker-number: var(--mushaf-marker-number);
@@ -190,6 +195,10 @@ html[data-mushaf-accent="gold"] .nm-root {
   --mushaf-metadata-border: color-mix(in srgb, var(--quran-gold) 28%, transparent);
   --mushaf-focus-ring: color-mix(in srgb, var(--quran-gold) 42%, transparent);
   --mushaf-selected-ayah: color-mix(in srgb, var(--quran-gold) 16%, transparent);
+  --mushaf-page-number: var(--mushaf-accent-fill);
+  --mushaf-page-control: var(--mushaf-accent-fill-strong);
+  --mm-ui-accent: var(--mushaf-accent-fill);
+  --mm-ui-accent-deep: var(--mushaf-accent-fill-strong);
   --mushaf-verse-marker-fill: var(--mushaf-marker-background);
   --mushaf-verse-marker-border: var(--mushaf-marker-border);
   --mushaf-verse-marker-number: var(--mushaf-marker-number);
@@ -920,7 +929,7 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   font-size: 0.92rem;
   font-weight: 700;
   line-height: 1.2;
-  color: var(--nm-meta);
+  color: var(--mushaf-page-number, var(--nm-meta));
   position: relative;
   z-index: 2;
   cursor: pointer;
@@ -1973,4 +1982,13 @@ html[data-theme="dark"] .nm-page-arrow {
 .nm-controls__btn:focus-visible {
   outline: 2px solid var(--v2-color-gold, var(--nm-gold-deep, #b89620));
   outline-offset: 2px;
+}
+
+/*
+ * CSS_SPECIFICITY: .mm-viewport يفرض --mm-ui-accent:#135034.
+ * .nm-root.mm-viewport (خصوصية أعلى) يربطها بـ Accent المختار.
+ */
+.nm-root.mm-viewport {
+  --mm-ui-accent: var(--mushaf-accent-fill);
+  --mm-ui-accent-deep: var(--mushaf-accent-fill-strong);
 }

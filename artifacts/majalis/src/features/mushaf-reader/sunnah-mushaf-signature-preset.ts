@@ -7,7 +7,7 @@ import { MUSHAF_PROVENANCE } from "@/lib/mushaf-v2/provenance";
 
 export const SUNNAH_MUSHAF_SIGNATURE_PRESET_ID = "sunnah-mushaf-signature-v1" as const;
 export const SUNNAH_MUSHAF_SIGNATURE_VERSION = "1.0.0" as const;
-export const SUNNAH_MUSHAF_SIGNATURE_CACHE_VERSION = "sms-2026-09-14-max-safe-layout-24";
+export const SUNNAH_MUSHAF_SIGNATURE_CACHE_VERSION = "sms-2026-09-24-gold-page-numbers";
 
 export type SunnahMushafSignaturePreset = {
   presetId: typeof SUNNAH_MUSHAF_SIGNATURE_PRESET_ID;

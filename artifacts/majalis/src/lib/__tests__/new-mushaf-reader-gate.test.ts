@@ -57,7 +57,8 @@ assert.match(verse, /MushafAyahMarker/);
 
 assert.match(pageView, /AyahSelectionOverlay/);
 assert.match(pageView, /onPageNumberPress/);
-assert.match(pageView, /mushaf-page-number/);
+assert.match(pageView, /MushafPageNumber/);
+assert.match(read("src/features/mushaf-reader/MushafPageNumber.tsx"), /data-testid="mushaf-page-number"/);
 assert.match(css, /nm-ayah-sel__band/);
 assert.match(css, /nm-ayah-sel__band--selected/);
 assert.match(css, /\.nm-word\.is-selected/);

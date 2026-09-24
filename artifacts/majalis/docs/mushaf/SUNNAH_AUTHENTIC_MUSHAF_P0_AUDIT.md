@@ -24,7 +24,7 @@
 | Juz / Hizb / Rub | حقول الآية في JSON الصفحة | `juz_number`, `hizb_number`, `rub_el_hizb_number` |
 | Sajdah | `sajdah_number` في البيانات | 14 موضعًا موثّقًا |
 | Waqf | مدمج في الحروف/الرموز داخل النص | لا ملف وقف منفصل — **لا تعديل يدوي** |
-| Cache version | `sms-2026-09-14-max-safe-layout-24` | `sunnah-mushaf-signature-preset.ts` |
+| Cache version | `sms-2026-09-24-gold-page-numbers` | `sunnah-mushaf-signature-preset.ts` |
 | Fingerprint | codesSha / textsSha / verseOrderSha | `SOURCE.json` → `fingerprint` |
 | ayahCount | 6236 | fingerprint |
 | wordCount | 83665 | fingerprint |

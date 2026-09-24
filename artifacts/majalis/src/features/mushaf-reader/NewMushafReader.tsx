@@ -1208,6 +1208,35 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       {import.meta.env.DEV ? (
         <div
           aria-hidden
+          data-testid="mushaf-appearance-diag"
+          data-selected-theme={accentTheme}
+          data-provider-theme={accentTheme}
+          data-root-accent={accentAttr}
+          data-persisted-theme={typeof localStorage !== "undefined" ? localStorage.getItem("ssunnah-mushaf-accent-theme-v1") ?? "" : ""}
+          data-page-layout={page === 1 ? "opening" : page === 2 ? "lead" : "regular"}
+          style={{
+            position: "fixed",
+            insetInlineEnd: 8,
+            insetBlockStart: 8,
+            zIndex: 9998,
+            pointerEvents: "none",
+            fontFamily: "ui-monospace, monospace",
+            fontSize: 10,
+            lineHeight: 1.35,
+            padding: "4px 6px",
+            borderRadius: 6,
+            background: "color-mix(in srgb, canvas 82%, transparent)",
+            color: "CanvasText",
+            maxWidth: "42vw",
+            whiteSpace: "pre-wrap",
+          }}
+        >
+          {`theme=${accentTheme}\nattr=${accentAttr}\npage=${page}`}
+        </div>
+      ) : null}
+      {import.meta.env.DEV ? (
+        <div
+          aria-hidden
           data-testid="mushaf-turn-debug"
           style={{
             position: "fixed",
