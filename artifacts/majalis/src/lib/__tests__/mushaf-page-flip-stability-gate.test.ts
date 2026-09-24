@@ -97,7 +97,8 @@ assert.doesNotMatch(
   "Pager sheet opacity flicker during pan forbidden",
 );
 assert.match(page, /منع layout shift عند قلب الصفحة/, "MushafPage must guard layout shift on flip");
-assert.match(page, /mushaf-page-number/);
+assert.match(page, /MushafPageNumber/);
+assert.match(read("src/features/mushaf-reader/MushafPageNumber.tsx"), /data-testid="mushaf-page-number"/);
 assert.match(page, /mushaf-footer-height, 40px/);
 
 assert.match(pager, /translate3d/);

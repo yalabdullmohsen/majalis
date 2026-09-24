@@ -70,8 +70,9 @@ assert.doesNotMatch(layout, /getPropertyValue\("--reader-bottom-stack"\)/);
 assert.match(overlay, /MAX_BAND_EM/);
 assert.match(overlay, /Math\.min\(r\.height,\s*maxH\)/);
 
-/* رقم الصفحة من بيانات المصحف */
+/* رقم الصفحة من بيانات المصحف عبر MushafPageNumber الموحّد */
 assert.match(mushafPage, /layout\.pageNumber/);
-assert.match(mushafPage, /mushaf-page-number/);
+assert.match(mushafPage, /MushafPageNumber/);
+assert.match(read("src/features/mushaf-reader/MushafPageNumber.tsx"), /data-testid="mushaf-page-number"/);
 
 console.log("mushaf-single-page-viewport-gate.test.ts: ok");
