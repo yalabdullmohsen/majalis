@@ -147,6 +147,25 @@ export function validateManifestShape(manifest) {
 }
 
 /**
+ * Same-run build-once reuse across attempts.
+ *
+ * `gh run rerun --failed` re-runs failed consumers (e.g. lhci-home) while the
+ * successful `build` producer is skipped, so consumers download the attempt-N
+ * stamp with github.run_attempt = N+1. Require identical source identity +
+ * workflowRunId, and allow stamped attempt <= consumer attempt.
+ *
+ * @param {string} actual
+ * @param {string} expected
+ * @returns {boolean}
+ */
+export function isCompatibleWorkflowRunAttempt(actual, expected) {
+  const a = Number(String(actual ?? "").trim());
+  const e = Number(String(expected ?? "").trim());
+  if (!Number.isInteger(a) || !Number.isInteger(e) || a < 1 || e < 1) return false;
+  return a <= e;
+}
+
+/**
  * @param {object|null|undefined} manifest
  * @param {object} expected
  */
@@ -163,7 +182,6 @@ export function assertDistArtifactManifest(manifest, expected) {
     ["sourceFingerprint", expected.sourceFingerprint],
     ["repository", expected.repository],
     ["workflowRunId", String(expected.workflowRunId)],
-    ["workflowRunAttempt", String(expected.workflowRunAttempt)],
     ["producerJob", expected.producerJob || "build"],
   ];
 
@@ -173,6 +191,16 @@ export function assertDistArtifactManifest(manifest, expected) {
     if (actual !== expectedVal) {
       rows.push({ field, expected: expectedVal, actual });
     }
+  }
+
+  const actualAttempt = String(m.workflowRunAttempt ?? "");
+  const expectedAttempt = String(expected.workflowRunAttempt ?? "");
+  if (!isCompatibleWorkflowRunAttempt(actualAttempt, expectedAttempt)) {
+    rows.push({
+      field: "workflowRunAttempt",
+      expected: `<=${expectedAttempt} (same run reuse)`,
+      actual: actualAttempt,
+    });
   }
 
   if (rows.length) {
