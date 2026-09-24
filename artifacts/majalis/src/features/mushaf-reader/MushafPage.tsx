@@ -1,9 +1,10 @@
 import { memo, useMemo, useRef, useState, type CSSProperties } from "react";
 import type { MushafPageLayout, QpcWord } from "@/lib/quran-data/qpc-page-data";
-import { toArabicIndicDigits as toArabicDigits, toArabicPageDigits } from "@/lib/numerals";
+import { toArabicIndicDigits as toArabicDigits } from "@/lib/numerals";
 import { MushafSurahBanner } from "./MushafSurahBanner";
 import { MushafBasmalaView, MushafVerseLayer } from "./MushafVerseLayer";
 import { MushafOpeningSpreadLayout } from "./MushafOpeningSpreadLayout";
+import { MushafPageNumber } from "./MushafPageNumber";
 import { AyahSelectionOverlay } from "./AyahSelectionOverlay";
 import { mushafPerfInc } from "./mushaf-turn-telemetry";
 import {
@@ -140,13 +141,97 @@ export const MushafPage = memo(function MushafPage({
     [onLongPressVerse],
   );
 
-  const pageInner = (
-    <>
-      {/*
-        MushafPageMetadataHeader — رأس مصحف أصيل:
-        الجزء بطرف البداية (يمين RTL) · الحزب بطرف النهاية (يسار RTL).
-        اسم السورة غير موجود هنا — يظهر فقط داخل MushafSurahFrame عند بداية سورة.
-      */}
+  /*
+   * شبكة .nm-page ثلاثية الصفوف: رأس | متن | تذييل.
+   * ص١–ص٢: MushafOpeningSpreadLayout يغلف المتن فقط — لا يلفّ الرأس/التذييل
+   * وإلا ينهار الـgrid ويُقصّ رقم الصفحة (CLIPPED_BY_OVERFLOW).
+   */
+  const stage = (
+    <div className="nm-page__stage" data-testid="mushaf-page-frame">
+      {sectionMark ? (
+        <span
+          className="nm-page__section-mark"
+          data-mark={sectionMark}
+          role="img"
+          aria-label={
+            sectionMark === "hizb"
+              ? `بداية الحزب ${toArabicDigits(layout.hizbStartingOnPage ?? layout.hizbNumber)}`
+              : "علامة ربع الحزب"
+          }
+        />
+      ) : null}
+      <div
+        ref={(node) => {
+          bodyRef.current = node;
+          setBodyEl((prev) => (prev === node ? prev : node));
+        }}
+        className="nm-page__body"
+        data-layout="pageBody"
+        data-content-rows={contentRows}
+        style={
+          {
+            ["--nm-content-rows"]: contentRows,
+          } as CSSProperties
+        }
+      >
+        <AyahSelectionOverlay container={bodyEl} enabled={selectionEnabled} />
+        {slotOrder.map((slot) => {
+          const cell = slots.get(slot);
+          return (
+            <div
+              key={slot}
+              className="nm-slot"
+              data-slot={slot}
+              data-kind={cell?.kind ?? "empty"}
+              data-layout="lineBlock"
+            >
+              {cell?.kind === "banner" ? (
+                <div className="nm-slot__banner">
+                  <MushafSurahBanner nameArabic={cell.nameArabic} />
+                </div>
+              ) : null}
+              {cell?.kind === "basmala" ? <MushafBasmalaView /> : null}
+              {cell?.kind === "line" ? (
+                cell.words.length > 0 && cell.words.every((w) => w.verseKey === "1:1") ? (
+                  <MushafBasmalaView
+                    words={cell.words}
+                    numbered
+                    onSelect={onSelectFatiha}
+                    onLongPress={onLongPressFatiha}
+                  />
+                ) : (
+                  <MushafVerseLayer
+                    words={cell.words}
+                    centered={isOpeningP1 || isLeadP2 || isLastSurahLine(cell.words, layout)}
+                    onSelectVerse={onSelectVerse}
+                    onLongPressVerse={onLongPressVerse}
+                  />
+                )
+              ) : null}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  return (
+    <article
+      className={`nm-page${isOpeningP1 ? " nm-page--opening" : ""}${isLeadP2 ? " nm-page--lead" : ""}`}
+      data-page={footerPage}
+      data-page-type={pageType}
+      data-layout="pageShell"
+      data-testid="mushaf-page"
+      data-opening={isOpeningP1 || isLeadP2 ? "1" : "0"}
+      data-mm-fit="1"
+      style={
+        {
+          ["--nm-qpc-family"]: fontFamily,
+          ["--mm-qpc-family"]: fontFamily,
+        } as CSSProperties
+      }
+      aria-label={`صفحة المصحف ${toArabicDigits(footerPage)}، الجزء ${toArabicDigits(layout.juzNumber)}، الحزب ${toArabicDigits(layout.hizbNumber)}`}
+    >
       <header
         className="nm-page__header"
         data-layout="pageHeader"
@@ -164,73 +249,11 @@ export const MushafPage = memo(function MushafPage({
         </span>
       </header>
 
-      <div className="nm-page__stage" data-testid="mushaf-page-frame">
-        {sectionMark ? (
-          <span
-            className="nm-page__section-mark"
-            data-mark={sectionMark}
-            role="img"
-            aria-label={
-              sectionMark === "hizb"
-                ? `بداية الحزب ${toArabicDigits(layout.hizbStartingOnPage ?? layout.hizbNumber)}`
-                : "علامة ربع الحزب"
-            }
-          />
-        ) : null}
-        <div
-          ref={(node) => {
-            bodyRef.current = node;
-            /* لا setState إن لم يتغيّر العنصر — يمنع render/measure ثانٍ بلا داعٍ */
-            setBodyEl((prev) => (prev === node ? prev : node));
-          }}
-          className="nm-page__body"
-          data-layout="pageBody"
-          data-content-rows={contentRows}
-          style={
-            {
-              ["--nm-content-rows"]: contentRows,
-            } as CSSProperties
-          }
-        >
-          <AyahSelectionOverlay container={bodyEl} enabled={selectionEnabled} />
-          {slotOrder.map((slot) => {
-            const cell = slots.get(slot);
-            return (
-              <div
-                key={slot}
-                className="nm-slot"
-                data-slot={slot}
-                data-kind={cell?.kind ?? "empty"}
-                data-layout="lineBlock"
-              >
-                {cell?.kind === "banner" ? (
-                  <div className="nm-slot__banner">
-                    <MushafSurahBanner nameArabic={cell.nameArabic} />
-                  </div>
-                ) : null}
-                {cell?.kind === "basmala" ? <MushafBasmalaView /> : null}
-                {cell?.kind === "line" ? (
-                  cell.words.length > 0 && cell.words.every((w) => w.verseKey === "1:1") ? (
-                    <MushafBasmalaView
-                      words={cell.words}
-                      numbered
-                      onSelect={onSelectFatiha}
-                      onLongPress={onLongPressFatiha}
-                    />
-                  ) : (
-                    <MushafVerseLayer
-                      words={cell.words}
-                      centered={isOpeningP1 || isLeadP2 || isLastSurahLine(cell.words, layout)}
-                      onSelectVerse={onSelectVerse}
-                      onLongPressVerse={onLongPressVerse}
-                    />
-                  )
-                ) : null}
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      {isOpeningP1 || isLeadP2 ? (
+        <MushafOpeningSpreadLayout pageNumber={isOpeningP1 ? 1 : 2}>{stage}</MushafOpeningSpreadLayout>
+      ) : (
+        stage
+      )}
 
       <footer
         className="nm-page__footer"
@@ -238,54 +261,9 @@ export const MushafPage = memo(function MushafPage({
         style={{ height: "var(--mushaf-footer-height, 40px)", minHeight: "var(--mushaf-footer-height, 40px)" }}
       >
         <span className="nm-page__footer-hizb">{hizbLabel}</span>
-        <button
-          type="button"
-          className="nm-page__footer-num"
-          data-testid="mushaf-page-number"
-          disabled={!onPageNumberPress}
-          aria-label={
-            onPageNumberPress
-              ? `الصفحة ${footerPage} — انتقال إلى صفحة`
-              : `الصفحة ${footerPage}`
-          }
-          onClick={(e) => {
-            e.stopPropagation();
-            onPageNumberPress?.();
-          }}
-          onPointerDown={(e) => e.stopPropagation()}
-        >
-          {toArabicPageDigits(footerPage)}
-        </button>
+        <MushafPageNumber pageNumber={footerPage} onPress={onPageNumberPress} />
         <span className="nm-page__footer-spacer" aria-hidden="true" />
       </footer>
-    </>
-  );
-
-  return (
-    <article
-      className={`nm-page${isOpeningP1 ? " nm-page--opening" : ""}${isLeadP2 ? " nm-page--lead" : ""}`}
-      data-page={footerPage}
-      data-page-type={pageType}
-      data-layout="pageShell"
-      data-component={isOpeningP1 || isLeadP2 ? "MushafOpeningSpreadLayout" : undefined}
-      data-testid="mushaf-page"
-      data-opening={isOpeningP1 || isLeadP2 ? "1" : "0"}
-      data-mm-fit="1"
-      style={
-        {
-          ["--nm-qpc-family"]: fontFamily,
-          ["--mm-qpc-family"]: fontFamily,
-        } as CSSProperties
-      }
-      aria-label={`صفحة المصحف ${toArabicDigits(footerPage)}، الجزء ${toArabicDigits(layout.juzNumber)}، الحزب ${toArabicDigits(layout.hizbNumber)}`}
-    >
-      {isOpeningP1 || isLeadP2 ? (
-        <MushafOpeningSpreadLayout pageNumber={isOpeningP1 ? 1 : 2}>
-          {pageInner}
-        </MushafOpeningSpreadLayout>
-      ) : (
-        pageInner
-      )}
     </article>
   );
 }, mushafPagePropsEqual);

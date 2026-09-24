@@ -647,13 +647,30 @@ html[data-theme="dark"] .mm-tafsir__ed-btn {
  * Content Driven Layout (ص١–ص٢) — First Spread via MushafOpeningSpreadLayout.
  * ROOT CAUSE السابق: تضخيم --mushaf-ayah-mark-size + إعادة استخدام number-size كـfont-size للحاوية.
  * العقد: نفس مقياس العلامة العام (1.15em / 0.62em / glyph) · Accent من data-mushaf-accent فقط.
+ *
+ * CLIPPED_BY_OVERFLOW (ص١–ص٢): الغلاف كان يلفّ الرأس+المتن+التذييل فيخالف شبكة
+ * .nm-page الثلاثية. الآن الغلاف = صف المتن فقط.
  */
 .nm-page--opening,
-.nm-page--lead,
+.nm-page--lead {
+  --mushaf-opening-meta-surface: color-mix(in srgb, var(--mushaf-accent-fill) 12%, #f3ebd8);
+  --mushaf-opening-meta-text: var(--mushaf-metadata-ink, #3a2e1a);
+}
+
 .nm-opening-spread {
-  /* تخطيط فقط — لا تضخيم علامة · الألوان من data-mushaf-accent على .nm-root */
-  --mushaf-opening-meta-surface: #f3ebd8;
-  --mushaf-opening-meta-text: #3a2e1a;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.nm-opening-spread > .nm-page__stage {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
 }
 
 .nm-page--opening .nm-page__body,
@@ -766,7 +783,7 @@ html[data-theme="dark"] .mm-tafsir__ed-btn {
   border-radius: 0.45rem;
   border: 1px solid var(--mushaf-metadata-border);
   background: var(--mushaf-opening-meta-surface);
-  color: var(--mushaf-opening-meta-text);
+  color: var(--mushaf-page-number, var(--mushaf-opening-meta-text));
   font-weight: 700;
 }
 

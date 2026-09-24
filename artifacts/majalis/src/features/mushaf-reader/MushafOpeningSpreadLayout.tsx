@@ -1,5 +1,6 @@
 /**
- * MushafOpeningSpreadLayout — غلاف تخطيط موحّد لص١–ص٢.
+ * MushafOpeningSpreadLayout — غلاف تخطيط موحّد لص١–ص٢ (صف المتن فقط).
+ * الرأس وMushafPageNumber يبقيان أبناء مباشرين لشبكة .nm-page الثلاثية.
  * لا يمسّ نص القرآن · يوحّد مقياس العلامة/الميتاداتا عبر CSS فقط.
  */
 import type { ReactNode } from "react";
