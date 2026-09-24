@@ -276,18 +276,40 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   useEffect(() => {
     beginPowerSaverSession();
     if (isMushafReaderV2Enabled()) migrateMushafUserData();
-    const appearance = QuranSettingsRepository.getAppearanceMode();
-    QuranSettingsRepository.applyAppearance(appearance);
 
-    const mq =
-      appearance === "system" && typeof window !== "undefined"
-        ? window.matchMedia("(prefers-color-scheme: dark)")
-        : null;
-    const onScheme = () => QuranSettingsRepository.applyAppearance("system");
-    mq?.addEventListener?.("change", onScheme);
+    const syncAppearance = () => {
+      const appearance = QuranSettingsRepository.getAppearanceMode();
+      QuranSettingsRepository.applyAppearance(appearance);
+      return appearance;
+    };
+
+    let appearance = syncAppearance();
+    let mq: MediaQueryList | null = null;
+    const onScheme = () => {
+      if (QuranSettingsRepository.getAppearanceMode() === "SYSTEM") {
+        QuranSettingsRepository.applyAppearance("SYSTEM");
+      }
+    };
+    const bindSystem = () => {
+      mq?.removeEventListener?.("change", onScheme);
+      mq =
+        QuranSettingsRepository.getAppearanceMode() === "SYSTEM" && typeof window !== "undefined"
+          ? window.matchMedia("(prefers-color-scheme: dark)")
+          : null;
+      mq?.addEventListener?.("change", onScheme);
+    };
+    bindSystem();
+
+    const onPrefChange = () => {
+      appearance = syncAppearance();
+      bindSystem();
+      void appearance;
+    };
+    window.addEventListener("ssunnah:mushaf-appearance-change", onPrefChange);
 
     return () => {
       mq?.removeEventListener?.("change", onScheme);
+      window.removeEventListener("ssunnah:mushaf-appearance-change", onPrefChange);
       endPowerSaverSession();
       readerControllerRef.current?.dispose();
       readerControllerRef.current = null;

@@ -1,14 +1,24 @@
 import { Check } from "lucide-react";
+import { useEffect, useState } from "react";
 import { QuranSheetShell } from "./quran-sheet";
+import { MushafDisplayModeControl } from "@/features/mushaf-reader/MushafDisplayModeControl";
+import {
+  MUSHAF_APPEARANCE_CHANGE_EVENT,
+  loadMushafAppearanceMode,
+  type MushafAppearanceMode,
+} from "@/lib/mushaf-v2/appearance-prefs";
+import { QuranSettingsRepository } from "@/lib/mushaf-v2/QuranSettingsRepository";
 
+/** @deprecated استُبدل بـ SYSTEM/LIGHT/DARK — يُبقى للتوافق مع المستدعين القدامى */
 export type MushafThemeChoice = "auto" | "paper" | "sepia" | "night" | "oled";
 /** 0 = كشف · 1 = إخفاء جزئي · 2 = إخفاء كامل (اختبار حفظ) */
 export type MushafHideLevel = 0 | 1 | 2;
 
 type Props = {
   open: boolean;
-  theme: MushafThemeChoice;
-  onTheme: (theme: MushafThemeChoice) => void;
+  /** لم يعد يُستخدم للعرض — يُتجاهل لصالح Store المصحف */
+  theme?: MushafThemeChoice;
+  onTheme?: (theme: MushafThemeChoice) => void;
   hideLevel: MushafHideLevel;
   onHideLevel: (level: MushafHideLevel) => void;
   ayahMarks: boolean;
@@ -16,10 +26,15 @@ type Props = {
   onClose: () => void;
 };
 
-/** إعدادات المصحف — QuranSettingsSheet الموحّد. بلا اختيار Accent (ذهبي ثابت). */
+function choiceFromMode(mode: MushafAppearanceMode): MushafThemeChoice {
+  if (mode === "DARK") return "night";
+  if (mode === "LIGHT") return "paper";
+  return "auto";
+}
+
+/** إعدادات المصحف — وضع العرض SYSTEM/LIGHT/DARK + أدوات الصفحة. */
 export function MushafSettingsSheet({
   open,
-  theme,
   onTheme,
   hideLevel,
   onHideLevel,
@@ -27,11 +42,33 @@ export function MushafSettingsSheet({
   onAyahMarks,
   onClose,
 }: Props) {
+  const [displayMode, setDisplayMode] = useState<MushafAppearanceMode>(() =>
+    loadMushafAppearanceMode(),
+  );
+
+  useEffect(() => {
+    if (!open) return;
+    setDisplayMode(loadMushafAppearanceMode());
+  }, [open]);
+
+  useEffect(() => {
+    const onChange = () => setDisplayMode(loadMushafAppearanceMode());
+    window.addEventListener(MUSHAF_APPEARANCE_CHANGE_EVENT, onChange);
+    return () => window.removeEventListener(MUSHAF_APPEARANCE_CHANGE_EVENT, onChange);
+  }, []);
+
+  const setMode = (mode: MushafAppearanceMode) => {
+    QuranSettingsRepository.setAppearanceMode(mode);
+    QuranSettingsRepository.applyAppearance(mode);
+    setDisplayMode(mode);
+    onTheme?.(choiceFromMode(mode));
+  };
+
   return (
     <QuranSheetShell
       open={open}
       ariaLabel="إعدادات المصحف"
-      title="إعدادات الصفحة"
+      title="إعدادات المصحف"
       titleId="mm-settings-title"
       onClose={onClose}
       snap="half"
@@ -40,6 +77,9 @@ export function MushafSettingsSheet({
       zIndex={10000}
     >
       <div className="quran-sheet__body mm-settings-sheet__body">
+        <section className="mm-settings-sheet__card quran-card">
+          <MushafDisplayModeControl value={displayMode} onChange={setMode} />
+        </section>
         <section className="mm-settings-sheet__card quran-card">
           <h3>نوع المصحف</h3>
           <p className="mm-settings-sheet__row quran-row is-active">
@@ -53,28 +93,6 @@ export function MushafSettingsSheet({
             <span>صفحة</span>
             <Check size={18} aria-hidden="true" />
           </p>
-        </section>
-        <section className="mm-settings-sheet__card quran-card">
-          <h3>المظهر</h3>
-          {(
-            [
-              ["auto", "تلقائي"],
-              ["paper", "ورق"],
-              ["sepia", "بيج دافئ"],
-              ["night", "داكن"],
-              ["oled", "أسود كامل"],
-            ] as const
-          ).map(([id, label]) => (
-            <button
-              key={id}
-              type="button"
-              className={`mm-settings-sheet__row quran-row${theme === id ? " is-active" : ""}`}
-              onClick={() => onTheme(id)}
-            >
-              <span>{label}</span>
-              {theme === id ? <Check size={18} aria-hidden="true" /> : null}
-            </button>
-          ))}
         </section>
         <section className="mm-settings-sheet__card quran-card">
           <h3>علامات الآيات</h3>
@@ -119,5 +137,4 @@ export function MushafSettingsSheet({
   );
 }
 
-/** الاسم الموحّد لشيت الإعدادات */
 export { MushafSettingsSheet as QuranSettingsSheet };

@@ -534,8 +534,8 @@ html[data-theme="dark"] .nm-page__header-hizb,
   --mushaf-surah-frame-text: var(--mushaf-ink-primary);
   --mushaf-surah-frame-ornament: var(--mushaf-surah-header-ornament);
 }
-html.dark .nm-root,
-html[data-theme="dark"] .nm-root {
+html[data-mushaf-appearance="night"] .nm-root,
+.nm-root[data-mushaf-appearance="night"] {
   --mushaf-surah-frame-bg: var(--mushaf-paper-warm-yellow-dark);
   --mushaf-surah-frame-border: var(--mushaf-verse-marker-dark-border);
   --mushaf-surah-frame-accent: var(--mushaf-verse-marker-dark-fill);
@@ -1245,11 +1245,9 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
 }
 
 
-/* مظهر ليلي للمصحف — خلفية داكنة غير سوداء حادة، بلا قلب ألوان عشوائي */
+/* مظهر ليلي للمصحف — يعتمد وضع عرض المصحف فقط، لا Theme التطبيق */
 html[data-mushaf-appearance="night"] .nm-root,
-.nm-root[data-mushaf-appearance="night"],
-html[data-theme="dark"] .nm-root,
-html.dark .nm-root {
+.nm-root[data-mushaf-appearance="night"] {
   --mushaf-paper-warm-yellow: var(--mushaf-paper-warm-yellow-dark);
   --mushaf-page-bg: var(--mushaf-paper-warm-yellow-dark);
   --mushaf-text-color: var(--mushaf-ink-dark);
@@ -1286,15 +1284,15 @@ html.dark .nm-root {
  * القيم أعلاه على .nm-root ليليًا كافية؛ لا قاعدة زمردية.
  */
 
-html[data-theme="dark"] .nm-root .mm-audio-dock,
-html.dark .nm-root .mm-audio-dock {
+html[data-mushaf-appearance="night"] .nm-root .mm-audio-dock,
+.nm-root[data-mushaf-appearance="night"] .mm-audio-dock {
   background: #1a1f1c;
   border-color: color-mix(in srgb, #cbb892 35%, transparent);
   color: #f3efe6;
 }
 
-html[data-theme="dark"] .nm-root .mm-audio-dock__reciter-btn,
-html.dark .nm-root .mm-audio-dock__reciter-btn {
+html[data-mushaf-appearance="night"] .nm-root .mm-audio-dock__reciter-btn,
+.nm-root[data-mushaf-appearance="night"] .mm-audio-dock__reciter-btn {
   background: color-mix(in srgb, #f3efe6 10%, #1a1f1c);
   border-color: color-mix(in srgb, #cbb892 40%, transparent);
   color: #f3efe6;

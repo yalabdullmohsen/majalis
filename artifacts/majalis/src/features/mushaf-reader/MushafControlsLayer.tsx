@@ -17,6 +17,13 @@ import {
   clampMushafPage,
   parseMushafPageQuery,
 } from "@/lib/quran-last-page";
+import { MushafDisplayModeControl } from "@/features/mushaf-reader/MushafDisplayModeControl";
+import {
+  MUSHAF_APPEARANCE_CHANGE_EVENT,
+  loadMushafAppearanceMode,
+  type MushafAppearanceMode,
+} from "@/lib/mushaf-v2/appearance-prefs";
+import { QuranSettingsRepository } from "@/lib/mushaf-v2/QuranSettingsRepository";
 import "./page-goto-dial.css";
 import "@/styles/components/page-goto-visibility.css";
 
@@ -79,6 +86,9 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
   const [gotoError, setGotoError] = useState<string | null>(null);
   const [dialStart, setDialStart] = useState(0);
   const [dialCount, setDialCount] = useState(16);
+  const [displayMode, setDisplayMode] = useState<MushafAppearanceMode>(() =>
+    loadMushafAppearanceMode(),
+  );
   const titleId = useId();
   const moreTitleId = useId();
   const dialId = useId();
@@ -102,6 +112,16 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
     setDraft(String(pageNumber));
     setGotoError(null);
   }, [pageNumber]);
+
+  useEffect(() => {
+    if (moreOpen) setDisplayMode(loadMushafAppearanceMode());
+  }, [moreOpen]);
+
+  useEffect(() => {
+    const onChange = () => setDisplayMode(loadMushafAppearanceMode());
+    window.addEventListener(MUSHAF_APPEARANCE_CHANGE_EVENT, onChange);
+    return () => window.removeEventListener(MUSHAF_APPEARANCE_CHANGE_EVENT, onChange);
+  }, []);
 
   useEffect(() => {
     if (!gotoOpen) return;
@@ -257,6 +277,15 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
           <h2 id={moreTitleId} className="nm-controls-more__title">
             إعدادات المصحف
           </h2>
+          <MushafDisplayModeControl
+            value={displayMode}
+            onChange={(mode) => {
+              QuranSettingsRepository.setAppearanceMode(mode);
+              QuranSettingsRepository.applyAppearance(mode);
+              setDisplayMode(mode);
+            }}
+            className="nm-controls-more__display-mode"
+          />
           <label className="nm-controls-more__row">
             <span>إظهار أسهم تقليب الصفحات</span>
             <input
@@ -264,7 +293,7 @@ export const MushafControlsLayer = memo(function MushafControlsLayer({
               data-testid="mushaf-page-arrows-toggle"
               checked={pageArrowsEnabled}
               aria-label="إظهار أسهم تقليب الصفحات"
-              onChange={(e) => onPageArrowsEnabledChange(e.target.checked)}
+              onChange={(e) => onPageArrowsEnabledChange?.(e.target.checked)}
             />
           </label>
           <a
