@@ -148,3 +148,12 @@
 - [ ] قياسات جهاز / CLS / TestFlight — مؤجّلة PR-8/9
 
 **الحالة:** PARTIAL
+
+---
+
+## 8) ملاحظة verify:ci محلي (صنف B)
+
+`critical-css-gzip-gate` يفشل محليًا على `origin/main` النظيف بنفس القيمة:
+`index-B_yJldyj.css gzip=65812 > 61440`.
+
+غير ناتج عن diff هذا الـPR (تقرير + علامات DEV فقط). Follow-up منفصل لضغط Critical CSS — لا تخفيف بوابة هنا.
