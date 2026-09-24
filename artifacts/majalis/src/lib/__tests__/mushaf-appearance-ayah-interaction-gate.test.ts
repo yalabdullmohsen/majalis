@@ -25,9 +25,10 @@ assert.doesNotMatch(verse, /OpeningAyahMarker|GreenAyahMarker|GoldAyahMarker/);
 
 console.log("=== GOLD night remapper (no emerald lock) ===");
 assert.match(css, /--mushaf-accent-fill-night:\s*#c4a030/i);
+assert.match(css, /html\[data-mushaf-appearance="night"\] \.nm-root/);
 assert.match(
   css,
-  /html\.dark \.nm-root[\s\S]{0,600}--mushaf-marker-background:\s*var\(--mushaf-verse-marker-dark-fill\)/,
+  /--mushaf-accent-primary:\s*var\(--mushaf-verse-marker-dark-fill\);\s*\n\s*--mushaf-accent-secondary:\s*var\(--mushaf-verse-marker-dark-border\);\s*\n\s*--mushaf-marker-background:\s*var\(--mushaf-verse-marker-dark-fill\)/,
 );
 assert.match(css, /--mushaf-accent-fill:\s*var\(--quran-gold\)/);
 assert.match(css, /\[data-mushaf-accent="gold"\]/);
