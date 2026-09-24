@@ -1,0 +1,27 @@
+{
+  "program": "sunnah-world-class-product-engineering-upgrade",
+  "stage": 0,
+  "stageName": "technology-audit-target-architecture",
+  "measuredAt": "2026-09-24T22:00:00Z",
+  "commit": "07d580b0afdfc65ce9142129a73c6201f1e47854",
+  "branchBase": "origin/main",
+  "acceptanceClaimForbiddenUntilLater": "SUNNAH_WORLD_CLASS_ENGINEERING_COMPLETE",
+  "documents": [
+    "docs/architecture/TECHNOLOGY_INVENTORY.md",
+    "docs/architecture/TARGET_ARCHITECTURE.md",
+    "docs/architecture/DEPENDENCY_DECISIONS.md"
+  ],
+  "dependenciesAddedInThisPr": [],
+  "dependenciesRemovedInThisPr": [],
+  "rejectUntilOwnerApproval": ["sentry", "storybook", "zustand", "second-analytics"],
+  "removeCandidatesLater": ["next-themes", "unused-radix-packages"],
+  "bundleDeltaThisPr": null,
+  "cssBudgetDeltaThisPr": null,
+  "ownerActionsRequiredBeforePr1": [
+    "approve-technology-inventory",
+    "decide-sentry-yes-no",
+    "decide-expo-mobile-long-term",
+    "prioritize-radix-trim-vs-critical-css"
+  ],
+  "status": "PARTIAL"
+}
