@@ -40,6 +40,10 @@ import { MushafControls } from "./MushafControls";
 import { MushafPage } from "./MushafPage";
 import { MushafPager, SWIPE_MIN_PX } from "./MushafPager";
 import { MushafSettingsSheet, type MushafHideLevel, type MushafThemeChoice } from "./MushafSettingsSheet";
+import {
+  loadMushafAppearanceMode,
+} from "@/lib/mushaf-v2/appearance-prefs";
+import { QuranSettingsRepository } from "@/lib/mushaf-v2/QuranSettingsRepository";
 import { setMushafAudioClock, useMushafAudioClock } from "./mushaf-audio-clock-store";
 import { setMushafAyahSyncKeys } from "./mushaf-ayah-sync-store";
 import {
@@ -80,14 +84,25 @@ const THEME_CHOICE_KEY = "majlisilm.mushaf.theme-choice";
 const HIDE_LEVEL_KEY = "majlisilm.mushaf.hide-level";
 const AYAH_MARKS_KEY = "majlisilm.mushaf.ayah-marks";
 
+void THEME_KEY;
+void THEME_CHOICE_KEY;
+
 function loadThemeChoice(): MushafThemeChoice {
-  try {
-    const v = localStorage.getItem(THEME_CHOICE_KEY) ?? localStorage.getItem(THEME_KEY);
-    if (v === "night" || v === "paper" || v === "sepia" || v === "oled" || v === "auto") return v;
-  } catch {
-    /* ignore */
-  }
-  return "paper";
+  const mode = loadMushafAppearanceMode();
+  if (mode === "DARK") return "night";
+  if (mode === "LIGHT") return "paper";
+  return "auto";
+}
+
+function persistThemeChoice(choice: MushafThemeChoice): void {
+  const mode =
+    choice === "night" || choice === "oled"
+      ? "DARK"
+      : choice === "paper" || choice === "sepia"
+        ? "LIGHT"
+        : "SYSTEM";
+  QuranSettingsRepository.setAppearanceMode(mode);
+  QuranSettingsRepository.applyAppearance(mode);
 }
 
 function loadHideLevel(): MushafHideLevel {
@@ -187,13 +202,8 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
   }, [audio]);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(THEME_CHOICE_KEY, themeChoice);
-      localStorage.setItem(THEME_KEY, theme);
-    } catch {
-      /* ignore */
-    }
-  }, [theme, themeChoice]);
+    persistThemeChoice(themeChoice);
+  }, [themeChoice]);
 
   useEffect(() => {
     try {
@@ -216,21 +226,38 @@ export function VerifiedMushafReader({ pageNumber, onPageChange, onExit, onIndex
     setRevealedVerses(new Set());
   }, [page]);
 
-  /** شريط حالة iOS: أيقونات داكنة على الورق · فاتحة على الليلي */
+  /** شريط حالة iOS + data-mushaf-appearance من وضع العرض الموحّد */
   useEffect(() => {
+    const mode =
+      themeChoice === "night" || themeChoice === "oled"
+        ? "DARK"
+        : themeChoice === "paper" || themeChoice === "sepia"
+          ? "LIGHT"
+          : "SYSTEM";
+    QuranSettingsRepository.applyAppearance(mode);
     let cancelled = false;
     void import("@/lib/apply-page-chrome").then(({ applyMushafThemeChrome }) => {
       if (!cancelled) void applyMushafThemeChrome(theme);
     });
+    const mq =
+      mode === "SYSTEM" && typeof window !== "undefined"
+        ? window.matchMedia("(prefers-color-scheme: dark)")
+        : null;
+    const onScheme = () => {
+      setThemeChoice(loadThemeChoice());
+      QuranSettingsRepository.applyAppearance("SYSTEM");
+    };
+    mq?.addEventListener?.("change", onScheme);
     return () => {
       cancelled = true;
+      mq?.removeEventListener?.("change", onScheme);
       const resolved =
         document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
       void import("@/lib/apply-page-chrome").then(({ reapplyPageChromeFromLocation }) =>
         reapplyPageChromeFromLocation(resolved),
       );
     };
-  }, [theme]);
+  }, [theme, themeChoice]);
 
   /** جلسة قراءة طويلة: مراقبة البطارية + توفير طاقة يقلّل الـprefetch والحلقات غير الحرجة */
   useEffect(() => {

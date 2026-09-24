@@ -45,6 +45,13 @@ import {
   restoreDefaultAppSettings,
   writeBackgroundPlaybackPref,
 } from "@/lib/restore-default-settings";
+import { MushafDisplayModeControl } from "@/features/mushaf-reader/MushafDisplayModeControl";
+import {
+  MUSHAF_APPEARANCE_CHANGE_EVENT,
+  loadMushafAppearanceMode,
+  type MushafAppearanceMode,
+} from "@/lib/mushaf-v2/appearance-prefs";
+import { QuranSettingsRepository } from "@/lib/mushaf-v2/QuranSettingsRepository";
 import {
   fetchLiveVersionInfo,
   getDisplayedAppVersion,
@@ -98,6 +105,9 @@ export default function SettingsPage() {
   const [cacheRefreshBusy, setCacheRefreshBusy] = useState(false);
   const [cacheRefreshNote, setCacheRefreshNote] = useState<string | null>(null);
   const [displayedAppVersion, setDisplayedAppVersion] = useState<string | null>(() => getDisplayedAppVersion());
+  const [mushafDisplayMode, setMushafDisplayMode] = useState<MushafAppearanceMode>(() =>
+    loadMushafAppearanceMode(),
+  );
 
   useEffect(() => {
     setDisplayedAppVersion(getDisplayedAppVersion());
@@ -108,6 +118,12 @@ export default function SettingsPage() {
     return () => {
       cancelled = true;
     };
+  }, []);
+
+  useEffect(() => {
+    const onChange = () => setMushafDisplayMode(loadMushafAppearanceMode());
+    window.addEventListener(MUSHAF_APPEARANCE_CHANGE_EVENT, onChange);
+    return () => window.removeEventListener(MUSHAF_APPEARANCE_CHANGE_EVENT, onChange);
   }, []);
 
   useEffect(() => {
@@ -386,6 +402,17 @@ export default function SettingsPage() {
 
       {visible(sections[2]!) && (
         <LegalSection title={sections[2]!.title}>
+          <MushafDisplayModeControl
+            value={mushafDisplayMode}
+            onChange={(mode) => {
+              QuranSettingsRepository.setAppearanceMode(mode);
+              QuranSettingsRepository.applyAppearance(mode);
+              setMushafDisplayMode(mode);
+            }}
+          />
+          <p className="settings-note">
+            يؤثر على المصحف فقط ولا يغيّر مظهر بقية التطبيق.
+          </p>
           <label className="settings-field">
             <span>{t("settings_reading_size")}</span>
             <input

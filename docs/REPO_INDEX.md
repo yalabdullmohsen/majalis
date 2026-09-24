@@ -69,6 +69,8 @@
 
 ## تطور المنتج
 
+| `docs/architecture/TECHNOLOGY_INVENTORY.md` | **World-Class Eng PR-0** — جرد تقنيات + قرارات تبعيات + هدف معماري |
+
 | `artifacts/majalis/docs/design/SUNNAH_VISUAL_LANGUAGE.md` | لغة سُنّة البصرية (SVL) — أساس + موجات PR |
 | `docs/design/SUNNAH_DESIGN_SYSTEM_REPORT.md` | توحيد Design System (PR-3 استقرار) |
 | `docs/design/SUNNAH_FOUNDATION_RESET_PR0_BASELINE.md` | Foundation Reset PR-0 — خريطة اعتماديات + Baseline |
@@ -76,6 +78,7 @@
 
 | `docs/performance/SUNNAH_WORLD_CLASS_BASELINE.md` | خط أساس برنامج World-Class Product Polish (PR-1) |
 | `docs/performance/STARTUP_ROOT_CAUSE_REPORT.md` | **Startup PR-0** — Timeline + جرد مصادر الجاهزية + أسباب جذرية (بلا إصلاح منتج) |
+| `docs/performance/ZERO_FLICKER_LAYOUT_SHIFT_ROOT_CAUSE_PR0.md` | **Zero Flicker PR-0** — جذر القفزات/الوميض + خط أساس صلاة (بلا إصلاح منتج) |
 | `docs/performance/startup-pr0-baseline-metrics.json` | مقاييس/جرد Startup PR-0 (NOT MEASURED للجهاز) |
 | `artifacts/majalis/src/lib/app-startup-controller.ts` | **Startup PR-1** — AppStartupController (آلة حالات الإقلاع مصدر حقيقة واحد) |
 | `artifacts/majalis/src/lib/background-ui-fonts.ts` | **Startup PR-2** — تسخين خطوط اختيارية بعد INTERACTIVE بلا UI |

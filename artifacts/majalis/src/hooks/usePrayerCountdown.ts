@@ -11,6 +11,7 @@ import { getActivePrayerLocation } from "@/lib/prayer-location-prefs";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { subscribeSecondTick } from "@/lib/second-tick";
 import { subscribePrayerDayRollover } from "@/lib/prayer-day-rollover";
+import { markPrayer } from "@/lib/prayer-performance-marks";
 
 const FETCH_TIMEOUT_MS = 4_000;
 
@@ -72,15 +73,22 @@ export function usePrayerCountdownState(
   options?: { enabled?: boolean },
 ): PrayerCountdownValue {
   const enabled = options?.enabled !== false;
-  const [data, setData] = useState<PrayerTimesPayload | null>(() =>
-    enabled ? initialPayload(governorateId) : null,
-  );
+  const [data, setData] = useState<PrayerTimesPayload | null>(() => {
+    if (!enabled) return null;
+    const seed = initialPayload(governorateId);
+    if (seed) {
+      markPrayer("prayer:cached-data-ready");
+      markPrayer("prayer:timezone-ready");
+      markPrayer("prayer:location-ready");
+    }
+    return seed;
+  });
   const [countdown, setCountdown] = useState<PrayerCountdown | null>(() => {
     if (!enabled) return null;
     const seed = initialPayload(governorateId);
-    return seed?.prayers?.length
-      ? computePrayerCountdown(seed.prayers, activeTz(seed))
-      : null;
+    if (!seed?.prayers?.length) return null;
+    markPrayer("prayer:calculation-ready");
+    return computePrayerCountdown(seed.prayers, activeTz(seed));
   });
   /** لا يمنع الرسم — يبقى للتوافق مع المستهلكين القدامى */
   const [loading, setLoading] = useState(() => (enabled ? !initialPayload(governorateId) : false));
@@ -113,6 +121,9 @@ export function usePrayerCountdownState(
       }
       setData(payload);
       syncLessonCache(payload);
+      markPrayer("prayer:timezone-ready");
+      markPrayer("prayer:location-ready");
+      markPrayer("prayer:calculation-ready");
       setCountdown(computePrayerCountdown(payload.prayers, activeTz(payload)));
     });
 

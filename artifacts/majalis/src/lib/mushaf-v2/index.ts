@@ -41,6 +41,9 @@ export {
   saveMushafAppearanceMode,
   applyMushafAppearanceMode,
   resolveMushafAppearance,
+  parseMushafAppearanceMode,
+  MUSHAF_APPEARANCE_CHANGE_EVENT,
+  MUSHAF_DISPLAY_MODE_OPTIONS,
   type MushafAppearanceMode,
   type MushafAppearanceResolved,
 } from "./appearance-prefs";

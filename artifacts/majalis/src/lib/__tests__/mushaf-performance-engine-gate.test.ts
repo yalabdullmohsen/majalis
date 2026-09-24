@@ -1,5 +1,5 @@
 /**
- * بوابة محرك أداء المصحف — prefetch صوتي، ضغط مطوّل للتفسير، بطاقة مشاركة، sepia.
+ * بوابة محرك أداء المصحف — prefetch صوتي، ضغط مطوّل للتفسير، بطاقة مشاركة، وضع عرض.
  * تشغيل: node --import tsx src/lib/__tests__/mushaf-performance-engine-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -26,12 +26,11 @@ assert.match(reader, /onShareImage/);
 assert.match(reader, /shareAyahAsImage/);
 assert.match(line, /onLongPressVerse/);
 assert.match(line, /LONG_PRESS_MS/);
-assert.match(settings, /sepia/);
-assert.match(settings, /بيج دافئ/);
-assert.match(settings, /oled/);
-assert.match(settings, /أسود كامل/);
+assert.match(settings, /MushafDisplayModeControl/);
+assert.match(settings, /وضع عرض المصحف|SYSTEM|LIGHT|DARK/);
 assert.match(settings, /hideLevel/);
 assert.match(settings, /اختبار الحفظ/);
+assert.doesNotMatch(settings, /بيج دافئ|أسود كامل/);
 assert.match(css, /data-mushaf-theme="sepia"/);
 assert.match(css, /data-mushaf-theme="oled"/);
 assert.match(css, /\.is-blanked/);

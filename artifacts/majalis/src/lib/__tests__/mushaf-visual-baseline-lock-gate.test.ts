@@ -12,10 +12,10 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const css = readFileSync(resolve(root, "src/features/mushaf-reader/mushaf-reader.css"), "utf8");
 const page = readFileSync(resolve(root, "src/features/mushaf-reader/MushafPage.tsx"), "utf8");
 
-/** ورق Warm Ivory المعتمد */
-assert.equal(mushafPaperWarmYellow.toLowerCase(), "#fcf6e3");
-assert.match(css, /--mushaf-paper-warm-yellow:\s*#fcf6e3/i);
-assert.match(css, /--mushaf-paper-reading-surface:\s*#fffbef/i);
+/** ورق عاجي مسطّح — Reference Rebuild PR-1 */
+assert.equal(mushafPaperWarmYellow.toLowerCase(), "#fffcf7");
+assert.match(css, /--mushaf-paper-warm-yellow:\s*#fffcf7/i);
+assert.match(css, /--mushaf-paper-reading-surface:\s*#fffcf7/i);
 assert.doesNotMatch(css, /--mushaf-paper-warm-yellow:\s*#ffffff/i);
 
 /** حذف نهائي للإطار والقوس الزخرفي */
