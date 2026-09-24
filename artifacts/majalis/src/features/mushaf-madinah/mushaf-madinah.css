@@ -19,10 +19,10 @@
 }
 
 .mm-viewport {
-  /* ورق مصحف عثماني — عاجي هادئ (مرجع ص١٢٦، ليس أبيض حاد) */
-  --mm-paper: #fdf9f3;
-  --mm-paper-deep: #faf6ee;
-  --mm-outer-bg: #fdf9f3;
+  /* ورق عاجي مسطّح — مرجع PR-1 (#FFFCF7) */
+  --mm-paper: #fffcf7;
+  --mm-paper-deep: #fffcf7;
+  --mm-outer-bg: #fffcf7;
   --mm-ink: #111111;
   /* حبر الآيات — يُغمَق على ثيم الورق */
   --mm-qpc-ink: var(--mm-ink);

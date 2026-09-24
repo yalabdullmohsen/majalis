@@ -11,17 +11,17 @@
   --mushaf-line-height: 1.85;
   --mushaf-font-weight: 400;
   /*
-   * Sunnah Warm Yellow Ivory — ورق عاجي أصفر هادئ + ذهب مطبعي مطفأ.
-   * مرجع بصري فقط؛ بلا مساس بالنص/الـmapping/أبعاد العلامات.
+   * Reference Rebuild PR-1 — ورق عاجي مسطّح (#FFFCF7) بلا تدرج،
+   * ذهب مطبعي مطفأ. بلا مساس بالنص/الـmapping/أبعاد العلامات.
    */
-  --mushaf-paper-warm-yellow: #fcf6e3;
+  --mushaf-paper-warm-yellow: #fffcf7;
   --mushaf-paper-warm-yellow-dark: #2a2418;
   --mushaf-paper-edge: #c9b06a;
-  --mushaf-paper-inner-glow: #fffef6;
-  --mushaf-paper-reading-surface: #fffbef;
+  --mushaf-paper-inner-glow: #fffcf7;
+  --mushaf-paper-reading-surface: #fffcf7;
   --mushaf-paper-light: var(--mushaf-paper-warm-yellow);
   --mushaf-paper-dark: var(--mushaf-paper-warm-yellow-dark);
-  --mushaf-ink: #1c160e;
+  --mushaf-ink: #0e0c0c;
   --mushaf-ink-primary: var(--mushaf-ink);
   --mushaf-ink-secondary: #3a2e1a;
   --mushaf-waqf-ink: #2a2014;
@@ -112,7 +112,7 @@
   --reader-bottom-stack: 0px;
 
   --nm-paper: var(--mushaf-page-bg);
-  --nm-paper-deep: color-mix(in srgb, var(--mushaf-paper-warm-yellow) 82%, var(--mushaf-paper-edge));
+  --nm-paper-deep: var(--mushaf-paper-warm-yellow);
   --nm-ink: var(--mushaf-text-color);
   --nm-meta: var(--mushaf-meta-color);
   --nm-gold: var(--mushaf-printed-gold);
@@ -137,15 +137,8 @@
   inset: 0;
   z-index: 40;
   direction: rtl;
-  background:
-    radial-gradient(ellipse 115% 75% at 50% 8%, color-mix(in srgb, var(--mushaf-paper-inner-glow) 48%, transparent) 0%, transparent 58%),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--mushaf-paper-edge) 6%, var(--mushaf-paper-warm-yellow)) 0%,
-      var(--mushaf-paper-reading-surface) 28%,
-      var(--mushaf-paper-warm-yellow) 58%,
-      color-mix(in srgb, var(--mushaf-paper-edge) 5%, var(--mushaf-paper-warm-yellow)) 100%
-    );
+  /* ورق مسطّح — عقد مرجع PR-1: بلا radial/linear على سطح الصفحة */
+  background: var(--nm-paper);
   color: var(--nm-ink);
   overflow: hidden;
   overscroll-behavior: none;

@@ -6,15 +6,18 @@
  * CSS on `.nm-root` mirrors these names as kebab-case custom properties.
  */
 
-/** ورق عاجي دافئ أفتح (Warm Ivory) — راحة بصرية بلا أبيض وبلا أصفر فاقع */
-export const mushafPaperWarmYellow = "#FCF6E3" as const;
+/**
+ * ورق عاجي مسطّح — مطابقة مرجع القراءة (#FFFCF7) بلا أصفر فاقع وبلا تدرج.
+ * Reference Rebuild PR-1.
+ */
+export const mushafPaperWarmYellow = "#FFFCF7" as const;
 export const mushafPaperWarmYellowDark = "#2A2418" as const;
 export const mushafPaperEdge = "#C9B06A" as const;
-export const mushafPaperInnerGlow = "#FFFEF6" as const;
-export const mushafPaperReadingSurface = "#FFFBEF" as const;
+export const mushafPaperInnerGlow = "#FFFCF7" as const;
+export const mushafPaperReadingSurface = "#FFFCF7" as const;
 
-/** حبر قرآني دافئ قريب من الأسود */
-export const mushafInk = "#1C160E" as const;
+/** حبر قرآني قريب من الأسود (مرجع ≈ #0E0C0C) */
+export const mushafInk = "#0E0C0C" as const;
 export const mushafInkPrimary = mushafInk;
 export const mushafInkSecondary = "#3A2E1A" as const;
 export const mushafWaqfInk = "#2A2014" as const;
