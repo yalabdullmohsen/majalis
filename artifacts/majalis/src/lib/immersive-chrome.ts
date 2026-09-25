@@ -3,25 +3,35 @@
  * (شريط الأقسام، شريط الأحاديث، التذييل، شريط تحرير المشرف).
  *
  * /mushaf قارئ غمري — الأدوات داخل الصفحة عند اللمس فقط.
+ * /prophets/:slug قراءة قصة مركّزة — بلا Header/BottomNav عامّين.
  * مركز القرآن الكريم (/quran-hub) ليس غمريًا.
  */
+export function isProphetsReadingPath(pathname: string): boolean {
+  const p = pathname.replace(/\/+$/, "") || "/";
+  const m = p.match(/^\/(?:prophets|prophet-stories|prophets-stories|anbiya)\/([^/]+)$/);
+  if (!m) return false;
+  const slug = m[1] ?? "";
+  /* الشجرة قائمة استكشاف وليست وضع قراءة */
+  return slug.length > 0 && slug !== "tree";
+}
+
 export function isImmersiveChromePath(pathname: string): boolean {
   const p = pathname.replace(/\/+$/, "") || "/";
-  return p === "/mushaf" || p.startsWith("/mushaf/");
+  return p === "/mushaf" || p.startsWith("/mushaf/") || isProphetsReadingPath(p);
 }
 
 /** مسارات قراءة طويلة — يُثبَّت الكروم بلا إخفاء transform حتى لا ينزلق الشريط داخل المحتوى. */
 export function isPinnedChromePath(pathname: string): boolean {
   const p = pathname.replace(/\/+$/, "") || "/";
+  /* وضع القراءة مركّز (immersive) — لا pinned */
+  if (isProphetsReadingPath(p)) return false;
   return (
     p === "/prophets" ||
-    p.startsWith("/prophets/") ||
+    p === "/prophets/tree" ||
+    p.startsWith("/prophets/tree/") ||
     p === "/prophet-stories" ||
-    p.startsWith("/prophet-stories/") ||
     p === "/prophets-stories" ||
-    p.startsWith("/prophets-stories/") ||
-    p === "/anbiya" ||
-    p.startsWith("/anbiya/")
+    p === "/anbiya"
   );
 }
 

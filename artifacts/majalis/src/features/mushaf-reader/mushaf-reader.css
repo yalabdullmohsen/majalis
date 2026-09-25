@@ -827,7 +827,7 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   border-radius: 0;
   border: 1px solid var(--mushaf-verse-marker-border);
   background: var(--mushaf-verse-marker-fill);
-  color: var(--mushaf-ayah-marker-number, var(--mushaf-verse-marker-number));
+  color: var(--mushaf-verse-marker-number);
   font-family: inherit;
   font-size: var(--mushaf-ayah-mark-font-size, 0.62em);
   font-weight: var(--mushaf-ayah-marker-number-weight, 700);
