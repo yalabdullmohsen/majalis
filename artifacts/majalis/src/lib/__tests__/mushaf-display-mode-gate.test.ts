@@ -53,7 +53,12 @@ assert.match(prefs, /data-mushaf-appearance/);
 const control = read("src/features/mushaf-reader/MushafDisplayModeControl.tsx");
 assert.match(control, /وضع عرض المصحف/);
 assert.match(control, /mushaf-display-mode/);
+assert.match(control, /onPointerDown=\{ \(e\) => e\.stopPropagation\(\) \}|onPointerDown=\{\(e\) => e\.stopPropagation\(\)\}/);
 assert.doesNotMatch(control, /<select|<option/);
+
+const cardCss = read("src/features/mushaf-reader/mushaf-display-mode-control.css");
+assert.match(cardCss, /\.mushaf-display-mode__card\s*\{[\s\S]*?pointer-events:\s*auto/);
+assert.match(cardCss, /width:\s*100%/);
 
 const sheet = read("src/features/mushaf-madinah/MushafSettingsSheet.tsx");
 assert.match(sheet, /MushafDisplayModeControl/);
@@ -71,6 +76,8 @@ const css = read("src/features/mushaf-reader/mushaf-reader.css");
 assert.match(css, /html\[data-mushaf-appearance="night"\] \.nm-root/);
 assert.match(css, /html\[data-mushaf-appearance="light"\] \.nm-root/);
 assert.match(css, /--mm-paper:\s*var\(--mushaf-paper/);
+assert.match(css, /\.nm-controls-more\s*\{[\s\S]*?pointer-events:\s*auto/);
+assert.match(css, /\.nm-controls-more \.mushaf-display-mode__card\s*\{[\s\S]*?pointer-events:\s*auto/);
 assert.doesNotMatch(
   css,
   /html\[data-mushaf-appearance="night"\] \.nm-root,\s*\.nm-root\[data-mushaf-appearance="night"\],\s*html\[data-theme="dark"\] \.nm-root,\s*html\.dark \.nm-root \{/,
