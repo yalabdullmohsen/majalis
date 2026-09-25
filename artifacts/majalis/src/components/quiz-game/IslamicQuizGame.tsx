@@ -3,7 +3,7 @@ import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { useSearch } from "wouter";
 import { DirectQaCard } from "./DirectQaCard";
 import {
-  Award, BookOpen, BookMarked, CheckCircle2, Coins, Compass, Droplets, GraduationCap, Handshake, Heart, Languages, Library, Lightbulb, Map, MessageCircle, PenLine, RefreshCw, ScrollText, Moon, Search, Send, Sparkles, Star, Scale, Building2, Landmark, Gem, Trophy, User, Users, XCircle, Zap, Sunrise,
+  Award, BookOpen, BookMarked, CheckCircle2, Coins, Compass, Droplets, GraduationCap, Handshake, Heart, Languages, Library, Lightbulb, Map, MessageCircle, PenLine, RefreshCw, ScrollText, Moon, Search, Send, Sparkles, Star, Scale, Building2, Landmark, Gem, Trophy, Users, XCircle, Zap, Sunrise,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -418,11 +418,11 @@ function SetupPhase({
   publishedCount?: number;
 }) {
   const [playMode, setPlayMode] = useState<PlayMode>("solo");
-  const [teamCount, setTeamCount] = useState<2 | 3 | 4>(2);
-  const [teamNames, setTeamNames] = useState<string[]>(["", ""]);
+  /** 1 = فردي · 2–4 = جماعي بعدد اللاعبين/الفرق */
+  const [playerCount, setPlayerCount] = useState<1 | 2 | 3 | 4>(1);
+  const [teamNames, setTeamNames] = useState<string[]>([""]);
   const [soloName, setSoloName] = useState("");
   const [selected, setSelected] = useState<string[]>(initialSelected);
-  const [showTeam, setShowTeam] = useState(false);
   const [questionCount, setQuestionCount] = useState<5 | 10 | 15>(10);
 
   const toggle = (id: string) =>
@@ -433,8 +433,8 @@ function SetupPhase({
   const selectAll = () => setSelected(GAME_CATEGORIES.map((c) => c.id));
   const clearAll = () => setSelected([]);
 
-  const changeTeamCount = (n: 2 | 3 | 4) => {
-    setTeamCount(n);
+  const changePlayerCount = (n: 1 | 2 | 3 | 4) => {
+    setPlayerCount(n);
     setTeamNames((prev) => {
       const next = prev.slice(0, n);
       while (next.length < n) next.push("");
@@ -468,12 +468,12 @@ function SetupPhase({
     }
     const cats = resolveCats();
     if (cats.length < 1) return;
-    if (showTeam && playMode === "solo") {
+    if (playerCount >= 2) {
       const names = teamNames.map((n, i) => n.trim() || DEFAULT_TEAM_NAMES[i]);
       onStart(cats, "team", names);
       return;
     }
-    onStart(cats, "solo", [soloName.trim() || "اللاعب"]);
+    onStart(cats, "solo", [soloName.trim() || teamNames[0]?.trim() || "اللاعب"]);
   };
 
   return (
@@ -503,10 +503,7 @@ function SetupPhase({
               key={m.id}
               type="button"
               aria-pressed={playMode === m.id}
-              onClick={() => {
-                setPlayMode(m.id);
-                setShowTeam(false);
-              }}
+              onClick={() => setPlayMode(m.id)}
               className={`qzg-play-mode${playMode === m.id ? " qzg-play-mode--on" : ""}`}
             >
               <span className="qzg-play-mode__label">{m.label}</span>
@@ -514,15 +511,6 @@ function SetupPhase({
             </button>
           ))}
         </div>
-        {playMode === "solo" ? (
-          <button
-            type="button"
-            className="qzg-team-extra"
-            onClick={() => setShowTeam((v) => !v)}
-          >
-            {showTeam ? "إخفاء الوضع الجماعي" : "وضع جماعي (اختياري)"}
-          </button>
-        ) : null}
       </section>
 
       {playMode === "quick" || playMode === "random" ? (
@@ -549,22 +537,40 @@ function SetupPhase({
         <p className="qzg-daily-hint">سؤال واحد يتجدّد يوميًا لكل المستخدمين.</p>
       ) : (
         <>
-          {showTeam ? (
-            <section className="qzg-section-card soft-card soft-card--on-light">
-              <h2 className="qzg-section-h2"><Users size={18} className="inline ms-1" />عدد الفرق</h2>
-              <div className="qzg-team-count-row">
-                {([2, 3, 4] as const).map((n) => (
-                  <button
-                    key={n}
-                    type="button"
-                    onClick={() => changeTeamCount(n)}
-                    className={`qzg-count-btn${teamCount === n ? " qzg-count-btn--on" : ""}`}
-                  >
-                    {n} فرق
-                  </button>
-                ))}
-              </div>
-              <div className="qzg-teams-grid qzg-teams-grid--dynamic" style={{ "--qzg-teams-cols": teamCount } as React.CSSProperties}>
+          <section className="qzg-section-card soft-card soft-card--on-light" aria-label="عدد اللاعبين">
+            <h2 className="qzg-section-h2"><Users size={18} className="inline ms-1" />عدد اللاعبين</h2>
+            <div className="qzg-team-count-row" role="group" aria-label="اختر عدد اللاعبين">
+              {([1, 2, 3, 4] as const).map((n) => (
+                <button
+                  key={n}
+                  type="button"
+                  aria-pressed={playerCount === n}
+                  onClick={() => changePlayerCount(n)}
+                  className={`qzg-count-btn${playerCount === n ? " qzg-count-btn--on" : ""}`}
+                >
+                  {n === 1 ? "1 لاعب" : `${n} لاعبين`}
+                </button>
+              ))}
+            </div>
+            {playerCount === 1 ? (
+              playMode !== "random" ? (
+                <div className="qzg-solo-name">
+                  <label htmlFor="qzg-solo-name" className="qzg-team-label">اسمك (اختياري)</label>
+                  <input
+                    id="qzg-solo-name"
+                    value={soloName}
+                    onChange={(e) => setSoloName(e.target.value)}
+                    placeholder="اللاعب"
+                    maxLength={20}
+                    className="qzg-input"
+                  />
+                </div>
+              ) : null
+            ) : (
+              <div
+                className="qzg-teams-grid qzg-teams-grid--dynamic"
+                style={{ "--qzg-teams-cols": playerCount } as React.CSSProperties}
+              >
                 {teamNames.map((name, i) => (
                   <div key={i}>
                     <label htmlFor={`qzg-team${i + 1}`} className="qzg-team-label">{DEFAULT_TEAM_NAMES[i]}</label>
@@ -579,19 +585,8 @@ function SetupPhase({
                   </div>
                 ))}
               </div>
-            </section>
-          ) : playMode !== "random" ? (
-            <section className="qzg-section-card soft-card soft-card--on-light">
-              <h2 className="qzg-section-h2"><User size={18} className="inline ms-1" />اسمك (اختياري)</h2>
-              <input
-                value={soloName}
-                onChange={(e) => setSoloName(e.target.value)}
-                placeholder="اللاعب"
-                maxLength={20}
-                className="qzg-input"
-              />
-            </section>
-          ) : null}
+            )}
+          </section>
 
           {playMode !== "random" ? (
             <section className="qzg-section-card soft-card soft-card--on-light">
