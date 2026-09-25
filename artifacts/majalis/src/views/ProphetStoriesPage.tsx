@@ -19,12 +19,14 @@ import "@/styles/prophets-semantic-tokens.css";
 import "@/styles/pages/prophet-stories.css";
 import "@/styles/pages/stories-seerah-v2.css";
 import { UtilityScreen } from "@/components/design-system/screens";
+import { ProphetIdentityHero } from "@/components/prophets/ProphetIdentityHero";
 import { ProphetMushafMentions } from "@/components/prophets/ProphetMushafMentions";
+import { ProphetQuickFacts, type ProphetQuickFact } from "@/components/prophets/ProphetQuickFacts";
 import { ProphetStoryReader } from "@/components/prophets/ProphetStoryReader";
 import { ProphetStoryReaderHeader } from "@/components/prophets/ProphetStoryReaderHeader";
 import { ProphetStorySectionHeader } from "@/components/prophets/ProphetStorySectionHeader";
 import { ProphetStorySourcesBlock } from "@/components/prophets/ProphetStorySourcesBlock";
-import { ProphetTopicCard } from "@/components/prophets/ProphetTopicCard";
+import { ProphetStoryTabs } from "@/components/prophets/ProphetStoryTabs";
 import { PROPHET_MUSHAF_MENTIONS, PROPHET_MUSHAF_NAV_SOURCE } from "@/lib/prophet-mushaf-mentions";
 
 function knowledgeBodyBlocks(body: string): { title?: string; paragraphs: string[] }[] {
@@ -315,7 +317,7 @@ function ProphetDetailView({
   const [knowledge, setKnowledge] = useState<KnowledgeItem | null>(null);
   const [knowledgeLoading, setKnowledgeLoading] = useState(true);
   const [readPct, setReadPct] = useState(0);
-  const [activeSection, setActiveSection] = useState("bio");
+  const [activeSection, setActiveSection] = useState("story");
   const articleRef = useRef<HTMLElement>(null);
   const prevProphet = p && p.id > 1 ? PROPHETS[p.id - 2] : null;
   const nextProphet = p && p.id < PROPHETS.length ? PROPHETS[p.id] : null;
@@ -333,16 +335,21 @@ function ProphetDetailView({
     return items;
   }, [knowledge?.review_status]);
 
+  const hasMushafMentions = Boolean(PROPHET_MUSHAF_MENTIONS[canonicalSlug]?.length);
+  const quranTabId = hasMushafMentions
+    ? "mushaf-mentions"
+    : p?.mainSurahs?.length
+      ? "quran-loci"
+      : null;
+  const hasStory = !dbLoading && Boolean(dbStory?.content);
   const sections: DetailSection[] = [
+    ...(hasStory ? [{ id: "story", label: "القصة" }] : []),
     { id: "bio", label: "نبذة" },
-    ...(p?.mainSurahs?.length ? [{ id: "quran-loci", label: "مواضع في القرآن" }] : []),
-    ...(sup?.miracle ? [{ id: "miracle", label: "المعجزة" }] : []),
-    { id: "surahs", label: "السور" },
+    ...(quranTabId ? [{ id: quranTabId, label: "مواضع القرآن" }] : []),
+    ...(sup?.miracle ? [{ id: "miracle", label: "المعجزات" }] : []),
     { id: "attrs", label: "الصفات" },
-    { id: "lessons", label: "العبر" },
-    ...(!knowledgeLoading && knowledgeBlocks.length ? [{ id: "knowledge", label: "عرض موسّع" }] : []),
-    ...(!dbLoading && dbStory?.content ? [{ id: "story", label: "القصة" }] : []),
-    ...(!dbLoading && dbStory?.citations?.length ? [{ id: "citations", label: "الاستشهادات" }] : []),
+    { id: "lessons", label: "الدروس والعبر" },
+    { id: "sources", label: "المصادر" },
   ];
 
   useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [slug]);
@@ -538,45 +545,53 @@ function ProphetDetailView({
           onBack={onBack}
         />
 
-        <div className="prophet-detail-lux__hero">
-          <div className="prophet-detail-lux__hero-content">
-            <span className="prophet-detail-lux__num-badge">النبي {p.id} من {PROPHETS.length}</span>
-            {isUlulAzm ? <span className="prophet-detail-lux__azm-badge">أولو العزم</span> : null}
-            <h1 className="prophet-detail-lux__name">{p.arabicName}</h1>
-            <p className="prophet-detail-lux__pbuh">صلوات الله وسلامه عليه</p>
-            {p.quranTitle ? (
-              <div className="prophet-detail-lux__quran-title">﴿ {p.quranTitle} ﴾</div>
-            ) : null}
-            <p className="prophet-detail-lux__hero-title">{p.title}</p>
-          </div>
-        </div>
+        <ProphetIdentityHero
+          arabicName={p.arabicName}
+          title={p.title}
+          quranTitle={p.quranTitle}
+          orderLabel={`النبي ${p.id} من ${PROPHETS.length}`}
+          isUlulAzm={isUlulAzm}
+          mentionCount={sup?.mentioned}
+          mainSurah={p.mainSurahs[0]}
+          place={p.peopleOrPlace}
+        />
 
-        <div className="prophet-facts-grid">
-          <ProphetTopicCard label="القوم / البلد" value={p.peopleOrPlace} />
-          <ProphetTopicCard label="الحقبة" value={p.era} />
-          {sup ? (
-            <ProphetTopicCard label="الذِّكر في القرآن" value={`${sup.mentioned} مرة`} meterPct={mentionPct} />
-          ) : null}
-          <ProphetTopicCard label="أبرز سورة" value={p.mainSurahs[0] || "—"} />
-          {sup?.book ? <ProphetTopicCard label="الكتاب المنزَّل" value={sup.book} /> : null}
-          {sup?.quranRef ? (
-            <ProphetTopicCard label="مواضع في القرآن" value={sup.quranRef} wide />
-          ) : null}
-        </div>
+        <ProphetQuickFacts
+          facts={(
+            [
+              { id: "title", label: "اللقب", value: p.title },
+              { id: "order", label: "الترتيب", value: `${p.id} / ${PROPHETS.length}` },
+              { id: "place", label: "القوم / الموضع", value: p.peopleOrPlace },
+              p.mainSurahs[0]
+                ? { id: "surah", label: "أبرز سورة", value: p.mainSurahs[0] }
+                : null,
+              sup
+                ? {
+                    id: "mentions",
+                    label: "مرات الذكر",
+                    value: `${sup.mentioned} مرة`,
+                    meterPct: mentionPct,
+                  }
+                : null,
+              hasMushafMentions
+                ? {
+                    id: "mushaf",
+                    label: "مواضع القرآن",
+                    value: `${PROPHET_MUSHAF_MENTIONS[canonicalSlug].length} موضع`,
+                  }
+                : sup?.quranRef
+                  ? { id: "quran-ref", label: "مواضع في القرآن", value: sup.quranRef, wide: true }
+                  : null,
+              sup?.book ? { id: "book", label: "الكتاب المنزَّل", value: sup.book } : null,
+            ] as Array<ProphetQuickFact | null>
+          ).filter((f): f is ProphetQuickFact => Boolean(f))}
+        />
 
-        <nav className="prophet-detail-toc" aria-label="أقسام القصة">
-          {sections.map((s) => (
-            <button
-              key={s.id}
-              type="button"
-              className={`prophet-detail-toc__btn${activeSection === s.id ? " prophet-detail-toc__btn--active" : ""}`}
-              aria-current={activeSection === s.id ? "true" : undefined}
-              onClick={() => scrollToSection(s.id)}
-            >
-              {s.label}
-            </button>
-          ))}
-        </nav>
+        <ProphetStoryTabs
+          tabs={sections}
+          activeId={sections.some((s) => s.id === activeSection) ? activeSection : sections[0]?.id ?? "bio"}
+          onSelect={scrollToSection}
+        />
 
         <article ref={articleRef} className="prophet-story-lux">
           <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="bio">

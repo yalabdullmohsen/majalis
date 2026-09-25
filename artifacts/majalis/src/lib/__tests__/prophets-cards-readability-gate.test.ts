@@ -46,7 +46,7 @@ assert.match(css, /html\.dark \.prophets-lux-page[\s\S]{0,80}?--ps-ink-soft:\s*#
 assert.match(css, /html\.dark \.prophet-lux-card__chip[\s\S]{0,220}?#E8F0EC/s);
 assert.match(css, /\.prophet-fact-card\s*\{[^}]*min-height:\s*0/s);
 assert.doesNotMatch(css, /word-break:\s*break-all/);
-assert.match(view, /ProphetTopicCard/);
+assert.match(view, /ProphetTopicCard|ProphetQuickFacts/);
 
 /* عرض ضيق: عمود واحد + chips أصغر عند 320px */
 assert.match(css, /@media \(max-width:\s*320px\)[\s\S]{0,220}?\.prophet-lux-card__chip/s);
