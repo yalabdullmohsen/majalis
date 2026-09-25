@@ -1,0 +1,82 @@
+{
+  "program": "mushaf-experience-rebuild",
+  "stage": 0,
+  "stageName": "experience-root-cause-baseline",
+  "measuredAt": "2026-09-25T20:20:00Z",
+  "commitBase": "04fdd4800005bf8d2c58d4c7448e09b2e10b6c08",
+  "branch": "cursor/mushaf-experience-pr0-baseline",
+  "report": "docs/mushaf/MUSHAF_EXPERIENCE_ROOT_CAUSE.md",
+  "acceptanceClaimForbidden": "SUNNAH_MUSHAF_EXPERIENCE_COMPLETE",
+  "productPatchInThisPr": false,
+  "instrumentationOnly": true,
+  "productionReader": "NewMushafReader",
+  "route": "/mushaf",
+  "domPageWindow": 3,
+  "quranFingerprint": {
+    "codesSha": "b21f6bdad370b8a6feea12236c844f809b3bdf9c191d312ac216543ed3c3ab7d",
+    "textsSha": "d7d6cae756ecb5fafe2885e9ab0f7193e9771864216b93ceb364b80a39a6ae26",
+    "verseOrderSha": "c7fb16ced00ce9d1cacd0d1405d9ad2958219e1f7bbe89c1ae37899d84fb1264",
+    "ayahCount": 6236,
+    "wordCount": 83665,
+    "mushafId": 1
+  },
+  "confirmedCauses": [
+    "EXCESSIVE_PAGE_DOM",
+    "PAGE_REMOUNT",
+    "GLOBAL_STORE_SUBSCRIPTION",
+    "EXPENSIVE_TEXT_LAYOUT",
+    "FONT_LOADING_DELAY",
+    "AUDIO_STATE_RERENDER",
+    "SETTINGS_STATE_RERENDER",
+    "SELECTION_RERENDER",
+    "SERVICE_WORKER_STALE_ASSET",
+    "OTHER_CONFIRMED"
+  ],
+  "absentCauses": ["ALL_PAGES_RENDERED"],
+  "mitigatedCauses": ["READER_REMOUNT"],
+  "unconfirmedCauses": ["UNSTABLE_CONTEXT_VALUE", "EVENT_LISTENER_LEAK", "DUPLICATE_GESTURE_HANDLERS"],
+  "gaps": [
+    "no-MushafSelectionController",
+    "clearSelection-blocked-during-playback",
+    "no-central-goToNextMushafPage-api",
+    "no-MushafPageSurahLabel-continuous-header",
+    "headerSurahName-computed-but-not-rendered",
+    "audio-state-not-fully-isolated-from-page-render",
+    "device-swipe-fps-not-measured",
+    "testflight-matrix-not-run"
+  ],
+  "alreadyFixed": [
+    "ipad-narrow-column-2283",
+    "lazy-mushaf-route",
+    "three-pane-pager",
+    "quiet-url-sync-no-reader-remount"
+  ],
+  "experienceMarks": [
+    "mushaf:route-start",
+    "mushaf:reader-mounted",
+    "mushaf:page-data-ready",
+    "mushaf:font-ready",
+    "mushaf:first-page-rendered",
+    "mushaf:first-stable-frame",
+    "mushaf:flip-start",
+    "mushaf:flip-complete",
+    "mushaf:selection-start",
+    "mushaf:selection-complete"
+  ],
+  "notMeasuredThisRun": [
+    "readerMountCountDevice",
+    "pageMountCountDevice",
+    "renderCountDevice",
+    "openToFirstStableMs",
+    "flipLatencyMsDevice",
+    "memoryAfter50Flips",
+    "domNodeCountDevice",
+    "longTasksDevice",
+    "eventListenerCount",
+    "gestureHandlerCount",
+    "swipeDirectionDeviceMatrix",
+    "ipadSplitView",
+    "testflight"
+  ],
+  "deviceMatrix": "NOT_MEASURED"
+}

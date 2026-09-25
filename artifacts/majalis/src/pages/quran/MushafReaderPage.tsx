@@ -23,6 +23,10 @@ import {
   stashPendingNavigationHighlight,
   type QuranNavigationSource,
 } from "@/lib/quran-navigation";
+import {
+  enableMushafExperiencePerf,
+  mushafExperienceMark,
+} from "@/features/mushaf-reader/mushaf-experience-perf";
 
 const NAV_SOURCES = new Set<QuranNavigationSource>([
   "prophets-stories",
@@ -52,6 +56,11 @@ export default function MushafReaderPage() {
   const paintReady = useNavigationPaintGate(100);
   /** لا تفكّ تركيب القارئ عند كل ?page= — وإلا ينكسر القلب المتتالي والتلاوة */
   const [readerMounted, setReaderMounted] = useState(false);
+
+  useEffect(() => {
+    enableMushafExperiencePerf(true);
+    mushafExperienceMark("mushaf:route-start");
+  }, []);
 
   /** مصدر الحقيقة للصفحة داخل الجلسة — يُحسب مرة عند الإقلاع فقط */
   const bootPageRef = useRef<number | null>(null);
