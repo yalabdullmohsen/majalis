@@ -54,7 +54,11 @@ assert.match(css, /\.prophet-sources-block\s*\{/);
 assert.match(css, /\.prophet-story-reader\s*\{/);
 assert.match(css, /\.prophet-section-lux__rule\s*\{/);
 
-assert.match(css, /\.prophet-fact-card__value[\s\S]{0,180}?var\(--prophets-ink/s);
-assert.match(css, /\.prophet-detail-toc__btn--active[\s\S]{0,220}?box-shadow:\s*inset 0 -2px 0/s);
+assert.match(css, /\.prophet-detail-lux__hero\s*\{[^}]*background-color:\s*var\(--ps-emerald/s);
+assert.match(css, /\.prophet-detail-lux h1\.prophet-detail-lux__name\s*\{[^}]*color:\s*var\(--ps-on-emerald/s);
+assert.doesNotMatch(
+  css,
+  /html\.dark \.prophet-detail-lux[\s\S]{0,500}?--prophets-accent:\s*var\(--accent/s,
+);
 
 console.log("prophets-stories-rebuild-impl-gate: ok");
