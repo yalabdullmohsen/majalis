@@ -523,28 +523,20 @@ html.dark .prophets-page-lead {
   min-height: 100dvh;
   min-height: 100svh;
   box-sizing: border-box;
-  --prophets-bg: var(--mj-bg, var(--msk-canvas, #f7f3ea));
-  --prophets-surface: var(--mj-surface, var(--mj-white, #ffffff));
-  --prophets-surface-soft: color-mix(in srgb, var(--mj-brand, #1e5f4b) 9%, var(--prophets-surface));
-  --prophets-ink: var(--mj-ink, var(--majalis-ink, #16241e));
-  --prophets-ink-soft: var(--text-secondary, var(--mj-ink-2, #3a4a44));
-  --prophets-accent: var(--mj-brand, #1e5f4b);
-  --prophets-brass: var(--mj-accent, var(--majalis-brass));
-  --prophets-line: var(--mj-hairline, var(--msk-border, #e5e0d5));
-  --prophets-bg-dark: var(--mj-brand-deep-surface, #0f2a24);
+  /* Semantic tokens: prophets-semantic-tokens.css — جسر ps-* فقط هنا */
   background-color: var(--prophets-bg);
   background-image: none;
-  color: var(--prophets-ink);
+  color: var(--prophets-text-primary, var(--prophets-ink));
   direction: rtl;
   padding-bottom: calc(var(--inset-bottom, 0px) + 2rem);
-  --prophet-color-on-dark: color-mix(in srgb, var(--prophet-color, var(--mj-brand, #1f6b56)) 35%, #f4f7f5);
-  --prophet-accent-on-dark: color-mix(in srgb, var(--prophet-accent, var(--mj-accent)) 55%, var(--mj-white, #ffffff));
-  --ps-text-primary: var(--prophets-ink);
-  --ps-text-body: var(--prophets-ink);
-  --ps-detail-soft: var(--prophets-ink-soft);
-  --ps-detail-muted: var(--prophets-ink-soft);
-  --ps-detail-border: var(--prophets-line);
-  --ps-detail-card: var(--prophets-surface);
+  --prophet-color-on-dark: color-mix(in srgb, var(--prophet-color, var(--prophets-accent, #1f6b56)) 35%, #f4f7f5);
+  --prophet-accent-on-dark: color-mix(in srgb, var(--prophet-accent, var(--prophets-gold)) 55%, var(--prophets-text-on-accent, #ffffff));
+  --ps-text-primary: var(--prophets-text-primary, var(--prophets-ink));
+  --ps-text-body: var(--prophets-text-primary, var(--prophets-ink));
+  --ps-detail-soft: var(--prophets-text-secondary, var(--prophets-ink-soft));
+  --ps-detail-muted: var(--prophets-text-muted, var(--prophets-ink-soft));
+  --ps-detail-border: var(--prophets-border-subtle, var(--prophets-line));
+  --ps-detail-card: var(--prophets-surface-1, var(--prophets-surface));
   border-radius: 0;
   overflow: visible;
 }
@@ -2921,10 +2913,11 @@ html[data-theme="dark"] .prophet-detail-lux {
 }
 
 
-/* ── مواضع الذكر في المصحف (تنقّل سياقي) ── */
+/* ── مواضع الذكر في المصحف (تنقّل سياقي) — تباين مضبوط PR-2 ── */
 .prophet-mushaf-mentions__lead {
   margin-block: 0.35rem 0.85rem;
-  opacity: 0.92;
+  color: var(--prophets-text-secondary, var(--prophets-ink-soft));
+  opacity: 1;
 }
 .prophet-mushaf-mentions {
   display: grid;
@@ -2937,52 +2930,71 @@ html[data-theme="dark"] .prophet-detail-lux {
   gap: 0.75rem;
   width: 100%;
   text-align: start;
-  padding: 0.85rem 1rem;
-  border-radius: 0.85rem;
-  border: 1px solid color-mix(in srgb, var(--prophet-accent, #c4a35a) 35%, transparent);
-  background: color-mix(in srgb, var(--prophet-surface, #1a2e24) 88%, #c4a35a 12%);
-  color: inherit;
+  padding: 0.75rem 0.95rem;
+  border-radius: var(--mie-radius-card, 0.85rem);
+  border: 1px solid var(--prophets-border-subtle, var(--prophets-line));
+  background: var(--prophets-surface-2, var(--prophets-surface-soft));
+  color: var(--prophets-text-primary, var(--prophets-ink));
   cursor: pointer;
-  transition: border-color 0.2s ease, transform 0.15s ease, background 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 .prophet-mushaf-mention-card:hover,
 .prophet-mushaf-mention-card:focus-visible {
-  border-color: color-mix(in srgb, var(--prophet-accent, #c4a35a) 70%, transparent);
-  transform: translateX(-2px);
-  outline: none;
+  border-color: var(--prophets-border-strong);
+  background: var(--prophets-surface-selected, var(--prophets-surface-3));
+  outline: 2px solid var(--prophets-focus-ring);
+  outline-offset: 2px;
 }
 .prophet-mushaf-mention-card:active {
-  transform: scale(0.99);
+  background: var(--prophets-surface-3, var(--prophets-surface-2));
 }
 .prophet-mushaf-mention-card__main {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.2rem;
   min-width: 0;
 }
 .prophet-mushaf-mention-card__title {
   font-weight: 700;
   font-size: 1.02rem;
   line-height: 1.45;
+  color: var(--prophets-text-primary, var(--prophets-ink));
 }
 .prophet-mushaf-mention-card__note {
   font-size: 0.88rem;
-  opacity: 0.85;
   line-height: 1.4;
+  color: var(--prophets-text-secondary, var(--prophets-ink-soft));
+  opacity: 1;
 }
 .prophet-mushaf-mention-card__cta {
   font-size: 0.82rem;
-  font-weight: 600;
-  color: color-mix(in srgb, var(--prophet-accent, #c4a35a) 85%, white);
+  font-weight: 650;
+  color: var(--prophets-accent);
 }
 .prophet-mushaf-mention-card__icon {
   flex-shrink: 0;
-  opacity: 0.9;
+  color: var(--prophets-accent);
+  opacity: 1;
 }
 html.dark .prophet-mushaf-mention-card,
 html[data-theme="dark"] .prophet-mushaf-mention-card {
-  background: color-mix(in srgb, #142019 92%, #8a6b2e 8%);
-  border-color: color-mix(in srgb, #8a6b2e 40%, transparent);
+  background: var(--prophets-surface-2);
+  border-color: var(--prophets-border-strong);
+  color: var(--prophets-text-primary);
+}
+html.dark .prophet-mushaf-mention-card__title,
+html[data-theme="dark"] .prophet-mushaf-mention-card__title {
+  color: var(--prophets-text-primary);
+}
+html.dark .prophet-mushaf-mention-card__note,
+html[data-theme="dark"] .prophet-mushaf-mention-card__note {
+  color: var(--prophets-text-secondary);
+}
+html.dark .prophet-mushaf-mention-card__cta,
+html[data-theme="dark"] .prophet-mushaf-mention-card__cta,
+html.dark .prophet-mushaf-mention-card__icon,
+html[data-theme="dark"] .prophet-mushaf-mention-card__icon {
+  color: var(--prophets-accent);
 }
 
 /* ── سيرة نبوية مختصرة (Timeline) داخل قصص الأنبياء ── */
@@ -3136,7 +3148,7 @@ html[data-theme="dark"] .prophets-lux-search::placeholder {
 .prophet-sources-block__detail,.prophet-sources-block__empty{color:var(--prophets-ink-soft,var(--ps-ink-soft));font-size:.9rem;line-height:1.6}
 .prophet-sources-block__copy{flex-shrink:0;min-width:44px;min-height:44px;padding:.4rem .8rem;border-radius:var(--radius-pill,999px);border:1px solid var(--prophets-line,var(--ps-line));background:color-mix(in srgb,var(--prophets-accent,var(--mj-brand)) 10%,#fff);color:var(--prophets-accent,var(--mj-brand));font-weight:650;cursor:pointer}
 .prophet-topic-card{min-height:44px}
-html.dark .prophet-detail-lux,html[data-theme=dark] .prophet-detail-lux,html.dark .prophet-story-reader,html[data-theme=dark] .prophet-story-reader{--prophets-bg:var(--bg,#131A18);--prophets-surface:var(--surface,#1A2421);--prophets-surface-soft:color-mix(in srgb,var(--accent,var(--mj-brand)) 14%,var(--surface,#1A2421));--prophets-ink:var(--text-primary,#ECF2EF);--prophets-ink-soft:var(--text-secondary,#C8D5CF);--prophets-line:var(--border,#35443F);--prophets-accent:var(--mj-brand,var(--ps-emerald-bright,#1e5f4b));--ps-text-primary:var(--prophets-ink);--ps-text-body:var(--prophets-ink);--ps-detail-soft:var(--prophets-ink-soft);--ps-detail-muted:var(--prophets-ink-soft);--ps-detail-border:var(--prophets-line);--ps-detail-card:var(--prophets-surface);background-color:var(--prophets-bg);color:var(--prophets-ink)}
+html.dark .prophet-detail-lux,html[data-theme=dark] .prophet-detail-lux,html.dark .prophet-story-reader,html[data-theme=dark] .prophet-story-reader{--prophets-ink:var(--text-primary,#ECF2EF);--prophets-ink-soft:var(--text-secondary,#C8D5CF);--prophets-text-primary:var(--text-primary,#ECF2EF);--prophets-text-secondary:var(--text-secondary,#C8D5CF);--prophets-text-muted:var(--text-muted,#9AABA3);--prophets-bg:#131A18;--prophets-surface-1:#1A2421;--prophets-surface-2:#24302B;--prophets-surface-3:#2E3C36;--prophets-surface:var(--prophets-surface-1);--prophets-surface-soft:var(--prophets-surface-2);--prophets-border-subtle:#35443F;--prophets-border-strong:#4A5C55;--prophets-line:var(--prophets-border-subtle);--prophets-accent:var(--brand-olive,#7a9a82);--ps-text-primary:var(--prophets-ink);--ps-text-body:var(--prophets-ink);--ps-detail-soft:var(--prophets-ink-soft);--ps-detail-muted:var(--prophets-ink-soft);--ps-detail-border:var(--prophets-line);--ps-detail-card:var(--prophets-surface);background-color:var(--prophets-bg);color:var(--prophets-ink)}
 html.dark .prophet-fact-card,html[data-theme=dark] .prophet-fact-card,html.dark .prophet-lesson-card,html[data-theme=dark] .prophet-lesson-card,html.dark .prophet-sources-block__item,html[data-theme=dark] .prophet-sources-block__item,html.dark .prophet-reader-header__back,html[data-theme=dark] .prophet-reader-header__back,html.dark .prophet-chip-lux,html[data-theme=dark] .prophet-chip-lux,html.dark .prophet-detail-toc__btn,html[data-theme=dark] .prophet-detail-toc__btn{background:color-mix(in srgb,var(--prophets-surface) 92%,#243530);border-color:var(--prophets-line);color:var(--prophets-ink);box-shadow:none}
 html.dark .prophet-fact-card__label,html[data-theme=dark] .prophet-fact-card__label,html.dark .prophet-sources-block__detail,html[data-theme=dark] .prophet-sources-block__detail{color:var(--prophets-ink-soft)}
 html.dark .prophet-fact-card__value,html[data-theme=dark] .prophet-fact-card__value,html.dark .prophet-lesson-card__text,html[data-theme=dark] .prophet-lesson-card__text,html.dark .prophet-section-lux__text,html[data-theme=dark] .prophet-section-lux__text,html.dark .prophet-section-lux__title,html[data-theme=dark] .prophet-section-lux__title,html.dark .prophet-reader-header__title,html[data-theme=dark] .prophet-reader-header__title{color:var(--prophets-ink)}

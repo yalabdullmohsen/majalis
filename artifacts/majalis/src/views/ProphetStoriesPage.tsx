@@ -15,6 +15,7 @@ import { ScholarlyTrustBadge } from "@/components/ScholarlyTrustBadge";
 import { GraphRelatedRail } from "@/widgets/RelatedRail";
 import { navigateTo } from "@/lib/navigation-intent";
 import { goBackOrFallback } from "@/lib/navigation-back";
+import "@/styles/prophets-semantic-tokens.css";
 import "@/styles/pages/prophet-stories.css";
 import "@/styles/pages/stories-seerah-v2.css";
 import { UtilityScreen } from "@/components/design-system/screens";

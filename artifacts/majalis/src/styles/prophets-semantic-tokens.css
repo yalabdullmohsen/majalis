@@ -1,0 +1,87 @@
+/**
+ * قصص الأنبياء — Semantic Tokens (PR-2)
+ * نطاق: .prophets-lux-page · .prophet-detail-lux · .prophet-story-reader
+ * ممنوع: Hex داخل المكوّنات؛ المصحف خارج النطاق.
+ */
+
+.prophets-lux-page,
+.prophet-detail-lux,
+.prophet-story-reader {
+  /* Surfaces — فاتح: عاجي دافئ + طبقات خضراء خفيفة */
+  --prophets-bg: var(--surface-paper, #f3eee3);
+  --prophets-surface-1: var(--surface-card, #fffbf5);
+  --prophets-surface-2: var(--brand-olive-soft, #e8efe6);
+  --prophets-surface-3: color-mix(in srgb, var(--brand-olive, #3d5c45) 12%, var(--prophets-surface-1));
+  --prophets-surface-selected: color-mix(in srgb, var(--brand-olive, #3d5c45) 16%, var(--prophets-surface-1));
+
+  /* Borders */
+  --prophets-border-subtle: var(--mie-border, color-mix(in srgb, var(--brand-olive, #3d5c45) 14%, transparent));
+  --prophets-border-strong: color-mix(in srgb, var(--brand-olive, #3d5c45) 32%, transparent);
+
+  /* Text — تباين قوي؛ muted ليس disabled */
+  --prophets-text-primary: var(--text-primary, #1a241c);
+  --prophets-text-secondary: var(--text-secondary, #3f4f46);
+  --prophets-text-muted: var(--text-muted, #5e6e65);
+  --prophets-text-on-accent: #fffef9;
+
+  /* Accent — زمردي/زيتوني بلا أزرق */
+  --prophets-accent: var(--brand-olive, #3d5c45);
+  --prophets-accent-hover: var(--brand-olive-deep, #2a4030);
+  --prophets-accent-soft: color-mix(in srgb, var(--prophets-accent) 14%, transparent);
+  --prophets-gold: var(--brand-gold, #c4a35a);
+
+  /* System */
+  --prophets-focus-ring: color-mix(in srgb, var(--prophets-accent) 45%, transparent);
+  --prophets-overlay: color-mix(in srgb, #1a241c 42%, transparent);
+  --prophets-error: #9b2c2c;
+  --prophets-success: #1e5f4b;
+
+  /* Legacy aliases — توافق prophet-stories.css الحالي */
+  --prophets-surface: var(--prophets-surface-1);
+  --prophets-surface-soft: var(--prophets-surface-2);
+  --prophets-ink: var(--prophets-text-primary);
+  --prophets-ink-soft: var(--prophets-text-secondary);
+  --prophets-line: var(--prophets-border-subtle);
+  --prophets-brass: var(--prophets-gold);
+  --prophets-bg-dark: #142019;
+}
+
+html.dark .prophets-lux-page,
+html.dark .prophet-detail-lux,
+html.dark .prophet-story-reader,
+html[data-theme="dark"] .prophets-lux-page,
+html[data-theme="dark"] .prophet-detail-lux,
+html[data-theme="dark"] .prophet-story-reader {
+  /* Surfaces — أخضر داكن محايد بطبقات أوضح من الخلفية */
+  --prophets-bg: #131a18;
+  --prophets-surface-1: #1a2421;
+  --prophets-surface-2: #24302b;
+  --prophets-surface-3: #2e3c36;
+  --prophets-surface-selected: color-mix(in srgb, #7a9a82 22%, #1a2421);
+
+  --prophets-border-subtle: #35443f;
+  --prophets-border-strong: #4a5c55;
+
+  --prophets-text-primary: #ecf2ef;
+  --prophets-text-secondary: #c8d5cf;
+  --prophets-text-muted: #9aaba3;
+  --prophets-text-on-accent: #0f1614;
+
+  --prophets-accent: #7a9a82;
+  --prophets-accent-hover: #9ab5a1;
+  --prophets-accent-soft: color-mix(in srgb, #7a9a82 20%, transparent);
+  --prophets-gold: #c4a84a;
+
+  --prophets-focus-ring: color-mix(in srgb, #7a9a82 50%, transparent);
+  --prophets-overlay: color-mix(in srgb, #050807 55%, transparent);
+  --prophets-error: #e8a0a0;
+  --prophets-success: #7a9a82;
+
+  --prophets-surface: var(--prophets-surface-1);
+  --prophets-surface-soft: var(--prophets-surface-2);
+  --prophets-ink: var(--prophets-text-primary);
+  --prophets-ink-soft: var(--prophets-text-secondary);
+  --prophets-line: var(--prophets-border-subtle);
+  --prophets-brass: var(--prophets-gold);
+  --prophets-bg-dark: #0f1614;
+}
