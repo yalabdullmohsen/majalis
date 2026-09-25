@@ -1,12 +1,14 @@
 /**
- * رأس قراءة مركّز لقصص الأنبياء — رجوع + عنوان + أدوات.
+ * رأس قراءة مركّز لقصص الأنبياء — رجوع + عنوان فقط.
  * يظهر فقط داخل ProphetStoryReader (مسار immersive).
+ * بلا استماع ولا تكبير/تصغير خط (PR-1 إعادة التصميم).
  */
 import type { ReactNode } from "react";
 
 type Props = {
   title: string;
   onBack: () => void;
+  /** اختياري — إجراءات حقيقية فقط؛ لا تُمرَّر أدوات استماع/خط */
   actions?: ReactNode;
 };
 
@@ -16,6 +18,7 @@ export function ProphetStoryReaderHeader({ title, onBack, actions }: Props) {
       className="prophet-reader-header"
       data-component="ProphetStoryReaderHeader"
       data-testid="prophet-reader-header"
+      data-has-actions={actions ? "1" : "0"}
     >
       <button
         type="button"
@@ -27,7 +30,7 @@ export function ProphetStoryReaderHeader({ title, onBack, actions }: Props) {
         رجوع
       </button>
       <h1 className="prophet-reader-header__title">{title}</h1>
-      <div className="prophet-reader-header__actions">{actions}</div>
+      {actions ? <div className="prophet-reader-header__actions">{actions}</div> : null}
     </header>
   );
 }

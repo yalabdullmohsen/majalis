@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from "react";
-import { CalendarDays, ChevronLeft, ChevronRight, HelpCircle, LayoutList, Sparkles, Square, Volume2 } from "lucide-react";
+import { CalendarDays, ChevronLeft, ChevronRight, HelpCircle, LayoutList, Sparkles } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { PROPHETS, getProphet, resolveProphetSlug, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
@@ -15,13 +15,6 @@ import { ScholarlyTrustBadge } from "@/components/ScholarlyTrustBadge";
 import { GraphRelatedRail } from "@/widgets/RelatedRail";
 import { navigateTo } from "@/lib/navigation-intent";
 import { goBackOrFallback } from "@/lib/navigation-back";
-import { isSpeechReadAloudSupported } from "@/lib/speech-read-aloud";
-import {
-  playAiNarration,
-  stopAiNarration,
-  type NarrationEngine,
-} from "@/lib/ai-narration";
-import { unlockAudioOnUserGesture } from "@/lib/quran/quranRecitationService";
 import "@/styles/pages/prophet-stories.css";
 import "@/styles/pages/stories-seerah-v2.css";
 import { UtilityScreen } from "@/components/design-system/screens";
@@ -316,17 +309,12 @@ function ProphetDetailView({
   const p = getProphet(slug);
   const canonicalSlug = p?.slug ?? resolveProphetSlug(slug);
   const sup = SUPPLEMENT[canonicalSlug];
-  const [fontSize, setFontSize] = useState(16);
   const [dbStory, setDbStory] = useState<{ content: string; citations: Citation[] } | null>(null);
   const [dbLoading, setDbLoading] = useState(true);
   const [knowledge, setKnowledge] = useState<KnowledgeItem | null>(null);
   const [knowledgeLoading, setKnowledgeLoading] = useState(true);
   const [readPct, setReadPct] = useState(0);
   const [activeSection, setActiveSection] = useState("bio");
-  const [speechPlaying, setSpeechPlaying] = useState(false);
-  const [speechEngine, setSpeechEngine] = useState<NarrationEngine>("none");
-  const [speechUnsupported, setSpeechUnsupported] = useState(false);
-  const [speechError, setSpeechError] = useState<string | null>(null);
   const articleRef = useRef<HTMLElement>(null);
   const prevProphet = p && p.id > 1 ? PROPHETS[p.id - 2] : null;
   const nextProphet = p && p.id < PROPHETS.length ? PROPHETS[p.id] : null;
@@ -343,84 +331,6 @@ function ProphetDetailView({
     }
     return items;
   }, [knowledge?.review_status]);
-
-  /**
-   * نص الاستماع من مصدر العرض الأساسي فقط (prophets-data + معجزة مكمّلة).
-   * لا نخلط معرفة موسّعة/Supabase في الصوت حتى لا ينفصل عن البطاقات الظاهرة،
-   * ولا تُفرَّغ القراءة بسبب آيات محمية في JSON.
-   */
-  const speakableText = useMemo(() => {
-    if (!p) return "";
-    const parts: string[] = [
-      `${p.arabicName} عليه السلام`,
-      p.title,
-      p.briefBio,
-      ...p.keyAttributes,
-      ...p.lessons,
-    ];
-    if (sup?.miracle) parts.push(sup.miracle);
-    return parts.filter(Boolean).join(". ");
-  }, [p, sup]);
-
-  useEffect(() => {
-    stopAiNarration();
-    setSpeechPlaying(false);
-    setSpeechEngine("none");
-    setSpeechUnsupported(false);
-    setSpeechError(null);
-    return () => {
-      stopAiNarration();
-    };
-  }, [slug]);
-
-  const toggleSpeech = useCallback(() => {
-    if (speechPlaying) {
-      stopAiNarration();
-      setSpeechPlaying(false);
-      setSpeechEngine("none");
-      return;
-    }
-    setSpeechError(null);
-    if (!speakableText.trim()) {
-      setSpeechError("لا يوجد نص قابل للقراءة الصوتية");
-      return;
-    }
-    unlockAudioOnUserGesture();
-    if (!isSpeechReadAloudSupported()) {
-      setSpeechUnsupported(true);
-      setSpeechError("القراءة الصوتية غير متاحة على هذا الجهاز");
-      return;
-    }
-    void (async () => {
-      const result = await playAiNarration({
-        contentId: `prophet:${canonicalSlug || slug}`,
-        title: p?.arabicName,
-        body: speakableText,
-        mode: "immersive",
-        contentKind: "prophet_story",
-        onEnd: () => {
-          setSpeechPlaying(false);
-          setSpeechEngine("none");
-        },
-        onError: () => {
-          setSpeechPlaying(false);
-          setSpeechEngine("none");
-          setSpeechUnsupported(true);
-          setSpeechError("تعذر تشغيل التعليق الصوتي");
-        },
-      });
-      if (result.ok) {
-        setSpeechPlaying(true);
-        setSpeechEngine(result.engine);
-        setSpeechError(null);
-      } else if (result.reason === "device_unsupported") {
-        setSpeechUnsupported(true);
-        setSpeechError(result.userLabel);
-      } else {
-        setSpeechError(result.userLabel || "تعذر بدء القراءة الصوتية");
-      }
-    })();
-  }, [speechPlaying, speakableText, slug, canonicalSlug, p?.arabicName]);
 
   const sections: DetailSection[] = [
     { id: "bio", label: "نبذة" },
@@ -600,31 +510,6 @@ function ProphetDetailView({
   const isUlulAzm = ULUL_AZM_SLUGS.includes(p.slug);
   const mentionPct = Math.min(100, Math.round(((sup?.mentioned ?? 0) / MAX_MENTIONS) * 100));
 
-  const readerActions = (
-    <div className="prophet-detail-lux__actions">
-      <button
-        type="button"
-        className={`prophet-speech-btn${speechPlaying ? " prophet-speech-btn--active" : ""}`}
-        onClick={toggleSpeech}
-        aria-pressed={speechPlaying}
-        aria-label={speechPlaying ? "إيقاف القراءة" : "استماع لنص القصة"}
-      >
-        {speechPlaying ? <Square size={14} strokeWidth={2} aria-hidden="true" /> : <Volume2 size={14} strokeWidth={2} aria-hidden="true" />}
-        <span>{speechPlaying ? "إيقاف" : "استماع"}</span>
-        {speechPlaying && speechEngine === "device-speech" ? (
-          <span className="prophet-speech-btn__engine" data-engine="device">صوت الجهاز</span>
-        ) : null}
-        {speechPlaying && speechEngine === "azure-neural" ? (
-          <span className="prophet-speech-btn__engine" data-engine="neural">سرد عصبي</span>
-        ) : null}
-      </button>
-      <div className="prophet-font-controls" role="group" aria-label="إعدادات القراءة">
-        <button type="button" onClick={() => setFontSize((s) => Math.max(13, s - 1))} aria-label="تصغير الخط">أ−</button>
-        <button type="button" onClick={() => setFontSize((s) => Math.min(22, s + 1))} aria-label="تكبير الخط">أ+</button>
-      </div>
-    </div>
-  );
-
   return (
     <ProphetStoryReader prophetSlug={canonicalSlug}>
       <div
@@ -650,13 +535,7 @@ function ProphetDetailView({
         <ProphetStoryReaderHeader
           title={p.arabicName}
           onBack={onBack}
-          actions={readerActions}
         />
-        {speechUnsupported || speechError ? (
-          <p className="prophet-speech-unsupported" role="status">
-            {speechError || "القراءة الصوتية غير مدعومة على هذا الجهاز"}
-          </p>
-        ) : null}
 
         <div className="prophet-detail-lux__hero">
           <div className="prophet-detail-lux__hero-content">
@@ -698,7 +577,7 @@ function ProphetDetailView({
           ))}
         </nav>
 
-        <article ref={articleRef} className="prophet-story-lux" style={{ "--pstory-fs": `${fontSize}px` } as React.CSSProperties}>
+        <article ref={articleRef} className="prophet-story-lux">
           <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="bio">
             <ProphetStorySectionHeader title="نبذة تعريفية" />
             <p className="prophet-section-lux__text">{p.briefBio}</p>

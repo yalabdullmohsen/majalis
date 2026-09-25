@@ -98,13 +98,12 @@ console.log("=== Server neural handler exists; keys server-only ===");
   assert.match(dispatch, /\/api\/narration\/tts/);
 }
 
-console.log("=== Prophets page uses AI orchestrator + honest labels ===");
+console.log("=== Prophets page: لا سرد صوتي داخل القارئ (PR-1) ===");
 {
   const page = read("src/views/ProphetStoriesPage.tsx");
-  assert.match(page, /playAiNarration/);
-  assert.match(page, /from "@\/lib\/ai-narration"/);
-  assert.match(page, /صوت الجهاز|device-speech/);
-  assert.match(page, /سرد عصبي|azure-neural/);
+  assert.doesNotMatch(page, /playAiNarration/);
+  assert.doesNotMatch(page, /from "@\/lib\/ai-narration"/);
+  assert.doesNotMatch(page, /prophet-speech-btn|استماع لنص القصة/);
   assert.doesNotMatch(page, /قارئ بالذكاء الاصطناعي/);
 }
 
