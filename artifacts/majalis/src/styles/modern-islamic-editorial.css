@@ -1,0 +1,241 @@
+/**
+ * تطبيق Modern Islamic Editorial على الصفحات التعليمية فقط.
+ * ممنوع لمس: .nm-root · mushaf · quran ayah · page-mapping
+ */
+
+/* ── جسر محلي للأسطح التعليمية ── */
+.prophets-lux-page,
+.prophet-detail-lux,
+.prophet-story-reader,
+.lessons-page-v2,
+.lessons-v2-page,
+.search-page,
+.page-shell.search-page,
+.cr-shell,
+.reading-prose,
+.reading-section-card,
+[data-editorial="mie"] {
+  --ps-canvas: var(--surface-paper);
+  --ps-surface: var(--surface-card);
+  --ps-ink: var(--text-primary);
+  --ps-ink-soft: var(--text-secondary);
+  --ps-line: var(--mie-border);
+  --ps-emerald: var(--brand-olive-deep);
+  --ps-emerald-bright: var(--brand-olive);
+  --prophets-bg: var(--surface-paper);
+  --prophets-surface: var(--surface-card);
+  --prophets-ink: var(--text-primary);
+  --prophets-ink-soft: var(--text-secondary);
+  --prophets-line: var(--mie-border);
+  --prophets-accent: var(--brand-olive);
+  background-color: var(--surface-paper);
+  color: var(--text-primary);
+}
+
+/* ── قصص الأنبياء ── */
+.prophets-lux-page,
+.prophet-detail-lux,
+.prophet-story-reader {
+  background: var(--surface-paper);
+  color: var(--text-primary);
+  font-size: var(--mie-type-body);
+  line-height: var(--mie-lh-body);
+}
+
+.prophets-lux-page .prophets-lux-hero__title,
+.prophet-detail-lux h1,
+.prophet-story-reader h1 {
+  font-family: var(--sf-font-display, var(--font-display, var(--font-app)));
+  font-size: var(--mie-type-display);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-primary);
+  letter-spacing: 0;
+}
+
+.prophets-lux-page .prophets-lux-card,
+.prophet-detail-lux .prophet-detail-card,
+.prophets-lux-page .nb-card,
+.prophet-detail-lux .nb-card {
+  background: var(--surface-card);
+  border: 1px solid var(--mie-border);
+  border-radius: var(--mie-radius-card);
+  box-shadow: var(--mie-shadow-card);
+}
+
+.prophets-page-lead,
+.prophet-detail-lux .prophets-page-lead {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: var(--mie-lh-reading);
+}
+
+/* ── الدروس ── */
+.lessons-page-v2,
+.lessons-v2-page {
+  background: var(--surface-paper);
+  color: var(--text-primary);
+}
+
+.lessons-page-v2 .lessons-v2-stat,
+.lessons-v2-page .lessons-v2-stat {
+  background: var(--surface-card);
+  border: 1px solid var(--mie-border);
+  border-radius: var(--mie-radius-card);
+  box-shadow: var(--mie-shadow-card);
+  padding: var(--mie-pad-card);
+}
+
+.lessons-page-v2 .lessons-v2-stat strong,
+.lessons-v2-page .lessons-v2-stat strong {
+  color: var(--brand-olive-deep);
+  font-size: var(--mie-type-card);
+}
+
+.lessons-page-v2 .filter-chips__chip,
+.lessons-v2-page .filter-chips__chip {
+  background: var(--surface-card);
+  color: var(--text-primary);
+  border: 1px solid var(--mie-border);
+}
+
+.lessons-page-v2 .lesson-card,
+.lessons-page-v2 .mj-card,
+.lessons-page-v2 .app-card,
+.lessons-v2-page .lesson-card,
+.lessons-v2-page .app-card {
+  background: var(--surface-card);
+  border: 1px solid var(--mie-border);
+  border-radius: var(--mie-radius-card);
+  box-shadow: var(--mie-shadow-card);
+  padding: var(--mie-pad-card);
+}
+
+.lessons-page-v2 h1,
+.lessons-page-v2 .page-hero-mj__title,
+.lessons-v2-page h1 {
+  font-family: var(--sf-font-display, var(--font-display, var(--font-app)));
+  font-size: var(--mie-type-title);
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+
+/* ── البحث ── */
+.search-page,
+.page-shell.search-page {
+  background: var(--surface-paper);
+  color: var(--text-primary);
+}
+
+.search-page .search-page-form {
+  background: color-mix(in srgb, var(--surface-paper) 92%, transparent);
+}
+
+.search-page .search-result,
+.search-page .search-hit,
+.search-page .sr-card,
+.search-page .result-card {
+  background: var(--surface-card);
+  border: 1px solid var(--mie-border);
+  border-radius: var(--mie-radius-card);
+  box-shadow: var(--mie-shadow-card);
+  padding: var(--mie-pad-card);
+}
+
+.search-page h1,
+.search-page .page-hero-mj__title {
+  font-family: var(--sf-font-display, var(--font-display, var(--font-app)));
+  font-size: var(--mie-type-title);
+  color: var(--text-primary);
+}
+
+.search-page .search-adv-toggle {
+  background: var(--surface-card);
+  border: 1px solid var(--mie-border);
+  color: var(--text-secondary);
+  border-radius: 999px;
+}
+
+.search-page .search-adv-toggle:hover,
+.search-page .search-adv-toggle.is-active {
+  background: var(--brand-olive);
+  border-color: var(--brand-olive);
+  color: #fff;
+  box-shadow: none;
+}
+
+/* ── صلاة: بطاقات Editorial فوق الهيكل الزيتوني الغامر ── */
+html.pts-immersive .pts-card,
+html.pts-immersive .pts-hero,
+html.pts-immersive .pts-next,
+html.pts-immersive .pts-list-item {
+  border-radius: var(--mie-radius-card);
+  border-width: 1px;
+  box-shadow: var(--mie-shadow-card);
+}
+
+html.pts-immersive {
+  --pts-accent-olive: var(--brand-olive);
+  --pts-accent-gold: var(--brand-gold);
+}
+
+html.pts-immersive:not([data-theme="dark"]):not(.dark) .pts-sheet,
+html.pts-immersive:not([data-theme="dark"]):not(.dark) .pts-panel {
+  background: var(--surface-card-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--mie-border);
+  border-radius: var(--mie-radius-lg);
+}
+
+/* ── محتوى طويل / قراءة ── */
+.cr-shell,
+.reading-prose,
+.reading-section-card {
+  background: transparent;
+  color: var(--text-primary);
+  font-size: var(--mie-type-body);
+  line-height: var(--mie-lh-reading);
+  max-width: min(40rem, 100%);
+}
+
+.cr-shell .cr-note,
+.cr-shell .cr-faq__item,
+.reading-section-card,
+.reading-prose .rsc-card,
+.reading-prose article {
+  background: var(--surface-card);
+  border: 1px solid var(--mie-border);
+  border-radius: var(--mie-radius-card);
+  box-shadow: var(--mie-shadow-card);
+  color: var(--text-primary);
+}
+
+.cr-shell .cr-faq__q,
+.reading-prose h2,
+.reading-prose h3,
+.reading-section-card h2 {
+  color: var(--brand-olive-deep);
+  font-family: var(--sf-font-display, var(--font-display, var(--font-app)));
+  line-height: 1.4;
+}
+
+.cr-shell .cr-faq__a,
+.reading-prose p {
+  color: var(--text-primary);
+  line-height: var(--mie-lh-reading);
+}
+
+/* إزالة ازدحام: بلا text-shadow / بلا نيون على الأسطح التعليمية */
+.prophets-lux-page,
+.lessons-page-v2,
+.search-page,
+.cr-shell,
+.prophet-detail-lux,
+.prophet-story-reader {
+  text-shadow: none;
+}
+
+/*
+ * استثناء صريح: لا تُعاد كتابة أسطح المصحف/الآيات/Page Mapping هنا.
+ * كل القواعد أعلاه مقيَّدة بجذور تعليمية فقط (.prophets-* / .lessons-* / .search-* / .cr-shell / pts-card).
+ */

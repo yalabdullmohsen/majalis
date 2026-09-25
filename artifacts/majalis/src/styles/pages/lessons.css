@@ -14,22 +14,23 @@
 }
 
 .lessons-v2-stat {
-  background: transparent;
-  border: 1px solid var(--msk-border, var(--mj-hairline));
-  border-radius: var(--ds-radius-lg);
-  padding: var(--ds-space-3);
+  background: var(--surface-card, transparent);
+  border: 1px solid var(--mie-border, var(--msk-border, var(--mj-hairline)));
+  border-radius: var(--mie-radius-card, var(--ds-radius-lg));
+  padding: var(--mie-pad-card, var(--ds-space-3));
   text-align: center;
+  box-shadow: var(--mie-shadow-card, none);
 }
 
 .lessons-v2-stat strong {
   display: block;
-  font-size: var(--ds-text-xl);
-  color: var(--majalis-emerald-deep);
+  font-size: var(--mie-type-card, var(--ds-text-xl));
+  color: var(--brand-olive-deep, var(--majalis-emerald-deep));
 }
 
 .lessons-v2-stat span {
   font-size: var(--ds-text-xs);
-  color: var(--mn-text-default);
+  color: var(--text-secondary, var(--mn-text-default));
 }
 
 .lessons-v2-toolbar {

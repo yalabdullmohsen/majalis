@@ -10,16 +10,17 @@
   --ps-on-emerald: var(--mj-white, #ffffff);
   --ps-on-emerald-muted: rgba(255, 255, 255, 0.94);
   --ps-on-emerald-soft: rgba(255, 255, 255, 0.88);
-  --ps-surface: var(--mj-surface, var(--mj-white, #ffffff));
-  --ps-canvas: var(--mj-bg, var(--msk-canvas, var(--mj-surface)));
+  /* Modern Islamic Editorial — ورق دافئ + زيتوني */
+  --ps-surface: var(--surface-card, var(--mj-surface, #fffbf5));
+  --ps-canvas: var(--surface-paper, var(--mj-bg, #f3eee3));
   /* fallback صلب — يمنع دائرية mj-ink الفارغة → نص شفاف تقريبًا */
-  --ps-ink: var(--mj-ink, var(--majalis-ink, #16241e));
+  --ps-ink: var(--text-primary, var(--mj-ink, #1a241c));
   /* ثانوي ≥85% وضوحًا من الأساسي — لا رمادي باهت ولا hairline */
-  --ps-ink-soft: var(--text-secondary, var(--mj-ink-2, #3A4A44));
-  --ps-line: var(--mj-hairline, var(--msk-border, #E5E0D5));
-  --ps-emerald: var(--majalis-emerald, var(--mj-brand-deep));
-  --ps-emerald-bright: var(--mj-brand, #1e5f4b);
-  --ps-brass: var(--majalis-brass, var(--mj-accent));
+  --ps-ink-soft: var(--text-secondary, var(--mj-ink-2, #3f4f46));
+  --ps-line: var(--mie-border, var(--mj-hairline, #e5e0d5));
+  --ps-emerald: var(--brand-olive-deep, var(--majalis-emerald, var(--mj-brand-deep)));
+  --ps-emerald-bright: var(--brand-olive, var(--mj-brand, #3d5c45));
+  --ps-brass: var(--brand-gold, var(--majalis-brass, var(--mj-accent)));
 }
 
 html[data-theme="dark"] .prophets-lux-page,

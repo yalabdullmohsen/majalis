@@ -26,7 +26,7 @@
   position: sticky;
   top: var(--sticky-below-chrome, var(--app-top-chrome-h, 0px));
   z-index: var(--z-sticky, 100);
-  background: var(--mj-bg, #f7f6f2);
+  background: var(--surface-paper, var(--mj-bg, #f3eee3));
   padding-block: 0.35rem 0.55rem;
   margin-inline: -0.15rem;
   padding-inline: 0.15rem;
